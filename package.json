@@ -2,11 +2,17 @@
   "name": "suru-ui",
   "type": "module",
   "private": true,
-  "workspaces": [],
+  "workspaces": [
+    "packages/build"
+  ],
   "scripts": {
     "check": "npm run check -ws",
+    "precheck": "dprint check",
+    "check:build": "npm run check -w packages/build",
     "test": "npm run test -ws",
-    "build": "npm run build -ws"
+    "test:build": "npm run test -w packages/build",
+    "build": "npm run build -ws",
+    "build:build": "npm run build -w packages/build"
   },
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.5",

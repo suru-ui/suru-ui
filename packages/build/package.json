@@ -1,0 +1,28 @@
+{
+  "name": "@suru-ui/build",
+  "private": true,
+  "version": "0.0.0",
+  "license": "MIT",
+  "description": "",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "sui-build": "./dist/packages/build/src/bin.js"
+  },
+  "dependencies": {
+    "esbuild": "^0.24.2",
+    "esbuild-plugin-replace": "^1.4.0"
+  },
+  "scripts": {
+    "check": "tsc --noEmit",
+    "test": "exit 0",
+    "build": "tsc"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  }
+}
