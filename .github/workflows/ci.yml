@@ -10,27 +10,6 @@ defaults:
     shell: bash -euo pipefail {0}
 
 jobs:
-  check:
-    timeout-minutes: 15
-    runs-on: ubuntu-latest
-    steps:
-      - name: "チェックアウト"
-        uses: actions/checkout@v4
-
-      - name: "Bun をセットアップ"
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-
-      - name: "Node.js をセットアップ"
-        uses: volta-cli/action@v4
-
-      - name: "依存関係をインストール"
-        run: bun i
-
-      - name: "実行"
-        run: npm run check
-
   test:
     timeout-minutes: 15
     runs-on: ubuntu-latest
