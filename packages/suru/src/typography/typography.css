@@ -1,0 +1,483 @@
+@layer sui.components {
+  .SuiTypography {
+    --SuiTypography-color: var(--sui-canvasText-main);
+    color: var(--SuiTypography-color);
+    display: block;
+  }
+
+  .SuiTypography-dsp-64n-4 {
+    font-size: var(--sui-text-dsp-64n-4-size);
+    font-family: var(--sui-text-dsp-64n-4-font);
+    font-weight: var(--sui-text-dsp-64n-4-weight);
+    line-height: var(--sui-text-dsp-64n-4-leading);
+    letter-spacing: var(--sui-text-dsp-64n-4-tracking);
+  }
+
+  .SuiTypography-dsp-57n-4 {
+    font-size: var(--sui-text-dsp-57n-4-size);
+    font-family: var(--sui-text-dsp-57n-4-font);
+    font-weight: var(--sui-text-dsp-57n-4-weight);
+    line-height: var(--sui-text-dsp-57n-4-leading);
+    letter-spacing: var(--sui-text-dsp-57n-4-tracking);
+  }
+
+  .SuiTypography-dsp-48n-4 {
+    font-size: var(--sui-text-dsp-48n-4-size);
+    font-family: var(--sui-text-dsp-48n-4-font);
+    font-weight: var(--sui-text-dsp-48n-4-weight);
+    line-height: var(--sui-text-dsp-48n-4-leading);
+    letter-spacing: var(--sui-text-dsp-48n-4-tracking);
+  }
+
+  .SuiTypography-std-45b-4 {
+    font-size: var(--sui-text-std-45b-4-size);
+    font-family: var(--sui-text-std-45b-4-font);
+    font-weight: var(--sui-text-std-45b-4-weight);
+    line-height: var(--sui-text-std-45b-4-leading);
+    letter-spacing: var(--sui-text-std-45b-4-tracking);
+  }
+
+  .SuiTypography-std-36b-4 {
+    font-size: var(--sui-text-std-36b-4-size);
+    font-family: var(--sui-text-std-36b-4-font);
+    font-weight: var(--sui-text-std-36b-4-weight);
+    line-height: var(--sui-text-std-36b-4-leading);
+    letter-spacing: var(--sui-text-std-36b-4-tracking);
+  }
+
+  .SuiTypography-std-32b-5 {
+    font-size: var(--sui-text-std-32b-5-size);
+    font-family: var(--sui-text-std-32b-5-font);
+    font-weight: var(--sui-text-std-32b-5-weight);
+    line-height: var(--sui-text-std-32b-5-leading);
+    letter-spacing: var(--sui-text-std-32b-5-tracking);
+  }
+
+  .SuiTypography-std-28b-5 {
+    font-size: var(--sui-text-std-28b-5-size);
+    font-family: var(--sui-text-std-28b-5-font);
+    font-weight: var(--sui-text-std-28b-5-weight);
+    line-height: var(--sui-text-std-28b-5-leading);
+    letter-spacing: var(--sui-text-std-28b-5-tracking);
+  }
+
+  .SuiTypography-std-24b-5 {
+    font-size: var(--sui-text-std-24b-5-size);
+    font-family: var(--sui-text-std-24b-5-font);
+    font-weight: var(--sui-text-std-24b-5-weight);
+    line-height: var(--sui-text-std-24b-5-leading);
+    letter-spacing: var(--sui-text-std-24b-5-tracking);
+  }
+
+  .SuiTypography-std-22b-5 {
+    font-size: var(--sui-text-std-22b-5-size);
+    font-family: var(--sui-text-std-22b-5-font);
+    font-weight: var(--sui-text-std-22b-5-weight);
+    line-height: var(--sui-text-std-22b-5-leading);
+    letter-spacing: var(--sui-text-std-22b-5-tracking);
+  }
+
+  .SuiTypography-std-20b-5 {
+    font-size: var(--sui-text-std-20b-5-size);
+    font-family: var(--sui-text-std-20b-5-font);
+    font-weight: var(--sui-text-std-20b-5-weight);
+    line-height: var(--sui-text-std-20b-5-leading);
+    letter-spacing: var(--sui-text-std-20b-5-tracking);
+  }
+
+  .SuiTypography-std-18b-6 {
+    font-size: var(--sui-text-std-18b-6-size);
+    font-family: var(--sui-text-std-18b-6-font);
+    font-weight: var(--sui-text-std-18b-6-weight);
+    line-height: var(--sui-text-std-18b-6-leading);
+    letter-spacing: var(--sui-text-std-18b-6-tracking);
+  }
+
+  .SuiTypography-std-17b-7 {
+    font-size: var(--sui-text-std-17b-7-size);
+    font-family: var(--sui-text-std-17b-7-font);
+    font-weight: var(--sui-text-std-17b-7-weight);
+    line-height: var(--sui-text-std-17b-7-leading);
+    letter-spacing: var(--sui-text-std-17b-7-tracking);
+  }
+
+  .SuiTypography-std-16b-7 {
+    font-size: var(--sui-text-std-16b-7-size);
+    font-family: var(--sui-text-std-16b-7-font);
+    font-weight: var(--sui-text-std-16b-7-weight);
+    line-height: var(--sui-text-std-16b-7-leading);
+    letter-spacing: var(--sui-text-std-16b-7-tracking);
+  }
+
+  .SuiTypography-std-32m-5 {
+    font-size: var(--sui-text-std-32m-5-size);
+    font-family: var(--sui-text-std-32m-5-font);
+    font-weight: var(--sui-text-std-32m-5-weight);
+    line-height: var(--sui-text-std-32m-5-leading);
+    letter-spacing: var(--sui-text-std-32m-5-tracking);
+  }
+
+  .SuiTypography-std-28m-5 {
+    font-size: var(--sui-text-std-28m-5-size);
+    font-family: var(--sui-text-std-28m-5-font);
+    font-weight: var(--sui-text-std-28m-5-weight);
+    line-height: var(--sui-text-std-28m-5-leading);
+    letter-spacing: var(--sui-text-std-28m-5-tracking);
+  }
+
+  .SuiTypography-std-24m-5 {
+    font-size: var(--sui-text-std-24m-5-size);
+    font-family: var(--sui-text-std-24m-5-font);
+    font-weight: var(--sui-text-std-24m-5-weight);
+    line-height: var(--sui-text-std-24m-5-leading);
+    letter-spacing: var(--sui-text-std-24m-5-tracking);
+  }
+
+  .SuiTypography-std-20m-5 {
+    font-size: var(--sui-text-std-20m-5-size);
+    font-family: var(--sui-text-std-20m-5-font);
+    font-weight: var(--sui-text-std-20m-5-weight);
+    line-height: var(--sui-text-std-20m-5-leading);
+    letter-spacing: var(--sui-text-std-20m-5-tracking);
+  }
+
+  .SuiTypography-std-17m-7 {
+    font-size: var(--sui-text-std-17m-7-size);
+    font-family: var(--sui-text-std-17m-7-font);
+    font-weight: var(--sui-text-std-17m-7-weight);
+    line-height: var(--sui-text-std-17m-7-leading);
+    letter-spacing: var(--sui-text-std-17m-7-tracking);
+  }
+
+  .SuiTypography-std-16m-7 {
+    font-size: var(--sui-text-std-16m-7-size);
+    font-family: var(--sui-text-std-16m-7-font);
+    font-weight: var(--sui-text-std-16m-7-weight);
+    line-height: var(--sui-text-std-16m-7-leading);
+    letter-spacing: var(--sui-text-std-16m-7-tracking);
+  }
+
+  .SuiTypography-std-45n-4 {
+    font-size: var(--sui-text-std-45n-4-size);
+    font-family: var(--sui-text-std-45n-4-font);
+    font-weight: var(--sui-text-std-45n-4-weight);
+    line-height: var(--sui-text-std-45n-4-leading);
+    letter-spacing: var(--sui-text-std-45n-4-tracking);
+  }
+
+  .SuiTypography-std-36n-4 {
+    font-size: var(--sui-text-std-36n-4-size);
+    font-family: var(--sui-text-std-36n-4-font);
+    font-weight: var(--sui-text-std-36n-4-weight);
+    line-height: var(--sui-text-std-36n-4-leading);
+    letter-spacing: var(--sui-text-std-36n-4-tracking);
+  }
+
+  .SuiTypography-std-32n-5 {
+    font-size: var(--sui-text-std-32n-5-size);
+    font-family: var(--sui-text-std-32n-5-font);
+    font-weight: var(--sui-text-std-32n-5-weight);
+    line-height: var(--sui-text-std-32n-5-leading);
+    letter-spacing: var(--sui-text-std-32n-5-tracking);
+  }
+
+  .SuiTypography-std-28n-5 {
+    font-size: var(--sui-text-std-28n-5-size);
+    font-family: var(--sui-text-std-28n-5-font);
+    font-weight: var(--sui-text-std-28n-5-weight);
+    line-height: var(--sui-text-std-28n-5-leading);
+    letter-spacing: var(--sui-text-std-28n-5-tracking);
+  }
+
+  .SuiTypography-std-26n-5 {
+    font-size: var(--sui-text-std-26n-5-size);
+    font-family: var(--sui-text-std-26n-5-font);
+    font-weight: var(--sui-text-std-26n-5-weight);
+    line-height: var(--sui-text-std-26n-5-leading);
+    letter-spacing: var(--sui-text-std-26n-5-tracking);
+  }
+
+  .SuiTypography-std-24n-5 {
+    font-size: var(--sui-text-std-24n-5-size);
+    font-family: var(--sui-text-std-24n-5-font);
+    font-weight: var(--sui-text-std-24n-5-weight);
+    line-height: var(--sui-text-std-24n-5-leading);
+    letter-spacing: var(--sui-text-std-24n-5-tracking);
+  }
+
+  .SuiTypography-std-22n-5 {
+    font-size: var(--sui-text-std-22n-5-size);
+    font-family: var(--sui-text-std-22n-5-font);
+    font-weight: var(--sui-text-std-22n-5-weight);
+    line-height: var(--sui-text-std-22n-5-leading);
+    letter-spacing: var(--sui-text-std-22n-5-tracking);
+  }
+
+  .SuiTypography-std-20n-5 {
+    font-size: var(--sui-text-std-20n-5-size);
+    font-family: var(--sui-text-std-20n-5-font);
+    font-weight: var(--sui-text-std-20n-5-weight);
+    line-height: var(--sui-text-std-20n-5-leading);
+    letter-spacing: var(--sui-text-std-20n-5-tracking);
+  }
+
+  .SuiTypography-std-18n-6 {
+    font-size: var(--sui-text-std-18n-6-size);
+    font-family: var(--sui-text-std-18n-6-font);
+    font-weight: var(--sui-text-std-18n-6-weight);
+    line-height: var(--sui-text-std-18n-6-leading);
+    letter-spacing: var(--sui-text-std-18n-6-tracking);
+  }
+
+  .SuiTypography-std-17n-7 {
+    font-size: var(--sui-text-std-17n-7-size);
+    font-family: var(--sui-text-std-17n-7-font);
+    font-weight: var(--sui-text-std-17n-7-weight);
+    line-height: var(--sui-text-std-17n-7-leading);
+    letter-spacing: var(--sui-text-std-17n-7-tracking);
+  }
+
+  .SuiTypography-std-16n-7 {
+    font-size: var(--sui-text-std-16n-7-size);
+    font-family: var(--sui-text-std-16n-7-font);
+    font-weight: var(--sui-text-std-16n-7-weight);
+    line-height: var(--sui-text-std-16n-7-leading);
+    letter-spacing: var(--sui-text-std-16n-7-tracking);
+  }
+
+  .SuiTypography-dns-17b-3 {
+    font-size: var(--sui-text-dns-17b-3-size);
+    font-family: var(--sui-text-dns-17b-3-font);
+    font-weight: var(--sui-text-dns-17b-3-weight);
+    line-height: var(--sui-text-dns-17b-3-leading);
+    letter-spacing: var(--sui-text-dns-17b-3-tracking);
+  }
+
+  .SuiTypography-dns-17n-3 {
+    font-size: var(--sui-text-dns-17n-3-size);
+    font-family: var(--sui-text-dns-17n-3-font);
+    font-weight: var(--sui-text-dns-17n-3-weight);
+    line-height: var(--sui-text-dns-17n-3-leading);
+    letter-spacing: var(--sui-text-dns-17n-3-tracking);
+  }
+
+  .SuiTypography-dns-17b-2 {
+    font-size: var(--sui-text-dns-17b-2-size);
+    font-family: var(--sui-text-dns-17b-2-font);
+    font-weight: var(--sui-text-dns-17b-2-weight);
+    line-height: var(--sui-text-dns-17b-2-leading);
+    letter-spacing: var(--sui-text-dns-17b-2-tracking);
+  }
+
+  .SuiTypography-dns-17n-2 {
+    font-size: var(--sui-text-dns-17n-2-size);
+    font-family: var(--sui-text-dns-17n-2-font);
+    font-weight: var(--sui-text-dns-17n-2-weight);
+    line-height: var(--sui-text-dns-17n-2-leading);
+    letter-spacing: var(--sui-text-dns-17n-2-tracking);
+  }
+
+  .SuiTypography-dns-16b-3 {
+    font-size: var(--sui-text-dns-16b-3-size);
+    font-family: var(--sui-text-dns-16b-3-font);
+    font-weight: var(--sui-text-dns-16b-3-weight);
+    line-height: var(--sui-text-dns-16b-3-leading);
+    letter-spacing: var(--sui-text-dns-16b-3-tracking);
+  }
+
+  .SuiTypography-dns-16n-3 {
+    font-size: var(--sui-text-dns-16n-3-size);
+    font-family: var(--sui-text-dns-16n-3-font);
+    font-weight: var(--sui-text-dns-16n-3-weight);
+    line-height: var(--sui-text-dns-16n-3-leading);
+    letter-spacing: var(--sui-text-dns-16n-3-tracking);
+  }
+
+  .SuiTypography-dns-16b-2 {
+    font-size: var(--sui-text-dns-16b-2-size);
+    font-family: var(--sui-text-dns-16b-2-font);
+    font-weight: var(--sui-text-dns-16b-2-weight);
+    line-height: var(--sui-text-dns-16b-2-leading);
+    letter-spacing: var(--sui-text-dns-16b-2-tracking);
+  }
+
+  .SuiTypography-dns-16n-2 {
+    font-size: var(--sui-text-dns-16n-2-size);
+    font-family: var(--sui-text-dns-16n-2-font);
+    font-weight: var(--sui-text-dns-16n-2-weight);
+    line-height: var(--sui-text-dns-16n-2-leading);
+    letter-spacing: var(--sui-text-dns-16n-2-tracking);
+  }
+
+  .SuiTypography-dns-14b-3 {
+    font-size: var(--sui-text-dns-14b-3-size);
+    font-family: var(--sui-text-dns-14b-3-font);
+    font-weight: var(--sui-text-dns-14b-3-weight);
+    line-height: var(--sui-text-dns-14b-3-leading);
+    letter-spacing: var(--sui-text-dns-14b-3-tracking);
+  }
+
+  .SuiTypography-dns-14n-3 {
+    font-size: var(--sui-text-dns-14n-3-size);
+    font-family: var(--sui-text-dns-14n-3-font);
+    font-weight: var(--sui-text-dns-14n-3-weight);
+    line-height: var(--sui-text-dns-14n-3-leading);
+    letter-spacing: var(--sui-text-dns-14n-3-tracking);
+  }
+
+  .SuiTypography-dns-14b-2 {
+    font-size: var(--sui-text-dns-14b-2-size);
+    font-family: var(--sui-text-dns-14b-2-font);
+    font-weight: var(--sui-text-dns-14b-2-weight);
+    line-height: var(--sui-text-dns-14b-2-leading);
+    letter-spacing: var(--sui-text-dns-14b-2-tracking);
+  }
+
+  .SuiTypography-dns-14n-2 {
+    font-size: var(--sui-text-dns-14n-2-size);
+    font-family: var(--sui-text-dns-14n-2-font);
+    font-weight: var(--sui-text-dns-14n-2-weight);
+    line-height: var(--sui-text-dns-14n-2-leading);
+    letter-spacing: var(--sui-text-dns-14n-2-tracking);
+  }
+
+  .SuiTypography-oln-17b-1 {
+    font-size: var(--sui-text-oln-17b-1-size);
+    font-family: var(--sui-text-oln-17b-1-font);
+    font-weight: var(--sui-text-oln-17b-1-weight);
+    line-height: var(--sui-text-oln-17b-1-leading);
+    letter-spacing: var(--sui-text-oln-17b-1-tracking);
+  }
+
+  .SuiTypography-oln-17m-1 {
+    font-size: var(--sui-text-oln-17m-1-size);
+    font-family: var(--sui-text-oln-17m-1-font);
+    font-weight: var(--sui-text-oln-17m-1-weight);
+    line-height: var(--sui-text-oln-17m-1-leading);
+    letter-spacing: var(--sui-text-oln-17m-1-tracking);
+  }
+
+  .SuiTypography-oln-17n-1 {
+    font-size: var(--sui-text-oln-17n-1-size);
+    font-family: var(--sui-text-oln-17n-1-font);
+    font-weight: var(--sui-text-oln-17n-1-weight);
+    line-height: var(--sui-text-oln-17n-1-leading);
+    letter-spacing: var(--sui-text-oln-17n-1-tracking);
+  }
+
+  .SuiTypography-oln-16b-1 {
+    font-size: var(--sui-text-oln-16b-1-size);
+    font-family: var(--sui-text-oln-16b-1-font);
+    font-weight: var(--sui-text-oln-16b-1-weight);
+    line-height: var(--sui-text-oln-16b-1-leading);
+    letter-spacing: var(--sui-text-oln-16b-1-tracking);
+  }
+
+  .SuiTypography-oln-16m-1 {
+    font-size: var(--sui-text-oln-16m-1-size);
+    font-family: var(--sui-text-oln-16m-1-font);
+    font-weight: var(--sui-text-oln-16m-1-weight);
+    line-height: var(--sui-text-oln-16m-1-leading);
+    letter-spacing: var(--sui-text-oln-16m-1-tracking);
+  }
+
+  .SuiTypography-oln-16n-1 {
+    font-size: var(--sui-text-oln-16n-1-size);
+    font-family: var(--sui-text-oln-16n-1-font);
+    font-weight: var(--sui-text-oln-16n-1-weight);
+    line-height: var(--sui-text-oln-16n-1-leading);
+    letter-spacing: var(--sui-text-oln-16n-1-tracking);
+  }
+
+  .SuiTypography-oln-14b-1 {
+    font-size: var(--sui-text-oln-14b-1-size);
+    font-family: var(--sui-text-oln-14b-1-font);
+    font-weight: var(--sui-text-oln-14b-1-weight);
+    line-height: var(--sui-text-oln-14b-1-leading);
+    letter-spacing: var(--sui-text-oln-14b-1-tracking);
+  }
+
+  .SuiTypography-oln-14m-1 {
+    font-size: var(--sui-text-oln-14m-1-size);
+    font-family: var(--sui-text-oln-14m-1-font);
+    font-weight: var(--sui-text-oln-14m-1-weight);
+    line-height: var(--sui-text-oln-14m-1-leading);
+    letter-spacing: var(--sui-text-oln-14m-1-tracking);
+  }
+
+  .SuiTypography-oln-14n-1 {
+    font-size: var(--sui-text-oln-14n-1-size);
+    font-family: var(--sui-text-oln-14n-1-font);
+    font-weight: var(--sui-text-oln-14n-1-weight);
+    line-height: var(--sui-text-oln-14n-1-leading);
+    letter-spacing: var(--sui-text-oln-14n-1-tracking);
+  }
+
+  .SuiTypography-mono-17b-5 {
+    font-size: var(--sui-text-mono-17b-5-size);
+    font-family: var(--sui-text-mono-17b-5-font);
+    font-weight: var(--sui-text-mono-17b-5-weight);
+    line-height: var(--sui-text-mono-17b-5-leading);
+    letter-spacing: var(--sui-text-mono-17b-5-tracking);
+  }
+
+  .SuiTypography-mono-17n-5 {
+    font-size: var(--sui-text-mono-17n-5-size);
+    font-family: var(--sui-text-mono-17n-5-font);
+    font-weight: var(--sui-text-mono-17n-5-weight);
+    line-height: var(--sui-text-mono-17n-5-leading);
+    letter-spacing: var(--sui-text-mono-17n-5-tracking);
+  }
+
+  .SuiTypography-mono-16b-5 {
+    font-size: var(--sui-text-mono-16b-5-size);
+    font-family: var(--sui-text-mono-16b-5-font);
+    font-weight: var(--sui-text-mono-16b-5-weight);
+    line-height: var(--sui-text-mono-16b-5-leading);
+    letter-spacing: var(--sui-text-mono-16b-5-tracking);
+  }
+
+  .SuiTypography-mono-16n-5 {
+    font-size: var(--sui-text-mono-16n-5-size);
+    font-family: var(--sui-text-mono-16n-5-font);
+    font-weight: var(--sui-text-mono-16n-5-weight);
+    line-height: var(--sui-text-mono-16n-5-leading);
+    letter-spacing: var(--sui-text-mono-16n-5-tracking);
+  }
+
+  .SuiTypography-mono-14b-5 {
+    font-size: var(--sui-text-mono-14b-5-size);
+    font-family: var(--sui-text-mono-14b-5-font);
+    font-weight: var(--sui-text-mono-14b-5-weight);
+    line-height: var(--sui-text-mono-14b-5-leading);
+    letter-spacing: var(--sui-text-mono-14b-5-tracking);
+  }
+
+  .SuiTypography-mono-14n-5 {
+    font-size: var(--sui-text-mono-14n-5-size);
+    font-family: var(--sui-text-mono-14n-5-font);
+    font-weight: var(--sui-text-mono-14n-5-weight);
+    line-height: var(--sui-text-mono-14n-5-leading);
+    letter-spacing: var(--sui-text-mono-14n-5-tracking);
+  }
+
+  .SuiTypography-inline {
+    display: inline-block;
+  }
+
+  .SuiTypography-oneline {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .SuiTypography-lineClamp {
+    display: -webkit-box;
+    overflow: hidden;
+    line-clamp: var(--SuiTypography-lineClamp);
+    white-space: normal;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--SuiTypography-lineClamp);
+  }
+}

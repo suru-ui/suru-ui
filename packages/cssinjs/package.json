@@ -1,0 +1,37 @@
+{
+  "name": "@suru-ui/cssinjs",
+  "version": "0.0.0",
+  "license": "MIT",
+  "description": "",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@suru-ui/hash": "^0.0.0"
+  },
+  "peerDependencies": {
+    "@types/react": "^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@suru-ui/build": "*",
+    "@types/react": "^19.0.0"
+  },
+  "scripts": {
+    "check": "tsc --noEmit",
+    "test": "vitest -c .config/vitest.config.ts --run tests/",
+    "build": "run-p build:*",
+    "build:src": "sui-build",
+    "build:tsc": "tsc -p .config/tsconfig.build.json"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  }
+}

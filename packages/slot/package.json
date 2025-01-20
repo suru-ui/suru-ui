@@ -1,0 +1,43 @@
+{
+  "name": "@suru-ui/slot",
+  "version": "0.0.0",
+  "license": "MIT",
+  "description": "",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@suru-ui/utils": "^0.0.0"
+  },
+  "peerDependencies": {
+    "@types/react": "^19.0.0",
+    "react": "^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@suru-ui/build": "*",
+    "@testing-library/react": "^16.2.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "happy-dom": "^16.6.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "scripts": {
+    "check": "tsc --noEmit",
+    "test": "vitest -c .config/vitest.config.ts --run tests/",
+    "build": "run-p build:*",
+    "build:src": "sui-build",
+    "build:tsc": "tsc -p .config/tsconfig.build.json"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  }
+}

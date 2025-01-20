@@ -36,8 +36,11 @@ export default async function build(options: BuildOptions | undefined = {}): Pro
       fs.glob(`src/**/*.{ts,tsx}`, {
         exclude: file => (
           file.endsWith(".d.ts")
+          || file.endsWith(".test.ts")
+          || file.endsWith(".test.tsx")
           || file.endsWith(".stories.tsx")
           || file.includes("/__snapshots__/")
+          || file.includes("/__screenshots__/")
         ),
       }),
     ),

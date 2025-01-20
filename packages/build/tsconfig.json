@@ -1,11 +1,16 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "@tsconfig/strictest/tsconfig.json",
   "include": [
     "./src/**/*"
   ],
   "compilerOptions": {
-    "noEmit": false,
+    "lib": [
+      "ESNext"
+    ],
     "outDir": "./dist",
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
     "resolveJsonModule": true
   }
 }
