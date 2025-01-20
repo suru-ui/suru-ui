@@ -75,5 +75,8 @@ export default async function build(options: BuildOptions | undefined = {}): Pro
         "__DEV__": `process.env.NODE_ENV !== "production"`,
       }),
     ],
+    define: {
+      "process.env.NODE_ENV": "process.env.NODE_ENV", // replace のあと最適化されないようにする。
+    },
   });
 }
