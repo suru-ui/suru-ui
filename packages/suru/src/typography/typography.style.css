@@ -1,10 +1,4 @@
 @layer sui.components {
-  .SuiTypography {
-    --SuiTypography-color: var(--sui-canvasText-main);
-    color: var(--SuiTypography-color);
-    display: block;
-  }
-
   .SuiTypography-dsp-64n-4 {
     font-size: var(--sui-text-dsp-64n-4-size);
     font-family: var(--sui-text-dsp-64n-4-font);

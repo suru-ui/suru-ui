@@ -1,22 +1,22 @@
 import { styled } from "@suru-ui/styled";
 import clsx from "clsx";
 import * as React from "react";
-import type { TypographyVariant } from "../../theme";
+import { $, type TypographyVariant } from "../../theme";
 
 const I = "SuiTypography";
 
 type DivCss = {
-  color: string | undefined;
+  color: string | undefined | null;
   lineClamp: number | undefined;
 };
 
 const Div = styled.div<DivCss>`
-${css => css.color && `--${I}-color: ${css.color};` || null}
+${css => css.color && `color: ${css.color};` || null}
 ${css => css.lineClamp != null && `--${I}-lineClamp: ${css.lineClamp};` || null}
 `;
 
 type RootParams = {
-  color?: string | { readonly toString: () => string } | undefined;
+  color?: string | { readonly toString: () => string } | undefined | null;
   inline?: boolean | undefined;
   lineClamp?: DivCss["lineClamp"];
   oneline?: boolean | undefined;
@@ -29,7 +29,7 @@ export type RootProps =
 
 export default function SuiTypographyRoot(props: RootProps): React.ReactElement {
   const {
-    color,
+    color = $.sui.canvasText.main,
     inline = false,
     oneline = false,
     variant = oneline ? "oln-17n-1" : "std-17n-7", // https://design.digital.go.jp/ の本文
@@ -84,7 +84,7 @@ export default function SuiTypographyRoot(props: RootProps): React.ReactElement 
     <Div
       {...otherRootProps}
       css={{
-        color: color?.toString(),
+        color: color && color.toString(),
         lineClamp,
       }}
       className={clsx(className, I, `${I}-${variant}`, {
