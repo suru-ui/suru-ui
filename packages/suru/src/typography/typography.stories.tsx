@@ -2,25 +2,25 @@ import "../../dist/suru.css";
 
 import type { Story, StoryDefault } from "@ladle/react";
 import { $, COLOR_LIST } from "../theme";
-import * as Typography from ".";
+import Typography from ".";
 
 export default {
   title: "Typography / Typography",
 } satisfies StoryDefault;
 
 export const Basic: Story = () => {
-  return <Typography.Root>テキスト</Typography.Root>;
+  return <Typography>テキスト</Typography>;
 };
 Basic.storyName = "基本的な使い方";
 
 export const Color: Story = () => {
   return COLOR_LIST.map(color => (
-    <Typography.Root
+    <Typography
       key={color}
       color={$.sui[color].naked.canvasText}
     >
       テキスト
-    </Typography.Root>
+    </Typography>
   ));
 };
 Color.storyName = "色のカスタマイズ";
@@ -85,12 +85,12 @@ export const Variant: Story = () => {
     "mono-14b-5",
     "mono-14n-5",
   ] as const).map(variant => (
-    <Typography.Root
+    <Typography
       key={variant}
       variant={variant}
     >
       {variant}
-    </Typography.Root>
+    </Typography>
   ));
 };
 Variant.storyName = "スタイルの変更";
@@ -98,12 +98,12 @@ Variant.storyName = "スタイルの変更";
 export const Inline: Story = () => {
   return (
     <>
-      <Typography.Root inline>インラインテキスト 1</Typography.Root>
-      <Typography.Root inline>インラインテキスト 2</Typography.Root>
-      <Typography.Root inline>インラインテキスト 3</Typography.Root>
-      <Typography.Root>ブロックテキスト 1</Typography.Root>
-      <Typography.Root>ブロックテキスト 2</Typography.Root>
-      <Typography.Root>ブロックテキスト 3</Typography.Root>
+      <Typography inline>インラインテキスト 1</Typography>
+      <Typography inline>インラインテキスト 2</Typography>
+      <Typography inline>インラインテキスト 3</Typography>
+      <Typography>ブロックテキスト 1</Typography>
+      <Typography>ブロックテキスト 2</Typography>
+      <Typography>ブロックテキスト 3</Typography>
     </>
   );
 };
@@ -111,9 +111,9 @@ Inline.storyName = "インライン化";
 
 export const Oneline: Story = () => {
   return (
-    <Typography.Root oneline>
+    <Typography oneline>
       {"長いテキスト".repeat(50)}
-    </Typography.Root>
+    </Typography>
   );
 };
 Oneline.storyName = "1 行に切り詰める";
@@ -127,26 +127,26 @@ export const LineClamp: Story = () => {
   return (
     <>
       {"lineClamp={1}:"}
-      <Typography.Root
+      <Typography
         style={style}
         lineClamp={1}
       >
         {"長いテキスト".repeat(50)}
-      </Typography.Root>
+      </Typography>
       {"lineClamp={3}:"}
-      <Typography.Root
+      <Typography
         style={style}
         lineClamp={3}
       >
         {"長いテキスト".repeat(50)}
-      </Typography.Root>
+      </Typography>
       {"lineClamp={Infinity}:"}
-      <Typography.Root
+      <Typography
         style={style}
         lineClamp={Infinity}
       >
         {"長いテキスト".repeat(50)}
-      </Typography.Root>
+      </Typography>
     </>
   );
 };

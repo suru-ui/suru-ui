@@ -1,2 +1,2 @@
 export type * from "./typography";
-export { default as Root } from "./typography";
+export { default } from "./typography";

@@ -3,11 +3,11 @@
 import { screen } from "@testing-library/dom";
 import { render } from "@testing-library/react";
 import { expect, test } from "vitest";
-import * as Typography from ".";
+import Typography from ".";
 
-test("Typography", async () => {
+test("テキストが表示される", async () => {
   const testId = Math.random().toString(36).slice(2);
-  render(<Typography.Root data-testid={testId}>TEXT</Typography.Root>);
+  render(<Typography data-testid={testId}>TEXT</Typography>);
 
   expect(screen.getByTestId(testId)).toHaveTextContent("TEXT");
 });
