@@ -8,24 +8,24 @@ import light from "./light.ts";
 
 function layer(w: Writer): void {
   w.writeln("@layer sui;");
-  w.writeln("@layer sui.reset;");
+  // w.writeln("@layer sui.reset;");
   w.writeln("@layer sui.tokens;");
   w.writeln("@layer sui.components;");
 }
 
-function reset(w: Writer): void {
-  w.writeln("@layer sui.reset {");
-  w.writeln("  .sui-reset {");
-  w.writeln("    &, &::after, &::before {");
-  w.writeln("      all: unset;");
-  w.writeln("      margin: 0;");
-  w.writeln("      display: revert;");
-  w.writeln("      padding: 0;");
-  w.writeln("      box-sizing: border-box;");
-  w.writeln("    }");
-  w.writeln("  }");
-  w.writeln("}");
-}
+// function reset(w: Writer): void {
+//   w.writeln("@layer sui.reset {");
+//   w.writeln("  .sui-reset {");
+//   w.writeln("    &, &::after, &::before {");
+//   w.writeln("      all: unset;");
+//   w.writeln("      margin: 0;");
+//   w.writeln("      display: revert;");
+//   w.writeln("      padding: 0;");
+//   w.writeln("      box-sizing: border-box;");
+//   w.writeln("    }");
+//   w.writeln("  }");
+//   w.writeln("}");
+// }
 
 const root = path.join(import.meta.dirname, "..");
 const dist = path.join(root, "dist");
@@ -35,7 +35,7 @@ await Promise.all([
   (async () => {
     const w = new Writer();
     layer(w);
-    reset(w);
+    // reset(w);
     w.writeln("@layer sui.tokens {");
     w.writeln("  /* base */");
     w.writeln("  :root {");
@@ -47,7 +47,7 @@ await Promise.all([
   (async () => {
     const w = new Writer();
     layer(w);
-    reset(w);
+    // reset(w);
     w.writeln("@layer sui.tokens {");
     w.writeln("  :root {");
     w.writeln("    /* base */");
@@ -64,6 +64,16 @@ await Promise.all([
     w.writeln("    :root:not([data-theme=light]) {");
     generate(w, dark, { indent: "  ".repeat(3) });
     w.writeln("    }");
+    w.writeln("  }");
+    w.writeln("  /* light */");
+    w.writeln("  .light,");
+    w.writeln("  [data-theme=light] {");
+    generate(w, light, { indent: "  ".repeat(2) });
+    w.writeln("  }");
+    w.writeln("  /* dark */");
+    w.writeln("  .dark,");
+    w.writeln("  [data-theme=dark] {");
+    generate(w, light, { indent: "  ".repeat(2) });
     w.writeln("  }");
     w.writeln("}");
     await w.output(path.join(dist, "suru.css"));

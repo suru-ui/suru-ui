@@ -156,7 +156,7 @@ function createRecursiveProxy(
       if (__DEV__) {
         if (method !== "toString" && method !== "valueOf") {
           console.error(
-            "suru-ui(design): .toString() と .valueOf() 以外を呼び出すことはできません:",
+            "suru-ui(suru/theme): .toString() と .valueOf() 以外を呼び出すことはできません:",
             stack,
           );
 
