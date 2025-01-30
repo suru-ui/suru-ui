@@ -32,7 +32,9 @@
     "update:packages": "npm run update -ws            ",
     "update:dprint": "  dprint config update          ",
     "update:install": " bun install                   ",
-    "update:deps": "    playwright install --with-deps"
+    "update:deps": "    playwright install --with-deps",
+    "ci": "run-s ci:*",
+    "ci:test": "act -W .github/workflows/ci.yml -j test"
   },
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.5",
