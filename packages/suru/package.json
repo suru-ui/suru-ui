@@ -7,8 +7,33 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist/src",
+    "dist/base.css",
+    "dist/suru.css"
   ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "exports": {
+    ".": {
+      "default": "./dist/src/index.js",
+      "types": "./dist/src/index.d.ts"
+    },
+    "./text": {
+      "default": "./dist/src/text/index.js",
+      "types": "./dist/src/text/index.d.ts"
+    },
+    "./text/core": {
+      "default": "./dist/src/text/core/index.js",
+      "types": "./dist/src/text/core/index.d.ts"
+    },
+    "./theme": {
+      "default": "./dist/src/theme/index.js",
+      "types": "./dist/src/theme/index.d.ts"
+    },
+    "./base.css": "./dist/base.css",
+    "./suru.css": "./dist/suru.css"
+  },
   "dependencies": {
     "@suru-ui/slot": "^0.0.0",
     "@suru-ui/utils": "^0.0.0",
