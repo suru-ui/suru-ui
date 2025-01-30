@@ -11,7 +11,6 @@
   ],
   "dependencies": {
     "@suru-ui/slot": "^0.0.0",
-    "@suru-ui/styled": "^0.0.0",
     "@suru-ui/utils": "^0.0.0",
     "clsx": "^2.1.1"
   },
@@ -31,7 +30,7 @@
   },
   "devDependencies": {
     "@ladle/react": "^5.0.1",
-    "@suru-ui/build": "*",
+    "@suru-ui/build": "^0.0.0",
     "@tailwindcss/vite": "^4.0.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",

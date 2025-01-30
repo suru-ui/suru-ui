@@ -1,6 +1,7 @@
 {
   "excludes": [
     "**/.history",
+    "**/dist",
     "**/node_modules"
   ],
   "typescript": {
