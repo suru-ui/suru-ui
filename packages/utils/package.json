@@ -10,7 +10,7 @@
     "dist"
   ],
   "dependencies": {
-    "clsx": "^2.1.0"
+    "clsx": "^2.1.1"
   },
   "peerDependencies": {
     "@types/react": "^19.0.0",
@@ -24,8 +24,8 @@
   "devDependencies": {
     "@suru-ui/build": "*",
     "@testing-library/react": "^16.2.0",
-    "@types/react": "^19.0.0",
-    "happy-dom": "^16.6.0",
+    "@types/react": "^19.0.8",
+    "happy-dom": "^16.7.3",
     "react": "^19.0.0"
   },
   "scripts": {
@@ -33,7 +33,8 @@
     "test": "vitest -c .config/vitest.config.ts --run tests/",
     "build": "run-p build:*",
     "build:src": "sui-build",
-    "build:tsc": "tsc -p .config/tsconfig.build.json"
+    "build:tsc": "tsc -p .config/tsconfig.build.json",
+    "update": "ncu -u -x '@suru-ui/'*"
   },
   "volta": {
     "extends": "../../package.json"

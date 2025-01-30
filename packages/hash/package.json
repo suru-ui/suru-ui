@@ -17,7 +17,8 @@
     "test": "vitest -c .config/vitest.config.ts --run tests/",
     "build": "run-p build:*",
     "build:src": "sui-build",
-    "build:tsc": "tsc -p .config/tsconfig.build.json"
+    "build:tsc": "tsc -p .config/tsconfig.build.json",
+    "update": "ncu -u -x '@suru-ui/'*"
   },
   "volta": {
     "extends": "../../package.json"

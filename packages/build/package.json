@@ -20,7 +20,8 @@
   "scripts": {
     "check": "tsc --noEmit",
     "test": "exit 0",
-    "build": "tsc"
+    "build": "tsc",
+    "update": "ncu -u -x '@suru-ui/'*"
   },
   "volta": {
     "extends": "../../package.json"

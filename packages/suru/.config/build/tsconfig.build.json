@@ -1,12 +1,12 @@
 {
-  "extends": "../../../tsconfig.json",
+  "extends": "../../../../tsconfig.json",
   "include": [
-    "../src/**/*",
-    "../../../env.d.ts"
+    "../../src/**/*",
+    "../../../../env.d.ts"
   ],
   "compilerOptions": {
     "noEmit": false,
-    "outDir": "../dist",
+    "outDir": "../../dist",
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": true
