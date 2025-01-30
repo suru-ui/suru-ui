@@ -22,7 +22,7 @@ export default define({
       offset: "2px",
     },
     overlay: {
-      blur: "10px",
+      blur: "4px",
     },
     sizing: {
       sm: "1.625rem",

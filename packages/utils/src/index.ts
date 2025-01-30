@@ -1,6 +1,9 @@
 export type * from "./compose-refs";
 export { default as composeRefs } from "./compose-refs";
 
+export type * from "./create-context";
+export { default as createContext } from "./create-context";
+
 export type * from "./merge-props";
 export { default as mergeProps } from "./merge-props";
 

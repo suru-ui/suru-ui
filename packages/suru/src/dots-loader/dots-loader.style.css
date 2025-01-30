@@ -1,0 +1,33 @@
+@layer sui.components {
+  .SuiDotsLoader {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .SuiDotsLoaderDot {
+    animation: SuiDotsLoaderDot-fade 1.2s infinite ease-in-out;
+    border-radius: 50%;
+  }
+
+  .SuiDotsLoaderDot-1 {
+    animation-delay: 0s;
+  }
+
+  .SuiDotsLoaderDot-2 {
+    animation-delay: 0.2s;
+  }
+
+  .SuiDotsLoaderDot-3 {
+    animation-delay: 0.4s;
+  }
+}
+
+@keyframes SuiDotsLoaderDot-fade {
+  0%, 80%, 100% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+}
