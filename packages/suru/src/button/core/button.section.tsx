@@ -12,7 +12,7 @@ export type SectionProps =
   & Omit<React.ComponentProps<"span">, keyof SectionParams>
   & SectionParams;
 
-export default function SuiButtonSection(props: SectionProps) {
+export default function SuiButtonSection(props: SectionProps): React.ReactElement {
   const {
     size,
     color,

@@ -18,7 +18,7 @@ export type RootProps =
   & Omit<React.ComponentProps<"button">, keyof RootParams>
   & RootParams;
 
-export default function SuiButtonRoot(props: RootProps) {
+export default function SuiButtonRoot(props: RootProps): React.ReactElement {
   const {
     size = "md",
     color = "blue",

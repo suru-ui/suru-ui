@@ -16,7 +16,7 @@ export type TextProps =
   & Omit<React.ComponentProps<"span">, keyof TextParams>
   & TextParams;
 
-export default function SuiButtonText(props: TextProps) {
+export default function SuiButtonText(props: TextProps): React.ReactElement {
   const {
     size,
     color,
