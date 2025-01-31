@@ -15,21 +15,25 @@
     "*.css"
   ],
   "exports": {
-    ".": {
-      "default": "./dist/src/index.js",
-      "types": "./dist/src/index.d.ts"
+    "./loader": {
+      "types": "./dist/src/loader/index.d.ts",
+      "default": "./dist/src/loader/index.js"
+    },
+    "./loader/core": {
+      "types": "./dist/src/loader/core/index.d.ts",
+      "default": "./dist/src/loader/core/index.js"
     },
     "./text": {
-      "default": "./dist/src/text/index.js",
-      "types": "./dist/src/text/index.d.ts"
+      "types": "./dist/src/text/index.d.ts",
+      "default": "./dist/src/text/index.js"
     },
     "./text/core": {
-      "default": "./dist/src/text/core/index.js",
-      "types": "./dist/src/text/core/index.d.ts"
+      "types": "./dist/src/text/core/index.d.ts",
+      "default": "./dist/src/text/core/index.js"
     },
     "./theme": {
-      "default": "./dist/src/theme/index.js",
-      "types": "./dist/src/theme/index.d.ts"
+      "types": "./dist/src/theme/index.d.ts",
+      "default": "./dist/src/theme/index.js"
     },
     "./base.css": "./dist/base.css",
     "./suru.css": "./dist/suru.css"
