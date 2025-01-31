@@ -15,6 +15,14 @@
     "*.css"
   ],
   "exports": {
+    "./button": {
+      "types": "./dist/src/button/index.d.ts",
+      "default": "./dist/src/button/index.js"
+    },
+    "./button/core": {
+      "types": "./dist/src/button/core/index.d.ts",
+      "default": "./dist/src/button/core/index.js"
+    },
     "./loader": {
       "types": "./dist/src/loader/index.d.ts",
       "default": "./dist/src/loader/index.js"
