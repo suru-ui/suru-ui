@@ -3,17 +3,20 @@ import "./button.css";
 import * as React from "react";
 import * as Button from "./core";
 
-export type Props = Omit<Button.RootProps, "asChild"> & {
+type Params = {
   loading?: boolean | undefined;
   endSection?: Button.SectionProps["children"];
   startSection?: Button.SectionProps["children"];
 };
 
+export type Props =
+  & Omit<Button.RootProps, "asChild" | keyof Params>
+  & Params;
+
 export default function SuiButton(props: Props): React.ReactElement {
   const {
     children,
     disabled = false,
-    className,
     endSection,
     startSection,
     ...otherRootProps
