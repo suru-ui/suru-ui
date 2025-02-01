@@ -1,0 +1,145 @@
+@layer sui.components {
+  .SuiTextInput {
+    gap: var(--SuiTextInput-gap);
+    height: var(--SuiTextInput-h);
+    display: inline-flex;
+    overflow: hidden;
+    position: relative;
+    min-width: var(--SuiTextInput-minW);
+    align-items: center;
+    user-select: none;
+    padding-left: var(--SuiTextInput-px);
+    border-radius: var(--SuiTextInput-rounded);
+    outline-color: var(--sui-canvasText-subtle);
+    outline-style: solid;
+    outline-width: calc(var(--sui-focusRing-width) - 1px);
+    padding-right: var(--SuiTextInput-px);
+    outline-offset: 1px;
+    justify-content: center;
+    background-color: var(--SuiTextInput-canvas, transparent);
+  }
+
+  @media (hover: hover) {
+    .SuiTextInput:has(.SuiTextInputInput:hover) {
+      outline-color: var(--SuiTextInput-color);
+      outline-width: var(--sui-focusRing-width);
+      outline-offset: 0;
+    }
+  }
+
+  .SuiTextInput:has(.SuiTextInputInput:focus-visible) {
+    outline-color: var(--sui-focusRing-color);
+    outline-width: var(--sui-focusRing-width);
+    outline-offset: 0;
+  }
+
+  .SuiTextInput-size-sm {
+    --SuiTextInput-h:       var(--sui-sizing-sm);
+    --SuiTextInput-px:      calc(var(--sui-sizing-sm) * .25);
+    --SuiTextInput-gap:     calc(var(--sui-sizing-sm) * .125);
+    --SuiTextInput-minW:    calc(var(--sui-sizing-sm) * 2);
+    --SuiTextInput-rounded: calc(var(--sui-sizing-sm) * .2);
+  }
+
+  .SuiTextInput-size-md {
+    --SuiTextInput-h:       var(--sui-sizing-md);
+    --SuiTextInput-px:      calc(var(--sui-sizing-md) * .375);
+    --SuiTextInput-gap:     calc(var(--sui-sizing-sm) * .25);
+    --SuiTextInput-minW:    calc(var(--sui-sizing-md) * 2);
+    --SuiTextInput-rounded: calc(var(--sui-sizing-md) * .2);
+  }
+
+  .SuiTextInput-size-lg {
+    --SuiTextInput-h:       var(--sui-sizing-lg);
+    --SuiTextInput-px:      calc(var(--sui-sizing-lg) * .5);
+    --SuiTextInput-gap:     calc(var(--sui-sizing-sm) * .25);
+    --SuiTextInput-minW:    calc(var(--sui-sizing-lg) * 2);
+    --SuiTextInput-rounded: calc(var(--sui-sizing-lg) * .2);
+  }
+
+  .SuiTextInput-color-blue {
+    --SuiTextInput-color: var(--sui-blue-naked-border);
+  }
+
+  .SuiTextInput-color-lightBlue {
+    --SuiTextInput-color: var(--sui-lightBlue-naked-border);
+  }
+
+  .SuiTextInput-color-cyan {
+    --SuiTextInput-color: var(--sui-cyan-naked-border);
+  }
+
+  .SuiTextInput-color-green {
+    --SuiTextInput-color: var(--sui-green-naked-border);
+  }
+
+  .SuiTextInput-color-lime {
+    --SuiTextInput-color: var(--sui-lime-naked-border);
+  }
+
+  .SuiTextInput-color-yellow {
+    --SuiTextInput-color: var(--sui-yellow-naked-border);
+  }
+
+  .SuiTextInput-color-orange {
+    --SuiTextInput-color: var(--sui-orange-naked-border);
+  }
+
+  .SuiTextInput-color-red {
+    --SuiTextInput-color: var(--sui-red-naked-border);
+  }
+
+  .SuiTextInput-color-magenta {
+    --SuiTextInput-color: var(--sui-magenta-naked-border);
+  }
+
+  .SuiTextInput-color-purple {
+    --SuiTextInput-color: var(--sui-purple-naked-border);
+  }
+
+  .SuiTextInput-color-grey {
+    --SuiTextInput-color: var(--sui-grey-naked-border);
+  }
+
+  .SuiTextInput-invalid {
+    outline-color: var(--sui-red-naked-border);
+    outline-width: var(--sui-focusRing-width);
+    outline-offset: 0;
+  }
+
+  .SuiTextInput-fullWidth {
+    width: 100%;
+  }
+
+  .SuiTextInputInput {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    padding: 0;
+    outline: none;
+    appearance: none;
+  }
+
+  .SuiTextInputSection {
+    color: var(--sui-canvasText-subtle);
+  }
+}
+
+.Sui-disabled {
+  &.SuiTextInput,
+  &.SuiTextInputInput,
+  &.SuiTextInputSection {
+    cursor: not-allowed !important;
+    user-select: none;
+  }
+
+  &.SuiTextInput {
+    outline-color: var(--sui-canvasText-disabled) !important;
+    outline-width: 1px !important;
+    outline-offset: calc(1px - var(--sui-focusRing-width)) !important;
+  }
+
+  &.SuiTextInputInput {
+    color: var(--sui-canvasText-disabled) !important;
+  }
+}

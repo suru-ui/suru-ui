@@ -39,6 +39,14 @@
       "types": "./dist/src/text/core/index.d.ts",
       "default": "./dist/src/text/core/index.js"
     },
+    "./text-input": {
+      "types": "./dist/src/text-input/index.d.ts",
+      "default": "./dist/src/text-input/index.js"
+    },
+    "./text-input/core": {
+      "types": "./dist/src/text-input/core/index.d.ts",
+      "default": "./dist/src/text-input/core/index.js"
+    },
     "./theme": {
       "types": "./dist/src/theme/index.d.ts",
       "default": "./dist/src/theme/index.js"
