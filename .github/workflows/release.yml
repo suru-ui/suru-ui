@@ -55,15 +55,43 @@ jobs:
           done
 
       - name: "公開"
+        shell: bash -e {0}
         run: |
+          failed_packages=()
+
+          publish_with_retry() {
+            local dir="$1"
+            local delay=10
+            local attempts=10
+
+            for ((i=1; i<=attempts; i++)); do
+              echo "Publishing $dir (Attempt $i/$attempts)..."
+              (cd "$dir" && npm publish --access public) && return 0
+
+              echo "Publish failed. Retrying in $delay seconds..."
+              sleep $delay
+            done
+
+            echo "Failed to publish $dir after $attempts attempts."
+            failed_packages+=("$dir")
+            return 1
+          }
+
           for dir in packages/*; do
             pkg="$dir/package.json"
-
-            if [ -f "$pkg" ] && ! jq -e '.private == true' "$pkg" >/dev/null; then
-              echo "Publishing $dir..."
-
-              (cd "$dir" && npm publish --access public)
+            if [ -f "$pkg" ] && ! jq -e '.private == true' "$pkg" > /dev/null; then
+              publish_with_retry "$dir"
+              sleep 5
             fi
           done
+
+          if [ ${#failed_packages[@]} -ne 0 ]; then
+            echo
+            echo "The following packages failed to publish:"
+            for pkg in "${failed_packages[@]}"; do
+              echo "- $pkg"
+            done
+            exit 1
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
