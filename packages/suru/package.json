@@ -113,6 +113,7 @@
     "build:gen": "node --experimental-strip-types ./theme/_gen.ts",
     "build:src": "sui-build --outDir=dist/src",
     "build:tsc": "tsc -p .config/tsconfig.build.json",
+    "build:css": "rsync -av --include='*/' --include='*.css' --exclude='*' src/ dist/src/",
     "gen": "node --experimental-strip-types ./theme/_gen.ts",
     "dev": "ladle dev --config .config/ladle",
     "update": "ncu -u -x '@suru-ui/'*"
