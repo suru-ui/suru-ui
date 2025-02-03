@@ -67,8 +67,8 @@
     "./suru.css": "./dist/suru.css"
   },
   "dependencies": {
-    "@suru-ui/slot": "^0.0.0",
-    "@suru-ui/utils": "^0.0.0",
+    "@suru-ui/slot": "workspace:*",
+    "@suru-ui/utils": "workspace:*",
     "clsx": "^2.1.1",
     "jotai": "^2.11.3",
     "lucide-react": "^0.474.0"
@@ -90,7 +90,7 @@
   "devDependencies": {
     "@conform-to/react": "^1.2.2",
     "@ladle/react": "^5.0.1",
-    "@suru-ui/build": "^0.0.0",
+    "@suru-ui/build": "workspace:*",
     "@tailwindcss/postcss": "^4.0.3",
     "@tailwindcss/vite": "^4.0.3",
     "@testing-library/dom": "^10.4.0",

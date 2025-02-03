@@ -7,10 +7,14 @@ on:
         description: "バージョン (e.g., 1.2.3)"
         required: true
 
+defaults:
+  run:
+    shell: bash -euo pipefail {0}
+
 jobs:
   publish:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
-
     steps:
       - name: "チェックアウト"
         uses: actions/checkout@v4
@@ -23,28 +27,39 @@ jobs:
       - name: "Node.js をセットアップ"
         uses: volta-cli/action@v4
 
-      - name: Update package versions
-        run: |
-          for dir in packages/*; do
-            pkg="$dir/package.json"
-            if [ -f "$pkg" ] && ! jq -e '.private == true' "$pkg" > /dev/null; then
-              jq --arg version "${{ github.event.inputs.version }}" '.version = $version' "$pkg" > tmp.json && mv tmp.json "$pkg"
-            fi
-          done
-
       - name: "依存関係をインストール"
-        run: |
-          bun i
+        run: bun i
 
       - name: "ビルド"
         run: npm run build
+
+      - name: "バージョンを更新"
+        run: |
+          for dir in packages/*; do
+            pkg="$dir/package.json"
+
+            if [ -f "$pkg" ] && ! jq -e '.private == true' "$pkg" > /dev/null; then
+              jq --arg version '${{ github.event.inputs.version }}' '
+                .version = $version |
+                (if .dependencies then .dependencies |= with_entries(select(.value == "workspace:*") | .value = $version) else . end) |
+                (if .devDependencies then .devDependencies |= with_entries(select(.value == "workspace:*") | .value = $version) else . end)
+              ' "$pkg" > tmp.json
+              mv tmp.json "$pkg"
+
+              echo "$pkg"
+              cat "$pkg"
+              echo
+            fi
+          done
 
       - name: "公開"
         run: |
           for dir in packages/*; do
             pkg="$dir/package.json"
-            if [ -f "$pkg" ] && ! jq -e '.private == true' "$pkg" > /dev/null; then
+
+            if [ -f "$pkg" ] && ! jq -e '.private == true' "$pkg" >/dev/null; then
               echo "Publishing $dir..."
+
               (cd "$dir" && npm publish --access public)
             fi
           done
