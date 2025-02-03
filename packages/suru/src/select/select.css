@@ -29,7 +29,7 @@
     letter-spacing: var(--SuiSelectButton-tracking);
     outline-offset: 1px;
     justify-content: center;
-    background-color: var(--SuiSelectButton-canvas, transparent);
+    background-color: var(--sui-canvas-main);
   }
 
   @media (hover: hover) {
@@ -46,11 +46,15 @@
     outline-offset: 0;
   }
 
+  .SuiSelectButton > :last-child {
+    margin-left: auto;
+  }
+
   .SuiSelectButton-size-sm {
     --SuiSelectButton-h:       var(--sui-sizing-sm);
     --SuiSelectButton-px:      calc(var(--SuiSelectButton-h) * .4);
     --SuiSelectButton-gap:     calc(var(--SuiSelectButton-h) * .25);
-    --SuiSelectButton-minW:    calc(var(--SuiSelectButton-h) * 2);
+    --SuiSelectButton-minW:    calc(var(--SuiSelectButton-h) * 3);
     --SuiSelectButton-rounded: calc(var(--SuiSelectButton-h) * .2);
   }
 
@@ -58,7 +62,7 @@
     --SuiSelectButton-h:       var(--sui-sizing-md);
     --SuiSelectButton-px:      calc(var(--SuiSelectButton-h) * .4);
     --SuiSelectButton-gap:     calc(var(--SuiSelectButton-h) * .25);
-    --SuiSelectButton-minW:    calc(var(--SuiSelectButton-h) * 2);
+    --SuiSelectButton-minW:    calc(var(--SuiSelectButton-h) * 3);
     --SuiSelectButton-rounded: calc(var(--SuiSelectButton-h) * .2);
   }
 
@@ -66,7 +70,7 @@
     --SuiSelectButton-h:       var(--sui-sizing-lg);
     --SuiSelectButton-px:      calc(var(--SuiSelectButton-h) * .4);
     --SuiSelectButton-gap:     calc(var(--SuiSelectButton-h) * .25);
-    --SuiSelectButton-minW:    calc(var(--SuiSelectButton-h) * 2);
+    --SuiSelectButton-minW:    calc(var(--SuiSelectButton-h) * 3);
     --SuiSelectButton-rounded: calc(var(--SuiSelectButton-h) * .2);
   }
 
@@ -397,4 +401,13 @@
 
 .SuiSelectConform {
   display: none !important;
+}
+
+.SuiSelectButton[disabled] {
+  color: var(--sui-canvasText-disabled) !important;
+  cursor: not-allowed !important;
+  user-select: none;
+  outline-color: var(--sui-canvasText-disabled) !important;
+  outline-width: 1px !important;
+  outline-offset: calc(1px - var(--sui-focusRing-width)) !important;
 }

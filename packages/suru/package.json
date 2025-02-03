@@ -31,6 +31,14 @@
       "types": "./dist/src/loader/core/index.d.ts",
       "default": "./dist/src/loader/core/index.js"
     },
+    "./select": {
+      "types": "./dist/src/select/index.d.ts",
+      "default": "./dist/src/select/index.js"
+    },
+    "./select/core": {
+      "types": "./dist/src/select/core/index.d.ts",
+      "default": "./dist/src/select/core/index.js"
+    },
     "./text": {
       "types": "./dist/src/text/index.d.ts",
       "default": "./dist/src/text/index.js"
@@ -46,6 +54,10 @@
     "./text-input/core": {
       "types": "./dist/src/text-input/core/index.d.ts",
       "default": "./dist/src/text-input/core/index.js"
+    },
+    "./scope": {
+      "types": "./dist/src/scope/index.d.ts",
+      "default": "./dist/src/scope/index.js"
     },
     "./theme": {
       "types": "./dist/src/theme/index.d.ts",
