@@ -26,6 +26,8 @@ jobs:
 
       - name: "Node.js をセットアップ"
         uses: volta-cli/action@v4
+        with:
+          registry-url: "https://registry.npmjs.org"
 
       - name: "依存関係をインストール"
         run: bun i
