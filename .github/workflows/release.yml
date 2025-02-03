@@ -43,8 +43,7 @@ jobs:
             if [ -f "$pkg" ] && ! jq -e '.private == true' "$pkg" > /dev/null; then
               jq --arg version '${{ github.event.inputs.version }}' '
                 .version = $version |
-                (if .dependencies then .dependencies |= with_entries(select(.value == "workspace:*") | .value = $version) else . end) |
-                (if .devDependencies then .devDependencies |= with_entries(select(.value == "workspace:*") | .value = $version) else . end)
+                (if .dependencies then .dependencies |= map_values(if . == "workspace:*" then $version else . end) else . end)
               ' "$pkg" > tmp.json
               mv tmp.json "$pkg"
 

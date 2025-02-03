@@ -4,8 +4,8 @@
   "license": "MIT",
   "description": "",
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "files": [
     "dist/src",
     "dist/base.css",
@@ -15,6 +15,10 @@
     "*.css"
   ],
   "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/src/index.js"
+    },
     "./button": {
       "types": "./dist/src/button/index.d.ts",
       "default": "./dist/src/button/index.js"
