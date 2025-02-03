@@ -26,8 +26,9 @@ jobs:
       - name: Update package versions
         run: |
           for dir in packages/*; do
-            if [ -f "$dir/package.json" ]; then
-              jq --arg version "${{ github.event.inputs.version }}" '.version = $version' "$dir/package.json" > tmp.json && mv tmp.json "$dir/package.json"
+            pkg="$dir/package.json"
+            if [ -f "$pkg" ] && ! jq -e '.private == true' "$pkg" > /dev/null; then
+              jq --arg version "${{ github.event.inputs.version }}" '.version = $version' "$pkg" > tmp.json && mv tmp.json "$pkg"
             fi
           done
 
@@ -41,8 +42,9 @@ jobs:
       - name: "公開"
         run: |
           for dir in packages/*; do
-            if [ -f "$dir/package.json" ]; then
-              echo "公開中 $dir..."
+            pkg="$dir/package.json"
+            if [ -f "$pkg" ] && ! jq -e '.private == true' "$pkg" > /dev/null; then
+              echo "Publishing $dir..."
               (cd "$dir" && npm publish --access public)
             fi
           done
