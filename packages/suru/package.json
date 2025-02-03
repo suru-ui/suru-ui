@@ -57,7 +57,9 @@
   "dependencies": {
     "@suru-ui/slot": "^0.0.0",
     "@suru-ui/utils": "^0.0.0",
-    "clsx": "^2.1.1"
+    "clsx": "^2.1.1",
+    "jotai": "^2.11.3",
+    "lucide-react": "^0.474.0"
   },
   "peerDependencies": {
     "@types/react": "^19.0.0",
@@ -74,17 +76,20 @@
     }
   },
   "devDependencies": {
+    "@conform-to/react": "^1.2.2",
     "@ladle/react": "^5.0.1",
     "@suru-ui/build": "^0.0.0",
-    "@tailwindcss/vite": "^4.0.1",
+    "@tailwindcss/postcss": "^4.0.3",
+    "@tailwindcss/vite": "^4.0.3",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
-    "lucide-react": "^0.474.0",
+    "conform-to-valibot": "^1.14.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "tailwindcss": "^4.0.1"
+    "tailwindcss": "^4.0.3",
+    "valibot": "^0.42.1"
   },
   "scripts": {
     "precheck": "node --experimental-strip-types ./theme/_gen.ts",

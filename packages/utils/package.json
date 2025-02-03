@@ -25,7 +25,7 @@
     "@suru-ui/build": "^0.0.0",
     "@testing-library/react": "^16.2.0",
     "@types/react": "^19.0.8",
-    "happy-dom": "^16.7.3",
+    "happy-dom": "^16.8.1",
     "react": "^19.0.0"
   },
   "scripts": {
