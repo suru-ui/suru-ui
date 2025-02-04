@@ -1,4 +1,4 @@
-import tailwindcss from "@tailwindcss/vite";
+import unocss from "unocss/vite";
 import { defineConfig } from "vite";
 
 export default defineConfig({
@@ -6,6 +6,6 @@ export default defineConfig({
     __DEV__: "true",
   },
   plugins: [
-    tailwindcss(),
+    unocss(),
   ],
 });

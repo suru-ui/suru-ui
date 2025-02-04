@@ -95,8 +95,6 @@
     "@conform-to/react": "^1.2.2",
     "@ladle/react": "^5.0.1",
     "@suru-ui/build": "workspace:*",
-    "@tailwindcss/postcss": "^4.0.3",
-    "@tailwindcss/vite": "^4.0.3",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
     "@types/react": "^19.0.8",
@@ -105,7 +103,7 @@
     "dependency-tree": "^11.0.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "tailwindcss": "^4.0.3",
+    "unocss": "^65.4.3",
     "valibot": "^0.42.1"
   },
   "scripts": {
@@ -114,8 +112,8 @@
     "test": "run-s test:*",
     "test:server": "vitest -c .config/vitest.server.ts --run src/",
     "test:client": "vitest -c .config/vitest.client.ts --run src/",
+    "prebuild": "node --experimental-strip-types ./theme/_gen.ts",
     "build": "run-s build:*",
-    "build:gen": "node --experimental-strip-types ./theme/_gen.ts",
     "build:src": "sui-build --outDir=dist/src",
     "build:tsc": "tsc -p .config/tsconfig.build.json",
     "build:css": "node --experimental-strip-types ./scripts/buildcss.ts",
