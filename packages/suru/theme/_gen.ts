@@ -77,7 +77,7 @@ await Promise.all([
     w.writeln("  .dark-theme,");
     w.writeln("  .theme-dark,");
     w.writeln("  [data-theme=dark] {");
-    generate(w, light, { indent: "  ".repeat(2) });
+    generate(w, dark, { indent: "  ".repeat(2) });
     w.writeln("  }");
     w.writeln("}");
     await w.output(path.join(dist, "suru.css"));

@@ -16,20 +16,20 @@ export default define({
       disabled: $("color.grey.600"),
     },
     linkText: {
-      main: $("color.blue.1000"),
+      main: $("sui.blue.900"),
       focus: {
-        canvas: $("color.yellow.700"),
-        canvasText: $("color.blue.1000"),
+        canvas: $("sui.yellow.100"),
+        canvasText: $("sui.grey.1100"),
         ring: {
-          color: $("color.grey.50"),
+          color: $("sui.grey.1100"),
         },
       },
-      hover: $("color.blue.900"),
-      active: $("color.orange.700"),
-      visited: $("color.magenta.900"),
+      hover: $("sui.blue.900"),
+      active: $("sui.orange.700"),
+      visited: $("sui.magenta.1000"),
     },
     focusRing: {
-      color: $("color.yellow.700"),
+      color: $("sui.yellow.700"),
     },
     shadow: [
       "none",
