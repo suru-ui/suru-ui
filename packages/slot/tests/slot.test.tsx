@@ -87,7 +87,7 @@ describe("Slottable を含む", () => {
 
   test("Slot は Slottable の子要素を展開する", () => {
     const markup = renderToStaticMarkup(
-      <Slot href="https://github.com/tai-kun/suru-ui">
+      <Slot href="https://github.com/suru-ui/suru-ui">
         <span>LEFT</span>
         <Slottable>
           <a>
@@ -99,7 +99,7 @@ describe("Slottable を含む", () => {
     );
 
     expect(markup).toBe(
-      `<a href="https://github.com/tai-kun/suru-ui"><span>LEFT</span><i>Suru</i> UI<span>RIGHT</span></a>`,
+      `<a href="https://github.com/suru-ui/suru-ui"><span>LEFT</span><i>Suru</i> UI<span>RIGHT</span></a>`,
     );
   });
 });

@@ -3,23 +3,6 @@ import * as React from "react";
 import isSlottable, { type SlottableElement } from "./is-slottable";
 import Slottable from "./slottable";
 
-function SlotClone(props: SlotProps): React.ReactElement | null {
-  const { children, ...slotProps } = props;
-
-  if (!React.isValidElement(children)) {
-    return React.Children.only(children), null;
-  }
-
-  using cache = useMemoMap();
-  const mergedProps = mergeProps(slotProps, children.props, cache);
-
-  return React.cloneElement(children, mergedProps);
-}
-
-function isValidElementOnly<P>(children: React.ReactNode): children is React.ReactElement<P> {
-  return React.isValidElement<P>(React.Children.only(children));
-}
-
 export type SlotProps = AllProps;
 
 export default function Slot(props: SlotProps): React.ReactElement {
@@ -74,4 +57,21 @@ export default function Slot(props: SlotProps): React.ReactElement {
         : null}
     </SlotClone>
   );
+}
+
+function SlotClone(props: SlotProps): React.ReactElement | null {
+  const { children, ...slotProps } = props;
+
+  if (!React.isValidElement(children)) {
+    return React.Children.only(children), null;
+  }
+
+  using cache = useMemoMap();
+  const mergedProps = mergeProps(slotProps, children.props, cache);
+
+  return React.cloneElement(children, mergedProps);
+}
+
+function isValidElementOnly<P>(children: React.ReactNode): children is React.ReactElement<P> {
+  return React.isValidElement<P>(React.Children.only(children));
 }

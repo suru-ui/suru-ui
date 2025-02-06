@@ -4,10 +4,6 @@ import composeRefs from "../compose-refs";
 import type MemoMap from "../use-memo-map/memo-map";
 import isHandlerProp from "./is-handler-prop-name";
 
-export type AllProps<T = unknown> = React.RefAttributes<T> & React.AllHTMLAttributes<T>;
-
-type Prop = keyof AllProps | "__proto__";
-
 interface Cache extends Pick<MemoMap, "get"> {}
 
 const noCache: Cache = {
@@ -15,6 +11,8 @@ const noCache: Cache = {
     return factory();
   },
 };
+
+export type AllProps<T = unknown> = React.RefAttributes<T> & React.AllHTMLAttributes<T>;
 
 /**
  * 2 つの props をマージする。
@@ -34,7 +32,7 @@ function mergeProps<T, U>(target: T, source: U, cache?: Cache): T & U;
 function mergeProps(target: AllProps, source: AllProps, cache: Cache = noCache): AllProps {
   const overrideProps: Partial<AllProps> = { ...source };
 
-  for (const name of Object.keys(source) as Prop[]) {
+  for (const name of Object.keys(source) as (keyof AllProps | "__proto__")[]) {
     if (name === "__proto__") {
       continue;
     }
