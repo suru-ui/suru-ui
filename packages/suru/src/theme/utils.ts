@@ -15,7 +15,7 @@ type Indexes<Tuple>
 type C = typeof common;
 type T = typeof theme;
 
-export type Sizing = keyof C["sui"]["sizing"];
+export type Sizing = Keyof<C["sui"]["sizing"], string>;
 
 export type Color = Keyof<T["color"], object>;
 
@@ -64,9 +64,9 @@ export const COLOR_SCALE_LIST: readonly ColorScale[] = [
 ];
 
 export const COLOR_VARIANT_LIST: readonly ColorVariant[] = [
-  "naked",
   "solid",
   "liquid",
+  "naked",
 ];
 
 export const SHADOW_ELEVATION_LIST: readonly ShadowElevation[] = [

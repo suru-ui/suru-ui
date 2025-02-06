@@ -2,7 +2,7 @@ import * as fs from "node:fs/promises";
 import * as os from "node:os";
 
 export class Writer {
-  text: string = "";
+  private text: string = "";
 
   clear(): void {
     this.text = "";
@@ -16,20 +16,20 @@ export class Writer {
     this.text += text + os.EOL;
   }
 
+  string(): string {
+    return this.text;
+  }
+
   async output(file: string): Promise<void> {
     await fs.writeFile(file, this.text, "utf-8");
   }
 }
 
-export interface GenerateOptions {
+export type GenerateOptions = {
   readonly indent?: string | undefined;
-}
+};
 
-export function generate(
-  w: Writer,
-  def: any,
-  opts: GenerateOptions | undefined = {},
-): void {
+export function generate(w: Writer, def: any, opts: GenerateOptions | undefined = {}): void {
   const {
     indent = "",
   } = opts;
@@ -57,9 +57,48 @@ export function generate(
         inner(w, d, [...path, `${i}`]);
       });
     } else {
-      Object.entries(def).forEach(([p, d]) => {
-        inner(w, d, [...path, p]);
-      });
+      Object.entries(def)
+        .sort(([a], [b]) => {
+          const na = toNumber(a);
+          const nb = toNumber(b);
+
+          switch (true) {
+            case na === null && nb === null:
+              return a.localeCompare(b);
+            case na === null:
+              return +1;
+            case nb === null:
+              return -1;
+            default:
+              return na - nb;
+          }
+        })
+        .forEach(([p, d]) => {
+          inner(w, d, [...path, p]);
+        });
     }
   }
+}
+
+function toNumber(s: string): number | null {
+  let n = Number(s);
+
+  if (!Number.isNaN(n)) {
+    return n;
+  }
+
+  switch (s) {
+    case "xs":
+      return 0.8;
+    case "sm":
+      return 0.9;
+    case "md":
+      return 1.0;
+    case "lg":
+      return 1.1;
+    case "xl":
+      return 1.2;
+  }
+
+  return null;
 }

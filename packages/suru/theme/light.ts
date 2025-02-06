@@ -1,5 +1,5 @@
-import { $, define, global } from "./_utils.ts";
 import base from "./base.ts";
+import { $, define, global } from "./utils/index.ts";
 
 // https://alphredo.app/
 export default define({
@@ -16,20 +16,38 @@ export default define({
       disabled: $("color.grey.420"),
     },
     linkText: {
-      main: $("color.blue.1000"),
-      focus: {
-        canvas: $("color.yellow.700"),
-        canvasText: $("color.blue.1000"),
-        ring: {
-          color: $("color.black"),
+      canvas: {
+        main: "transparent",
+        focus: $("color.yellow.700"),
+        hover: $("sui.linkText.canvas.main"),
+        active: $("sui.linkText.canvas.main"),
+        visited: $("sui.linkText.canvas.main"),
+      },
+      canvasText: {
+        main: $("color.blue.1000"),
+        focus: $("color.blue.1000"),
+        hover: $("color.blue.900"),
+        active: $("color.orange.700"),
+        visited: $("color.magenta.900"),
+      },
+      focusRing: {
+        color: $("color.black"),
+      },
+      underline: {
+        color: {
+          main: $("sui.linkText.canvasText.main"),
+          focus: $("sui.linkText.canvasText.focus"),
+          hover: $("sui.linkText.canvasText.hover"),
+          active: $("sui.linkText.canvasText.active"),
+          visited: $("sui.linkText.canvasText.visited"),
         },
       },
-      hover: $("color.blue.900"),
-      active: $("color.orange.700"),
-      visited: $("color.magenta.900"),
     },
     focusRing: {
       color: $("color.yellow.700"),
+    },
+    overlay: {
+      canvas: "#22222280",
     },
     shadow: [
       "none",
@@ -43,9 +61,6 @@ export default define({
       "0 3px 14px 0 rgb(0 0 0 / .3), 0 12px 36px 7px rgb(0 0 0 /.1)", // Style 7
       "0 3px 16px 0 rgb(0 0 0 / .3), 0 14px 40px 7px rgb(0 0 0 /.1)", // Style 8
     ],
-    overlay: {
-      shade: "#22222280",
-    },
     grey: {
       50: $("color.grey.50"),
       100: $("color.grey.100"),
