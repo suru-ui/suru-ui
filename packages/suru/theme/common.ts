@@ -7,23 +7,31 @@ export default define({
     // https://design.digital.go.jp/foundations/link-text/
     linkText: {
       focusRing: {
-        width: ".125rem", // calc (2 / 16 * 1rem)
+        width: $("sui.outline.width.md"),
         offset: ".0625rem", // calc(1 / 16 * 1rem)
       },
       underline: {
         width: {
-          main: ".0625rem", // calc(1 / 16 * 1rem)
-          hover: ".1875rem", // calc(3 / 16 * 1rem)
+          main: $("sui.outline.width.sm"),
+          hover: $("sui.outline.width.lg"),
           focus: $("sui.linkText.underline.width.main"),
           active: $("sui.linkText.underline.width.hover"),
           visited: $("sui.linkText.underline.width.main"),
         },
-        offset: ".125rem", // calc (2 / 16 * 1rem)
+        offset: ".125rem", //  calc(2 / 16 * 1rem)
       },
     },
     focusRing: {
-      width: ".1875rem", // calc(3 / 16 * 1rem)
-      offset: ".125rem", // calc (2 / 16 * 1rem)
+      width: $("sui.outline.width.lg"),
+      offset: ".125rem", //  calc(2 / 16 * 1rem)
+    },
+    outline: {
+      width: {
+        sm: ".0625rem", // calc(1 / 16 * 1rem)
+        md: ".125rem", //  calc(2 / 16 * 1rem)
+        lg: ".1875rem", // calc(3 / 16 * 1rem)
+        disabled: $("sui.outline.width.sm"),
+      },
     },
     overlay: {
       blurRadius: "4px",

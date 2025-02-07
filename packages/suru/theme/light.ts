@@ -46,6 +46,9 @@ export default define({
     focusRing: {
       color: $("color.yellow.700"),
     },
+    outline: {
+      color: $("sui.canvasText.subtle"),
+    },
     overlay: {
       canvas: "#22222280",
     },
