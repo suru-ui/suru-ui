@@ -4,6 +4,15 @@
     margin: 0;
     display: block;
     box-sizing: border-box;
+
+    &::after {
+      --SuiLabel-requiredText-display: inline-block;
+
+      color: var(--sui-error-naked-canvasText);
+      content: attr(data-sui-label-requiredtext);
+      display: none;
+      padding-left: .5em;
+    }
   }
 
   .SuiLabel {

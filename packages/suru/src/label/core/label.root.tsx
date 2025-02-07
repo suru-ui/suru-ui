@@ -21,18 +21,42 @@ const Label = /* @__PURE__ */ styled.label<Css>`${css => {
     "[aria-disabled=true]",
     `.${classes.disabled}`,
   ];
+  const required = [
+    ":required",
+    "[aria-required=true]",
+    `.${classes.required}`,
+  ];
   const disabledField = `#${htmlFor}:is(${disabled})`;
+  const requiredField = `#${htmlFor}:is(${required})`;
 
-  return `&:has(${disabledField}, ~ :is(${disabledField}, :has(${disabledField}))) {
+  return `
+  &:has(
+    ${disabledField},
+    ~ :is(
+      ${disabledField},
+      :has(${disabledField})
+    )
+  ) {
     color: ${$.sui.canvasText.disabled} !important;
     cursor: not-allowed !important;
-  }`;
+  }
+
+  &:has(
+    ~ :is(
+      ${requiredField},
+      :has(${requiredField})
+    )
+  )::after {
+    display: var(--SuiLabel-requiredText-display) !important;
+  }
+`;
 }}`;
 
 type RootParams = {
   color?: Color | (string & {}) | primitive.PrimitiveObject | undefined | null;
   disabled?: boolean | undefined;
   inline?: boolean | undefined;
+  requiredText?: string | undefined;
   variant?: TypographyVariant | undefined;
 };
 
@@ -48,6 +72,7 @@ export default function SuiLabelRoot(props: RootProps): React.ReactElement {
     variant = "std-16n-7" satisfies TypographyVariant,
     disabled = false,
     className,
+    requiredText = "(必須)",
     "aria-disabled": ariaDisabled = disabled,
     ...otherRootProps
   } = props;
@@ -64,6 +89,7 @@ export default function SuiLabelRoot(props: RootProps): React.ReactElement {
       })}
       aria-disabled={ariaDisabled}
       data-sui-label-canvastext={isColor(color) ? undefined : primitive.string(color)}
+      data-sui-label-requiredtext={requiredText}
     />
   );
 }

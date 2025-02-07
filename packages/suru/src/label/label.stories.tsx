@@ -136,3 +136,30 @@ export const Disabled: Story = () => {
   );
 };
 Disabled.storyName = "非活性化";
+
+export const Required: Story = () => {
+  const id1 = React.useId();
+  const id2 = React.useId();
+
+  return (
+    <>
+      <Label htmlFor={id1}>
+        ラベル
+        <input
+          id={id1}
+          type="text"
+          required
+        />
+      </Label>
+      <Label htmlFor={id2}>
+        ラベル
+      </Label>
+      <input
+        id={id2}
+        type="text"
+        required
+      />
+    </>
+  );
+};
+Required.storyName = "必須";
