@@ -1,6 +1,7 @@
 @layer sui.components {
   .SuiText {
     color: var(--SuiText-canvasText);
+    margin: 0;
     box-sizing: border-box;
   }
 

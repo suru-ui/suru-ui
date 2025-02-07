@@ -14,7 +14,7 @@ type RootParams = {
 };
 
 export type RootProps =
-  & Omit<React.ComponentProps<"div">, keyof RootParams>
+  & Omit<React.ComponentProps<"p">, keyof RootParams>
   & RootParams;
 
 export default function SuiTextRoot(props: RootProps): React.ReactElement {
@@ -28,7 +28,7 @@ export default function SuiTextRoot(props: RootProps): React.ReactElement {
     lineClamp: lineClampProp,
     ...otherRootProps
   } = props;
-  const Comp = asChild ? Slot : "div";
+  const Comp = asChild ? Slot : "p";
   const lineClamp = isFiniteLineClamp(lineClampProp) ? lineClampProp : undefined;
 
   if (__DEV__) {
