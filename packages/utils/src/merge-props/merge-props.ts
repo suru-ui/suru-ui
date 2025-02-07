@@ -4,15 +4,15 @@ import composeRefs from "../compose-refs";
 import type MemoMap from "../use-memo-map/memo-map";
 import isHandlerProp from "./is-handler-prop-name";
 
-interface Cache extends Pick<MemoMap, "get"> {}
+export interface PropsCache extends Pick<MemoMap, "get"> {}
 
-const noCache: Cache = {
+export type AllProps<T = unknown> = React.RefAttributes<T> & React.AllHTMLAttributes<T>;
+
+const noCache: PropsCache = {
   get(_1, factory, _2) {
     return factory();
   },
 };
-
-export type AllProps<T = unknown> = React.RefAttributes<T> & React.AllHTMLAttributes<T>;
 
 /**
  * 2 つの props をマージする。
@@ -27,9 +27,9 @@ export type AllProps<T = unknown> = React.RefAttributes<T> & React.AllHTMLAttrib
  * const mergedProps = mergeProps(target, source, cache);
  * ```
  */
-function mergeProps<T, U>(target: T, source: U, cache?: Cache): T & U;
+function mergeProps<T, U>(target: T, source: U, cache?: PropsCache): T & U;
 
-function mergeProps(target: AllProps, source: AllProps, cache: Cache = noCache): AllProps {
+function mergeProps(target: AllProps, source: AllProps, cache: PropsCache = noCache): AllProps {
   const overrideProps: Partial<AllProps> = { ...source };
 
   for (const name of Object.keys(source) as (keyof AllProps | "__proto__")[]) {
@@ -63,7 +63,19 @@ function mergeProps(target: AllProps, source: AllProps, cache: Cache = noCache):
       case name === "className":
         overrideProps[name] = cache.get(
           name,
-          () => clsx(child, slot), // child を先頭にする。
+          () => {
+            // Remix, React-Router の NavLink
+            if (typeof child === "function" || typeof slot === "function") {
+              return function mergedClassName(...args: any[]) {
+                return clsx(
+                  typeof child === "function" ? child(...args) : child, // child を先頭にする。
+                  typeof slot === "function" ? slot(...args) : slot,
+                );
+              };
+            }
+
+            return clsx(child, slot); // child を先頭にする。
+          },
           [slot, child],
         );
         break;
