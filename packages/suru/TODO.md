@@ -3,6 +3,6 @@
 [x] Button
 [x] TextInput
 [x] Select
-[ ] HelperText
+[x] HelperText
 [x] ErrorText
 [ ] Label

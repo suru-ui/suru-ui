@@ -35,6 +35,14 @@
       "types": "./dist/src/error-text/core/index.d.ts",
       "default": "./dist/src/error-text/core/index.js"
     },
+    "./helper-text": {
+      "types": "./dist/src/helper-text/index.d.ts",
+      "default": "./dist/src/helper-text/index.js"
+    },
+    "./helper-text/core": {
+      "types": "./dist/src/helper-text/core/index.d.ts",
+      "default": "./dist/src/helper-text/core/index.js"
+    },
     "./loader": {
       "types": "./dist/src/loader/index.d.ts",
       "default": "./dist/src/loader/index.js"
