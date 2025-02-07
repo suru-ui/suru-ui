@@ -43,6 +43,14 @@
       "types": "./dist/src/helper-text/core/index.d.ts",
       "default": "./dist/src/helper-text/core/index.js"
     },
+    "./label": {
+      "types": "./dist/src/label/index.d.ts",
+      "default": "./dist/src/label/index.js"
+    },
+    "./label/core": {
+      "types": "./dist/src/label/core/index.d.ts",
+      "default": "./dist/src/label/core/index.js"
+    },
     "./loader": {
       "types": "./dist/src/loader/index.d.ts",
       "default": "./dist/src/loader/index.js"
