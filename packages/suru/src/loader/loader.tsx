@@ -10,10 +10,10 @@ export type Variant = "circle" | "dots";
 export type SizeUnit = "em" | "rem" | "px" | "%";
 
 type Params = {
-  color?: Color | (string & {}) | primitive.PrimitiveObject | undefined;
-  size?: number | string | primitive.PrimitiveObject | undefined;
-  maxSize?: number | string | undefined;
-  minSize?: number | string | undefined;
+  color?: Color | (string & {}) | primitive.PrimitiveObject | undefined | null;
+  size?: number | string | primitive.PrimitiveObject | undefined | null;
+  maxSize?: number | string | undefined | null;
+  minSize?: number | string | undefined | null;
   variant?: Variant | undefined;
 };
 

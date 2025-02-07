@@ -4,6 +4,9 @@ export { default as composeRefs } from "./compose-refs";
 export type * from "./create-context";
 export { default as createContext } from "./create-context";
 
+export type * from "./css-escape";
+export { default as cssEscape } from "./css-escape";
+
 export type * from "./merge-props";
 export { default as mergeProps } from "./merge-props";
 

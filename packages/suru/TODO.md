@@ -5,4 +5,4 @@
 [x] Select
 [x] HelperText
 [x] ErrorText
-[ ] Label
+[x] Label

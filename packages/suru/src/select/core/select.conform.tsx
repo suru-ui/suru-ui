@@ -1,4 +1,6 @@
+import clsx from "clsx";
 import * as React from "react";
+import classes from "../../classes";
 import { SelectProps } from "../../conform";
 import { useScope, useStateValueWithSelector } from "../../scope";
 import { useContext } from "./select.context";
@@ -11,6 +13,8 @@ export default function SuiSelectConform(_: ConformProps): React.ReactElement {
   const {
     formId,
     fieldId,
+    invalid,
+    disabled,
     multiple,
     required,
     fieldName,
@@ -51,7 +55,12 @@ export default function SuiSelectConform(_: ConformProps): React.ReactElement {
     <select
       {...conform}
       // ref={ref}
-      className="SuiSelectConform"
+      disabled={disabled}
+      className={clsx("SuiSelectConform", {
+        [classes.invalid]: invalid,
+        [classes.disabled]: disabled,
+        [classes.required]: required,
+      })}
       aria-hidden
     >
       {options?.map(opt => <option key={opt.pkey} value={opt.value} />)}

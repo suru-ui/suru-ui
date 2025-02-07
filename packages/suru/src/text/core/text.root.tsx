@@ -6,7 +6,7 @@ import { type Color, isColor, type TypographyVariant } from "../../theme";
 
 type RootParams = {
   asChild?: boolean | undefined;
-  color?: Color | (string & {}) | primitive.PrimitiveObject | undefined;
+  color?: Color | (string & {}) | primitive.PrimitiveObject | undefined | null;
   inline?: boolean | undefined;
   lineClamp?: number | undefined;
   oneline?: boolean | undefined;

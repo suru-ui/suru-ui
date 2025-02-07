@@ -88,6 +88,7 @@
   },
   "dependencies": {
     "@suru-ui/slot": "workspace:*",
+    "@suru-ui/styled": "workspace:*",
     "@suru-ui/utils": "workspace:*",
     "clsx": "^2.1.1",
     "jotai": "^2.11.3",
