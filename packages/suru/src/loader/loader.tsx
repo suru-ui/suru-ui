@@ -2,6 +2,7 @@ import "./loader.css";
 
 import clsx from "clsx";
 import * as primitive from "../primitive";
+import { type Color, isColor } from "../theme";
 import * as Loader from "./core";
 
 export type Variant = "circle" | "dots";
@@ -9,10 +10,10 @@ export type Variant = "circle" | "dots";
 export type SizeUnit = "em" | "rem" | "px" | "%";
 
 type Params = {
-  color?: string | primitive.PrimitiveObject | undefined | null;
-  size?: number | string | primitive.PrimitiveObject | undefined | null;
-  maxSize?: number | string | undefined | null;
-  minSize?: number | string | undefined | null;
+  color?: Color | (string & {}) | primitive.PrimitiveObject | undefined;
+  size?: number | string | primitive.PrimitiveObject | undefined;
+  maxSize?: number | string | undefined;
+  minSize?: number | string | undefined;
   variant?: Variant | undefined;
 };
 
@@ -34,15 +35,18 @@ export default function SuiLoader(props: Props): React.ReactElement {
     classNameProp,
     "SuiLoader",
     `SuiLoader-variant-${variant}`,
+    {
+      [`SuiLoader-color-${color}`]: isColor(color),
+    },
   );
   const size = primitive.default(sizeProp);
   const maxSize = primitive.default(maxSizeProp);
   const minSize = primitive.default(minSizeProp);
   const dataAttrs = {
     "data-sui-loader-size": typeof size === "number" ? `${size}px` : size,
-    "data-sui-loader-color": primitive.string(color),
     "data-sui-loader-maxsize": typeof maxSize === "number" ? `${maxSize}px` : maxSize,
     "data-sui-loader-minsize": typeof minSize === "number" ? `${minSize}px` : minSize,
+    "data-sui-loader-accentcolor": isColor(color) ? undefined : primitive.string(color),
   };
 
   switch (variant) {

@@ -1,3 +1,5 @@
+import { globalId } from "../generator/utils.ts";
+
 type Val<T> = T[keyof T];
 
 type Ref<T extends string = string> = symbol & { ref: T };
@@ -13,8 +15,8 @@ type Idx = `${number}`;
 // dprint-ignore
 type Chain<T> =
     T extends string | number | Ref ? ""
-  : T extends Obj ? Val<{ [P in keyof T]: P extends Key ? `.${P}${Chain<T[P]>}` : never }>
-  : T extends Arr ? Val<{ [I in Extract<keyof T, Idx>]: `.${I}${Chain<T[I]>}` }>
+  : T extends Obj ? Val<{ [P in keyof T]: P extends Key ? `.${P}${Chain<T[P]> | ""}` : never }>
+  : T extends Arr ? Val<{ [I in Extract<keyof T, Idx>]: `.${I}${Chain<T[I]> | ""}` }>
   : never;
 
 // dprint-ignore
@@ -26,15 +28,14 @@ type Def<T, R, K extends keyof T = keyof T> = {
     : R;
 };
 
+export type { Ref };
+
 export function $<const T extends string>(ref: T): Ref<`$.${T}`> {
-  return {
-    $kind: Symbol.for("ref"),
-    value: ref,
-  } as any;
+  return { [Symbol.for("$")]: ref } as any;
 }
 
 export function global<const T extends Def<T, Ref<`$${Chain<T>}`>>>(def: T): T {
-  return Object.fromEntries(Object.keys(def).map(p => [p, []])) as any;
+  return { [Symbol.for(`global-${globalId.current++}`)]: def } as any;
 }
 
 export function define<const T extends Def<T, Ref<`$${Chain<T>}`>>>(def: T): T {

@@ -10,13 +10,13 @@
     border: none;
     cursor: pointer;
     height: var(--SuiSelectButton-height);
-    display: inline flex;
+    display: inline-flex;
     overflow: hidden;
     position: relative;
     font-size: var(--SuiSelectButton-fontSize);
     min-width: calc(var(--SuiSelectButton-height) * 3);
-    align-items: center;
     box-sizing: border-box;
+    align-items: center;
     anchor-name: --listbox-anchor;
     font-family: var(--SuiSelectButton-fontFamily);
     font-weight: var(--SuiSelectButton-fontWeight);
@@ -137,6 +137,22 @@
     --SuiSelectButton-accentColor: var(--sui-grey-naked-border);
   }
 
+  .SuiSelectButton-color-info {
+    --SuiSelectButton-accentColor: var(--sui-info-naked-border);
+  }
+
+  .SuiSelectButton-color-warn {
+    --SuiSelectButton-accentColor: var(--sui-warn-naked-border);
+  }
+
+  .SuiSelectButton-color-error {
+    --SuiSelectButton-accentColor: var(--sui-error-naked-border);
+  }
+
+  .SuiSelectButton-color-success {
+    --SuiSelectButton-accentColor: var(--sui-success-naked-border);
+  }
+
   .SuiSelectSelectedContent {
     display: contents;
   }
@@ -179,7 +195,7 @@
     border: var(--SuiSelectOption-border, none);
     cursor: pointer;
     height: var(--SuiSelectOption-height);
-    display: inline flex;
+    display: inline-flex;
     overflow: hidden;
     position: relative;
     font-size: var(--SuiSelectOption-fontSize);
@@ -312,6 +328,30 @@
     --SuiSelectOption-action: var(--sui-grey-naked-action);
   }
 
+  .SuiSelectOption-color-info {
+    --SuiSelectOption-canvas: var(--sui-info-naked-canvas);
+    --SuiSelectOption-subtle: var(--sui-info-naked-subtle);
+    --SuiSelectOption-action: var(--sui-info-naked-action);
+  }
+
+  .SuiSelectOption-color-warn {
+    --SuiSelectOption-canvas: var(--sui-warn-naked-canvas);
+    --SuiSelectOption-subtle: var(--sui-warn-naked-subtle);
+    --SuiSelectOption-action: var(--sui-warn-naked-action);
+  }
+
+  .SuiSelectOption-color-error {
+    --SuiSelectOption-canvas: var(--sui-error-naked-canvas);
+    --SuiSelectOption-subtle: var(--sui-error-naked-subtle);
+    --SuiSelectOption-action: var(--sui-error-naked-action);
+  }
+
+  .SuiSelectOption-color-success {
+    --SuiSelectOption-canvas: var(--sui-success-naked-canvas);
+    --SuiSelectOption-subtle: var(--sui-success-naked-subtle);
+    --SuiSelectOption-action: var(--sui-success-naked-action);
+  }
+
   .Sui-selected {
     &.SuiSelectOption-color-blue {
       --SuiSelectOption-canvas:     var(--sui-blue-solid-canvas);
@@ -388,6 +428,34 @@
       --SuiSelectOption-subtle:     var(--sui-grey-solid-subtle);
       --SuiSelectOption-action:     var(--sui-grey-solid-action);
       --SuiSelectOption-canvasText: var(--sui-grey-solid-canvasText);
+    }
+
+    &.SuiSelectOption-color-info {
+      --SuiSelectOption-canvas:     var(--sui-info-solid-canvas);
+      --SuiSelectOption-subtle:     var(--sui-info-solid-subtle);
+      --SuiSelectOption-action:     var(--sui-info-solid-action);
+      --SuiSelectOption-canvasText: var(--sui-info-solid-canvasText);
+    }
+
+    &.SuiSelectOption-color-warn {
+      --SuiSelectOption-canvas:     var(--sui-warn-solid-canvas);
+      --SuiSelectOption-subtle:     var(--sui-warn-solid-subtle);
+      --SuiSelectOption-action:     var(--sui-warn-solid-action);
+      --SuiSelectOption-canvasText: var(--sui-warn-solid-canvasText);
+    }
+
+    &.SuiSelectOption-color-error {
+      --SuiSelectOption-canvas:     var(--sui-error-solid-canvas);
+      --SuiSelectOption-subtle:     var(--sui-error-solid-subtle);
+      --SuiSelectOption-action:     var(--sui-error-solid-action);
+      --SuiSelectOption-canvasText: var(--sui-error-solid-canvasText);
+    }
+
+    &.SuiSelectOption-color-success {
+      --SuiSelectOption-canvas:     var(--sui-success-solid-canvas);
+      --SuiSelectOption-subtle:     var(--sui-success-solid-subtle);
+      --SuiSelectOption-action:     var(--sui-success-solid-action);
+      --SuiSelectOption-canvasText: var(--sui-success-solid-canvasText);
     }
   }
 }

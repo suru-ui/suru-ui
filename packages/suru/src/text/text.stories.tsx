@@ -17,7 +17,7 @@ export const Color: Story = () => {
   return COLOR_LIST.map(color => (
     <Text
       key={color}
-      color={$.sui[color].naked.canvasText}
+      color={color}
     >
       テキスト
     </Text>

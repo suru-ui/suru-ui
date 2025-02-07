@@ -29,11 +29,10 @@ export type GenerateOptions = {
   readonly indent?: string | undefined;
 };
 
-export function generate(w: Writer, def: any, opts: GenerateOptions | undefined = {}): void {
-  const {
-    indent = "",
-  } = opts;
-  inner(w, def, []);
+export function generate(w: Writer, def: any, options: GenerateOptions | undefined = {}): void {
+  const { indent = "" } = options;
+  const rootDef = def;
+  inner(w, rootDef, []);
 
   function inner(w: Writer, def: any, path: readonly string[]): void {
     if (typeof def === "string" || typeof def === "number") {
@@ -43,15 +42,21 @@ export function generate(w: Writer, def: any, opts: GenerateOptions | undefined 
       w.write(": ");
       w.write(def.toString(10));
       w.writeln(";");
-    } else if (def.$kind === Symbol.for("ref")) {
-      w.write(indent);
-      w.write("--");
-      w.write(path.join("-"));
-      w.write(": ");
-      w.write("var(");
-      w.write("--");
-      w.write(def.value.replaceAll(".", "-"));
-      w.writeln(");");
+    } else if (Symbol.for("$") in def) {
+      const ref = getValue(rootDef, def[Symbol.for("$")].split("."));
+
+      if (typeof ref === "string" || typeof ref === "number") {
+        w.write(indent);
+        w.write("--");
+        w.write(path.join("-"));
+        w.write(": ");
+        w.write("var(");
+        w.write("--");
+        w.write(def[Symbol.for("$")].replaceAll(".", "-"));
+        w.writeln(");");
+      } else {
+        inner(w, ref, path);
+      }
     } else if (Array.isArray(def)) {
       def.forEach((d, i) => {
         inner(w, d, [...path, `${i}`]);
@@ -101,4 +106,44 @@ function toNumber(s: string): number | null {
   }
 
   return null;
+}
+
+export const globalId = {
+  current: 0,
+};
+
+function getValue(rootDef: any, path: readonly string[]): any {
+  return inner(rootDef, path);
+
+  function inner(def: any, subPath: readonly string[]): any {
+    if (subPath.length === 0) {
+      return def;
+    } else if (typeof def === "string" || typeof def === "number" || def === undefined) {
+      console.dir(rootDef, { depth: 2 });
+      throw new Error(`参照 ${path} は ${subPath} を残したところで値 ${def} に到達しました。`);
+    } else if (Symbol.for("$") in def) {
+      return getValue(rootDef, def[Symbol.for("$")].split("."));
+    }
+
+    if (Array.isArray(def)) {
+      const [idx, ...rest] = subPath;
+      return inner(def[Number(idx)], rest);
+    }
+
+    for (let i = 0; i < globalId.current; i++) {
+      if (Symbol.for(`global-${i}`) in def) {
+        const {
+          [Symbol.for(`global-${i}`)]: global,
+          ...local
+        } = def;
+        def = {
+          ...global,
+          ...local,
+        };
+      }
+    }
+
+    const [key, ...rest] = subPath;
+    return inner(def[key!], rest);
+  }
 }

@@ -1,5 +1,6 @@
 import type common from "../../theme/common";
 import type theme from "../../theme/light";
+import type { Ref } from "../../theme/utils";
 import type { CssCustomProperties } from "./types";
 
 type Keyof<Entries, Where> = {
@@ -17,11 +18,14 @@ type T = typeof theme;
 
 export type Sizing = Keyof<C["sui"]["sizing"], string>;
 
-export type Color = Keyof<T["color"], object>;
+type ColorOrign = Keyof<T["color"], object>;
+type ColorAlias = Keyof<T["sui"], Ref<`$.sui.${ColorOrign}`>>;
 
-export type ColorScale = Keyof<T["sui"][Color], symbol>;
+export type Color = ColorOrign | ColorAlias;
 
-export type ColorVariant = Exclude<keyof T["sui"][Color], ColorScale | "alpha">;
+export type ColorScale = Keyof<T["sui"][ColorOrign], symbol>;
+
+export type ColorVariant = Exclude<keyof T["sui"][ColorOrign], ColorScale | "alpha">;
 
 export type ShadowElevation = Indexes<T["sui"]["shadow"]>;
 
@@ -45,6 +49,10 @@ export const COLOR_LIST: readonly Color[] = [
   "magenta",
   "purple",
   "grey",
+  "info",
+  "warn",
+  "error",
+  "success",
 ];
 
 export const COLOR_SCALE_LIST: readonly ColorScale[] = [

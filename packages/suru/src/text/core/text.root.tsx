@@ -2,11 +2,11 @@ import { Slot } from "@suru-ui/slot";
 import clsx from "clsx";
 import * as React from "react";
 import * as primitive from "../../primitive";
-import type { TypographyVariant } from "../../theme";
+import { type Color, isColor, type TypographyVariant } from "../../theme";
 
 type RootParams = {
   asChild?: boolean | undefined;
-  color?: primitive.PrimitiveObject | undefined;
+  color?: Color | (string & {}) | primitive.PrimitiveObject | undefined;
   inline?: boolean | undefined;
   lineClamp?: number | undefined;
   oneline?: boolean | undefined;
@@ -79,9 +79,10 @@ export default function SuiTextRoot(props: RootProps): React.ReactElement {
         "SuiText-inline": inline,
         "SuiText-oneline": oneline,
         "SuiText-lineClamp": lineClamp !== undefined,
+        [`SuiText-color-${color}`]: isColor(color),
       })}
       data-sui-text-lineclamp={lineClamp}
-      data-sui-text-canvastext={primitive.string(color)}
+      data-sui-text-canvastext={isColor(color) ? undefined : primitive.string(color)}
     />
   );
 }

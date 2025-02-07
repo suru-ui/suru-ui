@@ -26,7 +26,7 @@ export const Color: Story = () => {
             {COLOR_LIST.map(color => (
               <Loader
                 key={color}
-                color={$.sui[color].naked.canvasText}
+                color={color}
                 variant={variant}
               />
             ))}

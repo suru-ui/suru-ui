@@ -273,7 +273,87 @@
       --SuiButton-subtle: var(--sui-grey-liquid-subtle);
       --SuiButton-action: var(--sui-grey-liquid-action);
     }
-  }  
+  }
+
+  .SuiButton-color-info {
+    &.SuiButton-variant-naked {
+      --SuiButton-canvas: var(--sui-info-naked-canvas);
+      --SuiButton-subtle: var(--sui-info-naked-subtle);
+      --SuiButton-action: var(--sui-info-naked-action);
+    }
+
+    &.SuiButton-variant-solid {
+      --SuiButton-canvas: var(--sui-info-solid-canvas);
+      --SuiButton-subtle: var(--sui-info-solid-subtle);
+      --SuiButton-action: var(--sui-info-solid-action);
+    }
+
+    &.SuiButton-variant-liquid {
+      --SuiButton-canvas: var(--sui-info-liquid-canvas);
+      --SuiButton-subtle: var(--sui-info-liquid-subtle);
+      --SuiButton-action: var(--sui-info-liquid-action);
+    }
+  }
+
+  .SuiButton-color-warn {
+    &.SuiButton-variant-naked {
+      --SuiButton-canvas: var(--sui-warn-naked-canvas);
+      --SuiButton-subtle: var(--sui-warn-naked-subtle);
+      --SuiButton-action: var(--sui-warn-naked-action);
+    }
+
+    &.SuiButton-variant-solid {
+      --SuiButton-canvas: var(--sui-warn-solid-canvas);
+      --SuiButton-subtle: var(--sui-warn-solid-subtle);
+      --SuiButton-action: var(--sui-warn-solid-action);
+    }
+
+    &.SuiButton-variant-liquid {
+      --SuiButton-canvas: var(--sui-warn-liquid-canvas);
+      --SuiButton-subtle: var(--sui-warn-liquid-subtle);
+      --SuiButton-action: var(--sui-warn-liquid-action);
+    }
+  }
+
+  .SuiButton-color-error {
+    &.SuiButton-variant-naked {
+      --SuiButton-canvas: var(--sui-error-naked-canvas);
+      --SuiButton-subtle: var(--sui-error-naked-subtle);
+      --SuiButton-action: var(--sui-error-naked-action);
+    }
+
+    &.SuiButton-variant-solid {
+      --SuiButton-canvas: var(--sui-error-solid-canvas);
+      --SuiButton-subtle: var(--sui-error-solid-subtle);
+      --SuiButton-action: var(--sui-error-solid-action);
+    }
+
+    &.SuiButton-variant-liquid {
+      --SuiButton-canvas: var(--sui-error-liquid-canvas);
+      --SuiButton-subtle: var(--sui-error-liquid-subtle);
+      --SuiButton-action: var(--sui-error-liquid-action);
+    }
+  }
+
+  .SuiButton-color-success {
+    &.SuiButton-variant-naked {
+      --SuiButton-canvas: var(--sui-success-naked-canvas);
+      --SuiButton-subtle: var(--sui-success-naked-subtle);
+      --SuiButton-action: var(--sui-success-naked-action);
+    }
+
+    &.SuiButton-variant-solid {
+      --SuiButton-canvas: var(--sui-success-solid-canvas);
+      --SuiButton-subtle: var(--sui-success-solid-subtle);
+      --SuiButton-action: var(--sui-success-solid-action);
+    }
+
+    &.SuiButton-variant-liquid {
+      --SuiButton-canvas: var(--sui-success-liquid-canvas);
+      --SuiButton-subtle: var(--sui-success-liquid-subtle);
+      --SuiButton-action: var(--sui-success-liquid-action);
+    }
+  }
 
   .SuiButton-outlined {
     border-width: 1px;
@@ -431,12 +511,68 @@
         --SuiButton-borderColor: var(--sui-grey-liquid-border)
       }
     }
+
+    &.SuiButton-color-info {
+      &.SuiButton-variant-naked {
+        --SuiButton-borderColor: var(--sui-info-naked-border)
+      }
+
+      &.SuiButton-variant-solid {
+        --SuiButton-borderColor: var(--sui-info-solid-border)
+      }
+
+      &.SuiButton-variant-liquid {
+        --SuiButton-borderColor: var(--sui-info-liquid-border)
+      }
+    }
+
+    &.SuiButton-color-warn {
+      &.SuiButton-variant-naked {
+        --SuiButton-borderColor: var(--sui-warn-naked-border)
+      }
+
+      &.SuiButton-variant-solid {
+        --SuiButton-borderColor: var(--sui-warn-solid-border)
+      }
+
+      &.SuiButton-variant-liquid {
+        --SuiButton-borderColor: var(--sui-warn-liquid-border)
+      }
+    }
+
+    &.SuiButton-color-error {
+      &.SuiButton-variant-naked {
+        --SuiButton-borderColor: var(--sui-error-naked-border)
+      }
+
+      &.SuiButton-variant-solid {
+        --SuiButton-borderColor: var(--sui-error-solid-border)
+      }
+
+      &.SuiButton-variant-liquid {
+        --SuiButton-borderColor: var(--sui-error-liquid-border)
+      }
+    }
+
+    &.SuiButton-color-success {
+      &.SuiButton-variant-naked {
+        --SuiButton-borderColor: var(--sui-success-naked-border)
+      }
+
+      &.SuiButton-variant-solid {
+        --SuiButton-borderColor: var(--sui-success-solid-border)
+      }
+
+      &.SuiButton-variant-liquid {
+        --SuiButton-borderColor: var(--sui-success-liquid-border)
+      }
+    }
   }
 
   .SuiButtonText {
     color: var(--SuiButtonText-canvasText);
     cursor: pointer;
-    display: inline block;
+    display: inline-block;
     font-size: var(--SuiButtonText-fontSize);
     box-sizing: border-box;
     text-align: center;
@@ -615,6 +751,62 @@
 
     &.SuiButtonText-variant-liquid {
       --SuiButtonText-canvasText: var(--sui-grey-liquid-canvasText);
+    }
+  }
+
+  .SuiButtonText-color-info {
+    &.SuiButtonText-variant-naked {
+      --SuiButtonText-canvasText: var(--sui-info-naked-canvasText);
+    }
+
+    &.SuiButtonText-variant-solid {
+      --SuiButtonText-canvasText: var(--sui-info-solid-canvasText);
+    }
+
+    &.SuiButtonText-variant-liquid {
+      --SuiButtonText-canvasText: var(--sui-info-liquid-canvasText);
+    }
+  }
+
+  .SuiButtonText-color-warn {
+    &.SuiButtonText-variant-naked {
+      --SuiButtonText-canvasText: var(--sui-warn-naked-canvasText);
+    }
+
+    &.SuiButtonText-variant-solid {
+      --SuiButtonText-canvasText: var(--sui-warn-solid-canvasText);
+    }
+
+    &.SuiButtonText-variant-liquid {
+      --SuiButtonText-canvasText: var(--sui-warn-liquid-canvasText);
+    }
+  }
+
+  .SuiButtonText-color-error {
+    &.SuiButtonText-variant-naked {
+      --SuiButtonText-canvasText: var(--sui-error-naked-canvasText);
+    }
+
+    &.SuiButtonText-variant-solid {
+      --SuiButtonText-canvasText: var(--sui-error-solid-canvasText);
+    }
+
+    &.SuiButtonText-variant-liquid {
+      --SuiButtonText-canvasText: var(--sui-error-liquid-canvasText);
+    }
+  }
+
+  .SuiButtonText-color-success {
+    &.SuiButtonText-variant-naked {
+      --SuiButtonText-canvasText: var(--sui-success-naked-canvasText);
+    }
+
+    &.SuiButtonText-variant-solid {
+      --SuiButtonText-canvasText: var(--sui-success-solid-canvasText);
+    }
+
+    &.SuiButtonText-variant-liquid {
+      --SuiButtonText-canvasText: var(--sui-success-liquid-canvasText);
     }
   }
 
@@ -804,6 +996,62 @@
 
     &.SuiButtonSection-variant-liquid {
       --SuiButtonSection-canvasText: var(--sui-grey-liquid-canvasText);
+    }
+  }
+
+  .SuiButtonSection-color-info {
+    &.SuiButtonSection-variant-naked {
+      --SuiButtonSection-canvasText: var(--sui-info-naked-canvasText);
+    }
+
+    &.SuiButtonSection-variant-solid {
+      --SuiButtonSection-canvasText: var(--sui-info-solid-canvasText);
+    }
+
+    &.SuiButtonSection-variant-liquid {
+      --SuiButtonSection-canvasText: var(--sui-info-liquid-canvasText);
+    }
+  }
+
+  .SuiButtonSection-color-warn {
+    &.SuiButtonSection-variant-naked {
+      --SuiButtonSection-canvasText: var(--sui-warn-naked-canvasText);
+    }
+
+    &.SuiButtonSection-variant-solid {
+      --SuiButtonSection-canvasText: var(--sui-warn-solid-canvasText);
+    }
+
+    &.SuiButtonSection-variant-liquid {
+      --SuiButtonSection-canvasText: var(--sui-warn-liquid-canvasText);
+    }
+  }
+
+  .SuiButtonSection-color-error {
+    &.SuiButtonSection-variant-naked {
+      --SuiButtonSection-canvasText: var(--sui-error-naked-canvasText);
+    }
+
+    &.SuiButtonSection-variant-solid {
+      --SuiButtonSection-canvasText: var(--sui-error-solid-canvasText);
+    }
+
+    &.SuiButtonSection-variant-liquid {
+      --SuiButtonSection-canvasText: var(--sui-error-liquid-canvasText);
+    }
+  }
+
+  .SuiButtonSection-color-success {
+    &.SuiButtonSection-variant-naked {
+      --SuiButtonSection-canvasText: var(--sui-success-naked-canvasText);
+    }
+
+    &.SuiButtonSection-variant-solid {
+      --SuiButtonSection-canvasText: var(--sui-success-solid-canvasText);
+    }
+
+    &.SuiButtonSection-variant-liquid {
+      --SuiButtonSection-canvasText: var(--sui-success-liquid-canvasText);
     }
   }
 

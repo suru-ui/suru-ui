@@ -625,5 +625,9 @@ export default define({
         canvasText: $("sui.purple.1100"),
       },
     },
+    info: $("sui.blue"),
+    warn: $("sui.yellow"),
+    error: $("sui.red"),
+    success: $("sui.green"),
   },
 });
