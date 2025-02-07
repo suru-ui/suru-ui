@@ -1,4 +1,4 @@
-export { default as Context } from "./scope.context";
+export { Context, createScopeValue } from "./scope.context";
 export type * from "./scope.context";
 
 export { useScope, useSetState, useStateValue, useStateValueWithSelector } from "./scope.hooks";

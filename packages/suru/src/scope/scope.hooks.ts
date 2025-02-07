@@ -1,7 +1,7 @@
 import { atom, type SetStateAction, useAtomValue, useSetAtom } from "jotai";
 import { selectAtom } from "jotai/utils";
 import * as React from "react";
-import Context, { type ScopeValue, type State, type Store } from "./scope.context";
+import { Context, type ScopeValue, type State, type Store } from "./scope.context";
 
 export function useScope(): ScopeValue {
   const value = React.use(Context);

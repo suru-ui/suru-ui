@@ -13,6 +13,12 @@ export type ScopeValue = {
   store: Store;
 };
 
-export default /* @__PURE__ */ React.createContext<ScopeValue>({
-  store: new Map(),
-});
+export function createScopeValue(): ScopeValue {
+  return {
+    store: new Map(),
+  };
+}
+
+// dprint-ignore
+export const Context: React.Context<ScopeValue>
+  = /* @__PURE__ */ React.createContext(/* @__PURE__ */ createScopeValue());
