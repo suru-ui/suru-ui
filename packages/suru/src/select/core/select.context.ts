@@ -1,16 +1,16 @@
 import { createContext } from "@suru-ui/utils";
-import type { SelectProps } from "../../conform";
 import type { Color, Sizing } from "../../theme";
-
-type OptionalToUndefined<T> = {
-  [P in keyof T]-?: undefined extends T[P] ? T[P] | undefined : T[P];
-};
 
 export type ContextValue = {
   color: Color;
-  conform: OptionalToUndefined<Omit<SelectProps, `aria-${string}` | "multiple">>;
+  defaultValue: string | number | readonly string[] | undefined;
   disabled: boolean;
+  fieldId: string;
+  fieldName: string;
+  formId: string;
+  invalid: boolean;
   multiple: boolean;
+  required: boolean;
   selectedContentId: string | undefined;
   size: Sizing;
 };

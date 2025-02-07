@@ -2,7 +2,7 @@
 [x] Loader
 [x] Button
 [x] TextInput
-[ ] Select
+[x] Select
 [ ] HelperText
 [ ] ErrorText
 [ ] Label

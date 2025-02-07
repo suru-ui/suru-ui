@@ -1,18 +1,20 @@
 @layer sui.components {
   .SuiButton {
     gap: var(--SuiButton-gap);
-    border: var(--SuiButton-border, none);
     cursor: pointer;
-    height: var(--SuiButton-h);
+    height: var(--SuiButton-height);
     display: inline-flex;
     overflow: hidden;
     position: relative;
-    min-width: var(--SuiButton-minW);
+    min-width: calc(var(--SuiButton-height) * 2);
+    box-sizing: border-box;
     align-items: center;
     user-select: none;
-    padding-left: var(--SuiButton-px);
-    border-radius: var(--SuiButton-rounded);
-    padding-right: var(--SuiButton-px);
+    border-color: var(--SuiButton-borderColor);
+    border-style: solid;
+    border-width: 0;
+    border-radius: var(--SuiButton-borderRadius);
+    padding-inline: var(--SuiButton-paddingInline);
     justify-content: center;
     background-color: var(--SuiButton-canvas);
   }
@@ -33,27 +35,24 @@
   }
 
   .SuiButton-size-sm {
-    --SuiButton-h:       var(--sui-sizing-sm);
-    --SuiButton-px:      calc(var(--sui-sizing-sm) * .25);
-    --SuiButton-gap:     calc(var(--sui-sizing-sm) * .125);
-    --SuiButton-minW:    calc(var(--sui-sizing-sm) * 2);
-    --SuiButton-rounded: calc(var(--sui-sizing-sm) * .2);
+    --SuiButton-gap:           calc(var(--sui-sizing-sm) * var(--sui-sizing-gap-sm));
+    --SuiButton-height:        var(--sui-sizing-sm);
+    --SuiButton-borderRadius:  calc(var(--sui-sizing-sm) * var(--sui-sizing-rad-sm));
+    --SuiButton-paddingInline: calc(var(--sui-sizing-sm) * var(--sui-sizing-pad-sm));
   }
 
   .SuiButton-size-md {
-    --SuiButton-h:       var(--sui-sizing-md);
-    --SuiButton-px:      calc(var(--sui-sizing-md) * .375);
-    --SuiButton-gap:     calc(var(--sui-sizing-sm) * .25);
-    --SuiButton-minW:    calc(var(--sui-sizing-md) * 2);
-    --SuiButton-rounded: calc(var(--sui-sizing-md) * .2);
+    --SuiButton-gap:           calc(var(--sui-sizing-md) * var(--sui-sizing-gap-md));
+    --SuiButton-height:        var(--sui-sizing-md);
+    --SuiButton-borderRadius:  calc(var(--sui-sizing-md) * var(--sui-sizing-rad-md));
+    --SuiButton-paddingInline: calc(var(--sui-sizing-md) * var(--sui-sizing-pad-md));
   }
 
   .SuiButton-size-lg {
-    --SuiButton-h:       var(--sui-sizing-lg);
-    --SuiButton-px:      calc(var(--sui-sizing-lg) * .5);
-    --SuiButton-gap:     calc(var(--sui-sizing-sm) * .25);
-    --SuiButton-minW:    calc(var(--sui-sizing-lg) * 2);
-    --SuiButton-rounded: calc(var(--sui-sizing-lg) * .2);
+    --SuiButton-gap:           calc(var(--sui-sizing-lg) * var(--sui-sizing-gap-lg));
+    --SuiButton-height:        var(--sui-sizing-lg);
+    --SuiButton-borderRadius:  calc(var(--sui-sizing-lg) * var(--sui-sizing-rad-lg));
+    --SuiButton-paddingInline: calc(var(--sui-sizing-lg) * var(--sui-sizing-pad-lg));
   }
 
   .SuiButton-color-blue {
@@ -277,157 +276,159 @@
   }  
 
   .SuiButton-outlined {
+    border-width: 1px;
+
     &.SuiButton-color-blue {
       &.SuiButton-variant-naked {
-        --SuiButton-border: var(--sui-blue-naked-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-blue-naked-border)
       }
 
       &.SuiButton-variant-solid {
-        --SuiButton-border: var(--sui-blue-solid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-blue-solid-border)
       }
 
       &.SuiButton-variant-liquid {
-        --SuiButton-border: var(--sui-blue-liquid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-blue-liquid-border)
       }
     }
 
     &.SuiButton-color-lightBlue {
       &.SuiButton-variant-naked {
-        --SuiButton-border: var(--sui-lightBlue-naked-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-lightBlue-naked-border)
       }
 
       &.SuiButton-variant-solid {
-        --SuiButton-border: var(--sui-lightBlue-solid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-lightBlue-solid-border)
       }
 
       &.SuiButton-variant-liquid {
-        --SuiButton-border: var(--sui-lightBlue-liquid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-lightBlue-liquid-border)
       }
     }
 
     &.SuiButton-color-cyan {
       &.SuiButton-variant-naked {
-        --SuiButton-border: var(--sui-cyan-naked-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-cyan-naked-border)
       }
 
       &.SuiButton-variant-solid {
-        --SuiButton-border: var(--sui-cyan-solid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-cyan-solid-border)
       }
 
       &.SuiButton-variant-liquid {
-        --SuiButton-border: var(--sui-cyan-liquid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-cyan-liquid-border)
       }
     }
 
     &.SuiButton-color-green {
       &.SuiButton-variant-naked {
-        --SuiButton-border: var(--sui-green-naked-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-green-naked-border)
       }
 
       &.SuiButton-variant-solid {
-        --SuiButton-border: var(--sui-green-solid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-green-solid-border)
       }
 
       &.SuiButton-variant-liquid {
-        --SuiButton-border: var(--sui-green-liquid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-green-liquid-border)
       }
     }
 
     &.SuiButton-color-lime {
       &.SuiButton-variant-naked {
-        --SuiButton-border: var(--sui-lime-naked-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-lime-naked-border)
       }
 
       &.SuiButton-variant-solid {
-        --SuiButton-border: var(--sui-lime-solid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-lime-solid-border)
       }
 
       &.SuiButton-variant-liquid {
-        --SuiButton-border: var(--sui-lime-liquid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-lime-liquid-border)
       }
     }
 
     &.SuiButton-color-yellow {
       &.SuiButton-variant-naked {
-        --SuiButton-border: var(--sui-yellow-naked-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-yellow-naked-border)
       }
 
       &.SuiButton-variant-solid {
-        --SuiButton-border: var(--sui-yellow-solid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-yellow-solid-border)
       }
 
       &.SuiButton-variant-liquid {
-        --SuiButton-border: var(--sui-yellow-liquid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-yellow-liquid-border)
       }
     }
 
     &.SuiButton-color-orange {
       &.SuiButton-variant-naked {
-        --SuiButton-border: var(--sui-orange-naked-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-orange-naked-border)
       }
 
       &.SuiButton-variant-solid {
-        --SuiButton-border: var(--sui-orange-solid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-orange-solid-border)
       }
 
       &.SuiButton-variant-liquid {
-        --SuiButton-border: var(--sui-orange-liquid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-orange-liquid-border)
       }
     }
 
     &.SuiButton-color-red {
       &.SuiButton-variant-naked {
-        --SuiButton-border: var(--sui-red-naked-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-red-naked-border)
       }
 
       &.SuiButton-variant-solid {
-        --SuiButton-border: var(--sui-red-solid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-red-solid-border)
       }
 
       &.SuiButton-variant-liquid {
-        --SuiButton-border: var(--sui-red-liquid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-red-liquid-border)
       }
     }
 
     &.SuiButton-color-magenta {
       &.SuiButton-variant-naked {
-        --SuiButton-border: var(--sui-magenta-naked-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-magenta-naked-border)
       }
 
       &.SuiButton-variant-solid {
-        --SuiButton-border: var(--sui-magenta-solid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-magenta-solid-border)
       }
 
       &.SuiButton-variant-liquid {
-        --SuiButton-border: var(--sui-magenta-liquid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-magenta-liquid-border)
       }
     }
 
     &.SuiButton-color-purple {
       &.SuiButton-variant-naked {
-        --SuiButton-border: var(--sui-purple-naked-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-purple-naked-border)
       }
 
       &.SuiButton-variant-solid {
-        --SuiButton-border: var(--sui-purple-solid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-purple-solid-border)
       }
 
       &.SuiButton-variant-liquid {
-        --SuiButton-border: var(--sui-purple-liquid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-purple-liquid-border)
       }
     }
 
     &.SuiButton-color-grey {
       &.SuiButton-variant-naked {
-        --SuiButton-border: var(--sui-grey-naked-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-grey-naked-border)
       }
 
       &.SuiButton-variant-solid {
-        --SuiButton-border: var(--sui-grey-solid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-grey-solid-border)
       }
 
       &.SuiButton-variant-liquid {
-        --SuiButton-border: var(--sui-grey-liquid-border) solid 1px;
+        --SuiButton-borderColor: var(--sui-grey-liquid-border)
       }
     }
   }
@@ -435,9 +436,32 @@
   .SuiButtonText {
     color: var(--SuiButtonText-canvasText);
     cursor: pointer;
-    display: inline-block;
+    display: inline block;
+    font-size: var(--SuiButtonText-fontSize);
+    box-sizing: border-box;
     text-align: center;
+    font-family: var(--SuiButtonText-fontFamily);
+    font-weight: var(--SuiButtonText-fontWeight);
+    line-height: var(--SuiButtonText-lineHeight);
+    letter-spacing: var(--SuiButtonText-letterSpacing);
     text-decoration: none;
+  }
+
+  .SuiButtonText-size-sm {
+    --SuiButtonText-fontSize:      var(--sui-text-oln-16m-1-fontSize);
+    --SuiButtonText-fontFamily:    var(--sui-text-oln-16m-1-fontFamily);
+    --SuiButtonText-fontWeight:    var(--sui-text-oln-16m-1-fontWeight);
+    --SuiButtonText-lineHeight:    var(--sui-text-oln-16m-1-lineHeight);
+    --SuiButtonText-letterSpacing: var(--sui-text-oln-16m-1-letterSpacing);
+  }
+
+  .SuiButtonText-size-md,
+  .SuiButtonText-size-lg {
+    --SuiButtonText-fontSize:      var(--sui-text-oln-17m-1-fontSize);
+    --SuiButtonText-fontFamily:    var(--sui-text-oln-17m-1-fontFamily);
+    --SuiButtonText-fontWeight:    var(--sui-text-oln-17m-1-fontWeight);
+    --SuiButtonText-lineHeight:    var(--sui-text-oln-17m-1-lineHeight);
+    --SuiButtonText-letterSpacing: var(--sui-text-oln-17m-1-letterSpacing);
   }
 
   .SuiButtonText-color-blue {
@@ -598,9 +622,35 @@
     color: var(--SuiButtonSection-canvasText);
     cursor: pointer;
     display: inline-flex;
+    overflow: hidden;
+    font-size: var(--SuiButtonSection-fontSize);
     align-self: center;
+    box-sizing: border-box;
+    font-family: var(--SuiButtonSection-fontFamily);
+    font-weight: var(--SuiButtonSection-fontWeight);
+    line-height: var(--SuiButtonSection-lineHeight);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    letter-spacing: var(--SuiButtonSection-letterSpacing);
     text-decoration: none;
     justify-content: center;
+  }
+
+  .SuiButtonSection-size-sm {
+    --SuiButtonSection-fontSize:      var(--sui-text-oln-16m-1-fontSize);
+    --SuiButtonSection-fontFamily:    var(--sui-text-oln-16m-1-fontFamily);
+    --SuiButtonSection-fontWeight:    var(--sui-text-oln-16m-1-fontWeight);
+    --SuiButtonSection-lineHeight:    var(--sui-text-oln-16m-1-lineHeight);
+    --SuiButtonSection-letterSpacing: var(--sui-text-oln-16m-1-letterSpacing);
+  }
+
+  .SuiButtonSection-size-md,
+  .SuiButtonSection-size-lg {
+    --SuiButtonSection-fontSize:      var(--sui-text-oln-17m-1-fontSize);
+    --SuiButtonSection-fontFamily:    var(--sui-text-oln-17m-1-fontFamily);
+    --SuiButtonSection-fontWeight:    var(--sui-text-oln-17m-1-fontWeight);
+    --SuiButtonSection-lineHeight:    var(--sui-text-oln-17m-1-lineHeight);
+    --SuiButtonSection-letterSpacing: var(--sui-text-oln-17m-1-letterSpacing);
   }
 
   .SuiButtonSection-color-blue {
@@ -759,10 +809,22 @@
 
   .SuiButtonLoader {
     position: absolute;
+    user-select: none;
+    pointer-events: none;
   }
 }
 
 .Sui-loading {
+  &.SuiButton,
+  &.SuiButtonText,
+  &.SuiButtonSection {
+    cursor: progress !important;
+  }
+
+  &.SuiButton {
+    background-color: var(--SuiButton-canvas) !important;
+  }
+
   &.SuiButtonText,
   &.SuiButtonSection {
     opacity: 0 !important;
@@ -772,8 +834,7 @@
 .Sui-disabled {
   &.SuiButton,
   &.SuiButtonText,
-  &.SuiButtonSection,
-  &.SuiButtonLoader {
+  &.SuiButtonSection {
     cursor: not-allowed !important;
   }
 

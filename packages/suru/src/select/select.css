@@ -1,5 +1,6 @@
 @layer sui.components {
   .SuiSelect {
+    box-sizing: border-box;
     anchor-scope: all;
   }
 
@@ -8,42 +9,46 @@
     color: var(--sui-canvasText-main);
     border: none;
     cursor: pointer;
-    height: var(--SuiSelectButton-h);
-    display: inline-flex;
+    height: var(--SuiSelectButton-height);
+    display: inline flex;
     overflow: hidden;
     position: relative;
     font-size: var(--SuiSelectButton-fontSize);
-    min-width: var(--SuiSelectButton-minW);
+    min-width: calc(var(--SuiSelectButton-height) * 3);
     align-items: center;
+    box-sizing: border-box;
     anchor-name: --listbox-anchor;
     font-family: var(--SuiSelectButton-fontFamily);
     font-weight: var(--SuiSelectButton-fontWeight);
     line-height: var(--SuiSelectButton-leading);
     user-select: none;
-    padding-left: var(--SuiSelectButton-px);
-    border-radius: var(--SuiSelectButton-rounded);
-    outline-color: var(--sui-canvasText-subtle);
+    border-radius: var(--SuiSelectButton-borderRadius);
+    outline-color: var(--SuiSelectButton-outlineColor);
     outline-style: solid;
-    outline-width: calc(var(--sui-focusRing-width) - 1px);
-    padding-right: var(--SuiSelectButton-px);
+    outline-width: var(--SuiSelectButton-outlineWidth);
+    outline-offset: calc(-1 * var(--SuiSelectButton-outlineWidth));
     letter-spacing: var(--SuiSelectButton-tracking);
-    outline-offset: 1px;
+    padding-inline: var(--SuiSelectButton-paddingInline);
     justify-content: center;
-    background-color: var(--sui-canvas-main);
+    background-color: var(--SuiSelectButton-canvas);
+  }
+
+  .SuiSelectButton {
+    --SuiSelectButton-canvas:       var(--sui-canvas-main);
+    --SuiSelectButton-outlineColor: var(--sui-outline-color);
+    --SuiSelectButton-outlineWidth: var(--sui-outline-width-md);
   }
 
   @media (hover: hover) {
     .SuiSelectButton:hover {
-      outline-color: var(--SuiSelectButton-color);
-      outline-width: var(--sui-focusRing-width);
-      outline-offset: 0;
+      --SuiSelectButton-outlineColor: var(--SuiSelectButton-accentColor);
+      --SuiSelectButton-outlineWidth: var(--sui-focusRing-width);
     }
   }
 
   .SuiSelectButton:focus-visible {
-    outline-color: var(--sui-focusRing-color);
-    outline-width: var(--sui-focusRing-width);
-    outline-offset: 0;
+    --SuiSelectButton-outlineColor: var(--sui-focusRing-color);
+    --SuiSelectButton-outlineWidth: var(--sui-focusRing-width);
   }
 
   .SuiSelectButton > :last-child {
@@ -51,88 +56,85 @@
   }
 
   .SuiSelectButton-size-sm {
-    --SuiSelectButton-h:       var(--sui-sizing-sm);
-    --SuiSelectButton-px:      calc(var(--SuiSelectButton-h) * .4);
-    --SuiSelectButton-gap:     calc(var(--SuiSelectButton-h) * .25);
-    --SuiSelectButton-minW:    calc(var(--SuiSelectButton-h) * 3);
-    --SuiSelectButton-rounded: calc(var(--SuiSelectButton-h) * .2);
+    --SuiSelectButton-gap:           calc(var(--sui-sizing-sm) * var(--sui-sizing-gap-sm));
+    --SuiSelectButton-height:        var(--sui-sizing-sm);
+    --SuiSelectButton-borderRadius:  calc(var(--sui-sizing-sm) * var(--sui-sizing-rad-sm));
+    --SuiSelectButton-paddingInline: calc(var(--sui-sizing-sm) * var(--sui-sizing-pad-sm));
   }
 
   .SuiSelectButton-size-md {
-    --SuiSelectButton-h:       var(--sui-sizing-md);
-    --SuiSelectButton-px:      calc(var(--SuiSelectButton-h) * .4);
-    --SuiSelectButton-gap:     calc(var(--SuiSelectButton-h) * .25);
-    --SuiSelectButton-minW:    calc(var(--SuiSelectButton-h) * 3);
-    --SuiSelectButton-rounded: calc(var(--SuiSelectButton-h) * .2);
+    --SuiSelectButton-gap:           calc(var(--sui-sizing-md) * var(--sui-sizing-gap-md));
+    --SuiSelectButton-height:        var(--sui-sizing-md);
+    --SuiSelectButton-borderRadius:  calc(var(--sui-sizing-md) * var(--sui-sizing-rad-md));
+    --SuiSelectButton-paddingInline: calc(var(--sui-sizing-md) * var(--sui-sizing-pad-md));
   }
 
   .SuiSelectButton-size-lg {
-    --SuiSelectButton-h:       var(--sui-sizing-lg);
-    --SuiSelectButton-px:      calc(var(--SuiSelectButton-h) * .4);
-    --SuiSelectButton-gap:     calc(var(--SuiSelectButton-h) * .25);
-    --SuiSelectButton-minW:    calc(var(--SuiSelectButton-h) * 3);
-    --SuiSelectButton-rounded: calc(var(--SuiSelectButton-h) * .2);
+    --SuiSelectButton-gap:           calc(var(--sui-sizing-lg) * var(--sui-sizing-gap-lg));
+    --SuiSelectButton-height:        var(--sui-sizing-lg);
+    --SuiSelectButton-borderRadius:  calc(var(--sui-sizing-lg) * var(--sui-sizing-rad-lg));
+    --SuiSelectButton-paddingInline: calc(var(--sui-sizing-lg) * var(--sui-sizing-pad-lg));
   }
 
-  .SuiSelectButton-size-sm,
-  .SuiSelectButton-size-md {
-    --SuiSelectButton-leading:    var(--sui-text-oln-16m-1-leading);
-    --SuiSelectButton-tracking:   var(--sui-text-oln-16m-1-tracking);
-    --SuiSelectButton-fontSize:   var(--sui-text-oln-16m-1-size);
-    --SuiSelectButton-fontFamily: var(--sui-text-oln-16m-1-font);
-    --SuiSelectButton-fontWeight: var(--sui-text-oln-16m-1-weight);
+  .SuiSelectButton-size-sm {
+    --SuiSelectButton-fontSize:      var(--sui-text-oln-16m-1-fontSize);
+    --SuiSelectButton-fontFamily:    var(--sui-text-oln-16m-1-fontFamily);
+    --SuiSelectButton-fontWeight:    var(--sui-text-oln-16m-1-fontWeight);
+    --SuiSelectButton-lineHeight:    var(--sui-text-oln-16m-1-lineHeight);
+    --SuiSelectButton-letterSpacing: var(--sui-text-oln-16m-1-letterSpacing);
   }
 
+  .SuiSelectButton-size-md,
   .SuiSelectButton-size-lg {
-    --SuiSelectButton-leading:    var(--sui-text-oln-17m-1-leading);
-    --SuiSelectButton-tracking:   var(--sui-text-oln-17m-1-tracking);
-    --SuiSelectButton-fontSize:   var(--sui-text-oln-17m-1-size);
-    --SuiSelectButton-fontFamily: var(--sui-text-oln-17m-1-font);
-    --SuiSelectButton-fontWeight: var(--sui-text-oln-17m-1-weight);
+    --SuiSelectButton-fontSize:      var(--sui-text-oln-17m-1-fontSize);
+    --SuiSelectButton-fontFamily:    var(--sui-text-oln-17m-1-fontFamily);
+    --SuiSelectButton-fontWeight:    var(--sui-text-oln-17m-1-fontWeight);
+    --SuiSelectButton-lineHeight:    var(--sui-text-oln-17m-1-lineHeight);
+    --SuiSelectButton-letterSpacing: var(--sui-text-oln-17m-1-letterSpacing);
   }
 
   .SuiSelectButton-color-blue {
-    --SuiSelectButton-color: var(--sui-blue-naked-border);
+    --SuiSelectButton-accentColor: var(--sui-blue-naked-border);
   }
 
   .SuiSelectButton-color-lightBlue {
-    --SuiSelectButton-color: var(--sui-lightBlue-naked-border);
+    --SuiSelectButton-accentColor: var(--sui-lightBlue-naked-border);
   }
 
   .SuiSelectButton-color-cyan {
-    --SuiSelectButton-color: var(--sui-cyan-naked-border);
+    --SuiSelectButton-accentColor: var(--sui-cyan-naked-border);
   }
 
   .SuiSelectButton-color-green {
-    --SuiSelectButton-color: var(--sui-green-naked-border);
+    --SuiSelectButton-accentColor: var(--sui-green-naked-border);
   }
 
   .SuiSelectButton-color-lime {
-    --SuiSelectButton-color: var(--sui-lime-naked-border);
+    --SuiSelectButton-accentColor: var(--sui-lime-naked-border);
   }
 
   .SuiSelectButton-color-yellow {
-    --SuiSelectButton-color: var(--sui-yellow-naked-border);
+    --SuiSelectButton-accentColor: var(--sui-yellow-naked-border);
   }
 
   .SuiSelectButton-color-orange {
-    --SuiSelectButton-color: var(--sui-orange-naked-border);
+    --SuiSelectButton-accentColor: var(--sui-orange-naked-border);
   }
 
   .SuiSelectButton-color-red {
-    --SuiSelectButton-color: var(--sui-red-naked-border);
+    --SuiSelectButton-accentColor: var(--sui-red-naked-border);
   }
 
   .SuiSelectButton-color-magenta {
-    --SuiSelectButton-color: var(--sui-magenta-naked-border);
+    --SuiSelectButton-accentColor: var(--sui-magenta-naked-border);
   }
 
   .SuiSelectButton-color-purple {
-    --SuiSelectButton-color: var(--sui-purple-naked-border);
+    --SuiSelectButton-accentColor: var(--sui-purple-naked-border);
   }
 
   .SuiSelectButton-color-grey {
-    --SuiSelectButton-color: var(--sui-grey-naked-border);
+    --SuiSelectButton-accentColor: var(--sui-grey-naked-border);
   }
 
   .SuiSelectSelectedContent {
@@ -142,39 +144,33 @@
   .SuiSelectListBox:popover-open {
     top: calc(anchor(bottom) + 4px);
     left: anchor(left);
-    border: var(--sui-grey-naked-border) solid 2px;
+    border: var(--sui-outline-color) solid var(--sui-outline-width-md);
     margin: 0;
     display: flex;
+    overflow: auto;
     position: fixed;
-    padding-top: var(--SuiSelectListBox-py);
-    padding-left: var(--SuiSelectListBox-px);
-    border-radius: var(--SuiSelectListBox-rounded);
-    padding-right: var(--SuiSelectListBox-px);
+    box-sizing: border-box;
+    border-radius: var(--SuiSelectListBox-borderRadius);
+    padding-block: var(--SuiSelectListBox-paddingBlock);
+    padding-inline: 0;
     flex-direction: column;
-    padding-bottom: var(--SuiSelectListBox-py);
     position-anchor: --listbox-anchor;
     background-color: var(--sui-canvas-main);
   }
 
   .SuiSelectListBox-size-sm {
-    --SuiSelectListBox-sizing:  var(--sui-sizing-sm);
-    --SuiSelectListBox-px:      0;
-    --SuiSelectListBox-py:      calc(var(--SuiSelectListBox-sizing) * .2);
-    --SuiSelectListBox-rounded: calc(var(--SuiSelectListBox-sizing) * .2);
+    --SuiSelectListBox-paddingBlock: calc(var(--sui-sizing-sm) * var(--sui-sizing-pad-sm));
+    --SuiSelectListBox-borderRadius: calc(var(--sui-sizing-sm) * var(--sui-sizing-rad-sm));
   }
 
   .SuiSelectListBox-size-md {
-    --SuiSelectListBox-sizing:  var(--sui-sizing-md);
-    --SuiSelectListBox-px:      0;
-    --SuiSelectListBox-py:      calc(var(--SuiSelectListBox-sizing) * .2);
-    --SuiSelectListBox-rounded: calc(var(--SuiSelectListBox-sizing) * .2);
+    --SuiSelectListBox-paddingBlock: calc(var(--sui-sizing-md) * var(--sui-sizing-pad-md));
+    --SuiSelectListBox-borderRadius: calc(var(--sui-sizing-md) * var(--sui-sizing-rad-md));
   }
 
   .SuiSelectListBox-size-lg {
-    --SuiSelectListBox-sizing:  var(--sui-sizing-lg);
-    --SuiSelectListBox-px:      0;
-    --SuiSelectListBox-py:      calc(var(--SuiSelectListBox-sizing) * .2);
-    --SuiSelectListBox-rounded: calc(var(--SuiSelectListBox-sizing) * .2);
+    --SuiSelectListBox-paddingBlock: calc(var(--sui-sizing-lg) * var(--sui-sizing-pad-lg));
+    --SuiSelectListBox-borderRadius: calc(var(--sui-sizing-lg) * var(--sui-sizing-rad-lg));
   }
 
   .SuiSelectOption {
@@ -182,21 +178,21 @@
     color: var(--SuiSelectOption-canvasText, var(--sui-canvasText-main));
     border: var(--SuiSelectOption-border, none);
     cursor: pointer;
-    height: var(--SuiSelectOption-h);
-    display: inline-flex;
+    height: var(--SuiSelectOption-height);
+    display: inline flex;
     overflow: hidden;
     position: relative;
     font-size: var(--SuiSelectOption-fontSize);
-    min-width: var(--SuiSelectOption-minW);
+    min-width: calc(var(--SuiSelectOption-height) * 3);
+    box-sizing: border-box;
     align-items: center;
     font-family: var(--SuiSelectOption-fontFamily);
     font-weight: var(--SuiSelectOption-fontWeight);
-    line-height: var(--SuiSelectOption-leading);
+    line-height: var(--SuiSelectOption-lineHeight);
     user-select: none;
-    padding-left: var(--SuiSelectOption-px);
-    padding-right: var(--SuiSelectOption-px);
-    letter-spacing: var(--SuiSelectOption-tracking);
-    justify-content: center;
+    padding-inline: var(--SuiSelectOption-paddingInline);
+    letter-spacing: var(--SuiSelectOption-letterSpacing);
+    justify-content: flex-start;
     background-color: var(--SuiSelectOption-canvas);
   }
 
@@ -211,46 +207,43 @@
   }
 
   .SuiSelectOption:focus-visible {
-    outline: solid var(--sui-focusRing-color) var(--sui-focusRing-width);
-    outline-offset: var(--sui-focusRing-offset);
+    outline: var(--sui-focusRing-color) solid var(--sui-focusRing-width);
+    outline-offset: calc(-1 * var(--sui-focusRing-width));
   }
 
   .SuiSelectOption-size-sm {
-    --SuiSelectOption-h:    var(--sui-sizing-sm);
-    --SuiSelectOption-px:   calc(var(--SuiSelectOption-h) * .375);
-    --SuiSelectOption-gap:  calc(var(--SuiSelectOption-h) * .25);
-    --SuiSelectOption-minW: calc(var(--SuiSelectOption-h) * 2);
+    --SuiSelectOption-gap:           calc(var(--sui-sizing-sm) * var(--sui-sizing-gap-sm));
+    --SuiSelectOption-height:        var(--sui-sizing-sm);
+    --SuiSelectOption-paddingInline: calc(var(--sui-sizing-sm) * var(--sui-sizing-pad-sm));
   }
 
   .SuiSelectOption-size-md {
-    --SuiSelectOption-h:    var(--sui-sizing-md);
-    --SuiSelectOption-px:   calc(var(--SuiSelectOption-h) * .375);
-    --SuiSelectOption-gap:  calc(var(--SuiSelectOption-h) * .25);
-    --SuiSelectOption-minW: calc(var(--SuiSelectOption-h) * 2);
+    --SuiSelectOption-gap:           calc(var(--sui-sizing-md) * var(--sui-sizing-gap-md));
+    --SuiSelectOption-height:        var(--sui-sizing-md);
+    --SuiSelectOption-paddingInline: calc(var(--sui-sizing-md) * var(--sui-sizing-pad-md));
   }
 
   .SuiSelectOption-size-lg {
-    --SuiSelectOption-h:    var(--sui-sizing-lg);
-    --SuiSelectOption-px:   calc(var(--SuiSelectOption-h) * .375);
-    --SuiSelectOption-gap:  calc(var(--SuiSelectOption-h) * .25);
-    --SuiSelectOption-minW: calc(var(--SuiSelectOption-h) * 2);
+    --SuiSelectOption-gap:           calc(var(--sui-sizing-lg) * var(--sui-sizing-gap-lg));
+    --SuiSelectOption-height:        var(--sui-sizing-lg);
+    --SuiSelectOption-paddingInline: calc(var(--sui-sizing-lg) * var(--sui-sizing-pad-lg));
   }
 
-  .SuiSelectOption-size-sm,
-  .SuiSelectOption-size-md {
-    --SuiSelectOption-leading:    var(--sui-text-oln-16m-1-leading);
-    --SuiSelectOption-fontSize:   var(--sui-text-oln-16m-1-size);
-    --SuiSelectOption-tracking:   var(--sui-text-oln-16m-1-tracking); 
-    --SuiSelectOption-fontFamily: var(--sui-text-oln-16m-1-font);
-    --SuiSelectOption-fontWeight: var(--sui-text-oln-16m-1-weight);
+  .SuiSelectOption-size-sm {
+    --SuiSelectOption-fontSize:      var(--sui-text-oln-16m-1-fontSize);
+    --SuiSelectOption-fontFamily:    var(--sui-text-oln-16m-1-fontFamily);
+    --SuiSelectOption-fontWeight:    var(--sui-text-oln-16m-1-fontWeight);
+    --SuiSelectOption-lineHeight:    var(--sui-text-oln-16m-1-lineHeight);
+    --SuiSelectOption-letterSpacing: var(--sui-text-oln-16m-1-letterSpacing);
   }
 
+  .SuiSelectOption-size-md,
   .SuiSelectOption-size-lg {
-    --SuiSelectOption-leading:    var(--sui-text-oln-17m-1-leading);
-    --SuiSelectOption-fontSize:   var(--sui-text-oln-17m-1-size);
-    --SuiSelectOption-tracking:   var(--sui-text-oln-17m-1-tracking); 
-    --SuiSelectOption-fontFamily: var(--sui-text-oln-17m-1-font);
-    --SuiSelectOption-fontWeight: var(--sui-text-oln-17m-1-weight);
+    --SuiSelectOption-fontSize:      var(--sui-text-oln-17m-1-fontSize);
+    --SuiSelectOption-fontFamily:    var(--sui-text-oln-17m-1-fontFamily);
+    --SuiSelectOption-fontWeight:    var(--sui-text-oln-17m-1-fontWeight);
+    --SuiSelectOption-lineHeight:    var(--sui-text-oln-17m-1-lineHeight);
+    --SuiSelectOption-letterSpacing: var(--sui-text-oln-17m-1-letterSpacing);
   }
 
   .SuiSelectOption-color-blue {
@@ -319,7 +312,7 @@
     --SuiSelectOption-action: var(--sui-grey-naked-action);
   }
 
-  .SuiSelectOption[aria-selected=true] {
+  .Sui-selected {
     &.SuiSelectOption-color-blue {
       --SuiSelectOption-canvas:     var(--sui-blue-solid-canvas);
       --SuiSelectOption-subtle:     var(--sui-blue-solid-subtle);
@@ -403,11 +396,12 @@
   display: none !important;
 }
 
-.SuiSelectButton[disabled] {
-  color: var(--sui-canvasText-disabled) !important;
-  cursor: not-allowed !important;
-  user-select: none;
-  outline-color: var(--sui-canvasText-disabled) !important;
-  outline-width: 1px !important;
-  outline-offset: calc(1px - var(--sui-focusRing-width)) !important;
+.Sui-disabled {
+  &.SuiSelectButton {
+    color: var(--sui-canvasText-disabled) !important;
+    cursor: not-allowed !important;
+    outline: var(--sui-canvasText-disabled) solid var(--sui-outline-width-disabled) !important;
+    user-select: none !important;
+    outline-offset: calc(-1 * var(--sui-outline-width-disabled)) !important;
+  }  
 }

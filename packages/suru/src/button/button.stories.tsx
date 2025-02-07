@@ -104,7 +104,7 @@ export const Section: Story = () => {
           size={size}
           color="red"
           variant="liquid"
-          startSection={<Trash2Icon size={20} />}
+          startSection={<Trash2Icon size="1lh" />}
         >
           削除
         </Button>

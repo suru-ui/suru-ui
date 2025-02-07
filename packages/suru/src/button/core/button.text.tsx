@@ -2,14 +2,10 @@ import { Slot } from "@suru-ui/slot";
 import clsx from "clsx";
 import * as React from "react";
 import classes from "../../classes";
-import Text from "../../text";
-import type { Sizing, TypographyVariant } from "../../theme";
-import { $ } from "../../theme";
 import { useContext } from "./button.context";
 
 type TextParams = {
   asChild?: boolean | undefined;
-  variant?: TypographyVariant | undefined;
 };
 
 export type TextProps =
@@ -27,20 +23,16 @@ export default function SuiButtonText(props: TextProps): React.ReactElement {
   } = useContext();
   const {
     asChild,
-    variant: textVariant = getDefaultTextVariant(size),
-    children,
     className,
+    "aria-hidden": ariaHidden = loading || undefined,
+    "aria-disabled": ariaDisabled = disabled || undefined,
     ...otherTextProps
   } = props;
   const Comp = asChild ? Slot : "span";
 
   return (
-    <Text
+    <Comp
       {...otherTextProps as {}}
-      color={$.sui[color][variant].canvasText}
-      asChild
-      oneline
-      variant={textVariant}
       className={clsx(
         className,
         "SuiButtonText",
@@ -48,26 +40,13 @@ export default function SuiButtonText(props: TextProps): React.ReactElement {
         `SuiButtonText-color-${color}`,
         `SuiButtonText-variant-${variant}`,
         {
-          "SuiButtonText-outlined": outlined,
           [classes.loading]: loading,
           [classes.disabled]: disabled,
+          "SuiButtonText-outlined": outlined,
         },
       )}
-    >
-      <Comp>
-        {children}
-      </Comp>
-    </Text>
+      aria-hidden={ariaHidden}
+      aria-disabled={ariaDisabled}
+    />
   );
-}
-
-function getDefaultTextVariant(size: Sizing): TypographyVariant {
-  switch (size) {
-    case "md":
-    case "lg":
-      return "oln-17m-1";
-
-    case "sm":
-      return "oln-16n-1";
-  }
 }

@@ -24,6 +24,8 @@ export default function SuiButtonSection(props: SectionProps): React.ReactElemen
   const {
     asChild,
     className,
+    "aria-hidden": ariaHidden = loading || undefined,
+    "aria-disabled": ariaDisabled = disabled || undefined,
     ...otherSectionProps
   } = props;
   const Comp = asChild ? Slot : "span";
@@ -38,11 +40,13 @@ export default function SuiButtonSection(props: SectionProps): React.ReactElemen
         `SuiButtonSection-color-${color}`,
         `SuiButtonSection-variant-${variant}`,
         {
-          "SuiButtonSection-outlined": outlined,
           [classes.loading]: loading,
           [classes.disabled]: disabled,
+          "SuiButtonSection-outlined": outlined,
         },
       )}
+      aria-hidden={ariaHidden}
+      aria-disabled={ariaDisabled}
     />
   );
 }

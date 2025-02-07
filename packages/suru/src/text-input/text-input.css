@@ -1,128 +1,161 @@
 @layer sui.components {
   .SuiTextInput {
     gap: var(--SuiTextInput-gap);
-    height: var(--SuiTextInput-h);
+    height: var(--SuiTextInput-height);
     display: inline-flex;
     overflow: hidden;
     position: relative;
-    min-width: var(--SuiTextInput-minW);
+    box-sizing: border-box;
     align-items: center;
     user-select: none;
-    padding-left: var(--SuiTextInput-px);
-    border-radius: var(--SuiTextInput-rounded);
-    outline-color: var(--sui-canvasText-subtle);
+    border-radius: var(--SuiTextInput-borderRadius);
+    outline-color: var(--SuiTextInput-outlineColor);
     outline-style: solid;
-    outline-width: calc(var(--sui-focusRing-width) - 1px);
-    padding-right: var(--SuiTextInput-px);
-    outline-offset: 1px;
+    outline-width: var(--SuiTextInput-outlineWidth);
+    outline-offset: calc(-1 * var(--SuiTextInput-outlineWidth));
+    padding-inline: var(--SuiTextInput-paddingInline);
     justify-content: center;
-    background-color: var(--SuiTextInput-canvas, transparent);
+    background-color: var(--SuiTextInput-canvas, var(--sui-canvas-main));
+  }
+
+  .SuiTextInput {
+    --SuiTextInput-canvas:       var(--sui-canvas-main);
+    --SuiTextInput-outlineColor: var(--sui-outline-color);
+    --SuiTextInput-outlineWidth: var(--sui-outline-width-md);
   }
 
   @media (hover: hover) {
     .SuiTextInput:has(.SuiTextInputInput:hover) {
-      outline-color: var(--SuiTextInput-color);
-      outline-width: var(--sui-focusRing-width);
-      outline-offset: 0;
+      --SuiTextInput-outlineColor: var(--SuiTextInput-accentColor);
+      --SuiTextInput-outlineWidth: var(--sui-focusRing-width);
     }
   }
 
-  .SuiTextInput:has(.SuiTextInputInput:focus-visible) {
-    outline-color: var(--sui-focusRing-color);
-    outline-width: var(--sui-focusRing-width);
-    outline-offset: 0;
+  .SuiTextInput:has(.SuiTextInputInput:focus) {
+    --SuiTextInput-outlineColor: var(--sui-focusRing-color);
+    --SuiTextInput-outlineWidth: var(--sui-focusRing-width);
   }
 
   .SuiTextInput-size-sm {
-    --SuiTextInput-h:       var(--sui-sizing-sm);
-    --SuiTextInput-px:      calc(var(--sui-sizing-sm) * .25);
-    --SuiTextInput-gap:     calc(var(--sui-sizing-sm) * .125);
-    --SuiTextInput-minW:    calc(var(--sui-sizing-sm) * 2);
-    --SuiTextInput-rounded: calc(var(--sui-sizing-sm) * .2);
+    --SuiTextInput-gap:           calc(var(--sui-sizing-sm) * var(--sui-sizing-gap-sm));
+    --SuiTextInput-height:        var(--sui-sizing-sm);
+    --SuiTextInput-borderRadius:  calc(var(--sui-sizing-sm) * var(--sui-sizing-rad-sm));
+    --SuiTextInput-paddingInline: calc(var(--sui-sizing-sm) * var(--sui-sizing-pad-sm));
   }
 
   .SuiTextInput-size-md {
-    --SuiTextInput-h:       var(--sui-sizing-md);
-    --SuiTextInput-px:      calc(var(--sui-sizing-md) * .375);
-    --SuiTextInput-gap:     calc(var(--sui-sizing-sm) * .25);
-    --SuiTextInput-minW:    calc(var(--sui-sizing-md) * 2);
-    --SuiTextInput-rounded: calc(var(--sui-sizing-md) * .2);
+    --SuiTextInput-gap:           calc(var(--sui-sizing-md) * var(--sui-sizing-gap-md));
+    --SuiTextInput-height:        var(--sui-sizing-md);
+    --SuiTextInput-borderRadius:  calc(var(--sui-sizing-md) * var(--sui-sizing-rad-md));
+    --SuiTextInput-paddingInline: calc(var(--sui-sizing-md) * var(--sui-sizing-pad-md));
   }
 
   .SuiTextInput-size-lg {
-    --SuiTextInput-h:       var(--sui-sizing-lg);
-    --SuiTextInput-px:      calc(var(--sui-sizing-lg) * .5);
-    --SuiTextInput-gap:     calc(var(--sui-sizing-sm) * .25);
-    --SuiTextInput-minW:    calc(var(--sui-sizing-lg) * 2);
-    --SuiTextInput-rounded: calc(var(--sui-sizing-lg) * .2);
+    --SuiTextInput-gap:           calc(var(--sui-sizing-lg) * var(--sui-sizing-gap-lg));
+    --SuiTextInput-height:        var(--sui-sizing-lg);
+    --SuiTextInput-borderRadius:  calc(var(--sui-sizing-lg) * var(--sui-sizing-rad-lg));
+    --SuiTextInput-paddingInline: calc(var(--sui-sizing-lg) * var(--sui-sizing-pad-lg));
   }
 
   .SuiTextInput-color-blue {
-    --SuiTextInput-color: var(--sui-blue-naked-border);
+    --SuiTextInput-accentColor: var(--sui-blue-naked-border);
   }
 
   .SuiTextInput-color-lightBlue {
-    --SuiTextInput-color: var(--sui-lightBlue-naked-border);
+    --SuiTextInput-accentColor: var(--sui-lightBlue-naked-border);
   }
 
   .SuiTextInput-color-cyan {
-    --SuiTextInput-color: var(--sui-cyan-naked-border);
+    --SuiTextInput-accentColor: var(--sui-cyan-naked-border);
   }
 
   .SuiTextInput-color-green {
-    --SuiTextInput-color: var(--sui-green-naked-border);
+    --SuiTextInput-accentColor: var(--sui-green-naked-border);
   }
 
   .SuiTextInput-color-lime {
-    --SuiTextInput-color: var(--sui-lime-naked-border);
+    --SuiTextInput-accentColor: var(--sui-lime-naked-border);
   }
 
   .SuiTextInput-color-yellow {
-    --SuiTextInput-color: var(--sui-yellow-naked-border);
+    --SuiTextInput-accentColor: var(--sui-yellow-naked-border);
   }
 
   .SuiTextInput-color-orange {
-    --SuiTextInput-color: var(--sui-orange-naked-border);
+    --SuiTextInput-accentColor: var(--sui-orange-naked-border);
   }
 
   .SuiTextInput-color-red {
-    --SuiTextInput-color: var(--sui-red-naked-border);
+    --SuiTextInput-accentColor: var(--sui-red-naked-border);
   }
 
   .SuiTextInput-color-magenta {
-    --SuiTextInput-color: var(--sui-magenta-naked-border);
+    --SuiTextInput-accentColor: var(--sui-magenta-naked-border);
   }
 
   .SuiTextInput-color-purple {
-    --SuiTextInput-color: var(--sui-purple-naked-border);
+    --SuiTextInput-accentColor: var(--sui-purple-naked-border);
   }
 
   .SuiTextInput-color-grey {
-    --SuiTextInput-color: var(--sui-grey-naked-border);
-  }
-
-  .SuiTextInput-invalid {
-    outline-color: var(--sui-red-naked-border);
-    outline-width: var(--sui-focusRing-width);
-    outline-offset: 0;
+    --SuiTextInput-accentColor: var(--sui-grey-naked-border);
   }
 
   .SuiTextInput-fullWidth {
+    flex: 1;
     width: 100%;
   }
 
   .SuiTextInputInput {
-    width: 100%;
-    border: none;
+    all: unset;
+    flex: 1;
+    color: var(--SuiTextInputInput-canvasText, var(--sui-canvasText-main));
+    width: 0;
+    cursor: text;
     height: 100%;
-    display: inline-block;
-    padding: 0;
-    outline: none;
-    appearance: none;
+    display: inline block;
+    overflow: hidden;
+    min-width: 5em;
+    font-size: var(--SuiTextInputInput-fontSize);
+    box-sizing: border-box;
+    text-align: left;
+    font-family: var(--SuiTextInputInput-fontFamily);
+    font-weight: var(--SuiTextInputInput-fontWeight);
+    line-height: var(--SuiTextInputInput-lineHeight);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    letter-spacing: var(--SuiTextInputInput-letterSpacing);
+  }
+
+  .SuiTextInputInput-size-sm {
+    --SuiTextInputInput-fontSize:      var(--sui-text-oln-16m-1-fontSize);
+    --SuiTextInputInput-fontFamily:    var(--sui-text-oln-16m-1-fontFamily);
+    --SuiTextInputInput-fontWeight:    var(--sui-text-oln-16m-1-fontWeight);
+    --SuiTextInputInput-lineHeight:    var(--sui-text-oln-16m-1-lineHeight);
+    --SuiTextInputInput-letterSpacing: var(--sui-text-oln-16m-1-letterSpacing);
+  }
+
+  .SuiTextInputInput-size-md,
+  .SuiTextInputInput-size-lg {
+    --SuiTextInputInput-fontSize:      var(--sui-text-oln-17m-1-fontSize);
+    --SuiTextInputInput-fontFamily:    var(--sui-text-oln-17m-1-fontFamily);
+    --SuiTextInputInput-fontWeight:    var(--sui-text-oln-17m-1-fontWeight);
+    --SuiTextInputInput-lineHeight:    var(--sui-text-oln-17m-1-lineHeight);
+    --SuiTextInputInput-letterSpacing: var(--sui-text-oln-17m-1-letterSpacing);
   }
 
   .SuiTextInputSection {
-    color: var(--sui-canvasText-subtle);
+    color: var(--SuiTextInputSection-color, var(--sui-canvasText-subtle));
+    display: inline grid;
+    box-sizing: border-box;
+    place-content: center;
+  }
+}
+
+.Sui-invalid {
+  &.SuiTextInput:not(:has(.SuiTextInputInput:focus)) {
+    outline: var(--sui-red-naked-border) solid var(--sui-focusRing-width) !important;
+    outline-offset: calc(-1 * var(--sui-focusRing-width)) !important;
   }
 }
 
@@ -131,13 +164,12 @@
   &.SuiTextInputInput,
   &.SuiTextInputSection {
     cursor: not-allowed !important;
-    user-select: none;
+    user-select: none !important;
   }
 
   &.SuiTextInput {
-    outline-color: var(--sui-canvasText-disabled) !important;
-    outline-width: 1px !important;
-    outline-offset: calc(1px - var(--sui-focusRing-width)) !important;
+    outline: var(--sui-canvasText-disabled) solid var(--sui-outline-width-disabled) !important;
+    outline-offset: calc(-1 * var(--sui-outline-width-disabled)) !important;
   }
 
   &.SuiTextInputInput {

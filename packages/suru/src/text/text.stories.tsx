@@ -120,28 +120,18 @@ Oneline.storyName = "1 行に切り詰める";
 
 export const LineClamp: Story = () => {
   return (
-    <div className="space-y-[32px]">
-      {"lineClamp={1}:"}
-      <Text
-        className="border"
-        lineClamp={1}
-      >
-        {"長いテキスト".repeat(50)}
-      </Text>
-      {"lineClamp={3}:"}
-      <Text
-        className="border"
-        lineClamp={3}
-      >
-        {"長いテキスト".repeat(50)}
-      </Text>
-      {"lineClamp={Infinity}:"}
-      <Text
-        className="border"
-        lineClamp={Infinity}
-      >
-        {"長いテキスト".repeat(50)}
-      </Text>
+    <div>
+      {[1, 3, Infinity].map(lineClamp => (
+        <div className="pb-[32px]">
+          {`lineClamp=${lineClamp}:`}
+          <Text
+            className={`border border-[${$.sui.canvasText.main}] border-solid`}
+            lineClamp={lineClamp}
+          >
+            {"長いテキスト".repeat(50)}
+          </Text>
+        </div>
+      ))}
     </div>
   );
 };

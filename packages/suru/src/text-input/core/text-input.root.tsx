@@ -26,7 +26,11 @@ export default function SuiTextInputRoot(props: RootProps): React.ReactElement {
     ...otherRootProps
   } = props;
   const Comp = asChild ? Slot : "div";
-  const [inputProps, setInputProps] = React.useState<{
+  const [{
+    invalid,
+    disabled,
+    required,
+  }, setInputProps] = React.useState<{
     invalid: "false" | "true" | "grammar" | "spelling" | undefined;
     disabled: boolean;
     required: boolean;
@@ -40,16 +44,20 @@ export default function SuiTextInputRoot(props: RootProps): React.ReactElement {
     <Context
       value={React.useMemo(
         () => ({
-          ...inputProps,
           size,
           color,
+          invalid,
+          disabled,
+          required,
           fullWidth,
           setInputProps,
         }),
         [
-          inputProps,
           size,
           color,
+          invalid,
+          disabled,
+          required,
           fullWidth,
         ],
       )}
@@ -62,10 +70,10 @@ export default function SuiTextInputRoot(props: RootProps): React.ReactElement {
           `SuiTextInput-size-${size}`,
           `SuiTextInput-color-${color}`,
           {
+            [classes.invalid]: invalid,
+            [classes.disabled]: disabled,
+            [classes.required]: required,
             "SuiTextInput-fullWidth": fullWidth,
-            "SuiTextInput-invalid": inputProps.invalid,
-            "SuiTextInput-required": inputProps.required,
-            [classes.disabled]: inputProps.disabled,
           },
         )}
       />

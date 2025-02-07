@@ -37,10 +37,10 @@ export default function SuiTextInputSection(props: SectionProps): React.ReactEle
         `SuiTextInputSection-size-${size}`,
         `SuiTextInputSection-color-${color}`,
         {
-          "SuiTextInputSection-fullWidth": fullWidth,
-          "SuiTextInputSection-invalid": invalid,
-          "SuiTextInputSection-required": required,
+          [classes.invalid]: invalid,
           [classes.disabled]: disabled,
+          [classes.required]: required,
+          "SuiTextInputSection-fullWidth": fullWidth,
         },
       )}
     />

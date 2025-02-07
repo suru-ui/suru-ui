@@ -49,7 +49,7 @@ export const Basic: Story = () => {
         <Select.Option value="みかん">みかん</Select.Option>
         <Select.Option value="いちご">いちご</Select.Option>
       </Select>
-      <div>{fields.fruit.errors}</div>
+      <div id={fields.fruit.errorId}>{fields.fruit.errors}</div>
 
       <button type="submit">決定</button>
 

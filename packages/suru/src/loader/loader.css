@@ -1,13 +1,14 @@
 @layer sui.components {
   .SuiLoader {
+    display: inline block;
+    box-sizing: border-box;
+  }
+
+  .SuiLoader {
     --SuiLoader-color:    attr(data-sui-loader-color    type(<color>));
     --SuiLoader-size:     attr(data-sui-loader-size     type(<length-percentage>));
     --SuiLoader-maxSize:  attr(data-sui-loader-maxsize  type(<length-percentage>));
     --SuiLoader-minSize:  attr(data-sui-loader-minsize  type(<length-percentage>));
-  }
-
-  .SuiLoader {
-    display: inline-block;
   }
 
   .SuiLoader-variant-circle,

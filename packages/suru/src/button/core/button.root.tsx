@@ -21,14 +21,16 @@ export type RootProps =
 export default function SuiButtonRoot(props: RootProps): React.ReactElement {
   const {
     size = "md",
+    type = "button",
     color = "blue",
-    inert,
     asChild,
     loading = false,
+    onClick,
     variant = "solid",
     disabled = false,
     outlined = false,
     className,
+    "aria-disabled": ariaDisabled = (!disabled && loading) || undefined,
     ...otherRootProps
   } = props;
   const Comp = asChild ? Slot : "button";
@@ -56,7 +58,8 @@ export default function SuiButtonRoot(props: RootProps): React.ReactElement {
     >
       <Comp
         {...otherRootProps}
-        inert={!disabled && loading}
+        type={type}
+        onClick={loading ? disabledClick : onClick}
         disabled={disabled}
         className={clsx(
           className,
@@ -65,12 +68,17 @@ export default function SuiButtonRoot(props: RootProps): React.ReactElement {
           `SuiButton-color-${color}`,
           `SuiButton-variant-${variant}`,
           {
-            "SuiButton-outlined": outlined,
             [classes.loading]: loading,
             [classes.disabled]: disabled,
+            "SuiButton-outlined": outlined,
           },
         )}
+        aria-disabled={ariaDisabled}
       />
     </Context>
   );
+}
+
+function disabledClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+  e.preventDefault();
 }

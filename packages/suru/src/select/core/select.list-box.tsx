@@ -1,6 +1,7 @@
 import { Slot } from "@suru-ui/slot";
 import clsx from "clsx";
 import * as React from "react";
+import classes from "../../classes";
 import { useContext } from "./select.context";
 
 type ListBoxParams = {
@@ -15,10 +16,14 @@ export default function SuiSelectListBox(props: ListBoxProps): React.ReactElemen
   const {
     size,
     color,
-    conform,
+    fieldId,
+    invalid,
+    disabled,
+    required,
   } = useContext();
   const {
-    id = `${conform.id}-listbox`,
+    id = `${fieldId}-listbox`,
+    role = "listbox",
     asChild,
     popover = "auto",
     className,
@@ -30,12 +35,18 @@ export default function SuiSelectListBox(props: ListBoxProps): React.ReactElemen
     <Comp
       {...otherListBoxProps}
       id={id}
+      role={role}
       popover={popover}
       className={clsx(
         className,
         "SuiSelectListBox",
         `SuiSelectListBox-size-${size}`,
         `SuiSelectListBox-color-${color}`,
+        {
+          [classes.invalid]: invalid,
+          [classes.disabled]: disabled,
+          [classes.required]: required,
+        },
       )}
     />
   );

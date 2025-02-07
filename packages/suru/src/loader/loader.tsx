@@ -40,7 +40,7 @@ export default function SuiLoader(props: Props): React.ReactElement {
   const minSize = primitive.default(minSizeProp);
   const dataAttrs = {
     "data-sui-loader-size": typeof size === "number" ? `${size}px` : size,
-    "data-sui-loader-color": primitive.string(color)?.toString(),
+    "data-sui-loader-color": primitive.string(color),
     "data-sui-loader-maxsize": typeof maxSize === "number" ? `${maxSize}px` : maxSize,
     "data-sui-loader-minsize": typeof minSize === "number" ? `${minSize}px` : minSize,
   };

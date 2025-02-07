@@ -40,20 +40,21 @@ export default function SuiSelectSelectedContent(props: SelectedContentProps): R
   } = props;
   const size = sizeProp ?? context?.size ?? "md";
   const color = colorProp ?? context?.color ?? "blue";
-  const selectEventId = context?.conform.id ?? id ?? "<invalid>";
-
-  if (context === undefined && id === undefined) {
-    console.error(
-      "suru-ui(suru/select): <SelectedContent /> は <Root /> の外側にある場合、id 属性が必須です。",
-    );
-  }
-
+  const selectEventId = context?.fieldId ?? id ?? "<invalid>";
   const compRef = React.useRef<HTMLDivElement>(null);
   const selectEvent = useStateValueWithSelector(
     scope,
     SelectEvent.channel(selectEventId),
     sliceSelectEvent,
   );
+
+  if (__DEV__) {
+    if (context === undefined && id === undefined) {
+      console.error(
+        "suru-ui(suru/select): <SelectedContent /> は <Root /> の外側にある場合、id 属性が必須です。",
+      );
+    }
+  }
 
   return (
     <span

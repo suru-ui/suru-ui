@@ -2,7 +2,6 @@ import { Slot } from "@suru-ui/slot";
 import clsx from "clsx";
 import * as React from "react";
 import classes from "../../classes";
-import Text from "../../text";
 import { useContext } from "./text-input.context";
 
 type InputParams = {
@@ -50,28 +49,23 @@ export default function SuiTextInputInput(props: InputProps): React.ReactElement
   );
 
   return (
-    <Text
-      asChild
-      oneline
-    >
-      <Comp
-        {...otherInputProps}
-        disabled={disabled}
-        required={required}
-        className={clsx(
-          className,
-          "SuiTextInputInput",
-          `SuiTextInputInput-size-${size}`,
-          `SuiTextInputInput-color-${color}`,
-          {
-            "SuiTextInputInput-fullWidth": fullWidth,
-            "SuiTextInputInput-invalid": invalid,
-            "SuiTextInputInput-required": required,
-            [classes.disabled]: disabled,
-          },
-        )}
-        aria-invalid={invalid}
-      />
-    </Text>
+    <Comp
+      {...otherInputProps}
+      disabled={disabled}
+      required={required}
+      className={clsx(
+        className,
+        "SuiTextInputInput",
+        `SuiTextInputInput-size-${size}`,
+        `SuiTextInputInput-color-${color}`,
+        {
+          [classes.invalid]: invalid,
+          [classes.disabled]: disabled,
+          [classes.required]: required,
+          "SuiTextInputInput-fullWidth": fullWidth,
+        },
+      )}
+      aria-invalid={invalid}
+    />
   );
 }

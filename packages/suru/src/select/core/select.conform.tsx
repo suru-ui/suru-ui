@@ -1,4 +1,5 @@
 import * as React from "react";
+import { SelectProps } from "../../conform";
 import { useScope, useStateValueWithSelector } from "../../scope";
 import { useContext } from "./select.context";
 import { SelectEvent } from "./select.internal";
@@ -8,17 +9,29 @@ export type ConformProps = {};
 export default function SuiSelectConform(_: ConformProps): React.ReactElement {
   const scope = useScope();
   const {
-    conform,
+    formId,
+    fieldId,
     multiple,
-    selectedContentId: selectEventId = conform.id,
+    required,
+    fieldName,
+    defaultValue,
+    selectedContentId: selectEventId = fieldId,
   } = useContext();
-  // const ref = React.useRef<HTMLSelectElement>(null);
+  const conform: Required<Omit<SelectProps, `aria-${string}`>> = {
+    id: fieldId,
+    form: formId,
+    name: fieldName,
+    multiple,
+    required,
+    defaultValue,
+  };
   const options = useStateValueWithSelector(
     scope,
     SelectEvent.channel(selectEventId),
     sliceSelectEvent,
   );
 
+  // const ref = React.useRef<HTMLSelectElement>(null);
   // React.useEffect(
   //   () => {
   //     if (selectEvent === null || ref.current === null) {
@@ -38,8 +51,8 @@ export default function SuiSelectConform(_: ConformProps): React.ReactElement {
     <select
       {...conform}
       // ref={ref}
-      multiple={multiple}
       className="SuiSelectConform"
+      aria-hidden
     >
       {options?.map(opt => <option key={opt.pkey} value={opt.value} />)}
     </select>

@@ -2,6 +2,7 @@ import { Slot } from "@suru-ui/slot";
 import { useComposeRefs } from "@suru-ui/utils";
 import clsx from "clsx";
 import * as React from "react";
+import classes from "../../classes";
 import { useScope, useSetState, useStateValueWithSelector } from "../../scope";
 import { useContext } from "./select.context";
 import { SelectEvent } from "./select.internal";
@@ -24,19 +25,24 @@ export default function SuiSelectOption(props: OptionProps): React.ReactElement 
   const {
     size,
     color,
-    conform,
+    fieldId,
+    invalid,
     disabled: disabledCtx,
     multiple,
-    selectedContentId: selectEventId = conform.id,
+    required,
+    selectedContentId: selectEventId = fieldId,
   } = useContext();
   const {
     ref: userRef = null,
+    role = "listitem",
     value: valueProp,
     asChild,
     onClick,
     disabled = disabledCtx,
     className,
+    popoverTarget = multiple ? undefined : `${fieldId}-listbox`,
     "aria-selected": ariaSelected,
+    popoverTargetAction = multiple ? undefined : "hide",
     ...otherOptionProps
   } = props;
   const Comp = asChild ? Slot : "button";
@@ -95,7 +101,8 @@ export default function SuiSelectOption(props: OptionProps): React.ReactElement 
       value,
       onClick,
       dispatch,
-      // multiple は不変
+      // multiple, 不変
+      // optionId, 不変
     ],
   );
   const isSelected = useStateValueWithSelector<SelectEvent, boolean>(
@@ -108,6 +115,7 @@ export default function SuiSelectOption(props: OptionProps): React.ReactElement 
     <Comp
       {...otherOptionProps}
       ref={useComposeRefs(userRef, compRef)}
+      role={role}
       type="button"
       value={value}
       onClick={handleClick}
@@ -117,8 +125,16 @@ export default function SuiSelectOption(props: OptionProps): React.ReactElement 
         "SuiSelectOption",
         `SuiSelectOption-size-${size}`,
         `SuiSelectOption-color-${color}`,
+        {
+          [classes.invalid]: invalid,
+          [classes.disabled]: disabled,
+          [classes.required]: required,
+          [classes.selected]: isSelected,
+        },
       )}
       aria-selected={ariaSelected ?? isSelected}
+      popoverTarget={popoverTarget}
+      popoverTargetAction={popoverTargetAction}
     />
   );
 }

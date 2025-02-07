@@ -1,471 +1,472 @@
 @layer sui.components {
   .SuiText {
-    --SuiText-color:     attr(data-sui-text-color     type(<color>));
-    --SuiText-lineClamp: attr(data-sui-text-lineclamp type(<number>));
+    color: var(--SuiText-canvasText);
+    box-sizing: border-box;
   }
 
   .SuiText {
-    color: var(--SuiText-color);
+    --SuiText-lineClamp:  attr(data-sui-text-lineclamp  type(<number>));
+    --SuiText-canvasText: attr(data-sui-text-canvastext type(<color>));
   }
 
   .SuiText-variant-dsp-64n-4 {
-    font-size:      var(--sui-text-dsp-64n-4-size);
-    font-family:    var(--sui-text-dsp-64n-4-font);
-    font-weight:    var(--sui-text-dsp-64n-4-weight);
-    line-height:    var(--sui-text-dsp-64n-4-leading);
-    letter-spacing: var(--sui-text-dsp-64n-4-tracking);
+    font-size:      var(--sui-text-dsp-64n-4-fontSize);
+    font-family:    var(--sui-text-dsp-64n-4-fontFamily);
+    font-weight:    var(--sui-text-dsp-64n-4-fontWeight);
+    line-height:    var(--sui-text-dsp-64n-4-lineHeight);
+    letter-spacing: var(--sui-text-dsp-64n-4-letterSpacing);
   }
 
   .SuiText-variant-dsp-57n-4 {
-    font-size:      var(--sui-text-dsp-57n-4-size);
-    font-family:    var(--sui-text-dsp-57n-4-font);
-    font-weight:    var(--sui-text-dsp-57n-4-weight);
-    line-height:    var(--sui-text-dsp-57n-4-leading);
-    letter-spacing: var(--sui-text-dsp-57n-4-tracking);
+    font-size:      var(--sui-text-dsp-57n-4-fontSize);
+    font-family:    var(--sui-text-dsp-57n-4-fontFamily);
+    font-weight:    var(--sui-text-dsp-57n-4-fontWeight);
+    line-height:    var(--sui-text-dsp-57n-4-lineHeight);
+    letter-spacing: var(--sui-text-dsp-57n-4-letterSpacing);
   }
 
   .SuiText-variant-dsp-48n-4 {
-    font-size:      var(--sui-text-dsp-48n-4-size);
-    font-family:    var(--sui-text-dsp-48n-4-font);
-    font-weight:    var(--sui-text-dsp-48n-4-weight);
-    line-height:    var(--sui-text-dsp-48n-4-leading);
-    letter-spacing: var(--sui-text-dsp-48n-4-tracking);
+    font-size:      var(--sui-text-dsp-48n-4-fontSize);
+    font-family:    var(--sui-text-dsp-48n-4-fontFamily);
+    font-weight:    var(--sui-text-dsp-48n-4-fontWeight);
+    line-height:    var(--sui-text-dsp-48n-4-lineHeight);
+    letter-spacing: var(--sui-text-dsp-48n-4-letterSpacing);
   }
 
   .SuiText-variant-std-45b-4 {
-    font-size:      var(--sui-text-std-45b-4-size);
-    font-family:    var(--sui-text-std-45b-4-font);
-    font-weight:    var(--sui-text-std-45b-4-weight);
-    line-height:    var(--sui-text-std-45b-4-leading);
-    letter-spacing: var(--sui-text-std-45b-4-tracking);
+    font-size:      var(--sui-text-std-45b-4-fontSize);
+    font-family:    var(--sui-text-std-45b-4-fontFamily);
+    font-weight:    var(--sui-text-std-45b-4-fontWeight);
+    line-height:    var(--sui-text-std-45b-4-lineHeight);
+    letter-spacing: var(--sui-text-std-45b-4-letterSpacing);
   }
 
   .SuiText-variant-std-36b-4 {
-    font-size:      var(--sui-text-std-36b-4-size);
-    font-family:    var(--sui-text-std-36b-4-font);
-    font-weight:    var(--sui-text-std-36b-4-weight);
-    line-height:    var(--sui-text-std-36b-4-leading);
-    letter-spacing: var(--sui-text-std-36b-4-tracking);
+    font-size:      var(--sui-text-std-36b-4-fontSize);
+    font-family:    var(--sui-text-std-36b-4-fontFamily);
+    font-weight:    var(--sui-text-std-36b-4-fontWeight);
+    line-height:    var(--sui-text-std-36b-4-lineHeight);
+    letter-spacing: var(--sui-text-std-36b-4-letterSpacing);
   }
 
   .SuiText-variant-std-32b-5 {
-    font-size:      var(--sui-text-std-32b-5-size);
-    font-family:    var(--sui-text-std-32b-5-font);
-    font-weight:    var(--sui-text-std-32b-5-weight);
-    line-height:    var(--sui-text-std-32b-5-leading);
-    letter-spacing: var(--sui-text-std-32b-5-tracking);
+    font-size:      var(--sui-text-std-32b-5-fontSize);
+    font-family:    var(--sui-text-std-32b-5-fontFamily);
+    font-weight:    var(--sui-text-std-32b-5-fontWeight);
+    line-height:    var(--sui-text-std-32b-5-lineHeight);
+    letter-spacing: var(--sui-text-std-32b-5-letterSpacing);
   }
 
   .SuiText-variant-std-28b-5 {
-    font-size:      var(--sui-text-std-28b-5-size);
-    font-family:    var(--sui-text-std-28b-5-font);
-    font-weight:    var(--sui-text-std-28b-5-weight);
-    line-height:    var(--sui-text-std-28b-5-leading);
-    letter-spacing: var(--sui-text-std-28b-5-tracking);
+    font-size:      var(--sui-text-std-28b-5-fontSize);
+    font-family:    var(--sui-text-std-28b-5-fontFamily);
+    font-weight:    var(--sui-text-std-28b-5-fontWeight);
+    line-height:    var(--sui-text-std-28b-5-lineHeight);
+    letter-spacing: var(--sui-text-std-28b-5-letterSpacing);
   }
 
   .SuiText-variant-std-24b-5 {
-    font-size:      var(--sui-text-std-24b-5-size);
-    font-family:    var(--sui-text-std-24b-5-font);
-    font-weight:    var(--sui-text-std-24b-5-weight);
-    line-height:    var(--sui-text-std-24b-5-leading);
-    letter-spacing: var(--sui-text-std-24b-5-tracking);
+    font-size:      var(--sui-text-std-24b-5-fontSize);
+    font-family:    var(--sui-text-std-24b-5-fontFamily);
+    font-weight:    var(--sui-text-std-24b-5-fontWeight);
+    line-height:    var(--sui-text-std-24b-5-lineHeight);
+    letter-spacing: var(--sui-text-std-24b-5-letterSpacing);
   }
 
   .SuiText-variant-std-22b-5 {
-    font-size:      var(--sui-text-std-22b-5-size);
-    font-family:    var(--sui-text-std-22b-5-font);
-    font-weight:    var(--sui-text-std-22b-5-weight);
-    line-height:    var(--sui-text-std-22b-5-leading);
-    letter-spacing: var(--sui-text-std-22b-5-tracking);
+    font-size:      var(--sui-text-std-22b-5-fontSize);
+    font-family:    var(--sui-text-std-22b-5-fontFamily);
+    font-weight:    var(--sui-text-std-22b-5-fontWeight);
+    line-height:    var(--sui-text-std-22b-5-lineHeight);
+    letter-spacing: var(--sui-text-std-22b-5-letterSpacing);
   }
 
   .SuiText-variant-std-20b-5 {
-    font-size:      var(--sui-text-std-20b-5-size);
-    font-family:    var(--sui-text-std-20b-5-font);
-    font-weight:    var(--sui-text-std-20b-5-weight);
-    line-height:    var(--sui-text-std-20b-5-leading);
-    letter-spacing: var(--sui-text-std-20b-5-tracking);
+    font-size:      var(--sui-text-std-20b-5-fontSize);
+    font-family:    var(--sui-text-std-20b-5-fontFamily);
+    font-weight:    var(--sui-text-std-20b-5-fontWeight);
+    line-height:    var(--sui-text-std-20b-5-lineHeight);
+    letter-spacing: var(--sui-text-std-20b-5-letterSpacing);
   }
 
   .SuiText-variant-std-18b-6 {
-    font-size:      var(--sui-text-std-18b-6-size);
-    font-family:    var(--sui-text-std-18b-6-font);
-    font-weight:    var(--sui-text-std-18b-6-weight);
-    line-height:    var(--sui-text-std-18b-6-leading);
-    letter-spacing: var(--sui-text-std-18b-6-tracking);
+    font-size:      var(--sui-text-std-18b-6-fontSize);
+    font-family:    var(--sui-text-std-18b-6-fontFamily);
+    font-weight:    var(--sui-text-std-18b-6-fontWeight);
+    line-height:    var(--sui-text-std-18b-6-lineHeight);
+    letter-spacing: var(--sui-text-std-18b-6-letterSpacing);
   }
 
   .SuiText-variant-std-17b-7 {
-    font-size:      var(--sui-text-std-17b-7-size);
-    font-family:    var(--sui-text-std-17b-7-font);
-    font-weight:    var(--sui-text-std-17b-7-weight);
-    line-height:    var(--sui-text-std-17b-7-leading);
-    letter-spacing: var(--sui-text-std-17b-7-tracking);
+    font-size:      var(--sui-text-std-17b-7-fontSize);
+    font-family:    var(--sui-text-std-17b-7-fontFamily);
+    font-weight:    var(--sui-text-std-17b-7-fontWeight);
+    line-height:    var(--sui-text-std-17b-7-lineHeight);
+    letter-spacing: var(--sui-text-std-17b-7-letterSpacing);
   }
 
   .SuiText-variant-std-16b-7 {
-    font-size:      var(--sui-text-std-16b-7-size);
-    font-family:    var(--sui-text-std-16b-7-font);
-    font-weight:    var(--sui-text-std-16b-7-weight);
-    line-height:    var(--sui-text-std-16b-7-leading);
-    letter-spacing: var(--sui-text-std-16b-7-tracking);
+    font-size:      var(--sui-text-std-16b-7-fontSize);
+    font-family:    var(--sui-text-std-16b-7-fontFamily);
+    font-weight:    var(--sui-text-std-16b-7-fontWeight);
+    line-height:    var(--sui-text-std-16b-7-lineHeight);
+    letter-spacing: var(--sui-text-std-16b-7-letterSpacing);
   }
 
   .SuiText-variant-std-32m-5 {
-    font-size:      var(--sui-text-std-32m-5-size);
-    font-family:    var(--sui-text-std-32m-5-font);
-    font-weight:    var(--sui-text-std-32m-5-weight);
-    line-height:    var(--sui-text-std-32m-5-leading);
-    letter-spacing: var(--sui-text-std-32m-5-tracking);
+    font-size:      var(--sui-text-std-32m-5-fontSize);
+    font-family:    var(--sui-text-std-32m-5-fontFamily);
+    font-weight:    var(--sui-text-std-32m-5-fontWeight);
+    line-height:    var(--sui-text-std-32m-5-lineHeight);
+    letter-spacing: var(--sui-text-std-32m-5-letterSpacing);
   }
 
   .SuiText-variant-std-28m-5 {
-    font-size:      var(--sui-text-std-28m-5-size);
-    font-family:    var(--sui-text-std-28m-5-font);
-    font-weight:    var(--sui-text-std-28m-5-weight);
-    line-height:    var(--sui-text-std-28m-5-leading);
-    letter-spacing: var(--sui-text-std-28m-5-tracking);
+    font-size:      var(--sui-text-std-28m-5-fontSize);
+    font-family:    var(--sui-text-std-28m-5-fontFamily);
+    font-weight:    var(--sui-text-std-28m-5-fontWeight);
+    line-height:    var(--sui-text-std-28m-5-lineHeight);
+    letter-spacing: var(--sui-text-std-28m-5-letterSpacing);
   }
 
   .SuiText-variant-std-24m-5 {
-    font-size:      var(--sui-text-std-24m-5-size);
-    font-family:    var(--sui-text-std-24m-5-font);
-    font-weight:    var(--sui-text-std-24m-5-weight);
-    line-height:    var(--sui-text-std-24m-5-leading);
-    letter-spacing: var(--sui-text-std-24m-5-tracking);
+    font-size:      var(--sui-text-std-24m-5-fontSize);
+    font-family:    var(--sui-text-std-24m-5-fontFamily);
+    font-weight:    var(--sui-text-std-24m-5-fontWeight);
+    line-height:    var(--sui-text-std-24m-5-lineHeight);
+    letter-spacing: var(--sui-text-std-24m-5-letterSpacing);
   }
 
   .SuiText-variant-std-20m-5 {
-    font-size:      var(--sui-text-std-20m-5-size);
-    font-family:    var(--sui-text-std-20m-5-font);
-    font-weight:    var(--sui-text-std-20m-5-weight);
-    line-height:    var(--sui-text-std-20m-5-leading);
-    letter-spacing: var(--sui-text-std-20m-5-tracking);
+    font-size:      var(--sui-text-std-20m-5-fontSize);
+    font-family:    var(--sui-text-std-20m-5-fontFamily);
+    font-weight:    var(--sui-text-std-20m-5-fontWeight);
+    line-height:    var(--sui-text-std-20m-5-lineHeight);
+    letter-spacing: var(--sui-text-std-20m-5-letterSpacing);
   }
 
   .SuiText-variant-std-17m-7 {
-    font-size:      var(--sui-text-std-17m-7-size);
-    font-family:    var(--sui-text-std-17m-7-font);
-    font-weight:    var(--sui-text-std-17m-7-weight);
-    line-height:    var(--sui-text-std-17m-7-leading);
-    letter-spacing: var(--sui-text-std-17m-7-tracking);
+    font-size:      var(--sui-text-std-17m-7-fontSize);
+    font-family:    var(--sui-text-std-17m-7-fontFamily);
+    font-weight:    var(--sui-text-std-17m-7-fontWeight);
+    line-height:    var(--sui-text-std-17m-7-lineHeight);
+    letter-spacing: var(--sui-text-std-17m-7-letterSpacing);
   }
 
   .SuiText-variant-std-16m-7 {
-    font-size:      var(--sui-text-std-16m-7-size);
-    font-family:    var(--sui-text-std-16m-7-font);
-    font-weight:    var(--sui-text-std-16m-7-weight);
-    line-height:    var(--sui-text-std-16m-7-leading);
-    letter-spacing: var(--sui-text-std-16m-7-tracking);
+    font-size:      var(--sui-text-std-16m-7-fontSize);
+    font-family:    var(--sui-text-std-16m-7-fontFamily);
+    font-weight:    var(--sui-text-std-16m-7-fontWeight);
+    line-height:    var(--sui-text-std-16m-7-lineHeight);
+    letter-spacing: var(--sui-text-std-16m-7-letterSpacing);
   }
 
   .SuiText-variant-std-45n-4 {
-    font-size:      var(--sui-text-std-45n-4-size);
-    font-family:    var(--sui-text-std-45n-4-font);
-    font-weight:    var(--sui-text-std-45n-4-weight);
-    line-height:    var(--sui-text-std-45n-4-leading);
-    letter-spacing: var(--sui-text-std-45n-4-tracking);
+    font-size:      var(--sui-text-std-45n-4-fontSize);
+    font-family:    var(--sui-text-std-45n-4-fontFamily);
+    font-weight:    var(--sui-text-std-45n-4-fontWeight);
+    line-height:    var(--sui-text-std-45n-4-lineHeight);
+    letter-spacing: var(--sui-text-std-45n-4-letterSpacing);
   }
 
   .SuiText-variant-std-36n-4 {
-    font-size:      var(--sui-text-std-36n-4-size);
-    font-family:    var(--sui-text-std-36n-4-font);
-    font-weight:    var(--sui-text-std-36n-4-weight);
-    line-height:    var(--sui-text-std-36n-4-leading);
-    letter-spacing: var(--sui-text-std-36n-4-tracking);
+    font-size:      var(--sui-text-std-36n-4-fontSize);
+    font-family:    var(--sui-text-std-36n-4-fontFamily);
+    font-weight:    var(--sui-text-std-36n-4-fontWeight);
+    line-height:    var(--sui-text-std-36n-4-lineHeight);
+    letter-spacing: var(--sui-text-std-36n-4-letterSpacing);
   }
 
   .SuiText-variant-std-32n-5 {
-    font-size:      var(--sui-text-std-32n-5-size);
-    font-family:    var(--sui-text-std-32n-5-font);
-    font-weight:    var(--sui-text-std-32n-5-weight);
-    line-height:    var(--sui-text-std-32n-5-leading);
-    letter-spacing: var(--sui-text-std-32n-5-tracking);
+    font-size:      var(--sui-text-std-32n-5-fontSize);
+    font-family:    var(--sui-text-std-32n-5-fontFamily);
+    font-weight:    var(--sui-text-std-32n-5-fontWeight);
+    line-height:    var(--sui-text-std-32n-5-lineHeight);
+    letter-spacing: var(--sui-text-std-32n-5-letterSpacing);
   }
 
   .SuiText-variant-std-28n-5 {
-    font-size:      var(--sui-text-std-28n-5-size);
-    font-family:    var(--sui-text-std-28n-5-font);
-    font-weight:    var(--sui-text-std-28n-5-weight);
-    line-height:    var(--sui-text-std-28n-5-leading);
-    letter-spacing: var(--sui-text-std-28n-5-tracking);
+    font-size:      var(--sui-text-std-28n-5-fontSize);
+    font-family:    var(--sui-text-std-28n-5-fontFamily);
+    font-weight:    var(--sui-text-std-28n-5-fontWeight);
+    line-height:    var(--sui-text-std-28n-5-lineHeight);
+    letter-spacing: var(--sui-text-std-28n-5-letterSpacing);
   }
 
   .SuiText-variant-std-26n-5 {
-    font-size:      var(--sui-text-std-26n-5-size);
-    font-family:    var(--sui-text-std-26n-5-font);
-    font-weight:    var(--sui-text-std-26n-5-weight);
-    line-height:    var(--sui-text-std-26n-5-leading);
-    letter-spacing: var(--sui-text-std-26n-5-tracking);
+    font-size:      var(--sui-text-std-26n-5-fontSize);
+    font-family:    var(--sui-text-std-26n-5-fontFamily);
+    font-weight:    var(--sui-text-std-26n-5-fontWeight);
+    line-height:    var(--sui-text-std-26n-5-lineHeight);
+    letter-spacing: var(--sui-text-std-26n-5-letterSpacing);
   }
 
   .SuiText-variant-std-24n-5 {
-    font-size:      var(--sui-text-std-24n-5-size);
-    font-family:    var(--sui-text-std-24n-5-font);
-    font-weight:    var(--sui-text-std-24n-5-weight);
-    line-height:    var(--sui-text-std-24n-5-leading);
-    letter-spacing: var(--sui-text-std-24n-5-tracking);
+    font-size:      var(--sui-text-std-24n-5-fontSize);
+    font-family:    var(--sui-text-std-24n-5-fontFamily);
+    font-weight:    var(--sui-text-std-24n-5-fontWeight);
+    line-height:    var(--sui-text-std-24n-5-lineHeight);
+    letter-spacing: var(--sui-text-std-24n-5-letterSpacing);
   }
 
   .SuiText-variant-std-22n-5 {
-    font-size:      var(--sui-text-std-22n-5-size);
-    font-family:    var(--sui-text-std-22n-5-font);
-    font-weight:    var(--sui-text-std-22n-5-weight);
-    line-height:    var(--sui-text-std-22n-5-leading);
-    letter-spacing: var(--sui-text-std-22n-5-tracking);
+    font-size:      var(--sui-text-std-22n-5-fontSize);
+    font-family:    var(--sui-text-std-22n-5-fontFamily);
+    font-weight:    var(--sui-text-std-22n-5-fontWeight);
+    line-height:    var(--sui-text-std-22n-5-lineHeight);
+    letter-spacing: var(--sui-text-std-22n-5-letterSpacing);
   }
 
   .SuiText-variant-std-20n-5 {
-    font-size:      var(--sui-text-std-20n-5-size);
-    font-family:    var(--sui-text-std-20n-5-font);
-    font-weight:    var(--sui-text-std-20n-5-weight);
-    line-height:    var(--sui-text-std-20n-5-leading);
-    letter-spacing: var(--sui-text-std-20n-5-tracking);
+    font-size:      var(--sui-text-std-20n-5-fontSize);
+    font-family:    var(--sui-text-std-20n-5-fontFamily);
+    font-weight:    var(--sui-text-std-20n-5-fontWeight);
+    line-height:    var(--sui-text-std-20n-5-lineHeight);
+    letter-spacing: var(--sui-text-std-20n-5-letterSpacing);
   }
 
   .SuiText-variant-std-18n-6 {
-    font-size:      var(--sui-text-std-18n-6-size);
-    font-family:    var(--sui-text-std-18n-6-font);
-    font-weight:    var(--sui-text-std-18n-6-weight);
-    line-height:    var(--sui-text-std-18n-6-leading);
-    letter-spacing: var(--sui-text-std-18n-6-tracking);
+    font-size:      var(--sui-text-std-18n-6-fontSize);
+    font-family:    var(--sui-text-std-18n-6-fontFamily);
+    font-weight:    var(--sui-text-std-18n-6-fontWeight);
+    line-height:    var(--sui-text-std-18n-6-lineHeight);
+    letter-spacing: var(--sui-text-std-18n-6-letterSpacing);
   }
 
   .SuiText-variant-std-17n-7 {
-    font-size:      var(--sui-text-std-17n-7-size);
-    font-family:    var(--sui-text-std-17n-7-font);
-    font-weight:    var(--sui-text-std-17n-7-weight);
-    line-height:    var(--sui-text-std-17n-7-leading);
-    letter-spacing: var(--sui-text-std-17n-7-tracking);
+    font-size:      var(--sui-text-std-17n-7-fontSize);
+    font-family:    var(--sui-text-std-17n-7-fontFamily);
+    font-weight:    var(--sui-text-std-17n-7-fontWeight);
+    line-height:    var(--sui-text-std-17n-7-lineHeight);
+    letter-spacing: var(--sui-text-std-17n-7-letterSpacing);
   }
 
   .SuiText-variant-std-16n-7 {
-    font-size:      var(--sui-text-std-16n-7-size);
-    font-family:    var(--sui-text-std-16n-7-font);
-    font-weight:    var(--sui-text-std-16n-7-weight);
-    line-height:    var(--sui-text-std-16n-7-leading);
-    letter-spacing: var(--sui-text-std-16n-7-tracking);
+    font-size:      var(--sui-text-std-16n-7-fontSize);
+    font-family:    var(--sui-text-std-16n-7-fontFamily);
+    font-weight:    var(--sui-text-std-16n-7-fontWeight);
+    line-height:    var(--sui-text-std-16n-7-lineHeight);
+    letter-spacing: var(--sui-text-std-16n-7-letterSpacing);
   }
 
   .SuiText-variant-dns-17b-3 {
-    font-size:      var(--sui-text-dns-17b-3-size);
-    font-family:    var(--sui-text-dns-17b-3-font);
-    font-weight:    var(--sui-text-dns-17b-3-weight);
-    line-height:    var(--sui-text-dns-17b-3-leading);
-    letter-spacing: var(--sui-text-dns-17b-3-tracking);
+    font-size:      var(--sui-text-dns-17b-3-fontSize);
+    font-family:    var(--sui-text-dns-17b-3-fontFamily);
+    font-weight:    var(--sui-text-dns-17b-3-fontWeight);
+    line-height:    var(--sui-text-dns-17b-3-lineHeight);
+    letter-spacing: var(--sui-text-dns-17b-3-letterSpacing);
   }
 
   .SuiText-variant-dns-17n-3 {
-    font-size:      var(--sui-text-dns-17n-3-size);
-    font-family:    var(--sui-text-dns-17n-3-font);
-    font-weight:    var(--sui-text-dns-17n-3-weight);
-    line-height:    var(--sui-text-dns-17n-3-leading);
-    letter-spacing: var(--sui-text-dns-17n-3-tracking);
+    font-size:      var(--sui-text-dns-17n-3-fontSize);
+    font-family:    var(--sui-text-dns-17n-3-fontFamily);
+    font-weight:    var(--sui-text-dns-17n-3-fontWeight);
+    line-height:    var(--sui-text-dns-17n-3-lineHeight);
+    letter-spacing: var(--sui-text-dns-17n-3-letterSpacing);
   }
 
   .SuiText-variant-dns-17b-2 {
-    font-size:      var(--sui-text-dns-17b-2-size);
-    font-family:    var(--sui-text-dns-17b-2-font);
-    font-weight:    var(--sui-text-dns-17b-2-weight);
-    line-height:    var(--sui-text-dns-17b-2-leading);
-    letter-spacing: var(--sui-text-dns-17b-2-tracking);
+    font-size:      var(--sui-text-dns-17b-2-fontSize);
+    font-family:    var(--sui-text-dns-17b-2-fontFamily);
+    font-weight:    var(--sui-text-dns-17b-2-fontWeight);
+    line-height:    var(--sui-text-dns-17b-2-lineHeight);
+    letter-spacing: var(--sui-text-dns-17b-2-letterSpacing);
   }
 
   .SuiText-variant-dns-17n-2 {
-    font-size:      var(--sui-text-dns-17n-2-size);
-    font-family:    var(--sui-text-dns-17n-2-font);
-    font-weight:    var(--sui-text-dns-17n-2-weight);
-    line-height:    var(--sui-text-dns-17n-2-leading);
-    letter-spacing: var(--sui-text-dns-17n-2-tracking);
+    font-size:      var(--sui-text-dns-17n-2-fontSize);
+    font-family:    var(--sui-text-dns-17n-2-fontFamily);
+    font-weight:    var(--sui-text-dns-17n-2-fontWeight);
+    line-height:    var(--sui-text-dns-17n-2-lineHeight);
+    letter-spacing: var(--sui-text-dns-17n-2-letterSpacing);
   }
 
   .SuiText-variant-dns-16b-3 {
-    font-size:      var(--sui-text-dns-16b-3-size);
-    font-family:    var(--sui-text-dns-16b-3-font);
-    font-weight:    var(--sui-text-dns-16b-3-weight);
-    line-height:    var(--sui-text-dns-16b-3-leading);
-    letter-spacing: var(--sui-text-dns-16b-3-tracking);
+    font-size:      var(--sui-text-dns-16b-3-fontSize);
+    font-family:    var(--sui-text-dns-16b-3-fontFamily);
+    font-weight:    var(--sui-text-dns-16b-3-fontWeight);
+    line-height:    var(--sui-text-dns-16b-3-lineHeight);
+    letter-spacing: var(--sui-text-dns-16b-3-letterSpacing);
   }
 
   .SuiText-variant-dns-16n-3 {
-    font-size:      var(--sui-text-dns-16n-3-size);
-    font-family:    var(--sui-text-dns-16n-3-font);
-    font-weight:    var(--sui-text-dns-16n-3-weight);
-    line-height:    var(--sui-text-dns-16n-3-leading);
-    letter-spacing: var(--sui-text-dns-16n-3-tracking);
+    font-size:      var(--sui-text-dns-16n-3-fontSize);
+    font-family:    var(--sui-text-dns-16n-3-fontFamily);
+    font-weight:    var(--sui-text-dns-16n-3-fontWeight);
+    line-height:    var(--sui-text-dns-16n-3-lineHeight);
+    letter-spacing: var(--sui-text-dns-16n-3-letterSpacing);
   }
 
   .SuiText-variant-dns-16b-2 {
-    font-size:      var(--sui-text-dns-16b-2-size);
-    font-family:    var(--sui-text-dns-16b-2-font);
-    font-weight:    var(--sui-text-dns-16b-2-weight);
-    line-height:    var(--sui-text-dns-16b-2-leading);
-    letter-spacing: var(--sui-text-dns-16b-2-tracking);
+    font-size:      var(--sui-text-dns-16b-2-fontSize);
+    font-family:    var(--sui-text-dns-16b-2-fontFamily);
+    font-weight:    var(--sui-text-dns-16b-2-fontWeight);
+    line-height:    var(--sui-text-dns-16b-2-lineHeight);
+    letter-spacing: var(--sui-text-dns-16b-2-letterSpacing);
   }
 
   .SuiText-variant-dns-16n-2 {
-    font-size:      var(--sui-text-dns-16n-2-size);
-    font-family:    var(--sui-text-dns-16n-2-font);
-    font-weight:    var(--sui-text-dns-16n-2-weight);
-    line-height:    var(--sui-text-dns-16n-2-leading);
-    letter-spacing: var(--sui-text-dns-16n-2-tracking);
+    font-size:      var(--sui-text-dns-16n-2-fontSize);
+    font-family:    var(--sui-text-dns-16n-2-fontFamily);
+    font-weight:    var(--sui-text-dns-16n-2-fontWeight);
+    line-height:    var(--sui-text-dns-16n-2-lineHeight);
+    letter-spacing: var(--sui-text-dns-16n-2-letterSpacing);
   }
 
   .SuiText-variant-dns-14b-3 {
-    font-size:      var(--sui-text-dns-14b-3-size);
-    font-family:    var(--sui-text-dns-14b-3-font);
-    font-weight:    var(--sui-text-dns-14b-3-weight);
-    line-height:    var(--sui-text-dns-14b-3-leading);
-    letter-spacing: var(--sui-text-dns-14b-3-tracking);
+    font-size:      var(--sui-text-dns-14b-3-fontSize);
+    font-family:    var(--sui-text-dns-14b-3-fontFamily);
+    font-weight:    var(--sui-text-dns-14b-3-fontWeight);
+    line-height:    var(--sui-text-dns-14b-3-lineHeight);
+    letter-spacing: var(--sui-text-dns-14b-3-letterSpacing);
   }
 
   .SuiText-variant-dns-14n-3 {
-    font-size:      var(--sui-text-dns-14n-3-size);
-    font-family:    var(--sui-text-dns-14n-3-font);
-    font-weight:    var(--sui-text-dns-14n-3-weight);
-    line-height:    var(--sui-text-dns-14n-3-leading);
-    letter-spacing: var(--sui-text-dns-14n-3-tracking);
+    font-size:      var(--sui-text-dns-14n-3-fontSize);
+    font-family:    var(--sui-text-dns-14n-3-fontFamily);
+    font-weight:    var(--sui-text-dns-14n-3-fontWeight);
+    line-height:    var(--sui-text-dns-14n-3-lineHeight);
+    letter-spacing: var(--sui-text-dns-14n-3-letterSpacing);
   }
 
   .SuiText-variant-dns-14b-2 {
-    font-size:      var(--sui-text-dns-14b-2-size);
-    font-family:    var(--sui-text-dns-14b-2-font);
-    font-weight:    var(--sui-text-dns-14b-2-weight);
-    line-height:    var(--sui-text-dns-14b-2-leading);
-    letter-spacing: var(--sui-text-dns-14b-2-tracking);
+    font-size:      var(--sui-text-dns-14b-2-fontSize);
+    font-family:    var(--sui-text-dns-14b-2-fontFamily);
+    font-weight:    var(--sui-text-dns-14b-2-fontWeight);
+    line-height:    var(--sui-text-dns-14b-2-lineHeight);
+    letter-spacing: var(--sui-text-dns-14b-2-letterSpacing);
   }
 
   .SuiText-variant-dns-14n-2 {
-    font-size:      var(--sui-text-dns-14n-2-size);
-    font-family:    var(--sui-text-dns-14n-2-font);
-    font-weight:    var(--sui-text-dns-14n-2-weight);
-    line-height:    var(--sui-text-dns-14n-2-leading);
-    letter-spacing: var(--sui-text-dns-14n-2-tracking);
+    font-size:      var(--sui-text-dns-14n-2-fontSize);
+    font-family:    var(--sui-text-dns-14n-2-fontFamily);
+    font-weight:    var(--sui-text-dns-14n-2-fontWeight);
+    line-height:    var(--sui-text-dns-14n-2-lineHeight);
+    letter-spacing: var(--sui-text-dns-14n-2-letterSpacing);
   }
 
   .SuiText-variant-oln-17b-1 {
-    font-size:      var(--sui-text-oln-17b-1-size);
-    font-family:    var(--sui-text-oln-17b-1-font);
-    font-weight:    var(--sui-text-oln-17b-1-weight);
-    line-height:    var(--sui-text-oln-17b-1-leading);
-    letter-spacing: var(--sui-text-oln-17b-1-tracking);
+    font-size:      var(--sui-text-oln-17b-1-fontSize);
+    font-family:    var(--sui-text-oln-17b-1-fontFamily);
+    font-weight:    var(--sui-text-oln-17b-1-fontWeight);
+    line-height:    var(--sui-text-oln-17b-1-lineHeight);
+    letter-spacing: var(--sui-text-oln-17b-1-letterSpacing);
   }
 
   .SuiText-variant-oln-17m-1 {
-    font-size:      var(--sui-text-oln-17m-1-size);
-    font-family:    var(--sui-text-oln-17m-1-font);
-    font-weight:    var(--sui-text-oln-17m-1-weight);
-    line-height:    var(--sui-text-oln-17m-1-leading);
-    letter-spacing: var(--sui-text-oln-17m-1-tracking);
+    font-size:      var(--sui-text-oln-17m-1-fontSize);
+    font-family:    var(--sui-text-oln-17m-1-fontFamily);
+    font-weight:    var(--sui-text-oln-17m-1-fontWeight);
+    line-height:    var(--sui-text-oln-17m-1-lineHeight);
+    letter-spacing: var(--sui-text-oln-17m-1-letterSpacing);
   }
 
   .SuiText-variant-oln-17n-1 {
-    font-size:      var(--sui-text-oln-17n-1-size);
-    font-family:    var(--sui-text-oln-17n-1-font);
-    font-weight:    var(--sui-text-oln-17n-1-weight);
-    line-height:    var(--sui-text-oln-17n-1-leading);
-    letter-spacing: var(--sui-text-oln-17n-1-tracking);
+    font-size:      var(--sui-text-oln-17n-1-fontSize);
+    font-family:    var(--sui-text-oln-17n-1-fontFamily);
+    font-weight:    var(--sui-text-oln-17n-1-fontWeight);
+    line-height:    var(--sui-text-oln-17n-1-lineHeight);
+    letter-spacing: var(--sui-text-oln-17n-1-letterSpacing);
   }
 
   .SuiText-variant-oln-16b-1 {
-    font-size:      var(--sui-text-oln-16b-1-size);
-    font-family:    var(--sui-text-oln-16b-1-font);
-    font-weight:    var(--sui-text-oln-16b-1-weight);
-    line-height:    var(--sui-text-oln-16b-1-leading);
-    letter-spacing: var(--sui-text-oln-16b-1-tracking);
+    font-size:      var(--sui-text-oln-16b-1-fontSize);
+    font-family:    var(--sui-text-oln-16b-1-fontFamily);
+    font-weight:    var(--sui-text-oln-16b-1-fontWeight);
+    line-height:    var(--sui-text-oln-16b-1-lineHeight);
+    letter-spacing: var(--sui-text-oln-16b-1-letterSpacing);
   }
 
   .SuiText-variant-oln-16m-1 {
-    font-size:      var(--sui-text-oln-16m-1-size);
-    font-family:    var(--sui-text-oln-16m-1-font);
-    font-weight:    var(--sui-text-oln-16m-1-weight);
-    line-height:    var(--sui-text-oln-16m-1-leading);
-    letter-spacing: var(--sui-text-oln-16m-1-tracking);
+    font-size:      var(--sui-text-oln-16m-1-fontSize);
+    font-family:    var(--sui-text-oln-16m-1-fontFamily);
+    font-weight:    var(--sui-text-oln-16m-1-fontWeight);
+    line-height:    var(--sui-text-oln-16m-1-lineHeight);
+    letter-spacing: var(--sui-text-oln-16m-1-letterSpacing);
   }
 
   .SuiText-variant-oln-16n-1 {
-    font-size:      var(--sui-text-oln-16n-1-size);
-    font-family:    var(--sui-text-oln-16n-1-font);
-    font-weight:    var(--sui-text-oln-16n-1-weight);
-    line-height:    var(--sui-text-oln-16n-1-leading);
-    letter-spacing: var(--sui-text-oln-16n-1-tracking);
+    font-size:      var(--sui-text-oln-16n-1-fontSize);
+    font-family:    var(--sui-text-oln-16n-1-fontFamily);
+    font-weight:    var(--sui-text-oln-16n-1-fontWeight);
+    line-height:    var(--sui-text-oln-16n-1-lineHeight);
+    letter-spacing: var(--sui-text-oln-16n-1-letterSpacing);
   }
 
   .SuiText-variant-oln-14b-1 {
-    font-size:      var(--sui-text-oln-14b-1-size);
-    font-family:    var(--sui-text-oln-14b-1-font);
-    font-weight:    var(--sui-text-oln-14b-1-weight);
-    line-height:    var(--sui-text-oln-14b-1-leading);
-    letter-spacing: var(--sui-text-oln-14b-1-tracking);
+    font-size:      var(--sui-text-oln-14b-1-fontSize);
+    font-family:    var(--sui-text-oln-14b-1-fontFamily);
+    font-weight:    var(--sui-text-oln-14b-1-fontWeight);
+    line-height:    var(--sui-text-oln-14b-1-lineHeight);
+    letter-spacing: var(--sui-text-oln-14b-1-letterSpacing);
   }
 
   .SuiText-variant-oln-14m-1 {
-    font-size:      var(--sui-text-oln-14m-1-size);
-    font-family:    var(--sui-text-oln-14m-1-font);
-    font-weight:    var(--sui-text-oln-14m-1-weight);
-    line-height:    var(--sui-text-oln-14m-1-leading);
-    letter-spacing: var(--sui-text-oln-14m-1-tracking);
+    font-size:      var(--sui-text-oln-14m-1-fontSize);
+    font-family:    var(--sui-text-oln-14m-1-fontFamily);
+    font-weight:    var(--sui-text-oln-14m-1-fontWeight);
+    line-height:    var(--sui-text-oln-14m-1-lineHeight);
+    letter-spacing: var(--sui-text-oln-14m-1-letterSpacing);
   }
 
   .SuiText-variant-oln-14n-1 {
-    font-size:      var(--sui-text-oln-14n-1-size);
-    font-family:    var(--sui-text-oln-14n-1-font);
-    font-weight:    var(--sui-text-oln-14n-1-weight);
-    line-height:    var(--sui-text-oln-14n-1-leading);
-    letter-spacing: var(--sui-text-oln-14n-1-tracking);
+    font-size:      var(--sui-text-oln-14n-1-fontSize);
+    font-family:    var(--sui-text-oln-14n-1-fontFamily);
+    font-weight:    var(--sui-text-oln-14n-1-fontWeight);
+    line-height:    var(--sui-text-oln-14n-1-lineHeight);
+    letter-spacing: var(--sui-text-oln-14n-1-letterSpacing);
   }
 
   .SuiText-variant-mono-17b-5 {
-    font-size:      var(--sui-text-mono-17b-5-size);
-    font-family:    var(--sui-text-mono-17b-5-font);
-    font-weight:    var(--sui-text-mono-17b-5-weight);
-    line-height:    var(--sui-text-mono-17b-5-leading);
-    letter-spacing: var(--sui-text-mono-17b-5-tracking);
+    font-size:      var(--sui-text-mono-17b-5-fontSize);
+    font-family:    var(--sui-text-mono-17b-5-fontFamily);
+    font-weight:    var(--sui-text-mono-17b-5-fontWeight);
+    line-height:    var(--sui-text-mono-17b-5-lineHeight);
+    letter-spacing: var(--sui-text-mono-17b-5-letterSpacing);
   }
 
   .SuiText-variant-mono-17n-5 {
-    font-size:      var(--sui-text-mono-17n-5-size);
-    font-family:    var(--sui-text-mono-17n-5-font);
-    font-weight:    var(--sui-text-mono-17n-5-weight);
-    line-height:    var(--sui-text-mono-17n-5-leading);
-    letter-spacing: var(--sui-text-mono-17n-5-tracking);
+    font-size:      var(--sui-text-mono-17n-5-fontSize);
+    font-family:    var(--sui-text-mono-17n-5-fontFamily);
+    font-weight:    var(--sui-text-mono-17n-5-fontWeight);
+    line-height:    var(--sui-text-mono-17n-5-lineHeight);
+    letter-spacing: var(--sui-text-mono-17n-5-letterSpacing);
   }
 
   .SuiText-variant-mono-16b-5 {
-    font-size:      var(--sui-text-mono-16b-5-size);
-    font-family:    var(--sui-text-mono-16b-5-font);
-    font-weight:    var(--sui-text-mono-16b-5-weight);
-    line-height:    var(--sui-text-mono-16b-5-leading);
-    letter-spacing: var(--sui-text-mono-16b-5-tracking);
+    font-size:      var(--sui-text-mono-16b-5-fontSize);
+    font-family:    var(--sui-text-mono-16b-5-fontFamily);
+    font-weight:    var(--sui-text-mono-16b-5-fontWeight);
+    line-height:    var(--sui-text-mono-16b-5-lineHeight);
+    letter-spacing: var(--sui-text-mono-16b-5-letterSpacing);
   }
 
   .SuiText-variant-mono-16n-5 {
-    font-size:      var(--sui-text-mono-16n-5-size);
-    font-family:    var(--sui-text-mono-16n-5-font);
-    font-weight:    var(--sui-text-mono-16n-5-weight);
-    line-height:    var(--sui-text-mono-16n-5-leading);
-    letter-spacing: var(--sui-text-mono-16n-5-tracking);
+    font-size:      var(--sui-text-mono-16n-5-fontSize);
+    font-family:    var(--sui-text-mono-16n-5-fontFamily);
+    font-weight:    var(--sui-text-mono-16n-5-fontWeight);
+    line-height:    var(--sui-text-mono-16n-5-lineHeight);
+    letter-spacing: var(--sui-text-mono-16n-5-letterSpacing);
   }
 
   .SuiText-variant-mono-14b-5 {
-    font-size:      var(--sui-text-mono-14b-5-size);
-    font-family:    var(--sui-text-mono-14b-5-font);
-    font-weight:    var(--sui-text-mono-14b-5-weight);
-    line-height:    var(--sui-text-mono-14b-5-leading);
-    letter-spacing: var(--sui-text-mono-14b-5-tracking);
+    font-size:      var(--sui-text-mono-14b-5-fontSize);
+    font-family:    var(--sui-text-mono-14b-5-fontFamily);
+    font-weight:    var(--sui-text-mono-14b-5-fontWeight);
+    line-height:    var(--sui-text-mono-14b-5-lineHeight);
+    letter-spacing: var(--sui-text-mono-14b-5-letterSpacing);
   }
 
   .SuiText-variant-mono-14n-5 {
-    font-size:      var(--sui-text-mono-14n-5-size);
-    font-family:    var(--sui-text-mono-14n-5-font);
-    font-weight:    var(--sui-text-mono-14n-5-weight);
-    line-height:    var(--sui-text-mono-14n-5-leading);
-    letter-spacing: var(--sui-text-mono-14n-5-tracking);
+    font-size:      var(--sui-text-mono-14n-5-fontSize);
+    font-family:    var(--sui-text-mono-14n-5-fontFamily);
+    font-weight:    var(--sui-text-mono-14n-5-fontWeight);
+    line-height:    var(--sui-text-mono-14n-5-lineHeight);
+    letter-spacing: var(--sui-text-mono-14n-5-letterSpacing);
   }
 
   .SuiText-inline {
-    display: inline-block;
+    display: inline block;
   }
 
   .SuiText-oneline {

@@ -1,6 +1,7 @@
 import { Slot } from "@suru-ui/slot";
 import clsx from "clsx";
 import * as React from "react";
+import classes from "../../classes";
 import { useContext } from "./select.context";
 
 type ButtonParams = {
@@ -15,14 +16,16 @@ export default function SuiSelectButton(props: ButtonProps): React.ReactElement 
   const {
     size,
     color,
-    conform,
+    fieldId,
+    invalid,
     disabled: disabledCtx,
+    required,
   } = useContext();
   const {
     asChild,
     disabled = disabledCtx,
     className,
-    popoverTarget = `${conform.id}-listbox`,
+    popoverTarget = `${fieldId}-listbox`,
     ...otherButtonProps
   } = props;
   const Comp = asChild ? Slot : "button";
@@ -37,6 +40,11 @@ export default function SuiSelectButton(props: ButtonProps): React.ReactElement 
         "SuiSelectButton",
         `SuiSelectButton-size-${size}`,
         `SuiSelectButton-color-${color}`,
+        {
+          [classes.invalid]: invalid,
+          [classes.disabled]: disabled,
+          [classes.required]: required,
+        },
       )}
       popoverTarget={popoverTarget}
     />

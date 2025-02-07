@@ -1,11 +1,12 @@
 import { Slot, Slottable } from "@suru-ui/slot";
-import { useConstantValue } from "@suru-ui/utils";
+import { useImmutable } from "@suru-ui/utils";
 import clsx from "clsx";
 import * as React from "react";
+import classes from "../../classes";
 import { SelectProps } from "../../conform";
 import type { Color, Sizing } from "../../theme";
 import Conform from "./select.conform";
-import { Context, type ContextValue } from "./select.context";
+import { Context } from "./select.context";
 
 type RootParams = {
   conform: SelectProps;
@@ -18,10 +19,7 @@ type RootParams = {
 };
 
 export type RootProps =
-  & Omit<
-    React.ComponentProps<"div">,
-    keyof RootParams | "aria-invalid" | "aria-disabled" | "aria-required" | "aria-describedby"
-  >
+  & Omit<React.ComponentProps<"div">, keyof RootParams | "aria-invalid" | "aria-describedby">
   & RootParams;
 
 export default function SuiSelectRoot(props: RootProps): React.ReactElement {
@@ -29,44 +27,33 @@ export default function SuiSelectRoot(props: RootProps): React.ReactElement {
     size = "md",
     color = "blue",
     asChild,
-    conform: conformProp,
+    conform,
     disabled = false,
     children,
     className,
+    "aria-disabled": ariaDisabled,
+    "aria-required": ariaRequired,
     selectedContentElement,
     ...otherRootProps
   } = props;
   const Comp = asChild ? Slot : "div";
-  const conform = React.useMemo<ContextValue["conform"]>(
-    () => ({
-      id: conformProp.id,
-      name: conformProp.name,
-      form: conformProp.form,
-      required: conformProp.required,
-      defaultValue: conformProp.defaultValue,
-    }),
-    [
-      conformProp.id,
-      conformProp.name,
-      conformProp.form,
-      conformProp.required,
-      conformProp.defaultValue,
-    ],
+  const {
+    id: fieldId,
+    form: formId,
+    name: fieldName,
+    multiple: multipleProp = false,
+    required = false,
+    defaultValue,
+    "aria-invalid": invalid = false,
+    "aria-describedby": ariaDescribedby,
+  } = conform;
+  const multiple = useImmutable(
+    multipleProp,
+    __DEV__ && {
+      scope: "suru/select",
+      value: "conform.multiple",
+    },
   );
-  const multiple = useConstantValue(!!conformProp.multiple);
-
-  if (__DEV__) {
-    React.useEffect(
-      () => {
-        if (multiple === !!conformProp.multiple) {
-          return;
-        }
-
-        console.error("suru-ui(suru/select): multiple を変更することはできません。");
-      },
-      [!!conformProp.multiple],
-    );
-  }
 
   return (
     <Context
@@ -74,16 +61,29 @@ export default function SuiSelectRoot(props: RootProps): React.ReactElement {
         () => ({
           size,
           color,
+          formId,
           conform,
+          fieldId,
+          invalid,
           disabled,
           multiple,
+          required,
+          fieldName,
+          defaultValue,
           selectedContentId: selectedContentElement,
         }),
         [
           size,
           color,
+          formId,
           conform,
+          fieldId,
+          invalid,
           disabled,
+          // multiple, 不変
+          required,
+          fieldName,
+          defaultValue,
           selectedContentElement,
         ],
       )}
@@ -95,11 +95,16 @@ export default function SuiSelectRoot(props: RootProps): React.ReactElement {
           "SuiSelect",
           `SuiSelect-size-${size}`,
           `SuiSelect-color-${color}`,
+          {
+            [classes.invalid]: invalid,
+            [classes.disabled]: disabled,
+            [classes.required]: required,
+          },
         )}
-        aria-invalid={conformProp["aria-invalid"]}
-        aria-disabled={disabled}
-        aria-required={conformProp.required}
-        aria-describedby={conformProp["aria-describedby"]}
+        aria-invalid={invalid || undefined}
+        aria-disabled={ariaDisabled ?? (disabled || undefined)}
+        aria-required={ariaRequired ?? (required || undefined)}
+        aria-describedby={ariaDescribedby}
       >
         <Slottable>{children}</Slottable>
         <Conform />
