@@ -27,6 +27,14 @@
       "types": "./dist/src/button/core/index.d.ts",
       "default": "./dist/src/button/core/index.js"
     },
+    "./error-text": {
+      "types": "./dist/src/error-text/index.d.ts",
+      "default": "./dist/src/error-text/index.js"
+    },
+    "./error-text/core": {
+      "types": "./dist/src/error-text/core/index.d.ts",
+      "default": "./dist/src/error-text/core/index.js"
+    },
     "./loader": {
       "types": "./dist/src/loader/index.d.ts",
       "default": "./dist/src/loader/index.js"

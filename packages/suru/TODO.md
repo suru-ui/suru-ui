@@ -4,5 +4,5 @@
 [x] TextInput
 [x] Select
 [ ] HelperText
-[ ] ErrorText
+[x] ErrorText
 [ ] Label
