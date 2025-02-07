@@ -4,11 +4,14 @@ import { ChevronDown } from "lucide-react";
 import * as React from "react";
 import * as Select from "./core";
 
-export type Props = Omit<Select.RootProps, "asChild">;
+export type Props = Omit<Select.RootProps, "asChild"> & {
+  placeholder?: string | undefined;
+};
 
 function SuiSelect(props: Props): React.ReactElement {
   const {
     children,
+    placeholder,
     ...otherProps
   } = props;
 
@@ -18,7 +21,7 @@ function SuiSelect(props: Props): React.ReactElement {
       asChild={false}
     >
       <Select.Button>
-        <Select.SelectedContent />
+        <Select.SelectedContent placeholder={placeholder} />
         <ChevronDown />
       </Select.Button>
       <Select.ListBox>

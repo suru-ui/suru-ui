@@ -13,11 +13,14 @@ export default {
 
 export const Basic: Story = () => {
   const schema = v.object({
-    fruit: v.union([
-      v.literal("りんご"),
-      v.literal("みかん"),
-      v.literal("いちご"),
-    ]),
+    fruit: v.optional(
+      v.enum({
+        "りんご": "apple",
+        "みかん": "orange",
+        "いちご": "strawberry",
+      }),
+      "strawberry", // デフォルト値
+    ),
   });
   const [payload, setPayload] = React.useState("");
   const [form, fields] = useForm({
@@ -44,10 +47,13 @@ export const Basic: Story = () => {
       className="space-y-3"
       {...getFormProps(form)}
     >
-      <Select conform={getSelectProps(fields.fruit)}>
-        <Select.Option value="りんご">りんご</Select.Option>
-        <Select.Option value="みかん">みかん</Select.Option>
-        <Select.Option value="いちご">いちご</Select.Option>
+      <Select
+        conform={getSelectProps(fields.fruit)}
+        placeholder="未選択"
+      >
+        <Select.Option value="apple">りんご</Select.Option>
+        <Select.Option value="orange">みかん</Select.Option>
+        <Select.Option value="strawberry">いちご</Select.Option>
       </Select>
       <div id={fields.fruit.errorId}>{fields.fruit.errors}</div>
 

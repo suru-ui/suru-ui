@@ -18,11 +18,12 @@ export interface RenderItem extends React.FC<RenderItemProps> {}
 type SelectedContentParams = {
   color?: Color | undefined;
   renderItem?: RenderItem | undefined;
+  placeholder?: string | undefined;
   size?: Sizing | undefined;
 };
 
 export type SelectedContentProps =
-  & Omit<React.ComponentProps<"span">, keyof SelectedContentParams>
+  & Omit<React.ComponentProps<"span">, keyof SelectedContentParams | "children">
   & SelectedContentParams;
 
 export default function SuiSelectSelectedContent(props: SelectedContentProps): React.ReactElement {
@@ -33,9 +34,9 @@ export default function SuiSelectSelectedContent(props: SelectedContentProps): R
     ref: userRef = null,
     size: sizeProp,
     color: colorProp,
-    children,
     className,
     renderItem = defaultRenderItem,
+    placeholder,
     ...otherSelectedContentProps
   } = props;
   const size = sizeProp ?? context?.size ?? "md";
@@ -56,6 +57,16 @@ export default function SuiSelectSelectedContent(props: SelectedContentProps): R
     }
   }
 
+  const selectedOptions = selectEvent?.options.map(opt => (
+    <Item
+      key={opt.pkey}
+      value={opt.value}
+      Render={renderItem}
+      update={opt.pkey === selectEvent.pkey}
+      optionRef={opt.ref}
+    />
+  )) || [];
+
   return (
     <span
       {...otherSelectedContentProps}
@@ -66,17 +77,12 @@ export default function SuiSelectSelectedContent(props: SelectedContentProps): R
         "SuiSelectSelectedContent",
         `SuiSelectSelectedContent-size-${size}`,
         `SuiSelectSelectedContent-color-${color}`,
+        {
+          "SuiSelectSelectedContent-noContent": selectedOptions.length === 0,
+        },
       )}
     >
-      {selectEvent?.options.map(opt => (
-        <Item
-          key={opt.pkey}
-          value={opt.value}
-          Render={renderItem}
-          update={opt.pkey === selectEvent.pkey}
-          optionRef={opt.ref}
-        />
-      ))}
+      {selectedOptions.length ? selectedOptions : placeholder}
     </span>
   );
 }
