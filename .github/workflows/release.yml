@@ -11,6 +11,9 @@ defaults:
   run:
     shell: bash -euo pipefail {0}
 
+permissions:
+  contents: write
+
 jobs:
   publish:
     timeout-minutes: 15
