@@ -53,6 +53,11 @@ jobs:
             fi
           done
 
+      - name: "タグうち"
+        run: |
+          git tag v${{ github.event.inputs.version }}
+          git push origin v${{ github.event.inputs.version }}
+
       - name: "公開"
         shell: bash -e {0}
         run: |
