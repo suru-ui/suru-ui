@@ -11,11 +11,11 @@ type Css = {
 };
 
 const Label = /* @__PURE__ */ styled.label<Css>`${css => {
-  if (css.htmlFor === undefined) {
+  if (!css.htmlFor) {
     return "";
   }
 
-  const htmlFor = `${cssEscape(css.htmlFor)}`;
+  const htmlFor = cssEscape(css.htmlFor);
   const disabled = [
     ":disabled",
     "[aria-disabled=true]",
@@ -30,23 +30,15 @@ const Label = /* @__PURE__ */ styled.label<Css>`${css => {
   const requiredField = `#${htmlFor}:is(${required})`;
 
   return `
-  &:has(
-    ${disabledField},
-    ~ :is(
-      ${disabledField},
-      :has(${disabledField})
-    )
-  ) {
+  &:has(${disabledField}),
+  &:has(~ ${disabledField}),
+  &:has(~ * ${disabledField}) {
     color: ${$.sui.canvasText.disabled} !important;
     cursor: not-allowed !important;
   }
 
-  &:has(
-    ~ :is(
-      ${requiredField},
-      :has(${requiredField})
-    )
-  )::after {
+  &:has(~ ${requiredField})::after,
+  &:has(~ * ${requiredField})::after {
     display: var(--SuiLabel-requiredText-display) !important;
   }
 `;

@@ -113,6 +113,7 @@ Inline.storyName = "インライン化";
 export const Disabled: Story = () => {
   const id1 = React.useId();
   const id2 = React.useId();
+  const id3 = React.useId();
 
   return (
     <>
@@ -124,6 +125,7 @@ export const Disabled: Story = () => {
           disabled
         />
       </Label>
+      <hr />
       <Label htmlFor={id2}>
         ラベル
       </Label>
@@ -132,6 +134,17 @@ export const Disabled: Story = () => {
         type="text"
         disabled
       />
+      <hr />
+      <Label htmlFor={id3}>
+        ラベル
+      </Label>
+      <div>
+        <input
+          id={id3}
+          type="text"
+          disabled
+        />
+      </div>
     </>
   );
 };
@@ -140,6 +153,7 @@ Disabled.storyName = "非活性化";
 export const Required: Story = () => {
   const id1 = React.useId();
   const id2 = React.useId();
+  const id3 = React.useId();
 
   return (
     <>
@@ -151,6 +165,7 @@ export const Required: Story = () => {
           required
         />
       </Label>
+      <hr />
       <Label htmlFor={id2}>
         ラベル
       </Label>
@@ -159,6 +174,17 @@ export const Required: Story = () => {
         type="text"
         required
       />
+      <hr />
+      <Label htmlFor={id3}>
+        ラベル
+      </Label>
+      <div>
+        <input
+          id={id3}
+          type="text"
+          required
+        />
+      </div>
     </>
   );
 };
