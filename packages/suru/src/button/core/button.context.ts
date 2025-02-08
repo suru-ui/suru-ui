@@ -4,6 +4,7 @@ import type { Color, ColorVariant, Sizing } from "../../theme";
 export type ContextValue = {
   color: Color;
   disabled: boolean;
+  fullWidth: boolean;
   loading: boolean;
   outlined: boolean;
   size: Sizing;

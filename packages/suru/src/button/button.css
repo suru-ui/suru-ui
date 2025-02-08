@@ -569,6 +569,11 @@
     }
   }
 
+  .SuiButton-fullWidth {
+    flex: 1;
+    width: 100%;
+  }
+
   .SuiButtonText {
     color: var(--SuiButtonText-canvasText);
     cursor: pointer;

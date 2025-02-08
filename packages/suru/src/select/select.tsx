@@ -6,11 +6,13 @@ import * as Select from "./core";
 
 export type Props = Omit<Select.RootProps, "asChild"> & {
   placeholder?: string | undefined;
+  renderItem?: Select.RenderItem | undefined;
 };
 
 function SuiSelect(props: Props): React.ReactElement {
   const {
     children,
+    renderItem,
     placeholder,
     ...otherProps
   } = props;
@@ -21,7 +23,10 @@ function SuiSelect(props: Props): React.ReactElement {
       asChild={false}
     >
       <Select.Button>
-        <Select.SelectedContent placeholder={placeholder} />
+        <Select.SelectedContent
+          renderItem={renderItem}
+          placeholder={placeholder}
+        />
         <ChevronDown />
       </Select.Button>
       <Select.ListBox>

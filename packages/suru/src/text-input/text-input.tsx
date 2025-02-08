@@ -7,6 +7,7 @@ import * as TextInput from "./core";
 type Params = {
   color?: Color | undefined;
   endSection?: TextInput.SectionProps["children"];
+  fullWidth?: boolean | undefined;
   size?: Sizing | undefined;
   startSection?: TextInput.SectionProps["children"];
 };
@@ -19,6 +20,7 @@ export default function SuiTextInput(props: Props): React.ReactElement {
   const {
     size,
     color,
+    fullWidth,
     endSection,
     startSection,
     ...otherInputProps
@@ -28,6 +30,7 @@ export default function SuiTextInput(props: Props): React.ReactElement {
     <TextInput.Root
       size={size}
       color={color}
+      fullWidth={fullWidth}
     >
       {!("startSection" in props)
         ? null

@@ -4,8 +4,9 @@ import * as React from "react";
 import * as Button from "./core";
 
 type Params = {
-  loading?: boolean | undefined;
   endSection?: Button.SectionProps["children"];
+  fullWidth?: boolean | undefined;
+  loading?: boolean | undefined;
   startSection?: Button.SectionProps["children"];
 };
 
@@ -17,6 +18,7 @@ export default function SuiButton(props: Props): React.ReactElement {
   const {
     children,
     disabled = false,
+    fullWidth,
     endSection,
     startSection,
     ...otherRootProps
@@ -26,6 +28,7 @@ export default function SuiButton(props: Props): React.ReactElement {
     <Button.Root
       {...otherRootProps}
       disabled={disabled}
+      fullWidth={fullWidth}
     >
       {!("startSection" in props)
         ? null

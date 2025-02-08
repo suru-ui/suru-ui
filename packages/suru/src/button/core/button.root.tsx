@@ -8,6 +8,7 @@ import { Context } from "./button.context";
 type RootParams = {
   asChild?: boolean | undefined;
   color?: Color | undefined;
+  fullWidth?: boolean | undefined;
   loading?: boolean | undefined;
   outlined?: boolean | undefined;
   size?: Sizing | undefined;
@@ -30,6 +31,7 @@ export default function SuiButtonRoot(props: RootProps): React.ReactElement {
     disabled = false,
     outlined = false,
     className,
+    fullWidth = false,
     "aria-disabled": ariaDisabled = (!disabled && loading) || undefined,
     ...otherRootProps
   } = props;
@@ -45,6 +47,7 @@ export default function SuiButtonRoot(props: RootProps): React.ReactElement {
           variant,
           disabled,
           outlined,
+          fullWidth,
         }),
         [
           size,
@@ -53,6 +56,7 @@ export default function SuiButtonRoot(props: RootProps): React.ReactElement {
           variant,
           disabled,
           outlined,
+          fullWidth,
         ],
       )}
     >
