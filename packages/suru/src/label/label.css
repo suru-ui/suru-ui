@@ -3,6 +3,7 @@
     color: var(--SuiLabel-canvasText);
     margin: 0;
     display: block;
+    align-self: center;
     box-sizing: border-box;
 
     &::after {
