@@ -1,6 +1,6 @@
 import "./label.css";
 
-import * as Label from "./core";
+import * as Label from "./parts";
 
 export type Props = Label.RootProps;
 

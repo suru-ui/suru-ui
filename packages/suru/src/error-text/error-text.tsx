@@ -1,6 +1,6 @@
 import "./error-text.css";
 
-import * as ErrorText from "./core";
+import * as ErrorText from "./parts";
 
 export type Props = ErrorText.RootProps;
 

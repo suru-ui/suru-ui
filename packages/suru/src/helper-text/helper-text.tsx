@@ -1,6 +1,6 @@
 import "./helper-text.css";
 
-import * as HelperText from "./core";
+import * as HelperText from "./parts";
 
 export type Props = HelperText.RootProps;
 

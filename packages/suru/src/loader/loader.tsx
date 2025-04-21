@@ -3,7 +3,7 @@ import "./loader.css";
 import clsx from "clsx";
 import * as primitive from "../primitive";
 import { type Color, isColor } from "../theme";
-import * as Loader from "./core";
+import * as Loader from "./parts";
 
 export type Variant = "circle" | "dots";
 

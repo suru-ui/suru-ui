@@ -2,7 +2,7 @@ import "./select.css";
 
 import { ChevronDown } from "lucide-react";
 import * as React from "react";
-import * as Select from "./core";
+import * as Select from "./parts";
 
 export type Props = Omit<Select.RootProps, "asChild"> & {
   placeholder?: string | undefined;

@@ -1,7 +1,7 @@
 import "./button.css";
 
 import * as React from "react";
-import * as Button from "./core";
+import * as Button from "./parts";
 
 type Params = {
   endSection?: Button.SectionProps["children"];
@@ -30,19 +30,17 @@ export default function SuiButton(props: Props): React.ReactElement {
       disabled={disabled}
       fullWidth={fullWidth}
     >
-      {!("startSection" in props)
-        ? null
-        : (
-          <Button.Section className="SuiButtonSection-position-start">
-            {startSection}
-          </Button.Section>
-        )}
+      {"startSection" in props && (
+        <Button.Section className="SuiButtonSection-position-start">
+          {startSection}
+        </Button.Section>
+      )}
 
       <Button.Text>
         {children}
       </Button.Text>
 
-      {!("endSection" in props) ? null : (
+      {"endSection" in props && (
         <Button.Section className="SuiButtonSection-position-end">
           {endSection}
         </Button.Section>

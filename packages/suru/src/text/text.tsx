@@ -1,6 +1,6 @@
 import "./text.css";
 
-import * as Text from "./core";
+import * as Text from "./parts";
 
 export type Props = Text.RootProps;
 
