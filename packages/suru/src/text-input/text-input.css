@@ -37,24 +37,24 @@
   }
 
   .SuiTextInput-size-sm {
-    --SuiTextInput-gap:           calc(var(--sui-sizing-sm) * var(--sui-sizing-gap-sm));
+    --SuiTextInput-gap:           var(--sui-sizing-gap-sm);
     --SuiTextInput-height:        var(--sui-sizing-sm);
-    --SuiTextInput-borderRadius:  calc(var(--sui-sizing-sm) * var(--sui-sizing-rad-sm));
-    --SuiTextInput-paddingInline: calc(var(--sui-sizing-sm) * var(--sui-sizing-pad-sm));
+    --SuiTextInput-borderRadius:  var(--sui-sizing-rad-sm);
+    --SuiTextInput-paddingInline: var(--sui-sizing-pad-sm);
   }
 
   .SuiTextInput-size-md {
-    --SuiTextInput-gap:           calc(var(--sui-sizing-md) * var(--sui-sizing-gap-md));
+    --SuiTextInput-gap:           var(--sui-sizing-gap-md);
     --SuiTextInput-height:        var(--sui-sizing-md);
-    --SuiTextInput-borderRadius:  calc(var(--sui-sizing-md) * var(--sui-sizing-rad-md));
-    --SuiTextInput-paddingInline: calc(var(--sui-sizing-md) * var(--sui-sizing-pad-md));
+    --SuiTextInput-borderRadius:  var(--sui-sizing-rad-md);
+    --SuiTextInput-paddingInline: var(--sui-sizing-pad-md);
   }
 
   .SuiTextInput-size-lg {
-    --SuiTextInput-gap:           calc(var(--sui-sizing-lg) * var(--sui-sizing-gap-lg));
+    --SuiTextInput-gap:           var(--sui-sizing-gap-lg);
     --SuiTextInput-height:        var(--sui-sizing-lg);
-    --SuiTextInput-borderRadius:  calc(var(--sui-sizing-lg) * var(--sui-sizing-rad-lg));
-    --SuiTextInput-paddingInline: calc(var(--sui-sizing-lg) * var(--sui-sizing-pad-lg));
+    --SuiTextInput-borderRadius:  var(--sui-sizing-rad-lg);
+    --SuiTextInput-paddingInline: var(--sui-sizing-pad-lg);
   }
 
   .SuiTextInput-color-blue {

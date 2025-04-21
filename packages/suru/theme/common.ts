@@ -8,7 +8,7 @@ export default define({
     linkText: {
       focusRing: {
         width: $("sui.outline.width.md"),
-        offset: ".0625rem", // calc(1 / 16 * 1rem)
+        offset: "2px", // calc(1 / 16 * 1rem)
       },
       underline: {
         width: {
@@ -18,18 +18,18 @@ export default define({
           active: $("sui.linkText.underline.width.hover"),
           visited: $("sui.linkText.underline.width.main"),
         },
-        offset: ".125rem", //  calc(2 / 16 * 1rem)
+        offset: "2px",
       },
     },
     focusRing: {
       width: $("sui.outline.width.lg"),
-      offset: ".125rem", //  calc(2 / 16 * 1rem)
+      offset: "2px",
     },
     outline: {
       width: {
-        sm: ".0625rem", // calc(1 / 16 * 1rem)
-        md: ".125rem", //  calc(2 / 16 * 1rem)
-        lg: ".1875rem", // calc(3 / 16 * 1rem)
+        sm: "1px",
+        md: "2px",
+        lg: "3px",
         disabled: $("sui.outline.width.sm"),
       },
     },
@@ -37,23 +37,23 @@ export default define({
       blurRadius: "4px",
     },
     sizing: {
-      sm: "1.625rem",
-      md: "2.25rem",
-      lg: "2.75rem",
+      sm: "28px",
+      md: "40px",
+      lg: "52px",
       pad: {
-        sm: .25,
-        md: .375,
-        lg: .5,
+        sm: "8px",
+        md: "12px",
+        lg: "16px",
       },
       gap: {
-        sm: .125,
-        md: .25,
-        lg: .3,
+        sm: "4px",
+        md: "6px",
+        lg: "8px",
       },
       rad: {
-        sm: .25,
-        md: .25,
-        lg: .3,
+        sm: "8px",
+        md: "12px",
+        lg: "16px",
       },
     },
     fontFamily: {

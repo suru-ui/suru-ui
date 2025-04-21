@@ -56,24 +56,24 @@
   }
 
   .SuiSelectButton-size-sm {
-    --SuiSelectButton-gap:           calc(var(--sui-sizing-sm) * var(--sui-sizing-gap-sm));
+    --SuiSelectButton-gap:           var(--sui-sizing-gap-sm);
     --SuiSelectButton-height:        var(--sui-sizing-sm);
-    --SuiSelectButton-borderRadius:  calc(var(--sui-sizing-sm) * var(--sui-sizing-rad-sm));
-    --SuiSelectButton-paddingInline: calc(var(--sui-sizing-sm) * var(--sui-sizing-pad-sm));
+    --SuiSelectButton-borderRadius:  var(--sui-sizing-rad-sm);
+    --SuiSelectButton-paddingInline: var(--sui-sizing-pad-sm);
   }
 
   .SuiSelectButton-size-md {
-    --SuiSelectButton-gap:           calc(var(--sui-sizing-md) * var(--sui-sizing-gap-md));
+    --SuiSelectButton-gap:           var(--sui-sizing-gap-md);
     --SuiSelectButton-height:        var(--sui-sizing-md);
-    --SuiSelectButton-borderRadius:  calc(var(--sui-sizing-md) * var(--sui-sizing-rad-md));
-    --SuiSelectButton-paddingInline: calc(var(--sui-sizing-md) * var(--sui-sizing-pad-md));
+    --SuiSelectButton-borderRadius:  var(--sui-sizing-rad-md);
+    --SuiSelectButton-paddingInline: var(--sui-sizing-pad-md);
   }
 
   .SuiSelectButton-size-lg {
-    --SuiSelectButton-gap:           calc(var(--sui-sizing-lg) * var(--sui-sizing-gap-lg));
+    --SuiSelectButton-gap:           var(--sui-sizing-gap-lg);
     --SuiSelectButton-height:        var(--sui-sizing-lg);
-    --SuiSelectButton-borderRadius:  calc(var(--sui-sizing-lg) * var(--sui-sizing-rad-lg));
-    --SuiSelectButton-paddingInline: calc(var(--sui-sizing-lg) * var(--sui-sizing-pad-lg));
+    --SuiSelectButton-borderRadius:  var(--sui-sizing-rad-lg);
+    --SuiSelectButton-paddingInline: var(--sui-sizing-pad-lg);
   }
 
   .SuiSelectButton-size-sm {
@@ -179,18 +179,18 @@
   }
 
   .SuiSelectListBox-size-sm {
-    --SuiSelectListBox-paddingBlock: calc(var(--sui-sizing-sm) * var(--sui-sizing-pad-sm));
-    --SuiSelectListBox-borderRadius: calc(var(--sui-sizing-sm) * var(--sui-sizing-rad-sm));
+    --SuiSelectListBox-paddingBlock: var(--sui-sizing-pad-sm);
+    --SuiSelectListBox-borderRadius: var(--sui-sizing-rad-sm);
   }
 
   .SuiSelectListBox-size-md {
-    --SuiSelectListBox-paddingBlock: calc(var(--sui-sizing-md) * var(--sui-sizing-pad-md));
-    --SuiSelectListBox-borderRadius: calc(var(--sui-sizing-md) * var(--sui-sizing-rad-md));
+    --SuiSelectListBox-paddingBlock: var(--sui-sizing-pad-md);
+    --SuiSelectListBox-borderRadius: var(--sui-sizing-rad-md);
   }
 
   .SuiSelectListBox-size-lg {
-    --SuiSelectListBox-paddingBlock: calc(var(--sui-sizing-lg) * var(--sui-sizing-pad-lg));
-    --SuiSelectListBox-borderRadius: calc(var(--sui-sizing-lg) * var(--sui-sizing-rad-lg));
+    --SuiSelectListBox-paddingBlock: var(--sui-sizing-pad-lg);
+    --SuiSelectListBox-borderRadius: var(--sui-sizing-rad-lg);
   }
 
   .SuiSelectOption {
@@ -232,21 +232,21 @@
   }
 
   .SuiSelectOption-size-sm {
-    --SuiSelectOption-gap:           calc(var(--sui-sizing-sm) * var(--sui-sizing-gap-sm));
+    --SuiSelectOption-gap:           var(--sui-sizing-gap-sm);
     --SuiSelectOption-height:        var(--sui-sizing-sm);
-    --SuiSelectOption-paddingInline: calc(var(--sui-sizing-sm) * var(--sui-sizing-pad-sm));
+    --SuiSelectOption-paddingInline: var(--sui-sizing-pad-sm);
   }
 
   .SuiSelectOption-size-md {
-    --SuiSelectOption-gap:           calc(var(--sui-sizing-md) * var(--sui-sizing-gap-md));
+    --SuiSelectOption-gap:           var(--sui-sizing-gap-md);
     --SuiSelectOption-height:        var(--sui-sizing-md);
-    --SuiSelectOption-paddingInline: calc(var(--sui-sizing-md) * var(--sui-sizing-pad-md));
+    --SuiSelectOption-paddingInline: var(--sui-sizing-pad-md);
   }
 
   .SuiSelectOption-size-lg {
-    --SuiSelectOption-gap:           calc(var(--sui-sizing-lg) * var(--sui-sizing-gap-lg));
+    --SuiSelectOption-gap:           var(--sui-sizing-gap-lg);
     --SuiSelectOption-height:        var(--sui-sizing-lg);
-    --SuiSelectOption-paddingInline: calc(var(--sui-sizing-lg) * var(--sui-sizing-pad-lg));
+    --SuiSelectOption-paddingInline: var(--sui-sizing-pad-lg);
   }
 
   .SuiSelectOption-size-sm {

@@ -35,24 +35,24 @@
   }
 
   .SuiButton-size-sm {
-    --SuiButton-gap:           calc(var(--sui-sizing-sm) * var(--sui-sizing-gap-sm));
+    --SuiButton-gap:           var(--sui-sizing-gap-sm);
     --SuiButton-height:        var(--sui-sizing-sm);
-    --SuiButton-borderRadius:  calc(var(--sui-sizing-sm) * var(--sui-sizing-rad-sm));
-    --SuiButton-paddingInline: calc(var(--sui-sizing-sm) * var(--sui-sizing-pad-sm));
+    --SuiButton-borderRadius:  var(--sui-sizing-rad-sm);
+    --SuiButton-paddingInline: var(--sui-sizing-pad-sm);
   }
 
   .SuiButton-size-md {
-    --SuiButton-gap:           calc(var(--sui-sizing-md) * var(--sui-sizing-gap-md));
+    --SuiButton-gap:           var(--sui-sizing-gap-md);
     --SuiButton-height:        var(--sui-sizing-md);
-    --SuiButton-borderRadius:  calc(var(--sui-sizing-md) * var(--sui-sizing-rad-md));
-    --SuiButton-paddingInline: calc(var(--sui-sizing-md) * var(--sui-sizing-pad-md));
+    --SuiButton-borderRadius:  var(--sui-sizing-rad-md);
+    --SuiButton-paddingInline: var(--sui-sizing-pad-md);
   }
 
   .SuiButton-size-lg {
-    --SuiButton-gap:           calc(var(--sui-sizing-lg) * var(--sui-sizing-gap-lg));
+    --SuiButton-gap:           var(--sui-sizing-gap-lg);
     --SuiButton-height:        var(--sui-sizing-lg);
-    --SuiButton-borderRadius:  calc(var(--sui-sizing-lg) * var(--sui-sizing-rad-lg));
-    --SuiButton-paddingInline: calc(var(--sui-sizing-lg) * var(--sui-sizing-pad-lg));
+    --SuiButton-borderRadius:  var(--sui-sizing-rad-lg);
+    --SuiButton-paddingInline: var(--sui-sizing-pad-lg);
   }
 
   .SuiButton-color-blue {
@@ -580,10 +580,13 @@
     display: inline-block;
     font-size: var(--SuiButtonText-fontSize);
     box-sizing: border-box;
+    text-wrap: nowrap;
+    margin-top: 2px;
     text-align: center;
     font-family: var(--SuiButtonText-fontFamily);
     font-weight: var(--SuiButtonText-fontWeight);
     line-height: var(--SuiButtonText-lineHeight);
+    white-space: nowrap;
     letter-spacing: var(--SuiButtonText-letterSpacing);
     text-decoration: none;
   }
