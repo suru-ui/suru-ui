@@ -21,8 +21,9 @@ export type RootProps =
 
 export default function SuiButtonRoot(props: RootProps): React.ReactElement {
   const {
+    name,
     size = "md",
-    type = "button",
+    type = name === "__intent__" ? "submit" : "button", // conform は name="__intent__" をフックする。
     color = "blue",
     asChild,
     loading = false,
@@ -62,6 +63,7 @@ export default function SuiButtonRoot(props: RootProps): React.ReactElement {
     >
       <Comp
         {...otherRootProps}
+        name={name}
         type={type}
         onClick={loading ? disabledClick : onClick}
         disabled={disabled}
