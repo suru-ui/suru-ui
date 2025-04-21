@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import * as React from "react";
 import classes from "../../classes";
-import { SelectProps } from "../../conform";
+import type { SelectProps } from "../../conform";
 import { useScope, useStateValueWithSelector } from "../../scope";
 import { useContext } from "./select.context";
 import { SelectEvent } from "./select.internal";

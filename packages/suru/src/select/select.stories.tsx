@@ -1,8 +1,8 @@
 import "../../dist/suru.css";
 
 import { getFormProps, getSelectProps, useForm } from "@conform-to/react";
+import { getValibotConstraint, parseWithValibot } from "@conform-to/valibot";
 import type { Story, StoryDefault } from "@ladle/react";
-import { getValibotConstraint, parseWithValibot } from "conform-to-valibot";
 import * as React from "react";
 import * as v from "valibot";
 import Select from ".";
