@@ -1,8 +1,10 @@
-type ToString = { readonly toString: () => string };
+interface ToString {
+  readonly toString: () => string;
+}
 
-type ToPrimitive = {
-  readonly [Symbol.toPrimitive]: (hint: "default" | "string" | "number") => string | number;
-};
+interface ToPrimitive {
+  readonly [Symbol.toPrimitive]: (hint?: string | undefined) => string | number;
+}
 
 type ProcessPrimitiveObject<T extends string | number, U> =
   // dprint-ignore
@@ -16,16 +18,11 @@ type ProcessPrimitiveObject<T extends string | number, U> =
 
 export type PrimitiveObject = ToString | ToPrimitive;
 
-export default <T>(v: T): ProcessPrimitiveObject<string | number, T> =>
-  processPrimitiveObject(v, "default");
+export default <T>(v: T): ProcessPrimitiveObject<string | number, T> => toPrimitive(v, "default");
+export const string = <T>(v: T): ProcessPrimitiveObject<string, T> => toPrimitive(v, "string");
+export const number = <T>(v: T): ProcessPrimitiveObject<number, T> => toPrimitive(v, "number");
 
-export const string = <T>(v: T): ProcessPrimitiveObject<string, T> =>
-  processPrimitiveObject(v, "string");
-
-export const number = <T>(v: T): ProcessPrimitiveObject<number, T> =>
-  processPrimitiveObject(v, "number");
-
-function processPrimitiveObject(v: any, hint: "default" | "string" | "number"): any {
+function toPrimitive(v: any, hint: "default" | "string" | "number"): any {
   if (typeof v === "function" || typeof v === "object" && !!v) {
     if (typeof v[Symbol.toPrimitive] === "function") {
       return v[Symbol.toPrimitive](hint);
