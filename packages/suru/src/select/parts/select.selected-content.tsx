@@ -47,6 +47,7 @@ export default function SuiSelectSelectedContent(props: SelectedContentProps): R
     scope,
     SelectEvent.channel(selectEventId),
     sliceSelectEvent,
+    isSameSelectEventSlice,
   );
 
   if (__DEV__) {
@@ -139,7 +140,12 @@ function Item(
   );
 }
 
-function sliceSelectEvent(e: SelectEvent | null) {
+type SelectEventSlice = null | {
+  readonly pkey: string;
+  readonly options: readonly SelectEvent.Option[];
+};
+
+function sliceSelectEvent(e: SelectEvent | null): SelectEventSlice {
   if (e === null) {
     return null;
   }
@@ -148,4 +154,8 @@ function sliceSelectEvent(e: SelectEvent | null) {
     pkey: e.pkey,
     options: e.options,
   };
+}
+
+function isSameSelectEventSlice(a: SelectEventSlice, b: SelectEventSlice) {
+  return a === b || (a !== null && b !== null && a.pkey === b.pkey && a.options === b.options);
 }

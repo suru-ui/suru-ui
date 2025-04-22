@@ -18,12 +18,12 @@ export default function SuiSelectButton(props: ButtonProps): React.ReactElement 
     color,
     fieldId,
     invalid,
-    disabled: disabledCtx,
+    disabled: defaultDisabled,
     required,
   } = useContext();
   const {
     asChild,
-    disabled = disabledCtx,
+    disabled = defaultDisabled,
     className,
     popoverTarget = `${fieldId}-listbox`,
     ...otherButtonProps
