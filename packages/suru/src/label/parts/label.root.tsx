@@ -77,10 +77,11 @@ export default function SuiLabelRoot(props: RootProps): React.ReactElement {
       className={clsx(className, "SuiLabel", `SuiLabel-variant-${variant}`, {
         "SuiLabel-inline": inline,
         [classes.disabled]: disabled,
+        "SuiLabel-disabled": disabled,
         [`SuiLabel-color-${color}`]: isColor(color),
       })}
       aria-disabled={ariaDisabled}
-      data-sui-label-canvastext={isColor(color) ? undefined : primitive.string(color)}
+      data-sui-label-canvastext={isColor(color) ? null : primitive.string(color)}
       data-sui-label-requiredtext={requiredText}
     />
   );

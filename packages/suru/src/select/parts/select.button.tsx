@@ -44,6 +44,9 @@ export default function SuiSelectButton(props: ButtonProps): React.ReactElement 
           [classes.invalid]: invalid,
           [classes.disabled]: disabled,
           [classes.required]: required,
+          "SuiSelectButton-invalid": invalid,
+          "SuiSelectButton-disabled": disabled,
+          "SuiSelectButton-required": required,
         },
       )}
       popoverTarget={popoverTarget}

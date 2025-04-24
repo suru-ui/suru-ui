@@ -130,6 +130,10 @@ export default function SuiSelectOption(props: OptionProps): React.ReactElement 
           [classes.disabled]: disabled,
           [classes.required]: required,
           [classes.selected]: isSelected,
+          "SuiSelectOption-invalid": invalid,
+          "SuiSelectOption-disabled": disabled,
+          "SuiSelectOption-required": required,
+          "SuiSelectOption-selected": isSelected,
         },
       )}
       aria-selected={ariaSelected ?? isSelected}

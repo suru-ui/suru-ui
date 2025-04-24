@@ -42,6 +42,9 @@ export default function SuiButtonSection(props: SectionProps): React.ReactElemen
         {
           [classes.loading]: loading,
           [classes.disabled]: disabled,
+          [classes.outlined]: outlined,
+          "SuiButtonSection-loading": loading,
+          "SuiButtonSection-disabled": disabled,
           "SuiButtonSection-outlined": outlined,
         },
       )}

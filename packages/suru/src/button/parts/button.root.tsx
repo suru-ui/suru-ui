@@ -76,6 +76,9 @@ export default function SuiButtonRoot(props: RootProps): React.ReactElement {
           {
             [classes.loading]: loading,
             [classes.disabled]: disabled,
+            [classes.outlined]: outlined,
+            "SuiButton-loading": loading,
+            "SuiButton-disabled": disabled,
             "SuiButton-outlined": outlined,
           },
         )}

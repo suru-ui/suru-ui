@@ -99,6 +99,9 @@ export default function SuiSelectRoot(props: RootProps): React.ReactElement {
             [classes.invalid]: invalid,
             [classes.disabled]: disabled,
             [classes.required]: required,
+            "SuiSelect-invalid": invalid,
+            "SuiSelect-disabled": disabled,
+            "SuiSelect-required": required,
           },
         )}
         aria-invalid={invalid || undefined}

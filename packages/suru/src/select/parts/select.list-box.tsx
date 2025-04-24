@@ -46,6 +46,9 @@ export default function SuiSelectListBox(props: ListBoxProps): React.ReactElemen
           [classes.invalid]: invalid,
           [classes.disabled]: disabled,
           [classes.required]: required,
+          "SuiSelectListBox-invalid": invalid,
+          "SuiSelectListBox-disabled": disabled,
+          "SuiSelectListBox-required": required,
         },
       )}
     />

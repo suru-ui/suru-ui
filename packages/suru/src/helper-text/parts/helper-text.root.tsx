@@ -33,7 +33,7 @@ export default function SuiHelperTextRoot(props: RootProps): React.ReactElement 
         "SuiHelperText-inline": inline,
         [`SuiHelperText-color-${color}`]: isColor(color),
       })}
-      data-sui-helpertext-canvastext={isColor(color) ? undefined : primitive.string(color)}
+      data-sui-helpertext-canvastext={isColor(color) ? null : primitive.string(color)}
     />
   );
 }

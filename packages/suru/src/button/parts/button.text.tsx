@@ -42,6 +42,9 @@ export default function SuiButtonText(props: TextProps): React.ReactElement {
         {
           [classes.loading]: loading,
           [classes.disabled]: disabled,
+          [classes.outlined]: outlined,
+          "SuiButtonText-loading": loading,
+          "SuiButtonText-disabled": disabled,
           "SuiButtonText-outlined": outlined,
         },
       )}

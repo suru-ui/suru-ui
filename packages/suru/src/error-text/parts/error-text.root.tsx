@@ -33,7 +33,7 @@ export default function SuiErrorTextRoot(props: RootProps): React.ReactElement {
         "SuiErrorText-inline": inline,
         [`SuiErrorText-color-${color}`]: isColor(color),
       })}
-      data-sui-errortext-canvastext={isColor(color) ? undefined : primitive.string(color)}
+      data-sui-errortext-canvastext={isColor(color) ? null : primitive.string(color)}
     />
   );
 }

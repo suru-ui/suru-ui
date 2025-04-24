@@ -73,6 +73,10 @@ export default function SuiTextInputRoot(props: RootProps): React.ReactElement {
             [classes.invalid]: invalid,
             [classes.disabled]: disabled,
             [classes.required]: required,
+            [classes.fullWidth]: fullWidth,
+            "SuiTextInput-invalid": invalid,
+            "SuiTextInput-disabled": disabled,
+            "SuiTextInput-required": required,
             "SuiTextInput-fullWidth": fullWidth,
           },
         )}

@@ -60,6 +60,9 @@ export default function SuiSelectConform(_: ConformProps): React.ReactElement {
         [classes.invalid]: invalid,
         [classes.disabled]: disabled,
         [classes.required]: required,
+        "SuiSelectConform-invalid": invalid,
+        "SuiSelectConform-disabled": disabled,
+        "SuiSelectConform-required": required,
       })}
       aria-hidden
     >

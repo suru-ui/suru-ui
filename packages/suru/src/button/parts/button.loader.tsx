@@ -51,6 +51,9 @@ export default function SuiButtonLoader(props: LoaderProps): React.ReactElement 
         {
           [classes.loading]: loading,
           [classes.disabled]: disabled,
+          [classes.outlined]: outlined,
+          "SuiButtonLoader-loading": loading,
+          "SuiButtonLoader-disabled": disabled,
           "SuiButtonLoader-outlined": outlined,
         },
       )}
