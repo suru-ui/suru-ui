@@ -7,20 +7,20 @@ type RejectUndef<T> = undefined extends T ? never : unknown;
  *
  * @template T 値の型 (undefined 以外を許容)
  */
-export type CreateContextParams<T extends RejectUndef<T>> = {
+export type CreateContextParams<T extends RejectUndef<T>> = Readonly<{
   /**
    * コンテキストの名前、アッパーキャメルケースの形式。
    */
-  readonly name: string;
+  name: string;
   /**
    * デフォルト値。
    */
-  readonly default?: T;
-};
+  default?: T;
+}>;
 
-export type UseContextOptions = {
-  readonly optional?: boolean | undefined;
-};
+export type UseContextOptions = Readonly<{
+  optional?: boolean | undefined;
+}>;
 
 export interface UseContext<T extends RejectUndef<T>> {
   /**
@@ -29,14 +29,14 @@ export interface UseContext<T extends RejectUndef<T>> {
    * @param options オプション
    * @returns コンテキストの値
    */
-  (options?: { readonly optional?: false | undefined } | undefined): T;
+  (options?: Readonly<{ optional?: false | undefined }> | undefined): T;
   /**
    * コンテキストを使う。
    *
    * @param options オプション
    * @returns コンテキストの値
    */
-  (options: { readonly optional: boolean | undefined }): T | undefined;
+  (options: Readonly<{ optional: boolean | undefined }>): T | undefined;
 }
 
 /**

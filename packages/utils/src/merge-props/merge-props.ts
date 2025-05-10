@@ -4,9 +4,11 @@ import composeRefs from "../compose-refs";
 import type MemoMap from "../use-memo-map/memo-map";
 import isHandlerProp from "./is-handler-prop-name";
 
-export interface PropsCache extends Pick<MemoMap, "get"> {}
+export interface PropsCache extends Readonly<Pick<MemoMap, "get">> {}
 
-export type AllProps<T = unknown> = React.RefAttributes<T> & React.AllHTMLAttributes<T>;
+type MutableAllProps<T = unknown> = React.RefAttributes<T> & React.AllHTMLAttributes<T>;
+
+export type AllProps<T = unknown> = Readonly<MutableAllProps<T>>;
 
 const noCache: PropsCache = {
   get(_1, factory, _2) {
@@ -30,7 +32,7 @@ const noCache: PropsCache = {
 function mergeProps<T, U>(target: T, source: U, cache?: PropsCache): T & U;
 
 function mergeProps(target: AllProps, source: AllProps, cache: PropsCache = noCache): AllProps {
-  const overrideProps: Partial<AllProps> = { ...source };
+  const overrideProps: Partial<MutableAllProps> = { ...source };
 
   for (const name of Object.keys(source) as (keyof AllProps | "__proto__")[]) {
     if (name === "__proto__") {

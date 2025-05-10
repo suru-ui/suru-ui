@@ -1,4 +1,4 @@
-export interface Context {
+export type Context = {
   /**
    * 最後の更新時に余ったデータのバイト数
    */
@@ -16,7 +16,7 @@ export interface Context {
    */
   k: string;
   h1: number;
-}
+};
 
 /**
  * ハッシュ値の計算に必要なコンテキストを作成する。

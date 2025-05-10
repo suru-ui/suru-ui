@@ -4,10 +4,10 @@ import createCssFunction from "./create-css-function";
 import stringify from "./stringify";
 import type { CssValue, CssValueFactory } from "./types";
 
-export interface CompileResult {
+export type CompileResult = {
   hash: string;
   cssText: string;
-}
+};
 
 export default function compile(
   css: {} | undefined,

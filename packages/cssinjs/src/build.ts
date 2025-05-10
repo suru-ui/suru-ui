@@ -2,11 +2,11 @@ import { hash } from "@suru-ui/hash";
 import stringify from "./stringify";
 import type { CssValue, CssValueFactory } from "./types";
 
-export interface BuildResult {
+export type BuildResult = {
   hash: string;
   template: readonly [string, ...string[]];
   factories: readonly CssValueFactory[];
-}
+};
 
 export default function build(
   pieces: TemplateStringsArray,

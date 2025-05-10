@@ -2,10 +2,10 @@
  * メモのストレージ
  */
 export type MemoKV = {
-  [key: string]: {
+  [key: string]: Readonly<{
     deps: readonly unknown[];
     memo: unknown;
-  };
+  }>;
 };
 
 export default class MemoMap implements Disposable {

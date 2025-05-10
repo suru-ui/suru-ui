@@ -11,9 +11,11 @@ import htmltags from "./htmltags";
  *
  * @template T HTML 要素のタグ名
  */
-export type StyledComponentProps<T extends HtmlTag> =
-  & React.JSX.IntrinsicElements[T]
-  & { asChild?: boolean | undefined };
+export type StyledComponentProps<T extends HtmlTag> = Readonly<
+  React.JSX.IntrinsicElements[T] & {
+    asChild?: boolean | undefined;
+  }
+>;
 
 /**
  * スタイル付きのコンポーネントのプロパティ
@@ -21,11 +23,13 @@ export type StyledComponentProps<T extends HtmlTag> =
  * @template T HTML 要素のタグ名
  * @template P CSS プロパティ
  */
-export type StyledComponentPropsWithCss<T extends HtmlTag, P> = StyledComponentProps<T> & {
-  css: P;
-};
+export type StyledComponentPropsWithCss<T extends HtmlTag, P> = Readonly<
+  StyledComponentProps<T> & {
+    css: P;
+  }
+>;
 
-interface StyledFunctionComponentMeta<T extends HtmlTag, P> {
+type StyledFunctionComponentMeta<T extends HtmlTag, P> = {
   /**
    * HTML タグ名
    */
@@ -40,15 +44,19 @@ interface StyledFunctionComponentMeta<T extends HtmlTag, P> {
    * @default `${tagName}-${templateHash}`
    */
   componentName: string;
-  /**
-   * @returns `sui-c-${componentName}`
-   */
-  readonly className: (this: StyledFunctionComponent<T, P>) => string;
-  /**
-   * @returns `.${className()}`
-   */
-  readonly toString: (this: StyledFunctionComponent<T, P>) => string;
-}
+  readonly className: {
+    /**
+     * @returns `sui-c-${componentName}`
+     */
+    (this: StyledFunctionComponent<T, P>): string;
+  };
+  readonly toString: {
+    /**
+     * @returns `.${className()}`
+     */
+    (this: StyledFunctionComponent<T, P>): string;
+  };
+};
 
 /**
  * スタイル付きのコンポーネント

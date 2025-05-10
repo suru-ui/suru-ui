@@ -1,11 +1,11 @@
 import * as React from "react";
 
-export type SlottableProps = {
+export type SlottableProps = Readonly<{
   /**
    * 子要素
    */
   children: React.ReactNode;
-};
+}>;
 
 /**
  * Slot コンポーネントが props を渡す対象としてマークする。
