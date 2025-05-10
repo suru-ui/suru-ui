@@ -9,7 +9,8 @@
     "packages/utils",
     "packages/slot",
     "packages/styled",
-    "packages/core"
+    "packages/core",
+    "packages/suru"
   ],
   "scripts": {
     "check": "run-s check:*",
@@ -21,6 +22,7 @@
     "check:slot": "   npm run check -w packages/slot   ",
     "check:styled": " npm run check -w packages/styled ",
     "check:core": "   npm run check -w packages/core   ",
+    "check:suru": "   npm run check -w packages/suru   ",
     "test": "run-s test:*",
     "test:build": "  npm run test -w packages/build  ",
     "test:hash": "   npm run test -w packages/hash   ",
@@ -29,6 +31,7 @@
     "test:slot": "   npm run test -w packages/slot   ",
     "test:styled": " npm run test -w packages/styled ",
     "test:core": "   npm run test -w packages/core   ",
+    "test:suru": "   npm run test -w packages/suru   ",
     "build": "run-s build:*",
     "prebuild": "     npm run build -w packages/build && bun i",
     "build:hash": "   npm run build -w packages/hash          ",
@@ -37,8 +40,10 @@
     "build:slot": "   npm run build -w packages/slot          ",
     "build:styled": " npm run build -w packages/styled        ",
     "build:core": "   npm run build -w packages/core          ",
-    "gen": "npm run gen -w packages/core",
-    "dev": "npm run dev -w packages/core",
+    "build:suru": "   npm run build -w packages/suru          ",
+    "gen": "npm run gen -w packages/suru",
+    "dev:core": "npm run dev -w packages/core",
+    "dev:suru": "npm run dev -w packages/suru",
     "update": "run-s update:*",
     "update:monorepo": "ncu -u                        ",
     "update:packages": "npm run update -ws            ",
