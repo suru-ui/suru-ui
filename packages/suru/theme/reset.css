@@ -1,0 +1,25 @@
+@media (prefers-reduced-motion: no-preference) {
+  :where(html) {
+    interpolate-size: allow-keywords;
+  }
+
+	:where(html:focus-within) {
+		scroll-behavior: smooth;
+	}
+}
+
+:where([class^=sui-]) {
+  color: var(--sui-canvastext-main);
+  font-weight: 400;
+  font-family: var(--sui-fontfamily-sans);
+  line-height: 1;
+  letter-spacing: 0;
+  background-color: var(--sui-canvas-main);
+
+  &, &::before, &::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+  }
+}

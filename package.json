@@ -41,7 +41,7 @@
     "build:styled": " npm run build -w packages/styled        ",
     "build:core": "   npm run build -w packages/core          ",
     "build:suru": "   npm run build -w packages/suru          ",
-    "gen": "npm run gen -w packages/suru",
+    "gen:suru": "npm run gen -w packages/suru",
     "dev:core": "npm run dev -w packages/core",
     "dev:suru": "npm run dev -w packages/suru",
     "update": "run-s update:*",

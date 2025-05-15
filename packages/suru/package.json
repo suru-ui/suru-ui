@@ -16,6 +16,7 @@
     }
   },
   "dependencies": {
+    "@suru-ui/core": "workspace:*",
     "@suru-ui/slot": "workspace:*",
     "@suru-ui/styled": "workspace:*",
     "@suru-ui/utils": "workspace:*",
@@ -58,6 +59,7 @@
     "build": "run-s build:*",
     "build:src": "sui-build --outDir=dist/src",
     "build:tsc": "tsc -p .config/tsconfig.build.json",
+    "gen": "node --experimental-strip-types ./theme/gen/main.ts",
     "dev": "ladle dev --config .config/ladle",
     "update": "ncu -u -x '@suru-ui/'*"
   },

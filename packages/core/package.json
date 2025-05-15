@@ -4,15 +4,19 @@
   "license": "MIT",
   "description": "",
   "type": "module",
-  "main": "dist/src/index.js",
-  "types": "dist/src/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "exports": {
     ".": {
-      "types": "./dist/src/index.d.ts",
-      "default": "./dist/src/index.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./button": {
+      "types": "./dist/button/index.d.ts",
+      "default": "./dist/button/index.js"
     }
   },
   "dependencies": {
@@ -56,7 +60,7 @@
     "test:server": "vitest -c .config/vitest.server.ts --run src/",
     "test:client": "vitest -c .config/vitest.client.ts --run src/",
     "build": "run-s build:*",
-    "build:src": "sui-build --outDir=dist/src",
+    "build:src": "sui-build --outDir=dist",
     "build:tsc": "tsc -p .config/tsconfig.build.json",
     "dev": "ladle dev --config .config/ladle",
     "update": "ncu -u -x '@suru-ui/'*"
