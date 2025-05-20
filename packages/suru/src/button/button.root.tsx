@@ -39,8 +39,8 @@ export default function SuiButtonRoot(props: RootProps): React.ReactElement {
   } = props;
   const Comp = asChild ? Slot : "button";
   const loading = loadingProp || false;
-  const api = useButtonApi();
-  const apiRootProps = api.getRootProps({
+  const { getRootProps } = useButtonApi();
+  const apiRootProps = getRootProps({
     name,
     type,
     onClick,
