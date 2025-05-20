@@ -1,55 +1,14 @@
-import clsx from "clsx";
 import * as React from "react";
-import classes from "../utils/classes";
-import preventDefaultHandler from "../utils/prevent-default-handler";
-
-export type ButtonRootArgs<T = Element> = Readonly<{
-  ariaDisabled: boolean | `${boolean}` | undefined;
-  disabled: boolean | undefined;
-  name: string | undefined;
-  onClick: React.MouseEventHandler<T> | undefined;
-  type: "button" | "submit" | "reset" | undefined;
-}>;
-
-export type ButtonRootProps<T = Element> = Readonly<{
-  "aria-disabled": boolean | undefined;
-  className: string;
-  disabled: boolean | undefined;
-  onClick: React.MouseEventHandler<T> | undefined;
-  type: "button" | "submit" | "reset";
-}>;
-
-export interface GetButtonRootProps {
-  <T>(args: ButtonRootArgs<T>): ButtonRootProps;
-}
+import useGetButtonRootProps, { type GetButtonRootProps } from "./button.root";
 
 export type ButtonApi = Readonly<{
   getRootProps: GetButtonRootProps;
 }>;
 
-export default function useButtonApi(): ButtonApi {
-  return React.useMemo<ButtonApi>(() => ({
-    getRootProps(args: ButtonRootArgs<unknown>) {
-      const {
-        name,
-        type = name === "__intent__" ? "submit" : "button", // conform 用
-        onClick,
-        disabled,
-        ariaDisabled,
-      } = args;
+export type UseButtonApiArgs = void;
 
-      return {
-        type,
-        onClick: (disabled || `${ariaDisabled}` === "true") ? preventDefaultHandler : onClick,
-        disabled,
-        className: clsx("sui-button", {
-          [classes.disabled]: disabled,
-          "sui-button-disabled": disabled,
-        }),
-        "aria-disabled": ariaDisabled === undefined || disabled
-          ? undefined
-          : `${ariaDisabled}` === "true",
-      };
-    },
-  }), []);
+export default function useButtonApi(_: UseButtonApiArgs): ButtonApi {
+  const getRootProps = useGetButtonRootProps();
+
+  return React.useMemo(() => ({ getRootProps }), [getRootProps]);
 }

@@ -1,6 +1,6 @@
 import useButtonApi from "@suru-ui/core/button";
 import { Slot } from "@suru-ui/slot";
-import { mergeProps, useMemoMap } from "@suru-ui/utils";
+import { useMergeProps } from "@suru-ui/utils";
 import clsx from "clsx";
 import * as React from "react";
 import type { Color, ColorVariant, Sizing } from "../theme";
@@ -39,7 +39,6 @@ export default function SuiButtonRoot(props: RootProps): React.ReactElement {
   } = props;
   const Comp = asChild ? Slot : "button";
   const loading = loadingProp || false;
-  const mm = useMemoMap();
   const api = useButtonApi();
   const apiRootProps = api.getRootProps({
     name,
@@ -52,8 +51,7 @@ export default function SuiButtonRoot(props: RootProps): React.ReactElement {
   return (
     <Context value={React.useMemo(() => ({ loading }), [loading])}>
       <Comp
-        {...otherRootProps as {}}
-        {...mergeProps(apiRootProps, {
+        {...useMergeProps(otherRootProps as {}, apiRootProps, {
           className: clsx(
             className,
             `sui-button-size_${size}`,
@@ -66,7 +64,7 @@ export default function SuiButtonRoot(props: RootProps): React.ReactElement {
               "sui-button-outlined": outlined,
             },
           ),
-        }, mm)}
+        })}
       />
     </Context>
   );

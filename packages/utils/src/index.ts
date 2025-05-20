@@ -18,3 +18,6 @@ export { default as useImmutable } from "./use-immutable";
 
 export type * from "./use-memo-map";
 export { default as useMemoMap } from "./use-memo-map";
+
+export type * from "./use-merge-props";
+export { default as useMergeProps } from "./use-merge-props";
