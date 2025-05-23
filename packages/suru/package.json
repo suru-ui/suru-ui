@@ -13,6 +13,14 @@
     ".": {
       "types": "./dist/src/index.d.ts",
       "default": "./dist/src/index.js"
+    },
+    "./button": {
+      "types": "./dist/src/button/index.d.ts",
+      "default": "./dist/src/button/index.js"
+    },
+    "./theme": {
+      "types": "./dist/src/theme/index.d.ts",
+      "default": "./dist/src/theme/index.js"
     }
   },
   "dependencies": {
