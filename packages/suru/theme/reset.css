@@ -1,25 +1,18 @@
-@media (prefers-reduced-motion: no-preference) {
-  :where(html) {
-    interpolate-size: allow-keywords;
-  }
-
-	:where(html:focus-within) {
-		scroll-behavior: smooth;
-	}
-}
-
-:where([class^=sui-]) {
-  color: var(--sui-canvastext-main);
-  font-weight: 400;
+:where([class^="sui-"]) {
+  all: unset;
   font-family: var(--sui-fontfamily-sans);
+  font-weight: 400;
   line-height: 1;
+  color: var(--sui-canvastext-main);
   letter-spacing: 0;
   background-color: var(--sui-canvas-main);
 
-  &, &::before, &::after {
-    margin: 0;
-    padding: 0;
+  &,
+  &::after,
+  &::before {
     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
     -webkit-font-smoothing: antialiased;
   }
 }

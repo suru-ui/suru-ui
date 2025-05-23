@@ -1,5 +1,11 @@
 {
   "editor.rulers": [80, 100],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.stylelint": "explicit"
+  },
+  "stylelint.enable": true,
+  "stylelint.validate": ["css"],
+  "stylelint.configFile": ".config/.stylelintrc.json",
   "[json][jsonc][javascript][javascriptreact][typescript][typescriptreact]": {
     "editor.indentSize": 2,
     "editor.insertSpaces": true,
