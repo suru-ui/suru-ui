@@ -1,4 +1,4 @@
-import useButtonApi from "@suru-ui/core/button";
+import { useButtonApi } from "@suru-ui/core";
 import { Slot } from "@suru-ui/slot";
 import { useMergeProps } from "@suru-ui/utils";
 import clsx from "clsx";
