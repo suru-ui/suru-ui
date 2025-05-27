@@ -33,7 +33,6 @@ export default function SuiButtonRoot(props: RootProps): React.ReactElement {
     variant = "solid",
     disabled,
     outlined = false,
-    className,
     "aria-disabled": ariaDisabled = !!(!disabled && loadingProp) || loadingProp,
     ...otherRootProps
   } = props;
@@ -53,7 +52,6 @@ export default function SuiButtonRoot(props: RootProps): React.ReactElement {
       <Comp
         {...useMergeProps(otherRootProps as {}, apiRootProps, {
           className: clsx(
-            className,
             `sui-button-size_${size}`,
             `sui-button-color_${color}`,
             `sui-button-variant_${variant}`,
