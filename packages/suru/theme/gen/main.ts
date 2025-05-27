@@ -18,9 +18,10 @@ const src = path.join(root, "src");
 await fs.mkdir(dist, { recursive: true });
 await Promise.all([
   (async () => {
-    const w = new Writer();
+    let cssText: string;
     // CSS
     {
+      const w = new Writer();
       layer(w);
       w.writeln("@layer sui.reset {");
       w.write(await fs.readFile(path.join(root, "theme", "reset.css"), "utf-8"));
@@ -50,27 +51,27 @@ await Promise.all([
       w.writeln("  }");
       w.writeln("}");
       await w.output(path.join(dist, "suru.css"));
+      cssText = w.toString();
+    }
+    // CSS 変数
+    const properties: Record<string, any> = {};
+    for (const [, match] of cssText.matchAll(/--([0-9a-z-]+)/g)) {
+      let tmp = properties;
+      const keys = match!.split("-");
+
+      for (let i = 0, n = keys.length; i < n; i++) {
+        if (i !== n - 1) {
+          tmp = tmp[keys[i]!] ||= {};
+        } else {
+          tmp[keys[i]!] = 1;
+        }
+      }
     }
     // 型
     {
-      const properties: Record<string, any> = {};
-
-      for (const [, match] of w.string().matchAll(/--([0-9a-z-]+)/g)) {
-        let tmp = properties;
-        const keys = match!.split("-");
-
-        for (let i = 0, n = keys.length; i < n; i++) {
-          if (i !== n - 1) {
-            tmp = tmp[keys[i]!] ||= {};
-          } else {
-            tmp[keys[i]!] = 1;
-          }
-        }
-      }
-
-      w.clear();
+      const w = new Writer();
       w.writeln("export type CssCustomProperties = {");
-      (function inner(properties, indent, path: readonly string[]): void {
+      (function inner(properties, indent: string = "  ", path: readonly string[] = []): void {
         for (const p in properties) {
           const property = /^[0-9]/.test(p) && !/^[0-9]+$/.test(p)
             ? JSON.stringify(p)
@@ -90,7 +91,7 @@ await Promise.all([
             w.writeln(indent + "};");
           }
         }
-      })(properties, "  ", []);
+      })(properties);
       w.writeln("};");
       await w.output(path.join(src, "theme", "types.ts"));
     }

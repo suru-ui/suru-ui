@@ -11,4 +11,7 @@ export {
   type TypographyVariant,
 } from "./theme";
 
+export type * from "./unocss-vite";
+export { default as unoCssVitePresetSuiSuru } from "./unocss-vite";
+
 export { default as classes } from "./utils/classes";

@@ -21,6 +21,10 @@
     "./theme": {
       "types": "./dist/src/theme/index.d.ts",
       "default": "./dist/src/theme/index.js"
+    },
+    "./unocss-vite": {
+      "types": "./dist/src/unocss-vite/index.d.ts",
+      "default": "./dist/src/unocss-vite/index.js"
     }
   },
   "dependencies": {
