@@ -1,6 +1,12 @@
 export type * from "./button/button";
 export { default as Button } from "./button/button";
 
+export type * from "./details/details";
+export { default as Details } from "./details/details";
+
+export type * from "./details-group/details-group";
+export { default as DetailsGroup } from "./details-group/details-group";
+
 export {
   $,
   type Color,

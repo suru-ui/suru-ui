@@ -18,6 +18,14 @@
       "types": "./dist/src/button/index.d.ts",
       "default": "./dist/src/button/index.js"
     },
+    "./details": {
+      "types": "./dist/src/details/index.d.ts",
+      "default": "./dist/src/details/index.js"
+    },
+    "./details-group": {
+      "types": "./dist/src/details-group/index.d.ts",
+      "default": "./dist/src/details-group/index.js"
+    },
     "./theme": {
       "types": "./dist/src/theme/index.d.ts",
       "default": "./dist/src/theme/index.js"
