@@ -4,6 +4,8 @@ import composeRefs from "../compose-refs";
 import type MemoMap from "../use-memo-map/memo-map";
 import isHandlerProp from "./is-handler-prop-name";
 
+type NonNullable<T> = [T & {}] extends [never] ? {} : T;
+
 export interface PropsCache extends Readonly<Pick<MemoMap, "get">> {}
 
 type MutableAllProps<T = unknown> = React.RefAttributes<T> & React.AllHTMLAttributes<T>;
@@ -29,9 +31,24 @@ const noCache: PropsCache = {
  * const mergedProps = mergeProps(target, source, cache);
  * ```
  */
-function mergeProps<T, U>(target: T, source: U, cache?: PropsCache): T & U;
+function mergeProps<T, U>(
+  target: T,
+  source: U,
+  cache?: PropsCache,
+): NonNullable<T> & NonNullable<U>;
 
-function mergeProps(target: AllProps, source: AllProps, cache: PropsCache = noCache): AllProps {
+function mergeProps(
+  target: AllProps | null | undefined,
+  source: AllProps | null | undefined,
+  cache: PropsCache = noCache,
+): AllProps {
+  if (target == null) {
+    return source || {};
+  }
+  if (source == null) {
+    return target;
+  }
+
   const overrideProps: Partial<MutableAllProps> = { ...source };
 
   for (const name of Object.keys(source) as (keyof AllProps | "__proto__")[]) {
