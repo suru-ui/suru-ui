@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import * as React from "react";
 import composeRefs from "../compose-refs";
-import type MemoMap from "../use-memo-map/memo-map";
+import type MemoMap from "../memo-map";
 import isHandlerProp from "./is-handler-prop-name";
 
 type NonNullable<T> = [T & {}] extends [never] ? {} : T;

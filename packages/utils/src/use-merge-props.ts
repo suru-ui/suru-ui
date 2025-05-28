@@ -1,5 +1,5 @@
 import mergeProps from "./merge-props";
-import useMemoMap from "./use-memo-map";
+import useMemoMapList from "./use-memo-map-list";
 
 type NonNullable<T> = [T & {}] extends [never] ? {} : T;
 
@@ -45,8 +45,14 @@ function useMergeProps<T1, T2, T3, T4, T5, T6>(
   & NonNullable<T6>;
 
 function useMergeProps<T extends unknown[]>(...propsList: T): UnionToIntersection<T[number]> {
-  using mm = useMemoMap();
-  return propsList.reduce((acc, props) => mergeProps(acc, props, mm)) as any;
+  const mmList = useMemoMapList(propsList.length - 1);
+  let acc: any = propsList[0];
+  for (let i = 1; i < propsList.length; i++) {
+    using mm = mmList[i - 1];
+    acc = mergeProps(acc, propsList[i], mm);
+  }
+
+  return acc;
 }
 
 export default useMergeProps;

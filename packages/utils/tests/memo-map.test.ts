@@ -1,5 +1,5 @@
 import { beforeEach, expect, test, vi } from "vitest";
-import MemoMap, { type MemoKV } from "../../src/use-memo-map/memo-map";
+import { type MemoKV, MemoMap } from "../src";
 
 let kv: MemoKV;
 

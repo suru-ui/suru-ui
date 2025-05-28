@@ -4,6 +4,9 @@ export { default as composeRefs } from "./compose-refs";
 export type * from "./css-escape";
 export { default as cssEscape } from "./css-escape";
 
+export type * from "./memo-map";
+export { default as MemoMap } from "./memo-map";
+
 export type * from "./merge-props";
 export { default as mergeProps } from "./merge-props";
 
@@ -18,6 +21,9 @@ export { default as useImmutable } from "./use-immutable";
 
 export type * from "./use-memo-map";
 export { default as useMemoMap } from "./use-memo-map";
+
+export type * from "./use-memo-map-list";
+export { default as useMemoMapList } from "./use-memo-map-list";
 
 export type * from "./use-merge-props";
 export { default as useMergeProps } from "./use-merge-props";
