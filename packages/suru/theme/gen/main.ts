@@ -51,7 +51,7 @@ await Promise.all([
       w.writeln("  }");
       w.writeln("}");
       await w.output(path.join(dist, "suru.css"));
-      cssText = w.toString();
+      cssText = w.string();
     }
     // CSS 変数
     const properties: Record<string, any> = {};

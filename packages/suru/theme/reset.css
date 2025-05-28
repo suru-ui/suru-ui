@@ -1,5 +1,6 @@
-:where([class^="sui-"]) {
+:where([class^="sui-"]:not(svg, svg *)) {
   all: unset;
+  display: block;
   font-family: var(--sui-fontfamily-sans);
   font-weight: 400;
   line-height: 1;

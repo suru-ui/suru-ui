@@ -683,7 +683,6 @@
 
   .sui-button_loader {
     position: absolute;
-    display: inline-block;
     height: var(--sui-button-height);
     pointer-events: none;
     user-select: none;
@@ -706,15 +705,15 @@
   .sui-button_loader_dot-3 {
     animation-delay: .3s;
   }
-}
 
-@keyframes sui-button_loader {
-  0%, 100% {
-    r: 3;
-  }
+  @keyframes sui-button_loader {
+    0%, 100% {
+      r: 3;
+    }
 
-  50% {
-    r: .2;
+    50% {
+      r: .2;
+    }
   }
 }
 
