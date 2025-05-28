@@ -30,21 +30,21 @@
     border-style: solid;
     border-width: 0;
     border-radius: var(--sui-button-borderradius);
-  }
 
-  @media (hover: hover) {
-    .sui-button:hover {
-      background-color: var(--sui-button-subtle);
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--sui-button-subtle);
+      }
     }
-  }
 
-  .sui-button:active {
-    background-color: var(--sui-button-action);
-  }
+    &:active {
+      background-color: var(--sui-button-action);
+    }
 
-  .sui-button:focus-visible {
-    outline: solid var(--sui-focusring-color) var(--sui-focusring-width);
-    outline-offset: var(--sui-focusring-offset);
+    &:focus-visible {
+      outline: solid var(--sui-focusring-color) var(--sui-focusring-width);
+      outline-offset: var(--sui-focusring-offset);
+    }
   }
 
   .sui-button-size_sm {
