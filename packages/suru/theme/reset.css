@@ -6,7 +6,11 @@
   line-height: 1;
   color: var(--sui-canvastext-main);
   letter-spacing: 0;
+  overflow-wrap: anywhere;
   background-color: var(--sui-canvas-main);
+  text-spacing-trim: trim-start;
+  text-autospace: normal;
+  line-break: strict;
 
   &,
   &::after,
