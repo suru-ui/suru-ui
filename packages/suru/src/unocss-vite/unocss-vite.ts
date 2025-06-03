@@ -175,6 +175,7 @@ export default function unoCssVitePresetSuiSuru(
       ["text-subtle", { color: $.sui.canvastext.subtle.toString() }],
       ["text-disabled", { color: $.sui.canvastext.disabled.toString() }],
       ...COLOR_LIST.flatMap(color => [
+        <StaticRule> [`text-${color}`, { color: $.sui[color].naked.canvastext.toString() }],
         ...COLOR_SCALE_LIST.flatMap((scale): StaticRule[] => [
           [`text-${color}-${scale}`, { color: $.sui[color][scale].toString() }],
           [`text-${color}-${scale}-alpha`, { color: $.sui[color].alpha[scale].toString() }],

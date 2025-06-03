@@ -8,3 +8,6 @@ export { default as useDetailsApi } from "./details";
 
 export type * from "./details-group";
 export { default as useDetailsGroupApi } from "./details-group";
+
+export type * from "./text";
+export { default as useTextApi } from "./text";
