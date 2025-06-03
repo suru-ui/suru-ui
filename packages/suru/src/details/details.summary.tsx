@@ -2,7 +2,7 @@ import { Slot } from "@suru-ui/slot";
 import { useMergeProps } from "@suru-ui/utils";
 import * as React from "react";
 import assertRequiredContext from "../utils/assert-required-context";
-import { Context } from "./details.context";
+import Context from "./details.context";
 
 export type SummaryArgs = {
   asChild?: boolean | undefined;
@@ -22,5 +22,5 @@ export default function SuiDetailsSummary(props: SummaryProps): React.ReactEleme
   const Comp = asChild ? Slot as never : "summary";
   const apiSummaryProps = ctx.getSummaryProps();
 
-  return <Comp {...useMergeProps(otherSummaryProps as {}, apiSummaryProps)} />;
+  return <Comp {...useMergeProps(apiSummaryProps, otherSummaryProps as {})} />;
 }

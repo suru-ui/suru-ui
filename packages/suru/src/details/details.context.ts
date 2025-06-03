@@ -7,4 +7,4 @@ export type ContextValue = Readonly<
   }
 >;
 
-export const Context = React.createContext<ContextValue | undefined>(undefined);
+export default React.createContext<ContextValue | undefined>(undefined);

@@ -2,7 +2,7 @@ import { Slot } from "@suru-ui/slot";
 import clsx from "clsx";
 import * as React from "react";
 import assertRequiredContext from "../utils/assert-required-context";
-import { Context } from "./button.context";
+import Context from "./button.context";
 
 export type TextArgs = {
   asChild?: boolean | undefined;

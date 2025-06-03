@@ -5,7 +5,7 @@ import clsx from "clsx";
 import * as React from "react";
 import type { Color, ColorVariant, Sizing } from "../theme";
 import classes from "../utils/classes";
-import { Context } from "./button.context";
+import Context from "./button.context";
 
 export type RootArgs = {
   asChild?: boolean | undefined;
@@ -50,19 +50,23 @@ export default function SuiButtonRoot(props: RootProps): React.ReactElement {
   return (
     <Context value={React.useMemo(() => ({ loading }), [loading])}>
       <Comp
-        {...useMergeProps(otherRootProps as {}, apiRootProps, {
-          className: clsx(
-            `sui-button-size_${size}`,
-            `sui-button-color_${color}`,
-            `sui-button-variant_${variant}`,
-            {
-              [classes.loading]: loading,
-              [classes.outlined]: outlined,
-              "sui-button-loading": loading,
-              "sui-button-outlined": outlined,
-            },
-          ),
-        })}
+        {...useMergeProps(
+          apiRootProps,
+          {
+            className: clsx(
+              `sui-button-size_${size}`,
+              `sui-button-color_${color}`,
+              `sui-button-variant_${variant}`,
+              {
+                [classes.loading]: loading,
+                [classes.outlined]: outlined,
+                "sui-button-loading": loading,
+                "sui-button-outlined": outlined,
+              },
+            ),
+          },
+          otherRootProps as {},
+        )}
       />
     </Context>
   );

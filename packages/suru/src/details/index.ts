@@ -1,3 +1,6 @@
+export type * from "./details.context";
+export { default as Context } from "./details.context";
+
 export type * from "./details.root";
 export { default as Root } from "./details.root";
 

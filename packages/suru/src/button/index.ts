@@ -1,4 +1,5 @@
-export { Context, type ContextValue } from "./button.context";
+export type * from "./button.context";
+export { default as Context } from "./button.context";
 
 export type * from "./button.loader";
 export { default as Loader } from "./button.loader";

@@ -5,7 +5,7 @@ import clsx from "clsx";
 import * as React from "react";
 import GroupContext from "../details-group/details-group.context";
 import type { Sizing } from "../theme";
-import { Context } from "./details.context";
+import Context from "./details.context";
 
 export type RootArgs = {
   asChild?: boolean | undefined;

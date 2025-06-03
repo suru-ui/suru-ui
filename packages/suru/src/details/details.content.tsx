@@ -2,7 +2,7 @@ import { Slot } from "@suru-ui/slot";
 import { useMergeProps } from "@suru-ui/utils";
 import * as React from "react";
 import assertRequiredContext from "../utils/assert-required-context";
-import { Context } from "./details.context";
+import Context from "./details.context";
 
 export type DetailsArgs = {
   asChild?: boolean | undefined;
@@ -22,5 +22,5 @@ export default function SuiDetailsContent(props: DetailsProps): React.ReactEleme
   const Comp = asChild ? Slot as never : "div";
   const apiContentProps = ctx.getContentProps();
 
-  return <Comp {...useMergeProps(otherContentProps as {}, apiContentProps)} />;
+  return <Comp {...useMergeProps(apiContentProps, otherContentProps as {})} />;
 }

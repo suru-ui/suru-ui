@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import * as React from "react";
 import assertRequiredContext from "../utils/assert-required-context";
-import { Context } from "./button.context";
+import Context from "./button.context";
 
 export type LoaderArgs = {};
 

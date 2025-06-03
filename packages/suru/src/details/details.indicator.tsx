@@ -3,7 +3,7 @@ import { useMergeProps } from "@suru-ui/utils";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import * as React from "react";
 import assertRequiredContext from "../utils/assert-required-context";
-import { Context } from "./details.context";
+import Context from "./details.context";
 
 export type IndicatorArgs = {
   asChild?: boolean | undefined;
@@ -29,9 +29,12 @@ export default function SuiDetailsIndicator(props: IndicatorProps): React.ReactE
 
   return (
     <Comp
-      {...useMergeProps(otherIndicatorProps as {}, {
-        className: "sui-details_indicator",
-      })}
+      {...useMergeProps(
+        {
+          className: "sui-details_indicator",
+        },
+        otherIndicatorProps as {},
+      )}
     >
       <Slottable>{children}</Slottable>
       {ctx.isOpen ? close : open}
