@@ -36,7 +36,7 @@ export default function SuiButtonRoot(props: RootProps): React.ReactElement {
     "aria-disabled": ariaDisabled = !!(!disabled && loadingProp) || loadingProp,
     ...otherRootProps
   } = props;
-  const Comp = asChild ? Slot : "button";
+  const Comp = asChild ? Slot as never : "button";
   const loading = loadingProp || false;
   const { getRootProps } = useButtonApi();
   const apiRootProps = getRootProps({

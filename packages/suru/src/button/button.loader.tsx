@@ -11,7 +11,7 @@ export type LoaderProps =
 
 export default function SuiButtonLoader(props: LoaderProps): React.ReactElement | null {
   const ctx = React.use(Context);
-  assertRequiredContext("ButtonText", ctx);
+  assertRequiredContext("ButtonLoader", ctx);
   const { loading } = ctx;
   if (!loading) {
     return null;
@@ -19,6 +19,7 @@ export default function SuiButtonLoader(props: LoaderProps): React.ReactElement 
 
   const {
     className,
+    "aria-hidden": ariaHidden = true,
     ...otherLoaderProps
   } = props;
 
@@ -28,6 +29,7 @@ export default function SuiButtonLoader(props: LoaderProps): React.ReactElement 
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       className={clsx(className, "sui-button_loader")}
+      aria-hidden={ariaHidden}
     >
       <circle r="3" cx="4" cy="12" className="sui-button_loader_dot sui-button_loader_dot-1" />
       <circle r="3" cx="12" cy="12" className="sui-button_loader_dot sui-button_loader_dot-2" />

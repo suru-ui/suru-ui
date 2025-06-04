@@ -26,7 +26,6 @@
     cursor: pointer;
     user-select: none;
     background-color: var(--sui-button-canvas);
-    border-color: var(--sui-button-bordercolor);
     border-style: solid;
     border-width: 0;
     border-radius: var(--sui-button-borderradius);
@@ -427,6 +426,7 @@
   }
 
   .sui-button-outlined {
+    border-color: var(--sui-button-bordercolor);
     border-width: 1px;
 
     &.sui-button-color_blue {

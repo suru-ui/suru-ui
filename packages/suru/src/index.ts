@@ -7,6 +7,9 @@ export { default as Details } from "./details/details";
 export type * from "./details-group/details-group";
 export { default as DetailsGroup } from "./details-group/details-group";
 
+export type * from "./icon-button/icon-button";
+export { default as IconButton } from "./icon-button/icon-button";
+
 export type * from "./text/text";
 export { default as Text } from "./text/text";
 

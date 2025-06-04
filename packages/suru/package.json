@@ -26,6 +26,10 @@
       "types": "./dist/src/details-group/index.d.ts",
       "default": "./dist/src/details-group/index.js"
     },
+    "./icon-button": {
+      "types": "./dist/src/icon-button/index.d.ts",
+      "default": "./dist/src/icon-button/index.js"
+    },
     "./text": {
       "types": "./dist/src/text/index.d.ts",
       "default": "./dist/src/text/index.js"
