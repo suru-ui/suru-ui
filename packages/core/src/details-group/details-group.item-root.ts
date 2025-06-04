@@ -21,7 +21,7 @@ export default function useGetDetailsGroupItemRootProps(
   return React.useCallback(
     () => ({
       name,
-      className: "sui-details_group_item_root",
+      className: "sui-details_group_item",
     }),
     [name],
   );
