@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
-import useControlledState from "./../../src/utils/use-controlled-state";
+import useControlledState from "../../src/utils/use-controlled-state";
 
 describe("use-controlled-state", () => {
   describe("制御モード", () => {

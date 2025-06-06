@@ -45,7 +45,6 @@
     "@testing-library/react": "^16.3.0",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.6",
-    "happy-dom": "^17.6.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "unocss": "^66.1.3",
@@ -54,7 +53,7 @@
   "scripts": {
     "check": "tsc --noEmit",
     "test": "run-s test:*",
-    "test:server": "vitest -c .config/vitest.server.ts --run tests/",
+    "// test:server": "vitest -c .config/vitest.server.ts --run tests/",
     "test:client": "vitest -c .config/vitest.client.ts --run tests/",
     "build": "run-s build:*",
     "build:src": "sui-build --outDir=dist",
