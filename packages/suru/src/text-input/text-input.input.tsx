@@ -20,7 +20,6 @@ export default function SuiTextInputInput(props: InputProps): React.ReactElement
     asChild,
     disabled,
     className,
-    "aria-disabled": ariaDisabled,
     ...otherInputProps
   } = props;
   const Comp = asChild ? Slot as never : "input";
@@ -28,7 +27,6 @@ export default function SuiTextInputInput(props: InputProps): React.ReactElement
   const apiInputProps = getInputProps({
     type,
     disabled,
-    ariaDisabled,
   });
 
   return <Comp {...useMergeProps(apiInputProps, otherInputProps as {})} />;
