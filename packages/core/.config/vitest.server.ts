@@ -8,5 +8,7 @@ export default defineConfig({
     exclude: [
       "**\/*.client.test.ts?(x)",
     ],
+    environment: "happy-dom",
+    setupFiles: "./tests/setup.ts",
   },
 });
