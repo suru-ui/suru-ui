@@ -17,7 +17,7 @@ export default function SuiButtonSection(props: SectionProps): React.ReactElemen
     "aria-hidden": ariaHidden = true,
     ...otherTextProps
   } = props;
-  const Comp = asChild ? Slot : "span";
+  const Comp = asChild ? Slot as never : "span";
 
   return (
     <Comp

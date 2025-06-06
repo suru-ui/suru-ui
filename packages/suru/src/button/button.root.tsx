@@ -53,6 +53,7 @@ export default function SuiButtonRoot(props: RootProps): React.ReactElement {
         {...useMergeProps(
           apiRootProps,
           {
+            name,
             className: clsx(
               `sui-button-size_${size}`,
               `sui-button-color_${color}`,

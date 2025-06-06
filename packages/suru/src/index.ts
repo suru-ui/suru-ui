@@ -13,6 +13,9 @@ export { default as IconButton } from "./icon-button/icon-button";
 export type * from "./text/text";
 export { default as Text } from "./text/text";
 
+export type * from "./text-input/text-input";
+export { default as TextInput } from "./text-input/text-input";
+
 export {
   $,
   type Color,

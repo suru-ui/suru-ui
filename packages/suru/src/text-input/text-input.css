@@ -1,0 +1,208 @@
+@layer sui.components {
+  @scope (.sui-text_input) {
+    :scope {
+      /*********************************************************************************************
+       *
+       * root
+       *
+       ********************************************************************************************/
+
+      position: relative;
+      display: flex;
+      gap: var(--sui-text_input-gap);
+      align-items: center;
+      justify-content: center;
+      height: var(--sui-text_input-height);
+      padding-inline: var(--sui-text_input-paddinginline);
+      overflow: hidden;
+      font-family: var(--sui-text_input-fontfamily);
+      font-size: var(--sui-text_input-fontsize);
+      font-weight: var(--sui-text_input-fontweight);
+      line-height: var(--sui-text_input-lineheight);
+      vertical-align: middle;
+      letter-spacing: var(--sui-text_input_text-letterspacing);
+      touch-action: manipulation;
+      cursor: default;
+      user-select: none;
+      outline: var(--sui-text_input-outlinecolor) solid var(--sui-text_input-outlinewidth);
+      outline-offset: calc(var(--sui-text_input-outlinewidth) * -1);
+      border-radius: var(--sui-text_input-borderradius);
+
+      --sui-text_input-outlinewidth: var(--sui-outline-width-main);
+      --sui-text_input-outlinecolor: var(--sui-outline-color);
+
+      @media (hover: hover) {
+        &:not(:has(.sui-text_input_input:focus-visible), :has(.sui-text_input_escape_focus_trap:hover)):hover {
+          --sui-text_input-outlinewidth: var(--sui-outline-width-hover);
+          --sui-text_input-outlinecolor: var(--sui-text_input-accentcolor);
+        }
+      }
+
+      &:has(.sui-text_input_input:focus-visible) {
+        --sui-text_input-outlinewidth: var(--sui-focusring-width);
+        --sui-text_input-outlinecolor: var(--sui-focusring-color);
+      }
+
+      &.sui-text_input-size_sm {
+        --sui-text_input-gap:           var(--sui-sizing-gap-sm);
+        --sui-text_input-height:        var(--sui-sizing-sm);
+        --sui-text_input-borderradius:  var(--sui-sizing-rad-sm);
+        --sui-text_input-paddinginline: var(--sui-sizing-pad-sm);
+        --sui-text_input-fontsize:      var(--sui-text-oln-16m-1-fontsize);
+        --sui-text_input-fontfamily:    var(--sui-text-oln-16m-1-fontfamily);
+        --sui-text_input-fontweight:    var(--sui-text-oln-16m-1-fontweight);
+        --sui-text_input-lineheight:    var(--sui-text-oln-16m-1-lineheight);
+        --sui-text_input-letterspacing: var(--sui-text-oln-16m-1-letterspacing);
+      }
+
+      &.sui-text_input-size_md {
+        --sui-text_input-gap:           var(--sui-sizing-gap-md);
+        --sui-text_input-height:        var(--sui-sizing-md);
+        --sui-text_input-borderradius:  var(--sui-sizing-rad-md);
+        --sui-text_input-paddinginline: var(--sui-sizing-pad-md);
+      }
+
+      &.sui-text_input-size_lg {
+        --sui-text_input-gap:           var(--sui-sizing-gap-lg);
+        --sui-text_input-height:        var(--sui-sizing-lg);
+        --sui-text_input-borderradius:  var(--sui-sizing-rad-lg);
+        --sui-text_input-paddinginline: var(--sui-sizing-pad-lg);
+      }
+
+      &:is(.sui-text_input-size_md, .sui-text_input-size_lg) {
+        --sui-text_input-fontsize:      var(--sui-text-oln-17m-1-fontsize);
+        --sui-text_input-fontfamily:    var(--sui-text-oln-17m-1-fontfamily);
+        --sui-text_input-fontweight:    var(--sui-text-oln-17m-1-fontweight);
+        --sui-text_input-lineheight:    var(--sui-text-oln-17m-1-lineheight);
+        --sui-text_input-letterspacing: var(--sui-text-oln-17m-1-letterspacing);
+      }
+
+      &.sui-text_input-color_blue {
+        --sui-text_input-accentcolor: var(--sui-blue-naked-border);
+      }
+
+      &.sui-text_input-color_cyan {
+        --sui-text_input-accentcolor: var(--sui-cyan-naked-border);
+      }
+
+      &.sui-text_input-color_error {
+        --sui-text_input-accentcolor: var(--sui-error-naked-border);
+      }
+
+      &.sui-text_input-color_green {
+        --sui-text_input-accentcolor: var(--sui-green-naked-border);
+      }
+
+      &.sui-text_input-color_grey {
+        --sui-text_input-accentcolor: var(--sui-grey-naked-border);
+      }
+
+      &.sui-text_input-color_info {
+        --sui-text_input-accentcolor: var(--sui-info-naked-border);
+      }
+
+      &.sui-text_input-color_lightblue {
+        --sui-text_input-accentcolor: var(--sui-lightblue-naked-border);
+      }
+
+      &.sui-text_input-color_lime {
+        --sui-text_input-accentcolor: var(--sui-lime-naked-border);
+      }
+
+      &.sui-text_input-color_magenta {
+        --sui-text_input-accentcolor: var(--sui-magenta-naked-border);
+      }
+
+      &.sui-text_input-color_orange {
+        --sui-text_input-accentcolor: var(--sui-orange-naked-border);
+      }
+
+      &.sui-text_input-color_purple {
+        --sui-text_input-accentcolor: var(--sui-purple-naked-border);
+      }
+
+      &.sui-text_input-color_red {
+        --sui-text_input-accentcolor: var(--sui-red-naked-border);
+      }
+
+      &.sui-text_input-color_success {
+        --sui-text_input-accentcolor: var(--sui-success-naked-border);
+      }
+
+      &.sui-text_input-color_warn {
+        --sui-text_input-accentcolor: var(--sui-warn-naked-border);
+      }
+
+      &.sui-text_input-color_yellow {
+        --sui-text_input-accentcolor: var(--sui-yellow-naked-border);
+      }
+
+      /*********************************************************************************************
+       *
+       * input
+       *
+       ********************************************************************************************/
+
+      .sui-text_input_input {
+        flex: 1;
+        width: 0;
+        min-width: 0;
+        height: 100%;
+        text-autospace: no-autospace;
+        cursor: text;
+        background-color: transparent;
+
+        &[type="number"] {
+          font-variant-numeric: tabular-nums;
+        }
+      }
+
+      /*********************************************************************************************
+       *
+       * section
+       *
+       ********************************************************************************************/
+
+      .sui-text_input_section {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+/***************************************************************************************************
+ *
+ * invalid
+ *
+ **************************************************************************************************/
+
+.sui-text_input:has(
+  .sui-text_input_input:not(.sui-text_input_input-disabled, :focus-visible):is(:user-invalid, [aria-invalid])
+) {
+  outline-width: var(--sui-outline-width-hover) !important;
+  outline-color: var(--sui-error-naked-border) !important;
+  outline-offset: calc(var(--sui-outline-width-hover) * -1) !important;
+}
+
+/***************************************************************************************************
+ *
+ * disabled
+ *
+ **************************************************************************************************/
+
+.sui-text_input:has(.sui-text_input_input-disabled) {
+  outline-width: var(--sui-outline-width-disabled) !important;
+  outline-color: var(--sui-canvastext-disabled) !important;
+  outline-offset: calc(var(--sui-outline-width-disabled) * -1) !important;
+  background-color: var(--sui-grey-liquid-canvas) !important;
+
+  &, * {
+    color: var(--sui-canvastext-disabled) !important;
+    cursor: not-allowed !important;
+    user-select: none !important;
+  }
+
+  svg {
+    opacity: 0.5 !important;
+  }
+}

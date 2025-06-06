@@ -12,7 +12,7 @@ export type ButtonArgs = {
 };
 
 export type ButtonProps =
-  & Omit<Omit<RootProps, "asChild">, keyof ButtonArgs>
+  & Omit<RootProps, keyof ButtonArgs | "asChild">
   & ButtonArgs;
 
 export default function SuiButton(props: ButtonProps): React.ReactElement {
@@ -26,7 +26,7 @@ export default function SuiButton(props: ButtonProps): React.ReactElement {
   return (
     <Root {...otherRootProps}>
       {"startSection" in props && (
-        <Section className="sui-button_section-start">
+        <Section className="sui-button_section sui-button_section-start">
           {startSection}
         </Section>
       )}
@@ -34,7 +34,7 @@ export default function SuiButton(props: ButtonProps): React.ReactElement {
         {children}
       </Text>
       {"endSection" in props && (
-        <Section className="sui-button_section-end">
+        <Section className="sui-button_section sui-button_section-end">
           {endSection}
         </Section>
       )}
