@@ -3,24 +3,24 @@ import * as React from "react";
 import classes from "../utils/classes";
 import preventDefaultHandler from "../utils/prevent-default-handler";
 
-export type ButtonRootArgs<T extends Element = Element> = Readonly<{
+export type ButtonRootArgs = Readonly<{
   ariaDisabled: boolean | `${boolean}` | undefined;
   disabled: boolean | undefined;
   name: string | undefined;
-  onClick: React.MouseEventHandler<T> | undefined;
+  onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
   type: "button" | "submit" | "reset" | undefined;
 }>;
 
-export type ButtonRootProps<T extends Element = Element> = Readonly<{
+export type ButtonRootProps = Readonly<{
   "aria-disabled": boolean | undefined;
   className: string;
   disabled: boolean | undefined;
-  onClick: React.MouseEventHandler<T> | undefined;
+  onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
   type: "button" | "submit" | "reset";
 }>;
 
 export interface GetButtonRootProps {
-  <T extends Element>(args: ButtonRootArgs<T>): ButtonRootProps;
+  (args: ButtonRootArgs): ButtonRootProps;
 }
 
 export default function useGetButtonRootProps(): GetButtonRootProps {
