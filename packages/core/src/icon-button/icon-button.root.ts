@@ -15,6 +15,7 @@ export type IconButtonRootProps<T extends Element = Element> = Readonly<{
   "aria-disabled": boolean | undefined;
   className: string;
   disabled: boolean | undefined;
+  name: string | undefined;
   onClick: React.MouseEventHandler<T> | undefined;
   type: "button" | "submit" | "reset";
 }>;
@@ -35,6 +36,7 @@ export default function useGetIconButtonRootProps(): GetIconButtonRootProps {
       } = args;
 
       return {
+        name,
         type,
         onClick: (disabled || `${ariaDisabled}` === "true") ? preventDefaultHandler : onClick,
         disabled,

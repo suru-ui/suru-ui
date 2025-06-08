@@ -8,9 +8,13 @@ export type TextInputEscapeFocusTrapArgs = Readonly<{
 export type TextInputEscapeFocusTrapProps = Readonly<
   {
     className: string;
+    // dataset
+    "data-sui-disabled": true;
   } | {
     className: string;
     ref: React.RefCallback<any>;
+    // dataset
+    "data-sui-disabled": false;
   }
 >;
 
@@ -51,12 +55,14 @@ export default function useGetTextInputEscapeFocusTrapProps(
       if (disabled) {
         return {
           className: "sui-text_input_escape_focus_trap",
+          "data-sui-disabled": true,
         };
       }
 
       return {
-        ...props,
+        ref: props.ref,
         className: `${props.className} sui-text_input_escape_focus_trap`,
+        "data-sui-disabled": false,
       };
     },
     [props],

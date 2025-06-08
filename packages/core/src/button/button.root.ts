@@ -15,6 +15,7 @@ export type ButtonRootProps = Readonly<{
   "aria-disabled": boolean | undefined;
   className: string;
   disabled: boolean | undefined;
+  name: string | undefined;
   onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
   type: "button" | "submit" | "reset";
 }>;
@@ -35,6 +36,7 @@ export default function useGetButtonRootProps(): GetButtonRootProps {
       } = args;
 
       return {
+        name,
         type,
         onClick: (disabled || `${ariaDisabled}` === "true") ? preventDefaultHandler : onClick,
         disabled,
