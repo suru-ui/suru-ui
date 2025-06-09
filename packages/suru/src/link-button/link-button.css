@@ -760,7 +760,7 @@
   }
 
   &.sui-link_button-outlined {
-    border: var(--sui-canvastext-disabled) solid 1px !important;
+    border: var(--sui-canvastext-disabled) solid var(--sui-outline-width-disabled) !important;
   }
 
   &:is(
