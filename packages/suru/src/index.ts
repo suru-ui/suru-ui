@@ -10,6 +10,12 @@ export { default as DetailsGroup } from "./details-group/details-group";
 export type * from "./icon-button/icon-button";
 export { default as IconButton } from "./icon-button/icon-button";
 
+export type * from "./link-button/link-button";
+export { default as LinkButton } from "./link-button/link-button";
+
+export type * from "./link-icon-button/link-icon-button";
+export { default as LinkIconButton } from "./link-icon-button/link-icon-button";
+
 export type * from "./text/text";
 export { default as Text } from "./text/text";
 

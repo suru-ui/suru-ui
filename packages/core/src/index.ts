@@ -12,6 +12,12 @@ export { default as useDetailsGroupApi } from "./details-group";
 export type * from "./icon-button";
 export { default as useIconButtonApi } from "./icon-button";
 
+export type * from "./link-button";
+export { default as useLinkButtonApi } from "./link-button";
+
+export type * from "./link-icon-button";
+export { default as useLinkIconButtonApi } from "./link-icon-button";
+
 export type * from "./text";
 export { default as useTextApi } from "./text";
 

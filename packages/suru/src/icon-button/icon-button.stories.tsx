@@ -1,7 +1,7 @@
 import type { Story, StoryDefault } from "@ladle/react";
 import { Trash2Icon } from "lucide-react";
 import { COLOR_LIST, COLOR_VARIANT_LIST, SIZING_LIST } from "../theme";
-import Button from ".";
+import IconButton from ".";
 
 export default {
   title: "Forms / IconButton",
@@ -9,9 +9,9 @@ export default {
 
 export const Basic: Story = () => {
   return (
-    <Button>
+    <IconButton>
       <Trash2Icon />
-    </Button>
+    </IconButton>
   );
 };
 Basic.storyName = "基本的な使い方";
@@ -20,12 +20,12 @@ export const Color: Story = () => {
   return (
     <div className="space-x-2 space-y-2">
       {COLOR_LIST.map(color => (
-        <Button
+        <IconButton
           key={color}
           color={color}
         >
           <Trash2Icon />
-        </Button>
+        </IconButton>
       ))}
     </div>
   );
@@ -36,12 +36,12 @@ export const Size: Story = () => {
   return (
     <div className="space-x-2">
       {SIZING_LIST.map(size => (
-        <Button
+        <IconButton
           key={size}
           size={size}
         >
           <Trash2Icon />
-        </Button>
+        </IconButton>
       ))}
     </div>
   );
@@ -57,13 +57,13 @@ export const Variant: Story = () => {
           className="space-x-2"
         >
           {COLOR_VARIANT_LIST.map(variant => (
-            <Button
+            <IconButton
               key={variant}
               color={color}
               variant={variant}
             >
               <Trash2Icon />
-            </Button>
+            </IconButton>
           ))}
         </div>
       ))}
@@ -81,14 +81,14 @@ export const Outlined: Story = () => {
           className="space-x-2"
         >
           {COLOR_VARIANT_LIST.map(variant => (
-            <Button
+            <IconButton
               key={variant}
               color={color}
               variant={variant}
               outlined
             >
               <Trash2Icon />
-            </Button>
+            </IconButton>
           ))}
         </div>
       ))}
@@ -101,13 +101,13 @@ export const Loading: Story = () => {
   return (
     <div className="space-x-2">
       {COLOR_VARIANT_LIST.map(variant => (
-        <Button
+        <IconButton
           key={variant}
           variant={variant}
           loading
         >
           <Trash2Icon />
-        </Button>
+        </IconButton>
       ))}
     </div>
   );
@@ -128,7 +128,7 @@ export const Disabled: Story = () => {
           className="space-x-2"
         >
           {COLOR_VARIANT_LIST.map(variant => (
-            <Button
+            <IconButton
               key={variant}
               variant={variant}
               loading={loading}
@@ -136,7 +136,7 @@ export const Disabled: Story = () => {
               outlined={outlined}
             >
               <Trash2Icon />
-            </Button>
+            </IconButton>
           ))}
         </div>
       ))}

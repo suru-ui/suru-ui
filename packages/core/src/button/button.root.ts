@@ -12,12 +12,13 @@ export type ButtonRootArgs = Readonly<{
 }>;
 
 export type ButtonRootProps = Readonly<{
-  "aria-disabled": boolean | undefined;
   className: string;
   disabled: boolean | undefined;
   name: string | undefined;
   onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
   type: "button" | "submit" | "reset";
+  // aria
+  "aria-disabled": boolean | undefined;
 }>;
 
 export interface GetButtonRootProps {
