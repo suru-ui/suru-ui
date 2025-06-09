@@ -71,10 +71,22 @@ function mergeProps(
       case name === "style":
         overrideProps[name] = cache.get(
           name,
-          () =>
-            slot && child
-              ? { ...slot, ...child } // child が優先される。
-              : (slot || child),
+          () => {
+            if (typeof child !== "function" && typeof slot !== "function") {
+              return slot && child
+                ? { ...slot, ...child } // child が優先される。
+                : (slot || child);
+            }
+
+            // Remix, React-Router の NavLink
+            return function mergedStyle(...args: any[]) {
+              const childStyle = typeof child === "function" ? child(...args) : child;
+              const slotStyle = typeof slot === "function" ? slot(...args) : slot;
+              return slotStyle && childStyle
+                ? { ...slotStyle, ...childStyle } // child が優先される。
+                : (slotStyle || childStyle);
+            };
+          },
           [slot, child],
         );
         break;
@@ -83,17 +95,16 @@ function mergeProps(
         overrideProps[name] = cache.get(
           name,
           () => {
-            // Remix, React-Router の NavLink
-            if (typeof child === "function" || typeof slot === "function") {
-              return function mergedClassName(...args: any[]) {
-                return clsx(
-                  typeof child === "function" ? child(...args) : child, // child を先頭にする。
-                  typeof slot === "function" ? slot(...args) : slot,
-                );
-              };
+            if (typeof child !== "function" && typeof slot !== "function") {
+              return clsx(child, slot); // child を先頭にする。
             }
 
-            return clsx(child, slot); // child を先頭にする。
+            // Remix, React-Router の NavLink
+            return function mergedClassName(...args: any[]) {
+              const childClassName = typeof child === "function" ? child(...args) : child;
+              const slotClassName = typeof slot === "function" ? slot(...args) : slot;
+              return clsx(childClassName, slotClassName); // child を先頭にする。
+            };
           },
           [slot, child],
         );
