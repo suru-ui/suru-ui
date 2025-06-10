@@ -1,7 +1,7 @@
 import * as React from "react";
 import useIsomorphicEffect from "./use-isomorphic-effect";
 
-export default function useRequestSetState<T>(setState: React.Dispatch<T>): React.Dispatch<T> {
+export default function useUpdateState<T>(setState: React.Dispatch<T>): React.Dispatch<T> {
   const isUnmounted = React.useRef(false);
   const isRenderBusy = React.useRef(true);
   isRenderBusy.current = true;

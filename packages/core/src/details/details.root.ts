@@ -2,7 +2,7 @@ import clsx from "clsx";
 import * as React from "react";
 import classes from "../utils/classes";
 import useControlledState from "../utils/use-controlled-state";
-import useRequestSetState from "../utils/use-request-set-state";
+import useUpdateState from "../utils/use-update-state";
 
 export type DetailsRootArgs = void;
 
@@ -37,7 +37,7 @@ export default function useGetDetailsRootProps(
     initialValue: defaultOpen,
     controlledValue: initialOpen,
   });
-  const reqOpen = useRequestSetState(setOpen);
+  const updateOpen = useUpdateState(setOpen);
   const rootRef = React.useCallback<DetailsRootProps["ref"]>(
     el => {
       if (!el) {
@@ -45,7 +45,7 @@ export default function useGetDetailsRootProps(
       }
 
       function handleToggleEvent(this: HTMLDetailsElement) {
-        reqOpen(this.open);
+        updateOpen(this.open);
       }
 
       el.addEventListener("toggle", handleToggleEvent);
@@ -54,7 +54,7 @@ export default function useGetDetailsRootProps(
         el.removeEventListener("toggle", handleToggleEvent);
       };
     },
-    [reqOpen],
+    [updateOpen],
   );
 
   return React.useCallback(
