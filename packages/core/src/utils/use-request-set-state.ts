@@ -1,15 +1,15 @@
 import * as React from "react";
-import useIsMounted from "./use-is-mounted";
+import useIsomorphicEffect from "./use-isomorphic-effect";
 
 export default function useRequestSetState<T>(setState: React.Dispatch<T>): React.Dispatch<T> {
-  const isMounted = useIsMounted();
+  const isUnmounted = React.useRef(false);
   const isRenderBusy = React.useRef(true);
   isRenderBusy.current = true;
   const requestedValue = React.useMemo<{ current?: T }>(() => ({}), []);
   delete requestedValue.current;
   const requestSetState = React.useCallback<React.Dispatch<T>>(
     newValue => {
-      if (!isMounted.current) {
+      if (isUnmounted.current) {
         return;
       }
 
@@ -29,6 +29,11 @@ export default function useRequestSetState<T>(setState: React.Dispatch<T>): Reac
       delete requestedValue.current;
     }
   });
+
+  useIsomorphicEffect(() => () => {
+    // useLayoutEffect のデストラクタは useEffect の後に実行されます。
+    isUnmounted.current = false;
+  }, []);
 
   return requestSetState;
 }
