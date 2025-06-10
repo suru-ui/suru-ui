@@ -6,33 +6,24 @@ import useRequestSetState from "../utils/use-request-set-state";
 
 export type DetailsRootArgs = void;
 
-export interface DetailsRootElement {
-  readonly addEventListener: {
-    (type: string, listener: (this: { readonly open: boolean }) => void): void;
-  };
-  readonly removeEventListener: {
-    (type: string, listener: (this: { readonly open: boolean }) => void): void;
-  };
-}
-
-export type DetailsRootProps = {
+export type DetailsRootProps = Readonly<{
   className: string;
   open: boolean;
-  ref: React.RefCallback<DetailsRootElement | null>;
-};
+  ref: React.RefCallback<HTMLDetailsElement | null>;
+}>;
 
 export interface GetDetailsRootProps {
   (args: DetailsRootArgs): DetailsRootProps;
 }
 
-export interface OpenChangeHandler {
+export interface DetailsOpenChangeHandler {
   (open: boolean): void;
 }
 
 export default function useGetDetailsRootProps(
   args: Readonly<{
     defaultOpen: boolean | undefined;
-    onOpenChange: OpenChangeHandler | undefined;
+    onOpenChange: DetailsOpenChangeHandler | undefined;
     open: boolean | undefined;
   }>,
 ): GetDetailsRootProps {
@@ -53,7 +44,7 @@ export default function useGetDetailsRootProps(
         return;
       }
 
-      function handleToggleEvent(this: { readonly open: boolean }) {
+      function handleToggleEvent(this: HTMLDetailsElement) {
         reqOpen(this.open);
       }
 

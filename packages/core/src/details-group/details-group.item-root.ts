@@ -2,10 +2,10 @@ import * as React from "react";
 
 export type DetailsGroupItemRootArgs = void;
 
-export type DetailsGroupItemRootProps = {
+export type DetailsGroupItemRootProps = Readonly<{
   className: string;
   name: string;
-};
+}>;
 
 export interface GetDetailsGroupItemRootProps {
   (args: DetailsGroupItemRootArgs): DetailsGroupItemRootProps;
