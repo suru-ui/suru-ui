@@ -1,24 +1,24 @@
 {
-  "extends": "@tsconfig/strictest/tsconfig.json",
-  "include": [
-    "./packages/**/*",
-    "./env.d.ts"
-  ],
-  "exclude": [
-    "**/dist",
-    "**/node_modules"
+  "extends": [
+    "@tsconfig/node22",
+    "@tsconfig/strictest"
   ],
   "compilerOptions": {
-    "noEmit": true,
+    "types": [
+      "node",
+      "vite/client",
+      "@vitest/browser/providers/playwright"
+    ],
     "lib": [
       "DOM",
       "DOM.Iterable",
+      "DOM.AsyncIterable",
       "ESNext"
     ],
     "jsx": "react-jsx",
-    "target": "ES2022",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "allowImportingTsExtensions": true
+    "noEmit": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "erasableSyntaxOnly": true
   }
 }
