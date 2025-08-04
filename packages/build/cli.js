@@ -223,10 +223,10 @@ function resolve() {
         const toOutFilePath = createToOutFilePath(resolveDir);
 
         switch (true) {
-          case namespace !== "file" || kind !== "import-statement":
+          case pkg.endsWith(".css") || namespace !== "file" || kind !== "import-statement":
             return null;
 
-          case !pkg.endsWith(".css") && pkg.startsWith("."): {
+          case pkg.startsWith("."): {
             const builtPath = getBuiltPath(resolveDir, pkg);
 
             if (builtPath) {
