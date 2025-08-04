@@ -1,0 +1,115 @@
+@layer sui.component {
+  /*************************************************************************************************
+   *
+   * root
+   *
+   ************************************************************************************************/
+
+  .sui-textarea {
+    position: relative;
+    padding: var(--sui-textarea-padding);
+    overflow: hidden;
+    font-family: var(--sui-textarea-fontfamily);
+    font-size: var(--sui-textarea-fontsize);
+    font-weight: var(--sui-textarea-fontweight);
+    line-height: var(--sui-textarea-lineheight);
+    vertical-align: middle;
+    color: var(--sui-canvastext-main);
+    letter-spacing: var(--sui-textarea_text-letterspacing);
+    touch-action: manipulation;
+    cursor: text;
+    user-select: none;
+    outline: var(--sui-textarea-outlinecolor) solid var(--sui-textarea-outlinewidth);
+    outline-offset: calc(var(--sui-textarea-outlinewidth) * -1);
+    background-color: var(--sui-canvas-main);
+    border-radius: var(--sui-textarea-borderradius);
+
+    --sui-textarea-outlinewidth: var(--sui-outline-width-main);
+    --sui-textarea-outlinecolor: var(--sui-outline-color);
+
+    @media (hover: hover) {
+      &:not(:focus-visible):hover {
+        --sui-textarea-outlinewidth: var(--sui-outline-width-hover);
+        --sui-textarea-outlinecolor: var(--sui-textarea-accentcolor);
+      }
+    }
+
+    &:focus-visible {
+      --sui-textarea-outlinewidth: var(--sui-focusring-width);
+      --sui-textarea-outlinecolor: var(--sui-focusring-color);
+    }
+  }
+
+  .sui-textarea-size_sm {
+    --sui-textarea-borderradius:  var(--sui-sizing-rad-sm);
+    --sui-textarea-padding:       var(--sui-sizing-pad-sm);
+    --sui-textarea-fontsize:      var(--sui-text-oln-16n-1-fontsize);
+    --sui-textarea-fontfamily:    var(--sui-text-oln-16n-1-fontfamily);
+    --sui-textarea-fontweight:    var(--sui-text-oln-16n-1-fontweight);
+    --sui-textarea-lineheight:    var(--sui-text-oln-16n-1-lineheight);
+    --sui-textarea-letterspacing: var(--sui-text-oln-16n-1-letterspacing);
+  }
+
+  .sui-textarea-size_md {
+    --sui-textarea-borderradius:  var(--sui-sizing-rad-md);
+    --sui-textarea-padding:       var(--sui-sizing-pad-md);
+  }
+
+  .sui-textarea-size_lg {
+    --sui-textarea-borderradius: var(--sui-sizing-rad-lg);
+    --sui-textarea-padding:      var(--sui-sizing-pad-lg);
+  }
+
+  .sui-textarea-size_md,
+  .sui-textarea-size_lg {
+    --sui-textarea-fontsize:      var(--sui-text-oln-17n-1-fontsize);
+    --sui-textarea-fontfamily:    var(--sui-text-oln-17n-1-fontfamily);
+    --sui-textarea-fontweight:    var(--sui-text-oln-17n-1-fontweight);
+    --sui-textarea-lineheight:    var(--sui-text-oln-17n-1-lineheight);
+    --sui-textarea-letterspacing: var(--sui-text-oln-17n-1-letterspacing);
+  }
+
+  .sui-textarea-color_blue      { --sui-textarea-accentcolor: var(--sui-blue-naked-border)      }
+  .sui-textarea-color_cyan      { --sui-textarea-accentcolor: var(--sui-cyan-naked-border)      }
+  .sui-textarea-color_error     { --sui-textarea-accentcolor: var(--sui-error-naked-border)     }
+  .sui-textarea-color_green     { --sui-textarea-accentcolor: var(--sui-green-naked-border)     }
+  .sui-textarea-color_grey      { --sui-textarea-accentcolor: var(--sui-grey-naked-border)      }
+  .sui-textarea-color_info      { --sui-textarea-accentcolor: var(--sui-info-naked-border)      }
+  .sui-textarea-color_lightblue { --sui-textarea-accentcolor: var(--sui-lightblue-naked-border) }
+  .sui-textarea-color_lime      { --sui-textarea-accentcolor: var(--sui-lime-naked-border)      }
+  .sui-textarea-color_magenta   { --sui-textarea-accentcolor: var(--sui-magenta-naked-border)   }
+  .sui-textarea-color_orange    { --sui-textarea-accentcolor: var(--sui-orange-naked-border)    }
+  .sui-textarea-color_purple    { --sui-textarea-accentcolor: var(--sui-purple-naked-border)    }
+  .sui-textarea-color_red       { --sui-textarea-accentcolor: var(--sui-red-naked-border)       }
+  .sui-textarea-color_success   { --sui-textarea-accentcolor: var(--sui-success-naked-border)   }
+  .sui-textarea-color_warn      { --sui-textarea-accentcolor: var(--sui-warn-naked-border)      }
+  .sui-textarea-color_yellow    { --sui-textarea-accentcolor: var(--sui-yellow-naked-border)    }
+}
+
+/***************************************************************************************************
+ *
+ * invalid
+ *
+ **************************************************************************************************/
+
+.sui-textarea:not(.sui-textarea-disabled, :focus-visible):is(:user-invalid, [aria-invalid]) {
+  outline-width: var(--sui-outline-width-hover) !important;
+  outline-color: var(--sui-error-naked-border) !important;
+  outline-offset: calc(var(--sui-outline-width-hover) * -1) !important;
+}
+
+/***************************************************************************************************
+ *
+ * disabled
+ *
+ **************************************************************************************************/
+
+.sui-textarea-disabled {
+  color: var(--sui-canvastext-disabled) !important;
+  cursor: not-allowed !important;
+  user-select: none !important;
+  outline-width: var(--sui-outline-width-disabled) !important;
+  outline-color: var(--sui-canvastext-disabled) !important;
+  outline-offset: calc(var(--sui-outline-width-disabled) * -1) !important;
+  background-color: var(--sui-grey-liquid-canvas) !important;
+}

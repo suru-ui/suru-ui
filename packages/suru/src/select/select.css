@@ -1,0 +1,165 @@
+@layer sui.component {
+  /*************************************************************************************************
+   *
+   * root
+   *
+   ************************************************************************************************/
+
+  .sui-select {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    height: var(--sui-select-height);
+    padding-inline: var(--sui-select-paddinginline);
+    overflow: hidden;
+    font-family: var(--sui-select-fontfamily);
+    font-size: var(--sui-select-fontsize);
+    font-weight: var(--sui-select-fontweight);
+    line-height: var(--sui-select-lineheight);
+    color: var(--sui-canvastext-main);
+    letter-spacing: var(--sui-select_text-letterspacing);
+    touch-action: manipulation;
+    cursor: default;
+    user-select: none;
+    background-color: var(--sui-canvas-main);
+    border: var(--sui-outline-color) solid var(--sui-outline-width-main);
+    border-radius: var(--sui-select-borderradius);
+
+    &:focus-visible {
+      outline: solid var(--sui-focusring-color) var(--sui-focusring-width);
+      outline-offset: var(--sui-focusring-offset);
+    }
+
+    &,
+    &::picker(select) {
+      appearance: base-select;
+    }
+
+    &:open::picker(select) {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sui-select-gap);
+      padding: var(--sui-select-gap);
+      background-color: var(--sui-canvas-main);
+      border: var(--sui-outline-color) solid var(--sui-outline-width-main);
+      border-radius: var(--sui-select-borderradius);
+    }
+  }
+
+  .sui-select-size_sm {
+    --sui-select-gap:                  var(--sui-sizing-gap-sm);
+    --sui-select-height:               var(--sui-sizing-sm);
+    --sui-select-borderradius:         var(--sui-sizing-rad-sm);
+    --sui-select-paddinginline:        var(--sui-sizing-pad-sm);
+    --sui-select-fontsize:             var(--sui-text-oln-16n-1-fontsize);
+    --sui-select-fontfamily:           var(--sui-text-oln-16n-1-fontfamily);
+    --sui-select-fontweight:           var(--sui-text-oln-16n-1-fontweight);
+    --sui-select-lineheight:           var(--sui-text-oln-16n-1-lineheight);
+    --sui-select-letterspacing:        var(--sui-text-oln-16n-1-letterspacing);
+    --sui-select-option-fontsize:      var(--sui-text-oln-16b-1-fontsize);
+    --sui-select-option-fontfamily:    var(--sui-text-oln-16b-1-fontfamily);
+    --sui-select-option-fontweight:    var(--sui-text-oln-16b-1-fontweight);
+    --sui-select-option-lineheight:    var(--sui-text-oln-16b-1-lineheight);
+    --sui-select-option-letterspacing: var(--sui-text-oln-16b-1-letterspacing);
+  }
+
+  .sui-select-size_md {
+    --sui-select-gap:           var(--sui-sizing-gap-md);
+    --sui-select-height:        var(--sui-sizing-md);
+    --sui-select-borderradius:  var(--sui-sizing-rad-md);
+    --sui-select-paddinginline: var(--sui-sizing-pad-md);
+  }
+
+  .sui-select-size_lg {
+    --sui-select-gap:           var(--sui-sizing-gap-lg);
+    --sui-select-height:        var(--sui-sizing-lg);
+    --sui-select-borderradius:  var(--sui-sizing-rad-lg);
+    --sui-select-paddinginline: var(--sui-sizing-pad-lg);
+  }
+
+  .sui-select-size_md,
+  .sui-select-size_lg {
+    --sui-select-fontsize:             var(--sui-text-oln-17n-1-fontsize);
+    --sui-select-fontfamily:           var(--sui-text-oln-17n-1-fontfamily);
+    --sui-select-fontweight:           var(--sui-text-oln-17n-1-fontweight);
+    --sui-select-lineheight:           var(--sui-text-oln-17n-1-lineheight);
+    --sui-select-letterspacing:        var(--sui-text-oln-17n-1-letterspacing);
+    --sui-select-option-fontsize:      var(--sui-text-oln-17b-1-fontsize);
+    --sui-select-option-fontfamily:    var(--sui-text-oln-17b-1-fontfamily);
+    --sui-select-option-fontweight:    var(--sui-text-oln-17b-1-fontweight);
+    --sui-select-option-lineheight:    var(--sui-text-oln-17b-1-lineheight);
+    --sui-select-option-letterspacing: var(--sui-text-oln-17b-1-letterspacing);
+  }
+
+  /*************************************************************************************************
+   *
+   * option
+   *
+   ************************************************************************************************/
+
+  .sui-select-option {
+    height: var(--sui-select-option-height);
+    padding-inline: var(--sui-select-option-paddinginline);
+    color: var(--sui-select-option-canvascolor);
+    background-color: var(--sui-select-option-canvas);
+    border-radius: var(--sui-select-borderradius);
+
+    --sui-select-option-height:        var(--sui-select-height);
+    --sui-select-option-paddinginline: var(--sui-select-paddinginline);
+    --sui-select-option-canvas:        var(--sui-grey-naked-canvas);
+    --sui-select-option-subtle:        var(--sui-grey-naked-subtle);
+    --sui-select-option-action:        var(--sui-grey-naked-action);
+    --sui-select-option-canvascolor:   var(--sui-grey-naked-canvastext);
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--sui-select-option-subtle);
+      }
+    }
+
+    &:active {
+      background-color: var(--sui-select-option-action);
+    }
+
+    &:focus-visible {
+      outline: solid var(--sui-focusring-color) var(--sui-focusring-width);
+      outline-offset: var(--sui-focusring-offset);
+    }
+
+    &:checked {
+      font-family: var(--sui-select-option-fontfamily);
+      font-size: var(--sui-select-option-fontsize);
+      font-weight: var(--sui-select-option-fontweight);
+      line-height: var(--sui-select-option-lineheight);
+      letter-spacing: var(--sui-select-option-letterspacing);
+
+      --sui-select-option-canvas:      var(--sui-blue-solid-canvas);
+      --sui-select-option-subtle:      var(--sui-blue-solid-subtle);
+      --sui-select-option-action:      var(--sui-blue-solid-action);
+      --sui-select-option-canvascolor: var(--sui-blue-solid-canvastext);
+    }
+  }
+}
+
+/***************************************************************************************************
+ *
+ * invalid
+ *
+ **************************************************************************************************/
+
+.sui-select:not(.sui-select-disabled, :focus-visible):is(:user-invalid, [aria-invalid]) {
+  border: var(--sui-error-naked-border) solid var(--sui-outline-width-hover) !important;
+}
+
+/***************************************************************************************************
+ *
+ * disabled
+ *
+ **************************************************************************************************/
+
+.sui-select-disabled {
+  color: var(--sui-canvastext-disabled) !important;
+  cursor: not-allowed !important;
+  border: var(--sui-canvastext-disabled) solid var(--sui-outline-width-disabled) !important;
+}

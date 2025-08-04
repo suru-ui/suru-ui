@@ -1,0 +1,30 @@
+{
+  "name": "@suru-ui/build",
+  "version": "0.0.0",
+  "description": "",
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "sideEffects": false,
+  "files": [
+    "cli.js"
+  ],
+  "bin": {
+    "sui-build": "cli.js"
+  },
+  "scripts": {
+    "update": "npm-check-updates --target minor --reject '@suru-ui/'* --upgrade",
+    "check": "tsc --noEmit",
+    "test": "run-s test:*",
+    "test:server": "exit 0",
+    "test:client": "exit 0",
+    "build": "exit 0"
+  },
+  "dependencies": {
+    "esbuild": "^0.25.8",
+    "esbuild-plugin-replace": "^1.4.0"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  }
+}
