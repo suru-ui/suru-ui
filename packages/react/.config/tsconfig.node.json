@@ -1,0 +1,30 @@
+{
+  "extends": [
+    "@tsconfig/node22",
+    "@tsconfig/strictest"
+  ],
+  "include": [
+    "./env.d.ts",
+    "./storybook/preview.js",
+    "../src/**/*",
+    "../stories/**/*",
+    "../tests/**/*"
+  ],
+  "exclude": [
+    "../tests/**/*.client.test.ts"
+  ],
+  "compilerOptions": {
+    "types": [
+      "node"
+    ],
+    "lib": [
+      "ESNext"
+    ],
+    "jsx": "preserve",
+    "noEmit": true,
+    "target": "es2020",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "erasableSyntaxOnly": true
+  }
+}

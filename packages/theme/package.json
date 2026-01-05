@@ -1,0 +1,56 @@
+{
+  "name": "@suru-ui/theme",
+  "version": "0.0.0",
+  "description": "",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./all.css": "./dist/all.css",
+    "./base.css": "./dist/base.css",
+    "./dark.css": "./dist/dark.css",
+    "./dark-standard.css": "./dist/dark-standard.css",
+    "./dark-vivid.css": "./dist/dark-vivid.css",
+    "./light.css": "./dist/light.css",
+    "./light-standard.css": "./dist/light-standard.css",
+    "./light-vivid.css": "./dist/light-vivid.css"
+  },
+  "files": [
+    "dist",
+    "src",
+    "package.json",
+    "LICENSE"
+  ],
+  "peerDependencies": {
+    "@logtape/logtape": "^1.0.0"
+  },
+  "devDependencies": {
+    "@tsconfig/node22": "^22.0.5",
+    "@tsconfig/strictest": "^2.0.8",
+    "@types/node": "^22.19.3",
+    "@vitest/browser": "^4.0.16",
+    "@vitest/browser-playwright": "^4.0.16",
+    "npm-check-updates": "^19.2.0",
+    "npm-run-all2": "^8.0.4",
+    "playwright": "^1.57.0",
+    "vitest": "^4.0.16"
+  },
+  "scripts": {
+    "build": "run-s build:*",
+    "build:css": "run-p build:css:*",
+    "build:css:0": "node ./src/build/base.ts",
+    "build:css:1": "node ./src/build/dark-standard.ts",
+    "build:css:2": "node ./src/build/dark-vivid.ts",
+    "build:css:3": "node ./src/build/dark.ts",
+    "build:css:4": "node ./src/build/light-standard.ts",
+    "build:css:5": "node ./src/build/light-vivid.ts",
+    "build:css:6": "node ./src/build/light.ts",
+    "build:css:7": "node ./src/build/all.ts",
+    "build:mod": "run-s build:mod:*",
+    "build:mod:0": "node ./src/build/types.ts",
+    "build:mod:1": "npx tsc --project ./.config/tsconfig.build.json"
+  }
+}
