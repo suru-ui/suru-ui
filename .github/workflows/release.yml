@@ -76,8 +76,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: "公開"
+      - name: "公開 (theme)"
         run: npm publish
+        working-directory: packages/theme
+
+      - name: "公開 (react)"
+        run: npm publish
+        working-directory: packages/react
 
       - name: "npm ログをアップロード"
         if: always()
