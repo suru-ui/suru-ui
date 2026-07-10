@@ -1,0 +1,44 @@
+{
+  "name": "@suru-ui/core",
+  "version": "0.0.0",
+  "description": "",
+  "homepage": "https://github.com/suru-ui/suru-ui",
+  "license": "MIT",
+  "author": "tai-kun",
+  "repository": {
+    "url": "https://github.com/suru-ui/suru-ui"
+  },
+  "files": [
+    "dist",
+    "src",
+    "package.json",
+    "LICENSE"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/src/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc --project ./.config/tsconfig.build.json"
+  },
+  "dependencies": {
+    "i18n-error-base": "^0.0.4"
+  },
+  "devDependencies": {
+    "@tsconfig/node24": "^24.0.4",
+    "@tsconfig/strictest": "^2.0.8",
+    "@types/node": "^24.13.2",
+    "@vitest/browser": "^4.1.9",
+    "@vitest/browser-playwright": "^4.1.9",
+    "npm-check-updates": "^22.2.7",
+    "playwright": "^1.61.1",
+    "vite": "^8.1.0",
+    "vitest": "^4.1.9"
+  }
+}

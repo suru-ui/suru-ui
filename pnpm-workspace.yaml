@@ -1,0 +1,9 @@
+minimumReleaseAge: 10080
+minimumReleaseAgeExclude: []
+onlyBuiltDependencies: []
+strictDepBuilds: false
+blockExoticSubdeps: true
+trustPolicy: no-downgrade
+trustPolicyExclude:
+  - semver
+packages: ["packages/core", "packages/theme", "packages/react"]

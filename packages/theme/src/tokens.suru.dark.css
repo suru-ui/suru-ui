@@ -1,0 +1,428 @@
+.layer__sui_tokens {
+  --sui-theme: dark;
+
+  --sui-blue-0: --sui-canvas(0);
+  --sui-blue-10: oklch(18% 0.04 250deg);
+  --sui-blue-20: oklch(22% 0.05 250deg);
+  --sui-blue-30: oklch(26% 0.06 250deg);
+  --sui-blue-40: oklch(34% 0.08 250deg);
+  --sui-blue-50: oklch(45% 0.11 250deg);
+  --sui-blue-60: oklch(64% 0.15 250deg);
+  --sui-blue-70: oklch(70% 0.17 250deg);
+  --sui-blue-80: oklch(75% 0.15 250deg);
+  --sui-blue-90: oklch(85% 0.08 250deg);
+  --sui-blue-100: oklch(90% 0.05 250deg);
+
+  --sui-blue-solid-normal: var(--sui-blue-80);
+  --sui-blue-solid-subtle: var(--sui-blue-70);
+  --sui-blue-solid-action: var(--sui-blue-60);
+  --sui-blue-solid-border-normal: var(--sui-blue-60);
+  --sui-blue-solid-border-subtle: var(--sui-blue-50);
+  --sui-blue-solid-border-action: var(--sui-blue-50);
+  --sui-blue-solid-canvas_text-normal: var(--sui-blue-0);
+  --sui-blue-solid-canvas_text-subtle: var(--sui-blue-0);
+  --sui-blue-solid-canvas_text-action: var(--sui-blue-0);
+
+  --sui-blue-naked-normal: transparent;
+  --sui-blue-naked-subtle: var(--sui-blue-30);
+  --sui-blue-naked-action: var(--sui-blue-40);
+  --sui-blue-naked-border-normal: var(--sui-blue-50);
+  --sui-blue-naked-border-subtle: var(--sui-blue-60);
+  --sui-blue-naked-border-action: var(--sui-blue-60);
+  --sui-blue-naked-canvas_text-normal: var(--sui-blue-90);
+  --sui-blue-naked-canvas_text-subtle: var(--sui-blue-90);
+  --sui-blue-naked-canvas_text-action: var(--sui-blue-90);
+
+  --sui-blue-liquid-normal: var(--sui-blue-30);
+  --sui-blue-liquid-subtle: var(--sui-blue-40);
+  --sui-blue-liquid-action: var(--sui-blue-50);
+  --sui-blue-liquid-border-normal: var(--sui-blue-50);
+  --sui-blue-liquid-border-subtle: var(--sui-blue-60);
+  --sui-blue-liquid-border-action: var(--sui-blue-60);
+  --sui-blue-liquid-canvas_text-normal: var(--sui-blue-100);
+  --sui-blue-liquid-canvas_text-subtle: var(--sui-blue-100);
+  --sui-blue-liquid-canvas_text-action: var(--sui-blue-100);
+
+  --sui-green-0: --sui-canvas(0);
+  --sui-green-10: oklch(18% 0.04 160deg);
+  --sui-green-20: oklch(22% 0.05 160deg);
+  --sui-green-30: oklch(25% 0.06 160deg);
+  --sui-green-40: oklch(33% 0.08 160deg);
+  --sui-green-50: oklch(43% 0.11 160deg);
+  --sui-green-60: oklch(61% 0.15 160deg);
+  --sui-green-70: oklch(68% 0.17 160deg);
+  --sui-green-80: oklch(73% 0.15 160deg);
+  --sui-green-90: oklch(84% 0.08 160deg);
+  --sui-green-100: oklch(89% 0.05 160deg);
+
+  --sui-green-solid-normal: var(--sui-green-80);
+  --sui-green-solid-subtle: var(--sui-green-70);
+  --sui-green-solid-action: var(--sui-green-60);
+  --sui-green-solid-border-normal: var(--sui-green-60);
+  --sui-green-solid-border-subtle: var(--sui-green-50);
+  --sui-green-solid-border-action: var(--sui-green-50);
+  --sui-green-solid-canvas_text-normal: var(--sui-green-0);
+  --sui-green-solid-canvas_text-subtle: var(--sui-green-0);
+  --sui-green-solid-canvas_text-action: var(--sui-green-0);
+
+  --sui-green-naked-normal: transparent;
+  --sui-green-naked-subtle: var(--sui-green-30);
+  --sui-green-naked-action: var(--sui-green-40);
+  --sui-green-naked-border-normal: var(--sui-green-50);
+  --sui-green-naked-border-subtle: var(--sui-green-60);
+  --sui-green-naked-border-action: var(--sui-green-60);
+  --sui-green-naked-canvas_text-normal: var(--sui-green-90);
+  --sui-green-naked-canvas_text-subtle: var(--sui-green-90);
+  --sui-green-naked-canvas_text-action: var(--sui-green-90);
+
+  --sui-green-liquid-normal: var(--sui-green-30);
+  --sui-green-liquid-subtle: var(--sui-green-40);
+  --sui-green-liquid-action: var(--sui-green-50);
+  --sui-green-liquid-border-normal: var(--sui-green-50);
+  --sui-green-liquid-border-subtle: var(--sui-green-60);
+  --sui-green-liquid-border-action: var(--sui-green-60);
+  --sui-green-liquid-canvas_text-normal: var(--sui-green-100);
+  --sui-green-liquid-canvas_text-subtle: var(--sui-green-100);
+  --sui-green-liquid-canvas_text-action: var(--sui-green-100);
+
+  --sui-grey-0: --sui-canvas(0);
+  --sui-grey-10: oklch(18% 0 0deg);
+  --sui-grey-20: oklch(23% 0 0deg);
+  --sui-grey-30: oklch(26% 0 0deg);
+  --sui-grey-40: oklch(35% 0 0deg);
+  --sui-grey-50: oklch(46% 0 0deg);
+  --sui-grey-60: oklch(65% 0 0deg);
+  --sui-grey-70: oklch(72% 0 0deg);
+  --sui-grey-80: oklch(77% 0 0deg);
+  --sui-grey-90: oklch(86% 0 0deg);
+  --sui-grey-100: oklch(91% 0 0deg);
+
+  --sui-grey-solid-normal: var(--sui-grey-100);
+  --sui-grey-solid-subtle: var(--sui-grey-90);
+  --sui-grey-solid-action: var(--sui-grey-80);
+  --sui-grey-solid-border-normal: var(--sui-grey-60);
+  --sui-grey-solid-border-subtle: var(--sui-grey-50);
+  --sui-grey-solid-border-action: var(--sui-grey-50);
+  --sui-grey-solid-canvas_text-normal: var(--sui-grey-0);
+  --sui-grey-solid-canvas_text-subtle: var(--sui-grey-0);
+  --sui-grey-solid-canvas_text-action: var(--sui-grey-0);
+
+  --sui-grey-naked-normal: transparent;
+  --sui-grey-naked-subtle: var(--sui-grey-30);
+  --sui-grey-naked-action: var(--sui-grey-40);
+  --sui-grey-naked-border-normal: var(--sui-grey-50);
+  --sui-grey-naked-border-subtle: var(--sui-grey-60);
+  --sui-grey-naked-border-action: var(--sui-grey-60);
+  --sui-grey-naked-canvas_text-normal: var(--sui-grey-100);
+  --sui-grey-naked-canvas_text-subtle: var(--sui-grey-100);
+  --sui-grey-naked-canvas_text-action: var(--sui-grey-100);
+
+  --sui-grey-liquid-normal: var(--sui-grey-30);
+  --sui-grey-liquid-subtle: var(--sui-grey-40);
+  --sui-grey-liquid-action: var(--sui-grey-50);
+  --sui-grey-liquid-border-normal: var(--sui-grey-50);
+  --sui-grey-liquid-border-subtle: var(--sui-grey-60);
+  --sui-grey-liquid-border-action: var(--sui-grey-60);
+  --sui-grey-liquid-canvas_text-normal: var(--sui-grey-100);
+  --sui-grey-liquid-canvas_text-subtle: var(--sui-grey-100);
+  --sui-grey-liquid-canvas_text-action: var(--sui-grey-100);
+
+  --sui-magenta-0: --sui-canvas(0);
+  --sui-magenta-10: oklch(18% 0.04 350deg);
+  --sui-magenta-20: oklch(23% 0.05 350deg);
+  --sui-magenta-30: oklch(26% 0.06 350deg);
+  --sui-magenta-40: oklch(35% 0.08 350deg);
+  --sui-magenta-50: oklch(46% 0.11 350deg);
+  --sui-magenta-60: oklch(66% 0.15 350deg);
+  --sui-magenta-70: oklch(72% 0.17 350deg);
+  --sui-magenta-80: oklch(77% 0.15 350deg);
+  --sui-magenta-90: oklch(86% 0.08 350deg);
+  --sui-magenta-100: oklch(91% 0.05 350deg);
+
+  --sui-magenta-solid-normal: var(--sui-magenta-80);
+  --sui-magenta-solid-subtle: var(--sui-magenta-70);
+  --sui-magenta-solid-action: var(--sui-magenta-60);
+  --sui-magenta-solid-border-normal: var(--sui-magenta-60);
+  --sui-magenta-solid-border-subtle: var(--sui-magenta-50);
+  --sui-magenta-solid-border-action: var(--sui-magenta-50);
+  --sui-magenta-solid-canvas_text-normal: var(--sui-magenta-0);
+  --sui-magenta-solid-canvas_text-subtle: var(--sui-magenta-0);
+  --sui-magenta-solid-canvas_text-action: var(--sui-magenta-0);
+
+  --sui-magenta-naked-normal: transparent;
+  --sui-magenta-naked-subtle: var(--sui-magenta-30);
+  --sui-magenta-naked-action: var(--sui-magenta-40);
+  --sui-magenta-naked-border-normal: var(--sui-magenta-50);
+  --sui-magenta-naked-border-subtle: var(--sui-magenta-60);
+  --sui-magenta-naked-border-action: var(--sui-magenta-60);
+  --sui-magenta-naked-canvas_text-normal: var(--sui-magenta-90);
+  --sui-magenta-naked-canvas_text-subtle: var(--sui-magenta-90);
+  --sui-magenta-naked-canvas_text-action: var(--sui-magenta-90);
+
+  --sui-magenta-liquid-normal: var(--sui-magenta-30);
+  --sui-magenta-liquid-subtle: var(--sui-magenta-40);
+  --sui-magenta-liquid-action: var(--sui-magenta-50);
+  --sui-magenta-liquid-border-normal: var(--sui-magenta-50);
+  --sui-magenta-liquid-border-subtle: var(--sui-magenta-60);
+  --sui-magenta-liquid-border-action: var(--sui-magenta-60);
+  --sui-magenta-liquid-canvas_text-normal: var(--sui-magenta-100);
+  --sui-magenta-liquid-canvas_text-subtle: var(--sui-magenta-100);
+  --sui-magenta-liquid-canvas_text-action: var(--sui-magenta-100);
+
+  --sui-orange-0: --sui-canvas(0);
+  --sui-orange-10: oklch(18% 0.04 45deg);
+  --sui-orange-20: oklch(23% 0.05 45deg);
+  --sui-orange-30: oklch(26% 0.06 45deg);
+  --sui-orange-40: oklch(35% 0.08 45deg);
+  --sui-orange-50: oklch(46% 0.11 45deg);
+  --sui-orange-60: oklch(65% 0.15 45deg);
+  --sui-orange-70: oklch(71% 0.17 45deg);
+  --sui-orange-80: oklch(76% 0.15 45deg);
+  --sui-orange-90: oklch(86% 0.08 45deg);
+  --sui-orange-100: oklch(90% 0.05 45deg);
+
+  --sui-orange-solid-normal: var(--sui-orange-80);
+  --sui-orange-solid-subtle: var(--sui-orange-70);
+  --sui-orange-solid-action: var(--sui-orange-60);
+  --sui-orange-solid-border-normal: var(--sui-orange-60);
+  --sui-orange-solid-border-subtle: var(--sui-orange-50);
+  --sui-orange-solid-border-action: var(--sui-orange-50);
+  --sui-orange-solid-canvas_text-normal: var(--sui-orange-0);
+  --sui-orange-solid-canvas_text-subtle: var(--sui-orange-0);
+  --sui-orange-solid-canvas_text-action: var(--sui-orange-0);
+
+  --sui-orange-naked-normal: transparent;
+  --sui-orange-naked-subtle: var(--sui-orange-30);
+  --sui-orange-naked-action: var(--sui-orange-40);
+  --sui-orange-naked-border-normal: var(--sui-orange-50);
+  --sui-orange-naked-border-subtle: var(--sui-orange-60);
+  --sui-orange-naked-border-action: var(--sui-orange-60);
+  --sui-orange-naked-canvas_text-normal: var(--sui-orange-90);
+  --sui-orange-naked-canvas_text-subtle: var(--sui-orange-90);
+  --sui-orange-naked-canvas_text-action: var(--sui-orange-90);
+
+  --sui-orange-liquid-normal: var(--sui-orange-30);
+  --sui-orange-liquid-subtle: var(--sui-orange-40);
+  --sui-orange-liquid-action: var(--sui-orange-50);
+  --sui-orange-liquid-border-normal: var(--sui-orange-50);
+  --sui-orange-liquid-border-subtle: var(--sui-orange-60);
+  --sui-orange-liquid-border-action: var(--sui-orange-60);
+  --sui-orange-liquid-canvas_text-normal: var(--sui-orange-100);
+  --sui-orange-liquid-canvas_text-subtle: var(--sui-orange-100);
+  --sui-orange-liquid-canvas_text-action: var(--sui-orange-100);
+
+  --sui-purple-0: --sui-canvas(0);
+  --sui-purple-10: oklch(18% 0.04 310deg);
+  --sui-purple-20: oklch(23% 0.05 310deg);
+  --sui-purple-30: oklch(26% 0.06 310deg);
+  --sui-purple-40: oklch(35% 0.08 310deg);
+  --sui-purple-50: oklch(46% 0.11 310deg);
+  --sui-purple-60: oklch(65% 0.15 310deg);
+  --sui-purple-70: oklch(72% 0.17 310deg);
+  --sui-purple-80: oklch(77% 0.15 310deg);
+  --sui-purple-90: oklch(86% 0.08 310deg);
+  --sui-purple-100: oklch(91% 0.05 310deg);
+
+  --sui-purple-solid-normal: var(--sui-purple-80);
+  --sui-purple-solid-subtle: var(--sui-purple-70);
+  --sui-purple-solid-action: var(--sui-purple-60);
+  --sui-purple-solid-border-normal: var(--sui-purple-60);
+  --sui-purple-solid-border-subtle: var(--sui-purple-50);
+  --sui-purple-solid-border-action: var(--sui-purple-50);
+  --sui-purple-solid-canvas_text-normal: var(--sui-purple-0);
+  --sui-purple-solid-canvas_text-subtle: var(--sui-purple-0);
+  --sui-purple-solid-canvas_text-action: var(--sui-purple-0);
+
+  --sui-purple-naked-normal: transparent;
+  --sui-purple-naked-subtle: var(--sui-purple-30);
+  --sui-purple-naked-action: var(--sui-purple-40);
+  --sui-purple-naked-border-normal: var(--sui-purple-50);
+  --sui-purple-naked-border-subtle: var(--sui-purple-60);
+  --sui-purple-naked-border-action: var(--sui-purple-60);
+  --sui-purple-naked-canvas_text-normal: var(--sui-purple-90);
+  --sui-purple-naked-canvas_text-subtle: var(--sui-purple-90);
+  --sui-purple-naked-canvas_text-action: var(--sui-purple-90);
+
+  --sui-purple-liquid-normal: var(--sui-purple-30);
+  --sui-purple-liquid-subtle: var(--sui-purple-40);
+  --sui-purple-liquid-action: var(--sui-purple-50);
+  --sui-purple-liquid-border-normal: var(--sui-purple-50);
+  --sui-purple-liquid-border-subtle: var(--sui-purple-60);
+  --sui-purple-liquid-border-action: var(--sui-purple-60);
+  --sui-purple-liquid-canvas_text-normal: var(--sui-purple-100);
+  --sui-purple-liquid-canvas_text-subtle: var(--sui-purple-100);
+  --sui-purple-liquid-canvas_text-action: var(--sui-purple-100);
+
+  --sui-red-0: --sui-canvas(0);
+  --sui-red-10: oklch(18% 0.04 28deg);
+  --sui-red-20: oklch(23% 0.05 28deg);
+  --sui-red-30: oklch(26% 0.06 28deg);
+  --sui-red-40: oklch(35% 0.08 28deg);
+  --sui-red-50: oklch(46% 0.11 28deg);
+  --sui-red-60: oklch(65% 0.15 28deg);
+  --sui-red-70: oklch(72% 0.17 28deg);
+  --sui-red-80: oklch(77% 0.15 28deg);
+  --sui-red-90: oklch(86% 0.08 28deg);
+  --sui-red-100: oklch(91% 0.05 28deg);
+
+  --sui-red-solid-normal: var(--sui-red-80);
+  --sui-red-solid-subtle: var(--sui-red-70);
+  --sui-red-solid-action: var(--sui-red-60);
+  --sui-red-solid-border-normal: var(--sui-red-60);
+  --sui-red-solid-border-subtle: var(--sui-red-50);
+  --sui-red-solid-border-action: var(--sui-red-50);
+  --sui-red-solid-canvas_text-normal: var(--sui-red-0);
+  --sui-red-solid-canvas_text-subtle: var(--sui-red-0);
+  --sui-red-solid-canvas_text-action: var(--sui-red-0);
+
+  --sui-red-naked-normal: transparent;
+  --sui-red-naked-subtle: var(--sui-red-30);
+  --sui-red-naked-action: var(--sui-red-40);
+  --sui-red-naked-border-normal: var(--sui-red-50);
+  --sui-red-naked-border-subtle: var(--sui-red-60);
+  --sui-red-naked-border-action: var(--sui-red-60);
+  --sui-red-naked-canvas_text-normal: var(--sui-red-90);
+  --sui-red-naked-canvas_text-subtle: var(--sui-red-90);
+  --sui-red-naked-canvas_text-action: var(--sui-red-90);
+
+  --sui-red-liquid-normal: var(--sui-red-30);
+  --sui-red-liquid-subtle: var(--sui-red-40);
+  --sui-red-liquid-action: var(--sui-red-50);
+  --sui-red-liquid-border-normal: var(--sui-red-50);
+  --sui-red-liquid-border-subtle: var(--sui-red-60);
+  --sui-red-liquid-border-action: var(--sui-red-60);
+  --sui-red-liquid-canvas_text-normal: var(--sui-red-100);
+  --sui-red-liquid-canvas_text-subtle: var(--sui-red-100);
+  --sui-red-liquid-canvas_text-action: var(--sui-red-100);
+
+  --sui-yellow-0: --sui-canvas(0);
+  --sui-yellow-10: oklch(18% 0.04 75deg);
+  --sui-yellow-20: oklch(23% 0.05 75deg);
+  --sui-yellow-30: oklch(26% 0.06 75deg);
+  --sui-yellow-40: oklch(34% 0.08 75deg);
+  --sui-yellow-50: oklch(45% 0.11 75deg);
+  --sui-yellow-60: oklch(64% 0.15 75deg);
+  --sui-yellow-70: oklch(71% 0.17 75deg);
+  --sui-yellow-80: oklch(76% 0.15 75deg);
+  --sui-yellow-90: oklch(85% 0.08 75deg);
+  --sui-yellow-100: oklch(90% 0.05 75deg);
+
+  --sui-yellow-solid-normal: var(--sui-yellow-80);
+  --sui-yellow-solid-subtle: var(--sui-yellow-70);
+  --sui-yellow-solid-action: var(--sui-yellow-60);
+  --sui-yellow-solid-border-normal: var(--sui-yellow-60);
+  --sui-yellow-solid-border-subtle: var(--sui-yellow-50);
+  --sui-yellow-solid-border-action: var(--sui-yellow-50);
+  --sui-yellow-solid-canvas_text-normal: var(--sui-yellow-0);
+  --sui-yellow-solid-canvas_text-subtle: var(--sui-yellow-0);
+  --sui-yellow-solid-canvas_text-action: var(--sui-yellow-0);
+
+  --sui-yellow-naked-normal: transparent;
+  --sui-yellow-naked-subtle: var(--sui-yellow-30);
+  --sui-yellow-naked-action: var(--sui-yellow-40);
+  --sui-yellow-naked-border-normal: var(--sui-yellow-50);
+  --sui-yellow-naked-border-subtle: var(--sui-yellow-60);
+  --sui-yellow-naked-border-action: var(--sui-yellow-60);
+  --sui-yellow-naked-canvas_text-normal: var(--sui-yellow-90);
+  --sui-yellow-naked-canvas_text-subtle: var(--sui-yellow-90);
+  --sui-yellow-naked-canvas_text-action: var(--sui-yellow-90);
+
+  --sui-yellow-liquid-normal: var(--sui-yellow-30);
+  --sui-yellow-liquid-subtle: var(--sui-yellow-40);
+  --sui-yellow-liquid-action: var(--sui-yellow-50);
+  --sui-yellow-liquid-border-normal: var(--sui-yellow-50);
+  --sui-yellow-liquid-border-subtle: var(--sui-yellow-60);
+  --sui-yellow-liquid-border-action: var(--sui-yellow-60);
+  --sui-yellow-liquid-canvas_text-normal: var(--sui-yellow-100);
+  --sui-yellow-liquid-canvas_text-subtle: var(--sui-yellow-100);
+  --sui-yellow-liquid-canvas_text-action: var(--sui-yellow-100);
+
+  --sui-disabled-canvas:       #444;
+  --sui-disabled-canvas_text:  #aaa;
+  --sui-disabled-border_color: #666;
+
+  --sui-tooltip-canvas:      #6a6a6a;
+  --sui-tooltip-canvas_text: #fff;
+
+  --sui-focusring_color:  var(--sui-yellow-60);
+  --sui-focusring_width:  3px;
+  --sui-focusring_offset: 2px;
+
+  --sui-font-sans:
+    "Noto Sans JP",
+    sans-serif;
+  --sui-font-mono:
+    "Noto Sans Mono CJK JP",
+    monospace;
+
+  --sui-size-sm: 20px;
+  --sui-size-md: 28px;
+  --sui-size-lg: 36px;
+
+  --sui-radius-sm: 4px;
+  --sui-radius-md: 4px;
+  --sui-radius-lg: 6px;
+
+  --sui-space-base:   1.6;
+  --sui-space-growth: 0.4;
+  --sui-space-offset: 0;
+
+  --sui-gap-base:   1.6;
+  --sui-gap-growth: 0.25;
+  --sui-gap-offset: 0;
+
+  --sui-border_width-base:   3;
+  --sui-border_width-growth: 0.05;
+  --sui-border_width-offset: 0;
+
+  --sui-canvas-contrast-min: 10;
+  --sui-canvas-contrast-max: 100;
+
+  --sui-canvas_text-contrast-min: 0;
+  --sui-canvas_text-contrast-max: 100;
+
+  --sui-text-oln-sm-n-font_size:      14px;
+  --sui-text-oln-sm-n-font_weight:    400;
+  --sui-text-oln-sm-n-letter_spacing: 0.02em;
+  --sui-text-oln-sm-n-line_height:    1.1;
+
+  --sui-text-oln-sm-m-font_size:      14px;
+  --sui-text-oln-sm-m-font_weight:    500;
+  --sui-text-oln-sm-m-letter_spacing: 0.02em;
+  --sui-text-oln-sm-m-line_height:    1.1;
+
+  --sui-text-oln-sm-b-font_size:      14px;
+  --sui-text-oln-sm-b-font_weight:    700;
+  --sui-text-oln-sm-b-letter_spacing: 0.02em;
+  --sui-text-oln-sm-b-line_height:    1.1;
+
+  --sui-text-oln-md-n-font_size:      14px;
+  --sui-text-oln-md-n-font_weight:    400;
+  --sui-text-oln-md-n-letter_spacing: 0.02em;
+  --sui-text-oln-md-n-line_height:    1.1;
+
+  --sui-text-oln-md-m-font_size:      14px;
+  --sui-text-oln-md-m-font_weight:    500;
+  --sui-text-oln-md-m-letter_spacing: 0.02em;
+  --sui-text-oln-md-m-line_height:    1.1;
+
+  --sui-text-oln-md-b-font_size:      14px;
+  --sui-text-oln-md-b-font_weight:    700;
+  --sui-text-oln-md-b-letter_spacing: 0.02em;
+  --sui-text-oln-md-b-line_height:    1.1;
+
+  --sui-text-oln-lg-n-font_size:      17px;
+  --sui-text-oln-lg-n-font_weight:    400;
+  --sui-text-oln-lg-n-letter_spacing: 0.02em;
+  --sui-text-oln-lg-n-line_height:    1.1;
+
+  --sui-text-oln-lg-m-font_size:      17px;
+  --sui-text-oln-lg-m-font_weight:    500;
+  --sui-text-oln-lg-m-letter_spacing: 0.02em;
+  --sui-text-oln-lg-m-line_height:    1.1;
+
+  --sui-text-oln-lg-b-font_size:      17px;
+  --sui-text-oln-lg-b-font_weight:    700;
+  --sui-text-oln-lg-b-letter_spacing: 0.02em;
+  --sui-text-oln-lg-b-line_height:    1.1;
+}

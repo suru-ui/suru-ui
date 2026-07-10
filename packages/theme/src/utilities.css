@@ -1,0 +1,68 @@
+@layer sui.utilities {
+  @function --_sui-contrast-lightness(--contrast, --min, --max) {
+    --coef: calc((var(--max) - var(--min)) / 100);
+
+    result: calc(var(--min) + var(--coef) * var(--contrast));
+  }
+
+  @function --sui-canvas(--contrast) {
+    --lightness: --_sui-contrast-lightness(var(--contrast),
+        var(--sui-canvas-contrast-min),
+        var(--sui-canvas-contrast-max));
+
+    result: if(
+        /*
+         * ダークテーマでは --contrast の大きさに応じて明るくします。
+         * ライトテーマでは --contrast の大きさに応じて暗くします。
+         */
+        style(--sui-theme: dark): oklch(calc(var(--lightness) * 1%) 0 0deg);
+        style(--sui-theme: light): oklch(calc((100 - var(--lightness)) * 1%) 0 0deg);
+        else: Canvas;
+      );
+  }
+
+  @function --sui-canvas_text(--contrast) {
+    --lightness: --_sui-contrast-lightness(var(--contrast),
+        var(--sui-canvas_text-contrast-min),
+        var(--sui-canvas_text-contrast-max));
+
+    result: if(
+        /*
+         * ダークテーマでは --contrast の大きさに応じて暗くします。
+         * ライトテーマでは --contrast の大きさに応じて明るくします。
+         */
+        style(--sui-theme: dark): oklch(calc((100 - var(--lightness)) * 1%) 0 0deg);
+        style(--sui-theme: light): oklch(calc(var(--lightness) * 1%) 0 0deg);
+        else: CanvasText;
+      );
+  }
+
+  @function --_sui-exp-func(--level, --base, --growth, --offset) {
+    --exp: calc(var(--growth) * var(--level));
+    --coef: var(--level);
+    --space: calc(var(--coef) * pow(var(--base), var(--exp)) + var(--offset));
+
+    result: round(to-zero, calc(var(--space) * 1px), 1px);
+  }
+
+  @function --sui-space(--level) {
+    result: --_sui-exp-func(var(--level),
+        var(--sui-space-base),
+        var(--sui-space-growth),
+        var(--sui-space-offset));
+  }
+
+  @function --sui-gap(--level) {
+    result: --_sui-exp-func(var(--level),
+        var(--sui-gap-base),
+        var(--sui-gap-growth),
+        var(--sui-gap-offset));
+  }
+
+  @function --sui-border_width(--level) {
+    result: --_sui-exp-func(var(--level),
+        var(--sui-border_width-base),
+        var(--sui-border_width-growth),
+        var(--sui-border_width-offset));
+  }
+}

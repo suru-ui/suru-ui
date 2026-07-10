@@ -1,0 +1,27 @@
+{
+  "name": "suru-ui-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "homepage": "https://github.com/suru-ui/suru-ui",
+  "license": "MIT",
+  "author": "tai-kun",
+  "repository": {
+    "url": "https://github.com/suru-ui/suru-ui"
+  },
+  "workspaces": [
+    "packages/core",
+    "packages/theme",
+    "packages/react"
+  ],
+  "type": "module",
+  "devDependencies": {
+    "npm-check-updates": "^22.2.7",
+    "oxfmt": "0.45.0",
+    "oxlint": "1.60.0",
+    "oxlint-tsgolint": "0.21.1",
+    "stylelint": "^17.14.0",
+    "stylelint-config-recess-order": "^7.7.0",
+    "stylelint-order": "^8.1.1",
+    "typescript": "^6.0.3"
+  }
+}
