@@ -10,6 +10,7 @@ import splitRenderProps from "../../_split-render-props.js";
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
 import type { Component } from "../../types.js";
+import { useButtonGroupContext } from "../button-group/button-group.parts.jsx";
 
 import "./button.css";
 
@@ -125,20 +126,26 @@ export type ButtonRootProps = React.ComponentProps<typeof Button> & {
  * ```
  */
 export const ButtonRoot: Component<ButtonRootProps> = function SuiButtonRoot(props) {
+  const group = useButtonGroupContext(true);
   const {
-    size = "md",
+    size: sizeProp = "md",
     type = "button",
-    color = "grey",
-    radius = "rounded",
+    color: colorProp = "grey",
+    radius: radiusProp = "rounded",
     pending = false,
     squared = false,
-    variant = "solid",
+    variant: variantProp = "solid",
     disabled = false,
-    outlined = false,
+    outlined: outlinedProp = false,
     className,
     focusableWhenDisabled = !disabled && pending,
     ...otherProps
   } = props;
+  const size = group?.size ?? sizeProp;
+  const color = group?.color ?? colorProp;
+  const radius = group?.radius ?? radiusProp;
+  const variant = group?.variant ?? variantProp;
+  const outlined = group?.outlined ?? outlinedProp;
   const context = React.useMemo(
     () => ({
       pending,
