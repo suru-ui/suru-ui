@@ -5,6 +5,7 @@ import * as React from "react";
 import { ContextMissingError } from "../../errors.js";
 import type { Component } from "../../types.js";
 import * as Button from "../button/button.parts.jsx";
+import { useToggleButtonGroupContext } from "../toggle-button-group/toggle-button-group.parts.jsx";
 
 // Context
 // -------
@@ -77,7 +78,7 @@ export type ToggleButtonRootState = Button.Root.State;
 /**
  * {@link Root} に渡すプロパティーです。
  */
-export type ToggleButtonRootProps = Button.Root.Props & {
+export type ToggleButtonRootProps = Omit<Button.Root.Props, "value"> & {
   /**
    * トグルボタンのアクティブ状態を制御します。
    *
@@ -102,6 +103,13 @@ export type ToggleButtonRootProps = Button.Root.Props & {
    * @default false
    */
   defaultActive?: boolean | undefined;
+
+  /**
+   * {@link ToggleButtonGroup} 内で使用するときに、このボタンを識別する値です。
+   *
+   * グループ内の各 ToggleButton には一意の値を指定する必要があります。
+   */
+  value?: string | undefined;
 };
 
 /**
@@ -119,16 +127,33 @@ export type ToggleButtonRootProps = Button.Root.Props & {
 export const ToggleButtonRoot: Component<ToggleButtonRootProps> = function SuiToggleButtonRoot(
   props,
 ) {
-  const { active: activeProp, activeProps = {}, defaultActive, ...buttonProps } = props;
-  buttonProps.color ||= "grey";
-  buttonProps.variant ||= "liquid";
+  const { active: activeProp, activeProps = {}, defaultActive, value, ...buttonProps } = props;
+  const group = useToggleButtonGroupContext(true);
 
-  const [active, setActive] = useControlled({
+  if (group != null) {
+    buttonProps.size ??= group.size;
+    buttonProps.color ??= group.color;
+    buttonProps.radius ??= group.radius;
+    buttonProps.variant ??= group.variant;
+    buttonProps.outlined ??= group.outlined;
+  } else {
+    buttonProps.size ??= "md";
+    buttonProps.color ??= "grey";
+    buttonProps.radius ??= "rounded";
+    buttonProps.variant ??= "liquid";
+    buttonProps.outlined ??= false;
+  }
+
+  const isInGroup = group != null && value != null;
+
+  const [localActive, setLocalActive] = useControlled({
     name: "ToggleButton",
     state: "active",
     default: defaultActive,
     controlled: activeProp,
   });
+
+  const active = isInGroup ? group.selectedValues.has(value) : localActive;
 
   const { onClick, ...otherProps } = active ? { ...buttonProps, ...activeProps } : buttonProps;
   if (active) {
@@ -147,9 +172,13 @@ export const ToggleButtonRoot: Component<ToggleButtonRootProps> = function SuiTo
         return;
       }
 
-      setActive((prevActive) => !prevActive);
+      if (isInGroup) {
+        group!.onSelectionChange(value!);
+      } else {
+        setLocalActive((prevActive) => !prevActive);
+      }
     },
-    [onClick, setActive],
+    [onClick, setLocalActive, isInGroup, group, value],
   );
 
   return <Button.Root {...otherProps} onClick={handleClick} aria-pressed={active} />;

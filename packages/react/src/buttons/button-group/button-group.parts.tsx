@@ -106,12 +106,14 @@ export type ButtonGroupRootProps = Omit<
 export const ButtonGroupRoot: Component<ButtonGroupRootProps> = function SuiButtonGroupRoot(props) {
   const [renderProps, componentProps] = splitRenderProps(props);
   const {
+    role = "group",
     size = "md",
     color = "grey",
     radius = "rounded",
     variant = "solid",
     outlined = false,
     orientation = "horizontal",
+    "aria-orientation": ariaOrientation = orientation,
     ...elementProps
   } = componentProps;
   const context: ButtonGroupContext = {
@@ -124,7 +126,9 @@ export const ButtonGroupRoot: Component<ButtonGroupRootProps> = function SuiButt
   const element = useRenderElement("div", renderProps, {
     props: {
       ...elementProps,
+      role,
       className: cn("sui_button_group", `sui_button_group-orientation_${orientation}`),
+      "aria-orientation": ariaOrientation,
     },
   });
 

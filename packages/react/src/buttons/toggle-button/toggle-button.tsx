@@ -24,9 +24,7 @@ export type ToggleButtonProps = ToggleButtonParts.Root.Props &
           /**
            * {@link ToggleButtonParts.CircularProgress|CircularProgress} に渡すプロパティーです。
            */
-          readonly circularProgress?:
-            | ToggleButtonParts.CircularProgress.Props
-            | undefined;
+          readonly circularProgress?: ToggleButtonParts.CircularProgress.Props | undefined;
 
           /**
            * {@link ToggleButtonParts.CircularProgressTrack|CircularProgressTrack} に渡すプロパティーです。
@@ -38,9 +36,7 @@ export type ToggleButtonProps = ToggleButtonParts.Root.Props &
           /**
            * {@link ToggleButtonParts.CircularProgressFill|CircularProgressFill} に渡すプロパティーです。
            */
-          readonly circularProgressFill?:
-            | ToggleButtonParts.CircularProgressFill.Props
-            | undefined;
+          readonly circularProgressFill?: ToggleButtonParts.CircularProgressFill.Props | undefined;
 
           /**
            * {@link ToggleButtonParts.CircularProgressFillRotation|CircularProgressFillRotation}
@@ -85,9 +81,7 @@ export type ToggleButtonProps = ToggleButtonParts.Root.Props &
  * <ToggleButton pending percentage={75}>処理中…</ToggleButton>
  * ```
  */
-export const ToggleButton: Component<ToggleButtonProps> = function SuiToggleButton(
-  props,
-) {
+export const ToggleButton: Component<ToggleButtonProps> = function SuiToggleButton(props) {
   const {
     children,
     slotProps: {
