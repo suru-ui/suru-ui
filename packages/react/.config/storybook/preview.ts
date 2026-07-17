@@ -30,7 +30,7 @@ export default preview;
 export function controls<TProps, TArg extends keyof TProps>(
   component: React.ComponentType<TProps>,
   argTypes: ArgTypes<Record<TArg, unknown>>,
-): <TArgs extends Partial<Pick<TProps, TArg>>>(
+): <TArgs extends Partial<TProps>>(
   args: TArgs,
 ) => {
   argTypes: ArgTypes<Record<keyof TArgs, unknown>>;
@@ -49,9 +49,7 @@ export function controls<TArg extends keyof any>(
 export function controls(arg0: any, argTypes: ArgTypes = arg0): any {
   return (args: any) => ({
     argTypes: Object.fromEntries(
-      Object.keys(args)
-        .filter((key) => key in argTypes)
-        .map((key) => [key, argTypes[key]]),
+      Object.keys(args).map((key) => [key, argTypes[key] || { control: false }]),
     ),
     args,
   });
