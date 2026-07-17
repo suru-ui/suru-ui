@@ -57,7 +57,7 @@
   },
   "peerDependencies": {
     "react": "^19.0.0",
-    "react-aria-components": "^1.0.0"
+    "@base-ui/react": "^1.0.0"
   },
   "peerDependenciesMeta": {
     "@types/react": {
