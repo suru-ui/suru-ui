@@ -33,7 +33,7 @@ export type CheckboxRootProps = React.ComponentProps<typeof Checkbox.Root> & {
    * - `"naked"`: 背景のないチェックマークのみ、枠線なし
    * - `"liquid"`: 薄い塗りつぶし
    *
-   * 未指定の場合は塗りつぶしスタイル（`solid`）になります。
+   * @default "naked"
    */
   variant?: "naked" | "liquid" | undefined;
 
