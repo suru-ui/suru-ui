@@ -280,10 +280,9 @@ export const Pending = meta.story({
           value="foo.zip"
           pending={progress2.pending}
           onClick={progress2.clickHandler}
-          className="w-[120px]"
         >
-          <ButtonParts.Content>
-            <ButtonParts.Pending>
+          <ButtonParts.Content className="w-[100px]">
+            <ButtonParts.Pending defaultVisibility="hidden">
               <ButtonParts.CircularProgress>
                 <ButtonParts.CircularProgressTrack />
                 <ButtonParts.CircularProgressFill>
@@ -292,9 +291,11 @@ export const Pending = meta.story({
               </ButtonParts.CircularProgress>
             </ButtonParts.Pending>
 
-            {progress2.pending && progress2.percentage !== undefined
-              ? `${Math.trunc(progress2.percentage)}%完了`
-              : "アップロード"}
+            <span className="flex-1">
+              {progress2.pending && progress2.percentage !== undefined
+                ? `${Math.trunc(progress2.percentage)}%完了`
+                : "アップロード"}
+            </span>
           </ButtonParts.Content>
         </ButtonParts.Root>
       </div>
