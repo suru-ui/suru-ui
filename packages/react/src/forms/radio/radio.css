@@ -9,50 +9,53 @@
   .sui_radio {
     /* 形状 */
     --sui_radio-size: ;
+    /* 前景 */
+    --sui_radio-canvas_text-checked: ;
     /* 背景 */
-    --sui_radio-canvas-normal:         ;
-    --sui_radio-canvas-subtle:         ;
-    --sui_radio-canvas-action:         ;
-    --sui_radio-canvas-checked:        ;
-    --sui_radio-canvas-subtle-checked: ;
-    --sui_radio-canvas-action-checked: ;
-    --sui_radio-canvas_text-checked:   ;
+    --sui_radio-canvas-normal: ;
+    --sui_radio-canvas-subtle: ;
+    --sui_radio-canvas-action: ;
+    --sui_radio-canvas-checked-normal: ;
+    --sui_radio-canvas-checked-subtle: ;
+    --sui_radio-canvas-checked-action: ;
     /* 枠線 */
-    --sui_radio-border_radius:        ;
-    --sui_radio-border_width:         ;
-    --sui_radio-border_color-normal:  ;
-    --sui_radio-border_color-subtle:  ;
-    --sui_radio-border_color-action:  ;
+    --sui_radio-border_color-normal: ;
+    --sui_radio-border_color-subtle: ;
+    --sui_radio-border_color-action: ;
     --sui_radio-border_color-checked: ;
+    --sui_radio-border_width: ;
+    --sui_radio-border_radius: ;
   }
 
   /* 静的 */
   .sui_radio {
-    position:                    relative;
-    display:                     inline-flex;
-    flex-shrink:                 0;
-    align-items:                 center;
-    justify-content:             center;
-    touch-action:                manipulation;
-    cursor:                      default;
-    user-select:                 none;
+    position: relative;
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+    cursor: default;
+    user-select: none;
     -webkit-tap-highlight-color: transparent;
   }
 
   /* 動的 */
   .sui_radio {
-    width:            var(--sui_radio-size);
-    height:           var(--sui_radio-size);
-    outline:          var(--_sui_radio-outline_width, 0px)
-                      solid
-                      var(--sui-focusring_color);
-    outline-offset:   var(--sui-focusring_offset);
+    width: var(--sui_radio-size);
+    height: var(--sui_radio-size);
+    outline: var(--_sui_radio-outline_width, 0px)
+             solid
+             var(--sui-focusring_color);
+    outline-offset: var(--sui-focusring_offset);
     background-color: var(--_sui_radio-canvas, var(--sui_radio-canvas-normal));
-    border:           var(--_sui_radio-border_color, transparent)
-                      solid
-                      var(--_sui_radio-border_width, 0px);
-    border-radius:    var(--_sui_radio-border_radius, var(--sui_radio-border_radius));
+    border: var(--_sui_radio-border_color, transparent)
+            solid
+            var(--_sui_radio-border_width, 0px);
+    border-radius: var(--_sui_radio-border_radius, var(--sui_radio-border_radius));
   }
+
+  /* 変数の既定値設定: ここから */
 
   .sui_radio-size_sm {
     /* 形状 */
@@ -61,8 +64,6 @@
                       );
     /* 枠線 */
     --sui_radio-border_width: --sui-border_width(2);
-    /* indicator */
-    --sui_radio-indicator_size: 6;
   }
 
   .sui_radio-size_md {
@@ -72,8 +73,6 @@
                       );
     /* 枠線 */
     --sui_radio-border_width: --sui-border_width(2);
-    /* indicator */
-    --sui_radio-indicator_size: 8;
   }
 
   .sui_radio-size_lg {
@@ -83,8 +82,6 @@
                       );
     /* 枠線 */
     --sui_radio-border_width: --sui-border_width(2);
-    /* indicator */
-    --sui_radio-indicator_size: 10;
   }
 
   .sui_radio-radius_none {
@@ -128,9 +125,9 @@
     /* 前景 */
     --sui_radio-canvas_text-checked: var(--sui-grey-solid-canvas_text-normal);
     /* 背景 */
-    --sui_radio-canvas-checked:        var(--sui-grey-solid-normal);
-    --sui_radio-canvas-subtle-checked: var(--sui-grey-solid-subtle);
-    --sui_radio-canvas-action-checked: var(--sui-grey-solid-action);
+    --sui_radio-canvas-checked-normal: var(--sui-grey-solid-normal);
+    --sui_radio-canvas-checked-subtle: var(--sui-grey-solid-subtle);
+    --sui_radio-canvas-checked-action: var(--sui-grey-solid-action);
     /* 枠線 */
     --sui_radio-border_color-checked: var(--sui-grey-solid-border-normal);
   }
@@ -139,9 +136,9 @@
     /* 前景 */
     --sui_radio-canvas_text-checked: var(--sui-blue-solid-canvas_text-normal);
     /* 背景 */
-    --sui_radio-canvas-checked:        var(--sui-blue-solid-normal);
-    --sui_radio-canvas-subtle-checked: var(--sui-blue-solid-subtle);
-    --sui_radio-canvas-action-checked: var(--sui-blue-solid-action);
+    --sui_radio-canvas-checked-normal: var(--sui-blue-solid-normal);
+    --sui_radio-canvas-checked-subtle: var(--sui-blue-solid-subtle);
+    --sui_radio-canvas-checked-action: var(--sui-blue-solid-action);
     /* 枠線 */
     --sui_radio-border_color-checked: var(--sui-blue-solid-border-normal);
   }
@@ -150,9 +147,9 @@
     /* 前景 */
     --sui_radio-canvas_text-checked: var(--sui-purple-solid-canvas_text-normal);
     /* 背景 */
-    --sui_radio-canvas-checked:        var(--sui-purple-solid-normal);
-    --sui_radio-canvas-subtle-checked: var(--sui-purple-solid-subtle);
-    --sui_radio-canvas-action-checked: var(--sui-purple-solid-action);
+    --sui_radio-canvas-checked-normal: var(--sui-purple-solid-normal);
+    --sui_radio-canvas-checked-subtle: var(--sui-purple-solid-subtle);
+    --sui_radio-canvas-checked-action: var(--sui-purple-solid-action);
     /* 枠線 */
     --sui_radio-border_color-checked: var(--sui-purple-solid-border-normal);
   }
@@ -161,9 +158,9 @@
     /* 前景 */
     --sui_radio-canvas_text-checked: var(--sui-magenta-solid-canvas_text-normal);
     /* 背景 */
-    --sui_radio-canvas-checked:        var(--sui-magenta-solid-normal);
-    --sui_radio-canvas-subtle-checked: var(--sui-magenta-solid-subtle);
-    --sui_radio-canvas-action-checked: var(--sui-magenta-solid-action);
+    --sui_radio-canvas-checked-normal: var(--sui-magenta-solid-normal);
+    --sui_radio-canvas-checked-subtle: var(--sui-magenta-solid-subtle);
+    --sui_radio-canvas-checked-action: var(--sui-magenta-solid-action);
     /* 枠線 */
     --sui_radio-border_color-checked: var(--sui-magenta-solid-border-normal);
   }
@@ -172,9 +169,9 @@
     /* 前景 */
     --sui_radio-canvas_text-checked: var(--sui-red-solid-canvas_text-normal);
     /* 背景 */
-    --sui_radio-canvas-checked:        var(--sui-red-solid-normal);
-    --sui_radio-canvas-subtle-checked: var(--sui-red-solid-subtle);
-    --sui_radio-canvas-action-checked: var(--sui-red-solid-action);
+    --sui_radio-canvas-checked-normal: var(--sui-red-solid-normal);
+    --sui_radio-canvas-checked-subtle: var(--sui-red-solid-subtle);
+    --sui_radio-canvas-checked-action: var(--sui-red-solid-action);
     /* 枠線 */
     --sui_radio-border_color-checked: var(--sui-red-solid-border-normal);
   }
@@ -183,9 +180,9 @@
     /* 前景 */
     --sui_radio-canvas_text-checked: var(--sui-orange-solid-canvas_text-normal);
     /* 背景 */
-    --sui_radio-canvas-checked:        var(--sui-orange-solid-normal);
-    --sui_radio-canvas-subtle-checked: var(--sui-orange-solid-subtle);
-    --sui_radio-canvas-action-checked: var(--sui-orange-solid-action);
+    --sui_radio-canvas-checked-normal: var(--sui-orange-solid-normal);
+    --sui_radio-canvas-checked-subtle: var(--sui-orange-solid-subtle);
+    --sui_radio-canvas-checked-action: var(--sui-orange-solid-action);
     /* 枠線 */
     --sui_radio-border_color-checked: var(--sui-orange-solid-border-normal);
   }
@@ -194,9 +191,9 @@
     /* 前景 */
     --sui_radio-canvas_text-checked: var(--sui-yellow-solid-canvas_text-normal);
     /* 背景 */
-    --sui_radio-canvas-checked:        var(--sui-yellow-solid-normal);
-    --sui_radio-canvas-subtle-checked: var(--sui-yellow-solid-subtle);
-    --sui_radio-canvas-action-checked: var(--sui-yellow-solid-action);
+    --sui_radio-canvas-checked-normal: var(--sui-yellow-solid-normal);
+    --sui_radio-canvas-checked-subtle: var(--sui-yellow-solid-subtle);
+    --sui_radio-canvas-checked-action: var(--sui-yellow-solid-action);
     /* 枠線 */
     --sui_radio-border_color-checked: var(--sui-yellow-solid-border-normal);
   }
@@ -205,12 +202,15 @@
     /* 前景 */
     --sui_radio-canvas_text-checked: var(--sui-green-solid-canvas_text-normal);
     /* 背景 */
-    --sui_radio-canvas-checked:        var(--sui-green-solid-normal);
-    --sui_radio-canvas-subtle-checked: var(--sui-green-solid-subtle);
-    --sui_radio-canvas-action-checked: var(--sui-green-solid-action);
+    --sui_radio-canvas-checked-normal: var(--sui-green-solid-normal);
+    --sui_radio-canvas-checked-subtle: var(--sui-green-solid-subtle);
+    --sui_radio-canvas-checked-action: var(--sui-green-solid-action);
     /* 枠線 */
     --sui_radio-border_color-checked: var(--sui-green-solid-border-normal);
   }
+
+  /* 変数の既定値設定: ここまで */
+  /* 変数の上書き設定: ここから */
 
   .sui_radio-outlined {
     /* 枠線 */
@@ -234,7 +234,7 @@
 
   .sui_radio[data-checked] {
     /* 背景 */
-    --_sui_radio-canvas: var(--sui_radio-canvas-checked);
+    --_sui_radio-canvas: var(--sui_radio-canvas-checked-normal);
     /* 枠線 */
     --_sui_radio-border_color: var(--sui_radio-border_color-checked);
     --_sui_radio-border_width: 0px;
@@ -242,13 +242,13 @@
     @media (any-hover: hover) {
       &:hover {
         /* 背景 */
-        --_sui_radio-canvas: var(--sui_radio-canvas-subtle-checked);
+        --_sui_radio-canvas: var(--sui_radio-canvas-checked-subtle);
       }
     }
 
     &:active {
       /* 背景 */
-      --_sui_radio-canvas: var(--sui_radio-canvas-action-checked);
+      --_sui_radio-canvas: var(--sui_radio-canvas-checked-action);
     }
   }
 
@@ -258,6 +258,8 @@
       --_sui_radio-outline_width: var(--sui-focusring_width);
     }
   }
+
+  /* 変数の上書き設定: ここまで */
 }
 
 /* Indicator */
@@ -267,31 +269,69 @@
     box-sizing: border-box;
   }
 
+  /* 変数 */
+  .sui_radio {
+    /* 形状 */
+    --sui_radio_indicator-size: ;
+    /* 前景 */
+    --sui_radio_indicator-color: ;
+    /* 枠線 */
+    --sui_radio_indicator-border_radius: ;
+  }
+
   /* 静的 */
   .sui_radio_indicator {
-    display:          flex;
-    align-items:      center;
-    justify-content:  center;
-    width:            calc(var(--sui_radio-indicator_size) * 1px);
-    height:           calc(var(--sui_radio-indicator_size) * 1px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: currentColor;
-    border-radius:    calc(var(--sui_radio-indicator_size) * 1px / 2);
   }
 
   /* 動的 */
   .sui_radio_indicator {
-    color: var(--sui_radio-canvas_text-checked);
+    width: var(--sui_radio_indicator-size);
+    height: var(--sui_radio_indicator-size);
+    color: var(--sui_radio_indicator-color);
+    border-radius: var(--sui_radio_indicator-border_radius);
   }
+
+  /* 変数の既定値設定: ここから */
+
+  .sui_radio {
+    /* 前景 */
+    --sui_radio_indicator-color: var(--sui_radio-canvas_text-checked);
+    /* 枠線 */
+    --sui_radio_indicator-border_radius: calc(var(--sui_radio-size) / 2);
+  }
+
+  .sui_radio-size_sm {
+    /* 形状 */
+    --sui_radio_indicator-size: calc(var(--sui_radio-size) * 0.55);
+  }
+
+  .sui_radio-size_md {
+    /* 形状 */
+    --sui_radio_indicator-size: calc(var(--sui_radio-size) * 0.55);
+  }
+
+  .sui_radio-size_lg {
+    /* 形状 */
+    --sui_radio_indicator-size: calc(var(--sui_radio-size) * 0.55);
+  }
+
+  /* 変数の既定値設定: ここまで */
 }
 
 /* disabled */
-@layer sui.importnant {
+@layer sui.important {
+  /* Root */
   .sui_radio-disabled {
     cursor: not-allowed !important;
     background-color: var(--sui-disabled-canvas) !important;
     border-color: var(--sui-disabled-border_color) !important;
   }
 
+  /* Indicator */
   .sui_radio-disabled .sui_radio_indicator {
     color: var(--sui-disabled-canvas_text) !important;
   }

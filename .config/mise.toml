@@ -4,7 +4,6 @@ minimum_release_age = "7d"
 [tools]
 node = "24"
 pnpm = "10"
-opencode = "1"
 
 [tasks.test]
 run = [{ task = "test:format" }]
