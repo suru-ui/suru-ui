@@ -285,7 +285,7 @@ export const ButtonPending: Component<ButtonPendingProps> = function SuiButtonPe
           "sui_button_pending",
           pending && "sui_button_pending-enabled",
           overlay && "sui_button_pending-overlay",
-          defaultVisibility === "hidden" && "sui_button_pending-visibility_hidden",
+          !pending && defaultVisibility === "hidden" && "sui_button_pending-visibility_hidden",
         ),
       },
     ],
