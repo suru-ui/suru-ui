@@ -16,6 +16,10 @@
       "name": "@suru-ui/core",
       "path": "./packages/core",
     },
+    {
+      "name": "@suru-ui/website",
+      "path": "./website",
+    },
   ],
   "settings": {
     // 一般

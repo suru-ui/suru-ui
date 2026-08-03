@@ -1,0 +1,19 @@
+{
+  "name": "@suru-ui/website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "postinstall": "run-s postinstall:*",
+    "postinstall:theme": "cat \"$(node -e 'console.log(require.resolve(\"@suru-ui/theme/suru.css\"))')\" > examples/theme.css",
+    "postinstall:react": "cat \"$(node -e 'console.log(require.resolve(\"@suru-ui/react/suru.css\"))')\" >> examples/theme.css"
+  },
+  "dependencies": {
+    "@suru-ui/react": "workspace:*",
+    "@suru-ui/theme": "workspace:*",
+    "blume": "^1.1.4"
+  },
+  "devDependencies": {
+    "@tsconfig/strictest": "^2.0.8",
+    "npm-run-all2": "^9.0.2"
+  }
+}

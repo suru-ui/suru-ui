@@ -22,10 +22,38 @@
     ".": {
       "types": "./dist/src/index.d.ts",
       "default": "./dist/src/index.js"
-    }
+    },
+    "./button": {
+      "types": "./dist/src/buttons/button/index.d.ts",
+      "default": "./dist/src/buttons/button/index.js"
+    },
+    "./button-group": {
+      "types": "./dist/src/buttons/button-group/index.d.ts",
+      "default": "./dist/src/buttons/button-group/index.js"
+    },
+    "./toggle-button": {
+      "types": "./dist/src/buttons/toggle-button/index.d.ts",
+      "default": "./dist/src/buttons/toggle-button/index.js"
+    },
+    "./toggle-button-group": {
+      "types": "./dist/src/buttons/toggle-button-group/index.d.ts",
+      "default": "./dist/src/buttons/toggle-button-group/index.js"
+    },
+    "./checkbox": {
+      "types": "./dist/src/forms/checkbox/index.d.ts",
+      "default": "./dist/src/forms/checkbox/index.js"
+    },
+    "./radio": {
+      "types": "./dist/src/forms/radio/index.d.ts",
+      "default": "./dist/src/forms/radio/index.js"
+    },
+    "./suru.css": "./dist/suru.css"
   },
   "scripts": {
-    "build": "tsc --project ./.config/tsconfig.build.json"
+    "build": "run-s build:*",
+    "build:src": "tsc --project ./.config/tsconfig.build.json",
+    "build:css": "node ./scripts/build-css.ts",
+    "build:dst": "node ./scripts/comment-out-css-imports.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
@@ -46,8 +74,10 @@
     "@vitejs/plugin-react": "^6.0.4",
     "@vitest/browser": "^4.1.10",
     "@vitest/browser-playwright": "^4.1.10",
+    "dependency-tree": "^12.0.1",
     "lucide-react": "^1.27.0",
     "npm-check-updates": "^22.2.9",
+    "npm-run-all2": "^9.0.2",
     "playwright": "^1.62.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",

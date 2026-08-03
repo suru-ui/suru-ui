@@ -277,12 +277,12 @@
 
   /* 静的 */
   .sui_checkbox_indicator {
-    display:         flex;
-    align-items:     center;
+    display: flex;
+    align-items: center;
     justify-content: center;
 
     svg {
-      width:  75%;
+      width: 75%;
       height: 75%;
     }
   }
@@ -300,9 +300,9 @@
 /* disabled */
 @layer sui.importnant {
   .sui_checkbox-disabled {
-    cursor:           not-allowed !important;
+    cursor: not-allowed !important;
     background-color: var(--sui-disabled-canvas) !important;
-    border-color:     var(--sui-disabled-border_color) !important;
+    border-color: var(--sui-disabled-border_color) !important;
   }
 
   .sui_checkbox-disabled .sui_checkbox_indicator {

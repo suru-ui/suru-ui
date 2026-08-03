@@ -6,4 +6,8 @@ blockExoticSubdeps: true
 trustPolicy: no-downgrade
 trustPolicyExclude:
   - semver
-packages: ["packages/core", "packages/theme", "packages/react"]
+  # blume
+  - "@hono/node-server"
+  - "@pierre/theme"
+  - "chokidar"
+packages: ["packages/core", "packages/theme", "packages/react", "website"]
