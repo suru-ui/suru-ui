@@ -7,8 +7,19 @@ export default defineConfig({
     owner: "suru-ui",
     repo: "suru-ui",
   },
+  navigation: {
+    tabs: [
+      {
+        label: "React",
+        path: "/docs/react",
+      },
+    ],
+  },
+  content: {
+    root: "content",
+  },
   examples: {
-    css: "examples/theme.css",
+    css: "examples/.style.css",
   },
   i18n: {
     locales: [

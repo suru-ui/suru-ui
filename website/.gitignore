@@ -1,4 +1,4 @@
 .blume/
 dist/
 
-/examples/theme.css
+/examples/.style.css

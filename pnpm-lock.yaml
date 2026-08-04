@@ -203,10 +203,16 @@ importers:
       blume:
         specifier: ^1.1.4
         version: 1.1.4(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@shikijs/themes@4.3.1)(@types/node@24.13.3)(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(@vercel/functions@3.7.6(ws@8.21.0))(csstype@3.2.3)(esbuild@0.28.1)(prettier@3.9.6)(vite@8.1.5(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0))(ws@8.21.0)(yaml@2.9.0)
+      lucide-react:
+        specifier: ^1.27.0
+        version: 1.27.0(react@19.2.8)
     devDependencies:
       '@tsconfig/strictest':
         specifier: ^2.0.8
         version: 2.0.8
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
       npm-run-all2:
         specifier: ^9.0.2
         version: 9.0.2

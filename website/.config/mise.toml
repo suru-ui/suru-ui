@@ -1,3 +1,9 @@
+[tasks.format]
+run = "npx oxfmt --config ./.config/.oxfmtrc.json"
+
+[tasks.lint]
+run = "npx oxlint --config ./.config/.oxlintrc.json"
+
 [tasks.dev]
 run = "npx blume dev"
 

@@ -1,0 +1,114 @@
+---
+title: Button
+description: 複数のバリエーションと状態を持つクリック可能なボタンコンポーネントです。
+---
+
+## 使い方
+
+```tsx
+import { Button } from "@suru-ui/react";
+// または、
+import { Button } from "@suru-ui/react/button";
+```
+
+<Component path="react/button/basic" />
+
+## 例
+
+### バリエーション
+
+<Component path="react/button/variants" />
+
+### 色
+
+<Component path="react/button/colors" />
+
+### アイコン付き
+
+<Component path="react/button/with-icons" />
+
+### 正方形
+
+<Component path="react/button/squared" />
+
+### 保留
+
+#### 不確定
+
+<Component path="react/button/pending.indeterminate" />
+
+#### 進捗度付き
+
+<Component path="react/button/pending.determinate" />
+
+#### 進捗度表記のカスタマイズ
+
+<Component path="react/button/pending.custum" />
+
+### 角丸
+
+<Component path="react/button/radius" />
+
+### 枠線
+
+<Component path="react/button/outlined" />
+
+### 大きさ
+
+<Component path="react/button/sizes" />
+
+### 最大幅
+
+<Component path="react/button/full-width" />
+
+### 無効
+
+<Component path="react/button/disabled" />
+
+## API リファレンス
+
+### Root
+
+<TypeTable
+  type={{
+    variant: {
+      type: '"solid" | "naked" | "liquid"',
+      default: '"solid"',
+      description:
+        'ボタンのスタイルバリエーションを指定します。"solid" は塗りつぶしスタイル、"naked" は背景のないテキストのみ、"liquid" は薄い塗りつぶしになります。',
+    },
+    color: {
+      type: '"blue" | "green" | "grey" | "magenta" | "orange" | "purple" | "red" | "yellow"',
+      default: '"grey"',
+      description: 'ボタンの色を指定します。',
+    },
+    size: {
+      type: '"sm" | "md" | "lg"',
+      default: '"md"',
+      description: 'ボタンのサイズを指定します。',
+    },
+    radius: {
+      type: '"rounded" | "full" | "none"',
+      default: '"rounded"',
+      description:
+        'ボタンの角丸を指定します。"none" は角を直角にし、"rounded" は標準的な角丸、"full" は完全な丸形（pills 状）になります。',
+    },
+    outlined: {
+      type: "boolean",
+      default: "false",
+      description: "枠線を表示するかどうかを指定します。",
+    },
+    pending: {
+      type: "boolean",
+      default: "false",
+      description:
+        "true の場合、ボタンは無効化され、Pending スロットが表示される保留状態（ローディング中）になります。",
+    },
+    squared: {
+      type: "boolean",
+      default: "false",
+      description:
+        "true の場合、幅と高さが等しくなり、アイコンボタンなどに適した正方形になります。",
+    },
+  }}
+/>
