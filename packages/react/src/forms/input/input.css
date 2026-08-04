@@ -1,0 +1,219 @@
+/* Root */
+@layer sui.component {
+  /* リセット */
+  .sui_input {
+    box-sizing: border-box;
+    margin: 0px;
+    font-family: inherit;
+  }
+
+  /* 変数 */
+  .sui_input {
+    /* 形状 */
+    --sui_input-min_height: ;
+    /* 空白 */
+    --sui_input-padding_block: ;
+    --sui_input-padding_inline: ;
+    /* 書体 */
+    --sui_input-font_size: ;
+    --sui_input-font_weight: ;
+    --sui_input-line_height: ;
+    --sui_input-letter_spacing: ;
+    /* 背景 */
+    --sui_input-background_color-normal: ;
+    /* 前景 */
+    --sui_input-color: ;
+    --sui_input_placeholder-color: ;
+    /* 枠線 */
+    --sui_input-border_color-normal: ;
+    --sui_input-border_color-subtle: ;
+    --sui_input-border_color-invalid: ;
+    --sui_input-border_width: ;
+    --sui_input-border_radius: ;
+    --sui_input-outline_color: ;
+    --sui_input-outline_offset: ;
+  }
+
+  /* 静的 */
+  .sui_input {
+    display: inline-block;
+    vertical-align: middle;
+    touch-action: manipulation;
+    caret-color: currentColor;
+  }
+
+  /* 動的 */
+  .sui_input {
+    min-height: var(--sui_input-min_height);
+    padding-block: var(--_sui_input-padding_block, var(--sui_input-padding_block));
+    padding-inline: var(--_sui_input-padding_inline,
+                      calc(
+                        var(--sui_input-padding_inline)
+                        - var(--_sui_input-border_width, 0px)
+                      )
+                    );
+    font-family: var(--sui-font-sans);
+    font-size: var(--sui_input-font_size);
+    font-weight: var(--sui_input-font_weight);
+    line-height: var(--sui_input-line_height);
+    color: var(--sui_input-color);
+    letter-spacing: var(--sui_input-letter_spacing);
+    outline: var(--_sui_input-outline_width, 0px)
+             solid
+             var(--sui_input-outline_color);
+    outline-offset: var(--sui_input-outline_offset);
+    background-color: var(--_sui_input-background_color,
+                        var(--sui_input-background_color-normal)
+                      );
+    border: var(--_sui_input-border_color, var(--sui_input-border_color-normal))
+            solid
+            var(--_sui_input-border_width, 0px);
+    border-radius: var(--_sui_input-border_radius, var(--sui_input-border_radius));
+
+    &::placeholder {
+      color: var(--sui_input_placeholder-color);
+    }
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_input {
+    /* 空白 */
+    --sui_input-padding_block: calc(
+                                   (var(--sui_input-min_height) - var(--sui_input-text_height))
+                                   / 2
+                                   - var(--_sui_input-border_width, 0px)
+                                 );
+    /* 書体 */
+    --sui_input-text_height: calc(var(--sui_input-font_size) * var(--sui_input-line_height));
+    /* 前景 */
+    --sui_input_placeholder-color: color-mix(in srgb, var(--sui_input-color) 60%, transparent);
+    /* 枠線 */
+    --sui_input-border_color-normal: var(--sui-grey-60);
+    --sui_input-border_color-subtle: var(--sui-grey-70);
+    --sui_input-border_color-invalid: var(--sui-red-60);
+    --sui_input-border_width: --sui-border_width(2);
+    --sui_input-outline_color: var(--sui-focusring_color);
+    --sui_input-outline_offset: var(--sui-focusring_offset);
+  }
+
+  .sui_input-size_sm {
+    /* 形状 */
+    --sui_input-min_height: var(--sui-size-sm);
+    /* 空白 */
+    --sui_input-padding_inline: --sui-space(4);
+    /* 書体 */
+    --sui_input-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_input-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_input-line_height: var(--sui-text-oln-sm-n-line_height);
+    --sui_input-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+  }
+
+  .sui_input-size_md {
+    /* 形状 */
+    --sui_input-min_height: var(--sui-size-md);
+    /* 空白 */
+    --sui_input-padding_inline: --sui-space(5);
+    /* 書体 */
+    --sui_input-font_size: var(--sui-text-oln-md-n-font_size);
+    --sui_input-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_input-line_height: var(--sui-text-oln-md-n-line_height);
+    --sui_input-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
+  }
+
+  .sui_input-size_lg {
+    /* 形状 */
+    --sui_input-min_height: var(--sui-size-lg);
+    /* 空白 */
+    --sui_input-padding_inline: --sui-space(6);
+    /* 書体 */
+    --sui_input-font_size: var(--sui-text-oln-lg-n-font_size);
+    --sui_input-font_weight: var(--sui-text-oln-lg-n-font_weight);
+    --sui_input-line_height: var(--sui-text-oln-lg-n-line_height);
+    --sui_input-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
+  }
+
+  .sui_input-radius_none {
+    /* 枠線 */
+    --sui_input-border_radius: 0px;
+  }
+
+  .sui_input-radius_rounded {
+    /* 枠線 */
+    --sui_input-border_radius: var(--sui-radius-sm);
+  }
+
+  .sui_input-radius_full {
+    /* 枠線 */
+    --sui_input-border_radius: calc(var(--sui_input-min_height) / 2);
+  }
+
+  .sui_input-variant_naked {
+    /* 背景 */
+    --sui_input-background_color-normal: var(--sui-grey-naked-normal);
+    /* 前景 */
+    --sui_input-color: var(--sui-grey-naked-canvas_text-normal);
+  }
+
+  .sui_input-variant_liquid {
+    /* 背景 */
+    --sui_input-background_color-normal: var(--sui-grey-liquid-normal);
+    /* 前景 */
+    --sui_input-color: var(--sui-grey-liquid-canvas_text-normal);
+  }
+
+  /* 既定値設定: ここまで */
+  /* 上書き設定: ここから */
+
+  .sui_input {
+    &:focus-visible {
+      /* 枠線 */
+      --_sui_input-outline_width: var(--sui-focusring_width);
+    }
+  }
+
+  .sui_input-outlined {
+    /* 枠線 */
+    --_sui_input-border_width: var(--sui_input-border_width);
+    --_sui_input-border_color: var(--sui_input-border_color-normal);
+
+    @media (any-hover: hover) {
+      &:hover {
+        /* 枠線 */
+        --_sui_input-border_color: var(--sui_input-border_color-subtle);
+      }
+    }
+
+    &:focus-visible {
+      /* 枠線 */
+      --_sui_input-border_color: var(--sui_input-border_color-subtle);
+    }
+  }
+
+  .sui_input[data-invalid] {
+    /* 枠線 */
+    --_sui_input-border_color: var(--sui_input-border_color-invalid);
+  }
+
+  .sui_input:not([data-invalid], [data-valid]):user-invalid {
+    /* 枠線 */
+    --_sui_input-border_color: var(--sui_input-border_color-invalid);
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* disabled */
+@layer sui.important {
+  /* Root */
+  .sui_input-disabled {
+    color: var(--sui-disabled-canvas_text) !important;
+    cursor: not-allowed !important;
+    background-color: var(--sui-disabled-canvas) !important;
+    border-color: var(--sui-disabled-border_color) !important;
+
+    &::placeholder {
+      color: var(--sui-disabled-canvas_text) !important;
+    }
+  }
+}
