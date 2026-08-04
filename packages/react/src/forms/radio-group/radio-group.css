@@ -1,0 +1,17 @@
+/* Root */
+@layer sui.component {
+  /* リセット */
+  .sui_radio_group {
+    box-sizing: border-box;
+  }
+
+  /* 静的 */
+  .sui_radio_group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sui_radio_group-orientation_horizontal {
+    flex-direction: row;
+  }
+}

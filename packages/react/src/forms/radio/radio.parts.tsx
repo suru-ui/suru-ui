@@ -4,6 +4,7 @@ import * as React from "react";
 
 import cn from "../../cn.js";
 import type { Component } from "../../types.js";
+import { useRadioGroupContext } from "../radio-group/radio-group.parts.jsx";
 
 import "./radio.css";
 
@@ -65,16 +66,23 @@ export type RadioRootProps = React.ComponentProps<typeof Radio.Root> & {
  * ```
  */
 export const RadioRoot: Component<RadioRootProps> = function SuiRadioRoot(props) {
+  const group = useRadioGroupContext(true);
   const {
     size: sizeProp = "md",
     color: colorProp = "grey",
     radius: radiusProp = "full",
     variant: variantProp = "naked",
-    disabled = false,
+    disabled: disabledProp = false,
     outlined = variantProp === "naked",
     className,
     ...otherProps
   } = props;
+  const size = group?.size ?? sizeProp;
+  const color = group?.color ?? colorProp;
+  const radius = group?.radius ?? radiusProp;
+  const variant = group?.variant ?? variantProp;
+  const groupOutlined = group?.outlined ?? outlined;
+  const disabled = group?.disabled || disabledProp;
 
   return (
     <Radio.Root
@@ -83,11 +91,11 @@ export const RadioRoot: Component<RadioRootProps> = function SuiRadioRoot(props)
       className={cn(
         className,
         "sui_radio",
-        `sui_radio-size_${sizeProp}`,
-        `sui_radio-color_${colorProp}`,
-        `sui_radio-radius_${radiusProp}`,
-        `sui_radio-variant_${variantProp}`,
-        outlined && "sui_radio-outlined",
+        `sui_radio-size_${size}`,
+        `sui_radio-color_${color}`,
+        `sui_radio-radius_${radius}`,
+        `sui_radio-variant_${variant}`,
+        groupOutlined && "sui_radio-outlined",
         disabled && "sui_radio-disabled",
       )}
     />

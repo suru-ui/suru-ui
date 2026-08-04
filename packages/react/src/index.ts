@@ -21,3 +21,4 @@ export {
 // forms
 export { type CheckboxProps, Checkbox } from "./forms/checkbox/index.js";
 export { type RadioProps, Radio } from "./forms/radio/index.js";
+export { type RadioGroupProps, RadioGroup } from "./forms/radio-group/index.js";
