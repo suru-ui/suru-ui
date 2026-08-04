@@ -508,6 +508,7 @@
   /* 変数 */
   .sui_button {
     /* 形状 */
+    --sui_button_content-action-scale: 0.98;
     --sui_button_content_svg-size: ;
     /* 空白 */
     --sui_button_content-gap: ;
@@ -769,7 +770,7 @@
       /* 前景 */
       --_sui_button_content-color: var(--sui_button_content-color-action);
       /* 変形 */
-      --_sui_button_content-scale: 0.95;
+      --_sui_button_content-scale: var(--sui_button_content-action-scale);
     }
   }
 

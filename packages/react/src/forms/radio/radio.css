@@ -306,17 +306,17 @@
 
   .sui_radio-size_sm {
     /* 形状 */
-    --sui_radio_indicator-size: calc(var(--sui_radio-size) * 0.55);
+    --sui_radio_indicator-size: calc(var(--sui_radio-size) * 0.4);
   }
 
   .sui_radio-size_md {
     /* 形状 */
-    --sui_radio_indicator-size: calc(var(--sui_radio-size) * 0.55);
+    --sui_radio_indicator-size: calc(var(--sui_radio-size) * 0.4);
   }
 
   .sui_radio-size_lg {
     /* 形状 */
-    --sui_radio_indicator-size: calc(var(--sui_radio-size) * 0.55);
+    --sui_radio_indicator-size: calc(var(--sui_radio-size) * 0.4);
   }
 
   /* 変数の既定値設定: ここまで */

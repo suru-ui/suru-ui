@@ -1,0 +1,136 @@
+@layer sui.source {
+  /* https://stephango.com/flexoki */
+  /* https://github.com/kepano/flexoki/blob/2.0.0/css/flexoki.css */
+  :root {
+    --_flexoki-black:           #100F0F;
+    --_flexoki-paper:           #FFFCF0;
+
+    --_flexoki-base-50:         #F2F0E5;
+    --_flexoki-base-100:        #E6E4D9;
+    --_flexoki-base-150:        #DAD8CE;
+    --_flexoki-base-200:        #CECDC3;
+    --_flexoki-base-300:        #B7B5AC;
+    --_flexoki-base-400:        #9F9D96;
+    --_flexoki-base-500:        #878580;
+    --_flexoki-base-600:        #6F6E69;
+    --_flexoki-base-700:        #575653;
+    --_flexoki-base-800:        #403E3C;
+    --_flexoki-base-850:        #343331;
+    --_flexoki-base-900:        #282726;
+    --_flexoki-base-950:        #1C1B1A;
+
+    --_flexoki-red-50:          #FFE1D5;
+    --_flexoki-red-100:         #FFCABB;
+    --_flexoki-red-150:         #FDB2A2;
+    --_flexoki-red-200:         #F89A8A;
+    --_flexoki-red-300:         #E8705F;
+    --_flexoki-red-400:         #D14D41;
+    --_flexoki-red-500:         #C03E35;
+    --_flexoki-red-600:         #AF3029;
+    --_flexoki-red-700:         #942822;
+    --_flexoki-red-800:         #6C201C;
+    --_flexoki-red-850:         #551B18;
+    --_flexoki-red-900:         #3E1715;
+    --_flexoki-red-950:         #261312;
+
+    --_flexoki-orange-50:       #FFE7CE;
+    --_flexoki-orange-100:      #FED3AF;
+    --_flexoki-orange-150:      #FCC192;
+    --_flexoki-orange-200:      #F9AE77;
+    --_flexoki-orange-300:      #EC8B49;
+    --_flexoki-orange-400:      #DA702C;
+    --_flexoki-orange-500:      #CB6120;
+    --_flexoki-orange-600:      #BC5215;
+    --_flexoki-orange-700:      #9D4310;
+    --_flexoki-orange-800:      #71320D;
+    --_flexoki-orange-850:      #59290D;
+    --_flexoki-orange-900:      #40200D;
+    --_flexoki-orange-950:      #27180E;
+
+    --_flexoki-yellow-50:       #FAEEC6;
+    --_flexoki-yellow-100:      #F6E2A0;
+    --_flexoki-yellow-150:      #F1D67E;
+    --_flexoki-yellow-200:      #ECCB60;
+    --_flexoki-yellow-300:      #DFB431;
+    --_flexoki-yellow-400:      #D0A215;
+    --_flexoki-yellow-500:      #BE9207;
+    --_flexoki-yellow-600:      #AD8301;
+    --_flexoki-yellow-700:      #8E6B01;
+    --_flexoki-yellow-800:      #664D01;
+    --_flexoki-yellow-850:      #503D02;
+    --_flexoki-yellow-900:      #3A2D04;
+    --_flexoki-yellow-950:      #241E08;
+
+    --_flexoki-green-50:        #EDEECF;
+    --_flexoki-green-100:       #DDE2B2;
+    --_flexoki-green-150:       #CDD597;
+    --_flexoki-green-200:       #BEC97E;
+    --_flexoki-green-300:       #A0AF54;
+    --_flexoki-green-400:       #879A39;
+    --_flexoki-green-500:       #768D21;
+    --_flexoki-green-600:       #66800B;
+    --_flexoki-green-700:       #536907;
+    --_flexoki-green-800:       #3D4C07;
+    --_flexoki-green-850:       #313D07;
+    --_flexoki-green-900:       #252D09;
+    --_flexoki-green-950:       #1A1E0C;
+
+    /*
+    --_flexoki-cyan-50:         #DDF1E4;
+    --_flexoki-cyan-100:        #BFE8D9;
+    --_flexoki-cyan-150:        #A2DECE;
+    --_flexoki-cyan-200:        #87D3C3;
+    --_flexoki-cyan-300:        #5ABDAC;
+    --_flexoki-cyan-400:        #3AA99F;
+    --_flexoki-cyan-500:        #2F968D;
+    --_flexoki-cyan-600:        #24837B;
+    --_flexoki-cyan-700:        #1C6C66;
+    --_flexoki-cyan-800:        #164F4A;
+    --_flexoki-cyan-850:        #143F3C;
+    --_flexoki-cyan-900:        #122F2C;
+    --_flexoki-cyan-950:        #101F1D;
+    */
+
+    --_flexoki-blue-50:         #E1ECEB;
+    --_flexoki-blue-100:        #C6DDE8;
+    --_flexoki-blue-150:        #ABCFE2;
+    --_flexoki-blue-200:        #92BFDB;
+    --_flexoki-blue-300:        #66A0C8;
+    --_flexoki-blue-400:        #4385BE;
+    --_flexoki-blue-500:        #3171B2;
+    --_flexoki-blue-600:        #205EA6;
+    --_flexoki-blue-700:        #1A4F8C;
+    --_flexoki-blue-800:        #163B66;
+    --_flexoki-blue-850:        #133051;
+    --_flexoki-blue-900:        #12253B;
+    --_flexoki-blue-950:        #101A24;
+
+    --_flexoki-purple-50:       #F0EAEC;
+    --_flexoki-purple-100:      #E2D9E9;
+    --_flexoki-purple-150:      #D3CAE6;
+    --_flexoki-purple-200:      #C4B9E0;
+    --_flexoki-purple-300:      #A699D0;
+    --_flexoki-purple-400:      #8B7EC8;
+    --_flexoki-purple-500:      #735EB5;
+    --_flexoki-purple-600:      #5E409D;
+    --_flexoki-purple-700:      #4F3685;
+    --_flexoki-purple-800:      #3C2A62;
+    --_flexoki-purple-850:      #31234E;
+    --_flexoki-purple-900:      #261C39;
+    --_flexoki-purple-950:      #1A1623;
+
+    --_flexoki-magenta-50:      #FEE4E5;
+    --_flexoki-magenta-100:     #FCCFDA;
+    --_flexoki-magenta-150:     #F9B9CF;
+    --_flexoki-magenta-200:     #F4A4C2;
+    --_flexoki-magenta-300:     #E47DA8;
+    --_flexoki-magenta-400:     #CE5D97;
+    --_flexoki-magenta-500:     #B74583;
+    --_flexoki-magenta-600:     #A02F6F;
+    --_flexoki-magenta-700:     #87285E;
+    --_flexoki-magenta-800:     #641F46;
+    --_flexoki-magenta-850:     #4F1B39;
+    --_flexoki-magenta-900:     #39172B;
+    --_flexoki-magenta-950:     #24131D;
+  }
+}

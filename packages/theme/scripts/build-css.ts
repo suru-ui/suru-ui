@@ -16,7 +16,7 @@ const DIST = resolve(ROOT, "dist");
 // ---------------------------------------------------------------------------
 
 /** Files that are included verbatim in every output. */
-const COMMON_FILES = new Set(["layers.css", "utilities.css"]);
+const COMMON_FILES = new Set(["layers.css", "source.css", "utilities.css"]);
 
 /** Regex to extract family and mode from token filenames (e.g. tokens.suru.dark.css → ["suru", "dark"]). */
 const THEME_FILE_RE = /^tokens\.(.+)\.(.+)\.css$/;
