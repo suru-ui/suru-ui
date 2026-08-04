@@ -4,6 +4,7 @@ import * as React from "react";
 
 import cn from "../../cn.js";
 import type { Component } from "../../types.js";
+import { useCheckboxGroupContext } from "../checkbox-group/checkbox-group.parts.jsx";
 
 import "./checkbox.css";
 
@@ -67,16 +68,23 @@ export type CheckboxRootProps = React.ComponentProps<typeof Checkbox.Root> & {
  * ```
  */
 export const CheckboxRoot: Component<CheckboxRootProps> = function SuiCheckboxRoot(props) {
+  const group = useCheckboxGroupContext(true);
   const {
     size: sizeProp = "md",
     color: colorProp = "grey",
     radius: radiusProp = "rounded",
     variant: variantProp = "naked",
-    disabled = false,
+    disabled: disabledProp = false,
     outlined = variantProp === "naked",
     className,
     ...otherProps
   } = props;
+  const size = group?.size ?? sizeProp;
+  const color = group?.color ?? colorProp;
+  const radius = group?.radius ?? radiusProp;
+  const variant = group?.variant ?? variantProp;
+  const groupOutlined = group?.outlined ?? outlined;
+  const disabled = group?.disabled || disabledProp;
 
   return (
     <Checkbox.Root
@@ -85,11 +93,11 @@ export const CheckboxRoot: Component<CheckboxRootProps> = function SuiCheckboxRo
       className={cn(
         className,
         "sui_checkbox",
-        `sui_checkbox-size_${sizeProp}`,
-        `sui_checkbox-color_${colorProp}`,
-        `sui_checkbox-radius_${radiusProp}`,
-        `sui_checkbox-variant_${variantProp}`,
-        outlined && "sui_checkbox-outlined",
+        `sui_checkbox-size_${size}`,
+        `sui_checkbox-color_${color}`,
+        `sui_checkbox-radius_${radius}`,
+        `sui_checkbox-variant_${variant}`,
+        groupOutlined && "sui_checkbox-outlined",
         disabled && "sui_checkbox-disabled",
       )}
     />

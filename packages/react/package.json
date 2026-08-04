@@ -43,6 +43,10 @@
       "types": "./dist/src/forms/checkbox/index.d.ts",
       "default": "./dist/src/forms/checkbox/index.js"
     },
+    "./checkbox-group": {
+      "types": "./dist/src/forms/checkbox-group/index.d.ts",
+      "default": "./dist/src/forms/checkbox-group/index.js"
+    },
     "./radio": {
       "types": "./dist/src/forms/radio/index.d.ts",
       "default": "./dist/src/forms/radio/index.js"
