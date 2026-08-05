@@ -220,5 +220,6 @@ $RECYCLE.BIN/
 ################################################################################
 
 .history/
+.vitest-attachments/
 dist/
 __screenshots__/

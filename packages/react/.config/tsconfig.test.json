@@ -1,7 +1,7 @@
 {
   "extends": ["@tsconfig/node24", "@tsconfig/strictest"],
   "include": ["./global.d.ts", "../tests/**/*"],
-  "exclude": ["../tests/**/*.client.test.ts", "../tests/**/*.server.test.ts"],
+  "exclude": ["../tests/**/*.client.test.{ts,tsx}", "../tests/**/*.server.test.{ts,tsx}"],
   "compilerOptions": {
     "types": ["node", "vite/client"],
     "lib": ["DOM", "ESNext"],

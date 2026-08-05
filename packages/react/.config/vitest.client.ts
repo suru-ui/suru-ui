@@ -1,9 +1,11 @@
+import react from "@vitejs/plugin-react";
 import { playwright } from "@vitest/browser-playwright";
 import { defineConfig } from "vitest/config";
 
 import isDebugMode from "./_is-debug-mode";
 
 export default defineConfig({
+  plugins: [react()],
   oxc: {
     target: "es2020",
   },
@@ -13,8 +15,8 @@ export default defineConfig({
     __SERVER__: "false",
   },
   test: {
-    include: ["tests/**/*.test.ts"],
-    exclude: ["tests/**/*.server.test.ts"],
+    include: ["tests/**/*.test.{ts,tsx}"],
+    exclude: ["tests/**/*.server.test.{ts,tsx}"],
     browser: {
       provider: playwright(),
       enabled: true,

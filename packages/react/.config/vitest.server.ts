@@ -12,7 +12,7 @@ export default defineConfig({
     __SERVER__: "true",
   },
   test: {
-    include: ["tests/**/*.test.ts"],
-    exclude: ["tests/**/*.client.test.ts"],
+    include: ["tests/**/*.test.{ts,tsx}"],
+    exclude: ["tests/**/*.client.test.{ts,tsx}"],
   },
 });

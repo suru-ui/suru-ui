@@ -107,6 +107,7 @@
     "react-dom": "^19.2.8",
     "storybook": "^10.5.4",
     "unocss": "^66.7.5",
+    "valibot": "^1.4.1",
     "vite": "^8.1.5",
     "vitest": "^4.1.10",
     "vitest-browser-react": "^2.2.0"
