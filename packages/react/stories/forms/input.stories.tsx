@@ -1,8 +1,8 @@
-import { Field } from "@base-ui/react/field";
 import { SIZES } from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
+import { Field } from "../../src/forms/field/index.js";
 import { Input } from "../../src/forms/input/index.js";
 
 const meta = preview.meta({
@@ -187,7 +187,7 @@ export const Invalid = meta.story({
           <button type="submit" className="underline">
             送信
           </button>
-          <p className="text-sm opacity-80">送信を試みるとバリデーションが適用されます</p>
+          <p className="text-sm opacity-80">送信を試みると検証が適用されます</p>
         </form>
       </div>
     );

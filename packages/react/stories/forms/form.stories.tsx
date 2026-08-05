@@ -1,8 +1,8 @@
-import { Field } from "@base-ui/react/field";
 import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Button } from "../../src/buttons/button/index.js";
+import { Field } from "../../src/forms/field/index.js";
 import { Form } from "../../src/forms/form/index.js";
 import { Input } from "../../src/forms/input/index.js";
 
@@ -37,8 +37,8 @@ export const Usage = meta.story({
         }}
         className="flex w-80 flex-col items-start gap-4"
       >
-        <Field.Root name="url" className="flex flex-col items-start gap-1">
-          <Field.Label className="text-sm font-bold">Homepage</Field.Label>
+        <Field.Root name="url">
+          <Field.Label>Homepage</Field.Label>
           <Input
             type="url"
             required
@@ -47,7 +47,7 @@ export const Usage = meta.story({
             pattern="https?://.*"
             className="w-full"
           />
-          <Field.Error className="text-sm text-red-700 dark:text-red-400" />
+          <Field.Error />
         </Field.Root>
         <Button type="submit">送信</Button>
       </Form>

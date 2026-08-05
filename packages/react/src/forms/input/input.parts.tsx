@@ -54,7 +54,7 @@ export type InputRootProps = Omit<React.ComponentProps<typeof Input>, "size"> & 
  * テキスト入力欄のルート要素です。
  *
  * Base UI の {@link Input} をラップし、テーマに基づくスタイルクラスを適用します。
- * Field に組み込むと、バリデーション状態が `data-*` 属性として自動的に付与されます。
+ * Field に組み込むと、検証状態が `data-*` 属性として自動的に付与されます。
  *
  * @example
  * ```tsx
@@ -67,7 +67,6 @@ export const InputRoot: Component<InputRootProps> = function SuiInputRoot(props)
     variant: variantProp = "naked",
     radius: radiusProp = "rounded",
     outlined: outlinedProp = variantProp === "naked",
-    disabled = false,
     className,
     ...otherProps
   } = props;
@@ -75,7 +74,6 @@ export const InputRoot: Component<InputRootProps> = function SuiInputRoot(props)
   return (
     <Input
       {...otherProps}
-      disabled={disabled}
       className={cn(
         className,
         "sui_input",
@@ -83,7 +81,7 @@ export const InputRoot: Component<InputRootProps> = function SuiInputRoot(props)
         `sui_input-variant_${variantProp}`,
         `sui_input-radius_${radiusProp}`,
         outlinedProp && "sui_input-outlined",
-        disabled && "sui_input-disabled",
+        (state) => state.disabled && "sui_input-disabled",
       )}
     />
   );

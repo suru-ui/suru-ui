@@ -21,7 +21,7 @@ interface FieldComponentType extends Component<FieldProps> {
 /**
  * フィールドを表示するコンポーネントです。
  *
- * ラベル、入力欄、エラーメッセージ、説明文をグループ化し、バリデーション状態を管理します。
+ * ラベル、入力欄、エラーメッセージ、説明文をグループ化し、検証状態を管理します。
  * `<Form>` と組み合わせて使用できます。
  *
  * @example 基本
@@ -34,7 +34,7 @@ interface FieldComponentType extends Component<FieldProps> {
  * </Field.Root>
  * ```
  *
- * @example バリデーション
+ * @example 検証
  * ```tsx
  * <Field.Root
  *   name="username"

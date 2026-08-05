@@ -210,7 +210,10 @@
     color: var(--sui-disabled-canvas_text) !important;
     cursor: not-allowed !important;
     background-color: var(--sui-disabled-canvas) !important;
-    border-color: var(--sui-disabled-border_color) !important;
+
+    &.sui_input-outlined {
+      border: var(--sui-disabled-border_color) solid 1px !important;
+    }
 
     &::placeholder {
       color: var(--sui-disabled-canvas_text) !important;

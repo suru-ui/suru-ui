@@ -2,6 +2,7 @@ import { preview, controls } from "../../.config/storybook/preview.js";
 import { Button } from "../../src/buttons/button/index.js";
 import { Field } from "../../src/forms/field/index.js";
 import { Fieldset } from "../../src/forms/fieldset/index.js";
+import { Form } from "../../src/forms/form/index.js";
 
 const meta = preview.meta({
   title: "Forms / Fieldset",
@@ -23,7 +24,7 @@ export const Usage = meta.story({
   }),
   render(props) {
     return (
-      <form onSubmit={(event) => event.preventDefault()}>
+      <Form onSubmit={(event) => event.preventDefault()}>
         <Fieldset {...props} className="w-80">
           <Fieldset.Legend>お支払い情報</Fieldset.Legend>
           <Field.Root name="company">
@@ -36,7 +37,7 @@ export const Usage = meta.story({
           </Field.Root>
           <Button type="submit">送信</Button>
         </Fieldset>
-      </form>
+      </Form>
     );
   },
 });

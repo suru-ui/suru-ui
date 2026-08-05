@@ -22,7 +22,7 @@ export type FormRootProps<FormValues extends Record<string, any> = Record<string
 /**
  * フォームのルート要素です。
  *
- * Base UI の {@link Form} をラップし、一括のエラーハンドリングとバリデーションを提供します。
+ * Base UI の {@link Form} をラップし、一括のエラーハンドリングと検証を提供します。
  * `<Field.Root>` と組み合わせて使用します。
  *
  * @example

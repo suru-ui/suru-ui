@@ -23,7 +23,7 @@ export type FieldRootProps = React.ComponentProps<typeof Field.Root>;
 /**
  * フィールドのルート要素です。
  *
- * ラベル、入力欄、エラーメッセージ、説明文をグループ化し、バリデーション状態を管理します。
+ * ラベル、入力欄、エラーメッセージ、説明文をグループ化し、検証状態を管理します。
  *
  * @example
  * ```tsx
@@ -73,7 +73,12 @@ export type FieldLabelProps = React.ComponentProps<typeof Field.Label>;
 export const FieldLabel: Component<FieldLabelProps> = function SuiFieldLabel(props) {
   const { className, ...otherProps } = props;
 
-  return <Field.Label {...otherProps} className={cn(className, "sui_field_label")} />;
+  return (
+    <Field.Label
+      {...otherProps}
+      className={cn(className, (state) => state.disabled && "sui_field_label-disabled")}
+    />
+  );
 };
 
 export namespace Label {
@@ -99,7 +104,7 @@ export type FieldControlProps = InputRootProps;
 /**
  * フィールドの入力欄要素です。
  *
- * {@link Input} と同じ見た目とプロパティーを持ち、フィールドのバリデーション状態に連動します。
+ * {@link Input} と同じ見た目とプロパティーを持ち、フィールドの検証状態に連動します。
  *
  * @example
  * ```tsx
@@ -169,7 +174,7 @@ export type FieldErrorProps = React.ComponentProps<typeof Field.Error>;
 /**
  * フィールドのエラーメッセージ要素です。
  *
- * バリデーションに失敗したときに表示されます。
+ * 検証に失敗したときに表示されます。
  *
  * @example
  * ```tsx
@@ -243,9 +248,9 @@ export type FieldValidityState = Field.Validity.State;
 export type FieldValidityProps = React.ComponentProps<typeof Field.Validity>;
 
 /**
- * フィールドのバリデーション状態に応じてカスタムメッセージを表示する要素です。
+ * フィールドの検証状態に応じてカスタムメッセージを表示する要素です。
  *
- * `children` にはバリデーション状態を受け取る関数を指定します。
+ * `children` には検証状態を受け取る関数を指定します。
  *
  * @example
  * ```tsx

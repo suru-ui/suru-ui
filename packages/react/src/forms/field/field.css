@@ -172,3 +172,12 @@
     box-sizing: border-box;
   }
 }
+
+/* disabled */
+@layer sui.important {
+  /* Label */
+  .sui_field_label-disabled {
+    color: var(--sui-disabled-canvas_text) !important;
+    cursor: not-allowed !important;
+  }
+}

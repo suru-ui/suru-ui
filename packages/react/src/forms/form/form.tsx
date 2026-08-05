@@ -12,7 +12,7 @@ export type FormProps<FormValues extends Record<string, any> = Record<string, an
 /**
  * フォームを表示するコンポーネントです。
  *
- * 一括のエラーハンドリングとバリデーションを提供し、`<Field.Root>` と組み合わせて使用します。
+ * 一括のエラーハンドリングと検証を提供し、`<Field.Root>` と組み合わせて使用します。
  *
  * @example サーバーエラーの表示
  * ```tsx
