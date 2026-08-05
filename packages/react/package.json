@@ -51,6 +51,10 @@
       "types": "./dist/src/forms/field/index.d.ts",
       "default": "./dist/src/forms/field/index.js"
     },
+    "./fieldset": {
+      "types": "./dist/src/forms/fieldset/index.d.ts",
+      "default": "./dist/src/forms/fieldset/index.js"
+    },
     "./form": {
       "types": "./dist/src/forms/form/index.d.ts",
       "default": "./dist/src/forms/form/index.js"

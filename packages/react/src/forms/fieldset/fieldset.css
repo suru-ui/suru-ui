@@ -1,0 +1,100 @@
+/* Root */
+@layer sui.component {
+  /* リセット */
+  .sui_fieldset {
+    box-sizing: border-box;
+    min-inline-size: min-content;
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+  }
+
+  /* 変数 */
+  .sui_fieldset {
+    /* 空白 */
+    --sui_fieldset-gap: ;
+  }
+
+  /* 静的 */
+  .sui_fieldset {
+    display:        flex;
+    flex-direction: column;
+  }
+
+  /* 動的 */
+  .sui_fieldset {
+    gap: var(--sui_fieldset-gap);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_fieldset {
+    /* 空白 */
+    --sui_fieldset-gap: --sui-gap(4);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* Legend */
+@layer sui.component {
+  /* リセット */
+  .sui_fieldset_legend {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+  }
+
+  /* 変数 */
+  .sui_fieldset {
+    /* 書体 */
+    --sui_fieldset_legend-font_size: ;
+    --sui_fieldset_legend-font_weight: ;
+    --sui_fieldset_legend-line_height: ;
+    --sui_fieldset_legend-letter_spacing: ;
+    /* 枠線 */
+    --sui_fieldset_legend-border_width: ;
+    --sui_fieldset_legend-border_color: ;
+    /* 前景 */
+    --sui_fieldset_legend-color: ;
+  }
+
+  /* 動的 */
+  .sui_fieldset_legend {
+    font-family: var(--sui-font-sans);
+    font-size: var(--sui_fieldset_legend-font_size);
+    font-weight: var(--sui_fieldset_legend-font_weight);
+    line-height: var(--sui_fieldset_legend-line_height);
+    color: var(--sui_fieldset_legend-color);
+    letter-spacing: var(--sui_fieldset_legend-letter_spacing);
+    border-bottom: var(--sui_fieldset_legend-border_width)
+                   solid
+                   var(--sui_fieldset_legend-border_color);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_fieldset {
+    /* 書体 */
+    --sui_fieldset_legend-font_size: var(--sui-text-std-lg-b-font_size);
+    --sui_fieldset_legend-font_weight: var(--sui-text-std-lg-b-font_weight);
+    --sui_fieldset_legend-line_height: var(--sui-text-std-lg-b-line_height);
+    --sui_fieldset_legend-letter_spacing: var(--sui-text-std-lg-b-letter_spacing);
+    /* 枠線 */
+    --sui_fieldset_legend-border_width: --sui-border_width(1);
+    --sui_fieldset_legend-border_color: var(--sui-canvas_text-3);
+    /* 前景 */
+    --sui_fieldset_legend-color: var(--sui-canvas_text-1);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* disabled */
+@layer sui.important {
+  /* Legend */
+  .sui_fieldset_legend-disabled {
+    color: var(--sui-disabled-canvas_text) !important;
+  }
+}
