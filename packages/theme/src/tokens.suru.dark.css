@@ -400,16 +400,6 @@
   --sui-border_width-growth: 0.05;
   --sui-border_width-offset: 0;
 
-  /*
-  --sui-canvas-contrast-min: 10;
-  --sui-canvas-contrast-max: 100;
-  */
-
-  /*
-  --sui-canvas_text-contrast-min: 0;
-  --sui-canvas_text-contrast-max: 100;
-  */
-
   --sui-text-oln-sm-n-font_size:      14px;
   --sui-text-oln-sm-n-font_weight:    400;
   --sui-text-oln-sm-n-letter_spacing: 0.02em;
@@ -454,4 +444,79 @@
   --sui-text-oln-lg-b-font_weight:    700;
   --sui-text-oln-lg-b-letter_spacing: 0.02em;
   --sui-text-oln-lg-b-line_height:    1.1;
+
+  --sui-text-dns-sm-n-font_size:      14px;
+  --sui-text-dns-sm-n-font_weight:    400;
+  --sui-text-dns-sm-n-letter_spacing: 0em;
+  --sui-text-dns-sm-n-line_height:    1.2;
+
+  --sui-text-dns-sm-b-font_size:      14px;
+  --sui-text-dns-sm-b-font_weight:    700;
+  --sui-text-dns-sm-b-letter_spacing: 0em;
+  --sui-text-dns-sm-b-line_height:    1.2;
+
+  --sui-text-dns-md-n-font_size:      14px;
+  --sui-text-dns-md-n-font_weight:    400;
+  --sui-text-dns-md-n-letter_spacing: 0em;
+  --sui-text-dns-md-n-line_height:    1.2;
+
+  --sui-text-dns-md-b-font_size:      14px;
+  --sui-text-dns-md-b-font_weight:    700;
+  --sui-text-dns-md-b-letter_spacing: 0em;
+  --sui-text-dns-md-b-line_height:    1.2;
+
+  --sui-text-dns-lg-n-font_size:      17px;
+  --sui-text-dns-lg-n-font_weight:    400;
+  --sui-text-dns-lg-n-letter_spacing: 0em;
+  --sui-text-dns-lg-n-line_height:    1.2;
+
+  --sui-text-dns-lg-b-font_size:      17px;
+  --sui-text-dns-lg-b-font_weight:    700;
+  --sui-text-dns-lg-b-letter_spacing: 0em;
+  --sui-text-dns-lg-b-line_height:    1.7;
+
+  --sui-text-std-sm-n-font_size:      14px;
+  --sui-text-std-sm-n-font_weight:    400;
+  --sui-text-std-sm-n-letter_spacing: 0.02em;
+  --sui-text-std-sm-n-line_height:    1.7;
+
+  --sui-text-std-sm-m-font_size:      14px;
+  --sui-text-std-sm-m-font_weight:    500;
+  --sui-text-std-sm-m-letter_spacing: 0.02em;
+  --sui-text-std-sm-m-line_height:    1.7;
+
+  --sui-text-std-sm-b-font_size:      14px;
+  --sui-text-std-sm-b-font_weight:    700;
+  --sui-text-std-sm-b-letter_spacing: 0.02em;
+  --sui-text-std-sm-b-line_height:    1.7;
+
+  --sui-text-std-md-n-font_size:      14px;
+  --sui-text-std-md-n-font_weight:    400;
+  --sui-text-std-md-n-letter_spacing: 0.02em;
+  --sui-text-std-md-n-line_height:    1.7;
+
+  --sui-text-std-md-m-font_size:      14px;
+  --sui-text-std-md-m-font_weight:    500;
+  --sui-text-std-md-m-letter_spacing: 0.02em;
+  --sui-text-std-md-m-line_height:    1.7;
+
+  --sui-text-std-md-b-font_size:      14px;
+  --sui-text-std-md-b-font_weight:    700;
+  --sui-text-std-md-b-letter_spacing: 0.02em;
+  --sui-text-std-md-b-line_height:    1.7;
+
+  --sui-text-std-lg-n-font_size:      17px;
+  --sui-text-std-lg-n-font_weight:    400;
+  --sui-text-std-lg-n-letter_spacing: 0.02em;
+  --sui-text-std-lg-n-line_height:    1.7;
+
+  --sui-text-std-lg-m-font_size:      17px;
+  --sui-text-std-lg-m-font_weight:    500;
+  --sui-text-std-lg-m-letter_spacing: 0.02em;
+  --sui-text-std-lg-m-line_height:    1.7;
+
+  --sui-text-std-lg-b-font_size:      17px;
+  --sui-text-std-lg-b-font_weight:    700;
+  --sui-text-std-lg-b-letter_spacing: 0.02em;
+  --sui-text-std-lg-b-line_height:    1.7;
 }
