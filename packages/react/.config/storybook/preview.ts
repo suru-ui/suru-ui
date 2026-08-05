@@ -20,7 +20,7 @@ export const preview = definePreview({
   ],
   addons: [
     addonDocs(),
-    // @ts-expect-error addonThemes は呼び出し可能ではないという方エラーが出るので回避する。
+    // @ts-ignore addonThemes は呼び出し可能ではないという方エラーが出るので回避する。
     addonThemes(),
     addonVitest(),
   ],
