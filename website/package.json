@@ -2,12 +2,6 @@
   "name": "@suru-ui/website",
   "private": true,
   "type": "module",
-  "scripts": {
-    "prepare": "run-s prepare:*",
-    "prepare:theme": "cat \"$(node -e 'console.log(require.resolve(\"@suru-ui/theme/suru.css\"))')\" > examples/.style.css",
-    "prepare:react": "cat \"$(node -e 'console.log(require.resolve(\"@suru-ui/react/suru.css\"))')\" >> examples/.style.css",
-    "prepare:style": "cat examples/style.css >> examples/.style.css"
-  },
   "dependencies": {
     "@suru-ui/react": "workspace:*",
     "@suru-ui/theme": "workspace:*",
@@ -16,7 +10,6 @@
   },
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.8",
-    "@types/react": "^19.2.17",
-    "npm-run-all2": "^9.0.2"
+    "@types/react": "^19.2.17"
   }
 }

@@ -4,8 +4,15 @@ run = "npx oxfmt --config ./.config/.oxfmtrc.json"
 [tasks.lint]
 run = "npx oxlint --config ./.config/.oxlintrc.json"
 
+[tasks.prepare]
+run = [
+  "cat \"$(node -e 'console.log(require.resolve(\"@suru-ui/theme/suru.css\"))')\" >  examples/.style.css",
+  "cat \"$(node -e 'console.log(require.resolve(\"@suru-ui/react/suru.css\"))')\" >> examples/.style.css",
+  "cat examples/style.css >> examples/.style.css",
+]
+
 [tasks.dev]
-run = "npx blume dev"
+run = [{ task = "prepare" }, "npx blume dev"]
 
 [tasks.build]
-run = "npx blume build"
+run = [{ task = "prepare" }, "npx blume build"]
