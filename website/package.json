@@ -3,10 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "postinstall": "run-s postinstall:*",
-    "postinstall:theme": "cat \"$(node -e 'console.log(require.resolve(\"@suru-ui/theme/suru.css\"))')\" > examples/.style.css",
-    "postinstall:react": "cat \"$(node -e 'console.log(require.resolve(\"@suru-ui/react/suru.css\"))')\" >> examples/.style.css",
-    "postinstall:style": "cat examples/style.css >> examples/.style.css"
+    "prepare": "run-s prepare:*",
+    "prepare:theme": "cat \"$(node -e 'console.log(require.resolve(\"@suru-ui/theme/suru.css\"))')\" > examples/.style.css",
+    "prepare:react": "cat \"$(node -e 'console.log(require.resolve(\"@suru-ui/react/suru.css\"))')\" >> examples/.style.css",
+    "prepare:style": "cat examples/style.css >> examples/.style.css"
   },
   "dependencies": {
     "@suru-ui/react": "workspace:*",
