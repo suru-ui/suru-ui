@@ -1,9 +1,6 @@
 {
   "plugins": ["stylelint-order"],
   "rules": {
-    "order/properties-order": [
-      [],
-      { "unspecified": "bottomAlphabetical" }
-    ]
+    "order/properties-order": [[], { "unspecified": "bottomAlphabetical" }]
   }
 }

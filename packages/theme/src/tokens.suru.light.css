@@ -8,7 +8,7 @@
   --sui-canvas_text-2: var(--_flexoki-base-600);
   --sui-canvas_text-3: var(--_flexoki-base-300);
 
-  --sui-blue-5:  var(--_flexoki-blue-50);
+  --sui-blue-5: var(--_flexoki-blue-50);
   --sui-blue-10: var(--_flexoki-blue-100);
   --sui-blue-15: var(--_flexoki-blue-150);
   --sui-blue-20: var(--_flexoki-blue-200);
@@ -52,7 +52,7 @@
   --sui-blue-liquid-canvas_text-subtle: var(--sui-blue-80);
   --sui-blue-liquid-canvas_text-action: var(--sui-blue-85);
 
-  --sui-green-5:  var(--_flexoki-green-50);
+  --sui-green-5: var(--_flexoki-green-50);
   --sui-green-10: var(--_flexoki-green-100);
   --sui-green-15: var(--_flexoki-green-150);
   --sui-green-20: var(--_flexoki-green-200);
@@ -96,53 +96,53 @@
   --sui-green-liquid-canvas_text-subtle: var(--sui-green-80);
   --sui-green-liquid-canvas_text-action: var(--sui-green-85);
 
-  --sui-grey-0:   var(--_flexoki-paper);
-  --sui-grey-5:   var(--_flexoki-base-50);
-  --sui-grey-10:  var(--_flexoki-base-100);
-  --sui-grey-15:  var(--_flexoki-base-150);
-  --sui-grey-20:  var(--_flexoki-base-200);
-  --sui-grey-30:  var(--_flexoki-base-300);
-  --sui-grey-40:  var(--_flexoki-base-400);
-  --sui-grey-50:  var(--_flexoki-base-500);
-  --sui-grey-60:  var(--_flexoki-base-600);
-  --sui-grey-70:  var(--_flexoki-base-700);
-  --sui-grey-80:  var(--_flexoki-base-800);
-  --sui-grey-85:  var(--_flexoki-base-850);
-  --sui-grey-90:  var(--_flexoki-base-900);
-  --sui-grey-95:  var(--_flexoki-base-950);
+  --sui-grey-0: var(--_flexoki-paper);
+  --sui-grey-5: var(--_flexoki-base-50);
+  --sui-grey-10: var(--_flexoki-base-100);
+  --sui-grey-15: var(--_flexoki-base-150);
+  --sui-grey-20: var(--_flexoki-base-200);
+  --sui-grey-30: var(--_flexoki-base-300);
+  --sui-grey-40: var(--_flexoki-base-400);
+  --sui-grey-50: var(--_flexoki-base-500);
+  --sui-grey-60: var(--_flexoki-base-600);
+  --sui-grey-70: var(--_flexoki-base-700);
+  --sui-grey-80: var(--_flexoki-base-800);
+  --sui-grey-85: var(--_flexoki-base-850);
+  --sui-grey-90: var(--_flexoki-base-900);
+  --sui-grey-95: var(--_flexoki-base-950);
   --sui-grey-100: var(--_flexoki-black);
 
-  --sui-grey-solid-normal:  var(--sui-grey-100);
-  --sui-grey-solid-subtle:  var(--sui-grey-95);
-  --sui-grey-solid-action:  var(--sui-grey-90);
-  --sui-grey-solid-border-normal:  var(--sui-grey-20);
-  --sui-grey-solid-border-subtle:  var(--sui-grey-15);
-  --sui-grey-solid-border-action:  var(--sui-grey-10);
-  --sui-grey-solid-canvas_text-normal:  var(--sui-grey-0);
-  --sui-grey-solid-canvas_text-subtle:  var(--sui-grey-5);
-  --sui-grey-solid-canvas_text-action:  var(--sui-grey-10);
+  --sui-grey-solid-normal: var(--sui-grey-100);
+  --sui-grey-solid-subtle: var(--sui-grey-95);
+  --sui-grey-solid-action: var(--sui-grey-90);
+  --sui-grey-solid-border-normal: var(--sui-grey-20);
+  --sui-grey-solid-border-subtle: var(--sui-grey-15);
+  --sui-grey-solid-border-action: var(--sui-grey-10);
+  --sui-grey-solid-canvas_text-normal: var(--sui-grey-0);
+  --sui-grey-solid-canvas_text-subtle: var(--sui-grey-5);
+  --sui-grey-solid-canvas_text-action: var(--sui-grey-10);
 
-  --sui-grey-naked-normal:  transparent;
-  --sui-grey-naked-subtle:  var(--sui-grey-5);
-  --sui-grey-naked-action:  var(--sui-grey-10);
-  --sui-grey-naked-border-normal:  var(--sui-grey-90);
-  --sui-grey-naked-border-subtle:  var(--sui-grey-95);
-  --sui-grey-naked-border-action:  var(--sui-grey-100);
-  --sui-grey-naked-canvas_text-normal:  var(--sui-grey-90);
-  --sui-grey-naked-canvas_text-subtle:  var(--sui-grey-95);
-  --sui-grey-naked-canvas_text-action:  var(--sui-grey-100);
+  --sui-grey-naked-normal: transparent;
+  --sui-grey-naked-subtle: var(--sui-grey-5);
+  --sui-grey-naked-action: var(--sui-grey-10);
+  --sui-grey-naked-border-normal: var(--sui-grey-90);
+  --sui-grey-naked-border-subtle: var(--sui-grey-95);
+  --sui-grey-naked-border-action: var(--sui-grey-100);
+  --sui-grey-naked-canvas_text-normal: var(--sui-grey-90);
+  --sui-grey-naked-canvas_text-subtle: var(--sui-grey-95);
+  --sui-grey-naked-canvas_text-action: var(--sui-grey-100);
 
-  --sui-grey-liquid-normal:  var(--sui-grey-5);
-  --sui-grey-liquid-subtle:  var(--sui-grey-10);
-  --sui-grey-liquid-action:  var(--sui-grey-15);
-  --sui-grey-liquid-border-normal:  var(--sui-grey-90);
-  --sui-grey-liquid-border-subtle:  var(--sui-grey-95);
-  --sui-grey-liquid-border-action:  var(--sui-grey-100);
-  --sui-grey-liquid-canvas_text-normal:  var(--sui-grey-90);
-  --sui-grey-liquid-canvas_text-subtle:  var(--sui-grey-95);
-  --sui-grey-liquid-canvas_text-action:  var(--sui-grey-100);
+  --sui-grey-liquid-normal: var(--sui-grey-5);
+  --sui-grey-liquid-subtle: var(--sui-grey-10);
+  --sui-grey-liquid-action: var(--sui-grey-15);
+  --sui-grey-liquid-border-normal: var(--sui-grey-90);
+  --sui-grey-liquid-border-subtle: var(--sui-grey-95);
+  --sui-grey-liquid-border-action: var(--sui-grey-100);
+  --sui-grey-liquid-canvas_text-normal: var(--sui-grey-90);
+  --sui-grey-liquid-canvas_text-subtle: var(--sui-grey-95);
+  --sui-grey-liquid-canvas_text-action: var(--sui-grey-100);
 
-  --sui-magenta-5:  var(--_flexoki-magenta-50);
+  --sui-magenta-5: var(--_flexoki-magenta-50);
   --sui-magenta-10: var(--_flexoki-magenta-100);
   --sui-magenta-15: var(--_flexoki-magenta-150);
   --sui-magenta-20: var(--_flexoki-magenta-200);
@@ -186,7 +186,7 @@
   --sui-magenta-liquid-canvas_text-subtle: var(--sui-magenta-80);
   --sui-magenta-liquid-canvas_text-action: var(--sui-magenta-85);
 
-  --sui-orange-5:  var(--_flexoki-orange-50);
+  --sui-orange-5: var(--_flexoki-orange-50);
   --sui-orange-10: var(--_flexoki-orange-100);
   --sui-orange-15: var(--_flexoki-orange-150);
   --sui-orange-20: var(--_flexoki-orange-200);
@@ -230,7 +230,7 @@
   --sui-orange-liquid-canvas_text-subtle: var(--sui-orange-80);
   --sui-orange-liquid-canvas_text-action: var(--sui-orange-85);
 
-  --sui-purple-5:  var(--_flexoki-purple-50);
+  --sui-purple-5: var(--_flexoki-purple-50);
   --sui-purple-10: var(--_flexoki-purple-100);
   --sui-purple-15: var(--_flexoki-purple-150);
   --sui-purple-20: var(--_flexoki-purple-200);
@@ -274,7 +274,7 @@
   --sui-purple-liquid-canvas_text-subtle: var(--sui-purple-80);
   --sui-purple-liquid-canvas_text-action: var(--sui-purple-85);
 
-  --sui-red-5:  var(--_flexoki-red-50);
+  --sui-red-5: var(--_flexoki-red-50);
   --sui-red-10: var(--_flexoki-red-100);
   --sui-red-15: var(--_flexoki-red-150);
   --sui-red-20: var(--_flexoki-red-200);
@@ -318,7 +318,7 @@
   --sui-red-liquid-canvas_text-subtle: var(--sui-red-80);
   --sui-red-liquid-canvas_text-action: var(--sui-red-85);
 
-  --sui-yellow-5:  var(--_flexoki-yellow-50);
+  --sui-yellow-5: var(--_flexoki-yellow-50);
   --sui-yellow-10: var(--_flexoki-yellow-100);
   --sui-yellow-15: var(--_flexoki-yellow-150);
   --sui-yellow-20: var(--_flexoki-yellow-200);
@@ -362,23 +362,19 @@
   --sui-yellow-liquid-canvas_text-subtle: var(--sui-yellow-80);
   --sui-yellow-liquid-canvas_text-action: var(--sui-yellow-85);
 
-  --sui-disabled-canvas:       #444;
-  --sui-disabled-canvas_text:  #AAA;
+  --sui-disabled-canvas: #444;
+  --sui-disabled-canvas_text: #aaa;
   --sui-disabled-border_color: #666;
 
-  --sui-tooltip-canvas:      #6A6A6A;
-  --sui-tooltip-canvas_text: #FFF;
+  --sui-tooltip-canvas: #6a6a6a;
+  --sui-tooltip-canvas_text: #fff;
 
-  --sui-focusring_color:  var(--sui-yellow-60);
-  --sui-focusring_width:  3px;
+  --sui-focusring_color: var(--sui-yellow-60);
+  --sui-focusring_width: 3px;
   --sui-focusring_offset: 2px;
 
-  --sui-font-sans:
-    "Noto Sans JP",
-    sans-serif;
-  --sui-font-mono:
-    "Noto Sans Mono CJK JP",
-    monospace;
+  --sui-font-sans: "Noto Sans JP", sans-serif;
+  --sui-font-mono: "Noto Sans Mono CJK JP", monospace;
 
   --sui-size-sm: 20px;
   --sui-size-md: 28px;
@@ -388,135 +384,135 @@
   --sui-radius-md: 4px;
   --sui-radius-lg: 6px;
 
-  --sui-space-base:   1.6;
+  --sui-space-base: 1.6;
   --sui-space-growth: 0.4;
   --sui-space-offset: 0;
 
-  --sui-gap-base:   1.6;
+  --sui-gap-base: 1.6;
   --sui-gap-growth: 0.25;
   --sui-gap-offset: 0;
 
-  --sui-border_width-base:   3;
+  --sui-border_width-base: 3;
   --sui-border_width-growth: 0.05;
   --sui-border_width-offset: 0;
 
-  --sui-text-oln-sm-n-font_size:      14px;
-  --sui-text-oln-sm-n-font_weight:    400;
+  --sui-text-oln-sm-n-font_size: 14px;
+  --sui-text-oln-sm-n-font_weight: 400;
   --sui-text-oln-sm-n-letter_spacing: 0.02em;
-  --sui-text-oln-sm-n-line_height:    1.1;
+  --sui-text-oln-sm-n-line_height: 1.1;
 
-  --sui-text-oln-sm-m-font_size:      14px;
-  --sui-text-oln-sm-m-font_weight:    500;
+  --sui-text-oln-sm-m-font_size: 14px;
+  --sui-text-oln-sm-m-font_weight: 500;
   --sui-text-oln-sm-m-letter_spacing: 0.02em;
-  --sui-text-oln-sm-m-line_height:    1.1;
+  --sui-text-oln-sm-m-line_height: 1.1;
 
-  --sui-text-oln-sm-b-font_size:      14px;
-  --sui-text-oln-sm-b-font_weight:    700;
+  --sui-text-oln-sm-b-font_size: 14px;
+  --sui-text-oln-sm-b-font_weight: 700;
   --sui-text-oln-sm-b-letter_spacing: 0.02em;
-  --sui-text-oln-sm-b-line_height:    1.1;
+  --sui-text-oln-sm-b-line_height: 1.1;
 
-  --sui-text-oln-md-n-font_size:      14px;
-  --sui-text-oln-md-n-font_weight:    400;
+  --sui-text-oln-md-n-font_size: 14px;
+  --sui-text-oln-md-n-font_weight: 400;
   --sui-text-oln-md-n-letter_spacing: 0.02em;
-  --sui-text-oln-md-n-line_height:    1.1;
+  --sui-text-oln-md-n-line_height: 1.1;
 
-  --sui-text-oln-md-m-font_size:      14px;
-  --sui-text-oln-md-m-font_weight:    500;
+  --sui-text-oln-md-m-font_size: 14px;
+  --sui-text-oln-md-m-font_weight: 500;
   --sui-text-oln-md-m-letter_spacing: 0.02em;
-  --sui-text-oln-md-m-line_height:    1.1;
+  --sui-text-oln-md-m-line_height: 1.1;
 
-  --sui-text-oln-md-b-font_size:      14px;
-  --sui-text-oln-md-b-font_weight:    700;
+  --sui-text-oln-md-b-font_size: 14px;
+  --sui-text-oln-md-b-font_weight: 700;
   --sui-text-oln-md-b-letter_spacing: 0.02em;
-  --sui-text-oln-md-b-line_height:    1.1;
+  --sui-text-oln-md-b-line_height: 1.1;
 
-  --sui-text-oln-lg-n-font_size:      17px;
-  --sui-text-oln-lg-n-font_weight:    400;
+  --sui-text-oln-lg-n-font_size: 17px;
+  --sui-text-oln-lg-n-font_weight: 400;
   --sui-text-oln-lg-n-letter_spacing: 0.02em;
-  --sui-text-oln-lg-n-line_height:    1.1;
+  --sui-text-oln-lg-n-line_height: 1.1;
 
-  --sui-text-oln-lg-m-font_size:      17px;
-  --sui-text-oln-lg-m-font_weight:    500;
+  --sui-text-oln-lg-m-font_size: 17px;
+  --sui-text-oln-lg-m-font_weight: 500;
   --sui-text-oln-lg-m-letter_spacing: 0.02em;
-  --sui-text-oln-lg-m-line_height:    1.1;
+  --sui-text-oln-lg-m-line_height: 1.1;
 
-  --sui-text-oln-lg-b-font_size:      17px;
-  --sui-text-oln-lg-b-font_weight:    700;
+  --sui-text-oln-lg-b-font_size: 17px;
+  --sui-text-oln-lg-b-font_weight: 700;
   --sui-text-oln-lg-b-letter_spacing: 0.02em;
-  --sui-text-oln-lg-b-line_height:    1.1;
+  --sui-text-oln-lg-b-line_height: 1.1;
 
-  --sui-text-dns-sm-n-font_size:      14px;
-  --sui-text-dns-sm-n-font_weight:    400;
+  --sui-text-dns-sm-n-font_size: 14px;
+  --sui-text-dns-sm-n-font_weight: 400;
   --sui-text-dns-sm-n-letter_spacing: 0em;
-  --sui-text-dns-sm-n-line_height:    1.2;
+  --sui-text-dns-sm-n-line_height: 1.2;
 
-  --sui-text-dns-sm-b-font_size:      14px;
-  --sui-text-dns-sm-b-font_weight:    700;
+  --sui-text-dns-sm-b-font_size: 14px;
+  --sui-text-dns-sm-b-font_weight: 700;
   --sui-text-dns-sm-b-letter_spacing: 0em;
-  --sui-text-dns-sm-b-line_height:    1.2;
+  --sui-text-dns-sm-b-line_height: 1.2;
 
-  --sui-text-dns-md-n-font_size:      14px;
-  --sui-text-dns-md-n-font_weight:    400;
+  --sui-text-dns-md-n-font_size: 14px;
+  --sui-text-dns-md-n-font_weight: 400;
   --sui-text-dns-md-n-letter_spacing: 0em;
-  --sui-text-dns-md-n-line_height:    1.2;
+  --sui-text-dns-md-n-line_height: 1.2;
 
-  --sui-text-dns-md-b-font_size:      14px;
-  --sui-text-dns-md-b-font_weight:    700;
+  --sui-text-dns-md-b-font_size: 14px;
+  --sui-text-dns-md-b-font_weight: 700;
   --sui-text-dns-md-b-letter_spacing: 0em;
-  --sui-text-dns-md-b-line_height:    1.2;
+  --sui-text-dns-md-b-line_height: 1.2;
 
-  --sui-text-dns-lg-n-font_size:      17px;
-  --sui-text-dns-lg-n-font_weight:    400;
+  --sui-text-dns-lg-n-font_size: 17px;
+  --sui-text-dns-lg-n-font_weight: 400;
   --sui-text-dns-lg-n-letter_spacing: 0em;
-  --sui-text-dns-lg-n-line_height:    1.2;
+  --sui-text-dns-lg-n-line_height: 1.2;
 
-  --sui-text-dns-lg-b-font_size:      17px;
-  --sui-text-dns-lg-b-font_weight:    700;
+  --sui-text-dns-lg-b-font_size: 17px;
+  --sui-text-dns-lg-b-font_weight: 700;
   --sui-text-dns-lg-b-letter_spacing: 0em;
-  --sui-text-dns-lg-b-line_height:    1.7;
+  --sui-text-dns-lg-b-line_height: 1.7;
 
-  --sui-text-std-sm-n-font_size:      14px;
-  --sui-text-std-sm-n-font_weight:    400;
+  --sui-text-std-sm-n-font_size: 14px;
+  --sui-text-std-sm-n-font_weight: 400;
   --sui-text-std-sm-n-letter_spacing: 0.02em;
-  --sui-text-std-sm-n-line_height:    1.7;
+  --sui-text-std-sm-n-line_height: 1.7;
 
-  --sui-text-std-sm-m-font_size:      14px;
-  --sui-text-std-sm-m-font_weight:    500;
+  --sui-text-std-sm-m-font_size: 14px;
+  --sui-text-std-sm-m-font_weight: 500;
   --sui-text-std-sm-m-letter_spacing: 0.02em;
-  --sui-text-std-sm-m-line_height:    1.7;
+  --sui-text-std-sm-m-line_height: 1.7;
 
-  --sui-text-std-sm-b-font_size:      14px;
-  --sui-text-std-sm-b-font_weight:    700;
+  --sui-text-std-sm-b-font_size: 14px;
+  --sui-text-std-sm-b-font_weight: 700;
   --sui-text-std-sm-b-letter_spacing: 0.02em;
-  --sui-text-std-sm-b-line_height:    1.7;
+  --sui-text-std-sm-b-line_height: 1.7;
 
-  --sui-text-std-md-n-font_size:      14px;
-  --sui-text-std-md-n-font_weight:    400;
+  --sui-text-std-md-n-font_size: 14px;
+  --sui-text-std-md-n-font_weight: 400;
   --sui-text-std-md-n-letter_spacing: 0.02em;
-  --sui-text-std-md-n-line_height:    1.7;
+  --sui-text-std-md-n-line_height: 1.7;
 
-  --sui-text-std-md-m-font_size:      14px;
-  --sui-text-std-md-m-font_weight:    500;
+  --sui-text-std-md-m-font_size: 14px;
+  --sui-text-std-md-m-font_weight: 500;
   --sui-text-std-md-m-letter_spacing: 0.02em;
-  --sui-text-std-md-m-line_height:    1.7;
+  --sui-text-std-md-m-line_height: 1.7;
 
-  --sui-text-std-md-b-font_size:      14px;
-  --sui-text-std-md-b-font_weight:    700;
+  --sui-text-std-md-b-font_size: 14px;
+  --sui-text-std-md-b-font_weight: 700;
   --sui-text-std-md-b-letter_spacing: 0.02em;
-  --sui-text-std-md-b-line_height:    1.7;
+  --sui-text-std-md-b-line_height: 1.7;
 
-  --sui-text-std-lg-n-font_size:      17px;
-  --sui-text-std-lg-n-font_weight:    400;
+  --sui-text-std-lg-n-font_size: 17px;
+  --sui-text-std-lg-n-font_weight: 400;
   --sui-text-std-lg-n-letter_spacing: 0.02em;
-  --sui-text-std-lg-n-line_height:    1.7;
+  --sui-text-std-lg-n-line_height: 1.7;
 
-  --sui-text-std-lg-m-font_size:      17px;
-  --sui-text-std-lg-m-font_weight:    500;
+  --sui-text-std-lg-m-font_size: 17px;
+  --sui-text-std-lg-m-font_weight: 500;
   --sui-text-std-lg-m-letter_spacing: 0.02em;
-  --sui-text-std-lg-m-line_height:    1.7;
+  --sui-text-std-lg-m-line_height: 1.7;
 
-  --sui-text-std-lg-b-font_size:      17px;
-  --sui-text-std-lg-b-font_weight:    700;
+  --sui-text-std-lg-b-font_size: 17px;
+  --sui-text-std-lg-b-font_weight: 700;
   --sui-text-std-lg-b-letter_spacing: 0.02em;
-  --sui-text-std-lg-b-line_height:    1.7;
+  --sui-text-std-lg-b-line_height: 1.7;
 }

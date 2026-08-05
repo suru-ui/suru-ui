@@ -8,23 +8,29 @@
   }
 
   @function --sui-space(--level) {
-    result: --_sui-exp-func(var(--level),
-        var(--sui-space-base),
-        var(--sui-space-growth),
-        var(--sui-space-offset));
+    result: --_sui-exp-func(
+      var(--level),
+      var(--sui-space-base),
+      var(--sui-space-growth),
+      var(--sui-space-offset)
+    );
   }
 
   @function --sui-gap(--level) {
-    result: --_sui-exp-func(var(--level),
-        var(--sui-gap-base),
-        var(--sui-gap-growth),
-        var(--sui-gap-offset));
+    result: --_sui-exp-func(
+      var(--level),
+      var(--sui-gap-base),
+      var(--sui-gap-growth),
+      var(--sui-gap-offset)
+    );
   }
 
   @function --sui-border_width(--level) {
-    result: --_sui-exp-func(var(--level),
-        var(--sui-border_width-base),
-        var(--sui-border_width-growth),
-        var(--sui-border_width-offset));
+    result: --_sui-exp-func(
+      var(--level),
+      var(--sui-border_width-base),
+      var(--sui-border_width-growth),
+      var(--sui-border_width-offset)
+    );
   }
 }
