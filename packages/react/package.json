@@ -47,6 +47,10 @@
       "types": "./dist/src/forms/checkbox-group/index.d.ts",
       "default": "./dist/src/forms/checkbox-group/index.js"
     },
+    "./field": {
+      "types": "./dist/src/forms/field/index.d.ts",
+      "default": "./dist/src/forms/field/index.js"
+    },
     "./form": {
       "types": "./dist/src/forms/form/index.d.ts",
       "default": "./dist/src/forms/form/index.js"

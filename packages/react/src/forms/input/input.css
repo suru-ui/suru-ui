@@ -80,14 +80,14 @@
   .sui_input {
     /* 空白 */
     --sui_input-padding_block: calc(
-                                   (var(--sui_input-min_height) - var(--sui_input-text_height))
-                                   / 2
-                                   - var(--_sui_input-border_width, 0px)
-                                 );
+                                 (var(--sui_input-min_height) - var(--sui_input-text_height))
+                                 / 2
+                                 - var(--_sui_input-border_width, 0px)
+                               );
     /* 書体 */
     --sui_input-text_height: calc(var(--sui_input-font_size) * var(--sui_input-line_height));
     /* 前景 */
-    --sui_input_placeholder-color: color-mix(in srgb, var(--sui_input-color) 60%, transparent);
+    --sui_input_placeholder-color: var(--sui-canvas_text-2);
     /* 枠線 */
     --sui_input-border_color-normal: var(--sui-grey-60);
     --sui_input-border_color-subtle: var(--sui-grey-70);
