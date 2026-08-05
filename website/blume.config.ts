@@ -1,8 +1,11 @@
 import { defineConfig } from "blume";
 
+import "./.settings";
+
 export default defineConfig({
-  title: "Suru UI",
+  title: __PAGE_TITLE,
   description: "TypeScript 製の UI ライブラリー",
+  basePath: __BASE_PATH ?? undefined,
   github: {
     owner: "suru-ui",
     repo: "suru-ui",
@@ -14,6 +17,18 @@ export default defineConfig({
         path: "/docs/react",
       },
     ],
+    selectors: [
+      {
+        kind: "version",
+        label: "Version",
+        items: [
+          {
+            label: "v0 (latest)",
+            path: "/",
+          },
+        ],
+      },
+    ],
   },
   content: {
     root: "content",
@@ -22,17 +37,8 @@ export default defineConfig({
     css: "examples/.style.css",
   },
   i18n: {
-    locales: [
-      {
-        code: "ja",
-        label: "日本語",
-      },
-      {
-        code: "en",
-        label: "English",
-      },
-    ],
+    locales: __LOCALES,
     defaultLocale: "ja",
-    // hideDefaultLocalePrefix: false,
+    fallbackLocale: "en",
   },
 });

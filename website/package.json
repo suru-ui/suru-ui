@@ -11,7 +11,7 @@
   "dependencies": {
     "@suru-ui/react": "workspace:*",
     "@suru-ui/theme": "workspace:*",
-    "blume": "^1.1.4",
+    "blume": "^1.2.0",
     "lucide-react": "^1.27.0"
   },
   "devDependencies": {

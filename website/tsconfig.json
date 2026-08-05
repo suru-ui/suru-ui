@@ -1,5 +1,7 @@
 {
-  "extends": ["@tsconfig/strictest"],
+  "extends": "@tsconfig/strictest",
+  "include": [".blume/.astro/types.d.ts", "pages/**/*.astro", ".settings.d.ts"],
+  "exclude": ["dist"],
   "compilerOptions": {
     "lib": ["DOM", "ESNext"],
     "jsx": "preserve",

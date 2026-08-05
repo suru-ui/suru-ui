@@ -51,7 +51,7 @@
       },
       "editor.tabSize": 2,
     },
-    "[mdx]": {
+    "[astro][mdx]": {
       "editor.tabSize": 2,
     },
 
