@@ -98,7 +98,7 @@ export function useContext(optional?: boolean): ToggleButtonGroupContext | null 
 // ----
 
 /**
- * {@link Root} のステートです。
+ * {@link Root} の状態です。
  */
 export type ToggleButtonGroupRootState = {};
 

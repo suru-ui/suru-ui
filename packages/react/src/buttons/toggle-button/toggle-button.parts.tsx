@@ -71,7 +71,7 @@ export function useContext(optional?: boolean): ToggleButtonContext | null {
 // ----
 
 /**
- * {@link Root} のステートです。
+ * {@link Root} の状態です。
  */
 export type ToggleButtonRootState = Button.Root.State;
 
@@ -195,7 +195,7 @@ export const Root: Component<Root.Props> = ToggleButtonRoot;
 // -------
 
 /**
- * {@link Content} のステートです。
+ * {@link Content} の状態です。
  */
 export type ToggleButtonContentState = Button.Content.State;
 
@@ -225,7 +225,7 @@ export const Content: Component<Content.Props> = ToggleButtonContent;
 // -------
 
 /**
- * {@link Pending} のステートです。
+ * {@link Pending} の状態です。
  */
 export type ToggleButtonPendingState = Button.Pending.State;
 
@@ -318,7 +318,7 @@ export function useCircularProgressContext(
 // ----------------
 
 /**
- * {@link CircularProgress} のステートです。
+ * {@link CircularProgress} の状態です。
  */
 export type ToggleButtonCircularProgressState = Button.CircularProgress.State;
 
@@ -351,7 +351,7 @@ export const CircularProgress: Component<CircularProgress.Props> = ToggleButtonC
 // ---------------------
 
 /**
- * {@link CircularProgressTrack} のステートです。
+ * {@link CircularProgressTrack} の状態です。
  */
 export type ToggleButtonCircularProgressTrackState = Button.CircularProgressTrack.State;
 
@@ -383,7 +383,7 @@ export const CircularProgressTrack: Component<CircularProgressTrack.Props> =
 // --------------------
 
 /**
- * {@link CircularProgressFill} のステートです。
+ * {@link CircularProgressFill} の状態です。
  */
 export type ToggleButtonCircularProgressFillState = Button.CircularProgressFill.State;
 

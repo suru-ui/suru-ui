@@ -100,7 +100,7 @@ export function useContext(optional?: boolean): RadioGroupContext | null {
 // ----
 
 /**
- * {@link Root} のステートです。
+ * {@link Root} の状態です。
  */
 export type RadioGroupRootState = RadioGroup.State;
 

@@ -7,7 +7,7 @@ import type { Component } from "../../types.js";
 import "./form.css";
 
 /**
- * {@link Root} のステートです。
+ * {@link Root} の状態です。
  */
 export type FormRootState = Form.State;
 

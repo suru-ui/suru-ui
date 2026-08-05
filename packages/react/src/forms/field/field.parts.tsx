@@ -11,7 +11,7 @@ import "./field.css";
 // ----
 
 /**
- * {@link Root} のステートです。
+ * {@link Root} の状態です。
  */
 export type FieldRootState = Field.Root.State;
 
@@ -51,7 +51,7 @@ export const Root: Component<Root.Props> = FieldRoot;
 // -----
 
 /**
- * {@link Label} のステートです。
+ * {@link Label} の状態です。
  */
 export type FieldLabelState = Field.Label.State;
 
@@ -87,7 +87,7 @@ export const Label: Component<Label.Props> = FieldLabel;
 // -------
 
 /**
- * {@link Control} のステートです。
+ * {@link Control} の状態です。
  */
 export type FieldControlState = Field.Control.State;
 
@@ -119,7 +119,7 @@ export const Control: Component<Control.Props> = FieldControl;
 // -----------
 
 /**
- * {@link Description} のステートです。
+ * {@link Description} の状態です。
  */
 export type FieldDescriptionState = Field.Description.State;
 
@@ -157,7 +157,7 @@ export const Description: Component<Description.Props> = FieldDescription;
 // -----
 
 /**
- * {@link Error} のステートです。
+ * {@link Error} の状態です。
  */
 export type FieldErrorState = Field.Error.State;
 
@@ -193,7 +193,7 @@ export const Error: Component<Error.Props> = FieldError;
 // ----
 
 /**
- * {@link Item} のステートです。
+ * {@link Item} の状態です。
  */
 export type FieldItemState = Field.Item.State;
 
@@ -233,7 +233,7 @@ export const Item: Component<Item.Props> = FieldItem;
 // --------
 
 /**
- * {@link Validity} のステートです。
+ * {@link Validity} の状態です。
  */
 export type FieldValidityState = Field.Validity.State;
 
