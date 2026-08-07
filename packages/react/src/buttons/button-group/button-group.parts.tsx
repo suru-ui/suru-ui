@@ -8,10 +8,10 @@ import * as React from "react";
 
 import splitRenderProps from "../../_split-render-props.js";
 import cn from "../../cn.js";
-
-import "./button-group.css";
 import { ContextMissingError } from "../../errors.js";
 import type { Component } from "../../types.js";
+
+import "./button-group.css";
 
 // Context
 // -------

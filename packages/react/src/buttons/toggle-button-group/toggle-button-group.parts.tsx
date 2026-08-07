@@ -3,10 +3,10 @@ import type { Color, ColorTemplate as Variant, Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import cn from "../../cn.js";
-
-import "./toggle-button-group.css";
 import { ContextMissingError } from "../../errors.js";
 import type { Component } from "../../types.js";
+
+import "./toggle-button-group.css";
 
 // Context
 // -------
