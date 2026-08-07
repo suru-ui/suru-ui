@@ -29,3 +29,6 @@ export { type RadioProps, Radio } from "./forms/radio/index.js";
 export { type RadioGroupProps, RadioGroup } from "./forms/radio-group/index.js";
 export { type SliderProps, Slider } from "./forms/slider/index.js";
 export { type SwitchProps, Switch } from "./forms/switch/index.js";
+
+// navigation
+export { type AccordionProps, Accordion } from "./navigation/accordion/index.js";

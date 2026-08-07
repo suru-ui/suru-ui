@@ -23,6 +23,10 @@
       "types": "./dist/src/index.d.ts",
       "default": "./dist/src/index.js"
     },
+    "./accordion": {
+      "types": "./dist/src/navigation/accordion/index.d.ts",
+      "default": "./dist/src/navigation/accordion/index.js"
+    },
     "./button": {
       "types": "./dist/src/buttons/button/index.d.ts",
       "default": "./dist/src/buttons/button/index.js"

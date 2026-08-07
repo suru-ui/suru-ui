@@ -1,0 +1,420 @@
+/* Root */
+@layer sui.component {
+  /* リセット */
+  .sui_accordion {
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1.1;
+  }
+
+  /* 変数 */
+  .sui_accordion {
+    /* 背景 */
+    --sui_accordion-background_color: ;
+    /* 枠線 */
+    --sui_accordion-border_color: ;
+    --sui_accordion-border_width: ;
+    --sui_accordion-border_radius: ;
+  }
+
+  /* 静的 */
+  .sui_accordion {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 動的 */
+  .sui_accordion {
+    background-color: var(--sui_accordion-background_color);
+    border: var(--sui_accordion-border_color)
+            solid
+            var(--sui_accordion-border_width);
+    border-radius: var(--sui_accordion-border_radius);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_accordion {
+    /* 背景 */
+    --sui_accordion-background_color: var(--sui-canvas-1);
+    /* 枠線 */
+    --sui_accordion-border_radius: var(--sui-radius-md);
+    --sui_accordion-border_width: 0px;
+  }
+
+  .sui_accordion-outlined {
+    /* 枠線 */
+    --sui_accordion-border_color: var(--sui-grey-naked-border-normal);
+    --sui_accordion-border_width: --sui-border_width(1);
+  }
+
+  .sui_accordion-radius_none {
+    /* 枠線 */
+    --sui_accordion-border_radius: 0px;
+  }
+
+  .sui_accordion-radius_sm {
+    /* 枠線 */
+    --sui_accordion-border_radius: var(--sui-radius-sm);
+  }
+
+  .sui_accordion-radius_md {
+    /* 枠線 */
+    --sui_accordion-border_radius: var(--sui-radius-md);
+  }
+
+  .sui_accordion-radius_lg {
+    /* 枠線 */
+    --sui_accordion-border_radius: var(--sui-radius-lg);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* Item */
+@layer sui.component {
+  /* リセット */
+  .sui_accordion_item {
+    box-sizing: border-box;
+    border-radius: inherit;
+  }
+
+  /* 変数 */
+  .sui_accordion {
+    /* 枠線 */
+    --sui_accordion_item-border_color: ;
+    --sui_accordion_item-border_width: ;
+  }
+
+  /* 動的 */
+  .sui_accordion_item:not(:first-child) {
+    border-top: var(--sui_accordion_item-border_color)
+                solid
+                var(--_sui_accordion_item-border_width, 0px);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_accordion {
+    /* 枠線 */
+    --sui_accordion_item-border_color: var(--sui-grey-naked-border-normal);
+  }
+
+  /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  .sui_accordion-divider {
+    /* 枠線 */
+    --_sui_accordion_item-border_width: --sui-border_width(1);
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* Header */
+@layer sui.component {
+  /* リセット */
+  .sui_accordion_header {
+    box-sizing: border-box;
+    margin: 0px;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+  }
+}
+
+/* Trigger */
+@layer sui.component {
+  /* リセット */
+  .sui_accordion_trigger {
+    box-sizing: border-box;
+    margin: 0px;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    border: 0px;
+  }
+
+  /* 変数 */
+  .sui_accordion {
+    /* 空白 */
+    --sui_accordion_trigger-padding_block: ;
+    --sui_accordion_trigger-padding_inline: ;
+    --sui_accordion_trigger-gap: ;
+    /* 書体 */
+    --sui_accordion_trigger-font_size: ;
+    --sui_accordion_trigger-font_weight: ;
+    --sui_accordion_trigger-line_height: ;
+    --sui_accordion_trigger-letter_spacing: ;
+    /* 背景 */
+    --sui_accordion_trigger-background_color-normal: ;
+    --sui_accordion_trigger-background_color-subtle: ;
+    --sui_accordion_trigger-background_color-action: ;
+    /* 枠線 */
+    --sui_accordion_trigger-outline_color: ;
+    --sui_accordion_trigger-outline_offset: ;
+    /* 前景 */
+    --sui_accordion_trigger-color: ;
+  }
+
+  /* 静的 */
+  .sui_accordion_trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    text-align: left;
+    touch-action: manipulation;
+    cursor: default;
+    user-select: none;
+    border-radius: inherit;
+  }
+
+  /* 動的 */
+  .sui_accordion_trigger {
+    gap: var(--sui_accordion_trigger-gap);
+    padding-block: var(--sui_accordion_trigger-padding_block);
+    padding-inline: var(--sui_accordion_trigger-padding_inline);
+    font-family: var(--sui-font-sans);
+    font-size: var(--sui_accordion_trigger-font_size);
+    font-weight: var(--sui_accordion_trigger-font_weight);
+    line-height: var(--sui_accordion_trigger-line_height);
+    color: var(--sui_accordion_trigger-color);
+    letter-spacing: var(--sui_accordion_trigger-letter_spacing);
+    outline: var(--_sui_accordion_trigger-outline_width, 0px)
+             solid
+             var(--sui_accordion_trigger-outline_color);
+    outline-offset: var(--sui_accordion_trigger-outline_offset);
+    background-color: var(--_sui_accordion_trigger-background_color,
+                        var(--sui_accordion_trigger-background_color-normal)
+                      );
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_accordion {
+    /* 背景 */
+    --sui_accordion_trigger-background_color-normal: var(--sui-grey-naked-normal);
+    --sui_accordion_trigger-background_color-subtle: var(--sui-grey-naked-subtle);
+    --sui_accordion_trigger-background_color-action: var(--sui-grey-naked-action);
+    /* 枠線 */
+    --sui_accordion_trigger-outline_color: var(--sui-focusring_color);
+    --sui_accordion_trigger-outline_offset: var(--sui-focusring_offset);
+    /* 前景 */
+    --sui_accordion_trigger-color: var(--sui-canvas_text-1);
+  }
+
+  .sui_accordion-size_sm {
+    /* 空白 */
+    --sui_accordion_trigger-padding_block: --sui-space(3);
+    --sui_accordion_trigger-padding_inline: --sui-space(4);
+    --sui_accordion_trigger-gap: --sui-gap(2);
+    /* 書体 */
+    --sui_accordion_trigger-font_size: var(--sui-text-oln-sm-m-font_size);
+    --sui_accordion_trigger-font_weight: var(--sui-text-oln-sm-m-font_weight);
+    --sui_accordion_trigger-line_height: var(--sui-text-oln-sm-m-line_height);
+    --sui_accordion_trigger-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
+  }
+
+  .sui_accordion-size_md {
+    /* 空白 */
+    --sui_accordion_trigger-padding_block: --sui-space(4);
+    --sui_accordion_trigger-padding_inline: --sui-space(4);
+    --sui_accordion_trigger-gap: --sui-gap(3);
+    /* 書体 */
+    --sui_accordion_trigger-font_size: var(--sui-text-oln-md-m-font_size);
+    --sui_accordion_trigger-font_weight: var(--sui-text-oln-md-m-font_weight);
+    --sui_accordion_trigger-line_height: var(--sui-text-oln-md-m-line_height);
+    --sui_accordion_trigger-letter_spacing:  var(--sui-text-oln-md-m-letter_spacing);
+  }
+
+  .sui_accordion-size_lg {
+    /* 空白 */
+    --sui_accordion_trigger-padding_block: --sui-space(5);
+    --sui_accordion_trigger-padding_inline: --sui-space(5);
+    --sui_accordion_trigger-gap: --sui-gap(4);
+    /* 書体 */
+    --sui_accordion_trigger-font_size: var(--sui-text-oln-lg-m-font_size);
+    --sui_accordion_trigger-font_weight: var(--sui-text-oln-lg-m-font_weight);
+    --sui_accordion_trigger-line_height: var(--sui-text-oln-lg-m-line_height);
+    --sui_accordion_trigger-letter_spacing: var(--sui-text-oln-lg-m-letter_spacing);
+  }
+
+  /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  .sui_accordion_trigger {
+    @media (any-hover: hover) {
+      &:hover {
+        /* 背景 */
+        --_sui_accordion_trigger-background_color:
+          var(--sui_accordion_trigger-background_color-subtle);
+      }
+    }
+
+    &:active {
+      /* 背景 */
+      --_sui_accordion_trigger-background_color:
+        var(--sui_accordion_trigger-background_color-action);
+    }
+
+    &:focus-visible {
+      /* 枠線 */
+      --_sui_accordion_trigger-outline_width: var(--sui-focusring_width);
+    }
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* Indicator */
+@layer sui.component {
+  /* リセット */
+  .sui_accordion_indicator {
+    box-sizing: border-box;
+  }
+
+  /* 変数 */
+  .sui_accordion {
+    /* 形状 */
+    --sui_accordion_indicator-size: ;
+    /* 前景 */
+    --sui_accordion_indicator-color: ;
+  }
+
+  /* 静的 */
+  .sui_accordion_indicator {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    transition: rotate 150ms ease-out;
+
+    svg:not(.sui-unstyled) {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  /* 動的 */
+  .sui_accordion_indicator {
+    width: var(--sui_accordion_indicator-size);
+    height: var(--sui_accordion_indicator-size);
+    color: var(--sui_accordion_indicator-color);
+    rotate: var(--_sui_accordion_indicator-rotate, 0deg);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_accordion {
+    /* 形状 */
+    --sui_accordion_indicator-size: 1em;
+    /* 前景 */
+    --sui_accordion_indicator-color: var(--sui-canvas_text-2);
+  }
+
+  /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  .sui_accordion_trigger[data-panel-open] .sui_accordion_indicator {
+    /* 変形 */
+    --_sui_accordion_indicator-rotate: 180deg;
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* Panel */
+@layer sui.component {
+  /* リセット */
+  .sui_accordion_panel {
+    box-sizing: border-box;
+  }
+
+  /* 変数 */
+  .sui_accordion {
+    /* 空白 */
+    --sui_accordion_panel-padding_block: ;
+    --sui_accordion_panel-padding_inline: ;
+    /* 書体 */
+    --sui_accordion_panel-font_size: ;
+    --sui_accordion_panel-line_height: ;
+    /* 前景 */
+    --sui_accordion_panel-color: ;
+  }
+
+  /* 静的 */
+  .sui_accordion_panel {
+    overflow: hidden;
+    transition: height 150ms ease-out;
+  }
+
+  /* 動的 */
+  .sui_accordion_panel {
+    height: var(--_sui_accordion_panel-height, var(--accordion-panel-height));
+    padding-block: var(--sui_accordion_panel-padding_block);
+    padding-inline: var(--sui_accordion_panel-padding_inline);
+    font-family: var(--sui-font-sans);
+    font-size: var(--sui_accordion_panel-font_size);
+    line-height: var(--sui_accordion_panel-line_height);
+    color: var(--sui_accordion_panel-color);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_accordion {
+    /* 書体 */
+    --sui_accordion_panel-font_size: var(--sui-text-std-sm-n-font_size);
+    --sui_accordion_panel-line_height: var(--sui-text-std-sm-n-line_height);
+    /* 前景 */
+    --sui_accordion_panel-color: var(--sui-canvas_text-1);
+  }
+
+  .sui_accordion-size_sm {
+    /* 空白 */
+    --sui_accordion_panel-padding_block: --sui-space(2);
+    --sui_accordion_panel-padding_inline: --sui-space(4);
+  }
+
+  .sui_accordion-size_md {
+    /* 空白 */
+    --sui_accordion_panel-padding_block: --sui-space(3);
+    --sui_accordion_panel-padding_inline: --sui-space(4);
+  }
+
+  .sui_accordion-size_lg {
+    /* 空白 */
+    --sui_accordion_panel-padding_block: --sui-space(4);
+    --sui_accordion_panel-padding_inline: --sui-space(5);
+  }
+
+  /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  .sui_accordion_panel:is([data-starting-style], [data-ending-style]) {
+    /* 形状 */
+    --_sui_accordion_panel-height: 0px;
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* disabled */
+@layer sui.important {
+  /* Trigger */
+  .sui_accordion_trigger[data-disabled] {
+    color: var(--sui-disabled-canvas_text) !important;
+    cursor: not-allowed !important;
+    background-color: transparent !important;
+  }
+
+  /* Indicator */
+  .sui_accordion_trigger[data-disabled] .sui_accordion_indicator {
+    color: var(--sui-disabled-canvas_text) !important;
+  }
+}
