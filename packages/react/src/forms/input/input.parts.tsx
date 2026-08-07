@@ -1,5 +1,5 @@
 import { Input } from "@base-ui/react/input";
-import type { Size } from "@suru-ui/theme";
+import type { Color, Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import cn from "../../cn.js";
@@ -16,6 +16,13 @@ export type InputRootState = Input.State;
  * テキスト入力欄のルート要素のプロパティーです。
  */
 export type InputRootProps = Omit<React.ComponentProps<typeof Input>, "size"> & {
+  /**
+   * フォーカス時に枠線へ適用するアクセントカラーを指定します。
+   *
+   * @default "grey"
+   */
+  accentColor?: Color | undefined;
+
   /**
    * 枠線を表示するかどうかを指定します。
    */
@@ -64,9 +71,10 @@ export type InputRootProps = Omit<React.ComponentProps<typeof Input>, "size"> & 
 export const InputRoot: Component<InputRootProps> = function SuiInputRoot(props) {
   const {
     size: sizeProp = "md",
-    variant: variantProp = "naked",
     radius: radiusProp = "rounded",
+    variant: variantProp = "naked",
     outlined: outlinedProp = variantProp === "naked",
+    accentColor: accentColorProp = "grey",
     className,
     ...otherProps
   } = props;
@@ -80,6 +88,7 @@ export const InputRoot: Component<InputRootProps> = function SuiInputRoot(props)
         `sui_input-size_${sizeProp}`,
         `sui_input-variant_${variantProp}`,
         `sui_input-radius_${radiusProp}`,
+        `sui_input-accent_color_${accentColorProp}`,
         outlinedProp && "sui_input-outlined",
         (state) => state.disabled && "sui_input-disabled",
       )}

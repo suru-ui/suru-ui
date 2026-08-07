@@ -1,4 +1,4 @@
-import { SIZES } from "@suru-ui/theme";
+import { COLORS, SIZES } from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
@@ -13,6 +13,10 @@ const meta = preview.meta({
 export default meta;
 
 const ctrl = controls(Input, {
+  accentColor: {
+    options: COLORS,
+    control: "select",
+  },
   disabled: {
     control: "boolean",
   },
@@ -87,6 +91,26 @@ export const Outlined = meta.story({
       <div className="flex flex-col gap-3">
         <Input {...props} variant="naked" className="w-64" />
         <Input {...props} variant="liquid" className="w-64" />
+      </div>
+    );
+  },
+});
+
+export const AccentColors = meta.story({
+  name: "アクセントカラー",
+  ...ctrl({
+    size: "md",
+    radius: "rounded",
+    disabled: false,
+    outlined: true,
+    placeholder: "e.g. Colm Tuite",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        {COLORS.map((color) => (
+          <Input key={color} {...props} accentColor={color} className="w-64" />
+        ))}
       </div>
     );
   },

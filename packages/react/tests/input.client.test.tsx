@@ -25,6 +25,7 @@ describe("Input", () => {
     await expect.element(input).toHaveClass("sui_input-size_md");
     await expect.element(input).toHaveClass("sui_input-variant_naked");
     await expect.element(input).toHaveClass("sui_input-radius_rounded");
+    await expect.element(input).toHaveClass("sui_input-accent_color_grey");
     await expect.element(input).toHaveClass("sui_input-outlined");
   });
 
@@ -40,6 +41,51 @@ describe("Input", () => {
     await expect.element(input).toHaveClass("sui_input-variant_liquid");
     await expect.element(input).toHaveClass("sui_input-size_lg");
     await expect.element(input).toHaveClass("sui_input-radius_full");
+  });
+
+  test("accentColor に応じたクラスを適用する", async () => {
+    // 実行
+    const screen = await render(<Input accentColor="blue" />);
+
+    // 検証
+    const input = screen.getByRole("textbox");
+
+    await expect.element(input).toHaveClass("sui_input-accent_color_blue");
+  });
+
+  test("ポインターでフォーカスすると data-focus-type が pointer になる", async () => {
+    // 実行
+    const screen = await render(<Input />);
+    const input = screen.getByRole("textbox");
+    const inputElement = input.element() as HTMLInputElement;
+    inputElement.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
+    inputElement.focus();
+
+    // 検証
+    await expect.element(input).toHaveAttribute("data-focus-type", "pointer");
+  });
+
+  test("キーボードでフォーカスすると data-focus-type が keyboard になる", async () => {
+    // 実行
+    const screen = await render(<Input />);
+    const input = screen.getByRole("textbox");
+    (input.element() as HTMLElement).focus();
+
+    // 検証
+    await expect.element(input).toHaveAttribute("data-focus-type", "keyboard");
+  });
+
+  test("フォーカスが外れると data-focus-type が外れる", async () => {
+    // 実行
+    const screen = await render(<Input />);
+    const input = screen.getByRole("textbox");
+    const inputElement = input.element() as HTMLInputElement;
+    inputElement.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
+    inputElement.focus();
+    inputElement.blur();
+
+    // 検証
+    await expect.element(input).not.toHaveAttribute("data-focus-type");
   });
 
   test("文字を入力すると onValueChange が呼ばれる", async () => {

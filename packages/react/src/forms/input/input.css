@@ -28,6 +28,7 @@
     --sui_input-border_color-normal: ;
     --sui_input-border_color-subtle: ;
     --sui_input-border_color-invalid: ;
+    --sui_input-accent_color: ;
     --sui_input-border_width: ;
     --sui_input-border_radius: ;
     --sui_input-outline_color: ;
@@ -162,14 +163,53 @@
     --sui_input-color: var(--sui-grey-liquid-canvas_text-normal);
   }
 
+  .sui_input-accent_color_grey {
+    /* 枠線 */
+    --sui_input-accent_color: var(--sui-grey-naked-border-action);
+  }
+
+  .sui_input-accent_color_blue {
+    /* 枠線 */
+    --sui_input-accent_color: var(--sui-blue-naked-border-normal);
+  }
+
+  .sui_input-accent_color_purple {
+    /* 枠線 */
+    --sui_input-accent_color: var(--sui-purple-naked-border-normal);
+  }
+
+  .sui_input-accent_color_magenta {
+    /* 枠線 */
+    --sui_input-accent_color: var(--sui-magenta-naked-border-normal);
+  }
+
+  .sui_input-accent_color_red {
+    /* 枠線 */
+    --sui_input-accent_color: var(--sui-red-naked-border-normal);
+  }
+
+  .sui_input-accent_color_orange {
+    /* 枠線 */
+    --sui_input-accent_color: var(--sui-orange-naked-border-normal);
+  }
+
+  .sui_input-accent_color_yellow {
+    /* 枠線 */
+    --sui_input-accent_color: var(--sui-yellow-naked-border-normal);
+  }
+
+  .sui_input-accent_color_green {
+    /* 枠線 */
+    --sui_input-accent_color: var(--sui-green-naked-border-normal);
+  }
+
   /* 既定値設定: ここまで */
+
   /* 上書き設定: ここから */
 
-  .sui_input {
-    &:focus-visible {
-      /* 枠線 */
-      --_sui_input-outline_width: var(--sui-focusring_width);
-    }
+  .sui_input:focus-visible {
+    /* 枠線 */
+    --_sui_input-outline_width: var(--sui-focusring_width);
   }
 
   .sui_input-outlined {
@@ -186,7 +226,7 @@
 
     &:focus-visible {
       /* 枠線 */
-      --_sui_input-border_color: var(--sui_input-border_color-subtle);
+      --_sui_input-border_color: var(--sui_input-accent_color);
     }
   }
 
