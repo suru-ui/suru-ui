@@ -8,7 +8,7 @@ describe("ToggleButtonGroup", () => {
   test("グループ div をレンダリングする", async () => {
     // 実行
     const screen = await render(
-      <ToggleButtonGroup selectionMode="single">
+      <ToggleButtonGroup>
         <ToggleButton value="a">A</ToggleButton>
         <ToggleButton value="b">B</ToggleButton>
       </ToggleButtonGroup>,
@@ -26,7 +26,7 @@ describe("ToggleButtonGroup", () => {
   test("選択状態を子要素に伝播する", async () => {
     // 実行
     const screen = await render(
-      <ToggleButtonGroup selectionMode="single">
+      <ToggleButtonGroup>
         <ToggleButton value="a">A</ToggleButton>
         <ToggleButton value="b">B</ToggleButton>
       </ToggleButtonGroup>,
@@ -40,10 +40,10 @@ describe("ToggleButtonGroup", () => {
     await expect.element(b).toHaveAttribute("aria-pressed", "false");
   });
 
-  test("defaultSelectedValues で初期選択を指定できる", async () => {
+  test("defaultValue で初期選択を指定できる", async () => {
     // 実行
     const screen = await render(
-      <ToggleButtonGroup selectionMode="single" defaultSelectedValues={["a"]}>
+      <ToggleButtonGroup defaultValue={["a"]}>
         <ToggleButton value="a">A</ToggleButton>
         <ToggleButton value="b">B</ToggleButton>
       </ToggleButtonGroup>,
@@ -58,7 +58,7 @@ describe("ToggleButtonGroup", () => {
   test("単一選択では 1 つだけアクティブになる", async () => {
     // 実行
     const screen = await render(
-      <ToggleButtonGroup selectionMode="single">
+      <ToggleButtonGroup>
         <ToggleButton value="a">A</ToggleButton>
         <ToggleButton value="b">B</ToggleButton>
       </ToggleButtonGroup>,
@@ -80,7 +80,7 @@ describe("ToggleButtonGroup", () => {
   test("複数選択では複数のボタンをアクティブにできる", async () => {
     // 実行
     const screen = await render(
-      <ToggleButtonGroup selectionMode="multiple">
+      <ToggleButtonGroup multiple>
         <ToggleButton value="a">A</ToggleButton>
         <ToggleButton value="b">B</ToggleButton>
       </ToggleButtonGroup>,
@@ -102,7 +102,7 @@ describe("ToggleButtonGroup", () => {
   test("選択中のボタンをクリックすると解除される", async () => {
     // 実行
     const screen = await render(
-      <ToggleButtonGroup selectionMode="multiple" defaultSelectedValues={["a"]}>
+      <ToggleButtonGroup multiple defaultValue={["a"]}>
         <ToggleButton value="a">A</ToggleButton>
         <ToggleButton value="b">B</ToggleButton>
       </ToggleButtonGroup>,
@@ -117,38 +117,16 @@ describe("ToggleButtonGroup", () => {
       .toHaveAttribute("aria-pressed", "false");
   });
 
-  test("disallowEmptySelection を指定すると最後の選択を解除できない", async () => {
-    // 実行
-    const screen = await render(
-      <ToggleButtonGroup
-        selectionMode="single"
-        disallowEmptySelection
-        defaultSelectedValues={["a"]}
-      >
-        <ToggleButton value="a">A</ToggleButton>
-        <ToggleButton value="b">B</ToggleButton>
-      </ToggleButtonGroup>,
-    );
-
-    // 実行
-    await screen.getByRole("button", { name: "A" }).click();
-
-    // 検証
-    await expect
-      .element(screen.getByRole("button", { name: "A" }))
-      .toHaveAttribute("aria-pressed", "true");
-  });
-
-  test("onSelectionChange が選択値を通知する", async () => {
+  test("onValueChange が選択値を通知する", async () => {
     // 準備
-    let selected: ReadonlySet<string> = new Set();
+    let selected: ReadonlyArray<string> = [];
 
     // 実行
     const screen = await render(
       <ToggleButtonGroup
-        selectionMode="multiple"
-        onSelectionChange={(values: Set<string>) => {
-          selected = new Set(values);
+        multiple
+        onValueChange={(values) => {
+          selected = values;
         }}
       >
         <ToggleButton value="a">A</ToggleButton>

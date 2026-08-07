@@ -1,9 +1,11 @@
-import { COLOR_TEMPLATES as VALIANTS, COLORS, SIZES } from "@suru-ui/theme";
+import { COLOR_TEMPLATES, COLORS, SIZES } from "@suru-ui/theme";
 import { CogIcon, DeleteIcon, EllipsisIcon, GlobeIcon, Trash2Icon } from "lucide-react";
 import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { ToggleButton } from "../../src/buttons/toggle-button/index.js";
+
+const VALIANTS = COLOR_TEMPLATES.filter((variant) => variant !== "solid");
 
 const meta = preview.meta({
   title: "Buttons / ToggleButton",
@@ -16,6 +18,9 @@ const ctrl = controls(ToggleButton, {
   color: {
     options: COLORS,
     control: "select",
+  },
+  defaultPressed: {
+    control: "boolean",
   },
   disabled: {
     control: "boolean",
@@ -34,6 +39,9 @@ const ctrl = controls(ToggleButton, {
     options: SIZES,
     control: "select",
   },
+  squared: {
+    control: "boolean",
+  },
   variant: {
     options: VALIANTS,
     control: "select",
@@ -51,6 +59,8 @@ export const Usage = meta.story({
     outlined: false,
     pending: false,
     disabled: false,
+    squared: false,
+    defaultPressed: false,
   }),
 });
 
@@ -63,18 +73,23 @@ export const Variants = meta.story({
     outlined: false,
     pending: false,
     disabled: false,
+    squared: false,
+    defaultPressed: false,
   }),
   render(props) {
     return (
       <div className="flex flex-wrap gap-3">
-        <ToggleButton {...props} variant="solid">
-          ソリッド
+        <ToggleButton {...props} variant="liquid">
+          リキッド
         </ToggleButton>
         <ToggleButton {...props} variant="naked">
           ネイキッド
         </ToggleButton>
-        <ToggleButton {...props} variant="liquid">
-          リキッド
+        <ToggleButton {...props} variant="liquid" defaultPressed>
+          押下（solid）
+        </ToggleButton>
+        <ToggleButton {...props} variant="naked" defaultPressed>
+          押下（solid）
         </ToggleButton>
       </div>
     );
@@ -89,21 +104,13 @@ export const Colors = meta.story({
     outlined: false,
     pending: false,
     disabled: false,
+    squared: false,
   }),
   render(props) {
     return (
       <div className="flex flex-wrap gap-3">
         {COLORS.map((color) => (
-          <ToggleButton
-            {...props}
-            key={color}
-            defaultActive
-            variant={color !== "grey" ? "liquid" : "naked"}
-            activeProps={{
-              color,
-              variant: color !== "grey" ? "liquid" : "solid",
-            }}
-          >
+          <ToggleButton {...props} key={color} defaultPressed color={color}>
             ボタン
           </ToggleButton>
         ))}
@@ -113,78 +120,37 @@ export const Colors = meta.story({
 });
 
 export const Active = meta.story({
-  name: "アクティブ",
+  name: "押下状態",
   ...ctrl({
-    variant: "solid",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: "rounded",
     outlined: false,
     pending: false,
     disabled: false,
+    squared: false,
+    defaultPressed: false,
   }),
   render(props) {
-    const [active, setActive] = React.useState(false);
+    const [pressed, setPressed] = React.useState(false);
 
     return (
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-center gap-3">
-          <ToggleButton {...props} defaultActive>
-            初期アクティブ
+          <ToggleButton {...props} defaultPressed>
+            初期押下
           </ToggleButton>
-          <ToggleButton {...props}>初期非アクティブ</ToggleButton>
+          <ToggleButton {...props}>初期非押下</ToggleButton>
         </div>
         <div className="flex items-center justify-center gap-3">
-          <ToggleButton {...props} active={active} onClick={() => setActive((p) => !p)}>
-            制御: {active ? "ON" : "OFF"}
+          <ToggleButton {...props} pressed={pressed} onPressedChange={setPressed}>
+            制御: {pressed ? "ON" : "OFF"}
           </ToggleButton>
-          <ToggleButton {...props} active>
-            強制アクティブ
+          <ToggleButton {...props} pressed>
+            強制押下
           </ToggleButton>
         </div>
-      </div>
-    );
-  },
-});
-
-export const ActiveProps = meta.story({
-  name: "アクティブ Props",
-  ...ctrl({
-    size: "md",
-    outlined: false,
-    pending: false,
-    disabled: false,
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-wrap gap-3">
-        <ToggleButton
-          {...props}
-          defaultActive
-          activeProps={{
-            color: "green",
-          }}
-        >
-          色が変わる
-        </ToggleButton>
-        <ToggleButton
-          {...props}
-          defaultActive
-          activeProps={{
-            variant: "solid",
-          }}
-        >
-          塗りが変わる
-        </ToggleButton>
-        <ToggleButton
-          {...props}
-          defaultActive
-          activeProps={{
-            radius: "full",
-          }}
-        >
-          形が変わる
-        </ToggleButton>
       </div>
     );
   },
@@ -199,24 +165,20 @@ export const WithIcons = meta.story({
     outlined: false,
     pending: false,
     disabled: false,
+    squared: false,
+    defaultPressed: false,
   }),
   render(props) {
-    const [active, setActive] = React.useState(true);
+    const [pressed, setPressed] = React.useState(true);
 
     return (
       <div className="flex flex-col gap-3">
         <div className="flex justify-center gap-3">
-          <ToggleButton {...props} defaultActive>
+          <ToggleButton {...props} defaultPressed>
             <GlobeIcon />
             公開
           </ToggleButton>
-          <ToggleButton
-            {...props}
-            defaultActive
-            activeProps={{
-              color: "red",
-            }}
-          >
+          <ToggleButton {...props} defaultPressed>
             削除
             <DeleteIcon />
           </ToggleButton>
@@ -224,8 +186,8 @@ export const WithIcons = meta.story({
         <div className="flex justify-center gap-3">
           <ToggleButton
             {...props}
-            active={active}
-            onClick={() => setActive((p) => !p)}
+            pressed={pressed}
+            onPressedChange={setPressed}
             slotProps={{
               content: {
                 className: "flex-col",
@@ -233,14 +195,11 @@ export const WithIcons = meta.story({
             }}
           >
             <GlobeIcon />
-            {active ? "公開中" : "非公開"}
+            {pressed ? "公開中" : "非公開"}
           </ToggleButton>
           <ToggleButton
             {...props}
-            defaultActive
-            activeProps={{
-              color: "red",
-            }}
+            defaultPressed
             slotProps={{
               content: {
                 className: "flex-col",
@@ -266,17 +225,19 @@ export const Squared = meta.story({
     outlined: false,
     pending: false,
     disabled: false,
+    squared: true,
+    defaultPressed: false,
   }),
   render(props) {
     return (
       <div className="flex flex-wrap gap-3">
-        <ToggleButton {...props} squared defaultActive>
+        <ToggleButton {...props} squared defaultPressed>
           <EllipsisIcon />
         </ToggleButton>
         <ToggleButton {...props} squared>
           <CogIcon />
         </ToggleButton>
-        <ToggleButton {...props} squared defaultActive>
+        <ToggleButton {...props} squared defaultPressed>
           <Trash2Icon />
         </ToggleButton>
       </div>
@@ -306,12 +267,14 @@ function useToggleFeature() {
 export const Pending = meta.story({
   name: "保留",
   ...ctrl({
-    variant: "solid",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: "rounded",
     outlined: false,
     disabled: false,
+    squared: false,
+    defaultPressed: false,
   }),
   render(props) {
     const feature = useToggleFeature();
@@ -320,7 +283,7 @@ export const Pending = meta.story({
       <div className="flex flex-wrap gap-3">
         <ToggleButton
           {...props}
-          active={feature.flag}
+          pressed={feature.flag}
           pending={feature.pending}
           onClick={feature.clickHandler}
         >
@@ -334,12 +297,14 @@ export const Pending = meta.story({
 export const Radius = meta.story({
   name: "角丸",
   ...ctrl({
-    variant: "solid",
+    variant: "liquid",
     color: "grey",
     size: "md",
     outlined: false,
     pending: false,
     disabled: false,
+    squared: false,
+    defaultPressed: false,
   }),
   render(props) {
     return (
@@ -366,11 +331,13 @@ export const Outlined = meta.story({
     radius: "rounded",
     pending: false,
     disabled: false,
+    squared: false,
+    defaultPressed: false,
   }),
   render(props) {
     return (
       <div className="flex flex-wrap gap-3">
-        <ToggleButton {...props} variant="solid" outlined>
+        <ToggleButton {...props} variant="liquid" outlined>
           ソリッド
         </ToggleButton>
         <ToggleButton {...props} variant="naked" outlined>
@@ -387,12 +354,14 @@ export const Outlined = meta.story({
 export const Sizes = meta.story({
   name: "大きさ",
   ...ctrl({
-    variant: "solid",
+    variant: "liquid",
     color: "grey",
     radius: "rounded",
     outlined: false,
     pending: false,
     disabled: false,
+    squared: false,
+    defaultPressed: false,
   }),
   render(props) {
     return (
@@ -439,13 +408,15 @@ export const Sizes = meta.story({
 export const FullWidth = meta.story({
   name: "最大幅",
   ...ctrl({
-    variant: "solid",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: "rounded",
     outlined: false,
     pending: false,
     disabled: false,
+    squared: false,
+    defaultPressed: false,
   }),
   render(props) {
     return (
@@ -477,21 +448,23 @@ export const FullWidth = meta.story({
 export const Disabled = meta.story({
   name: "無効",
   ...ctrl({
-    variant: "solid",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: "rounded",
     outlined: false,
     pending: false,
+    squared: false,
+    defaultPressed: false,
   }),
   render(props) {
     return (
       <div className="flex flex-wrap gap-3">
-        <ToggleButton {...props} disabled>
-          送信
+        <ToggleButton {...props} disabled variant="liquid">
+          OFF
         </ToggleButton>
-        <ToggleButton {...props} disabled defaultActive>
-          ON（無効）
+        <ToggleButton {...props} disabled defaultPressed variant="liquid">
+          ON
         </ToggleButton>
         <ToggleButton {...props} disabled squared>
           <EllipsisIcon />

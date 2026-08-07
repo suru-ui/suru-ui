@@ -21,7 +21,7 @@ export type ToggleButtonGroupProps = ToggleButtonGroupParts.Root.Props & {
  *
  * @example 基本（単一選択）
  * ```tsx
- * <ToggleButtonGroup selectionMode="single">
+ * <ToggleButtonGroup>
  *   <ToggleButton value="a">A</ToggleButton>
  *   <ToggleButton value="b">B</ToggleButton>
  * </ToggleButtonGroup>
@@ -29,7 +29,15 @@ export type ToggleButtonGroupProps = ToggleButtonGroupParts.Root.Props & {
  *
  * @example 複数選択
  * ```tsx
- * <ToggleButtonGroup selectionMode="multiple">
+ * <ToggleButtonGroup multiple>
+ *   <ToggleButton value="a">A</ToggleButton>
+ *   <ToggleButton value="b">B</ToggleButton>
+ * </ToggleButtonGroup>
+ * ```
+ *
+ * @example 初期選択値
+ * ```tsx
+ * <ToggleButtonGroup defaultValue={["a"]}>
  *   <ToggleButton value="a">A</ToggleButton>
  *   <ToggleButton value="b">B</ToggleButton>
  * </ToggleButtonGroup>

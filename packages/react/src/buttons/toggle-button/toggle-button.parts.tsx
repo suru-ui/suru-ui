@@ -1,7 +1,8 @@
-import type { BaseUIEvent } from "@base-ui/react";
-import { useControlled } from "@base-ui/utils/useControlled";
+import { Toggle } from "@base-ui/react/toggle";
+import type { Color, ColorTemplate as Variant, Size } from "@suru-ui/theme";
 import * as React from "react";
 
+import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
 import type { Component } from "../../types.js";
 import * as Button from "../button/button.parts.jsx";
@@ -73,53 +74,77 @@ export function useContext(optional?: boolean): ToggleButtonContext | null {
 /**
  * {@link Root} の状態です。
  */
-export type ToggleButtonRootState = Button.Root.State;
+export type ToggleButtonRootState = Toggle.State;
 
 /**
  * {@link Root} に渡すプロパティーです。
  */
-export type ToggleButtonRootProps = Omit<Button.Root.Props, "value"> & {
+export type ToggleButtonRootProps = React.ComponentProps<typeof Toggle> & {
   /**
-   * トグルボタンのアクティブ状態を制御します。
+   * トグルボタンのスタイルバリエーションを指定します。
    *
-   * `true` の場合、ボタンは押下状態（`aria-pressed` が `true`）になります。
+   * - `"naked"`: 背景のないテキストのみ
+   * - `"liquid"`: 薄い塗りつぶし
+   *
+   * 押下状態（`pressed`）のときは、どちらのバリエーションでも `"solid"` のスタイルになります。
+   *
+   * @default "liquid"
    */
-  active?: boolean | undefined;
+  variant?: Exclude<Variant, "solid"> | undefined;
 
   /**
-   * アクティブ状態のときに適用するプロパティーです。
+   * トグルボタンの色を指定します。
    *
-   * アクティブ時と非アクティブ時で異なるスタイルや動作を指定したい場合に使用します。
-   *
-   * 指定しない場合は、通常のプロパティーがそのまま使用されます。
+   * @default "grey"
    */
-  activeProps?: Button.Root.Props | undefined;
+  color?: Color | undefined;
 
   /**
-   * 初期状態でのアクティブ状態を指定します。
+   * トグルボタンのサイズを指定します。
    *
-   * 非制御（uncontrolled）モードで使用する場合の初期値です。
-   *
-   * @default false
+   * @default "md"
    */
-  defaultActive?: boolean | undefined;
+  size?: Size | undefined;
 
   /**
-   * {@link ToggleButtonGroup} 内で使用するときに、このボタンを識別する値です。
+   * トグルボタンの角丸を指定します。
    *
-   * グループ内の各 ToggleButton には一意の値を指定する必要があります。
+   * - `"none"`: 角を直角にする
+   * - `"rounded"`: 標準的な角丸
+   * - `"full"`: 完全な丸形（pills 状）
+   *
+   * @default "rounded"
    */
-  value?: string | undefined;
+  radius?: "none" | "rounded" | "full" | undefined;
+
+  /**
+   * 枠線を表示するかどうかを指定します。
+   */
+  outlined?: boolean | undefined;
+
+  /**
+   * トグルボタンを保留状態（ローディング中）にするかどうかを指定します。
+   *
+   * `true` の場合、ボタンは無効化され、`Pending` スロットが表示されます。
+   */
+  pending?: boolean | undefined;
+
+  /**
+   * トグルボタンを正方形にするかどうかを指定します。
+   *
+   * `true` の場合、幅と高さが等しくなり、アイコンボタンなどに適した形状になります。
+   */
+  squared?: boolean | undefined;
 };
 
 /**
  * トグルボタンのルート要素です。
  *
- * Base UI の {@link Button.Root} をラップし、クリックごとにアクティブ状態を切り替えます。
+ * Base UI の {@link Toggle} をラップし、テーマに基づくスタイルクラスを適用します。
  *
  * @example
  * ```tsx
- * <ToggleButtonParts.Root color="red" defaultActive>
+ * <ToggleButtonParts.Root color="red" defaultPressed>
  *   <ToggleButtonParts.Content>削除</ToggleButtonParts.Content>
  * </ToggleButtonParts.Root>
  * ```
@@ -127,61 +152,57 @@ export type ToggleButtonRootProps = Omit<Button.Root.Props, "value"> & {
 export const ToggleButtonRoot: Component<ToggleButtonRootProps> = function SuiToggleButtonRoot(
   props,
 ) {
-  const { active: activeProp, activeProps = {}, defaultActive, value, ...buttonProps } = props;
   const group = useToggleButtonGroupContext(true);
-
-  if (group != null) {
-    buttonProps.size ??= group.size;
-    buttonProps.color ??= group.color;
-    buttonProps.radius ??= group.radius;
-    buttonProps.variant ??= group.variant;
-    buttonProps.outlined ??= group.outlined;
-  } else {
-    buttonProps.size ??= "md";
-    buttonProps.color ??= "grey";
-    buttonProps.radius ??= "rounded";
-    buttonProps.variant ??= "liquid";
-    buttonProps.outlined ??= false;
-  }
-
-  const isInGroup = group != null && value != null;
-
-  const [localActive, setLocalActive] = useControlled({
-    name: "ToggleButton",
-    state: "active",
-    default: defaultActive,
-    controlled: activeProp,
-  });
-
-  const active = isInGroup ? group.selectedValues.has(value) : localActive;
-
-  const { onClick, ...otherProps } = active ? { ...buttonProps, ...activeProps } : buttonProps;
-  if (active) {
-    if (buttonProps.color === "grey" && !("color" in activeProps)) {
-      otherProps.color = "blue";
-    }
-    if (buttonProps.variant === "naked" && !("variant" in activeProps)) {
-      otherProps.variant = "liquid";
-    }
-  }
-
-  const handleClick = React.useCallback(
-    (evt: BaseUIEvent<React.MouseEvent<HTMLButtonElement, MouseEvent>>) => {
-      onClick?.(evt);
-      if (evt.defaultPrevented) {
-        return;
-      }
-
-      if (isInGroup) {
-        group!.onSelectionChange(value!);
-      } else {
-        setLocalActive((prevActive) => !prevActive);
-      }
-    },
-    [onClick, setLocalActive, isInGroup, group, value],
+  const {
+    size: sizeProp,
+    type = "button",
+    color: colorProp,
+    radius: radiusProp,
+    pending = false,
+    squared = false,
+    variant: variantProp,
+    disabled: disabledProp,
+    outlined: outlinedProp,
+    className,
+    ...otherProps
+  } = props;
+  const size = sizeProp ?? group?.size ?? "md";
+  const color = colorProp ?? group?.color ?? "grey";
+  const radius = radiusProp ?? group?.radius ?? "rounded";
+  const variant = variantProp ?? group?.variant ?? "liquid";
+  const outlined = outlinedProp ?? group?.outlined ?? false;
+  const disabled = disabledProp || pending;
+  const context = React.useMemo(
+    () => ({
+      pending,
+    }),
+    [pending],
   );
 
-  return <Button.Root {...otherProps} onClick={handleClick} aria-pressed={active} />;
+  return (
+    <ToggleButtonContext value={context}>
+      <Toggle
+        {...otherProps}
+        type={type}
+        disabled={disabled}
+        className={cn(
+          className,
+          "sui_button",
+          `sui_button-size_${size}`,
+          `sui_button-color_${color}`,
+          `sui_button-radius_${radius}`,
+          pending && "sui_button-pending",
+          squared && "sui_button-squared",
+          outlined && "sui_button-outlined",
+          (state: Toggle.State) =>
+            cn(
+              state.disabled && "sui_button-disabled",
+              state.pressed ? "sui_button-variant_solid" : `sui_button-variant_${variant}`,
+            ),
+        )}
+      />
+    </ToggleButtonContext>
+  );
 };
 
 export namespace Root {

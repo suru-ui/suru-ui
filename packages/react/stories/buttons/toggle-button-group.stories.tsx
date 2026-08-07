@@ -1,10 +1,12 @@
-import { COLOR_TEMPLATES as VALIANTS, COLORS, SIZES } from "@suru-ui/theme";
+import { COLOR_TEMPLATES, COLORS, SIZES } from "@suru-ui/theme";
 import { BoldIcon, ItalicIcon, UnderlineIcon } from "lucide-react";
 import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { ToggleButtonGroup } from "../../src/buttons/toggle-button-group/index.js";
 import { ToggleButton } from "../../src/buttons/toggle-button/index.js";
+
+const VALIANTS = COLOR_TEMPLATES.filter((variant) => variant !== "solid");
 
 const meta = preview.meta({
   title: "Buttons / ToggleButtonGroup",
@@ -18,6 +20,15 @@ const ctrl = controls(ToggleButtonGroup, {
     options: COLORS,
     control: "select",
   },
+  disabled: {
+    control: "boolean",
+  },
+  detached: {
+    control: "boolean",
+  },
+  multiple: {
+    control: "boolean",
+  },
   orientation: {
     options: ["horizontal", "vertical"],
     control: "select",
@@ -29,10 +40,6 @@ const ctrl = controls(ToggleButtonGroup, {
     options: ["none", "rounded", "full"],
     control: "select",
   },
-  selectionMode: {
-    options: ["single", "multiple"],
-    control: "select",
-  },
   size: {
     options: SIZES,
     control: "select",
@@ -40,12 +47,6 @@ const ctrl = controls(ToggleButtonGroup, {
   variant: {
     options: VALIANTS,
     control: "select",
-  },
-  detached: {
-    control: "boolean",
-  },
-  disallowEmptySelection: {
-    control: "boolean",
   },
 });
 
@@ -58,9 +59,9 @@ export const Usage = meta.story({
     radius: "rounded",
     outlined: false,
     orientation: "horizontal",
-    selectionMode: "single",
+    multiple: false,
     detached: false,
-    disallowEmptySelection: false,
+    disabled: false,
   }),
   render(props) {
     return (
@@ -83,14 +84,14 @@ export const SelectionMode = meta.story({
     outlined: false,
     orientation: "horizontal",
     detached: false,
-    disallowEmptySelection: false,
+    disabled: false,
   }),
   render(props) {
     return (
       <div className="flex flex-col gap-6">
         <div className="flex flex-col items-center gap-2">
           <span className="text-sm text-gray-500">単一選択</span>
-          <ToggleButtonGroup {...props} selectionMode="single">
+          <ToggleButtonGroup {...props}>
             <ToggleButton value="a">A</ToggleButton>
             <ToggleButton value="b">B</ToggleButton>
             <ToggleButton value="c">C</ToggleButton>
@@ -98,7 +99,7 @@ export const SelectionMode = meta.story({
         </div>
         <div className="flex flex-col items-center gap-2">
           <span className="text-sm text-gray-500">複数選択</span>
-          <ToggleButtonGroup {...props} selectionMode="multiple">
+          <ToggleButtonGroup {...props} multiple>
             <ToggleButton value="a">A</ToggleButton>
             <ToggleButton value="b">B</ToggleButton>
             <ToggleButton value="c">C</ToggleButton>
@@ -118,16 +119,16 @@ export const DefaultSelected = meta.story({
     radius: "rounded",
     outlined: false,
     orientation: "horizontal",
-    selectionMode: "multiple",
+    multiple: true,
     detached: false,
-    disallowEmptySelection: false,
+    disabled: false,
   }),
   render(props) {
     return (
       <div className="flex flex-col gap-6">
         <div className="flex flex-col items-center gap-2">
           <span className="text-sm text-gray-500">単一選択</span>
-          <ToggleButtonGroup {...props} selectionMode="single" defaultSelectedValues={["b"]}>
+          <ToggleButtonGroup {...props} multiple={false} defaultValue={["b"]}>
             <ToggleButton value="a">A</ToggleButton>
             <ToggleButton value="b">B</ToggleButton>
             <ToggleButton value="c">C</ToggleButton>
@@ -135,36 +136,13 @@ export const DefaultSelected = meta.story({
         </div>
         <div className="flex flex-col items-center gap-2">
           <span className="text-sm text-gray-500">複数選択</span>
-          <ToggleButtonGroup {...props} selectionMode="multiple" defaultSelectedValues={["a", "c"]}>
+          <ToggleButtonGroup {...props} defaultValue={["a", "c"]}>
             <ToggleButton value="a">A</ToggleButton>
             <ToggleButton value="b">B</ToggleButton>
             <ToggleButton value="c">C</ToggleButton>
           </ToggleButtonGroup>
         </div>
       </div>
-    );
-  },
-});
-
-export const DisallowEmptySelection = meta.story({
-  name: "空選択防止",
-  ...ctrl({
-    variant: "liquid",
-    color: "grey",
-    size: "md",
-    radius: "rounded",
-    outlined: false,
-    orientation: "horizontal",
-    selectionMode: "single",
-    detached: false,
-  }),
-  render(props) {
-    return (
-      <ToggleButtonGroup {...props} disallowEmptySelection defaultSelectedValues={["a"]}>
-        <ToggleButton value="a">A</ToggleButton>
-        <ToggleButton value="b">B</ToggleButton>
-        <ToggleButton value="c">C</ToggleButton>
-      </ToggleButtonGroup>
     );
   },
 });
@@ -178,25 +156,21 @@ export const Controlled = meta.story({
     radius: "rounded",
     outlined: false,
     orientation: "horizontal",
-    selectionMode: "multiple",
+    multiple: true,
     detached: false,
-    disallowEmptySelection: false,
+    disabled: false,
   }),
   render(props) {
-    const [selected, setSelected] = React.useState(new Set(["a"]));
+    const [selected, setSelected] = React.useState(["a"]);
 
     return (
       <div className="flex flex-col gap-4">
-        <ToggleButtonGroup
-          {...props}
-          selectedValues={selected}
-          onSelectionChange={(values) => setSelected(values)}
-        >
+        <ToggleButtonGroup {...props} value={selected} onValueChange={setSelected}>
           <ToggleButton value="a">A</ToggleButton>
           <ToggleButton value="b">B</ToggleButton>
           <ToggleButton value="c">C</ToggleButton>
         </ToggleButtonGroup>
-        <div className="text-center text-sm text-gray-500">選択中: {[...selected].join(", ")}</div>
+        <div className="text-center text-sm text-gray-500">選択中: {selected.join(", ")}</div>
       </div>
     );
   },
@@ -210,9 +184,9 @@ export const Orientation = meta.story({
     size: "md",
     radius: "rounded",
     outlined: false,
-    selectionMode: "single",
+    multiple: false,
     detached: false,
-    disallowEmptySelection: false,
+    disabled: false,
   }),
   render(props) {
     return (
@@ -246,9 +220,9 @@ export const Detached = meta.story({
     size: "md",
     radius: "rounded",
     outlined: false,
-    selectionMode: "multiple",
+    multiple: true,
     orientation: "horizontal",
-    disallowEmptySelection: false,
+    disabled: false,
   }),
   render(props) {
     return (
@@ -294,21 +268,13 @@ export const Variants = meta.story({
     radius: "rounded",
     outlined: false,
     orientation: "horizontal",
-    selectionMode: "single",
+    multiple: false,
     detached: false,
-    disallowEmptySelection: false,
+    disabled: false,
   }),
   render(props) {
     return (
       <div className="flex flex-wrap gap-6">
-        <div className="flex flex-col items-center gap-2">
-          <span className="text-sm text-gray-500">solid</span>
-          <ToggleButtonGroup {...props} variant="solid">
-            <ToggleButton value="a">A</ToggleButton>
-            <ToggleButton value="b">B</ToggleButton>
-            <ToggleButton value="c">C</ToggleButton>
-          </ToggleButtonGroup>
-        </div>
         <div className="flex flex-col items-center gap-2">
           <span className="text-sm text-gray-500">naked</span>
           <ToggleButtonGroup {...props} variant="naked">
@@ -320,6 +286,14 @@ export const Variants = meta.story({
         <div className="flex flex-col items-center gap-2">
           <span className="text-sm text-gray-500">liquid</span>
           <ToggleButtonGroup {...props} variant="liquid">
+            <ToggleButton value="a">A</ToggleButton>
+            <ToggleButton value="b">B</ToggleButton>
+            <ToggleButton value="c">C</ToggleButton>
+          </ToggleButtonGroup>
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          <span className="text-sm text-gray-500">押下（solid）</span>
+          <ToggleButtonGroup {...props} variant="naked" defaultValue={["b"]}>
             <ToggleButton value="a">A</ToggleButton>
             <ToggleButton value="b">B</ToggleButton>
             <ToggleButton value="c">C</ToggleButton>
@@ -338,9 +312,9 @@ export const Colors = meta.story({
     radius: "rounded",
     outlined: false,
     orientation: "horizontal",
-    selectionMode: "single",
+    multiple: false,
     detached: false,
-    disallowEmptySelection: false,
+    disabled: false,
   }),
   render(props) {
     return (
@@ -368,9 +342,9 @@ export const Radius = meta.story({
     size: "md",
     outlined: false,
     orientation: "horizontal",
-    selectionMode: "single",
+    multiple: false,
     detached: false,
-    disallowEmptySelection: false,
+    disabled: false,
   }),
   render(props) {
     return (
@@ -412,9 +386,9 @@ export const Sizes = meta.story({
     radius: "rounded",
     outlined: false,
     orientation: "horizontal",
-    selectionMode: "single",
+    multiple: false,
     detached: false,
-    disallowEmptySelection: false,
+    disabled: false,
   }),
   render(props) {
     return (
@@ -457,14 +431,14 @@ export const WithIcons = meta.story({
     radius: "rounded",
     outlined: false,
     orientation: "horizontal",
-    selectionMode: "single",
+    multiple: true,
     detached: false,
-    disallowEmptySelection: false,
+    disabled: false,
   }),
   render(props) {
     return (
-      <ToggleButtonGroup {...props} selectionMode="multiple">
-        <ToggleButton value="bold" defaultActive squared>
+      <ToggleButtonGroup {...props}>
+        <ToggleButton value="bold" defaultPressed squared>
           <BoldIcon />
         </ToggleButton>
         <ToggleButton value="italic" squared>
@@ -481,24 +455,23 @@ export const WithIcons = meta.story({
 export const Disabled = meta.story({
   name: "無効",
   ...ctrl({
-    variant: "solid",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: "rounded",
     outlined: false,
     orientation: "horizontal",
-    selectionMode: "single",
+    multiple: false,
     detached: false,
-    disallowEmptySelection: false,
   }),
   render(props) {
     return (
       <ToggleButtonGroup {...props}>
         <ToggleButton value="a" disabled>
-          送信
+          OFF
         </ToggleButton>
-        <ToggleButton value="b" disabled defaultActive>
-          ON（無効）
+        <ToggleButton value="b" disabled defaultPressed>
+          ON
         </ToggleButton>
         <ToggleButton value="c">有効</ToggleButton>
       </ToggleButtonGroup>

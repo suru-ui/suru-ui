@@ -73,7 +73,14 @@ export type ToggleButtonProps = ToggleButtonParts.Root.Props &
  *
  * @example アクティブ初期値指定
  * ```tsx
- * <ToggleButton defaultActive>有効</ToggleButton>
+ * <ToggleButton defaultPressed>有効</ToggleButton>
+ * ```
+ *
+ * @example 制御
+ * ```tsx
+ * <ToggleButton pressed onPressedChange={(pressed) => setPressed(pressed)}>
+ *   有効
+ * </ToggleButton>
  * ```
  *
  * @example 進捗表示
