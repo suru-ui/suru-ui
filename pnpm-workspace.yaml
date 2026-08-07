@@ -10,6 +10,6 @@ trustPolicyExclude:
   - "@hono/node-server"
   - "@pierre/theme"
   - "chokidar"
-packages: [ "packages/core", "packages/theme", "packages/react", "website" ]
+packages: ["packages/core", "packages/theme", "packages/react", "website"]
 allowBuilds:
   esbuild: set this to true or false

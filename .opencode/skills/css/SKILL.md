@@ -236,9 +236,9 @@ description: Suru UI のコンポーネントスタイル (`packages/react/src/*
 ```text
 /* 静的 */
 .sui_button {
-  position:        relative;
-  display:         inline-flex;
-  align-items:     center;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
 }
 ```

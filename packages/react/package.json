@@ -71,6 +71,10 @@
       "types": "./dist/src/forms/radio-group/index.d.ts",
       "default": "./dist/src/forms/radio-group/index.js"
     },
+    "./slider": {
+      "types": "./dist/src/forms/slider/index.d.ts",
+      "default": "./dist/src/forms/slider/index.js"
+    },
     "./suru.css": "./dist/suru.css"
   },
   "scripts": {
