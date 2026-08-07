@@ -28,3 +28,4 @@ export { type InputProps, Input } from "./forms/input/index.js";
 export { type RadioProps, Radio } from "./forms/radio/index.js";
 export { type RadioGroupProps, RadioGroup } from "./forms/radio-group/index.js";
 export { type SliderProps, Slider } from "./forms/slider/index.js";
+export { type SwitchProps, Switch } from "./forms/switch/index.js";

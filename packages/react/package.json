@@ -75,6 +75,10 @@
       "types": "./dist/src/forms/slider/index.d.ts",
       "default": "./dist/src/forms/slider/index.js"
     },
+    "./switch": {
+      "types": "./dist/src/forms/switch/index.d.ts",
+      "default": "./dist/src/forms/switch/index.js"
+    },
     "./suru.css": "./dist/suru.css"
   },
   "scripts": {
