@@ -125,9 +125,9 @@
   --sui-grey-naked-normal: transparent;
   --sui-grey-naked-subtle: var(--sui-grey-5);
   --sui-grey-naked-action: var(--sui-grey-10);
-  --sui-grey-naked-border-normal: var(--sui-grey-90);
-  --sui-grey-naked-border-subtle: var(--sui-grey-95);
-  --sui-grey-naked-border-action: var(--sui-grey-100);
+  --sui-grey-naked-border-normal: var(--sui-grey-60);
+  --sui-grey-naked-border-subtle: var(--sui-grey-70);
+  --sui-grey-naked-border-action: var(--sui-grey-80);
   --sui-grey-naked-canvas_text-normal: var(--sui-grey-90);
   --sui-grey-naked-canvas_text-subtle: var(--sui-grey-95);
   --sui-grey-naked-canvas_text-action: var(--sui-grey-100);
@@ -135,9 +135,9 @@
   --sui-grey-liquid-normal: var(--sui-grey-5);
   --sui-grey-liquid-subtle: var(--sui-grey-10);
   --sui-grey-liquid-action: var(--sui-grey-15);
-  --sui-grey-liquid-border-normal: var(--sui-grey-90);
-  --sui-grey-liquid-border-subtle: var(--sui-grey-95);
-  --sui-grey-liquid-border-action: var(--sui-grey-100);
+  --sui-grey-liquid-border-normal: var(--sui-grey-60);
+  --sui-grey-liquid-border-subtle: var(--sui-grey-70);
+  --sui-grey-liquid-border-action: var(--sui-grey-80);
   --sui-grey-liquid-canvas_text-normal: var(--sui-grey-90);
   --sui-grey-liquid-canvas_text-subtle: var(--sui-grey-95);
   --sui-grey-liquid-canvas_text-action: var(--sui-grey-100);
