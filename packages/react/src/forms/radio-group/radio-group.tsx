@@ -9,6 +9,8 @@ import * as RadioGroupParts from "./radio-group.parts.jsx";
 export type RadioGroupProps = RadioGroupParts.Root.Props & {
   /**
    * ラジオボタン要素です。
+   *
+   * {@link RadioGroupParts.Root} にそのまま渡されます。
    */
   readonly children?: React.ReactNode | undefined;
 };
@@ -17,6 +19,7 @@ export type RadioGroupProps = RadioGroupParts.Root.Props & {
  * ラジオボタンをグループ化するコンポーネントです。
  *
  * グループの選択状態を管理し、子要素のラジオボタンにスタイルを強制します。
+ * スタイルの指定は子要素の指定より優先され、値を変更するとグループ内へ反映されます。
  *
  * @example 基本
  * ```tsx

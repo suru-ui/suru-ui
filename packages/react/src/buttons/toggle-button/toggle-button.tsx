@@ -8,6 +8,9 @@ export type ToggleButtonProps = ToggleButtonParts.Root.Props &
   Pick<ToggleButtonParts.Content.Props, "children"> & {
     /**
      * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+     *
+     * ルートのプロパティーより優先される値は、各パーツのプロパティーに従います。
+     * `undefined` の値は指定されていないものとして扱われます。
      */
     slotProps?:
       | {
@@ -52,11 +55,15 @@ export type ToggleButtonProps = ToggleButtonParts.Root.Props &
      * 進行状況をパーセンテージで指定します。
      *
      * 指定された場合、`pending` が `true` のときに円形プログレスバーが進捗を表示します。
+     * {@link slotProps.circularProgress} にも指定した場合は、そちらの値が優先されます。
      */
     percentage?: number | undefined;
 
     /**
      * プログレスバーを不定モード（回転するアニメーション）にするかどうかを指定します。
+     *
+     * {@link slotProps.circularProgress} にも指定した場合は、そちらの値が優先されます。
+     * 値は再レンダー時に円形プログレスバーへ反映されます。
      *
      * @default false
      */
@@ -101,6 +108,7 @@ export const ToggleButton: Component<ToggleButtonProps> = function SuiToggleButt
     } = {},
     percentage: percentageProp,
     indeterminate: indeterminateProp,
+    pending,
     ...rootProps
   } = props;
   const { overlay = true, ...otherPendingProps } = pendingProps;
@@ -109,24 +117,27 @@ export const ToggleButton: Component<ToggleButtonProps> = function SuiToggleButt
     indeterminate = indeterminateProp,
     ...otherCircularProgressProps
   } = circularProgressProps;
+  const shouldRenderPending = pending === true || pendingProps.defaultVisibility === "hidden";
 
   return (
-    <ToggleButtonParts.Root {...rootProps}>
+    <ToggleButtonParts.Root {...rootProps} pending={pending}>
       <ToggleButtonParts.Content {...contentProps}>{children}</ToggleButtonParts.Content>
-      <ToggleButtonParts.Pending {...otherPendingProps} overlay={overlay}>
-        <ToggleButtonParts.CircularProgress
-          {...otherCircularProgressProps}
-          percentage={percentage}
-          indeterminate={indeterminate}
-        >
-          <ToggleButtonParts.CircularProgressTrack {...circularProgressTrackProps} />
-          <ToggleButtonParts.CircularProgressFill {...circularProgressFillProps}>
-            <ToggleButtonParts.CircularProgressFillRotation
-              {...circularProgressFillRotationProps}
-            />
-          </ToggleButtonParts.CircularProgressFill>
-        </ToggleButtonParts.CircularProgress>
-      </ToggleButtonParts.Pending>
+      {shouldRenderPending && (
+        <ToggleButtonParts.Pending {...otherPendingProps} overlay={overlay}>
+          <ToggleButtonParts.CircularProgress
+            {...otherCircularProgressProps}
+            percentage={percentage}
+            indeterminate={indeterminate}
+          >
+            <ToggleButtonParts.CircularProgressTrack {...circularProgressTrackProps} />
+            <ToggleButtonParts.CircularProgressFill {...circularProgressFillProps}>
+              <ToggleButtonParts.CircularProgressFillRotation
+                {...circularProgressFillRotationProps}
+              />
+            </ToggleButtonParts.CircularProgressFill>
+          </ToggleButtonParts.CircularProgress>
+        </ToggleButtonParts.Pending>
+      )}
     </ToggleButtonParts.Root>
   );
 };

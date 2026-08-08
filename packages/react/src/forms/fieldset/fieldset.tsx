@@ -3,9 +3,18 @@ import * as FieldsetParts from "./fieldset.parts.jsx";
 
 /**
  * {@link Fieldset} コンポーネントのプロパティーです。
+ *
+ * {@link Fieldset.Root} と同じプロパティーを受け取ります。`disabled` の既定値は
+ * `false` で、指定した値が子孫のコントロールを無効化します。`className` と `render` は
+ * 既定の値より優先され、`disabled` の変化は子孫の状態に反映されます。
  */
 export type FieldsetProps = FieldsetParts.Root.Props;
 
+/**
+ * {@link Fieldset} の複合コンポーネント型です。
+ *
+ * {@link Fieldset.Root} と {@link Fieldset.Legend} をプロパティーとして公開します。
+ */
 interface FieldsetComponentType extends Component<FieldsetProps> {
   readonly Legend: Component<FieldsetParts.Legend.Props>;
   readonly Root: Component<FieldsetParts.Root.Props>;

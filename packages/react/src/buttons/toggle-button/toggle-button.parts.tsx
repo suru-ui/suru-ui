@@ -12,7 +12,7 @@ import { useToggleButtonGroupContext } from "../toggle-button-group/toggle-butto
 // -------
 
 /**
- * {@link ToggleButtonContext} の値です。
+ * {@link Button.Context} が提供するトグルボタンの値です。
  */
 export type ToggleButtonContext = Button.Context;
 
@@ -95,7 +95,7 @@ export type ToggleButtonRootProps = React.ComponentProps<typeof Toggle> & {
   /**
    * トグルボタンの色を指定します。
    *
-   * @default "grey"
+   * @default "blue"
    */
   color?: Color | undefined;
 
@@ -125,7 +125,8 @@ export type ToggleButtonRootProps = React.ComponentProps<typeof Toggle> & {
   /**
    * トグルボタンを保留状態（ローディング中）にするかどうかを指定します。
    *
-   * `true` の場合、ボタンは無効化され、`Pending` スロットが表示されます。
+   * `true` の場合、ボタンは無効化され、{@link Pending} スロットが表示されます。
+   * `false` から `true` に変化すると、保留表示が生成されます。
    */
   pending?: boolean | undefined;
 
@@ -167,7 +168,7 @@ export const ToggleButtonRoot: Component<ToggleButtonRootProps> = function SuiTo
     ...otherProps
   } = props;
   const size = sizeProp ?? group?.size ?? "md";
-  const color = colorProp ?? group?.color ?? "grey";
+  const color = colorProp ?? group?.color ?? "blue";
   const radius = radiusProp ?? group?.radius ?? "rounded";
   const variant = variantProp ?? group?.variant ?? "liquid";
   const outlined = outlinedProp ?? group?.outlined ?? false;
@@ -206,10 +207,20 @@ export const ToggleButtonRoot: Component<ToggleButtonRootProps> = function SuiTo
 };
 
 export namespace Root {
+  /**
+   * {@link ToggleButtonRoot} の状態型です。
+   */
   export type State = ToggleButtonRootState;
+
+  /**
+   * {@link ToggleButtonRoot} のプロパティー型です。
+   */
   export type Props = ToggleButtonRootProps;
 }
 
+/**
+ * {@link ToggleButtonRoot} の別名です。
+ */
 export const Root: Component<Root.Props> = ToggleButtonRoot;
 
 // Content
@@ -236,10 +247,20 @@ export type ToggleButtonContentProps = Button.Content.Props;
 export const ToggleButtonContent: Component<ToggleButtonContentProps> = Button.Content;
 
 export namespace Content {
+  /**
+   * {@link ToggleButtonContent} の状態型です。
+   */
   export type State = ToggleButtonContentState;
+
+  /**
+   * {@link ToggleButtonContent} のプロパティー型です。
+   */
   export type Props = ToggleButtonContentProps;
 }
 
+/**
+ * {@link ToggleButtonContent} の別名です。
+ */
 export const Content: Component<Content.Props> = ToggleButtonContent;
 
 // Pending
@@ -268,10 +289,20 @@ export type ToggleButtonPendingProps = Button.Pending.Props;
 export const ToggleButtonPending: Component<ToggleButtonPendingProps> = Button.Pending;
 
 export namespace Pending {
+  /**
+   * {@link ToggleButtonPending} の状態型です。
+   */
   export type State = ToggleButtonPendingState;
+
+  /**
+   * {@link ToggleButtonPending} のプロパティー型です。
+   */
   export type Props = ToggleButtonPendingProps;
 }
 
+/**
+ * {@link ToggleButtonPending} の別名です。
+ */
 export const Pending: Component<Pending.Props> = ToggleButtonPending;
 
 // CircularProgressContext
@@ -362,10 +393,20 @@ export const ToggleButtonCircularProgress: Component<ToggleButtonCircularProgres
   Button.CircularProgress;
 
 export namespace CircularProgress {
+  /**
+   * {@link ToggleButtonCircularProgress} の状態型です。
+   */
   export type State = ToggleButtonCircularProgressState;
+
+  /**
+   * {@link ToggleButtonCircularProgress} のプロパティー型です。
+   */
   export type Props = ToggleButtonCircularProgressProps;
 }
 
+/**
+ * {@link ToggleButtonCircularProgress} の別名です。
+ */
 export const CircularProgress: Component<CircularProgress.Props> = ToggleButtonCircularProgress;
 
 // CircularProgressTrack
@@ -393,10 +434,20 @@ export const ToggleButtonCircularProgressTrack: Component<ToggleButtonCircularPr
   Button.CircularProgressTrack;
 
 export namespace CircularProgressTrack {
+  /**
+   * {@link ToggleButtonCircularProgressTrack} の状態型です。
+   */
   export type State = ToggleButtonCircularProgressTrackState;
+
+  /**
+   * {@link ToggleButtonCircularProgressTrack} のプロパティー型です。
+   */
   export type Props = ToggleButtonCircularProgressTrackProps;
 }
 
+/**
+ * {@link ToggleButtonCircularProgressTrack} の別名です。
+ */
 export const CircularProgressTrack: Component<CircularProgressTrack.Props> =
   ToggleButtonCircularProgressTrack;
 
@@ -425,10 +476,20 @@ export const ToggleButtonCircularProgressFill: Component<ToggleButtonCircularPro
   Button.CircularProgressFill;
 
 export namespace CircularProgressFill {
+  /**
+   * {@link ToggleButtonCircularProgressFill} の状態型です。
+   */
   export type State = ToggleButtonCircularProgressFillState;
+
+  /**
+   * {@link ToggleButtonCircularProgressFill} のプロパティー型です。
+   */
   export type Props = ToggleButtonCircularProgressFillProps;
 }
 
+/**
+ * {@link ToggleButtonCircularProgressFill} の別名です。
+ */
 export const CircularProgressFill: Component<CircularProgressFill.Props> =
   ToggleButtonCircularProgressFill;
 
@@ -453,8 +514,14 @@ export const ToggleButtonCircularProgressFillRotation: Component<ToggleButtonCir
   Button.CircularProgressFillRotation;
 
 export namespace CircularProgressFillRotation {
+  /**
+   * {@link ToggleButtonCircularProgressFillRotation} のプロパティー型です。
+   */
   export type Props = ToggleButtonCircularProgressFillRotationProps;
 }
 
+/**
+ * {@link ToggleButtonCircularProgressFillRotation} の別名です。
+ */
 export const CircularProgressFillRotation: Component<CircularProgressFillRotation.Props> =
   ToggleButtonCircularProgressFillRotation;

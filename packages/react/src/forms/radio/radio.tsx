@@ -7,11 +7,16 @@ import * as RadioParts from "./radio.parts.jsx";
 export type RadioProps = RadioParts.Root.Props & {
   /**
    * Indicator 内に表示するコンテンツです。
+   *
+   * 選択時だけ表示され、未選択時は DOM から除去されます。
    */
   children?: React.ReactNode | undefined;
 
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   *
+   * `indicator` の値はインジケーターの既定値に優先して適用されます。
+   * `children` を指定した場合は、`indicator.children` より優先されます。
    */
   slotProps?:
     | {

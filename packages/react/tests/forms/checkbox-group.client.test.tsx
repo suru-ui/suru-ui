@@ -1,6 +1,8 @@
+import * as React from "react";
 import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
 
+import { useCheckboxGroupContext } from "../../src/forms/checkbox-group/checkbox-group.parts.jsx";
 import { CheckboxGroup } from "../../src/forms/checkbox-group/index.js";
 import { Checkbox } from "../../src/forms/checkbox/index.js";
 import { clickElement } from "../_click.js";
@@ -112,5 +114,56 @@ describe("CheckboxGroup", () => {
     await expect.element(checkbox).toHaveClass("sui_checkbox-color_green");
     await expect.element(checkbox).toHaveClass("sui_checkbox-size_lg");
     await expect.element(checkbox).toHaveClass("sui_checkbox-variant_liquid");
+  });
+
+  test("スタイルの変更をグループと子要素に反映する", async () => {
+    // 実行
+    const screen = await render(
+      <CheckboxGroup color="green">
+        <Checkbox value="a" color="red" />
+      </CheckboxGroup>,
+    );
+
+    // 検証
+    const checkbox = screen.getByRole("group").getByRole("checkbox");
+    await expect.element(checkbox).toHaveClass("sui_checkbox-color_green");
+
+    // 実行
+    await screen.rerender(
+      <CheckboxGroup color="blue">
+        <Checkbox value="a" color="red" />
+      </CheckboxGroup>,
+    );
+
+    // 検証
+    await expect.element(checkbox).toHaveClass("sui_checkbox-color_blue");
+  });
+
+  test("スタイルが同じ再レンダーではコンテキストの利用者を再レンダーしない", async () => {
+    // 準備
+    let renderCount = 0;
+    const ContextConsumer = React.memo(function ContextConsumer() {
+      useCheckboxGroupContext();
+      renderCount += 1;
+      return null;
+    });
+
+    // 実行
+    const screen = await render(
+      <CheckboxGroup color="green">
+        <ContextConsumer />
+      </CheckboxGroup>,
+    );
+    expect(renderCount).toBe(1);
+
+    // 実行
+    await screen.rerender(
+      <CheckboxGroup color="green">
+        <ContextConsumer />
+      </CheckboxGroup>,
+    );
+
+    // 検証
+    expect(renderCount).toBe(1);
   });
 });

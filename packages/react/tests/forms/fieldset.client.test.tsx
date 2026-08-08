@@ -17,6 +17,14 @@ describe("Fieldset", () => {
     const fieldset = screen.getByText("お支払い情報").element().parentElement;
 
     expect(fieldset?.tagName).toBe("FIELDSET");
+    expect(fieldset).toHaveClass("sui_fieldset");
+    expect(fieldset).not.toHaveClass("sui_fieldset-disabled");
+  });
+
+  test("className を保持する", async () => {
+    const screen = await render(<Fieldset.Root className="custom-fieldset" />);
+
+    expect(screen.container.querySelector("fieldset")).toHaveClass("sui_fieldset", "custom-fieldset");
   });
 
   test("disabled を指定すると子の入力欄が無効化される", async () => {

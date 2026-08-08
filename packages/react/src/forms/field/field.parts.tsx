@@ -40,11 +40,27 @@ export const FieldRoot: Component<FieldRootProps> = function SuiFieldRoot(props)
   return <Field.Root {...otherProps} className={cn(className, "sui_field")} />;
 };
 
+/**
+ * {@link FieldRoot} の状態型とプロパティー型をまとめた名前空間です。
+ */
 export namespace Root {
+  /**
+   * {@link FieldRoot} の状態型です。
+   */
   export type State = FieldRootState;
+
+  /**
+   * {@link FieldRoot} のプロパティー型です。
+   *
+   * Base UI の {@link Field.Root} が受け取る値を指定できます。
+   * `name`、`validate`、`validationMode` などの値は、指定後の変更に応じて検証状態を更新します。
+   */
   export type Props = FieldRootProps;
 }
 
+/**
+ * {@link FieldRoot} の別名です。
+ */
 export const Root: Component<Root.Props> = FieldRoot;
 
 // Label
@@ -81,11 +97,24 @@ export const FieldLabel: Component<FieldLabelProps> = function SuiFieldLabel(pro
   );
 };
 
+/**
+ * {@link FieldLabel} の状態型とプロパティー型をまとめた名前空間です。
+ */
 export namespace Label {
+  /**
+   * {@link FieldLabel} の状態型です。
+   */
   export type State = FieldLabelState;
+
+  /**
+   * {@link FieldLabel} のプロパティー型です。
+   */
   export type Props = FieldLabelProps;
 }
 
+/**
+ * {@link FieldLabel} の別名です。
+ */
 export const Label: Component<Label.Props> = FieldLabel;
 
 // Control
@@ -113,11 +142,26 @@ export type FieldControlProps = InputRootProps;
  */
 export const FieldControl: Component<FieldControlProps> = InputRoot;
 
+/**
+ * {@link FieldControl} の状態型とプロパティー型をまとめた名前空間です。
+ */
 export namespace Control {
+  /**
+   * {@link FieldControl} の状態型です。
+   */
   export type State = FieldControlState;
+
+  /**
+   * {@link FieldControl} のプロパティー型です。
+   *
+   * {@link InputRootProps} と同じ値を指定できます。
+   */
   export type Props = FieldControlProps;
 }
 
+/**
+ * {@link FieldControl} の別名です。
+ */
 export const Control: Component<Control.Props> = FieldControl;
 
 // Description
@@ -151,11 +195,24 @@ export const FieldDescription: Component<FieldDescriptionProps> = function SuiFi
   return <Field.Description {...otherProps} className={cn(className, "sui_field_description")} />;
 };
 
+/**
+ * {@link FieldDescription} の状態型とプロパティー型をまとめた名前空間です。
+ */
 export namespace Description {
+  /**
+   * {@link FieldDescription} の状態型です。
+   */
   export type State = FieldDescriptionState;
+
+  /**
+   * {@link FieldDescription} のプロパティー型です。
+   */
   export type Props = FieldDescriptionProps;
 }
 
+/**
+ * {@link FieldDescription} の別名です。
+ */
 export const Description: Component<Description.Props> = FieldDescription;
 
 // Error
@@ -187,11 +244,27 @@ export const FieldError: Component<FieldErrorProps> = function SuiFieldError(pro
   return <Field.Error {...otherProps} className={cn(className, "sui_field_error")} />;
 };
 
+/**
+ * {@link FieldError} の状態型とプロパティー型をまとめた名前空間です。
+ */
 export namespace Error {
+  /**
+   * {@link FieldError} の状態型です。
+   */
   export type State = FieldErrorState;
+
+  /**
+   * {@link FieldError} のプロパティー型です。
+   *
+   * `match` で表示対象の検証エラーを指定できます。
+   * 検証状態が変化すると、条件に一致する場合だけエラーメッセージを表示します。
+   */
   export type Props = FieldErrorProps;
 }
 
+/**
+ * {@link FieldError} の別名です。
+ */
 export const Error: Component<Error.Props> = FieldError;
 
 // Item
@@ -227,11 +300,24 @@ export const FieldItem: Component<FieldItemProps> = function SuiFieldItem(props)
   return <Field.Item {...otherProps} className={cn(className, "sui_field_item")} />;
 };
 
+/**
+ * {@link FieldItem} の状態型とプロパティー型をまとめた名前空間です。
+ */
 export namespace Item {
+  /**
+   * {@link FieldItem} の状態型です。
+   */
   export type State = FieldItemState;
+
+  /**
+   * {@link FieldItem} のプロパティー型です。
+   */
   export type Props = FieldItemProps;
 }
 
+/**
+ * {@link FieldItem} の別名です。
+ */
 export const Item: Component<Item.Props> = FieldItem;
 
 // Validity
@@ -263,9 +349,22 @@ export const FieldValidity: Component<FieldValidityProps> = function SuiFieldVal
   return <Field.Validity {...props} />;
 };
 
+/**
+ * {@link FieldValidity} の状態型とプロパティー型をまとめた名前空間です。
+ */
 export namespace Validity {
+  /**
+   * {@link FieldValidity} の状態型です。
+   */
   export type State = FieldValidityState;
+
+  /**
+   * {@link FieldValidity} のプロパティー型です。
+   */
   export type Props = FieldValidityProps;
 }
 
-export const Validity: Component<Validity.Props> = FieldValidity;
+/**
+ * {@link FieldValidity} の別名です。
+ */
+export const Validity = FieldValidity;

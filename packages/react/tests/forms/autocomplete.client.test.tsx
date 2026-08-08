@@ -133,6 +133,24 @@ describe("Autocomplete", () => {
     await expect.element(label).toHaveTextContent("みかん");
   });
 
+  test("グループ項目を表示できる", async () => {
+    const screen = await render(
+      <Autocomplete items={[{ label: "果物", items: ["りんご", "みかん"] }]} />,
+    );
+    await userEvent.click(screen.getByRole("combobox"));
+
+    await expect.element(screen.getByText("果物")).toBeVisible();
+    await expect.element(screen.getByRole("option", { name: "りんご" })).toBeVisible();
+  });
+
+  test("placeholder は input slot より優先される", async () => {
+    const screen = await render(
+      <Autocomplete placeholder="優先" slotProps={{ input: { placeholder: "slot" } }} />,
+    );
+
+    await expect.element(screen.getByPlaceholder("優先")).toBeVisible();
+  });
+
   test("disabled を指定すると無効化される", async () => {
     // 実行
     const screen = await render(<Autocomplete items={items} disabled />);

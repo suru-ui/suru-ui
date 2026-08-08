@@ -7,20 +7,36 @@ import type { Component } from "../../types.js";
 
 import "./switch.css";
 
-// Root
-// ----
+/**
+ * スイッチのスタイルバリエーションです。
+ *
+ * {@link SwitchRootProps} で指定できます。
+ */
+export type SwitchVariant = "naked" | "liquid";
 
 /**
- * {@link Root} の状態です。
+ * スイッチの角丸です。
+ *
+ * {@link SwitchRootProps} で指定できます。
+ */
+export type SwitchRadius = "none" | "rounded" | "full";
+
+/**
+ * {@link SwitchRoot} が公開するスイッチのルート要素の状態です。
  */
 export type SwitchRootState = Switch.Root.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link SwitchRoot} に渡すプロパティーです。
+ *
+ * スタイルのプロパティーを変更すると、対応するクラスと表示が更新されます。
  */
 export type SwitchRootProps = React.ComponentProps<typeof Switch.Root> & {
   /**
    * スイッチのサイズを指定します。
+   *
+   * 指定可能な値はテーマの {@link Size} です。
+   * 値を変更すると、スイッチのサイズが更新されます。
    *
    * @default "md"
    */
@@ -28,6 +44,9 @@ export type SwitchRootProps = React.ComponentProps<typeof Switch.Root> & {
 
   /**
    * スイッチの色を指定します。
+   *
+   * 指定可能な値はテーマの {@link Color} です。
+   * 値を変更すると、スイッチの色が更新されます。
    *
    * @default "grey"
    */
@@ -39,12 +58,17 @@ export type SwitchRootProps = React.ComponentProps<typeof Switch.Root> & {
    * - `"naked"`: 背景のないトラックのみ、枠線なし
    * - `"liquid"`: 薄い塗りつぶし
    *
+   * 値を変更すると、スイッチのスタイルが更新されます。
+   *
    * @default "naked"
    */
-  variant?: "naked" | "liquid" | undefined;
+  variant?: SwitchVariant | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
+   *
+   * 未指定時は `variant` が `"naked"` の場合に表示します。
+   * 値を変更すると、枠線の表示が更新されます。
    */
   outlined?: boolean | undefined;
 
@@ -55,9 +79,11 @@ export type SwitchRootProps = React.ComponentProps<typeof Switch.Root> & {
    * - `"rounded"`: 標準的な角丸
    * - `"full"`: 完全な丸形
    *
+   * 値を変更すると、スイッチの角丸が更新されます。
+   *
    * @default "full"
    */
-  radius?: "none" | "rounded" | "full" | undefined;
+  radius?: SwitchRadius | undefined;
 };
 
 /**
@@ -101,22 +127,29 @@ export const SwitchRoot: Component<SwitchRootProps> = function SuiSwitchRoot(pro
 };
 
 export namespace Root {
+  /**
+   * {@link SwitchRoot} の状態型です。
+   */
   export type State = SwitchRootState;
+
+  /**
+   * {@link SwitchRoot} のプロパティー型です。
+   */
   export type Props = SwitchRootProps;
 }
 
+/**
+ * {@link SwitchRoot} の別名です。
+ */
 export const Root: Component<Root.Props> = SwitchRoot;
 
-// Thumb
-// -----
-
 /**
- * {@link Thumb} の状態です。
+ * {@link SwitchThumb} が公開するつまみ要素の状態です。
  */
 export type SwitchThumbState = Switch.Thumb.State;
 
 /**
- * {@link Thumb} に渡すプロパティーです。
+ * {@link SwitchThumb} に渡すプロパティーです。
  */
 export type SwitchThumbProps = React.ComponentProps<typeof Switch.Thumb>;
 
@@ -137,8 +170,18 @@ export const SwitchThumb: Component<SwitchThumbProps> = function SuiSwitchThumb(
 };
 
 export namespace Thumb {
+  /**
+   * {@link SwitchThumb} の状態型です。
+   */
   export type State = SwitchThumbState;
+
+  /**
+   * {@link SwitchThumb} のプロパティー型です。
+   */
   export type Props = SwitchThumbProps;
 }
 
+/**
+ * {@link SwitchThumb} の別名です。
+ */
 export const Thumb: Component<Thumb.Props> = SwitchThumb;

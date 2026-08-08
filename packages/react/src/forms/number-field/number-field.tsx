@@ -9,22 +9,56 @@ import * as NumberFieldParts from "./number-field.parts.jsx";
 export type NumberFieldProps = NumberFieldParts.Root.Props & {
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   *
+   * `scrubArea` を指定した場合だけ {@link NumberFieldParts.ScrubArea} が表示されます。
+   * その他のパーツは常に表示され、各パーツの指定値が既定値より優先されます。
    */
-  slotProps?:
-    | {
-        readonly scrubArea?: NumberFieldParts.ScrubArea.Props | undefined;
+  slotProps?: NumberFieldSlotProps | undefined;
+};
 
-        readonly scrubAreaCursor?: NumberFieldParts.ScrubAreaCursor.Props | undefined;
+/**
+ * {@link NumberField} を構成する各パーツのプロパティーです。
+ *
+ * `scrubArea` と `scrubAreaCursor` は、スクラブ領域を使う場合だけ指定します。
+ */
+export type NumberFieldSlotProps = {
+  /**
+   * スクラブ領域のプロパティーです。
+   *
+   * 指定すると {@link NumberFieldParts.ScrubArea} が表示されます。
+   */
+  readonly scrubArea?: NumberFieldParts.ScrubArea.Props | undefined;
 
-        readonly group?: NumberFieldParts.Group.Props | undefined;
+  /**
+   * スクラブ領域カーソルのプロパティーです。
+   *
+   * `scrubArea` と同時に指定した場合だけ適用されます。
+   */
+  readonly scrubAreaCursor?: NumberFieldParts.ScrubAreaCursor.Props | undefined;
 
-        readonly decrement?: NumberFieldParts.Decrement.Props | undefined;
+  /**
+   * パーツをまとめるグループのプロパティーです。
+   */
+  readonly group?: NumberFieldParts.Group.Props | undefined;
 
-        readonly input?: NumberFieldParts.Input.Props | undefined;
+  /**
+   * 減少ボタンのプロパティーです。
+   *
+   * `children` を指定しない場合は既定のマイナスアイコンが表示されます。
+   */
+  readonly decrement?: NumberFieldParts.Decrement.Props | undefined;
 
-        readonly increment?: NumberFieldParts.Increment.Props | undefined;
-      }
-    | undefined;
+  /**
+   * 数値入力欄のプロパティーです。
+   */
+  readonly input?: NumberFieldParts.Input.Props | undefined;
+
+  /**
+   * 増加ボタンのプロパティーです。
+   *
+   * `children` を指定しない場合は既定のプラスアイコンが表示されます。
+   */
+  readonly increment?: NumberFieldParts.Increment.Props | undefined;
 };
 
 /**

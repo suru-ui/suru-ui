@@ -2,50 +2,61 @@ import type { Component } from "../../types.js";
 import * as AccordionParts from "./accordion.parts.jsx";
 
 /**
+ * {@link Accordion} を構成する各パーツのプロパティーです。
+ *
+ * 各パーツの指定値は、パーツに渡される既定のプロパティーより優先されます。
+ * `trigger.children` を指定した場合は `title` と既定の Indicator が表示されません。
+ */
+export type AccordionSlotProps = {
+  /**
+   * {@link AccordionParts.Item|Item} に渡すプロパティーです。
+   */
+  readonly item?: AccordionParts.Item.Props | undefined;
+
+  /**
+   * {@link AccordionParts.Header|Header} に渡すプロパティーです。
+   */
+  readonly header?: AccordionParts.Header.Props | undefined;
+
+  /**
+   * {@link AccordionParts.Trigger|Trigger} に渡すプロパティーです。
+   * `children` を指定すると、`title` より優先されてトリガー全体を置き換えます。
+   */
+  readonly trigger?: AccordionParts.Trigger.Props | undefined;
+
+  /**
+   * {@link AccordionParts.Indicator|Indicator} に渡すプロパティーです。
+   * `children` を指定すると、既定の下向き矢印アイコンより優先されます。
+   */
+  readonly indicator?: AccordionParts.Indicator.Props | undefined;
+
+  /**
+   * {@link AccordionParts.Panel|Panel} に渡すプロパティーです。
+   */
+  readonly panel?: AccordionParts.Panel.Props | undefined;
+};
+
+/**
  * {@link Accordion} コンポーネントのプロパティーです。
  */
 export type AccordionProps = Omit<AccordionParts.Root.Props, "children"> & {
   /**
    * アコーディオンの見出し（Trigger に表示するラベル）です。
+   * `slotProps.trigger.children` を指定した場合は、そちらが優先されます。
    */
   title?: React.ReactNode | undefined;
 
   /**
    * アコーディオンのパネルに表示するコンテンツです。
+   * パネルを閉じると、既定ではパネル要素が DOM から除去されます。
    */
   children?: React.ReactNode | undefined;
 
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   * `trigger.children` を指定すると、`title` と既定の Indicator は表示されません。
    */
-  slotProps?:
-    | {
-        /**
-         * {@link AccordionParts.Item|Item} に渡すプロパティーです。
-         */
-        readonly item?: AccordionParts.Item.Props | undefined;
-
-        /**
-         * {@link AccordionParts.Header|Header} に渡すプロパティーです。
-         */
-        readonly header?: AccordionParts.Header.Props | undefined;
-
-        /**
-         * {@link AccordionParts.Trigger|Trigger} に渡すプロパティーです。
-         */
-        readonly trigger?: AccordionParts.Trigger.Props | undefined;
-
-        /**
-         * {@link AccordionParts.Indicator|Indicator} に渡すプロパティーです。
-         */
-        readonly indicator?: AccordionParts.Indicator.Props | undefined;
-
-        /**
-         * {@link AccordionParts.Panel|Panel} に渡すプロパティーです。
-         */
-        readonly panel?: AccordionParts.Panel.Props | undefined;
-      }
-    | undefined;
+  slotProps?: AccordionSlotProps | undefined;
 };
 
 /**
@@ -71,18 +82,14 @@ export type AccordionProps = Omit<AccordionParts.Root.Props, "children"> & {
  * ```
  */
 export const Accordion: Component<AccordionProps> = function SuiAccordion(props) {
+  const { title, children, slotProps, ...rootProps } = props;
   const {
-    title,
-    children,
-    slotProps: {
-      item: itemProps,
-      header: headerProps,
-      trigger: triggerProps,
-      indicator: indicatorProps,
-      panel: panelProps,
-    } = {},
-    ...rootProps
-  } = props;
+    item: itemProps,
+    header: headerProps,
+    trigger: triggerProps,
+    indicator: indicatorProps,
+    panel: panelProps,
+  } = slotProps ?? {};
   const { children: triggerChildren, ...otherTriggerProps } = triggerProps ?? {};
 
   return (

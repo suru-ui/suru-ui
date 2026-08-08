@@ -73,11 +73,17 @@ export const AlertDialogRoot: Component<AlertDialogRootProps> = function SuiAler
   return <AlertDialog.Root {...props} />;
 };
 
+/**
+ * {@link AlertDialogRoot} の型をまとめた名前空間です。
+ */
 export namespace Root {
   export type State = AlertDialogRootState;
   export type Props = AlertDialogRootProps;
 }
 
+/**
+ * {@link AlertDialogRoot} の短縮名です。
+ */
 export const Root: Component<Root.Props> = AlertDialogRoot;
 
 // Trigger
@@ -138,11 +144,17 @@ export const AlertDialogTrigger: Component<AlertDialogTriggerProps> =
     );
   };
 
+/**
+ * {@link AlertDialogTrigger} の型をまとめた名前空間です。
+ */
 export namespace Trigger {
   export type State = AlertDialogTriggerState;
   export type Props = AlertDialogTriggerProps;
 }
 
+/**
+ * {@link AlertDialogTrigger} の短縮名です。
+ */
 export const Trigger: Component<Trigger.Props> = AlertDialogTrigger;
 
 // Portal
@@ -180,11 +192,17 @@ export const AlertDialogPortal: Component<AlertDialogPortalProps> = function Sui
   );
 };
 
+/**
+ * {@link AlertDialogPortal} の型をまとめた名前空間です。
+ */
 export namespace Portal {
   export type State = AlertDialogPortalState;
   export type Props = AlertDialogPortalProps;
 }
 
+/**
+ * {@link AlertDialogPortal} の短縮名です。
+ */
 export const Portal: Component<Portal.Props> = AlertDialogPortal;
 
 // Backdrop
@@ -220,11 +238,17 @@ export const AlertDialogBackdrop: Component<AlertDialogBackdropProps> =
     );
   };
 
+/**
+ * {@link AlertDialogBackdrop} の型をまとめた名前空間です。
+ */
 export namespace Backdrop {
   export type State = AlertDialogBackdropState;
   export type Props = AlertDialogBackdropProps;
 }
 
+/**
+ * {@link AlertDialogBackdrop} の短縮名です。
+ */
 export const Backdrop: Component<Backdrop.Props> = AlertDialogBackdrop;
 
 // Viewport
@@ -264,11 +288,17 @@ export const AlertDialogViewport: Component<AlertDialogViewportProps> =
     );
   };
 
+/**
+ * {@link AlertDialogViewport} の型をまとめた名前空間です。
+ */
 export namespace Viewport {
   export type State = AlertDialogViewportState;
   export type Props = AlertDialogViewportProps;
 }
 
+/**
+ * {@link AlertDialogViewport} の短縮名です。
+ */
 export const Viewport: Component<Viewport.Props> = AlertDialogViewport;
 
 // Popup
@@ -303,11 +333,17 @@ export const AlertDialogPopup: Component<AlertDialogPopupProps> = function SuiAl
   return <AlertDialog.Popup {...otherProps} className={cn(className, "sui_alert_dialog_popup")} />;
 };
 
+/**
+ * {@link AlertDialogPopup} の型をまとめた名前空間です。
+ */
 export namespace Popup {
   export type State = AlertDialogPopupState;
   export type Props = AlertDialogPopupProps;
 }
 
+/**
+ * {@link AlertDialogPopup} の短縮名です。
+ */
 export const Popup: Component<Popup.Props> = AlertDialogPopup;
 
 // Title
@@ -339,11 +375,17 @@ export const AlertDialogTitle: Component<AlertDialogTitleProps> = function SuiAl
   return <AlertDialog.Title {...otherProps} className={cn(className, "sui_alert_dialog_title")} />;
 };
 
+/**
+ * {@link AlertDialogTitle} の型をまとめた名前空間です。
+ */
 export namespace Title {
   export type State = AlertDialogTitleState;
   export type Props = AlertDialogTitleProps;
 }
 
+/**
+ * {@link AlertDialogTitle} の短縮名です。
+ */
 export const Title: Component<Title.Props> = AlertDialogTitle;
 
 // Description
@@ -379,11 +421,17 @@ export const AlertDialogDescription: Component<AlertDialogDescriptionProps> =
     );
   };
 
+/**
+ * {@link AlertDialogDescription} の型をまとめた名前空間です。
+ */
 export namespace Description {
   export type State = AlertDialogDescriptionState;
   export type Props = AlertDialogDescriptionProps;
 }
 
+/**
+ * {@link AlertDialogDescription} の短縮名です。
+ */
 export const Description: Component<Description.Props> = AlertDialogDescription;
 
 // Close
@@ -437,9 +485,15 @@ export const AlertDialogClose: Component<AlertDialogCloseProps> = function SuiAl
   );
 };
 
+/**
+ * {@link AlertDialogClose} の型をまとめた名前空間です。
+ */
 export namespace Close {
   export type State = AlertDialogCloseState;
   export type Props = AlertDialogCloseProps;
 }
 
+/**
+ * {@link AlertDialogClose} の短縮名です。
+ */
 export const Close: Component<Close.Props> = AlertDialogClose;

@@ -6,27 +6,35 @@ import * as AlertDialogParts from "./alert-dialog.parts.jsx";
 
 /**
  * {@link AlertDialog} コンポーネントのプロパティーです。
+ *
+ * {@link AlertDialogParts.Root|Root} から継承した `open` を指定すると開閉状態を制御でき、
+ * `defaultOpen` は初期状態だけを指定します。`open` を指定した場合は `defaultOpen` より優先されます。
+ * いずれも省略した場合の初期状態は閉じています。
  */
 export type AlertDialogProps = Omit<AlertDialogParts.Root.Props, "children" | "handle"> & {
   /**
    * ダイアログを開くトリガーに表示するコンテンツです。
    *
    * {@link AlertDialogParts.Trigger|Trigger} の子要素として直接渡されます。
+   * 省略した場合、トリガーはレンダリングされません。
    */
   trigger?: AlertDialogParts.Trigger.Props["children"] | undefined;
 
   /**
    * ダイアログのタイトルです。
+   * 省略した場合、タイトル要素はレンダリングされません。
    */
   title?: React.ReactNode | undefined;
 
   /**
    * ダイアログの説明文です。
+   * 省略した場合、説明要素はレンダリングされません。
    */
   description?: React.ReactNode | undefined;
 
   /**
    * ダイアログの本文に表示するコンテンツです。
+   * `title` と `description` の後、アクションボタンの前に表示されます。
    */
   children?: React.ReactNode | undefined;
 
@@ -34,6 +42,7 @@ export type AlertDialogProps = Omit<AlertDialogParts.Root.Props, "children" | "h
    * 承諾せずにダイアログを閉じるボタンに表示するコンテンツです。
    *
    * {@link AlertDialogParts.Close|Close} の子要素として直接渡されます。
+   * 省略した場合、拒否ボタンはレンダリングされません。
    */
   reject?: AlertDialogParts.Close.Props["children"] | undefined;
 
@@ -41,21 +50,28 @@ export type AlertDialogProps = Omit<AlertDialogParts.Root.Props, "children" | "h
    * 承諾してダイアログを閉じるボタンに表示するコンテンツです。
    *
    * {@link AlertDialogParts.Close|Close} の子要素として直接渡されます。
+   * 省略した場合、承諾ボタンはレンダリングされません。
    */
   accept?: AlertDialogParts.Close.Props["children"] | undefined;
 
   /**
    * 拒否ボタンがクリックされたときに呼ばれるコールバックです。
+   * {@link slotProps} の `reject.onClick` が先に実行され、イベントが `preventDefault` されていない場合だけ呼ばれます。
+   * クリックイベントを引数として受け取ります。
    */
-  onReject?: (() => void) | undefined;
+  onReject?: ((event: CloseClickEvent) => void) | undefined;
 
   /**
    * 承諾ボタンがクリックされたときに呼ばれるコールバックです。
+   * {@link slotProps} の `accept.onClick` が先に実行され、イベントが `preventDefault` されていない場合だけ呼ばれます。
+   * クリックイベントを引数として受け取ります。
    */
-  onAccept?: (() => void) | undefined;
+  onAccept?: ((event: CloseClickEvent) => void) | undefined;
 
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   * クラス名は既定のクラス名と結合され、拒否・承諾ボタンの `onClick` は
+   * このオブジェクトのハンドラーが先に実行されます。
    */
   slotProps?:
     | {
@@ -107,6 +123,35 @@ export type AlertDialogProps = Omit<AlertDialogParts.Root.Props, "children" | "h
     | undefined;
 };
 
+type CloseClickHandler = AlertDialogParts.Close.Props["onClick"];
+type CloseClickEvent = Parameters<NonNullable<CloseClickHandler>>[0];
+
+interface AlertDialogComponentType extends Component<AlertDialogProps> {
+  /**
+   * アラートダイアログを制御するハンドルを新しく作成します。
+   *
+   * 作成したハンドルは {@link AlertDialogParts.Root} と
+   * {@link AlertDialogParts.Trigger} の `handle` プロパティーに渡します。
+   */
+  readonly createHandle: typeof AlertDialogParts.createHandle;
+}
+
+function createCloseClickHandler(
+  onClick: CloseClickHandler | undefined,
+  callback: ((event: CloseClickEvent) => void) | undefined,
+): CloseClickHandler {
+  if (onClick === undefined && callback === undefined) {
+    return undefined;
+  }
+
+  return (event) => {
+    onClick?.(event);
+    if (!event.defaultPrevented) {
+      callback?.(event);
+    }
+  };
+}
+
 /**
  * アラートダイアログを表示するコンポーネントです。
  *
@@ -135,108 +180,97 @@ export type AlertDialogProps = Omit<AlertDialogParts.Root.Props, "children" | "h
  * />
  * ```
  */
-export const AlertDialog: Component<AlertDialogProps> = function SuiAlertDialog(props) {
-  const [handle] = React.useState(AlertDialogParts.createHandle);
-  const {
-    trigger,
-    title,
-    description,
-    reject,
-    accept,
-    onReject,
-    onAccept,
-    children,
-    slotProps: {
-      trigger: triggerProps,
-      portal: portalProps,
-      backdrop: backdropProps,
-      viewport: viewportProps,
-      popup: popupProps,
-      title: titleProps,
-      description: descriptionProps,
-      reject: rejectProps,
-      accept: acceptProps,
-    } = {},
-    ...rootProps
-  } = props;
+export const AlertDialog: AlertDialogComponentType = /*#__PURE__*/ Object.assign(
+  function SuiAlertDialog(props: AlertDialogProps) {
+    const [handle] = React.useState(AlertDialog.createHandle);
+    const {
+      trigger,
+      title,
+      description,
+      reject,
+      accept,
+      onReject,
+      onAccept,
+      children,
+      slotProps: {
+        trigger: triggerProps,
+        portal: portalProps,
+        backdrop: backdropProps,
+        viewport: viewportProps,
+        popup: popupProps,
+        title: titleProps,
+        description: descriptionProps,
+        reject: rejectProps,
+        accept: acceptProps,
+      } = {},
+      ...rootProps
+    } = props;
 
-  return (
-    <AlertDialogParts.Root {...rootProps} handle={handle}>
-      {trigger !== undefined && (
-        <AlertDialogParts.Trigger {...triggerProps} handle={handle}>
-          {trigger}
-        </AlertDialogParts.Trigger>
-      )}
-      <AlertDialogParts.Portal {...portalProps}>
-        <AlertDialogParts.Backdrop {...backdropProps} />
-        <AlertDialogParts.Viewport {...viewportProps}>
-          <AlertDialogParts.Popup {...popupProps}>
-            <AlertDialogParts.Close
-              className="sui_alert_dialog_close_button"
-              onClick={(event) => {
-                if (!event.defaultPrevented) {
-                  onReject?.();
-                }
-              }}
-            >
-              <Button variant="naked" color="grey" squared aria-label="閉じる">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                  focusable="false"
-                >
-                  <path d="M18 6 6 18" />
-                  <path d="m6 6 12 12" />
-                </svg>
-              </Button>
-            </AlertDialogParts.Close>
-            {title !== undefined && (
-              <AlertDialogParts.Title {...titleProps}>{title}</AlertDialogParts.Title>
-            )}
-            {description !== undefined && (
-              <AlertDialogParts.Description {...descriptionProps}>
-                {description}
-              </AlertDialogParts.Description>
-            )}
-            {children}
-            {(reject !== undefined || accept !== undefined) && (
-              <div className="sui_alert_dialog_actions">
-                {reject !== undefined && (
-                  <AlertDialogParts.Close
-                    {...rejectProps}
-                    onClick={(event) => {
-                      rejectProps?.onClick?.(event);
-                      if (!event.defaultPrevented) {
-                        onReject?.();
-                      }
-                    }}
+    return (
+      <AlertDialogParts.Root {...rootProps} handle={handle}>
+        {trigger !== undefined && (
+          <AlertDialogParts.Trigger {...triggerProps} handle={handle}>
+            {trigger}
+          </AlertDialogParts.Trigger>
+        )}
+        <AlertDialogParts.Portal {...portalProps}>
+          <AlertDialogParts.Backdrop {...backdropProps} />
+          <AlertDialogParts.Viewport {...viewportProps}>
+            <AlertDialogParts.Popup {...popupProps}>
+              <AlertDialogParts.Close
+                className="sui_alert_dialog_close_button"
+                onClick={createCloseClickHandler(undefined, onReject)}
+              >
+                <Button variant="naked" color="grey" squared aria-label="閉じる">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                    focusable="false"
                   >
-                    {reject}
-                  </AlertDialogParts.Close>
-                )}
-                {accept !== undefined && (
-                  <AlertDialogParts.Close
-                    {...acceptProps}
-                    onClick={(event) => {
-                      acceptProps?.onClick?.(event);
-                      if (!event.defaultPrevented) {
-                        onAccept?.();
-                      }
-                    }}
-                  >
-                    {accept}
-                  </AlertDialogParts.Close>
-                )}
-              </div>
-            )}
-          </AlertDialogParts.Popup>
-        </AlertDialogParts.Viewport>
-      </AlertDialogParts.Portal>
-    </AlertDialogParts.Root>
-  );
-};
+                    <path d="M18 6 6 18" />
+                    <path d="m6 6 12 12" />
+                  </svg>
+                </Button>
+              </AlertDialogParts.Close>
+              {title !== undefined && (
+                <AlertDialogParts.Title {...titleProps}>{title}</AlertDialogParts.Title>
+              )}
+              {description !== undefined && (
+                <AlertDialogParts.Description {...descriptionProps}>
+                  {description}
+                </AlertDialogParts.Description>
+              )}
+              {children}
+              {(reject !== undefined || accept !== undefined) && (
+                <div className="sui_alert_dialog_actions">
+                  {reject !== undefined && (
+                    <AlertDialogParts.Close
+                      {...rejectProps}
+                      onClick={createCloseClickHandler(rejectProps?.onClick, onReject)}
+                    >
+                      {reject}
+                    </AlertDialogParts.Close>
+                  )}
+                  {accept !== undefined && (
+                    <AlertDialogParts.Close
+                      {...acceptProps}
+                      onClick={createCloseClickHandler(acceptProps?.onClick, onAccept)}
+                    >
+                      {accept}
+                    </AlertDialogParts.Close>
+                  )}
+                </div>
+              )}
+            </AlertDialogParts.Popup>
+          </AlertDialogParts.Viewport>
+        </AlertDialogParts.Portal>
+      </AlertDialogParts.Root>
+    );
+  },
+  { createHandle: AlertDialogParts.createHandle },
+);

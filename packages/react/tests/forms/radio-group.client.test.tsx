@@ -1,8 +1,10 @@
 import type { ReactNode } from "react";
+import * as React from "react";
 import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { RadioGroup } from "../../src/forms/radio-group/index.js";
+import { useRadioGroupContext } from "../../src/forms/radio-group/radio-group.parts.jsx";
 import { Radio } from "../../src/forms/radio/index.js";
 import { clickElement } from "../_click.js";
 
@@ -100,6 +102,34 @@ describe("RadioGroup", () => {
     await expect.element(radioElement).toHaveClass("sui_radio-size_sm");
     await expect.element(radioElement).toHaveClass("sui_radio-variant_liquid");
     await expect.element(radioElement).toHaveClass("sui_radio-radius_rounded");
+  });
+
+  test("スタイルが同じ再レンダーではコンテキストの利用者を再レンダーしない", async () => {
+    // 準備
+    let renderCount = 0;
+    const ContextConsumer = React.memo(function ContextConsumer() {
+      useRadioGroupContext();
+      renderCount += 1;
+      return null;
+    });
+
+    // 実行
+    const screen = await render(
+      <RadioGroup color="purple">
+        <ContextConsumer />
+      </RadioGroup>,
+    );
+    expect(renderCount).toBe(1);
+
+    // 実行
+    await screen.rerender(
+      <RadioGroup color="purple">
+        <ContextConsumer />
+      </RadioGroup>,
+    );
+
+    // 検証
+    expect(renderCount).toBe(1);
   });
 
   test("name を指定すると入力欄に反映される", async () => {

@@ -50,6 +50,22 @@ describe("NumberField", () => {
     await expect.element(root).toHaveClass("sui_number_field-radius_full");
   });
 
+  test("outlined は variant による既定値より優先される", async () => {
+    // 実行
+    const screen = await render(
+      <>
+        <NumberField variant="liquid" aria-label="既定" />
+        <NumberField variant="liquid" outlined aria-label="明示" />
+      </>,
+    );
+
+    // 検証
+    const roots = screen.container.querySelectorAll<HTMLElement>(".sui_number_field");
+
+    await expect.element(roots[0]).not.toHaveClass("sui_number_field-outlined");
+    await expect.element(roots[1]).toHaveClass("sui_number_field-outlined");
+  });
+
   test("accentColor に応じたクラスを適用する", async () => {
     // 実行
     const screen = await render(<NumberField accentColor="blue" />);

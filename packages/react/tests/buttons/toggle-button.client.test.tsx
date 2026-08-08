@@ -106,4 +106,40 @@ describe("ToggleButton", () => {
     // 検証
     expect(pressed).toBe(true);
   });
+
+  test("pending を指定すると無効化され、プログレスバーが表示される", async () => {
+    // 実行
+    const screen = await render(<ToggleButton pending>切り替え</ToggleButton>);
+
+    // 検証
+    const button = screen.getByRole("button");
+    await expect.element(button).toBeDisabled();
+    await expect.element(button).toHaveClass("sui_button-pending");
+    await expect
+      .element(screen.container.querySelector<HTMLElement>(".sui_button_circular_progress"))
+      .toBeInTheDocument();
+  });
+
+  test("pending でないときは保留表示を生成しない", async () => {
+    // 実行
+    const screen = await render(<ToggleButton>切り替え</ToggleButton>);
+
+    // 検証
+    expect(screen.container.querySelector<HTMLElement>(".sui_button_pending")).toBeNull();
+    expect(screen.container.querySelector<HTMLElement>(".sui_button_circular_progress")).toBeNull();
+  });
+
+  test("pending の defaultVisibility が hidden のときは非保留時も領域を保持する", async () => {
+    // 実行
+    const screen = await render(
+      <ToggleButton slotProps={{ pending: { defaultVisibility: "hidden" } }}>
+        切り替え
+      </ToggleButton>,
+    );
+
+    // 検証
+    await expect
+      .element(screen.container.querySelector<HTMLElement>(".sui_button_pending"))
+      .toHaveClass("sui_button_pending-visibility_hidden");
+  });
 });

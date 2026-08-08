@@ -15,14 +15,29 @@ import "./toggle-button-group.css";
  * {@link ToggleButtonGroupContext} の値です。
  */
 export type ToggleButtonGroupContext = {
+  /**
+   * 子要素のトグルボタンに適用するバリエーションです。
+   */
   readonly variant: Exclude<Variant, "solid">;
 
+  /**
+   * 子要素のトグルボタンに適用する色です。
+   */
   readonly color: Color;
 
+  /**
+   * 子要素のトグルボタンに適用するサイズです。
+   */
   readonly size: Size;
 
+  /**
+   * 子要素のトグルボタンに適用する角丸です。
+   */
   readonly radius: "none" | "rounded" | "full";
 
+  /**
+   * 子要素のトグルボタンに適用する枠線の有無です。
+   */
   readonly outlined: boolean;
 };
 
@@ -35,7 +50,11 @@ export const ToggleButtonGroupContext: React.Context<ToggleButtonGroupContext | 
 /**
  * {@link ToggleButtonGroupContext} を読み取るフックです。
  *
- * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
+ * {@link ToggleButtonGroupRoot} の Provider 配下で使用する必要があります。
+ * Provider がない場合、`optional` が `true` でなければ {@link ContextMissingError} を投げます。
+ * `optional` に `true` を指定すると、Provider がない場合に `null` を返します。
+ *
+ * @param optional Provider がなくても `null` を返すかどうかを指定します。
  *
  * @returns コンテキストの値。`optional` が `true` でコンテキストがない場合は `null`。
  */
@@ -86,6 +105,10 @@ export type ToggleButtonGroupRootState = ToggleGroup.State;
 
 /**
  * {@link Root} に渡すプロパティーです。
+ *
+ * グループに指定したスタイルプロパティーは、子要素の指定より優先されません。
+ * 子要素の {@link ToggleButtonRootProps} に同じスタイルプロパティーを指定すると、子要素の値が優先されます。
+ * 指定後に値を変更すると、グループと子要素のスタイルも更新されます。
  */
 export type ToggleButtonGroupRootProps = React.ComponentProps<typeof ToggleGroup> & {
   /**
@@ -93,26 +116,44 @@ export type ToggleButtonGroupRootProps = React.ComponentProps<typeof ToggleGroup
    *
    * トグルボタンでは `"solid"` は指定できません。押下状態の表示は
    * {@link ToggleButton} の `variant` を参照してください。
+   *
+   * `"naked"` または `"liquid"` を指定できます。
+   *
+   * @default "liquid"
    */
   variant?: Exclude<Variant, "solid"> | undefined;
 
   /**
    * ボタンの色を指定します。
+   *
+   * {@link Color} で定義された色を指定できます。
+   *
+   * @default "grey"
    */
   color?: Color | undefined;
 
   /**
    * ボタンのサイズを指定します。
+   *
+   * {@link Size} で定義されたサイズを指定できます。
+   *
+   * @default "md"
    */
   size?: Size | undefined;
 
   /**
    * ボタンの角丸を指定します。
+   *
+   * `"none"`、`"rounded"`、`"full"` のいずれかを指定できます。
+   *
+   * @default "rounded"
    */
   radius?: "none" | "rounded" | "full" | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
+   *
+   * `true` の場合に枠線を表示します。
    */
   outlined?: boolean | undefined;
 
@@ -155,13 +196,10 @@ export const ToggleButtonGroupRoot: Component<ToggleButtonGroupRootProps> =
       ...otherProps
     } = props;
     const role = roleProps ?? (multiple ? "group" : "radiogroup");
-    const context: ToggleButtonGroupContext = {
-      size,
-      color,
-      radius,
-      variant,
-      outlined,
-    };
+    const context = React.useMemo<ToggleButtonGroupContext>(
+      () => ({ size, color, radius, variant, outlined }),
+      [color, outlined, radius, size, variant],
+    );
 
     return (
       <Context value={context}>
@@ -184,8 +222,18 @@ export const ToggleButtonGroupRoot: Component<ToggleButtonGroupRootProps> =
   };
 
 export namespace Root {
+  /**
+   * {@link ToggleButtonGroupRoot} の状態型です。
+   */
   export type State = ToggleButtonGroupRootState;
+
+  /**
+   * {@link ToggleButtonGroupRoot} のプロパティー型です。
+   */
   export type Props = ToggleButtonGroupRootProps;
 }
 
+/**
+ * {@link ToggleButtonGroupRoot} の別名です。
+ */
 export const Root: Component<Root.Props> = ToggleButtonGroupRoot;

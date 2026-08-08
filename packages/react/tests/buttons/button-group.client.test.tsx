@@ -1,6 +1,8 @@
+import * as React from "react";
 import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
 
+import { useButtonGroupContext } from "../../src/buttons/button-group/button-group.parts.jsx";
 import { ButtonGroup } from "../../src/buttons/button-group/index.js";
 import { Button } from "../../src/buttons/button/index.js";
 
@@ -69,5 +71,38 @@ describe("ButtonGroup", () => {
     const button = screen.getByRole("button");
 
     await expect.element(button).toHaveClass("sui_button-color_blue");
+  });
+
+  test("スタイルが変わらない再レンダーではコンテキスト利用者を再レンダーしない", async () => {
+    // 準備
+    let consumerRenderCount = 0;
+
+    const Consumer = React.memo(function Consumer() {
+      useButtonGroupContext();
+      consumerRenderCount += 1;
+      return null;
+    });
+
+    function Example() {
+      const [, setUpdated] = React.useState(false);
+
+      return (
+        <>
+          <button type="button" onClick={() => setUpdated((value) => !value)}>
+            更新
+          </button>
+          <ButtonGroup>
+            <Consumer />
+          </ButtonGroup>
+        </>
+      );
+    }
+
+    // 実行
+    const screen = await render(<Example />);
+    await screen.getByRole("button", { name: "更新" }).click();
+
+    // 検証
+    expect(consumerRenderCount).toBe(1);
   });
 });

@@ -2,27 +2,55 @@ import type { Component } from "../../types.js";
 import * as SliderParts from "./slider.parts.jsx";
 
 /**
+ * {@link Slider} の各パーツに渡すプロパティーです。
+ *
+ * `label` または `value` を指定した場合だけ、対応するパーツが表示されます。
+ * その他のプロパティーは対応するパーツへそのまま渡され、パーツ側の既定値より優先されます。
+ */
+export type SliderSlotProps = {
+  /**
+   * {@link SliderParts.Label} に渡すプロパティーです。
+   */
+  readonly label?: SliderParts.Label.Props | undefined;
+
+  /**
+   * {@link SliderParts.Value} に渡すプロパティーです。
+   */
+  readonly value?: SliderParts.Value.Props | undefined;
+
+  /**
+   * {@link SliderParts.Control} に渡すプロパティーです。
+   */
+  readonly control?: SliderParts.Control.Props | undefined;
+
+  /**
+   * {@link SliderParts.Track} に渡すプロパティーです。
+   */
+  readonly track?: SliderParts.Track.Props | undefined;
+
+  /**
+   * {@link SliderParts.Indicator} に渡すプロパティーです。
+   */
+  readonly indicator?: SliderParts.Indicator.Props | undefined;
+
+  /**
+   * {@link SliderParts.Thumb} に渡すプロパティーです。
+   */
+  readonly thumb?: SliderParts.Thumb.Props | undefined;
+};
+
+/**
  * {@link Slider} コンポーネントのプロパティーです。
+ *
+ * `value` が指定されている場合は `defaultValue` より優先され、値が配列になると Thumb の数も更新されます。
  */
 export type SliderProps = SliderParts.Root.Props & {
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   *
+   * {@link SliderSlotProps} を参照してください。
    */
-  slotProps?:
-    | {
-        readonly label?: SliderParts.Label.Props | undefined;
-
-        readonly value?: SliderParts.Value.Props | undefined;
-
-        readonly control?: SliderParts.Control.Props | undefined;
-
-        readonly track?: SliderParts.Track.Props | undefined;
-
-        readonly indicator?: SliderParts.Indicator.Props | undefined;
-
-        readonly thumb?: SliderParts.Thumb.Props | undefined;
-      }
-    | undefined;
+  slotProps?: SliderSlotProps | undefined;
 };
 
 /**
@@ -65,7 +93,11 @@ export const Slider: Component<SliderProps> = function SuiSlider(props) {
     ...rootProps
   } = props;
   const value = rootProps.value ?? rootProps.defaultValue;
-  const thumbCount = Array.isArray(value) ? value.length : 1;
+  const thumbs = Array.isArray(value) ? (
+    value.map((_, index) => <SliderParts.Thumb key={index} index={index} {...thumbProps} />)
+  ) : (
+    <SliderParts.Thumb index={0} {...thumbProps} />
+  );
 
   return (
     <SliderParts.Root {...rootProps}>
@@ -74,9 +106,7 @@ export const Slider: Component<SliderProps> = function SuiSlider(props) {
       <SliderParts.Control {...controlProps}>
         <SliderParts.Track {...trackProps}>
           <SliderParts.Indicator {...indicatorProps} />
-          {Array.from({ length: thumbCount }, (_, index) => (
-            <SliderParts.Thumb key={index} index={index} {...thumbProps} />
-          ))}
+          {thumbs}
         </SliderParts.Track>
       </SliderParts.Control>
     </SliderParts.Root>

@@ -9,6 +9,8 @@ import * as ButtonGroupParts from "./button-group.parts.jsx";
 export type ButtonGroupProps = ButtonGroupParts.Root.Props & {
   /**
    * ボタン要素です。
+   *
+   * グループのスタイル指定が子ボタンの同じ指定より優先されます。
    */
   readonly children?: React.ReactNode | undefined;
 };
@@ -17,6 +19,8 @@ export type ButtonGroupProps = ButtonGroupParts.Root.Props & {
  * ボタンをグループ化するコンポーネントです。
  *
  * グループに指定したプロパティーは、子要素のボタンに強制されます。
+ *
+ * {@link ButtonGroupParts.Root} の Props と同じプロパティーを指定できます。
  *
  * @example 基本
  * ```tsx

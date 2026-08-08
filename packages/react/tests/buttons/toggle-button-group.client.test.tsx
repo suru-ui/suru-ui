@@ -1,7 +1,9 @@
+import * as React from "react";
 import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { ToggleButtonGroup } from "../../src/buttons/toggle-button-group/index.js";
+import { useToggleButtonGroupContext } from "../../src/buttons/toggle-button-group/toggle-button-group.parts.jsx";
 import { ToggleButton } from "../../src/buttons/toggle-button/index.js";
 
 describe("ToggleButtonGroup", () => {
@@ -175,5 +177,38 @@ describe("ToggleButtonGroup", () => {
     await expect.element(group).toHaveClass("sui_toggle_button_group-orientation_vertical");
     await expect.element(group).toHaveClass("sui_toggle_button_group-detached");
     await expect.element(group).toHaveAttribute("aria-orientation", "vertical");
+  });
+
+  test("スタイルが変わらない再レンダーではコンテキスト利用者を再レンダーしない", async () => {
+    // 準備
+    let consumerRenderCount = 0;
+
+    const Consumer = React.memo(function Consumer() {
+      useToggleButtonGroupContext();
+      consumerRenderCount += 1;
+      return null;
+    });
+
+    function Example() {
+      const [, setUpdated] = React.useState(false);
+
+      return (
+        <>
+          <button type="button" onClick={() => setUpdated((value) => !value)}>
+            更新
+          </button>
+          <ToggleButtonGroup>
+            <Consumer />
+          </ToggleButtonGroup>
+        </>
+      );
+    }
+
+    // 実行
+    const screen = await render(<Example />);
+    await screen.getByRole("button", { name: "更新" }).click();
+
+    // 検証
+    expect(consumerRenderCount).toBe(1);
   });
 });

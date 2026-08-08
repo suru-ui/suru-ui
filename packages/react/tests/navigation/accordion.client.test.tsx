@@ -206,6 +206,21 @@ describe("Accordion", () => {
     await expect.element(indicator).toBeInTheDocument();
     await expect.element(indicator).toHaveTextContent("▼");
   });
+
+  test("Trigger の children を指定すると既定の Indicator を表示しない", async () => {
+    // 実行
+    const screen = await render(
+      <Accordion title="見出し" slotProps={{ trigger: { children: "差し替え" } }}>
+        コンテンツ
+      </Accordion>,
+    );
+
+    // 検証
+    await expect.element(screen.getByRole("button", { name: "差し替え" })).toBeInTheDocument();
+    await expect
+      .element(screen.container.querySelector<HTMLElement>(".sui_accordion_indicator"))
+      .not.toBeInTheDocument();
+  });
 });
 
 describe("AccordionParts.Root", () => {

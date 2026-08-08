@@ -127,6 +127,17 @@ describe("Button", () => {
     expect(screen.container.querySelector<HTMLElement>(".sui_button_circular_progress")).toBeNull();
   });
 
+  test("pending の defaultVisibility が hidden のときは非保留時も領域を保持する", async () => {
+    // 実行
+    const screen = await render(
+      <Button slotProps={{ pending: { defaultVisibility: "hidden" } }}>送信</Button>,
+    );
+
+    // 検証
+    const pending = screen.container.querySelector<HTMLElement>(".sui_button_pending");
+    await expect.element(pending).toHaveClass("sui_button_pending-visibility_hidden");
+  });
+
   test("percentage で進捗を表示する", async () => {
     // 実行
     const screen = await render(

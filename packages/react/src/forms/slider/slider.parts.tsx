@@ -11,30 +11,30 @@ import "./slider.css";
 // ----
 
 /**
- * {@link Root} の状態です。
+ * {@link SliderRoot} の状態です。
  */
 export type SliderRootState = Slider.Root.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link SliderRoot} に渡すプロパティーです。
  */
 export type SliderRootProps = React.ComponentProps<typeof Slider.Root> & {
   /**
-   * スライダーのサイズを指定します。
+   * スライダーのサイズを指定します。値を変更すると、ルートのクラスも更新されます。
    *
    * @default "md"
    */
   size?: Size | undefined;
 
   /**
-   * スライダーの色を指定します。
+   * スライダーの色を指定します。値を変更すると、ルートのクラスも更新されます。
    *
    * @default "grey"
    */
   color?: Color | undefined;
 
   /**
-   * スライダーのスタイルバリエーションを指定します。
+   * スライダーのスタイルバリエーションを指定します。値を変更すると、ルートのクラスも更新されます。
    *
    * - `"naked"`: 背景のないトラックのみ、枠線なし
    * - `"liquid"`: 薄い塗りつぶし
@@ -44,12 +44,12 @@ export type SliderRootProps = React.ComponentProps<typeof Slider.Root> & {
   variant?: "naked" | "liquid" | undefined;
 
   /**
-   * 枠線を表示するかどうかを指定します。
+   * 枠線を表示するかどうかを指定します。値を変更すると、ルートのクラスも更新されます。
    */
   outlined?: boolean | undefined;
 
   /**
-   * スライダーの角丸を指定します。
+   * スライダーの角丸を指定します。値を変更すると、ルートのクラスも更新されます。
    *
    * - `"none"`: 角を直角にする
    * - `"rounded"`: 標準的な角丸
@@ -105,23 +105,36 @@ export const SliderRoot: Component<SliderRootProps> = function SuiSliderRoot(pro
   );
 };
 
+/**
+ * {@link SliderRoot} の状態とプロパティーをまとめた型名前空間です。
+ */
 export namespace Root {
+  /**
+   * {@link SliderRoot} の状態型です。
+   */
   export type State = SliderRootState;
+
+  /**
+   * {@link SliderRoot} のプロパティー型です。
+   */
   export type Props = SliderRootProps;
 }
 
+/**
+ * {@link SliderRoot} の別名です。
+ */
 export const Root: Component<Root.Props> = SliderRoot;
 
 // Label
 // -----
 
 /**
- * {@link Label} の状態です。
+ * {@link SliderLabel} の状態です。
  */
 export type SliderLabelState = Slider.Label.State;
 
 /**
- * {@link Label} に渡すプロパティーです。
+ * {@link SliderLabel} に渡すプロパティーです。
  */
 export type SliderLabelProps = React.ComponentProps<typeof Slider.Label>;
 
@@ -147,23 +160,36 @@ export const SliderLabel: Component<SliderLabelProps> = function SuiSliderLabel(
   return <Slider.Label {...otherProps} className={cn(className, "sui_slider_label")} />;
 };
 
+/**
+ * {@link SliderLabel} の状態とプロパティーをまとめた型名前空間です。
+ */
 export namespace Label {
+  /**
+   * {@link SliderLabel} の状態型です。
+   */
   export type State = SliderLabelState;
+
+  /**
+   * {@link SliderLabel} のプロパティー型です。
+   */
   export type Props = SliderLabelProps;
 }
 
+/**
+ * {@link SliderLabel} の別名です。
+ */
 export const Label: Component<Label.Props> = SliderLabel;
 
 // Value
 // -----
 
 /**
- * {@link Value} の状態です。
+ * {@link SliderValue} の状態です。
  */
 export type SliderValueState = Slider.Value.State;
 
 /**
- * {@link Value} に渡すプロパティーです。
+ * {@link SliderValue} に渡すプロパティーです。
  */
 export type SliderValueProps = React.ComponentProps<typeof Slider.Value>;
 
@@ -189,23 +215,36 @@ export const SliderValue: Component<SliderValueProps> = function SuiSliderValue(
   return <Slider.Value {...otherProps} className={cn(className, "sui_slider_value")} />;
 };
 
+/**
+ * {@link SliderValue} の状態とプロパティーをまとめた型名前空間です。
+ */
 export namespace Value {
+  /**
+   * {@link SliderValue} の状態型です。
+   */
   export type State = SliderValueState;
+
+  /**
+   * {@link SliderValue} のプロパティー型です。
+   */
   export type Props = SliderValueProps;
 }
 
+/**
+ * {@link SliderValue} の別名です。
+ */
 export const Value: Component<Value.Props> = SliderValue;
 
 // Control
 // -------
 
 /**
- * {@link Control} の状態です。
+ * {@link SliderControl} の状態です。
  */
 export type SliderControlState = Slider.Control.State;
 
 /**
- * {@link Control} に渡すプロパティーです。
+ * {@link SliderControl} に渡すプロパティーです。
  */
 export type SliderControlProps = React.ComponentProps<typeof Slider.Control>;
 
@@ -230,23 +269,36 @@ export const SliderControl: Component<SliderControlProps> = function SuiSliderCo
   return <Slider.Control {...otherProps} className={cn(className, "sui_slider_control")} />;
 };
 
+/**
+ * {@link SliderControl} の状態とプロパティーをまとめた型名前空間です。
+ */
 export namespace Control {
+  /**
+   * {@link SliderControl} の状態型です。
+   */
   export type State = SliderControlState;
+
+  /**
+   * {@link SliderControl} のプロパティー型です。
+   */
   export type Props = SliderControlProps;
 }
 
+/**
+ * {@link SliderControl} の別名です。
+ */
 export const Control: Component<Control.Props> = SliderControl;
 
 // Track
 // -----
 
 /**
- * {@link Track} の状態です。
+ * {@link SliderTrack} の状態です。
  */
 export type SliderTrackState = Slider.Track.State;
 
 /**
- * {@link Track} に渡すプロパティーです。
+ * {@link SliderTrack} に渡すプロパティーです。
  */
 export type SliderTrackProps = React.ComponentProps<typeof Slider.Track>;
 
@@ -271,23 +323,36 @@ export const SliderTrack: Component<SliderTrackProps> = function SuiSliderTrack(
   return <Slider.Track {...otherProps} className={cn(className, "sui_slider_track")} />;
 };
 
+/**
+ * {@link SliderTrack} の状態とプロパティーをまとめた型名前空間です。
+ */
 export namespace Track {
+  /**
+   * {@link SliderTrack} の状態型です。
+   */
   export type State = SliderTrackState;
+
+  /**
+   * {@link SliderTrack} のプロパティー型です。
+   */
   export type Props = SliderTrackProps;
 }
 
+/**
+ * {@link SliderTrack} の別名です。
+ */
 export const Track: Component<Track.Props> = SliderTrack;
 
 // Indicator
 // ---------
 
 /**
- * {@link Indicator} の状態です。
+ * {@link SliderIndicator} の状態です。
  */
 export type SliderIndicatorState = Slider.Indicator.State;
 
 /**
- * {@link Indicator} に渡すプロパティーです。
+ * {@link SliderIndicator} に渡すプロパティーです。
  */
 export type SliderIndicatorProps = React.ComponentProps<typeof Slider.Indicator>;
 
@@ -312,23 +377,36 @@ export const SliderIndicator: Component<SliderIndicatorProps> = function SuiSlid
   return <Slider.Indicator {...otherProps} className={cn(className, "sui_slider_indicator")} />;
 };
 
+/**
+ * {@link SliderIndicator} の状態とプロパティーをまとめた型名前空間です。
+ */
 export namespace Indicator {
+  /**
+   * {@link SliderIndicator} の状態型です。
+   */
   export type State = SliderIndicatorState;
+
+  /**
+   * {@link SliderIndicator} のプロパティー型です。
+   */
   export type Props = SliderIndicatorProps;
 }
 
+/**
+ * {@link SliderIndicator} の別名です。
+ */
 export const Indicator: Component<Indicator.Props> = SliderIndicator;
 
 // Thumb
 // -----
 
 /**
- * {@link Thumb} の状態です。
+ * {@link SliderThumb} の状態です。
  */
 export type SliderThumbState = Slider.Thumb.State;
 
 /**
- * {@link Thumb} に渡すプロパティーです。
+ * {@link SliderThumb} に渡すプロパティーです。
  */
 export type SliderThumbProps = React.ComponentProps<typeof Slider.Thumb>;
 
@@ -353,9 +431,22 @@ export const SliderThumb: Component<SliderThumbProps> = function SuiSliderThumb(
   return <Slider.Thumb {...otherProps} className={cn(className, "sui_slider_thumb")} />;
 };
 
+/**
+ * {@link SliderThumb} の状態とプロパティーをまとめた型名前空間です。
+ */
 export namespace Thumb {
+  /**
+   * {@link SliderThumb} の状態型です。
+   */
   export type State = SliderThumbState;
+
+  /**
+   * {@link SliderThumb} のプロパティー型です。
+   */
   export type Props = SliderThumbProps;
 }
 
+/**
+ * {@link SliderThumb} の別名です。
+ */
 export const Thumb: Component<Thumb.Props> = SliderThumb;

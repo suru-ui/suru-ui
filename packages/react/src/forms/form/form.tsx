@@ -5,6 +5,10 @@ import * as FormParts from "./form.parts.jsx";
  * {@link Form} コンポーネントのプロパティーです。
  *
  * @template FormValues フォームの入力値を表す型です。
+ *
+ * `validationMode` は `"onSubmit"`、`"onBlur"`、`"onChange"` を指定でき、既定値は `"onSubmit"` です。
+ * 子要素の {@link FormParts.Root.Props} にあるフィールド単位の設定がフォーム全体の設定より優先されます。
+ * `errors`、`onFormSubmit`、`actionsRef` の変更は、それぞれ外部エラー、送信処理、命令的な検証操作に反映されます。
  */
 export type FormProps<FormValues extends Record<string, any> = Record<string, any>> =
   FormParts.Root.Props<FormValues>;
@@ -33,6 +37,4 @@ export type FormProps<FormValues extends Record<string, any> = Record<string, an
  * </Form>
  * ```
  */
-export const Form: Component<FormProps> = function SuiForm(props) {
-  return <FormParts.Root {...props} />;
-};
+export const Form: Component<FormProps> = FormParts.Root;

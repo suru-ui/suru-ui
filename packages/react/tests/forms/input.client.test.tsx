@@ -43,6 +43,24 @@ describe("Input", () => {
     await expect.element(input).toHaveClass("sui_input-radius_full");
   });
 
+  test("outlined は variant による既定値より優先される", async () => {
+    // 実行
+    const screen = await render(
+      <>
+        <Input variant="liquid" aria-label="既定" />
+        <Input variant="liquid" outlined aria-label="明示" />
+      </>,
+    );
+
+    // 検証
+    await expect
+      .element(screen.getByRole("textbox", { name: "既定" }))
+      .not.toHaveClass("sui_input-outlined");
+    await expect
+      .element(screen.getByRole("textbox", { name: "明示" }))
+      .toHaveClass("sui_input-outlined");
+  });
+
   test("accentColor に応じたクラスを適用する", async () => {
     // 実行
     const screen = await render(<Input accentColor="blue" />);

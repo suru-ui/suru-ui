@@ -18,6 +18,14 @@ describe("Form", () => {
     await expect.element(formElement(screen)).toBeInTheDocument();
   });
 
+  test("指定したクラスを標準クラスと併用する", async () => {
+    const screen = await render(<Form className="custom-form" />);
+    const form = screen.container.querySelector("form");
+
+    expect(form).toHaveClass("sui_form");
+    expect(form).toHaveClass("custom-form");
+  });
+
   test("送信時に onFormSubmit が値を通知する", async () => {
     // 準備
     let submitted: Record<string, string> | undefined;

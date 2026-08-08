@@ -5,6 +5,7 @@ import * as React from "react";
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
 import type { Component } from "../../types.js";
+import type { RadioRadius, RadioVariant } from "../radio/radio.parts.js";
 
 import "./radio-group.css";
 
@@ -13,12 +14,14 @@ import "./radio-group.css";
 
 /**
  * {@link RadioGroupContext} の値です。
+ *
+ * {@link RadioGroupRoot} に指定したスタイル値を子要素へ伝播します。
  */
 export type RadioGroupContext = {
   /**
    * ラジオボタンのスタイルバリエーションです。
    */
-  readonly variant: "naked" | "liquid";
+  readonly variant: RadioVariant;
 
   /**
    * ラジオボタンの色です。
@@ -33,7 +36,7 @@ export type RadioGroupContext = {
   /**
    * ラジオボタンの角丸です。
    */
-  readonly radius: "none" | "rounded" | "full";
+  readonly radius: RadioRadius;
 
   /**
    * 枠線を表示するかどうかです。
@@ -54,6 +57,10 @@ export const RadioGroupContext: React.Context<RadioGroupContext | null> =
 
 /**
  * {@link RadioGroupContext} を読み取るフックです。
+ *
+ * Provider は {@link RadioGroupRoot} の配下に必要です。
+ * Provider がない場合、`optional` が `true` でなければ {@link ContextMissingError} を投げます。
+ * `optional` に `true` を指定すると、Provider がない場合に `null` を返します。
  *
  * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
  *
@@ -86,6 +93,10 @@ export const Context: React.Context<RadioGroupContext | null> = RadioGroupContex
 /**
  * {@link useRadioGroupContext} のエイリアスです。
  *
+ * Provider は {@link RadioGroupRoot} の配下に必要です。
+ * Provider がない場合、`optional` が `true` でなければ {@link ContextMissingError} を投げます。
+ * `optional` に `true` を指定すると、Provider がない場合に `null` を返します。
+ *
  * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
  *
  * @returns コンテキストの値。`optional` が `true` でコンテキストがない場合は `null`。
@@ -101,15 +112,23 @@ export function useContext(optional?: boolean): RadioGroupContext | null {
 
 /**
  * {@link Root} の状態です。
+ *
+ * {@link RadioGroupRoot} が公開する状態型の別名です。
  */
 export type RadioGroupRootState = RadioGroup.State;
 
 /**
  * {@link Root} に渡すプロパティーです。
+ *
+ * グループに指定したスタイルプロパティーは、子要素のラジオボタン指定より優先されます。
+ * 指定後に値を変更すると、グループと子要素のスタイルも更新されます。
  */
 export type RadioGroupRootProps = React.ComponentProps<typeof RadioGroup> & {
   /**
    * ラジオボタンのサイズを指定します。
+   *
+   * {@link RadioGroupRoot} の子要素に指定した値より優先されます。
+   * 値を変更すると、グループ内のラジオボタンも更新されます。
    *
    * @default "md"
    */
@@ -117,6 +136,9 @@ export type RadioGroupRootProps = React.ComponentProps<typeof RadioGroup> & {
 
   /**
    * ラジオボタンの色を指定します。
+   *
+   * {@link RadioGroupRoot} の子要素に指定した値より優先されます。
+   * 値を変更すると、グループ内のラジオボタンも更新されます。
    *
    * @default "grey"
    */
@@ -128,12 +150,18 @@ export type RadioGroupRootProps = React.ComponentProps<typeof RadioGroup> & {
    * - `"naked"`: 背景のないインジケーターのみ、枠線なし
    * - `"liquid"`: 薄い塗りつぶし
    *
+   * {@link RadioGroupRoot} の子要素に指定した値より優先されます。
+   * 値を変更すると、グループ内のラジオボタンも更新されます。
+   *
    * @default "naked"
    */
-  variant?: "naked" | "liquid" | undefined;
+  variant?: RadioVariant | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
+   *
+   * {@link RadioGroupRoot} の子要素に指定した値より優先されます。
+   * 値を変更すると、グループ内のラジオボタンも更新されます。
    */
   outlined?: boolean | undefined;
 
@@ -144,15 +172,21 @@ export type RadioGroupRootProps = React.ComponentProps<typeof RadioGroup> & {
    * - `"rounded"`: 標準的な角丸
    * - `"full"`: 完全な丸形
    *
+   * {@link RadioGroupRoot} の子要素に指定した値より優先されます。
+   * 値を変更すると、グループ内のラジオボタンも更新されます。
+   *
    * @default "full"
    */
-  radius?: "none" | "rounded" | "full" | undefined;
+  radius?: RadioRadius | undefined;
 
   /**
    * ラジオボタン群の向きを指定します。
    *
    * - `"horizontal"`: 横並び
    * - `"vertical"`: 縦並び
+   *
+   * 値を変更すると、グループのレイアウトと `aria-orientation` が更新されます。
+   * `aria-orientation` を指定した場合は、その値が `orientation` より優先されます。
    *
    * @default "vertical"
    */
@@ -163,6 +197,7 @@ export type RadioGroupRootProps = React.ComponentProps<typeof RadioGroup> & {
  * ラジオボタングループのルート要素です。
  *
  * 選択状態を管理し、子要素のラジオボタンにスタイルを伝播します。
+ * スタイル値が変わらない再レンダーでは、コンテキストの値を再生成しません。
  *
  * @example
  * ```tsx
@@ -185,14 +220,17 @@ export const RadioGroupRoot: Component<RadioGroupRootProps> = function SuiRadioG
     className,
     ...otherProps
   } = props;
-  const context: RadioGroupContext = {
-    size: sizeProp,
-    color: colorProp,
-    radius: radiusProp,
-    variant: variantProp,
-    outlined,
-    disabled,
-  };
+  const context = React.useMemo<RadioGroupContext>(
+    () => ({
+      size: sizeProp,
+      color: colorProp,
+      radius: radiusProp,
+      variant: variantProp,
+      outlined,
+      disabled,
+    }),
+    [colorProp, disabled, outlined, radiusProp, sizeProp, variantProp],
+  );
 
   return (
     <Context value={context}>
@@ -206,9 +244,22 @@ export const RadioGroupRoot: Component<RadioGroupRootProps> = function SuiRadioG
   );
 };
 
+/**
+ * {@link RadioGroupRoot} の状態型とプロパティー型をまとめた名前空間です。
+ */
 export namespace Root {
+  /**
+   * {@link RadioGroupRoot} の状態型です。
+   */
   export type State = RadioGroupRootState;
+
+  /**
+   * {@link RadioGroupRoot} のプロパティー型です。
+   */
   export type Props = RadioGroupRootProps;
 }
 
+/**
+ * {@link RadioGroupRoot} の別名です。
+ */
 export const Root: Component<Root.Props> = RadioGroupRoot;

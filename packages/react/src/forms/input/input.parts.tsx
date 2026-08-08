@@ -9,15 +9,21 @@ import "./input.css";
 
 /**
  * テキスト入力欄のルート要素の状態です。
+ *
+ * {@link InputRoot} が公開する状態型の別名です。
  */
 export type InputRootState = Input.State;
 
 /**
- * テキスト入力欄のルート要素のプロパティーです。
+ * {@link InputRoot} に渡すプロパティーです。
  */
 export type InputRootProps = Omit<React.ComponentProps<typeof Input>, "size"> & {
   /**
    * フォーカス時に枠線へ適用するアクセントカラーを指定します。
+   *
+   * 指定可能な値はテーマの {@link Color} です。
+   *
+   * `accentColor` はフォーカス中の枠線にだけ適用されます。
    *
    * @default "grey"
    */
@@ -25,11 +31,16 @@ export type InputRootProps = Omit<React.ComponentProps<typeof Input>, "size"> & 
 
   /**
    * 枠線を表示するかどうかを指定します。
+   *
+   * 未指定時は `variant` が `"naked"` の場合に表示します。
+   * `outlined` を指定した場合は、この値が `variant` による既定値より優先されます。
    */
   outlined?: boolean | undefined;
 
   /**
    * テキスト入力欄のサイズを指定します。
+   *
+   * 指定可能な値はテーマの {@link Size} です。
    *
    * @default "md"
    */
@@ -41,6 +52,8 @@ export type InputRootProps = Omit<React.ComponentProps<typeof Input>, "size"> & 
    * - `"naked"`: 背景のないテキスト入力欄
    * - `"liquid"`: 薄い塗りつぶし
    *
+   * `outlined` を指定しない場合は、`"naked"` のときだけ枠線を表示します。
+   *
    * @default "naked"
    */
   variant?: "naked" | "liquid" | undefined;
@@ -51,6 +64,8 @@ export type InputRootProps = Omit<React.ComponentProps<typeof Input>, "size"> & 
    * - `"none"`: 角を直角にする
    * - `"rounded"`: 標準的な角丸
    * - `"full"`: 完全な丸形
+   *
+   * 指定値は角丸の見た目だけを変更し、入力値やフォーカス状態は変更しません。
    *
    * @default "rounded"
    */
@@ -96,9 +111,22 @@ export const InputRoot: Component<InputRootProps> = function SuiInputRoot(props)
   );
 };
 
+/**
+ * {@link InputRoot} の状態とプロパティーをまとめた型名前空間です。
+ */
 export namespace Root {
+  /**
+   * {@link InputRoot} の状態型です。
+   */
   export type State = InputRootState;
+
+  /**
+   * {@link InputRoot} のプロパティー型です。
+   */
   export type Props = InputRootProps;
 }
 
+/**
+ * {@link InputRoot} の別名です。
+ */
 export const Root: Component<Root.Props> = InputRoot;

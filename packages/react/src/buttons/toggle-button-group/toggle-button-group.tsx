@@ -9,6 +9,8 @@ import * as ToggleButtonGroupParts from "./toggle-button-group.parts.jsx";
 export type ToggleButtonGroupProps = ToggleButtonGroupParts.Root.Props & {
   /**
    * トグルボタン要素です。
+   *
+   * {@link ToggleButtonGroupParts.Root} が提供するコンテキストによって、選択状態とグループのスタイルが子要素へ伝播します。
    */
   readonly children?: React.ReactNode | undefined;
 };

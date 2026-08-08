@@ -123,6 +123,20 @@ describe("Slider", () => {
     await expect.element(sliders[1]!).toHaveAttribute("aria-valuenow", "75");
   });
 
+  test("controlled value の配列長が変わると Thumb の数を更新する", async () => {
+    // 準備と実行
+    const screen = await render(<Slider value={25} />);
+
+    // 検証
+    expect(screen.container.querySelectorAll('input[type="range"]')).toHaveLength(1);
+
+    // 実行
+    await screen.rerender(<Slider value={[25, 75]} />);
+
+    // 検証
+    expect(screen.container.querySelectorAll('input[type="range"]')).toHaveLength(2);
+  });
+
   test("disabled を指定すると無効化される", async () => {
     // 実行
     const screen = await render(<Slider disabled />);

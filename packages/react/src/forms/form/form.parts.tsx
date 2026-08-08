@@ -7,14 +7,20 @@ import type { Component } from "../../types.js";
 import "./form.css";
 
 /**
- * {@link Root} の状態です。
+ * {@link FormRoot} が公開する状態です。
+ *
+ * Form 自体には追加の状態がなく、Base UI の {@link Form.State} をそのまま利用します。
  */
 export type FormRootState = Form.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link FormRoot} に渡すプロパティーです。
  *
  * @template FormValues フォームの入力値を表す型です。
+ *
+ * `validationMode` は `"onSubmit"`、`"onBlur"`、`"onChange"` を指定できます。
+ * 既定値は `"onSubmit"` で、{@link FormRoot} の子要素である {@link Field.Root} に指定した値が優先されます。
+ * `errors` を変更すると外部から渡したフィールドエラーが更新され、`onFormSubmit` は送信時にフォームの値と詳細を通知します。
  */
 export type FormRootProps<FormValues extends Record<string, any> = Record<string, any>> =
   React.ComponentProps<typeof Form<FormValues>>;
@@ -46,10 +52,25 @@ export const FormRoot: Component<FormRootProps> = function SuiFormRoot(props) {
   return <Form {...otherProps} className={cn(className, "sui_form")} />;
 };
 
+/**
+ * {@link FormRoot} の状態型とプロパティー型をまとめた名前空間です。
+ */
 export namespace Root {
+  /**
+   * {@link FormRoot} の状態型です。
+   */
   export type State = FormRootState;
+
+  /**
+   * {@link FormRoot} のプロパティー型です。
+   *
+   * {@link FormRootProps} と同じ型です。
+   */
   export type Props<FormValues extends Record<string, any> = Record<string, any>> =
     FormRootProps<FormValues>;
 }
 
+/**
+ * {@link FormRoot} の別名です。
+ */
 export const Root: Component<Root.Props> = FormRoot;

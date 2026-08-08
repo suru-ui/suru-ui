@@ -46,6 +46,14 @@ describe("Switch", () => {
     await expect.element(sw).toHaveClass("sui_switch-radius_rounded");
   });
 
+  test("variant を変更すると outlined の既定値も更新される", async () => {
+    // 実行
+    const screen = await render(<Switch variant="liquid" />);
+
+    // 検証
+    await expect.element(screen.getByRole("switch")).not.toHaveClass("sui_switch-outlined");
+  });
+
   test("クリックするとチェック状態が切り替わる", async () => {
     // 実行
     const screen = await render(<Switch />);

@@ -56,6 +56,29 @@ describe("Field", () => {
       .toHaveClass("sui_field_description");
   });
 
+  test("Validity で検証状態に応じたメッセージを表示する", async () => {
+    // 実行
+    const screen = await render(
+      <Wrapper>
+        <Field.Root name="name" validationMode="onSubmit">
+          <Field.Control required />
+          <Field.Validity>
+            {({ validity }) => (validity.valueMissing ? "名前を入力してください" : null)}
+          </Field.Validity>
+        </Field.Root>
+      </Wrapper>,
+    );
+
+    // 検証
+    expect(screen.getByText("名前を入力してください")).not.toBeInTheDocument();
+
+    // 実行
+    await screen.getByRole("button", { name: "送信" }).click();
+
+    // 検証
+    await expect.element(screen.getByText("名前を入力してください")).toBeInTheDocument();
+  });
+
   test("必須項目を空のまま送信するとエラーが表示される", async () => {
     // 実行
     const screen = await render(

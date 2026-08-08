@@ -10,7 +10,7 @@ export type * from "./types.js";
 /** components */
 
 // buttons
-export { type ButtonProps, Button } from "./buttons/button/index.js";
+export { type ButtonProps, type ButtonSlotProps, Button } from "./buttons/button/index.js";
 export { type ButtonGroupProps, ButtonGroup } from "./buttons/button-group/index.js";
 export { type ToggleButtonProps, ToggleButton } from "./buttons/toggle-button/index.js";
 export {
@@ -26,14 +26,22 @@ export { type FieldProps, Field } from "./forms/field/index.js";
 export { type FieldsetProps, Fieldset } from "./forms/fieldset/index.js";
 export { type FormProps, Form } from "./forms/form/index.js";
 export { type InputProps, Input } from "./forms/input/index.js";
-export { type NumberFieldProps, NumberField } from "./forms/number-field/index.js";
+export {
+  type NumberFieldProps,
+  type NumberFieldSlotProps,
+  NumberField,
+} from "./forms/number-field/index.js";
 export { type RadioProps, Radio } from "./forms/radio/index.js";
 export { type RadioGroupProps, RadioGroup } from "./forms/radio-group/index.js";
-export { type SliderProps, Slider } from "./forms/slider/index.js";
-export { type SwitchProps, Switch } from "./forms/switch/index.js";
+export { type SliderProps, type SliderSlotProps, Slider } from "./forms/slider/index.js";
+export { type SwitchProps, type SwitchSlotProps, Switch } from "./forms/switch/index.js";
 
 // navigation
-export { type AccordionProps, Accordion } from "./navigation/accordion/index.js";
+export {
+  type AccordionProps,
+  type AccordionSlotProps,
+  Accordion,
+} from "./navigation/accordion/index.js";
 
 // overlays
 export { type AlertDialogProps, AlertDialog } from "./overlays/alert-dialog/index.js";

@@ -10,11 +10,13 @@ import * as AutocompleteParts from "./autocomplete.parts.jsx";
 export type AutocompleteProps = Omit<AutocompleteParts.Root.Props, "children"> & {
   /**
    * 入力欄を含むグループ要素に適用するクラス名です。
+   * `slotProps.inputGroup.className` と結合されます。
    */
   className?: AutocompleteParts.InputGroup.Props["className"] | undefined;
 
   /**
    * 入力欄のプレースホルダー文字列です。
+   * 指定した場合は `slotProps.input.placeholder` より優先されます。
    */
   placeholder?: string | undefined;
 
@@ -24,11 +26,14 @@ export type AutocompleteProps = Omit<AutocompleteParts.Root.Props, "children"> &
    * - 関数: 各行の内容を、項目の値とインデックスを受け取って作ります。
    * - それ以外の React ノード: リストにそのまま表示します（`Item` を列挙する場合など）
    * - 指定しない場合: アイテムの値をそのまま各行に表示します
+   * 項目の状態が変わると、関数形式の children は再び呼び出されます。
    */
   children?: React.ReactNode | ((item: any, index: number) => React.ReactNode) | undefined;
 
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   * `clear`、`icon`、`input`、`inputGroup`、`item`、`list`、`portal`、`positioner`、
+   * `popup`、`trigger` を指定できます。
    */
   slotProps?:
     | {
@@ -61,6 +66,9 @@ export type AutocompleteProps = Omit<AutocompleteParts.Root.Props, "children"> &
  * クリアボタンと、ポップアップを開くボタンを自動で配置します。
  * Clear と Trigger に挿入するアイコンは、`slotProps` の
  * `clear.children` と `icon.children` で差し替えられます。
+ * `autoHighlight` と `openOnInputClick` の既定値はどちらも `true` です。
+ * `placeholder` は `slotProps.input.placeholder` より優先されます。
+ * クリアボタンは入力値がある場合だけ、ポップアップの内容は開いている場合だけ表示されます。
  *
  * @example 基本
  * ```tsx
@@ -117,35 +125,38 @@ export const Autocomplete: Component<AutocompleteProps> = function SuiAutocomple
     sideOffset = 8,
     ...restPositionerProps
   } = positionerProps ?? {};
-  const listChildren =
-    typeof children === "function" || children === undefined
-      ? (item: any, index: number): React.ReactNode => {
-          const group = item as { label?: React.ReactNode; items?: readonly unknown[] } | null;
-          if (group && Array.isArray(group.items)) {
-            return (
-              <AutocompleteParts.Group key={index} items={group.items}>
-                {group.label !== undefined && (
-                  <AutocompleteParts.GroupLabel>{group.label}</AutocompleteParts.GroupLabel>
-                )}
-                <AutocompleteParts.Collection>
-                  {(groupItem, groupIndex) => (
-                    <AutocompleteParts.Item {...itemProps} key={groupIndex} value={groupItem}>
-                      {typeof children === "function"
-                        ? children(groupItem, groupIndex)
-                        : String(groupItem)}
-                    </AutocompleteParts.Item>
-                  )}
-                </AutocompleteParts.Collection>
-              </AutocompleteParts.Group>
-            );
-          }
-          return (
-            <AutocompleteParts.Item {...itemProps} key={index} value={item}>
-              {typeof children === "function" ? children(item, index) : String(item)}
-            </AutocompleteParts.Item>
-          );
-        }
-      : children;
+  const listChildren = React.useMemo(() => {
+    if (typeof children !== "function" && children !== undefined) {
+      return children;
+    }
+
+    return (item: any, index: number): React.ReactNode => {
+      const group = item as { label?: React.ReactNode; items?: readonly unknown[] } | null;
+      if (group && Array.isArray(group.items)) {
+        return (
+          <AutocompleteParts.Group key={index} items={group.items}>
+            {group.label !== undefined && (
+              <AutocompleteParts.GroupLabel>{group.label}</AutocompleteParts.GroupLabel>
+            )}
+            <AutocompleteParts.Collection>
+              {(groupItem, groupIndex) => (
+                <AutocompleteParts.Item {...itemProps} key={groupIndex} value={groupItem}>
+                  {typeof children === "function"
+                    ? children(groupItem, groupIndex)
+                    : String(groupItem)}
+                </AutocompleteParts.Item>
+              )}
+            </AutocompleteParts.Collection>
+          </AutocompleteParts.Group>
+        );
+      }
+      return (
+        <AutocompleteParts.Item {...itemProps} key={index} value={item}>
+          {typeof children === "function" ? children(item, index) : String(item)}
+        </AutocompleteParts.Item>
+      );
+    };
+  }, [children, itemProps]);
 
   return (
     <AutocompleteParts.Root
@@ -187,8 +198,9 @@ export const Autocomplete: Component<AutocompleteProps> = function SuiAutocomple
   );
 };
 
-// Clear と Icon の既定アイコンです。
-
+/**
+ * {@link Autocomplete} の Clear に使う既定のアイコンです。
+ */
 function SuiClearIcon(props: React.ComponentProps<"svg">) {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeLinecap="round" {...props}>
@@ -197,6 +209,9 @@ function SuiClearIcon(props: React.ComponentProps<"svg">) {
   );
 }
 
+/**
+ * {@link Autocomplete} の Trigger に使う既定のアイコンです。
+ */
 function SuiChevronIcon(props: React.ComponentProps<"svg">) {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeLinecap="round" {...props}>

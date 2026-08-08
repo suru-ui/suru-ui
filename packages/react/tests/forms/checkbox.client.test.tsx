@@ -105,4 +105,24 @@ describe("Checkbox", () => {
     await expect.element(indicator).toHaveClass("sui_checkbox_indicator");
     await expect.element(indicator).toHaveTextContent("✓");
   });
+
+  test("コンテンツがない場合は Indicator を生成しない", async () => {
+    // 実行
+    const screen = await render(<Checkbox defaultChecked />);
+
+    // 検証
+    expect(screen.container.querySelector(".sui_checkbox_indicator")).toBeNull();
+  });
+
+  test("slotProps.indicator を指定するとコンテンツがなくても Indicator を生成する", async () => {
+    // 実行
+    const screen = await render(
+      <Checkbox defaultChecked slotProps={{ indicator: { className: "custom-indicator" } }} />,
+    );
+
+    // 検証
+    const indicator = screen.container.querySelector<HTMLElement>(".sui_checkbox_indicator");
+
+    await expect.element(indicator).toHaveClass("custom-indicator");
+  });
 });

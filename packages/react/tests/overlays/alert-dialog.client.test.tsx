@@ -294,6 +294,40 @@ describe("AlertDialog", () => {
     expect(results).toStrictEqual(["prevented"]);
   });
 
+  test("slotProps の onClick の後に onReject が呼ばれる", async () => {
+    // 準備
+    const results: string[] = [];
+
+    // 実行
+    const screen = await render(
+      <AlertDialog
+        defaultOpen
+        title="確認"
+        reject={(props) => (
+          <button type="button" {...props}>
+            キャンセル
+          </button>
+        )}
+        slotProps={{
+          reject: {
+            onClick: () => {
+              results.push("slot");
+            },
+          },
+        }}
+        onReject={(event) => {
+          results.push(`reject:${event.type}`);
+        }}
+      />,
+    );
+
+    // 実行
+    clickElement(screen.getByRole("button", { name: "キャンセル" }));
+
+    // 検証
+    expect(results).toStrictEqual(["slot", "reject:click"]);
+  });
+
   test("Esc キーでダイアログが閉じる", async () => {
     // 実行
     const screen = await render(

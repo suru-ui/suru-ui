@@ -102,11 +102,24 @@ export const AccordionRoot: Component<AccordionRootProps> = function SuiAccordio
   );
 };
 
+/**
+ * {@link AccordionRoot} に対応する型名前空間です。
+ */
 export namespace Root {
+  /**
+   * {@link Root} の状態です。
+   */
   export type State = AccordionRootState;
+
+  /**
+   * {@link Root} に渡すプロパティーです。
+   */
   export type Props = AccordionRootProps;
 }
 
+/**
+ * {@link AccordionRoot} の別名です。
+ */
 export const Root: Component<Root.Props> = AccordionRoot;
 
 // Item
@@ -141,11 +154,24 @@ export const AccordionItem: Component<AccordionItemProps> = function SuiAccordio
   return <Accordion.Item {...otherProps} className={cn(className, "sui_accordion_item")} />;
 };
 
+/**
+ * {@link AccordionItem} に対応する型名前空間です。
+ */
 export namespace Item {
+  /**
+   * {@link Item} の状態です。
+   */
   export type State = AccordionItemState;
+
+  /**
+   * {@link Item} に渡すプロパティーです。
+   */
   export type Props = AccordionItemProps;
 }
 
+/**
+ * {@link AccordionItem} の別名です。
+ */
 export const Item: Component<Item.Props> = AccordionItem;
 
 // Header
@@ -177,11 +203,24 @@ export const AccordionHeader: Component<AccordionHeaderProps> = function SuiAcco
   return <Accordion.Header {...otherProps} className={cn(className, "sui_accordion_header")} />;
 };
 
+/**
+ * {@link AccordionHeader} に対応する型名前空間です。
+ */
 export namespace Header {
+  /**
+   * {@link Header} の状態です。
+   */
   export type State = AccordionHeaderState;
+
+  /**
+   * {@link Header} に渡すプロパティーです。
+   */
   export type Props = AccordionHeaderProps;
 }
 
+/**
+ * {@link AccordionHeader} の別名です。
+ */
 export const Header: Component<Header.Props> = AccordionHeader;
 
 // Trigger
@@ -216,11 +255,24 @@ export const AccordionTrigger: Component<AccordionTriggerProps> = function SuiAc
   return <Accordion.Trigger {...otherProps} className={cn(className, "sui_accordion_trigger")} />;
 };
 
+/**
+ * {@link AccordionTrigger} に対応する型名前空間です。
+ */
 export namespace Trigger {
+  /**
+   * {@link Trigger} の状態です。
+   */
   export type State = AccordionTriggerState;
+
+  /**
+   * {@link Trigger} に渡すプロパティーです。
+   */
   export type Props = AccordionTriggerProps;
 }
 
+/**
+ * {@link AccordionTrigger} の別名です。
+ */
 export const Trigger: Component<Trigger.Props> = AccordionTrigger;
 
 // Indicator
@@ -266,11 +318,24 @@ export const AccordionIndicator: Component<AccordionIndicatorProps> =
     });
   };
 
+/**
+ * {@link AccordionIndicator} に対応する型名前空間です。
+ */
 export namespace Indicator {
+  /**
+   * {@link Indicator} の状態です。
+   */
   export type State = AccordionIndicatorState;
+
+  /**
+   * {@link Indicator} に渡すプロパティーです。
+   */
   export type Props = AccordionIndicatorProps;
 }
 
+/**
+ * {@link AccordionIndicator} の別名です。
+ */
 export const Indicator: Component<Indicator.Props> = AccordionIndicator;
 
 // Panel
@@ -300,9 +365,22 @@ export const AccordionPanel: Component<AccordionPanelProps> = function SuiAccord
   return <Accordion.Panel {...otherProps} className={cn(className, "sui_accordion_panel")} />;
 };
 
+/**
+ * {@link AccordionPanel} に対応する型名前空間です。
+ */
 export namespace Panel {
+  /**
+   * {@link Panel} の状態です。
+   */
   export type State = AccordionPanelState;
+
+  /**
+   * {@link Panel} に渡すプロパティーです。
+   */
   export type Props = AccordionPanelProps;
 }
 
+/**
+ * {@link AccordionPanel} の別名です。
+ */
 export const Panel: Component<Panel.Props> = AccordionPanel;

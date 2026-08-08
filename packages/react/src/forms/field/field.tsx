@@ -5,6 +5,9 @@ import * as FieldParts from "./field.parts.jsx";
 
 /**
  * {@link Field} コンポーネントのプロパティーです。
+ *
+ * {@link Field.Root} が受け取る値を指定できます。
+ * `name`、`validate`、`validationMode` などの値は、指定後の変更に応じて検証状態を更新します。
  */
 export type FieldProps = FieldParts.Root.Props;
 

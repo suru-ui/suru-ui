@@ -9,13 +9,36 @@ import { useRadioGroupContext } from "../radio-group/radio-group.parts.jsx";
 import "./radio.css";
 
 /**
- * ラジオボタンのルート要素の状態です。
+ * ラジオボタンのスタイルバリエーションです。
+ *
+ * {@link RadioRootProps} と {@link RadioGroupRootProps} で指定できます。
+ */
+export type RadioVariant = "naked" | "liquid";
+
+/**
+ * ラジオボタンの角丸です。
+ *
+ * {@link RadioRootProps} と {@link RadioGroupRootProps} で指定できます。
+ */
+export type RadioRadius = "none" | "rounded" | "full";
+
+/**
+ * {@link RadioRoot} が公開するラジオボタンのルート要素の状態です。
  */
 export type RadioRootState = Radio.Root.State;
 
+/**
+ * {@link RadioRoot} に渡すプロパティーです。
+ *
+ * {@link RadioGroupRoot} 内では、グループに指定したスタイル値が子要素の指定より優先されます。
+ * グループまたは子要素の値を変更すると、対応するスタイルと無効状態が更新されます。
+ */
 export type RadioRootProps = React.ComponentProps<typeof Radio.Root> & {
   /**
    * ラジオボタンのサイズを指定します。
+   *
+   * {@link RadioGroupRoot} 内では、グループの値が優先されます。
+   * 値を変更すると、ラジオボタンのクラスが更新されます。
    *
    * @default "md"
    */
@@ -23,6 +46,9 @@ export type RadioRootProps = React.ComponentProps<typeof Radio.Root> & {
 
   /**
    * ラジオボタンの色を指定します。
+   *
+   * {@link RadioGroupRoot} 内では、グループの値が優先されます。
+   * 値を変更すると、ラジオボタンのクラスが更新されます。
    *
    * @default "grey"
    */
@@ -34,12 +60,18 @@ export type RadioRootProps = React.ComponentProps<typeof Radio.Root> & {
    * - `"naked"`: 背景のないインジケーターのみ、枠線なし
    * - `"liquid"`: 薄い塗りつぶし
    *
+   * {@link RadioGroupRoot} 内では、グループの値が優先されます。
+   * 値を変更すると、ラジオボタンのクラスが更新されます。
+   *
    * @default "naked"
    */
-  variant?: "naked" | "liquid" | undefined;
+  variant?: RadioVariant | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
+   *
+   * 未指定時は `variant` が `"naked"` の場合に表示します。
+   * {@link RadioGroupRoot} 内では、グループの値が優先されます。
    */
   outlined?: boolean | undefined;
 
@@ -50,9 +82,12 @@ export type RadioRootProps = React.ComponentProps<typeof Radio.Root> & {
    * - `"rounded"`: 標準的な角丸
    * - `"full"`: 完全な丸形
    *
+   * {@link RadioGroupRoot} 内では、グループの値が優先されます。
+   * 値を変更すると、ラジオボタンのクラスが更新されます。
+   *
    * @default "full"
    */
-  radius?: "none" | "rounded" | "full" | undefined;
+  radius?: RadioRadius | undefined;
 };
 
 /**
@@ -103,26 +138,42 @@ export const RadioRoot: Component<RadioRootProps> = function SuiRadioRoot(props)
 };
 
 export namespace Root {
+  /**
+   * {@link RadioRoot} の状態型です。
+   */
   export type State = RadioRootState;
+
+  /**
+   * {@link RadioRoot} のプロパティー型です。
+   */
   export type Props = RadioRootProps;
 }
 
+/**
+ * {@link RadioRoot} の別名です。
+ */
 export const Root: Component<Root.Props> = RadioRoot;
+
+/**
+ * {@link RadioIndicator} の状態です。
+ */
+export type RadioIndicatorState = {};
+
+/**
+ * {@link RadioIndicator} に渡すプロパティーです。
+ */
+export type RadioIndicatorProps = React.ComponentProps<typeof Radio.Indicator>;
 
 /**
  * ラジオボタンのインジケーター要素です。
  *
- * チェック状態に応じて子要素の表示・非表示を切り替えます。
+ * チェック状態に応じて子要素の表示と非表示を切り替えます。
  *
  * @example
  * ```tsx
  * <Radio.Indicator />
  * ```
  */
-export type RadioIndicatorState = {};
-
-export type RadioIndicatorProps = React.ComponentProps<typeof Radio.Indicator>;
-
 export const RadioIndicator: Component<RadioIndicatorProps> = function SuiRadioIndicator(props) {
   const { className, ...otherProps } = props;
 
@@ -130,8 +181,18 @@ export const RadioIndicator: Component<RadioIndicatorProps> = function SuiRadioI
 };
 
 export namespace Indicator {
+  /**
+   * {@link RadioIndicator} の状態型です。
+   */
   export type State = RadioIndicatorState;
+
+  /**
+   * {@link RadioIndicator} のプロパティー型です。
+   */
   export type Props = RadioIndicatorProps;
 }
 
+/**
+ * {@link RadioIndicator} の別名です。
+ */
 export const Indicator: Component<Indicator.Props> = RadioIndicator;
