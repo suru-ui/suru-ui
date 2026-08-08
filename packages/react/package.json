@@ -67,6 +67,10 @@
       "types": "./dist/src/forms/input/index.d.ts",
       "default": "./dist/src/forms/input/index.js"
     },
+    "./number-field": {
+      "types": "./dist/src/forms/number-field/index.d.ts",
+      "default": "./dist/src/forms/number-field/index.js"
+    },
     "./radio": {
       "types": "./dist/src/forms/radio/index.d.ts",
       "default": "./dist/src/forms/radio/index.js"
