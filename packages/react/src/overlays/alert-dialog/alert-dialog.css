@@ -1,0 +1,407 @@
+/* Portal */
+@layer sui.component {
+  /* リセット */
+  .sui_alert_dialog_portal {
+    box-sizing: border-box;
+  }
+}
+
+/* Backdrop */
+@layer sui.component {
+  /* リセット */
+  .sui_alert_dialog_backdrop {
+    box-sizing: border-box;
+  }
+
+  /* 変数 */
+  .sui_alert_dialog_backdrop {
+    /* 背景 */
+    --sui_alert_dialog_backdrop-background_color: ;
+    /* 外観 */
+    --sui_alert_dialog_backdrop-opacity: ;
+  }
+
+  /* 静的 */
+  .sui_alert_dialog_backdrop {
+    position: fixed;
+    inset: 0px;
+    transition: opacity 150ms ease-out;
+  }
+
+  /* 動的 */
+  .sui_alert_dialog_backdrop {
+    /* 背景 */
+    background-color: var(--sui_alert_dialog_backdrop-background_color);
+    /* 外観 */
+    opacity: var(--_sui_alert_dialog_backdrop-opacity, var(--sui_alert_dialog_backdrop-opacity));
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_alert_dialog_backdrop {
+    /* 背景 */
+    --sui_alert_dialog_backdrop-background_color: var(--sui-canvas-1);
+    /* 外観 */
+    --sui_alert_dialog_backdrop-opacity: var(--sui-backdrop-opacity);
+  }
+
+  /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  .sui_alert_dialog_backdrop:is([data-starting-style], [data-ending-style]) {
+    /* 外観 */
+    --_sui_alert_dialog_backdrop-opacity: 0;
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* Viewport */
+@layer sui.component {
+  /* リセット */
+  .sui_alert_dialog_viewport {
+    box-sizing: border-box;
+  }
+
+  /* 変数 */
+  .sui_alert_dialog_viewport {
+    /* 空白 */
+    --sui_alert_dialog_viewport-padding: ;
+  }
+
+  /* 静的 */
+  .sui_alert_dialog_viewport {
+    position: fixed;
+    inset: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    pointer-events: none;
+  }
+
+  /* 動的 */
+  .sui_alert_dialog_viewport {
+    /* 空白 */
+    padding: var(--sui_alert_dialog_viewport-padding);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_alert_dialog_viewport {
+    /* 空白 */
+    --sui_alert_dialog_viewport-padding: --sui-space(6);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* Popup */
+@layer sui.component {
+  /* リセット */
+  .sui_alert_dialog_popup {
+    box-sizing: border-box;
+  }
+
+  /* 変数 */
+  .sui_alert_dialog_popup {
+    /* 形状 */
+    --sui_alert_dialog_popup-width: ;
+    --sui_alert_dialog_popup-max_width: ;
+    /* 空白 */
+    --sui_alert_dialog_popup-gap: ;
+    --sui_alert_dialog_popup-padding: ;
+    /* 背景 */
+    --sui_alert_dialog_popup-background_color: ;
+    /* 枠線 */
+    --sui_alert_dialog_popup-border_color: ;
+    --sui_alert_dialog_popup-border_width: ;
+    --sui_alert_dialog_popup-border_radius: ;
+    --sui_alert_dialog_popup-outline_color: ;
+    --sui_alert_dialog_popup-outline_offset: ;
+    /* 前景 */
+    --sui_alert_dialog_popup-color: ;
+    /* 外観 */
+    --sui_alert_dialog_popup-opacity: ;
+    /* 変形 */
+    --sui_alert_dialog_popup-scale: ;
+  }
+
+  /* 静的 */
+  .sui_alert_dialog_popup {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto;
+    transition:
+      opacity 150ms ease-out,
+      scale 150ms ease-out;
+  }
+
+  /* 動的 */
+  .sui_alert_dialog_popup {
+    /* 空白 */
+    gap: var(--sui_alert_dialog_popup-gap);
+    /* 形状 */
+    width: var(--sui_alert_dialog_popup-width);
+    max-width: var(--sui_alert_dialog_popup-max_width);
+    padding: var(--sui_alert_dialog_popup-padding);
+    /* 前景 */
+    color: var(--sui_alert_dialog_popup-color);
+    /* 枠線 */
+    outline: var(--sui_alert_dialog_popup-outline_width, 0px)
+             solid
+             var(--sui_alert_dialog_popup-outline_color);
+    outline-offset: var(--sui_alert_dialog_popup-outline_offset);
+    /* 背景 */
+    background-color: var(--sui_alert_dialog_popup-background_color);
+    border: var(--sui_alert_dialog_popup-border_color)
+            solid
+            var(--sui_alert_dialog_popup-border_width);
+    border-radius: var(--sui_alert_dialog_popup-border_radius);
+    /* 外観 */
+    opacity: var(--_sui_alert_dialog_popup-opacity, var(--sui_alert_dialog_popup-opacity));
+    /* 変形 */
+    scale: var(--_sui_alert_dialog_popup-scale, var(--sui_alert_dialog_popup-scale));
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_alert_dialog_popup {
+    /* 形状 */
+    --sui_alert_dialog_popup-width: 448px;
+    --sui_alert_dialog_popup-max_width: 100%;
+    /* 空白 */
+    --sui_alert_dialog_popup-gap: --sui-gap(6);
+    --sui_alert_dialog_popup-padding: --sui-space(6);
+    /* 背景 */
+    --sui_alert_dialog_popup-background_color: var(--sui-canvas-2);
+    /* 枠線 */
+    --sui_alert_dialog_popup-border_color: var(--sui-grey-naked-border-normal);
+    --sui_alert_dialog_popup-border_width: --sui-border_width(1);
+    --sui_alert_dialog_popup-border_radius: var(--sui-radius-xl);
+    --sui_alert_dialog_popup-outline_color: var(--sui-focusring_color);
+    --sui_alert_dialog_popup-outline_offset: var(--sui-focusring_offset);
+    /* 前景 */
+    --sui_alert_dialog_popup-color: var(--sui-canvas_text-1);
+    /* 外観 */
+    --sui_alert_dialog_popup-opacity: 1;
+    /* 変形 */
+    --sui_alert_dialog_popup-scale: 1;
+  }
+
+  /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  .sui_alert_dialog_popup:is([data-starting-style], [data-ending-style]) {
+    /* 外観 */
+    --_sui_alert_dialog_popup-opacity: 0;
+    /* 変形 */
+    --_sui_alert_dialog_popup-scale: 0.98;
+  }
+
+  .sui_alert_dialog_popup:focus-visible {
+    /* 枠線 */
+    --_sui_alert_dialog_popup-outline_width: var(--sui-focusring_width);
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* CloseButton */
+@layer sui.component {
+  /* リセット */
+  .sui_alert_dialog_close_button {
+    box-sizing: border-box;
+  }
+
+  /* 変数 */
+  .sui_alert_dialog_popup {
+    /* 形状 */
+    --sui_alert_dialog_close_button-size: ;
+    /* 位置 */
+    --sui_alert_dialog_close_button-position_top: ;
+    --sui_alert_dialog_close_button-position_right: ;
+  }
+
+  /* 静的 */
+  .sui_alert_dialog_close_button {
+    position: absolute;
+  }
+
+  /* 動的 */
+  .sui_alert_dialog_close_button {
+    top: var(--sui_alert_dialog_close_button-position_top);
+    right: var(--sui_alert_dialog_close_button-position_right);
+    width: var(--sui_alert_dialog_close_button-size);
+    height: var(--sui_alert_dialog_close_button-size);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_alert_dialog_popup {
+    /* 形状 */
+    --sui_alert_dialog_close_button-size: var(--sui-size-md);
+    /* 位置 */
+    --sui_alert_dialog_close_button-position_top: --sui-space(4);
+    --sui_alert_dialog_close_button-position_right: --sui-space(4);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* Title */
+@layer sui.component {
+  /* リセット */
+  .sui_alert_dialog_title {
+    box-sizing: border-box;
+    margin: 0px;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+  }
+
+  /* 変数 */
+  .sui_alert_dialog_title {
+    /* 空白 */
+    --sui_alert_dialog_title-padding_right: ;
+    /* 書体 */
+    --sui_alert_dialog_title-font_size: ;
+    --sui_alert_dialog_title-font_weight: ;
+    --sui_alert_dialog_title-line_height: ;
+    --sui_alert_dialog_title-letter_spacing: ;
+    /* 前景 */
+    --sui_alert_dialog_title-color: ;
+  }
+
+  /* 動的 */
+  .sui_alert_dialog_title {
+    /* 空白 */
+    padding-right: var(--sui_alert_dialog_title-padding_right);
+    /* 書体 */
+    font-size: var(--sui_alert_dialog_title-font_size);
+    font-weight: var(--sui_alert_dialog_title-font_weight);
+    line-height: var(--sui_alert_dialog_title-line_height);
+    /* 前景 */
+    color: var(--sui_alert_dialog_title-color);
+    letter-spacing: var(--sui_alert_dialog_title-letter_spacing);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_alert_dialog_title {
+    /* 空白 */
+    --sui_alert_dialog_title-padding_right: calc(
+      var(--sui_alert_dialog_close_button-size)
+      + var(--sui_alert_dialog_close_button-position_right)
+      + var(--sui_alert_dialog_close_button-position_right)
+      - var(--sui_alert_dialog_popup-padding)
+    );
+    /* 書体 */
+    --sui_alert_dialog_title-font_size: var(--sui-text-std-md-b-font_size);
+    --sui_alert_dialog_title-font_weight: var(--sui-text-std-md-b-font_weight);
+    --sui_alert_dialog_title-line_height: var(--sui-text-std-md-b-line_height);
+    --sui_alert_dialog_title-letter_spacing: var(--sui-text-std-md-b-letter_spacing);
+    /* 前景 */
+    --sui_alert_dialog_title-color: var(--sui-canvas_text-1);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* Description */
+@layer sui.component {
+  /* リセット */
+  .sui_alert_dialog_description {
+    box-sizing: border-box;
+    margin: 0px;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  /* 変数 */
+  .sui_alert_dialog_description {
+    /* 空白 */
+    --sui_alert_dialog_description-padding_right: ;
+    /* 書体 */
+    --sui_alert_dialog_description-font_size: ;
+    --sui_alert_dialog_description-font_weight: ;
+    --sui_alert_dialog_description-line_height: ;
+    --sui_alert_dialog_description-letter_spacing: ;
+    /* 前景 */
+    --sui_alert_dialog_description-color: ;
+  }
+
+  /* 動的 */
+  .sui_alert_dialog_description {
+    /* 空白 */
+    padding-right: var(--sui_alert_dialog_description-padding_right);
+    /* 書体 */
+    font-size: var(--sui_alert_dialog_description-font_size);
+    font-weight: var(--sui_alert_dialog_description-font_weight);
+    line-height: var(--sui_alert_dialog_description-line_height);
+    /* 前景 */
+    color: var(--sui_alert_dialog_description-color);
+    letter-spacing: var(--sui_alert_dialog_description-letter_spacing);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_alert_dialog_description {
+    /* 空白 */
+    --sui_alert_dialog_description-padding_right: calc(
+      var(--sui_alert_dialog_close_button-size)
+      + var(--sui_alert_dialog_close_button-position_right)
+      + var(--sui_alert_dialog_close_button-position_right)
+      - var(--sui_alert_dialog_popup-padding)
+    );
+    /* 書体 */
+    --sui_alert_dialog_description-font_size: var(--sui-text-std-sm-n-font_size);
+    --sui_alert_dialog_description-font_weight: var(--sui-text-std-sm-n-font_weight);
+    --sui_alert_dialog_description-line_height: var(--sui-text-std-sm-n-line_height);
+    --sui_alert_dialog_description-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+    /* 前景 */
+    --sui_alert_dialog_description-color: var(--sui-canvas_text-2);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* Actions */
+@layer sui.component {
+  /* リセット */
+  .sui_alert_dialog_actions {
+    box-sizing: border-box;
+  }
+
+  /* 変数 */
+  .sui_alert_dialog_actions {
+    /* 空白 */
+    --sui_alert_dialog_actions-gap: ;
+  }
+
+  /* 静的 */
+  .sui_alert_dialog_actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* 動的 */
+  .sui_alert_dialog_actions {
+    /* 空白 */
+    gap: var(--sui_alert_dialog_actions-gap);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_alert_dialog_actions {
+    /* 空白 */
+    --sui_alert_dialog_actions-gap: --sui-gap(4);
+  }
+
+  /* 既定値設定: ここまで */
+}

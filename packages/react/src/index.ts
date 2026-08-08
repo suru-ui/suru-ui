@@ -33,3 +33,6 @@ export { type SwitchProps, Switch } from "./forms/switch/index.js";
 
 // navigation
 export { type AccordionProps, Accordion } from "./navigation/accordion/index.js";
+
+// overlays
+export { type AlertDialogProps, AlertDialog } from "./overlays/alert-dialog/index.js";

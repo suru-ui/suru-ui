@@ -369,6 +369,8 @@
   --sui-tooltip-canvas: #6a6a6a;
   --sui-tooltip-canvas_text: #fff;
 
+  --sui-backdrop-opacity: 0.5;
+
   --sui-focusring_color: var(--sui-yellow-60);
   --sui-focusring_width: 3px;
   --sui-focusring_offset: 2px;
@@ -383,6 +385,7 @@
   --sui-radius-sm: 4px;
   --sui-radius-md: 4px;
   --sui-radius-lg: 6px;
+  --sui-radius-xl: 12px;
 
   --sui-space-base: 1.6;
   --sui-space-growth: 0.4;

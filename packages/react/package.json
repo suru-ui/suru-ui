@@ -27,6 +27,10 @@
       "types": "./dist/src/navigation/accordion/index.d.ts",
       "default": "./dist/src/navigation/accordion/index.js"
     },
+    "./alert-dialog": {
+      "types": "./dist/src/overlays/alert-dialog/index.d.ts",
+      "default": "./dist/src/overlays/alert-dialog/index.js"
+    },
     "./button": {
       "types": "./dist/src/buttons/button/index.d.ts",
       "default": "./dist/src/buttons/button/index.js"
