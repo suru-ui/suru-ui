@@ -16,9 +16,13 @@
 
   /* 静的 */
   .sui_slider {
-    display:  grid;
+    display: grid;
     grid-template-columns: 1fr auto;
     width: 100%;
+  }
+
+  :root:has(.sui_slider[data-dragging]) {
+    cursor: grabbing;
   }
 
   /* 動的 */
@@ -415,11 +419,6 @@
   }
 
   /* 上書き設定: ここまで */
-
-  /* ドラッグ中の画面全体のカーソル */
-  :root:has(.sui_slider[data-dragging]) {
-    cursor: grabbing;
-  }
 }
 
 /* disabled */

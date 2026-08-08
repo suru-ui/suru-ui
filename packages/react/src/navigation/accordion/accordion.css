@@ -227,7 +227,7 @@
     --sui_accordion_trigger-font_size: var(--sui-text-oln-md-m-font_size);
     --sui_accordion_trigger-font_weight: var(--sui-text-oln-md-m-font_weight);
     --sui_accordion_trigger-line_height: var(--sui-text-oln-md-m-line_height);
-    --sui_accordion_trigger-letter_spacing:  var(--sui-text-oln-md-m-letter_spacing);
+    --sui_accordion_trigger-letter_spacing: var(--sui-text-oln-md-m-letter_spacing);
   }
 
   .sui_accordion-size_lg {
@@ -337,6 +337,8 @@
 
   /* 変数 */
   .sui_accordion {
+    /* 形状 */
+    --sui_accordion_panel-height: ;
     /* 空白 */
     --sui_accordion_panel-padding_block: ;
     --sui_accordion_panel-padding_inline: ;
@@ -355,7 +357,7 @@
 
   /* 動的 */
   .sui_accordion_panel {
-    height: var(--_sui_accordion_panel-height, var(--accordion-panel-height));
+    height: var(--_sui_accordion_panel-height, var(--sui_accordion_panel-height));
     padding-block: var(--sui_accordion_panel-padding_block);
     padding-inline: var(--sui_accordion_panel-padding_inline);
     font-family: var(--sui-font-sans);
@@ -367,6 +369,8 @@
   /* 既定値設定: ここから */
 
   .sui_accordion {
+    /* 形状 */
+    --sui_accordion_panel-height: auto;
     /* 書体 */
     --sui_accordion_panel-font_size: var(--sui-text-std-sm-n-font_size);
     --sui_accordion_panel-line_height: var(--sui-text-std-sm-n-line_height);

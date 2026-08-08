@@ -54,8 +54,8 @@
     --sui_fieldset_legend-line_height: ;
     --sui_fieldset_legend-letter_spacing: ;
     /* 枠線 */
-    --sui_fieldset_legend-border_width: ;
     --sui_fieldset_legend-border_color: ;
+    --sui_fieldset_legend-border_width: ;
     /* 前景 */
     --sui_fieldset_legend-color: ;
   }
@@ -82,8 +82,8 @@
     --sui_fieldset_legend-line_height: var(--sui-text-std-lg-b-line_height);
     --sui_fieldset_legend-letter_spacing: var(--sui-text-std-lg-b-letter_spacing);
     /* 枠線 */
-    --sui_fieldset_legend-border_width: --sui-border_width(1);
     --sui_fieldset_legend-border_color: var(--sui-canvas_text-3);
+    --sui_fieldset_legend-border_width: --sui-border_width(1);
     /* 前景 */
     --sui_fieldset_legend-color: var(--sui-canvas_text-1);
   }

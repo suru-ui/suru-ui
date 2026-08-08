@@ -9,8 +9,6 @@
   .sui_radio {
     /* 形状 */
     --sui_radio-size: ;
-    /* 前景 */
-    --sui_radio-canvas_text-checked: ;
     /* 背景 */
     --sui_radio-canvas-normal: ;
     --sui_radio-canvas-subtle: ;
@@ -25,6 +23,8 @@
     --sui_radio-border_color-checked: ;
     --sui_radio-border_width: ;
     --sui_radio-border_radius: ;
+    /* 前景 */
+    --sui_radio-canvas_text-checked: ;
   }
 
   /* 静的 */
@@ -55,7 +55,7 @@
     border-radius: var(--_sui_radio-border_radius, var(--sui_radio-border_radius));
   }
 
-  /* 変数の既定値設定: ここから */
+  /* 既定値設定: ここから */
 
   .sui_radio-size_sm {
     /* 形状 */
@@ -122,101 +122,96 @@
   }
 
   .sui_radio-color_grey {
-    /* 前景 */
-    --sui_radio-canvas_text-checked: var(--sui-grey-solid-canvas_text-normal);
     /* 背景 */
     --sui_radio-canvas-checked-normal: var(--sui-grey-solid-normal);
     --sui_radio-canvas-checked-subtle: var(--sui-grey-solid-subtle);
     --sui_radio-canvas-checked-action: var(--sui-grey-solid-action);
     /* 枠線 */
     --sui_radio-border_color-checked: var(--sui-grey-solid-border-normal);
+    /* 前景 */
+    --sui_radio-canvas_text-checked: var(--sui-grey-solid-canvas_text-normal);
   }
 
   .sui_radio-color_blue {
-    /* 前景 */
-    --sui_radio-canvas_text-checked: var(--sui-blue-solid-canvas_text-normal);
     /* 背景 */
     --sui_radio-canvas-checked-normal: var(--sui-blue-solid-normal);
     --sui_radio-canvas-checked-subtle: var(--sui-blue-solid-subtle);
     --sui_radio-canvas-checked-action: var(--sui-blue-solid-action);
     /* 枠線 */
     --sui_radio-border_color-checked: var(--sui-blue-solid-border-normal);
+    /* 前景 */
+    --sui_radio-canvas_text-checked: var(--sui-blue-solid-canvas_text-normal);
   }
 
   .sui_radio-color_purple {
-    /* 前景 */
-    --sui_radio-canvas_text-checked: var(--sui-purple-solid-canvas_text-normal);
     /* 背景 */
     --sui_radio-canvas-checked-normal: var(--sui-purple-solid-normal);
     --sui_radio-canvas-checked-subtle: var(--sui-purple-solid-subtle);
     --sui_radio-canvas-checked-action: var(--sui-purple-solid-action);
     /* 枠線 */
     --sui_radio-border_color-checked: var(--sui-purple-solid-border-normal);
+    /* 前景 */
+    --sui_radio-canvas_text-checked: var(--sui-purple-solid-canvas_text-normal);
   }
 
   .sui_radio-color_magenta {
-    /* 前景 */
-    --sui_radio-canvas_text-checked: var(--sui-magenta-solid-canvas_text-normal);
     /* 背景 */
     --sui_radio-canvas-checked-normal: var(--sui-magenta-solid-normal);
     --sui_radio-canvas-checked-subtle: var(--sui-magenta-solid-subtle);
     --sui_radio-canvas-checked-action: var(--sui-magenta-solid-action);
     /* 枠線 */
     --sui_radio-border_color-checked: var(--sui-magenta-solid-border-normal);
+    /* 前景 */
+    --sui_radio-canvas_text-checked: var(--sui-magenta-solid-canvas_text-normal);
   }
 
   .sui_radio-color_red {
-    /* 前景 */
-    --sui_radio-canvas_text-checked: var(--sui-red-solid-canvas_text-normal);
     /* 背景 */
     --sui_radio-canvas-checked-normal: var(--sui-red-solid-normal);
     --sui_radio-canvas-checked-subtle: var(--sui-red-solid-subtle);
     --sui_radio-canvas-checked-action: var(--sui-red-solid-action);
     /* 枠線 */
     --sui_radio-border_color-checked: var(--sui-red-solid-border-normal);
+    /* 前景 */
+    --sui_radio-canvas_text-checked: var(--sui-red-solid-canvas_text-normal);
   }
 
   .sui_radio-color_orange {
-    /* 前景 */
-    --sui_radio-canvas_text-checked: var(--sui-orange-solid-canvas_text-normal);
     /* 背景 */
     --sui_radio-canvas-checked-normal: var(--sui-orange-solid-normal);
     --sui_radio-canvas-checked-subtle: var(--sui-orange-solid-subtle);
     --sui_radio-canvas-checked-action: var(--sui-orange-solid-action);
     /* 枠線 */
     --sui_radio-border_color-checked: var(--sui-orange-solid-border-normal);
+    /* 前景 */
+    --sui_radio-canvas_text-checked: var(--sui-orange-solid-canvas_text-normal);
   }
 
   .sui_radio-color_yellow {
-    /* 前景 */
-    --sui_radio-canvas_text-checked: var(--sui-yellow-solid-canvas_text-normal);
     /* 背景 */
     --sui_radio-canvas-checked-normal: var(--sui-yellow-solid-normal);
     --sui_radio-canvas-checked-subtle: var(--sui-yellow-solid-subtle);
     --sui_radio-canvas-checked-action: var(--sui-yellow-solid-action);
     /* 枠線 */
     --sui_radio-border_color-checked: var(--sui-yellow-solid-border-normal);
+    /* 前景 */
+    --sui_radio-canvas_text-checked: var(--sui-yellow-solid-canvas_text-normal);
   }
 
   .sui_radio-color_green {
-    /* 前景 */
-    --sui_radio-canvas_text-checked: var(--sui-green-solid-canvas_text-normal);
     /* 背景 */
     --sui_radio-canvas-checked-normal: var(--sui-green-solid-normal);
     --sui_radio-canvas-checked-subtle: var(--sui-green-solid-subtle);
     --sui_radio-canvas-checked-action: var(--sui-green-solid-action);
     /* 枠線 */
     --sui_radio-border_color-checked: var(--sui-green-solid-border-normal);
+    /* 前景 */
+    --sui_radio-canvas_text-checked: var(--sui-green-solid-canvas_text-normal);
   }
 
-  /* 変数の既定値設定: ここまで */
-  /* 変数の上書き設定: ここから */
+  /* 既定値設定: ここまで */
 
-  .sui_radio-outlined {
-    /* 枠線 */
-    --_sui_radio-border_width: var(--sui_radio-border_width);
-    --_sui_radio-border_color: var(--sui_radio-border_color-normal);
-  }
+  /* 上書き設定: ここから */
 
   .sui_radio:not([data-checked]) {
     @media (any-hover: hover) {
@@ -259,7 +254,13 @@
     }
   }
 
-  /* 変数の上書き設定: ここまで */
+  .sui_radio-outlined {
+    /* 枠線 */
+    --_sui_radio-border_width: var(--sui_radio-border_width);
+    --_sui_radio-border_color: var(--sui_radio-border_color-normal);
+  }
+
+  /* 上書き設定: ここまで */
 }
 
 /* Indicator */
@@ -273,10 +274,10 @@
   .sui_radio {
     /* 形状 */
     --sui_radio_indicator-size: ;
-    /* 前景 */
-    --sui_radio_indicator-color: ;
     /* 枠線 */
     --sui_radio_indicator-border_radius: ;
+    /* 前景 */
+    --sui_radio_indicator-color: ;
   }
 
   /* 静的 */
@@ -295,13 +296,13 @@
     border-radius: var(--sui_radio_indicator-border_radius);
   }
 
-  /* 変数の既定値設定: ここから */
+  /* 既定値設定: ここから */
 
   .sui_radio {
-    /* 前景 */
-    --sui_radio_indicator-color: var(--sui_radio-canvas_text-checked);
     /* 枠線 */
     --sui_radio_indicator-border_radius: calc(var(--sui_radio-size) / 2);
+    /* 前景 */
+    --sui_radio_indicator-color: var(--sui_radio-canvas_text-checked);
   }
 
   .sui_radio-size_sm {
@@ -319,7 +320,7 @@
     --sui_radio_indicator-size: calc(var(--sui_radio-size) * 0.4);
   }
 
-  /* 変数の既定値設定: ここまで */
+  /* 既定値設定: ここまで */
 }
 
 /* disabled */

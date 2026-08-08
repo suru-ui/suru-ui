@@ -21,9 +21,6 @@
     --sui_input-letter_spacing: ;
     /* 背景 */
     --sui_input-background_color-normal: ;
-    /* 前景 */
-    --sui_input-color: ;
-    --sui_input_placeholder-color: ;
     /* 枠線 */
     --sui_input-border_color-normal: ;
     --sui_input-border_color-subtle: ;
@@ -33,6 +30,9 @@
     --sui_input-border_radius: ;
     --sui_input-outline_color: ;
     --sui_input-outline_offset: ;
+    /* 前景 */
+    --sui_input-color: ;
+    --sui_input_placeholder-color: ;
   }
 
   /* 静的 */
@@ -87,8 +87,6 @@
                                );
     /* 書体 */
     --sui_input-text_height: calc(var(--sui_input-font_size) * var(--sui_input-line_height));
-    /* 前景 */
-    --sui_input_placeholder-color: var(--sui-canvas_text-2);
     /* 枠線 */
     --sui_input-border_color-normal: var(--sui-grey-60);
     --sui_input-border_color-subtle: var(--sui-grey-70);
@@ -96,6 +94,8 @@
     --sui_input-border_width: --sui-border_width(2);
     --sui_input-outline_color: var(--sui-focusring_color);
     --sui_input-outline_offset: var(--sui-focusring_offset);
+    /* 前景 */
+    --sui_input_placeholder-color: var(--sui-canvas_text-2);
   }
 
   .sui_input-size_sm {

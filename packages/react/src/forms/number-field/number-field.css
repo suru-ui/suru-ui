@@ -264,6 +264,9 @@
   .sui_number_field_input {
     box-sizing: border-box;
     margin: 0px;
+    outline: none;
+    background-color: transparent;
+    border: 0px solid transparent;
   }
 
   /* 変数 */
@@ -293,9 +296,6 @@
     line-height: var(--sui_number_field-line_height);
     color: var(--sui_number_field-color);
     letter-spacing: var(--sui_number_field-letter_spacing);
-    outline: none;
-    background-color: transparent;
-    border: 0px solid transparent;
 
     &::placeholder {
       color: var(--sui_number_field_placeholder-color);
