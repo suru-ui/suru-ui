@@ -55,7 +55,7 @@ export const Usage = meta.story({
     color: "grey",
     size: "md",
     radius: "full",
-    outlined: true,
+    outlined: undefined,
     disabled: false,
     orientation: "vertical",
   }),
@@ -76,7 +76,9 @@ export const Sizes = meta.story({
     variant: "naked",
     color: "grey",
     radius: "full",
-    outlined: true,
+    outlined: undefined,
+    disabled: false,
+    orientation: "vertical",
   }),
   render(props) {
     return (
@@ -105,7 +107,9 @@ export const Colors = meta.story({
     variant: "naked",
     size: "md",
     radius: "full",
-    outlined: true,
+    outlined: undefined,
+    disabled: false,
+    orientation: "vertical",
   }),
   render(props) {
     return (
@@ -127,7 +131,8 @@ export const Disabled = meta.story({
     color: "grey",
     size: "md",
     radius: "full",
-    outlined: true,
+    outlined: undefined,
+    orientation: "vertical",
   }),
   render(props) {
     return (
@@ -146,7 +151,8 @@ export const Horizontal = meta.story({
     color: "grey",
     size: "md",
     radius: "full",
-    outlined: true,
+    outlined: undefined,
+    disabled: false,
   }),
   render(props) {
     return (

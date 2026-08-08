@@ -61,6 +61,7 @@ export const Variants = meta.story({
     color: "blue",
     size: "md",
     radius: "full",
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -76,7 +77,6 @@ export const Variants = meta.story({
 export const Outlined = meta.story({
   name: "枠線",
   ...ctrl({
-    variant: "liquid",
     color: "blue",
     size: "md",
     radius: "full",
@@ -98,6 +98,7 @@ export const Colors = meta.story({
     variant: "liquid",
     size: "md",
     radius: "full",
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -117,6 +118,7 @@ export const Sizes = meta.story({
     variant: "liquid",
     color: "blue",
     radius: "full",
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -136,6 +138,7 @@ export const Radius = meta.story({
     variant: "liquid",
     color: "blue",
     size: "md",
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -156,6 +159,7 @@ export const LabelAndValue = meta.story({
     color: "blue",
     size: "md",
     radius: "full",
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -189,6 +193,7 @@ export const Range = meta.story({
     color: "blue",
     size: "md",
     radius: "full",
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -203,6 +208,7 @@ export const Vertical = meta.story({
     color: "blue",
     size: "md",
     radius: "full",
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -232,6 +238,7 @@ export const Controlled = meta.story({
     color: "blue",
     size: "md",
     radius: "full",
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -249,10 +256,11 @@ export const Controlled = meta.story({
 export const Disabled = meta.story({
   name: "無効",
   ...ctrl({
+    variant: "liquid",
     color: "blue",
     size: "md",
     radius: "full",
-    variant: "liquid",
+    outlined: false,
   }),
   render(props) {
     return (

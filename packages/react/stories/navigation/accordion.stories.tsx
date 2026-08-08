@@ -44,6 +44,7 @@ export const Usage = meta.story({
     divider: true,
     outlined: true,
     radius: "md",
+    size: "md",
   }),
   render(props) {
     return (
@@ -62,6 +63,10 @@ export const Multiple = meta.story({
   ...ctrl({
     disabled: false,
     multiple: true,
+    divider: true,
+    outlined: true,
+    radius: "md",
+    size: "md",
   }),
   render(props) {
     return (
@@ -115,6 +120,10 @@ export const CustomIcon = meta.story({
   ...ctrl({
     disabled: false,
     multiple: false,
+    divider: true,
+    outlined: true,
+    radius: "md",
+    size: "md",
   }),
   render(props) {
     return (
@@ -147,6 +156,10 @@ export const Controlled = meta.story({
   ...ctrl({
     disabled: false,
     multiple: false,
+    divider: true,
+    outlined: true,
+    radius: "md",
+    size: "md",
   }),
   render(props) {
     const [open, setOpen] = React.useState(false);
@@ -173,6 +186,10 @@ export const Outlined = meta.story({
   ...ctrl({
     disabled: false,
     multiple: false,
+    divider: true,
+    outlined: true,
+    radius: "md",
+    size: "md",
   }),
   render(props) {
     return (
@@ -218,6 +235,10 @@ export const Divider = meta.story({
   ...ctrl({
     disabled: false,
     multiple: true,
+    divider: true,
+    outlined: true,
+    radius: "md",
+    size: "md",
   }),
   render(props) {
     return (
@@ -244,6 +265,9 @@ export const Radius = meta.story({
   ...ctrl({
     disabled: false,
     multiple: false,
+    divider: true,
+    outlined: true,
+    size: "md",
   }),
   render(props) {
     return (
@@ -265,6 +289,9 @@ export const Sizes = meta.story({
   ...ctrl({
     disabled: false,
     multiple: false,
+    divider: true,
+    outlined: true,
+    radius: "md",
   }),
   render(props) {
     return (
@@ -284,6 +311,10 @@ export const Disabled = meta.story({
   ...ctrl({
     disabled: true,
     multiple: false,
+    divider: true,
+    outlined: true,
+    radius: "md",
+    size: "md",
   }),
   render(props) {
     return (

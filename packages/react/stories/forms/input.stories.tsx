@@ -44,8 +44,10 @@ export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
     variant: "naked",
+    accentColor: "grey",
     size: "md",
     radius: "rounded",
+    outlined: undefined,
     disabled: false,
     placeholder: "e.g. Colm Tuite",
   }),
@@ -62,8 +64,10 @@ export const Usage = meta.story({
 export const Variants = meta.story({
   name: "バリエーション",
   ...ctrl({
+    accentColor: "grey",
     size: "md",
     radius: "rounded",
+    outlined: undefined,
     disabled: false,
     placeholder: "e.g. Colm Tuite",
   }),
@@ -80,10 +84,11 @@ export const Variants = meta.story({
 export const Outlined = meta.story({
   name: "枠線",
   ...ctrl({
+    accentColor: "grey",
     size: "md",
     radius: "rounded",
-    disabled: false,
     outlined: true,
+    disabled: false,
     placeholder: "e.g. Colm Tuite",
   }),
   render(props) {
@@ -99,10 +104,11 @@ export const Outlined = meta.story({
 export const AccentColors = meta.story({
   name: "アクセントカラー",
   ...ctrl({
+    variant: "naked",
     size: "md",
     radius: "rounded",
+    outlined: undefined,
     disabled: false,
-    outlined: true,
     placeholder: "e.g. Colm Tuite",
   }),
   render(props) {
@@ -120,7 +126,9 @@ export const Sizes = meta.story({
   name: "大きさ",
   ...ctrl({
     variant: "naked",
+    accentColor: "grey",
     radius: "rounded",
+    outlined: undefined,
     disabled: false,
     placeholder: "e.g. Colm Tuite",
   }),
@@ -139,7 +147,9 @@ export const Radius = meta.story({
   name: "角丸",
   ...ctrl({
     variant: "naked",
+    accentColor: "grey",
     size: "md",
+    outlined: undefined,
     disabled: false,
     placeholder: "e.g. Colm Tuite",
   }),
@@ -158,8 +168,10 @@ export const Filled = meta.story({
   name: "入力済み",
   ...ctrl({
     variant: "naked",
+    accentColor: "grey",
     size: "md",
     radius: "rounded",
+    outlined: undefined,
     disabled: false,
     placeholder: "e.g. Colm Tuite",
   }),
@@ -172,8 +184,10 @@ export const Controlled = meta.story({
   name: "制御",
   ...ctrl({
     variant: "naked",
+    accentColor: "grey",
     size: "md",
     radius: "rounded",
+    outlined: undefined,
     disabled: false,
     placeholder: "e.g. Colm Tuite",
   }),
@@ -193,8 +207,10 @@ export const Invalid = meta.story({
   name: "エラー",
   ...ctrl({
     variant: "naked",
+    accentColor: "grey",
     size: "md",
     radius: "rounded",
+    outlined: undefined,
     disabled: false,
     placeholder: "e.g. Colm Tuite",
   }),
@@ -222,8 +238,10 @@ export const Disabled = meta.story({
   name: "無効",
   ...ctrl({
     variant: "naked",
+    accentColor: "grey",
     size: "md",
     radius: "rounded",
+    outlined: undefined,
     placeholder: "e.g. Colm Tuite",
   }),
   render(props) {

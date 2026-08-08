@@ -83,6 +83,7 @@ export const SelectionMode = meta.story({
     radius: "rounded",
     outlined: false,
     orientation: "horizontal",
+    multiple: false,
     detached: false,
     disabled: false,
   }),
@@ -463,6 +464,7 @@ export const Disabled = meta.story({
     orientation: "horizontal",
     multiple: false,
     detached: false,
+    disabled: true,
   }),
   render(props) {
     return (

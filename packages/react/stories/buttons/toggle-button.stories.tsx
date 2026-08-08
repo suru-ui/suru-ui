@@ -99,6 +99,7 @@ export const Variants = meta.story({
 export const Colors = meta.story({
   name: "色",
   ...ctrl({
+    variant: "liquid",
     size: "md",
     radius: "rounded",
     outlined: false,
@@ -225,7 +226,6 @@ export const Squared = meta.story({
     outlined: false,
     pending: false,
     disabled: false,
-    squared: true,
     defaultPressed: false,
   }),
   render(props) {

@@ -43,7 +43,7 @@ export const Usage = meta.story({
     color: "grey",
     size: "md",
     radius: "full",
-    outlined: true,
+    outlined: undefined,
     disabled: false,
   }),
   render(props) {
@@ -62,6 +62,7 @@ export const Variants = meta.story({
     color: "grey",
     size: "md",
     radius: "full",
+    outlined: undefined,
     disabled: false,
   }),
   render(props) {
@@ -83,7 +84,6 @@ export const Variants = meta.story({
 export const Outlined = meta.story({
   name: "枠線",
   ...ctrl({
-    variant: "naked",
     color: "grey",
     size: "md",
     radius: "full",
@@ -111,6 +111,7 @@ export const Colors = meta.story({
     variant: "naked",
     size: "md",
     radius: "full",
+    outlined: undefined,
     disabled: false,
   }),
   render(props) {
@@ -133,6 +134,7 @@ export const Sizes = meta.story({
     variant: "naked",
     color: "grey",
     radius: "full",
+    outlined: undefined,
     disabled: false,
   }),
   render(props) {
@@ -161,6 +163,7 @@ export const Radius = meta.story({
     variant: "naked",
     color: "grey",
     size: "md",
+    outlined: undefined,
     disabled: false,
   }),
   render(props) {
@@ -190,6 +193,7 @@ export const Checked = meta.story({
     color: "grey",
     size: "md",
     radius: "full",
+    outlined: undefined,
     disabled: false,
   }),
   render(props) {
@@ -215,6 +219,7 @@ export const Controlled = meta.story({
     color: "grey",
     size: "md",
     radius: "full",
+    outlined: undefined,
     disabled: false,
   }),
   render(props) {
@@ -234,10 +239,11 @@ export const Controlled = meta.story({
 export const Disabled = meta.story({
   name: "無効",
   ...ctrl({
+    variant: "naked",
     color: "grey",
     size: "md",
     radius: "full",
-    variant: "naked",
+    outlined: undefined,
   }),
   render(props) {
     return (
