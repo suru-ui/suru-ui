@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { Checkbox } from "../src/forms/checkbox/index.js";
-import { clickElement } from "./_click.js";
+import { Checkbox } from "../../src/forms/checkbox/index.js";
+import { clickElement } from "../_click.js";
 
 describe("Checkbox", () => {
   test("チェックボックスをレンダリングする", async () => {

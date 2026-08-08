@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
 import { userEvent } from "vitest/browser";
 
-import { Button } from "../src/buttons/button/index.js";
+import { Button } from "../../src/buttons/button/index.js";
 
 describe("Button", () => {
   test("ボタン要素をレンダリングする", async () => {

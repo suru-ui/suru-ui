@@ -1,9 +1,9 @@
 import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { RadioGroup } from "../src/forms/radio-group/index.js";
-import { Radio } from "../src/forms/radio/index.js";
-import { clickElement } from "./_click.js";
+import { RadioGroup } from "../../src/forms/radio-group/index.js";
+import { Radio } from "../../src/forms/radio/index.js";
+import { clickElement } from "../_click.js";
 
 describe("Radio", () => {
   test("ラジオボタンをレンダリングする", async () => {

@@ -2,9 +2,9 @@ import type { ReactNode } from "react";
 import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { Accordion } from "../src/navigation/accordion/index.js";
-import * as AccordionParts from "../src/navigation/accordion/index.js";
-import { clickElement } from "./_click.js";
+import { Accordion } from "../../src/navigation/accordion/index.js";
+import * as AccordionParts from "../../src/navigation/accordion/index.js";
+import { clickElement } from "../_click.js";
 
 function accordionItems(): ReactNode[] {
   return [

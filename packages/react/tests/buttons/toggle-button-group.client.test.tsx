@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { ToggleButtonGroup } from "../src/buttons/toggle-button-group/index.js";
-import { ToggleButton } from "../src/buttons/toggle-button/index.js";
+import { ToggleButtonGroup } from "../../src/buttons/toggle-button-group/index.js";
+import { ToggleButton } from "../../src/buttons/toggle-button/index.js";
 
 describe("ToggleButtonGroup", () => {
   test("グループ div をレンダリングする", async () => {

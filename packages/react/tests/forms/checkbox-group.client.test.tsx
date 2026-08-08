@@ -1,9 +1,9 @@
 import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { CheckboxGroup } from "../src/forms/checkbox-group/index.js";
-import { Checkbox } from "../src/forms/checkbox/index.js";
-import { clickElement } from "./_click.js";
+import { CheckboxGroup } from "../../src/forms/checkbox-group/index.js";
+import { Checkbox } from "../../src/forms/checkbox/index.js";
+import { clickElement } from "../_click.js";
 
 describe("CheckboxGroup", () => {
   test("グループ div をレンダリングする", async () => {

@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
 import { userEvent } from "vitest/browser";
 
-import { Slider } from "../src/forms/slider/index.js";
+import { Slider } from "../../src/forms/slider/index.js";
 
 describe("Slider", () => {
   test("スライダーをレンダリングする", async () => {

@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
 import { userEvent } from "vitest/browser";
 
-import { Input } from "../src/forms/input/index.js";
+import { Input } from "../../src/forms/input/index.js";
 
 describe("Input", () => {
   test("テキスト入力欄をレンダリングする", async () => {

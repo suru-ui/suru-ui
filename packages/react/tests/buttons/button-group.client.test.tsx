@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { ButtonGroup } from "../src/buttons/button-group/index.js";
-import { Button } from "../src/buttons/button/index.js";
+import { ButtonGroup } from "../../src/buttons/button-group/index.js";
+import { Button } from "../../src/buttons/button/index.js";
 
 describe("ButtonGroup", () => {
   test("グループ div をレンダリングする", async () => {

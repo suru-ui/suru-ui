@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { Field } from "../src/forms/field/index.js";
-import { Fieldset } from "../src/forms/fieldset/index.js";
+import { Field } from "../../src/forms/field/index.js";
+import { Fieldset } from "../../src/forms/fieldset/index.js";
 
 describe("Fieldset", () => {
   test("フィールドセットと凡例をレンダリングする", async () => {

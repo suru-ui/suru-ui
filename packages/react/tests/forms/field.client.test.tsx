@@ -2,9 +2,9 @@ import type { ReactElement, ReactNode } from "react";
 import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { Button } from "../src/buttons/button/index.js";
-import { Field } from "../src/forms/field/index.js";
-import { Form } from "../src/forms/form/index.js";
+import { Button } from "../../src/buttons/button/index.js";
+import { Field } from "../../src/forms/field/index.js";
+import { Form } from "../../src/forms/form/index.js";
 
 function Wrapper(props: { children: ReactNode }): ReactElement {
   return (

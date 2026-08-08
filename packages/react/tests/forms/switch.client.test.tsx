@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { Switch } from "../src/forms/switch/index.js";
-import { clickElement } from "./_click.js";
+import { Switch } from "../../src/forms/switch/index.js";
+import { clickElement } from "../_click.js";
 
 describe("Switch", () => {
   test("スイッチをレンダリングする", async () => {

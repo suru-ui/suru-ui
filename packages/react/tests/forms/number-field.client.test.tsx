@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { NumberField } from "../src/forms/number-field/index.js";
-import { clickElement } from "./_click.js";
+import { NumberField } from "../../src/forms/number-field/index.js";
+import { clickElement } from "../_click.js";
 
 describe("NumberField", () => {
   test("数値入力欄をレンダリングする", async () => {

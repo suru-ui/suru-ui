@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
 import { userEvent } from "vitest/browser";
 
-import { ToggleButton } from "../src/buttons/toggle-button/index.js";
+import { ToggleButton } from "../../src/buttons/toggle-button/index.js";
 
 describe("ToggleButton", () => {
   test("ボタン要素をレンダリングする", async () => {
