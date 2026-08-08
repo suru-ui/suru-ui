@@ -19,6 +19,7 @@ export {
 } from "./buttons/toggle-button-group/index.js";
 
 // forms
+export { type AutocompleteProps, Autocomplete } from "./forms/autocomplete/index.js";
 export { type CheckboxProps, Checkbox } from "./forms/checkbox/index.js";
 export { type CheckboxGroupProps, CheckboxGroup } from "./forms/checkbox-group/index.js";
 export { type FieldProps, Field } from "./forms/field/index.js";

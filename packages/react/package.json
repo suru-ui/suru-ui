@@ -71,6 +71,10 @@
       "types": "./dist/src/forms/input/index.d.ts",
       "default": "./dist/src/forms/input/index.js"
     },
+    "./autocomplete": {
+      "types": "./dist/src/forms/autocomplete/index.d.ts",
+      "default": "./dist/src/forms/autocomplete/index.js"
+    },
     "./number-field": {
       "types": "./dist/src/forms/number-field/index.d.ts",
       "default": "./dist/src/forms/number-field/index.js"
