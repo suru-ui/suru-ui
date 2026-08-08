@@ -1,6 +1,6 @@
 ---
 name: new-component
-description: Suru UI モノレポ (`packages/react`) に新しい React コンポーネントを追加するときに使用します。新しいコンポーネントの作成、コンポーネントの追加、`*.parts.tsx` のパーツ実装、`slotProps`、グループコンテキスト、CSS クラス設計、Storybook stories、`package.json` のサブパスエクスポートを扱います。既存の Button や Checkbox と同じ方式で実装し、`@base-ui/react`（Base UI）を基盤としたヘッドレスコンポーネントをスタイル付きで公開するときに使います。
+description: Suru UI モノレポ (`packages/react`) に新しい React コンポーネントを追加するときに使用します。新しいコンポーネントの作成、コンポーネントの追加、`*.parts.tsx` のパーツ実装、`slotProps`、グループコンテキスト、CSS クラス設計、Storybook stories、テスト（`*.client.test.tsx`）、`package.json` のサブパスエクスポートを扱います。既存の Button や Checkbox と同じ方式で実装し、`@base-ui/react`（Base UI）を基盤としたヘッドレスコンポーネントをスタイル付きで公開するときに使います。
 ---
 
 # 新しい React コンポーネントの追加
@@ -55,6 +55,7 @@ packages/react/src/<カテゴリー>/<名前>/
 カテゴリーの実例として、`buttons/button/` は `index.ts`、`button.tsx`、`button.parts.tsx`、`button.css` で構成されています（`packages/react/src/buttons/button/`）。
 
 Storybook の stories は `packages/react/stories/<カテゴリー>/<名前>.stories.tsx` に置きます。
+テストは `packages/react/tests/` に置きます。ブラウザーで実行するテストは `<名前>.client.test.tsx`、ブラウザーを必要としないロジックのテストは `<名前>.test.ts` です。
 
 ## 実装パターン
 
@@ -481,6 +482,24 @@ export function useContext(optional?: boolean): CheckboxGroupContext | null {
 },
 ```
 
+## テスト
+
+コンポーネントのテストは `packages/react/tests/` に置きます。書き方は `../vitest/SKILL.md` に従います。
+
+- ブラウザーで実行するテストは `<名前>.client.test.tsx` にします（例: `tests/button.client.test.tsx`）。Vitest の Browser Mode で Playwright の 3 ブラウザー（chromium、firefox、webkit）すべてに実行されます。
+- ブラウザーを必要としないロジック（`cn`、`splitRenderProps` など）のテストは `<名前>.test.ts` にします（例: `tests/cn.test.ts`）。サーバー専用のテストは `*.server.test.ts` です。
+- パーツ単体のテストは、同じ `*.client.test.tsx` に `describe("<名前>Parts.Root")` として並べます（`tests/accordion.client.test.tsx:211`）。
+- コンポーネントは `../src/<カテゴリー>/<名前>/index.js` から import します。
+- レンダリングには `vitest-browser-react` の `render` を使います。検証は `screen.getByRole()` などのロケーターと `await expect.element(...)` を使います（`tests/button.client.test.tsx:8`）。
+- クリックには `vitest/browser` の `userEvent.click` か、`./_click.js` の `clickElement`（DOM の `click()` を直接呼ぶ）を使います。
+- カバーする内容は次のとおりです（`tests/checkbox.client.test.tsx` 参照）。
+  1. レンダリング: ロール、テキスト、既定のスタイルクラス（`sui_<名前>-size_md` など）
+  2. スタイル系プロパティーの上書き: variant、color、size、radius などでクラスが変わる
+  3. インタラクション: クリックで状態が切り替わる、`onXxxChange` が通知する
+  4. disabled などの無効状態
+  5. `slotProps` が各パーツに適用される
+  6. パーツ単体の振る舞い
+
 ## 実装手順
 
 手順は、書き手が一度に 1 つの作業に集中できるよう、短い Step に分けています。
@@ -563,14 +582,37 @@ export { type CheckboxProps, Checkbox } from "./forms/checkbox/index.js";
 
 完了条件: 少なくとも「使い方」の story があり、`controls` で主要プロパティーを操作できる。
 
-### Step 8 検証
+### Step 8 テスト
+
+`packages/react/tests/<名前>.client.test.tsx` を作り、`../vitest/SKILL.md` と、このスキルの「テスト」章を読んでから、既存の `tests/checkbox.client.test.tsx` を参考に次のテストを書きます。
+
+1. レンダリングと既定のスタイルクラス
+2. スタイル系プロパティーの上書き
+3. インタラクション（クリック、入力、開閉など）
+4. disabled などの無効状態
+5. `slotProps` が各パーツに適用される
+6. パーツ単体の振る舞い（`describe("<名前>Parts.Root")`）
+
+ブラウザーを必要としない純粋なロジック（`cn` など）を書いた場合は、`<名前>.test.ts` に分けます。
+
+完了条件: 公開 API の主要な振る舞いを検証するテストが `packages/react/tests/` に存在する。
+
+### Step 9 検証
 
 モノレポルートで次のコマンドを順に実行し、すべて通ることを確認します。
 
 ```sh
-mise run test:format
-mise run test:lint
-mise run test:typecheck
+mise run test
+```
+
+個別のステップを確認する場合は次のコマンドを使います。
+
+```sh
+mise run test:server      # npx vitest --config ./.config/vitest.server.ts
+mise run test:client      # npx vitest --config ./.config/vitest.client.ts
+mise run test:format      # npx oxfmt --config ./.config/.oxfmtrc.json --check
+mise run test:lint        # npx oxlint --config ./.config/.oxlintrc.json
+mise run test:typecheck   # npx tsc --noEmit
 ```
 
 CSS を書いた場合、整形は `mise run format` の stylelint で整えます。
@@ -647,7 +689,9 @@ export { type XxxProps, Xxx } from "./xxx.jsx";
 - JSDoc の 1 行形式、`@default undefined`、`@example` ラベルなしフェンスコードを書かない（`../jsdoc/SKILL.md` 参照）。
 - 状態クラスの強制上書きを `@layer sui.important` の外に書かない（`../css/SKILL.md` 参照）。
 - `package.json` の `exports` と `packages/react/src/index.ts` の公開を忘れない。
-- 検証コマンド（format、lint、typecheck）を通さずに完了としない。
+- テストを書かずに完了としない。
+- ブラウザーで実行するテストを `*.client.test.tsx` 以外のファイル名にしない。ブラウザーを必要としないロジックのテストは `*.test.ts` に分ける。
+- 検証コマンド（test、format、lint、typecheck）を通さずに完了としない。
 
 ## 既存コンポーネントへの対応
 
