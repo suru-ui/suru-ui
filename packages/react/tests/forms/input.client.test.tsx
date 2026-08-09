@@ -106,6 +106,59 @@ describe("Input", () => {
     await expect.element(input).not.toHaveAttribute("data-focus-type");
   });
 
+  test("onPointerDown が preventDefault するとポインターによるフォーカス判定を行わない", async () => {
+    // 実行
+    const screen = await render(
+      <Input
+        onPointerDown={(event) => {
+          event.preventDefault();
+        }}
+      />,
+    );
+    const input = screen.getByRole("textbox");
+    const inputElement = input.element() as HTMLInputElement;
+    inputElement.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
+    inputElement.focus();
+
+    // 検証
+    await expect.element(input).toHaveAttribute("data-focus-type", "keyboard");
+  });
+
+  test("onFocus が preventDefault するとフォーカスの種類を更新しない", async () => {
+    // 実行
+    const screen = await render(
+      <Input
+        onFocus={(event) => {
+          event.preventDefault();
+        }}
+      />,
+    );
+    const input = screen.getByRole("textbox");
+    (input.element() as HTMLInputElement).focus();
+
+    // 検証
+    await expect.element(input).not.toHaveAttribute("data-focus-type");
+  });
+
+  test("onBlur が preventDefault するとフォーカスの種類をクリアしない", async () => {
+    // 実行
+    const screen = await render(
+      <Input
+        onBlur={(event) => {
+          event.preventDefault();
+        }}
+      />,
+    );
+    const input = screen.getByRole("textbox");
+    const inputElement = input.element() as HTMLInputElement;
+    inputElement.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
+    inputElement.focus();
+    inputElement.blur();
+
+    // 検証
+    await expect.element(input).toHaveAttribute("data-focus-type", "pointer");
+  });
+
   test("文字を入力すると onValueChange が呼ばれる", async () => {
     // 準備
     let value = "";

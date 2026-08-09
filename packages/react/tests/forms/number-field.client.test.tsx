@@ -61,9 +61,14 @@ describe("NumberField", () => {
 
     // 検証
     const roots = screen.container.querySelectorAll<HTMLElement>(".sui_number_field");
+    const [defaultRoot, explicitRoot] = [...roots];
 
-    await expect.element(roots[0]).not.toHaveClass("sui_number_field-outlined");
-    await expect.element(roots[1]).toHaveClass("sui_number_field-outlined");
+    if (defaultRoot === undefined || explicitRoot === undefined) {
+      throw new Error("Expected two number field roots.");
+    }
+
+    await expect.element(defaultRoot).not.toHaveClass("sui_number_field-outlined");
+    await expect.element(explicitRoot).toHaveClass("sui_number_field-outlined");
   });
 
   test("accentColor に応じたクラスを適用する", async () => {

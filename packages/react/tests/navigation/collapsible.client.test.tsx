@@ -25,7 +25,7 @@ describe("Collapsible", () => {
     const root = screen.container.querySelector<HTMLElement>(".sui_collapsible");
 
     await expect.element(root).toHaveClass("sui_collapsible");
-    await expect.element(root).toHaveClass("sui_collapsible-outlined");
+    await expect.element(root).not.toHaveClass("sui_collapsible-outlined");
     await expect.element(root).toHaveClass("sui_collapsible-radius_md");
     await expect.element(root).toHaveClass("sui_collapsible-size_md");
   });

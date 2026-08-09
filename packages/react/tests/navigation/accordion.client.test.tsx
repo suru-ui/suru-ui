@@ -44,7 +44,7 @@ describe("Accordion", () => {
 
     await expect.element(root).toHaveClass("sui_accordion");
     await expect.element(root).toHaveClass("sui_accordion-divider");
-    await expect.element(root).toHaveClass("sui_accordion-outlined");
+    await expect.element(root).not.toHaveClass("sui_accordion-outlined");
     await expect.element(root).toHaveClass("sui_accordion-radius_md");
     await expect.element(root).toHaveClass("sui_accordion-size_md");
   });

@@ -24,7 +24,10 @@ describe("Fieldset", () => {
   test("className を保持する", async () => {
     const screen = await render(<Fieldset.Root className="custom-fieldset" />);
 
-    expect(screen.container.querySelector("fieldset")).toHaveClass("sui_fieldset", "custom-fieldset");
+    expect(screen.container.querySelector("fieldset")).toHaveClass(
+      "sui_fieldset",
+      "custom-fieldset",
+    );
   });
 
   test("disabled を指定すると子の入力欄が無効化される", async () => {

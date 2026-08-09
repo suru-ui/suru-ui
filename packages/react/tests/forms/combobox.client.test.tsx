@@ -132,10 +132,14 @@ describe("Combobox", () => {
     const input = document.querySelector<HTMLElement>(".sui_combobox_chips .sui_combobox_input");
     const chipRects = chips.map((chip) => chip.getBoundingClientRect());
     const inputRect = input?.getBoundingClientRect();
+    const [firstChip, secondChip] = chipRects;
 
     expect(chips).toHaveLength(2);
     expect(chipRects.every((rect) => rect.height > 0)).toBe(true);
-    expect(Math.abs(chipRects[0].top - chipRects[1].top)).toBeLessThan(1);
+    if (firstChip === undefined || secondChip === undefined) {
+      throw new Error("Expected two chip rectangles.");
+    }
+    expect(Math.abs(firstChip.top - secondChip.top)).toBeLessThan(1);
     expect(inputRect?.height).toBeGreaterThan(0);
     expect(inputRect?.height).toBeLessThan(40);
   });

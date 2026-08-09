@@ -43,7 +43,11 @@ export const FieldsetRoot: Component<FieldsetRootProps> = function SuiFieldsetRo
   return (
     <Fieldset.Root
       {...otherProps}
-      className={cn(className, "sui_fieldset", (state) => state.disabled && "sui_fieldset-disabled")}
+      className={cn(
+        className,
+        "sui_fieldset",
+        (state) => state.disabled && "sui_fieldset-disabled",
+      )}
     />
   );
 };

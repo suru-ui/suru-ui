@@ -74,7 +74,8 @@ export const Content: Component<Content.Props> = ScrollAreaContent;
 // ---------
 
 export type ScrollAreaScrollbarState = BaseScrollArea.Scrollbar.State;
-export type ScrollAreaScrollbarProps = React.ComponentProps<typeof BaseScrollArea.Scrollbar>;
+export type ScrollAreaScrollbarProps = React.ComponentProps<typeof BaseScrollArea.Scrollbar> &
+  ScrollAreaDataAttributes;
 
 export const ScrollAreaScrollbar: Component<ScrollAreaScrollbarProps> =
   function SuiScrollAreaScrollbar(props) {
@@ -98,7 +99,8 @@ export const Scrollbar: Component<Scrollbar.Props> = ScrollAreaScrollbar;
 // -----
 
 export type ScrollAreaThumbState = BaseScrollArea.Thumb.State;
-export type ScrollAreaThumbProps = React.ComponentProps<typeof BaseScrollArea.Thumb>;
+export type ScrollAreaThumbProps = React.ComponentProps<typeof BaseScrollArea.Thumb> &
+  ScrollAreaDataAttributes;
 
 export const ScrollAreaThumb: Component<ScrollAreaThumbProps> = function SuiScrollAreaThumb(props) {
   const { className, ...otherProps } = props;
@@ -113,6 +115,10 @@ export namespace Thumb {
 }
 
 export const Thumb: Component<Thumb.Props> = ScrollAreaThumb;
+
+type ScrollAreaDataAttributes = {
+  [attribute: `data-${string}`]: string | undefined;
+};
 
 // Corner
 // ------

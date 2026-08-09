@@ -3,6 +3,7 @@ import type { Color, Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import cn from "../../cn.js";
+import useFocusType from "../../hooks/use-focus-type.js";
 import type { Component } from "../../types.js";
 
 import "./input.css";
@@ -91,8 +92,12 @@ export const InputRoot: Component<InputRootProps> = function SuiInputRoot(props)
     outlined: outlinedProp = variantProp === "naked",
     accentColor: accentColorProp = "grey",
     className,
+    onBlur,
+    onFocus,
+    onPointerDown,
     ...otherProps
   } = props;
+  const { focusType, ...focusProps } = useFocusType({ onBlur, onFocus, onPointerDown });
 
   return (
     <Input
@@ -107,6 +112,8 @@ export const InputRoot: Component<InputRootProps> = function SuiInputRoot(props)
         outlinedProp && "sui_input-outlined",
         (state) => state.disabled && "sui_input-disabled",
       )}
+      {...focusProps}
+      data-focus-type={focusType}
     />
   );
 };

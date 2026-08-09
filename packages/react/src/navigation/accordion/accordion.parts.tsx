@@ -34,7 +34,7 @@ export type AccordionRootProps = React.ComponentProps<typeof Accordion.Root> & {
   /**
    * アコーディオンの枠線を表示するかどうかを指定します。
    *
-   * @default true
+   * @default false
    */
   outlined?: boolean | undefined;
 
@@ -81,7 +81,7 @@ export const AccordionRoot: Component<AccordionRootProps> = function SuiAccordio
   const {
     className,
     divider = true,
-    outlined = true,
+    outlined = false,
     radius = "md",
     size = "md",
     ...otherProps

@@ -15,13 +15,13 @@ describe("ScrollArea", () => {
 
     await expect.element(screen.getByText("コンテンツ")).toBeVisible();
     await expect
-      .element(screen.getByText("コンテンツ").locator(".."))
+      .element(screen.container.querySelector<HTMLElement>(".sui_scroll_area_content"))
       .toHaveClass("sui_scroll_area_content");
     await expect
-      .element(screen.getByText("コンテンツ").locator("../.."))
+      .element(screen.container.querySelector<HTMLElement>(".sui_scroll_area_viewport"))
       .toHaveClass("sui_scroll_area_viewport");
     await expect
-      .element(screen.getByText("コンテンツ").locator("../../.."))
+      .element(screen.container.querySelector<HTMLElement>(".sui_scroll_area"))
       .toHaveClass("sui_scroll_area");
   });
 
