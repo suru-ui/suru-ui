@@ -35,6 +35,10 @@
       "types": "./dist/src/navigation/scroll-area/index.d.ts",
       "default": "./dist/src/navigation/scroll-area/index.js"
     },
+    "./tabs": {
+      "types": "./dist/src/navigation/tabs/index.d.ts",
+      "default": "./dist/src/navigation/tabs/index.js"
+    },
     "./avatar": {
       "types": "./dist/src/data-display/avatar/index.d.ts",
       "default": "./dist/src/data-display/avatar/index.js"
@@ -42,6 +46,34 @@
     "./alert-dialog": {
       "types": "./dist/src/overlays/alert-dialog/index.d.ts",
       "default": "./dist/src/overlays/alert-dialog/index.js"
+    },
+    "./context-menu": {
+      "types": "./dist/src/overlays/context-menu/index.d.ts",
+      "default": "./dist/src/overlays/context-menu/index.js"
+    },
+    "./dialog": {
+      "types": "./dist/src/overlays/dialog/index.d.ts",
+      "default": "./dist/src/overlays/dialog/index.js"
+    },
+    "./drawer": {
+      "types": "./dist/src/overlays/drawer/index.d.ts",
+      "default": "./dist/src/overlays/drawer/index.js"
+    },
+    "./menu": {
+      "types": "./dist/src/overlays/menu/index.d.ts",
+      "default": "./dist/src/overlays/menu/index.js"
+    },
+    "./menubar": {
+      "types": "./dist/src/overlays/menubar/index.d.ts",
+      "default": "./dist/src/overlays/menubar/index.js"
+    },
+    "./toast": {
+      "types": "./dist/src/overlays/toast/index.d.ts",
+      "default": "./dist/src/overlays/toast/index.js"
+    },
+    "./tooltip": {
+      "types": "./dist/src/overlays/tooltip/index.d.ts",
+      "default": "./dist/src/overlays/tooltip/index.js"
     },
     "./button": {
       "types": "./dist/src/buttons/button/index.d.ts",
@@ -91,6 +123,14 @@
       "types": "./dist/src/forms/input/index.d.ts",
       "default": "./dist/src/forms/input/index.js"
     },
+    "./meter": {
+      "types": "./dist/src/data-display/meter/index.d.ts",
+      "default": "./dist/src/data-display/meter/index.js"
+    },
+    "./progress": {
+      "types": "./dist/src/data-display/progress/index.d.ts",
+      "default": "./dist/src/data-display/progress/index.js"
+    },
     "./autocomplete": {
       "types": "./dist/src/forms/autocomplete/index.d.ts",
       "default": "./dist/src/forms/autocomplete/index.js"
@@ -106,6 +146,10 @@
     "./radio-group": {
       "types": "./dist/src/forms/radio-group/index.d.ts",
       "default": "./dist/src/forms/radio-group/index.js"
+    },
+    "./select": {
+      "types": "./dist/src/forms/select/index.d.ts",
+      "default": "./dist/src/forms/select/index.js"
     },
     "./slider": {
       "types": "./dist/src/forms/slider/index.d.ts",

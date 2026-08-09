@@ -1,0 +1,520 @@
+/* IndentBackground */
+@layer sui.component {
+  /* リセット */
+  .sui_drawer_indent_background {
+    box-sizing: border-box;
+  }
+
+  /* 変数 */
+  .sui_drawer_indent_background {
+    /* 形状 */
+    --sui_drawer_indent_background-scale: ;
+  }
+
+  /* 静的 */
+  .sui_drawer_indent_background {
+    position: fixed;
+    inset: 0px;
+    transform-origin: center;
+    transition: scale 200ms ease-out;
+  }
+
+  /* 動的 */
+  .sui_drawer_indent_background {
+    scale: var(--sui_drawer_indent_background-scale);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_drawer_indent_background {
+    /* 形状 */
+    --sui_drawer_indent_background-scale: 1;
+  }
+
+  /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  .sui_drawer_indent_background[data-active] {
+    /* 形状 */
+    --sui_drawer_indent_background-scale: 0.96;
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* Indent */
+@layer sui.component {
+  /* リセット */
+  .sui_drawer_indent {
+    box-sizing: border-box;
+  }
+
+  /* 変数 */
+  .sui_drawer_indent {
+    /* 形状 */
+    --sui_drawer_indent-scale: ;
+  }
+
+  /* 静的 */
+  .sui_drawer_indent {
+    position: relative;
+    min-height: 100%;
+    transform-origin: center;
+    transition: scale 200ms ease-out;
+  }
+
+  /* 動的 */
+  .sui_drawer_indent {
+    scale: var(--sui_drawer_indent-scale);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_drawer_indent {
+    /* 形状 */
+    --sui_drawer_indent-scale: 1;
+  }
+
+  /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  .sui_drawer_indent[data-active] {
+    /* 形状 */
+    --sui_drawer_indent-scale: 0.96;
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* Trigger */
+@layer sui.component {
+  /* リセット */
+  .sui_drawer_trigger {
+    box-sizing: border-box;
+  }
+}
+
+/* SwipeArea */
+@layer sui.component {
+  /* リセット */
+  .sui_drawer_swipe_area {
+    box-sizing: border-box;
+  }
+
+  /* 変数 */
+  .sui_drawer_swipe_area {
+    /* 形状 */
+    --sui_drawer_swipe_area-height: ;
+  }
+
+  /* 静的 */
+  .sui_drawer_swipe_area {
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    z-index: 1;
+  }
+
+  /* 動的 */
+  .sui_drawer_swipe_area {
+    height: var(--sui_drawer_swipe_area-height);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_drawer_swipe_area {
+    /* 形状 */
+    --sui_drawer_swipe_area-height: --sui-space(4);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* Portal */
+@layer sui.component {
+  /* リセット */
+  .sui_drawer_portal {
+    box-sizing: border-box;
+  }
+}
+
+/* Backdrop */
+@layer sui.component {
+  /* リセット */
+  .sui_drawer_backdrop {
+    box-sizing: border-box;
+  }
+
+  /* 変数 */
+  .sui_drawer_backdrop {
+    /* 背景 */
+    --sui_drawer_backdrop-background_color: ;
+    /* 外観 */
+    --sui_drawer_backdrop-opacity: ;
+  }
+
+  /* 静的 */
+  .sui_drawer_backdrop {
+    position: fixed;
+    inset: 0px;
+    z-index: 0;
+    transition: opacity 200ms ease-out;
+  }
+
+  /* 動的 */
+  .sui_drawer_backdrop {
+    background-color: var(--sui_drawer_backdrop-background_color);
+    opacity: var(--_sui_drawer_backdrop-opacity, var(--sui_drawer_backdrop-opacity));
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_drawer_backdrop {
+    /* 背景 */
+    --sui_drawer_backdrop-background_color: var(--sui-canvas-1);
+    /* 外観 */
+    --sui_drawer_backdrop-opacity: var(--sui-backdrop-opacity);
+  }
+
+  /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  .sui_drawer_backdrop:is([data-starting-style], [data-ending-style]) {
+    /* 外観 */
+    --_sui_drawer_backdrop-opacity: 0;
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* Viewport */
+@layer sui.component {
+  /* リセット */
+  .sui_drawer_viewport {
+    box-sizing: border-box;
+  }
+
+  /* 静的 */
+  .sui_drawer_viewport {
+    position: fixed;
+    inset: 0px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: auto;
+    pointer-events: none;
+  }
+
+  .sui_drawer_viewport:has(.sui_drawer_popup[data-swipe-direction="up"]) {
+    align-items: flex-start;
+  }
+}
+
+/* Popup */
+@layer sui.component {
+  /* リセット */
+  .sui_drawer_popup {
+    box-sizing: border-box;
+  }
+
+  /* 変数 */
+  .sui_drawer_popup {
+    /* 形状 */
+    --sui_drawer_popup-width: ;
+    --sui_drawer_popup-max_width: ;
+    --sui_drawer_popup-max_height: ;
+    /* 空白 */
+    --sui_drawer_popup-gap: ;
+    --sui_drawer_popup-padding: ;
+    /* 背景 */
+    --sui_drawer_popup-background_color: ;
+    /* 枠線 */
+    --sui_drawer_popup-border_color: ;
+    --sui_drawer_popup-border_width: ;
+    --sui_drawer_popup-border_radius: ;
+    --sui_drawer_popup-outline_color: ;
+    --sui_drawer_popup-outline_offset: ;
+    /* 前景 */
+    --sui_drawer_popup-color: ;
+    /* 外観 */
+    --sui_drawer_popup-opacity: ;
+    /* 変形 */
+    --sui_drawer_popup-transform: ;
+  }
+
+  /* 静的 */
+  .sui_drawer_popup {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto;
+    transition:
+      transform 200ms ease-out,
+      opacity 200ms ease-out;
+  }
+
+  .sui_drawer_popup[data-swipe-direction="left"] {
+    align-self: stretch;
+    margin-right: auto;
+  }
+
+  .sui_drawer_popup[data-swipe-direction="right"] {
+    align-self: stretch;
+    margin-left: auto;
+  }
+
+  /* 動的 */
+  .sui_drawer_popup {
+    gap: var(--sui_drawer_popup-gap);
+    width: var(--_sui_drawer_popup-width, var(--sui_drawer_popup-width));
+    max-width: var(--sui_drawer_popup-max_width);
+    max-height: var(--_sui_drawer_popup-max_height, var(--sui_drawer_popup-max_height));
+    padding: var(--sui_drawer_popup-padding);
+    color: var(--sui_drawer_popup-color);
+    outline: var(--_sui_drawer_popup-outline_width, 0px)
+             solid
+             var(--sui_drawer_popup-outline_color);
+    outline-offset: var(--sui_drawer_popup-outline_offset);
+    background-color: var(--sui_drawer_popup-background_color);
+    border: var(--sui_drawer_popup-border_color)
+            solid
+            var(--sui_drawer_popup-border_width);
+    border-radius: var(--_sui_drawer_popup-border_radius, var(--sui_drawer_popup-border_radius));
+    opacity: var(--_sui_drawer_popup-opacity, var(--sui_drawer_popup-opacity));
+    transform: var(--_sui_drawer_popup-transform, var(--sui_drawer_popup-transform));
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_drawer_popup {
+    /* 形状 */
+    --sui_drawer_popup-width: 100%;
+    --sui_drawer_popup-max_width: 640px;
+    --sui_drawer_popup-max_height: calc(100% - --sui-space(4));
+    /* 空白 */
+    --sui_drawer_popup-gap: --sui-gap(4);
+    --sui_drawer_popup-padding: --sui-space(6);
+    /* 背景 */
+    --sui_drawer_popup-background_color: var(--sui-canvas-2);
+    /* 枠線 */
+    --sui_drawer_popup-border_color: var(--sui-grey-naked-border-normal);
+    --sui_drawer_popup-border_width: --sui-border_width(1);
+    --sui_drawer_popup-border_radius: var(--sui-radius-xl) var(--sui-radius-xl) 0px 0px;
+    --sui_drawer_popup-outline_color: var(--sui-focusring_color);
+    --sui_drawer_popup-outline_offset: var(--sui-focusring_offset);
+    /* 前景 */
+    --sui_drawer_popup-color: var(--sui-canvas_text-1);
+    /* 外観 */
+    --sui_drawer_popup-opacity: 1;
+    /* 変形 */
+    --sui_drawer_popup-transform: translate3d(0px, 0px, 0px);
+  }
+
+  /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  .sui_drawer_popup[data-swipe-direction="down"]:is([data-starting-style], [data-ending-style]) {
+    /* 変形 */
+    --_sui_drawer_popup-transform: translate3d(0px, 100%, 0px);
+  }
+
+  .sui_drawer_popup[data-swipe-direction="up"]:is([data-starting-style], [data-ending-style]) {
+    /* 変形 */
+    --_sui_drawer_popup-transform: translate3d(0px, -100%, 0px);
+  }
+
+  .sui_drawer_popup[data-swipe-direction="left"]:is([data-starting-style], [data-ending-style]) {
+    /* 変形 */
+    --_sui_drawer_popup-transform: translate3d(-100%, 0px, 0px);
+  }
+
+  .sui_drawer_popup[data-swipe-direction="right"]:is([data-starting-style], [data-ending-style]) {
+    /* 変形 */
+    --_sui_drawer_popup-transform: translate3d(100%, 0px, 0px);
+  }
+
+  .sui_drawer_popup:focus-visible {
+    /* 枠線 */
+    --_sui_drawer_popup-outline_width: var(--sui-focusring_width);
+  }
+
+  .sui_drawer_popup[data-swipe-direction="up"] {
+    /* 枠線 */
+    --_sui_drawer_popup-border_radius: 0px 0px var(--sui-radius-xl) var(--sui-radius-xl);
+  }
+
+  .sui_drawer_popup[data-swipe-direction="left"] {
+    /* 形状 */
+    --_sui_drawer_popup-width: min(100%, var(--sui_drawer_popup-max_width));
+    --_sui_drawer_popup-max_height: 100%;
+    /* 枠線 */
+    --_sui_drawer_popup-border_radius: 0px var(--sui-radius-xl) var(--sui-radius-xl) 0px;
+  }
+
+  .sui_drawer_popup[data-swipe-direction="right"] {
+    /* 形状 */
+    --_sui_drawer_popup-width: min(100%, var(--sui_drawer_popup-max_width));
+    --_sui_drawer_popup-max_height: 100%;
+    /* 枠線 */
+    --_sui_drawer_popup-border_radius: var(--sui-radius-xl) 0px 0px var(--sui-radius-xl);
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* Content */
+@layer sui.component {
+  /* リセット */
+  .sui_drawer_content {
+    box-sizing: border-box;
+  }
+
+  /* 静的 */
+  .sui_drawer_content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0px;
+    overflow: auto;
+  }
+}
+
+/* Title */
+@layer sui.component {
+  /* リセット */
+  .sui_drawer_title {
+    box-sizing: border-box;
+    margin: 0px;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+  }
+
+  /* 変数 */
+  .sui_drawer_title {
+    /* 書体 */
+    --sui_drawer_title-font_size: ;
+    --sui_drawer_title-font_weight: ;
+    --sui_drawer_title-line_height: ;
+    --sui_drawer_title-letter_spacing: ;
+    /* 前景 */
+    --sui_drawer_title-color: ;
+  }
+
+  /* 動的 */
+  .sui_drawer_title {
+    font-size: var(--sui_drawer_title-font_size);
+    font-weight: var(--sui_drawer_title-font_weight);
+    line-height: var(--sui_drawer_title-line_height);
+    color: var(--sui_drawer_title-color);
+    letter-spacing: var(--sui_drawer_title-letter_spacing);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_drawer_title {
+    /* 書体 */
+    --sui_drawer_title-font_size: var(--sui-text-std-md-b-font_size);
+    --sui_drawer_title-font_weight: var(--sui-text-std-md-b-font_weight);
+    --sui_drawer_title-line_height: var(--sui-text-std-md-b-line_height);
+    --sui_drawer_title-letter_spacing: var(--sui-text-std-md-b-letter_spacing);
+    /* 前景 */
+    --sui_drawer_title-color: var(--sui-canvas_text-1);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* Description */
+@layer sui.component {
+  /* リセット */
+  .sui_drawer_description {
+    box-sizing: border-box;
+    margin: 0px;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  /* 変数 */
+  .sui_drawer_description {
+    /* 書体 */
+    --sui_drawer_description-font_size: ;
+    --sui_drawer_description-font_weight: ;
+    --sui_drawer_description-line_height: ;
+    --sui_drawer_description-letter_spacing: ;
+    /* 前景 */
+    --sui_drawer_description-color: ;
+  }
+
+  /* 動的 */
+  .sui_drawer_description {
+    font-size: var(--sui_drawer_description-font_size);
+    font-weight: var(--sui_drawer_description-font_weight);
+    line-height: var(--sui_drawer_description-line_height);
+    color: var(--sui_drawer_description-color);
+    letter-spacing: var(--sui_drawer_description-letter_spacing);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_drawer_description {
+    /* 書体 */
+    --sui_drawer_description-font_size: var(--sui-text-std-sm-n-font_size);
+    --sui_drawer_description-font_weight: var(--sui-text-std-sm-n-font_weight);
+    --sui_drawer_description-line_height: var(--sui-text-std-sm-n-line_height);
+    --sui_drawer_description-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+    /* 前景 */
+    --sui_drawer_description-color: var(--sui-canvas_text-2);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* CloseButton */
+@layer sui.component {
+  /* リセット */
+  .sui_drawer_close_button {
+    box-sizing: border-box;
+  }
+
+  /* 変数 */
+  .sui_drawer_popup {
+    /* 形状 */
+    --sui_drawer_close_button-size: ;
+    /* 位置 */
+    --sui_drawer_close_button-position_top: ;
+    --sui_drawer_close_button-position_right: ;
+  }
+
+  /* 静的 */
+  .sui_drawer_close_button {
+    position: absolute;
+  }
+
+  /* 動的 */
+  .sui_drawer_close_button {
+    top: var(--sui_drawer_close_button-position_top);
+    right: var(--sui_drawer_close_button-position_right);
+    width: var(--sui_drawer_close_button-size);
+    height: var(--sui_drawer_close_button-size);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_drawer_popup {
+    /* 形状 */
+    --sui_drawer_close_button-size: var(--sui-size-md);
+    /* 位置 */
+    --sui_drawer_close_button-position_top: --sui-space(4);
+    --sui_drawer_close_button-position_right: --sui-space(4);
+  }
+
+  /* 既定値設定: ここまで */
+}

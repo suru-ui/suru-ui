@@ -1,0 +1,178 @@
+/* Portal */
+@layer sui.component {
+  /* リセット */
+  .sui_tooltip_portal {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    box-sizing: border-box;
+  }
+}
+
+/* Positioner */
+@layer sui.component {
+  /* リセット */
+  .sui_tooltip_positioner {
+    box-sizing: border-box;
+  }
+
+  /* 静的 */
+  .sui_tooltip_positioner {
+    z-index: 100;
+  }
+}
+
+/* Popup */
+@layer sui.component {
+  /* リセット */
+  .sui_tooltip_popup {
+    box-sizing: border-box;
+  }
+
+  /* 変数 */
+  .sui_tooltip_popup {
+    /* 形状 */
+    --sui_tooltip_popup-max_width: ;
+    /* 空白 */
+    --sui_tooltip_popup-padding: ;
+    /* 書体 */
+    --sui_tooltip_popup-font_size: ;
+    --sui_tooltip_popup-font_weight: ;
+    --sui_tooltip_popup-line_height: ;
+    --sui_tooltip_popup-letter_spacing: ;
+    /* 背景 */
+    --sui_tooltip_popup-background_color: ;
+    /* 枠線 */
+    --sui_tooltip_popup-border_radius: ;
+    /* 前景 */
+    --sui_tooltip_popup-color: ;
+    /* 外観 */
+    --sui_tooltip_popup-opacity: ;
+    /* 変形 */
+    --sui_tooltip_popup-scale: ;
+    --sui_tooltip_popup-transform_origin: ;
+  }
+
+  /* 静的 */
+  .sui_tooltip_popup {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto;
+    transition:
+      opacity 150ms ease-out,
+      scale 150ms ease-out;
+  }
+
+  /* 動的 */
+  .sui_tooltip_popup {
+    max-width: var(--sui_tooltip_popup-max_width);
+    padding: var(--sui_tooltip_popup-padding);
+    font-family: var(--sui-font-sans);
+    font-size: var(--sui_tooltip_popup-font_size);
+    font-weight: var(--sui_tooltip_popup-font_weight);
+    line-height: var(--sui_tooltip_popup-line_height);
+    color: var(--sui_tooltip_popup-color);
+    letter-spacing: var(--sui_tooltip_popup-letter_spacing);
+    background-color: var(--sui_tooltip_popup-background_color);
+    border-radius: var(--sui_tooltip_popup-border_radius);
+    opacity: var(--_sui_tooltip_popup-opacity, var(--sui_tooltip_popup-opacity));
+    transform-origin: var(--sui_tooltip_popup-transform_origin);
+    scale: var(--_sui_tooltip_popup-scale, var(--sui_tooltip_popup-scale));
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_tooltip_popup {
+    /* 形状 */
+    --sui_tooltip_popup-max_width: 320px;
+    /* 空白 */
+    --sui_tooltip_popup-padding: --sui-space(2) --sui-space(3);
+    /* 書体 */
+    --sui_tooltip_popup-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_tooltip_popup-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_tooltip_popup-line_height: var(--sui-text-oln-sm-n-line_height);
+    --sui_tooltip_popup-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+    /* 背景 */
+    --sui_tooltip_popup-background_color: var(--sui-tooltip-canvas);
+    /* 枠線 */
+    --sui_tooltip_popup-border_radius: var(--sui-radius-sm);
+    /* 前景 */
+    --sui_tooltip_popup-color: var(--sui-tooltip-canvas_text);
+    /* 外観 */
+    --sui_tooltip_popup-opacity: 1;
+    /* 変形 */
+    --sui_tooltip_popup-scale: 1;
+    --sui_tooltip_popup-transform_origin: var(--transform-origin);
+  }
+
+  /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  .sui_tooltip_popup:is([data-starting-style], [data-ending-style]) {
+    /* 外観 */
+    --_sui_tooltip_popup-opacity: 0;
+    /* 変形 */
+    --_sui_tooltip_popup-scale: 0.98;
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* Arrow */
+@layer sui.component {
+  /* リセット */
+  .sui_tooltip_arrow {
+    box-sizing: border-box;
+  }
+
+  /* 静的 */
+  .sui_tooltip_arrow {
+    position: relative;
+    display: block;
+    width: 12px;
+    height: 6px;
+    overflow: clip;
+  }
+
+  .sui_tooltip_arrow[data-side="top"] {
+    bottom: -6px;
+    rotate: 180deg;
+  }
+
+  .sui_tooltip_arrow[data-side="bottom"] {
+    top: -6px;
+  }
+
+  .sui_tooltip_arrow[data-side="left"] {
+    right: -9px;
+    rotate: 90deg;
+  }
+
+  .sui_tooltip_arrow[data-side="right"] {
+    left: -9px;
+    rotate: -90deg;
+  }
+
+  .sui_tooltip_arrow::before {
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    box-sizing: border-box;
+    display: block;
+    width: calc(6px * sqrt(2));
+    height: calc(6px * sqrt(2));
+    content: "";
+    background-color: var(--sui_tooltip_popup-background_color);
+    transform: translate(-50%, 50%) rotate(45deg);
+  }
+}
+
+/* Viewport */
+@layer sui.component {
+  /* リセット */
+  .sui_tooltip_viewport {
+    box-sizing: border-box;
+  }
+}

@@ -26,6 +26,12 @@ export {
 // data-display
 export { type AvatarProps, Avatar } from "./data-display/avatar/index.js";
 export { type ChipProps, Chip } from "./data-display/chip/index.js";
+export { type MeterProps, type MeterSlotProps, Meter } from "./data-display/meter/index.js";
+export {
+  type ProgressProps,
+  type ProgressSlotProps,
+  Progress,
+} from "./data-display/progress/index.js";
 
 // forms
 export { type AutocompleteProps, Autocomplete } from "./forms/autocomplete/index.js";
@@ -43,6 +49,7 @@ export {
 } from "./forms/number-field/index.js";
 export { type RadioProps, Radio } from "./forms/radio/index.js";
 export { type RadioGroupProps, RadioGroup } from "./forms/radio-group/index.js";
+export { type SelectProps, Select } from "./forms/select/index.js";
 export { type SliderProps, type SliderSlotProps, Slider } from "./forms/slider/index.js";
 export { type SwitchProps, type SwitchSlotProps, Switch } from "./forms/switch/index.js";
 
@@ -62,6 +69,14 @@ export {
   type ScrollAreaSlotProps,
   ScrollArea,
 } from "./navigation/scroll-area/index.js";
+export { type TabsProps, Tabs } from "./navigation/tabs/index.js";
 
 // overlays
 export { type AlertDialogProps, AlertDialog } from "./overlays/alert-dialog/index.js";
+export { type ContextMenuProps, ContextMenu } from "./overlays/context-menu/index.js";
+export { type DialogProps, Dialog } from "./overlays/dialog/index.js";
+export { type DrawerProps, type DrawerSlotProps, Drawer } from "./overlays/drawer/index.js";
+export { type MenuProps, Menu } from "./overlays/menu/index.js";
+export { type MenubarProps, Menubar } from "./overlays/menubar/index.js";
+export { type ToastProps, type ToastSlotProps, Toast } from "./overlays/toast/index.js";
+export { type TooltipProps, Tooltip } from "./overlays/tooltip/index.js";

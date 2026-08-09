@@ -1,0 +1,280 @@
+/* Root */
+@layer sui.component {
+  /* リセット */
+  .sui_meter {
+    box-sizing: border-box;
+  }
+
+  /* 変数 */
+  .sui_meter {
+    /* 形状 */
+    --sui_meter_track-height: ;
+    /* 空白 */
+    --sui_meter-gap: ;
+    /* 書体 */
+    --sui_meter_label-font_size: ;
+    --sui_meter_label-font_weight: ;
+    --sui_meter_label-line_height: ;
+    --sui_meter_label-letter_spacing: ;
+    --sui_meter_value-font_size: ;
+    --sui_meter_value-font_weight: ;
+    --sui_meter_value-line_height: ;
+    --sui_meter_value-letter_spacing: ;
+    /* 背景 */
+    --sui_meter_track-canvas-normal: ;
+    --sui_meter_indicator-canvas-normal: ;
+    /* 枠線 */
+    --sui_meter_track-border_color-normal: ;
+    --sui_meter_track-border_width: ;
+    --sui_meter_track-border_radius: ;
+    /* 前景 */
+    --sui_meter_label-color: ;
+    --sui_meter_value-color: ;
+  }
+
+  /* 静的 */
+  .sui_meter {
+    display: grid;
+    grid-template-columns: minmax(0px, 1fr) auto;
+    width: 100%;
+  }
+
+  /* 動的 */
+  .sui_meter {
+    gap: var(--sui_meter-gap);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_meter {
+    /* 形状 */
+    --sui_meter_track-height: calc(
+      var(--sui_meter_label-font_size) * var(--sui_meter_label-line_height) / 4
+    );
+    /* 空白 */
+    --sui_meter-gap: --sui-gap(2);
+    /* 前景 */
+    --sui_meter_label-color: var(--sui-canvas_text-1);
+    --sui_meter_value-color: var(--sui-canvas_text-2);
+  }
+
+  .sui_meter-size_sm {
+    /* 書体 */
+    --sui_meter_label-font_size: var(--sui-text-std-sm-b-font_size);
+    --sui_meter_label-font_weight: var(--sui-text-std-sm-b-font_weight);
+    --sui_meter_label-line_height: var(--sui-text-std-sm-b-line_height);
+    --sui_meter_label-letter_spacing: var(--sui-text-std-sm-b-letter_spacing);
+    --sui_meter_value-font_size: var(--sui-text-std-sm-n-font_size);
+    --sui_meter_value-font_weight: var(--sui-text-std-sm-n-font_weight);
+    --sui_meter_value-line_height: var(--sui-text-std-sm-n-line_height);
+    --sui_meter_value-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+  }
+
+  .sui_meter-size_md {
+    /* 書体 */
+    --sui_meter_label-font_size: var(--sui-text-std-md-b-font_size);
+    --sui_meter_label-font_weight: var(--sui-text-std-md-b-font_weight);
+    --sui_meter_label-line_height: var(--sui-text-std-md-b-line_height);
+    --sui_meter_label-letter_spacing: var(--sui-text-std-md-b-letter_spacing);
+    --sui_meter_value-font_size: var(--sui-text-std-md-n-font_size);
+    --sui_meter_value-font_weight: var(--sui-text-std-md-n-font_weight);
+    --sui_meter_value-line_height: var(--sui-text-std-md-n-line_height);
+    --sui_meter_value-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
+  }
+
+  .sui_meter-size_lg {
+    /* 書体 */
+    --sui_meter_label-font_size: var(--sui-text-std-lg-b-font_size);
+    --sui_meter_label-font_weight: var(--sui-text-std-lg-b-font_weight);
+    --sui_meter_label-line_height: var(--sui-text-std-lg-b-line_height);
+    --sui_meter_label-letter_spacing: var(--sui-text-std-lg-b-letter_spacing);
+    --sui_meter_value-font_size: var(--sui-text-std-lg-n-font_size);
+    --sui_meter_value-font_weight: var(--sui-text-std-lg-n-font_weight);
+    --sui_meter_value-line_height: var(--sui-text-std-lg-n-line_height);
+    --sui_meter_value-letter_spacing: var(--sui-text-std-lg-n-letter_spacing);
+  }
+
+  .sui_meter-radius_none {
+    /* 枠線 */
+    --sui_meter_track-border_radius: 0px;
+  }
+
+  .sui_meter-radius_rounded {
+    /* 枠線 */
+    --sui_meter_track-border_radius: var(--sui-radius-sm);
+  }
+
+  .sui_meter-radius_full {
+    /* 枠線 */
+    --sui_meter_track-border_radius: calc(var(--sui_meter_track-height) / 2);
+  }
+
+  .sui_meter-variant_naked {
+    /* 背景 */
+    --sui_meter_track-canvas-normal: var(--sui-grey-naked-normal);
+    /* 枠線 */
+    --sui_meter_track-border_color-normal: var(--sui-grey-naked-border-normal);
+  }
+
+  .sui_meter-variant_liquid {
+    /* 背景 */
+    --sui_meter_track-canvas-normal: var(--sui-grey-liquid-normal);
+    /* 枠線 */
+    --sui_meter_track-border_color-normal: var(--sui-grey-liquid-border-normal);
+  }
+
+  .sui_meter-color_grey {
+    /* 背景 */
+    --sui_meter_indicator-canvas-normal: var(--sui-grey-solid-normal);
+  }
+
+  .sui_meter-color_blue {
+    /* 背景 */
+    --sui_meter_indicator-canvas-normal: var(--sui-blue-solid-normal);
+  }
+
+  .sui_meter-color_purple {
+    /* 背景 */
+    --sui_meter_indicator-canvas-normal: var(--sui-purple-solid-normal);
+  }
+
+  .sui_meter-color_magenta {
+    /* 背景 */
+    --sui_meter_indicator-canvas-normal: var(--sui-magenta-solid-normal);
+  }
+
+  .sui_meter-color_red {
+    /* 背景 */
+    --sui_meter_indicator-canvas-normal: var(--sui-red-solid-normal);
+  }
+
+  .sui_meter-color_orange {
+    /* 背景 */
+    --sui_meter_indicator-canvas-normal: var(--sui-orange-solid-normal);
+  }
+
+  .sui_meter-color_yellow {
+    /* 背景 */
+    --sui_meter_indicator-canvas-normal: var(--sui-yellow-solid-normal);
+  }
+
+  .sui_meter-color_green {
+    /* 背景 */
+    --sui_meter_indicator-canvas-normal: var(--sui-green-solid-normal);
+  }
+
+  /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  .sui_meter-outlined {
+    /* 枠線 */
+    --_sui_meter_track-border_color: var(--sui_meter_track-border_color-normal);
+    --_sui_meter_track-border_width: var(--sui_meter_track-border_width);
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* Label */
+@layer sui.component {
+  /* リセット */
+  .sui_meter_label {
+    box-sizing: border-box;
+  }
+
+  /* 静的 */
+  .sui_meter_label {
+    min-width: 0px;
+  }
+
+  /* 動的 */
+  .sui_meter_label {
+    font-family: var(--sui-font-sans);
+    font-size: var(--sui_meter_label-font_size);
+    font-weight: var(--sui_meter_label-font_weight);
+    line-height: var(--sui_meter_label-line_height);
+    color: var(--sui_meter_label-color);
+    letter-spacing: var(--sui_meter_label-letter_spacing);
+  }
+}
+
+/* Value */
+@layer sui.component {
+  /* リセット */
+  .sui_meter_value {
+    box-sizing: border-box;
+  }
+
+  /* 静的 */
+  .sui_meter_value {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* 動的 */
+  .sui_meter_value {
+    font-family: var(--sui-font-sans);
+    font-size: var(--sui_meter_value-font_size);
+    font-weight: var(--sui_meter_value-font_weight);
+    line-height: var(--sui_meter_value-line_height);
+    color: var(--sui_meter_value-color);
+    letter-spacing: var(--sui_meter_value-letter_spacing);
+  }
+}
+
+/* Track */
+@layer sui.component {
+  /* リセット */
+  .sui_meter_track {
+    box-sizing: border-box;
+  }
+
+  /* 静的 */
+  .sui_meter_track {
+    position: relative;
+    grid-column: 1 / -1;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  /* 動的 */
+  .sui_meter_track {
+    height: var(--sui_meter_track-height);
+    background-color: var(--sui_meter_track-canvas-normal);
+    border: var(--_sui_meter_track-border_color, transparent)
+            solid
+            var(--_sui_meter_track-border_width, 0px);
+    border-radius: var(--sui_meter_track-border_radius);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_meter {
+    /* 枠線 */
+    --sui_meter_track-border_width: --sui-border_width(1);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* Indicator */
+@layer sui.component {
+  /* リセット */
+  .sui_meter_indicator {
+    box-sizing: border-box;
+  }
+
+  /* 静的 */
+  .sui_meter_indicator {
+    position: absolute;
+    inset-block: 0px;
+    inset-inline-start: 0px;
+    display: block;
+    border-radius: inherit;
+  }
+
+  /* 動的 */
+  .sui_meter_indicator {
+    background-color: var(--sui_meter_indicator-canvas-normal);
+  }
+}
