@@ -170,6 +170,16 @@ import type { Component } from "../../types.js";
 import * as CheckboxParts from "./checkbox.parts.jsx";
 
 /**
+ * {@link Checkbox} の各パーツに渡すプロパティーです。
+ */
+export type CheckboxSlotProps = {
+  /**
+   * {@link CheckboxParts.Indicator|Indicator} に渡すプロパティーです。
+   */
+  readonly indicator?: CheckboxParts.Indicator.Props | undefined;
+};
+
+/**
  * {@link Checkbox} コンポーネントのプロパティーです。
  */
 export type CheckboxProps = CheckboxParts.Root.Props & {
@@ -181,11 +191,7 @@ export type CheckboxProps = CheckboxParts.Root.Props & {
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
    */
-  slotProps?:
-    | {
-        readonly indicator?: CheckboxParts.Indicator.Props | undefined;
-      }
-    | undefined;
+  slotProps?: CheckboxSlotProps | undefined;
 };
 
 /**
@@ -579,8 +585,26 @@ export { type CheckboxProps, Checkbox } from "./forms/checkbox/index.js";
 - `import { preview, controls } from "../../.config/storybook/preview.js";`
 - コンポーネント本体は `../../src/<カテゴリー>/<名前>/index.js` から import します。
 - テーマの配列（`COLORS`、`SIZES`、`COLOR_TEMPLATES`）は `@suru-ui/theme` から import します。
+- `controls` の第 2 引数は、各プロパティーの設定を必ず複数行のオブジェクトで記述します。プロパティー設定を 1 行に詰め込んではいけません。
 
-完了条件: 少なくとも「使い方」の story があり、`controls` で主要プロパティーを操作できる。
+  ```tsx
+  const ctrl = controls(Component, {
+    color: {
+      options: COLORS,
+      control: "select",
+    },
+    size: {
+      options: SIZES,
+      control: "select",
+    },
+  });
+  ```
+
+- コンポーネントが `color`、`radius`、`size` のいずれかを公開する場合は、それぞれに対応する `Colors`、`Radius`、`Sizes` story を必ず作ります。該当しないプロパティーの story は作りません。
+- `Colors` は `COLORS`、`Sizes` は `SIZES`、`Radius` は `"none"`、`"rounded"`、`"full"` の全候補を列挙し、各候補の値が分かるラベルも表示します。配列の `map` で実装して構いません。
+- 「使い方」の story を最初に置き、その後に `Image` などの構造例、`Colors`、`Radius`、`Sizes` などのバリエーション story を置きます。
+
+完了条件: 「使い方」の story、公開している各スタイル系プロパティーのバリエーション story、複数行で書かれた `controls` があり、`controls` で主要プロパティーを操作できる。
 
 ### Step 8 テスト
 
@@ -631,6 +655,16 @@ import type { Component } from "../../types.js";
 import * as XxxParts from "./xxx.parts.jsx";
 
 /**
+ * {@link Xxx} の各パーツに渡すプロパティーです。
+ */
+export type XxxSlotProps = {
+  /**
+   * {@link XxxParts.Content|Content} に渡すプロパティーです。
+   */
+  readonly content?: XxxParts.Indicator.Props | undefined;
+};
+
+/**
  * {@link Xxx} コンポーネントのプロパティーです。
  */
 export type XxxProps = XxxParts.Root.Props & {
@@ -642,11 +676,7 @@ export type XxxProps = XxxParts.Root.Props & {
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
    */
-  slotProps?:
-    | {
-        readonly content?: XxxParts.Content.Props | undefined;
-      }
-    | undefined;
+  slotProps?: XxxSlotProps | undefined;
 };
 
 /**

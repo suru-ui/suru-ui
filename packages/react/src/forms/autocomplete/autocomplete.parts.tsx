@@ -4,6 +4,7 @@ import * as React from "react";
 
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
+import { ScrollArea } from "../../navigation/scroll-area/index.js";
 import type { Component } from "../../types.js";
 
 import "./autocomplete.css";
@@ -31,7 +32,7 @@ export type AutocompleteContext = {
   readonly radius: "none" | "rounded" | "full";
 
   /**
-   * 入力欄のサイズです。
+   * 入力欄とリスト項目のサイズです。
    */
   readonly size: Size;
 
@@ -128,7 +129,7 @@ export type AutocompleteRootProps = Omit<
   outlined?: boolean | undefined;
 
   /**
-   * 入力欄のサイズを指定します。
+   * 入力欄とリスト項目のサイズを指定します。
    *
    * @default "md"
    */
@@ -546,7 +547,11 @@ export const AutocompleteList: Component<AutocompleteListProps> = function SuiAu
 ) {
   const { className, ...otherProps } = props;
 
-  return <Autocomplete.List {...otherProps} className={cn(className, "sui_autocomplete_list")} />;
+  return (
+    <ScrollArea className="sui_autocomplete_scroll_area">
+      <Autocomplete.List {...otherProps} className={cn(className, "sui_autocomplete_list")} />
+    </ScrollArea>
+  );
 };
 
 /**
@@ -958,9 +963,16 @@ export type AutocompleteItemProps = React.ComponentProps<typeof Autocomplete.Ite
 export const AutocompleteItem: Component<AutocompleteItemProps> = function SuiAutocompleteItem(
   props,
 ) {
+  const context = useAutocompleteContext(true);
   const { className, ...otherProps } = props;
+  const size = context?.size ?? "md";
 
-  return <Autocomplete.Item {...otherProps} className={cn(className, "sui_autocomplete_item")} />;
+  return (
+    <Autocomplete.Item
+      {...otherProps}
+      className={cn(className, "sui_autocomplete_item", `sui_autocomplete-size_${size}`)}
+    />
+  );
 };
 
 /**

@@ -18,10 +18,15 @@ export {
   ToggleButtonGroup,
 } from "./buttons/toggle-button-group/index.js";
 
+// data-display
+export { type AvatarProps, Avatar } from "./data-display/avatar/index.js";
+export { type ChipProps, Chip } from "./data-display/chip/index.js";
+
 // forms
 export { type AutocompleteProps, Autocomplete } from "./forms/autocomplete/index.js";
 export { type CheckboxProps, Checkbox } from "./forms/checkbox/index.js";
 export { type CheckboxGroupProps, CheckboxGroup } from "./forms/checkbox-group/index.js";
+export { type ComboboxProps, Combobox } from "./forms/combobox/index.js";
 export { type FieldProps, Field } from "./forms/field/index.js";
 export { type FieldsetProps, Fieldset } from "./forms/fieldset/index.js";
 export { type FormProps, Form } from "./forms/form/index.js";
@@ -42,6 +47,16 @@ export {
   type AccordionSlotProps,
   Accordion,
 } from "./navigation/accordion/index.js";
+export {
+  type CollapsibleProps,
+  type CollapsibleSlotProps,
+  Collapsible,
+} from "./navigation/collapsible/index.js";
+export {
+  type ScrollAreaProps,
+  type ScrollAreaSlotProps,
+  ScrollArea,
+} from "./navigation/scroll-area/index.js";
 
 // overlays
 export { type AlertDialogProps, AlertDialog } from "./overlays/alert-dialog/index.js";

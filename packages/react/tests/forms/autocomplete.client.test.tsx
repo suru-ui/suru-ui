@@ -38,6 +38,33 @@ describe("Autocomplete", () => {
     await expect.element(group).toHaveClass("sui_autocomplete-outlined");
   });
 
+  test("size をリスト項目に適用する", async () => {
+    // 実行
+    const screen = await render(<Autocomplete items={items} size="lg" />);
+    await userEvent.click(screen.getByRole("combobox"));
+
+    // 検証
+    await expect
+      .element(screen.getByRole("option", { name: "りんご" }))
+      .toHaveClass("sui_autocomplete-size_lg");
+  });
+
+  test("項目が多いリストをスクロールできる", async () => {
+    // 実行
+    const manyItems = Array.from({ length: 20 }, (_, index) => `候補 ${index + 1}`);
+    const screen = await render(<Autocomplete items={manyItems} />);
+    await userEvent.click(screen.getByRole("combobox"));
+
+    // 検証
+    const list = screen.getByRole("listbox").element();
+    const scrollArea = list.closest(".sui_autocomplete_scroll_area");
+    const viewport = scrollArea?.querySelector<HTMLElement>(".sui_scroll_area_viewport");
+
+    expect(scrollArea).not.toBeNull();
+    expect(viewport).not.toBeNull();
+    expect(viewport?.scrollHeight).toBeGreaterThan(viewport?.clientHeight ?? 0);
+  });
+
   test("文字を入力すると項目が絞り込まれる", async () => {
     // 実行
     const screen = await render(<Autocomplete items={items} />);
@@ -161,5 +188,12 @@ describe("Autocomplete", () => {
 
     await expect.element(input).toBeDisabled();
     await expect.element(group).toHaveClass("sui_autocomplete-disabled");
+
+    const groupElement = group as HTMLElement;
+    const borderColor = getComputedStyle(groupElement).borderColor;
+    await userEvent.hover(input);
+
+    expect(getComputedStyle(groupElement).cursor).toBe("not-allowed");
+    expect(getComputedStyle(groupElement).borderColor).toBe(borderColor);
   });
 });

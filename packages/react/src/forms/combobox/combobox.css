@@ -1,0 +1,1125 @@
+/* Root */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox {
+    box-sizing: border-box;
+  }
+
+  /* 変数 */
+  .sui_combobox {
+    /* 形状 */
+    --sui_combobox-min_height: ;
+    --sui_combobox_button-width: ;
+    --sui_combobox-icon-size: ;
+    /* 空白 */
+    --sui_combobox-padding_inline: ;
+    /* 書体 */
+    --sui_combobox-font_size: ;
+    --sui_combobox-font_weight: ;
+    --sui_combobox-line_height: ;
+    --sui_combobox-letter_spacing: ;
+    /* 背景 */
+    --sui_combobox-canvas-normal: ;
+    --sui_combobox_button-canvas-normal: ;
+    --sui_combobox_button-canvas-subtle: ;
+    --sui_combobox_button-canvas-action: ;
+    /* 枠線 */
+    --sui_combobox-border_color-normal: ;
+    --sui_combobox-border_color-subtle: ;
+    --sui_combobox-border_color-invalid: ;
+    --sui_combobox-accent_color: ;
+    --sui_combobox-border_width: ;
+    --sui_combobox-border_radius: ;
+    --sui_combobox-outline_color: ;
+    --sui_combobox-outline_offset: ;
+    /* 前景 */
+    --sui_combobox-color: ;
+    --sui_combobox_placeholder-color: ;
+    --sui_combobox_button-color-normal: ;
+    --sui_combobox_button-color-subtle: ;
+    --sui_combobox_button-color-action: ;
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_combobox {
+    /* 形状 */
+    --sui_combobox_button-width: calc(
+      var(--sui_combobox-min_height) - var(--_sui_combobox-border_width, 0px) * 2
+    );
+    --sui_combobox-icon-size: calc(var(--sui_combobox-font_size) * var(--sui_combobox-line_height));
+    /* 背景 */
+    --sui_combobox_button-canvas-normal: transparent;
+    /* 枠線 */
+    --sui_combobox-border_color-normal: var(--sui-grey-60);
+    --sui_combobox-border_color-subtle: var(--sui-grey-70);
+    --sui_combobox-border_color-invalid: var(--sui-red-60);
+    --sui_combobox-border_width: --sui-border_width(2);
+    --sui_combobox-outline_color: var(--sui-focusring_color);
+    --sui_combobox-outline_offset: var(--sui-focusring_offset);
+    /* 前景 */
+    --sui_combobox_placeholder-color: var(--sui-canvas_text-2);
+  }
+
+  .sui_combobox-size_sm {
+    /* 形状 */
+    --sui_combobox-min_height: var(--sui-size-sm);
+    /* 空白 */
+    --sui_combobox-padding_inline: 8px;
+    /* 書体 */
+    --sui_combobox-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_combobox-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_combobox-line_height: var(--sui-text-oln-sm-n-line_height);
+    --sui_combobox-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+  }
+
+  .sui_combobox-size_md {
+    /* 形状 */
+    --sui_combobox-min_height: var(--sui-size-md);
+    /* 空白 */
+    --sui_combobox-padding_inline: 12px;
+    /* 書体 */
+    --sui_combobox-font_size: var(--sui-text-oln-md-n-font_size);
+    --sui_combobox-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_combobox-line_height: var(--sui-text-oln-md-n-line_height);
+    --sui_combobox-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
+  }
+
+  .sui_combobox-size_lg {
+    /* 形状 */
+    --sui_combobox-min_height: var(--sui-size-lg);
+    /* 空白 */
+    --sui_combobox-padding_inline: 16px;
+    /* 書体 */
+    --sui_combobox-font_size: var(--sui-text-oln-lg-n-font_size);
+    --sui_combobox-font_weight: var(--sui-text-oln-lg-n-font_weight);
+    --sui_combobox-line_height: var(--sui-text-oln-lg-n-line_height);
+    --sui_combobox-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
+  }
+
+  .sui_combobox-radius_none {
+    /* 枠線 */
+    --sui_combobox-border_radius: 0px;
+  }
+
+  .sui_combobox-radius_rounded {
+    /* 枠線 */
+    --sui_combobox-border_radius: var(--sui-radius-sm);
+  }
+
+  .sui_combobox-radius_full {
+    /* 枠線 */
+    --sui_combobox-border_radius: calc(var(--sui_combobox-min_height) / 2);
+  }
+
+  .sui_combobox-variant_naked {
+    /* 背景 */
+    --sui_combobox-canvas-normal: var(--sui-grey-naked-normal);
+    --sui_combobox_button-canvas-subtle: var(--sui-grey-naked-subtle);
+    --sui_combobox_button-canvas-action: var(--sui-grey-naked-action);
+    /* 前景 */
+    --sui_combobox-color: var(--sui-grey-naked-canvas_text-normal);
+    --sui_combobox_button-color-normal: var(--sui-grey-naked-canvas_text-normal);
+    --sui_combobox_button-color-subtle: var(--sui-grey-naked-canvas_text-subtle);
+    --sui_combobox_button-color-action: var(--sui-grey-naked-canvas_text-action);
+  }
+
+  .sui_combobox-variant_liquid {
+    /* 背景 */
+    --sui_combobox-canvas-normal: var(--sui-grey-liquid-normal);
+    --sui_combobox_button-canvas-subtle: var(--sui-grey-liquid-subtle);
+    --sui_combobox_button-canvas-action: var(--sui-grey-liquid-action);
+    /* 前景 */
+    --sui_combobox-color: var(--sui-grey-liquid-canvas_text-normal);
+    --sui_combobox_button-color-normal: var(--sui-grey-liquid-canvas_text-normal);
+    --sui_combobox_button-color-subtle: var(--sui-grey-liquid-canvas_text-subtle);
+    --sui_combobox_button-color-action: var(--sui-grey-liquid-canvas_text-action);
+  }
+
+  .sui_combobox-accent_color_grey {
+    /* 枠線 */
+    --sui_combobox-accent_color: var(--sui-grey-naked-border-action);
+  }
+
+  .sui_combobox-accent_color_blue {
+    /* 枠線 */
+    --sui_combobox-accent_color: var(--sui-blue-naked-border-normal);
+  }
+
+  .sui_combobox-accent_color_purple {
+    /* 枠線 */
+    --sui_combobox-accent_color: var(--sui-purple-naked-border-normal);
+  }
+
+  .sui_combobox-accent_color_magenta {
+    /* 枠線 */
+    --sui_combobox-accent_color: var(--sui-magenta-naked-border-normal);
+  }
+
+  .sui_combobox-accent_color_red {
+    /* 枠線 */
+    --sui_combobox-accent_color: var(--sui-red-naked-border-normal);
+  }
+
+  .sui_combobox-accent_color_orange {
+    /* 枠線 */
+    --sui_combobox-accent_color: var(--sui-orange-naked-border-normal);
+  }
+
+  .sui_combobox-accent_color_yellow {
+    /* 枠線 */
+    --sui_combobox-accent_color: var(--sui-yellow-naked-border-normal);
+  }
+
+  .sui_combobox-accent_color_green {
+    /* 枠線 */
+    --sui_combobox-accent_color: var(--sui-green-naked-border-normal);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* Label */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_label {
+    box-sizing: border-box;
+    margin: 0px;
+  }
+
+  /* 静的 */
+  .sui_combobox_label {
+    display: block;
+    margin-block-end: 8px;
+    font-family: var(--sui-font-sans);
+    font-size: var(--sui-text-std-sm-n-font_size);
+    font-weight: var(--sui-text-std-sm-n-font_weight);
+    line-height: var(--sui-text-std-sm-n-line_height);
+    color: var(--sui-canvas_text-1);
+    letter-spacing: var(--sui-text-std-sm-n-letter_spacing);
+  }
+}
+
+/* Input */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_input {
+    box-sizing: border-box;
+    min-width: 0px;
+    margin: 0px;
+    outline: none;
+    background-color: transparent;
+    border: 0px solid transparent;
+  }
+
+  /* 静的 */
+  .sui_combobox_input {
+    flex: 1 1 auto;
+    caret-color: currentColor;
+  }
+
+  /* 動的 */
+  .sui_combobox_input {
+    min-height: var(--sui_combobox-min_height);
+    padding-inline: var(--sui_combobox-padding_inline);
+    font-family: var(--sui-font-sans);
+    font-size: var(--sui_combobox-font_size);
+    font-weight: var(--sui_combobox-font_weight);
+    line-height: var(--sui_combobox-line_height);
+    color: var(--sui_combobox-color);
+    letter-spacing: var(--sui_combobox-letter_spacing);
+
+    &::placeholder {
+      color: var(--sui_combobox_placeholder-color);
+    }
+  }
+}
+
+/* InputGroup */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_input_group {
+    box-sizing: border-box;
+    margin: 0px;
+  }
+
+  /* 静的 */
+  .sui_combobox_input_group {
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+  }
+
+  /* 動的 */
+  .sui_combobox_input_group {
+    min-height: var(--sui_combobox-min_height);
+    outline: var(--_sui_combobox-outline_width, 0px)
+             solid
+             var(--sui_combobox-outline_color);
+    outline-offset: var(--sui_combobox-outline_offset);
+    background-color: var(--_sui_combobox-canvas, var(--sui_combobox-canvas-normal));
+    border: var(--_sui_combobox-border_color, var(--sui_combobox-border_color-normal))
+            solid
+            var(--_sui_combobox-border_width, 0px);
+    border-radius: var(--_sui_combobox-border_radius, var(--sui_combobox-border_radius));
+  }
+
+  /* 上書き設定: ここから */
+
+  .sui_combobox_input_group {
+    &:focus-within {
+      /* 枠線 */
+      --_sui_combobox-outline_width: var(--sui-focusring_width);
+    }
+  }
+
+  .sui_combobox-outlined {
+    /* 枠線 */
+    --_sui_combobox-border_width: var(--sui_combobox-border_width);
+    --_sui_combobox-border_color: var(--sui_combobox-border_color-normal);
+
+    @media (any-hover: hover) {
+      &:hover {
+        --_sui_combobox-border_color: var(--sui_combobox-border_color-subtle);
+      }
+    }
+
+    &:focus-within {
+      --_sui_combobox-border_color: var(--sui_combobox-accent_color);
+    }
+  }
+
+  .sui_combobox[data-invalid] {
+    --_sui_combobox-border_color: var(--sui_combobox-border_color-invalid);
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* Trigger */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_trigger {
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    padding: 0px;
+    margin: 0px;
+    border: 0px solid transparent;
+  }
+
+  /* 動的 */
+  .sui_combobox_trigger {
+    width: var(--sui_combobox_button-width);
+    color: var(--_sui_combobox_button-color, var(--sui_combobox_button-color-normal));
+    cursor: pointer;
+    background-color: var(--_sui_combobox_button-canvas, var(--sui_combobox_button-canvas-normal));
+  }
+
+  /* 上書き設定: ここから */
+
+  .sui_combobox_trigger:not([data-disabled]) {
+    @media (any-hover: hover) {
+      &:hover {
+        --_sui_combobox_button-canvas: var(--sui_combobox_button-canvas-subtle);
+        --_sui_combobox_button-color: var(--sui_combobox_button-color-subtle);
+      }
+    }
+
+    &:active {
+      --_sui_combobox_button-canvas: var(--sui_combobox_button-canvas-action);
+      --_sui_combobox_button-color: var(--sui_combobox_button-color-action);
+    }
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* Icon */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_icon {
+    box-sizing: border-box;
+  }
+
+  /* 静的 */
+  .sui_combobox_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+
+    svg:not(.sui-unstyled) {
+      width: var(--sui_combobox-icon-size);
+      height: var(--sui_combobox-icon-size);
+    }
+  }
+}
+
+/* Clear */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_clear {
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    padding: 0px;
+    margin: 0px;
+    border: 0px solid transparent;
+  }
+
+  /* 静的 */
+  .sui_combobox_clear {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 動的 */
+  .sui_combobox_clear {
+    width: var(--sui_combobox_button-width);
+    color: var(--_sui_combobox_button-color, var(--sui_combobox_button-color-normal));
+    cursor: pointer;
+    background-color: var(--_sui_combobox_button-canvas, var(--sui_combobox_button-canvas-normal));
+
+    svg:not(.sui-unstyled) {
+      width: var(--sui_combobox-icon-size);
+      height: var(--sui_combobox-icon-size);
+    }
+  }
+
+  /* 上書き設定: ここから */
+
+  .sui_combobox_clear:not([data-disabled]) {
+    @media (any-hover: hover) {
+      &:hover {
+        --_sui_combobox_button-canvas: var(--sui_combobox_button-canvas-subtle);
+        --_sui_combobox_button-color: var(--sui_combobox_button-color-subtle);
+      }
+    }
+
+    &:active {
+      --_sui_combobox_button-canvas: var(--sui_combobox_button-canvas-action);
+      --_sui_combobox_button-color: var(--sui_combobox_button-color-action);
+    }
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* Chips */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_chips {
+    box-sizing: border-box;
+    min-width: 0px;
+    margin: 0px;
+  }
+
+  /* 静的 */
+  .sui_combobox_chips {
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    row-gap: 4px;
+    column-gap: 8px;
+    align-content: center;
+    align-items: center;
+    min-height: var(--sui_combobox-min_height);
+    padding-inline: 8px;
+
+    > .sui_combobox_input {
+      flex: 1 1 8em;
+      min-width: 8em;
+      min-height: 0px;
+      padding-inline: 0px;
+    }
+  }
+}
+
+/* Chip */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_chip {
+    box-sizing: border-box;
+    margin: 0px;
+  }
+
+  /* 静的 */
+  .sui_combobox_chip {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+    max-width: 100%;
+    padding-block: 4px;
+    padding-inline: 8px;
+    overflow: hidden;
+    font-size: var(--sui_combobox-font_size);
+    line-height: var(--sui_combobox-line_height);
+    color: var(--sui-grey-solid-canvas_text-normal);
+    white-space: nowrap;
+    background-color: var(--sui-grey-solid-normal);
+    border-radius: var(--sui-radius-sm);
+  }
+}
+
+/* ChipRemove */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_chip_remove {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+    border: 0px solid transparent;
+  }
+
+  /* 静的 */
+  .sui_combobox_chip_remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    cursor: pointer;
+    background-color: transparent;
+
+    svg:not(.sui-unstyled) {
+      width: calc(var(--sui_combobox-font_size) * var(--sui_combobox-line_height));
+      height: calc(var(--sui_combobox-font_size) * var(--sui_combobox-line_height));
+    }
+  }
+}
+
+/* ScrollArea */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_scroll_area {
+    box-sizing: border-box;
+  }
+
+  /* 静的 */
+  .sui_combobox_scroll_area {
+    height: fit-content;
+
+    > .sui_scroll_area_viewport {
+      height: fit-content;
+    }
+  }
+
+  /* 動的 */
+  .sui_combobox_scroll_area {
+    max-height: var(--sui_combobox_list-max_height);
+
+    > .sui_scroll_area_viewport {
+      max-height: var(--sui_combobox_list-max_height);
+    }
+  }
+}
+
+/* List */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_list {
+    box-sizing: border-box;
+    margin: 0px;
+  }
+
+  /* 変数 */
+  .sui_combobox_popup {
+    /* 形状 */
+    --sui_combobox_list-max_height: ;
+    /* 空白 */
+    --sui_combobox_list-padding: ;
+    --sui_combobox_list-gap: ;
+  }
+
+  /* 静的 */
+  .sui_combobox_list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 動的 */
+  .sui_combobox_list {
+    gap: var(--sui_combobox_list-gap);
+    padding: var(--sui_combobox_list-padding);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_combobox_popup {
+    /* 形状 */
+    --sui_combobox_list-max_height: 16em;
+    /* 空白 */
+    --sui_combobox_list-padding: --sui-space(2);
+    --sui_combobox_list-gap: --sui-gap(2);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* Status */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_status {
+    position: absolute;
+    box-sizing: border-box;
+    width: 1px;
+    height: 1px;
+    padding: 0px;
+    margin: -1px;
+    overflow: hidden;
+    white-space: nowrap;
+    border: 0px;
+    clip-path: inset(50%);
+  }
+}
+
+/* Portal */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_portal {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    box-sizing: border-box;
+  }
+}
+
+/* Backdrop */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_backdrop {
+    box-sizing: border-box;
+  }
+
+  /* 静的 */
+  .sui_combobox_backdrop {
+    position: fixed;
+    inset: 0px;
+    background-color: var(--sui-canvas-1);
+    opacity: var(--sui-backdrop-opacity);
+    transition: opacity 150ms ease-out;
+  }
+
+  /* 上書き設定: ここから */
+
+  .sui_combobox_backdrop:is([data-starting-style], [data-ending-style]) {
+    opacity: 0;
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* Positioner */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_positioner {
+    z-index: 100;
+    box-sizing: border-box;
+  }
+}
+
+/* Popup */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_popup {
+    box-sizing: border-box;
+  }
+
+  /* 変数 */
+  .sui_combobox_popup {
+    /* 形状 */
+    --sui_combobox_popup-min_width: ;
+    --sui_combobox_popup-max_width: ;
+    /* 空白 */
+    --sui_combobox_popup-padding: ;
+    /* 書体 */
+    --sui_combobox_popup-font_size: ;
+    --sui_combobox_popup-font_weight: ;
+    --sui_combobox_popup-line_height: ;
+    --sui_combobox_popup-letter_spacing: ;
+    /* 背景 */
+    --sui_combobox_popup-background_color: ;
+    /* 枠線 */
+    --sui_combobox_popup-border_color: ;
+    --sui_combobox_popup-border_width: ;
+    --sui_combobox_popup-border_radius: ;
+    /* 前景 */
+    --sui_combobox_popup-color: ;
+    /* 外観 */
+    --sui_combobox_popup-opacity: ;
+    --sui_combobox_popup-scale: ;
+  }
+
+  /* 静的 */
+  .sui_combobox_popup {
+    pointer-events: auto;
+    transition:
+      opacity 150ms ease-out,
+      scale 150ms ease-out;
+  }
+
+  /* 動的 */
+  .sui_combobox_popup {
+    min-width: var(--sui_combobox_popup-min_width);
+    max-width: var(--sui_combobox_popup-max_width);
+    padding: var(--sui_combobox_popup-padding);
+    font-family: var(--sui-font-sans);
+    font-size: var(--sui_combobox_popup-font_size);
+    font-weight: var(--sui_combobox_popup-font_weight);
+    line-height: var(--sui_combobox_popup-line_height);
+    color: var(--sui_combobox_popup-color);
+    letter-spacing: var(--sui_combobox_popup-letter_spacing);
+    background-color: var(--sui_combobox_popup-background_color);
+    border: var(--sui_combobox_popup-border_color)
+            solid
+            var(--sui_combobox_popup-border_width);
+    border-radius: var(--sui_combobox_popup-border_radius);
+    opacity: var(--_sui_combobox_popup-opacity, var(--sui_combobox_popup-opacity));
+    transform-origin: var(--transform-origin);
+    scale: var(--_sui_combobox_popup-scale, var(--sui_combobox_popup-scale));
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_combobox_popup {
+    /* 形状 */
+    --sui_combobox_popup-min_width: var(--anchor-width);
+    --sui_combobox_popup-max_width: var(--available-width);
+    /* 空白 */
+    --sui_combobox_popup-padding: 0px;
+    /* 書体 */
+    --sui_combobox_popup-font_size: var(--sui-text-oln-md-n-font_size);
+    --sui_combobox_popup-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_combobox_popup-line_height: var(--sui-text-oln-md-n-line_height);
+    --sui_combobox_popup-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
+    /* 背景 */
+    --sui_combobox_popup-background_color: var(--sui-canvas-2);
+    /* 枠線 */
+    --sui_combobox_popup-border_color: var(--sui-grey-naked-border-normal);
+    --sui_combobox_popup-border_width: --sui-border_width(1);
+    --sui_combobox_popup-border_radius: var(--sui-radius-md);
+    /* 前景 */
+    --sui_combobox_popup-color: var(--sui-canvas_text-1);
+    /* 外観 */
+    --sui_combobox_popup-opacity: 1;
+    --sui_combobox_popup-scale: 1;
+  }
+
+  /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  .sui_combobox_popup:is([data-starting-style], [data-ending-style]) {
+    --_sui_combobox_popup-opacity: 0;
+    --_sui_combobox_popup-scale: 0.98;
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* Arrow */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_arrow {
+    box-sizing: border-box;
+    rotate: 45deg;
+  }
+}
+
+/* Group */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_group {
+    box-sizing: border-box;
+  }
+
+  /* 静的 */
+  .sui_combobox_group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sui_combobox_list-gap);
+  }
+}
+
+/* GroupLabel */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_group_label {
+    box-sizing: border-box;
+  }
+
+  /* 変数 */
+  .sui_combobox_popup {
+    /* 空白 */
+    --sui_combobox_group_label-padding: ;
+    /* 書体 */
+    --sui_combobox_group_label-font_size: ;
+    --sui_combobox_group_label-font_weight: ;
+    --sui_combobox_group_label-line_height: ;
+    --sui_combobox_group_label-letter_spacing: ;
+    /* 前景 */
+    --sui_combobox_group_label-color: ;
+  }
+
+  /* 静的 */
+  .sui_combobox_group_label {
+    display: flex;
+    align-items: center;
+  }
+
+  /* 動的 */
+  .sui_combobox_group_label {
+    padding: var(--sui_combobox_group_label-padding);
+    font-size: var(--sui_combobox_group_label-font_size);
+    font-weight: var(--sui_combobox_group_label-font_weight);
+    line-height: var(--sui_combobox_group_label-line_height);
+    color: var(--sui_combobox_group_label-color);
+    letter-spacing: var(--sui_combobox_group_label-letter_spacing);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_combobox_popup {
+    /* 空白 */
+    --sui_combobox_group_label-padding: --sui-space(4) --sui-space(3);
+    /* 書体 */
+    --sui_combobox_group_label-font_size: var(--sui-text-std-sm-n-font_size);
+    --sui_combobox_group_label-font_weight: var(--sui-text-std-sm-n-font_weight);
+    --sui_combobox_group_label-line_height: var(--sui-text-std-sm-n-line_height);
+    --sui_combobox_group_label-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+    /* 前景 */
+    --sui_combobox_group_label-color: var(--sui-canvas_text-2);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* Item */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_item {
+    box-sizing: border-box;
+    margin: 0px;
+  }
+
+  /* 変数 */
+  .sui_combobox_popup {
+    /* 形状 */
+    --sui_combobox_item-min_height: ;
+    /* 空白 */
+    --sui_combobox_item-padding_inline: ;
+    /* 書体 */
+    --sui_combobox_item-font_size: ;
+    --sui_combobox_item-font_weight: ;
+    --sui_combobox_item-line_height: ;
+    --sui_combobox_item-letter_spacing: ;
+    /* 背景 */
+    --sui_combobox_item-canvas-normal: ;
+    --sui_combobox_item-canvas-subtle: ;
+    --sui_combobox_item-canvas-action: ;
+    /* 枠線 */
+    --sui_combobox_item-border_radius: ;
+    /* 前景 */
+    --sui_combobox_item-color-normal: ;
+    --sui_combobox_item-color-subtle: ;
+    --sui_combobox_item-color-action: ;
+  }
+
+  /* 静的 */
+  .sui_combobox_item {
+    display: flex;
+    gap: --sui-gap(2);
+    align-items: center;
+    touch-action: manipulation;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* 動的 */
+  .sui_combobox_item {
+    min-height: var(--sui_combobox_item-min_height);
+    padding-inline: var(--sui_combobox_item-padding_inline);
+    font-size: var(--sui_combobox_item-font_size);
+    font-weight: var(--sui_combobox_item-font_weight);
+    line-height: var(--sui_combobox_item-line_height);
+    color: var(--_sui_combobox_item-color, var(--sui_combobox_item-color-normal));
+    letter-spacing: var(--sui_combobox_item-letter_spacing);
+    background-color: var(--_sui_combobox_item-canvas,
+                        var(--sui_combobox_item-canvas-normal));
+    border-radius: var(--sui_combobox_item-border_radius);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_combobox_popup {
+    /* 形状 */
+    --sui_combobox_item-min_height: var(--sui-size-md);
+    /* 空白 */
+    --sui_combobox_item-padding_inline: --sui-space(5);
+    /* 書体 */
+    --sui_combobox_item-font_size: var(--sui-text-oln-md-m-font_size);
+    --sui_combobox_item-font_weight: var(--sui-text-oln-md-m-font_weight);
+    --sui_combobox_item-line_height: var(--sui-text-oln-md-m-line_height);
+    --sui_combobox_item-letter_spacing: var(--sui-text-oln-md-m-letter_spacing);
+    /* 背景 */
+    --sui_combobox_item-canvas-normal: var(--sui-grey-naked-normal);
+    --sui_combobox_item-canvas-subtle: var(--sui-grey-solid-normal);
+    --sui_combobox_item-canvas-action: var(--sui-grey-solid-action);
+    /* 枠線 */
+    --sui_combobox_item-border_radius: var(--sui-radius-sm);
+    /* 前景 */
+    --sui_combobox_item-color-normal: var(--sui-grey-naked-canvas_text-normal);
+    --sui_combobox_item-color-subtle: var(--sui-grey-solid-canvas_text-normal);
+    --sui_combobox_item-color-action: var(--sui-grey-solid-canvas_text-action);
+  }
+
+  .sui_combobox_item {
+    &.sui_combobox-size_sm {
+      /* 形状 */
+      --sui_combobox_item-min_height: var(--sui-size-sm);
+      /* 空白 */
+      --sui_combobox_item-padding_inline: --sui-space(4);
+      /* 書体 */
+      --sui_combobox_item-font_size: var(--sui-text-oln-sm-m-font_size);
+      --sui_combobox_item-font_weight: var(--sui-text-oln-sm-m-font_weight);
+      --sui_combobox_item-line_height: var(--sui-text-oln-sm-m-line_height);
+      --sui_combobox_item-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
+    }
+
+    &.sui_combobox-size_md {
+      /* 形状 */
+      --sui_combobox_item-min_height: var(--sui-size-md);
+      /* 空白 */
+      --sui_combobox_item-padding_inline: --sui-space(5);
+      /* 書体 */
+      --sui_combobox_item-font_size: var(--sui-text-oln-md-m-font_size);
+      --sui_combobox_item-font_weight: var(--sui-text-oln-md-m-font_weight);
+      --sui_combobox_item-line_height: var(--sui-text-oln-md-m-line_height);
+      --sui_combobox_item-letter_spacing: var(--sui-text-oln-md-m-letter_spacing);
+    }
+
+    &.sui_combobox-size_lg {
+      /* 形状 */
+      --sui_combobox_item-min_height: var(--sui-size-lg);
+      /* 空白 */
+      --sui_combobox_item-padding_inline: --sui-space(6);
+      /* 書体 */
+      --sui_combobox_item-font_size: var(--sui-text-oln-lg-m-font_size);
+      --sui_combobox_item-font_weight: var(--sui-text-oln-lg-m-font_weight);
+      --sui_combobox_item-line_height: var(--sui-text-oln-lg-m-line_height);
+      --sui_combobox_item-letter_spacing: var(--sui-text-oln-lg-m-letter_spacing);
+    }
+  }
+
+  /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  .sui_combobox_item:not([data-disabled]) {
+    @media (any-hover: hover) {
+      &:hover,
+      &[data-highlighted] {
+        /* 背景 */
+        --_sui_combobox_item-canvas: var(--sui_combobox_item-canvas-subtle);
+        /* 前景 */
+        --_sui_combobox_item-color: var(--sui_combobox_item-color-subtle);
+      }
+    }
+
+    &:active {
+      /* 背景 */
+      --_sui_combobox_item-canvas: var(--sui_combobox_item-canvas-action);
+      /* 前景 */
+      --_sui_combobox_item-color: var(--sui_combobox_item-color-action);
+    }
+  }
+
+  .sui_combobox_item:is([data-highlighted], [data-selected]) {
+    /* 背景 */
+    --_sui_combobox_item-canvas: var(--sui_combobox_item-canvas-subtle);
+    /* 前景 */
+    --_sui_combobox_item-color: var(--sui_combobox_item-color-subtle);
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* ItemIndicator */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_item_indicator {
+    box-sizing: border-box;
+    flex: 0 0 auto;
+  }
+
+  /* 静的 */
+  .sui_combobox_item_indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 動的 */
+  .sui_combobox_item_indicator {
+    width: calc(var(--sui_combobox_item-font_size) * var(--sui_combobox_item-line_height));
+    height: calc(var(--sui_combobox_item-font_size) * var(--sui_combobox_item-line_height));
+
+    svg:not(.sui-unstyled) {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+/* Row */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_row {
+    box-sizing: border-box;
+  }
+
+  /* 静的 */
+  .sui_combobox_row {
+    display: flex;
+    gap: var(--sui_combobox_list-gap);
+  }
+}
+
+/* Empty */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_empty {
+    box-sizing: border-box;
+  }
+
+  /* 変数 */
+  .sui_combobox_popup {
+    /* 空白 */
+    --sui_combobox_empty-padding: ;
+    /* 前景 */
+    --sui_combobox_empty-color: ;
+  }
+
+  /* 静的 */
+  .sui_combobox_empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  /* 動的 */
+  .sui_combobox_empty {
+    padding: var(--sui_combobox_empty-padding);
+    color: var(--sui_combobox_empty-color);
+    text-align: center;
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_combobox_popup {
+    /* 空白 */
+    --sui_combobox_empty-padding: --sui-space(4) --sui-space(6);
+    /* 前景 */
+    --sui_combobox_empty-color: var(--sui-canvas_text-2);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* Separator */
+@layer sui.component {
+  /* リセット */
+  .sui_combobox_separator {
+    box-sizing: border-box;
+    margin: 0px;
+    border: 0px solid transparent;
+  }
+
+  /* 変数 */
+  .sui_combobox_popup {
+    /* 形状 */
+    --sui_combobox_separator-height: ;
+    /* 空白 */
+    --sui_combobox_separator-margin: ;
+    /* 前景 */
+    --sui_combobox_separator-color: ;
+  }
+
+  /* 動的 */
+  .sui_combobox_separator {
+    height: var(--sui_combobox_separator-height);
+    margin: var(--sui_combobox_separator-margin);
+    background-color: var(--sui_combobox_separator-color);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_combobox_popup {
+    /* 形状 */
+    --sui_combobox_separator-height: var(--sui-border_width(1));
+    /* 空白 */
+    --sui_combobox_separator-margin: --sui-space(1) 0px;
+    /* 前景 */
+    --sui_combobox_separator-color: var(--sui-grey-naked-border-normal);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* disabled */
+@layer sui.important {
+  /* Root */
+  .sui_combobox-disabled {
+    cursor: not-allowed !important;
+  }
+
+  .sui_combobox-disabled * {
+    cursor: not-allowed !important;
+  }
+
+  /* InputGroup */
+  .sui_combobox-disabled.sui_combobox_input_group {
+    background-color: var(--sui-disabled-canvas) !important;
+    border-color: var(--sui-disabled-border_color) !important;
+  }
+
+  /* Input */
+  .sui_combobox-disabled .sui_combobox_input {
+    color: var(--sui-disabled-canvas_text) !important;
+
+    &::placeholder {
+      color: var(--sui-disabled-canvas_text) !important;
+    }
+  }
+
+  /* Clear */
+  .sui_combobox-disabled .sui_combobox_clear {
+    color: var(--sui-disabled-canvas_text) !important;
+    cursor: not-allowed !important;
+    background-color: transparent !important;
+  }
+
+  /* Trigger */
+  .sui_combobox-disabled .sui_combobox_trigger {
+    color: var(--sui-disabled-canvas_text) !important;
+    cursor: not-allowed !important;
+    background-color: transparent !important;
+  }
+
+  /* Item */
+  .sui_combobox_item[data-disabled] {
+    color: var(--sui-disabled-canvas_text) !important;
+    cursor: not-allowed !important;
+    background-color: transparent !important;
+  }
+
+  /* ChipRemove */
+  .sui_combobox_chip_remove[data-disabled] {
+    color: var(--sui-disabled-canvas_text) !important;
+    cursor: not-allowed !important;
+  }
+}

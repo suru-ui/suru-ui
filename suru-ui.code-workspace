@@ -2,23 +2,23 @@
   "folders": [
     {
       "name": ".",
-      "path": "./",
+      "path": ".",
     },
     {
       "name": "@suru-ui/react",
-      "path": "./packages/react",
+      "path": "packages/react",
     },
     {
       "name": "@suru-ui/theme",
-      "path": "./packages/theme",
+      "path": "packages/theme",
     },
     {
       "name": "@suru-ui/core",
-      "path": "./packages/core",
+      "path": "packages/core",
     },
     {
       "name": "@suru-ui/website",
-      "path": "./website",
+      "path": "website",
     },
   ],
   "settings": {

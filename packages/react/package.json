@@ -27,6 +27,18 @@
       "types": "./dist/src/navigation/accordion/index.d.ts",
       "default": "./dist/src/navigation/accordion/index.js"
     },
+    "./collapsible": {
+      "types": "./dist/src/navigation/collapsible/index.d.ts",
+      "default": "./dist/src/navigation/collapsible/index.js"
+    },
+    "./scroll-area": {
+      "types": "./dist/src/navigation/scroll-area/index.d.ts",
+      "default": "./dist/src/navigation/scroll-area/index.js"
+    },
+    "./avatar": {
+      "types": "./dist/src/data-display/avatar/index.d.ts",
+      "default": "./dist/src/data-display/avatar/index.js"
+    },
     "./alert-dialog": {
       "types": "./dist/src/overlays/alert-dialog/index.d.ts",
       "default": "./dist/src/overlays/alert-dialog/index.js"
@@ -47,6 +59,10 @@
       "types": "./dist/src/buttons/toggle-button-group/index.d.ts",
       "default": "./dist/src/buttons/toggle-button-group/index.js"
     },
+    "./chip": {
+      "types": "./dist/src/data-display/chip/index.d.ts",
+      "default": "./dist/src/data-display/chip/index.js"
+    },
     "./checkbox": {
       "types": "./dist/src/forms/checkbox/index.d.ts",
       "default": "./dist/src/forms/checkbox/index.js"
@@ -54,6 +70,10 @@
     "./checkbox-group": {
       "types": "./dist/src/forms/checkbox-group/index.d.ts",
       "default": "./dist/src/forms/checkbox-group/index.js"
+    },
+    "./combobox": {
+      "types": "./dist/src/forms/combobox/index.d.ts",
+      "default": "./dist/src/forms/combobox/index.js"
     },
     "./field": {
       "types": "./dist/src/forms/field/index.d.ts",

@@ -42,6 +42,8 @@ const ctrl = controls(Autocomplete, {
   },
 });
 
+const manyItems = Array.from({ length: 50 }, (_, index) => `候補 ${index + 1}`);
+
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
@@ -217,6 +219,23 @@ export const Grouped = meta.story({
         ]}
       />
     );
+  },
+});
+
+export const ManyItems = meta.story({
+  name: "項目が多い場合",
+  ...ctrl({
+    items: manyItems,
+    variant: "naked",
+    accentColor: "grey",
+    size: "md",
+    radius: "rounded",
+    outlined: undefined,
+    disabled: false,
+    placeholder: "候補を検索",
+  }),
+  render(props) {
+    return <Autocomplete {...props} className="w-64" />;
   },
 });
 

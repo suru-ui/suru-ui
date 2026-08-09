@@ -1,0 +1,135 @@
+/* Root */
+@layer sui.component {
+  /* リセット */
+  .sui_scroll_area {
+    box-sizing: border-box;
+  }
+
+  /* 静的 */
+  .sui_scroll_area {
+    position: relative;
+    min-width: 0px;
+    min-height: 0px;
+    overflow: hidden;
+  }
+}
+
+/* Viewport */
+@layer sui.component {
+  /* リセット */
+  .sui_scroll_area_viewport {
+    box-sizing: border-box;
+  }
+
+  /* 静的 */
+  .sui_scroll_area_viewport {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    overscroll-behavior: contain;
+    outline: none;
+    scrollbar-width: none;
+  }
+
+  .sui_scroll_area_viewport::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Content */
+@layer sui.component {
+  /* リセット */
+  .sui_scroll_area_content {
+    box-sizing: border-box;
+    min-width: 100%;
+  }
+}
+
+/* Scrollbar */
+@layer sui.component {
+  /* リセット */
+  .sui_scroll_area_scrollbar {
+    box-sizing: border-box;
+  }
+
+  /* 静的 */
+  .sui_scroll_area_scrollbar {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+    touch-action: none;
+    user-select: none;
+    opacity: 0;
+    transition: opacity 150ms ease-out;
+  }
+
+  .sui_scroll_area_scrollbar[data-orientation="vertical"] {
+    width: 10px;
+  }
+
+  .sui_scroll_area_scrollbar[data-orientation="horizontal"] {
+    height: 10px;
+  }
+
+  .sui_scroll_area[data-has-overflow-x],
+  .sui_scroll_area[data-has-overflow-y],
+  .sui_scroll_area[data-scrolling] {
+    .sui_scroll_area_scrollbar {
+      opacity: 1;
+    }
+  }
+
+  @media (any-hover: hover) {
+    .sui_scroll_area_scrollbar:hover {
+      opacity: 1;
+    }
+  }
+}
+
+/* Thumb */
+@layer sui.component {
+  /* リセット */
+  .sui_scroll_area_thumb {
+    box-sizing: border-box;
+    border: 0px;
+  }
+
+  /* 静的 */
+  .sui_scroll_area_thumb {
+    flex: none;
+    background-color: color-mix(in srgb, var(--sui-canvas_text-1) 38%, transparent);
+    border-radius: 999px;
+    transition: background-color 150ms ease-out;
+  }
+
+  .sui_scroll_area_thumb[data-orientation="vertical"] {
+    width: 100%;
+    height: var(--scroll-area-thumb-height);
+  }
+
+  .sui_scroll_area_thumb[data-orientation="horizontal"] {
+    width: var(--scroll-area-thumb-width);
+    height: 100%;
+  }
+
+  @media (any-hover: hover) {
+    .sui_scroll_area_thumb:hover {
+      background-color: color-mix(in srgb, var(--sui-canvas_text-1) 58%, transparent);
+    }
+  }
+}
+
+/* Corner */
+@layer sui.component {
+  /* リセット */
+  .sui_scroll_area_corner {
+    box-sizing: border-box;
+  }
+
+  /* 静的 */
+  .sui_scroll_area_corner {
+    background-color: transparent;
+  }
+}
