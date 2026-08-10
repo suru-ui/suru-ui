@@ -369,6 +369,10 @@
   --sui-tooltip-canvas: #6a6a6a;
   --sui-tooltip-canvas_text: #fff;
 
+  --sui-border-1: var(--sui-grey-30);
+  --sui-border-2: var(--sui-grey-40);
+  --sui-border-3: var(--sui-grey-50);
+
   --sui-backdrop-opacity: 0.5;
 
   --sui-focusring_color: var(--sui-yellow-40);
