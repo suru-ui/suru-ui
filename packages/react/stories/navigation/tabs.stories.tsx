@@ -149,3 +149,57 @@ export const DisabledTab = meta.story({
     );
   },
 });
+
+export const Sizes = meta.story({
+  name: "大きさ",
+  ...ctrl({
+    orientation: "horizontal",
+    outlined: false,
+    radius: "md",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        {SIZES.map((size) => (
+          <div key={size}>
+            <Tabs {...props} size={size} defaultValue="overview" className="w-96">
+              <TabsParts.List>
+                <TabsParts.Tab value="overview">概要</TabsParts.Tab>
+                <TabsParts.Tab value="projects">プロジェクト</TabsParts.Tab>
+                <TabsParts.Indicator />
+              </TabsParts.List>
+            </Tabs>
+            <div>{size}</div>
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Radius = meta.story({
+  name: "角丸",
+  ...ctrl({
+    orientation: "horizontal",
+    outlined: false,
+    size: "md",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        {(["none", "sm", "md", "lg"] as const).map((radius) => (
+          <div key={radius}>
+            <Tabs {...props} radius={radius} defaultValue="overview" className="w-96">
+              <TabsParts.List>
+                <TabsParts.Tab value="overview">概要</TabsParts.Tab>
+                <TabsParts.Tab value="projects">プロジェクト</TabsParts.Tab>
+                <TabsParts.Indicator />
+              </TabsParts.List>
+            </Tabs>
+            <div>{radius}</div>
+          </div>
+        ))}
+      </div>
+    );
+  },
+});

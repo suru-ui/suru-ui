@@ -5,7 +5,7 @@ import * as React from "react";
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
 import type { Component } from "../../types.js";
-import type { RadioRadius, RadioVariant } from "../radio/radio.parts.js";
+import type { RadioRadius, RadioVariant } from "../radio/radio.parts.jsx";
 
 import "./radio-group.css";
 
@@ -13,9 +13,7 @@ import "./radio-group.css";
 // -------
 
 /**
- * {@link RadioGroupContext} の値です。
- *
- * {@link RadioGroupRoot} に指定したスタイル値を子要素へ伝播します。
+ * {@link RadioGroupRoot} が子パーツへ提供する状態です。
  */
 export type RadioGroupContext = {
   /**
@@ -81,17 +79,17 @@ export function useRadioGroupContext(optional?: boolean): RadioGroupContext | nu
 }
 
 /**
- * {@link RadioGroupContext} のエイリアスです。
+ * {@link RadioGroupContext} の別名です。
  */
 export type Context = RadioGroupContext;
 
 /**
- * {@link RadioGroupContext} のエイリアスです。
+ * {@link RadioGroupContext} の別名です。
  */
 export const Context: React.Context<RadioGroupContext | null> = RadioGroupContext;
 
 /**
- * {@link useRadioGroupContext} のエイリアスです。
+ * {@link useRadioGroupContext} の別名です。
  *
  * Provider は {@link RadioGroupRoot} の配下に必要です。
  * Provider がない場合、`optional` が `true` でなければ {@link ContextMissingError} を投げます。
@@ -111,14 +109,12 @@ export function useContext(optional?: boolean): RadioGroupContext | null {
 // ----
 
 /**
- * {@link Root} の状態です。
- *
- * {@link RadioGroupRoot} が公開する状態型の別名です。
+ * {@link RadioGroupRoot} の状態です。
  */
 export type RadioGroupRootState = RadioGroup.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link RadioGroupRoot} に渡すプロパティーです。
  *
  * グループに指定したスタイルプロパティーは、子要素のラジオボタン指定より優先されます。
  * 指定後に値を変更すると、グループと子要素のスタイルも更新されます。
@@ -245,7 +241,7 @@ export const RadioGroupRoot: Component<RadioGroupRootProps> = function SuiRadioG
 };
 
 /**
- * {@link RadioGroupRoot} の状態型とプロパティー型をまとめた名前空間です。
+ * {@link RadioGroupRoot} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**

@@ -11,12 +11,12 @@ import "./number-field.css";
 // ----
 
 /**
- * {@link Root} の状態です。
+ * {@link NumberFieldRoot} の状態です。
  */
 export type NumberFieldRootState = NumberField.Root.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link NumberFieldRoot} に渡すプロパティーです。
  */
 export type NumberFieldRootProps = Omit<React.ComponentProps<typeof NumberField.Root>, "size"> & {
   /**
@@ -107,8 +107,8 @@ export const NumberFieldRoot: Component<NumberFieldRootProps> = function SuiNumb
         className,
         "sui_number_field",
         `sui_number_field-size_${sizeProp}`,
-        `sui_number_field-variant_${variantProp}`,
         `sui_number_field-radius_${radiusProp}`,
+        `sui_number_field-variant_${variantProp}`,
         `sui_number_field-accent_color_${accentColorProp}`,
         outlinedProp && "sui_number_field-outlined",
         (state) => state.disabled && "sui_number_field-disabled",

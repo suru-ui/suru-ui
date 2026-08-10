@@ -77,7 +77,14 @@ export const AlertDialogRoot: Component<AlertDialogRootProps> = function SuiAler
  * {@link AlertDialogRoot} の型をまとめた名前空間です。
  */
 export namespace Root {
+  /**
+   * {@link AlertDialogRoot} の状態型です。
+   */
   export type State = AlertDialogRootState;
+
+  /**
+   * {@link AlertDialogRoot} のプロパティー型です。
+   */
   export type Props = AlertDialogRootProps;
 }
 
@@ -148,7 +155,14 @@ export const AlertDialogTrigger: Component<AlertDialogTriggerProps> =
  * {@link AlertDialogTrigger} の型をまとめた名前空間です。
  */
 export namespace Trigger {
+  /**
+   * {@link AlertDialogTrigger} の状態型です。
+   */
   export type State = AlertDialogTriggerState;
+
+  /**
+   * {@link AlertDialogTrigger} のプロパティー型です。
+   */
   export type Props = AlertDialogTriggerProps;
 }
 
@@ -196,7 +210,14 @@ export const AlertDialogPortal: Component<AlertDialogPortalProps> = function Sui
  * {@link AlertDialogPortal} の型をまとめた名前空間です。
  */
 export namespace Portal {
+  /**
+   * {@link AlertDialogPortal} の状態型です。
+   */
   export type State = AlertDialogPortalState;
+
+  /**
+   * {@link AlertDialogPortal} のプロパティー型です。
+   */
   export type Props = AlertDialogPortalProps;
 }
 
@@ -242,7 +263,14 @@ export const AlertDialogBackdrop: Component<AlertDialogBackdropProps> =
  * {@link AlertDialogBackdrop} の型をまとめた名前空間です。
  */
 export namespace Backdrop {
+  /**
+   * {@link AlertDialogBackdrop} の状態型です。
+   */
   export type State = AlertDialogBackdropState;
+
+  /**
+   * {@link AlertDialogBackdrop} のプロパティー型です。
+   */
   export type Props = AlertDialogBackdropProps;
 }
 
@@ -292,7 +320,14 @@ export const AlertDialogViewport: Component<AlertDialogViewportProps> =
  * {@link AlertDialogViewport} の型をまとめた名前空間です。
  */
 export namespace Viewport {
+  /**
+   * {@link AlertDialogViewport} の状態型です。
+   */
   export type State = AlertDialogViewportState;
+
+  /**
+   * {@link AlertDialogViewport} のプロパティー型です。
+   */
   export type Props = AlertDialogViewportProps;
 }
 
@@ -337,7 +372,14 @@ export const AlertDialogPopup: Component<AlertDialogPopupProps> = function SuiAl
  * {@link AlertDialogPopup} の型をまとめた名前空間です。
  */
 export namespace Popup {
+  /**
+   * {@link AlertDialogPopup} の状態型です。
+   */
   export type State = AlertDialogPopupState;
+
+  /**
+   * {@link AlertDialogPopup} のプロパティー型です。
+   */
   export type Props = AlertDialogPopupProps;
 }
 
@@ -379,7 +421,14 @@ export const AlertDialogTitle: Component<AlertDialogTitleProps> = function SuiAl
  * {@link AlertDialogTitle} の型をまとめた名前空間です。
  */
 export namespace Title {
+  /**
+   * {@link AlertDialogTitle} の状態型です。
+   */
   export type State = AlertDialogTitleState;
+
+  /**
+   * {@link AlertDialogTitle} のプロパティー型です。
+   */
   export type Props = AlertDialogTitleProps;
 }
 
@@ -425,7 +474,14 @@ export const AlertDialogDescription: Component<AlertDialogDescriptionProps> =
  * {@link AlertDialogDescription} の型をまとめた名前空間です。
  */
 export namespace Description {
+  /**
+   * {@link AlertDialogDescription} の状態型です。
+   */
   export type State = AlertDialogDescriptionState;
+
+  /**
+   * {@link AlertDialogDescription} のプロパティー型です。
+   */
   export type Props = AlertDialogDescriptionProps;
 }
 
@@ -489,7 +545,14 @@ export const AlertDialogClose: Component<AlertDialogCloseProps> = function SuiAl
  * {@link AlertDialogClose} の型をまとめた名前空間です。
  */
 export namespace Close {
+  /**
+   * {@link AlertDialogClose} の状態型です。
+   */
   export type State = AlertDialogCloseState;
+
+  /**
+   * {@link AlertDialogClose} のプロパティー型です。
+   */
   export type Props = AlertDialogCloseProps;
 }
 

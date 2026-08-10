@@ -61,7 +61,14 @@ export const TooltipProvider: Component<TooltipProviderProps> = function SuiTool
  * {@link TooltipProvider} の型をまとめた名前空間です。
  */
 export namespace Provider {
+  /**
+   * {@link TooltipProvider} の状態型です。
+   */
   export type State = TooltipProviderState;
+
+  /**
+   * {@link TooltipProvider} のプロパティー型です。
+   */
   export type Props = TooltipProviderProps;
 }
 
@@ -127,7 +134,14 @@ export const TooltipRoot: TooltipRootComponent = function SuiTooltipRoot<Payload
  * {@link TooltipRoot} の型をまとめた名前空間です。
  */
 export namespace Root {
+  /**
+   * {@link TooltipRoot} の状態型です。
+   */
   export type State = TooltipRootState;
+
+  /**
+   * {@link TooltipRoot} のプロパティー型です。
+   */
   export type Props<Payload = unknown> = TooltipRootProps<Payload>;
 }
 
@@ -202,7 +216,14 @@ export const TooltipTrigger: TooltipTriggerComponent = function SuiTooltipTrigge
  * {@link TooltipTrigger} の型をまとめた名前空間です。
  */
 export namespace Trigger {
+  /**
+   * {@link TooltipTrigger} の状態型です。
+   */
   export type State = TooltipTriggerState;
+
+  /**
+   * {@link TooltipTrigger} のプロパティー型です。
+   */
   export type Props<Payload = unknown> = TooltipTriggerProps<Payload>;
 }
 
@@ -246,7 +267,14 @@ export const TooltipPortal: Component<TooltipPortalProps> = function SuiTooltipP
  * {@link TooltipPortal} の型をまとめた名前空間です。
  */
 export namespace Portal {
+  /**
+   * {@link TooltipPortal} の状態型です。
+   */
   export type State = TooltipPortalState;
+
+  /**
+   * {@link TooltipPortal} のプロパティー型です。
+   */
   export type Props = TooltipPortalProps;
 }
 
@@ -296,7 +324,14 @@ export const TooltipPositioner: Component<TooltipPositionerProps> = function Sui
  * {@link TooltipPositioner} の型をまとめた名前空間です。
  */
 export namespace Positioner {
+  /**
+   * {@link TooltipPositioner} の状態型です。
+   */
   export type State = TooltipPositionerState;
+
+  /**
+   * {@link TooltipPositioner} のプロパティー型です。
+   */
   export type Props = TooltipPositionerProps;
 }
 
@@ -341,7 +376,14 @@ export const TooltipPopup: Component<TooltipPopupProps> = function SuiTooltipPop
  * {@link TooltipPopup} の型をまとめた名前空間です。
  */
 export namespace Popup {
+  /**
+   * {@link TooltipPopup} の状態型です。
+   */
   export type State = TooltipPopupState;
+
+  /**
+   * {@link TooltipPopup} のプロパティー型です。
+   */
   export type Props = TooltipPopupProps;
 }
 
@@ -384,7 +426,14 @@ export const TooltipArrow: Component<TooltipArrowProps> = function SuiTooltipArr
  * {@link TooltipArrow} の型をまとめた名前空間です。
  */
 export namespace Arrow {
+  /**
+   * {@link TooltipArrow} の状態型です。
+   */
   export type State = TooltipArrowState;
+
+  /**
+   * {@link TooltipArrow} のプロパティー型です。
+   */
   export type Props = TooltipArrowProps;
 }
 
@@ -429,7 +478,14 @@ export const TooltipViewport: Component<TooltipViewportProps> = function SuiTool
  * {@link TooltipViewport} の型をまとめた名前空間です。
  */
 export namespace Viewport {
+  /**
+   * {@link TooltipViewport} の状態型です。
+   */
   export type State = TooltipViewportState;
+
+  /**
+   * {@link TooltipViewport} のプロパティー型です。
+   */
   export type Props = TooltipViewportProps;
 }
 

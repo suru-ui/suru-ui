@@ -1,10 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_switch {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_switch {
     /* 形状 */
@@ -264,11 +259,6 @@
 
 /* Thumb */
 @layer sui.component {
-  /* リセット */
-  .sui_switch_thumb {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_switch {
     /* 背景 */
@@ -303,7 +293,7 @@
             solid
             var(--_sui_switch_thumb-border_width, 0px);
     border-radius: var(--sui_switch_thumb-border_radius);
-    translate: var(--_sui_switch_thumb-translate_x, 0px) 0;
+    translate: var(--_sui_switch_thumb-translate_x, 0px) 0px;
   }
 
   /* 既定値設定: ここから */

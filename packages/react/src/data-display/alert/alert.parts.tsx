@@ -1,9 +1,9 @@
-import { useRender } from "@base-ui/react/use-render";
 import type { Color, Size } from "@suru-ui/theme";
 import type * as React from "react";
 
+import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Component, RenderProps } from "../../types.js";
+import type { Component } from "../../types.js";
 
 import "./alert.css";
 
@@ -18,45 +18,46 @@ export type AlertRootState = {};
 /**
  * {@link AlertRoot} に渡すプロパティーです。
  */
-export type AlertRootProps = useRender.ComponentProps<"div", AlertRootState> & {
-  /**
-   * アラートのスタイルバリエーションを指定します。
-   *
-   * @default "liquid"
-   */
-  variant?: "naked" | "liquid" | undefined;
+export type AlertRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
+  RenderProps<AlertRootState> & {
+    /**
+     * アラートのスタイルバリエーションを指定します。
+     *
+     * @default "liquid"
+     */
+    variant?: "naked" | "liquid" | undefined;
 
-  /**
-   * アラートの色を指定します。
-   *
-   * @default "blue"
-   */
-  color?: Color | undefined;
+    /**
+     * アラートの色を指定します。
+     *
+     * @default "blue"
+     */
+    color?: Color | undefined;
 
-  /**
-   * アラートのサイズを指定します。
-   *
-   * @default "md"
-   */
-  size?: Size | undefined;
+    /**
+     * アラートのサイズを指定します。
+     *
+     * @default "md"
+     */
+    size?: Size | undefined;
 
-  /**
-   * アラートの角丸を指定します。
-   *
-   * デフォルト値は {@link AlertRootProps.size|size} です。
-   *
-   * - `"none"`: 角を直角にする
-   * - `"sm"`: 小さい角丸
-   * - `"md"`: 標準的な角丸
-   * - `"lg"`: 大きい角丸
-   */
-  radius?: "none" | Size | undefined;
+    /**
+     * アラートの角丸を指定します。
+     *
+     * デフォルト値は {@link AlertRootProps.size|size} です。
+     *
+     * - `"none"`: 角を直角にする
+     * - `"sm"`: 小さい角丸
+     * - `"md"`: 標準的な角丸
+     * - `"lg"`: 大きい角丸
+     */
+    radius?: "none" | Size | undefined;
 
-  /**
-   * 枠線を表示するかどうかを指定します。
-   */
-  outlined?: boolean | undefined;
-};
+    /**
+     * 枠線を表示するかどうかを指定します。
+     */
+    outlined?: boolean | undefined;
+  };
 
 /**
  * アラートのルート要素です。
@@ -78,7 +79,6 @@ export const AlertRoot: Component<AlertRootProps> = function SuiAlertRoot(props)
     size = "md",
     color = "grey",
     radius = size,
-    render,
     variant = "liquid",
     outlined = false,
     className,
@@ -88,7 +88,6 @@ export const AlertRoot: Component<AlertRootProps> = function SuiAlertRoot(props)
   return useRender({
     defaultTagName: "div",
     ref,
-    render,
     props: {
       ...elementProps,
       role,
@@ -106,7 +105,14 @@ export const AlertRoot: Component<AlertRootProps> = function SuiAlertRoot(props)
 };
 
 export namespace Root {
+  /**
+   * {@link AlertRoot} の状態型です。
+   */
   export type State = AlertRootState;
+
+  /**
+   * {@link AlertRoot} のプロパティー型です。
+   */
   export type Props = AlertRootProps;
 }
 
@@ -124,7 +130,7 @@ export type AlertIconState = {};
  * {@link AlertIcon} に渡すプロパティーです。
  */
 export type AlertIconProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<"div", AlertIconState>;
+  RenderProps<AlertIconState>;
 
 /**
  * アラートの状態を視覚的に示すインジケーター要素です。
@@ -139,12 +145,11 @@ export type AlertIconProps = Omit<React.ComponentProps<"div">, keyof RenderProps
  * ```
  */
 export const AlertIcon: Component<AlertIconProps> = function SuiAlertIcon(props) {
-  const { ref, render, className, "aria-hidden": ariaHidden = true, ...elementProps } = props;
+  const { ref, className, "aria-hidden": ariaHidden = true, ...elementProps } = props;
 
   return useRender({
     defaultTagName: "div",
     ref,
-    render,
     props: {
       ...elementProps,
       className: cn(className, "sui_alert_icon"),
@@ -154,7 +159,14 @@ export const AlertIcon: Component<AlertIconProps> = function SuiAlertIcon(props)
 };
 
 export namespace Icon {
+  /**
+   * {@link AlertIcon} の状態型です。
+   */
   export type State = AlertIconState;
+
+  /**
+   * {@link AlertIcon} のプロパティー型です。
+   */
   export type Props = AlertIconProps;
 }
 
@@ -172,7 +184,7 @@ export type AlertTitleState = {};
  * {@link AlertTitle} に渡すプロパティーです。
  */
 export type AlertTitleProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<"div", AlertTitleState>;
+  RenderProps<AlertTitleState>;
 
 /**
  * アラートのタイトルを表示する要素です。
@@ -183,12 +195,11 @@ export type AlertTitleProps = Omit<React.ComponentProps<"div">, keyof RenderProp
  * ```
  */
 export const AlertTitle: Component<AlertTitleProps> = function SuiAlertTitle(props) {
-  const { ref, render, className, ...elementProps } = props;
+  const { ref, className, ...elementProps } = props;
 
   return useRender({
     defaultTagName: "div",
     ref,
-    render,
     props: {
       ...elementProps,
       className: cn(className, "sui_alert_title"),
@@ -197,7 +208,14 @@ export const AlertTitle: Component<AlertTitleProps> = function SuiAlertTitle(pro
 };
 
 export namespace Title {
+  /**
+   * {@link AlertTitle} の状態型です。
+   */
   export type State = AlertTitleState;
+
+  /**
+   * {@link AlertTitle} のプロパティー型です。
+   */
   export type Props = AlertTitleProps;
 }
 
@@ -215,7 +233,7 @@ export type AlertDescriptionState = {};
  * {@link AlertDescription} に渡すプロパティーです。
  */
 export type AlertDescriptionProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<"div", AlertDescriptionState>;
+  RenderProps<AlertDescriptionState>;
 
 /**
  * アラートのメッセージをまとめるコンテンツ要素です。
@@ -228,12 +246,11 @@ export type AlertDescriptionProps = Omit<React.ComponentProps<"div">, keyof Rend
 export const AlertDescription: Component<AlertDescriptionProps> = function SuiAlertDescription(
   props,
 ) {
-  const { ref, render, className, ...elementProps } = props;
+  const { ref, className, ...elementProps } = props;
 
   return useRender({
     defaultTagName: "div",
     ref,
-    render,
     props: {
       ...elementProps,
       className: cn(className, "sui_alert_description"),
@@ -242,7 +259,14 @@ export const AlertDescription: Component<AlertDescriptionProps> = function SuiAl
 };
 
 export namespace Description {
+  /**
+   * {@link AlertDescription} の状態型です。
+   */
   export type State = AlertDescriptionState;
+
+  /**
+   * {@link AlertDescription} のプロパティー型です。
+   */
   export type Props = AlertDescriptionProps;
 }
 
@@ -260,7 +284,7 @@ export type AlertActionsState = {};
  * {@link AlertActions} に渡すプロパティーです。
  */
 export type AlertActionsProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<"div", AlertActionsState>;
+  RenderProps<AlertActionsState>;
 
 /**
  * アラートの操作ボタンを右寄せでまとめる要素です。
@@ -274,12 +298,11 @@ export type AlertActionsProps = Omit<React.ComponentProps<"div">, keyof RenderPr
  * ```
  */
 export const AlertActions: Component<AlertActionsProps> = function SuiAlertActions(props) {
-  const { ref, render, className, ...elementProps } = props;
+  const { ref, className, ...elementProps } = props;
 
   return useRender({
     defaultTagName: "div",
     ref,
-    render,
     props: {
       ...elementProps,
       className: cn(className, "sui_alert_actions"),
@@ -288,7 +311,14 @@ export const AlertActions: Component<AlertActionsProps> = function SuiAlertActio
 };
 
 export namespace Actions {
+  /**
+   * {@link AlertActions} の状態型です。
+   */
   export type State = AlertActionsState;
+
+  /**
+   * {@link AlertActions} のプロパティー型です。
+   */
   export type Props = AlertActionsProps;
 }
 

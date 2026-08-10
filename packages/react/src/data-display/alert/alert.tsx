@@ -32,6 +32,9 @@ export type AlertSlotProps = {
  * {@link Alert} コンポーネントのプロパティーです。
  */
 export type AlertProps = AlertParts.Root.Props & {
+  /**
+   * アラートの操作ボタンです。
+   */
   actions?: React.ReactNode | undefined;
 
   /**
@@ -39,6 +42,9 @@ export type AlertProps = AlertParts.Root.Props & {
    */
   children?: React.ReactNode | undefined;
 
+  /**
+   * アラートに表示するアイコンです。
+   */
   icon?: React.ReactNode | undefined;
 
   /**
@@ -46,6 +52,9 @@ export type AlertProps = AlertParts.Root.Props & {
    */
   slotProps?: AlertSlotProps | undefined;
 
+  /**
+   * アラートのタイトルです。
+   */
   title?: React.ReactNode | undefined;
 };
 

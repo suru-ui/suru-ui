@@ -1,10 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_checkbox {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_checkbox {
     /* 形状 */
@@ -269,11 +264,6 @@
 
 /* Indicator */
 @layer sui.component {
-  /* リセット */
-  .sui_checkbox_indicator {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_checkbox_indicator {
     display: flex;

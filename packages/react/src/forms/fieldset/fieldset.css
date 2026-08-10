@@ -1,14 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_fieldset {
-    box-sizing: border-box;
-    min-inline-size: min-content;
-    padding: 0px;
-    margin: 0px;
-    border: 0px;
-  }
-
   /* 変数 */
   .sui_fieldset {
     /* 空白 */
@@ -38,14 +29,6 @@
 
 /* Legend */
 @layer sui.component {
-  /* リセット */
-  .sui_fieldset_legend {
-    box-sizing: border-box;
-    padding: 0px;
-    margin: 0px;
-    border: 0px;
-  }
-
   /* 変数 */
   .sui_fieldset {
     /* 書体 */

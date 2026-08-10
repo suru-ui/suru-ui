@@ -1,10 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_combobox {
     /* 形状 */
@@ -181,12 +176,6 @@
 
 /* Label */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox_label {
-    box-sizing: border-box;
-    margin: 0px;
-  }
-
   /* 静的 */
   .sui_combobox_label {
     display: block;
@@ -202,16 +191,6 @@
 
 /* Input */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox_input {
-    box-sizing: border-box;
-    min-width: 0px;
-    margin: 0px;
-    outline: none;
-    background-color: transparent;
-    border: 0px solid transparent;
-  }
-
   /* 静的 */
   .sui_combobox_input {
     flex: 1 1 auto;
@@ -237,12 +216,6 @@
 
 /* InputGroup */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox_input_group {
-    box-sizing: border-box;
-    margin: 0px;
-  }
-
   /* 静的 */
   .sui_combobox_input_group {
     display: flex;
@@ -298,15 +271,6 @@
 
 /* Trigger */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox_trigger {
-    box-sizing: border-box;
-    flex: 0 0 auto;
-    padding: 0px;
-    margin: 0px;
-    border: 0px solid transparent;
-  }
-
   /* 動的 */
   .sui_combobox_trigger {
     width: var(--sui_combobox_button-width);
@@ -336,11 +300,6 @@
 
 /* Icon */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox_icon {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_combobox_icon {
     display: flex;
@@ -357,15 +316,6 @@
 
 /* Clear */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox_clear {
-    box-sizing: border-box;
-    flex: 0 0 auto;
-    padding: 0px;
-    margin: 0px;
-    border: 0px solid transparent;
-  }
-
   /* 静的 */
   .sui_combobox_clear {
     display: flex;
@@ -407,13 +357,6 @@
 
 /* Chips */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox_chips {
-    box-sizing: border-box;
-    min-width: 0px;
-    margin: 0px;
-  }
-
   /* 静的 */
   .sui_combobox_chips {
     display: flex;
@@ -437,12 +380,6 @@
 
 /* Chip */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox_chip {
-    box-sizing: border-box;
-    margin: 0px;
-  }
-
   /* 静的 */
   .sui_combobox_chip {
     display: inline-flex;
@@ -463,14 +400,6 @@
 
 /* ChipRemove */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox_chip_remove {
-    box-sizing: border-box;
-    padding: 0px;
-    margin: 0px;
-    border: 0px solid transparent;
-  }
-
   /* 静的 */
   .sui_combobox_chip_remove {
     display: inline-flex;
@@ -489,11 +418,6 @@
 
 /* ScrollArea */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox_scroll_area {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_combobox_scroll_area {
     height: fit-content;
@@ -515,12 +439,6 @@
 
 /* List */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox_list {
-    box-sizing: border-box;
-    margin: 0px;
-  }
-
   /* 変数 */
   .sui_combobox_popup {
     /* 形状 */
@@ -556,53 +474,43 @@
 }
 
 /* Status */
-@layer sui.component {
-  /* リセット */
-  .sui_combobox_status {
-    position: absolute;
-    box-sizing: border-box;
-    width: 1px;
-    height: 1px;
-    padding: 0px;
-    margin: -1px;
-    overflow: hidden;
-    white-space: nowrap;
-    border: 0px;
-    clip-path: inset(50%);
-  }
-}
 
 /* Portal */
-@layer sui.component {
-  /* リセット */
-  .sui_combobox_portal {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    box-sizing: border-box;
-  }
-}
 
 /* Backdrop */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox_backdrop {
-    box-sizing: border-box;
+  /* 変数 */
+  .sui_combobox {
+    /* 外観 */
+    --sui_combobox_backdrop-opacity: ;
   }
 
   /* 静的 */
   .sui_combobox_backdrop {
     position: fixed;
     inset: 0px;
-    background-color: var(--sui-canvas-1);
-    opacity: var(--sui-backdrop-opacity);
     transition: opacity 150ms ease-out;
   }
+
+  /* 動的 */
+  .sui_combobox_backdrop {
+    background-color: var(--sui-canvas-1);
+    opacity: var(--_sui_combobox_backdrop-opacity, var(--sui_combobox_backdrop-opacity));
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_combobox {
+    /* 外観 */
+    --sui_combobox_backdrop-opacity: var(--sui-backdrop-opacity);
+  }
+
+  /* 既定値設定: ここまで */
 
   /* 上書き設定: ここから */
 
   .sui_combobox_backdrop:is([data-starting-style], [data-ending-style]) {
-    opacity: 0;
+    --_sui_combobox_backdrop-opacity: 0;
   }
 
   /* 上書き設定: ここまで */
@@ -610,20 +518,14 @@
 
 /* Positioner */
 @layer sui.component {
-  /* リセット */
+  /* 静的 */
   .sui_combobox_positioner {
     z-index: 100;
-    box-sizing: border-box;
   }
 }
 
 /* Popup */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox_popup {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_combobox_popup {
     /* 形状 */
@@ -717,21 +619,9 @@
 }
 
 /* Arrow */
-@layer sui.component {
-  /* リセット */
-  .sui_combobox_arrow {
-    box-sizing: border-box;
-    rotate: 45deg;
-  }
-}
 
 /* Group */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox_group {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_combobox_group {
     display: flex;
@@ -742,11 +632,6 @@
 
 /* GroupLabel */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox_group_label {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_combobox_popup {
     /* 空白 */
@@ -795,12 +680,6 @@
 
 /* Item */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox_item {
-    box-sizing: border-box;
-    margin: 0px;
-  }
-
   /* 変数 */
   .sui_combobox_popup {
     /* 形状 */
@@ -917,7 +796,13 @@
 
   .sui_combobox_item:not([data-disabled]) {
     @media (any-hover: hover) {
-      &:hover,
+      &:hover {
+        /* 背景 */
+        --_sui_combobox_item-canvas: var(--sui_combobox_item-canvas-subtle);
+        /* 前景 */
+        --_sui_combobox_item-color: var(--sui_combobox_item-color-subtle);
+      }
+
       &[data-highlighted] {
         /* 背景 */
         --_sui_combobox_item-canvas: var(--sui_combobox_item-canvas-subtle);
@@ -946,12 +831,6 @@
 
 /* ItemIndicator */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox_item_indicator {
-    box-sizing: border-box;
-    flex: 0 0 auto;
-  }
-
   /* 静的 */
   .sui_combobox_item_indicator {
     display: inline-flex;
@@ -973,11 +852,6 @@
 
 /* Row */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox_row {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_combobox_row {
     display: flex;
@@ -987,11 +861,6 @@
 
 /* Empty */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox_empty {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_combobox_popup {
     /* 空白 */
@@ -1032,13 +901,6 @@
 
 /* Separator */
 @layer sui.component {
-  /* リセット */
-  .sui_combobox_separator {
-    box-sizing: border-box;
-    margin: 0px;
-    border: 0px solid transparent;
-  }
-
   /* 変数 */
   .sui_combobox_popup {
     /* 形状 */
@@ -1060,7 +922,7 @@
 
   .sui_combobox_popup {
     /* 形状 */
-    --sui_combobox_separator-height: var(--sui-border_width(1));
+    --sui_combobox_separator-height: --sui-border_width(1);
     /* 空白 */
     --sui_combobox_separator-margin: --sui-space(1) 0px;
     /* 前景 */

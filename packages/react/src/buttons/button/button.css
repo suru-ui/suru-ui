@@ -1,13 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_button {
-    box-sizing: border-box;
-    font-family: inherit;
-    font-size: inherit;
-    line-height: 1.1;
-  }
-
   /* 変数 */
   .sui_button {
     /* 形状 */
@@ -500,11 +492,6 @@
 
 /* Content */
 @layer sui.component {
-  /* リセット */
-  .sui_button_content {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_button {
     /* 形状 */
@@ -779,11 +766,6 @@
 
 /* Pending */
 @layer sui.component {
-  /* リセット */
-  .sui_button_pending {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_button {
     /* 形状 */
@@ -821,21 +803,8 @@
   /* 上書き設定: ここまで */
 }
 
-/* CircularProgress */
-@layer sui.component {
-  /* リセット */
-  .sui_button_circular_progress {
-    box-sizing: border-box;
-  }
-}
-
 /* CircularProgressTrack */
 @layer sui.component {
-  /* リセット */
-  .sui_button_circular_progress_track {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_button {
     /* 前景 */
@@ -990,11 +959,6 @@
 
 /* CircularProgressFill */
 @layer sui.component {
-  /* リセット */
-  .sui_button_circular_progress_fill {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_button {
     /* 前景 */
@@ -1178,7 +1142,7 @@
 
   /* Content */
   .sui_button-pending:has(.sui_button_pending-enabled.sui_button_pending-overlay)
-  .sui_button_content {
+    .sui_button_content {
     visibility: hidden !important;
   }
 }

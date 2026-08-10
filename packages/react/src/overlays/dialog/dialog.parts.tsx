@@ -78,7 +78,14 @@ export const DialogRoot: Component<DialogRootProps> = function SuiDialogRoot(pro
  * {@link DialogRoot} の型をまとめた名前空間です。
  */
 export namespace Root {
+  /**
+   * {@link DialogRoot} の状態型です。
+   */
   export type State = DialogRootState;
+
+  /**
+   * {@link DialogRoot} のプロパティー型です。
+   */
   export type Props = DialogRootProps;
 }
 
@@ -146,7 +153,14 @@ export const DialogTrigger: Component<DialogTriggerProps> = function SuiDialogTr
  * {@link DialogTrigger} の型をまとめた名前空間です。
  */
 export namespace Trigger {
+  /**
+   * {@link DialogTrigger} の状態型です。
+   */
   export type State = DialogTriggerState;
+
+  /**
+   * {@link DialogTrigger} のプロパティー型です。
+   */
   export type Props = DialogTriggerProps;
 }
 
@@ -190,7 +204,14 @@ export const DialogPortal: Component<DialogPortalProps> = function SuiDialogPort
  * {@link DialogPortal} の型をまとめた名前空間です。
  */
 export namespace Portal {
+  /**
+   * {@link DialogPortal} の状態型です。
+   */
   export type State = DialogPortalState;
+
+  /**
+   * {@link DialogPortal} のプロパティー型です。
+   */
   export type Props = DialogPortalProps;
 }
 
@@ -230,7 +251,14 @@ export const DialogBackdrop: Component<DialogBackdropProps> = function SuiDialog
  * {@link DialogBackdrop} の型をまとめた名前空間です。
  */
 export namespace Backdrop {
+  /**
+   * {@link DialogBackdrop} の状態型です。
+   */
   export type State = DialogBackdropState;
+
+  /**
+   * {@link DialogBackdrop} のプロパティー型です。
+   */
   export type Props = DialogBackdropProps;
 }
 
@@ -274,7 +302,14 @@ export const DialogViewport: Component<DialogViewportProps> = function SuiDialog
  * {@link DialogViewport} の型をまとめた名前空間です。
  */
 export namespace Viewport {
+  /**
+   * {@link DialogViewport} の状態型です。
+   */
   export type State = DialogViewportState;
+
+  /**
+   * {@link DialogViewport} のプロパティー型です。
+   */
   export type Props = DialogViewportProps;
 }
 
@@ -319,7 +354,14 @@ export const DialogPopup: Component<DialogPopupProps> = function SuiDialogPopup(
  * {@link DialogPopup} の型をまとめた名前空間です。
  */
 export namespace Popup {
+  /**
+   * {@link DialogPopup} の状態型です。
+   */
   export type State = DialogPopupState;
+
+  /**
+   * {@link DialogPopup} のプロパティー型です。
+   */
   export type Props = DialogPopupProps;
 }
 
@@ -359,7 +401,14 @@ export const DialogTitle: Component<DialogTitleProps> = function SuiDialogTitle(
  * {@link DialogTitle} の型をまとめた名前空間です。
  */
 export namespace Title {
+  /**
+   * {@link DialogTitle} の状態型です。
+   */
   export type State = DialogTitleState;
+
+  /**
+   * {@link DialogTitle} のプロパティー型です。
+   */
   export type Props = DialogTitleProps;
 }
 
@@ -401,7 +450,14 @@ export const DialogDescription: Component<DialogDescriptionProps> = function Sui
  * {@link DialogDescription} の型をまとめた名前空間です。
  */
 export namespace Description {
+  /**
+   * {@link DialogDescription} の状態型です。
+   */
   export type State = DialogDescriptionState;
+
+  /**
+   * {@link DialogDescription} のプロパティー型です。
+   */
   export type Props = DialogDescriptionProps;
 }
 
@@ -457,7 +513,14 @@ export const DialogClose: Component<DialogCloseProps> = function SuiDialogClose(
  * {@link DialogClose} の型をまとめた名前空間です。
  */
 export namespace Close {
+  /**
+   * {@link DialogClose} の状態型です。
+   */
   export type State = DialogCloseState;
+
+  /**
+   * {@link DialogClose} のプロパティー型です。
+   */
   export type Props = DialogCloseProps;
 }
 

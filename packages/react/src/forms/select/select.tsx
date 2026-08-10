@@ -149,15 +149,9 @@ export const Select: SelectComponent = function SuiSelect<
         className={cn(restTriggerProps.className, className)}
         aria-label={triggerAriaLabel ?? (label === undefined ? "選択肢を選択" : undefined)}
       >
-        {typeof valueChildren === "function" ? (
-          <SelectParts.Value {...restValueProps} placeholder={placeholder}>
-            {valueChildren}
-          </SelectParts.Value>
-        ) : (
-          <SelectParts.Value {...restValueProps} placeholder={placeholder}>
-            {valueChildren}
-          </SelectParts.Value>
-        )}
+        <SelectParts.Value placeholder={placeholder} {...restValueProps}>
+          {valueChildren}
+        </SelectParts.Value>
         <SelectParts.Icon {...restIconProps}>{iconChildren}</SelectParts.Icon>
       </SelectParts.Trigger>
       <SelectParts.Portal {...portalProps}>

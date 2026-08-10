@@ -4,7 +4,7 @@ import type { Component } from "../../types.js";
 import * as AvatarParts from "./avatar.parts.jsx";
 
 /**
- * アバターを表示するコンポーネントのプロパティーです。
+ * {@link Avatar} コンポーネントのプロパティーです。
  */
 export type AvatarProps = AvatarParts.Root.Props & {
   /**
@@ -27,7 +27,14 @@ export type AvatarProps = AvatarParts.Root.Props & {
    */
   slotProps?:
     | {
+        /**
+         * {@link AvatarParts.Image|Image} に渡すプロパティーです。
+         */
         readonly image?: AvatarParts.Image.Props | undefined;
+
+        /**
+         * {@link AvatarParts.Fallback|Fallback} に渡すプロパティーです。
+         */
         readonly fallback?: AvatarParts.Fallback.Props | undefined;
       }
     | undefined;
@@ -43,9 +50,9 @@ export type AvatarProps = AvatarParts.Root.Props & {
  */
 export const Avatar: Component<AvatarProps> = function SuiAvatar(props) {
   const {
-    children,
     src,
     alt,
+    children,
     slotProps: { image: imageProps, fallback: fallbackProps } = {},
     ...rootProps
   } = props;
@@ -55,8 +62,8 @@ export const Avatar: Component<AvatarProps> = function SuiAvatar(props) {
       {src !== undefined || imageProps !== undefined ? (
         <AvatarParts.Image
           {...imageProps}
-          src={src ?? imageProps?.src}
-          alt={alt ?? imageProps?.alt}
+          src={imageProps?.src ?? src}
+          alt={imageProps?.alt ?? alt}
         />
       ) : null}
       {children !== undefined || fallbackProps !== undefined ? (

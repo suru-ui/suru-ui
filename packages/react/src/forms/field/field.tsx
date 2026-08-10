@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import type { Component } from "../../types.js";
 import * as FieldParts from "./field.parts.jsx";
 

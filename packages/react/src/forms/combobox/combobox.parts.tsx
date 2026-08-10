@@ -13,7 +13,7 @@ import "./combobox.css";
 // -------
 
 /**
- * {@link ComboboxContext} の値です。
+ * {@link ComboboxRoot} が子パーツへ提供する状態です。
  */
 export type ComboboxContext = {
   /**
@@ -70,17 +70,17 @@ export function useComboboxContext(optional?: boolean): ComboboxContext | null {
 }
 
 /**
- * {@link ComboboxContext} のエイリアスです。
+ * {@link ComboboxContext} の別名です。
  */
 export type Context = ComboboxContext;
 
 /**
- * {@link ComboboxContext} のエイリアスです。
+ * {@link ComboboxContext} の別名です。
  */
 export const Context: React.Context<ComboboxContext | null> = ComboboxContext;
 
 /**
- * {@link useComboboxContext} のエイリアスです。
+ * {@link useComboboxContext} の別名です。
  *
  * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
  *
@@ -96,12 +96,12 @@ export function useContext(optional?: boolean): ComboboxContext | null {
 // ----
 
 /**
- * {@link Root} の状態です。
+ * {@link ComboboxRoot} の状態です。
  */
 export type ComboboxRootState = Combobox.Root.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link ComboboxRoot} に渡すプロパティーです。
  */
 export type ComboboxRootProps<Value = unknown, Multiple extends boolean | undefined = false> = Omit<
   Combobox.Root.Props<Value, Multiple>,
@@ -220,12 +220,17 @@ export const ComboboxRoot: ComboboxRootComponent = function SuiComboboxRoot<
 };
 
 /**
- * {@link ComboboxRoot} に対応する型名前空間です。
+ * {@link ComboboxRoot} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
-  /** {@link ComboboxRootState} の別名です。 */
+  /**
+   * {@link ComboboxRootState} の別名です。
+   */
   export type State = ComboboxRootState;
-  /** {@link ComboboxRootProps} の別名です。 */
+
+  /**
+   * {@link ComboboxRootProps} の別名です。
+   */
   export type Props<
     Value = unknown,
     Multiple extends boolean | undefined = false,
@@ -233,7 +238,7 @@ export namespace Root {
 }
 
 /**
- * {@link ComboboxRoot} の短い名前です。
+ * {@link ComboboxRoot} の別名です。
  */
 export const Root: ComboboxRootComponent = ComboboxRoot;
 
@@ -265,17 +270,22 @@ export const ComboboxLabel: Component<ComboboxLabelProps> = function SuiCombobox
 };
 
 /**
- * {@link ComboboxLabel} に対応する型名前空間です。
+ * {@link ComboboxLabel} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Label {
-  /** {@link ComboboxLabelState} の別名です。 */
+  /**
+   * {@link ComboboxLabelState} の別名です。
+   */
   export type State = ComboboxLabelState;
-  /** {@link ComboboxLabelProps} の別名です。 */
+
+  /**
+   * {@link ComboboxLabelProps} の別名です。
+   */
   export type Props = ComboboxLabelProps;
 }
 
 /**
- * {@link ComboboxLabel} の短い名前です。
+ * {@link ComboboxLabel} の別名です。
  */
 export const Label: Component<Label.Props> = ComboboxLabel;
 
@@ -305,17 +315,22 @@ export const ComboboxValue: Component<ComboboxValueProps> = function SuiCombobox
 };
 
 /**
- * {@link ComboboxValue} に対応する型名前空間です。
+ * {@link ComboboxValue} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Value {
-  /** {@link ComboboxValueState} の別名です。 */
+  /**
+   * {@link ComboboxValueState} の別名です。
+   */
   export type State = ComboboxValueState;
-  /** {@link ComboboxValueProps} の別名です。 */
+
+  /**
+   * {@link ComboboxValueProps} の別名です。
+   */
   export type Props = ComboboxValueProps;
 }
 
 /**
- * {@link ComboboxValue} の短い名前です。
+ * {@link ComboboxValue} の別名です。
  */
 export const Value: Component<Value.Props> = ComboboxValue;
 
@@ -347,17 +362,22 @@ export const ComboboxInput: Component<ComboboxInputProps> = function SuiCombobox
 };
 
 /**
- * {@link ComboboxInput} に対応する型名前空間です。
+ * {@link ComboboxInput} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Input {
-  /** {@link ComboboxInputState} の別名です。 */
+  /**
+   * {@link ComboboxInputState} の別名です。
+   */
   export type State = ComboboxInputState;
-  /** {@link ComboboxInputProps} の別名です。 */
+
+  /**
+   * {@link ComboboxInputProps} の別名です。
+   */
   export type Props = ComboboxInputProps;
 }
 
 /**
- * {@link ComboboxInput} の短い名前です。
+ * {@link ComboboxInput} の別名です。
  */
 export const Input: Component<Input.Props> = ComboboxInput;
 
@@ -416,17 +436,22 @@ export const ComboboxInputGroup: Component<ComboboxInputGroupProps> =
   };
 
 /**
- * {@link ComboboxInputGroup} に対応する型名前空間です。
+ * {@link ComboboxInputGroup} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace InputGroup {
-  /** {@link ComboboxInputGroupState} の別名です。 */
+  /**
+   * {@link ComboboxInputGroupState} の別名です。
+   */
   export type State = ComboboxInputGroupState;
-  /** {@link ComboboxInputGroupProps} の別名です。 */
+
+  /**
+   * {@link ComboboxInputGroupProps} の別名です。
+   */
   export type Props = ComboboxInputGroupProps;
 }
 
 /**
- * {@link ComboboxInputGroup} の短い名前です。
+ * {@link ComboboxInputGroup} の別名です。
  */
 export const InputGroup: Component<InputGroup.Props> = ComboboxInputGroup;
 
@@ -458,17 +483,22 @@ export const ComboboxTrigger: Component<ComboboxTriggerProps> = function SuiComb
 };
 
 /**
- * {@link ComboboxTrigger} に対応する型名前空間です。
+ * {@link ComboboxTrigger} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Trigger {
-  /** {@link ComboboxTriggerState} の別名です。 */
+  /**
+   * {@link ComboboxTriggerState} の別名です。
+   */
   export type State = ComboboxTriggerState;
-  /** {@link ComboboxTriggerProps} の別名です。 */
+
+  /**
+   * {@link ComboboxTriggerProps} の別名です。
+   */
   export type Props = ComboboxTriggerProps;
 }
 
 /**
- * {@link ComboboxTrigger} の短い名前です。
+ * {@link ComboboxTrigger} の別名です。
  */
 export const Trigger: Component<Trigger.Props> = ComboboxTrigger;
 
@@ -500,17 +530,22 @@ export const ComboboxIcon: Component<ComboboxIconProps> = function SuiComboboxIc
 };
 
 /**
- * {@link ComboboxIcon} に対応する型名前空間です。
+ * {@link ComboboxIcon} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Icon {
-  /** {@link ComboboxIconState} の別名です。 */
+  /**
+   * {@link ComboboxIconState} の別名です。
+   */
   export type State = ComboboxIconState;
-  /** {@link ComboboxIconProps} の別名です。 */
+
+  /**
+   * {@link ComboboxIconProps} の別名です。
+   */
   export type Props = ComboboxIconProps;
 }
 
 /**
- * {@link ComboboxIcon} の短い名前です。
+ * {@link ComboboxIcon} の別名です。
  */
 export const Icon: Component<Icon.Props> = ComboboxIcon;
 
@@ -542,17 +577,22 @@ export const ComboboxClear: Component<ComboboxClearProps> = function SuiCombobox
 };
 
 /**
- * {@link ComboboxClear} に対応する型名前空間です。
+ * {@link ComboboxClear} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Clear {
-  /** {@link ComboboxClearState} の別名です。 */
+  /**
+   * {@link ComboboxClearState} の別名です。
+   */
   export type State = ComboboxClearState;
-  /** {@link ComboboxClearProps} の別名です。 */
+
+  /**
+   * {@link ComboboxClearProps} の別名です。
+   */
   export type Props = ComboboxClearProps;
 }
 
 /**
- * {@link ComboboxClear} の短い名前です。
+ * {@link ComboboxClear} の別名です。
  */
 export const Clear: Component<Clear.Props> = ComboboxClear;
 
@@ -586,17 +626,22 @@ export const ComboboxChips: Component<ComboboxChipsProps> = function SuiCombobox
 };
 
 /**
- * {@link ComboboxChips} に対応する型名前空間です。
+ * {@link ComboboxChips} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Chips {
-  /** {@link ComboboxChipsState} の別名です。 */
+  /**
+   * {@link ComboboxChipsState} の別名です。
+   */
   export type State = ComboboxChipsState;
-  /** {@link ComboboxChipsProps} の別名です。 */
+
+  /**
+   * {@link ComboboxChipsProps} の別名です。
+   */
   export type Props = ComboboxChipsProps;
 }
 
 /**
- * {@link ComboboxChips} の短い名前です。
+ * {@link ComboboxChips} の別名です。
  */
 export const Chips: Component<Chips.Props> = ComboboxChips;
 
@@ -628,17 +673,22 @@ export const ComboboxChip: Component<ComboboxChipProps> = function SuiComboboxCh
 };
 
 /**
- * {@link ComboboxChip} に対応する型名前空間です。
+ * {@link ComboboxChip} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Chip {
-  /** {@link ComboboxChipState} の別名です。 */
+  /**
+   * {@link ComboboxChipState} の別名です。
+   */
   export type State = ComboboxChipState;
-  /** {@link ComboboxChipProps} の別名です。 */
+
+  /**
+   * {@link ComboboxChipProps} の別名です。
+   */
   export type Props = ComboboxChipProps;
 }
 
 /**
- * {@link ComboboxChip} の短い名前です。
+ * {@link ComboboxChip} の別名です。
  */
 export const Chip: Component<Chip.Props> = ComboboxChip;
 
@@ -673,17 +723,22 @@ export const ComboboxChipRemove: Component<ComboboxChipRemoveProps> =
   };
 
 /**
- * {@link ComboboxChipRemove} に対応する型名前空間です。
+ * {@link ComboboxChipRemove} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace ChipRemove {
-  /** {@link ComboboxChipRemoveState} の別名です。 */
+  /**
+   * {@link ComboboxChipRemoveState} の別名です。
+   */
   export type State = ComboboxChipRemoveState;
-  /** {@link ComboboxChipRemoveProps} の別名です。 */
+
+  /**
+   * {@link ComboboxChipRemoveProps} の別名です。
+   */
   export type Props = ComboboxChipRemoveProps;
 }
 
 /**
- * {@link ComboboxChipRemove} の短い名前です。
+ * {@link ComboboxChipRemove} の別名です。
  */
 export const ChipRemove: Component<ChipRemove.Props> = ComboboxChipRemove;
 
@@ -721,17 +776,22 @@ export const ComboboxList: Component<ComboboxListProps> = function SuiComboboxLi
 };
 
 /**
- * {@link ComboboxList} に対応する型名前空間です。
+ * {@link ComboboxList} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace List {
-  /** {@link ComboboxListState} の別名です。 */
+  /**
+   * {@link ComboboxListState} の別名です。
+   */
   export type State = ComboboxListState;
-  /** {@link ComboboxListProps} の別名です。 */
+
+  /**
+   * {@link ComboboxListProps} の別名です。
+   */
   export type Props = ComboboxListProps;
 }
 
 /**
- * {@link ComboboxList} の短い名前です。
+ * {@link ComboboxList} の別名です。
  */
 export const List: Component<List.Props> = ComboboxList;
 
@@ -763,17 +823,22 @@ export const ComboboxStatus: Component<ComboboxStatusProps> = function SuiCombob
 };
 
 /**
- * {@link ComboboxStatus} に対応する型名前空間です。
+ * {@link ComboboxStatus} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Status {
-  /** {@link ComboboxStatusState} の別名です。 */
+  /**
+   * {@link ComboboxStatusState} の別名です。
+   */
   export type State = ComboboxStatusState;
-  /** {@link ComboboxStatusProps} の別名です。 */
+
+  /**
+   * {@link ComboboxStatusProps} の別名です。
+   */
   export type Props = ComboboxStatusProps;
 }
 
 /**
- * {@link ComboboxStatus} の短い名前です。
+ * {@link ComboboxStatus} の別名です。
  */
 export const Status: Component<Status.Props> = ComboboxStatus;
 
@@ -805,17 +870,22 @@ export const ComboboxPortal: Component<ComboboxPortalProps> = function SuiCombob
 };
 
 /**
- * {@link ComboboxPortal} に対応する型名前空間です。
+ * {@link ComboboxPortal} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Portal {
-  /** {@link ComboboxPortalState} の別名です。 */
+  /**
+   * {@link ComboboxPortalState} の別名です。
+   */
   export type State = ComboboxPortalState;
-  /** {@link ComboboxPortalProps} の別名です。 */
+
+  /**
+   * {@link ComboboxPortalProps} の別名です。
+   */
   export type Props = ComboboxPortalProps;
 }
 
 /**
- * {@link ComboboxPortal} の短い名前です。
+ * {@link ComboboxPortal} の別名です。
  */
 export const Portal: Component<Portal.Props> = ComboboxPortal;
 
@@ -849,17 +919,22 @@ export const ComboboxBackdrop: Component<ComboboxBackdropProps> = function SuiCo
 };
 
 /**
- * {@link ComboboxBackdrop} に対応する型名前空間です。
+ * {@link ComboboxBackdrop} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Backdrop {
-  /** {@link ComboboxBackdropState} の別名です。 */
+  /**
+   * {@link ComboboxBackdropState} の別名です。
+   */
   export type State = ComboboxBackdropState;
-  /** {@link ComboboxBackdropProps} の別名です。 */
+
+  /**
+   * {@link ComboboxBackdropProps} の別名です。
+   */
   export type Props = ComboboxBackdropProps;
 }
 
 /**
- * {@link ComboboxBackdrop} の短い名前です。
+ * {@link ComboboxBackdrop} の別名です。
  */
 export const Backdrop: Component<Backdrop.Props> = ComboboxBackdrop;
 
@@ -894,17 +969,22 @@ export const ComboboxPositioner: Component<ComboboxPositionerProps> =
   };
 
 /**
- * {@link ComboboxPositioner} に対応する型名前空間です。
+ * {@link ComboboxPositioner} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Positioner {
-  /** {@link ComboboxPositionerState} の別名です。 */
+  /**
+   * {@link ComboboxPositionerState} の別名です。
+   */
   export type State = ComboboxPositionerState;
-  /** {@link ComboboxPositionerProps} の別名です。 */
+
+  /**
+   * {@link ComboboxPositionerProps} の別名です。
+   */
   export type Props = ComboboxPositionerProps;
 }
 
 /**
- * {@link ComboboxPositioner} の短い名前です。
+ * {@link ComboboxPositioner} の別名です。
  */
 export const Positioner: Component<Positioner.Props> = ComboboxPositioner;
 
@@ -936,17 +1016,22 @@ export const ComboboxPopup: Component<ComboboxPopupProps> = function SuiCombobox
 };
 
 /**
- * {@link ComboboxPopup} に対応する型名前空間です。
+ * {@link ComboboxPopup} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Popup {
-  /** {@link ComboboxPopupState} の別名です。 */
+  /**
+   * {@link ComboboxPopupState} の別名です。
+   */
   export type State = ComboboxPopupState;
-  /** {@link ComboboxPopupProps} の別名です。 */
+
+  /**
+   * {@link ComboboxPopupProps} の別名です。
+   */
   export type Props = ComboboxPopupProps;
 }
 
 /**
- * {@link ComboboxPopup} の短い名前です。
+ * {@link ComboboxPopup} の別名です。
  */
 export const Popup: Component<Popup.Props> = ComboboxPopup;
 
@@ -978,17 +1063,22 @@ export const ComboboxArrow: Component<ComboboxArrowProps> = function SuiCombobox
 };
 
 /**
- * {@link ComboboxArrow} に対応する型名前空間です。
+ * {@link ComboboxArrow} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Arrow {
-  /** {@link ComboboxArrowState} の別名です。 */
+  /**
+   * {@link ComboboxArrowState} の別名です。
+   */
   export type State = ComboboxArrowState;
-  /** {@link ComboboxArrowProps} の別名です。 */
+
+  /**
+   * {@link ComboboxArrowProps} の別名です。
+   */
   export type Props = ComboboxArrowProps;
 }
 
 /**
- * {@link ComboboxArrow} の短い名前です。
+ * {@link ComboboxArrow} の別名です。
  */
 export const Arrow: Component<Arrow.Props> = ComboboxArrow;
 
@@ -1020,17 +1110,22 @@ export const ComboboxGroup: Component<ComboboxGroupProps> = function SuiCombobox
 };
 
 /**
- * {@link ComboboxGroup} に対応する型名前空間です。
+ * {@link ComboboxGroup} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Group {
-  /** {@link ComboboxGroupState} の別名です。 */
+  /**
+   * {@link ComboboxGroupState} の別名です。
+   */
   export type State = ComboboxGroupState;
-  /** {@link ComboboxGroupProps} の別名です。 */
+
+  /**
+   * {@link ComboboxGroupProps} の別名です。
+   */
   export type Props = ComboboxGroupProps;
 }
 
 /**
- * {@link ComboboxGroup} の短い名前です。
+ * {@link ComboboxGroup} の別名です。
  */
 export const Group: Component<Group.Props> = ComboboxGroup;
 
@@ -1065,17 +1160,22 @@ export const ComboboxGroupLabel: Component<ComboboxGroupLabelProps> =
   };
 
 /**
- * {@link ComboboxGroupLabel} に対応する型名前空間です。
+ * {@link ComboboxGroupLabel} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace GroupLabel {
-  /** {@link ComboboxGroupLabelState} の別名です。 */
+  /**
+   * {@link ComboboxGroupLabelState} の別名です。
+   */
   export type State = ComboboxGroupLabelState;
-  /** {@link ComboboxGroupLabelProps} の別名です。 */
+
+  /**
+   * {@link ComboboxGroupLabelProps} の別名です。
+   */
   export type Props = ComboboxGroupLabelProps;
 }
 
 /**
- * {@link ComboboxGroupLabel} の短い名前です。
+ * {@link ComboboxGroupLabel} の別名です。
  */
 export const GroupLabel: Component<GroupLabel.Props> = ComboboxGroupLabel;
 
@@ -1114,17 +1214,22 @@ export const ComboboxItem: Component<ComboboxItemProps> = function SuiComboboxIt
 };
 
 /**
- * {@link ComboboxItem} に対応する型名前空間です。
+ * {@link ComboboxItem} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Item {
-  /** {@link ComboboxItemState} の別名です。 */
+  /**
+   * {@link ComboboxItemState} の別名です。
+   */
   export type State = ComboboxItemState;
-  /** {@link ComboboxItemProps} の別名です。 */
+
+  /**
+   * {@link ComboboxItemProps} の別名です。
+   */
   export type Props = ComboboxItemProps;
 }
 
 /**
- * {@link ComboboxItem} の短い名前です。
+ * {@link ComboboxItem} の別名です。
  */
 export const Item: Component<Item.Props> = ComboboxItem;
 
@@ -1162,17 +1267,22 @@ export const ComboboxItemIndicator: Component<ComboboxItemIndicatorProps> =
   };
 
 /**
- * {@link ComboboxItemIndicator} に対応する型名前空間です。
+ * {@link ComboboxItemIndicator} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace ItemIndicator {
-  /** {@link ComboboxItemIndicatorState} の別名です。 */
+  /**
+   * {@link ComboboxItemIndicatorState} の別名です。
+   */
   export type State = ComboboxItemIndicatorState;
-  /** {@link ComboboxItemIndicatorProps} の別名です。 */
+
+  /**
+   * {@link ComboboxItemIndicatorProps} の別名です。
+   */
   export type Props = ComboboxItemIndicatorProps;
 }
 
 /**
- * {@link ComboboxItemIndicator} の短い名前です。
+ * {@link ComboboxItemIndicator} の別名です。
  */
 export const ItemIndicator: Component<ItemIndicator.Props> = ComboboxItemIndicator;
 
@@ -1204,17 +1314,22 @@ export const ComboboxRow: Component<ComboboxRowProps> = function SuiComboboxRow(
 };
 
 /**
- * {@link ComboboxRow} に対応する型名前空間です。
+ * {@link ComboboxRow} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Row {
-  /** {@link ComboboxRowState} の別名です。 */
+  /**
+   * {@link ComboboxRowState} の別名です。
+   */
   export type State = ComboboxRowState;
-  /** {@link ComboboxRowProps} の別名です。 */
+
+  /**
+   * {@link ComboboxRowProps} の別名です。
+   */
   export type Props = ComboboxRowProps;
 }
 
 /**
- * {@link ComboboxRow} の短い名前です。
+ * {@link ComboboxRow} の別名です。
  */
 export const Row: Component<Row.Props> = ComboboxRow;
 
@@ -1245,17 +1360,22 @@ export const ComboboxCollection: Component<ComboboxCollectionProps> =
   };
 
 /**
- * {@link ComboboxCollection} に対応する型名前空間です。
+ * {@link ComboboxCollection} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Collection {
-  /** {@link ComboboxCollectionState} の別名です。 */
+  /**
+   * {@link ComboboxCollectionState} の別名です。
+   */
   export type State = ComboboxCollectionState;
-  /** {@link ComboboxCollectionProps} の別名です。 */
+
+  /**
+   * {@link ComboboxCollectionProps} の別名です。
+   */
   export type Props = ComboboxCollectionProps;
 }
 
 /**
- * {@link ComboboxCollection} の短い名前です。
+ * {@link ComboboxCollection} の別名です。
  */
 export const Collection: Component<Collection.Props> = ComboboxCollection;
 
@@ -1287,17 +1407,22 @@ export const ComboboxEmpty: Component<ComboboxEmptyProps> = function SuiCombobox
 };
 
 /**
- * {@link ComboboxEmpty} に対応する型名前空間です。
+ * {@link ComboboxEmpty} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Empty {
-  /** {@link ComboboxEmptyState} の別名です。 */
+  /**
+   * {@link ComboboxEmptyState} の別名です。
+   */
   export type State = ComboboxEmptyState;
-  /** {@link ComboboxEmptyProps} の別名です。 */
+
+  /**
+   * {@link ComboboxEmptyProps} の別名です。
+   */
   export type Props = ComboboxEmptyProps;
 }
 
 /**
- * {@link ComboboxEmpty} の短い名前です。
+ * {@link ComboboxEmpty} の別名です。
  */
 export const Empty: Component<Empty.Props> = ComboboxEmpty;
 
@@ -1331,17 +1456,22 @@ export const ComboboxSeparator: Component<ComboboxSeparatorProps> = function Sui
 };
 
 /**
- * {@link ComboboxSeparator} に対応する型名前空間です。
+ * {@link ComboboxSeparator} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Separator {
-  /** {@link ComboboxSeparatorState} の別名です。 */
+  /**
+   * {@link ComboboxSeparatorState} の別名です。
+   */
   export type State = ComboboxSeparatorState;
-  /** {@link ComboboxSeparatorProps} の別名です。 */
+
+  /**
+   * {@link ComboboxSeparatorProps} の別名です。
+   */
   export type Props = ComboboxSeparatorProps;
 }
 
 /**
- * {@link ComboboxSeparator} の短い名前です。
+ * {@link ComboboxSeparator} の別名です。
  */
 export const Separator: Component<Separator.Props> = ComboboxSeparator;
 

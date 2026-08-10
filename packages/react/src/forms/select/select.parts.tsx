@@ -230,7 +230,14 @@ function getBaseItems<Value>(items: SelectItems<Value> | undefined): BaseSelectI
  * {@link SelectRoot} に対応する型名前空間です。
  */
 export namespace Root {
+  /**
+   * {@link SelectRoot} の状態型です。
+   */
   export type State = SelectRootState;
+
+  /**
+   * {@link SelectRoot} のプロパティー型です。
+   */
   export type Props<
     Value = unknown,
     Multiple extends boolean | undefined = false,
@@ -272,7 +279,14 @@ export const SelectLabel: Component<SelectLabelProps> = function SuiSelectLabel(
  * {@link SelectLabel} に対応する型名前空間です。
  */
 export namespace Label {
+  /**
+   * {@link SelectLabel} の状態型です。
+   */
   export type State = SelectLabelState;
+
+  /**
+   * {@link SelectLabel} のプロパティー型です。
+   */
   export type Props = SelectLabelProps;
 }
 
@@ -333,7 +347,14 @@ export const SelectTrigger: Component<SelectTriggerProps> = function SuiSelectTr
  * {@link SelectTrigger} に対応する型名前空間です。
  */
 export namespace Trigger {
+  /**
+   * {@link SelectTrigger} の状態型です。
+   */
   export type State = SelectTriggerState;
+
+  /**
+   * {@link SelectTrigger} のプロパティー型です。
+   */
   export type Props = SelectTriggerProps;
 }
 
@@ -372,7 +393,14 @@ export const SelectValue: Component<SelectValueProps> = function SuiSelectValue(
  * {@link SelectValue} に対応する型名前空間です。
  */
 export namespace Value {
+  /**
+   * {@link SelectValue} の状態型です。
+   */
   export type State = SelectValueState;
+
+  /**
+   * {@link SelectValue} のプロパティー型です。
+   */
   export type Props = SelectValueProps;
 }
 
@@ -411,7 +439,14 @@ export const SelectIcon: Component<SelectIconProps> = function SuiSelectIcon(pro
  * {@link SelectIcon} に対応する型名前空間です。
  */
 export namespace Icon {
+  /**
+   * {@link SelectIcon} の状態型です。
+   */
   export type State = SelectIconState;
+
+  /**
+   * {@link SelectIcon} のプロパティー型です。
+   */
   export type Props = SelectIconProps;
 }
 
@@ -450,7 +485,14 @@ export const SelectPortal: Component<SelectPortalProps> = function SuiSelectPort
  * {@link SelectPortal} に対応する型名前空間です。
  */
 export namespace Portal {
+  /**
+   * {@link SelectPortal} の状態型です。
+   */
   export type State = SelectPortalState;
+
+  /**
+   * {@link SelectPortal} のプロパティー型です。
+   */
   export type Props = SelectPortalProps;
 }
 
@@ -489,7 +531,14 @@ export const SelectBackdrop: Component<SelectBackdropProps> = function SuiSelect
  * {@link SelectBackdrop} に対応する型名前空間です。
  */
 export namespace Backdrop {
+  /**
+   * {@link SelectBackdrop} の状態型です。
+   */
   export type State = SelectBackdropState;
+
+  /**
+   * {@link SelectBackdrop} のプロパティー型です。
+   */
   export type Props = SelectBackdropProps;
 }
 
@@ -532,7 +581,14 @@ export const SelectPositioner: Component<SelectPositionerProps> = function SuiSe
  * {@link SelectPositioner} に対応する型名前空間です。
  */
 export namespace Positioner {
+  /**
+   * {@link SelectPositioner} の状態型です。
+   */
   export type State = SelectPositionerState;
+
+  /**
+   * {@link SelectPositioner} のプロパティー型です。
+   */
   export type Props = SelectPositionerProps;
 }
 
@@ -571,7 +627,14 @@ export const SelectPopup: Component<SelectPopupProps> = function SuiSelectPopup(
  * {@link SelectPopup} に対応する型名前空間です。
  */
 export namespace Popup {
+  /**
+   * {@link SelectPopup} の状態型です。
+   */
   export type State = SelectPopupState;
+
+  /**
+   * {@link SelectPopup} のプロパティー型です。
+   */
   export type Props = SelectPopupProps;
 }
 
@@ -614,7 +677,14 @@ export const SelectList: Component<SelectListProps> = function SuiSelectList(pro
  * {@link SelectList} に対応する型名前空間です。
  */
 export namespace List {
+  /**
+   * {@link SelectList} の状態型です。
+   */
   export type State = SelectListState;
+
+  /**
+   * {@link SelectList} のプロパティー型です。
+   */
   export type Props = SelectListProps;
 }
 
@@ -653,7 +723,14 @@ export const SelectArrow: Component<SelectArrowProps> = function SuiSelectArrow(
  * {@link SelectArrow} に対応する型名前空間です。
  */
 export namespace Arrow {
+  /**
+   * {@link SelectArrow} の状態型です。
+   */
   export type State = SelectArrowState;
+
+  /**
+   * {@link SelectArrow} のプロパティー型です。
+   */
   export type Props = SelectArrowProps;
 }
 
@@ -700,7 +777,14 @@ export const SelectItem: Component<SelectItemProps> = function SuiSelectItem(pro
  * {@link SelectItem} に対応する型名前空間です。
  */
 export namespace Item {
+  /**
+   * {@link SelectItem} の状態型です。
+   */
   export type State = SelectItemState;
+
+  /**
+   * {@link SelectItem} のプロパティー型です。
+   */
   export type Props = SelectItemProps;
 }
 
@@ -739,7 +823,14 @@ export const SelectItemText: Component<SelectItemTextProps> = function SuiSelect
  * {@link SelectItemText} に対応する型名前空間です。
  */
 export namespace ItemText {
+  /**
+   * {@link SelectItemText} の状態型です。
+   */
   export type State = SelectItemTextState;
+
+  /**
+   * {@link SelectItemText} のプロパティー型です。
+   */
   export type Props = SelectItemTextProps;
 }
 
@@ -785,7 +876,14 @@ export const SelectItemIndicator: Component<SelectItemIndicatorProps> =
  * {@link SelectItemIndicator} に対応する型名前空間です。
  */
 export namespace ItemIndicator {
+  /**
+   * {@link SelectItemIndicator} の状態型です。
+   */
   export type State = SelectItemIndicatorState;
+
+  /**
+   * {@link SelectItemIndicator} のプロパティー型です。
+   */
   export type Props = SelectItemIndicatorProps;
 }
 
@@ -830,7 +928,14 @@ export const SelectScrollUpArrow: Component<SelectScrollUpArrowProps> =
  * {@link SelectScrollUpArrow} に対応する型名前空間です。
  */
 export namespace ScrollUpArrow {
+  /**
+   * {@link SelectScrollUpArrow} の状態型です。
+   */
   export type State = SelectScrollUpArrowState;
+
+  /**
+   * {@link SelectScrollUpArrow} のプロパティー型です。
+   */
   export type Props = SelectScrollUpArrowProps;
 }
 
@@ -875,7 +980,14 @@ export const SelectScrollDownArrow: Component<SelectScrollDownArrowProps> =
  * {@link SelectScrollDownArrow} に対応する型名前空間です。
  */
 export namespace ScrollDownArrow {
+  /**
+   * {@link SelectScrollDownArrow} の状態型です。
+   */
   export type State = SelectScrollDownArrowState;
+
+  /**
+   * {@link SelectScrollDownArrow} のプロパティー型です。
+   */
   export type Props = SelectScrollDownArrowProps;
 }
 
@@ -914,7 +1026,14 @@ export const SelectGroup: Component<SelectGroupProps> = function SuiSelectGroup(
  * {@link SelectGroup} に対応する型名前空間です。
  */
 export namespace Group {
+  /**
+   * {@link SelectGroup} の状態型です。
+   */
   export type State = SelectGroupState;
+
+  /**
+   * {@link SelectGroup} のプロパティー型です。
+   */
   export type Props = SelectGroupProps;
 }
 
@@ -957,7 +1076,14 @@ export const SelectGroupLabel: Component<SelectGroupLabelProps> = function SuiSe
  * {@link SelectGroupLabel} に対応する型名前空間です。
  */
 export namespace GroupLabel {
+  /**
+   * {@link SelectGroupLabel} の状態型です。
+   */
   export type State = SelectGroupLabelState;
+
+  /**
+   * {@link SelectGroupLabel} のプロパティー型です。
+   */
   export type Props = SelectGroupLabelProps;
 }
 
@@ -996,7 +1122,14 @@ export const SelectSeparator: Component<SelectSeparatorProps> = function SuiSele
  * {@link SelectSeparator} に対応する型名前空間です。
  */
 export namespace Separator {
+  /**
+   * {@link SelectSeparator} の状態型です。
+   */
   export type State = SelectSeparatorState;
+
+  /**
+   * {@link SelectSeparator} のプロパティー型です。
+   */
   export type Props = SelectSeparatorProps;
 }
 

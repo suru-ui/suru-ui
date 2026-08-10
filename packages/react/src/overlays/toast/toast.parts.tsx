@@ -37,7 +37,14 @@ export const ToastProvider: Component<ToastProviderProps> = function SuiToastPro
  * {@link ToastProvider} の型をまとめた名前空間です。
  */
 export namespace Provider {
+  /**
+   * {@link ToastProvider} の状態型です。
+   */
   export type State = ToastProviderState;
+
+  /**
+   * {@link ToastProvider} のプロパティー型です。
+   */
   export type Props = ToastProviderProps;
 }
 
@@ -81,7 +88,14 @@ export const ToastPortal: Component<ToastPortalProps> = function SuiToastPortal(
  * {@link ToastPortal} の型をまとめた名前空間です。
  */
 export namespace Portal {
+  /**
+   * {@link ToastPortal} の状態型です。
+   */
   export type State = ToastPortalState;
+
+  /**
+   * {@link ToastPortal} のプロパティー型です。
+   */
   export type Props = ToastPortalProps;
 }
 
@@ -125,7 +139,14 @@ export const ToastViewport: Component<ToastViewportProps> = function SuiToastVie
  * {@link ToastViewport} の型をまとめた名前空間です。
  */
 export namespace Viewport {
+  /**
+   * {@link ToastViewport} の状態型です。
+   */
   export type State = ToastViewportState;
+
+  /**
+   * {@link ToastViewport} のプロパティー型です。
+   */
   export type Props = ToastViewportProps;
 }
 
@@ -190,7 +211,14 @@ export const ToastRoot: ToastRootComponent = function SuiToastRoot<Data extends 
  * {@link ToastRoot} の型をまとめた名前空間です。
  */
 export namespace Root {
+  /**
+   * {@link ToastRoot} の状態型です。
+   */
   export type State = ToastRootState;
+
+  /**
+   * {@link ToastRoot} のプロパティー型です。
+   */
   export type Props<Data extends object = object> = ToastRootProps<Data>;
   export type ToastObject<Data extends object = object> = BaseToast.Root.ToastObject<Data>;
 }
@@ -234,7 +262,14 @@ export const ToastContent: Component<ToastContentProps> = function SuiToastConte
  * {@link ToastContent} の型をまとめた名前空間です。
  */
 export namespace Content {
+  /**
+   * {@link ToastContent} の状態型です。
+   */
   export type State = ToastContentState;
+
+  /**
+   * {@link ToastContent} のプロパティー型です。
+   */
   export type Props = ToastContentProps;
 }
 
@@ -276,7 +311,14 @@ export const ToastTitle: Component<ToastTitleProps> = function SuiToastTitle(pro
  * {@link ToastTitle} の型をまとめた名前空間です。
  */
 export namespace Title {
+  /**
+   * {@link ToastTitle} の状態型です。
+   */
   export type State = ToastTitleState;
+
+  /**
+   * {@link ToastTitle} のプロパティー型です。
+   */
   export type Props = ToastTitleProps;
 }
 
@@ -322,7 +364,14 @@ export const ToastDescription: Component<ToastDescriptionProps> = function SuiTo
  * {@link ToastDescription} の型をまとめた名前空間です。
  */
 export namespace Description {
+  /**
+   * {@link ToastDescription} の状態型です。
+   */
   export type State = ToastDescriptionState;
+
+  /**
+   * {@link ToastDescription} のプロパティー型です。
+   */
   export type Props = ToastDescriptionProps;
 }
 
@@ -364,7 +413,14 @@ export const ToastAction: Component<ToastActionProps> = function SuiToastAction(
  * {@link ToastAction} の型をまとめた名前空間です。
  */
 export namespace Action {
+  /**
+   * {@link ToastAction} の状態型です。
+   */
   export type State = ToastActionState;
+
+  /**
+   * {@link ToastAction} のプロパティー型です。
+   */
   export type Props = ToastActionProps;
 }
 
@@ -404,7 +460,14 @@ export const ToastClose: Component<ToastCloseProps> = function SuiToastClose(pro
  * {@link ToastClose} の型をまとめた名前空間です。
  */
 export namespace Close {
+  /**
+   * {@link ToastClose} の状態型です。
+   */
   export type State = ToastCloseState;
+
+  /**
+   * {@link ToastClose} のプロパティー型です。
+   */
   export type Props = ToastCloseProps;
 }
 
@@ -450,7 +513,14 @@ export const ToastPositioner: Component<ToastPositionerProps> = function SuiToas
  * {@link ToastPositioner} の型をまとめた名前空間です。
  */
 export namespace Positioner {
+  /**
+   * {@link ToastPositioner} の状態型です。
+   */
   export type State = ToastPositionerState;
+
+  /**
+   * {@link ToastPositioner} のプロパティー型です。
+   */
   export type Props = ToastPositionerProps;
 }
 
@@ -490,7 +560,14 @@ export const ToastArrow: Component<ToastArrowProps> = function SuiToastArrow(pro
  * {@link ToastArrow} の型をまとめた名前空間です。
  */
 export namespace Arrow {
+  /**
+   * {@link ToastArrow} の状態型です。
+   */
   export type State = ToastArrowState;
+
+  /**
+   * {@link ToastArrow} のプロパティー型です。
+   */
   export type Props = ToastArrowProps;
 }
 

@@ -1,10 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_progress {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_progress {
     /* 形状 */
@@ -180,11 +175,6 @@
 
 /* Label */
 @layer sui.component {
-  /* リセット */
-  .sui_progress_label {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_progress_label {
     min-width: 0px;
@@ -203,11 +193,6 @@
 
 /* Value */
 @layer sui.component {
-  /* リセット */
-  .sui_progress_value {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_progress_value {
     font-variant-numeric: tabular-nums;
@@ -226,11 +211,6 @@
 
 /* Track */
 @layer sui.component {
-  /* リセット */
-  .sui_progress_track {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_progress_track {
     position: relative;
@@ -261,11 +241,6 @@
 
 /* Indicator */
 @layer sui.component {
-  /* リセット */
-  .sui_progress_indicator {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_progress_indicator {
     position: absolute;
@@ -274,6 +249,10 @@
     display: block;
     border-radius: inherit;
     transition: width 500ms;
+  }
+
+  .sui_progress_indicator[data-indeterminate] {
+    animation: sui_progress-indeterminate 1.5s infinite linear;
   }
 
   /* 動的 */
@@ -287,7 +266,6 @@
   .sui_progress_indicator[data-indeterminate] {
     /* 形状 */
     --_sui_progress_indicator-width: 40%;
-    animation: sui_progress-indeterminate 1.5s infinite linear;
   }
 
   /* 上書き設定: ここまで */

@@ -75,11 +75,19 @@ export const Variants = meta.story({
 
 export const Sizes = meta.story({
   name: "大きさ",
-  render() {
+  ...ctrl({
+    items: fruits,
+    variant: "naked",
+    radius: "rounded",
+    outlined: undefined,
+    disabled: false,
+    placeholder: "選択",
+  }),
+  render(props) {
     return (
       <div className="flex flex-col gap-3">
         {SIZES.map((size) => (
-          <Select key={size} items={fruits} size={size} label={size} className="w-64" />
+          <Select {...props} key={size} items={fruits} size={size} label={size} className="w-64" />
         ))}
       </div>
     );
@@ -88,12 +96,23 @@ export const Sizes = meta.story({
 
 export const Radius = meta.story({
   name: "角丸",
-  render() {
+  ...ctrl({
+    items: fruits,
+    variant: "naked",
+    size: "md",
+    outlined: undefined,
+    disabled: false,
+    placeholder: "選択",
+  }),
+  render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <Select items={fruits} radius="none" className="w-64" />
-        <Select items={fruits} radius="rounded" className="w-64" />
-        <Select items={fruits} radius="full" className="w-64" />
+        {(["none", "rounded", "full"] as const).map((radius) => (
+          <div key={radius}>
+            <Select {...props} items={fruits} radius={radius} className="w-64" />
+            <div>{radius}</div>
+          </div>
+        ))}
       </div>
     );
   },
@@ -101,9 +120,22 @@ export const Radius = meta.story({
 
 export const Multiple = meta.story({
   name: "複数選択",
-  render() {
+  ...ctrl({
+    items: ["TypeScript", "Rust", "Go", "Python"],
+    variant: "naked",
+    size: "md",
+    radius: "rounded",
+    outlined: undefined,
+    disabled: false,
+    multiple: false,
+    placeholder: "言語を選択",
+  }),
+  render(props) {
+    const { multiple: _multiple, value: _value, ...rest } = props;
+
     return (
       <Select
+        {...rest}
         items={["TypeScript", "Rust", "Go", "Python"]}
         multiple
         defaultValue={["TypeScript"]}
@@ -119,9 +151,19 @@ export const Multiple = meta.story({
 
 export const Grouped = meta.story({
   name: "グループ化",
-  render() {
+  ...ctrl({
+    variant: "naked",
+    size: "md",
+    radius: "rounded",
+    outlined: undefined,
+    disabled: false,
+    multiple: false,
+    placeholder: "食材を選択",
+  }),
+  render(props) {
     return (
       <Select
+        {...props}
         label="食材"
         className="w-80"
         items={[
@@ -136,9 +178,19 @@ export const Grouped = meta.story({
 
 export const ManyItems = meta.story({
   name: "項目が多い場合",
-  render() {
+  ...ctrl({
+    variant: "naked",
+    size: "md",
+    radius: "rounded",
+    outlined: undefined,
+    disabled: false,
+    multiple: false,
+    placeholder: "候補を選択",
+  }),
+  render(props) {
     return (
       <Select
+        {...props}
         items={Array.from({ length: 50 }, (_, index) => `候補 ${index + 1}`)}
         placeholder="候補を選択"
         className="w-64"
@@ -149,11 +201,19 @@ export const ManyItems = meta.story({
 
 export const Disabled = meta.story({
   name: "無効",
-  render() {
+  ...ctrl({
+    variant: "naked",
+    size: "md",
+    radius: "rounded",
+    outlined: undefined,
+    multiple: false,
+    placeholder: "選択",
+  }),
+  render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <Select items={fruits} disabled defaultValue="りんご" className="w-64" />
-        <Select items={fruits} disabled placeholder="選択" className="w-64" />
+        <Select {...props} items={fruits} disabled defaultValue="りんご" className="w-64" />
+        <Select {...props} items={fruits} disabled placeholder="選択" className="w-64" />
       </div>
     );
   },

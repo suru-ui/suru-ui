@@ -10,22 +10,22 @@ import * as ProgressParts from "./progress.parts.jsx";
  */
 export type ProgressSlotProps = {
   /**
-   * {@link ProgressParts.Label} に渡すプロパティーです。
+   * {@link ProgressParts.Label|Label} に渡すプロパティーです。
    */
   readonly label?: ProgressParts.Label.Props | undefined;
 
   /**
-   * {@link ProgressParts.Value} に渡すプロパティーです。
+   * {@link ProgressParts.Value|Value} に渡すプロパティーです。
    */
   readonly value?: ProgressParts.Value.Props | undefined;
 
   /**
-   * {@link ProgressParts.Track} に渡すプロパティーです。
+   * {@link ProgressParts.Track|Track} に渡すプロパティーです。
    */
   readonly track?: ProgressParts.Track.Props | undefined;
 
   /**
-   * {@link ProgressParts.Indicator} に渡すプロパティーです。
+   * {@link ProgressParts.Indicator|Indicator} に渡すプロパティーです。
    */
   readonly indicator?: ProgressParts.Indicator.Props | undefined;
 };
@@ -36,8 +36,6 @@ export type ProgressSlotProps = {
 export type ProgressProps = ProgressParts.Root.Props & {
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-   *
-   * {@link ProgressSlotProps} を参照してください。
    */
   slotProps?: ProgressSlotProps | undefined;
 };

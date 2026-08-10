@@ -1,21 +1,15 @@
 /* Portal */
 @layer sui.component {
-  /* リセット */
+  /* 静的 */
   .sui_toast_portal {
     position: absolute;
     top: 0px;
     left: 0px;
-    box-sizing: border-box;
   }
 }
 
 /* Viewport */
 @layer sui.component {
-  /* リセット */
-  .sui_toast_viewport {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_toast_viewport {
     /* 空白 */
@@ -56,11 +50,6 @@
 
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_toast {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_toast {
     /* 形状 */
@@ -85,6 +74,7 @@
     --sui_toast-color: ;
     /* 外観 */
     --sui_toast-opacity: ;
+    /* 変形 */
     --sui_toast-scale: ;
   }
 
@@ -149,6 +139,7 @@
     --sui_toast-color: var(--sui-canvas_text-1);
     /* 外観 */
     --sui_toast-opacity: 1;
+    /* 変形 */
     --sui_toast-scale: 1;
   }
 
@@ -187,11 +178,6 @@
 
 /* Content */
 @layer sui.component {
-  /* リセット */
-  .sui_toast_content {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_toast_content {
     display: flex;
@@ -202,13 +188,6 @@
 
 /* Text */
 @layer sui.component {
-  /* リセット */
-  .sui_toast_text {
-    box-sizing: border-box;
-    flex: 1 1 auto;
-    min-width: 0px;
-  }
-
   /* 静的 */
   .sui_toast_text {
     display: flex;
@@ -219,17 +198,6 @@
 
 /* Title */
 @layer sui.component {
-  /* リセット */
-  .sui_toast_title {
-    box-sizing: border-box;
-    padding: 0px;
-    margin: 0px;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: inherit;
-  }
-
   /* 変数 */
   .sui_toast_title {
     /* 書体 */
@@ -252,30 +220,9 @@
 }
 
 /* Description */
-@layer sui.component {
-  /* リセット */
-  .sui_toast_description {
-    box-sizing: border-box;
-    padding: 0px;
-    margin: 0px;
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
-  }
-}
 
 /* Action */
 @layer sui.component {
-  /* リセット */
-  .sui_toast_action {
-    box-sizing: border-box;
-    padding: 0px;
-    font: inherit;
-    color: inherit;
-    background-color: transparent;
-    border: 0px;
-  }
-
   /* 静的 */
   .sui_toast_action {
     flex: 0 0 auto;
@@ -292,16 +239,6 @@
 
 /* Close */
 @layer sui.component {
-  /* リセット */
-  .sui_toast_close {
-    box-sizing: border-box;
-    padding: 0px;
-    font: inherit;
-    color: inherit;
-    background-color: transparent;
-    border: 0px;
-  }
-
   /* 静的 */
   .sui_toast_close {
     flex: 0 0 auto;
@@ -317,21 +254,9 @@
 }
 
 /* Positioner */
-@layer sui.component {
-  /* リセット */
-  .sui_toast_positioner {
-    box-sizing: border-box;
-    pointer-events: none;
-  }
-}
 
 /* Arrow */
 @layer sui.component {
-  /* リセット */
-  .sui_toast_arrow {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_toast_arrow {
     position: relative;
@@ -348,7 +273,11 @@
     width: 8px;
     height: 8px;
     content: "";
-    background-color: var(--sui_toast-background_color);
     transform: translate(-50%, 50%) rotate(45deg);
+  }
+
+  /* 動的 */
+  .sui_toast_arrow::before {
+    background-color: var(--sui_toast-background_color);
   }
 }

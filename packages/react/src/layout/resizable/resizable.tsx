@@ -4,7 +4,7 @@ import type { Component } from "../../types.js";
 import * as ResizableParts from "./resizable.parts.jsx";
 
 /**
- * パネル群のルートに渡すプロパティーです。
+ * {@link ResizablePanelGroup} コンポーネントのプロパティーです。
  */
 export type ResizablePanelGroupProps = ResizableParts.Root.Props;
 

@@ -1,10 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_slider {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_slider {
     /* 空白 */
@@ -44,20 +39,9 @@
 }
 
 /* Label */
-@layer sui.component {
-  /* リセット */
-  .sui_slider_label {
-    box-sizing: border-box;
-  }
-}
 
 /* Value */
 @layer sui.component {
-  /* リセット */
-  .sui_slider_value {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_slider_value {
     font-variant-numeric: tabular-nums;
@@ -66,11 +50,6 @@
 
 /* Control */
 @layer sui.component {
-  /* リセット */
-  .sui_slider_control {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_slider_control {
     grid-column: 1 / -1;
@@ -115,11 +94,6 @@
 
 /* Track */
 @layer sui.component {
-  /* リセット */
-  .sui_slider_track {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_slider {
     /* 形状 */
@@ -227,11 +201,6 @@
 
 /* Indicator */
 @layer sui.component {
-  /* リセット */
-  .sui_slider_indicator {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_slider {
     /* 背景 */
@@ -295,10 +264,14 @@
 
 /* Thumb */
 @layer sui.component {
-  /* リセット */
-  .sui_slider_thumb {
-    box-sizing: border-box;
+  /* 既定値設定: ここから */
+
+  .sui_slider {
+    /* 外観 */
+    --sui_slider_thumb-cursor: auto;
   }
+
+  /* 既定値設定: ここまで */
 
   /* 変数 */
   .sui_slider {
@@ -318,7 +291,7 @@
   .sui_slider_thumb {
     width: var(--sui_slider_thumb-size);
     height: var(--sui_slider_thumb-size);
-    cursor: var(--_sui_slider_thumb-cursor, auto);
+    cursor: var(--_sui_slider_thumb-cursor, var(--sui_slider_thumb-cursor));
     background-color: var(--_sui_slider_thumb-canvas, var(--sui_slider_thumb-canvas-normal));
     border: var(--_sui_slider_thumb-border_color, transparent)
             solid

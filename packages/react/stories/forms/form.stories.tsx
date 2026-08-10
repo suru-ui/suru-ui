@@ -55,9 +55,11 @@ export const Usage = meta.story({
   },
 });
 
-function validateUrl(value: string): React.ComponentProps<typeof Form>["errors"] {
+function validateUrl(value: unknown): React.ComponentProps<typeof Form>["errors"] {
+  const stringValue = typeof value === "string" ? value : "";
+
   try {
-    const url = new URL(value);
+    const url = new URL(stringValue);
 
     if (url.hostname.endsWith("example.com")) {
       return { url: "example.com ドメインは使用できません" };

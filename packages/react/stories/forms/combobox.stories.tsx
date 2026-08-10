@@ -87,9 +87,23 @@ export const Variants = meta.story({
 
 export const Multiple = meta.story({
   name: "複数選択",
-  render() {
+  ...ctrl({
+    items: ["TypeScript", "Rust", "Go", "Python"],
+    variant: "naked",
+    accentColor: "grey",
+    size: "md",
+    radius: "rounded",
+    outlined: undefined,
+    disabled: false,
+    multiple: true,
+    placeholder: "言語を追加",
+  }),
+  render(props) {
+    const { multiple: _multiple, value: _value, ...rest } = props;
+
     return (
       <Combobox
+        {...rest}
         items={["TypeScript", "Rust", "Go", "Python"]}
         multiple
         defaultValue={["TypeScript"]}
@@ -103,9 +117,20 @@ export const Multiple = meta.story({
 
 export const Grouped = meta.story({
   name: "グループ化",
-  render() {
+  ...ctrl({
+    variant: "naked",
+    accentColor: "grey",
+    size: "md",
+    radius: "rounded",
+    outlined: undefined,
+    disabled: false,
+    multiple: false,
+    placeholder: "食材を選択",
+  }),
+  render(props) {
     return (
       <Combobox
+        {...props}
         label="食材"
         className="w-80"
         items={[
@@ -138,11 +163,24 @@ export const ManyItems = meta.story({
 
 export const Sizes = meta.story({
   name: "大きさ",
-  render() {
+  ...ctrl({
+    items: fruits,
+    variant: "naked",
+    accentColor: "grey",
+    radius: "rounded",
+    outlined: undefined,
+    disabled: false,
+    multiple: false,
+    placeholder: "選択",
+  }),
+  render(props) {
     return (
       <div className="flex flex-col gap-3">
         {SIZES.map((size) => (
-          <Combobox key={size} items={fruits} size={size} className="w-64" />
+          <div key={size}>
+            <Combobox {...props} items={fruits} size={size} className="w-64" />
+            <div>{size}</div>
+          </div>
         ))}
       </div>
     );
@@ -151,11 +189,21 @@ export const Sizes = meta.story({
 
 export const AccentColors = meta.story({
   name: "アクセントカラー",
-  render() {
+  ...ctrl({
+    items: fruits,
+    variant: "naked",
+    size: "md",
+    radius: "rounded",
+    outlined: undefined,
+    disabled: false,
+    multiple: false,
+    placeholder: "選択",
+  }),
+  render(props) {
     return (
       <div className="flex flex-col gap-3">
         {COLORS.map((color) => (
-          <Combobox key={color} items={fruits} accentColor={color} className="w-64" />
+          <Combobox {...props} key={color} items={fruits} accentColor={color} className="w-64" />
         ))}
       </div>
     );
@@ -164,11 +212,47 @@ export const AccentColors = meta.story({
 
 export const Disabled = meta.story({
   name: "無効",
-  render() {
+  ...ctrl({
+    items: fruits,
+    variant: "naked",
+    accentColor: "grey",
+    size: "md",
+    radius: "rounded",
+    outlined: undefined,
+    multiple: false,
+    placeholder: "選択",
+  }),
+  render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <Combobox items={fruits} disabled defaultValue="りんご" className="w-64" />
-        <Combobox items={fruits} disabled placeholder="選択" className="w-64" />
+        <Combobox {...props} items={fruits} disabled defaultValue="りんご" className="w-64" />
+        <Combobox {...props} items={fruits} disabled placeholder="選択" className="w-64" />
+      </div>
+    );
+  },
+});
+
+export const Radius = meta.story({
+  name: "角丸",
+  ...ctrl({
+    items: fruits,
+    variant: "naked",
+    accentColor: "grey",
+    size: "md",
+    outlined: undefined,
+    disabled: false,
+    multiple: false,
+    placeholder: "選択",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        {(["none", "rounded", "full"] as const).map((radius) => (
+          <div key={radius}>
+            <Combobox {...props} radius={radius} className="w-64" />
+            <div>{radius}</div>
+          </div>
+        ))}
       </div>
     );
   },

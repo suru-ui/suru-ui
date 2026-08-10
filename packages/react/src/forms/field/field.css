@@ -1,11 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_field {
-    box-sizing: border-box;
-    margin: 0px;
-  }
-
   /* 変数 */
   .sui_field {
     /* 空白 */
@@ -35,12 +29,6 @@
 
 /* Label */
 @layer sui.component {
-  /* リセット */
-  .sui_field_label {
-    box-sizing: border-box;
-    margin: 0px;
-  }
-
   /* 変数 */
   .sui_field {
     /* 書体 */
@@ -79,12 +67,6 @@
 
 /* Description */
 @layer sui.component {
-  /* リセット */
-  .sui_field_description {
-    box-sizing: border-box;
-    margin: 0px;
-  }
-
   /* 変数 */
   .sui_field {
     /* 書体 */
@@ -123,12 +105,6 @@
 
 /* Error */
 @layer sui.component {
-  /* リセット */
-  .sui_field_error {
-    box-sizing: border-box;
-    margin: 0px;
-  }
-
   /* 変数 */
   .sui_field {
     /* 書体 */
@@ -166,12 +142,6 @@
 }
 
 /* Item */
-@layer sui.component {
-  /* リセット */
-  .sui_field_item {
-    box-sizing: border-box;
-  }
-}
 
 /* disabled */
 @layer sui.important {

@@ -1,9 +1,7 @@
-import { mergeProps } from "@base-ui/react/merge-props";
-import { useRender } from "@base-ui/react/use-render";
 import { useMergedRefs } from "@base-ui/utils/useMergedRefs";
 import * as React from "react";
 import {
-  Group,
+  Group as ExternalGroup,
   Panel as ExternalPanel,
   Separator,
   type GroupProps,
@@ -12,6 +10,7 @@ import {
   type SeparatorProps,
 } from "react-resizable-panels";
 
+import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
 import type { Component } from "../../types.js";
@@ -23,38 +22,25 @@ import "./resizable.css";
 
 export type ResizableDirection = "horizontal" | "vertical";
 
-type ResizableContextValue = {
+export type ResizableContext = {
   readonly direction: ResizableDirection;
 };
 
-const ResizableContext = React.createContext<ResizableContextValue | null>(null);
+export const ResizableContext: React.Context<ResizableContext | null> =
+  React.createContext<ResizableContext | null>(null);
 
-function useResizableContext(): ResizableContextValue {
+export function useResizableContext(optional?: false): ResizableContext;
+export function useResizableContext(optional?: boolean): ResizableContext | null;
+export function useResizableContext(optional?: boolean): ResizableContext | null {
   const context = React.use(ResizableContext);
-  if (context === null) {
+  if (context === null && !optional) {
     throw new ContextMissingError({
       contextName: "ResizableContext",
-      providerName: "ResizableParts.Root",
+      providerName: "ResizableRoot",
     });
   }
 
   return context;
-}
-
-function resolveClassName<State>(
-  className: string | ((state: State) => string | undefined) | undefined,
-  state: State,
-  fixedClassName: string,
-): string | undefined {
-  const resolvedClassName = typeof className === "function" ? className(state) : className;
-  return cn(resolvedClassName, fixedClassName);
-}
-
-function resolveStyle<State>(
-  style: React.CSSProperties | ((state: State) => React.CSSProperties | undefined) | undefined,
-  state: State,
-): React.CSSProperties | undefined {
-  return typeof style === "function" ? style(state) : style;
 }
 
 function normalizePanelSize(value: number | string | undefined): number | string | undefined {
@@ -72,7 +58,7 @@ const DEFAULT_RESIZE_TARGET_MINIMUM_SIZE = {
 // ----
 
 /**
- * {@link Root} の状態です。
+ * {@link ResizableRoot} の状態です。
  */
 export type ResizableRootState = {
   /**
@@ -82,13 +68,14 @@ export type ResizableRootState = {
 };
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link ResizableRoot} に渡すプロパティーです。
  */
 export type ResizableRootProps = Omit<
   GroupProps,
   "children" | "className" | "orientation" | "style"
 > &
-  useRender.ComponentProps<"div", ResizableRootState> & {
+  Omit<React.ComponentProps<"div">, keyof RenderProps> &
+  RenderProps<ResizableRootState> & {
     /**
      * パネルを並べる向きです。
      *
@@ -123,17 +110,16 @@ export type ResizableRootProps = Omit<
  */
 export const ResizableRoot: Component<ResizableRootProps> = function SuiResizableRoot(props) {
   const {
+    ref,
+    render = <ExternalGroup />,
     children,
+    onLayout,
     className,
+    onLayoutChange,
     direction: directionProp,
     orientation: orientationProp,
-    onLayout,
-    onLayoutChange,
-    render,
-    ref,
     resizeTargetMinimumSize: resizeTargetMinimumSizeProp,
-    style,
-    ...elementProps
+    ...otherProps
   } = props;
   const direction = directionProp ?? orientationProp ?? "horizontal";
   const resizeTargetMinimumSize = {
@@ -147,28 +133,20 @@ export const ResizableRoot: Component<ResizableRootProps> = function SuiResizabl
     ),
   };
   const state: ResizableRootState = { direction };
-  const visualProps = mergeProps<"div">(
-    {
-      className: `sui_resizable sui_resizable-direction_${direction}`,
-    },
-    {
-      className: resolveClassName(className, state, ""),
-      style: resolveStyle(style, state),
-    },
-  );
+
   const handleLayoutChange = (layout: Parameters<NonNullable<GroupProps["onLayoutChange"]>>[0]) => {
     onLayoutChange?.(layout);
     onLayout?.(Object.values(layout));
   };
   const element = useRender({
     defaultTagName: "div",
-    render: render ?? <Group />,
     ref,
     state,
     props: {
-      ...elementProps,
-      ...visualProps,
+      ...otherProps,
+      render,
       children,
+      className: cn(className, `sui_resizable sui_resizable-direction_${direction}`),
       orientation: direction,
       onLayoutChange: handleLayoutChange,
       resizeTargetMinimumSize,
@@ -201,7 +179,7 @@ export const Root: Component<Root.Props> = ResizableRoot;
 // -----
 
 /**
- * {@link Panel} の状態です。
+ * {@link ResizablePanel} の状態です。
  */
 export type ResizablePanelState = {
   /**
@@ -211,13 +189,14 @@ export type ResizablePanelState = {
 };
 
 /**
- * {@link Panel} に渡すプロパティーです。
+ * {@link ResizablePanel} に渡すプロパティーです。
  */
 export type ResizablePanelProps = Omit<
   PanelProps,
   "children" | "className" | "defaultSize" | "maxSize" | "minSize" | "onResize" | "style"
 > &
-  useRender.ComponentProps<"div", ResizablePanelState> & {
+  Omit<React.ComponentProps<"div">, keyof RenderProps> &
+  RenderProps<ResizablePanelState> & {
     /**
      * パネルの初期サイズを指定します。
      *
@@ -270,36 +249,26 @@ export type ResizablePanelProps = Omit<
  * ```
  */
 export const ResizablePanel: Component<ResizablePanelProps> = function SuiResizablePanel(props) {
-  const { direction } = useResizableContext();
+  const { direction } = useResizableContext(true) ?? { direction: "horizontal" };
   const {
-    children,
-    className,
-    defaultSize,
-    maxSize,
-    minSize,
-    onResize,
-    onSizeChange,
-    order,
-    panelRef: panelRefProp,
-    render,
     ref,
     size,
-    style,
-    ...elementProps
+    order,
+    render = <ExternalPanel />,
+    maxSize,
+    minSize,
+    children,
+    onResize,
+    panelRef: panelRefProp,
+    className,
+    defaultSize,
+    onSizeChange,
+    ...otherProps
   } = props;
   const state: ResizablePanelState = { direction };
   const internalPanelRef = React.useRef<PanelImperativeHandle>(null);
   const panelRef = useMergedRefs(internalPanelRef, panelRefProp);
   const panelSize = normalizePanelSize(size ?? defaultSize);
-  const visualProps = mergeProps<"div">(
-    {
-      className: "sui_resizable_panel",
-    },
-    {
-      className: resolveClassName(className, state, ""),
-      style: resolveStyle(style, state),
-    },
-  );
 
   React.useEffect(() => {
     if (size !== undefined) {
@@ -316,18 +285,18 @@ export const ResizablePanel: Component<ResizablePanelProps> = function SuiResiza
   };
   const element = useRender({
     defaultTagName: "div",
-    render: render ?? <ExternalPanel />,
     ref,
     state,
     props: {
-      ...elementProps,
-      ...visualProps,
-      children,
-      defaultSize: panelSize,
-      minSize: normalizePanelSize(minSize),
+      ...otherProps,
+      render,
       maxSize: normalizePanelSize(maxSize),
-      onResize: handleResize,
+      minSize: normalizePanelSize(minSize),
+      children,
       panelRef,
+      onResize: handleResize,
+      className: cn(className, "sui_resizable_panel"),
+      defaultSize: panelSize,
       "data-order": order === undefined ? undefined : String(order),
     },
   });
@@ -356,7 +325,7 @@ export const Panel: Component<Panel.Props> = ResizablePanel;
 // ------
 
 /**
- * {@link Handle} の状態です。
+ * {@link ResizableHandle} の状態です。
  */
 export type ResizableHandleState = {
   /**
@@ -371,10 +340,11 @@ export type ResizableHandleState = {
 };
 
 /**
- * {@link Handle} に渡すプロパティーです。
+ * {@link ResizableHandle} に渡すプロパティーです。
  */
 export type ResizableHandleProps = Omit<SeparatorProps, "children" | "className" | "style"> &
-  useRender.ComponentProps<"div", ResizableHandleState> & {
+  Omit<React.ComponentProps<"div">, keyof RenderProps> &
+  RenderProps<ResizableHandleState> & {
     /**
      * 中央にグリップを表示します。
      */
@@ -392,51 +362,39 @@ export type ResizableHandleProps = Omit<SeparatorProps, "children" | "className"
  * ```
  */
 export const ResizableHandle: Component<ResizableHandleProps> = function SuiResizableHandle(props) {
-  const { direction } = useResizableContext();
+  const { direction } = useResizableContext(true) ?? { direction: "horizontal" };
   const {
-    children,
-    className,
-    disabled = false,
-    render,
     ref,
-    style,
+    render = <Separator />,
+    children,
+    disabled = false,
+    className,
     withHandle = false,
-    ...elementProps
+    ...otherProps
   } = props;
   const state: ResizableHandleState = { direction, disabled };
-  const visualProps = mergeProps<"div">(
-    {
+
+  return useRender({
+    defaultTagName: "div",
+    ref,
+    state,
+    props: {
+      ...otherProps,
+      render,
+      children: withHandle ? (
+        <span className="sui_resizable_handle_grip">{children}</span>
+      ) : (
+        children
+      ),
+      disabled,
       className: cn(
+        className,
         "sui_resizable_handle",
         disabled && "sui_resizable_handle-disabled",
         `sui_resizable_handle-direction_${direction}`,
       ),
-    },
-    {
-      className: resolveClassName(className, state, ""),
-      style: resolveStyle(style, state),
-    },
-  );
-  const grip = useRender({
-    defaultTagName: "span",
-    state,
-    props: {
-      className: "sui_resizable_handle_grip",
-      children,
-    },
-  });
-  return useRender({
-    defaultTagName: "div",
-    render: render ?? <Separator />,
-    ref,
-    state,
-    props: {
-      ...elementProps,
-      ...visualProps,
-      children: withHandle ? grip : children,
-      disabled,
-      "aria-orientation": direction === "horizontal" ? "vertical" : "horizontal",
       "data-direction": direction,
+      "aria-orientation": direction === "horizontal" ? "vertical" : "horizontal",
     },
   });
 };

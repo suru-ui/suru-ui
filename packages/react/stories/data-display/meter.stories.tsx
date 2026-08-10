@@ -150,7 +150,10 @@ export const Sizes = meta.story({
     return (
       <div className="flex w-80 flex-col gap-6">
         {SIZES.map((size) => (
-          <Meter key={size} {...props} size={size} />
+          <div key={size}>
+            <Meter {...props} size={size} />
+            <div>{size}</div>
+          </div>
         ))}
       </div>
     );
@@ -171,9 +174,12 @@ export const Radius = meta.story({
   render(props) {
     return (
       <div className="flex w-80 flex-col gap-6">
-        <Meter {...props} radius="none" />
-        <Meter {...props} radius="rounded" />
-        <Meter {...props} radius="full" />
+        {(["none", "rounded", "full"] as const).map((radius) => (
+          <div key={radius}>
+            <Meter {...props} radius={radius} />
+            <div>{radius}</div>
+          </div>
+        ))}
       </div>
     );
   },

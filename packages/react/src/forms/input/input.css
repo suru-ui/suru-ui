@@ -1,12 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_input {
-    box-sizing: border-box;
-    margin: 0px;
-    font-family: inherit;
-  }
-
   /* 変数 */
   .sui_input {
     /* 形状 */

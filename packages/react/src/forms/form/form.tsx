@@ -10,7 +10,7 @@ import * as FormParts from "./form.parts.jsx";
  * 子要素の {@link FormParts.Root.Props} にあるフィールド単位の設定がフォーム全体の設定より優先されます。
  * `errors`、`onFormSubmit`、`actionsRef` の変更は、それぞれ外部エラー、送信処理、命令的な検証操作に反映されます。
  */
-export type FormProps<FormValues extends Record<string, any> = Record<string, any>> =
+export type FormProps<FormValues extends Record<string, unknown> = Record<string, string>> =
   FormParts.Root.Props<FormValues>;
 
 /**
@@ -37,4 +37,6 @@ export type FormProps<FormValues extends Record<string, any> = Record<string, an
  * </Form>
  * ```
  */
-export const Form: Component<FormProps> = FormParts.Root;
+export const Form: Component<FormProps> = function SuiForm(props) {
+  return <FormParts.Root {...props} />;
+};

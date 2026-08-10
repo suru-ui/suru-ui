@@ -10,22 +10,22 @@ import * as MeterParts from "./meter.parts.jsx";
  */
 export type MeterSlotProps = {
   /**
-   * {@link MeterParts.Label} に渡すプロパティーです。
+   * {@link MeterParts.Label|Label} に渡すプロパティーです。
    */
   readonly label?: MeterParts.Label.Props | undefined;
 
   /**
-   * {@link MeterParts.Value} に渡すプロパティーです。
+   * {@link MeterParts.Value|Value} に渡すプロパティーです。
    */
   readonly value?: MeterParts.Value.Props | undefined;
 
   /**
-   * {@link MeterParts.Track} に渡すプロパティーです。
+   * {@link MeterParts.Track|Track} に渡すプロパティーです。
    */
   readonly track?: MeterParts.Track.Props | undefined;
 
   /**
-   * {@link MeterParts.Indicator} に渡すプロパティーです。
+   * {@link MeterParts.Indicator|Indicator} に渡すプロパティーです。
    */
   readonly indicator?: MeterParts.Indicator.Props | undefined;
 };
@@ -36,8 +36,6 @@ export type MeterSlotProps = {
 export type MeterProps = MeterParts.Root.Props & {
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-   *
-   * {@link MeterSlotProps} を参照してください。
    */
   slotProps?: MeterSlotProps | undefined;
 };

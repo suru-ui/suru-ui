@@ -1,10 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_alert {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_alert {
     /* 空白 */
@@ -326,11 +321,6 @@
 
 /* Icon */
 @layer sui.component {
-  /* リセット */
-  .sui_alert_icon {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_alert {
     /* 形状 */
@@ -381,7 +371,11 @@
     --sui_alert_icon-width: calc(var(--sui_alert_title-font_size) * 1.2);
   }
 
-  .sui_alert-color_grey,
+  .sui_alert-color_grey {
+    /* 前景 */
+    --sui_alert_icon-color: var(--sui-canvas_text-1);
+  }
+
   .sui_alert-variant_liquid {
     /* 前景 */
     --sui_alert_icon-color: var(--sui-canvas_text-1);
@@ -427,11 +421,6 @@
 
 /* Title */
 @layer sui.component {
-  /* リセット */
-  .sui_alert_title {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_alert {
     /* 書体 */
@@ -439,6 +428,8 @@
     --sui_alert_title-font_weight: ;
     --sui_alert_title-line_height: ;
     --sui_alert_title-letter_spacing: ;
+    /* 前景 */
+    --sui_alert_title-color: ;
   }
 
   /* 静的 */
@@ -481,7 +472,11 @@
     --sui_alert_title-letter_spacing: var(--sui-text-std-lg-b-letter_spacing);
   }
 
-  .sui_alert-color_grey,
+  .sui_alert-color_grey {
+    /* 前景 */
+    --sui_alert_title-color: var(--sui-canvas_text-1);
+  }
+
   .sui_alert-variant_liquid {
     /* 前景 */
     --sui_alert_title-color: var(--sui-canvas_text-1);
@@ -527,11 +522,6 @@
 
 /* Description */
 @layer sui.component {
-  /* リセット */
-  .sui_alert_description {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_alert {
     /* 書体 */
@@ -539,6 +529,8 @@
     --sui_alert_description-font_weight: ;
     --sui_alert_description-line_height: ;
     --sui_alert_description-letter_spacing: ;
+    /* 前景 */
+    --sui_alert_description-color: ;
   }
 
   /* 静的 */
@@ -581,7 +573,11 @@
     --sui_alert_description-letter_spacing: var(--sui-text-std-lg-n-letter_spacing);
   }
 
-  .sui_alert-color_grey,
+  .sui_alert-color_grey {
+    /* 前景 */
+    --sui_alert_description-color: var(--sui-canvas_text-1);
+  }
+
   .sui_alert-variant_liquid {
     /* 前景 */
     --sui_alert_description-color: var(--sui-canvas_text-1);
@@ -627,11 +623,6 @@
 
 /* Actions */
 @layer sui.component {
-  /* リセット */
-  .sui_alert_actions {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_alert {
     /* 空白 */

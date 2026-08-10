@@ -143,7 +143,10 @@ export const Sizes = meta.story({
     return (
       <div className="flex flex-col gap-3">
         {SIZES.map((size) => (
-          <Autocomplete key={size} {...props} size={size} className="w-64" />
+          <div key={size}>
+            <Autocomplete {...props} size={size} className="w-64" />
+            <div>{size}</div>
+          </div>
         ))}
       </div>
     );
@@ -156,16 +159,19 @@ export const Radius = meta.story({
     variant: "naked",
     accentColor: "grey",
     size: "md",
-    outlined: undefined,
+    outlined: false,
     disabled: false,
     placeholder: "検索",
   }),
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <Autocomplete {...props} radius="none" className="w-64" />
-        <Autocomplete {...props} radius="rounded" className="w-64" />
-        <Autocomplete {...props} radius="full" className="w-64" />
+        {(["none", "rounded", "full"] as const).map((radius) => (
+          <div key={radius}>
+            <Autocomplete {...props} radius={radius} className="w-64" />
+            <div>{radius}</div>
+          </div>
+        ))}
       </div>
     );
   },

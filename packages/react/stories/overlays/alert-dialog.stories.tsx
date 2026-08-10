@@ -89,9 +89,7 @@ export const Controlled = meta.story({
             `open` と `onOpenChange` でダイアログを制御できます。
           </p>
         </AlertDialog>
-        <button type="button" className="sui_alert_dialog_trigger" onClick={() => setOpen(true)}>
-          開く
-        </button>
+        <Button onClick={() => setOpen(true)}>開く</Button>
       </>
     );
   },

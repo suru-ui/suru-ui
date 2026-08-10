@@ -12,7 +12,7 @@ import "./toggle-button-group.css";
 // -------
 
 /**
- * {@link ToggleButtonGroupContext} の値です。
+ * {@link ToggleButtonGroupRoot} が子パーツへ提供する状態です。
  */
 export type ToggleButtonGroupContext = {
   /**
@@ -73,17 +73,17 @@ export function useToggleButtonGroupContext(optional?: boolean): ToggleButtonGro
 }
 
 /**
- * {@link ToggleButtonGroupContext} のエイリアスです。
+ * {@link ToggleButtonGroupContext} の別名です。
  */
 export type Context = ToggleButtonGroupContext;
 
 /**
- * {@link ToggleButtonGroupContext} のエイリアスです。
+ * {@link ToggleButtonGroupContext} の別名です。
  */
 export const Context: React.Context<ToggleButtonGroupContext | null> = ToggleButtonGroupContext;
 
 /**
- * {@link useToggleButtonGroupContext} のエイリアスです。
+ * {@link useToggleButtonGroupContext} の別名です。
  *
  * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
  *
@@ -99,12 +99,12 @@ export function useContext(optional?: boolean): ToggleButtonGroupContext | null 
 // ----
 
 /**
- * {@link Root} の状態です。
+ * {@link ToggleButtonGroupRoot} の状態です。
  */
 export type ToggleButtonGroupRootState = ToggleGroup.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link ToggleButtonGroupRoot} に渡すプロパティーです。
  *
  * グループに指定したスタイルプロパティーは、子要素の指定より優先されません。
  * 子要素の {@link ToggleButtonRootProps} に同じスタイルプロパティーを指定すると、子要素の値が優先されます。

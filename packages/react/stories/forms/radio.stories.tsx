@@ -1,8 +1,8 @@
-import { RadioGroup } from "@base-ui/react/radio-group";
 import { COLORS, SIZES } from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
+import { RadioGroup } from "../../src/forms/radio-group/index.js";
 import { Radio } from "../../src/forms/radio/index.js";
 
 const meta = preview.meta({
@@ -199,32 +199,6 @@ export const Radius = meta.story({
   },
 });
 
-// export const Checked = meta.story({
-//   name: "チェック状態",
-//   ...ctrl({
-//     variant: "naked",
-//     color: "grey",
-//     size: "md",
-//     radius: "full",
-//     disabled: false,
-//     value: "",
-//   }),
-//   render(props) {
-//     return (
-//       <div className="flex flex-col gap-3">
-//         <label className="flex items-center gap-2">
-//           <Radio {...props} checked={false} value="unchecked" />
-//           未チェック
-//         </label>
-//         <label className="flex items-center gap-2">
-//           <Radio {...props} checked value="checked" />
-//           チェック済み
-//         </label>
-//       </div>
-//     );
-//   },
-// });
-
 export const Controlled = meta.story({
   name: "制御",
   ...ctrl({
@@ -240,7 +214,11 @@ export const Controlled = meta.story({
     const [value, setValue] = React.useState("option-a");
 
     return (
-      <RadioGroup value={value} onValueChange={setValue} className="flex flex-col gap-3">
+      <RadioGroup
+        value={value}
+        onValueChange={(nextValue) => setValue(String(nextValue))}
+        className="flex flex-col gap-3"
+      >
         <label className="flex items-center gap-2">
           <Radio {...props} value="option-a" />
           選択肢 A

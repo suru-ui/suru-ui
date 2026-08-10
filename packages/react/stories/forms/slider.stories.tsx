@@ -125,7 +125,10 @@ export const Sizes = meta.story({
     return (
       <div className="flex w-80 flex-col gap-6">
         {SIZES.map((size) => (
-          <Slider key={size} {...props} size={size} defaultValue={25} />
+          <div key={size}>
+            <Slider {...props} size={size} defaultValue={25} />
+            <div>{size}</div>
+          </div>
         ))}
       </div>
     );
@@ -144,9 +147,12 @@ export const Radius = meta.story({
   render(props) {
     return (
       <div className="flex w-80 flex-col gap-6">
-        <Slider {...props} radius="none" defaultValue={25} />
-        <Slider {...props} radius="rounded" defaultValue={50} />
-        <Slider {...props} radius="full" defaultValue={75} />
+        {(["none", "rounded", "full"] as const).map((radius, index) => (
+          <div key={radius}>
+            <Slider {...props} radius={radius} defaultValue={(index + 1) * 25} />
+            <div>{radius}</div>
+          </div>
+        ))}
       </div>
     );
   },

@@ -13,7 +13,7 @@ import "./autocomplete.css";
 // -------
 
 /**
- * {@link AutocompleteContext} の値です。
+ * {@link AutocompleteRoot} が子パーツへ提供する状態です。
  */
 export type AutocompleteContext = {
   /**
@@ -70,17 +70,17 @@ export function useAutocompleteContext(optional?: boolean): AutocompleteContext 
 }
 
 /**
- * {@link AutocompleteContext} のエイリアスです。
+ * {@link AutocompleteContext} の別名です。
  */
 export type Context = AutocompleteContext;
 
 /**
- * {@link AutocompleteContext} のエイリアスです。
+ * {@link AutocompleteContext} の別名です。
  */
 export const Context: React.Context<AutocompleteContext | null> = AutocompleteContext;
 
 /**
- * {@link useAutocompleteContext} のエイリアスです。
+ * {@link useAutocompleteContext} の別名です。
  *
  * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
  *
@@ -96,12 +96,12 @@ export function useContext(optional?: boolean): AutocompleteContext | null {
 // ----
 
 /**
- * {@link Root} の状態です。
+ * {@link AutocompleteRoot} の状態です。
  */
 export type AutocompleteRootState = Autocomplete.Root.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link AutocompleteRoot} に渡すプロパティーです。
  */
 export type AutocompleteRootProps = Omit<
   React.ComponentProps<typeof Autocomplete.Root>,
@@ -219,16 +219,23 @@ export const AutocompleteRoot: Component<AutocompleteRootProps> = function SuiAu
 };
 
 /**
- * {@link AutocompleteRoot} に対応する型名前空間です。
+ * {@link AutocompleteRoot} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
-  /** {@link AutocompleteRootState} の別名です。 */
+  /**
+   * {@link AutocompleteRoot} の状態型です。
+   */
   export type State = AutocompleteRootState;
-  /** {@link AutocompleteRootProps} の別名です。 */
+
+  /**
+   * {@link AutocompleteRoot} のプロパティー型です。
+   */
   export type Props = AutocompleteRootProps;
 }
 
-/** {@link AutocompleteRoot} の短い名前です。 */
+/**
+ * {@link AutocompleteRoot} の別名です。
+ */
 export const Root: Component<Root.Props> = AutocompleteRoot;
 
 // Value
@@ -261,16 +268,23 @@ export const AutocompleteValue: Component<AutocompleteValueProps> = function Sui
 };
 
 /**
- * {@link AutocompleteValue} に対応する型名前空間です。
+ * {@link AutocompleteValue} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Value {
-  /** {@link AutocompleteValueState} の別名です。 */
+  /**
+   * {@link AutocompleteValue} の状態型です。
+   */
   export type State = AutocompleteValueState;
-  /** {@link AutocompleteValueProps} の別名です。 */
+
+  /**
+   * {@link AutocompleteValue} のプロパティー型です。
+   */
   export type Props = AutocompleteValueProps;
 }
 
-/** {@link AutocompleteValue} の短い名前です。 */
+/**
+ * {@link AutocompleteValue} の別名です。
+ */
 export const Value: Component<Value.Props> = AutocompleteValue;
 
 // Trigger
@@ -306,16 +320,23 @@ export const AutocompleteTrigger: Component<AutocompleteTriggerProps> =
   };
 
 /**
- * {@link AutocompleteTrigger} に対応する型名前空間です。
+ * {@link AutocompleteTrigger} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Trigger {
-  /** {@link AutocompleteTriggerState} の別名です。 */
+  /**
+   * {@link AutocompleteTriggerState} の別名です。
+   */
   export type State = AutocompleteTriggerState;
-  /** {@link AutocompleteTriggerProps} の別名です。 */
+
+  /**
+   * {@link AutocompleteTriggerProps} の別名です。
+   */
   export type Props = AutocompleteTriggerProps;
 }
 
-/** {@link AutocompleteTrigger} の短い名前です。 */
+/**
+ * {@link AutocompleteTrigger} の別名です。
+ */
 export const Trigger: Component<Trigger.Props> = AutocompleteTrigger;
 
 // Input
@@ -348,16 +369,23 @@ export const AutocompleteInput: Component<AutocompleteInputProps> = function Sui
 };
 
 /**
- * {@link AutocompleteInput} に対応する型名前空間です。
+ * {@link AutocompleteInput} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Input {
-  /** {@link AutocompleteInputState} の別名です。 */
+  /**
+   * {@link AutocompleteInputState} の別名です。
+   */
   export type State = AutocompleteInputState;
-  /** {@link AutocompleteInputProps} の別名です。 */
+
+  /**
+   * {@link AutocompleteInputProps} の別名です。
+   */
   export type Props = AutocompleteInputProps;
 }
 
-/** {@link AutocompleteInput} の短い名前です。 */
+/**
+ * {@link AutocompleteInput} の別名です。
+ */
 export const Input: Component<Input.Props> = AutocompleteInput;
 
 // InputGroup
@@ -415,16 +443,23 @@ export const AutocompleteInputGroup: Component<AutocompleteInputGroupProps> =
   };
 
 /**
- * {@link AutocompleteInputGroup} に対応する型名前空間です。
+ * {@link AutocompleteInputGroup} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace InputGroup {
-  /** {@link AutocompleteInputGroupState} の別名です。 */
+  /**
+   * {@link AutocompleteInputGroupState} の別名です。
+   */
   export type State = AutocompleteInputGroupState;
-  /** {@link AutocompleteInputGroupProps} の別名です。 */
+
+  /**
+   * {@link AutocompleteInputGroupProps} の別名です。
+   */
   export type Props = AutocompleteInputGroupProps;
 }
 
-/** {@link AutocompleteInputGroup} の短い名前です。 */
+/**
+ * {@link AutocompleteInputGroup} の別名です。
+ */
 export const InputGroup: Component<InputGroup.Props> = AutocompleteInputGroup;
 
 // Icon
@@ -457,16 +492,23 @@ export const AutocompleteIcon: Component<AutocompleteIconProps> = function SuiAu
 };
 
 /**
- * {@link AutocompleteIcon} に対応する型名前空間です。
+ * {@link AutocompleteIcon} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Icon {
-  /** {@link AutocompleteIconState} の別名です。 */
+  /**
+   * {@link AutocompleteIconState} の別名です。
+   */
   export type State = AutocompleteIconState;
-  /** {@link AutocompleteIconProps} の別名です。 */
+
+  /**
+   * {@link AutocompleteIconProps} の別名です。
+   */
   export type Props = AutocompleteIconProps;
 }
 
-/** {@link AutocompleteIcon} の短い名前です。 */
+/**
+ * {@link AutocompleteIcon} の別名です。
+ */
 export const Icon: Component<Icon.Props> = AutocompleteIcon;
 
 // Clear
@@ -503,16 +545,23 @@ export const AutocompleteClear: Component<AutocompleteClearProps> = function Sui
 };
 
 /**
- * {@link AutocompleteClear} に対応する型名前空間です。
+ * {@link AutocompleteClear} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Clear {
-  /** {@link AutocompleteClearState} の別名です。 */
+  /**
+   * {@link AutocompleteClearState} の別名です。
+   */
   export type State = AutocompleteClearState;
-  /** {@link AutocompleteClearProps} の別名です。 */
+
+  /**
+   * {@link AutocompleteClearProps} の別名です。
+   */
   export type Props = AutocompleteClearProps;
 }
 
-/** {@link AutocompleteClear} の短い名前です。 */
+/**
+ * {@link AutocompleteClear} の別名です。
+ */
 export const Clear: Component<Clear.Props> = AutocompleteClear;
 
 // List
@@ -555,16 +604,23 @@ export const AutocompleteList: Component<AutocompleteListProps> = function SuiAu
 };
 
 /**
- * {@link AutocompleteList} に対応する型名前空間です。
+ * {@link AutocompleteList} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace List {
-  /** {@link AutocompleteListState} の別名です。 */
+  /**
+   * {@link AutocompleteListState} の別名です。
+   */
   export type State = AutocompleteListState;
-  /** {@link AutocompleteListProps} の別名です。 */
+
+  /**
+   * {@link AutocompleteListProps} の別名です。
+   */
   export type Props = AutocompleteListProps;
 }
 
-/** {@link AutocompleteList} の短い名前です。 */
+/**
+ * {@link AutocompleteList} の別名です。
+ */
 export const List: Component<List.Props> = AutocompleteList;
 
 // Status
@@ -601,16 +657,23 @@ export const AutocompleteStatus: Component<AutocompleteStatusProps> =
   };
 
 /**
- * {@link AutocompleteStatus} に対応する型名前空間です。
+ * {@link AutocompleteStatus} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Status {
-  /** {@link AutocompleteStatusState} の別名です。 */
+  /**
+   * {@link AutocompleteStatusState} の別名です。
+   */
   export type State = AutocompleteStatusState;
-  /** {@link AutocompleteStatusProps} の別名です。 */
+
+  /**
+   * {@link AutocompleteStatusProps} の別名です。
+   */
   export type Props = AutocompleteStatusProps;
 }
 
-/** {@link AutocompleteStatus} の短い名前です。 */
+/**
+ * {@link AutocompleteStatus} の別名です。
+ */
 export const Status: Component<Status.Props> = AutocompleteStatus;
 
 // Portal
@@ -650,16 +713,23 @@ export const AutocompletePortal: Component<AutocompletePortalProps> =
   };
 
 /**
- * {@link AutocompletePortal} に対応する型名前空間です。
+ * {@link AutocompletePortal} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Portal {
-  /** {@link AutocompletePortalState} の別名です。 */
+  /**
+   * {@link AutocompletePortalState} の別名です。
+   */
   export type State = AutocompletePortalState;
-  /** {@link AutocompletePortalProps} の別名です。 */
+
+  /**
+   * {@link AutocompletePortalProps} の別名です。
+   */
   export type Props = AutocompletePortalProps;
 }
 
-/** {@link AutocompletePortal} の短い名前です。 */
+/**
+ * {@link AutocompletePortal} の別名です。
+ */
 export const Portal: Component<Portal.Props> = AutocompletePortal;
 
 // Backdrop
@@ -698,16 +768,23 @@ export const AutocompleteBackdrop: Component<AutocompleteBackdropProps> =
   };
 
 /**
- * {@link AutocompleteBackdrop} に対応する型名前空間です。
+ * {@link AutocompleteBackdrop} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Backdrop {
-  /** {@link AutocompleteBackdropState} の別名です。 */
+  /**
+   * {@link AutocompleteBackdropState} の別名です。
+   */
   export type State = AutocompleteBackdropState;
-  /** {@link AutocompleteBackdropProps} の別名です。 */
+
+  /**
+   * {@link AutocompleteBackdropProps} の別名です。
+   */
   export type Props = AutocompleteBackdropProps;
 }
 
-/** {@link AutocompleteBackdrop} の短い名前です。 */
+/**
+ * {@link AutocompleteBackdrop} の別名です。
+ */
 export const Backdrop: Component<Backdrop.Props> = AutocompleteBackdrop;
 
 // Positioner
@@ -746,16 +823,23 @@ export const AutocompletePositioner: Component<AutocompletePositionerProps> =
   };
 
 /**
- * {@link AutocompletePositioner} に対応する型名前空間です。
+ * {@link AutocompletePositioner} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Positioner {
-  /** {@link AutocompletePositionerState} の別名です。 */
+  /**
+   * {@link AutocompletePositionerState} の別名です。
+   */
   export type State = AutocompletePositionerState;
-  /** {@link AutocompletePositionerProps} の別名です。 */
+
+  /**
+   * {@link AutocompletePositionerProps} の別名です。
+   */
   export type Props = AutocompletePositionerProps;
 }
 
-/** {@link AutocompletePositioner} の短い名前です。 */
+/**
+ * {@link AutocompletePositioner} の別名です。
+ */
 export const Positioner: Component<Positioner.Props> = AutocompletePositioner;
 
 // Popup
@@ -790,16 +874,23 @@ export const AutocompletePopup: Component<AutocompletePopupProps> = function Sui
 };
 
 /**
- * {@link AutocompletePopup} に対応する型名前空間です。
+ * {@link AutocompletePopup} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Popup {
-  /** {@link AutocompletePopupState} の別名です。 */
+  /**
+   * {@link AutocompletePopupState} の別名です。
+   */
   export type State = AutocompletePopupState;
-  /** {@link AutocompletePopupProps} の別名です。 */
+
+  /**
+   * {@link AutocompletePopupProps} の別名です。
+   */
   export type Props = AutocompletePopupProps;
 }
 
-/** {@link AutocompletePopup} の短い名前です。 */
+/**
+ * {@link AutocompletePopup} の別名です。
+ */
 export const Popup: Component<Popup.Props> = AutocompletePopup;
 
 // Arrow
@@ -835,16 +926,23 @@ export const AutocompleteArrow: Component<AutocompleteArrowProps> = function Sui
 };
 
 /**
- * {@link AutocompleteArrow} に対応する型名前空間です。
+ * {@link AutocompleteArrow} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Arrow {
-  /** {@link AutocompleteArrowState} の別名です。 */
+  /**
+   * {@link AutocompleteArrowState} の別名です。
+   */
   export type State = AutocompleteArrowState;
-  /** {@link AutocompleteArrowProps} の別名です。 */
+
+  /**
+   * {@link AutocompleteArrowProps} の別名です。
+   */
   export type Props = AutocompleteArrowProps;
 }
 
-/** {@link AutocompleteArrow} の短い名前です。 */
+/**
+ * {@link AutocompleteArrow} の別名です。
+ */
 export const Arrow: Component<Arrow.Props> = AutocompleteArrow;
 
 // Group
@@ -881,16 +979,23 @@ export const AutocompleteGroup: Component<AutocompleteGroupProps> = function Sui
 };
 
 /**
- * {@link AutocompleteGroup} に対応する型名前空間です。
+ * {@link AutocompleteGroup} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Group {
-  /** {@link AutocompleteGroupState} の別名です。 */
+  /**
+   * {@link AutocompleteGroupState} の別名です。
+   */
   export type State = AutocompleteGroupState;
-  /** {@link AutocompleteGroupProps} の別名です。 */
+
+  /**
+   * {@link AutocompleteGroupProps} の別名です。
+   */
   export type Props = AutocompleteGroupProps;
 }
 
-/** {@link AutocompleteGroup} の短い名前です。 */
+/**
+ * {@link AutocompleteGroup} の別名です。
+ */
 export const Group: Component<Group.Props> = AutocompleteGroup;
 
 // GroupLabel
@@ -927,16 +1032,23 @@ export const AutocompleteGroupLabel: Component<AutocompleteGroupLabelProps> =
   };
 
 /**
- * {@link AutocompleteGroupLabel} に対応する型名前空間です。
+ * {@link AutocompleteGroupLabel} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace GroupLabel {
-  /** {@link AutocompleteGroupLabelState} の別名です。 */
+  /**
+   * {@link AutocompleteGroupLabelState} の別名です。
+   */
   export type State = AutocompleteGroupLabelState;
-  /** {@link AutocompleteGroupLabelProps} の別名です。 */
+
+  /**
+   * {@link AutocompleteGroupLabelProps} の別名です。
+   */
   export type Props = AutocompleteGroupLabelProps;
 }
 
-/** {@link AutocompleteGroupLabel} の短い名前です。 */
+/**
+ * {@link AutocompleteGroupLabel} の別名です。
+ */
 export const GroupLabel: Component<GroupLabel.Props> = AutocompleteGroupLabel;
 
 // Item
@@ -976,16 +1088,23 @@ export const AutocompleteItem: Component<AutocompleteItemProps> = function SuiAu
 };
 
 /**
- * {@link AutocompleteItem} に対応する型名前空間です。
+ * {@link AutocompleteItem} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Item {
-  /** {@link AutocompleteItemState} の別名です。 */
+  /**
+   * {@link AutocompleteItemState} の別名です。
+   */
   export type State = AutocompleteItemState;
-  /** {@link AutocompleteItemProps} の別名です。 */
+
+  /**
+   * {@link AutocompleteItemProps} の別名です。
+   */
   export type Props = AutocompleteItemProps;
 }
 
-/** {@link AutocompleteItem} の短い名前です。 */
+/**
+ * {@link AutocompleteItem} の別名です。
+ */
 export const Item: Component<Item.Props> = AutocompleteItem;
 
 // Row
@@ -1020,16 +1139,23 @@ export const AutocompleteRow: Component<AutocompleteRowProps> = function SuiAuto
 };
 
 /**
- * {@link AutocompleteRow} に対応する型名前空間です。
+ * {@link AutocompleteRow} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Row {
-  /** {@link AutocompleteRowState} の別名です。 */
+  /**
+   * {@link AutocompleteRowState} の別名です。
+   */
   export type State = AutocompleteRowState;
-  /** {@link AutocompleteRowProps} の別名です。 */
+
+  /**
+   * {@link AutocompleteRowProps} の別名です。
+   */
   export type Props = AutocompleteRowProps;
 }
 
-/** {@link AutocompleteRow} の短い名前です。 */
+/**
+ * {@link AutocompleteRow} の別名です。
+ */
 export const Row: Component<Row.Props> = AutocompleteRow;
 
 // Collection
@@ -1068,16 +1194,23 @@ export const AutocompleteCollection: Component<AutocompleteCollectionProps> =
   };
 
 /**
- * {@link AutocompleteCollection} に対応する型名前空間です。
+ * {@link AutocompleteCollection} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Collection {
-  /** {@link AutocompleteCollectionState} の別名です。 */
+  /**
+   * {@link AutocompleteCollectionState} の別名です。
+   */
   export type State = AutocompleteCollectionState;
-  /** {@link AutocompleteCollectionProps} の別名です。 */
+
+  /**
+   * {@link AutocompleteCollectionProps} の別名です。
+   */
   export type Props = AutocompleteCollectionProps;
 }
 
-/** {@link AutocompleteCollection} の短い名前です。 */
+/**
+ * {@link AutocompleteCollection} の別名です。
+ */
 export const Collection: Component<Collection.Props> = AutocompleteCollection;
 
 // Empty
@@ -1112,16 +1245,23 @@ export const AutocompleteEmpty: Component<AutocompleteEmptyProps> = function Sui
 };
 
 /**
- * {@link AutocompleteEmpty} に対応する型名前空間です。
+ * {@link AutocompleteEmpty} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Empty {
-  /** {@link AutocompleteEmptyState} の別名です。 */
+  /**
+   * {@link AutocompleteEmptyState} の別名です。
+   */
   export type State = AutocompleteEmptyState;
-  /** {@link AutocompleteEmptyProps} の別名です。 */
+
+  /**
+   * {@link AutocompleteEmptyProps} の別名です。
+   */
   export type Props = AutocompleteEmptyProps;
 }
 
-/** {@link AutocompleteEmpty} の短い名前です。 */
+/**
+ * {@link AutocompleteEmpty} の別名です。
+ */
 export const Empty: Component<Empty.Props> = AutocompleteEmpty;
 
 // Separator
@@ -1158,16 +1298,23 @@ export const AutocompleteSeparator: Component<AutocompleteSeparatorProps> =
   };
 
 /**
- * {@link AutocompleteSeparator} に対応する型名前空間です。
+ * {@link AutocompleteSeparator} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Separator {
-  /** {@link AutocompleteSeparatorState} の別名です。 */
+  /**
+   * {@link AutocompleteSeparatorState} の別名です。
+   */
   export type State = AutocompleteSeparatorState;
-  /** {@link AutocompleteSeparatorProps} の別名です。 */
+
+  /**
+   * {@link AutocompleteSeparatorProps} の別名です。
+   */
   export type Props = AutocompleteSeparatorProps;
 }
 
-/** {@link AutocompleteSeparator} の短い名前です。 */
+/**
+ * {@link AutocompleteSeparator} の別名です。
+ */
 export const Separator: Component<Separator.Props> = AutocompleteSeparator;
 
 // useFilter

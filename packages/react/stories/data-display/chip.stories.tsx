@@ -160,7 +160,7 @@ export const Radius = meta.story({
 });
 
 export const Sizes = meta.story({
-  name: "サイズ",
+  name: "大きさ",
   ...ctrl({
     color: "blue",
     outlined: false,

@@ -25,4 +25,6 @@ export type InputProps = InputParts.Root.Props;
  * </label>
  * ```
  */
-export const Input: Component<InputProps> = InputParts.Root;
+export const Input: Component<InputProps> = function SuiInput(props) {
+  return <InputParts.Root {...props} />;
+};

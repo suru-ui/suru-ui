@@ -100,7 +100,13 @@ export const ChipRoot: Component<ChipRootProps> = function SuiChipRoot(props) {
 };
 
 export namespace Root {
+  /**
+   * {@link ChipRoot} の状態型です。
+   */
   export type State = ChipRootState;
+  /**
+   * {@link ChipRoot} のプロパティー型です。
+   */
   export type Props = ChipRootProps;
 }
 

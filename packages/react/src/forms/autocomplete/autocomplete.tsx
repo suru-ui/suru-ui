@@ -28,7 +28,10 @@ export type AutocompleteProps = Omit<AutocompleteParts.Root.Props, "children"> &
    * - 指定しない場合: アイテムの値をそのまま各行に表示します
    * 項目の状態が変わると、関数形式の children は再び呼び出されます。
    */
-  children?: React.ReactNode | ((item: any, index: number) => React.ReactNode) | undefined;
+  children?:
+    | React.ReactNode
+    | ((item: React.ReactNode, index: number) => React.ReactNode)
+    | undefined;
 
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
@@ -130,7 +133,7 @@ export const Autocomplete: Component<AutocompleteProps> = function SuiAutocomple
       return children;
     }
 
-    return (item: any, index: number): React.ReactNode => {
+    return (item: unknown, index: number): React.ReactNode => {
       const group = item as { label?: React.ReactNode; items?: readonly unknown[] } | null;
       if (group && Array.isArray(group.items)) {
         return (
@@ -142,7 +145,7 @@ export const Autocomplete: Component<AutocompleteProps> = function SuiAutocomple
               {(groupItem, groupIndex) => (
                 <AutocompleteParts.Item {...itemProps} key={groupIndex} value={groupItem}>
                   {typeof children === "function"
-                    ? children(groupItem, groupIndex)
+                    ? children(groupItem as React.ReactNode, groupIndex)
                     : String(groupItem)}
                 </AutocompleteParts.Item>
               )}
@@ -152,7 +155,7 @@ export const Autocomplete: Component<AutocompleteProps> = function SuiAutocomple
       }
       return (
         <AutocompleteParts.Item {...itemProps} key={index} value={item}>
-          {typeof children === "function" ? children(item, index) : String(item)}
+          {typeof children === "function" ? children(item as React.ReactNode, index) : String(item)}
         </AutocompleteParts.Item>
       );
     };

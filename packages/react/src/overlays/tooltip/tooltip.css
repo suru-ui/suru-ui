@@ -1,21 +1,15 @@
 /* Portal */
 @layer sui.component {
-  /* リセット */
+  /* 静的 */
   .sui_tooltip_portal {
     position: absolute;
     top: 0px;
     left: 0px;
-    box-sizing: border-box;
   }
 }
 
 /* Positioner */
 @layer sui.component {
-  /* リセット */
-  .sui_tooltip_positioner {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_tooltip_positioner {
     z-index: 100;
@@ -24,11 +18,6 @@
 
 /* Popup */
 @layer sui.component {
-  /* リセット */
-  .sui_tooltip_popup {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_tooltip_popup {
     /* 形状 */
@@ -122,11 +111,6 @@
 
 /* Arrow */
 @layer sui.component {
-  /* リセット */
-  .sui_tooltip_arrow {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_tooltip_arrow {
     position: relative;
@@ -164,15 +148,13 @@
     width: calc(6px * sqrt(2));
     height: calc(6px * sqrt(2));
     content: "";
-    background-color: var(--sui_tooltip_popup-background_color);
     transform: translate(-50%, 50%) rotate(45deg);
+  }
+
+  /* 動的 */
+  .sui_tooltip_arrow::before {
+    background-color: var(--sui_tooltip_popup-background_color);
   }
 }
 
 /* Viewport */
-@layer sui.component {
-  /* リセット */
-  .sui_tooltip_viewport {
-    box-sizing: border-box;
-  }
-}

@@ -90,7 +90,14 @@ export const MenuRoot: MenuRootComponent = function SuiMenuRoot<Payload>(
  * {@link MenuRoot} の型をまとめた名前空間です。
  */
 export namespace Root {
+  /**
+   * {@link MenuRoot} の状態型です。
+   */
   export type State = MenuRootState;
+
+  /**
+   * {@link MenuRoot} のプロパティー型です。
+   */
   export type Props<Payload = unknown> = MenuRootProps<Payload>;
 }
 
@@ -169,7 +176,14 @@ export const MenuTrigger: MenuTriggerComponent = function SuiMenuTrigger<Payload
  * {@link MenuTrigger} の型をまとめた名前空間です。
  */
 export namespace Trigger {
+  /**
+   * {@link MenuTrigger} の状態型です。
+   */
   export type State = MenuTriggerState;
+
+  /**
+   * {@link MenuTrigger} のプロパティー型です。
+   */
   export type Props<Payload = unknown> = MenuTriggerProps<Payload>;
 }
 
@@ -213,7 +227,14 @@ export const MenuPortal: Component<MenuPortalProps> = function SuiMenuPortal(pro
  * {@link MenuPortal} の型をまとめた名前空間です。
  */
 export namespace Portal {
+  /**
+   * {@link MenuPortal} の状態型です。
+   */
   export type State = MenuPortalState;
+
+  /**
+   * {@link MenuPortal} のプロパティー型です。
+   */
   export type Props = MenuPortalProps;
 }
 
@@ -253,7 +274,14 @@ export const MenuBackdrop: Component<MenuBackdropProps> = function SuiMenuBackdr
  * {@link MenuBackdrop} の型をまとめた名前空間です。
  */
 export namespace Backdrop {
+  /**
+   * {@link MenuBackdrop} の状態型です。
+   */
   export type State = MenuBackdropState;
+
+  /**
+   * {@link MenuBackdrop} のプロパティー型です。
+   */
   export type Props = MenuBackdropProps;
 }
 
@@ -295,7 +323,14 @@ export const MenuPositioner: Component<MenuPositionerProps> = function SuiMenuPo
  * {@link MenuPositioner} の型をまとめた名前空間です。
  */
 export namespace Positioner {
+  /**
+   * {@link MenuPositioner} の状態型です。
+   */
   export type State = MenuPositionerState;
+
+  /**
+   * {@link MenuPositioner} のプロパティー型です。
+   */
   export type Props = MenuPositionerProps;
 }
 
@@ -337,7 +372,14 @@ export const MenuPopup: Component<MenuPopupProps> = function SuiMenuPopup(props)
  * {@link MenuPopup} の型をまとめた名前空間です。
  */
 export namespace Popup {
+  /**
+   * {@link MenuPopup} の状態型です。
+   */
   export type State = MenuPopupState;
+
+  /**
+   * {@link MenuPopup} のプロパティー型です。
+   */
   export type Props = MenuPopupProps;
 }
 
@@ -380,7 +422,14 @@ export const MenuArrow: Component<MenuArrowProps> = function SuiMenuArrow(props)
  * {@link MenuArrow} の型をまとめた名前空間です。
  */
 export namespace Arrow {
+  /**
+   * {@link MenuArrow} の状態型です。
+   */
   export type State = MenuArrowState;
+
+  /**
+   * {@link MenuArrow} のプロパティー型です。
+   */
   export type Props = MenuArrowProps;
 }
 
@@ -422,7 +471,14 @@ export const MenuViewport: Component<MenuViewportProps> = function SuiMenuViewpo
  * {@link MenuViewport} の型をまとめた名前空間です。
  */
 export namespace Viewport {
+  /**
+   * {@link MenuViewport} の状態型です。
+   */
   export type State = MenuViewportState;
+
+  /**
+   * {@link MenuViewport} のプロパティー型です。
+   */
   export type Props = MenuViewportProps;
 }
 
@@ -462,7 +518,14 @@ export const MenuItem: Component<MenuItemProps> = function SuiMenuItem(props) {
  * {@link MenuItem} の型をまとめた名前空間です。
  */
 export namespace Item {
+  /**
+   * {@link MenuItem} の状態型です。
+   */
   export type State = MenuItemState;
+
+  /**
+   * {@link MenuItem} のプロパティー型です。
+   */
   export type Props = MenuItemProps;
 }
 
@@ -507,7 +570,14 @@ export const MenuLinkItem: Component<MenuLinkItemProps> = function SuiMenuLinkIt
  * {@link MenuLinkItem} の型をまとめた名前空間です。
  */
 export namespace LinkItem {
+  /**
+   * {@link MenuLinkItem} の状態型です。
+   */
   export type State = MenuLinkItemState;
+
+  /**
+   * {@link MenuLinkItem} のプロパティー型です。
+   */
   export type Props = MenuLinkItemProps;
 }
 
@@ -549,7 +619,14 @@ export const MenuSubmenuRoot: Component<MenuSubmenuRootProps> = function SuiMenu
  * {@link MenuSubmenuRoot} の型をまとめた名前空間です。
  */
 export namespace SubmenuRoot {
+  /**
+   * {@link MenuSubmenuRoot} の状態型です。
+   */
   export type State = MenuSubmenuRootState;
+
+  /**
+   * {@link MenuSubmenuRoot} のプロパティー型です。
+   */
   export type Props = MenuSubmenuRootProps;
 }
 
@@ -595,7 +672,14 @@ export const MenuSubmenuTrigger: Component<MenuSubmenuTriggerProps> =
  * {@link MenuSubmenuTrigger} の型をまとめた名前空間です。
  */
 export namespace SubmenuTrigger {
+  /**
+   * {@link MenuSubmenuTrigger} の状態型です。
+   */
   export type State = MenuSubmenuTriggerState;
+
+  /**
+   * {@link MenuSubmenuTrigger} のプロパティー型です。
+   */
   export type Props = MenuSubmenuTriggerProps;
 }
 
@@ -638,7 +722,14 @@ export const MenuGroup: Component<MenuGroupProps> = function SuiMenuGroup(props)
  * {@link MenuGroup} の型をまとめた名前空間です。
  */
 export namespace Group {
+  /**
+   * {@link MenuGroup} の状態型です。
+   */
   export type State = MenuGroupState;
+
+  /**
+   * {@link MenuGroup} のプロパティー型です。
+   */
   export type Props = MenuGroupProps;
 }
 
@@ -678,7 +769,14 @@ export const MenuGroupLabel: Component<MenuGroupLabelProps> = function SuiMenuGr
  * {@link MenuGroupLabel} の型をまとめた名前空間です。
  */
 export namespace GroupLabel {
+  /**
+   * {@link MenuGroupLabel} の状態型です。
+   */
   export type State = MenuGroupLabelState;
+
+  /**
+   * {@link MenuGroupLabel} のプロパティー型です。
+   */
   export type Props = MenuGroupLabelProps;
 }
 
@@ -721,7 +819,14 @@ export const MenuRadioGroup: Component<MenuRadioGroupProps> = function SuiMenuRa
  * {@link MenuRadioGroup} の型をまとめた名前空間です。
  */
 export namespace RadioGroup {
+  /**
+   * {@link MenuRadioGroup} の状態型です。
+   */
   export type State = MenuRadioGroupState;
+
+  /**
+   * {@link MenuRadioGroup} のプロパティー型です。
+   */
   export type Props = MenuRadioGroupProps;
 }
 
@@ -766,7 +871,14 @@ export const MenuRadioItem: Component<MenuRadioItemProps> = function SuiMenuRadi
  * {@link MenuRadioItem} の型をまとめた名前空間です。
  */
 export namespace RadioItem {
+  /**
+   * {@link MenuRadioItem} の状態型です。
+   */
   export type State = MenuRadioItemState;
+
+  /**
+   * {@link MenuRadioItem} のプロパティー型です。
+   */
   export type Props = MenuRadioItemProps;
 }
 
@@ -813,7 +925,14 @@ export const MenuRadioItemIndicator: Component<MenuRadioItemIndicatorProps> =
  * {@link MenuRadioItemIndicator} の型をまとめた名前空間です。
  */
 export namespace RadioItemIndicator {
+  /**
+   * {@link MenuRadioItemIndicator} の状態型です。
+   */
   export type State = MenuRadioItemIndicatorState;
+
+  /**
+   * {@link MenuRadioItemIndicator} のプロパティー型です。
+   */
   export type Props = MenuRadioItemIndicatorProps;
 }
 
@@ -860,7 +979,14 @@ export const MenuCheckboxItem: Component<MenuCheckboxItemProps> = function SuiMe
  * {@link MenuCheckboxItem} の型をまとめた名前空間です。
  */
 export namespace CheckboxItem {
+  /**
+   * {@link MenuCheckboxItem} の状態型です。
+   */
   export type State = MenuCheckboxItemState;
+
+  /**
+   * {@link MenuCheckboxItem} のプロパティー型です。
+   */
   export type Props = MenuCheckboxItemProps;
 }
 
@@ -909,7 +1035,14 @@ export const MenuCheckboxItemIndicator: Component<MenuCheckboxItemIndicatorProps
  * {@link MenuCheckboxItemIndicator} の型をまとめた名前空間です。
  */
 export namespace CheckboxItemIndicator {
+  /**
+   * {@link MenuCheckboxItemIndicator} の状態型です。
+   */
   export type State = MenuCheckboxItemIndicatorState;
+
+  /**
+   * {@link MenuCheckboxItemIndicator} のプロパティー型です。
+   */
   export type Props = MenuCheckboxItemIndicatorProps;
 }
 
@@ -950,7 +1083,14 @@ export const MenuSeparator: Component<MenuSeparatorProps> = function SuiMenuSepa
  * {@link MenuSeparator} の型をまとめた名前空間です。
  */
 export namespace Separator {
+  /**
+   * {@link MenuSeparator} の状態型です。
+   */
   export type State = MenuSeparatorState;
+
+  /**
+   * {@link MenuSeparator} のプロパティー型です。
+   */
   export type Props = MenuSeparatorProps;
 }
 

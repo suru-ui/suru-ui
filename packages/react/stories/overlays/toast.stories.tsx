@@ -55,7 +55,7 @@ function PartsExample() {
           {toasts.map((toast) => (
             <ToastParts.Root key={toast.id} toast={toast}>
               <ToastParts.Content>
-                <div className="sui_toast_text">
+                <div className="flex flex-col">
                   <ToastParts.Title />
                   <ToastParts.Description />
                 </div>

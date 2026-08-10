@@ -22,7 +22,7 @@ export type FormRootState = Form.State;
  * 既定値は `"onSubmit"` で、{@link FormRoot} の子要素である {@link Field.Root} に指定した値が優先されます。
  * `errors` を変更すると外部から渡したフィールドエラーが更新され、`onFormSubmit` は送信時にフォームの値と詳細を通知します。
  */
-export type FormRootProps<FormValues extends Record<string, any> = Record<string, any>> =
+export type FormRootProps<FormValues extends Record<string, unknown> = Record<string, string>> =
   React.ComponentProps<typeof Form<FormValues>>;
 
 /**
@@ -53,7 +53,7 @@ export const FormRoot: Component<FormRootProps> = function SuiFormRoot(props) {
 };
 
 /**
- * {@link FormRoot} の状態型とプロパティー型をまとめた名前空間です。
+ * {@link FormRoot} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
@@ -66,7 +66,7 @@ export namespace Root {
    *
    * {@link FormRootProps} と同じ型です。
    */
-  export type Props<FormValues extends Record<string, any> = Record<string, any>> =
+  export type Props<FormValues extends Record<string, unknown> = Record<string, string>> =
     FormRootProps<FormValues>;
 }
 

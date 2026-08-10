@@ -337,9 +337,6 @@ export const Outlined = meta.story({
   render(props) {
     return (
       <div className="flex flex-wrap gap-3">
-        <ToggleButton {...props} variant="liquid" outlined>
-          ソリッド
-        </ToggleButton>
         <ToggleButton {...props} variant="naked" outlined>
           ネイキッド
         </ToggleButton>

@@ -1,12 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_resizable {
-    box-sizing: border-box;
-    min-width: 0px;
-    min-height: 0px;
-  }
-
   /* 静的 */
   .sui_resizable {
     display: flex;
@@ -25,25 +18,9 @@
 }
 
 /* Panel */
-@layer sui.component {
-  /* リセット */
-  .sui_resizable_panel {
-    box-sizing: border-box;
-    min-width: 0px;
-    min-height: 0px;
-  }
-}
 
 /* Handle */
 @layer sui.component {
-  /* リセット */
-  .sui_resizable_handle {
-    box-sizing: border-box;
-    outline: none;
-    background-color: transparent;
-    border: 0px;
-  }
-
   .sui_resizable_handle_grip {
     box-sizing: border-box;
     border: 0px;
@@ -109,10 +86,33 @@
     padding: 0px;
   }
 
+  .sui_resizable_handle {
+    height: 100%;
+  }
+
+  .sui_resizable_handle[aria-orientation="horizontal"] {
+    width: 100%;
+  }
+
+  .sui_resizable_handle[aria-orientation="horizontal"] > .sui_resizable_handle_grip {
+    transform: rotate(90deg);
+  }
+
+  .sui_resizable_handle[aria-orientation="vertical"]::after {
+    top: 0px;
+    bottom: 0px;
+    left: 50%;
+  }
+
+  .sui_resizable_handle[aria-orientation="horizontal"]::after {
+    top: 50%;
+    right: 0px;
+    left: 0px;
+  }
+
   /* 動的 */
   .sui_resizable_handle {
     width: var(--sui_resizable_handle-line_size);
-    height: 100%;
     outline: var(--_sui_resizable_handle-outline_width,
                  var(--sui_resizable_handle-outline_width)
                )
@@ -139,26 +139,15 @@
   }
 
   .sui_resizable_handle[aria-orientation="horizontal"] {
-    width: 100%;
     height: var(--sui_resizable_handle-line_size);
   }
 
-  .sui_resizable_handle[aria-orientation="horizontal"] > .sui_resizable_handle_grip {
-    transform: rotate(90deg);
-  }
-
   .sui_resizable_handle[aria-orientation="vertical"]::after {
-    top: 0px;
-    bottom: 0px;
-    left: 50%;
     width: var(--sui_resizable_handle-hit_size);
     transform: translateX(-50%);
   }
 
   .sui_resizable_handle[aria-orientation="horizontal"]::after {
-    top: 50%;
-    right: 0px;
-    left: 0px;
     height: var(--sui_resizable_handle-hit_size);
     transform: translateY(-50%);
   }

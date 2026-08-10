@@ -1,10 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_scroll_area {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_scroll_area {
     position: relative;
@@ -16,11 +11,6 @@
 
 /* Viewport */
 @layer sui.component {
-  /* リセット */
-  .sui_scroll_area_viewport {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_scroll_area_viewport {
     width: 100%;
@@ -37,21 +27,9 @@
 }
 
 /* Content */
-@layer sui.component {
-  /* リセット */
-  .sui_scroll_area_content {
-    box-sizing: border-box;
-    min-width: 100%;
-  }
-}
 
 /* Scrollbar */
 @layer sui.component {
-  /* リセット */
-  .sui_scroll_area_scrollbar {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_scroll_area_scrollbar {
     position: absolute;
@@ -73,8 +51,18 @@
     height: 10px;
   }
 
-  .sui_scroll_area[data-has-overflow-x],
-  .sui_scroll_area[data-has-overflow-y],
+  .sui_scroll_area[data-has-overflow-x] {
+    .sui_scroll_area_scrollbar {
+      opacity: 1;
+    }
+  }
+
+  .sui_scroll_area[data-has-overflow-y] {
+    .sui_scroll_area_scrollbar {
+      opacity: 1;
+    }
+  }
+
   .sui_scroll_area[data-scrolling] {
     .sui_scroll_area_scrollbar {
       opacity: 1;
@@ -90,44 +78,68 @@
 
 /* Thumb */
 @layer sui.component {
-  /* リセット */
-  .sui_scroll_area_thumb {
-    box-sizing: border-box;
-    border: 0px;
+  /* 変数 */
+  .sui_scroll_area {
+    /* 形状 */
+    --sui_scroll_area_thumb-height: ;
+    --sui_scroll_area_thumb-width: ;
+    /* 背景 */
+    --sui_scroll_area_thumb-background_color-normal: ;
+    --sui_scroll_area_thumb-background_color-subtle: ;
   }
 
   /* 静的 */
   .sui_scroll_area_thumb {
     flex: none;
-    background-color: color-mix(in srgb, var(--sui-canvas_text-1) 38%, transparent);
     border-radius: 999px;
     transition: background-color 150ms ease-out;
   }
 
   .sui_scroll_area_thumb[data-orientation="vertical"] {
     width: 100%;
-    height: var(--scroll-area-thumb-height);
   }
 
   .sui_scroll_area_thumb[data-orientation="horizontal"] {
-    width: var(--scroll-area-thumb-width);
     height: 100%;
   }
 
+  /* 動的 */
+  .sui_scroll_area_thumb {
+    background-color: var(--sui_scroll_area_thumb-background_color-normal);
+  }
+
+  .sui_scroll_area_thumb[data-orientation="vertical"] {
+    height: var(--sui_scroll_area_thumb-height);
+  }
+
+  .sui_scroll_area_thumb[data-orientation="horizontal"] {
+    width: var(--sui_scroll_area_thumb-width);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_scroll_area {
+    /* 形状 */
+    --sui_scroll_area_thumb-height: var(--scroll-area-thumb-height);
+    --sui_scroll_area_thumb-width: var(--scroll-area-thumb-width);
+    /* 背景 */
+    --sui_scroll_area_thumb-background_color-normal:
+      color-mix(in srgb, var(--sui-canvas_text-1) 38%, transparent);
+    --sui_scroll_area_thumb-background_color-subtle:
+      color-mix(in srgb, var(--sui-canvas_text-1) 58%, transparent);
+  }
+
+  /* 既定値設定: ここまで */
+
   @media (any-hover: hover) {
     .sui_scroll_area_thumb:hover {
-      background-color: color-mix(in srgb, var(--sui-canvas_text-1) 58%, transparent);
+      background-color: var(--sui_scroll_area_thumb-background_color-subtle);
     }
   }
 }
 
 /* Corner */
 @layer sui.component {
-  /* リセット */
-  .sui_scroll_area_corner {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_scroll_area_corner {
     background-color: transparent;

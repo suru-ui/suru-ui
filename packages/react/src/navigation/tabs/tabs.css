@@ -1,13 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_tabs {
-    box-sizing: border-box;
-    font-family: inherit;
-    font-size: inherit;
-    line-height: 1.1;
-  }
-
   /* 変数 */
   .sui_tabs {
     /* 背景 */
@@ -41,14 +33,8 @@
     --sui_tabs-background_color: var(--sui-canvas-1);
     /* 枠線 */
     --sui_tabs-border_color: transparent;
-    --sui_tabs-border_radius: var(--sui-radius-md);
     --sui_tabs-border_width: 0px;
-  }
-
-  .sui_tabs-outlined {
-    /* 枠線 */
-    --sui_tabs-border_color: var(--sui-grey-naked-border-normal);
-    --sui_tabs-border_width: --sui-border_width(1);
+    --sui_tabs-border_radius: var(--sui-radius-md);
   }
 
   .sui_tabs-radius_none {
@@ -71,16 +57,17 @@
     --sui_tabs-border_radius: var(--sui-radius-lg);
   }
 
+  .sui_tabs-outlined {
+    /* 枠線 */
+    --sui_tabs-border_color: var(--sui-grey-naked-border-normal);
+    --sui_tabs-border_width: --sui-border_width(1);
+  }
+
   /* 既定値設定: ここまで */
 }
 
 /* List */
 @layer sui.component {
-  /* リセット */
-  .sui_tabs_list {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_tabs {
     /* 空白 */
@@ -95,6 +82,10 @@
     position: relative;
     display: flex;
     flex-shrink: 0;
+  }
+
+  /* 動的 */
+  .sui_tabs_list {
     gap: var(--sui_tabs_list-gap);
   }
 
@@ -140,24 +131,13 @@
 
 /* Tab */
 @layer sui.component {
-  /* リセット */
-  .sui_tabs_tab {
-    box-sizing: border-box;
-    padding: 0px;
-    margin: 0px;
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    border: 0px;
-  }
-
   /* 変数 */
   .sui_tabs {
-    /* 形状 */
-    --sui_tabs_tab-border_radius: ;
     /* 空白 */
     --sui_tabs_tab-padding_block: ;
     --sui_tabs_tab-padding_inline: ;
+    /* 枠線 */
+    --sui_tabs_tab-border_radius: ;
     /* 書体 */
     --sui_tabs_tab-font_size: ;
     --sui_tabs_tab-font_weight: ;
@@ -285,11 +265,11 @@
       /* 背景 */
       --_sui_tabs_tab-background_color: var(--sui_tabs_tab-background_color-action);
     }
-  }
 
-  .sui_tabs_tab:focus-visible {
-    /* 枠線 */
-    --_sui_tabs_tab-outline_width: var(--sui-focusring_width);
+    &:focus-visible {
+      /* 枠線 */
+      --_sui_tabs_tab-outline_width: var(--sui-focusring_width);
+    }
   }
 
   /* 上書き設定: ここまで */
@@ -297,13 +277,8 @@
 
 /* Indicator */
 @layer sui.component {
-  /* リセット */
-  .sui_tabs_indicator {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
-  .sui_tabs_indicator {
+  .sui_tabs {
     /* 形状 */
     --sui_tabs_indicator-size: ;
     --sui_tabs_indicator-active_height: ;
@@ -349,7 +324,7 @@
 
   /* 既定値設定: ここから */
 
-  .sui_tabs_indicator {
+  .sui_tabs {
     /* 形状 */
     --sui_tabs_indicator-size: --sui-border_width(2);
     --sui_tabs_indicator-active_height: var(--active-tab-height, 0px);
@@ -370,12 +345,6 @@
 
 /* Panel */
 @layer sui.component {
-  /* リセット */
-  .sui_tabs_panel {
-    box-sizing: border-box;
-    margin: 0px;
-  }
-
   /* 変数 */
   .sui_tabs {
     /* 空白 */

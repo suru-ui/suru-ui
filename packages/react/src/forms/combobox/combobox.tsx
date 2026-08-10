@@ -40,23 +40,23 @@ export type ComboboxProps<Value = unknown, Multiple extends boolean | undefined 
    */
   slotProps?:
     | {
-        readonly label?: ComboboxParts.Label.Props | undefined;
-        readonly value?: ComboboxParts.Value.Props | undefined;
+        readonly chip?: ComboboxParts.Chip.Props | undefined;
+        readonly chipRemove?: ComboboxParts.ChipRemove.Props | undefined;
+        readonly chips?: ComboboxParts.Chips.Props | undefined;
         readonly clear?: ComboboxParts.Clear.Props | undefined;
+        readonly empty?: ComboboxParts.Empty.Props | undefined;
         readonly icon?: ComboboxParts.Icon.Props | undefined;
         readonly input?: ComboboxParts.Input.Props | undefined;
         readonly inputGroup?: ComboboxParts.InputGroup.Props | undefined;
-        readonly trigger?: ComboboxParts.Trigger.Props | undefined;
-        readonly chips?: ComboboxParts.Chips.Props | undefined;
-        readonly chip?: ComboboxParts.Chip.Props | undefined;
-        readonly chipRemove?: ComboboxParts.ChipRemove.Props | undefined;
         readonly item?: ComboboxParts.Item.Props | undefined;
         readonly itemIndicator?: ComboboxParts.ItemIndicator.Props | undefined;
-        readonly empty?: ComboboxParts.Empty.Props | undefined;
+        readonly label?: ComboboxParts.Label.Props | undefined;
         readonly list?: ComboboxParts.List.Props | undefined;
+        readonly popup?: ComboboxParts.Popup.Props | undefined;
         readonly portal?: ComboboxParts.Portal.Props | undefined;
         readonly positioner?: ComboboxParts.Positioner.Props | undefined;
-        readonly popup?: ComboboxParts.Popup.Props | undefined;
+        readonly trigger?: ComboboxParts.Trigger.Props | undefined;
+        readonly value?: ComboboxParts.Value.Props | undefined;
       }
     | undefined;
 };
@@ -103,32 +103,32 @@ export const Combobox: ComboboxComponent = function SuiCombobox<
   Multiple extends boolean | undefined = false,
 >(props: ComboboxProps<Value, Multiple>) {
   const {
-    children,
-    className,
     label,
+    children,
     multiple: multipleProp,
-    placeholder,
+    className,
     slotProps: {
-      label: labelProps,
-      value: valueProps,
-      clear: clearProps,
-      icon: iconProps,
-      input: inputProps,
-      inputGroup: inputGroupProps,
-      trigger: triggerProps,
-      chips: chipsProps,
       chip: chipProps,
-      chipRemove: chipRemoveProps,
+      icon: iconProps,
       item: itemProps,
-      itemIndicator: itemIndicatorProps,
-      empty: emptyProps,
       list: listProps,
-      portal: portalProps,
-      positioner: positionerProps,
+      chips: chipsProps,
+      clear: clearProps,
+      empty: emptyProps,
+      input: inputProps,
+      label: labelProps,
       popup: popupProps,
+      value: valueProps,
+      portal: portalProps,
+      trigger: triggerProps,
+      chipRemove: chipRemoveProps,
+      inputGroup: inputGroupProps,
+      positioner: positionerProps,
+      itemIndicator: itemIndicatorProps,
     } = {},
-    openOnInputClick = true,
+    placeholder,
     autoHighlight = true,
+    openOnInputClick = true,
     ...rootProps
   } = props;
   const {
@@ -139,8 +139,8 @@ export const Combobox: ComboboxComponent = function SuiCombobox<
   const { children: iconChildren = <SuiChevronIcon />, ...restIconProps } = iconProps ?? {};
   const { "aria-label": triggerAriaLabel, ...restTriggerProps } = triggerProps ?? {};
   const {
-    align = "start",
     side = "bottom",
+    align = "start",
     sideOffset = 8,
     ...restPositionerProps
   } = positionerProps ?? {};
@@ -189,9 +189,7 @@ export const Combobox: ComboboxComponent = function SuiCombobox<
     };
   }, [children, indicatorChildren, itemProps, restIndicatorProps, rootProps.itemToStringLabel]);
 
-  const input = (
-    <ComboboxParts.Input {...inputProps} placeholder={placeholder ?? inputProps?.placeholder} />
-  );
+  const input = <ComboboxParts.Input placeholder={placeholder} {...inputProps} />;
 
   return (
     <ComboboxParts.Root

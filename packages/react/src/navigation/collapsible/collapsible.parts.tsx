@@ -82,7 +82,14 @@ export const CollapsibleRoot: Component<CollapsibleRootProps> = function SuiColl
 };
 
 export namespace Root {
+  /**
+   * {@link CollapsibleRoot} の状態型です。
+   */
   export type State = CollapsibleRootState;
+
+  /**
+   * {@link CollapsibleRoot} のプロパティー型です。
+   */
   export type Props = CollapsibleRootProps;
 }
 
@@ -138,7 +145,14 @@ export const CollapsibleTrigger: Component<CollapsibleTriggerProps> =
   };
 
 export namespace Trigger {
+  /**
+   * {@link CollapsibleTrigger} の状態型です。
+   */
   export type State = CollapsibleTriggerState;
+
+  /**
+   * {@link CollapsibleTrigger} のプロパティー型です。
+   */
   export type Props = CollapsibleTriggerProps;
 }
 
@@ -186,7 +200,14 @@ export const CollapsibleIndicator: Component<CollapsibleIndicatorProps> =
   };
 
 export namespace Indicator {
+  /**
+   * {@link CollapsibleIndicator} の状態型です。
+   */
   export type State = CollapsibleIndicatorState;
+
+  /**
+   * {@link CollapsibleIndicator} のプロパティー型です。
+   */
   export type Props = CollapsibleIndicatorProps;
 }
 
@@ -222,7 +243,14 @@ export const CollapsiblePanel: Component<CollapsiblePanelProps> = function SuiCo
 };
 
 export namespace Panel {
+  /**
+   * {@link CollapsiblePanel} の状態型です。
+   */
   export type State = CollapsiblePanelState;
+
+  /**
+   * {@link CollapsiblePanel} のプロパティー型です。
+   */
   export type Props = CollapsiblePanelProps;
 }
 

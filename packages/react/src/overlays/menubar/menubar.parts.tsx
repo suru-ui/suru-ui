@@ -54,7 +54,14 @@ export const MenubarRoot: Component<MenubarRootProps> = function SuiMenubarRoot(
  * {@link MenubarRoot} の型をまとめた名前空間です。
  */
 export namespace Root {
+  /**
+   * {@link MenubarRoot} の状態型です。
+   */
   export type State = MenubarRootState;
+
+  /**
+   * {@link MenubarRoot} のプロパティー型です。
+   */
   export type Props = MenubarRootProps;
 }
 

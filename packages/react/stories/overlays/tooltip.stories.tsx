@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
-import { Button } from "../../src/buttons/button/index.jsx";
+import { Button } from "../../src/buttons/button/index.js";
 import { Tooltip } from "../../src/overlays/tooltip/index.js";
 import * as TooltipParts from "../../src/overlays/tooltip/index.js";
 

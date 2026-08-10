@@ -42,7 +42,9 @@ export const Usage = meta.story({
 
 export const Vertical = meta.story({
   name: "縦方向",
-  ...ctrl({ direction: "vertical" }),
+  ...ctrl({
+    direction: "vertical",
+  }),
   render(props) {
     return (
       <Resizable

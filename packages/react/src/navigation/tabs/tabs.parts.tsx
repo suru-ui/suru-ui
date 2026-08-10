@@ -11,12 +11,12 @@ import "./tabs.css";
 // ----
 
 /**
- * {@link Root} の状態です。
+ * {@link TabsRoot} の状態です。
  */
 export type TabsRootState = BaseTabs.Root.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link TabsRoot} に渡すプロパティーです。
  */
 export type TabsRootProps = React.ComponentProps<typeof BaseTabs.Root> & {
   /**
@@ -90,7 +90,7 @@ export const TabsRoot: Component<TabsRootProps> = function SuiTabsRoot(props) {
 };
 
 /**
- * {@link TabsRoot} の型をまとめた名前空間です。
+ * {@link TabsRoot} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
@@ -140,7 +140,7 @@ export const TabsList: Component<TabsListProps> = function SuiTabsList(props) {
 };
 
 /**
- * {@link TabsList} の型をまとめた名前空間です。
+ * {@link TabsList} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace List {
   /**
@@ -187,7 +187,7 @@ export const TabsTab: Component<TabsTabProps> = function SuiTabsTab(props) {
 };
 
 /**
- * {@link TabsTab} の型をまとめた名前空間です。
+ * {@link TabsTab} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Tab {
   /**
@@ -210,12 +210,12 @@ export const Tab: Component<Tab.Props> = TabsTab;
 // ---------
 
 /**
- * {@link Indicator} の状態です。
+ * {@link TabsIndicator} の状態です。
  */
 export type TabsIndicatorState = BaseTabs.Indicator.State;
 
 /**
- * {@link Indicator} に渡すプロパティーです。
+ * {@link TabsIndicator} に渡すプロパティーです。
  */
 export type TabsIndicatorProps = React.ComponentProps<typeof BaseTabs.Indicator>;
 
@@ -239,7 +239,7 @@ export const TabsIndicator: Component<TabsIndicatorProps> = function SuiTabsIndi
 };
 
 /**
- * {@link TabsIndicator} の型をまとめた名前空間です。
+ * {@link TabsIndicator} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Indicator {
   /**
@@ -262,12 +262,12 @@ export const Indicator: Component<Indicator.Props> = TabsIndicator;
 // -----
 
 /**
- * {@link Panel} の状態です。
+ * {@link TabsPanel} の状態です。
  */
 export type TabsPanelState = BaseTabs.Panel.State;
 
 /**
- * {@link Panel} に渡すプロパティーです。
+ * {@link TabsPanel} に渡すプロパティーです。
  */
 export type TabsPanelProps = React.ComponentProps<typeof BaseTabs.Panel>;
 
@@ -286,7 +286,7 @@ export const TabsPanel: Component<TabsPanelProps> = function SuiTabsPanel(props)
 };
 
 /**
- * {@link TabsPanel} の型をまとめた名前空間です。
+ * {@link TabsPanel} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Panel {
   /**

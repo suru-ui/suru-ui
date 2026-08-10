@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>レポート 4: Storybook ストーリーの不統一 — Suru UI コーディングスタイル検査</title>
+<style>
+  :root {
+    --bg: #fafafa; --card: #ffffff; --fg: #1c1c1e; --muted: #6e6e73;
+    --accent: #0a58ca; --accent-weak: #e8f0fe; --accent-strong: #0b3f96; --border: #e3e3e8;
+    --red-bg: #fdecec; --red-fg: #b4232a; --red-border: #f3c0c3;
+    --warn-bg: #fff8e6; --warn-border: #f0d48a; --code-bg: #f2f2f5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16161a; --card: #202024; --fg: #e8e8ec; --muted: #9a9aa2;
+      --accent: #7ab4ff; --accent-weak: #1b2a3d; --accent-strong: #9dc4ff; --border: #34343a;
+      --red-bg: #3a2226; --red-fg: #ff8d92; --red-border: #5a3338;
+      --warn-bg: #332b18; --warn-border: #7a6526; --code-bg: #2a2a30;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font-family: system-ui, -apple-system, "Segoe UI", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; line-height: 1.7; }
+  header { background: var(--card); border-bottom: 1px solid var(--border); padding: 1.5rem 0; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem; }
+  h1 { font-size: 1.5rem; margin: 0.25rem 0 0.5rem; }
+  h2 { font-size: 1.2rem; margin: 2.5rem 0 0.5rem; border-left: 4px solid var(--accent); padding-left: 0.6rem; }
+  h3 { font-size: 1.05rem; margin: 1.75rem 0 0.5rem; }
+  .meta { color: var(--muted); font-size: 0.9rem; margin: 0; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  table { width: 100%; border-collapse: collapse; margin: 0.5rem 0 1rem; font-size: 0.875rem; }
+  th, td { text-align: left; padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { background: var(--accent-weak); color: var(--accent-strong); font-weight: 600; white-space: nowrap; }
+  td.line { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.8rem; white-space: nowrap; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.875rem; background: var(--code-bg); border-radius: 4px; padding: 0.05em 0.3em; }
+  .cat { display: inline-block; background: var(--accent-weak); color: var(--accent-strong); border-radius: 4px; font-size: 0.75rem; font-weight: 600; padding: 0 0.45em; white-space: nowrap; }
+  .cat.sev { background: var(--red-bg); color: var(--red-fg); }
+  .note { background: var(--warn-bg); border: 1px solid var(--warn-border); border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.9rem; margin: 0.5rem 0 1.5rem; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 0.75rem 0 1.5rem; }
+  .stat { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 0.9rem 1.1rem; }
+  .stat b { font-size: 1.6rem; color: var(--red-fg); }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <p class="meta"><a href="index.html">検査レポート一覧に戻る</a></p>
+    <h1>レポート 4: Storybook ストーリーの不統一</h1>
+    <p class="meta">対象: <code>packages/react/stories/**/*.stories.tsx</code>（基準の <code>buttons/button.stories.tsx</code> を含む 37 ファイル）&nbsp;&nbsp;/&nbsp;&nbsp;基準: <code>.opencode/skills/new-component/SKILL.md</code> の Step 7 と <code>button.stories.tsx</code></p>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+
+    <h2>概要</h2>
+    <div class="grid">
+      <div class="stat">検出件数<br><b>34</b></div>
+      <div class="stat">違反のあるファイル<br><b>22 / 37</b></div>
+    </div>
+    <p>ストーリーの問題は 3 系統に分かれます。<code>outlined: undefined</code> などの args の既定値表記が forms の 10 ファイルに及ぶ点（15 件）、Sizes/Radius の候補ラベル欠落が 8 ファイルに及ぶ点（8 件）、公開プロパティーに対応するバリエーション story の不足（4 件）が主です。</p>
+    <p>違反のなかったファイルは 15 ファイル（button、button-group、toggle-button-group、avatar、avatar-group、field、fieldset、form、accordion、collapsible、scroll-area、context-menu、dialog、drawer、menu、menubar など）です。</p>
+
+    <h2>カテゴリー別の件数</h2>
+    <table>
+      <thead><tr><th>カテゴリー</th><th class="num">件数</th><th class="num">ファイル数</th></tr></thead>
+      <tbody>
+        <tr><td>buttons</td><td class="num">1</td><td class="num">1 / 4</td></tr>
+        <tr><td>data-display</td><td class="num">5</td><td class="num">4 / 6</td></tr>
+        <tr><td>forms</td><td class="num">23</td><td class="num">12 / 14</td></tr>
+        <tr><td>layout</td><td class="num">1</td><td class="num">1 / 1</td></tr>
+        <tr><td>navigation</td><td class="num">1</td><td class="num">1 / 4</td></tr>
+        <tr><td>overlays</td><td class="num">3</td><td class="num">3 / 8</td></tr>
+        <tr><td><strong>合計</strong></td><td class="num"><strong>34</strong></td><td class="num"><strong>22 / 37</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      <p><code>outlined: undefined</code> の記述は「既定値 false の明示」を意図した可能性がありますが、他ファイル（例えば button 系）は <code>outlined: false</code> と明示しているため、表記を統一するのが望ましいです。</p>
+    </div>
+
+    <h2>buttons</h2>
+    <table>
+      <thead><tr><th>ファイル:行</th><th>分類</th><th>問題の説明</th><th>規約どおりの書き方</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="line">toggle-button.stories.tsx:340-348</td><td><span class="cat sev">args の誤り</span></td>
+          <td>Outlined で「ソリッド」ラベルのボタンが <code>variant="liquid"</code>（3 番目の「リキッド」と重複。ToggleButton は solid 非対応のため誤写とみられる）</td>
+          <td>naked / liquid の 2 種類にし、ラベルと variant を一致させる</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>data-display</h2>
+    <table>
+      <thead><tr><th>ファイル:行</th><th>分類</th><th>問題の説明</th><th>規約どおりの書き方</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="line">alert.stories.tsx:241</td><td><span class="cat">命名</span></td>
+          <td>Sizes story の name が「サイズ」</td>
+          <td>基準と同じ「大きさ」に揃える</td>
+        </tr>
+        <tr>
+          <td class="line">alert.stories.tsx:51, 62</td><td><span class="cat">args</span></td>
+          <td>args に <code>radius: undefined</code></td>
+          <td><code>radius: "md"</code> など、既定値・明示値を記述する</td>
+        </tr>
+        <tr>
+          <td class="line">chip.stories.tsx:163</td><td><span class="cat">命名</span></td>
+          <td>Sizes story の name が「サイズ」</td>
+          <td>基準と同じ「大きさ」に揃える</td>
+        </tr>
+        <tr>
+          <td class="line">meter.stories.tsx:138-180</td><td><span class="cat">ラベル欠落</span></td>
+          <td>Sizes / Radius story に各候補のラベルがない（Colors のみラベルあり）</td>
+          <td><code>size</code>/<code>radius</code> の値が分かるラベルを表示する</td>
+        </tr>
+        <tr>
+          <td class="line">progress.stories.tsx:149-191</td><td><span class="cat">ラベル欠落</span></td>
+          <td>Sizes / Radius story に各候補のラベルがない</td>
+          <td>値が分かるラベルを表示する</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>forms</h2>
+    <table>
+      <thead><tr><th>ファイル:行</th><th>分類</th><th>問題の説明</th><th>規約どおりの書き方</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="line">autocomplete.stories.tsx:132-172</td><td><span class="cat">ラベル欠落</span></td>
+          <td>Sizes / Radius story に各候補のラベルがない</td>
+          <td>値が分かるラベルを表示する</td>
+        </tr>
+        <tr>
+          <td class="line">autocomplete.stories.tsx:55, 76, 117, 138, 159, 181, 201, 233, 249</td><td><span class="cat">args</span></td>
+          <td>args に <code>outlined: undefined</code></td>
+          <td><code>outlined: false</code> と明示する</td>
+        </tr>
+        <tr>
+          <td class="line">checkbox.stories.tsx:47, 68, 125, 150, 181, 217, 247, 273, 297</td><td><span class="cat">args</span></td>
+          <td>args に <code>outlined: undefined</code>（9 箇所）</td>
+          <td><code>outlined: false</code> と明示する</td>
+        </tr>
+        <tr>
+          <td class="line">checkbox-group.stories.tsx:31-34</td><td><span class="cat sev">story 不足</span></td>
+          <td><code>radius</code> を公開（ctrl にも定義）しているのに Radius story がない</td>
+          <td>"none"/"rounded"/"full" を列挙した Radius story を追加する</td>
+        </tr>
+        <tr>
+          <td class="line">checkbox-group.stories.tsx:61, 85, 121, 144, 176, 196</td><td><span class="cat">args</span></td>
+          <td>args に <code>outlined: undefined</code></td>
+          <td><code>outlined: false</code> と明示する</td>
+        </tr>
+        <tr>
+          <td class="line">combobox.stories.tsx:31-34</td><td><span class="cat sev">story 不足</span></td>
+          <td><code>radius</code> を公開しているのに Radius story がない</td>
+          <td>Radius story を追加する</td>
+        </tr>
+        <tr>
+          <td class="line">combobox.stories.tsx:139-150</td><td><span class="cat">ラベル欠落</span></td>
+          <td>Sizes story に各候補（sm/md/lg）のラベルがない</td>
+          <td>各候補の値が分かるラベルを表示する</td>
+        </tr>
+        <tr>
+          <td class="line">combobox.stories.tsx:88, 104, 139, 152, 165</td><td><span class="cat sev">controls</span></td>
+          <td>Multiple / Grouped / Sizes / AccentColors / Disabled に <code>...ctrl(...)</code> がなく controls が効かない</td>
+          <td><code>...ctrl({ ... })</code> を展開して主要プロパティーを操作可能にする</td>
+        </tr>
+        <tr>
+          <td class="line">combobox.stories.tsx:56, 73, 129</td><td><span class="cat">args</span></td>
+          <td>args に <code>outlined: undefined</code></td>
+          <td><code>outlined: false</code> と明示する</td>
+        </tr>
+        <tr>
+          <td class="line">input.stories.tsx:125-165</td><td><span class="cat">ラベル欠落</span></td>
+          <td>Sizes / Radius story に各候補のラベルがない</td>
+          <td>値が分かるラベルを表示する</td>
+        </tr>
+        <tr>
+          <td class="line">input.stories.tsx:50, 70, 110, 131, 152, 174, 190, 213, 244</td><td><span class="cat">args</span></td>
+          <td>args に <code>outlined: undefined</code></td>
+          <td><code>outlined: false</code> と明示する</td>
+        </tr>
+        <tr>
+          <td class="line">number-field.stories.tsx:127-165</td><td><span class="cat">ラベル欠落</span></td>
+          <td>Sizes / Radius story に各候補のラベルがない</td>
+          <td>値が分かるラベルを表示する</td>
+        </tr>
+        <tr>
+          <td class="line">number-field.stories.tsx:55, 69, 107, 133, 153, 174, 194, 218, 240, 263</td><td><span class="cat">args</span></td>
+          <td>args に <code>outlined: undefined</code></td>
+          <td><code>outlined: false</code> と明示する</td>
+        </tr>
+        <tr>
+          <td class="line">radio.stories.tsx:1</td><td><span class="cat sev">import</span></td>
+          <td>Base UI の <code>RadioGroup</code> を <code>@base-ui/react</code> から直接 import して使用</td>
+          <td>Suru UI の <code>RadioGroup</code>（<code>../../src/forms/radio-group/index.js</code>）を使う</td>
+        </tr>
+        <tr>
+          <td class="line">radio.stories.tsx:202-226</td><td><span class="cat sev">デッドコード</span></td>
+          <td>コメントアウトされた Checked story が残っている</td>
+          <td>不要ならコメントごと削除する</td>
+        </tr>
+        <tr>
+          <td class="line">radio.stories.tsx:47, 73, 124, 148, 178, 235, 264</td><td><span class="cat">args</span></td>
+          <td>args に <code>outlined: undefined</code></td>
+          <td><code>outlined: false</code> と明示する</td>
+        </tr>
+        <tr>
+          <td class="line">radio-group.stories.tsx:30-33</td><td><span class="cat sev">story 不足</span></td>
+          <td><code>radius</code> を公開しているのに Radius story がない</td>
+          <td>Radius story を追加する</td>
+        </tr>
+        <tr>
+          <td class="line">radio-group.stories.tsx:58, 79, 110, 134, 154</td><td><span class="cat">args</span></td>
+          <td>args に <code>outlined: undefined</code></td>
+          <td><code>outlined: false</code> と明示する</td>
+        </tr>
+        <tr>
+          <td class="line">select.stories.tsx:89-100</td><td><span class="cat">ラベル欠落</span></td>
+          <td>Radius story に各候補のラベルがない（Sizes は <code>label={size}</code> であり）</td>
+          <td>Radius にも候補ラベルを表示する</td>
+        </tr>
+        <tr>
+          <td class="line">select.stories.tsx:76, 89, 102, 120, 137, 150</td><td><span class="cat sev">controls</span></td>
+          <td>Sizes / Radius / Multiple / Grouped / ManyItems / Disabled に <code>...ctrl(...)</code> がない</td>
+          <td><code>...ctrl({ ... })</code> を展開する</td>
+        </tr>
+        <tr>
+          <td class="line">select.stories.tsx:47, 62</td><td><span class="cat">args</span></td>
+          <td>args に <code>outlined: undefined</code></td>
+          <td><code>outlined: false</code> と明示する</td>
+        </tr>
+        <tr>
+          <td class="line">slider.stories.tsx:115-153</td><td><span class="cat">ラベル欠落</span></td>
+          <td>Sizes / Radius story に各候補のラベルがない</td>
+          <td>値が分かるラベルを表示する</td>
+        </tr>
+        <tr>
+          <td class="line">switch.stories.tsx:46, 65, 114, 137, 166, 196, 222, 246</td><td><span class="cat">args</span></td>
+          <td>args に <code>outlined: undefined</code></td>
+          <td><code>outlined: false</code> と明示する</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>layout・navigation</h2>
+    <table>
+      <thead><tr><th>ファイル:行</th><th>分類</th><th>問題の説明</th><th>規約どおりの書き方</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="line">resizable.stories.tsx:45</td><td><span class="cat">controls</span></td>
+          <td><code>...ctrl({ direction: "vertical" })</code> が 1 行詰め</td>
+          <td>基準どおり常に複数行で記述する</td>
+        </tr>
+        <tr>
+          <td class="line">tabs.stories.tsx:23-30</td><td><span class="cat sev">story 不足</span></td>
+          <td><code>radius</code>/<code>size</code> を公開（ctrl にも定義）しているのに Radius / Sizes story がない</td>
+          <td>両 story を追加する（radius は "none"/"sm"/"md"/"lg"）</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>overlays</h2>
+    <table>
+      <thead><tr><th>ファイル:行</th><th>分類</th><th>問題の説明</th><th>規約どおりの書き方</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="line">alert-dialog.stories.tsx:92</td><td><span class="cat sev">内部クラスの使用</span></td>
+          <td>story 内で内部クラス <code>sui_alert_dialog_trigger</code> を直接使用（dialog.stories の同等 story は <code>&lt;Button&gt;</code> を使用）</td>
+          <td><code>&lt;Button onClick={...}&gt;開く&lt;/Button&gt;</code> を使う</td>
+        </tr>
+        <tr>
+          <td class="line">toast.stories.tsx:58</td><td><span class="cat sev">内部クラスの使用</span></td>
+          <td>story 内で内部クラス <code>sui_toast_text</code> を直接使用</td>
+          <td>UnoCSS のユーティリティークラス（<code>flex flex-col</code> など）で組み立てる</td>
+        </tr>
+        <tr>
+          <td class="line">tooltip.stories.tsx:4</td><td><span class="cat">import</span></td>
+          <td>Button の import が <code>index.jsx</code>（コンパイル後は <code>.js</code>）</td>
+          <td><code>import { Button } from "../../src/buttons/button/index.js";</code> にする</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</main>
+</body>
+</html>

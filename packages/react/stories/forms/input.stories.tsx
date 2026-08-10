@@ -136,7 +136,10 @@ export const Sizes = meta.story({
     return (
       <div className="flex flex-col gap-3">
         {SIZES.map((size) => (
-          <Input key={size} {...props} size={size} className="w-64" />
+          <div key={size}>
+            <Input {...props} size={size} className="w-64" />
+            <div>{size}</div>
+          </div>
         ))}
       </div>
     );
@@ -156,9 +159,12 @@ export const Radius = meta.story({
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <Input {...props} radius="none" className="w-64" />
-        <Input {...props} radius="rounded" className="w-64" />
-        <Input {...props} radius="full" className="w-64" />
+        {(["none", "rounded", "full"] as const).map((radius) => (
+          <div key={radius}>
+            <Input {...props} radius={radius} className="w-64" />
+            <div>{radius}</div>
+          </div>
+        ))}
       </div>
     );
   },

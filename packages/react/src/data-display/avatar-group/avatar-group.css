@@ -1,10 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_avatar_group {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_avatar_group {
     /* 空白 */

@@ -12,7 +12,7 @@ import { useToggleButtonGroupContext } from "../toggle-button-group/toggle-butto
 // -------
 
 /**
- * {@link Button.Context} が提供するトグルボタンの値です。
+ * {@link ToggleButtonRoot} が子パーツへ提供する状態です。
  */
 export type ToggleButtonContext = Button.Context;
 
@@ -46,17 +46,17 @@ export function useToggleButtonContext(optional?: boolean): ToggleButtonContext 
 }
 
 /**
- * {@link ToggleButtonContext} のエイリアスです。
+ * {@link ToggleButtonContext} の別名です。
  */
 export type Context = ToggleButtonContext;
 
 /**
- * {@link ToggleButtonContext} のエイリアスです。
+ * {@link ToggleButtonContext} の別名です。
  */
 export const Context: React.Context<ToggleButtonContext | null> = ToggleButtonContext;
 
 /**
- * {@link useToggleButtonContext} のエイリアスです。
+ * {@link useToggleButtonContext} の別名です。
  *
  * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
  *
@@ -72,12 +72,12 @@ export function useContext(optional?: boolean): ToggleButtonContext | null {
 // ----
 
 /**
- * {@link Root} の状態です。
+ * {@link ToggleButtonRoot} の状態です。
  */
 export type ToggleButtonRootState = Toggle.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link ToggleButtonRoot} に渡すプロパティーです。
  */
 export type ToggleButtonRootProps = React.ComponentProps<typeof Toggle> & {
   /**
@@ -309,7 +309,7 @@ export const Pending: Component<Pending.Props> = ToggleButtonPending;
 // -----------------------
 
 /**
- * {@link CircularProgressContext} の値です。
+ * {@link ToggleButtonCircularProgress} が子パーツへ提供する状態です。
  */
 export type ToggleButtonCircularProgressContext = Button.CircularProgressContext;
 
@@ -340,17 +340,17 @@ export function useToggleButtonCircularProgressContext(
 }
 
 /**
- * {@link ToggleButtonCircularProgressContext} のエイリアスです。
+ * {@link ToggleButtonCircularProgressContext} の別名です。
  */
 export type CircularProgressContext = ToggleButtonCircularProgressContext;
 
 /**
- * {@link ToggleButtonCircularProgressContext} のエイリアスです。
+ * {@link ToggleButtonCircularProgressContext} の別名です。
  */
 export const CircularProgressContext = ToggleButtonCircularProgressContext;
 
 /**
- * {@link useToggleButtonCircularProgressContext} のエイリアスです。
+ * {@link useToggleButtonCircularProgressContext} の別名です。
  *
  * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
  *

@@ -1,13 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_accordion {
-    box-sizing: border-box;
-    font-family: inherit;
-    font-size: inherit;
-    line-height: 1.1;
-  }
-
   /* 変数 */
   .sui_accordion {
     /* 背景 */
@@ -39,14 +31,8 @@
     /* 背景 */
     --sui_accordion-background_color: var(--sui-canvas-1);
     /* 枠線 */
-    --sui_accordion-border_radius: var(--sui-radius-md);
     --sui_accordion-border_width: 0px;
-  }
-
-  .sui_accordion-outlined {
-    /* 枠線 */
-    --sui_accordion-border_color: var(--sui-grey-naked-border-normal);
-    --sui_accordion-border_width: --sui-border_width(1);
+    --sui_accordion-border_radius: var(--sui-radius-md);
   }
 
   .sui_accordion-radius_none {
@@ -69,17 +55,17 @@
     --sui_accordion-border_radius: var(--sui-radius-lg);
   }
 
+  .sui_accordion-outlined {
+    /* 枠線 */
+    --sui_accordion-border_color: var(--sui-grey-naked-border-normal);
+    --sui_accordion-border_width: --sui-border_width(1);
+  }
+
   /* 既定値設定: ここまで */
 }
 
 /* Item */
 @layer sui.component {
-  /* リセット */
-  .sui_accordion_item {
-    box-sizing: border-box;
-    border-radius: inherit;
-  }
-
   /* 変数 */
   .sui_accordion {
     /* 枠線 */
@@ -99,6 +85,7 @@
   .sui_accordion {
     /* 枠線 */
     --sui_accordion_item-border_color: var(--sui-grey-naked-border-normal);
+    --sui_accordion_item-border_width: 0px;
   }
 
   /* 既定値設定: ここまで */
@@ -114,29 +101,9 @@
 }
 
 /* Header */
-@layer sui.component {
-  /* リセット */
-  .sui_accordion_header {
-    box-sizing: border-box;
-    margin: 0px;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: inherit;
-  }
-}
 
 /* Trigger */
 @layer sui.component {
-  /* リセット */
-  .sui_accordion_trigger {
-    box-sizing: border-box;
-    margin: 0px;
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    border: 0px;
-  }
-
   /* 変数 */
   .sui_accordion {
     /* 空白 */
@@ -272,11 +239,6 @@
 
 /* Indicator */
 @layer sui.component {
-  /* リセット */
-  .sui_accordion_indicator {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_accordion {
     /* 形状 */
@@ -330,11 +292,6 @@
 
 /* Panel */
 @layer sui.component {
-  /* リセット */
-  .sui_accordion_panel {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_accordion {
     /* 形状 */

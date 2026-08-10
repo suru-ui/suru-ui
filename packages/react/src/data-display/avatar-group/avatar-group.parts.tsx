@@ -44,7 +44,13 @@ export const AvatarGroupRoot: Component<AvatarGroupRootProps> = function SuiAvat
 };
 
 export namespace Root {
+  /**
+   * {@link AvatarGroupRoot} の状態型です。
+   */
   export type State = AvatarGroupRootState;
+  /**
+   * {@link AvatarGroupRoot} のプロパティー型です。
+   */
   export type Props = AvatarGroupRootProps;
 }
 

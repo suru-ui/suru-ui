@@ -210,3 +210,26 @@ export const Horizontal = meta.story({
     );
   },
 });
+
+export const Radius = meta.story({
+  name: "角丸",
+  ...ctrl({
+    variant: "naked",
+    color: "grey",
+    size: "md",
+    outlined: false,
+    disabled: false,
+    orientation: "vertical",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        {(["none", "rounded", "full"] as const).map((radius) => (
+          <CheckboxGroup key={radius} defaultValue={[radius]} {...props} radius={radius}>
+            <Item value={radius}>{radius}</Item>
+          </CheckboxGroup>
+        ))}
+      </div>
+    );
+  },
+});

@@ -16,12 +16,12 @@ import "./accordion.css";
 // ----
 
 /**
- * {@link Root} の状態です。
+ * {@link AccordionRoot} の状態です。
  */
 export type AccordionRootState = Accordion.Root.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link AccordionRoot} に渡すプロパティーです。
  */
 export type AccordionRootProps = React.ComponentProps<typeof Accordion.Root> & {
   /**
@@ -103,16 +103,16 @@ export const AccordionRoot: Component<AccordionRootProps> = function SuiAccordio
 };
 
 /**
- * {@link AccordionRoot} に対応する型名前空間です。
+ * {@link AccordionRoot} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
-   * {@link Root} の状態です。
+   * {@link AccordionRoot} の状態型です。
    */
   export type State = AccordionRootState;
 
   /**
-   * {@link Root} に渡すプロパティーです。
+   * {@link AccordionRoot} のプロパティー型です。
    */
   export type Props = AccordionRootProps;
 }
@@ -126,12 +126,12 @@ export const Root: Component<Root.Props> = AccordionRoot;
 // ----
 
 /**
- * {@link Item} の状態です。
+  * {@link AccordionItem} の状態型です。
  */
 export type AccordionItemState = Accordion.Item.State;
 
 /**
- * {@link Item} に渡すプロパティーです。
+  * {@link AccordionItem} のプロパティー型です。
  */
 export type AccordionItemProps = React.ComponentProps<typeof Accordion.Item>;
 
@@ -155,16 +155,16 @@ export const AccordionItem: Component<AccordionItemProps> = function SuiAccordio
 };
 
 /**
- * {@link AccordionItem} に対応する型名前空間です。
+ * {@link AccordionItem} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Item {
   /**
-   * {@link Item} の状態です。
+   * {@link AccordionItem} の状態型です。
    */
   export type State = AccordionItemState;
 
   /**
-   * {@link Item} に渡すプロパティーです。
+   * {@link AccordionItem} のプロパティー型です。
    */
   export type Props = AccordionItemProps;
 }
@@ -204,7 +204,7 @@ export const AccordionHeader: Component<AccordionHeaderProps> = function SuiAcco
 };
 
 /**
- * {@link AccordionHeader} に対応する型名前空間です。
+ * {@link AccordionHeader} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Header {
   /**
@@ -227,12 +227,12 @@ export const Header: Component<Header.Props> = AccordionHeader;
 // -------
 
 /**
- * {@link Trigger} の状態です。
+  * {@link AccordionTrigger} の状態型です。
  */
 export type AccordionTriggerState = Accordion.Trigger.State;
 
 /**
- * {@link Trigger} に渡すプロパティーです。
+  * {@link AccordionTrigger} のプロパティー型です。
  */
 export type AccordionTriggerProps = React.ComponentProps<typeof Accordion.Trigger>;
 
@@ -256,16 +256,16 @@ export const AccordionTrigger: Component<AccordionTriggerProps> = function SuiAc
 };
 
 /**
- * {@link AccordionTrigger} に対応する型名前空間です。
+ * {@link AccordionTrigger} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Trigger {
   /**
-   * {@link Trigger} の状態です。
+   * {@link AccordionTrigger} の状態型です。
    */
   export type State = AccordionTriggerState;
 
   /**
-   * {@link Trigger} に渡すプロパティーです。
+   * {@link AccordionTrigger} のプロパティー型です。
    */
   export type Props = AccordionTriggerProps;
 }
@@ -279,12 +279,12 @@ export const Trigger: Component<Trigger.Props> = AccordionTrigger;
 // ---------
 
 /**
- * {@link Indicator} の状態です。
+  * {@link AccordionIndicator} の状態型です。
  */
 export type AccordionIndicatorState = {};
 
 /**
- * {@link Indicator} に渡すプロパティーです。
+  * {@link AccordionIndicator} のプロパティー型です。
  */
 export type AccordionIndicatorProps = Omit<
   React.ComponentProps<"span">,
@@ -319,16 +319,16 @@ export const AccordionIndicator: Component<AccordionIndicatorProps> =
   };
 
 /**
- * {@link AccordionIndicator} に対応する型名前空間です。
+ * {@link AccordionIndicator} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Indicator {
   /**
-   * {@link Indicator} の状態です。
+   * {@link AccordionIndicator} の状態です。
    */
   export type State = AccordionIndicatorState;
 
   /**
-   * {@link Indicator} に渡すプロパティーです。
+   * {@link AccordionIndicator} に渡すプロパティーです。
    */
   export type Props = AccordionIndicatorProps;
 }
@@ -342,12 +342,12 @@ export const Indicator: Component<Indicator.Props> = AccordionIndicator;
 // -----
 
 /**
- * {@link Panel} の状態です。
+  * {@link AccordionPanel} の状態型です。
  */
 export type AccordionPanelState = Accordion.Panel.State;
 
 /**
- * {@link Panel} に渡すプロパティーです。
+  * {@link AccordionPanel} のプロパティー型です。
  */
 export type AccordionPanelProps = React.ComponentProps<typeof Accordion.Panel>;
 
@@ -366,16 +366,16 @@ export const AccordionPanel: Component<AccordionPanelProps> = function SuiAccord
 };
 
 /**
- * {@link AccordionPanel} に対応する型名前空間です。
+ * {@link AccordionPanel} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Panel {
   /**
-   * {@link Panel} の状態です。
+   * {@link AccordionPanel} の状態です。
    */
   export type State = AccordionPanelState;
 
   /**
-   * {@link Panel} に渡すプロパティーです。
+   * {@link AccordionPanel} に渡すプロパティーです。
    */
   export type Props = AccordionPanelProps;
 }

@@ -161,7 +161,10 @@ export const Sizes = meta.story({
     return (
       <div className="flex w-80 flex-col gap-6">
         {SIZES.map((size) => (
-          <Progress key={size} {...props} size={size} />
+          <div key={size}>
+            <Progress {...props} size={size} />
+            <div>{size}</div>
+          </div>
         ))}
       </div>
     );
@@ -182,9 +185,12 @@ export const Radius = meta.story({
   render(props) {
     return (
       <div className="flex w-80 flex-col gap-6">
-        <Progress {...props} radius="none" />
-        <Progress {...props} radius="rounded" />
-        <Progress {...props} radius="full" />
+        {(["none", "rounded", "full"] as const).map((radius) => (
+          <div key={radius}>
+            <Progress {...props} radius={radius} />
+            <div>{radius}</div>
+          </div>
+        ))}
       </div>
     );
   },

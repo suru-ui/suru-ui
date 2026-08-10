@@ -25,6 +25,8 @@ export type AvatarGroupProps = AvatarGroupParts.Root.Props & {
 
   /**
    * 省略されたアバター数を表示する要素を生成します。
+   *
+   * @default 既定の `<Avatar>` と過剰数表示
    */
   renderSurplus?: ((surplus: number) => React.ReactNode) | undefined;
 };
@@ -45,8 +47,8 @@ export type AvatarGroupProps = AvatarGroupParts.Root.Props & {
  */
 export const AvatarGroup: Component<AvatarGroupProps> = function SuiAvatarGroup(props) {
   const {
-    children,
     max = 5,
+    children,
     renderSurplus = (surplus) => <Avatar>+{surplus}</Avatar>,
     ...rootProps
   } = props;

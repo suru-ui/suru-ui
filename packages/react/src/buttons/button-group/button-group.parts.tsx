@@ -1,12 +1,8 @@
-import {
-  useRenderElement,
-  type UseRenderElementComponentProps,
-} from "@base-ui/react/internals/useRenderElement";
 import type { Color, ColorTemplate as Variant } from "@suru-ui/theme";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
-import splitRenderProps from "../../_split-render-props.js";
+import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
 import type { Component } from "../../types.js";
@@ -17,17 +13,32 @@ import "./button-group.css";
 // -------
 
 /**
- * {@link ButtonGroupContext} が保持するボタンのスタイルです。
+ * {@link ButtonGroupRoot} が子パーツへ提供する状態です。
  */
 export type ButtonGroupContext = {
+  /**
+   * ボタンのスタイルバリエーションです。
+   */
   readonly variant: Variant;
 
+  /**
+   * ボタンの色です。
+   */
   readonly color: Color;
 
+  /**
+   * ボタンのサイズです。
+   */
   readonly size: Size;
 
+  /**
+   * ボタンの角丸です。
+   */
   readonly radius: "none" | "rounded" | "full";
 
+  /**
+   * 枠線を表示するかどうかです。
+   */
   readonly outlined: boolean;
 };
 
@@ -38,14 +49,7 @@ export const ButtonGroupContext: React.Context<ButtonGroupContext | null> =
   React.createContext<ButtonGroupContext | null>(null);
 
 /**
- * {@link ButtonGroupContext} を読み取るフックです。
- *
- * Provider は {@link ButtonGroupRoot} の配下に必要です。
- * Provider がない場合、`optional` が `true` でなければ {@link ContextMissingError} を投げます。
- * `optional` に `true` を指定すると、Provider がない場合に `null` を返します。
- *
- * @param optional Provider がなくても `null` を返すかどうかを指定します。
- * @returns コンテキストの値。`optional` が `true` で Provider がない場合は `null` です。
+ * {@link ButtonGroupRoot} のコンテキストを読み取るフックです。
  */
 export function useButtonGroupContext(optional?: false): ButtonGroupContext;
 export function useButtonGroupContext(optional?: boolean): ButtonGroupContext | null;
@@ -62,7 +66,7 @@ export function useButtonGroupContext(optional?: boolean): ButtonGroupContext | 
 }
 
 /**
- * {@link ButtonGroupContext} の型別名です。
+ * {@link ButtonGroupContext} の別名です。
  */
 export type Context = ButtonGroupContext;
 
@@ -73,13 +77,6 @@ export const Context: React.Context<ButtonGroupContext | null> = ButtonGroupCont
 
 /**
  * {@link useButtonGroupContext} の別名です。
- *
- * Provider は {@link ButtonGroupRoot} の配下に必要です。
- * Provider がない場合、`optional` が `true` でなければ {@link ContextMissingError} を投げます。
- * `optional` に `true` を指定すると、Provider がない場合に `null` を返します。
- *
- * @param optional Provider がなくても `null` を返すかどうかを指定します。
- * @returns コンテキストの値。`optional` が `true` で Provider がない場合は `null` です。
  */
 export function useContext(optional?: false): ButtonGroupContext;
 export function useContext(optional?: boolean): ButtonGroupContext | null;
@@ -101,11 +98,8 @@ export type ButtonGroupRootState = {};
  * グループに指定したスタイルプロパティーは、子要素のボタン指定より優先されます。
  * 指定後に値を変更すると、グループと子要素のスタイルも更新されます。
  */
-export type ButtonGroupRootProps = Omit<
-  React.ComponentProps<"div">,
-  keyof UseRenderElementComponentProps<{}>
-> &
-  UseRenderElementComponentProps<ButtonGroupRootState> & {
+export type ButtonGroupRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps<{}>> &
+  RenderProps<ButtonGroupRootState> & {
     /**
      * ボタンのスタイルバリエーションを指定します。
      *
@@ -174,27 +168,35 @@ export type ButtonGroupRootProps = Omit<
  * ```
  */
 export const ButtonGroupRoot: Component<ButtonGroupRootProps> = function SuiButtonGroupRoot(props) {
-  const [renderProps, componentProps] = splitRenderProps(props);
   const {
+    ref,
     role = "group",
     size = "md",
     color = "grey",
     radius = "rounded",
     variant = "solid",
     outlined = false,
+    className,
     orientation = "horizontal",
     "aria-orientation": ariaOrientation = orientation,
-    ...elementProps
-  } = componentProps;
+    ...otherProps
+  } = props;
   const context = React.useMemo<ButtonGroupContext>(
     () => ({ size, color, radius, variant, outlined }),
     [color, outlined, radius, size, variant],
   );
-  const element = useRenderElement("div", renderProps, {
+  const element = useRender({
+    defaultTagName: "div",
+    ref,
     props: {
-      ...elementProps,
+      ...otherProps,
       role,
-      className: cn("sui_button_group", `sui_button_group-orientation_${orientation}`),
+      className: cn(
+        className,
+        "sui_button_group",
+        `sui_button_group-orientation_${orientation}`,
+        outlined && "sui_button_group-outlined",
+      ),
       "aria-orientation": ariaOrientation,
     },
   });

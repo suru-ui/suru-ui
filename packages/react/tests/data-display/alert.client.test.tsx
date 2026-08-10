@@ -4,14 +4,14 @@ import { render } from "vitest-browser-react";
 import {
   Alert,
   AlertActions,
-  AlertContent,
-  AlertIndicator,
+  AlertDescription,
+  AlertIcon,
   AlertRoot,
   AlertTitle,
 } from "../../src/data-display/alert/index.js";
 
 describe("Alert", () => {
-  test("メッセージと既定のインジケーターを表示する", async () => {
+  test("メッセージを表示する", async () => {
     const screen = await render(<Alert>プロフィールを更新しました。</Alert>);
 
     const alert = screen.getByRole("alert");
@@ -22,20 +22,17 @@ describe("Alert", () => {
       .toHaveClass(
         "sui_alert",
         "sui_alert-size_md",
-        "sui_alert-color_blue",
-        "sui_alert-radius_rounded",
+        "sui_alert-color_grey",
+        "sui_alert-radius_md",
         "sui_alert-variant_liquid",
       );
     await expect.element(screen.getByText("プロフィールを更新しました。")).toBeVisible();
-    const indicator = screen.container.querySelector(".sui_alert_indicator");
-
-    expect(indicator).not.toBeNull();
-    await expect.element(indicator as HTMLElement).toHaveAttribute("aria-hidden", "true");
+    expect(screen.container.querySelector(".sui_alert_icon")).toBeNull();
   });
 
   test("スタイルのプロパティーを上書きする", async () => {
     const screen = await render(
-      <Alert color="green" outlined radius="full" size="lg" variant="solid">
+      <Alert color="green" outlined radius="lg" size="lg" variant="naked">
         完了しました。
       </Alert>,
     );
@@ -46,9 +43,9 @@ describe("Alert", () => {
       .toHaveClass(
         "sui_alert-color_green",
         "sui_alert-outlined",
-        "sui_alert-radius_full",
+        "sui_alert-radius_lg",
         "sui_alert-size_lg",
-        "sui_alert-variant_solid",
+        "sui_alert-variant_naked",
       );
   });
 
@@ -56,8 +53,8 @@ describe("Alert", () => {
     const screen = await render(
       <Alert
         slotProps={{
-          content: { className: "custom-content" },
-          indicator: { children: <svg data-testid="status-icon" /> },
+          description: { className: "custom-content" },
+          icon: { children: <svg data-testid="status-icon" /> },
         }}
       >
         カスタム通知
@@ -68,7 +65,9 @@ describe("Alert", () => {
     const content = screen.container.querySelector(".custom-content");
 
     expect(content).not.toBeNull();
-    await expect.element(content as HTMLElement).toHaveClass("sui_alert_content", "custom-content");
+    await expect
+      .element(content as HTMLElement)
+      .toHaveClass("sui_alert_description", "custom-content");
   });
 
   test("タイトルを slotProps で表示する", async () => {
@@ -79,18 +78,16 @@ describe("Alert", () => {
     await expect.element(screen.getByText("更新完了")).toHaveClass("sui_alert_title");
   });
 
-  test("Indicator を省略して表示する", async () => {
-    const screen = await render(
-      <Alert slotProps={{ indicator: null }}>プロフィールを更新しました。</Alert>,
-    );
+  test("Icon を省略して表示する", async () => {
+    const screen = await render(<Alert>プロフィールを更新しました。</Alert>);
 
     await expect.element(screen.getByRole("alert")).toBeVisible();
-    expect(screen.container.querySelector(".sui_alert_indicator")).toBeNull();
+    expect(screen.container.querySelector(".sui_alert_icon")).toBeNull();
     await expect.element(screen.getByText("プロフィールを更新しました。")).toBeVisible();
-    const content = screen.container.querySelector(".sui_alert_content");
+    const content = screen.container.querySelector(".sui_alert_description");
 
     expect(content).not.toBeNull();
-    expect(getComputedStyle(content!).gridArea).toBe("content");
+    expect(getComputedStyle(content!).gridArea).toBe("description");
   });
 
   test("Actions を右寄せで表示する", async () => {
@@ -126,9 +123,9 @@ describe("AlertParts", () => {
   test("パーツを組み合わせて表示する", async () => {
     const screen = await render(
       <AlertRoot>
-        <AlertIndicator />
+        <AlertIcon />
         <AlertTitle>保存完了</AlertTitle>
-        <AlertContent>直接組み立てた通知</AlertContent>
+        <AlertDescription>直接組み立てた通知</AlertDescription>
         <AlertActions>操作</AlertActions>
       </AlertRoot>,
     );
@@ -137,14 +134,14 @@ describe("AlertParts", () => {
     await expect.element(screen.getByText("直接組み立てた通知")).toBeVisible();
     await expect.element(screen.getByText("操作")).toBeVisible();
     const title = screen.container.querySelector(".sui_alert_title");
-    const content = screen.container.querySelector(".sui_alert_content");
+    const content = screen.container.querySelector(".sui_alert_description");
     const actions = screen.container.querySelector(".sui_alert_actions");
 
     expect(title).not.toBeNull();
     expect(content).not.toBeNull();
     expect(actions).not.toBeNull();
     expect(getComputedStyle(title!).gridArea).toBe("title");
-    expect(getComputedStyle(content!).gridArea).toBe("content");
+    expect(getComputedStyle(content!).gridArea).toBe("description");
     expect(getComputedStyle(actions!).gridArea).toBe("actions");
   });
 });

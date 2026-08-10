@@ -1,10 +1,5 @@
 /* IndentBackground */
 @layer sui.component {
-  /* リセット */
-  .sui_drawer_indent_background {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_drawer_indent_background {
     /* 形状 */
@@ -21,7 +16,7 @@
 
   /* 動的 */
   .sui_drawer_indent_background {
-    scale: var(--sui_drawer_indent_background-scale);
+    scale: var(--_sui_drawer_indent_background-scale, var(--sui_drawer_indent_background-scale));
   }
 
   /* 既定値設定: ここから */
@@ -37,7 +32,7 @@
 
   .sui_drawer_indent_background[data-active] {
     /* 形状 */
-    --sui_drawer_indent_background-scale: 0.96;
+    --_sui_drawer_indent_background-scale: 0.96;
   }
 
   /* 上書き設定: ここまで */
@@ -45,11 +40,6 @@
 
 /* Indent */
 @layer sui.component {
-  /* リセット */
-  .sui_drawer_indent {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_drawer_indent {
     /* 形状 */
@@ -66,7 +56,7 @@
 
   /* 動的 */
   .sui_drawer_indent {
-    scale: var(--sui_drawer_indent-scale);
+    scale: var(--_sui_drawer_indent-scale, var(--sui_drawer_indent-scale));
   }
 
   /* 既定値設定: ここから */
@@ -82,27 +72,16 @@
 
   .sui_drawer_indent[data-active] {
     /* 形状 */
-    --sui_drawer_indent-scale: 0.96;
+    --_sui_drawer_indent-scale: 0.96;
   }
 
   /* 上書き設定: ここまで */
 }
 
 /* Trigger */
-@layer sui.component {
-  /* リセット */
-  .sui_drawer_trigger {
-    box-sizing: border-box;
-  }
-}
 
 /* SwipeArea */
 @layer sui.component {
-  /* リセット */
-  .sui_drawer_swipe_area {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_drawer_swipe_area {
     /* 形状 */
@@ -134,20 +113,9 @@
 }
 
 /* Portal */
-@layer sui.component {
-  /* リセット */
-  .sui_drawer_portal {
-    box-sizing: border-box;
-  }
-}
 
 /* Backdrop */
 @layer sui.component {
-  /* リセット */
-  .sui_drawer_backdrop {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_drawer_backdrop {
     /* 背景 */
@@ -193,11 +161,6 @@
 
 /* Viewport */
 @layer sui.component {
-  /* リセット */
-  .sui_drawer_viewport {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_drawer_viewport {
     position: fixed;
@@ -216,11 +179,6 @@
 
 /* Popup */
 @layer sui.component {
-  /* リセット */
-  .sui_drawer_popup {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_drawer_popup {
     /* 形状 */
@@ -369,11 +327,6 @@
 
 /* Content */
 @layer sui.component {
-  /* リセット */
-  .sui_drawer_content {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_drawer_content {
     display: flex;
@@ -386,16 +339,6 @@
 
 /* Title */
 @layer sui.component {
-  /* リセット */
-  .sui_drawer_title {
-    box-sizing: border-box;
-    margin: 0px;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: inherit;
-  }
-
   /* 変数 */
   .sui_drawer_title {
     /* 書体 */
@@ -433,15 +376,6 @@
 
 /* Description */
 @layer sui.component {
-  /* リセット */
-  .sui_drawer_description {
-    box-sizing: border-box;
-    margin: 0px;
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
-  }
-
   /* 変数 */
   .sui_drawer_description {
     /* 書体 */
@@ -479,11 +413,6 @@
 
 /* CloseButton */
 @layer sui.component {
-  /* リセット */
-  .sui_drawer_close_button {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_drawer_popup {
     /* 形状 */

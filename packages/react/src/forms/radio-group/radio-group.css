@@ -1,10 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_radio_group {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_radio_group {
     display: flex;

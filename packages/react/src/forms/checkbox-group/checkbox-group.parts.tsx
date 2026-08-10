@@ -12,7 +12,7 @@ import "./checkbox-group.css";
 // -------
 
 /**
- * {@link CheckboxGroupContext} の値です。
+ * {@link CheckboxGroupRoot} が子パーツへ提供する状態です。
  *
  * {@link CheckboxGroupRoot} に指定したスタイル値を子要素へ伝播します。
  */
@@ -80,7 +80,7 @@ export function useCheckboxGroupContext(optional?: boolean): CheckboxGroupContex
 }
 
 /**
- * {@link CheckboxGroupContext} の型別名です。
+ * {@link CheckboxGroupContext} の別名です。
  */
 export type Context = CheckboxGroupContext;
 
@@ -90,7 +90,7 @@ export type Context = CheckboxGroupContext;
 export const Context: React.Context<CheckboxGroupContext | null> = CheckboxGroupContext;
 
 /**
- * {@link useCheckboxGroupContext} のエイリアスです。
+ * {@link useCheckboxGroupContext} の別名です。
  *
  * Provider は {@link CheckboxGroupRoot} の配下に必要です。
  * Provider がない場合、`optional` が `true` でなければ {@link ContextMissingError} を投げます。
@@ -110,14 +110,14 @@ export function useContext(optional?: boolean): CheckboxGroupContext | null {
 // ----
 
 /**
- * {@link Root} の状態です。
+ * {@link CheckboxGroupRoot} の状態です。
  *
  * {@link CheckboxGroupRoot} が公開する状態型の別名です。
  */
 export type CheckboxGroupRootState = CheckboxGroup.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link CheckboxGroupRoot} に渡すプロパティーです。
  *
  * グループに指定したスタイルプロパティーは、子要素のチェックボックス指定より優先されます。
  * 指定後に値を変更すると、グループと子要素のスタイルも更新されます。
@@ -247,7 +247,7 @@ export const CheckboxGroupRoot: Component<CheckboxGroupRootProps> = function Sui
 };
 
 /**
- * {@link CheckboxGroupRoot} の状態型とプロパティー型をまとめた名前空間です。
+ * {@link CheckboxGroupRoot} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**

@@ -11,12 +11,12 @@ import "./field.css";
 // ----
 
 /**
- * {@link Root} の状態です。
+ * {@link FieldRoot} の状態です。
  */
 export type FieldRootState = Field.Root.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link FieldRoot} に渡すプロパティーです。
  */
 export type FieldRootProps = React.ComponentProps<typeof Field.Root>;
 
@@ -41,7 +41,7 @@ export const FieldRoot: Component<FieldRootProps> = function SuiFieldRoot(props)
 };
 
 /**
- * {@link FieldRoot} の状態型とプロパティー型をまとめた名前空間です。
+ * {@link FieldRoot} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
@@ -67,12 +67,12 @@ export const Root: Component<Root.Props> = FieldRoot;
 // -----
 
 /**
- * {@link Label} の状態です。
+ * {@link FieldLabel} の状態です。
  */
 export type FieldLabelState = Field.Label.State;
 
 /**
- * {@link Label} に渡すプロパティーです。
+ * {@link FieldLabel} に渡すプロパティーです。
  */
 export type FieldLabelProps = React.ComponentProps<typeof Field.Label>;
 
@@ -98,7 +98,7 @@ export const FieldLabel: Component<FieldLabelProps> = function SuiFieldLabel(pro
 };
 
 /**
- * {@link FieldLabel} の状態型とプロパティー型をまとめた名前空間です。
+ * {@link FieldLabel} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Label {
   /**
@@ -143,7 +143,7 @@ export type FieldControlProps = InputRootProps;
 export const FieldControl: Component<FieldControlProps> = InputRoot;
 
 /**
- * {@link FieldControl} の状態型とプロパティー型をまとめた名前空間です。
+ * {@link FieldControl} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Control {
   /**
@@ -196,7 +196,7 @@ export const FieldDescription: Component<FieldDescriptionProps> = function SuiFi
 };
 
 /**
- * {@link FieldDescription} の状態型とプロパティー型をまとめた名前空間です。
+ * {@link FieldDescription} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Description {
   /**
@@ -245,7 +245,7 @@ export const FieldError: Component<FieldErrorProps> = function SuiFieldError(pro
 };
 
 /**
- * {@link FieldError} の状態型とプロパティー型をまとめた名前空間です。
+ * {@link FieldError} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Error {
   /**
@@ -301,7 +301,7 @@ export const FieldItem: Component<FieldItemProps> = function SuiFieldItem(props)
 };
 
 /**
- * {@link FieldItem} の状態型とプロパティー型をまとめた名前空間です。
+ * {@link FieldItem} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Item {
   /**
@@ -350,7 +350,7 @@ export const FieldValidity: Component<FieldValidityProps> = function SuiFieldVal
 };
 
 /**
- * {@link FieldValidity} の状態型とプロパティー型をまとめた名前空間です。
+ * {@link FieldValidity} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Validity {
   /**

@@ -70,7 +70,13 @@ export const AvatarRoot: Component<AvatarRootProps> = function SuiAvatarRoot(pro
 };
 
 export namespace Root {
+  /**
+   * {@link AvatarRoot} の状態型です。
+   */
   export type State = AvatarRootState;
+  /**
+   * {@link AvatarRoot} のプロパティー型です。
+   */
   export type Props = AvatarRootProps;
 }
 
@@ -101,7 +107,13 @@ export const AvatarImage: Component<AvatarImageProps> = function SuiAvatarImage(
 };
 
 export namespace Image {
+  /**
+   * {@link AvatarImage} の状態型です。
+   */
   export type State = AvatarImageState;
+  /**
+   * {@link AvatarImage} のプロパティー型です。
+   */
   export type Props = AvatarImageProps;
 }
 
@@ -135,7 +147,13 @@ export const AvatarFallback: Component<AvatarFallbackProps> = function SuiAvatar
 };
 
 export namespace Fallback {
+  /**
+   * {@link AvatarFallback} の状態型です。
+   */
   export type State = AvatarFallbackState;
+  /**
+   * {@link AvatarFallback} のプロパティー型です。
+   */
   export type Props = AvatarFallbackProps;
 }
 

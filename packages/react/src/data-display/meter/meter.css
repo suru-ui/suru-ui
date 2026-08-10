@@ -1,10 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_meter {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_meter {
     /* 形状 */
@@ -178,11 +173,6 @@
 
 /* Label */
 @layer sui.component {
-  /* リセット */
-  .sui_meter_label {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_meter_label {
     min-width: 0px;
@@ -201,11 +191,6 @@
 
 /* Value */
 @layer sui.component {
-  /* リセット */
-  .sui_meter_value {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_meter_value {
     font-variant-numeric: tabular-nums;
@@ -224,11 +209,6 @@
 
 /* Track */
 @layer sui.component {
-  /* リセット */
-  .sui_meter_track {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_meter_track {
     position: relative;
@@ -259,11 +239,6 @@
 
 /* Indicator */
 @layer sui.component {
-  /* リセット */
-  .sui_meter_indicator {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_meter_indicator {
     position: absolute;

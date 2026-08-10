@@ -1,13 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_collapsible {
-    box-sizing: border-box;
-    font-family: inherit;
-    font-size: inherit;
-    line-height: 1.1;
-  }
-
   /* 変数 */
   .sui_collapsible {
     /* 背景 */
@@ -39,14 +31,8 @@
     /* 背景 */
     --sui_collapsible-background_color: var(--sui-canvas-1);
     /* 枠線 */
-    --sui_collapsible-border_radius: var(--sui-radius-md);
     --sui_collapsible-border_width: 0px;
-  }
-
-  .sui_collapsible-outlined {
-    /* 枠線 */
-    --sui_collapsible-border_color: var(--sui-grey-naked-border-normal);
-    --sui_collapsible-border_width: --sui-border_width(1);
+    --sui_collapsible-border_radius: var(--sui-radius-md);
   }
 
   .sui_collapsible-radius_none {
@@ -69,22 +55,17 @@
     --sui_collapsible-border_radius: var(--sui-radius-lg);
   }
 
+  .sui_collapsible-outlined {
+    /* 枠線 */
+    --sui_collapsible-border_color: var(--sui-grey-naked-border-normal);
+    --sui_collapsible-border_width: --sui-border_width(1);
+  }
+
   /* 既定値設定: ここまで */
 }
 
 /* Trigger */
 @layer sui.component {
-  /* リセット */
-  .sui_collapsible_trigger {
-    box-sizing: border-box;
-    padding: 0px;
-    margin: 0px;
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    border: 0px;
-  }
-
   /* 変数 */
   .sui_collapsible {
     /* 空白 */
@@ -220,11 +201,6 @@
 
 /* Indicator */
 @layer sui.component {
-  /* リセット */
-  .sui_collapsible_indicator {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_collapsible {
     /* 形状 */
@@ -278,11 +254,6 @@
 
 /* Panel */
 @layer sui.component {
-  /* リセット */
-  .sui_collapsible_panel {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_collapsible {
     /* 形状 */

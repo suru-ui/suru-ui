@@ -73,6 +73,66 @@ describe("ButtonGroup", () => {
     await expect.element(button).toHaveClass("sui_button-color_blue");
   });
 
+  test("区切り線は横並びで先頭以外のボタンに表示される", async () => {
+    // 実行
+    const screen = await render(
+      <ButtonGroup outlined>
+        <Button>A</Button>
+        <Button>B</Button>
+      </ButtonGroup>,
+    );
+
+    // 検証
+    const [a, b] = [
+      screen.getByRole("button", { name: "A" }).element(),
+      screen.getByRole("button", { name: "B" }).element(),
+    ];
+
+    expect(getComputedStyle(a!).borderRightWidth).toBe("0px");
+    expect(getComputedStyle(b!).borderLeftWidth).toBe("1px");
+    expect(getComputedStyle(b!).borderLeftColor).toBe(getComputedStyle(b!).borderTopColor);
+    expect(getComputedStyle(b!).borderLeftColor).toBe(getComputedStyle(a!).borderTopColor);
+  });
+
+  test("区切り線は縦並びで先頭以外のボタンに表示される", async () => {
+    // 実行
+    const screen = await render(
+      <ButtonGroup orientation="vertical" outlined>
+        <Button>A</Button>
+        <Button>B</Button>
+      </ButtonGroup>,
+    );
+
+    // 検証
+    const [a, b] = [
+      screen.getByRole("button", { name: "A" }).element(),
+      screen.getByRole("button", { name: "B" }).element(),
+    ];
+
+    expect(getComputedStyle(a!).borderBottomWidth).toBe("0px");
+    expect(getComputedStyle(b!).borderTopWidth).toBe("1px");
+    expect(getComputedStyle(b!).borderTopColor).toBe(getComputedStyle(b!).borderLeftColor);
+  });
+
+  test("無効化されたボタンでも区切り線が 1px に保たれる", async () => {
+    // 実行
+    const screen = await render(
+      <ButtonGroup outlined>
+        <Button disabled>A</Button>
+        <Button disabled>B</Button>
+      </ButtonGroup>,
+    );
+
+    // 検証
+    const [a, b] = [
+      screen.getByRole("button", { name: "A" }).element(),
+      screen.getByRole("button", { name: "B" }).element(),
+    ];
+
+    expect(getComputedStyle(a!).borderRightWidth).toBe("0px");
+    expect(getComputedStyle(b!).borderLeftWidth).toBe("1px");
+  });
+
   test("スタイルが変わらない再レンダーではコンテキスト利用者を再レンダーしない", async () => {
     // 準備
     let consumerRenderCount = 0;

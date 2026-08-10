@@ -1,15 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_select {
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    padding: 0px;
-    margin: 0px;
-    border: 0px solid transparent;
-  }
-
   /* 変数 */
   .sui_select {
     /* 形状 */
@@ -145,12 +135,6 @@
 
 /* Label */
 @layer sui.component {
-  /* リセット */
-  .sui_select_label {
-    box-sizing: border-box;
-    margin: 0px;
-  }
-
   /* 静的 */
   .sui_select_label {
     display: block;
@@ -239,13 +223,6 @@
 
 /* Value */
 @layer sui.component {
-  /* リセット */
-  .sui_select_value {
-    box-sizing: border-box;
-    min-width: 0px;
-    overflow: hidden;
-  }
-
   /* 静的 */
   .sui_select_value {
     flex: 1 1 auto;
@@ -263,12 +240,6 @@
 
 /* Icon */
 @layer sui.component {
-  /* リセット */
-  .sui_select_icon {
-    box-sizing: border-box;
-    flex: 0 0 auto;
-  }
-
   /* 静的 */
   .sui_select_icon {
     display: flex;
@@ -291,11 +262,6 @@
 
 /* ScrollArea */
 @layer sui.component {
-  /* リセット */
-  .sui_select_scroll_area {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_select_scroll_area {
     height: fit-content;
@@ -316,36 +282,45 @@
 }
 
 /* Portal */
-@layer sui.component {
-  /* リセット */
-  .sui_select_portal {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    box-sizing: border-box;
-  }
-}
 
 /* Backdrop */
 @layer sui.component {
-  /* リセット */
-  .sui_select_backdrop {
-    box-sizing: border-box;
+  /* 変数 */
+  .sui_select {
+    /* 外観 */
+    --sui_select_backdrop-opacity: ;
+    /* 背景 */
+    --sui_select_backdrop-background_color: ;
   }
 
   /* 静的 */
   .sui_select_backdrop {
     position: fixed;
     inset: 0px;
-    background-color: var(--sui-canvas-1);
-    opacity: var(--sui-backdrop-opacity);
+    background-color: var(--sui_select_backdrop-background_color);
     transition: opacity 150ms ease-out;
   }
+
+  /* 動的 */
+  .sui_select_backdrop {
+    opacity: var(--_sui_select_backdrop-opacity, var(--sui_select_backdrop-opacity));
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_select {
+    /* 外観 */
+    --sui_select_backdrop-opacity: var(--sui-backdrop-opacity);
+    /* 背景 */
+    --sui_select_backdrop-background_color: var(--sui-canvas-1);
+  }
+
+  /* 既定値設定: ここまで */
 
   /* 上書き設定: ここから */
 
   .sui_select_backdrop:is([data-starting-style], [data-ending-style]) {
-    opacity: 0;
+    --_sui_select_backdrop-opacity: 0;
   }
 
   /* 上書き設定: ここまで */
@@ -353,21 +328,14 @@
 
 /* Positioner */
 @layer sui.component {
-  /* リセット */
+  /* 静的 */
   .sui_select_positioner {
     z-index: 100;
-    box-sizing: border-box;
   }
 }
 
 /* Popup */
 @layer sui.component {
-  /* リセット */
-  .sui_select_popup {
-    box-sizing: border-box;
-    outline: none;
-  }
-
   /* 変数 */
   .sui_select_popup {
     /* 形状 */
@@ -460,12 +428,6 @@
 
 /* List */
 @layer sui.component {
-  /* リセット */
-  .sui_select_list {
-    box-sizing: border-box;
-    margin: 0px;
-  }
-
   /* 変数 */
   .sui_select_popup {
     /* 形状 */
@@ -498,20 +460,9 @@
 }
 
 /* Arrow */
-@layer sui.component {
-  /* リセット */
-  .sui_select_arrow {
-    box-sizing: border-box;
-  }
-}
 
 /* Group */
 @layer sui.component {
-  /* リセット */
-  .sui_select_group {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_select_group {
     display: flex;
@@ -522,11 +473,6 @@
 
 /* GroupLabel */
 @layer sui.component {
-  /* リセット */
-  .sui_select_group_label {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_select_group_label {
     display: flex;
@@ -543,14 +489,6 @@
 
 /* Item */
 @layer sui.component {
-  /* リセット */
-  .sui_select_item {
-    box-sizing: border-box;
-    min-width: 0px;
-    margin: 0px;
-    outline: none;
-  }
-
   /* 変数 */
   .sui_select_popup {
     /* 形状 */
@@ -655,7 +593,11 @@
 
   .sui_select_item:not([data-disabled]) {
     @media (any-hover: hover) {
-      &:hover,
+      &:hover {
+        --_sui_select_item-canvas: var(--sui_select_item-canvas-subtle);
+        --_sui_select_item-color: var(--sui_select_item-color-subtle);
+      }
+
       &[data-highlighted] {
         --_sui_select_item-canvas: var(--sui_select_item-canvas-subtle);
         --_sui_select_item-color: var(--sui_select_item-color-subtle);
@@ -678,13 +620,6 @@
 
 /* ItemText */
 @layer sui.component {
-  /* リセット */
-  .sui_select_item_text {
-    box-sizing: border-box;
-    min-width: 0px;
-    overflow: hidden;
-  }
-
   /* 静的 */
   .sui_select_item_text {
     flex: 1 1 auto;
@@ -696,12 +631,6 @@
 
 /* ItemIndicator */
 @layer sui.component {
-  /* リセット */
-  .sui_select_item_indicator {
-    box-sizing: border-box;
-    flex: 0 0 auto;
-  }
-
   /* 静的 */
   .sui_select_item_indicator {
     display: inline-flex;
@@ -731,11 +660,6 @@
 
 /* ScrollUpArrow */
 @layer sui.component {
-  /* リセット */
-  .sui_select_scroll_up_arrow {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_select_scroll_up_arrow {
     display: flex;
@@ -752,11 +676,6 @@
 
 /* ScrollDownArrow */
 @layer sui.component {
-  /* リセット */
-  .sui_select_scroll_down_arrow {
-    box-sizing: border-box;
-  }
-
   /* 静的 */
   .sui_select_scroll_down_arrow {
     display: flex;
@@ -773,13 +692,15 @@
 
 /* Separator */
 @layer sui.component {
-  /* リセット */
+  /* 静的 */
   .sui_select_separator {
-    box-sizing: border-box;
-    height: var(--sui-border_width(1));
     margin: --sui-space(1) 0px;
+  }
+
+  /* 動的 */
+  .sui_select_separator {
+    height: --sui-border_width(1);
     background-color: var(--sui-grey-naked-border-normal);
-    border: 0px solid transparent;
   }
 }
 

@@ -10,12 +10,12 @@ import "./fieldset.css";
 // ----
 
 /**
- * {@link Root} の状態です。
+ * {@link FieldsetRoot} の状態です。
  */
 export type FieldsetRootState = Fieldset.Root.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link FieldsetRoot} に渡すプロパティーです。
  *
  * {@link Fieldset.Root} のプロパティーをそのまま受け取ります。`disabled` の既定値は
  * `false` で、指定した値が子孫のコントロールを無効化します。`className` と `render` は
@@ -53,7 +53,7 @@ export const FieldsetRoot: Component<FieldsetRootProps> = function SuiFieldsetRo
 };
 
 /**
- * {@link FieldsetRoot} の状態型とプロパティー型をまとめた名前空間です。
+ * {@link FieldsetRoot} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
@@ -63,8 +63,6 @@ export namespace Root {
 
   /**
    * {@link FieldsetRoot} のプロパティー型です。
-   *
-   * {@link FieldsetRootProps} と同じで、`disabled` は既定で `false` です。
    */
   export type Props = FieldsetRootProps;
 }
@@ -78,16 +76,16 @@ export const Root: Component<Root.Props> = FieldsetRoot;
 // ------
 
 /**
- * {@link Legend} の状態です。
+ * {@link FieldsetLegend} の状態です。
  */
 export type FieldsetLegendState = Fieldset.Legend.State;
 
 /**
- * {@link Legend} に渡すプロパティーです。
+ * {@link FieldsetLegend} に渡すプロパティーです。
  *
  * {@link Fieldset.Legend} のプロパティーをそのまま受け取ります。既定の表示は
  * Suru UI のスタイルが適用され、`className` と `render` を指定した場合はその値が
- * 既定の値より優先されます。親の {@link Root} が無効になると状態も無効になります。
+ * 既定の値より優先されます。親の {@link FieldsetRoot} が無効になると状態も無効になります。
  */
 export type FieldsetLegendProps = React.ComponentProps<typeof Fieldset.Legend>;
 
@@ -113,7 +111,7 @@ export const FieldsetLegend: Component<FieldsetLegendProps> = function SuiFields
 };
 
 /**
- * {@link FieldsetLegend} の状態型とプロパティー型をまとめた名前空間です。
+ * {@link FieldsetLegend} の状態とプロパティーをまとめた型名前空間です。
  */
 export namespace Legend {
   /**
@@ -123,8 +121,6 @@ export namespace Legend {
 
   /**
    * {@link FieldsetLegend} のプロパティー型です。
-   *
-   * {@link FieldsetLegendProps} と同じ値を指定できます。
    */
   export type Props = FieldsetLegendProps;
 }

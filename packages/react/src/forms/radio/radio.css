@@ -1,10 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_radio {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_radio {
     /* 形状 */
@@ -265,11 +260,6 @@
 
 /* Indicator */
 @layer sui.component {
-  /* リセット */
-  .sui_radio_indicator {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_radio {
     /* 形状 */
