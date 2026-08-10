@@ -335,7 +335,7 @@
     justify-content: center;
     pointer-events: none;
 
-    svg:not(.sui-unstyled) {
+    svg:not(.sui-ignore) {
       width: var(--sui_autocomplete-icon-size);
       height: var(--sui_autocomplete-icon-size);
     }
@@ -367,7 +367,7 @@
     background-color: var(--_sui_autocomplete_button-canvas,
                         var(--sui_autocomplete_button-canvas-normal));
 
-    svg:not(.sui-unstyled) {
+    svg:not(.sui-ignore) {
       width: var(--sui_autocomplete-icon-size);
       height: var(--sui_autocomplete-icon-size);
     }

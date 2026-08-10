@@ -54,7 +54,7 @@
     color: var(--sui_chip-content_color);
     letter-spacing: var(--sui_chip-letter_spacing);
 
-    svg:not(.sui-unstyled) {
+    svg:not(.sui-ignore) {
       width: var(--sui_chip-svg_size);
       height: var(--sui_chip-svg_size);
     }

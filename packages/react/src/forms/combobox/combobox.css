@@ -348,7 +348,7 @@
     justify-content: center;
     pointer-events: none;
 
-    svg:not(.sui-unstyled) {
+    svg:not(.sui-ignore) {
       width: var(--sui_combobox-icon-size);
       height: var(--sui_combobox-icon-size);
     }
@@ -380,7 +380,7 @@
     cursor: pointer;
     background-color: var(--_sui_combobox_button-canvas, var(--sui_combobox_button-canvas-normal));
 
-    svg:not(.sui-unstyled) {
+    svg:not(.sui-ignore) {
       width: var(--sui_combobox-icon-size);
       height: var(--sui_combobox-icon-size);
     }
@@ -480,7 +480,7 @@
     cursor: pointer;
     background-color: transparent;
 
-    svg:not(.sui-unstyled) {
+    svg:not(.sui-ignore) {
       width: calc(var(--sui_combobox-font_size) * var(--sui_combobox-line_height));
       height: calc(var(--sui_combobox-font_size) * var(--sui_combobox-line_height));
     }
@@ -964,7 +964,7 @@
     width: calc(var(--sui_combobox_item-font_size) * var(--sui_combobox_item-line_height));
     height: calc(var(--sui_combobox_item-font_size) * var(--sui_combobox_item-line_height));
 
-    svg:not(.sui-unstyled) {
+    svg:not(.sui-ignore) {
       width: 100%;
       height: 100%;
     }

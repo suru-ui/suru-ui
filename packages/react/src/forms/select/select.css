@@ -282,7 +282,7 @@
     width: var(--sui_select_button-width);
     color: var(--sui_select_button-color-normal);
 
-    svg:not(.sui-unstyled) {
+    svg:not(.sui-ignore) {
       width: var(--sui_select-icon-size);
       height: var(--sui_select-icon-size);
     }
@@ -714,7 +714,7 @@
     width: calc(var(--sui_select_item-font_size) * var(--sui_select_item-line_height));
     height: calc(var(--sui_select_item-font_size) * var(--sui_select_item-line_height));
 
-    svg:not(.sui-unstyled) {
+    svg:not(.sui-ignore) {
       width: 100%;
       height: 100%;
     }
@@ -743,7 +743,7 @@
     justify-content: center;
     height: var(--sui_select-icon-size);
 
-    svg:not(.sui-unstyled) {
+    svg:not(.sui-ignore) {
       width: var(--sui_select-icon-size);
       height: var(--sui_select-icon-size);
     }
@@ -764,7 +764,7 @@
     justify-content: center;
     height: var(--sui_select-icon-size);
 
-    svg:not(.sui-unstyled) {
+    svg:not(.sui-ignore) {
       width: var(--sui_select-icon-size);
       height: var(--sui_select-icon-size);
     }

@@ -1,0 +1,251 @@
+/* Root */
+@layer sui.component {
+  /* リセット */
+  .sui_resizable {
+    box-sizing: border-box;
+    min-width: 0px;
+    min-height: 0px;
+  }
+
+  /* 静的 */
+  .sui_resizable {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .sui_resizable[data-direction="horizontal"] {
+    flex-direction: row;
+  }
+
+  .sui_resizable[data-direction="vertical"] {
+    flex-direction: column;
+  }
+}
+
+/* Panel */
+@layer sui.component {
+  /* リセット */
+  .sui_resizable_panel {
+    box-sizing: border-box;
+    min-width: 0px;
+    min-height: 0px;
+  }
+}
+
+/* Handle */
+@layer sui.component {
+  /* リセット */
+  .sui_resizable_handle {
+    box-sizing: border-box;
+    outline: none;
+    background-color: transparent;
+    border: 0px;
+  }
+
+  .sui_resizable_handle_grip {
+    box-sizing: border-box;
+    border: 0px;
+  }
+
+  /* 変数 */
+  .sui_resizable_handle {
+    /* 形状 */
+    --sui_resizable_handle-line_size: ;
+    --sui_resizable_handle-hit_size: ;
+    --sui_resizable_handle-grip_width: ;
+    --sui_resizable_handle-grip_height: ;
+    --sui_resizable_handle-grip_dot_size: ;
+    /* 背景 */
+    --sui_resizable_handle-line_color-normal: ;
+    --sui_resizable_handle-line_color-subtle: ;
+    --sui_resizable_handle-line_color-action: ;
+    --sui_resizable_handle-grip_background_color-normal: ;
+    --sui_resizable_handle-grip_background_color-subtle: ;
+    --sui_resizable_handle-grip_background_color-action: ;
+    /* 枠線 */
+    --sui_resizable_handle-grip_border_color-normal: ;
+    --sui_resizable_handle-grip_border_color-subtle: ;
+    --sui_resizable_handle-grip_border_color-action: ;
+    --sui_resizable_handle-grip_border_width: ;
+    --sui_resizable_handle-grip_border_radius: ;
+    --sui_resizable_handle-outline_color: ;
+    --sui_resizable_handle-outline_offset: ;
+    --sui_resizable_handle-outline_width: ;
+  }
+
+  /* 静的 */
+  .sui_resizable_handle {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+    touch-action: none;
+    cursor: col-resize;
+    user-select: none;
+  }
+
+  .sui_resizable_handle[aria-orientation="horizontal"] {
+    cursor: row-resize;
+  }
+
+  .sui_resizable_handle::after {
+    position: absolute;
+    z-index: 0;
+    content: "";
+  }
+
+  .sui_resizable_handle_grip {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+  }
+
+  /* 動的 */
+  .sui_resizable_handle {
+    width: var(--sui_resizable_handle-line_size);
+    height: 100%;
+    outline: var(--_sui_resizable_handle-outline_width,
+                 var(--sui_resizable_handle-outline_width)
+               )
+               solid
+               var(--sui_resizable_handle-outline_color);
+    outline-offset: var(--sui_resizable_handle-outline_offset);
+    background-color: var(--_sui_resizable_handle-line_color,
+                          var(--sui_resizable_handle-line_color-normal)
+                        );
+  }
+
+  .sui_resizable_handle_grip {
+    width: var(--sui_resizable_handle-grip_width);
+    height: var(--sui_resizable_handle-grip_height);
+    background-color: var(--_sui_resizable_handle-grip_background_color,
+                          var(--sui_resizable_handle-grip_background_color-normal)
+                        );
+    border: var(--sui_resizable_handle-grip_border_width)
+            solid
+            var(--_sui_resizable_handle-grip_border_color,
+                 var(--sui_resizable_handle-grip_border_color-normal)
+               );
+    border-radius: var(--sui_resizable_handle-grip_border_radius);
+  }
+
+  .sui_resizable_handle[aria-orientation="horizontal"] {
+    width: 100%;
+    height: var(--sui_resizable_handle-line_size);
+  }
+
+  .sui_resizable_handle[aria-orientation="horizontal"] > .sui_resizable_handle_grip {
+    transform: rotate(90deg);
+  }
+
+  .sui_resizable_handle[aria-orientation="vertical"]::after {
+    top: 0px;
+    bottom: 0px;
+    left: 50%;
+    width: var(--sui_resizable_handle-hit_size);
+    transform: translateX(-50%);
+  }
+
+  .sui_resizable_handle[aria-orientation="horizontal"]::after {
+    top: 50%;
+    right: 0px;
+    left: 0px;
+    height: var(--sui_resizable_handle-hit_size);
+    transform: translateY(-50%);
+  }
+
+  .sui_resizable_handle_grip:empty::before {
+    display: block;
+    width: var(--sui_resizable_handle-grip_dot_size);
+    height: var(--sui_resizable_handle-grip_dot_size);
+    content: "";
+    background-color: var(--_sui_resizable_handle-line_color,
+                          var(--sui_resizable_handle-line_color-normal)
+                        );
+    border-radius: 999px;
+    box-shadow: 0px -4px 0px
+                  var(--_sui_resizable_handle-line_color,
+                       var(--sui_resizable_handle-line_color-normal)
+                     ),
+                0px 4px 0px
+                  var(--_sui_resizable_handle-line_color,
+                       var(--sui_resizable_handle-line_color-normal)
+                     );
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_resizable_handle {
+    /* 形状 */
+    --sui_resizable_handle-line_size: 1px;
+    --sui_resizable_handle-hit_size: 16px;
+    --sui_resizable_handle-grip_width: 12px;
+    --sui_resizable_handle-grip_height: 16px;
+    --sui_resizable_handle-grip_dot_size: 2px;
+    /* 背景 */
+    --sui_resizable_handle-line_color-normal: var(--sui-canvas_text-3);
+    --sui_resizable_handle-line_color-subtle: var(--sui-canvas_text-2);
+    --sui_resizable_handle-line_color-action: var(--sui-canvas_text-1);
+    --sui_resizable_handle-grip_background_color-normal: var(--sui-canvas-1);
+    --sui_resizable_handle-grip_background_color-subtle: var(--sui-canvas-2);
+    --sui_resizable_handle-grip_background_color-action: var(--sui-canvas-1);
+    /* 枠線 */
+    --sui_resizable_handle-grip_border_color-normal: var(--sui-canvas_text-3);
+    --sui_resizable_handle-grip_border_color-subtle: var(--sui-canvas_text-2);
+    --sui_resizable_handle-grip_border_color-action: var(--sui-canvas_text-1);
+    --sui_resizable_handle-grip_border_width: 1px;
+    --sui_resizable_handle-grip_border_radius: 2px;
+    --sui_resizable_handle-outline_color: var(--sui-focusring_color);
+    --sui_resizable_handle-outline_offset: var(--sui-focusring_offset);
+    --sui_resizable_handle-outline_width: 0px;
+  }
+
+  /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  @media (any-hover: hover) {
+    .sui_resizable_handle:not(.sui_resizable_handle-disabled):hover {
+      /* 背景 */
+      --_sui_resizable_handle-line_color: var(--sui_resizable_handle-line_color-subtle);
+      --_sui_resizable_handle-grip_background_color:
+        var(--sui_resizable_handle-grip_background_color-subtle);
+      --_sui_resizable_handle-grip_border_color:
+        var(--sui_resizable_handle-grip_border_color-subtle);
+    }
+  }
+
+  .sui_resizable_handle:not(.sui_resizable_handle-disabled):active {
+    /* 背景 */
+    --_sui_resizable_handle-line_color: var(--sui_resizable_handle-line_color-action);
+    --_sui_resizable_handle-grip_background_color:
+      var(--sui_resizable_handle-grip_background_color-action);
+    --_sui_resizable_handle-grip_border_color:
+      var(--sui_resizable_handle-grip_border_color-action);
+  }
+
+  .sui_resizable_handle:focus-visible {
+    /* 枠線 */
+    --_sui_resizable_handle-outline_width: var(--sui-focusring_width);
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* disabled */
+@layer sui.important {
+  /* Handle */
+  .sui_resizable_handle-disabled {
+    cursor: not-allowed !important;
+    opacity: 0.5 !important;
+  }
+}

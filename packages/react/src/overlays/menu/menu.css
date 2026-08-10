@@ -416,7 +416,7 @@
     height: calc(var(--sui_menu_item-font_size) * var(--sui_menu_item-line_height));
     opacity: var(--_sui_menu_item_indicator-opacity, var(--sui_menu_item_indicator-opacity));
 
-    svg:not(.sui-unstyled) {
+    svg:not(.sui-ignore) {
       width: 100%;
       height: 100%;
     }

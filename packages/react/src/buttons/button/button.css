@@ -541,7 +541,7 @@
     /* 変形 */
     scale: var(--_sui_button_content-scale, 1);
 
-    svg:not(.sui-unstyled) {
+    svg:not(.sui-ignore) {
       /* 形状 */
       width: var(--sui_button_content_svg-size);
       height: var(--sui_button_content_svg-size);

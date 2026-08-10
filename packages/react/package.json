@@ -23,6 +23,10 @@
       "types": "./dist/src/index.d.ts",
       "default": "./dist/src/index.js"
     },
+    "./alert": {
+      "types": "./dist/src/data-display/alert/index.d.ts",
+      "default": "./dist/src/data-display/alert/index.js"
+    },
     "./accordion": {
       "types": "./dist/src/navigation/accordion/index.d.ts",
       "default": "./dist/src/navigation/accordion/index.js"
@@ -42,6 +46,10 @@
     "./avatar": {
       "types": "./dist/src/data-display/avatar/index.d.ts",
       "default": "./dist/src/data-display/avatar/index.js"
+    },
+    "./avatar-group": {
+      "types": "./dist/src/data-display/avatar-group/index.d.ts",
+      "default": "./dist/src/data-display/avatar-group/index.js"
     },
     "./alert-dialog": {
       "types": "./dist/src/overlays/alert-dialog/index.d.ts",
@@ -131,6 +139,10 @@
       "types": "./dist/src/data-display/progress/index.d.ts",
       "default": "./dist/src/data-display/progress/index.js"
     },
+    "./resizable": {
+      "types": "./dist/src/layout/resizable/index.d.ts",
+      "default": "./dist/src/layout/resizable/index.js"
+    },
     "./autocomplete": {
       "types": "./dist/src/forms/autocomplete/index.d.ts",
       "default": "./dist/src/forms/autocomplete/index.js"
@@ -171,7 +183,8 @@
     "@base-ui/react": "^1.6.0",
     "@base-ui/utils": "^0.3.1",
     "@suru-ui/core": "workspace:*",
-    "@suru-ui/theme": "workspace:*"
+    "@suru-ui/theme": "workspace:*",
+    "react-resizable-panels": "^4.12.2"
   },
   "devDependencies": {
     "@storybook/addon-docs": "^10.5.4",

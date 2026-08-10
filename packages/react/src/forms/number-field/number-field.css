@@ -377,7 +377,7 @@
     color: var(--_sui_number_field_button-color, var(--sui_number_field_button-color-normal));
     background-color: var(--_sui_number_field_button-canvas, transparent);
 
-    svg:not(.sui-unstyled) {
+    svg:not(.sui-ignore) {
       width: var(--sui_number_field_button-icon-size);
       height: var(--sui_number_field_button-icon-size);
     }
@@ -484,7 +484,7 @@
     color: var(--_sui_number_field_button-color, var(--sui_number_field_button-color-normal));
     background-color: var(--_sui_number_field_button-canvas, transparent);
 
-    svg:not(.sui-unstyled) {
+    svg:not(.sui-ignore) {
       width: var(--sui_number_field_button-icon-size);
       height: var(--sui_number_field_button-icon-size);
     }

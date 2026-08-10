@@ -24,7 +24,9 @@ export {
 } from "./buttons/toggle-button-group/index.js";
 
 // data-display
+export { type AlertProps, type AlertSlotProps, Alert } from "./data-display/alert/index.js";
 export { type AvatarProps, Avatar } from "./data-display/avatar/index.js";
+export { type AvatarGroupProps, AvatarGroup } from "./data-display/avatar-group/index.js";
 export { type ChipProps, Chip } from "./data-display/chip/index.js";
 export { type MeterProps, type MeterSlotProps, Meter } from "./data-display/meter/index.js";
 export {
@@ -52,6 +54,19 @@ export { type RadioGroupProps, RadioGroup } from "./forms/radio-group/index.js";
 export { type SelectProps, Select } from "./forms/select/index.js";
 export { type SliderProps, type SliderSlotProps, Slider } from "./forms/slider/index.js";
 export { type SwitchProps, type SwitchSlotProps, Switch } from "./forms/switch/index.js";
+
+// layout
+export {
+  type ResizableDirection,
+  type ResizableHandleProps,
+  type ResizablePanelProps,
+  type ResizablePanelGroupProps,
+  type ResizableProps,
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+  Resizable,
+} from "./layout/resizable/index.js";
 
 // navigation
 export {
