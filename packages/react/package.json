@@ -87,17 +87,9 @@
       "types": "./dist/src/buttons/button/index.d.ts",
       "default": "./dist/src/buttons/button/index.js"
     },
-    "./button-group": {
-      "types": "./dist/src/buttons/button-group/index.d.ts",
-      "default": "./dist/src/buttons/button-group/index.js"
-    },
     "./toggle-button": {
       "types": "./dist/src/buttons/toggle-button/index.d.ts",
       "default": "./dist/src/buttons/toggle-button/index.js"
-    },
-    "./toggle-button-group": {
-      "types": "./dist/src/buttons/toggle-button-group/index.d.ts",
-      "default": "./dist/src/buttons/toggle-button-group/index.js"
     },
     "./chip": {
       "types": "./dist/src/data-display/chip/index.d.ts",
@@ -138,6 +130,10 @@
     "./progress": {
       "types": "./dist/src/data-display/progress/index.d.ts",
       "default": "./dist/src/data-display/progress/index.js"
+    },
+    "./action-group": {
+      "types": "./dist/src/leyaout/action-group/index.d.ts",
+      "default": "./dist/src/leyaout/action-group/index.js"
     },
     "./resizable": {
       "types": "./dist/src/layout/resizable/index.d.ts",

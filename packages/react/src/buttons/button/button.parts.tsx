@@ -5,8 +5,8 @@ import * as React from "react";
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
+import { useActionGroupContext } from "../../layout/action-group/action-group.parts.jsx";
 import type { Component } from "../../types.js";
-import { useButtonGroupContext } from "../button-group/button-group.parts.jsx";
 
 import "./button.css";
 
@@ -154,7 +154,7 @@ export type ButtonRootProps = React.ComponentProps<typeof Button> & {
  * ```
  */
 export const ButtonRoot: Component<ButtonRootProps> = function SuiButtonRoot(props) {
-  const group = useButtonGroupContext(true);
+  const group = useActionGroupContext(true);
   const {
     size: sizeProp = "md",
     type = "button",
@@ -190,6 +190,7 @@ export const ButtonRoot: Component<ButtonRootProps> = function SuiButtonRoot(pro
         className={cn(
           className,
           "sui_button",
+          "sui_action_group_item",
           `sui_button-size_${size}`,
           `sui_button-color_${color}`,
           `sui_button-radius_${radius}`,

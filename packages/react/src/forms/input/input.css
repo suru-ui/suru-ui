@@ -132,6 +132,21 @@
     --sui_input-border_radius: 0px;
   }
 
+  .sui_input-radius_sm {
+    /* 枠線 */
+    --sui_input-border_radius: var(--sui-radius-sm);
+  }
+
+  .sui_input-radius_md {
+    /* 枠線 */
+    --sui_input-border_radius: var(--sui-radius-md);
+  }
+
+  .sui_input-radius_lg {
+    /* 枠線 */
+    --sui_input-border_radius: var(--sui-radius-lg);
+  }
+
   .sui_input-radius_rounded {
     /* 枠線 */
     --sui_input-border_radius: var(--sui-radius-sm);
@@ -154,6 +169,13 @@
     --sui_input-background_color-normal: var(--sui-grey-liquid-normal);
     /* 前景 */
     --sui_input-color: var(--sui-grey-liquid-canvas_text-normal);
+  }
+
+  .sui_input-variant_solid {
+    /* 背景 */
+    --sui_input-background_color-normal: var(--sui-grey-solid-normal);
+    /* 前景 */
+    --sui_input-color: var(--sui-grey-solid-canvas_text-normal);
   }
 
   .sui_input-accent_color_grey {

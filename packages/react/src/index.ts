@@ -16,12 +16,7 @@ export { default as useFocusType } from "./hooks/use-focus-type.js";
 
 // buttons
 export { type ButtonProps, type ButtonSlotProps, Button } from "./buttons/button/index.js";
-export { type ButtonGroupProps, ButtonGroup } from "./buttons/button-group/index.js";
 export { type ToggleButtonProps, ToggleButton } from "./buttons/toggle-button/index.js";
-export {
-  type ToggleButtonGroupProps,
-  ToggleButtonGroup,
-} from "./buttons/toggle-button-group/index.js";
 
 // data-display
 export { type AlertProps, type AlertSlotProps, Alert } from "./data-display/alert/index.js";
@@ -56,6 +51,12 @@ export { type SliderProps, type SliderSlotProps, Slider } from "./forms/slider/i
 export { type SwitchProps, type SwitchSlotProps, Switch } from "./forms/switch/index.js";
 
 // layout
+export {
+  type ActionGroupRootProps,
+  type ActionGroupSeparatorProps,
+  ActionGroupRoot,
+  ActionGroupSeparator,
+} from "./layout/action-group/index.js";
 export {
   type ResizableDirection,
   type ResizableHandleProps,

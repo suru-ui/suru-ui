@@ -140,6 +140,21 @@
     --sui_number_field-border_radius: 0px;
   }
 
+  .sui_number_field-radius_sm {
+    /* 枠線 */
+    --sui_number_field-border_radius: var(--sui-radius-sm);
+  }
+
+  .sui_number_field-radius_md {
+    /* 枠線 */
+    --sui_number_field-border_radius: var(--sui-radius-md);
+  }
+
+  .sui_number_field-radius_lg {
+    /* 枠線 */
+    --sui_number_field-border_radius: var(--sui-radius-lg);
+  }
+
   .sui_number_field-radius_rounded {
     /* 枠線 */
     --sui_number_field-border_radius: var(--sui-radius-sm);
@@ -158,6 +173,11 @@
   .sui_number_field-variant_liquid {
     /* 背景 */
     --sui_number_field-group-canvas-normal: var(--sui-grey-liquid-normal);
+  }
+
+  .sui_number_field-variant_solid {
+    /* 背景 */
+    --sui_number_field-group-canvas-normal: var(--sui-grey-solid-normal);
   }
 
   .sui_number_field-accent_color_grey {
@@ -382,6 +402,17 @@
     --sui_number_field_button-color-action: var(--sui-grey-liquid-canvas_text-action);
   }
 
+  .sui_number_field-variant_solid {
+    /* 背景 */
+    --sui_number_field_button-canvas-normal: var(--sui-grey-solid-normal);
+    --sui_number_field_button-canvas-subtle: var(--sui-grey-solid-subtle);
+    --sui_number_field_button-canvas-action: var(--sui-grey-solid-action);
+    /* 前景 */
+    --sui_number_field_button-color-normal: var(--sui-grey-solid-canvas_text-normal);
+    --sui_number_field_button-color-subtle: var(--sui-grey-solid-canvas_text-subtle);
+    --sui_number_field_button-color-action: var(--sui-grey-solid-canvas_text-action);
+  }
+
   /* 既定値設定: ここまで */
 
   /* 上書き設定: ここから */
@@ -480,6 +511,17 @@
     --sui_number_field_button-color-normal: var(--sui-grey-liquid-canvas_text-normal);
     --sui_number_field_button-color-subtle: var(--sui-grey-liquid-canvas_text-subtle);
     --sui_number_field_button-color-action: var(--sui-grey-liquid-canvas_text-action);
+  }
+
+  .sui_number_field-variant_solid {
+    /* 背景 */
+    --sui_number_field_button-canvas-normal: var(--sui-grey-solid-normal);
+    --sui_number_field_button-canvas-subtle: var(--sui-grey-solid-subtle);
+    --sui_number_field_button-canvas-action: var(--sui-grey-solid-action);
+    /* 前景 */
+    --sui_number_field_button-color-normal: var(--sui-grey-solid-canvas_text-normal);
+    --sui_number_field_button-color-subtle: var(--sui-grey-solid-canvas_text-subtle);
+    --sui_number_field_button-color-action: var(--sui-grey-solid-canvas_text-action);
   }
 
   /* 既定値設定: ここまで */

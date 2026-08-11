@@ -3,6 +3,7 @@ import type { Color, Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import cn from "../../cn.js";
+import { useActionGroupContext } from "../../layout/action-group/action-group.parts.jsx";
 import type { Component } from "../../types.js";
 
 import "./number-field.css";
@@ -90,6 +91,7 @@ export type NumberFieldRootProps = Omit<React.ComponentProps<typeof NumberField.
  * ```
  */
 export const NumberFieldRoot: Component<NumberFieldRootProps> = function SuiNumberFieldRoot(props) {
+  const group = useActionGroupContext(true);
   const {
     size: sizeProp = "md",
     radius: radiusProp = "rounded",
@@ -99,6 +101,11 @@ export const NumberFieldRoot: Component<NumberFieldRootProps> = function SuiNumb
     className,
     ...otherProps
   } = props;
+  const size = group?.size ?? sizeProp;
+  const radius = group?.radius ?? radiusProp;
+  const variant = group?.variant ?? variantProp;
+  const outlined = group?.outlined ?? outlinedProp;
+  const accentColor = group?.color ?? accentColorProp;
 
   return (
     <NumberField.Root
@@ -106,11 +113,12 @@ export const NumberFieldRoot: Component<NumberFieldRootProps> = function SuiNumb
       className={cn(
         className,
         "sui_number_field",
-        `sui_number_field-size_${sizeProp}`,
-        `sui_number_field-radius_${radiusProp}`,
-        `sui_number_field-variant_${variantProp}`,
-        `sui_number_field-accent_color_${accentColorProp}`,
-        outlinedProp && "sui_number_field-outlined",
+        "sui_action_group_item",
+        `sui_number_field-size_${size}`,
+        `sui_number_field-radius_${radius}`,
+        `sui_number_field-variant_${variant}`,
+        `sui_number_field-accent_color_${accentColor}`,
+        outlined && "sui_number_field-outlined",
         (state) => state.disabled && "sui_number_field-disabled",
       )}
     />

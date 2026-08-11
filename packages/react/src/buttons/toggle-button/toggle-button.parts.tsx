@@ -4,9 +4,9 @@ import * as React from "react";
 
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
+import { useActionGroupContext } from "../../layout/action-group/action-group.parts.jsx";
 import type { Component } from "../../types.js";
 import * as Button from "../button/button.parts.jsx";
-import { useToggleButtonGroupContext } from "../toggle-button-group/toggle-button-group.parts.jsx";
 
 // Context
 // -------
@@ -153,7 +153,7 @@ export type ToggleButtonRootProps = React.ComponentProps<typeof Toggle> & {
 export const ToggleButtonRoot: Component<ToggleButtonRootProps> = function SuiToggleButtonRoot(
   props,
 ) {
-  const group = useToggleButtonGroupContext(true);
+  const group = useActionGroupContext(true);
   const {
     size: sizeProp,
     type = "button",
@@ -167,11 +167,11 @@ export const ToggleButtonRoot: Component<ToggleButtonRootProps> = function SuiTo
     className,
     ...otherProps
   } = props;
-  const size = sizeProp ?? group?.size ?? "md";
-  const color = colorProp ?? group?.color ?? "blue";
-  const radius = radiusProp ?? group?.radius ?? "rounded";
-  const variant = variantProp ?? group?.variant ?? "liquid";
-  const outlined = outlinedProp ?? group?.outlined ?? false;
+  const size = group?.size ?? sizeProp ?? "md";
+  const color = group?.color ?? colorProp ?? "blue";
+  const radius = group?.radius ?? radiusProp ?? "rounded";
+  const variant = group?.variant ?? variantProp ?? "liquid";
+  const outlined = group?.outlined ?? outlinedProp ?? false;
   const disabled = disabledProp || pending;
   const context = React.useMemo(
     () => ({
@@ -189,6 +189,7 @@ export const ToggleButtonRoot: Component<ToggleButtonRootProps> = function SuiTo
         className={cn(
           className,
           "sui_button",
+          "sui_action_group_item",
           `sui_button-size_${size}`,
           `sui_button-color_${color}`,
           `sui_button-radius_${radius}`,

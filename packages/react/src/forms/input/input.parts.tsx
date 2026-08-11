@@ -4,6 +4,7 @@ import * as React from "react";
 
 import cn from "../../cn.js";
 import useFocusType from "../../hooks/use-focus-type.js";
+import { useActionGroupContext } from "../../layout/action-group/action-group.parts.jsx";
 import type { Component } from "../../types.js";
 
 import "./input.css";
@@ -85,6 +86,7 @@ export type InputRootProps = Omit<React.ComponentProps<typeof Input>, "size"> & 
  * ```
  */
 export const InputRoot: Component<InputRootProps> = function SuiInputRoot(props) {
+  const group = useActionGroupContext(true);
   const {
     size: sizeProp = "md",
     radius: radiusProp = "rounded",
@@ -97,6 +99,11 @@ export const InputRoot: Component<InputRootProps> = function SuiInputRoot(props)
     onPointerDown,
     ...otherProps
   } = props;
+  const size = group?.size ?? sizeProp;
+  const radius = group?.radius ?? radiusProp;
+  const variant = group?.variant ?? variantProp;
+  const outlined = group?.outlined ?? outlinedProp;
+  const accentColor = group?.color ?? accentColorProp;
   const { focusType, ...focusProps } = useFocusType({ onBlur, onFocus, onPointerDown });
 
   return (
@@ -105,11 +112,12 @@ export const InputRoot: Component<InputRootProps> = function SuiInputRoot(props)
       className={cn(
         className,
         "sui_input",
-        `sui_input-size_${sizeProp}`,
-        `sui_input-radius_${radiusProp}`,
-        `sui_input-variant_${variantProp}`,
-        `sui_input-accent_color_${accentColorProp}`,
-        outlinedProp && "sui_input-outlined",
+        "sui_action_group_item",
+        `sui_input-size_${size}`,
+        `sui_input-radius_${radius}`,
+        `sui_input-variant_${variant}`,
+        `sui_input-accent_color_${accentColor}`,
+        outlined && "sui_input-outlined",
         (state) => state.disabled && "sui_input-disabled",
       )}
       {...focusProps}

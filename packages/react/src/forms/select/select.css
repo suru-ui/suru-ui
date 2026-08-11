@@ -96,6 +96,21 @@
     --sui_select-border_radius: 0px;
   }
 
+  .sui_select-radius_sm {
+    /* 枠線 */
+    --sui_select-border_radius: var(--sui-radius-sm);
+  }
+
+  .sui_select-radius_md {
+    /* 枠線 */
+    --sui_select-border_radius: var(--sui-radius-md);
+  }
+
+  .sui_select-radius_lg {
+    /* 枠線 */
+    --sui_select-border_radius: var(--sui-radius-lg);
+  }
+
   .sui_select-radius_rounded {
     /* 枠線 */
     --sui_select-border_radius: var(--sui-radius-sm);
@@ -128,6 +143,19 @@
     --sui_select_button-color-normal: var(--sui-grey-liquid-canvas_text-normal);
     --sui_select_button-color-subtle: var(--sui-grey-liquid-canvas_text-subtle);
     --sui_select_button-color-action: var(--sui-grey-liquid-canvas_text-action);
+  }
+
+  .sui_select-variant_solid {
+    /* 背景 */
+    --sui_select-canvas-normal: var(--sui-grey-solid-normal);
+    --sui_select_button-canvas-normal: var(--sui-grey-solid-normal);
+    --sui_select_button-canvas-subtle: var(--sui-grey-solid-subtle);
+    --sui_select_button-canvas-action: var(--sui-grey-solid-action);
+    /* 前景 */
+    --sui_select-color: var(--sui-grey-solid-canvas_text-normal);
+    --sui_select_button-color-normal: var(--sui-grey-solid-canvas_text-normal);
+    --sui_select_button-color-subtle: var(--sui-grey-solid-canvas_text-subtle);
+    --sui_select_button-color-action: var(--sui-grey-solid-canvas_text-action);
   }
 
   /* 既定値設定: ここまで */

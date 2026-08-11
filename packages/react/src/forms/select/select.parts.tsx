@@ -4,6 +4,7 @@ import * as React from "react";
 
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
+import { useActionGroupContext } from "../../layout/action-group/action-group.parts.jsx";
 import { ScrollArea } from "../../navigation/scroll-area/index.js";
 import type { Component } from "../../types.js";
 
@@ -320,12 +321,13 @@ export type SelectTriggerProps = React.ComponentProps<typeof BaseSelect.Trigger>
  * ```
  */
 export const SelectTrigger: Component<SelectTriggerProps> = function SuiSelectTrigger(props) {
+  const actionGroup = useActionGroupContext(true);
   const context = useSelectContext(true);
   const { className, ...otherProps } = props;
-  const size = context?.size ?? "md";
-  const radius = context?.radius ?? "rounded";
-  const variant = context?.variant ?? "naked";
-  const outlined = context?.outlined ?? variant === "naked";
+  const size = actionGroup?.size ?? context?.size ?? "md";
+  const radius = actionGroup?.radius ?? context?.radius ?? "rounded";
+  const variant = actionGroup?.variant ?? context?.variant ?? "naked";
+  const outlined = actionGroup?.outlined ?? context?.outlined ?? variant === "naked";
 
   return (
     <BaseSelect.Trigger
@@ -333,6 +335,7 @@ export const SelectTrigger: Component<SelectTriggerProps> = function SuiSelectTr
       className={cn(
         className,
         "sui_select",
+        "sui_action_group_item",
         `sui_select-size_${size}`,
         `sui_select-variant_${variant}`,
         `sui_select-radius_${radius}`,
