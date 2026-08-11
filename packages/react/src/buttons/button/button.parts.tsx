@@ -1,12 +1,8 @@
 import { Button } from "@base-ui/react/button";
-import {
-  useRenderElement,
-  type UseRenderElementComponentProps,
-} from "@base-ui/react/internals/useRenderElement";
 import type { Size, Color, ColorTemplate as Variant } from "@suru-ui/theme";
 import * as React from "react";
 
-import splitRenderProps from "../../_split-render-props.js";
+import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
 import type { Component } from "../../types.js";
@@ -240,11 +236,8 @@ export type ButtonContentState = {};
 /**
  * {@link ButtonContent} に渡すプロパティーです。
  */
-export type ButtonContentProps = Omit<
-  React.ComponentProps<"span">,
-  keyof UseRenderElementComponentProps<{}>
-> &
-  UseRenderElementComponentProps<ButtonContentState>;
+export type ButtonContentProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
+  RenderProps<ButtonContentState>;
 
 /**
  * ボタンのコンテンツを表示するラッパー要素です。
@@ -255,13 +248,10 @@ export type ButtonContentProps = Omit<
  * ```
  */
 export const ButtonContent: Component<ButtonContentProps> = function SuiButtonContent(props) {
-  const [renderProps, componentProps] = splitRenderProps(props);
-  const { ref, ...elementProps } = componentProps;
-
-  return useRenderElement("span", renderProps, {
-    ref,
+  return useRender({
+    defaultTagName: "span",
     props: [
-      elementProps,
+      props,
       {
         className: "sui_button_content",
       },
@@ -300,11 +290,8 @@ export type ButtonPendingState = {};
 /**
  * {@link ButtonPending} に渡すプロパティーです。
  */
-export type ButtonPendingProps = Omit<
-  React.ComponentProps<"span">,
-  keyof UseRenderElementComponentProps<{}>
-> &
-  UseRenderElementComponentProps<ButtonPendingState> & {
+export type ButtonPendingProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
+  RenderProps<ButtonPendingState> & {
     /**
      * `pending` が `false` のときの表示モードを指定します。
      *
@@ -337,13 +324,13 @@ export type ButtonPendingProps = Omit<
  */
 export const ButtonPending: Component<ButtonPendingProps> = function SuiButtonPending(props) {
   const { pending } = useContext();
-  const [renderProps, componentProps] = splitRenderProps(props);
-  const { ref, overlay = false, defaultVisibility = "none", ...elementProps } = componentProps;
+  const { overlay = false, defaultVisibility = "none", ...otherProps } = props;
 
-  return useRenderElement("span", renderProps, {
-    ref,
+  return useRender({
+    defaultTagName: "span",
+    enabled: pending || defaultVisibility === "hidden",
     props: [
-      elementProps,
+      otherProps,
       {
         className: cn(
           "sui_button_pending",
@@ -353,7 +340,6 @@ export const ButtonPending: Component<ButtonPendingProps> = function SuiButtonPe
         ),
       },
     ],
-    enabled: pending || defaultVisibility === "hidden",
   });
 };
 
@@ -462,11 +448,8 @@ export type ButtonCircularProgressState = {};
 /**
  * {@link ButtonCircularProgress} に渡すプロパティーです。
  */
-export type ButtonCircularProgressProps = Omit<
-  React.ComponentProps<"svg">,
-  keyof UseRenderElementComponentProps<{}>
-> &
-  UseRenderElementComponentProps<ButtonCircularProgressState> & {
+export type ButtonCircularProgressProps = Omit<React.ComponentProps<"svg">, keyof RenderProps> &
+  RenderProps<ButtonCircularProgressState> & {
     /**
      * プログレスバーを不定モード（回転するアニメーション）にするかどうかを指定します。
      *
@@ -496,9 +479,7 @@ export type ButtonCircularProgressProps = Omit<
  */
 export const ButtonCircularProgress: Component<ButtonCircularProgressProps> =
   function SuiButtonCircularProgress(props) {
-    const [renderProps, componentProps] = splitRenderProps(props);
     const {
-      ref,
       fill = "none",
       width = "100%",
       xmlns = "http://www.w3.org/2000/svg",
@@ -506,20 +487,20 @@ export const ButtonCircularProgress: Component<ButtonCircularProgressProps> =
       viewBox = "0 0 24 24",
       percentage,
       indeterminate = percentage === undefined || percentage < 0,
-      ...elementProps
-    } = componentProps;
+      ...otherProps
+    } = props;
     const context = React.useMemo(
       () => ({ percentage, indeterminate }),
       [percentage, indeterminate],
     );
-    const element = useRenderElement("svg", renderProps, {
-      ref,
+    const element = useRender({
+      defaultTagName: "svg",
       props: [
-        elementProps,
+        otherProps,
         {
           fill,
-          xmlns,
           width,
+          xmlns,
           height,
           viewBox,
           className: "sui_button_circular_progress",
@@ -563,9 +544,9 @@ export type ButtonCircularProgressTrackState = {};
  */
 export type ButtonCircularProgressTrackProps = Omit<
   React.ComponentProps<"circle">,
-  keyof UseRenderElementComponentProps<{}>
+  keyof RenderProps
 > &
-  UseRenderElementComponentProps<ButtonCircularProgressTrackState>;
+  RenderProps<ButtonCircularProgressTrackState>;
 
 /**
  * 円形プログレスバーのトラック（背景の円弧）を描画する要素です。
@@ -577,29 +558,29 @@ export type ButtonCircularProgressTrackProps = Omit<
  */
 export const ButtonCircularProgressTrack: Component<ButtonCircularProgressTrackProps> =
   function SuiButtonCircularProgressTrack(props) {
-    const [renderProps, componentProps] = splitRenderProps(props);
     const {
       r,
       cx = "50%",
       cy = "50%",
-      ref,
       stroke = "currentColor",
       strokeWidth = 4,
-      ...elementProps
-    } = componentProps;
+      ...otherProps
+    } = props;
     const strokeWidthCss = typeof strokeWidth === "number" ? strokeWidth + "px" : strokeWidth;
 
-    return useRenderElement("circle", renderProps, {
-      ref,
-      props: {
-        ...elementProps,
-        r: r ?? `calc(50% - ${strokeWidthCss} / 2)`,
-        cx,
-        cy,
-        stroke,
-        className: "sui_button_circular_progress_track",
-        strokeWidth: strokeWidthCss,
-      },
+    return useRender({
+      defaultTagName: "circle",
+      props: [
+        otherProps,
+        {
+          r: r ?? `calc(50% - ${strokeWidthCss} / 2)`,
+          cx,
+          cy,
+          stroke,
+          className: "sui_button_circular_progress_track",
+          strokeWidth: strokeWidthCss,
+        },
+      ],
     });
   };
 
@@ -637,9 +618,9 @@ export type ButtonCircularProgressFillState = {};
  */
 export type ButtonCircularProgressFillProps = Omit<
   React.ComponentProps<"circle">,
-  keyof UseRenderElementComponentProps<{}>
+  keyof RenderProps
 > &
-  UseRenderElementComponentProps<ButtonCircularProgressFillState>;
+  RenderProps<ButtonCircularProgressFillState>;
 
 /**
  * 円形プログレスバーのフィル（進捗を表す円弧）を描画する要素です。
@@ -655,37 +636,37 @@ export type ButtonCircularProgressFillProps = Omit<
 export const ButtonCircularProgressFill: Component<ButtonCircularProgressFillProps> =
   function SuiButtonCircularProgressFill(props) {
     const { percentage, indeterminate } = useCircularProgressContext();
-    const [renderProps, componentProps] = splitRenderProps(props);
     const {
       r,
       cx = "50%",
       cy = "50%",
-      ref,
       stroke = "currentColor",
       pathLength = "100",
       strokeWidth = 4,
       strokeLinecap = "round",
       strokeDasharray = "100 200",
       strokeDashoffset = 100 - (indeterminate || percentage === undefined ? 25 : percentage),
-      ...elementProps
-    } = componentProps;
+      ...otherProps
+    } = props;
     const strokeWidthCss = typeof strokeWidth === "number" ? strokeWidth + "px" : strokeWidth;
 
-    return useRenderElement("circle", renderProps, {
-      ref,
-      props: {
-        ...elementProps,
-        r: r ?? `calc(50% - ${strokeWidthCss} / 2)`,
-        cx,
-        cy,
-        stroke,
-        className: "sui_button_circular_progress_fill",
-        pathLength,
-        strokeWidth: strokeWidthCss,
-        strokeLinecap,
-        strokeDasharray,
-        strokeDashoffset,
-      },
+    return useRender({
+      defaultTagName: "circle",
+      props: [
+        otherProps,
+        {
+          r: r ?? `calc(50% - ${strokeWidthCss} / 2)`,
+          cx,
+          cy,
+          stroke,
+          className: "sui_button_circular_progress_fill",
+          pathLength,
+          strokeWidth: strokeWidthCss,
+          strokeLinecap,
+          strokeDasharray,
+          strokeDashoffset,
+        },
+      ],
     });
   };
 
@@ -723,9 +704,9 @@ export type ButtonCircularProgressFillRotationState = {};
  */
 export type ButtonCircularProgressFillRotationProps = Omit<
   React.ComponentProps<"animateTransform">,
-  keyof UseRenderElementComponentProps<{}>
+  keyof RenderProps
 > &
-  UseRenderElementComponentProps<ButtonCircularProgressFillState>;
+  RenderProps<ButtonCircularProgressFillState>;
 
 /**
  * 不定モード時に円形プログレスバーを回転させるアニメーション要素です。
@@ -740,27 +721,29 @@ export type ButtonCircularProgressFillRotationProps = Omit<
 export const ButtonCircularProgressFillRotation: Component<ButtonCircularProgressFillRotationProps> =
   function SuiButtonCircularProgressFillRotation(props) {
     const { indeterminate } = useCircularProgressContext();
-    const [renderProps, componentProps] = splitRenderProps(props);
     const {
       dur = "0.75s",
       type = "rotate",
       values = "0;360",
       repeatCount = "indefinite",
       attributeName = "transform",
-      ...elementProps
-    } = componentProps;
+      ...otherProps
+    } = props;
 
-    return useRenderElement("animateTransform", renderProps, {
+    return useRender({
+      defaultTagName: "animateTransform",
       enabled: indeterminate,
-      props: {
-        ...elementProps,
-        dur,
-        type,
-        values,
-        className: "sui_button_circular_progress_fill_rotation",
-        repeatCount,
-        attributeName,
-      },
+      props: [
+        otherProps,
+        {
+          dur,
+          type,
+          values,
+          className: "sui_button_circular_progress_fill_rotation",
+          repeatCount,
+          attributeName,
+        },
+      ],
     });
   };
 
