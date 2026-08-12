@@ -3,6 +3,10 @@ import { COLORS, SIZES } from "@suru-ui/theme";
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Meter } from "../../src/data-display/meter/index.js";
 
+const RADII = ["none", ...SIZES, "full"] as const;
+
+const VARIANTS = ["naked", "liquid"] as const;
+
 const meta = preview.meta({
   title: "Data Display / Meter",
   component: Meter,
@@ -15,6 +19,9 @@ const ctrl = controls(Meter, {
     options: COLORS,
     control: "select",
   },
+  label: {
+    control: "text",
+  },
   max: {
     control: "number",
   },
@@ -25,7 +32,7 @@ const ctrl = controls(Meter, {
     control: "boolean",
   },
   radius: {
-    options: ["none", "rounded", "full"],
+    options: RADII,
     control: "select",
   },
   size: {
@@ -36,7 +43,7 @@ const ctrl = controls(Meter, {
     control: "number",
   },
   variant: {
-    options: ["naked", "liquid"],
+    options: VARIANTS,
     control: "select",
   },
 });
@@ -44,67 +51,60 @@ const ctrl = controls(Meter, {
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
-    color: "blue",
-    max: 100,
-    min: 0,
-    outlined: false,
-    radius: "full",
-    size: "md",
-    value: 24,
+    label: "ストレージ使用量",
     variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: "full",
+    outlined: undefined,
+    max: 100,
+    value: 24,
+    min: 0,
   }),
   render(props) {
-    return (
-      <div className="w-80">
-        <Meter
-          {...props}
-          slotProps={{
-            label: { children: "ストレージ使用量" },
-            value: {},
-          }}
-        />
-      </div>
-    );
+    return <Meter {...props} className="w-[300px]" />;
   },
 });
 
 export const Variants = meta.story({
   name: "バリエーション",
   ...ctrl({
-    color: "blue",
-    max: 100,
-    min: 0,
-    outlined: false,
-    radius: "full",
+    color: "grey",
     size: "md",
-    value: 50,
+    radius: "full",
+    outlined: undefined,
+    max: 100,
+    value: 24,
+    min: 0,
   }),
   render(props) {
     return (
-      <div className="flex w-80 flex-col gap-6">
-        <Meter {...props} variant="naked" />
-        <Meter {...props} variant="liquid" />
+      <div className="flex w-[300px] flex-col gap-6">
+        {VARIANTS.map((variant) => (
+          <Meter {...props} key={variant} variant={variant} label={variant} />
+        ))}
       </div>
     );
   },
 });
 
-export const Outlined = meta.story({
-  name: "枠線",
+export const Labelless = meta.story({
+  name: "ラベルなし",
   ...ctrl({
-    color: "blue",
-    max: 100,
-    min: 0,
-    radius: "full",
+    color: "grey",
     size: "md",
-    value: 50,
-    variant: "liquid",
+    radius: "full",
+    outlined: undefined,
+    max: 100,
+    value: 24,
+    min: 0,
   }),
   render(props) {
     return (
-      <div className="flex w-80 flex-col gap-6">
-        <Meter {...props} variant="naked" outlined />
-        <Meter {...props} variant="liquid" outlined />
+      <div className="flex w-[300px] flex-col gap-6">
+        {VARIANTS.map((variant) => (
+          <Meter {...props} key={variant} variant={variant} />
+        ))}
       </div>
     );
   },
@@ -113,47 +113,18 @@ export const Outlined = meta.story({
 export const Colors = meta.story({
   name: "色",
   ...ctrl({
-    max: 100,
-    min: 0,
-    outlined: false,
-    radius: "full",
     size: "md",
-    value: 50,
-    variant: "liquid",
-  }),
-  render(props) {
-    return (
-      <div className="flex w-80 flex-col gap-4">
-        {COLORS.map((color) => (
-          <div key={color}>
-            <Meter {...props} color={color} />
-            <div>{color}</div>
-          </div>
-        ))}
-      </div>
-    );
-  },
-});
-
-export const Sizes = meta.story({
-  name: "大きさ",
-  ...ctrl({
-    color: "blue",
-    max: 100,
-    min: 0,
-    outlined: false,
     radius: "full",
-    value: 50,
-    variant: "liquid",
+    outlined: undefined,
+    max: 100,
+    value: 24,
+    min: 0,
   }),
   render(props) {
     return (
-      <div className="flex w-80 flex-col gap-6">
-        {SIZES.map((size) => (
-          <div key={size}>
-            <Meter {...props} size={size} />
-            <div>{size}</div>
-          </div>
+      <div className="flex w-[300px] flex-col gap-4">
+        {COLORS.map((color) => (
+          <Meter {...props} key={color} color={color} label={color} />
         ))}
       </div>
     );
@@ -163,21 +134,21 @@ export const Sizes = meta.story({
 export const Radius = meta.story({
   name: "角丸",
   ...ctrl({
-    color: "blue",
-    max: 100,
-    min: 0,
-    outlined: false,
-    size: "md",
-    value: 50,
     variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: "full",
+    outlined: undefined,
+    max: 100,
+    value: 24,
+    min: 0,
   }),
   render(props) {
     return (
-      <div className="flex w-80 flex-col gap-6">
-        {(["none", "rounded", "full"] as const).map((radius) => (
-          <div key={radius}>
-            <Meter {...props} radius={radius} />
-            <div>{radius}</div>
+      <div className="flex w-[300px] flex-col gap-6">
+        {RADII.map((radius) => (
+          <div key={radius} className="flex flex-col items-center gap-2">
+            <Meter {...props} key={radius} radius={radius} label={radius} />
           </div>
         ))}
       </div>
@@ -185,29 +156,42 @@ export const Radius = meta.story({
   },
 });
 
-export const Range = meta.story({
-  name: "範囲",
+export const Outlined = meta.story({
+  name: "枠線",
   ...ctrl({
-    color: "blue",
-    outlined: false,
-    radius: "full",
     size: "md",
-    value: 50,
-    variant: "liquid",
+    radius: "full",
+    max: 100,
+    value: 24,
+    min: 0,
   }),
   render(props) {
     return (
-      <div className="w-80">
-        <Meter
-          {...props}
-          min={20}
-          max={80}
-          value={50}
-          slotProps={{
-            label: { children: "範囲 20 から 80" },
-            value: {},
-          }}
-        />
+      <div className="flex w-[300px] flex-col gap-6">
+        <Meter {...props} label="naked" variant="naked" outlined />
+        <Meter {...props} label="liquid" variant="liquid" outlined />
+      </div>
+    );
+  },
+});
+
+export const Sizes = meta.story({
+  name: "大きさ",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    radius: "full",
+    outlined: undefined,
+    max: 100,
+    value: 24,
+    min: 0,
+  }),
+  render(props) {
+    return (
+      <div className="flex w-[300px] flex-col gap-6">
+        {SIZES.map((size) => (
+          <Meter key={size} {...props} size={size} label={size} />
+        ))}
       </div>
     );
   },

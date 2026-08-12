@@ -20,28 +20,11 @@ export type MeterRootState = Meter.Root.State;
  */
 export type MeterRootProps = React.ComponentProps<typeof Meter.Root> & {
   /**
-   * メーターのサイズを指定します。
-   *
-   * @default "md"
-   */
-  size?: Size | undefined;
-
-  /**
    * メーターの色を指定します。
    *
    * @default "grey"
    */
   color?: Color | undefined;
-
-  /**
-   * メーターのスタイルバリエーションを指定します。
-   *
-   * - `"naked"`: 背景のないトラック
-   * - `"liquid"`: 薄い塗りつぶしのトラック
-   *
-   * @default "liquid"
-   */
-  variant?: "naked" | "liquid" | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
@@ -52,12 +35,31 @@ export type MeterRootProps = React.ComponentProps<typeof Meter.Root> & {
    * メーターの角丸を指定します。
    *
    * - `"none"`: 角を直角にする
-   * - `"rounded"`: 標準的な角丸
+   * - `"sm"`: 小さい角丸
+   * - `"md"`: 標準的な角丸
+   * - `"lg"`: 大きい角丸
    * - `"full"`: 完全な丸形
    *
    * @default "full"
    */
-  radius?: "none" | "rounded" | "full" | undefined;
+  radius?: "none" | Size | "full" | undefined;
+
+  /**
+   * メーターのサイズを指定します。
+   *
+   * @default "md"
+   */
+  size?: Size | undefined;
+
+  /**
+   * メーターのスタイルバリエーションを指定します。
+   *
+   * - `"naked"`: 背景のないトラック
+   * - `"liquid"`: 薄い塗りつぶしのトラック
+   *
+   * @default "liquid"
+   */
+  variant?: "naked" | "liquid" | undefined;
 };
 
 /**
@@ -78,7 +80,7 @@ export const MeterRoot: Component<MeterRootProps> = function SuiMeterRoot(props)
     color = "grey",
     radius = "full",
     variant = "liquid",
-    outlined = false,
+    outlined = variant === "naked",
     className,
     ...otherProps
   } = props;

@@ -1,11 +1,7 @@
-import {
-  useRenderElement,
-  type UseRenderElementComponentProps,
-} from "@base-ui/react/internals/useRenderElement";
 import type { Color, ColorTemplate as Variant, Size } from "@suru-ui/theme";
-import * as React from "react";
+import type * as React from "react";
 
-import splitRenderProps from "../../_split-render-props.js";
+import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Component } from "../../types.js";
 
@@ -22,11 +18,8 @@ export type ChipRootState = {};
 /**
  * {@link ChipRoot} に渡すプロパティーです。
  */
-export type ChipRootProps = Omit<
-  React.ComponentProps<"span">,
-  keyof UseRenderElementComponentProps<ChipRootState>
-> &
-  UseRenderElementComponentProps<ChipRootState> & {
+export type ChipRootProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
+  RenderProps<ChipRootState> & {
     /**
      * チップのスタイルバリエーションを指定します。
      *
@@ -53,7 +46,7 @@ export type ChipRootProps = Omit<
      *
      * @default "full"
      */
-    radius?: "none" | "rounded" | "full" | undefined;
+    radius?: "none" | Size | "full" | undefined;
 
     /**
      * 枠線を表示するかどうかを指定します。
@@ -70,21 +63,19 @@ export type ChipRootProps = Omit<
  * ```
  */
 export const ChipRoot: Component<ChipRootProps> = function SuiChipRoot(props) {
-  const [renderProps, componentProps] = splitRenderProps(props);
   const {
-    variant = "liquid",
-    color = "grey",
     size = "sm",
+    color = "grey",
     radius = "full",
-    outlined = false,
-    ref,
-    ...elementProps
-  } = componentProps;
+    variant = "liquid",
+    outlined = variant !== "solid",
+    ...otherProps
+  } = props;
 
-  return useRenderElement("span", renderProps, {
-    ref,
+  return useRender({
+    defaultTagName: "span",
     props: [
-      elementProps,
+      otherProps,
       {
         className: cn(
           "sui_chip",
@@ -104,6 +95,7 @@ export namespace Root {
    * {@link ChipRoot} の状態型です。
    */
   export type State = ChipRootState;
+
   /**
    * {@link ChipRoot} のプロパティー型です。
    */

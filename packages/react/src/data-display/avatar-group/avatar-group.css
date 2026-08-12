@@ -17,9 +17,6 @@
   /* 動的 */
   .sui_avatar_group > .sui_avatar + .sui_avatar {
     margin-inline-start: var(--sui_avatar_group-overlap);
-  }
-
-  .sui_avatar_group > .sui_avatar:has(+ .sui_avatar) {
     box-shadow: 0px 0px 0px 2px var(--sui_avatar_group-border_color);
   }
 

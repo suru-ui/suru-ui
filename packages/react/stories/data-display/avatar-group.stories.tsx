@@ -1,6 +1,11 @@
-import { preview } from "../../.config/storybook/preview.js";
+import { COLORS as BASE_COLORS, SIZES } from "@suru-ui/theme";
+
+import { preview, controls } from "../../.config/storybook/preview.js";
 import { AvatarGroup } from "../../src/data-display/avatar-group/index.js";
 import { Avatar } from "../../src/data-display/avatar/index.js";
+
+const RADII = ["none", ...SIZES, "full"] as const;
+const COLORS = ["colorful", ...BASE_COLORS] as const;
 
 const meta = preview.meta({
   title: "Data Display / Avatar Group",
@@ -9,32 +14,99 @@ const meta = preview.meta({
 
 export default meta;
 
+const ctrl = controls(AvatarGroup, {
+  color: {
+    options: COLORS,
+    control: "select",
+  },
+  max: {
+    control: "number",
+  },
+  radius: {
+    options: RADII,
+    control: "select",
+  },
+  size: {
+    options: SIZES,
+    control: "select",
+  },
+});
+
 export const Usage = meta.story({
   name: "使い方",
-  render() {
+  ...ctrl({
+    color: "colorful",
+    size: "md",
+    radius: "full",
+    max: 4,
+  }),
+  render(props) {
     return (
-      <AvatarGroup max={4}>
-        <Avatar color="blue">太</Avatar>
-        <Avatar color="green">花</Avatar>
-        <Avatar color="orange">次</Avatar>
-        <Avatar color="purple">桜</Avatar>
-        <Avatar color="red">健</Avatar>
-        <Avatar color="yellow">葵</Avatar>
+      <AvatarGroup {...props}>
+        <Avatar src="https://i.pravatar.cc/128?img=11" alt="い">
+          い
+        </Avatar>
+        <Avatar src="https://i.pravatar.cc/128?img=12" alt="ろ">
+          ろ
+        </Avatar>
+        <Avatar src="https://i.pravatar.cc/128?img=13" alt="は">
+          は
+        </Avatar>
       </AvatarGroup>
     );
   },
 });
 
-export const CustomSurplus = meta.story({
-  name: "省略アバターのカスタマイズ",
-  render() {
+export const Surplus = meta.story({
+  name: "余剰分",
+  ...ctrl({
+    color: "colorful",
+    size: "md",
+    radius: "full",
+    max: 4,
+  }),
+  render(props) {
     return (
-      <AvatarGroup max={3} renderSurplus={(surplus) => <Avatar color="red">+{surplus}</Avatar>}>
-        <Avatar color="blue">太</Avatar>
-        <Avatar color="green">花</Avatar>
-        <Avatar color="orange">次</Avatar>
-        <Avatar color="purple">桜</Avatar>
-        <Avatar color="red">健</Avatar>
+      <AvatarGroup {...props}>
+        <Avatar src="https://i.pravatar.cc/128?img=11" alt="い">
+          い
+        </Avatar>
+        <Avatar src="https://i.pravatar.cc/128?img=12" alt="ろ">
+          ろ
+        </Avatar>
+        <Avatar src="https://i.pravatar.cc/128?img=13" alt="は">
+          は
+        </Avatar>
+        <Avatar>に</Avatar>
+        <Avatar>ほ</Avatar>
+        <Avatar>へ</Avatar>
+      </AvatarGroup>
+    );
+  },
+});
+
+export const Colors = meta.story({
+  name: "色",
+  ...ctrl({
+    size: "md",
+    radius: "full",
+    max: 1000,
+  }),
+  render(props) {
+    return (
+      <AvatarGroup {...props}>
+        <Avatar>い</Avatar>
+        <Avatar>ろ</Avatar>
+        <Avatar>は</Avatar>
+        <Avatar>に</Avatar>
+        <Avatar>ほ</Avatar>
+        <Avatar>へ</Avatar>
+        <Avatar>と</Avatar>
+        <Avatar>ち</Avatar>
+        <Avatar>り</Avatar>
+        <Avatar>ぬ</Avatar>
+        <Avatar>る</Avatar>
+        <Avatar>を</Avatar>
       </AvatarGroup>
     );
   },

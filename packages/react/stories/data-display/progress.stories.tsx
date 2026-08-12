@@ -4,6 +4,10 @@ import * as React from "react";
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Progress } from "../../src/data-display/progress/index.js";
 
+const RADII = ["none", ...SIZES, "full"] as const;
+
+const VARIANTS = ["naked", "liquid"] as const;
+
 const meta = preview.meta({
   title: "Data Display / Progress",
   component: Progress,
@@ -16,6 +20,9 @@ const ctrl = controls(Progress, {
     options: COLORS,
     control: "select",
   },
+  label: {
+    control: "text",
+  },
   max: {
     control: "number",
   },
@@ -26,7 +33,7 @@ const ctrl = controls(Progress, {
     control: "boolean",
   },
   radius: {
-    options: ["none", "rounded", "full"],
+    options: RADII,
     control: "select",
   },
   size: {
@@ -37,7 +44,7 @@ const ctrl = controls(Progress, {
     control: "number",
   },
   variant: {
-    options: ["naked", "liquid"],
+    options: VARIANTS,
     control: "select",
   },
 });
@@ -45,77 +52,76 @@ const ctrl = controls(Progress, {
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
-    color: "blue",
-    max: 100,
-    min: 0,
-    outlined: false,
-    radius: "full",
-    size: "md",
-    value: 24,
+    label: "データを準備しています",
     variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: "full",
+    outlined: undefined,
+    max: 100,
+    value: null,
+    min: 0,
   }),
   render(props) {
-    const [value, setValue] = React.useState(20);
+    const [value, setValue] = React.useState(0);
 
     React.useEffect(() => {
       const interval = setInterval(() => {
-        setValue((current) => Math.min(100, Math.round(current + Math.random() * 15)));
-      }, 1e3);
-      return () => clearInterval(interval);
-    }, []);
+        setValue((current) => {
+          if (current >= props.max!) {
+            return 0;
+          } else {
+            return Math.min(100, Math.round(current + Math.random() * 25));
+          }
+        });
+      }, 2e3);
 
-    return (
-      <div className="w-80">
-        <Progress
-          {...props}
-          value={value}
-          slotProps={{
-            label: { children: "データを書き出しています" },
-            value: {},
-          }}
-        />
-      </div>
-    );
+      return () => clearInterval(interval);
+    }, [props.max]);
+
+    return <Progress {...props} value={value} className="w-[300px]" />;
   },
 });
 
 export const Variants = meta.story({
   name: "バリエーション",
   ...ctrl({
-    color: "blue",
-    max: 100,
-    min: 0,
-    outlined: false,
-    radius: "full",
+    color: "grey",
     size: "md",
-    value: 50,
+    radius: "full",
+    outlined: undefined,
+    max: 100,
+    value: 24,
+    min: 0,
   }),
   render(props) {
     return (
-      <div className="flex w-80 flex-col gap-6">
-        <Progress {...props} variant="naked" />
-        <Progress {...props} variant="liquid" />
+      <div className="flex w-[300px] flex-col gap-6">
+        {VARIANTS.map((variant) => (
+          <Progress {...props} key={variant} variant={variant} label={variant} />
+        ))}
       </div>
     );
   },
 });
 
-export const Outlined = meta.story({
-  name: "枠線",
+export const Labelless = meta.story({
+  name: "ラベルなし",
   ...ctrl({
-    color: "blue",
-    max: 100,
-    min: 0,
-    radius: "full",
+    color: "grey",
     size: "md",
-    value: 50,
-    variant: "liquid",
+    radius: "full",
+    outlined: undefined,
+    max: 100,
+    value: 24,
+    min: 0,
   }),
   render(props) {
     return (
-      <div className="flex w-80 flex-col gap-6">
-        <Progress {...props} variant="naked" outlined />
-        <Progress {...props} variant="liquid" outlined />
+      <div className="flex w-[300px] flex-col gap-6">
+        {VARIANTS.map((variant) => (
+          <Progress {...props} key={variant} variant={variant} />
+        ))}
       </div>
     );
   },
@@ -124,47 +130,18 @@ export const Outlined = meta.story({
 export const Colors = meta.story({
   name: "色",
   ...ctrl({
-    max: 100,
-    min: 0,
-    outlined: false,
-    radius: "full",
     size: "md",
-    value: 50,
-    variant: "liquid",
-  }),
-  render(props) {
-    return (
-      <div className="flex w-80 flex-col gap-4">
-        {COLORS.map((color) => (
-          <div key={color}>
-            <Progress {...props} color={color} />
-            <div>{color}</div>
-          </div>
-        ))}
-      </div>
-    );
-  },
-});
-
-export const Sizes = meta.story({
-  name: "大きさ",
-  ...ctrl({
-    color: "blue",
-    max: 100,
-    min: 0,
-    outlined: false,
     radius: "full",
-    value: 50,
-    variant: "liquid",
+    outlined: undefined,
+    max: 100,
+    value: 24,
+    min: 0,
   }),
   render(props) {
     return (
-      <div className="flex w-80 flex-col gap-6">
-        {SIZES.map((size) => (
-          <div key={size}>
-            <Progress {...props} size={size} />
-            <div>{size}</div>
-          </div>
+      <div className="flex w-[300px] flex-col gap-4">
+        {COLORS.map((color) => (
+          <Progress {...props} key={color} color={color} label={color} />
         ))}
       </div>
     );
@@ -174,22 +151,63 @@ export const Sizes = meta.story({
 export const Radius = meta.story({
   name: "角丸",
   ...ctrl({
-    color: "blue",
-    max: 100,
-    min: 0,
-    outlined: false,
-    size: "md",
-    value: 50,
     variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: "full",
+    outlined: undefined,
+    max: 100,
+    value: 24,
+    min: 0,
   }),
   render(props) {
     return (
-      <div className="flex w-80 flex-col gap-6">
-        {(["none", "rounded", "full"] as const).map((radius) => (
-          <div key={radius}>
-            <Progress {...props} radius={radius} />
-            <div>{radius}</div>
+      <div className="flex w-[300px] flex-col gap-6">
+        {RADII.map((radius) => (
+          <div key={radius} className="flex flex-col items-center gap-2">
+            <Progress {...props} key={radius} radius={radius} label={radius} />
           </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Outlined = meta.story({
+  name: "枠線",
+  ...ctrl({
+    size: "md",
+    radius: "full",
+    max: 100,
+    value: 24,
+    min: 0,
+  }),
+  render(props) {
+    return (
+      <div className="flex w-[300px] flex-col gap-6">
+        <Progress {...props} label="naked" variant="naked" outlined />
+        <Progress {...props} label="liquid" variant="liquid" outlined />
+      </div>
+    );
+  },
+});
+
+export const Sizes = meta.story({
+  name: "大きさ",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    radius: "full",
+    outlined: undefined,
+    max: 100,
+    value: 24,
+    min: 0,
+  }),
+  render(props) {
+    return (
+      <div className="flex w-[300px] flex-col gap-6">
+        {SIZES.map((size) => (
+          <Progress key={size} {...props} size={size} label={size} />
         ))}
       </div>
     );
@@ -199,50 +217,17 @@ export const Radius = meta.story({
 export const Indeterminate = meta.story({
   name: "不確定状態",
   ...ctrl({
-    color: "blue",
-    max: 100,
-    min: 0,
-    outlined: false,
+    label: "データを準備しています",
+    variant: "liquid",
+    color: "grey",
     radius: "full",
-    size: "md",
+    outlined: undefined,
     value: null,
-    variant: "liquid",
   }),
   render(props) {
     return (
       <div className="w-80">
-        <Progress
-          {...props}
-          value={null}
-          slotProps={{ label: { children: "データを準備しています" } }}
-        />
-      </div>
-    );
-  },
-});
-
-export const Complete = meta.story({
-  name: "完了",
-  ...ctrl({
-    color: "green",
-    max: 100,
-    min: 0,
-    outlined: false,
-    radius: "full",
-    size: "md",
-    value: 100,
-    variant: "liquid",
-  }),
-  render(props) {
-    return (
-      <div className="w-80">
-        <Progress
-          {...props}
-          slotProps={{
-            label: { children: "書き出しが完了しました" },
-            value: {},
-          }}
-        />
+        <Progress {...props} value={null} />
       </div>
     );
   },

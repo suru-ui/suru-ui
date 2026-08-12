@@ -1,12 +1,10 @@
-import { COLORS, SIZES } from "@suru-ui/theme";
+import { COLORS, SIZES, COLOR_TEMPLATES as VARIANTS } from "@suru-ui/theme";
 import { AlertCircleIcon, CheckCircle2Icon, InfoIcon } from "lucide-react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Button } from "../../src/buttons/button/index.js";
 import { Alert } from "../../src/data-display/alert/index.js";
-import * as AlertParts from "../../src/data-display/alert/index.js";
 
-const VARIANTS = ["naked", "liquid"] as const;
 const RADII = ["none", ...SIZES] as const;
 
 const meta = preview.meta({
@@ -35,6 +33,9 @@ const ctrl = controls(Alert, {
     options: SIZES,
     control: "select",
   },
+  title: {
+    control: "text",
+  },
   variant: {
     options: VARIANTS,
     control: "select",
@@ -45,22 +46,22 @@ export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
     children: "プロフィールを更新しました。",
-    variant: "liquid",
+    variant: "solid",
     color: "grey",
     size: "md",
     radius: undefined,
-    outlined: false,
+    outlined: true,
   }),
 });
 
 export const WithIcon = meta.story({
   name: "アイコン付き",
   ...ctrl({
-    variant: "liquid",
+    variant: "solid",
     color: "grey",
     size: "md",
     radius: undefined,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -82,18 +83,18 @@ export const WithIcon = meta.story({
 export const WithTitle = meta.story({
   name: "タイトル付き",
   ...ctrl({
-    color: "blue",
-    outlined: false,
-    radius: "md",
+    title: "更新完了",
+    children: "プロフィールを更新しました。",
+    variant: "solid",
+    color: "green",
     size: "md",
-    variant: "liquid",
+    radius: undefined,
+    outlined: true,
   }),
   render(props) {
     return (
       <div className="w-96">
-        <Alert {...props} icon={<CheckCircle2Icon />} title="更新完了">
-          プロフィールを更新しました。
-        </Alert>
+        <Alert {...props} icon={<CheckCircle2Icon />} />
       </div>
     );
   },
@@ -102,11 +103,13 @@ export const WithTitle = meta.story({
 export const WithActions = meta.story({
   name: "アクション付き",
   ...ctrl({
+    title: "保存できませんでした",
+    children: "入力内容を確認して、もう一度お試しください。",
+    variant: "solid",
     color: "red",
-    outlined: false,
-    radius: "md",
     size: "md",
-    variant: "liquid",
+    radius: undefined,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -114,39 +117,13 @@ export const WithActions = meta.story({
         <Alert
           {...props}
           icon={<AlertCircleIcon />}
-          title="保存できませんでした"
           actions={
             <>
               <Button variant="naked">閉じる</Button>
               <Button color="red">再試行</Button>
             </>
           }
-        >
-          入力内容を確認して、もう一度お試しください。
-        </Alert>
-      </div>
-    );
-  },
-});
-
-export const Parts = meta.story({
-  name: "パーツ",
-  ...ctrl({}),
-  render() {
-    return (
-      <div className="w-96">
-        <AlertParts.Root color="blue" radius="md" variant="liquid">
-          <AlertParts.Icon>
-            <InfoIcon />
-          </AlertParts.Icon>
-          <AlertParts.Title>お知らせ</AlertParts.Title>
-          <AlertParts.Description>
-            パーツを組み合わせてアラートの内容を組み立てられます。
-          </AlertParts.Description>
-          <AlertParts.Actions>
-            <Button>詳細を見る</Button>
-          </AlertParts.Actions>
-        </AlertParts.Root>
+        />
       </div>
     );
   },
@@ -155,41 +132,22 @@ export const Parts = meta.story({
 export const Variants = meta.story({
   name: "バリエーション",
   ...ctrl({
+    title: "更新完了",
+    children: "プロフィールを更新しました。",
     color: "blue",
-    outlined: false,
-    radius: "md",
     size: "md",
+    radius: undefined,
+    outlined: true,
   }),
   render(props) {
     return (
-      <div className="flex w-96 flex-col gap-3">
+      <div className="flex flex-col gap-3">
         {VARIANTS.map((variant) => (
-          <Alert {...props} key={variant} variant={variant}>
-            {variant === "naked" ? "ネイキッド" : "リキッド"}
-          </Alert>
+          <div key={variant} className="flex flex-col gap-2 w-96">
+            <span className="text-sm">{variant}</span>
+            <Alert {...props} icon={<InfoIcon />} variant={variant} />
+          </div>
         ))}
-      </div>
-    );
-  },
-});
-
-export const Outlined = meta.story({
-  name: "枠線",
-  ...ctrl({
-    color: "blue",
-    radius: "md",
-    size: "md",
-    variant: "liquid",
-  }),
-  render(props) {
-    return (
-      <div className="flex w-96 flex-col gap-3">
-        <Alert {...props} outlined={false}>
-          通常
-        </Alert>
-        <Alert {...props} outlined>
-          枠線付き
-        </Alert>
       </div>
     );
   },
@@ -198,18 +156,21 @@ export const Outlined = meta.story({
 export const Colors = meta.story({
   name: "色",
   ...ctrl({
-    outlined: false,
-    radius: "md",
+    title: "更新完了",
+    children: "プロフィールを更新しました。",
+    variant: "solid",
     size: "md",
-    variant: "liquid",
+    radius: undefined,
+    outlined: true,
   }),
   render(props) {
     return (
-      <div className="flex w-96 flex-col gap-3">
+      <div className="flex flex-col gap-3">
         {COLORS.map((color) => (
-          <Alert {...props} key={color} color={color}>
-            {color}
-          </Alert>
+          <div key={color} className="flex flex-col gap-2 w-96">
+            <span className="text-sm">{color}</span>
+            <Alert {...props} icon={<InfoIcon />} color={color} />
+          </div>
         ))}
       </div>
     );
@@ -219,19 +180,41 @@ export const Colors = meta.story({
 export const Radius = meta.story({
   name: "角丸",
   ...ctrl({
-    color: "blue",
-    outlined: false,
+    title: "更新完了",
+    children: "プロフィールを更新しました。",
+    variant: "solid",
+    color: "grey",
     size: "md",
-    variant: "liquid",
+    outlined: true,
   }),
   render(props) {
     return (
       <div className="flex w-96 flex-col gap-3">
         {RADII.map((radius) => (
-          <Alert {...props} key={radius} radius={radius}>
-            {radius}
-          </Alert>
+          <div key={radius} className="flex flex-col gap-2 w-96">
+            <span className="text-sm">{radius}</span>
+            <Alert {...props} icon={<InfoIcon />} radius={radius} />
+          </div>
         ))}
+      </div>
+    );
+  },
+});
+
+export const Outlined = meta.story({
+  name: "枠線",
+  ...ctrl({
+    children: "説明文",
+    variant: "solid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+  }),
+  render(props) {
+    return (
+      <div className="flex w-96 flex-col gap-3">
+        <Alert {...props} icon={<InfoIcon />} title="枠線付き" outlined />
+        <Alert {...props} icon={<InfoIcon />} title="枠線無し" />
       </div>
     );
   },
@@ -240,18 +223,21 @@ export const Radius = meta.story({
 export const Sizes = meta.story({
   name: "大きさ",
   ...ctrl({
-    color: "blue",
-    outlined: false,
-    radius: "md",
-    variant: "liquid",
+    title: "更新完了",
+    children: "プロフィールを更新しました。",
+    variant: "solid",
+    color: "grey",
+    radius: undefined,
+    outlined: true,
   }),
   render(props) {
     return (
       <div className="flex w-96 flex-col gap-3">
         {SIZES.map((size) => (
-          <Alert {...props} key={size} size={size}>
-            {size}
-          </Alert>
+          <div key={size} className="flex flex-col gap-2 w-96">
+            <span className="text-sm">{size}</span>
+            <Alert {...props} icon={<InfoIcon />} size={size} />
+          </div>
         ))}
       </div>
     );

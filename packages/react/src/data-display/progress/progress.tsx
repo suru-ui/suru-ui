@@ -35,6 +35,11 @@ export type ProgressSlotProps = {
  */
 export type ProgressProps = ProgressParts.Root.Props & {
   /**
+   * ラベルです。
+   */
+  label?: React.ReactNode | undefined;
+
+  /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
    */
   slotProps?: ProgressSlotProps | undefined;
@@ -59,16 +64,14 @@ export type ProgressProps = ProgressParts.Root.Props & {
  * @example ラベルと現在値の表示
  * ```tsx
  * <Progress
+ *   label="データを書き出しています"
  *   value={24}
- *   slotProps={{
- *     label: { children: "データを書き出しています" },
- *     value: {},
- *   }}
  * />
  * ```
  */
 export const Progress: Component<ProgressProps> = function SuiProgress(props) {
   const {
+    label,
     slotProps: {
       label: labelProps,
       value: valueProps,
@@ -80,8 +83,10 @@ export const Progress: Component<ProgressProps> = function SuiProgress(props) {
 
   return (
     <ProgressParts.Root {...rootProps}>
-      {labelProps ? <ProgressParts.Label {...labelProps} /> : null}
-      {valueProps ? <ProgressParts.Value {...valueProps} /> : null}
+      {("label" in props || !!labelProps) && (
+        <ProgressParts.Label {...{ children: label, ...labelProps }} />
+      )}
+      {("label" in props || !!valueProps) && <ProgressParts.Value {...valueProps} />}
       <ProgressParts.Track {...trackProps}>
         <ProgressParts.Indicator {...indicatorProps} />
       </ProgressParts.Track>

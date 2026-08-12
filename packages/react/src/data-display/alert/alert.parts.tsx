@@ -1,4 +1,4 @@
-import type { Color, Size } from "@suru-ui/theme";
+import type { Color, Size, ColorTemplate as Variant } from "@suru-ui/theme";
 import type * as React from "react";
 
 import useRender, { type RenderProps } from "../../_use-render.js";
@@ -21,13 +21,6 @@ export type AlertRootState = {};
 export type AlertRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
   RenderProps<AlertRootState> & {
     /**
-     * アラートのスタイルバリエーションを指定します。
-     *
-     * @default "liquid"
-     */
-    variant?: "naked" | "liquid" | undefined;
-
-    /**
      * アラートの色を指定します。
      *
      * @default "blue"
@@ -35,11 +28,11 @@ export type AlertRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps
     color?: Color | undefined;
 
     /**
-     * アラートのサイズを指定します。
+     * 枠線を表示するかどうかを指定します。
      *
-     * @default "md"
+     * @default false
      */
-    size?: Size | undefined;
+    outlined?: boolean | undefined;
 
     /**
      * アラートの角丸を指定します。
@@ -54,15 +47,22 @@ export type AlertRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps
     radius?: "none" | Size | undefined;
 
     /**
-     * 枠線を表示するかどうかを指定します。
+     * アラートのサイズを指定します。
+     *
+     * @default "md"
      */
-    outlined?: boolean | undefined;
+    size?: Size | undefined;
+
+    /**
+     * アラートのスタイルバリエーションを指定します。
+     *
+     * @default "solid"
+     */
+    variant?: Variant | undefined;
   };
 
 /**
  * アラートのルート要素です。
- *
- * 既定では `role="alert"` を持つ要素として描画されます。
  *
  * @example
  * ```tsx
@@ -74,33 +74,31 @@ export type AlertRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps
  */
 export const AlertRoot: Component<AlertRootProps> = function SuiAlertRoot(props) {
   const {
-    ref,
     role = "alert",
     size = "md",
     color = "grey",
     radius = size,
-    variant = "liquid",
+    variant = "solid",
     outlined = false,
-    className,
-    ...elementProps
+    ...otherProps
   } = props;
 
   return useRender({
     defaultTagName: "div",
-    ref,
-    props: {
-      ...elementProps,
-      role,
-      className: cn(
-        className,
-        "sui_alert",
-        `sui_alert-size_${size}`,
-        `sui_alert-color_${color}`,
-        `sui_alert-radius_${radius}`,
-        `sui_alert-variant_${variant}`,
-        outlined && "sui_alert-outlined",
-      ),
-    },
+    props: [
+      otherProps,
+      {
+        role,
+        className: cn(
+          "sui_alert",
+          `sui_alert-size_${size}`,
+          `sui_alert-color_${color}`,
+          `sui_alert-radius_${radius}`,
+          `sui_alert-variant_${variant}`,
+          outlined && "sui_alert-outlined",
+        ),
+      },
+    ],
   });
 };
 
@@ -145,16 +143,17 @@ export type AlertIconProps = Omit<React.ComponentProps<"div">, keyof RenderProps
  * ```
  */
 export const AlertIcon: Component<AlertIconProps> = function SuiAlertIcon(props) {
-  const { ref, className, "aria-hidden": ariaHidden = true, ...elementProps } = props;
+  const { "aria-hidden": ariaHidden = true, ...otherProps } = props;
 
   return useRender({
     defaultTagName: "div",
-    ref,
-    props: {
-      ...elementProps,
-      className: cn(className, "sui_alert_icon"),
-      "aria-hidden": ariaHidden,
-    },
+    props: [
+      otherProps,
+      {
+        className: "sui_alert_icon",
+        "aria-hidden": ariaHidden,
+      },
+    ],
   });
 };
 
@@ -195,15 +194,14 @@ export type AlertTitleProps = Omit<React.ComponentProps<"div">, keyof RenderProp
  * ```
  */
 export const AlertTitle: Component<AlertTitleProps> = function SuiAlertTitle(props) {
-  const { ref, className, ...elementProps } = props;
-
   return useRender({
     defaultTagName: "div",
-    ref,
-    props: {
-      ...elementProps,
-      className: cn(className, "sui_alert_title"),
-    },
+    props: [
+      props,
+      {
+        className: "sui_alert_title",
+      },
+    ],
   });
 };
 
@@ -246,15 +244,14 @@ export type AlertDescriptionProps = Omit<React.ComponentProps<"div">, keyof Rend
 export const AlertDescription: Component<AlertDescriptionProps> = function SuiAlertDescription(
   props,
 ) {
-  const { ref, className, ...elementProps } = props;
-
   return useRender({
     defaultTagName: "div",
-    ref,
-    props: {
-      ...elementProps,
-      className: cn(className, "sui_alert_description"),
-    },
+    props: [
+      props,
+      {
+        className: "sui_alert_description",
+      },
+    ],
   });
 };
 
@@ -298,15 +295,14 @@ export type AlertActionsProps = Omit<React.ComponentProps<"div">, keyof RenderPr
  * ```
  */
 export const AlertActions: Component<AlertActionsProps> = function SuiAlertActions(props) {
-  const { ref, className, ...elementProps } = props;
-
   return useRender({
     defaultTagName: "div",
-    ref,
-    props: {
-      ...elementProps,
-      className: cn(className, "sui_alert_actions"),
-    },
+    props: [
+      props,
+      {
+        className: "sui_alert_actions",
+      },
+    ],
   });
 };
 

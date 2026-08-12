@@ -4,6 +4,7 @@ import * as React from "react";
 
 import cn from "../../cn.js";
 import type { Component } from "../../types.js";
+import { useAvatarGroupContext } from "../avatar-group/avatar-group.parts.jsx";
 
 import "./avatar.css";
 
@@ -11,21 +12,14 @@ import "./avatar.css";
 // ----
 
 /**
- * アバターのルート要素の状態です。
+ * {@link AvatarRoot} の状態です。
  */
 export type AvatarRootState = Avatar.Root.State;
 
 /**
- * アバターのルート要素に渡すプロパティーです。
+ * {@link AvatarRoot} に渡すプロパティーです。
  */
 export type AvatarRootProps = React.ComponentProps<typeof Avatar.Root> & {
-  /**
-   * アバターのサイズを指定します。
-   *
-   * @default "md"
-   */
-  size?: Size | undefined;
-
   /**
    * フォールバックの背景色を指定します。
    *
@@ -38,7 +32,14 @@ export type AvatarRootProps = React.ComponentProps<typeof Avatar.Root> & {
    *
    * @default "full"
    */
-  radius?: "none" | "rounded" | "full" | undefined;
+  radius?: "none" | Size | "full" | undefined;
+
+  /**
+   * アバターのサイズを指定します。
+   *
+   * @default "md"
+   */
+  size?: Size | undefined;
 };
 
 /**
@@ -53,7 +54,15 @@ export type AvatarRootProps = React.ComponentProps<typeof Avatar.Root> & {
  * ```
  */
 export const AvatarRoot: Component<AvatarRootProps> = function SuiAvatarRoot(props) {
-  const { size = "md", color = "grey", radius = "full", className, ...otherProps } = props;
+  const group = useAvatarGroupContext(true);
+  const {
+    size: sizeProp = "md",
+    color = group?.color ?? "grey",
+    radius = group?.radius ?? "full",
+    className,
+    ...otherProps
+  } = props;
+  const size = group?.size ?? sizeProp;
 
   return (
     <Avatar.Root
@@ -74,6 +83,7 @@ export namespace Root {
    * {@link AvatarRoot} の状態型です。
    */
   export type State = AvatarRootState;
+
   /**
    * {@link AvatarRoot} のプロパティー型です。
    */
@@ -86,19 +96,19 @@ export const Root: Component<Root.Props> = AvatarRoot;
 // -----
 
 /**
- * アバター画像の状態です。
+ * {@link AvatarImage} の状態です。
  */
 export type AvatarImageState = Avatar.Image.State;
 
 /**
- * アバター画像に渡すプロパティーです。
+ * {@link AvatarImage} に渡すプロパティーです。
  */
 export type AvatarImageProps = React.ComponentProps<typeof Avatar.Image>;
 
 /**
  * アバターの画像要素です。
  *
- * 画像の読み込みに失敗すると、Base UI が Fallback を表示します。
+ * 画像の読み込みに失敗すると、{@link AvatarFallback} を表示します。
  */
 export const AvatarImage: Component<AvatarImageProps> = function SuiAvatarImage(props) {
   const { className, ...otherProps } = props;
@@ -111,6 +121,7 @@ export namespace Image {
    * {@link AvatarImage} の状態型です。
    */
   export type State = AvatarImageState;
+
   /**
    * {@link AvatarImage} のプロパティー型です。
    */
@@ -123,12 +134,12 @@ export const Image: Component<Image.Props> = AvatarImage;
 // --------
 
 /**
- * アバターフォールバックの状態です。
+ * {@link AvatarFallback} に渡すプロパティーです。
  */
 export type AvatarFallbackState = Avatar.Fallback.State;
 
 /**
- * アバターフォールバックに渡すプロパティーです。
+ * {@link AvatarFallback} に渡すプロパティーです。
  */
 export type AvatarFallbackProps = React.ComponentProps<typeof Avatar.Fallback>;
 
@@ -151,6 +162,7 @@ export namespace Fallback {
    * {@link AvatarFallback} の状態型です。
    */
   export type State = AvatarFallbackState;
+
   /**
    * {@link AvatarFallback} のプロパティー型です。
    */

@@ -35,6 +35,11 @@ export type MeterSlotProps = {
  */
 export type MeterProps = MeterParts.Root.Props & {
   /**
+   * ラベルです。
+   */
+  label?: React.ReactNode | undefined;
+
+  /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
    */
   slotProps?: MeterSlotProps | undefined;
@@ -53,20 +58,18 @@ export type MeterProps = MeterParts.Root.Props & {
  * @example ラベルと現在値の表示
  * ```tsx
  * <Meter
+ *   label="ストレージ使用量"
  *   value={24}
- *   slotProps={{
- *     label: { children: "ストレージ使用量" },
- *     value: {},
- *   }}
  * />
  * ```
  */
 export const Meter: Component<MeterProps> = function SuiMeter(props) {
   const {
+    label,
     slotProps: {
       label: labelProps,
-      value: valueProps,
       track: trackProps,
+      value: valueProps,
       indicator: indicatorProps,
     } = {},
     ...rootProps
@@ -74,8 +77,10 @@ export const Meter: Component<MeterProps> = function SuiMeter(props) {
 
   return (
     <MeterParts.Root {...rootProps}>
-      {labelProps ? <MeterParts.Label {...labelProps} /> : null}
-      {valueProps ? <MeterParts.Value {...valueProps} /> : null}
+      {("label" in props || !!labelProps) && (
+        <MeterParts.Label {...{ children: label, ...labelProps }} />
+      )}
+      {("label" in props || !!valueProps) && <MeterParts.Value {...valueProps} />}
       <MeterParts.Track {...trackProps}>
         <MeterParts.Indicator {...indicatorProps} />
       </MeterParts.Track>

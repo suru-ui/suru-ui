@@ -130,30 +130,30 @@
 
   .sui_alert-size_sm {
     /* 空白 */
-    --sui_alert-padding_block: --sui-space(2);
-    --sui_alert-padding_inline: --sui-space(4);
-    --sui_alert-row_gap: --sui-gap(3);
-    --sui_alert-column_gap: --sui-gap(4);
+    --sui_alert-padding_block: --sui-space(5);
+    --sui_alert-padding_inline: --sui-space(6);
+    --sui_alert-row_gap: --sui-gap(2);
+    --sui_alert-column_gap: --sui-gap(5);
     /* 枠線 */
     --sui_alert-border_width: --sui-border_width(1);
   }
 
   .sui_alert-size_md {
     /* 空白 */
-    --sui_alert-padding_block: --sui-space(3);
-    --sui_alert-padding_inline: --sui-space(4);
-    --sui_alert-row_gap: --sui-gap(3);
-    --sui_alert-column_gap: --sui-gap(4);
+    --sui_alert-padding_block: --sui-space(5);
+    --sui_alert-padding_inline: --sui-space(6);
+    --sui_alert-row_gap: --sui-gap(2);
+    --sui_alert-column_gap: --sui-gap(5);
     /* 枠線 */
     --sui_alert-border_width: --sui-border_width(1);
   }
 
   .sui_alert-size_lg {
     /* 空白 */
-    --sui_alert-padding_block: --sui-space(3);
-    --sui_alert-padding_inline: --sui-space(5);
-    --sui_alert-row_gap: --sui-gap(3);
-    --sui_alert-column_gap: --sui-gap(4);
+    --sui_alert-padding_block: --sui-space(5);
+    --sui_alert-padding_inline: --sui-space(6);
+    --sui_alert-row_gap: --sui-gap(2);
+    --sui_alert-column_gap: --sui-gap(5);
     /* 枠線 */
     --sui_alert-border_width: --sui-border_width(1);
   }
@@ -176,6 +176,13 @@
   .sui_alert-radius_lg {
     /* 枠線 */
     --sui_alert-border_radius: var(--sui-radius-lg);
+  }
+
+  .sui_alert-variant_solid {
+    /* 背景 */
+    --sui_alert-background_color: var(--sui-canvas-2);
+    /* 枠線 */
+    --sui_alert-border_color: var(--sui-border-1);
   }
 
   .sui_alert-color_grey {
@@ -376,44 +383,123 @@
     --sui_alert_icon-color: var(--sui-canvas_text-1);
   }
 
-  .sui_alert-variant_liquid {
-    /* 前景 */
-    --sui_alert_icon-color: var(--sui-canvas_text-1);
+  .sui_alert-color_blue {
+    &.sui_alert-variant_solid {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-blue-liquid-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_naked {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-blue-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-blue-liquid-canvas_text-normal);
+    }
   }
 
-  .sui_alert-color_blue.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_icon-color: var(--sui-blue-naked-canvas_text-normal);
+  .sui_alert-color_purple {
+    &.sui_alert-variant_solid {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-purple-liquid-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_naked {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-purple-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-purple-liquid-canvas_text-normal);
+    }
   }
 
-  .sui_alert-color_purple.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_icon-color: var(--sui-purple-naked-canvas_text-normal);
+  .sui_alert-color_magenta {
+    &.sui_alert-variant_solid {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-magenta-liquid-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_naked {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-magenta-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-magenta-liquid-canvas_text-normal);
+    }
   }
 
-  .sui_alert-color_magenta.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_icon-color: var(--sui-magenta-naked-canvas_text-normal);
+  .sui_alert-color_red {
+    &.sui_alert-variant_solid {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-red-liquid-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_naked {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-red-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-red-liquid-canvas_text-normal);
+    }
   }
 
-  .sui_alert-color_red.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_icon-color: var(--sui-red-naked-canvas_text-normal);
+  .sui_alert-color_orange {
+    &.sui_alert-variant_solid {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-orange-liquid-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_naked {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-orange-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-orange-liquid-canvas_text-normal);
+    }
   }
 
-  .sui_alert-color_orange.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_icon-color: var(--sui-orange-naked-canvas_text-normal);
+  .sui_alert-color_yellow {
+    &.sui_alert-variant_solid {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-yellow-liquid-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_naked {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-yellow-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-yellow-liquid-canvas_text-normal);
+    }
   }
 
-  .sui_alert-color_yellow.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_icon-color: var(--sui-yellow-naked-canvas_text-normal);
-  }
+  .sui_alert-color_green {
+    &.sui_alert-variant_solid {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-green-liquid-canvas_text-normal);
+    }
 
-  .sui_alert-color_green.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_icon-color: var(--sui-green-naked-canvas_text-normal);
+    &.sui_alert-variant_naked {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-green-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      /* 前景 */
+      --sui_alert_icon-color: var(--sui-green-liquid-canvas_text-normal);
+    }
   }
 
   /* 既定値設定: ここまで */
@@ -477,44 +563,123 @@
     --sui_alert_title-color: var(--sui-canvas_text-1);
   }
 
-  .sui_alert-variant_liquid {
-    /* 前景 */
-    --sui_alert_title-color: var(--sui-canvas_text-1);
+  .sui_alert-color_blue {
+    &.sui_alert-variant_solid {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-blue-liquid-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_naked {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-blue-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-blue-liquid-canvas_text-normal);
+    }
   }
 
-  .sui_alert-color_blue.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_title-color: var(--sui-blue-naked-canvas_text-normal);
+  .sui_alert-color_purple {
+    &.sui_alert-variant_solid {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-purple-liquid-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_naked {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-purple-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-purple-liquid-canvas_text-normal);
+    }
   }
 
-  .sui_alert-color_purple.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_title-color: var(--sui-purple-naked-canvas_text-normal);
+  .sui_alert-color_magenta {
+    &.sui_alert-variant_solid {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-magenta-liquid-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_naked {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-magenta-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-magenta-liquid-canvas_text-normal);
+    }
   }
 
-  .sui_alert-color_magenta.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_title-color: var(--sui-magenta-naked-canvas_text-normal);
+  .sui_alert-color_red {
+    &.sui_alert-variant_solid {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-red-liquid-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_naked {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-red-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-red-liquid-canvas_text-normal);
+    }
   }
 
-  .sui_alert-color_red.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_title-color: var(--sui-red-naked-canvas_text-normal);
+  .sui_alert-color_orange {
+    &.sui_alert-variant_solid {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-orange-liquid-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_naked {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-orange-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-orange-liquid-canvas_text-normal);
+    }
   }
 
-  .sui_alert-color_orange.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_title-color: var(--sui-orange-naked-canvas_text-normal);
+  .sui_alert-color_yellow {
+    &.sui_alert-variant_solid {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-yellow-liquid-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_naked {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-yellow-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-yellow-liquid-canvas_text-normal);
+    }
   }
 
-  .sui_alert-color_yellow.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_title-color: var(--sui-yellow-naked-canvas_text-normal);
-  }
+  .sui_alert-color_green {
+    &.sui_alert-variant_solid {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-green-liquid-canvas_text-normal);
+    }
 
-  .sui_alert-color_green.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_title-color: var(--sui-green-naked-canvas_text-normal);
+    &.sui_alert-variant_naked {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-green-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      /* 前景 */
+      --sui_alert_title-color: var(--sui-green-liquid-canvas_text-normal);
+    }
   }
 
   /* 既定値設定: ここまで */
@@ -549,6 +714,11 @@
 
   /* 既定値設定: ここから */
 
+  .sui_alert {
+    /* 前景 */
+    --sui_alert_description-color: var(--sui-canvas_text-1);
+  }
+
   .sui_alert-size_sm {
     /* 書体 */
     --sui_alert_description-font_size: var(--sui-text-std-sm-n-font_size);
@@ -573,51 +743,6 @@
     --sui_alert_description-letter_spacing: var(--sui-text-std-lg-n-letter_spacing);
   }
 
-  .sui_alert-color_grey {
-    /* 前景 */
-    --sui_alert_description-color: var(--sui-canvas_text-1);
-  }
-
-  .sui_alert-variant_liquid {
-    /* 前景 */
-    --sui_alert_description-color: var(--sui-canvas_text-1);
-  }
-
-  .sui_alert-color_blue.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_description-color: var(--sui-blue-naked-canvas_text-normal);
-  }
-
-  .sui_alert-color_purple.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_description-color: var(--sui-purple-naked-canvas_text-normal);
-  }
-
-  .sui_alert-color_magenta.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_description-color: var(--sui-magenta-naked-canvas_text-normal);
-  }
-
-  .sui_alert-color_red.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_description-color: var(--sui-red-naked-canvas_text-normal);
-  }
-
-  .sui_alert-color_orange.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_description-color: var(--sui-orange-naked-canvas_text-normal);
-  }
-
-  .sui_alert-color_yellow.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_description-color: var(--sui-yellow-naked-canvas_text-normal);
-  }
-
-  .sui_alert-color_green.sui_alert-variant_naked {
-    /* 前景 */
-    --sui_alert_description-color: var(--sui-green-naked-canvas_text-normal);
-  }
-
   /* 既定値設定: ここまで */
 }
 
@@ -626,7 +751,8 @@
   /* 変数 */
   .sui_alert {
     /* 空白 */
-    --sui_alert-actions_gap: ;
+    --sui_alert_actions-gap: ;
+    --sui_alert_actions-padding_top: ;
   }
 
   /* 静的 */
@@ -641,24 +767,29 @@
 
   /* 動的 */
   .sui_alert_actions {
-    gap: var(--sui_alert-actions_gap);
+    gap: var(--sui_alert_actions-gap);
+    padding-top: var(--sui_alert_actions-padding_top);
   }
 
   /* 既定値設定: ここから */
 
+  .sui_alert:has(.sui_alert_title, .sui_alert_description) {
+    --sui_alert_actions-padding_top: --sui-gap(5);
+  }
+
   .sui_alert-size_sm {
     /* 空白 */
-    --sui_alert-actions_gap: --sui-gap(2);
+    --sui_alert_actions-gap: --sui-gap(4);
   }
 
   .sui_alert-size_md {
     /* 空白 */
-    --sui_alert-actions_gap: --sui-gap(2);
+    --sui_alert_actions-gap: --sui-gap(4);
   }
 
   .sui_alert-size_lg {
     /* 空白 */
-    --sui_alert-actions_gap: --sui-gap(2);
+    --sui_alert_actions-gap: --sui-gap(4);
   }
 
   /* 既定値設定: ここまで */

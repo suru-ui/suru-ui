@@ -1,8 +1,6 @@
-import { mergeProps } from "@base-ui/react/merge-props";
 import * as React from "react";
 
 import type { Component } from "../../types.js";
-import { Avatar } from "../avatar/index.js";
 import * as AvatarGroupParts from "./avatar-group.parts.jsx";
 
 /**
@@ -14,21 +12,9 @@ export type AvatarGroupProps = AvatarGroupParts.Root.Props & {
    *
    * 省略アバターもこの数に含まれます。
    *
-   * @default 5
+   * @default 4
    */
   max?: number | undefined;
-
-  /**
-   * グループに含めるアバター要素です。
-   */
-  readonly children?: React.ReactNode | undefined;
-
-  /**
-   * 省略されたアバター数を表示する要素を生成します。
-   *
-   * @default 既定の `<Avatar>` と過剰数表示
-   */
-  renderSurplus?: ((surplus: number) => React.ReactNode) | undefined;
 };
 
 /**
@@ -46,49 +32,14 @@ export type AvatarGroupProps = AvatarGroupParts.Root.Props & {
  * ```
  */
 export const AvatarGroup: Component<AvatarGroupProps> = function SuiAvatarGroup(props) {
-  const {
-    max = 5,
-    children,
-    renderSurplus = (surplus) => <Avatar>+{surplus}</Avatar>,
-    ...rootProps
-  } = props;
-  const avatarChildren = React.Children.toArray(children);
-  const hasSurplus = avatarChildren.length > max;
-  const visibleChildren = avatarChildren.slice(0, hasSurplus ? max - 1 : max);
-  const surplus = avatarChildren.length - visibleChildren.length;
-  const renderedChildren: React.ReactNode[] = visibleChildren.map((child, index) => {
-    if (!React.isValidElement<React.ComponentProps<"div">>(child)) {
-      return child;
-    }
-
-    return React.cloneElement(
-      child,
-      mergeProps<"div">(child.props, {
-        style: {
-          zIndex: visibleChildren.length - index + (hasSurplus ? 1 : 0),
-        },
-      }),
-    );
-  });
-
+  const { max = 4, children, ...otherRootProps } = props;
+  const childArray = React.Children.toArray(children);
+  const hasSurplus = childArray.length > max;
+  const renderedChildArray = childArray.slice(0, hasSurplus ? max - 1 : max);
   if (hasSurplus) {
-    const surplusAvatar = renderSurplus(surplus);
-
-    if (React.isValidElement<React.ComponentProps<"div">>(surplusAvatar)) {
-      renderedChildren.push(
-        React.cloneElement(
-          surplusAvatar,
-          mergeProps<"div">(surplusAvatar.props, {
-            style: {
-              zIndex: 1,
-            },
-          }),
-        ),
-      );
-    } else {
-      renderedChildren.push(surplusAvatar);
-    }
+    const surplus = Math.max(0, childArray.length - renderedChildArray.length);
+    renderedChildArray.push(<AvatarGroupParts.Surplus>+{surplus}</AvatarGroupParts.Surplus>);
   }
 
-  return <AvatarGroupParts.Root {...rootProps}>{renderedChildren}</AvatarGroupParts.Root>;
+  return <AvatarGroupParts.Root {...otherRootProps}>{renderedChildArray}</AvatarGroupParts.Root>;
 };

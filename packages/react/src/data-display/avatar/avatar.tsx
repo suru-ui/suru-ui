@@ -54,11 +54,11 @@ export const Avatar: Component<AvatarProps> = function SuiAvatar(props) {
     alt,
     children,
     slotProps: { image: imageProps, fallback: fallbackProps } = {},
-    ...rootProps
+    ...otherRootProps
   } = props;
 
   return (
-    <AvatarParts.Root {...rootProps}>
+    <AvatarParts.Root {...otherRootProps}>
       {src !== undefined || imageProps !== undefined ? (
         <AvatarParts.Image
           {...imageProps}
