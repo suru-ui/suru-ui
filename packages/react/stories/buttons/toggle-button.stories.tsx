@@ -1,11 +1,12 @@
 import { COLOR_TEMPLATES, COLORS, SIZES } from "@suru-ui/theme";
-import { CogIcon, DeleteIcon, EllipsisIcon, GlobeIcon, Trash2Icon } from "lucide-react";
+import { ItalicIcon } from "lucide-react";
 import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { ToggleButton } from "../../src/buttons/toggle-button/index.js";
 
-const VALIANTS = COLOR_TEMPLATES.filter((variant) => variant !== "solid");
+const RADII = ["none", ...SIZES, "full"] as const;
+const VARIANTS = COLOR_TEMPLATES.filter((variant) => variant !== "solid");
 
 const meta = preview.meta({
   title: "Buttons / ToggleButton",
@@ -32,7 +33,7 @@ const ctrl = controls(ToggleButton, {
     control: "boolean",
   },
   radius: {
-    options: ["none", "rounded", "full"],
+    options: RADII,
     control: "select",
   },
   size: {
@@ -43,7 +44,7 @@ const ctrl = controls(ToggleButton, {
     control: "boolean",
   },
   variant: {
-    options: VALIANTS,
+    options: VARIANTS,
     control: "select",
   },
 });
@@ -55,42 +56,33 @@ export const Usage = meta.story({
     variant: "liquid",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: false,
     pending: false,
     disabled: false,
-    squared: false,
-    defaultPressed: false,
   }),
 });
 
 export const Variants = meta.story({
   name: "バリエーション",
   ...ctrl({
+    children: "切り替え",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: false,
     pending: false,
     disabled: false,
-    squared: false,
-    defaultPressed: false,
   }),
   render(props) {
     return (
       <div className="flex flex-wrap gap-3">
-        <ToggleButton {...props} variant="liquid">
-          リキッド
-        </ToggleButton>
-        <ToggleButton {...props} variant="naked">
-          ネイキッド
-        </ToggleButton>
-        <ToggleButton {...props} variant="liquid" defaultPressed>
-          押下（solid）
-        </ToggleButton>
-        <ToggleButton {...props} variant="naked" defaultPressed>
-          押下（solid）
-        </ToggleButton>
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col items-center gap-2">
+            <span className="text-sm">{variant}</span>
+            <ToggleButton {...props} variant={variant} />
+          </div>
+        ))}
       </div>
     );
   },
@@ -99,60 +91,43 @@ export const Variants = meta.story({
 export const Colors = meta.story({
   name: "色",
   ...ctrl({
+    children: "切り替え",
     variant: "liquid",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: false,
     pending: false,
     disabled: false,
-    squared: false,
   }),
   render(props) {
     return (
       <div className="flex flex-wrap gap-3">
         {COLORS.map((color) => (
-          <ToggleButton {...props} key={color} defaultPressed color={color}>
-            ボタン
-          </ToggleButton>
+          <ToggleButton {...props} key={color} defaultPressed color={color} />
         ))}
       </div>
     );
   },
 });
 
-export const Active = meta.story({
-  name: "押下状態",
+export const Controlled = meta.story({
+  name: "制御",
   ...ctrl({
     variant: "liquid",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: false,
     pending: false,
     disabled: false,
-    squared: false,
-    defaultPressed: false,
   }),
   render(props) {
     const [pressed, setPressed] = React.useState(false);
 
     return (
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center justify-center gap-3">
-          <ToggleButton {...props} defaultPressed>
-            初期押下
-          </ToggleButton>
-          <ToggleButton {...props}>初期非押下</ToggleButton>
-        </div>
-        <div className="flex items-center justify-center gap-3">
-          <ToggleButton {...props} pressed={pressed} onPressedChange={setPressed}>
-            制御: {pressed ? "ON" : "OFF"}
-          </ToggleButton>
-          <ToggleButton {...props} pressed>
-            強制押下
-          </ToggleButton>
-        </div>
-      </div>
+      <ToggleButton {...props} pressed={pressed} onPressedChange={setPressed}>
+        {pressed ? "ON" : "OFF"}
+      </ToggleButton>
     );
   },
 });
@@ -162,53 +137,59 @@ export const WithIcons = meta.story({
   ...ctrl({
     variant: "liquid",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: false,
     pending: false,
     disabled: false,
-    squared: false,
-    defaultPressed: false,
   }),
   render(props) {
-    const [pressed, setPressed] = React.useState(true);
-
     return (
       <div className="flex flex-col gap-3">
         <div className="flex justify-center gap-3">
-          <ToggleButton {...props} defaultPressed>
-            <GlobeIcon />
-            公開
+          <ToggleButton {...props}>
+            <ItalicIcon />
+            切り替え
           </ToggleButton>
-          <ToggleButton {...props} defaultPressed>
-            削除
-            <DeleteIcon />
+          <ToggleButton {...props}>
+            切り替え
+            <ItalicIcon />
           </ToggleButton>
         </div>
         <div className="flex justify-center gap-3">
           <ToggleButton
             {...props}
-            pressed={pressed}
-            onPressedChange={setPressed}
             slotProps={{
               content: {
                 className: "flex-col",
               },
             }}
           >
-            <GlobeIcon />
-            {pressed ? "公開中" : "非公開"}
+            <ItalicIcon />
+            切り替え
           </ToggleButton>
           <ToggleButton
             {...props}
-            defaultPressed
             slotProps={{
               content: {
                 className: "flex-col",
               },
             }}
           >
-            <DeleteIcon />
-            削除
+            切り替え
+            <ItalicIcon />
+          </ToggleButton>
+        </div>
+        <div className="flex justify-center gap-3">
+          <ToggleButton
+            {...props}
+            slotProps={{
+              content: {
+                className: "flex-col gap-[8px]",
+              },
+            }}
+          >
+            <ItalicIcon className="size-[28px]" />
+            切り替え
           </ToggleButton>
         </div>
       </div>
@@ -222,24 +203,22 @@ export const Squared = meta.story({
     variant: "liquid",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: false,
     pending: false,
     disabled: false,
-    defaultPressed: false,
   }),
   render(props) {
     return (
       <div className="flex flex-wrap gap-3">
-        <ToggleButton {...props} squared defaultPressed>
-          <EllipsisIcon />
-        </ToggleButton>
-        <ToggleButton {...props} squared>
-          <CogIcon />
-        </ToggleButton>
-        <ToggleButton {...props} squared defaultPressed>
-          <Trash2Icon />
-        </ToggleButton>
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col items-center gap-2">
+            <span className="text-sm">{variant}</span>
+            <ToggleButton {...props} variant={variant} squared>
+              <ItalicIcon />
+            </ToggleButton>
+          </div>
+        ))}
       </div>
     );
   },
@@ -270,11 +249,9 @@ export const Pending = meta.story({
     variant: "liquid",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: false,
     disabled: false,
-    squared: false,
-    defaultPressed: false,
   }),
   render(props) {
     const feature = useToggleFeature();
@@ -297,27 +274,23 @@ export const Pending = meta.story({
 export const Radius = meta.story({
   name: "角丸",
   ...ctrl({
+    children: "切り替え",
     variant: "liquid",
     color: "grey",
     size: "md",
     outlined: false,
     pending: false,
     disabled: false,
-    squared: false,
-    defaultPressed: false,
   }),
   render(props) {
     return (
       <div className="flex flex-wrap gap-3">
-        <ToggleButton {...props} radius="none">
-          NONE
-        </ToggleButton>
-        <ToggleButton {...props} radius="rounded">
-          ROUNDED
-        </ToggleButton>
-        <ToggleButton {...props} radius="full">
-          FULL
-        </ToggleButton>
+        {RADII.map((radius) => (
+          <div key={radius} className="flex flex-col items-center gap-2">
+            <span className="text-sm">{radius}</span>
+            <ToggleButton {...props} radius={radius} />
+          </div>
+        ))}
       </div>
     );
   },
@@ -326,23 +299,22 @@ export const Radius = meta.story({
 export const Outlined = meta.story({
   name: "枠線",
   ...ctrl({
+    children: "切り替え",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     pending: false,
     disabled: false,
-    squared: false,
-    defaultPressed: false,
   }),
   render(props) {
     return (
       <div className="flex flex-wrap gap-3">
-        <ToggleButton {...props} variant="naked" outlined>
-          ネイキッド
-        </ToggleButton>
-        <ToggleButton {...props} variant="liquid" outlined>
-          リキッド
-        </ToggleButton>
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col items-center gap-2">
+            <span className="text-sm">{variant}</span>
+            <ToggleButton {...props} variant={variant} outlined />
+          </div>
+        ))}
       </div>
     );
   },
@@ -351,51 +323,49 @@ export const Outlined = meta.story({
 export const Sizes = meta.story({
   name: "大きさ",
   ...ctrl({
+    children: "切り替え",
     variant: "liquid",
     color: "grey",
-    radius: "rounded",
+    radius: undefined,
     outlined: false,
     pending: false,
     disabled: false,
-    squared: false,
-    defaultPressed: false,
   }),
   render(props) {
     return (
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-center gap-3">
-          <ToggleButton {...props} size="sm">
-            <Trash2Icon />
-            Small
-          </ToggleButton>
-          <ToggleButton {...props} size="md">
-            <Trash2Icon />
-            Medium
-          </ToggleButton>
-          <ToggleButton {...props} size="lg">
-            <Trash2Icon />
-            Large
-          </ToggleButton>
+          {SIZES.map((size) => (
+            <div key={size} className="flex flex-col items-center gap-2">
+              <span className="text-sm">{size}</span>
+              <ToggleButton {...props} size={size}>
+                <ItalicIcon />
+                {props.children}
+              </ToggleButton>
+            </div>
+          ))}
         </div>
         <div className="flex items-center justify-center gap-3">
-          <ToggleButton {...props} size="sm" squared>
-            <Trash2Icon />
-          </ToggleButton>
-          <ToggleButton {...props} size="md" squared>
-            <Trash2Icon />
-          </ToggleButton>
-          <ToggleButton {...props} size="lg" squared>
-            <Trash2Icon />
-          </ToggleButton>
+          {SIZES.map((size) => (
+            <div key={size} className="flex flex-col items-center gap-2">
+              <span className="text-sm">{size}</span>
+              <ToggleButton {...props} size={size} squared>
+                <ItalicIcon />
+              </ToggleButton>
+            </div>
+          ))}
         </div>
-        <div className="flex justify-center gap-3 h-[50px]">
-          <ToggleButton {...props}>
-            <Trash2Icon />
-            ボタン
-          </ToggleButton>
-          <ToggleButton {...props} squared>
-            <Trash2Icon />
-          </ToggleButton>
+        <div className="flex flex-col items-center gap-2">
+          <span className="text-sm">親要素に合わせる</span>
+          <div className="flex justify-center gap-3 h-[50px]">
+            <ToggleButton {...props}>
+              <ItalicIcon />
+              {props.children}
+            </ToggleButton>
+            <ToggleButton {...props} squared>
+              <ItalicIcon />
+            </ToggleButton>
+          </div>
         </div>
       </div>
     );
@@ -408,12 +378,10 @@ export const FullWidth = meta.story({
     variant: "liquid",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: false,
     pending: false,
     disabled: false,
-    squared: false,
-    defaultPressed: false,
   }),
   render(props) {
     return (
@@ -426,7 +394,7 @@ export const FullWidth = meta.story({
             {"width: 100%"}
           </ToggleButton>
           <ToggleButton {...props} squared>
-            <EllipsisIcon />
+            <ItalicIcon />
           </ToggleButton>
         </div>
         <div className="flex w-[200px] gap-1">
@@ -434,7 +402,7 @@ export const FullWidth = meta.story({
             {"flex: 1"}
           </ToggleButton>
           <ToggleButton {...props} squared>
-            <EllipsisIcon />
+            <ItalicIcon />
           </ToggleButton>
         </div>
       </div>
@@ -448,11 +416,9 @@ export const Disabled = meta.story({
     variant: "liquid",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: false,
     pending: false,
-    squared: false,
-    defaultPressed: false,
   }),
   render(props) {
     return (
@@ -464,7 +430,7 @@ export const Disabled = meta.story({
           ON
         </ToggleButton>
         <ToggleButton {...props} disabled squared>
-          <EllipsisIcon />
+          <ItalicIcon />
         </ToggleButton>
       </div>
     );

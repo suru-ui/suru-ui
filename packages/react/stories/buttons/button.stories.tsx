@@ -1,10 +1,12 @@
-import { COLOR_TEMPLATES as VALIANTS, COLORS, SIZES } from "@suru-ui/theme";
-import { CogIcon, DeleteIcon, EllipsisIcon, GlobeIcon, Trash2Icon } from "lucide-react";
+import { COLOR_TEMPLATES as VARIANTS, COLORS, SIZES } from "@suru-ui/theme";
+import { DeleteIcon, EllipsisIcon, GlobeIcon, Trash2Icon } from "lucide-react";
 import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Button } from "../../src/buttons/button/index.js";
 import * as ButtonParts from "../../src/buttons/button/index.js";
+
+const RADII = ["none", ...SIZES, "full"] as const;
 
 const meta = preview.meta({
   title: "Buttons / Button",
@@ -14,6 +16,9 @@ const meta = preview.meta({
 export default meta;
 
 const ctrl = controls(Button, {
+  children: {
+    control: "text",
+  },
   color: {
     options: COLORS,
     control: "select",
@@ -28,7 +33,7 @@ const ctrl = controls(Button, {
     control: "boolean",
   },
   radius: {
-    options: ["none", "rounded", "full"],
+    options: RADII,
     control: "select",
   },
   size: {
@@ -36,7 +41,7 @@ const ctrl = controls(Button, {
     control: "select",
   },
   variant: {
-    options: VALIANTS,
+    options: VARIANTS,
     control: "select",
   },
 });
@@ -48,7 +53,7 @@ export const Usage = meta.story({
     variant: "solid",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: false,
     pending: false,
     disabled: false,
@@ -58,9 +63,10 @@ export const Usage = meta.story({
 export const Variants = meta.story({
   name: "バリエーション",
   ...ctrl({
+    children: "ボタン",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: false,
     pending: false,
     disabled: false,
@@ -68,15 +74,12 @@ export const Variants = meta.story({
   render(props) {
     return (
       <div className="flex flex-wrap gap-3">
-        <Button {...props} variant="solid">
-          ソリッド
-        </Button>
-        <Button {...props} variant="naked">
-          ネイキッド
-        </Button>
-        <Button {...props} variant="liquid">
-          リキッド
-        </Button>
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col items-center gap-2">
+            <span className="text-sm">{variant}</span>
+            <Button {...props} variant={variant} />
+          </div>
+        ))}
       </div>
     );
   },
@@ -85,9 +88,10 @@ export const Variants = meta.story({
 export const Colors = meta.story({
   name: "色",
   ...ctrl({
+    children: "ボタン",
     variant: "solid",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: false,
     pending: false,
     disabled: false,
@@ -96,9 +100,10 @@ export const Colors = meta.story({
     return (
       <div className="flex flex-wrap gap-3">
         {COLORS.map((color) => (
-          <Button {...props} key={color} color={color}>
-            ボタン
-          </Button>
+          <div key={color} className="flex flex-col items-center gap-2">
+            <span className="text-sm">{color}</span>
+            <Button {...props} color={color} />
+          </div>
         ))}
       </div>
     );
@@ -109,8 +114,9 @@ export const WithIcons = meta.story({
   name: "アイコン付き",
   ...ctrl({
     variant: "solid",
+    color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: false,
     pending: false,
     disabled: false,
@@ -119,23 +125,50 @@ export const WithIcons = meta.story({
     return (
       <div className="flex flex-col gap-3">
         <div className="flex justify-center gap-3">
-          <Button {...props} color="blue">
+          <Button {...props}>
             <GlobeIcon />
-            検索
+            ボタン
           </Button>
-          <Button {...props} color="red">
-            削除
+          <Button {...props}>
+            ボタン
             <DeleteIcon />
           </Button>
         </div>
         <div className="flex justify-center gap-3">
-          <Button {...props} color="blue" slotProps={{ content: { className: "flex-col" } }}>
+          <Button
+            {...props}
+            slotProps={{
+              content: {
+                className: "flex-col",
+              },
+            }}
+          >
             <GlobeIcon />
-            検索
+            ボタン
           </Button>
-          <Button {...props} color="red" slotProps={{ content: { className: "flex-col" } }}>
-            削除
+          <Button
+            {...props}
+            slotProps={{
+              content: {
+                className: "flex-col",
+              },
+            }}
+          >
+            ボタン
             <DeleteIcon />
+          </Button>
+        </div>
+        <div className="flex justify-center gap-3">
+          <Button
+            {...props}
+            slotProps={{
+              content: {
+                className: "flex-col gap-[8px]",
+              },
+            }}
+          >
+            <GlobeIcon className="size-[28px]" />
+            ボタン
           </Button>
         </div>
       </div>
@@ -146,10 +179,9 @@ export const WithIcons = meta.story({
 export const Squared = meta.story({
   name: "正方形",
   ...ctrl({
-    variant: "solid",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: false,
     pending: false,
     disabled: false,
@@ -157,15 +189,14 @@ export const Squared = meta.story({
   render(props) {
     return (
       <div className="flex flex-wrap gap-3">
-        <Button {...props} squared>
-          <EllipsisIcon />
-        </Button>
-        <Button {...props} squared>
-          <CogIcon />
-        </Button>
-        <Button {...props} squared>
-          <Trash2Icon />
-        </Button>
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col items-center gap-2">
+            <span className="text-sm">{variant}</span>
+            <Button {...props} variant={variant} squared>
+              <Trash2Icon />
+            </Button>
+          </div>
+        ))}
       </div>
     );
   },
@@ -244,60 +275,85 @@ function useProgress() {
   };
 }
 
+function PendingProgress(props: {}) {
+  const progress = useProgress();
+
+  return (
+    <Button
+      {...props}
+      value="foo.zip"
+      pending={progress.pending}
+      onClick={progress.clickHandler}
+      percentage={progress.percentage}
+    >
+      ダウンロード
+    </Button>
+  );
+}
+
+function PendingCustomStyle(props: {}) {
+  const progress = useProgress();
+
+  return (
+    <ButtonParts.Root
+      {...props}
+      value="foo.zip"
+      pending={progress.pending}
+      onClick={progress.clickHandler}
+    >
+      <ButtonParts.Pending defaultVisibility="hidden">
+        <ButtonParts.CircularProgress>
+          <ButtonParts.CircularProgressTrack />
+          <ButtonParts.CircularProgressFill>
+            <ButtonParts.CircularProgressFillRotation />
+          </ButtonParts.CircularProgressFill>
+        </ButtonParts.CircularProgress>
+      </ButtonParts.Pending>
+      <ButtonParts.Content className="w-[100px]">
+        {progress.pending && progress.percentage !== undefined
+          ? `${Math.trunc(progress.percentage)}%完了`
+          : "アップロード"}
+      </ButtonParts.Content>
+    </ButtonParts.Root>
+  );
+}
+
 export const Pending = meta.story({
   name: "保留",
   ...ctrl({
     variant: "solid",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: false,
     disabled: false,
   }),
   render(props) {
-    const progress1 = useProgress();
-    const progress2 = useProgress();
-
     return (
-      <div className="flex flex-wrap gap-3">
-        <Button {...props} pending>
-          検索
-        </Button>
-        <Button {...props} pending squared>
-          <Trash2Icon />
-        </Button>
-        <Button
-          {...props}
-          value="foo.zip"
-          pending={progress1.pending}
-          onClick={progress1.clickHandler}
-          percentage={progress1.percentage}
-        >
-          ダウンロード
-        </Button>
-        <ButtonParts.Root
-          {...props}
-          value="foo.zip"
-          pending={progress2.pending}
-          onClick={progress2.clickHandler}
-        >
-          <ButtonParts.Content className="w-[100px]">
-            <ButtonParts.Pending defaultVisibility="hidden">
-              <ButtonParts.CircularProgress>
-                <ButtonParts.CircularProgressTrack />
-                <ButtonParts.CircularProgressFill>
-                  <ButtonParts.CircularProgressFillRotation />
-                </ButtonParts.CircularProgressFill>
-              </ButtonParts.CircularProgress>
-            </ButtonParts.Pending>
-
-            <span className="flex-1">
-              {progress2.pending && progress2.percentage !== undefined
-                ? `${Math.trunc(progress2.percentage)}%完了`
-                : "アップロード"}
-            </span>
-          </ButtonParts.Content>
-        </ButtonParts.Root>
+      <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3">
+          <span className="text-sm">読み込み中</span>
+          <div className="flex flex-wrap gap-3">
+            <Button {...props} pending>
+              検索
+            </Button>
+            <Button {...props} pending squared>
+              <Trash2Icon />
+            </Button>
+          </div>
+        </div>
+        <div className="flex flex-col gap-3">
+          <span className="text-sm">進捗度付き</span>
+          <div>
+            <PendingProgress {...props} />
+          </div>
+        </div>
+        <div className="flex flex-col gap-3">
+          <span className="text-sm">カスタマイズ</span>
+          <div>
+            <PendingCustomStyle {...props} />
+          </div>
+        </div>
       </div>
     );
   },
@@ -306,6 +362,7 @@ export const Pending = meta.story({
 export const Radius = meta.story({
   name: "角丸",
   ...ctrl({
+    children: "ボタン",
     variant: "solid",
     color: "grey",
     size: "md",
@@ -316,15 +373,12 @@ export const Radius = meta.story({
   render(props) {
     return (
       <div className="flex flex-wrap gap-3">
-        <Button {...props} radius="none">
-          NONE
-        </Button>
-        <Button {...props} radius="rounded">
-          ROUNDED
-        </Button>
-        <Button {...props} radius="full">
-          FULL
-        </Button>
+        {RADII.map((radius) => (
+          <div key={radius} className="flex flex-col items-center gap-2">
+            <span className="text-sm">{radius}</span>
+            <Button {...props} radius={radius} />
+          </div>
+        ))}
       </div>
     );
   },
@@ -333,24 +387,22 @@ export const Radius = meta.story({
 export const Outlined = meta.story({
   name: "枠線",
   ...ctrl({
+    children: "ボタン",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     pending: false,
     disabled: false,
   }),
   render(props) {
     return (
       <div className="flex flex-wrap gap-3">
-        <Button {...props} variant="solid" outlined>
-          ソリッド
-        </Button>
-        <Button {...props} variant="naked" outlined>
-          ネイキッド
-        </Button>
-        <Button {...props} variant="liquid" outlined>
-          リキッド
-        </Button>
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col items-center gap-2">
+            <span className="text-sm">{variant}</span>
+            <Button {...props} variant={variant} outlined />
+          </div>
+        ))}
       </div>
     );
   },
@@ -359,9 +411,10 @@ export const Outlined = meta.story({
 export const Sizes = meta.story({
   name: "大きさ",
   ...ctrl({
+    children: "ボタン",
     variant: "solid",
     color: "grey",
-    radius: "rounded",
+    radius: undefined,
     outlined: false,
     pending: false,
     disabled: false,
@@ -370,38 +423,37 @@ export const Sizes = meta.story({
     return (
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-center gap-3">
-          <Button {...props} size="sm">
-            <Trash2Icon />
-            Small
-          </Button>
-          <Button {...props} size="md">
-            <Trash2Icon />
-            Medium
-          </Button>
-          <Button {...props} size="lg">
-            <Trash2Icon />
-            Large
-          </Button>
+          {SIZES.map((size) => (
+            <div key={size} className="flex flex-col items-center gap-2">
+              <span className="text-sm">{size}</span>
+              <Button {...props} size={size}>
+                <Trash2Icon />
+                {props.children}
+              </Button>
+            </div>
+          ))}
         </div>
         <div className="flex items-center justify-center gap-3">
-          <Button {...props} size="sm" squared>
-            <Trash2Icon />
-          </Button>
-          <Button {...props} size="md" squared>
-            <Trash2Icon />
-          </Button>
-          <Button {...props} size="lg" squared>
-            <Trash2Icon />
-          </Button>
+          {SIZES.map((size) => (
+            <div key={size} className="flex flex-col items-center gap-2">
+              <span className="text-sm">{size}</span>
+              <Button {...props} size={size} squared>
+                <Trash2Icon />
+              </Button>
+            </div>
+          ))}
         </div>
-        <div className="flex justify-center gap-3 h-[50px]">
-          <Button {...props}>
-            <Trash2Icon />
-            ボタン
-          </Button>
-          <Button {...props} squared>
-            <Trash2Icon />
-          </Button>
+        <div className="flex flex-col items-center gap-2">
+          <span className="text-sm">親要素に合わせる</span>
+          <div className="flex justify-center gap-3 h-[50px]">
+            <Button {...props}>
+              <Trash2Icon />
+              {props.children}
+            </Button>
+            <Button {...props} squared>
+              <Trash2Icon />
+            </Button>
+          </div>
         </div>
       </div>
     );
@@ -414,7 +466,7 @@ export const FullWidth = meta.story({
     variant: "solid",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: false,
     pending: false,
     disabled: false,
@@ -452,7 +504,7 @@ export const Disabled = meta.story({
     variant: "solid",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: false,
     pending: false,
   }),

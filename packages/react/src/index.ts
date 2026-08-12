@@ -16,7 +16,11 @@ export { default as useFocusType } from "./hooks/use-focus-type.js";
 
 // buttons
 export { type ButtonProps, type ButtonSlotProps, Button } from "./buttons/button/index.js";
-export { type ToggleButtonProps, ToggleButton } from "./buttons/toggle-button/index.js";
+export {
+  type ToggleButtonProps,
+  type ToggleButtonSlotProps,
+  ToggleButton,
+} from "./buttons/toggle-button/index.js";
 
 // data-display
 export { type AlertProps, type AlertSlotProps, Alert } from "./data-display/alert/index.js";

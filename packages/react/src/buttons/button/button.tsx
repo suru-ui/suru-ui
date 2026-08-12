@@ -3,8 +3,6 @@ import * as ButtonParts from "./button.parts.jsx";
 
 /**
  * {@link Button} の各パーツに渡すプロパティーです。
- *
- * `pending` と `circularProgress` の同名プロパティーは、ルートの指定より優先されます。
  */
 export type ButtonSlotProps = {
   /**
@@ -84,46 +82,34 @@ export type ButtonProps = ButtonParts.Root.Props &
 export const Button: Component<ButtonProps> = function SuiButton(props) {
   const {
     children,
-    slotProps,
-    percentage: percentageProp,
-    indeterminate: indeterminateProp,
+    slotProps: {
+      content: contentProps,
+      pending: { overlay = true, ...otherPendingProps } = {},
+      circularProgress: circularProgressProps,
+      circularProgressFill: circularProgressFillProps,
+      circularProgressTrack: circularProgressTrackProps,
+      circularProgressFillRotation: circularProgressFillRotationProps,
+    } = {},
+    percentage,
+    indeterminate,
     ...rootProps
   } = props;
-  const {
-    content: contentProps,
-    pending: pendingProps = {},
-    circularProgress: circularProgressProps = {},
-    circularProgressFill: circularProgressFillProps,
-    circularProgressTrack: circularProgressTrackProps,
-    circularProgressFillRotation: circularProgressFillRotationProps,
-  } = slotProps ?? {};
-  const { overlay = true, ...otherPendingProps } = pendingProps;
-  const {
-    percentage = percentageProp,
-    indeterminate = indeterminateProp,
-    ...otherCircularProgressProps
-  } = circularProgressProps;
-
-  const shouldRenderPending =
-    rootProps.pending === true || pendingProps.defaultVisibility === "hidden";
 
   return (
     <ButtonParts.Root {...rootProps}>
-      <ButtonParts.Content {...contentProps}>{children}</ButtonParts.Content>
-      {shouldRenderPending ? (
-        <ButtonParts.Pending {...otherPendingProps} overlay={overlay}>
-          <ButtonParts.CircularProgress
-            {...otherCircularProgressProps}
-            percentage={percentage}
-            indeterminate={indeterminate}
-          >
-            <ButtonParts.CircularProgressTrack {...circularProgressTrackProps} />
-            <ButtonParts.CircularProgressFill {...circularProgressFillProps}>
-              <ButtonParts.CircularProgressFillRotation {...circularProgressFillRotationProps} />
-            </ButtonParts.CircularProgressFill>
-          </ButtonParts.CircularProgress>
-        </ButtonParts.Pending>
-      ) : null}
+      <ButtonParts.Content {...{ children, ...contentProps }} />
+      <ButtonParts.Pending {...otherPendingProps} overlay={overlay}>
+        <ButtonParts.CircularProgress
+          percentage={percentage}
+          indeterminate={indeterminate}
+          {...circularProgressProps}
+        >
+          <ButtonParts.CircularProgressTrack {...circularProgressTrackProps} />
+          <ButtonParts.CircularProgressFill {...circularProgressFillProps}>
+            <ButtonParts.CircularProgressFillRotation {...circularProgressFillRotationProps} />
+          </ButtonParts.CircularProgressFill>
+        </ButtonParts.CircularProgress>
+      </ButtonParts.Pending>
     </ButtonParts.Root>
   );
 };

@@ -161,23 +161,6 @@
     --sui_button-border_radius: var(--sui-radius-lg);
   }
 
-  .sui_button-radius_rounded {
-    &.sui_button-size_sm {
-      /* 枠線 */
-      --sui_button-border_radius: var(--sui-radius-sm);
-    }
-
-    &.sui_button-size_md {
-      /* 枠線 */
-      --sui_button-border_radius: var(--sui-radius-md);
-    }
-
-    &.sui_button-size_lg {
-      /* 枠線 */
-      --sui_button-border_radius: var(--sui-radius-lg);
-    }
-  }
-
   .sui_button-radius_full {
     /* 枠線 */
     --sui_button-border_radius: calc(var(--sui_button-min_height) / 2);

@@ -1,10 +1,8 @@
 import { Toggle } from "@base-ui/react/toggle";
-import type { Color, ColorTemplate as Variant, Size } from "@suru-ui/theme";
+import type { Color, Size } from "@suru-ui/theme";
 import * as React from "react";
 
-import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
-import { useActionGroupContext } from "../../layout/action-group/action-group.parts.jsx";
 import type { Component } from "../../types.js";
 import * as Button from "../button/button.parts.jsx";
 
@@ -81,23 +79,45 @@ export type ToggleButtonRootState = Toggle.State;
  */
 export type ToggleButtonRootProps = React.ComponentProps<typeof Toggle> & {
   /**
-   * トグルボタンのスタイルバリエーションを指定します。
-   *
-   * - `"naked"`: 背景のないテキストのみ
-   * - `"liquid"`: 薄い塗りつぶし
-   *
-   * 押下状態（`pressed`）のときは、どちらのバリエーションでも `"solid"` のスタイルになります。
-   *
-   * @default "liquid"
-   */
-  variant?: Exclude<Variant, "solid"> | undefined;
-
-  /**
    * トグルボタンの色を指定します。
    *
-   * @default "blue"
+   * @default "grey"
    */
   color?: Color | undefined;
+
+  /**
+   * ボタンが無効になっている場合でも、フォーカス可能かどうかを指定します。
+   */
+  focusableWhenDisabled?: boolean | undefined;
+
+  /**
+   * 枠線を表示するかどうかを指定します。
+   *
+   * @default false
+   */
+  outlined?: boolean | undefined;
+
+  /**
+   * トグルボタンを保留状態にするかどうかを指定します。
+   *
+   * `true` の場合、ボタンの押下が無効化され、{@link ToggleButtonPending} スロットが表示されます。`disabled` を `true` にしない限り、デフォルトでフォーカスが維持されます。
+   *
+   * @default false
+   */
+  pending?: boolean | undefined;
+
+  /**
+   * トグルボタンの角丸を指定します。
+   *
+   * デフォルト値は {@link ToggleButtonRootProps.size|size} です。
+   *
+   * - `"none"`: 角を直角にする
+   * - `"sm"`: 小さい角丸
+   * - `"md"`: 標準的な角丸
+   * - `"lg"`: 大きい角丸
+   * - `"full"`: 完全な丸形
+   */
+  radius?: "none" | Size | "full" | undefined;
 
   /**
    * トグルボタンのサイズを指定します。
@@ -107,41 +127,25 @@ export type ToggleButtonRootProps = React.ComponentProps<typeof Toggle> & {
   size?: Size | undefined;
 
   /**
-   * トグルボタンの角丸を指定します。
-   *
-   * - `"none"`: 角を直角にする
-   * - `"rounded"`: 標準的な角丸
-   * - `"full"`: 完全な丸形（pills 状）
-   *
-   * @default "rounded"
-   */
-  radius?: "none" | "rounded" | "full" | undefined;
-
-  /**
-   * 枠線を表示するかどうかを指定します。
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * トグルボタンを保留状態（ローディング中）にするかどうかを指定します。
-   *
-   * `true` の場合、ボタンは無効化され、{@link Pending} スロットが表示されます。
-   * `false` から `true` に変化すると、保留表示が生成されます。
-   */
-  pending?: boolean | undefined;
-
-  /**
    * トグルボタンを正方形にするかどうかを指定します。
    *
    * `true` の場合、幅と高さが等しくなり、アイコンボタンなどに適した形状になります。
    */
   squared?: boolean | undefined;
+
+  /**
+   * トグルボタンのスタイルバリエーションを指定します。
+   *
+   * - `"naked"`: 背景のないテキストのみ
+   * - `"liquid"`: 薄い塗りつぶし
+   *
+   * @default "liquid"
+   */
+  variant?: "naked" | "liquid" | undefined;
 };
 
 /**
  * トグルボタンのルート要素です。
- *
- * Base UI の {@link Toggle} をラップし、テーマに基づくスタイルクラスを適用します。
  *
  * @example
  * ```tsx
@@ -153,57 +157,41 @@ export type ToggleButtonRootProps = React.ComponentProps<typeof Toggle> & {
 export const ToggleButtonRoot: Component<ToggleButtonRootProps> = function SuiToggleButtonRoot(
   props,
 ) {
-  const group = useActionGroupContext(true);
   const {
-    size: sizeProp,
-    type = "button",
-    color: colorProp,
-    radius: radiusProp,
+    size = "md",
+    color = "grey",
+    radius = size,
     pending = false,
     squared = false,
-    variant: variantProp,
-    disabled: disabledProp,
-    outlined: outlinedProp,
-    className,
-    ...otherProps
+    variant = "liquid",
+    disabled = false,
+    outlined,
+    focusableWhenDisabled,
+    ...toggleButtonProps
   } = props;
-  const size = group?.size ?? sizeProp ?? "md";
-  const color = group?.color ?? colorProp ?? "blue";
-  const radius = group?.radius ?? radiusProp ?? "rounded";
-  const variant = group?.variant ?? variantProp ?? "liquid";
-  const outlined = group?.outlined ?? outlinedProp ?? false;
-  const disabled = disabledProp || pending;
-  const context = React.useMemo(
-    () => ({
-      pending,
-    }),
-    [pending],
-  );
+  const { render, ...otherToggleButtonProps } = toggleButtonProps;
 
   return (
-    <ToggleButtonContext value={context}>
-      <Toggle
-        {...otherProps}
-        type={type}
-        disabled={disabled}
-        className={cn(
-          className,
-          "sui_button",
-          "sui_action_group_item",
-          `sui_button-size_${size}`,
-          `sui_button-color_${color}`,
-          `sui_button-radius_${radius}`,
-          pending && "sui_button-pending",
-          squared && "sui_button-squared",
-          outlined && "sui_button-outlined",
-          (state: Toggle.State) =>
-            cn(
-              state.disabled && "sui_button-disabled",
-              state.pressed ? "sui_button-variant_solid" : `sui_button-variant_${variant}`,
-            ),
-        )}
-      />
-    </ToggleButtonContext>
+    <Toggle
+      {...otherToggleButtonProps}
+      render={
+        render ||
+        ((props, state) => (
+          <Button.Root
+            {...props}
+            size={size}
+            color={state.pressed ? color : "grey"}
+            radius={radius}
+            pending={pending}
+            squared={squared}
+            variant={state.pressed ? "solid" : variant}
+            disabled={disabled}
+            outlined={outlined}
+            focusableWhenDisabled={focusableWhenDisabled}
+          />
+        ))
+      }
+    />
   );
 };
 
@@ -245,7 +233,10 @@ export type ToggleButtonContentProps = Button.Content.Props;
  * <ToggleButtonParts.Content>ラベル</ToggleButtonParts.Content>
  * ```
  */
-export const ToggleButtonContent: Component<ToggleButtonContentProps> = Button.Content;
+export const ToggleButtonContent: Component<ToggleButtonContentProps> =
+  function SuiToggleButtonContent(props) {
+    return <Button.Content {...props} />;
+  };
 
 export namespace Content {
   /**
@@ -268,12 +259,12 @@ export const Content: Component<Content.Props> = ToggleButtonContent;
 // -------
 
 /**
- * {@link Pending} の状態です。
+ * {@link ToggleButtonPending} の状態です。
  */
 export type ToggleButtonPendingState = Button.Pending.State;
 
 /**
- * {@link Pending} に渡すプロパティーです。
+ * {@link ToggleButtonPending} に渡すプロパティーです。
  */
 export type ToggleButtonPendingProps = Button.Pending.Props;
 
@@ -287,7 +278,10 @@ export type ToggleButtonPendingProps = Button.Pending.Props;
  * </ToggleButtonParts.Pending>
  * ```
  */
-export const ToggleButtonPending: Component<ToggleButtonPendingProps> = Button.Pending;
+export const ToggleButtonPending: Component<ToggleButtonPendingProps> =
+  function SuiToggleButtonPending(props) {
+    return <Button.Pending {...props} />;
+  };
 
 export namespace Pending {
   /**
@@ -391,7 +385,9 @@ export type ToggleButtonCircularProgressProps = Button.CircularProgress.Props;
  * ```
  */
 export const ToggleButtonCircularProgress: Component<ToggleButtonCircularProgressProps> =
-  Button.CircularProgress;
+  function SuiToggleButtonCircularProgress(props) {
+    return <Button.CircularProgress {...props} />;
+  };
 
 export namespace CircularProgress {
   /**
@@ -432,7 +428,9 @@ export type ToggleButtonCircularProgressTrackProps = Button.CircularProgressTrac
  * ```
  */
 export const ToggleButtonCircularProgressTrack: Component<ToggleButtonCircularProgressTrackProps> =
-  Button.CircularProgressTrack;
+  function SuiToggleButtonCircularProgressTrack(props) {
+    return <Button.CircularProgressTrack {...props} />;
+  };
 
 export namespace CircularProgressTrack {
   /**
@@ -474,7 +472,9 @@ export type ToggleButtonCircularProgressFillProps = Button.CircularProgressFill.
  * ```
  */
 export const ToggleButtonCircularProgressFill: Component<ToggleButtonCircularProgressFillProps> =
-  Button.CircularProgressFill;
+  function SuiToggleButtonCircularProgressFill(props) {
+    return <Button.CircularProgressFill {...props} />;
+  };
 
 export namespace CircularProgressFill {
   /**
@@ -498,6 +498,12 @@ export const CircularProgressFill: Component<CircularProgressFill.Props> =
 // ----------------------------
 
 /**
+ * {@link CircularProgressFillRotation} の状態です。
+ */
+export type ToggleButtonCircularProgressFillRotationState =
+  Button.CircularProgressFillRotation.State;
+
+/**
  * {@link CircularProgressFillRotation} に渡すプロパティーです。
  */
 export type ToggleButtonCircularProgressFillRotationProps =
@@ -512,9 +518,16 @@ export type ToggleButtonCircularProgressFillRotationProps =
  * ```
  */
 export const ToggleButtonCircularProgressFillRotation: Component<ToggleButtonCircularProgressFillRotationProps> =
-  Button.CircularProgressFillRotation;
+  function SuiToggleButtonCircularProgressFillRotation(props) {
+    return <Button.CircularProgressFillRotation {...props} />;
+  };
 
 export namespace CircularProgressFillRotation {
+  /**
+   * {@link ToggleButtonCircularProgressFillRotation} の状態型です。
+   */
+  export type State = ToggleButtonCircularProgressFillRotationState;
+
   /**
    * {@link ToggleButtonCircularProgressFillRotation} のプロパティー型です。
    */

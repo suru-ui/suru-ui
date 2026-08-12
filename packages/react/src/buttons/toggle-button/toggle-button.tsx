@@ -2,6 +2,44 @@ import type { Component } from "../../types.js";
 import * as ToggleButtonParts from "./toggle-button.parts.jsx";
 
 /**
+ * {@link Button} の各パーツに渡すプロパティーです。
+ */
+export type ToggleButtonSlotProps = {
+  /**
+   * {@link ToggleButtonParts.Content|Content} に渡すプロパティーです。
+   */
+  readonly content?: ToggleButtonParts.Content.Props | undefined;
+
+  /**
+   * {@link ToggleButtonParts.Pending|Pending} に渡すプロパティーです。
+   */
+  readonly pending?: ToggleButtonParts.Pending.Props | undefined;
+
+  /**
+   * {@link ToggleButtonParts.CircularProgress|CircularProgress} に渡すプロパティーです。
+   */
+  readonly circularProgress?: ToggleButtonParts.CircularProgress.Props | undefined;
+
+  /**
+   * {@link ToggleButtonParts.CircularProgressTrack|CircularProgressTrack} に渡すプロパティーです。
+   */
+  readonly circularProgressTrack?: ToggleButtonParts.CircularProgressTrack.Props | undefined;
+
+  /**
+   * {@link ToggleButtonParts.CircularProgressFill|CircularProgressFill} に渡すプロパティーです。
+   */
+  readonly circularProgressFill?: ToggleButtonParts.CircularProgressFill.Props | undefined;
+
+  /**
+   * {@link ToggleButtonParts.CircularProgressFillRotation|CircularProgressFillRotation}
+   * に渡すプロパティーです。
+   */
+  readonly circularProgressFillRotation?:
+    | ToggleButtonParts.CircularProgressFillRotation.Props
+    | undefined;
+};
+
+/**
  * {@link ToggleButton} コンポーネントのプロパティーです。
  */
 export type ToggleButtonProps = ToggleButtonParts.Root.Props &
@@ -9,47 +47,9 @@ export type ToggleButtonProps = ToggleButtonParts.Root.Props &
     /**
      * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
      *
-     * ルートのプロパティーより優先される値は、各パーツのプロパティーに従います。
-     * `undefined` の値は指定されていないものとして扱われます。
+     * 各パーツのプロパティーが優先されます。
      */
-    slotProps?:
-      | {
-          /**
-           * {@link ToggleButtonParts.Content|Content} に渡すプロパティーです。
-           */
-          readonly content?: ToggleButtonParts.Content.Props | undefined;
-
-          /**
-           * {@link ToggleButtonParts.Pending|Pending} に渡すプロパティーです。
-           */
-          readonly pending?: ToggleButtonParts.Pending.Props | undefined;
-
-          /**
-           * {@link ToggleButtonParts.CircularProgress|CircularProgress} に渡すプロパティーです。
-           */
-          readonly circularProgress?: ToggleButtonParts.CircularProgress.Props | undefined;
-
-          /**
-           * {@link ToggleButtonParts.CircularProgressTrack|CircularProgressTrack} に渡すプロパティーです。
-           */
-          readonly circularProgressTrack?:
-            | ToggleButtonParts.CircularProgressTrack.Props
-            | undefined;
-
-          /**
-           * {@link ToggleButtonParts.CircularProgressFill|CircularProgressFill} に渡すプロパティーです。
-           */
-          readonly circularProgressFill?: ToggleButtonParts.CircularProgressFill.Props | undefined;
-
-          /**
-           * {@link ToggleButtonParts.CircularProgressFillRotation|CircularProgressFillRotation}
-           * に渡すプロパティーです。
-           */
-          readonly circularProgressFillRotation?:
-            | ToggleButtonParts.CircularProgressFillRotation.Props
-            | undefined;
-        }
-      | undefined;
+    slotProps?: ToggleButtonSlotProps | undefined;
 
     /**
      * 進行状況をパーセンテージで指定します。
@@ -78,14 +78,14 @@ export type ToggleButtonProps = ToggleButtonParts.Root.Props &
  * <ToggleButton>切り替え</ToggleButton>
  * ```
  *
- * @example アクティブ初期値指定
+ * @example 初期値指定
  * ```tsx
  * <ToggleButton defaultPressed>有効</ToggleButton>
  * ```
  *
  * @example 制御
  * ```tsx
- * <ToggleButton pressed onPressedChange={(pressed) => setPressed(pressed)}>
+ * <ToggleButton pressed={pressed} onPressedChange={(pressed) => setPressed(pressed)}>
  *   有効
  * </ToggleButton>
  * ```
@@ -100,44 +100,34 @@ export const ToggleButton: Component<ToggleButtonProps> = function SuiToggleButt
     children,
     slotProps: {
       content: contentProps,
-      pending: pendingProps = {},
-      circularProgress: circularProgressProps = {},
+      pending: { overlay = true, ...otherPendingProps } = {},
+      circularProgress: circularProgressProps,
       circularProgressFill: circularProgressFillProps,
       circularProgressTrack: circularProgressTrackProps,
       circularProgressFillRotation: circularProgressFillRotationProps,
     } = {},
-    percentage: percentageProp,
-    indeterminate: indeterminateProp,
-    pending,
+    percentage,
+    indeterminate,
     ...rootProps
   } = props;
-  const { overlay = true, ...otherPendingProps } = pendingProps;
-  const {
-    percentage = percentageProp,
-    indeterminate = indeterminateProp,
-    ...otherCircularProgressProps
-  } = circularProgressProps;
-  const shouldRenderPending = pending === true || pendingProps.defaultVisibility === "hidden";
 
   return (
-    <ToggleButtonParts.Root {...rootProps} pending={pending}>
-      <ToggleButtonParts.Content {...contentProps}>{children}</ToggleButtonParts.Content>
-      {shouldRenderPending && (
-        <ToggleButtonParts.Pending {...otherPendingProps} overlay={overlay}>
-          <ToggleButtonParts.CircularProgress
-            {...otherCircularProgressProps}
-            percentage={percentage}
-            indeterminate={indeterminate}
-          >
-            <ToggleButtonParts.CircularProgressTrack {...circularProgressTrackProps} />
-            <ToggleButtonParts.CircularProgressFill {...circularProgressFillProps}>
-              <ToggleButtonParts.CircularProgressFillRotation
-                {...circularProgressFillRotationProps}
-              />
-            </ToggleButtonParts.CircularProgressFill>
-          </ToggleButtonParts.CircularProgress>
-        </ToggleButtonParts.Pending>
-      )}
+    <ToggleButtonParts.Root {...rootProps}>
+      <ToggleButtonParts.Content {...{ children, ...contentProps }} />
+      <ToggleButtonParts.Pending {...otherPendingProps} overlay={overlay}>
+        <ToggleButtonParts.CircularProgress
+          percentage={percentage}
+          indeterminate={indeterminate}
+          {...circularProgressProps}
+        >
+          <ToggleButtonParts.CircularProgressTrack {...circularProgressTrackProps} />
+          <ToggleButtonParts.CircularProgressFill {...circularProgressFillProps}>
+            <ToggleButtonParts.CircularProgressFillRotation
+              {...circularProgressFillRotationProps}
+            />
+          </ToggleButtonParts.CircularProgressFill>
+        </ToggleButtonParts.CircularProgress>
+      </ToggleButtonParts.Pending>
     </ToggleButtonParts.Root>
   );
 };

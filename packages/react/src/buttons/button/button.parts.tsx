@@ -83,22 +83,40 @@ export type ButtonRootState = Button.State;
  */
 export type ButtonRootProps = React.ComponentProps<typeof Button> & {
   /**
-   * ボタンのスタイルバリエーションを指定します。
-   *
-   * - `"solid"`: 塗りつぶしスタイル
-   * - `"naked"`: 背景のないテキストのみ
-   * - `"liquid"`: 薄い塗りつぶし
-   *
-   * @default "solid"
-   */
-  variant?: Variant | undefined;
-
-  /**
    * ボタンの色を指定します。
    *
    * @default "grey"
    */
   color?: Color | undefined;
+
+  /**
+   * 枠線を表示するかどうかを指定します。
+   *
+   * @default false
+   */
+  outlined?: boolean | undefined;
+
+  /**
+   * ボタンを保留状態（ローディング中）にするかどうかを指定します。
+   *
+   * `true` の場合、ボタンの押下が無効化され、{@link ButtonPending} スロットが表示されます。`disabled` を `true` にしない限り、デフォルトでフォーカスが維持されます。
+   *
+   * @default false
+   */
+  pending?: boolean | undefined;
+
+  /**
+   * ボタンの角丸を指定します。
+   *
+   * デフォルト値は {@link ButtonRootProps.size|size} です。
+   *
+   * - `"none"`: 角を直角にする
+   * - `"sm"`: 小さい角丸
+   * - `"md"`: 標準的な角丸
+   * - `"lg"`: 大きい角丸
+   * - `"full"`: 完全な丸形
+   */
+  radius?: "none" | Size | "full" | undefined;
 
   /**
    * ボタンのサイズを指定します。
@@ -108,34 +126,22 @@ export type ButtonRootProps = React.ComponentProps<typeof Button> & {
   size?: Size | undefined;
 
   /**
-   * ボタンの角丸を指定します。
-   *
-   * - `"none"`: 角を直角にする
-   * - `"rounded"`: 標準的な角丸
-   * - `"full"`: 完全な丸形（pills 状）
-   *
-   * @default "rounded"
-   */
-  radius?: "none" | "rounded" | "full" | undefined;
-
-  /**
-   * 枠線を表示するかどうかを指定します。
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * ボタンを保留状態（ローディング中）にするかどうかを指定します。
-   *
-   * `true` の場合、ボタンは無効化され、`Pending` スロットが表示されます。
-   */
-  pending?: boolean | undefined;
-
-  /**
    * ボタンを正方形にするかどうかを指定します。
    *
    * `true` の場合、幅と高さが等しくなり、アイコンボタンなどに適した形状になります。
    */
   squared?: boolean | undefined;
+
+  /**
+   * ボタンのスタイルバリエーションを指定します。
+   *
+   * - `"solid"`: 塗りつぶしスタイル
+   * - `"naked"`: 背景のないテキストのみ
+   * - `"liquid"`: 薄い塗りつぶし
+   *
+   * @default "solid"
+   */
+  variant?: Variant | undefined;
 };
 
 /**
@@ -159,7 +165,7 @@ export const ButtonRoot: Component<ButtonRootProps> = function SuiButtonRoot(pro
     size: sizeProp = "md",
     type = "button",
     color: colorProp = "grey",
-    radius: radiusProp = "rounded",
+    radius: radiusProp,
     pending = false,
     squared = false,
     variant: variantProp = "solid",
@@ -171,15 +177,10 @@ export const ButtonRoot: Component<ButtonRootProps> = function SuiButtonRoot(pro
   } = props;
   const size = group?.size ?? sizeProp;
   const color = group?.color ?? colorProp;
-  const radius = group?.radius ?? radiusProp;
+  const radius = group?.radius ?? radiusProp ?? size;
   const variant = group?.variant ?? variantProp;
   const outlined = group?.outlined ?? outlinedProp;
-  const context = React.useMemo(
-    () => ({
-      pending,
-    }),
-    [pending],
-  );
+  const context = React.useMemo(() => ({ pending }), [pending]);
 
   return (
     <Context value={context}>
@@ -752,6 +753,11 @@ export const ButtonCircularProgressFillRotation: Component<ButtonCircularProgres
  * {@link ButtonCircularProgressFillRotation} のプロパティーをまとめた型名前空間です。
  */
 export namespace CircularProgressFillRotation {
+  /**
+   * {@link ButtonCircularProgressFillRotation} の状態型です。
+   */
+  export type State = ButtonCircularProgressFillRotationState;
+
   /**
    * {@link ButtonCircularProgressFillRotation} のプロパティー型です。
    */
