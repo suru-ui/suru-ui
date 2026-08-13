@@ -56,9 +56,7 @@
     aspect-ratio: var(--_sui_button-aspect_ratio, unset);
     padding-block: var(--_sui_button-padding_block, var(--sui_button-padding_block));
     padding-inline: var(--_sui_button-padding_inline,
-                      calc(
-                        var(--sui_button-padding_inline) - var(--_sui_button-border_width, 0px)
-                      )
+                      calc(var(--sui_button-padding_inline) - var(--_sui_button-border_width, 0px))
                     );
     font-size: var(--sui_button-font_size);
     font-weight: var(--sui_button-font_weight);

@@ -3,9 +3,6 @@ import * as InputParts from "./input.parts.jsx";
 
 /**
  * {@link Input} に渡すプロパティーです。
- *
- * {@link InputParts.Root.Props} の別名であり、標準の input 属性と {@link InputParts.Root}
- * 固有のスタイル指定を受け取ります。
  */
 export type InputProps = InputParts.Root.Props;
 
@@ -14,7 +11,7 @@ export type InputProps = InputParts.Root.Props;
  *
  * @example 基本
  * ```tsx
- * <Input placeholder="e.g. Colm Tuite" />
+ * <Input placeholder="田中 太郎" />
  * ```
  *
  * @example ラベル付き

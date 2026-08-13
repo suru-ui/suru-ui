@@ -3,16 +3,16 @@ import type { Color, Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import cn from "../../cn.js";
-import useFocusType from "../../hooks/use-focus-type.js";
 import { useActionGroupContext } from "../../layout/action-group/action-group.parts.jsx";
 import type { Component } from "../../types.js";
 
 import "./input.css";
 
+// Root
+// ----
+
 /**
- * テキスト入力欄のルート要素の状態です。
- *
- * {@link InputRoot} が公開する状態型の別名です。
+ * {@link InputRoot} の状態です。
  */
 export type InputRootState = Input.State;
 
@@ -21,23 +21,31 @@ export type InputRootState = Input.State;
  */
 export type InputRootProps = Omit<React.ComponentProps<typeof Input>, "size"> & {
   /**
-   * フォーカス時に枠線へ適用するアクセントカラーを指定します。
-   *
-   * 指定可能な値はテーマの {@link Color} です。
-   *
-   * `accentColor` はフォーカス中の枠線にだけ適用されます。
+   * フォーカス時に枠線へ適用する色を指定します。
    *
    * @default "grey"
    */
-  accentColor?: Color | undefined;
+  color?: Color | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
    *
-   * 未指定時は `variant` が `"naked"` の場合に表示します。
-   * `outlined` を指定した場合は、この値が `variant` による既定値より優先されます。
+   * @default false
    */
   outlined?: boolean | undefined;
+
+  /**
+   * テキスト入力欄の角丸を指定します。
+   *
+   * デフォルト値は {@link InputRootProps.size|size} です。
+   *
+   * - `"none"`: 角を直角にする
+   * - `"sm"`: 小さい角丸
+   * - `"md"`: 標準的な角丸
+   * - `"lg"`: 大きい角丸
+   * - `"full"`: 完全な丸形
+   */
+  radius?: "none" | Size | "full" | undefined;
 
   /**
    * テキスト入力欄のサイズを指定します。
@@ -56,55 +64,35 @@ export type InputRootProps = Omit<React.ComponentProps<typeof Input>, "size"> & 
    *
    * `outlined` を指定しない場合は、`"naked"` のときだけ枠線を表示します。
    *
-   * @default "naked"
+   * @default "liquid"
    */
   variant?: "naked" | "liquid" | undefined;
-
-  /**
-   * テキスト入力欄の角丸を指定します。
-   *
-   * - `"none"`: 角を直角にする
-   * - `"rounded"`: 標準的な角丸
-   * - `"full"`: 完全な丸形
-   *
-   * 指定値は角丸の見た目だけを変更し、入力値やフォーカス状態は変更しません。
-   *
-   * @default "rounded"
-   */
-  radius?: "none" | "rounded" | "full" | undefined;
 };
 
 /**
  * テキスト入力欄のルート要素です。
  *
- * Base UI の {@link Input} をラップし、テーマに基づくスタイルクラスを適用します。
- * Field に組み込むと、検証状態が `data-*` 属性として自動的に付与されます。
- *
  * @example
  * ```tsx
- * <InputParts.Root placeholder="e.g. Colm Tuite" />
+ * <InputParts.Root placeholder="田中 太郎" />
  * ```
  */
 export const InputRoot: Component<InputRootProps> = function SuiInputRoot(props) {
-  const group = useActionGroupContext(true);
+  const actionGroupCtx = useActionGroupContext(true);
   const {
     size: sizeProp = "md",
+    color: colorProp = "grey",
     radius: radiusProp = "rounded",
-    variant: variantProp = "naked",
-    outlined: outlinedProp = variantProp === "naked",
-    accentColor: accentColorProp = "grey",
+    variant: variantProp = "liquid",
+    outlined: outlinedProp = false,
     className,
-    onBlur,
-    onFocus,
-    onPointerDown,
     ...otherProps
   } = props;
-  const size = group?.size ?? sizeProp;
-  const radius = group?.radius ?? radiusProp;
-  const variant = group?.variant ?? variantProp;
-  const outlined = group?.outlined ?? outlinedProp;
-  const accentColor = group?.color ?? accentColorProp;
-  const { focusType, ...focusProps } = useFocusType({ onBlur, onFocus, onPointerDown });
+  const size = actionGroupCtx?.size ?? sizeProp;
+  const color = actionGroupCtx?.color ?? colorProp;
+  const radius = actionGroupCtx?.radius ?? radiusProp;
+  const variant = actionGroupCtx?.variant ?? variantProp;
+  const outlined = actionGroupCtx?.outlined ?? outlinedProp;
 
   return (
     <Input
@@ -114,14 +102,12 @@ export const InputRoot: Component<InputRootProps> = function SuiInputRoot(props)
         "sui_input",
         "sui_action_group_item",
         `sui_input-size_${size}`,
+        `sui_input-color_${color}`,
         `sui_input-radius_${radius}`,
         `sui_input-variant_${variant}`,
-        `sui_input-accent_color_${accentColor}`,
         outlined && "sui_input-outlined",
         (state) => state.disabled && "sui_input-disabled",
       )}
-      {...focusProps}
-      data-focus-type={focusType}
     />
   );
 };
