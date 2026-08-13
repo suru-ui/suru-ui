@@ -253,14 +253,14 @@
 
   .sui_meter-variant_naked {
     /* 背景 */
-    --sui_meter_track-canvas: var(--sui-grey-naked-normal);
+    --sui_meter_track-canvas: var(--sui-grey-naked-canvas-normal);
     /* 枠線 */
     --sui_meter_track-border_color: var(--sui-border-1);
   }
 
   .sui_meter-variant_liquid {
     /* 背景 */
-    --sui_meter_track-canvas: var(--sui-grey-liquid-normal);
+    --sui_meter_track-canvas: var(--sui-grey-liquid-canvas-normal);
     /* 枠線 */
     --sui_meter_track-border_color: var(--sui-border-1);
   }
@@ -309,42 +309,42 @@
 
   .sui_meter-color_grey {
     /* 背景 */
-    --sui_meter_indicator-canvas: var(--sui-grey-solid-normal);
+    --sui_meter_indicator-canvas: var(--sui-grey-solid-canvas-normal);
   }
 
   .sui_meter-color_blue {
     /* 背景 */
-    --sui_meter_indicator-canvas: var(--sui-blue-solid-normal);
+    --sui_meter_indicator-canvas: var(--sui-blue-solid-canvas-normal);
   }
 
   .sui_meter-color_purple {
     /* 背景 */
-    --sui_meter_indicator-canvas: var(--sui-purple-solid-normal);
+    --sui_meter_indicator-canvas: var(--sui-purple-solid-canvas-normal);
   }
 
   .sui_meter-color_magenta {
     /* 背景 */
-    --sui_meter_indicator-canvas: var(--sui-magenta-solid-normal);
+    --sui_meter_indicator-canvas: var(--sui-magenta-solid-canvas-normal);
   }
 
   .sui_meter-color_red {
     /* 背景 */
-    --sui_meter_indicator-canvas: var(--sui-red-solid-normal);
+    --sui_meter_indicator-canvas: var(--sui-red-solid-canvas-normal);
   }
 
   .sui_meter-color_orange {
     /* 背景 */
-    --sui_meter_indicator-canvas: var(--sui-orange-solid-normal);
+    --sui_meter_indicator-canvas: var(--sui-orange-solid-canvas-normal);
   }
 
   .sui_meter-color_yellow {
     /* 背景 */
-    --sui_meter_indicator-canvas: var(--sui-yellow-solid-normal);
+    --sui_meter_indicator-canvas: var(--sui-yellow-solid-canvas-normal);
   }
 
   .sui_meter-color_green {
     /* 背景 */
-    --sui_meter_indicator-canvas: var(--sui-green-solid-normal);
+    --sui_meter_indicator-canvas: var(--sui-green-solid-canvas-normal);
   }
 
   /* 既定値設定: ここまで */

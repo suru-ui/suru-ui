@@ -275,12 +275,12 @@
     --sui_menu_item-line_height: var(--sui-text-oln-md-m-line_height);
     --sui_menu_item-letter_spacing: var(--sui-text-oln-md-m-letter_spacing);
     /* 背景 */
-    --sui_menu_item-background_color-normal: var(--sui-grey-naked-normal);
-    --sui_menu_item-background_color-subtle: var(--sui-grey-naked-subtle);
-    --sui_menu_item-background_color-action: var(--sui-grey-naked-action);
-    --sui_menu_item-background_color-checked-normal: var(--sui-grey-solid-normal);
-    --sui_menu_item-background_color-checked-subtle: var(--sui-grey-solid-subtle);
-    --sui_menu_item-background_color-checked-action: var(--sui-grey-solid-action);
+    --sui_menu_item-background_color-normal: var(--sui-grey-naked-canvas-normal);
+    --sui_menu_item-background_color-subtle: var(--sui-grey-naked-canvas-subtle);
+    --sui_menu_item-background_color-action: var(--sui-grey-naked-canvas-action);
+    --sui_menu_item-background_color-checked-normal: var(--sui-grey-solid-canvas-normal);
+    --sui_menu_item-background_color-checked-subtle: var(--sui-grey-solid-canvas-subtle);
+    --sui_menu_item-background_color-checked-action: var(--sui-grey-solid-canvas-action);
     /* 枠線 */
     --sui_menu_item-border_radius: var(--sui-radius-md);
     /* 前景 */

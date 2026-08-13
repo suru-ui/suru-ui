@@ -167,17 +167,17 @@
 
   .sui_number_field-variant_naked {
     /* 背景 */
-    --sui_number_field-group-canvas-normal: var(--sui-grey-naked-normal);
+    --sui_number_field-group-canvas-normal: var(--sui-grey-naked-canvas-normal);
   }
 
   .sui_number_field-variant_liquid {
     /* 背景 */
-    --sui_number_field-group-canvas-normal: var(--sui-grey-liquid-normal);
+    --sui_number_field-group-canvas-normal: var(--sui-grey-liquid-canvas-normal);
   }
 
   .sui_number_field-variant_solid {
     /* 背景 */
-    --sui_number_field-group-canvas-normal: var(--sui-grey-solid-normal);
+    --sui_number_field-group-canvas-normal: var(--sui-grey-solid-canvas-normal);
   }
 
   .sui_number_field-accent_color_grey {
@@ -382,9 +382,9 @@
 
   .sui_number_field-variant_naked {
     /* 背景 */
-    --sui_number_field_button-canvas-normal: var(--sui-grey-naked-normal);
-    --sui_number_field_button-canvas-subtle: var(--sui-grey-naked-subtle);
-    --sui_number_field_button-canvas-action: var(--sui-grey-naked-action);
+    --sui_number_field_button-canvas-normal: var(--sui-grey-naked-canvas-normal);
+    --sui_number_field_button-canvas-subtle: var(--sui-grey-naked-canvas-subtle);
+    --sui_number_field_button-canvas-action: var(--sui-grey-naked-canvas-action);
     /* 前景 */
     --sui_number_field_button-color-normal: var(--sui-grey-naked-canvas_text-normal);
     --sui_number_field_button-color-subtle: var(--sui-grey-naked-canvas_text-subtle);
@@ -393,9 +393,9 @@
 
   .sui_number_field-variant_liquid {
     /* 背景 */
-    --sui_number_field_button-canvas-normal: var(--sui-grey-liquid-normal);
-    --sui_number_field_button-canvas-subtle: var(--sui-grey-liquid-subtle);
-    --sui_number_field_button-canvas-action: var(--sui-grey-liquid-action);
+    --sui_number_field_button-canvas-normal: var(--sui-grey-liquid-canvas-normal);
+    --sui_number_field_button-canvas-subtle: var(--sui-grey-liquid-canvas-subtle);
+    --sui_number_field_button-canvas-action: var(--sui-grey-liquid-canvas-action);
     /* 前景 */
     --sui_number_field_button-color-normal: var(--sui-grey-liquid-canvas_text-normal);
     --sui_number_field_button-color-subtle: var(--sui-grey-liquid-canvas_text-subtle);
@@ -404,9 +404,9 @@
 
   .sui_number_field-variant_solid {
     /* 背景 */
-    --sui_number_field_button-canvas-normal: var(--sui-grey-solid-normal);
-    --sui_number_field_button-canvas-subtle: var(--sui-grey-solid-subtle);
-    --sui_number_field_button-canvas-action: var(--sui-grey-solid-action);
+    --sui_number_field_button-canvas-normal: var(--sui-grey-solid-canvas-normal);
+    --sui_number_field_button-canvas-subtle: var(--sui-grey-solid-canvas-subtle);
+    --sui_number_field_button-canvas-action: var(--sui-grey-solid-canvas-action);
     /* 前景 */
     --sui_number_field_button-color-normal: var(--sui-grey-solid-canvas_text-normal);
     --sui_number_field_button-color-subtle: var(--sui-grey-solid-canvas_text-subtle);
@@ -493,9 +493,9 @@
 
   .sui_number_field-variant_naked {
     /* 背景 */
-    --sui_number_field_button-canvas-normal: var(--sui-grey-naked-normal);
-    --sui_number_field_button-canvas-subtle: var(--sui-grey-naked-subtle);
-    --sui_number_field_button-canvas-action: var(--sui-grey-naked-action);
+    --sui_number_field_button-canvas-normal: var(--sui-grey-naked-canvas-normal);
+    --sui_number_field_button-canvas-subtle: var(--sui-grey-naked-canvas-subtle);
+    --sui_number_field_button-canvas-action: var(--sui-grey-naked-canvas-action);
     /* 前景 */
     --sui_number_field_button-color-normal: var(--sui-grey-naked-canvas_text-normal);
     --sui_number_field_button-color-subtle: var(--sui-grey-naked-canvas_text-subtle);
@@ -504,9 +504,9 @@
 
   .sui_number_field-variant_liquid {
     /* 背景 */
-    --sui_number_field_button-canvas-normal: var(--sui-grey-liquid-normal);
-    --sui_number_field_button-canvas-subtle: var(--sui-grey-liquid-subtle);
-    --sui_number_field_button-canvas-action: var(--sui-grey-liquid-action);
+    --sui_number_field_button-canvas-normal: var(--sui-grey-liquid-canvas-normal);
+    --sui_number_field_button-canvas-subtle: var(--sui-grey-liquid-canvas-subtle);
+    --sui_number_field_button-canvas-action: var(--sui-grey-liquid-canvas-action);
     /* 前景 */
     --sui_number_field_button-color-normal: var(--sui-grey-liquid-canvas_text-normal);
     --sui_number_field_button-color-subtle: var(--sui-grey-liquid-canvas_text-subtle);
@@ -515,9 +515,9 @@
 
   .sui_number_field-variant_solid {
     /* 背景 */
-    --sui_number_field_button-canvas-normal: var(--sui-grey-solid-normal);
-    --sui_number_field_button-canvas-subtle: var(--sui-grey-solid-subtle);
-    --sui_number_field_button-canvas-action: var(--sui-grey-solid-action);
+    --sui_number_field_button-canvas-normal: var(--sui-grey-solid-canvas-normal);
+    --sui_number_field_button-canvas-subtle: var(--sui-grey-solid-canvas-subtle);
+    --sui_number_field_button-canvas-action: var(--sui-grey-solid-canvas-action);
     /* 前景 */
     --sui_number_field_button-color-normal: var(--sui-grey-solid-canvas_text-normal);
     --sui_number_field_button-color-subtle: var(--sui-grey-solid-canvas_text-subtle);

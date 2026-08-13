@@ -91,56 +91,56 @@
 
   .sui_avatar-color_grey {
     /* 背景 */
-    --sui_avatar-background_color: var(--sui-grey-solid-normal);
+    --sui_avatar-background_color: var(--sui-grey-solid-canvas-normal);
     /* 前景 */
     --sui_avatar-color: var(--sui-grey-solid-canvas_text-normal);
   }
 
   .sui_avatar-color_blue {
     /* 背景 */
-    --sui_avatar-background_color: var(--sui-blue-solid-normal);
+    --sui_avatar-background_color: var(--sui-blue-solid-canvas-normal);
     /* 前景 */
     --sui_avatar-color: var(--sui-blue-solid-canvas_text-normal);
   }
 
   .sui_avatar-color_purple {
     /* 背景 */
-    --sui_avatar-background_color: var(--sui-purple-solid-normal);
+    --sui_avatar-background_color: var(--sui-purple-solid-canvas-normal);
     /* 前景 */
     --sui_avatar-color: var(--sui-purple-solid-canvas_text-normal);
   }
 
   .sui_avatar-color_magenta {
     /* 背景 */
-    --sui_avatar-background_color: var(--sui-magenta-solid-normal);
+    --sui_avatar-background_color: var(--sui-magenta-solid-canvas-normal);
     /* 前景 */
     --sui_avatar-color: var(--sui-magenta-solid-canvas_text-normal);
   }
 
   .sui_avatar-color_red {
     /* 背景 */
-    --sui_avatar-background_color: var(--sui-red-solid-normal);
+    --sui_avatar-background_color: var(--sui-red-solid-canvas-normal);
     /* 前景 */
     --sui_avatar-color: var(--sui-red-solid-canvas_text-normal);
   }
 
   .sui_avatar-color_orange {
     /* 背景 */
-    --sui_avatar-background_color: var(--sui-orange-solid-normal);
+    --sui_avatar-background_color: var(--sui-orange-solid-canvas-normal);
     /* 前景 */
     --sui_avatar-color: var(--sui-orange-solid-canvas_text-normal);
   }
 
   .sui_avatar-color_yellow {
     /* 背景 */
-    --sui_avatar-background_color: var(--sui-yellow-solid-normal);
+    --sui_avatar-background_color: var(--sui-yellow-solid-canvas-normal);
     /* 前景 */
     --sui_avatar-color: var(--sui-yellow-solid-canvas_text-normal);
   }
 
   .sui_avatar-color_green {
     /* 背景 */
-    --sui_avatar-background_color: var(--sui-green-solid-normal);
+    --sui_avatar-background_color: var(--sui-green-solid-canvas-normal);
     /* 前景 */
     --sui_avatar-color: var(--sui-green-solid-canvas_text-normal);
   }

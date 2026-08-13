@@ -109,9 +109,9 @@
 
   .sui_combobox-variant_naked {
     /* 背景 */
-    --sui_combobox-canvas-normal: var(--sui-grey-naked-normal);
-    --sui_combobox_button-canvas-subtle: var(--sui-grey-naked-subtle);
-    --sui_combobox_button-canvas-action: var(--sui-grey-naked-action);
+    --sui_combobox-canvas-normal: var(--sui-grey-naked-canvas-normal);
+    --sui_combobox_button-canvas-subtle: var(--sui-grey-naked-canvas-subtle);
+    --sui_combobox_button-canvas-action: var(--sui-grey-naked-canvas-action);
     /* 前景 */
     --sui_combobox-color: var(--sui-grey-naked-canvas_text-normal);
     --sui_combobox_button-color-normal: var(--sui-grey-naked-canvas_text-normal);
@@ -121,9 +121,9 @@
 
   .sui_combobox-variant_liquid {
     /* 背景 */
-    --sui_combobox-canvas-normal: var(--sui-grey-liquid-normal);
-    --sui_combobox_button-canvas-subtle: var(--sui-grey-liquid-subtle);
-    --sui_combobox_button-canvas-action: var(--sui-grey-liquid-action);
+    --sui_combobox-canvas-normal: var(--sui-grey-liquid-canvas-normal);
+    --sui_combobox_button-canvas-subtle: var(--sui-grey-liquid-canvas-subtle);
+    --sui_combobox_button-canvas-action: var(--sui-grey-liquid-canvas-action);
     /* 前景 */
     --sui_combobox-color: var(--sui-grey-liquid-canvas_text-normal);
     --sui_combobox_button-color-normal: var(--sui-grey-liquid-canvas_text-normal);
@@ -393,7 +393,7 @@
     line-height: var(--sui_combobox-line_height);
     color: var(--sui-grey-solid-canvas_text-normal);
     white-space: nowrap;
-    background-color: var(--sui-grey-solid-normal);
+    background-color: var(--sui-grey-solid-canvas-normal);
     border-radius: var(--sui-radius-sm);
   }
 }
@@ -741,9 +741,9 @@
     --sui_combobox_item-line_height: var(--sui-text-oln-md-m-line_height);
     --sui_combobox_item-letter_spacing: var(--sui-text-oln-md-m-letter_spacing);
     /* 背景 */
-    --sui_combobox_item-canvas-normal: var(--sui-grey-naked-normal);
-    --sui_combobox_item-canvas-subtle: var(--sui-grey-solid-normal);
-    --sui_combobox_item-canvas-action: var(--sui-grey-solid-action);
+    --sui_combobox_item-canvas-normal: var(--sui-grey-naked-canvas-normal);
+    --sui_combobox_item-canvas-subtle: var(--sui-grey-solid-canvas-normal);
+    --sui_combobox_item-canvas-action: var(--sui-grey-solid-canvas-action);
     /* 枠線 */
     --sui_combobox_item-border_radius: var(--sui-radius-sm);
     /* 前景 */

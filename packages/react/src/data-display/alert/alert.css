@@ -188,14 +188,14 @@
   .sui_alert-color_grey {
     &.sui_alert-variant_naked {
       /* 背景 */
-      --sui_alert-background_color: var(--sui-grey-naked-normal);
+      --sui_alert-background_color: var(--sui-grey-naked-canvas-normal);
       /* 枠線 */
       --sui_alert-border_color: var(--sui-grey-naked-border-normal);
     }
 
     &.sui_alert-variant_liquid {
       /* 背景 */
-      --sui_alert-background_color: var(--sui-grey-liquid-normal);
+      --sui_alert-background_color: var(--sui-grey-liquid-canvas-normal);
       /* 枠線 */
       --sui_alert-border_color: var(--sui-grey-liquid-border-normal);
     }
@@ -204,14 +204,14 @@
   .sui_alert-color_blue {
     &.sui_alert-variant_naked {
       /* 背景 */
-      --sui_alert-background_color: var(--sui-blue-naked-normal);
+      --sui_alert-background_color: var(--sui-blue-naked-canvas-normal);
       /* 枠線 */
       --sui_alert-border_color: var(--sui-blue-naked-border-normal);
     }
 
     &.sui_alert-variant_liquid {
       /* 背景 */
-      --sui_alert-background_color: var(--sui-blue-liquid-normal);
+      --sui_alert-background_color: var(--sui-blue-liquid-canvas-normal);
       /* 枠線 */
       --sui_alert-border_color: var(--sui-blue-liquid-border-normal);
     }
@@ -220,14 +220,14 @@
   .sui_alert-color_purple {
     &.sui_alert-variant_naked {
       /* 背景 */
-      --sui_alert-background_color: var(--sui-purple-naked-normal);
+      --sui_alert-background_color: var(--sui-purple-naked-canvas-normal);
       /* 枠線 */
       --sui_alert-border_color: var(--sui-purple-naked-border-normal);
     }
 
     &.sui_alert-variant_liquid {
       /* 背景 */
-      --sui_alert-background_color: var(--sui-purple-liquid-normal);
+      --sui_alert-background_color: var(--sui-purple-liquid-canvas-normal);
       /* 枠線 */
       --sui_alert-border_color: var(--sui-purple-liquid-border-normal);
     }
@@ -236,14 +236,14 @@
   .sui_alert-color_magenta {
     &.sui_alert-variant_naked {
       /* 背景 */
-      --sui_alert-background_color: var(--sui-magenta-naked-normal);
+      --sui_alert-background_color: var(--sui-magenta-naked-canvas-normal);
       /* 枠線 */
       --sui_alert-border_color: var(--sui-magenta-naked-border-normal);
     }
 
     &.sui_alert-variant_liquid {
       /* 背景 */
-      --sui_alert-background_color: var(--sui-magenta-liquid-normal);
+      --sui_alert-background_color: var(--sui-magenta-liquid-canvas-normal);
       /* 枠線 */
       --sui_alert-border_color: var(--sui-magenta-liquid-border-normal);
     }
@@ -252,14 +252,14 @@
   .sui_alert-color_red {
     &.sui_alert-variant_naked {
       /* 背景 */
-      --sui_alert-background_color: var(--sui-red-naked-normal);
+      --sui_alert-background_color: var(--sui-red-naked-canvas-normal);
       /* 枠線 */
       --sui_alert-border_color: var(--sui-red-naked-border-normal);
     }
 
     &.sui_alert-variant_liquid {
       /* 背景 */
-      --sui_alert-background_color: var(--sui-red-liquid-normal);
+      --sui_alert-background_color: var(--sui-red-liquid-canvas-normal);
       /* 枠線 */
       --sui_alert-border_color: var(--sui-red-liquid-border-normal);
     }
@@ -268,14 +268,14 @@
   .sui_alert-color_orange {
     &.sui_alert-variant_naked {
       /* 背景 */
-      --sui_alert-background_color: var(--sui-orange-naked-normal);
+      --sui_alert-background_color: var(--sui-orange-naked-canvas-normal);
       /* 枠線 */
       --sui_alert-border_color: var(--sui-orange-naked-border-normal);
     }
 
     &.sui_alert-variant_liquid {
       /* 背景 */
-      --sui_alert-background_color: var(--sui-orange-liquid-normal);
+      --sui_alert-background_color: var(--sui-orange-liquid-canvas-normal);
       /* 枠線 */
       --sui_alert-border_color: var(--sui-orange-liquid-border-normal);
     }
@@ -284,14 +284,14 @@
   .sui_alert-color_yellow {
     &.sui_alert-variant_naked {
       /* 背景 */
-      --sui_alert-background_color: var(--sui-yellow-naked-normal);
+      --sui_alert-background_color: var(--sui-yellow-naked-canvas-normal);
       /* 枠線 */
       --sui_alert-border_color: var(--sui-yellow-naked-border-normal);
     }
 
     &.sui_alert-variant_liquid {
       /* 背景 */
-      --sui_alert-background_color: var(--sui-yellow-liquid-normal);
+      --sui_alert-background_color: var(--sui-yellow-liquid-canvas-normal);
       /* 枠線 */
       --sui_alert-border_color: var(--sui-yellow-liquid-border-normal);
     }
@@ -300,14 +300,14 @@
   .sui_alert-color_green {
     &.sui_alert-variant_naked {
       /* 背景 */
-      --sui_alert-background_color: var(--sui-green-naked-normal);
+      --sui_alert-background_color: var(--sui-green-naked-canvas-normal);
       /* 枠線 */
       --sui_alert-border_color: var(--sui-green-naked-border-normal);
     }
 
     &.sui_alert-variant_liquid {
       /* 背景 */
-      --sui_alert-background_color: var(--sui-green-liquid-normal);
+      --sui_alert-background_color: var(--sui-green-liquid-canvas-normal);
       /* 枠線 */
       --sui_alert-border_color: var(--sui-green-liquid-border-normal);
     }

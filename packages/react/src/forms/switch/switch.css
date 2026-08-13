@@ -116,9 +116,9 @@
 
   .sui_switch-variant_naked {
     /* 背景 */
-    --sui_switch-canvas-normal: var(--sui-grey-naked-normal);
-    --sui_switch-canvas-subtle: var(--sui-grey-naked-subtle);
-    --sui_switch-canvas-action: var(--sui-grey-naked-action);
+    --sui_switch-canvas-normal: var(--sui-grey-naked-canvas-normal);
+    --sui_switch-canvas-subtle: var(--sui-grey-naked-canvas-subtle);
+    --sui_switch-canvas-action: var(--sui-grey-naked-canvas-action);
     /* 枠線 */
     --sui_switch-border_color-normal: var(--sui-grey-naked-border-normal);
     --sui_switch-border_color-subtle: var(--sui-grey-naked-border-subtle);
@@ -127,9 +127,9 @@
 
   .sui_switch-variant_liquid {
     /* 背景 */
-    --sui_switch-canvas-normal: var(--sui-grey-liquid-normal);
-    --sui_switch-canvas-subtle: var(--sui-grey-liquid-subtle);
-    --sui_switch-canvas-action: var(--sui-grey-liquid-action);
+    --sui_switch-canvas-normal: var(--sui-grey-liquid-canvas-normal);
+    --sui_switch-canvas-subtle: var(--sui-grey-liquid-canvas-subtle);
+    --sui_switch-canvas-action: var(--sui-grey-liquid-canvas-action);
     /* 枠線 */
     --sui_switch-border_color-normal: var(--sui-grey-liquid-border-normal);
     --sui_switch-border_color-subtle: var(--sui-grey-liquid-border-subtle);
@@ -138,58 +138,58 @@
 
   .sui_switch-color_grey {
     /* 背景 */
-    --sui_switch-canvas-checked: var(--sui-grey-solid-normal);
-    --sui_switch-canvas-subtle-checked: var(--sui-grey-solid-subtle);
-    --sui_switch-canvas-action-checked: var(--sui-grey-solid-action);
+    --sui_switch-canvas-checked: var(--sui-grey-solid-canvas-normal);
+    --sui_switch-canvas-subtle-checked: var(--sui-grey-solid-canvas-subtle);
+    --sui_switch-canvas-action-checked: var(--sui-grey-solid-canvas-action);
   }
 
   .sui_switch-color_blue {
     /* 背景 */
-    --sui_switch-canvas-checked: var(--sui-blue-solid-normal);
-    --sui_switch-canvas-subtle-checked: var(--sui-blue-solid-subtle);
-    --sui_switch-canvas-action-checked: var(--sui-blue-solid-action);
+    --sui_switch-canvas-checked: var(--sui-blue-solid-canvas-normal);
+    --sui_switch-canvas-subtle-checked: var(--sui-blue-solid-canvas-subtle);
+    --sui_switch-canvas-action-checked: var(--sui-blue-solid-canvas-action);
   }
 
   .sui_switch-color_purple {
     /* 背景 */
-    --sui_switch-canvas-checked: var(--sui-purple-solid-normal);
-    --sui_switch-canvas-subtle-checked: var(--sui-purple-solid-subtle);
-    --sui_switch-canvas-action-checked: var(--sui-purple-solid-action);
+    --sui_switch-canvas-checked: var(--sui-purple-solid-canvas-normal);
+    --sui_switch-canvas-subtle-checked: var(--sui-purple-solid-canvas-subtle);
+    --sui_switch-canvas-action-checked: var(--sui-purple-solid-canvas-action);
   }
 
   .sui_switch-color_magenta {
     /* 背景 */
-    --sui_switch-canvas-checked: var(--sui-magenta-solid-normal);
-    --sui_switch-canvas-subtle-checked: var(--sui-magenta-solid-subtle);
-    --sui_switch-canvas-action-checked: var(--sui-magenta-solid-action);
+    --sui_switch-canvas-checked: var(--sui-magenta-solid-canvas-normal);
+    --sui_switch-canvas-subtle-checked: var(--sui-magenta-solid-canvas-subtle);
+    --sui_switch-canvas-action-checked: var(--sui-magenta-solid-canvas-action);
   }
 
   .sui_switch-color_red {
     /* 背景 */
-    --sui_switch-canvas-checked: var(--sui-red-solid-normal);
-    --sui_switch-canvas-subtle-checked: var(--sui-red-solid-subtle);
-    --sui_switch-canvas-action-checked: var(--sui-red-solid-action);
+    --sui_switch-canvas-checked: var(--sui-red-solid-canvas-normal);
+    --sui_switch-canvas-subtle-checked: var(--sui-red-solid-canvas-subtle);
+    --sui_switch-canvas-action-checked: var(--sui-red-solid-canvas-action);
   }
 
   .sui_switch-color_orange {
     /* 背景 */
-    --sui_switch-canvas-checked: var(--sui-orange-solid-normal);
-    --sui_switch-canvas-subtle-checked: var(--sui-orange-solid-subtle);
-    --sui_switch-canvas-action-checked: var(--sui-orange-solid-action);
+    --sui_switch-canvas-checked: var(--sui-orange-solid-canvas-normal);
+    --sui_switch-canvas-subtle-checked: var(--sui-orange-solid-canvas-subtle);
+    --sui_switch-canvas-action-checked: var(--sui-orange-solid-canvas-action);
   }
 
   .sui_switch-color_yellow {
     /* 背景 */
-    --sui_switch-canvas-checked: var(--sui-yellow-solid-normal);
-    --sui_switch-canvas-subtle-checked: var(--sui-yellow-solid-subtle);
-    --sui_switch-canvas-action-checked: var(--sui-yellow-solid-action);
+    --sui_switch-canvas-checked: var(--sui-yellow-solid-canvas-normal);
+    --sui_switch-canvas-subtle-checked: var(--sui-yellow-solid-canvas-subtle);
+    --sui_switch-canvas-action-checked: var(--sui-yellow-solid-canvas-action);
   }
 
   .sui_switch-color_green {
     /* 背景 */
-    --sui_switch-canvas-checked: var(--sui-green-solid-normal);
-    --sui_switch-canvas-subtle-checked: var(--sui-green-solid-subtle);
-    --sui_switch-canvas-action-checked: var(--sui-green-solid-action);
+    --sui_switch-canvas-checked: var(--sui-green-solid-canvas-normal);
+    --sui_switch-canvas-subtle-checked: var(--sui-green-solid-canvas-subtle);
+    --sui_switch-canvas-action-checked: var(--sui-green-solid-canvas-action);
   }
 
   /* 既定値設定: ここまで */

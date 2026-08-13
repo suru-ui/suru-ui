@@ -195,8 +195,8 @@
     --sui_tabs_tab-border_radius: var(--sui_tabs-border_radius);
     /* 背景 */
     --sui_tabs_tab-background_color-normal: transparent;
-    --sui_tabs_tab-background_color-subtle: var(--sui-grey-naked-subtle);
-    --sui_tabs_tab-background_color-action: var(--sui-grey-naked-action);
+    --sui_tabs_tab-background_color-subtle: var(--sui-grey-naked-canvas-subtle);
+    --sui_tabs_tab-background_color-action: var(--sui-grey-naked-canvas-action);
     /* 枠線 */
     --sui_tabs_tab-outline_color: var(--sui-focusring_color);
     --sui_tabs_tab-outline_offset: var(--sui-focusring_offset);

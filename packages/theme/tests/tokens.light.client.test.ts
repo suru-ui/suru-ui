@@ -44,8 +44,8 @@ describe("ライトテーマのトークン", () => {
 
     // 検証
     expect(getTokenValue(element, "--sui-blue-60")).toBe("#205ea6");
-    expect(getTokenValue(element, "--sui-blue-solid-normal")).toBe("#205ea6");
-    expect(getTokenValue(element, "--sui-blue-naked-normal")).toBe("transparent");
+    expect(getTokenValue(element, "--sui-blue-solid-canvas-normal")).toBe("#205ea6");
+    expect(getTokenValue(element, "--sui-blue-naked-canvas-normal")).toBe("transparent");
   });
 
   test("サイズ・角丸・フォーカスリングのトークンを提供する", () => {

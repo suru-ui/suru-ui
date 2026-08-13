@@ -157,21 +157,21 @@
 
   .sui_input-variant_naked {
     /* 背景 */
-    --sui_input-background_color-normal: var(--sui-grey-naked-normal);
+    --sui_input-background_color-normal: var(--sui-grey-naked-canvas-normal);
     /* 前景 */
     --sui_input-color: var(--sui-grey-naked-canvas_text-normal);
   }
 
   .sui_input-variant_liquid {
     /* 背景 */
-    --sui_input-background_color-normal: var(--sui-grey-liquid-normal);
+    --sui_input-background_color-normal: var(--sui-grey-liquid-canvas-normal);
     /* 前景 */
     --sui_input-color: var(--sui-grey-liquid-canvas_text-normal);
   }
 
   .sui_input-variant_solid {
     /* 背景 */
-    --sui_input-background_color-normal: var(--sui-grey-solid-normal);
+    --sui_input-background_color-normal: var(--sui-grey-solid-canvas-normal);
     /* 前景 */
     --sui_input-color: var(--sui-grey-solid-canvas_text-normal);
   }

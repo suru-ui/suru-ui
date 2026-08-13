@@ -163,9 +163,9 @@
 
   .sui_accordion {
     /* 背景 */
-    --sui_accordion_trigger-background_color-normal: var(--sui-grey-naked-normal);
-    --sui_accordion_trigger-background_color-subtle: var(--sui-grey-naked-subtle);
-    --sui_accordion_trigger-background_color-action: var(--sui-grey-naked-action);
+    --sui_accordion_trigger-background_color-normal: var(--sui-grey-naked-canvas-normal);
+    --sui_accordion_trigger-background_color-subtle: var(--sui-grey-naked-canvas-subtle);
+    --sui_accordion_trigger-background_color-action: var(--sui-grey-naked-canvas-action);
     /* 枠線 */
     --sui_accordion_trigger-outline_color: var(--sui-focusring_color);
     --sui_accordion_trigger-outline_offset: var(--sui-focusring_offset);

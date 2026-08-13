@@ -167,9 +167,9 @@
   .sui_button-color_grey {
     &.sui_button-variant_solid {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-grey-solid-normal);
-      --sui_button-background_color-subtle: var(--sui-grey-solid-subtle);
-      --sui_button-background_color-action: var(--sui-grey-solid-action);
+      --sui_button-background_color-normal: var(--sui-grey-solid-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-grey-solid-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-grey-solid-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-grey-solid-border-normal);
       --sui_button-border_color-subtle: var(--sui-grey-solid-border-subtle);
@@ -178,9 +178,9 @@
 
     &.sui_button-variant_naked {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-grey-naked-normal);
-      --sui_button-background_color-subtle: var(--sui-grey-naked-subtle);
-      --sui_button-background_color-action: var(--sui-grey-naked-action);
+      --sui_button-background_color-normal: var(--sui-grey-naked-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-grey-naked-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-grey-naked-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-grey-naked-border-normal);
       --sui_button-border_color-subtle: var(--sui-grey-naked-border-subtle);
@@ -189,9 +189,9 @@
 
     &.sui_button-variant_liquid {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-grey-liquid-normal);
-      --sui_button-background_color-subtle: var(--sui-grey-liquid-subtle);
-      --sui_button-background_color-action: var(--sui-grey-liquid-action);
+      --sui_button-background_color-normal: var(--sui-grey-liquid-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-grey-liquid-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-grey-liquid-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-grey-liquid-border-normal);
       --sui_button-border_color-subtle: var(--sui-grey-liquid-border-subtle);
@@ -202,9 +202,9 @@
   .sui_button-color_blue {
     &.sui_button-variant_solid {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-blue-solid-normal);
-      --sui_button-background_color-subtle: var(--sui-blue-solid-subtle);
-      --sui_button-background_color-action: var(--sui-blue-solid-action);
+      --sui_button-background_color-normal: var(--sui-blue-solid-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-blue-solid-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-blue-solid-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-blue-solid-border-normal);
       --sui_button-border_color-subtle: var(--sui-blue-solid-border-subtle);
@@ -213,9 +213,9 @@
 
     &.sui_button-variant_naked {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-blue-naked-normal);
-      --sui_button-background_color-subtle: var(--sui-blue-naked-subtle);
-      --sui_button-background_color-action: var(--sui-blue-naked-action);
+      --sui_button-background_color-normal: var(--sui-blue-naked-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-blue-naked-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-blue-naked-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-blue-naked-border-normal);
       --sui_button-border_color-subtle: var(--sui-blue-naked-border-subtle);
@@ -224,9 +224,9 @@
 
     &.sui_button-variant_liquid {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-blue-liquid-normal);
-      --sui_button-background_color-subtle: var(--sui-blue-liquid-subtle);
-      --sui_button-background_color-action: var(--sui-blue-liquid-action);
+      --sui_button-background_color-normal: var(--sui-blue-liquid-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-blue-liquid-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-blue-liquid-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-blue-liquid-border-normal);
       --sui_button-border_color-subtle: var(--sui-blue-liquid-border-subtle);
@@ -237,9 +237,9 @@
   .sui_button-color_purple {
     &.sui_button-variant_solid {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-purple-solid-normal);
-      --sui_button-background_color-subtle: var(--sui-purple-solid-subtle);
-      --sui_button-background_color-action: var(--sui-purple-solid-action);
+      --sui_button-background_color-normal: var(--sui-purple-solid-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-purple-solid-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-purple-solid-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-purple-solid-border-normal);
       --sui_button-border_color-subtle: var(--sui-purple-solid-border-subtle);
@@ -248,9 +248,9 @@
 
     &.sui_button-variant_naked {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-purple-naked-normal);
-      --sui_button-background_color-subtle: var(--sui-purple-naked-subtle);
-      --sui_button-background_color-action: var(--sui-purple-naked-action);
+      --sui_button-background_color-normal: var(--sui-purple-naked-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-purple-naked-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-purple-naked-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-purple-naked-border-normal);
       --sui_button-border_color-subtle: var(--sui-purple-naked-border-subtle);
@@ -259,9 +259,9 @@
 
     &.sui_button-variant_liquid {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-purple-liquid-normal);
-      --sui_button-background_color-subtle: var(--sui-purple-liquid-subtle);
-      --sui_button-background_color-action: var(--sui-purple-liquid-action);
+      --sui_button-background_color-normal: var(--sui-purple-liquid-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-purple-liquid-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-purple-liquid-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-purple-liquid-border-normal);
       --sui_button-border_color-subtle: var(--sui-purple-liquid-border-subtle);
@@ -272,9 +272,9 @@
   .sui_button-color_magenta {
     &.sui_button-variant_solid {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-magenta-solid-normal);
-      --sui_button-background_color-subtle: var(--sui-magenta-solid-subtle);
-      --sui_button-background_color-action: var(--sui-magenta-solid-action);
+      --sui_button-background_color-normal: var(--sui-magenta-solid-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-magenta-solid-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-magenta-solid-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-magenta-solid-border-normal);
       --sui_button-border_color-subtle: var(--sui-magenta-solid-border-subtle);
@@ -283,9 +283,9 @@
 
     &.sui_button-variant_naked {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-magenta-naked-normal);
-      --sui_button-background_color-subtle: var(--sui-magenta-naked-subtle);
-      --sui_button-background_color-action: var(--sui-magenta-naked-action);
+      --sui_button-background_color-normal: var(--sui-magenta-naked-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-magenta-naked-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-magenta-naked-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-magenta-naked-border-normal);
       --sui_button-border_color-subtle: var(--sui-magenta-naked-border-subtle);
@@ -294,9 +294,9 @@
 
     &.sui_button-variant_liquid {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-magenta-liquid-normal);
-      --sui_button-background_color-subtle: var(--sui-magenta-liquid-subtle);
-      --sui_button-background_color-action: var(--sui-magenta-liquid-action);
+      --sui_button-background_color-normal: var(--sui-magenta-liquid-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-magenta-liquid-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-magenta-liquid-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-magenta-liquid-border-normal);
       --sui_button-border_color-subtle: var(--sui-magenta-liquid-border-subtle);
@@ -307,9 +307,9 @@
   .sui_button-color_red {
     &.sui_button-variant_solid {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-red-solid-normal);
-      --sui_button-background_color-subtle: var(--sui-red-solid-subtle);
-      --sui_button-background_color-action: var(--sui-red-solid-action);
+      --sui_button-background_color-normal: var(--sui-red-solid-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-red-solid-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-red-solid-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-red-solid-border-normal);
       --sui_button-border_color-subtle: var(--sui-red-solid-border-subtle);
@@ -318,9 +318,9 @@
 
     &.sui_button-variant_naked {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-red-naked-normal);
-      --sui_button-background_color-subtle: var(--sui-red-naked-subtle);
-      --sui_button-background_color-action: var(--sui-red-naked-action);
+      --sui_button-background_color-normal: var(--sui-red-naked-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-red-naked-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-red-naked-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-red-naked-border-normal);
       --sui_button-border_color-subtle: var(--sui-red-naked-border-subtle);
@@ -329,9 +329,9 @@
 
     &.sui_button-variant_liquid {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-red-liquid-normal);
-      --sui_button-background_color-subtle: var(--sui-red-liquid-subtle);
-      --sui_button-background_color-action: var(--sui-red-liquid-action);
+      --sui_button-background_color-normal: var(--sui-red-liquid-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-red-liquid-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-red-liquid-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-red-liquid-border-normal);
       --sui_button-border_color-subtle: var(--sui-red-liquid-border-subtle);
@@ -342,9 +342,9 @@
   .sui_button-color_orange {
     &.sui_button-variant_solid {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-orange-solid-normal);
-      --sui_button-background_color-subtle: var(--sui-orange-solid-subtle);
-      --sui_button-background_color-action: var(--sui-orange-solid-action);
+      --sui_button-background_color-normal: var(--sui-orange-solid-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-orange-solid-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-orange-solid-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-orange-solid-border-normal);
       --sui_button-border_color-subtle: var(--sui-orange-solid-border-subtle);
@@ -353,9 +353,9 @@
 
     &.sui_button-variant_naked {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-orange-naked-normal);
-      --sui_button-background_color-subtle: var(--sui-orange-naked-subtle);
-      --sui_button-background_color-action: var(--sui-orange-naked-action);
+      --sui_button-background_color-normal: var(--sui-orange-naked-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-orange-naked-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-orange-naked-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-orange-naked-border-normal);
       --sui_button-border_color-subtle: var(--sui-orange-naked-border-subtle);
@@ -364,9 +364,9 @@
 
     &.sui_button-variant_liquid {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-orange-liquid-normal);
-      --sui_button-background_color-subtle: var(--sui-orange-liquid-subtle);
-      --sui_button-background_color-action: var(--sui-orange-liquid-action);
+      --sui_button-background_color-normal: var(--sui-orange-liquid-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-orange-liquid-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-orange-liquid-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-orange-liquid-border-normal);
       --sui_button-border_color-subtle: var(--sui-orange-liquid-border-subtle);
@@ -377,9 +377,9 @@
   .sui_button-color_yellow {
     &.sui_button-variant_solid {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-yellow-solid-normal);
-      --sui_button-background_color-subtle: var(--sui-yellow-solid-subtle);
-      --sui_button-background_color-action: var(--sui-yellow-solid-action);
+      --sui_button-background_color-normal: var(--sui-yellow-solid-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-yellow-solid-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-yellow-solid-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-yellow-solid-border-normal);
       --sui_button-border_color-subtle: var(--sui-yellow-solid-border-subtle);
@@ -388,9 +388,9 @@
 
     &.sui_button-variant_naked {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-yellow-naked-normal);
-      --sui_button-background_color-subtle: var(--sui-yellow-naked-subtle);
-      --sui_button-background_color-action: var(--sui-yellow-naked-action);
+      --sui_button-background_color-normal: var(--sui-yellow-naked-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-yellow-naked-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-yellow-naked-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-yellow-naked-border-normal);
       --sui_button-border_color-subtle: var(--sui-yellow-naked-border-subtle);
@@ -399,9 +399,9 @@
 
     &.sui_button-variant_liquid {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-yellow-liquid-normal);
-      --sui_button-background_color-subtle: var(--sui-yellow-liquid-subtle);
-      --sui_button-background_color-action: var(--sui-yellow-liquid-action);
+      --sui_button-background_color-normal: var(--sui-yellow-liquid-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-yellow-liquid-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-yellow-liquid-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-yellow-liquid-border-normal);
       --sui_button-border_color-subtle: var(--sui-yellow-liquid-border-subtle);
@@ -412,9 +412,9 @@
   .sui_button-color_green {
     &.sui_button-variant_solid {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-green-solid-normal);
-      --sui_button-background_color-subtle: var(--sui-green-solid-subtle);
-      --sui_button-background_color-action: var(--sui-green-solid-action);
+      --sui_button-background_color-normal: var(--sui-green-solid-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-green-solid-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-green-solid-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-green-solid-border-normal);
       --sui_button-border_color-subtle: var(--sui-green-solid-border-subtle);
@@ -423,9 +423,9 @@
 
     &.sui_button-variant_naked {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-green-naked-normal);
-      --sui_button-background_color-subtle: var(--sui-green-naked-subtle);
-      --sui_button-background_color-action: var(--sui-green-naked-action);
+      --sui_button-background_color-normal: var(--sui-green-naked-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-green-naked-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-green-naked-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-green-naked-border-normal);
       --sui_button-border_color-subtle: var(--sui-green-naked-border-subtle);
@@ -434,9 +434,9 @@
 
     &.sui_button-variant_liquid {
       /* 背景 */
-      --sui_button-background_color-normal: var(--sui-green-liquid-normal);
-      --sui_button-background_color-subtle: var(--sui-green-liquid-subtle);
-      --sui_button-background_color-action: var(--sui-green-liquid-action);
+      --sui_button-background_color-normal: var(--sui-green-liquid-canvas-normal);
+      --sui_button-background_color-subtle: var(--sui-green-liquid-canvas-subtle);
+      --sui_button-background_color-action: var(--sui-green-liquid-canvas-action);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-green-liquid-border-normal);
       --sui_button-border_color-subtle: var(--sui-green-liquid-border-subtle);

@@ -22,9 +22,9 @@
   --sui-blue-90: var(--_flexoki-blue-900);
   --sui-blue-95: var(--_flexoki-blue-950);
 
-  --sui-blue-solid-normal: var(--sui-blue-60);
-  --sui-blue-solid-subtle: var(--sui-blue-70);
-  --sui-blue-solid-action: var(--sui-blue-80);
+  --sui-blue-solid-canvas-normal: var(--sui-blue-60);
+  --sui-blue-solid-canvas-subtle: var(--sui-blue-70);
+  --sui-blue-solid-canvas-action: var(--sui-blue-80);
   --sui-blue-solid-border-normal: var(--sui-blue-10);
   --sui-blue-solid-border-subtle: var(--sui-blue-15);
   --sui-blue-solid-border-action: var(--sui-blue-20);
@@ -32,9 +32,9 @@
   --sui-blue-solid-canvas_text-subtle: var(--sui-blue-10);
   --sui-blue-solid-canvas_text-action: var(--sui-blue-15);
 
-  --sui-blue-naked-normal: transparent;
-  --sui-blue-naked-subtle: var(--sui-blue-5);
-  --sui-blue-naked-action: var(--sui-blue-10);
+  --sui-blue-naked-canvas-normal: transparent;
+  --sui-blue-naked-canvas-subtle: var(--sui-blue-5);
+  --sui-blue-naked-canvas-action: var(--sui-blue-10);
   --sui-blue-naked-border-normal: var(--sui-blue-60);
   --sui-blue-naked-border-subtle: var(--sui-blue-70);
   --sui-blue-naked-border-action: var(--sui-blue-80);
@@ -42,9 +42,9 @@
   --sui-blue-naked-canvas_text-subtle: var(--sui-blue-70);
   --sui-blue-naked-canvas_text-action: var(--sui-blue-80);
 
-  --sui-blue-liquid-normal: var(--sui-blue-5);
-  --sui-blue-liquid-subtle: var(--sui-blue-10);
-  --sui-blue-liquid-action: var(--sui-blue-15);
+  --sui-blue-liquid-canvas-normal: var(--sui-blue-5);
+  --sui-blue-liquid-canvas-subtle: var(--sui-blue-10);
+  --sui-blue-liquid-canvas-action: var(--sui-blue-15);
   --sui-blue-liquid-border-normal: var(--sui-blue-60);
   --sui-blue-liquid-border-subtle: var(--sui-blue-70);
   --sui-blue-liquid-border-action: var(--sui-blue-80);
@@ -66,9 +66,9 @@
   --sui-green-90: var(--_flexoki-green-900);
   --sui-green-95: var(--_flexoki-green-950);
 
-  --sui-green-solid-normal: var(--sui-green-60);
-  --sui-green-solid-subtle: var(--sui-green-70);
-  --sui-green-solid-action: var(--sui-green-80);
+  --sui-green-solid-canvas-normal: var(--sui-green-60);
+  --sui-green-solid-canvas-subtle: var(--sui-green-70);
+  --sui-green-solid-canvas-action: var(--sui-green-80);
   --sui-green-solid-border-normal: var(--sui-green-10);
   --sui-green-solid-border-subtle: var(--sui-green-15);
   --sui-green-solid-border-action: var(--sui-green-20);
@@ -76,9 +76,9 @@
   --sui-green-solid-canvas_text-subtle: var(--sui-green-10);
   --sui-green-solid-canvas_text-action: var(--sui-green-15);
 
-  --sui-green-naked-normal: transparent;
-  --sui-green-naked-subtle: var(--sui-green-5);
-  --sui-green-naked-action: var(--sui-green-10);
+  --sui-green-naked-canvas-normal: transparent;
+  --sui-green-naked-canvas-subtle: var(--sui-green-5);
+  --sui-green-naked-canvas-action: var(--sui-green-10);
   --sui-green-naked-border-normal: var(--sui-green-60);
   --sui-green-naked-border-subtle: var(--sui-green-70);
   --sui-green-naked-border-action: var(--sui-green-80);
@@ -86,9 +86,9 @@
   --sui-green-naked-canvas_text-subtle: var(--sui-green-70);
   --sui-green-naked-canvas_text-action: var(--sui-green-80);
 
-  --sui-green-liquid-normal: var(--sui-green-5);
-  --sui-green-liquid-subtle: var(--sui-green-10);
-  --sui-green-liquid-action: var(--sui-green-15);
+  --sui-green-liquid-canvas-normal: var(--sui-green-5);
+  --sui-green-liquid-canvas-subtle: var(--sui-green-10);
+  --sui-green-liquid-canvas-action: var(--sui-green-15);
   --sui-green-liquid-border-normal: var(--sui-green-60);
   --sui-green-liquid-border-subtle: var(--sui-green-70);
   --sui-green-liquid-border-action: var(--sui-green-80);
@@ -112,9 +112,9 @@
   --sui-grey-95: var(--_flexoki-base-950);
   --sui-grey-100: var(--_flexoki-black);
 
-  --sui-grey-solid-normal: var(--sui-grey-100);
-  --sui-grey-solid-subtle: var(--sui-grey-95);
-  --sui-grey-solid-action: var(--sui-grey-90);
+  --sui-grey-solid-canvas-normal: var(--sui-grey-100);
+  --sui-grey-solid-canvas-subtle: var(--sui-grey-95);
+  --sui-grey-solid-canvas-action: var(--sui-grey-90);
   --sui-grey-solid-border-normal: var(--sui-grey-20);
   --sui-grey-solid-border-subtle: var(--sui-grey-15);
   --sui-grey-solid-border-action: var(--sui-grey-10);
@@ -122,9 +122,9 @@
   --sui-grey-solid-canvas_text-subtle: var(--sui-grey-5);
   --sui-grey-solid-canvas_text-action: var(--sui-grey-10);
 
-  --sui-grey-naked-normal: transparent;
-  --sui-grey-naked-subtle: var(--sui-grey-5);
-  --sui-grey-naked-action: var(--sui-grey-10);
+  --sui-grey-naked-canvas-normal: transparent;
+  --sui-grey-naked-canvas-subtle: var(--sui-grey-5);
+  --sui-grey-naked-canvas-action: var(--sui-grey-10);
   --sui-grey-naked-border-normal: var(--sui-grey-60);
   --sui-grey-naked-border-subtle: var(--sui-grey-70);
   --sui-grey-naked-border-action: var(--sui-grey-80);
@@ -132,9 +132,9 @@
   --sui-grey-naked-canvas_text-subtle: var(--sui-grey-95);
   --sui-grey-naked-canvas_text-action: var(--sui-grey-100);
 
-  --sui-grey-liquid-normal: var(--sui-grey-5);
-  --sui-grey-liquid-subtle: var(--sui-grey-10);
-  --sui-grey-liquid-action: var(--sui-grey-15);
+  --sui-grey-liquid-canvas-normal: var(--sui-grey-5);
+  --sui-grey-liquid-canvas-subtle: var(--sui-grey-10);
+  --sui-grey-liquid-canvas-action: var(--sui-grey-15);
   --sui-grey-liquid-border-normal: var(--sui-grey-60);
   --sui-grey-liquid-border-subtle: var(--sui-grey-70);
   --sui-grey-liquid-border-action: var(--sui-grey-80);
@@ -156,9 +156,9 @@
   --sui-magenta-90: var(--_flexoki-magenta-900);
   --sui-magenta-95: var(--_flexoki-magenta-950);
 
-  --sui-magenta-solid-normal: var(--sui-magenta-60);
-  --sui-magenta-solid-subtle: var(--sui-magenta-70);
-  --sui-magenta-solid-action: var(--sui-magenta-80);
+  --sui-magenta-solid-canvas-normal: var(--sui-magenta-60);
+  --sui-magenta-solid-canvas-subtle: var(--sui-magenta-70);
+  --sui-magenta-solid-canvas-action: var(--sui-magenta-80);
   --sui-magenta-solid-border-normal: var(--sui-magenta-10);
   --sui-magenta-solid-border-subtle: var(--sui-magenta-15);
   --sui-magenta-solid-border-action: var(--sui-magenta-20);
@@ -166,9 +166,9 @@
   --sui-magenta-solid-canvas_text-subtle: var(--sui-magenta-10);
   --sui-magenta-solid-canvas_text-action: var(--sui-magenta-15);
 
-  --sui-magenta-naked-normal: transparent;
-  --sui-magenta-naked-subtle: var(--sui-magenta-5);
-  --sui-magenta-naked-action: var(--sui-magenta-10);
+  --sui-magenta-naked-canvas-normal: transparent;
+  --sui-magenta-naked-canvas-subtle: var(--sui-magenta-5);
+  --sui-magenta-naked-canvas-action: var(--sui-magenta-10);
   --sui-magenta-naked-border-normal: var(--sui-magenta-60);
   --sui-magenta-naked-border-subtle: var(--sui-magenta-70);
   --sui-magenta-naked-border-action: var(--sui-magenta-80);
@@ -176,9 +176,9 @@
   --sui-magenta-naked-canvas_text-subtle: var(--sui-magenta-70);
   --sui-magenta-naked-canvas_text-action: var(--sui-magenta-80);
 
-  --sui-magenta-liquid-normal: var(--sui-magenta-5);
-  --sui-magenta-liquid-subtle: var(--sui-magenta-10);
-  --sui-magenta-liquid-action: var(--sui-magenta-15);
+  --sui-magenta-liquid-canvas-normal: var(--sui-magenta-5);
+  --sui-magenta-liquid-canvas-subtle: var(--sui-magenta-10);
+  --sui-magenta-liquid-canvas-action: var(--sui-magenta-15);
   --sui-magenta-liquid-border-normal: var(--sui-magenta-60);
   --sui-magenta-liquid-border-subtle: var(--sui-magenta-70);
   --sui-magenta-liquid-border-action: var(--sui-magenta-80);
@@ -200,9 +200,9 @@
   --sui-orange-90: var(--_flexoki-orange-900);
   --sui-orange-95: var(--_flexoki-orange-950);
 
-  --sui-orange-solid-normal: var(--sui-orange-60);
-  --sui-orange-solid-subtle: var(--sui-orange-70);
-  --sui-orange-solid-action: var(--sui-orange-80);
+  --sui-orange-solid-canvas-normal: var(--sui-orange-60);
+  --sui-orange-solid-canvas-subtle: var(--sui-orange-70);
+  --sui-orange-solid-canvas-action: var(--sui-orange-80);
   --sui-orange-solid-border-normal: var(--sui-orange-10);
   --sui-orange-solid-border-subtle: var(--sui-orange-15);
   --sui-orange-solid-border-action: var(--sui-orange-20);
@@ -210,9 +210,9 @@
   --sui-orange-solid-canvas_text-subtle: var(--sui-orange-10);
   --sui-orange-solid-canvas_text-action: var(--sui-orange-15);
 
-  --sui-orange-naked-normal: transparent;
-  --sui-orange-naked-subtle: var(--sui-orange-5);
-  --sui-orange-naked-action: var(--sui-orange-10);
+  --sui-orange-naked-canvas-normal: transparent;
+  --sui-orange-naked-canvas-subtle: var(--sui-orange-5);
+  --sui-orange-naked-canvas-action: var(--sui-orange-10);
   --sui-orange-naked-border-normal: var(--sui-orange-60);
   --sui-orange-naked-border-subtle: var(--sui-orange-70);
   --sui-orange-naked-border-action: var(--sui-orange-80);
@@ -220,9 +220,9 @@
   --sui-orange-naked-canvas_text-subtle: var(--sui-orange-70);
   --sui-orange-naked-canvas_text-action: var(--sui-orange-80);
 
-  --sui-orange-liquid-normal: var(--sui-orange-5);
-  --sui-orange-liquid-subtle: var(--sui-orange-10);
-  --sui-orange-liquid-action: var(--sui-orange-15);
+  --sui-orange-liquid-canvas-normal: var(--sui-orange-5);
+  --sui-orange-liquid-canvas-subtle: var(--sui-orange-10);
+  --sui-orange-liquid-canvas-action: var(--sui-orange-15);
   --sui-orange-liquid-border-normal: var(--sui-orange-60);
   --sui-orange-liquid-border-subtle: var(--sui-orange-70);
   --sui-orange-liquid-border-action: var(--sui-orange-80);
@@ -244,9 +244,9 @@
   --sui-purple-90: var(--_flexoki-purple-900);
   --sui-purple-95: var(--_flexoki-purple-950);
 
-  --sui-purple-solid-normal: var(--sui-purple-60);
-  --sui-purple-solid-subtle: var(--sui-purple-70);
-  --sui-purple-solid-action: var(--sui-purple-80);
+  --sui-purple-solid-canvas-normal: var(--sui-purple-60);
+  --sui-purple-solid-canvas-subtle: var(--sui-purple-70);
+  --sui-purple-solid-canvas-action: var(--sui-purple-80);
   --sui-purple-solid-border-normal: var(--sui-purple-10);
   --sui-purple-solid-border-subtle: var(--sui-purple-15);
   --sui-purple-solid-border-action: var(--sui-purple-20);
@@ -254,9 +254,9 @@
   --sui-purple-solid-canvas_text-subtle: var(--sui-purple-10);
   --sui-purple-solid-canvas_text-action: var(--sui-purple-15);
 
-  --sui-purple-naked-normal: transparent;
-  --sui-purple-naked-subtle: var(--sui-purple-5);
-  --sui-purple-naked-action: var(--sui-purple-10);
+  --sui-purple-naked-canvas-normal: transparent;
+  --sui-purple-naked-canvas-subtle: var(--sui-purple-5);
+  --sui-purple-naked-canvas-action: var(--sui-purple-10);
   --sui-purple-naked-border-normal: var(--sui-purple-60);
   --sui-purple-naked-border-subtle: var(--sui-purple-70);
   --sui-purple-naked-border-action: var(--sui-purple-80);
@@ -264,9 +264,9 @@
   --sui-purple-naked-canvas_text-subtle: var(--sui-purple-70);
   --sui-purple-naked-canvas_text-action: var(--sui-purple-80);
 
-  --sui-purple-liquid-normal: var(--sui-purple-5);
-  --sui-purple-liquid-subtle: var(--sui-purple-10);
-  --sui-purple-liquid-action: var(--sui-purple-15);
+  --sui-purple-liquid-canvas-normal: var(--sui-purple-5);
+  --sui-purple-liquid-canvas-subtle: var(--sui-purple-10);
+  --sui-purple-liquid-canvas-action: var(--sui-purple-15);
   --sui-purple-liquid-border-normal: var(--sui-purple-60);
   --sui-purple-liquid-border-subtle: var(--sui-purple-70);
   --sui-purple-liquid-border-action: var(--sui-purple-80);
@@ -288,9 +288,9 @@
   --sui-red-90: var(--_flexoki-red-900);
   --sui-red-95: var(--_flexoki-red-950);
 
-  --sui-red-solid-normal: var(--sui-red-60);
-  --sui-red-solid-subtle: var(--sui-red-70);
-  --sui-red-solid-action: var(--sui-red-80);
+  --sui-red-solid-canvas-normal: var(--sui-red-60);
+  --sui-red-solid-canvas-subtle: var(--sui-red-70);
+  --sui-red-solid-canvas-action: var(--sui-red-80);
   --sui-red-solid-border-normal: var(--sui-red-10);
   --sui-red-solid-border-subtle: var(--sui-red-15);
   --sui-red-solid-border-action: var(--sui-red-20);
@@ -298,9 +298,9 @@
   --sui-red-solid-canvas_text-subtle: var(--sui-red-10);
   --sui-red-solid-canvas_text-action: var(--sui-red-15);
 
-  --sui-red-naked-normal: transparent;
-  --sui-red-naked-subtle: var(--sui-red-5);
-  --sui-red-naked-action: var(--sui-red-10);
+  --sui-red-naked-canvas-normal: transparent;
+  --sui-red-naked-canvas-subtle: var(--sui-red-5);
+  --sui-red-naked-canvas-action: var(--sui-red-10);
   --sui-red-naked-border-normal: var(--sui-red-60);
   --sui-red-naked-border-subtle: var(--sui-red-70);
   --sui-red-naked-border-action: var(--sui-red-80);
@@ -308,9 +308,9 @@
   --sui-red-naked-canvas_text-subtle: var(--sui-red-70);
   --sui-red-naked-canvas_text-action: var(--sui-red-80);
 
-  --sui-red-liquid-normal: var(--sui-red-5);
-  --sui-red-liquid-subtle: var(--sui-red-10);
-  --sui-red-liquid-action: var(--sui-red-15);
+  --sui-red-liquid-canvas-normal: var(--sui-red-5);
+  --sui-red-liquid-canvas-subtle: var(--sui-red-10);
+  --sui-red-liquid-canvas-action: var(--sui-red-15);
   --sui-red-liquid-border-normal: var(--sui-red-60);
   --sui-red-liquid-border-subtle: var(--sui-red-70);
   --sui-red-liquid-border-action: var(--sui-red-80);
@@ -332,9 +332,9 @@
   --sui-yellow-90: var(--_flexoki-yellow-900);
   --sui-yellow-95: var(--_flexoki-yellow-950);
 
-  --sui-yellow-solid-normal: var(--sui-yellow-60);
-  --sui-yellow-solid-subtle: var(--sui-yellow-70);
-  --sui-yellow-solid-action: var(--sui-yellow-80);
+  --sui-yellow-solid-canvas-normal: var(--sui-yellow-60);
+  --sui-yellow-solid-canvas-subtle: var(--sui-yellow-70);
+  --sui-yellow-solid-canvas-action: var(--sui-yellow-80);
   --sui-yellow-solid-border-normal: var(--sui-yellow-10);
   --sui-yellow-solid-border-subtle: var(--sui-yellow-15);
   --sui-yellow-solid-border-action: var(--sui-yellow-20);
@@ -342,9 +342,9 @@
   --sui-yellow-solid-canvas_text-subtle: var(--sui-yellow-10);
   --sui-yellow-solid-canvas_text-action: var(--sui-yellow-15);
 
-  --sui-yellow-naked-normal: transparent;
-  --sui-yellow-naked-subtle: var(--sui-yellow-5);
-  --sui-yellow-naked-action: var(--sui-yellow-10);
+  --sui-yellow-naked-canvas-normal: transparent;
+  --sui-yellow-naked-canvas-subtle: var(--sui-yellow-5);
+  --sui-yellow-naked-canvas-action: var(--sui-yellow-10);
   --sui-yellow-naked-border-normal: var(--sui-yellow-60);
   --sui-yellow-naked-border-subtle: var(--sui-yellow-70);
   --sui-yellow-naked-border-action: var(--sui-yellow-80);
@@ -352,9 +352,9 @@
   --sui-yellow-naked-canvas_text-subtle: var(--sui-yellow-70);
   --sui-yellow-naked-canvas_text-action: var(--sui-yellow-80);
 
-  --sui-yellow-liquid-normal: var(--sui-yellow-5);
-  --sui-yellow-liquid-subtle: var(--sui-yellow-10);
-  --sui-yellow-liquid-action: var(--sui-yellow-15);
+  --sui-yellow-liquid-canvas-normal: var(--sui-yellow-5);
+  --sui-yellow-liquid-canvas-subtle: var(--sui-yellow-10);
+  --sui-yellow-liquid-canvas-action: var(--sui-yellow-15);
   --sui-yellow-liquid-border-normal: var(--sui-yellow-60);
   --sui-yellow-liquid-border-subtle: var(--sui-yellow-70);
   --sui-yellow-liquid-border-action: var(--sui-yellow-80);

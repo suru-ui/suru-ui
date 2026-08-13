@@ -158,7 +158,7 @@
 
   .sui_slider-variant_naked {
     /* 背景 */
-    --sui_slider_track-canvas-normal: var(--sui-grey-naked-normal);
+    --sui_slider_track-canvas-normal: var(--sui-grey-naked-canvas-normal);
     /* 枠線 */
     --sui_slider_track-border_color-normal: var(--sui-grey-naked-border-normal);
     --sui_slider_track-border_color-subtle: var(--sui-grey-naked-border-subtle);
@@ -167,7 +167,7 @@
 
   .sui_slider-variant_liquid {
     /* 背景 */
-    --sui_slider_track-canvas-normal: var(--sui-grey-liquid-normal);
+    --sui_slider_track-canvas-normal: var(--sui-grey-liquid-canvas-normal);
     /* 枠線 */
     --sui_slider_track-border_color-normal: var(--sui-grey-liquid-border-normal);
     --sui_slider_track-border_color-subtle: var(--sui-grey-liquid-border-subtle);
@@ -221,42 +221,42 @@
 
   .sui_slider-color_grey {
     /* 背景 */
-    --sui_slider_indicator-canvas-normal: var(--sui-grey-solid-normal);
+    --sui_slider_indicator-canvas-normal: var(--sui-grey-solid-canvas-normal);
   }
 
   .sui_slider-color_blue {
     /* 背景 */
-    --sui_slider_indicator-canvas-normal: var(--sui-blue-solid-normal);
+    --sui_slider_indicator-canvas-normal: var(--sui-blue-solid-canvas-normal);
   }
 
   .sui_slider-color_purple {
     /* 背景 */
-    --sui_slider_indicator-canvas-normal: var(--sui-purple-solid-normal);
+    --sui_slider_indicator-canvas-normal: var(--sui-purple-solid-canvas-normal);
   }
 
   .sui_slider-color_magenta {
     /* 背景 */
-    --sui_slider_indicator-canvas-normal: var(--sui-magenta-solid-normal);
+    --sui_slider_indicator-canvas-normal: var(--sui-magenta-solid-canvas-normal);
   }
 
   .sui_slider-color_red {
     /* 背景 */
-    --sui_slider_indicator-canvas-normal: var(--sui-red-solid-normal);
+    --sui_slider_indicator-canvas-normal: var(--sui-red-solid-canvas-normal);
   }
 
   .sui_slider-color_orange {
     /* 背景 */
-    --sui_slider_indicator-canvas-normal: var(--sui-orange-solid-normal);
+    --sui_slider_indicator-canvas-normal: var(--sui-orange-solid-canvas-normal);
   }
 
   .sui_slider-color_yellow {
     /* 背景 */
-    --sui_slider_indicator-canvas-normal: var(--sui-yellow-solid-normal);
+    --sui_slider_indicator-canvas-normal: var(--sui-yellow-solid-canvas-normal);
   }
 
   .sui_slider-color_green {
     /* 背景 */
-    --sui_slider_indicator-canvas-normal: var(--sui-green-solid-normal);
+    --sui_slider_indicator-canvas-normal: var(--sui-green-solid-canvas-normal);
   }
 
   /* 既定値設定: ここまで */
