@@ -1,27 +1,39 @@
-import { readFile, writeFile, readdir, mkdir } from "node:fs/promises";
-import { resolve, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
+import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import { resolve } from "node:path";
+
+/**
+ * `src` の CSS ファイルから、テーマモードごとの配布用 CSS を `dist` に生成します。
+ */
 
 // ---------------------------------------------------------------------------
-// Paths
+// パス
 // ---------------------------------------------------------------------------
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = resolve(__dirname, "..");
+const ROOT = resolve(import.meta.dirname, "..");
 const SRC = resolve(ROOT, "src");
 const DIST = resolve(ROOT, "dist");
 
 // ---------------------------------------------------------------------------
-// Configuration
+// 設定
 // ---------------------------------------------------------------------------
 
-/** Files that are included verbatim in every output. */
-const COMMON_FILES = new Set(["layers.css", "reset.css", "source.css", "utilities.css"]);
+/**
+ * テーマモードの一覧です。
+ *
+ * この並び順が結合ファイルのセクション順になります。モードを追加するときは
+ * THEMES にも同じ名前のエントリーを追加してください。
+ */
+const THEME_MODES = ["dark", "light"] as const;
 
-/** Regex to extract family and mode from token filenames (e.g. tokens.suru.dark.css → ["suru", "dark"]). */
-const THEME_FILE_RE = /^tokens\.(.+)\.(.+)\.css$/;
+/** テーマモードです。 */
+type ThemeMode = (typeof THEME_MODES)[number];
 
-/** Theme-mode definitions — media query + attribute selector. */
+/**
+ * モードごとのセレクター定義です。
+ *
+ * - `media`: システム設定に追従するためのメディアクエリーです。
+ * - `attr`: 手動設定に使う属性セレクターです。
+ */
 const THEMES = {
   dark: {
     media: "(prefers-color-scheme: dark)",
@@ -31,10 +43,22 @@ const THEMES = {
     media: "(prefers-color-scheme: light)",
     attr: '[data-theme="light"]',
   },
-} as const;
+} satisfies Record<ThemeMode, { media: string; attr: string }>;
+
+/** すべての出力ファイルにそのまま含まれる共通ファイルです。 */
+const COMMON_FILES = new Set(["layers.css", "reset.css", "source.css", "utilities.css"]);
+
+/** トークンファイル名からファミリーとモードを取り出します (例: `tokens.suru.dark.css` → `["suru", "dark"]`)。 */
+const TOKEN_FILE_RE = /^tokens\.(.+)\.(.+)\.css$/;
+
+/** アルファカラーソースのファイル名からモードを取り出します (例: `source.alpha.dark.css` → `["dark"]`)。 */
+const ALPHA_SOURCE_FILE_RE = /^source\.alpha\.(.+)\.css$/;
+
+/** 宣言を包むレイヤーです。 */
+type Layer = "sui.source" | "sui.tokens";
 
 // ---------------------------------------------------------------------------
-// Helpers
+// CSS 生成ヘルパー
 // ---------------------------------------------------------------------------
 
 function indent(text: string, level: number): string {
@@ -46,40 +70,75 @@ function indent(text: string, level: number): string {
 }
 
 /**
- * Extract inner declarations from a `.layer__sui_tokens { … }` block.
+ * `{ … }` ブロックの内側から生の宣言を取り出します。
  *
- * Returns the raw property declarations (one per line) with leading/trailing
- * whitespace stripped, ready to be re-indented into a new wrapper.
+ * `marker` を含む行で始まる最初のブロックを対象に、開き括弧の直後から対応する
+ * 閉じ括弧の直前までを返します。行頭・行末の空白を取り除き、空行を除外します。
+ *
+ * @param content 対象の CSS テキストです。
+ * @param marker ブロックの開始行に含まれる文字列です。
+ * @returns 宣言の行を改行で連結した文字列です。
  */
-function extractTokenDeclarations(content: string): string {
+function extractDeclarations(content: string, marker: string): string {
   const lines = content.split("\n");
-  const startIdx = lines.findIndex((l) => l.includes("{"));
-  const endIdx = lines.findLastIndex((l) => l.includes("}"));
+  const startIdx = lines.findIndex((line) => line.includes(marker));
 
-  if (startIdx === -1 || endIdx === -1 || startIdx >= endIdx) {
+  if (startIdx === -1) {
     throw new Error(
-      "Could not find a valid `.layer__sui_tokens { … }` block in:\n" + content.slice(0, 200),
+      `Could not find a valid \`${marker} { … }\` block in:\n${content.slice(0, 200)}`,
     );
   }
 
-  return lines
-    .slice(startIdx + 1, endIdx)
-    .map((l) => l.trim())
-    .filter((l) => l.length > 0)
-    .join("\n");
+  let depth = 0;
+
+  for (let i = startIdx; i < lines.length; i++) {
+    const line = lines[i]!;
+    depth += (line.match(/\{/g) ?? []).length - (line.match(/\}/g) ?? []).length;
+
+    if (depth === 0) {
+      return lines
+        .slice(startIdx + 1, i)
+        .map((line) => line.trim())
+        .filter((line) => line.length > 0)
+        .join("\n");
+    }
+  }
+
+  throw new Error(
+    `Could not find the closing brace of the \`${marker} { … }\` block in:\n${content.slice(0, 200)}`,
+  );
+}
+
+/** トークンファイルの `.layer__sui_tokens { … }` ブロックから宣言を抽出します。 */
+function extractTokenDeclarations(content: string): string {
+  return extractDeclarations(content, ".layer__sui_tokens");
+}
+
+/** アルファカラーソースの `:root { … }` ブロックから宣言を抽出します。 */
+function extractSourceDeclarations(content: string): string {
+  return extractDeclarations(content, ":root");
 }
 
 /**
- * \@layer sui.tokens {
+ * 宣言をセレクター付きのレイヤーブロックに包みます。
+ *
+ * @param selector 宣言を包むセレクターです。
+ * @param declarations ブロックの内側に書く宣言です。
+ * @param layer 宣言を包むレイヤーです。
+ *
+ * @example
+ * ```
+ * @layer sui.tokens {
  *   :root {
  *     <declarations>
  *   }
  * }
+ * ```
  */
-function buildRootBlock(declarations: string): string {
+function buildLayerBlock(selector: string, declarations: string, layer: Layer): string {
   return [
-    `@layer sui.tokens {`,
-    indent(`:root {`, 1),
+    `@layer ${layer} {`,
+    indent(`${selector} {`, 1),
     indent(declarations, 2),
     indent(`}`, 1),
     `}`,
@@ -87,125 +146,252 @@ function buildRootBlock(declarations: string): string {
 }
 
 /**
- * \@layer sui.tokens {
- *   [data-theme="<mode>"] {
- *     <declarations>
- *   }
- * }
+ * 宣言を `:root` のレイヤーブロックに包みます。
+ *
+ * @param declarations ブロックの内側に書く宣言です。
+ * @param layer 宣言を包むレイヤーです。
+ * @default "sui.tokens"
  */
-function buildAttrBlock(theme: "dark" | "light", declarations: string): string {
-  const { attr } = THEMES[theme];
-
-  return [
-    `@layer sui.tokens {`,
-    indent(`${attr} {`, 1),
-    indent(declarations, 2),
-    indent(`}`, 1),
-    `}`,
-  ].join("\n");
+function buildRootBlock(declarations: string, layer: Layer = "sui.tokens"): string {
+  return buildLayerBlock(":root", declarations, layer);
 }
 
 /**
- * \@media (prefers-color-scheme: <mode>) {
- *   @layer sui.tokens {
- *     :root {
- *       <declarations>
- *     }
- *   }
- * }
+ * 宣言を属性セレクターのレイヤーブロックに包みます。
+ *
+ * @param mode セレクターを決めるテーマモードです。
+ * @param declarations ブロックの内側に書く宣言です。
+ * @param layer 宣言を包むレイヤーです。
+ * @default "sui.tokens"
  */
-function buildMediaBlock(theme: "dark" | "light", declarations: string): string {
-  const { media } = THEMES[theme];
+function buildAttrBlock(
+  mode: ThemeMode,
+  declarations: string,
+  layer: Layer = "sui.tokens",
+): string {
+  return buildLayerBlock(THEMES[mode].attr, declarations, layer);
+}
 
+/**
+ * 宣言をメディアクエリーとレイヤーで包みます。
+ *
+ * システム設定 (prefers-color-scheme) に追従させるときに使います。
+ *
+ * @param mode メディアクエリーを決めるテーマモードです。
+ * @param declarations ブロックの内側に書く宣言です。
+ * @param layer 宣言を包むレイヤーです。
+ * @default "sui.tokens"
+ */
+function buildMediaBlock(
+  mode: ThemeMode,
+  declarations: string,
+  layer: Layer = "sui.tokens",
+): string {
   return [
-    `@media ${media} {`,
-    indent(`@layer sui.tokens {`, 1),
-    indent(`:root {`, 2),
-    indent(declarations, 3),
-    indent(`}`, 2),
-    indent(`}`, 1),
+    `@media ${THEMES[mode].media} {`,
+    indent(buildLayerBlock(":root", declarations, layer), 1),
     `}`,
   ].join("\n");
 }
 
 // ---------------------------------------------------------------------------
-// Main
+// ソースの読み込み
 // ---------------------------------------------------------------------------
 
-async function main(): Promise<void> {
-  // 1. Discover source files
-  const entries = await readdir(SRC);
-  const cssFiles = entries.filter((f) => f.endsWith(".css"));
+/** `loadSources` の戻り値です。 */
+interface ParsedSources {
+  /** 共通ファイルの内容です。 */
+  common: string[];
+  /** ファミリーごとのモード別トークン宣言です。 */
+  tokens: Map<string, Partial<Record<ThemeMode, string>>>;
+  /** モード別のアルファカラーソース宣言です。 */
+  alpha: Partial<Record<ThemeMode, string>>;
+}
 
-  // 2. Read and classify files
-  const commonParts: string[] = [];
-  const families = new Map<string, Map<string, string>>();
+/**
+ * `src` ディレクトリーの CSS ファイルを読み込み、役割ごとに分類します。
+ *
+ * - 共通ファイル: 内容をそのまま共通部分に集めます。
+ * - `source.alpha.<mode>.css`: `:root` ブロックの中身をモード別に集めます。
+ * - `tokens.<family>.<mode>.css`: トークンブロックの中身をファミリーとモードの組に集めます。
+ * - 上記のどれにも該当しない CSS ファイル: 無視します。
+ */
+async function loadSources(): Promise<ParsedSources> {
+  const common: string[] = [];
+  const tokens = new Map<string, Partial<Record<ThemeMode, string>>>();
+  const alpha: Partial<Record<ThemeMode, string>> = {};
 
-  for (const file of cssFiles) {
-    const content = await readFile(resolve(SRC, file), "utf-8");
+  const files = (await readdir(SRC)).filter((name) => name.endsWith(".css"));
 
-    if (COMMON_FILES.has(file)) {
-      commonParts.push(content);
-    } else {
-      const match = file.match(THEME_FILE_RE);
+  for (const name of files) {
+    const content = await readFile(resolve(SRC, name), "utf-8");
 
-      if (match) {
-        const family = match[1]!; // e.g. "suru", "vscode"
-        const mode = match[2]!; // e.g. "dark", "light"
-        const decls = extractTokenDeclarations(content);
+    if (COMMON_FILES.has(name)) {
+      common.push(content);
+      continue;
+    }
 
-        let modes = families.get(family);
+    const alphaMatch = name.match(ALPHA_SOURCE_FILE_RE);
 
-        if (!modes) {
-          modes = new Map();
-          families.set(family, modes);
-        }
+    if (alphaMatch) {
+      const declarations = extractSourceDeclarations(content);
+      alpha[parseMode(alphaMatch[1]!, name)] = declarations;
+      continue;
+    }
 
-        modes.set(mode, decls);
+    const tokenMatch = name.match(TOKEN_FILE_RE);
+
+    if (tokenMatch) {
+      const family = tokenMatch[1]!;
+      const declarations = extractTokenDeclarations(content);
+      const mode = parseMode(tokenMatch[2]!, name);
+      let modes = tokens.get(family);
+
+      if (!modes) {
+        modes = {};
+        tokens.set(family, modes);
       }
+
+      modes[mode] = declarations;
     }
   }
 
-  const commonBlock = commonParts.join("\n\n");
+  return { common, tokens, alpha };
+}
 
-  // 3. Ensure output directory exists
+/**
+ * ファイル名から取り出したモード文字列を検証し、`ThemeMode` として返します。
+ *
+ * `THEME_MODES` にないモードはエラーにします。
+ *
+ * @param value ファイル名から取り出したモード文字列です。
+ * @param filename エラーメッセージに含めるファイル名です。
+ * @returns 検証済みのテーマモードです。
+ */
+function parseMode(value: string, filename: string): ThemeMode {
+  if (!isThemeMode(value)) {
+    throw new Error(
+      `Unknown theme mode "${value}" in "${filename}". The build cannot generate CSS for unsupported modes. Add "${value}" to THEME_MODES and THEMES in scripts/build-css.ts.`,
+    );
+  }
+
+  return value;
+}
+
+function isThemeMode(value: string): value is ThemeMode {
+  return (THEME_MODES as readonly string[]).includes(value);
+}
+
+// ---------------------------------------------------------------------------
+// 出力の生成
+// ---------------------------------------------------------------------------
+
+/**
+ * モードごとのトークン宣言がすべて揃っている場合に `true` を返します。
+ *
+ * 結合ファイルは dark と light の両方が揃っているときだけ生成するため、
+ * 判定に使います。
+ */
+function isComplete(
+  modes: Readonly<Partial<Record<ThemeMode, string>>>,
+): modes is Readonly<Record<ThemeMode, string>> {
+  return THEME_MODES.every((mode) => modes[mode] !== undefined);
+}
+
+/**
+ * 各モードの宣言を同じ包み方でセクションに変換します。
+ *
+ * モードの並び順に、アルファカラーソース (存在する場合のみ) とトークンの
+ * ブロックを並べます。
+ *
+ * @param wrap 宣言を 1 つのブロックに包む関数です。
+ * @param alpha モード別のアルファカラーソース宣言です。
+ * @param tokens モード別のトークン宣言です。
+ * @returns ブロックの配列です。
+ */
+function buildModeSections(
+  wrap: (mode: ThemeMode, declarations: string, layer: Layer) => string,
+  alpha: Readonly<Partial<Record<ThemeMode, string>>>,
+  tokens: Readonly<Record<ThemeMode, string>>,
+): string[] {
+  return THEME_MODES.flatMap((mode) => {
+    const source = alpha[mode];
+    const token = tokens[mode];
+
+    return [...(source ? [wrap(mode, source, "sui.source")] : []), wrap(mode, token, "sui.tokens")];
+  });
+}
+
+/**
+ * 1 つのファミリーの CSS ファイルを生成して `dist` に書き出します。
+ *
+ * - `<family>-<mode>.css`: `:root` と属性セレクターの両方にトークンを書き出します。
+ * - `<family>.css`: メディアクエリー (システム設定) のブロックを先に、属性セレクター
+ *   (手動設定) のブロックを後に並べます。後勝ちの CSS 規則により、手動設定が
+ *   システム設定に優先します。dark と light の両方のモードが揃っている場合のみ
+ *   生成します。
+ *
+ * @param family ファミリー名です。
+ * @param tokens モード別のトークン宣言です。
+ * @param alpha モード別のアルファカラーソース宣言です。
+ * @param commonBlock すべての出力に含まれる共通部分です。
+ */
+async function buildFamily(
+  family: string,
+  tokens: Readonly<Partial<Record<ThemeMode, string>>>,
+  alpha: Readonly<Partial<Record<ThemeMode, string>>>,
+  commonBlock: string,
+): Promise<void> {
+  for (const mode of THEME_MODES) {
+    const token = tokens[mode];
+
+    if (!token) {
+      continue;
+    }
+
+    const source = alpha[mode];
+    const sections = [
+      ...(source ? [buildRootBlock(source, "sui.source")] : []),
+      buildRootBlock(token),
+      buildAttrBlock(mode, token),
+    ];
+
+    await writeOutput(`${family}-${mode}.css`, [commonBlock, ...sections]);
+  }
+
+  if (isComplete(tokens)) {
+    const sections = [
+      ...buildModeSections(buildMediaBlock, alpha, tokens),
+      ...buildModeSections(buildAttrBlock, alpha, tokens),
+    ];
+
+    await writeOutput(`${family}.css`, [commonBlock, ...sections]);
+  }
+}
+
+/**
+ * セクションを空行で連結して `dist` に書き出します。
+ *
+ * @param filename 出力ファイル名です。
+ * @param sections 出力に含めるセクションの配列です。
+ */
+async function writeOutput(filename: string, sections: string[]): Promise<void> {
+  const content = `${sections.join("\n\n")}\n`;
+  await writeFile(resolve(DIST, filename), content);
+}
+
+// ---------------------------------------------------------------------------
+// メイン
+// ---------------------------------------------------------------------------
+
+async function main(): Promise<void> {
+  const { common, tokens, alpha } = await loadSources();
+  const commonBlock = common.join("\n\n");
+
   await mkdir(DIST, { recursive: true });
 
-  // 4. Build output files per family
-  for (const [family, modes] of families) {
-    const darkDecl = modes.get("dark");
-    const lightDecl = modes.get("light");
-
-    // {family}-{mode}.css — single-mode files
-    if (darkDecl) {
-      const css = [commonBlock, buildRootBlock(darkDecl), buildAttrBlock("dark", darkDecl)].join(
-        "\n\n",
-      );
-
-      await writeFile(resolve(DIST, `${family}-dark.css`), `${css}\n`);
-    }
-
-    if (lightDecl) {
-      const css = [commonBlock, buildRootBlock(lightDecl), buildAttrBlock("light", lightDecl)].join(
-        "\n\n",
-      );
-
-      await writeFile(resolve(DIST, `${family}-light.css`), `${css}\n`);
-    }
-
-    // {family}.css — combined modes
-    // Order: media blocks first (system preference), then attr blocks (manual override)
-    if (darkDecl && lightDecl) {
-      const css = [
-        commonBlock,
-        buildMediaBlock("dark", darkDecl),
-        buildMediaBlock("light", lightDecl),
-        buildAttrBlock("dark", darkDecl),
-        buildAttrBlock("light", lightDecl),
-      ].join("\n\n");
-
-      await writeFile(resolve(DIST, `${family}.css`), `${css}\n`);
-    }
+  for (const [family, modes] of tokens) {
+    await buildFamily(family, modes, alpha, commonBlock);
   }
 }
 

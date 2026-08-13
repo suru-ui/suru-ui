@@ -1,6 +1,8 @@
 @layer sui.source {
-  /* https://stephango.com/flexoki */
-  /* https://github.com/kepano/flexoki/blob/2.0.0/css/flexoki.css */
+  /*
+    https://stephango.com/flexoki
+    https://github.com/kepano/flexoki/blob/2.0.0/css/flexoki.css
+  */
   :root {
     --_flexoki-black: #100f0f;
     --_flexoki-paper: #fffcf0;

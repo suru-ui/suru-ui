@@ -1,0 +1,138 @@
+@layer sui.source {
+  /*
+    https://tai-kun.github.io/alpha-color-lab/
+    alpha-Alpha: 0.8
+  */
+  :root {
+    --_flexoki-black-alpha: #100f0f;
+    --_flexoki-paper-alpha: rgb(255 252 240 / 0.8);
+
+    --_flexoki-base-alpha-50: rgb(239 237 226 / 0.8);
+    --_flexoki-base-alpha-100: rgb(224 222 211 / 0.8);
+    --_flexoki-base-alpha-150: rgb(209 207 198 / 0.8);
+    --_flexoki-base-alpha-200: rgb(194 193 184 / 0.8);
+    --_flexoki-base-alpha-300: rgb(165 163 155 / 0.8);
+    --_flexoki-base-alpha-400: rgb(135 133 128 / 0.8);
+    --_flexoki-base-alpha-500: rgb(105 103 100 / 0.8);
+    --_flexoki-base-alpha-600: rgb(75 75 71 / 0.8);
+    --_flexoki-base-alpha-700: rgb(45 45 44 / 0.8);
+    --_flexoki-base-alpha-800: rgb(16 15 15 / 0.8);
+    --_flexoki-base-alpha-850: rgb(1 1 1 / 0.8);
+    --_flexoki-base-alpha-900: #282726;
+    --_flexoki-base-alpha-950: #1c1b1a;
+
+    --_flexoki-red-alpha-50: rgb(255 218 206 / 0.8);
+    --_flexoki-red-alpha-100: rgb(255 190 174 / 0.8);
+    --_flexoki-red-alpha-150: rgb(253 160 143 / 0.8);
+    --_flexoki-red-alpha-200: rgb(246 130 113 / 0.8);
+    --_flexoki-red-alpha-300: rgb(226 77 59 / 0.8);
+    --_flexoki-red-alpha-400: rgb(198 33 21 / 0.8);
+    --_flexoki-red-alpha-500: rgb(176 15 6 / 0.8);
+    --_flexoki-red-alpha-600: #af3029;
+    --_flexoki-red-alpha-700: #942822;
+    --_flexoki-red-alpha-800: #6c201c;
+    --_flexoki-red-alpha-850: #551b18;
+    --_flexoki-red-alpha-900: #3e1715;
+    --_flexoki-red-alpha-950: #261312;
+
+    --_flexoki-orange-alpha-50: rgb(255 226 198 / 0.8);
+    --_flexoki-orange-alpha-100: rgb(254 201 159 / 0.8);
+    --_flexoki-orange-alpha-150: rgb(251 178 123 / 0.8);
+    --_flexoki-orange-alpha-200: rgb(248 155 89 / 0.8);
+    --_flexoki-orange-alpha-300: rgb(231 111 31 / 0.8);
+    --_flexoki-orange-alpha-400: #da702c;
+    --_flexoki-orange-alpha-500: #cb6120;
+    --_flexoki-orange-alpha-600: #bc5215;
+    --_flexoki-orange-alpha-700: #9d4310;
+    --_flexoki-orange-alpha-800: #71320d;
+    --_flexoki-orange-alpha-850: #59290d;
+    --_flexoki-orange-alpha-900: #40200d;
+    --_flexoki-orange-alpha-950: #27180e;
+
+    --_flexoki-yellow-alpha-50: rgb(249 235 188 / 0.8);
+    --_flexoki-yellow-alpha-100: rgb(244 220 140 / 0.8);
+    --_flexoki-yellow-alpha-150: rgb(238 205 98 / 0.8);
+    --_flexoki-yellow-alpha-200: rgb(231 191 60 / 0.8);
+    --_flexoki-yellow-alpha-300: rgb(215 162 1 / 0.8);
+    --_flexoki-yellow-alpha-400: #d0a215;
+    --_flexoki-yellow-alpha-500: #be9207;
+    --_flexoki-yellow-alpha-600: #ad8301;
+    --_flexoki-yellow-alpha-700: #8e6b01;
+    --_flexoki-yellow-alpha-800: #664d01;
+    --_flexoki-yellow-alpha-850: #503d02;
+    --_flexoki-yellow-alpha-900: #3a2d04;
+    --_flexoki-yellow-alpha-950: #241e08;
+
+    --_flexoki-green-alpha-50: rgb(233 235 199 / 0.8);
+    --_flexoki-green-alpha-100: rgb(213 220 163 / 0.8);
+    --_flexoki-green-alpha-150: rgb(193 203 129 / 0.8);
+    --_flexoki-green-alpha-200: rgb(174 188 98 / 0.8);
+    --_flexoki-green-alpha-300: rgb(136 156 45 / 0.8);
+    --_flexoki-green-alpha-400: rgb(105 130 11 / 0.8);
+    --_flexoki-green-alpha-500: #768d21;
+    --_flexoki-green-alpha-600: #66800b;
+    --_flexoki-green-alpha-700: #536907;
+    --_flexoki-green-alpha-800: #3d4c07;
+    --_flexoki-green-alpha-850: #313d07;
+    --_flexoki-green-alpha-900: #252d09;
+    --_flexoki-green-alpha-950: #1a1e0c;
+
+    /*
+    --_flexoki-cyan-alpha-50:         rgb(213 238 225 / 0.8);
+    --_flexoki-cyan-alpha-100:        rgb(175 227 211 / 0.8);
+    --_flexoki-cyan-alpha-150:        rgb(139 215 198 / 0.8);
+    --_flexoki-cyan-alpha-200:        rgb(105 201 184 / 0.8);
+    --_flexoki-cyan-alpha-300:        rgb(49 173 155 / 0.8);
+    --_flexoki-cyan-alpha-400:        rgb(9 148 139 / 0.8);
+    --_flexoki-cyan-alpha-500:        #2F968D;
+    --_flexoki-cyan-alpha-600:        #24837B;
+    --_flexoki-cyan-alpha-700:        #1C6C66;
+    --_flexoki-cyan-alpha-800:        #164F4A;
+    --_flexoki-cyan-alpha-850:        #143F3C;
+    --_flexoki-cyan-alpha-900:        #122F2C;
+    --_flexoki-cyan-alpha-950:        #101F1D;
+    */
+
+    --_flexoki-blue-alpha-50: rgb(218 232 234 / 0.8);
+    --_flexoki-blue-alpha-100: rgb(184 213 230 / 0.8);
+    --_flexoki-blue-alpha-150: rgb(150 196 223 / 0.8);
+    --_flexoki-blue-alpha-200: rgb(119 176 214 / 0.8);
+    --_flexoki-blue-alpha-300: rgb(64 137 190 / 0.8);
+    --_flexoki-blue-alpha-400: rgb(20 103 178 / 0.8);
+    --_flexoki-blue-alpha-500: #3171b2;
+    --_flexoki-blue-alpha-600: #205ea6;
+    --_flexoki-blue-alpha-700: #1a4f8c;
+    --_flexoki-blue-alpha-800: #163b66;
+    --_flexoki-blue-alpha-850: #133051;
+    --_flexoki-blue-alpha-900: #12253b;
+    --_flexoki-blue-alpha-950: #101a24;
+
+    --_flexoki-purple-alpha-50: rgb(236 230 235 / 0.8);
+    --_flexoki-purple-alpha-100: rgb(219 208 231 / 0.8);
+    --_flexoki-purple-alpha-150: rgb(200 190 228 / 0.8);
+    --_flexoki-purple-alpha-200: rgb(181 168 220 / 0.8);
+    --_flexoki-purple-alpha-300: rgb(144 128 200 / 0.8);
+    --_flexoki-purple-alpha-400: rgb(110 95 190 / 0.8);
+    --_flexoki-purple-alpha-500: rgb(80 55 166 / 0.8);
+    --_flexoki-purple-alpha-600: rgb(54 17 136 / 0.8);
+    --_flexoki-purple-alpha-700: rgb(35 5 106 / 0.8);
+    --_flexoki-purple-alpha-800: #3c2a62;
+    --_flexoki-purple-alpha-850: #31234e;
+    --_flexoki-purple-alpha-900: #261c39;
+    --_flexoki-purple-alpha-950: #1a1623;
+
+    --_flexoki-magenta-alpha-50: rgb(254 222 226 / 0.8);
+    --_flexoki-magenta-alpha-100: rgb(251 196 213 / 0.8);
+    --_flexoki-magenta-alpha-150: rgb(248 168 199 / 0.8);
+    --_flexoki-magenta-alpha-200: rgb(241 142 183 / 0.8);
+    --_flexoki-magenta-alpha-300: rgb(221 93 150 / 0.8);
+    --_flexoki-magenta-alpha-400: rgb(194 53 129 / 0.8);
+    --_flexoki-magenta-alpha-500: rgb(165 23 104 / 0.8);
+    --_flexoki-magenta-alpha-600: #a02f6f;
+    --_flexoki-magenta-alpha-700: #87285e;
+    --_flexoki-magenta-alpha-800: #641f46;
+    --_flexoki-magenta-alpha-850: #4f1b39;
+    --_flexoki-magenta-alpha-900: #39172b;
+    --_flexoki-magenta-alpha-950: #24131d;
+  }
+}

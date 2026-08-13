@@ -120,6 +120,45 @@ describe("build-css", () => {
     expect(lightCss).not.toContain("--sui-theme: dark");
   });
 
+  test("アルファ版ソースをモード別のファイルに含める", async () => {
+    // 準備
+    await runBuild(tmp);
+
+    // 実行
+    const darkCss = await readDist(tmp, "suru-dark.css");
+    const lightCss = await readDist(tmp, "suru-light.css");
+    const css = await readDist(tmp, "suru.css");
+
+    // 検証: 単一モードのファイルは対応するモードのアルファ版ソースのみを含む
+    expect(darkCss).toContain("@layer sui.source {\n  :root {");
+    expect(darkCss).toContain("--_flexoki-base-alpha-50: #f2f0e5");
+    expect(darkCss).not.toContain("--_flexoki-base-50: rgb(239 237 226 / 0.8)");
+
+    expect(lightCss).toContain("@layer sui.source {\n  :root {");
+    expect(lightCss).toContain("--_flexoki-base-50: rgb(239 237 226 / 0.8)");
+    expect(lightCss).not.toContain("--_flexoki-base-alpha-50: #f2f0e5");
+
+    // 検証: 結合ファイルはメディアクエリーと属性セレクターでモード分岐する
+    const darkMediaBlock = css.slice(
+      css.indexOf("@media (prefers-color-scheme: dark)"),
+      css.indexOf("@media (prefers-color-scheme: light)"),
+    );
+    const lightMediaBlock = css.slice(
+      css.indexOf("@media (prefers-color-scheme: light)"),
+      css.indexOf('[data-theme="dark"]'),
+    );
+    const darkAttrBlock = css.slice(
+      css.indexOf('[data-theme="dark"]'),
+      css.indexOf('[data-theme="light"]'),
+    );
+    const lightAttrBlock = css.slice(css.indexOf('[data-theme="light"]'));
+
+    expect(darkMediaBlock).toContain("--_flexoki-base-alpha-50: #f2f0e5");
+    expect(darkAttrBlock).toContain("--_flexoki-base-alpha-50: #f2f0e5");
+    expect(lightMediaBlock).toContain("--_flexoki-base-50: rgb(239 237 226 / 0.8)");
+    expect(lightAttrBlock).toContain("--_flexoki-base-50: rgb(239 237 226 / 0.8)");
+  });
+
   test("トークンファイルが壊れているとエラーになる", async () => {
     // 準備
     await writeFile(join(tmp, "src", "tokens.broken.unknown.css"), ".broken { color: red; }\n");

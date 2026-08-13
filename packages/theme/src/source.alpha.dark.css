@@ -1,0 +1,138 @@
+@layer sui.source {
+  /*
+    https://tai-kun.github.io/alpha-color-lab/
+    Alpha: 0.8
+  */
+  :root {
+    --_flexoki-black-alpha: rgb(16 15 15 / 0.8);
+    --_flexoki-paper-alpha: #fffcf0;
+
+    --_flexoki-base-alpha-50: #f2f0e5;
+    --_flexoki-base-alpha-100: #e6e4d9;
+    --_flexoki-base-alpha-150: #dad8ce;
+    --_flexoki-base-alpha-200: rgb(254 253 240 / 0.8);
+    --_flexoki-base-alpha-300: rgb(225 223 211 / 0.8);
+    --_flexoki-base-alpha-400: rgb(195 193 184 / 0.8);
+    --_flexoki-base-alpha-500: rgb(165 163 156 / 0.8);
+    --_flexoki-base-alpha-600: rgb(135 134 128 / 0.8);
+    --_flexoki-base-alpha-700: rgb(105 104 100 / 0.8);
+    --_flexoki-base-alpha-800: rgb(76 74 71 / 0.8);
+    --_flexoki-base-alpha-850: rgb(61 60 58 / 0.8);
+    --_flexoki-base-alpha-900: rgb(46 45 44 / 0.8);
+    --_flexoki-base-alpha-950: rgb(31 30 29 / 0.8);
+
+    --_flexoki-red-alpha-50: #ffe1d5;
+    --_flexoki-red-alpha-100: #ffcabb;
+    --_flexoki-red-alpha-150: #fdb2a2;
+    --_flexoki-red-alpha-200: #f89a8a;
+    --_flexoki-red-alpha-300: #e8705f;
+    --_flexoki-red-alpha-400: #d14d41;
+    --_flexoki-red-alpha-500: rgb(236 74 63 / 0.8);
+    --_flexoki-red-alpha-600: rgb(215 56 48 / 0.8);
+    --_flexoki-red-alpha-700: rgb(181 46 39 / 0.8);
+    --_flexoki-red-alpha-800: rgb(131 36 31 / 0.8);
+    --_flexoki-red-alpha-850: rgb(102 30 26 / 0.8);
+    --_flexoki-red-alpha-900: rgb(73 25 23 / 0.8);
+    --_flexoki-red-alpha-950: rgb(43 20 19 / 0.8);
+
+    --_flexoki-orange-alpha-50: #ffe7ce;
+    --_flexoki-orange-alpha-100: #fed3af;
+    --_flexoki-orange-alpha-150: #fcc192;
+    --_flexoki-orange-alpha-200: #f9ae77;
+    --_flexoki-orange-alpha-300: #ec8b49;
+    --_flexoki-orange-alpha-400: #da702c;
+    --_flexoki-orange-alpha-500: rgb(250 118 36 / 0.8);
+    --_flexoki-orange-alpha-600: rgb(231 99 23 / 0.8);
+    --_flexoki-orange-alpha-700: rgb(192 80 16 / 0.8);
+    --_flexoki-orange-alpha-800: rgb(137 59 13 / 0.8);
+    --_flexoki-orange-alpha-850: rgb(107 48 13 / 0.8);
+    --_flexoki-orange-alpha-900: rgb(76 36 13 / 0.8);
+    --_flexoki-orange-alpha-950: rgb(45 26 14 / 0.8);
+
+    --_flexoki-yellow-alpha-50: #faeec6;
+    --_flexoki-yellow-alpha-100: #f6e2a0;
+    --_flexoki-yellow-alpha-150: #f1d67e;
+    --_flexoki-yellow-alpha-200: #eccb60;
+    --_flexoki-yellow-alpha-300: #dfb431;
+    --_flexoki-yellow-alpha-400: #d0a215;
+    --_flexoki-yellow-alpha-500: rgb(234 179 5 / 0.8);
+    --_flexoki-yellow-alpha-600: #ad8301;
+    --_flexoki-yellow-alpha-700: #8e6b01;
+    --_flexoki-yellow-alpha-800: #664d01;
+    --_flexoki-yellow-alpha-850: #503d02;
+    --_flexoki-yellow-alpha-900: rgb(68 53 1 / 0.8);
+    --_flexoki-yellow-alpha-950: rgb(41 34 6 / 0.8);
+
+    --_flexoki-green-alpha-50: #edeecf;
+    --_flexoki-green-alpha-100: #dde2b2;
+    --_flexoki-green-alpha-150: #cdd597;
+    --_flexoki-green-alpha-200: rgb(234 248 154 / 0.8);
+    --_flexoki-green-alpha-300: rgb(196 215 101 / 0.8);
+    --_flexoki-green-alpha-400: rgb(165 189 68 / 0.8);
+    --_flexoki-green-alpha-500: rgb(144 173 38 / 0.8);
+    --_flexoki-green-alpha-600: rgb(123 156 10 / 0.8);
+    --_flexoki-green-alpha-700: rgb(100 128 5 / 0.8);
+    --_flexoki-green-alpha-800: rgb(72 91 5 / 0.8);
+    --_flexoki-green-alpha-850: rgb(57 73 5 / 0.8);
+    --_flexoki-green-alpha-900: rgb(42 53 8 / 0.8);
+    --_flexoki-green-alpha-950: rgb(29 34 11 / 0.8);
+
+    /*
+    --_flexoki-cyan-alpha-50:         #DDF1E4;
+    --_flexoki-cyan-alpha-100:        #BFE8D9;
+    --_flexoki-cyan-alpha-150:        #A2DECE;
+    --_flexoki-cyan-alpha-200:        #87D3C3;
+    --_flexoki-cyan-alpha-300:        rgb(108 233 211 / 0.8);
+    --_flexoki-cyan-alpha-400:        rgb(68 208 195 / 0.8);
+    --_flexoki-cyan-alpha-500:        rgb(55 184 173 / 0.8);
+    --_flexoki-cyan-alpha-600:        rgb(41 160 150 / 0.8);
+    --_flexoki-cyan-alpha-700:        rgb(31 131 124 / 0.8);
+    --_flexoki-cyan-alpha-800:        rgb(24 95 89 / 0.8);
+    --_flexoki-cyan-alpha-850:        rgb(21 75 71 / 0.8);
+    --_flexoki-cyan-alpha-900:        rgb(19 55 51 / 0.8);
+    --_flexoki-cyan-alpha-950:        rgb(16 35 33 / 0.8);
+    */
+
+    --_flexoki-blue-alpha-50: #e1eceb;
+    --_flexoki-blue-alpha-100: #c6dde8;
+    --_flexoki-blue-alpha-150: #abcfe2;
+    --_flexoki-blue-alpha-200: #92bfdb;
+    --_flexoki-blue-alpha-300: rgb(123 196 246 / 0.8);
+    --_flexoki-blue-alpha-400: rgb(80 163 234 / 0.8);
+    --_flexoki-blue-alpha-500: rgb(57 138 219 / 0.8);
+    --_flexoki-blue-alpha-600: rgb(36 114 204 / 0.8);
+    --_flexoki-blue-alpha-700: rgb(29 95 171 / 0.8);
+    --_flexoki-blue-alpha-800: rgb(24 70 124 / 0.8);
+    --_flexoki-blue-alpha-850: rgb(20 56 98 / 0.8);
+    --_flexoki-blue-alpha-900: rgb(19 43 70 / 0.8);
+    --_flexoki-blue-alpha-950: rgb(16 29 41 / 0.8);
+
+    --_flexoki-purple-alpha-50: #f0eaec;
+    --_flexoki-purple-alpha-100: #e2d9e9;
+    --_flexoki-purple-alpha-150: #d3cae6;
+    --_flexoki-purple-alpha-200: #c4b9e0;
+    --_flexoki-purple-alpha-300: #a699d0;
+    --_flexoki-purple-alpha-400: rgb(170 154 246 / 0.8);
+    --_flexoki-purple-alpha-500: rgb(140 114 223 / 0.8);
+    --_flexoki-purple-alpha-600: rgb(113 76 193 / 0.8);
+    --_flexoki-purple-alpha-700: rgb(95 64 163 / 0.8);
+    --_flexoki-purple-alpha-800: rgb(71 49 119 / 0.8);
+    --_flexoki-purple-alpha-850: rgb(57 40 94 / 0.8);
+    --_flexoki-purple-alpha-900: rgb(43 31 68 / 0.8);
+    --_flexoki-purple-alpha-950: rgb(29 24 40 / 0.8);
+
+    --_flexoki-magenta-alpha-50: #fee4e5;
+    --_flexoki-magenta-alpha-100: #fccfda;
+    --_flexoki-magenta-alpha-150: #f9b9cf;
+    --_flexoki-magenta-alpha-200: #f4a4c2;
+    --_flexoki-magenta-alpha-300: #e47da8;
+    --_flexoki-magenta-alpha-400: rgb(254 113 185 / 0.8);
+    --_flexoki-magenta-alpha-500: rgb(225 83 160 / 0.8);
+    --_flexoki-magenta-alpha-600: rgb(196 55 135 / 0.8);
+    --_flexoki-magenta-alpha-700: rgb(165 46 114 / 0.8);
+    --_flexoki-magenta-alpha-800: rgb(121 35 84 / 0.8);
+    --_flexoki-magenta-alpha-850: rgb(95 30 68 / 0.8);
+    --_flexoki-magenta-alpha-900: rgb(67 25 50 / 0.8);
+    --_flexoki-magenta-alpha-950: rgb(41 20 33 / 0.8);
+  }
+}
