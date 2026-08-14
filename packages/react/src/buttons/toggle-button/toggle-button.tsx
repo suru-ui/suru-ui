@@ -42,32 +42,15 @@ export type ToggleButtonSlotProps = {
 /**
  * {@link ToggleButton} コンポーネントのプロパティーです。
  */
-export type ToggleButtonProps = ToggleButtonParts.Root.Props &
-  Pick<ToggleButtonParts.Content.Props, "children"> & {
+export type ToggleButtonProps = Omit<ToggleButtonParts.Root.Props, "children"> &
+  Pick<ToggleButtonParts.Content.Props, "children"> &
+  Pick<ToggleButtonParts.CircularProgress.Props, "percentage" | "indeterminate"> & {
     /**
      * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
      *
      * 各パーツのプロパティーが優先されます。
      */
     slotProps?: ToggleButtonSlotProps | undefined;
-
-    /**
-     * 進行状況をパーセンテージで指定します。
-     *
-     * 指定された場合、`pending` が `true` のときに円形プログレスバーが進捗を表示します。
-     * {@link slotProps.circularProgress} にも指定した場合は、そちらの値が優先されます。
-     */
-    percentage?: number | undefined;
-
-    /**
-     * プログレスバーを不定モード（回転するアニメーション）にするかどうかを指定します。
-     *
-     * {@link slotProps.circularProgress} にも指定した場合は、そちらの値が優先されます。
-     * 値は再レンダー時に円形プログレスバーへ反映されます。
-     *
-     * @default false
-     */
-    indeterminate?: boolean | undefined;
   };
 
 /**

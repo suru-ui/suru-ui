@@ -7,18 +7,19 @@
     /* 空白 */
     --sui_button-padding_inline: ;
     /* 書体 */
+    --sui_button-font_family: ;
     --sui_button-font_size: ;
     --sui_button-font_weight: ;
     --sui_button-line_height: ;
     --sui_button-letter_spacing: ;
     /* 背景 */
     --sui_button-background_color-normal: ;
-    --sui_button-background_color-subtle: ;
-    --sui_button-background_color-action: ;
+    --sui_button-background_color-hover: ;
+    --sui_button-background_color-active: ;
     /* 枠線 */
     --sui_button-border_color-normal: ;
-    --sui_button-border_color-subtle: ;
-    --sui_button-border_color-action: ;
+    --sui_button-border_color-hover: ;
+    --sui_button-border_color-active: ;
     --sui_button-border_width: ;
     --sui_button-border_radius: ;
     --sui_button-outline_color: ;
@@ -58,6 +59,7 @@
     padding-inline: var(--_sui_button-padding_inline,
                       calc(var(--sui_button-padding_inline) - var(--_sui_button-border_width, 0px))
                     );
+    font-family: var(--sui_button-font_family);
     font-size: var(--sui_button-font_size);
     font-weight: var(--sui_button-font_weight);
     line-height: var(--sui_button-line_height);
@@ -91,6 +93,7 @@
                                   )
                                 );
     /* 書体 */
+    --sui_button-font_family: var(--sui-font-sans);
     --sui_button-text_height: calc(var(--sui_button-font_size) * var(--sui_button-line_height));
     /* 枠線 */
     --sui_button-outline_color: var(--sui-focusring_color);
@@ -168,34 +171,34 @@
     &.sui_button-variant_solid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-grey-solid-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-grey-solid-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-grey-solid-canvas-action);
+      --sui_button-background_color-hover: var(--sui-grey-solid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-grey-solid-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-grey-solid-border-normal);
-      --sui_button-border_color-subtle: var(--sui-grey-solid-border-subtle);
-      --sui_button-border_color-action: var(--sui-grey-solid-border-action);
+      --sui_button-border_color-hover: var(--sui-grey-solid-border-subtle);
+      --sui_button-border_color-active: var(--sui-grey-solid-border-strong);
     }
 
     &.sui_button-variant_naked {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-grey-naked-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-grey-naked-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-grey-naked-canvas-action);
+      --sui_button-background_color-hover: var(--sui-grey-naked-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-grey-naked-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-grey-naked-border-normal);
-      --sui_button-border_color-subtle: var(--sui-grey-naked-border-subtle);
-      --sui_button-border_color-action: var(--sui-grey-naked-border-action);
+      --sui_button-border_color-hover: var(--sui-grey-naked-border-subtle);
+      --sui_button-border_color-active: var(--sui-grey-naked-border-strong);
     }
 
     &.sui_button-variant_liquid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-grey-liquid-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-grey-liquid-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-grey-liquid-canvas-action);
+      --sui_button-background_color-hover: var(--sui-grey-liquid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-grey-liquid-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-grey-liquid-border-normal);
-      --sui_button-border_color-subtle: var(--sui-grey-liquid-border-subtle);
-      --sui_button-border_color-action: var(--sui-grey-liquid-border-action);
+      --sui_button-border_color-hover: var(--sui-grey-liquid-border-subtle);
+      --sui_button-border_color-active: var(--sui-grey-liquid-border-strong);
     }
   }
 
@@ -203,34 +206,34 @@
     &.sui_button-variant_solid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-blue-solid-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-blue-solid-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-blue-solid-canvas-action);
+      --sui_button-background_color-hover: var(--sui-blue-solid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-blue-solid-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-blue-solid-border-normal);
-      --sui_button-border_color-subtle: var(--sui-blue-solid-border-subtle);
-      --sui_button-border_color-action: var(--sui-blue-solid-border-action);
+      --sui_button-border_color-hover: var(--sui-blue-solid-border-subtle);
+      --sui_button-border_color-active: var(--sui-blue-solid-border-strong);
     }
 
     &.sui_button-variant_naked {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-blue-naked-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-blue-naked-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-blue-naked-canvas-action);
+      --sui_button-background_color-hover: var(--sui-blue-naked-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-blue-naked-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-blue-naked-border-normal);
-      --sui_button-border_color-subtle: var(--sui-blue-naked-border-subtle);
-      --sui_button-border_color-action: var(--sui-blue-naked-border-action);
+      --sui_button-border_color-hover: var(--sui-blue-naked-border-subtle);
+      --sui_button-border_color-active: var(--sui-blue-naked-border-strong);
     }
 
     &.sui_button-variant_liquid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-blue-liquid-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-blue-liquid-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-blue-liquid-canvas-action);
+      --sui_button-background_color-hover: var(--sui-blue-liquid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-blue-liquid-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-blue-liquid-border-normal);
-      --sui_button-border_color-subtle: var(--sui-blue-liquid-border-subtle);
-      --sui_button-border_color-action: var(--sui-blue-liquid-border-action);
+      --sui_button-border_color-hover: var(--sui-blue-liquid-border-subtle);
+      --sui_button-border_color-active: var(--sui-blue-liquid-border-strong);
     }
   }
 
@@ -238,34 +241,34 @@
     &.sui_button-variant_solid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-purple-solid-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-purple-solid-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-purple-solid-canvas-action);
+      --sui_button-background_color-hover: var(--sui-purple-solid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-purple-solid-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-purple-solid-border-normal);
-      --sui_button-border_color-subtle: var(--sui-purple-solid-border-subtle);
-      --sui_button-border_color-action: var(--sui-purple-solid-border-action);
+      --sui_button-border_color-hover: var(--sui-purple-solid-border-subtle);
+      --sui_button-border_color-active: var(--sui-purple-solid-border-strong);
     }
 
     &.sui_button-variant_naked {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-purple-naked-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-purple-naked-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-purple-naked-canvas-action);
+      --sui_button-background_color-hover: var(--sui-purple-naked-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-purple-naked-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-purple-naked-border-normal);
-      --sui_button-border_color-subtle: var(--sui-purple-naked-border-subtle);
-      --sui_button-border_color-action: var(--sui-purple-naked-border-action);
+      --sui_button-border_color-hover: var(--sui-purple-naked-border-subtle);
+      --sui_button-border_color-active: var(--sui-purple-naked-border-strong);
     }
 
     &.sui_button-variant_liquid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-purple-liquid-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-purple-liquid-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-purple-liquid-canvas-action);
+      --sui_button-background_color-hover: var(--sui-purple-liquid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-purple-liquid-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-purple-liquid-border-normal);
-      --sui_button-border_color-subtle: var(--sui-purple-liquid-border-subtle);
-      --sui_button-border_color-action: var(--sui-purple-liquid-border-action);
+      --sui_button-border_color-hover: var(--sui-purple-liquid-border-subtle);
+      --sui_button-border_color-active: var(--sui-purple-liquid-border-strong);
     }
   }
 
@@ -273,34 +276,34 @@
     &.sui_button-variant_solid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-magenta-solid-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-magenta-solid-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-magenta-solid-canvas-action);
+      --sui_button-background_color-hover: var(--sui-magenta-solid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-magenta-solid-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-magenta-solid-border-normal);
-      --sui_button-border_color-subtle: var(--sui-magenta-solid-border-subtle);
-      --sui_button-border_color-action: var(--sui-magenta-solid-border-action);
+      --sui_button-border_color-hover: var(--sui-magenta-solid-border-subtle);
+      --sui_button-border_color-active: var(--sui-magenta-solid-border-strong);
     }
 
     &.sui_button-variant_naked {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-magenta-naked-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-magenta-naked-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-magenta-naked-canvas-action);
+      --sui_button-background_color-hover: var(--sui-magenta-naked-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-magenta-naked-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-magenta-naked-border-normal);
-      --sui_button-border_color-subtle: var(--sui-magenta-naked-border-subtle);
-      --sui_button-border_color-action: var(--sui-magenta-naked-border-action);
+      --sui_button-border_color-hover: var(--sui-magenta-naked-border-subtle);
+      --sui_button-border_color-active: var(--sui-magenta-naked-border-strong);
     }
 
     &.sui_button-variant_liquid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-magenta-liquid-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-magenta-liquid-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-magenta-liquid-canvas-action);
+      --sui_button-background_color-hover: var(--sui-magenta-liquid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-magenta-liquid-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-magenta-liquid-border-normal);
-      --sui_button-border_color-subtle: var(--sui-magenta-liquid-border-subtle);
-      --sui_button-border_color-action: var(--sui-magenta-liquid-border-action);
+      --sui_button-border_color-hover: var(--sui-magenta-liquid-border-subtle);
+      --sui_button-border_color-active: var(--sui-magenta-liquid-border-strong);
     }
   }
 
@@ -308,34 +311,34 @@
     &.sui_button-variant_solid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-red-solid-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-red-solid-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-red-solid-canvas-action);
+      --sui_button-background_color-hover: var(--sui-red-solid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-red-solid-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-red-solid-border-normal);
-      --sui_button-border_color-subtle: var(--sui-red-solid-border-subtle);
-      --sui_button-border_color-action: var(--sui-red-solid-border-action);
+      --sui_button-border_color-hover: var(--sui-red-solid-border-subtle);
+      --sui_button-border_color-active: var(--sui-red-solid-border-strong);
     }
 
     &.sui_button-variant_naked {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-red-naked-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-red-naked-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-red-naked-canvas-action);
+      --sui_button-background_color-hover: var(--sui-red-naked-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-red-naked-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-red-naked-border-normal);
-      --sui_button-border_color-subtle: var(--sui-red-naked-border-subtle);
-      --sui_button-border_color-action: var(--sui-red-naked-border-action);
+      --sui_button-border_color-hover: var(--sui-red-naked-border-subtle);
+      --sui_button-border_color-active: var(--sui-red-naked-border-strong);
     }
 
     &.sui_button-variant_liquid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-red-liquid-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-red-liquid-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-red-liquid-canvas-action);
+      --sui_button-background_color-hover: var(--sui-red-liquid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-red-liquid-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-red-liquid-border-normal);
-      --sui_button-border_color-subtle: var(--sui-red-liquid-border-subtle);
-      --sui_button-border_color-action: var(--sui-red-liquid-border-action);
+      --sui_button-border_color-hover: var(--sui-red-liquid-border-subtle);
+      --sui_button-border_color-active: var(--sui-red-liquid-border-strong);
     }
   }
 
@@ -343,34 +346,34 @@
     &.sui_button-variant_solid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-orange-solid-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-orange-solid-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-orange-solid-canvas-action);
+      --sui_button-background_color-hover: var(--sui-orange-solid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-orange-solid-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-orange-solid-border-normal);
-      --sui_button-border_color-subtle: var(--sui-orange-solid-border-subtle);
-      --sui_button-border_color-action: var(--sui-orange-solid-border-action);
+      --sui_button-border_color-hover: var(--sui-orange-solid-border-subtle);
+      --sui_button-border_color-active: var(--sui-orange-solid-border-strong);
     }
 
     &.sui_button-variant_naked {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-orange-naked-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-orange-naked-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-orange-naked-canvas-action);
+      --sui_button-background_color-hover: var(--sui-orange-naked-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-orange-naked-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-orange-naked-border-normal);
-      --sui_button-border_color-subtle: var(--sui-orange-naked-border-subtle);
-      --sui_button-border_color-action: var(--sui-orange-naked-border-action);
+      --sui_button-border_color-hover: var(--sui-orange-naked-border-subtle);
+      --sui_button-border_color-active: var(--sui-orange-naked-border-strong);
     }
 
     &.sui_button-variant_liquid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-orange-liquid-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-orange-liquid-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-orange-liquid-canvas-action);
+      --sui_button-background_color-hover: var(--sui-orange-liquid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-orange-liquid-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-orange-liquid-border-normal);
-      --sui_button-border_color-subtle: var(--sui-orange-liquid-border-subtle);
-      --sui_button-border_color-action: var(--sui-orange-liquid-border-action);
+      --sui_button-border_color-hover: var(--sui-orange-liquid-border-subtle);
+      --sui_button-border_color-active: var(--sui-orange-liquid-border-strong);
     }
   }
 
@@ -378,34 +381,34 @@
     &.sui_button-variant_solid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-yellow-solid-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-yellow-solid-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-yellow-solid-canvas-action);
+      --sui_button-background_color-hover: var(--sui-yellow-solid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-yellow-solid-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-yellow-solid-border-normal);
-      --sui_button-border_color-subtle: var(--sui-yellow-solid-border-subtle);
-      --sui_button-border_color-action: var(--sui-yellow-solid-border-action);
+      --sui_button-border_color-hover: var(--sui-yellow-solid-border-subtle);
+      --sui_button-border_color-active: var(--sui-yellow-solid-border-strong);
     }
 
     &.sui_button-variant_naked {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-yellow-naked-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-yellow-naked-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-yellow-naked-canvas-action);
+      --sui_button-background_color-hover: var(--sui-yellow-naked-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-yellow-naked-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-yellow-naked-border-normal);
-      --sui_button-border_color-subtle: var(--sui-yellow-naked-border-subtle);
-      --sui_button-border_color-action: var(--sui-yellow-naked-border-action);
+      --sui_button-border_color-hover: var(--sui-yellow-naked-border-subtle);
+      --sui_button-border_color-active: var(--sui-yellow-naked-border-strong);
     }
 
     &.sui_button-variant_liquid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-yellow-liquid-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-yellow-liquid-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-yellow-liquid-canvas-action);
+      --sui_button-background_color-hover: var(--sui-yellow-liquid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-yellow-liquid-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-yellow-liquid-border-normal);
-      --sui_button-border_color-subtle: var(--sui-yellow-liquid-border-subtle);
-      --sui_button-border_color-action: var(--sui-yellow-liquid-border-action);
+      --sui_button-border_color-hover: var(--sui-yellow-liquid-border-subtle);
+      --sui_button-border_color-active: var(--sui-yellow-liquid-border-strong);
     }
   }
 
@@ -413,34 +416,34 @@
     &.sui_button-variant_solid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-green-solid-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-green-solid-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-green-solid-canvas-action);
+      --sui_button-background_color-hover: var(--sui-green-solid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-green-solid-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-green-solid-border-normal);
-      --sui_button-border_color-subtle: var(--sui-green-solid-border-subtle);
-      --sui_button-border_color-action: var(--sui-green-solid-border-action);
+      --sui_button-border_color-hover: var(--sui-green-solid-border-subtle);
+      --sui_button-border_color-active: var(--sui-green-solid-border-strong);
     }
 
     &.sui_button-variant_naked {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-green-naked-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-green-naked-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-green-naked-canvas-action);
+      --sui_button-background_color-hover: var(--sui-green-naked-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-green-naked-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-green-naked-border-normal);
-      --sui_button-border_color-subtle: var(--sui-green-naked-border-subtle);
-      --sui_button-border_color-action: var(--sui-green-naked-border-action);
+      --sui_button-border_color-hover: var(--sui-green-naked-border-subtle);
+      --sui_button-border_color-active: var(--sui-green-naked-border-strong);
     }
 
     &.sui_button-variant_liquid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-green-liquid-canvas-normal);
-      --sui_button-background_color-subtle: var(--sui-green-liquid-canvas-subtle);
-      --sui_button-background_color-action: var(--sui-green-liquid-canvas-action);
+      --sui_button-background_color-hover: var(--sui-green-liquid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-green-liquid-canvas-strong);
       /* 枠線 */
       --sui_button-border_color-normal: var(--sui-green-liquid-border-normal);
-      --sui_button-border_color-subtle: var(--sui-green-liquid-border-subtle);
-      --sui_button-border_color-action: var(--sui-green-liquid-border-action);
+      --sui_button-border_color-hover: var(--sui-green-liquid-border-subtle);
+      --sui_button-border_color-active: var(--sui-green-liquid-border-strong);
     }
   }
 
@@ -452,13 +455,13 @@
     @media (any-hover: hover) {
       &:hover {
         /* 背景 */
-        --_sui_button-background_color: var(--sui_button-background_color-subtle);
+        --_sui_button-background_color: var(--sui_button-background_color-hover);
       }
     }
 
     &:active {
       /* 背景 */
-      --_sui_button-background_color: var(--sui_button-background_color-action);
+      --_sui_button-background_color: var(--sui_button-background_color-active);
     }
 
     &:focus-visible {
@@ -478,19 +481,19 @@
 
   .sui_button-outlined {
     /* 枠線 */
-    --_sui_button-border_width: var(--sui_button-border_width);
     --_sui_button-border_color: var(--sui_button-border_color-normal);
+    --_sui_button-border_width: var(--sui_button-border_width);
 
     @media (any-hover: hover) {
       &:hover {
         /* 枠線 */
-        --_sui_button-border_color: var(--sui_button-border_color-subtle);
+        --_sui_button-border_color: var(--sui_button-border_color-hover);
       }
     }
 
     &:active {
       /* 枠線 */
-      --_sui_button-border_color: var(--sui_button-border_color-action);
+      --_sui_button-border_color: var(--sui_button-border_color-active);
     }
   }
 
@@ -502,14 +505,14 @@
   /* 変数 */
   .sui_button {
     /* 形状 */
-    --sui_button_content-action-scale: 0.98;
+    --sui_button_content-strong-scale: 0.98;
     --sui_button_content_svg-size: ;
     /* 空白 */
     --sui_button_content-gap: ;
     /* 前景 */
     --sui_button_content-color-normal: ;
-    --sui_button_content-color-subtle: ;
-    --sui_button_content-color-action: ;
+    --sui_button_content-color-hover: ;
+    --sui_button_content-color-active: ;
   }
 
   /* 静的 */
@@ -526,17 +529,11 @@
 
   /* 動的 */
   .sui_button_content {
-    /* 空白 */
     gap: var(--sui_button_content-gap);
-    /* 書体 */
-    font-family: var(--sui-font-sans);
-    /* 前景 */
     color: var(--_sui_button_content-color, var(--sui_button_content-color-normal));
-    /* 変形 */
     scale: var(--_sui_button_content-scale, 1);
 
     svg:not(.sui-ignore) {
-      /* 形状 */
       width: var(--sui_button_content_svg-size);
       height: var(--sui_button_content_svg-size);
     }
@@ -568,22 +565,22 @@
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-grey-solid-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-grey-solid-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-grey-solid-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-grey-solid-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-grey-solid-canvas_text-strong);
     }
 
     &.sui_button-variant_naked {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-grey-naked-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-grey-naked-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-grey-naked-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-grey-naked-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-grey-naked-canvas_text-strong);
     }
 
     &.sui_button-variant_liquid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-grey-liquid-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-grey-liquid-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-grey-liquid-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-grey-liquid-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-grey-liquid-canvas_text-strong);
     }
   }
 
@@ -591,22 +588,22 @@
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-blue-solid-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-blue-solid-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-blue-solid-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-blue-solid-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-blue-solid-canvas_text-strong);
     }
 
     &.sui_button-variant_naked {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-blue-naked-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-blue-naked-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-blue-naked-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-blue-naked-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-blue-naked-canvas_text-strong);
     }
 
     &.sui_button-variant_liquid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-blue-liquid-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-blue-liquid-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-blue-liquid-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-blue-liquid-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-blue-liquid-canvas_text-strong);
     }
   }
 
@@ -614,22 +611,22 @@
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-purple-solid-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-purple-solid-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-purple-solid-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-purple-solid-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-purple-solid-canvas_text-strong);
     }
 
     &.sui_button-variant_naked {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-purple-naked-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-purple-naked-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-purple-naked-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-purple-naked-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-purple-naked-canvas_text-strong);
     }
 
     &.sui_button-variant_liquid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-purple-liquid-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-purple-liquid-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-purple-liquid-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-purple-liquid-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-purple-liquid-canvas_text-strong);
     }
   }
 
@@ -637,22 +634,22 @@
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-magenta-solid-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-magenta-solid-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-magenta-solid-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-magenta-solid-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-magenta-solid-canvas_text-strong);
     }
 
     &.sui_button-variant_naked {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-magenta-naked-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-magenta-naked-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-magenta-naked-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-magenta-naked-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-magenta-naked-canvas_text-strong);
     }
 
     &.sui_button-variant_liquid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-magenta-liquid-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-magenta-liquid-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-magenta-liquid-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-magenta-liquid-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-magenta-liquid-canvas_text-strong);
     }
   }
 
@@ -660,22 +657,22 @@
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-red-solid-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-red-solid-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-red-solid-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-red-solid-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-red-solid-canvas_text-strong);
     }
 
     &.sui_button-variant_naked {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-red-naked-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-red-naked-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-red-naked-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-red-naked-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-red-naked-canvas_text-strong);
     }
 
     &.sui_button-variant_liquid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-red-liquid-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-red-liquid-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-red-liquid-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-red-liquid-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-red-liquid-canvas_text-strong);
     }
   }
 
@@ -683,22 +680,22 @@
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-orange-solid-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-orange-solid-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-orange-solid-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-orange-solid-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-orange-solid-canvas_text-strong);
     }
 
     &.sui_button-variant_naked {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-orange-naked-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-orange-naked-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-orange-naked-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-orange-naked-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-orange-naked-canvas_text-strong);
     }
 
     &.sui_button-variant_liquid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-orange-liquid-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-orange-liquid-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-orange-liquid-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-orange-liquid-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-orange-liquid-canvas_text-strong);
     }
   }
 
@@ -706,22 +703,22 @@
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-yellow-solid-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-yellow-solid-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-yellow-solid-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-yellow-solid-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-yellow-solid-canvas_text-strong);
     }
 
     &.sui_button-variant_naked {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-yellow-naked-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-yellow-naked-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-yellow-naked-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-yellow-naked-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-yellow-naked-canvas_text-strong);
     }
 
     &.sui_button-variant_liquid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-yellow-liquid-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-yellow-liquid-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-yellow-liquid-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-yellow-liquid-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-yellow-liquid-canvas_text-strong);
     }
   }
 
@@ -729,22 +726,22 @@
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-green-solid-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-green-solid-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-green-solid-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-green-solid-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-green-solid-canvas_text-strong);
     }
 
     &.sui_button-variant_naked {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-green-naked-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-green-naked-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-green-naked-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-green-naked-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-green-naked-canvas_text-strong);
     }
 
     &.sui_button-variant_liquid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-green-liquid-canvas_text-normal);
-      --sui_button_content-color-subtle: var(--sui-green-liquid-canvas_text-subtle);
-      --sui_button_content-color-action: var(--sui-green-liquid-canvas_text-action);
+      --sui_button_content-color-hover: var(--sui-green-liquid-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-green-liquid-canvas_text-strong);
     }
   }
 
@@ -756,15 +753,15 @@
     @media (any-hover: hover) {
       &:hover {
         /* 前景 */
-        --_sui_button_content-color: var(--sui_button_content-color-subtle);
+        --_sui_button_content-color: var(--sui_button_content-color-hover);
       }
     }
 
     &:active {
       /* 前景 */
-      --_sui_button_content-color: var(--sui_button_content-color-action);
+      --_sui_button_content-color: var(--sui_button_content-color-active);
       /* 変形 */
-      --_sui_button_content-scale: var(--sui_button_content-action-scale);
+      --_sui_button_content-scale: var(--sui_button_content-strong-scale);
     }
   }
 

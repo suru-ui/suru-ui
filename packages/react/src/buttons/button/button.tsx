@@ -6,24 +6,9 @@ import * as ButtonParts from "./button.parts.jsx";
  */
 export type ButtonSlotProps = {
   /**
-   * {@link ButtonParts.Content|Content} に渡すプロパティーです。
-   */
-  readonly content?: ButtonParts.Content.Props | undefined;
-
-  /**
-   * {@link ButtonParts.Pending|Pending} に渡すプロパティーです。
-   */
-  readonly pending?: ButtonParts.Pending.Props | undefined;
-
-  /**
    * {@link ButtonParts.CircularProgress|CircularProgress} に渡すプロパティーです。
    */
   readonly circularProgress?: ButtonParts.CircularProgress.Props | undefined;
-
-  /**
-   * {@link ButtonParts.CircularProgressTrack|CircularProgressTrack} に渡すプロパティーです。
-   */
-  readonly circularProgressTrack?: ButtonParts.CircularProgressTrack.Props | undefined;
 
   /**
    * {@link ButtonParts.CircularProgressFill|CircularProgressFill} に渡すプロパティーです。
@@ -36,34 +21,35 @@ export type ButtonSlotProps = {
   readonly circularProgressFillRotation?:
     | ButtonParts.CircularProgressFillRotation.Props
     | undefined;
+
+  /**
+   * {@link ButtonParts.CircularProgressTrack|CircularProgressTrack} に渡すプロパティーです。
+   */
+  readonly circularProgressTrack?: ButtonParts.CircularProgressTrack.Props | undefined;
+
+  /**
+   * {@link ButtonParts.Content|Content} に渡すプロパティーです。
+   */
+  readonly content?: ButtonParts.Content.Props | undefined;
+
+  /**
+   * {@link ButtonParts.Pending|Pending} に渡すプロパティーです。
+   */
+  readonly pending?: ButtonParts.Pending.Props | undefined;
 };
 
 /**
  * {@link Button} コンポーネントのプロパティーです。
  */
-export type ButtonProps = ButtonParts.Root.Props &
-  Pick<ButtonParts.Content.Props, "children"> & {
+export type ButtonProps = Omit<ButtonParts.Root.Props, "children"> &
+  Pick<ButtonParts.Content.Props, "children"> &
+  Pick<ButtonParts.CircularProgress.Props, "percentage" | "indeterminate"> & {
     /**
      * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+     *
+     * 各パーツのプロパティーが優先されます。
      */
     slotProps?: ButtonSlotProps | undefined;
-
-    /**
-     * 進行状況をパーセンテージで指定します。
-     *
-     * 指定された場合、`pending` が `true` のときに円形プログレスバーが進捗を表示します。
-     * `slotProps.circularProgress.percentage` を指定した場合は、そちらが優先されます。
-     */
-    percentage?: number | undefined;
-
-    /**
-     * プログレスバーを不定モード（回転するアニメーション）にするかどうかを指定します。
-     *
-     * `slotProps.circularProgress.indeterminate` を指定した場合は、そちらが優先されます。
-     *
-     * @default false
-     */
-    indeterminate?: boolean | undefined;
   };
 
 /**

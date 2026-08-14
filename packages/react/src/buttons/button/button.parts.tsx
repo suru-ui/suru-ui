@@ -14,7 +14,7 @@ import "./button.css";
 // -------
 
 /**
- * {@link ButtonRoot} が子パーツへ提供する状態です。
+ * {@link ButtonRoot} が子パーツへ提供するコンテキストです。
  */
 export type ButtonContext = {
   /**
@@ -24,18 +24,16 @@ export type ButtonContext = {
 };
 
 /**
- * {@link ButtonRoot} が提供するボタン状態の Context です。
- *
- * 通常は {@link useButtonContext} または {@link useContext} を使用してください。
+ * {@link ButtonRoot} が子パーツへ提供するコンテキストです。
  */
 export const ButtonContext: React.Context<ButtonContext | null> =
   React.createContext<ButtonContext | null>(null);
 
 /**
- * 直近の {@link ButtonRoot} が提供する状態を取得します。
+ * {@link ButtonContext} を読み取るフックです。
  *
- * `optional` が `true` の場合、Provider の外では `null` を返します。
- * `optional` を指定しない場合、Provider の外で呼び出すとエラーになります。
+ * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
+ * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
  */
 export function useButtonContext(optional?: false): ButtonContext;
 export function useButtonContext(optional?: boolean): ButtonContext | null;
@@ -52,17 +50,20 @@ export function useButtonContext(optional?: boolean): ButtonContext | null {
 }
 
 /**
- * ボタン Context の別名です。
+ * {@link ButtonContext} です。
  */
 export type Context = ButtonContext;
 
 /**
- * {@link ButtonContext} の別名です。
+ * {@link ButtonContext} です。
  */
 export const Context: React.Context<ButtonContext | null> = ButtonContext;
 
 /**
- * {@link useButtonContext} の別名です。
+ * {@link useButtonContext} です。
+ *
+ * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
+ * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
  */
 export function useContext(optional?: false): ButtonContext;
 export function useContext(optional?: boolean): ButtonContext | null;
@@ -97,7 +98,7 @@ export type ButtonRootProps = React.ComponentProps<typeof Button> & {
   outlined?: boolean | undefined;
 
   /**
-   * ボタンを保留状態（ローディング中）にするかどうかを指定します。
+   * ボタンを保留状態にするかどうかを指定します。
    *
    * `true` の場合、ボタンの押下が無効化され、{@link ButtonPending} スロットが表示されます。`disabled` を `true` にしない限り、デフォルトでフォーカスが維持されます。
    *
@@ -145,22 +146,20 @@ export type ButtonRootProps = React.ComponentProps<typeof Button> & {
 };
 
 /**
- * ボタンのルート要素です。
- *
- * Base UI の {@link Button} をラップし、テーマに基づくスタイルクラスを適用します。
+ * ボタンのルートコンポーネントです。
  *
  * @example
  * ```tsx
- * <ButtonParts.Root color="red" pending>
- *   <ButtonParts.Content>削除</ButtonParts.Content>
- *   <ButtonParts.Pending>
- *     <ButtonParts.CircularProgress>...</ButtonParts.CircularProgress>
- *   </ButtonParts.Pending>
- * </ButtonParts.Root>
+ * <ButtonRoot color="red" pending>
+ *   <ButtonContent>削除</ButtonContent>
+ *   <ButtonPending>
+ *     <ButtonCircularProgress>...</ButtonCircularProgress>
+ *   </ButtonPending>
+ * </ButtonRoot>
  * ```
  */
 export const ButtonRoot: Component<ButtonRootProps> = function SuiButtonRoot(props) {
-  const group = useActionGroupContext(true);
+  const actionGroupCtx = useActionGroupContext(true);
   const {
     size: sizeProp = "md",
     type = "button",
@@ -175,11 +174,11 @@ export const ButtonRoot: Component<ButtonRootProps> = function SuiButtonRoot(pro
     focusableWhenDisabled = !disabled && pending,
     ...otherProps
   } = props;
-  const size = group?.size ?? sizeProp;
-  const color = group?.color ?? colorProp;
-  const radius = group?.radius ?? radiusProp ?? size;
-  const variant = group?.variant ?? variantProp;
-  const outlined = group?.outlined ?? outlinedProp;
+  const size = actionGroupCtx?.size ?? sizeProp;
+  const color = actionGroupCtx?.color ?? colorProp;
+  const radius = actionGroupCtx?.radius ?? radiusProp ?? size;
+  const variant = actionGroupCtx?.variant ?? variantProp;
+  const outlined = actionGroupCtx?.outlined ?? outlinedProp;
   const context = React.useMemo(() => ({ pending }), [pending]);
 
   return (
@@ -223,7 +222,7 @@ export namespace Root {
 }
 
 /**
- * {@link ButtonRoot} の別名です。
+ * {@link ButtonRoot} です。
  */
 export const Root: Component<Root.Props> = ButtonRoot;
 
@@ -242,11 +241,11 @@ export type ButtonContentProps = Omit<React.ComponentProps<"span">, keyof Render
   RenderProps<ButtonContentState>;
 
 /**
- * ボタンのコンテンツを表示するラッパー要素です。
+ * ボタンのコンテンツを表示するコンポーネントです。
  *
  * @example
  * ```tsx
- * <ButtonParts.Content>ラベル</ButtonParts.Content>
+ * <ButtonContent>ラベル</ButtonContent>
  * ```
  */
 export const ButtonContent: Component<ButtonContentProps> = function SuiButtonContent(props) {
@@ -277,7 +276,7 @@ export namespace Content {
 }
 
 /**
- * {@link ButtonContent} の別名です。
+ * {@link ButtonContent} です。
  */
 export const Content: Component<Content.Props> = ButtonContent;
 
@@ -297,8 +296,8 @@ export type ButtonPendingProps = Omit<React.ComponentProps<"span">, keyof Render
     /**
      * `pending` が `false` のときの表示モードを指定します。
      *
-     * - `"hidden"`: 非表示にするがレイアウトは維持する（`visibility: hidden`）
-     * - `"none"`: レイアウトから除去する（`display: none`）
+     * - `"hidden"`: 非表示にするがレイアウトは維持します。
+     * - `"none"`: レイアウトから除去します。
      *
      * @default "none"
      */
@@ -313,15 +312,15 @@ export type ButtonPendingProps = Omit<React.ComponentProps<"span">, keyof Render
   };
 
 /**
- * ボタンの保留状態（ローディング中）を表示する要素です。
+ * ボタンの保留状態を表示するコンポーネントです。
  *
- * コンテキストから `pending` の状態を読み取り、有効時のみ表示します。
+ * 保留中のみ有効になります。
  *
  * @example
  * ```tsx
- * <ButtonParts.Pending overlay>
+ * <ButtonPending overlay>
  *   読み込み中…
- * </ButtonParts.Pending>
+ * </ButtonPending>
  * ```
  */
 export const ButtonPending: Component<ButtonPendingProps> = function SuiButtonPending(props) {
@@ -361,7 +360,7 @@ export namespace Pending {
 }
 
 /**
- * {@link ButtonPending} の別名です。
+ * {@link ButtonPending} です。
  */
 export const Pending: Component<Pending.Props> = ButtonPending;
 
@@ -369,7 +368,7 @@ export const Pending: Component<Pending.Props> = ButtonPending;
 // -----------------------
 
 /**
- * {@link ButtonCircularProgress} が子パーツへ提供する進捗状態です。
+ * {@link ButtonCircularProgress} が子パーツへ提供するコンテキストです。
  */
 export type ButtonCircularProgressContext = {
   /**
@@ -384,18 +383,16 @@ export type ButtonCircularProgressContext = {
 };
 
 /**
- * {@link ButtonCircularProgress} が提供する進捗状態の Context です。
- *
- * 通常は {@link useCircularProgressContext} または {@link useContext} を使用してください。
+ * {@link ButtonCircularProgress} が子パーツへ提供するコンテキストです。
  */
 export const ButtonCircularProgressContext: React.Context<ButtonCircularProgressContext | null> =
   React.createContext<ButtonCircularProgressContext | null>(null);
 
 /**
- * 直近の {@link ButtonCircularProgress} が提供する進捗状態を取得します。
+ * {@link ButtonCircularProgressContext} を読み取るフックです。
  *
- * `optional` が `true` の場合、Provider の外では `null` を返します。
- * `optional` を指定しない場合、Provider の外で呼び出すとエラーになります。
+ * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
+ * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
  */
 export function useButtonCircularProgressContext(optional?: false): ButtonCircularProgressContext;
 export function useButtonCircularProgressContext(
@@ -416,18 +413,18 @@ export function useButtonCircularProgressContext(
 }
 
 /**
- * {@link ButtonCircularProgressContext} の別名です。
+ * {@link ButtonCircularProgressContext} です。
  */
 export type CircularProgressContext = ButtonCircularProgressContext;
 
 /**
- * {@link ButtonCircularProgressContext} の別名です。
+ * {@link ButtonCircularProgressContext} です。
  */
 export const CircularProgressContext: React.Context<ButtonCircularProgressContext | null> =
   ButtonCircularProgressContext;
 
 /**
- * {@link useButtonCircularProgressContext} の別名です。
+ * {@link useButtonCircularProgressContext} です。
  */
 export function useCircularProgressContext(optional?: false): ButtonCircularProgressContext;
 export function useCircularProgressContext(
@@ -453,7 +450,7 @@ export type ButtonCircularProgressState = {};
 export type ButtonCircularProgressProps = Omit<React.ComponentProps<"svg">, keyof RenderProps> &
   RenderProps<ButtonCircularProgressState> & {
     /**
-     * プログレスバーを不定モード（回転するアニメーション）にするかどうかを指定します。
+     * プログレスバーを不定モードにするかどうかを指定します。
      *
      * @default false
      */
@@ -468,15 +465,13 @@ export type ButtonCircularProgressProps = Omit<React.ComponentProps<"svg">, keyo
   };
 
 /**
- * 円形プログレスバーの SVG ルート要素です。
- *
- * コンテキストを通じて子パーツに進捗状態を伝播します。
+ * 円形プログレスバーの SVG ルートコンポーネントです。
  *
  * @example 不定モード
  * ```tsx
- * <ButtonParts.CircularProgress indeterminate>
+ * <ButtonCircularProgress indeterminate>
  *   <circle />
- * </ButtonParts.CircularProgress>
+ * </ButtonCircularProgress>
  * ```
  */
 export const ButtonCircularProgress: Component<ButtonCircularProgressProps> =
@@ -529,7 +524,7 @@ export namespace CircularProgress {
 }
 
 /**
- * {@link ButtonCircularProgress} の別名です。
+ * {@link ButtonCircularProgress} です。
  */
 export const CircularProgress: Component<CircularProgress.Props> = ButtonCircularProgress;
 
@@ -551,11 +546,11 @@ export type ButtonCircularProgressTrackProps = Omit<
   RenderProps<ButtonCircularProgressTrackState>;
 
 /**
- * 円形プログレスバーのトラック（背景の円弧）を描画する要素です。
+ * 円形プログレスバーのトラック（背景の円弧）を描画するコンポーネントです。
  *
  * @example
  * ```tsx
- * <ButtonParts.CircularProgressTrack strokeWidth={4} />
+ * <ButtonCircularProgressTrack strokeWidth={4} />
  * ```
  */
 export const ButtonCircularProgressTrack: Component<ButtonCircularProgressTrackProps> =
@@ -602,7 +597,7 @@ export namespace CircularProgressTrack {
 }
 
 /**
- * {@link ButtonCircularProgressTrack} の別名です。
+ * {@link ButtonCircularProgressTrack} です。
  */
 export const CircularProgressTrack: Component<CircularProgressTrack.Props> =
   ButtonCircularProgressTrack;
@@ -625,14 +620,11 @@ export type ButtonCircularProgressFillProps = Omit<
   RenderProps<ButtonCircularProgressFillState>;
 
 /**
- * 円形プログレスバーのフィル（進捗を表す円弧）を描画する要素です。
- *
- * コンテキストから `percentage` と `indeterminate` を読み取り、
- * `strokeDashoffset` を自動計算して進捗を表現します。
+ * 円形プログレスバーのフィル（進捗を表す円弧）を描画するコンポーネントです。
  *
  * @example
  * ```tsx
- * <ButtonParts.CircularProgressFill strokeWidth={4} strokeLinecap="round" />
+ * <ButtonCircularProgressFill strokeWidth={4} strokeLinecap="round" />
  * ```
  */
 export const ButtonCircularProgressFill: Component<ButtonCircularProgressFillProps> =
@@ -688,7 +680,7 @@ export namespace CircularProgressFill {
 }
 
 /**
- * {@link ButtonCircularProgressFill} の別名です。
+ * {@link ButtonCircularProgressFill} です。
  */
 export const CircularProgressFill: Component<CircularProgressFill.Props> =
   ButtonCircularProgressFill;
@@ -711,13 +703,13 @@ export type ButtonCircularProgressFillRotationProps = Omit<
   RenderProps<ButtonCircularProgressFillState>;
 
 /**
- * 不定モード時に円形プログレスバーを回転させるアニメーション要素です。
+ * 不定モード時に円形プログレスバーを回転させるアニメーションコンポーネントです。
  *
- * コンテキストから `indeterminate` を読み取り、不定モードの場合のみ有効になります。
+ * 不定モードの場合のみ有効になります。
  *
  * @example
  * ```tsx
- * <ButtonParts.CircularProgressFillRotation dur="0.75s" />
+ * <ButtonCircularProgressFillRotation dur="0.75s" />
  * ```
  */
 export const ButtonCircularProgressFillRotation: Component<ButtonCircularProgressFillRotationProps> =
@@ -765,7 +757,7 @@ export namespace CircularProgressFillRotation {
 }
 
 /**
- * {@link ButtonCircularProgressFillRotation} の別名です。
+ * {@link ButtonCircularProgressFillRotation} です。
  */
 export const CircularProgressFillRotation: Component<CircularProgressFillRotation.Props> =
   ButtonCircularProgressFillRotation;
