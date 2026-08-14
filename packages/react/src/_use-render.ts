@@ -53,19 +53,28 @@ export default function useRender<
 >(args: UseRenderArgs<TRenderedElementType, TState, TEnabled>): UseRenderReturn<TEnabled> {
   const { ref, props, state, enabled, defaultTagName, stateAttributesMapping } = args;
   const refList = Array.isArray(ref) ? ref.slice() : [ref];
-  let renderProps: Required<RenderProps<TState>>;
+  let renderProps: RenderProps<TState>;
   const elementPropsList = [];
   if (Array.isArray(props)) {
-    const renderPropsList: Required<RenderProps<TState>>[] = [];
-    for (const { ref, style, render, className, ...elementProps } of props) {
+    const propsList = props;
+    const renderPropsList: RenderProps<TState>[] = [];
+    for (const props of propsList) {
+      const { ref, style, render, className, ...elementProps } = props;
+
+      const renderProps: RenderProps<TState> = { style, className };
+      if ("render" in props) {
+        renderProps.render = render;
+      }
+
       refList.push(ref);
-      renderPropsList.push({ style, render, className });
+      renderPropsList.push(renderProps);
       elementPropsList.push(elementProps);
     }
 
-    renderProps = mergePropsN(renderPropsList) as Required<RenderProps<TState>>;
+    renderProps = mergePropsN(renderPropsList);
   } else {
     const { ref, style, render, className, ...elementProps } = props;
+
     refList.push(ref);
     renderProps = { style, render, className };
     elementPropsList.push(elementProps);
