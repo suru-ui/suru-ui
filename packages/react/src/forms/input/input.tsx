@@ -13,14 +13,6 @@ export type InputProps = InputParts.Root.Props;
  * ```tsx
  * <Input placeholder="田中 太郎" />
  * ```
- *
- * @example ラベル付き
- * ```tsx
- * <label>
- *   名前
- *   <Input variant="liquid" placeholder="田中 太郎" />
- * </label>
- * ```
  */
 export const Input: Component<InputProps> = function SuiInput(props) {
   return <InputParts.Root {...props} />;

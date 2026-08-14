@@ -2,9 +2,26 @@ import { COLORS, SIZES } from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
+import { Field } from "../../src/forms/field/index.js";
 import { Input } from "../../src/forms/input/index.js";
 
 const RADII = ["none", ...SIZES, "full"] as const;
+const TYPES = [
+  "date",
+  "datetime-local",
+  "email",
+  "file",
+  "hidden",
+  "month",
+  "number",
+  "password",
+  "search",
+  "tel",
+  "text",
+  "time",
+  "url",
+  "week",
+] as const;
 const VARIANTS = ["naked", "liquid"] as const;
 
 const meta = preview.meta({
@@ -36,6 +53,10 @@ const ctrl = controls(Input, {
     options: SIZES,
     control: "select",
   },
+  type: {
+    options: TYPES,
+    control: "select",
+  },
   variant: {
     options: VARIANTS,
     control: "select",
@@ -52,207 +73,190 @@ export const Usage = meta.story({
     outlined: false,
     disabled: false,
     placeholder: "田中 太郎",
+    type: "text",
   }),
   render(props) {
     return <Input {...props} className="w-64" />;
   },
 });
 
-// export const Variants = meta.story({
-//   name: "バリエーション",
-//   ...ctrl({
-//     accentColor: "grey",
-//     size: "md",
-//     radius: "rounded",
-//     outlined: undefined,
-//     disabled: false,
-//     placeholder: "田中 太郎",
-//   }),
-//   render(props) {
-//     return (
-//       <div className="flex flex-col gap-3">
-//         <Input {...props} variant="naked" className="w-64" />
-//         <Input {...props} variant="liquid" className="w-64" />
-//       </div>
-//     );
-//   },
-// });
+export const Variants = meta.story({
+  name: "バリエーション",
+  ...ctrl({
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+    placeholder: "田中 太郎",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        <Input {...props} variant="naked" className="w-64" />
+        <Input {...props} variant="liquid" className="w-64" />
+      </div>
+    );
+  },
+});
 
-// export const Outlined = meta.story({
-//   name: "枠線",
-//   ...ctrl({
-//     accentColor: "grey",
-//     size: "md",
-//     radius: "rounded",
-//     outlined: true,
-//     disabled: false,
-//     placeholder: "田中 太郎",
-//   }),
-//   render(props) {
-//     return (
-//       <div className="flex flex-col gap-3">
-//         <Input {...props} variant="naked" className="w-64" />
-//         <Input {...props} variant="liquid" className="w-64" />
-//       </div>
-//     );
-//   },
-// });
+export const Colors = meta.story({
+  name: "色",
+  ...ctrl({
+    variant: "liquid",
+    size: "md",
+    radius: undefined,
+    outlined: true,
+    disabled: false,
+    placeholder: "色",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        {COLORS.map((color) => (
+          <Input
+            key={color}
+            {...props}
+            color={color}
+            defaultValue={
+              {
+                grey: "grey グレー",
+                blue: "blue ブルー",
+                purple: "purple パープル",
+                magenta: "magenta マゼンタ",
+                red: "red レッド",
+                orange: "orange オレンジ",
+                yellow: "yellow イエロー",
+                green: "green グリーン",
+              }[color]
+            }
+            className="w-64"
+            // className="w-64 h-[36px]"
+          />
+        ))}
+      </div>
+    );
+  },
+});
 
-// export const AccentColors = meta.story({
-//   name: "アクセントカラー",
-//   ...ctrl({
-//     variant: "naked",
-//     size: "md",
-//     radius: "rounded",
-//     outlined: undefined,
-//     disabled: false,
-//     placeholder: "田中 太郎",
-//   }),
-//   render(props) {
-//     return (
-//       <div className="flex flex-col gap-3">
-//         {COLORS.map((color) => (
-//           <Input key={color} {...props} accentColor={color} className="w-64" />
-//         ))}
-//       </div>
-//     );
-//   },
-// });
+export const Radius = meta.story({
+  name: "角丸",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    outlined: false,
+    disabled: false,
+    placeholder: "田中 太郎",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        {RADII.map((radius) => (
+          <div key={radius} className="flex flex-col gap-2">
+            <span className="text-sm">{radius}</span>
+            <Input {...props} radius={radius} className="w-64" />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
 
-// export const Sizes = meta.story({
-//   name: "大きさ",
-//   ...ctrl({
-//     variant: "naked",
-//     accentColor: "grey",
-//     radius: "rounded",
-//     outlined: undefined,
-//     disabled: false,
-//     placeholder: "田中 太郎",
-//   }),
-//   render(props) {
-//     return (
-//       <div className="flex flex-col gap-3">
-//         {SIZES.map((size) => (
-//           <div key={size}>
-//             <Input {...props} size={size} className="w-64" />
-//             <div>{size}</div>
-//           </div>
-//         ))}
-//       </div>
-//     );
-//   },
-// });
+export const Outlined = meta.story({
+  name: "枠線",
+  ...ctrl({
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    disabled: false,
+    placeholder: "田中 太郎",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col gap-2">
+            <span className="text-sm">{variant}</span>
+            <Input {...props} outlined variant={variant} className="w-64" />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
 
-// export const Radius = meta.story({
-//   name: "角丸",
-//   ...ctrl({
-//     variant: "naked",
-//     accentColor: "grey",
-//     size: "md",
-//     outlined: undefined,
-//     disabled: false,
-//     placeholder: "田中 太郎",
-//   }),
-//   render(props) {
-//     return (
-//       <div className="flex flex-col gap-3">
-//         {(["none", "rounded", "full"] as const).map((radius) => (
-//           <div key={radius}>
-//             <Input {...props} radius={radius} className="w-64" />
-//             <div>{radius}</div>
-//           </div>
-//         ))}
-//       </div>
-//     );
-//   },
-// });
+export const Sizes = meta.story({
+  name: "大きさ",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+    placeholder: "田中 太郎",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        {SIZES.map((size) => (
+          <div key={size} className="flex flex-col gap-2">
+            <span className="text-sm">{size}</span>
+            <Input {...props} size={size} className="w-64" />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
 
-// export const Filled = meta.story({
-//   name: "入力済み",
-//   ...ctrl({
-//     variant: "naked",
-//     accentColor: "grey",
-//     size: "md",
-//     radius: "rounded",
-//     outlined: undefined,
-//     disabled: false,
-//     placeholder: "田中 太郎",
-//   }),
-//   render(props) {
-//     return <Input {...props} defaultValue="田仲 太郎" className="w-64" />;
-//   },
-// });
+export const Invalid = meta.story({
+  name: "エラー",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+    placeholder: "田中 太郎",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        <Field invalid>
+          <Input {...props} defaultValue="不正な値" className="w-64" />
+        </Field>
+      </div>
+    );
+  },
+});
 
-// export const Controlled = meta.story({
-//   name: "制御",
-//   ...ctrl({
-//     variant: "naked",
-//     accentColor: "grey",
-//     size: "md",
-//     radius: "rounded",
-//     outlined: undefined,
-//     disabled: false,
-//     placeholder: "田中 太郎",
-//   }),
-//   render(props) {
-//     const [value, setValue] = React.useState("");
-
-//     return (
-//       <div className="flex w-64 flex-col items-start gap-2">
-//         <Input {...props} value={value} onValueChange={setValue} className="w-64" />
-//         <p className="text-sm opacity-80">入力中: {value}</p>
-//       </div>
-//     );
-//   },
-// });
-
-// export const Invalid = meta.story({
-//   name: "エラー",
-//   ...ctrl({
-//     variant: "naked",
-//     accentColor: "grey",
-//     size: "md",
-//     radius: "rounded",
-//     outlined: undefined,
-//     disabled: false,
-//     placeholder: "田中 太郎",
-//   }),
-//   render(props) {
-//     return (
-//       <div className="flex flex-col gap-3">
-//         <Field.Root invalid>
-//           <Input {...props} defaultValue="不正な値" className="w-64" />
-//         </Field.Root>
-//         <form className="flex w-64 flex-col items-start gap-2">
-//           <Field.Root>
-//             <Input {...props} required className="w-64" />
-//           </Field.Root>
-//           <button type="submit" className="underline">
-//             送信
-//           </button>
-//           <p className="text-sm opacity-80">送信を試みると検証が適用されます</p>
-//         </form>
-//       </div>
-//     );
-//   },
-// });
-
-// export const Disabled = meta.story({
-//   name: "無効",
-//   ...ctrl({
-//     variant: "naked",
-//     accentColor: "grey",
-//     size: "md",
-//     radius: "rounded",
-//     outlined: undefined,
-//     placeholder: "田中 太郎",
-//   }),
-//   render(props) {
-//     return (
-//       <div className="flex flex-col gap-3">
-//         <Input {...props} disabled defaultValue="田仲 太郎" className="w-64" />
-//         <Input {...props} disabled placeholder="田中 太郎" className="w-64" />
-//       </div>
-//     );
-//   },
-// });
+export const Disabled = meta.story({
+  name: "無効",
+  ...ctrl({
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col gap-2">
+            <span className="text-sm">{variant}</span>
+            <Input {...props} disabled variant={variant} defaultValue="入力値" className="w-64" />
+            <Input
+              {...props}
+              disabled
+              variant={variant}
+              placeholder="プレースホルダー"
+              className="w-64"
+            />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});

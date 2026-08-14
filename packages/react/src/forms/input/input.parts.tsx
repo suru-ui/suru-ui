@@ -50,11 +50,21 @@ export type InputRootProps = Omit<React.ComponentProps<typeof Input>, "size"> & 
   /**
    * テキスト入力欄のサイズを指定します。
    *
-   * 指定可能な値はテーマの {@link Size} です。
-   *
    * @default "md"
    */
   size?: Size | undefined;
+
+  /**
+   * 入力項目です。
+   *
+   * @default "text"
+   */
+  type?:
+    | Exclude<
+        React.HTMLInputTypeAttribute,
+        "button" | "checkbox" | "color" | "image" | "radio" | "range" | "reset" | "submit"
+      >
+    | undefined;
 
   /**
    * テキスト入力欄のスタイルバリエーションを指定します。
@@ -62,15 +72,13 @@ export type InputRootProps = Omit<React.ComponentProps<typeof Input>, "size"> & 
    * - `"naked"`: 背景のないテキスト入力欄
    * - `"liquid"`: 薄い塗りつぶし
    *
-   * `outlined` を指定しない場合は、`"naked"` のときだけ枠線を表示します。
-   *
    * @default "liquid"
    */
   variant?: "naked" | "liquid" | undefined;
 };
 
 /**
- * テキスト入力欄のルート要素です。
+ * テキスト入力欄のルートコンポーネントです。
  *
  * @example
  * ```tsx
@@ -81,8 +89,9 @@ export const InputRoot: Component<InputRootProps> = function SuiInputRoot(props)
   const actionGroupCtx = useActionGroupContext(true);
   const {
     size: sizeProp = "md",
+    type = "text",
     color: colorProp = "grey",
-    radius: radiusProp = "rounded",
+    radius: radiusProp,
     variant: variantProp = "liquid",
     outlined: outlinedProp = false,
     className,
@@ -90,13 +99,14 @@ export const InputRoot: Component<InputRootProps> = function SuiInputRoot(props)
   } = props;
   const size = actionGroupCtx?.size ?? sizeProp;
   const color = actionGroupCtx?.color ?? colorProp;
-  const radius = actionGroupCtx?.radius ?? radiusProp;
+  const radius = actionGroupCtx?.radius ?? radiusProp ?? size;
   const variant = actionGroupCtx?.variant ?? variantProp;
   const outlined = actionGroupCtx?.outlined ?? outlinedProp;
 
   return (
     <Input
       {...otherProps}
+      type={type}
       className={cn(
         className,
         "sui_input",
@@ -106,6 +116,9 @@ export const InputRoot: Component<InputRootProps> = function SuiInputRoot(props)
         `sui_input-radius_${radius}`,
         `sui_input-variant_${variant}`,
         outlined && "sui_input-outlined",
+        (state) => state.valid === true && "sui_input-valid",
+        (state) => state.valid === false && "sui_input-invalid",
+        (state) => state.valid === null && "sui_input-unverified",
         (state) => state.disabled && "sui_input-disabled",
       )}
     />
@@ -128,6 +141,6 @@ export namespace Root {
 }
 
 /**
- * {@link InputRoot} の別名です。
+ * {@link InputRoot} です。
  */
 export const Root: Component<Root.Props> = InputRoot;
