@@ -479,6 +479,7 @@
   --sui-disabled-canvas: #444;
   --sui-disabled-canvas_text: #aaa;
   --sui-disabled-border_color: #666;
+  --sui-disabled-border_width: --sui-border_width(1);
 
   --sui-tooltip-canvas: #6a6a6a;
   --sui-tooltip-canvas_text: #fff;
@@ -489,7 +490,7 @@
 
   --sui-backdrop-opacity: 0.5;
 
-  --sui-focusring_color: var(--sui-yellow-60);
+  --sui-focusring_color: color-mix(in srgb, var(--sui-yellow-40) 65%, transparent);
   --sui-focusring_width: 3px;
   --sui-focusring_offset: 2px;
 
