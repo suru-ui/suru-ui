@@ -55,6 +55,8 @@ describe("ライトテーマのトークン", () => {
     // 検証
     expect(getTokenValue(element, "--sui-size-md")).toBe("28px");
     expect(getTokenValue(element, "--sui-radius-lg")).toBe("6px");
-    expect(getTokenValue(element, "--sui-focusring_color")).toBe("#ad8301");
+    expect(getTokenValue(element, "--sui-focusring_color")).toBe(
+      "color-mix(in srgb, #d0a215 65%, transparent)",
+    );
   });
 });

@@ -14,9 +14,10 @@
    */
   *:where(
     [class*="sui_"]:not(.sui_ignore):not(img, svg, html, audio, video, canvas, iframe, ):not(
-      svg *,
-      symbol *,
-    )
+        svg *,
+        symbol *,
+
+      )
   ) {
     all: unset;
     display: revert;

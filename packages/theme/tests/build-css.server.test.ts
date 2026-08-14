@@ -135,7 +135,7 @@ describe("build-css", () => {
     expect(darkCss).not.toContain("--_flexoki-base-50: rgb(239 237 226 / 0.8)");
 
     expect(lightCss).toContain("@layer sui.source {\n  :root {");
-    expect(lightCss).toContain("--_flexoki-base-50: rgb(239 237 226 / 0.8)");
+    expect(lightCss).toContain("--_flexoki-base-alpha-50: rgb(239 237 226 / 0.8)");
     expect(lightCss).not.toContain("--_flexoki-base-alpha-50: #f2f0e5");
 
     // 検証: 結合ファイルはメディアクエリーと属性セレクターでモード分岐する
@@ -155,8 +155,8 @@ describe("build-css", () => {
 
     expect(darkMediaBlock).toContain("--_flexoki-base-alpha-50: #f2f0e5");
     expect(darkAttrBlock).toContain("--_flexoki-base-alpha-50: #f2f0e5");
-    expect(lightMediaBlock).toContain("--_flexoki-base-50: rgb(239 237 226 / 0.8)");
-    expect(lightAttrBlock).toContain("--_flexoki-base-50: rgb(239 237 226 / 0.8)");
+    expect(lightMediaBlock).toContain("--_flexoki-base-alpha-50: rgb(239 237 226 / 0.8)");
+    expect(lightAttrBlock).toContain("--_flexoki-base-alpha-50: rgb(239 237 226 / 0.8)");
   });
 
   test("トークンファイルが壊れているとエラーになる", async () => {
