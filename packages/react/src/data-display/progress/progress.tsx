@@ -10,14 +10,14 @@ import * as ProgressParts from "./progress.parts.jsx";
  */
 export type ProgressSlotProps = {
   /**
+   * {@link ProgressParts.Indicator|Indicator} に渡すプロパティーです。
+   */
+  readonly indicator?: ProgressParts.Indicator.Props | undefined;
+
+  /**
    * {@link ProgressParts.Label|Label} に渡すプロパティーです。
    */
   readonly label?: ProgressParts.Label.Props | undefined;
-
-  /**
-   * {@link ProgressParts.Value|Value} に渡すプロパティーです。
-   */
-  readonly value?: ProgressParts.Value.Props | undefined;
 
   /**
    * {@link ProgressParts.Track|Track} に渡すプロパティーです。
@@ -25,9 +25,9 @@ export type ProgressSlotProps = {
   readonly track?: ProgressParts.Track.Props | undefined;
 
   /**
-   * {@link ProgressParts.Indicator|Indicator} に渡すプロパティーです。
+   * {@link ProgressParts.Value|Value} に渡すプロパティーです。
    */
-  readonly indicator?: ProgressParts.Indicator.Props | undefined;
+  readonly value?: ProgressParts.Value.Props | undefined;
 };
 
 /**
@@ -37,19 +37,18 @@ export type ProgressProps = ProgressParts.Root.Props & {
   /**
    * ラベルです。
    */
-  label?: React.ReactNode | undefined;
+  label?: ProgressParts.Label.Props["children"];
 
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   *
+   * 各パーツのプロパティーが優先されます。
    */
   slotProps?: ProgressSlotProps | undefined;
 };
 
 /**
- * 時間のかかる処理の進捗を表示します。
- *
- * `value` に `null` を指定すると、不確定状態になります。
- * `Label` と `Value` は `slotProps` を渡したときだけ表示します。
+ * 時間のかかる処理の進捗を表示するコンポーネントです。
  *
  * @example 基本
  * ```tsx

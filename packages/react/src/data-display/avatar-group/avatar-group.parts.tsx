@@ -14,7 +14,7 @@ const colorfulColors = COLORS.filter((color) => color !== "grey");
 // -------
 
 /**
- * {@link AvatarGroupRoot} が子パーツへ提供する状態です。
+ * {@link AvatarGroupRoot} が子パーツへ提供するコンテキストです。
  */
 export type AvatarGroupContext = {
   /**
@@ -34,18 +34,16 @@ export type AvatarGroupContext = {
 };
 
 /**
- * {@link AvatarGroupRoot} が提供するボタン状態の Context です。
- *
- * 通常は {@link useAvatarGroupContext} または {@link useContext} を使用してください。
+ * {@link AvatarGroupRoot} が子パーツへ提供するコンテキストです。
  */
 export const AvatarGroupContext: React.Context<AvatarGroupContext | null> =
   React.createContext<AvatarGroupContext | null>(null);
 
 /**
- * 直近の {@link AvatarGroupRoot} が提供する状態を取得します。
+ * {@link AvatarGroupContext} を読み取るフックです。
  *
- * `optional` が `true` の場合、Provider の外では `null` を返します。
- * `optional` を指定しない場合、Provider の外で呼び出すとエラーになります。
+ * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
+ * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
  */
 export function useAvatarGroupContext(optional?: false): AvatarGroupContext;
 export function useAvatarGroupContext(optional?: boolean): AvatarGroupContext | null;
@@ -62,17 +60,20 @@ export function useAvatarGroupContext(optional?: boolean): AvatarGroupContext | 
 }
 
 /**
- * {@link AvatarGroupContext} の別名です。
+ * {@link AvatarGroupContext} です。
  */
 export type Context = AvatarGroupContext;
 
 /**
- * {@link AvatarGroupContext} の別名です。
+ * {@link AvatarGroupContext} です。
  */
 export const Context: React.Context<AvatarGroupContext | null> = AvatarGroupContext;
 
 /**
- * {@link useAvatarGroupContext} の別名です。
+ * {@link useAvatarGroupContext} です。
+ *
+ * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
+ * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
  */
 export function useContext(optional?: false): AvatarGroupContext;
 export function useContext(optional?: boolean): AvatarGroupContext | null;
@@ -122,14 +123,14 @@ export type AvatarGroupRootProps = Omit<React.ComponentProps<"div">, keyof Rende
   };
 
 /**
- * アバターを重ねて表示するグループのルート要素です。
+ * アバターを重ねて表示するグループのルートコンポーネントです。
  *
  * @example
  * ```tsx
- * <AvatarGroupParts.Root>
+ * <AvatarGroupRoot>
  *   <Avatar>太</Avatar>
  *   <Avatar>花</Avatar>
- * </AvatarGroupParts.Root>
+ * </AvatarGroupRoot>
  * ```
  */
 export const AvatarGroupRoot: Component<AvatarGroupRootProps> = function SuiAvatarGroupRoot(props) {
@@ -164,6 +165,9 @@ export const AvatarGroupRoot: Component<AvatarGroupRootProps> = function SuiAvat
   });
 };
 
+/**
+ * {@link AvatarGroupRoot} の状態とプロパティーをまとめた型名前空間です。
+ */
 export namespace Root {
   /**
    * {@link AvatarGroupRoot} の状態型です。
@@ -176,6 +180,9 @@ export namespace Root {
   export type Props = AvatarGroupRootProps;
 }
 
+/**
+ * {@link AvatarGroupRoot} です。
+ */
 export const Root: Component<Root.Props> = AvatarGroupRoot;
 
 // Surplus
@@ -191,6 +198,14 @@ export type AvatarGroupSurplusState = Avatar.Root.State;
  */
 export type AvatarGroupSurplusProps = Avatar.Root.Props;
 
+/**
+ * 余剰分のアバターの数などを表示するコンポーネントです。
+ *
+ * @example
+ * ```tsx
+ * <AvatarGroupSurplus>+{surplus}</AvatarGroupSurplus>
+ * ```
+ */
 export const AvatarGroupSurplus: Component<AvatarGroupSurplusProps> =
   function SuiAvatarGroupSurplus(props) {
     const { color = "grey", ...otherProps } = props;
@@ -198,6 +213,9 @@ export const AvatarGroupSurplus: Component<AvatarGroupSurplusProps> =
     return <Avatar.Root {...otherProps} color={color} />;
   };
 
+/**
+ * {@link AvatarGroupSurplus} の状態とプロパティーをまとめた型名前空間です。
+ */
 export namespace Surplus {
   /**
    * {@link AvatarGroupSurplus} の状態型です。
@@ -210,4 +228,7 @@ export namespace Surplus {
   export type Props = AvatarGroupSurplusProps;
 }
 
+/**
+ * {@link AvatarGroupSurplus} です。
+ */
 export const Surplus: Component<Surplus.Props> = AvatarGroupSurplus;

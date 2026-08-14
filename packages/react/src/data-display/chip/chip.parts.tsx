@@ -21,13 +21,6 @@ export type ChipRootState = {};
 export type ChipRootProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
   RenderProps<ChipRootState> & {
     /**
-     * チップのスタイルバリエーションを指定します。
-     *
-     * @default "liquid"
-     */
-    variant?: Variant | undefined;
-
-    /**
      * チップの色を指定します。
      *
      * @default "grey"
@@ -35,11 +28,9 @@ export type ChipRootProps = Omit<React.ComponentProps<"span">, keyof RenderProps
     color?: Color | undefined;
 
     /**
-     * チップのサイズを指定します。
-     *
-     * @default "sm"
+     * 枠線を表示するかどうかを指定します。
      */
-    size?: Size | undefined;
+    outlined?: boolean | undefined;
 
     /**
      * チップの角丸を指定します。
@@ -49,17 +40,26 @@ export type ChipRootProps = Omit<React.ComponentProps<"span">, keyof RenderProps
     radius?: "none" | Size | "full" | undefined;
 
     /**
-     * 枠線を表示するかどうかを指定します。
+     * チップのサイズを指定します。
+     *
+     * @default "sm"
      */
-    outlined?: boolean | undefined;
+    size?: Size | undefined;
+
+    /**
+     * チップのスタイルバリエーションを指定します。
+     *
+     * @default "liquid"
+     */
+    variant?: Variant | undefined;
   };
 
 /**
- * チップのルート要素です。
+ * チップのルートコンポーネントです。
  *
  * @example
  * ```tsx
- * <ChipParts.Root color="blue">ラベル</ChipParts.Root>
+ * <ChipRoot color="blue">ラベル</ChipRoot>
  * ```
  */
 export const ChipRoot: Component<ChipRootProps> = function SuiChipRoot(props) {
@@ -68,7 +68,7 @@ export const ChipRoot: Component<ChipRootProps> = function SuiChipRoot(props) {
     color = "grey",
     radius = "full",
     variant = "liquid",
-    outlined = variant !== "solid",
+    outlined = false,
     ...otherProps
   } = props;
 
@@ -90,6 +90,9 @@ export const ChipRoot: Component<ChipRootProps> = function SuiChipRoot(props) {
   });
 };
 
+/**
+ * {@link ChipRoot} の状態とプロパティーをまとめた型名前空間です。
+ */
 export namespace Root {
   /**
    * {@link ChipRoot} の状態型です。
@@ -102,4 +105,7 @@ export namespace Root {
   export type Props = ChipRootProps;
 }
 
+/**
+ * {@link ChipRoot} です。
+ */
 export const Root: Component<Root.Props> = ChipRoot;

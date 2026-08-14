@@ -5,6 +5,12 @@
     /* 形状 */
     --sui_avatar-size: ;
     --sui_avatar-border_radius: ;
+    /* 書体 */
+    --sui_avatar-font_family: ;
+    --sui_avatar-font_size: ;
+    --sui_avatar-font_weight: ;
+    --sui_avatar-line_height: ;
+    --sui_avatar-letter_spacing: ;
     /* 背景 */
     --sui_avatar-background_color: ;
   }
@@ -23,6 +29,7 @@
   .sui_avatar {
     width: var(--sui_avatar-size);
     height: var(--sui_avatar-size);
+    font-family: var(--sui_avatar-font_family);
     font-size: var(--sui_avatar_fallback-font_size);
     font-weight: var(--sui_avatar_fallback-font_weight);
     line-height: var(--sui_avatar_fallback-line_height);
@@ -33,6 +40,11 @@
   }
 
   /* 既定値設定: ここから */
+
+  .sui_avatar {
+    /* 書体 */
+    --sui_avatar-font_family: var(--sui-font-sans);
+  }
 
   .sui_avatar-size_sm {
     /* 形状 */
@@ -164,6 +176,7 @@
   /* 変数 */
   .sui_avatar {
     /* 書体 */
+    --sui_avatar_fallback-font_family: ;
     --sui_avatar_fallback-font_size: ;
     --sui_avatar_fallback-font_weight: ;
     --sui_avatar_fallback-line_height: ;
@@ -183,6 +196,7 @@
 
   /* 動的 */
   .sui_avatar_fallback {
+    font-family: var(--sui_avatar_fallback-font_family);
     font-size: var(--sui_avatar_fallback-font_size);
     font-weight: var(--sui_avatar_fallback-font_weight);
     line-height: var(--sui_avatar_fallback-line_height);
@@ -194,6 +208,7 @@
 
   .sui_avatar {
     /* 書体 */
+    --sui_avatar_fallback-font_family: var(--sui-font-sans);
     --sui_avatar_fallback-font_size: var(--sui_avatar-font_size);
     --sui_avatar_fallback-font_weight: var(--sui_avatar-font_weight);
     --sui_avatar_fallback-line_height: var(--sui_avatar-line_height);

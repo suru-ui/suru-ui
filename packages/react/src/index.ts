@@ -24,7 +24,7 @@ export {
 
 // data-display
 export { type AlertProps, type AlertSlotProps, Alert } from "./data-display/alert/index.js";
-export { type AvatarProps, Avatar } from "./data-display/avatar/index.js";
+export { type AvatarProps, type AvatarSlotProps, Avatar } from "./data-display/avatar/index.js";
 export { type AvatarGroupProps, AvatarGroup } from "./data-display/avatar-group/index.js";
 export { type ChipProps, Chip } from "./data-display/chip/index.js";
 export { type MeterProps, type MeterSlotProps, Meter } from "./data-display/meter/index.js";

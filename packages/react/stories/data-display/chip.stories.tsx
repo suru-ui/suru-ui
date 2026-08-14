@@ -1,7 +1,8 @@
 import { COLOR_TEMPLATES as VARIANTS, COLORS, SIZES } from "@suru-ui/theme";
-import { CheckIcon, TagIcon } from "lucide-react";
+import { CheckIcon, TagIcon, XIcon } from "lucide-react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
+import { Button } from "../../src/buttons/button/index.js";
 import { Chip } from "../../src/data-display/chip/index.js";
 
 const RADII = ["none", ...SIZES, "full"] as const;
@@ -43,7 +44,7 @@ export const Usage = meta.story({
     color: "blue",
     size: "sm",
     radius: "full",
-    outlined: undefined,
+    outlined: false,
   }),
 });
 
@@ -54,7 +55,7 @@ export const Variants = meta.story({
     color: "blue",
     size: "sm",
     radius: "full",
-    outlined: undefined,
+    outlined: false,
   }),
   render(props) {
     return (
@@ -77,7 +78,7 @@ export const Colors = meta.story({
     variant: "liquid",
     size: "sm",
     radius: "full",
-    outlined: undefined,
+    outlined: false,
   }),
   render(props) {
     return (
@@ -99,7 +100,7 @@ export const WithIcons = meta.story({
     variant: "liquid",
     size: "sm",
     radius: "full",
-    outlined: undefined,
+    outlined: false,
   }),
   render(props) {
     return (
@@ -124,7 +125,7 @@ export const Radius = meta.story({
     variant: "liquid",
     color: "blue",
     size: "sm",
-    outlined: undefined,
+    outlined: false,
   }),
   render(props) {
     return (
@@ -147,7 +148,6 @@ export const Outlined = meta.story({
     color: "blue",
     size: "sm",
     radius: "full",
-    variant: "liquid",
   }),
   render(props) {
     return (
@@ -170,7 +170,7 @@ export const Sizes = meta.story({
     variant: "liquid",
     color: "blue",
     radius: "full",
-    outlined: undefined,
+    outlined: false,
   }),
   render(props) {
     return (
@@ -181,6 +181,41 @@ export const Sizes = meta.story({
             <Chip {...props} size={size}>
               <TagIcon />
               {props.children}
+            </Chip>
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const WithButton = meta.story({
+  name: "ボタン付き",
+  ...ctrl({
+    children: "新着",
+    color: "blue",
+    size: "sm",
+    radius: "full",
+    outlined: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-wrap gap-3">
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col items-center gap-2">
+            <span className="text-sm">{variant}</span>
+            <Chip {...props} render={<button type="button" />} variant={variant} className="pr-0">
+              {props.children}
+              <Button
+                size={props.size}
+                color={props.color}
+                radius={props.radius}
+                variant={variant}
+                squared
+                className="[--sui_button-background_color-normal:transparent]"
+              >
+                <XIcon />
+              </Button>
             </Chip>
           </div>
         ))}

@@ -10,14 +10,14 @@ import * as MeterParts from "./meter.parts.jsx";
  */
 export type MeterSlotProps = {
   /**
+   * {@link MeterParts.Indicator|Indicator} に渡すプロパティーです。
+   */
+  readonly indicator?: MeterParts.Indicator.Props | undefined;
+
+  /**
    * {@link MeterParts.Label|Label} に渡すプロパティーです。
    */
   readonly label?: MeterParts.Label.Props | undefined;
-
-  /**
-   * {@link MeterParts.Value|Value} に渡すプロパティーです。
-   */
-  readonly value?: MeterParts.Value.Props | undefined;
 
   /**
    * {@link MeterParts.Track|Track} に渡すプロパティーです。
@@ -25,9 +25,9 @@ export type MeterSlotProps = {
   readonly track?: MeterParts.Track.Props | undefined;
 
   /**
-   * {@link MeterParts.Indicator|Indicator} に渡すプロパティーです。
+   * {@link MeterParts.Value|Value} に渡すプロパティーです。
    */
-  readonly indicator?: MeterParts.Indicator.Props | undefined;
+  readonly value?: MeterParts.Value.Props | undefined;
 };
 
 /**
@@ -37,18 +37,18 @@ export type MeterProps = MeterParts.Root.Props & {
   /**
    * ラベルです。
    */
-  label?: React.ReactNode | undefined;
+  label?: MeterParts.Label.Props["children"];
 
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   *
+   * 各パーツのプロパティーが優先されます。
    */
   slotProps?: MeterSlotProps | undefined;
 };
 
 /**
- * 数値の範囲内にある現在値を表示するメーターです。
- *
- * `Label` と `Value` は `slotProps` を渡したときだけ表示します。
+ * 数値の範囲内にある現在値を表示するメーターコンテキストです。
  *
  * @example 基本
  * ```tsx

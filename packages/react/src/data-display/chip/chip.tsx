@@ -7,7 +7,7 @@ import * as ChipParts from "./chip.parts.jsx";
 export type ChipProps = ChipParts.Root.Props;
 
 /**
- * 短いラベルや属性を表示するチップです。
+ * 短いラベルや属性を表示するチップコンポーネントです。
  *
  * @example 基本
  * ```tsx

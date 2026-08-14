@@ -23,7 +23,7 @@ export type AlertRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps
     /**
      * アラートの色を指定します。
      *
-     * @default "blue"
+     * @default "grey"
      */
     color?: Color | undefined;
 
@@ -62,14 +62,14 @@ export type AlertRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps
   };
 
 /**
- * アラートのルート要素です。
+ * アラートのルートコンポーネントです。
  *
  * @example
  * ```tsx
- * <AlertParts.Root color="green">
- *   <AlertParts.Icon />
- *   <AlertParts.Description>保存しました。</AlertParts.Description>
- * </AlertParts.Root>
+ * <AlertRoot color="green">
+ *   <AlertIcon />
+ *   <AlertDescription>保存しました。</AlertDescription>
+ * </AlertRoot>
  * ```
  */
 export const AlertRoot: Component<AlertRootProps> = function SuiAlertRoot(props) {
@@ -102,6 +102,9 @@ export const AlertRoot: Component<AlertRootProps> = function SuiAlertRoot(props)
   });
 };
 
+/**
+ * {@link AlertRoot} の状態とプロパティーをまとめた型名前空間です。
+ */
 export namespace Root {
   /**
    * {@link AlertRoot} の状態型です。
@@ -114,6 +117,9 @@ export namespace Root {
   export type Props = AlertRootProps;
 }
 
+/**
+ * {@link AlertRoot} です。
+ */
 export const Root: Component<Root.Props> = AlertRoot;
 
 // Icon
@@ -131,15 +137,15 @@ export type AlertIconProps = Omit<React.ComponentProps<"div">, keyof RenderProps
   RenderProps<AlertIconState>;
 
 /**
- * アラートの状態を視覚的に示すインジケーター要素です。
+ * アラートの状態を視覚的に示すインジケーターコンポーネントです。
  *
  * 子要素を省略すると、状態色の丸いインジケーターを表示します。
  *
  * @example
  * ```tsx
- * <AlertParts.Icon>
+ * <AlertIcon>
  *   <InfoIcon />
- * </AlertParts.Icon>
+ * </AlertIcon>
  * ```
  */
 export const AlertIcon: Component<AlertIconProps> = function SuiAlertIcon(props) {
@@ -157,6 +163,9 @@ export const AlertIcon: Component<AlertIconProps> = function SuiAlertIcon(props)
   });
 };
 
+/**
+ * {@link AlertIcon} の状態とプロパティーをまとめた型名前空間です。
+ */
 export namespace Icon {
   /**
    * {@link AlertIcon} の状態型です。
@@ -169,6 +178,9 @@ export namespace Icon {
   export type Props = AlertIconProps;
 }
 
+/**
+ * {@link AlertIcon} です。
+ */
 export const Icon: Component<Icon.Props> = AlertIcon;
 
 // Title
@@ -186,11 +198,11 @@ export type AlertTitleProps = Omit<React.ComponentProps<"div">, keyof RenderProp
   RenderProps<AlertTitleState>;
 
 /**
- * アラートのタイトルを表示する要素です。
+ * アラートのタイトルを表示するコンポーネントです。
  *
  * @example
  * ```tsx
- * <AlertParts.Title>保存完了</AlertParts.Title>
+ * <AlertTitle>保存完了</AlertTitle>
  * ```
  */
 export const AlertTitle: Component<AlertTitleProps> = function SuiAlertTitle(props) {
@@ -205,6 +217,9 @@ export const AlertTitle: Component<AlertTitleProps> = function SuiAlertTitle(pro
   });
 };
 
+/**
+ * {@link AlertTitle} の状態とプロパティーをまとめた型名前空間です。
+ */
 export namespace Title {
   /**
    * {@link AlertTitle} の状態型です。
@@ -217,6 +232,9 @@ export namespace Title {
   export type Props = AlertTitleProps;
 }
 
+/**
+ * {@link AlertTitle} です。
+ */
 export const Title: Component<Title.Props> = AlertTitle;
 
 // Description
@@ -234,11 +252,11 @@ export type AlertDescriptionProps = Omit<React.ComponentProps<"div">, keyof Rend
   RenderProps<AlertDescriptionState>;
 
 /**
- * アラートのメッセージをまとめるコンテンツ要素です。
+ * アラートのメッセージをまとめるコンテンツコンポーネントです。
  *
  * @example
  * ```tsx
- * <AlertParts.Description>プロフィールを更新しました。</AlertParts.Description>
+ * <AlertDescription>プロフィールを更新しました。</AlertDescription>
  * ```
  */
 export const AlertDescription: Component<AlertDescriptionProps> = function SuiAlertDescription(
@@ -255,6 +273,9 @@ export const AlertDescription: Component<AlertDescriptionProps> = function SuiAl
   });
 };
 
+/**
+ * {@link AlertDescription} の状態とプロパティーをまとめた型名前空間です。
+ */
 export namespace Description {
   /**
    * {@link AlertDescription} の状態型です。
@@ -267,6 +288,9 @@ export namespace Description {
   export type Props = AlertDescriptionProps;
 }
 
+/**
+ * {@link AlertDescription} の状態とプロパティーをまとめた型名前空間です。
+ */
 export const Description: Component<Description.Props> = AlertDescription;
 
 // Actions
@@ -284,14 +308,14 @@ export type AlertActionsProps = Omit<React.ComponentProps<"div">, keyof RenderPr
   RenderProps<AlertActionsState>;
 
 /**
- * アラートの操作ボタンを右寄せでまとめる要素です。
+ * アラートの操作ボタンを右寄せでまとめるコンポーネントです。
  *
  * @example
  * ```tsx
- * <AlertParts.Actions>
+ * <AlertActions>
  *   <Button>取り消す</Button>
  *   <Button>再試行</Button>
- * </AlertParts.Actions>
+ * </AlertActions>
  * ```
  */
 export const AlertActions: Component<AlertActionsProps> = function SuiAlertActions(props) {
@@ -306,6 +330,9 @@ export const AlertActions: Component<AlertActionsProps> = function SuiAlertActio
   });
 };
 
+/**
+ * {@link AlertActions} の状態とプロパティーをまとめた型名前空間です。
+ */
 export namespace Actions {
   /**
    * {@link AlertActions} の状態型です。
@@ -318,4 +345,7 @@ export namespace Actions {
   export type Props = AlertActionsProps;
 }
 
+/**
+ * {@link AlertActions} の状態とプロパティーをまとめた型名前空間です。
+ */
 export const Actions: Component<Actions.Props> = AlertActions;

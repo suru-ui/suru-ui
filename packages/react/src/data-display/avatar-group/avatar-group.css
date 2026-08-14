@@ -16,15 +16,15 @@
 
   /* 動的 */
   .sui_avatar_group > .sui_avatar + .sui_avatar {
-    margin-inline-start: var(--sui_avatar_group-overlap);
-    box-shadow: 0px 0px 0px 2px var(--sui_avatar_group-border_color);
+    margin-left: var(--sui_avatar_group-overlap);
+    box-shadow: 0px 0px 0px --sui-border_width(2) var(--sui_avatar_group-border_color);
   }
 
   /* 既定値設定: ここから */
 
   .sui_avatar_group {
     /* 空白 */
-    --sui_avatar_group-overlap: -8px;
+    --sui_avatar_group-overlap: calc(-1 * --sui-space(4));
     /* 枠線 */
     --sui_avatar_group-border_color: var(--sui-canvas-1);
   }

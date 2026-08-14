@@ -33,6 +33,8 @@ export type ProgressRootProps = React.ComponentProps<typeof Progress.Root> & {
 
   /**
    * 枠線を表示するかどうかを指定します。
+   *
+   * @default false
    */
   outlined?: boolean | undefined;
 
@@ -68,7 +70,7 @@ export type ProgressRootProps = React.ComponentProps<typeof Progress.Root> & {
 };
 
 /**
- * 進捗のルート要素です。
+ * 進捗のルートコンポーネントです。
  *
  * `value` に `null` を指定すると、不確定状態になります。
  *
@@ -124,7 +126,7 @@ export namespace Root {
 }
 
 /**
- * {@link ProgressRoot} の別名です。
+ * {@link ProgressRoot} です。
  */
 export const Root: Component<Root.Props> = ProgressRoot;
 
@@ -142,7 +144,7 @@ export type ProgressLabelState = Progress.Label.State;
 export type ProgressLabelProps = React.ComponentProps<typeof Progress.Label>;
 
 /**
- * 進捗のラベル要素です。
+ * 進捗のラベルコンポーネントです。
  *
  * @example
  * ```tsx
@@ -173,7 +175,7 @@ export namespace Label {
 }
 
 /**
- * {@link ProgressLabel} の別名です。
+ * {@link ProgressLabel} です。
  */
 export const Label: Component<Label.Props> = ProgressLabel;
 
@@ -191,7 +193,7 @@ export type ProgressValueState = Progress.Value.State;
 export type ProgressValueProps = React.ComponentProps<typeof Progress.Value>;
 
 /**
- * 進捗の現在値を表示する要素です。
+ * 進捗の現在値を表示するコンポーネントです。
  *
  * 不確定状態では既定の表示が空になります。
  *
@@ -224,7 +226,7 @@ export namespace Value {
 }
 
 /**
- * {@link ProgressValue} の別名です。
+ * {@link ProgressValue} です。
  */
 export const Value: Component<Value.Props> = ProgressValue;
 
@@ -242,7 +244,7 @@ export type ProgressTrackState = Progress.Track.State;
 export type ProgressTrackProps = React.ComponentProps<typeof Progress.Track>;
 
 /**
- * 進捗の全範囲を表すトラック要素です。
+ * 進捗の全範囲を表すトラックコンポーネントです。
  *
  * @example
  * ```tsx
@@ -275,7 +277,7 @@ export namespace Track {
 }
 
 /**
- * {@link ProgressTrack} の別名です。
+ * {@link ProgressTrack} です。
  */
 export const Track: Component<Track.Props> = ProgressTrack;
 
@@ -293,7 +295,7 @@ export type ProgressIndicatorState = Progress.Indicator.State;
 export type ProgressIndicatorProps = React.ComponentProps<typeof Progress.Indicator>;
 
 /**
- * 進捗の現在値を示すインジケーター要素です。
+ * 進捗の現在値を示すインジケーターコンポーネントです。
  *
  * @example
  * ```tsx
@@ -328,6 +330,6 @@ export namespace Indicator {
 }
 
 /**
- * {@link ProgressIndicator} の別名です。
+ * {@link ProgressIndicator} です。
  */
 export const Indicator: Component<Indicator.Props> = ProgressIndicator;

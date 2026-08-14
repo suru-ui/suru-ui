@@ -28,6 +28,8 @@ export type MeterRootProps = React.ComponentProps<typeof Meter.Root> & {
 
   /**
    * 枠線を表示するかどうかを指定します。
+   *
+   * @default false
    */
   outlined?: boolean | undefined;
 
@@ -63,7 +65,7 @@ export type MeterRootProps = React.ComponentProps<typeof Meter.Root> & {
 };
 
 /**
- * メーターのルート要素です。
+ * メーターのルートコンポーネントです。
  *
  * @example
  * ```tsx
@@ -80,7 +82,7 @@ export const MeterRoot: Component<MeterRootProps> = function SuiMeterRoot(props)
     color = "grey",
     radius = "full",
     variant = "liquid",
-    outlined = variant === "naked",
+    outlined = false,
     className,
     ...otherProps
   } = props;
@@ -117,7 +119,7 @@ export namespace Root {
 }
 
 /**
- * {@link MeterRoot} の別名です。
+ * {@link MeterRoot} です。
  */
 export const Root: Component<Root.Props> = MeterRoot;
 
@@ -135,7 +137,7 @@ export type MeterLabelState = Meter.Label.State;
 export type MeterLabelProps = React.ComponentProps<typeof Meter.Label>;
 
 /**
- * メーターのラベル要素です。
+ * メーターのラベルコンポーネントです。
  *
  * @example
  * ```tsx
@@ -166,7 +168,7 @@ export namespace Label {
 }
 
 /**
- * {@link MeterLabel} の別名です。
+ * {@link MeterLabel} です。
  */
 export const Label: Component<Label.Props> = MeterLabel;
 
@@ -184,7 +186,7 @@ export type MeterValueState = Meter.Value.State;
 export type MeterValueProps = React.ComponentProps<typeof Meter.Value>;
 
 /**
- * メーターの現在値を表示する要素です。
+ * メーターの現在値を表示するコンポーネントです。
  *
  * @example
  * ```tsx
@@ -215,7 +217,7 @@ export namespace Value {
 }
 
 /**
- * {@link MeterValue} の別名です。
+ * {@link MeterValue} です。
  */
 export const Value: Component<Value.Props> = MeterValue;
 
@@ -233,7 +235,7 @@ export type MeterTrackState = Meter.Track.State;
 export type MeterTrackProps = React.ComponentProps<typeof Meter.Track>;
 
 /**
- * メーターの全範囲を表すトラック要素です。
+ * メーターの全範囲を表すトラックコンポーネントです。
  *
  * @example
  * ```tsx
@@ -266,7 +268,7 @@ export namespace Track {
 }
 
 /**
- * {@link MeterTrack} の別名です。
+ * {@link MeterTrack} です。
  */
 export const Track: Component<Track.Props> = MeterTrack;
 
@@ -284,7 +286,7 @@ export type MeterIndicatorState = Meter.Indicator.State;
 export type MeterIndicatorProps = React.ComponentProps<typeof Meter.Indicator>;
 
 /**
- * メーターの現在値を示すインジケーター要素です。
+ * メーターの現在値を示すインジケーターコンポーネントです。
  *
  * @example
  * ```tsx
@@ -317,6 +319,6 @@ export namespace Indicator {
 }
 
 /**
- * {@link MeterIndicator} の別名です。
+ * {@link MeterIndicator} です。
  */
 export const Indicator: Component<Indicator.Props> = MeterIndicator;

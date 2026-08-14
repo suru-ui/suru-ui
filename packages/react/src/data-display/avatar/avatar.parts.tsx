@@ -43,14 +43,14 @@ export type AvatarRootProps = React.ComponentProps<typeof Avatar.Root> & {
 };
 
 /**
- * アバターのルート要素です。
+ * アバターのルートコンポーネントです。
  *
  * @example
  * ```tsx
- * <AvatarParts.Root>
- *   <AvatarParts.Image src="/avatar.jpg" alt="太郎" />
- *   <AvatarParts.Fallback>太</AvatarParts.Fallback>
- * </AvatarParts.Root>
+ * <AvatarRoot>
+ *   <AvatarImage src="/avatar.jpg" alt="太郎" />
+ *   <AvatarFallback>太</AvatarFallback>
+ * </AvatarRoot>
  * ```
  */
 export const AvatarRoot: Component<AvatarRootProps> = function SuiAvatarRoot(props) {
@@ -78,6 +78,9 @@ export const AvatarRoot: Component<AvatarRootProps> = function SuiAvatarRoot(pro
   );
 };
 
+/**
+ * {@link AvatarRoot} の状態とプロパティーをまとめた型名前空間です。
+ */
 export namespace Root {
   /**
    * {@link AvatarRoot} の状態型です。
@@ -90,6 +93,9 @@ export namespace Root {
   export type Props = AvatarRootProps;
 }
 
+/**
+ * {@link AvatarRoot} です。
+ */
 export const Root: Component<Root.Props> = AvatarRoot;
 
 // Image
@@ -106,7 +112,7 @@ export type AvatarImageState = Avatar.Image.State;
 export type AvatarImageProps = React.ComponentProps<typeof Avatar.Image>;
 
 /**
- * アバターの画像要素です。
+ * アバターの画像コンポーネントです。
  *
  * 画像の読み込みに失敗すると、{@link AvatarFallback} を表示します。
  */
@@ -116,6 +122,9 @@ export const AvatarImage: Component<AvatarImageProps> = function SuiAvatarImage(
   return <Avatar.Image {...otherProps} className={cn(className, "sui_avatar_image")} />;
 };
 
+/**
+ * {@link AvatarImage} の状態とプロパティーをまとめた型名前空間です。
+ */
 export namespace Image {
   /**
    * {@link AvatarImage} の状態型です。
@@ -128,13 +137,16 @@ export namespace Image {
   export type Props = AvatarImageProps;
 }
 
+/**
+ * {@link AvatarImage} です。
+ */
 export const Image: Component<Image.Props> = AvatarImage;
 
 // Fallback
 // --------
 
 /**
- * {@link AvatarFallback} に渡すプロパティーです。
+ * {@link AvatarFallback} の状態です。
  */
 export type AvatarFallbackState = Avatar.Fallback.State;
 
@@ -144,11 +156,11 @@ export type AvatarFallbackState = Avatar.Fallback.State;
 export type AvatarFallbackProps = React.ComponentProps<typeof Avatar.Fallback>;
 
 /**
- * 画像を表示できないときのアバターフォールバック要素です。
+ * 画像を表示できないときのアバターフォールバックコンポーネントです。
  *
  * @example
  * ```tsx
- * <AvatarParts.Fallback>太</AvatarParts.Fallback>
+ * <AvatarFallback>太</AvatarFallback>
  * ```
  */
 export const AvatarFallback: Component<AvatarFallbackProps> = function SuiAvatarFallback(props) {
@@ -157,6 +169,9 @@ export const AvatarFallback: Component<AvatarFallbackProps> = function SuiAvatar
   return <Avatar.Fallback {...otherProps} className={cn(className, "sui_avatar_fallback")} />;
 };
 
+/**
+ * {@link AvatarFallback} の状態とプロパティーをまとめた型名前空間です。
+ */
 export namespace Fallback {
   /**
    * {@link AvatarFallback} の状態型です。
@@ -169,4 +184,7 @@ export namespace Fallback {
   export type Props = AvatarFallbackProps;
 }
 
+/**
+ * {@link AvatarFallback} です。
+ */
 export const Fallback: Component<Fallback.Props> = AvatarFallback;

@@ -6,34 +6,43 @@
     --sui_chip-min_height: ;
     --sui_chip-svg_size: ;
     /* 空白 */
-    --sui_chip-padding_block: ;
     --sui_chip-padding_inline: ;
     --sui_chip-gap: ;
     /* 書体 */
+    --sui_chip-font_family: ;
     --sui_chip-font_size: ;
     --sui_chip-font_weight: ;
     --sui_chip-line_height: ;
     --sui_chip-letter_spacing: ;
     /* 背景 */
     --sui_chip-background_color-normal: ;
-    --sui_chip-background_color-subtle: ;
-    --sui_chip-background_color-action: ;
+    --sui_chip-background_color-hover: ;
+    --sui_chip-background_color-active: ;
     /* 前景 */
-    --sui_chip-content_color: ;
+    --sui_chip-color-normal: ;
+    --sui_chip-color-hover: ;
+    --sui_chip-color-active: ;
     /* 枠線 */
     --sui_chip-border_color-normal: ;
-    --sui_chip-border_color-subtle: ;
-    --sui_chip-border_color-action: ;
+    --sui_chip-border_color-hover: ;
+    --sui_chip-border_color-active: ;
     --sui_chip-border_width: ;
     --sui_chip-border_radius: ;
+    --sui_chip-outline_color: ;
+    --sui_chip-outline_offset: ;
   }
 
   /* 静的 */
   .sui_chip {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    vertical-align: middle;
+    padding-block: 0px;
+    line-height: 1;
+    text-decoration: none;
+    touch-action: manipulation;
+    cursor: default;
     user-select: none;
   }
 
@@ -41,16 +50,37 @@
   .sui_chip {
     gap: var(--sui_chip-gap);
     min-height: var(--sui_chip-min_height);
-    padding-block: var(--_sui_chip-padding_block, var(--sui_chip-padding_block));
     padding-inline: var(--sui_chip-padding_inline);
+    font-family: var(--sui_chip-font_family);
     font-size: var(--sui_chip-font_size);
     font-weight: var(--sui_chip-font_weight);
     line-height: var(--sui_chip-line_height);
-    color: var(--sui_chip-content_color);
+    color: var(--_sui_chip-color-normal, var(--sui_chip-color-normal));
     letter-spacing: var(--sui_chip-letter_spacing);
+    outline: var(--_sui_chip-outline_width, 0px)
+             solid
+             var(--sui_chip-outline_color);
+    outline-offset: var(--sui_chip-outline_offset);
     background-color: var(--_sui_chip-background_color, var(--sui_chip-background_color-normal));
-    border: var(--_sui_chip-border_color, transparent) solid var(--_sui_chip-border_width, 0px);
+    border: none;
     border-radius: var(--sui_chip-border_radius);
+
+    &::after {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      content: "";
+      background-color: transparent;
+      border: var(--_sui_chip-border_color, transparent)
+              solid
+              var(--_sui_chip-border_width, 0px);
+      border-radius: var(--sui_chip-border_radius);
+    }
 
     svg:not(.sui-ignore) {
       width: var(--sui_chip-svg_size);
@@ -63,14 +93,12 @@
   .sui_chip {
     /* 形状 */
     --sui_chip-svg_size: var(--sui_chip-text_height);
-    /* 空白 */
-    --sui_chip-padding_block: round(
-      down,
-      calc((var(--sui_chip-min_height) - var(--sui_chip-text_height)) / 2),
-      1px
-    );
     /* 書体 */
+    --sui_chip-font_family: var(--sui-font-sans);
     --sui_chip-text_height: calc(var(--sui_chip-font_size) * var(--sui_chip-line_height));
+    /* 枠線 */
+    --sui_chip-outline_color: var(--sui-focusring_color);
+    --sui_chip-outline_offset: var(--sui-focusring_offset);
   }
 
   .sui_chip-size_sm {
@@ -147,34 +175,46 @@
     &.sui_chip-variant_solid {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-grey-solid-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-grey-solid-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-grey-solid-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-grey-solid-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-grey-solid-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-grey-solid-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-grey-solid-border-subtle);
-      --sui_chip-border_color-action: var(--sui-grey-solid-border-action);
+      --sui_chip-border_color-hover: var(--sui-grey-solid-border-subtle);
+      --sui_chip-border_color-active: var(--sui-grey-solid-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-grey-solid-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-grey-solid-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-grey-solid-canvas_text-strong);
     }
 
     &.sui_chip-variant_naked {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-grey-naked-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-grey-naked-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-grey-naked-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-grey-naked-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-grey-naked-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-grey-naked-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-grey-naked-border-subtle);
-      --sui_chip-border_color-action: var(--sui-grey-naked-border-action);
+      --sui_chip-border_color-hover: var(--sui-grey-naked-border-subtle);
+      --sui_chip-border_color-active: var(--sui-grey-naked-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-grey-naked-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-grey-naked-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-grey-naked-canvas_text-strong);
     }
 
     &.sui_chip-variant_liquid {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-grey-liquid-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-grey-liquid-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-grey-liquid-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-grey-liquid-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-grey-liquid-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-grey-liquid-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-grey-liquid-border-subtle);
-      --sui_chip-border_color-action: var(--sui-grey-liquid-border-action);
+      --sui_chip-border_color-hover: var(--sui-grey-liquid-border-subtle);
+      --sui_chip-border_color-active: var(--sui-grey-liquid-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-grey-liquid-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-grey-liquid-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-grey-liquid-canvas_text-strong);
     }
   }
 
@@ -182,34 +222,46 @@
     &.sui_chip-variant_solid {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-blue-solid-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-blue-solid-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-blue-solid-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-blue-solid-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-blue-solid-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-blue-solid-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-blue-solid-border-subtle);
-      --sui_chip-border_color-action: var(--sui-blue-solid-border-action);
+      --sui_chip-border_color-hover: var(--sui-blue-solid-border-subtle);
+      --sui_chip-border_color-active: var(--sui-blue-solid-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-blue-solid-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-blue-solid-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-blue-solid-canvas_text-strong);
     }
 
     &.sui_chip-variant_naked {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-blue-naked-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-blue-naked-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-blue-naked-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-blue-naked-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-blue-naked-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-blue-naked-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-blue-naked-border-subtle);
-      --sui_chip-border_color-action: var(--sui-blue-naked-border-action);
+      --sui_chip-border_color-hover: var(--sui-blue-naked-border-subtle);
+      --sui_chip-border_color-active: var(--sui-blue-naked-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-blue-naked-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-blue-naked-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-blue-naked-canvas_text-strong);
     }
 
     &.sui_chip-variant_liquid {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-blue-liquid-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-blue-liquid-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-blue-liquid-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-blue-liquid-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-blue-liquid-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-blue-liquid-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-blue-liquid-border-subtle);
-      --sui_chip-border_color-action: var(--sui-blue-liquid-border-action);
+      --sui_chip-border_color-hover: var(--sui-blue-liquid-border-subtle);
+      --sui_chip-border_color-active: var(--sui-blue-liquid-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-blue-liquid-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-blue-liquid-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-blue-liquid-canvas_text-strong);
     }
   }
 
@@ -217,32 +269,46 @@
     &.sui_chip-variant_solid {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-purple-solid-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-purple-solid-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-purple-solid-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-purple-solid-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-purple-solid-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-purple-solid-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-purple-solid-border-subtle);
-      --sui_chip-border_color-action: var(--sui-purple-solid-border-action);
+      --sui_chip-border_color-hover: var(--sui-purple-solid-border-subtle);
+      --sui_chip-border_color-active: var(--sui-purple-solid-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-purple-solid-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-purple-solid-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-purple-solid-canvas_text-strong);
     }
+
     &.sui_chip-variant_naked {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-purple-naked-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-purple-naked-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-purple-naked-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-purple-naked-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-purple-naked-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-purple-naked-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-purple-naked-border-subtle);
-      --sui_chip-border_color-action: var(--sui-purple-naked-border-action);
+      --sui_chip-border_color-hover: var(--sui-purple-naked-border-subtle);
+      --sui_chip-border_color-active: var(--sui-purple-naked-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-purple-naked-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-purple-naked-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-purple-naked-canvas_text-strong);
     }
+
     &.sui_chip-variant_liquid {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-purple-liquid-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-purple-liquid-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-purple-liquid-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-purple-liquid-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-purple-liquid-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-purple-liquid-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-purple-liquid-border-subtle);
-      --sui_chip-border_color-action: var(--sui-purple-liquid-border-action);
+      --sui_chip-border_color-hover: var(--sui-purple-liquid-border-subtle);
+      --sui_chip-border_color-active: var(--sui-purple-liquid-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-purple-liquid-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-purple-liquid-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-purple-liquid-canvas_text-strong);
     }
   }
 
@@ -250,32 +316,46 @@
     &.sui_chip-variant_solid {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-magenta-solid-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-magenta-solid-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-magenta-solid-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-magenta-solid-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-magenta-solid-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-magenta-solid-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-magenta-solid-border-subtle);
-      --sui_chip-border_color-action: var(--sui-magenta-solid-border-action);
+      --sui_chip-border_color-hover: var(--sui-magenta-solid-border-subtle);
+      --sui_chip-border_color-active: var(--sui-magenta-solid-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-magenta-solid-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-magenta-solid-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-magenta-solid-canvas_text-strong);
     }
+
     &.sui_chip-variant_naked {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-magenta-naked-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-magenta-naked-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-magenta-naked-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-magenta-naked-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-magenta-naked-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-magenta-naked-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-magenta-naked-border-subtle);
-      --sui_chip-border_color-action: var(--sui-magenta-naked-border-action);
+      --sui_chip-border_color-hover: var(--sui-magenta-naked-border-subtle);
+      --sui_chip-border_color-active: var(--sui-magenta-naked-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-magenta-naked-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-magenta-naked-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-magenta-naked-canvas_text-strong);
     }
+
     &.sui_chip-variant_liquid {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-magenta-liquid-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-magenta-liquid-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-magenta-liquid-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-magenta-liquid-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-magenta-liquid-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-magenta-liquid-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-magenta-liquid-border-subtle);
-      --sui_chip-border_color-action: var(--sui-magenta-liquid-border-action);
+      --sui_chip-border_color-hover: var(--sui-magenta-liquid-border-subtle);
+      --sui_chip-border_color-active: var(--sui-magenta-liquid-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-magenta-liquid-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-magenta-liquid-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-magenta-liquid-canvas_text-strong);
     }
   }
 
@@ -283,32 +363,46 @@
     &.sui_chip-variant_solid {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-red-solid-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-red-solid-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-red-solid-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-red-solid-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-red-solid-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-red-solid-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-red-solid-border-subtle);
-      --sui_chip-border_color-action: var(--sui-red-solid-border-action);
+      --sui_chip-border_color-hover: var(--sui-red-solid-border-subtle);
+      --sui_chip-border_color-active: var(--sui-red-solid-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-red-solid-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-red-solid-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-red-solid-canvas_text-strong);
     }
+
     &.sui_chip-variant_naked {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-red-naked-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-red-naked-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-red-naked-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-red-naked-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-red-naked-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-red-naked-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-red-naked-border-subtle);
-      --sui_chip-border_color-action: var(--sui-red-naked-border-action);
+      --sui_chip-border_color-hover: var(--sui-red-naked-border-subtle);
+      --sui_chip-border_color-active: var(--sui-red-naked-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-red-naked-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-red-naked-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-red-naked-canvas_text-strong);
     }
+
     &.sui_chip-variant_liquid {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-red-liquid-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-red-liquid-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-red-liquid-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-red-liquid-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-red-liquid-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-red-liquid-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-red-liquid-border-subtle);
-      --sui_chip-border_color-action: var(--sui-red-liquid-border-action);
+      --sui_chip-border_color-hover: var(--sui-red-liquid-border-subtle);
+      --sui_chip-border_color-active: var(--sui-red-liquid-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-red-liquid-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-red-liquid-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-red-liquid-canvas_text-strong);
     }
   }
 
@@ -316,32 +410,46 @@
     &.sui_chip-variant_solid {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-orange-solid-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-orange-solid-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-orange-solid-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-orange-solid-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-orange-solid-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-orange-solid-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-orange-solid-border-subtle);
-      --sui_chip-border_color-action: var(--sui-orange-solid-border-action);
+      --sui_chip-border_color-hover: var(--sui-orange-solid-border-subtle);
+      --sui_chip-border_color-active: var(--sui-orange-solid-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-orange-solid-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-orange-solid-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-orange-solid-canvas_text-strong);
     }
+
     &.sui_chip-variant_naked {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-orange-naked-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-orange-naked-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-orange-naked-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-orange-naked-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-orange-naked-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-orange-naked-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-orange-naked-border-subtle);
-      --sui_chip-border_color-action: var(--sui-orange-naked-border-action);
+      --sui_chip-border_color-hover: var(--sui-orange-naked-border-subtle);
+      --sui_chip-border_color-active: var(--sui-orange-naked-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-orange-naked-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-orange-naked-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-orange-naked-canvas_text-strong);
     }
+
     &.sui_chip-variant_liquid {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-orange-liquid-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-orange-liquid-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-orange-liquid-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-orange-liquid-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-orange-liquid-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-orange-liquid-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-orange-liquid-border-subtle);
-      --sui_chip-border_color-action: var(--sui-orange-liquid-border-action);
+      --sui_chip-border_color-hover: var(--sui-orange-liquid-border-subtle);
+      --sui_chip-border_color-active: var(--sui-orange-liquid-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-orange-liquid-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-orange-liquid-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-orange-liquid-canvas_text-strong);
     }
   }
 
@@ -349,32 +457,46 @@
     &.sui_chip-variant_solid {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-yellow-solid-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-yellow-solid-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-yellow-solid-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-yellow-solid-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-yellow-solid-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-yellow-solid-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-yellow-solid-border-subtle);
-      --sui_chip-border_color-action: var(--sui-yellow-solid-border-action);
+      --sui_chip-border_color-hover: var(--sui-yellow-solid-border-subtle);
+      --sui_chip-border_color-active: var(--sui-yellow-solid-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-yellow-solid-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-yellow-solid-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-yellow-solid-canvas_text-strong);
     }
+
     &.sui_chip-variant_naked {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-yellow-naked-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-yellow-naked-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-yellow-naked-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-yellow-naked-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-yellow-naked-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-yellow-naked-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-yellow-naked-border-subtle);
-      --sui_chip-border_color-action: var(--sui-yellow-naked-border-action);
+      --sui_chip-border_color-hover: var(--sui-yellow-naked-border-subtle);
+      --sui_chip-border_color-active: var(--sui-yellow-naked-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-yellow-naked-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-yellow-naked-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-yellow-naked-canvas_text-strong);
     }
+
     &.sui_chip-variant_liquid {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-yellow-liquid-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-yellow-liquid-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-yellow-liquid-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-yellow-liquid-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-yellow-liquid-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-yellow-liquid-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-yellow-liquid-border-subtle);
-      --sui_chip-border_color-action: var(--sui-yellow-liquid-border-action);
+      --sui_chip-border_color-hover: var(--sui-yellow-liquid-border-subtle);
+      --sui_chip-border_color-active: var(--sui-yellow-liquid-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-yellow-liquid-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-yellow-liquid-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-yellow-liquid-canvas_text-strong);
     }
   }
 
@@ -382,140 +504,92 @@
     &.sui_chip-variant_solid {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-green-solid-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-green-solid-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-green-solid-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-green-solid-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-green-solid-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-green-solid-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-green-solid-border-subtle);
-      --sui_chip-border_color-action: var(--sui-green-solid-border-action);
+      --sui_chip-border_color-hover: var(--sui-green-solid-border-subtle);
+      --sui_chip-border_color-active: var(--sui-green-solid-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-green-solid-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-green-solid-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-green-solid-canvas_text-strong);
     }
+
     &.sui_chip-variant_naked {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-green-naked-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-green-naked-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-green-naked-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-green-naked-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-green-naked-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-green-naked-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-green-naked-border-subtle);
-      --sui_chip-border_color-action: var(--sui-green-naked-border-action);
+      --sui_chip-border_color-hover: var(--sui-green-naked-border-subtle);
+      --sui_chip-border_color-active: var(--sui-green-naked-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-green-naked-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-green-naked-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-green-naked-canvas_text-strong);
     }
+
     &.sui_chip-variant_liquid {
       /* 背景 */
       --sui_chip-background_color-normal: var(--sui-green-liquid-canvas-normal);
-      --sui_chip-background_color-subtle: var(--sui-green-liquid-canvas-subtle);
-      --sui_chip-background_color-action: var(--sui-green-liquid-canvas-action);
+      --sui_chip-background_color-hover: var(--sui-green-liquid-canvas-subtle);
+      --sui_chip-background_color-active: var(--sui-green-liquid-canvas-strong);
       /* 枠線 */
       --sui_chip-border_color-normal: var(--sui-green-liquid-border-normal);
-      --sui_chip-border_color-subtle: var(--sui-green-liquid-border-subtle);
-      --sui_chip-border_color-action: var(--sui-green-liquid-border-action);
+      --sui_chip-border_color-hover: var(--sui-green-liquid-border-subtle);
+      --sui_chip-border_color-active: var(--sui-green-liquid-border-strong);
+      /* 前景 */
+      --sui_chip-color-normal: var(--sui-green-liquid-canvas_text-normal);
+      --sui_chip-color-hover: var(--sui-green-liquid-canvas_text-subtle);
+      --sui_chip-color-active: var(--sui-green-liquid-canvas_text-strong);
     }
-  }
-
-  .sui_chip-color_grey.sui_chip-variant_solid {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-grey-solid-canvas_text-normal);
-  }
-  .sui_chip-color_grey.sui_chip-variant_naked {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-grey-naked-canvas_text-normal);
-  }
-  .sui_chip-color_grey.sui_chip-variant_liquid {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-grey-liquid-canvas_text-normal);
-  }
-  .sui_chip-color_blue.sui_chip-variant_solid {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-blue-solid-canvas_text-normal);
-  }
-  .sui_chip-color_blue.sui_chip-variant_naked {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-blue-naked-canvas_text-normal);
-  }
-  .sui_chip-color_blue.sui_chip-variant_liquid {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-blue-liquid-canvas_text-normal);
-  }
-  .sui_chip-color_purple.sui_chip-variant_solid {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-purple-solid-canvas_text-normal);
-  }
-  .sui_chip-color_purple.sui_chip-variant_naked {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-purple-naked-canvas_text-normal);
-  }
-  .sui_chip-color_purple.sui_chip-variant_liquid {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-purple-liquid-canvas_text-normal);
-  }
-  .sui_chip-color_magenta.sui_chip-variant_solid {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-magenta-solid-canvas_text-normal);
-  }
-  .sui_chip-color_magenta.sui_chip-variant_naked {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-magenta-naked-canvas_text-normal);
-  }
-  .sui_chip-color_magenta.sui_chip-variant_liquid {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-magenta-liquid-canvas_text-normal);
-  }
-  .sui_chip-color_red.sui_chip-variant_solid {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-red-solid-canvas_text-normal);
-  }
-  .sui_chip-color_red.sui_chip-variant_naked {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-red-naked-canvas_text-normal);
-  }
-  .sui_chip-color_red.sui_chip-variant_liquid {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-red-liquid-canvas_text-normal);
-  }
-  .sui_chip-color_orange.sui_chip-variant_solid {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-orange-solid-canvas_text-normal);
-  }
-  .sui_chip-color_orange.sui_chip-variant_naked {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-orange-naked-canvas_text-normal);
-  }
-  .sui_chip-color_orange.sui_chip-variant_liquid {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-orange-liquid-canvas_text-normal);
-  }
-  .sui_chip-color_yellow.sui_chip-variant_solid {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-yellow-solid-canvas_text-normal);
-  }
-  .sui_chip-color_yellow.sui_chip-variant_naked {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-yellow-naked-canvas_text-normal);
-  }
-  .sui_chip-color_yellow.sui_chip-variant_liquid {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-yellow-liquid-canvas_text-normal);
-  }
-  .sui_chip-color_green.sui_chip-variant_solid {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-green-solid-canvas_text-normal);
-  }
-  .sui_chip-color_green.sui_chip-variant_naked {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-green-naked-canvas_text-normal);
-  }
-  .sui_chip-color_green.sui_chip-variant_liquid {
-    /* 前景 */
-    --sui_chip-content_color: var(--sui-green-liquid-canvas_text-normal);
   }
 
   /* 既定値設定: ここまで */
 
   /* 上書き設定: ここから */
 
+  .sui_chip {
+    &:enabled {
+      @media (any-hover: hover) {
+        &:not(:has(:enabled:hover)):hover {
+          /* 背景 */
+          --_sui_chip-background_color: var(--sui_chip-background_color-hover);
+        }
+      }
+
+      &:not(:has(:enabled:active)):active {
+        /* 背景 */
+        --_sui_chip-background_color: var(--sui_chip-background_color-active);
+      }
+
+      &:focus-visible {
+        /* 枠線 */
+        --_sui_chip-outline_width: var(--sui-focusring_width);
+      }
+    }
+  }
+
   .sui_chip-outlined {
     /* 枠線 */
-    --_sui_chip-border_width: var(--sui_chip-border_width);
     --_sui_chip-border_color: var(--sui_chip-border_color-normal);
+    --_sui_chip-border_width: var(--sui_chip-border_width);
+
+    &:enabled {
+      @media (any-hover: hover) {
+        &:not(:has(:enabled:hover)):hover {
+          /* 枠線 */
+          --_sui_chip-border_color: var(--sui_chip-border_color-hover);
+        }
+      }
+
+      &:not(:has(:enabled:active)):active {
+        /* 枠線 */
+        --_sui_chip-border_color: var(--sui_chip-border_color-active);
+      }
+    }
   }
 
   /* 上書き設定: ここまで */

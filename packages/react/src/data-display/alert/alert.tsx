@@ -31,35 +31,33 @@ export type AlertSlotProps = {
 /**
  * {@link Alert} コンポーネントのプロパティーです。
  */
-export type AlertProps = AlertParts.Root.Props & {
-  /**
-   * アラートの操作ボタンです。
-   */
-  actions?: React.ReactNode | undefined;
+export type AlertProps = Omit<AlertParts.Root.Props, "children"> &
+  Pick<AlertParts.Description.Props, "children"> & {
+    /**
+     * アラートの操作ボタンです。
+     */
+    actions?: AlertParts.Actions.Props["children"];
 
-  /**
-   * アラートに表示するメッセージです。
-   */
-  children?: React.ReactNode | undefined;
+    /**
+     * アラートに表示するアイコンです。
+     */
+    icon?: AlertParts.Icon.Props["children"];
 
-  /**
-   * アラートに表示するアイコンです。
-   */
-  icon?: React.ReactNode | undefined;
+    /**
+     * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+     *
+     * 各パーツのプロパティーが優先されます。
+     */
+    slotProps?: AlertSlotProps | undefined;
 
-  /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-   */
-  slotProps?: AlertSlotProps | undefined;
-
-  /**
-   * アラートのタイトルです。
-   */
-  title?: React.ReactNode | undefined;
-};
+    /**
+     * アラートのタイトルです。
+     */
+    title?: AlertParts.Title.Props["children"] | undefined;
+  };
 
 /**
- * 重要なメッセージや通知をステータスインジケーター付きで表示します。
+ * 重要なメッセージや通知をステータスインジケーター付きで表示するコンポーネントです。
  *
  * @example 基本
  * ```tsx

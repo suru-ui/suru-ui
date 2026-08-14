@@ -4,7 +4,6 @@ import { preview, controls } from "../../.config/storybook/preview.js";
 import { Meter } from "../../src/data-display/meter/index.js";
 
 const RADII = ["none", ...SIZES, "full"] as const;
-
 const VARIANTS = ["naked", "liquid"] as const;
 
 const meta = preview.meta({
@@ -56,7 +55,7 @@ export const Usage = meta.story({
     color: "grey",
     size: "md",
     radius: "full",
-    outlined: undefined,
+    outlined: false,
     max: 100,
     value: 24,
     min: 0,
@@ -72,7 +71,7 @@ export const Variants = meta.story({
     color: "grey",
     size: "md",
     radius: "full",
-    outlined: undefined,
+    outlined: false,
     max: 100,
     value: 24,
     min: 0,
@@ -94,7 +93,7 @@ export const Labelless = meta.story({
     color: "grey",
     size: "md",
     radius: "full",
-    outlined: undefined,
+    outlined: false,
     max: 100,
     value: 24,
     min: 0,
@@ -115,7 +114,7 @@ export const Colors = meta.story({
   ...ctrl({
     size: "md",
     radius: "full",
-    outlined: undefined,
+    outlined: false,
     max: 100,
     value: 24,
     min: 0,
@@ -138,7 +137,7 @@ export const Radius = meta.story({
     color: "grey",
     size: "md",
     radius: "full",
-    outlined: undefined,
+    outlined: false,
     max: 100,
     value: 24,
     min: 0,
@@ -181,7 +180,7 @@ export const Sizes = meta.story({
     variant: "liquid",
     color: "grey",
     radius: "full",
-    outlined: undefined,
+    outlined: false,
     max: 100,
     value: 24,
     min: 0,

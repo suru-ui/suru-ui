@@ -4,44 +4,36 @@ import type { Component } from "../../types.js";
 import * as AvatarParts from "./avatar.parts.jsx";
 
 /**
- * {@link Avatar} コンポーネントのプロパティーです。
+ * {@link Avatar} の各パーツに渡すプロパティーです。
  */
-export type AvatarProps = AvatarParts.Root.Props & {
+export type AvatarSlotProps = {
   /**
-   * フォールバックに表示するコンテンツです。
+   * {@link AvatarParts.Image|Image} に渡すプロパティーです。
    */
-  children?: React.ReactNode | undefined;
+  readonly image?: AvatarParts.Image.Props | undefined;
 
   /**
-   * 画像の URL です。
+   * {@link AvatarParts.Fallback|Fallback} に渡すプロパティーです。
    */
-  src?: string | undefined;
-
-  /**
-   * 画像の代替テキストです。
-   */
-  alt?: string | undefined;
-
-  /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-   */
-  slotProps?:
-    | {
-        /**
-         * {@link AvatarParts.Image|Image} に渡すプロパティーです。
-         */
-        readonly image?: AvatarParts.Image.Props | undefined;
-
-        /**
-         * {@link AvatarParts.Fallback|Fallback} に渡すプロパティーです。
-         */
-        readonly fallback?: AvatarParts.Fallback.Props | undefined;
-      }
-    | undefined;
+  readonly fallback?: AvatarParts.Fallback.Props | undefined;
 };
 
 /**
- * 画像またはフォールバックコンテンツを持つアバターを表示します。
+ * {@link Avatar} コンポーネントのプロパティーです。
+ */
+export type AvatarProps = Omit<AvatarParts.Root.Props, "children"> &
+  Pick<AvatarParts.Fallback.Props, "children"> &
+  Pick<AvatarParts.Image.Props, "alt" | "src"> & {
+    /**
+     * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+     *
+     * 各パーツのプロパティーが優先されます。
+     */
+    slotProps?: AvatarSlotProps | undefined;
+  };
+
+/**
+ * 画像またはフォールバックコンテンツを持つアバターを表示するコンポーネントです。
  *
  * @example
  * ```tsx
@@ -50,8 +42,8 @@ export type AvatarProps = AvatarParts.Root.Props & {
  */
 export const Avatar: Component<AvatarProps> = function SuiAvatar(props) {
   const {
-    src,
     alt,
+    src,
     children,
     slotProps: { image: imageProps, fallback: fallbackProps } = {},
     ...otherRootProps
@@ -59,16 +51,12 @@ export const Avatar: Component<AvatarProps> = function SuiAvatar(props) {
 
   return (
     <AvatarParts.Root {...otherRootProps}>
-      {src !== undefined || imageProps !== undefined ? (
-        <AvatarParts.Image
-          {...imageProps}
-          src={imageProps?.src ?? src}
-          alt={imageProps?.alt ?? alt}
-        />
-      ) : null}
-      {children !== undefined || fallbackProps !== undefined ? (
+      {("alt" in props || "src" in props || !!imageProps) && (
+        <AvatarParts.Image alt={alt} src={src} {...imageProps} />
+      )}
+      {("children" in props || !!fallbackProps) && (
         <AvatarParts.Fallback {...fallbackProps}>{children}</AvatarParts.Fallback>
-      ) : null}
+      )}
     </AvatarParts.Root>
   );
 };

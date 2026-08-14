@@ -50,7 +50,7 @@ export const Usage = meta.story({
     color: "grey",
     size: "md",
     radius: undefined,
-    outlined: true,
+    outlined: false,
   }),
 });
 
@@ -61,11 +61,11 @@ export const WithIcon = meta.story({
     color: "grey",
     size: "md",
     radius: undefined,
-    outlined: true,
+    outlined: false,
   }),
   render(props) {
     return (
-      <div className="flex w-96 flex-col gap-3">
+      <div className="flex w-[450px] flex-col gap-3">
         <Alert {...props} icon={<InfoIcon />}>
           新しい更新があります。
         </Alert>
@@ -80,6 +80,25 @@ export const WithIcon = meta.story({
   },
 });
 
+export const WithIndicator = meta.story({
+  name: "インジケーター付き",
+  ...ctrl({
+    children: "プロフィールを更新しました。",
+    variant: "solid",
+    color: "green",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+  }),
+  render(props) {
+    return (
+      <div className="w-[450px]">
+        <Alert {...props} icon />
+      </div>
+    );
+  },
+});
+
 export const WithTitle = meta.story({
   name: "タイトル付き",
   ...ctrl({
@@ -89,11 +108,11 @@ export const WithTitle = meta.story({
     color: "green",
     size: "md",
     radius: undefined,
-    outlined: true,
+    outlined: false,
   }),
   render(props) {
     return (
-      <div className="w-96">
+      <div className="w-[450px]">
         <Alert {...props} icon={<CheckCircle2Icon />} />
       </div>
     );
@@ -109,18 +128,22 @@ export const WithActions = meta.story({
     color: "red",
     size: "md",
     radius: undefined,
-    outlined: true,
+    outlined: false,
   }),
   render(props) {
     return (
-      <div className="w-96">
+      <div className="w-[450px]">
         <Alert
           {...props}
           icon={<AlertCircleIcon />}
           actions={
             <>
-              <Button variant="naked">閉じる</Button>
-              <Button color="red">再試行</Button>
+              <Button size={props.size} variant="naked">
+                閉じる
+              </Button>
+              <Button size={props.size} color={props.color}>
+                再試行
+              </Button>
             </>
           }
         />
@@ -137,13 +160,13 @@ export const Variants = meta.story({
     color: "blue",
     size: "md",
     radius: undefined,
-    outlined: true,
+    outlined: false,
   }),
   render(props) {
     return (
       <div className="flex flex-col gap-3">
         {VARIANTS.map((variant) => (
-          <div key={variant} className="flex flex-col gap-2 w-96">
+          <div key={variant} className="flex flex-col gap-2 w-[450px]">
             <span className="text-sm">{variant}</span>
             <Alert {...props} icon={<InfoIcon />} variant={variant} />
           </div>
@@ -161,13 +184,13 @@ export const Colors = meta.story({
     variant: "solid",
     size: "md",
     radius: undefined,
-    outlined: true,
+    outlined: false,
   }),
   render(props) {
     return (
       <div className="flex flex-col gap-3">
         {COLORS.map((color) => (
-          <div key={color} className="flex flex-col gap-2 w-96">
+          <div key={color} className="flex flex-col gap-2 w-[450px]">
             <span className="text-sm">{color}</span>
             <Alert {...props} icon={<InfoIcon />} color={color} />
           </div>
@@ -185,13 +208,13 @@ export const Radius = meta.story({
     variant: "solid",
     color: "grey",
     size: "md",
-    outlined: true,
+    outlined: false,
   }),
   render(props) {
     return (
-      <div className="flex w-96 flex-col gap-3">
+      <div className="flex w-[450px] flex-col gap-3">
         {RADII.map((radius) => (
-          <div key={radius} className="flex flex-col gap-2 w-96">
+          <div key={radius} className="flex flex-col gap-2 w-[450px]">
             <span className="text-sm">{radius}</span>
             <Alert {...props} icon={<InfoIcon />} radius={radius} />
           </div>
@@ -212,7 +235,7 @@ export const Outlined = meta.story({
   }),
   render(props) {
     return (
-      <div className="flex w-96 flex-col gap-3">
+      <div className="flex w-[450px] flex-col gap-3">
         <Alert {...props} icon={<InfoIcon />} title="枠線付き" outlined />
         <Alert {...props} icon={<InfoIcon />} title="枠線無し" />
       </div>
@@ -228,13 +251,13 @@ export const Sizes = meta.story({
     variant: "solid",
     color: "grey",
     radius: undefined,
-    outlined: true,
+    outlined: false,
   }),
   render(props) {
     return (
-      <div className="flex w-96 flex-col gap-3">
+      <div className="flex w-[450px] flex-col gap-3">
         {SIZES.map((size) => (
-          <div key={size} className="flex flex-col gap-2 w-96">
+          <div key={size} className="flex flex-col gap-2 w-[450px]">
             <span className="text-sm">{size}</span>
             <Alert {...props} icon={<InfoIcon />} size={size} />
           </div>
