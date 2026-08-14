@@ -64,16 +64,12 @@
     font-weight: var(--sui_button-font_weight);
     line-height: var(--sui_button-line_height);
     letter-spacing: var(--sui_button-letter_spacing);
-    outline: var(--_sui_button-outline_width, 0px)
-             solid
-             var(--sui_button-outline_color);
+    outline: var(--_sui_button-outline_width, 0px) solid var(--sui_button-outline_color);
     outline-offset: var(--sui_button-outline_offset);
     background-color: var(--_sui_button-background_color,
                         var(--sui_button-background_color-normal)
                       );
-    border: var(--_sui_button-border_color, transparent)
-            solid
-            var(--_sui_button-border_width, 0px);
+    border: var(--_sui_button-border_color, transparent) solid var(--_sui_button-border_width, 0px);
     border-radius: var(--_sui_button-border_radius, var(--sui_button-border_radius));
   }
 

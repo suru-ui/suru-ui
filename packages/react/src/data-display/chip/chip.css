@@ -57,9 +57,7 @@
     line-height: var(--sui_chip-line_height);
     color: var(--_sui_chip-color-normal, var(--sui_chip-color-normal));
     letter-spacing: var(--sui_chip-letter_spacing);
-    outline: var(--_sui_chip-outline_width, 0px)
-             solid
-             var(--sui_chip-outline_color);
+    outline: var(--_sui_chip-outline_width, 0px) solid var(--sui_chip-outline_color);
     outline-offset: var(--sui_chip-outline_offset);
     background-color: var(--_sui_chip-background_color, var(--sui_chip-background_color-normal));
     border: none;
@@ -76,9 +74,7 @@
       pointer-events: none;
       content: "";
       background-color: transparent;
-      border: var(--_sui_chip-border_color, transparent)
-              solid
-              var(--_sui_chip-border_width, 0px);
+      border: var(--_sui_chip-border_color, transparent) solid var(--_sui_chip-border_width, 0px);
       border-radius: var(--sui_chip-border_radius);
     }
 
