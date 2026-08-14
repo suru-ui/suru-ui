@@ -36,7 +36,7 @@ describe("Meter", () => {
   test("size・color・variant・radius・outlined のクラスを適用する", async () => {
     // 実行
     const screen = await render(
-      <Meter value={50} size="lg" color="red" variant="naked" radius="rounded" outlined={true} />,
+      <Meter value={50} size="lg" color="red" variant="naked" radius="md" outlined={true} />,
     );
 
     // 検証
@@ -45,7 +45,7 @@ describe("Meter", () => {
     await expect.element(meter).toHaveClass("sui_meter-size_lg");
     await expect.element(meter).toHaveClass("sui_meter-color_red");
     await expect.element(meter).toHaveClass("sui_meter-variant_naked");
-    await expect.element(meter).toHaveClass("sui_meter-radius_rounded");
+    await expect.element(meter).toHaveClass("sui_meter-radius_md");
     await expect.element(meter).toHaveClass("sui_meter-outlined");
   });
 

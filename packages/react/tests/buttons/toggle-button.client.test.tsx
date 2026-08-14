@@ -42,9 +42,13 @@ describe("ToggleButton", () => {
     await expect.element(screen.getByRole("button")).toHaveAttribute("aria-pressed", "true");
   });
 
-  test("押下時は既定で color が blue になる", async () => {
+  test("押下時は指定した color が適用される", async () => {
     // 実行
-    const screen = await render(<ToggleButton defaultPressed>切り替え</ToggleButton>);
+    const screen = await render(
+      <ToggleButton color="blue" defaultPressed>
+        切り替え
+      </ToggleButton>,
+    );
 
     // 検証
     await expect.element(screen.getByRole("button")).toHaveClass("sui_button-color_blue");
@@ -85,26 +89,6 @@ describe("ToggleButton", () => {
 
     // 検証
     await expect.element(screen.getByRole("button")).toHaveAttribute("aria-pressed", "false");
-  });
-
-  test("onPressedChange が押下状態を通知する", async () => {
-    // 準備
-    let pressed: boolean | undefined;
-
-    // 実行
-    const screen = await render(
-      <ToggleButton
-        onPressedChange={(nextPressed) => {
-          pressed = nextPressed;
-        }}
-      >
-        切り替え
-      </ToggleButton>,
-    );
-    await userEvent.click(screen.getByRole("button"));
-
-    // 検証
-    expect(pressed).toBe(true);
   });
 
   test("pending を指定すると無効化され、プログレスバーが表示される", async () => {

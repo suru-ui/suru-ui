@@ -24,7 +24,7 @@ describe("Alert", () => {
         "sui_alert-size_md",
         "sui_alert-color_grey",
         "sui_alert-radius_md",
-        "sui_alert-variant_liquid",
+        "sui_alert-variant_solid",
       );
     await expect.element(screen.getByText("プロフィールを更新しました。")).toBeVisible();
     expect(screen.container.querySelector(".sui_alert_icon")).toBeNull();

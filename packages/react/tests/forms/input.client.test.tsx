@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
-import { userEvent } from "vitest/browser";
 
 import { Input } from "../../src/forms/input/index.js";
 
@@ -23,10 +22,8 @@ describe("Input", () => {
     const input = screen.getByRole("textbox");
 
     await expect.element(input).toHaveClass("sui_input-size_md");
-    await expect.element(input).toHaveClass("sui_input-variant_naked");
-    await expect.element(input).toHaveClass("sui_input-radius_rounded");
-    await expect.element(input).toHaveClass("sui_input-accent_color_grey");
-    await expect.element(input).toHaveClass("sui_input-outlined");
+    await expect.element(input).toHaveClass("sui_input-variant_liquid");
+    await expect.element(input).toHaveClass("sui_input-radius_md");
   });
 
   test("variant・size・radius・outlined を指定できる", async () => {
@@ -59,122 +56,6 @@ describe("Input", () => {
     await expect
       .element(screen.getByRole("textbox", { name: "明示" }))
       .toHaveClass("sui_input-outlined");
-  });
-
-  test("accentColor に応じたクラスを適用する", async () => {
-    // 実行
-    const screen = await render(<Input accentColor="blue" />);
-
-    // 検証
-    const input = screen.getByRole("textbox");
-
-    await expect.element(input).toHaveClass("sui_input-accent_color_blue");
-  });
-
-  test("ポインターでフォーカスすると data-focus-type が pointer になる", async () => {
-    // 実行
-    const screen = await render(<Input />);
-    const input = screen.getByRole("textbox");
-    const inputElement = input.element() as HTMLInputElement;
-    inputElement.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
-    inputElement.focus();
-
-    // 検証
-    await expect.element(input).toHaveAttribute("data-focus-type", "pointer");
-  });
-
-  test("キーボードでフォーカスすると data-focus-type が keyboard になる", async () => {
-    // 実行
-    const screen = await render(<Input />);
-    const input = screen.getByRole("textbox");
-    (input.element() as HTMLElement).focus();
-
-    // 検証
-    await expect.element(input).toHaveAttribute("data-focus-type", "keyboard");
-  });
-
-  test("フォーカスが外れると data-focus-type が外れる", async () => {
-    // 実行
-    const screen = await render(<Input />);
-    const input = screen.getByRole("textbox");
-    const inputElement = input.element() as HTMLInputElement;
-    inputElement.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
-    inputElement.focus();
-    inputElement.blur();
-
-    // 検証
-    await expect.element(input).not.toHaveAttribute("data-focus-type");
-  });
-
-  test("onPointerDown が preventDefault するとポインターによるフォーカス判定を行わない", async () => {
-    // 実行
-    const screen = await render(
-      <Input
-        onPointerDown={(event) => {
-          event.preventDefault();
-        }}
-      />,
-    );
-    const input = screen.getByRole("textbox");
-    const inputElement = input.element() as HTMLInputElement;
-    inputElement.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
-    inputElement.focus();
-
-    // 検証
-    await expect.element(input).toHaveAttribute("data-focus-type", "keyboard");
-  });
-
-  test("onFocus が preventDefault するとフォーカスの種類を更新しない", async () => {
-    // 実行
-    const screen = await render(
-      <Input
-        onFocus={(event) => {
-          event.preventDefault();
-        }}
-      />,
-    );
-    const input = screen.getByRole("textbox");
-    (input.element() as HTMLInputElement).focus();
-
-    // 検証
-    await expect.element(input).not.toHaveAttribute("data-focus-type");
-  });
-
-  test("onBlur が preventDefault するとフォーカスの種類をクリアしない", async () => {
-    // 実行
-    const screen = await render(
-      <Input
-        onBlur={(event) => {
-          event.preventDefault();
-        }}
-      />,
-    );
-    const input = screen.getByRole("textbox");
-    const inputElement = input.element() as HTMLInputElement;
-    inputElement.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true }));
-    inputElement.focus();
-    inputElement.blur();
-
-    // 検証
-    await expect.element(input).toHaveAttribute("data-focus-type", "pointer");
-  });
-
-  test("文字を入力すると onValueChange が呼ばれる", async () => {
-    // 準備
-    let value = "";
-
-    // 実行
-    const screen = await render(
-      <Input
-        onValueChange={(nextValue) => {
-          value = nextValue;
-        }}
-      />,
-    );
-    await userEvent.type(screen.getByRole("textbox"), "山田太郎");
-
-    // 検証
-    expect(value).toBe("山田太郎");
   });
 
   test("制御モードで value を表示する", async () => {

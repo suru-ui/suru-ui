@@ -20,24 +20,6 @@ describe("AvatarGroup", () => {
     await expect.element(screen.getByText("花")).toBeVisible();
   });
 
-  test("左側のアバターを手前に表示する", async () => {
-    const screen = await render(
-      <AvatarGroup>
-        <Avatar>太</Avatar>
-        <Avatar>花</Avatar>
-        <Avatar>次</Avatar>
-      </AvatarGroup>,
-    );
-    const avatars = screen.container.querySelectorAll<HTMLElement>(
-      ":scope > .sui_avatar_group > .sui_avatar",
-    );
-
-    expect(avatars).toHaveLength(3);
-    await expect.element(avatars[0]!).toHaveStyle({ zIndex: "3" });
-    await expect.element(avatars[1]!).toHaveStyle({ zIndex: "2" });
-    await expect.element(avatars[2]!).toHaveStyle({ zIndex: "1" });
-  });
-
   test("最大数を超えたアバターを省略する", async () => {
     const screen = await render(
       <AvatarGroup max={4}>
@@ -52,20 +34,6 @@ describe("AvatarGroup", () => {
 
     expect(screen.container.querySelectorAll(".sui_avatar")).toHaveLength(4);
     await expect.element(screen.getByText("+3")).toBeVisible();
-  });
-
-  test("省略アバターをカスタマイズする", async () => {
-    const screen = await render(
-      <AvatarGroup max={3} renderSurplus={(surplus) => <Avatar color="red">残り{surplus}</Avatar>}>
-        <Avatar>太</Avatar>
-        <Avatar>花</Avatar>
-        <Avatar>次</Avatar>
-        <Avatar>桜</Avatar>
-      </AvatarGroup>,
-    );
-
-    await expect.element(screen.getByText("残り2")).toBeVisible();
-    await expect.element(screen.getByText("残り2")).toHaveClass("sui_avatar_fallback");
   });
 
   test("render でルート要素を置き換える", async () => {

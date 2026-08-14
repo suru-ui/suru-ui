@@ -20,7 +20,7 @@ test("既定のスタイルでチップを表示する", async () => {
 test("スタイルプロパティーを上書きする", async () => {
   // 準備と実行
   const screen = await render(
-    <Chip color="red" outlined radius="rounded" size="lg" variant="solid">
+    <Chip color="red" outlined radius="md" size="lg" variant="solid">
       警告
     </Chip>,
   );
@@ -28,7 +28,7 @@ test("スタイルプロパティーを上書きする", async () => {
   // 検証
   const chip = screen.getByText("警告");
   await expect.element(chip).toHaveClass("sui_chip-color_red");
-  await expect.element(chip).toHaveClass("sui_chip-radius_rounded");
+  await expect.element(chip).toHaveClass("sui_chip-radius_md");
   await expect.element(chip).toHaveClass("sui_chip-size_lg");
   await expect.element(chip).toHaveClass("sui_chip-variant_solid");
   await expect.element(chip).toHaveClass("sui_chip-outlined");

@@ -50,14 +50,7 @@ describe("Progress", () => {
   test("size・color・variant・radius・outlined のクラスを適用する", async () => {
     // 実行
     const screen = await render(
-      <Progress
-        value={50}
-        size="lg"
-        color="red"
-        variant="naked"
-        radius="rounded"
-        outlined={true}
-      />,
+      <Progress value={50} size="lg" color="red" variant="naked" radius="md" outlined={true} />,
     );
 
     // 検証
@@ -66,7 +59,7 @@ describe("Progress", () => {
     await expect.element(progress).toHaveClass("sui_progress-size_lg");
     await expect.element(progress).toHaveClass("sui_progress-color_red");
     await expect.element(progress).toHaveClass("sui_progress-variant_naked");
-    await expect.element(progress).toHaveClass("sui_progress-radius_rounded");
+    await expect.element(progress).toHaveClass("sui_progress-radius_md");
     await expect.element(progress).toHaveClass("sui_progress-outlined");
   });
 

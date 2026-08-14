@@ -25,13 +25,13 @@ describe("Avatar", () => {
   });
 
   test("Root にサイズ・色・角丸のクラスを適用する", async () => {
-    const screen = await render(<Avatar size="lg" color="blue" radius="rounded" />);
+    const screen = await render(<Avatar size="lg" color="blue" radius="md" />);
     const avatar = screen.container.querySelector(".sui_avatar");
 
     expect(avatar).not.toBeNull();
     await expect.element(avatar as SVGElement).toHaveClass("sui_avatar-size_lg");
     await expect.element(avatar as SVGElement).toHaveClass("sui_avatar-color_blue");
-    await expect.element(avatar as SVGElement).toHaveClass("sui_avatar-radius_rounded");
+    await expect.element(avatar as SVGElement).toHaveClass("sui_avatar-radius_md");
   });
 });
 

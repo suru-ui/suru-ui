@@ -1,11 +1,11 @@
 import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { ActionGroupRoot, ActionGroupSeparator } from "../../src/buttons/action-group/index.js";
 import { Button } from "../../src/buttons/button/index.js";
 import { Input } from "../../src/forms/input/index.js";
 import { NumberField } from "../../src/forms/number-field/index.js";
 import { Select } from "../../src/forms/select/index.js";
+import { ActionGroupRoot, ActionGroupSeparator } from "../../src/layout/action-group/index.js";
 
 describe("ActionGroupRoot", () => {
   test("グループ要素と既定の向きをレンダリングする", async () => {

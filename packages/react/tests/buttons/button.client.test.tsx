@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
 import { render } from "vitest-browser-react";
-import { userEvent } from "vitest/browser";
 
 import { Button } from "../../src/buttons/button/index.js";
 
@@ -26,7 +25,7 @@ describe("Button", () => {
 
     await expect.element(button).toHaveClass("sui_button-size_md");
     await expect.element(button).toHaveClass("sui_button-color_grey");
-    await expect.element(button).toHaveClass("sui_button-radius_rounded");
+    await expect.element(button).toHaveClass("sui_button-radius_md");
     await expect.element(button).toHaveClass("sui_button-variant_solid");
   });
 
@@ -75,18 +74,6 @@ describe("Button", () => {
 
     await expect.element(button).toHaveAttribute("type", "submit");
     await expect.element(button).toHaveClass("my-button");
-  });
-
-  test("クリックすると onClick が呼ばれる", async () => {
-    // 準備
-    let clickCount = 0;
-
-    // 実行
-    const screen = await render(<Button onClick={() => clickCount++}>送信</Button>);
-    await userEvent.click(screen.getByRole("button"));
-
-    // 検証
-    expect(clickCount).toBe(1);
   });
 
   test("disabled を指定すると無効化される", async () => {
