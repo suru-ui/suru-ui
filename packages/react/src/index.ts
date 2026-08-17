@@ -15,17 +15,43 @@ export { default as useFocusType } from "./hooks/use-focus-type.js";
 /** components */
 
 // buttons
-export { type ButtonProps, type ButtonSlotProps, Button } from "./buttons/button/index.js";
+export {
+  type ButtonSize,
+  type ButtonColor,
+  type ButtonProps,
+  type ButtonState,
+  type ButtonRadius,
+  type ButtonContext,
+  type ButtonVariant,
+  type ButtonSlotProps,
+  Button,
+} from "./buttons/button/index.js";
 export {
   type ToggleButtonProps,
+  type ToggleButtonState,
+  type ToggleButtonContext,
   type ToggleButtonSlotProps,
   ToggleButton,
 } from "./buttons/toggle-button/index.js";
 
 // data-display
-export { type AlertProps, type AlertSlotProps, Alert } from "./data-display/alert/index.js";
-export { type AvatarProps, type AvatarSlotProps, Avatar } from "./data-display/avatar/index.js";
-export { type AvatarGroupProps, AvatarGroup } from "./data-display/avatar-group/index.js";
+export {
+  type AlertProps,
+  type AlertState,
+  type AlertSlotProps,
+  Alert,
+} from "./data-display/alert/index.js";
+export {
+  type AvatarProps,
+  type AvatarState,
+  type AvatarSlotProps,
+  Avatar,
+} from "./data-display/avatar/index.js";
+export {
+  type AvatarGroupProps,
+  type AvatarGroupState,
+  AvatarGroup,
+} from "./data-display/avatar-group/index.js";
 export { type ChipProps, Chip } from "./data-display/chip/index.js";
 export { type MeterProps, type MeterSlotProps, Meter } from "./data-display/meter/index.js";
 export {

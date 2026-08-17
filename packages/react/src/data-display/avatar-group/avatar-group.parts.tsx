@@ -1,11 +1,11 @@
-import { COLORS, type Color, type Size } from "@suru-ui/theme";
+import { type Size, type Color, COLORS } from "@suru-ui/theme";
 import * as React from "react";
 
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
-import type { Component } from "../../types.js";
-import * as Avatar from "../avatar/index.js";
+import type { IComponent, IUseContext } from "../../types.js";
+import { AvatarRoot, type AvatarRootProps, type AvatarRootState } from "../avatar/index.js";
 
 import "./avatar-group.css";
 
@@ -40,15 +40,9 @@ export type AvatarGroupContext = {
 export const AvatarGroupContext: React.Context<AvatarGroupContext | null> =
   React.createContext<AvatarGroupContext | null>(null);
 
-/**
- * {@link AvatarGroupContext} を読み取るフックです。
- *
- * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
- * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
- */
-export function useAvatarGroupContext(optional?: false): AvatarGroupContext;
-export function useAvatarGroupContext(optional?: boolean): AvatarGroupContext | null;
-export function useAvatarGroupContext(optional?: boolean): AvatarGroupContext | null {
+function useSuiAvatarGroupContext(optional?: false): AvatarGroupContext;
+function useSuiAvatarGroupContext(optional?: boolean): AvatarGroupContext | null;
+function useSuiAvatarGroupContext(optional?: boolean): AvatarGroupContext | null {
   const context = React.use(AvatarGroupContext);
   if (context === null && !optional) {
     throw new ContextMissingError({
@@ -59,6 +53,11 @@ export function useAvatarGroupContext(optional?: boolean): AvatarGroupContext | 
 
   return context;
 }
+
+/**
+ * {@link AvatarGroupContext} を読み取るフックです。
+ */
+export const useAvatarGroupContext: IUseContext<AvatarGroupContext> = useSuiAvatarGroupContext;
 
 /**
  * {@link AvatarGroupContext} です。
@@ -72,15 +71,8 @@ export const Context: React.Context<AvatarGroupContext | null> = AvatarGroupCont
 
 /**
  * {@link useAvatarGroupContext} です。
- *
- * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
- * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
  */
-export function useContext(optional?: false): AvatarGroupContext;
-export function useContext(optional?: boolean): AvatarGroupContext | null;
-export function useContext(optional?: boolean): AvatarGroupContext | null {
-  return useAvatarGroupContext(optional);
-}
+export const useContext: IUseContext<Context> = useAvatarGroupContext;
 
 // Root
 // ----
@@ -134,16 +126,10 @@ export type AvatarGroupRootProps = Omit<React.ComponentProps<"div">, keyof Rende
 
 /**
  * アバターを重ねて表示するグループのルートコンポーネントです。
- *
- * @example
- * ```tsx
- * <AvatarGroupRoot>
- *   <Avatar>太</Avatar>
- *   <Avatar>花</Avatar>
- * </AvatarGroupRoot>
- * ```
  */
-export const AvatarGroupRoot: Component<AvatarGroupRootProps> = function SuiAvatarGroupRoot(props) {
+export const AvatarGroupRoot: IComponent<AvatarGroupRootProps> = function SuiAvatarGroupRoot(
+  props,
+) {
   const {
     size = "md",
     color = "colorful",
@@ -194,12 +180,12 @@ export const AvatarGroupRoot: Component<AvatarGroupRootProps> = function SuiAvat
  */
 export namespace Root {
   /**
-   * {@link AvatarGroupRoot} の状態型です。
+   * {@link AvatarGroupRootState} です。
    */
   export type State = AvatarGroupRootState;
 
   /**
-   * {@link AvatarGroupRoot} のプロパティー型です。
+   * {@link AvatarGroupRootProps} です。
    */
   export type Props = AvatarGroupRootProps;
 }
@@ -207,7 +193,7 @@ export namespace Root {
 /**
  * {@link AvatarGroupRoot} です。
  */
-export const Root: Component<Root.Props> = AvatarGroupRoot;
+export const Root: IComponent<Root.Props> = AvatarGroupRoot;
 
 // Surplus
 // -------
@@ -215,26 +201,21 @@ export const Root: Component<Root.Props> = AvatarGroupRoot;
 /**
  * {@link AvatarGroupSurplus} の状態です。
  */
-export type AvatarGroupSurplusState = Avatar.Root.State;
+export type AvatarGroupSurplusState = AvatarRootState;
 
 /**
  * {@link AvatarGroupSurplus} に渡すプロパティーです。
  */
-export type AvatarGroupSurplusProps = Avatar.Root.Props;
+export type AvatarGroupSurplusProps = AvatarRootProps;
 
 /**
  * 余剰分のアバターの数などを表示するコンポーネントです。
- *
- * @example
- * ```tsx
- * <AvatarGroupSurplus>+{surplus}</AvatarGroupSurplus>
- * ```
  */
-export const AvatarGroupSurplus: Component<AvatarGroupSurplusProps> =
+export const AvatarGroupSurplus: IComponent<AvatarGroupSurplusProps> =
   function SuiAvatarGroupSurplus(props) {
     const { color = "grey", ...otherProps } = props;
 
-    return <Avatar.Root {...otherProps} color={color} />;
+    return <AvatarRoot {...otherProps} color={color} />;
   };
 
 /**
@@ -242,12 +223,12 @@ export const AvatarGroupSurplus: Component<AvatarGroupSurplusProps> =
  */
 export namespace Surplus {
   /**
-   * {@link AvatarGroupSurplus} の状態型です。
+   * {@link AvatarGroupSurplusState} です。
    */
   export type State = AvatarGroupSurplusState;
 
   /**
-   * {@link AvatarGroupSurplus} のプロパティー型です。
+   * {@link AvatarGroupSurplusProps} です。
    */
   export type Props = AvatarGroupSurplusProps;
 }
@@ -255,4 +236,4 @@ export namespace Surplus {
 /**
  * {@link AvatarGroupSurplus} です。
  */
-export const Surplus: Component<Surplus.Props> = AvatarGroupSurplus;
+export const Surplus: IComponent<Surplus.Props> = AvatarGroupSurplus;

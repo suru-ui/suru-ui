@@ -104,12 +104,12 @@ export type FieldProps = FieldRootProps & {
 
 interface FieldComponentType extends Component<FieldProps> {
   /**
-   * フィールド内に配置する入力欄です。
+   * {@link FieldControl} です。
    */
   readonly Control: Component<FieldControlProps>;
 
   /**
-   * フィールド内の入力欄をグループ化する項目です。
+   * {@link FieldItem} です。
    */
   readonly Item: Component<FieldItemProps>;
 }

@@ -169,9 +169,9 @@
   --sui-grey-naked-canvas_text-subtle: var(--sui-grey-100);
   --sui-grey-naked-canvas_text-strong: var(--sui-grey-100);
 
-  --sui-grey-liquid-canvas-normal: var(--sui-grey-alpha-10);
-  --sui-grey-liquid-canvas-subtle: var(--sui-grey-alpha-20);
-  --sui-grey-liquid-canvas-strong: var(--sui-grey-alpha-30);
+  --sui-grey-liquid-canvas-normal: var(--sui-grey-alpha-5);
+  --sui-grey-liquid-canvas-subtle: var(--sui-grey-alpha-10);
+  --sui-grey-liquid-canvas-strong: var(--sui-grey-alpha-15);
   --sui-grey-liquid-border-normal: var(--sui-grey-50);
   --sui-grey-liquid-border-subtle: var(--sui-grey-80);
   --sui-grey-liquid-border-strong: var(--sui-grey-90);

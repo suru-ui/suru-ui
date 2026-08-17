@@ -1,49 +1,70 @@
-import type { Component } from "../../types.js";
-import * as ButtonParts from "./button.parts.jsx";
+import type { IComponent, IUseContext } from "../../types.js";
+import {
+  type ButtonContext,
+  type ButtonRootProps,
+  type ButtonRootState,
+  type ButtonContentProps,
+  type ButtonPendingProps,
+  type ButtonCircularProgressProps,
+  type ButtonCircularProgressFillProps,
+  type ButtonCircularProgressTrackProps,
+  type ButtonCircularProgressFillRotationProps,
+  ButtonRoot,
+  ButtonContent,
+  ButtonPending,
+  useButtonContext,
+  ButtonCircularProgress,
+  ButtonCircularProgressFill,
+  ButtonCircularProgressTrack,
+  ButtonCircularProgressFillRotation,
+} from "./button.parts.jsx";
 
 /**
  * {@link Button} の各パーツに渡すプロパティーです。
  */
 export type ButtonSlotProps = {
   /**
-   * {@link ButtonParts.CircularProgress|CircularProgress} に渡すプロパティーです。
+   * {@link ButtonCircularProgress} に渡すプロパティーです。
    */
-  readonly circularProgress?: ButtonParts.CircularProgress.Props | undefined;
+  readonly circularProgress?: ButtonCircularProgressProps | undefined;
 
   /**
-   * {@link ButtonParts.CircularProgressFill|CircularProgressFill} に渡すプロパティーです。
+   * {@link ButtonCircularProgressFill} に渡すプロパティーです。
    */
-  readonly circularProgressFill?: ButtonParts.CircularProgressFill.Props | undefined;
+  readonly circularProgressFill?: ButtonCircularProgressFillProps | undefined;
 
   /**
-   * {@link ButtonParts.CircularProgressFillRotation|CircularProgressFillRotation} に渡すプロパティーです。
+   * {@link ButtonCircularProgressFillRotation} に渡すプロパティーです。
    */
-  readonly circularProgressFillRotation?:
-    | ButtonParts.CircularProgressFillRotation.Props
-    | undefined;
+  readonly circularProgressFillRotation?: ButtonCircularProgressFillRotationProps | undefined;
 
   /**
-   * {@link ButtonParts.CircularProgressTrack|CircularProgressTrack} に渡すプロパティーです。
+   * {@link ButtonCircularProgressTrack} に渡すプロパティーです。
    */
-  readonly circularProgressTrack?: ButtonParts.CircularProgressTrack.Props | undefined;
+  readonly circularProgressTrack?: ButtonCircularProgressTrackProps | undefined;
 
   /**
-   * {@link ButtonParts.Content|Content} に渡すプロパティーです。
+   * {@link ButtonContent} に渡すプロパティーです。
    */
-  readonly content?: ButtonParts.Content.Props | undefined;
+  readonly content?: ButtonContentProps | undefined;
 
   /**
-   * {@link ButtonParts.Pending|Pending} に渡すプロパティーです。
+   * {@link ButtonPending} に渡すプロパティーです。
    */
-  readonly pending?: ButtonParts.Pending.Props | undefined;
+  readonly pending?: ButtonPendingProps | undefined;
 };
 
 /**
- * {@link Button} コンポーネントのプロパティーです。
+ * {@link Button} の状態です。
  */
-export type ButtonProps = Omit<ButtonParts.Root.Props, "children"> &
-  Pick<ButtonParts.Content.Props, "children"> &
-  Pick<ButtonParts.CircularProgress.Props, "percentage" | "indeterminate"> & {
+export type ButtonState = ButtonRootState;
+
+/**
+ * {@link Button} に渡すプロパティーです。
+ */
+export type ButtonProps = Omit<ButtonRootProps, "children"> &
+  Pick<ButtonContentProps, "children"> &
+  Pick<ButtonCircularProgressProps, "percentage" | "indeterminate"> & {
     /**
      * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
      *
@@ -52,50 +73,77 @@ export type ButtonProps = Omit<ButtonParts.Root.Props, "children"> &
     slotProps?: ButtonSlotProps | undefined;
   };
 
+interface ButtonType extends IComponent<ButtonProps> {
+  /**
+   * {@link useButtonContext} です。
+   */
+  readonly useContext: IUseContext<ButtonContext>;
+}
+
 /**
  * ボタンを表示するコンポーネントです。
- *
- * @example 基本
- * ```tsx
- * <Button variant="solid" color="blue" size="md" type="submit">送信</Button>
- * ```
- *
- * @example 進捗表示
- * ```tsx
- * <Button pending percentage={75}>処理中…</Button>
- * ```
  */
-export const Button: Component<ButtonProps> = function SuiButton(props) {
-  const {
-    children,
-    slotProps: {
-      content: contentProps,
-      pending: { overlay = true, ...otherPendingProps } = {},
-      circularProgress: circularProgressProps,
-      circularProgressFill: circularProgressFillProps,
-      circularProgressTrack: circularProgressTrackProps,
-      circularProgressFillRotation: circularProgressFillRotationProps,
-    } = {},
-    percentage,
-    indeterminate,
-    ...rootProps
-  } = props;
+export const Button: ButtonType = /*#__PURE__*/ Object.assign(
+  function SuiButton(props: ButtonProps) {
+    const {
+      children,
+      slotProps: {
+        content: contentProps,
+        pending: { overlay = true, ...otherPendingProps } = {},
+        circularProgress: circularProgressProps,
+        circularProgressFill: circularProgressFillProps,
+        circularProgressTrack: circularProgressTrackProps,
+        circularProgressFillRotation: circularProgressFillRotationProps,
+      } = {},
+      percentage,
+      indeterminate,
+      ...rootProps
+    } = props;
 
-  return (
-    <ButtonParts.Root {...rootProps}>
-      <ButtonParts.Content {...{ children, ...contentProps }} />
-      <ButtonParts.Pending {...otherPendingProps} overlay={overlay}>
-        <ButtonParts.CircularProgress
-          percentage={percentage}
-          indeterminate={indeterminate}
-          {...circularProgressProps}
-        >
-          <ButtonParts.CircularProgressTrack {...circularProgressTrackProps} />
-          <ButtonParts.CircularProgressFill {...circularProgressFillProps}>
-            <ButtonParts.CircularProgressFillRotation {...circularProgressFillRotationProps} />
-          </ButtonParts.CircularProgressFill>
-        </ButtonParts.CircularProgress>
-      </ButtonParts.Pending>
-    </ButtonParts.Root>
-  );
-};
+    return (
+      <ButtonRoot {...rootProps}>
+        <ButtonContent {...{ children, ...contentProps }} />
+        <ButtonPending {...otherPendingProps} overlay={overlay}>
+          <ButtonCircularProgress
+            percentage={percentage}
+            indeterminate={indeterminate}
+            {...circularProgressProps}
+          >
+            <ButtonCircularProgressTrack {...circularProgressTrackProps} />
+            <ButtonCircularProgressFill {...circularProgressFillProps}>
+              <ButtonCircularProgressFillRotation {...circularProgressFillRotationProps} />
+            </ButtonCircularProgressFill>
+          </ButtonCircularProgress>
+        </ButtonPending>
+      </ButtonRoot>
+    );
+  },
+  {
+    useContext: useButtonContext,
+  },
+);
+
+/**
+ * {@link Button} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Button {
+  /**
+   * {@link ButtonState} です。
+   */
+  export type State = ButtonState;
+
+  /**
+   * {@link ButtonProps} です。
+   */
+  export type Props = ButtonProps;
+
+  /**
+   * {@link ButtonSlotProps} です。
+   */
+  export type SlotProps = ButtonSlotProps;
+
+  /**
+   * {@link ButtonContext} です。
+   */
+  export type Context = ButtonContext;
+}

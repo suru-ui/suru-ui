@@ -1,29 +1,42 @@
 import * as React from "react";
 
-import type { Component } from "../../types.js";
-import * as AvatarParts from "./avatar.parts.jsx";
+import type { IComponent } from "../../types.js";
+import {
+  type AvatarRootProps,
+  type AvatarRootState,
+  type AvatarImageProps,
+  type AvatarFallbackProps,
+  AvatarRoot,
+  AvatarImage,
+  AvatarFallback,
+} from "./avatar.parts.jsx";
 
 /**
  * {@link Avatar} の各パーツに渡すプロパティーです。
  */
 export type AvatarSlotProps = {
   /**
-   * {@link AvatarParts.Image|Image} に渡すプロパティーです。
+   * {@link AvatarFallback} に渡すプロパティーです。
    */
-  readonly image?: AvatarParts.Image.Props | undefined;
+  readonly fallback?: AvatarFallbackProps | undefined;
 
   /**
-   * {@link AvatarParts.Fallback|Fallback} に渡すプロパティーです。
+   * {@link AvatarImage} に渡すプロパティーです。
    */
-  readonly fallback?: AvatarParts.Fallback.Props | undefined;
+  readonly image?: AvatarImageProps | undefined;
 };
 
 /**
- * {@link Avatar} コンポーネントのプロパティーです。
+ * {@link Avatar} の状態です。
  */
-export type AvatarProps = Omit<AvatarParts.Root.Props, "children"> &
-  Pick<AvatarParts.Fallback.Props, "children"> &
-  Pick<AvatarParts.Image.Props, "alt" | "src"> & {
+export type AvatarState = AvatarRootState;
+
+/**
+ * {@link Avatar} に渡すプロパティーです。
+ */
+export type AvatarProps = Omit<AvatarRootProps, "children"> &
+  Pick<AvatarFallbackProps, "children"> &
+  Pick<AvatarImageProps, "alt" | "src"> & {
     /**
      * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
      *
@@ -34,13 +47,8 @@ export type AvatarProps = Omit<AvatarParts.Root.Props, "children"> &
 
 /**
  * 画像またはフォールバックコンテンツを持つアバターを表示するコンポーネントです。
- *
- * @example
- * ```tsx
- * <Avatar src="/avatar.jpg" alt="太郎">太</Avatar>
- * ```
  */
-export const Avatar: Component<AvatarProps> = function SuiAvatar(props) {
+export const Avatar: IComponent<AvatarProps> = function SuiAvatar(props) {
   const {
     alt,
     src,
@@ -50,13 +58,31 @@ export const Avatar: Component<AvatarProps> = function SuiAvatar(props) {
   } = props;
 
   return (
-    <AvatarParts.Root {...otherRootProps}>
-      {("alt" in props || "src" in props || !!imageProps) && (
-        <AvatarParts.Image alt={alt} src={src} {...imageProps} />
-      )}
+    <AvatarRoot {...otherRootProps}>
+      {("src" in props || !!imageProps) && <AvatarImage alt={alt} src={src} {...imageProps} />}
       {("children" in props || !!fallbackProps) && (
-        <AvatarParts.Fallback {...fallbackProps}>{children}</AvatarParts.Fallback>
+        <AvatarFallback {...fallbackProps}>{children}</AvatarFallback>
       )}
-    </AvatarParts.Root>
+    </AvatarRoot>
   );
 };
+
+/**
+ * {@link Avatar} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Avatar {
+  /**
+   * {@link AvatarState} です。
+   */
+  export type State = AvatarState;
+
+  /**
+   * {@link AvatarProps} です。
+   */
+  export type Props = AvatarProps;
+
+  /**
+   * {@link AvatarSlotProps} です。
+   */
+  export type SlotProps = AvatarSlotProps;
+}

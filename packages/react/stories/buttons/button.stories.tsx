@@ -1,4 +1,4 @@
-import { COLOR_TEMPLATES as VARIANTS, COLORS, SIZES } from "@suru-ui/theme";
+import { SIZES, COLORS, COLOR_TEMPLATES } from "@suru-ui/theme";
 import { DeleteIcon, EllipsisIcon, GlobeIcon, Trash2Icon } from "lucide-react";
 import * as React from "react";
 
@@ -7,6 +7,7 @@ import { Button } from "../../src/buttons/button/index.js";
 import * as ButtonParts from "../../src/buttons/button/index.js";
 
 const RADII = ["none", ...SIZES, "full"] as const;
+const VARIANTS = COLOR_TEMPLATES;
 
 const meta = preview.meta({
   title: "Buttons / Button",
@@ -24,6 +25,9 @@ const ctrl = controls(Button, {
     control: "select",
   },
   disabled: {
+    control: "boolean",
+  },
+  muted: {
     control: "boolean",
   },
   outlined: {
@@ -54,6 +58,7 @@ export const Usage = meta.story({
     color: "grey",
     size: "md",
     radius: undefined,
+    muted: false,
     outlined: false,
     pending: false,
     disabled: false,
@@ -67,6 +72,7 @@ export const Variants = meta.story({
     color: "grey",
     size: "md",
     radius: undefined,
+    muted: false,
     outlined: false,
     pending: false,
     disabled: false,
@@ -92,6 +98,7 @@ export const Colors = meta.story({
     variant: "solid",
     size: "md",
     radius: undefined,
+    muted: false,
     outlined: false,
     pending: false,
     disabled: false,
@@ -117,6 +124,7 @@ export const WithIcons = meta.story({
     color: "grey",
     size: "md",
     radius: undefined,
+    muted: false,
     outlined: false,
     pending: false,
     disabled: false,
@@ -182,6 +190,7 @@ export const Squared = meta.story({
     color: "grey",
     size: "md",
     radius: undefined,
+    muted: false,
     outlined: false,
     pending: false,
     disabled: false,
@@ -292,29 +301,31 @@ function PendingProgress(props: {}) {
 }
 
 function PendingCustomStyle(props: {}) {
+  const Button = ButtonParts;
+
   const progress = useProgress();
 
   return (
-    <ButtonParts.Root
+    <Button.Root
       {...props}
       value="foo.zip"
       pending={progress.pending}
       onClick={progress.clickHandler}
     >
-      <ButtonParts.Pending defaultVisibility="hidden">
-        <ButtonParts.CircularProgress>
-          <ButtonParts.CircularProgressTrack />
-          <ButtonParts.CircularProgressFill>
-            <ButtonParts.CircularProgressFillRotation />
-          </ButtonParts.CircularProgressFill>
-        </ButtonParts.CircularProgress>
-      </ButtonParts.Pending>
-      <ButtonParts.Content className="w-[100px]">
+      <Button.Pending defaultVisibility="hidden">
+        <Button.CircularProgress>
+          <Button.CircularProgressTrack />
+          <Button.CircularProgressFill>
+            <Button.CircularProgressFillRotation />
+          </Button.CircularProgressFill>
+        </Button.CircularProgress>
+      </Button.Pending>
+      <Button.Content className="w-[100px]">
         {progress.pending && progress.percentage !== undefined
           ? `${Math.trunc(progress.percentage)}%完了`
           : "アップロード"}
-      </ButtonParts.Content>
-    </ButtonParts.Root>
+      </Button.Content>
+    </Button.Root>
   );
 }
 
@@ -325,6 +336,7 @@ export const Pending = meta.story({
     color: "grey",
     size: "md",
     radius: undefined,
+    muted: false,
     outlined: false,
     disabled: false,
   }),
@@ -366,6 +378,7 @@ export const Radius = meta.story({
     variant: "solid",
     color: "grey",
     size: "md",
+    muted: false,
     outlined: false,
     pending: false,
     disabled: false,
@@ -415,6 +428,7 @@ export const Sizes = meta.story({
     variant: "solid",
     color: "grey",
     radius: undefined,
+    muted: false,
     outlined: false,
     pending: false,
     disabled: false,
@@ -467,6 +481,7 @@ export const FullWidth = meta.story({
     color: "grey",
     size: "md",
     radius: undefined,
+    muted: false,
     outlined: false,
     pending: false,
     disabled: false,
@@ -504,6 +519,7 @@ export const Disabled = meta.story({
     color: "grey",
     size: "md",
     radius: undefined,
+    muted: false,
     outlined: false,
     pending: false,
   }),

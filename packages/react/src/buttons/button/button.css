@@ -198,7 +198,7 @@
     }
   }
 
-  .sui_button-color_blue {
+  .sui_button-color_blue:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-blue-solid-canvas-normal);
@@ -233,7 +233,7 @@
     }
   }
 
-  .sui_button-color_purple {
+  .sui_button-color_purple:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-purple-solid-canvas-normal);
@@ -268,7 +268,7 @@
     }
   }
 
-  .sui_button-color_magenta {
+  .sui_button-color_magenta:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-magenta-solid-canvas-normal);
@@ -303,7 +303,7 @@
     }
   }
 
-  .sui_button-color_red {
+  .sui_button-color_red:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-red-solid-canvas-normal);
@@ -338,7 +338,7 @@
     }
   }
 
-  .sui_button-color_orange {
+  .sui_button-color_orange:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-orange-solid-canvas-normal);
@@ -373,7 +373,7 @@
     }
   }
 
-  .sui_button-color_yellow {
+  .sui_button-color_yellow:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-yellow-solid-canvas-normal);
@@ -408,7 +408,7 @@
     }
   }
 
-  .sui_button-color_green {
+  .sui_button-color_green:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 背景 */
       --sui_button-background_color-normal: var(--sui-green-solid-canvas-normal);
@@ -440,6 +440,41 @@
       --sui_button-border_color-normal: var(--sui-green-liquid-border-normal);
       --sui_button-border_color-hover: var(--sui-green-liquid-border-subtle);
       --sui_button-border_color-active: var(--sui-green-liquid-border-strong);
+    }
+  }
+
+  .sui_button-muted:not(.sui_button-color_grey) {
+    &.sui_button-variant_solid {
+      /* 背景 */
+      --sui_button-background_color-normal: var(--sui-grey-solid-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-grey-solid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-grey-solid-canvas-strong);
+      /* 枠線 */
+      --sui_button-border_color-normal: var(--sui-grey-solid-border-normal);
+      --sui_button-border_color-hover: var(--sui-grey-solid-border-subtle);
+      --sui_button-border_color-active: var(--sui-grey-solid-border-strong);
+    }
+
+    &.sui_button-variant_naked {
+      /* 背景 */
+      --sui_button-background_color-normal: var(--sui-grey-naked-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-grey-naked-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-grey-naked-canvas-strong);
+      /* 枠線 */
+      --sui_button-border_color-normal: var(--sui-grey-naked-border-normal);
+      --sui_button-border_color-hover: var(--sui-grey-naked-border-subtle);
+      --sui_button-border_color-active: var(--sui-grey-naked-border-strong);
+    }
+
+    &.sui_button-variant_liquid {
+      /* 背景 */
+      --sui_button-background_color-normal: var(--sui-grey-liquid-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-grey-liquid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-grey-liquid-canvas-strong);
+      /* 枠線 */
+      --sui_button-border_color-normal: var(--sui-grey-liquid-border-normal);
+      --sui_button-border_color-hover: var(--sui-grey-liquid-border-subtle);
+      --sui_button-border_color-active: var(--sui-grey-liquid-border-strong);
     }
   }
 
@@ -580,7 +615,7 @@
     }
   }
 
-  .sui_button-color_blue {
+  .sui_button-color_blue:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-blue-solid-canvas_text-normal);
@@ -603,7 +638,7 @@
     }
   }
 
-  .sui_button-color_purple {
+  .sui_button-color_purple:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-purple-solid-canvas_text-normal);
@@ -626,7 +661,7 @@
     }
   }
 
-  .sui_button-color_magenta {
+  .sui_button-color_magenta:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-magenta-solid-canvas_text-normal);
@@ -649,7 +684,7 @@
     }
   }
 
-  .sui_button-color_red {
+  .sui_button-color_red:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-red-solid-canvas_text-normal);
@@ -672,7 +707,7 @@
     }
   }
 
-  .sui_button-color_orange {
+  .sui_button-color_orange:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-orange-solid-canvas_text-normal);
@@ -695,7 +730,7 @@
     }
   }
 
-  .sui_button-color_yellow {
+  .sui_button-color_yellow:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-yellow-solid-canvas_text-normal);
@@ -718,7 +753,7 @@
     }
   }
 
-  .sui_button-color_green {
+  .sui_button-color_green:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_content-color-normal: var(--sui-green-solid-canvas_text-normal);
@@ -738,6 +773,64 @@
       --sui_button_content-color-normal: var(--sui-green-liquid-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-green-liquid-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-green-liquid-canvas_text-strong);
+    }
+  }
+
+  .sui_button-muted:not(.sui_button-color_grey) {
+    &.sui_button-variant_solid {
+      /* 前景 */
+      --sui_button_content-color-normal: var(--sui-grey-solid-canvas_text-normal);
+      --sui_button_content-color-hover: var(--sui-grey-solid-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-grey-solid-canvas_text-strong);
+    }
+
+    &.sui_button-color_blue:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_content-color-normal: var(--sui-blue-naked-canvas_text-normal);
+      --sui_button_content-color-hover: var(--sui-blue-naked-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-blue-naked-canvas_text-strong);
+    }
+
+    &.sui_button-color_purple:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_content-color-normal: var(--sui-purple-naked-canvas_text-normal);
+      --sui_button_content-color-hover: var(--sui-purple-naked-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-purple-naked-canvas_text-strong);
+    }
+
+    &.sui_button-color_magenta:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_content-color-normal: var(--sui-magenta-naked-canvas_text-normal);
+      --sui_button_content-color-hover: var(--sui-magenta-naked-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-magenta-naked-canvas_text-strong);
+    }
+
+    &.sui_button-color_red:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_content-color-normal: var(--sui-red-naked-canvas_text-normal);
+      --sui_button_content-color-hover: var(--sui-red-naked-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-red-naked-canvas_text-strong);
+    }
+
+    &.sui_button-color_orange:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_content-color-normal: var(--sui-orange-naked-canvas_text-normal);
+      --sui_button_content-color-hover: var(--sui-orange-naked-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-orange-naked-canvas_text-strong);
+    }
+
+    &.sui_button-color_yellow:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_content-color-normal: var(--sui-yellow-naked-canvas_text-normal);
+      --sui_button_content-color-hover: var(--sui-yellow-naked-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-yellow-naked-canvas_text-strong);
+    }
+
+    &.sui_button-color_green:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_content-color-normal: var(--sui-green-naked-canvas_text-normal);
+      --sui_button_content-color-hover: var(--sui-green-naked-canvas_text-subtle);
+      --sui_button_content-color-active: var(--sui-green-naked-canvas_text-strong);
     }
   }
 
@@ -835,7 +928,7 @@
     }
   }
 
-  .sui_button-color_blue {
+  .sui_button-color_blue:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_circular_progress_track-color: var(--sui-blue-solid-canvas_text-normal);
@@ -852,7 +945,7 @@
     }
   }
 
-  .sui_button-color_purple {
+  .sui_button-color_purple:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_circular_progress_track-color: var(--sui-purple-solid-canvas_text-normal);
@@ -869,7 +962,7 @@
     }
   }
 
-  .sui_button-color_magenta {
+  .sui_button-color_magenta:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_circular_progress_track-color: var(--sui-magenta-solid-canvas_text-normal);
@@ -886,7 +979,7 @@
     }
   }
 
-  .sui_button-color_red {
+  .sui_button-color_red:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_circular_progress_track-color: var(--sui-red-solid-canvas_text-normal);
@@ -903,7 +996,7 @@
     }
   }
 
-  .sui_button-color_orange {
+  .sui_button-color_orange:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_circular_progress_track-color: var(--sui-orange-solid-canvas_text-normal);
@@ -920,7 +1013,7 @@
     }
   }
 
-  .sui_button-color_yellow {
+  .sui_button-color_yellow:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_circular_progress_track-color: var(--sui-yellow-solid-canvas_text-normal);
@@ -937,7 +1030,7 @@
     }
   }
 
-  .sui_button-color_green {
+  .sui_button-color_green:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_circular_progress_track-color: var(--sui-green-solid-canvas_text-normal);
@@ -951,6 +1044,48 @@
     &.sui_button-variant_liquid {
       /* 前景 */
       --sui_button_circular_progress_track-color: var(--sui-green-liquid-canvas_text-normal);
+    }
+  }
+
+  .sui_button-muted:not(.sui_button-color_grey) {
+    &.sui_button-variant_solid {
+      /* 前景 */
+      --sui_button_circular_progress_track-color: var(--sui-grey-solid-canvas_text-normal);
+    }
+
+    &.sui_button-color_blue:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_circular_progress_track-color: var(--sui-blue-naked-canvas_text-normal);
+    }
+
+    &.sui_button-color_purple:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_circular_progress_track-color: var(--sui-purple-naked-canvas_text-normal);
+    }
+
+    &.sui_button-color_magenta:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_circular_progress_track-color: var(--sui-magenta-naked-canvas_text-normal);
+    }
+
+    &.sui_button-color_red:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_circular_progress_track-color: var(--sui-red-naked-canvas_text-normal);
+    }
+
+    &.sui_button-color_orange:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_circular_progress_track-color: var(--sui-orange-naked-canvas_text-normal);
+    }
+
+    &.sui_button-color_yellow:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_circular_progress_track-color: var(--sui-yellow-naked-canvas_text-normal);
+    }
+
+    &.sui_button-color_green:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_circular_progress_track-color: var(--sui-green-naked-canvas_text-normal);
     }
   }
 
@@ -995,7 +1130,7 @@
     }
   }
 
-  .sui_button-color_blue {
+  .sui_button-color_blue:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_circular_progress_fill-color: var(--sui-blue-solid-canvas_text-normal);
@@ -1012,7 +1147,7 @@
     }
   }
 
-  .sui_button-color_purple {
+  .sui_button-color_purple:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_circular_progress_fill-color: var(--sui-purple-solid-canvas_text-normal);
@@ -1029,7 +1164,7 @@
     }
   }
 
-  .sui_button-color_magenta {
+  .sui_button-color_magenta:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_circular_progress_fill-color: var(--sui-magenta-solid-canvas_text-normal);
@@ -1046,7 +1181,7 @@
     }
   }
 
-  .sui_button-color_red {
+  .sui_button-color_red:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_circular_progress_fill-color: var(--sui-red-solid-canvas_text-normal);
@@ -1063,7 +1198,7 @@
     }
   }
 
-  .sui_button-color_orange {
+  .sui_button-color_orange:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_circular_progress_fill-color: var(--sui-orange-solid-canvas_text-normal);
@@ -1080,7 +1215,7 @@
     }
   }
 
-  .sui_button-color_yellow {
+  .sui_button-color_yellow:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_circular_progress_fill-color: var(--sui-yellow-solid-canvas_text-normal);
@@ -1097,7 +1232,7 @@
     }
   }
 
-  .sui_button-color_green {
+  .sui_button-color_green:not(.sui_button-muted) {
     &.sui_button-variant_solid {
       /* 前景 */
       --sui_button_circular_progress_fill-color: var(--sui-green-solid-canvas_text-normal);
@@ -1111,6 +1246,48 @@
     &.sui_button-variant_liquid {
       /* 前景 */
       --sui_button_circular_progress_fill-color: var(--sui-green-liquid-canvas_text-normal);
+    }
+  }
+
+  .sui_button-muted:not(.sui_button-color_grey) {
+    &.sui_button-variant_solid {
+      /* 前景 */
+      --sui_button_circular_progress_fill-color: var(--sui-grey-solid-canvas_text-normal);
+    }
+
+    &.sui_button-color_blue:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_circular_progress_fill-color: var(--sui-blue-naked-canvas_text-normal);
+    }
+
+    &.sui_button-color_purple:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_circular_progress_fill-color: var(--sui-purple-naked-canvas_text-normal);
+    }
+
+    &.sui_button-color_magenta:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_circular_progress_fill-color: var(--sui-magenta-naked-canvas_text-normal);
+    }
+
+    &.sui_button-color_red:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_circular_progress_fill-color: var(--sui-red-naked-canvas_text-normal);
+    }
+
+    &.sui_button-color_orange:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_circular_progress_fill-color: var(--sui-orange-naked-canvas_text-normal);
+    }
+
+    &.sui_button-color_yellow:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_circular_progress_fill-color: var(--sui-yellow-naked-canvas_text-normal);
+    }
+
+    &.sui_button-color_green:not(.sui_button-variant_solid) {
+      /* 前景 */
+      --sui_button_circular_progress_fill-color: var(--sui-green-naked-canvas_text-normal);
     }
   }
 

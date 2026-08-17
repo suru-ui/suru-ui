@@ -1,47 +1,64 @@
 import * as React from "react";
 
-import type { Component } from "../../types.js";
-import * as AlertParts from "./alert.parts.jsx";
+import type { IComponent } from "../../types.js";
+import {
+  type AlertIconProps,
+  type AlertRootProps,
+  type AlertRootState,
+  type AlertTitleProps,
+  type AlertActionsProps,
+  type AlertDescriptionProps,
+  AlertIcon,
+  AlertRoot,
+  AlertTitle,
+  AlertActions,
+  AlertDescription,
+} from "./alert.parts.jsx";
 
 /**
  * {@link Alert} の各パーツに渡すプロパティーです。
  */
 export type AlertSlotProps = {
   /**
-   * {@link AlertParts.Actions|Actions} に渡すプロパティーです。
+   * {@link AlertActions} に渡すプロパティーです。
    */
-  readonly actions?: AlertParts.Actions.Props | undefined;
+  readonly actions?: AlertActionsProps | undefined;
 
   /**
-   * {@link AlertParts.Description|Description} に渡すプロパティーです。
+   * {@link AlertDescription} に渡すプロパティーです。
    */
-  readonly description?: AlertParts.Description.Props | undefined;
+  readonly description?: AlertDescriptionProps | undefined;
 
   /**
-   * {@link AlertParts.Icon|Icon} に渡すプロパティーです。
+   * {@link AlertIcon} に渡すプロパティーです。
    */
-  readonly icon?: AlertParts.Icon.Props | undefined;
+  readonly icon?: AlertIconProps | undefined;
 
   /**
-   * {@link AlertParts.Title|Title} に渡すプロパティーです。
+   * {@link AlertTitle} に渡すプロパティーです。
    */
-  readonly title?: AlertParts.Title.Props | undefined;
+  readonly title?: AlertTitleProps | undefined;
 };
+
+/**
+ * {@link Alert} の状態です。
+ */
+export type AlertState = AlertRootState;
 
 /**
  * {@link Alert} コンポーネントのプロパティーです。
  */
-export type AlertProps = Omit<AlertParts.Root.Props, "children"> &
-  Pick<AlertParts.Description.Props, "children"> & {
+export type AlertProps = Omit<AlertRootProps, "children"> &
+  Pick<AlertDescriptionProps, "children"> & {
     /**
      * アラートの操作ボタンです。
      */
-    actions?: AlertParts.Actions.Props["children"];
+    actions?: AlertActionsProps["children"];
 
     /**
      * アラートに表示するアイコンです。
      */
-    icon?: AlertParts.Icon.Props["children"];
+    icon?: AlertIconProps["children"];
 
     /**
      * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
@@ -53,25 +70,13 @@ export type AlertProps = Omit<AlertParts.Root.Props, "children"> &
     /**
      * アラートのタイトルです。
      */
-    title?: AlertParts.Title.Props["children"] | undefined;
+    title?: AlertTitleProps["children"] | undefined;
   };
 
 /**
  * 重要なメッセージや通知をステータスインジケーター付きで表示するコンポーネントです。
- *
- * @example 基本
- * ```tsx
- * <Alert>プロフィールを更新しました。</Alert>
- * ```
- *
- * @example アイコン付き
- * ```tsx
- * <Alert color="green" icon={<CheckIcon />}>
- *   保存しました。
- * </Alert>
- * ```
  */
-export const Alert: Component<AlertProps> = function SuiAlert(props) {
+export const Alert: IComponent<AlertProps> = function SuiAlert(props) {
   const {
     icon,
     title,
@@ -87,19 +92,35 @@ export const Alert: Component<AlertProps> = function SuiAlert(props) {
   } = props;
 
   return (
-    <AlertParts.Root {...rootProps}>
-      {("icon" in props || !!iconProps) && (
-        <AlertParts.Icon {...{ children: icon, ...iconProps }} />
-      )}
-      {("title" in props || !!titleProps) && (
-        <AlertParts.Title {...{ children: title, ...titleProps }} />
-      )}
+    <AlertRoot {...rootProps}>
+      {("icon" in props || !!iconProps) && <AlertIcon {...{ children: icon, ...iconProps }} />}
+      {("title" in props || !!titleProps) && <AlertTitle {...{ children: title, ...titleProps }} />}
       {("children" in props || !!descriptionProps) && (
-        <AlertParts.Description {...{ children, ...descriptionProps }} />
+        <AlertDescription {...{ children, ...descriptionProps }} />
       )}
       {("actions" in props || !!actionsProps) && (
-        <AlertParts.Actions {...{ children: actions, ...actionsProps }} />
+        <AlertActions {...{ children: actions, ...actionsProps }} />
       )}
-    </AlertParts.Root>
+    </AlertRoot>
   );
 };
+
+/**
+ * {@link Alert} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Alert {
+  /**
+   * {@link AlertState} です。
+   */
+  export type State = AlertState;
+
+  /**
+   * {@link AlertProps} です。
+   */
+  export type Props = AlertProps;
+
+  /**
+   * {@link AlertSlotProps} です。
+   */
+  export type SlotProps = AlertSlotProps;
+}

@@ -1,12 +1,22 @@
 import * as React from "react";
 
-import type { Component } from "../../types.js";
-import * as AvatarGroupParts from "./avatar-group.parts.jsx";
+import type { IComponent } from "../../types.js";
+import {
+  type AvatarGroupRootProps,
+  type AvatarGroupRootState,
+  AvatarGroupRoot,
+  AvatarGroupSurplus,
+} from "./avatar-group.parts.jsx";
 
 /**
- * {@link AvatarGroup} コンポーネントのプロパティーです。
+ * {@link AvatarGroup} の状態です。
  */
-export type AvatarGroupProps = AvatarGroupParts.Root.Props & {
+export type AvatarGroupState = AvatarGroupRootState;
+
+/**
+ * {@link AvatarGroup} に渡すプロパティーです。
+ */
+export type AvatarGroupProps = AvatarGroupRootProps & {
   /**
    * 表示するアバターの最大数です。
    *
@@ -19,27 +29,31 @@ export type AvatarGroupProps = AvatarGroupParts.Root.Props & {
 
 /**
  * 複数のアバターを重ねて表示するコンポーネントです。
- *
- * @example
- * ```tsx
- * <AvatarGroup max={4}>
- *   <Avatar src="/taro.jpg" alt="太郎">太</Avatar>
- *   <Avatar src="/hanako.jpg" alt="花子">花</Avatar>
- *   <Avatar src="/jiro.jpg" alt="次郎">次</Avatar>
- *   <Avatar src="/sakura.jpg" alt="桜">桜</Avatar>
- *   <Avatar src="/ken.jpg" alt="健">健</Avatar>
- * </AvatarGroup>
- * ```
  */
-export const AvatarGroup: Component<AvatarGroupProps> = function SuiAvatarGroup(props) {
+export const AvatarGroup: IComponent<AvatarGroupProps> = function SuiAvatarGroup(props) {
   const { max = 4, children, ...otherRootProps } = props;
   const childArray = React.Children.toArray(children);
   const hasSurplus = childArray.length > max;
   const renderedChildArray = childArray.slice(0, hasSurplus ? max - 1 : max);
   if (hasSurplus) {
     const surplus = Math.max(0, childArray.length - renderedChildArray.length);
-    renderedChildArray.push(<AvatarGroupParts.Surplus>+{surplus}</AvatarGroupParts.Surplus>);
+    renderedChildArray.push(<AvatarGroupSurplus>+{surplus}</AvatarGroupSurplus>);
   }
 
-  return <AvatarGroupParts.Root {...otherRootProps}>{renderedChildArray}</AvatarGroupParts.Root>;
+  return <AvatarGroupRoot {...otherRootProps}>{renderedChildArray}</AvatarGroupRoot>;
 };
+
+/**
+ * {@link AvatarGroup} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace AvatarGroup {
+  /**
+   * {@link AvatarGroupState} です。
+   */
+  export type State = AvatarGroupState;
+
+  /**
+   * {@link AvatarGroupProps} です。
+   */
+  export type Props = AvatarGroupProps;
+}

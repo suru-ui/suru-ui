@@ -1,45 +1,51 @@
 import { Toggle } from "@base-ui/react/toggle";
-import type { Color, Size } from "@suru-ui/theme";
+import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
-import { ContextMissingError } from "../../errors.js";
-import type { Component } from "../../types.js";
-import * as Button from "../button/button.parts.jsx";
+import type { IComponent, IUseContext } from "../../types.js";
+import {
+  type ButtonContentProps,
+  type ButtonContentState,
+  type ButtonPendingProps,
+  type ButtonPendingState,
+  type ButtonCircularProgressProps,
+  type ButtonCircularProgressState,
+  type ButtonCircularProgressFillProps,
+  type ButtonCircularProgressFillState,
+  type ButtonCircularProgressTrackProps,
+  type ButtonCircularProgressTrackState,
+  type ButtonCircularProgressFillRotationProps,
+  type ButtonCircularProgressFillRotationState,
+  ButtonRoot,
+  ButtonContent,
+  ButtonContext,
+  ButtonPending,
+  useButtonContext,
+  ButtonCircularProgress,
+  ButtonCircularProgressFill,
+  ButtonCircularProgressTrack,
+  ButtonCircularProgressContext,
+  useButtonCircularProgressContext,
+  ButtonCircularProgressFillRotation,
+} from "../button/button.parts.jsx";
 
 // Context
 // -------
 
 /**
- * {@link ToggleButtonRoot} が子パーツへ提供するコンテキストです。
+ * {@link ButtonContext} です。
  */
-export type ToggleButtonContext = Button.Context;
+export type ToggleButtonContext = ButtonContext;
 
 /**
- * {@link ToggleButtonRoot} が提供するボタン状態のコンテキストです。
- *
- * このコンテキストは {@link Button.Context|ButtonContext} をそのまま利用します。
+ * {@link ButtonContext} です。
  */
-export const ToggleButtonContext: React.Context<ToggleButtonContext | null> = Button.Context;
+export const ToggleButtonContext: React.Context<ToggleButtonContext | null> = ButtonContext;
 
 /**
- * {@link ToggleButtonContext} を読み取るフックです。
- *
- * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
- * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
+ * {@link useButtonContext} です。
  */
-export function useToggleButtonContext(optional?: false): ToggleButtonContext;
-export function useToggleButtonContext(optional?: boolean): ToggleButtonContext | null;
-export function useToggleButtonContext(optional?: boolean): ToggleButtonContext | null {
-  const context = React.use(ToggleButtonContext);
-  if (context === null && !optional) {
-    throw new ContextMissingError({
-      contextName: "ToggleButtonContext",
-      providerName: "ToggleButtonRoot",
-    });
-  }
-
-  return context;
-}
+export const useToggleButtonContext: IUseContext<ToggleButtonContext> = useButtonContext;
 
 /**
  * {@link ToggleButtonContext} です。
@@ -53,15 +59,8 @@ export const Context: React.Context<ToggleButtonContext | null> = ToggleButtonCo
 
 /**
  * {@link useToggleButtonContext} です。
- *
- * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
- * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
  */
-export function useContext(optional?: false): ToggleButtonContext;
-export function useContext(optional?: boolean): ToggleButtonContext | null;
-export function useContext(optional?: boolean): ToggleButtonContext | null {
-  return useToggleButtonContext(optional);
-}
+export const useContext: IUseContext<Context> = useToggleButtonContext;
 
 // Root
 // ----
@@ -143,15 +142,8 @@ export type ToggleButtonRootProps = React.ComponentProps<typeof Toggle> & {
 
 /**
  * トグルボタンのルートコンポーネントです。
- *
- * @example
- * ```tsx
- * <ToggleButtonRoot color="red" defaultPressed>
- *   <ToggleButtonContent>削除</ToggleButtonContent>
- * </ToggleButtonRoot>
- * ```
  */
-export const ToggleButtonRoot: Component<ToggleButtonRootProps> = function SuiToggleButtonRoot(
+export const ToggleButtonRoot: IComponent<ToggleButtonRootProps> = function SuiToggleButtonRoot(
   props,
 ) {
   const {
@@ -172,7 +164,7 @@ export const ToggleButtonRoot: Component<ToggleButtonRootProps> = function SuiTo
     <Toggle
       {...otherToggleButtonProps}
       render={(props, state) => (
-        <Button.Root
+        <ButtonRoot
           {...props}
           size={size}
           color={state.pressed ? color : "grey"}
@@ -208,7 +200,7 @@ export namespace Root {
 /**
  * {@link ToggleButtonRoot} です。
  */
-export const Root: Component<Root.Props> = ToggleButtonRoot;
+export const Root: IComponent<Root.Props> = ToggleButtonRoot;
 
 // Content
 // -------
@@ -216,24 +208,19 @@ export const Root: Component<Root.Props> = ToggleButtonRoot;
 /**
  * {@link ToggleButtonContent} の状態です。
  */
-export type ToggleButtonContentState = Button.Content.State;
+export type ToggleButtonContentState = ButtonContentState;
 
 /**
  * {@link ToggleButtonContent} に渡すプロパティーです。
  */
-export type ToggleButtonContentProps = Button.Content.Props;
+export type ToggleButtonContentProps = ButtonContentProps;
 
 /**
  * トグルボタンのコンテンツを表示するコンポーネントです。
- *
- * @example
- * ```tsx
- * <ToggleButtonContent>ラベル</ToggleButtonContent>
- * ```
  */
-export const ToggleButtonContent: Component<ToggleButtonContentProps> =
+export const ToggleButtonContent: IComponent<ToggleButtonContentProps> =
   function SuiToggleButtonContent(props) {
-    return <Button.Content {...props} />;
+    return <ButtonContent {...props} />;
   };
 
 /**
@@ -254,7 +241,7 @@ export namespace Content {
 /**
  * {@link ToggleButtonContent} です。
  */
-export const Content: Component<Content.Props> = ToggleButtonContent;
+export const Content: IComponent<Content.Props> = ToggleButtonContent;
 
 // Pending
 // -------
@@ -262,28 +249,21 @@ export const Content: Component<Content.Props> = ToggleButtonContent;
 /**
  * {@link ToggleButtonPending} の状態です。
  */
-export type ToggleButtonPendingState = Button.Pending.State;
+export type ToggleButtonPendingState = ButtonPendingState;
 
 /**
  * {@link ToggleButtonPending} に渡すプロパティーです。
  */
-export type ToggleButtonPendingProps = Button.Pending.Props;
+export type ToggleButtonPendingProps = ButtonPendingProps;
 
 /**
  * トグルボタンの保留状態を表示するコンポーネントです。
  *
  * 保留中のみ有効になります。
- *
- * @example
- * ```tsx
- * <ToggleButtonPending overlay>
- *   読み込み中…
- * </ToggleButtonPending>
- * ```
  */
-export const ToggleButtonPending: Component<ToggleButtonPendingProps> =
+export const ToggleButtonPending: IComponent<ToggleButtonPendingProps> =
   function SuiToggleButtonPending(props) {
-    return <Button.Pending {...props} />;
+    return <ButtonPending {...props} />;
   };
 
 /**
@@ -304,40 +284,26 @@ export namespace Pending {
 /**
  * {@link ToggleButtonPending} です。
  */
-export const Pending: Component<Pending.Props> = ToggleButtonPending;
+export const Pending: IComponent<Pending.Props> = ToggleButtonPending;
 
 // CircularProgressContext
 // -----------------------
 
 /**
- * {@link ToggleButtonCircularProgress} が子パーツへ提供する状態です。
+ * {@link ButtonCircularProgressContext} です。
  */
-export type ToggleButtonCircularProgressContext = Button.CircularProgressContext;
+export type ToggleButtonCircularProgressContext = ButtonCircularProgressContext;
 
 /**
- * 円形プログレスバーの状態を子要素に伝播するコンテキストです。
- *
- * このコンテキストは {@link Button.CircularProgressContext} をそのまま利用します。
+ * {@link ButtonCircularProgressContext} です。
  */
-export const ToggleButtonCircularProgressContext = Button.CircularProgressContext;
+export const ToggleButtonCircularProgressContext = ButtonCircularProgressContext;
 
 /**
- * {@link ToggleButtonCircularProgressContext} を読み取るフックです。
- *
- * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
- * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
+ * {@link useButtonContext} です。
  */
-export function useToggleButtonCircularProgressContext(
-  optional?: false,
-): Button.CircularProgressContext;
-export function useToggleButtonCircularProgressContext(
-  optional?: boolean,
-): Button.CircularProgressContext | null;
-export function useToggleButtonCircularProgressContext(
-  optional?: boolean,
-): Button.CircularProgressContext | null {
-  return Button.useCircularProgressContext(optional);
-}
+export const useToggleButtonCircularProgressContext: IUseContext<ToggleButtonCircularProgressContext> =
+  useButtonCircularProgressContext;
 
 /**
  * {@link ToggleButtonCircularProgressContext} です。
@@ -351,20 +317,9 @@ export const CircularProgressContext = ToggleButtonCircularProgressContext;
 
 /**
  * {@link useToggleButtonCircularProgressContext} です。
- *
- * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
- *
- * @returns コンテキストの値。`optional` が `true` でコンテキストがない場合は `null`。
  */
-export function useCircularProgressContext(optional?: false): Button.CircularProgressContext;
-export function useCircularProgressContext(
-  optional?: boolean,
-): Button.CircularProgressContext | null;
-export function useCircularProgressContext(
-  optional?: boolean,
-): Button.CircularProgressContext | null {
-  return useToggleButtonCircularProgressContext(optional);
-}
+export const useCircularProgressContext: IUseContext<CircularProgressContext> =
+  useToggleButtonCircularProgressContext;
 
 // CircularProgress
 // ----------------
@@ -372,26 +327,19 @@ export function useCircularProgressContext(
 /**
  * {@link CircularProgress} の状態です。
  */
-export type ToggleButtonCircularProgressState = Button.CircularProgress.State;
+export type ToggleButtonCircularProgressState = ButtonCircularProgressState;
 
 /**
  * {@link CircularProgress} に渡すプロパティーです。
  */
-export type ToggleButtonCircularProgressProps = Button.CircularProgress.Props;
+export type ToggleButtonCircularProgressProps = ButtonCircularProgressProps;
 
 /**
  * 円形プログレスバーの SVG ルートコンポーネントです。
- *
- * @example 不定モード
- * ```tsx
- * <ToggleButtonCircularProgress indeterminate>
- *   <circle />
- * </ToggleButtonCircularProgress>
- * ```
  */
-export const ToggleButtonCircularProgress: Component<ToggleButtonCircularProgressProps> =
+export const ToggleButtonCircularProgress: IComponent<ToggleButtonCircularProgressProps> =
   function SuiToggleButtonCircularProgress(props) {
-    return <Button.CircularProgress {...props} />;
+    return <ButtonCircularProgress {...props} />;
   };
 
 export namespace CircularProgress {
@@ -409,7 +357,7 @@ export namespace CircularProgress {
 /**
  * {@link ToggleButtonCircularProgress} です。
  */
-export const CircularProgress: Component<CircularProgress.Props> = ToggleButtonCircularProgress;
+export const CircularProgress: IComponent<CircularProgress.Props> = ToggleButtonCircularProgress;
 
 // CircularProgressTrack
 // ---------------------
@@ -417,24 +365,19 @@ export const CircularProgress: Component<CircularProgress.Props> = ToggleButtonC
 /**
  * {@link CircularProgressTrack} の状態です。
  */
-export type ToggleButtonCircularProgressTrackState = Button.CircularProgressTrack.State;
+export type ToggleButtonCircularProgressTrackState = ButtonCircularProgressTrackState;
 
 /**
  * {@link CircularProgressTrack} に渡すプロパティーです。
  */
-export type ToggleButtonCircularProgressTrackProps = Button.CircularProgressTrack.Props;
+export type ToggleButtonCircularProgressTrackProps = ButtonCircularProgressTrackProps;
 
 /**
  * 円形プログレスバーのトラック（背景の円弧）を描画するコンポーネントです。
- *
- * @example
- * ```tsx
- * <ToggleButtonCircularProgressTrack strokeWidth={4} />
- * ```
  */
-export const ToggleButtonCircularProgressTrack: Component<ToggleButtonCircularProgressTrackProps> =
+export const ToggleButtonCircularProgressTrack: IComponent<ToggleButtonCircularProgressTrackProps> =
   function SuiToggleButtonCircularProgressTrack(props) {
-    return <Button.CircularProgressTrack {...props} />;
+    return <ButtonCircularProgressTrack {...props} />;
   };
 
 export namespace CircularProgressTrack {
@@ -452,7 +395,7 @@ export namespace CircularProgressTrack {
 /**
  * {@link ToggleButtonCircularProgressTrack} です。
  */
-export const CircularProgressTrack: Component<CircularProgressTrack.Props> =
+export const CircularProgressTrack: IComponent<CircularProgressTrack.Props> =
   ToggleButtonCircularProgressTrack;
 
 // CircularProgressFill
@@ -461,24 +404,19 @@ export const CircularProgressTrack: Component<CircularProgressTrack.Props> =
 /**
  * {@link CircularProgressFill} の状態です。
  */
-export type ToggleButtonCircularProgressFillState = Button.CircularProgressFill.State;
+export type ToggleButtonCircularProgressFillState = ButtonCircularProgressFillState;
 
 /**
  * {@link CircularProgressFill} に渡すプロパティーです。
  */
-export type ToggleButtonCircularProgressFillProps = Button.CircularProgressFill.Props;
+export type ToggleButtonCircularProgressFillProps = ButtonCircularProgressFillProps;
 
 /**
  * 円形プログレスバーのフィル（進捗を表す円弧）を描画するコンポーネントです。
- *
- * @example
- * ```tsx
- * <ToggleButtonCircularProgressFill strokeWidth={4} strokeLinecap="round" />
- * ```
  */
-export const ToggleButtonCircularProgressFill: Component<ToggleButtonCircularProgressFillProps> =
+export const ToggleButtonCircularProgressFill: IComponent<ToggleButtonCircularProgressFillProps> =
   function SuiToggleButtonCircularProgressFill(props) {
-    return <Button.CircularProgressFill {...props} />;
+    return <ButtonCircularProgressFill {...props} />;
   };
 
 export namespace CircularProgressFill {
@@ -496,7 +434,7 @@ export namespace CircularProgressFill {
 /**
  * {@link ToggleButtonCircularProgressFill} です。
  */
-export const CircularProgressFill: Component<CircularProgressFill.Props> =
+export const CircularProgressFill: IComponent<CircularProgressFill.Props> =
   ToggleButtonCircularProgressFill;
 
 // CircularProgressFillRotation
@@ -505,28 +443,21 @@ export const CircularProgressFill: Component<CircularProgressFill.Props> =
 /**
  * {@link CircularProgressFillRotation} の状態です。
  */
-export type ToggleButtonCircularProgressFillRotationState =
-  Button.CircularProgressFillRotation.State;
+export type ToggleButtonCircularProgressFillRotationState = ButtonCircularProgressFillRotationState;
 
 /**
  * {@link CircularProgressFillRotation} に渡すプロパティーです。
  */
-export type ToggleButtonCircularProgressFillRotationProps =
-  Button.CircularProgressFillRotation.Props;
+export type ToggleButtonCircularProgressFillRotationProps = ButtonCircularProgressFillRotationProps;
 
 /**
  * 不定モード時に円形プログレスバーを回転させるアニメーションコンポーネントです。
  *
  * 不定モードの場合のみ有効になります。
- *
- * @example
- * ```tsx
- * <ToggleButtonCircularProgressFillRotation dur="0.75s" />
- * ```
  */
-export const ToggleButtonCircularProgressFillRotation: Component<ToggleButtonCircularProgressFillRotationProps> =
+export const ToggleButtonCircularProgressFillRotation: IComponent<ToggleButtonCircularProgressFillRotationProps> =
   function SuiToggleButtonCircularProgressFillRotation(props) {
-    return <Button.CircularProgressFillRotation {...props} />;
+    return <ButtonCircularProgressFillRotation {...props} />;
   };
 
 export namespace CircularProgressFillRotation {
@@ -544,5 +475,5 @@ export namespace CircularProgressFillRotation {
 /**
  * {@link ToggleButtonCircularProgressFillRotation} です。
  */
-export const CircularProgressFillRotation: Component<CircularProgressFillRotation.Props> =
+export const CircularProgressFillRotation: IComponent<CircularProgressFillRotation.Props> =
   ToggleButtonCircularProgressFillRotation;

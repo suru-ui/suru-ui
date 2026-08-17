@@ -1,14 +1,47 @@
 import { Button } from "@base-ui/react/button";
-import type { Size, Color, ColorTemplate as Variant } from "@suru-ui/theme";
+import type { Size, Color, ColorTemplate } from "@suru-ui/theme";
 import * as React from "react";
 
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
 import { useActionGroupContext } from "../../layout/action-group/action-group.parts.jsx";
-import type { Component } from "../../types.js";
+import type { IComponent, IUseContext } from "../../types.js";
 
 import "./button.css";
+
+// Types
+// -----
+
+/**
+ * ボタンの色です。
+ */
+export type ButtonColor = Color;
+
+/**
+ * ボタンの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
+ */
+export type ButtonRadius = "none" | Size | "full";
+
+/**
+ * ボタンの大きさです。
+ */
+export type ButtonSize = Size;
+
+/**
+ * ボタンの主な外観の種類です。
+ *
+ * - `"solid"`: 塗りつぶしスタイル
+ * - `"naked"`: 背景のないテキストのみ
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type ButtonVariant = ColorTemplate;
 
 // Context
 // -------
@@ -29,15 +62,9 @@ export type ButtonContext = {
 export const ButtonContext: React.Context<ButtonContext | null> =
   React.createContext<ButtonContext | null>(null);
 
-/**
- * {@link ButtonContext} を読み取るフックです。
- *
- * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
- * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
- */
-export function useButtonContext(optional?: false): ButtonContext;
-export function useButtonContext(optional?: boolean): ButtonContext | null;
-export function useButtonContext(optional?: boolean): ButtonContext | null {
+function useSuiButtonContext(optional?: false): ButtonContext;
+function useSuiButtonContext(optional?: boolean): ButtonContext | null;
+function useSuiButtonContext(optional?: boolean): ButtonContext | null {
   const context = React.use(ButtonContext);
   if (context === null && !optional) {
     throw new ContextMissingError({
@@ -48,6 +75,11 @@ export function useButtonContext(optional?: boolean): ButtonContext | null {
 
   return context;
 }
+
+/**
+ * {@link ButtonContext} を読み取るフックです。
+ */
+export const useButtonContext: IUseContext<ButtonContext> = useSuiButtonContext;
 
 /**
  * {@link ButtonContext} です。
@@ -61,15 +93,8 @@ export const Context: React.Context<ButtonContext | null> = ButtonContext;
 
 /**
  * {@link useButtonContext} です。
- *
- * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
- * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
  */
-export function useContext(optional?: false): ButtonContext;
-export function useContext(optional?: boolean): ButtonContext | null;
-export function useContext(optional?: boolean): ButtonContext | null {
-  return useButtonContext(optional);
-}
+export const useContext: IUseContext<Context> = useButtonContext;
 
 // Root
 // ----
@@ -88,7 +113,14 @@ export type ButtonRootProps = React.ComponentProps<typeof Button> & {
    *
    * @default "grey"
    */
-  color?: Color | undefined;
+  color?: ButtonColor | undefined;
+
+  /**
+   * 背景色を控えめにします。
+   *
+   * @default false
+   */
+  muted?: boolean | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
@@ -110,21 +142,15 @@ export type ButtonRootProps = React.ComponentProps<typeof Button> & {
    * ボタンの角丸を指定します。
    *
    * デフォルト値は {@link ButtonRootProps.size|size} です。
-   *
-   * - `"none"`: 角を直角にする
-   * - `"sm"`: 小さい角丸
-   * - `"md"`: 標準的な角丸
-   * - `"lg"`: 大きい角丸
-   * - `"full"`: 完全な丸形
    */
-  radius?: "none" | Size | "full" | undefined;
+  radius?: ButtonRadius | undefined;
 
   /**
    * ボタンの大きさを指定します。
    *
    * @default "md"
    */
-  size?: Size | undefined;
+  size?: ButtonSize | undefined;
 
   /**
    * ボタンを正方形にするかどうかを指定します。
@@ -134,40 +160,27 @@ export type ButtonRootProps = React.ComponentProps<typeof Button> & {
   squared?: boolean | undefined;
 
   /**
-   * ボタンのスタイルバリエーションを指定します。
-   *
-   * - `"solid"`: 塗りつぶしスタイル
-   * - `"naked"`: 背景のないテキストのみ
-   * - `"liquid"`: 薄い塗りつぶし
+   * ボタンの主な外観を指定します。
    *
    * @default "solid"
    */
-  variant?: Variant | undefined;
+  variant?: ButtonVariant | undefined;
 };
 
 /**
  * ボタンのルートコンポーネントです。
- *
- * @example
- * ```tsx
- * <ButtonRoot color="red" pending>
- *   <ButtonContent>削除</ButtonContent>
- *   <ButtonPending>
- *     <ButtonCircularProgress>...</ButtonCircularProgress>
- *   </ButtonPending>
- * </ButtonRoot>
- * ```
  */
-export const ButtonRoot: Component<ButtonRootProps> = function SuiButtonRoot(props) {
+export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(props) {
   const actionGroupCtx = useActionGroupContext(true);
   const {
     size: sizeProp = "md",
     type = "button",
     color: colorProp = "grey",
+    muted: mutedProp = false,
     radius: radiusProp,
     pending = false,
     squared = false,
-    variant: variantProp = "solid",
+    variant: variantProp = "soft",
     disabled = false,
     outlined: outlinedProp = false,
     className,
@@ -176,6 +189,7 @@ export const ButtonRoot: Component<ButtonRootProps> = function SuiButtonRoot(pro
   } = props;
   const size = actionGroupCtx?.size ?? sizeProp;
   const color = actionGroupCtx?.color ?? colorProp;
+  const muted = mutedProp ?? false;
   const radius = actionGroupCtx?.radius ?? radiusProp ?? size;
   const variant = actionGroupCtx?.variant ?? variantProp;
   const outlined = actionGroupCtx?.outlined ?? outlinedProp;
@@ -195,6 +209,7 @@ export const ButtonRoot: Component<ButtonRootProps> = function SuiButtonRoot(pro
           `sui_button-color_${color}`,
           `sui_button-radius_${radius}`,
           `sui_button-variant_${variant}`,
+          muted && "sui_button-muted",
           pending && "sui_button-pending",
           squared && "sui_button-squared",
           outlined && "sui_button-outlined",
@@ -224,7 +239,7 @@ export namespace Root {
 /**
  * {@link ButtonRoot} です。
  */
-export const Root: Component<Root.Props> = ButtonRoot;
+export const Root: IComponent<Root.Props> = ButtonRoot;
 
 // Content
 // -------
@@ -242,13 +257,8 @@ export type ButtonContentProps = Omit<React.ComponentProps<"span">, keyof Render
 
 /**
  * ボタンのコンテンツを表示するコンポーネントです。
- *
- * @example
- * ```tsx
- * <ButtonContent>ラベル</ButtonContent>
- * ```
  */
-export const ButtonContent: Component<ButtonContentProps> = function SuiButtonContent(props) {
+export const ButtonContent: IComponent<ButtonContentProps> = function SuiButtonContent(props) {
   return useRender({
     defaultTagName: "span",
     props: [
@@ -278,7 +288,7 @@ export namespace Content {
 /**
  * {@link ButtonContent} です。
  */
-export const Content: Component<Content.Props> = ButtonContent;
+export const Content: IComponent<Content.Props> = ButtonContent;
 
 // Pending
 // -------
@@ -315,15 +325,8 @@ export type ButtonPendingProps = Omit<React.ComponentProps<"span">, keyof Render
  * ボタンの保留状態を表示するコンポーネントです。
  *
  * 保留中のみ有効になります。
- *
- * @example
- * ```tsx
- * <ButtonPending overlay>
- *   読み込み中…
- * </ButtonPending>
- * ```
  */
-export const ButtonPending: Component<ButtonPendingProps> = function SuiButtonPending(props) {
+export const ButtonPending: IComponent<ButtonPendingProps> = function SuiButtonPending(props) {
   const { pending } = useContext();
   const { overlay = false, defaultVisibility = "none", ...otherProps } = props;
 
@@ -362,7 +365,7 @@ export namespace Pending {
 /**
  * {@link ButtonPending} です。
  */
-export const Pending: Component<Pending.Props> = ButtonPending;
+export const Pending: IComponent<Pending.Props> = ButtonPending;
 
 // CircularProgressContext
 // -----------------------
@@ -394,11 +397,11 @@ export const ButtonCircularProgressContext: React.Context<ButtonCircularProgress
  * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
  * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
  */
-export function useButtonCircularProgressContext(optional?: false): ButtonCircularProgressContext;
-export function useButtonCircularProgressContext(
+function useSuiButtonCircularProgressContext(optional?: false): ButtonCircularProgressContext;
+function useSuiButtonCircularProgressContext(
   optional?: boolean,
 ): ButtonCircularProgressContext | null;
-export function useButtonCircularProgressContext(
+function useSuiButtonCircularProgressContext(
   optional?: boolean,
 ): ButtonCircularProgressContext | null {
   const CircularProgressContext = React.use(ButtonCircularProgressContext);
@@ -411,6 +414,12 @@ export function useButtonCircularProgressContext(
 
   return CircularProgressContext;
 }
+
+/**
+ * {@link ButtonCircularProgressContext} を読み取るフックです。
+ */
+export const useButtonCircularProgressContext: IUseContext<ButtonCircularProgressContext> =
+  useSuiButtonCircularProgressContext;
 
 /**
  * {@link ButtonCircularProgressContext} です。
@@ -426,15 +435,8 @@ export const CircularProgressContext: React.Context<ButtonCircularProgressContex
 /**
  * {@link useButtonCircularProgressContext} です。
  */
-export function useCircularProgressContext(optional?: false): ButtonCircularProgressContext;
-export function useCircularProgressContext(
-  optional?: boolean,
-): ButtonCircularProgressContext | null;
-export function useCircularProgressContext(
-  optional?: boolean,
-): ButtonCircularProgressContext | null {
-  return useButtonCircularProgressContext(optional);
-}
+export const useCircularProgressContext: IUseContext<CircularProgressContext> =
+  useButtonCircularProgressContext;
 
 // CircularProgress
 // ----------------
@@ -466,15 +468,8 @@ export type ButtonCircularProgressProps = Omit<React.ComponentProps<"svg">, keyo
 
 /**
  * 円形プログレスバーの SVG ルートコンポーネントです。
- *
- * @example 不定モード
- * ```tsx
- * <ButtonCircularProgress indeterminate>
- *   <circle />
- * </ButtonCircularProgress>
- * ```
  */
-export const ButtonCircularProgress: Component<ButtonCircularProgressProps> =
+export const ButtonCircularProgress: IComponent<ButtonCircularProgressProps> =
   function SuiButtonCircularProgress(props) {
     const {
       fill = "none",
@@ -526,7 +521,7 @@ export namespace CircularProgress {
 /**
  * {@link ButtonCircularProgress} です。
  */
-export const CircularProgress: Component<CircularProgress.Props> = ButtonCircularProgress;
+export const CircularProgress: IComponent<CircularProgress.Props> = ButtonCircularProgress;
 
 // CircularProgressTrack
 // ---------------------
@@ -547,13 +542,8 @@ export type ButtonCircularProgressTrackProps = Omit<
 
 /**
  * 円形プログレスバーのトラック（背景の円弧）を描画するコンポーネントです。
- *
- * @example
- * ```tsx
- * <ButtonCircularProgressTrack strokeWidth={4} />
- * ```
  */
-export const ButtonCircularProgressTrack: Component<ButtonCircularProgressTrackProps> =
+export const ButtonCircularProgressTrack: IComponent<ButtonCircularProgressTrackProps> =
   function SuiButtonCircularProgressTrack(props) {
     const {
       r,
@@ -599,7 +589,7 @@ export namespace CircularProgressTrack {
 /**
  * {@link ButtonCircularProgressTrack} です。
  */
-export const CircularProgressTrack: Component<CircularProgressTrack.Props> =
+export const CircularProgressTrack: IComponent<CircularProgressTrack.Props> =
   ButtonCircularProgressTrack;
 
 // CircularProgressFill
@@ -621,13 +611,8 @@ export type ButtonCircularProgressFillProps = Omit<
 
 /**
  * 円形プログレスバーのフィル（進捗を表す円弧）を描画するコンポーネントです。
- *
- * @example
- * ```tsx
- * <ButtonCircularProgressFill strokeWidth={4} strokeLinecap="round" />
- * ```
  */
-export const ButtonCircularProgressFill: Component<ButtonCircularProgressFillProps> =
+export const ButtonCircularProgressFill: IComponent<ButtonCircularProgressFillProps> =
   function SuiButtonCircularProgressFill(props) {
     const { percentage, indeterminate } = useCircularProgressContext();
     const {
@@ -682,7 +667,7 @@ export namespace CircularProgressFill {
 /**
  * {@link ButtonCircularProgressFill} です。
  */
-export const CircularProgressFill: Component<CircularProgressFill.Props> =
+export const CircularProgressFill: IComponent<CircularProgressFill.Props> =
   ButtonCircularProgressFill;
 
 // CircularProgressFillRotation
@@ -706,13 +691,8 @@ export type ButtonCircularProgressFillRotationProps = Omit<
  * 不定モード時に円形プログレスバーを回転させるアニメーションコンポーネントです。
  *
  * 不定モードの場合のみ有効になります。
- *
- * @example
- * ```tsx
- * <ButtonCircularProgressFillRotation dur="0.75s" />
- * ```
  */
-export const ButtonCircularProgressFillRotation: Component<ButtonCircularProgressFillRotationProps> =
+export const ButtonCircularProgressFillRotation: IComponent<ButtonCircularProgressFillRotationProps> =
   function SuiButtonCircularProgressFillRotation(props) {
     const { indeterminate } = useCircularProgressContext();
     const {
@@ -759,5 +739,5 @@ export namespace CircularProgressFillRotation {
 /**
  * {@link ButtonCircularProgressFillRotation} です。
  */
-export const CircularProgressFillRotation: Component<CircularProgressFillRotation.Props> =
+export const CircularProgressFillRotation: IComponent<CircularProgressFillRotation.Props> =
   ButtonCircularProgressFillRotation;

@@ -3,7 +3,7 @@ import type { Color, Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 import { useAvatarGroupContext } from "../avatar-group/avatar-group.parts.jsx";
 
 import "./avatar.css";
@@ -44,16 +44,8 @@ export type AvatarRootProps = React.ComponentProps<typeof Avatar.Root> & {
 
 /**
  * アバターのルートコンポーネントです。
- *
- * @example
- * ```tsx
- * <AvatarRoot>
- *   <AvatarImage src="/avatar.jpg" alt="太郎" />
- *   <AvatarFallback>太</AvatarFallback>
- * </AvatarRoot>
- * ```
  */
-export const AvatarRoot: Component<AvatarRootProps> = function SuiAvatarRoot(props) {
+export const AvatarRoot: IComponent<AvatarRootProps> = function SuiAvatarRoot(props) {
   const group = useAvatarGroupContext(true);
   const {
     size: sizeProp = "md",
@@ -96,7 +88,7 @@ export namespace Root {
 /**
  * {@link AvatarRoot} です。
  */
-export const Root: Component<Root.Props> = AvatarRoot;
+export const Root: IComponent<Root.Props> = AvatarRoot;
 
 // Image
 // -----
@@ -116,7 +108,7 @@ export type AvatarImageProps = React.ComponentProps<typeof Avatar.Image>;
  *
  * 画像の読み込みに失敗すると、{@link AvatarFallback} を表示します。
  */
-export const AvatarImage: Component<AvatarImageProps> = function SuiAvatarImage(props) {
+export const AvatarImage: IComponent<AvatarImageProps> = function SuiAvatarImage(props) {
   const { className, ...otherProps } = props;
 
   return <Avatar.Image {...otherProps} className={cn(className, "sui_avatar_image")} />;
@@ -140,7 +132,7 @@ export namespace Image {
 /**
  * {@link AvatarImage} です。
  */
-export const Image: Component<Image.Props> = AvatarImage;
+export const Image: IComponent<Image.Props> = AvatarImage;
 
 // Fallback
 // --------
@@ -157,13 +149,8 @@ export type AvatarFallbackProps = React.ComponentProps<typeof Avatar.Fallback>;
 
 /**
  * 画像を表示できないときのアバターフォールバックコンポーネントです。
- *
- * @example
- * ```tsx
- * <AvatarFallback>太</AvatarFallback>
- * ```
  */
-export const AvatarFallback: Component<AvatarFallbackProps> = function SuiAvatarFallback(props) {
+export const AvatarFallback: IComponent<AvatarFallbackProps> = function SuiAvatarFallback(props) {
   const { className, ...otherProps } = props;
 
   return <Avatar.Fallback {...otherProps} className={cn(className, "sui_avatar_fallback")} />;
@@ -187,4 +174,4 @@ export namespace Fallback {
 /**
  * {@link AvatarFallback} です。
  */
-export const Fallback: Component<Fallback.Props> = AvatarFallback;
+export const Fallback: IComponent<Fallback.Props> = AvatarFallback;

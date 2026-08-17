@@ -1,9 +1,9 @@
-import type { Color, Size, ColorTemplate as Variant } from "@suru-ui/theme";
+import type { Size, Color, ColorTemplate as Variant } from "@suru-ui/theme";
 import type * as React from "react";
 
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 
 import "./alert.css";
 
@@ -63,16 +63,8 @@ export type AlertRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps
 
 /**
  * アラートのルートコンポーネントです。
- *
- * @example
- * ```tsx
- * <AlertRoot color="green">
- *   <AlertIcon />
- *   <AlertDescription>保存しました。</AlertDescription>
- * </AlertRoot>
- * ```
  */
-export const AlertRoot: Component<AlertRootProps> = function SuiAlertRoot(props) {
+export const AlertRoot: IComponent<AlertRootProps> = function SuiAlertRoot(props) {
   const {
     role = "alert",
     size = "md",
@@ -120,7 +112,7 @@ export namespace Root {
 /**
  * {@link AlertRoot} です。
  */
-export const Root: Component<Root.Props> = AlertRoot;
+export const Root: IComponent<Root.Props> = AlertRoot;
 
 // Icon
 // ----
@@ -140,15 +132,8 @@ export type AlertIconProps = Omit<React.ComponentProps<"div">, keyof RenderProps
  * アラートの状態を視覚的に示すインジケーターコンポーネントです。
  *
  * 子要素を省略すると、状態色の丸いインジケーターを表示します。
- *
- * @example
- * ```tsx
- * <AlertIcon>
- *   <InfoIcon />
- * </AlertIcon>
- * ```
  */
-export const AlertIcon: Component<AlertIconProps> = function SuiAlertIcon(props) {
+export const AlertIcon: IComponent<AlertIconProps> = function SuiAlertIcon(props) {
   const { "aria-hidden": ariaHidden = true, ...otherProps } = props;
 
   return useRender({
@@ -181,7 +166,7 @@ export namespace Icon {
 /**
  * {@link AlertIcon} です。
  */
-export const Icon: Component<Icon.Props> = AlertIcon;
+export const Icon: IComponent<Icon.Props> = AlertIcon;
 
 // Title
 // -----
@@ -199,13 +184,8 @@ export type AlertTitleProps = Omit<React.ComponentProps<"div">, keyof RenderProp
 
 /**
  * アラートのタイトルを表示するコンポーネントです。
- *
- * @example
- * ```tsx
- * <AlertTitle>保存完了</AlertTitle>
- * ```
  */
-export const AlertTitle: Component<AlertTitleProps> = function SuiAlertTitle(props) {
+export const AlertTitle: IComponent<AlertTitleProps> = function SuiAlertTitle(props) {
   return useRender({
     defaultTagName: "div",
     props: [
@@ -235,7 +215,7 @@ export namespace Title {
 /**
  * {@link AlertTitle} です。
  */
-export const Title: Component<Title.Props> = AlertTitle;
+export const Title: IComponent<Title.Props> = AlertTitle;
 
 // Description
 // -----------
@@ -253,13 +233,8 @@ export type AlertDescriptionProps = Omit<React.ComponentProps<"div">, keyof Rend
 
 /**
  * アラートのメッセージをまとめるコンテンツコンポーネントです。
- *
- * @example
- * ```tsx
- * <AlertDescription>プロフィールを更新しました。</AlertDescription>
- * ```
  */
-export const AlertDescription: Component<AlertDescriptionProps> = function SuiAlertDescription(
+export const AlertDescription: IComponent<AlertDescriptionProps> = function SuiAlertDescription(
   props,
 ) {
   return useRender({
@@ -291,7 +266,7 @@ export namespace Description {
 /**
  * {@link AlertDescription} の状態やプロパティーをまとめた型名前空間です。
  */
-export const Description: Component<Description.Props> = AlertDescription;
+export const Description: IComponent<Description.Props> = AlertDescription;
 
 // Actions
 // -------
@@ -309,16 +284,8 @@ export type AlertActionsProps = Omit<React.ComponentProps<"div">, keyof RenderPr
 
 /**
  * アラートの操作ボタンを右寄せでまとめるコンポーネントです。
- *
- * @example
- * ```tsx
- * <AlertActions>
- *   <Button>取り消す</Button>
- *   <Button>再試行</Button>
- * </AlertActions>
- * ```
  */
-export const AlertActions: Component<AlertActionsProps> = function SuiAlertActions(props) {
+export const AlertActions: IComponent<AlertActionsProps> = function SuiAlertActions(props) {
   return useRender({
     defaultTagName: "div",
     props: [
@@ -348,4 +315,4 @@ export namespace Actions {
 /**
  * {@link AlertActions} の状態やプロパティーをまとめた型名前空間です。
  */
-export const Actions: Component<Actions.Props> = AlertActions;
+export const Actions: IComponent<Actions.Props> = AlertActions;

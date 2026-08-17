@@ -1,6 +1,6 @@
 ---
 name: new-component
-description: Suru UI モノレポ (`packages/react`) に新しい React コンポーネントを追加するときに使用します。新しいコンポーネントの作成、コンポーネントの追加、`*.parts.tsx` のパーツ実装、`slotProps`、グループコンテキスト、CSS クラス設計、Storybook stories、テスト（`*.client.test.tsx`）、`package.json` のサブパスエクスポートを扱います。既存の Button や Checkbox と同じ方式で実装し、`@base-ui/react`（Base UI）を基盤としたヘッドレスコンポーネントをスタイル付きで公開するときに使います。
+description: Suru UI モノレポ (`packages/react`) に新しい React コンポーネントを追加するときに使用します。新しいコンポーネントの作成、コンポーネントの追加、`*.parts.tsx` の Base UI ラッパーとパーツ実装、Root と公開本体の型分離、ジェネリック型、`slotProps`、グループコンテキスト、CSS クラス設計、Storybook stories、テスト（`*.client.test.tsx`）、`package.json` のサブパスエクスポートを扱います。既存の Button、Field、Form、Checkbox と同じ方式で実装し、`@base-ui/react`（Base UI）を基盤としたヘッドレスコンポーネントをスタイル付きで公開するときに使います。
 ---
 
 # 新しい React コンポーネントの追加
@@ -48,9 +48,13 @@ Suru UI は、[Base UI](https://github.com/mui/base-ui) のヘッドレスコン
 packages/react/src/<カテゴリー>/<名前>/
   index.ts          // パーツと本体を再エクスポートする
   <名前>.tsx        // 公開コンポーネント本体
-  <名前>.parts.tsx  // パーツ（Root、Content、Indicator など）
+  <名前>.parts.tsx  // Base UI のラッパーとパーツ（Root、Content、Indicator など）
   <名前>.css        // スタイル
 ```
+
+`*.parts.tsx` は子パーツがない場合も作ります。
+Base UI の型を Suru UI の型として公開し、`cn()` によるクラス名の合成と CSS の import を一箇所にまとめる層です。
+そのため、`Form` のように Root だけを持つコンポーネントでも、Root のラッパーは `*.parts.tsx` に置きます。
 
 カテゴリーの実例として、`buttons/button/` は `index.ts`、`button.tsx`、`button.parts.tsx`、`button.css` で構成されています（`packages/react/src/buttons/button/`）。
 
@@ -77,12 +81,13 @@ Storybook の stories は `packages/react/stories/<カテゴリー>/<名前>.sto
 | Button         | Root, Content, Pending, CircularProgress, CircularProgressTrack, CircularProgressFill, CircularProgressFillRotation |
 | Checkbox       | Root, Indicator                                                                                                     |
 | Field          | Root, Label, Control, Description, Error, Item, Validity                                                            |
+| Form           | Root                                                                                                                |
 | ButtonGroup    | Root                                                                                                                |
 
 ### パターン A（Base UI コンポーネントのラップ）
 
 Base UI のコンポーネントをそのまま使い、クラス名と共通プロパティーを追加します。
-参考実装は `packages/react/src/forms/field/field.parts.tsx`、`packages/react/src/forms/checkbox-group/checkbox-group.parts.tsx` です。
+参考実装は `packages/react/src/forms/field/field.parts.tsx`、`packages/react/src/forms/form/form.parts.tsx`、`packages/react/src/forms/checkbox-group/checkbox-group.parts.tsx` です。
 
 ````tsx
 import { CheckboxGroup } from "@base-ui/react/checkbox-group";
@@ -158,6 +163,98 @@ export const Root: Component<Root.Props> = CheckboxGroupRoot;
 - クラス名は `cn(className, ...)` で利用者のクラス名と合成します。
 - Base UI のコンポーネントは、利用者の付けたイベントハンドラーと `className`、Render Props をそのまま通します。
 
+### パターン A の Root 層と公開本体
+
+`Field` と `Form` のように Base UI の Root を利用するコンポーネントは、パーツ層と公開本体を分けます。
+パーツ層の `XxxRoot` は Base UI の Root をラップし、公開本体の `Xxx` は `XxxRoot` に委譲します。
+
+`<名前>.parts.tsx` では、次の順で Root を定義します。
+
+1. Base UI の状態、プロパティー、アクション、イベント関連の型を `XxxRoot*` として再公開します。
+2. `React.ComponentProps<typeof BaseRoot>` を `XxxRootProps` の基礎にします。
+3. `className` を分割代入し、`cn(className, "sui_<名前>", ...)` で利用者の値と既定のクラスを合成します。
+4. `export namespace Root` に `State` と `Props` を置き、`export const Root` から Root パーツを公開します。
+5. CSS はこのパーツファイルだけで import します。
+
+```tsx
+export type XxxRootState = BaseRoot.State;
+
+export type XxxRootProps = React.ComponentProps<typeof BaseRoot>;
+
+export const XxxRoot: Component<XxxRootProps> = function SuiXxxRoot(props) {
+  const { className, ...otherProps } = props;
+
+  return <BaseRoot {...otherProps} className={cn(className, "sui_xxx")} />;
+};
+
+export namespace Root {
+  export type State = XxxRootState;
+  export type Props = XxxRootProps;
+}
+
+export const Root: Component<Root.Props> = XxxRoot;
+```
+
+`Form` のように入力値やイベントの型パラメーターを持つ場合は、Root の型パラメーターを公開本体まで保持します。
+`FormRootProps<TValues>` は `React.ComponentProps<typeof Form<TValues>>` を基礎にし、`FormRootComponentType` は `Component<FormRootProps>` を拡張したジェネリックな呼び出しシグネチャーを持ちます。
+この場合、`Root` も `Component<Root.Props>` に狭めず、`FormRootComponentType` をそのまま使います。
+
+```tsx
+interface XxxRootComponentType extends Component<XxxRootProps> {
+  <TValues extends XxxRootValues>(props: XxxRootProps<TValues>): React.ReactElement | null;
+}
+
+export const XxxRoot: XxxRootComponentType = function SuiXxxRoot(props: XxxRootProps) {
+  const { className, ...otherProps } = props;
+
+  return <BaseRoot {...otherProps} className={cn(className, "sui_xxx")} />;
+};
+
+export const Root: XxxRootComponentType = XxxRoot;
+```
+
+`<名前>.tsx` では、Root の型を別名として公開し、追加の API がなければ Root にそのまま委譲します。
+`Form` のように公開 API でもジェネリックを受け取る場合は、公開本体にも同じ呼び出しシグネチャーを定義します。
+
+```tsx
+export type XxxValues<TValues extends XxxRootValues = XxxRootValues> = XxxRootValues<TValues>;
+
+export type XxxState = XxxRootState;
+
+export type XxxProps<TValues extends XxxValues = XxxValues> = XxxRootProps<TValues>;
+
+interface XxxComponentType extends Component<XxxProps> {
+  <TValues extends XxxValues>(props: XxxProps<TValues>): React.ReactElement | null;
+}
+
+export const Xxx: XxxComponentType = function SuiXxx(props: XxxProps) {
+  return <XxxRoot {...props} />;
+};
+
+export namespace Xxx {
+  export type State = XxxState;
+  export type Props<TValues extends XxxValues = XxxValues> = XxxProps<TValues>;
+  export type Values<TValues extends XxxValues = XxxValues> = XxxValues<TValues>;
+}
+```
+
+`Form` の `Values`、`Actions`、`ValidationMode`、送信イベントのような Root 固有の型は、まず `FormRoot*` としてパーツ層に置き、公開本体で `Form*` として別名を付けます。
+型名前空間の別名も同じ規則でそろえます。
+ジェネリック型の既定値と制約を Root 層、本体層、型名前空間で一致させ、型パラメーターを失わないようにします。
+
+`Form` では `FormRootValues`、`FormRootActions`、`FormRootValidationMode`、`FormRootSubmitEventReason`、`FormRootSubmitEventDetails` をパーツ層に定義し、公開本体で `FormValues`、`FormActions`、`FormValidationMode`、`FormSubmitEventReason`、`FormSubmitEventDetails` として公開します。
+`Field` では `FieldRootState`、`FieldRootActions`、`FieldRootProps` を基礎に `FieldState`、`FieldActions`、`FieldProps` を定義し、`FieldErrorMatch`、`FieldErrorMatches`、`FieldSlotProps` のような公開 API 固有の型を本体層に追加します。
+
+`Field` のように複数の子パーツを組み立てる場合は、この Root 層に加えてパターン B を使います。
+Root 以外のパーツの生のプロパティーは `slotProps` にまとめ、`label`、`description`、`errorMatches`、`validity` のような公開本体固有の便利なプロパティーと区別します。
+`slotProps` の値はパーツの `Props` 型を参照し、各プロパティーに `readonly` を付けます。
+入力値が `undefined` でも明示的に指定されたことが意味を持つ場合は、`"label" in props` のようにプロパティーの存在を判定して条件付きパーツを描画します。
+
+公開本体に静的なパーツを付ける場合は、公開するものだけを `Object.assign` で付けます。
+`Field` は `Control` と `Item` を静的プロパティーとして公開し、その他のパーツは `*.parts.tsx` の `Root`、`Label`、`Description` などから公開します。
+静的パーツに対応する状態型とプロパティー型を公開本体の namespace にも付ける場合は、`Field.Item.State`、`Field.Item.Props` のような入れ子の型 namespace にまとめます。
+Root だけを公開する `Form` のようなコンポーネントに、不要な静的パーツを追加してはいけません。
+
 ### パターン B（パーツ合成コンポーネント）
 
 公開コンポーネントが複数のパーツを組み立てます。
@@ -216,6 +313,7 @@ export const Checkbox: Component<CheckboxProps> = function SuiCheckbox(props) {
 ````
 
 - 公開コンポーネントに渡せるパーツは、必ず `slotProps` として公開します。パーツ単体のプロパティーを 1 段目に直接公開しません。
+- `Field` の `label`、`description`、`errorMatches` のような1段目のプロパティーは、パーツの生のプロパティーではなく公開本体の便利な API です。これらは `slotProps` の規則と区別します。
 - `slotProps` の各プロパティーには `readonly` を付けます。
 - 本体のプロパティー（例: Button の `percentage`）とパーツのプロパティーが同名で重なるときは、パーツ側を優先し、本体側を既定値として供給します（`packages/react/src/buttons/button/button.tsx:91` の `percentage = percentageProp` の形）。
 - グループ化する部品には、公開コンポーネントは存在せずパターン A の Root だけを公開するものもあります（ButtonGroup）。
@@ -392,7 +490,7 @@ export const ToggleButtonContent: Component<ToggleButtonContentProps> = Button.C
 - コンポーネントの型は `types.ts` の `Component<TProps>` を使います。
 - コンポーネント関数には `Sui` プレフィックスを付けます。公開名 `Button` の関数は `function SuiButton` です（`packages/react/src/buttons/button/button.tsx:76`）。
 - 公開定数は `export const Button: Component<ButtonProps> = ...` の形です。
-- `erasableSyntaxOnly` が有効です（`packages/react/.config/tsconfig.build.json`）。`enum` と、値を持つ `namespace` は使えません。パーツの `namespace` は `State` と `Props` の型だけを入れます。
+- `erasableSyntaxOnly` が有効です（`packages/react/.config/tsconfig.build.json`）。`enum` と、値を持つ `namespace` は使えません。パーツと公開本体の `namespace` には型だけを入れ、パーツ固有の `Actions`、イベント型、ジェネリック型なども型エイリアスとして定義します。
 
 ### パーツファイルのセクション構成
 
@@ -404,7 +502,7 @@ export const ToggleButtonContent: Component<ToggleButtonContentProps> = Button.C
    - `State` 型（`/** {@link Root} の状態です。 */` の JSDoc を付ける）
    - `Props` 型（`/** {@link Root} に渡すプロパティーです。 */` の JSDoc を付ける）
    - コンポーネント本体（説明と `@example` の JSDoc を付ける）
-   - `export namespace Root { ... }` と `export const Root: Component<Root.Props> = ButtonRoot;`
+   - `export namespace Root { ... }` と `export const Root: Component<Root.Props> = ButtonRoot;`（ジェネリックな Root は専用のコンポーネント型をそのまま使う）
 
 見出しの例です。
 
@@ -468,6 +566,18 @@ export function useContext(optional?: boolean): CheckboxGroupContext | null {
 - コンポーネントの JSDoc には説明に続けて `@example` を付けます。
 - 自明でない既定値には `@default` を付けます。`undefined` の場合は付けません。
 - `slotProps` の各パーツプロパティーには、パーツに型をリンクする JSDoc を付けます（`packages/react/src/buttons/button/button.tsx:12`）。
+
+### 型名前空間と再エクスポート
+
+パーツは `XxxRootState`、`XxxRootProps` のような個別名を先に定義し、`Root.State`、`Root.Props` から参照できるようにします。
+`Actions`、値の型、検証モード、イベントの理由や詳細など、利用者が参照する型も同じ namespace にまとめます。
+公開本体では `XxxState`、`XxxProps` のような API 用の別名を定義し、`Xxx.State`、`Xxx.Props` から参照できるようにします。
+namespace に値を入れず、すべて `export type` で定義してください。
+
+`index.ts` は最初に `*.parts.jsx` を `export *` し、その後で本体ファイルから公開本体と、その本体に属する型を明示的に export します。
+パーツの型を隠すために `export *` を本体ファイルへ適用してはいけません。
+`Field` のように公開本体の型が多い場合は、`FieldState`、`FieldActions`、`FieldSlotProps`、エラー関連の型を個別に export します。
+`Form` のようにジェネリックな型がある場合は、`FormValues` とイベント関連の型も個別に export します。
 
 ### クラス名と CSS
 
@@ -533,6 +643,9 @@ export * from "./checkbox.parts.jsx";
 export { type CheckboxProps, Checkbox } from "./checkbox.jsx";
 ```
 
+パーツの `export *` と本体の明示的な export を分ける点が重要です。
+本体の型が複数ある場合は、`Field` や `Form` の `index.ts` のように、本体に属する公開型をすべて列挙します。
+
 完了条件: ディレクトリーと、パーツと本体を再エクスポートする `index.ts` が存在する。
 
 ### Step 3 パーツファイル
@@ -540,9 +653,11 @@ export { type CheckboxProps, Checkbox } from "./checkbox.jsx";
 `<名前>.parts.tsx` を作り、パーツツリー順に全パーツを実装します。
 
 1. 必要な import を書きます（Base UI、`cn`、`errors`、`types`、`_split-render-props`、テーマ、CSS）。
-2. 各パーツについて、`State` 型 → `Props` 型 → コンポーネント本体 → `namespace` → 別名を書きます。
-3. グループの場合はコンテキストのセットを書きます。
-4. パーツが状態を子に伝える必要がある場合は、その状態のコンテキストを追加し、`useRenderElement` か Base UI のコンポーネントで包みます。
+2. 各パーツについて、`XxxPartState` 型 → `XxxPartProps` 型 → コンポーネント本体 → `namespace` → 別名を書きます。
+3. Root だけのコンポーネントでも、Base UI の Root ラッパー、`Root` namespace、`Root` 別名を定義します。
+4. Root にジェネリックやイベント関連の型がある場合は、Root の個別型、namespace の型エイリアス、ジェネリックなコンポーネント型をそろえます。
+5. グループの場合はコンテキストのセットを書きます。
+6. パーツが状態を子に伝える必要がある場合は、その状態のコンテキストを追加し、`useRenderElement` か Base UI のコンポーネントで包みます。
 
 完了条件: `index.ts` からパーツが import でき、参照コンポーネントと同じ形で全パーツが定義されている。
 
@@ -550,9 +665,11 @@ export { type CheckboxProps, Checkbox } from "./checkbox.jsx";
 
 `<名前>.tsx` を作り、公開コンポーネントを実装します。
 
-1. Root 以外のパーツを組み合わせる場合は、各パーツを `slotProps` で公開します。
-2. 単純な包み込みなら `XxxParts.Root` にそのまま渡します（Input の例、`packages/react/src/forms/input/input.tsx:16`）。
-3. コンポーネント関数名は `Sui<名前>` にします。
+1. Root 以外のパーツを組み合わせる場合は、各パーツの生のプロパティーを `slotProps` で公開します。
+2. `Field` のように利用者向けの便利なプロパティーを追加する場合は、Root のプロパティーと `slotProps`、便利なプロパティーを別の型として定義します。
+3. 単純な包み込みなら `XxxParts.Root` にそのまま渡します（Form の例、`packages/react/src/forms/form/form.tsx:63`）。
+4. Root や本体がジェネリックな場合は、公開コンポーネントの型にジェネリックな呼び出しシグネチャーを持たせます。
+5. コンポーネント関数名は `Sui<名前>` にします。
 
 完了条件: 公開 API の型とコンポーネントが定義され、JSDoc と `@example` が書かれている。
 
@@ -561,6 +678,8 @@ export { type CheckboxProps, Checkbox } from "./checkbox.jsx";
 `<名前>.css` を作ります。
 `../css/SKILL.md` を読み、`sui_<名前>-*` のクラスとカスタムプロパティーを定義します。
 必要な状態（pending、disabled など）を先に洗い出し、`@layer sui.important` の状態セクションを計画します。
+Suru UI 固有の規則がまだない Root は、`form.css` のようにセクション見出しだけを置いて空にできます。
+空の `@layer` や不要なカスタムプロパティーを追加せず、CSS の import はパーツファイルに残します。
 
 完了条件: パーツごとのセクションが `../css/SKILL.md` の構成に従っている。
 
@@ -661,7 +780,7 @@ export type XxxSlotProps = {
   /**
    * {@link XxxParts.Content|Content} に渡すプロパティーです。
    */
-  readonly content?: XxxParts.Indicator.Props | undefined;
+  readonly content?: XxxParts.Content.Props | undefined;
 };
 
 /**
