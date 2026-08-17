@@ -2,7 +2,6 @@
 .docs-story {
   scrollbar-gutter: stable;
   color: var(--sui-canvas_text-1);
-  color-scheme: var(--sui-theme);
   background-color: var(--sui-canvas-1);
   isolation: isolate;
 }

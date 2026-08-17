@@ -1,72 +1,77 @@
 import * as React from "react";
 
+import isLikelyVisibleNode from "../../_is-likely-visible-node.js";
 import type { Component } from "../../types.js";
 import * as NumberFieldParts from "./number-field.parts.jsx";
 
 /**
- * {@link NumberField} コンポーネントのプロパティーです。
- */
-export type NumberFieldProps = NumberFieldParts.Root.Props & {
-  /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-   *
-   * `scrubArea` を指定した場合だけ {@link NumberFieldParts.ScrubArea} が表示されます。
-   * その他のパーツは常に表示され、各パーツの指定値が既定値より優先されます。
-   */
-  slotProps?: NumberFieldSlotProps | undefined;
-};
-
-/**
- * {@link NumberField} を構成する各パーツのプロパティーです。
- *
- * `scrubArea` と `scrubAreaCursor` は、スクラブ領域を使う場合だけ指定します。
+ * {@link NumberField} の各パーツに渡すプロパティーです。
  */
 export type NumberFieldSlotProps = {
   /**
-   * スクラブ領域のプロパティーです。
-   *
-   * 指定すると {@link NumberFieldParts.ScrubArea} が表示されます。
+   * {@link NumberFieldParts.Addon|Addon} に渡すプロパティーです。
    */
-  readonly scrubArea?: NumberFieldParts.ScrubArea.Props | undefined;
+  readonly addon?: Omit<NumberFieldParts.Addon.Props, "children"> | undefined;
 
   /**
-   * スクラブ領域カーソルのプロパティーです。
-   *
-   * `scrubArea` と同時に指定した場合だけ適用されます。
-   */
-  readonly scrubAreaCursor?: NumberFieldParts.ScrubAreaCursor.Props | undefined;
-
-  /**
-   * パーツをまとめるグループのプロパティーです。
-   */
-  readonly group?: NumberFieldParts.Group.Props | undefined;
-
-  /**
-   * 減少ボタンのプロパティーです。
-   *
-   * `children` を指定しない場合は既定のマイナスアイコンが表示されます。
+   * {@link NumberFieldParts.Decrement|Decrement} に渡すプロパティーです。
    */
   readonly decrement?: NumberFieldParts.Decrement.Props | undefined;
 
   /**
-   * 数値入力欄のプロパティーです。
+   * {@link NumberFieldParts.Group|Group} に渡すプロパティーです。
+   */
+  readonly group?: NumberFieldParts.Group.Props | undefined;
+
+  /**
+   * {@link NumberFieldParts.Increment|Increment} に渡すプロパティーです。
+   */
+  readonly increment?: NumberFieldParts.Increment.Props | undefined;
+
+  /**
+   * {@link NumberFieldParts.Input|Input} に渡すプロパティーです。
    */
   readonly input?: NumberFieldParts.Input.Props | undefined;
 
   /**
-   * 増加ボタンのプロパティーです。
-   *
-   * `children` を指定しない場合は既定のプラスアイコンが表示されます。
+   * {@link NumberFieldParts.ScrubArea|ScrubArea} に渡すプロパティーです。
    */
-  readonly increment?: NumberFieldParts.Increment.Props | undefined;
+  readonly scrubArea?: NumberFieldParts.ScrubArea.Props | undefined;
+
+  /**
+   * {@link NumberFieldParts.ScrubAreaCursor|ScrubAreaCursor} に渡すプロパティーです。
+   */
+  readonly scrubAreaCursor?: NumberFieldParts.ScrubAreaCursor.Props | undefined;
 };
 
 /**
+ * {@link NumberField} コンポーネントのプロパティーです。
+ */
+export type NumberFieldProps = NumberFieldParts.Root.Props &
+  Pick<NumberFieldParts.Input.Props, "placeholder"> & {
+    decrement?: NumberFieldParts.Decrement.Props["children"];
+
+    endAddons?: readonly React.ReactNode[] | undefined;
+
+    increment?: NumberFieldParts.Decrement.Props["children"];
+
+    /**
+     * ドラッグで値を変更できる領域です。
+     */
+    scrubArea?: NumberFieldParts.ScrubArea.Props["children"];
+
+    /**
+     * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+     *
+     * 各パーツのプロパティーが優先されます。
+     */
+    slotProps?: NumberFieldSlotProps | undefined;
+
+    startAddons?: readonly React.ReactNode[] | undefined;
+  };
+
+/**
  * 数値入力欄を表示するコンポーネントです。
- *
- * Increment と Decrement に挿入するアイコンは、`slotProps` の
- * `increment.children` と `decrement.children` で差し替えられます。
- * ScrubArea は `slotProps.scrubArea` を渡したときだけ表示します。
  *
  * @example 基本
  * ```tsx
@@ -90,58 +95,138 @@ export type NumberFieldSlotProps = {
  */
 export const NumberField: Component<NumberFieldProps> = function SuiNumberField(props) {
   const {
+    decrement,
+    endAddons = [],
+    increment,
+    scrubArea,
     slotProps: {
+      addon: addonProps,
+      group: groupProps,
+      input: inputProps,
+      decrement: decrementProps,
+      increment: incrementProps,
       scrubArea: scrubAreaProps,
       scrubAreaCursor: scrubAreaCursorProps,
-      group: groupProps,
-      decrement: decrementProps,
-      input: inputProps,
-      increment: incrementProps,
     } = {},
+    placeholder,
+    startAddons = [],
     ...rootProps
   } = props;
-  const { children: decrementChildren = <SuiMinusIcon />, ...restDecrementProps } =
-    decrementProps ?? {};
-  const { children: incrementChildren = <SuiPlusIcon />, ...restIncrementProps } =
-    incrementProps ?? {};
 
   return (
     <NumberFieldParts.Root {...rootProps}>
-      {scrubAreaProps ? (
-        <NumberFieldParts.ScrubArea {...scrubAreaProps}>
-          {scrubAreaProps.children}
-          {scrubAreaCursorProps ? (
-            <NumberFieldParts.ScrubAreaCursor {...scrubAreaCursorProps} />
-          ) : null}
-        </NumberFieldParts.ScrubArea>
-      ) : null}
+      {("scrubArea" in props || !!scrubAreaProps) && (
+        <NumberFieldParts.ScrubArea
+          {...{
+            children: (
+              <>
+                {scrubArea}
+                <NumberFieldParts.ScrubAreaCursor
+                  {...{
+                    children: <SuiCursorGrowIcon />,
+                    ...scrubAreaCursorProps,
+                  }}
+                />
+              </>
+            ),
+            ...scrubAreaProps,
+          }}
+        />
+      )}
       <NumberFieldParts.Group {...groupProps}>
-        <NumberFieldParts.Input {...inputProps} />
-        <NumberFieldParts.Decrement {...restDecrementProps}>
-          {decrementChildren}
-        </NumberFieldParts.Decrement>
-        <NumberFieldParts.Increment {...restIncrementProps}>
-          {incrementChildren}
-        </NumberFieldParts.Increment>
+        {startAddons.map((addon, i) => (
+          <NumberFieldParts.Addon
+            {...addonProps}
+            key={React.isValidElement(addon) ? (addon.key ?? i) : i}
+          >
+            {addon}
+          </NumberFieldParts.Addon>
+        ))}
+        <NumberFieldParts.Input placeholder={placeholder} {...inputProps} />
+        {endAddons.map((addon, i) => (
+          <NumberFieldParts.Addon
+            {...addonProps}
+            key={React.isValidElement(addon) ? (addon.key ?? i) : i}
+          >
+            {addon}
+          </NumberFieldParts.Addon>
+        ))}
+        {(("decrement" in props && (decrement === true || isLikelyVisibleNode(decrement))) ||
+          !!decrementProps) && (
+          <NumberFieldParts.Addon disableFocusOnClick {...addonProps}>
+            <NumberFieldParts.Decrement
+              {...{
+                children: decrement === true ? <SuiMinusIcon /> : decrement,
+                ...decrementProps,
+              }}
+            />
+          </NumberFieldParts.Addon>
+        )}
+        {(("increment" in props && (increment === true || isLikelyVisibleNode(increment))) ||
+          !!incrementProps) && (
+          <NumberFieldParts.Addon disableFocusOnClick {...addonProps}>
+            <NumberFieldParts.Increment
+              {...{
+                children: increment === true ? <SuiPlusIcon /> : increment,
+                ...incrementProps,
+              }}
+            />
+          </NumberFieldParts.Addon>
+        )}
       </NumberFieldParts.Group>
     </NumberFieldParts.Root>
   );
 };
 
-// Increment と Decrement の既定アイコンです。
-
-function SuiPlusIcon(props: React.ComponentProps<"svg">) {
+function SuiCursorGrowIcon(props: React.ComponentProps<"svg">) {
   return (
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeLinecap="round" {...props}>
-      <path d="M8 3v10M3 8h10" />
+    <svg
+      fill="none"
+      width={24}
+      xmlns="http://www.w3.org/2000/svg"
+      height={24}
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      {...props}
+    >
+      <line x1="4" y1="12" x2="20" y2="12" />
+      <polyline points="8 8 4 12 8 16" />
+      <polyline points="16 8 20 12 16 16" />
     </svg>
   );
 }
 
 function SuiMinusIcon(props: React.ComponentProps<"svg">) {
   return (
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeLinecap="round" {...props}>
+    <svg
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 16 16"
+      strokeLinecap="round"
+      aria-hidden="true"
+      {...props}
+    >
       <path d="M3 8h10" />
+    </svg>
+  );
+}
+
+function SuiPlusIcon(props: React.ComponentProps<"svg">) {
+  return (
+    <svg
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      stroke="currentColor"
+      viewBox="0 0 16 16"
+      strokeLinecap="round"
+      aria-hidden="true"
+      {...props}
+    >
+      <path d="M8 3v10M3 8h10" />
     </svg>
   );
 }

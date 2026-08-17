@@ -32,26 +32,17 @@ export const preview = definePreview({
 
 export default preview;
 
-export function controls<TProps, TArg extends keyof TProps>(
+export function controls<TProps>(
   component: React.ComponentType<TProps>,
-  argTypes: ArgTypes<Record<TArg, unknown>>,
-): <TArgs extends Partial<TProps>>(
+  argTypes: Partial<ArgTypes<Record<keyof TProps | (string & {}), unknown>>>,
+): <TArgs extends Partial<TProps> & Record<string & {}, unknown>>(
   args: TArgs,
 ) => {
   argTypes: ArgTypes<Record<keyof TArgs, unknown>>;
   args: TArgs;
 };
 
-export function controls<TArg extends keyof any>(
-  argTypes: ArgTypes<Record<TArg, unknown>>,
-): <TArgs extends Partial<Record<TArg, unknown>>>(
-  args: TArgs,
-) => {
-  argTypes: ArgTypes<Record<keyof TArgs, unknown>>;
-  args: TArgs;
-};
-
-export function controls(arg0: any, argTypes: ArgTypes = arg0): any {
+export function controls(_: any, argTypes: any): any {
   return (args: any) => ({
     argTypes: Object.fromEntries(
       Object.keys(args).map((key) => [key, argTypes[key] || { control: false }]),

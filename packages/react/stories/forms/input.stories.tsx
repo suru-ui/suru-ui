@@ -93,8 +93,12 @@ export const Variants = meta.story({
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <Input {...props} variant="naked" className="w-64" />
-        <Input {...props} variant="liquid" className="w-64" />
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col gap-2">
+            <span className="text-sm">{variant}</span>
+            <Input {...props} variant={variant} className="w-64" />
+          </div>
+        ))}
       </div>
     );
   },
@@ -115,8 +119,8 @@ export const Colors = meta.story({
       <div className="flex flex-col gap-3">
         {COLORS.map((color) => (
           <Input
-            key={color}
             {...props}
+            key={color}
             color={color}
             defaultValue={
               {
@@ -131,7 +135,6 @@ export const Colors = meta.story({
               }[color]
             }
             className="w-64"
-            // className="w-64 h-[36px]"
           />
         ))}
       </div>
@@ -223,11 +226,9 @@ export const Invalid = meta.story({
   }),
   render(props) {
     return (
-      <div className="flex flex-col gap-3">
-        <Field invalid>
-          <Input {...props} defaultValue="不正な値" className="w-64" />
-        </Field>
-      </div>
+      <Field invalid>
+        <Input {...props} defaultValue="不正な値" className="w-64" />
+      </Field>
     );
   },
 });

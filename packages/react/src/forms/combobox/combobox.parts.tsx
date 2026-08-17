@@ -220,7 +220,7 @@ export const ComboboxRoot: ComboboxRootComponent = function SuiComboboxRoot<
 };
 
 /**
- * {@link ComboboxRoot} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
@@ -270,7 +270,7 @@ export const ComboboxLabel: Component<ComboboxLabelProps> = function SuiCombobox
 };
 
 /**
- * {@link ComboboxLabel} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxLabel} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Label {
   /**
@@ -315,7 +315,7 @@ export const ComboboxValue: Component<ComboboxValueProps> = function SuiCombobox
 };
 
 /**
- * {@link ComboboxValue} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxValue} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Value {
   /**
@@ -362,7 +362,7 @@ export const ComboboxInput: Component<ComboboxInputProps> = function SuiCombobox
 };
 
 /**
- * {@link ComboboxInput} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxInput} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Input {
   /**
@@ -436,7 +436,7 @@ export const ComboboxInputGroup: Component<ComboboxInputGroupProps> =
   };
 
 /**
- * {@link ComboboxInputGroup} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxInputGroup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace InputGroup {
   /**
@@ -483,7 +483,7 @@ export const ComboboxTrigger: Component<ComboboxTriggerProps> = function SuiComb
 };
 
 /**
- * {@link ComboboxTrigger} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxTrigger} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Trigger {
   /**
@@ -530,7 +530,7 @@ export const ComboboxIcon: Component<ComboboxIconProps> = function SuiComboboxIc
 };
 
 /**
- * {@link ComboboxIcon} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxIcon} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Icon {
   /**
@@ -577,7 +577,7 @@ export const ComboboxClear: Component<ComboboxClearProps> = function SuiCombobox
 };
 
 /**
- * {@link ComboboxClear} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxClear} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Clear {
   /**
@@ -626,7 +626,7 @@ export const ComboboxChips: Component<ComboboxChipsProps> = function SuiCombobox
 };
 
 /**
- * {@link ComboboxChips} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxChips} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Chips {
   /**
@@ -673,7 +673,7 @@ export const ComboboxChip: Component<ComboboxChipProps> = function SuiComboboxCh
 };
 
 /**
- * {@link ComboboxChip} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxChip} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Chip {
   /**
@@ -723,7 +723,7 @@ export const ComboboxChipRemove: Component<ComboboxChipRemoveProps> =
   };
 
 /**
- * {@link ComboboxChipRemove} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxChipRemove} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace ChipRemove {
   /**
@@ -776,7 +776,7 @@ export const ComboboxList: Component<ComboboxListProps> = function SuiComboboxLi
 };
 
 /**
- * {@link ComboboxList} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxList} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace List {
   /**
@@ -823,7 +823,7 @@ export const ComboboxStatus: Component<ComboboxStatusProps> = function SuiCombob
 };
 
 /**
- * {@link ComboboxStatus} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxStatus} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Status {
   /**
@@ -870,7 +870,7 @@ export const ComboboxPortal: Component<ComboboxPortalProps> = function SuiCombob
 };
 
 /**
- * {@link ComboboxPortal} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxPortal} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Portal {
   /**
@@ -919,7 +919,7 @@ export const ComboboxBackdrop: Component<ComboboxBackdropProps> = function SuiCo
 };
 
 /**
- * {@link ComboboxBackdrop} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxBackdrop} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Backdrop {
   /**
@@ -969,7 +969,7 @@ export const ComboboxPositioner: Component<ComboboxPositionerProps> =
   };
 
 /**
- * {@link ComboboxPositioner} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxPositioner} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Positioner {
   /**
@@ -1016,7 +1016,7 @@ export const ComboboxPopup: Component<ComboboxPopupProps> = function SuiCombobox
 };
 
 /**
- * {@link ComboboxPopup} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxPopup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Popup {
   /**
@@ -1063,7 +1063,7 @@ export const ComboboxArrow: Component<ComboboxArrowProps> = function SuiCombobox
 };
 
 /**
- * {@link ComboboxArrow} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxArrow} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Arrow {
   /**
@@ -1110,7 +1110,7 @@ export const ComboboxGroup: Component<ComboboxGroupProps> = function SuiCombobox
 };
 
 /**
- * {@link ComboboxGroup} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxGroup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Group {
   /**
@@ -1160,7 +1160,7 @@ export const ComboboxGroupLabel: Component<ComboboxGroupLabelProps> =
   };
 
 /**
- * {@link ComboboxGroupLabel} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxGroupLabel} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace GroupLabel {
   /**
@@ -1214,7 +1214,7 @@ export const ComboboxItem: Component<ComboboxItemProps> = function SuiComboboxIt
 };
 
 /**
- * {@link ComboboxItem} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxItem} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Item {
   /**
@@ -1267,7 +1267,7 @@ export const ComboboxItemIndicator: Component<ComboboxItemIndicatorProps> =
   };
 
 /**
- * {@link ComboboxItemIndicator} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxItemIndicator} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace ItemIndicator {
   /**
@@ -1314,7 +1314,7 @@ export const ComboboxRow: Component<ComboboxRowProps> = function SuiComboboxRow(
 };
 
 /**
- * {@link ComboboxRow} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxRow} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Row {
   /**
@@ -1360,7 +1360,7 @@ export const ComboboxCollection: Component<ComboboxCollectionProps> =
   };
 
 /**
- * {@link ComboboxCollection} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxCollection} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Collection {
   /**
@@ -1407,7 +1407,7 @@ export const ComboboxEmpty: Component<ComboboxEmptyProps> = function SuiCombobox
 };
 
 /**
- * {@link ComboboxEmpty} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxEmpty} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Empty {
   /**
@@ -1456,7 +1456,7 @@ export const ComboboxSeparator: Component<ComboboxSeparatorProps> = function Sui
 };
 
 /**
- * {@link ComboboxSeparator} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ComboboxSeparator} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Separator {
   /**

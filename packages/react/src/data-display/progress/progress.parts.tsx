@@ -111,7 +111,7 @@ export const ProgressRoot: Component<ProgressRootProps> = function SuiProgressRo
 };
 
 /**
- * {@link ProgressRoot} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ProgressRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
@@ -160,7 +160,7 @@ export const ProgressLabel: Component<ProgressLabelProps> = function SuiProgress
 };
 
 /**
- * {@link ProgressLabel} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ProgressLabel} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Label {
   /**
@@ -211,7 +211,7 @@ export const ProgressValue: Component<ProgressValueProps> = function SuiProgress
 };
 
 /**
- * {@link ProgressValue} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ProgressValue} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Value {
   /**
@@ -262,7 +262,7 @@ export const ProgressTrack: Component<ProgressTrackProps> = function SuiProgress
 };
 
 /**
- * {@link ProgressTrack} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ProgressTrack} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Track {
   /**
@@ -315,7 +315,7 @@ export const ProgressIndicator: Component<ProgressIndicatorProps> = function Sui
 };
 
 /**
- * {@link ProgressIndicator} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ProgressIndicator} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Indicator {
   /**

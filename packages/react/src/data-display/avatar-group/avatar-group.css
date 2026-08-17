@@ -1,33 +1,69 @@
 /* Root */
 @layer sui.component {
-  /* 変数 */
-  .sui_avatar_group {
-    /* 空白 */
-    --sui_avatar_group-overlap: ;
-    /* 枠線 */
-    --sui_avatar_group-border_color: ;
-  }
-
   /* 静的 */
   .sui_avatar_group {
     display: inline-flex;
     align-items: center;
+    overflow: hidden;
+  }
+}
+
+/* Avatar */
+@layer sui.component {
+  /* 変数 */
+  .sui_avatar_group {
+    /* 空白 */
+    --sui_avatar_group-avatar-overlap: ;
+    /* 枠線 */
+    --sui_avatar_group-avatar-pseudo_ring_color: ;
+    --sui_avatar_group-avatar-pseudo_ring_width: ;
+    /* 位置 */
+    --sui_avatar_group-avatar-z_index: ;
   }
 
   /* 動的 */
-  .sui_avatar_group > .sui_avatar + .sui_avatar {
-    margin-left: var(--sui_avatar_group-overlap);
-    box-shadow: 0px 0px 0px --sui-border_width(2) var(--sui_avatar_group-border_color);
+  .sui_avatar_group .sui_avatar {
+    z-index: var(--_sui_avatar_group-avatar-z_index, var(--sui_avatar_group-avatar-z_index));
+    box-shadow: 0px
+                0px
+                0px
+                var(--sui_avatar_group-avatar-pseudo_ring_width)
+                var(--sui_avatar_group-avatar-pseudo_ring_color);
+  }
+  .sui_avatar_group-forward .sui_avatar:not(:first-child) {
+    margin-left: var(--sui_avatar_group-avatar-overlap);
+  }
+  .sui_avatar_group-reverse .sui_avatar:not(:last-child) {
+    margin-right: var(--sui_avatar_group-avatar-overlap);
   }
 
   /* 既定値設定: ここから */
 
   .sui_avatar_group {
     /* 空白 */
-    --sui_avatar_group-overlap: calc(-1 * --sui-space(4));
+    --sui_avatar_group-avatar-overlap: calc(-1 * --sui-space(4));
     /* 枠線 */
-    --sui_avatar_group-border_color: var(--sui-canvas-1);
+    --sui_avatar_group-avatar-pseudo_ring_color: var(--sui-canvas-1);
+    --sui_avatar_group-avatar-pseudo_ring_width: --sui-border_width(3);
+  }
+
+  .sui_avatar_group-forward {
+    --sui_avatar_group-avatar-z_index: sibling-index();
+  }
+
+  .sui_avatar_group-reverse {
+    --sui_avatar_group-avatar-z_index: calc(sibling-count() - sibling-index());
   }
 
   /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  @media (any-hover: hover) {
+    .sui_avatar_group .sui_avatar:hover {
+      --_sui_avatar_group-avatar-z_index: calc(infinity);
+    }
+  }
+
+  /* 上書き設定: ここまで */
 }

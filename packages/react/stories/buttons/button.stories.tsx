@@ -501,7 +501,6 @@ export const FullWidth = meta.story({
 export const Disabled = meta.story({
   name: "無効",
   ...ctrl({
-    variant: "solid",
     color: "grey",
     size: "md",
     radius: undefined,
@@ -510,13 +509,20 @@ export const Disabled = meta.story({
   }),
   render(props) {
     return (
-      <div className="flex flex-wrap gap-3">
-        <Button {...props} disabled>
-          送信
-        </Button>
-        <Button {...props} disabled squared>
-          <EllipsisIcon />
-        </Button>
+      <div className="flex flex-col gap-3">
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col items-center gap-2">
+            <span className="text-sm">{variant}</span>
+            <div className="flex flex-wrap gap-3">
+              <Button {...props} disabled variant={variant}>
+                送信
+              </Button>
+              <Button {...props} disabled squared variant={variant}>
+                <EllipsisIcon />
+              </Button>
+            </div>
+          </div>
+        ))}
       </div>
     );
   },

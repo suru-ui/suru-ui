@@ -219,7 +219,7 @@ export const AutocompleteRoot: Component<AutocompleteRootProps> = function SuiAu
 };
 
 /**
- * {@link AutocompleteRoot} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompleteRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
@@ -268,7 +268,7 @@ export const AutocompleteValue: Component<AutocompleteValueProps> = function Sui
 };
 
 /**
- * {@link AutocompleteValue} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompleteValue} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Value {
   /**
@@ -320,7 +320,7 @@ export const AutocompleteTrigger: Component<AutocompleteTriggerProps> =
   };
 
 /**
- * {@link AutocompleteTrigger} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompleteTrigger} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Trigger {
   /**
@@ -369,7 +369,7 @@ export const AutocompleteInput: Component<AutocompleteInputProps> = function Sui
 };
 
 /**
- * {@link AutocompleteInput} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompleteInput} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Input {
   /**
@@ -443,7 +443,7 @@ export const AutocompleteInputGroup: Component<AutocompleteInputGroupProps> =
   };
 
 /**
- * {@link AutocompleteInputGroup} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompleteInputGroup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace InputGroup {
   /**
@@ -492,7 +492,7 @@ export const AutocompleteIcon: Component<AutocompleteIconProps> = function SuiAu
 };
 
 /**
- * {@link AutocompleteIcon} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompleteIcon} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Icon {
   /**
@@ -545,7 +545,7 @@ export const AutocompleteClear: Component<AutocompleteClearProps> = function Sui
 };
 
 /**
- * {@link AutocompleteClear} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompleteClear} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Clear {
   /**
@@ -604,7 +604,7 @@ export const AutocompleteList: Component<AutocompleteListProps> = function SuiAu
 };
 
 /**
- * {@link AutocompleteList} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompleteList} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace List {
   /**
@@ -657,7 +657,7 @@ export const AutocompleteStatus: Component<AutocompleteStatusProps> =
   };
 
 /**
- * {@link AutocompleteStatus} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompleteStatus} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Status {
   /**
@@ -713,7 +713,7 @@ export const AutocompletePortal: Component<AutocompletePortalProps> =
   };
 
 /**
- * {@link AutocompletePortal} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompletePortal} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Portal {
   /**
@@ -768,7 +768,7 @@ export const AutocompleteBackdrop: Component<AutocompleteBackdropProps> =
   };
 
 /**
- * {@link AutocompleteBackdrop} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompleteBackdrop} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Backdrop {
   /**
@@ -823,7 +823,7 @@ export const AutocompletePositioner: Component<AutocompletePositionerProps> =
   };
 
 /**
- * {@link AutocompletePositioner} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompletePositioner} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Positioner {
   /**
@@ -874,7 +874,7 @@ export const AutocompletePopup: Component<AutocompletePopupProps> = function Sui
 };
 
 /**
- * {@link AutocompletePopup} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompletePopup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Popup {
   /**
@@ -926,7 +926,7 @@ export const AutocompleteArrow: Component<AutocompleteArrowProps> = function Sui
 };
 
 /**
- * {@link AutocompleteArrow} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompleteArrow} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Arrow {
   /**
@@ -979,7 +979,7 @@ export const AutocompleteGroup: Component<AutocompleteGroupProps> = function Sui
 };
 
 /**
- * {@link AutocompleteGroup} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompleteGroup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Group {
   /**
@@ -1032,7 +1032,7 @@ export const AutocompleteGroupLabel: Component<AutocompleteGroupLabelProps> =
   };
 
 /**
- * {@link AutocompleteGroupLabel} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompleteGroupLabel} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace GroupLabel {
   /**
@@ -1088,7 +1088,7 @@ export const AutocompleteItem: Component<AutocompleteItemProps> = function SuiAu
 };
 
 /**
- * {@link AutocompleteItem} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompleteItem} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Item {
   /**
@@ -1139,7 +1139,7 @@ export const AutocompleteRow: Component<AutocompleteRowProps> = function SuiAuto
 };
 
 /**
- * {@link AutocompleteRow} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompleteRow} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Row {
   /**
@@ -1194,7 +1194,7 @@ export const AutocompleteCollection: Component<AutocompleteCollectionProps> =
   };
 
 /**
- * {@link AutocompleteCollection} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompleteCollection} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Collection {
   /**
@@ -1245,7 +1245,7 @@ export const AutocompleteEmpty: Component<AutocompleteEmptyProps> = function Sui
 };
 
 /**
- * {@link AutocompleteEmpty} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompleteEmpty} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Empty {
   /**
@@ -1298,7 +1298,7 @@ export const AutocompleteSeparator: Component<AutocompleteSeparatorProps> =
   };
 
 /**
- * {@link AutocompleteSeparator} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AutocompleteSeparator} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Separator {
   /**

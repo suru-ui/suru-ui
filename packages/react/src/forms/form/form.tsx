@@ -1,42 +1,107 @@
 import type { Component } from "../../types.js";
-import * as FormParts from "./form.parts.jsx";
+import {
+  type FormRootProps,
+  type FormRootState,
+  type FormRootValues,
+  type FormRootActions,
+  type FormRootValidationMode,
+  type FormRootSubmitEventReason,
+  type FormRootSubmitEventDetails,
+  FormRoot,
+} from "./form.parts.jsx";
 
 /**
- * {@link Form} コンポーネントのプロパティーです。
+ * {@link Form} の入力値を表す型です。
  *
- * @template FormValues フォームの入力値を表す型です。
- *
- * `validationMode` は `"onSubmit"`、`"onBlur"`、`"onChange"` を指定でき、既定値は `"onSubmit"` です。
- * 子要素の {@link FormParts.Root.Props} にあるフィールド単位の設定がフォーム全体の設定より優先されます。
- * `errors`、`onFormSubmit`、`actionsRef` の変更は、それぞれ外部エラー、送信処理、命令的な検証操作に反映されます。
+ * @template TValues フォームの入力値を表す型です。
  */
-export type FormProps<FormValues extends Record<string, unknown> = Record<string, string>> =
-  FormParts.Root.Props<FormValues>;
+export type FormValues<TValues extends FormRootValues = FormRootValues> = FormRootValues<TValues>;
+
+/**
+ * {@link Form} を命令的に操作するためのオブジェクトです。
+ */
+export type FormActions = FormRootActions;
+
+/**
+ * {@link Form} の検証を行うタイミングを決定します。
+ *
+ * - "onSubmit": フォーム送信時にフィールドを検証し、それ以降は値が変更されるたびに再検証を行います。
+ * - "onBlur": フィールドからフォーカスが外れたときに検証を行います。
+ * - "onChange": 値が変更されるたびに検証を行います。
+ */
+export type FormValidationMode = FormRootValidationMode;
+
+/**
+ * {@link Form} が送信された理由です。
+ */
+export type FormSubmitEventReason = FormRootSubmitEventReason;
+
+/**
+ * {@link Form} が送信されたイベントの詳細です。
+ */
+export type FormSubmitEventDetails = FormRootSubmitEventDetails;
+
+/**
+ * {@link Form} の状態です。
+ */
+export type FormState = FormRootState;
+
+/**
+ * {@link Form} に渡すプロパティーです。
+ *
+ * @template TValues フォームの入力値を表す型です。
+ */
+export type FormProps<TValues extends FormValues = FormValues> = FormRootProps<TValues>;
+
+interface FormComponentType extends Component<FormProps> {
+  <TValues extends FormValues>(props: FormProps<TValues>): React.ReactElement | null;
+}
 
 /**
  * フォームを表示するコンポーネントです。
- *
- * 一括のエラーハンドリングと検証を提供し、`<Field.Root>` と組み合わせて使用します。
- *
- * @example サーバーエラーの表示
- * ```tsx
- * const [errors, setErrors] = React.useState({});
- *
- * <Form
- *   errors={errors}
- *   onFormSubmit={async (formValues) => {
- *     const response = await submit(formValues);
- *     setErrors(response.errors);
- *   }}
- * >
- *   <Field.Root name="username">
- *     <Field.Control required />
- *     <Field.Error />
- *   </Field.Root>
- *   <Button type="submit">送信</Button>
- * </Form>
- * ```
  */
-export const Form: Component<FormProps> = function SuiForm(props) {
-  return <FormParts.Root {...props} />;
+export const Form: FormComponentType = function SuiForm(props: FormProps) {
+  return <FormRoot {...props} />;
 };
+
+/**
+ * {@link Form} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Form {
+  /**
+   * {@link FormState} です。
+   */
+  export type State = FormState;
+
+  /**
+   * {@link FormProps} です。
+   */
+  export type Props = FormProps;
+
+  /**
+   * {@link FormValues} です。
+   *
+   * @template TValues フォームの入力値を表す型です。
+   */
+  export type Values<TValues extends FormValues = FormValues> = FormValues<TValues>;
+
+  /**
+   * {@link FormActions} です。
+   */
+  export type Actions = FormActions;
+
+  /**
+   * {@link FormValidationMode} です。
+   */
+  export type ValidationMode = FormValidationMode;
+
+  /**
+   * {@link FormSubmitEventReason} です。
+   */
+  export type SubmitEventReason = FormSubmitEventReason;
+
+  /**
+   * {@link FormSubmitEventDetails} です。
+   */
+  export type SubmitEventDetails = FormSubmitEventDetails;
+}

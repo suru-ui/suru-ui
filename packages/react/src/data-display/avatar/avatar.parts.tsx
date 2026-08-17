@@ -79,7 +79,7 @@ export const AvatarRoot: Component<AvatarRootProps> = function SuiAvatarRoot(pro
 };
 
 /**
- * {@link AvatarRoot} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AvatarRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
@@ -123,7 +123,7 @@ export const AvatarImage: Component<AvatarImageProps> = function SuiAvatarImage(
 };
 
 /**
- * {@link AvatarImage} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AvatarImage} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Image {
   /**
@@ -170,7 +170,7 @@ export const AvatarFallback: Component<AvatarFallbackProps> = function SuiAvatar
 };
 
 /**
- * {@link AvatarFallback} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AvatarFallback} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Fallback {
   /**

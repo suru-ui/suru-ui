@@ -103,7 +103,7 @@ export const AlertRoot: Component<AlertRootProps> = function SuiAlertRoot(props)
 };
 
 /**
- * {@link AlertRoot} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AlertRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
@@ -164,7 +164,7 @@ export const AlertIcon: Component<AlertIconProps> = function SuiAlertIcon(props)
 };
 
 /**
- * {@link AlertIcon} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AlertIcon} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Icon {
   /**
@@ -218,7 +218,7 @@ export const AlertTitle: Component<AlertTitleProps> = function SuiAlertTitle(pro
 };
 
 /**
- * {@link AlertTitle} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AlertTitle} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Title {
   /**
@@ -274,7 +274,7 @@ export const AlertDescription: Component<AlertDescriptionProps> = function SuiAl
 };
 
 /**
- * {@link AlertDescription} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AlertDescription} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Description {
   /**
@@ -289,7 +289,7 @@ export namespace Description {
 }
 
 /**
- * {@link AlertDescription} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AlertDescription} の状態やプロパティーをまとめた型名前空間です。
  */
 export const Description: Component<Description.Props> = AlertDescription;
 
@@ -331,7 +331,7 @@ export const AlertActions: Component<AlertActionsProps> = function SuiAlertActio
 };
 
 /**
- * {@link AlertActions} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AlertActions} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Actions {
   /**
@@ -346,6 +346,6 @@ export namespace Actions {
 }
 
 /**
- * {@link AlertActions} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AlertActions} の状態やプロパティーをまとめた型名前空間です。
  */
 export const Actions: Component<Actions.Props> = AlertActions;

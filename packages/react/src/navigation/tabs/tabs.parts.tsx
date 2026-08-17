@@ -90,7 +90,7 @@ export const TabsRoot: Component<TabsRootProps> = function SuiTabsRoot(props) {
 };
 
 /**
- * {@link TabsRoot} の状態とプロパティーをまとめた型名前空間です。
+ * {@link TabsRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
@@ -140,7 +140,7 @@ export const TabsList: Component<TabsListProps> = function SuiTabsList(props) {
 };
 
 /**
- * {@link TabsList} の状態とプロパティーをまとめた型名前空間です。
+ * {@link TabsList} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace List {
   /**
@@ -187,7 +187,7 @@ export const TabsTab: Component<TabsTabProps> = function SuiTabsTab(props) {
 };
 
 /**
- * {@link TabsTab} の状態とプロパティーをまとめた型名前空間です。
+ * {@link TabsTab} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Tab {
   /**
@@ -239,7 +239,7 @@ export const TabsIndicator: Component<TabsIndicatorProps> = function SuiTabsIndi
 };
 
 /**
- * {@link TabsIndicator} の状態とプロパティーをまとめた型名前空間です。
+ * {@link TabsIndicator} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Indicator {
   /**
@@ -286,7 +286,7 @@ export const TabsPanel: Component<TabsPanelProps> = function SuiTabsPanel(props)
 };
 
 /**
- * {@link TabsPanel} の状態とプロパティーをまとめた型名前空間です。
+ * {@link TabsPanel} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Panel {
   /**

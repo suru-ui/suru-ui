@@ -167,6 +167,10 @@
       "types": "./dist/src/forms/switch/index.d.ts",
       "default": "./dist/src/forms/switch/index.js"
     },
+    "./text-field": {
+      "types": "./dist/src/forms/text-field/index.d.ts",
+      "default": "./dist/src/forms/text-field/index.js"
+    },
     "./suru.css": "./dist/suru.css"
   },
   "scripts": {

@@ -91,7 +91,7 @@ export const ChipRoot: Component<ChipRootProps> = function SuiChipRoot(props) {
 };
 
 /**
- * {@link ChipRoot} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ChipRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**

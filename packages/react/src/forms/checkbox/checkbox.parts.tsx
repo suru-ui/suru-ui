@@ -121,7 +121,7 @@ export const CheckboxRoot: Component<CheckboxRootProps> = function SuiCheckboxRo
 };
 
 /**
- * {@link CheckboxRoot} の状態とプロパティーをまとめた型名前空間です。
+ * {@link CheckboxRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**

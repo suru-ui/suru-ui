@@ -120,7 +120,7 @@ export type ButtonRootProps = React.ComponentProps<typeof Button> & {
   radius?: "none" | Size | "full" | undefined;
 
   /**
-   * ボタンのサイズを指定します。
+   * ボタンの大きさを指定します。
    *
    * @default "md"
    */
@@ -207,7 +207,7 @@ export const ButtonRoot: Component<ButtonRootProps> = function SuiButtonRoot(pro
 };
 
 /**
- * {@link ButtonRoot} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ButtonRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
@@ -261,7 +261,7 @@ export const ButtonContent: Component<ButtonContentProps> = function SuiButtonCo
 };
 
 /**
- * {@link ButtonContent} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ButtonContent} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Content {
   /**
@@ -345,7 +345,7 @@ export const ButtonPending: Component<ButtonPendingProps> = function SuiButtonPe
 };
 
 /**
- * {@link ButtonPending} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ButtonPending} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Pending {
   /**
@@ -509,7 +509,7 @@ export const ButtonCircularProgress: Component<ButtonCircularProgressProps> =
   };
 
 /**
- * {@link ButtonCircularProgress} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ButtonCircularProgress} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace CircularProgress {
   /**
@@ -582,7 +582,7 @@ export const ButtonCircularProgressTrack: Component<ButtonCircularProgressTrackP
   };
 
 /**
- * {@link ButtonCircularProgressTrack} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ButtonCircularProgressTrack} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace CircularProgressTrack {
   /**
@@ -665,7 +665,7 @@ export const ButtonCircularProgressFill: Component<ButtonCircularProgressFillPro
   };
 
 /**
- * {@link ButtonCircularProgressFill} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ButtonCircularProgressFill} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace CircularProgressFill {
   /**

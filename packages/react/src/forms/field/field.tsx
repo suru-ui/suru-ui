@@ -1,62 +1,244 @@
 import type { Component } from "../../types.js";
-import * as FieldParts from "./field.parts.jsx";
+import {
+  type FieldItemProps,
+  type FieldItemState,
+  type FieldRootProps,
+  type FieldRootState,
+  type FieldErrorProps,
+  type FieldLabelProps,
+  type FieldRootActions,
+  type FieldControlProps,
+  type FieldControlState,
+  type FieldValidityProps,
+  type FieldDescriptionProps,
+  type FieldControlChangeEventReason,
+  type FieldControlChangeEventDetails,
+  FieldItem,
+  FieldRoot,
+  FieldError,
+  FieldLabel,
+  FieldControl,
+  FieldValidity,
+  FieldDescription,
+} from "./field.parts.jsx";
 
 /**
- * {@link Field} コンポーネントのプロパティーです。
- *
- * {@link Field.Root} が受け取る値を指定できます。
- * `name`、`validate`、`validationMode` などの値は、指定後の変更に応じて検証状態を更新します。
+ * {@link Field} を命令的に操作するためのオブジェクトです。
  */
-export type FieldProps = FieldParts.Root.Props;
+export type FieldActions = FieldRootActions;
+
+/**
+ * エラーを表示する検証状態です。
+ */
+export type FieldErrorMatch = Extract<NonNullable<FieldErrorProps["match"]>, string>;
+
+/**
+ * {@link Field} に表示するエラーメッセージと検証状態の対応を指定します。
+ *
+ * 文字列または文字列の配列を指定すると、対応する検証状態の既定メッセージを表示します。オブジェクトを指定すると、検証状態ごとのメッセージを指定できます。
+ */
+export type FieldErrorMatches =
+  | boolean
+  | FieldErrorMatch
+  | readonly FieldErrorMatch[]
+  | { readonly [_ in FieldErrorMatch]?: React.ReactNode };
+
+/**
+ * {@link Field} の各パーツに渡すプロパティーです。
+ */
+export type FieldSlotProps = {
+  /**
+   * {@link FieldDescription} に渡すプロパティーです。
+   */
+  readonly description?: FieldDescriptionProps | undefined;
+
+  /**
+   * {@link FieldError} に渡すプロパティーです。
+   */
+  readonly error?: FieldErrorProps | undefined;
+
+  /**
+   * {@link FieldLabel} に渡すプロパティーです。
+   */
+  readonly label?: FieldLabelProps | undefined;
+};
+
+/**
+ * {@link Field} の状態です。
+ */
+export type FieldState = FieldRootState;
+
+/**
+ * {@link Field} に渡すプロパティーです。
+ */
+export type FieldProps = FieldRootProps & {
+  /**
+   * 入力欄の下に表示する説明文です。
+   */
+  description?: FieldDescriptionProps["children"] | undefined;
+
+  /**
+   * 表示するエラーメッセージの検証状態を指定します。
+   *
+   * `false` を指定すると、エラーメッセージを表示しません。
+   *
+   * @default true
+   */
+  errorMatches?: FieldErrorMatches | undefined;
+
+  /**
+   * 入力欄の上に表示するラベルです。
+   */
+  label?: FieldLabelProps["children"] | undefined;
+
+  /**
+   * 各パーツに渡すプロパティーです。
+   */
+  slotProps?: FieldSlotProps | undefined;
+
+  /**
+   * 入力欄の検証状態に応じて表示する内容です。
+   */
+  validity?: FieldValidityProps["children"] | undefined;
+};
 
 interface FieldComponentType extends Component<FieldProps> {
-  readonly Root: Component<FieldParts.Root.Props>;
-  readonly Label: Component<FieldParts.Label.Props>;
-  readonly Control: Component<FieldParts.Control.Props>;
-  readonly Description: Component<FieldParts.Description.Props>;
-  readonly Error: Component<FieldParts.Error.Props>;
-  readonly Item: Component<FieldParts.Item.Props>;
-  readonly Validity: Component<FieldParts.Validity.Props>;
+  /**
+   * フィールド内に配置する入力欄です。
+   */
+  readonly Control: Component<FieldControlProps>;
+
+  /**
+   * フィールド内の入力欄をグループ化する項目です。
+   */
+  readonly Item: Component<FieldItemProps>;
 }
 
 /**
  * フィールドを表示するコンポーネントです。
  *
  * ラベル、入力欄、エラーメッセージ、説明文をグループ化し、検証状態を管理します。
- * `<Form>` と組み合わせて使用できます。
- *
- * @example 基本
- * ```tsx
- * <Field.Root name="email">
- *   <Field.Label>メールアドレス</Field.Label>
- *   <Field.Control required placeholder="you@example.com" />
- *   <Field.Error match="valueMissing">メールアドレスを入力してください</Field.Error>
- *   <Field.Description>連絡先に使用されます</Field.Description>
- * </Field.Root>
- * ```
- *
- * @example 検証
- * ```tsx
- * <Field.Root
- *   name="username"
- *   validate={(value) => (value ? null : "ユーザー名を入力してください")}
- * >
- *   <Field.Control required />
- *   <Field.Error match />
- * </Field.Root>
- * ```
  */
 export const Field: FieldComponentType = /*#__PURE__*/ Object.assign(
   function SuiField(props: FieldProps) {
-    return <FieldParts.Root {...props} />;
+    const {
+      label,
+      children,
+      validity,
+      slotProps: { error: errorProps, label: labelProps, description: descriptionProps } = {},
+      description,
+      errorMatches = true,
+      ...rootProps
+    } = props;
+
+    return (
+      <FieldRoot {...rootProps}>
+        {("label" in props || !!labelProps) && (
+          <FieldLabel {...{ children: label, ...labelProps }} />
+        )}
+        {children}
+        {("description" in props || !!descriptionProps) && (
+          <FieldDescription {...{ children: description, ...descriptionProps }} />
+        )}
+        {(errorMatches !== false || !!errorProps) &&
+          ((matches, props) => {
+            if (typeof matches === "boolean" || typeof matches === "string") {
+              return <FieldError match={matches} {...props} />;
+            }
+
+            if (Array.isArray(matches)) {
+              matches = [...new Set(matches)];
+              return matches.length > 0
+                ? matches.map((match) => <FieldError key={match} match={match} {...props} />)
+                : null;
+            }
+
+            const entries = Object.entries(matches) as [FieldErrorMatch, React.ReactNode][];
+            return entries.map(([match, children]) => (
+              <FieldError key={match} match={match} {...{ children, ...props }} />
+            ));
+          })(errorMatches, errorProps)}
+        {typeof validity === "function" && <FieldValidity>{validity}</FieldValidity>}
+      </FieldRoot>
+    );
   },
   {
-    Item: FieldParts.Item,
-    Root: FieldParts.Root,
-    Error: FieldParts.Error,
-    Label: FieldParts.Label,
-    Control: FieldParts.Control,
-    Validity: FieldParts.Validity,
-    Description: FieldParts.Description,
+    Item: FieldItem,
+    Control: FieldControl,
   },
 );
+
+/**
+ * {@link Field} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Field {
+  /**
+   * {@link FieldState} です。
+   */
+  export type State = FieldState;
+
+  /**
+   * {@link FieldProps} です。
+   */
+  export type Props = FieldProps;
+
+  /**
+   * {@link FieldSlotProps} です。
+   */
+  export type SlotProps = FieldSlotProps;
+
+  /**
+   * {@link FieldActions} です。
+   */
+  export type Actions = FieldActions;
+
+  /**
+   * {@link FieldErrorMatch} です。
+   */
+  export type ErrorMatch = FieldErrorMatch;
+
+  /**
+   * {@link FieldErrorMatches} です。
+   */
+  export type ErrorMatches = FieldErrorMatches;
+
+  /**
+   * {@link FieldItem} の状態やプロパティーをまとめた型名前空間です。
+   */
+  export namespace Item {
+    /**
+     * {@link FieldItemState} です。
+     */
+    export type State = FieldItemState;
+
+    /**
+     * {@link FieldItemProps} です。
+     */
+    export type Props = FieldItemProps;
+  }
+
+  /**
+   * {@link FieldControl} の状態やプロパティーをまとめた型名前空間です。
+   */
+  export namespace Control {
+    /**
+     * {@link FieldControlState} です。
+     */
+    export type State = FieldControlState;
+
+    /**
+     * {@link FieldControlProps} です。
+     */
+    export type Props = FieldControlProps;
+
+    /**
+     * {@link FieldControlChangeEventReason} です。
+     */
+    export type ChangeEventReason = FieldControlChangeEventReason;
+
+    /**
+     * {@link FieldControlChangeEventDetails} です。
+     */
+    export type ChangeEventDetails = FieldControlChangeEventDetails;
+  }
+}

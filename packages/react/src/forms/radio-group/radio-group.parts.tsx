@@ -241,7 +241,7 @@ export const RadioGroupRoot: Component<RadioGroupRootProps> = function SuiRadioG
 };
 
 /**
- * {@link RadioGroupRoot} の状態とプロパティーをまとめた型名前空間です。
+ * {@link RadioGroupRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**

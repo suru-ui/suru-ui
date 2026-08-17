@@ -2,6 +2,7 @@ import { COLORS, type Color, type Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import useRender, { type RenderProps } from "../../_use-render.js";
+import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
 import type { Component } from "../../types.js";
 import * as Avatar from "../avatar/index.js";
@@ -103,6 +104,8 @@ export type AvatarGroupRootProps = Omit<React.ComponentProps<"div">, keyof Rende
      */
     color?: Color | "colorful" | undefined;
 
+    // opticallyCenter?: boolean | undefined;
+
     /**
      * アバターの角丸を指定します。
      *
@@ -111,6 +114,13 @@ export type AvatarGroupRootProps = Omit<React.ComponentProps<"div">, keyof Rende
      * @default "full"
      */
     radius?: "none" | Size | "full" | undefined;
+
+    /**
+     * アバターの重なり順を逆にします。
+     *
+     * @default false
+     */
+    reverse?: boolean | undefined;
 
     /**
      * アバターの大きさを指定します。
@@ -134,8 +144,17 @@ export type AvatarGroupRootProps = Omit<React.ComponentProps<"div">, keyof Rende
  * ```
  */
 export const AvatarGroupRoot: Component<AvatarGroupRootProps> = function SuiAvatarGroupRoot(props) {
-  const { size = "md", color = "colorful", radius = "full", children, ...otherProps } = props;
-  const renderedChildArray = React.Children.map(children, (child, i) => {
+  const {
+    size = "md",
+    color = "colorful",
+    radius = "full",
+    reverse = false,
+    children: childrenProp,
+    // opticallyCenter = false,
+    ...otherProps
+  } = props;
+  // oxlint-disable-next-line react/jsx-key
+  const children = React.Children.map(childrenProp, (child, i) => {
     if (!React.isValidElement(child)) {
       return child;
     }
@@ -158,15 +177,20 @@ export const AvatarGroupRoot: Component<AvatarGroupRootProps> = function SuiAvat
     props: [
       otherProps,
       {
-        children: renderedChildArray,
-        className: "sui_avatar_group",
+        children,
+        className: cn(
+          "sui_avatar_group",
+          reverse && "sui_avatar_group-reverse",
+          !reverse && "sui_avatar_group-forward",
+          // opticallyCenter && "sui_avatar_group-optically_center",
+        ),
       },
     ],
   });
 };
 
 /**
- * {@link AvatarGroupRoot} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AvatarGroupRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
@@ -214,7 +238,7 @@ export const AvatarGroupSurplus: Component<AvatarGroupSurplusProps> =
   };
 
 /**
- * {@link AvatarGroupSurplus} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AvatarGroupSurplus} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Surplus {
   /**

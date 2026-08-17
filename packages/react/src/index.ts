@@ -53,6 +53,11 @@ export { type RadioGroupProps, RadioGroup } from "./forms/radio-group/index.js";
 export { type SelectProps, Select } from "./forms/select/index.js";
 export { type SliderProps, type SliderSlotProps, Slider } from "./forms/slider/index.js";
 export { type SwitchProps, type SwitchSlotProps, Switch } from "./forms/switch/index.js";
+export {
+  type TextFieldProps,
+  type TextFieldSlotProps,
+  TextField,
+} from "./forms/text-field/index.js";
 
 // layout
 export {

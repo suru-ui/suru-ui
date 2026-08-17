@@ -191,7 +191,7 @@ export const ToggleButtonRoot: Component<ToggleButtonRootProps> = function SuiTo
 };
 
 /**
- * {@link ToggleButtonRoot} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ToggleButtonRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
@@ -237,7 +237,7 @@ export const ToggleButtonContent: Component<ToggleButtonContentProps> =
   };
 
 /**
- * {@link ToggleButtonContent} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ToggleButtonContent} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Content {
   /**
@@ -287,7 +287,7 @@ export const ToggleButtonPending: Component<ToggleButtonPendingProps> =
   };
 
 /**
- * {@link ToggleButtonPending} の状態とプロパティーをまとめた型名前空間です。
+ * {@link ToggleButtonPending} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Pending {
   /**

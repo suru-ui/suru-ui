@@ -3,12 +3,16 @@ import * as React from "react";
 
 import cn from "../../cn.js";
 import type { Component } from "../../types.js";
-import { type InputRootProps, InputRoot } from "../input/input.parts.jsx";
 
 import "./field.css";
 
 // Root
 // ----
+
+/**
+ * {@link FieldRoot} を命令的に操作するためのオブジェクトです。
+ */
+export type FieldRootActions = Field.Root.Actions;
 
 /**
  * {@link FieldRoot} の状態です。
@@ -21,45 +25,43 @@ export type FieldRootState = Field.Root.State;
 export type FieldRootProps = React.ComponentProps<typeof Field.Root>;
 
 /**
- * フィールドのルート要素です。
+ * フィールドのルートコンポーネントです。
  *
  * ラベル、入力欄、エラーメッセージ、説明文をグループ化し、検証状態を管理します。
- *
- * @example
- * ```tsx
- * <FieldParts.Root name="email">
- *   <FieldParts.Label>メールアドレス</FieldParts.Label>
- *   <FieldParts.Control required />
- *   <FieldParts.Error match="valueMissing">メールアドレスを入力してください</FieldParts.Error>
- * </FieldParts.Root>
- * ```
  */
 export const FieldRoot: Component<FieldRootProps> = function SuiFieldRoot(props) {
   const { className, ...otherProps } = props;
 
-  return <Field.Root {...otherProps} className={cn(className, "sui_field")} />;
+  return (
+    <Field.Root
+      {...otherProps}
+      className={cn(className, "sui_field", (state) => state.disabled && "sui_field-disabled")}
+    />
+  );
 };
 
 /**
- * {@link FieldRoot} の状態とプロパティーをまとめた型名前空間です。
+ * {@link FieldRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
-   * {@link FieldRoot} の状態型です。
+   * {@link FieldRootState} です。
    */
   export type State = FieldRootState;
 
   /**
-   * {@link FieldRoot} のプロパティー型です。
-   *
-   * Base UI の {@link Field.Root} が受け取る値を指定できます。
-   * `name`、`validate`、`validationMode` などの値は、指定後の変更に応じて検証状態を更新します。
+   * {@link FieldRootProps} です。
    */
   export type Props = FieldRootProps;
+
+  /**
+   * {@link FieldRootActions} です。
+   */
+  export type Actions = FieldRootActions;
 }
 
 /**
- * {@link FieldRoot} の別名です。
+ * {@link FieldRoot} です。
  */
 export const Root: Component<Root.Props> = FieldRoot;
 
@@ -77,43 +79,33 @@ export type FieldLabelState = Field.Label.State;
 export type FieldLabelProps = React.ComponentProps<typeof Field.Label>;
 
 /**
- * フィールドのラベル要素です。
+ * フィールドのラベルコンポーネントです。
  *
  * 自動的に入力欄と関連付けられ、クリックで入力欄にフォーカスされます。
- *
- * @example
- * ```tsx
- * <FieldParts.Label>名前</FieldParts.Label>
- * ```
  */
 export const FieldLabel: Component<FieldLabelProps> = function SuiFieldLabel(props) {
   const { className, ...otherProps } = props;
 
-  return (
-    <Field.Label
-      {...otherProps}
-      className={cn(className, (state) => state.disabled && "sui_field_label-disabled")}
-    />
-  );
+  return <Field.Label {...otherProps} className={cn(className, "sui_field_label")} />;
 };
 
 /**
- * {@link FieldLabel} の状態とプロパティーをまとめた型名前空間です。
+ * {@link FieldLabel} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Label {
   /**
-   * {@link FieldLabel} の状態型です。
+   * {@link FieldLabelState} です。
    */
   export type State = FieldLabelState;
 
   /**
-   * {@link FieldLabel} のプロパティー型です。
+   * {@link FieldLabelProps} です。
    */
   export type Props = FieldLabelProps;
 }
 
 /**
- * {@link FieldLabel} の別名です。
+ * {@link FieldLabel} です。
  */
 export const Label: Component<Label.Props> = FieldLabel;
 
@@ -121,46 +113,61 @@ export const Label: Component<Label.Props> = FieldLabel;
 // -------
 
 /**
- * {@link Control} の状態です。
+ * {@link FieldControl} の値が変更された理由です。
+ */
+export type FieldControlChangeEventReason = Field.Control.ChangeEventReason;
+
+/**
+ * {@link FieldControl} の値が変更されたイベントの詳細です。
+ */
+export type FieldControlChangeEventDetails = Field.Control.ChangeEventDetails;
+
+/**
+ * {@link FieldControl} の状態です。
  */
 export type FieldControlState = Field.Control.State;
 
 /**
- * {@link Control} に渡すプロパティーです。
+ * {@link FieldControl} に渡すプロパティーです。
  */
-export type FieldControlProps = InputRootProps;
+export type FieldControlProps = React.ComponentProps<typeof Field.Control>;
 
 /**
- * フィールドの入力欄要素です。
- *
- * {@link Input} と同じ見た目とプロパティーを持ち、フィールドの検証状態に連動します。
- *
- * @example
- * ```tsx
- * <FieldParts.Control required placeholder="例: 田中 太郎" />
- * ```
+ * フィールドの入力欄コンポーネントです。
  */
-export const FieldControl: Component<FieldControlProps> = InputRoot;
+export const FieldControl: Component<FieldControlProps> = function SuiFieldControl(props) {
+  const { className, ...otherProps } = props;
+
+  return <Field.Control {...otherProps} className={cn(className, "sui_field_control")} />;
+};
 
 /**
- * {@link FieldControl} の状態とプロパティーをまとめた型名前空間です。
+ * {@link FieldControl} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Control {
   /**
-   * {@link FieldControl} の状態型です。
+   * {@link FieldControlState} です。
    */
   export type State = FieldControlState;
 
   /**
-   * {@link FieldControl} のプロパティー型です。
-   *
-   * {@link InputRootProps} と同じ値を指定できます。
+   * {@link FieldControlProps} です。
    */
   export type Props = FieldControlProps;
+
+  /**
+   * {@link FieldControlChangeEventReason} です。
+   */
+  export type ChangeEventReason = FieldControlChangeEventReason;
+
+  /**
+   * {@link FieldControlChangeEventDetails} です。
+   */
+  export type ChangeEventDetails = FieldControlChangeEventDetails;
 }
 
 /**
- * {@link FieldControl} の別名です。
+ * {@link FieldControl} です。
  */
 export const Control: Component<Control.Props> = FieldControl;
 
@@ -168,24 +175,19 @@ export const Control: Component<Control.Props> = FieldControl;
 // -----------
 
 /**
- * {@link Description} の状態です。
+ * {@link FieldDescription} の状態です。
  */
 export type FieldDescriptionState = Field.Description.State;
 
 /**
- * {@link Description} に渡すプロパティーです。
+ * {@link FieldDescription} に渡すプロパティーです。
  */
 export type FieldDescriptionProps = React.ComponentProps<typeof Field.Description>;
 
 /**
- * フィールドの補足説明要素です。
+ * フィールドの補足説明コンポーネントです。
  *
  * 入力欄の補助情報を表示します。
- *
- * @example
- * ```tsx
- * <FieldParts.Description>プロフィールに表示されます</FieldParts.Description>
- * ```
  */
 export const FieldDescription: Component<FieldDescriptionProps> = function SuiFieldDescription(
   props,
@@ -196,22 +198,22 @@ export const FieldDescription: Component<FieldDescriptionProps> = function SuiFi
 };
 
 /**
- * {@link FieldDescription} の状態とプロパティーをまとめた型名前空間です。
+ * {@link FieldDescription} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Description {
   /**
-   * {@link FieldDescription} の状態型です。
+   * {@link FieldDescriptionState} です。
    */
   export type State = FieldDescriptionState;
 
   /**
-   * {@link FieldDescription} のプロパティー型です。
+   * {@link FieldDescriptionProps} です。
    */
   export type Props = FieldDescriptionProps;
 }
 
 /**
- * {@link FieldDescription} の別名です。
+ * {@link FieldDescription} です。
  */
 export const Description: Component<Description.Props> = FieldDescription;
 
@@ -219,24 +221,19 @@ export const Description: Component<Description.Props> = FieldDescription;
 // -----
 
 /**
- * {@link Error} の状態です。
+ * {@link FieldError} の状態です。
  */
 export type FieldErrorState = Field.Error.State;
 
 /**
- * {@link Error} に渡すプロパティーです。
+ * {@link FieldError} に渡すプロパティーです。
  */
 export type FieldErrorProps = React.ComponentProps<typeof Field.Error>;
 
 /**
- * フィールドのエラーメッセージ要素です。
+ * フィールドのエラーメッセージコンポーネントです。
  *
  * 検証に失敗したときに表示されます。
- *
- * @example
- * ```tsx
- * <FieldParts.Error match="valueMissing">名前を入力してください</FieldParts.Error>
- * ```
  */
 export const FieldError: Component<FieldErrorProps> = function SuiFieldError(props) {
   const { className, ...otherProps } = props;
@@ -245,25 +242,22 @@ export const FieldError: Component<FieldErrorProps> = function SuiFieldError(pro
 };
 
 /**
- * {@link FieldError} の状態とプロパティーをまとめた型名前空間です。
+ * {@link FieldError} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Error {
   /**
-   * {@link FieldError} の状態型です。
+   * {@link FieldErrorState} です。
    */
   export type State = FieldErrorState;
 
   /**
-   * {@link FieldError} のプロパティー型です。
-   *
-   * `match` で表示対象の検証エラーを指定できます。
-   * 検証状態が変化すると、条件に一致する場合だけエラーメッセージを表示します。
+   * {@link FieldErrorProps} です。
    */
   export type Props = FieldErrorProps;
 }
 
 /**
- * {@link FieldError} の別名です。
+ * {@link FieldError} です。
  */
 export const Error: Component<Error.Props> = FieldError;
 
@@ -271,28 +265,19 @@ export const Error: Component<Error.Props> = FieldError;
 // ----
 
 /**
- * {@link Item} の状態です。
+ * {@link FieldItem} の状態です。
  */
 export type FieldItemState = Field.Item.State;
 
 /**
- * {@link Item} に渡すプロパティーです。
+ * {@link FieldItem} に渡すプロパティーです。
  */
 export type FieldItemProps = React.ComponentProps<typeof Field.Item>;
 
 /**
- * チェックボックスグループやラジオグループの個別項目をグループ化する要素です。
+ * チェックボックスグループやラジオグループの個別項目をグループ化するコンポーネントです。
  *
  * ラベルと説明文をラップして 1 つの項目としてまとめます。
- *
- * @example
- * ```tsx
- * <FieldParts.Item>
- *   <Checkbox value="option-a" />
- *   <FieldParts.Label>選択肢 A</FieldParts.Label>
- *   <FieldParts.Description>説明文</FieldParts.Description>
- * </FieldParts.Item>
- * ```
  */
 export const FieldItem: Component<FieldItemProps> = function SuiFieldItem(props) {
   const { className, ...otherProps } = props;
@@ -301,22 +286,22 @@ export const FieldItem: Component<FieldItemProps> = function SuiFieldItem(props)
 };
 
 /**
- * {@link FieldItem} の状態とプロパティーをまとめた型名前空間です。
+ * {@link FieldItem} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Item {
   /**
-   * {@link FieldItem} の状態型です。
+   * {@link FieldItemState} です。
    */
   export type State = FieldItemState;
 
   /**
-   * {@link FieldItem} のプロパティー型です。
+   * {@link FieldItemProps} です。
    */
   export type Props = FieldItemProps;
 }
 
 /**
- * {@link FieldItem} の別名です。
+ * {@link FieldItem} です。
  */
 export const Item: Component<Item.Props> = FieldItem;
 
@@ -324,47 +309,40 @@ export const Item: Component<Item.Props> = FieldItem;
 // --------
 
 /**
- * {@link Validity} の状態です。
+ * {@link FieldValidity} の状態です。
  */
 export type FieldValidityState = Field.Validity.State;
 
 /**
- * {@link Validity} に渡すプロパティーです。
+ * {@link FieldValidity} に渡すプロパティーです。
  */
 export type FieldValidityProps = React.ComponentProps<typeof Field.Validity>;
 
 /**
- * フィールドの検証状態に応じてカスタムメッセージを表示する要素です。
+ * フィールドの検証状態に応じてカスタムメッセージを表示するコンポーネントです。
  *
  * `children` には検証状態を受け取る関数を指定します。
- *
- * @example
- * ```tsx
- * <FieldParts.Validity>
- *   {({ validity }) => (validity.valueMissing ? "必須項目です" : null)}
- * </FieldParts.Validity>
- * ```
  */
 export const FieldValidity: Component<FieldValidityProps> = function SuiFieldValidity(props) {
   return <Field.Validity {...props} />;
 };
 
 /**
- * {@link FieldValidity} の状態とプロパティーをまとめた型名前空間です。
+ * {@link FieldValidity} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Validity {
   /**
-   * {@link FieldValidity} の状態型です。
+   * {@link FieldValidityState} です。
    */
   export type State = FieldValidityState;
 
   /**
-   * {@link FieldValidity} のプロパティー型です。
+   * {@link FieldValidityProps} です。
    */
   export type Props = FieldValidityProps;
 }
 
 /**
- * {@link FieldValidity} の別名です。
+ * {@link FieldValidity} です。
  */
 export const Validity = FieldValidity;

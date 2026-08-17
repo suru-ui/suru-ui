@@ -19,7 +19,7 @@ export type InputRootState = Input.State;
 /**
  * {@link InputRoot} に渡すプロパティーです。
  */
-export type InputRootProps = Omit<React.ComponentProps<typeof Input>, "size"> & {
+export type InputRootProps = Omit<React.ComponentProps<typeof Input>, "size" | "type"> & {
   /**
    * フォーカス時に枠線へ適用する色を指定します。
    *
@@ -78,6 +78,16 @@ export type InputRootProps = Omit<React.ComponentProps<typeof Input>, "size"> & 
 };
 
 /**
+ * {@link InputRoot} の値が変更された理由です。
+ */
+export type InputChangeEventReason = Input.ChangeEventReason;
+
+/**
+ * {@link InputRoot} の値が変更されたイベントの詳細です。
+ */
+export type InputChangeEventDetails = Input.ChangeEventDetails;
+
+/**
  * テキスト入力欄のルートコンポーネントです。
  *
  * @example
@@ -91,7 +101,7 @@ export const InputRoot: Component<InputRootProps> = function SuiInputRoot(props)
     size: sizeProp = "md",
     type = "text",
     color: colorProp = "grey",
-    radius: radiusProp,
+    radius: radiusProp = sizeProp,
     variant: variantProp = "liquid",
     outlined: outlinedProp = false,
     className,
@@ -99,7 +109,7 @@ export const InputRoot: Component<InputRootProps> = function SuiInputRoot(props)
   } = props;
   const size = actionGroupCtx?.size ?? sizeProp;
   const color = actionGroupCtx?.color ?? colorProp;
-  const radius = actionGroupCtx?.radius ?? radiusProp ?? size;
+  const radius = actionGroupCtx?.radius ?? radiusProp;
   const variant = actionGroupCtx?.variant ?? variantProp;
   const outlined = actionGroupCtx?.outlined ?? outlinedProp;
 
@@ -126,18 +136,28 @@ export const InputRoot: Component<InputRootProps> = function SuiInputRoot(props)
 };
 
 /**
- * {@link InputRoot} の状態とプロパティーをまとめた型名前空間です。
+ * {@link InputRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
-   * {@link InputRoot} の状態型です。
+   * {@link InputRootState} です。
    */
   export type State = InputRootState;
 
   /**
-   * {@link InputRoot} のプロパティー型です。
+   * {@link InputRootProps} です。
    */
   export type Props = InputRootProps;
+
+  /**
+   * {@link InputChangeEventReason} です。
+   */
+  export type ChangeEventReason = InputChangeEventReason;
+
+  /**
+   * {@link InputChangeEventDetails} です。
+   */
+  export type ChangeEventDetails = InputChangeEventDetails;
 }
 
 /**

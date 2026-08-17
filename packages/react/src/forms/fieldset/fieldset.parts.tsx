@@ -53,7 +53,7 @@ export const FieldsetRoot: Component<FieldsetRootProps> = function SuiFieldsetRo
 };
 
 /**
- * {@link FieldsetRoot} の状態とプロパティーをまとめた型名前空間です。
+ * {@link FieldsetRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
@@ -111,7 +111,7 @@ export const FieldsetLegend: Component<FieldsetLegendProps> = function SuiFields
 };
 
 /**
- * {@link FieldsetLegend} の状態とプロパティーをまとめた型名前空間です。
+ * {@link FieldsetLegend} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Legend {
   /**

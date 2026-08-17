@@ -7,70 +7,104 @@ import type { Component } from "../../types.js";
 import "./form.css";
 
 /**
- * {@link FormRoot} が公開する状態です。
+ * {@link FormRoot} の入力値を表す型です。
  *
- * Form 自体には追加の状態がなく、Base UI の {@link Form.State} をそのまま利用します。
+ * @template TValues フォームの入力値を表す型です。
+ */
+export type FormRootValues<TValues extends Record<string, any> = Record<string, any>> = TValues;
+
+/**
+ * {@link FormRoot} を命令的に操作するためのオブジェクトです。
+ */
+export type FormRootActions = Form.Actions;
+
+/**
+ * {@link FormRoot} の検証を行うタイミングを決定します。
+ *
+ * - "onSubmit": フォーム送信時にフィールドを検証し、それ以降は値が変更されるたびに再検証を行います。
+ * - "onBlur": フィールドからフォーカスが外れたときに検証を行います。
+ * - "onChange": 値が変更されるたびに検証を行います。
+ */
+export type FormRootValidationMode = Form.ValidationMode;
+
+/**
+ * {@link FormRoot} が送信された理由です。
+ */
+export type FormRootSubmitEventReason = Form.SubmitEventReason;
+
+/**
+ * {@link FormRoot} が送信されたイベントの詳細です。
+ */
+export type FormRootSubmitEventDetails = Form.SubmitEventDetails;
+
+/**
+ * {@link FormRoot} の状態です。
  */
 export type FormRootState = Form.State;
 
 /**
  * {@link FormRoot} に渡すプロパティーです。
  *
- * @template FormValues フォームの入力値を表す型です。
- *
- * `validationMode` は `"onSubmit"`、`"onBlur"`、`"onChange"` を指定できます。
- * 既定値は `"onSubmit"` で、{@link FormRoot} の子要素である {@link Field.Root} に指定した値が優先されます。
- * `errors` を変更すると外部から渡したフィールドエラーが更新され、`onFormSubmit` は送信時にフォームの値と詳細を通知します。
+ * @template TValues フォームの入力値を表す型です。
  */
-export type FormRootProps<FormValues extends Record<string, unknown> = Record<string, string>> =
-  React.ComponentProps<typeof Form<FormValues>>;
+export type FormRootProps<TValues extends FormRootValues = FormRootValues> = React.ComponentProps<
+  typeof Form<TValues>
+>;
+
+interface FormRootComponentType extends Component<FormRootProps> {
+  <TValues extends FormRootValues>(props: FormRootProps<TValues>): React.ReactElement | null;
+}
 
 /**
- * フォームのルート要素です。
- *
- * Base UI の {@link Form} をラップし、一括のエラーハンドリングと検証を提供します。
- * `<Field.Root>` と組み合わせて使用します。
- *
- * @example
- * ```tsx
- * <FormRoot
- *   errors={errors}
- *   onFormSubmit={(formValues) => {
- *     setErrors(validate(formValues));
- *   }}
- * >
- *   <Field.Root name="email">
- *     <Field.Control required />
- *     <Field.Error />
- *   </Field.Root>
- * </FormRoot>
- * ```
+ * フォームのルートコンポーネントです。
  */
-export const FormRoot: Component<FormRootProps> = function SuiFormRoot(props) {
+export const FormRoot: FormRootComponentType = function SuiFormRoot(props: FormRootProps) {
   const { className, ...otherProps } = props;
 
   return <Form {...otherProps} className={cn(className, "sui_form")} />;
 };
 
 /**
- * {@link FormRoot} の状態とプロパティーをまとめた型名前空間です。
+ * {@link FormRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
-   * {@link FormRoot} の状態型です。
+   * {@link FormRootState} です。
    */
   export type State = FormRootState;
 
   /**
-   * {@link FormRoot} のプロパティー型です。
-   *
-   * {@link FormRootProps} と同じ型です。
+   * {@link FormRootProps} です。
    */
-  export type Props<FormValues extends Record<string, unknown> = Record<string, string>> =
-    FormRootProps<FormValues>;
+  export type Props<TValues extends FormRootValues = FormRootValues> = FormRootProps<TValues>;
+
+  /**
+   * {@link FormRootValues} です。
+   */
+  export type Values<TValues extends FormRootValues = FormRootValues> = FormRootValues<TValues>;
+
+  /**
+   * {@link FormRootActions} です。
+   */
+  export type Actions = FormRootActions;
+
+  /**
+   * {@link FormRootValidationMode} です。
+   */
+  export type ValidationMode = FormRootValidationMode;
+
+  /**
+   * {@link FormRootSubmitEventReason} です。
+   */
+  export type SubmitEventReason = FormRootSubmitEventReason;
+
+  /**
+   * {@link FormRootSubmitEventDetails} です。
+   */
+  export type SubmitEventDetails = FormRootSubmitEventDetails;
 }
 
 /**
- * {@link FormRoot} の別名です。
+ * {@link FormRoot} です。
  */
-export const Root: Component<Root.Props> = FormRoot;
+export const Root: FormRootComponentType = FormRoot;

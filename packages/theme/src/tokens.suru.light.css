@@ -1,13 +1,6 @@
 .layer__sui_tokens {
   --sui-theme: light;
 
-  --sui-canvas-1: var(--_flexoki-paper);
-  --sui-canvas-2: var(--_flexoki-base-50);
-
-  --sui-canvas_text-1: var(--_flexoki-black);
-  --sui-canvas_text-2: var(--_flexoki-base-600);
-  --sui-canvas_text-3: var(--_flexoki-base-300);
-
   --sui-blue-5: var(--_flexoki-blue-50);
   --sui-blue-10: var(--_flexoki-blue-100);
   --sui-blue-15: var(--_flexoki-blue-150);
@@ -476,10 +469,24 @@
   --sui-yellow-liquid-canvas_text-subtle: var(--sui-yellow-100);
   --sui-yellow-liquid-canvas_text-strong: var(--sui-yellow-100);
 
-  --sui-disabled-canvas: #444;
-  --sui-disabled-canvas_text: #aaa;
-  --sui-disabled-border_color: #666;
-  --sui-disabled-border_width: --sui-border_width(1);
+  --sui-canvas-1: var(--sui-grey-0);
+  --sui-canvas-2: var(--sui-grey-5);
+
+  --sui-canvas_text-1: var(--sui-grey-100);
+  --sui-canvas_text-2: var(--sui-grey-80);
+  --sui-canvas_text-3: var(--sui-grey-60);
+
+  --sui-disabled-solid-canvas: var(--sui-grey-50);
+  --sui-disabled-solid-border: var(--sui-grey-50);
+  --sui-disabled-solid-canvas_text: var(--sui-grey-10);
+
+  --sui-disabled-naked-canvas: transparent;
+  --sui-disabled-naked-border: var(--sui-grey-20);
+  --sui-disabled-naked-canvas_text: var(--sui-grey-60);
+
+  --sui-disabled-liquid-canvas: var(--sui-grey-alpha-10);
+  --sui-disabled-liquid-border: var(--sui-grey-20);
+  --sui-disabled-liquid-canvas_text: var(--sui-grey-60);
 
   --sui-tooltip-canvas: #6a6a6a;
   --sui-tooltip-canvas_text: #fff;

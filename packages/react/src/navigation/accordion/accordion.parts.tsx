@@ -103,7 +103,7 @@ export const AccordionRoot: Component<AccordionRootProps> = function SuiAccordio
 };
 
 /**
- * {@link AccordionRoot} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AccordionRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
@@ -155,7 +155,7 @@ export const AccordionItem: Component<AccordionItemProps> = function SuiAccordio
 };
 
 /**
- * {@link AccordionItem} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AccordionItem} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Item {
   /**
@@ -204,7 +204,7 @@ export const AccordionHeader: Component<AccordionHeaderProps> = function SuiAcco
 };
 
 /**
- * {@link AccordionHeader} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AccordionHeader} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Header {
   /**
@@ -256,7 +256,7 @@ export const AccordionTrigger: Component<AccordionTriggerProps> = function SuiAc
 };
 
 /**
- * {@link AccordionTrigger} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AccordionTrigger} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Trigger {
   /**
@@ -319,7 +319,7 @@ export const AccordionIndicator: Component<AccordionIndicatorProps> =
   };
 
 /**
- * {@link AccordionIndicator} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AccordionIndicator} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Indicator {
   /**
@@ -366,7 +366,7 @@ export const AccordionPanel: Component<AccordionPanelProps> = function SuiAccord
 };
 
 /**
- * {@link AccordionPanel} の状態とプロパティーをまとめた型名前空間です。
+ * {@link AccordionPanel} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Panel {
   /**

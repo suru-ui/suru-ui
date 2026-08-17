@@ -26,6 +26,9 @@ const ctrl = controls(AvatarGroup, {
     options: RADII,
     control: "select",
   },
+  reverse: {
+    control: "boolean",
+  },
   size: {
     options: SIZES,
     control: "select",
@@ -38,6 +41,7 @@ export const Usage = meta.story({
     color: "colorful",
     size: "md",
     radius: "full",
+    reverse: false,
     max: 4,
   }),
   render(props) {
@@ -63,6 +67,7 @@ export const Surplus = meta.story({
     color: "colorful",
     size: "md",
     radius: "full",
+    reverse: false,
     max: 4,
   }),
   render(props) {
@@ -90,6 +95,7 @@ export const Colors = meta.story({
   ...ctrl({
     size: "md",
     radius: "full",
+    reverse: false,
     max: 1000,
   }),
   render(props) {

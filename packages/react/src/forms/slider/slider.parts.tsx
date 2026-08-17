@@ -106,7 +106,7 @@ export const SliderRoot: Component<SliderRootProps> = function SuiSliderRoot(pro
 };
 
 /**
- * {@link SliderRoot} の状態とプロパティーをまとめた型名前空間です。
+ * {@link SliderRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
@@ -161,7 +161,7 @@ export const SliderLabel: Component<SliderLabelProps> = function SuiSliderLabel(
 };
 
 /**
- * {@link SliderLabel} の状態とプロパティーをまとめた型名前空間です。
+ * {@link SliderLabel} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Label {
   /**
@@ -216,7 +216,7 @@ export const SliderValue: Component<SliderValueProps> = function SuiSliderValue(
 };
 
 /**
- * {@link SliderValue} の状態とプロパティーをまとめた型名前空間です。
+ * {@link SliderValue} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Value {
   /**
@@ -270,7 +270,7 @@ export const SliderControl: Component<SliderControlProps> = function SuiSliderCo
 };
 
 /**
- * {@link SliderControl} の状態とプロパティーをまとめた型名前空間です。
+ * {@link SliderControl} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Control {
   /**
@@ -324,7 +324,7 @@ export const SliderTrack: Component<SliderTrackProps> = function SuiSliderTrack(
 };
 
 /**
- * {@link SliderTrack} の状態とプロパティーをまとめた型名前空間です。
+ * {@link SliderTrack} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Track {
   /**
@@ -378,7 +378,7 @@ export const SliderIndicator: Component<SliderIndicatorProps> = function SuiSlid
 };
 
 /**
- * {@link SliderIndicator} の状態とプロパティーをまとめた型名前空間です。
+ * {@link SliderIndicator} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Indicator {
   /**
@@ -432,7 +432,7 @@ export const SliderThumb: Component<SliderThumbProps> = function SuiSliderThumb(
 };
 
 /**
- * {@link SliderThumb} の状態とプロパティーをまとめた型名前空間です。
+ * {@link SliderThumb} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Thumb {
   /**

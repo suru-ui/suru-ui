@@ -104,7 +104,7 @@ export const MeterRoot: Component<MeterRootProps> = function SuiMeterRoot(props)
 };
 
 /**
- * {@link MeterRoot} の状態とプロパティーをまとめた型名前空間です。
+ * {@link MeterRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
@@ -153,7 +153,7 @@ export const MeterLabel: Component<MeterLabelProps> = function SuiMeterLabel(pro
 };
 
 /**
- * {@link MeterLabel} の状態とプロパティーをまとめた型名前空間です。
+ * {@link MeterLabel} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Label {
   /**
@@ -202,7 +202,7 @@ export const MeterValue: Component<MeterValueProps> = function SuiMeterValue(pro
 };
 
 /**
- * {@link MeterValue} の状態とプロパティーをまとめた型名前空間です。
+ * {@link MeterValue} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Value {
   /**
@@ -253,7 +253,7 @@ export const MeterTrack: Component<MeterTrackProps> = function SuiMeterTrack(pro
 };
 
 /**
- * {@link MeterTrack} の状態とプロパティーをまとめた型名前空間です。
+ * {@link MeterTrack} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Track {
   /**
@@ -304,7 +304,7 @@ export const MeterIndicator: Component<MeterIndicatorProps> = function SuiMeterI
 };
 
 /**
- * {@link MeterIndicator} の状態とプロパティーをまとめた型名前空間です。
+ * {@link MeterIndicator} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Indicator {
   /**

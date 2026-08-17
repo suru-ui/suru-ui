@@ -28,8 +28,7 @@
     --sui_input-outline_offset: ;
     /* 前景 */
     --sui_input-color: ;
-    --sui_input_placeholder-color: ;
-    --sui_input-icon_color: ;
+    --sui_input-placeholder-color: ;
   }
 
   /* 静的 */
@@ -55,26 +54,10 @@
     outline-offset: var(--sui_input-outline_offset);
     background-color: var(--sui_input-background_color);
     border: var(--_sui_input-border_color, transparent) solid var(--_sui_input-border_width, 0px);
-    border-radius: var(--_sui_input-border_radius, var(--sui_input-border_radius));
+    border-radius: var(--sui_input-border_radius);
 
     &::placeholder {
-      color: var(--sui_input_placeholder-color);
-    }
-
-    &::-webkit-calendar-picker-indicator {
-      color: var(--sui_input-icon_color);
-    }
-
-    &::-webkit-clear-button {
-      color: var(--sui_input-icon_color);
-    }
-
-    &::-webkit-inner-spin-button {
-      color: var(--sui_input-icon_color);
-    }
-
-    &::-webkit-outer-spin-button {
-      color: var(--sui_input-icon_color);
+      color: var(--sui_input-placeholder-color);
     }
   }
 
@@ -103,8 +86,7 @@
     --sui_input-outline_color: var(--sui-focusring_color);
     --sui_input-outline_offset: var(--sui-focusring_offset);
     /* 前景 */
-    --sui_input_placeholder-color: var(--sui-canvas_text-2);
-    --sui_input-icon_color: currentColor;
+    --sui_input-placeholder-color: var(--sui-canvas_text-2);
   }
 
   .sui_input-size_sm {
@@ -327,19 +309,27 @@
     cursor: not-allowed !important;
 
     &.sui_input-variant_naked {
-      background-color: var(--sui-grey-naked-canvas-normal) !important;
+      background-color: var(--sui-disabled-naked-canvas) !important;
+
+      &::placeholder {
+        color: var(--sui-disabled-naked-canvas_text) !important;
+      }
+
+      &.sui_input-outlined {
+        border: var(--sui-disabled-naked-border) solid var(--sui-disabled-border_width) !important;
+      }
     }
 
     &.sui_input-variant_liquid {
-      background-color: var(--sui-grey-liquid-canvas-normal) !important;
-    }
+      background-color: var(--sui-disabled-liquid-canvas) !important;
 
-    &.sui_input-outlined {
-      border: var(--sui-disabled-border_color) solid var(--sui-disabled-border_width) !important;
-    }
+      &::placeholder {
+        color: var(--sui-disabled-liquid-canvas_text) !important;
+      }
 
-    &::placeholder {
-      color: var(--sui-canvas_text-2) !important;
+      &.sui_input-outlined {
+        border: var(--sui-disabled-liquid-border) solid var(--sui-disabled-border_width) !important;
+      }
     }
   }
 }
