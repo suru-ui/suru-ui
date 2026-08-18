@@ -3,10 +3,47 @@ import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 import { useCheckboxGroupContext } from "../checkbox-group/checkbox-group.parts.jsx";
 
 import "./checkbox.css";
+
+// Types
+// -----
+
+/**
+ * チェックボックスの色です。
+ */
+export type CheckboxColor = Color;
+
+/**
+ * チェックボックスの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"rounded"`: 標準的な角丸
+ * - `"full"`: 完全な丸形
+ */
+export type CheckboxRadius = "none" | "rounded" | "full";
+
+/**
+ * チェックボックスの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type CheckboxSize = Size;
+
+/**
+ * チェックボックスの主な外観の種類です。
+ *
+ * - `"naked"`: 背景のないチェックマークのみ、枠線なし
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type CheckboxVariant = "naked" | "liquid";
+
+// Root
+// ----
 
 /**
  * チェックボックスのルート要素の状態です。
@@ -26,7 +63,7 @@ export type CheckboxRootProps = React.ComponentProps<typeof Checkbox.Root> & {
    *
    * @default "md"
    */
-  size?: Size | undefined;
+  size?: CheckboxSize | undefined;
 
   /**
    * チェックボックスの色を指定します。
@@ -35,19 +72,16 @@ export type CheckboxRootProps = React.ComponentProps<typeof Checkbox.Root> & {
    *
    * @default "grey"
    */
-  color?: Color | undefined;
+  color?: CheckboxColor | undefined;
 
   /**
    * チェックボックスのスタイルバリエーションを指定します。
-   *
-   * - `"naked"`: 背景のないチェックマークのみ、枠線なし
-   * - `"liquid"`: 薄い塗りつぶし
    *
    * {@link CheckboxGroupRoot} 内では、グループの値が優先されます。
    *
    * @default "naked"
    */
-  variant?: "naked" | "liquid" | undefined;
+  variant?: CheckboxVariant | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
@@ -60,30 +94,17 @@ export type CheckboxRootProps = React.ComponentProps<typeof Checkbox.Root> & {
   /**
    * チェックボックスの角丸を指定します。
    *
-   * - `"none"`: 角を直角にする
-   * - `"rounded"`: 標準的な角丸
-   * - `"full"`: 完全な丸形
-   *
    * {@link CheckboxGroupRoot} 内では、グループの値が優先されます。
    *
    * @default "rounded"
    */
-  radius?: "none" | "rounded" | "full" | undefined;
+  radius?: CheckboxRadius | undefined;
 };
 
 /**
  * チェックボックスのルート要素です。
- *
- * @example
- * ```tsx
- * <CheckboxParts.Root color="blue">
- *   <CheckboxParts.Indicator>
- *     <CheckIcon />
- *   </CheckboxParts.Indicator>
- * </CheckboxParts.Root>
- * ```
  */
-export const CheckboxRoot: Component<CheckboxRootProps> = function SuiCheckboxRoot(props) {
+export const CheckboxRoot: IComponent<CheckboxRootProps> = function SuiCheckboxRoot(props) {
   const group = useCheckboxGroupContext(true);
   const {
     size: sizeProp = "md",
@@ -138,7 +159,10 @@ export namespace Root {
 /**
  * {@link CheckboxRoot} の別名です。
  */
-export const Root: Component<Root.Props> = CheckboxRoot;
+export const Root: IComponent<Root.Props> = CheckboxRoot;
+
+// Indicator
+// ---------
 
 /**
  * チェックボックスのインジケーター要素です。
@@ -146,13 +170,6 @@ export const Root: Component<Root.Props> = CheckboxRoot;
  * チェック状態に応じて子要素の表示・非表示を切り替えます。
  *
  * {@link CheckboxIndicator} の状態型として利用できます。
- *
- * @example
- * ```tsx
- * <CheckboxParts.Indicator>
- *   <CheckIcon />
- * </CheckboxParts.Indicator>
- * ```
  */
 export type CheckboxIndicatorState = {};
 
@@ -164,7 +181,7 @@ export type CheckboxIndicatorProps = React.ComponentProps<typeof Checkbox.Indica
 /**
  * {@link CheckboxIndicator} のインジケーター要素を表示します。
  */
-export const CheckboxIndicator: Component<CheckboxIndicatorProps> = function SuiCheckboxIndicator(
+export const CheckboxIndicator: IComponent<CheckboxIndicatorProps> = function SuiCheckboxIndicator(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -172,6 +189,9 @@ export const CheckboxIndicator: Component<CheckboxIndicatorProps> = function Sui
   return <Checkbox.Indicator {...otherProps} className={cn(className, "sui_checkbox_indicator")} />;
 };
 
+/**
+ * {@link CheckboxIndicator} の状態やプロパティーをまとめた型名前空間です。
+ */
 export namespace Indicator {
   /**
    * {@link CheckboxIndicator} の状態型です。
@@ -187,4 +207,4 @@ export namespace Indicator {
 /**
  * {@link CheckboxIndicator} の別名です。
  */
-export const Indicator: Component<Indicator.Props> = CheckboxIndicator;
+export const Indicator: IComponent<Indicator.Props> = CheckboxIndicator;

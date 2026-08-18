@@ -342,12 +342,14 @@
   /* 上書き設定: ここまで */
 }
 
-@keyframes sui_progress-indeterminate {
-  from {
-    transform: translateX(-100%);
-  }
+@layer sui.component {
+  @keyframes sui_progress-indeterminate {
+    from {
+      transform: translateX(-100%);
+    }
 
-  to {
-    transform: translateX(250%);
+    to {
+      transform: translateX(250%);
+    }
   }
 }

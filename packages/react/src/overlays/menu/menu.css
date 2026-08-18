@@ -1,7 +1,3 @@
-/* Trigger */
-
-/* Portal */
-
 /* Backdrop */
 @layer sui.component {
   /* 変数 */
@@ -82,6 +78,7 @@
     /* 外観 */
     --sui_menu_popup-opacity: ;
     /* 変形 */
+    --sui_menu_popup-transform_origin: ;
     --sui_menu_popup-scale: ;
   }
 
@@ -150,7 +147,6 @@
     --sui_menu_popup-opacity: 1;
     /* 変形 */
     --sui_menu_popup-transform_origin: var(--transform-origin);
-    /* 変形 */
     --sui_menu_popup-scale: 1;
   }
 

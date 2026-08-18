@@ -13,14 +13,30 @@ import {
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
-import type { Component } from "../../types.js";
+import type { IComponent, IUseContext } from "../../types.js";
 
 import "./resizable.css";
 
+// Types
+// -----
+
+/**
+ * リサイズ可能なパネル群の向きです。
+ *
+ * - `"horizontal"`: 水平方向にパネルを並べます。
+ * - `"vertical"`: 垂直方向にパネルを並べます。
+ */
+export type ResizableDirection = "horizontal" | "vertical";
+
+/**
+ * リサイズ可能なパネルのサイズです。
+ *
+ * 数値はパーセントとして扱われ、単位付きの文字列も指定できます。
+ */
+export type ResizablePanelSize = number | string;
+
 // Context
 // -------
-
-export type ResizableDirection = "horizontal" | "vertical";
 
 export type ResizableContext = {
   readonly direction: ResizableDirection;
@@ -29,9 +45,9 @@ export type ResizableContext = {
 export const ResizableContext: React.Context<ResizableContext | null> =
   React.createContext<ResizableContext | null>(null);
 
-export function useResizableContext(optional?: false): ResizableContext;
-export function useResizableContext(optional?: boolean): ResizableContext | null;
-export function useResizableContext(optional?: boolean): ResizableContext | null {
+function useSuiResizableContext(optional?: false): ResizableContext;
+function useSuiResizableContext(optional?: boolean): ResizableContext | null;
+function useSuiResizableContext(optional?: boolean): ResizableContext | null {
   const context = React.use(ResizableContext);
   if (context === null && !optional) {
     throw new ContextMissingError({
@@ -43,7 +59,27 @@ export function useResizableContext(optional?: boolean): ResizableContext | null
   return context;
 }
 
-function normalizePanelSize(value: number | string | undefined): number | string | undefined {
+/**
+ * {@link ResizableContext} を読み取るフックです。
+ */
+export const useResizableContext: IUseContext<ResizableContext> = useSuiResizableContext;
+
+/**
+ * {@link ResizableContext} です。
+ */
+export type Context = ResizableContext;
+
+/**
+ * {@link ResizableContext} です。
+ */
+export const Context: React.Context<ResizableContext | null> = ResizableContext;
+
+/**
+ * {@link useResizableContext} です。
+ */
+export const useContext: IUseContext<Context> = useResizableContext;
+
+function normalizePanelSize(value: ResizablePanelSize | undefined): ResizablePanelSize | undefined {
   return typeof value === "number" ? `${value}%` : value;
 }
 
@@ -98,17 +134,8 @@ export type ResizableRootProps = Omit<
  * リサイズ可能なパネル群のルート要素です。
  *
  * 子要素には {@link Panel} と {@link Handle} を交互に配置します。
- *
- * @example
- * ```tsx
- * <ResizableParts.Root direction="horizontal">
- *   <ResizableParts.Panel defaultSize={35}>サイドバー</ResizableParts.Panel>
- *   <ResizableParts.Handle />
- *   <ResizableParts.Panel>コンテンツ</ResizableParts.Panel>
- * </ResizableParts.Root>
- * ```
  */
-export const ResizableRoot: Component<ResizableRootProps> = function SuiResizableRoot(props) {
+export const ResizableRoot: IComponent<ResizableRootProps> = function SuiResizableRoot(props) {
   const {
     ref,
     render = <ExternalGroup />,
@@ -155,9 +182,12 @@ export const ResizableRoot: Component<ResizableRootProps> = function SuiResizabl
   });
 
   const context = React.useMemo(() => ({ direction }), [direction]);
-  return <ResizableContext value={context}>{element}</ResizableContext>;
+  return <Context value={context}>{element}</Context>;
 };
 
+/**
+ * {@link ResizableRoot} の状態やプロパティーをまとめた型名前空間です。
+ */
 export namespace Root {
   /**
    * {@link ResizableRoot} の状態型です。
@@ -173,7 +203,7 @@ export namespace Root {
 /**
  * {@link ResizableRoot} の別名です。
  */
-export const Root: Component<Root.Props> = ResizableRoot;
+export const Root: IComponent<Root.Props> = ResizableRoot;
 
 // Panel
 // -----
@@ -199,25 +229,23 @@ export type ResizablePanelProps = Omit<
   RenderProps<ResizablePanelState> & {
     /**
      * パネルの初期サイズを指定します。
-     *
-     * 数値はパーセントとして扱い、単位付きの文字列はそのまま外部ライブラリーへ渡します。
      */
-    defaultSize?: number | string | undefined;
+    defaultSize?: ResizablePanelSize | undefined;
 
     /**
      * パネルのサイズを制御します。
      */
-    size?: number | string | undefined;
+    size?: ResizablePanelSize | undefined;
 
     /**
      * パネルが小さくなるときの最小サイズを指定します。
      */
-    minSize?: number | string | undefined;
+    minSize?: ResizablePanelSize | undefined;
 
     /**
      * パネルが大きくなるときの最大サイズを指定します。
      */
-    maxSize?: number | string | undefined;
+    maxSize?: ResizablePanelSize | undefined;
 
     /**
      * パネルサイズが変化したときに、パーセント値で呼び出されます。
@@ -240,15 +268,8 @@ export type ResizablePanelProps = Omit<
  *
  * `size` を指定すると、外部ライブラリーの命令型 API を使ってサイズを更新します。
  * 数値のサイズはパーセントとして扱います。
- *
- * @example
- * ```tsx
- * <ResizableParts.Panel defaultSize={30} minSize={20}>
- *   サイドバー
- * </ResizableParts.Panel>
- * ```
  */
-export const ResizablePanel: Component<ResizablePanelProps> = function SuiResizablePanel(props) {
+export const ResizablePanel: IComponent<ResizablePanelProps> = function SuiResizablePanel(props) {
   const { direction } = useResizableContext(true) ?? { direction: "horizontal" };
   const {
     ref,
@@ -304,6 +325,9 @@ export const ResizablePanel: Component<ResizablePanelProps> = function SuiResiza
   return element;
 };
 
+/**
+ * {@link ResizablePanel} の状態やプロパティーをまとめた型名前空間です。
+ */
 export namespace Panel {
   /**
    * {@link ResizablePanel} の状態型です。
@@ -319,7 +343,7 @@ export namespace Panel {
 /**
  * {@link ResizablePanel} の別名です。
  */
-export const Panel: Component<Panel.Props> = ResizablePanel;
+export const Panel: IComponent<Panel.Props> = ResizablePanel;
 
 // Handle
 // ------
@@ -355,13 +379,10 @@ export type ResizableHandleProps = Omit<SeparatorProps, "children" | "className"
  * 隣接するパネルのサイズを変更するハンドルです。
  *
  * マウス、タッチ、ペンのポインター操作と、矢印キーによる操作に対応します。
- *
- * @example
- * ```tsx
- * <ResizableParts.Handle withHandle />
- * ```
  */
-export const ResizableHandle: Component<ResizableHandleProps> = function SuiResizableHandle(props) {
+export const ResizableHandle: IComponent<ResizableHandleProps> = function SuiResizableHandle(
+  props,
+) {
   const { direction } = useResizableContext(true) ?? { direction: "horizontal" };
   const {
     ref,
@@ -399,6 +420,9 @@ export const ResizableHandle: Component<ResizableHandleProps> = function SuiResi
   });
 };
 
+/**
+ * {@link ResizableHandle} の状態やプロパティーをまとめた型名前空間です。
+ */
 export namespace Handle {
   /**
    * {@link ResizableHandle} の状態型です。
@@ -414,4 +438,4 @@ export namespace Handle {
 /**
  * {@link ResizableHandle} の別名です。
  */
-export const Handle: Component<Handle.Props> = ResizableHandle;
+export const Handle: IComponent<Handle.Props> = ResizableHandle;

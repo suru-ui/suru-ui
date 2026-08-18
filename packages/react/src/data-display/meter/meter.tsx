@@ -1,43 +1,58 @@
 import * as React from "react";
 
-import type { Component } from "../../types.js";
-import * as MeterParts from "./meter.parts.jsx";
+import type { IComponent } from "../../types.js";
+import {
+  type MeterRootProps,
+  type MeterRootState,
+  type MeterLabelProps,
+  type MeterTrackProps,
+  type MeterValueProps,
+  type MeterIndicatorProps,
+  MeterRoot,
+  MeterLabel,
+  MeterTrack,
+  MeterValue,
+  MeterIndicator,
+} from "./meter.parts.jsx";
 
 /**
  * {@link Meter} の各パーツに渡すプロパティーです。
- *
- * `label` または `value` を指定した場合だけ、対応するパーツが表示されます。
  */
 export type MeterSlotProps = {
   /**
-   * {@link MeterParts.Indicator|Indicator} に渡すプロパティーです。
+   * {@link MeterIndicator} に渡すプロパティーです。
    */
-  readonly indicator?: MeterParts.Indicator.Props | undefined;
+  readonly indicator?: MeterIndicatorProps | undefined;
 
   /**
-   * {@link MeterParts.Label|Label} に渡すプロパティーです。
+   * {@link MeterLabel} に渡すプロパティーです。
    */
-  readonly label?: MeterParts.Label.Props | undefined;
+  readonly label?: MeterLabelProps | undefined;
 
   /**
-   * {@link MeterParts.Track|Track} に渡すプロパティーです。
+   * {@link MeterTrack} に渡すプロパティーです。
    */
-  readonly track?: MeterParts.Track.Props | undefined;
+  readonly track?: MeterTrackProps | undefined;
 
   /**
-   * {@link MeterParts.Value|Value} に渡すプロパティーです。
+   * {@link MeterValue} に渡すプロパティーです。
    */
-  readonly value?: MeterParts.Value.Props | undefined;
+  readonly value?: MeterValueProps | undefined;
 };
+
+/**
+ * {@link Meter} の状態です。
+ */
+export type MeterState = MeterRootState;
 
 /**
  * {@link Meter} コンポーネントのプロパティーです。
  */
-export type MeterProps = MeterParts.Root.Props & {
+export type MeterProps = MeterRootProps & {
   /**
    * ラベルです。
    */
-  label?: MeterParts.Label.Props["children"];
+  label?: MeterLabelProps["children"];
 
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
@@ -49,21 +64,8 @@ export type MeterProps = MeterParts.Root.Props & {
 
 /**
  * 数値の範囲内にある現在値を表示するメーターコンテキストです。
- *
- * @example 基本
- * ```tsx
- * <Meter value={24} />
- * ```
- *
- * @example ラベルと現在値の表示
- * ```tsx
- * <Meter
- *   label="ストレージ使用量"
- *   value={24}
- * />
- * ```
  */
-export const Meter: Component<MeterProps> = function SuiMeter(props) {
+export const Meter: IComponent<MeterProps> = function SuiMeter(props) {
   const {
     label,
     slotProps: {
@@ -76,14 +78,32 @@ export const Meter: Component<MeterProps> = function SuiMeter(props) {
   } = props;
 
   return (
-    <MeterParts.Root {...rootProps}>
-      {("label" in props || !!labelProps) && (
-        <MeterParts.Label {...{ children: label, ...labelProps }} />
-      )}
-      {("label" in props || !!valueProps) && <MeterParts.Value {...valueProps} />}
-      <MeterParts.Track {...trackProps}>
-        <MeterParts.Indicator {...indicatorProps} />
-      </MeterParts.Track>
-    </MeterParts.Root>
+    <MeterRoot {...rootProps}>
+      {("label" in props || !!labelProps) && <MeterLabel {...{ children: label, ...labelProps }} />}
+      {("label" in props || !!valueProps) && <MeterValue {...valueProps} />}
+      <MeterTrack {...trackProps}>
+        <MeterIndicator {...indicatorProps} />
+      </MeterTrack>
+    </MeterRoot>
   );
 };
+
+/**
+ * {@link Meter} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Meter {
+  /**
+   * {@link MeterState} です。
+   */
+  export type State = MeterState;
+
+  /**
+   * {@link MeterProps} です。
+   */
+  export type Props = MeterProps;
+
+  /**
+   * {@link MeterSlotProps} です。
+   */
+  export type SlotProps = MeterSlotProps;
+}

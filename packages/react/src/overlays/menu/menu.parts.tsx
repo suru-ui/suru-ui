@@ -2,9 +2,12 @@ import { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 
 import "./menu.css";
+
+// Types
+// -----
 
 // Handle
 // ------
@@ -12,18 +15,13 @@ import "./menu.css";
 /**
  * メニューを制御するハンドルです。
  */
-export type MenuHandle<Payload = unknown> = Menu.Handle<Payload>;
+export type MenuHandle<TPayload = unknown> = Menu.Handle<TPayload>;
 
 /**
  * メニューを制御するハンドルを新しく作成します。
  *
  * 作成したハンドルを {@link Root} と {@link Trigger} の `handle` プロパティーに渡すことで、
  * トリガーとメニューの内容を関連付けます。
- *
- * @example
- * ```tsx
- * const handle = MenuParts.createHandle();
- * ```
  */
 export const createHandle: typeof Menu.createHandle = Menu.createHandle;
 
@@ -38,22 +36,20 @@ export type MenuRootState = Menu.Root.State;
 /**
  * {@link Root} に渡すプロパティーです。
  */
-export type MenuRootProps<Payload = unknown> = Omit<Menu.Root.Props<Payload>, "handle"> & {
+export type MenuRootProps<TPayload = unknown> = Omit<Menu.Root.Props<TPayload>, "handle"> & {
   /**
    * メニューとトリガー ({@link Trigger}) を関連付けるハンドルです。
    *
    * {@link createHandle} で作成します。Root 内に {@link Trigger} を配置する場合は省略できます。
    */
-  handle?: MenuHandle<Payload> | undefined;
+  handle?: MenuHandle<TPayload> | undefined;
 };
 
 /**
  * {@link MenuRoot} のコンポーネント型です。
  */
-export interface MenuRootComponent {
-  <Payload = unknown>(props: MenuRootProps<Payload>): React.ReactElement | null;
-
-  displayName?: string | undefined;
+export interface MenuRootComponent extends IComponent<MenuRootProps> {
+  <TPayload = unknown>(props: MenuRootProps<TPayload>): React.ReactElement | null;
 }
 
 /**
@@ -61,27 +57,9 @@ export interface MenuRootComponent {
  *
  * メニューの開閉状態を管理し、各パーツをグループ化します。
  * それ自身は HTML 要素をレンダリングしません。
- *
- * @example
- * ```tsx
- * const handle = MenuParts.createHandle();
- *
- * <MenuParts.Root handle={handle}>
- *   <MenuParts.Trigger handle={handle}>
- *     {(props) => <button type="button" {...props}>操作</button>}
- *   </MenuParts.Trigger>
- *   <MenuParts.Portal>
- *     <MenuParts.Positioner>
- *       <MenuParts.Popup>
- *         <MenuParts.Item>編集</MenuParts.Item>
- *       </MenuParts.Popup>
- *     </MenuParts.Positioner>
- *   </MenuParts.Portal>
- * </MenuParts.Root>
- * ```
  */
-export const MenuRoot: MenuRootComponent = function SuiMenuRoot<Payload>(
-  props: MenuRootProps<Payload>,
+export const MenuRoot: MenuRootComponent = function SuiMenuRoot<TPayload>(
+  props: MenuRootProps<TPayload>,
 ) {
   return <Menu.Root {...props} />;
 };
@@ -98,7 +76,7 @@ export namespace Root {
   /**
    * {@link MenuRoot} のプロパティー型です。
    */
-  export type Props<Payload = unknown> = MenuRootProps<Payload>;
+  export type Props<TPayload = unknown> = MenuRootProps<TPayload>;
 }
 
 /**
@@ -117,8 +95,8 @@ export type MenuTriggerState = Menu.Trigger.State;
 /**
  * {@link Trigger} に渡すプロパティーです。
  */
-export type MenuTriggerProps<Payload = unknown> = Omit<
-  Menu.Trigger.Props<Payload>,
+export type MenuTriggerProps<TPayload = unknown> = Omit<
+  Menu.Trigger.Props<TPayload>,
   "handle" | "children" | "render"
 > & {
   /**
@@ -126,39 +104,30 @@ export type MenuTriggerProps<Payload = unknown> = Omit<
    *
    * {@link createHandle} で作成し、{@link Root} と共有します。Root 内に配置する場合は省略できます。
    */
-  handle?: MenuHandle<Payload> | undefined;
+  handle?: MenuHandle<TPayload> | undefined;
 
   /**
    * ボタンとしてレンダリングする要素です。
    *
    * {@link Menu.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
    */
-  children: NonNullable<Menu.Trigger.Props<Payload>["render"]>;
+  children: NonNullable<Menu.Trigger.Props<TPayload>["render"]>;
 };
 
 /**
  * {@link MenuTrigger} のコンポーネント型です。
  */
-export interface MenuTriggerComponent {
-  <Payload = unknown>(props: MenuTriggerProps<Payload>): React.ReactElement | null;
-
-  displayName?: string | undefined;
+export interface MenuTriggerComponent extends IComponent<MenuTriggerProps> {
+  <TPayload = unknown>(props: MenuTriggerProps<TPayload>): React.ReactElement | null;
 }
 
 /**
  * メニューを開くボタン要素です。
  *
  * 子要素は何にもラップされず、そのまま {@link Menu.Trigger} の `render` プロパティーに渡されます。
- *
- * @example
- * ```tsx
- * <MenuParts.Trigger handle={handle}>
- *   {(props) => <button type="button" {...props}>操作</button>}
- * </MenuParts.Trigger>
- * ```
  */
-export const MenuTrigger: MenuTriggerComponent = function SuiMenuTrigger<Payload>(
-  props: MenuTriggerProps<Payload>,
+export const MenuTrigger: MenuTriggerComponent = function SuiMenuTrigger<TPayload>(
+  props: MenuTriggerProps<TPayload>,
 ) {
   const { className, handle, children, ...otherProps } = props;
 
@@ -184,7 +153,7 @@ export namespace Trigger {
   /**
    * {@link MenuTrigger} のプロパティー型です。
    */
-  export type Props<Payload = unknown> = MenuTriggerProps<Payload>;
+  export type Props<TPayload = unknown> = MenuTriggerProps<TPayload>;
 }
 
 /**
@@ -209,15 +178,8 @@ export type MenuPortalProps = React.ComponentProps<typeof Menu.Portal>;
  * メニューを DOM の別の場所へ移動する要素です。
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
- *
- * @example
- * ```tsx
- * <MenuParts.Portal>
- *   <MenuParts.Positioner>…</MenuParts.Positioner>
- * </MenuParts.Portal>
- * ```
  */
-export const MenuPortal: Component<MenuPortalProps> = function SuiMenuPortal(props) {
+export const MenuPortal: IComponent<MenuPortalProps> = function SuiMenuPortal(props) {
   const { className, ...otherProps } = props;
 
   return <Menu.Portal {...otherProps} className={cn(className, "sui_menu_portal")} />;
@@ -241,7 +203,7 @@ export namespace Portal {
 /**
  * {@link MenuPortal} の短縮名です。
  */
-export const Portal: Component<Portal.Props> = MenuPortal;
+export const Portal: IComponent<Portal.Props> = MenuPortal;
 
 // Backdrop
 // --------
@@ -258,13 +220,8 @@ export type MenuBackdropProps = React.ComponentProps<typeof Menu.Backdrop>;
 
 /**
  * メニューの背後に表示されるオーバーレイ要素です。
- *
- * @example
- * ```tsx
- * <MenuParts.Backdrop />
- * ```
  */
-export const MenuBackdrop: Component<MenuBackdropProps> = function SuiMenuBackdrop(props) {
+export const MenuBackdrop: IComponent<MenuBackdropProps> = function SuiMenuBackdrop(props) {
   const { className, ...otherProps } = props;
 
   return <Menu.Backdrop {...otherProps} className={cn(className, "sui_menu_backdrop")} />;
@@ -288,7 +245,7 @@ export namespace Backdrop {
 /**
  * {@link MenuBackdrop} の短縮名です。
  */
-export const Backdrop: Component<Backdrop.Props> = MenuBackdrop;
+export const Backdrop: IComponent<Backdrop.Props> = MenuBackdrop;
 
 // Positioner
 // ----------
@@ -305,15 +262,8 @@ export type MenuPositionerProps = React.ComponentProps<typeof Menu.Positioner>;
 
 /**
  * ポップアップをトリガーに位置合わせする要素です。
- *
- * @example
- * ```tsx
- * <MenuParts.Positioner side="bottom" align="start" sideOffset={8}>
- *   <MenuParts.Popup>…</MenuParts.Popup>
- * </MenuParts.Positioner>
- * ```
  */
-export const MenuPositioner: Component<MenuPositionerProps> = function SuiMenuPositioner(props) {
+export const MenuPositioner: IComponent<MenuPositionerProps> = function SuiMenuPositioner(props) {
   const { className, ...otherProps } = props;
 
   return <Menu.Positioner {...otherProps} className={cn(className, "sui_menu_positioner")} />;
@@ -337,7 +287,7 @@ export namespace Positioner {
 /**
  * {@link MenuPositioner} の短縮名です。
  */
-export const Positioner: Component<Positioner.Props> = MenuPositioner;
+export const Positioner: IComponent<Positioner.Props> = MenuPositioner;
 
 // Popup
 // -----
@@ -354,15 +304,8 @@ export type MenuPopupProps = React.ComponentProps<typeof Menu.Popup>;
 
 /**
  * メニュー項目を表示するポップアップ要素です。
- *
- * @example
- * ```tsx
- * <MenuParts.Popup>
- *   <MenuParts.Item>編集</MenuParts.Item>
- * </MenuParts.Popup>
- * ```
  */
-export const MenuPopup: Component<MenuPopupProps> = function SuiMenuPopup(props) {
+export const MenuPopup: IComponent<MenuPopupProps> = function SuiMenuPopup(props) {
   const { className, ...otherProps } = props;
 
   return <Menu.Popup {...otherProps} className={cn(className, "sui_menu_popup")} />;
@@ -386,7 +329,7 @@ export namespace Popup {
 /**
  * {@link MenuPopup} の短縮名です。
  */
-export const Popup: Component<Popup.Props> = MenuPopup;
+export const Popup: IComponent<Popup.Props> = MenuPopup;
 
 // Arrow
 // -----
@@ -403,16 +346,8 @@ export type MenuArrowProps = React.ComponentProps<typeof Menu.Arrow>;
 
 /**
  * ポップアップとトリガーをつなぐ矢印要素です。
- *
- * @example
- * ```tsx
- * <MenuParts.Popup>
- *   <MenuParts.Arrow />
- *   …
- * </MenuParts.Popup>
- * ```
  */
-export const MenuArrow: Component<MenuArrowProps> = function SuiMenuArrow(props) {
+export const MenuArrow: IComponent<MenuArrowProps> = function SuiMenuArrow(props) {
   const { className, ...otherProps } = props;
 
   return <Menu.Arrow {...otherProps} className={cn(className, "sui_menu_arrow")} />;
@@ -436,7 +371,7 @@ export namespace Arrow {
 /**
  * {@link MenuArrow} の短縮名です。
  */
-export const Arrow: Component<Arrow.Props> = MenuArrow;
+export const Arrow: IComponent<Arrow.Props> = MenuArrow;
 
 // Viewport
 // --------
@@ -453,15 +388,8 @@ export type MenuViewportProps = React.ComponentProps<typeof Menu.Viewport>;
 
 /**
  * トリガーの切り替えに伴うメニュー内容のアニメーション用ビューポートです。
- *
- * @example
- * ```tsx
- * <MenuParts.Viewport>
- *   <MenuParts.Item>編集</MenuParts.Item>
- * </MenuParts.Viewport>
- * ```
  */
-export const MenuViewport: Component<MenuViewportProps> = function SuiMenuViewport(props) {
+export const MenuViewport: IComponent<MenuViewportProps> = function SuiMenuViewport(props) {
   const { className, ...otherProps } = props;
 
   return <Menu.Viewport {...otherProps} className={cn(className, "sui_menu_viewport")} />;
@@ -485,7 +413,7 @@ export namespace Viewport {
 /**
  * {@link MenuViewport} の短縮名です。
  */
-export const Viewport: Component<Viewport.Props> = MenuViewport;
+export const Viewport: IComponent<Viewport.Props> = MenuViewport;
 
 // Item
 // ----
@@ -502,13 +430,8 @@ export type MenuItemProps = React.ComponentProps<typeof Menu.Item>;
 
 /**
  * メニューの操作項目です。
- *
- * @example
- * ```tsx
- * <MenuParts.Item>編集</MenuParts.Item>
- * ```
  */
-export const MenuItem: Component<MenuItemProps> = function SuiMenuItem(props) {
+export const MenuItem: IComponent<MenuItemProps> = function SuiMenuItem(props) {
   const { className, ...otherProps } = props;
 
   return <Menu.Item {...otherProps} className={cn(className, "sui_menu_item")} />;
@@ -532,7 +455,7 @@ export namespace Item {
 /**
  * {@link MenuItem} の短縮名です。
  */
-export const Item: Component<Item.Props> = MenuItem;
+export const Item: IComponent<Item.Props> = MenuItem;
 
 // LinkItem
 // --------
@@ -549,13 +472,8 @@ export type MenuLinkItemProps = React.ComponentProps<typeof Menu.LinkItem>;
 
 /**
  * 別のページやセクションへ移動するメニュー項目です。
- *
- * @example
- * ```tsx
- * <MenuParts.LinkItem href="/settings">設定</MenuParts.LinkItem>
- * ```
  */
-export const MenuLinkItem: Component<MenuLinkItemProps> = function SuiMenuLinkItem(props) {
+export const MenuLinkItem: IComponent<MenuLinkItemProps> = function SuiMenuLinkItem(props) {
   const { className, ...otherProps } = props;
 
   return (
@@ -584,7 +502,7 @@ export namespace LinkItem {
 /**
  * {@link MenuLinkItem} の短縮名です。
  */
-export const LinkItem: Component<LinkItem.Props> = MenuLinkItem;
+export const LinkItem: IComponent<LinkItem.Props> = MenuLinkItem;
 
 // SubmenuRoot
 // -----------
@@ -603,15 +521,10 @@ export type MenuSubmenuRootProps = React.ComponentProps<typeof Menu.SubmenuRoot>
  * サブメニューのルートです。
  *
  * それ自身は HTML 要素をレンダリングしません。
- *
- * @example
- * ```tsx
- * <MenuParts.SubmenuRoot>
- *   <MenuParts.SubmenuTrigger>その他</MenuParts.SubmenuTrigger>
- * </MenuParts.SubmenuRoot>
- * ```
  */
-export const MenuSubmenuRoot: Component<MenuSubmenuRootProps> = function SuiMenuSubmenuRoot(props) {
+export const MenuSubmenuRoot: IComponent<MenuSubmenuRootProps> = function SuiMenuSubmenuRoot(
+  props,
+) {
   return <Menu.SubmenuRoot {...props} />;
 };
 
@@ -633,7 +546,7 @@ export namespace SubmenuRoot {
 /**
  * {@link MenuSubmenuRoot} の短縮名です。
  */
-export const SubmenuRoot: Component<SubmenuRoot.Props> = MenuSubmenuRoot;
+export const SubmenuRoot: IComponent<SubmenuRoot.Props> = MenuSubmenuRoot;
 
 // SubmenuTrigger
 // --------------
@@ -650,13 +563,8 @@ export type MenuSubmenuTriggerProps = React.ComponentProps<typeof Menu.SubmenuTr
 
 /**
  * サブメニューを開くメニュー項目です。
- *
- * @example
- * ```tsx
- * <MenuParts.SubmenuTrigger>その他</MenuParts.SubmenuTrigger>
- * ```
  */
-export const MenuSubmenuTrigger: Component<MenuSubmenuTriggerProps> =
+export const MenuSubmenuTrigger: IComponent<MenuSubmenuTriggerProps> =
   function SuiMenuSubmenuTrigger(props) {
     const { className, ...otherProps } = props;
 
@@ -686,7 +594,7 @@ export namespace SubmenuTrigger {
 /**
  * {@link MenuSubmenuTrigger} の短縮名です。
  */
-export const SubmenuTrigger: Component<SubmenuTrigger.Props> = MenuSubmenuTrigger;
+export const SubmenuTrigger: IComponent<SubmenuTrigger.Props> = MenuSubmenuTrigger;
 
 // Group
 // -----
@@ -703,16 +611,8 @@ export type MenuGroupProps = React.ComponentProps<typeof Menu.Group>;
 
 /**
  * 関連するメニュー項目をまとめるグループ要素です。
- *
- * @example
- * ```tsx
- * <MenuParts.Group>
- *   <MenuParts.GroupLabel>ファイル</MenuParts.GroupLabel>
- *   <MenuParts.Item>新規作成</MenuParts.Item>
- * </MenuParts.Group>
- * ```
  */
-export const MenuGroup: Component<MenuGroupProps> = function SuiMenuGroup(props) {
+export const MenuGroup: IComponent<MenuGroupProps> = function SuiMenuGroup(props) {
   const { className, ...otherProps } = props;
 
   return <Menu.Group {...otherProps} className={cn(className, "sui_menu_group")} />;
@@ -736,7 +636,7 @@ export namespace Group {
 /**
  * {@link MenuGroup} の短縮名です。
  */
-export const Group: Component<Group.Props> = MenuGroup;
+export const Group: IComponent<Group.Props> = MenuGroup;
 
 // GroupLabel
 // ----------
@@ -753,13 +653,8 @@ export type MenuGroupLabelProps = React.ComponentProps<typeof Menu.GroupLabel>;
 
 /**
  * グループに自動的に対応付けられるラベル要素です。
- *
- * @example
- * ```tsx
- * <MenuParts.GroupLabel>ファイル</MenuParts.GroupLabel>
- * ```
  */
-export const MenuGroupLabel: Component<MenuGroupLabelProps> = function SuiMenuGroupLabel(props) {
+export const MenuGroupLabel: IComponent<MenuGroupLabelProps> = function SuiMenuGroupLabel(props) {
   const { className, ...otherProps } = props;
 
   return <Menu.GroupLabel {...otherProps} className={cn(className, "sui_menu_group_label")} />;
@@ -783,7 +678,7 @@ export namespace GroupLabel {
 /**
  * {@link MenuGroupLabel} の短縮名です。
  */
-export const GroupLabel: Component<GroupLabel.Props> = MenuGroupLabel;
+export const GroupLabel: IComponent<GroupLabel.Props> = MenuGroupLabel;
 
 // RadioGroup
 // ----------
@@ -800,16 +695,8 @@ export type MenuRadioGroupProps = React.ComponentProps<typeof Menu.RadioGroup>;
 
 /**
  * ラジオ項目をまとめるグループ要素です。
- *
- * @example
- * ```tsx
- * <MenuParts.RadioGroup defaultValue="name">
- *   <MenuParts.RadioItem value="name">名前</MenuParts.RadioItem>
- *   <MenuParts.RadioItem value="date">日付</MenuParts.RadioItem>
- * </MenuParts.RadioGroup>
- * ```
  */
-export const MenuRadioGroup: Component<MenuRadioGroupProps> = function SuiMenuRadioGroup(props) {
+export const MenuRadioGroup: IComponent<MenuRadioGroupProps> = function SuiMenuRadioGroup(props) {
   const { className, ...otherProps } = props;
 
   return <Menu.RadioGroup {...otherProps} className={cn(className, "sui_menu_radio_group")} />;
@@ -833,7 +720,7 @@ export namespace RadioGroup {
 /**
  * {@link MenuRadioGroup} の短縮名です。
  */
-export const RadioGroup: Component<RadioGroup.Props> = MenuRadioGroup;
+export const RadioGroup: IComponent<RadioGroup.Props> = MenuRadioGroup;
 
 // RadioItem
 // ---------
@@ -850,13 +737,8 @@ export type MenuRadioItemProps = React.ComponentProps<typeof Menu.RadioItem>;
 
 /**
  * ラジオグループ内のメニュー項目です。
- *
- * @example
- * ```tsx
- * <MenuParts.RadioItem value="name">名前</MenuParts.RadioItem>
- * ```
  */
-export const MenuRadioItem: Component<MenuRadioItemProps> = function SuiMenuRadioItem(props) {
+export const MenuRadioItem: IComponent<MenuRadioItemProps> = function SuiMenuRadioItem(props) {
   const { className, ...otherProps } = props;
 
   return (
@@ -885,7 +767,7 @@ export namespace RadioItem {
 /**
  * {@link MenuRadioItem} の短縮名です。
  */
-export const RadioItem: Component<RadioItem.Props> = MenuRadioItem;
+export const RadioItem: IComponent<RadioItem.Props> = MenuRadioItem;
 
 // RadioItemIndicator
 // ------------------
@@ -902,13 +784,8 @@ export type MenuRadioItemIndicatorProps = React.ComponentProps<typeof Menu.Radio
 
 /**
  * 選択されたラジオ項目を示す要素です。
- *
- * @example
- * ```tsx
- * <MenuParts.RadioItemIndicator>✓</MenuParts.RadioItemIndicator>
- * ```
  */
-export const MenuRadioItemIndicator: Component<MenuRadioItemIndicatorProps> =
+export const MenuRadioItemIndicator: IComponent<MenuRadioItemIndicatorProps> =
   function SuiMenuRadioItemIndicator(props) {
     const { className, keepMounted = true, ...otherProps } = props;
 
@@ -939,7 +816,7 @@ export namespace RadioItemIndicator {
 /**
  * {@link MenuRadioItemIndicator} の短縮名です。
  */
-export const RadioItemIndicator: Component<RadioItemIndicator.Props> = MenuRadioItemIndicator;
+export const RadioItemIndicator: IComponent<RadioItemIndicator.Props> = MenuRadioItemIndicator;
 
 // CheckboxItem
 // ------------
@@ -956,13 +833,8 @@ export type MenuCheckboxItemProps = React.ComponentProps<typeof Menu.CheckboxIte
 
 /**
  * 設定をオン・オフできるメニュー項目です。
- *
- * @example
- * ```tsx
- * <MenuParts.CheckboxItem defaultChecked>サイドバー</MenuParts.CheckboxItem>
- * ```
  */
-export const MenuCheckboxItem: Component<MenuCheckboxItemProps> = function SuiMenuCheckboxItem(
+export const MenuCheckboxItem: IComponent<MenuCheckboxItemProps> = function SuiMenuCheckboxItem(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -993,7 +865,7 @@ export namespace CheckboxItem {
 /**
  * {@link MenuCheckboxItem} の短縮名です。
  */
-export const CheckboxItem: Component<CheckboxItem.Props> = MenuCheckboxItem;
+export const CheckboxItem: IComponent<CheckboxItem.Props> = MenuCheckboxItem;
 
 // CheckboxItemIndicator
 // ---------------------
@@ -1012,13 +884,8 @@ export type MenuCheckboxItemIndicatorProps = React.ComponentProps<
 
 /**
  * チェックされた項目を示す要素です。
- *
- * @example
- * ```tsx
- * <MenuParts.CheckboxItemIndicator>✓</MenuParts.CheckboxItemIndicator>
- * ```
  */
-export const MenuCheckboxItemIndicator: Component<MenuCheckboxItemIndicatorProps> =
+export const MenuCheckboxItemIndicator: IComponent<MenuCheckboxItemIndicatorProps> =
   function SuiMenuCheckboxItemIndicator(props) {
     const { className, keepMounted = true, ...otherProps } = props;
 
@@ -1049,7 +916,7 @@ export namespace CheckboxItemIndicator {
 /**
  * {@link MenuCheckboxItemIndicator} の短縮名です。
  */
-export const CheckboxItemIndicator: Component<CheckboxItemIndicator.Props> =
+export const CheckboxItemIndicator: IComponent<CheckboxItemIndicator.Props> =
   MenuCheckboxItemIndicator;
 
 // Separator
@@ -1067,13 +934,8 @@ export type MenuSeparatorProps = React.ComponentProps<typeof Menu.Separator>;
 
 /**
  * メニュー項目を区切る要素です。
- *
- * @example
- * ```tsx
- * <MenuParts.Separator />
- * ```
  */
-export const MenuSeparator: Component<MenuSeparatorProps> = function SuiMenuSeparator(props) {
+export const MenuSeparator: IComponent<MenuSeparatorProps> = function SuiMenuSeparator(props) {
   const { className, ...otherProps } = props;
 
   return <Menu.Separator {...otherProps} className={cn(className, "sui_menu_separator")} />;
@@ -1097,4 +959,4 @@ export namespace Separator {
 /**
  * {@link MenuSeparator} の短縮名です。
  */
-export const Separator: Component<Separator.Props> = MenuSeparator;
+export const Separator: IComponent<Separator.Props> = MenuSeparator;

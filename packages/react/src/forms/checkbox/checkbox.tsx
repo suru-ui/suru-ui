@@ -1,5 +1,28 @@
-import type { Component } from "../../types.js";
-import * as CheckboxParts from "./checkbox.parts.jsx";
+import * as React from "react";
+
+import type { IComponent } from "../../types.js";
+import {
+  type CheckboxRootProps,
+  type CheckboxRootState,
+  type CheckboxIndicatorProps,
+  CheckboxRoot,
+  CheckboxIndicator,
+} from "./checkbox.parts.jsx";
+
+/**
+ * {@link Checkbox} の各パーツに渡すプロパティーです。
+ */
+export type CheckboxSlotProps = {
+  /**
+   * {@link CheckboxIndicator} に渡すプロパティーです。
+   */
+  readonly indicator?: CheckboxIndicatorProps | undefined;
+};
+
+/**
+ * {@link Checkbox} の状態です。
+ */
+export type CheckboxState = CheckboxRootState;
 
 /**
  * {@link Checkbox} コンポーネントのプロパティーです。
@@ -7,7 +30,7 @@ import * as CheckboxParts from "./checkbox.parts.jsx";
  * スタイルに関するプロパティーは、{@link CheckboxGroup} 内ではグループの指定が優先されます。
  * 指定後に値を変更すると、チェックボックスのスタイルも更新されます。
  */
-export type CheckboxProps = CheckboxParts.Root.Props & {
+export type CheckboxProps = CheckboxRootProps & {
   /**
    * Indicator 内に表示するコンテンツ（チェックアイコンなど）です。
    *
@@ -18,44 +41,42 @@ export type CheckboxProps = CheckboxParts.Root.Props & {
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
    *
-   * `indicator` を指定した場合、子要素がなくても {@link CheckboxParts.Indicator} を生成します。
+   * `indicator` を指定した場合、子要素がなくても {@link CheckboxIndicator} を生成します。
    */
-  slotProps?:
-    | {
-        readonly indicator?: CheckboxParts.Indicator.Props | undefined;
-      }
-    | undefined;
+  slotProps?: CheckboxSlotProps | undefined;
 };
 
 /**
  * チェックボックスを表示するコンポーネントです。
- *
- * @example 基本
- * ```tsx
- * <Checkbox>
- *   <CheckIcon />
- * </Checkbox>
- * ```
- *
- * @example ラベル付き
- * ```tsx
- * <label>
- *   <Checkbox variant="liquid" color="blue">
- *     <CheckIcon />
- *   </Checkbox>
- *   同意する
- * </label>
- * ```
  */
-export const Checkbox: Component<CheckboxProps> = function SuiCheckbox(props) {
-  const { children, slotProps, ...rootProps } = props;
-  const indicatorProps = slotProps?.indicator;
+export const Checkbox: IComponent<CheckboxProps> = function SuiCheckbox(props) {
+  const { children, slotProps: { indicator: indicatorProps } = {}, ...rootProps } = props;
 
   return (
-    <CheckboxParts.Root {...rootProps}>
+    <CheckboxRoot {...rootProps}>
       {children !== undefined || indicatorProps !== undefined ? (
-        <CheckboxParts.Indicator {...indicatorProps}>{children}</CheckboxParts.Indicator>
+        <CheckboxIndicator {...{ children, ...indicatorProps }} />
       ) : null}
-    </CheckboxParts.Root>
+    </CheckboxRoot>
   );
 };
+
+/**
+ * {@link Checkbox} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Checkbox {
+  /**
+   * {@link CheckboxState} です。
+   */
+  export type State = CheckboxState;
+
+  /**
+   * {@link CheckboxProps} です。
+   */
+  export type Props = CheckboxProps;
+
+  /**
+   * {@link CheckboxSlotProps} です。
+   */
+  export type SlotProps = CheckboxSlotProps;
+}

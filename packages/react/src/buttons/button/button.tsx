@@ -1,10 +1,14 @@
 import type { IComponent, IUseContext } from "../../types.js";
 import {
+  type ButtonSize,
+  type ButtonColor,
+  type ButtonRadius,
   type ButtonContext,
   type ButtonRootProps,
   type ButtonRootState,
   type ButtonContentProps,
   type ButtonPendingProps,
+  type ButtonPendingVisibility,
   type ButtonCircularProgressProps,
   type ButtonCircularProgressFillProps,
   type ButtonCircularProgressTrackProps,
@@ -146,4 +150,24 @@ export namespace Button {
    * {@link ButtonContext} です。
    */
   export type Context = ButtonContext;
+
+  /**
+   * {@link ButtonColor} です。
+   */
+  export type Color = ButtonColor;
+
+  /**
+   * {@link ButtonRadius} です。
+   */
+  export type Radius = ButtonRadius;
+
+  /**
+   * {@link ButtonSize} です。
+   */
+  export type Size = ButtonSize;
+
+  /**
+   * {@link ButtonPendingVisibility} です。
+   */
+  export type PendingVisibility = ButtonPendingVisibility;
 }

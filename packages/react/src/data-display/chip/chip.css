@@ -152,12 +152,12 @@
     --sui_chip-border_radius: var(--sui-radius-sm);
   }
 
-  .sui_chip-radius_sm {
+  .sui_chip-radius_md {
     /* 枠線 */
     --sui_chip-border_radius: var(--sui-radius-md);
   }
 
-  .sui_chip-radius_sm {
+  .sui_chip-radius_lg {
     /* 枠線 */
     --sui_chip-border_radius: var(--sui-radius-lg);
   }

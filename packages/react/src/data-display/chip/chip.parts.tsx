@@ -1,11 +1,48 @@
-import type { Color, ColorTemplate as Variant, Size } from "@suru-ui/theme";
+import type { Size, Color, ColorTemplate } from "@suru-ui/theme";
 import type * as React from "react";
 
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 
 import "./chip.css";
+
+// Types
+// -----
+
+/**
+ * チップの色です。
+ */
+export type ChipColor = Color;
+
+/**
+ * チップの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
+ */
+export type ChipRadius = "none" | Size | "full";
+
+/**
+ * チップの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type ChipSize = Size;
+
+/**
+ * チップの主な外観の種類です。
+ *
+ * - `"solid"`: 塗りつぶしスタイル
+ * - `"naked"`: 背景のないテキストのみ
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type ChipVariant = ColorTemplate;
 
 // Root
 // ----
@@ -25,7 +62,7 @@ export type ChipRootProps = Omit<React.ComponentProps<"span">, keyof RenderProps
      *
      * @default "grey"
      */
-    color?: Color | undefined;
+    color?: ChipColor | undefined;
 
     /**
      * 枠線を表示するかどうかを指定します。
@@ -37,32 +74,27 @@ export type ChipRootProps = Omit<React.ComponentProps<"span">, keyof RenderProps
      *
      * @default "full"
      */
-    radius?: "none" | Size | "full" | undefined;
+    radius?: ChipRadius | undefined;
 
     /**
      * チップのサイズを指定します。
      *
      * @default "sm"
      */
-    size?: Size | undefined;
+    size?: ChipSize | undefined;
 
     /**
      * チップのスタイルバリエーションを指定します。
      *
      * @default "liquid"
      */
-    variant?: Variant | undefined;
+    variant?: ChipVariant | undefined;
   };
 
 /**
  * チップのルートコンポーネントです。
- *
- * @example
- * ```tsx
- * <ChipRoot color="blue">ラベル</ChipRoot>
- * ```
  */
-export const ChipRoot: Component<ChipRootProps> = function SuiChipRoot(props) {
+export const ChipRoot: IComponent<ChipRootProps> = function SuiChipRoot(props) {
   const {
     size = "sm",
     color = "grey",
@@ -108,4 +140,4 @@ export namespace Root {
 /**
  * {@link ChipRoot} です。
  */
-export const Root: Component<Root.Props> = ChipRoot;
+export const Root: IComponent<Root.Props> = ChipRoot;

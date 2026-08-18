@@ -17,8 +17,6 @@
   }
 }
 
-/* Panel */
-
 /* Handle */
 @layer sui.component {
   .sui_resizable_handle_grip {

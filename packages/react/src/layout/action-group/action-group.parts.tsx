@@ -1,12 +1,57 @@
-import type { Color, ColorTemplate as Variant, Size } from "@suru-ui/theme";
+import type { Size, Color, ColorTemplate } from "@suru-ui/theme";
 import * as React from "react";
 
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
-import type { Component } from "../../types.js";
+import type { IComponent, IUseContext } from "../../types.js";
 
 import "./action-group.css";
+
+// Types
+// -----
+
+/**
+ * アクショングループの色です。
+ */
+export type ActionGroupColor = Color;
+
+/**
+ * アクショングループの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
+ */
+export type ActionGroupRadius = "none" | Size | "full";
+
+/**
+ * アクショングループの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type ActionGroupSize = Size;
+
+/**
+ * アクショングループの主な外観の種類です。
+ *
+ * - `"solid"`: 塗りつぶしスタイル
+ * - `"naked"`: 背景のないテキストのみ
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type ActionGroupVariant = ColorTemplate;
+
+/**
+ * アクショングループの向きです。
+ *
+ * - `"horizontal"`: 横並び
+ * - `"vertical"`: 縦並び
+ */
+export type ActionGroupOrientation = "horizontal" | "vertical";
 
 // Context
 // -------
@@ -18,22 +63,22 @@ export type ActionGroupContext = {
   /**
    * グループアイテムのスタイルバリエーションです。
    */
-  readonly variant: Variant;
+  readonly variant: ActionGroupVariant;
 
   /**
    * グループアイテムの色です。
    */
-  readonly color: Color;
+  readonly color: ActionGroupColor;
 
   /**
    * グループアイテムのサイズです。
    */
-  readonly size: Size;
+  readonly size: ActionGroupSize;
 
   /**
    * グループアイテムの角丸です。
    */
-  readonly radius: "none" | "sm" | "md" | "lg" | "full";
+  readonly radius: ActionGroupRadius;
 
   /**
    * グループアイテムの枠線を表示するかどうかです。
@@ -43,7 +88,7 @@ export type ActionGroupContext = {
   /**
    * グループアイテムの向きです。
    */
-  readonly orientation: "horizontal" | "vertical";
+  readonly orientation: ActionGroupOrientation;
 };
 
 /**
@@ -52,12 +97,9 @@ export type ActionGroupContext = {
 export const ActionGroupContext: React.Context<ActionGroupContext | null> =
   React.createContext<ActionGroupContext | null>(null);
 
-/**
- * {@link ActionGroupRoot} のコンテキストを読み取るフックです。
- */
-export function useActionGroupContext(optional?: false): ActionGroupContext;
-export function useActionGroupContext(optional?: boolean): ActionGroupContext | null;
-export function useActionGroupContext(optional?: boolean): ActionGroupContext | null {
+function useSuiActionGroupContext(optional?: false): ActionGroupContext;
+function useSuiActionGroupContext(optional?: boolean): ActionGroupContext | null;
+function useSuiActionGroupContext(optional?: boolean): ActionGroupContext | null {
   const context = React.use(ActionGroupContext);
   if (context === null && !optional) {
     throw new ContextMissingError({
@@ -80,13 +122,14 @@ export type Context = ActionGroupContext;
 export const Context: React.Context<ActionGroupContext | null> = ActionGroupContext;
 
 /**
+ * {@link ActionGroupContext} を読み取るフックです。
+ */
+export const useActionGroupContext: IUseContext<ActionGroupContext> = useSuiActionGroupContext;
+
+/**
  * {@link useActionGroupContext} の別名です。
  */
-export function useContext(optional?: false): ActionGroupContext;
-export function useContext(optional?: boolean): ActionGroupContext | null;
-export function useContext(optional?: boolean): ActionGroupContext | null {
-  return useActionGroupContext(optional);
-}
+export const useContext: IUseContext<Context> = useActionGroupContext;
 
 // Root
 // ----
@@ -108,28 +151,28 @@ export type ActionGroupRootProps = Omit<React.ComponentProps<"div">, keyof Rende
      *
      * @default "solid"
      */
-    variant?: Variant | undefined;
+    variant?: ActionGroupVariant | undefined;
 
     /**
      * グループアイテムの色を指定します。
      *
      * @default "grey"
      */
-    color?: Color | undefined;
+    color?: ActionGroupColor | undefined;
 
     /**
      * グループアイテムのサイズを指定します。
      *
      * @default "md"
      */
-    size?: Size | undefined;
+    size?: ActionGroupSize | undefined;
 
     /**
      * グループアイテムの角丸を指定します。
      *
      * @default "md"
      */
-    radius?: "none" | "sm" | "md" | "lg" | "full" | undefined;
+    radius?: ActionGroupRadius | undefined;
 
     /**
      * グループアイテムの枠線を表示するかどうかを指定します。
@@ -141,7 +184,7 @@ export type ActionGroupRootProps = Omit<React.ComponentProps<"div">, keyof Rende
      *
      * @default "horizontal"
      */
-    orientation?: "horizontal" | "vertical" | undefined;
+    orientation?: ActionGroupOrientation | undefined;
   };
 
 /**
@@ -149,16 +192,10 @@ export type ActionGroupRootProps = Omit<React.ComponentProps<"div">, keyof Rende
  *
  * スタイルプロパティーをコンテキストでグループアイテムへ伝播します。
  * ActionGroup を入れ子にした場合は、最も内側のグループの値が使用されます。
- *
- * @example
- * ```tsx
- * <ActionGroupParts.Root color="blue">
- *   <Button>保存</Button>
- *   <Button>キャンセル</Button>
- * </ActionGroupParts.Root>
- * ```
  */
-export const ActionGroupRoot: Component<ActionGroupRootProps> = function SuiActionGroupRoot(props) {
+export const ActionGroupRoot: IComponent<ActionGroupRootProps> = function SuiActionGroupRoot(
+  props,
+) {
   const {
     role = "group",
     variant = "solid",
@@ -197,6 +234,9 @@ export const ActionGroupRoot: Component<ActionGroupRootProps> = function SuiActi
   return <Context value={context}>{element}</Context>;
 };
 
+/**
+ * {@link ActionGroupRoot} の状態やプロパティーをまとめた型名前空間です。
+ */
 export namespace Root {
   /**
    * {@link ActionGroupRoot} の状態型です。
@@ -212,7 +252,7 @@ export namespace Root {
 /**
  * {@link ActionGroupRoot} の別名です。
  */
-export const Root: Component<Root.Props> = ActionGroupRoot;
+export const Root: IComponent<Root.Props> = ActionGroupRoot;
 
 // Separator
 // ---------
@@ -233,22 +273,13 @@ export type ActionGroupSeparatorProps = Omit<
     /**
      * 区切り線の向きを指定します。省略時は親 ActionGroup の向きを使用します。
      */
-    orientation?: "horizontal" | "vertical" | undefined;
+    orientation?: ActionGroupOrientation | undefined;
   };
 
 /**
  * ActionGroup 内のアイテムを区切る要素です。
- *
- * @example
- * ```tsx
- * <ActionGroupParts.Root>
- *   <Button>戻る</Button>
- *   <ActionGroupParts.Separator />
- *   <Button>進む</Button>
- * </ActionGroupParts.Root>
- * ```
  */
-export const ActionGroupSeparator: Component<ActionGroupSeparatorProps> =
+export const ActionGroupSeparator: IComponent<ActionGroupSeparatorProps> =
   function SuiActionGroupSeparator(props) {
     const context = useActionGroupContext(true);
     const {
@@ -276,6 +307,9 @@ export const ActionGroupSeparator: Component<ActionGroupSeparatorProps> =
     });
   };
 
+/**
+ * {@link ActionGroupSeparator} の状態やプロパティーをまとめた型名前空間です。
+ */
 export namespace Separator {
   /**
    * {@link ActionGroupSeparator} の状態型です。
@@ -291,4 +325,4 @@ export namespace Separator {
 /**
  * {@link ActionGroupSeparator} の別名です。
  */
-export const Separator: Component<Separator.Props> = ActionGroupSeparator;
+export const Separator: IComponent<Separator.Props> = ActionGroupSeparator;

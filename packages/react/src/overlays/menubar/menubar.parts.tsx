@@ -2,9 +2,12 @@ import { Menubar as BaseMenubar } from "@base-ui/react/menubar";
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 
 import "./menubar.css";
+
+// Types
+// -----
 
 // Root
 // ----
@@ -23,22 +26,8 @@ export type MenubarRootProps = React.ComponentProps<typeof BaseMenubar>;
  * メニューを横または縦に並べるルート要素です。
  *
  * 子要素には `Menu` または `MenuParts.Root` を配置します。
- *
- * @example
- * ```tsx
- * import { Button } from "@suru-ui/react/button";
- * import { Menu } from "@suru-ui/react/menu";
- * import * as MenuParts from "@suru-ui/react/menu";
- * import * as MenubarParts from "@suru-ui/react/menubar";
- *
- * <MenubarParts.Root>
- *   <Menu trigger={<Button>ファイル</Button>}>
- *     <MenuParts.Item>新規作成</MenuParts.Item>
- *   </Menu>
- * </MenubarParts.Root>
- * ```
  */
-export const MenubarRoot: Component<MenubarRootProps> = function SuiMenubarRoot(props) {
+export const MenubarRoot: IComponent<MenubarRootProps> = function SuiMenubarRoot(props) {
   const { className, orientation = "horizontal", ...otherProps } = props;
 
   return (
@@ -68,4 +57,4 @@ export namespace Root {
 /**
  * {@link MenubarRoot} の短縮名です。
  */
-export const Root: Component<Root.Props> = MenubarRoot;
+export const Root: IComponent<Root.Props> = MenubarRoot;

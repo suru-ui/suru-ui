@@ -4,9 +4,51 @@ import * as React from "react";
 
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
-import type { Component } from "../../types.js";
+import type { IComponent, IUseContext } from "../../types.js";
 
 import "./checkbox-group.css";
+
+// Types
+// -----
+
+/**
+ * チェックボックスグループの色です。
+ */
+export type CheckboxGroupColor = Color;
+
+/**
+ * チェックボックスグループの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"rounded"`: 標準的な角丸
+ * - `"full"`: 完全な丸形
+ */
+export type CheckboxGroupRadius = "none" | "rounded" | "full";
+
+/**
+ * チェックボックスグループの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type CheckboxGroupSize = Size;
+
+/**
+ * チェックボックスグループの主な外観の種類です。
+ *
+ * - `"naked"`: 背景のないチェックマークのみ、枠線なし
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type CheckboxGroupVariant = "naked" | "liquid";
+
+/**
+ * チェックボックスグループの向きです。
+ *
+ * - `"horizontal"`: 横並び
+ * - `"vertical"`: 縦並び
+ */
+export type CheckboxGroupOrientation = "horizontal" | "vertical";
 
 // Context
 // -------
@@ -20,22 +62,22 @@ export type CheckboxGroupContext = {
   /**
    * チェックボックスのスタイルバリエーションです。
    */
-  readonly variant: "naked" | "liquid";
+  readonly variant: CheckboxGroupVariant;
 
   /**
    * チェックボックスの色です。
    */
-  readonly color: Color;
+  readonly color: CheckboxGroupColor;
 
   /**
    * チェックボックスのサイズです。
    */
-  readonly size: Size;
+  readonly size: CheckboxGroupSize;
 
   /**
    * チェックボックスの角丸です。
    */
-  readonly radius: "none" | "rounded" | "full";
+  readonly radius: CheckboxGroupRadius;
 
   /**
    * 枠線を表示するかどうかです。
@@ -54,20 +96,9 @@ export type CheckboxGroupContext = {
 export const CheckboxGroupContext: React.Context<CheckboxGroupContext | null> =
   React.createContext<CheckboxGroupContext | null>(null);
 
-/**
- * {@link CheckboxGroupContext} を読み取るフックです。
- *
- * Provider は {@link CheckboxGroupRoot} の配下に必要です。
- * Provider がない場合、`optional` が `true` でなければ {@link ContextMissingError} を投げます。
- * `optional` に `true` を指定すると、Provider がない場合に `null` を返します。
- *
- * @param optional Provider がなくても `null` を返すかどうかを指定します。
- *
- * @returns コンテキストの値。`optional` が `true` でコンテキストがない場合は `null`。
- */
-export function useCheckboxGroupContext(optional?: false): CheckboxGroupContext;
-export function useCheckboxGroupContext(optional?: boolean): CheckboxGroupContext | null;
-export function useCheckboxGroupContext(optional?: boolean): CheckboxGroupContext | null {
+function useSuiCheckboxGroupContext(optional?: false): CheckboxGroupContext;
+function useSuiCheckboxGroupContext(optional?: boolean): CheckboxGroupContext | null;
+function useSuiCheckboxGroupContext(optional?: boolean): CheckboxGroupContext | null {
   const context = React.use(CheckboxGroupContext);
   if (context === null && !optional) {
     throw new ContextMissingError({
@@ -80,31 +111,25 @@ export function useCheckboxGroupContext(optional?: boolean): CheckboxGroupContex
 }
 
 /**
- * {@link CheckboxGroupContext} の別名です。
+ * {@link CheckboxGroupContext} です。
  */
 export type Context = CheckboxGroupContext;
 
 /**
- * {@link CheckboxGroupContext} の別名です。
+ * {@link CheckboxGroupContext} です。
  */
 export const Context: React.Context<CheckboxGroupContext | null> = CheckboxGroupContext;
 
 /**
- * {@link useCheckboxGroupContext} の別名です。
- *
- * Provider は {@link CheckboxGroupRoot} の配下に必要です。
- * Provider がない場合、`optional` が `true` でなければ {@link ContextMissingError} を投げます。
- * `optional` に `true` を指定すると、Provider がない場合に `null` を返します。
- *
- * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
- *
- * @returns コンテキストの値。`optional` が `true` でコンテキストがない場合は `null`。
+ * {@link CheckboxGroupContext} を読み取るフックです。
  */
-export function useContext(optional?: false): CheckboxGroupContext;
-export function useContext(optional?: boolean): CheckboxGroupContext | null;
-export function useContext(optional?: boolean): CheckboxGroupContext | null {
-  return useCheckboxGroupContext(optional);
-}
+export const useCheckboxGroupContext: IUseContext<CheckboxGroupContext> =
+  useSuiCheckboxGroupContext;
+
+/**
+ * {@link useCheckboxGroupContext} です。
+ */
+export const useContext: IUseContext<Context> = useCheckboxGroupContext;
 
 // Root
 // ----
@@ -131,7 +156,7 @@ export type CheckboxGroupRootProps = React.ComponentProps<typeof CheckboxGroup> 
    *
    * @default "md"
    */
-  size?: Size | undefined;
+  size?: CheckboxGroupSize | undefined;
 
   /**
    * チェックボックスの色を指定します。
@@ -141,20 +166,17 @@ export type CheckboxGroupRootProps = React.ComponentProps<typeof CheckboxGroup> 
    *
    * @default "grey"
    */
-  color?: Color | undefined;
+  color?: CheckboxGroupColor | undefined;
 
   /**
    * チェックボックスのスタイルバリエーションを指定します。
-   *
-   * - `"naked"`: 背景のないチェックマークのみ、枠線なし
-   * - `"liquid"`: 薄い塗りつぶし
    *
    * {@link CheckboxGroupRoot} の子要素に指定した値より優先されます。
    * 値を変更すると、グループ内のチェックボックスも更新されます。
    *
    * @default "naked"
    */
-  variant?: "naked" | "liquid" | undefined;
+  variant?: CheckboxGroupVariant | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
@@ -167,28 +189,21 @@ export type CheckboxGroupRootProps = React.ComponentProps<typeof CheckboxGroup> 
   /**
    * チェックボックスの角丸を指定します。
    *
-   * - `"none"`: 角を直角にする
-   * - `"rounded"`: 標準的な角丸
-   * - `"full"`: 完全な丸形
-   *
    * {@link CheckboxGroupRoot} の子要素に指定した値より優先されます。
    * 値を変更すると、グループ内のチェックボックスも更新されます。
    *
    * @default "rounded"
    */
-  radius?: "none" | "rounded" | "full" | undefined;
+  radius?: CheckboxGroupRadius | undefined;
 
   /**
    * チェックボックス群の向きを指定します。
-   *
-   * - `"horizontal"`: 横並び
-   * - `"vertical"`: 縦並び
    *
    * 値を変更すると、グループのレイアウトが更新されます。
    *
    * @default "vertical"
    */
-  orientation?: "horizontal" | "vertical" | undefined;
+  orientation?: CheckboxGroupOrientation | undefined;
 };
 
 /**
@@ -196,16 +211,8 @@ export type CheckboxGroupRootProps = React.ComponentProps<typeof CheckboxGroup> 
  *
  * 選択状態を管理し、子要素のチェックボックスにスタイルを伝播します。
  * スタイル値が変わらない再レンダーでは、コンテキストの値を再生成しません。
- *
- * @example
- * ```tsx
- * <CheckboxGroupParts.Root defaultValue={["option-a"]} color="blue">
- *   <Checkbox value="option-a" />
- *   <Checkbox value="option-b" />
- * </CheckboxGroupParts.Root>
- * ```
  */
-export const CheckboxGroupRoot: Component<CheckboxGroupRootProps> = function SuiCheckboxGroupRoot(
+export const CheckboxGroupRoot: IComponent<CheckboxGroupRootProps> = function SuiCheckboxGroupRoot(
   props,
 ) {
   const {
@@ -264,4 +271,4 @@ export namespace Root {
 /**
  * {@link CheckboxGroupRoot} の別名です。
  */
-export const Root: Component<Root.Props> = CheckboxGroupRoot;
+export const Root: IComponent<Root.Props> = CheckboxGroupRoot;

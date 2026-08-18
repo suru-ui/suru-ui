@@ -1,7 +1,17 @@
 import * as React from "react";
 
-import type { Component } from "../../types.js";
-import * as CollapsibleParts from "./collapsible.parts.jsx";
+import type { IComponent } from "../../types.js";
+import {
+  type CollapsibleRootProps,
+  type CollapsibleRootState,
+  type CollapsiblePanelProps,
+  type CollapsibleTriggerProps,
+  type CollapsibleIndicatorProps,
+  CollapsibleRoot,
+  CollapsiblePanel,
+  CollapsibleTrigger,
+  CollapsibleIndicator,
+} from "./collapsible.parts.jsx";
 
 /**
  * {@link Collapsible} を構成する各パーツのプロパティーです。
@@ -10,25 +20,30 @@ import * as CollapsibleParts from "./collapsible.parts.jsx";
  */
 export type CollapsibleSlotProps = {
   /**
-   * {@link CollapsibleParts.Trigger|Trigger} に渡すプロパティーです。
+   * {@link CollapsibleTrigger|Trigger} に渡すプロパティーです。
    */
-  readonly trigger?: Omit<CollapsibleParts.Trigger.Props, "children"> | undefined;
+  readonly trigger?: Omit<CollapsibleTriggerProps, "children"> | undefined;
 
   /**
-   * {@link CollapsibleParts.Indicator|Indicator} に渡すプロパティーです。
+   * {@link CollapsibleIndicator|Indicator} に渡すプロパティーです。
    */
-  readonly indicator?: CollapsibleParts.Indicator.Props | undefined;
+  readonly indicator?: CollapsibleIndicatorProps | undefined;
 
   /**
-   * {@link CollapsibleParts.Panel|Panel} に渡すプロパティーです。
+   * {@link CollapsiblePanel|Panel} に渡すプロパティーです。
    */
-  readonly panel?: CollapsibleParts.Panel.Props | undefined;
+  readonly panel?: CollapsiblePanelProps | undefined;
 };
+
+/**
+ * {@link Collapsible} の状態です。
+ */
+export type CollapsibleState = CollapsibleRootState;
 
 /**
  * {@link Collapsible} コンポーネントのプロパティーです。
  */
-export type CollapsibleProps = Omit<CollapsibleParts.Root.Props, "children"> & {
+export type CollapsibleProps = Omit<CollapsibleRootProps, "children"> & {
   /**
    * トリガーに表示する見出しです。
    */
@@ -47,39 +62,47 @@ export type CollapsibleProps = Omit<CollapsibleParts.Root.Props, "children"> & {
 
 /**
  * 見出しのボタンで開閉できるパネルを表示します。
- *
- * @example 基本
- * ```tsx
- * <Collapsible title="見出し">コンテンツ</Collapsible>
- * ```
- *
- * @example 初期状態を開く
- * ```tsx
- * <Collapsible title="見出し" defaultOpen>
- *   コンテンツ
- * </Collapsible>
- * ```
  */
-export const Collapsible: Component<CollapsibleProps> = function SuiCollapsible(props) {
+export const Collapsible: IComponent<CollapsibleProps> = function SuiCollapsible(props) {
   const { title, children, slotProps, ...rootProps } = props;
   const { trigger: triggerProps, indicator: indicatorProps, panel: panelProps } = slotProps ?? {};
 
   return (
-    <CollapsibleParts.Root {...rootProps}>
-      <CollapsibleParts.Trigger {...triggerProps}>
+    <CollapsibleRoot {...rootProps}>
+      <CollapsibleTrigger {...triggerProps}>
         {(triggerRenderProps) => (
           <button type="button" {...triggerRenderProps}>
             {title}
-            <CollapsibleParts.Indicator {...indicatorProps}>
+            <CollapsibleIndicator {...indicatorProps}>
               {indicatorProps?.children ?? <SuiCollapsibleIcon />}
-            </CollapsibleParts.Indicator>
+            </CollapsibleIndicator>
           </button>
         )}
-      </CollapsibleParts.Trigger>
-      <CollapsibleParts.Panel {...panelProps}>{children}</CollapsibleParts.Panel>
-    </CollapsibleParts.Root>
+      </CollapsibleTrigger>
+      <CollapsiblePanel {...panelProps}>{children}</CollapsiblePanel>
+    </CollapsibleRoot>
   );
 };
+
+/**
+ * {@link Collapsible} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Collapsible {
+  /**
+   * {@link CollapsibleState} です。
+   */
+  export type State = CollapsibleState;
+
+  /**
+   * {@link CollapsibleProps} です。
+   */
+  export type Props = CollapsibleProps;
+
+  /**
+   * {@link CollapsibleSlotProps} です。
+   */
+  export type SlotProps = CollapsibleSlotProps;
+}
 
 function SuiCollapsibleIcon() {
   return (

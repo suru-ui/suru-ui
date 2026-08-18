@@ -8,6 +8,34 @@ import { useAvatarGroupContext } from "../avatar-group/avatar-group.parts.jsx";
 
 import "./avatar.css";
 
+// Types
+// -----
+
+/**
+ * アバターの色です。
+ */
+export type AvatarColor = Color;
+
+/**
+ * アバターの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
+ */
+export type AvatarRadius = "none" | Size | "full";
+
+/**
+ * アバターの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type AvatarSize = Size;
+
 // Root
 // ----
 
@@ -25,21 +53,21 @@ export type AvatarRootProps = React.ComponentProps<typeof Avatar.Root> & {
    *
    * @default "grey"
    */
-  color?: Color | undefined;
+  color?: AvatarColor | undefined;
 
   /**
    * アバターの角丸を指定します。
    *
    * @default "full"
    */
-  radius?: "none" | Size | "full" | undefined;
+  radius?: AvatarRadius | undefined;
 
   /**
    * アバターのサイズを指定します。
    *
    * @default "md"
    */
-  size?: Size | undefined;
+  size?: AvatarSize | undefined;
 };
 
 /**

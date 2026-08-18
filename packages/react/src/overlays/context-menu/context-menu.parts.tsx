@@ -2,10 +2,13 @@ import { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 
 import "./context-menu.css";
 import "../menu/menu.css";
+
+// Types
+// -----
 
 // Root
 // ----
@@ -25,22 +28,10 @@ export type ContextMenuRootProps = React.ComponentProps<typeof ContextMenu.Root>
  *
  * 開閉状態を管理し、各パーツをグループ化します。
  * それ自身は HTML 要素をレンダリングしません。
- *
- * @example
- * ```tsx
- * <ContextMenuParts.Root>
- *   <ContextMenuParts.Trigger>対象</ContextMenuParts.Trigger>
- *   <ContextMenuParts.Portal>
- *     <ContextMenuParts.Positioner>
- *       <ContextMenuParts.Popup>
- *         <ContextMenuParts.Item>編集</ContextMenuParts.Item>
- *       </ContextMenuParts.Popup>
- *     </ContextMenuParts.Positioner>
- *   </ContextMenuParts.Portal>
- * </ContextMenuParts.Root>
- * ```
  */
-export const ContextMenuRoot: Component<ContextMenuRootProps> = function SuiContextMenuRoot(props) {
+export const ContextMenuRoot: IComponent<ContextMenuRootProps> = function SuiContextMenuRoot(
+  props,
+) {
   return <ContextMenu.Root {...props} />;
 };
 
@@ -62,7 +53,7 @@ export namespace Root {
 /**
  * {@link ContextMenuRoot} の短縮名です。
  */
-export const Root: Component<Root.Props> = ContextMenuRoot;
+export const Root: IComponent<Root.Props> = ContextMenuRoot;
 
 // Trigger
 // -------
@@ -81,15 +72,8 @@ export type ContextMenuTriggerProps = React.ComponentProps<typeof ContextMenu.Tr
  * 右クリックまたは長押しでコンテキストメニューを開く対象です。
  *
  * 子要素は追加のラッパーなしで `div` 要素に表示されます。
- *
- * @example
- * ```tsx
- * <ContextMenuParts.Trigger>
- *   <div>右クリックしてください</div>
- * </ContextMenuParts.Trigger>
- * ```
  */
-export const ContextMenuTrigger: Component<ContextMenuTriggerProps> =
+export const ContextMenuTrigger: IComponent<ContextMenuTriggerProps> =
   function SuiContextMenuTrigger(props) {
     const { className, ...otherProps } = props;
 
@@ -116,7 +100,7 @@ export namespace Trigger {
 /**
  * {@link ContextMenuTrigger} の短縮名です。
  */
-export const Trigger: Component<Trigger.Props> = ContextMenuTrigger;
+export const Trigger: IComponent<Trigger.Props> = ContextMenuTrigger;
 
 // Portal
 // ------
@@ -135,15 +119,8 @@ export type ContextMenuPortalProps = React.ComponentProps<typeof ContextMenu.Por
  * コンテキストメニューを DOM の別の場所へ移動する要素です。
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
- *
- * @example
- * ```tsx
- * <ContextMenuParts.Portal>
- *   <ContextMenuParts.Positioner>…</ContextMenuParts.Positioner>
- * </ContextMenuParts.Portal>
- * ```
  */
-export const ContextMenuPortal: Component<ContextMenuPortalProps> = function SuiContextMenuPortal(
+export const ContextMenuPortal: IComponent<ContextMenuPortalProps> = function SuiContextMenuPortal(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -174,7 +151,7 @@ export namespace Portal {
 /**
  * {@link ContextMenuPortal} の短縮名です。
  */
-export const Portal: Component<Portal.Props> = ContextMenuPortal;
+export const Portal: IComponent<Portal.Props> = ContextMenuPortal;
 
 // Backdrop
 // --------
@@ -191,13 +168,8 @@ export type ContextMenuBackdropProps = React.ComponentProps<typeof ContextMenu.B
 
 /**
  * コンテキストメニューの背後に表示されるオーバーレイ要素です。
- *
- * @example
- * ```tsx
- * <ContextMenuParts.Backdrop />
- * ```
  */
-export const ContextMenuBackdrop: Component<ContextMenuBackdropProps> =
+export const ContextMenuBackdrop: IComponent<ContextMenuBackdropProps> =
   function SuiContextMenuBackdrop(props) {
     const { className, ...otherProps } = props;
 
@@ -227,7 +199,7 @@ export namespace Backdrop {
 /**
  * {@link ContextMenuBackdrop} の短縮名です。
  */
-export const Backdrop: Component<Backdrop.Props> = ContextMenuBackdrop;
+export const Backdrop: IComponent<Backdrop.Props> = ContextMenuBackdrop;
 
 // Positioner
 // ----------
@@ -244,15 +216,8 @@ export type ContextMenuPositionerProps = React.ComponentProps<typeof ContextMenu
 
 /**
  * ポップアップを右クリックまたは長押しした位置に合わせる要素です。
- *
- * @example
- * ```tsx
- * <ContextMenuParts.Positioner>
- *   <ContextMenuParts.Popup>…</ContextMenuParts.Popup>
- * </ContextMenuParts.Positioner>
- * ```
  */
-export const ContextMenuPositioner: Component<ContextMenuPositionerProps> =
+export const ContextMenuPositioner: IComponent<ContextMenuPositionerProps> =
   function SuiContextMenuPositioner(props) {
     const { className, ...otherProps } = props;
 
@@ -282,7 +247,7 @@ export namespace Positioner {
 /**
  * {@link ContextMenuPositioner} の短縮名です。
  */
-export const Positioner: Component<Positioner.Props> = ContextMenuPositioner;
+export const Positioner: IComponent<Positioner.Props> = ContextMenuPositioner;
 
 // Popup
 // -----
@@ -299,15 +264,8 @@ export type ContextMenuPopupProps = React.ComponentProps<typeof ContextMenu.Popu
 
 /**
  * コンテキストメニュー項目を表示するポップアップ要素です。
- *
- * @example
- * ```tsx
- * <ContextMenuParts.Popup>
- *   <ContextMenuParts.Item>編集</ContextMenuParts.Item>
- * </ContextMenuParts.Popup>
- * ```
  */
-export const ContextMenuPopup: Component<ContextMenuPopupProps> = function SuiContextMenuPopup(
+export const ContextMenuPopup: IComponent<ContextMenuPopupProps> = function SuiContextMenuPopup(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -338,7 +296,7 @@ export namespace Popup {
 /**
  * {@link ContextMenuPopup} の短縮名です。
  */
-export const Popup: Component<Popup.Props> = ContextMenuPopup;
+export const Popup: IComponent<Popup.Props> = ContextMenuPopup;
 
 // Arrow
 // -----
@@ -355,16 +313,8 @@ export type ContextMenuArrowProps = React.ComponentProps<typeof ContextMenu.Arro
 
 /**
  * ポップアップと対象をつなぐ矢印要素です。
- *
- * @example
- * ```tsx
- * <ContextMenuParts.Popup>
- *   <ContextMenuParts.Arrow />
- *   …
- * </ContextMenuParts.Popup>
- * ```
  */
-export const ContextMenuArrow: Component<ContextMenuArrowProps> = function SuiContextMenuArrow(
+export const ContextMenuArrow: IComponent<ContextMenuArrowProps> = function SuiContextMenuArrow(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -395,7 +345,7 @@ export namespace Arrow {
 /**
  * {@link ContextMenuArrow} の短縮名です。
  */
-export const Arrow: Component<Arrow.Props> = ContextMenuArrow;
+export const Arrow: IComponent<Arrow.Props> = ContextMenuArrow;
 
 // Item
 // ----
@@ -412,13 +362,10 @@ export type ContextMenuItemProps = React.ComponentProps<typeof ContextMenu.Item>
 
 /**
  * コンテキストメニューの操作項目です。
- *
- * @example
- * ```tsx
- * <ContextMenuParts.Item>編集</ContextMenuParts.Item>
- * ```
  */
-export const ContextMenuItem: Component<ContextMenuItemProps> = function SuiContextMenuItem(props) {
+export const ContextMenuItem: IComponent<ContextMenuItemProps> = function SuiContextMenuItem(
+  props,
+) {
   const { className, ...otherProps } = props;
 
   return (
@@ -447,7 +394,7 @@ export namespace Item {
 /**
  * {@link ContextMenuItem} の短縮名です。
  */
-export const Item: Component<Item.Props> = ContextMenuItem;
+export const Item: IComponent<Item.Props> = ContextMenuItem;
 
 // LinkItem
 // --------
@@ -464,13 +411,8 @@ export type ContextMenuLinkItemProps = React.ComponentProps<typeof ContextMenu.L
 
 /**
  * 別のページやセクションへ移動するコンテキストメニュー項目です。
- *
- * @example
- * ```tsx
- * <ContextMenuParts.LinkItem href="/settings">設定</ContextMenuParts.LinkItem>
- * ```
  */
-export const ContextMenuLinkItem: Component<ContextMenuLinkItemProps> =
+export const ContextMenuLinkItem: IComponent<ContextMenuLinkItemProps> =
   function SuiContextMenuLinkItem(props) {
     const { className, ...otherProps } = props;
 
@@ -506,7 +448,7 @@ export namespace LinkItem {
 /**
  * {@link ContextMenuLinkItem} の短縮名です。
  */
-export const LinkItem: Component<LinkItem.Props> = ContextMenuLinkItem;
+export const LinkItem: IComponent<LinkItem.Props> = ContextMenuLinkItem;
 
 // SubmenuRoot
 // -----------
@@ -525,15 +467,8 @@ export type ContextMenuSubmenuRootProps = React.ComponentProps<typeof ContextMen
  * サブメニューのルートです。
  *
  * それ自身は HTML 要素をレンダリングしません。
- *
- * @example
- * ```tsx
- * <ContextMenuParts.SubmenuRoot>
- *   <ContextMenuParts.SubmenuTrigger>その他</ContextMenuParts.SubmenuTrigger>
- * </ContextMenuParts.SubmenuRoot>
- * ```
  */
-export const ContextMenuSubmenuRoot: Component<ContextMenuSubmenuRootProps> =
+export const ContextMenuSubmenuRoot: IComponent<ContextMenuSubmenuRootProps> =
   function SuiContextMenuSubmenuRoot(props) {
     return <ContextMenu.SubmenuRoot {...props} />;
   };
@@ -556,7 +491,7 @@ export namespace SubmenuRoot {
 /**
  * {@link ContextMenuSubmenuRoot} の短縮名です。
  */
-export const SubmenuRoot: Component<SubmenuRoot.Props> = ContextMenuSubmenuRoot;
+export const SubmenuRoot: IComponent<SubmenuRoot.Props> = ContextMenuSubmenuRoot;
 
 // SubmenuTrigger
 // --------------
@@ -575,13 +510,8 @@ export type ContextMenuSubmenuTriggerProps = React.ComponentProps<
 
 /**
  * サブメニューを開くコンテキストメニュー項目です。
- *
- * @example
- * ```tsx
- * <ContextMenuParts.SubmenuTrigger>その他</ContextMenuParts.SubmenuTrigger>
- * ```
  */
-export const ContextMenuSubmenuTrigger: Component<ContextMenuSubmenuTriggerProps> =
+export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProps> =
   function SuiContextMenuSubmenuTrigger(props) {
     const { className, ...otherProps } = props;
 
@@ -617,7 +547,7 @@ export namespace SubmenuTrigger {
 /**
  * {@link ContextMenuSubmenuTrigger} の短縮名です。
  */
-export const SubmenuTrigger: Component<SubmenuTrigger.Props> = ContextMenuSubmenuTrigger;
+export const SubmenuTrigger: IComponent<SubmenuTrigger.Props> = ContextMenuSubmenuTrigger;
 
 // Group
 // -----
@@ -634,16 +564,8 @@ export type ContextMenuGroupProps = React.ComponentProps<typeof ContextMenu.Grou
 
 /**
  * 関連するコンテキストメニュー項目をまとめるグループ要素です。
- *
- * @example
- * ```tsx
- * <ContextMenuParts.Group>
- *   <ContextMenuParts.GroupLabel>ファイル</ContextMenuParts.GroupLabel>
- *   <ContextMenuParts.Item>新規作成</ContextMenuParts.Item>
- * </ContextMenuParts.Group>
- * ```
  */
-export const ContextMenuGroup: Component<ContextMenuGroupProps> = function SuiContextMenuGroup(
+export const ContextMenuGroup: IComponent<ContextMenuGroupProps> = function SuiContextMenuGroup(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -674,7 +596,7 @@ export namespace Group {
 /**
  * {@link ContextMenuGroup} の短縮名です。
  */
-export const Group: Component<Group.Props> = ContextMenuGroup;
+export const Group: IComponent<Group.Props> = ContextMenuGroup;
 
 // GroupLabel
 // ----------
@@ -691,13 +613,8 @@ export type ContextMenuGroupLabelProps = React.ComponentProps<typeof ContextMenu
 
 /**
  * グループに自動的に対応付けられるラベル要素です。
- *
- * @example
- * ```tsx
- * <ContextMenuParts.GroupLabel>ファイル</ContextMenuParts.GroupLabel>
- * ```
  */
-export const ContextMenuGroupLabel: Component<ContextMenuGroupLabelProps> =
+export const ContextMenuGroupLabel: IComponent<ContextMenuGroupLabelProps> =
   function SuiContextMenuGroupLabel(props) {
     const { className, ...otherProps } = props;
 
@@ -727,7 +644,7 @@ export namespace GroupLabel {
 /**
  * {@link ContextMenuGroupLabel} の短縮名です。
  */
-export const GroupLabel: Component<GroupLabel.Props> = ContextMenuGroupLabel;
+export const GroupLabel: IComponent<GroupLabel.Props> = ContextMenuGroupLabel;
 
 // RadioGroup
 // ----------
@@ -744,16 +661,8 @@ export type ContextMenuRadioGroupProps = React.ComponentProps<typeof ContextMenu
 
 /**
  * ラジオ項目をまとめるグループ要素です。
- *
- * @example
- * ```tsx
- * <ContextMenuParts.RadioGroup defaultValue="name">
- *   <ContextMenuParts.RadioItem value="name">名前</ContextMenuParts.RadioItem>
- *   <ContextMenuParts.RadioItem value="date">日付</ContextMenuParts.RadioItem>
- * </ContextMenuParts.RadioGroup>
- * ```
  */
-export const ContextMenuRadioGroup: Component<ContextMenuRadioGroupProps> =
+export const ContextMenuRadioGroup: IComponent<ContextMenuRadioGroupProps> =
   function SuiContextMenuRadioGroup(props) {
     const { className, ...otherProps } = props;
 
@@ -783,7 +692,7 @@ export namespace RadioGroup {
 /**
  * {@link ContextMenuRadioGroup} の短縮名です。
  */
-export const RadioGroup: Component<RadioGroup.Props> = ContextMenuRadioGroup;
+export const RadioGroup: IComponent<RadioGroup.Props> = ContextMenuRadioGroup;
 
 // RadioItem
 // ---------
@@ -800,13 +709,8 @@ export type ContextMenuRadioItemProps = React.ComponentProps<typeof ContextMenu.
 
 /**
  * ラジオグループ内のコンテキストメニュー項目です。
- *
- * @example
- * ```tsx
- * <ContextMenuParts.RadioItem value="name">名前</ContextMenuParts.RadioItem>
- * ```
  */
-export const ContextMenuRadioItem: Component<ContextMenuRadioItemProps> =
+export const ContextMenuRadioItem: IComponent<ContextMenuRadioItemProps> =
   function SuiContextMenuRadioItem(props) {
     const { className, ...otherProps } = props;
 
@@ -842,7 +746,7 @@ export namespace RadioItem {
 /**
  * {@link ContextMenuRadioItem} の短縮名です。
  */
-export const RadioItem: Component<RadioItem.Props> = ContextMenuRadioItem;
+export const RadioItem: IComponent<RadioItem.Props> = ContextMenuRadioItem;
 
 // RadioItemIndicator
 // ------------------
@@ -861,13 +765,8 @@ export type ContextMenuRadioItemIndicatorProps = React.ComponentProps<
 
 /**
  * 選択されたラジオ項目を示す要素です。
- *
- * @example
- * ```tsx
- * <ContextMenuParts.RadioItemIndicator>✓</ContextMenuParts.RadioItemIndicator>
- * ```
  */
-export const ContextMenuRadioItemIndicator: Component<ContextMenuRadioItemIndicatorProps> =
+export const ContextMenuRadioItemIndicator: IComponent<ContextMenuRadioItemIndicatorProps> =
   function SuiContextMenuRadioItemIndicator(props) {
     const { className, keepMounted = true, ...otherProps } = props;
 
@@ -904,7 +803,7 @@ export namespace RadioItemIndicator {
 /**
  * {@link ContextMenuRadioItemIndicator} の短縮名です。
  */
-export const RadioItemIndicator: Component<RadioItemIndicator.Props> =
+export const RadioItemIndicator: IComponent<RadioItemIndicator.Props> =
   ContextMenuRadioItemIndicator;
 
 // CheckboxItem
@@ -922,13 +821,8 @@ export type ContextMenuCheckboxItemProps = React.ComponentProps<typeof ContextMe
 
 /**
  * 設定をオンまたはオフにできるコンテキストメニュー項目です。
- *
- * @example
- * ```tsx
- * <ContextMenuParts.CheckboxItem defaultChecked>サイドバー</ContextMenuParts.CheckboxItem>
- * ```
  */
-export const ContextMenuCheckboxItem: Component<ContextMenuCheckboxItemProps> =
+export const ContextMenuCheckboxItem: IComponent<ContextMenuCheckboxItemProps> =
   function SuiContextMenuCheckboxItem(props) {
     const { className, ...otherProps } = props;
 
@@ -964,7 +858,7 @@ export namespace CheckboxItem {
 /**
  * {@link ContextMenuCheckboxItem} の短縮名です。
  */
-export const CheckboxItem: Component<CheckboxItem.Props> = ContextMenuCheckboxItem;
+export const CheckboxItem: IComponent<CheckboxItem.Props> = ContextMenuCheckboxItem;
 
 // CheckboxItemIndicator
 // ---------------------
@@ -983,13 +877,8 @@ export type ContextMenuCheckboxItemIndicatorProps = React.ComponentProps<
 
 /**
  * チェックされた項目を示す要素です。
- *
- * @example
- * ```tsx
- * <ContextMenuParts.CheckboxItemIndicator>✓</ContextMenuParts.CheckboxItemIndicator>
- * ```
  */
-export const ContextMenuCheckboxItemIndicator: Component<ContextMenuCheckboxItemIndicatorProps> =
+export const ContextMenuCheckboxItemIndicator: IComponent<ContextMenuCheckboxItemIndicatorProps> =
   function SuiContextMenuCheckboxItemIndicator(props) {
     const { className, keepMounted = true, ...otherProps } = props;
 
@@ -1026,7 +915,7 @@ export namespace CheckboxItemIndicator {
 /**
  * {@link ContextMenuCheckboxItemIndicator} の短縮名です。
  */
-export const CheckboxItemIndicator: Component<CheckboxItemIndicator.Props> =
+export const CheckboxItemIndicator: IComponent<CheckboxItemIndicator.Props> =
   ContextMenuCheckboxItemIndicator;
 
 // Separator
@@ -1044,13 +933,8 @@ export type ContextMenuSeparatorProps = React.ComponentProps<typeof ContextMenu.
 
 /**
  * コンテキストメニュー項目を区切る要素です。
- *
- * @example
- * ```tsx
- * <ContextMenuParts.Separator />
- * ```
  */
-export const ContextMenuSeparator: Component<ContextMenuSeparatorProps> =
+export const ContextMenuSeparator: IComponent<ContextMenuSeparatorProps> =
   function SuiContextMenuSeparator(props) {
     const { className, ...otherProps } = props;
 
@@ -1080,4 +964,4 @@ export namespace Separator {
 /**
  * {@link ContextMenuSeparator} の短縮名です。
  */
-export const Separator: Component<Separator.Props> = ContextMenuSeparator;
+export const Separator: IComponent<Separator.Props> = ContextMenuSeparator;

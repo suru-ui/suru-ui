@@ -1,19 +1,69 @@
 import type * as React from "react";
 
-import type { Component } from "../../types.js";
-import * as MenuParts from "./menu.parts.jsx";
+import type { IComponent } from "../../types.js";
+import {
+  type MenuRootProps,
+  type MenuRootState,
+  type MenuPopupProps,
+  type MenuPortalProps,
+  type MenuTriggerProps,
+  type MenuBackdropProps,
+  type MenuPositionerProps,
+  MenuRoot,
+  MenuPopup,
+  MenuPortal,
+  MenuTrigger,
+  createHandle,
+  MenuBackdrop,
+  MenuPositioner,
+} from "./menu.parts.jsx";
+
+/**
+ * {@link Menu} の各パーツに渡すプロパティーです。
+ */
+export type MenuSlotProps = {
+  /**
+   * {@link MenuTrigger} に渡すプロパティーです。
+   */
+  readonly trigger?: Omit<MenuTriggerProps, "handle" | "children"> | undefined;
+
+  /**
+   * {@link MenuPortal} に渡すプロパティーです。
+   */
+  readonly portal?: MenuPortalProps | undefined;
+
+  /**
+   * {@link MenuBackdrop} に渡すプロパティーです。
+   */
+  readonly backdrop?: MenuBackdropProps | undefined;
+
+  /**
+   * {@link MenuPositioner} に渡すプロパティーです。
+   */
+  readonly positioner?: MenuPositionerProps | undefined;
+
+  /**
+   * {@link MenuPopup} に渡すプロパティーです。
+   */
+  readonly popup?: MenuPopupProps | undefined;
+};
+
+/**
+ * {@link Menu} の状態です。
+ */
+export type MenuState = MenuRootState;
 
 /**
  * {@link Menu} コンポーネントのプロパティーです。
  */
-export type MenuProps = Omit<MenuParts.Root.Props, "children" | "handle"> & {
+export type MenuProps = Omit<MenuRootProps, "children" | "handle"> & {
   /**
    * メニューを開くトリガーに表示する要素です。
    *
-   * {@link MenuParts.Trigger|Trigger} の子要素として直接渡されます。
+   * {@link MenuTrigger|Trigger} の子要素として直接渡されます。
    * 省略した場合、トリガーはレンダリングされません。
    */
-  trigger?: MenuParts.Trigger.Props["children"] | undefined;
+  trigger?: MenuTriggerProps["children"] | undefined;
 
   /**
    * ポップアップに表示するメニュー項目です。
@@ -23,66 +73,23 @@ export type MenuProps = Omit<MenuParts.Root.Props, "children" | "handle"> & {
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
    */
-  slotProps?:
-    | {
-        /**
-         * {@link MenuParts.Trigger|Trigger} に渡すプロパティーです。
-         */
-        readonly trigger?: Omit<MenuParts.Trigger.Props, "handle" | "children"> | undefined;
-
-        /**
-         * {@link MenuParts.Portal|Portal} に渡すプロパティーです。
-         */
-        readonly portal?: MenuParts.Portal.Props | undefined;
-
-        /**
-         * {@link MenuParts.Backdrop|Backdrop} に渡すプロパティーです。
-         */
-        readonly backdrop?: MenuParts.Backdrop.Props | undefined;
-
-        /**
-         * {@link MenuParts.Positioner|Positioner} に渡すプロパティーです。
-         */
-        readonly positioner?: MenuParts.Positioner.Props | undefined;
-
-        /**
-         * {@link MenuParts.Popup|Popup} に渡すプロパティーです。
-         */
-        readonly popup?: MenuParts.Popup.Props | undefined;
-      }
-    | undefined;
+  slotProps?: MenuSlotProps | undefined;
 };
 
-interface MenuComponentType extends Component<MenuProps> {
+interface MenuComponentType extends IComponent<MenuProps> {
   /**
    * メニューを制御するハンドルを新しく作成します。
    *
-   * 作成したハンドルは {@link MenuParts.Root} と {@link MenuParts.Trigger} の `handle` プロパティーに渡します。
+   * 作成したハンドルは {@link MenuRoot} と {@link MenuTrigger} の `handle` プロパティーに渡します。
    */
-  readonly createHandle: typeof MenuParts.createHandle;
+  readonly createHandle: typeof createHandle;
 }
 
 /**
  * メニューを表示するコンポーネントです。
  *
  * トリガーとポップアップを組み立てます。項目の種類や構成を細かく制御する場合は、
- * {@link MenuParts.Root|Root} を直接組み立てます。
- *
- * @example 基本
- * ```tsx
- * import { Button } from "@suru-ui/react/button";
- * import { Menu } from "@suru-ui/react/menu";
- * import * as MenuParts from "@suru-ui/react/menu";
- *
- * <Menu
- *   trigger={<Button>ファイル</Button>}
- * >
- *   <MenuParts.Item>新規作成</MenuParts.Item>
- *   <MenuParts.Item>開く</MenuParts.Item>
- *   <MenuParts.Separator />
- *   <MenuParts.Item>閉じる</MenuParts.Item>
- * </Menu>
- * ```
+ * {@link MenuRoot|Root} を直接組み立てます。
  */
 export const Menu: MenuComponentType = /*#__PURE__*/ Object.assign(
   function SuiMenu(props: MenuProps) {
@@ -106,23 +113,41 @@ export const Menu: MenuComponentType = /*#__PURE__*/ Object.assign(
     } = positionerProps ?? {};
 
     return (
-      <MenuParts.Root {...rootProps}>
-        {trigger !== undefined && (
-          <MenuParts.Trigger {...triggerProps}>{trigger}</MenuParts.Trigger>
-        )}
-        <MenuParts.Portal {...portalProps}>
-          <MenuParts.Backdrop {...backdropProps} />
-          <MenuParts.Positioner
+      <MenuRoot {...rootProps}>
+        {trigger !== undefined && <MenuTrigger {...triggerProps}>{trigger}</MenuTrigger>}
+        <MenuPortal {...portalProps}>
+          <MenuBackdrop {...backdropProps} />
+          <MenuPositioner
             {...otherPositionerProps}
             side={side}
             align={align}
             sideOffset={sideOffset}
           >
-            <MenuParts.Popup {...popupProps}>{children}</MenuParts.Popup>
-          </MenuParts.Positioner>
-        </MenuParts.Portal>
-      </MenuParts.Root>
+            <MenuPopup {...popupProps}>{children}</MenuPopup>
+          </MenuPositioner>
+        </MenuPortal>
+      </MenuRoot>
     );
   },
-  { createHandle: MenuParts.createHandle },
+  { createHandle },
 );
+
+/**
+ * {@link Menu} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Menu {
+  /**
+   * {@link MenuState} です。
+   */
+  export type State = MenuState;
+
+  /**
+   * {@link MenuProps} です。
+   */
+  export type Props = MenuProps;
+
+  /**
+   * {@link MenuSlotProps} です。
+   */
+  export type SlotProps = MenuSlotProps;
+}

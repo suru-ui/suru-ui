@@ -4,6 +4,7 @@ import {
   useRenderElement,
   type UseRenderElementComponentProps,
 } from "@base-ui/react/internals/useRenderElement";
+import type * as React from "react";
 
 type State = { readonly [key: string]: unknown };
 

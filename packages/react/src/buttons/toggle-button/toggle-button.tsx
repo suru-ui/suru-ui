@@ -20,7 +20,7 @@ import {
 } from "./toggle-button.parts.jsx";
 
 /**
- * {@link Button} の各パーツに渡すプロパティーです。
+ * {@link ToggleButton} の各パーツに渡すプロパティーです。
  */
 export type ToggleButtonSlotProps = {
   /**

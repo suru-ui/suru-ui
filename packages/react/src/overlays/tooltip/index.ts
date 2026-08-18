@@ -1,3 +1,8 @@
 export * from "./tooltip.parts.jsx";
 
-export { type TooltipProps, Tooltip } from "./tooltip.jsx";
+export {
+  type TooltipProps,
+  type TooltipState,
+  type TooltipSlotProps,
+  Tooltip,
+} from "./tooltip.jsx";

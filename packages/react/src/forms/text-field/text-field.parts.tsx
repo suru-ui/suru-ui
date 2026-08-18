@@ -5,9 +5,53 @@ import * as React from "react";
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
-import type { Component } from "../../types.js";
+import type { IComponent, IUseContext } from "../../types.js";
 
 import "./text-field.css";
+
+// Types
+// -----
+
+/**
+ * テキストフィールドの色です。
+ */
+export type TextFieldColor = Color;
+
+/**
+ * テキストフィールドの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
+ */
+export type TextFieldRadius = "none" | Size | "full";
+
+/**
+ * テキストフィールドの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type TextFieldSize = Size;
+
+/**
+ * テキストフィールドの主な外観の種類です。
+ *
+ * - `"naked"`: 背景のないテキストフィールド
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type TextFieldVariant = "naked" | "liquid";
+
+/**
+ * テキストフィールドで使用できる入力項目の種類です。
+ */
+export type TextFieldInputType = Exclude<
+  React.HTMLInputTypeAttribute,
+  "button" | "checkbox" | "color" | "image" | "radio" | "range" | "reset" | "submit"
+>;
 
 // Context
 // -------
@@ -19,7 +63,7 @@ export type TextFieldContext = {
   /**
    * テキストフィールドの色です。
    */
-  readonly color: Color;
+  readonly color: TextFieldColor;
 
   /**
    * 枠線を表示するかどうかです。
@@ -29,17 +73,17 @@ export type TextFieldContext = {
   /**
    * テキストフィールドの角丸です。
    */
-  readonly radius: "none" | Size | "full";
+  readonly radius: TextFieldRadius;
 
   /**
    * テキストフィールドのサイズです。
    */
-  readonly size: Size;
+  readonly size: TextFieldSize;
 
   /**
    * テキストフィールドのスタイルバリエーションです。
    */
-  readonly variant: "naked" | "liquid";
+  readonly variant: TextFieldVariant;
 };
 
 /**
@@ -48,15 +92,9 @@ export type TextFieldContext = {
 export const TextFieldContext: React.Context<TextFieldContext | null> =
   React.createContext<TextFieldContext | null>(null);
 
-/**
- * {@link TextFieldContext} を読み取るフックです。
- *
- * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
- * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
- */
-export function useTextFieldContext(optional?: false): TextFieldContext;
-export function useTextFieldContext(optional?: boolean): TextFieldContext | null;
-export function useTextFieldContext(optional?: boolean): TextFieldContext | null {
+function useSuiTextFieldContext(optional?: false): TextFieldContext;
+function useSuiTextFieldContext(optional?: boolean): TextFieldContext | null;
+function useSuiTextFieldContext(optional?: boolean): TextFieldContext | null {
   const context = React.use(TextFieldContext);
   if (context === null && !optional) {
     throw new ContextMissingError({
@@ -79,13 +117,14 @@ export type Context = TextFieldContext;
 export const Context: React.Context<TextFieldContext | null> = TextFieldContext;
 
 /**
+ * {@link TextFieldContext} を読み取るフックです。
+ */
+export const useTextFieldContext: IUseContext<TextFieldContext> = useSuiTextFieldContext;
+
+/**
  * {@link useTextFieldContext} です。
  */
-export function useContext(optional?: false): TextFieldContext;
-export function useContext(optional?: boolean): TextFieldContext | null;
-export function useContext(optional?: boolean): TextFieldContext | null {
-  return useTextFieldContext(optional);
-}
+export const useContext: IUseContext<Context> = useTextFieldContext;
 
 // Root
 // ----
@@ -105,7 +144,7 @@ export type TextFieldRootProps = Omit<React.ComponentProps<"div">, keyof RenderP
      *
      * @default "grey"
      */
-    color?: Color | undefined;
+    color?: TextFieldColor | undefined;
 
     /**
      * 枠線を表示するかどうかを指定します。
@@ -118,31 +157,22 @@ export type TextFieldRootProps = Omit<React.ComponentProps<"div">, keyof RenderP
      * テキストフィールドの角丸を指定します。
      *
      * 省略時は {@link TextFieldRootProps.size|size} と同じ値になります。
-     *
-     * - `"none"`: 角を直角にする
-     * - `"sm"`: 小さい角丸
-     * - `"md"`: 標準的な角丸
-     * - `"lg"`: 大きい角丸
-     * - `"full"`: 完全な丸形
      */
-    radius?: "none" | Size | "full" | undefined;
+    radius?: TextFieldRadius | undefined;
 
     /**
      * テキストフィールドのサイズを指定します。
      *
      * @default "md"
      */
-    size?: Size | undefined;
+    size?: TextFieldSize | undefined;
 
     /**
      * テキストフィールドのスタイルバリエーションを指定します。
      *
-     * - `"naked"`: 背景のないテキストフィールド
-     * - `"liquid"`: 薄い塗りつぶし
-     *
      * @default "liquid"
      */
-    variant?: "naked" | "liquid" | undefined;
+    variant?: TextFieldVariant | undefined;
   };
 
 const DISABLE_FOCUS_ON_CLICK_DATA = "data-suitextfielddisablefocusonclick";
@@ -151,16 +181,8 @@ const DISABLE_FOCUS_ON_CLICK_DATA = "data-suitextfielddisablefocusonclick";
  * テキストフィールドの入力欄と Addon をまとめるルート要素です。
  *
  * 指定したスタイルプロパティーは、子パーツへ継承されます。
- *
- * @example
- * ```tsx
- * <TextFieldRoot>
- *   <TextFieldAddon>https://</TextFieldAddon>
- *   <TextFieldInput placeholder="example.com" />
- * </TextFieldRoot>
- * ```
  */
-export const TextFieldRoot: Component<TextFieldRootProps> = function SuiTextFieldRoot(props) {
+export const TextFieldRoot: IComponent<TextFieldRootProps> = function SuiTextFieldRoot(props) {
   const {
     size = "md",
     color = "grey",
@@ -229,7 +251,7 @@ export namespace Root {
 /**
  * {@link TextFieldRoot} の別名です。
  */
-export const Root: Component<Root.Props> = TextFieldRoot;
+export const Root: IComponent<Root.Props> = TextFieldRoot;
 
 // Input
 // -----
@@ -248,25 +270,13 @@ export type TextFieldInputProps = Omit<React.ComponentProps<typeof BaseInput>, "
    *
    * @default "text"
    */
-  type?:
-    | Exclude<
-        React.HTMLInputTypeAttribute,
-        "button" | "checkbox" | "color" | "image" | "radio" | "range" | "reset" | "submit"
-      >
-    | undefined;
+  type?: TextFieldInputType | undefined;
 };
 
 /**
  * Base UI の Input を使ったテキストフィールドの入力欄です。
- *
- * @example
- * ```tsx
- * <TextFieldRoot>
- *   <TextFieldInput placeholder="example.com" />
- * </TextFieldRoot>
- * ```
  */
-export const TextFieldInput: Component<TextFieldInputProps> = function SuiTextFieldInput(props) {
+export const TextFieldInput: IComponent<TextFieldInputProps> = function SuiTextFieldInput(props) {
   const { type = "text", className, ...otherProps } = props;
 
   return (
@@ -303,7 +313,7 @@ export namespace Input {
 /**
  * {@link TextFieldInput} の別名です。
  */
-export const Input: Component<Input.Props> = TextFieldInput;
+export const Input: IComponent<Input.Props> = TextFieldInput;
 
 // Addon
 // -----
@@ -333,19 +343,8 @@ export type TextFieldAddonProps = Omit<
  * 入力欄の左右に表示する補助コンポーネントです。
  *
  * 接頭辞、接尾辞、アイコンなどを表示できます。
- *
- * @example
- * ```tsx
- * <TextFieldRoot>
- *   <TextFieldAddon>https://</TextFieldAddon>
- *   <TextFieldInput />
- *   <TextFieldAddon aria-label="検索">
- *     <SearchIcon />
- *   </TextFieldAddon>
- * </TextFieldRoot>
- * ```
  */
-export const TextFieldAddon: Component<TextFieldAddonProps> = function SuiTextFieldAddon(props) {
+export const TextFieldAddon: IComponent<TextFieldAddonProps> = function SuiTextFieldAddon(props) {
   const { disableFocusOnClick = false, ...otherProps } = props;
 
   return useRender({
@@ -378,4 +377,4 @@ export namespace Addon {
 /**
  * {@link TextFieldAddon} の別名です。
  */
-export const Addon: Component<Addon.Props> = TextFieldAddon;
+export const Addon: IComponent<Addon.Props> = TextFieldAddon;

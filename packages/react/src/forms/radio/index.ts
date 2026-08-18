@@ -1,3 +1,3 @@
 export * from "./radio.parts.jsx";
 
-export { type RadioProps, Radio } from "./radio.jsx";
+export { type RadioProps, type RadioState, type RadioSlotProps, Radio } from "./radio.jsx";

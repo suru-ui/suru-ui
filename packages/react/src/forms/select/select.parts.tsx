@@ -6,9 +6,38 @@ import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
 import { useActionGroupContext } from "../../layout/action-group/action-group.parts.jsx";
 import { ScrollArea } from "../../navigation/scroll-area/index.js";
-import type { Component } from "../../types.js";
+import type { IComponent, IUseContext } from "../../types.js";
 
 import "./select.css";
+
+// Types
+// -----
+
+/**
+ * 選択欄の角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"rounded"`: 標準的な角丸
+ * - `"full"`: 完全な丸形
+ */
+export type SelectRadius = "none" | "rounded" | "full";
+
+/**
+ * 選択欄の大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type SelectSize = Size;
+
+/**
+ * 選択欄の主な外観の種類です。
+ *
+ * - `"naked"`: 背景のない選択欄
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type SelectVariant = "naked" | "liquid";
 
 // Context
 // -------
@@ -25,17 +54,17 @@ export type SelectContext = {
   /**
    * 選択欄とリスト項目の角丸です。
    */
-  readonly radius: "none" | "rounded" | "full";
+  readonly radius: SelectRadius;
 
   /**
    * 選択欄とリスト項目のサイズです。
    */
-  readonly size: Size;
+  readonly size: SelectSize;
 
   /**
    * 選択欄のスタイルバリエーションです。
    */
-  readonly variant: "naked" | "liquid";
+  readonly variant: SelectVariant;
 };
 
 /**
@@ -44,16 +73,9 @@ export type SelectContext = {
 export const SelectContext: React.Context<SelectContext | null> =
   React.createContext<SelectContext | null>(null);
 
-/**
- * {@link SelectContext} を読み取るフックです。
- *
- * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
- *
- * @returns コンテキストの値。`optional` が `true` でコンテキストがない場合は `null`。
- */
-export function useSelectContext(optional?: false): SelectContext;
-export function useSelectContext(optional?: boolean): SelectContext | null;
-export function useSelectContext(optional?: boolean): SelectContext | null {
+function useSuiSelectContext(optional?: false): SelectContext;
+function useSuiSelectContext(optional?: boolean): SelectContext | null;
+function useSuiSelectContext(optional?: boolean): SelectContext | null {
   const context = React.use(SelectContext);
   if (context === null && !optional) {
     throw new ContextMissingError({
@@ -66,27 +88,24 @@ export function useSelectContext(optional?: boolean): SelectContext | null {
 }
 
 /**
- * {@link SelectContext} のエイリアスです。
+ * {@link SelectContext} です。
  */
 export type Context = SelectContext;
 
 /**
- * {@link SelectContext} のエイリアスです。
+ * {@link SelectContext} です。
  */
 export const Context: React.Context<SelectContext | null> = SelectContext;
 
 /**
- * {@link useSelectContext} のエイリアスです。
- *
- * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
- *
- * @returns コンテキストの値。`optional` が `true` でコンテキストがない場合は `null`。
+ * {@link SelectContext} を読み取るフックです。
  */
-export function useContext(optional?: false): SelectContext;
-export function useContext(optional?: boolean): SelectContext | null;
-export function useContext(optional?: boolean): SelectContext | null {
-  return useSelectContext(optional);
-}
+export const useSelectContext: IUseContext<SelectContext> = useSuiSelectContext;
+
+/**
+ * {@link useSelectContext} です。
+ */
+export const useContext: IUseContext<Context> = useSelectContext;
 
 // Root
 // ----
@@ -109,6 +128,10 @@ export type SelectItemGroup<Value = unknown> = {
 
 /**
  * Select の項目一覧です。
+ *
+ * - `Record<string, React.ReactNode>`: 値と表示内容を対応付けたオブジェクト
+ * - `readonly (Value | { label: React.ReactNode; value: Value })[]`: 平坦な項目の配列
+ * - `readonly SelectItemGroup<Value>[]`: グループ化した項目の配列
  */
 export type SelectItems<Value = unknown> =
   | Record<string, React.ReactNode>
@@ -140,44 +163,34 @@ export type SelectRootProps<Value = unknown, Multiple extends boolean | undefine
   /**
    * 選択欄とリスト項目のサイズを指定します。
    */
-  size?: Size | undefined;
+  size?: SelectSize | undefined;
 
   /**
    * 選択欄のスタイルバリエーションを指定します。
    */
-  variant?: "naked" | "liquid" | undefined;
+  variant?: SelectVariant | undefined;
 
   /**
    * 選択欄とリスト項目の角丸を指定します。
    */
-  radius?: "none" | "rounded" | "full" | undefined;
+  radius?: SelectRadius | undefined;
 };
 
 /**
  * {@link SelectRoot} のコンポーネント型です。
  */
-export interface SelectRootComponent {
+export interface SelectRootComponent extends IComponent<
+  SelectRootProps<unknown, boolean | undefined>
+> {
   <Value, Multiple extends boolean | undefined = false>(
     props: SelectRootProps<Value, Multiple>,
   ): React.ReactElement | null;
-
-  displayName?: string | undefined;
 }
 
 /**
  * 選択状態とポップアップの開閉状態を管理する Select のルートです。
  *
  * それ自身は HTML 要素をレンダリングせず、スタイルを子パーツへ伝播します。
- *
- * @example
- * ```tsx
- * <SelectParts.Root items={["りんご", "ばなな"]}>
- *   <SelectParts.Trigger>
- *     <SelectParts.Value placeholder="選択してください" />
- *     <SelectParts.Icon>⌄</SelectParts.Icon>
- *   </SelectParts.Trigger>
- * </SelectParts.Root>
- * ```
  */
 export const SelectRoot: SelectRootComponent = function SuiSelectRoot<
   Value,
@@ -265,13 +278,8 @@ export type SelectLabelProps = React.ComponentProps<typeof BaseSelect.Label>;
 
 /**
  * 選択欄に対応する表示ラベルです。
- *
- * @example
- * ```tsx
- * <SelectParts.Label>果物</SelectParts.Label>
- * ```
  */
-export const SelectLabel: Component<SelectLabelProps> = function SuiSelectLabel(props) {
+export const SelectLabel: IComponent<SelectLabelProps> = function SuiSelectLabel(props) {
   const { className, ...otherProps } = props;
   return <BaseSelect.Label {...otherProps} className={cn(className, "sui_select_label")} />;
 };
@@ -294,7 +302,7 @@ export namespace Label {
 /**
  * {@link SelectLabel} の短い名前です。
  */
-export const Label: Component<Label.Props> = SelectLabel;
+export const Label: IComponent<Label.Props> = SelectLabel;
 
 // Trigger
 // -------
@@ -311,16 +319,8 @@ export type SelectTriggerProps = React.ComponentProps<typeof BaseSelect.Trigger>
 
 /**
  * Select ポップアップを開閉するボタン要素です。
- *
- * @example
- * ```tsx
- * <SelectParts.Trigger aria-label="果物を選択">
- *   <SelectParts.Value />
- *   <SelectParts.Icon>⌄</SelectParts.Icon>
- * </SelectParts.Trigger>
- * ```
  */
-export const SelectTrigger: Component<SelectTriggerProps> = function SuiSelectTrigger(props) {
+export const SelectTrigger: IComponent<SelectTriggerProps> = function SuiSelectTrigger(props) {
   const actionGroup = useActionGroupContext(true);
   const context = useSelectContext(true);
   const { className, ...otherProps } = props;
@@ -364,7 +364,7 @@ export namespace Trigger {
 /**
  * {@link SelectTrigger} の短い名前です。
  */
-export const Trigger: Component<Trigger.Props> = SelectTrigger;
+export const Trigger: IComponent<Trigger.Props> = SelectTrigger;
 
 // Value
 // -----
@@ -381,13 +381,8 @@ export type SelectValueProps = React.ComponentProps<typeof BaseSelect.Value>;
 
 /**
  * 現在の選択値またはプレースホルダーを表示する要素です。
- *
- * @example
- * ```tsx
- * <SelectParts.Value placeholder="選択してください" />
- * ```
  */
-export const SelectValue: Component<SelectValueProps> = function SuiSelectValue(props) {
+export const SelectValue: IComponent<SelectValueProps> = function SuiSelectValue(props) {
   const { className, ...otherProps } = props;
   return <BaseSelect.Value {...otherProps} className={cn(className, "sui_select_value")} />;
 };
@@ -410,7 +405,7 @@ export namespace Value {
 /**
  * {@link SelectValue} の短い名前です。
  */
-export const Value: Component<Value.Props> = SelectValue;
+export const Value: IComponent<Value.Props> = SelectValue;
 
 // Icon
 // ----
@@ -427,13 +422,8 @@ export type SelectIconProps = React.ComponentProps<typeof BaseSelect.Icon>;
 
 /**
  * ポップアップの開閉を示すアイコンのラッパー要素です。
- *
- * @example
- * ```tsx
- * <SelectParts.Icon>⌄</SelectParts.Icon>
- * ```
  */
-export const SelectIcon: Component<SelectIconProps> = function SuiSelectIcon(props) {
+export const SelectIcon: IComponent<SelectIconProps> = function SuiSelectIcon(props) {
   const { className, ...otherProps } = props;
   return <BaseSelect.Icon {...otherProps} className={cn(className, "sui_select_icon")} />;
 };
@@ -456,7 +446,7 @@ export namespace Icon {
 /**
  * {@link SelectIcon} の短い名前です。
  */
-export const Icon: Component<Icon.Props> = SelectIcon;
+export const Icon: IComponent<Icon.Props> = SelectIcon;
 
 // Portal
 // ------
@@ -473,13 +463,8 @@ export type SelectPortalProps = React.ComponentProps<typeof BaseSelect.Portal>;
 
 /**
  * ポップアップを DOM の別の場所へ移動する要素です。
- *
- * @example
- * ```tsx
- * <SelectParts.Portal><SelectParts.Popup /></SelectParts.Portal>
- * ```
  */
-export const SelectPortal: Component<SelectPortalProps> = function SuiSelectPortal(props) {
+export const SelectPortal: IComponent<SelectPortalProps> = function SuiSelectPortal(props) {
   const { className, ...otherProps } = props;
   return <BaseSelect.Portal {...otherProps} className={cn(className, "sui_select_portal")} />;
 };
@@ -502,7 +487,7 @@ export namespace Portal {
 /**
  * {@link SelectPortal} の短い名前です。
  */
-export const Portal: Component<Portal.Props> = SelectPortal;
+export const Portal: IComponent<Portal.Props> = SelectPortal;
 
 // Backdrop
 // --------
@@ -519,13 +504,8 @@ export type SelectBackdropProps = React.ComponentProps<typeof BaseSelect.Backdro
 
 /**
  * ポップアップの背後に表示される要素です。
- *
- * @example
- * ```tsx
- * <SelectParts.Backdrop />
- * ```
  */
-export const SelectBackdrop: Component<SelectBackdropProps> = function SuiSelectBackdrop(props) {
+export const SelectBackdrop: IComponent<SelectBackdropProps> = function SuiSelectBackdrop(props) {
   const { className, ...otherProps } = props;
   return <BaseSelect.Backdrop {...otherProps} className={cn(className, "sui_select_backdrop")} />;
 };
@@ -548,7 +528,7 @@ export namespace Backdrop {
 /**
  * {@link SelectBackdrop} の短い名前です。
  */
-export const Backdrop: Component<Backdrop.Props> = SelectBackdrop;
+export const Backdrop: IComponent<Backdrop.Props> = SelectBackdrop;
 
 // Positioner
 // ----------
@@ -565,13 +545,8 @@ export type SelectPositionerProps = React.ComponentProps<typeof BaseSelect.Posit
 
 /**
  * ポップアップをトリガーへ位置合わせする要素です。
- *
- * @example
- * ```tsx
- * <SelectParts.Positioner side="bottom" align="start"><SelectParts.Popup /></SelectParts.Positioner>
- * ```
  */
-export const SelectPositioner: Component<SelectPositionerProps> = function SuiSelectPositioner(
+export const SelectPositioner: IComponent<SelectPositionerProps> = function SuiSelectPositioner(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -598,7 +573,7 @@ export namespace Positioner {
 /**
  * {@link SelectPositioner} の短い名前です。
  */
-export const Positioner: Component<Positioner.Props> = SelectPositioner;
+export const Positioner: IComponent<Positioner.Props> = SelectPositioner;
 
 // Popup
 // -----
@@ -615,13 +590,8 @@ export type SelectPopupProps = React.ComponentProps<typeof BaseSelect.Popup>;
 
 /**
  * 選択項目を表示するポップアップ要素です。
- *
- * @example
- * ```tsx
- * <SelectParts.Popup><SelectParts.List /></SelectParts.Popup>
- * ```
  */
-export const SelectPopup: Component<SelectPopupProps> = function SuiSelectPopup(props) {
+export const SelectPopup: IComponent<SelectPopupProps> = function SuiSelectPopup(props) {
   const { className, ...otherProps } = props;
   return <BaseSelect.Popup {...otherProps} className={cn(className, "sui_select_popup")} />;
 };
@@ -644,7 +614,7 @@ export namespace Popup {
 /**
  * {@link SelectPopup} の短い名前です。
  */
-export const Popup: Component<Popup.Props> = SelectPopup;
+export const Popup: IComponent<Popup.Props> = SelectPopup;
 
 // List
 // ----
@@ -661,13 +631,8 @@ export type SelectListProps = React.ComponentProps<typeof BaseSelect.List>;
 
 /**
  * 選択項目を列挙するリスト要素です。
- *
- * @example
- * ```tsx
- * <SelectParts.List><SelectParts.Item value="りんご">りんご</SelectParts.Item></SelectParts.List>
- * ```
  */
-export const SelectList: Component<SelectListProps> = function SuiSelectList(props) {
+export const SelectList: IComponent<SelectListProps> = function SuiSelectList(props) {
   const { className, ...otherProps } = props;
   return (
     <ScrollArea className="sui_select_scroll_area">
@@ -694,7 +659,7 @@ export namespace List {
 /**
  * {@link SelectList} の短い名前です。
  */
-export const List: Component<List.Props> = SelectList;
+export const List: IComponent<List.Props> = SelectList;
 
 // Arrow
 // -----
@@ -711,13 +676,8 @@ export type SelectArrowProps = React.ComponentProps<typeof BaseSelect.Arrow>;
 
 /**
  * ポップアップとトリガーをつなぐ矢印要素です。
- *
- * @example
- * ```tsx
- * <SelectParts.Arrow />
- * ```
  */
-export const SelectArrow: Component<SelectArrowProps> = function SuiSelectArrow(props) {
+export const SelectArrow: IComponent<SelectArrowProps> = function SuiSelectArrow(props) {
   const { className, ...otherProps } = props;
   return <BaseSelect.Arrow {...otherProps} className={cn(className, "sui_select_arrow")} />;
 };
@@ -740,7 +700,7 @@ export namespace Arrow {
 /**
  * {@link SelectArrow} の短い名前です。
  */
-export const Arrow: Component<Arrow.Props> = SelectArrow;
+export const Arrow: IComponent<Arrow.Props> = SelectArrow;
 
 // Item
 // ----
@@ -757,13 +717,8 @@ export type SelectItemProps = React.ComponentProps<typeof BaseSelect.Item>;
 
 /**
  * 選択肢の個々の項目です。
- *
- * @example
- * ```tsx
- * <SelectParts.Item value="りんご">りんご</SelectParts.Item>
- * ```
  */
-export const SelectItem: Component<SelectItemProps> = function SuiSelectItem(props) {
+export const SelectItem: IComponent<SelectItemProps> = function SuiSelectItem(props) {
   const context = useSelectContext(true);
   const { className, ...otherProps } = props;
   const size = context?.size ?? "md";
@@ -794,7 +749,7 @@ export namespace Item {
 /**
  * {@link SelectItem} の短い名前です。
  */
-export const Item: Component<Item.Props> = SelectItem;
+export const Item: IComponent<Item.Props> = SelectItem;
 
 // ItemText
 // --------
@@ -811,13 +766,8 @@ export type SelectItemTextProps = React.ComponentProps<typeof BaseSelect.ItemTex
 
 /**
  * 選択肢の表示テキストを包む要素です。
- *
- * @example
- * ```tsx
- * <SelectParts.ItemText>りんご</SelectParts.ItemText>
- * ```
  */
-export const SelectItemText: Component<SelectItemTextProps> = function SuiSelectItemText(props) {
+export const SelectItemText: IComponent<SelectItemTextProps> = function SuiSelectItemText(props) {
   const { className, ...otherProps } = props;
   return <BaseSelect.ItemText {...otherProps} className={cn(className, "sui_select_item_text")} />;
 };
@@ -840,7 +790,7 @@ export namespace ItemText {
 /**
  * {@link SelectItemText} の短い名前です。
  */
-export const ItemText: Component<ItemText.Props> = SelectItemText;
+export const ItemText: IComponent<ItemText.Props> = SelectItemText;
 
 // ItemIndicator
 // -------------
@@ -857,13 +807,8 @@ export type SelectItemIndicatorProps = React.ComponentProps<typeof BaseSelect.It
 
 /**
  * 選択された項目を示す要素です。
- *
- * @example
- * ```tsx
- * <SelectParts.ItemIndicator>✓</SelectParts.ItemIndicator>
- * ```
  */
-export const SelectItemIndicator: Component<SelectItemIndicatorProps> =
+export const SelectItemIndicator: IComponent<SelectItemIndicatorProps> =
   function SuiSelectItemIndicator(props) {
     const { className, keepMounted = true, ...otherProps } = props;
     return (
@@ -893,7 +838,7 @@ export namespace ItemIndicator {
 /**
  * {@link SelectItemIndicator} の短い名前です。
  */
-export const ItemIndicator: Component<ItemIndicator.Props> = SelectItemIndicator;
+export const ItemIndicator: IComponent<ItemIndicator.Props> = SelectItemIndicator;
 
 // ScrollUpArrow
 // -------------
@@ -910,13 +855,8 @@ export type SelectScrollUpArrowProps = React.ComponentProps<typeof BaseSelect.Sc
 
 /**
  * 上方向へスクロールできることを示す要素です。
- *
- * @example
- * ```tsx
- * <SelectParts.ScrollUpArrow>⌃</SelectParts.ScrollUpArrow>
- * ```
  */
-export const SelectScrollUpArrow: Component<SelectScrollUpArrowProps> =
+export const SelectScrollUpArrow: IComponent<SelectScrollUpArrowProps> =
   function SuiSelectScrollUpArrow(props) {
     const { className, ...otherProps } = props;
     return (
@@ -945,7 +885,7 @@ export namespace ScrollUpArrow {
 /**
  * {@link SelectScrollUpArrow} の短い名前です。
  */
-export const ScrollUpArrow: Component<ScrollUpArrow.Props> = SelectScrollUpArrow;
+export const ScrollUpArrow: IComponent<ScrollUpArrow.Props> = SelectScrollUpArrow;
 
 // ScrollDownArrow
 // ---------------
@@ -962,13 +902,8 @@ export type SelectScrollDownArrowProps = React.ComponentProps<typeof BaseSelect.
 
 /**
  * 下方向へスクロールできることを示す要素です。
- *
- * @example
- * ```tsx
- * <SelectParts.ScrollDownArrow>⌄</SelectParts.ScrollDownArrow>
- * ```
  */
-export const SelectScrollDownArrow: Component<SelectScrollDownArrowProps> =
+export const SelectScrollDownArrow: IComponent<SelectScrollDownArrowProps> =
   function SuiSelectScrollDownArrow(props) {
     const { className, ...otherProps } = props;
     return (
@@ -997,7 +932,7 @@ export namespace ScrollDownArrow {
 /**
  * {@link SelectScrollDownArrow} の短い名前です。
  */
-export const ScrollDownArrow: Component<ScrollDownArrow.Props> = SelectScrollDownArrow;
+export const ScrollDownArrow: IComponent<ScrollDownArrow.Props> = SelectScrollDownArrow;
 
 // Group
 // -----
@@ -1014,13 +949,8 @@ export type SelectGroupProps = React.ComponentProps<typeof BaseSelect.Group>;
 
 /**
  * 関連する選択肢をまとめるグループ要素です。
- *
- * @example
- * ```tsx
- * <SelectParts.Group><SelectParts.GroupLabel>果物</SelectParts.GroupLabel></SelectParts.Group>
- * ```
  */
-export const SelectGroup: Component<SelectGroupProps> = function SuiSelectGroup(props) {
+export const SelectGroup: IComponent<SelectGroupProps> = function SuiSelectGroup(props) {
   const { className, ...otherProps } = props;
   return <BaseSelect.Group {...otherProps} className={cn(className, "sui_select_group")} />;
 };
@@ -1043,7 +973,7 @@ export namespace Group {
 /**
  * {@link SelectGroup} の短い名前です。
  */
-export const Group: Component<Group.Props> = SelectGroup;
+export const Group: IComponent<Group.Props> = SelectGroup;
 
 // GroupLabel
 // ----------
@@ -1060,13 +990,8 @@ export type SelectGroupLabelProps = React.ComponentProps<typeof BaseSelect.Group
 
 /**
  * 選択肢グループの見出し要素です。
- *
- * @example
- * ```tsx
- * <SelectParts.GroupLabel>果物</SelectParts.GroupLabel>
- * ```
  */
-export const SelectGroupLabel: Component<SelectGroupLabelProps> = function SuiSelectGroupLabel(
+export const SelectGroupLabel: IComponent<SelectGroupLabelProps> = function SuiSelectGroupLabel(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -1093,7 +1018,7 @@ export namespace GroupLabel {
 /**
  * {@link SelectGroupLabel} の短い名前です。
  */
-export const GroupLabel: Component<GroupLabel.Props> = SelectGroupLabel;
+export const GroupLabel: IComponent<GroupLabel.Props> = SelectGroupLabel;
 
 // Separator
 // ---------
@@ -1110,13 +1035,10 @@ export type SelectSeparatorProps = React.ComponentProps<typeof BaseSelect.Separa
 
 /**
  * 項目やグループを区切る要素です。
- *
- * @example
- * ```tsx
- * <SelectParts.Separator />
- * ```
  */
-export const SelectSeparator: Component<SelectSeparatorProps> = function SuiSelectSeparator(props) {
+export const SelectSeparator: IComponent<SelectSeparatorProps> = function SuiSelectSeparator(
+  props,
+) {
   const { className, ...otherProps } = props;
   return <BaseSelect.Separator {...otherProps} className={cn(className, "sui_select_separator")} />;
 };
@@ -1139,4 +1061,4 @@ export namespace Separator {
 /**
  * {@link SelectSeparator} の短い名前です。
  */
-export const Separator: Component<Separator.Props> = SelectSeparator;
+export const Separator: IComponent<Separator.Props> = SelectSeparator;

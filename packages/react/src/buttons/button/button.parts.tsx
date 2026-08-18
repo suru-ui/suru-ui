@@ -21,7 +21,7 @@ export type ButtonColor = Color;
 /**
  * ボタンの角丸です。
  *
- * - `"none"`: 角を直角にする
+ * - `"none"`: 直角
  * - `"sm"`: 小さい角丸
  * - `"md"`: 標準的な角丸
  * - `"lg"`: 大きい角丸
@@ -31,6 +31,10 @@ export type ButtonRadius = "none" | Size | "full";
 
 /**
  * ボタンの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
  */
 export type ButtonSize = Size;
 
@@ -42,6 +46,14 @@ export type ButtonSize = Size;
  * - `"liquid"`: 薄い塗りつぶし
  */
 export type ButtonVariant = ColorTemplate;
+
+/**
+ * ボタンが保留状態でないときの表示モードです。
+ *
+ * - `"hidden"`: 非表示にするがレイアウトは維持します。
+ * - `"none"`: レイアウトから除去します。
+ */
+export type ButtonPendingVisibility = "hidden" | "none";
 
 // Context
 // -------
@@ -180,7 +192,7 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
     radius: radiusProp,
     pending = false,
     squared = false,
-    variant: variantProp = "soft",
+    variant: variantProp = "solid",
     disabled = false,
     outlined: outlinedProp = false,
     className,
@@ -306,12 +318,9 @@ export type ButtonPendingProps = Omit<React.ComponentProps<"span">, keyof Render
     /**
      * `pending` が `false` のときの表示モードを指定します。
      *
-     * - `"hidden"`: 非表示にするがレイアウトは維持します。
-     * - `"none"`: レイアウトから除去します。
-     *
      * @default "none"
      */
-    defaultVisibility?: "hidden" | "none" | undefined;
+    defaultVisibility?: ButtonPendingVisibility | undefined;
 
     /**
      * 親要素を覆うオーバーレイとして表示するかどうかを指定します。

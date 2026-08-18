@@ -1,4 +1,6 @@
-import type { Component } from "../../types.js";
+import * as React from "react";
+
+import type { IComponent } from "../../types.js";
 import {
   type FieldItemProps,
   type FieldItemState,
@@ -102,16 +104,16 @@ export type FieldProps = FieldRootProps & {
   validity?: FieldValidityProps["children"] | undefined;
 };
 
-interface FieldComponentType extends Component<FieldProps> {
+interface FieldComponentType extends IComponent<FieldProps> {
   /**
    * {@link FieldControl} です。
    */
-  readonly Control: Component<FieldControlProps>;
+  readonly Control: IComponent<FieldControlProps>;
 
   /**
    * {@link FieldItem} です。
    */
-  readonly Item: Component<FieldItemProps>;
+  readonly Item: IComponent<FieldItemProps>;
 }
 
 /**

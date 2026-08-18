@@ -1,16 +1,25 @@
 import * as React from "react";
 
-import type { Component } from "../../types.js";
-import * as RadioGroupParts from "./radio-group.parts.jsx";
+import type { IComponent } from "../../types.js";
+import {
+  type RadioGroupRootProps,
+  type RadioGroupRootState,
+  RadioGroupRoot,
+} from "./radio-group.parts.jsx";
+
+/**
+ * {@link RadioGroup} の状態です。
+ */
+export type RadioGroupState = RadioGroupRootState;
 
 /**
  * {@link RadioGroup} コンポーネントのプロパティーです。
  */
-export type RadioGroupProps = RadioGroupParts.Root.Props & {
+export type RadioGroupProps = RadioGroupRootProps & {
   /**
    * ラジオボタン要素です。
    *
-   * {@link RadioGroupParts.Root} にそのまま渡されます。
+   * {@link RadioGroupRoot} にそのまま渡されます。
    */
   readonly children?: React.ReactNode | undefined;
 };
@@ -20,23 +29,22 @@ export type RadioGroupProps = RadioGroupParts.Root.Props & {
  *
  * グループの選択状態を管理し、子要素のラジオボタンにスタイルを強制します。
  * スタイルの指定は子要素の指定より優先され、値を変更するとグループ内へ反映されます。
- *
- * @example 基本
- * ```tsx
- * <RadioGroup defaultValue="option-a" color="blue">
- *   <Radio value="option-a" />
- *   <Radio value="option-b" />
- * </RadioGroup>
- * ```
- *
- * @example 横並び
- * ```tsx
- * <RadioGroup orientation="horizontal">
- *   <Radio value="a" />
- *   <Radio value="b" />
- * </RadioGroup>
- * ```
  */
-export const RadioGroup: Component<RadioGroupProps> = function SuiRadioGroup(props) {
-  return <RadioGroupParts.Root {...props} />;
+export const RadioGroup: IComponent<RadioGroupProps> = function SuiRadioGroup(props) {
+  return <RadioGroupRoot {...props} />;
 };
+
+/**
+ * {@link RadioGroup} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace RadioGroup {
+  /**
+   * {@link RadioGroupState} です。
+   */
+  export type State = RadioGroupState;
+
+  /**
+   * {@link RadioGroupProps} です。
+   */
+  export type Props = RadioGroupProps;
+}

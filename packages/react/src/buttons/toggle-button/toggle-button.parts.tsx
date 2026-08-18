@@ -29,6 +29,42 @@ import {
   ButtonCircularProgressFillRotation,
 } from "../button/button.parts.jsx";
 
+// Types
+// -----
+
+/**
+ * トグルボタンの色です。
+ */
+export type ToggleButtonColor = Color;
+
+/**
+ * トグルボタンの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
+ */
+export type ToggleButtonRadius = "none" | Size | "full";
+
+/**
+ * トグルボタンの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type ToggleButtonSize = Size;
+
+/**
+ * トグルボタンの主な外観の種類です。
+ *
+ * - `"naked"`: 背景のないテキストのみ
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type ToggleButtonVariant = "naked" | "liquid";
+
 // Context
 // -------
 
@@ -79,7 +115,7 @@ export type ToggleButtonRootProps = React.ComponentProps<typeof Toggle> & {
    *
    * @default "grey"
    */
-  color?: Color | undefined;
+  color?: ToggleButtonColor | undefined;
 
   /**
    * ボタンが無効になっている場合でも、フォーカス可能かどうかを指定します。
@@ -106,21 +142,15 @@ export type ToggleButtonRootProps = React.ComponentProps<typeof Toggle> & {
    * トグルボタンの角丸を指定します。
    *
    * デフォルト値は {@link ToggleButtonRootProps.size|size} です。
-   *
-   * - `"none"`: 角を直角にする
-   * - `"sm"`: 小さい角丸
-   * - `"md"`: 標準的な角丸
-   * - `"lg"`: 大きい角丸
-   * - `"full"`: 完全な丸形
    */
-  radius?: "none" | Size | "full" | undefined;
+  radius?: ToggleButtonRadius | undefined;
 
   /**
    * トグルボタンのサイズを指定します。
    *
    * @default "md"
    */
-  size?: Size | undefined;
+  size?: ToggleButtonSize | undefined;
 
   /**
    * トグルボタンを正方形にするかどうかを指定します。
@@ -132,12 +162,9 @@ export type ToggleButtonRootProps = React.ComponentProps<typeof Toggle> & {
   /**
    * トグルボタンのスタイルバリエーションを指定します。
    *
-   * - `"naked"`: 背景のないテキストのみ
-   * - `"liquid"`: 薄い塗りつぶし
-   *
    * @default "liquid"
    */
-  variant?: "naked" | "liquid" | undefined;
+  variant?: ToggleButtonVariant | undefined;
 };
 
 /**
@@ -297,7 +324,8 @@ export type ToggleButtonCircularProgressContext = ButtonCircularProgressContext;
 /**
  * {@link ButtonCircularProgressContext} です。
  */
-export const ToggleButtonCircularProgressContext = ButtonCircularProgressContext;
+export const ToggleButtonCircularProgressContext: React.Context<ToggleButtonCircularProgressContext | null> =
+  ButtonCircularProgressContext;
 
 /**
  * {@link useButtonContext} です。
@@ -313,7 +341,8 @@ export type CircularProgressContext = ToggleButtonCircularProgressContext;
 /**
  * {@link ToggleButtonCircularProgressContext} です。
  */
-export const CircularProgressContext = ToggleButtonCircularProgressContext;
+export const CircularProgressContext: React.Context<CircularProgressContext | null> =
+  ToggleButtonCircularProgressContext;
 
 /**
  * {@link useToggleButtonCircularProgressContext} です。
@@ -342,6 +371,9 @@ export const ToggleButtonCircularProgress: IComponent<ToggleButtonCircularProgre
     return <ButtonCircularProgress {...props} />;
   };
 
+/**
+ * {@link ToggleButtonCircularProgress} の状態やプロパティーをまとめた型名前空間です。
+ */
 export namespace CircularProgress {
   /**
    * {@link ToggleButtonCircularProgress} の状態型です。
@@ -380,6 +412,9 @@ export const ToggleButtonCircularProgressTrack: IComponent<ToggleButtonCircularP
     return <ButtonCircularProgressTrack {...props} />;
   };
 
+/**
+ * {@link ToggleButtonCircularProgressTrack} の状態やプロパティーをまとめた型名前空間です。
+ */
 export namespace CircularProgressTrack {
   /**
    * {@link ToggleButtonCircularProgressTrack} の状態型です。
@@ -419,6 +454,9 @@ export const ToggleButtonCircularProgressFill: IComponent<ToggleButtonCircularPr
     return <ButtonCircularProgressFill {...props} />;
   };
 
+/**
+ * {@link ToggleButtonCircularProgressFill} の状態やプロパティーをまとめた型名前空間です。
+ */
 export namespace CircularProgressFill {
   /**
    * {@link ToggleButtonCircularProgressFill} の状態型です。
@@ -460,6 +498,9 @@ export const ToggleButtonCircularProgressFillRotation: IComponent<ToggleButtonCi
     return <ButtonCircularProgressFillRotation {...props} />;
   };
 
+/**
+ * {@link ToggleButtonCircularProgressFillRotation} の状態やプロパティーをまとめた型名前空間です。
+ */
 export namespace CircularProgressFillRotation {
   /**
    * {@link ToggleButtonCircularProgressFillRotation} の状態型です。

@@ -3,9 +3,43 @@ import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 
 import "./slider.css";
+
+// Types
+// -----
+
+/**
+ * スライダーの色です。
+ */
+export type SliderColor = Color;
+
+/**
+ * スライダーの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"rounded"`: 標準的な角丸
+ * - `"full"`: 完全な丸形
+ */
+export type SliderRadius = "none" | "rounded" | "full";
+
+/**
+ * スライダーの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type SliderSize = Size;
+
+/**
+ * スライダーの主な外観の種類です。
+ *
+ * - `"naked"`: 背景のないトラックのみ、枠線なし
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type SliderVariant = "naked" | "liquid";
 
 // Root
 // ----
@@ -24,24 +58,21 @@ export type SliderRootProps = React.ComponentProps<typeof Slider.Root> & {
    *
    * @default "md"
    */
-  size?: Size | undefined;
+  size?: SliderSize | undefined;
 
   /**
    * スライダーの色を指定します。値を変更すると、ルートのクラスも更新されます。
    *
    * @default "grey"
    */
-  color?: Color | undefined;
+  color?: SliderColor | undefined;
 
   /**
    * スライダーのスタイルバリエーションを指定します。値を変更すると、ルートのクラスも更新されます。
    *
-   * - `"naked"`: 背景のないトラックのみ、枠線なし
-   * - `"liquid"`: 薄い塗りつぶし
-   *
    * @default "liquid"
    */
-  variant?: "naked" | "liquid" | undefined;
+  variant?: SliderVariant | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。値を変更すると、ルートのクラスも更新されます。
@@ -51,31 +82,15 @@ export type SliderRootProps = React.ComponentProps<typeof Slider.Root> & {
   /**
    * スライダーの角丸を指定します。値を変更すると、ルートのクラスも更新されます。
    *
-   * - `"none"`: 角を直角にする
-   * - `"rounded"`: 標準的な角丸
-   * - `"full"`: 完全な丸形
-   *
    * @default "full"
    */
-  radius?: "none" | "rounded" | "full" | undefined;
+  radius?: SliderRadius | undefined;
 };
 
 /**
  * スライダーのルート要素です。
- *
- * @example
- * ```tsx
- * <SliderParts.Root defaultValue={25} color="blue">
- *   <SliderParts.Control>
- *     <SliderParts.Track>
- *       <SliderParts.Indicator />
- *       <SliderParts.Thumb />
- *     </SliderParts.Track>
- *   </SliderParts.Control>
- * </SliderParts.Root>
- * ```
  */
-export const SliderRoot: Component<SliderRootProps> = function SuiSliderRoot(props) {
+export const SliderRoot: IComponent<SliderRootProps> = function SuiSliderRoot(props) {
   const {
     size: sizeProp = "md",
     color: colorProp = "grey",
@@ -123,7 +138,7 @@ export namespace Root {
 /**
  * {@link SliderRoot} の別名です。
  */
-export const Root: Component<Root.Props> = SliderRoot;
+export const Root: IComponent<Root.Props> = SliderRoot;
 
 // Label
 // -----
@@ -140,21 +155,8 @@ export type SliderLabelProps = React.ComponentProps<typeof Slider.Label>;
 
 /**
  * スライダーのラベル要素です。
- *
- * @example
- * ```tsx
- * <SliderParts.Root>
- *   <SliderParts.Label>音量</SliderParts.Label>
- *   <SliderParts.Control>
- *     <SliderParts.Track>
- *       <SliderParts.Indicator />
- *       <SliderParts.Thumb />
- *     </SliderParts.Track>
- *   </SliderParts.Control>
- * </SliderParts.Root>
- * ```
  */
-export const SliderLabel: Component<SliderLabelProps> = function SuiSliderLabel(props) {
+export const SliderLabel: IComponent<SliderLabelProps> = function SuiSliderLabel(props) {
   const { className, ...otherProps } = props;
 
   return <Slider.Label {...otherProps} className={cn(className, "sui_slider_label")} />;
@@ -178,7 +180,7 @@ export namespace Label {
 /**
  * {@link SliderLabel} の別名です。
  */
-export const Label: Component<Label.Props> = SliderLabel;
+export const Label: IComponent<Label.Props> = SliderLabel;
 
 // Value
 // -----
@@ -195,21 +197,8 @@ export type SliderValueProps = React.ComponentProps<typeof Slider.Value>;
 
 /**
  * スライダーの現在値を表示する要素です。
- *
- * @example
- * ```tsx
- * <SliderParts.Root>
- *   <SliderParts.Value />
- *   <SliderParts.Control>
- *     <SliderParts.Track>
- *       <SliderParts.Indicator />
- *       <SliderParts.Thumb />
- *     </SliderParts.Track>
- *   </SliderParts.Control>
- * </SliderParts.Root>
- * ```
  */
-export const SliderValue: Component<SliderValueProps> = function SuiSliderValue(props) {
+export const SliderValue: IComponent<SliderValueProps> = function SuiSliderValue(props) {
   const { className, ...otherProps } = props;
 
   return <Slider.Value {...otherProps} className={cn(className, "sui_slider_value")} />;
@@ -233,7 +222,7 @@ export namespace Value {
 /**
  * {@link SliderValue} の別名です。
  */
-export const Value: Component<Value.Props> = SliderValue;
+export const Value: IComponent<Value.Props> = SliderValue;
 
 // Control
 // -------
@@ -250,20 +239,8 @@ export type SliderControlProps = React.ComponentProps<typeof Slider.Control>;
 
 /**
  * スライダーの操作可能な領域です。
- *
- * @example
- * ```tsx
- * <SliderParts.Root>
- *   <SliderParts.Control>
- *     <SliderParts.Track>
- *       <SliderParts.Indicator />
- *       <SliderParts.Thumb />
- *     </SliderParts.Track>
- *   </SliderParts.Control>
- * </SliderParts.Root>
- * ```
  */
-export const SliderControl: Component<SliderControlProps> = function SuiSliderControl(props) {
+export const SliderControl: IComponent<SliderControlProps> = function SuiSliderControl(props) {
   const { className, ...otherProps } = props;
 
   return <Slider.Control {...otherProps} className={cn(className, "sui_slider_control")} />;
@@ -287,7 +264,7 @@ export namespace Control {
 /**
  * {@link SliderControl} の別名です。
  */
-export const Control: Component<Control.Props> = SliderControl;
+export const Control: IComponent<Control.Props> = SliderControl;
 
 // Track
 // -----
@@ -304,20 +281,8 @@ export type SliderTrackProps = React.ComponentProps<typeof Slider.Track>;
 
 /**
  * スライダーのトラック要素です。
- *
- * @example
- * ```tsx
- * <SliderParts.Root>
- *   <SliderParts.Control>
- *     <SliderParts.Track>
- *       <SliderParts.Indicator />
- *       <SliderParts.Thumb />
- *     </SliderParts.Track>
- *   </SliderParts.Control>
- * </SliderParts.Root>
- * ```
  */
-export const SliderTrack: Component<SliderTrackProps> = function SuiSliderTrack(props) {
+export const SliderTrack: IComponent<SliderTrackProps> = function SuiSliderTrack(props) {
   const { className, ...otherProps } = props;
 
   return <Slider.Track {...otherProps} className={cn(className, "sui_slider_track")} />;
@@ -341,7 +306,7 @@ export namespace Track {
 /**
  * {@link SliderTrack} の別名です。
  */
-export const Track: Component<Track.Props> = SliderTrack;
+export const Track: IComponent<Track.Props> = SliderTrack;
 
 // Indicator
 // ---------
@@ -358,20 +323,10 @@ export type SliderIndicatorProps = React.ComponentProps<typeof Slider.Indicator>
 
 /**
  * スライダーの現在値を示すインジケーター要素です。
- *
- * @example
- * ```tsx
- * <SliderParts.Root>
- *   <SliderParts.Control>
- *     <SliderParts.Track>
- *       <SliderParts.Indicator />
- *       <SliderParts.Thumb />
- *     </SliderParts.Track>
- *   </SliderParts.Control>
- * </SliderParts.Root>
- * ```
  */
-export const SliderIndicator: Component<SliderIndicatorProps> = function SuiSliderIndicator(props) {
+export const SliderIndicator: IComponent<SliderIndicatorProps> = function SuiSliderIndicator(
+  props,
+) {
   const { className, ...otherProps } = props;
 
   return <Slider.Indicator {...otherProps} className={cn(className, "sui_slider_indicator")} />;
@@ -395,7 +350,7 @@ export namespace Indicator {
 /**
  * {@link SliderIndicator} の別名です。
  */
-export const Indicator: Component<Indicator.Props> = SliderIndicator;
+export const Indicator: IComponent<Indicator.Props> = SliderIndicator;
 
 // Thumb
 // -----
@@ -412,20 +367,8 @@ export type SliderThumbProps = React.ComponentProps<typeof Slider.Thumb>;
 
 /**
  * スライダーのつまみ要素です。
- *
- * @example
- * ```tsx
- * <SliderParts.Root>
- *   <SliderParts.Control>
- *     <SliderParts.Track>
- *       <SliderParts.Indicator />
- *       <SliderParts.Thumb aria-label="音量" />
- *     </SliderParts.Track>
- *   </SliderParts.Control>
- * </SliderParts.Root>
- * ```
  */
-export const SliderThumb: Component<SliderThumbProps> = function SuiSliderThumb(props) {
+export const SliderThumb: IComponent<SliderThumbProps> = function SuiSliderThumb(props) {
   const { className, ...otherProps } = props;
 
   return <Slider.Thumb {...otherProps} className={cn(className, "sui_slider_thumb")} />;
@@ -449,4 +392,4 @@ export namespace Thumb {
 /**
  * {@link SliderThumb} の別名です。
  */
-export const Thumb: Component<Thumb.Props> = SliderThumb;
+export const Thumb: IComponent<Thumb.Props> = SliderThumb;

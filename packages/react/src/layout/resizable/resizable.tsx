@@ -1,17 +1,31 @@
 import * as React from "react";
 
-import type { Component } from "../../types.js";
-import * as ResizableParts from "./resizable.parts.jsx";
+import type { IComponent } from "../../types.js";
+import {
+  type ResizableRootProps,
+  type ResizableRootState,
+  ResizableRoot,
+} from "./resizable.parts.jsx";
+
+/**
+ * {@link ResizablePanelGroup} の状態です。
+ */
+export type ResizablePanelGroupState = ResizableRootState;
 
 /**
  * {@link ResizablePanelGroup} コンポーネントのプロパティーです。
  */
-export type ResizablePanelGroupProps = ResizableParts.Root.Props;
+export type ResizablePanelGroupProps = ResizableRootProps;
+
+/**
+ * {@link Resizable} の状態です。
+ */
+export type ResizableState = ResizableRootState;
 
 /**
  * {@link Resizable} コンポーネントのプロパティーです。
  */
-export type ResizableProps = ResizableParts.Root.Props & {
+export type ResizableProps = ResizableRootProps & {
   /**
    * リサイズ可能なパネルとハンドルです。
    */
@@ -22,30 +36,42 @@ export type ResizableProps = ResizableParts.Root.Props & {
  * パネル群を表示するルートコンポーネントです。
  *
  * `ResizablePanel` と `ResizableHandle` は、パーツ API として直接組み合わせて使用します。
- *
- * @example
- * ```tsx
- * <ResizablePanelGroup direction="horizontal">
- *   <ResizablePanel defaultSize={50}>左側</ResizablePanel>
- *   <ResizableHandle />
- *   <ResizablePanel>右側</ResizablePanel>
- * </ResizablePanelGroup>
- * ```
  */
-export const ResizablePanelGroup: Component<ResizablePanelGroupProps> = ResizableParts.Root;
+export const ResizablePanelGroup: IComponent<ResizablePanelGroupProps> = ResizableRoot;
+
+/**
+ * {@link ResizablePanelGroup} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace ResizablePanelGroup {
+  /**
+   * {@link ResizablePanelGroupState} です。
+   */
+  export type State = ResizablePanelGroupState;
+
+  /**
+   * {@link ResizablePanelGroupProps} です。
+   */
+  export type Props = ResizablePanelGroupProps;
+}
 
 /**
  * リサイズ可能なパネル群を表示するコンポーネントです。
- *
- * @example
- * ```tsx
- * <Resizable>
- *   <ResizableParts.Panel defaultSize={30}>サイドバー</ResizableParts.Panel>
- *   <ResizableParts.Handle withHandle />
- *   <ResizableParts.Panel>コンテンツ</ResizableParts.Panel>
- * </Resizable>
- * ```
  */
-export const Resizable: Component<ResizableProps> = function SuiResizable(props) {
-  return <ResizableParts.Root {...props} />;
+export const Resizable: IComponent<ResizableProps> = function SuiResizable(props) {
+  return <ResizableRoot {...props} />;
 };
+
+/**
+ * {@link Resizable} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Resizable {
+  /**
+   * {@link ResizableState} です。
+   */
+  export type State = ResizableState;
+
+  /**
+   * {@link ResizableProps} です。
+   */
+  export type Props = ResizableProps;
+}

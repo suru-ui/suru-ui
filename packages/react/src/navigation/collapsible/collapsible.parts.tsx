@@ -8,9 +8,31 @@ import * as React from "react";
 
 import splitRenderProps from "../../_split-render-props.js";
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 
 import "./collapsible.css";
+
+// Types
+// -----
+
+/**
+ * コラプシブルの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ */
+export type CollapsibleRadius = "none" | Size;
+
+/**
+ * コラプシブルの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type CollapsibleSize = Size;
 
 // Root
 // ----
@@ -34,37 +56,24 @@ export type CollapsibleRootProps = React.ComponentProps<typeof Collapsible.Root>
   /**
    * パネルの角丸を指定します。
    *
-   * - `"none"`: 角を直角にする
-   * - `"sm"`: 小さい角丸
-   * - `"md"`: 標準的な角丸
-   * - `"lg"`: 大きい角丸
-   *
    * @default "md"
    */
-  radius?: "none" | "sm" | "md" | "lg" | undefined;
+  radius?: CollapsibleRadius | undefined;
 
   /**
    * パネルのサイズを指定します。
    *
    * @default "md"
    */
-  size?: Size | undefined;
+  size?: CollapsibleSize | undefined;
 };
 
 /**
  * コラプシブルのルート要素です。
- *
- * @example
- * ```tsx
- * <CollapsibleParts.Root>
- *   <CollapsibleParts.Trigger>
- *     {(props) => <button type="button" {...props}>見出し</button>}
- *   </CollapsibleParts.Trigger>
- *   <CollapsibleParts.Panel>コンテンツ</CollapsibleParts.Panel>
- * </CollapsibleParts.Root>
- * ```
  */
-export const CollapsibleRoot: Component<CollapsibleRootProps> = function SuiCollapsibleRoot(props) {
+export const CollapsibleRoot: IComponent<CollapsibleRootProps> = function SuiCollapsibleRoot(
+  props,
+) {
   const { className, outlined = false, radius = "md", size = "md", ...otherProps } = props;
 
   return (
@@ -81,6 +90,9 @@ export const CollapsibleRoot: Component<CollapsibleRootProps> = function SuiColl
   );
 };
 
+/**
+ * {@link CollapsibleRoot} の状態やプロパティーをまとめた型名前空間です。
+ */
 export namespace Root {
   /**
    * {@link CollapsibleRoot} の状態型です。
@@ -93,7 +105,10 @@ export namespace Root {
   export type Props = CollapsibleRootProps;
 }
 
-export const Root: Component<Root.Props> = CollapsibleRoot;
+/**
+ * {@link CollapsibleRoot} です。
+ */
+export const Root: IComponent<Root.Props> = CollapsibleRoot;
 
 // Trigger
 // -------
@@ -123,15 +138,8 @@ export type CollapsibleTriggerProps = Omit<
  *
  * 子要素は何にもラップされず、そのまま {@link Collapsible.Trigger} の `render` プロパティーに
  * 渡されます。
- *
- * @example
- * ```tsx
- * <CollapsibleParts.Trigger>
- *   {(props) => <button type="button" {...props}>見出し</button>}
- * </CollapsibleParts.Trigger>
- * ```
  */
-export const CollapsibleTrigger: Component<CollapsibleTriggerProps> =
+export const CollapsibleTrigger: IComponent<CollapsibleTriggerProps> =
   function SuiCollapsibleTrigger(props) {
     const { className, children, ...otherProps } = props;
 
@@ -144,6 +152,9 @@ export const CollapsibleTrigger: Component<CollapsibleTriggerProps> =
     );
   };
 
+/**
+ * {@link CollapsibleTrigger} の状態やプロパティーをまとめた型名前空間です。
+ */
 export namespace Trigger {
   /**
    * {@link CollapsibleTrigger} の状態型です。
@@ -156,7 +167,10 @@ export namespace Trigger {
   export type Props = CollapsibleTriggerProps;
 }
 
-export const Trigger: Component<Trigger.Props> = CollapsibleTrigger;
+/**
+ * {@link CollapsibleTrigger} です。
+ */
+export const Trigger: IComponent<Trigger.Props> = CollapsibleTrigger;
 
 // Indicator
 // ---------
@@ -177,13 +191,8 @@ export type CollapsibleIndicatorProps = Omit<
 
 /**
  * コラプシブルの展開状態を示すアイコンのラッパー要素です。
- *
- * @example
- * ```tsx
- * <CollapsibleParts.Indicator>▼</CollapsibleParts.Indicator>
- * ```
  */
-export const CollapsibleIndicator: Component<CollapsibleIndicatorProps> =
+export const CollapsibleIndicator: IComponent<CollapsibleIndicatorProps> =
   function SuiCollapsibleIndicator(props) {
     const [renderProps, componentProps] = splitRenderProps(props);
     const { ref, ...elementProps } = componentProps;
@@ -199,6 +208,9 @@ export const CollapsibleIndicator: Component<CollapsibleIndicatorProps> =
     });
   };
 
+/**
+ * {@link CollapsibleIndicator} の状態やプロパティーをまとめた型名前空間です。
+ */
 export namespace Indicator {
   /**
    * {@link CollapsibleIndicator} の状態型です。
@@ -211,7 +223,10 @@ export namespace Indicator {
   export type Props = CollapsibleIndicatorProps;
 }
 
-export const Indicator: Component<Indicator.Props> = CollapsibleIndicator;
+/**
+ * {@link CollapsibleIndicator} です。
+ */
+export const Indicator: IComponent<Indicator.Props> = CollapsibleIndicator;
 
 // Panel
 // -----
@@ -228,13 +243,8 @@ export type CollapsiblePanelProps = React.ComponentProps<typeof Collapsible.Pane
 
 /**
  * コラプシブルのコンテンツを表示するパネル要素です。
- *
- * @example
- * ```tsx
- * <CollapsibleParts.Panel>コンテンツ</CollapsibleParts.Panel>
- * ```
  */
-export const CollapsiblePanel: Component<CollapsiblePanelProps> = function SuiCollapsiblePanel(
+export const CollapsiblePanel: IComponent<CollapsiblePanelProps> = function SuiCollapsiblePanel(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -242,6 +252,9 @@ export const CollapsiblePanel: Component<CollapsiblePanelProps> = function SuiCo
   return <Collapsible.Panel {...otherProps} className={cn(className, "sui_collapsible_panel")} />;
 };
 
+/**
+ * {@link CollapsiblePanel} の状態やプロパティーをまとめた型名前空間です。
+ */
 export namespace Panel {
   /**
    * {@link CollapsiblePanel} の状態型です。
@@ -254,4 +267,7 @@ export namespace Panel {
   export type Props = CollapsiblePanelProps;
 }
 
-export const Panel: Component<Panel.Props> = CollapsiblePanel;
+/**
+ * {@link CollapsiblePanel} です。
+ */
+export const Panel: IComponent<Panel.Props> = CollapsiblePanel;

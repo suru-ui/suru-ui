@@ -1,4 +1,4 @@
-import type { Size, Color, ColorTemplate as Variant } from "@suru-ui/theme";
+import type { Size, Color, ColorTemplate } from "@suru-ui/theme";
 import type * as React from "react";
 
 import useRender, { type RenderProps } from "../../_use-render.js";
@@ -6,6 +6,42 @@ import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
 
 import "./alert.css";
+
+// Types
+// -----
+
+/**
+ * アラートの色です。
+ */
+export type AlertColor = Color;
+
+/**
+ * アラートの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ */
+export type AlertRadius = "none" | Size;
+
+/**
+ * アラートの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type AlertSize = Size;
+
+/**
+ * アラートの主な外観の種類です。
+ *
+ * - `"solid"`: 塗りつぶしスタイル
+ * - `"naked"`: 背景のないテキストのみ
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type AlertVariant = ColorTemplate;
 
 // Root
 // ----
@@ -25,7 +61,7 @@ export type AlertRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps
      *
      * @default "grey"
      */
-    color?: Color | undefined;
+    color?: AlertColor | undefined;
 
     /**
      * 枠線を表示するかどうかを指定します。
@@ -38,27 +74,22 @@ export type AlertRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps
      * アラートの角丸を指定します。
      *
      * デフォルト値は {@link AlertRootProps.size|size} です。
-     *
-     * - `"none"`: 角を直角にする
-     * - `"sm"`: 小さい角丸
-     * - `"md"`: 標準的な角丸
-     * - `"lg"`: 大きい角丸
      */
-    radius?: "none" | Size | undefined;
+    radius?: AlertRadius | undefined;
 
     /**
      * アラートのサイズを指定します。
      *
      * @default "md"
      */
-    size?: Size | undefined;
+    size?: AlertSize | undefined;
 
     /**
      * アラートのスタイルバリエーションを指定します。
      *
      * @default "solid"
      */
-    variant?: Variant | undefined;
+    variant?: AlertVariant | undefined;
   };
 
 /**

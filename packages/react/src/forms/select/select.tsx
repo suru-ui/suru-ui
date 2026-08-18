@@ -1,14 +1,156 @@
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
-import * as SelectParts from "./select.parts.jsx";
+import type { IComponent } from "../../types.js";
+import {
+  type SelectItems,
+  type SelectIconProps,
+  type SelectItemGroup,
+  type SelectItemProps,
+  type SelectListProps,
+  type SelectRootProps,
+  type SelectRootState,
+  type SelectArrowProps,
+  type SelectGroupProps,
+  type SelectLabelProps,
+  type SelectPopupProps,
+  type SelectValueProps,
+  type SelectPortalProps,
+  type SelectTriggerProps,
+  type SelectBackdropProps,
+  type SelectItemTextProps,
+  type SelectSeparatorProps,
+  type SelectGroupLabelProps,
+  type SelectPositionerProps,
+  type SelectItemIndicatorProps,
+  type SelectScrollUpArrowProps,
+  type SelectScrollDownArrowProps,
+  SelectIcon,
+  SelectItem,
+  SelectList,
+  SelectRoot,
+  SelectArrow,
+  SelectGroup,
+  SelectLabel,
+  SelectPopup,
+  SelectValue,
+  SelectPortal,
+  SelectTrigger,
+  SelectBackdrop,
+  SelectItemText,
+  SelectSeparator,
+  SelectGroupLabel,
+  SelectPositioner,
+  SelectItemIndicator,
+  SelectScrollUpArrow,
+  SelectScrollDownArrow,
+} from "./select.parts.jsx";
+
+/**
+ * {@link Select} の各パーツに渡すプロパティーです。
+ */
+export type SelectSlotProps = {
+  /**
+   * {@link SelectLabel} に渡すプロパティーです。
+   */
+  readonly label?: SelectLabelProps | undefined;
+
+  /**
+   * {@link SelectValue} に渡すプロパティーです。
+   */
+  readonly value?: SelectValueProps | undefined;
+
+  /**
+   * {@link SelectTrigger} に渡すプロパティーです。
+   */
+  readonly trigger?: SelectTriggerProps | undefined;
+
+  /**
+   * {@link SelectIcon} に渡すプロパティーです。
+   */
+  readonly icon?: SelectIconProps | undefined;
+
+  /**
+   * {@link SelectPortal} に渡すプロパティーです。
+   */
+  readonly portal?: SelectPortalProps | undefined;
+
+  /**
+   * {@link SelectBackdrop} に渡すプロパティーです。
+   */
+  readonly backdrop?: SelectBackdropProps | undefined;
+
+  /**
+   * {@link SelectPositioner} に渡すプロパティーです。
+   */
+  readonly positioner?: SelectPositionerProps | undefined;
+
+  /**
+   * {@link SelectPopup} に渡すプロパティーです。
+   */
+  readonly popup?: SelectPopupProps | undefined;
+
+  /**
+   * {@link SelectList} に渡すプロパティーです。
+   */
+  readonly list?: SelectListProps | undefined;
+
+  /**
+   * {@link SelectItem} に渡すプロパティーです。
+   */
+  readonly item?: SelectItemProps | undefined;
+
+  /**
+   * {@link SelectItemIndicator} に渡すプロパティーです。
+   */
+  readonly itemIndicator?: SelectItemIndicatorProps | undefined;
+
+  /**
+   * {@link SelectItemText} に渡すプロパティーです。
+   */
+  readonly itemText?: SelectItemTextProps | undefined;
+
+  /**
+   * {@link SelectArrow} に渡すプロパティーです。
+   */
+  readonly arrow?: SelectArrowProps | undefined;
+
+  /**
+   * {@link SelectScrollUpArrow} に渡すプロパティーです。
+   */
+  readonly scrollUpArrow?: SelectScrollUpArrowProps | undefined;
+
+  /**
+   * {@link SelectScrollDownArrow} に渡すプロパティーです。
+   */
+  readonly scrollDownArrow?: SelectScrollDownArrowProps | undefined;
+
+  /**
+   * {@link SelectGroup} に渡すプロパティーです。
+   */
+  readonly group?: SelectGroupProps | undefined;
+
+  /**
+   * {@link SelectGroupLabel} に渡すプロパティーです。
+   */
+  readonly groupLabel?: SelectGroupLabelProps | undefined;
+
+  /**
+   * {@link SelectSeparator} に渡すプロパティーです。
+   */
+  readonly separator?: SelectSeparatorProps | undefined;
+};
+
+/**
+ * {@link Select} の状態です。
+ */
+export type SelectState = SelectRootState;
 
 /**
  * {@link Select} コンポーネントのプロパティーです。
  */
 export type SelectProps<Value = unknown, Multiple extends boolean | undefined = false> = Omit<
-  SelectParts.Root.Props<Value, Multiple>,
+  SelectRootProps<Value, Multiple>,
   "children"
 > & {
   /**
@@ -19,7 +161,7 @@ export type SelectProps<Value = unknown, Multiple extends boolean | undefined = 
   /**
    * トリガーに適用するクラス名です。`slotProps.trigger.className` と結合されます。
    */
-  className?: SelectParts.Trigger.Props["className"] | undefined;
+  className?: SelectTriggerProps["className"] | undefined;
 
   /**
    * 選択値がないときに表示するプレースホルダーです。
@@ -34,26 +176,7 @@ export type SelectProps<Value = unknown, Multiple extends boolean | undefined = 
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
    */
-  slotProps?: {
-    readonly label?: SelectParts.Label.Props | undefined;
-    readonly value?: SelectParts.Value.Props | undefined;
-    readonly trigger?: SelectParts.Trigger.Props | undefined;
-    readonly icon?: SelectParts.Icon.Props | undefined;
-    readonly portal?: SelectParts.Portal.Props | undefined;
-    readonly backdrop?: SelectParts.Backdrop.Props | undefined;
-    readonly positioner?: SelectParts.Positioner.Props | undefined;
-    readonly popup?: SelectParts.Popup.Props | undefined;
-    readonly list?: SelectParts.List.Props | undefined;
-    readonly item?: SelectParts.Item.Props | undefined;
-    readonly itemIndicator?: SelectParts.ItemIndicator.Props | undefined;
-    readonly itemText?: SelectParts.ItemText.Props | undefined;
-    readonly arrow?: SelectParts.Arrow.Props | undefined;
-    readonly scrollUpArrow?: SelectParts.ScrollUpArrow.Props | undefined;
-    readonly scrollDownArrow?: SelectParts.ScrollDownArrow.Props | undefined;
-    readonly group?: SelectParts.Group.Props | undefined;
-    readonly groupLabel?: SelectParts.GroupLabel.Props | undefined;
-    readonly separator?: SelectParts.Separator.Props | undefined;
-  };
+  slotProps?: SelectSlotProps | undefined;
 };
 
 /**
@@ -61,16 +184,6 @@ export type SelectProps<Value = unknown, Multiple extends boolean | undefined = 
  *
  * `multiple` を指定すると複数の値を選択できます。項目が多く、入力による絞り込みが必要な場合は
  * {@link Combobox} を使用してください。
- *
- * @example 基本
- * ```tsx
- * <Select items={["りんご", "ばなな", "みかん"]} placeholder="果物を選択" />
- * ```
- *
- * @example 複数選択
- * ```tsx
- * <Select items={["TypeScript", "Rust", "Go"]} multiple defaultValue={["TypeScript"]} />
- * ```
  */
 export const Select: SelectComponent = function SuiSelect<
   Value,
@@ -125,14 +238,10 @@ export const Select: SelectComponent = function SuiSelect<
         : (defaultLabel ?? getItemLabel(item, rootProps.itemToStringLabel));
 
     return (
-      <SelectParts.Item {...itemProps} key={index} value={item}>
-        <SelectParts.ItemIndicator {...restIndicatorProps}>
-          {indicatorChildren}
-        </SelectParts.ItemIndicator>
-        <SelectParts.ItemText {...restItemTextProps}>
-          {itemTextChildren ?? content}
-        </SelectParts.ItemText>
-      </SelectParts.Item>
+      <SelectItem {...itemProps} key={index} value={item}>
+        <SelectItemIndicator {...restIndicatorProps}>{indicatorChildren}</SelectItemIndicator>
+        <SelectItemText {...restItemTextProps}>{itemTextChildren ?? content}</SelectItemText>
+      </SelectItem>
     );
   };
 
@@ -142,55 +251,81 @@ export const Select: SelectComponent = function SuiSelect<
       : children;
 
   return (
-    <SelectParts.Root {...rootProps}>
-      {label !== undefined && <SelectParts.Label {...labelProps}>{label}</SelectParts.Label>}
-      <SelectParts.Trigger
+    <SelectRoot {...rootProps}>
+      {label !== undefined && <SelectLabel {...labelProps}>{label}</SelectLabel>}
+      <SelectTrigger
         {...restTriggerProps}
-        className={cn(restTriggerProps.className, className)}
+        className={cn(className, restTriggerProps.className)}
         aria-label={triggerAriaLabel ?? (label === undefined ? "選択肢を選択" : undefined)}
       >
-        <SelectParts.Value placeholder={placeholder} {...restValueProps}>
+        <SelectValue placeholder={placeholder} {...restValueProps}>
           {valueChildren}
-        </SelectParts.Value>
-        <SelectParts.Icon {...restIconProps}>{iconChildren}</SelectParts.Icon>
-      </SelectParts.Trigger>
-      <SelectParts.Portal {...portalProps}>
-        <SelectParts.Backdrop {...backdropProps} />
-        <SelectParts.Positioner
+        </SelectValue>
+        <SelectIcon {...restIconProps}>{iconChildren}</SelectIcon>
+      </SelectTrigger>
+      <SelectPortal {...portalProps}>
+        <SelectBackdrop {...backdropProps} />
+        <SelectPositioner
           {...restPositionerProps}
           side={side}
           align={align}
           sideOffset={sideOffset}
           alignItemWithTrigger={alignItemWithTrigger}
         >
-          <SelectParts.Popup {...popupProps}>
-            <SelectParts.ScrollUpArrow {...scrollUpArrowProps}>
+          <SelectPopup {...popupProps}>
+            <SelectScrollUpArrow {...scrollUpArrowProps}>
               <SuiChevronUpIcon />
-            </SelectParts.ScrollUpArrow>
-            <SelectParts.Arrow {...arrowProps} />
-            <SelectParts.List {...listProps}>{listChildren}</SelectParts.List>
-            <SelectParts.ScrollDownArrow {...scrollDownArrowProps}>
+            </SelectScrollUpArrow>
+            <SelectArrow {...arrowProps} />
+            <SelectList {...listProps}>{listChildren}</SelectList>
+            <SelectScrollDownArrow {...scrollDownArrowProps}>
               <SuiChevronDownIcon />
-            </SelectParts.ScrollDownArrow>
-          </SelectParts.Popup>
-        </SelectParts.Positioner>
-      </SelectParts.Portal>
-    </SelectParts.Root>
+            </SelectScrollDownArrow>
+          </SelectPopup>
+        </SelectPositioner>
+      </SelectPortal>
+    </SelectRoot>
   );
 };
 
-interface SelectComponent extends Component<SelectProps> {
+/**
+ * {@link Select} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Select {
+  /**
+   * {@link SelectState} です。
+   */
+  export type State = SelectState;
+
+  /**
+   * {@link SelectProps} です。
+   *
+   * @template Value 選択項目の値を表す型です。
+   * @template Multiple 複数選択を有効にするかどうかです。
+   */
+  export type Props<Value = unknown, Multiple extends boolean | undefined = false> = SelectProps<
+    Value,
+    Multiple
+  >;
+
+  /**
+   * {@link SelectSlotProps} です。
+   */
+  export type SlotProps = SelectSlotProps;
+}
+
+interface SelectComponent extends IComponent<SelectProps> {
   <Value, Multiple extends boolean | undefined = false>(
     props: SelectProps<Value, Multiple>,
   ): React.ReactElement | null;
 }
 
 function renderItems<Value>(
-  items: SelectParts.SelectItems<Value> | undefined,
+  items: SelectItems<Value> | undefined,
   renderItem: (item: Value, index: number, defaultLabel?: React.ReactNode) => React.ReactNode,
-  groupProps: SelectParts.Group.Props | undefined,
-  groupLabelProps: SelectParts.GroupLabel.Props | undefined,
-  separatorProps: SelectParts.Separator.Props | undefined,
+  groupProps: SelectGroupProps | undefined,
+  groupLabelProps: SelectGroupLabelProps | undefined,
+  separatorProps: SelectSeparatorProps | undefined,
 ): React.ReactNode {
   if (items === undefined) {
     return null;
@@ -207,13 +342,11 @@ function renderItems<Value>(
       const label = entry.label ?? getItemLabel(entry, undefined);
       return (
         <React.Fragment key={index}>
-          <SelectParts.Group {...groupProps}>
-            {label !== "" && (
-              <SelectParts.GroupLabel {...groupLabelProps}>{label}</SelectParts.GroupLabel>
-            )}
+          <SelectGroup {...groupProps}>
+            {label !== "" && <SelectGroupLabel {...groupLabelProps}>{label}</SelectGroupLabel>}
             {entry.items.map((item, itemIndex) => renderItem(item, itemIndex))}
-          </SelectParts.Group>
-          {index < items.length - 1 && <SelectParts.Separator {...separatorProps} />}
+          </SelectGroup>
+          {index < items.length - 1 && <SelectSeparator {...separatorProps} />}
         </React.Fragment>
       );
     }
@@ -226,7 +359,7 @@ function renderItems<Value>(
   });
 }
 
-function isItemGroup<Value>(item: unknown): item is SelectParts.SelectItemGroup<Value> {
+function isItemGroup<Value>(item: unknown): item is SelectItemGroup<Value> {
   return typeof item === "object" && item !== null && "items" in item && Array.isArray(item.items);
 }
 

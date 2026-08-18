@@ -262,17 +262,8 @@
   /* 既定値設定: ここまで */
 }
 
-/* Thumb */
+  /* Thumb */
 @layer sui.component {
-  /* 既定値設定: ここから */
-
-  .sui_slider {
-    /* 外観 */
-    --sui_slider_thumb-cursor: auto;
-  }
-
-  /* 既定値設定: ここまで */
-
   /* 変数 */
   .sui_slider {
     /* 形状 */
@@ -285,6 +276,8 @@
     --sui_slider_thumb-border_color-action: ;
     --sui_slider_thumb-border_width: ;
     --sui_slider_thumb-border_radius: ;
+    /* 外観 */
+    --sui_slider_thumb-cursor: ;
   }
 
   /* 動的 */
@@ -316,6 +309,8 @@
     --sui_slider_thumb-border_color-subtle: var(--sui-grey-naked-border-subtle);
     --sui_slider_thumb-border_color-action: var(--sui-grey-naked-border-action);
     --sui_slider_thumb-border_width: --sui-border_width(2);
+    /* 外観 */
+    --sui_slider_thumb-cursor: auto;
   }
 
   .sui_slider-size_sm {

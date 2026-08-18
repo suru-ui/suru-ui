@@ -3,9 +3,45 @@ import type { Color, Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 
 import "./meter.css";
+
+// Types
+// -----
+
+/**
+ * メーターの色です。
+ */
+export type MeterColor = Color;
+
+/**
+ * メーターの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
+ */
+export type MeterRadius = "none" | Size | "full";
+
+/**
+ * メーターの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type MeterSize = Size;
+
+/**
+ * メーターの主な外観の種類です。
+ *
+ * - `"naked"`: 背景のないトラック
+ * - `"liquid"`: 薄い塗りつぶしのトラック
+ */
+export type MeterVariant = "naked" | "liquid";
 
 // Root
 // ----
@@ -24,7 +60,7 @@ export type MeterRootProps = React.ComponentProps<typeof Meter.Root> & {
    *
    * @default "grey"
    */
-  color?: Color | undefined;
+  color?: MeterColor | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
@@ -36,47 +72,29 @@ export type MeterRootProps = React.ComponentProps<typeof Meter.Root> & {
   /**
    * メーターの角丸を指定します。
    *
-   * - `"none"`: 角を直角にする
-   * - `"sm"`: 小さい角丸
-   * - `"md"`: 標準的な角丸
-   * - `"lg"`: 大きい角丸
-   * - `"full"`: 完全な丸形
-   *
    * @default "full"
    */
-  radius?: "none" | Size | "full" | undefined;
+  radius?: MeterRadius | undefined;
 
   /**
    * メーターのサイズを指定します。
    *
    * @default "md"
    */
-  size?: Size | undefined;
+  size?: MeterSize | undefined;
 
   /**
    * メーターのスタイルバリエーションを指定します。
    *
-   * - `"naked"`: 背景のないトラック
-   * - `"liquid"`: 薄い塗りつぶしのトラック
-   *
    * @default "liquid"
    */
-  variant?: "naked" | "liquid" | undefined;
+  variant?: MeterVariant | undefined;
 };
 
 /**
  * メーターのルートコンポーネントです。
- *
- * @example
- * ```tsx
- * <MeterParts.Root value={24} color="blue">
- *   <MeterParts.Track>
- *     <MeterParts.Indicator />
- *   </MeterParts.Track>
- * </MeterParts.Root>
- * ```
  */
-export const MeterRoot: Component<MeterRootProps> = function SuiMeterRoot(props) {
+export const MeterRoot: IComponent<MeterRootProps> = function SuiMeterRoot(props) {
   const {
     size = "md",
     color = "grey",
@@ -121,7 +139,7 @@ export namespace Root {
 /**
  * {@link MeterRoot} です。
  */
-export const Root: Component<Root.Props> = MeterRoot;
+export const Root: IComponent<Root.Props> = MeterRoot;
 
 // Label
 // -----
@@ -138,15 +156,8 @@ export type MeterLabelProps = React.ComponentProps<typeof Meter.Label>;
 
 /**
  * メーターのラベルコンポーネントです。
- *
- * @example
- * ```tsx
- * <MeterParts.Root value={24}>
- *   <MeterParts.Label>ストレージ使用量</MeterParts.Label>
- * </MeterParts.Root>
- * ```
  */
-export const MeterLabel: Component<MeterLabelProps> = function SuiMeterLabel(props) {
+export const MeterLabel: IComponent<MeterLabelProps> = function SuiMeterLabel(props) {
   const { className, ...otherProps } = props;
 
   return <Meter.Label {...otherProps} className={cn(className, "sui_meter_label")} />;
@@ -170,7 +181,7 @@ export namespace Label {
 /**
  * {@link MeterLabel} です。
  */
-export const Label: Component<Label.Props> = MeterLabel;
+export const Label: IComponent<Label.Props> = MeterLabel;
 
 // Value
 // -----
@@ -187,15 +198,8 @@ export type MeterValueProps = React.ComponentProps<typeof Meter.Value>;
 
 /**
  * メーターの現在値を表示するコンポーネントです。
- *
- * @example
- * ```tsx
- * <MeterParts.Root value={24}>
- *   <MeterParts.Value />
- * </MeterParts.Root>
- * ```
  */
-export const MeterValue: Component<MeterValueProps> = function SuiMeterValue(props) {
+export const MeterValue: IComponent<MeterValueProps> = function SuiMeterValue(props) {
   const { className, ...otherProps } = props;
 
   return <Meter.Value {...otherProps} className={cn(className, "sui_meter_value")} />;
@@ -219,7 +223,7 @@ export namespace Value {
 /**
  * {@link MeterValue} です。
  */
-export const Value: Component<Value.Props> = MeterValue;
+export const Value: IComponent<Value.Props> = MeterValue;
 
 // Track
 // -----
@@ -236,17 +240,8 @@ export type MeterTrackProps = React.ComponentProps<typeof Meter.Track>;
 
 /**
  * メーターの全範囲を表すトラックコンポーネントです。
- *
- * @example
- * ```tsx
- * <MeterParts.Root value={24}>
- *   <MeterParts.Track>
- *     <MeterParts.Indicator />
- *   </MeterParts.Track>
- * </MeterParts.Root>
- * ```
  */
-export const MeterTrack: Component<MeterTrackProps> = function SuiMeterTrack(props) {
+export const MeterTrack: IComponent<MeterTrackProps> = function SuiMeterTrack(props) {
   const { className, ...otherProps } = props;
 
   return <Meter.Track {...otherProps} className={cn(className, "sui_meter_track")} />;
@@ -270,7 +265,7 @@ export namespace Track {
 /**
  * {@link MeterTrack} です。
  */
-export const Track: Component<Track.Props> = MeterTrack;
+export const Track: IComponent<Track.Props> = MeterTrack;
 
 // Indicator
 // ---------
@@ -287,17 +282,8 @@ export type MeterIndicatorProps = React.ComponentProps<typeof Meter.Indicator>;
 
 /**
  * メーターの現在値を示すインジケーターコンポーネントです。
- *
- * @example
- * ```tsx
- * <MeterParts.Root value={24}>
- *   <MeterParts.Track>
- *     <MeterParts.Indicator />
- *   </MeterParts.Track>
- * </MeterParts.Root>
- * ```
  */
-export const MeterIndicator: Component<MeterIndicatorProps> = function SuiMeterIndicator(props) {
+export const MeterIndicator: IComponent<MeterIndicatorProps> = function SuiMeterIndicator(props) {
   const { className, ...otherProps } = props;
 
   return <Meter.Indicator {...otherProps} className={cn(className, "sui_meter_indicator")} />;
@@ -321,4 +307,4 @@ export namespace Indicator {
 /**
  * {@link MeterIndicator} です。
  */
-export const Indicator: Component<Indicator.Props> = MeterIndicator;
+export const Indicator: IComponent<Indicator.Props> = MeterIndicator;

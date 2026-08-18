@@ -1,18 +1,68 @@
 import * as React from "react";
 
-import type { Component } from "../../types.js";
-import * as TooltipParts from "./tooltip.parts.jsx";
+import type { IComponent } from "../../types.js";
+import {
+  type TooltipRootProps,
+  type TooltipRootState,
+  type TooltipArrowProps,
+  type TooltipPopupProps,
+  type TooltipPortalProps,
+  type TooltipTriggerProps,
+  type TooltipPositionerProps,
+  TooltipRoot,
+  createHandle,
+  TooltipArrow,
+  TooltipPopup,
+  TooltipPortal,
+  TooltipTrigger,
+  TooltipPositioner,
+} from "./tooltip.parts.jsx";
+
+/**
+ * {@link Tooltip} の各パーツに渡すプロパティーです。
+ */
+export type TooltipSlotProps = {
+  /**
+   * {@link TooltipTrigger} に渡すプロパティーです。
+   */
+  readonly trigger?: Omit<TooltipTriggerProps, "handle" | "children" | "render"> | undefined;
+
+  /**
+   * {@link TooltipPortal} に渡すプロパティーです。
+   */
+  readonly portal?: TooltipPortalProps | undefined;
+
+  /**
+   * {@link TooltipPositioner} に渡すプロパティーです。
+   */
+  readonly positioner?: TooltipPositionerProps | undefined;
+
+  /**
+   * {@link TooltipPopup} に渡すプロパティーです。
+   */
+  readonly popup?: TooltipPopupProps | undefined;
+
+  /**
+   * {@link TooltipArrow} に渡すプロパティーです。
+   */
+  readonly arrow?: TooltipArrowProps | undefined;
+};
+
+/**
+ * {@link Tooltip} の状態です。
+ */
+export type TooltipState = TooltipRootState;
 
 /**
  * {@link Tooltip} コンポーネントのプロパティーです。
  */
-export type TooltipProps = Omit<TooltipParts.Root.Props, "children" | "handle"> & {
+export type TooltipProps = Omit<TooltipRootProps, "children" | "handle"> & {
   /**
    * ツールチップを表示する対象です。
    *
-   * {@link TooltipParts.Trigger|Trigger} の子要素として直接渡され、`render` に設定されます。
+   * {@link TooltipTrigger|Trigger} の子要素として直接渡され、`render` に設定されます。
    */
-  trigger?: TooltipParts.Trigger.Props["children"] | undefined;
+  trigger?: TooltipTriggerProps["children"] | undefined;
 
   /**
    * ポップアップに表示する内容です。
@@ -22,62 +72,23 @@ export type TooltipProps = Omit<TooltipParts.Root.Props, "children" | "handle"> 
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
    */
-  slotProps?: {
-    /**
-     * {@link TooltipParts.Trigger|Trigger} に渡すプロパティーです。
-     */
-    readonly trigger?:
-      | Omit<TooltipParts.Trigger.Props, "handle" | "children" | "render">
-      | undefined;
-
-    /**
-     * {@link TooltipParts.Portal|Portal} に渡すプロパティーです。
-     */
-    readonly portal?: TooltipParts.Portal.Props | undefined;
-
-    /**
-     * {@link TooltipParts.Positioner|Positioner} に渡すプロパティーです。
-     */
-    readonly positioner?: TooltipParts.Positioner.Props | undefined;
-
-    /**
-     * {@link TooltipParts.Popup|Popup} に渡すプロパティーです。
-     */
-    readonly popup?: TooltipParts.Popup.Props | undefined;
-
-    /**
-     * {@link TooltipParts.Arrow|Arrow} に渡すプロパティーです。
-     */
-    readonly arrow?: TooltipParts.Arrow.Props | undefined;
-  };
+  slotProps?: TooltipSlotProps | undefined;
 };
 
-interface TooltipComponentType extends Component<TooltipProps> {
+interface TooltipComponentType extends IComponent<TooltipProps> {
   /**
    * ツールチップを制御するハンドルを新しく作成します。
    *
-   * 作成したハンドルは {@link TooltipParts.Root} と {@link TooltipParts.Trigger} の `handle` プロパティーに渡します。
+   * 作成したハンドルは {@link TooltipRoot} と {@link TooltipTrigger} の `handle` プロパティーに渡します。
    */
-  readonly createHandle: typeof TooltipParts.createHandle;
+  readonly createHandle: typeof createHandle;
 }
 
 /**
  * トリガーとポップアップを組み立てたツールチップです。
  *
  * 複数のトリガーで内容を共有する場合や構成を細かく制御する場合は、
- * {@link TooltipParts.Root|Root} を直接組み立てます。
- *
- * @example 基本
- * ```tsx
- * import { Tooltip } from "@suru-ui/react/tooltip";
- *
- * <Tooltip
- *   trigger={<button type="button">保存</button>}
- *   slotProps={{ trigger: { "aria-label": "保存" } }}
- * >
- *   保存します
- * </Tooltip>
- * ```
+ * {@link TooltipRoot|Root} を直接組み立てます。
  */
 export const Tooltip: TooltipComponentType = /*#__PURE__*/ Object.assign(
   function SuiTooltip(props: TooltipProps) {
@@ -96,20 +107,38 @@ export const Tooltip: TooltipComponentType = /*#__PURE__*/ Object.assign(
     const { side = "top", sideOffset = 8, ...otherPositionerProps } = positionerProps ?? {};
 
     return (
-      <TooltipParts.Root {...rootProps}>
-        {trigger !== undefined && (
-          <TooltipParts.Trigger {...triggerProps}>{trigger}</TooltipParts.Trigger>
-        )}
-        <TooltipParts.Portal {...portalProps}>
-          <TooltipParts.Positioner {...otherPositionerProps} side={side} sideOffset={sideOffset}>
-            <TooltipParts.Popup {...popupProps}>
-              <TooltipParts.Arrow {...arrowProps} />
+      <TooltipRoot {...rootProps}>
+        {trigger !== undefined && <TooltipTrigger {...triggerProps}>{trigger}</TooltipTrigger>}
+        <TooltipPortal {...portalProps}>
+          <TooltipPositioner {...otherPositionerProps} side={side} sideOffset={sideOffset}>
+            <TooltipPopup {...popupProps}>
+              <TooltipArrow {...arrowProps} />
               {children}
-            </TooltipParts.Popup>
-          </TooltipParts.Positioner>
-        </TooltipParts.Portal>
-      </TooltipParts.Root>
+            </TooltipPopup>
+          </TooltipPositioner>
+        </TooltipPortal>
+      </TooltipRoot>
     );
   },
-  { createHandle: TooltipParts.createHandle },
+  { createHandle },
 );
+
+/**
+ * {@link Tooltip} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Tooltip {
+  /**
+   * {@link TooltipState} です。
+   */
+  export type State = TooltipState;
+
+  /**
+   * {@link TooltipProps} です。
+   */
+  export type Props = TooltipProps;
+
+  /**
+   * {@link TooltipSlotProps} です。
+   */
+  export type SlotProps = TooltipSlotProps;
+}

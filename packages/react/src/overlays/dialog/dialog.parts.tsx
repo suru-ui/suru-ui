@@ -2,9 +2,12 @@ import { Dialog } from "@base-ui/react/dialog";
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 
 import "./dialog.css";
+
+// Types
+// -----
 
 // Handle
 // ------
@@ -19,11 +22,6 @@ export type DialogHandle = Dialog.Handle<unknown>;
  *
  * 作成したハンドルを {@link Root} と {@link Trigger} の `handle` プロパティーに渡すことで、
  * トリガーとダイアログの内容を関連付けます。
- *
- * @example
- * ```tsx
- * const handle = DialogParts.createHandle();
- * ```
  */
 export const createHandle: typeof Dialog.createHandle = Dialog.createHandle;
 
@@ -52,25 +50,8 @@ export type DialogRootProps = Omit<React.ComponentProps<typeof Dialog.Root>, "ha
  *
  * ダイアログの開閉状態を管理し、各パーツをグループ化します。
  * それ自身は HTML 要素をレンダリングしません。
- *
- * @example
- * ```tsx
- * const handle = DialogParts.createHandle();
- *
- * <DialogParts.Root handle={handle}>
- *   <DialogParts.Trigger handle={handle}>
- *     {(props) => <button type="button" {...props}>通知を見る</button>}
- *   </DialogParts.Trigger>
- *   <DialogParts.Portal>
- *     <DialogParts.Popup>
- *       <DialogParts.Title>通知</DialogParts.Title>
- *       <DialogParts.Close>閉じる</DialogParts.Close>
- *     </DialogParts.Popup>
- *   </DialogParts.Portal>
- * </DialogParts.Root>
- * ```
  */
-export const DialogRoot: Component<DialogRootProps> = function SuiDialogRoot(props) {
+export const DialogRoot: IComponent<DialogRootProps> = function SuiDialogRoot(props) {
   return <Dialog.Root {...props} />;
 };
 
@@ -92,7 +73,7 @@ export namespace Root {
 /**
  * {@link DialogRoot} の短縮名です。
  */
-export const Root: Component<Root.Props> = DialogRoot;
+export const Root: IComponent<Root.Props> = DialogRoot;
 
 // Trigger
 // -------
@@ -128,15 +109,8 @@ export type DialogTriggerProps = Omit<
  * ダイアログを開くボタン要素です。
  *
  * 子要素は何にもラップされず、そのまま {@link Dialog.Trigger} の `render` プロパティーに渡されます。
- *
- * @example
- * ```tsx
- * <DialogParts.Trigger>
- *   {(props) => <button type="button" {...props}>通知を見る</button>}
- * </DialogParts.Trigger>
- * ```
  */
-export const DialogTrigger: Component<DialogTriggerProps> = function SuiDialogTrigger(props) {
+export const DialogTrigger: IComponent<DialogTriggerProps> = function SuiDialogTrigger(props) {
   const { className, handle, children, ...otherProps } = props;
 
   return (
@@ -167,7 +141,7 @@ export namespace Trigger {
 /**
  * {@link DialogTrigger} の短縮名です。
  */
-export const Trigger: Component<Trigger.Props> = DialogTrigger;
+export const Trigger: IComponent<Trigger.Props> = DialogTrigger;
 
 // Portal
 // ------
@@ -186,15 +160,8 @@ export type DialogPortalProps = React.ComponentProps<typeof Dialog.Portal>;
  * ダイアログを DOM の別の場所へ移動する要素です。
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
- *
- * @example
- * ```tsx
- * <DialogParts.Portal container={customContainer}>
- *   <DialogParts.Popup>…</DialogParts.Popup>
- * </DialogParts.Portal>
- * ```
  */
-export const DialogPortal: Component<DialogPortalProps> = function SuiDialogPortal(props) {
+export const DialogPortal: IComponent<DialogPortalProps> = function SuiDialogPortal(props) {
   const { className, ...otherProps } = props;
 
   return <Dialog.Portal {...otherProps} className={cn(className, "sui_dialog_portal")} />;
@@ -218,7 +185,7 @@ export namespace Portal {
 /**
  * {@link DialogPortal} の短縮名です。
  */
-export const Portal: Component<Portal.Props> = DialogPortal;
+export const Portal: IComponent<Portal.Props> = DialogPortal;
 
 // Backdrop
 // --------
@@ -235,13 +202,8 @@ export type DialogBackdropProps = React.ComponentProps<typeof Dialog.Backdrop>;
 
 /**
  * ポップアップの背後に表示されるオーバーレイ要素です。
- *
- * @example
- * ```tsx
- * <DialogParts.Backdrop />
- * ```
  */
-export const DialogBackdrop: Component<DialogBackdropProps> = function SuiDialogBackdrop(props) {
+export const DialogBackdrop: IComponent<DialogBackdropProps> = function SuiDialogBackdrop(props) {
   const { className, ...otherProps } = props;
 
   return <Dialog.Backdrop {...otherProps} className={cn(className, "sui_dialog_backdrop")} />;
@@ -265,7 +227,7 @@ export namespace Backdrop {
 /**
  * {@link DialogBackdrop} の短縮名です。
  */
-export const Backdrop: Component<Backdrop.Props> = DialogBackdrop;
+export const Backdrop: IComponent<Backdrop.Props> = DialogBackdrop;
 
 // Viewport
 // --------
@@ -284,15 +246,8 @@ export type DialogViewportProps = React.ComponentProps<typeof Dialog.Viewport>;
  * ポップアップの配置コンテナー要素です。
  *
  * スクロール可能なオーバーレイを作り、ポップアップを中央に配置します。
- *
- * @example
- * ```tsx
- * <DialogParts.Viewport>
- *   <DialogParts.Popup>…</DialogParts.Popup>
- * </DialogParts.Viewport>
- * ```
  */
-export const DialogViewport: Component<DialogViewportProps> = function SuiDialogViewport(props) {
+export const DialogViewport: IComponent<DialogViewportProps> = function SuiDialogViewport(props) {
   const { className, ...otherProps } = props;
 
   return <Dialog.Viewport {...otherProps} className={cn(className, "sui_dialog_viewport")} />;
@@ -316,7 +271,7 @@ export namespace Viewport {
 /**
  * {@link DialogViewport} の短縮名です。
  */
-export const Viewport: Component<Viewport.Props> = DialogViewport;
+export const Viewport: IComponent<Viewport.Props> = DialogViewport;
 
 // Popup
 // -----
@@ -335,16 +290,8 @@ export type DialogPopupProps = React.ComponentProps<typeof Dialog.Popup>;
  * ダイアログの本文を表示する要素です。
  *
  * `initialFocus` と `finalFocus` を使うと、開閉時に移動するフォーカス先を指定できます。
- *
- * @example
- * ```tsx
- * <DialogParts.Popup>
- *   <DialogParts.Title>通知</DialogParts.Title>
- *   <DialogParts.Description>新しい通知はありません。</DialogParts.Description>
- * </DialogParts.Popup>
- * ```
  */
-export const DialogPopup: Component<DialogPopupProps> = function SuiDialogPopup(props) {
+export const DialogPopup: IComponent<DialogPopupProps> = function SuiDialogPopup(props) {
   const { className, ...otherProps } = props;
 
   return <Dialog.Popup {...otherProps} className={cn(className, "sui_dialog_popup")} />;
@@ -368,7 +315,7 @@ export namespace Popup {
 /**
  * {@link DialogPopup} の短縮名です。
  */
-export const Popup: Component<Popup.Props> = DialogPopup;
+export const Popup: IComponent<Popup.Props> = DialogPopup;
 
 // Title
 // -----
@@ -385,13 +332,8 @@ export type DialogTitleProps = React.ComponentProps<typeof Dialog.Title>;
 
 /**
  * ダイアログのタイトルを表示する見出し要素です。
- *
- * @example
- * ```tsx
- * <DialogParts.Title>通知</DialogParts.Title>
- * ```
  */
-export const DialogTitle: Component<DialogTitleProps> = function SuiDialogTitle(props) {
+export const DialogTitle: IComponent<DialogTitleProps> = function SuiDialogTitle(props) {
   const { className, ...otherProps } = props;
 
   return <Dialog.Title {...otherProps} className={cn(className, "sui_dialog_title")} />;
@@ -415,7 +357,7 @@ export namespace Title {
 /**
  * {@link DialogTitle} の短縮名です。
  */
-export const Title: Component<Title.Props> = DialogTitle;
+export const Title: IComponent<Title.Props> = DialogTitle;
 
 // Description
 // -----------
@@ -432,13 +374,8 @@ export type DialogDescriptionProps = React.ComponentProps<typeof Dialog.Descript
 
 /**
  * ダイアログの説明文を表示する段落要素です。
- *
- * @example
- * ```tsx
- * <DialogParts.Description>新しい通知はありません。</DialogParts.Description>
- * ```
  */
-export const DialogDescription: Component<DialogDescriptionProps> = function SuiDialogDescription(
+export const DialogDescription: IComponent<DialogDescriptionProps> = function SuiDialogDescription(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -464,7 +401,7 @@ export namespace Description {
 /**
  * {@link DialogDescription} の短縮名です。
  */
-export const Description: Component<Description.Props> = DialogDescription;
+export const Description: IComponent<Description.Props> = DialogDescription;
 
 // Close
 // -----
@@ -493,15 +430,8 @@ export type DialogCloseProps = Omit<
  * ダイアログを閉じるボタン要素です。
  *
  * 子要素は何にもラップされず、そのまま {@link Dialog.Close} の `render` プロパティーに渡されます。
- *
- * @example
- * ```tsx
- * <DialogParts.Close>
- *   {(props) => <button type="button" {...props}>閉じる</button>}
- * </DialogParts.Close>
- * ```
  */
-export const DialogClose: Component<DialogCloseProps> = function SuiDialogClose(props) {
+export const DialogClose: IComponent<DialogCloseProps> = function SuiDialogClose(props) {
   const { className, children, ...otherProps } = props;
 
   return (
@@ -527,4 +457,4 @@ export namespace Close {
 /**
  * {@link DialogClose} の短縮名です。
  */
-export const Close: Component<Close.Props> = DialogClose;
+export const Close: IComponent<Close.Props> = DialogClose;

@@ -1,18 +1,105 @@
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
-import * as AutocompleteParts from "./autocomplete.parts.jsx";
+import type { IComponent } from "../../types.js";
+import {
+  type AutocompleteIconProps,
+  type AutocompleteItemProps,
+  type AutocompleteListProps,
+  type AutocompleteRootProps,
+  type AutocompleteRootState,
+  type AutocompleteClearProps,
+  type AutocompleteInputProps,
+  type AutocompletePopupProps,
+  type AutocompletePortalProps,
+  type AutocompleteTriggerProps,
+  type AutocompleteInputGroupProps,
+  type AutocompletePositionerProps,
+  AutocompleteIcon,
+  AutocompleteItem,
+  AutocompleteList,
+  AutocompleteRoot,
+  AutocompleteClear,
+  AutocompleteGroup,
+  AutocompleteInput,
+  AutocompletePopup,
+  AutocompletePortal,
+  AutocompleteTrigger,
+  AutocompleteCollection,
+  AutocompleteGroupLabel,
+  AutocompleteInputGroup,
+  AutocompletePositioner,
+} from "./autocomplete.parts.jsx";
+
+/**
+ * {@link Autocomplete} の各パーツに渡すプロパティーです。
+ */
+export type AutocompleteSlotProps = {
+  /**
+   * {@link AutocompleteClear} に渡すプロパティーです。
+   */
+  readonly clear?: AutocompleteClearProps | undefined;
+
+  /**
+   * {@link AutocompleteIcon} に渡すプロパティーです。
+   */
+  readonly icon?: AutocompleteIconProps | undefined;
+
+  /**
+   * {@link AutocompleteInput} に渡すプロパティーです。
+   */
+  readonly input?: AutocompleteInputProps | undefined;
+
+  /**
+   * {@link AutocompleteInputGroup} に渡すプロパティーです。
+   */
+  readonly inputGroup?: AutocompleteInputGroupProps | undefined;
+
+  /**
+   * {@link AutocompleteItem} に渡すプロパティーです。
+   */
+  readonly item?: AutocompleteItemProps | undefined;
+
+  /**
+   * {@link AutocompleteList} に渡すプロパティーです。
+   */
+  readonly list?: AutocompleteListProps | undefined;
+
+  /**
+   * {@link AutocompletePortal} に渡すプロパティーです。
+   */
+  readonly portal?: AutocompletePortalProps | undefined;
+
+  /**
+   * {@link AutocompletePositioner} に渡すプロパティーです。
+   */
+  readonly positioner?: AutocompletePositionerProps | undefined;
+
+  /**
+   * {@link AutocompletePopup} に渡すプロパティーです。
+   */
+  readonly popup?: AutocompletePopupProps | undefined;
+
+  /**
+   * {@link AutocompleteTrigger} に渡すプロパティーです。
+   */
+  readonly trigger?: AutocompleteTriggerProps | undefined;
+};
+
+/**
+ * {@link Autocomplete} の状態です。
+ */
+export type AutocompleteState = AutocompleteRootState;
 
 /**
  * {@link Autocomplete} コンポーネントのプロパティーです。
  */
-export type AutocompleteProps = Omit<AutocompleteParts.Root.Props, "children"> & {
+export type AutocompleteProps = Omit<AutocompleteRootProps, "children"> & {
   /**
    * 入力欄を含むグループ要素に適用するクラス名です。
    * `slotProps.inputGroup.className` と結合されます。
    */
-  className?: AutocompleteParts.InputGroup.Props["className"] | undefined;
+  className?: AutocompleteInputGroupProps["className"] | undefined;
 
   /**
    * 入力欄のプレースホルダー文字列です。
@@ -38,29 +125,7 @@ export type AutocompleteProps = Omit<AutocompleteParts.Root.Props, "children"> &
    * `clear`、`icon`、`input`、`inputGroup`、`item`、`list`、`portal`、`positioner`、
    * `popup`、`trigger` を指定できます。
    */
-  slotProps?:
-    | {
-        readonly clear?: AutocompleteParts.Clear.Props | undefined;
-
-        readonly icon?: AutocompleteParts.Icon.Props | undefined;
-
-        readonly input?: AutocompleteParts.Input.Props | undefined;
-
-        readonly inputGroup?: AutocompleteParts.InputGroup.Props | undefined;
-
-        readonly item?: AutocompleteParts.Item.Props | undefined;
-
-        readonly list?: AutocompleteParts.List.Props | undefined;
-
-        readonly portal?: AutocompleteParts.Portal.Props | undefined;
-
-        readonly positioner?: AutocompleteParts.Positioner.Props | undefined;
-
-        readonly popup?: AutocompleteParts.Popup.Props | undefined;
-
-        readonly trigger?: AutocompleteParts.Trigger.Props | undefined;
-      }
-    | undefined;
+  slotProps?: AutocompleteSlotProps | undefined;
 };
 
 /**
@@ -72,29 +137,8 @@ export type AutocompleteProps = Omit<AutocompleteParts.Root.Props, "children"> &
  * `autoHighlight` と `openOnInputClick` の既定値はどちらも `true` です。
  * `placeholder` は `slotProps.input.placeholder` より優先されます。
  * クリアボタンは入力値がある場合だけ、ポップアップの内容は開いている場合だけ表示されます。
- *
- * @example 基本
- * ```tsx
- * <Autocomplete items={["りんご", "ばなな", "みかん"]} />
- * ```
- *
- * @example 行の見た目を変える
- * ```tsx
- * <Autocomplete items={["りんご", "ばなな", "みかん"]}>
- *   {(item) => <span className="pl-2">🍎 {item}</span>}
- * </Autocomplete>
- * ```
- *
- * @example 制御モード
- * ```tsx
- * <Autocomplete
- *   items={["りんご", "ばなな", "みかん"]}
- *   value={value}
- *   onValueChange={setValue}
- * />
- * ```
  */
-export const Autocomplete: Component<AutocompleteProps> = function SuiAutocomplete(props) {
+export const Autocomplete: IComponent<AutocompleteProps> = function SuiAutocomplete(props) {
   const {
     autoHighlight = true,
     children,
@@ -137,69 +181,83 @@ export const Autocomplete: Component<AutocompleteProps> = function SuiAutocomple
       const group = item as { label?: React.ReactNode; items?: readonly unknown[] } | null;
       if (group && Array.isArray(group.items)) {
         return (
-          <AutocompleteParts.Group key={index} items={group.items}>
+          <AutocompleteGroup key={index} items={group.items}>
             {group.label !== undefined && (
-              <AutocompleteParts.GroupLabel>{group.label}</AutocompleteParts.GroupLabel>
+              <AutocompleteGroupLabel>{group.label}</AutocompleteGroupLabel>
             )}
-            <AutocompleteParts.Collection>
+            <AutocompleteCollection>
               {(groupItem, groupIndex) => (
-                <AutocompleteParts.Item {...itemProps} key={groupIndex} value={groupItem}>
+                <AutocompleteItem {...itemProps} key={groupIndex} value={groupItem}>
                   {typeof children === "function"
                     ? children(groupItem as React.ReactNode, groupIndex)
                     : String(groupItem)}
-                </AutocompleteParts.Item>
+                </AutocompleteItem>
               )}
-            </AutocompleteParts.Collection>
-          </AutocompleteParts.Group>
+            </AutocompleteCollection>
+          </AutocompleteGroup>
         );
       }
       return (
-        <AutocompleteParts.Item {...itemProps} key={index} value={item}>
+        <AutocompleteItem {...itemProps} key={index} value={item}>
           {typeof children === "function" ? children(item as React.ReactNode, index) : String(item)}
-        </AutocompleteParts.Item>
+        </AutocompleteItem>
       );
     };
   }, [children, itemProps]);
 
   return (
-    <AutocompleteParts.Root
+    <AutocompleteRoot
       {...rootProps}
       autoHighlight={autoHighlight}
       openOnInputClick={openOnInputClick}
     >
-      <AutocompleteParts.InputGroup
+      <AutocompleteInputGroup
         {...inputGroupProps}
-        className={cn(inputGroupProps?.className, className)}
+        className={cn(className, inputGroupProps?.className)}
       >
-        <AutocompleteParts.Input
-          {...inputProps}
-          placeholder={placeholder ?? inputProps?.placeholder}
-        />
-        <AutocompleteParts.Clear {...restClearProps} aria-label={clearAriaLabel ?? "クリア"}>
+        <AutocompleteInput {...inputProps} placeholder={placeholder ?? inputProps?.placeholder} />
+        <AutocompleteClear {...restClearProps} aria-label={clearAriaLabel ?? "クリア"}>
           {clearChildren}
-        </AutocompleteParts.Clear>
-        <AutocompleteParts.Trigger
-          {...restTriggerProps}
-          aria-label={triggerAriaLabel ?? "選択肢を選択"}
-        >
-          <AutocompleteParts.Icon {...restIconProps}>{iconChildren}</AutocompleteParts.Icon>
-        </AutocompleteParts.Trigger>
-      </AutocompleteParts.InputGroup>
-      <AutocompleteParts.Portal {...portalProps}>
-        <AutocompleteParts.Positioner
+        </AutocompleteClear>
+        <AutocompleteTrigger {...restTriggerProps} aria-label={triggerAriaLabel ?? "選択肢を選択"}>
+          <AutocompleteIcon {...restIconProps}>{iconChildren}</AutocompleteIcon>
+        </AutocompleteTrigger>
+      </AutocompleteInputGroup>
+      <AutocompletePortal {...portalProps}>
+        <AutocompletePositioner
           {...restPositionerProps}
           side={side}
           align={align}
           sideOffset={sideOffset}
         >
-          <AutocompleteParts.Popup {...popupProps}>
-            <AutocompleteParts.List {...listProps}>{listChildren}</AutocompleteParts.List>
-          </AutocompleteParts.Popup>
-        </AutocompleteParts.Positioner>
-      </AutocompleteParts.Portal>
-    </AutocompleteParts.Root>
+          <AutocompletePopup {...popupProps}>
+            <AutocompleteList {...listProps}>{listChildren}</AutocompleteList>
+          </AutocompletePopup>
+        </AutocompletePositioner>
+      </AutocompletePortal>
+    </AutocompleteRoot>
   );
 };
+
+/**
+ * {@link Autocomplete} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Autocomplete {
+  /**
+   * {@link AutocompleteState} です。
+   */
+  export type State = AutocompleteState;
+
+  /**
+   * {@link AutocompleteProps} です。
+   */
+  export type Props = AutocompleteProps;
+
+  /**
+   * {@link AutocompleteSlotProps} です。
+   */
+  export type SlotProps = AutocompleteSlotProps;
+}
 
 /**
  * {@link Autocomplete} の Clear に使う既定のアイコンです。

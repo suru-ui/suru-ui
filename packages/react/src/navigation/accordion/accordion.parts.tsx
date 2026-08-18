@@ -8,9 +8,31 @@ import * as React from "react";
 
 import splitRenderProps from "../../_split-render-props.js";
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 
 import "./accordion.css";
+
+// Types
+// -----
+
+/**
+ * アコーディオンの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸（4px）
+ * - `"md"`: 標準的な角丸（4px）
+ * - `"lg"`: 大きい角丸（6px）
+ */
+export type AccordionRadius = "none" | "sm" | "md" | "lg";
+
+/**
+ * アコーディオンの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type AccordionSize = Size;
 
 // Root
 // ----
@@ -41,43 +63,22 @@ export type AccordionRootProps = React.ComponentProps<typeof Accordion.Root> & {
   /**
    * アコーディオンの角丸を指定します。
    *
-   * - `"none"`: 角を直角にする
-   * - `"sm"`: 小さい角丸（4px）
-   * - `"md"`: 標準的な角丸（4px）
-   * - `"lg"`: 大きい角丸（6px）
-   *
    * @default "md"
    */
-  radius?: "none" | "sm" | "md" | "lg" | undefined;
+  radius?: AccordionRadius | undefined;
 
   /**
    * アコーディオンのサイズを指定します。
    *
-   * - `"sm"`: 小さいサイズ
-   * - `"md"`: 標準的なサイズ
-   * - `"lg"`: 大きいサイズ
-   *
    * @default "md"
    */
-  size?: Size | undefined;
+  size?: AccordionSize | undefined;
 };
 
 /**
  * アコーディオンのルート要素です。
- *
- * @example
- * ```tsx
- * <AccordionParts.Root>
- *   <AccordionParts.Item>
- *     <AccordionParts.Header>
- *       <AccordionParts.Trigger>見出し</AccordionParts.Trigger>
- *     </AccordionParts.Header>
- *     <AccordionParts.Panel>コンテンツ</AccordionParts.Panel>
- *   </AccordionParts.Item>
- * </AccordionParts.Root>
- * ```
  */
-export const AccordionRoot: Component<AccordionRootProps> = function SuiAccordionRoot(props) {
+export const AccordionRoot: IComponent<AccordionRootProps> = function SuiAccordionRoot(props) {
   const {
     className,
     divider = true,
@@ -120,7 +121,7 @@ export namespace Root {
 /**
  * {@link AccordionRoot} の別名です。
  */
-export const Root: Component<Root.Props> = AccordionRoot;
+export const Root: IComponent<Root.Props> = AccordionRoot;
 
 // Item
 // ----
@@ -139,16 +140,8 @@ export type AccordionItemProps = React.ComponentProps<typeof Accordion.Item>;
  * アコーディオンの項目要素です。
  *
  * 見出しとパネルを 1 組にしてまとめます。
- *
- * @example
- * ```tsx
- * <AccordionParts.Item value="a">
- *   <AccordionParts.Header>…</AccordionParts.Header>
- *   <AccordionParts.Panel>…</AccordionParts.Panel>
- * </AccordionParts.Item>
- * ```
  */
-export const AccordionItem: Component<AccordionItemProps> = function SuiAccordionItem(props) {
+export const AccordionItem: IComponent<AccordionItemProps> = function SuiAccordionItem(props) {
   const { className, ...otherProps } = props;
 
   return <Accordion.Item {...otherProps} className={cn(className, "sui_accordion_item")} />;
@@ -172,7 +165,7 @@ export namespace Item {
 /**
  * {@link AccordionItem} の別名です。
  */
-export const Item: Component<Item.Props> = AccordionItem;
+export const Item: IComponent<Item.Props> = AccordionItem;
 
 // Header
 // ------
@@ -189,15 +182,10 @@ export type AccordionHeaderProps = React.ComponentProps<typeof Accordion.Header>
 
 /**
  * アコーディオンの見出し要素です。
- *
- * @example
- * ```tsx
- * <AccordionParts.Header>
- *   <AccordionParts.Trigger>見出し</AccordionParts.Trigger>
- * </AccordionParts.Header>
- * ```
  */
-export const AccordionHeader: Component<AccordionHeaderProps> = function SuiAccordionHeader(props) {
+export const AccordionHeader: IComponent<AccordionHeaderProps> = function SuiAccordionHeader(
+  props,
+) {
   const { className, ...otherProps } = props;
 
   return <Accordion.Header {...otherProps} className={cn(className, "sui_accordion_header")} />;
@@ -221,7 +209,7 @@ export namespace Header {
 /**
  * {@link AccordionHeader} の別名です。
  */
-export const Header: Component<Header.Props> = AccordionHeader;
+export const Header: IComponent<Header.Props> = AccordionHeader;
 
 // Trigger
 // -------
@@ -238,16 +226,8 @@ export type AccordionTriggerProps = React.ComponentProps<typeof Accordion.Trigge
 
 /**
  * アコーディオンの開閉ボタン要素です。
- *
- * @example
- * ```tsx
- * <AccordionParts.Trigger>
- *   見出し
- *   <AccordionParts.Indicator>…</AccordionParts.Indicator>
- * </AccordionParts.Trigger>
- * ```
  */
-export const AccordionTrigger: Component<AccordionTriggerProps> = function SuiAccordionTrigger(
+export const AccordionTrigger: IComponent<AccordionTriggerProps> = function SuiAccordionTrigger(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -273,7 +253,7 @@ export namespace Trigger {
 /**
  * {@link AccordionTrigger} の別名です。
  */
-export const Trigger: Component<Trigger.Props> = AccordionTrigger;
+export const Trigger: IComponent<Trigger.Props> = AccordionTrigger;
 
 // Indicator
 // ---------
@@ -294,15 +274,8 @@ export type AccordionIndicatorProps = Omit<
 
 /**
  * アコーディオンの展開状態を示すアイコンを表示する要素です。
- *
- * @example
- * ```tsx
- * <AccordionParts.Indicator>
- *   <ChevronIcon />
- * </AccordionParts.Indicator>
- * ```
  */
-export const AccordionIndicator: Component<AccordionIndicatorProps> =
+export const AccordionIndicator: IComponent<AccordionIndicatorProps> =
   function SuiAccordionIndicator(props) {
     const [renderProps, componentProps] = splitRenderProps(props);
     const { ref, ...elementProps } = componentProps;
@@ -336,7 +309,7 @@ export namespace Indicator {
 /**
  * {@link AccordionIndicator} の別名です。
  */
-export const Indicator: Component<Indicator.Props> = AccordionIndicator;
+export const Indicator: IComponent<Indicator.Props> = AccordionIndicator;
 
 // Panel
 // -----
@@ -353,13 +326,8 @@ export type AccordionPanelProps = React.ComponentProps<typeof Accordion.Panel>;
 
 /**
  * アコーディオンのパネル要素です。
- *
- * @example
- * ```tsx
- * <AccordionParts.Panel>コンテンツ</AccordionParts.Panel>
- * ```
  */
-export const AccordionPanel: Component<AccordionPanelProps> = function SuiAccordionPanel(props) {
+export const AccordionPanel: IComponent<AccordionPanelProps> = function SuiAccordionPanel(props) {
   const { className, ...otherProps } = props;
 
   return <Accordion.Panel {...otherProps} className={cn(className, "sui_accordion_panel")} />;
@@ -383,4 +351,4 @@ export namespace Panel {
 /**
  * {@link AccordionPanel} の別名です。
  */
-export const Panel: Component<Panel.Props> = AccordionPanel;
+export const Panel: IComponent<Panel.Props> = AccordionPanel;

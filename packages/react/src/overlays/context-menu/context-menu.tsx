@@ -1,18 +1,60 @@
 import * as React from "react";
 
-import type { Component } from "../../types.js";
-import * as ContextMenuParts from "./context-menu.parts.jsx";
+import type { IComponent } from "../../types.js";
+import {
+  type ContextMenuRootProps,
+  type ContextMenuRootState,
+  type ContextMenuPopupProps,
+  type ContextMenuPortalProps,
+  type ContextMenuTriggerProps,
+  type ContextMenuPositionerProps,
+  ContextMenuRoot,
+  ContextMenuPopup,
+  ContextMenuPortal,
+  ContextMenuTrigger,
+  ContextMenuPositioner,
+} from "./context-menu.parts.jsx";
+
+/**
+ * {@link ContextMenu} の各パーツに渡すプロパティーです。
+ */
+export type ContextMenuSlotProps = {
+  /**
+   * {@link ContextMenuTrigger|Trigger} に渡すプロパティーです。
+   */
+  readonly trigger?: Omit<ContextMenuTriggerProps, "children"> | undefined;
+
+  /**
+   * {@link ContextMenuPortal|Portal} に渡すプロパティーです。
+   */
+  readonly portal?: ContextMenuPortalProps | undefined;
+
+  /**
+   * {@link ContextMenuPositioner|Positioner} に渡すプロパティーです。
+   */
+  readonly positioner?: ContextMenuPositionerProps | undefined;
+
+  /**
+   * {@link ContextMenuPopup|Popup} に渡すプロパティーです。
+   */
+  readonly popup?: ContextMenuPopupProps | undefined;
+};
+
+/**
+ * {@link ContextMenu} の状態です。
+ */
+export type ContextMenuState = ContextMenuRootState;
 
 /**
  * {@link ContextMenu} コンポーネントのプロパティーです。
  */
-export type ContextMenuProps = Omit<ContextMenuParts.Root.Props, "children"> & {
+export type ContextMenuProps = Omit<ContextMenuRootProps, "children"> & {
   /**
    * コンテキストメニューを開く対象のコンテンツです。
    *
-   * {@link ContextMenuParts.Trigger|Trigger} の子要素として直接渡されます。
+   * {@link ContextMenuTrigger|Trigger} の子要素として直接渡されます。
    */
-  trigger?: ContextMenuParts.Trigger.Props["children"] | undefined;
+  trigger?: ContextMenuTriggerProps["children"] | undefined;
 
   /**
    * ポップアップに表示するメニュー項目です。
@@ -22,51 +64,16 @@ export type ContextMenuProps = Omit<ContextMenuParts.Root.Props, "children"> & {
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
    */
-  slotProps?:
-    | {
-        /**
-         * {@link ContextMenuParts.Trigger|Trigger} に渡すプロパティーです。
-         */
-        readonly trigger?: Omit<ContextMenuParts.Trigger.Props, "children"> | undefined;
-
-        /**
-         * {@link ContextMenuParts.Portal|Portal} に渡すプロパティーです。
-         */
-        readonly portal?: ContextMenuParts.Portal.Props | undefined;
-
-        /**
-         * {@link ContextMenuParts.Positioner|Positioner} に渡すプロパティーです。
-         */
-        readonly positioner?: ContextMenuParts.Positioner.Props | undefined;
-
-        /**
-         * {@link ContextMenuParts.Popup|Popup} に渡すプロパティーです。
-         */
-        readonly popup?: ContextMenuParts.Popup.Props | undefined;
-      }
-    | undefined;
+  slotProps?: ContextMenuSlotProps | undefined;
 };
 
 /**
  * コンテキストメニューを表示するコンポーネントです。
  *
  * 右クリックまたは長押しの対象とポップアップを組み立てます。
- * 項目の種類や構成を細かく制御する場合は、{@link ContextMenuParts.Root|Root} を直接組み立てます。
- *
- * @example 基本
- * ```tsx
- * import { ContextMenu } from "@suru-ui/react/context-menu";
- * import * as ContextMenuParts from "@suru-ui/react/context-menu";
- *
- * <ContextMenu trigger={<div>右クリックしてください</div>}>
- *   <ContextMenuParts.Item>編集</ContextMenuParts.Item>
- *   <ContextMenuParts.Item>複製</ContextMenuParts.Item>
- *   <ContextMenuParts.Separator />
- *   <ContextMenuParts.Item>削除</ContextMenuParts.Item>
- * </ContextMenu>
- * ```
+ * 項目の種類や構成を細かく制御する場合は、{@link ContextMenuRoot|Root} を直接組み立てます。
  */
-export const ContextMenu: Component<ContextMenuProps> = function SuiContextMenu(props) {
+export const ContextMenu: IComponent<ContextMenuProps> = function SuiContextMenu(props) {
   const {
     trigger,
     children,
@@ -80,15 +87,35 @@ export const ContextMenu: Component<ContextMenuProps> = function SuiContextMenu(
   } = props;
 
   return (
-    <ContextMenuParts.Root {...rootProps}>
+    <ContextMenuRoot {...rootProps}>
       {trigger !== undefined && (
-        <ContextMenuParts.Trigger {...triggerProps}>{trigger}</ContextMenuParts.Trigger>
+        <ContextMenuTrigger {...triggerProps}>{trigger}</ContextMenuTrigger>
       )}
-      <ContextMenuParts.Portal {...portalProps}>
-        <ContextMenuParts.Positioner {...positionerProps}>
-          <ContextMenuParts.Popup {...popupProps}>{children}</ContextMenuParts.Popup>
-        </ContextMenuParts.Positioner>
-      </ContextMenuParts.Portal>
-    </ContextMenuParts.Root>
+      <ContextMenuPortal {...portalProps}>
+        <ContextMenuPositioner {...positionerProps}>
+          <ContextMenuPopup {...popupProps}>{children}</ContextMenuPopup>
+        </ContextMenuPositioner>
+      </ContextMenuPortal>
+    </ContextMenuRoot>
   );
 };
+
+/**
+ * {@link ContextMenu} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace ContextMenu {
+  /**
+   * {@link ContextMenuState} です。
+   */
+  export type State = ContextMenuState;
+
+  /**
+   * {@link ContextMenuProps} です。
+   */
+  export type Props = ContextMenuProps;
+
+  /**
+   * {@link ContextMenuSlotProps} です。
+   */
+  export type SlotProps = ContextMenuSlotProps;
+}

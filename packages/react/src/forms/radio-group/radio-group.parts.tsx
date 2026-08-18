@@ -4,10 +4,35 @@ import * as React from "react";
 
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
-import type { Component } from "../../types.js";
+import type { IComponent, IUseContext } from "../../types.js";
 import type { RadioRadius, RadioVariant } from "../radio/radio.parts.jsx";
 
 import "./radio-group.css";
+
+// Types
+// -----
+
+/**
+ * ラジオボタングループの色です。
+ */
+export type RadioGroupColor = Color;
+
+/**
+ * ラジオボタングループの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type RadioGroupSize = Size;
+
+/**
+ * ラジオボタングループの向きです。
+ *
+ * - `"horizontal"`: 横並び
+ * - `"vertical"`: 縦並び
+ */
+export type RadioGroupOrientation = "horizontal" | "vertical";
 
 // Context
 // -------
@@ -24,12 +49,12 @@ export type RadioGroupContext = {
   /**
    * ラジオボタンの色です。
    */
-  readonly color: Color;
+  readonly color: RadioGroupColor;
 
   /**
    * ラジオボタンのサイズです。
    */
-  readonly size: Size;
+  readonly size: RadioGroupSize;
 
   /**
    * ラジオボタンの角丸です。
@@ -53,20 +78,9 @@ export type RadioGroupContext = {
 export const RadioGroupContext: React.Context<RadioGroupContext | null> =
   React.createContext<RadioGroupContext | null>(null);
 
-/**
- * {@link RadioGroupContext} を読み取るフックです。
- *
- * Provider は {@link RadioGroupRoot} の配下に必要です。
- * Provider がない場合、`optional` が `true` でなければ {@link ContextMissingError} を投げます。
- * `optional` に `true` を指定すると、Provider がない場合に `null` を返します。
- *
- * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
- *
- * @returns コンテキストの値。`optional` が `true` でコンテキストがない場合は `null`。
- */
-export function useRadioGroupContext(optional?: false): RadioGroupContext;
-export function useRadioGroupContext(optional?: boolean): RadioGroupContext | null;
-export function useRadioGroupContext(optional?: boolean): RadioGroupContext | null {
+function useSuiRadioGroupContext(optional?: false): RadioGroupContext;
+function useSuiRadioGroupContext(optional?: boolean): RadioGroupContext | null;
+function useSuiRadioGroupContext(optional?: boolean): RadioGroupContext | null {
   const context = React.use(RadioGroupContext);
   if (context === null && !optional) {
     throw new ContextMissingError({
@@ -79,31 +93,24 @@ export function useRadioGroupContext(optional?: boolean): RadioGroupContext | nu
 }
 
 /**
- * {@link RadioGroupContext} の別名です。
+ * {@link RadioGroupContext} です。
  */
 export type Context = RadioGroupContext;
 
 /**
- * {@link RadioGroupContext} の別名です。
+ * {@link RadioGroupContext} です。
  */
 export const Context: React.Context<RadioGroupContext | null> = RadioGroupContext;
 
 /**
- * {@link useRadioGroupContext} の別名です。
- *
- * Provider は {@link RadioGroupRoot} の配下に必要です。
- * Provider がない場合、`optional` が `true` でなければ {@link ContextMissingError} を投げます。
- * `optional` に `true` を指定すると、Provider がない場合に `null` を返します。
- *
- * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
- *
- * @returns コンテキストの値。`optional` が `true` でコンテキストがない場合は `null`。
+ * {@link RadioGroupContext} を読み取るフックです。
  */
-export function useContext(optional?: false): RadioGroupContext;
-export function useContext(optional?: boolean): RadioGroupContext | null;
-export function useContext(optional?: boolean): RadioGroupContext | null {
-  return useRadioGroupContext(optional);
-}
+export const useRadioGroupContext: IUseContext<RadioGroupContext> = useSuiRadioGroupContext;
+
+/**
+ * {@link useRadioGroupContext} です。
+ */
+export const useContext: IUseContext<Context> = useRadioGroupContext;
 
 // Root
 // ----
@@ -128,7 +135,7 @@ export type RadioGroupRootProps = React.ComponentProps<typeof RadioGroup> & {
    *
    * @default "md"
    */
-  size?: Size | undefined;
+  size?: RadioGroupSize | undefined;
 
   /**
    * ラジオボタンの色を指定します。
@@ -138,13 +145,10 @@ export type RadioGroupRootProps = React.ComponentProps<typeof RadioGroup> & {
    *
    * @default "grey"
    */
-  color?: Color | undefined;
+  color?: RadioGroupColor | undefined;
 
   /**
    * ラジオボタンのスタイルバリエーションを指定します。
-   *
-   * - `"naked"`: 背景のないインジケーターのみ、枠線なし
-   * - `"liquid"`: 薄い塗りつぶし
    *
    * {@link RadioGroupRoot} の子要素に指定した値より優先されます。
    * 値を変更すると、グループ内のラジオボタンも更新されます。
@@ -164,10 +168,6 @@ export type RadioGroupRootProps = React.ComponentProps<typeof RadioGroup> & {
   /**
    * ラジオボタンの角丸を指定します。
    *
-   * - `"none"`: 角を直角にする
-   * - `"rounded"`: 標準的な角丸
-   * - `"full"`: 完全な丸形
-   *
    * {@link RadioGroupRoot} の子要素に指定した値より優先されます。
    * 値を変更すると、グループ内のラジオボタンも更新されます。
    *
@@ -178,15 +178,12 @@ export type RadioGroupRootProps = React.ComponentProps<typeof RadioGroup> & {
   /**
    * ラジオボタン群の向きを指定します。
    *
-   * - `"horizontal"`: 横並び
-   * - `"vertical"`: 縦並び
-   *
    * 値を変更すると、グループのレイアウトと `aria-orientation` が更新されます。
    * `aria-orientation` を指定した場合は、その値が `orientation` より優先されます。
    *
    * @default "vertical"
    */
-  orientation?: "horizontal" | "vertical" | undefined;
+  orientation?: RadioGroupOrientation | undefined;
 };
 
 /**
@@ -194,16 +191,8 @@ export type RadioGroupRootProps = React.ComponentProps<typeof RadioGroup> & {
  *
  * 選択状態を管理し、子要素のラジオボタンにスタイルを伝播します。
  * スタイル値が変わらない再レンダーでは、コンテキストの値を再生成しません。
- *
- * @example
- * ```tsx
- * <RadioGroupParts.Root defaultValue="option-a" color="blue">
- *   <Radio value="option-a" />
- *   <Radio value="option-b" />
- * </RadioGroupParts.Root>
- * ```
  */
-export const RadioGroupRoot: Component<RadioGroupRootProps> = function SuiRadioGroupRoot(props) {
+export const RadioGroupRoot: IComponent<RadioGroupRootProps> = function SuiRadioGroupRoot(props) {
   const {
     size: sizeProp = "md",
     color: colorProp = "grey",
@@ -258,4 +247,4 @@ export namespace Root {
 /**
  * {@link RadioGroupRoot} の別名です。
  */
-export const Root: Component<Root.Props> = RadioGroupRoot;
+export const Root: IComponent<Root.Props> = RadioGroupRoot;

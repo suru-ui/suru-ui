@@ -2,9 +2,12 @@ import { ScrollArea as BaseScrollArea } from "@base-ui/react/scroll-area";
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 
 import "./scroll-area.css";
+
+// Types
+// -----
 
 // Root
 // ----
@@ -21,20 +24,8 @@ export type ScrollAreaRootProps = React.ComponentProps<typeof BaseScrollArea.Roo
 
 /**
  * スクロール領域の各パーツをまとめるルート要素です。
- *
- * @example
- * ```tsx
- * <ScrollAreaParts.Root style={{ maxHeight: 240 }}>
- *   <ScrollAreaParts.Viewport>
- *     <ScrollAreaParts.Content>コンテンツ</ScrollAreaParts.Content>
- *   </ScrollAreaParts.Viewport>
- *   <ScrollAreaParts.Scrollbar>
- *     <ScrollAreaParts.Thumb />
- *   </ScrollAreaParts.Scrollbar>
- * </ScrollAreaParts.Root>
- * ```
  */
-export const ScrollAreaRoot: Component<ScrollAreaRootProps> = function SuiScrollAreaRoot(props) {
+export const ScrollAreaRoot: IComponent<ScrollAreaRootProps> = function SuiScrollAreaRoot(props) {
   const { className, ...otherProps } = props;
   return <BaseScrollArea.Root {...otherProps} className={cn(className, "sui_scroll_area")} />;
 };
@@ -54,7 +45,7 @@ export namespace Root {
 /**
  * {@link ScrollAreaRoot} の別名です。
  */
-export const Root: Component<Root.Props> = ScrollAreaRoot;
+export const Root: IComponent<Root.Props> = ScrollAreaRoot;
 
 // Viewport
 // --------
@@ -72,7 +63,7 @@ export type ScrollAreaViewportProps = React.ComponentProps<typeof BaseScrollArea
 /**
  * コンテンツをクリップし、スクロール操作を受け付けるビューポート要素です。
  */
-export const ScrollAreaViewport: Component<ScrollAreaViewportProps> =
+export const ScrollAreaViewport: IComponent<ScrollAreaViewportProps> =
   function SuiScrollAreaViewport(props) {
     const { className, ...otherProps } = props;
     return (
@@ -98,7 +89,7 @@ export namespace Viewport {
 /**
  * {@link ScrollAreaViewport} の別名です。
  */
-export const Viewport: Component<Viewport.Props> = ScrollAreaViewport;
+export const Viewport: IComponent<Viewport.Props> = ScrollAreaViewport;
 
 // Content
 // -------
@@ -116,7 +107,7 @@ export type ScrollAreaContentProps = React.ComponentProps<typeof BaseScrollArea.
 /**
  * ビューポート内でスクロールされるコンテンツを保持する要素です。
  */
-export const ScrollAreaContent: Component<ScrollAreaContentProps> = function SuiScrollAreaContent(
+export const ScrollAreaContent: IComponent<ScrollAreaContentProps> = function SuiScrollAreaContent(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -140,7 +131,7 @@ export namespace Content {
 /**
  * {@link ScrollAreaContent} の別名です。
  */
-export const Content: Component<Content.Props> = ScrollAreaContent;
+export const Content: IComponent<Content.Props> = ScrollAreaContent;
 
 // Scrollbar
 // ---------
@@ -161,7 +152,7 @@ export type ScrollAreaScrollbarProps = React.ComponentProps<typeof BaseScrollAre
  *
  * 子要素として {@link ScrollAreaThumb} を配置します。
  */
-export const ScrollAreaScrollbar: Component<ScrollAreaScrollbarProps> =
+export const ScrollAreaScrollbar: IComponent<ScrollAreaScrollbarProps> =
   function SuiScrollAreaScrollbar(props) {
     const { className, ...otherProps } = props;
     return (
@@ -187,7 +178,7 @@ export namespace Scrollbar {
 /**
  * {@link ScrollAreaScrollbar} の別名です。
  */
-export const Scrollbar: Component<Scrollbar.Props> = ScrollAreaScrollbar;
+export const Scrollbar: IComponent<Scrollbar.Props> = ScrollAreaScrollbar;
 
 // Thumb
 // -----
@@ -206,7 +197,9 @@ export type ScrollAreaThumbProps = React.ComponentProps<typeof BaseScrollArea.Th
 /**
  * スクロール位置とスクロール可能な範囲を示す、スクロールバー内のつまみ要素です。
  */
-export const ScrollAreaThumb: Component<ScrollAreaThumbProps> = function SuiScrollAreaThumb(props) {
+export const ScrollAreaThumb: IComponent<ScrollAreaThumbProps> = function SuiScrollAreaThumb(
+  props,
+) {
   const { className, ...otherProps } = props;
   return (
     <BaseScrollArea.Thumb {...otherProps} className={cn(className, "sui_scroll_area_thumb")} />
@@ -228,7 +221,7 @@ export namespace Thumb {
 /**
  * {@link ScrollAreaThumb} の別名です。
  */
-export const Thumb: Component<Thumb.Props> = ScrollAreaThumb;
+export const Thumb: IComponent<Thumb.Props> = ScrollAreaThumb;
 
 type ScrollAreaDataAttributes = {
   [attribute: `data-${string}`]: string | undefined;
@@ -250,7 +243,7 @@ export type ScrollAreaCornerProps = React.ComponentProps<typeof BaseScrollArea.C
 /**
  * 水平スクロールバーと垂直スクロールバーの交差部分を埋める要素です。
  */
-export const ScrollAreaCorner: Component<ScrollAreaCornerProps> = function SuiScrollAreaCorner(
+export const ScrollAreaCorner: IComponent<ScrollAreaCornerProps> = function SuiScrollAreaCorner(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -274,4 +267,4 @@ export namespace Corner {
 /**
  * {@link ScrollAreaCorner} の別名です。
  */
-export const Corner: Component<Corner.Props> = ScrollAreaCorner;
+export const Corner: IComponent<Corner.Props> = ScrollAreaCorner;

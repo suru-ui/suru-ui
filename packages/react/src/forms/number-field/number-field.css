@@ -409,7 +409,7 @@
   }
 
   /* 動的 */
-  .sui_number_field_input { 
+  .sui_number_field_input {
     font-family: var(--sui_number_field_input-font_family);
     font-size: var(--sui_number_field_input-font_size);
     font-weight: var(--sui_number_field_input-font_weight);

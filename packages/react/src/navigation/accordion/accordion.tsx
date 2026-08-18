@@ -1,5 +1,21 @@
-import type { Component } from "../../types.js";
-import * as AccordionParts from "./accordion.parts.jsx";
+import * as React from "react";
+
+import type { IComponent } from "../../types.js";
+import {
+  type AccordionItemProps,
+  type AccordionRootProps,
+  type AccordionRootState,
+  type AccordionPanelProps,
+  type AccordionHeaderProps,
+  type AccordionTriggerProps,
+  type AccordionIndicatorProps,
+  AccordionItem,
+  AccordionRoot,
+  AccordionPanel,
+  AccordionHeader,
+  AccordionTrigger,
+  AccordionIndicator,
+} from "./accordion.parts.jsx";
 
 /**
  * {@link Accordion} を構成する各パーツのプロパティーです。
@@ -9,43 +25,42 @@ import * as AccordionParts from "./accordion.parts.jsx";
  */
 export type AccordionSlotProps = {
   /**
-   * {@link AccordionParts.Item|Item} に渡すプロパティーです。
+   * {@link AccordionItem} に渡すプロパティーです。
    */
-  readonly item?: AccordionParts.Item.Props | undefined;
+  readonly item?: AccordionItemProps | undefined;
 
   /**
-   * {@link AccordionParts.Header|Header} に渡すプロパティーです。
+   * {@link AccordionHeader} に渡すプロパティーです。
    */
-  readonly header?: AccordionParts.Header.Props | undefined;
+  readonly header?: AccordionHeaderProps | undefined;
 
   /**
-   * {@link AccordionParts.Trigger|Trigger} に渡すプロパティーです。
+   * {@link AccordionTrigger} に渡すプロパティーです。
    * `children` を指定すると、`title` より優先されてトリガー全体を置き換えます。
    */
-  readonly trigger?: AccordionParts.Trigger.Props | undefined;
+  readonly trigger?: AccordionTriggerProps | undefined;
 
   /**
-   * {@link AccordionParts.Indicator|Indicator} に渡すプロパティーです。
+   * {@link AccordionIndicator} に渡すプロパティーです。
    * `children` を指定すると、既定の下向き矢印アイコンより優先されます。
    */
-  readonly indicator?: AccordionParts.Indicator.Props | undefined;
+  readonly indicator?: AccordionIndicatorProps | undefined;
 
   /**
-   * {@link AccordionParts.Panel|Panel} に渡すプロパティーです。
+   * {@link AccordionPanel} に渡すプロパティーです。
    */
-  readonly panel?: AccordionParts.Panel.Props | undefined;
+  readonly panel?: AccordionPanelProps | undefined;
 };
+
+/**
+ * {@link Accordion} の状態です。
+ */
+export type AccordionState = AccordionRootState;
 
 /**
  * {@link Accordion} コンポーネントのプロパティーです。
  */
-export type AccordionProps = Omit<AccordionParts.Root.Props, "children"> & {
-  /**
-   * アコーディオンの見出し（Trigger に表示するラベル）です。
-   * `slotProps.trigger.children` を指定した場合は、そちらが優先されます。
-   */
-  title?: React.ReactNode | undefined;
-
+export type AccordionProps = Omit<AccordionRootProps, "children"> & {
   /**
    * アコーディオンのパネルに表示するコンテンツです。
    * パネルを閉じると、既定ではパネル要素が DOM から除去されます。
@@ -57,6 +72,12 @@ export type AccordionProps = Omit<AccordionParts.Root.Props, "children"> & {
    * `trigger.children` を指定すると、`title` と既定の Indicator は表示されません。
    */
   slotProps?: AccordionSlotProps | undefined;
+
+  /**
+   * アコーディオンの見出し（Trigger に表示するラベル）です。
+   * `slotProps.trigger.children` を指定した場合は、そちらが優先されます。
+   */
+  title?: React.ReactNode | undefined;
 };
 
 /**
@@ -64,24 +85,9 @@ export type AccordionProps = Omit<AccordionParts.Root.Props, "children"> & {
  *
  * 見出し（`title`）とコンテンツ（`children`）から、展開・折りたたみ可能な
  * アコーディオンを組み立てます。
- * 複数の項目を扱う場合は、{@link AccordionParts.Root|Root} を直接組み立てます。
- *
- * @example 基本
- * ```tsx
- * <Accordion title="見出し">コンテンツ</Accordion>
- * ```
- *
- * @example アイコンの差し替え
- * ```tsx
- * <Accordion
- *   title="見出し"
- *   slotProps={{ indicator: { children: <HelpIcon /> } }}
- * >
- *   コンテンツ
- * </Accordion>
- * ```
+ * 複数の項目を扱う場合は、{@link AccordionRoot|Root} を直接組み立てます。
  */
-export const Accordion: Component<AccordionProps> = function SuiAccordion(props) {
+export const Accordion: IComponent<AccordionProps> = function SuiAccordion(props) {
   const { title, children, slotProps, ...rootProps } = props;
   const {
     item: itemProps,
@@ -93,25 +99,45 @@ export const Accordion: Component<AccordionProps> = function SuiAccordion(props)
   const { children: triggerChildren, ...otherTriggerProps } = triggerProps ?? {};
 
   return (
-    <AccordionParts.Root {...rootProps}>
-      <AccordionParts.Item {...itemProps}>
-        <AccordionParts.Header {...headerProps}>
-          <AccordionParts.Trigger {...otherTriggerProps}>
+    <AccordionRoot {...rootProps}>
+      <AccordionItem {...itemProps}>
+        <AccordionHeader {...headerProps}>
+          <AccordionTrigger {...otherTriggerProps}>
             {triggerChildren ?? (
               <>
                 {title}
-                <AccordionParts.Indicator {...indicatorProps}>
+                <AccordionIndicator {...indicatorProps}>
                   {indicatorProps?.children ?? <SuiAccordionIcon />}
-                </AccordionParts.Indicator>
+                </AccordionIndicator>
               </>
             )}
-          </AccordionParts.Trigger>
-        </AccordionParts.Header>
-        <AccordionParts.Panel {...panelProps}>{children}</AccordionParts.Panel>
-      </AccordionParts.Item>
-    </AccordionParts.Root>
+          </AccordionTrigger>
+        </AccordionHeader>
+        <AccordionPanel {...panelProps}>{children}</AccordionPanel>
+      </AccordionItem>
+    </AccordionRoot>
   );
 };
+
+/**
+ * {@link Accordion} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Accordion {
+  /**
+   * {@link AccordionState} です。
+   */
+  export type State = AccordionState;
+
+  /**
+   * {@link AccordionProps} です。
+   */
+  export type Props = AccordionProps;
+
+  /**
+   * {@link AccordionSlotProps} です。
+   */
+  export type SlotProps = AccordionSlotProps;
+}
 
 function SuiAccordionIcon() {
   return (

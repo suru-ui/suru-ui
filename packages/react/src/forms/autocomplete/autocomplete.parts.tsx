@@ -5,9 +5,43 @@ import * as React from "react";
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
 import { ScrollArea } from "../../navigation/scroll-area/index.js";
-import type { Component } from "../../types.js";
+import type { IComponent, IUseContext } from "../../types.js";
 
 import "./autocomplete.css";
+
+// Types
+// -----
+
+/**
+ * オートコンプリートの色です。
+ */
+export type AutocompleteColor = Color;
+
+/**
+ * オートコンプリートの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"rounded"`: 標準的な角丸
+ * - `"full"`: 完全な丸形
+ */
+export type AutocompleteRadius = "none" | "rounded" | "full";
+
+/**
+ * オートコンプリートの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type AutocompleteSize = Size;
+
+/**
+ * オートコンプリートの主な外観の種類です。
+ *
+ * - `"naked"`: 背景のない入力欄
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type AutocompleteVariant = "naked" | "liquid";
 
 // Context
 // -------
@@ -19,7 +53,7 @@ export type AutocompleteContext = {
   /**
    * フォーカス時に枠線へ適用するアクセントカラーです。
    */
-  readonly accentColor: Color;
+  readonly accentColor: AutocompleteColor;
 
   /**
    * 枠線を表示するかどうかです。
@@ -29,17 +63,17 @@ export type AutocompleteContext = {
   /**
    * 入力を含むグループ要素の角丸です。
    */
-  readonly radius: "none" | "rounded" | "full";
+  readonly radius: AutocompleteRadius;
 
   /**
    * 入力欄とリスト項目のサイズです。
    */
-  readonly size: Size;
+  readonly size: AutocompleteSize;
 
   /**
    * 入力欄のスタイルバリエーションです。
    */
-  readonly variant: "naked" | "liquid";
+  readonly variant: AutocompleteVariant;
 };
 
 /**
@@ -48,16 +82,9 @@ export type AutocompleteContext = {
 export const AutocompleteContext: React.Context<AutocompleteContext | null> =
   React.createContext<AutocompleteContext | null>(null);
 
-/**
- * {@link AutocompleteContext} を読み取るフックです。
- *
- * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
- *
- * @returns コンテキストの値。`optional` が `true` でコンテキストがない場合は `null`。
- */
-export function useAutocompleteContext(optional?: false): AutocompleteContext;
-export function useAutocompleteContext(optional?: boolean): AutocompleteContext | null;
-export function useAutocompleteContext(optional?: boolean): AutocompleteContext | null {
+function useSuiAutocompleteContext(optional?: false): AutocompleteContext;
+function useSuiAutocompleteContext(optional?: boolean): AutocompleteContext | null;
+function useSuiAutocompleteContext(optional?: boolean): AutocompleteContext | null {
   const context = React.use(AutocompleteContext);
   if (context === null && !optional) {
     throw new ContextMissingError({
@@ -70,27 +97,24 @@ export function useAutocompleteContext(optional?: boolean): AutocompleteContext 
 }
 
 /**
- * {@link AutocompleteContext} の別名です。
+ * {@link AutocompleteContext} です。
  */
 export type Context = AutocompleteContext;
 
 /**
- * {@link AutocompleteContext} の別名です。
+ * {@link AutocompleteContext} です。
  */
 export const Context: React.Context<AutocompleteContext | null> = AutocompleteContext;
 
 /**
- * {@link useAutocompleteContext} の別名です。
- *
- * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
- *
- * @returns コンテキストの値。`optional` が `true` でコンテキストがない場合は `null`。
+ * {@link AutocompleteContext} を読み取るフックです。
  */
-export function useContext(optional?: false): AutocompleteContext;
-export function useContext(optional?: boolean): AutocompleteContext | null;
-export function useContext(optional?: boolean): AutocompleteContext | null {
-  return useAutocompleteContext(optional);
-}
+export const useAutocompleteContext: IUseContext<AutocompleteContext> = useSuiAutocompleteContext;
+
+/**
+ * {@link useAutocompleteContext} です。
+ */
+export const useContext: IUseContext<Context> = useAutocompleteContext;
 
 // Root
 // ----
@@ -120,7 +144,7 @@ export type AutocompleteRootProps = Omit<
    *
    * @default "grey"
    */
-  accentColor?: Color | undefined;
+  accentColor?: AutocompleteColor | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
@@ -133,63 +157,29 @@ export type AutocompleteRootProps = Omit<
    *
    * @default "md"
    */
-  size?: Size | undefined;
+  size?: AutocompleteSize | undefined;
 
   /**
    * 入力欄のスタイルバリエーションを指定します。
    *
-   * - `"naked"`: 背景のない入力欄
-   * - `"liquid"`: 薄い塗りつぶし
-   *
    * @default "naked"
    */
-  variant?: "naked" | "liquid" | undefined;
+  variant?: AutocompleteVariant | undefined;
 
   /**
    * 入力を含むグループ要素の角丸を指定します。
    *
-   * - `"none"`: 角を直角にする
-   * - `"rounded"`: 標準的な角丸
-   * - `"full"`: 完全な丸形
-   *
    * @default "rounded"
    */
-  radius?: "none" | "rounded" | "full" | undefined;
+  radius?: AutocompleteRadius | undefined;
 };
 
 /**
  * オートコンプリートのルート要素です。
  *
  * 入力値とポップアップの開閉状態を管理し、各パーツをグループ化します。
- * それ自身は HTML 要素をレンダリングしません。
- * スタイルプロパティーは、コンテキストを通して {@link InputGroup} に伝播します。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.Root items={["りんご", "ばなな"]}>
- *   <AutocompleteParts.InputGroup>
- *     <AutocompleteParts.Input />
- *     <AutocompleteParts.Trigger>
- *       <AutocompleteParts.Icon />
- *     </AutocompleteParts.Trigger>
- *   </AutocompleteParts.InputGroup>
- *   <AutocompleteParts.Portal>
- *     <AutocompleteParts.Positioner>
- *       <AutocompleteParts.Popup>
- *         <AutocompleteParts.List>
- *           {(item, index) => (
- *             <AutocompleteParts.Item key={index} index={index} value={item}>
- *               {item}
- *             </AutocompleteParts.Item>
- *           )}
- *         </AutocompleteParts.List>
- *       </AutocompleteParts.Popup>
- *     </AutocompleteParts.Positioner>
- *   </AutocompleteParts.Portal>
- * </AutocompleteParts.Root>
- * ```
  */
-export const AutocompleteRoot: Component<AutocompleteRootProps> = function SuiAutocompleteRoot(
+export const AutocompleteRoot: IComponent<AutocompleteRootProps> = function SuiAutocompleteRoot(
   props,
 ) {
   const {
@@ -236,7 +226,7 @@ export namespace Root {
 /**
  * {@link AutocompleteRoot} の別名です。
  */
-export const Root: Component<Root.Props> = AutocompleteRoot;
+export const Root: IComponent<Root.Props> = AutocompleteRoot;
 
 // Value
 // -----
@@ -255,13 +245,8 @@ export type AutocompleteValueProps = React.ComponentProps<typeof Autocomplete.Va
  * 現在の入力値を子要素に反映する要素です。
  *
  * それ自身は HTML 要素をレンダリングしません。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.Value>{(value) => value}</AutocompleteParts.Value>
- * ```
  */
-export const AutocompleteValue: Component<AutocompleteValueProps> = function SuiAutocompleteValue(
+export const AutocompleteValue: IComponent<AutocompleteValueProps> = function SuiAutocompleteValue(
   props,
 ) {
   return <Autocomplete.Value {...props} />;
@@ -285,7 +270,7 @@ export namespace Value {
 /**
  * {@link AutocompleteValue} の別名です。
  */
-export const Value: Component<Value.Props> = AutocompleteValue;
+export const Value: IComponent<Value.Props> = AutocompleteValue;
 
 // Trigger
 // -------
@@ -302,15 +287,8 @@ export type AutocompleteTriggerProps = React.ComponentProps<typeof Autocomplete.
 
 /**
  * ポップアップを開閉するボタン要素です。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.Trigger>
- *   <AutocompleteParts.Icon />
- * </AutocompleteParts.Trigger>
- * ```
  */
-export const AutocompleteTrigger: Component<AutocompleteTriggerProps> =
+export const AutocompleteTrigger: IComponent<AutocompleteTriggerProps> =
   function SuiAutocompleteTrigger(props) {
     const { className, ...otherProps } = props;
 
@@ -337,7 +315,7 @@ export namespace Trigger {
 /**
  * {@link AutocompleteTrigger} の別名です。
  */
-export const Trigger: Component<Trigger.Props> = AutocompleteTrigger;
+export const Trigger: IComponent<Trigger.Props> = AutocompleteTrigger;
 
 // Input
 // -----
@@ -354,13 +332,8 @@ export type AutocompleteInputProps = React.ComponentProps<typeof Autocomplete.In
 
 /**
  * 検索文字列を入力するテキスト入力欄です。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.Input placeholder="検索" />
- * ```
  */
-export const AutocompleteInput: Component<AutocompleteInputProps> = function SuiAutocompleteInput(
+export const AutocompleteInput: IComponent<AutocompleteInputProps> = function SuiAutocompleteInput(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -386,7 +359,7 @@ export namespace Input {
 /**
  * {@link AutocompleteInput} の別名です。
  */
-export const Input: Component<Input.Props> = AutocompleteInput;
+export const Input: IComponent<Input.Props> = AutocompleteInput;
 
 // InputGroup
 // ----------
@@ -405,16 +378,8 @@ export type AutocompleteInputGroupProps = React.ComponentProps<typeof Autocomple
  * 入力欄とその付属コントロールをまとめるグループ要素です。
  *
  * {@link Root} のスタイルプロパティーが伝播され、入力欄の見た目を決定します。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.InputGroup>
- *   <AutocompleteParts.Input />
- *   <AutocompleteParts.Clear />
- * </AutocompleteParts.InputGroup>
- * ```
  */
-export const AutocompleteInputGroup: Component<AutocompleteInputGroupProps> =
+export const AutocompleteInputGroup: IComponent<AutocompleteInputGroupProps> =
   function SuiAutocompleteInputGroup(props) {
     const context = useAutocompleteContext(true);
     const { className, ...otherProps } = props;
@@ -460,7 +425,7 @@ export namespace InputGroup {
 /**
  * {@link AutocompleteInputGroup} の別名です。
  */
-export const InputGroup: Component<InputGroup.Props> = AutocompleteInputGroup;
+export const InputGroup: IComponent<InputGroup.Props> = AutocompleteInputGroup;
 
 // Icon
 // ----
@@ -477,13 +442,8 @@ export type AutocompleteIconProps = React.ComponentProps<typeof Autocomplete.Ico
 
 /**
  * ポップアップを開く操作を示すアイコンを表示する要素です。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.Icon render={<ChevronDownIcon />} />
- * ```
  */
-export const AutocompleteIcon: Component<AutocompleteIconProps> = function SuiAutocompleteIcon(
+export const AutocompleteIcon: IComponent<AutocompleteIconProps> = function SuiAutocompleteIcon(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -509,7 +469,7 @@ export namespace Icon {
 /**
  * {@link AutocompleteIcon} の別名です。
  */
-export const Icon: Component<Icon.Props> = AutocompleteIcon;
+export const Icon: IComponent<Icon.Props> = AutocompleteIcon;
 
 // Clear
 // -----
@@ -528,15 +488,8 @@ export type AutocompleteClearProps = React.ComponentProps<typeof Autocomplete.Cl
  * 入力値を消去するボタン要素です。
  *
  * 入力値があるときだけ表示されます。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.Clear>
- *   <CloseIcon />
- * </AutocompleteParts.Clear>
- * ```
  */
-export const AutocompleteClear: Component<AutocompleteClearProps> = function SuiAutocompleteClear(
+export const AutocompleteClear: IComponent<AutocompleteClearProps> = function SuiAutocompleteClear(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -562,7 +515,7 @@ export namespace Clear {
 /**
  * {@link AutocompleteClear} の別名です。
  */
-export const Clear: Component<Clear.Props> = AutocompleteClear;
+export const Clear: IComponent<Clear.Props> = AutocompleteClear;
 
 // List
 // ----
@@ -579,19 +532,8 @@ export type AutocompleteListProps = React.ComponentProps<typeof Autocomplete.Lis
 
 /**
  * 検索結果のリストを表示するコンテナー要素です。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.List>
- *   {(item, index) => (
- *     <AutocompleteParts.Item key={index} index={index} value={item}>
- *       {item}
- *     </AutocompleteParts.Item>
- *   )}
- * </AutocompleteParts.List>
- * ```
  */
-export const AutocompleteList: Component<AutocompleteListProps> = function SuiAutocompleteList(
+export const AutocompleteList: IComponent<AutocompleteListProps> = function SuiAutocompleteList(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -621,7 +563,7 @@ export namespace List {
 /**
  * {@link AutocompleteList} の別名です。
  */
-export const List: Component<List.Props> = AutocompleteList;
+export const List: IComponent<List.Props> = AutocompleteList;
 
 // Status
 // ------
@@ -641,13 +583,8 @@ export type AutocompleteStatusProps = React.ComponentProps<typeof Autocomplete.S
  *
  * この要素は常に DOM にマウントされたままにしてください。
  * 内容を変更するときは、要素を出し入れするのではなく children を差し替えます。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.Status>{status}</AutocompleteParts.Status>
- * ```
  */
-export const AutocompleteStatus: Component<AutocompleteStatusProps> =
+export const AutocompleteStatus: IComponent<AutocompleteStatusProps> =
   function SuiAutocompleteStatus(props) {
     const { className, ...otherProps } = props;
 
@@ -674,7 +611,7 @@ export namespace Status {
 /**
  * {@link AutocompleteStatus} の別名です。
  */
-export const Status: Component<Status.Props> = AutocompleteStatus;
+export const Status: IComponent<Status.Props> = AutocompleteStatus;
 
 // Portal
 // ------
@@ -693,17 +630,8 @@ export type AutocompletePortalProps = React.ComponentProps<typeof Autocomplete.P
  * ポップアップを DOM の別の場所へ移動する要素です。
  *
  * 既定では ポップアップを `<body>` の末尾に配置します。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.Portal>
- *   <AutocompleteParts.Positioner>
- *     <AutocompleteParts.Popup>…</AutocompleteParts.Popup>
- *   </AutocompleteParts.Positioner>
- * </AutocompleteParts.Portal>
- * ```
  */
-export const AutocompletePortal: Component<AutocompletePortalProps> =
+export const AutocompletePortal: IComponent<AutocompletePortalProps> =
   function SuiAutocompletePortal(props) {
     const { className, ...otherProps } = props;
 
@@ -730,7 +658,7 @@ export namespace Portal {
 /**
  * {@link AutocompletePortal} の別名です。
  */
-export const Portal: Component<Portal.Props> = AutocompletePortal;
+export const Portal: IComponent<Portal.Props> = AutocompletePortal;
 
 // Backdrop
 // --------
@@ -749,13 +677,8 @@ export type AutocompleteBackdropProps = React.ComponentProps<typeof Autocomplete
  * ポップアップの背後に表示されるオーバーレイ要素です。
  *
  * {@link Root} の `modal` プロパティーが `true` のときだけ表示します。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.Backdrop />
- * ```
  */
-export const AutocompleteBackdrop: Component<AutocompleteBackdropProps> =
+export const AutocompleteBackdrop: IComponent<AutocompleteBackdropProps> =
   function SuiAutocompleteBackdrop(props) {
     const { className, ...otherProps } = props;
 
@@ -785,7 +708,7 @@ export namespace Backdrop {
 /**
  * {@link AutocompleteBackdrop} の別名です。
  */
-export const Backdrop: Component<Backdrop.Props> = AutocompleteBackdrop;
+export const Backdrop: IComponent<Backdrop.Props> = AutocompleteBackdrop;
 
 // Positioner
 // ----------
@@ -802,15 +725,8 @@ export type AutocompletePositionerProps = React.ComponentProps<typeof Autocomple
 
 /**
  * ポップアップを入力欄に位置合わせする要素です。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.Positioner side="bottom" align="start" sideOffset={8}>
- *   <AutocompleteParts.Popup>…</AutocompleteParts.Popup>
- * </AutocompleteParts.Positioner>
- * ```
  */
-export const AutocompletePositioner: Component<AutocompletePositionerProps> =
+export const AutocompletePositioner: IComponent<AutocompletePositionerProps> =
   function SuiAutocompletePositioner(props) {
     const { className, ...otherProps } = props;
 
@@ -840,7 +756,7 @@ export namespace Positioner {
 /**
  * {@link AutocompletePositioner} の別名です。
  */
-export const Positioner: Component<Positioner.Props> = AutocompletePositioner;
+export const Positioner: IComponent<Positioner.Props> = AutocompletePositioner;
 
 // Popup
 // -----
@@ -857,15 +773,8 @@ export type AutocompletePopupProps = React.ComponentProps<typeof Autocomplete.Po
 
 /**
  * 検索結果リストを表示するポップアップ要素です。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.Popup>
- *   <AutocompleteParts.List>…</AutocompleteParts.List>
- * </AutocompleteParts.Popup>
- * ```
  */
-export const AutocompletePopup: Component<AutocompletePopupProps> = function SuiAutocompletePopup(
+export const AutocompletePopup: IComponent<AutocompletePopupProps> = function SuiAutocompletePopup(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -891,7 +800,7 @@ export namespace Popup {
 /**
  * {@link AutocompletePopup} の別名です。
  */
-export const Popup: Component<Popup.Props> = AutocompletePopup;
+export const Popup: IComponent<Popup.Props> = AutocompletePopup;
 
 // Arrow
 // -----
@@ -908,16 +817,8 @@ export type AutocompleteArrowProps = React.ComponentProps<typeof Autocomplete.Ar
 
 /**
  * ポップアップと入力欄をつなぐ矢印要素です。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.Positioner>
- *   <AutocompleteParts.Arrow />
- *   <AutocompleteParts.Popup>…</AutocompleteParts.Popup>
- * </AutocompleteParts.Positioner>
- * ```
  */
-export const AutocompleteArrow: Component<AutocompleteArrowProps> = function SuiAutocompleteArrow(
+export const AutocompleteArrow: IComponent<AutocompleteArrowProps> = function SuiAutocompleteArrow(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -943,7 +844,7 @@ export namespace Arrow {
 /**
  * {@link AutocompleteArrow} の別名です。
  */
-export const Arrow: Component<Arrow.Props> = AutocompleteArrow;
+export const Arrow: IComponent<Arrow.Props> = AutocompleteArrow;
 
 // Group
 // -----
@@ -962,15 +863,8 @@ export type AutocompleteGroupProps = React.ComponentProps<typeof Autocomplete.Gr
  * 関連する項目をまとめるグループ要素です。
  *
  * {@link Root} の `items` にグループの配列を渡したときに使います。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.Group items={groupItems}>
- *   <AutocompleteParts.GroupLabel>果物</AutocompleteParts.GroupLabel>
- * </AutocompleteParts.Group>
- * ```
  */
-export const AutocompleteGroup: Component<AutocompleteGroupProps> = function SuiAutocompleteGroup(
+export const AutocompleteGroup: IComponent<AutocompleteGroupProps> = function SuiAutocompleteGroup(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -996,7 +890,7 @@ export namespace Group {
 /**
  * {@link AutocompleteGroup} の別名です。
  */
-export const Group: Component<Group.Props> = AutocompleteGroup;
+export const Group: IComponent<Group.Props> = AutocompleteGroup;
 
 // GroupLabel
 // ----------
@@ -1013,13 +907,8 @@ export type AutocompleteGroupLabelProps = React.ComponentProps<typeof Autocomple
 
 /**
  * グループに自動的に対応付けられるラベル要素です。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.GroupLabel>果物</AutocompleteParts.GroupLabel>
- * ```
  */
-export const AutocompleteGroupLabel: Component<AutocompleteGroupLabelProps> =
+export const AutocompleteGroupLabel: IComponent<AutocompleteGroupLabelProps> =
   function SuiAutocompleteGroupLabel(props) {
     const { className, ...otherProps } = props;
 
@@ -1049,7 +938,7 @@ export namespace GroupLabel {
 /**
  * {@link AutocompleteGroupLabel} の別名です。
  */
-export const GroupLabel: Component<GroupLabel.Props> = AutocompleteGroupLabel;
+export const GroupLabel: IComponent<GroupLabel.Props> = AutocompleteGroupLabel;
 
 // Item
 // ----
@@ -1066,13 +955,8 @@ export type AutocompleteItemProps = React.ComponentProps<typeof Autocomplete.Ite
 
 /**
  * リストの個々の項目要素です。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.Item value="apple">りんご</AutocompleteParts.Item>
- * ```
  */
-export const AutocompleteItem: Component<AutocompleteItemProps> = function SuiAutocompleteItem(
+export const AutocompleteItem: IComponent<AutocompleteItemProps> = function SuiAutocompleteItem(
   props,
 ) {
   const context = useAutocompleteContext(true);
@@ -1105,7 +989,7 @@ export namespace Item {
 /**
  * {@link AutocompleteItem} の別名です。
  */
-export const Item: Component<Item.Props> = AutocompleteItem;
+export const Item: IComponent<Item.Props> = AutocompleteItem;
 
 // Row
 // ---
@@ -1124,15 +1008,10 @@ export type AutocompleteRowProps = React.ComponentProps<typeof Autocomplete.Row>
  * グリッドリストの 1 行を表示する要素です。
  *
  * {@link Root} の `grid` プロパティーと一緒に使います。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.Row>
- *   <AutocompleteParts.Item value="a">a</AutocompleteParts.Item>
- * </AutocompleteParts.Row>
- * ```
  */
-export const AutocompleteRow: Component<AutocompleteRowProps> = function SuiAutocompleteRow(props) {
+export const AutocompleteRow: IComponent<AutocompleteRowProps> = function SuiAutocompleteRow(
+  props,
+) {
   const { className, ...otherProps } = props;
 
   return <Autocomplete.Row {...otherProps} className={cn(className, "sui_autocomplete_row")} />;
@@ -1156,7 +1035,7 @@ export namespace Row {
 /**
  * {@link AutocompleteRow} の別名です。
  */
-export const Row: Component<Row.Props> = AutocompleteRow;
+export const Row: IComponent<Row.Props> = AutocompleteRow;
 
 // Collection
 // ----------
@@ -1176,19 +1055,8 @@ export type AutocompleteCollectionProps = React.ComponentProps<typeof Autocomple
  *
  * それ自身は HTML 要素をレンダリングしません。
  * 平坦なリストでは {@link List} の関数 children がこの要素を暗黙的に提供するため、通常は使いません。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.Collection>
- *   {(item, index) => (
- *     <AutocompleteParts.Item key={index} index={index} value={item}>
- *       {item}
- *     </AutocompleteParts.Item>
- *   )}
- * </AutocompleteParts.Collection>
- * ```
  */
-export const AutocompleteCollection: Component<AutocompleteCollectionProps> =
+export const AutocompleteCollection: IComponent<AutocompleteCollectionProps> =
   function SuiAutocompleteCollection(props) {
     return <Autocomplete.Collection {...props} />;
   };
@@ -1211,7 +1079,7 @@ export namespace Collection {
 /**
  * {@link AutocompleteCollection} の別名です。
  */
-export const Collection: Component<Collection.Props> = AutocompleteCollection;
+export const Collection: IComponent<Collection.Props> = AutocompleteCollection;
 
 // Empty
 // -----
@@ -1230,13 +1098,8 @@ export type AutocompleteEmptyProps = React.ComponentProps<typeof Autocomplete.Em
  * リストが空のときだけ、その children を表示する要素です。
  *
  * この要素自体は常に DOM に残します。表示内容の切り替えは children で行います。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.Empty>見つかりませんでした</AutocompleteParts.Empty>
- * ```
  */
-export const AutocompleteEmpty: Component<AutocompleteEmptyProps> = function SuiAutocompleteEmpty(
+export const AutocompleteEmpty: IComponent<AutocompleteEmptyProps> = function SuiAutocompleteEmpty(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -1262,7 +1125,7 @@ export namespace Empty {
 /**
  * {@link AutocompleteEmpty} の別名です。
  */
-export const Empty: Component<Empty.Props> = AutocompleteEmpty;
+export const Empty: IComponent<Empty.Props> = AutocompleteEmpty;
 
 // Separator
 // ---------
@@ -1279,13 +1142,8 @@ export type AutocompleteSeparatorProps = React.ComponentProps<typeof Autocomplet
 
 /**
  * 項目やグループを区切る区切り線要素です。
- *
- * @example
- * ```tsx
- * <AutocompleteParts.Separator />
- * ```
  */
-export const AutocompleteSeparator: Component<AutocompleteSeparatorProps> =
+export const AutocompleteSeparator: IComponent<AutocompleteSeparatorProps> =
   function SuiAutocompleteSeparator(props) {
     const { className, ...otherProps } = props;
 
@@ -1315,7 +1173,7 @@ export namespace Separator {
 /**
  * {@link AutocompleteSeparator} の別名です。
  */
-export const Separator: Component<Separator.Props> = AutocompleteSeparator;
+export const Separator: IComponent<Separator.Props> = AutocompleteSeparator;
 
 // useFilter
 // ---------
@@ -1327,11 +1185,6 @@ export const Separator: Component<Separator.Props> = AutocompleteSeparator;
  * 外部でフィルタリングしたい場合、フィルタ関数は {@link Root} の `filter` プロパティーや
  * `filteredItems` プロパティーと組み合わせて使います。
  * {@link Root} の配下で呼び出してください。Provider がない場合は例外を投げます。
- *
- * @example
- * ```tsx
- * const filter = AutocompleteParts.useFilter();
- * ```
  */
 export const useFilter = Autocomplete.useFilter;
 
@@ -1341,10 +1194,5 @@ export const useFilter = Autocomplete.useFilter;
 /**
  * {@link Root} 内で、内部的にフィルタリングされた項目の一覧を返すフックです。
  * {@link Root} の配下で呼び出してください。Provider がない場合は例外を投げます。
- *
- * @example
- * ```tsx
- * const filteredItems = AutocompleteParts.useFilteredItems();
- * ```
  */
 export const useFilteredItems = Autocomplete.useFilteredItems;

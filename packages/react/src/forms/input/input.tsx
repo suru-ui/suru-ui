@@ -1,19 +1,34 @@
-import type { Component } from "../../types.js";
-import * as InputParts from "./input.parts.jsx";
+import type { IComponent } from "../../types.js";
+import { type InputRootProps, type InputRootState, InputRoot } from "./input.parts.jsx";
+
+/**
+ * {@link Input} の状態です。
+ */
+export type InputState = InputRootState;
 
 /**
  * {@link Input} に渡すプロパティーです。
  */
-export type InputProps = InputParts.Root.Props;
+export type InputProps = InputRootProps;
 
 /**
  * テキスト入力欄を表示するコンポーネントです。
- *
- * @example 基本
- * ```tsx
- * <Input placeholder="田中 太郎" />
- * ```
  */
-export const Input: Component<InputProps> = function SuiInput(props) {
-  return <InputParts.Root {...props} />;
+export const Input: IComponent<InputProps> = function SuiInput(props) {
+  return <InputRoot {...props} />;
 };
+
+/**
+ * {@link Input} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Input {
+  /**
+   * {@link InputState} です。
+   */
+  export type State = InputState;
+
+  /**
+   * {@link InputProps} です。
+   */
+  export type Props = InputProps;
+}

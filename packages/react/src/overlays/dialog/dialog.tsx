@@ -1,22 +1,93 @@
 import * as React from "react";
 
 import { Button } from "../../buttons/button/index.js";
-import type { Component } from "../../types.js";
-import * as DialogParts from "./dialog.parts.jsx";
+import type { IComponent } from "../../types.js";
+import {
+  type DialogRootProps,
+  type DialogRootState,
+  type DialogCloseProps,
+  type DialogPopupProps,
+  type DialogTitleProps,
+  type DialogPortalProps,
+  type DialogTriggerProps,
+  type DialogBackdropProps,
+  type DialogViewportProps,
+  type DialogDescriptionProps,
+  DialogRoot,
+  DialogClose,
+  DialogPopup,
+  DialogTitle,
+  createHandle,
+  DialogPortal,
+  DialogTrigger,
+  DialogBackdrop,
+  DialogViewport,
+  DialogDescription,
+} from "./dialog.parts.jsx";
+
+/**
+ * {@link Dialog} の各パーツに渡すプロパティーです。
+ */
+export type DialogSlotProps = {
+  /**
+   * {@link DialogTrigger} に渡すプロパティーです。
+   */
+  readonly trigger?: Omit<DialogTriggerProps, "handle" | "children" | "render"> | undefined;
+
+  /**
+   * {@link DialogPortal} に渡すプロパティーです。
+   */
+  readonly portal?: DialogPortalProps | undefined;
+
+  /**
+   * {@link DialogBackdrop} に渡すプロパティーです。
+   */
+  readonly backdrop?: DialogBackdropProps | undefined;
+
+  /**
+   * {@link DialogViewport} に渡すプロパティーです。
+   */
+  readonly viewport?: DialogViewportProps | undefined;
+
+  /**
+   * {@link DialogPopup} に渡すプロパティーです。
+   */
+  readonly popup?: DialogPopupProps | undefined;
+
+  /**
+   * {@link DialogTitle} に渡すプロパティーです。
+   */
+  readonly title?: DialogTitleProps | undefined;
+
+  /**
+   * {@link DialogDescription} に渡すプロパティーです。
+   */
+  readonly description?: DialogDescriptionProps | undefined;
+
+  /**
+   * {@link DialogClose}に渡すプロパティーです。
+   */
+  readonly close?: Omit<DialogCloseProps, "children"> | undefined;
+};
+
+/**
+ * {@link Dialog} の状態です。
+ */
+export type DialogState = DialogRootState;
 
 /**
  * {@link Dialog} コンポーネントのプロパティーです。
  *
- * {@link DialogParts.Root|Root} から継承した `open` を指定すると開閉状態を制御でき、
+ * {@link DialogRoot|Root} から継承した `open` を指定すると開閉状態を制御でき、
  * `defaultOpen` は初期状態だけを指定します。
  */
-export type DialogProps = Omit<DialogParts.Root.Props, "children" | "handle"> & {
+export type DialogProps = Omit<DialogRootProps, "children" | "handle"> & {
   /**
    * ダイアログを開くトリガーに表示するコンテンツです。
    *
-   * {@link DialogParts.Trigger|Trigger} の子要素として直接渡され、`render` に設定されます。
+   * {@link DialogTrigger|Trigger} の子要素として直接渡され、`render` に設定されます。
    */
-  trigger?: DialogParts.Trigger.Props["children"] | undefined;
+  trigger?: DialogTriggerProps["children"] | undefined;
 
   /**
    * ダイアログのタイトルです。
@@ -36,7 +107,7 @@ export type DialogProps = Omit<DialogParts.Root.Props, "children" | "handle"> & 
   /**
    * フッターに表示する閉じるボタンのコンテンツです。
    */
-  close?: DialogParts.Close.Props["children"] | undefined;
+  close?: DialogCloseProps["children"] | undefined;
 
   /**
    * いずれかの閉じるボタンがクリックされたときに呼ばれるコールバックです。
@@ -48,67 +119,19 @@ export type DialogProps = Omit<DialogParts.Root.Props, "children" | "handle"> & 
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
    */
-  slotProps?:
-    | {
-        /**
-         * {@link DialogParts.Trigger|Trigger} に渡すプロパティーです。
-         */
-        readonly trigger?:
-          | Omit<DialogParts.Trigger.Props, "handle" | "children" | "render">
-          | undefined;
-
-        /**
-         * {@link DialogParts.Portal|Portal} に渡すプロパティーです。
-         */
-        readonly portal?: DialogParts.Portal.Props | undefined;
-
-        /**
-         * {@link DialogParts.Backdrop|Backdrop} に渡すプロパティーです。
-         */
-        readonly backdrop?: DialogParts.Backdrop.Props | undefined;
-
-        /**
-         * {@link DialogParts.Viewport|Viewport} に渡すプロパティーです。
-         */
-        readonly viewport?: DialogParts.Viewport.Props | undefined;
-
-        /**
-         * {@link DialogParts.Popup|Popup} に渡すプロパティーです。
-         */
-        readonly popup?: DialogParts.Popup.Props | undefined;
-
-        /**
-         * {@link DialogParts.Title|Title} に渡すプロパティーです。
-         */
-        readonly title?: DialogParts.Title.Props | undefined;
-
-        /**
-         * {@link DialogParts.Description|Description} に渡すプロパティーです。
-         */
-        readonly description?: DialogParts.Description.Props | undefined;
-
-        /**
-         * {@link DialogParts.Close|Close}（フッターの閉じるボタン）に渡すプロパティーです。
-         */
-        readonly close?: Omit<DialogParts.Close.Props, "children"> | undefined;
-
-        /**
-         * {@link DialogParts.Close|Close}（右上の閉じるボタン）に渡すプロパティーです。
-         */
-      }
-    | undefined;
+  slotProps?: DialogSlotProps | undefined;
 };
 
-type CloseClickHandler = DialogParts.Close.Props["onClick"];
+type CloseClickHandler = DialogCloseProps["onClick"];
 type CloseClickEvent = Parameters<NonNullable<CloseClickHandler>>[0];
 
-interface DialogComponentType extends Component<DialogProps> {
+interface DialogComponentType extends IComponent<DialogProps> {
   /**
    * ダイアログを制御するハンドルを新しく作成します。
    *
-   * 作成したハンドルは {@link DialogParts.Root} と {@link DialogParts.Trigger} の `handle` プロパティーに渡します。
+   * 作成したハンドルは {@link DialogRoot} と {@link DialogTrigger} の `handle` プロパティーに渡します。
    */
-  readonly createHandle: typeof DialogParts.createHandle;
+  readonly createHandle: typeof createHandle;
 }
 
 function createCloseClickHandler(
@@ -131,24 +154,11 @@ function createCloseClickHandler(
  * ダイアログを表示するコンポーネントです。
  *
  * トリガー、タイトル、説明文、本文、閉じる操作からダイアログを組み立てます。
- * 構成を細かく制御したい場合は、{@link DialogParts.Root|Root} を直接組み立てます。
- *
- * @example 基本
- * ```tsx
- * import { Dialog } from "@suru-ui/react/dialog";
- * import { Button } from "@suru-ui/react/button";
- *
- * <Dialog
- *   trigger={<Button>通知を見る</Button>}
- *   title="通知"
- *   description="新しい通知はありません。"
- *   close={<Button variant="naked">閉じる</Button>}
- * />
- * ```
+ * 構成を細かく制御したい場合は、{@link DialogRoot|Root} を直接組み立てます。
  */
 export const Dialog: DialogComponentType = /*#__PURE__*/ Object.assign(
   function SuiDialog(props: DialogProps) {
-    const [handle] = React.useState(DialogParts.createHandle);
+    const [handle] = React.useState(createHandle);
     const {
       trigger,
       title,
@@ -170,17 +180,17 @@ export const Dialog: DialogComponentType = /*#__PURE__*/ Object.assign(
     } = props;
 
     return (
-      <DialogParts.Root {...rootProps} handle={handle}>
+      <DialogRoot {...rootProps} handle={handle}>
         {trigger !== undefined && (
-          <DialogParts.Trigger {...triggerProps} handle={handle}>
+          <DialogTrigger {...triggerProps} handle={handle}>
             {trigger}
-          </DialogParts.Trigger>
+          </DialogTrigger>
         )}
-        <DialogParts.Portal {...portalProps}>
-          <DialogParts.Backdrop {...backdropProps} />
-          <DialogParts.Viewport {...viewportProps}>
-            <DialogParts.Popup {...popupProps}>
-              <DialogParts.Close
+        <DialogPortal {...portalProps}>
+          <DialogBackdrop {...backdropProps} />
+          <DialogViewport {...viewportProps}>
+            <DialogPopup {...popupProps}>
+              <DialogClose
                 className="sui_dialog_close_button"
                 onClick={createCloseClickHandler(undefined, onClose)}
               >
@@ -199,31 +209,47 @@ export const Dialog: DialogComponentType = /*#__PURE__*/ Object.assign(
                     <path d="m6 6 12 12" />
                   </svg>
                 </Button>
-              </DialogParts.Close>
-              {title !== undefined && (
-                <DialogParts.Title {...titleProps}>{title}</DialogParts.Title>
-              )}
+              </DialogClose>
+              {title !== undefined && <DialogTitle {...titleProps}>{title}</DialogTitle>}
               {description !== undefined && (
-                <DialogParts.Description {...descriptionProps}>
-                  {description}
-                </DialogParts.Description>
+                <DialogDescription {...descriptionProps}>{description}</DialogDescription>
               )}
               {children}
               {close !== undefined && (
                 <div className="sui_dialog_actions">
-                  <DialogParts.Close
+                  <DialogClose
                     {...closeProps}
                     onClick={createCloseClickHandler(closeProps?.onClick, onClose)}
                   >
                     {close}
-                  </DialogParts.Close>
+                  </DialogClose>
                 </div>
               )}
-            </DialogParts.Popup>
-          </DialogParts.Viewport>
-        </DialogParts.Portal>
-      </DialogParts.Root>
+            </DialogPopup>
+          </DialogViewport>
+        </DialogPortal>
+      </DialogRoot>
     );
   },
-  { createHandle: DialogParts.createHandle },
+  { createHandle },
 );
+
+/**
+ * {@link Dialog} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Dialog {
+  /**
+   * {@link DialogState} です。
+   */
+  export type State = DialogState;
+
+  /**
+   * {@link DialogProps} です。
+   */
+  export type Props = DialogProps;
+
+  /**
+   * {@link DialogSlotProps} です。
+   */
+  export type SlotProps = DialogSlotProps;
+}

@@ -5,9 +5,39 @@ import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
 import type { IComponent, IUseContext } from "../../types.js";
-import { AvatarRoot, type AvatarRootProps, type AvatarRootState } from "../avatar/index.js";
+import { AvatarRoot, type AvatarRootProps, type AvatarRootState } from "../avatar/avatar.parts.jsx";
 
 import "./avatar-group.css";
+
+// Types
+// -----
+
+/**
+ * アバターグループの色です。
+ *
+ * `"colorful"` を指定すると、子アバターごとに色を自動で割り当てます。
+ */
+export type AvatarGroupColor = Color | "colorful";
+
+/**
+ * アバターグループの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
+ */
+export type AvatarGroupRadius = "none" | Size | "full";
+
+/**
+ * アバターグループの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type AvatarGroupSize = Size;
 
 const colorfulColors = COLORS.filter((color) => color !== "grey");
 
@@ -21,17 +51,17 @@ export type AvatarGroupContext = {
   /**
    * アバターの背景色です。
    */
-  color: Color;
+  readonly color: Color;
 
   /**
    * アバターの角丸です。
    */
-  radius: "none" | Size | "full";
+  readonly radius: AvatarGroupRadius;
 
   /**
    * アバターの大きさを指定します。
    */
-  size: Size;
+  readonly size: AvatarGroupSize;
 };
 
 /**
@@ -94,7 +124,7 @@ export type AvatarGroupRootProps = Omit<React.ComponentProps<"div">, keyof Rende
      *
      * @default "colorful"
      */
-    color?: Color | "colorful" | undefined;
+    color?: AvatarGroupColor | undefined;
 
     // opticallyCenter?: boolean | undefined;
 
@@ -105,7 +135,7 @@ export type AvatarGroupRootProps = Omit<React.ComponentProps<"div">, keyof Rende
      *
      * @default "full"
      */
-    radius?: "none" | Size | "full" | undefined;
+    radius?: AvatarGroupRadius | undefined;
 
     /**
      * アバターの重なり順を逆にします。
@@ -121,7 +151,7 @@ export type AvatarGroupRootProps = Omit<React.ComponentProps<"div">, keyof Rende
      *
      * @default "md"
      */
-    size?: Size | undefined;
+    size?: AvatarGroupSize | undefined;
   };
 
 /**

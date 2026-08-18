@@ -1,57 +1,83 @@
 import * as React from "react";
 
-import type { Component } from "../../types.js";
-import * as ToastParts from "./toast.parts.jsx";
+import type { IComponent } from "../../types.js";
+import {
+  type ToastRootProps,
+  type ToastCloseProps,
+  type ToastTitleProps,
+  type ToastActionProps,
+  type ToastPortalProps,
+  type ToastContentProps,
+  type ToastProviderProps,
+  type ToastProviderState,
+  type ToastViewportProps,
+  type ToastDescriptionProps,
+  ToastRoot,
+  ToastClose,
+  ToastTitle,
+  ToastAction,
+  ToastPortal,
+  ToastContent,
+  ToastProvider,
+  ToastViewport,
+  useToastManager,
+  ToastDescription,
+} from "./toast.parts.jsx";
 
 /**
  * {@link Toast} の各パーツに渡すプロパティーです。
  */
 export type ToastSlotProps = {
   /**
-   * {@link ToastParts.Portal|Portal} に渡すプロパティーです。
+   * {@link ToastPortal} に渡すプロパティーです。
    */
-  readonly portal?: ToastParts.Portal.Props | undefined;
+  readonly portal?: ToastPortalProps | undefined;
 
   /**
-   * {@link ToastParts.Viewport|Viewport} に渡すプロパティーです。
+   * {@link ToastViewport} に渡すプロパティーです。
    */
-  readonly viewport?: ToastParts.Viewport.Props | undefined;
+  readonly viewport?: ToastViewportProps | undefined;
 
   /**
-   * {@link ToastParts.Root|Root} に渡すプロパティーです。
+   * {@link ToastRoot} に渡すプロパティーです。
    */
-  readonly root?: Omit<ToastParts.Root.Props, "toast"> | undefined;
+  readonly root?: Omit<ToastRootProps, "toast"> | undefined;
 
   /**
-   * {@link ToastParts.Content|Content} に渡すプロパティーです。
+   * {@link ToastContent} に渡すプロパティーです。
    */
-  readonly content?: ToastParts.Content.Props | undefined;
+  readonly content?: ToastContentProps | undefined;
 
   /**
-   * {@link ToastParts.Title|Title} に渡すプロパティーです。
+   * {@link ToastTitle} に渡すプロパティーです。
    */
-  readonly title?: ToastParts.Title.Props | undefined;
+  readonly title?: ToastTitleProps | undefined;
 
   /**
-   * {@link ToastParts.Description|Description} に渡すプロパティーです。
+   * {@link ToastDescription} に渡すプロパティーです。
    */
-  readonly description?: ToastParts.Description.Props | undefined;
+  readonly description?: ToastDescriptionProps | undefined;
 
   /**
-   * {@link ToastParts.Action|Action} に渡すプロパティーです。
+   * {@link ToastAction} に渡すプロパティーです。
    */
-  readonly action?: ToastParts.Action.Props | undefined;
+  readonly action?: ToastActionProps | undefined;
 
   /**
-   * {@link ToastParts.Close|Close} に渡すプロパティーです。
+   * {@link ToastClose} に渡すプロパティーです。
    */
-  readonly close?: ToastParts.Close.Props | undefined;
+  readonly close?: ToastCloseProps | undefined;
 };
+
+/**
+ * {@link Toast} の状態です。
+ */
+export type ToastState = ToastProviderState;
 
 /**
  * {@link Toast} コンポーネントのプロパティーです。
  */
-export type ToastProps = Omit<ToastParts.Provider.Props, "children"> & {
+export type ToastProps = Omit<ToastProviderProps, "children"> & {
   /**
    * 通知を作成する画面のコンテンツです。
    */
@@ -75,62 +101,61 @@ function ToastList({
   action: actionProps,
   close: closeProps,
 }: ToastListProps): React.ReactElement {
-  const { toasts } = ToastParts.useToastManager();
+  const { toasts } = useToastManager();
 
   return (
-    <ToastParts.Portal {...portalProps}>
-      <ToastParts.Viewport {...viewportProps}>
+    <ToastPortal {...portalProps}>
+      <ToastViewport {...viewportProps}>
         {toasts.map((toast) => (
-          <ToastParts.Root key={toast.id} {...rootProps} toast={toast}>
-            <ToastParts.Content {...contentProps}>
+          <ToastRoot key={toast.id} {...rootProps} toast={toast}>
+            <ToastContent {...contentProps}>
               <div className="sui_toast_text">
-                <ToastParts.Title {...titleProps} />
-                <ToastParts.Description {...descriptionProps} />
+                <ToastTitle {...titleProps} />
+                <ToastDescription {...descriptionProps} />
               </div>
-              <ToastParts.Action {...actionProps} />
-              <ToastParts.Close {...closeProps}>
-                {closeProps?.children ?? "閉じる"}
-              </ToastParts.Close>
-            </ToastParts.Content>
-          </ToastParts.Root>
+              <ToastAction {...actionProps} />
+              <ToastClose {...closeProps}>{closeProps?.children ?? "閉じる"}</ToastClose>
+            </ToastContent>
+          </ToastRoot>
         ))}
-      </ToastParts.Viewport>
-    </ToastParts.Portal>
+      </ToastViewport>
+    </ToastPortal>
   );
 }
 
 /**
  * 通知を管理する Provider と、通知一覧を組み立てるコンポーネントです。
  *
- * 子コンポーネントから {@link ToastParts.useToastManager|useToastManager} を呼び出して通知を追加します。
- * 複雑なレイアウトやアンカー付き通知を使う場合は、{@link ToastParts.Provider|Provider} と各パーツを直接組み立てます。
- *
- * @example 基本
- * ```tsx
- * import { Toast, useToastManager } from "@suru-ui/react/toast";
- *
- * function SaveButton() {
- *   const toastManager = useToastManager();
- *
- *   return (
- *     <button type="button" onClick={() => toastManager.add({ description: "保存しました。" })}>
- *       保存
- *     </button>
- *   );
- * }
- *
- * <Toast>
- *   <SaveButton />
- * </Toast>
- * ```
+ * 子コンポーネントから {@link useToastManager} を呼び出して通知を追加します。
+ * 複雑なレイアウトやアンカー付き通知を使う場合は、{@link ToastProvider|Provider} と各パーツを直接組み立てます。
  */
-export const Toast: Component<ToastProps> = function SuiToast(props) {
+export const Toast: IComponent<ToastProps> = function SuiToast(props) {
   const { children, slotProps, ...providerProps } = props;
 
   return (
-    <ToastParts.Provider {...providerProps}>
+    <ToastProvider {...providerProps}>
       {children}
       <ToastList {...slotProps} />
-    </ToastParts.Provider>
+    </ToastProvider>
   );
 };
+
+/**
+ * {@link Toast} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Toast {
+  /**
+   * {@link ToastState} です。
+   */
+  export type State = ToastState;
+
+  /**
+   * {@link ToastProps} です。
+   */
+  export type Props = ToastProps;
+
+  /**
+   * {@link ToastSlotProps} です。
+   */
+  export type SlotProps = ToastSlotProps;
+}

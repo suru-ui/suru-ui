@@ -18,6 +18,8 @@
     --sui_radio-border_color-checked: ;
     --sui_radio-border_width: ;
     --sui_radio-border_radius: ;
+    --sui_radio-outline_color: ;
+    --sui_radio-outline_offset: ;
     /* 前景 */
     --sui_radio-canvas_text-checked: ;
   }
@@ -41,8 +43,8 @@
     height: var(--sui_radio-size);
     outline: var(--_sui_radio-outline_width, 0px)
              solid
-             var(--sui-focusring_color);
-    outline-offset: var(--sui-focusring_offset);
+             var(--sui_radio-outline_color);
+    outline-offset: var(--sui_radio-outline_offset);
     background-color: var(--_sui_radio-canvas, var(--sui_radio-canvas-normal));
     border: var(--_sui_radio-border_color, transparent)
             solid
@@ -51,6 +53,12 @@
   }
 
   /* 既定値設定: ここから */
+
+  .sui_radio {
+    /* 枠線 */
+    --sui_radio-outline_color: var(--sui-focusring_color);
+    --sui_radio-outline_offset: var(--sui-focusring_offset);
+  }
 
   .sui_radio-size_sm {
     /* 形状 */

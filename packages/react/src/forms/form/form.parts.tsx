@@ -2,9 +2,15 @@ import { Form } from "@base-ui/react/form";
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 
 import "./form.css";
+
+// Types
+// -----
+
+// Root
+// ----
 
 /**
  * {@link FormRoot} の入力値を表す型です。
@@ -21,9 +27,9 @@ export type FormRootActions = Form.Actions;
 /**
  * {@link FormRoot} の検証を行うタイミングを決定します。
  *
- * - "onSubmit": フォーム送信時にフィールドを検証し、それ以降は値が変更されるたびに再検証を行います。
- * - "onBlur": フィールドからフォーカスが外れたときに検証を行います。
- * - "onChange": 値が変更されるたびに検証を行います。
+ * - `"onSubmit"`: フォーム送信時にフィールドを検証し、それ以降は値が変更されるたびに再検証を行います。
+ * - `"onBlur"`: フィールドからフォーカスが外れたときに検証を行います。
+ * - `"onChange"`: 値が変更されるたびに検証を行います。
  */
 export type FormRootValidationMode = Form.ValidationMode;
 
@@ -51,7 +57,7 @@ export type FormRootProps<TValues extends FormRootValues = FormRootValues> = Rea
   typeof Form<TValues>
 >;
 
-interface FormRootComponentType extends Component<FormRootProps> {
+interface FormRootComponentType extends IComponent<FormRootProps> {
   <TValues extends FormRootValues>(props: FormRootProps<TValues>): React.ReactElement | null;
 }
 

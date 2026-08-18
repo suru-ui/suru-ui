@@ -1,8 +1,10 @@
 export * from "./resizable.parts.jsx";
 
 export {
-  type ResizablePanelGroupProps,
   type ResizableProps,
-  ResizablePanelGroup,
+  type ResizableState,
+  type ResizablePanelGroupProps,
+  type ResizablePanelGroupState,
   Resizable,
+  ResizablePanelGroup,
 } from "./resizable.jsx";

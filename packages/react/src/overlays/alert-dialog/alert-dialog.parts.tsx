@@ -2,9 +2,12 @@ import { AlertDialog } from "@base-ui/react/alert-dialog";
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 
 import "./alert-dialog.css";
+
+// Types
+// -----
 
 // Handle
 // ------
@@ -19,11 +22,6 @@ export type AlertDialogHandle = AlertDialog.Handle<unknown>;
  *
  * 作成したハンドルを {@link Root} と {@link Trigger} または {@link AlertDialog} の
  * `handle` プロパティーに渡すことで、トリガーとダイアログの内容を関連付けます。
- *
- * @example
- * ```tsx
- * const handle = AlertDialogParts.createHandle();
- * ```
  */
 export const createHandle: typeof AlertDialog.createHandle = AlertDialog.createHandle;
 
@@ -52,24 +50,10 @@ export type AlertDialogRootProps = Omit<React.ComponentProps<typeof AlertDialog.
  *
  * ダイアログの開閉状態を管理し、各パーツをグループ化します。
  * それ自身は HTML 要素をレンダリングしません。
- *
- * @example
- * ```tsx
- * const handle = AlertDialogParts.createHandle();
- *
- * <AlertDialogParts.Root handle={handle}>
- *   <AlertDialogParts.Trigger handle={handle}>
- *     {(props) => <button type="button" {...props}>下書きを破棄</button>}
- *   </AlertDialogParts.Trigger>
- *   <AlertDialogParts.Portal>
- *     <AlertDialogParts.Popup>
- *       <AlertDialogParts.Title>下書きを破棄しますか?</AlertDialogParts.Title>
- *     </AlertDialogParts.Popup>
- *   </AlertDialogParts.Portal>
- * </AlertDialogParts.Root>
- * ```
  */
-export const AlertDialogRoot: Component<AlertDialogRootProps> = function SuiAlertDialogRoot(props) {
+export const AlertDialogRoot: IComponent<AlertDialogRootProps> = function SuiAlertDialogRoot(
+  props,
+) {
   return <AlertDialog.Root {...props} />;
 };
 
@@ -91,7 +75,7 @@ export namespace Root {
 /**
  * {@link AlertDialogRoot} の短縮名です。
  */
-export const Root: Component<Root.Props> = AlertDialogRoot;
+export const Root: IComponent<Root.Props> = AlertDialogRoot;
 
 // Trigger
 // -------
@@ -129,15 +113,8 @@ export type AlertDialogTriggerProps = Omit<
  *
  * 子要素は何にもラップされず、そのまま {@link AlertDialog.Trigger} の
  * `render` プロパティーに渡されます。
- *
- * @example
- * ```tsx
- * <AlertDialogParts.Trigger handle={handle}>
- *   {(props) => <button type="button" {...props}>下書きを破棄</button>}
- * </AlertDialogParts.Trigger>
- * ```
  */
-export const AlertDialogTrigger: Component<AlertDialogTriggerProps> =
+export const AlertDialogTrigger: IComponent<AlertDialogTriggerProps> =
   function SuiAlertDialogTrigger(props) {
     const { className, handle, children, ...otherProps } = props;
 
@@ -169,7 +146,7 @@ export namespace Trigger {
 /**
  * {@link AlertDialogTrigger} の短縮名です。
  */
-export const Trigger: Component<Trigger.Props> = AlertDialogTrigger;
+export const Trigger: IComponent<Trigger.Props> = AlertDialogTrigger;
 
 // Portal
 // ------
@@ -188,15 +165,8 @@ export type AlertDialogPortalProps = React.ComponentProps<typeof AlertDialog.Por
  * アラートダイアログを DOM の別の場所へ移動する要素です。
  *
  * 既定では ポップアップを `<body>` の末尾に配置します。
- *
- * @example
- * ```tsx
- * <AlertDialogParts.Portal container={customContainer}>
- *   <AlertDialogParts.Popup>…</AlertDialogParts.Popup>
- * </AlertDialogParts.Portal>
- * ```
  */
-export const AlertDialogPortal: Component<AlertDialogPortalProps> = function SuiAlertDialogPortal(
+export const AlertDialogPortal: IComponent<AlertDialogPortalProps> = function SuiAlertDialogPortal(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -224,7 +194,7 @@ export namespace Portal {
 /**
  * {@link AlertDialogPortal} の短縮名です。
  */
-export const Portal: Component<Portal.Props> = AlertDialogPortal;
+export const Portal: IComponent<Portal.Props> = AlertDialogPortal;
 
 // Backdrop
 // --------
@@ -241,13 +211,8 @@ export type AlertDialogBackdropProps = React.ComponentProps<typeof AlertDialog.B
 
 /**
  * ポップアップの背後に表示されるオーバーレイ要素です。
- *
- * @example
- * ```tsx
- * <AlertDialogParts.Backdrop />
- * ```
  */
-export const AlertDialogBackdrop: Component<AlertDialogBackdropProps> =
+export const AlertDialogBackdrop: IComponent<AlertDialogBackdropProps> =
   function SuiAlertDialogBackdrop(props) {
     const { className, ...otherProps } = props;
 
@@ -277,7 +242,7 @@ export namespace Backdrop {
 /**
  * {@link AlertDialogBackdrop} の短縮名です。
  */
-export const Backdrop: Component<Backdrop.Props> = AlertDialogBackdrop;
+export const Backdrop: IComponent<Backdrop.Props> = AlertDialogBackdrop;
 
 // Viewport
 // --------
@@ -296,15 +261,8 @@ export type AlertDialogViewportProps = React.ComponentProps<typeof AlertDialog.V
  * ポップアップの配置コンテナー要素です。
  *
  * スクロール可能なオーバーレイを作り、ポップアップを中央に配置します。
- *
- * @example
- * ```tsx
- * <AlertDialogParts.Viewport>
- *   <AlertDialogParts.Popup>…</AlertDialogParts.Popup>
- * </AlertDialogParts.Viewport>
- * ```
  */
-export const AlertDialogViewport: Component<AlertDialogViewportProps> =
+export const AlertDialogViewport: IComponent<AlertDialogViewportProps> =
   function SuiAlertDialogViewport(props) {
     const { className, ...otherProps } = props;
 
@@ -334,7 +292,7 @@ export namespace Viewport {
 /**
  * {@link AlertDialogViewport} の短縮名です。
  */
-export const Viewport: Component<Viewport.Props> = AlertDialogViewport;
+export const Viewport: IComponent<Viewport.Props> = AlertDialogViewport;
 
 // Popup
 // -----
@@ -351,16 +309,8 @@ export type AlertDialogPopupProps = React.ComponentProps<typeof AlertDialog.Popu
 
 /**
  * アラートダイアログの本文を表示する要素です。
- *
- * @example
- * ```tsx
- * <AlertDialogParts.Popup>
- *   <AlertDialogParts.Title>下書きを破棄しますか?</AlertDialogParts.Title>
- *   <AlertDialogParts.Description>この操作は元に戻せません。</AlertDialogParts.Description>
- * </AlertDialogParts.Popup>
- * ```
  */
-export const AlertDialogPopup: Component<AlertDialogPopupProps> = function SuiAlertDialogPopup(
+export const AlertDialogPopup: IComponent<AlertDialogPopupProps> = function SuiAlertDialogPopup(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -386,7 +336,7 @@ export namespace Popup {
 /**
  * {@link AlertDialogPopup} の短縮名です。
  */
-export const Popup: Component<Popup.Props> = AlertDialogPopup;
+export const Popup: IComponent<Popup.Props> = AlertDialogPopup;
 
 // Title
 // -----
@@ -403,13 +353,8 @@ export type AlertDialogTitleProps = React.ComponentProps<typeof AlertDialog.Titl
 
 /**
  * アラートダイアログのタイトルを表示する見出し要素です。
- *
- * @example
- * ```tsx
- * <AlertDialogParts.Title>下書きを破棄しますか?</AlertDialogParts.Title>
- * ```
  */
-export const AlertDialogTitle: Component<AlertDialogTitleProps> = function SuiAlertDialogTitle(
+export const AlertDialogTitle: IComponent<AlertDialogTitleProps> = function SuiAlertDialogTitle(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -435,7 +380,7 @@ export namespace Title {
 /**
  * {@link AlertDialogTitle} の短縮名です。
  */
-export const Title: Component<Title.Props> = AlertDialogTitle;
+export const Title: IComponent<Title.Props> = AlertDialogTitle;
 
 // Description
 // -----------
@@ -452,13 +397,8 @@ export type AlertDialogDescriptionProps = React.ComponentProps<typeof AlertDialo
 
 /**
  * アラートダイアログの説明文を表示する段落要素です。
- *
- * @example
- * ```tsx
- * <AlertDialogParts.Description>この操作は元に戻せません。</AlertDialogParts.Description>
- * ```
  */
-export const AlertDialogDescription: Component<AlertDialogDescriptionProps> =
+export const AlertDialogDescription: IComponent<AlertDialogDescriptionProps> =
   function SuiAlertDialogDescription(props) {
     const { className, ...otherProps } = props;
 
@@ -488,7 +428,7 @@ export namespace Description {
 /**
  * {@link AlertDialogDescription} の短縮名です。
  */
-export const Description: Component<Description.Props> = AlertDialogDescription;
+export const Description: IComponent<Description.Props> = AlertDialogDescription;
 
 // Close
 // -----
@@ -519,15 +459,8 @@ export type AlertDialogCloseProps = Omit<
  *
  * 子要素は何にもラップされず、そのまま {@link AlertDialog.Close} の
  * `render` プロパティーに渡されます。
- *
- * @example
- * ```tsx
- * <AlertDialogParts.Close>
- *   {(props) => <button type="button" {...props}>キャンセル</button>}
- * </AlertDialogParts.Close>
- * ```
  */
-export const AlertDialogClose: Component<AlertDialogCloseProps> = function SuiAlertDialogClose(
+export const AlertDialogClose: IComponent<AlertDialogCloseProps> = function SuiAlertDialogClose(
   props,
 ) {
   const { className, children, ...otherProps } = props;
@@ -559,4 +492,4 @@ export namespace Close {
 /**
  * {@link AlertDialogClose} の短縮名です。
  */
-export const Close: Component<Close.Props> = AlertDialogClose;
+export const Close: IComponent<Close.Props> = AlertDialogClose;

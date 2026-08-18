@@ -1,10 +1,33 @@
-import type { Component } from "../../types.js";
-import * as RadioParts from "./radio.parts.jsx";
+import * as React from "react";
+
+import type { IComponent } from "../../types.js";
+import {
+  type RadioRootProps,
+  type RadioRootState,
+  type RadioIndicatorProps,
+  RadioRoot,
+  RadioIndicator,
+} from "./radio.parts.jsx";
+
+/**
+ * {@link Radio} の状態です。
+ */
+export type RadioState = RadioRootState;
+
+/**
+ * {@link Radio} の各パーツに渡すプロパティーです。
+ */
+export type RadioSlotProps = {
+  /**
+   * {@link RadioIndicator} に渡すプロパティーです。
+   */
+  readonly indicator?: RadioIndicatorProps | undefined;
+};
 
 /**
  * {@link Radio} コンポーネントのプロパティーです。
  */
-export type RadioProps = RadioParts.Root.Props & {
+export type RadioProps = RadioRootProps & {
   /**
    * Indicator 内に表示するコンテンツです。
    *
@@ -18,35 +41,38 @@ export type RadioProps = RadioParts.Root.Props & {
    * `indicator` の値はインジケーターの既定値に優先して適用されます。
    * `children` を指定した場合は、`indicator.children` より優先されます。
    */
-  slotProps?:
-    | {
-        readonly indicator?: RadioParts.Indicator.Props | undefined;
-      }
-    | undefined;
+  slotProps?: RadioSlotProps | undefined;
 };
 
 /**
  * ラジオボタンを表示するコンポーネントです。
- *
- * @example 基本
- * ```tsx
- * <Radio value="option-a" />
- * ```
- *
- * @example ラベル付き
- * ```tsx
- * <label>
- *   <Radio variant="liquid" color="blue" value="option-a" />
- *   オプション A
- * </label>
- * ```
  */
-export const Radio: Component<RadioProps> = function SuiRadio(props) {
+export const Radio: IComponent<RadioProps> = function SuiRadio(props) {
   const { children, slotProps: { indicator: indicatorProps } = {}, ...rootProps } = props;
 
   return (
-    <RadioParts.Root {...rootProps}>
-      <RadioParts.Indicator {...indicatorProps}>{children}</RadioParts.Indicator>
-    </RadioParts.Root>
+    <RadioRoot {...rootProps}>
+      <RadioIndicator {...{ children, ...indicatorProps }} />
+    </RadioRoot>
   );
 };
+
+/**
+ * {@link Radio} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Radio {
+  /**
+   * {@link RadioState} です。
+   */
+  export type State = RadioState;
+
+  /**
+   * {@link RadioProps} です。
+   */
+  export type Props = RadioProps;
+
+  /**
+   * {@link RadioSlotProps} です。
+   */
+  export type SlotProps = RadioSlotProps;
+}

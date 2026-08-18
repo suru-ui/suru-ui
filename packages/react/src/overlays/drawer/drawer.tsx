@@ -2,16 +2,109 @@ import * as React from "react";
 
 import { Button } from "../../buttons/button/index.js";
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
-import * as DrawerParts from "./drawer.parts.jsx";
+import type { IComponent } from "../../types.js";
+import {
+  type DrawerRootProps,
+  type DrawerRootState,
+  type DrawerCloseProps,
+  type DrawerPopupProps,
+  type DrawerTitleProps,
+  type DrawerPortalProps,
+  type DrawerContentProps,
+  type DrawerTriggerProps,
+  type DrawerBackdropProps,
+  type DrawerViewportProps,
+  type DrawerSwipeAreaProps,
+  type DrawerSwipeDirection,
+  type DrawerDescriptionProps,
+  type DrawerVirtualKeyboardProviderProps,
+  DrawerRoot,
+  DrawerClose,
+  DrawerPopup,
+  DrawerTitle,
+  createHandle,
+  DrawerPortal,
+  DrawerContent,
+  DrawerTrigger,
+  DrawerBackdrop,
+  DrawerViewport,
+  DrawerSwipeArea,
+  DrawerDescription,
+  DrawerVirtualKeyboardProvider,
+} from "./drawer.parts.jsx";
+
+/**
+ * {@link Drawer} の各パーツに渡すプロパティーです。
+ */
+export type DrawerSlotProps = {
+  /**
+   * {@link DrawerTrigger} に渡すプロパティーです。
+   */
+  readonly trigger?: Omit<DrawerTriggerProps, "handle" | "children"> | undefined;
+
+  /**
+   * {@link DrawerSwipeArea} に渡すプロパティーです。
+   */
+  readonly swipeArea?: DrawerSwipeAreaProps | undefined;
+
+  /**
+   * {@link DrawerVirtualKeyboardProvider} に渡すプロパティーです。
+   */
+  readonly virtualKeyboardProvider?: DrawerVirtualKeyboardProviderProps | undefined;
+
+  /**
+   * {@link DrawerPortal} に渡すプロパティーです。
+   */
+  readonly portal?: DrawerPortalProps | undefined;
+
+  /**
+   * {@link DrawerBackdrop} に渡すプロパティーです。
+   */
+  readonly backdrop?: DrawerBackdropProps | undefined;
+
+  /**
+   * {@link DrawerViewport} に渡すプロパティーです。
+   */
+  readonly viewport?: DrawerViewportProps | undefined;
+
+  /**
+   * {@link DrawerPopup} に渡すプロパティーです。
+   */
+  readonly popup?: DrawerPopupProps | undefined;
+
+  /**
+   * {@link DrawerContent} に渡すプロパティーです。
+   */
+  readonly content?: DrawerContentProps | undefined;
+
+  /**
+   * {@link DrawerTitle} に渡すプロパティーです。
+   */
+  readonly title?: DrawerTitleProps | undefined;
+
+  /**
+   * {@link DrawerDescription} に渡すプロパティーです。
+   */
+  readonly description?: DrawerDescriptionProps | undefined;
+
+  /**
+   * {@link DrawerClose}（右上の閉じるボタン）に渡すプロパティーです。
+   */
+  readonly headerClose?: Omit<DrawerCloseProps, "children"> | undefined;
+};
+
+/**
+ * {@link Drawer} の状態です。
+ */
+export type DrawerState = DrawerRootState;
 
 /**
  * {@link Drawer} コンポーネントのプロパティーです。
  *
- * {@link DrawerParts.Root|Root} から継承した `open` を指定すると開閉状態を制御でき、
+ * {@link DrawerRoot|Root} から継承した `open` を指定すると開閉状態を制御でき、
  * `defaultOpen` は初期状態だけを指定します。
  */
-export type DrawerProps = Omit<DrawerParts.Root.Props, "children" | "handle" | "swipeDirection"> & {
+export type DrawerProps = Omit<DrawerRootProps, "children" | "handle" | "swipeDirection"> & {
   /**
    * ドロワーが表示され、スワイプで閉じられる方向です。
    *
@@ -22,15 +115,15 @@ export type DrawerProps = Omit<DrawerParts.Root.Props, "children" | "handle" | "
    *
    * @default "left"
    */
-  swipeDirection?: DrawerParts.DrawerSwipeDirection | undefined;
+  swipeDirection?: DrawerSwipeDirection | undefined;
 
   /**
    * ドロワーを開くトリガーに表示するコンテンツです。
    *
-   * {@link DrawerParts.Trigger|Trigger} の `render` プロパティーに渡されます。
+   * {@link DrawerTrigger|Trigger} の `render` プロパティーに渡されます。
    * 省略した場合、トリガーはレンダリングされません。
    */
-  trigger?: DrawerParts.Trigger.Props["render"] | undefined;
+  trigger?: DrawerTriggerProps["render"] | undefined;
 
   /**
    * ドロワーのタイトルです。
@@ -62,76 +155,16 @@ export type DrawerProps = Omit<DrawerParts.Root.Props, "children" | "handle" | "
   slotProps?: DrawerSlotProps | undefined;
 };
 
-/**
- * {@link Drawer} の各パーツに渡すプロパティーです。
- */
-export type DrawerSlotProps = {
-  /**
-   * {@link DrawerParts.Trigger|Trigger} に渡すプロパティーです。
-   */
-  readonly trigger?: Omit<DrawerParts.Trigger.Props, "handle" | "children"> | undefined;
-
-  /**
-   * {@link DrawerParts.SwipeArea|SwipeArea} に渡すプロパティーです。
-   */
-  readonly swipeArea?: DrawerParts.SwipeArea.Props | undefined;
-
-  /**
-   * {@link DrawerParts.VirtualKeyboardProvider|VirtualKeyboardProvider} に渡すプロパティーです。
-   */
-  readonly virtualKeyboardProvider?: DrawerParts.VirtualKeyboardProvider.Props | undefined;
-
-  /**
-   * {@link DrawerParts.Portal|Portal} に渡すプロパティーです。
-   */
-  readonly portal?: DrawerParts.Portal.Props | undefined;
-
-  /**
-   * {@link DrawerParts.Backdrop|Backdrop} に渡すプロパティーです。
-   */
-  readonly backdrop?: DrawerParts.Backdrop.Props | undefined;
-
-  /**
-   * {@link DrawerParts.Viewport|Viewport} に渡すプロパティーです。
-   */
-  readonly viewport?: DrawerParts.Viewport.Props | undefined;
-
-  /**
-   * {@link DrawerParts.Popup|Popup} に渡すプロパティーです。
-   */
-  readonly popup?: DrawerParts.Popup.Props | undefined;
-
-  /**
-   * {@link DrawerParts.Content|Content} に渡すプロパティーです。
-   */
-  readonly content?: DrawerParts.Content.Props | undefined;
-
-  /**
-   * {@link DrawerParts.Title|Title} に渡すプロパティーです。
-   */
-  readonly title?: DrawerParts.Title.Props | undefined;
-
-  /**
-   * {@link DrawerParts.Description|Description} に渡すプロパティーです。
-   */
-  readonly description?: DrawerParts.Description.Props | undefined;
-
-  /**
-   * {@link DrawerParts.Close|Close}（右上の閉じるボタン）に渡すプロパティーです。
-   */
-  readonly headerClose?: Omit<DrawerParts.Close.Props, "children"> | undefined;
-};
-
-type CloseClickHandler = DrawerParts.Close.Props["onClick"];
+type CloseClickHandler = DrawerCloseProps["onClick"];
 type CloseClickEvent = Parameters<NonNullable<CloseClickHandler>>[0];
 
-interface DrawerComponentType extends Component<DrawerProps> {
+interface DrawerComponentType extends IComponent<DrawerProps> {
   /**
    * ドロワーを制御するハンドルを新しく作成します。
    *
-   * 作成したハンドルは {@link DrawerParts.Root} と {@link DrawerParts.Trigger} の `handle` プロパティーに渡します。
+   * 作成したハンドルは {@link DrawerRoot} と {@link DrawerTrigger} の `handle` プロパティーに渡します。
    */
-  readonly createHandle: typeof DrawerParts.createHandle;
+  readonly createHandle: typeof createHandle;
 }
 
 function createCloseClickHandler(
@@ -154,23 +187,11 @@ function createCloseClickHandler(
  * 画面端からスライドして表示されるドロワーを表示するコンポーネントです。
  *
  * トリガー、タイトル、説明文、本文、閉じるアイコンからドロワーを組み立てます。
- * 構成を細かく制御したい場合は、{@link DrawerParts.Root|Root} を直接組み立てます。
- *
- * @example 基本
- * ```tsx
- * import { Button } from "@suru-ui/react/button";
- * import { Drawer } from "@suru-ui/react/drawer";
- *
- * <Drawer
- *   trigger={<Button>通知を見る</Button>}
- *   title="通知"
- *   description="新しい通知はありません。"
- * />
- * ```
+ * 構成を細かく制御したい場合は、{@link DrawerRoot|Root} を直接組み立てます。
  */
 export const Drawer: DrawerComponentType = /*#__PURE__*/ Object.assign(
   function SuiDrawer(props: DrawerProps) {
-    const [handle] = React.useState(DrawerParts.createHandle);
+    const [handle] = React.useState(createHandle);
     const {
       trigger,
       title,
@@ -194,17 +215,17 @@ export const Drawer: DrawerComponentType = /*#__PURE__*/ Object.assign(
     } = props;
 
     return (
-      <DrawerParts.Root {...rootProps} handle={handle}>
+      <DrawerRoot {...rootProps} handle={handle}>
         {trigger !== undefined && (
-          <DrawerParts.Trigger {...triggerProps} handle={handle} render={trigger} />
+          <DrawerTrigger {...triggerProps} handle={handle} render={trigger} />
         )}
-        {swipeAreaProps !== undefined && <DrawerParts.SwipeArea {...swipeAreaProps} />}
-        <DrawerParts.VirtualKeyboardProvider {...virtualKeyboardProviderProps}>
-          <DrawerParts.Portal {...portalProps}>
-            <DrawerParts.Backdrop {...backdropProps} />
-            <DrawerParts.Viewport {...viewportProps}>
-              <DrawerParts.Popup {...popupProps}>
-                <DrawerParts.Close
+        {swipeAreaProps !== undefined && <DrawerSwipeArea {...swipeAreaProps} />}
+        <DrawerVirtualKeyboardProvider {...virtualKeyboardProviderProps}>
+          <DrawerPortal {...portalProps}>
+            <DrawerBackdrop {...backdropProps} />
+            <DrawerViewport {...viewportProps}>
+              <DrawerPopup {...popupProps}>
+                <DrawerClose
                   {...headerCloseProps}
                   className={cn("sui_drawer_close_button", headerCloseProps?.className)}
                   onClick={createCloseClickHandler(headerCloseProps?.onClick, onClose)}
@@ -226,23 +247,39 @@ export const Drawer: DrawerComponentType = /*#__PURE__*/ Object.assign(
                     </Button>
                   }
                 />
-                <DrawerParts.Content {...contentProps}>
-                  {title !== undefined && (
-                    <DrawerParts.Title {...titleProps}>{title}</DrawerParts.Title>
-                  )}
+                <DrawerContent {...contentProps}>
+                  {title !== undefined && <DrawerTitle {...titleProps}>{title}</DrawerTitle>}
                   {description !== undefined && (
-                    <DrawerParts.Description {...descriptionProps}>
-                      {description}
-                    </DrawerParts.Description>
+                    <DrawerDescription {...descriptionProps}>{description}</DrawerDescription>
                   )}
                   {children}
-                </DrawerParts.Content>
-              </DrawerParts.Popup>
-            </DrawerParts.Viewport>
-          </DrawerParts.Portal>
-        </DrawerParts.VirtualKeyboardProvider>
-      </DrawerParts.Root>
+                </DrawerContent>
+              </DrawerPopup>
+            </DrawerViewport>
+          </DrawerPortal>
+        </DrawerVirtualKeyboardProvider>
+      </DrawerRoot>
     );
   },
-  { createHandle: DrawerParts.createHandle },
+  { createHandle },
 );
+
+/**
+ * {@link Drawer} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Drawer {
+  /**
+   * {@link DrawerState} です。
+   */
+  export type State = DrawerState;
+
+  /**
+   * {@link DrawerProps} です。
+   */
+  export type Props = DrawerProps;
+
+  /**
+   * {@link DrawerSlotProps} です。
+   */
+  export type SlotProps = DrawerSlotProps;
+}

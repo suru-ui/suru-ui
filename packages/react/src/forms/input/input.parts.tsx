@@ -4,9 +4,53 @@ import * as React from "react";
 
 import cn from "../../cn.js";
 import { useActionGroupContext } from "../../layout/action-group/action-group.parts.jsx";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 
 import "./input.css";
+
+// Types
+// -----
+
+/**
+ * テキスト入力欄の色です。
+ */
+export type InputColor = Color;
+
+/**
+ * テキスト入力欄の角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
+ */
+export type InputRadius = "none" | Size | "full";
+
+/**
+ * テキスト入力欄の大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type InputSize = Size;
+
+/**
+ * テキスト入力欄の主な外観の種類です。
+ *
+ * - `"naked"`: 背景のないテキスト入力欄
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type InputVariant = "naked" | "liquid";
+
+/**
+ * 入力欄で使用できる入力項目の種類です。
+ */
+export type InputType = Exclude<
+  React.HTMLInputTypeAttribute,
+  "button" | "checkbox" | "color" | "image" | "radio" | "range" | "reset" | "submit"
+>;
 
 // Root
 // ----
@@ -25,7 +69,7 @@ export type InputRootProps = Omit<React.ComponentProps<typeof Input>, "size" | "
    *
    * @default "grey"
    */
-  color?: Color | undefined;
+  color?: InputColor | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
@@ -38,43 +82,29 @@ export type InputRootProps = Omit<React.ComponentProps<typeof Input>, "size" | "
    * テキスト入力欄の角丸を指定します。
    *
    * デフォルト値は {@link InputRootProps.size|size} です。
-   *
-   * - `"none"`: 角を直角にする
-   * - `"sm"`: 小さい角丸
-   * - `"md"`: 標準的な角丸
-   * - `"lg"`: 大きい角丸
-   * - `"full"`: 完全な丸形
    */
-  radius?: "none" | Size | "full" | undefined;
+  radius?: InputRadius | undefined;
 
   /**
    * テキスト入力欄のサイズを指定します。
    *
    * @default "md"
    */
-  size?: Size | undefined;
+  size?: InputSize | undefined;
 
   /**
    * 入力項目です。
    *
    * @default "text"
    */
-  type?:
-    | Exclude<
-        React.HTMLInputTypeAttribute,
-        "button" | "checkbox" | "color" | "image" | "radio" | "range" | "reset" | "submit"
-      >
-    | undefined;
+  type?: InputType | undefined;
 
   /**
    * テキスト入力欄のスタイルバリエーションを指定します。
    *
-   * - `"naked"`: 背景のないテキスト入力欄
-   * - `"liquid"`: 薄い塗りつぶし
-   *
    * @default "liquid"
    */
-  variant?: "naked" | "liquid" | undefined;
+  variant?: InputVariant | undefined;
 };
 
 /**
@@ -89,13 +119,8 @@ export type InputChangeEventDetails = Input.ChangeEventDetails;
 
 /**
  * テキスト入力欄のルートコンポーネントです。
- *
- * @example
- * ```tsx
- * <InputParts.Root placeholder="田中 太郎" />
- * ```
  */
-export const InputRoot: Component<InputRootProps> = function SuiInputRoot(props) {
+export const InputRoot: IComponent<InputRootProps> = function SuiInputRoot(props) {
   const actionGroupCtx = useActionGroupContext(true);
   const {
     size: sizeProp = "md",
@@ -163,4 +188,4 @@ export namespace Root {
 /**
  * {@link InputRoot} です。
  */
-export const Root: Component<Root.Props> = InputRoot;
+export const Root: IComponent<Root.Props> = InputRoot;

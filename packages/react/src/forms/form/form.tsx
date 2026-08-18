@@ -1,4 +1,6 @@
-import type { Component } from "../../types.js";
+import type * as React from "react";
+
+import type { IComponent } from "../../types.js";
 import {
   type FormRootProps,
   type FormRootState,
@@ -53,7 +55,7 @@ export type FormState = FormRootState;
  */
 export type FormProps<TValues extends FormValues = FormValues> = FormRootProps<TValues>;
 
-interface FormComponentType extends Component<FormProps> {
+interface FormComponentType extends IComponent<FormProps> {
   <TValues extends FormValues>(props: FormProps<TValues>): React.ReactElement | null;
 }
 

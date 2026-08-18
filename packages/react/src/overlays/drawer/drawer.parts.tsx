@@ -2,9 +2,12 @@ import { Drawer } from "@base-ui/react/drawer";
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 
 import "./drawer.css";
+
+// Types
+// -----
 
 // Handle
 // ------
@@ -19,11 +22,6 @@ export type DrawerHandle<Payload = unknown> = Drawer.Handle<Payload>;
  *
  * 作成したハンドルを {@link Root} と {@link Trigger} の `handle` プロパティーに渡すことで、
  * トリガーとドロワーの内容を関連付けます。
- *
- * @example
- * ```tsx
- * const handle = DrawerParts.createHandle();
- * ```
  */
 export const createHandle: typeof Drawer.createHandle = Drawer.createHandle;
 
@@ -44,16 +42,8 @@ export type DrawerProviderProps = React.ComponentProps<typeof Drawer.Provider>;
  * 複数のドロワーでインデント効果などの状態を共有するプロバイダーです。
  *
  * それ自身は HTML 要素をレンダリングしません。
- *
- * @example
- * ```tsx
- * <DrawerParts.Provider>
- *   <DrawerParts.IndentBackground />
- *   <DrawerParts.Indent>アプリケーション</DrawerParts.Indent>
- * </DrawerParts.Provider>
- * ```
  */
-export const DrawerProvider: Component<DrawerProviderProps> = function SuiDrawerProvider(props) {
+export const DrawerProvider: IComponent<DrawerProviderProps> = function SuiDrawerProvider(props) {
   return <Drawer.Provider {...props} />;
 };
 
@@ -75,7 +65,7 @@ export namespace Provider {
 /**
  * {@link DrawerProvider} の短縮名です。
  */
-export const Provider: Component<Provider.Props> = DrawerProvider;
+export const Provider: IComponent<Provider.Props> = DrawerProvider;
 
 // IndentBackground
 // ----------------
@@ -94,13 +84,8 @@ export type DrawerIndentBackgroundProps = React.ComponentProps<typeof Drawer.Ind
  * ドロワーが開いているときの背景レイヤーです。
  *
  * {@link Provider} の子として {@link Indent} より前に配置します。
- *
- * @example
- * ```tsx
- * <DrawerParts.IndentBackground />
- * ```
  */
-export const DrawerIndentBackground: Component<DrawerIndentBackgroundProps> =
+export const DrawerIndentBackground: IComponent<DrawerIndentBackgroundProps> =
   function SuiDrawerIndentBackground(props) {
     const { className, ...otherProps } = props;
 
@@ -130,7 +115,7 @@ export namespace IndentBackground {
 /**
  * {@link DrawerIndentBackground} の短縮名です。
  */
-export const IndentBackground: Component<IndentBackground.Props> = DrawerIndentBackground;
+export const IndentBackground: IComponent<IndentBackground.Props> = DrawerIndentBackground;
 
 // Indent
 // ------
@@ -147,13 +132,8 @@ export type DrawerIndentProps = React.ComponentProps<typeof Drawer.Indent>;
 
 /**
  * アプリケーションのメイン UI を囲み、ドロワーのインデント状態を受け取る要素です。
- *
- * @example
- * ```tsx
- * <DrawerParts.Indent>アプリケーション</DrawerParts.Indent>
- * ```
  */
-export const DrawerIndent: Component<DrawerIndentProps> = function SuiDrawerIndent(props) {
+export const DrawerIndent: IComponent<DrawerIndentProps> = function SuiDrawerIndent(props) {
   const { className, ...otherProps } = props;
 
   return <Drawer.Indent {...otherProps} className={cn(className, "sui_drawer_indent")} />;
@@ -177,13 +157,18 @@ export namespace Indent {
 /**
  * {@link DrawerIndent} の短縮名です。
  */
-export const Indent: Component<Indent.Props> = DrawerIndent;
+export const Indent: IComponent<Indent.Props> = DrawerIndent;
 
 // SwipeDirection
 // --------------
 
 /**
  * ドロワーが表示され、スワイプで閉じられる方向です。
+ *
+ * - `"up"`: 上端から表示する
+ * - `"down"`: 下端から表示する
+ * - `"left"`: 左端から表示する
+ * - `"right"`: 右端から表示する
  */
 export type DrawerSwipeDirection = "up" | "down" | "left" | "right";
 
@@ -205,11 +190,6 @@ export type DrawerRootProps<Payload = unknown> = Omit<
   /**
    * ドロワーが表示され、スワイプで閉じられる方向です。
    *
-   * - `"up"`: 上端から表示する
-   * - `"down"`: 下端から表示する
-   * - `"left"`: 左端から表示する
-   * - `"right"`: 右端から表示する
-   *
    * @default "left"
    */
   swipeDirection?: DrawerSwipeDirection | undefined;
@@ -225,10 +205,8 @@ export type DrawerRootProps<Payload = unknown> = Omit<
 /**
  * {@link DrawerRoot} のコンポーネント型です。
  */
-export interface DrawerRootComponent {
+export interface DrawerRootComponent extends IComponent<DrawerRootProps> {
   <Payload = unknown>(props: DrawerRootProps<Payload>): React.ReactElement | null;
-
-  displayName?: string | undefined;
 }
 
 /**
@@ -236,24 +214,6 @@ export interface DrawerRootComponent {
  *
  * ドロワーの開閉状態を管理し、各パーツをグループ化します。
  * それ自身は HTML 要素をレンダリングしません。
- *
- * @example
- * ```tsx
- * const handle = DrawerParts.createHandle();
- *
- * <DrawerParts.Root handle={handle}>
- *   <DrawerParts.Trigger handle={handle}>開く</DrawerParts.Trigger>
- *   <DrawerParts.Portal>
- *     <DrawerParts.Viewport>
- *       <DrawerParts.Popup>
- *         <DrawerParts.Content>
- *           <DrawerParts.Title>通知</DrawerParts.Title>
- *         </DrawerParts.Content>
- *       </DrawerParts.Popup>
- *     </DrawerParts.Viewport>
- *   </DrawerParts.Portal>
- * </DrawerParts.Root>
- * ```
  */
 export const DrawerRoot: DrawerRootComponent = function SuiDrawerRoot<Payload>(
   props: DrawerRootProps<Payload>,
@@ -309,19 +269,12 @@ export type DrawerTriggerProps<Payload = unknown> = Omit<
 /**
  * {@link DrawerTrigger} のコンポーネント型です。
  */
-export interface DrawerTriggerComponent {
+export interface DrawerTriggerComponent extends IComponent<DrawerTriggerProps> {
   <Payload = unknown>(props: DrawerTriggerProps<Payload>): React.ReactElement | null;
-
-  displayName?: string | undefined;
 }
 
 /**
  * ドロワーを開くボタン要素です。
- *
- * @example
- * ```tsx
- * <DrawerParts.Trigger handle={handle}>通知を見る</DrawerParts.Trigger>
- * ```
  */
 export const DrawerTrigger: DrawerTriggerComponent = function SuiDrawerTrigger<Payload>(
   props: DrawerTriggerProps<Payload>,
@@ -366,13 +319,10 @@ export type DrawerSwipeAreaProps = React.ComponentProps<typeof Drawer.SwipeArea>
 
 /**
  * 画面端からのスワイプでドロワーを開く領域です。
- *
- * @example
- * ```tsx
- * <DrawerParts.SwipeArea aria-label="ドロワーを開く" />
- * ```
  */
-export const DrawerSwipeArea: Component<DrawerSwipeAreaProps> = function SuiDrawerSwipeArea(props) {
+export const DrawerSwipeArea: IComponent<DrawerSwipeAreaProps> = function SuiDrawerSwipeArea(
+  props,
+) {
   const { className, ...otherProps } = props;
 
   return <Drawer.SwipeArea {...otherProps} className={cn(className, "sui_drawer_swipe_area")} />;
@@ -396,7 +346,7 @@ export namespace SwipeArea {
 /**
  * {@link DrawerSwipeArea} の短縮名です。
  */
-export const SwipeArea: Component<SwipeArea.Props> = DrawerSwipeArea;
+export const SwipeArea: IComponent<SwipeArea.Props> = DrawerSwipeArea;
 
 // VirtualKeyboardProvider
 // -----------------------
@@ -417,15 +367,8 @@ export type DrawerVirtualKeyboardProviderProps = React.ComponentProps<
  * ソフトウェアキーボードに合わせたフォーカスとスクロールを管理するプロバイダーです。
  *
  * ボトムシート内にフォームを配置するときに使用します。
- *
- * @example
- * ```tsx
- * <DrawerParts.VirtualKeyboardProvider>
- *   <DrawerParts.Portal>…</DrawerParts.Portal>
- * </DrawerParts.VirtualKeyboardProvider>
- * ```
  */
-export const DrawerVirtualKeyboardProvider: Component<DrawerVirtualKeyboardProviderProps> =
+export const DrawerVirtualKeyboardProvider: IComponent<DrawerVirtualKeyboardProviderProps> =
   function SuiDrawerVirtualKeyboardProvider(props) {
     return <Drawer.VirtualKeyboardProvider {...props} />;
   };
@@ -448,7 +391,7 @@ export namespace VirtualKeyboardProvider {
 /**
  * {@link DrawerVirtualKeyboardProvider} の短縮名です。
  */
-export const VirtualKeyboardProvider: Component<VirtualKeyboardProvider.Props> =
+export const VirtualKeyboardProvider: IComponent<VirtualKeyboardProvider.Props> =
   DrawerVirtualKeyboardProvider;
 
 // Portal
@@ -468,15 +411,8 @@ export type DrawerPortalProps = React.ComponentProps<typeof Drawer.Portal>;
  * ドロワーを DOM の別の場所へ移動する要素です。
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
- *
- * @example
- * ```tsx
- * <DrawerParts.Portal>
- *   <DrawerParts.Viewport>…</DrawerParts.Viewport>
- * </DrawerParts.Portal>
- * ```
  */
-export const DrawerPortal: Component<DrawerPortalProps> = function SuiDrawerPortal(props) {
+export const DrawerPortal: IComponent<DrawerPortalProps> = function SuiDrawerPortal(props) {
   const { className, ...otherProps } = props;
 
   return <Drawer.Portal {...otherProps} className={cn(className, "sui_drawer_portal")} />;
@@ -500,7 +436,7 @@ export namespace Portal {
 /**
  * {@link DrawerPortal} の短縮名です。
  */
-export const Portal: Component<Portal.Props> = DrawerPortal;
+export const Portal: IComponent<Portal.Props> = DrawerPortal;
 
 // Backdrop
 // --------
@@ -517,13 +453,8 @@ export type DrawerBackdropProps = React.ComponentProps<typeof Drawer.Backdrop>;
 
 /**
  * ドロワーの背後に表示されるオーバーレイ要素です。
- *
- * @example
- * ```tsx
- * <DrawerParts.Backdrop />
- * ```
  */
-export const DrawerBackdrop: Component<DrawerBackdropProps> = function SuiDrawerBackdrop(props) {
+export const DrawerBackdrop: IComponent<DrawerBackdropProps> = function SuiDrawerBackdrop(props) {
   const { className, ...otherProps } = props;
 
   return <Drawer.Backdrop {...otherProps} className={cn(className, "sui_drawer_backdrop")} />;
@@ -547,7 +478,7 @@ export namespace Backdrop {
 /**
  * {@link DrawerBackdrop} の短縮名です。
  */
-export const Backdrop: Component<Backdrop.Props> = DrawerBackdrop;
+export const Backdrop: IComponent<Backdrop.Props> = DrawerBackdrop;
 
 // Viewport
 // --------
@@ -564,15 +495,8 @@ export type DrawerViewportProps = React.ComponentProps<typeof Drawer.Viewport>;
 
 /**
  * ドロワーのポップアップを配置するコンテナー要素です。
- *
- * @example
- * ```tsx
- * <DrawerParts.Viewport>
- *   <DrawerParts.Popup>…</DrawerParts.Popup>
- * </DrawerParts.Viewport>
- * ```
  */
-export const DrawerViewport: Component<DrawerViewportProps> = function SuiDrawerViewport(props) {
+export const DrawerViewport: IComponent<DrawerViewportProps> = function SuiDrawerViewport(props) {
   const { className, ...otherProps } = props;
 
   return <Drawer.Viewport {...otherProps} className={cn(className, "sui_drawer_viewport")} />;
@@ -596,7 +520,7 @@ export namespace Viewport {
 /**
  * {@link DrawerViewport} の短縮名です。
  */
-export const Viewport: Component<Viewport.Props> = DrawerViewport;
+export const Viewport: IComponent<Viewport.Props> = DrawerViewport;
 
 // Popup
 // -----
@@ -615,15 +539,8 @@ export type DrawerPopupProps = React.ComponentProps<typeof Drawer.Popup>;
  * ドロワーの本文を表示する要素です。
  *
  * `initialFocus` と `finalFocus` を使うと、開閉時に移動するフォーカス先を指定できます。
- *
- * @example
- * ```tsx
- * <DrawerParts.Popup>
- *   <DrawerParts.Content>…</DrawerParts.Content>
- * </DrawerParts.Popup>
- * ```
  */
-export const DrawerPopup: Component<DrawerPopupProps> = function SuiDrawerPopup(props) {
+export const DrawerPopup: IComponent<DrawerPopupProps> = function SuiDrawerPopup(props) {
   const { className, ...otherProps } = props;
 
   return <Drawer.Popup {...otherProps} className={cn(className, "sui_drawer_popup")} />;
@@ -647,7 +564,7 @@ export namespace Popup {
 /**
  * {@link DrawerPopup} の短縮名です。
  */
-export const Popup: Component<Popup.Props> = DrawerPopup;
+export const Popup: IComponent<Popup.Props> = DrawerPopup;
 
 // Content
 // -------
@@ -664,13 +581,8 @@ export type DrawerContentProps = React.ComponentProps<typeof Drawer.Content>;
 
 /**
  * ドロワー内のテキスト選択とスワイプ操作を分けるコンテンツ要素です。
- *
- * @example
- * ```tsx
- * <DrawerParts.Content>通知はありません。</DrawerParts.Content>
- * ```
  */
-export const DrawerContent: Component<DrawerContentProps> = function SuiDrawerContent(props) {
+export const DrawerContent: IComponent<DrawerContentProps> = function SuiDrawerContent(props) {
   const { className, ...otherProps } = props;
 
   return <Drawer.Content {...otherProps} className={cn(className, "sui_drawer_content")} />;
@@ -694,7 +606,7 @@ export namespace Content {
 /**
  * {@link DrawerContent} の短縮名です。
  */
-export const Content: Component<Content.Props> = DrawerContent;
+export const Content: IComponent<Content.Props> = DrawerContent;
 
 // Title
 // -----
@@ -711,13 +623,8 @@ export type DrawerTitleProps = React.ComponentProps<typeof Drawer.Title>;
 
 /**
  * ドロワーのタイトルを表示する見出し要素です。
- *
- * @example
- * ```tsx
- * <DrawerParts.Title>通知</DrawerParts.Title>
- * ```
  */
-export const DrawerTitle: Component<DrawerTitleProps> = function SuiDrawerTitle(props) {
+export const DrawerTitle: IComponent<DrawerTitleProps> = function SuiDrawerTitle(props) {
   const { className, ...otherProps } = props;
 
   return <Drawer.Title {...otherProps} className={cn(className, "sui_drawer_title")} />;
@@ -741,7 +648,7 @@ export namespace Title {
 /**
  * {@link DrawerTitle} の短縮名です。
  */
-export const Title: Component<Title.Props> = DrawerTitle;
+export const Title: IComponent<Title.Props> = DrawerTitle;
 
 // Description
 // -----------
@@ -758,13 +665,8 @@ export type DrawerDescriptionProps = React.ComponentProps<typeof Drawer.Descript
 
 /**
  * ドロワーの説明文を表示する段落要素です。
- *
- * @example
- * ```tsx
- * <DrawerParts.Description>新しい通知はありません。</DrawerParts.Description>
- * ```
  */
-export const DrawerDescription: Component<DrawerDescriptionProps> = function SuiDrawerDescription(
+export const DrawerDescription: IComponent<DrawerDescriptionProps> = function SuiDrawerDescription(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -790,7 +692,7 @@ export namespace Description {
 /**
  * {@link DrawerDescription} の短縮名です。
  */
-export const Description: Component<Description.Props> = DrawerDescription;
+export const Description: IComponent<Description.Props> = DrawerDescription;
 
 // Close
 // -----
@@ -807,13 +709,8 @@ export type DrawerCloseProps = React.ComponentProps<typeof Drawer.Close>;
 
 /**
  * ドロワーを閉じるボタン要素です。
- *
- * @example
- * ```tsx
- * <DrawerParts.Close>閉じる</DrawerParts.Close>
- * ```
  */
-export const DrawerClose: Component<DrawerCloseProps> = function SuiDrawerClose(props) {
+export const DrawerClose: IComponent<DrawerCloseProps> = function SuiDrawerClose(props) {
   const { className, ...otherProps } = props;
 
   return <Drawer.Close {...otherProps} className={cn(className, "sui_drawer_close")} />;
@@ -837,4 +734,4 @@ export namespace Close {
 /**
  * {@link DrawerClose} の短縮名です。
  */
-export const Close: Component<Close.Props> = DrawerClose;
+export const Close: IComponent<Close.Props> = DrawerClose;

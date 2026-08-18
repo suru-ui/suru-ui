@@ -1,3 +1,3 @@
 export * from "./chip.parts.jsx";
 
-export { type ChipProps, Chip } from "./chip.jsx";
+export { type ChipProps, type ChipState, Chip } from "./chip.jsx";

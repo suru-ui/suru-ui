@@ -1,29 +1,36 @@
-import type { Component } from "../../types.js";
-import * as TabsParts from "./tabs.parts.jsx";
+import type { IComponent } from "../../types.js";
+import { type TabsRootProps, type TabsRootState, TabsRoot } from "./tabs.parts.jsx";
+
+/**
+ * {@link Tabs} の状態です。
+ */
+export type TabsState = TabsRootState;
 
 /**
  * {@link Tabs} コンポーネントのプロパティーです。
  */
-export type TabsProps = TabsParts.Root.Props;
+export type TabsProps = TabsRootProps;
 
 /**
  * Tab とパネルを切り替えるコンポーネントです。
  *
- * Tab の構成を細かく制御する場合は、{@link TabsParts.Root|Root} と各パーツを直接組み立てます。
- *
- * @example 基本
- * ```tsx
- * <Tabs defaultValue="overview">
- *   <TabsParts.List>
- *     <TabsParts.Tab value="overview">概要</TabsParts.Tab>
- *     <TabsParts.Tab value="projects">プロジェクト</TabsParts.Tab>
- *     <TabsParts.Indicator />
- *   </TabsParts.List>
- *   <TabsParts.Panel value="overview">概要の内容</TabsParts.Panel>
- *   <TabsParts.Panel value="projects">プロジェクトの内容</TabsParts.Panel>
- * </Tabs>
- * ```
+ * Tab の構成を細かく制御する場合は、{@link TabsRoot|Root} と各パーツを直接組み立てます。
  */
-export const Tabs: Component<TabsProps> = function SuiTabs(props) {
-  return <TabsParts.Root {...props} />;
+export const Tabs: IComponent<TabsProps> = function SuiTabs(props) {
+  return <TabsRoot {...props} />;
 };
+
+/**
+ * {@link Tabs} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Tabs {
+  /**
+   * {@link TabsState} です。
+   */
+  export type State = TabsState;
+
+  /**
+   * {@link TabsProps} です。
+   */
+  export type Props = TabsProps;
+}

@@ -2,9 +2,12 @@ import { Tooltip } from "@base-ui/react/tooltip";
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 
 import "./tooltip.css";
+
+// Types
+// -----
 
 // Handle
 // ------
@@ -12,18 +15,13 @@ import "./tooltip.css";
 /**
  * ツールチップを制御するハンドルです。
  */
-export type TooltipHandle<Payload = unknown> = Tooltip.Handle<Payload>;
+export type TooltipHandle<TPayload = unknown> = Tooltip.Handle<TPayload>;
 
 /**
  * ツールチップを制御するハンドルを新しく作成します。
  *
  * 作成したハンドルを {@link Root} と {@link Trigger} の `handle` プロパティーに渡すことで、
  * ルートとトリガーを別々の場所に配置できます。
- *
- * @example
- * ```tsx
- * const handle = TooltipParts.createHandle();
- * ```
  */
 export const createHandle: typeof Tooltip.createHandle = Tooltip.createHandle;
 
@@ -45,15 +43,10 @@ export type TooltipProviderProps = Tooltip.Provider.Props;
  *
  * 近接したツールチップを続けて表示するとき、先に表示したツールチップが閉じてから一定時間内であれば、
  * 次のツールチップをすぐに表示します。
- *
- * @example
- * ```tsx
- * <TooltipParts.Provider>
- *   <Toolbar />
- * </TooltipParts.Provider>
- * ```
  */
-export const TooltipProvider: Component<TooltipProviderProps> = function SuiTooltipProvider(props) {
+export const TooltipProvider: IComponent<TooltipProviderProps> = function SuiTooltipProvider(
+  props,
+) {
   return <Tooltip.Provider {...props} />;
 };
 
@@ -75,7 +68,7 @@ export namespace Provider {
 /**
  * {@link TooltipProvider} の短縮名です。
  */
-export const Provider: Component<Provider.Props> = TooltipProvider;
+export const Provider: IComponent<Provider.Props> = TooltipProvider;
 
 // Root
 // ----
@@ -88,17 +81,15 @@ export type TooltipRootState = Tooltip.Root.State;
 /**
  * {@link Root} に渡すプロパティーです。
  *
- * @template Payload トリガーから受け取るデータの型です。
+ * @template TPayload トリガーから受け取るデータの型です。
  */
-export type TooltipRootProps<Payload = unknown> = Tooltip.Root.Props<Payload>;
+export type TooltipRootProps<TPayload = unknown> = Tooltip.Root.Props<TPayload>;
 
 /**
  * {@link TooltipRoot} のコンポーネント型です。
  */
-export interface TooltipRootComponent {
-  <Payload = unknown>(props: TooltipRootProps<Payload>): React.ReactElement | null;
-
-  displayName?: string | undefined;
+export interface TooltipRootComponent extends IComponent<TooltipRootProps> {
+  <TPayload = unknown>(props: TooltipRootProps<TPayload>): React.ReactElement | null;
 }
 
 /**
@@ -106,26 +97,9 @@ export interface TooltipRootComponent {
  *
  * 開閉状態を管理し、トリガーとポップアップをグループ化します。
  * それ自身は HTML 要素をレンダリングしません。
- *
- * @example
- * ```tsx
- * <TooltipParts.Root>
- *   <TooltipParts.Trigger aria-label="保存">
- *     {(props) => <button type="button" {...props}>保存</button>}
- *   </TooltipParts.Trigger>
- *   <TooltipParts.Portal>
- *     <TooltipParts.Positioner>
- *       <TooltipParts.Popup>
- *         <TooltipParts.Arrow />
- *         保存します
- *       </TooltipParts.Popup>
- *     </TooltipParts.Positioner>
- *   </TooltipParts.Portal>
- * </TooltipParts.Root>
- * ```
  */
-export const TooltipRoot: TooltipRootComponent = function SuiTooltipRoot<Payload>(
-  props: TooltipRootProps<Payload>,
+export const TooltipRoot: TooltipRootComponent = function SuiTooltipRoot<TPayload>(
+  props: TooltipRootProps<TPayload>,
 ) {
   return <Tooltip.Root {...props} />;
 };
@@ -142,7 +116,7 @@ export namespace Root {
   /**
    * {@link TooltipRoot} のプロパティー型です。
    */
-  export type Props<Payload = unknown> = TooltipRootProps<Payload>;
+  export type Props<TPayload = unknown> = TooltipRootProps<TPayload>;
 }
 
 /**
@@ -156,17 +130,17 @@ export const Root: TooltipRootComponent = TooltipRoot;
 /**
  * {@link Trigger} の状態です。
  *
- * @template Payload トリガーから渡すデータの型です。
+ * @template TPayload トリガーから渡すデータの型です。
  */
 export type TooltipTriggerState = Tooltip.Trigger.State;
 
 /**
  * {@link Trigger} に渡すプロパティーです。
  *
- * @template Payload トリガーから渡すデータの型です。
+ * @template TPayload トリガーから渡すデータの型です。
  */
-export type TooltipTriggerProps<Payload = unknown> = Omit<
-  Tooltip.Trigger.Props<Payload>,
+export type TooltipTriggerProps<TPayload = unknown> = Omit<
+  Tooltip.Trigger.Props<TPayload>,
   "children" | "render"
 > & {
   /**
@@ -174,32 +148,23 @@ export type TooltipTriggerProps<Payload = unknown> = Omit<
    *
    * {@link Tooltip.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
    */
-  children: NonNullable<Tooltip.Trigger.Props<Payload>["render"]>;
+  children: NonNullable<Tooltip.Trigger.Props<TPayload>["render"]>;
 };
 
 /**
  * {@link TooltipTrigger} のコンポーネント型です。
  */
-export interface TooltipTriggerComponent {
-  <Payload = unknown>(props: TooltipTriggerProps<Payload>): React.ReactElement | null;
-
-  displayName?: string | undefined;
+export interface TooltipTriggerComponent extends IComponent<TooltipTriggerProps> {
+  <TPayload = unknown>(props: TooltipTriggerProps<TPayload>): React.ReactElement | null;
 }
 
 /**
  * ツールチップを開くトリガー要素です。
  *
  * 子要素は何にもラップされず、そのまま {@link Tooltip.Trigger} の `render` プロパティーに渡されます。
- *
- * @example
- * ```tsx
- * <TooltipParts.Trigger aria-label="削除">
- *   {(props) => <button type="button" {...props}>削除</button>}
- * </TooltipParts.Trigger>
- * ```
  */
-export const TooltipTrigger: TooltipTriggerComponent = function SuiTooltipTrigger<Payload>(
-  props: TooltipTriggerProps<Payload>,
+export const TooltipTrigger: TooltipTriggerComponent = function SuiTooltipTrigger<TPayload>(
+  props: TooltipTriggerProps<TPayload>,
 ) {
   const { className, children, ...otherProps } = props;
 
@@ -224,7 +189,7 @@ export namespace Trigger {
   /**
    * {@link TooltipTrigger} のプロパティー型です。
    */
-  export type Props<Payload = unknown> = TooltipTriggerProps<Payload>;
+  export type Props<TPayload = unknown> = TooltipTriggerProps<TPayload>;
 }
 
 /**
@@ -249,15 +214,8 @@ export type TooltipPortalProps = React.ComponentProps<typeof Tooltip.Portal>;
  * ツールチップを DOM の別の場所へ移動する要素です。
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
- *
- * @example
- * ```tsx
- * <TooltipParts.Portal>
- *   <TooltipParts.Positioner>…</TooltipParts.Positioner>
- * </TooltipParts.Portal>
- * ```
  */
-export const TooltipPortal: Component<TooltipPortalProps> = function SuiTooltipPortal(props) {
+export const TooltipPortal: IComponent<TooltipPortalProps> = function SuiTooltipPortal(props) {
   const { className, ...otherProps } = props;
 
   return <Tooltip.Portal {...otherProps} className={cn(className, "sui_tooltip_portal")} />;
@@ -281,7 +239,7 @@ export namespace Portal {
 /**
  * {@link TooltipPortal} の短縮名です。
  */
-export const Portal: Component<Portal.Props> = TooltipPortal;
+export const Portal: IComponent<Portal.Props> = TooltipPortal;
 
 // Positioner
 // ----------
@@ -298,15 +256,8 @@ export type TooltipPositionerProps = React.ComponentProps<typeof Tooltip.Positio
 
 /**
  * トリガーを基準にポップアップを配置する要素です。
- *
- * @example
- * ```tsx
- * <TooltipParts.Positioner sideOffset={8}>
- *   <TooltipParts.Popup>説明</TooltipParts.Popup>
- * </TooltipParts.Positioner>
- * ```
  */
-export const TooltipPositioner: Component<TooltipPositionerProps> = function SuiTooltipPositioner(
+export const TooltipPositioner: IComponent<TooltipPositionerProps> = function SuiTooltipPositioner(
   props,
 ) {
   const { className, positionMethod = "fixed", ...otherProps } = props;
@@ -338,7 +289,7 @@ export namespace Positioner {
 /**
  * {@link TooltipPositioner} の短縮名です。
  */
-export const Positioner: Component<Positioner.Props> = TooltipPositioner;
+export const Positioner: IComponent<Positioner.Props> = TooltipPositioner;
 
 // Popup
 // -----
@@ -355,16 +306,8 @@ export type TooltipPopupProps = React.ComponentProps<typeof Tooltip.Popup>;
 
 /**
  * ツールチップの内容を表示するポップアップ要素です。
- *
- * @example
- * ```tsx
- * <TooltipParts.Popup>
- *   <TooltipParts.Arrow />
- *   保存します
- * </TooltipParts.Popup>
- * ```
  */
-export const TooltipPopup: Component<TooltipPopupProps> = function SuiTooltipPopup(props) {
+export const TooltipPopup: IComponent<TooltipPopupProps> = function SuiTooltipPopup(props) {
   const { className, ...otherProps } = props;
 
   return (
@@ -390,7 +333,7 @@ export namespace Popup {
 /**
  * {@link TooltipPopup} の短縮名です。
  */
-export const Popup: Component<Popup.Props> = TooltipPopup;
+export const Popup: IComponent<Popup.Props> = TooltipPopup;
 
 // Arrow
 // -----
@@ -407,16 +350,8 @@ export type TooltipArrowProps = React.ComponentProps<typeof Tooltip.Arrow>;
 
 /**
  * ポップアップとトリガーをつなぐ矢印要素です。
- *
- * @example
- * ```tsx
- * <TooltipParts.Popup>
- *   <TooltipParts.Arrow />
- *   説明
- * </TooltipParts.Popup>
- * ```
  */
-export const TooltipArrow: Component<TooltipArrowProps> = function SuiTooltipArrow(props) {
+export const TooltipArrow: IComponent<TooltipArrowProps> = function SuiTooltipArrow(props) {
   const { className, ...otherProps } = props;
 
   return <Tooltip.Arrow {...otherProps} className={cn(className, "sui_tooltip_arrow")} />;
@@ -440,7 +375,7 @@ export namespace Arrow {
 /**
  * {@link TooltipArrow} の短縮名です。
  */
-export const Arrow: Component<Arrow.Props> = TooltipArrow;
+export const Arrow: IComponent<Arrow.Props> = TooltipArrow;
 
 // Viewport
 // --------
@@ -459,16 +394,10 @@ export type TooltipViewportProps = React.ComponentProps<typeof Tooltip.Viewport>
  * 複数のトリガー間で内容を切り替えるときのアニメーション領域です。
  *
  * 1 つのツールチップを複数のトリガーで共有し、内容をトリガーごとに変える場合に使います。
- *
- * @example
- * ```tsx
- * <TooltipParts.Popup>
- *   <TooltipParts.Arrow />
- *   <TooltipParts.Viewport>{content}</TooltipParts.Viewport>
- * </TooltipParts.Popup>
- * ```
  */
-export const TooltipViewport: Component<TooltipViewportProps> = function SuiTooltipViewport(props) {
+export const TooltipViewport: IComponent<TooltipViewportProps> = function SuiTooltipViewport(
+  props,
+) {
   const { className, ...otherProps } = props;
 
   return <Tooltip.Viewport {...otherProps} className={cn(className, "sui_tooltip_viewport")} />;
@@ -492,4 +421,4 @@ export namespace Viewport {
 /**
  * {@link TooltipViewport} の短縮名です。
  */
-export const Viewport: Component<Viewport.Props> = TooltipViewport;
+export const Viewport: IComponent<Viewport.Props> = TooltipViewport;

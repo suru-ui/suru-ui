@@ -19,6 +19,8 @@
     --sui_checkbox-border_color-checked: ;
     --sui_checkbox-border_width: ;
     --sui_checkbox-border_radius: ;
+    --sui_checkbox-outline_color: ;
+    --sui_checkbox-outline_offset: ;
     /* 前景 */
     --sui_checkbox-canvas_text-checked: ;
   }
@@ -42,8 +44,8 @@
     height: var(--sui_checkbox-size);
     outline: var(--_sui_checkbox-outline_width, 0px)
              solid
-             var(--sui-focusring_color);
-    outline-offset: var(--sui-focusring_offset);
+             var(--sui_checkbox-outline_color);
+    outline-offset: var(--sui_checkbox-outline_offset);
     background-color: var(--_sui_checkbox-canvas, var(--sui_checkbox-canvas-normal));
     border: var(--_sui_checkbox-border_color, transparent)
             solid
@@ -52,6 +54,12 @@
   }
 
   /* 既定値設定: ここから */
+
+  .sui_checkbox {
+    /* 枠線 */
+    --sui_checkbox-outline_color: var(--sui-focusring_color);
+    --sui_checkbox-outline_offset: var(--sui-focusring_offset);
+  }
 
   .sui_checkbox-size_sm {
     /* 形状 */

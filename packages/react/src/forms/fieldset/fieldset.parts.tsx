@@ -2,9 +2,12 @@ import { Fieldset } from "@base-ui/react/fieldset";
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 
 import "./fieldset.css";
+
+// Types
+// -----
 
 // Root
 // ----
@@ -29,15 +32,8 @@ export type FieldsetRootProps = React.ComponentProps<typeof Fieldset.Root>;
  *
  * 共通の凡例と関連するコントロールをグループ化します。
  * `disabled` を指定すると、グループ内のコントロールも無効になります。
- *
- * @example
- * ```tsx
- * <FieldsetParts.Root disabled>
- *   <FieldsetParts.Legend>お支払い情報</FieldsetParts.Legend>
- * </FieldsetParts.Root>
- * ```
  */
-export const FieldsetRoot: Component<FieldsetRootProps> = function SuiFieldsetRoot(props) {
+export const FieldsetRoot: IComponent<FieldsetRootProps> = function SuiFieldsetRoot(props) {
   const { className, ...otherProps } = props;
 
   return (
@@ -70,7 +66,7 @@ export namespace Root {
 /**
  * {@link FieldsetRoot} の別名です。
  */
-export const Root: Component<Root.Props> = FieldsetRoot;
+export const Root: IComponent<Root.Props> = FieldsetRoot;
 
 // Legend
 // ------
@@ -93,13 +89,8 @@ export type FieldsetLegendProps = React.ComponentProps<typeof Fieldset.Legend>;
  * フィールドセットの凡例要素です。
  *
  * フィールドセットの説明ラベルを表示し、グループと自動的に関連付けられます。
- *
- * @example
- * ```tsx
- * <FieldsetParts.Legend>配送先情報</FieldsetParts.Legend>
- * ```
  */
-export const FieldsetLegend: Component<FieldsetLegendProps> = function SuiFieldsetLegend(props) {
+export const FieldsetLegend: IComponent<FieldsetLegendProps> = function SuiFieldsetLegend(props) {
   const { className, ...otherProps } = props;
 
   return (
@@ -128,4 +119,4 @@ export namespace Legend {
 /**
  * {@link FieldsetLegend} の別名です。
  */
-export const Legend: Component<Legend.Props> = FieldsetLegend;
+export const Legend: IComponent<Legend.Props> = FieldsetLegend;

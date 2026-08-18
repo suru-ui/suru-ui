@@ -2,9 +2,12 @@ import { Field } from "@base-ui/react/field";
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 
 import "./field.css";
+
+// Types
+// -----
 
 // Root
 // ----
@@ -29,7 +32,7 @@ export type FieldRootProps = React.ComponentProps<typeof Field.Root>;
  *
  * ラベル、入力欄、エラーメッセージ、説明文をグループ化し、検証状態を管理します。
  */
-export const FieldRoot: Component<FieldRootProps> = function SuiFieldRoot(props) {
+export const FieldRoot: IComponent<FieldRootProps> = function SuiFieldRoot(props) {
   const { className, ...otherProps } = props;
 
   return (
@@ -63,7 +66,7 @@ export namespace Root {
 /**
  * {@link FieldRoot} です。
  */
-export const Root: Component<Root.Props> = FieldRoot;
+export const Root: IComponent<Root.Props> = FieldRoot;
 
 // Label
 // -----
@@ -83,7 +86,7 @@ export type FieldLabelProps = React.ComponentProps<typeof Field.Label>;
  *
  * 自動的に入力欄と関連付けられ、クリックで入力欄にフォーカスされます。
  */
-export const FieldLabel: Component<FieldLabelProps> = function SuiFieldLabel(props) {
+export const FieldLabel: IComponent<FieldLabelProps> = function SuiFieldLabel(props) {
   const { className, ...otherProps } = props;
 
   return <Field.Label {...otherProps} className={cn(className, "sui_field_label")} />;
@@ -107,7 +110,7 @@ export namespace Label {
 /**
  * {@link FieldLabel} です。
  */
-export const Label: Component<Label.Props> = FieldLabel;
+export const Label: IComponent<Label.Props> = FieldLabel;
 
 // Control
 // -------
@@ -135,7 +138,7 @@ export type FieldControlProps = React.ComponentProps<typeof Field.Control>;
 /**
  * フィールドの入力欄コンポーネントです。
  */
-export const FieldControl: Component<FieldControlProps> = function SuiFieldControl(props) {
+export const FieldControl: IComponent<FieldControlProps> = function SuiFieldControl(props) {
   const { className, ...otherProps } = props;
 
   return <Field.Control {...otherProps} className={cn(className, "sui_field_control")} />;
@@ -169,7 +172,7 @@ export namespace Control {
 /**
  * {@link FieldControl} です。
  */
-export const Control: Component<Control.Props> = FieldControl;
+export const Control: IComponent<Control.Props> = FieldControl;
 
 // Description
 // -----------
@@ -189,7 +192,7 @@ export type FieldDescriptionProps = React.ComponentProps<typeof Field.Descriptio
  *
  * 入力欄の補助情報を表示します。
  */
-export const FieldDescription: Component<FieldDescriptionProps> = function SuiFieldDescription(
+export const FieldDescription: IComponent<FieldDescriptionProps> = function SuiFieldDescription(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -215,7 +218,7 @@ export namespace Description {
 /**
  * {@link FieldDescription} です。
  */
-export const Description: Component<Description.Props> = FieldDescription;
+export const Description: IComponent<Description.Props> = FieldDescription;
 
 // Error
 // -----
@@ -235,7 +238,7 @@ export type FieldErrorProps = React.ComponentProps<typeof Field.Error>;
  *
  * 検証に失敗したときに表示されます。
  */
-export const FieldError: Component<FieldErrorProps> = function SuiFieldError(props) {
+export const FieldError: IComponent<FieldErrorProps> = function SuiFieldError(props) {
   const { className, ...otherProps } = props;
 
   return <Field.Error {...otherProps} className={cn(className, "sui_field_error")} />;
@@ -259,7 +262,7 @@ export namespace Error {
 /**
  * {@link FieldError} です。
  */
-export const Error: Component<Error.Props> = FieldError;
+export const Error: IComponent<Error.Props> = FieldError;
 
 // Item
 // ----
@@ -279,7 +282,7 @@ export type FieldItemProps = React.ComponentProps<typeof Field.Item>;
  *
  * ラベルと説明文をラップして 1 つの項目としてまとめます。
  */
-export const FieldItem: Component<FieldItemProps> = function SuiFieldItem(props) {
+export const FieldItem: IComponent<FieldItemProps> = function SuiFieldItem(props) {
   const { className, ...otherProps } = props;
 
   return <Field.Item {...otherProps} className={cn(className, "sui_field_item")} />;
@@ -303,7 +306,7 @@ export namespace Item {
 /**
  * {@link FieldItem} です。
  */
-export const Item: Component<Item.Props> = FieldItem;
+export const Item: IComponent<Item.Props> = FieldItem;
 
 // Validity
 // --------
@@ -323,7 +326,7 @@ export type FieldValidityProps = React.ComponentProps<typeof Field.Validity>;
  *
  * `children` には検証状態を受け取る関数を指定します。
  */
-export const FieldValidity: Component<FieldValidityProps> = function SuiFieldValidity(props) {
+export const FieldValidity: IComponent<FieldValidityProps> = function SuiFieldValidity(props) {
   return <Field.Validity {...props} />;
 };
 

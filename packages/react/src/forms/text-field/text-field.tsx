@@ -1,29 +1,42 @@
 import * as React from "react";
 
-import type { Component } from "../../types.js";
-import * as TextFieldParts from "./text-field.parts.jsx";
+import type { IComponent } from "../../types.js";
+import {
+  type TextFieldRootProps,
+  type TextFieldRootState,
+  type TextFieldAddonProps,
+  type TextFieldInputProps,
+  TextFieldRoot,
+  TextFieldAddon,
+  TextFieldInput,
+} from "./text-field.parts.jsx";
 
 /**
  * {@link TextField} の各パーツに渡すプロパティーです。
  */
 export type TextFieldSlotProps = {
   /**
-   * {@link TextFieldParts.Addon|Addon} に渡すプロパティーです。
+   * {@link TextFieldAddon} に渡すプロパティーです。
    */
-  readonly addon?: Omit<TextFieldParts.Addon.Props, "children"> | undefined;
+  readonly addon?: Omit<TextFieldAddonProps, "children"> | undefined;
 
   /**
-   * {@link TextFieldParts.Input|Input} に渡すプロパティーです。
+   * {@link TextFieldInput} に渡すプロパティーです。
    */
-  readonly input?: TextFieldParts.Input.Props | undefined;
+  readonly input?: TextFieldInputProps | undefined;
 };
 
 /**
- * {@link TextField} に渡すプロパティーです。
+ * {@link TextField} の状態です。
  */
-export type TextFieldProps = TextFieldParts.Root.Props &
+export type TextFieldState = TextFieldRootState;
+
+/**
+ * {@link} に渡すプロパティーです。
+ */
+export type TextFieldProps = TextFieldRootProps &
   Pick<
-    TextFieldParts.Input.Props,
+    TextFieldInputProps,
     | "defaultValue"
     | "disabled"
     | "name"
@@ -46,7 +59,7 @@ export type TextFieldProps = TextFieldParts.Root.Props &
     startAddons?: readonly React.ReactNode[] | undefined;
   };
 
-export const TextField: Component<TextFieldProps> = function SuiTextField(props) {
+export const TextField: IComponent<TextFieldProps> = function SuiTextField(props) {
   const {
     name,
     type,
@@ -64,16 +77,13 @@ export const TextField: Component<TextFieldProps> = function SuiTextField(props)
   } = props;
 
   return (
-    <TextFieldParts.Root {...rootProps}>
+    <TextFieldRoot {...rootProps}>
       {startAddons.map((addon, i) => (
-        <TextFieldParts.Addon
-          {...addonProps}
-          key={React.isValidElement(addon) ? (addon.key ?? i) : i}
-        >
+        <TextFieldAddon {...addonProps} key={React.isValidElement(addon) ? (addon.key ?? i) : i}>
           {addon}
-        </TextFieldParts.Addon>
+        </TextFieldAddon>
       ))}
-      <TextFieldParts.Input
+      <TextFieldInput
         {...{
           name,
           type,
@@ -88,13 +98,30 @@ export const TextField: Component<TextFieldProps> = function SuiTextField(props)
         }}
       />
       {endAddons.map((addon, i) => (
-        <TextFieldParts.Addon
-          {...addonProps}
-          key={React.isValidElement(addon) ? (addon.key ?? i) : i}
-        >
+        <TextFieldAddon {...addonProps} key={React.isValidElement(addon) ? (addon.key ?? i) : i}>
           {addon}
-        </TextFieldParts.Addon>
+        </TextFieldAddon>
       ))}
-    </TextFieldParts.Root>
+    </TextFieldRoot>
   );
 };
+
+/**
+ * {@link TextField} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace TextField {
+  /**
+   * {@link TextFieldState} です。
+   */
+  export type State = TextFieldState;
+
+  /**
+   * {@link TextFieldProps} です。
+   */
+  export type Props = TextFieldProps;
+
+  /**
+   * {@link TextFieldSlotProps} です。
+   */
+  export type SlotProps = TextFieldSlotProps;
+}

@@ -1,5 +1,21 @@
-import type { Component } from "../../types.js";
-import * as SliderParts from "./slider.parts.jsx";
+import type { IComponent } from "../../types.js";
+import {
+  type SliderRootProps,
+  type SliderRootState,
+  type SliderLabelProps,
+  type SliderThumbProps,
+  type SliderTrackProps,
+  type SliderValueProps,
+  type SliderControlProps,
+  type SliderIndicatorProps,
+  SliderRoot,
+  SliderLabel,
+  SliderThumb,
+  SliderTrack,
+  SliderValue,
+  SliderControl,
+  SliderIndicator,
+} from "./slider.parts.jsx";
 
 /**
  * {@link Slider} の各パーツに渡すプロパティーです。
@@ -9,42 +25,47 @@ import * as SliderParts from "./slider.parts.jsx";
  */
 export type SliderSlotProps = {
   /**
-   * {@link SliderParts.Label} に渡すプロパティーです。
+   * {@link SliderLabel} に渡すプロパティーです。
    */
-  readonly label?: SliderParts.Label.Props | undefined;
+  readonly label?: SliderLabelProps | undefined;
 
   /**
-   * {@link SliderParts.Value} に渡すプロパティーです。
+   * {@link SliderValue} に渡すプロパティーです。
    */
-  readonly value?: SliderParts.Value.Props | undefined;
+  readonly value?: SliderValueProps | undefined;
 
   /**
-   * {@link SliderParts.Control} に渡すプロパティーです。
+   * {@link SliderControl} に渡すプロパティーです。
    */
-  readonly control?: SliderParts.Control.Props | undefined;
+  readonly control?: SliderControlProps | undefined;
 
   /**
-   * {@link SliderParts.Track} に渡すプロパティーです。
+   * {@link SliderTrack} に渡すプロパティーです。
    */
-  readonly track?: SliderParts.Track.Props | undefined;
+  readonly track?: SliderTrackProps | undefined;
 
   /**
-   * {@link SliderParts.Indicator} に渡すプロパティーです。
+   * {@link SliderIndicator} に渡すプロパティーです。
    */
-  readonly indicator?: SliderParts.Indicator.Props | undefined;
+  readonly indicator?: SliderIndicatorProps | undefined;
 
   /**
-   * {@link SliderParts.Thumb} に渡すプロパティーです。
+   * {@link SliderThumb} に渡すプロパティーです。
    */
-  readonly thumb?: SliderParts.Thumb.Props | undefined;
+  readonly thumb?: SliderThumbProps | undefined;
 };
+
+/**
+ * {@link Slider} の状態です。
+ */
+export type SliderState = SliderRootState;
 
 /**
  * {@link Slider} コンポーネントのプロパティーです。
  *
  * `value` が指定されている場合は `defaultValue` より優先され、値が配列になると Thumb の数も更新されます。
  */
-export type SliderProps = SliderParts.Root.Props & {
+export type SliderProps = SliderRootProps & {
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
    *
@@ -58,29 +79,8 @@ export type SliderProps = SliderParts.Root.Props & {
  *
  * `value` または `defaultValue` が配列の場合は、値の数だけ Thumb を自動的に配置します。
  * Label と Value は `slotProps` を渡したときだけ表示します。
- *
- * @example 基本
- * ```tsx
- * <Slider defaultValue={25} />
- * ```
- *
- * @example ラベルと現在値の表示
- * ```tsx
- * <Slider
- *   defaultValue={25}
- *   slotProps={{
- *     label: { children: "音量" },
- *     value: {},
- *   }}
- * />
- * ```
- *
- * @example レンジスライダー
- * ```tsx
- * <Slider defaultValue={[25, 75]} />
- * ```
  */
-export const Slider: Component<SliderProps> = function SuiSlider(props) {
+export const Slider: IComponent<SliderProps> = function SuiSlider(props) {
   const {
     slotProps: {
       label: labelProps,
@@ -94,21 +94,41 @@ export const Slider: Component<SliderProps> = function SuiSlider(props) {
   } = props;
   const value = rootProps.value ?? rootProps.defaultValue;
   const thumbs = Array.isArray(value) ? (
-    value.map((_, index) => <SliderParts.Thumb key={index} index={index} {...thumbProps} />)
+    value.map((_, index) => <SliderThumb key={index} index={index} {...thumbProps} />)
   ) : (
-    <SliderParts.Thumb index={0} {...thumbProps} />
+    <SliderThumb index={0} {...thumbProps} />
   );
 
   return (
-    <SliderParts.Root {...rootProps}>
-      {labelProps ? <SliderParts.Label {...labelProps} /> : null}
-      {valueProps ? <SliderParts.Value {...valueProps} /> : null}
-      <SliderParts.Control {...controlProps}>
-        <SliderParts.Track {...trackProps}>
-          <SliderParts.Indicator {...indicatorProps} />
+    <SliderRoot {...rootProps}>
+      {labelProps ? <SliderLabel {...labelProps} /> : null}
+      {valueProps ? <SliderValue {...valueProps} /> : null}
+      <SliderControl {...controlProps}>
+        <SliderTrack {...trackProps}>
+          <SliderIndicator {...indicatorProps} />
           {thumbs}
-        </SliderParts.Track>
-      </SliderParts.Control>
-    </SliderParts.Root>
+        </SliderTrack>
+      </SliderControl>
+    </SliderRoot>
   );
 };
+
+/**
+ * {@link Slider} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Slider {
+  /**
+   * {@link SliderState} です。
+   */
+  export type State = SliderState;
+
+  /**
+   * {@link SliderProps} です。
+   */
+  export type Props = SliderProps;
+
+  /**
+   * {@link SliderSlotProps} です。
+   */
+  export type SlotProps = SliderSlotProps;
+}

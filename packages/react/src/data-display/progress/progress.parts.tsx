@@ -3,9 +3,45 @@ import type { Color, Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { Component } from "../../types.js";
+import type { IComponent } from "../../types.js";
 
 import "./progress.css";
+
+// Types
+// -----
+
+/**
+ * 進捗の色です。
+ */
+export type ProgressColor = Color;
+
+/**
+ * 進捗の角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
+ */
+export type ProgressRadius = "none" | Size | "full";
+
+/**
+ * 進捗の大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type ProgressSize = Size;
+
+/**
+ * 進捗の主な外観の種類です。
+ *
+ * - `"naked"`: 背景のないトラック
+ * - `"liquid"`: 薄い塗りつぶしのトラック
+ */
+export type ProgressVariant = "naked" | "liquid";
 
 // Root
 // ----
@@ -29,7 +65,7 @@ export type ProgressRootProps = React.ComponentProps<typeof Progress.Root> & {
    *
    * @default "grey"
    */
-  color?: Color | undefined;
+  color?: ProgressColor | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
@@ -41,49 +77,31 @@ export type ProgressRootProps = React.ComponentProps<typeof Progress.Root> & {
   /**
    * 進捗の角丸を指定します。
    *
-   * - `"none"`: 角を直角にする
-   * - `"sm"`: 小さい角丸
-   * - `"md"`: 標準的な角丸
-   * - `"lg"`: 大きい角丸
-   * - `"full"`: 完全な丸形
-   *
    * @default "full"
    */
-  radius?: "none" | Size | "full" | undefined;
+  radius?: ProgressRadius | undefined;
 
   /**
    * 進捗のサイズを指定します。
    *
    * @default "md"
    */
-  size?: Size | undefined;
+  size?: ProgressSize | undefined;
 
   /**
    * 進捗のスタイルバリエーションを指定します。
    *
-   * - `"naked"`: 背景のないトラック
-   * - `"liquid"`: 薄い塗りつぶしのトラック
-   *
    * @default "liquid"
    */
-  variant?: "naked" | "liquid" | undefined;
+  variant?: ProgressVariant | undefined;
 };
 
 /**
  * 進捗のルートコンポーネントです。
  *
  * `value` に `null` を指定すると、不確定状態になります。
- *
- * @example
- * ```tsx
- * <ProgressParts.Root value={24} color="blue">
- *   <ProgressParts.Track>
- *     <ProgressParts.Indicator />
- *   </ProgressParts.Track>
- * </ProgressParts.Root>
- * ```
  */
-export const ProgressRoot: Component<ProgressRootProps> = function SuiProgressRoot(props) {
+export const ProgressRoot: IComponent<ProgressRootProps> = function SuiProgressRoot(props) {
   const {
     size = "md",
     color = "grey",
@@ -128,7 +146,7 @@ export namespace Root {
 /**
  * {@link ProgressRoot} です。
  */
-export const Root: Component<Root.Props> = ProgressRoot;
+export const Root: IComponent<Root.Props> = ProgressRoot;
 
 // Label
 // -----
@@ -145,15 +163,8 @@ export type ProgressLabelProps = React.ComponentProps<typeof Progress.Label>;
 
 /**
  * 進捗のラベルコンポーネントです。
- *
- * @example
- * ```tsx
- * <ProgressParts.Root value={24}>
- *   <ProgressParts.Label>データを書き出しています</ProgressParts.Label>
- * </ProgressParts.Root>
- * ```
  */
-export const ProgressLabel: Component<ProgressLabelProps> = function SuiProgressLabel(props) {
+export const ProgressLabel: IComponent<ProgressLabelProps> = function SuiProgressLabel(props) {
   const { className, ...otherProps } = props;
 
   return <Progress.Label {...otherProps} className={cn(className, "sui_progress_label")} />;
@@ -177,7 +188,7 @@ export namespace Label {
 /**
  * {@link ProgressLabel} です。
  */
-export const Label: Component<Label.Props> = ProgressLabel;
+export const Label: IComponent<Label.Props> = ProgressLabel;
 
 // Value
 // -----
@@ -196,15 +207,8 @@ export type ProgressValueProps = React.ComponentProps<typeof Progress.Value>;
  * 進捗の現在値を表示するコンポーネントです。
  *
  * 不確定状態では既定の表示が空になります。
- *
- * @example
- * ```tsx
- * <ProgressParts.Root value={24}>
- *   <ProgressParts.Value />
- * </ProgressParts.Root>
- * ```
  */
-export const ProgressValue: Component<ProgressValueProps> = function SuiProgressValue(props) {
+export const ProgressValue: IComponent<ProgressValueProps> = function SuiProgressValue(props) {
   const { className, ...otherProps } = props;
 
   return <Progress.Value {...otherProps} className={cn(className, "sui_progress_value")} />;
@@ -228,7 +232,7 @@ export namespace Value {
 /**
  * {@link ProgressValue} です。
  */
-export const Value: Component<Value.Props> = ProgressValue;
+export const Value: IComponent<Value.Props> = ProgressValue;
 
 // Track
 // -----
@@ -245,17 +249,8 @@ export type ProgressTrackProps = React.ComponentProps<typeof Progress.Track>;
 
 /**
  * 進捗の全範囲を表すトラックコンポーネントです。
- *
- * @example
- * ```tsx
- * <ProgressParts.Root value={24}>
- *   <ProgressParts.Track>
- *     <ProgressParts.Indicator />
- *   </ProgressParts.Track>
- * </ProgressParts.Root>
- * ```
  */
-export const ProgressTrack: Component<ProgressTrackProps> = function SuiProgressTrack(props) {
+export const ProgressTrack: IComponent<ProgressTrackProps> = function SuiProgressTrack(props) {
   const { className, ...otherProps } = props;
 
   return <Progress.Track {...otherProps} className={cn(className, "sui_progress_track")} />;
@@ -279,7 +274,7 @@ export namespace Track {
 /**
  * {@link ProgressTrack} です。
  */
-export const Track: Component<Track.Props> = ProgressTrack;
+export const Track: IComponent<Track.Props> = ProgressTrack;
 
 // Indicator
 // ---------
@@ -296,17 +291,8 @@ export type ProgressIndicatorProps = React.ComponentProps<typeof Progress.Indica
 
 /**
  * 進捗の現在値を示すインジケーターコンポーネントです。
- *
- * @example
- * ```tsx
- * <ProgressParts.Root value={24}>
- *   <ProgressParts.Track>
- *     <ProgressParts.Indicator />
- *   </ProgressParts.Track>
- * </ProgressParts.Root>
- * ```
  */
-export const ProgressIndicator: Component<ProgressIndicatorProps> = function SuiProgressIndicator(
+export const ProgressIndicator: IComponent<ProgressIndicatorProps> = function SuiProgressIndicator(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -332,4 +318,4 @@ export namespace Indicator {
 /**
  * {@link ProgressIndicator} です。
  */
-export const Indicator: Component<Indicator.Props> = ProgressIndicator;
+export const Indicator: IComponent<Indicator.Props> = ProgressIndicator;

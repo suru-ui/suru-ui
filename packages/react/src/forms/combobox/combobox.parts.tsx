@@ -5,9 +5,56 @@ import * as React from "react";
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
 import { ScrollArea } from "../../navigation/scroll-area/index.js";
-import type { Component } from "../../types.js";
+import type { IComponent, IUseContext } from "../../types.js";
 
 import "./combobox.css";
+
+// Types
+// -----
+
+/**
+ * コンボボックスの色です。
+ */
+export type ComboboxColor = Color;
+
+/**
+ * コンボボックスの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"rounded"`: 標準的な角丸
+ * - `"full"`: 完全な丸形
+ */
+export type ComboboxRadius = "none" | "rounded" | "full";
+
+/**
+ * コンボボックスの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type ComboboxSize = Size;
+
+/**
+ * コンボボックスの主な外観の種類です。
+ *
+ * - `"naked"`: 背景のない入力欄
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type ComboboxVariant = "naked" | "liquid";
+
+/**
+ * コンボボックスに表示する項目の一覧です。
+ *
+ * - `readonly Value[]`: 平坦な項目の配列
+ * - `readonly { label?: React.ReactNode; items: readonly Value[] }[]`: `items` を持つグループの配列
+ */
+export type ComboboxItems<Value = unknown> =
+  | readonly Value[]
+  | readonly {
+      readonly label?: React.ReactNode;
+      readonly items: readonly Value[];
+    }[];
 
 // Context
 // -------
@@ -19,7 +66,7 @@ export type ComboboxContext = {
   /**
    * フォーカス時に枠線へ適用するアクセントカラーです。
    */
-  readonly accentColor: Color;
+  readonly accentColor: ComboboxColor;
 
   /**
    * 枠線を表示するかどうかです。
@@ -29,17 +76,17 @@ export type ComboboxContext = {
   /**
    * 入力を含むグループ要素の角丸です。
    */
-  readonly radius: "none" | "rounded" | "full";
+  readonly radius: ComboboxRadius;
 
   /**
    * 入力欄とリスト項目のサイズです。
    */
-  readonly size: Size;
+  readonly size: ComboboxSize;
 
   /**
    * 入力欄のスタイルバリエーションです。
    */
-  readonly variant: "naked" | "liquid";
+  readonly variant: ComboboxVariant;
 };
 
 /**
@@ -48,16 +95,9 @@ export type ComboboxContext = {
 export const ComboboxContext: React.Context<ComboboxContext | null> =
   React.createContext<ComboboxContext | null>(null);
 
-/**
- * {@link ComboboxContext} を読み取るフックです。
- *
- * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
- *
- * @returns コンテキストの値。`optional` が `true` でコンテキストがない場合は `null`。
- */
-export function useComboboxContext(optional?: false): ComboboxContext;
-export function useComboboxContext(optional?: boolean): ComboboxContext | null;
-export function useComboboxContext(optional?: boolean): ComboboxContext | null {
+function useSuiComboboxContext(optional?: false): ComboboxContext;
+function useSuiComboboxContext(optional?: boolean): ComboboxContext | null;
+function useSuiComboboxContext(optional?: boolean): ComboboxContext | null {
   const context = React.use(ComboboxContext);
   if (context === null && !optional) {
     throw new ContextMissingError({
@@ -70,27 +110,24 @@ export function useComboboxContext(optional?: boolean): ComboboxContext | null {
 }
 
 /**
- * {@link ComboboxContext} の別名です。
+ * {@link ComboboxContext} です。
  */
 export type Context = ComboboxContext;
 
 /**
- * {@link ComboboxContext} の別名です。
+ * {@link ComboboxContext} です。
  */
 export const Context: React.Context<ComboboxContext | null> = ComboboxContext;
 
 /**
- * {@link useComboboxContext} の別名です。
- *
- * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
- *
- * @returns コンテキストの値。`optional` が `true` でコンテキストがない場合は `null`。
+ * {@link ComboboxContext} を読み取るフックです。
  */
-export function useContext(optional?: false): ComboboxContext;
-export function useContext(optional?: boolean): ComboboxContext | null;
-export function useContext(optional?: boolean): ComboboxContext | null {
-  return useComboboxContext(optional);
-}
+export const useComboboxContext: IUseContext<ComboboxContext> = useSuiComboboxContext;
+
+/**
+ * {@link useComboboxContext} です。
+ */
+export const useContext: IUseContext<Context> = useComboboxContext;
 
 // Root
 // ----
@@ -109,23 +146,15 @@ export type ComboboxRootProps<Value = unknown, Multiple extends boolean | undefi
 > & {
   /**
    * リストに表示する項目の一覧です。
-   *
-   * 平坦な配列か、`items` を持つグループの配列を指定します。
    */
-  items?:
-    | readonly Value[]
-    | readonly {
-        readonly label?: React.ReactNode;
-        readonly items: readonly Value[];
-      }[]
-    | undefined;
+  items?: ComboboxItems<Value> | undefined;
 
   /**
    * フォーカス時に枠線へ適用するアクセントカラーを指定します。
    *
    * @default "grey"
    */
-  accentColor?: Color | undefined;
+  accentColor?: ComboboxColor | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
@@ -138,39 +167,32 @@ export type ComboboxRootProps<Value = unknown, Multiple extends boolean | undefi
    *
    * @default "md"
    */
-  size?: Size | undefined;
+  size?: ComboboxSize | undefined;
 
   /**
    * 入力欄のスタイルバリエーションを指定します。
    *
-   * - `"naked"`: 背景のない入力欄
-   * - `"liquid"`: 薄い塗りつぶし
-   *
    * @default "naked"
    */
-  variant?: "naked" | "liquid" | undefined;
+  variant?: ComboboxVariant | undefined;
 
   /**
    * 入力を含むグループ要素の角丸を指定します。
    *
-   * - `"none"`: 角を直角にする
-   * - `"rounded"`: 標準的な角丸
-   * - `"full"`: 完全な丸形
-   *
    * @default "rounded"
    */
-  radius?: "none" | "rounded" | "full" | undefined;
+  radius?: ComboboxRadius | undefined;
 };
 
 /**
  * {@link ComboboxRoot} のコンポーネント型です。
  */
-export interface ComboboxRootComponent {
+export interface ComboboxRootComponent extends IComponent<
+  ComboboxRootProps<unknown, boolean | undefined>
+> {
   <Value, Multiple extends boolean | undefined = false>(
     props: ComboboxRootProps<Value, Multiple>,
   ): React.ReactElement | null;
-
-  displayName?: string | undefined;
 }
 
 /**
@@ -178,16 +200,6 @@ export interface ComboboxRootComponent {
  *
  * 選択状態とポップアップの開閉状態を管理し、スタイルを子パーツへ伝播します。
  * それ自身は HTML 要素をレンダリングしません。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Root items={["りんご", "ばなな"]}>
- *   <ComboboxParts.InputGroup>
- *     <ComboboxParts.Input />
- *     <ComboboxParts.Trigger />
- *   </ComboboxParts.InputGroup>
- * </ComboboxParts.Root>
- * ```
  */
 export const ComboboxRoot: ComboboxRootComponent = function SuiComboboxRoot<
   Value,
@@ -257,13 +269,8 @@ export type ComboboxLabelProps = React.ComponentProps<typeof Combobox.Label>;
 
 /**
  * トリガーに対応する表示ラベルです。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Label>果物</ComboboxParts.Label>
- * ```
  */
-export const ComboboxLabel: Component<ComboboxLabelProps> = function SuiComboboxLabel(props) {
+export const ComboboxLabel: IComponent<ComboboxLabelProps> = function SuiComboboxLabel(props) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Label {...otherProps} className={cn(className, "sui_combobox_label")} />;
@@ -287,7 +294,7 @@ export namespace Label {
 /**
  * {@link ComboboxLabel} の別名です。
  */
-export const Label: Component<Label.Props> = ComboboxLabel;
+export const Label: IComponent<Label.Props> = ComboboxLabel;
 
 // Value
 // -----
@@ -304,13 +311,8 @@ export type ComboboxValueProps = React.ComponentProps<typeof Combobox.Value>;
 
 /**
  * 現在の選択値を子要素へ反映する要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Value placeholder="選択してください" />
- * ```
  */
-export const ComboboxValue: Component<ComboboxValueProps> = function SuiComboboxValue(props) {
+export const ComboboxValue: IComponent<ComboboxValueProps> = function SuiComboboxValue(props) {
   return <Combobox.Value {...props} />;
 };
 
@@ -332,7 +334,7 @@ export namespace Value {
 /**
  * {@link ComboboxValue} の別名です。
  */
-export const Value: Component<Value.Props> = ComboboxValue;
+export const Value: IComponent<Value.Props> = ComboboxValue;
 
 // Input
 // -----
@@ -349,13 +351,8 @@ export type ComboboxInputProps = React.ComponentProps<typeof Combobox.Input>;
 
 /**
  * 候補を検索するテキスト入力欄です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Input placeholder="検索" />
- * ```
  */
-export const ComboboxInput: Component<ComboboxInputProps> = function SuiComboboxInput(props) {
+export const ComboboxInput: IComponent<ComboboxInputProps> = function SuiComboboxInput(props) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Input {...otherProps} className={cn(className, "sui_combobox_input")} />;
@@ -379,7 +376,7 @@ export namespace Input {
 /**
  * {@link ComboboxInput} の別名です。
  */
-export const Input: Component<Input.Props> = ComboboxInput;
+export const Input: IComponent<Input.Props> = ComboboxInput;
 
 // InputGroup
 // ----------
@@ -398,16 +395,8 @@ export type ComboboxInputGroupProps = React.ComponentProps<typeof Combobox.Input
  * 入力欄と付属コントロールをまとめるグループ要素です。
  *
  * Root のスタイルプロパティーがこの要素へ適用されます。
- *
- * @example
- * ```tsx
- * <ComboboxParts.InputGroup>
- *   <ComboboxParts.Input />
- *   <ComboboxParts.Trigger />
- * </ComboboxParts.InputGroup>
- * ```
  */
-export const ComboboxInputGroup: Component<ComboboxInputGroupProps> =
+export const ComboboxInputGroup: IComponent<ComboboxInputGroupProps> =
   function SuiComboboxInputGroup(props) {
     const context = useComboboxContext(true);
     const { className, ...otherProps } = props;
@@ -453,7 +442,7 @@ export namespace InputGroup {
 /**
  * {@link ComboboxInputGroup} の別名です。
  */
-export const InputGroup: Component<InputGroup.Props> = ComboboxInputGroup;
+export const InputGroup: IComponent<InputGroup.Props> = ComboboxInputGroup;
 
 // Trigger
 // -------
@@ -470,13 +459,10 @@ export type ComboboxTriggerProps = React.ComponentProps<typeof Combobox.Trigger>
 
 /**
  * 候補リストを開閉するボタン要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Trigger aria-label="候補を開く" />
- * ```
  */
-export const ComboboxTrigger: Component<ComboboxTriggerProps> = function SuiComboboxTrigger(props) {
+export const ComboboxTrigger: IComponent<ComboboxTriggerProps> = function SuiComboboxTrigger(
+  props,
+) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Trigger {...otherProps} className={cn(className, "sui_combobox_trigger")} />;
@@ -500,7 +486,7 @@ export namespace Trigger {
 /**
  * {@link ComboboxTrigger} の別名です。
  */
-export const Trigger: Component<Trigger.Props> = ComboboxTrigger;
+export const Trigger: IComponent<Trigger.Props> = ComboboxTrigger;
 
 // Icon
 // ----
@@ -517,13 +503,8 @@ export type ComboboxIconProps = React.ComponentProps<typeof Combobox.Icon>;
 
 /**
  * トリガーの操作を示すアイコンのラッパー要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Icon>⌄</ComboboxParts.Icon>
- * ```
  */
-export const ComboboxIcon: Component<ComboboxIconProps> = function SuiComboboxIcon(props) {
+export const ComboboxIcon: IComponent<ComboboxIconProps> = function SuiComboboxIcon(props) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Icon {...otherProps} className={cn(className, "sui_combobox_icon")} />;
@@ -547,7 +528,7 @@ export namespace Icon {
 /**
  * {@link ComboboxIcon} の別名です。
  */
-export const Icon: Component<Icon.Props> = ComboboxIcon;
+export const Icon: IComponent<Icon.Props> = ComboboxIcon;
 
 // Clear
 // -----
@@ -564,13 +545,8 @@ export type ComboboxClearProps = React.ComponentProps<typeof Combobox.Clear>;
 
 /**
  * 選択値を消去するボタン要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Clear aria-label="クリア">×</ComboboxParts.Clear>
- * ```
  */
-export const ComboboxClear: Component<ComboboxClearProps> = function SuiComboboxClear(props) {
+export const ComboboxClear: IComponent<ComboboxClearProps> = function SuiComboboxClear(props) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Clear {...otherProps} className={cn(className, "sui_combobox_clear")} />;
@@ -594,7 +570,7 @@ export namespace Clear {
 /**
  * {@link ComboboxClear} の別名です。
  */
-export const Clear: Component<Clear.Props> = ComboboxClear;
+export const Clear: IComponent<Clear.Props> = ComboboxClear;
 
 // Chips
 // -----
@@ -611,15 +587,8 @@ export type ComboboxChipsProps = React.ComponentProps<typeof Combobox.Chips>;
 
 /**
  * 複数選択した値を表示するチップのコンテナーです。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Chips>
- *   <ComboboxParts.Value />
- * </ComboboxParts.Chips>
- * ```
  */
-export const ComboboxChips: Component<ComboboxChipsProps> = function SuiComboboxChips(props) {
+export const ComboboxChips: IComponent<ComboboxChipsProps> = function SuiComboboxChips(props) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Chips {...otherProps} className={cn(className, "sui_combobox_chips")} />;
@@ -643,7 +612,7 @@ export namespace Chips {
 /**
  * {@link ComboboxChips} の別名です。
  */
-export const Chips: Component<Chips.Props> = ComboboxChips;
+export const Chips: IComponent<Chips.Props> = ComboboxChips;
 
 // Chip
 // ----
@@ -660,13 +629,8 @@ export type ComboboxChipProps = React.ComponentProps<typeof Combobox.Chip>;
 
 /**
  * 複数選択した値を表すチップ要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Chip>TypeScript</ComboboxParts.Chip>
- * ```
  */
-export const ComboboxChip: Component<ComboboxChipProps> = function SuiComboboxChip(props) {
+export const ComboboxChip: IComponent<ComboboxChipProps> = function SuiComboboxChip(props) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Chip {...otherProps} className={cn(className, "sui_combobox_chip")} />;
@@ -690,7 +654,7 @@ export namespace Chip {
 /**
  * {@link ComboboxChip} の別名です。
  */
-export const Chip: Component<Chip.Props> = ComboboxChip;
+export const Chip: IComponent<Chip.Props> = ComboboxChip;
 
 // ChipRemove
 // ----------
@@ -707,13 +671,8 @@ export type ComboboxChipRemoveProps = React.ComponentProps<typeof Combobox.ChipR
 
 /**
  * チップを選択値から削除するボタン要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.ChipRemove aria-label="削除">×</ComboboxParts.ChipRemove>
- * ```
  */
-export const ComboboxChipRemove: Component<ComboboxChipRemoveProps> =
+export const ComboboxChipRemove: IComponent<ComboboxChipRemoveProps> =
   function SuiComboboxChipRemove(props) {
     const { className, ...otherProps } = props;
 
@@ -740,7 +699,7 @@ export namespace ChipRemove {
 /**
  * {@link ComboboxChipRemove} の別名です。
  */
-export const ChipRemove: Component<ChipRemove.Props> = ComboboxChipRemove;
+export const ChipRemove: IComponent<ChipRemove.Props> = ComboboxChipRemove;
 
 // List
 // ----
@@ -757,15 +716,8 @@ export type ComboboxListProps = React.ComponentProps<typeof Combobox.List>;
 
 /**
  * 候補項目のリストを表示するコンテナー要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.List>
- *   {(item, index) => <ComboboxParts.Item key={index} value={item} />}
- * </ComboboxParts.List>
- * ```
  */
-export const ComboboxList: Component<ComboboxListProps> = function SuiComboboxList(props) {
+export const ComboboxList: IComponent<ComboboxListProps> = function SuiComboboxList(props) {
   const { className, ...otherProps } = props;
 
   return (
@@ -793,7 +745,7 @@ export namespace List {
 /**
  * {@link ComboboxList} の別名です。
  */
-export const List: Component<List.Props> = ComboboxList;
+export const List: IComponent<List.Props> = ComboboxList;
 
 // Status
 // ------
@@ -810,13 +762,8 @@ export type ComboboxStatusProps = React.ComponentProps<typeof Combobox.Status>;
 
 /**
  * 非同期検索などの状態を読み上げる要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Status>検索中</ComboboxParts.Status>
- * ```
  */
-export const ComboboxStatus: Component<ComboboxStatusProps> = function SuiComboboxStatus(props) {
+export const ComboboxStatus: IComponent<ComboboxStatusProps> = function SuiComboboxStatus(props) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Status {...otherProps} className={cn(className, "sui_combobox_status")} />;
@@ -840,7 +787,7 @@ export namespace Status {
 /**
  * {@link ComboboxStatus} の別名です。
  */
-export const Status: Component<Status.Props> = ComboboxStatus;
+export const Status: IComponent<Status.Props> = ComboboxStatus;
 
 // Portal
 // ------
@@ -857,13 +804,8 @@ export type ComboboxPortalProps = React.ComponentProps<typeof Combobox.Portal>;
 
 /**
  * ポップアップを DOM の別の場所へ移動する要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Portal><ComboboxParts.Popup /></ComboboxParts.Portal>
- * ```
  */
-export const ComboboxPortal: Component<ComboboxPortalProps> = function SuiComboboxPortal(props) {
+export const ComboboxPortal: IComponent<ComboboxPortalProps> = function SuiComboboxPortal(props) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Portal {...otherProps} className={cn(className, "sui_combobox_portal")} />;
@@ -887,7 +829,7 @@ export namespace Portal {
 /**
  * {@link ComboboxPortal} の別名です。
  */
-export const Portal: Component<Portal.Props> = ComboboxPortal;
+export const Portal: IComponent<Portal.Props> = ComboboxPortal;
 
 // Backdrop
 // --------
@@ -904,13 +846,8 @@ export type ComboboxBackdropProps = React.ComponentProps<typeof Combobox.Backdro
 
 /**
  * ポップアップの背後に表示される要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Backdrop />
- * ```
  */
-export const ComboboxBackdrop: Component<ComboboxBackdropProps> = function SuiComboboxBackdrop(
+export const ComboboxBackdrop: IComponent<ComboboxBackdropProps> = function SuiComboboxBackdrop(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -936,7 +873,7 @@ export namespace Backdrop {
 /**
  * {@link ComboboxBackdrop} の別名です。
  */
-export const Backdrop: Component<Backdrop.Props> = ComboboxBackdrop;
+export const Backdrop: IComponent<Backdrop.Props> = ComboboxBackdrop;
 
 // Positioner
 // ----------
@@ -953,13 +890,8 @@ export type ComboboxPositionerProps = React.ComponentProps<typeof Combobox.Posit
 
 /**
  * ポップアップを入力欄へ位置合わせする要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Positioner side="bottom" align="start"><ComboboxParts.Popup /></ComboboxParts.Positioner>
- * ```
  */
-export const ComboboxPositioner: Component<ComboboxPositionerProps> =
+export const ComboboxPositioner: IComponent<ComboboxPositionerProps> =
   function SuiComboboxPositioner(props) {
     const { className, ...otherProps } = props;
 
@@ -986,7 +918,7 @@ export namespace Positioner {
 /**
  * {@link ComboboxPositioner} の別名です。
  */
-export const Positioner: Component<Positioner.Props> = ComboboxPositioner;
+export const Positioner: IComponent<Positioner.Props> = ComboboxPositioner;
 
 // Popup
 // -----
@@ -1003,13 +935,8 @@ export type ComboboxPopupProps = React.ComponentProps<typeof Combobox.Popup>;
 
 /**
  * 候補項目を表示するポップアップ要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Popup><ComboboxParts.List /></ComboboxParts.Popup>
- * ```
  */
-export const ComboboxPopup: Component<ComboboxPopupProps> = function SuiComboboxPopup(props) {
+export const ComboboxPopup: IComponent<ComboboxPopupProps> = function SuiComboboxPopup(props) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Popup {...otherProps} className={cn(className, "sui_combobox_popup")} />;
@@ -1033,7 +960,7 @@ export namespace Popup {
 /**
  * {@link ComboboxPopup} の別名です。
  */
-export const Popup: Component<Popup.Props> = ComboboxPopup;
+export const Popup: IComponent<Popup.Props> = ComboboxPopup;
 
 // Arrow
 // -----
@@ -1050,13 +977,8 @@ export type ComboboxArrowProps = React.ComponentProps<typeof Combobox.Arrow>;
 
 /**
  * ポップアップと入力欄をつなぐ矢印要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Arrow />
- * ```
  */
-export const ComboboxArrow: Component<ComboboxArrowProps> = function SuiComboboxArrow(props) {
+export const ComboboxArrow: IComponent<ComboboxArrowProps> = function SuiComboboxArrow(props) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Arrow {...otherProps} className={cn(className, "sui_combobox_arrow")} />;
@@ -1080,7 +1002,7 @@ export namespace Arrow {
 /**
  * {@link ComboboxArrow} の別名です。
  */
-export const Arrow: Component<Arrow.Props> = ComboboxArrow;
+export const Arrow: IComponent<Arrow.Props> = ComboboxArrow;
 
 // Group
 // -----
@@ -1097,13 +1019,8 @@ export type ComboboxGroupProps = React.ComponentProps<typeof Combobox.Group>;
 
 /**
  * 関連する候補項目をまとめるグループ要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Group items={["りんご"]}><ComboboxParts.GroupLabel>果物</ComboboxParts.GroupLabel></ComboboxParts.Group>
- * ```
  */
-export const ComboboxGroup: Component<ComboboxGroupProps> = function SuiComboboxGroup(props) {
+export const ComboboxGroup: IComponent<ComboboxGroupProps> = function SuiComboboxGroup(props) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Group {...otherProps} className={cn(className, "sui_combobox_group")} />;
@@ -1127,7 +1044,7 @@ export namespace Group {
 /**
  * {@link ComboboxGroup} の別名です。
  */
-export const Group: Component<Group.Props> = ComboboxGroup;
+export const Group: IComponent<Group.Props> = ComboboxGroup;
 
 // GroupLabel
 // ----------
@@ -1144,13 +1061,8 @@ export type ComboboxGroupLabelProps = React.ComponentProps<typeof Combobox.Group
 
 /**
  * 候補グループの見出し要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.GroupLabel>果物</ComboboxParts.GroupLabel>
- * ```
  */
-export const ComboboxGroupLabel: Component<ComboboxGroupLabelProps> =
+export const ComboboxGroupLabel: IComponent<ComboboxGroupLabelProps> =
   function SuiComboboxGroupLabel(props) {
     const { className, ...otherProps } = props;
 
@@ -1177,7 +1089,7 @@ export namespace GroupLabel {
 /**
  * {@link ComboboxGroupLabel} の別名です。
  */
-export const GroupLabel: Component<GroupLabel.Props> = ComboboxGroupLabel;
+export const GroupLabel: IComponent<GroupLabel.Props> = ComboboxGroupLabel;
 
 // Item
 // ----
@@ -1194,13 +1106,8 @@ export type ComboboxItemProps = React.ComponentProps<typeof Combobox.Item>;
 
 /**
  * 候補リストの個々の項目要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Item value="りんご">りんご</ComboboxParts.Item>
- * ```
  */
-export const ComboboxItem: Component<ComboboxItemProps> = function SuiComboboxItem(props) {
+export const ComboboxItem: IComponent<ComboboxItemProps> = function SuiComboboxItem(props) {
   const context = useComboboxContext(true);
   const { className, ...otherProps } = props;
   const size = context?.size ?? "md";
@@ -1231,7 +1138,7 @@ export namespace Item {
 /**
  * {@link ComboboxItem} の別名です。
  */
-export const Item: Component<Item.Props> = ComboboxItem;
+export const Item: IComponent<Item.Props> = ComboboxItem;
 
 // ItemIndicator
 // -------------
@@ -1248,13 +1155,8 @@ export type ComboboxItemIndicatorProps = React.ComponentProps<typeof Combobox.It
 
 /**
  * 項目が選択されていることを示す要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.ItemIndicator>✓</ComboboxParts.ItemIndicator>
- * ```
  */
-export const ComboboxItemIndicator: Component<ComboboxItemIndicatorProps> =
+export const ComboboxItemIndicator: IComponent<ComboboxItemIndicatorProps> =
   function SuiComboboxItemIndicator(props) {
     const { className, ...otherProps } = props;
 
@@ -1284,7 +1186,7 @@ export namespace ItemIndicator {
 /**
  * {@link ComboboxItemIndicator} の別名です。
  */
-export const ItemIndicator: Component<ItemIndicator.Props> = ComboboxItemIndicator;
+export const ItemIndicator: IComponent<ItemIndicator.Props> = ComboboxItemIndicator;
 
 // Row
 // ---
@@ -1301,13 +1203,8 @@ export type ComboboxRowProps = React.ComponentProps<typeof Combobox.Row>;
 
 /**
  * グリッドリストの 1 行を表示する要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Row><ComboboxParts.Item value="a">a</ComboboxParts.Item></ComboboxParts.Row>
- * ```
  */
-export const ComboboxRow: Component<ComboboxRowProps> = function SuiComboboxRow(props) {
+export const ComboboxRow: IComponent<ComboboxRowProps> = function SuiComboboxRow(props) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Row {...otherProps} className={cn(className, "sui_combobox_row")} />;
@@ -1331,7 +1228,7 @@ export namespace Row {
 /**
  * {@link ComboboxRow} の別名です。
  */
-export const Row: Component<Row.Props> = ComboboxRow;
+export const Row: IComponent<Row.Props> = ComboboxRow;
 
 // Collection
 // ----------
@@ -1348,13 +1245,8 @@ export type ComboboxCollectionProps = React.ComponentProps<typeof Combobox.Colle
 
 /**
  * フィルタリングされた項目を列挙する要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Collection>{(item, index) => <ComboboxParts.Item key={index} value={item} />}</ComboboxParts.Collection>
- * ```
  */
-export const ComboboxCollection: Component<ComboboxCollectionProps> =
+export const ComboboxCollection: IComponent<ComboboxCollectionProps> =
   function SuiComboboxCollection(props) {
     return <Combobox.Collection {...props} />;
   };
@@ -1377,7 +1269,7 @@ export namespace Collection {
 /**
  * {@link ComboboxCollection} の別名です。
  */
-export const Collection: Component<Collection.Props> = ComboboxCollection;
+export const Collection: IComponent<Collection.Props> = ComboboxCollection;
 
 // Empty
 // -----
@@ -1394,13 +1286,8 @@ export type ComboboxEmptyProps = React.ComponentProps<typeof Combobox.Empty>;
 
 /**
  * 候補リストが空のときに内容を表示する要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Empty>候補がありません</ComboboxParts.Empty>
- * ```
  */
-export const ComboboxEmpty: Component<ComboboxEmptyProps> = function SuiComboboxEmpty(props) {
+export const ComboboxEmpty: IComponent<ComboboxEmptyProps> = function SuiComboboxEmpty(props) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Empty {...otherProps} className={cn(className, "sui_combobox_empty")} />;
@@ -1424,7 +1311,7 @@ export namespace Empty {
 /**
  * {@link ComboboxEmpty} の別名です。
  */
-export const Empty: Component<Empty.Props> = ComboboxEmpty;
+export const Empty: IComponent<Empty.Props> = ComboboxEmpty;
 
 // Separator
 // ---------
@@ -1441,13 +1328,8 @@ export type ComboboxSeparatorProps = React.ComponentProps<typeof Combobox.Separa
 
 /**
  * 項目やグループを区切る要素です。
- *
- * @example
- * ```tsx
- * <ComboboxParts.Separator />
- * ```
  */
-export const ComboboxSeparator: Component<ComboboxSeparatorProps> = function SuiComboboxSeparator(
+export const ComboboxSeparator: IComponent<ComboboxSeparatorProps> = function SuiComboboxSeparator(
   props,
 ) {
   const { className, ...otherProps } = props;
@@ -1473,18 +1355,13 @@ export namespace Separator {
 /**
  * {@link ComboboxSeparator} の別名です。
  */
-export const Separator: Component<Separator.Props> = ComboboxSeparator;
+export const Separator: IComponent<Separator.Props> = ComboboxSeparator;
 
 // useFilter
 // ---------
 
 /**
  * 項目を検索文字列と照合するフィルター関数を作るフックです。
- *
- * @example
- * ```tsx
- * const filter = ComboboxParts.useFilter();
- * ```
  */
 export const useFilter = Combobox.useFilter;
 
@@ -1493,10 +1370,5 @@ export const useFilter = Combobox.useFilter;
 
 /**
  * Root 内でフィルタリングされた項目の一覧を返すフックです。
- *
- * @example
- * ```tsx
- * const items = ComboboxParts.useFilteredItems();
- * ```
  */
 export const useFilteredItems = Combobox.useFilteredItems;
