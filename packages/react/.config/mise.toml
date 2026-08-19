@@ -18,6 +18,7 @@ run = "npx vitest --config ./.config/vitest.client.ts"
 run = [
   "npx oxfmt --config ./.config/.oxfmtrc.json --check",
   "node scripts/sort-jsx-props.ts --check",
+  "node scripts/sort-import-exports.ts --check",
 ]
 
 [tasks."test:lint"]
@@ -33,16 +34,24 @@ run = [
 ]
 
 [tasks.format]
-run = [{ task = "format:oxfmt" }, { task = "format:stylelint" }, { task = "format:sort-jsx-props" }]
-
-[tasks."format:sort-jsx-props"]
-run = "node scripts/sort-jsx-props.ts"
+run = [
+  { task = "format:oxfmt" },
+  { task = "format:stylelint" },
+  { task = "format:sort-jsx-props" },
+  { task = "format:sort-import-exports" },
+]
 
 [tasks."format:oxfmt"]
 run = "npx oxfmt --config ./.config/.oxfmtrc.json"
 
 [tasks."format:stylelint"]
 run = "npx stylelint --config ./.config/.stylelintrc.json --fix 'src/**/*.css'"
+
+[tasks."format:sort-jsx-props"]
+run = "node scripts/sort-jsx-props.ts"
+
+[tasks."format:sort-import-exports"]
+run = "node scripts/sort-import-exports.ts"
 
 [tasks.lint]
 run = "npx oxlint --config ./.config/.oxlintrc.json"
