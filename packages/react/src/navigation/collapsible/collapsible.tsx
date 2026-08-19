@@ -2,9 +2,11 @@ import * as React from "react";
 
 import type { IComponent } from "../../types.js";
 import {
+  type CollapsibleRootSize,
   type CollapsibleRootProps,
   type CollapsibleRootState,
   type CollapsiblePanelProps,
+  type CollapsibleRootRadius,
   type CollapsibleTriggerProps,
   type CollapsibleIndicatorProps,
   CollapsibleRoot,
@@ -12,6 +14,16 @@ import {
   CollapsibleTrigger,
   CollapsibleIndicator,
 } from "./collapsible.parts.jsx";
+
+/**
+ * {@link CollapsibleRootRadius} です。
+ */
+export type CollapsibleRadius = CollapsibleRootRadius;
+
+/**
+ * {@link CollapsibleRootSize} です。
+ */
+export type CollapsibleSize = CollapsibleRootSize;
 
 /**
  * {@link Collapsible} を構成する各パーツのプロパティーです。
@@ -102,6 +114,16 @@ export namespace Collapsible {
    * {@link CollapsibleSlotProps} です。
    */
   export type SlotProps = CollapsibleSlotProps;
+
+  /**
+   * {@link CollapsibleRadius} です。
+   */
+  export type Radius = CollapsibleRadius;
+
+  /**
+   * {@link CollapsibleSize} です。
+   */
+  export type Size = CollapsibleSize;
 }
 
 function SuiCollapsibleIcon() {

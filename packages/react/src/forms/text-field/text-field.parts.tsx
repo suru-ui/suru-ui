@@ -1,5 +1,5 @@
 import { Input as BaseInput } from "@base-ui/react/input";
-import type { Color, Size } from "@suru-ui/theme";
+import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import useRender, { type RenderProps } from "../../_use-render.js";
@@ -9,50 +9,6 @@ import type { IComponent, IUseContext } from "../../types.js";
 
 import "./text-field.css";
 
-// Types
-// -----
-
-/**
- * テキストフィールドの色です。
- */
-export type TextFieldColor = Color;
-
-/**
- * テキストフィールドの角丸です。
- *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
- * - `"full"`: 完全な丸形
- */
-export type TextFieldRadius = "none" | Size | "full";
-
-/**
- * テキストフィールドの大きさです。
- *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
- */
-export type TextFieldSize = Size;
-
-/**
- * テキストフィールドの主な外観の種類です。
- *
- * - `"naked"`: 背景のないテキストフィールド
- * - `"liquid"`: 薄い塗りつぶし
- */
-export type TextFieldVariant = "naked" | "liquid";
-
-/**
- * テキストフィールドで使用できる入力項目の種類です。
- */
-export type TextFieldInputType = Exclude<
-  React.HTMLInputTypeAttribute,
-  "button" | "checkbox" | "color" | "image" | "radio" | "range" | "reset" | "submit"
->;
-
 // Context
 // -------
 
@@ -61,9 +17,9 @@ export type TextFieldInputType = Exclude<
  */
 export type TextFieldContext = {
   /**
-   * テキストフィールドの色です。
+   * 文字入力欄の色です。
    */
-  readonly color: TextFieldColor;
+  readonly color: TextFieldRootColor;
 
   /**
    * 枠線を表示するかどうかです。
@@ -71,19 +27,19 @@ export type TextFieldContext = {
   readonly outlined: boolean;
 
   /**
-   * テキストフィールドの角丸です。
+   * 文字入力欄の角丸です。
    */
-  readonly radius: TextFieldRadius;
+  readonly radius: TextFieldRootRadius;
 
   /**
-   * テキストフィールドのサイズです。
+   * 文字入力欄のサイズです。
    */
-  readonly size: TextFieldSize;
+  readonly size: TextFieldRootSize;
 
   /**
-   * テキストフィールドのスタイルバリエーションです。
+   * 文字入力欄のスタイルバリエーションです。
    */
-  readonly variant: TextFieldVariant;
+  readonly variant: TextFieldRootVariant;
 };
 
 /**
@@ -107,6 +63,11 @@ function useSuiTextFieldContext(optional?: boolean): TextFieldContext | null {
 }
 
 /**
+ * {@link TextFieldContext} を読み取るフックです。
+ */
+export const useTextFieldContext: IUseContext<TextFieldContext> = useSuiTextFieldContext;
+
+/**
  * {@link TextFieldContext} です。
  */
 export type Context = TextFieldContext;
@@ -117,17 +78,45 @@ export type Context = TextFieldContext;
 export const Context: React.Context<TextFieldContext | null> = TextFieldContext;
 
 /**
- * {@link TextFieldContext} を読み取るフックです。
- */
-export const useTextFieldContext: IUseContext<TextFieldContext> = useSuiTextFieldContext;
-
-/**
  * {@link useTextFieldContext} です。
  */
 export const useContext: IUseContext<Context> = useTextFieldContext;
 
 // Root
 // ----
+
+/**
+ * 文字入力欄の色です。
+ */
+export type TextFieldRootColor = Color;
+
+/**
+ * 文字入力欄の角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
+ */
+export type TextFieldRootRadius = "none" | Size | "full";
+
+/**
+ * 文字入力欄の大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type TextFieldRootSize = Size;
+
+/**
+ * 文字入力欄の主な外観の種類です。
+ *
+ * - `"naked"`: 背景のない文字入力欄
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type TextFieldRootVariant = "naked" | "liquid";
 
 /**
  * {@link TextFieldRoot} の状態です。
@@ -144,7 +133,7 @@ export type TextFieldRootProps = Omit<React.ComponentProps<"div">, keyof RenderP
      *
      * @default "grey"
      */
-    color?: TextFieldColor | undefined;
+    color?: TextFieldRootColor | undefined;
 
     /**
      * 枠線を表示するかどうかを指定します。
@@ -154,31 +143,31 @@ export type TextFieldRootProps = Omit<React.ComponentProps<"div">, keyof RenderP
     outlined?: boolean | undefined;
 
     /**
-     * テキストフィールドの角丸を指定します。
+     * 文字入力欄の角丸を指定します。
      *
      * 省略時は {@link TextFieldRootProps.size|size} と同じ値になります。
      */
-    radius?: TextFieldRadius | undefined;
+    radius?: TextFieldRootRadius | undefined;
 
     /**
-     * テキストフィールドのサイズを指定します。
+     * 文字入力欄のサイズを指定します。
      *
      * @default "md"
      */
-    size?: TextFieldSize | undefined;
+    size?: TextFieldRootSize | undefined;
 
     /**
-     * テキストフィールドのスタイルバリエーションを指定します。
+     * 文字入力欄のスタイルバリエーションを指定します。
      *
      * @default "liquid"
      */
-    variant?: TextFieldVariant | undefined;
+    variant?: TextFieldRootVariant | undefined;
   };
 
 const DISABLE_FOCUS_ON_CLICK_DATA = "data-suitextfielddisablefocusonclick";
 
 /**
- * テキストフィールドの入力欄と Addon をまとめるルート要素です。
+ * 文字入力欄の入力欄と Addon をまとめるルート要素です。
  *
  * 指定したスタイルプロパティーは、子パーツへ継承されます。
  */
@@ -238,23 +227,61 @@ export const TextFieldRoot: IComponent<TextFieldRootProps> = function SuiTextFie
  */
 export namespace Root {
   /**
-   * {@link TextFieldRoot} の状態型です。
+   * {@link TextFieldRootState} です。
    */
   export type State = TextFieldRootState;
 
   /**
-   * {@link TextFieldRoot} のプロパティー型です。
+   * {@link TextFieldRootProps} です。
    */
   export type Props = TextFieldRootProps;
+
+  /**
+   * {@link TextFieldRootColor} です。
+   */
+  export type Color = TextFieldRootColor;
+
+  /**
+   * {@link TextFieldRootRadius} です。
+   */
+  export type Radius = TextFieldRootRadius;
+
+  /**
+   * {@link TextFieldRootSize} です。
+   */
+  export type Size = TextFieldRootSize;
+
+  /**
+   * {@link TextFieldRootVariant} です。
+   */
+  export type Variant = TextFieldRootVariant;
 }
 
 /**
- * {@link TextFieldRoot} の別名です。
+ * {@link TextFieldRoot} です。
  */
 export const Root: IComponent<Root.Props> = TextFieldRoot;
 
 // Input
 // -----
+
+/**
+ * {@link TextFieldInput} で使用できる入力項目の種類です。
+ */
+export type TextFieldInputType = Exclude<
+  React.HTMLInputTypeAttribute,
+  "button" | "checkbox" | "color" | "image" | "radio" | "range" | "reset" | "submit"
+>;
+
+/**
+ * {@link TextFieldInput} の値が変更された理由です。
+ */
+export type TextFieldInputChangeEventReason = BaseInput.ChangeEventReason;
+
+/**
+ * {@link TextFieldInput} の値が変更されたイベントの詳細です。
+ */
+export type TextFieldInputChangeEventDetails = BaseInput.ChangeEventDetails;
 
 /**
  * {@link TextFieldInput} の状態です。
@@ -274,7 +301,7 @@ export type TextFieldInputProps = Omit<React.ComponentProps<typeof BaseInput>, "
 };
 
 /**
- * Base UI の Input を使ったテキストフィールドの入力欄です。
+ * Base UI の Input を使った文字入力欄の入力欄です。
  */
 export const TextFieldInput: IComponent<TextFieldInputProps> = function SuiTextFieldInput(props) {
   const { type = "text", className, ...otherProps } = props;
@@ -300,18 +327,28 @@ export const TextFieldInput: IComponent<TextFieldInputProps> = function SuiTextF
  */
 export namespace Input {
   /**
-   * {@link TextFieldInput} の状態型です。
+   * {@link TextFieldInputState} です。
    */
   export type State = TextFieldInputState;
 
   /**
-   * {@link TextFieldInput} のプロパティー型です。
+   * {@link TextFieldInputProps} です。
    */
   export type Props = TextFieldInputProps;
+
+  /**
+   * {@link TextFieldInputChangeEventReason} です。
+   */
+  export type ChangeEventReason = TextFieldInputChangeEventReason;
+
+  /**
+   * {@link TextFieldInputChangeEventDetails} です。
+   */
+  export type ChangeEventDetails = TextFieldInputChangeEventDetails;
 }
 
 /**
- * {@link TextFieldInput} の別名です。
+ * {@link TextFieldInput} です。
  */
 export const Input: IComponent<Input.Props> = TextFieldInput;
 
@@ -364,17 +401,17 @@ export const TextFieldAddon: IComponent<TextFieldAddonProps> = function SuiTextF
  */
 export namespace Addon {
   /**
-   * {@link TextFieldAddon} の状態型です。
+   * {@link TextFieldAddonState} です。
    */
   export type State = TextFieldAddonState;
 
   /**
-   * {@link TextFieldAddon} のプロパティー型です。
+   * {@link TextFieldAddonProps} です。
    */
   export type Props = TextFieldAddonProps;
 }
 
 /**
- * {@link TextFieldAddon} の別名です。
+ * {@link TextFieldAddon} です。
  */
 export const Addon: IComponent<Addon.Props> = TextFieldAddon;

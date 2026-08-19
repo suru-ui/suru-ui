@@ -146,6 +146,8 @@ export type AlertDialogProps = Omit<AlertDialogRootProps, "children" | "handle">
 
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   *
+   * 各パーツのプロパティーが優先されます。
    * クラス名は既定のクラス名と結合され、拒否・承諾ボタンの `onClick` は
    * このオブジェクトのハンドラーが先に実行されます。
    */

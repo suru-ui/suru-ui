@@ -6,9 +6,6 @@ import type { IComponent } from "../../types.js";
 
 import "./dialog.css";
 
-// Types
-// -----
-
 // Handle
 // ------
 
@@ -29,12 +26,12 @@ export const createHandle: typeof Dialog.createHandle = Dialog.createHandle;
 // ----
 
 /**
- * {@link Root} の状態です。
+ * {@link DialogRoot} の状態です。
  */
 export type DialogRootState = Dialog.Root.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link DialogRoot} に渡すプロパティーです。
  */
 export type DialogRootProps = Omit<React.ComponentProps<typeof Dialog.Root>, "handle"> & {
   /**
@@ -56,22 +53,22 @@ export const DialogRoot: IComponent<DialogRootProps> = function SuiDialogRoot(pr
 };
 
 /**
- * {@link DialogRoot} の型をまとめた名前空間です。
+ * {@link DialogRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
-   * {@link DialogRoot} の状態型です。
+   * {@link DialogRootState} です。
    */
   export type State = DialogRootState;
 
   /**
-   * {@link DialogRoot} のプロパティー型です。
+   * {@link DialogRootProps} です。
    */
   export type Props = DialogRootProps;
 }
 
 /**
- * {@link DialogRoot} の短縮名です。
+ * {@link DialogRoot} です。
  */
 export const Root: IComponent<Root.Props> = DialogRoot;
 
@@ -79,12 +76,12 @@ export const Root: IComponent<Root.Props> = DialogRoot;
 // -------
 
 /**
- * {@link Trigger} の状態です。
+ * {@link DialogTrigger} の状態です。
  */
 export type DialogTriggerState = Dialog.Trigger.State;
 
 /**
- * {@link Trigger} に渡すプロパティーです。
+ * {@link DialogTrigger} に渡すプロパティーです。
  */
 export type DialogTriggerProps = Omit<
   React.ComponentProps<typeof Dialog.Trigger>,
@@ -124,22 +121,22 @@ export const DialogTrigger: IComponent<DialogTriggerProps> = function SuiDialogT
 };
 
 /**
- * {@link DialogTrigger} の型をまとめた名前空間です。
+ * {@link DialogTrigger} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Trigger {
   /**
-   * {@link DialogTrigger} の状態型です。
+   * {@link DialogTriggerState} です。
    */
   export type State = DialogTriggerState;
 
   /**
-   * {@link DialogTrigger} のプロパティー型です。
+   * {@link DialogTriggerProps} です。
    */
   export type Props = DialogTriggerProps;
 }
 
 /**
- * {@link DialogTrigger} の短縮名です。
+ * {@link DialogTrigger} です。
  */
 export const Trigger: IComponent<Trigger.Props> = DialogTrigger;
 
@@ -147,12 +144,12 @@ export const Trigger: IComponent<Trigger.Props> = DialogTrigger;
 // ------
 
 /**
- * {@link Portal} の状態です。
+ * {@link DialogPortal} の状態です。
  */
 export type DialogPortalState = Dialog.Portal.State;
 
 /**
- * {@link Portal} に渡すプロパティーです。
+ * {@link DialogPortal} に渡すプロパティーです。
  */
 export type DialogPortalProps = React.ComponentProps<typeof Dialog.Portal>;
 
@@ -168,22 +165,22 @@ export const DialogPortal: IComponent<DialogPortalProps> = function SuiDialogPor
 };
 
 /**
- * {@link DialogPortal} の型をまとめた名前空間です。
+ * {@link DialogPortal} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Portal {
   /**
-   * {@link DialogPortal} の状態型です。
+   * {@link DialogPortalState} です。
    */
   export type State = DialogPortalState;
 
   /**
-   * {@link DialogPortal} のプロパティー型です。
+   * {@link DialogPortalProps} です。
    */
   export type Props = DialogPortalProps;
 }
 
 /**
- * {@link DialogPortal} の短縮名です。
+ * {@link DialogPortal} です。
  */
 export const Portal: IComponent<Portal.Props> = DialogPortal;
 
@@ -191,12 +188,12 @@ export const Portal: IComponent<Portal.Props> = DialogPortal;
 // --------
 
 /**
- * {@link Backdrop} の状態です。
+ * {@link DialogBackdrop} の状態です。
  */
 export type DialogBackdropState = Dialog.Backdrop.State;
 
 /**
- * {@link Backdrop} に渡すプロパティーです。
+ * {@link DialogBackdrop} に渡すプロパティーです。
  */
 export type DialogBackdropProps = React.ComponentProps<typeof Dialog.Backdrop>;
 
@@ -210,22 +207,22 @@ export const DialogBackdrop: IComponent<DialogBackdropProps> = function SuiDialo
 };
 
 /**
- * {@link DialogBackdrop} の型をまとめた名前空間です。
+ * {@link DialogBackdrop} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Backdrop {
   /**
-   * {@link DialogBackdrop} の状態型です。
+   * {@link DialogBackdropState} です。
    */
   export type State = DialogBackdropState;
 
   /**
-   * {@link DialogBackdrop} のプロパティー型です。
+   * {@link DialogBackdropProps} です。
    */
   export type Props = DialogBackdropProps;
 }
 
 /**
- * {@link DialogBackdrop} の短縮名です。
+ * {@link DialogBackdrop} です。
  */
 export const Backdrop: IComponent<Backdrop.Props> = DialogBackdrop;
 
@@ -233,12 +230,12 @@ export const Backdrop: IComponent<Backdrop.Props> = DialogBackdrop;
 // --------
 
 /**
- * {@link Viewport} の状態です。
+ * {@link DialogViewport} の状態です。
  */
 export type DialogViewportState = Dialog.Viewport.State;
 
 /**
- * {@link Viewport} に渡すプロパティーです。
+ * {@link DialogViewport} に渡すプロパティーです。
  */
 export type DialogViewportProps = React.ComponentProps<typeof Dialog.Viewport>;
 
@@ -254,22 +251,22 @@ export const DialogViewport: IComponent<DialogViewportProps> = function SuiDialo
 };
 
 /**
- * {@link DialogViewport} の型をまとめた名前空間です。
+ * {@link DialogViewport} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Viewport {
   /**
-   * {@link DialogViewport} の状態型です。
+   * {@link DialogViewportState} です。
    */
   export type State = DialogViewportState;
 
   /**
-   * {@link DialogViewport} のプロパティー型です。
+   * {@link DialogViewportProps} です。
    */
   export type Props = DialogViewportProps;
 }
 
 /**
- * {@link DialogViewport} の短縮名です。
+ * {@link DialogViewport} です。
  */
 export const Viewport: IComponent<Viewport.Props> = DialogViewport;
 
@@ -277,12 +274,12 @@ export const Viewport: IComponent<Viewport.Props> = DialogViewport;
 // -----
 
 /**
- * {@link Popup} の状態です。
+ * {@link DialogPopup} の状態です。
  */
 export type DialogPopupState = Dialog.Popup.State;
 
 /**
- * {@link Popup} に渡すプロパティーです。
+ * {@link DialogPopup} に渡すプロパティーです。
  */
 export type DialogPopupProps = React.ComponentProps<typeof Dialog.Popup>;
 
@@ -298,22 +295,22 @@ export const DialogPopup: IComponent<DialogPopupProps> = function SuiDialogPopup
 };
 
 /**
- * {@link DialogPopup} の型をまとめた名前空間です。
+ * {@link DialogPopup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Popup {
   /**
-   * {@link DialogPopup} の状態型です。
+   * {@link DialogPopupState} です。
    */
   export type State = DialogPopupState;
 
   /**
-   * {@link DialogPopup} のプロパティー型です。
+   * {@link DialogPopupProps} です。
    */
   export type Props = DialogPopupProps;
 }
 
 /**
- * {@link DialogPopup} の短縮名です。
+ * {@link DialogPopup} です。
  */
 export const Popup: IComponent<Popup.Props> = DialogPopup;
 
@@ -321,12 +318,12 @@ export const Popup: IComponent<Popup.Props> = DialogPopup;
 // -----
 
 /**
- * {@link Title} の状態です。
+ * {@link DialogTitle} の状態です。
  */
 export type DialogTitleState = Dialog.Title.State;
 
 /**
- * {@link Title} に渡すプロパティーです。
+ * {@link DialogTitle} に渡すプロパティーです。
  */
 export type DialogTitleProps = React.ComponentProps<typeof Dialog.Title>;
 
@@ -340,22 +337,22 @@ export const DialogTitle: IComponent<DialogTitleProps> = function SuiDialogTitle
 };
 
 /**
- * {@link DialogTitle} の型をまとめた名前空間です。
+ * {@link DialogTitle} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Title {
   /**
-   * {@link DialogTitle} の状態型です。
+   * {@link DialogTitleState} です。
    */
   export type State = DialogTitleState;
 
   /**
-   * {@link DialogTitle} のプロパティー型です。
+   * {@link DialogTitleProps} です。
    */
   export type Props = DialogTitleProps;
 }
 
 /**
- * {@link DialogTitle} の短縮名です。
+ * {@link DialogTitle} です。
  */
 export const Title: IComponent<Title.Props> = DialogTitle;
 
@@ -363,12 +360,12 @@ export const Title: IComponent<Title.Props> = DialogTitle;
 // -----------
 
 /**
- * {@link Description} の状態です。
+ * {@link DialogDescription} の状態です。
  */
 export type DialogDescriptionState = Dialog.Description.State;
 
 /**
- * {@link Description} に渡すプロパティーです。
+ * {@link DialogDescription} に渡すプロパティーです。
  */
 export type DialogDescriptionProps = React.ComponentProps<typeof Dialog.Description>;
 
@@ -384,22 +381,22 @@ export const DialogDescription: IComponent<DialogDescriptionProps> = function Su
 };
 
 /**
- * {@link DialogDescription} の型をまとめた名前空間です。
+ * {@link DialogDescription} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Description {
   /**
-   * {@link DialogDescription} の状態型です。
+   * {@link DialogDescriptionState} です。
    */
   export type State = DialogDescriptionState;
 
   /**
-   * {@link DialogDescription} のプロパティー型です。
+   * {@link DialogDescriptionProps} です。
    */
   export type Props = DialogDescriptionProps;
 }
 
 /**
- * {@link DialogDescription} の短縮名です。
+ * {@link DialogDescription} です。
  */
 export const Description: IComponent<Description.Props> = DialogDescription;
 
@@ -407,12 +404,12 @@ export const Description: IComponent<Description.Props> = DialogDescription;
 // -----
 
 /**
- * {@link Close} の状態です。
+ * {@link DialogClose} の状態です。
  */
 export type DialogCloseState = Dialog.Close.State;
 
 /**
- * {@link Close} に渡すプロパティーです。
+ * {@link DialogClose} に渡すプロパティーです。
  */
 export type DialogCloseProps = Omit<
   React.ComponentProps<typeof Dialog.Close>,
@@ -440,21 +437,21 @@ export const DialogClose: IComponent<DialogCloseProps> = function SuiDialogClose
 };
 
 /**
- * {@link DialogClose} の型をまとめた名前空間です。
+ * {@link DialogClose} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Close {
   /**
-   * {@link DialogClose} の状態型です。
+   * {@link DialogCloseState} です。
    */
   export type State = DialogCloseState;
 
   /**
-   * {@link DialogClose} のプロパティー型です。
+   * {@link DialogCloseProps} です。
    */
   export type Props = DialogCloseProps;
 }
 
 /**
- * {@link DialogClose} の短縮名です。
+ * {@link DialogClose} です。
  */
 export const Close: IComponent<Close.Props> = DialogClose;

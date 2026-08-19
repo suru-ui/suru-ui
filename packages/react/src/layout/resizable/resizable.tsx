@@ -1,11 +1,25 @@
 import * as React from "react";
 
-import type { IComponent } from "../../types.js";
+import type { IComponent, IUseContext } from "../../types.js";
 import {
+  type ResizableContext,
   type ResizableRootProps,
   type ResizableRootState,
+  type ResizableRootDirection,
+  type ResizableRootOrientation,
   ResizableRoot,
+  useResizableContext,
 } from "./resizable.parts.jsx";
+
+/**
+ * {@link ResizableRootDirection} です。
+ */
+export type ResizableDirection = ResizableRootDirection;
+
+/**
+ * {@link ResizableRootOrientation} です。
+ */
+export type ResizableOrientation = ResizableRootOrientation;
 
 /**
  * {@link ResizablePanelGroup} の状態です。
@@ -25,7 +39,7 @@ export type ResizableState = ResizableRootState;
 /**
  * {@link Resizable} コンポーネントのプロパティーです。
  */
-export type ResizableProps = ResizableRootProps & {
+export type ResizableProps = Omit<ResizableRootProps, "children"> & {
   /**
    * リサイズ可能なパネルとハンドルです。
    */
@@ -57,9 +71,21 @@ export namespace ResizablePanelGroup {
 /**
  * リサイズ可能なパネル群を表示するコンポーネントです。
  */
-export const Resizable: IComponent<ResizableProps> = function SuiResizable(props) {
-  return <ResizableRoot {...props} />;
-};
+interface ResizableType extends IComponent<ResizableProps> {
+  /**
+   * {@link useResizableContext} です。
+   */
+  readonly useContext: IUseContext<ResizableContext>;
+}
+
+export const Resizable: ResizableType = /*#__PURE__*/ Object.assign(
+  function SuiResizable(props: ResizableProps) {
+    return <ResizableRoot {...props} />;
+  },
+  {
+    useContext: useResizableContext,
+  },
+);
 
 /**
  * {@link Resizable} の状態やプロパティーをまとめた型名前空間です。
@@ -74,4 +100,19 @@ export namespace Resizable {
    * {@link ResizableProps} です。
    */
   export type Props = ResizableProps;
+
+  /**
+   * {@link ResizableContext} です。
+   */
+  export type Context = ResizableContext;
+
+  /**
+   * {@link ResizableDirection} です。
+   */
+  export type Direction = ResizableDirection;
+
+  /**
+   * {@link ResizableOrientation} です。
+   */
+  export type Orientation = ResizableOrientation;
 }

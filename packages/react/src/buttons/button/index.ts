@@ -1,3 +1,12 @@
 export * from "./button.parts.jsx";
 
-export { type ButtonProps, type ButtonState, type ButtonSlotProps, Button } from "./button.jsx";
+export {
+  type ButtonSize,
+  type ButtonColor,
+  type ButtonProps,
+  type ButtonState,
+  type ButtonRadius,
+  type ButtonVariant,
+  type ButtonSlotProps,
+  Button,
+} from "./button.jsx";

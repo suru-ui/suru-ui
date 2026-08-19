@@ -8,48 +8,6 @@ import type { IComponent, IUseContext } from "../../types.js";
 
 import "./checkbox-group.css";
 
-// Types
-// -----
-
-/**
- * チェックボックスグループの色です。
- */
-export type CheckboxGroupColor = Color;
-
-/**
- * チェックボックスグループの角丸です。
- *
- * - `"none"`: 角を直角にする
- * - `"rounded"`: 標準的な角丸
- * - `"full"`: 完全な丸形
- */
-export type CheckboxGroupRadius = "none" | "rounded" | "full";
-
-/**
- * チェックボックスグループの大きさです。
- *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
- */
-export type CheckboxGroupSize = Size;
-
-/**
- * チェックボックスグループの主な外観の種類です。
- *
- * - `"naked"`: 背景のないチェックマークのみ、枠線なし
- * - `"liquid"`: 薄い塗りつぶし
- */
-export type CheckboxGroupVariant = "naked" | "liquid";
-
-/**
- * チェックボックスグループの向きです。
- *
- * - `"horizontal"`: 横並び
- * - `"vertical"`: 縦並び
- */
-export type CheckboxGroupOrientation = "horizontal" | "vertical";
-
 // Context
 // -------
 
@@ -60,29 +18,29 @@ export type CheckboxGroupOrientation = "horizontal" | "vertical";
  */
 export type CheckboxGroupContext = {
   /**
-   * チェックボックスのスタイルバリエーションです。
-   */
-  readonly variant: CheckboxGroupVariant;
-
-  /**
    * チェックボックスの色です。
    */
-  readonly color: CheckboxGroupColor;
-
-  /**
-   * チェックボックスのサイズです。
-   */
-  readonly size: CheckboxGroupSize;
-
-  /**
-   * チェックボックスの角丸です。
-   */
-  readonly radius: CheckboxGroupRadius;
+  readonly color: CheckboxGroupRootColor;
 
   /**
    * 枠線を表示するかどうかです。
    */
   readonly outlined: boolean;
+
+  /**
+   * チェックボックスの角丸です。
+   */
+  readonly radius: CheckboxGroupRootRadius;
+
+  /**
+   * チェックボックスのサイズです。
+   */
+  readonly size: CheckboxGroupRootSize;
+
+  /**
+   * チェックボックスのスタイルバリエーションです。
+   */
+  readonly variant: CheckboxGroupRootVariant;
 
   /**
    * グループ全体を無効にするかどうかです。
@@ -135,9 +93,48 @@ export const useContext: IUseContext<Context> = useCheckboxGroupContext;
 // ----
 
 /**
+ * チェックボックスグループの色です。
+ */
+export type CheckboxGroupRootColor = Color;
+
+/**
+ * チェックボックスグループの向きです。
+ *
+ * - `"horizontal"`: 横並び
+ * - `"vertical"`: 縦並び
+ */
+export type CheckboxGroupRootOrientation = "horizontal" | "vertical";
+
+/**
+ * チェックボックスグループの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"rounded"`: 標準的な角丸
+ * - `"full"`: 完全な丸形
+ */
+export type CheckboxGroupRootRadius = "none" | "rounded" | "full";
+
+/**
+ * チェックボックスグループの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type CheckboxGroupRootSize = Size;
+
+/**
+ * チェックボックスグループの主な外観の種類です。
+ *
+ * - `"naked"`: 背景のないチェックマークのみ、枠線なし
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type CheckboxGroupRootVariant = "naked" | "liquid";
+
+/**
  * {@link CheckboxGroupRoot} の状態です。
  *
- * {@link CheckboxGroupRoot} が公開する状態型の別名です。
+ * {@link CheckboxGroupRoot} が公開する状態です。
  */
 export type CheckboxGroupRootState = CheckboxGroup.State;
 
@@ -149,16 +146,6 @@ export type CheckboxGroupRootState = CheckboxGroup.State;
  */
 export type CheckboxGroupRootProps = React.ComponentProps<typeof CheckboxGroup> & {
   /**
-   * チェックボックスのサイズを指定します。
-   *
-   * {@link CheckboxGroupRoot} の子要素に指定した値より優先されます。
-   * 値を変更すると、グループ内のチェックボックスも更新されます。
-   *
-   * @default "md"
-   */
-  size?: CheckboxGroupSize | undefined;
-
-  /**
    * チェックボックスの色を指定します。
    *
    * {@link CheckboxGroupRoot} の子要素に指定した値より優先されます。
@@ -166,17 +153,16 @@ export type CheckboxGroupRootProps = React.ComponentProps<typeof CheckboxGroup> 
    *
    * @default "grey"
    */
-  color?: CheckboxGroupColor | undefined;
+  color?: CheckboxGroupRootColor | undefined;
 
   /**
-   * チェックボックスのスタイルバリエーションを指定します。
+   * チェックボックス群の向きを指定します。
    *
-   * {@link CheckboxGroupRoot} の子要素に指定した値より優先されます。
-   * 値を変更すると、グループ内のチェックボックスも更新されます。
+   * 値を変更すると、グループのレイアウトが更新されます。
    *
-   * @default "naked"
+   * @default "vertical"
    */
-  variant?: CheckboxGroupVariant | undefined;
+  orientation?: CheckboxGroupRootOrientation | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
@@ -194,16 +180,27 @@ export type CheckboxGroupRootProps = React.ComponentProps<typeof CheckboxGroup> 
    *
    * @default "rounded"
    */
-  radius?: CheckboxGroupRadius | undefined;
+  radius?: CheckboxGroupRootRadius | undefined;
 
   /**
-   * チェックボックス群の向きを指定します。
+   * チェックボックスのサイズを指定します。
    *
-   * 値を変更すると、グループのレイアウトが更新されます。
+   * {@link CheckboxGroupRoot} の子要素に指定した値より優先されます。
+   * 値を変更すると、グループ内のチェックボックスも更新されます。
    *
-   * @default "vertical"
+   * @default "md"
    */
-  orientation?: CheckboxGroupOrientation | undefined;
+  size?: CheckboxGroupRootSize | undefined;
+
+  /**
+   * チェックボックスのスタイルバリエーションを指定します。
+   *
+   * {@link CheckboxGroupRoot} の子要素に指定した値より優先されます。
+   * 値を変更すると、グループ内のチェックボックスも更新されます。
+   *
+   * @default "naked"
+   */
+  variant?: CheckboxGroupRootVariant | undefined;
 };
 
 /**
@@ -216,9 +213,9 @@ export const CheckboxGroupRoot: IComponent<CheckboxGroupRootProps> = function Su
   props,
 ) {
   const {
-    size: sizeProp = "md",
     color: colorProp = "grey",
     radius: radiusProp = "rounded",
+    size: sizeProp = "md",
     variant: variantProp = "naked",
     disabled,
     outlined = variantProp === "naked",
@@ -228,11 +225,11 @@ export const CheckboxGroupRoot: IComponent<CheckboxGroupRootProps> = function Su
   } = props;
   const context = React.useMemo<CheckboxGroupContext>(
     () => ({
-      size: sizeProp,
       color: colorProp,
-      radius: radiusProp,
-      variant: variantProp,
       outlined,
+      radius: radiusProp,
+      size: sizeProp,
+      variant: variantProp,
       disabled,
     }),
     [colorProp, disabled, outlined, radiusProp, sizeProp, variantProp],
@@ -258,17 +255,42 @@ export const CheckboxGroupRoot: IComponent<CheckboxGroupRootProps> = function Su
  */
 export namespace Root {
   /**
-   * {@link CheckboxGroupRoot} の状態型です。
+   * {@link CheckboxGroupRootState} です。
    */
   export type State = CheckboxGroupRootState;
 
   /**
-   * {@link CheckboxGroupRoot} のプロパティー型です。
+   * {@link CheckboxGroupRootProps} です。
    */
   export type Props = CheckboxGroupRootProps;
+
+  /**
+   * {@link CheckboxGroupRootColor} です。
+   */
+  export type Color = CheckboxGroupRootColor;
+
+  /**
+   * {@link CheckboxGroupRootRadius} です。
+   */
+  export type Radius = CheckboxGroupRootRadius;
+
+  /**
+   * {@link CheckboxGroupRootSize} です。
+   */
+  export type Size = CheckboxGroupRootSize;
+
+  /**
+   * {@link CheckboxGroupRootVariant} です。
+   */
+  export type Variant = CheckboxGroupRootVariant;
+
+  /**
+   * {@link CheckboxGroupRootOrientation} です。
+   */
+  export type Orientation = CheckboxGroupRootOrientation;
 }
 
 /**
- * {@link CheckboxGroupRoot} の別名です。
+ * {@link CheckboxGroupRoot} です。
  */
 export const Root: IComponent<Root.Props> = CheckboxGroupRoot;

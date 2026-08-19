@@ -13,45 +13,37 @@ import {
 } from "./form.parts.jsx";
 
 /**
- * {@link Form} の入力値を表す型です。
- *
- * @template TValues フォームの入力値を表す型です。
+ * {@link FormRootValues} です。
  */
 export type FormValues<TValues extends FormRootValues = FormRootValues> = FormRootValues<TValues>;
 
 /**
- * {@link Form} を命令的に操作するためのオブジェクトです。
+ * {@link FormRootActions} です。
  */
 export type FormActions = FormRootActions;
 
 /**
- * {@link Form} の検証を行うタイミングを決定します。
- *
- * - "onSubmit": フォーム送信時にフィールドを検証し、それ以降は値が変更されるたびに再検証を行います。
- * - "onBlur": フィールドからフォーカスが外れたときに検証を行います。
- * - "onChange": 値が変更されるたびに検証を行います。
+ * {@link FormRootValidationMode} です。
  */
 export type FormValidationMode = FormRootValidationMode;
 
 /**
- * {@link Form} が送信された理由です。
+ * {@link FormRootSubmitEventReason} です。
  */
 export type FormSubmitEventReason = FormRootSubmitEventReason;
 
 /**
- * {@link Form} が送信されたイベントの詳細です。
+ * {@link FormRootSubmitEventDetails} です。
  */
 export type FormSubmitEventDetails = FormRootSubmitEventDetails;
 
 /**
- * {@link Form} の状態です。
+ * {@link FormRootState} です。
  */
 export type FormState = FormRootState;
 
 /**
- * {@link Form} に渡すプロパティーです。
- *
- * @template TValues フォームの入力値を表す型です。
+ * {@link FormRootProps} です。
  */
 export type FormProps<TValues extends FormValues = FormValues> = FormRootProps<TValues>;
 
@@ -60,7 +52,7 @@ interface FormComponentType extends IComponent<FormProps> {
 }
 
 /**
- * フォームを表示するコンポーネントです。
+ * {@link FormRoot} です。
  */
 export const Form: FormComponentType = function SuiForm(props: FormProps) {
   return <FormRoot {...props} />;
@@ -78,12 +70,10 @@ export namespace Form {
   /**
    * {@link FormProps} です。
    */
-  export type Props = FormProps;
+  export type Props<TValues extends Values = Values> = FormProps<TValues>;
 
   /**
    * {@link FormValues} です。
-   *
-   * @template TValues フォームの入力値を表す型です。
    */
   export type Values<TValues extends FormValues = FormValues> = FormValues<TValues>;
 

@@ -1,11 +1,11 @@
-import { COLORS as BASE_COLORS, SIZES } from "@suru-ui/theme";
+import { SIZES, COLORS as BASE_COLORS } from "@suru-ui/theme";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { AvatarGroup } from "../../src/data-display/avatar-group/index.js";
 import { Avatar } from "../../src/data-display/avatar/index.js";
 
 const RADII = ["none", ...SIZES, "full"] as const;
-const COLORS = ["colorful", ...BASE_COLORS] as const;
+const COLORS = ["auto", ...BASE_COLORS] as const;
 
 const meta = preview.meta({
   title: "Data Display / Avatar Group",
@@ -38,7 +38,7 @@ const ctrl = controls(AvatarGroup, {
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
-    color: "colorful",
+    color: "auto",
     size: "md",
     radius: "full",
     reverse: false,
@@ -64,7 +64,7 @@ export const Usage = meta.story({
 export const Surplus = meta.story({
   name: "余剰分",
   ...ctrl({
-    color: "colorful",
+    color: "auto",
     size: "md",
     radius: "full",
     reverse: false,

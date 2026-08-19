@@ -1,3 +1,14 @@
 export * from "./input.parts.jsx";
 
-export { type InputProps, type InputState, Input } from "./input.jsx";
+export {
+  type InputSize,
+  type InputType,
+  type InputColor,
+  type InputProps,
+  type InputState,
+  type InputRadius,
+  type InputVariant,
+  type InputChangeEventReason,
+  type InputChangeEventDetails,
+  Input,
+} from "./input.jsx";

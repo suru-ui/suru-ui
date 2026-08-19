@@ -1,15 +1,59 @@
 import * as React from "react";
 
-import type { IComponent } from "../../types.js";
+import type { IComponent, IUseContext } from "../../types.js";
 import {
+  type TextFieldContext,
+  type TextFieldRootSize,
+  type TextFieldInputType,
+  type TextFieldRootColor,
   type TextFieldRootProps,
   type TextFieldRootState,
   type TextFieldAddonProps,
   type TextFieldInputProps,
+  type TextFieldRootRadius,
+  type TextFieldRootVariant,
+  type TextFieldInputChangeEventReason,
+  type TextFieldInputChangeEventDetails,
   TextFieldRoot,
   TextFieldAddon,
   TextFieldInput,
+  useTextFieldContext,
 } from "./text-field.parts.jsx";
+
+/**
+ * {@link TextFieldRootColor} です。
+ */
+export type TextFieldColor = TextFieldRootColor;
+
+/**
+ * {@link TextFieldRootRadius} です。
+ */
+export type TextFieldRadius = TextFieldRootRadius;
+
+/**
+ * {@link TextFieldRootSize} です。
+ */
+export type TextFieldSize = TextFieldRootSize;
+
+/**
+ * {@link TextFieldRootVariant} です。
+ */
+export type TextFieldVariant = TextFieldRootVariant;
+
+/**
+ * {@link TextFieldInputType} です。
+ */
+export type TextFieldType = TextFieldInputType;
+
+/**
+ * {@link TextFieldInputChangeEventReason} です。
+ */
+export type TextFieldChangeEventReason = TextFieldInputChangeEventReason;
+
+/**
+ * {@link TextFieldInputChangeEventDetails} です。
+ */
+export type TextFieldChangeEventDetails = TextFieldInputChangeEventDetails;
 
 /**
  * {@link TextField} の各パーツに渡すプロパティーです。
@@ -32,9 +76,9 @@ export type TextFieldSlotProps = {
 export type TextFieldState = TextFieldRootState;
 
 /**
- * {@link} に渡すプロパティーです。
+ * {@link TextField} に渡すプロパティーです。
  */
-export type TextFieldProps = TextFieldRootProps &
+export type TextFieldProps = Omit<TextFieldRootProps, "children"> &
   Pick<
     TextFieldInputProps,
     | "defaultValue"
@@ -47,7 +91,10 @@ export type TextFieldProps = TextFieldRootProps &
     | "type"
     | "value"
   > & {
-    endAddons?: readonly React.ReactNode[] | undefined;
+    /**
+     * 入力欄の末尾に表示する内容です。
+     */
+    endAddons?: Iterable<React.ReactNode> | undefined;
 
     /**
      * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
@@ -56,55 +103,69 @@ export type TextFieldProps = TextFieldRootProps &
      */
     slotProps?: TextFieldSlotProps | undefined;
 
-    startAddons?: readonly React.ReactNode[] | undefined;
+    /**
+     * 入力欄の先頭に表示する内容です。
+     */
+    startAddons?: Iterable<React.ReactNode> | undefined;
   };
 
-export const TextField: IComponent<TextFieldProps> = function SuiTextField(props) {
-  const {
-    name,
-    type,
-    value,
-    disabled,
-    readOnly,
-    required,
-    endAddons = [],
-    slotProps: { addon: addonProps, input: inputProps } = {},
-    placeholder,
-    startAddons = [],
-    defaultValue,
-    onValueChange,
-    ...rootProps
-  } = props;
+interface TextFieldComponentType extends IComponent<TextFieldProps> {
+  /**
+   * {@link useTextFieldContext} です。
+   */
+  readonly useContext: IUseContext<TextFieldContext>;
+}
 
-  return (
-    <TextFieldRoot {...rootProps}>
-      {startAddons.map((addon, i) => (
-        <TextFieldAddon {...addonProps} key={React.isValidElement(addon) ? (addon.key ?? i) : i}>
-          {addon}
-        </TextFieldAddon>
-      ))}
-      <TextFieldInput
-        {...{
-          name,
-          type,
-          value,
-          disabled,
-          readOnly,
-          required,
-          placeholder,
-          defaultValue,
-          onValueChange,
-          ...inputProps,
-        }}
-      />
-      {endAddons.map((addon, i) => (
-        <TextFieldAddon {...addonProps} key={React.isValidElement(addon) ? (addon.key ?? i) : i}>
-          {addon}
-        </TextFieldAddon>
-      ))}
-    </TextFieldRoot>
-  );
-};
+/**
+ * 文字入力欄を表示するコンポーネントです。
+ */
+export const TextField: TextFieldComponentType = /*#__PURE__*/ Object.assign(
+  function SuiTextField(props: TextFieldProps) {
+    const {
+      name,
+      type,
+      value,
+      disabled,
+      readOnly,
+      required,
+      endAddons = null,
+      slotProps: { addon: addonProps, input: inputProps } = {},
+      placeholder,
+      startAddons = null,
+      defaultValue,
+      onValueChange,
+      ...rootProps
+    } = props;
+
+    return (
+      <TextFieldRoot {...rootProps}>
+        {React.Children.map(startAddons, (addon) => (
+          <TextFieldAddon {...addonProps}>{addon}</TextFieldAddon>
+        ))}
+        <TextFieldInput
+          {...{
+            name,
+            type,
+            value,
+            disabled,
+            readOnly,
+            required,
+            placeholder,
+            defaultValue,
+            onValueChange,
+            ...inputProps,
+          }}
+        />
+        {React.Children.map(endAddons, (addon) => (
+          <TextFieldAddon {...addonProps}>{addon}</TextFieldAddon>
+        ))}
+      </TextFieldRoot>
+    );
+  },
+  {
+    useContext: useTextFieldContext,
+  },
+);
 
 /**
  * {@link TextField} の状態やプロパティーをまとめた型名前空間です。
@@ -124,4 +185,44 @@ export namespace TextField {
    * {@link TextFieldSlotProps} です。
    */
   export type SlotProps = TextFieldSlotProps;
+
+  /**
+   * {@link TextFieldContext} です。
+   */
+  export type Context = TextFieldContext;
+
+  /**
+   * {@link TextFieldColor} です。
+   */
+  export type Color = TextFieldColor;
+
+  /**
+   * {@link TextFieldRadius} です。
+   */
+  export type Radius = TextFieldRadius;
+
+  /**
+   * {@link TextFieldSize} です。
+   */
+  export type Size = TextFieldSize;
+
+  /**
+   * {@link TextFieldType} です。
+   */
+  export type Type = TextFieldType;
+
+  /**
+   * {@link TextFieldVariant} です。
+   */
+  export type Variant = TextFieldVariant;
+
+  /**
+   * {@link TextFieldChangeEventReason} です。
+   */
+  export type ChangeEventReason = TextFieldChangeEventReason;
+
+  /**
+   * {@link TextFieldChangeEventDetails} です。
+   */
+  export type ChangeEventDetails = TextFieldChangeEventDetails;
 }

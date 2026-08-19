@@ -118,6 +118,8 @@ export type DialogProps = Omit<DialogRootProps, "children" | "handle"> & {
 
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   *
+   * 各パーツのプロパティーが優先されます。
    */
   slotProps?: DialogSlotProps | undefined;
 };

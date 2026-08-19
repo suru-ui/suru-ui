@@ -7,13 +7,13 @@ import type { IComponent } from "../../types.js";
 
 import "./chip.css";
 
-// Types
-// -----
+// Root
+// ----
 
 /**
  * チップの色です。
  */
-export type ChipColor = Color;
+export type ChipRootColor = Color;
 
 /**
  * チップの角丸です。
@@ -24,7 +24,7 @@ export type ChipColor = Color;
  * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-export type ChipRadius = "none" | Size | "full";
+export type ChipRootRadius = "none" | Size | "full";
 
 /**
  * チップの大きさです。
@@ -33,7 +33,7 @@ export type ChipRadius = "none" | Size | "full";
  * - `"md"`: 標準的なサイズ
  * - `"lg"`: 大きいサイズ
  */
-export type ChipSize = Size;
+export type ChipRootSize = Size;
 
 /**
  * チップの主な外観の種類です。
@@ -42,10 +42,7 @@ export type ChipSize = Size;
  * - `"naked"`: 背景のないテキストのみ
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type ChipVariant = ColorTemplate;
-
-// Root
-// ----
+export type ChipRootVariant = ColorTemplate;
 
 /**
  * {@link ChipRoot} の状態です。
@@ -62,10 +59,12 @@ export type ChipRootProps = Omit<React.ComponentProps<"span">, keyof RenderProps
      *
      * @default "grey"
      */
-    color?: ChipColor | undefined;
+    color?: ChipRootColor | undefined;
 
     /**
      * 枠線を表示するかどうかを指定します。
+     *
+     * @default false
      */
     outlined?: boolean | undefined;
 
@@ -74,21 +73,21 @@ export type ChipRootProps = Omit<React.ComponentProps<"span">, keyof RenderProps
      *
      * @default "full"
      */
-    radius?: ChipRadius | undefined;
+    radius?: ChipRootRadius | undefined;
 
     /**
      * チップのサイズを指定します。
      *
      * @default "sm"
      */
-    size?: ChipSize | undefined;
+    size?: ChipRootSize | undefined;
 
     /**
      * チップのスタイルバリエーションを指定します。
      *
      * @default "liquid"
      */
-    variant?: ChipVariant | undefined;
+    variant?: ChipRootVariant | undefined;
   };
 
 /**
@@ -127,12 +126,12 @@ export const ChipRoot: IComponent<ChipRootProps> = function SuiChipRoot(props) {
  */
 export namespace Root {
   /**
-   * {@link ChipRoot} の状態型です。
+   * {@link ChipRootState} です。
    */
   export type State = ChipRootState;
 
   /**
-   * {@link ChipRoot} のプロパティー型です。
+   * {@link ChipRootProps} です。
    */
   export type Props = ChipRootProps;
 }

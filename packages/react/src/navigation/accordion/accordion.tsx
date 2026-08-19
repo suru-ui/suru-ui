@@ -2,10 +2,12 @@ import * as React from "react";
 
 import type { IComponent } from "../../types.js";
 import {
+  type AccordionRootSize,
   type AccordionItemProps,
   type AccordionRootProps,
   type AccordionRootState,
   type AccordionPanelProps,
+  type AccordionRootRadius,
   type AccordionHeaderProps,
   type AccordionTriggerProps,
   type AccordionIndicatorProps,
@@ -16,6 +18,16 @@ import {
   AccordionTrigger,
   AccordionIndicator,
 } from "./accordion.parts.jsx";
+
+/**
+ * {@link AccordionRootRadius} です。
+ */
+export type AccordionRadius = AccordionRootRadius;
+
+/**
+ * {@link AccordionRootSize} です。
+ */
+export type AccordionSize = AccordionRootSize;
 
 /**
  * {@link Accordion} を構成する各パーツのプロパティーです。
@@ -137,6 +149,16 @@ export namespace Accordion {
    * {@link AccordionSlotProps} です。
    */
   export type SlotProps = AccordionSlotProps;
+
+  /**
+   * {@link AccordionRadius} です。
+   */
+  export type Radius = AccordionRadius;
+
+  /**
+   * {@link AccordionSize} です。
+   */
+  export type Size = AccordionSize;
 }
 
 function SuiAccordionIcon() {

@@ -11,6 +11,11 @@ export interface IComponent<TProps = {}> {
   displayName?: string | undefined;
 }
 
+/**
+ * コンテキストを読み取るフックの型です。
+ *
+ * @template TContext コンテキストの型です。
+ */
 export interface IUseContext<TContext = unknown> {
   /**
    * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。

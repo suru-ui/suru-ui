@@ -1,4 +1,4 @@
-import { COLORS, SIZES } from "@suru-ui/theme";
+import { SIZES, COLORS } from "@suru-ui/theme";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Avatar } from "../../src/data-display/avatar/index.js";

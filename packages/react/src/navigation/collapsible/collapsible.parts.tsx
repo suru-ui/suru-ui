@@ -12,8 +12,8 @@ import type { IComponent } from "../../types.js";
 
 import "./collapsible.css";
 
-// Types
-// -----
+// Root
+// ----
 
 /**
  * コラプシブルの角丸です。
@@ -23,7 +23,7 @@ import "./collapsible.css";
  * - `"md"`: 標準的な角丸
  * - `"lg"`: 大きい角丸
  */
-export type CollapsibleRadius = "none" | Size;
+export type CollapsibleRootRadius = "none" | Size;
 
 /**
  * コラプシブルの大きさです。
@@ -32,18 +32,15 @@ export type CollapsibleRadius = "none" | Size;
  * - `"md"`: 標準的なサイズ
  * - `"lg"`: 大きいサイズ
  */
-export type CollapsibleSize = Size;
-
-// Root
-// ----
+export type CollapsibleRootSize = Size;
 
 /**
- * {@link Root} の状態です。
+ * {@link CollapsibleRootState} です。
  */
 export type CollapsibleRootState = Collapsible.Root.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link CollapsibleRootProps} です。
  */
 export type CollapsibleRootProps = React.ComponentProps<typeof Collapsible.Root> & {
   /**
@@ -58,14 +55,14 @@ export type CollapsibleRootProps = React.ComponentProps<typeof Collapsible.Root>
    *
    * @default "md"
    */
-  radius?: CollapsibleRadius | undefined;
+  radius?: CollapsibleRootRadius | undefined;
 
   /**
    * パネルのサイズを指定します。
    *
    * @default "md"
    */
-  size?: CollapsibleSize | undefined;
+  size?: CollapsibleRootSize | undefined;
 };
 
 /**
@@ -95,14 +92,24 @@ export const CollapsibleRoot: IComponent<CollapsibleRootProps> = function SuiCol
  */
 export namespace Root {
   /**
-   * {@link CollapsibleRoot} の状態型です。
+   * {@link CollapsibleRootState} です。
    */
   export type State = CollapsibleRootState;
 
   /**
-   * {@link CollapsibleRoot} のプロパティー型です。
+   * {@link CollapsibleRootProps} です。
    */
   export type Props = CollapsibleRootProps;
+
+  /**
+   * {@link CollapsibleRootRadius} です。
+   */
+  export type Radius = CollapsibleRootRadius;
+
+  /**
+   * {@link CollapsibleRootSize} です。
+   */
+  export type Size = CollapsibleRootSize;
 }
 
 /**
@@ -114,12 +121,12 @@ export const Root: IComponent<Root.Props> = CollapsibleRoot;
 // -------
 
 /**
- * {@link Trigger} の状態です。
+ * {@link CollapsibleTriggerState} です。
  */
 export type CollapsibleTriggerState = Collapsible.Trigger.State;
 
 /**
- * {@link Trigger} に渡すプロパティーです。
+ * {@link CollapsibleTriggerProps} です。
  */
 export type CollapsibleTriggerProps = Omit<
   React.ComponentProps<typeof Collapsible.Trigger>,
@@ -157,12 +164,12 @@ export const CollapsibleTrigger: IComponent<CollapsibleTriggerProps> =
  */
 export namespace Trigger {
   /**
-   * {@link CollapsibleTrigger} の状態型です。
+   * {@link CollapsibleTriggerState} です。
    */
   export type State = CollapsibleTriggerState;
 
   /**
-   * {@link CollapsibleTrigger} のプロパティー型です。
+   * {@link CollapsibleTriggerProps} です。
    */
   export type Props = CollapsibleTriggerProps;
 }
@@ -176,12 +183,12 @@ export const Trigger: IComponent<Trigger.Props> = CollapsibleTrigger;
 // ---------
 
 /**
- * {@link Indicator} の状態です。
+ * {@link CollapsibleIndicatorState} です。
  */
 export type CollapsibleIndicatorState = {};
 
 /**
- * {@link Indicator} に渡すプロパティーです。
+ * {@link CollapsibleIndicatorProps} です。
  */
 export type CollapsibleIndicatorProps = Omit<
   React.ComponentProps<"span">,
@@ -213,12 +220,12 @@ export const CollapsibleIndicator: IComponent<CollapsibleIndicatorProps> =
  */
 export namespace Indicator {
   /**
-   * {@link CollapsibleIndicator} の状態型です。
+   * {@link CollapsibleIndicatorState} です。
    */
   export type State = CollapsibleIndicatorState;
 
   /**
-   * {@link CollapsibleIndicator} のプロパティー型です。
+   * {@link CollapsibleIndicatorProps} です。
    */
   export type Props = CollapsibleIndicatorProps;
 }
@@ -232,12 +239,12 @@ export const Indicator: IComponent<Indicator.Props> = CollapsibleIndicator;
 // -----
 
 /**
- * {@link Panel} の状態です。
+ * {@link CollapsiblePanelState} です。
  */
 export type CollapsiblePanelState = Collapsible.Panel.State;
 
 /**
- * {@link Panel} に渡すプロパティーです。
+ * {@link CollapsiblePanelProps} です。
  */
 export type CollapsiblePanelProps = React.ComponentProps<typeof Collapsible.Panel>;
 
@@ -257,12 +264,12 @@ export const CollapsiblePanel: IComponent<CollapsiblePanelProps> = function SuiC
  */
 export namespace Panel {
   /**
-   * {@link CollapsiblePanel} の状態型です。
+   * {@link CollapsiblePanelState} です。
    */
   export type State = CollapsiblePanelState;
 
   /**
-   * {@link CollapsiblePanel} のプロパティー型です。
+   * {@link CollapsiblePanelProps} です。
    */
   export type Props = CollapsiblePanelProps;
 }

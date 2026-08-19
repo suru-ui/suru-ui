@@ -9,40 +9,6 @@ import type { IComponent, IUseContext } from "../../types.js";
 
 import "./autocomplete.css";
 
-// Types
-// -----
-
-/**
- * オートコンプリートの色です。
- */
-export type AutocompleteColor = Color;
-
-/**
- * オートコンプリートの角丸です。
- *
- * - `"none"`: 角を直角にする
- * - `"rounded"`: 標準的な角丸
- * - `"full"`: 完全な丸形
- */
-export type AutocompleteRadius = "none" | "rounded" | "full";
-
-/**
- * オートコンプリートの大きさです。
- *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
- */
-export type AutocompleteSize = Size;
-
-/**
- * オートコンプリートの主な外観の種類です。
- *
- * - `"naked"`: 背景のない入力欄
- * - `"liquid"`: 薄い塗りつぶし
- */
-export type AutocompleteVariant = "naked" | "liquid";
-
 // Context
 // -------
 
@@ -53,7 +19,7 @@ export type AutocompleteContext = {
   /**
    * フォーカス時に枠線へ適用するアクセントカラーです。
    */
-  readonly accentColor: AutocompleteColor;
+  readonly accentColor: AutocompleteRootColor;
 
   /**
    * 枠線を表示するかどうかです。
@@ -63,17 +29,17 @@ export type AutocompleteContext = {
   /**
    * 入力を含むグループ要素の角丸です。
    */
-  readonly radius: AutocompleteRadius;
+  readonly radius: AutocompleteRootRadius;
 
   /**
    * 入力欄とリスト項目のサイズです。
    */
-  readonly size: AutocompleteSize;
+  readonly size: AutocompleteRootSize;
 
   /**
    * 入力欄のスタイルバリエーションです。
    */
-  readonly variant: AutocompleteVariant;
+  readonly variant: AutocompleteRootVariant;
 };
 
 /**
@@ -97,6 +63,11 @@ function useSuiAutocompleteContext(optional?: boolean): AutocompleteContext | nu
 }
 
 /**
+ * {@link AutocompleteContext} を読み取るフックです。
+ */
+export const useAutocompleteContext: IUseContext<AutocompleteContext> = useSuiAutocompleteContext;
+
+/**
  * {@link AutocompleteContext} です。
  */
 export type Context = AutocompleteContext;
@@ -107,17 +78,43 @@ export type Context = AutocompleteContext;
 export const Context: React.Context<AutocompleteContext | null> = AutocompleteContext;
 
 /**
- * {@link AutocompleteContext} を読み取るフックです。
- */
-export const useAutocompleteContext: IUseContext<AutocompleteContext> = useSuiAutocompleteContext;
-
-/**
  * {@link useAutocompleteContext} です。
  */
 export const useContext: IUseContext<Context> = useAutocompleteContext;
 
 // Root
 // ----
+
+/**
+ * オートコンプリートの色です。
+ */
+export type AutocompleteRootColor = Color;
+
+/**
+ * オートコンプリートの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"rounded"`: 標準的な角丸
+ * - `"full"`: 完全な丸形
+ */
+export type AutocompleteRootRadius = "none" | "rounded" | "full";
+
+/**
+ * オートコンプリートの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type AutocompleteRootSize = Size;
+
+/**
+ * オートコンプリートの主な外観の種類です。
+ *
+ * - `"naked"`: 背景のない入力欄
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type AutocompleteRootVariant = "naked" | "liquid";
 
 /**
  * {@link AutocompleteRoot} の状態です。
@@ -144,7 +141,7 @@ export type AutocompleteRootProps = Omit<
    *
    * @default "grey"
    */
-  accentColor?: AutocompleteColor | undefined;
+  accentColor?: AutocompleteRootColor | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
@@ -153,25 +150,25 @@ export type AutocompleteRootProps = Omit<
   outlined?: boolean | undefined;
 
   /**
+   * 入力を含むグループ要素の角丸を指定します。
+   *
+   * @default "rounded"
+   */
+  radius?: AutocompleteRootRadius | undefined;
+
+  /**
    * 入力欄とリスト項目のサイズを指定します。
    *
    * @default "md"
    */
-  size?: AutocompleteSize | undefined;
+  size?: AutocompleteRootSize | undefined;
 
   /**
    * 入力欄のスタイルバリエーションを指定します。
    *
    * @default "naked"
    */
-  variant?: AutocompleteVariant | undefined;
-
-  /**
-   * 入力を含むグループ要素の角丸を指定します。
-   *
-   * @default "rounded"
-   */
-  radius?: AutocompleteRadius | undefined;
+  variant?: AutocompleteRootVariant | undefined;
 };
 
 /**
@@ -183,20 +180,20 @@ export const AutocompleteRoot: IComponent<AutocompleteRootProps> = function SuiA
   props,
 ) {
   const {
-    size: sizeProp = "md",
-    radius: radiusProp = "rounded",
     variant: variantProp = "naked",
     outlined: outlinedProp = variantProp === "naked",
     accentColor: accentColorProp = "grey",
+    radius: radiusProp = "rounded",
+    size: sizeProp = "md",
     ...otherProps
   } = props;
   const context = React.useMemo<AutocompleteContext>(
     () => ({
-      size: sizeProp,
-      radius: radiusProp,
-      variant: variantProp,
-      outlined: outlinedProp,
       accentColor: accentColorProp,
+      outlined: outlinedProp,
+      radius: radiusProp,
+      size: sizeProp,
+      variant: variantProp,
     }),
     [accentColorProp, outlinedProp, radiusProp, sizeProp, variantProp],
   );
@@ -213,18 +210,38 @@ export const AutocompleteRoot: IComponent<AutocompleteRootProps> = function SuiA
  */
 export namespace Root {
   /**
-   * {@link AutocompleteRoot} の状態型です。
+   * {@link AutocompleteRootState} です。
    */
   export type State = AutocompleteRootState;
 
   /**
-   * {@link AutocompleteRoot} のプロパティー型です。
+   * {@link AutocompleteRootProps} です。
    */
   export type Props = AutocompleteRootProps;
+
+  /**
+   * {@link AutocompleteRootColor} です。
+   */
+  export type Color = AutocompleteRootColor;
+
+  /**
+   * {@link AutocompleteRootRadius} です。
+   */
+  export type Radius = AutocompleteRootRadius;
+
+  /**
+   * {@link AutocompleteRootSize} です。
+   */
+  export type Size = AutocompleteRootSize;
+
+  /**
+   * {@link AutocompleteRootVariant} です。
+   */
+  export type Variant = AutocompleteRootVariant;
 }
 
 /**
- * {@link AutocompleteRoot} の別名です。
+ * {@link AutocompleteRoot} です。
  */
 export const Root: IComponent<Root.Props> = AutocompleteRoot;
 
@@ -257,18 +274,18 @@ export const AutocompleteValue: IComponent<AutocompleteValueProps> = function Su
  */
 export namespace Value {
   /**
-   * {@link AutocompleteValue} の状態型です。
+   * {@link AutocompleteValueState} です。
    */
   export type State = AutocompleteValueState;
 
   /**
-   * {@link AutocompleteValue} のプロパティー型です。
+   * {@link AutocompleteValueProps} です。
    */
   export type Props = AutocompleteValueProps;
 }
 
 /**
- * {@link AutocompleteValue} の別名です。
+ * {@link AutocompleteValue} です。
  */
 export const Value: IComponent<Value.Props> = AutocompleteValue;
 
@@ -302,18 +319,18 @@ export const AutocompleteTrigger: IComponent<AutocompleteTriggerProps> =
  */
 export namespace Trigger {
   /**
-   * {@link AutocompleteTriggerState} の別名です。
+   * {@link AutocompleteTriggerState} です。
    */
   export type State = AutocompleteTriggerState;
 
   /**
-   * {@link AutocompleteTriggerProps} の別名です。
+   * {@link AutocompleteTriggerProps} です。
    */
   export type Props = AutocompleteTriggerProps;
 }
 
 /**
- * {@link AutocompleteTrigger} の別名です。
+ * {@link AutocompleteTrigger} です。
  */
 export const Trigger: IComponent<Trigger.Props> = AutocompleteTrigger;
 
@@ -346,18 +363,18 @@ export const AutocompleteInput: IComponent<AutocompleteInputProps> = function Su
  */
 export namespace Input {
   /**
-   * {@link AutocompleteInputState} の別名です。
+   * {@link AutocompleteInputState} です。
    */
   export type State = AutocompleteInputState;
 
   /**
-   * {@link AutocompleteInputProps} の別名です。
+   * {@link AutocompleteInputProps} です。
    */
   export type Props = AutocompleteInputProps;
 }
 
 /**
- * {@link AutocompleteInput} の別名です。
+ * {@link AutocompleteInput} です。
  */
 export const Input: IComponent<Input.Props> = AutocompleteInput;
 
@@ -412,18 +429,18 @@ export const AutocompleteInputGroup: IComponent<AutocompleteInputGroupProps> =
  */
 export namespace InputGroup {
   /**
-   * {@link AutocompleteInputGroupState} の別名です。
+   * {@link AutocompleteInputGroupState} です。
    */
   export type State = AutocompleteInputGroupState;
 
   /**
-   * {@link AutocompleteInputGroupProps} の別名です。
+   * {@link AutocompleteInputGroupProps} です。
    */
   export type Props = AutocompleteInputGroupProps;
 }
 
 /**
- * {@link AutocompleteInputGroup} の別名です。
+ * {@link AutocompleteInputGroup} です。
  */
 export const InputGroup: IComponent<InputGroup.Props> = AutocompleteInputGroup;
 
@@ -456,18 +473,18 @@ export const AutocompleteIcon: IComponent<AutocompleteIconProps> = function SuiA
  */
 export namespace Icon {
   /**
-   * {@link AutocompleteIconState} の別名です。
+   * {@link AutocompleteIconState} です。
    */
   export type State = AutocompleteIconState;
 
   /**
-   * {@link AutocompleteIconProps} の別名です。
+   * {@link AutocompleteIconProps} です。
    */
   export type Props = AutocompleteIconProps;
 }
 
 /**
- * {@link AutocompleteIcon} の別名です。
+ * {@link AutocompleteIcon} です。
  */
 export const Icon: IComponent<Icon.Props> = AutocompleteIcon;
 
@@ -502,18 +519,18 @@ export const AutocompleteClear: IComponent<AutocompleteClearProps> = function Su
  */
 export namespace Clear {
   /**
-   * {@link AutocompleteClearState} の別名です。
+   * {@link AutocompleteClearState} です。
    */
   export type State = AutocompleteClearState;
 
   /**
-   * {@link AutocompleteClearProps} の別名です。
+   * {@link AutocompleteClearProps} です。
    */
   export type Props = AutocompleteClearProps;
 }
 
 /**
- * {@link AutocompleteClear} の別名です。
+ * {@link AutocompleteClear} です。
  */
 export const Clear: IComponent<Clear.Props> = AutocompleteClear;
 
@@ -550,18 +567,18 @@ export const AutocompleteList: IComponent<AutocompleteListProps> = function SuiA
  */
 export namespace List {
   /**
-   * {@link AutocompleteListState} の別名です。
+   * {@link AutocompleteListState} です。
    */
   export type State = AutocompleteListState;
 
   /**
-   * {@link AutocompleteListProps} の別名です。
+   * {@link AutocompleteListProps} です。
    */
   export type Props = AutocompleteListProps;
 }
 
 /**
- * {@link AutocompleteList} の別名です。
+ * {@link AutocompleteList} です。
  */
 export const List: IComponent<List.Props> = AutocompleteList;
 
@@ -598,18 +615,18 @@ export const AutocompleteStatus: IComponent<AutocompleteStatusProps> =
  */
 export namespace Status {
   /**
-   * {@link AutocompleteStatusState} の別名です。
+   * {@link AutocompleteStatusState} です。
    */
   export type State = AutocompleteStatusState;
 
   /**
-   * {@link AutocompleteStatusProps} の別名です。
+   * {@link AutocompleteStatusProps} です。
    */
   export type Props = AutocompleteStatusProps;
 }
 
 /**
- * {@link AutocompleteStatus} の別名です。
+ * {@link AutocompleteStatus} です。
  */
 export const Status: IComponent<Status.Props> = AutocompleteStatus;
 
@@ -645,18 +662,18 @@ export const AutocompletePortal: IComponent<AutocompletePortalProps> =
  */
 export namespace Portal {
   /**
-   * {@link AutocompletePortalState} の別名です。
+   * {@link AutocompletePortalState} です。
    */
   export type State = AutocompletePortalState;
 
   /**
-   * {@link AutocompletePortalProps} の別名です。
+   * {@link AutocompletePortalProps} です。
    */
   export type Props = AutocompletePortalProps;
 }
 
 /**
- * {@link AutocompletePortal} の別名です。
+ * {@link AutocompletePortal} です。
  */
 export const Portal: IComponent<Portal.Props> = AutocompletePortal;
 
@@ -695,18 +712,18 @@ export const AutocompleteBackdrop: IComponent<AutocompleteBackdropProps> =
  */
 export namespace Backdrop {
   /**
-   * {@link AutocompleteBackdropState} の別名です。
+   * {@link AutocompleteBackdropState} です。
    */
   export type State = AutocompleteBackdropState;
 
   /**
-   * {@link AutocompleteBackdropProps} の別名です。
+   * {@link AutocompleteBackdropProps} です。
    */
   export type Props = AutocompleteBackdropProps;
 }
 
 /**
- * {@link AutocompleteBackdrop} の別名です。
+ * {@link AutocompleteBackdrop} です。
  */
 export const Backdrop: IComponent<Backdrop.Props> = AutocompleteBackdrop;
 
@@ -743,18 +760,18 @@ export const AutocompletePositioner: IComponent<AutocompletePositionerProps> =
  */
 export namespace Positioner {
   /**
-   * {@link AutocompletePositionerState} の別名です。
+   * {@link AutocompletePositionerState} です。
    */
   export type State = AutocompletePositionerState;
 
   /**
-   * {@link AutocompletePositionerProps} の別名です。
+   * {@link AutocompletePositionerProps} です。
    */
   export type Props = AutocompletePositionerProps;
 }
 
 /**
- * {@link AutocompletePositioner} の別名です。
+ * {@link AutocompletePositioner} です。
  */
 export const Positioner: IComponent<Positioner.Props> = AutocompletePositioner;
 
@@ -787,18 +804,18 @@ export const AutocompletePopup: IComponent<AutocompletePopupProps> = function Su
  */
 export namespace Popup {
   /**
-   * {@link AutocompletePopupState} の別名です。
+   * {@link AutocompletePopupState} です。
    */
   export type State = AutocompletePopupState;
 
   /**
-   * {@link AutocompletePopupProps} の別名です。
+   * {@link AutocompletePopupProps} です。
    */
   export type Props = AutocompletePopupProps;
 }
 
 /**
- * {@link AutocompletePopup} の別名です。
+ * {@link AutocompletePopup} です。
  */
 export const Popup: IComponent<Popup.Props> = AutocompletePopup;
 
@@ -831,18 +848,18 @@ export const AutocompleteArrow: IComponent<AutocompleteArrowProps> = function Su
  */
 export namespace Arrow {
   /**
-   * {@link AutocompleteArrowState} の別名です。
+   * {@link AutocompleteArrowState} です。
    */
   export type State = AutocompleteArrowState;
 
   /**
-   * {@link AutocompleteArrowProps} の別名です。
+   * {@link AutocompleteArrowProps} です。
    */
   export type Props = AutocompleteArrowProps;
 }
 
 /**
- * {@link AutocompleteArrow} の別名です。
+ * {@link AutocompleteArrow} です。
  */
 export const Arrow: IComponent<Arrow.Props> = AutocompleteArrow;
 
@@ -877,18 +894,18 @@ export const AutocompleteGroup: IComponent<AutocompleteGroupProps> = function Su
  */
 export namespace Group {
   /**
-   * {@link AutocompleteGroupState} の別名です。
+   * {@link AutocompleteGroupState} です。
    */
   export type State = AutocompleteGroupState;
 
   /**
-   * {@link AutocompleteGroupProps} の別名です。
+   * {@link AutocompleteGroupProps} です。
    */
   export type Props = AutocompleteGroupProps;
 }
 
 /**
- * {@link AutocompleteGroup} の別名です。
+ * {@link AutocompleteGroup} です。
  */
 export const Group: IComponent<Group.Props> = AutocompleteGroup;
 
@@ -925,18 +942,18 @@ export const AutocompleteGroupLabel: IComponent<AutocompleteGroupLabelProps> =
  */
 export namespace GroupLabel {
   /**
-   * {@link AutocompleteGroupLabelState} の別名です。
+   * {@link AutocompleteGroupLabelState} です。
    */
   export type State = AutocompleteGroupLabelState;
 
   /**
-   * {@link AutocompleteGroupLabelProps} の別名です。
+   * {@link AutocompleteGroupLabelProps} です。
    */
   export type Props = AutocompleteGroupLabelProps;
 }
 
 /**
- * {@link AutocompleteGroupLabel} の別名です。
+ * {@link AutocompleteGroupLabel} です。
  */
 export const GroupLabel: IComponent<GroupLabel.Props> = AutocompleteGroupLabel;
 
@@ -976,18 +993,18 @@ export const AutocompleteItem: IComponent<AutocompleteItemProps> = function SuiA
  */
 export namespace Item {
   /**
-   * {@link AutocompleteItemState} の別名です。
+   * {@link AutocompleteItemState} です。
    */
   export type State = AutocompleteItemState;
 
   /**
-   * {@link AutocompleteItemProps} の別名です。
+   * {@link AutocompleteItemProps} です。
    */
   export type Props = AutocompleteItemProps;
 }
 
 /**
- * {@link AutocompleteItem} の別名です。
+ * {@link AutocompleteItem} です。
  */
 export const Item: IComponent<Item.Props> = AutocompleteItem;
 
@@ -1022,18 +1039,18 @@ export const AutocompleteRow: IComponent<AutocompleteRowProps> = function SuiAut
  */
 export namespace Row {
   /**
-   * {@link AutocompleteRowState} の別名です。
+   * {@link AutocompleteRowState} です。
    */
   export type State = AutocompleteRowState;
 
   /**
-   * {@link AutocompleteRowProps} の別名です。
+   * {@link AutocompleteRowProps} です。
    */
   export type Props = AutocompleteRowProps;
 }
 
 /**
- * {@link AutocompleteRow} の別名です。
+ * {@link AutocompleteRow} です。
  */
 export const Row: IComponent<Row.Props> = AutocompleteRow;
 
@@ -1066,18 +1083,18 @@ export const AutocompleteCollection: IComponent<AutocompleteCollectionProps> =
  */
 export namespace Collection {
   /**
-   * {@link AutocompleteCollectionState} の別名です。
+   * {@link AutocompleteCollectionState} です。
    */
   export type State = AutocompleteCollectionState;
 
   /**
-   * {@link AutocompleteCollectionProps} の別名です。
+   * {@link AutocompleteCollectionProps} です。
    */
   export type Props = AutocompleteCollectionProps;
 }
 
 /**
- * {@link AutocompleteCollection} の別名です。
+ * {@link AutocompleteCollection} です。
  */
 export const Collection: IComponent<Collection.Props> = AutocompleteCollection;
 
@@ -1112,18 +1129,18 @@ export const AutocompleteEmpty: IComponent<AutocompleteEmptyProps> = function Su
  */
 export namespace Empty {
   /**
-   * {@link AutocompleteEmptyState} の別名です。
+   * {@link AutocompleteEmptyState} です。
    */
   export type State = AutocompleteEmptyState;
 
   /**
-   * {@link AutocompleteEmptyProps} の別名です。
+   * {@link AutocompleteEmptyProps} です。
    */
   export type Props = AutocompleteEmptyProps;
 }
 
 /**
- * {@link AutocompleteEmpty} の別名です。
+ * {@link AutocompleteEmpty} です。
  */
 export const Empty: IComponent<Empty.Props> = AutocompleteEmpty;
 
@@ -1160,18 +1177,18 @@ export const AutocompleteSeparator: IComponent<AutocompleteSeparatorProps> =
  */
 export namespace Separator {
   /**
-   * {@link AutocompleteSeparatorState} の別名です。
+   * {@link AutocompleteSeparatorState} です。
    */
   export type State = AutocompleteSeparatorState;
 
   /**
-   * {@link AutocompleteSeparatorProps} の別名です。
+   * {@link AutocompleteSeparatorProps} です。
    */
   export type Props = AutocompleteSeparatorProps;
 }
 
 /**
- * {@link AutocompleteSeparator} の別名です。
+ * {@link AutocompleteSeparator} です。
  */
 export const Separator: IComponent<Separator.Props> = AutocompleteSeparator;
 

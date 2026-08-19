@@ -63,6 +63,8 @@ export type ContextMenuProps = Omit<ContextMenuRootProps, "children"> & {
 
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   *
+   * 各パーツのプロパティーが優先されます。
    */
   slotProps?: ContextMenuSlotProps | undefined;
 };

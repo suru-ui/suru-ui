@@ -8,13 +8,13 @@ import { useCheckboxGroupContext } from "../checkbox-group/checkbox-group.parts.
 
 import "./checkbox.css";
 
-// Types
-// -----
+// Root
+// ----
 
 /**
  * チェックボックスの色です。
  */
-export type CheckboxColor = Color;
+export type CheckboxRootColor = Color;
 
 /**
  * チェックボックスの角丸です。
@@ -23,7 +23,7 @@ export type CheckboxColor = Color;
  * - `"rounded"`: 標準的な角丸
  * - `"full"`: 完全な丸形
  */
-export type CheckboxRadius = "none" | "rounded" | "full";
+export type CheckboxRootRadius = "none" | "rounded" | "full";
 
 /**
  * チェックボックスの大きさです。
@@ -32,7 +32,7 @@ export type CheckboxRadius = "none" | "rounded" | "full";
  * - `"md"`: 標準的なサイズ
  * - `"lg"`: 大きいサイズ
  */
-export type CheckboxSize = Size;
+export type CheckboxRootSize = Size;
 
 /**
  * チェックボックスの主な外観の種類です。
@@ -40,15 +40,12 @@ export type CheckboxSize = Size;
  * - `"naked"`: 背景のないチェックマークのみ、枠線なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type CheckboxVariant = "naked" | "liquid";
-
-// Root
-// ----
+export type CheckboxRootVariant = "naked" | "liquid";
 
 /**
  * チェックボックスのルート要素の状態です。
  *
- * {@link CheckboxRoot} が公開する状態型の別名です。
+ * {@link CheckboxRoot} が公開する状態です。
  */
 export type CheckboxRootState = Checkbox.Root.State;
 
@@ -57,31 +54,13 @@ export type CheckboxRootState = Checkbox.Root.State;
  */
 export type CheckboxRootProps = React.ComponentProps<typeof Checkbox.Root> & {
   /**
-   * チェックボックスのサイズを指定します。
-   *
-   * {@link CheckboxGroupRoot} 内では、グループの値が優先されます。
-   *
-   * @default "md"
-   */
-  size?: CheckboxSize | undefined;
-
-  /**
    * チェックボックスの色を指定します。
    *
    * {@link CheckboxGroupRoot} 内では、グループの値が優先されます。
    *
    * @default "grey"
    */
-  color?: CheckboxColor | undefined;
-
-  /**
-   * チェックボックスのスタイルバリエーションを指定します。
-   *
-   * {@link CheckboxGroupRoot} 内では、グループの値が優先されます。
-   *
-   * @default "naked"
-   */
-  variant?: CheckboxVariant | undefined;
+  color?: CheckboxRootColor | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
@@ -98,7 +77,25 @@ export type CheckboxRootProps = React.ComponentProps<typeof Checkbox.Root> & {
    *
    * @default "rounded"
    */
-  radius?: CheckboxRadius | undefined;
+  radius?: CheckboxRootRadius | undefined;
+
+  /**
+   * チェックボックスのサイズを指定します。
+   *
+   * {@link CheckboxGroupRoot} 内では、グループの値が優先されます。
+   *
+   * @default "md"
+   */
+  size?: CheckboxRootSize | undefined;
+
+  /**
+   * チェックボックスのスタイルバリエーションを指定します。
+   *
+   * {@link CheckboxGroupRoot} 内では、グループの値が優先されます。
+   *
+   * @default "naked"
+   */
+  variant?: CheckboxRootVariant | undefined;
 };
 
 /**
@@ -146,18 +143,38 @@ export const CheckboxRoot: IComponent<CheckboxRootProps> = function SuiCheckboxR
  */
 export namespace Root {
   /**
-   * {@link CheckboxRoot} の状態型です。
+   * {@link CheckboxRootState} です。
    */
   export type State = CheckboxRootState;
 
   /**
-   * {@link CheckboxRoot} のプロパティー型です。
+   * {@link CheckboxRootProps} です。
    */
   export type Props = CheckboxRootProps;
+
+  /**
+   * {@link CheckboxRootColor} です。
+   */
+  export type Color = CheckboxRootColor;
+
+  /**
+   * {@link CheckboxRootRadius} です。
+   */
+  export type Radius = CheckboxRootRadius;
+
+  /**
+   * {@link CheckboxRootSize} です。
+   */
+  export type Size = CheckboxRootSize;
+
+  /**
+   * {@link CheckboxRootVariant} です。
+   */
+  export type Variant = CheckboxRootVariant;
 }
 
 /**
- * {@link CheckboxRoot} の別名です。
+ * {@link CheckboxRoot} です。
  */
 export const Root: IComponent<Root.Props> = CheckboxRoot;
 
@@ -194,17 +211,17 @@ export const CheckboxIndicator: IComponent<CheckboxIndicatorProps> = function Su
  */
 export namespace Indicator {
   /**
-   * {@link CheckboxIndicator} の状態型です。
+   * {@link CheckboxIndicatorState} です。
    */
   export type State = CheckboxIndicatorState;
 
   /**
-   * {@link CheckboxIndicator} のプロパティー型です。
+   * {@link CheckboxIndicatorProps} です。
    */
   export type Props = CheckboxIndicatorProps;
 }
 
 /**
- * {@link CheckboxIndicator} の別名です。
+ * {@link CheckboxIndicator} です。
  */
 export const Indicator: IComponent<Indicator.Props> = CheckboxIndicator;

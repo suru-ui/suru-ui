@@ -397,12 +397,38 @@ export const Radius = meta.story({
   },
 });
 
+export const Muted = meta.story({
+  name: "控えめ",
+  ...ctrl({
+    children: "削除",
+    color: "red",
+    size: "md",
+    radius: undefined,
+    outlined: true,
+    pending: false,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-wrap gap-3">
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col items-center gap-2">
+            <span className="text-sm">{variant}</span>
+            <Button {...props} variant={variant} muted />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
 export const Outlined = meta.story({
   name: "枠線",
   ...ctrl({
     children: "ボタン",
     color: "grey",
     size: "md",
+    muted: false,
     radius: undefined,
     pending: false,
     disabled: false,

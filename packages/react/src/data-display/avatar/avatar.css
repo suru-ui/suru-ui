@@ -30,11 +30,11 @@
     width: var(--sui_avatar-size);
     height: var(--sui_avatar-size);
     font-family: var(--sui_avatar-font_family);
-    font-size: var(--sui_avatar_fallback-font_size);
-    font-weight: var(--sui_avatar_fallback-font_weight);
-    line-height: var(--sui_avatar_fallback-line_height);
-    color: var(--sui_avatar_fallback-color);
-    letter-spacing: var(--sui_avatar_fallback-letter_spacing);
+    font-size: var(--sui_avatar-font_size);
+    font-weight: var(--sui_avatar-font_weight);
+    line-height: var(--sui_avatar-line_height);
+    color: var(--sui_avatar-color);
+    letter-spacing: var(--sui_avatar-letter_spacing);
     background-color: var(--sui_avatar-background_color);
     border-radius: var(--sui_avatar-border_radius);
   }

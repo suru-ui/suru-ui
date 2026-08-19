@@ -6,9 +6,6 @@ import type { IComponent } from "../../types.js";
 
 import "./fieldset.css";
 
-// Types
-// -----
-
 // Root
 // ----
 
@@ -53,18 +50,18 @@ export const FieldsetRoot: IComponent<FieldsetRootProps> = function SuiFieldsetR
  */
 export namespace Root {
   /**
-   * {@link FieldsetRoot} の状態型です。
+   * {@link FieldsetRootState} です。
    */
   export type State = FieldsetRootState;
 
   /**
-   * {@link FieldsetRoot} のプロパティー型です。
+   * {@link FieldsetRootProps} です。
    */
   export type Props = FieldsetRootProps;
 }
 
 /**
- * {@link FieldsetRoot} の別名です。
+ * {@link FieldsetRoot} です。
  */
 export const Root: IComponent<Root.Props> = FieldsetRoot;
 
@@ -106,17 +103,17 @@ export const FieldsetLegend: IComponent<FieldsetLegendProps> = function SuiField
  */
 export namespace Legend {
   /**
-   * {@link FieldsetLegend} の状態型です。
+   * {@link FieldsetLegendState} です。
    */
   export type State = FieldsetLegendState;
 
   /**
-   * {@link FieldsetLegend} のプロパティー型です。
+   * {@link FieldsetLegendProps} です。
    */
   export type Props = FieldsetLegendProps;
 }
 
 /**
- * {@link FieldsetLegend} の別名です。
+ * {@link FieldsetLegend} です。
  */
 export const Legend: IComponent<Legend.Props> = FieldsetLegend;

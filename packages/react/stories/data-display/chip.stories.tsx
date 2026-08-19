@@ -1,11 +1,12 @@
-import { COLOR_TEMPLATES as VARIANTS, COLORS, SIZES } from "@suru-ui/theme";
-import { CheckIcon, TagIcon, XIcon } from "lucide-react";
+import { SIZES, COLORS, COLOR_TEMPLATES } from "@suru-ui/theme";
+import { XIcon, TagIcon, CheckIcon } from "lucide-react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Button } from "../../src/buttons/button/index.js";
 import { Chip } from "../../src/data-display/chip/index.js";
 
 const RADII = ["none", ...SIZES, "full"] as const;
+const VARIANTS = COLOR_TEMPLATES;
 
 const meta = preview.meta({
   title: "Data Display / Chip",

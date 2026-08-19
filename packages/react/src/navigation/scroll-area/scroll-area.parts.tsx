@@ -6,19 +6,16 @@ import type { IComponent } from "../../types.js";
 
 import "./scroll-area.css";
 
-// Types
-// -----
-
 // Root
 // ----
 
 /**
- * スクロール領域のルート要素の状態です。
+ * {@link ScrollAreaRoot} の状態です。
  */
 export type ScrollAreaRootState = BaseScrollArea.Root.State;
 
 /**
- * スクロール領域のルート要素に渡すプロパティーです。
+ * {@link ScrollAreaRoot} に渡すプロパティーです。
  */
 export type ScrollAreaRootProps = React.ComponentProps<typeof BaseScrollArea.Root>;
 
@@ -30,20 +27,23 @@ export const ScrollAreaRoot: IComponent<ScrollAreaRootProps> = function SuiScrol
   return <BaseScrollArea.Root {...otherProps} className={cn(className, "sui_scroll_area")} />;
 };
 
+/**
+ * {@link ScrollAreaRoot} の状態やプロパティーをまとめた型名前空間です。
+ */
 export namespace Root {
   /**
-   * {@link ScrollAreaRoot} の状態型です。
+   * {@link ScrollAreaRootState} です。
    */
   export type State = ScrollAreaRootState;
 
   /**
-   * {@link ScrollAreaRoot} のプロパティー型です。
+   * {@link ScrollAreaRootProps} です。
    */
   export type Props = ScrollAreaRootProps;
 }
 
 /**
- * {@link ScrollAreaRoot} の別名です。
+ * {@link ScrollAreaRoot} です。
  */
 export const Root: IComponent<Root.Props> = ScrollAreaRoot;
 
@@ -51,12 +51,12 @@ export const Root: IComponent<Root.Props> = ScrollAreaRoot;
 // --------
 
 /**
- * スクロール可能な領域を提供するビューポート要素の状態です。
+ * {@link ScrollAreaViewport} の状態です。
  */
 export type ScrollAreaViewportState = BaseScrollArea.Viewport.State;
 
 /**
- * スクロール可能な領域を提供するビューポート要素に渡すプロパティーです。
+ * {@link ScrollAreaViewport} に渡すプロパティーです。
  */
 export type ScrollAreaViewportProps = React.ComponentProps<typeof BaseScrollArea.Viewport>;
 
@@ -74,20 +74,23 @@ export const ScrollAreaViewport: IComponent<ScrollAreaViewportProps> =
     );
   };
 
+/**
+ * {@link ScrollAreaViewport} の状態やプロパティーをまとめた型名前空間です。
+ */
 export namespace Viewport {
   /**
-   * {@link ScrollAreaViewport} の状態型です。
+   * {@link ScrollAreaViewportState} です。
    */
   export type State = ScrollAreaViewportState;
 
   /**
-   * {@link ScrollAreaViewport} のプロパティー型です。
+   * {@link ScrollAreaViewportProps} です。
    */
   export type Props = ScrollAreaViewportProps;
 }
 
 /**
- * {@link ScrollAreaViewport} の別名です。
+ * {@link ScrollAreaViewport} です。
  */
 export const Viewport: IComponent<Viewport.Props> = ScrollAreaViewport;
 
@@ -95,12 +98,12 @@ export const Viewport: IComponent<Viewport.Props> = ScrollAreaViewport;
 // -------
 
 /**
- * スクロール領域内に表示するコンテンツ要素の状態です。
+ * {@link ScrollAreaContent} の状態です。
  */
 export type ScrollAreaContentState = BaseScrollArea.Content.State;
 
 /**
- * スクロール領域内に表示するコンテンツ要素に渡すプロパティーです。
+ * {@link ScrollAreaContent} に渡すプロパティーです。
  */
 export type ScrollAreaContentProps = React.ComponentProps<typeof BaseScrollArea.Content>;
 
@@ -116,20 +119,23 @@ export const ScrollAreaContent: IComponent<ScrollAreaContentProps> = function Su
   );
 };
 
+/**
+ * {@link ScrollAreaContent} の状態やプロパティーをまとめた型名前空間です。
+ */
 export namespace Content {
   /**
-   * {@link ScrollAreaContent} の状態型です。
+   * {@link ScrollAreaContentState} です。
    */
   export type State = ScrollAreaContentState;
 
   /**
-   * {@link ScrollAreaContent} のプロパティー型です。
+   * {@link ScrollAreaContentProps} です。
    */
   export type Props = ScrollAreaContentProps;
 }
 
 /**
- * {@link ScrollAreaContent} の別名です。
+ * {@link ScrollAreaContent} です。
  */
 export const Content: IComponent<Content.Props> = ScrollAreaContent;
 
@@ -137,12 +143,12 @@ export const Content: IComponent<Content.Props> = ScrollAreaContent;
 // ---------
 
 /**
- * スクロールバー要素の状態です。
+ * {@link ScrollAreaScrollbar} の状態です。
  */
 export type ScrollAreaScrollbarState = BaseScrollArea.Scrollbar.State;
 
 /**
- * スクロールバー要素に渡すプロパティーです。
+ * {@link ScrollAreaScrollbar} に渡すプロパティーです。
  */
 export type ScrollAreaScrollbarProps = React.ComponentProps<typeof BaseScrollArea.Scrollbar> &
   ScrollAreaDataAttributes;
@@ -163,20 +169,23 @@ export const ScrollAreaScrollbar: IComponent<ScrollAreaScrollbarProps> =
     );
   };
 
+/**
+ * {@link ScrollAreaScrollbar} の状態やプロパティーをまとめた型名前空間です。
+ */
 export namespace Scrollbar {
   /**
-   * {@link ScrollAreaScrollbar} の状態型です。
+   * {@link ScrollAreaScrollbarState} です。
    */
   export type State = ScrollAreaScrollbarState;
 
   /**
-   * {@link ScrollAreaScrollbar} のプロパティー型です。
+   * {@link ScrollAreaScrollbarProps} です。
    */
   export type Props = ScrollAreaScrollbarProps;
 }
 
 /**
- * {@link ScrollAreaScrollbar} の別名です。
+ * {@link ScrollAreaScrollbar} です。
  */
 export const Scrollbar: IComponent<Scrollbar.Props> = ScrollAreaScrollbar;
 
@@ -184,12 +193,12 @@ export const Scrollbar: IComponent<Scrollbar.Props> = ScrollAreaScrollbar;
 // -----
 
 /**
- * スクロールバー内のつまみ要素の状態です。
+ * {@link ScrollAreaThumb} の状態です。
  */
 export type ScrollAreaThumbState = BaseScrollArea.Thumb.State;
 
 /**
- * スクロールバー内のつまみ要素に渡すプロパティーです。
+ * {@link ScrollAreaThumb} に渡すプロパティーです。
  */
 export type ScrollAreaThumbProps = React.ComponentProps<typeof BaseScrollArea.Thumb> &
   ScrollAreaDataAttributes;
@@ -206,20 +215,23 @@ export const ScrollAreaThumb: IComponent<ScrollAreaThumbProps> = function SuiScr
   );
 };
 
+/**
+ * {@link ScrollAreaThumb} の状態やプロパティーをまとめた型名前空間です。
+ */
 export namespace Thumb {
   /**
-   * {@link ScrollAreaThumb} の状態型です。
+   * {@link ScrollAreaThumbState} です。
    */
   export type State = ScrollAreaThumbState;
 
   /**
-   * {@link ScrollAreaThumb} のプロパティー型です。
+   * {@link ScrollAreaThumbProps} です。
    */
   export type Props = ScrollAreaThumbProps;
 }
 
 /**
- * {@link ScrollAreaThumb} の別名です。
+ * {@link ScrollAreaThumb} です。
  */
 export const Thumb: IComponent<Thumb.Props> = ScrollAreaThumb;
 
@@ -231,12 +243,12 @@ type ScrollAreaDataAttributes = {
 // ------
 
 /**
- * 水平スクロールバーと垂直スクロールバーが交差する角の状態です。
+ * {@link ScrollAreaCorner} の状態です。
  */
 export type ScrollAreaCornerState = BaseScrollArea.Corner.State;
 
 /**
- * 水平スクロールバーと垂直スクロールバーが交差する角に渡すプロパティーです。
+ * {@link ScrollAreaCorner} に渡すプロパティーです。
  */
 export type ScrollAreaCornerProps = React.ComponentProps<typeof BaseScrollArea.Corner>;
 
@@ -252,19 +264,22 @@ export const ScrollAreaCorner: IComponent<ScrollAreaCornerProps> = function SuiS
   );
 };
 
+/**
+ * {@link ScrollAreaCorner} の状態やプロパティーをまとめた型名前空間です。
+ */
 export namespace Corner {
   /**
-   * {@link ScrollAreaCorner} の状態型です。
+   * {@link ScrollAreaCornerState} です。
    */
   export type State = ScrollAreaCornerState;
 
   /**
-   * {@link ScrollAreaCorner} のプロパティー型です。
+   * {@link ScrollAreaCornerProps} です。
    */
   export type Props = ScrollAreaCornerProps;
 }
 
 /**
- * {@link ScrollAreaCorner} の別名です。
+ * {@link ScrollAreaCorner} です。
  */
 export const Corner: IComponent<Corner.Props> = ScrollAreaCorner;

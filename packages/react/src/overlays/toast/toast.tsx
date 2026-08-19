@@ -11,6 +11,7 @@ import {
   type ToastProviderProps,
   type ToastProviderState,
   type ToastViewportProps,
+  type ToastRootToastObject,
   type ToastDescriptionProps,
   ToastRoot,
   ToastClose,
@@ -23,6 +24,11 @@ import {
   useToastManager,
   ToastDescription,
 } from "./toast.parts.jsx";
+
+/**
+ * {@link ToastRootToastObject} です。
+ */
+export type ToastToastObject<TData extends object = object> = ToastRootToastObject<TData>;
 
 /**
  * {@link Toast} の各パーツに渡すプロパティーです。
@@ -77,51 +83,14 @@ export type ToastState = ToastProviderState;
 /**
  * {@link Toast} コンポーネントのプロパティーです。
  */
-export type ToastProps = Omit<ToastProviderProps, "children"> & {
-  /**
-   * 通知を作成する画面のコンテンツです。
-   */
-  children?: React.ReactNode | undefined;
-
+export type ToastProps = ToastProviderProps & {
   /**
    * 通知一覧の各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   *
+   * 各パーツのプロパティーが優先されます。
    */
   slotProps?: ToastSlotProps | undefined;
 };
-
-type ToastListProps = ToastSlotProps;
-
-function ToastList({
-  portal: portalProps,
-  viewport: viewportProps,
-  root: rootProps,
-  content: contentProps,
-  title: titleProps,
-  description: descriptionProps,
-  action: actionProps,
-  close: closeProps,
-}: ToastListProps): React.ReactElement {
-  const { toasts } = useToastManager();
-
-  return (
-    <ToastPortal {...portalProps}>
-      <ToastViewport {...viewportProps}>
-        {toasts.map((toast) => (
-          <ToastRoot key={toast.id} {...rootProps} toast={toast}>
-            <ToastContent {...contentProps}>
-              <div className="sui_toast_text">
-                <ToastTitle {...titleProps} />
-                <ToastDescription {...descriptionProps} />
-              </div>
-              <ToastAction {...actionProps} />
-              <ToastClose {...closeProps}>{closeProps?.children ?? "閉じる"}</ToastClose>
-            </ToastContent>
-          </ToastRoot>
-        ))}
-      </ToastViewport>
-    </ToastPortal>
-  );
-}
 
 /**
  * 通知を管理する Provider と、通知一覧を組み立てるコンポーネントです。
@@ -158,4 +127,44 @@ export namespace Toast {
    * {@link ToastSlotProps} です。
    */
   export type SlotProps = ToastSlotProps;
+
+  /**
+   * {@link ToastToastObject} です。
+   */
+  export type ToastObject<TData extends object = object> = ToastToastObject<TData>;
+}
+
+type ToastListProps = ToastSlotProps;
+
+function ToastList(props: ToastListProps): React.ReactElement {
+  const {
+    root: rootProps,
+    close: closeProps,
+    title: titleProps,
+    action: actionProps,
+    portal: portalProps,
+    content: contentProps,
+    viewport: viewportProps,
+    description: descriptionProps,
+  } = props;
+  const { toasts } = useToastManager();
+
+  return (
+    <ToastPortal {...portalProps}>
+      <ToastViewport {...viewportProps}>
+        {toasts.map((toast) => (
+          <ToastRoot key={toast.id} {...rootProps} toast={toast}>
+            <ToastContent {...contentProps}>
+              <div className="sui_toast_text">
+                <ToastTitle {...titleProps} />
+                <ToastDescription {...descriptionProps} />
+              </div>
+              <ToastAction {...actionProps} />
+              <ToastClose {...closeProps}>{closeProps?.children ?? "閉じる"}</ToastClose>
+            </ToastContent>
+          </ToastRoot>
+        ))}
+      </ToastViewport>
+    </ToastPortal>
+  );
 }

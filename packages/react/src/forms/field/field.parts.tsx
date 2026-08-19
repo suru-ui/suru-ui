@@ -6,9 +6,6 @@ import type { IComponent } from "../../types.js";
 
 import "./field.css";
 
-// Types
-// -----
-
 // Root
 // ----
 
@@ -348,4 +345,4 @@ export namespace Validity {
 /**
  * {@link FieldValidity} です。
  */
-export const Validity = FieldValidity;
+export const Validity: IComponent<Validity.Props> = FieldValidity;

@@ -7,19 +7,16 @@ import type { IComponent } from "../../types.js";
 import "./context-menu.css";
 import "../menu/menu.css";
 
-// Types
-// -----
-
 // Root
 // ----
 
 /**
- * {@link Root} の状態です。
+ * {@link ContextMenuRoot} の状態です。
  */
 export type ContextMenuRootState = ContextMenu.Root.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link ContextMenuRoot} に渡すプロパティーです。
  */
 export type ContextMenuRootProps = React.ComponentProps<typeof ContextMenu.Root>;
 
@@ -36,22 +33,22 @@ export const ContextMenuRoot: IComponent<ContextMenuRootProps> = function SuiCon
 };
 
 /**
- * {@link ContextMenuRoot} の型をまとめた名前空間です。
+ * {@link ContextMenuRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
-   * {@link ContextMenuRoot} の状態型です。
+   * {@link ContextMenuRootState} です。
    */
   export type State = ContextMenuRootState;
 
   /**
-   * {@link ContextMenuRoot} のプロパティー型です。
+   * {@link ContextMenuRootProps} です。
    */
   export type Props = ContextMenuRootProps;
 }
 
 /**
- * {@link ContextMenuRoot} の短縮名です。
+ * {@link ContextMenuRoot} です。
  */
 export const Root: IComponent<Root.Props> = ContextMenuRoot;
 
@@ -59,12 +56,12 @@ export const Root: IComponent<Root.Props> = ContextMenuRoot;
 // -------
 
 /**
- * {@link Trigger} の状態です。
+ * {@link ContextMenuTrigger} の状態です。
  */
 export type ContextMenuTriggerState = ContextMenu.Trigger.State;
 
 /**
- * {@link Trigger} に渡すプロパティーです。
+ * {@link ContextMenuTrigger} に渡すプロパティーです。
  */
 export type ContextMenuTriggerProps = React.ComponentProps<typeof ContextMenu.Trigger>;
 
@@ -83,22 +80,22 @@ export const ContextMenuTrigger: IComponent<ContextMenuTriggerProps> =
   };
 
 /**
- * {@link ContextMenuTrigger} の型をまとめた名前空間です。
+ * {@link ContextMenuTrigger} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Trigger {
   /**
-   * {@link ContextMenuTrigger} の状態型です。
+   * {@link ContextMenuTriggerState} です。
    */
   export type State = ContextMenuTriggerState;
 
   /**
-   * {@link ContextMenuTrigger} のプロパティー型です。
+   * {@link ContextMenuTriggerProps} です。
    */
   export type Props = ContextMenuTriggerProps;
 }
 
 /**
- * {@link ContextMenuTrigger} の短縮名です。
+ * {@link ContextMenuTrigger} です。
  */
 export const Trigger: IComponent<Trigger.Props> = ContextMenuTrigger;
 
@@ -106,12 +103,12 @@ export const Trigger: IComponent<Trigger.Props> = ContextMenuTrigger;
 // ------
 
 /**
- * {@link Portal} の状態です。
+ * {@link ContextMenuPortal} の状態です。
  */
 export type ContextMenuPortalState = ContextMenu.Portal.State;
 
 /**
- * {@link Portal} に渡すプロパティーです。
+ * {@link ContextMenuPortal} に渡すプロパティーです。
  */
 export type ContextMenuPortalProps = React.ComponentProps<typeof ContextMenu.Portal>;
 
@@ -134,22 +131,22 @@ export const ContextMenuPortal: IComponent<ContextMenuPortalProps> = function Su
 };
 
 /**
- * {@link ContextMenuPortal} の型をまとめた名前空間です。
+ * {@link ContextMenuPortal} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Portal {
   /**
-   * {@link ContextMenuPortal} の状態型です。
+   * {@link ContextMenuPortalState} です。
    */
   export type State = ContextMenuPortalState;
 
   /**
-   * {@link ContextMenuPortal} のプロパティー型です。
+   * {@link ContextMenuPortalProps} です。
    */
   export type Props = ContextMenuPortalProps;
 }
 
 /**
- * {@link ContextMenuPortal} の短縮名です。
+ * {@link ContextMenuPortal} です。
  */
 export const Portal: IComponent<Portal.Props> = ContextMenuPortal;
 
@@ -157,12 +154,12 @@ export const Portal: IComponent<Portal.Props> = ContextMenuPortal;
 // --------
 
 /**
- * {@link Backdrop} の状態です。
+ * {@link ContextMenuBackdrop} の状態です。
  */
 export type ContextMenuBackdropState = ContextMenu.Backdrop.State;
 
 /**
- * {@link Backdrop} に渡すプロパティーです。
+ * {@link ContextMenuBackdrop} に渡すプロパティーです。
  */
 export type ContextMenuBackdropProps = React.ComponentProps<typeof ContextMenu.Backdrop>;
 
@@ -182,22 +179,22 @@ export const ContextMenuBackdrop: IComponent<ContextMenuBackdropProps> =
   };
 
 /**
- * {@link ContextMenuBackdrop} の型をまとめた名前空間です。
+ * {@link ContextMenuBackdrop} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Backdrop {
   /**
-   * {@link ContextMenuBackdrop} の状態型です。
+   * {@link ContextMenuBackdropState} です。
    */
   export type State = ContextMenuBackdropState;
 
   /**
-   * {@link ContextMenuBackdrop} のプロパティー型です。
+   * {@link ContextMenuBackdropProps} です。
    */
   export type Props = ContextMenuBackdropProps;
 }
 
 /**
- * {@link ContextMenuBackdrop} の短縮名です。
+ * {@link ContextMenuBackdrop} です。
  */
 export const Backdrop: IComponent<Backdrop.Props> = ContextMenuBackdrop;
 
@@ -205,12 +202,12 @@ export const Backdrop: IComponent<Backdrop.Props> = ContextMenuBackdrop;
 // ----------
 
 /**
- * {@link Positioner} の状態です。
+ * {@link ContextMenuPositioner} の状態です。
  */
 export type ContextMenuPositionerState = ContextMenu.Positioner.State;
 
 /**
- * {@link Positioner} に渡すプロパティーです。
+ * {@link ContextMenuPositioner} に渡すプロパティーです。
  */
 export type ContextMenuPositionerProps = React.ComponentProps<typeof ContextMenu.Positioner>;
 
@@ -230,22 +227,22 @@ export const ContextMenuPositioner: IComponent<ContextMenuPositionerProps> =
   };
 
 /**
- * {@link ContextMenuPositioner} の型をまとめた名前空間です。
+ * {@link ContextMenuPositioner} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Positioner {
   /**
-   * {@link ContextMenuPositioner} の状態型です。
+   * {@link ContextMenuPositionerState} です。
    */
   export type State = ContextMenuPositionerState;
 
   /**
-   * {@link ContextMenuPositioner} のプロパティー型です。
+   * {@link ContextMenuPositionerProps} です。
    */
   export type Props = ContextMenuPositionerProps;
 }
 
 /**
- * {@link ContextMenuPositioner} の短縮名です。
+ * {@link ContextMenuPositioner} です。
  */
 export const Positioner: IComponent<Positioner.Props> = ContextMenuPositioner;
 
@@ -253,12 +250,12 @@ export const Positioner: IComponent<Positioner.Props> = ContextMenuPositioner;
 // -----
 
 /**
- * {@link Popup} の状態です。
+ * {@link ContextMenuPopup} の状態です。
  */
 export type ContextMenuPopupState = ContextMenu.Popup.State;
 
 /**
- * {@link Popup} に渡すプロパティーです。
+ * {@link ContextMenuPopup} に渡すプロパティーです。
  */
 export type ContextMenuPopupProps = React.ComponentProps<typeof ContextMenu.Popup>;
 
@@ -279,22 +276,22 @@ export const ContextMenuPopup: IComponent<ContextMenuPopupProps> = function SuiC
 };
 
 /**
- * {@link ContextMenuPopup} の型をまとめた名前空間です。
+ * {@link ContextMenuPopup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Popup {
   /**
-   * {@link ContextMenuPopup} の状態型です。
+   * {@link ContextMenuPopupState} です。
    */
   export type State = ContextMenuPopupState;
 
   /**
-   * {@link ContextMenuPopup} のプロパティー型です。
+   * {@link ContextMenuPopupProps} です。
    */
   export type Props = ContextMenuPopupProps;
 }
 
 /**
- * {@link ContextMenuPopup} の短縮名です。
+ * {@link ContextMenuPopup} です。
  */
 export const Popup: IComponent<Popup.Props> = ContextMenuPopup;
 
@@ -302,12 +299,12 @@ export const Popup: IComponent<Popup.Props> = ContextMenuPopup;
 // -----
 
 /**
- * {@link Arrow} の状態です。
+ * {@link ContextMenuArrow} の状態です。
  */
 export type ContextMenuArrowState = ContextMenu.Arrow.State;
 
 /**
- * {@link Arrow} に渡すプロパティーです。
+ * {@link ContextMenuArrow} に渡すプロパティーです。
  */
 export type ContextMenuArrowProps = React.ComponentProps<typeof ContextMenu.Arrow>;
 
@@ -328,22 +325,22 @@ export const ContextMenuArrow: IComponent<ContextMenuArrowProps> = function SuiC
 };
 
 /**
- * {@link ContextMenuArrow} の型をまとめた名前空間です。
+ * {@link ContextMenuArrow} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Arrow {
   /**
-   * {@link ContextMenuArrow} の状態型です。
+   * {@link ContextMenuArrowState} です。
    */
   export type State = ContextMenuArrowState;
 
   /**
-   * {@link ContextMenuArrow} のプロパティー型です。
+   * {@link ContextMenuArrowProps} です。
    */
   export type Props = ContextMenuArrowProps;
 }
 
 /**
- * {@link ContextMenuArrow} の短縮名です。
+ * {@link ContextMenuArrow} です。
  */
 export const Arrow: IComponent<Arrow.Props> = ContextMenuArrow;
 
@@ -351,12 +348,12 @@ export const Arrow: IComponent<Arrow.Props> = ContextMenuArrow;
 // ----
 
 /**
- * {@link Item} の状態です。
+ * {@link ContextMenuItem} の状態です。
  */
 export type ContextMenuItemState = ContextMenu.Item.State;
 
 /**
- * {@link Item} に渡すプロパティーです。
+ * {@link ContextMenuItem} に渡すプロパティーです。
  */
 export type ContextMenuItemProps = React.ComponentProps<typeof ContextMenu.Item>;
 
@@ -377,22 +374,22 @@ export const ContextMenuItem: IComponent<ContextMenuItemProps> = function SuiCon
 };
 
 /**
- * {@link ContextMenuItem} の型をまとめた名前空間です。
+ * {@link ContextMenuItem} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Item {
   /**
-   * {@link ContextMenuItem} の状態型です。
+   * {@link ContextMenuItemState} です。
    */
   export type State = ContextMenuItemState;
 
   /**
-   * {@link ContextMenuItem} のプロパティー型です。
+   * {@link ContextMenuItemProps} です。
    */
   export type Props = ContextMenuItemProps;
 }
 
 /**
- * {@link ContextMenuItem} の短縮名です。
+ * {@link ContextMenuItem} です。
  */
 export const Item: IComponent<Item.Props> = ContextMenuItem;
 
@@ -400,12 +397,12 @@ export const Item: IComponent<Item.Props> = ContextMenuItem;
 // --------
 
 /**
- * {@link LinkItem} の状態です。
+ * {@link ContextMenuLinkItem} の状態です。
  */
 export type ContextMenuLinkItemState = ContextMenu.LinkItem.State;
 
 /**
- * {@link LinkItem} に渡すプロパティーです。
+ * {@link ContextMenuLinkItem} に渡すプロパティーです。
  */
 export type ContextMenuLinkItemProps = React.ComponentProps<typeof ContextMenu.LinkItem>;
 
@@ -431,22 +428,22 @@ export const ContextMenuLinkItem: IComponent<ContextMenuLinkItemProps> =
   };
 
 /**
- * {@link ContextMenuLinkItem} の型をまとめた名前空間です。
+ * {@link ContextMenuLinkItem} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace LinkItem {
   /**
-   * {@link ContextMenuLinkItem} の状態型です。
+   * {@link ContextMenuLinkItemState} です。
    */
   export type State = ContextMenuLinkItemState;
 
   /**
-   * {@link ContextMenuLinkItem} のプロパティー型です。
+   * {@link ContextMenuLinkItemProps} です。
    */
   export type Props = ContextMenuLinkItemProps;
 }
 
 /**
- * {@link ContextMenuLinkItem} の短縮名です。
+ * {@link ContextMenuLinkItem} です。
  */
 export const LinkItem: IComponent<LinkItem.Props> = ContextMenuLinkItem;
 
@@ -454,12 +451,12 @@ export const LinkItem: IComponent<LinkItem.Props> = ContextMenuLinkItem;
 // -----------
 
 /**
- * {@link SubmenuRoot} の状態です。
+ * {@link ContextMenuSubmenuRoot} の状態です。
  */
 export type ContextMenuSubmenuRootState = ContextMenu.SubmenuRoot.State;
 
 /**
- * {@link SubmenuRoot} に渡すプロパティーです。
+ * {@link ContextMenuSubmenuRoot} に渡すプロパティーです。
  */
 export type ContextMenuSubmenuRootProps = React.ComponentProps<typeof ContextMenu.SubmenuRoot>;
 
@@ -474,22 +471,22 @@ export const ContextMenuSubmenuRoot: IComponent<ContextMenuSubmenuRootProps> =
   };
 
 /**
- * {@link ContextMenuSubmenuRoot} の型をまとめた名前空間です。
+ * {@link ContextMenuSubmenuRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace SubmenuRoot {
   /**
-   * {@link ContextMenuSubmenuRoot} の状態型です。
+   * {@link ContextMenuSubmenuRootState} です。
    */
   export type State = ContextMenuSubmenuRootState;
 
   /**
-   * {@link ContextMenuSubmenuRoot} のプロパティー型です。
+   * {@link ContextMenuSubmenuRootProps} です。
    */
   export type Props = ContextMenuSubmenuRootProps;
 }
 
 /**
- * {@link ContextMenuSubmenuRoot} の短縮名です。
+ * {@link ContextMenuSubmenuRoot} です。
  */
 export const SubmenuRoot: IComponent<SubmenuRoot.Props> = ContextMenuSubmenuRoot;
 
@@ -497,12 +494,12 @@ export const SubmenuRoot: IComponent<SubmenuRoot.Props> = ContextMenuSubmenuRoot
 // --------------
 
 /**
- * {@link SubmenuTrigger} の状態です。
+ * {@link ContextMenuSubmenuTrigger} の状態です。
  */
 export type ContextMenuSubmenuTriggerState = ContextMenu.SubmenuTrigger.State;
 
 /**
- * {@link SubmenuTrigger} に渡すプロパティーです。
+ * {@link ContextMenuSubmenuTrigger} に渡すプロパティーです。
  */
 export type ContextMenuSubmenuTriggerProps = React.ComponentProps<
   typeof ContextMenu.SubmenuTrigger
@@ -530,22 +527,22 @@ export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProp
   };
 
 /**
- * {@link ContextMenuSubmenuTrigger} の型をまとめた名前空間です。
+ * {@link ContextMenuSubmenuTrigger} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace SubmenuTrigger {
   /**
-   * {@link ContextMenuSubmenuTrigger} の状態型です。
+   * {@link ContextMenuSubmenuTriggerState} です。
    */
   export type State = ContextMenuSubmenuTriggerState;
 
   /**
-   * {@link ContextMenuSubmenuTrigger} のプロパティー型です。
+   * {@link ContextMenuSubmenuTriggerProps} です。
    */
   export type Props = ContextMenuSubmenuTriggerProps;
 }
 
 /**
- * {@link ContextMenuSubmenuTrigger} の短縮名です。
+ * {@link ContextMenuSubmenuTrigger} です。
  */
 export const SubmenuTrigger: IComponent<SubmenuTrigger.Props> = ContextMenuSubmenuTrigger;
 
@@ -553,12 +550,12 @@ export const SubmenuTrigger: IComponent<SubmenuTrigger.Props> = ContextMenuSubme
 // -----
 
 /**
- * {@link Group} の状態です。
+ * {@link ContextMenuGroup} の状態です。
  */
 export type ContextMenuGroupState = ContextMenu.Group.State;
 
 /**
- * {@link Group} に渡すプロパティーです。
+ * {@link ContextMenuGroup} に渡すプロパティーです。
  */
 export type ContextMenuGroupProps = React.ComponentProps<typeof ContextMenu.Group>;
 
@@ -579,22 +576,22 @@ export const ContextMenuGroup: IComponent<ContextMenuGroupProps> = function SuiC
 };
 
 /**
- * {@link ContextMenuGroup} の型をまとめた名前空間です。
+ * {@link ContextMenuGroup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Group {
   /**
-   * {@link ContextMenuGroup} の状態型です。
+   * {@link ContextMenuGroupState} です。
    */
   export type State = ContextMenuGroupState;
 
   /**
-   * {@link ContextMenuGroup} のプロパティー型です。
+   * {@link ContextMenuGroupProps} です。
    */
   export type Props = ContextMenuGroupProps;
 }
 
 /**
- * {@link ContextMenuGroup} の短縮名です。
+ * {@link ContextMenuGroup} です。
  */
 export const Group: IComponent<Group.Props> = ContextMenuGroup;
 
@@ -602,12 +599,12 @@ export const Group: IComponent<Group.Props> = ContextMenuGroup;
 // ----------
 
 /**
- * {@link GroupLabel} の状態です。
+ * {@link ContextMenuGroupLabel} の状態です。
  */
 export type ContextMenuGroupLabelState = ContextMenu.GroupLabel.State;
 
 /**
- * {@link GroupLabel} に渡すプロパティーです。
+ * {@link ContextMenuGroupLabel} に渡すプロパティーです。
  */
 export type ContextMenuGroupLabelProps = React.ComponentProps<typeof ContextMenu.GroupLabel>;
 
@@ -627,22 +624,22 @@ export const ContextMenuGroupLabel: IComponent<ContextMenuGroupLabelProps> =
   };
 
 /**
- * {@link ContextMenuGroupLabel} の型をまとめた名前空間です。
+ * {@link ContextMenuGroupLabel} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace GroupLabel {
   /**
-   * {@link ContextMenuGroupLabel} の状態型です。
+   * {@link ContextMenuGroupLabelState} です。
    */
   export type State = ContextMenuGroupLabelState;
 
   /**
-   * {@link ContextMenuGroupLabel} のプロパティー型です。
+   * {@link ContextMenuGroupLabelProps} です。
    */
   export type Props = ContextMenuGroupLabelProps;
 }
 
 /**
- * {@link ContextMenuGroupLabel} の短縮名です。
+ * {@link ContextMenuGroupLabel} です。
  */
 export const GroupLabel: IComponent<GroupLabel.Props> = ContextMenuGroupLabel;
 
@@ -650,12 +647,12 @@ export const GroupLabel: IComponent<GroupLabel.Props> = ContextMenuGroupLabel;
 // ----------
 
 /**
- * {@link RadioGroup} の状態です。
+ * {@link ContextMenuRadioGroup} の状態です。
  */
 export type ContextMenuRadioGroupState = ContextMenu.RadioGroup.State;
 
 /**
- * {@link RadioGroup} に渡すプロパティーです。
+ * {@link ContextMenuRadioGroup} に渡すプロパティーです。
  */
 export type ContextMenuRadioGroupProps = React.ComponentProps<typeof ContextMenu.RadioGroup>;
 
@@ -675,22 +672,22 @@ export const ContextMenuRadioGroup: IComponent<ContextMenuRadioGroupProps> =
   };
 
 /**
- * {@link ContextMenuRadioGroup} の型をまとめた名前空間です。
+ * {@link ContextMenuRadioGroup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace RadioGroup {
   /**
-   * {@link ContextMenuRadioGroup} の状態型です。
+   * {@link ContextMenuRadioGroupState} です。
    */
   export type State = ContextMenuRadioGroupState;
 
   /**
-   * {@link ContextMenuRadioGroup} のプロパティー型です。
+   * {@link ContextMenuRadioGroupProps} です。
    */
   export type Props = ContextMenuRadioGroupProps;
 }
 
 /**
- * {@link ContextMenuRadioGroup} の短縮名です。
+ * {@link ContextMenuRadioGroup} です。
  */
 export const RadioGroup: IComponent<RadioGroup.Props> = ContextMenuRadioGroup;
 
@@ -698,12 +695,12 @@ export const RadioGroup: IComponent<RadioGroup.Props> = ContextMenuRadioGroup;
 // ---------
 
 /**
- * {@link RadioItem} の状態です。
+ * {@link ContextMenuRadioItem} の状態です。
  */
 export type ContextMenuRadioItemState = ContextMenu.RadioItem.State;
 
 /**
- * {@link RadioItem} に渡すプロパティーです。
+ * {@link ContextMenuRadioItem} に渡すプロパティーです。
  */
 export type ContextMenuRadioItemProps = React.ComponentProps<typeof ContextMenu.RadioItem>;
 
@@ -729,22 +726,22 @@ export const ContextMenuRadioItem: IComponent<ContextMenuRadioItemProps> =
   };
 
 /**
- * {@link ContextMenuRadioItem} の型をまとめた名前空間です。
+ * {@link ContextMenuRadioItem} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace RadioItem {
   /**
-   * {@link ContextMenuRadioItem} の状態型です。
+   * {@link ContextMenuRadioItemState} です。
    */
   export type State = ContextMenuRadioItemState;
 
   /**
-   * {@link ContextMenuRadioItem} のプロパティー型です。
+   * {@link ContextMenuRadioItemProps} です。
    */
   export type Props = ContextMenuRadioItemProps;
 }
 
 /**
- * {@link ContextMenuRadioItem} の短縮名です。
+ * {@link ContextMenuRadioItem} です。
  */
 export const RadioItem: IComponent<RadioItem.Props> = ContextMenuRadioItem;
 
@@ -752,12 +749,12 @@ export const RadioItem: IComponent<RadioItem.Props> = ContextMenuRadioItem;
 // ------------------
 
 /**
- * {@link RadioItemIndicator} の状態です。
+ * {@link ContextMenuRadioItemIndicator} の状態です。
  */
 export type ContextMenuRadioItemIndicatorState = ContextMenu.RadioItemIndicator.State;
 
 /**
- * {@link RadioItemIndicator} に渡すプロパティーです。
+ * {@link ContextMenuRadioItemIndicator} に渡すプロパティーです。
  */
 export type ContextMenuRadioItemIndicatorProps = React.ComponentProps<
   typeof ContextMenu.RadioItemIndicator
@@ -786,22 +783,22 @@ export const ContextMenuRadioItemIndicator: IComponent<ContextMenuRadioItemIndic
   };
 
 /**
- * {@link ContextMenuRadioItemIndicator} の型をまとめた名前空間です。
+ * {@link ContextMenuRadioItemIndicator} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace RadioItemIndicator {
   /**
-   * {@link ContextMenuRadioItemIndicator} の状態型です。
+   * {@link ContextMenuRadioItemIndicatorState} です。
    */
   export type State = ContextMenuRadioItemIndicatorState;
 
   /**
-   * {@link ContextMenuRadioItemIndicator} のプロパティー型です。
+   * {@link ContextMenuRadioItemIndicatorProps} です。
    */
   export type Props = ContextMenuRadioItemIndicatorProps;
 }
 
 /**
- * {@link ContextMenuRadioItemIndicator} の短縮名です。
+ * {@link ContextMenuRadioItemIndicator} です。
  */
 export const RadioItemIndicator: IComponent<RadioItemIndicator.Props> =
   ContextMenuRadioItemIndicator;
@@ -810,12 +807,12 @@ export const RadioItemIndicator: IComponent<RadioItemIndicator.Props> =
 // ------------
 
 /**
- * {@link CheckboxItem} の状態です。
+ * {@link ContextMenuCheckboxItem} の状態です。
  */
 export type ContextMenuCheckboxItemState = ContextMenu.CheckboxItem.State;
 
 /**
- * {@link CheckboxItem} に渡すプロパティーです。
+ * {@link ContextMenuCheckboxItem} に渡すプロパティーです。
  */
 export type ContextMenuCheckboxItemProps = React.ComponentProps<typeof ContextMenu.CheckboxItem>;
 
@@ -841,22 +838,22 @@ export const ContextMenuCheckboxItem: IComponent<ContextMenuCheckboxItemProps> =
   };
 
 /**
- * {@link ContextMenuCheckboxItem} の型をまとめた名前空間です。
+ * {@link ContextMenuCheckboxItem} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace CheckboxItem {
   /**
-   * {@link ContextMenuCheckboxItem} の状態型です。
+   * {@link ContextMenuCheckboxItemState} です。
    */
   export type State = ContextMenuCheckboxItemState;
 
   /**
-   * {@link ContextMenuCheckboxItem} のプロパティー型です。
+   * {@link ContextMenuCheckboxItemProps} です。
    */
   export type Props = ContextMenuCheckboxItemProps;
 }
 
 /**
- * {@link ContextMenuCheckboxItem} の短縮名です。
+ * {@link ContextMenuCheckboxItem} です。
  */
 export const CheckboxItem: IComponent<CheckboxItem.Props> = ContextMenuCheckboxItem;
 
@@ -864,12 +861,12 @@ export const CheckboxItem: IComponent<CheckboxItem.Props> = ContextMenuCheckboxI
 // ---------------------
 
 /**
- * {@link CheckboxItemIndicator} の状態です。
+ * {@link ContextMenuCheckboxItemIndicator} の状態です。
  */
 export type ContextMenuCheckboxItemIndicatorState = ContextMenu.CheckboxItemIndicator.State;
 
 /**
- * {@link CheckboxItemIndicator} に渡すプロパティーです。
+ * {@link ContextMenuCheckboxItemIndicator} に渡すプロパティーです。
  */
 export type ContextMenuCheckboxItemIndicatorProps = React.ComponentProps<
   typeof ContextMenu.CheckboxItemIndicator
@@ -898,22 +895,22 @@ export const ContextMenuCheckboxItemIndicator: IComponent<ContextMenuCheckboxIte
   };
 
 /**
- * {@link ContextMenuCheckboxItemIndicator} の型をまとめた名前空間です。
+ * {@link ContextMenuCheckboxItemIndicator} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace CheckboxItemIndicator {
   /**
-   * {@link ContextMenuCheckboxItemIndicator} の状態型です。
+   * {@link ContextMenuCheckboxItemIndicatorState} です。
    */
   export type State = ContextMenuCheckboxItemIndicatorState;
 
   /**
-   * {@link ContextMenuCheckboxItemIndicator} のプロパティー型です。
+   * {@link ContextMenuCheckboxItemIndicatorProps} です。
    */
   export type Props = ContextMenuCheckboxItemIndicatorProps;
 }
 
 /**
- * {@link ContextMenuCheckboxItemIndicator} の短縮名です。
+ * {@link ContextMenuCheckboxItemIndicator} です。
  */
 export const CheckboxItemIndicator: IComponent<CheckboxItemIndicator.Props> =
   ContextMenuCheckboxItemIndicator;
@@ -922,12 +919,12 @@ export const CheckboxItemIndicator: IComponent<CheckboxItemIndicator.Props> =
 // ---------
 
 /**
- * {@link Separator} の状態です。
+ * {@link ContextMenuSeparator} の状態です。
  */
 export type ContextMenuSeparatorState = ContextMenu.Separator.State;
 
 /**
- * {@link Separator} に渡すプロパティーです。
+ * {@link ContextMenuSeparator} に渡すプロパティーです。
  */
 export type ContextMenuSeparatorProps = React.ComponentProps<typeof ContextMenu.Separator>;
 
@@ -947,21 +944,21 @@ export const ContextMenuSeparator: IComponent<ContextMenuSeparatorProps> =
   };
 
 /**
- * {@link ContextMenuSeparator} の型をまとめた名前空間です。
+ * {@link ContextMenuSeparator} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Separator {
   /**
-   * {@link ContextMenuSeparator} の状態型です。
+   * {@link ContextMenuSeparatorState} です。
    */
   export type State = ContextMenuSeparatorState;
 
   /**
-   * {@link ContextMenuSeparator} のプロパティー型です。
+   * {@link ContextMenuSeparatorProps} です。
    */
   export type Props = ContextMenuSeparatorProps;
 }
 
 /**
- * {@link ContextMenuSeparator} の短縮名です。
+ * {@link ContextMenuSeparator} です。
  */
 export const Separator: IComponent<Separator.Props> = ContextMenuSeparator;

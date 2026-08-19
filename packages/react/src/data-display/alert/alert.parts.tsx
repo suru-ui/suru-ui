@@ -1,4 +1,4 @@
-import type { Size, Color, ColorTemplate } from "@suru-ui/theme";
+import type { Size, Color } from "@suru-ui/theme";
 import type * as React from "react";
 
 import useRender, { type RenderProps } from "../../_use-render.js";
@@ -7,13 +7,13 @@ import type { IComponent } from "../../types.js";
 
 import "./alert.css";
 
-// Types
-// -----
+// Root
+// ----
 
 /**
  * アラートの色です。
  */
-export type AlertColor = Color;
+export type AlertRootColor = Color;
 
 /**
  * アラートの角丸です。
@@ -23,7 +23,7 @@ export type AlertColor = Color;
  * - `"md"`: 標準的な角丸
  * - `"lg"`: 大きい角丸
  */
-export type AlertRadius = "none" | Size;
+export type AlertRootRadius = "none" | Size;
 
 /**
  * アラートの大きさです。
@@ -32,19 +32,16 @@ export type AlertRadius = "none" | Size;
  * - `"md"`: 標準的なサイズ
  * - `"lg"`: 大きいサイズ
  */
-export type AlertSize = Size;
+export type AlertRootSize = Size;
 
 /**
  * アラートの主な外観の種類です。
  *
- * - `"solid"`: 塗りつぶしスタイル
+ * - `"muted"`: 控えめな背景
  * - `"naked"`: 背景のないテキストのみ
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type AlertVariant = ColorTemplate;
-
-// Root
-// ----
+export type AlertRootVariant = "muted" | "naked" | "liquid";
 
 /**
  * {@link AlertRoot} の状態です。
@@ -61,7 +58,7 @@ export type AlertRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps
      *
      * @default "grey"
      */
-    color?: AlertColor | undefined;
+    color?: AlertRootColor | undefined;
 
     /**
      * 枠線を表示するかどうかを指定します。
@@ -75,21 +72,21 @@ export type AlertRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps
      *
      * デフォルト値は {@link AlertRootProps.size|size} です。
      */
-    radius?: AlertRadius | undefined;
+    radius?: AlertRootRadius | undefined;
 
     /**
      * アラートのサイズを指定します。
      *
      * @default "md"
      */
-    size?: AlertSize | undefined;
+    size?: AlertRootSize | undefined;
 
     /**
      * アラートのスタイルバリエーションを指定します。
      *
-     * @default "solid"
+     * @default "muted"
      */
-    variant?: AlertVariant | undefined;
+    variant?: AlertRootVariant | undefined;
   };
 
 /**
@@ -101,7 +98,7 @@ export const AlertRoot: IComponent<AlertRootProps> = function SuiAlertRoot(props
     size = "md",
     color = "grey",
     radius = size,
-    variant = "solid",
+    variant = "muted",
     outlined = false,
     ...otherProps
   } = props;
@@ -130,14 +127,34 @@ export const AlertRoot: IComponent<AlertRootProps> = function SuiAlertRoot(props
  */
 export namespace Root {
   /**
-   * {@link AlertRoot} の状態型です。
+   * {@link AlertRootState} です。
    */
   export type State = AlertRootState;
 
   /**
-   * {@link AlertRoot} のプロパティー型です。
+   * {@link AlertRootProps} です。
    */
   export type Props = AlertRootProps;
+
+  /**
+   * {@link AlertRootColor} です。
+   */
+  export type Color = AlertRootColor;
+
+  /**
+   * {@link AlertRootRadius} です。
+   */
+  export type Radius = AlertRootRadius;
+
+  /**
+   * {@link AlertRootSize} です。
+   */
+  export type Size = AlertRootSize;
+
+  /**
+   * {@link AlertRootVariant} です。
+   */
+  export type Variant = AlertRootVariant;
 }
 
 /**
@@ -184,12 +201,12 @@ export const AlertIcon: IComponent<AlertIconProps> = function SuiAlertIcon(props
  */
 export namespace Icon {
   /**
-   * {@link AlertIcon} の状態型です。
+   * {@link AlertIconState} です。
    */
   export type State = AlertIconState;
 
   /**
-   * {@link AlertIcon} のプロパティー型です。
+   * {@link AlertIconProps} です。
    */
   export type Props = AlertIconProps;
 }
@@ -233,12 +250,12 @@ export const AlertTitle: IComponent<AlertTitleProps> = function SuiAlertTitle(pr
  */
 export namespace Title {
   /**
-   * {@link AlertTitle} の状態型です。
+   * {@link AlertTitleState} です。
    */
   export type State = AlertTitleState;
 
   /**
-   * {@link AlertTitle} のプロパティー型です。
+   * {@link AlertTitleProps} です。
    */
   export type Props = AlertTitleProps;
 }
@@ -284,12 +301,12 @@ export const AlertDescription: IComponent<AlertDescriptionProps> = function SuiA
  */
 export namespace Description {
   /**
-   * {@link AlertDescription} の状態型です。
+   * {@link AlertDescriptionState} です。
    */
   export type State = AlertDescriptionState;
 
   /**
-   * {@link AlertDescription} のプロパティー型です。
+   * {@link AlertDescriptionProps} です。
    */
   export type Props = AlertDescriptionProps;
 }
@@ -333,12 +350,12 @@ export const AlertActions: IComponent<AlertActionsProps> = function SuiAlertActi
  */
 export namespace Actions {
   /**
-   * {@link AlertActions} の状態型です。
+   * {@link AlertActionsState} です。
    */
   export type State = AlertActionsState;
 
   /**
-   * {@link AlertActions} のプロパティー型です。
+   * {@link AlertActionsProps} です。
    */
   export type Props = AlertActionsProps;
 }

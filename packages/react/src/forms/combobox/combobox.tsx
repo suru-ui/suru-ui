@@ -1,8 +1,14 @@
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { IComponent } from "../../types.js";
+import type { IComponent, IUseContext } from "../../types.js";
 import {
+  type ComboboxContext,
+  type ComboboxRootColor,
+  type ComboboxRootItems,
+  type ComboboxRootRadius,
+  type ComboboxRootSize,
+  type ComboboxRootVariant,
   type ComboboxChipProps,
   type ComboboxIconProps,
   type ComboboxItemProps,
@@ -43,7 +49,33 @@ import {
   ComboboxInputGroup,
   ComboboxPositioner,
   ComboboxItemIndicator,
+  useComboboxContext,
 } from "./combobox.parts.jsx";
+
+/**
+ * {@link ComboboxRootColor} です。
+ */
+export type ComboboxColor = ComboboxRootColor;
+
+/**
+ * {@link ComboboxRootRadius} です。
+ */
+export type ComboboxRadius = ComboboxRootRadius;
+
+/**
+ * {@link ComboboxRootSize} です。
+ */
+export type ComboboxSize = ComboboxRootSize;
+
+/**
+ * {@link ComboboxRootVariant} です。
+ */
+export type ComboboxVariant = ComboboxRootVariant;
+
+/**
+ * {@link ComboboxRootItems} です。
+ */
+export type ComboboxItems<Value = unknown> = ComboboxRootItems<Value>;
 
 /**
  * {@link Combobox} の各パーツに渡すプロパティーです。
@@ -174,6 +206,8 @@ export type ComboboxProps<Value = unknown, Multiple extends boolean | undefined 
 
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   *
+   * 各パーツのプロパティーが優先されます。
    */
   slotProps?: ComboboxSlotProps | undefined;
 };
@@ -181,10 +215,15 @@ export type ComboboxProps<Value = unknown, Multiple extends boolean | undefined 
 /**
  * {@link Combobox} のコンポーネント型です。
  */
-interface ComboboxComponentType extends IComponent<ComboboxProps<unknown, boolean | undefined>> {
+interface ComboboxType extends IComponent<ComboboxProps<unknown, boolean | undefined>> {
   <Value, Multiple extends boolean | undefined = false>(
     props: ComboboxProps<Value, Multiple>,
   ): React.ReactElement | null;
+
+  /**
+   * {@link useComboboxContext} です。
+   */
+  readonly useContext: IUseContext<ComboboxContext>;
 }
 
 /**
@@ -193,158 +232,164 @@ interface ComboboxComponentType extends IComponent<ComboboxProps<unknown, boolea
  * `multiple` を指定すると、選択値をチップとして入力欄内に表示します。
  * Clear と Trigger に挿入するアイコンは `slotProps` で差し替えられます。
  */
-export const Combobox: ComboboxComponentType = function SuiCombobox<
-  Value,
-  Multiple extends boolean | undefined = false,
->(props: ComboboxProps<Value, Multiple>) {
-  const {
-    label,
-    children,
-    multiple: multipleProp,
-    className,
-    slotProps: {
-      chip: chipProps,
-      icon: iconProps,
-      item: itemProps,
-      list: listProps,
-      chips: chipsProps,
-      clear: clearProps,
-      empty: emptyProps,
-      input: inputProps,
-      label: labelProps,
-      popup: popupProps,
-      value: valueProps,
-      portal: portalProps,
-      trigger: triggerProps,
-      chipRemove: chipRemoveProps,
-      inputGroup: inputGroupProps,
-      positioner: positionerProps,
-      itemIndicator: itemIndicatorProps,
-    } = {},
-    placeholder,
-    autoHighlight = true,
-    openOnInputClick = true,
-    ...rootProps
-  } = props;
-  const {
-    children: clearChildren = <SuiClearIcon />,
-    "aria-label": clearAriaLabel,
-    ...restClearProps
-  } = clearProps ?? {};
-  const { children: iconChildren = <SuiChevronIcon />, ...restIconProps } = iconProps ?? {};
-  const { "aria-label": triggerAriaLabel, ...restTriggerProps } = triggerProps ?? {};
-  const {
-    side = "bottom",
-    align = "start",
-    sideOffset = 8,
-    ...restPositionerProps
-  } = positionerProps ?? {};
-  const { children: indicatorChildren = <SuiCheckIcon />, ...restIndicatorProps } =
-    itemIndicatorProps ?? {};
-  const { children: chipChildren, ...restChipProps } = chipProps ?? {};
-  const { children: chipRemoveChildren = <SuiClearIcon />, ...restChipRemoveProps } =
-    chipRemoveProps ?? {};
-  const { children: emptyChildren = "候補がありません", ...restEmptyProps } = emptyProps ?? {};
-  const multiple = multipleProp === true;
+export const Combobox: ComboboxType = /*#__PURE__*/ Object.assign(
+  function SuiCombobox<Value, Multiple extends boolean | undefined = false>(
+    props: ComboboxProps<Value, Multiple>,
+  ) {
+    const {
+      label,
+      children,
+      multiple: multipleProp,
+      className,
+      slotProps: {
+        chip: chipProps,
+        icon: iconProps,
+        item: itemProps,
+        list: listProps,
+        chips: chipsProps,
+        clear: clearProps,
+        empty: emptyProps,
+        input: inputProps,
+        label: labelProps,
+        popup: popupProps,
+        value: valueProps,
+        portal: portalProps,
+        trigger: triggerProps,
+        chipRemove: chipRemoveProps,
+        inputGroup: inputGroupProps,
+        positioner: positionerProps,
+        itemIndicator: itemIndicatorProps,
+      } = {},
+      placeholder,
+      autoHighlight = true,
+      openOnInputClick = true,
+      ...rootProps
+    } = props;
+    const {
+      children: clearChildren = <SuiClearIcon />,
+      "aria-label": clearAriaLabel,
+      ...restClearProps
+    } = clearProps ?? {};
+    const { children: iconChildren = <SuiChevronIcon />, ...restIconProps } = iconProps ?? {};
+    const { "aria-label": triggerAriaLabel, ...restTriggerProps } = triggerProps ?? {};
+    const {
+      side = "bottom",
+      align = "start",
+      sideOffset = 8,
+      ...restPositionerProps
+    } = positionerProps ?? {};
+    const { children: indicatorChildren = <SuiCheckIcon />, ...restIndicatorProps } =
+      itemIndicatorProps ?? {};
+    const { children: chipChildren, ...restChipProps } = chipProps ?? {};
+    const { children: chipRemoveChildren = <SuiClearIcon />, ...restChipRemoveProps } =
+      chipRemoveProps ?? {};
+    const { children: emptyChildren = "候補がありません", ...restEmptyProps } = emptyProps ?? {};
+    const multiple = multipleProp === true;
 
-  const listChildren = React.useMemo(() => {
-    if (typeof children !== "function" && children !== undefined) {
-      return children;
-    }
-
-    const renderItem = (item: Value, index: number): React.ReactNode => {
-      const itemLabel = getItemLabel(item, rootProps.itemToStringLabel);
-      const content = typeof children === "function" ? children(item, index) : itemLabel;
-
-      return (
-        <ComboboxItem {...itemProps} key={index} value={item}>
-          <ComboboxItemIndicator {...restIndicatorProps}>{indicatorChildren}</ComboboxItemIndicator>
-          {content}
-        </ComboboxItem>
-      );
-    };
-
-    return (item: Value, index: number): React.ReactNode => {
-      if (isItemGroup(item)) {
-        return (
-          <ComboboxGroup key={index} items={item.items}>
-            {item.label !== undefined && <ComboboxGroupLabel>{item.label}</ComboboxGroupLabel>}
-            <ComboboxCollection>
-              {(groupItem, groupIndex) => renderItem(groupItem, groupIndex)}
-            </ComboboxCollection>
-          </ComboboxGroup>
-        );
+    const listChildren = React.useMemo(() => {
+      if (typeof children !== "function" && children !== undefined) {
+        return children;
       }
 
-      return renderItem(item, index);
-    };
-  }, [children, indicatorChildren, itemProps, restIndicatorProps, rootProps.itemToStringLabel]);
+      const renderItem = (item: Value, index: number): React.ReactNode => {
+        const itemLabel = getItemLabel(item, rootProps.itemToStringLabel);
+        const content = typeof children === "function" ? children(item, index) : itemLabel;
 
-  const input = <ComboboxInput placeholder={placeholder} {...inputProps} />;
+        return (
+          <ComboboxItem {...itemProps} key={index} value={item}>
+            <ComboboxItemIndicator {...restIndicatorProps}>
+              {indicatorChildren}
+            </ComboboxItemIndicator>
+            {content}
+          </ComboboxItem>
+        );
+      };
 
-  return (
-    <ComboboxRoot
-      {...rootProps}
-      autoHighlight={autoHighlight}
-      multiple={multipleProp}
-      openOnInputClick={openOnInputClick}
-    >
-      {label !== undefined && <ComboboxLabel {...labelProps}>{label}</ComboboxLabel>}
-      <ComboboxInputGroup
-        {...inputGroupProps}
-        className={cn(className, inputGroupProps?.className)}
+      return (item: Value, index: number): React.ReactNode => {
+        if (isItemGroup(item)) {
+          return (
+            <ComboboxGroup key={index} items={item.items}>
+              {item.label !== undefined && <ComboboxGroupLabel>{item.label}</ComboboxGroupLabel>}
+              <ComboboxCollection>
+                {(groupItem, groupIndex) => renderItem(groupItem, groupIndex)}
+              </ComboboxCollection>
+            </ComboboxGroup>
+          );
+        }
+
+        return renderItem(item, index);
+      };
+    }, [children, indicatorChildren, itemProps, restIndicatorProps, rootProps.itemToStringLabel]);
+
+    const input = <ComboboxInput placeholder={placeholder} {...inputProps} />;
+
+    return (
+      <ComboboxRoot
+        {...rootProps}
+        autoHighlight={autoHighlight}
+        multiple={multipleProp}
+        openOnInputClick={openOnInputClick}
       >
-        {multiple ? (
-          <ComboboxChips {...chipsProps}>
-            <ComboboxValue {...valueProps}>
-              {(value) => (
-                <>
-                  {Array.isArray(value) &&
-                    value.map((item, index) => {
-                      const itemLabel = getItemLabel(item, rootProps.itemToStringLabel);
-                      return (
-                        <ComboboxChip {...restChipProps} key={index}>
-                          {chipChildren ?? itemLabel}
-                          <ComboboxChipRemove
-                            {...restChipRemoveProps}
-                            aria-label={chipRemoveProps?.["aria-label"] ?? `${itemLabel}を削除`}
-                          >
-                            {chipRemoveChildren}
-                          </ComboboxChipRemove>
-                        </ComboboxChip>
-                      );
-                    })}
-                  {input}
-                </>
-              )}
-            </ComboboxValue>
-          </ComboboxChips>
-        ) : (
-          input
-        )}
-        <ComboboxClear {...restClearProps} aria-label={clearAriaLabel ?? "クリア"}>
-          {clearChildren}
-        </ComboboxClear>
-        <ComboboxTrigger {...restTriggerProps} aria-label={triggerAriaLabel ?? "選択肢を選択"}>
-          <ComboboxIcon {...restIconProps}>{iconChildren}</ComboboxIcon>
-        </ComboboxTrigger>
-      </ComboboxInputGroup>
-      <ComboboxPortal {...portalProps}>
-        <ComboboxPositioner
-          {...restPositionerProps}
-          side={side}
-          align={align}
-          sideOffset={sideOffset}
+        {label !== undefined && <ComboboxLabel {...labelProps}>{label}</ComboboxLabel>}
+        <ComboboxInputGroup
+          {...inputGroupProps}
+          className={cn(className, inputGroupProps?.className)}
         >
-          <ComboboxPopup {...popupProps}>
-            <ComboboxEmpty {...restEmptyProps}>{emptyChildren}</ComboboxEmpty>
-            <ComboboxList {...listProps}>{listChildren}</ComboboxList>
-          </ComboboxPopup>
-        </ComboboxPositioner>
-      </ComboboxPortal>
-    </ComboboxRoot>
-  );
-};
+          {multiple ? (
+            <ComboboxChips {...chipsProps}>
+              <ComboboxValue {...valueProps}>
+                {(value) => (
+                  <>
+                    {Array.isArray(value) &&
+                      value.map((item, index) => {
+                        const itemLabel = getItemLabel(item, rootProps.itemToStringLabel);
+                        return (
+                          <ComboboxChip {...restChipProps} key={index}>
+                            {chipChildren ?? itemLabel}
+                            <ComboboxChipRemove
+                              {...restChipRemoveProps}
+                              aria-label={chipRemoveProps?.["aria-label"] ?? `${itemLabel}を削除`}
+                            >
+                              {chipRemoveChildren}
+                            </ComboboxChipRemove>
+                          </ComboboxChip>
+                        );
+                      })}
+                    {input}
+                  </>
+                )}
+              </ComboboxValue>
+            </ComboboxChips>
+          ) : (
+            input
+          )}
+          <ComboboxClear {...restClearProps} aria-label={clearAriaLabel ?? "クリア"}>
+            {clearChildren}
+          </ComboboxClear>
+          <ComboboxTrigger {...restTriggerProps} aria-label={triggerAriaLabel ?? "選択肢を選択"}>
+            <ComboboxIcon {...restIconProps}>{iconChildren}</ComboboxIcon>
+          </ComboboxTrigger>
+        </ComboboxInputGroup>
+        <ComboboxPortal {...portalProps}>
+          <ComboboxPositioner
+            {...restPositionerProps}
+            side={side}
+            align={align}
+            sideOffset={sideOffset}
+          >
+            <ComboboxPopup {...popupProps}>
+              <ComboboxEmpty {...restEmptyProps}>{emptyChildren}</ComboboxEmpty>
+              <ComboboxList {...listProps}>{listChildren}</ComboboxList>
+            </ComboboxPopup>
+          </ComboboxPositioner>
+        </ComboboxPortal>
+      </ComboboxRoot>
+    );
+  },
+  {
+    useContext: useComboboxContext,
+  },
+);
 
 /**
  * {@link Combobox} の状態やプロパティーをまとめた型名前空間です。
@@ -370,6 +415,36 @@ export namespace Combobox {
    * {@link ComboboxSlotProps} です。
    */
   export type SlotProps = ComboboxSlotProps;
+
+  /**
+   * {@link ComboboxContext} です。
+   */
+  export type Context = ComboboxContext;
+
+  /**
+   * {@link ComboboxColor} です。
+   */
+  export type Color = ComboboxColor;
+
+  /**
+   * {@link ComboboxRadius} です。
+   */
+  export type Radius = ComboboxRadius;
+
+  /**
+   * {@link ComboboxSize} です。
+   */
+  export type Size = ComboboxSize;
+
+  /**
+   * {@link ComboboxVariant} です。
+   */
+  export type Variant = ComboboxVariant;
+
+  /**
+   * {@link ComboboxItems} です。
+   */
+  export type Items<Value = unknown> = ComboboxItems<Value>;
 }
 
 function isItemGroup<Value>(item: Value): item is Value & {

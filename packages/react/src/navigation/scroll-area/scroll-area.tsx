@@ -19,6 +19,8 @@ import {
 
 /**
  * {@link ScrollArea} の各パーツに渡すプロパティーです。
+ *
+ * 各パーツの指定値は、パーツに渡される既定のプロパティーより優先されます。
  */
 export type ScrollAreaSlotProps = {
   /**
@@ -65,24 +67,20 @@ export type ScrollAreaState = ScrollAreaRootState;
 /**
  * {@link ScrollArea} コンポーネントのプロパティーです。
  */
-export type ScrollAreaProps = ScrollAreaRootProps & {
-  /**
-   * スクロール領域に表示するコンテンツです。
-   */
-  children?: React.ReactNode | undefined;
+export type ScrollAreaProps = Omit<ScrollAreaRootProps, "children"> &
+  Pick<ScrollAreaContentProps, "children"> & {
+    /**
+     * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+     */
+    slotProps?: ScrollAreaSlotProps | undefined;
 
-  /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-   */
-  slotProps?: ScrollAreaSlotProps | undefined;
-
-  /**
-   * 水平方向のスクロールバーを表示するかどうかを指定します。
-   *
-   * @default false
-   */
-  horizontal?: boolean | undefined;
-};
+    /**
+     * 水平方向のスクロールバーを表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    horizontal?: boolean | undefined;
+  };
 
 /**
  * スクロール可能なコンテンツを表示するコンポーネントです。

@@ -13,46 +13,46 @@
   /* 変数 */
   .sui_avatar_group {
     /* 空白 */
-    --sui_avatar_group-avatar-overlap: ;
+    --sui_avatar_group_avatar-overlap: ;
     /* 枠線 */
-    --sui_avatar_group-avatar-pseudo_ring_color: ;
-    --sui_avatar_group-avatar-pseudo_ring_width: ;
+    --sui_avatar_group_avatar-pseudo_ring_color: ;
+    --sui_avatar_group_avatar-pseudo_ring_width: ;
     /* 位置 */
-    --sui_avatar_group-avatar-z_index: ;
+    --sui_avatar_group_avatar-z_index: ;
   }
 
   /* 動的 */
   .sui_avatar_group .sui_avatar {
-    z-index: var(--_sui_avatar_group-avatar-z_index, var(--sui_avatar_group-avatar-z_index));
+    z-index: var(--_sui_avatar_group_avatar-z_index, var(--sui_avatar_group_avatar-z_index));
     box-shadow: 0px
                 0px
                 0px
-                var(--sui_avatar_group-avatar-pseudo_ring_width)
-                var(--sui_avatar_group-avatar-pseudo_ring_color);
+                var(--sui_avatar_group_avatar-pseudo_ring_width)
+                var(--sui_avatar_group_avatar-pseudo_ring_color);
   }
   .sui_avatar_group-forward .sui_avatar:not(:first-child) {
-    margin-left: var(--sui_avatar_group-avatar-overlap);
+    margin-left: var(--sui_avatar_group_avatar-overlap);
   }
   .sui_avatar_group-reverse .sui_avatar:not(:last-child) {
-    margin-right: var(--sui_avatar_group-avatar-overlap);
+    margin-right: var(--sui_avatar_group_avatar-overlap);
   }
 
   /* 既定値設定: ここから */
 
   .sui_avatar_group {
     /* 空白 */
-    --sui_avatar_group-avatar-overlap: calc(-1 * --sui-space(4));
+    --sui_avatar_group_avatar-overlap: calc(-1 * --sui-space(4));
     /* 枠線 */
-    --sui_avatar_group-avatar-pseudo_ring_color: var(--sui-canvas-1);
-    --sui_avatar_group-avatar-pseudo_ring_width: --sui-border_width(3);
+    --sui_avatar_group_avatar-pseudo_ring_color: var(--sui-canvas-1);
+    --sui_avatar_group_avatar-pseudo_ring_width: --sui-border_width(3);
   }
 
   .sui_avatar_group-forward {
-    --sui_avatar_group-avatar-z_index: sibling-index();
+    --sui_avatar_group_avatar-z_index: sibling-index();
   }
 
   .sui_avatar_group-reverse {
-    --sui_avatar_group-avatar-z_index: calc(sibling-count() - sibling-index());
+    --sui_avatar_group_avatar-z_index: calc(sibling-count() - sibling-index());
   }
 
   /* 既定値設定: ここまで */
@@ -61,7 +61,7 @@
 
   @media (any-hover: hover) {
     .sui_avatar_group .sui_avatar:hover {
-      --_sui_avatar_group-avatar-z_index: calc(infinity);
+      --_sui_avatar_group_avatar-z_index: calc(infinity);
     }
   }
 

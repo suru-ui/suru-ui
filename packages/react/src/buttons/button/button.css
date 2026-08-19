@@ -39,6 +39,13 @@
     cursor: default;
     user-select: none;
 
+    &::after {
+      position: absolute;
+      inset: 0px;
+      pointer-events: none;
+      content: "";
+    }
+
     @media (any-hover: hover) {
       &:hover {
         z-index: 1;
@@ -56,9 +63,7 @@
     min-height: var(--sui_button-min_height);
     aspect-ratio: var(--_sui_button-aspect_ratio, unset);
     padding-block: var(--_sui_button-padding_block, var(--sui_button-padding_block));
-    padding-inline: var(--_sui_button-padding_inline,
-                      calc(var(--sui_button-padding_inline) - var(--_sui_button-border_width, 0px))
-                    );
+    padding-inline: var(--_sui_button-padding_inline, var(--sui_button-padding_inline));
     font-family: var(--sui_button-font_family);
     font-size: var(--sui_button-font_size);
     font-weight: var(--sui_button-font_weight);
@@ -69,24 +74,27 @@
     background-color: var(--_sui_button-background_color,
                         var(--sui_button-background_color-normal)
                       );
-    border: var(--_sui_button-border_color, transparent) solid var(--_sui_button-border_width, 0px);
-    border-radius: var(--_sui_button-border_radius, var(--sui_button-border_radius));
+    border-radius: var(--sui_button-border_radius);
+
+    &::after {
+      border: var(--_sui_button-border_color, transparent)
+              solid
+              var(--_sui_button-border_width, 0px);
+      border-radius: var(--sui_button-border_radius);
+    }
   }
 
   /* 既定値設定: ここから */
 
   .sui_button {
     /* 空白 */
-    --sui_button-padding_block: var(--_sui_button-padding_block,
-                                  round(
-                                    down,
-                                    calc(
-                                      (var(--sui_button-min_height) - var(--sui_button-text_height))
-                                      / 2
-                                      - var(--_sui_button-border_width, 0px)
-                                    ),
-                                    1px
-                                  )
+    --sui_button-padding_block: round(
+                                  down,
+                                  calc(
+                                    (var(--sui_button-min_height) - var(--sui_button-text_height))
+                                    / 2
+                                  ),
+                                  1px
                                 );
     /* 書体 */
     --sui_button-font_family: var(--sui-font-sans);
@@ -1333,7 +1341,7 @@
     &.sui_button-variant_solid {
       background-color: var(--sui-disabled-solid-canvas) !important;
 
-      &.sui_button-outlined {
+      &.sui_button-outlined::after {
         border: var(--sui-disabled-solid-border) solid var(--sui-disabled-border_width) !important;
       }
     }
@@ -1341,7 +1349,7 @@
     &.sui_button-variant_naked {
       background-color: var(--sui-disabled-naked-canvas) !important;
 
-      &.sui_button-outlined {
+      &.sui_button-outlined::after {
         border: var(--sui-disabled-naked-border) solid var(--sui-disabled-border_width) !important;
       }
     }
@@ -1349,7 +1357,7 @@
     &.sui_button-variant_liquid {
       background-color: var(--sui-disabled-liquid-canvas) !important;
 
-      &.sui_button-outlined {
+      &.sui_button-outlined::after {
         border: var(--sui-disabled-liquid-border) solid var(--sui-disabled-border_width) !important;
       }
     }

@@ -6,19 +6,16 @@ import type { IComponent } from "../../types.js";
 
 import "./toast.css";
 
-// Types
-// -----
-
 // Provider
 // --------
 
 /**
- * {@link Provider} の状態です。
+ * {@link ToastProvider} の状態です。
  */
 export type ToastProviderState = BaseToast.Provider.State;
 
 /**
- * {@link Provider} に渡すプロパティーです。
+ * {@link ToastProvider} に渡すプロパティーです。
  */
 export type ToastProviderProps = BaseToast.Provider.Props;
 
@@ -30,22 +27,22 @@ export const ToastProvider: IComponent<ToastProviderProps> = function SuiToastPr
 };
 
 /**
- * {@link ToastProvider} の型をまとめた名前空間です。
+ * {@link ToastProvider} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Provider {
   /**
-   * {@link ToastProvider} の状態型です。
+   * {@link ToastProviderState} です。
    */
   export type State = ToastProviderState;
 
   /**
-   * {@link ToastProvider} のプロパティー型です。
+   * {@link ToastProviderProps} です。
    */
   export type Props = ToastProviderProps;
 }
 
 /**
- * {@link ToastProvider} の短縮名です。
+ * {@link ToastProvider} です。
  */
 export const Provider: IComponent<Provider.Props> = ToastProvider;
 
@@ -53,12 +50,12 @@ export const Provider: IComponent<Provider.Props> = ToastProvider;
 // ------
 
 /**
- * {@link Portal} の状態です。
+ * {@link ToastPortal} の状態です。
  */
 export type ToastPortalState = BaseToast.Portal.State;
 
 /**
- * {@link Portal} に渡すプロパティーです。
+ * {@link ToastPortal} に渡すプロパティーです。
  */
 export type ToastPortalProps = BaseToast.Portal.Props;
 
@@ -74,22 +71,22 @@ export const ToastPortal: IComponent<ToastPortalProps> = function SuiToastPortal
 };
 
 /**
- * {@link ToastPortal} の型をまとめた名前空間です。
+ * {@link ToastPortal} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Portal {
   /**
-   * {@link ToastPortal} の状態型です。
+   * {@link ToastPortalState} です。
    */
   export type State = ToastPortalState;
 
   /**
-   * {@link ToastPortal} のプロパティー型です。
+   * {@link ToastPortalProps} です。
    */
   export type Props = ToastPortalProps;
 }
 
 /**
- * {@link ToastPortal} の短縮名です。
+ * {@link ToastPortal} です。
  */
 export const Portal: IComponent<Portal.Props> = ToastPortal;
 
@@ -97,12 +94,12 @@ export const Portal: IComponent<Portal.Props> = ToastPortal;
 // --------
 
 /**
- * {@link Viewport} の状態です。
+ * {@link ToastViewport} の状態です。
  */
 export type ToastViewportState = BaseToast.Viewport.State;
 
 /**
- * {@link Viewport} に渡すプロパティーです。
+ * {@link ToastViewport} に渡すプロパティーです。
  */
 export type ToastViewportProps = BaseToast.Viewport.Props;
 
@@ -116,22 +113,22 @@ export const ToastViewport: IComponent<ToastViewportProps> = function SuiToastVi
 };
 
 /**
- * {@link ToastViewport} の型をまとめた名前空間です。
+ * {@link ToastViewport} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Viewport {
   /**
-   * {@link ToastViewport} の状態型です。
+   * {@link ToastViewportState} です。
    */
   export type State = ToastViewportState;
 
   /**
-   * {@link ToastViewport} のプロパティー型です。
+   * {@link ToastViewportProps} です。
    */
   export type Props = ToastViewportProps;
 }
 
 /**
- * {@link ToastViewport} の短縮名です。
+ * {@link ToastViewport} です。
  */
 export const Viewport: IComponent<Viewport.Props> = ToastViewport;
 
@@ -139,12 +136,19 @@ export const Viewport: IComponent<Viewport.Props> = ToastViewport;
 // ----
 
 /**
- * {@link Root} の状態です。
+ * {@link ToastRoot} に渡す通知オブジェクトの型です。
+ *
+ * @template TData 通知に含める追加データの型です。
+ */
+export type ToastRootToastObject<TData extends object = object> = BaseToast.Root.ToastObject<TData>;
+
+/**
+ * {@link ToastRoot} の状態です。
  */
 export type ToastRootState = BaseToast.Root.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link ToastRoot} に渡すプロパティーです。
  *
  * @template TData 通知に含める追加データの型です。
  */
@@ -152,7 +156,7 @@ export type ToastRootProps<TData extends object = object> = Omit<BaseToast.Root.
   /**
    * 表示する通知オブジェクトです。
    */
-  toast: BaseToast.Root.ToastObject<TData>;
+  toast: ToastRootToastObject<TData>;
 };
 
 /**
@@ -176,23 +180,26 @@ export const ToastRoot: ToastRootComponent = function SuiToastRoot<TData extends
 };
 
 /**
- * {@link ToastRoot} の型をまとめた名前空間です。
+ * {@link ToastRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
-   * {@link ToastRoot} の状態型です。
+   * {@link ToastRootState} です。
    */
   export type State = ToastRootState;
 
   /**
-   * {@link ToastRoot} のプロパティー型です。
+   * {@link ToastRootProps} です。
    */
   export type Props<TData extends object = object> = ToastRootProps<TData>;
-  export type ToastObject<TData extends object = object> = BaseToast.Root.ToastObject<TData>;
+  /**
+   * {@link ToastRootToastObject} です。
+   */
+  export type ToastObject<TData extends object = object> = ToastRootToastObject<TData>;
 }
 
 /**
- * {@link ToastRoot} の短縮名です。
+ * {@link ToastRoot} です。
  */
 export const Root: ToastRootComponent = ToastRoot;
 
@@ -200,12 +207,12 @@ export const Root: ToastRootComponent = ToastRoot;
 // -------
 
 /**
- * {@link Content} の状態です。
+ * {@link ToastContent} の状態です。
  */
 export type ToastContentState = BaseToast.Content.State;
 
 /**
- * {@link Content} に渡すプロパティーです。
+ * {@link ToastContent} に渡すプロパティーです。
  */
 export type ToastContentProps = BaseToast.Content.Props;
 
@@ -219,22 +226,22 @@ export const ToastContent: IComponent<ToastContentProps> = function SuiToastCont
 };
 
 /**
- * {@link ToastContent} の型をまとめた名前空間です。
+ * {@link ToastContent} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Content {
   /**
-   * {@link ToastContent} の状態型です。
+   * {@link ToastContentState} です。
    */
   export type State = ToastContentState;
 
   /**
-   * {@link ToastContent} のプロパティー型です。
+   * {@link ToastContentProps} です。
    */
   export type Props = ToastContentProps;
 }
 
 /**
- * {@link ToastContent} の短縮名です。
+ * {@link ToastContent} です。
  */
 export const Content: IComponent<Content.Props> = ToastContent;
 
@@ -242,12 +249,12 @@ export const Content: IComponent<Content.Props> = ToastContent;
 // -----
 
 /**
- * {@link Title} の状態です。
+ * {@link ToastTitle} の状態です。
  */
 export type ToastTitleState = BaseToast.Title.State;
 
 /**
- * {@link Title} に渡すプロパティーです。
+ * {@link ToastTitle} に渡すプロパティーです。
  */
 export type ToastTitleProps = BaseToast.Title.Props;
 
@@ -263,22 +270,22 @@ export const ToastTitle: IComponent<ToastTitleProps> = function SuiToastTitle(pr
 };
 
 /**
- * {@link ToastTitle} の型をまとめた名前空間です。
+ * {@link ToastTitle} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Title {
   /**
-   * {@link ToastTitle} の状態型です。
+   * {@link ToastTitleState} です。
    */
   export type State = ToastTitleState;
 
   /**
-   * {@link ToastTitle} のプロパティー型です。
+   * {@link ToastTitleProps} です。
    */
   export type Props = ToastTitleProps;
 }
 
 /**
- * {@link ToastTitle} の短縮名です。
+ * {@link ToastTitle} です。
  */
 export const Title: IComponent<Title.Props> = ToastTitle;
 
@@ -286,12 +293,12 @@ export const Title: IComponent<Title.Props> = ToastTitle;
 // -----------
 
 /**
- * {@link Description} の状態です。
+ * {@link ToastDescription} の状態です。
  */
 export type ToastDescriptionState = BaseToast.Description.State;
 
 /**
- * {@link Description} に渡すプロパティーです。
+ * {@link ToastDescription} に渡すプロパティーです。
  */
 export type ToastDescriptionProps = BaseToast.Description.Props;
 
@@ -311,22 +318,22 @@ export const ToastDescription: IComponent<ToastDescriptionProps> = function SuiT
 };
 
 /**
- * {@link ToastDescription} の型をまとめた名前空間です。
+ * {@link ToastDescription} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Description {
   /**
-   * {@link ToastDescription} の状態型です。
+   * {@link ToastDescriptionState} です。
    */
   export type State = ToastDescriptionState;
 
   /**
-   * {@link ToastDescription} のプロパティー型です。
+   * {@link ToastDescriptionProps} です。
    */
   export type Props = ToastDescriptionProps;
 }
 
 /**
- * {@link ToastDescription} の短縮名です。
+ * {@link ToastDescription} です。
  */
 export const Description: IComponent<Description.Props> = ToastDescription;
 
@@ -334,12 +341,12 @@ export const Description: IComponent<Description.Props> = ToastDescription;
 // ------
 
 /**
- * {@link Action} の状態です。
+ * {@link ToastAction} の状態です。
  */
 export type ToastActionState = BaseToast.Action.State;
 
 /**
- * {@link Action} に渡すプロパティーです。
+ * {@link ToastAction} に渡すプロパティーです。
  */
 export type ToastActionProps = BaseToast.Action.Props;
 
@@ -355,22 +362,22 @@ export const ToastAction: IComponent<ToastActionProps> = function SuiToastAction
 };
 
 /**
- * {@link ToastAction} の型をまとめた名前空間です。
+ * {@link ToastAction} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Action {
   /**
-   * {@link ToastAction} の状態型です。
+   * {@link ToastActionState} です。
    */
   export type State = ToastActionState;
 
   /**
-   * {@link ToastAction} のプロパティー型です。
+   * {@link ToastActionProps} です。
    */
   export type Props = ToastActionProps;
 }
 
 /**
- * {@link ToastAction} の短縮名です。
+ * {@link ToastAction} です。
  */
 export const Action: IComponent<Action.Props> = ToastAction;
 
@@ -378,12 +385,12 @@ export const Action: IComponent<Action.Props> = ToastAction;
 // -----
 
 /**
- * {@link Close} の状態です。
+ * {@link ToastClose} の状態です。
  */
 export type ToastCloseState = BaseToast.Close.State;
 
 /**
- * {@link Close} に渡すプロパティーです。
+ * {@link ToastClose} に渡すプロパティーです。
  */
 export type ToastCloseProps = BaseToast.Close.Props;
 
@@ -397,22 +404,22 @@ export const ToastClose: IComponent<ToastCloseProps> = function SuiToastClose(pr
 };
 
 /**
- * {@link ToastClose} の型をまとめた名前空間です。
+ * {@link ToastClose} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Close {
   /**
-   * {@link ToastClose} の状態型です。
+   * {@link ToastCloseState} です。
    */
   export type State = ToastCloseState;
 
   /**
-   * {@link ToastClose} のプロパティー型です。
+   * {@link ToastCloseProps} です。
    */
   export type Props = ToastCloseProps;
 }
 
 /**
- * {@link ToastClose} の短縮名です。
+ * {@link ToastClose} です。
  */
 export const Close: IComponent<Close.Props> = ToastClose;
 
@@ -420,12 +427,12 @@ export const Close: IComponent<Close.Props> = ToastClose;
 // ----------
 
 /**
- * {@link Positioner} の状態です。
+ * {@link ToastPositioner} の状態です。
  */
 export type ToastPositionerState = BaseToast.Positioner.State;
 
 /**
- * {@link Positioner} に渡すプロパティーです。
+ * {@link ToastPositioner} に渡すプロパティーです。
  */
 export type ToastPositionerProps = BaseToast.Positioner.Props;
 
@@ -441,22 +448,22 @@ export const ToastPositioner: IComponent<ToastPositionerProps> = function SuiToa
 };
 
 /**
- * {@link ToastPositioner} の型をまとめた名前空間です。
+ * {@link ToastPositioner} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Positioner {
   /**
-   * {@link ToastPositioner} の状態型です。
+   * {@link ToastPositionerState} です。
    */
   export type State = ToastPositionerState;
 
   /**
-   * {@link ToastPositioner} のプロパティー型です。
+   * {@link ToastPositionerProps} です。
    */
   export type Props = ToastPositionerProps;
 }
 
 /**
- * {@link ToastPositioner} の短縮名です。
+ * {@link ToastPositioner} です。
  */
 export const Positioner: IComponent<Positioner.Props> = ToastPositioner;
 
@@ -464,12 +471,12 @@ export const Positioner: IComponent<Positioner.Props> = ToastPositioner;
 // -----
 
 /**
- * {@link Arrow} の状態です。
+ * {@link ToastArrow} の状態です。
  */
 export type ToastArrowState = BaseToast.Arrow.State;
 
 /**
- * {@link Arrow} に渡すプロパティーです。
+ * {@link ToastArrow} に渡すプロパティーです。
  */
 export type ToastArrowProps = BaseToast.Arrow.Props;
 
@@ -483,22 +490,22 @@ export const ToastArrow: IComponent<ToastArrowProps> = function SuiToastArrow(pr
 };
 
 /**
- * {@link ToastArrow} の型をまとめた名前空間です。
+ * {@link ToastArrow} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Arrow {
   /**
-   * {@link ToastArrow} の状態型です。
+   * {@link ToastArrowState} です。
    */
   export type State = ToastArrowState;
 
   /**
-   * {@link ToastArrow} のプロパティー型です。
+   * {@link ToastArrowProps} です。
    */
   export type Props = ToastArrowProps;
 }
 
 /**
- * {@link ToastArrow} の短縮名です。
+ * {@link ToastArrow} です。
  */
 export const Arrow: IComponent<Arrow.Props> = ToastArrow;
 

@@ -15,7 +15,6 @@ import {
   type DrawerBackdropProps,
   type DrawerViewportProps,
   type DrawerSwipeAreaProps,
-  type DrawerSwipeDirection,
   type DrawerDescriptionProps,
   type DrawerVirtualKeyboardProviderProps,
   DrawerRoot,
@@ -104,56 +103,42 @@ export type DrawerState = DrawerRootState;
  * {@link DrawerRoot|Root} から継承した `open` を指定すると開閉状態を制御でき、
  * `defaultOpen` は初期状態だけを指定します。
  */
-export type DrawerProps = Omit<DrawerRootProps, "children" | "handle" | "swipeDirection"> & {
-  /**
-   * ドロワーが表示され、スワイプで閉じられる方向です。
-   *
-   * - `"up"`: 上端から表示する
-   * - `"down"`: 下端から表示する
-   * - `"left"`: 左端から表示する
-   * - `"right"`: 右端から表示する
-   *
-   * @default "left"
-   */
-  swipeDirection?: DrawerSwipeDirection | undefined;
+export type DrawerProps = Omit<DrawerRootProps, "children" | "handle"> &
+  Pick<DrawerContentProps, "children"> & {
+    /**
+     * ドロワーを開くトリガーに表示するコンテンツです。
+     *
+     * {@link DrawerTrigger|Trigger} の `render` プロパティーに渡されます。
+     * 省略した場合、トリガーはレンダリングされません。
+     */
+    trigger?: DrawerTriggerProps["render"] | undefined;
 
-  /**
-   * ドロワーを開くトリガーに表示するコンテンツです。
-   *
-   * {@link DrawerTrigger|Trigger} の `render` プロパティーに渡されます。
-   * 省略した場合、トリガーはレンダリングされません。
-   */
-  trigger?: DrawerTriggerProps["render"] | undefined;
+    /**
+     * ドロワーのタイトルです。
+     * 省略した場合、タイトル要素はレンダリングされません。
+     */
+    title?: React.ReactNode | undefined;
 
-  /**
-   * ドロワーのタイトルです。
-   * 省略した場合、タイトル要素はレンダリングされません。
-   */
-  title?: React.ReactNode | undefined;
+    /**
+     * ドロワーの説明文です。
+     * 省略した場合、説明要素はレンダリングされません。
+     */
+    description?: React.ReactNode | undefined;
 
-  /**
-   * ドロワーの説明文です。
-   * 省略した場合、説明要素はレンダリングされません。
-   */
-  description?: React.ReactNode | undefined;
+    /**
+     * 右上の閉じるアイコンがクリックされたときに呼ばれるコールバックです。
+     *
+     * `slotProps.headerClose` の `onClick` が先に実行され、イベントが `preventDefault` されていない場合に呼ばれます。
+     */
+    onClose?: ((event: CloseClickEvent) => void) | undefined;
 
-  /**
-   * ドロワーの本文に表示するコンテンツです。
-   */
-  children?: React.ReactNode | undefined;
-
-  /**
-   * 右上の閉じるアイコンがクリックされたときに呼ばれるコールバックです。
-   *
-   * `slotProps.headerClose` の `onClick` が先に実行され、イベントが `preventDefault` されていない場合に呼ばれます。
-   */
-  onClose?: ((event: CloseClickEvent) => void) | undefined;
-
-  /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-   */
-  slotProps?: DrawerSlotProps | undefined;
-};
+    /**
+     * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+     *
+     * 各パーツのプロパティーが優先されます。
+     */
+    slotProps?: DrawerSlotProps | undefined;
+  };
 
 type CloseClickHandler = DrawerCloseProps["onClick"];
 type CloseClickEvent = Parameters<NonNullable<CloseClickHandler>>[0];

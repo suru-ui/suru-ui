@@ -2,11 +2,15 @@ import * as React from "react";
 
 import type { IComponent } from "../../types.js";
 import {
+  type ProgressRootSize,
+  type ProgressRootColor,
   type ProgressRootProps,
   type ProgressRootState,
   type ProgressLabelProps,
+  type ProgressRootRadius,
   type ProgressTrackProps,
   type ProgressValueProps,
+  type ProgressRootVariant,
   type ProgressIndicatorProps,
   ProgressRoot,
   ProgressLabel,
@@ -14,6 +18,26 @@ import {
   ProgressValue,
   ProgressIndicator,
 } from "./progress.parts.jsx";
+
+/**
+ * {@link ProgressRootColor} です。
+ */
+export type ProgressColor = ProgressRootColor;
+
+/**
+ * {@link ProgressRootRadius} です。
+ */
+export type ProgressRadius = ProgressRootRadius;
+
+/**
+ * {@link ProgressRootSize} です。
+ */
+export type ProgressSize = ProgressRootSize;
+
+/**
+ * {@link ProgressRootVariant} です。
+ */
+export type ProgressVariant = ProgressRootVariant;
 
 /**
  * {@link Progress} の各パーツに渡すプロパティーです。
@@ -48,7 +72,7 @@ export type ProgressState = ProgressRootState;
 /**
  * {@link Progress} コンポーネントのプロパティーです。
  */
-export type ProgressProps = ProgressRootProps & {
+export type ProgressProps = Omit<ProgressRootProps, "children"> & {
   /**
    * ラベルです。
    */
@@ -108,4 +132,24 @@ export namespace Progress {
    * {@link ProgressSlotProps} です。
    */
   export type SlotProps = ProgressSlotProps;
+
+  /**
+   * {@link ProgressColor} です。
+   */
+  export type Color = ProgressColor;
+
+  /**
+   * {@link ProgressRadius} です。
+   */
+  export type Radius = ProgressRadius;
+
+  /**
+   * {@link ProgressSize} です。
+   */
+  export type Size = ProgressSize;
+
+  /**
+   * {@link ProgressVariant} です。
+   */
+  export type Variant = ProgressVariant;
 }

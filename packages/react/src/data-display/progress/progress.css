@@ -22,7 +22,7 @@
 
   .sui_progress {
     /* 空白 */
-    --sui_progress-gap: --sui-gap(2);
+    --sui_progress-gap: --sui-gap(4);
   }
 
   /* 既定値設定: ここまで */
@@ -165,7 +165,7 @@
     /* 形状 */
     --sui_progress_track-height: ;
     /* 背景 */
-    --sui_progress_track-canvas: ;
+    --sui_progress_track-background_color: ;
     /* 枠線 */
     --sui_progress_track-border_color: ;
     --sui_progress_track-border_width: ;
@@ -183,7 +183,7 @@
   /* 動的 */
   .sui_progress_track {
     height: var(--sui_progress_track-height);
-    background-color: var(--sui_progress_track-canvas);
+    background-color: var(--sui_progress_track-background_color);
     border: var(--_sui_progress_track-border_color, transparent)
             solid
             var(--_sui_progress_track-border_width, 0px);
@@ -239,14 +239,14 @@
 
   .sui_progress-variant_naked {
     /* 背景 */
-    --sui_progress_track-canvas: var(--sui-grey-naked-canvas-normal);
+    --sui_progress_track-background_color: var(--sui-grey-naked-canvas-normal);
     /* 枠線 */
     --sui_progress_track-border_color: var(--sui-border-1);
   }
 
   .sui_progress-variant_liquid {
     /* 背景 */
-    --sui_progress_track-canvas: var(--sui-grey-liquid-canvas-normal);
+    --sui_progress_track-background_color: var(--sui-grey-liquid-canvas-normal);
     /* 枠線 */
     --sui_progress_track-border_color: var(--sui-border-1);
   }
@@ -269,7 +269,7 @@
   /* 変数 */
   .sui_progress {
     /* 背景 */
-    --sui_progress_indicator-canvas: ;
+    --sui_progress_indicator-background_color: ;
   }
 
   /* 静的 */
@@ -285,49 +285,49 @@
   /* 動的 */
   .sui_progress_indicator {
     width: var(--_sui_progress_indicator-width, auto);
-    background-color: var(--sui_progress_indicator-canvas);
+    background-color: var(--sui_progress_indicator-background_color);
   }
 
   /* 既定値設定: ここから */
 
   .sui_progress-color_grey {
     /* 背景 */
-    --sui_progress_indicator-canvas: var(--sui-grey-solid-canvas-normal);
+    --sui_progress_indicator-background_color: var(--sui-grey-solid-canvas-normal);
   }
 
   .sui_progress-color_blue {
     /* 背景 */
-    --sui_progress_indicator-canvas: var(--sui-blue-solid-canvas-normal);
+    --sui_progress_indicator-background_color: var(--sui-blue-solid-canvas-normal);
   }
 
   .sui_progress-color_purple {
     /* 背景 */
-    --sui_progress_indicator-canvas: var(--sui-purple-solid-canvas-normal);
+    --sui_progress_indicator-background_color: var(--sui-purple-solid-canvas-normal);
   }
 
   .sui_progress-color_magenta {
     /* 背景 */
-    --sui_progress_indicator-canvas: var(--sui-magenta-solid-canvas-normal);
+    --sui_progress_indicator-background_color: var(--sui-magenta-solid-canvas-normal);
   }
 
   .sui_progress-color_red {
     /* 背景 */
-    --sui_progress_indicator-canvas: var(--sui-red-solid-canvas-normal);
+    --sui_progress_indicator-background_color: var(--sui-red-solid-canvas-normal);
   }
 
   .sui_progress-color_orange {
     /* 背景 */
-    --sui_progress_indicator-canvas: var(--sui-orange-solid-canvas-normal);
+    --sui_progress_indicator-background_color: var(--sui-orange-solid-canvas-normal);
   }
 
   .sui_progress-color_yellow {
     /* 背景 */
-    --sui_progress_indicator-canvas: var(--sui-yellow-solid-canvas-normal);
+    --sui_progress_indicator-background_color: var(--sui-yellow-solid-canvas-normal);
   }
 
   .sui_progress-color_green {
     /* 背景 */
-    --sui_progress_indicator-canvas: var(--sui-green-solid-canvas-normal);
+    --sui_progress_indicator-background_color: var(--sui-green-solid-canvas-normal);
   }
 
   /* 既定値設定: ここまで */
@@ -337,6 +337,8 @@
   .sui_progress_indicator[data-indeterminate] {
     /* 形状 */
     --_sui_progress_indicator-width: 40%;
+
+    animation: sui_progress-indeterminate 1.5s infinite linear;
   }
 
   /* 上書き設定: ここまで */

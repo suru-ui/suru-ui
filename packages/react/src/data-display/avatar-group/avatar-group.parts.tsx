@@ -9,40 +9,23 @@ import { AvatarRoot, type AvatarRootProps, type AvatarRootState } from "../avata
 
 import "./avatar-group.css";
 
-// Types
-// -----
-
-/**
- * アバターグループの色です。
- *
- * `"colorful"` を指定すると、子アバターごとに色を自動で割り当てます。
- */
-export type AvatarGroupColor = Color | "colorful";
-
-/**
- * アバターグループの角丸です。
- *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
- * - `"full"`: 完全な丸形
- */
-export type AvatarGroupRadius = "none" | Size | "full";
-
-/**
- * アバターグループの大きさです。
- *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
- */
-export type AvatarGroupSize = Size;
-
-const colorfulColors = COLORS.filter((color) => color !== "grey");
-
 // Context
 // -------
+
+/**
+ * アバターの色です。
+ */
+export type AvatarGroupContextColor = Color;
+
+/**
+ * {@link AvatarGroupRootRadius} です。
+ */
+export type AvatarGroupContextRadius = AvatarGroupRootRadius;
+
+/**
+ * {@link AvatarGroupRootSize} です。
+ */
+export type AvatarGroupContextSize = AvatarGroupRootSize;
 
 /**
  * {@link AvatarGroupRoot} が子パーツへ提供するコンテキストです。
@@ -51,17 +34,17 @@ export type AvatarGroupContext = {
   /**
    * アバターの背景色です。
    */
-  readonly color: Color;
+  readonly color: AvatarGroupContextColor;
 
   /**
    * アバターの角丸です。
    */
-  readonly radius: AvatarGroupRadius;
+  readonly radius: AvatarGroupContextRadius;
 
   /**
    * アバターの大きさを指定します。
    */
-  readonly size: AvatarGroupSize;
+  readonly size: AvatarGroupContextSize;
 };
 
 /**
@@ -69,6 +52,26 @@ export type AvatarGroupContext = {
  */
 export const AvatarGroupContext: React.Context<AvatarGroupContext | null> =
   React.createContext<AvatarGroupContext | null>(null);
+
+/**
+ * {@link AvatarGroupContext} の型名前空間です。
+ */
+export namespace AvatarGroupContext {
+  /**
+   * {@link AvatarGroupContextColor} です。
+   */
+  export type Color = AvatarGroupContextColor;
+
+  /**
+   * {@link AvatarGroupContextRadius} です。
+   */
+  export type Radius = AvatarGroupContextRadius;
+
+  /**
+   * {@link AvatarGroupContextSize} です。
+   */
+  export type Size = AvatarGroupContextSize;
+}
 
 function useSuiAvatarGroupContext(optional?: false): AvatarGroupContext;
 function useSuiAvatarGroupContext(optional?: boolean): AvatarGroupContext | null;
@@ -108,6 +111,33 @@ export const useContext: IUseContext<Context> = useAvatarGroupContext;
 // ----
 
 /**
+ * アバターグループの色です。
+ *
+ * `"auto"` を指定すると、子アバターごとに色を自動で割り当てます。
+ */
+export type AvatarGroupRootColor = "auto" | Color;
+
+/**
+ * アバターグループの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
+ */
+export type AvatarGroupRootRadius = "none" | Size | "full";
+
+/**
+ * アバターグループの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type AvatarGroupRootSize = Size;
+
+/**
  * {@link AvatarGroupRoot} の状態です。
  */
 export type AvatarGroupRootState = {};
@@ -122,9 +152,9 @@ export type AvatarGroupRootProps = Omit<React.ComponentProps<"div">, keyof Rende
      *
      * アバターに色が指定されている場合、それを優先します。
      *
-     * @default "colorful"
+     * @default "auto"
      */
-    color?: AvatarGroupColor | undefined;
+    color?: AvatarGroupRootColor | undefined;
 
     // opticallyCenter?: boolean | undefined;
 
@@ -135,7 +165,7 @@ export type AvatarGroupRootProps = Omit<React.ComponentProps<"div">, keyof Rende
      *
      * @default "full"
      */
-    radius?: AvatarGroupRadius | undefined;
+    radius?: AvatarGroupRootRadius | undefined;
 
     /**
      * アバターの重なり順を逆にします。
@@ -151,8 +181,10 @@ export type AvatarGroupRootProps = Omit<React.ComponentProps<"div">, keyof Rende
      *
      * @default "md"
      */
-    size?: AvatarGroupSize | undefined;
+    size?: AvatarGroupRootSize | undefined;
   };
+
+const colors = /*#__PURE__*/ COLORS.filter((color) => color !== "grey");
 
 /**
  * アバターを重ねて表示するグループのルートコンポーネントです。
@@ -162,7 +194,7 @@ export const AvatarGroupRoot: IComponent<AvatarGroupRootProps> = function SuiAva
 ) {
   const {
     size = "md",
-    color = "colorful",
+    color = "auto",
     radius = "full",
     reverse = false,
     children: childrenProp,
@@ -179,7 +211,7 @@ export const AvatarGroupRoot: IComponent<AvatarGroupRootProps> = function SuiAva
       <AvatarGroupContext
         value={{
           size,
-          color: color === "colorful" ? colorfulColors[i % colorfulColors.length]! : color,
+          color: color === "auto" ? colors[i % colors.length]! : color,
           radius,
         }}
       >

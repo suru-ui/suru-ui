@@ -6,9 +6,6 @@ import type { IComponent } from "../../types.js";
 
 import "./alert-dialog.css";
 
-// Types
-// -----
-
 // Handle
 // ------
 
@@ -29,12 +26,12 @@ export const createHandle: typeof AlertDialog.createHandle = AlertDialog.createH
 // ----
 
 /**
- * {@link Root} の状態です。
+ * {@link AlertDialogRoot} の状態です。
  */
 export type AlertDialogRootState = AlertDialog.Root.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link AlertDialogRoot} に渡すプロパティーです。
  */
 export type AlertDialogRootProps = Omit<React.ComponentProps<typeof AlertDialog.Root>, "handle"> & {
   /**
@@ -58,22 +55,22 @@ export const AlertDialogRoot: IComponent<AlertDialogRootProps> = function SuiAle
 };
 
 /**
- * {@link AlertDialogRoot} の型をまとめた名前空間です。
+ * {@link AlertDialogRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
-   * {@link AlertDialogRoot} の状態型です。
+   * {@link AlertDialogRootState} です。
    */
   export type State = AlertDialogRootState;
 
   /**
-   * {@link AlertDialogRoot} のプロパティー型です。
+   * {@link AlertDialogRootProps} です。
    */
   export type Props = AlertDialogRootProps;
 }
 
 /**
- * {@link AlertDialogRoot} の短縮名です。
+ * {@link AlertDialogRoot} です。
  */
 export const Root: IComponent<Root.Props> = AlertDialogRoot;
 
@@ -81,12 +78,12 @@ export const Root: IComponent<Root.Props> = AlertDialogRoot;
 // -------
 
 /**
- * {@link Trigger} の状態です。
+ * {@link AlertDialogTrigger} の状態です。
  */
 export type AlertDialogTriggerState = AlertDialog.Trigger.State;
 
 /**
- * {@link Trigger} に渡すプロパティーです。
+ * {@link AlertDialogTrigger} に渡すプロパティーです。
  */
 export type AlertDialogTriggerProps = Omit<
   React.ComponentProps<typeof AlertDialog.Trigger>,
@@ -129,22 +126,22 @@ export const AlertDialogTrigger: IComponent<AlertDialogTriggerProps> =
   };
 
 /**
- * {@link AlertDialogTrigger} の型をまとめた名前空間です。
+ * {@link AlertDialogTrigger} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Trigger {
   /**
-   * {@link AlertDialogTrigger} の状態型です。
+   * {@link AlertDialogTriggerState} です。
    */
   export type State = AlertDialogTriggerState;
 
   /**
-   * {@link AlertDialogTrigger} のプロパティー型です。
+   * {@link AlertDialogTriggerProps} です。
    */
   export type Props = AlertDialogTriggerProps;
 }
 
 /**
- * {@link AlertDialogTrigger} の短縮名です。
+ * {@link AlertDialogTrigger} です。
  */
 export const Trigger: IComponent<Trigger.Props> = AlertDialogTrigger;
 
@@ -152,12 +149,12 @@ export const Trigger: IComponent<Trigger.Props> = AlertDialogTrigger;
 // ------
 
 /**
- * {@link Portal} の状態です。
+ * {@link AlertDialogPortal} の状態です。
  */
 export type AlertDialogPortalState = AlertDialog.Portal.State;
 
 /**
- * {@link Portal} に渡すプロパティーです。
+ * {@link AlertDialogPortal} に渡すプロパティーです。
  */
 export type AlertDialogPortalProps = React.ComponentProps<typeof AlertDialog.Portal>;
 
@@ -177,22 +174,22 @@ export const AlertDialogPortal: IComponent<AlertDialogPortalProps> = function Su
 };
 
 /**
- * {@link AlertDialogPortal} の型をまとめた名前空間です。
+ * {@link AlertDialogPortal} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Portal {
   /**
-   * {@link AlertDialogPortal} の状態型です。
+   * {@link AlertDialogPortalState} です。
    */
   export type State = AlertDialogPortalState;
 
   /**
-   * {@link AlertDialogPortal} のプロパティー型です。
+   * {@link AlertDialogPortalProps} です。
    */
   export type Props = AlertDialogPortalProps;
 }
 
 /**
- * {@link AlertDialogPortal} の短縮名です。
+ * {@link AlertDialogPortal} です。
  */
 export const Portal: IComponent<Portal.Props> = AlertDialogPortal;
 
@@ -200,12 +197,12 @@ export const Portal: IComponent<Portal.Props> = AlertDialogPortal;
 // --------
 
 /**
- * {@link Backdrop} の状態です。
+ * {@link AlertDialogBackdrop} の状態です。
  */
 export type AlertDialogBackdropState = AlertDialog.Backdrop.State;
 
 /**
- * {@link Backdrop} に渡すプロパティーです。
+ * {@link AlertDialogBackdrop} に渡すプロパティーです。
  */
 export type AlertDialogBackdropProps = React.ComponentProps<typeof AlertDialog.Backdrop>;
 
@@ -225,22 +222,22 @@ export const AlertDialogBackdrop: IComponent<AlertDialogBackdropProps> =
   };
 
 /**
- * {@link AlertDialogBackdrop} の型をまとめた名前空間です。
+ * {@link AlertDialogBackdrop} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Backdrop {
   /**
-   * {@link AlertDialogBackdrop} の状態型です。
+   * {@link AlertDialogBackdropState} です。
    */
   export type State = AlertDialogBackdropState;
 
   /**
-   * {@link AlertDialogBackdrop} のプロパティー型です。
+   * {@link AlertDialogBackdropProps} です。
    */
   export type Props = AlertDialogBackdropProps;
 }
 
 /**
- * {@link AlertDialogBackdrop} の短縮名です。
+ * {@link AlertDialogBackdrop} です。
  */
 export const Backdrop: IComponent<Backdrop.Props> = AlertDialogBackdrop;
 
@@ -248,12 +245,12 @@ export const Backdrop: IComponent<Backdrop.Props> = AlertDialogBackdrop;
 // --------
 
 /**
- * {@link Viewport} の状態です。
+ * {@link AlertDialogViewport} の状態です。
  */
 export type AlertDialogViewportState = AlertDialog.Viewport.State;
 
 /**
- * {@link Viewport} に渡すプロパティーです。
+ * {@link AlertDialogViewport} に渡すプロパティーです。
  */
 export type AlertDialogViewportProps = React.ComponentProps<typeof AlertDialog.Viewport>;
 
@@ -275,22 +272,22 @@ export const AlertDialogViewport: IComponent<AlertDialogViewportProps> =
   };
 
 /**
- * {@link AlertDialogViewport} の型をまとめた名前空間です。
+ * {@link AlertDialogViewport} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Viewport {
   /**
-   * {@link AlertDialogViewport} の状態型です。
+   * {@link AlertDialogViewportState} です。
    */
   export type State = AlertDialogViewportState;
 
   /**
-   * {@link AlertDialogViewport} のプロパティー型です。
+   * {@link AlertDialogViewportProps} です。
    */
   export type Props = AlertDialogViewportProps;
 }
 
 /**
- * {@link AlertDialogViewport} の短縮名です。
+ * {@link AlertDialogViewport} です。
  */
 export const Viewport: IComponent<Viewport.Props> = AlertDialogViewport;
 
@@ -298,12 +295,12 @@ export const Viewport: IComponent<Viewport.Props> = AlertDialogViewport;
 // -----
 
 /**
- * {@link Popup} の状態です。
+ * {@link AlertDialogPopup} の状態です。
  */
 export type AlertDialogPopupState = AlertDialog.Popup.State;
 
 /**
- * {@link Popup} に渡すプロパティーです。
+ * {@link AlertDialogPopup} に渡すプロパティーです。
  */
 export type AlertDialogPopupProps = React.ComponentProps<typeof AlertDialog.Popup>;
 
@@ -319,22 +316,22 @@ export const AlertDialogPopup: IComponent<AlertDialogPopupProps> = function SuiA
 };
 
 /**
- * {@link AlertDialogPopup} の型をまとめた名前空間です。
+ * {@link AlertDialogPopup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Popup {
   /**
-   * {@link AlertDialogPopup} の状態型です。
+   * {@link AlertDialogPopupState} です。
    */
   export type State = AlertDialogPopupState;
 
   /**
-   * {@link AlertDialogPopup} のプロパティー型です。
+   * {@link AlertDialogPopupProps} です。
    */
   export type Props = AlertDialogPopupProps;
 }
 
 /**
- * {@link AlertDialogPopup} の短縮名です。
+ * {@link AlertDialogPopup} です。
  */
 export const Popup: IComponent<Popup.Props> = AlertDialogPopup;
 
@@ -342,12 +339,12 @@ export const Popup: IComponent<Popup.Props> = AlertDialogPopup;
 // -----
 
 /**
- * {@link Title} の状態です。
+ * {@link AlertDialogTitle} の状態です。
  */
 export type AlertDialogTitleState = AlertDialog.Title.State;
 
 /**
- * {@link Title} に渡すプロパティーです。
+ * {@link AlertDialogTitle} に渡すプロパティーです。
  */
 export type AlertDialogTitleProps = React.ComponentProps<typeof AlertDialog.Title>;
 
@@ -363,22 +360,22 @@ export const AlertDialogTitle: IComponent<AlertDialogTitleProps> = function SuiA
 };
 
 /**
- * {@link AlertDialogTitle} の型をまとめた名前空間です。
+ * {@link AlertDialogTitle} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Title {
   /**
-   * {@link AlertDialogTitle} の状態型です。
+   * {@link AlertDialogTitleState} です。
    */
   export type State = AlertDialogTitleState;
 
   /**
-   * {@link AlertDialogTitle} のプロパティー型です。
+   * {@link AlertDialogTitleProps} です。
    */
   export type Props = AlertDialogTitleProps;
 }
 
 /**
- * {@link AlertDialogTitle} の短縮名です。
+ * {@link AlertDialogTitle} です。
  */
 export const Title: IComponent<Title.Props> = AlertDialogTitle;
 
@@ -386,12 +383,12 @@ export const Title: IComponent<Title.Props> = AlertDialogTitle;
 // -----------
 
 /**
- * {@link Description} の状態です。
+ * {@link AlertDialogDescription} の状態です。
  */
 export type AlertDialogDescriptionState = AlertDialog.Description.State;
 
 /**
- * {@link Description} に渡すプロパティーです。
+ * {@link AlertDialogDescription} に渡すプロパティーです。
  */
 export type AlertDialogDescriptionProps = React.ComponentProps<typeof AlertDialog.Description>;
 
@@ -411,22 +408,22 @@ export const AlertDialogDescription: IComponent<AlertDialogDescriptionProps> =
   };
 
 /**
- * {@link AlertDialogDescription} の型をまとめた名前空間です。
+ * {@link AlertDialogDescription} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Description {
   /**
-   * {@link AlertDialogDescription} の状態型です。
+   * {@link AlertDialogDescriptionState} です。
    */
   export type State = AlertDialogDescriptionState;
 
   /**
-   * {@link AlertDialogDescription} のプロパティー型です。
+   * {@link AlertDialogDescriptionProps} です。
    */
   export type Props = AlertDialogDescriptionProps;
 }
 
 /**
- * {@link AlertDialogDescription} の短縮名です。
+ * {@link AlertDialogDescription} です。
  */
 export const Description: IComponent<Description.Props> = AlertDialogDescription;
 
@@ -434,12 +431,12 @@ export const Description: IComponent<Description.Props> = AlertDialogDescription
 // -----
 
 /**
- * {@link Close} の状態です。
+ * {@link AlertDialogClose} の状態です。
  */
 export type AlertDialogCloseState = AlertDialog.Close.State;
 
 /**
- * {@link Close} に渡すプロパティーです。
+ * {@link AlertDialogClose} に渡すプロパティーです。
  */
 export type AlertDialogCloseProps = Omit<
   React.ComponentProps<typeof AlertDialog.Close>,
@@ -475,21 +472,21 @@ export const AlertDialogClose: IComponent<AlertDialogCloseProps> = function SuiA
 };
 
 /**
- * {@link AlertDialogClose} の型をまとめた名前空間です。
+ * {@link AlertDialogClose} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Close {
   /**
-   * {@link AlertDialogClose} の状態型です。
+   * {@link AlertDialogCloseState} です。
    */
   export type State = AlertDialogCloseState;
 
   /**
-   * {@link AlertDialogClose} のプロパティー型です。
+   * {@link AlertDialogCloseProps} です。
    */
   export type Props = AlertDialogCloseProps;
 }
 
 /**
- * {@link AlertDialogClose} の短縮名です。
+ * {@link AlertDialogClose} です。
  */
 export const Close: IComponent<Close.Props> = AlertDialogClose;

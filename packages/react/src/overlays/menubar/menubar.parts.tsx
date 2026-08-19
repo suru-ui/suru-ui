@@ -6,19 +6,16 @@ import type { IComponent } from "../../types.js";
 
 import "./menubar.css";
 
-// Types
-// -----
-
 // Root
 // ----
 
 /**
- * {@link Root} の状態です。
+ * {@link MenubarRoot} の状態です。
  */
 export type MenubarRootState = BaseMenubar.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link MenubarRoot} に渡すプロパティーです。
  */
 export type MenubarRootProps = React.ComponentProps<typeof BaseMenubar>;
 
@@ -40,21 +37,21 @@ export const MenubarRoot: IComponent<MenubarRootProps> = function SuiMenubarRoot
 };
 
 /**
- * {@link MenubarRoot} の型をまとめた名前空間です。
+ * {@link MenubarRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
-   * {@link MenubarRoot} の状態型です。
+   * {@link MenubarRootState} です。
    */
   export type State = MenubarRootState;
 
   /**
-   * {@link MenubarRoot} のプロパティー型です。
+   * {@link MenubarRootProps} です。
    */
   export type Props = MenubarRootProps;
 }
 
 /**
- * {@link MenubarRoot} の短縮名です。
+ * {@link MenubarRoot} です。
  */
 export const Root: IComponent<Root.Props> = MenubarRoot;

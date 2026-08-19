@@ -1,5 +1,33 @@
 import type { IComponent } from "../../types.js";
-import { type ChipRootProps, type ChipRootState, ChipRoot } from "./chip.parts.jsx";
+import {
+  type ChipRootSize,
+  type ChipRootColor,
+  type ChipRootProps,
+  type ChipRootState,
+  type ChipRootRadius,
+  type ChipRootVariant,
+  ChipRoot,
+} from "./chip.parts.jsx";
+
+/**
+ * {@link ChipRootColor} です。
+ */
+export type ChipColor = ChipRootColor;
+
+/**
+ * {@link ChipRootRadius} です。
+ */
+export type ChipRadius = ChipRootRadius;
+
+/**
+ * {@link ChipRootSize} です。
+ */
+export type ChipSize = ChipRootSize;
+
+/**
+ * {@link ChipRootVariant} です。
+ */
+export type ChipVariant = ChipRootVariant;
 
 /**
  * {@link Chip} の状態です。
@@ -31,4 +59,24 @@ export namespace Chip {
    * {@link ChipProps} です。
    */
   export type Props = ChipProps;
+
+  /**
+   * {@link ChipColor} です。
+   */
+  export type Color = ChipColor;
+
+  /**
+   * {@link ChipRadius} です。
+   */
+  export type Radius = ChipRadius;
+
+  /**
+   * {@link ChipSize} です。
+   */
+  export type Size = ChipSize;
+
+  /**
+   * {@link ChipVariant} です。
+   */
+  export type Variant = ChipVariant;
 }

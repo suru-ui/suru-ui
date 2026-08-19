@@ -1,11 +1,35 @@
 import type { IComponent } from "../../types.js";
 import {
+  type SwitchRootColor,
+  type SwitchRootRadius,
+  type SwitchRootSize,
+  type SwitchRootVariant,
   type SwitchRootProps,
   type SwitchRootState,
   type SwitchThumbProps,
   SwitchRoot,
   SwitchThumb,
 } from "./switch.parts.jsx";
+
+/**
+ * {@link SwitchRootColor} です。
+ */
+export type SwitchColor = SwitchRootColor;
+
+/**
+ * {@link SwitchRootRadius} です。
+ */
+export type SwitchRadius = SwitchRootRadius;
+
+/**
+ * {@link SwitchRootSize} です。
+ */
+export type SwitchSize = SwitchRootSize;
+
+/**
+ * {@link SwitchRootVariant} です。
+ */
+export type SwitchVariant = SwitchRootVariant;
 
 /**
  * {@link Switch} の各パーツに渡すプロパティーです。
@@ -27,7 +51,7 @@ export type SwitchState = SwitchRootState;
  *
  * `checked` が指定されている場合は `defaultChecked` より優先され、状態の変更は `onCheckedChange` に通知されます。
  */
-export type SwitchProps = SwitchRootProps & {
+export type SwitchProps = Omit<SwitchRootProps, "children"> & {
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
    *
@@ -73,4 +97,24 @@ export namespace Switch {
    * {@link SwitchSlotProps} です。
    */
   export type SlotProps = SwitchSlotProps;
+
+  /**
+   * {@link SwitchColor} です。
+   */
+  export type Color = SwitchColor;
+
+  /**
+   * {@link SwitchRadius} です。
+   */
+  export type Radius = SwitchRadius;
+
+  /**
+   * {@link SwitchSize} です。
+   */
+  export type Size = SwitchSize;
+
+  /**
+   * {@link SwitchVariant} です。
+   */
+  export type Variant = SwitchVariant;
 }

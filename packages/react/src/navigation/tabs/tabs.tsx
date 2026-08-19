@@ -1,5 +1,21 @@
 import type { IComponent } from "../../types.js";
-import { type TabsRootProps, type TabsRootState, TabsRoot } from "./tabs.parts.jsx";
+import {
+  type TabsRootSize,
+  type TabsRootProps,
+  type TabsRootState,
+  type TabsRootRadius,
+  TabsRoot,
+} from "./tabs.parts.jsx";
+
+/**
+ * {@link TabsRootRadius} です。
+ */
+export type TabsRadius = TabsRootRadius;
+
+/**
+ * {@link TabsRootSize} です。
+ */
+export type TabsSize = TabsRootSize;
 
 /**
  * {@link Tabs} の状態です。
@@ -33,4 +49,14 @@ export namespace Tabs {
    * {@link TabsProps} です。
    */
   export type Props = TabsProps;
+
+  /**
+   * {@link TabsRadius} です。
+   */
+  export type Radius = TabsRadius;
+
+  /**
+   * {@link TabsSize} です。
+   */
+  export type Size = TabsSize;
 }

@@ -1,3 +1,12 @@
 export * from "./alert.parts.jsx";
 
-export { type AlertProps, type AlertState, type AlertSlotProps, Alert } from "./alert.jsx";
+export {
+  type AlertSize,
+  type AlertColor,
+  type AlertProps,
+  type AlertState,
+  type AlertRadius,
+  type AlertVariant,
+  type AlertSlotProps,
+  Alert,
+} from "./alert.jsx";

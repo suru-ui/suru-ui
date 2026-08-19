@@ -1,11 +1,15 @@
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { IComponent } from "../../types.js";
+import type { IComponent, IUseContext } from "../../types.js";
 import {
-  type SelectItems,
+  type SelectRootItems,
+  type SelectRootItemGroup,
+  type SelectRootRadius,
+  type SelectRootSize,
+  type SelectRootVariant,
+  type SelectContext,
   type SelectIconProps,
-  type SelectItemGroup,
   type SelectItemProps,
   type SelectListProps,
   type SelectRootProps,
@@ -44,7 +48,33 @@ import {
   SelectItemIndicator,
   SelectScrollUpArrow,
   SelectScrollDownArrow,
+  useSelectContext,
 } from "./select.parts.jsx";
+
+/**
+ * {@link SelectRootRadius} です。
+ */
+export type SelectRadius = SelectRootRadius;
+
+/**
+ * {@link SelectRootSize} です。
+ */
+export type SelectSize = SelectRootSize;
+
+/**
+ * {@link SelectRootVariant} です。
+ */
+export type SelectVariant = SelectRootVariant;
+
+/**
+ * {@link SelectRootItemGroup} です。
+ */
+export type SelectItemGroup<Value = unknown> = SelectRootItemGroup<Value>;
+
+/**
+ * {@link SelectRootItems} です。
+ */
+export type SelectItems<Value = unknown> = SelectRootItems<Value>;
 
 /**
  * {@link Select} の各パーツに渡すプロパティーです。
@@ -175,6 +205,8 @@ export type SelectProps<Value = unknown, Multiple extends boolean | undefined = 
 
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   *
+   * 各パーツのプロパティーが優先されます。
    */
   slotProps?: SelectSlotProps | undefined;
 };
@@ -185,108 +217,112 @@ export type SelectProps<Value = unknown, Multiple extends boolean | undefined = 
  * `multiple` を指定すると複数の値を選択できます。項目が多く、入力による絞り込みが必要な場合は
  * {@link Combobox} を使用してください。
  */
-export const Select: SelectComponent = function SuiSelect<
-  Value,
-  Multiple extends boolean | undefined = false,
->(props: SelectProps<Value, Multiple>) {
-  const {
-    children,
-    className,
-    label,
-    placeholder = "選択してください",
-    slotProps: {
-      label: labelProps,
-      value: valueProps,
-      trigger: triggerProps,
-      icon: iconProps,
-      portal: portalProps,
-      backdrop: backdropProps,
-      positioner: positionerProps,
-      popup: popupProps,
-      list: listProps,
-      item: itemProps,
-      itemIndicator: itemIndicatorProps,
-      itemText: itemTextProps,
-      arrow: arrowProps,
-      scrollUpArrow: scrollUpArrowProps,
-      scrollDownArrow: scrollDownArrowProps,
-      group: groupProps,
-      groupLabel: groupLabelProps,
-      separator: separatorProps,
-    } = {},
-    ...rootProps
-  } = props;
-  const { children: iconChildren = <SuiChevronIcon />, ...restIconProps } = iconProps ?? {};
-  const { "aria-label": triggerAriaLabel, ...restTriggerProps } = triggerProps ?? {};
-  const {
-    align = "start",
-    side = "bottom",
-    sideOffset = 8,
-    alignItemWithTrigger = true,
-    ...restPositionerProps
-  } = positionerProps ?? {};
-  const { children: indicatorChildren = <SuiCheckIcon />, ...restIndicatorProps } =
-    itemIndicatorProps ?? {};
-  const { children: valueChildren, ...restValueProps } = valueProps ?? {};
-  const { children: itemTextChildren, ...restItemTextProps } = itemTextProps ?? {};
-  const items = rootProps.items;
+export const Select: SelectType = /*#__PURE__*/ Object.assign(
+  function SuiSelect<Value, Multiple extends boolean | undefined = false>(
+    props: SelectProps<Value, Multiple>,
+  ) {
+    const {
+      children,
+      className,
+      label,
+      placeholder = "選択してください",
+      slotProps: {
+        label: labelProps,
+        value: valueProps,
+        trigger: triggerProps,
+        icon: iconProps,
+        portal: portalProps,
+        backdrop: backdropProps,
+        positioner: positionerProps,
+        popup: popupProps,
+        list: listProps,
+        item: itemProps,
+        itemIndicator: itemIndicatorProps,
+        itemText: itemTextProps,
+        arrow: arrowProps,
+        scrollUpArrow: scrollUpArrowProps,
+        scrollDownArrow: scrollDownArrowProps,
+        group: groupProps,
+        groupLabel: groupLabelProps,
+        separator: separatorProps,
+      } = {},
+      ...rootProps
+    } = props;
+    const { children: iconChildren = <SuiChevronIcon />, ...restIconProps } = iconProps ?? {};
+    const { "aria-label": triggerAriaLabel, ...restTriggerProps } = triggerProps ?? {};
+    const {
+      align = "start",
+      side = "bottom",
+      sideOffset = 8,
+      alignItemWithTrigger = true,
+      ...restPositionerProps
+    } = positionerProps ?? {};
+    const { children: indicatorChildren = <SuiCheckIcon />, ...restIndicatorProps } =
+      itemIndicatorProps ?? {};
+    const { children: valueChildren, ...restValueProps } = valueProps ?? {};
+    const { children: itemTextChildren, ...restItemTextProps } = itemTextProps ?? {};
+    const items = rootProps.items;
 
-  const renderItem = (item: Value, index: number, defaultLabel?: React.ReactNode) => {
-    const content =
-      typeof children === "function"
-        ? children(item, index)
-        : (defaultLabel ?? getItemLabel(item, rootProps.itemToStringLabel));
+    const renderItem = (item: Value, index: number, defaultLabel?: React.ReactNode) => {
+      const content =
+        typeof children === "function"
+          ? children(item, index)
+          : (defaultLabel ?? getItemLabel(item, rootProps.itemToStringLabel));
+
+      return (
+        <SelectItem {...itemProps} key={index} value={item}>
+          <SelectItemIndicator {...restIndicatorProps}>{indicatorChildren}</SelectItemIndicator>
+          <SelectItemText {...restItemTextProps}>{itemTextChildren ?? content}</SelectItemText>
+        </SelectItem>
+      );
+    };
+
+    const listChildren =
+      typeof children === "function" || children === undefined
+        ? renderItems(items, renderItem, groupProps, groupLabelProps, separatorProps)
+        : children;
 
     return (
-      <SelectItem {...itemProps} key={index} value={item}>
-        <SelectItemIndicator {...restIndicatorProps}>{indicatorChildren}</SelectItemIndicator>
-        <SelectItemText {...restItemTextProps}>{itemTextChildren ?? content}</SelectItemText>
-      </SelectItem>
-    );
-  };
-
-  const listChildren =
-    typeof children === "function" || children === undefined
-      ? renderItems(items, renderItem, groupProps, groupLabelProps, separatorProps)
-      : children;
-
-  return (
-    <SelectRoot {...rootProps}>
-      {label !== undefined && <SelectLabel {...labelProps}>{label}</SelectLabel>}
-      <SelectTrigger
-        {...restTriggerProps}
-        className={cn(className, restTriggerProps.className)}
-        aria-label={triggerAriaLabel ?? (label === undefined ? "選択肢を選択" : undefined)}
-      >
-        <SelectValue placeholder={placeholder} {...restValueProps}>
-          {valueChildren}
-        </SelectValue>
-        <SelectIcon {...restIconProps}>{iconChildren}</SelectIcon>
-      </SelectTrigger>
-      <SelectPortal {...portalProps}>
-        <SelectBackdrop {...backdropProps} />
-        <SelectPositioner
-          {...restPositionerProps}
-          side={side}
-          align={align}
-          sideOffset={sideOffset}
-          alignItemWithTrigger={alignItemWithTrigger}
+      <SelectRoot {...rootProps}>
+        {label !== undefined && <SelectLabel {...labelProps}>{label}</SelectLabel>}
+        <SelectTrigger
+          {...restTriggerProps}
+          className={cn(className, restTriggerProps.className)}
+          aria-label={triggerAriaLabel ?? (label === undefined ? "選択肢を選択" : undefined)}
         >
-          <SelectPopup {...popupProps}>
-            <SelectScrollUpArrow {...scrollUpArrowProps}>
-              <SuiChevronUpIcon />
-            </SelectScrollUpArrow>
-            <SelectArrow {...arrowProps} />
-            <SelectList {...listProps}>{listChildren}</SelectList>
-            <SelectScrollDownArrow {...scrollDownArrowProps}>
-              <SuiChevronDownIcon />
-            </SelectScrollDownArrow>
-          </SelectPopup>
-        </SelectPositioner>
-      </SelectPortal>
-    </SelectRoot>
-  );
-};
+          <SelectValue placeholder={placeholder} {...restValueProps}>
+            {valueChildren}
+          </SelectValue>
+          <SelectIcon {...restIconProps}>{iconChildren}</SelectIcon>
+        </SelectTrigger>
+        <SelectPortal {...portalProps}>
+          <SelectBackdrop {...backdropProps} />
+          <SelectPositioner
+            {...restPositionerProps}
+            side={side}
+            align={align}
+            sideOffset={sideOffset}
+            alignItemWithTrigger={alignItemWithTrigger}
+          >
+            <SelectPopup {...popupProps}>
+              <SelectScrollUpArrow {...scrollUpArrowProps}>
+                <SuiChevronUpIcon />
+              </SelectScrollUpArrow>
+              <SelectArrow {...arrowProps} />
+              <SelectList {...listProps}>{listChildren}</SelectList>
+              <SelectScrollDownArrow {...scrollDownArrowProps}>
+                <SuiChevronDownIcon />
+              </SelectScrollDownArrow>
+            </SelectPopup>
+          </SelectPositioner>
+        </SelectPortal>
+      </SelectRoot>
+    );
+  },
+  {
+    useContext: useSelectContext,
+  },
+);
 
 /**
  * {@link Select} の状態やプロパティーをまとめた型名前空間です。
@@ -312,12 +348,47 @@ export namespace Select {
    * {@link SelectSlotProps} です。
    */
   export type SlotProps = SelectSlotProps;
+
+  /**
+   * {@link SelectContext} です。
+   */
+  export type Context = SelectContext;
+
+  /**
+   * {@link SelectRadius} です。
+   */
+  export type Radius = SelectRadius;
+
+  /**
+   * {@link SelectSize} です。
+   */
+  export type Size = SelectSize;
+
+  /**
+   * {@link SelectVariant} です。
+   */
+  export type Variant = SelectVariant;
+
+  /**
+   * {@link SelectItemGroup} です。
+   */
+  export type ItemGroup<Value = unknown> = SelectItemGroup<Value>;
+
+  /**
+   * {@link SelectItems} です。
+   */
+  export type Items<Value = unknown> = SelectItems<Value>;
 }
 
-interface SelectComponent extends IComponent<SelectProps> {
+interface SelectType extends IComponent<SelectProps<unknown, boolean | undefined>> {
   <Value, Multiple extends boolean | undefined = false>(
     props: SelectProps<Value, Multiple>,
   ): React.ReactElement | null;
+
+  /**
+   * {@link useSelectContext} です。
+   */
+  readonly useContext: IUseContext<SelectContext>;
 }
 
 function renderItems<Value>(

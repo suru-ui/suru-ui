@@ -10,35 +10,6 @@ import type { IComponent, IUseContext } from "../../types.js";
 
 import "./select.css";
 
-// Types
-// -----
-
-/**
- * 選択欄の角丸です。
- *
- * - `"none"`: 角を直角にする
- * - `"rounded"`: 標準的な角丸
- * - `"full"`: 完全な丸形
- */
-export type SelectRadius = "none" | "rounded" | "full";
-
-/**
- * 選択欄の大きさです。
- *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
- */
-export type SelectSize = Size;
-
-/**
- * 選択欄の主な外観の種類です。
- *
- * - `"naked"`: 背景のない選択欄
- * - `"liquid"`: 薄い塗りつぶし
- */
-export type SelectVariant = "naked" | "liquid";
-
 // Context
 // -------
 
@@ -54,17 +25,17 @@ export type SelectContext = {
   /**
    * 選択欄とリスト項目の角丸です。
    */
-  readonly radius: SelectRadius;
+  readonly radius: SelectRootRadius;
 
   /**
    * 選択欄とリスト項目のサイズです。
    */
-  readonly size: SelectSize;
+  readonly size: SelectRootSize;
 
   /**
    * 選択欄のスタイルバリエーションです。
    */
-  readonly variant: SelectVariant;
+  readonly variant: SelectRootVariant;
 };
 
 /**
@@ -88,6 +59,11 @@ function useSuiSelectContext(optional?: boolean): SelectContext | null {
 }
 
 /**
+ * {@link SelectContext} を読み取るフックです。
+ */
+export const useSelectContext: IUseContext<SelectContext> = useSuiSelectContext;
+
+/**
  * {@link SelectContext} です。
  */
 export type Context = SelectContext;
@@ -98,11 +74,6 @@ export type Context = SelectContext;
 export const Context: React.Context<SelectContext | null> = SelectContext;
 
 /**
- * {@link SelectContext} を読み取るフックです。
- */
-export const useSelectContext: IUseContext<SelectContext> = useSuiSelectContext;
-
-/**
  * {@link useSelectContext} です。
  */
 export const useContext: IUseContext<Context> = useSelectContext;
@@ -111,9 +82,35 @@ export const useContext: IUseContext<Context> = useSelectContext;
 // ----
 
 /**
+ * 選択欄の角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"rounded"`: 標準的な角丸
+ * - `"full"`: 完全な丸形
+ */
+export type SelectRootRadius = "none" | "rounded" | "full";
+
+/**
+ * 選択欄の大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type SelectRootSize = Size;
+
+/**
+ * 選択欄の主な外観の種類です。
+ *
+ * - `"naked"`: 背景のない選択欄
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type SelectRootVariant = "naked" | "liquid";
+
+/**
  * Select のグループ項目です。
  */
-export type SelectItemGroup<Value = unknown> = {
+export type SelectRootItemGroup<Value = unknown> = {
   /**
    * グループの見出しです。
    */
@@ -123,6 +120,7 @@ export type SelectItemGroup<Value = unknown> = {
    * グループに含まれる項目です。
    */
   readonly items: readonly Value[];
+
   readonly [key: string]: unknown;
 };
 
@@ -131,20 +129,20 @@ export type SelectItemGroup<Value = unknown> = {
  *
  * - `Record<string, React.ReactNode>`: 値と表示内容を対応付けたオブジェクト
  * - `readonly (Value | { label: React.ReactNode; value: Value })[]`: 平坦な項目の配列
- * - `readonly SelectItemGroup<Value>[]`: グループ化した項目の配列
+ * - `readonly SelectRootItemGroup<Value>[]`: グループ化した項目の配列
  */
-export type SelectItems<Value = unknown> =
+export type SelectRootItems<Value = unknown> =
   | Record<string, React.ReactNode>
   | readonly (Value | { readonly label: React.ReactNode; readonly value: Value })[]
-  | readonly SelectItemGroup<Value>[];
+  | readonly SelectRootItemGroup<Value>[];
 
 /**
- * {@link Root} の状態です。
+ * {@link SelectRoot} の状態です。
  */
 export type SelectRootState = BaseSelect.Root.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link SelectRoot} に渡すプロパティーです。
  */
 export type SelectRootProps<Value = unknown, Multiple extends boolean | undefined = false> = Omit<
   BaseSelect.Root.Props<Value, Multiple>,
@@ -153,7 +151,7 @@ export type SelectRootProps<Value = unknown, Multiple extends boolean | undefine
   /**
    * リストに表示する項目の一覧です。
    */
-  items?: SelectItems<Value> | undefined;
+  items?: SelectRootItems<Value> | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
@@ -161,19 +159,19 @@ export type SelectRootProps<Value = unknown, Multiple extends boolean | undefine
   outlined?: boolean | undefined;
 
   /**
+   * 選択欄とリスト項目の角丸を指定します。
+   */
+  radius?: SelectRootRadius | undefined;
+
+  /**
    * 選択欄とリスト項目のサイズを指定します。
    */
-  size?: SelectSize | undefined;
+  size?: SelectRootSize | undefined;
 
   /**
    * 選択欄のスタイルバリエーションを指定します。
    */
-  variant?: SelectVariant | undefined;
-
-  /**
-   * 選択欄とリスト項目の角丸を指定します。
-   */
-  radius?: SelectRadius | undefined;
+  variant?: SelectRootVariant | undefined;
 };
 
 /**
@@ -223,7 +221,9 @@ export const SelectRoot: SelectRootComponent = function SuiSelectRoot<
 
 type BaseSelectItems = NonNullable<BaseSelect.Root.Props<unknown>["items"]>;
 
-function getBaseItems<Value>(items: SelectItems<Value> | undefined): BaseSelectItems | undefined {
+function getBaseItems<Value>(
+  items: SelectRootItems<Value> | undefined,
+): BaseSelectItems | undefined {
   if (!Array.isArray(items)) {
     return items;
   }
@@ -245,21 +245,46 @@ function getBaseItems<Value>(items: SelectItems<Value> | undefined): BaseSelectI
  */
 export namespace Root {
   /**
-   * {@link SelectRoot} の状態型です。
+   * {@link SelectRootState} です。
    */
   export type State = SelectRootState;
 
   /**
-   * {@link SelectRoot} のプロパティー型です。
+   * {@link SelectRootProps} です。
    */
   export type Props<
     Value = unknown,
     Multiple extends boolean | undefined = false,
   > = SelectRootProps<Value, Multiple>;
+
+  /**
+   * {@link SelectRootRadius} です。
+   */
+  export type Radius = SelectRootRadius;
+
+  /**
+   * {@link SelectRootSize} です。
+   */
+  export type Size = SelectRootSize;
+
+  /**
+   * {@link SelectRootVariant} です。
+   */
+  export type Variant = SelectRootVariant;
+
+  /**
+   * {@link SelectRootItemGroup} です。
+   */
+  export type ItemGroup<Value = unknown> = SelectRootItemGroup<Value>;
+
+  /**
+   * {@link SelectRootItems} です。
+   */
+  export type Items<Value = unknown> = SelectRootItems<Value>;
 }
 
 /**
- * {@link SelectRoot} の短い名前です。
+ * {@link SelectRoot} です。
  */
 export const Root: SelectRootComponent = SelectRoot;
 
@@ -289,18 +314,18 @@ export const SelectLabel: IComponent<SelectLabelProps> = function SuiSelectLabel
  */
 export namespace Label {
   /**
-   * {@link SelectLabel} の状態型です。
+   * {@link SelectLabelState} です。
    */
   export type State = SelectLabelState;
 
   /**
-   * {@link SelectLabel} のプロパティー型です。
+   * {@link SelectLabelProps} です。
    */
   export type Props = SelectLabelProps;
 }
 
 /**
- * {@link SelectLabel} の短い名前です。
+ * {@link SelectLabel} です。
  */
 export const Label: IComponent<Label.Props> = SelectLabel;
 
@@ -351,18 +376,18 @@ export const SelectTrigger: IComponent<SelectTriggerProps> = function SuiSelectT
  */
 export namespace Trigger {
   /**
-   * {@link SelectTrigger} の状態型です。
+   * {@link SelectTriggerState} です。
    */
   export type State = SelectTriggerState;
 
   /**
-   * {@link SelectTrigger} のプロパティー型です。
+   * {@link SelectTriggerProps} です。
    */
   export type Props = SelectTriggerProps;
 }
 
 /**
- * {@link SelectTrigger} の短い名前です。
+ * {@link SelectTrigger} です。
  */
 export const Trigger: IComponent<Trigger.Props> = SelectTrigger;
 
@@ -392,18 +417,18 @@ export const SelectValue: IComponent<SelectValueProps> = function SuiSelectValue
  */
 export namespace Value {
   /**
-   * {@link SelectValue} の状態型です。
+   * {@link SelectValueState} です。
    */
   export type State = SelectValueState;
 
   /**
-   * {@link SelectValue} のプロパティー型です。
+   * {@link SelectValueProps} です。
    */
   export type Props = SelectValueProps;
 }
 
 /**
- * {@link SelectValue} の短い名前です。
+ * {@link SelectValue} です。
  */
 export const Value: IComponent<Value.Props> = SelectValue;
 
@@ -433,18 +458,18 @@ export const SelectIcon: IComponent<SelectIconProps> = function SuiSelectIcon(pr
  */
 export namespace Icon {
   /**
-   * {@link SelectIcon} の状態型です。
+   * {@link SelectIconState} です。
    */
   export type State = SelectIconState;
 
   /**
-   * {@link SelectIcon} のプロパティー型です。
+   * {@link SelectIconProps} です。
    */
   export type Props = SelectIconProps;
 }
 
 /**
- * {@link SelectIcon} の短い名前です。
+ * {@link SelectIcon} です。
  */
 export const Icon: IComponent<Icon.Props> = SelectIcon;
 
@@ -474,18 +499,18 @@ export const SelectPortal: IComponent<SelectPortalProps> = function SuiSelectPor
  */
 export namespace Portal {
   /**
-   * {@link SelectPortal} の状態型です。
+   * {@link SelectPortalState} です。
    */
   export type State = SelectPortalState;
 
   /**
-   * {@link SelectPortal} のプロパティー型です。
+   * {@link SelectPortalProps} です。
    */
   export type Props = SelectPortalProps;
 }
 
 /**
- * {@link SelectPortal} の短い名前です。
+ * {@link SelectPortal} です。
  */
 export const Portal: IComponent<Portal.Props> = SelectPortal;
 
@@ -515,18 +540,18 @@ export const SelectBackdrop: IComponent<SelectBackdropProps> = function SuiSelec
  */
 export namespace Backdrop {
   /**
-   * {@link SelectBackdrop} の状態型です。
+   * {@link SelectBackdropState} です。
    */
   export type State = SelectBackdropState;
 
   /**
-   * {@link SelectBackdrop} のプロパティー型です。
+   * {@link SelectBackdropProps} です。
    */
   export type Props = SelectBackdropProps;
 }
 
 /**
- * {@link SelectBackdrop} の短い名前です。
+ * {@link SelectBackdrop} です。
  */
 export const Backdrop: IComponent<Backdrop.Props> = SelectBackdrop;
 
@@ -560,18 +585,18 @@ export const SelectPositioner: IComponent<SelectPositionerProps> = function SuiS
  */
 export namespace Positioner {
   /**
-   * {@link SelectPositioner} の状態型です。
+   * {@link SelectPositionerState} です。
    */
   export type State = SelectPositionerState;
 
   /**
-   * {@link SelectPositioner} のプロパティー型です。
+   * {@link SelectPositionerProps} です。
    */
   export type Props = SelectPositionerProps;
 }
 
 /**
- * {@link SelectPositioner} の短い名前です。
+ * {@link SelectPositioner} です。
  */
 export const Positioner: IComponent<Positioner.Props> = SelectPositioner;
 
@@ -601,18 +626,18 @@ export const SelectPopup: IComponent<SelectPopupProps> = function SuiSelectPopup
  */
 export namespace Popup {
   /**
-   * {@link SelectPopup} の状態型です。
+   * {@link SelectPopupState} です。
    */
   export type State = SelectPopupState;
 
   /**
-   * {@link SelectPopup} のプロパティー型です。
+   * {@link SelectPopupProps} です。
    */
   export type Props = SelectPopupProps;
 }
 
 /**
- * {@link SelectPopup} の短い名前です。
+ * {@link SelectPopup} です。
  */
 export const Popup: IComponent<Popup.Props> = SelectPopup;
 
@@ -646,18 +671,18 @@ export const SelectList: IComponent<SelectListProps> = function SuiSelectList(pr
  */
 export namespace List {
   /**
-   * {@link SelectList} の状態型です。
+   * {@link SelectListState} です。
    */
   export type State = SelectListState;
 
   /**
-   * {@link SelectList} のプロパティー型です。
+   * {@link SelectListProps} です。
    */
   export type Props = SelectListProps;
 }
 
 /**
- * {@link SelectList} の短い名前です。
+ * {@link SelectList} です。
  */
 export const List: IComponent<List.Props> = SelectList;
 
@@ -687,18 +712,18 @@ export const SelectArrow: IComponent<SelectArrowProps> = function SuiSelectArrow
  */
 export namespace Arrow {
   /**
-   * {@link SelectArrow} の状態型です。
+   * {@link SelectArrowState} です。
    */
   export type State = SelectArrowState;
 
   /**
-   * {@link SelectArrow} のプロパティー型です。
+   * {@link SelectArrowProps} です。
    */
   export type Props = SelectArrowProps;
 }
 
 /**
- * {@link SelectArrow} の短い名前です。
+ * {@link SelectArrow} です。
  */
 export const Arrow: IComponent<Arrow.Props> = SelectArrow;
 
@@ -736,18 +761,18 @@ export const SelectItem: IComponent<SelectItemProps> = function SuiSelectItem(pr
  */
 export namespace Item {
   /**
-   * {@link SelectItem} の状態型です。
+   * {@link SelectItemState} です。
    */
   export type State = SelectItemState;
 
   /**
-   * {@link SelectItem} のプロパティー型です。
+   * {@link SelectItemProps} です。
    */
   export type Props = SelectItemProps;
 }
 
 /**
- * {@link SelectItem} の短い名前です。
+ * {@link SelectItem} です。
  */
 export const Item: IComponent<Item.Props> = SelectItem;
 
@@ -777,18 +802,18 @@ export const SelectItemText: IComponent<SelectItemTextProps> = function SuiSelec
  */
 export namespace ItemText {
   /**
-   * {@link SelectItemText} の状態型です。
+   * {@link SelectItemTextState} です。
    */
   export type State = SelectItemTextState;
 
   /**
-   * {@link SelectItemText} のプロパティー型です。
+   * {@link SelectItemTextProps} です。
    */
   export type Props = SelectItemTextProps;
 }
 
 /**
- * {@link SelectItemText} の短い名前です。
+ * {@link SelectItemText} です。
  */
 export const ItemText: IComponent<ItemText.Props> = SelectItemText;
 
@@ -825,18 +850,18 @@ export const SelectItemIndicator: IComponent<SelectItemIndicatorProps> =
  */
 export namespace ItemIndicator {
   /**
-   * {@link SelectItemIndicator} の状態型です。
+   * {@link SelectItemIndicatorState} です。
    */
   export type State = SelectItemIndicatorState;
 
   /**
-   * {@link SelectItemIndicator} のプロパティー型です。
+   * {@link SelectItemIndicatorProps} です。
    */
   export type Props = SelectItemIndicatorProps;
 }
 
 /**
- * {@link SelectItemIndicator} の短い名前です。
+ * {@link SelectItemIndicator} です。
  */
 export const ItemIndicator: IComponent<ItemIndicator.Props> = SelectItemIndicator;
 
@@ -872,18 +897,18 @@ export const SelectScrollUpArrow: IComponent<SelectScrollUpArrowProps> =
  */
 export namespace ScrollUpArrow {
   /**
-   * {@link SelectScrollUpArrow} の状態型です。
+   * {@link SelectScrollUpArrowState} です。
    */
   export type State = SelectScrollUpArrowState;
 
   /**
-   * {@link SelectScrollUpArrow} のプロパティー型です。
+   * {@link SelectScrollUpArrowProps} です。
    */
   export type Props = SelectScrollUpArrowProps;
 }
 
 /**
- * {@link SelectScrollUpArrow} の短い名前です。
+ * {@link SelectScrollUpArrow} です。
  */
 export const ScrollUpArrow: IComponent<ScrollUpArrow.Props> = SelectScrollUpArrow;
 
@@ -919,18 +944,18 @@ export const SelectScrollDownArrow: IComponent<SelectScrollDownArrowProps> =
  */
 export namespace ScrollDownArrow {
   /**
-   * {@link SelectScrollDownArrow} の状態型です。
+   * {@link SelectScrollDownArrowState} です。
    */
   export type State = SelectScrollDownArrowState;
 
   /**
-   * {@link SelectScrollDownArrow} のプロパティー型です。
+   * {@link SelectScrollDownArrowProps} です。
    */
   export type Props = SelectScrollDownArrowProps;
 }
 
 /**
- * {@link SelectScrollDownArrow} の短い名前です。
+ * {@link SelectScrollDownArrow} です。
  */
 export const ScrollDownArrow: IComponent<ScrollDownArrow.Props> = SelectScrollDownArrow;
 
@@ -960,18 +985,18 @@ export const SelectGroup: IComponent<SelectGroupProps> = function SuiSelectGroup
  */
 export namespace Group {
   /**
-   * {@link SelectGroup} の状態型です。
+   * {@link SelectGroupState} です。
    */
   export type State = SelectGroupState;
 
   /**
-   * {@link SelectGroup} のプロパティー型です。
+   * {@link SelectGroupProps} です。
    */
   export type Props = SelectGroupProps;
 }
 
 /**
- * {@link SelectGroup} の短い名前です。
+ * {@link SelectGroup} です。
  */
 export const Group: IComponent<Group.Props> = SelectGroup;
 
@@ -1005,18 +1030,18 @@ export const SelectGroupLabel: IComponent<SelectGroupLabelProps> = function SuiS
  */
 export namespace GroupLabel {
   /**
-   * {@link SelectGroupLabel} の状態型です。
+   * {@link SelectGroupLabelState} です。
    */
   export type State = SelectGroupLabelState;
 
   /**
-   * {@link SelectGroupLabel} のプロパティー型です。
+   * {@link SelectGroupLabelProps} です。
    */
   export type Props = SelectGroupLabelProps;
 }
 
 /**
- * {@link SelectGroupLabel} の短い名前です。
+ * {@link SelectGroupLabel} です。
  */
 export const GroupLabel: IComponent<GroupLabel.Props> = SelectGroupLabel;
 
@@ -1048,17 +1073,17 @@ export const SelectSeparator: IComponent<SelectSeparatorProps> = function SuiSel
  */
 export namespace Separator {
   /**
-   * {@link SelectSeparator} の状態型です。
+   * {@link SelectSeparatorState} です。
    */
   export type State = SelectSeparatorState;
 
   /**
-   * {@link SelectSeparator} のプロパティー型です。
+   * {@link SelectSeparatorProps} です。
    */
   export type Props = SelectSeparatorProps;
 }
 
 /**
- * {@link SelectSeparator} の短い名前です。
+ * {@link SelectSeparator} です。
  */
 export const Separator: IComponent<Separator.Props> = SelectSeparator;

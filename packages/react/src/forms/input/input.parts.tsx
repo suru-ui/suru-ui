@@ -1,5 +1,5 @@
 import { Input } from "@base-ui/react/input";
-import type { Color, Size } from "@suru-ui/theme";
+import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import cn from "../../cn.js";
@@ -8,13 +8,13 @@ import type { IComponent } from "../../types.js";
 
 import "./input.css";
 
-// Types
-// -----
+// Root
+// ----
 
 /**
  * テキスト入力欄の色です。
  */
-export type InputColor = Color;
+export type InputRootColor = Color;
 
 /**
  * テキスト入力欄の角丸です。
@@ -25,7 +25,7 @@ export type InputColor = Color;
  * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-export type InputRadius = "none" | Size | "full";
+export type InputRootRadius = "none" | Size | "full";
 
 /**
  * テキスト入力欄の大きさです。
@@ -34,7 +34,15 @@ export type InputRadius = "none" | Size | "full";
  * - `"md"`: 標準的なサイズ
  * - `"lg"`: 大きいサイズ
  */
-export type InputSize = Size;
+export type InputRootSize = Size;
+
+/**
+ * 入力欄で使用できる入力項目の種類です。
+ */
+export type InputRootType = Exclude<
+  React.HTMLInputTypeAttribute,
+  "button" | "checkbox" | "color" | "image" | "radio" | "range" | "reset" | "submit"
+>;
 
 /**
  * テキスト入力欄の主な外観の種類です。
@@ -42,18 +50,17 @@ export type InputSize = Size;
  * - `"naked"`: 背景のないテキスト入力欄
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type InputVariant = "naked" | "liquid";
+export type InputRootVariant = "naked" | "liquid";
 
 /**
- * 入力欄で使用できる入力項目の種類です。
+ * {@link InputRoot} の値が変更された理由です。
  */
-export type InputType = Exclude<
-  React.HTMLInputTypeAttribute,
-  "button" | "checkbox" | "color" | "image" | "radio" | "range" | "reset" | "submit"
->;
+export type InputRootChangeEventReason = Input.ChangeEventReason;
 
-// Root
-// ----
+/**
+ * {@link InputRoot} の値が変更されたイベントの詳細です。
+ */
+export type InputRootChangeEventDetails = Input.ChangeEventDetails;
 
 /**
  * {@link InputRoot} の状態です。
@@ -63,13 +70,16 @@ export type InputRootState = Input.State;
 /**
  * {@link InputRoot} に渡すプロパティーです。
  */
-export type InputRootProps = Omit<React.ComponentProps<typeof Input>, "size" | "type"> & {
+export type InputRootProps = Omit<
+  React.ComponentProps<typeof Input>,
+  "children" | "size" | "type"
+> & {
   /**
    * フォーカス時に枠線へ適用する色を指定します。
    *
    * @default "grey"
    */
-  color?: InputColor | undefined;
+  color?: InputRootColor | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
@@ -83,39 +93,29 @@ export type InputRootProps = Omit<React.ComponentProps<typeof Input>, "size" | "
    *
    * デフォルト値は {@link InputRootProps.size|size} です。
    */
-  radius?: InputRadius | undefined;
+  radius?: InputRootRadius | undefined;
 
   /**
    * テキスト入力欄のサイズを指定します。
    *
    * @default "md"
    */
-  size?: InputSize | undefined;
+  size?: InputRootSize | undefined;
 
   /**
    * 入力項目です。
    *
    * @default "text"
    */
-  type?: InputType | undefined;
+  type?: InputRootType | undefined;
 
   /**
    * テキスト入力欄のスタイルバリエーションを指定します。
    *
    * @default "liquid"
    */
-  variant?: InputVariant | undefined;
+  variant?: InputRootVariant | undefined;
 };
-
-/**
- * {@link InputRoot} の値が変更された理由です。
- */
-export type InputChangeEventReason = Input.ChangeEventReason;
-
-/**
- * {@link InputRoot} の値が変更されたイベントの詳細です。
- */
-export type InputChangeEventDetails = Input.ChangeEventDetails;
 
 /**
  * テキスト入力欄のルートコンポーネントです。
@@ -175,14 +175,39 @@ export namespace Root {
   export type Props = InputRootProps;
 
   /**
-   * {@link InputChangeEventReason} です。
+   * {@link InputRootColor}
    */
-  export type ChangeEventReason = InputChangeEventReason;
+  export type Color = InputRootColor;
 
   /**
-   * {@link InputChangeEventDetails} です。
+   * {@link InputRootRadius} です。
    */
-  export type ChangeEventDetails = InputChangeEventDetails;
+  export type Radius = InputRootRadius;
+
+  /**
+   * {@link InputRootSize} です。
+   */
+  export type Size = InputRootSize;
+
+  /**
+   * {@link InputRootType} です。
+   */
+  export type Type = InputRootType;
+
+  /**
+   * {@link InputRootVariant} です。
+   */
+  export type Variant = InputRootVariant;
+
+  /**
+   * {@link InputRootChangeEventReason} です。
+   */
+  export type ChangeEventReason = InputRootChangeEventReason;
+
+  /**
+   * {@link InputRootChangeEventDetails} です。
+   */
+  export type ChangeEventDetails = InputRootChangeEventDetails;
 }
 
 /**

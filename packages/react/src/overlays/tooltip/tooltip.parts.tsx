@@ -6,9 +6,6 @@ import type { IComponent } from "../../types.js";
 
 import "./tooltip.css";
 
-// Types
-// -----
-
 // Handle
 // ------
 
@@ -29,12 +26,12 @@ export const createHandle: typeof Tooltip.createHandle = Tooltip.createHandle;
 // --------
 
 /**
- * {@link Provider} の状態です。
+ * {@link TooltipProvider} の状態です。
  */
 export type TooltipProviderState = Tooltip.Provider.State;
 
 /**
- * {@link Provider} に渡すプロパティーです。
+ * {@link TooltipProvider} に渡すプロパティーです。
  */
 export type TooltipProviderProps = Tooltip.Provider.Props;
 
@@ -51,22 +48,22 @@ export const TooltipProvider: IComponent<TooltipProviderProps> = function SuiToo
 };
 
 /**
- * {@link TooltipProvider} の型をまとめた名前空間です。
+ * {@link TooltipProvider} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Provider {
   /**
-   * {@link TooltipProvider} の状態型です。
+   * {@link TooltipProviderState} です。
    */
   export type State = TooltipProviderState;
 
   /**
-   * {@link TooltipProvider} のプロパティー型です。
+   * {@link TooltipProviderProps} です。
    */
   export type Props = TooltipProviderProps;
 }
 
 /**
- * {@link TooltipProvider} の短縮名です。
+ * {@link TooltipProvider} です。
  */
 export const Provider: IComponent<Provider.Props> = TooltipProvider;
 
@@ -74,12 +71,12 @@ export const Provider: IComponent<Provider.Props> = TooltipProvider;
 // ----
 
 /**
- * {@link Root} の状態です。
+ * {@link TooltipRoot} の状態です。
  */
 export type TooltipRootState = Tooltip.Root.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link TooltipRoot} に渡すプロパティーです。
  *
  * @template TPayload トリガーから受け取るデータの型です。
  */
@@ -105,22 +102,22 @@ export const TooltipRoot: TooltipRootComponent = function SuiTooltipRoot<TPayloa
 };
 
 /**
- * {@link TooltipRoot} の型をまとめた名前空間です。
+ * {@link TooltipRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
-   * {@link TooltipRoot} の状態型です。
+   * {@link TooltipRootState} です。
    */
   export type State = TooltipRootState;
 
   /**
-   * {@link TooltipRoot} のプロパティー型です。
+   * {@link TooltipRootProps} です。
    */
   export type Props<TPayload = unknown> = TooltipRootProps<TPayload>;
 }
 
 /**
- * {@link TooltipRoot} の短縮名です。
+ * {@link TooltipRoot} です。
  */
 export const Root: TooltipRootComponent = TooltipRoot;
 
@@ -128,14 +125,14 @@ export const Root: TooltipRootComponent = TooltipRoot;
 // -------
 
 /**
- * {@link Trigger} の状態です。
+ * {@link TooltipTrigger} の状態です。
  *
  * @template TPayload トリガーから渡すデータの型です。
  */
 export type TooltipTriggerState = Tooltip.Trigger.State;
 
 /**
- * {@link Trigger} に渡すプロパティーです。
+ * {@link TooltipTrigger} に渡すプロパティーです。
  *
  * @template TPayload トリガーから渡すデータの型です。
  */
@@ -178,22 +175,22 @@ export const TooltipTrigger: TooltipTriggerComponent = function SuiTooltipTrigge
 };
 
 /**
- * {@link TooltipTrigger} の型をまとめた名前空間です。
+ * {@link TooltipTrigger} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Trigger {
   /**
-   * {@link TooltipTrigger} の状態型です。
+   * {@link TooltipTriggerState} です。
    */
   export type State = TooltipTriggerState;
 
   /**
-   * {@link TooltipTrigger} のプロパティー型です。
+   * {@link TooltipTriggerProps} です。
    */
   export type Props<TPayload = unknown> = TooltipTriggerProps<TPayload>;
 }
 
 /**
- * {@link TooltipTrigger} の短縮名です。
+ * {@link TooltipTrigger} です。
  */
 export const Trigger: TooltipTriggerComponent = TooltipTrigger;
 
@@ -201,12 +198,12 @@ export const Trigger: TooltipTriggerComponent = TooltipTrigger;
 // ------
 
 /**
- * {@link Portal} の状態です。
+ * {@link TooltipPortal} の状態です。
  */
 export type TooltipPortalState = Tooltip.Portal.State;
 
 /**
- * {@link Portal} に渡すプロパティーです。
+ * {@link TooltipPortal} に渡すプロパティーです。
  */
 export type TooltipPortalProps = React.ComponentProps<typeof Tooltip.Portal>;
 
@@ -222,22 +219,22 @@ export const TooltipPortal: IComponent<TooltipPortalProps> = function SuiTooltip
 };
 
 /**
- * {@link TooltipPortal} の型をまとめた名前空間です。
+ * {@link TooltipPortal} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Portal {
   /**
-   * {@link TooltipPortal} の状態型です。
+   * {@link TooltipPortalState} です。
    */
   export type State = TooltipPortalState;
 
   /**
-   * {@link TooltipPortal} のプロパティー型です。
+   * {@link TooltipPortalProps} です。
    */
   export type Props = TooltipPortalProps;
 }
 
 /**
- * {@link TooltipPortal} の短縮名です。
+ * {@link TooltipPortal} です。
  */
 export const Portal: IComponent<Portal.Props> = TooltipPortal;
 
@@ -245,12 +242,12 @@ export const Portal: IComponent<Portal.Props> = TooltipPortal;
 // ----------
 
 /**
- * {@link Positioner} の状態です。
+ * {@link TooltipPositioner} の状態です。
  */
 export type TooltipPositionerState = Tooltip.Positioner.State;
 
 /**
- * {@link Positioner} に渡すプロパティーです。
+ * {@link TooltipPositioner} に渡すプロパティーです。
  */
 export type TooltipPositionerProps = React.ComponentProps<typeof Tooltip.Positioner>;
 
@@ -272,22 +269,22 @@ export const TooltipPositioner: IComponent<TooltipPositionerProps> = function Su
 };
 
 /**
- * {@link TooltipPositioner} の型をまとめた名前空間です。
+ * {@link TooltipPositioner} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Positioner {
   /**
-   * {@link TooltipPositioner} の状態型です。
+   * {@link TooltipPositionerState} です。
    */
   export type State = TooltipPositionerState;
 
   /**
-   * {@link TooltipPositioner} のプロパティー型です。
+   * {@link TooltipPositionerProps} です。
    */
   export type Props = TooltipPositionerProps;
 }
 
 /**
- * {@link TooltipPositioner} の短縮名です。
+ * {@link TooltipPositioner} です。
  */
 export const Positioner: IComponent<Positioner.Props> = TooltipPositioner;
 
@@ -295,12 +292,12 @@ export const Positioner: IComponent<Positioner.Props> = TooltipPositioner;
 // -----
 
 /**
- * {@link Popup} の状態です。
+ * {@link TooltipPopup} の状態です。
  */
 export type TooltipPopupState = Tooltip.Popup.State;
 
 /**
- * {@link Popup} に渡すプロパティーです。
+ * {@link TooltipPopup} に渡すプロパティーです。
  */
 export type TooltipPopupProps = React.ComponentProps<typeof Tooltip.Popup>;
 
@@ -316,22 +313,22 @@ export const TooltipPopup: IComponent<TooltipPopupProps> = function SuiTooltipPo
 };
 
 /**
- * {@link TooltipPopup} の型をまとめた名前空間です。
+ * {@link TooltipPopup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Popup {
   /**
-   * {@link TooltipPopup} の状態型です。
+   * {@link TooltipPopupState} です。
    */
   export type State = TooltipPopupState;
 
   /**
-   * {@link TooltipPopup} のプロパティー型です。
+   * {@link TooltipPopupProps} です。
    */
   export type Props = TooltipPopupProps;
 }
 
 /**
- * {@link TooltipPopup} の短縮名です。
+ * {@link TooltipPopup} です。
  */
 export const Popup: IComponent<Popup.Props> = TooltipPopup;
 
@@ -339,12 +336,12 @@ export const Popup: IComponent<Popup.Props> = TooltipPopup;
 // -----
 
 /**
- * {@link Arrow} の状態です。
+ * {@link TooltipArrow} の状態です。
  */
 export type TooltipArrowState = Tooltip.Arrow.State;
 
 /**
- * {@link Arrow} に渡すプロパティーです。
+ * {@link TooltipArrow} に渡すプロパティーです。
  */
 export type TooltipArrowProps = React.ComponentProps<typeof Tooltip.Arrow>;
 
@@ -358,22 +355,22 @@ export const TooltipArrow: IComponent<TooltipArrowProps> = function SuiTooltipAr
 };
 
 /**
- * {@link TooltipArrow} の型をまとめた名前空間です。
+ * {@link TooltipArrow} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Arrow {
   /**
-   * {@link TooltipArrow} の状態型です。
+   * {@link TooltipArrowState} です。
    */
   export type State = TooltipArrowState;
 
   /**
-   * {@link TooltipArrow} のプロパティー型です。
+   * {@link TooltipArrowProps} です。
    */
   export type Props = TooltipArrowProps;
 }
 
 /**
- * {@link TooltipArrow} の短縮名です。
+ * {@link TooltipArrow} です。
  */
 export const Arrow: IComponent<Arrow.Props> = TooltipArrow;
 
@@ -381,12 +378,12 @@ export const Arrow: IComponent<Arrow.Props> = TooltipArrow;
 // --------
 
 /**
- * {@link Viewport} の状態です。
+ * {@link TooltipViewport} の状態です。
  */
 export type TooltipViewportState = Tooltip.Viewport.State;
 
 /**
- * {@link Viewport} に渡すプロパティーです。
+ * {@link TooltipViewport} に渡すプロパティーです。
  */
 export type TooltipViewportProps = React.ComponentProps<typeof Tooltip.Viewport>;
 
@@ -404,21 +401,21 @@ export const TooltipViewport: IComponent<TooltipViewportProps> = function SuiToo
 };
 
 /**
- * {@link TooltipViewport} の型をまとめた名前空間です。
+ * {@link TooltipViewport} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Viewport {
   /**
-   * {@link TooltipViewport} の状態型です。
+   * {@link TooltipViewportState} です。
    */
   export type State = TooltipViewportState;
 
   /**
-   * {@link TooltipViewport} のプロパティー型です。
+   * {@link TooltipViewportProps} です。
    */
   export type Props = TooltipViewportProps;
 }
 
 /**
- * {@link TooltipViewport} の短縮名です。
+ * {@link TooltipViewport} です。
  */
 export const Viewport: IComponent<Viewport.Props> = TooltipViewport;

@@ -10,42 +10,6 @@ import type { IComponent, IUseContext } from "../../types.js";
 
 import "./number-field.css";
 
-// Types
-// -----
-
-/**
- * 数値入力欄の色です。
- */
-export type NumberFieldColor = Color;
-
-/**
- * 数値入力欄の角丸です。
- *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
- * - `"full"`: 完全な丸形
- */
-export type NumberFieldRadius = "none" | Size | "full";
-
-/**
- * 数値入力欄の大きさです。
- *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
- */
-export type NumberFieldSize = Size;
-
-/**
- * 数値入力欄の主な外観の種類です。
- *
- * - `"naked"`: 背景のない数値入力欄
- * - `"liquid"`: 薄い塗りつぶし
- */
-export type NumberFieldVariant = "naked" | "liquid";
-
 // Context
 // -------
 
@@ -54,9 +18,9 @@ export type NumberFieldVariant = "naked" | "liquid";
  */
 export type NumberFieldContext = {
   /**
-   * テキストフィールドの色です。
+   * 数値入力欄の色です。
    */
-  readonly color: NumberFieldColor;
+  readonly color: NumberFieldRootColor;
 
   /**
    * 枠線を表示するかどうかです。
@@ -64,19 +28,19 @@ export type NumberFieldContext = {
   readonly outlined: boolean;
 
   /**
-   * テキストフィールドの角丸です。
+   * 数値入力欄の角丸です。
    */
-  readonly radius: NumberFieldRadius;
+  readonly radius: NumberFieldRootRadius;
 
   /**
-   * テキストフィールドのサイズです。
+   * 数値入力欄のサイズです。
    */
-  readonly size: NumberFieldSize;
+  readonly size: NumberFieldRootSize;
 
   /**
-   * テキストフィールドのスタイルバリエーションです。
+   * 数値入力欄の主な外観です。
    */
-  readonly variant: NumberFieldVariant;
+  readonly variant: NumberFieldRootVariant;
 };
 
 /**
@@ -123,6 +87,49 @@ export const useContext: IUseContext<Context> = useNumberFieldContext;
 // ----
 
 /**
+ * 数値入力欄の色です。
+ */
+export type NumberFieldRootColor = Color;
+
+/**
+ * 数値入力欄の角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
+ */
+export type NumberFieldRootRadius = "none" | Size | "full";
+
+/**
+ * 数値入力欄の大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type NumberFieldRootSize = Size;
+
+/**
+ * 数値入力欄の主な外観の種類です。
+ *
+ * - `"naked"`: 背景のない数値入力欄
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type NumberFieldRootVariant = "naked" | "liquid";
+
+/**
+ * {@link NumberFieldRoot} の値が変更された理由です。
+ */
+export type NumberFieldRootChangeEventReason = NumberField.Root.ChangeEventReason;
+
+/**
+ * {@link NumberFieldRoot} の値が変更されたイベントの詳細です。
+ */
+export type NumberFieldRootChangeEventDetails = NumberField.Root.ChangeEventDetails;
+
+/**
  * {@link NumberFieldRoot} の状態です。
  */
 export type NumberFieldRootState = NumberField.Root.State;
@@ -136,7 +143,7 @@ export type NumberFieldRootProps = React.ComponentProps<typeof NumberField.Root>
    *
    * @default "grey"
    */
-  color?: NumberFieldColor | undefined;
+  color?: NumberFieldRootColor | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
@@ -150,21 +157,21 @@ export type NumberFieldRootProps = React.ComponentProps<typeof NumberField.Root>
    *
    * デフォルト値は {@link NumberFieldRootProps.size|size} です。
    */
-  radius?: NumberFieldRadius | undefined;
+  radius?: NumberFieldRootRadius | undefined;
 
   /**
    * 数値入力欄のサイズを指定します。
    *
    * @default "md"
    */
-  size?: NumberFieldSize | undefined;
+  size?: NumberFieldRootSize | undefined;
 
   /**
-   * 数値入力欄のスタイルバリエーションを指定します。
+   * 数値入力欄の主な外観を指定します。
    *
    * @default "liquid"
    */
-  variant?: NumberFieldVariant | undefined;
+  variant?: NumberFieldRootVariant | undefined;
 };
 
 /**
@@ -219,14 +226,44 @@ export const NumberFieldRoot: IComponent<NumberFieldRootProps> = function SuiNum
  */
 export namespace Root {
   /**
-   * {@link NumberFieldRoot} の状態型です。
+   * {@link NumberFieldRootState} です。
    */
   export type State = NumberFieldRootState;
 
   /**
-   * {@link NumberFieldRoot} のプロパティー型です。
+   * {@link NumberFieldRootProps} です。
    */
   export type Props = NumberFieldRootProps;
+
+  /**
+   * {@link NumberFieldRootColor} です。
+   */
+  export type Color = NumberFieldRootColor;
+
+  /**
+   * {@link NumberFieldRootRadius} です。
+   */
+  export type Radius = NumberFieldRootRadius;
+
+  /**
+   * {@link NumberFieldRootSize} です。
+   */
+  export type Size = NumberFieldRootSize;
+
+  /**
+   * {@link NumberFieldRootVariant} です。
+   */
+  export type Variant = NumberFieldRootVariant;
+
+  /**
+   * {@link NumberFieldRootChangeEventReason} です。
+   */
+  export type ChangeEventReason = NumberFieldRootChangeEventReason;
+
+  /**
+   * {@link NumberFieldRootChangeEventDetails} です。
+   */
+  export type ChangeEventDetails = NumberFieldRootChangeEventDetails;
 }
 
 /**
@@ -267,12 +304,12 @@ export const NumberFieldScrubArea: IComponent<NumberFieldScrubAreaProps> =
  */
 export namespace ScrubArea {
   /**
-   * {@link NumberFieldScrubArea} の状態型です。
+   * {@link NumberFieldScrubAreaState} です。
    */
   export type State = NumberFieldScrubAreaState;
 
   /**
-   * {@link NumberFieldScrubArea} のプロパティー型です。
+   * {@link NumberFieldScrubAreaProps} です。
    */
   export type Props = NumberFieldScrubAreaProps;
 }
@@ -317,12 +354,12 @@ export const NumberFieldScrubAreaCursor: IComponent<NumberFieldScrubAreaCursorPr
  */
 export namespace ScrubAreaCursor {
   /**
-   * {@link NumberFieldScrubAreaCursor} の状態型です。
+   * {@link NumberFieldScrubAreaCursorState} です。
    */
   export type State = NumberFieldScrubAreaCursorState;
 
   /**
-   * {@link NumberFieldScrubAreaCursor} のプロパティー型です。
+   * {@link NumberFieldScrubAreaCursorProps} です。
    */
   export type Props = NumberFieldScrubAreaCursorProps;
 }
@@ -392,12 +429,12 @@ export const NumberFieldGroup: IComponent<NumberFieldGroupProps> = function SuiN
  */
 export namespace Group {
   /**
-   * {@link NumberFieldGroup} の状態型です。
+   * {@link NumberFieldGroupState} です。
    */
   export type State = NumberFieldGroupState;
 
   /**
-   * {@link NumberFieldGroup} のプロパティー型です。
+   * {@link NumberFieldGroupProps} です。
    */
   export type Props = NumberFieldGroupProps;
 }
@@ -411,12 +448,12 @@ export const Group: IComponent<Group.Props> = NumberFieldGroup;
 // -----
 
 /**
- * {@link Input} の状態です。
+ * {@link NumberFieldInput} の状態です。
  */
 export type NumberFieldInputState = NumberField.Input.State;
 
 /**
- * {@link Input} に渡すプロパティーです。
+ * {@link NumberFieldInput} に渡すプロパティーです。
  */
 export type NumberFieldInputProps = React.ComponentProps<typeof NumberField.Input>;
 
@@ -447,12 +484,12 @@ export const NumberFieldInput: IComponent<NumberFieldInputProps> = function SuiN
  */
 export namespace Input {
   /**
-   * {@link NumberFieldInput} の状態型です。
+   * {@link NumberFieldInputState} です。
    */
   export type State = NumberFieldInputState;
 
   /**
-   * {@link NumberFieldInput} のプロパティー型です。
+   * {@link NumberFieldInputProps} です。
    */
   export type Props = NumberFieldInputProps;
 }
@@ -513,18 +550,18 @@ export const NumberFieldAddon: IComponent<NumberFieldAddonProps> = function SuiN
  */
 export namespace Addon {
   /**
-   * {@link NumberFieldAddon} の状態型です。
+   * {@link NumberFieldAddonState} です。
    */
   export type State = NumberFieldAddonState;
 
   /**
-   * {@link NumberFieldAddon} のプロパティー型です。
+   * {@link NumberFieldAddonProps} です。
    */
   export type Props = NumberFieldAddonProps;
 }
 
 /**
- * {@link NumberFieldAddon} の別名です。
+ * {@link NumberFieldAddon} です。
  */
 export const Addon: IComponent<Addon.Props> = NumberFieldAddon;
 
@@ -561,12 +598,12 @@ export const NumberFieldDecrement: IComponent<NumberFieldDecrementProps> =
  */
 export namespace Decrement {
   /**
-   * {@link NumberFieldDecrement} の状態型です。
+   * {@link NumberFieldDecrementState} です。
    */
   export type State = NumberFieldDecrementState;
 
   /**
-   * {@link NumberFieldDecrement} のプロパティー型です。
+   * {@link NumberFieldDecrementProps} です。
    */
   export type Props = NumberFieldDecrementProps;
 }
@@ -609,12 +646,12 @@ export const NumberFieldIncrement: IComponent<NumberFieldIncrementProps> =
  */
 export namespace Increment {
   /**
-   * {@link NumberFieldIncrement} の状態型です。
+   * {@link NumberFieldIncrementState} です。
    */
   export type State = NumberFieldIncrementState;
 
   /**
-   * {@link NumberFieldIncrement} のプロパティー型です。
+   * {@link NumberFieldIncrementProps} です。
    */
   export type Props = NumberFieldIncrementProps;
 }

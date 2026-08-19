@@ -1,11 +1,12 @@
-import { COLORS, SIZES, COLOR_TEMPLATES as VARIANTS } from "@suru-ui/theme";
-import { AlertCircleIcon, CheckCircle2Icon, InfoIcon } from "lucide-react";
+import { SIZES, COLORS } from "@suru-ui/theme";
+import { InfoIcon, AlertCircleIcon, CheckCircle2Icon } from "lucide-react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Button } from "../../src/buttons/button/index.js";
 import { Alert } from "../../src/data-display/alert/index.js";
 
 const RADII = ["none", ...SIZES] as const;
+const VARIANTS = ["muted", "naked", "liquid"] as const;
 
 const meta = preview.meta({
   title: "Data Display / Alert",
@@ -46,7 +47,7 @@ export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
     children: "プロフィールを更新しました。",
-    variant: "solid",
+    variant: "muted",
     color: "grey",
     size: "md",
     radius: undefined,
@@ -57,7 +58,7 @@ export const Usage = meta.story({
 export const WithIcon = meta.story({
   name: "アイコン付き",
   ...ctrl({
-    variant: "solid",
+    variant: "muted",
     color: "grey",
     size: "md",
     radius: undefined,
@@ -84,7 +85,7 @@ export const WithIndicator = meta.story({
   name: "インジケーター付き",
   ...ctrl({
     children: "プロフィールを更新しました。",
-    variant: "solid",
+    variant: "muted",
     color: "green",
     size: "md",
     radius: undefined,
@@ -104,7 +105,7 @@ export const WithTitle = meta.story({
   ...ctrl({
     title: "更新完了",
     children: "プロフィールを更新しました。",
-    variant: "solid",
+    variant: "muted",
     color: "green",
     size: "md",
     radius: undefined,
@@ -124,7 +125,7 @@ export const WithActions = meta.story({
   ...ctrl({
     title: "保存できませんでした",
     children: "入力内容を確認して、もう一度お試しください。",
-    variant: "solid",
+    variant: "muted",
     color: "red",
     size: "md",
     radius: undefined,
@@ -181,7 +182,7 @@ export const Colors = meta.story({
   ...ctrl({
     title: "更新完了",
     children: "プロフィールを更新しました。",
-    variant: "solid",
+    variant: "muted",
     size: "md",
     radius: undefined,
     outlined: false,
@@ -205,7 +206,7 @@ export const Radius = meta.story({
   ...ctrl({
     title: "更新完了",
     children: "プロフィールを更新しました。",
-    variant: "solid",
+    variant: "muted",
     color: "grey",
     size: "md",
     outlined: false,
@@ -228,7 +229,7 @@ export const Outlined = meta.story({
   name: "枠線",
   ...ctrl({
     children: "説明文",
-    variant: "solid",
+    variant: "muted",
     color: "grey",
     size: "md",
     radius: undefined,
@@ -248,7 +249,7 @@ export const Sizes = meta.story({
   ...ctrl({
     title: "更新完了",
     children: "プロフィールを更新しました。",
-    variant: "solid",
+    variant: "muted",
     color: "grey",
     radius: undefined,
     outlined: false,

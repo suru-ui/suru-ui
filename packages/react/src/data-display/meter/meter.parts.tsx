@@ -1,5 +1,5 @@
 import { Meter } from "@base-ui/react/meter";
-import type { Color, Size } from "@suru-ui/theme";
+import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import cn from "../../cn.js";
@@ -7,13 +7,13 @@ import type { IComponent } from "../../types.js";
 
 import "./meter.css";
 
-// Types
-// -----
+// Root
+// ----
 
 /**
  * メーターの色です。
  */
-export type MeterColor = Color;
+export type MeterRootColor = Color;
 
 /**
  * メーターの角丸です。
@@ -24,7 +24,7 @@ export type MeterColor = Color;
  * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-export type MeterRadius = "none" | Size | "full";
+export type MeterRootRadius = "none" | Size | "full";
 
 /**
  * メーターの大きさです。
@@ -33,7 +33,7 @@ export type MeterRadius = "none" | Size | "full";
  * - `"md"`: 標準的なサイズ
  * - `"lg"`: 大きいサイズ
  */
-export type MeterSize = Size;
+export type MeterRootSize = Size;
 
 /**
  * メーターの主な外観の種類です。
@@ -41,10 +41,7 @@ export type MeterSize = Size;
  * - `"naked"`: 背景のないトラック
  * - `"liquid"`: 薄い塗りつぶしのトラック
  */
-export type MeterVariant = "naked" | "liquid";
-
-// Root
-// ----
+export type MeterRootVariant = "naked" | "liquid";
 
 /**
  * {@link MeterRoot} の状態です。
@@ -60,7 +57,7 @@ export type MeterRootProps = React.ComponentProps<typeof Meter.Root> & {
    *
    * @default "grey"
    */
-  color?: MeterColor | undefined;
+  color?: MeterRootColor | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
@@ -74,21 +71,21 @@ export type MeterRootProps = React.ComponentProps<typeof Meter.Root> & {
    *
    * @default "full"
    */
-  radius?: MeterRadius | undefined;
+  radius?: MeterRootRadius | undefined;
 
   /**
    * メーターのサイズを指定します。
    *
    * @default "md"
    */
-  size?: MeterSize | undefined;
+  size?: MeterRootSize | undefined;
 
   /**
    * メーターのスタイルバリエーションを指定します。
    *
    * @default "liquid"
    */
-  variant?: MeterVariant | undefined;
+  variant?: MeterRootVariant | undefined;
 };
 
 /**
@@ -126,14 +123,34 @@ export const MeterRoot: IComponent<MeterRootProps> = function SuiMeterRoot(props
  */
 export namespace Root {
   /**
-   * {@link MeterRoot} の状態型です。
+   * {@link MeterRootState} です。
    */
   export type State = MeterRootState;
 
   /**
-   * {@link MeterRoot} のプロパティー型です。
+   * {@link MeterRootProps} です。
    */
   export type Props = MeterRootProps;
+
+  /**
+   * {@link MeterRootColor} です。
+   */
+  export type Color = MeterRootColor;
+
+  /**
+   * {@link MeterRootRadius} です。
+   */
+  export type Radius = MeterRootRadius;
+
+  /**
+   * {@link MeterRootSize} です。
+   */
+  export type Size = MeterRootSize;
+
+  /**
+   * {@link MeterRootVariant} です。
+   */
+  export type Variant = MeterRootVariant;
 }
 
 /**
@@ -168,12 +185,12 @@ export const MeterLabel: IComponent<MeterLabelProps> = function SuiMeterLabel(pr
  */
 export namespace Label {
   /**
-   * {@link MeterLabel} の状態型です。
+   * {@link MeterLabelState} です。
    */
   export type State = MeterLabelState;
 
   /**
-   * {@link MeterLabel} のプロパティー型です。
+   * {@link MeterLabelProps} です。
    */
   export type Props = MeterLabelProps;
 }
@@ -210,12 +227,12 @@ export const MeterValue: IComponent<MeterValueProps> = function SuiMeterValue(pr
  */
 export namespace Value {
   /**
-   * {@link MeterValue} の状態型です。
+   * {@link MeterValueState} です。
    */
   export type State = MeterValueState;
 
   /**
-   * {@link MeterValue} のプロパティー型です。
+   * {@link MeterValueProps} です。
    */
   export type Props = MeterValueProps;
 }
@@ -252,12 +269,12 @@ export const MeterTrack: IComponent<MeterTrackProps> = function SuiMeterTrack(pr
  */
 export namespace Track {
   /**
-   * {@link MeterTrack} の状態型です。
+   * {@link MeterTrackState} です。
    */
   export type State = MeterTrackState;
 
   /**
-   * {@link MeterTrack} のプロパティー型です。
+   * {@link MeterTrackProps} です。
    */
   export type Props = MeterTrackProps;
 }
@@ -294,12 +311,12 @@ export const MeterIndicator: IComponent<MeterIndicatorProps> = function SuiMeter
  */
 export namespace Indicator {
   /**
-   * {@link MeterIndicator} の状態型です。
+   * {@link MeterIndicatorState} です。
    */
   export type State = MeterIndicatorState;
 
   /**
-   * {@link MeterIndicator} のプロパティー型です。
+   * {@link MeterIndicatorProps} です。
    */
   export type Props = MeterIndicatorProps;
 }

@@ -7,13 +7,13 @@ import type { IComponent } from "../../types.js";
 
 import "./slider.css";
 
-// Types
-// -----
+// Root
+// ----
 
 /**
  * スライダーの色です。
  */
-export type SliderColor = Color;
+export type SliderRootColor = Color;
 
 /**
  * スライダーの角丸です。
@@ -22,7 +22,7 @@ export type SliderColor = Color;
  * - `"rounded"`: 標準的な角丸
  * - `"full"`: 完全な丸形
  */
-export type SliderRadius = "none" | "rounded" | "full";
+export type SliderRootRadius = "none" | "rounded" | "full";
 
 /**
  * スライダーの大きさです。
@@ -31,7 +31,7 @@ export type SliderRadius = "none" | "rounded" | "full";
  * - `"md"`: 標準的なサイズ
  * - `"lg"`: 大きいサイズ
  */
-export type SliderSize = Size;
+export type SliderRootSize = Size;
 
 /**
  * スライダーの主な外観の種類です。
@@ -39,10 +39,7 @@ export type SliderSize = Size;
  * - `"naked"`: 背景のないトラックのみ、枠線なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type SliderVariant = "naked" | "liquid";
-
-// Root
-// ----
+export type SliderRootVariant = "naked" | "liquid";
 
 /**
  * {@link SliderRoot} の状態です。
@@ -54,25 +51,11 @@ export type SliderRootState = Slider.Root.State;
  */
 export type SliderRootProps = React.ComponentProps<typeof Slider.Root> & {
   /**
-   * スライダーのサイズを指定します。値を変更すると、ルートのクラスも更新されます。
-   *
-   * @default "md"
-   */
-  size?: SliderSize | undefined;
-
-  /**
    * スライダーの色を指定します。値を変更すると、ルートのクラスも更新されます。
    *
    * @default "grey"
    */
-  color?: SliderColor | undefined;
-
-  /**
-   * スライダーのスタイルバリエーションを指定します。値を変更すると、ルートのクラスも更新されます。
-   *
-   * @default "liquid"
-   */
-  variant?: SliderVariant | undefined;
+  color?: SliderRootColor | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。値を変更すると、ルートのクラスも更新されます。
@@ -84,7 +67,21 @@ export type SliderRootProps = React.ComponentProps<typeof Slider.Root> & {
    *
    * @default "full"
    */
-  radius?: SliderRadius | undefined;
+  radius?: SliderRootRadius | undefined;
+
+  /**
+   * スライダーのサイズを指定します。値を変更すると、ルートのクラスも更新されます。
+   *
+   * @default "md"
+   */
+  size?: SliderRootSize | undefined;
+
+  /**
+   * スライダーのスタイルバリエーションを指定します。値を変更すると、ルートのクラスも更新されます。
+   *
+   * @default "liquid"
+   */
+  variant?: SliderRootVariant | undefined;
 };
 
 /**
@@ -96,8 +93,8 @@ export const SliderRoot: IComponent<SliderRootProps> = function SuiSliderRoot(pr
     color: colorProp = "grey",
     radius: radiusProp = "full",
     variant: variantProp = "liquid",
-    disabled = false,
     outlined = false,
+    disabled = false,
     className,
     ...otherProps
   } = props;
@@ -125,18 +122,38 @@ export const SliderRoot: IComponent<SliderRootProps> = function SuiSliderRoot(pr
  */
 export namespace Root {
   /**
-   * {@link SliderRoot} の状態型です。
+   * {@link SliderRootState} です。
    */
   export type State = SliderRootState;
 
   /**
-   * {@link SliderRoot} のプロパティー型です。
+   * {@link SliderRootProps} です。
    */
   export type Props = SliderRootProps;
+
+  /**
+   * {@link SliderRootColor} です。
+   */
+  export type Color = SliderRootColor;
+
+  /**
+   * {@link SliderRootRadius} です。
+   */
+  export type Radius = SliderRootRadius;
+
+  /**
+   * {@link SliderRootSize} です。
+   */
+  export type Size = SliderRootSize;
+
+  /**
+   * {@link SliderRootVariant} です。
+   */
+  export type Variant = SliderRootVariant;
 }
 
 /**
- * {@link SliderRoot} の別名です。
+ * {@link SliderRoot} です。
  */
 export const Root: IComponent<Root.Props> = SliderRoot;
 
@@ -167,18 +184,18 @@ export const SliderLabel: IComponent<SliderLabelProps> = function SuiSliderLabel
  */
 export namespace Label {
   /**
-   * {@link SliderLabel} の状態型です。
+   * {@link SliderLabelState} です。
    */
   export type State = SliderLabelState;
 
   /**
-   * {@link SliderLabel} のプロパティー型です。
+   * {@link SliderLabelProps} です。
    */
   export type Props = SliderLabelProps;
 }
 
 /**
- * {@link SliderLabel} の別名です。
+ * {@link SliderLabel} です。
  */
 export const Label: IComponent<Label.Props> = SliderLabel;
 
@@ -209,18 +226,18 @@ export const SliderValue: IComponent<SliderValueProps> = function SuiSliderValue
  */
 export namespace Value {
   /**
-   * {@link SliderValue} の状態型です。
+   * {@link SliderValueState} です。
    */
   export type State = SliderValueState;
 
   /**
-   * {@link SliderValue} のプロパティー型です。
+   * {@link SliderValueProps} です。
    */
   export type Props = SliderValueProps;
 }
 
 /**
- * {@link SliderValue} の別名です。
+ * {@link SliderValue} です。
  */
 export const Value: IComponent<Value.Props> = SliderValue;
 
@@ -251,18 +268,18 @@ export const SliderControl: IComponent<SliderControlProps> = function SuiSliderC
  */
 export namespace Control {
   /**
-   * {@link SliderControl} の状態型です。
+   * {@link SliderControlState} です。
    */
   export type State = SliderControlState;
 
   /**
-   * {@link SliderControl} のプロパティー型です。
+   * {@link SliderControlProps} です。
    */
   export type Props = SliderControlProps;
 }
 
 /**
- * {@link SliderControl} の別名です。
+ * {@link SliderControl} です。
  */
 export const Control: IComponent<Control.Props> = SliderControl;
 
@@ -293,18 +310,18 @@ export const SliderTrack: IComponent<SliderTrackProps> = function SuiSliderTrack
  */
 export namespace Track {
   /**
-   * {@link SliderTrack} の状態型です。
+   * {@link SliderTrackState} です。
    */
   export type State = SliderTrackState;
 
   /**
-   * {@link SliderTrack} のプロパティー型です。
+   * {@link SliderTrackProps} です。
    */
   export type Props = SliderTrackProps;
 }
 
 /**
- * {@link SliderTrack} の別名です。
+ * {@link SliderTrack} です。
  */
 export const Track: IComponent<Track.Props> = SliderTrack;
 
@@ -337,18 +354,18 @@ export const SliderIndicator: IComponent<SliderIndicatorProps> = function SuiSli
  */
 export namespace Indicator {
   /**
-   * {@link SliderIndicator} の状態型です。
+   * {@link SliderIndicatorState} です。
    */
   export type State = SliderIndicatorState;
 
   /**
-   * {@link SliderIndicator} のプロパティー型です。
+   * {@link SliderIndicatorProps} です。
    */
   export type Props = SliderIndicatorProps;
 }
 
 /**
- * {@link SliderIndicator} の別名です。
+ * {@link SliderIndicator} です。
  */
 export const Indicator: IComponent<Indicator.Props> = SliderIndicator;
 
@@ -379,17 +396,17 @@ export const SliderThumb: IComponent<SliderThumbProps> = function SuiSliderThumb
  */
 export namespace Thumb {
   /**
-   * {@link SliderThumb} の状態型です。
+   * {@link SliderThumbState} です。
    */
   export type State = SliderThumbState;
 
   /**
-   * {@link SliderThumb} のプロパティー型です。
+   * {@link SliderThumbProps} です。
    */
   export type Props = SliderThumbProps;
 }
 
 /**
- * {@link SliderThumb} の別名です。
+ * {@link SliderThumb} です。
  */
 export const Thumb: IComponent<Thumb.Props> = SliderThumb;

@@ -8,13 +8,13 @@ import { useAvatarGroupContext } from "../avatar-group/avatar-group.parts.jsx";
 
 import "./avatar.css";
 
-// Types
-// -----
+// Root
+// ----
 
 /**
  * アバターの色です。
  */
-export type AvatarColor = Color;
+export type AvatarRootColor = Color;
 
 /**
  * アバターの角丸です。
@@ -25,7 +25,7 @@ export type AvatarColor = Color;
  * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-export type AvatarRadius = "none" | Size | "full";
+export type AvatarRootRadius = "none" | Size | "full";
 
 /**
  * アバターの大きさです。
@@ -34,10 +34,7 @@ export type AvatarRadius = "none" | Size | "full";
  * - `"md"`: 標準的なサイズ
  * - `"lg"`: 大きいサイズ
  */
-export type AvatarSize = Size;
-
-// Root
-// ----
+export type AvatarRootSize = Size;
 
 /**
  * {@link AvatarRoot} の状態です。
@@ -53,21 +50,21 @@ export type AvatarRootProps = React.ComponentProps<typeof Avatar.Root> & {
    *
    * @default "grey"
    */
-  color?: AvatarColor | undefined;
+  color?: AvatarRootColor | undefined;
 
   /**
    * アバターの角丸を指定します。
    *
    * @default "full"
    */
-  radius?: AvatarRadius | undefined;
+  radius?: AvatarRootRadius | undefined;
 
   /**
    * アバターのサイズを指定します。
    *
    * @default "md"
    */
-  size?: AvatarSize | undefined;
+  size?: AvatarRootSize | undefined;
 };
 
 /**
@@ -103,14 +100,29 @@ export const AvatarRoot: IComponent<AvatarRootProps> = function SuiAvatarRoot(pr
  */
 export namespace Root {
   /**
-   * {@link AvatarRoot} の状態型です。
+   * {@link AvatarRootState} です。
    */
   export type State = AvatarRootState;
 
   /**
-   * {@link AvatarRoot} のプロパティー型です。
+   * {@link AvatarRootProps} です。
    */
   export type Props = AvatarRootProps;
+
+  /**
+   * {@link AvatarRootColor} です。
+   */
+  export type Color = AvatarRootColor;
+
+  /**
+   * {@link AvatarRootRadius} です。
+   */
+  export type Radius = AvatarRootRadius;
+
+  /**
+   * {@link AvatarRootSize} です。
+   */
+  export type Size = AvatarRootSize;
 }
 
 /**
@@ -147,12 +159,12 @@ export const AvatarImage: IComponent<AvatarImageProps> = function SuiAvatarImage
  */
 export namespace Image {
   /**
-   * {@link AvatarImage} の状態型です。
+   * {@link AvatarImageState} です。
    */
   export type State = AvatarImageState;
 
   /**
-   * {@link AvatarImage} のプロパティー型です。
+   * {@link AvatarImageProps} です。
    */
   export type Props = AvatarImageProps;
 }
@@ -189,12 +201,12 @@ export const AvatarFallback: IComponent<AvatarFallbackProps> = function SuiAvata
  */
 export namespace Fallback {
   /**
-   * {@link AvatarFallback} の状態型です。
+   * {@link AvatarFallbackState} です。
    */
   export type State = AvatarFallbackState;
 
   /**
-   * {@link AvatarFallback} のプロパティー型です。
+   * {@link AvatarFallbackProps} です。
    */
   export type Props = AvatarFallbackProps;
 }

@@ -1,3 +1,10 @@
 export * from "./avatar-group.parts.jsx";
 
-export { type AvatarGroupProps, type AvatarGroupState, AvatarGroup } from "./avatar-group.jsx";
+export {
+  type AvatarGroupSize,
+  type AvatarGroupColor,
+  type AvatarGroupProps,
+  type AvatarGroupState,
+  type AvatarGroupRadius,
+  AvatarGroup,
+} from "./avatar-group.jsx";

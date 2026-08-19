@@ -31,6 +31,8 @@ export type FieldActions = FieldRootActions;
 
 /**
  * エラーを表示する検証状態です。
+ *
+ * @see https://developer.mozilla.org/docs/Web/API/ValidityState
  */
 export type FieldErrorMatch = Extract<NonNullable<FieldErrorProps["match"]>, string>;
 
@@ -94,7 +96,9 @@ export type FieldProps = FieldRootProps & {
   label?: FieldLabelProps["children"] | undefined;
 
   /**
-   * 各パーツに渡すプロパティーです。
+   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   *
+   * 各パーツのプロパティーが優先されます。
    */
   slotProps?: FieldSlotProps | undefined;
 
@@ -205,7 +209,7 @@ export namespace Field {
   export type ErrorMatches = FieldErrorMatches;
 
   /**
-   * {@link FieldItem} の状態やプロパティーをまとめた型名前空間です。
+   * {@link Field.Item} の状態やプロパティーをまとめた型名前空間です。
    */
   export namespace Item {
     /**
@@ -220,7 +224,7 @@ export namespace Field {
   }
 
   /**
-   * {@link FieldControl} の状態やプロパティーをまとめた型名前空間です。
+   * {@link Field.Control} の状態やプロパティーをまとめた型名前空間です。
    */
   export namespace Control {
     /**

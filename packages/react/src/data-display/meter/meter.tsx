@@ -2,11 +2,15 @@ import * as React from "react";
 
 import type { IComponent } from "../../types.js";
 import {
+  type MeterRootSize,
+  type MeterRootColor,
   type MeterRootProps,
   type MeterRootState,
   type MeterLabelProps,
+  type MeterRootRadius,
   type MeterTrackProps,
   type MeterValueProps,
+  type MeterRootVariant,
   type MeterIndicatorProps,
   MeterRoot,
   MeterLabel,
@@ -14,6 +18,26 @@ import {
   MeterValue,
   MeterIndicator,
 } from "./meter.parts.jsx";
+
+/**
+ * {@link MeterRootColor} です。
+ */
+export type MeterColor = MeterRootColor;
+
+/**
+ * {@link MeterRootRadius} です。
+ */
+export type MeterRadius = MeterRootRadius;
+
+/**
+ * {@link MeterRootSize} です。
+ */
+export type MeterSize = MeterRootSize;
+
+/**
+ * {@link MeterRootVariant} です。
+ */
+export type MeterVariant = MeterRootVariant;
 
 /**
  * {@link Meter} の各パーツに渡すプロパティーです。
@@ -48,7 +72,7 @@ export type MeterState = MeterRootState;
 /**
  * {@link Meter} コンポーネントのプロパティーです。
  */
-export type MeterProps = MeterRootProps & {
+export type MeterProps = Omit<MeterRootProps, "children"> & {
   /**
    * ラベルです。
    */
@@ -106,4 +130,24 @@ export namespace Meter {
    * {@link MeterSlotProps} です。
    */
   export type SlotProps = MeterSlotProps;
+
+  /**
+   * {@link MeterColor} です。
+   */
+  export type Color = MeterColor;
+
+  /**
+   * {@link MeterRadius} です。
+   */
+  export type Radius = MeterRadius;
+
+  /**
+   * {@link MeterSize} です。
+   */
+  export type Size = MeterSize;
+
+  /**
+   * {@link MeterVariant} です。
+   */
+  export type Variant = MeterVariant;
 }

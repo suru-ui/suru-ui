@@ -17,31 +17,22 @@ import type { IComponent, IUseContext } from "../../types.js";
 
 import "./resizable.css";
 
-// Types
-// -----
-
-/**
- * リサイズ可能なパネル群の向きです。
- *
- * - `"horizontal"`: 水平方向にパネルを並べます。
- * - `"vertical"`: 垂直方向にパネルを並べます。
- */
-export type ResizableDirection = "horizontal" | "vertical";
-
-/**
- * リサイズ可能なパネルのサイズです。
- *
- * 数値はパーセントとして扱われ、単位付きの文字列も指定できます。
- */
-export type ResizablePanelSize = number | string;
-
 // Context
 // -------
 
+/**
+ * {@link ResizableRoot} が子パーツへ提供するコンテキストの型です。
+ */
 export type ResizableContext = {
-  readonly direction: ResizableDirection;
+  /**
+   * パネル群の向きです。
+   */
+  readonly direction: ResizableRootDirection;
 };
 
+/**
+ * {@link ResizableRoot} が子パーツへ提供するコンテキストです。
+ */
 export const ResizableContext: React.Context<ResizableContext | null> =
   React.createContext<ResizableContext | null>(null);
 
@@ -94,13 +85,26 @@ const DEFAULT_RESIZE_TARGET_MINIMUM_SIZE = {
 // ----
 
 /**
+ * リサイズ可能なパネル群の向きです。
+ *
+ * - `"horizontal"`: 水平方向にパネルを並べます。
+ * - `"vertical"`: 垂直方向にパネルを並べます。
+ */
+export type ResizableRootDirection = "horizontal" | "vertical";
+
+/**
+ * {@link ResizableRootDirection} です。
+ */
+export type ResizableRootOrientation = ResizableRootDirection;
+
+/**
  * {@link ResizableRoot} の状態です。
  */
 export type ResizableRootState = {
   /**
    * パネル群の向きです。
    */
-  readonly direction: ResizableDirection;
+  readonly direction: ResizableRootDirection;
 };
 
 /**
@@ -117,12 +121,12 @@ export type ResizableRootProps = Omit<
      *
      * @default "horizontal"
      */
-    direction?: ResizableDirection | undefined;
+    direction?: ResizableRootDirection | undefined;
 
     /**
-     * {@link direction} の別名です。
+     * {@link ResizableRootDirection} です。
      */
-    orientation?: ResizableDirection | undefined;
+    orientation?: ResizableRootOrientation | undefined;
 
     /**
      * パネルサイズの配列が変化したときに呼び出されます。
@@ -142,9 +146,9 @@ export const ResizableRoot: IComponent<ResizableRootProps> = function SuiResizab
     children,
     onLayout,
     className,
-    onLayoutChange,
     direction: directionProp,
     orientation: orientationProp,
+    onLayoutChange,
     resizeTargetMinimumSize: resizeTargetMinimumSizeProp,
     ...otherProps
   } = props;
@@ -190,18 +194,28 @@ export const ResizableRoot: IComponent<ResizableRootProps> = function SuiResizab
  */
 export namespace Root {
   /**
-   * {@link ResizableRoot} の状態型です。
+   * {@link ResizableRootState} です。
    */
   export type State = ResizableRootState;
 
   /**
-   * {@link ResizableRoot} のプロパティー型です。
+   * {@link ResizableRootProps} です。
    */
   export type Props = ResizableRootProps;
+
+  /**
+   * {@link ResizableRootDirection} です。
+   */
+  export type Direction = ResizableRootDirection;
+
+  /**
+   * {@link ResizableRootOrientation} です。
+   */
+  export type Orientation = ResizableRootOrientation;
 }
 
 /**
- * {@link ResizableRoot} の別名です。
+ * {@link ResizableRoot} です。
  */
 export const Root: IComponent<Root.Props> = ResizableRoot;
 
@@ -209,17 +223,24 @@ export const Root: IComponent<Root.Props> = ResizableRoot;
 // -----
 
 /**
- * {@link ResizablePanel} の状態です。
+ * リサイズ可能なパネルのサイズです。
+ *
+ * 数値はパーセントとして扱われ、単位付きの文字列も指定できます。
+ */
+export type ResizablePanelSize = number | string;
+
+/**
+ * {@link ResizablePanelState} です。
  */
 export type ResizablePanelState = {
   /**
    * パネル群の向きです。
    */
-  readonly direction: ResizableDirection;
+  readonly direction: ResizableRootDirection;
 };
 
 /**
- * {@link ResizablePanel} に渡すプロパティーです。
+ * {@link ResizablePanelProps} です。
  */
 export type ResizablePanelProps = Omit<
   PanelProps,
@@ -330,18 +351,23 @@ export const ResizablePanel: IComponent<ResizablePanelProps> = function SuiResiz
  */
 export namespace Panel {
   /**
-   * {@link ResizablePanel} の状態型です。
+   * {@link ResizablePanelState} です。
    */
   export type State = ResizablePanelState;
 
   /**
-   * {@link ResizablePanel} のプロパティー型です。
+   * {@link ResizablePanelProps} です。
    */
   export type Props = ResizablePanelProps;
+
+  /**
+   * {@link ResizablePanelSize} です。
+   */
+  export type Size = ResizablePanelSize;
 }
 
 /**
- * {@link ResizablePanel} の別名です。
+ * {@link ResizablePanel} です。
  */
 export const Panel: IComponent<Panel.Props> = ResizablePanel;
 
@@ -349,13 +375,13 @@ export const Panel: IComponent<Panel.Props> = ResizablePanel;
 // ------
 
 /**
- * {@link ResizableHandle} の状態です。
+ * {@link ResizableHandleState} です。
  */
 export type ResizableHandleState = {
   /**
    * パネル群の向きです。
    */
-  readonly direction: ResizableDirection;
+  readonly direction: ResizableRootDirection;
 
   /**
    * ハンドルが無効かどうかです。
@@ -364,7 +390,7 @@ export type ResizableHandleState = {
 };
 
 /**
- * {@link ResizableHandle} に渡すプロパティーです。
+ * {@link ResizableHandleProps} です。
  */
 export type ResizableHandleProps = Omit<SeparatorProps, "children" | "className" | "style"> &
   Omit<React.ComponentProps<"div">, keyof RenderProps> &
@@ -425,17 +451,17 @@ export const ResizableHandle: IComponent<ResizableHandleProps> = function SuiRes
  */
 export namespace Handle {
   /**
-   * {@link ResizableHandle} の状態型です。
+   * {@link ResizableHandleState} です。
    */
   export type State = ResizableHandleState;
 
   /**
-   * {@link ResizableHandle} のプロパティー型です。
+   * {@link ResizableHandleProps} です。
    */
   export type Props = ResizableHandleProps;
 }
 
 /**
- * {@link ResizableHandle} の別名です。
+ * {@link ResizableHandle} です。
  */
 export const Handle: IComponent<Handle.Props> = ResizableHandle;

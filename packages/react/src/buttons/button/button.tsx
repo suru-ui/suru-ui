@@ -1,14 +1,14 @@
 import type { IComponent, IUseContext } from "../../types.js";
 import {
-  type ButtonSize,
-  type ButtonColor,
-  type ButtonRadius,
   type ButtonContext,
+  type ButtonRootSize,
+  type ButtonRootColor,
   type ButtonRootProps,
   type ButtonRootState,
+  type ButtonRootRadius,
+  type ButtonRootVariant,
   type ButtonContentProps,
   type ButtonPendingProps,
-  type ButtonPendingVisibility,
   type ButtonCircularProgressProps,
   type ButtonCircularProgressFillProps,
   type ButtonCircularProgressTrackProps,
@@ -22,6 +22,26 @@ import {
   ButtonCircularProgressTrack,
   ButtonCircularProgressFillRotation,
 } from "./button.parts.jsx";
+
+/**
+ * {@link ButtonRootColor} です。
+ */
+export type ButtonColor = ButtonRootColor;
+
+/**
+ * {@link ButtonRootRadius} です。
+ */
+export type ButtonRadius = ButtonRootRadius;
+
+/**
+ * {@link ButtonRootSize} です。
+ */
+export type ButtonSize = ButtonRootSize;
+
+/**
+ * {@link ButtonRootVariant} です。
+ */
+export type ButtonVariant = ButtonRootVariant;
 
 /**
  * {@link Button} の各パーツに渡すプロパティーです。
@@ -167,7 +187,7 @@ export namespace Button {
   export type Size = ButtonSize;
 
   /**
-   * {@link ButtonPendingVisibility} です。
+   * {@link ButtonVariant} です。
    */
-  export type PendingVisibility = ButtonPendingVisibility;
+  export type Variant = ButtonVariant;
 }

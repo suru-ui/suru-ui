@@ -1,11 +1,15 @@
 import type { IComponent } from "../../types.js";
 import {
+  type SliderRootSize,
+  type SliderRootColor,
   type SliderRootProps,
   type SliderRootState,
   type SliderLabelProps,
+  type SliderRootRadius,
   type SliderThumbProps,
   type SliderTrackProps,
   type SliderValueProps,
+  type SliderRootVariant,
   type SliderControlProps,
   type SliderIndicatorProps,
   SliderRoot,
@@ -16,6 +20,26 @@ import {
   SliderControl,
   SliderIndicator,
 } from "./slider.parts.jsx";
+
+/**
+ * {@link SliderRootColor} です。
+ */
+export type SliderColor = SliderRootColor;
+
+/**
+ * {@link SliderRootRadius} です。
+ */
+export type SliderRadius = SliderRootRadius;
+
+/**
+ * {@link SliderRootSize} です。
+ */
+export type SliderSize = SliderRootSize;
+
+/**
+ * {@link SliderRootVariant} です。
+ */
+export type SliderVariant = SliderRootVariant;
 
 /**
  * {@link Slider} の各パーツに渡すプロパティーです。
@@ -65,11 +89,12 @@ export type SliderState = SliderRootState;
  *
  * `value` が指定されている場合は `defaultValue` より優先され、値が配列になると Thumb の数も更新されます。
  */
-export type SliderProps = SliderRootProps & {
+export type SliderProps = Omit<SliderRootProps, "children"> & {
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
    *
    * {@link SliderSlotProps} を参照してください。
+   * 各パーツのプロパティーが優先されます。
    */
   slotProps?: SliderSlotProps | undefined;
 };
@@ -131,4 +156,24 @@ export namespace Slider {
    * {@link SliderSlotProps} です。
    */
   export type SlotProps = SliderSlotProps;
+
+  /**
+   * {@link SliderColor} です。
+   */
+  export type Color = SliderColor;
+
+  /**
+   * {@link SliderRadius} です。
+   */
+  export type Radius = SliderRadius;
+
+  /**
+   * {@link SliderSize} です。
+   */
+  export type Size = SliderSize;
+
+  /**
+   * {@link SliderVariant} です。
+   */
+  export type Variant = SliderVariant;
 }

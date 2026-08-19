@@ -9,53 +9,6 @@ import type { IComponent, IUseContext } from "../../types.js";
 
 import "./combobox.css";
 
-// Types
-// -----
-
-/**
- * コンボボックスの色です。
- */
-export type ComboboxColor = Color;
-
-/**
- * コンボボックスの角丸です。
- *
- * - `"none"`: 角を直角にする
- * - `"rounded"`: 標準的な角丸
- * - `"full"`: 完全な丸形
- */
-export type ComboboxRadius = "none" | "rounded" | "full";
-
-/**
- * コンボボックスの大きさです。
- *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
- */
-export type ComboboxSize = Size;
-
-/**
- * コンボボックスの主な外観の種類です。
- *
- * - `"naked"`: 背景のない入力欄
- * - `"liquid"`: 薄い塗りつぶし
- */
-export type ComboboxVariant = "naked" | "liquid";
-
-/**
- * コンボボックスに表示する項目の一覧です。
- *
- * - `readonly Value[]`: 平坦な項目の配列
- * - `readonly { label?: React.ReactNode; items: readonly Value[] }[]`: `items` を持つグループの配列
- */
-export type ComboboxItems<Value = unknown> =
-  | readonly Value[]
-  | readonly {
-      readonly label?: React.ReactNode;
-      readonly items: readonly Value[];
-    }[];
-
 // Context
 // -------
 
@@ -66,7 +19,7 @@ export type ComboboxContext = {
   /**
    * フォーカス時に枠線へ適用するアクセントカラーです。
    */
-  readonly accentColor: ComboboxColor;
+  readonly accentColor: ComboboxRootColor;
 
   /**
    * 枠線を表示するかどうかです。
@@ -76,17 +29,17 @@ export type ComboboxContext = {
   /**
    * 入力を含むグループ要素の角丸です。
    */
-  readonly radius: ComboboxRadius;
+  readonly radius: ComboboxRootRadius;
 
   /**
    * 入力欄とリスト項目のサイズです。
    */
-  readonly size: ComboboxSize;
+  readonly size: ComboboxRootSize;
 
   /**
    * 入力欄のスタイルバリエーションです。
    */
-  readonly variant: ComboboxVariant;
+  readonly variant: ComboboxRootVariant;
 };
 
 /**
@@ -133,6 +86,50 @@ export const useContext: IUseContext<Context> = useComboboxContext;
 // ----
 
 /**
+ * コンボボックスの色です。
+ */
+export type ComboboxRootColor = Color;
+
+/**
+ * コンボボックスに表示する項目の一覧です。
+ *
+ * - `readonly Value[]`: 平坦な項目の配列
+ * - `readonly { label?: React.ReactNode; items: readonly Value[] }[]`: `items` を持つグループの配列
+ */
+export type ComboboxRootItems<Value = unknown> =
+  | readonly Value[]
+  | readonly {
+      readonly label?: React.ReactNode;
+      readonly items: readonly Value[];
+    }[];
+
+/**
+ * コンボボックスの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"rounded"`: 標準的な角丸
+ * - `"full"`: 完全な丸形
+ */
+export type ComboboxRootRadius = "none" | "rounded" | "full";
+
+/**
+ * コンボボックスの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type ComboboxRootSize = Size;
+
+/**
+ * コンボボックスの主な外観の種類です。
+ *
+ * - `"naked"`: 背景のない入力欄
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type ComboboxRootVariant = "naked" | "liquid";
+
+/**
  * {@link ComboboxRoot} の状態です。
  */
 export type ComboboxRootState = Combobox.Root.State;
@@ -145,16 +142,16 @@ export type ComboboxRootProps<Value = unknown, Multiple extends boolean | undefi
   "items"
 > & {
   /**
-   * リストに表示する項目の一覧です。
-   */
-  items?: ComboboxItems<Value> | undefined;
-
-  /**
    * フォーカス時に枠線へ適用するアクセントカラーを指定します。
    *
    * @default "grey"
    */
-  accentColor?: ComboboxColor | undefined;
+  accentColor?: ComboboxRootColor | undefined;
+
+  /**
+   * リストに表示する項目の一覧です。
+   */
+  items?: ComboboxRootItems<Value> | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
@@ -163,25 +160,25 @@ export type ComboboxRootProps<Value = unknown, Multiple extends boolean | undefi
   outlined?: boolean | undefined;
 
   /**
+   * 入力を含むグループ要素の角丸を指定します。
+   *
+   * @default "rounded"
+   */
+  radius?: ComboboxRootRadius | undefined;
+
+  /**
    * 入力欄とリスト項目のサイズを指定します。
    *
    * @default "md"
    */
-  size?: ComboboxSize | undefined;
+  size?: ComboboxRootSize | undefined;
 
   /**
    * 入力欄のスタイルバリエーションを指定します。
    *
    * @default "naked"
    */
-  variant?: ComboboxVariant | undefined;
-
-  /**
-   * 入力を含むグループ要素の角丸を指定します。
-   *
-   * @default "rounded"
-   */
-  radius?: ComboboxRadius | undefined;
+  variant?: ComboboxRootVariant | undefined;
 };
 
 /**
@@ -206,20 +203,20 @@ export const ComboboxRoot: ComboboxRootComponent = function SuiComboboxRoot<
   Multiple extends boolean | undefined = false,
 >(props: ComboboxRootProps<Value, Multiple>) {
   const {
-    size: sizeProp = "md",
-    radius: radiusProp = "rounded",
     variant: variantProp = "naked",
     outlined: outlinedProp = variantProp === "naked",
     accentColor: accentColorProp = "grey",
+    radius: radiusProp = "rounded",
+    size: sizeProp = "md",
     ...otherProps
   } = props;
   const context = React.useMemo<ComboboxContext>(
     () => ({
-      size: sizeProp,
-      radius: radiusProp,
-      variant: variantProp,
-      outlined: outlinedProp,
       accentColor: accentColorProp,
+      outlined: outlinedProp,
+      radius: radiusProp,
+      size: sizeProp,
+      variant: variantProp,
     }),
     [accentColorProp, outlinedProp, radiusProp, sizeProp, variantProp],
   );
@@ -236,21 +233,46 @@ export const ComboboxRoot: ComboboxRootComponent = function SuiComboboxRoot<
  */
 export namespace Root {
   /**
-   * {@link ComboboxRootState} の別名です。
+   * {@link ComboboxRootState} です。
    */
   export type State = ComboboxRootState;
 
   /**
-   * {@link ComboboxRootProps} の別名です。
+   * {@link ComboboxRootProps} です。
    */
   export type Props<
     Value = unknown,
     Multiple extends boolean | undefined = false,
   > = ComboboxRootProps<Value, Multiple>;
+
+  /**
+   * {@link ComboboxRootColor} です。
+   */
+  export type Color = ComboboxRootColor;
+
+  /**
+   * {@link ComboboxRootRadius} です。
+   */
+  export type Radius = ComboboxRootRadius;
+
+  /**
+   * {@link ComboboxRootSize} です。
+   */
+  export type Size = ComboboxRootSize;
+
+  /**
+   * {@link ComboboxRootVariant} です。
+   */
+  export type Variant = ComboboxRootVariant;
+
+  /**
+   * {@link ComboboxRootItems} です。
+   */
+  export type Items<Value = unknown> = ComboboxRootItems<Value>;
 }
 
 /**
- * {@link ComboboxRoot} の別名です。
+ * {@link ComboboxRoot} です。
  */
 export const Root: ComboboxRootComponent = ComboboxRoot;
 
@@ -281,18 +303,18 @@ export const ComboboxLabel: IComponent<ComboboxLabelProps> = function SuiCombobo
  */
 export namespace Label {
   /**
-   * {@link ComboboxLabelState} の別名です。
+   * {@link ComboboxLabelState} です。
    */
   export type State = ComboboxLabelState;
 
   /**
-   * {@link ComboboxLabelProps} の別名です。
+   * {@link ComboboxLabelProps} です。
    */
   export type Props = ComboboxLabelProps;
 }
 
 /**
- * {@link ComboboxLabel} の別名です。
+ * {@link ComboboxLabel} です。
  */
 export const Label: IComponent<Label.Props> = ComboboxLabel;
 
@@ -321,18 +343,18 @@ export const ComboboxValue: IComponent<ComboboxValueProps> = function SuiCombobo
  */
 export namespace Value {
   /**
-   * {@link ComboboxValueState} の別名です。
+   * {@link ComboboxValueState} です。
    */
   export type State = ComboboxValueState;
 
   /**
-   * {@link ComboboxValueProps} の別名です。
+   * {@link ComboboxValueProps} です。
    */
   export type Props = ComboboxValueProps;
 }
 
 /**
- * {@link ComboboxValue} の別名です。
+ * {@link ComboboxValue} です。
  */
 export const Value: IComponent<Value.Props> = ComboboxValue;
 
@@ -363,18 +385,18 @@ export const ComboboxInput: IComponent<ComboboxInputProps> = function SuiCombobo
  */
 export namespace Input {
   /**
-   * {@link ComboboxInputState} の別名です。
+   * {@link ComboboxInputState} です。
    */
   export type State = ComboboxInputState;
 
   /**
-   * {@link ComboboxInputProps} の別名です。
+   * {@link ComboboxInputProps} です。
    */
   export type Props = ComboboxInputProps;
 }
 
 /**
- * {@link ComboboxInput} の別名です。
+ * {@link ComboboxInput} です。
  */
 export const Input: IComponent<Input.Props> = ComboboxInput;
 
@@ -429,18 +451,18 @@ export const ComboboxInputGroup: IComponent<ComboboxInputGroupProps> =
  */
 export namespace InputGroup {
   /**
-   * {@link ComboboxInputGroupState} の別名です。
+   * {@link ComboboxInputGroupState} です。
    */
   export type State = ComboboxInputGroupState;
 
   /**
-   * {@link ComboboxInputGroupProps} の別名です。
+   * {@link ComboboxInputGroupProps} です。
    */
   export type Props = ComboboxInputGroupProps;
 }
 
 /**
- * {@link ComboboxInputGroup} の別名です。
+ * {@link ComboboxInputGroup} です。
  */
 export const InputGroup: IComponent<InputGroup.Props> = ComboboxInputGroup;
 
@@ -473,18 +495,18 @@ export const ComboboxTrigger: IComponent<ComboboxTriggerProps> = function SuiCom
  */
 export namespace Trigger {
   /**
-   * {@link ComboboxTriggerState} の別名です。
+   * {@link ComboboxTriggerState} です。
    */
   export type State = ComboboxTriggerState;
 
   /**
-   * {@link ComboboxTriggerProps} の別名です。
+   * {@link ComboboxTriggerProps} です。
    */
   export type Props = ComboboxTriggerProps;
 }
 
 /**
- * {@link ComboboxTrigger} の別名です。
+ * {@link ComboboxTrigger} です。
  */
 export const Trigger: IComponent<Trigger.Props> = ComboboxTrigger;
 
@@ -515,18 +537,18 @@ export const ComboboxIcon: IComponent<ComboboxIconProps> = function SuiComboboxI
  */
 export namespace Icon {
   /**
-   * {@link ComboboxIconState} の別名です。
+   * {@link ComboboxIconState} です。
    */
   export type State = ComboboxIconState;
 
   /**
-   * {@link ComboboxIconProps} の別名です。
+   * {@link ComboboxIconProps} です。
    */
   export type Props = ComboboxIconProps;
 }
 
 /**
- * {@link ComboboxIcon} の別名です。
+ * {@link ComboboxIcon} です。
  */
 export const Icon: IComponent<Icon.Props> = ComboboxIcon;
 
@@ -557,18 +579,18 @@ export const ComboboxClear: IComponent<ComboboxClearProps> = function SuiCombobo
  */
 export namespace Clear {
   /**
-   * {@link ComboboxClearState} の別名です。
+   * {@link ComboboxClearState} です。
    */
   export type State = ComboboxClearState;
 
   /**
-   * {@link ComboboxClearProps} の別名です。
+   * {@link ComboboxClearProps} です。
    */
   export type Props = ComboboxClearProps;
 }
 
 /**
- * {@link ComboboxClear} の別名です。
+ * {@link ComboboxClear} です。
  */
 export const Clear: IComponent<Clear.Props> = ComboboxClear;
 
@@ -599,18 +621,18 @@ export const ComboboxChips: IComponent<ComboboxChipsProps> = function SuiCombobo
  */
 export namespace Chips {
   /**
-   * {@link ComboboxChipsState} の別名です。
+   * {@link ComboboxChipsState} です。
    */
   export type State = ComboboxChipsState;
 
   /**
-   * {@link ComboboxChipsProps} の別名です。
+   * {@link ComboboxChipsProps} です。
    */
   export type Props = ComboboxChipsProps;
 }
 
 /**
- * {@link ComboboxChips} の別名です。
+ * {@link ComboboxChips} です。
  */
 export const Chips: IComponent<Chips.Props> = ComboboxChips;
 
@@ -641,18 +663,18 @@ export const ComboboxChip: IComponent<ComboboxChipProps> = function SuiComboboxC
  */
 export namespace Chip {
   /**
-   * {@link ComboboxChipState} の別名です。
+   * {@link ComboboxChipState} です。
    */
   export type State = ComboboxChipState;
 
   /**
-   * {@link ComboboxChipProps} の別名です。
+   * {@link ComboboxChipProps} です。
    */
   export type Props = ComboboxChipProps;
 }
 
 /**
- * {@link ComboboxChip} の別名です。
+ * {@link ComboboxChip} です。
  */
 export const Chip: IComponent<Chip.Props> = ComboboxChip;
 
@@ -686,18 +708,18 @@ export const ComboboxChipRemove: IComponent<ComboboxChipRemoveProps> =
  */
 export namespace ChipRemove {
   /**
-   * {@link ComboboxChipRemoveState} の別名です。
+   * {@link ComboboxChipRemoveState} です。
    */
   export type State = ComboboxChipRemoveState;
 
   /**
-   * {@link ComboboxChipRemoveProps} の別名です。
+   * {@link ComboboxChipRemoveProps} です。
    */
   export type Props = ComboboxChipRemoveProps;
 }
 
 /**
- * {@link ComboboxChipRemove} の別名です。
+ * {@link ComboboxChipRemove} です。
  */
 export const ChipRemove: IComponent<ChipRemove.Props> = ComboboxChipRemove;
 
@@ -732,18 +754,18 @@ export const ComboboxList: IComponent<ComboboxListProps> = function SuiComboboxL
  */
 export namespace List {
   /**
-   * {@link ComboboxListState} の別名です。
+   * {@link ComboboxListState} です。
    */
   export type State = ComboboxListState;
 
   /**
-   * {@link ComboboxListProps} の別名です。
+   * {@link ComboboxListProps} です。
    */
   export type Props = ComboboxListProps;
 }
 
 /**
- * {@link ComboboxList} の別名です。
+ * {@link ComboboxList} です。
  */
 export const List: IComponent<List.Props> = ComboboxList;
 
@@ -774,18 +796,18 @@ export const ComboboxStatus: IComponent<ComboboxStatusProps> = function SuiCombo
  */
 export namespace Status {
   /**
-   * {@link ComboboxStatusState} の別名です。
+   * {@link ComboboxStatusState} です。
    */
   export type State = ComboboxStatusState;
 
   /**
-   * {@link ComboboxStatusProps} の別名です。
+   * {@link ComboboxStatusProps} です。
    */
   export type Props = ComboboxStatusProps;
 }
 
 /**
- * {@link ComboboxStatus} の別名です。
+ * {@link ComboboxStatus} です。
  */
 export const Status: IComponent<Status.Props> = ComboboxStatus;
 
@@ -816,18 +838,18 @@ export const ComboboxPortal: IComponent<ComboboxPortalProps> = function SuiCombo
  */
 export namespace Portal {
   /**
-   * {@link ComboboxPortalState} の別名です。
+   * {@link ComboboxPortalState} です。
    */
   export type State = ComboboxPortalState;
 
   /**
-   * {@link ComboboxPortalProps} の別名です。
+   * {@link ComboboxPortalProps} です。
    */
   export type Props = ComboboxPortalProps;
 }
 
 /**
- * {@link ComboboxPortal} の別名です。
+ * {@link ComboboxPortal} です。
  */
 export const Portal: IComponent<Portal.Props> = ComboboxPortal;
 
@@ -860,18 +882,18 @@ export const ComboboxBackdrop: IComponent<ComboboxBackdropProps> = function SuiC
  */
 export namespace Backdrop {
   /**
-   * {@link ComboboxBackdropState} の別名です。
+   * {@link ComboboxBackdropState} です。
    */
   export type State = ComboboxBackdropState;
 
   /**
-   * {@link ComboboxBackdropProps} の別名です。
+   * {@link ComboboxBackdropProps} です。
    */
   export type Props = ComboboxBackdropProps;
 }
 
 /**
- * {@link ComboboxBackdrop} の別名です。
+ * {@link ComboboxBackdrop} です。
  */
 export const Backdrop: IComponent<Backdrop.Props> = ComboboxBackdrop;
 
@@ -905,18 +927,18 @@ export const ComboboxPositioner: IComponent<ComboboxPositionerProps> =
  */
 export namespace Positioner {
   /**
-   * {@link ComboboxPositionerState} の別名です。
+   * {@link ComboboxPositionerState} です。
    */
   export type State = ComboboxPositionerState;
 
   /**
-   * {@link ComboboxPositionerProps} の別名です。
+   * {@link ComboboxPositionerProps} です。
    */
   export type Props = ComboboxPositionerProps;
 }
 
 /**
- * {@link ComboboxPositioner} の別名です。
+ * {@link ComboboxPositioner} です。
  */
 export const Positioner: IComponent<Positioner.Props> = ComboboxPositioner;
 
@@ -947,18 +969,18 @@ export const ComboboxPopup: IComponent<ComboboxPopupProps> = function SuiCombobo
  */
 export namespace Popup {
   /**
-   * {@link ComboboxPopupState} の別名です。
+   * {@link ComboboxPopupState} です。
    */
   export type State = ComboboxPopupState;
 
   /**
-   * {@link ComboboxPopupProps} の別名です。
+   * {@link ComboboxPopupProps} です。
    */
   export type Props = ComboboxPopupProps;
 }
 
 /**
- * {@link ComboboxPopup} の別名です。
+ * {@link ComboboxPopup} です。
  */
 export const Popup: IComponent<Popup.Props> = ComboboxPopup;
 
@@ -989,18 +1011,18 @@ export const ComboboxArrow: IComponent<ComboboxArrowProps> = function SuiCombobo
  */
 export namespace Arrow {
   /**
-   * {@link ComboboxArrowState} の別名です。
+   * {@link ComboboxArrowState} です。
    */
   export type State = ComboboxArrowState;
 
   /**
-   * {@link ComboboxArrowProps} の別名です。
+   * {@link ComboboxArrowProps} です。
    */
   export type Props = ComboboxArrowProps;
 }
 
 /**
- * {@link ComboboxArrow} の別名です。
+ * {@link ComboboxArrow} です。
  */
 export const Arrow: IComponent<Arrow.Props> = ComboboxArrow;
 
@@ -1031,18 +1053,18 @@ export const ComboboxGroup: IComponent<ComboboxGroupProps> = function SuiCombobo
  */
 export namespace Group {
   /**
-   * {@link ComboboxGroupState} の別名です。
+   * {@link ComboboxGroupState} です。
    */
   export type State = ComboboxGroupState;
 
   /**
-   * {@link ComboboxGroupProps} の別名です。
+   * {@link ComboboxGroupProps} です。
    */
   export type Props = ComboboxGroupProps;
 }
 
 /**
- * {@link ComboboxGroup} の別名です。
+ * {@link ComboboxGroup} です。
  */
 export const Group: IComponent<Group.Props> = ComboboxGroup;
 
@@ -1076,18 +1098,18 @@ export const ComboboxGroupLabel: IComponent<ComboboxGroupLabelProps> =
  */
 export namespace GroupLabel {
   /**
-   * {@link ComboboxGroupLabelState} の別名です。
+   * {@link ComboboxGroupLabelState} です。
    */
   export type State = ComboboxGroupLabelState;
 
   /**
-   * {@link ComboboxGroupLabelProps} の別名です。
+   * {@link ComboboxGroupLabelProps} です。
    */
   export type Props = ComboboxGroupLabelProps;
 }
 
 /**
- * {@link ComboboxGroupLabel} の別名です。
+ * {@link ComboboxGroupLabel} です。
  */
 export const GroupLabel: IComponent<GroupLabel.Props> = ComboboxGroupLabel;
 
@@ -1125,18 +1147,18 @@ export const ComboboxItem: IComponent<ComboboxItemProps> = function SuiComboboxI
  */
 export namespace Item {
   /**
-   * {@link ComboboxItemState} の別名です。
+   * {@link ComboboxItemState} です。
    */
   export type State = ComboboxItemState;
 
   /**
-   * {@link ComboboxItemProps} の別名です。
+   * {@link ComboboxItemProps} です。
    */
   export type Props = ComboboxItemProps;
 }
 
 /**
- * {@link ComboboxItem} の別名です。
+ * {@link ComboboxItem} です。
  */
 export const Item: IComponent<Item.Props> = ComboboxItem;
 
@@ -1173,18 +1195,18 @@ export const ComboboxItemIndicator: IComponent<ComboboxItemIndicatorProps> =
  */
 export namespace ItemIndicator {
   /**
-   * {@link ComboboxItemIndicatorState} の別名です。
+   * {@link ComboboxItemIndicatorState} です。
    */
   export type State = ComboboxItemIndicatorState;
 
   /**
-   * {@link ComboboxItemIndicatorProps} の別名です。
+   * {@link ComboboxItemIndicatorProps} です。
    */
   export type Props = ComboboxItemIndicatorProps;
 }
 
 /**
- * {@link ComboboxItemIndicator} の別名です。
+ * {@link ComboboxItemIndicator} です。
  */
 export const ItemIndicator: IComponent<ItemIndicator.Props> = ComboboxItemIndicator;
 
@@ -1215,18 +1237,18 @@ export const ComboboxRow: IComponent<ComboboxRowProps> = function SuiComboboxRow
  */
 export namespace Row {
   /**
-   * {@link ComboboxRowState} の別名です。
+   * {@link ComboboxRowState} です。
    */
   export type State = ComboboxRowState;
 
   /**
-   * {@link ComboboxRowProps} の別名です。
+   * {@link ComboboxRowProps} です。
    */
   export type Props = ComboboxRowProps;
 }
 
 /**
- * {@link ComboboxRow} の別名です。
+ * {@link ComboboxRow} です。
  */
 export const Row: IComponent<Row.Props> = ComboboxRow;
 
@@ -1256,18 +1278,18 @@ export const ComboboxCollection: IComponent<ComboboxCollectionProps> =
  */
 export namespace Collection {
   /**
-   * {@link ComboboxCollectionState} の別名です。
+   * {@link ComboboxCollectionState} です。
    */
   export type State = ComboboxCollectionState;
 
   /**
-   * {@link ComboboxCollectionProps} の別名です。
+   * {@link ComboboxCollectionProps} です。
    */
   export type Props = ComboboxCollectionProps;
 }
 
 /**
- * {@link ComboboxCollection} の別名です。
+ * {@link ComboboxCollection} です。
  */
 export const Collection: IComponent<Collection.Props> = ComboboxCollection;
 
@@ -1298,18 +1320,18 @@ export const ComboboxEmpty: IComponent<ComboboxEmptyProps> = function SuiCombobo
  */
 export namespace Empty {
   /**
-   * {@link ComboboxEmptyState} の別名です。
+   * {@link ComboboxEmptyState} です。
    */
   export type State = ComboboxEmptyState;
 
   /**
-   * {@link ComboboxEmptyProps} の別名です。
+   * {@link ComboboxEmptyProps} です。
    */
   export type Props = ComboboxEmptyProps;
 }
 
 /**
- * {@link ComboboxEmpty} の別名です。
+ * {@link ComboboxEmpty} です。
  */
 export const Empty: IComponent<Empty.Props> = ComboboxEmpty;
 
@@ -1342,18 +1364,18 @@ export const ComboboxSeparator: IComponent<ComboboxSeparatorProps> = function Su
  */
 export namespace Separator {
   /**
-   * {@link ComboboxSeparatorState} の別名です。
+   * {@link ComboboxSeparatorState} です。
    */
   export type State = ComboboxSeparatorState;
 
   /**
-   * {@link ComboboxSeparatorProps} の別名です。
+   * {@link ComboboxSeparatorProps} です。
    */
   export type Props = ComboboxSeparatorProps;
 }
 
 /**
- * {@link ComboboxSeparator} の別名です。
+ * {@link ComboboxSeparator} です。
  */
 export const Separator: IComponent<Separator.Props> = ComboboxSeparator;
 

@@ -403,6 +403,7 @@
     display: block;
     flex: 1 1 auto;
     min-width: 0px;
+    font-variant-numeric: tabular-nums;
     line-height: 1lh;
     touch-action: manipulation;
     caret-color: currentColor;
@@ -569,6 +570,8 @@
     --sui_number_field_stepper-background_color-normal: ;
     --sui_number_field_stepper-background_color-hover: ;
     --sui_number_field_stepper-background_color-active: ;
+    /* 枠線 */
+    --sui_number_field_stepper-border_radius: ;
     /* 前景 */
     --sui_number_field_stepper-color-normal: ;
     --sui_number_field_stepper-color-hover: ;

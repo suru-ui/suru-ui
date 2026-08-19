@@ -2,14 +2,32 @@ import * as React from "react";
 
 import type { IComponent } from "../../types.js";
 import {
+  type AvatarRootSize,
+  type AvatarRootColor,
   type AvatarRootProps,
   type AvatarRootState,
   type AvatarImageProps,
+  type AvatarRootRadius,
   type AvatarFallbackProps,
   AvatarRoot,
   AvatarImage,
   AvatarFallback,
 } from "./avatar.parts.jsx";
+
+/**
+ * {@link AvatarRootColor} です。
+ */
+export type AvatarColor = AvatarRootColor;
+
+/**
+ * {@link AvatarRootRadius} です。
+ */
+export type AvatarRadius = AvatarRootRadius;
+
+/**
+ * {@link AvatarRootSize} です。
+ */
+export type AvatarSize = AvatarRootSize;
 
 /**
  * {@link Avatar} の各パーツに渡すプロパティーです。
@@ -85,4 +103,19 @@ export namespace Avatar {
    * {@link AvatarSlotProps} です。
    */
   export type SlotProps = AvatarSlotProps;
+
+  /**
+   * {@link AvatarColor} です。
+   */
+  export type Color = AvatarColor;
+
+  /**
+   * {@link AvatarRadius} です。
+   */
+  export type Radius = AvatarRadius;
+
+  /**
+   * {@link AvatarSize} です。
+   */
+  export type Size = AvatarSize;
 }

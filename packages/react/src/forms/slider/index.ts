@@ -1,3 +1,12 @@
 export * from "./slider.parts.jsx";
 
-export { type SliderProps, type SliderState, type SliderSlotProps, Slider } from "./slider.jsx";
+export {
+  type SliderSize,
+  type SliderColor,
+  type SliderProps,
+  type SliderState,
+  type SliderRadius,
+  type SliderVariant,
+  type SliderSlotProps,
+  Slider,
+} from "./slider.jsx";

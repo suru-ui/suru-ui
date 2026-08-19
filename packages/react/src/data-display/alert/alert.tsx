@@ -2,10 +2,14 @@ import * as React from "react";
 
 import type { IComponent } from "../../types.js";
 import {
+  type AlertRootSize,
   type AlertIconProps,
+  type AlertRootColor,
   type AlertRootProps,
   type AlertRootState,
+  type AlertRootRadius,
   type AlertTitleProps,
+  type AlertRootVariant,
   type AlertActionsProps,
   type AlertDescriptionProps,
   AlertIcon,
@@ -14,6 +18,26 @@ import {
   AlertActions,
   AlertDescription,
 } from "./alert.parts.jsx";
+
+/**
+ * {@link AlertRootColor} です。
+ */
+export type AlertColor = AlertRootColor;
+
+/**
+ * {@link AlertRootRadius} です。
+ */
+export type AlertRadius = AlertRootRadius;
+
+/**
+ * {@link AlertRootSize} です。
+ */
+export type AlertSize = AlertRootSize;
+
+/**
+ * {@link AlertRootVariant} です。
+ */
+export type AlertVariant = AlertRootVariant;
 
 /**
  * {@link Alert} の各パーツに渡すプロパティーです。
@@ -41,7 +65,7 @@ export type AlertSlotProps = {
 };
 
 /**
- * {@link Alert} の状態です。
+ * {@link AlertRootState} です。
  */
 export type AlertState = AlertRootState;
 
@@ -123,4 +147,24 @@ export namespace Alert {
    * {@link AlertSlotProps} です。
    */
   export type SlotProps = AlertSlotProps;
+
+  /**
+   * {@link AlertColor} です。
+   */
+  export type Color = AlertColor;
+
+  /**
+   * {@link AlertRadius} です。
+   */
+  export type Radius = AlertRadius;
+
+  /**
+   * {@link AlertSize} です。
+   */
+  export type Size = AlertSize;
+
+  /**
+   * {@link AlertVariant} です。
+   */
+  export type Variant = AlertVariant;
 }

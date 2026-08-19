@@ -17,6 +17,7 @@
 
   /* 静的 */
   .sui_alert {
+    position: relative;
     display: grid;
 
     &:has(.sui_alert_icon) {
@@ -104,6 +105,13 @@
         ".    actions    " auto
         /auto 1fr        ;
     }
+
+    &::after {
+      position: absolute;
+      inset: 0px;
+      pointer-events: none;
+      content: "";
+    }
   }
 
   /* 動的 */
@@ -113,8 +121,12 @@
     padding-block: var(--sui_alert-padding_block);
     padding-inline: var(--sui_alert-padding_inline);
     background-color: var(--sui_alert-background_color);
-    border: var(--_sui_alert-border_color, transparent) solid var(--_sui_alert-border_width, 0px);
     border-radius: var(--sui_alert-border_radius);
+
+    &::after {
+      border: var(--_sui_alert-border_color, transparent) solid var(--_sui_alert-border_width, 0px);
+      border-radius: var(--sui_alert-border_radius);
+    }
   }
 
   /* 既定値設定: ここから */
@@ -169,7 +181,7 @@
     --sui_alert-border_radius: var(--sui-radius-lg);
   }
 
-  .sui_alert-variant_solid {
+  .sui_alert-variant_muted {
     /* 背景 */
     --sui_alert-background_color: var(--sui-canvas-2);
     /* 枠線 */
@@ -310,8 +322,8 @@
 
   .sui_alert-outlined {
     /* 枠線 */
-    --_sui_alert-border_width: var(--sui_alert-border_width);
     --_sui_alert-border_color: var(--sui_alert-border_color);
+    --_sui_alert-border_width: var(--sui_alert-border_width);
   }
 
   /* 上書き設定: ここまで */
@@ -376,7 +388,7 @@
   }
 
   .sui_alert-color_blue {
-    &.sui_alert-variant_solid {
+    &.sui_alert-variant_muted {
       /* 前景 */
       --sui_alert_icon-color: var(--sui-blue-naked-canvas_text-normal);
     }
@@ -393,7 +405,7 @@
   }
 
   .sui_alert-color_purple {
-    &.sui_alert-variant_solid {
+    &.sui_alert-variant_muted {
       /* 前景 */
       --sui_alert_icon-color: var(--sui-purple-naked-canvas_text-normal);
     }
@@ -410,7 +422,7 @@
   }
 
   .sui_alert-color_magenta {
-    &.sui_alert-variant_solid {
+    &.sui_alert-variant_muted {
       /* 前景 */
       --sui_alert_icon-color: var(--sui-magenta-naked-canvas_text-normal);
     }
@@ -427,7 +439,7 @@
   }
 
   .sui_alert-color_red {
-    &.sui_alert-variant_solid {
+    &.sui_alert-variant_muted {
       /* 前景 */
       --sui_alert_icon-color: var(--sui-red-naked-canvas_text-normal);
     }
@@ -444,7 +456,7 @@
   }
 
   .sui_alert-color_orange {
-    &.sui_alert-variant_solid {
+    &.sui_alert-variant_muted {
       /* 前景 */
       --sui_alert_icon-color: var(--sui-orange-naked-canvas_text-normal);
     }
@@ -461,7 +473,7 @@
   }
 
   .sui_alert-color_yellow {
-    &.sui_alert-variant_solid {
+    &.sui_alert-variant_muted {
       /* 前景 */
       --sui_alert_icon-color: var(--sui-yellow-naked-canvas_text-normal);
     }
@@ -478,7 +490,7 @@
   }
 
   .sui_alert-color_green {
-    &.sui_alert-variant_solid {
+    &.sui_alert-variant_muted {
       /* 前景 */
       --sui_alert_icon-color: var(--sui-green-naked-canvas_text-normal);
     }
@@ -563,7 +575,7 @@
   }
 
   .sui_alert-color_blue {
-    &.sui_alert-variant_solid {
+    &.sui_alert-variant_muted {
       /* 前景 */
       --sui_alert_title-color: var(--sui-blue-naked-canvas_text-normal);
     }
@@ -580,7 +592,7 @@
   }
 
   .sui_alert-color_purple {
-    &.sui_alert-variant_solid {
+    &.sui_alert-variant_muted {
       /* 前景 */
       --sui_alert_title-color: var(--sui-purple-naked-canvas_text-normal);
     }
@@ -597,7 +609,7 @@
   }
 
   .sui_alert-color_magenta {
-    &.sui_alert-variant_solid {
+    &.sui_alert-variant_muted {
       /* 前景 */
       --sui_alert_title-color: var(--sui-magenta-naked-canvas_text-normal);
     }
@@ -614,7 +626,7 @@
   }
 
   .sui_alert-color_red {
-    &.sui_alert-variant_solid {
+    &.sui_alert-variant_muted {
       /* 前景 */
       --sui_alert_title-color: var(--sui-red-naked-canvas_text-normal);
     }
@@ -631,7 +643,7 @@
   }
 
   .sui_alert-color_orange {
-    &.sui_alert-variant_solid {
+    &.sui_alert-variant_muted {
       /* 前景 */
       --sui_alert_title-color: var(--sui-orange-naked-canvas_text-normal);
     }
@@ -648,7 +660,7 @@
   }
 
   .sui_alert-color_yellow {
-    &.sui_alert-variant_solid {
+    &.sui_alert-variant_muted {
       /* 前景 */
       --sui_alert_title-color: var(--sui-yellow-naked-canvas_text-normal);
     }
@@ -665,7 +677,7 @@
   }
 
   .sui_alert-color_green {
-    &.sui_alert-variant_solid {
+    &.sui_alert-variant_muted {
       /* 前景 */
       --sui_alert_title-color: var(--sui-green-naked-canvas_text-normal);
     }

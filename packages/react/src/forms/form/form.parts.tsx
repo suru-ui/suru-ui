@@ -6,9 +6,6 @@ import type { IComponent } from "../../types.js";
 
 import "./form.css";
 
-// Types
-// -----
-
 // Root
 // ----
 
@@ -27,9 +24,9 @@ export type FormRootActions = Form.Actions;
 /**
  * {@link FormRoot} の検証を行うタイミングを決定します。
  *
- * - `"onSubmit"`: フォーム送信時にフィールドを検証し、それ以降は値が変更されるたびに再検証を行います。
  * - `"onBlur"`: フィールドからフォーカスが外れたときに検証を行います。
  * - `"onChange"`: 値が変更されるたびに検証を行います。
+ * - `"onSubmit"`: フォーム送信時にフィールドを検証し、それ以降は値が変更されるたびに再検証を行います。
  */
 export type FormRootValidationMode = Form.ValidationMode;
 

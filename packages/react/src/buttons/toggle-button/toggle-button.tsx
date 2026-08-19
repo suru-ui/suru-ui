@@ -1,8 +1,12 @@
 import type { IComponent, IUseContext } from "../../types.js";
 import {
   type ToggleButtonContext,
+  type ToggleButtonRootSize,
+  type ToggleButtonRootColor,
   type ToggleButtonRootProps,
   type ToggleButtonRootState,
+  type ToggleButtonRootRadius,
+  type ToggleButtonRootVariant,
   type ToggleButtonContentProps,
   type ToggleButtonPendingProps,
   type ToggleButtonCircularProgressProps,
@@ -18,6 +22,26 @@ import {
   ToggleButtonCircularProgressTrack,
   ToggleButtonCircularProgressFillRotation,
 } from "./toggle-button.parts.jsx";
+
+/**
+ * {@link ToggleButtonRootColor} です。
+ */
+export type ToggleButtonColor = ToggleButtonRootColor;
+
+/**
+ * {@link ToggleButtonRootRadius} です。
+ */
+export type ToggleButtonRadius = ToggleButtonRootRadius;
+
+/**
+ * {@link ToggleButtonRootSize} です。
+ */
+export type ToggleButtonSize = ToggleButtonRootSize;
+
+/**
+ * {@link ToggleButtonRootVariant} です。
+ */
+export type ToggleButtonVariant = ToggleButtonRootVariant;
 
 /**
  * {@link ToggleButton} の各パーツに渡すプロパティーです。
@@ -146,4 +170,24 @@ export namespace ToggleButton {
    * {@link ToggleButtonContext} です。
    */
   export type Context = ToggleButtonContext;
+
+  /**
+   * {@link ToggleButtonColor} です。
+   */
+  export type Color = ToggleButtonColor;
+
+  /**
+   * {@link ToggleButtonRadius} です。
+   */
+  export type Radius = ToggleButtonRadius;
+
+  /**
+   * {@link ToggleButtonSize} です。
+   */
+  export type Size = ToggleButtonSize;
+
+  /**
+   * {@link ToggleButtonVariant} です。
+   */
+  export type Variant = ToggleButtonVariant;
 }

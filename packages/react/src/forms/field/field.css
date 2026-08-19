@@ -113,7 +113,7 @@
   /* 変数 */
   .sui_field {
     /* 書体 */
-    --sui_field_error-font_family: var(--sui-font-sans);
+    --sui_field_error-font_family: ;
     --sui_field_error-font_size: ;
     --sui_field_error-font_weight: ;
     --sui_field_error-line_height: ;

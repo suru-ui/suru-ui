@@ -1,17 +1,22 @@
 import * as React from "react";
 
 import cn from "../../cn.js";
-import type { IComponent } from "../../types.js";
+import type { IComponent, IUseContext } from "../../types.js";
 import {
+  type AutocompleteContext,
+  type AutocompleteRootSize,
   type AutocompleteIconProps,
   type AutocompleteItemProps,
   type AutocompleteListProps,
+  type AutocompleteRootColor,
   type AutocompleteRootProps,
   type AutocompleteRootState,
   type AutocompleteClearProps,
   type AutocompleteInputProps,
   type AutocompletePopupProps,
+  type AutocompleteRootRadius,
   type AutocompletePortalProps,
+  type AutocompleteRootVariant,
   type AutocompleteTriggerProps,
   type AutocompleteInputGroupProps,
   type AutocompletePositionerProps,
@@ -29,7 +34,28 @@ import {
   AutocompleteGroupLabel,
   AutocompleteInputGroup,
   AutocompletePositioner,
+  useAutocompleteContext,
 } from "./autocomplete.parts.jsx";
+
+/**
+ * {@link AutocompleteRootColor} です。
+ */
+export type AutocompleteColor = AutocompleteRootColor;
+
+/**
+ * {@link AutocompleteRootRadius} です。
+ */
+export type AutocompleteRadius = AutocompleteRootRadius;
+
+/**
+ * {@link AutocompleteRootSize} です。
+ */
+export type AutocompleteSize = AutocompleteRootSize;
+
+/**
+ * {@link AutocompleteRootVariant} です。
+ */
+export type AutocompleteVariant = AutocompleteRootVariant;
 
 /**
  * {@link Autocomplete} の各パーツに渡すプロパティーです。
@@ -122,11 +148,20 @@ export type AutocompleteProps = Omit<AutocompleteRootProps, "children"> & {
 
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   *
+   * 各パーツのプロパティーが優先されます。
    * `clear`、`icon`、`input`、`inputGroup`、`item`、`list`、`portal`、`positioner`、
    * `popup`、`trigger` を指定できます。
    */
   slotProps?: AutocompleteSlotProps | undefined;
 };
+
+interface AutocompleteType extends IComponent<AutocompleteProps> {
+  /**
+   * {@link useAutocompleteContext} です。
+   */
+  readonly useContext: IUseContext<AutocompleteContext>;
+}
 
 /**
  * 検索文字列に応じて候補を絞り込んで表示する入力欄です。
@@ -138,106 +173,116 @@ export type AutocompleteProps = Omit<AutocompleteRootProps, "children"> & {
  * `placeholder` は `slotProps.input.placeholder` より優先されます。
  * クリアボタンは入力値がある場合だけ、ポップアップの内容は開いている場合だけ表示されます。
  */
-export const Autocomplete: IComponent<AutocompleteProps> = function SuiAutocomplete(props) {
-  const {
-    autoHighlight = true,
-    children,
-    className,
-    placeholder,
-    slotProps: {
-      clear: clearProps,
-      icon: iconProps,
-      input: inputProps,
-      inputGroup: inputGroupProps,
-      item: itemProps,
-      list: listProps,
-      portal: portalProps,
-      positioner: positionerProps,
-      popup: popupProps,
-      trigger: triggerProps,
-    } = {},
-    openOnInputClick = true,
-    ...rootProps
-  } = props;
-  const {
-    children: clearChildren = <SuiClearIcon />,
-    "aria-label": clearAriaLabel,
-    ...restClearProps
-  } = clearProps ?? {};
-  const { children: iconChildren = <SuiChevronIcon />, ...restIconProps } = iconProps ?? {};
-  const { "aria-label": triggerAriaLabel, ...restTriggerProps } = triggerProps ?? {};
-  const {
-    align = "start",
-    side = "bottom",
-    sideOffset = 8,
-    ...restPositionerProps
-  } = positionerProps ?? {};
-  const listChildren = React.useMemo(() => {
-    if (typeof children !== "function" && children !== undefined) {
-      return children;
-    }
-
-    return (item: unknown, index: number): React.ReactNode => {
-      const group = item as { label?: React.ReactNode; items?: readonly unknown[] } | null;
-      if (group && Array.isArray(group.items)) {
-        return (
-          <AutocompleteGroup key={index} items={group.items}>
-            {group.label !== undefined && (
-              <AutocompleteGroupLabel>{group.label}</AutocompleteGroupLabel>
-            )}
-            <AutocompleteCollection>
-              {(groupItem, groupIndex) => (
-                <AutocompleteItem {...itemProps} key={groupIndex} value={groupItem}>
-                  {typeof children === "function"
-                    ? children(groupItem as React.ReactNode, groupIndex)
-                    : String(groupItem)}
-                </AutocompleteItem>
-              )}
-            </AutocompleteCollection>
-          </AutocompleteGroup>
-        );
+export const Autocomplete: AutocompleteType = /*#__PURE__*/ Object.assign(
+  function SuiAutocomplete(props: AutocompleteProps) {
+    const {
+      autoHighlight = true,
+      children,
+      className,
+      placeholder,
+      slotProps: {
+        clear: clearProps,
+        icon: iconProps,
+        input: inputProps,
+        inputGroup: inputGroupProps,
+        item: itemProps,
+        list: listProps,
+        portal: portalProps,
+        positioner: positionerProps,
+        popup: popupProps,
+        trigger: triggerProps,
+      } = {},
+      openOnInputClick = true,
+      ...rootProps
+    } = props;
+    const {
+      children: clearChildren = <SuiClearIcon />,
+      "aria-label": clearAriaLabel,
+      ...restClearProps
+    } = clearProps ?? {};
+    const { children: iconChildren = <SuiChevronIcon />, ...restIconProps } = iconProps ?? {};
+    const { "aria-label": triggerAriaLabel, ...restTriggerProps } = triggerProps ?? {};
+    const {
+      align = "start",
+      side = "bottom",
+      sideOffset = 8,
+      ...restPositionerProps
+    } = positionerProps ?? {};
+    const listChildren = React.useMemo(() => {
+      if (typeof children !== "function" && children !== undefined) {
+        return children;
       }
-      return (
-        <AutocompleteItem {...itemProps} key={index} value={item}>
-          {typeof children === "function" ? children(item as React.ReactNode, index) : String(item)}
-        </AutocompleteItem>
-      );
-    };
-  }, [children, itemProps]);
 
-  return (
-    <AutocompleteRoot
-      {...rootProps}
-      autoHighlight={autoHighlight}
-      openOnInputClick={openOnInputClick}
-    >
-      <AutocompleteInputGroup
-        {...inputGroupProps}
-        className={cn(className, inputGroupProps?.className)}
+      return (item: unknown, index: number): React.ReactNode => {
+        const group = item as { label?: React.ReactNode; items?: readonly unknown[] } | null;
+        if (group && Array.isArray(group.items)) {
+          return (
+            <AutocompleteGroup key={index} items={group.items}>
+              {group.label !== undefined && (
+                <AutocompleteGroupLabel>{group.label}</AutocompleteGroupLabel>
+              )}
+              <AutocompleteCollection>
+                {(groupItem, groupIndex) => (
+                  <AutocompleteItem {...itemProps} key={groupIndex} value={groupItem}>
+                    {typeof children === "function"
+                      ? children(groupItem as React.ReactNode, groupIndex)
+                      : String(groupItem)}
+                  </AutocompleteItem>
+                )}
+              </AutocompleteCollection>
+            </AutocompleteGroup>
+          );
+        }
+        return (
+          <AutocompleteItem {...itemProps} key={index} value={item}>
+            {typeof children === "function"
+              ? children(item as React.ReactNode, index)
+              : String(item)}
+          </AutocompleteItem>
+        );
+      };
+    }, [children, itemProps]);
+
+    return (
+      <AutocompleteRoot
+        {...rootProps}
+        autoHighlight={autoHighlight}
+        openOnInputClick={openOnInputClick}
       >
-        <AutocompleteInput {...inputProps} placeholder={placeholder ?? inputProps?.placeholder} />
-        <AutocompleteClear {...restClearProps} aria-label={clearAriaLabel ?? "クリア"}>
-          {clearChildren}
-        </AutocompleteClear>
-        <AutocompleteTrigger {...restTriggerProps} aria-label={triggerAriaLabel ?? "選択肢を選択"}>
-          <AutocompleteIcon {...restIconProps}>{iconChildren}</AutocompleteIcon>
-        </AutocompleteTrigger>
-      </AutocompleteInputGroup>
-      <AutocompletePortal {...portalProps}>
-        <AutocompletePositioner
-          {...restPositionerProps}
-          side={side}
-          align={align}
-          sideOffset={sideOffset}
+        <AutocompleteInputGroup
+          {...inputGroupProps}
+          className={cn(className, inputGroupProps?.className)}
         >
-          <AutocompletePopup {...popupProps}>
-            <AutocompleteList {...listProps}>{listChildren}</AutocompleteList>
-          </AutocompletePopup>
-        </AutocompletePositioner>
-      </AutocompletePortal>
-    </AutocompleteRoot>
-  );
-};
+          <AutocompleteInput {...inputProps} placeholder={placeholder ?? inputProps?.placeholder} />
+          <AutocompleteClear {...restClearProps} aria-label={clearAriaLabel ?? "クリア"}>
+            {clearChildren}
+          </AutocompleteClear>
+          <AutocompleteTrigger
+            {...restTriggerProps}
+            aria-label={triggerAriaLabel ?? "選択肢を選択"}
+          >
+            <AutocompleteIcon {...restIconProps}>{iconChildren}</AutocompleteIcon>
+          </AutocompleteTrigger>
+        </AutocompleteInputGroup>
+        <AutocompletePortal {...portalProps}>
+          <AutocompletePositioner
+            {...restPositionerProps}
+            side={side}
+            align={align}
+            sideOffset={sideOffset}
+          >
+            <AutocompletePopup {...popupProps}>
+              <AutocompleteList {...listProps}>{listChildren}</AutocompleteList>
+            </AutocompletePopup>
+          </AutocompletePositioner>
+        </AutocompletePortal>
+      </AutocompleteRoot>
+    );
+  },
+  {
+    useContext: useAutocompleteContext,
+  },
+);
 
 /**
  * {@link Autocomplete} の状態やプロパティーをまとめた型名前空間です。
@@ -257,6 +302,31 @@ export namespace Autocomplete {
    * {@link AutocompleteSlotProps} です。
    */
   export type SlotProps = AutocompleteSlotProps;
+
+  /**
+   * {@link AutocompleteContext} です。
+   */
+  export type Context = AutocompleteContext;
+
+  /**
+   * {@link AutocompleteColor} です。
+   */
+  export type Color = AutocompleteColor;
+
+  /**
+   * {@link AutocompleteRadius} です。
+   */
+  export type Radius = AutocompleteRadius;
+
+  /**
+   * {@link AutocompleteSize} です。
+   */
+  export type Size = AutocompleteSize;
+
+  /**
+   * {@link AutocompleteVariant} です。
+   */
+  export type Variant = AutocompleteVariant;
 }
 
 /**

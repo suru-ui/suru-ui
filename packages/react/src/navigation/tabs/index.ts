@@ -1,3 +1,3 @@
 export * from "./tabs.parts.jsx";
 
-export { type TabsProps, type TabsState, Tabs } from "./tabs.jsx";
+export { type TabsSize, type TabsProps, type TabsState, type TabsRadius, Tabs } from "./tabs.jsx";

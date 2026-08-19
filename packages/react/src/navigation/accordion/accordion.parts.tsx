@@ -12,8 +12,8 @@ import type { IComponent } from "../../types.js";
 
 import "./accordion.css";
 
-// Types
-// -----
+// Root
+// ----
 
 /**
  * アコーディオンの角丸です。
@@ -23,7 +23,7 @@ import "./accordion.css";
  * - `"md"`: 標準的な角丸（4px）
  * - `"lg"`: 大きい角丸（6px）
  */
-export type AccordionRadius = "none" | "sm" | "md" | "lg";
+export type AccordionRootRadius = "none" | "sm" | "md" | "lg";
 
 /**
  * アコーディオンの大きさです。
@@ -32,10 +32,7 @@ export type AccordionRadius = "none" | "sm" | "md" | "lg";
  * - `"md"`: 標準的なサイズ
  * - `"lg"`: 大きいサイズ
  */
-export type AccordionSize = Size;
-
-// Root
-// ----
+export type AccordionRootSize = Size;
 
 /**
  * {@link AccordionRoot} の状態です。
@@ -65,14 +62,14 @@ export type AccordionRootProps = React.ComponentProps<typeof Accordion.Root> & {
    *
    * @default "md"
    */
-  radius?: AccordionRadius | undefined;
+  radius?: AccordionRootRadius | undefined;
 
   /**
    * アコーディオンのサイズを指定します。
    *
    * @default "md"
    */
-  size?: AccordionSize | undefined;
+  size?: AccordionRootSize | undefined;
 };
 
 /**
@@ -108,18 +105,28 @@ export const AccordionRoot: IComponent<AccordionRootProps> = function SuiAccordi
  */
 export namespace Root {
   /**
-   * {@link AccordionRoot} の状態型です。
+   * {@link AccordionRootState} です。
    */
   export type State = AccordionRootState;
 
   /**
-   * {@link AccordionRoot} のプロパティー型です。
+   * {@link AccordionRootProps} です。
    */
   export type Props = AccordionRootProps;
+
+  /**
+   * {@link AccordionRootRadius} です。
+   */
+  export type Radius = AccordionRootRadius;
+
+  /**
+   * {@link AccordionRootSize} です。
+   */
+  export type Size = AccordionRootSize;
 }
 
 /**
- * {@link AccordionRoot} の別名です。
+ * {@link AccordionRoot} です。
  */
 export const Root: IComponent<Root.Props> = AccordionRoot;
 
@@ -127,12 +134,12 @@ export const Root: IComponent<Root.Props> = AccordionRoot;
 // ----
 
 /**
- * {@link AccordionItem} の状態型です。
+ * {@link AccordionItemState} です。
  */
 export type AccordionItemState = Accordion.Item.State;
 
 /**
- * {@link AccordionItem} のプロパティー型です。
+ * {@link AccordionItemProps} です。
  */
 export type AccordionItemProps = React.ComponentProps<typeof Accordion.Item>;
 
@@ -152,18 +159,18 @@ export const AccordionItem: IComponent<AccordionItemProps> = function SuiAccordi
  */
 export namespace Item {
   /**
-   * {@link AccordionItem} の状態型です。
+   * {@link AccordionItemState} です。
    */
   export type State = AccordionItemState;
 
   /**
-   * {@link AccordionItem} のプロパティー型です。
+   * {@link AccordionItemProps} です。
    */
   export type Props = AccordionItemProps;
 }
 
 /**
- * {@link AccordionItem} の別名です。
+ * {@link AccordionItem} です。
  */
 export const Item: IComponent<Item.Props> = AccordionItem;
 
@@ -196,18 +203,18 @@ export const AccordionHeader: IComponent<AccordionHeaderProps> = function SuiAcc
  */
 export namespace Header {
   /**
-   * {@link Header} の状態です。
+   * {@link AccordionHeaderState} です。
    */
   export type State = AccordionHeaderState;
 
   /**
-   * {@link Header} に渡すプロパティーです。
+   * {@link AccordionHeaderProps} です。
    */
   export type Props = AccordionHeaderProps;
 }
 
 /**
- * {@link AccordionHeader} の別名です。
+ * {@link AccordionHeader} です。
  */
 export const Header: IComponent<Header.Props> = AccordionHeader;
 
@@ -215,12 +222,12 @@ export const Header: IComponent<Header.Props> = AccordionHeader;
 // -------
 
 /**
- * {@link AccordionTrigger} の状態型です。
+ * {@link AccordionTriggerState} です。
  */
 export type AccordionTriggerState = Accordion.Trigger.State;
 
 /**
- * {@link AccordionTrigger} のプロパティー型です。
+ * {@link AccordionTriggerProps} です。
  */
 export type AccordionTriggerProps = React.ComponentProps<typeof Accordion.Trigger>;
 
@@ -240,18 +247,18 @@ export const AccordionTrigger: IComponent<AccordionTriggerProps> = function SuiA
  */
 export namespace Trigger {
   /**
-   * {@link AccordionTrigger} の状態型です。
+   * {@link AccordionTriggerState} です。
    */
   export type State = AccordionTriggerState;
 
   /**
-   * {@link AccordionTrigger} のプロパティー型です。
+   * {@link AccordionTriggerProps} です。
    */
   export type Props = AccordionTriggerProps;
 }
 
 /**
- * {@link AccordionTrigger} の別名です。
+ * {@link AccordionTrigger} です。
  */
 export const Trigger: IComponent<Trigger.Props> = AccordionTrigger;
 
@@ -259,12 +266,12 @@ export const Trigger: IComponent<Trigger.Props> = AccordionTrigger;
 // ---------
 
 /**
- * {@link AccordionIndicator} の状態型です。
+ * {@link AccordionIndicatorState} です。
  */
 export type AccordionIndicatorState = {};
 
 /**
- * {@link AccordionIndicator} のプロパティー型です。
+ * {@link AccordionIndicatorProps} です。
  */
 export type AccordionIndicatorProps = Omit<
   React.ComponentProps<"span">,
@@ -296,18 +303,18 @@ export const AccordionIndicator: IComponent<AccordionIndicatorProps> =
  */
 export namespace Indicator {
   /**
-   * {@link AccordionIndicator} の状態です。
+   * {@link AccordionIndicatorState} です。
    */
   export type State = AccordionIndicatorState;
 
   /**
-   * {@link AccordionIndicator} に渡すプロパティーです。
+   * {@link AccordionIndicatorProps} です。
    */
   export type Props = AccordionIndicatorProps;
 }
 
 /**
- * {@link AccordionIndicator} の別名です。
+ * {@link AccordionIndicator} です。
  */
 export const Indicator: IComponent<Indicator.Props> = AccordionIndicator;
 
@@ -315,12 +322,12 @@ export const Indicator: IComponent<Indicator.Props> = AccordionIndicator;
 // -----
 
 /**
- * {@link AccordionPanel} の状態型です。
+ * {@link AccordionPanelState} です。
  */
 export type AccordionPanelState = Accordion.Panel.State;
 
 /**
- * {@link AccordionPanel} のプロパティー型です。
+ * {@link AccordionPanelProps} です。
  */
 export type AccordionPanelProps = React.ComponentProps<typeof Accordion.Panel>;
 
@@ -349,6 +356,6 @@ export namespace Panel {
 }
 
 /**
- * {@link AccordionPanel} の別名です。
+ * {@link AccordionPanel} です。
  */
 export const Panel: IComponent<Panel.Props> = AccordionPanel;

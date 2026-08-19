@@ -38,6 +38,13 @@
     vertical-align: middle;
     touch-action: manipulation;
     caret-color: currentColor;
+
+    &::after {
+      position: absolute;
+      inset: 0px;
+      pointer-events: none;
+      content: "";
+    }
   }
 
   /* 動的 */

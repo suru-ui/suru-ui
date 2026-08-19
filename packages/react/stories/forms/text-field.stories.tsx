@@ -1,4 +1,4 @@
-import { COLORS, SIZES } from "@suru-ui/theme";
+import { SIZES, COLORS } from "@suru-ui/theme";
 import { LinkIcon, PenToolIcon } from "lucide-react";
 import * as React from "react";
 
@@ -76,22 +76,8 @@ export const Usage = meta.story({
     placeholder: "田中 太郎",
     type: "text",
   }),
-  render({
-    // @ts-expect-error
-    disabled,
-    ...props
-  }) {
-    return (
-      <TextField
-        {...props}
-        className="w-[320px]"
-        slotProps={{
-          input: {
-            disabled,
-          },
-        }}
-      />
-    );
+  render(props) {
+    return <TextField {...props} className="w-[320px]" />;
   },
 });
 
@@ -107,20 +93,11 @@ export const WidhAddons = meta.story({
     placeholder: "example.com",
     type: "text",
   }),
-  render({
-    // @ts-expect-error
-    disabled,
-    ...props
-  }) {
+  render(props) {
     return (
       <TextField
         {...props}
         className="w-[320px]"
-        slotProps={{
-          input: {
-            disabled,
-          },
-        }}
         endAddons={[<LinkIcon key={0} />]}
         startAddons={["https://"]}
       />
@@ -138,11 +115,7 @@ export const Variants = meta.story({
     disabled: false,
     placeholder: "example.com",
   }),
-  render({
-    // @ts-expect-error
-    disabled,
-    ...props
-  }) {
+  render(props) {
     return (
       <div className="flex flex-col gap-3">
         {VARIANTS.map((variant) => (
@@ -152,11 +125,6 @@ export const Variants = meta.story({
               {...props}
               variant={variant}
               className="w-[320px]"
-              slotProps={{
-                input: {
-                  disabled,
-                },
-              }}
               endAddons={[<LinkIcon key={0} />]}
               startAddons={["https://"]}
             />
@@ -177,11 +145,7 @@ export const Colors = meta.story({
     disabled: false,
     placeholder: "色",
   }),
-  render({
-    // @ts-expect-error
-    disabled,
-    ...props
-  }) {
+  render(props) {
     return (
       <div className="flex flex-col gap-3">
         {COLORS.map((color) => (
@@ -202,11 +166,6 @@ export const Colors = meta.story({
               }[color]
             }
             className="w-64"
-            slotProps={{
-              input: {
-                disabled,
-              },
-            }}
             endAddons={[<PenToolIcon key={0} />]}
             startAddons={["色"]}
           />
@@ -226,26 +185,13 @@ export const Radius = meta.story({
     disabled: false,
     placeholder: "田中 太郎",
   }),
-  render({
-    // @ts-expect-error
-    disabled,
-    ...props
-  }) {
+  render(props) {
     return (
       <div className="flex flex-col gap-3">
         {RADII.map((radius) => (
           <div key={radius} className="flex flex-col gap-2">
             <span className="text-sm">{radius}</span>
-            <TextField
-              {...props}
-              radius={radius}
-              className="w-[320px]"
-              slotProps={{
-                input: {
-                  disabled,
-                },
-              }}
-            />
+            <TextField {...props} radius={radius} className="w-[320px]" />
           </div>
         ))}
       </div>
@@ -262,27 +208,13 @@ export const Outlined = meta.story({
     disabled: false,
     placeholder: "田中 太郎",
   }),
-  render({
-    // @ts-expect-error
-    disabled,
-    ...props
-  }) {
+  render(props) {
     return (
       <div className="flex flex-col gap-3">
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col gap-2">
             <span className="text-sm">{variant}</span>
-            <TextField
-              {...props}
-              variant={variant}
-              outlined
-              className="w-[320px]"
-              slotProps={{
-                input: {
-                  disabled,
-                },
-              }}
-            />
+            <TextField {...props} variant={variant} outlined className="w-[320px]" />
           </div>
         ))}
       </div>
@@ -300,11 +232,7 @@ export const Sizes = meta.story({
     disabled: false,
     placeholder: "example.com",
   }),
-  render({
-    // @ts-expect-error
-    disabled,
-    ...props
-  }) {
+  render(props) {
     return (
       <div className="flex flex-col gap-3">
         {SIZES.map((size) => (
@@ -314,11 +242,6 @@ export const Sizes = meta.story({
               {...props}
               size={size}
               className="w-[320px]"
-              slotProps={{
-                input: {
-                  disabled,
-                },
-              }}
               endAddons={[<LinkIcon key={0} />]}
               startAddons={["https://"]}
             />
@@ -340,22 +263,13 @@ export const Invalid = meta.story({
     disabled: false,
     placeholder: "田中 太郎",
   }),
-  render({
-    // @ts-expect-error
-    disabled,
-    ...props
-  }) {
+  render(props) {
     return (
       <div className="flex flex-col gap-3">
         <Field invalid>
           <TextField
             {...props}
             className="w-[320px]"
-            slotProps={{
-              input: {
-                disabled,
-              },
-            }}
             endAddons={[<LinkIcon key={0} />]}
             startAddons={["https://"]}
             defaultValue="不正な値"
@@ -383,12 +297,8 @@ export const Disabled = meta.story({
             <TextField
               {...props}
               variant={variant}
+              disabled
               className="w-[320px]"
-              slotProps={{
-                input: {
-                  disabled: true,
-                },
-              }}
               endAddons={[<LinkIcon key={0} />]}
               startAddons={["https://"]}
               defaultValue="入力値"
@@ -396,12 +306,8 @@ export const Disabled = meta.story({
             <TextField
               {...props}
               variant={variant}
+              disabled
               className="w-[320px]"
-              slotProps={{
-                input: {
-                  disabled: true,
-                },
-              }}
               endAddons={[<LinkIcon key={0} />]}
               startAddons={["https://"]}
               placeholder="プレースホルダー"

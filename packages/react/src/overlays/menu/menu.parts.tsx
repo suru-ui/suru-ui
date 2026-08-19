@@ -6,9 +6,6 @@ import type { IComponent } from "../../types.js";
 
 import "./menu.css";
 
-// Types
-// -----
-
 // Handle
 // ------
 
@@ -29,12 +26,12 @@ export const createHandle: typeof Menu.createHandle = Menu.createHandle;
 // ----
 
 /**
- * {@link Root} の状態です。
+ * {@link MenuRoot} の状態です。
  */
 export type MenuRootState = Menu.Root.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link MenuRoot} に渡すプロパティーです。
  */
 export type MenuRootProps<TPayload = unknown> = Omit<Menu.Root.Props<TPayload>, "handle"> & {
   /**
@@ -65,22 +62,22 @@ export const MenuRoot: MenuRootComponent = function SuiMenuRoot<TPayload>(
 };
 
 /**
- * {@link MenuRoot} の型をまとめた名前空間です。
+ * {@link MenuRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
-   * {@link MenuRoot} の状態型です。
+   * {@link MenuRootState} です。
    */
   export type State = MenuRootState;
 
   /**
-   * {@link MenuRoot} のプロパティー型です。
+   * {@link MenuRootProps} です。
    */
   export type Props<TPayload = unknown> = MenuRootProps<TPayload>;
 }
 
 /**
- * {@link MenuRoot} の短縮名です。
+ * {@link MenuRoot} です。
  */
 export const Root: MenuRootComponent = MenuRoot;
 
@@ -88,12 +85,12 @@ export const Root: MenuRootComponent = MenuRoot;
 // -------
 
 /**
- * {@link Trigger} の状態です。
+ * {@link MenuTrigger} の状態です。
  */
 export type MenuTriggerState = Menu.Trigger.State;
 
 /**
- * {@link Trigger} に渡すプロパティーです。
+ * {@link MenuTrigger} に渡すプロパティーです。
  */
 export type MenuTriggerProps<TPayload = unknown> = Omit<
   Menu.Trigger.Props<TPayload>,
@@ -142,22 +139,22 @@ export const MenuTrigger: MenuTriggerComponent = function SuiMenuTrigger<TPayloa
 };
 
 /**
- * {@link MenuTrigger} の型をまとめた名前空間です。
+ * {@link MenuTrigger} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Trigger {
   /**
-   * {@link MenuTrigger} の状態型です。
+   * {@link MenuTriggerState} です。
    */
   export type State = MenuTriggerState;
 
   /**
-   * {@link MenuTrigger} のプロパティー型です。
+   * {@link MenuTriggerProps} です。
    */
   export type Props<TPayload = unknown> = MenuTriggerProps<TPayload>;
 }
 
 /**
- * {@link MenuTrigger} の短縮名です。
+ * {@link MenuTrigger} です。
  */
 export const Trigger: MenuTriggerComponent = MenuTrigger;
 
@@ -165,12 +162,12 @@ export const Trigger: MenuTriggerComponent = MenuTrigger;
 // ------
 
 /**
- * {@link Portal} の状態です。
+ * {@link MenuPortal} の状態です。
  */
 export type MenuPortalState = Menu.Portal.State;
 
 /**
- * {@link Portal} に渡すプロパティーです。
+ * {@link MenuPortal} に渡すプロパティーです。
  */
 export type MenuPortalProps = React.ComponentProps<typeof Menu.Portal>;
 
@@ -186,22 +183,22 @@ export const MenuPortal: IComponent<MenuPortalProps> = function SuiMenuPortal(pr
 };
 
 /**
- * {@link MenuPortal} の型をまとめた名前空間です。
+ * {@link MenuPortal} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Portal {
   /**
-   * {@link MenuPortal} の状態型です。
+   * {@link MenuPortalState} です。
    */
   export type State = MenuPortalState;
 
   /**
-   * {@link MenuPortal} のプロパティー型です。
+   * {@link MenuPortalProps} です。
    */
   export type Props = MenuPortalProps;
 }
 
 /**
- * {@link MenuPortal} の短縮名です。
+ * {@link MenuPortal} です。
  */
 export const Portal: IComponent<Portal.Props> = MenuPortal;
 
@@ -209,12 +206,12 @@ export const Portal: IComponent<Portal.Props> = MenuPortal;
 // --------
 
 /**
- * {@link Backdrop} の状態です。
+ * {@link MenuBackdrop} の状態です。
  */
 export type MenuBackdropState = Menu.Backdrop.State;
 
 /**
- * {@link Backdrop} に渡すプロパティーです。
+ * {@link MenuBackdrop} に渡すプロパティーです。
  */
 export type MenuBackdropProps = React.ComponentProps<typeof Menu.Backdrop>;
 
@@ -228,22 +225,22 @@ export const MenuBackdrop: IComponent<MenuBackdropProps> = function SuiMenuBackd
 };
 
 /**
- * {@link MenuBackdrop} の型をまとめた名前空間です。
+ * {@link MenuBackdrop} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Backdrop {
   /**
-   * {@link MenuBackdrop} の状態型です。
+   * {@link MenuBackdropState} です。
    */
   export type State = MenuBackdropState;
 
   /**
-   * {@link MenuBackdrop} のプロパティー型です。
+   * {@link MenuBackdropProps} です。
    */
   export type Props = MenuBackdropProps;
 }
 
 /**
- * {@link MenuBackdrop} の短縮名です。
+ * {@link MenuBackdrop} です。
  */
 export const Backdrop: IComponent<Backdrop.Props> = MenuBackdrop;
 
@@ -251,12 +248,12 @@ export const Backdrop: IComponent<Backdrop.Props> = MenuBackdrop;
 // ----------
 
 /**
- * {@link Positioner} の状態です。
+ * {@link MenuPositioner} の状態です。
  */
 export type MenuPositionerState = Menu.Positioner.State;
 
 /**
- * {@link Positioner} に渡すプロパティーです。
+ * {@link MenuPositioner} に渡すプロパティーです。
  */
 export type MenuPositionerProps = React.ComponentProps<typeof Menu.Positioner>;
 
@@ -270,22 +267,22 @@ export const MenuPositioner: IComponent<MenuPositionerProps> = function SuiMenuP
 };
 
 /**
- * {@link MenuPositioner} の型をまとめた名前空間です。
+ * {@link MenuPositioner} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Positioner {
   /**
-   * {@link MenuPositioner} の状態型です。
+   * {@link MenuPositionerState} です。
    */
   export type State = MenuPositionerState;
 
   /**
-   * {@link MenuPositioner} のプロパティー型です。
+   * {@link MenuPositionerProps} です。
    */
   export type Props = MenuPositionerProps;
 }
 
 /**
- * {@link MenuPositioner} の短縮名です。
+ * {@link MenuPositioner} です。
  */
 export const Positioner: IComponent<Positioner.Props> = MenuPositioner;
 
@@ -293,12 +290,12 @@ export const Positioner: IComponent<Positioner.Props> = MenuPositioner;
 // -----
 
 /**
- * {@link Popup} の状態です。
+ * {@link MenuPopup} の状態です。
  */
 export type MenuPopupState = Menu.Popup.State;
 
 /**
- * {@link Popup} に渡すプロパティーです。
+ * {@link MenuPopup} に渡すプロパティーです。
  */
 export type MenuPopupProps = React.ComponentProps<typeof Menu.Popup>;
 
@@ -312,22 +309,22 @@ export const MenuPopup: IComponent<MenuPopupProps> = function SuiMenuPopup(props
 };
 
 /**
- * {@link MenuPopup} の型をまとめた名前空間です。
+ * {@link MenuPopup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Popup {
   /**
-   * {@link MenuPopup} の状態型です。
+   * {@link MenuPopupState} です。
    */
   export type State = MenuPopupState;
 
   /**
-   * {@link MenuPopup} のプロパティー型です。
+   * {@link MenuPopupProps} です。
    */
   export type Props = MenuPopupProps;
 }
 
 /**
- * {@link MenuPopup} の短縮名です。
+ * {@link MenuPopup} です。
  */
 export const Popup: IComponent<Popup.Props> = MenuPopup;
 
@@ -335,12 +332,12 @@ export const Popup: IComponent<Popup.Props> = MenuPopup;
 // -----
 
 /**
- * {@link Arrow} の状態です。
+ * {@link MenuArrow} の状態です。
  */
 export type MenuArrowState = Menu.Arrow.State;
 
 /**
- * {@link Arrow} に渡すプロパティーです。
+ * {@link MenuArrow} に渡すプロパティーです。
  */
 export type MenuArrowProps = React.ComponentProps<typeof Menu.Arrow>;
 
@@ -354,22 +351,22 @@ export const MenuArrow: IComponent<MenuArrowProps> = function SuiMenuArrow(props
 };
 
 /**
- * {@link MenuArrow} の型をまとめた名前空間です。
+ * {@link MenuArrow} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Arrow {
   /**
-   * {@link MenuArrow} の状態型です。
+   * {@link MenuArrowState} です。
    */
   export type State = MenuArrowState;
 
   /**
-   * {@link MenuArrow} のプロパティー型です。
+   * {@link MenuArrowProps} です。
    */
   export type Props = MenuArrowProps;
 }
 
 /**
- * {@link MenuArrow} の短縮名です。
+ * {@link MenuArrow} です。
  */
 export const Arrow: IComponent<Arrow.Props> = MenuArrow;
 
@@ -377,12 +374,12 @@ export const Arrow: IComponent<Arrow.Props> = MenuArrow;
 // --------
 
 /**
- * {@link Viewport} の状態です。
+ * {@link MenuViewport} の状態です。
  */
 export type MenuViewportState = Menu.Viewport.State;
 
 /**
- * {@link Viewport} に渡すプロパティーです。
+ * {@link MenuViewport} に渡すプロパティーです。
  */
 export type MenuViewportProps = React.ComponentProps<typeof Menu.Viewport>;
 
@@ -396,22 +393,22 @@ export const MenuViewport: IComponent<MenuViewportProps> = function SuiMenuViewp
 };
 
 /**
- * {@link MenuViewport} の型をまとめた名前空間です。
+ * {@link MenuViewport} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Viewport {
   /**
-   * {@link MenuViewport} の状態型です。
+   * {@link MenuViewportState} です。
    */
   export type State = MenuViewportState;
 
   /**
-   * {@link MenuViewport} のプロパティー型です。
+   * {@link MenuViewportProps} です。
    */
   export type Props = MenuViewportProps;
 }
 
 /**
- * {@link MenuViewport} の短縮名です。
+ * {@link MenuViewport} です。
  */
 export const Viewport: IComponent<Viewport.Props> = MenuViewport;
 
@@ -419,12 +416,12 @@ export const Viewport: IComponent<Viewport.Props> = MenuViewport;
 // ----
 
 /**
- * {@link Item} の状態です。
+ * {@link MenuItem} の状態です。
  */
 export type MenuItemState = Menu.Item.State;
 
 /**
- * {@link Item} に渡すプロパティーです。
+ * {@link MenuItem} に渡すプロパティーです。
  */
 export type MenuItemProps = React.ComponentProps<typeof Menu.Item>;
 
@@ -438,22 +435,22 @@ export const MenuItem: IComponent<MenuItemProps> = function SuiMenuItem(props) {
 };
 
 /**
- * {@link MenuItem} の型をまとめた名前空間です。
+ * {@link MenuItem} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Item {
   /**
-   * {@link MenuItem} の状態型です。
+   * {@link MenuItemState} です。
    */
   export type State = MenuItemState;
 
   /**
-   * {@link MenuItem} のプロパティー型です。
+   * {@link MenuItemProps} です。
    */
   export type Props = MenuItemProps;
 }
 
 /**
- * {@link MenuItem} の短縮名です。
+ * {@link MenuItem} です。
  */
 export const Item: IComponent<Item.Props> = MenuItem;
 
@@ -461,12 +458,12 @@ export const Item: IComponent<Item.Props> = MenuItem;
 // --------
 
 /**
- * {@link LinkItem} の状態です。
+ * {@link MenuLinkItem} の状態です。
  */
 export type MenuLinkItemState = Menu.LinkItem.State;
 
 /**
- * {@link LinkItem} に渡すプロパティーです。
+ * {@link MenuLinkItem} に渡すプロパティーです。
  */
 export type MenuLinkItemProps = React.ComponentProps<typeof Menu.LinkItem>;
 
@@ -485,22 +482,22 @@ export const MenuLinkItem: IComponent<MenuLinkItemProps> = function SuiMenuLinkI
 };
 
 /**
- * {@link MenuLinkItem} の型をまとめた名前空間です。
+ * {@link MenuLinkItem} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace LinkItem {
   /**
-   * {@link MenuLinkItem} の状態型です。
+   * {@link MenuLinkItemState} です。
    */
   export type State = MenuLinkItemState;
 
   /**
-   * {@link MenuLinkItem} のプロパティー型です。
+   * {@link MenuLinkItemProps} です。
    */
   export type Props = MenuLinkItemProps;
 }
 
 /**
- * {@link MenuLinkItem} の短縮名です。
+ * {@link MenuLinkItem} です。
  */
 export const LinkItem: IComponent<LinkItem.Props> = MenuLinkItem;
 
@@ -508,12 +505,12 @@ export const LinkItem: IComponent<LinkItem.Props> = MenuLinkItem;
 // -----------
 
 /**
- * {@link SubmenuRoot} の状態です。
+ * {@link MenuSubmenuRoot} の状態です。
  */
 export type MenuSubmenuRootState = Menu.SubmenuRoot.State;
 
 /**
- * {@link SubmenuRoot} に渡すプロパティーです。
+ * {@link MenuSubmenuRoot} に渡すプロパティーです。
  */
 export type MenuSubmenuRootProps = React.ComponentProps<typeof Menu.SubmenuRoot>;
 
@@ -529,22 +526,22 @@ export const MenuSubmenuRoot: IComponent<MenuSubmenuRootProps> = function SuiMen
 };
 
 /**
- * {@link MenuSubmenuRoot} の型をまとめた名前空間です。
+ * {@link MenuSubmenuRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace SubmenuRoot {
   /**
-   * {@link MenuSubmenuRoot} の状態型です。
+   * {@link MenuSubmenuRootState} です。
    */
   export type State = MenuSubmenuRootState;
 
   /**
-   * {@link MenuSubmenuRoot} のプロパティー型です。
+   * {@link MenuSubmenuRootProps} です。
    */
   export type Props = MenuSubmenuRootProps;
 }
 
 /**
- * {@link MenuSubmenuRoot} の短縮名です。
+ * {@link MenuSubmenuRoot} です。
  */
 export const SubmenuRoot: IComponent<SubmenuRoot.Props> = MenuSubmenuRoot;
 
@@ -552,12 +549,12 @@ export const SubmenuRoot: IComponent<SubmenuRoot.Props> = MenuSubmenuRoot;
 // --------------
 
 /**
- * {@link SubmenuTrigger} の状態です。
+ * {@link MenuSubmenuTrigger} の状態です。
  */
 export type MenuSubmenuTriggerState = Menu.SubmenuTrigger.State;
 
 /**
- * {@link SubmenuTrigger} に渡すプロパティーです。
+ * {@link MenuSubmenuTrigger} に渡すプロパティーです。
  */
 export type MenuSubmenuTriggerProps = React.ComponentProps<typeof Menu.SubmenuTrigger>;
 
@@ -577,22 +574,22 @@ export const MenuSubmenuTrigger: IComponent<MenuSubmenuTriggerProps> =
   };
 
 /**
- * {@link MenuSubmenuTrigger} の型をまとめた名前空間です。
+ * {@link MenuSubmenuTrigger} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace SubmenuTrigger {
   /**
-   * {@link MenuSubmenuTrigger} の状態型です。
+   * {@link MenuSubmenuTriggerState} です。
    */
   export type State = MenuSubmenuTriggerState;
 
   /**
-   * {@link MenuSubmenuTrigger} のプロパティー型です。
+   * {@link MenuSubmenuTriggerProps} です。
    */
   export type Props = MenuSubmenuTriggerProps;
 }
 
 /**
- * {@link MenuSubmenuTrigger} の短縮名です。
+ * {@link MenuSubmenuTrigger} です。
  */
 export const SubmenuTrigger: IComponent<SubmenuTrigger.Props> = MenuSubmenuTrigger;
 
@@ -600,12 +597,12 @@ export const SubmenuTrigger: IComponent<SubmenuTrigger.Props> = MenuSubmenuTrigg
 // -----
 
 /**
- * {@link Group} の状態です。
+ * {@link MenuGroup} の状態です。
  */
 export type MenuGroupState = Menu.Group.State;
 
 /**
- * {@link Group} に渡すプロパティーです。
+ * {@link MenuGroup} に渡すプロパティーです。
  */
 export type MenuGroupProps = React.ComponentProps<typeof Menu.Group>;
 
@@ -619,22 +616,22 @@ export const MenuGroup: IComponent<MenuGroupProps> = function SuiMenuGroup(props
 };
 
 /**
- * {@link MenuGroup} の型をまとめた名前空間です。
+ * {@link MenuGroup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Group {
   /**
-   * {@link MenuGroup} の状態型です。
+   * {@link MenuGroupState} です。
    */
   export type State = MenuGroupState;
 
   /**
-   * {@link MenuGroup} のプロパティー型です。
+   * {@link MenuGroupProps} です。
    */
   export type Props = MenuGroupProps;
 }
 
 /**
- * {@link MenuGroup} の短縮名です。
+ * {@link MenuGroup} です。
  */
 export const Group: IComponent<Group.Props> = MenuGroup;
 
@@ -642,12 +639,12 @@ export const Group: IComponent<Group.Props> = MenuGroup;
 // ----------
 
 /**
- * {@link GroupLabel} の状態です。
+ * {@link MenuGroupLabel} の状態です。
  */
 export type MenuGroupLabelState = Menu.GroupLabel.State;
 
 /**
- * {@link GroupLabel} に渡すプロパティーです。
+ * {@link MenuGroupLabel} に渡すプロパティーです。
  */
 export type MenuGroupLabelProps = React.ComponentProps<typeof Menu.GroupLabel>;
 
@@ -661,22 +658,22 @@ export const MenuGroupLabel: IComponent<MenuGroupLabelProps> = function SuiMenuG
 };
 
 /**
- * {@link MenuGroupLabel} の型をまとめた名前空間です。
+ * {@link MenuGroupLabel} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace GroupLabel {
   /**
-   * {@link MenuGroupLabel} の状態型です。
+   * {@link MenuGroupLabelState} です。
    */
   export type State = MenuGroupLabelState;
 
   /**
-   * {@link MenuGroupLabel} のプロパティー型です。
+   * {@link MenuGroupLabelProps} です。
    */
   export type Props = MenuGroupLabelProps;
 }
 
 /**
- * {@link MenuGroupLabel} の短縮名です。
+ * {@link MenuGroupLabel} です。
  */
 export const GroupLabel: IComponent<GroupLabel.Props> = MenuGroupLabel;
 
@@ -684,12 +681,12 @@ export const GroupLabel: IComponent<GroupLabel.Props> = MenuGroupLabel;
 // ----------
 
 /**
- * {@link RadioGroup} の状態です。
+ * {@link MenuRadioGroup} の状態です。
  */
 export type MenuRadioGroupState = Menu.RadioGroup.State;
 
 /**
- * {@link RadioGroup} に渡すプロパティーです。
+ * {@link MenuRadioGroup} に渡すプロパティーです。
  */
 export type MenuRadioGroupProps = React.ComponentProps<typeof Menu.RadioGroup>;
 
@@ -703,22 +700,22 @@ export const MenuRadioGroup: IComponent<MenuRadioGroupProps> = function SuiMenuR
 };
 
 /**
- * {@link MenuRadioGroup} の型をまとめた名前空間です。
+ * {@link MenuRadioGroup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace RadioGroup {
   /**
-   * {@link MenuRadioGroup} の状態型です。
+   * {@link MenuRadioGroupState} です。
    */
   export type State = MenuRadioGroupState;
 
   /**
-   * {@link MenuRadioGroup} のプロパティー型です。
+   * {@link MenuRadioGroupProps} です。
    */
   export type Props = MenuRadioGroupProps;
 }
 
 /**
- * {@link MenuRadioGroup} の短縮名です。
+ * {@link MenuRadioGroup} です。
  */
 export const RadioGroup: IComponent<RadioGroup.Props> = MenuRadioGroup;
 
@@ -726,12 +723,12 @@ export const RadioGroup: IComponent<RadioGroup.Props> = MenuRadioGroup;
 // ---------
 
 /**
- * {@link RadioItem} の状態です。
+ * {@link MenuRadioItem} の状態です。
  */
 export type MenuRadioItemState = Menu.RadioItem.State;
 
 /**
- * {@link RadioItem} に渡すプロパティーです。
+ * {@link MenuRadioItem} に渡すプロパティーです。
  */
 export type MenuRadioItemProps = React.ComponentProps<typeof Menu.RadioItem>;
 
@@ -750,22 +747,22 @@ export const MenuRadioItem: IComponent<MenuRadioItemProps> = function SuiMenuRad
 };
 
 /**
- * {@link MenuRadioItem} の型をまとめた名前空間です。
+ * {@link MenuRadioItem} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace RadioItem {
   /**
-   * {@link MenuRadioItem} の状態型です。
+   * {@link MenuRadioItemState} です。
    */
   export type State = MenuRadioItemState;
 
   /**
-   * {@link MenuRadioItem} のプロパティー型です。
+   * {@link MenuRadioItemProps} です。
    */
   export type Props = MenuRadioItemProps;
 }
 
 /**
- * {@link MenuRadioItem} の短縮名です。
+ * {@link MenuRadioItem} です。
  */
 export const RadioItem: IComponent<RadioItem.Props> = MenuRadioItem;
 
@@ -773,12 +770,12 @@ export const RadioItem: IComponent<RadioItem.Props> = MenuRadioItem;
 // ------------------
 
 /**
- * {@link RadioItemIndicator} の状態です。
+ * {@link MenuRadioItemIndicator} の状態です。
  */
 export type MenuRadioItemIndicatorState = Menu.RadioItemIndicator.State;
 
 /**
- * {@link RadioItemIndicator} に渡すプロパティーです。
+ * {@link MenuRadioItemIndicator} に渡すプロパティーです。
  */
 export type MenuRadioItemIndicatorProps = React.ComponentProps<typeof Menu.RadioItemIndicator>;
 
@@ -799,22 +796,22 @@ export const MenuRadioItemIndicator: IComponent<MenuRadioItemIndicatorProps> =
   };
 
 /**
- * {@link MenuRadioItemIndicator} の型をまとめた名前空間です。
+ * {@link MenuRadioItemIndicator} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace RadioItemIndicator {
   /**
-   * {@link MenuRadioItemIndicator} の状態型です。
+   * {@link MenuRadioItemIndicatorState} です。
    */
   export type State = MenuRadioItemIndicatorState;
 
   /**
-   * {@link MenuRadioItemIndicator} のプロパティー型です。
+   * {@link MenuRadioItemIndicatorProps} です。
    */
   export type Props = MenuRadioItemIndicatorProps;
 }
 
 /**
- * {@link MenuRadioItemIndicator} の短縮名です。
+ * {@link MenuRadioItemIndicator} です。
  */
 export const RadioItemIndicator: IComponent<RadioItemIndicator.Props> = MenuRadioItemIndicator;
 
@@ -822,12 +819,12 @@ export const RadioItemIndicator: IComponent<RadioItemIndicator.Props> = MenuRadi
 // ------------
 
 /**
- * {@link CheckboxItem} の状態です。
+ * {@link MenuCheckboxItem} の状態です。
  */
 export type MenuCheckboxItemState = Menu.CheckboxItem.State;
 
 /**
- * {@link CheckboxItem} に渡すプロパティーです。
+ * {@link MenuCheckboxItem} に渡すプロパティーです。
  */
 export type MenuCheckboxItemProps = React.ComponentProps<typeof Menu.CheckboxItem>;
 
@@ -848,22 +845,22 @@ export const MenuCheckboxItem: IComponent<MenuCheckboxItemProps> = function SuiM
 };
 
 /**
- * {@link MenuCheckboxItem} の型をまとめた名前空間です。
+ * {@link MenuCheckboxItem} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace CheckboxItem {
   /**
-   * {@link MenuCheckboxItem} の状態型です。
+   * {@link MenuCheckboxItemState} です。
    */
   export type State = MenuCheckboxItemState;
 
   /**
-   * {@link MenuCheckboxItem} のプロパティー型です。
+   * {@link MenuCheckboxItemProps} です。
    */
   export type Props = MenuCheckboxItemProps;
 }
 
 /**
- * {@link MenuCheckboxItem} の短縮名です。
+ * {@link MenuCheckboxItem} です。
  */
 export const CheckboxItem: IComponent<CheckboxItem.Props> = MenuCheckboxItem;
 
@@ -871,12 +868,12 @@ export const CheckboxItem: IComponent<CheckboxItem.Props> = MenuCheckboxItem;
 // ---------------------
 
 /**
- * {@link CheckboxItemIndicator} の状態です。
+ * {@link MenuCheckboxItemIndicator} の状態です。
  */
 export type MenuCheckboxItemIndicatorState = Menu.CheckboxItemIndicator.State;
 
 /**
- * {@link CheckboxItemIndicator} に渡すプロパティーです。
+ * {@link MenuCheckboxItemIndicator} に渡すプロパティーです。
  */
 export type MenuCheckboxItemIndicatorProps = React.ComponentProps<
   typeof Menu.CheckboxItemIndicator
@@ -899,22 +896,22 @@ export const MenuCheckboxItemIndicator: IComponent<MenuCheckboxItemIndicatorProp
   };
 
 /**
- * {@link MenuCheckboxItemIndicator} の型をまとめた名前空間です。
+ * {@link MenuCheckboxItemIndicator} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace CheckboxItemIndicator {
   /**
-   * {@link MenuCheckboxItemIndicator} の状態型です。
+   * {@link MenuCheckboxItemIndicatorState} です。
    */
   export type State = MenuCheckboxItemIndicatorState;
 
   /**
-   * {@link MenuCheckboxItemIndicator} のプロパティー型です。
+   * {@link MenuCheckboxItemIndicatorProps} です。
    */
   export type Props = MenuCheckboxItemIndicatorProps;
 }
 
 /**
- * {@link MenuCheckboxItemIndicator} の短縮名です。
+ * {@link MenuCheckboxItemIndicator} です。
  */
 export const CheckboxItemIndicator: IComponent<CheckboxItemIndicator.Props> =
   MenuCheckboxItemIndicator;
@@ -923,12 +920,12 @@ export const CheckboxItemIndicator: IComponent<CheckboxItemIndicator.Props> =
 // ---------
 
 /**
- * {@link Separator} の状態です。
+ * {@link MenuSeparator} の状態です。
  */
 export type MenuSeparatorState = Menu.Separator.State;
 
 /**
- * {@link Separator} に渡すプロパティーです。
+ * {@link MenuSeparator} に渡すプロパティーです。
  */
 export type MenuSeparatorProps = React.ComponentProps<typeof Menu.Separator>;
 
@@ -942,21 +939,21 @@ export const MenuSeparator: IComponent<MenuSeparatorProps> = function SuiMenuSep
 };
 
 /**
- * {@link MenuSeparator} の型をまとめた名前空間です。
+ * {@link MenuSeparator} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Separator {
   /**
-   * {@link MenuSeparator} の状態型です。
+   * {@link MenuSeparatorState} です。
    */
   export type State = MenuSeparatorState;
 
   /**
-   * {@link MenuSeparator} のプロパティー型です。
+   * {@link MenuSeparatorProps} です。
    */
   export type Props = MenuSeparatorProps;
 }
 
 /**
- * {@link MenuSeparator} の短縮名です。
+ * {@link MenuSeparator} です。
  */
 export const Separator: IComponent<Separator.Props> = MenuSeparator;

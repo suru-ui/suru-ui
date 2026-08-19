@@ -10,51 +10,6 @@ import type { IComponent, IUseContext } from "../../types.js";
 
 import "./button.css";
 
-// Types
-// -----
-
-/**
- * ボタンの色です。
- */
-export type ButtonColor = Color;
-
-/**
- * ボタンの角丸です。
- *
- * - `"none"`: 直角
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
- * - `"full"`: 完全な丸形
- */
-export type ButtonRadius = "none" | Size | "full";
-
-/**
- * ボタンの大きさです。
- *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
- */
-export type ButtonSize = Size;
-
-/**
- * ボタンの主な外観の種類です。
- *
- * - `"solid"`: 塗りつぶしスタイル
- * - `"naked"`: 背景のないテキストのみ
- * - `"liquid"`: 薄い塗りつぶし
- */
-export type ButtonVariant = ColorTemplate;
-
-/**
- * ボタンが保留状態でないときの表示モードです。
- *
- * - `"hidden"`: 非表示にするがレイアウトは維持します。
- * - `"none"`: レイアウトから除去します。
- */
-export type ButtonPendingVisibility = "hidden" | "none";
-
 // Context
 // -------
 
@@ -112,6 +67,40 @@ export const useContext: IUseContext<Context> = useButtonContext;
 // ----
 
 /**
+ * ボタンの色です。
+ */
+export type ButtonRootColor = Color;
+
+/**
+ * ボタンの角丸です。
+ *
+ * - `"none"`: 直角
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
+ */
+export type ButtonRootRadius = "none" | Size | "full";
+
+/**
+ * ボタンの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type ButtonRootSize = Size;
+
+/**
+ * ボタンの主な外観の種類です。
+ *
+ * - `"solid"`: 塗りつぶしスタイル
+ * - `"naked"`: 背景のないテキストのみ
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type ButtonRootVariant = ColorTemplate;
+
+/**
  * {@link ButtonRoot} の状態です。
  */
 export type ButtonRootState = Button.State;
@@ -125,7 +114,7 @@ export type ButtonRootProps = React.ComponentProps<typeof Button> & {
    *
    * @default "grey"
    */
-  color?: ButtonColor | undefined;
+  color?: ButtonRootColor | undefined;
 
   /**
    * 背景色を控えめにします。
@@ -155,19 +144,21 @@ export type ButtonRootProps = React.ComponentProps<typeof Button> & {
    *
    * デフォルト値は {@link ButtonRootProps.size|size} です。
    */
-  radius?: ButtonRadius | undefined;
+  radius?: ButtonRootRadius | undefined;
 
   /**
    * ボタンの大きさを指定します。
    *
    * @default "md"
    */
-  size?: ButtonSize | undefined;
+  size?: ButtonRootSize | undefined;
 
   /**
    * ボタンを正方形にするかどうかを指定します。
    *
    * `true` の場合、幅と高さが等しくなり、アイコンボタンなどに適した形状になります。
+   *
+   * @default false
    */
   squared?: boolean | undefined;
 
@@ -176,7 +167,7 @@ export type ButtonRootProps = React.ComponentProps<typeof Button> & {
    *
    * @default "solid"
    */
-  variant?: ButtonVariant | undefined;
+  variant?: ButtonRootVariant | undefined;
 };
 
 /**
@@ -189,7 +180,7 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
     type = "button",
     color: colorProp = "grey",
     muted: mutedProp = false,
-    radius: radiusProp,
+    radius: radiusProp = sizeProp,
     pending = false,
     squared = false,
     variant: variantProp = "solid",
@@ -201,8 +192,8 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
   } = props;
   const size = actionGroupCtx?.size ?? sizeProp;
   const color = actionGroupCtx?.color ?? colorProp;
-  const muted = mutedProp ?? false;
-  const radius = actionGroupCtx?.radius ?? radiusProp ?? size;
+  const muted = /* actionGroupCtx?.muted ?? */ mutedProp;
+  const radius = actionGroupCtx?.radius ?? radiusProp;
   const variant = actionGroupCtx?.variant ?? variantProp;
   const outlined = actionGroupCtx?.outlined ?? outlinedProp;
   const context = React.useMemo(() => ({ pending }), [pending]);
@@ -238,14 +229,34 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
  */
 export namespace Root {
   /**
-   * {@link ButtonRoot} の状態型です。
+   * {@link ButtonRootState} です。
    */
   export type State = ButtonRootState;
 
   /**
-   * {@link ButtonRoot} のプロパティー型です。
+   * {@link ButtonRootProps} です。
    */
   export type Props = ButtonRootProps;
+
+  /**
+   * {@link ButtonRootColor} です。
+   */
+  export type Color = ButtonRootColor;
+
+  /**
+   * {@link ButtonRootRadius} です。
+   */
+  export type Radius = ButtonRootRadius;
+
+  /**
+   * {@link ButtonRootSize} です。
+   */
+  export type Size = ButtonRootSize;
+
+  /**
+   * {@link ButtonRootVariant} です。
+   */
+  export type Variant = ButtonRootVariant;
 }
 
 /**
@@ -287,12 +298,12 @@ export const ButtonContent: IComponent<ButtonContentProps> = function SuiButtonC
  */
 export namespace Content {
   /**
-   * {@link ButtonContent} の状態型です。
+   * {@link ButtonContentState} です。
    */
   export type State = ButtonContentState;
 
   /**
-   * {@link ButtonContent} のプロパティー型です。
+   * {@link ButtonContentProps} です。
    */
   export type Props = ButtonContentProps;
 }
@@ -306,6 +317,14 @@ export const Content: IComponent<Content.Props> = ButtonContent;
 // -------
 
 /**
+ * ボタンが保留状態でないときの表示モードです。
+ *
+ * - `"hidden"`: 非表示にするがレイアウトは維持します。
+ * - `"none"`: レイアウトから除去します。
+ */
+export type ButtonPendingVisibility = "hidden" | "none";
+
+/**
  * {@link ButtonPending} の状態です。
  */
 export type ButtonPendingState = {};
@@ -316,7 +335,7 @@ export type ButtonPendingState = {};
 export type ButtonPendingProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
   RenderProps<ButtonPendingState> & {
     /**
-     * `pending` が `false` のときの表示モードを指定します。
+     * {@link ButtonRootProps.pending|pending} が `false` のときの表示モードを指定します。
      *
      * @default "none"
      */
@@ -361,14 +380,19 @@ export const ButtonPending: IComponent<ButtonPendingProps> = function SuiButtonP
  */
 export namespace Pending {
   /**
-   * {@link ButtonPending} の状態型です。
+   * {@link ButtonPendingState} です。
    */
   export type State = ButtonPendingState;
 
   /**
-   * {@link ButtonPending} のプロパティー型です。
+   * {@link ButtonPendingProps} です。
    */
   export type Props = ButtonPendingProps;
+
+  /**
+   * {@link ButtonPendingVisibility} です。
+   */
+  export type Visibility = ButtonPendingVisibility;
 }
 
 /**
@@ -517,12 +541,12 @@ export const ButtonCircularProgress: IComponent<ButtonCircularProgressProps> =
  */
 export namespace CircularProgress {
   /**
-   * {@link ButtonCircularProgress} の状態型です。
+   * {@link ButtonCircularProgressState} です。
    */
   export type State = ButtonCircularProgressState;
 
   /**
-   * {@link ButtonCircularProgress} のプロパティー型です。
+   * {@link ButtonCircularProgressProps} です。
    */
   export type Props = ButtonCircularProgressProps;
 }
@@ -585,12 +609,12 @@ export const ButtonCircularProgressTrack: IComponent<ButtonCircularProgressTrack
  */
 export namespace CircularProgressTrack {
   /**
-   * {@link ButtonCircularProgressTrack} の状態型です。
+   * {@link ButtonCircularProgressTrackState} です。
    */
   export type State = ButtonCircularProgressTrackState;
 
   /**
-   * {@link ButtonCircularProgressTrack} のプロパティー型です。
+   * {@link ButtonCircularProgressTrackProps} です。
    */
   export type Props = ButtonCircularProgressTrackProps;
 }
@@ -663,12 +687,12 @@ export const ButtonCircularProgressFill: IComponent<ButtonCircularProgressFillPr
  */
 export namespace CircularProgressFill {
   /**
-   * {@link ButtonCircularProgressFill} の状態型です。
+   * {@link ButtonCircularProgressFillState} です。
    */
   export type State = ButtonCircularProgressFillState;
 
   /**
-   * {@link ButtonCircularProgressFill} のプロパティー型です。
+   * {@link ButtonCircularProgressFillProps} です。
    */
   export type Props = ButtonCircularProgressFillProps;
 }
@@ -735,12 +759,12 @@ export const ButtonCircularProgressFillRotation: IComponent<ButtonCircularProgre
  */
 export namespace CircularProgressFillRotation {
   /**
-   * {@link ButtonCircularProgressFillRotation} の状態型です。
+   * {@link ButtonCircularProgressFillRotationState} です。
    */
   export type State = ButtonCircularProgressFillRotationState;
 
   /**
-   * {@link ButtonCircularProgressFillRotation} のプロパティー型です。
+   * {@link ButtonCircularProgressFillRotationProps} です。
    */
   export type Props = ButtonCircularProgressFillRotationProps;
 }

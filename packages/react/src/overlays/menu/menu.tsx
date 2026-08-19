@@ -1,5 +1,3 @@
-import type * as React from "react";
-
 import type { IComponent } from "../../types.js";
 import {
   type MenuRootProps,
@@ -56,25 +54,23 @@ export type MenuState = MenuRootState;
 /**
  * {@link Menu} コンポーネントのプロパティーです。
  */
-export type MenuProps = Omit<MenuRootProps, "children" | "handle"> & {
-  /**
-   * メニューを開くトリガーに表示する要素です。
-   *
-   * {@link MenuTrigger|Trigger} の子要素として直接渡されます。
-   * 省略した場合、トリガーはレンダリングされません。
-   */
-  trigger?: MenuTriggerProps["children"] | undefined;
+export type MenuProps = Omit<MenuRootProps, "children" | "handle"> &
+  Pick<MenuPopupProps, "children"> & {
+    /**
+     * メニューを開くトリガーに表示する要素です。
+     *
+     * {@link MenuTrigger|Trigger} の子要素として直接渡されます。
+     * 省略した場合、トリガーはレンダリングされません。
+     */
+    trigger?: MenuTriggerProps["children"] | undefined;
 
-  /**
-   * ポップアップに表示するメニュー項目です。
-   */
-  children?: React.ReactNode | undefined;
-
-  /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-   */
-  slotProps?: MenuSlotProps | undefined;
-};
+    /**
+     * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+     *
+     * 各パーツのプロパティーが優先されます。
+     */
+    slotProps?: MenuSlotProps | undefined;
+  };
 
 interface MenuComponentType extends IComponent<MenuProps> {
   /**

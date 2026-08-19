@@ -7,8 +7,8 @@ import type { IComponent } from "../../types.js";
 
 import "./tabs.css";
 
-// Types
-// -----
+// Root
+// ----
 
 /**
  * Tabs の角丸です。
@@ -18,7 +18,7 @@ import "./tabs.css";
  * - `"md"`: 標準的な角丸
  * - `"lg"`: 大きい角丸
  */
-export type TabsRadius = "none" | "sm" | "md" | "lg";
+export type TabsRootRadius = "none" | "sm" | "md" | "lg";
 
 /**
  * Tabs の大きさです。
@@ -27,10 +27,7 @@ export type TabsRadius = "none" | "sm" | "md" | "lg";
  * - `"md"`: 標準的なサイズ
  * - `"lg"`: 大きいサイズ
  */
-export type TabsSize = Size;
-
-// Root
-// ----
+export type TabsRootSize = Size;
 
 /**
  * {@link TabsRoot} の状態です。
@@ -53,14 +50,14 @@ export type TabsRootProps = React.ComponentProps<typeof BaseTabs.Root> & {
    *
    * @default "md"
    */
-  radius?: TabsRadius | undefined;
+  radius?: TabsRootRadius | undefined;
 
   /**
    * Tabs のサイズを指定します。
    *
    * @default "md"
    */
-  size?: TabsSize | undefined;
+  size?: TabsRootSize | undefined;
 };
 
 /**
@@ -99,18 +96,28 @@ export const TabsRoot: IComponent<TabsRootProps> = function SuiTabsRoot(props) {
  */
 export namespace Root {
   /**
-   * {@link Root} の状態です。
+   * {@link TabsRootState} です。
    */
   export type State = TabsRootState;
 
   /**
-   * {@link Root} に渡すプロパティーです。
+   * {@link TabsRootProps} です。
    */
   export type Props = TabsRootProps;
+
+  /**
+   * {@link TabsRootRadius} です。
+   */
+  export type Radius = TabsRootRadius;
+
+  /**
+   * {@link TabsRootSize} です。
+   */
+  export type Size = TabsRootSize;
 }
 
 /**
- * {@link TabsRoot} の別名です。
+ * {@link TabsRoot} です。
  */
 export const Root: IComponent<Root.Props> = TabsRoot;
 
@@ -118,12 +125,12 @@ export const Root: IComponent<Root.Props> = TabsRoot;
 // ----
 
 /**
- * {@link List} の状態です。
+ * {@link TabsListState} です。
  */
 export type TabsListState = BaseTabs.List.State;
 
 /**
- * {@link List} に渡すプロパティーです。
+ * {@link TabsListProps} です。
  */
 export type TabsListProps = React.ComponentProps<typeof BaseTabs.List>;
 
@@ -141,18 +148,18 @@ export const TabsList: IComponent<TabsListProps> = function SuiTabsList(props) {
  */
 export namespace List {
   /**
-   * {@link List} の状態です。
+   * {@link TabsListState} です。
    */
   export type State = TabsListState;
 
   /**
-   * {@link List} に渡すプロパティーです。
+   * {@link TabsListProps} です。
    */
   export type Props = TabsListProps;
 }
 
 /**
- * {@link TabsList} の別名です。
+ * {@link TabsList} です。
  */
 export const List: IComponent<List.Props> = TabsList;
 
@@ -160,12 +167,12 @@ export const List: IComponent<List.Props> = TabsList;
 // ---
 
 /**
- * {@link Tab} の状態です。
+ * {@link TabsTabState} です。
  */
 export type TabsTabState = BaseTabs.Tab.State;
 
 /**
- * {@link Tab} に渡すプロパティーです。
+ * {@link TabsTabProps} です。
  */
 export type TabsTabProps = React.ComponentProps<typeof BaseTabs.Tab>;
 
@@ -183,18 +190,18 @@ export const TabsTab: IComponent<TabsTabProps> = function SuiTabsTab(props) {
  */
 export namespace Tab {
   /**
-   * {@link Tab} の状態です。
+   * {@link TabsTabState} です。
    */
   export type State = TabsTabState;
 
   /**
-   * {@link Tab} に渡すプロパティーです。
+   * {@link TabsTabProps} です。
    */
   export type Props = TabsTabProps;
 }
 
 /**
- * {@link TabsTab} の別名です。
+ * {@link TabsTab} です。
  */
 export const Tab: IComponent<Tab.Props> = TabsTab;
 
@@ -227,18 +234,18 @@ export const TabsIndicator: IComponent<TabsIndicatorProps> = function SuiTabsInd
  */
 export namespace Indicator {
   /**
-   * {@link Indicator} の状態です。
+   * {@link TabsIndicatorState} です。
    */
   export type State = TabsIndicatorState;
 
   /**
-   * {@link Indicator} に渡すプロパティーです。
+   * {@link TabsIndicatorProps} です。
    */
   export type Props = TabsIndicatorProps;
 }
 
 /**
- * {@link TabsIndicator} の別名です。
+ * {@link TabsIndicator} です。
  */
 export const Indicator: IComponent<Indicator.Props> = TabsIndicator;
 
@@ -269,17 +276,17 @@ export const TabsPanel: IComponent<TabsPanelProps> = function SuiTabsPanel(props
  */
 export namespace Panel {
   /**
-   * {@link Panel} の状態です。
+   * {@link TabsPanelState} です。
    */
   export type State = TabsPanelState;
 
   /**
-   * {@link Panel} に渡すプロパティーです。
+   * {@link TabsPanelProps} です。
    */
   export type Props = TabsPanelProps;
 }
 
 /**
- * {@link TabsPanel} の別名です。
+ * {@link TabsPanel} です。
  */
 export const Panel: IComponent<Panel.Props> = TabsPanel;

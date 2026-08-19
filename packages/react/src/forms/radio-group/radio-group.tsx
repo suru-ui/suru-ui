@@ -1,11 +1,43 @@
 import * as React from "react";
 
-import type { IComponent } from "../../types.js";
+import type { IComponent, IUseContext } from "../../types.js";
 import {
+  type RadioGroupContext,
+  type RadioGroupRootSize,
+  type RadioGroupRootColor,
   type RadioGroupRootProps,
   type RadioGroupRootState,
+  type RadioGroupRootRadius,
+  type RadioGroupRootVariant,
+  type RadioGroupRootOrientation,
   RadioGroupRoot,
+  useRadioGroupContext,
 } from "./radio-group.parts.jsx";
+
+/**
+ * {@link RadioGroupRootColor} です。
+ */
+export type RadioGroupColor = RadioGroupRootColor;
+
+/**
+ * {@link RadioGroupRootOrientation} です。
+ */
+export type RadioGroupOrientation = RadioGroupRootOrientation;
+
+/**
+ * {@link RadioGroupRootRadius} です。
+ */
+export type RadioGroupRadius = RadioGroupRootRadius;
+
+/**
+ * {@link RadioGroupRootSize} です。
+ */
+export type RadioGroupSize = RadioGroupRootSize;
+
+/**
+ * {@link RadioGroupRootVariant} です。
+ */
+export type RadioGroupVariant = RadioGroupRootVariant;
 
 /**
  * {@link RadioGroup} の状態です。
@@ -15,14 +47,14 @@ export type RadioGroupState = RadioGroupRootState;
 /**
  * {@link RadioGroup} コンポーネントのプロパティーです。
  */
-export type RadioGroupProps = RadioGroupRootProps & {
+export type RadioGroupProps = RadioGroupRootProps;
+
+interface RadioGroupType extends IComponent<RadioGroupProps> {
   /**
-   * ラジオボタン要素です。
-   *
-   * {@link RadioGroupRoot} にそのまま渡されます。
+   * {@link useRadioGroupContext} です。
    */
-  readonly children?: React.ReactNode | undefined;
-};
+  readonly useContext: IUseContext<RadioGroupContext>;
+}
 
 /**
  * ラジオボタンをグループ化するコンポーネントです。
@@ -30,9 +62,14 @@ export type RadioGroupProps = RadioGroupRootProps & {
  * グループの選択状態を管理し、子要素のラジオボタンにスタイルを強制します。
  * スタイルの指定は子要素の指定より優先され、値を変更するとグループ内へ反映されます。
  */
-export const RadioGroup: IComponent<RadioGroupProps> = function SuiRadioGroup(props) {
-  return <RadioGroupRoot {...props} />;
-};
+export const RadioGroup: RadioGroupType = /*#__PURE__*/ Object.assign(
+  function SuiRadioGroup(props: RadioGroupProps) {
+    return <RadioGroupRoot {...props} />;
+  },
+  {
+    useContext: useRadioGroupContext,
+  },
+);
 
 /**
  * {@link RadioGroup} の状態やプロパティーをまとめた型名前空間です。
@@ -47,4 +84,34 @@ export namespace RadioGroup {
    * {@link RadioGroupProps} です。
    */
   export type Props = RadioGroupProps;
+
+  /**
+   * {@link RadioGroupContext} です。
+   */
+  export type Context = RadioGroupContext;
+
+  /**
+   * {@link RadioGroupColor} です。
+   */
+  export type Color = RadioGroupColor;
+
+  /**
+   * {@link RadioGroupOrientation} です。
+   */
+  export type Orientation = RadioGroupOrientation;
+
+  /**
+   * {@link RadioGroupRadius} です。
+   */
+  export type Radius = RadioGroupRadius;
+
+  /**
+   * {@link RadioGroupSize} です。
+   */
+  export type Size = RadioGroupSize;
+
+  /**
+   * {@link RadioGroupVariant} です。
+   */
+  export type Variant = RadioGroupVariant;
 }
