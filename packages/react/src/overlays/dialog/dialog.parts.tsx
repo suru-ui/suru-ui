@@ -108,7 +108,7 @@ export type DialogTriggerProps = Omit<
  * 子要素は何にもラップされず、そのまま {@link Dialog.Trigger} の `render` プロパティーに渡されます。
  */
 export const DialogTrigger: IComponent<DialogTriggerProps> = function SuiDialogTrigger(props) {
-  const { className, handle, children, ...otherProps } = props;
+  const { handle, children, className, ...otherProps } = props;
 
   return (
     <Dialog.Trigger
@@ -429,7 +429,7 @@ export type DialogCloseProps = Omit<
  * 子要素は何にもラップされず、そのまま {@link Dialog.Close} の `render` プロパティーに渡されます。
  */
 export const DialogClose: IComponent<DialogCloseProps> = function SuiDialogClose(props) {
-  const { className, children, ...otherProps } = props;
+  const { children, className, ...otherProps } = props;
 
   return (
     <Dialog.Close {...otherProps} className={cn(className, "sui_dialog_close")} render={children} />

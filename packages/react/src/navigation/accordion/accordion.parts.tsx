@@ -73,11 +73,11 @@ export type AccordionRootProps = React.ComponentProps<typeof Accordion.Root> & {
  */
 export const AccordionRoot: IComponent<AccordionRootProps> = function SuiAccordionRoot(props) {
   const {
-    className,
+    size = "md",
+    radius = "md",
     divider = true,
     outlined = false,
-    radius = "md",
-    size = "md",
+    className,
     ...otherProps
   } = props;
 

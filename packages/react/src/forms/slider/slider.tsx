@@ -109,11 +109,11 @@ export const Slider: IComponent<SliderProps> = function SuiSlider(props) {
   const {
     slotProps: {
       label: labelProps,
+      thumb: thumbProps,
+      track: trackProps,
       value: valueProps,
       control: controlProps,
-      track: trackProps,
       indicator: indicatorProps,
-      thumb: thumbProps,
     } = {},
     ...rootProps
   } = props;

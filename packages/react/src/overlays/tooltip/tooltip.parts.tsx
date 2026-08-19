@@ -163,7 +163,7 @@ export interface TooltipTriggerComponent extends IComponent<TooltipTriggerProps>
 export const TooltipTrigger: TooltipTriggerComponent = function SuiTooltipTrigger<TPayload>(
   props: TooltipTriggerProps<TPayload>,
 ) {
-  const { className, children, ...otherProps } = props;
+  const { children, className, ...otherProps } = props;
 
   return (
     <Tooltip.Trigger

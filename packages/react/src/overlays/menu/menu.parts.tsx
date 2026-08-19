@@ -126,7 +126,7 @@ export interface MenuTriggerComponent extends IComponent<MenuTriggerProps> {
 export const MenuTrigger: MenuTriggerComponent = function SuiMenuTrigger<TPayload>(
   props: MenuTriggerProps<TPayload>,
 ) {
-  const { className, handle, children, ...otherProps } = props;
+  const { handle, children, className, ...otherProps } = props;
 
   return (
     <Menu.Trigger

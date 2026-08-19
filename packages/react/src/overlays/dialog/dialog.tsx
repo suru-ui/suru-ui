@@ -147,22 +147,22 @@ export const Dialog: DialogComponentType = /*#__PURE__*/ Object.assign(
   function SuiDialog(props: DialogProps) {
     const [handle] = React.useState(createHandle);
     const {
-      trigger,
-      title,
-      description,
       close,
+      title,
       onClose,
+      trigger,
       children,
       slotProps: {
-        trigger: triggerProps,
-        portal: portalProps,
-        backdrop: backdropProps,
-        viewport: viewportProps,
+        close: closeProps,
         popup: popupProps,
         title: titleProps,
+        portal: portalProps,
+        trigger: triggerProps,
+        backdrop: backdropProps,
+        viewport: viewportProps,
         description: descriptionProps,
-        close: closeProps,
       } = {},
+      description,
       ...rootProps
     } = props;
 

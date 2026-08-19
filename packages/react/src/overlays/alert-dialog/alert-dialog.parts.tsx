@@ -113,7 +113,7 @@ export type AlertDialogTriggerProps = Omit<
  */
 export const AlertDialogTrigger: IComponent<AlertDialogTriggerProps> =
   function SuiAlertDialogTrigger(props) {
-    const { className, handle, children, ...otherProps } = props;
+    const { handle, children, className, ...otherProps } = props;
 
     return (
       <AlertDialog.Trigger
@@ -460,7 +460,7 @@ export type AlertDialogCloseProps = Omit<
 export const AlertDialogClose: IComponent<AlertDialogCloseProps> = function SuiAlertDialogClose(
   props,
 ) {
-  const { className, children, ...otherProps } = props;
+  const { children, className, ...otherProps } = props;
 
   return (
     <AlertDialog.Close

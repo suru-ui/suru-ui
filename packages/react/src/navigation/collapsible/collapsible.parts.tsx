@@ -67,7 +67,7 @@ export type CollapsibleRootProps = React.ComponentProps<typeof Collapsible.Root>
 export const CollapsibleRoot: IComponent<CollapsibleRootProps> = function SuiCollapsibleRoot(
   props,
 ) {
-  const { className, outlined = false, radius = "md", size = "md", ...otherProps } = props;
+  const { size = "md", radius = "md", outlined = false, className, ...otherProps } = props;
 
   return (
     <Collapsible.Root
@@ -144,7 +144,7 @@ export type CollapsibleTriggerProps = Omit<
  */
 export const CollapsibleTrigger: IComponent<CollapsibleTriggerProps> =
   function SuiCollapsibleTrigger(props) {
-    const { className, children, ...otherProps } = props;
+    const { children, className, ...otherProps } = props;
 
     return (
       <Collapsible.Trigger

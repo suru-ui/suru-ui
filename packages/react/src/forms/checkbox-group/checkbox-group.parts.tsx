@@ -214,14 +214,14 @@ export const CheckboxGroupRoot: IComponent<CheckboxGroupRootProps> = function Su
   props,
 ) {
   const {
-    color: colorProp = "grey",
     size: sizeProp = "md",
+    color: colorProp = "grey",
     radius: radiusProp = sizeProp,
     variant: variantProp = "naked",
     disabled,
     outlined = variantProp === "naked",
-    orientation = "vertical",
     className,
+    orientation = "vertical",
     ...otherProps
   } = props;
   const context = React.useMemo<CheckboxGroupContext>(

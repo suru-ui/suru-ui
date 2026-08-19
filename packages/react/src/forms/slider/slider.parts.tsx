@@ -95,8 +95,8 @@ export const SliderRoot: IComponent<SliderRootProps> = function SuiSliderRoot(pr
     color: colorProp = "grey",
     radius: radiusProp = "full",
     variant: variantProp = "liquid",
-    outlined = false,
     disabled = false,
+    outlined = false,
     className,
     ...otherProps
   } = props;

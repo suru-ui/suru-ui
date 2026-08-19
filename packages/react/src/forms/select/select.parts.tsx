@@ -199,8 +199,8 @@ export const SelectRoot: SelectRootComponent = function SuiSelectRoot<
   Multiple extends boolean | undefined = false,
 >(props: SelectRootProps<Value, Multiple>) {
   const {
-    items,
     size: sizeProp = "md",
+    items,
     radius: radiusProp = sizeProp,
     variant: variantProp = "naked",
     outlined: outlinedProp = variantProp === "naked",

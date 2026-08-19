@@ -207,9 +207,9 @@ export const RadioGroupRoot: IComponent<RadioGroupRootProps> = function SuiRadio
     variant: variantProp = "naked",
     disabled,
     outlined = variantProp === "naked",
+    className,
     orientation = "vertical",
     "aria-orientation": ariaOrientation = orientation,
-    className,
     ...otherProps
   } = props;
   const context = React.useMemo<RadioGroupContext>(

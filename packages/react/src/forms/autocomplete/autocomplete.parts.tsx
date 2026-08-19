@@ -182,11 +182,11 @@ export const AutocompleteRoot: IComponent<AutocompleteRootProps> = function SuiA
   props,
 ) {
   const {
+    size: sizeProp = "md",
+    radius: radiusProp = sizeProp,
     variant: variantProp = "naked",
     outlined: outlinedProp = variantProp === "naked",
     accentColor: accentColorProp = "grey",
-    size: sizeProp = "md",
-    radius: radiusProp = sizeProp,
     ...otherProps
   } = props;
   const context = React.useMemo<AutocompleteContext>(

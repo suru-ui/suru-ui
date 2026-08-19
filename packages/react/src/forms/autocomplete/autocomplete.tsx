@@ -176,22 +176,22 @@ interface AutocompleteType extends IComponent<AutocompleteProps> {
 export const Autocomplete: AutocompleteType = /*#__PURE__*/ Object.assign(
   function SuiAutocomplete(props: AutocompleteProps) {
     const {
-      autoHighlight = true,
       children,
       className,
-      placeholder,
       slotProps: {
-        clear: clearProps,
         icon: iconProps,
-        input: inputProps,
-        inputGroup: inputGroupProps,
         item: itemProps,
         list: listProps,
-        portal: portalProps,
-        positioner: positionerProps,
+        clear: clearProps,
+        input: inputProps,
         popup: popupProps,
+        portal: portalProps,
         trigger: triggerProps,
+        inputGroup: inputGroupProps,
+        positioner: positionerProps,
       } = {},
+      placeholder,
+      autoHighlight = true,
       openOnInputClick = true,
       ...rootProps
     } = props;
@@ -203,8 +203,8 @@ export const Autocomplete: AutocompleteType = /*#__PURE__*/ Object.assign(
     const { children: iconChildren = <SuiChevronIcon />, ...restIconProps } = iconProps ?? {};
     const { "aria-label": triggerAriaLabel, ...restTriggerProps } = triggerProps ?? {};
     const {
-      align = "start",
       side = "bottom",
+      align = "start",
       sideOffset = 8,
       ...restPositionerProps
     } = positionerProps ?? {};

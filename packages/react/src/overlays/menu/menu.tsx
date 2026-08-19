@@ -93,17 +93,17 @@ export const Menu: MenuComponentType = /*#__PURE__*/ Object.assign(
       trigger,
       children,
       slotProps: {
-        trigger: triggerProps,
+        popup: popupProps,
         portal: portalProps,
+        trigger: triggerProps,
         backdrop: backdropProps,
         positioner: positionerProps,
-        popup: popupProps,
       } = {},
       ...rootProps
     } = props;
     const {
-      align = "start",
       side = "bottom",
+      align = "start",
       sideOffset = 8,
       ...otherPositionerProps
     } = positionerProps ?? {};

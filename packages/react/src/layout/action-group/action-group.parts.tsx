@@ -305,9 +305,9 @@ export const ActionGroupSeparator: IComponent<ActionGroupSeparatorProps> =
   function SuiActionGroupSeparator(props) {
     const context = useActionGroupContext(true);
     const {
+      className,
       orientation: orientationProp,
       "aria-orientation": ariaOrientation = orientationProp ?? context?.orientation ?? "horizontal",
-      className,
       ...otherProps
     } = props;
     const orientation = orientationProp ?? context?.orientation ?? "horizontal";

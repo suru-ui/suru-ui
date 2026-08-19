@@ -215,7 +215,7 @@ const accordionItems = [
 ];
 
 function AccordionItems() {
-  return accordionItems.map(({ title, panel }) => (
+  return accordionItems.map(({ panel, title }) => (
     <AccordionParts.Item key={title}>
       <AccordionParts.Header>
         <AccordionParts.Trigger>

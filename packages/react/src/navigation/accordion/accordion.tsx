@@ -103,10 +103,10 @@ export const Accordion: IComponent<AccordionProps> = function SuiAccordion(props
   const { title, children, slotProps, ...rootProps } = props;
   const {
     item: itemProps,
+    panel: panelProps,
     header: headerProps,
     trigger: triggerProps,
     indicator: indicatorProps,
-    panel: panelProps,
   } = slotProps ?? {};
   const { children: triggerChildren, ...otherTriggerProps } = triggerProps ?? {};
 

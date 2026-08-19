@@ -101,7 +101,7 @@ export const Multiple = meta.story({
     placeholder: "言語を追加",
   }),
   render(props) {
-    const { multiple: _multiple, value: _value, ...rest } = props;
+    const { value: _value, multiple: _multiple, ...rest } = props;
 
     return (
       <Combobox

@@ -94,8 +94,8 @@ export const Progress: IComponent<ProgressProps> = function SuiProgress(props) {
     label,
     slotProps: {
       label: labelProps,
-      value: valueProps,
       track: trackProps,
+      value: valueProps,
       indicator: indicatorProps,
     } = {},
     ...rootProps

@@ -88,16 +88,16 @@ export type ScrollAreaProps = Omit<ScrollAreaRootProps, "children"> &
 export const ScrollArea: IComponent<ScrollAreaProps> = function SuiScrollArea(props) {
   const {
     children,
-    horizontal = false,
     slotProps: {
-      viewport: viewportProps,
-      content: contentProps,
-      scrollbar: scrollbarProps,
-      horizontalScrollbar: horizontalScrollbarProps,
       thumb: thumbProps,
-      horizontalThumb: horizontalThumbProps,
       corner: cornerProps,
+      content: contentProps,
+      viewport: viewportProps,
+      scrollbar: scrollbarProps,
+      horizontalThumb: horizontalThumbProps,
+      horizontalScrollbar: horizontalScrollbarProps,
     } = {},
+    horizontal = false,
     ...rootProps
   } = props;
 

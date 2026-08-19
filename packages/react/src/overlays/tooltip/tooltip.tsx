@@ -98,11 +98,11 @@ export const Tooltip: TooltipComponentType = /*#__PURE__*/ Object.assign(
       trigger,
       children,
       slotProps: {
-        trigger: triggerProps,
-        portal: portalProps,
-        positioner: positionerProps,
-        popup: popupProps,
         arrow: arrowProps,
+        popup: popupProps,
+        portal: portalProps,
+        trigger: triggerProps,
+        positioner: positionerProps,
       } = {},
       ...rootProps
     } = props;

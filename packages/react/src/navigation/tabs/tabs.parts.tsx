@@ -67,11 +67,11 @@ export type TabsRootProps = React.ComponentProps<typeof BaseTabs.Root> & {
  */
 export const TabsRoot: IComponent<TabsRootProps> = function SuiTabsRoot(props) {
   const {
+    size = "md",
+    radius = "md",
+    outlined = false,
     className,
     orientation = "horizontal",
-    outlined = false,
-    radius = "md",
-    size = "md",
     ...otherProps
   } = props;
 

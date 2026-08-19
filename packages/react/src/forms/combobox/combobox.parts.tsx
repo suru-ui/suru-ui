@@ -205,11 +205,11 @@ export const ComboboxRoot: ComboboxRootComponent = function SuiComboboxRoot<
   Multiple extends boolean | undefined = false,
 >(props: ComboboxRootProps<Value, Multiple>) {
   const {
+    size: sizeProp = "md",
+    radius: radiusProp = sizeProp,
     variant: variantProp = "naked",
     outlined: outlinedProp = variantProp === "naked",
     accentColor: accentColorProp = "grey",
-    size: sizeProp = "md",
-    radius: radiusProp = sizeProp,
     ...otherProps
   } = props;
   const context = React.useMemo<ComboboxContext>(

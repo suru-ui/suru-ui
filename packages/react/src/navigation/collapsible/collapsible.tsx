@@ -77,7 +77,7 @@ export type CollapsibleProps = Omit<CollapsibleRootProps, "children"> & {
  */
 export const Collapsible: IComponent<CollapsibleProps> = function SuiCollapsible(props) {
   const { title, children, slotProps, ...rootProps } = props;
-  const { trigger: triggerProps, indicator: indicatorProps, panel: panelProps } = slotProps ?? {};
+  const { panel: panelProps, trigger: triggerProps, indicator: indicatorProps } = slotProps ?? {};
 
   return (
     <CollapsibleRoot {...rootProps}>

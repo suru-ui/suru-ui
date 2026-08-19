@@ -80,10 +80,10 @@ export const ContextMenu: IComponent<ContextMenuProps> = function SuiContextMenu
     trigger,
     children,
     slotProps: {
-      trigger: triggerProps,
-      portal: portalProps,
-      positioner: positionerProps,
       popup: popupProps,
+      portal: portalProps,
+      trigger: triggerProps,
+      positioner: positionerProps,
     } = {},
     ...rootProps
   } = props;

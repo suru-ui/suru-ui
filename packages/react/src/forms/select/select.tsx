@@ -222,37 +222,37 @@ export const Select: SelectType = /*#__PURE__*/ Object.assign(
     props: SelectProps<Value, Multiple>,
   ) {
     const {
+      label,
       children,
       className,
-      label,
-      placeholder = "選択してください",
       slotProps: {
-        label: labelProps,
-        value: valueProps,
-        trigger: triggerProps,
         icon: iconProps,
-        portal: portalProps,
-        backdrop: backdropProps,
-        positioner: positionerProps,
-        popup: popupProps,
-        list: listProps,
         item: itemProps,
-        itemIndicator: itemIndicatorProps,
-        itemText: itemTextProps,
+        list: listProps,
         arrow: arrowProps,
+        group: groupProps,
+        label: labelProps,
+        popup: popupProps,
+        value: valueProps,
+        portal: portalProps,
+        trigger: triggerProps,
+        backdrop: backdropProps,
+        itemText: itemTextProps,
+        separator: separatorProps,
+        groupLabel: groupLabelProps,
+        positioner: positionerProps,
+        itemIndicator: itemIndicatorProps,
         scrollUpArrow: scrollUpArrowProps,
         scrollDownArrow: scrollDownArrowProps,
-        group: groupProps,
-        groupLabel: groupLabelProps,
-        separator: separatorProps,
       } = {},
+      placeholder = "選択してください",
       ...rootProps
     } = props;
     const { children: iconChildren = <SuiChevronIcon />, ...restIconProps } = iconProps ?? {};
     const { "aria-label": triggerAriaLabel, ...restTriggerProps } = triggerProps ?? {};
     const {
-      align = "start",
       side = "bottom",
+      align = "start",
       sideOffset = 8,
       alignItemWithTrigger = true,
       ...restPositionerProps

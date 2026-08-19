@@ -162,24 +162,24 @@ export const Drawer: DrawerComponentType = /*#__PURE__*/ Object.assign(
   function SuiDrawer(props: DrawerProps) {
     const [handle] = React.useState(createHandle);
     const {
-      trigger,
       title,
-      description,
       onClose,
+      trigger,
       children,
       slotProps: {
-        trigger: triggerProps,
-        swipeArea: swipeAreaProps,
-        virtualKeyboardProvider: virtualKeyboardProviderProps,
+        popup: popupProps,
+        title: titleProps,
         portal: portalProps,
+        content: contentProps,
+        trigger: triggerProps,
         backdrop: backdropProps,
         viewport: viewportProps,
-        popup: popupProps,
-        content: contentProps,
-        title: titleProps,
+        swipeArea: swipeAreaProps,
         description: descriptionProps,
         headerClose: headerCloseProps,
+        virtualKeyboardProvider: virtualKeyboardProviderProps,
       } = {},
+      description,
       ...rootProps
     } = props;
 

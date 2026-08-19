@@ -197,25 +197,25 @@ export const AlertDialog: AlertDialogComponentType = /*#__PURE__*/ Object.assign
   function SuiAlertDialog(props: AlertDialogProps) {
     const [handle] = React.useState(AlertDialog.createHandle);
     const {
-      trigger,
       title,
-      description,
-      reject,
       accept,
-      onReject,
-      onAccept,
+      reject,
+      trigger,
       children,
+      onAccept,
+      onReject,
       slotProps: {
-        trigger: triggerProps,
-        portal: portalProps,
-        backdrop: backdropProps,
-        viewport: viewportProps,
         popup: popupProps,
         title: titleProps,
-        description: descriptionProps,
-        reject: rejectProps,
         accept: acceptProps,
+        portal: portalProps,
+        reject: rejectProps,
+        trigger: triggerProps,
+        backdrop: backdropProps,
+        viewport: viewportProps,
+        description: descriptionProps,
       } = {},
+      description,
       ...rootProps
     } = props;
 
