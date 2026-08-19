@@ -1,12 +1,12 @@
 import type { IComponent } from "../../types.js";
 import {
-  type InputRootColor,
-  type InputRootRadius,
   type InputRootSize,
   type InputRootType,
-  type InputRootVariant,
+  type InputRootColor,
   type InputRootProps,
   type InputRootState,
+  type InputRootRadius,
+  type InputRootVariant,
   type InputRootChangeEventReason,
   type InputRootChangeEventDetails,
   InputRoot,

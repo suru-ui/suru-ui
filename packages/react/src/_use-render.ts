@@ -1,8 +1,8 @@
 import { mergePropsN } from "@base-ui/react";
 import type { StateAttributesMapping } from "@base-ui/react/internals/getStateAttributesProps";
 import {
-  useRenderElement,
   type UseRenderElementComponentProps,
+  useRenderElement,
 } from "@base-ui/react/internals/useRenderElement";
 import type * as React from "react";
 

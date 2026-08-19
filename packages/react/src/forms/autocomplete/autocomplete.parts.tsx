@@ -1,5 +1,5 @@
 import { Autocomplete } from "@base-ui/react/autocomplete";
-import type { Color, Size } from "@suru-ui/theme";
+import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import cn from "../../cn.js";

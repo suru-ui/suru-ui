@@ -1,12 +1,12 @@
 export * from "./checkbox-group.parts.jsx";
 
 export {
-  type CheckboxGroupColor,
-  type CheckboxGroupRadius,
   type CheckboxGroupSize,
-  type CheckboxGroupVariant,
-  type CheckboxGroupOrientation,
+  type CheckboxGroupColor,
   type CheckboxGroupProps,
   type CheckboxGroupState,
+  type CheckboxGroupRadius,
+  type CheckboxGroupVariant,
+  type CheckboxGroupOrientation,
   CheckboxGroup,
 } from "./checkbox-group.jsx";

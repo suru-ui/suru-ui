@@ -1,13 +1,13 @@
 import { useMergedRefs } from "@base-ui/utils/useMergedRefs";
 import * as React from "react";
 import {
+  type GroupProps,
+  type PanelProps,
+  type SeparatorProps,
+  type PanelImperativeHandle,
   Group as ExternalGroup,
   Panel as ExternalPanel,
   Separator,
-  type GroupProps,
-  type PanelImperativeHandle,
-  type PanelProps,
-  type SeparatorProps,
 } from "react-resizable-panels";
 
 import useRender, { type RenderProps } from "../../_use-render.js";

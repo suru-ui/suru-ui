@@ -1,5 +1,5 @@
 import { preview, controls } from "../../.config/storybook/preview.js";
-import { Resizable, ResizableHandle, ResizablePanel } from "../../src/layout/resizable/index.js";
+import { Resizable, ResizablePanel, ResizableHandle } from "../../src/layout/resizable/index.js";
 import * as ResizableParts from "../../src/layout/resizable/index.js";
 
 const meta = preview.meta({

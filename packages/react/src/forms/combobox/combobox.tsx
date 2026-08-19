@@ -4,15 +4,13 @@ import cn from "../../cn.js";
 import type { IComponent, IUseContext } from "../../types.js";
 import {
   type ComboboxContext,
-  type ComboboxRootColor,
-  type ComboboxRootItems,
-  type ComboboxRootRadius,
   type ComboboxRootSize,
-  type ComboboxRootVariant,
   type ComboboxChipProps,
   type ComboboxIconProps,
   type ComboboxItemProps,
   type ComboboxListProps,
+  type ComboboxRootColor,
+  type ComboboxRootItems,
   type ComboboxRootProps,
   type ComboboxRootState,
   type ComboboxChipsProps,
@@ -21,8 +19,10 @@ import {
   type ComboboxInputProps,
   type ComboboxLabelProps,
   type ComboboxPopupProps,
+  type ComboboxRootRadius,
   type ComboboxValueProps,
   type ComboboxPortalProps,
+  type ComboboxRootVariant,
   type ComboboxTriggerProps,
   type ComboboxChipRemoveProps,
   type ComboboxInputGroupProps,
@@ -48,8 +48,8 @@ import {
   ComboboxGroupLabel,
   ComboboxInputGroup,
   ComboboxPositioner,
-  ComboboxItemIndicator,
   useComboboxContext,
+  ComboboxItemIndicator,
 } from "./combobox.parts.jsx";
 
 /**

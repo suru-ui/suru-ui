@@ -1,5 +1,5 @@
 import { SIZES } from "@suru-ui/theme";
-import { ChevronDownIcon, PlusIcon } from "lucide-react";
+import { PlusIcon, ChevronDownIcon } from "lucide-react";
 import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";

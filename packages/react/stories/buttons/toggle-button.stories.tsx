@@ -1,4 +1,4 @@
-import { COLOR_TEMPLATES, COLORS, SIZES } from "@suru-ui/theme";
+import { SIZES, COLORS, COLOR_TEMPLATES } from "@suru-ui/theme";
 import { ItalicIcon } from "lucide-react";
 import * as React from "react";
 

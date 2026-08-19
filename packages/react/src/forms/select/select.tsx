@@ -3,26 +3,26 @@ import * as React from "react";
 import cn from "../../cn.js";
 import type { IComponent, IUseContext } from "../../types.js";
 import {
-  type SelectRootItems,
-  type SelectRootItemGroup,
-  type SelectRootRadius,
-  type SelectRootSize,
-  type SelectRootVariant,
   type SelectContext,
+  type SelectRootSize,
   type SelectIconProps,
   type SelectItemProps,
   type SelectListProps,
+  type SelectRootItems,
   type SelectRootProps,
   type SelectRootState,
   type SelectArrowProps,
   type SelectGroupProps,
   type SelectLabelProps,
   type SelectPopupProps,
+  type SelectRootRadius,
   type SelectValueProps,
   type SelectPortalProps,
+  type SelectRootVariant,
   type SelectTriggerProps,
   type SelectBackdropProps,
   type SelectItemTextProps,
+  type SelectRootItemGroup,
   type SelectSeparatorProps,
   type SelectGroupLabelProps,
   type SelectPositionerProps,
@@ -45,10 +45,10 @@ import {
   SelectSeparator,
   SelectGroupLabel,
   SelectPositioner,
+  useSelectContext,
   SelectItemIndicator,
   SelectScrollUpArrow,
   SelectScrollDownArrow,
-  useSelectContext,
 } from "./select.parts.jsx";
 
 /**

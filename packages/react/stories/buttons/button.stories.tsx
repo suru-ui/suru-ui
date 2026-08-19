@@ -1,5 +1,5 @@
 import { SIZES, COLORS, COLOR_TEMPLATES } from "@suru-ui/theme";
-import { DeleteIcon, EllipsisIcon, GlobeIcon, Trash2Icon } from "lucide-react";
+import { GlobeIcon, DeleteIcon, Trash2Icon, EllipsisIcon } from "lucide-react";
 import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";

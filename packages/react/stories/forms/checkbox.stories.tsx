@@ -1,4 +1,4 @@
-import { COLORS, SIZES } from "@suru-ui/theme";
+import { SIZES, COLORS } from "@suru-ui/theme";
 import { CheckIcon, MinusIcon } from "lucide-react";
 import * as React from "react";
 

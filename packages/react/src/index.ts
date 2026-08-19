@@ -294,8 +294,8 @@ export {
   Accordion,
 } from "./navigation/accordion/index.js";
 export {
-  type CollapsibleProps,
   type CollapsibleSize,
+  type CollapsibleProps,
   type CollapsibleState,
   type CollapsibleRadius,
   type CollapsibleSlotProps,

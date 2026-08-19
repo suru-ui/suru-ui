@@ -1,13 +1,13 @@
 export * from "./combobox.parts.jsx";
 
 export {
-  type ComboboxColor,
-  type ComboboxRadius,
   type ComboboxSize,
-  type ComboboxVariant,
+  type ComboboxColor,
   type ComboboxItems,
   type ComboboxProps,
   type ComboboxState,
+  type ComboboxRadius,
+  type ComboboxVariant,
   type ComboboxSlotProps,
   Combobox,
 } from "./combobox.jsx";

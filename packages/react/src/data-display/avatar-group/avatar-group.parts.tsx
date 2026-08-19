@@ -5,7 +5,7 @@ import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import { ContextMissingError } from "../../errors.js";
 import type { IComponent, IUseContext } from "../../types.js";
-import { AvatarRoot, type AvatarRootProps, type AvatarRootState } from "../avatar/avatar.parts.jsx";
+import { type AvatarRootProps, type AvatarRootState, AvatarRoot } from "../avatar/avatar.parts.jsx";
 
 import "./avatar-group.css";
 

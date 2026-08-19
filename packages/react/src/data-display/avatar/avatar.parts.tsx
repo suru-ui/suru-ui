@@ -1,5 +1,5 @@
 import { Avatar } from "@base-ui/react/avatar";
-import type { Color, Size } from "@suru-ui/theme";
+import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import cn from "../../cn.js";

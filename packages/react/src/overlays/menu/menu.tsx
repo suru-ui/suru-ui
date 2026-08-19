@@ -11,8 +11,8 @@ import {
   MenuPopup,
   MenuPortal,
   MenuTrigger,
-  createHandle,
   MenuBackdrop,
+  createHandle,
   MenuPositioner,
 } from "./menu.parts.jsx";
 

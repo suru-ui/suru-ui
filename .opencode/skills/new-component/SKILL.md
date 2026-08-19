@@ -69,7 +69,7 @@ Storybook の stories は `packages/react/stories/<カテゴリー>/<名前>.sto
 1. Base UI に同じ部品のコンポーネントがあるかどうかを、`@base-ui/react` のパッケージで調べます。
 2. ある場合はパターン A（そのまま包む）かパターン B（パーツを組む）で、子パーツが複数で構造を持つ場合はパターン B を選びます。
 3. 複数の子をまとめて状態やスタイルを伝えるグループの場合はパターン C を併用します。
-4. Base UI にない単純な要素（`span`、`svg` など）はパターン D で `useRenderElement` を使います。
+4. Base UI にない単純な要素（`span`、`svg` など）はパターン D で `useRender` を使います。
 5. 既存の Suru UI コンポーネントの特殊形ならパターン E で既存のパーツへ委譲します。
 
 パターンを決めたら、次にパーツツリーを決めます。
@@ -327,50 +327,45 @@ export const Checkbox: Component<CheckboxProps> = function SuiCheckbox(props) {
 グループ側（値の提供）:
 
 ```tsx
-import {
-  useRenderElement,
-  type UseRenderElementComponentProps,
-} from "@base-ui/react/internals/useRenderElement";
 import type { Color, ColorTemplate as Variant, Size } from "@suru-ui/theme";
 import * as React from "react";
 
-import splitRenderProps from "../../_split-render-props.js";
+import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Component } from "../../types.js";
 
 import "./button-group.css";
 
-export type ButtonGroupRootProps = Omit<
-  React.ComponentProps<"div">,
-  keyof UseRenderElementComponentProps<{}>
-> &
-  UseRenderElementComponentProps<ButtonGroupRootState> & {
+export type ButtonGroupRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
+  RenderProps<ButtonGroupRootState> & {
     size?: Size | undefined;
     color?: Color | undefined;
     orientation?: "horizontal" | "vertical" | undefined;
   };
 
 export const ButtonGroupRoot: Component<ButtonGroupRootProps> = function SuiButtonGroupRoot(props) {
-  const [renderProps, componentProps] = splitRenderProps(props);
   const {
     size = "md",
     color = "grey",
     orientation = "horizontal",
     "aria-orientation": ariaOrientation = orientation,
-    ...elementProps
-  } = componentProps;
+    ...otherProps
+  } = props;
   const context: ButtonGroupContext = {
     size,
     color,
     orientation,
   };
-  const element = useRenderElement("div", renderProps, {
-    props: {
-      ...elementProps,
-      role: "group",
-      className: cn("sui_button_group", `sui_button_group-orientation_${orientation}`),
-      "aria-orientation": ariaOrientation,
-    },
+  const element = useRender({
+    defaultTagName: "div",
+    props: [
+      otherProps,
+      {
+        role: "group",
+        className: cn("sui_button_group", `sui_button_group-orientation_${orientation}`),
+        "aria-orientation": ariaOrientation,
+      },
+    ],
   });
 
   return <Context value={context}>{element}</Context>;
@@ -391,21 +386,17 @@ export const ButtonRoot: Component<ButtonRootProps> = function SuiButtonRoot(pro
 
 - 子の読み取りは必ず `useXxxGroupContext(true)` にします。オプショナル引数により、グループの外で使ってもエラーになりません。
 - グループ外での既定値（例: `size = "md"`、`color = "grey"`）を子側に持ちます。
-- グループの Root は、描画する要素を `<Context value={context}>` で包みます。`useRenderElement` の返り値（`element`）を children にします。
+- グループの Root は、描画する要素を `<Context value={context}>` で包みます。`useRender` の返り値（`element`）を children にします。
 
 ### パターン D（Render Props パーツ）
 
-Base UI にない小物パーツ（`span`、`svg`、`circle` など）は、`useRenderElement` で描画します。
-参考実装は `packages/react/src/buttons/button/button.parts.tsx:209`（Content）です。
+Base UI にない小物パーツ（`span`、`svg`、`circle` など）は、`useRender` で描画します。
+参考実装は `packages/react/src/buttons/button/button.parts.tsx:284`（Content）です。
 
 ````tsx
-import {
-  useRenderElement,
-  type UseRenderElementComponentProps,
-} from "@base-ui/react/internals/useRenderElement";
-import * as React from "react";
+import type * as React from "react";
 
-import splitRenderProps from "../../_split-render-props.js";
+import useRender, { type RenderProps } from "../../_use-render.js";
 import type { Component } from "../../types.js";
 
 export type ButtonContentState = {};
@@ -413,11 +404,8 @@ export type ButtonContentState = {};
 /**
  * {@link Content} に渡すプロパティーです。
  */
-export type ButtonContentProps = Omit<
-  React.ComponentProps<"span">,
-  keyof UseRenderElementComponentProps<{}>
-> &
-  UseRenderElementComponentProps<ButtonContentState>;
+export type ButtonContentProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
+  RenderProps<ButtonContentState>;
 
 /**
  * ボタンのコンテンツを表示するラッパー要素です。
@@ -428,13 +416,10 @@ export type ButtonContentProps = Omit<
  * ```
  */
 export const ButtonContent: Component<ButtonContentProps> = function SuiButtonContent(props) {
-  const [renderProps, componentProps] = splitRenderProps(props);
-  const { ref, ...elementProps } = componentProps;
-
-  return useRenderElement("span", renderProps, {
-    ref,
+  return useRender({
+    defaultTagName: "span",
     props: [
-      elementProps,
+      props,
       {
         className: "sui_button_content",
       },
@@ -443,10 +428,9 @@ export const ButtonContent: Component<ButtonContentProps> = function SuiButtonCo
 };
 ````
 
-- `splitRenderProps` は `style`、`render`、`className` を分離し、残りを要素のプロパティーとして返します。
-- `useRenderElement` の第 3 引数に `ref` と `props` を渡します。`props` は利用者のプロパティーと固定プロパティーの配列、または 1 つのオブジェクトです。
-- 要素を条件付きで描画したいときは `enabled` に条件を渡します（`packages/react/src/buttons/button/button.parts.tsx:279`）。
-- 空状態の型（`{}`）は `ButtonContentState` のような名前で定義し、`UseRenderElementComponentProps` の型引数に渡します。
+- `useRender` の `props` は、利用者のプロパティーと固定プロパティーの配列、または 1 つのオブジェクトです。プロパティーは配列の先頭から順に合成されます。
+- 要素を条件付きで描画したいときは `enabled` に条件を渡します（`packages/react/src/buttons/button/button.parts.tsx:361`）。
+- 空状態の型（`{}`）は `ButtonContentState` のような名前で定義し、`RenderProps` の型引数に渡します。
 
 ### パターン E（既存コンポーネントへの委譲）
 
@@ -484,6 +468,7 @@ export const ToggleButtonContent: Component<ToggleButtonContentProps> = Button.C
 - 外部パッケージ → 相対パス → CSS の順に並べます（`packages/react/src/forms/checkbox/checkbox.parts.tsx:1`）。
 - CSS はパーツファイル（`*.parts.tsx`）でのみ `import "./<名前>.css"` します。本体ファイルでは import しません。
 - テーマの型は `import type { Size, Color } from "@suru-ui/theme";` で取り込みます。
+- `import { ... } from "..."` と `export { ... } from "..."` の `{}` 内は、`type` 付きを先に、値は後ろに置きます。それぞれのグループ内は名前の長さが短い順（同じ長さは名前順）に並べます。
 
 ### 型と関数名
 
@@ -603,7 +588,7 @@ namespace に値を入れず、すべて `export type` で定義してくださ�
 コンポーネントのテストは `packages/react/tests/` に置きます。書き方は `../vitest/SKILL.md` に従います。
 
 - ブラウザーで実行するテストは `<名前>.client.test.tsx` にします（例: `tests/button.client.test.tsx`）。Vitest の Browser Mode で Playwright の 3 ブラウザー（chromium、firefox、webkit）すべてに実行されます。
-- ブラウザーを必要としないロジック（`cn`、`splitRenderProps` など）のテストは `<名前>.test.ts` にします（例: `tests/cn.test.ts`）。サーバー専用のテストは `*.server.test.ts` です。
+- ブラウザーを必要としないロジック（`cn` など）のテストは `<名前>.test.ts` にします（例: `tests/cn.test.ts`）。サーバー専用のテストは `*.server.test.ts` です。
 - パーツ単体のテストは、同じ `*.client.test.tsx` に `describe("<名前>Parts.Root")` として並べます（`tests/accordion.client.test.tsx:211`）。
 - コンポーネントは `../src/<カテゴリー>/<名前>/index.js` から import します。
 - レンダリングには `vitest-browser-react` の `render` を使います。検証は `screen.getByRole()` などのロケーターと `await expect.element(...)` を使います（`tests/button.client.test.tsx:8`）。
@@ -626,7 +611,7 @@ namespace に値を入れず、すべて `export type` で定義してくださ�
 追加する部品に合う Base UI のコンポーネントを調べ、パターン（A〜E）とパーツツリーを決めます。
 
 1. `node_modules/@base-ui/react` のパッケージ一覧から、対応する部品を探します（例: `@base-ui/react/checkbox`）。
-2. 無い場合はパターン D（`useRenderElement`）で要素を組みます。
+2. 無い場合はパターン D（`useRender`）で要素を組みます。
 3. 既存の Suru UI コンポーネントの特殊形ならパターン E を選びます。
 4. パターンが決まったら、パーツツリー（Root とその子パーツ）を決めます。
 
@@ -652,12 +637,12 @@ export { type CheckboxProps, Checkbox } from "./checkbox.jsx";
 
 `<名前>.parts.tsx` を作り、パーツツリー順に全パーツを実装します。
 
-1. 必要な import を書きます（Base UI、`cn`、`errors`、`types`、`_split-render-props`、テーマ、CSS）。
+1. 必要な import を書きます（Base UI、`cn`、`errors`、`types`、`_use-render`、テーマ、CSS）。
 2. 各パーツについて、`XxxPartState` 型 → `XxxPartProps` 型 → コンポーネント本体 → `namespace` → 別名を書きます。
 3. Root だけのコンポーネントでも、Base UI の Root ラッパー、`Root` namespace、`Root` 別名を定義します。
 4. Root にジェネリックやイベント関連の型がある場合は、Root の個別型、namespace の型エイリアス、ジェネリックなコンポーネント型をそろえます。
 5. グループの場合はコンテキストのセットを書きます。
-6. パーツが状態を子に伝える必要がある場合は、その状態のコンテキストを追加し、`useRenderElement` か Base UI のコンポーネントで包みます。
+6. パーツが状態を子に伝える必要がある場合は、その状態のコンテキストを追加し、`useRender` か Base UI のコンポーネントで包みます。
 
 完了条件: `index.ts` からパーツが import でき、参照コンポーネントと同じ形で全パーツが定義されている。
 

@@ -1,12 +1,8 @@
 import { Collapsible } from "@base-ui/react/collapsible";
-import {
-  useRenderElement,
-  type UseRenderElementComponentProps,
-} from "@base-ui/react/internals/useRenderElement";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
-import splitRenderProps from "../../_split-render-props.js";
+import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
 
@@ -190,24 +186,18 @@ export type CollapsibleIndicatorState = {};
 /**
  * {@link CollapsibleIndicatorProps} です。
  */
-export type CollapsibleIndicatorProps = Omit<
-  React.ComponentProps<"span">,
-  keyof UseRenderElementComponentProps<{}>
-> &
-  UseRenderElementComponentProps<CollapsibleIndicatorState>;
+export type CollapsibleIndicatorProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
+  RenderProps<CollapsibleIndicatorState>;
 
 /**
  * コラプシブルの展開状態を示すアイコンのラッパー要素です。
  */
 export const CollapsibleIndicator: IComponent<CollapsibleIndicatorProps> =
   function SuiCollapsibleIndicator(props) {
-    const [renderProps, componentProps] = splitRenderProps(props);
-    const { ref, ...elementProps } = componentProps;
-
-    return useRenderElement("span", renderProps, {
-      ref,
+    return useRender({
+      defaultTagName: "span",
       props: [
-        elementProps,
+        props,
         {
           className: "sui_collapsible_indicator",
         },

@@ -1,8 +1,8 @@
 import {
   type ErrorMeta,
   type ErrorOptions,
-  setErrorMessage,
   ErrorBase as CoreErrorBase,
+  setErrorMessage,
 } from "@suru-ui/core";
 
 export type { ErrorMeta, ErrorOptions };

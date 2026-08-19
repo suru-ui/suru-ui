@@ -1,12 +1,12 @@
 import type { IComponent } from "../../types.js";
 import {
-  type SwitchRootColor,
-  type SwitchRootRadius,
   type SwitchRootSize,
-  type SwitchRootVariant,
+  type SwitchRootColor,
   type SwitchRootProps,
   type SwitchRootState,
+  type SwitchRootRadius,
   type SwitchThumbProps,
+  type SwitchRootVariant,
   SwitchRoot,
   SwitchThumb,
 } from "./switch.parts.jsx";

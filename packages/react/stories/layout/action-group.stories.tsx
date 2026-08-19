@@ -1,7 +1,7 @@
-import { COLORS, COLOR_TEMPLATES, SIZES } from "@suru-ui/theme";
-import { SettingsIcon, Trash2Icon } from "lucide-react";
+import { SIZES, COLORS, COLOR_TEMPLATES } from "@suru-ui/theme";
+import { Trash2Icon, SettingsIcon } from "lucide-react";
 
-import { controls, preview } from "../../.config/storybook/preview.js";
+import { preview, controls } from "../../.config/storybook/preview.js";
 import { Button } from "../../src/buttons/button/index.js";
 import { Input } from "../../src/forms/input/index.js";
 import { ActionGroupRoot, ActionGroupSeparator } from "../../src/layout/action-group/index.js";

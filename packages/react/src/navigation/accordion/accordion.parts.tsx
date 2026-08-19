@@ -1,12 +1,8 @@
 import { Accordion } from "@base-ui/react/accordion";
-import {
-  useRenderElement,
-  type UseRenderElementComponentProps,
-} from "@base-ui/react/internals/useRenderElement";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
-import splitRenderProps from "../../_split-render-props.js";
+import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
 
@@ -273,24 +269,18 @@ export type AccordionIndicatorState = {};
 /**
  * {@link AccordionIndicatorProps} です。
  */
-export type AccordionIndicatorProps = Omit<
-  React.ComponentProps<"span">,
-  keyof UseRenderElementComponentProps<{}>
-> &
-  UseRenderElementComponentProps<AccordionIndicatorState>;
+export type AccordionIndicatorProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
+  RenderProps<AccordionIndicatorState>;
 
 /**
  * アコーディオンの展開状態を示すアイコンを表示する要素です。
  */
 export const AccordionIndicator: IComponent<AccordionIndicatorProps> =
   function SuiAccordionIndicator(props) {
-    const [renderProps, componentProps] = splitRenderProps(props);
-    const { ref, ...elementProps } = componentProps;
-
-    return useRenderElement("span", renderProps, {
-      ref,
+    return useRender({
+      defaultTagName: "span",
       props: [
-        elementProps,
+        props,
         {
           className: "sui_accordion_indicator",
         },
