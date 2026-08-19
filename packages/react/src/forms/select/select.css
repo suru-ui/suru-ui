@@ -17,7 +17,7 @@
     --sui_select-canvas-normal: ;
     --sui_select_button-canvas-normal: ;
     --sui_select_button-canvas-subtle: ;
-    --sui_select_button-canvas-action: ;
+    --sui_select_button-canvas-strong: ;
     /* 枠線 */
     --sui_select-border_color-normal: ;
     --sui_select-border_color-subtle: ;
@@ -31,7 +31,7 @@
     --sui_select_placeholder-color: ;
     --sui_select_button-color-normal: ;
     --sui_select_button-color-subtle: ;
-    --sui_select_button-color-action: ;
+    --sui_select_button-color-strong: ;
   }
 
   /* 既定値設定: ここから */
@@ -120,24 +120,24 @@
     /* 背景 */
     --sui_select-canvas-normal: var(--sui-grey-naked-canvas-normal);
     --sui_select_button-canvas-subtle: var(--sui-grey-naked-canvas-subtle);
-    --sui_select_button-canvas-action: var(--sui-grey-naked-canvas-action);
+    --sui_select_button-canvas-strong: var(--sui-grey-naked-canvas-strong);
     /* 前景 */
     --sui_select-color: var(--sui-grey-naked-canvas_text-normal);
     --sui_select_button-color-normal: var(--sui-grey-naked-canvas_text-normal);
     --sui_select_button-color-subtle: var(--sui-grey-naked-canvas_text-subtle);
-    --sui_select_button-color-action: var(--sui-grey-naked-canvas_text-action);
+    --sui_select_button-color-strong: var(--sui-grey-naked-canvas_text-strong);
   }
 
   .sui_select-variant_liquid {
     /* 背景 */
     --sui_select-canvas-normal: var(--sui-grey-liquid-canvas-normal);
     --sui_select_button-canvas-subtle: var(--sui-grey-liquid-canvas-subtle);
-    --sui_select_button-canvas-action: var(--sui-grey-liquid-canvas-action);
+    --sui_select_button-canvas-strong: var(--sui-grey-liquid-canvas-strong);
     /* 前景 */
     --sui_select-color: var(--sui-grey-liquid-canvas_text-normal);
     --sui_select_button-color-normal: var(--sui-grey-liquid-canvas_text-normal);
     --sui_select_button-color-subtle: var(--sui-grey-liquid-canvas_text-subtle);
-    --sui_select_button-color-action: var(--sui-grey-liquid-canvas_text-action);
+    --sui_select_button-color-strong: var(--sui-grey-liquid-canvas_text-strong);
   }
 
   .sui_select-variant_solid {
@@ -145,12 +145,12 @@
     --sui_select-canvas-normal: var(--sui-grey-solid-canvas-normal);
     --sui_select_button-canvas-normal: var(--sui-grey-solid-canvas-normal);
     --sui_select_button-canvas-subtle: var(--sui-grey-solid-canvas-subtle);
-    --sui_select_button-canvas-action: var(--sui-grey-solid-canvas-action);
+    --sui_select_button-canvas-strong: var(--sui-grey-solid-canvas-strong);
     /* 前景 */
     --sui_select-color: var(--sui-grey-solid-canvas_text-normal);
     --sui_select_button-color-normal: var(--sui-grey-solid-canvas_text-normal);
     --sui_select_button-color-subtle: var(--sui-grey-solid-canvas_text-subtle);
-    --sui_select_button-color-action: var(--sui-grey-solid-canvas_text-action);
+    --sui_select_button-color-strong: var(--sui-grey-solid-canvas_text-strong);
   }
 
   /* 既定値設定: ここまで */
@@ -235,9 +235,9 @@
 
     &:active {
       /* 背景 */
-      --_sui_select_button-canvas: var(--sui_select_button-canvas-action);
+      --_sui_select_button-canvas: var(--sui_select_button-canvas-strong);
       /* 前景 */
-      --_sui_select_button-color: var(--sui_select_button-color-action);
+      --_sui_select_button-color: var(--sui_select_button-color-strong);
     }
   }
 
@@ -527,13 +527,13 @@
     /* 背景 */
     --sui_select_item-canvas-normal: ;
     --sui_select_item-canvas-subtle: ;
-    --sui_select_item-canvas-action: ;
+    --sui_select_item-canvas-strong: ;
     /* 枠線 */
     --sui_select_item-border_radius: ;
     /* 前景 */
     --sui_select_item-color-normal: ;
     --sui_select_item-color-subtle: ;
-    --sui_select_item-color-action: ;
+    --sui_select_item-color-strong: ;
   }
 
   /* 静的 */
@@ -577,13 +577,13 @@
     /* 背景 */
     --sui_select_item-canvas-normal: var(--sui-grey-naked-canvas-normal);
     --sui_select_item-canvas-subtle: var(--sui-grey-solid-canvas-normal);
-    --sui_select_item-canvas-action: var(--sui-grey-solid-canvas-action);
+    --sui_select_item-canvas-strong: var(--sui-grey-solid-canvas-strong);
     /* 枠線 */
     --sui_select_item-border_radius: var(--sui-radius-sm);
     /* 前景 */
     --sui_select_item-color-normal: var(--sui-grey-naked-canvas_text-normal);
     --sui_select_item-color-subtle: var(--sui-grey-solid-canvas_text-normal);
-    --sui_select_item-color-action: var(--sui-grey-solid-canvas_text-action);
+    --sui_select_item-color-strong: var(--sui-grey-solid-canvas_text-strong);
   }
 
   .sui_select_item.sui_select-size_sm {
@@ -628,8 +628,8 @@
     }
 
     &:active {
-      --_sui_select_item-canvas: var(--sui_select_item-canvas-action);
-      --_sui_select_item-color: var(--sui_select_item-color-action);
+      --_sui_select_item-canvas: var(--sui_select_item-canvas-strong);
+      --_sui_select_item-color: var(--sui_select_item-color-strong);
     }
   }
 

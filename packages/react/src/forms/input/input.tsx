@@ -53,7 +53,7 @@ export type InputChangeEventDetails = InputRootChangeEventDetails;
 export type InputState = InputRootState;
 
 /**
- * {@link Input} に渡すプロパティーです。
+ * {@link Input} コンポーネントのプロパティーです。
  */
 export type InputProps = InputRootProps;
 

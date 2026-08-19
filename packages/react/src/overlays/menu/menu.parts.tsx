@@ -17,8 +17,7 @@ export type MenuHandle<TPayload = unknown> = Menu.Handle<TPayload>;
 /**
  * メニューを制御するハンドルを新しく作成します。
  *
- * 作成したハンドルを {@link Root} と {@link Trigger} の `handle` プロパティーに渡すことで、
- * トリガーとメニューの内容を関連付けます。
+ * 作成したハンドルを {@link Root} と {@link Trigger} の `handle` プロパティーに渡すことで、トリガーとメニューの内容を関連付けます。
  */
 export const createHandle: typeof Menu.createHandle = Menu.createHandle;
 

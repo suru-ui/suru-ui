@@ -14,8 +14,7 @@ export type MenubarProps = MenubarRootProps;
 /**
  * メニューを横または縦に並べるコンポーネントです。
  *
- * メニュー項目の構成を細かく制御する場合は、{@link MenubarRoot|Root} と
- * `MenuParts` を直接組み立てます。
+ * メニュー項目の構成を細かく制御する場合は、{@link MenubarRoot|Root} と `MenuParts` を直接組み立てます。
  */
 export const Menubar: IComponent<MenubarProps> = function SuiMenubar(props) {
   return <MenubarRoot {...props} />;

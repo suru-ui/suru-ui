@@ -45,7 +45,7 @@ export type RadioRootSize = Size;
 export type RadioRootVariant = "naked" | "liquid";
 
 /**
- * {@link RadioRoot} が公開するラジオボタンのルート要素の状態です。
+ * {@link RadioRoot} の状態です。
  */
 export type RadioRootState = Radio.Root.State;
 

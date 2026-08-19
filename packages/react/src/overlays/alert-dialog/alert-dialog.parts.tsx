@@ -17,8 +17,7 @@ export type AlertDialogHandle = AlertDialog.Handle<unknown>;
 /**
  * アラートダイアログを制御するハンドルを新しく作成します。
  *
- * 作成したハンドルを {@link Root} と {@link Trigger} または {@link AlertDialog} の
- * `handle` プロパティーに渡すことで、トリガーとダイアログの内容を関連付けます。
+ * 作成したハンドルを {@link Root} と {@link Trigger} または {@link AlertDialog} の `handle` プロパティーに渡すことで、トリガーとダイアログの内容を関連付けます。
  */
 export const createHandle: typeof AlertDialog.createHandle = AlertDialog.createHandle;
 
@@ -92,8 +91,7 @@ export type AlertDialogTriggerProps = Omit<
   /**
    * ボタンとしてレンダリングする要素です。
    *
-   * {@link AlertDialog.Trigger} の `render` プロパティーと同じ型で、
-   * そのまま `render` に渡されます。
+   * {@link AlertDialog.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
    */
   children: NonNullable<React.ComponentProps<typeof AlertDialog.Trigger>["render"]>;
 
@@ -108,8 +106,7 @@ export type AlertDialogTriggerProps = Omit<
 /**
  * アラートダイアログを開くボタン要素です。
  *
- * 子要素は何にもラップされず、そのまま {@link AlertDialog.Trigger} の
- * `render` プロパティーに渡されます。
+ * 子要素は何にもラップされず、そのまま {@link AlertDialog.Trigger} の `render` プロパティーに渡されます。
  */
 export const AlertDialogTrigger: IComponent<AlertDialogTriggerProps> =
   function SuiAlertDialogTrigger(props) {
@@ -445,8 +442,7 @@ export type AlertDialogCloseProps = Omit<
   /**
    * ボタンとしてレンダリングする要素です。
    *
-   * {@link AlertDialog.Close} の `render` プロパティーと同じ型で、
-   * そのまま `render` に渡されます。
+   * {@link AlertDialog.Close} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
    */
   children: NonNullable<React.ComponentProps<typeof AlertDialog.Close>["render"]>;
 };
@@ -454,8 +450,7 @@ export type AlertDialogCloseProps = Omit<
 /**
  * アラートダイアログを閉じるボタン要素です。
  *
- * 子要素は何にもラップされず、そのまま {@link AlertDialog.Close} の
- * `render` プロパティーに渡されます。
+ * 子要素は何にもラップされず、そのまま {@link AlertDialog.Close} の `render` プロパティーに渡されます。
  */
 export const AlertDialogClose: IComponent<AlertDialogCloseProps> = function SuiAlertDialogClose(
   props,

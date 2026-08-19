@@ -1,4 +1,4 @@
-import { mergeProps } from "@base-ui/react";
+import { makeEventPreventable } from "@base-ui/react";
 import * as React from "react";
 
 import { Button } from "../../buttons/button/index.js";
@@ -84,8 +84,7 @@ export type AlertDialogState = AlertDialogRootState;
 /**
  * {@link AlertDialog} コンポーネントのプロパティーです。
  *
- * {@link AlertDialogRoot|Root} から継承した `open` を指定すると開閉状態を制御でき、
- * `defaultOpen` は初期状態だけを指定します。`open` を指定した場合は `defaultOpen` より優先されます。
+ * {@link AlertDialogRoot|Root} から継承した `open` を指定すると開閉状態を制御でき、`defaultOpen` は初期状態だけを指定します。`open` を指定した場合は `defaultOpen` より優先されます。
  * いずれも省略した場合の初期状態は閉じています。
  */
 export type AlertDialogProps = Omit<AlertDialogRootProps, "children" | "handle"> & {
@@ -111,14 +110,14 @@ export type AlertDialogProps = Omit<AlertDialogRootProps, "children" | "handle">
 
   /**
    * 承諾ボタンがクリックされたときに呼ばれるコールバックです。
-   * {@link slotProps} の `accept.onClick` が先に実行され、イベントが `preventDefault` されていない場合だけ呼ばれます。
+   * {@link slotProps} の `accept.onClick` が先に実行され、`preventBaseUIHandler()` が呼ばれていない場合だけ呼ばれます。
    * クリックイベントを引数として受け取ります。
    */
   onAccept?: ((event: CloseClickEvent) => void) | undefined;
 
   /**
    * 拒否ボタンがクリックされたときに呼ばれるコールバックです。
-   * {@link slotProps} の `reject.onClick` が先に実行され、イベントが `preventDefault` されていない場合だけ呼ばれます。
+   * {@link slotProps} の `reject.onClick` が先に実行され、`preventBaseUIHandler()` が呼ばれていない場合だけ呼ばれます。
    * クリックイベントを引数として受け取ります。
    */
   onReject?: ((event: CloseClickEvent) => void) | undefined;
@@ -135,8 +134,7 @@ export type AlertDialogProps = Omit<AlertDialogRootProps, "children" | "handle">
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
    *
    * 各パーツのプロパティーが優先されます。
-   * クラス名は既定のクラス名と結合され、拒否・承諾ボタンの `onClick` は
-   * このオブジェクトのハンドラーが先に実行されます。
+   * クラス名は既定のクラス名と結合され、拒否・承諾ボタンの `onClick` はこのオブジェクトのハンドラーが先に実行されます。
    */
   slotProps?: AlertDialogSlotProps | undefined;
 
@@ -162,8 +160,7 @@ interface AlertDialogComponentType extends IComponent<AlertDialogProps> {
   /**
    * アラートダイアログを制御するハンドルを新しく作成します。
    *
-   * 作成したハンドルは {@link AlertDialogRoot} と
-   * {@link AlertDialogTrigger} の `handle` プロパティーに渡します。
+   * 作成したハンドルは {@link AlertDialogRoot} と {@link AlertDialogTrigger} の `handle` プロパティーに渡します。
    */
   readonly createHandle: typeof createHandle;
 }
@@ -177,8 +174,11 @@ function createCloseClickHandler(
   }
 
   return (event) => {
+    if (typeof event.preventBaseUIHandler !== "function") {
+      makeEventPreventable(event);
+    }
     onClick?.(event);
-    if (!event.defaultPrevented) {
+    if (!event.baseUIHandlerPrevented) {
       callback?.(event);
     }
   };
@@ -187,8 +187,7 @@ function createCloseClickHandler(
 /**
  * アラートダイアログを表示するコンポーネントです。
  *
- * タイトル（`title`）と説明文（`description`）、本文（`children`）、
- * 拒否（`reject`）と承諾（`accept`）のボタンから、確認を求めるダイアログを組み立てます。
+ * タイトル（`title`）と説明文（`description`）、本文（`children`）、拒否（`reject`）と承諾（`accept`）のボタンから、確認を求めるダイアログを組み立てます。
  * ボタンのクリックはそれぞれ `onReject` と `onAccept` で受け取れます。
  * 右上の閉じるボタンのクリックは `onReject` で受け取れます。
  * 構成を細かく制御したい場合は、{@link AlertDialogRoot|Root} を直接組み立てます。
@@ -259,14 +258,16 @@ export const AlertDialog: AlertDialogComponentType = /*#__PURE__*/ Object.assign
                 <div className="sui_alert_dialog_actions">
                   {(!!reject || !!rejectProps) && (
                     <AlertDialogClose
+                      onClick={createCloseClickHandler(rejectProps?.onClick, onReject)}
+                      {...rejectProps}
                       children={reject!}
-                      {...mergeProps(rejectProps, { onClick: onReject })}
                     />
                   )}
                   {("accept" in props || !!acceptProps) && (
                     <AlertDialogClose
+                      onClick={createCloseClickHandler(acceptProps?.onClick, onAccept)}
+                      {...acceptProps}
                       children={accept!}
-                      {...mergeProps(acceptProps, { onClick: onAccept })}
                     />
                   )}
                 </div>

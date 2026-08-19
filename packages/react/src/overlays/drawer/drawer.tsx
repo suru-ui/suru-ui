@@ -100,8 +100,7 @@ export type DrawerState = DrawerRootState;
 /**
  * {@link Drawer} コンポーネントのプロパティーです。
  *
- * {@link DrawerRoot|Root} から継承した `open` を指定すると開閉状態を制御でき、
- * `defaultOpen` は初期状態だけを指定します。
+ * {@link DrawerRoot|Root} から継承した `open` を指定すると開閉状態を制御でき、`defaultOpen` は初期状態だけを指定します。
  */
 export type DrawerProps = Omit<DrawerRootProps, "children" | "handle"> &
   Pick<DrawerContentProps, "children"> & {
@@ -114,7 +113,7 @@ export type DrawerProps = Omit<DrawerRootProps, "children" | "handle"> &
     /**
      * 右上の閉じるアイコンがクリックされたときに呼ばれるコールバックです。
      *
-     * `slotProps.headerClose` の `onClick` が先に実行され、イベントが `preventDefault` されていない場合に呼ばれます。
+     * `slotProps.headerClose` の `onClick` が先に実行され、`preventBaseUIHandler()` が呼ばれていない場合に呼ばれます。
      */
     onClose?: ((event: CloseClickEvent) => void) | undefined;
 
@@ -212,10 +211,13 @@ export const Drawer: DrawerComponentType = /*#__PURE__*/ Object.assign(
                       </svg>
                     </Button>
                   }
-                  {...mergeProps(headerCloseProps, {
-                    onClick: onClose,
-                    className: "sui_drawer_close_button",
-                  })}
+                  {...mergeProps(
+                    {
+                      onClick: onClose,
+                      className: "sui_drawer_close_button",
+                    },
+                    headerCloseProps,
+                  )}
                 />
                 <DrawerContent {...contentProps}>
                   {("title" in props || !!titleProps) && (

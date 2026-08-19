@@ -8,6 +8,7 @@ import {
   type ContextMenuPortalProps,
   type ContextMenuTriggerProps,
   type ContextMenuPositionerProps,
+  createHandle,
   ContextMenuRoot,
   ContextMenuPopup,
   ContextMenuPortal,
@@ -48,7 +49,7 @@ export type ContextMenuState = ContextMenuRootState;
 /**
  * {@link ContextMenu} コンポーネントのプロパティーです。
  */
-export type ContextMenuProps = Omit<ContextMenuRootProps, "children"> & {
+export type ContextMenuProps = Omit<ContextMenuRootProps, "children" | "handle"> & {
   /**
    * ポップアップに表示するメニュー項目です。
    */
@@ -69,38 +70,51 @@ export type ContextMenuProps = Omit<ContextMenuRootProps, "children"> & {
   trigger?: ContextMenuTriggerProps["children"] | undefined;
 };
 
+interface ContextMenuComponentType extends IComponent<ContextMenuProps> {
+  /**
+   * コンテキストメニューを制御するハンドルを新しく作成します。
+   *
+   * 作成したハンドルは {@link ContextMenuRoot} の `handle` プロパティーに渡します。
+   */
+  readonly createHandle: typeof createHandle;
+}
+
 /**
  * コンテキストメニューを表示するコンポーネントです。
  *
  * 右クリックまたは長押しの対象とポップアップを組み立てます。
  * 項目の種類や構成を細かく制御する場合は、{@link ContextMenuRoot|Root} を直接組み立てます。
  */
-export const ContextMenu: IComponent<ContextMenuProps> = function SuiContextMenu(props) {
-  const {
-    trigger,
-    children,
-    slotProps: {
-      popup: popupProps,
-      portal: portalProps,
-      trigger: triggerProps,
-      positioner: positionerProps,
-    } = {},
-    ...rootProps
-  } = props;
+export const ContextMenu: ContextMenuComponentType = /*#__PURE__*/ Object.assign(
+  function SuiContextMenu(props: ContextMenuProps) {
+    const [handle] = React.useState(createHandle);
+    const {
+      trigger,
+      children,
+      slotProps: {
+        popup: popupProps,
+        portal: portalProps,
+        trigger: triggerProps,
+        positioner: positionerProps,
+      } = {},
+      ...rootProps
+    } = props;
 
-  return (
-    <ContextMenuRoot {...rootProps}>
-      {("trigger" in props || !!triggerProps) && (
-        <ContextMenuTrigger children={trigger} {...triggerProps} />
-      )}
-      <ContextMenuPortal {...portalProps}>
-        <ContextMenuPositioner {...positionerProps}>
-          <ContextMenuPopup {...popupProps}>{children}</ContextMenuPopup>
-        </ContextMenuPositioner>
-      </ContextMenuPortal>
-    </ContextMenuRoot>
-  );
-};
+    return (
+      <ContextMenuRoot {...rootProps} handle={handle}>
+        {("trigger" in props || !!triggerProps) && (
+          <ContextMenuTrigger children={trigger} {...triggerProps} />
+        )}
+        <ContextMenuPortal {...portalProps}>
+          <ContextMenuPositioner {...positionerProps}>
+            <ContextMenuPopup {...popupProps}>{children}</ContextMenuPopup>
+          </ContextMenuPositioner>
+        </ContextMenuPortal>
+      </ContextMenuRoot>
+    );
+  },
+  { createHandle },
+);
 
 /**
  * {@link ContextMenu} の状態やプロパティーをまとめた型名前空間です。

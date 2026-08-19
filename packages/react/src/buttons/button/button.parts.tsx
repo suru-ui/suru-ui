@@ -142,7 +142,7 @@ export type ButtonRootProps = React.ComponentProps<typeof Button> & {
   /**
    * ボタンの角丸を指定します。
    *
-   * デフォルト値は {@link ButtonRootProps.size|size} です。
+   * 既定値は {@link ButtonRootProps.size|size} です。
    */
   radius?: ButtonRootRadius | undefined;
 

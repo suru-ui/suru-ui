@@ -34,7 +34,7 @@ export type AvatarGroupSize = AvatarGroupRootSize;
 export type AvatarGroupState = AvatarGroupRootState;
 
 /**
- * {@link AvatarGroup} に渡すプロパティーです。
+ * {@link AvatarGroup} コンポーネントのプロパティーです。
  */
 export type AvatarGroupProps = AvatarGroupRootProps & {
   /**

@@ -200,7 +200,8 @@ export type ComboboxProps<Value = unknown, Multiple extends boolean | undefined 
 
   /**
    * 入力欄のプレースホルダー文字列です。
-   * 指定した場合は `slotProps.input.placeholder` より優先されます。
+   * `slotProps.input` の `placeholder` が優先されます。
+   * Autocomplete と異なり、トップレベルの `placeholder` を指定しても `slotProps` 側を上書きできません。
    */
   placeholder?: string | undefined;
 

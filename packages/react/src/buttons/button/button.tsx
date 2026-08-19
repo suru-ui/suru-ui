@@ -84,7 +84,7 @@ export type ButtonSlotProps = {
 export type ButtonState = ButtonRootState;
 
 /**
- * {@link Button} に渡すプロパティーです。
+ * {@link Button} コンポーネントのプロパティーです。
  */
 export type ButtonProps = Omit<ButtonRootProps, "children"> &
   Pick<ButtonContentProps, "children"> &

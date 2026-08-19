@@ -89,8 +89,7 @@ interface TooltipComponentType extends IComponent<TooltipProps> {
 /**
  * トリガーとポップアップを組み立てたツールチップです。
  *
- * 複数のトリガーで内容を共有する場合や構成を細かく制御する場合は、
- * {@link TooltipRoot|Root} を直接組み立てます。
+ * 複数のトリガーで内容を共有する場合や構成を細かく制御する場合は、{@link TooltipRoot|Root} を直接組み立てます。
  */
 export const Tooltip: TooltipComponentType = /*#__PURE__*/ Object.assign(
   function SuiTooltip(props: TooltipProps) {

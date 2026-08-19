@@ -214,8 +214,7 @@ export type SelectProps<Value = unknown, Multiple extends boolean | undefined = 
 /**
  * 定義済みの項目から値を選択するコンポーネントです。
  *
- * `multiple` を指定すると複数の値を選択できます。項目が多く、入力による絞り込みが必要な場合は
- * {@link Combobox} を使用してください。
+ * `multiple` を指定すると複数の値を選択できます。項目が多く、入力による絞り込みが必要な場合は {@link Combobox} を使用してください。
  */
 export const Select: SelectType = /*#__PURE__*/ Object.assign(
   function SuiSelect<Value, Multiple extends boolean | undefined = false>(

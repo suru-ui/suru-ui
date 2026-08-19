@@ -84,8 +84,7 @@ interface MenuComponentType extends IComponent<MenuProps> {
 /**
  * メニューを表示するコンポーネントです。
  *
- * トリガーとポップアップを組み立てます。項目の種類や構成を細かく制御する場合は、
- * {@link MenuRoot|Root} を直接組み立てます。
+ * トリガーとポップアップを組み立てます。項目の種類や構成を細かく制御する場合は、{@link MenuRoot|Root} を直接組み立てます。
  */
 export const Menu: MenuComponentType = /*#__PURE__*/ Object.assign(
   function SuiMenu(props: MenuProps) {

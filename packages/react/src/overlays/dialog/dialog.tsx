@@ -36,7 +36,7 @@ export type DialogSlotProps = {
   readonly backdrop?: DialogBackdropProps | undefined;
 
   /**
-   * {@link DialogClose}に渡すプロパティーです。
+   * {@link DialogClose} に渡すプロパティーです。
    */
   readonly close?: Omit<DialogCloseProps, "children"> | undefined;
 
@@ -79,8 +79,7 @@ export type DialogState = DialogRootState;
 /**
  * {@link Dialog} コンポーネントのプロパティーです。
  *
- * {@link DialogRoot|Root} から継承した `open` を指定すると開閉状態を制御でき、
- * `defaultOpen` は初期状態だけを指定します。
+ * {@link DialogRoot|Root} から継承した `open` を指定すると開閉状態を制御でき、`defaultOpen` は初期状態だけを指定します。
  */
 export type DialogProps = Omit<DialogRootProps, "children" | "handle"> & {
   /**
@@ -101,7 +100,7 @@ export type DialogProps = Omit<DialogRootProps, "children" | "handle"> & {
   /**
    * いずれかの閉じるボタンがクリックされたときに呼ばれるコールバックです。
    *
-   * `slotProps.close` の `onClick` が先に実行され、イベントが `preventDefault` されていない場合に呼ばれます。
+   * `slotProps.close` の `onClick` が先に実行され、`preventBaseUIHandler()` が呼ばれていない場合に呼ばれます。
    */
   onClose?: ((event: CloseClickEvent) => void) | undefined;
 
@@ -203,7 +202,7 @@ export const Dialog: DialogComponentType = /*#__PURE__*/ Object.assign(
                 <div className="sui_dialog_actions">
                   <DialogClose
                     children={close!}
-                    {...mergeProps(closeProps, { onClick: onClose })}
+                    {...mergeProps({ onClick: onClose }, closeProps)}
                   />
                 </div>
               )}

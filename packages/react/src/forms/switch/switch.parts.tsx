@@ -48,7 +48,7 @@ export type SwitchRootSize = Size;
 export type SwitchRootVariant = "naked" | "liquid";
 
 /**
- * {@link SwitchRoot} が公開するスイッチのルート要素の状態です。
+ * {@link SwitchRoot} の状態です。
  */
 export type SwitchRootState = Switch.Root.State;
 

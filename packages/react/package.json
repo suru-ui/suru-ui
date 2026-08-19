@@ -132,8 +132,8 @@
       "default": "./dist/src/data-display/progress/index.js"
     },
     "./action-group": {
-      "types": "./dist/src/leyaout/action-group/index.d.ts",
-      "default": "./dist/src/leyaout/action-group/index.js"
+      "types": "./dist/src/layout/action-group/index.d.ts",
+      "default": "./dist/src/layout/action-group/index.js"
     },
     "./resizable": {
       "types": "./dist/src/layout/resizable/index.d.ts",

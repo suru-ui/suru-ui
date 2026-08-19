@@ -139,7 +139,7 @@ export type ToggleButtonRootProps = React.ComponentProps<typeof Toggle> & {
   /**
    * トグルボタンの角丸を指定します。
    *
-   * デフォルト値は {@link ToggleButtonRootProps.size|size} です。
+   * 既定値は {@link ToggleButtonRootProps.size|size} です。
    */
   radius?: ToggleButtonRootRadius | undefined;
 

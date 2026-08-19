@@ -30,7 +30,7 @@ export type AccordionRadius = AccordionRootRadius;
 export type AccordionSize = AccordionRootSize;
 
 /**
- * {@link Accordion} を構成する各パーツのプロパティーです。
+ * {@link Accordion} の各パーツに渡すプロパティーです。
  *
  * 各パーツの指定値は、パーツに渡される既定のプロパティーより優先されます。
  * `trigger.children` を指定した場合は `title` と既定の Indicator が表示されません。
@@ -95,8 +95,7 @@ export type AccordionProps = Omit<AccordionRootProps, "children"> & {
 /**
  * アコーディオンの 1 項目を表示するコンポーネントです。
  *
- * 見出し（`title`）とコンテンツ（`children`）から、展開・折りたたみ可能な
- * アコーディオンを組み立てます。
+ * 見出し（`title`）とコンテンツ（`children`）から、展開・折りたたみ可能なアコーディオンを組み立てます。
  * 複数の項目を扱う場合は、{@link AccordionRoot|Root} を直接組み立てます。
  */
 export const Accordion: IComponent<AccordionProps> = function SuiAccordion(props) {

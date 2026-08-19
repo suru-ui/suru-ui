@@ -91,7 +91,7 @@ export type InputRootProps = Omit<
   /**
    * テキスト入力欄の角丸を指定します。
    *
-   * デフォルト値は {@link InputRootProps.size|size} です。
+   * 既定値は {@link InputRootProps.size|size} です。
    */
   radius?: InputRootRadius | undefined;
 
@@ -175,7 +175,7 @@ export namespace Root {
   export type Props = InputRootProps;
 
   /**
-   * {@link InputRootColor}
+   * {@link InputRootColor} です。
    */
   export type Color = InputRootColor;
 

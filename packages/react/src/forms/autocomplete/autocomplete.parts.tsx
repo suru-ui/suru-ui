@@ -154,7 +154,7 @@ export type AutocompleteRootProps = Omit<
   /**
    * 入力を含むグループ要素の角丸を指定します。
    *
-   * デフォルト値は {@link AutocompleteRootProps.size|size} です。
+   * 既定値は {@link AutocompleteRootProps.size|size} です。
    */
   radius?: AutocompleteRootRadius | undefined;
 
@@ -1201,8 +1201,7 @@ export const Separator: IComponent<Separator.Props> = AutocompleteSeparator;
  * アイテムをクエリと照合するフィルタ関数を作るフックです。
  *
  * 比較には `Intl.Collator` を使用します。
- * 外部でフィルタリングしたい場合、フィルタ関数は {@link Root} の `filter` プロパティーや
- * `filteredItems` プロパティーと組み合わせて使います。
+ * 外部でフィルタリングしたい場合、フィルタ関数は {@link Root} の `filter` プロパティーや `filteredItems` プロパティーと組み合わせて使います。
  * {@link Root} の配下で呼び出してください。Provider がない場合は例外を投げます。
  */
 export const useFilter = Autocomplete.useFilter;

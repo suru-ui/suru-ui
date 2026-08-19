@@ -164,7 +164,7 @@ export type ComboboxRootProps<Value = unknown, Multiple extends boolean | undefi
   /**
    * 入力を含むグループ要素の角丸を指定します。
    *
-   * デフォルト値は {@link ComboboxRootProps.size|size} です。
+   * 既定値は {@link ComboboxRootProps.size|size} です。
    */
   radius?: ComboboxRootRadius | undefined;
 

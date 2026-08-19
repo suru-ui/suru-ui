@@ -76,7 +76,7 @@ export type TextFieldSlotProps = {
 export type TextFieldState = TextFieldRootState;
 
 /**
- * {@link TextField} に渡すプロパティーです。
+ * {@link TextField} コンポーネントのプロパティーです。
  */
 export type TextFieldProps = Omit<TextFieldRootProps, "children"> &
   Pick<

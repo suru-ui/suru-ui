@@ -15,9 +15,7 @@ export type FieldsetState = FieldsetRootState;
 /**
  * {@link Fieldset} コンポーネントのプロパティーです。
  *
- * {@link Fieldset.Root} と同じプロパティーを受け取ります。`disabled` の既定値は
- * `false` で、指定した値が子孫のコントロールを無効化します。`className` と `render` は
- * 既定の値より優先され、`disabled` の変化は子孫の状態に反映されます。
+ * {@link Fieldset.Root} と同じプロパティーを受け取ります。`disabled` の既定値は `false` で、指定した値が子孫のコントロールを無効化します。`className` と `render` は既定の値より優先され、`disabled` の変化は子孫の状態に反映されます。
  */
 export type FieldsetProps = FieldsetRootProps;
 

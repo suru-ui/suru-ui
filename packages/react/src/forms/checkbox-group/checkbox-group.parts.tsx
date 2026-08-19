@@ -177,7 +177,7 @@ export type CheckboxGroupRootProps = React.ComponentProps<typeof CheckboxGroup> 
   /**
    * チェックボックスの角丸を指定します。
    *
-   * デフォルト値は {@link CheckboxGroupRootProps.size|size} です。
+   * 既定値は {@link CheckboxGroupRootProps.size|size} です。
    * {@link CheckboxGroupRoot} の子要素に指定した値より優先されます。
    * 値を変更すると、グループ内のチェックボックスも更新されます。
    */
@@ -271,6 +271,11 @@ export namespace Root {
   export type Color = CheckboxGroupRootColor;
 
   /**
+   * {@link CheckboxGroupRootOrientation} です。
+   */
+  export type Orientation = CheckboxGroupRootOrientation;
+
+  /**
    * {@link CheckboxGroupRootRadius} です。
    */
   export type Radius = CheckboxGroupRootRadius;
@@ -284,11 +289,6 @@ export namespace Root {
    * {@link CheckboxGroupRootVariant} です。
    */
   export type Variant = CheckboxGroupRootVariant;
-
-  /**
-   * {@link CheckboxGroupRootOrientation} です。
-   */
-  export type Orientation = CheckboxGroupRootOrientation;
 }
 
 /**

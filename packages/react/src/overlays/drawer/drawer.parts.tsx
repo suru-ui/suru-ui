@@ -17,8 +17,7 @@ export type DrawerHandle<Payload = unknown> = Drawer.Handle<Payload>;
 /**
  * ドロワーを制御するハンドルを新しく作成します。
  *
- * 作成したハンドルを {@link Root} と {@link Trigger} の `handle` プロパティーに渡すことで、
- * トリガーとドロワーの内容を関連付けます。
+ * 作成したハンドルを {@link Root} と {@link Trigger} の `handle` プロパティーに渡すことで、トリガーとドロワーの内容を関連付けます。
  */
 export const createHandle: typeof Drawer.createHandle = Drawer.createHandle;
 

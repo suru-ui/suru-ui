@@ -26,7 +26,7 @@ export type CollapsibleRadius = CollapsibleRootRadius;
 export type CollapsibleSize = CollapsibleRootSize;
 
 /**
- * {@link Collapsible} を構成する各パーツのプロパティーです。
+ * {@link Collapsible} の各パーツに渡すプロパティーです。
  *
  * 各パーツの指定値は、パーツに渡される既定のプロパティーより優先されます。
  */

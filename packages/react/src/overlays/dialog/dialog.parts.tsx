@@ -17,8 +17,7 @@ export type DialogHandle = Dialog.Handle<unknown>;
 /**
  * ダイアログを制御するハンドルを新しく作成します。
  *
- * 作成したハンドルを {@link Root} と {@link Trigger} の `handle` プロパティーに渡すことで、
- * トリガーとダイアログの内容を関連付けます。
+ * 作成したハンドルを {@link Root} と {@link Trigger} の `handle` プロパティーに渡すことで、トリガーとダイアログの内容を関連付けます。
  */
 export const createHandle: typeof Dialog.createHandle = Dialog.createHandle;
 

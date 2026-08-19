@@ -80,7 +80,7 @@
     /* 背景 */
     --sui_collapsible_trigger-background_color-normal: ;
     --sui_collapsible_trigger-background_color-subtle: ;
-    --sui_collapsible_trigger-background_color-action: ;
+    --sui_collapsible_trigger-background_color-strong: ;
     /* 枠線 */
     --sui_collapsible_trigger-outline_color: ;
     --sui_collapsible_trigger-outline_offset: ;
@@ -127,7 +127,7 @@
     /* 背景 */
     --sui_collapsible_trigger-background_color-normal: var(--sui-grey-naked-canvas-normal);
     --sui_collapsible_trigger-background_color-subtle: var(--sui-grey-naked-canvas-subtle);
-    --sui_collapsible_trigger-background_color-action: var(--sui-grey-naked-canvas-action);
+    --sui_collapsible_trigger-background_color-strong: var(--sui-grey-naked-canvas-strong);
     /* 枠線 */
     --sui_collapsible_trigger-outline_color: var(--sui-focusring_color);
     --sui_collapsible_trigger-outline_offset: var(--sui-focusring_offset);
@@ -187,7 +187,7 @@
     &:active {
       /* 背景 */
       --_sui_collapsible_trigger-background_color:
-        var(--sui_collapsible_trigger-background_color-action);
+        var(--sui_collapsible_trigger-background_color-strong);
     }
 
     &:focus-visible {

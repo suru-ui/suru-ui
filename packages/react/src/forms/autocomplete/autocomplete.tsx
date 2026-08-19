@@ -143,6 +143,7 @@ export type AutocompleteProps = Omit<AutocompleteRootProps, "children"> & {
   /**
    * 入力欄のプレースホルダー文字列です。
    * 指定した場合は `slotProps.input.placeholder` より優先されます。
+   * Combobox と異なり、トップレベルの `placeholder` が優先されます。
    */
   placeholder?: string | undefined;
 
@@ -150,8 +151,7 @@ export type AutocompleteProps = Omit<AutocompleteRootProps, "children"> & {
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
    *
    * 各パーツのプロパティーが優先されます。
-   * `clear`、`icon`、`input`、`inputGroup`、`item`、`list`、`portal`、`positioner`、
-   * `popup`、`trigger` を指定できます。
+   * `clear`、`icon`、`input`、`inputGroup`、`item`、`list`、`portal`、`positioner`、`popup`、`trigger` を指定できます。
    */
   slotProps?: AutocompleteSlotProps | undefined;
 };
@@ -167,8 +167,7 @@ interface AutocompleteType extends IComponent<AutocompleteProps> {
  * 検索文字列に応じて候補を絞り込んで表示する入力欄です。
  *
  * クリアボタンと、ポップアップを開くボタンを自動で配置します。
- * Clear と Trigger に挿入するアイコンは、`slotProps` の
- * `clear.children` と `icon.children` で差し替えられます。
+ * Clear と Trigger に挿入するアイコンは、`slotProps` の `clear.children` と `icon.children` で差し替えられます。
  * `autoHighlight` と `openOnInputClick` の既定値はどちらも `true` です。
  * `placeholder` は `slotProps.input.placeholder` より優先されます。
  * クリアボタンは入力値がある場合だけ、ポップアップの内容は開いている場合だけ表示されます。

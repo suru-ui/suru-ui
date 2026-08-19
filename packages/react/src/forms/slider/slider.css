@@ -103,7 +103,7 @@
     /* 枠線 */
     --sui_slider_track-border_color-normal: ;
     --sui_slider_track-border_color-subtle: ;
-    --sui_slider_track-border_color-action: ;
+    --sui_slider_track-border_color-strong: ;
     --sui_slider_track-border_width: ;
     --sui_slider_track-border_radius: ;
   }
@@ -172,7 +172,7 @@
     /* 枠線 */
     --sui_slider_track-border_color-normal: var(--sui-grey-naked-border-normal);
     --sui_slider_track-border_color-subtle: var(--sui-grey-naked-border-subtle);
-    --sui_slider_track-border_color-action: var(--sui-grey-naked-border-action);
+    --sui_slider_track-border_color-strong: var(--sui-grey-naked-border-strong);
   }
 
   .sui_slider-variant_liquid {
@@ -181,7 +181,7 @@
     /* 枠線 */
     --sui_slider_track-border_color-normal: var(--sui-grey-liquid-border-normal);
     --sui_slider_track-border_color-subtle: var(--sui-grey-liquid-border-subtle);
-    --sui_slider_track-border_color-action: var(--sui-grey-liquid-border-action);
+    --sui_slider_track-border_color-strong: var(--sui-grey-liquid-border-strong);
   }
 
   /* 既定値設定: ここまで */
@@ -202,7 +202,7 @@
 
     &:active {
       /* 枠線 */
-      --_sui_slider_track-border_color: var(--sui_slider_track-border_color-action);
+      --_sui_slider_track-border_color: var(--sui_slider_track-border_color-strong);
     }
   }
 
@@ -283,7 +283,7 @@
     /* 枠線 */
     --sui_slider_thumb-border_color-normal: ;
     --sui_slider_thumb-border_color-subtle: ;
-    --sui_slider_thumb-border_color-action: ;
+    --sui_slider_thumb-border_color-strong: ;
     --sui_slider_thumb-border_width: ;
     --sui_slider_thumb-border_radius: ;
     /* 外観 */
@@ -317,7 +317,7 @@
     /* 枠線 */
     --sui_slider_thumb-border_color-normal: var(--sui-grey-naked-border-normal);
     --sui_slider_thumb-border_color-subtle: var(--sui-grey-naked-border-subtle);
-    --sui_slider_thumb-border_color-action: var(--sui-grey-naked-border-action);
+    --sui_slider_thumb-border_color-strong: var(--sui-grey-naked-border-strong);
     --sui_slider_thumb-border_width: --sui-border_width(2);
     /* 外観 */
     --sui_slider_thumb-cursor: auto;
@@ -392,7 +392,7 @@
 
     &:active {
       /* 枠線 */
-      --_sui_slider_thumb-border_color: var(--sui_slider_thumb-border_color-action);
+      --_sui_slider_thumb-border_color: var(--sui_slider_thumb-border_color-strong);
     }
 
     &[data-dragging] {

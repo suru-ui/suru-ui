@@ -163,7 +163,7 @@ export type SelectRootProps<Value = unknown, Multiple extends boolean | undefine
   /**
    * 選択欄とリスト項目の角丸を指定します。
    *
-   * デフォルト値は {@link SelectRootProps.size|size} です。
+   * 既定値は {@link SelectRootProps.size|size} です。
    */
   radius?: SelectRootRadius | undefined;
 

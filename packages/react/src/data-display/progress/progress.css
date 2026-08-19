@@ -68,26 +68,26 @@
 
   .sui_progress-size_sm {
     /* 書体 */
-    --sui_progress_label-font_size: var(--sui-text-std-sm-b-font_size);
-    --sui_progress_label-font_weight: var(--sui-text-std-sm-b-font_weight);
-    --sui_progress_label-line_height: var(--sui-text-std-sm-b-line_height);
-    --sui_progress_label-letter_spacing: var(--sui-text-std-sm-b-letter_spacing);
+    --sui_progress_label-font_size: var(--sui-text-dns-sm-b-font_size);
+    --sui_progress_label-font_weight: var(--sui-text-dns-sm-b-font_weight);
+    --sui_progress_label-line_height: var(--sui-text-dns-sm-b-line_height);
+    --sui_progress_label-letter_spacing: var(--sui-text-dns-sm-b-letter_spacing);
   }
 
   .sui_progress-size_md {
     /* 書体 */
-    --sui_progress_label-font_size: var(--sui-text-std-md-b-font_size);
-    --sui_progress_label-font_weight: var(--sui-text-std-md-b-font_weight);
-    --sui_progress_label-line_height: var(--sui-text-std-md-b-line_height);
-    --sui_progress_label-letter_spacing: var(--sui-text-std-md-b-letter_spacing);
+    --sui_progress_label-font_size: var(--sui-text-dns-md-b-font_size);
+    --sui_progress_label-font_weight: var(--sui-text-dns-md-b-font_weight);
+    --sui_progress_label-line_height: var(--sui-text-dns-md-b-line_height);
+    --sui_progress_label-letter_spacing: var(--sui-text-dns-md-b-letter_spacing);
   }
 
   .sui_progress-size_lg {
     /* 書体 */
-    --sui_progress_label-font_size: var(--sui-text-std-lg-b-font_size);
-    --sui_progress_label-font_weight: var(--sui-text-std-lg-b-font_weight);
-    --sui_progress_label-line_height: var(--sui-text-std-lg-b-line_height);
-    --sui_progress_label-letter_spacing: var(--sui-text-std-lg-b-letter_spacing);
+    --sui_progress_label-font_size: var(--sui-text-dns-lg-b-font_size);
+    --sui_progress_label-font_weight: var(--sui-text-dns-lg-b-font_weight);
+    --sui_progress_label-line_height: var(--sui-text-dns-lg-b-line_height);
+    --sui_progress_label-letter_spacing: var(--sui-text-dns-lg-b-letter_spacing);
   }
 
   /* 既定値設定: ここまで */
@@ -133,26 +133,26 @@
 
   .sui_progress-size_sm {
     /* 書体 */
-    --sui_progress_value-font_size: var(--sui-text-std-sm-n-font_size);
-    --sui_progress_value-font_weight: var(--sui-text-std-sm-n-font_weight);
-    --sui_progress_value-line_height: var(--sui-text-std-sm-n-line_height);
-    --sui_progress_value-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+    --sui_progress_value-font_size: var(--sui-text-dns-sm-n-font_size);
+    --sui_progress_value-font_weight: var(--sui-text-dns-sm-n-font_weight);
+    --sui_progress_value-line_height: var(--sui-text-dns-sm-n-line_height);
+    --sui_progress_value-letter_spacing: var(--sui-text-dns-sm-n-letter_spacing);
   }
 
   .sui_progress-size_md {
     /* 書体 */
-    --sui_progress_value-font_size: var(--sui-text-std-md-n-font_size);
-    --sui_progress_value-font_weight: var(--sui-text-std-md-n-font_weight);
-    --sui_progress_value-line_height: var(--sui-text-std-md-n-line_height);
-    --sui_progress_value-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
+    --sui_progress_value-font_size: var(--sui-text-dns-md-n-font_size);
+    --sui_progress_value-font_weight: var(--sui-text-dns-md-n-font_weight);
+    --sui_progress_value-line_height: var(--sui-text-dns-md-n-line_height);
+    --sui_progress_value-letter_spacing: var(--sui-text-dns-md-n-letter_spacing);
   }
 
   .sui_progress-size_lg {
     /* 書体 */
-    --sui_progress_value-font_size: var(--sui-text-std-lg-n-font_size);
-    --sui_progress_value-font_weight: var(--sui-text-std-lg-n-font_weight);
-    --sui_progress_value-line_height: var(--sui-text-std-lg-n-line_height);
-    --sui_progress_value-letter_spacing: var(--sui-text-std-lg-n-letter_spacing);
+    --sui_progress_value-font_size: var(--sui-text-dns-lg-n-font_size);
+    --sui_progress_value-font_weight: var(--sui-text-dns-lg-n-font_weight);
+    --sui_progress_value-line_height: var(--sui-text-dns-lg-n-line_height);
+    --sui_progress_value-letter_spacing: var(--sui-text-dns-lg-n-letter_spacing);
   }
 
   /* 既定値設定: ここまで */

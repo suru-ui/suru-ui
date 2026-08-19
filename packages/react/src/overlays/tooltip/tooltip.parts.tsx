@@ -17,8 +17,7 @@ export type TooltipHandle<TPayload = unknown> = Tooltip.Handle<TPayload>;
 /**
  * ツールチップを制御するハンドルを新しく作成します。
  *
- * 作成したハンドルを {@link Root} と {@link Trigger} の `handle` プロパティーに渡すことで、
- * ルートとトリガーを別々の場所に配置できます。
+ * 作成したハンドルを {@link Root} と {@link Trigger} の `handle` プロパティーに渡すことで、ルートとトリガーを別々の場所に配置できます。
  */
 export const createHandle: typeof Tooltip.createHandle = Tooltip.createHandle;
 
@@ -38,8 +37,7 @@ export type TooltipProviderProps = Tooltip.Provider.Props;
 /**
  * 複数のツールチップで開閉の遅延を共有するプロバイダーです。
  *
- * 近接したツールチップを続けて表示するとき、先に表示したツールチップが閉じてから一定時間内であれば、
- * 次のツールチップをすぐに表示します。
+ * 近接したツールチップを続けて表示するとき、先に表示したツールチップが閉じてから一定時間内であれば、次のツールチップをすぐに表示します。
  */
 export const TooltipProvider: IComponent<TooltipProviderProps> = function SuiTooltipProvider(
   props,

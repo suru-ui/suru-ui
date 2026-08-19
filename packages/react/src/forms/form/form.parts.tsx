@@ -4,8 +4,6 @@ import * as React from "react";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
 
-import "./form.css";
-
 // Root
 // ----
 

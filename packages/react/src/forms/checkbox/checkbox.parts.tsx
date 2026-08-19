@@ -45,9 +45,7 @@ export type CheckboxRootSize = Size;
 export type CheckboxRootVariant = "naked" | "liquid";
 
 /**
- * チェックボックスのルート要素の状態です。
- *
- * {@link CheckboxRoot} が公開する状態です。
+ * {@link CheckboxRoot} の状態です。
  */
 export type CheckboxRootState = Checkbox.Root.State;
 
@@ -75,7 +73,7 @@ export type CheckboxRootProps = React.ComponentProps<typeof Checkbox.Root> & {
   /**
    * チェックボックスの角丸を指定します。
    *
-   * デフォルト値は {@link CheckboxRootProps.size|size} です。
+   * 既定値は {@link CheckboxRootProps.size|size} です。
    * {@link CheckboxGroupRoot} 内では、グループの値が優先されます。
    */
   radius?: CheckboxRootRadius | undefined;

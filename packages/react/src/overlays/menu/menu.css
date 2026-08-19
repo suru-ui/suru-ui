@@ -216,19 +216,19 @@
     /* 背景 */
     --sui_menu_item-background_color-normal: ;
     --sui_menu_item-background_color-subtle: ;
-    --sui_menu_item-background_color-action: ;
+    --sui_menu_item-background_color-strong: ;
     --sui_menu_item-background_color-checked-normal: ;
     --sui_menu_item-background_color-checked-subtle: ;
-    --sui_menu_item-background_color-checked-action: ;
+    --sui_menu_item-background_color-checked-strong: ;
     /* 枠線 */
     --sui_menu_item-border_radius: ;
     /* 前景 */
     --sui_menu_item-color-normal: ;
     --sui_menu_item-color-subtle: ;
-    --sui_menu_item-color-action: ;
+    --sui_menu_item-color-strong: ;
     --sui_menu_item-color-checked-normal: ;
     --sui_menu_item-color-checked-subtle: ;
-    --sui_menu_item-color-checked-action: ;
+    --sui_menu_item-color-checked-strong: ;
   }
 
   /* 静的 */
@@ -273,19 +273,19 @@
     /* 背景 */
     --sui_menu_item-background_color-normal: var(--sui-grey-naked-canvas-normal);
     --sui_menu_item-background_color-subtle: var(--sui-grey-naked-canvas-subtle);
-    --sui_menu_item-background_color-action: var(--sui-grey-naked-canvas-action);
+    --sui_menu_item-background_color-strong: var(--sui-grey-naked-canvas-strong);
     --sui_menu_item-background_color-checked-normal: var(--sui-grey-solid-canvas-normal);
     --sui_menu_item-background_color-checked-subtle: var(--sui-grey-solid-canvas-subtle);
-    --sui_menu_item-background_color-checked-action: var(--sui-grey-solid-canvas-action);
+    --sui_menu_item-background_color-checked-strong: var(--sui-grey-solid-canvas-strong);
     /* 枠線 */
     --sui_menu_item-border_radius: var(--sui-radius-md);
     /* 前景 */
     --sui_menu_item-color-normal: var(--sui-grey-naked-canvas_text-normal);
     --sui_menu_item-color-subtle: var(--sui-grey-naked-canvas_text-subtle);
-    --sui_menu_item-color-action: var(--sui-grey-naked-canvas_text-action);
+    --sui_menu_item-color-strong: var(--sui-grey-naked-canvas_text-strong);
     --sui_menu_item-color-checked-normal: var(--sui-grey-solid-canvas_text-normal);
     --sui_menu_item-color-checked-subtle: var(--sui-grey-solid-canvas_text-subtle);
-    --sui_menu_item-color-checked-action: var(--sui-grey-solid-canvas_text-action);
+    --sui_menu_item-color-checked-strong: var(--sui-grey-solid-canvas_text-strong);
   }
 
   /* 既定値設定: ここまで */
@@ -311,9 +311,9 @@
 
     &:active {
       /* 背景 */
-      --_sui_menu_item-background_color: var(--sui_menu_item-background_color-action);
+      --_sui_menu_item-background_color: var(--sui_menu_item-background_color-strong);
       /* 前景 */
-      --_sui_menu_item-color: var(--sui_menu_item-color-action);
+      --_sui_menu_item-color: var(--sui_menu_item-color-strong);
     }
   }
 
@@ -348,9 +348,9 @@
 
     &:active {
       /* 背景 */
-      --_sui_menu_item-background_color: var(--sui_menu_item-background_color-checked-action);
+      --_sui_menu_item-background_color: var(--sui_menu_item-background_color-checked-strong);
       /* 前景 */
-      --_sui_menu_item-color: var(--sui_menu_item-color-checked-action);
+      --_sui_menu_item-color: var(--sui_menu_item-color-checked-strong);
     }
   }
 

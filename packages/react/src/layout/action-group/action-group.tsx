@@ -43,7 +43,7 @@ export type ActionGroupOrientation = ActionGroupRootOrientation;
 export type ActionGroupState = ActionGroupRootState;
 
 /**
- * {@link ActionGroupRoot} に渡すプロパティーです。
+ * {@link ActionGroup} コンポーネントのプロパティーです。
  */
 export type ActionGroupProps = ActionGroupRootProps;
 
@@ -91,6 +91,11 @@ export namespace ActionGroup {
   export type Color = ActionGroupColor;
 
   /**
+   * {@link ActionGroupOrientation} です。
+   */
+  export type Orientation = ActionGroupOrientation;
+
+  /**
    * {@link ActionGroupRadius} です。
    */
   export type Radius = ActionGroupRadius;
@@ -104,9 +109,4 @@ export namespace ActionGroup {
    * {@link ActionGroupVariant} です。
    */
   export type Variant = ActionGroupVariant;
-
-  /**
-   * {@link ActionGroupOrientation} です。
-   */
-  export type Orientation = ActionGroupOrientation;
 }

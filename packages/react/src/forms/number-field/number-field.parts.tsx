@@ -155,7 +155,7 @@ export type NumberFieldRootProps = React.ComponentProps<typeof NumberField.Root>
   /**
    * 数値入力欄の角丸を指定します。
    *
-   * デフォルト値は {@link NumberFieldRootProps.size|size} です。
+   * 既定値は {@link NumberFieldRootProps.size|size} です。
    */
   radius?: NumberFieldRootRadius | undefined;
 

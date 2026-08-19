@@ -1,4 +1,5 @@
 import { ContextMenu } from "@base-ui/react/context-menu";
+import { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
 import cn from "../../cn.js";
@@ -6,6 +7,27 @@ import type { IComponent } from "../../types.js";
 
 import "./context-menu.css";
 import "../menu/menu.css";
+
+// Handle
+// ------
+
+/**
+ * コンテキストメニューを制御するハンドルです。
+ */
+export type ContextMenuHandle = Menu.Handle<unknown>;
+
+/**
+ * コンテキストメニューを制御するハンドルを新しく作成します。
+ *
+ * 作成したハンドルを {@link ContextMenuRoot} の `handle` プロパティーに渡すことで、
+ * コンテキストメニューの開閉状態を外部から制御できます。
+ *
+ * @example ハンドルを作成する
+ * ```ts
+ * const handle = createHandle();
+ * ```
+ */
+export const createHandle: typeof Menu.createHandle = Menu.createHandle;
 
 // Root
 // ----
@@ -18,7 +40,14 @@ export type ContextMenuRootState = ContextMenu.Root.State;
 /**
  * {@link ContextMenuRoot} に渡すプロパティーです。
  */
-export type ContextMenuRootProps = React.ComponentProps<typeof ContextMenu.Root>;
+export type ContextMenuRootProps = Omit<React.ComponentProps<typeof ContextMenu.Root>, "handle"> & {
+  /**
+   * コンテキストメニューを制御するハンドルです。
+   *
+   * {@link createHandle} で作成します。
+   */
+  handle?: ContextMenuHandle | undefined;
+};
 
 /**
  * 右クリックまたは長押しで開くコンテキストメニューのルートです。
@@ -29,7 +58,9 @@ export type ContextMenuRootProps = React.ComponentProps<typeof ContextMenu.Root>
 export const ContextMenuRoot: IComponent<ContextMenuRootProps> = function SuiContextMenuRoot(
   props,
 ) {
-  return <ContextMenu.Root {...props} />;
+  const { handle, ...otherProps } = props;
+
+  return <ContextMenu.Root {...otherProps} handle={handle} />;
 };
 
 /**

@@ -107,12 +107,12 @@ export namespace Resizable {
   export type Context = ResizableContext;
 
   /**
-   * {@link ResizableDirection} です。
-   */
-  export type Direction = ResizableDirection;
-
-  /**
    * {@link ResizableOrientation} です。
    */
   export type Orientation = ResizableOrientation;
+
+  /**
+   * {@link ResizableDirection} です。
+   */
+  export type Direction = ResizableDirection;
 }

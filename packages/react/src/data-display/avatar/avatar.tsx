@@ -50,7 +50,7 @@ export type AvatarSlotProps = {
 export type AvatarState = AvatarRootState;
 
 /**
- * {@link Avatar} に渡すプロパティーです。
+ * {@link Avatar} コンポーネントのプロパティーです。
  */
 export type AvatarProps = Omit<AvatarRootProps, "children"> &
   Pick<AvatarFallbackProps, "children"> &

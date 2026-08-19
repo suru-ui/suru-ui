@@ -3,18 +3,14 @@ import * as React from "react";
 import type { IComponent } from "../../types.js";
 import {
   type FieldItemProps,
-  type FieldItemState,
   type FieldRootProps,
   type FieldRootState,
   type FieldErrorProps,
   type FieldLabelProps,
   type FieldRootActions,
   type FieldControlProps,
-  type FieldControlState,
   type FieldValidityProps,
   type FieldDescriptionProps,
-  type FieldControlChangeEventReason,
-  type FieldControlChangeEventDetails,
   FieldItem,
   FieldRoot,
   FieldError,
@@ -73,7 +69,7 @@ export type FieldSlotProps = {
 export type FieldState = FieldRootState;
 
 /**
- * {@link Field} に渡すプロパティーです。
+ * {@link Field} コンポーネントのプロパティーです。
  */
 export type FieldProps = FieldRootProps & {
   /**
@@ -205,44 +201,4 @@ export namespace Field {
    * {@link FieldErrorMatches} です。
    */
   export type ErrorMatches = FieldErrorMatches;
-
-  /**
-   * {@link Field.Item} の状態やプロパティーをまとめた型名前空間です。
-   */
-  export namespace Item {
-    /**
-     * {@link FieldItemState} です。
-     */
-    export type State = FieldItemState;
-
-    /**
-     * {@link FieldItemProps} です。
-     */
-    export type Props = FieldItemProps;
-  }
-
-  /**
-   * {@link Field.Control} の状態やプロパティーをまとめた型名前空間です。
-   */
-  export namespace Control {
-    /**
-     * {@link FieldControlState} です。
-     */
-    export type State = FieldControlState;
-
-    /**
-     * {@link FieldControlProps} です。
-     */
-    export type Props = FieldControlProps;
-
-    /**
-     * {@link FieldControlChangeEventReason} です。
-     */
-    export type ChangeEventReason = FieldControlChangeEventReason;
-
-    /**
-     * {@link FieldControlChangeEventDetails} です。
-     */
-    export type ChangeEventDetails = FieldControlChangeEventDetails;
-  }
 }

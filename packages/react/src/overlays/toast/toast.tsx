@@ -85,7 +85,7 @@ export type ToastState = ToastProviderState;
  */
 export type ToastProps = ToastProviderProps & {
   /**
-   * 通知一覧の各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
    *
    * 各パーツのプロパティーが優先されます。
    */
