@@ -25,7 +25,7 @@ export type TooltipSlotProps = {
   /**
    * {@link TooltipTrigger} に渡すプロパティーです。
    */
-  readonly trigger?: Omit<TooltipTriggerProps, "handle" | "children" | "render"> | undefined;
+  readonly trigger?: Omit<TooltipTriggerProps, "handle"> | undefined;
 
   /**
    * {@link TooltipPortal} に渡すプロパティーです。
@@ -110,7 +110,9 @@ export const Tooltip: TooltipComponentType = /*#__PURE__*/ Object.assign(
 
     return (
       <TooltipRoot {...rootProps}>
-        {trigger !== undefined && <TooltipTrigger {...triggerProps}>{trigger}</TooltipTrigger>}
+        {("trigger" in props || !!triggerProps) && (
+          <TooltipTrigger children={trigger!} {...triggerProps} />
+        )}
         <TooltipPortal {...portalProps}>
           <TooltipPositioner {...otherPositionerProps} side={side} sideOffset={sideOffset}>
             <TooltipPopup {...popupProps}>

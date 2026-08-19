@@ -223,7 +223,7 @@ export type DrawerTriggerState = Drawer.Trigger.State;
  */
 export type DrawerTriggerProps<Payload = unknown> = Omit<
   Drawer.Trigger.Props<Payload>,
-  "handle"
+  "children" | "handle" | "render"
 > & {
   /**
    * ドロワー ({@link Root}) を関連付けるハンドルです。
@@ -231,6 +231,13 @@ export type DrawerTriggerProps<Payload = unknown> = Omit<
    * {@link createHandle} で作成し、{@link Root} と共有します。
    */
   handle: DrawerHandle<Payload>;
+
+  /**
+   * ボタンとしてレンダリングする要素です。
+   *
+   * {@link Drawer.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
+   */
+  children: NonNullable<React.ComponentProps<typeof Drawer.Trigger>["render"]>;
 };
 
 /**
@@ -246,9 +253,15 @@ export interface DrawerTriggerComponent extends IComponent<DrawerTriggerProps> {
 export const DrawerTrigger: DrawerTriggerComponent = function SuiDrawerTrigger<Payload>(
   props: DrawerTriggerProps<Payload>,
 ) {
-  const { className, ...otherProps } = props;
+  const { children, className, ...otherProps } = props;
 
-  return <Drawer.Trigger {...otherProps} className={cn(className, "sui_drawer_trigger")} />;
+  return (
+    <Drawer.Trigger
+      {...otherProps}
+      render={children}
+      className={cn(className, "sui_drawer_trigger")}
+    />
+  );
 };
 
 /**
@@ -672,15 +685,27 @@ export type DrawerCloseState = Drawer.Close.State;
 /**
  * {@link DrawerClose} に渡すプロパティーです。
  */
-export type DrawerCloseProps = React.ComponentProps<typeof Drawer.Close>;
+export type DrawerCloseProps = Omit<
+  React.ComponentProps<typeof Drawer.Close>,
+  "children" | "render"
+> & {
+  /**
+   * ボタンとしてレンダリングする要素です。
+   *
+   * {@link Drawer.Close} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
+   */
+  children: NonNullable<React.ComponentProps<typeof Drawer.Close>["render"]>;
+};
 
 /**
  * ドロワーを閉じるボタン要素です。
  */
 export const DrawerClose: IComponent<DrawerCloseProps> = function SuiDrawerClose(props) {
-  const { className, ...otherProps } = props;
+  const { children, className, ...otherProps } = props;
 
-  return <Drawer.Close {...otherProps} className={cn(className, "sui_drawer_close")} />;
+  return (
+    <Drawer.Close {...otherProps} render={children} className={cn(className, "sui_drawer_close")} />
+  );
 };
 
 /**

@@ -41,7 +41,9 @@ export const Parts = meta.story({
 
     return (
       <DrawerParts.Root handle={handle}>
-        <DrawerParts.Trigger handle={handle}>通知を見る</DrawerParts.Trigger>
+        <DrawerParts.Trigger handle={handle}>
+          <Button>通知を見る</Button>
+        </DrawerParts.Trigger>
         <DrawerParts.Portal>
           <DrawerParts.Backdrop />
           <DrawerParts.Viewport>
@@ -49,7 +51,9 @@ export const Parts = meta.story({
               <DrawerParts.Content>
                 <DrawerParts.Title>通知</DrawerParts.Title>
                 <DrawerParts.Description>新しい通知はありません。</DrawerParts.Description>
-                <DrawerParts.Close>閉じる</DrawerParts.Close>
+                <DrawerParts.Close>
+                  <Button>閉じる</Button>
+                </DrawerParts.Close>
               </DrawerParts.Content>
             </DrawerParts.Popup>
           </DrawerParts.Viewport>

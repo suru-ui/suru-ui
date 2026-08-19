@@ -168,14 +168,8 @@ export const Dialog: DialogComponentType = /*#__PURE__*/ Object.assign(
 
     return (
       <DialogRoot {...rootProps} handle={handle}>
-        {trigger !== undefined && (
-          <DialogTrigger
-            {...{
-              children: trigger,
-              ...triggerProps,
-              handle,
-            }}
-          />
+        {("trigger" in props || !!triggerProps) && (
+          <DialogTrigger children={trigger!} {...triggerProps} handle={handle} />
         )}
         <DialogPortal {...portalProps}>
           <DialogBackdrop {...backdropProps} />
@@ -198,20 +192,18 @@ export const Dialog: DialogComponentType = /*#__PURE__*/ Object.assign(
                   </svg>
                 </Button>
               </DialogClose>
-              {title !== undefined && <DialogTitle {...titleProps}>{title}</DialogTitle>}
-              {description !== undefined && (
-                <DialogDescription {...descriptionProps}>{description}</DialogDescription>
+              {("title" in props || !!titleProps) && (
+                <DialogTitle {...{ children: title, ...titleProps }} />
+              )}
+              {("description" in props || !!descriptionProps) && (
+                <DialogDescription {...{ children: description, ...descriptionProps }} />
               )}
               {children}
-              {close !== undefined && (
+              {("close" in props || !!closeProps) && (
                 <div className="sui_dialog_actions">
                   <DialogClose
-                    {...{
-                      children: close,
-                      ...mergeProps(closeProps, {
-                        onClick: onClose,
-                      }),
-                    }}
+                    children={close!}
+                    {...mergeProps(closeProps, { onClick: onClose })}
                   />
                 </div>
               )}

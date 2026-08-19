@@ -23,7 +23,7 @@ export type MenuSlotProps = {
   /**
    * {@link MenuTrigger} に渡すプロパティーです。
    */
-  readonly trigger?: Omit<MenuTriggerProps, "handle" | "children"> | undefined;
+  readonly trigger?: Omit<MenuTriggerProps, "handle"> | undefined;
 
   /**
    * {@link MenuPortal} に渡すプロパティーです。
@@ -110,7 +110,9 @@ export const Menu: MenuComponentType = /*#__PURE__*/ Object.assign(
 
     return (
       <MenuRoot {...rootProps}>
-        {trigger !== undefined && <MenuTrigger {...triggerProps}>{trigger}</MenuTrigger>}
+        {("trigger" in props || !!triggerProps) && (
+          <MenuTrigger children={trigger!} {...triggerProps} />
+        )}
         <MenuPortal {...portalProps}>
           <MenuBackdrop {...backdropProps} />
           <MenuPositioner

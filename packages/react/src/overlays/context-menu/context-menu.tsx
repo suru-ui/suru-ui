@@ -22,7 +22,7 @@ export type ContextMenuSlotProps = {
   /**
    * {@link ContextMenuTrigger|Trigger} に渡すプロパティーです。
    */
-  readonly trigger?: Omit<ContextMenuTriggerProps, "children"> | undefined;
+  readonly trigger?: ContextMenuTriggerProps | undefined;
 
   /**
    * {@link ContextMenuPortal|Portal} に渡すプロパティーです。
@@ -90,8 +90,8 @@ export const ContextMenu: IComponent<ContextMenuProps> = function SuiContextMenu
 
   return (
     <ContextMenuRoot {...rootProps}>
-      {trigger !== undefined && (
-        <ContextMenuTrigger {...triggerProps}>{trigger}</ContextMenuTrigger>
+      {("trigger" in props || !!triggerProps) && (
+        <ContextMenuTrigger children={trigger} {...triggerProps} />
       )}
       <ContextMenuPortal {...portalProps}>
         <ContextMenuPositioner {...positionerProps}>

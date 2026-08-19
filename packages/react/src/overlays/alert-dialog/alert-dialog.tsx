@@ -1,3 +1,4 @@
+import { mergeProps } from "@base-ui/react";
 import * as React from "react";
 
 import { Button } from "../../buttons/button/index.js";
@@ -32,7 +33,7 @@ export type AlertDialogSlotProps = {
   /**
    * {@link AlertDialogTrigger|Trigger} に渡すプロパティーです。
    */
-  readonly trigger?: Omit<AlertDialogTriggerProps, "handle" | "children"> | undefined;
+  readonly trigger?: Omit<AlertDialogTriggerProps, "handle"> | undefined;
 
   /**
    * {@link AlertDialogPortal|Portal} に渡すプロパティーです。
@@ -220,10 +221,8 @@ export const AlertDialog: AlertDialogComponentType = /*#__PURE__*/ Object.assign
 
     return (
       <AlertDialogRoot {...rootProps} handle={handle}>
-        {trigger !== undefined && (
-          <AlertDialogTrigger {...triggerProps} handle={handle}>
-            {trigger}
-          </AlertDialogTrigger>
+        {(!!trigger || !!triggerProps) && (
+          <AlertDialogTrigger {...{ children: trigger!, ...triggerProps, handle }} />
         )}
         <AlertDialogPortal {...portalProps}>
           <AlertDialogBackdrop {...backdropProps} />
@@ -249,28 +248,26 @@ export const AlertDialog: AlertDialogComponentType = /*#__PURE__*/ Object.assign
                   </svg>
                 </Button>
               </AlertDialogClose>
-              {title !== undefined && <AlertDialogTitle {...titleProps}>{title}</AlertDialogTitle>}
-              {description !== undefined && (
-                <AlertDialogDescription {...descriptionProps}>{description}</AlertDialogDescription>
+              {("title" in props || !!titleProps) && (
+                <AlertDialogTitle {...{ children: title, ...titleProps }} />
+              )}
+              {("description" in props || !!descriptionProps) && (
+                <AlertDialogDescription {...{ children: description, ...descriptionProps }} />
               )}
               {children}
-              {(reject !== undefined || accept !== undefined) && (
+              {("reject" in props || !!rejectProps || "accept" in props || !!acceptProps) && (
                 <div className="sui_alert_dialog_actions">
-                  {reject !== undefined && (
+                  {(!!reject || !!rejectProps) && (
                     <AlertDialogClose
-                      {...rejectProps}
-                      onClick={createCloseClickHandler(rejectProps?.onClick, onReject)}
-                    >
-                      {reject}
-                    </AlertDialogClose>
+                      children={reject!}
+                      {...mergeProps(rejectProps, { onClick: onReject })}
+                    />
                   )}
-                  {accept !== undefined && (
+                  {("accept" in props || !!acceptProps) && (
                     <AlertDialogClose
-                      {...acceptProps}
-                      onClick={createCloseClickHandler(acceptProps?.onClick, onAccept)}
-                    >
-                      {accept}
-                    </AlertDialogClose>
+                      children={accept!}
+                      {...mergeProps(acceptProps, { onClick: onAccept })}
+                    />
                   )}
                 </div>
               )}

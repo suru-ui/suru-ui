@@ -24,6 +24,7 @@
   "rules": {
     "no-unused-expressions": "off", // logtape で使用します。
     "no-unused-vars": "warn",
+    "react/no-children-prop": "off",
     "vitest/no-focused-tests": "off"
   },
   "env": {

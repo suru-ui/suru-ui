@@ -38,11 +38,11 @@ export const Usage = meta.story({
         <div className="flex gap-3">
           <Tooltip
             {...props}
-            trigger={<Button>保存</Button>}
             slotProps={{
               trigger: {
-                "aria-label": "保存",
+                children: <Button>保存</Button>,
                 delay: 0,
+                "aria-label": "保存",
               },
             }}
           >
@@ -50,11 +50,11 @@ export const Usage = meta.story({
           </Tooltip>
           <Tooltip
             {...props}
-            trigger={<Button>共有</Button>}
             slotProps={{
               trigger: {
-                "aria-label": "共有",
+                children: <Button>共有</Button>,
                 delay: 0,
+                "aria-label": "共有",
               },
             }}
           >
@@ -124,11 +124,11 @@ export const Controlled = meta.story({
       <Tooltip
         open={open}
         onOpenChange={setOpen}
-        trigger={<Button>詳細</Button>}
         slotProps={{
           trigger: {
-            "aria-label": "詳細",
+            children: <Button>詳細</Button>,
             delay: 0,
+            "aria-label": "詳細",
           },
         }}
       >

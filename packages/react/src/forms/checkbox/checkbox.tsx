@@ -80,9 +80,9 @@ export const Checkbox: IComponent<CheckboxProps> = function SuiCheckbox(props) {
 
   return (
     <CheckboxRoot {...rootProps}>
-      {children !== undefined || indicatorProps !== undefined ? (
+      {("children" in props || !!indicatorProps) && (
         <CheckboxIndicator {...{ children, ...indicatorProps }} />
-      ) : null}
+      )}
     </CheckboxRoot>
   );
 };

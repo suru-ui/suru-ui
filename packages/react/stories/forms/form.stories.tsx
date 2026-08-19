@@ -37,8 +37,7 @@ export const Usage = meta.story({
         }}
         className="flex w-80 flex-col items-start gap-4"
       >
-        <Field.Root name="url">
-          <Field.Label>Homepage</Field.Label>
+        <Field name="url" label="ホームページ">
           <Input
             type="url"
             required
@@ -47,8 +46,7 @@ export const Usage = meta.story({
             pattern="https?://.*"
             className="w-full"
           />
-          <Field.Error />
-        </Field.Root>
+        </Field>
         <Button type="submit">送信</Button>
       </Form>
     );

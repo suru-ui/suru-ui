@@ -1,7 +1,7 @@
+import { mergeProps } from "@base-ui/react";
 import * as React from "react";
 
 import { Button } from "../../buttons/button/index.js";
-import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
 import {
   type DrawerRootProps,
@@ -39,7 +39,7 @@ export type DrawerSlotProps = {
   /**
    * {@link DrawerTrigger} に渡すプロパティーです。
    */
-  readonly trigger?: Omit<DrawerTriggerProps, "handle" | "children"> | undefined;
+  readonly trigger?: Omit<DrawerTriggerProps, "handle"> | undefined;
 
   /**
    * {@link DrawerSwipeArea} に渡すプロパティーです。
@@ -111,7 +111,7 @@ export type DrawerProps = Omit<DrawerRootProps, "children" | "handle"> &
      * {@link DrawerTrigger|Trigger} の `render` プロパティーに渡されます。
      * 省略した場合、トリガーはレンダリングされません。
      */
-    trigger?: DrawerTriggerProps["render"] | undefined;
+    trigger?: DrawerTriggerProps["children"] | undefined;
 
     /**
      * ドロワーのタイトルです。
@@ -152,22 +152,6 @@ interface DrawerComponentType extends IComponent<DrawerProps> {
   readonly createHandle: typeof createHandle;
 }
 
-function createCloseClickHandler(
-  onClick: CloseClickHandler | undefined,
-  callback: ((event: CloseClickEvent) => void) | undefined,
-): CloseClickHandler {
-  if (onClick === undefined && callback === undefined) {
-    return undefined;
-  }
-
-  return (event) => {
-    onClick?.(event);
-    if (!event.defaultPrevented) {
-      callback?.(event);
-    }
-  };
-}
-
 /**
  * 画面端からスライドして表示されるドロワーを表示するコンポーネントです。
  *
@@ -201,8 +185,8 @@ export const Drawer: DrawerComponentType = /*#__PURE__*/ Object.assign(
 
     return (
       <DrawerRoot {...rootProps} handle={handle}>
-        {trigger !== undefined && (
-          <DrawerTrigger {...triggerProps} handle={handle} render={trigger} />
+        {("trigger" in props || !!triggerProps) && (
+          <DrawerTrigger children={trigger!} {...triggerProps} handle={handle} />
         )}
         {swipeAreaProps !== undefined && <DrawerSwipeArea {...swipeAreaProps} />}
         <DrawerVirtualKeyboardProvider {...virtualKeyboardProviderProps}>
@@ -211,10 +195,7 @@ export const Drawer: DrawerComponentType = /*#__PURE__*/ Object.assign(
             <DrawerViewport {...viewportProps}>
               <DrawerPopup {...popupProps}>
                 <DrawerClose
-                  {...headerCloseProps}
-                  className={cn("sui_drawer_close_button", headerCloseProps?.className)}
-                  onClick={createCloseClickHandler(headerCloseProps?.onClick, onClose)}
-                  render={
+                  children={
                     <Button variant="naked" color="grey" squared aria-label="閉じる">
                       <svg
                         viewBox="0 0 24 24"
@@ -231,11 +212,17 @@ export const Drawer: DrawerComponentType = /*#__PURE__*/ Object.assign(
                       </svg>
                     </Button>
                   }
+                  {...mergeProps(headerCloseProps, {
+                    onClick: onClose,
+                    className: "sui_drawer_close_button",
+                  })}
                 />
                 <DrawerContent {...contentProps}>
-                  {title !== undefined && <DrawerTitle {...titleProps}>{title}</DrawerTitle>}
-                  {description !== undefined && (
-                    <DrawerDescription {...descriptionProps}>{description}</DrawerDescription>
+                  {("title" in props || !!titleProps) && (
+                    <DrawerTitle {...{ children: title, ...titleProps }} />
+                  )}
+                  {("description" in props || !!descriptionProps) && (
+                    <DrawerDescription {...{ children: description, ...descriptionProps }} />
                   )}
                   {children}
                 </DrawerContent>

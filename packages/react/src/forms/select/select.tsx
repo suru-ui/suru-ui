@@ -284,7 +284,9 @@ export const Select: SelectType = /*#__PURE__*/ Object.assign(
 
     return (
       <SelectRoot {...rootProps}>
-        {label !== undefined && <SelectLabel {...labelProps}>{label}</SelectLabel>}
+        {("label" in props || !!labelProps) && (
+          <SelectLabel {...{ children: label, ...labelProps }} />
+        )}
         <SelectTrigger
           {...restTriggerProps}
           className={cn(className, restTriggerProps.className)}
