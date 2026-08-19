@@ -57,9 +57,6 @@ export type RadioProps = Omit<RadioRootProps, "children"> &
      * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
      *
      * 各パーツのプロパティーが優先されます。
-     *
-     * `indicator` の値はインジケーターの既定値に優先して適用されます。
-     * `children` を指定した場合は、`indicator.children` より優先されます。
      */
     slotProps?: RadioSlotProps | undefined;
   };

@@ -1,3 +1,4 @@
+import { mergeProps } from "@base-ui/react";
 import * as React from "react";
 
 import { Button } from "../../buttons/button/index.js";
@@ -32,7 +33,7 @@ export type DialogSlotProps = {
   /**
    * {@link DialogTrigger} に渡すプロパティーです。
    */
-  readonly trigger?: Omit<DialogTriggerProps, "handle" | "children" | "render"> | undefined;
+  readonly trigger?: Omit<DialogTriggerProps, "handle"> | undefined;
 
   /**
    * {@link DialogPortal} に渡すプロパティーです。
@@ -136,22 +137,6 @@ interface DialogComponentType extends IComponent<DialogProps> {
   readonly createHandle: typeof createHandle;
 }
 
-function createCloseClickHandler(
-  onClick: CloseClickHandler | undefined,
-  callback: ((event: CloseClickEvent) => void) | undefined,
-): CloseClickHandler {
-  if (onClick === undefined && callback === undefined) {
-    return undefined;
-  }
-
-  return (event) => {
-    onClick?.(event);
-    if (!event.defaultPrevented) {
-      callback?.(event);
-    }
-  };
-}
-
 /**
  * ダイアログを表示するコンポーネントです。
  *
@@ -184,18 +169,19 @@ export const Dialog: DialogComponentType = /*#__PURE__*/ Object.assign(
     return (
       <DialogRoot {...rootProps} handle={handle}>
         {trigger !== undefined && (
-          <DialogTrigger {...triggerProps} handle={handle}>
-            {trigger}
-          </DialogTrigger>
+          <DialogTrigger
+            {...{
+              children: trigger,
+              ...triggerProps,
+              handle,
+            }}
+          />
         )}
         <DialogPortal {...portalProps}>
           <DialogBackdrop {...backdropProps} />
           <DialogViewport {...viewportProps}>
             <DialogPopup {...popupProps}>
-              <DialogClose
-                className="sui_dialog_close_button"
-                onClick={createCloseClickHandler(undefined, onClose)}
-              >
+              <DialogClose className="sui_dialog_close_button" onClick={onClose}>
                 <Button variant="naked" color="grey" squared aria-label="閉じる">
                   <svg
                     viewBox="0 0 24 24"
@@ -220,11 +206,13 @@ export const Dialog: DialogComponentType = /*#__PURE__*/ Object.assign(
               {close !== undefined && (
                 <div className="sui_dialog_actions">
                   <DialogClose
-                    {...closeProps}
-                    onClick={createCloseClickHandler(closeProps?.onClick, onClose)}
-                  >
-                    {close}
-                  </DialogClose>
+                    {...{
+                      children: close,
+                      ...mergeProps(closeProps, {
+                        onClick: onClose,
+                      }),
+                    }}
+                  />
                 </div>
               )}
             </DialogPopup>
