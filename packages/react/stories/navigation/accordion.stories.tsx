@@ -170,8 +170,8 @@ export const Controlled = meta.story({
           {...props}
           title="操作パネル"
           value={open ? ["panel"] : []}
-          onValueChange={(next) => setOpen(next.length > 0)}
           slotProps={{ item: { value: "panel" } }}
+          onValueChange={(next) => setOpen(next.length > 0)}
         >
           `value` と `onValueChange` で開閉を制御できます。
         </Accordion>
@@ -197,7 +197,7 @@ export const Outlined = meta.story({
         <Accordion {...props} title="枠線あり（既定）">
           既定では、アコーディオンの外側に枠線が表示されます。
         </Accordion>
-        <Accordion {...props} outlined={false} title="枠線なし">
+        <Accordion {...props} title="枠線なし" outlined={false}>
           `outlined={false}` で枠線を非表示にできます。
         </Accordion>
       </div>
@@ -274,7 +274,7 @@ export const Radius = meta.story({
       <div className="flex w-full flex-col gap-4">
         {(["none", "sm", "md", "lg"] as const).map((radius) => (
           <div key={radius} className="w-80">
-            <Accordion {...props} radius={radius} title={`角丸 "${radius}"`}>
+            <Accordion {...props} title={`角丸 "${radius}"`} radius={radius}>
               `radius` プロパティーで角丸の大きさを指定できます。
             </Accordion>
           </div>
@@ -324,8 +324,8 @@ export const Disabled = meta.story({
         </Accordion>
         <Accordion
           {...props}
-          disabled={false}
           title="項目単位で無効"
+          disabled={false}
           slotProps={{ item: { disabled: true } }}
         >
           `slotProps.item` に `disabled` を渡すと、項目単位で無効化できます。

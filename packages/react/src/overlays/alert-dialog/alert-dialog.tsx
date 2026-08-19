@@ -222,26 +222,26 @@ export const AlertDialog: AlertDialogComponentType = /*#__PURE__*/ Object.assign
     return (
       <AlertDialogRoot {...rootProps} handle={handle}>
         {(!!trigger || !!triggerProps) && (
-          <AlertDialogTrigger children={trigger!} {...triggerProps} handle={handle} />
+          <AlertDialogTrigger handle={handle} {...triggerProps} children={trigger!} />
         )}
         <AlertDialogPortal {...portalProps}>
           <AlertDialogBackdrop {...backdropProps} />
           <AlertDialogViewport {...viewportProps}>
             <AlertDialogPopup {...popupProps}>
               <AlertDialogClose
-                className="sui_alert_dialog_close_button"
                 onClick={createCloseClickHandler(undefined, onReject)}
+                className="sui_alert_dialog_close_button"
               >
-                <Button variant="naked" color="grey" squared aria-label="閉じる">
+                <Button color="grey" squared variant="naked" aria-label="閉じる">
                   <svg
-                    viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    focusable="false"
                     strokeWidth={2}
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     aria-hidden="true"
-                    focusable="false"
                   >
                     <path d="M18 6 6 18" />
                     <path d="m6 6 12 12" />

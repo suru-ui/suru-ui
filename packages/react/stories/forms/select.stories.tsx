@@ -89,7 +89,7 @@ export const Sizes = meta.story({
     return (
       <div className="flex flex-col gap-3">
         {SIZES.map((size) => (
-          <Select {...props} key={size} items={fruits} size={size} label={size} className="w-64" />
+          <Select {...props} key={size} size={size} items={fruits} label={size} className="w-64" />
         ))}
       </div>
     );
@@ -139,11 +139,11 @@ export const Multiple = meta.story({
       <Select
         {...rest}
         items={["TypeScript", "Rust", "Go", "Python"]}
-        multiple
-        defaultValue={["TypeScript"]}
         label="言語"
-        placeholder="言語を選択"
+        multiple
         className="w-80"
+        placeholder="言語を選択"
+        defaultValue={["TypeScript"]}
       >
         {(item) => item}
       </Select>
@@ -166,12 +166,12 @@ export const Grouped = meta.story({
     return (
       <Select
         {...props}
-        label="食材"
-        className="w-80"
         items={[
           { label: "果物", items: ["りんご", "ばなな", "みかん"] },
           { label: "野菜", items: ["にんじん", "きゅうり", "トマト"] },
         ]}
+        label="食材"
+        className="w-80"
         placeholder="食材を選択"
       />
     );
@@ -194,8 +194,8 @@ export const ManyItems = meta.story({
       <Select
         {...props}
         items={Array.from({ length: 50 }, (_, index) => `候補 ${index + 1}`)}
-        placeholder="候補を選択"
         className="w-64"
+        placeholder="候補を選択"
       />
     );
   },
@@ -214,8 +214,8 @@ export const Disabled = meta.story({
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <Select {...props} items={fruits} disabled defaultValue="りんご" className="w-64" />
-        <Select {...props} items={fruits} disabled placeholder="選択" className="w-64" />
+        <Select {...props} items={fruits} disabled className="w-64" defaultValue="りんご" />
+        <Select {...props} items={fruits} disabled className="w-64" placeholder="選択" />
       </div>
     );
   },

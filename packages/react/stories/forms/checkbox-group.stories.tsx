@@ -128,7 +128,7 @@ export const Colors = meta.story({
     return (
       <div className="flex flex-col gap-3">
         {COLORS.map((color) => (
-          <CheckboxGroup key={color} defaultValue={[color]} {...props} color={color}>
+          <CheckboxGroup key={color} color={color} {...props} defaultValue={[color]}>
             <Item value={color}>{color}</Item>
           </CheckboxGroup>
         ))}
@@ -151,7 +151,7 @@ export const Sizes = meta.story({
     return (
       <div className="flex flex-col gap-3">
         {SIZES.map((size) => (
-          <CheckboxGroup key={size} defaultValue={[size]} {...props} size={size}>
+          <CheckboxGroup key={size} size={size} {...props} defaultValue={[size]}>
             <Item value={size}>
               {
                 {
@@ -180,7 +180,7 @@ export const Disabled = meta.story({
   }),
   render(props) {
     return (
-      <CheckboxGroup defaultValue={["option-a"]} {...props} disabled>
+      <CheckboxGroup disabled {...props} defaultValue={["option-a"]}>
         <Item value="option-a">無効（選択済み）</Item>
         <Item value="option-b">無効（未選択）</Item>
       </CheckboxGroup>
@@ -201,10 +201,10 @@ export const Horizontal = meta.story({
   render(props) {
     return (
       <CheckboxGroup
-        defaultValue={["option-a"]}
+        className="gap-3"
         {...props}
         orientation="horizontal"
-        className="gap-3"
+        defaultValue={["option-a"]}
       >
         <Item value="option-a">オプション A</Item>
         <Item value="option-b">オプション B</Item>
@@ -227,7 +227,7 @@ export const Radius = meta.story({
     return (
       <div className="flex flex-col gap-3">
         {RADII.map((radius) => (
-          <CheckboxGroup key={radius} defaultValue={[radius]} {...props} radius={radius}>
+          <CheckboxGroup key={radius} radius={radius} {...props} defaultValue={[radius]}>
             <Item value={radius}>{radius}</Item>
           </CheckboxGroup>
         ))}

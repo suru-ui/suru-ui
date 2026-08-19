@@ -52,7 +52,7 @@ export const Usage = meta.story({
   }),
   render(props) {
     return (
-      <RadioGroup defaultValue="option-a" className="flex flex-col gap-3">
+      <RadioGroup className="flex flex-col gap-3" defaultValue="option-a">
         <label className="flex items-center gap-2">
           <Radio {...props} value="option-a" />
           オプション A
@@ -78,13 +78,13 @@ export const Variants = meta.story({
   }),
   render(props) {
     return (
-      <RadioGroup defaultValue="naked" className="flex flex-col gap-3">
+      <RadioGroup className="flex flex-col gap-3" defaultValue="naked">
         <label className="flex items-center gap-2">
-          <Radio {...props} variant="naked" value="naked" />
+          <Radio {...props} value="naked" variant="naked" />
           naked
         </label>
         <label className="flex items-center gap-2">
-          <Radio {...props} variant="liquid" value="liquid" />
+          <Radio {...props} value="liquid" variant="liquid" />
           liquid
         </label>
       </RadioGroup>
@@ -103,13 +103,13 @@ export const Outlined = meta.story({
   }),
   render(props) {
     return (
-      <RadioGroup defaultValue="naked-outlined" className="flex flex-col gap-3">
+      <RadioGroup className="flex flex-col gap-3" defaultValue="naked-outlined">
         <label className="flex items-center gap-2">
-          <Radio {...props} variant="naked" outlined value="naked-outlined" />
+          <Radio {...props} value="naked-outlined" variant="naked" outlined />
           naked + outlined
         </label>
         <label className="flex items-center gap-2">
-          <Radio {...props} variant="liquid" outlined value="liquid-outlined" />
+          <Radio {...props} value="liquid-outlined" variant="liquid" outlined />
           liquid + outlined
         </label>
       </RadioGroup>
@@ -129,7 +129,7 @@ export const Colors = meta.story({
   }),
   render(props) {
     return (
-      <RadioGroup defaultValue="grey" className="flex flex-col gap-3">
+      <RadioGroup className="flex flex-col gap-3" defaultValue="grey">
         {COLORS.map((color) => (
           <label key={color} className="flex items-center gap-2">
             <Radio {...props} color={color} value={color} />
@@ -153,7 +153,7 @@ export const Sizes = meta.story({
   }),
   render(props) {
     return (
-      <RadioGroup defaultValue="md" className="flex flex-col gap-3">
+      <RadioGroup className="flex flex-col gap-3" defaultValue="md">
         {SIZES.map((size) => (
           <label key={size} className="flex items-center gap-2">
             <Radio {...props} size={size} value={size} />
@@ -183,10 +183,10 @@ export const Radius = meta.story({
   }),
   render(props) {
     return (
-      <RadioGroup defaultValue="full" className="flex flex-col gap-3">
+      <RadioGroup className="flex flex-col gap-3" defaultValue="full">
         {RADII.map((radius) => (
           <label key={radius} className="flex items-center gap-2">
-            <Radio {...props} radius={radius} value={radius} />
+            <Radio {...props} value={radius} radius={radius} />
             {radius}
           </label>
         ))}
@@ -212,8 +212,8 @@ export const Controlled = meta.story({
     return (
       <RadioGroup
         value={value}
-        onValueChange={(nextValue) => setValue(String(nextValue))}
         className="flex flex-col gap-3"
+        onValueChange={(nextValue) => setValue(String(nextValue))}
       >
         <label className="flex items-center gap-2">
           <Radio {...props} value="option-a" />
@@ -240,13 +240,13 @@ export const Disabled = meta.story({
   }),
   render(props) {
     return (
-      <RadioGroup defaultValue="checked" className="flex flex-col gap-3">
+      <RadioGroup className="flex flex-col gap-3" defaultValue="checked">
         <label className="flex items-center gap-2">
-          <Radio {...props} disabled value="unchecked" />
+          <Radio {...props} value="unchecked" disabled />
           無効（未チェック）
         </label>
         <label className="flex items-center gap-2">
-          <Radio {...props} disabled value="checked" />
+          <Radio {...props} value="checked" disabled />
           無効（チェック済み）
         </label>
       </RadioGroup>

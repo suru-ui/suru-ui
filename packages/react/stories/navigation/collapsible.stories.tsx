@@ -92,7 +92,7 @@ export const Controlled = meta.story({
 
     return (
       <div className="w-80">
-        <Collapsible {...props} title="操作パネル" open={open} onOpenChange={setOpen}>
+        <Collapsible {...props} open={open} title="操作パネル" onOpenChange={setOpen}>
           `open` と `onOpenChange` で開閉を制御できます。
         </Collapsible>
         <p className="mt-2">現在の状態: {open ? "開" : "閉"}</p>
@@ -116,7 +116,7 @@ export const Outlined = meta.story({
         <Collapsible {...props} title="枠線あり（既定）">
           既定では、コラプシブルの外側に枠線が表示されます。
         </Collapsible>
-        <Collapsible {...props} outlined={false} title="枠線なし">
+        <Collapsible {...props} title="枠線なし" outlined={false}>
           `outlined={false}` で枠線を非表示にできます。
         </Collapsible>
       </div>
@@ -137,7 +137,7 @@ export const Radius = meta.story({
       <div className="flex w-full flex-col gap-4">
         {(["none", "sm", "md", "lg"] as const).map((radius) => (
           <div key={radius} className="w-80">
-            <Collapsible {...props} radius={radius} title={`角丸 "${radius}"`}>
+            <Collapsible {...props} title={`角丸 "${radius}"`} radius={radius}>
               `radius` プロパティーで角丸の大きさを指定できます。
             </Collapsible>
           </div>
@@ -183,7 +183,7 @@ export const Disabled = meta.story({
         <Collapsible {...props} title="無効">
           `disabled` を渡すと、トリガーを操作できなくなります。
         </Collapsible>
-        <Collapsible {...props} disabled={false} title="有効">
+        <Collapsible {...props} title="有効" disabled={false}>
           `disabled={false}` で操作できる状態に戻せます。
         </Collapsible>
       </div>

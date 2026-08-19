@@ -122,6 +122,7 @@ export const Colors = meta.story({
             {...props}
             key={color}
             color={color}
+            className="w-64"
             defaultValue={
               {
                 grey: "grey グレー",
@@ -134,7 +135,6 @@ export const Colors = meta.story({
                 green: "green グリーン",
               }[color]
             }
-            className="w-64"
           />
         ))}
       </div>
@@ -181,7 +181,7 @@ export const Outlined = meta.story({
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col gap-2">
             <span className="text-sm">{variant}</span>
-            <Input {...props} outlined variant={variant} className="w-64" />
+            <Input {...props} variant={variant} outlined className="w-64" />
           </div>
         ))}
       </div>
@@ -227,7 +227,7 @@ export const Invalid = meta.story({
   render(props) {
     return (
       <Field invalid>
-        <Input {...props} defaultValue="不正な値" className="w-64" />
+        <Input {...props} className="w-64" defaultValue="不正な値" />
       </Field>
     );
   },
@@ -247,13 +247,13 @@ export const Disabled = meta.story({
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col gap-2">
             <span className="text-sm">{variant}</span>
-            <Input {...props} disabled variant={variant} defaultValue="入力値" className="w-64" />
+            <Input {...props} variant={variant} disabled className="w-64" defaultValue="入力値" />
             <Input
               {...props}
-              disabled
               variant={variant}
-              placeholder="プレースホルダー"
+              disabled
               className="w-64"
+              placeholder="プレースホルダー"
             />
           </div>
         ))}

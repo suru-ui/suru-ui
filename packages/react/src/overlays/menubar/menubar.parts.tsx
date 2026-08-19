@@ -30,8 +30,8 @@ export const MenubarRoot: IComponent<MenubarRootProps> = function SuiMenubarRoot
   return (
     <BaseMenubar
       {...otherProps}
-      orientation={orientation}
       className={cn(className, "sui_menubar", `sui_menubar-orientation_${orientation}`)}
+      orientation={orientation}
     />
   );
 };

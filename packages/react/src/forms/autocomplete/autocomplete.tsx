@@ -334,7 +334,7 @@ export namespace Autocomplete {
  */
 function SuiClearIcon(props: React.ComponentProps<"svg">) {
   return (
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeLinecap="round" {...props}>
+    <svg fill="none" stroke="currentColor" viewBox="0 0 16 16" strokeLinecap="round" {...props}>
       <path d="M4 4l8 8M12 4l-8 8" />
     </svg>
   );
@@ -345,7 +345,7 @@ function SuiClearIcon(props: React.ComponentProps<"svg">) {
  */
 function SuiChevronIcon(props: React.ComponentProps<"svg">) {
   return (
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeLinecap="round" {...props}>
+    <svg fill="none" stroke="currentColor" viewBox="0 0 16 16" strokeLinecap="round" {...props}>
       <path d="M4 6l4 4 4-4" />
     </svg>
   );

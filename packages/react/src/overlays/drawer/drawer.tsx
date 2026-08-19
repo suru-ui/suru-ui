@@ -186,7 +186,7 @@ export const Drawer: DrawerComponentType = /*#__PURE__*/ Object.assign(
     return (
       <DrawerRoot {...rootProps} handle={handle}>
         {("trigger" in props || !!triggerProps) && (
-          <DrawerTrigger children={trigger!} {...triggerProps} handle={handle} />
+          <DrawerTrigger handle={handle} {...triggerProps} children={trigger!} />
         )}
         {swipeAreaProps !== undefined && <DrawerSwipeArea {...swipeAreaProps} />}
         <DrawerVirtualKeyboardProvider {...virtualKeyboardProviderProps}>
@@ -196,16 +196,16 @@ export const Drawer: DrawerComponentType = /*#__PURE__*/ Object.assign(
               <DrawerPopup {...popupProps}>
                 <DrawerClose
                   children={
-                    <Button variant="naked" color="grey" squared aria-label="閉じる">
+                    <Button color="grey" squared variant="naked" aria-label="閉じる">
                       <svg
-                        viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        focusable="false"
                         strokeWidth={2}
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         aria-hidden="true"
-                        focusable="false"
                       >
                         <path d="M18 6 6 18" />
                         <path d="m6 6 12 12" />

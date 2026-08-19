@@ -317,7 +317,7 @@ function SuiCursorGrowIcon(props: React.ComponentProps<"svg">) {
       aria-hidden="true"
       {...props}
     >
-      <line x1="4" y1="12" x2="20" y2="12" />
+      <line x1="4" x2="20" y1="12" y2="12" />
       <polyline points="8 8 4 12 8 16" />
       <polyline points="16 8 20 12 16 16" />
     </svg>

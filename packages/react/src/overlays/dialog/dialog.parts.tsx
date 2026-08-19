@@ -114,8 +114,8 @@ export const DialogTrigger: IComponent<DialogTriggerProps> = function SuiDialogT
     <Dialog.Trigger
       {...otherProps}
       handle={handle}
-      className={cn(className, "sui_dialog_trigger")}
       render={children}
+      className={cn(className, "sui_dialog_trigger")}
     />
   );
 };
@@ -432,7 +432,7 @@ export const DialogClose: IComponent<DialogCloseProps> = function SuiDialogClose
   const { children, className, ...otherProps } = props;
 
   return (
-    <Dialog.Close {...otherProps} className={cn(className, "sui_dialog_close")} render={children} />
+    <Dialog.Close {...otherProps} render={children} className={cn(className, "sui_dialog_close")} />
   );
 };
 

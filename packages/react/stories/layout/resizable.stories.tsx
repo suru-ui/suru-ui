@@ -23,15 +23,15 @@ export const Usage = meta.story({
     return (
       <Resizable
         {...props}
-        className="w-full max-w-5xl overflow-hidden rounded-xl border-1 border-solid border-(--sui-canvas_text-3) bg-(--sui-canvas-1) shadow-sm"
         style={{ height: "32rem" }}
+        className="w-full max-w-5xl overflow-hidden rounded-xl border-1 border-solid border-(--sui-canvas_text-3) bg-(--sui-canvas-1) shadow-sm"
       >
-        <ResizablePanel defaultSize={35} minSize={20} className="bg-(--sui-canvas-2) p-6">
+        <ResizablePanel minSize={20} className="bg-(--sui-canvas-2) p-6" defaultSize={35}>
           <h2 className="mb-2 text-lg font-semibold">サイドバー</h2>
           <p>パネルの境界をドラッグして幅を変更できます。</p>
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={65} className="bg-(--sui-canvas-1) p-6">
+        <ResizablePanel className="bg-(--sui-canvas-1) p-6" defaultSize={65}>
           <h2 className="mb-2 text-lg font-semibold">コンテンツ</h2>
           <p>キーボードの矢印キーでもサイズを変更できます。</p>
         </ResizablePanel>
@@ -49,15 +49,15 @@ export const Vertical = meta.story({
     return (
       <Resizable
         {...props}
-        className="w-full max-w-5xl overflow-hidden rounded-xl border-1 border-solid border-(--sui-canvas_text-3) bg-(--sui-canvas-1) shadow-sm"
         style={{ height: "36rem" }}
+        className="w-full max-w-5xl overflow-hidden rounded-xl border-1 border-solid border-(--sui-canvas_text-3) bg-(--sui-canvas-1) shadow-sm"
       >
-        <ResizablePanel defaultSize={40} className="bg-(--sui-canvas-2) p-6">
+        <ResizablePanel className="bg-(--sui-canvas-2) p-6" defaultSize={40}>
           <h2 className="mb-2 text-lg font-semibold">上部パネル</h2>
           <p>上下の境界をドラッグして高さを変更できます。</p>
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={60} className="bg-(--sui-canvas-1) p-6">
+        <ResizablePanel className="bg-(--sui-canvas-1) p-6" defaultSize={60}>
           <h2 className="mb-2 text-lg font-semibold">下部パネル</h2>
           <p>縦方向のリサイズ操作を確認できます。</p>
         </ResizablePanel>
@@ -72,14 +72,14 @@ export const Parts = meta.story({
   render() {
     return (
       <ResizableParts.Root
-        className="w-full max-w-5xl overflow-hidden rounded-xl border-1 border-solid border-(--sui-canvas_text-3) bg-(--sui-canvas-1) shadow-sm"
         style={{ height: "28rem" }}
+        className="w-full max-w-5xl overflow-hidden rounded-xl border-1 border-solid border-(--sui-canvas_text-3) bg-(--sui-canvas-1) shadow-sm"
       >
-        <ResizableParts.Panel defaultSize={40} className="bg-(--sui-canvas-2) p-6">
+        <ResizableParts.Panel className="bg-(--sui-canvas-2) p-6" defaultSize={40}>
           左側
         </ResizableParts.Panel>
         <ResizableParts.Handle />
-        <ResizableParts.Panel defaultSize={60} className="bg-(--sui-canvas-1) p-6">
+        <ResizableParts.Panel className="bg-(--sui-canvas-1) p-6" defaultSize={60}>
           右側
         </ResizableParts.Panel>
       </ResizableParts.Root>

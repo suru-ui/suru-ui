@@ -80,7 +80,7 @@ export const Variants = meta.story({
     return (
       <div className="flex w-[300px] flex-col gap-6">
         {VARIANTS.map((variant) => (
-          <Meter {...props} key={variant} variant={variant} label={variant} />
+          <Meter {...props} key={variant} label={variant} variant={variant} />
         ))}
       </div>
     );
@@ -147,7 +147,7 @@ export const Radius = meta.story({
       <div className="flex w-[300px] flex-col gap-6">
         {RADII.map((radius) => (
           <div key={radius} className="flex flex-col items-center gap-2">
-            <Meter {...props} key={radius} radius={radius} label={radius} />
+            <Meter {...props} key={radius} label={radius} radius={radius} />
           </div>
         ))}
       </div>

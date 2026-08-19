@@ -86,7 +86,7 @@ export const Sizes = meta.story({
     return (
       <div className="flex flex-col gap-3">
         {SIZES.map((size) => (
-          <RadioGroup key={size} defaultValue={size} {...props} size={size}>
+          <RadioGroup key={size} size={size} {...props} defaultValue={size}>
             <Item value={size}>
               {
                 {
@@ -117,7 +117,7 @@ export const Colors = meta.story({
     return (
       <div className="flex flex-col gap-3">
         {COLORS.map((color) => (
-          <RadioGroup key={color} defaultValue={color} {...props} color={color}>
+          <RadioGroup key={color} color={color} {...props} defaultValue={color}>
             <Item value={color}>{color}</Item>
           </RadioGroup>
         ))}
@@ -138,7 +138,7 @@ export const Disabled = meta.story({
   }),
   render(props) {
     return (
-      <RadioGroup defaultValue="option-a" {...props} disabled>
+      <RadioGroup disabled {...props} defaultValue="option-a">
         <Item value="option-a">無効（選択済み）</Item>
         <Item value="option-b">無効（未選択）</Item>
       </RadioGroup>
@@ -158,7 +158,7 @@ export const Horizontal = meta.story({
   }),
   render(props) {
     return (
-      <RadioGroup defaultValue="option-a" {...props} orientation="horizontal" className="gap-3">
+      <RadioGroup className="gap-3" {...props} orientation="horizontal" defaultValue="option-a">
         <Item value="option-a">オプション A</Item>
         <Item value="option-b">オプション B</Item>
       </RadioGroup>
@@ -180,7 +180,7 @@ export const Radius = meta.story({
     return (
       <div className="flex flex-col gap-3">
         {RADII.map((radius) => (
-          <RadioGroup key={radius} defaultValue={radius} {...props} radius={radius}>
+          <RadioGroup key={radius} radius={radius} {...props} defaultValue={radius}>
             <Item value={radius}>{radius}</Item>
           </RadioGroup>
         ))}

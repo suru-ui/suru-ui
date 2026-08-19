@@ -32,19 +32,19 @@ export const Usage = meta.story({
       <Form
         {...props}
         errors={errors}
+        className="flex w-80 flex-col items-start gap-4"
         onFormSubmit={(formValues) => {
           setErrors(validateUrl(formValues["url"]));
         }}
-        className="flex w-80 flex-col items-start gap-4"
       >
         <Field name="url" label="ホームページ">
           <Input
             type="url"
-            required
-            defaultValue="https://example.com"
-            placeholder="https://example.com"
             pattern="https?://.*"
+            required
             className="w-full"
+            placeholder="https://example.com"
+            defaultValue="https://example.com"
           />
         </Field>
         <Button type="submit">送信</Button>

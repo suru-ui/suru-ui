@@ -132,8 +132,8 @@ export const MenuTrigger: MenuTriggerComponent = function SuiMenuTrigger<TPayloa
     <Menu.Trigger
       {...otherProps}
       handle={handle}
-      className={cn(className, "sui_menu_trigger")}
       render={children}
+      className={cn(className, "sui_menu_trigger")}
     />
   );
 };
@@ -789,8 +789,8 @@ export const MenuRadioItemIndicator: IComponent<MenuRadioItemIndicatorProps> =
     return (
       <Menu.RadioItemIndicator
         {...otherProps}
-        keepMounted={keepMounted}
         className={cn(className, "sui_menu_item_indicator", "sui_menu_radio_item_indicator")}
+        keepMounted={keepMounted}
       />
     );
   };
@@ -889,8 +889,8 @@ export const MenuCheckboxItemIndicator: IComponent<MenuCheckboxItemIndicatorProp
     return (
       <Menu.CheckboxItemIndicator
         {...otherProps}
-        keepMounted={keepMounted}
         className={cn(className, "sui_menu_item_indicator", "sui_menu_checkbox_item_indicator")}
+        keepMounted={keepMounted}
       />
     );
   };

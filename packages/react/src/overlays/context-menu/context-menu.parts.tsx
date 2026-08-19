@@ -770,7 +770,6 @@ export const ContextMenuRadioItemIndicator: IComponent<ContextMenuRadioItemIndic
     return (
       <ContextMenu.RadioItemIndicator
         {...otherProps}
-        keepMounted={keepMounted}
         className={cn(
           className,
           "sui_context_menu_item_indicator",
@@ -778,6 +777,7 @@ export const ContextMenuRadioItemIndicator: IComponent<ContextMenuRadioItemIndic
           "sui_menu_item_indicator",
           "sui_menu_radio_item_indicator",
         )}
+        keepMounted={keepMounted}
       />
     );
   };
@@ -882,7 +882,6 @@ export const ContextMenuCheckboxItemIndicator: IComponent<ContextMenuCheckboxIte
     return (
       <ContextMenu.CheckboxItemIndicator
         {...otherProps}
-        keepMounted={keepMounted}
         className={cn(
           className,
           "sui_context_menu_item_indicator",
@@ -890,6 +889,7 @@ export const ContextMenuCheckboxItemIndicator: IComponent<ContextMenuCheckboxIte
           "sui_menu_item_indicator",
           "sui_menu_checkbox_item_indicator",
         )}
+        keepMounted={keepMounted}
       />
     );
   };

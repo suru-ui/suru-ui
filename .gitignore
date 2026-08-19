@@ -223,3 +223,4 @@ $RECYCLE.BIN/
 .vitest-attachments/
 dist/
 __screenshots__/
+reports/

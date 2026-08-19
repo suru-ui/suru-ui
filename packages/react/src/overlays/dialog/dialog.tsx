@@ -169,23 +169,23 @@ export const Dialog: DialogComponentType = /*#__PURE__*/ Object.assign(
     return (
       <DialogRoot {...rootProps} handle={handle}>
         {("trigger" in props || !!triggerProps) && (
-          <DialogTrigger children={trigger!} {...triggerProps} handle={handle} />
+          <DialogTrigger handle={handle} {...triggerProps} children={trigger!} />
         )}
         <DialogPortal {...portalProps}>
           <DialogBackdrop {...backdropProps} />
           <DialogViewport {...viewportProps}>
             <DialogPopup {...popupProps}>
-              <DialogClose className="sui_dialog_close_button" onClick={onClose}>
-                <Button variant="naked" color="grey" squared aria-label="閉じる">
+              <DialogClose onClick={onClose} className="sui_dialog_close_button">
+                <Button color="grey" squared variant="naked" aria-label="閉じる">
                   <svg
-                    viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    focusable="false"
                     strokeWidth={2}
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     aria-hidden="true"
-                    focusable="false"
                   >
                     <path d="M18 6 6 18" />
                     <path d="m6 6 12 12" />

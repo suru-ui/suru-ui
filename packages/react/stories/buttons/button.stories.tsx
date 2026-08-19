@@ -201,7 +201,7 @@ export const Squared = meta.story({
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col items-center gap-2">
             <span className="text-sm">{variant}</span>
-            <Button {...props} variant={variant} squared>
+            <Button {...props} squared variant={variant}>
               <Trash2Icon />
             </Button>
           </div>
@@ -291,8 +291,8 @@ function PendingProgress(props: {}) {
     <Button
       {...props}
       value="foo.zip"
-      pending={progress.pending}
       onClick={progress.clickHandler}
+      pending={progress.pending}
       percentage={progress.percentage}
     >
       ダウンロード
@@ -309,8 +309,8 @@ function PendingCustomStyle(props: {}) {
     <Button.Root
       {...props}
       value="foo.zip"
-      pending={progress.pending}
       onClick={progress.clickHandler}
+      pending={progress.pending}
     >
       <Button.Pending defaultVisibility="hidden">
         <Button.CircularProgress>
@@ -414,7 +414,7 @@ export const Muted = meta.story({
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col items-center gap-2">
             <span className="text-sm">{variant}</span>
-            <Button {...props} variant={variant} muted />
+            <Button {...props} muted variant={variant} />
           </div>
         ))}
       </div>
@@ -556,10 +556,10 @@ export const Disabled = meta.story({
           <div key={variant} className="flex flex-col items-center gap-2">
             <span className="text-sm">{variant}</span>
             <div className="flex flex-wrap gap-3">
-              <Button {...props} disabled variant={variant}>
+              <Button {...props} variant={variant} disabled>
                 送信
               </Button>
-              <Button {...props} disabled squared variant={variant}>
+              <Button {...props} squared variant={variant} disabled>
                 <EllipsisIcon />
               </Button>
             </div>

@@ -21,8 +21,8 @@ export const Usage = meta.story({
     return (
       <div className="flex flex-col items-center gap-4">
         <Drawer
-          trigger={<Button>通知を見る</Button>}
           title="通知"
+          trigger={<Button>通知を見る</Button>}
           description="新しい通知はありません。"
         />
         <p className="text-sm text-neutral-500">
@@ -71,7 +71,7 @@ export const Controlled = meta.story({
 
     return (
       <>
-        <Drawer open={open} onOpenChange={setOpen} title="制御されたドロワー">
+        <Drawer open={open} title="制御されたドロワー" onOpenChange={setOpen}>
           <p className="text-sm text-neutral-500">`open` と `onOpenChange` で制御できます。</p>
         </Drawer>
         <Button onClick={() => setOpen(true)}>開く</Button>
@@ -86,10 +86,10 @@ export const Right = meta.story({
   render() {
     return (
       <Drawer
-        trigger={<Button>設定を開く</Button>}
-        swipeDirection="right"
         title="設定"
+        trigger={<Button>設定を開く</Button>}
         description="右側から表示されるドロワーです。"
+        swipeDirection="right"
       />
     );
   },
@@ -111,10 +111,10 @@ export const Directions = meta.story({
         {directions.map(([direction, label]) => (
           <Drawer
             key={direction}
-            trigger={<Button>{label}から表示</Button>}
-            swipeDirection={direction}
             title={`${label}から表示`}
+            trigger={<Button>{label}から表示</Button>}
             description={`${label}端から表示されるドロワーです。`}
+            swipeDirection={direction}
           />
         ))}
       </div>

@@ -187,6 +187,8 @@
     "react-resizable-panels": "^4.12.2"
   },
   "devDependencies": {
+    "@babel/parser": "^8.0.4",
+    "@babel/types": "^8.0.4",
     "@storybook/addon-docs": "^10.5.5",
     "@storybook/addon-themes": "^10.5.5",
     "@storybook/addon-vitest": "^10.5.5",

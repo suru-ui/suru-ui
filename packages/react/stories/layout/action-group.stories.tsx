@@ -58,7 +58,7 @@ export const Usage = meta.story({
           <SettingsIcon />
           設定
         </Button>
-        <Input aria-label="検索" placeholder="検索" />
+        <Input placeholder="検索" aria-label="検索" />
         <Button>
           <Trash2Icon />
           削除
@@ -102,7 +102,7 @@ export const Colors = meta.story({
     return (
       <div className="flex flex-wrap gap-4">
         {COLORS.map((color) => (
-          <ActionGroupRoot {...props} color={color} key={color}>
+          <ActionGroupRoot {...props} key={color} color={color}>
             <Button>{color}</Button>
             <Button>実行</Button>
           </ActionGroupRoot>
@@ -125,7 +125,7 @@ export const Sizes = meta.story({
     return (
       <div className="flex flex-col items-start gap-4">
         {SIZES.map((size) => (
-          <ActionGroupRoot {...props} size={size} key={size}>
+          <ActionGroupRoot {...props} key={size} size={size}>
             <Button>{size}</Button>
             <Button>保存</Button>
           </ActionGroupRoot>
@@ -148,7 +148,7 @@ export const Radius = meta.story({
     return (
       <div className="flex flex-wrap items-end gap-4">
         {RADII.map((radius) => (
-          <div className="flex flex-col items-center gap-2" key={radius}>
+          <div key={radius} className="flex flex-col items-center gap-2">
             <span className="text-sm text-gray-500">{radius}</span>
             <ActionGroupRoot {...props} radius={radius}>
               <Button>A</Button>

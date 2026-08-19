@@ -21,10 +21,10 @@ export const Usage = meta.story({
     return (
       <div className="flex flex-col items-center gap-4">
         <Dialog
-          trigger={<Button>通知を見る</Button>}
-          title="通知"
-          description="新しい通知はありません。"
           close={<Button variant="naked">閉じる</Button>}
+          title="通知"
+          trigger={<Button>通知を見る</Button>}
+          description="新しい通知はありません。"
         />
         <p className="text-sm text-neutral-500">
           トリガーをクリックすると、ポップアップが中央に表示されます。
@@ -78,7 +78,7 @@ export const Controlled = meta.story({
 
     return (
       <>
-        <Dialog open={open} onOpenChange={setOpen} title="制御されたダイアログ">
+        <Dialog open={open} title="制御されたダイアログ" onOpenChange={setOpen}>
           <p className="text-sm text-neutral-500">`open` と `onOpenChange` で制御できます。</p>
         </Dialog>
         <Button onClick={() => setOpen(true)}>開く</Button>

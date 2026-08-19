@@ -153,6 +153,9 @@ export const Colors = meta.story({
             {...props}
             key={color}
             color={color}
+            className="w-64"
+            endAddons={[<PenToolIcon key={0} />]}
+            startAddons={["色"]}
             defaultValue={
               {
                 grey: "grey グレー",
@@ -165,9 +168,6 @@ export const Colors = meta.story({
                 green: "green グリーン",
               }[color]
             }
-            className="w-64"
-            endAddons={[<PenToolIcon key={0} />]}
-            startAddons={["色"]}
           />
         ))}
       </div>
@@ -309,8 +309,8 @@ export const Disabled = meta.story({
               disabled
               className="w-[320px]"
               endAddons={[<LinkIcon key={0} />]}
-              startAddons={["https://"]}
               placeholder="プレースホルダー"
+              startAddons={["https://"]}
             />
           </div>
         ))}

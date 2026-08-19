@@ -50,7 +50,7 @@ export const Usage = meta.story({
             valueMissing: "メールアドレスを入力してください。",
           }}
         >
-          <TextField required className="w-[320px]" type="email" placeholder="you@example.com" />
+          <TextField type="email" required className="w-[320px]" placeholder="you@example.com" />
         </Field>
         <div className="flex">
           <Button type="submit" className="ml-auto">

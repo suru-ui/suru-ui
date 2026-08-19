@@ -72,7 +72,7 @@ export const Parts = meta.story({
   render() {
     return (
       <TooltipParts.Root>
-        <TooltipParts.Trigger aria-label="保存" delay={0}>
+        <TooltipParts.Trigger delay={0} aria-label="保存">
           <Button>保存</Button>
         </TooltipParts.Trigger>
         <TooltipParts.Portal>
@@ -96,7 +96,7 @@ export const DetachedTrigger = meta.story({
 
     return (
       <TooltipParts.Provider>
-        <TooltipParts.Trigger handle={handle} aria-label="削除" delay={0}>
+        <TooltipParts.Trigger delay={0} handle={handle} aria-label="削除">
           <Button>削除</Button>
         </TooltipParts.Trigger>
         <TooltipParts.Root handle={handle}>
@@ -123,7 +123,6 @@ export const Controlled = meta.story({
     return (
       <Tooltip
         open={open}
-        onOpenChange={setOpen}
         slotProps={{
           trigger: {
             children: <Button>詳細</Button>,
@@ -131,6 +130,7 @@ export const Controlled = meta.story({
             "aria-label": "詳細",
           },
         }}
+        onOpenChange={setOpen}
       >
         詳細を表示します
       </Tooltip>

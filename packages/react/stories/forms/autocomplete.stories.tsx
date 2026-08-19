@@ -124,7 +124,7 @@ export const AccentColors = meta.story({
     return (
       <div className="flex flex-col gap-3">
         {COLORS.map((color) => (
-          <Autocomplete key={color} {...props} accentColor={color} className="w-64" />
+          <Autocomplete key={color} {...props} className="w-64" accentColor={color} />
         ))}
       </div>
     );
@@ -193,7 +193,7 @@ export const Filled = meta.story({
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <Autocomplete {...props} defaultValue="りんご" className="w-64" />
+        <Autocomplete {...props} className="w-64" defaultValue="りんご" />
       </div>
     );
   },
@@ -214,7 +214,6 @@ export const Grouped = meta.story({
     return (
       <Autocomplete
         {...props}
-        className="w-96"
         items={[
           {
             label: "果物",
@@ -225,6 +224,7 @@ export const Grouped = meta.story({
             items: ["にんじん", "きゅうり", "トマト"],
           },
         ]}
+        className="w-96"
       />
     );
   },
@@ -260,8 +260,8 @@ export const Disabled = meta.story({
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <Autocomplete {...props} disabled defaultValue="りんご" className="w-96" />
-        <Autocomplete {...props} disabled placeholder="検索" className="w-64" />
+        <Autocomplete {...props} disabled className="w-96" defaultValue="りんご" />
+        <Autocomplete {...props} disabled className="w-64" placeholder="検索" />
       </div>
     );
   },

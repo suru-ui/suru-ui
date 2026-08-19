@@ -107,11 +107,11 @@ export const Multiple = meta.story({
       <Combobox
         {...rest}
         items={["TypeScript", "Rust", "Go", "Python"]}
-        multiple
-        defaultValue={["TypeScript"]}
         label="言語"
-        placeholder="言語を追加"
+        multiple
         className="w-80"
+        placeholder="言語を追加"
+        defaultValue={["TypeScript"]}
       />
     );
   },
@@ -133,12 +133,12 @@ export const Grouped = meta.story({
     return (
       <Combobox
         {...props}
-        label="食材"
-        className="w-80"
         items={[
           { label: "果物", items: ["りんご", "ばなな", "みかん"] },
           { label: "野菜", items: ["にんじん", "きゅうり", "トマト"] },
         ]}
+        label="食材"
+        className="w-80"
         placeholder="食材を選択"
       />
     );
@@ -180,7 +180,7 @@ export const Sizes = meta.story({
       <div className="flex flex-col gap-3">
         {SIZES.map((size) => (
           <div key={size}>
-            <Combobox {...props} items={fruits} size={size} className="w-64" />
+            <Combobox {...props} size={size} items={fruits} className="w-64" />
             <div>{size}</div>
           </div>
         ))}
@@ -205,7 +205,7 @@ export const AccentColors = meta.story({
     return (
       <div className="flex flex-col gap-3">
         {COLORS.map((color) => (
-          <Combobox {...props} key={color} items={fruits} accentColor={color} className="w-64" />
+          <Combobox {...props} key={color} items={fruits} className="w-64" accentColor={color} />
         ))}
       </div>
     );
@@ -227,8 +227,8 @@ export const Disabled = meta.story({
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <Combobox {...props} items={fruits} disabled defaultValue="りんご" className="w-64" />
-        <Combobox {...props} items={fruits} disabled placeholder="選択" className="w-64" />
+        <Combobox {...props} items={fruits} disabled className="w-64" defaultValue="りんご" />
+        <Combobox {...props} items={fruits} disabled className="w-64" placeholder="選択" />
       </div>
     );
   },

@@ -168,8 +168,8 @@ export const TooltipTrigger: TooltipTriggerComponent = function SuiTooltipTrigge
   return (
     <Tooltip.Trigger
       {...otherProps}
-      className={cn(className, "sui_tooltip_trigger")}
       render={children}
+      className={cn(className, "sui_tooltip_trigger")}
     />
   );
 };

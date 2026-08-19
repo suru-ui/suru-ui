@@ -21,14 +21,14 @@ export const Usage = meta.story({
     return (
       <div className="flex flex-col items-center gap-4">
         <AlertDialog
-          trigger={<Button color="red">下書きを破棄</Button>}
           title="下書きを破棄しますか?"
-          description="この操作は元に戻せません。"
-          reject={<Button>キャンセル</Button>}
           accept={<Button color="red">破棄する</Button>}
+          reject={<Button>キャンセル</Button>}
+          trigger={<Button color="red">下書きを破棄</Button>}
           onAccept={() => {
             alert("下書きを破棄しました");
           }}
+          description="この操作は元に戻せません。"
         />
         <p className="text-sm text-neutral-500">
           トリガーをクリックすると、ポップアップが中央に表示されます。
@@ -84,7 +84,7 @@ export const Controlled = meta.story({
 
     return (
       <>
-        <AlertDialog open={open} onOpenChange={setOpen} title="制御されたダイアログ">
+        <AlertDialog open={open} title="制御されたダイアログ" onOpenChange={setOpen}>
           <p className="text-sm text-neutral-500">
             `open` と `onOpenChange` でダイアログを制御できます。
           </p>

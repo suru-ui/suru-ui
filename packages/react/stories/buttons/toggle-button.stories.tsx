@@ -103,7 +103,7 @@ export const Colors = meta.story({
     return (
       <div className="flex flex-wrap gap-3">
         {COLORS.map((color) => (
-          <ToggleButton {...props} key={color} defaultPressed color={color} />
+          <ToggleButton {...props} key={color} color={color} defaultPressed />
         ))}
       </div>
     );
@@ -214,7 +214,7 @@ export const Squared = meta.story({
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col items-center gap-2">
             <span className="text-sm">{variant}</span>
-            <ToggleButton {...props} variant={variant} squared>
+            <ToggleButton {...props} squared variant={variant}>
               <ItalicIcon />
             </ToggleButton>
           </div>
@@ -260,9 +260,9 @@ export const Pending = meta.story({
       <div className="flex flex-wrap gap-3">
         <ToggleButton
           {...props}
-          pressed={feature.flag}
-          pending={feature.pending}
           onClick={feature.clickHandler}
+          pending={feature.pending}
+          pressed={feature.flag}
         >
           {feature.flag ? "有効化済み" : "有効化する"}
         </ToggleButton>
@@ -423,13 +423,13 @@ export const Disabled = meta.story({
   render(props) {
     return (
       <div className="flex flex-wrap gap-3">
-        <ToggleButton {...props} disabled variant="liquid">
+        <ToggleButton {...props} variant="liquid" disabled>
           OFF
         </ToggleButton>
-        <ToggleButton {...props} disabled defaultPressed variant="liquid">
+        <ToggleButton {...props} variant="liquid" disabled defaultPressed>
           ON
         </ToggleButton>
-        <ToggleButton {...props} disabled squared>
+        <ToggleButton {...props} squared disabled>
           <ItalicIcon />
         </ToggleButton>
       </div>

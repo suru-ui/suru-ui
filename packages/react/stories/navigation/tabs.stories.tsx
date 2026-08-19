@@ -40,7 +40,7 @@ export const Usage = meta.story({
   }),
   render(props) {
     return (
-      <Tabs {...props} defaultValue="overview" className="w-96">
+      <Tabs {...props} className="w-96" defaultValue="overview">
         <TabsParts.List>
           <TabsParts.Tab value="overview">概要</TabsParts.Tab>
           <TabsParts.Tab value="projects">プロジェクト</TabsParts.Tab>
@@ -71,7 +71,7 @@ export const Vertical = meta.story({
   }),
   render(props) {
     return (
-      <Tabs {...props} defaultValue="overview" className="w-96">
+      <Tabs {...props} className="w-96" defaultValue="overview">
         <div className="flex">
           <TabsParts.List>
             <TabsParts.Tab value="overview">概要</TabsParts.Tab>
@@ -105,8 +105,8 @@ export const Controlled = meta.story({
       <div className="flex w-96 flex-col gap-2">
         <Tabs
           {...props}
-          className="w-96"
           value={value}
+          className="w-96"
           onValueChange={(nextValue) => setValue(String(nextValue))}
         >
           <TabsParts.List>
@@ -133,7 +133,7 @@ export const DisabledTab = meta.story({
   }),
   render(props) {
     return (
-      <Tabs {...props} defaultValue="overview" className="w-96">
+      <Tabs {...props} className="w-96" defaultValue="overview">
         <TabsParts.List>
           <TabsParts.Tab value="overview">概要</TabsParts.Tab>
           <TabsParts.Tab value="projects" disabled>
@@ -162,7 +162,7 @@ export const Sizes = meta.story({
       <div className="flex flex-col gap-3">
         {SIZES.map((size) => (
           <div key={size}>
-            <Tabs {...props} size={size} defaultValue="overview" className="w-96">
+            <Tabs {...props} size={size} className="w-96" defaultValue="overview">
               <TabsParts.List>
                 <TabsParts.Tab value="overview">概要</TabsParts.Tab>
                 <TabsParts.Tab value="projects">プロジェクト</TabsParts.Tab>
@@ -189,7 +189,7 @@ export const Radius = meta.story({
       <div className="flex flex-col gap-3">
         {(["none", "sm", "md", "lg"] as const).map((radius) => (
           <div key={radius}>
-            <Tabs {...props} radius={radius} defaultValue="overview" className="w-96">
+            <Tabs {...props} radius={radius} className="w-96" defaultValue="overview">
               <TabsParts.List>
                 <TabsParts.Tab value="overview">概要</TabsParts.Tab>
                 <TabsParts.Tab value="projects">プロジェクト</TabsParts.Tab>

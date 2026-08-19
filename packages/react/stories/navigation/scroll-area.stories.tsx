@@ -35,7 +35,7 @@ export const BothScrollbars = meta.story({
   ...ctrl({}),
   render(props) {
     return (
-      <ScrollArea {...props} horizontal className="h-64 w-80 rounded-lg bg-(--sui-canvas-1) p-4">
+      <ScrollArea {...props} className="h-64 w-80 rounded-lg bg-(--sui-canvas-1) p-4" horizontal>
         <div className="grid w-[720px] grid-cols-8 gap-2">
           {Array.from({ length: 80 }, (_, index) => (
             <div key={index} className="rounded-md bg-(--sui-canvas-2) p-3 text-center">

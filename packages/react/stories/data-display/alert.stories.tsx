@@ -70,10 +70,10 @@ export const WithIcon = meta.story({
         <Alert {...props} icon={<InfoIcon />}>
           新しい更新があります。
         </Alert>
-        <Alert {...props} color="green" icon={<CheckCircle2Icon />}>
+        <Alert {...props} icon={<CheckCircle2Icon />} color="green">
           保存しました。
         </Alert>
-        <Alert {...props} color="red" icon={<AlertCircleIcon />}>
+        <Alert {...props} icon={<AlertCircleIcon />} color="red">
           保存できませんでした。
         </Alert>
       </div>

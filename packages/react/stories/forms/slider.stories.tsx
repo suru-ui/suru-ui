@@ -175,19 +175,19 @@ export const LabelAndValue = meta.story({
       <div className="flex w-80 flex-col gap-6">
         <Slider
           {...props}
-          defaultValue={25}
           slotProps={{
             label: { children: "音量" },
             value: {},
           }}
+          defaultValue={25}
         />
         <Slider
           {...props}
-          defaultValue={[25, 75]}
           slotProps={{
             label: { children: "レンジ" },
             value: {},
           }}
+          defaultValue={[25, 75]}
         />
       </div>
     );
@@ -224,15 +224,15 @@ export const Vertical = meta.story({
       <div className="flex items-center justify-center gap-10">
         <Slider
           {...props}
+          slotProps={{ control: { style: { height: 160 } } }}
           orientation="vertical"
           defaultValue={25}
-          slotProps={{ control: { style: { height: 160 } } }}
         />
         <Slider
           {...props}
+          slotProps={{ control: { style: { height: 160 } } }}
           orientation="vertical"
           defaultValue={[25, 75]}
-          slotProps={{ control: { style: { height: 160 } } }}
         />
       </div>
     );

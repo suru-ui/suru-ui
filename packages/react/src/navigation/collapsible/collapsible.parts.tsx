@@ -149,8 +149,8 @@ export const CollapsibleTrigger: IComponent<CollapsibleTriggerProps> =
     return (
       <Collapsible.Trigger
         {...otherProps}
-        className={cn(className, "sui_collapsible_trigger")}
         render={children}
+        className={cn(className, "sui_collapsible_trigger")}
       />
     );
   };

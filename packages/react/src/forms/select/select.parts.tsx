@@ -843,8 +843,8 @@ export const SelectItemIndicator: IComponent<SelectItemIndicatorProps> =
     return (
       <BaseSelect.ItemIndicator
         {...otherProps}
-        keepMounted={keepMounted}
         className={cn(className, "sui_select_item_indicator")}
+        keepMounted={keepMounted}
       />
     );
   };

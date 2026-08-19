@@ -211,8 +211,8 @@ export const WithButton = meta.story({
                 size={props.size}
                 color={props.color}
                 radius={props.radius}
-                variant={variant}
                 squared
+                variant={variant}
                 className="[--sui_button-background_color-normal:transparent]"
               >
                 <XIcon />

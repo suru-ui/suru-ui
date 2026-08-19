@@ -119,8 +119,8 @@ export const AlertDialogTrigger: IComponent<AlertDialogTriggerProps> =
       <AlertDialog.Trigger
         {...otherProps}
         handle={handle}
-        className={cn(className, "sui_alert_dialog_trigger")}
         render={children}
+        className={cn(className, "sui_alert_dialog_trigger")}
       />
     );
   };
@@ -465,8 +465,8 @@ export const AlertDialogClose: IComponent<AlertDialogCloseProps> = function SuiA
   return (
     <AlertDialog.Close
       {...otherProps}
-      className={cn(className, "sui_alert_dialog_close")}
       render={children}
+      className={cn(className, "sui_alert_dialog_close")}
     />
   );
 };

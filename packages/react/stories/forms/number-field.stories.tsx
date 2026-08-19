@@ -76,7 +76,7 @@ export const Usage = meta.story({
     min: undefined,
   }),
   render(props) {
-    return <NumberField {...props} defaultValue={100} className="w-[320px]" />;
+    return <NumberField {...props} className="w-[320px]" defaultValue={100} />;
   },
 });
 
@@ -316,8 +316,8 @@ export const Disabled = meta.story({
               {...props}
               disabled
               className="w-[320px]"
-              startAddons={[<JapaneseYenIcon key={0} />]}
               placeholder="プレースホルダー"
+              startAddons={[<JapaneseYenIcon key={0} />]}
             />
           </div>
         ))}

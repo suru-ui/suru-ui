@@ -78,7 +78,6 @@ export const TabsRoot: IComponent<TabsRootProps> = function SuiTabsRoot(props) {
   return (
     <BaseTabs.Root
       {...otherProps}
-      orientation={orientation}
       className={cn(
         className,
         "sui_tabs",
@@ -87,6 +86,7 @@ export const TabsRoot: IComponent<TabsRootProps> = function SuiTabsRoot(props) {
         `sui_tabs-radius_${radius}`,
         `sui_tabs-size_${size}`,
       )}
+      orientation={orientation}
     />
   );
 };

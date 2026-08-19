@@ -47,13 +47,13 @@ export const Usage = meta.story({
   render(props) {
     return (
       <AvatarGroup {...props}>
-        <Avatar src="https://i.pravatar.cc/128?img=11" alt="い">
+        <Avatar alt="い" src="https://i.pravatar.cc/128?img=11">
           い
         </Avatar>
-        <Avatar src="https://i.pravatar.cc/128?img=12" alt="ろ">
+        <Avatar alt="ろ" src="https://i.pravatar.cc/128?img=12">
           ろ
         </Avatar>
-        <Avatar src="https://i.pravatar.cc/128?img=13" alt="は">
+        <Avatar alt="は" src="https://i.pravatar.cc/128?img=13">
           は
         </Avatar>
       </AvatarGroup>
@@ -73,13 +73,13 @@ export const Surplus = meta.story({
   render(props) {
     return (
       <AvatarGroup {...props}>
-        <Avatar src="https://i.pravatar.cc/128?img=11" alt="い">
+        <Avatar alt="い" src="https://i.pravatar.cc/128?img=11">
           い
         </Avatar>
-        <Avatar src="https://i.pravatar.cc/128?img=12" alt="ろ">
+        <Avatar alt="ろ" src="https://i.pravatar.cc/128?img=12">
           ろ
         </Avatar>
-        <Avatar src="https://i.pravatar.cc/128?img=13" alt="は">
+        <Avatar alt="は" src="https://i.pravatar.cc/128?img=13">
           は
         </Avatar>
         <Avatar>に</Avatar>
