@@ -21,10 +21,12 @@ export type SwitchRootColor = Color;
  * {@link SwitchRootProps} で指定できます。
  *
  * - `"none"`: 角を直角にする
- * - `"rounded"`: 標準的な角丸
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-export type SwitchRootRadius = "none" | "rounded" | "full";
+export type SwitchRootRadius = "none" | Size | "full";
 
 /**
  * スイッチの大きさです。

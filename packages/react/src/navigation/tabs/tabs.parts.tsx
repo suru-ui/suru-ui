@@ -18,7 +18,7 @@ import "./tabs.css";
  * - `"md"`: 標準的な角丸
  * - `"lg"`: 大きい角丸
  */
-export type TabsRootRadius = "none" | "sm" | "md" | "lg";
+export type TabsRootRadius = "none" | Size;
 
 /**
  * Tabs の大きさです。

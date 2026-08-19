@@ -109,10 +109,12 @@ export type CheckboxGroupRootOrientation = "horizontal" | "vertical";
  * チェックボックスグループの角丸です。
  *
  * - `"none"`: 角を直角にする
- * - `"rounded"`: 標準的な角丸
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-export type CheckboxGroupRootRadius = "none" | "rounded" | "full";
+export type CheckboxGroupRootRadius = "none" | Size | "full";
 
 /**
  * チェックボックスグループの大きさです。
@@ -175,10 +177,9 @@ export type CheckboxGroupRootProps = React.ComponentProps<typeof CheckboxGroup> 
   /**
    * チェックボックスの角丸を指定します。
    *
+   * デフォルト値は {@link CheckboxGroupRootProps.size|size} です。
    * {@link CheckboxGroupRoot} の子要素に指定した値より優先されます。
    * 値を変更すると、グループ内のチェックボックスも更新されます。
-   *
-   * @default "rounded"
    */
   radius?: CheckboxGroupRootRadius | undefined;
 
@@ -214,8 +215,8 @@ export const CheckboxGroupRoot: IComponent<CheckboxGroupRootProps> = function Su
 ) {
   const {
     color: colorProp = "grey",
-    radius: radiusProp = "rounded",
     size: sizeProp = "md",
+    radius: radiusProp = sizeProp,
     variant: variantProp = "naked",
     disabled,
     outlined = variantProp === "naked",

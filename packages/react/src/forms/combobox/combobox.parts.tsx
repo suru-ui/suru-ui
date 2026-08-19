@@ -107,10 +107,12 @@ export type ComboboxRootItems<Value = unknown> =
  * コンボボックスの角丸です。
  *
  * - `"none"`: 角を直角にする
- * - `"rounded"`: 標準的な角丸
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-export type ComboboxRootRadius = "none" | "rounded" | "full";
+export type ComboboxRootRadius = "none" | Size | "full";
 
 /**
  * コンボボックスの大きさです。
@@ -162,7 +164,7 @@ export type ComboboxRootProps<Value = unknown, Multiple extends boolean | undefi
   /**
    * 入力を含むグループ要素の角丸を指定します。
    *
-   * @default "rounded"
+   * デフォルト値は {@link ComboboxRootProps.size|size} です。
    */
   radius?: ComboboxRootRadius | undefined;
 
@@ -206,8 +208,8 @@ export const ComboboxRoot: ComboboxRootComponent = function SuiComboboxRoot<
     variant: variantProp = "naked",
     outlined: outlinedProp = variantProp === "naked",
     accentColor: accentColorProp = "grey",
-    radius: radiusProp = "rounded",
     size: sizeProp = "md",
+    radius: radiusProp = sizeProp,
     ...otherProps
   } = props;
   const context = React.useMemo<ComboboxContext>(
@@ -423,7 +425,7 @@ export const ComboboxInputGroup: IComponent<ComboboxInputGroupProps> =
     const context = useComboboxContext(true);
     const { className, ...otherProps } = props;
     const size = context?.size ?? "md";
-    const radius = context?.radius ?? "rounded";
+    const radius = context?.radius ?? "md";
     const variant = context?.variant ?? "naked";
     const outlined = context?.outlined ?? variant === "naked";
     const accentColor = context?.accentColor ?? "grey";

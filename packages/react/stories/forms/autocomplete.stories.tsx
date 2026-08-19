@@ -4,6 +4,8 @@ import * as React from "react";
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Autocomplete } from "../../src/forms/autocomplete/index.js";
 
+const RADII = ["none", ...SIZES, "full"] as const;
+
 const meta = preview.meta({
   title: "Forms / Autocomplete",
   component: Autocomplete,
@@ -29,7 +31,7 @@ const ctrl = controls(Autocomplete, {
     control: "text",
   },
   radius: {
-    options: ["none", "rounded", "full"],
+    options: RADII,
     control: "select",
   },
   size: {
@@ -51,7 +53,7 @@ export const Usage = meta.story({
     variant: "naked",
     accentColor: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     placeholder: "フルーツを検索",
@@ -72,7 +74,7 @@ export const Variants = meta.story({
     items: ["りんご", "バナナ", "ぶどう", "みかん", "いちご", "もも"],
     accentColor: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     placeholder: "検索",
@@ -93,7 +95,7 @@ export const Outlined = meta.story({
     variant: "naked",
     accentColor: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: true,
     disabled: false,
     placeholder: "検索",
@@ -113,7 +115,7 @@ export const AccentColors = meta.story({
   ...ctrl({
     variant: "naked",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     placeholder: "検索",
@@ -134,7 +136,7 @@ export const Sizes = meta.story({
   ...ctrl({
     variant: "naked",
     accentColor: "grey",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     placeholder: "検索",
@@ -166,7 +168,7 @@ export const Radius = meta.story({
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        {(["none", "rounded", "full"] as const).map((radius) => (
+        {RADII.map((radius) => (
           <div key={radius}>
             <Autocomplete {...props} radius={radius} className="w-64" />
             <div>{radius}</div>
@@ -183,7 +185,7 @@ export const Filled = meta.story({
     variant: "naked",
     accentColor: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     placeholder: "検索",
@@ -203,7 +205,7 @@ export const Grouped = meta.story({
     variant: "naked",
     accentColor: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     placeholder: "検索",
@@ -235,7 +237,7 @@ export const ManyItems = meta.story({
     variant: "naked",
     accentColor: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     placeholder: "候補を検索",
@@ -251,7 +253,7 @@ export const Disabled = meta.story({
     variant: "naked",
     accentColor: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     placeholder: "検索",
   }),

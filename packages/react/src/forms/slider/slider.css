@@ -146,9 +146,19 @@
     --sui_slider_track-border_radius: 0px;
   }
 
-  .sui_slider-radius_rounded {
+  .sui_slider-radius_sm {
     /* 枠線 */
     --sui_slider_track-border_radius: var(--sui-radius-sm);
+  }
+
+  .sui_slider-radius_md {
+    /* 枠線 */
+    --sui_slider_track-border_radius: var(--sui-radius-md);
+  }
+
+  .sui_slider-radius_lg {
+    /* 枠線 */
+    --sui_slider_track-border_radius: var(--sui-radius-lg);
   }
 
   .sui_slider-radius_full {
@@ -342,9 +352,19 @@
     --sui_slider_thumb-border_radius: 0px;
   }
 
-  .sui_slider-radius_rounded {
+  .sui_slider-radius_sm {
     /* 枠線 */
     --sui_slider_thumb-border_radius: var(--sui-radius-sm);
+  }
+
+  .sui_slider-radius_md {
+    /* 枠線 */
+    --sui_slider_thumb-border_radius: var(--sui-radius-md);
+  }
+
+  .sui_slider-radius_lg {
+    /* 枠線 */
+    --sui_slider_thumb-border_radius: var(--sui-radius-lg);
   }
 
   .sui_slider-radius_full {

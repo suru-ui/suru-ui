@@ -99,9 +99,19 @@
     --sui_autocomplete-border_radius: 0px;
   }
 
-  .sui_autocomplete-radius_rounded {
+  .sui_autocomplete-radius_sm {
     /* 枠線 */
     --sui_autocomplete-border_radius: var(--sui-radius-sm);
+  }
+
+  .sui_autocomplete-radius_md {
+    /* 枠線 */
+    --sui_autocomplete-border_radius: var(--sui-radius-md);
+  }
+
+  .sui_autocomplete-radius_lg {
+    /* 枠線 */
+    --sui_autocomplete-border_radius: var(--sui-radius-lg);
   }
 
   .sui_autocomplete-radius_full {

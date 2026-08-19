@@ -20,10 +20,12 @@ export type CheckboxRootColor = Color;
  * チェックボックスの角丸です。
  *
  * - `"none"`: 角を直角にする
- * - `"rounded"`: 標準的な角丸
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-export type CheckboxRootRadius = "none" | "rounded" | "full";
+export type CheckboxRootRadius = "none" | Size | "full";
 
 /**
  * チェックボックスの大きさです。
@@ -73,9 +75,8 @@ export type CheckboxRootProps = React.ComponentProps<typeof Checkbox.Root> & {
   /**
    * チェックボックスの角丸を指定します。
    *
+   * デフォルト値は {@link CheckboxRootProps.size|size} です。
    * {@link CheckboxGroupRoot} 内では、グループの値が優先されます。
-   *
-   * @default "rounded"
    */
   radius?: CheckboxRootRadius | undefined;
 
@@ -106,7 +107,7 @@ export const CheckboxRoot: IComponent<CheckboxRootProps> = function SuiCheckboxR
   const {
     size: sizeProp = "md",
     color: colorProp = "grey",
-    radius: radiusProp = "rounded",
+    radius: radiusProp = sizeProp,
     variant: variantProp = "naked",
     disabled: disabledProp = false,
     outlined = variantProp === "naked",

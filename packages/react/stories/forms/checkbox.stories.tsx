@@ -5,6 +5,8 @@ import * as React from "react";
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Checkbox } from "../../src/forms/checkbox/index.js";
 
+const RADII = ["none", ...SIZES, "full"] as const;
+
 const meta = preview.meta({
   title: "Forms / Checkbox",
   component: Checkbox,
@@ -24,7 +26,7 @@ const ctrl = controls(Checkbox, {
     control: "boolean",
   },
   radius: {
-    options: ["none", "rounded", "full"],
+    options: RADII,
     control: "select",
   },
   size: {
@@ -43,7 +45,7 @@ export const Usage = meta.story({
     variant: "naked",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
   }),
@@ -64,7 +66,7 @@ export const Variants = meta.story({
   ...ctrl({
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
   }),
@@ -93,7 +95,7 @@ export const Outlined = meta.story({
   ...ctrl({
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     disabled: false,
   }),
   render(props) {
@@ -121,7 +123,7 @@ export const Colors = meta.story({
   ...ctrl({
     variant: "naked",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
   }),
@@ -146,7 +148,7 @@ export const Sizes = meta.story({
   ...ctrl({
     variant: "naked",
     color: "grey",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
   }),
@@ -184,24 +186,14 @@ export const Radius = meta.story({
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <label className="flex items-center gap-2">
-          <Checkbox {...props} radius="none" defaultChecked>
-            <CheckIcon />
-          </Checkbox>
-          none
-        </label>
-        <label className="flex items-center gap-2">
-          <Checkbox {...props} radius="rounded" defaultChecked>
-            <CheckIcon />
-          </Checkbox>
-          rounded
-        </label>
-        <label className="flex items-center gap-2">
-          <Checkbox {...props} radius="full" defaultChecked>
-            <CheckIcon />
-          </Checkbox>
-          full
-        </label>
+        {RADII.map((radius) => (
+          <label key={radius} className="flex items-center gap-2">
+            <Checkbox {...props} radius={radius} defaultChecked>
+              <CheckIcon />
+            </Checkbox>
+            {radius}
+          </label>
+        ))}
       </div>
     );
   },
@@ -213,7 +205,7 @@ export const Checked = meta.story({
     variant: "naked",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
   }),
@@ -243,7 +235,7 @@ export const Controlled = meta.story({
     variant: "naked",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
   }),
@@ -269,7 +261,7 @@ export const Indeterminate = meta.story({
     variant: "naked",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
   }),
@@ -293,7 +285,7 @@ export const Disabled = meta.story({
     variant: "naked",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
   }),
   render(props) {

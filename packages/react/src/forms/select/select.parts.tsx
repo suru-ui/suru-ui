@@ -85,10 +85,12 @@ export const useContext: IUseContext<Context> = useSelectContext;
  * 選択欄の角丸です。
  *
  * - `"none"`: 角を直角にする
- * - `"rounded"`: 標準的な角丸
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-export type SelectRootRadius = "none" | "rounded" | "full";
+export type SelectRootRadius = "none" | Size | "full";
 
 /**
  * 選択欄の大きさです。
@@ -160,6 +162,8 @@ export type SelectRootProps<Value = unknown, Multiple extends boolean | undefine
 
   /**
    * 選択欄とリスト項目の角丸を指定します。
+   *
+   * デフォルト値は {@link SelectRootProps.size|size} です。
    */
   radius?: SelectRootRadius | undefined;
 
@@ -196,8 +200,8 @@ export const SelectRoot: SelectRootComponent = function SuiSelectRoot<
 >(props: SelectRootProps<Value, Multiple>) {
   const {
     items,
-    radius: radiusProp = "rounded",
     size: sizeProp = "md",
+    radius: radiusProp = sizeProp,
     variant: variantProp = "naked",
     outlined: outlinedProp = variantProp === "naked",
     ...otherProps
@@ -350,7 +354,7 @@ export const SelectTrigger: IComponent<SelectTriggerProps> = function SuiSelectT
   const context = useSelectContext(true);
   const { className, ...otherProps } = props;
   const size = actionGroup?.size ?? context?.size ?? "md";
-  const radius = actionGroup?.radius ?? context?.radius ?? "rounded";
+  const radius = actionGroup?.radius ?? context?.radius ?? "md";
   const variant = actionGroup?.variant ?? context?.variant ?? "naked";
   const outlined = actionGroup?.outlined ?? context?.outlined ?? variant === "naked";
 

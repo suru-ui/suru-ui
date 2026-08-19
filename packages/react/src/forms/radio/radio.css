@@ -92,9 +92,19 @@
     --sui_radio-border_radius: 0px;
   }
 
-  .sui_radio-radius_rounded {
+  .sui_radio-radius_sm {
     /* 枠線 */
     --sui_radio-border_radius: var(--sui-radius-sm);
+  }
+
+  .sui_radio-radius_md {
+    /* 枠線 */
+    --sui_radio-border_radius: var(--sui-radius-md);
+  }
+
+  .sui_radio-radius_lg {
+    /* 枠線 */
+    --sui_radio-border_radius: var(--sui-radius-lg);
   }
 
   .sui_radio-radius_full {

@@ -5,6 +5,8 @@ import { preview, controls } from "../../.config/storybook/preview.js";
 import { RadioGroup } from "../../src/forms/radio-group/index.js";
 import { Radio } from "../../src/forms/radio/index.js";
 
+const RADII = ["none", ...SIZES, "full"] as const;
+
 const meta = preview.meta({
   title: "Forms / Radio",
   component: Radio,
@@ -24,7 +26,7 @@ const ctrl = controls(Radio, {
     control: "boolean",
   },
   radius: {
-    options: ["none", "rounded", "full"],
+    options: RADII,
     control: "select",
   },
   size: {
@@ -182,18 +184,12 @@ export const Radius = meta.story({
   render(props) {
     return (
       <RadioGroup defaultValue="full" className="flex flex-col gap-3">
-        <label className="flex items-center gap-2">
-          <Radio {...props} radius="none" value="none" />
-          none
-        </label>
-        <label className="flex items-center gap-2">
-          <Radio {...props} radius="rounded" value="rounded" />
-          rounded
-        </label>
-        <label className="flex items-center gap-2">
-          <Radio {...props} radius="full" value="full" />
-          full
-        </label>
+        {RADII.map((radius) => (
+          <label key={radius} className="flex items-center gap-2">
+            <Radio {...props} radius={radius} value={radius} />
+            {radius}
+          </label>
+        ))}
       </RadioGroup>
     );
   },

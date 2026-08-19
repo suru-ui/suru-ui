@@ -104,9 +104,19 @@
     --sui_switch-border_radius: 0px;
   }
 
-  .sui_switch-radius_rounded {
+  .sui_switch-radius_sm {
     /* 枠線 */
     --sui_switch-border_radius: var(--sui-radius-sm);
+  }
+
+  .sui_switch-radius_md {
+    /* 枠線 */
+    --sui_switch-border_radius: var(--sui-radius-md);
+  }
+
+  .sui_switch-radius_lg {
+    /* 枠線 */
+    --sui_switch-border_radius: var(--sui-radius-lg);
   }
 
   .sui_switch-radius_full {
@@ -312,9 +322,19 @@
     --sui_switch_thumb-border_radius: 0px;
   }
 
-  .sui_switch-radius_rounded {
+  .sui_switch-radius_sm {
     /* 枠線 */
     --sui_switch_thumb-border_radius: var(--sui-radius-sm);
+  }
+
+  .sui_switch-radius_md {
+    /* 枠線 */
+    --sui_switch_thumb-border_radius: var(--sui-radius-md);
+  }
+
+  .sui_switch-radius_lg {
+    /* 枠線 */
+    --sui_switch_thumb-border_radius: var(--sui-radius-lg);
   }
 
   .sui_switch-radius_full {

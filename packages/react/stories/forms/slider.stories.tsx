@@ -4,6 +4,8 @@ import * as React from "react";
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Slider } from "../../src/forms/slider/index.js";
 
+const RADII = ["none", ...SIZES, "full"] as const;
+
 const meta = preview.meta({
   title: "Forms / Slider",
   component: Slider,
@@ -23,7 +25,7 @@ const ctrl = controls(Slider, {
     control: "boolean",
   },
   radius: {
-    options: ["none", "rounded", "full"],
+    options: RADII,
     control: "select",
   },
   size: {
@@ -147,7 +149,7 @@ export const Radius = meta.story({
   render(props) {
     return (
       <div className="flex w-80 flex-col gap-6">
-        {(["none", "rounded", "full"] as const).map((radius, index) => (
+        {RADII.map((radius, index) => (
           <div key={radius}>
             <Slider {...props} radius={radius} defaultValue={(index + 1) * 25} />
             <div>{radius}</div>

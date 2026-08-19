@@ -4,6 +4,8 @@ import * as React from "react";
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Switch } from "../../src/forms/switch/index.js";
 
+const RADII = ["none", ...SIZES, "full"] as const;
+
 const meta = preview.meta({
   title: "Forms / Switch",
   component: Switch,
@@ -23,7 +25,7 @@ const ctrl = controls(Switch, {
     control: "boolean",
   },
   radius: {
-    options: ["none", "rounded", "full"],
+    options: RADII,
     control: "select",
   },
   size: {
@@ -169,18 +171,12 @@ export const Radius = meta.story({
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <label className="flex items-center gap-2">
-          <Switch {...props} radius="none" defaultChecked />
-          none
-        </label>
-        <label className="flex items-center gap-2">
-          <Switch {...props} radius="rounded" defaultChecked />
-          rounded
-        </label>
-        <label className="flex items-center gap-2">
-          <Switch {...props} radius="full" defaultChecked />
-          full
-        </label>
+        {RADII.map((radius) => (
+          <label key={radius} className="flex items-center gap-2">
+            <Switch {...props} radius={radius} defaultChecked />
+            {radius}
+          </label>
+        ))}
       </div>
     );
   },

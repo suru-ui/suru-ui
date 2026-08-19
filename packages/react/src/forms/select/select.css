@@ -111,11 +111,6 @@
     --sui_select-border_radius: var(--sui-radius-lg);
   }
 
-  .sui_select-radius_rounded {
-    /* 枠線 */
-    --sui_select-border_radius: var(--sui-radius-sm);
-  }
-
   .sui_select-radius_full {
     /* 枠線 */
     --sui_select-border_radius: calc(var(--sui_select-min_height) / 2);

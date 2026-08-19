@@ -97,9 +97,19 @@
     --sui_combobox-border_radius: 0px;
   }
 
-  .sui_combobox-radius_rounded {
+  .sui_combobox-radius_sm {
     /* 枠線 */
     --sui_combobox-border_radius: var(--sui-radius-sm);
+  }
+
+  .sui_combobox-radius_md {
+    /* 枠線 */
+    --sui_combobox-border_radius: var(--sui-radius-md);
+  }
+
+  .sui_combobox-radius_lg {
+    /* 枠線 */
+    --sui_combobox-border_radius: var(--sui-radius-lg);
   }
 
   .sui_combobox-radius_full {

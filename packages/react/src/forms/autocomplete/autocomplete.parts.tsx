@@ -94,10 +94,12 @@ export type AutocompleteRootColor = Color;
  * オートコンプリートの角丸です。
  *
  * - `"none"`: 角を直角にする
- * - `"rounded"`: 標準的な角丸
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-export type AutocompleteRootRadius = "none" | "rounded" | "full";
+export type AutocompleteRootRadius = "none" | Size | "full";
 
 /**
  * オートコンプリートの大きさです。
@@ -152,7 +154,7 @@ export type AutocompleteRootProps = Omit<
   /**
    * 入力を含むグループ要素の角丸を指定します。
    *
-   * @default "rounded"
+   * デフォルト値は {@link AutocompleteRootProps.size|size} です。
    */
   radius?: AutocompleteRootRadius | undefined;
 
@@ -183,8 +185,8 @@ export const AutocompleteRoot: IComponent<AutocompleteRootProps> = function SuiA
     variant: variantProp = "naked",
     outlined: outlinedProp = variantProp === "naked",
     accentColor: accentColorProp = "grey",
-    radius: radiusProp = "rounded",
     size: sizeProp = "md",
+    radius: radiusProp = sizeProp,
     ...otherProps
   } = props;
   const context = React.useMemo<AutocompleteContext>(
@@ -401,7 +403,7 @@ export const AutocompleteInputGroup: IComponent<AutocompleteInputGroupProps> =
     const context = useAutocompleteContext(true);
     const { className, ...otherProps } = props;
     const size = context?.size ?? "md";
-    const radius = context?.radius ?? "rounded";
+    const radius = context?.radius ?? "md";
     const variant = context?.variant ?? "naked";
     const outlined = context?.outlined ?? variant === "naked";
     const accentColor = context?.accentColor ?? "grey";

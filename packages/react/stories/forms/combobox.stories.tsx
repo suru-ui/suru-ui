@@ -4,6 +4,8 @@ import * as React from "react";
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Combobox } from "../../src/forms/combobox/index.js";
 
+const RADII = ["none", ...SIZES, "full"] as const;
+
 const meta = preview.meta({
   title: "Forms / Combobox",
   component: Combobox,
@@ -29,7 +31,7 @@ const ctrl = controls(Combobox, {
     control: "text",
   },
   radius: {
-    options: ["none", "rounded", "full"],
+    options: RADII,
     control: "select",
   },
   size: {
@@ -52,7 +54,7 @@ export const Usage = meta.story({
     variant: "naked",
     accentColor: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     multiple: false,
@@ -69,7 +71,7 @@ export const Variants = meta.story({
     items: fruits,
     accentColor: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     multiple: false,
@@ -92,7 +94,7 @@ export const Multiple = meta.story({
     variant: "naked",
     accentColor: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     multiple: true,
@@ -121,7 +123,7 @@ export const Grouped = meta.story({
     variant: "naked",
     accentColor: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     multiple: false,
@@ -150,7 +152,7 @@ export const ManyItems = meta.story({
     variant: "naked",
     accentColor: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     multiple: false,
@@ -167,7 +169,7 @@ export const Sizes = meta.story({
     items: fruits,
     variant: "naked",
     accentColor: "grey",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     multiple: false,
@@ -193,7 +195,7 @@ export const AccentColors = meta.story({
     items: fruits,
     variant: "naked",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     multiple: false,
@@ -217,7 +219,7 @@ export const Disabled = meta.story({
     variant: "naked",
     accentColor: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     multiple: false,
     placeholder: "選択",
@@ -247,7 +249,7 @@ export const Radius = meta.story({
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        {(["none", "rounded", "full"] as const).map((radius) => (
+        {RADII.map((radius) => (
           <div key={radius}>
             <Combobox {...props} radius={radius} className="w-64" />
             <div>{radius}</div>

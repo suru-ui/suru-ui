@@ -4,6 +4,8 @@ import * as React from "react";
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Select } from "../../src/forms/select/index.js";
 
+const RADII = ["none", ...SIZES, "full"] as const;
+
 const meta = preview.meta({
   title: "Forms / Select",
   component: Select,
@@ -22,7 +24,7 @@ const ctrl = controls(Select, {
     control: "text",
   },
   radius: {
-    options: ["none", "rounded", "full"],
+    options: RADII,
     control: "select",
   },
   size: {
@@ -43,7 +45,7 @@ export const Usage = meta.story({
     items: fruits,
     variant: "naked",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     placeholder: "果物を選択",
@@ -58,7 +60,7 @@ export const Variants = meta.story({
   ...ctrl({
     items: fruits,
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     placeholder: "選択",
@@ -78,7 +80,7 @@ export const Sizes = meta.story({
   ...ctrl({
     items: fruits,
     variant: "naked",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     placeholder: "選択",
@@ -107,7 +109,7 @@ export const Radius = meta.story({
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        {(["none", "rounded", "full"] as const).map((radius) => (
+        {RADII.map((radius) => (
           <div key={radius}>
             <Select {...props} items={fruits} radius={radius} className="w-64" />
             <div>{radius}</div>
@@ -124,7 +126,7 @@ export const Multiple = meta.story({
     items: ["TypeScript", "Rust", "Go", "Python"],
     variant: "naked",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     multiple: false,
@@ -154,7 +156,7 @@ export const Grouped = meta.story({
   ...ctrl({
     variant: "naked",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     multiple: false,
@@ -181,7 +183,7 @@ export const ManyItems = meta.story({
   ...ctrl({
     variant: "naked",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     multiple: false,
@@ -204,7 +206,7 @@ export const Disabled = meta.story({
   ...ctrl({
     variant: "naked",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     multiple: false,
     placeholder: "選択",

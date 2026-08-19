@@ -96,9 +96,19 @@
     --sui_checkbox-border_radius: 0px;
   }
 
-  .sui_checkbox-radius_rounded {
+  .sui_checkbox-radius_sm {
     /* 枠線 */
     --sui_checkbox-border_radius: var(--sui-radius-sm);
+  }
+
+  .sui_checkbox-radius_md {
+    /* 枠線 */
+    --sui_checkbox-border_radius: var(--sui-radius-md);
+  }
+
+  .sui_checkbox-radius_lg {
+    /* 枠線 */
+    --sui_checkbox-border_radius: var(--sui-radius-lg);
   }
 
   .sui_checkbox-radius_full {

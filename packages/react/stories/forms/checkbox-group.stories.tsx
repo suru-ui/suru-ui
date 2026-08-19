@@ -6,6 +6,8 @@ import { preview, controls } from "../../.config/storybook/preview.js";
 import { CheckboxGroup } from "../../src/forms/checkbox-group/index.js";
 import { Checkbox } from "../../src/forms/checkbox/index.js";
 
+const RADII = ["none", ...SIZES, "full"] as const;
+
 const meta = preview.meta({
   title: "Forms / Checkbox Group",
   component: CheckboxGroup,
@@ -29,7 +31,7 @@ const ctrl = controls(CheckboxGroup, {
     control: "boolean",
   },
   radius: {
-    options: ["none", "rounded", "full"],
+    options: RADII,
     control: "select",
   },
   size: {
@@ -57,7 +59,7 @@ export const Usage = meta.story({
     variant: "naked",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     orientation: "vertical",
@@ -81,7 +83,7 @@ export const Parent = meta.story({
     variant: "naked",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     orientation: "vertical",
@@ -117,7 +119,7 @@ export const Colors = meta.story({
   ...ctrl({
     variant: "naked",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     orientation: "vertical",
@@ -140,7 +142,7 @@ export const Sizes = meta.story({
   ...ctrl({
     variant: "naked",
     color: "grey",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
     orientation: "vertical",
@@ -172,7 +174,7 @@ export const Disabled = meta.story({
     variant: "naked",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     orientation: "vertical",
   }),
@@ -192,7 +194,7 @@ export const Horizontal = meta.story({
     variant: "naked",
     color: "grey",
     size: "md",
-    radius: "rounded",
+    radius: undefined,
     outlined: undefined,
     disabled: false,
   }),
@@ -224,7 +226,7 @@ export const Radius = meta.story({
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        {(["none", "rounded", "full"] as const).map((radius) => (
+        {RADII.map((radius) => (
           <CheckboxGroup key={radius} defaultValue={[radius]} {...props} radius={radius}>
             <Item value={radius}>{radius}</Item>
           </CheckboxGroup>

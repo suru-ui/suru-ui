@@ -19,11 +19,11 @@ import "./accordion.css";
  * アコーディオンの角丸です。
  *
  * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸（4px）
- * - `"md"`: 標準的な角丸（4px）
- * - `"lg"`: 大きい角丸（6px）
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
  */
-export type AccordionRootRadius = "none" | "sm" | "md" | "lg";
+export type AccordionRootRadius = "none" | Size;
 
 /**
  * アコーディオンの大きさです。

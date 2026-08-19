@@ -20,10 +20,12 @@ export type RadioRootColor = Color;
  * ラジオボタンの角丸です。
  *
  * - `"none"`: 角を直角にする
- * - `"rounded"`: 標準的な角丸
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-export type RadioRootRadius = "none" | "rounded" | "full";
+export type RadioRootRadius = "none" | Size | "full";
 
 /**
  * ラジオボタンの大きさです。
