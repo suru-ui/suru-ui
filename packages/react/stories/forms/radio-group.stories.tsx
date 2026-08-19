@@ -43,7 +43,7 @@ const ctrl = controls(RadioGroup, {
   },
 });
 
-const Item = ({ value, children }: { value: string; children: React.ReactNode }) => (
+const Item = ({ value, children }: { children: React.ReactNode; value: string }) => (
   <label className="flex items-center gap-2">
     <Radio value={value} />
     {children}

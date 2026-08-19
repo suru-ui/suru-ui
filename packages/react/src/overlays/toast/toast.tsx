@@ -35,36 +35,6 @@ export type ToastToastObject<TData extends object = object> = ToastRootToastObje
  */
 export type ToastSlotProps = {
   /**
-   * {@link ToastPortal} に渡すプロパティーです。
-   */
-  readonly portal?: ToastPortalProps | undefined;
-
-  /**
-   * {@link ToastViewport} に渡すプロパティーです。
-   */
-  readonly viewport?: ToastViewportProps | undefined;
-
-  /**
-   * {@link ToastRoot} に渡すプロパティーです。
-   */
-  readonly root?: Omit<ToastRootProps, "toast"> | undefined;
-
-  /**
-   * {@link ToastContent} に渡すプロパティーです。
-   */
-  readonly content?: ToastContentProps | undefined;
-
-  /**
-   * {@link ToastTitle} に渡すプロパティーです。
-   */
-  readonly title?: ToastTitleProps | undefined;
-
-  /**
-   * {@link ToastDescription} に渡すプロパティーです。
-   */
-  readonly description?: ToastDescriptionProps | undefined;
-
-  /**
    * {@link ToastAction} に渡すプロパティーです。
    */
   readonly action?: ToastActionProps | undefined;
@@ -73,6 +43,36 @@ export type ToastSlotProps = {
    * {@link ToastClose} に渡すプロパティーです。
    */
   readonly close?: ToastCloseProps | undefined;
+
+  /**
+   * {@link ToastContent} に渡すプロパティーです。
+   */
+  readonly content?: ToastContentProps | undefined;
+
+  /**
+   * {@link ToastDescription} に渡すプロパティーです。
+   */
+  readonly description?: ToastDescriptionProps | undefined;
+
+  /**
+   * {@link ToastPortal} に渡すプロパティーです。
+   */
+  readonly portal?: ToastPortalProps | undefined;
+
+  /**
+   * {@link ToastRoot} に渡すプロパティーです。
+   */
+  readonly root?: Omit<ToastRootProps, "toast"> | undefined;
+
+  /**
+   * {@link ToastTitle} に渡すプロパティーです。
+   */
+  readonly title?: ToastTitleProps | undefined;
+
+  /**
+   * {@link ToastViewport} に渡すプロパティーです。
+   */
+  readonly viewport?: ToastViewportProps | undefined;
 };
 
 /**

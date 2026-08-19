@@ -23,9 +23,14 @@ import {
  */
 export type TooltipSlotProps = {
   /**
-   * {@link TooltipTrigger} に渡すプロパティーです。
+   * {@link TooltipArrow} に渡すプロパティーです。
    */
-  readonly trigger?: Omit<TooltipTriggerProps, "handle"> | undefined;
+  readonly arrow?: TooltipArrowProps | undefined;
+
+  /**
+   * {@link TooltipPopup} に渡すプロパティーです。
+   */
+  readonly popup?: TooltipPopupProps | undefined;
 
   /**
    * {@link TooltipPortal} に渡すプロパティーです。
@@ -38,14 +43,9 @@ export type TooltipSlotProps = {
   readonly positioner?: TooltipPositionerProps | undefined;
 
   /**
-   * {@link TooltipPopup} に渡すプロパティーです。
+   * {@link TooltipTrigger} に渡すプロパティーです。
    */
-  readonly popup?: TooltipPopupProps | undefined;
-
-  /**
-   * {@link TooltipArrow} に渡すプロパティーです。
-   */
-  readonly arrow?: TooltipArrowProps | undefined;
+  readonly trigger?: Omit<TooltipTriggerProps, "handle"> | undefined;
 };
 
 /**
@@ -58,13 +58,6 @@ export type TooltipState = TooltipRootState;
  */
 export type TooltipProps = Omit<TooltipRootProps, "children" | "handle"> & {
   /**
-   * ツールチップを表示する対象です。
-   *
-   * {@link TooltipTrigger|Trigger} の子要素として直接渡され、`render` に設定されます。
-   */
-  trigger?: TooltipTriggerProps["children"] | undefined;
-
-  /**
    * ポップアップに表示する内容です。
    */
   children?: React.ReactNode | undefined;
@@ -75,6 +68,13 @@ export type TooltipProps = Omit<TooltipRootProps, "children" | "handle"> & {
    * 各パーツのプロパティーが優先されます。
    */
   slotProps?: TooltipSlotProps | undefined;
+
+  /**
+   * ツールチップを表示する対象です。
+   *
+   * {@link TooltipTrigger|Trigger} の子要素として直接渡され、`render` に設定されます。
+   */
+  trigger?: TooltipTriggerProps["children"] | undefined;
 };
 
 interface TooltipComponentType extends IComponent<TooltipProps> {

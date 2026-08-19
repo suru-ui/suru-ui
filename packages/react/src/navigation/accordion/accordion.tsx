@@ -37,20 +37,9 @@ export type AccordionSize = AccordionRootSize;
  */
 export type AccordionSlotProps = {
   /**
-   * {@link AccordionItem} に渡すプロパティーです。
-   */
-  readonly item?: AccordionItemProps | undefined;
-
-  /**
    * {@link AccordionHeader} に渡すプロパティーです。
    */
   readonly header?: AccordionHeaderProps | undefined;
-
-  /**
-   * {@link AccordionTrigger} に渡すプロパティーです。
-   * `children` を指定すると、`title` より優先されてトリガー全体を置き換えます。
-   */
-  readonly trigger?: AccordionTriggerProps | undefined;
 
   /**
    * {@link AccordionIndicator} に渡すプロパティーです。
@@ -59,9 +48,20 @@ export type AccordionSlotProps = {
   readonly indicator?: AccordionIndicatorProps | undefined;
 
   /**
+   * {@link AccordionItem} に渡すプロパティーです。
+   */
+  readonly item?: AccordionItemProps | undefined;
+
+  /**
    * {@link AccordionPanel} に渡すプロパティーです。
    */
   readonly panel?: AccordionPanelProps | undefined;
+
+  /**
+   * {@link AccordionTrigger} に渡すプロパティーです。
+   * `children` を指定すると、`title` より優先されてトリガー全体を置き換えます。
+   */
+  readonly trigger?: AccordionTriggerProps | undefined;
 };
 
 /**

@@ -81,29 +81,9 @@ export type SelectItems<Value = unknown> = SelectRootItems<Value>;
  */
 export type SelectSlotProps = {
   /**
-   * {@link SelectLabel} に渡すプロパティーです。
+   * {@link SelectArrow} に渡すプロパティーです。
    */
-  readonly label?: SelectLabelProps | undefined;
-
-  /**
-   * {@link SelectValue} に渡すプロパティーです。
-   */
-  readonly value?: SelectValueProps | undefined;
-
-  /**
-   * {@link SelectTrigger} に渡すプロパティーです。
-   */
-  readonly trigger?: SelectTriggerProps | undefined;
-
-  /**
-   * {@link SelectIcon} に渡すプロパティーです。
-   */
-  readonly icon?: SelectIconProps | undefined;
-
-  /**
-   * {@link SelectPortal} に渡すプロパティーです。
-   */
-  readonly portal?: SelectPortalProps | undefined;
+  readonly arrow?: SelectArrowProps | undefined;
 
   /**
    * {@link SelectBackdrop} に渡すプロパティーです。
@@ -111,19 +91,19 @@ export type SelectSlotProps = {
   readonly backdrop?: SelectBackdropProps | undefined;
 
   /**
-   * {@link SelectPositioner} に渡すプロパティーです。
+   * {@link SelectGroup} に渡すプロパティーです。
    */
-  readonly positioner?: SelectPositionerProps | undefined;
+  readonly group?: SelectGroupProps | undefined;
 
   /**
-   * {@link SelectPopup} に渡すプロパティーです。
+   * {@link SelectGroupLabel} に渡すプロパティーです。
    */
-  readonly popup?: SelectPopupProps | undefined;
+  readonly groupLabel?: SelectGroupLabelProps | undefined;
 
   /**
-   * {@link SelectList} に渡すプロパティーです。
+   * {@link SelectIcon} に渡すプロパティーです。
    */
-  readonly list?: SelectListProps | undefined;
+  readonly icon?: SelectIconProps | undefined;
 
   /**
    * {@link SelectItem} に渡すプロパティーです。
@@ -141,14 +121,29 @@ export type SelectSlotProps = {
   readonly itemText?: SelectItemTextProps | undefined;
 
   /**
-   * {@link SelectArrow} に渡すプロパティーです。
+   * {@link SelectLabel} に渡すプロパティーです。
    */
-  readonly arrow?: SelectArrowProps | undefined;
+  readonly label?: SelectLabelProps | undefined;
 
   /**
-   * {@link SelectScrollUpArrow} に渡すプロパティーです。
+   * {@link SelectList} に渡すプロパティーです。
    */
-  readonly scrollUpArrow?: SelectScrollUpArrowProps | undefined;
+  readonly list?: SelectListProps | undefined;
+
+  /**
+   * {@link SelectPopup} に渡すプロパティーです。
+   */
+  readonly popup?: SelectPopupProps | undefined;
+
+  /**
+   * {@link SelectPortal} に渡すプロパティーです。
+   */
+  readonly portal?: SelectPortalProps | undefined;
+
+  /**
+   * {@link SelectPositioner} に渡すプロパティーです。
+   */
+  readonly positioner?: SelectPositionerProps | undefined;
 
   /**
    * {@link SelectScrollDownArrow} に渡すプロパティーです。
@@ -156,19 +151,24 @@ export type SelectSlotProps = {
   readonly scrollDownArrow?: SelectScrollDownArrowProps | undefined;
 
   /**
-   * {@link SelectGroup} に渡すプロパティーです。
+   * {@link SelectScrollUpArrow} に渡すプロパティーです。
    */
-  readonly group?: SelectGroupProps | undefined;
-
-  /**
-   * {@link SelectGroupLabel} に渡すプロパティーです。
-   */
-  readonly groupLabel?: SelectGroupLabelProps | undefined;
+  readonly scrollUpArrow?: SelectScrollUpArrowProps | undefined;
 
   /**
    * {@link SelectSeparator} に渡すプロパティーです。
    */
   readonly separator?: SelectSeparatorProps | undefined;
+
+  /**
+   * {@link SelectTrigger} に渡すプロパティーです。
+   */
+  readonly trigger?: SelectTriggerProps | undefined;
+
+  /**
+   * {@link SelectValue} に渡すプロパティーです。
+   */
+  readonly value?: SelectValueProps | undefined;
 };
 
 /**
@@ -184,9 +184,9 @@ export type SelectProps<Value = unknown, Multiple extends boolean | undefined = 
   "children"
 > & {
   /**
-   * トリガーの上に表示するラベルです。
+   * 選択項目の内容です。関数を指定すると、項目の値とインデックスから各項目を作ります。
    */
-  label?: React.ReactNode | undefined;
+  children?: React.ReactNode | ((item: Value, index: number) => React.ReactNode) | undefined;
 
   /**
    * トリガーに適用するクラス名です。`slotProps.trigger.className` と結合されます。
@@ -194,14 +194,14 @@ export type SelectProps<Value = unknown, Multiple extends boolean | undefined = 
   className?: SelectTriggerProps["className"] | undefined;
 
   /**
+   * トリガーの上に表示するラベルです。
+   */
+  label?: React.ReactNode | undefined;
+
+  /**
    * 選択値がないときに表示するプレースホルダーです。
    */
   placeholder?: React.ReactNode | undefined;
-
-  /**
-   * 選択項目の内容です。関数を指定すると、項目の値とインデックスから各項目を作ります。
-   */
-  children?: React.ReactNode | ((item: Value, index: number) => React.ReactNode) | undefined;
 
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。

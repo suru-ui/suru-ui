@@ -24,19 +24,14 @@ import {
  */
 export type ScrollAreaSlotProps = {
   /**
-   * {@link ScrollAreaViewport|Viewport} に渡すプロパティーです。
-   */
-  readonly viewport?: ScrollAreaViewportProps | undefined;
-
-  /**
    * {@link ScrollAreaContent|Content} に渡すプロパティーです。
    */
   readonly content?: ScrollAreaContentProps | undefined;
 
   /**
-   * {@link ScrollAreaScrollbar|Scrollbar} に渡すプロパティーです。
+   * {@link ScrollAreaCorner|Corner} に渡すプロパティーです。
    */
-  readonly scrollbar?: ScrollAreaScrollbarProps | undefined;
+  readonly corner?: ScrollAreaCornerProps | undefined;
 
   /**
    * 水平方向の {@link ScrollAreaScrollbar|Scrollbar} に渡すプロパティーです。
@@ -44,19 +39,24 @@ export type ScrollAreaSlotProps = {
   readonly horizontalScrollbar?: ScrollAreaScrollbarProps | undefined;
 
   /**
-   * {@link ScrollAreaThumb|Thumb} に渡すプロパティーです。
-   */
-  readonly thumb?: ScrollAreaThumbProps | undefined;
-
-  /**
    * 水平方向の {@link ScrollAreaThumb|Thumb} に渡すプロパティーです。
    */
   readonly horizontalThumb?: ScrollAreaThumbProps | undefined;
 
   /**
-   * {@link ScrollAreaCorner|Corner} に渡すプロパティーです。
+   * {@link ScrollAreaScrollbar|Scrollbar} に渡すプロパティーです。
    */
-  readonly corner?: ScrollAreaCornerProps | undefined;
+  readonly scrollbar?: ScrollAreaScrollbarProps | undefined;
+
+  /**
+   * {@link ScrollAreaThumb|Thumb} に渡すプロパティーです。
+   */
+  readonly thumb?: ScrollAreaThumbProps | undefined;
+
+  /**
+   * {@link ScrollAreaViewport|Viewport} に渡すプロパティーです。
+   */
+  readonly viewport?: ScrollAreaViewportProps | undefined;
 };
 
 /**
@@ -70,16 +70,16 @@ export type ScrollAreaState = ScrollAreaRootState;
 export type ScrollAreaProps = Omit<ScrollAreaRootProps, "children"> &
   Pick<ScrollAreaContentProps, "children"> & {
     /**
-     * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-     */
-    slotProps?: ScrollAreaSlotProps | undefined;
-
-    /**
      * 水平方向のスクロールバーを表示するかどうかを指定します。
      *
      * @default false
      */
     horizontal?: boolean | undefined;
+
+    /**
+     * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+     */
+    slotProps?: ScrollAreaSlotProps | undefined;
   };
 
 /**

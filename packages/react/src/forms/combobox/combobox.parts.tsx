@@ -99,8 +99,8 @@ export type ComboboxRootColor = Color;
 export type ComboboxRootItems<Value = unknown> =
   | readonly Value[]
   | readonly {
-      readonly label?: React.ReactNode;
       readonly items: readonly Value[];
+      readonly label?: React.ReactNode;
     }[];
 
 /**

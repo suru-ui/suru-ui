@@ -20,9 +20,9 @@ import {
  */
 export type ContextMenuSlotProps = {
   /**
-   * {@link ContextMenuTrigger|Trigger} に渡すプロパティーです。
+   * {@link ContextMenuPopup|Popup} に渡すプロパティーです。
    */
-  readonly trigger?: ContextMenuTriggerProps | undefined;
+  readonly popup?: ContextMenuPopupProps | undefined;
 
   /**
    * {@link ContextMenuPortal|Portal} に渡すプロパティーです。
@@ -35,9 +35,9 @@ export type ContextMenuSlotProps = {
   readonly positioner?: ContextMenuPositionerProps | undefined;
 
   /**
-   * {@link ContextMenuPopup|Popup} に渡すプロパティーです。
+   * {@link ContextMenuTrigger|Trigger} に渡すプロパティーです。
    */
-  readonly popup?: ContextMenuPopupProps | undefined;
+  readonly trigger?: ContextMenuTriggerProps | undefined;
 };
 
 /**
@@ -50,13 +50,6 @@ export type ContextMenuState = ContextMenuRootState;
  */
 export type ContextMenuProps = Omit<ContextMenuRootProps, "children"> & {
   /**
-   * コンテキストメニューを開く対象のコンテンツです。
-   *
-   * {@link ContextMenuTrigger|Trigger} の子要素として直接渡されます。
-   */
-  trigger?: ContextMenuTriggerProps["children"] | undefined;
-
-  /**
    * ポップアップに表示するメニュー項目です。
    */
   children?: React.ReactNode | undefined;
@@ -67,6 +60,13 @@ export type ContextMenuProps = Omit<ContextMenuRootProps, "children"> & {
    * 各パーツのプロパティーが優先されます。
    */
   slotProps?: ContextMenuSlotProps | undefined;
+
+  /**
+   * コンテキストメニューを開く対象のコンテンツです。
+   *
+   * {@link ContextMenuTrigger|Trigger} の子要素として直接渡されます。
+   */
+  trigger?: ContextMenuTriggerProps["children"] | undefined;
 };
 
 /**

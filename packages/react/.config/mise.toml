@@ -19,6 +19,7 @@ run = [
   "npx oxfmt --config ./.config/.oxfmtrc.json --check",
   "node scripts/sort-jsx-props.ts --check",
   "node scripts/sort-import-exports.ts --check",
+  "node scripts/sort-type-props.ts --check",
 ]
 
 [tasks."test:lint"]
@@ -39,6 +40,7 @@ run = [
   { task = "format:stylelint" },
   { task = "format:sort-jsx-props" },
   { task = "format:sort-import-exports" },
+  { task = "format:sort-type-props" },
 ]
 
 [tasks."format:oxfmt"]
@@ -52,6 +54,9 @@ run = "node scripts/sort-jsx-props.ts"
 
 [tasks."format:sort-import-exports"]
 run = "node scripts/sort-import-exports.ts"
+
+[tasks."format:sort-type-props"]
+run = "node scripts/sort-type-props.ts"
 
 [tasks.lint]
 run = "npx oxlint --config ./.config/.oxlintrc.json"

@@ -97,18 +97,18 @@ export type MenuTriggerProps<TPayload = unknown> = Omit<
   "handle" | "children" | "render"
 > & {
   /**
-   * メニュー ({@link Root}) を関連付けるハンドルです。
-   *
-   * {@link createHandle} で作成し、{@link Root} と共有します。Root 内に配置する場合は省略できます。
-   */
-  handle?: MenuHandle<TPayload> | undefined;
-
-  /**
    * ボタンとしてレンダリングする要素です。
    *
    * {@link Menu.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
    */
   children: NonNullable<Menu.Trigger.Props<TPayload>["render"]>;
+
+  /**
+   * メニュー ({@link Root}) を関連付けるハンドルです。
+   *
+   * {@link createHandle} で作成し、{@link Root} と共有します。Root 内に配置する場合は省略できます。
+   */
+  handle?: MenuHandle<TPayload> | undefined;
 };
 
 /**

@@ -131,19 +131,19 @@ export type AutocompleteRootProps = Omit<
   "items"
 > & {
   /**
+   * フォーカス時に枠線へ適用するアクセントカラーを指定します。
+   *
+   * @default "grey"
+   */
+  accentColor?: AutocompleteRootColor | undefined;
+
+  /**
    * リストに表示する項目の一覧です。
    *
    * フラットな配列か、`{ items }` を持つグループの配列を指定します。
    * 指定しない場合、`Item` に列挙された項目からリストが作られます。
    */
   items?: readonly unknown[] | undefined;
-
-  /**
-   * フォーカス時に枠線へ適用するアクセントカラーを指定します。
-   *
-   * @default "grey"
-   */
-  accentColor?: AutocompleteRootColor | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。

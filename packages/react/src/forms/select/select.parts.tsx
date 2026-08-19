@@ -114,14 +114,14 @@ export type SelectRootVariant = "naked" | "liquid";
  */
 export type SelectRootItemGroup<Value = unknown> = {
   /**
-   * グループの見出しです。
-   */
-  readonly label?: React.ReactNode;
-
-  /**
    * グループに含まれる項目です。
    */
   readonly items: readonly Value[];
+
+  /**
+   * グループの見出しです。
+   */
+  readonly label?: React.ReactNode;
 
   readonly [key: string]: unknown;
 };

@@ -180,9 +180,12 @@ export type ComboboxProps<Value = unknown, Multiple extends boolean | undefined 
   "children"
 > & {
   /**
-   * トリガーに対応する表示ラベルです。
+   * 候補項目の内容です。
+   *
+   * 関数を指定すると、項目の値とインデックスから各項目を作ります。
+   * React ノードを指定すると、リストへそのまま表示します。
    */
-  label?: React.ReactNode | undefined;
+  children?: React.ReactNode | ((item: Value, index: number) => React.ReactNode) | undefined;
 
   /**
    * 入力欄を含むグループ要素に適用するクラス名です。
@@ -191,18 +194,15 @@ export type ComboboxProps<Value = unknown, Multiple extends boolean | undefined 
   className?: ComboboxInputGroupProps["className"] | undefined;
 
   /**
+   * トリガーに対応する表示ラベルです。
+   */
+  label?: React.ReactNode | undefined;
+
+  /**
    * 入力欄のプレースホルダー文字列です。
    * 指定した場合は `slotProps.input.placeholder` より優先されます。
    */
   placeholder?: string | undefined;
-
-  /**
-   * 候補項目の内容です。
-   *
-   * 関数を指定すると、項目の値とインデックスから各項目を作ります。
-   * React ノードを指定すると、リストへそのまま表示します。
-   */
-  children?: React.ReactNode | ((item: Value, index: number) => React.ReactNode) | undefined;
 
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
@@ -448,8 +448,8 @@ export namespace Combobox {
 }
 
 function isItemGroup<Value>(item: Value): item is Value & {
-  label?: React.ReactNode;
   items: readonly Value[];
+  label?: React.ReactNode;
 } {
   return typeof item === "object" && item !== null && "items" in item && Array.isArray(item.items);
 }

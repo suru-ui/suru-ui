@@ -49,24 +49,9 @@ export type SliderVariant = SliderRootVariant;
  */
 export type SliderSlotProps = {
   /**
-   * {@link SliderLabel} に渡すプロパティーです。
-   */
-  readonly label?: SliderLabelProps | undefined;
-
-  /**
-   * {@link SliderValue} に渡すプロパティーです。
-   */
-  readonly value?: SliderValueProps | undefined;
-
-  /**
    * {@link SliderControl} に渡すプロパティーです。
    */
   readonly control?: SliderControlProps | undefined;
-
-  /**
-   * {@link SliderTrack} に渡すプロパティーです。
-   */
-  readonly track?: SliderTrackProps | undefined;
 
   /**
    * {@link SliderIndicator} に渡すプロパティーです。
@@ -74,9 +59,24 @@ export type SliderSlotProps = {
   readonly indicator?: SliderIndicatorProps | undefined;
 
   /**
+   * {@link SliderLabel} に渡すプロパティーです。
+   */
+  readonly label?: SliderLabelProps | undefined;
+
+  /**
    * {@link SliderThumb} に渡すプロパティーです。
    */
   readonly thumb?: SliderThumbProps | undefined;
+
+  /**
+   * {@link SliderTrack} に渡すプロパティーです。
+   */
+  readonly track?: SliderTrackProps | undefined;
+
+  /**
+   * {@link SliderValue} に渡すプロパティーです。
+   */
+  readonly value?: SliderValueProps | undefined;
 };
 
 /**

@@ -226,18 +226,18 @@ export type DrawerTriggerProps<Payload = unknown> = Omit<
   "children" | "handle" | "render"
 > & {
   /**
-   * ドロワー ({@link Root}) を関連付けるハンドルです。
-   *
-   * {@link createHandle} で作成し、{@link Root} と共有します。
-   */
-  handle: DrawerHandle<Payload>;
-
-  /**
    * ボタンとしてレンダリングする要素です。
    *
    * {@link Drawer.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
    */
   children: NonNullable<React.ComponentProps<typeof Drawer.Trigger>["render"]>;
+
+  /**
+   * ドロワー ({@link Root}) を関連付けるハンドルです。
+   *
+   * {@link createHandle} で作成し、{@link Root} と共有します。
+   */
+  handle: DrawerHandle<Payload>;
 };
 
 /**

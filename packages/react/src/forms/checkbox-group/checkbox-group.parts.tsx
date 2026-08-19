@@ -23,6 +23,11 @@ export type CheckboxGroupContext = {
   readonly color: CheckboxGroupRootColor;
 
   /**
+   * グループ全体を無効にするかどうかです。
+   */
+  readonly disabled: boolean | undefined;
+
+  /**
    * 枠線を表示するかどうかです。
    */
   readonly outlined: boolean;
@@ -41,11 +46,6 @@ export type CheckboxGroupContext = {
    * チェックボックスのスタイルバリエーションです。
    */
   readonly variant: CheckboxGroupRootVariant;
-
-  /**
-   * グループ全体を無効にするかどうかです。
-   */
-  readonly disabled: boolean | undefined;
 };
 
 /**

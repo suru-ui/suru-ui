@@ -92,6 +92,11 @@ export type AutocompleteSlotProps = {
   readonly list?: AutocompleteListProps | undefined;
 
   /**
+   * {@link AutocompletePopup} に渡すプロパティーです。
+   */
+  readonly popup?: AutocompletePopupProps | undefined;
+
+  /**
    * {@link AutocompletePortal} に渡すプロパティーです。
    */
   readonly portal?: AutocompletePortalProps | undefined;
@@ -100,11 +105,6 @@ export type AutocompleteSlotProps = {
    * {@link AutocompletePositioner} に渡すプロパティーです。
    */
   readonly positioner?: AutocompletePositionerProps | undefined;
-
-  /**
-   * {@link AutocompletePopup} に渡すプロパティーです。
-   */
-  readonly popup?: AutocompletePopupProps | undefined;
 
   /**
    * {@link AutocompleteTrigger} に渡すプロパティーです。
@@ -122,18 +122,6 @@ export type AutocompleteState = AutocompleteRootState;
  */
 export type AutocompleteProps = Omit<AutocompleteRootProps, "children"> & {
   /**
-   * 入力欄を含むグループ要素に適用するクラス名です。
-   * `slotProps.inputGroup.className` と結合されます。
-   */
-  className?: AutocompleteInputGroupProps["className"] | undefined;
-
-  /**
-   * 入力欄のプレースホルダー文字列です。
-   * 指定した場合は `slotProps.input.placeholder` より優先されます。
-   */
-  placeholder?: string | undefined;
-
-  /**
    * 検索結果リストの内容です。
    *
    * - 関数: 各行の内容を、項目の値とインデックスを受け取って作ります。
@@ -145,6 +133,18 @@ export type AutocompleteProps = Omit<AutocompleteRootProps, "children"> & {
     | React.ReactNode
     | ((item: React.ReactNode, index: number) => React.ReactNode)
     | undefined;
+
+  /**
+   * 入力欄を含むグループ要素に適用するクラス名です。
+   * `slotProps.inputGroup.className` と結合されます。
+   */
+  className?: AutocompleteInputGroupProps["className"] | undefined;
+
+  /**
+   * 入力欄のプレースホルダー文字列です。
+   * 指定した場合は `slotProps.input.placeholder` より優先されます。
+   */
+  placeholder?: string | undefined;
 
   /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
@@ -214,7 +214,7 @@ export const Autocomplete: AutocompleteType = /*#__PURE__*/ Object.assign(
       }
 
       return (item: unknown, index: number): React.ReactNode => {
-        const group = item as { label?: React.ReactNode; items?: readonly unknown[] } | null;
+        const group = item as { items?: readonly unknown[]; label?: React.ReactNode } | null;
         if (group && Array.isArray(group.items)) {
           return (
             <AutocompleteGroup key={index} items={group.items}>

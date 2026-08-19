@@ -31,34 +31,14 @@ import {
  */
 export type DialogSlotProps = {
   /**
-   * {@link DialogTrigger} に渡すプロパティーです。
-   */
-  readonly trigger?: Omit<DialogTriggerProps, "handle"> | undefined;
-
-  /**
-   * {@link DialogPortal} に渡すプロパティーです。
-   */
-  readonly portal?: DialogPortalProps | undefined;
-
-  /**
    * {@link DialogBackdrop} に渡すプロパティーです。
    */
   readonly backdrop?: DialogBackdropProps | undefined;
 
   /**
-   * {@link DialogViewport} に渡すプロパティーです。
+   * {@link DialogClose}に渡すプロパティーです。
    */
-  readonly viewport?: DialogViewportProps | undefined;
-
-  /**
-   * {@link DialogPopup} に渡すプロパティーです。
-   */
-  readonly popup?: DialogPopupProps | undefined;
-
-  /**
-   * {@link DialogTitle} に渡すプロパティーです。
-   */
-  readonly title?: DialogTitleProps | undefined;
+  readonly close?: Omit<DialogCloseProps, "children"> | undefined;
 
   /**
    * {@link DialogDescription} に渡すプロパティーです。
@@ -66,9 +46,29 @@ export type DialogSlotProps = {
   readonly description?: DialogDescriptionProps | undefined;
 
   /**
-   * {@link DialogClose}に渡すプロパティーです。
+   * {@link DialogPopup} に渡すプロパティーです。
    */
-  readonly close?: Omit<DialogCloseProps, "children"> | undefined;
+  readonly popup?: DialogPopupProps | undefined;
+
+  /**
+   * {@link DialogPortal} に渡すプロパティーです。
+   */
+  readonly portal?: DialogPortalProps | undefined;
+
+  /**
+   * {@link DialogTitle} に渡すプロパティーです。
+   */
+  readonly title?: DialogTitleProps | undefined;
+
+  /**
+   * {@link DialogTrigger} に渡すプロパティーです。
+   */
+  readonly trigger?: Omit<DialogTriggerProps, "handle"> | undefined;
+
+  /**
+   * {@link DialogViewport} に渡すプロパティーです。
+   */
+  readonly viewport?: DialogViewportProps | undefined;
 };
 
 /**
@@ -84,23 +84,6 @@ export type DialogState = DialogRootState;
  */
 export type DialogProps = Omit<DialogRootProps, "children" | "handle"> & {
   /**
-   * ダイアログを開くトリガーに表示するコンテンツです。
-   *
-   * {@link DialogTrigger|Trigger} の子要素として直接渡され、`render` に設定されます。
-   */
-  trigger?: DialogTriggerProps["children"] | undefined;
-
-  /**
-   * ダイアログのタイトルです。
-   */
-  title?: React.ReactNode | undefined;
-
-  /**
-   * ダイアログの説明文です。
-   */
-  description?: React.ReactNode | undefined;
-
-  /**
    * ダイアログの本文に表示するコンテンツです。
    */
   children?: React.ReactNode | undefined;
@@ -109,6 +92,11 @@ export type DialogProps = Omit<DialogRootProps, "children" | "handle"> & {
    * フッターに表示する閉じるボタンのコンテンツです。
    */
   close?: DialogCloseProps["children"] | undefined;
+
+  /**
+   * ダイアログの説明文です。
+   */
+  description?: React.ReactNode | undefined;
 
   /**
    * いずれかの閉じるボタンがクリックされたときに呼ばれるコールバックです。
@@ -123,6 +111,18 @@ export type DialogProps = Omit<DialogRootProps, "children" | "handle"> & {
    * 各パーツのプロパティーが優先されます。
    */
   slotProps?: DialogSlotProps | undefined;
+
+  /**
+   * ダイアログのタイトルです。
+   */
+  title?: React.ReactNode | undefined;
+
+  /**
+   * ダイアログを開くトリガーに表示するコンテンツです。
+   *
+   * {@link DialogTrigger|Trigger} の子要素として直接渡され、`render` に設定されます。
+   */
+  trigger?: DialogTriggerProps["children"] | undefined;
 };
 
 type CloseClickHandler = DialogCloseProps["onClick"];

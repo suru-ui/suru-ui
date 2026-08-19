@@ -32,11 +32,6 @@ export type CollapsibleSize = CollapsibleRootSize;
  */
 export type CollapsibleSlotProps = {
   /**
-   * {@link CollapsibleTrigger|Trigger} に渡すプロパティーです。
-   */
-  readonly trigger?: Omit<CollapsibleTriggerProps, "children"> | undefined;
-
-  /**
    * {@link CollapsibleIndicator|Indicator} に渡すプロパティーです。
    */
   readonly indicator?: CollapsibleIndicatorProps | undefined;
@@ -45,6 +40,11 @@ export type CollapsibleSlotProps = {
    * {@link CollapsiblePanel|Panel} に渡すプロパティーです。
    */
   readonly panel?: CollapsiblePanelProps | undefined;
+
+  /**
+   * {@link CollapsibleTrigger|Trigger} に渡すプロパティーです。
+   */
+  readonly trigger?: Omit<CollapsibleTriggerProps, "children"> | undefined;
 };
 
 /**
@@ -57,11 +57,6 @@ export type CollapsibleState = CollapsibleRootState;
  */
 export type CollapsibleProps = Omit<CollapsibleRootProps, "children"> & {
   /**
-   * トリガーに表示する見出しです。
-   */
-  title?: React.ReactNode | undefined;
-
-  /**
    * パネルに表示するコンテンツです。
    */
   children?: React.ReactNode | undefined;
@@ -70,6 +65,11 @@ export type CollapsibleProps = Omit<CollapsibleRootProps, "children"> & {
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
    */
   slotProps?: CollapsibleSlotProps | undefined;
+
+  /**
+   * トリガーに表示する見出しです。
+   */
+  title?: React.ReactNode | undefined;
 };
 
 /**

@@ -37,49 +37,14 @@ import {
  */
 export type DrawerSlotProps = {
   /**
-   * {@link DrawerTrigger} に渡すプロパティーです。
-   */
-  readonly trigger?: Omit<DrawerTriggerProps, "handle"> | undefined;
-
-  /**
-   * {@link DrawerSwipeArea} に渡すプロパティーです。
-   */
-  readonly swipeArea?: DrawerSwipeAreaProps | undefined;
-
-  /**
-   * {@link DrawerVirtualKeyboardProvider} に渡すプロパティーです。
-   */
-  readonly virtualKeyboardProvider?: DrawerVirtualKeyboardProviderProps | undefined;
-
-  /**
-   * {@link DrawerPortal} に渡すプロパティーです。
-   */
-  readonly portal?: DrawerPortalProps | undefined;
-
-  /**
    * {@link DrawerBackdrop} に渡すプロパティーです。
    */
   readonly backdrop?: DrawerBackdropProps | undefined;
 
   /**
-   * {@link DrawerViewport} に渡すプロパティーです。
-   */
-  readonly viewport?: DrawerViewportProps | undefined;
-
-  /**
-   * {@link DrawerPopup} に渡すプロパティーです。
-   */
-  readonly popup?: DrawerPopupProps | undefined;
-
-  /**
    * {@link DrawerContent} に渡すプロパティーです。
    */
   readonly content?: DrawerContentProps | undefined;
-
-  /**
-   * {@link DrawerTitle} に渡すプロパティーです。
-   */
-  readonly title?: DrawerTitleProps | undefined;
 
   /**
    * {@link DrawerDescription} に渡すプロパティーです。
@@ -90,6 +55,41 @@ export type DrawerSlotProps = {
    * {@link DrawerClose}（右上の閉じるボタン）に渡すプロパティーです。
    */
   readonly headerClose?: Omit<DrawerCloseProps, "children"> | undefined;
+
+  /**
+   * {@link DrawerPopup} に渡すプロパティーです。
+   */
+  readonly popup?: DrawerPopupProps | undefined;
+
+  /**
+   * {@link DrawerPortal} に渡すプロパティーです。
+   */
+  readonly portal?: DrawerPortalProps | undefined;
+
+  /**
+   * {@link DrawerSwipeArea} に渡すプロパティーです。
+   */
+  readonly swipeArea?: DrawerSwipeAreaProps | undefined;
+
+  /**
+   * {@link DrawerTitle} に渡すプロパティーです。
+   */
+  readonly title?: DrawerTitleProps | undefined;
+
+  /**
+   * {@link DrawerTrigger} に渡すプロパティーです。
+   */
+  readonly trigger?: Omit<DrawerTriggerProps, "handle"> | undefined;
+
+  /**
+   * {@link DrawerViewport} に渡すプロパティーです。
+   */
+  readonly viewport?: DrawerViewportProps | undefined;
+
+  /**
+   * {@link DrawerVirtualKeyboardProvider} に渡すプロパティーです。
+   */
+  readonly virtualKeyboardProvider?: DrawerVirtualKeyboardProviderProps | undefined;
 };
 
 /**
@@ -105,20 +105,6 @@ export type DrawerState = DrawerRootState;
  */
 export type DrawerProps = Omit<DrawerRootProps, "children" | "handle"> &
   Pick<DrawerContentProps, "children"> & {
-    /**
-     * ドロワーを開くトリガーに表示するコンテンツです。
-     *
-     * {@link DrawerTrigger|Trigger} の `render` プロパティーに渡されます。
-     * 省略した場合、トリガーはレンダリングされません。
-     */
-    trigger?: DrawerTriggerProps["children"] | undefined;
-
-    /**
-     * ドロワーのタイトルです。
-     * 省略した場合、タイトル要素はレンダリングされません。
-     */
-    title?: React.ReactNode | undefined;
-
     /**
      * ドロワーの説明文です。
      * 省略した場合、説明要素はレンダリングされません。
@@ -138,6 +124,20 @@ export type DrawerProps = Omit<DrawerRootProps, "children" | "handle"> &
      * 各パーツのプロパティーが優先されます。
      */
     slotProps?: DrawerSlotProps | undefined;
+
+    /**
+     * ドロワーのタイトルです。
+     * 省略した場合、タイトル要素はレンダリングされません。
+     */
+    title?: React.ReactNode | undefined;
+
+    /**
+     * ドロワーを開くトリガーに表示するコンテンツです。
+     *
+     * {@link DrawerTrigger|Trigger} の `render` プロパティーに渡されます。
+     * 省略した場合、トリガーはレンダリングされません。
+     */
+    trigger?: DrawerTriggerProps["children"] | undefined;
   };
 
 type CloseClickHandler = DrawerCloseProps["onClick"];

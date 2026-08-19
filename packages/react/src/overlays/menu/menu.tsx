@@ -21,9 +21,14 @@ import {
  */
 export type MenuSlotProps = {
   /**
-   * {@link MenuTrigger} に渡すプロパティーです。
+   * {@link MenuBackdrop} に渡すプロパティーです。
    */
-  readonly trigger?: Omit<MenuTriggerProps, "handle"> | undefined;
+  readonly backdrop?: MenuBackdropProps | undefined;
+
+  /**
+   * {@link MenuPopup} に渡すプロパティーです。
+   */
+  readonly popup?: MenuPopupProps | undefined;
 
   /**
    * {@link MenuPortal} に渡すプロパティーです。
@@ -31,19 +36,14 @@ export type MenuSlotProps = {
   readonly portal?: MenuPortalProps | undefined;
 
   /**
-   * {@link MenuBackdrop} に渡すプロパティーです。
-   */
-  readonly backdrop?: MenuBackdropProps | undefined;
-
-  /**
    * {@link MenuPositioner} に渡すプロパティーです。
    */
   readonly positioner?: MenuPositionerProps | undefined;
 
   /**
-   * {@link MenuPopup} に渡すプロパティーです。
+   * {@link MenuTrigger} に渡すプロパティーです。
    */
-  readonly popup?: MenuPopupProps | undefined;
+  readonly trigger?: Omit<MenuTriggerProps, "handle"> | undefined;
 };
 
 /**
@@ -57,19 +57,19 @@ export type MenuState = MenuRootState;
 export type MenuProps = Omit<MenuRootProps, "children" | "handle"> &
   Pick<MenuPopupProps, "children"> & {
     /**
+     * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+     *
+     * 各パーツのプロパティーが優先されます。
+     */
+    slotProps?: MenuSlotProps | undefined;
+
+    /**
      * メニューを開くトリガーに表示する要素です。
      *
      * {@link MenuTrigger|Trigger} の子要素として直接渡されます。
      * 省略した場合、トリガーはレンダリングされません。
      */
     trigger?: MenuTriggerProps["children"] | undefined;
-
-    /**
-     * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-     *
-     * 各パーツのプロパティーが優先されます。
-     */
-    slotProps?: MenuSlotProps | undefined;
   };
 
 interface MenuComponentType extends IComponent<MenuProps> {

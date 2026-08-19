@@ -21,6 +21,11 @@ export type ActionGroupContext = {
   readonly color: ActionGroupRootColor;
 
   /**
+   * グループアイテムの向きです。
+   */
+  readonly orientation: ActionGroupRootOrientation;
+
+  /**
    * グループアイテムの枠線を表示するかどうかです。
    */
   readonly outlined: boolean;
@@ -39,11 +44,6 @@ export type ActionGroupContext = {
    * グループアイテムのスタイルバリエーションです。
    */
   readonly variant: ActionGroupRootVariant;
-
-  /**
-   * グループアイテムの向きです。
-   */
-  readonly orientation: ActionGroupRootOrientation;
 };
 
 /**

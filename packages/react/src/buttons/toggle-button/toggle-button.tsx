@@ -48,24 +48,9 @@ export type ToggleButtonVariant = ToggleButtonRootVariant;
  */
 export type ToggleButtonSlotProps = {
   /**
-   * {@link ToggleButtonContent} に渡すプロパティーです。
-   */
-  readonly content?: ToggleButtonContentProps | undefined;
-
-  /**
-   * {@link ToggleButtonPending} に渡すプロパティーです。
-   */
-  readonly pending?: ToggleButtonPendingProps | undefined;
-
-  /**
    * {@link ToggleButtonCircularProgress} に渡すプロパティーです。
    */
   readonly circularProgress?: ToggleButtonCircularProgressProps | undefined;
-
-  /**
-   * {@link ToggleButtonCircularProgressTrack} に渡すプロパティーです。
-   */
-  readonly circularProgressTrack?: ToggleButtonCircularProgressTrackProps | undefined;
 
   /**
    * {@link ToggleButtonCircularProgressFill} に渡すプロパティーです。
@@ -76,6 +61,21 @@ export type ToggleButtonSlotProps = {
    * {@link ToggleButtonCircularProgressFillRotation} に渡すプロパティーです。
    */
   readonly circularProgressFillRotation?: ToggleButtonCircularProgressFillRotationProps | undefined;
+
+  /**
+   * {@link ToggleButtonCircularProgressTrack} に渡すプロパティーです。
+   */
+  readonly circularProgressTrack?: ToggleButtonCircularProgressTrackProps | undefined;
+
+  /**
+   * {@link ToggleButtonContent} に渡すプロパティーです。
+   */
+  readonly content?: ToggleButtonContentProps | undefined;
+
+  /**
+   * {@link ToggleButtonPending} に渡すプロパティーです。
+   */
+  readonly pending?: ToggleButtonPendingProps | undefined;
 };
 
 /**

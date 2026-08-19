@@ -124,14 +124,14 @@ export type ResizableRootProps = Omit<
     direction?: ResizableRootDirection | undefined;
 
     /**
-     * {@link ResizableRootDirection} です。
-     */
-    orientation?: ResizableRootOrientation | undefined;
-
-    /**
      * パネルサイズの配列が変化したときに呼び出されます。
      */
     onLayout?: ((sizes: readonly number[]) => void) | undefined;
+
+    /**
+     * {@link ResizableRootDirection} です。
+     */
+    orientation?: ResizableRootOrientation | undefined;
   };
 
 /**
@@ -254,9 +254,9 @@ export type ResizablePanelProps = Omit<
     defaultSize?: ResizablePanelSize | undefined;
 
     /**
-     * パネルのサイズを制御します。
+     * パネルが大きくなるときの最大サイズを指定します。
      */
-    size?: ResizablePanelSize | undefined;
+    maxSize?: ResizablePanelSize | undefined;
 
     /**
      * パネルが小さくなるときの最小サイズを指定します。
@@ -264,9 +264,9 @@ export type ResizablePanelProps = Omit<
     minSize?: ResizablePanelSize | undefined;
 
     /**
-     * パネルが大きくなるときの最大サイズを指定します。
+     * パネルサイズが変化したときに呼び出されます。
      */
-    maxSize?: ResizablePanelSize | undefined;
+    onResize?: PanelProps["onResize"];
 
     /**
      * パネルサイズが変化したときに、パーセント値で呼び出されます。
@@ -279,9 +279,9 @@ export type ResizablePanelProps = Omit<
     order?: number | undefined;
 
     /**
-     * パネルサイズが変化したときに呼び出されます。
+     * パネルのサイズを制御します。
      */
-    onResize?: PanelProps["onResize"];
+    size?: ResizablePanelSize | undefined;
   };
 
 /**

@@ -31,14 +31,9 @@ import {
  */
 export type AlertDialogSlotProps = {
   /**
-   * {@link AlertDialogTrigger|Trigger} に渡すプロパティーです。
+   * {@link AlertDialogClose|Close} (承諾ボタン) に渡すプロパティーです。
    */
-  readonly trigger?: Omit<AlertDialogTriggerProps, "handle"> | undefined;
-
-  /**
-   * {@link AlertDialogPortal|Portal} に渡すプロパティーです。
-   */
-  readonly portal?: AlertDialogPortalProps | undefined;
+  readonly accept?: Omit<AlertDialogCloseProps, "children"> | undefined;
 
   /**
    * {@link AlertDialogBackdrop|Backdrop} に渡すプロパティーです。
@@ -46,9 +41,9 @@ export type AlertDialogSlotProps = {
   readonly backdrop?: AlertDialogBackdropProps | undefined;
 
   /**
-   * {@link AlertDialogViewport|Viewport} に渡すプロパティーです。
+   * {@link AlertDialogDescription|Description} に渡すプロパティーです。
    */
-  readonly viewport?: AlertDialogViewportProps | undefined;
+  readonly description?: AlertDialogDescriptionProps | undefined;
 
   /**
    * {@link AlertDialogPopup|Popup} に渡すプロパティーです。
@@ -56,14 +51,9 @@ export type AlertDialogSlotProps = {
   readonly popup?: AlertDialogPopupProps | undefined;
 
   /**
-   * {@link AlertDialogTitle|Title} に渡すプロパティーです。
+   * {@link AlertDialogPortal|Portal} に渡すプロパティーです。
    */
-  readonly title?: AlertDialogTitleProps | undefined;
-
-  /**
-   * {@link AlertDialogDescription|Description} に渡すプロパティーです。
-   */
-  readonly description?: AlertDialogDescriptionProps | undefined;
+  readonly portal?: AlertDialogPortalProps | undefined;
 
   /**
    * {@link AlertDialogClose|Close} (拒否ボタン) に渡すプロパティーです。
@@ -71,9 +61,19 @@ export type AlertDialogSlotProps = {
   readonly reject?: Omit<AlertDialogCloseProps, "children"> | undefined;
 
   /**
-   * {@link AlertDialogClose|Close} (承諾ボタン) に渡すプロパティーです。
+   * {@link AlertDialogTitle|Title} に渡すプロパティーです。
    */
-  readonly accept?: Omit<AlertDialogCloseProps, "children"> | undefined;
+  readonly title?: AlertDialogTitleProps | undefined;
+
+  /**
+   * {@link AlertDialogTrigger|Trigger} に渡すプロパティーです。
+   */
+  readonly trigger?: Omit<AlertDialogTriggerProps, "handle"> | undefined;
+
+  /**
+   * {@link AlertDialogViewport|Viewport} に渡すプロパティーです。
+   */
+  readonly viewport?: AlertDialogViewportProps | undefined;
 };
 
 /**
@@ -90,18 +90,18 @@ export type AlertDialogState = AlertDialogRootState;
  */
 export type AlertDialogProps = Omit<AlertDialogRootProps, "children" | "handle"> & {
   /**
-   * ダイアログを開くトリガーに表示するコンテンツです。
+   * 承諾してダイアログを閉じるボタンに表示するコンテンツです。
    *
-   * {@link AlertDialogTrigger|Trigger} の子要素として直接渡されます。
-   * 省略した場合、トリガーはレンダリングされません。
+   * {@link AlertDialogClose|Close} の子要素として直接渡されます。
+   * 省略した場合、承諾ボタンはレンダリングされません。
    */
-  trigger?: AlertDialogTriggerProps["children"] | undefined;
+  accept?: AlertDialogCloseProps["children"] | undefined;
 
   /**
-   * ダイアログのタイトルです。
-   * 省略した場合、タイトル要素はレンダリングされません。
+   * ダイアログの本文に表示するコンテンツです。
+   * `title` と `description` の後、アクションボタンの前に表示されます。
    */
-  title?: React.ReactNode | undefined;
+  children?: React.ReactNode | undefined;
 
   /**
    * ダイアログの説明文です。
@@ -110,10 +110,18 @@ export type AlertDialogProps = Omit<AlertDialogRootProps, "children" | "handle">
   description?: React.ReactNode | undefined;
 
   /**
-   * ダイアログの本文に表示するコンテンツです。
-   * `title` と `description` の後、アクションボタンの前に表示されます。
+   * 承諾ボタンがクリックされたときに呼ばれるコールバックです。
+   * {@link slotProps} の `accept.onClick` が先に実行され、イベントが `preventDefault` されていない場合だけ呼ばれます。
+   * クリックイベントを引数として受け取ります。
    */
-  children?: React.ReactNode | undefined;
+  onAccept?: ((event: CloseClickEvent) => void) | undefined;
+
+  /**
+   * 拒否ボタンがクリックされたときに呼ばれるコールバックです。
+   * {@link slotProps} の `reject.onClick` が先に実行され、イベントが `preventDefault` されていない場合だけ呼ばれます。
+   * クリックイベントを引数として受け取ります。
+   */
+  onReject?: ((event: CloseClickEvent) => void) | undefined;
 
   /**
    * 承諾せずにダイアログを閉じるボタンに表示するコンテンツです。
@@ -124,28 +132,6 @@ export type AlertDialogProps = Omit<AlertDialogRootProps, "children" | "handle">
   reject?: AlertDialogCloseProps["children"] | undefined;
 
   /**
-   * 承諾してダイアログを閉じるボタンに表示するコンテンツです。
-   *
-   * {@link AlertDialogClose|Close} の子要素として直接渡されます。
-   * 省略した場合、承諾ボタンはレンダリングされません。
-   */
-  accept?: AlertDialogCloseProps["children"] | undefined;
-
-  /**
-   * 拒否ボタンがクリックされたときに呼ばれるコールバックです。
-   * {@link slotProps} の `reject.onClick` が先に実行され、イベントが `preventDefault` されていない場合だけ呼ばれます。
-   * クリックイベントを引数として受け取ります。
-   */
-  onReject?: ((event: CloseClickEvent) => void) | undefined;
-
-  /**
-   * 承諾ボタンがクリックされたときに呼ばれるコールバックです。
-   * {@link slotProps} の `accept.onClick` が先に実行され、イベントが `preventDefault` されていない場合だけ呼ばれます。
-   * クリックイベントを引数として受け取ります。
-   */
-  onAccept?: ((event: CloseClickEvent) => void) | undefined;
-
-  /**
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
    *
    * 各パーツのプロパティーが優先されます。
@@ -153,6 +139,20 @@ export type AlertDialogProps = Omit<AlertDialogRootProps, "children" | "handle">
    * このオブジェクトのハンドラーが先に実行されます。
    */
   slotProps?: AlertDialogSlotProps | undefined;
+
+  /**
+   * ダイアログのタイトルです。
+   * 省略した場合、タイトル要素はレンダリングされません。
+   */
+  title?: React.ReactNode | undefined;
+
+  /**
+   * ダイアログを開くトリガーに表示するコンテンツです。
+   *
+   * {@link AlertDialogTrigger|Trigger} の子要素として直接渡されます。
+   * 省略した場合、トリガーはレンダリングされません。
+   */
+  trigger?: AlertDialogTriggerProps["children"] | undefined;
 };
 
 type CloseClickHandler = AlertDialogCloseProps["onClick"];

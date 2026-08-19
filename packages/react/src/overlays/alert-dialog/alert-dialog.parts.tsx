@@ -90,19 +90,19 @@ export type AlertDialogTriggerProps = Omit<
   "handle" | "children" | "render"
 > & {
   /**
-   * アラートダイアログ ({@link Root}) を関連付けるハンドルです。
-   *
-   * {@link createHandle} で作成し、{@link Root} と共有します。
-   */
-  handle: AlertDialogHandle;
-
-  /**
    * ボタンとしてレンダリングする要素です。
    *
    * {@link AlertDialog.Trigger} の `render` プロパティーと同じ型で、
    * そのまま `render` に渡されます。
    */
   children: NonNullable<React.ComponentProps<typeof AlertDialog.Trigger>["render"]>;
+
+  /**
+   * アラートダイアログ ({@link Root}) を関連付けるハンドルです。
+   *
+   * {@link createHandle} で作成し、{@link Root} と共有します。
+   */
+  handle: AlertDialogHandle;
 };
 
 /**
