@@ -117,13 +117,13 @@ export const Alert: IComponent<AlertProps> = function SuiAlert(props) {
 
   return (
     <AlertRoot {...rootProps}>
-      {("icon" in props || !!iconProps) && <AlertIcon {...{ children: icon, ...iconProps }} />}
-      {("title" in props || !!titleProps) && <AlertTitle {...{ children: title, ...titleProps }} />}
+      {("icon" in props || !!iconProps) && <AlertIcon children={icon} {...iconProps} />}
+      {("title" in props || !!titleProps) && <AlertTitle children={title} {...titleProps} />}
       {("children" in props || !!descriptionProps) && (
-        <AlertDescription {...{ children, ...descriptionProps }} />
+        <AlertDescription children={children} {...descriptionProps} />
       )}
       {("actions" in props || !!actionsProps) && (
-        <AlertActions {...{ children: actions, ...actionsProps }} />
+        <AlertActions children={actions} {...actionsProps} />
       )}
     </AlertRoot>
   );

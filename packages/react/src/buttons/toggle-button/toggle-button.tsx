@@ -126,7 +126,7 @@ export const ToggleButton: ToggleButtonType = /*#__PURE__*/ Object.assign(
 
     return (
       <ToggleButtonRoot {...rootProps}>
-        <ToggleButtonContent {...{ children, ...contentProps }} />
+        <ToggleButtonContent children={children} {...contentProps} />
         <ToggleButtonPending {...otherPendingProps} overlay={overlay}>
           <ToggleButtonCircularProgress
             percentage={percentage}

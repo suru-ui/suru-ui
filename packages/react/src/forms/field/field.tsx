@@ -139,12 +139,10 @@ export const Field: FieldComponentType = /*#__PURE__*/ Object.assign(
 
     return (
       <FieldRoot {...rootProps}>
-        {("label" in props || !!labelProps) && (
-          <FieldLabel {...{ children: label, ...labelProps }} />
-        )}
+        {("label" in props || !!labelProps) && <FieldLabel children={label} {...labelProps} />}
         {children}
         {("description" in props || !!descriptionProps) && (
-          <FieldDescription {...{ children: description, ...descriptionProps }} />
+          <FieldDescription children={description} {...descriptionProps} />
         )}
         {(errorMatches !== false || !!errorProps) &&
           ((matches, props) => {
@@ -161,7 +159,7 @@ export const Field: FieldComponentType = /*#__PURE__*/ Object.assign(
 
             const entries = Object.entries(matches) as [FieldErrorMatch, React.ReactNode][];
             return entries.map(([match, children]) => (
-              <FieldError key={match} match={match} {...{ children, ...props }} />
+              <FieldError key={match} match={match} children={children} {...props} />
             ));
           })(errorMatches, errorProps)}
         {typeof validity === "function" && <FieldValidity>{validity}</FieldValidity>}

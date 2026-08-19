@@ -193,10 +193,10 @@ export const Dialog: DialogComponentType = /*#__PURE__*/ Object.assign(
                 </Button>
               </DialogClose>
               {("title" in props || !!titleProps) && (
-                <DialogTitle {...{ children: title, ...titleProps }} />
+                <DialogTitle children={title} {...titleProps} />
               )}
               {("description" in props || !!descriptionProps) && (
-                <DialogDescription {...{ children: description, ...descriptionProps }} />
+                <DialogDescription children={description} {...descriptionProps} />
               )}
               {children}
               {("close" in props || !!closeProps) && (

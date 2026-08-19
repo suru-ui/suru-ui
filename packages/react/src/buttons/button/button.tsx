@@ -126,7 +126,7 @@ export const Button: ButtonType = /*#__PURE__*/ Object.assign(
 
     return (
       <ButtonRoot {...rootProps}>
-        <ButtonContent {...{ children, ...contentProps }} />
+        <ButtonContent children={children} {...contentProps} />
         <ButtonPending {...otherPendingProps} overlay={overlay}>
           <ButtonCircularProgress
             percentage={percentage}

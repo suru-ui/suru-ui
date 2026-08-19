@@ -79,7 +79,7 @@ export const Avatar: IComponent<AvatarProps> = function SuiAvatar(props) {
     <AvatarRoot {...otherRootProps}>
       {("src" in props || !!imageProps) && <AvatarImage alt={alt} src={src} {...imageProps} />}
       {("children" in props || !!fallbackProps) && (
-        <AvatarFallback {...{ children, ...fallbackProps }} />
+        <AvatarFallback children={children} {...fallbackProps} />
       )}
     </AvatarRoot>
   );

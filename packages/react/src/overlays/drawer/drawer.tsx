@@ -219,10 +219,10 @@ export const Drawer: DrawerComponentType = /*#__PURE__*/ Object.assign(
                 />
                 <DrawerContent {...contentProps}>
                   {("title" in props || !!titleProps) && (
-                    <DrawerTitle {...{ children: title, ...titleProps }} />
+                    <DrawerTitle children={title} {...titleProps} />
                   )}
                   {("description" in props || !!descriptionProps) && (
-                    <DrawerDescription {...{ children: description, ...descriptionProps }} />
+                    <DrawerDescription children={description} {...descriptionProps} />
                   )}
                   {children}
                 </DrawerContent>

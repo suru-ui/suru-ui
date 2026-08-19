@@ -103,9 +103,7 @@ export const Progress: IComponent<ProgressProps> = function SuiProgress(props) {
 
   return (
     <ProgressRoot {...rootProps}>
-      {("label" in props || !!labelProps) && (
-        <ProgressLabel {...{ children: label, ...labelProps }} />
-      )}
+      {("label" in props || !!labelProps) && <ProgressLabel children={label} {...labelProps} />}
       {("label" in props || !!valueProps) && <ProgressValue {...valueProps} />}
       <ProgressTrack {...trackProps}>
         <ProgressIndicator {...indicatorProps} />

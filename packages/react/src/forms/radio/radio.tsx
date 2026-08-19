@@ -69,7 +69,7 @@ export const Radio: IComponent<RadioProps> = function SuiRadio(props) {
 
   return (
     <RadioRoot {...rootProps}>
-      <RadioIndicator {...{ children, ...indicatorProps }} />
+      <RadioIndicator children={children} {...indicatorProps} />
     </RadioRoot>
   );
 };

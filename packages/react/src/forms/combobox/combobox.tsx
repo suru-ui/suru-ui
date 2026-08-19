@@ -330,9 +330,7 @@ export const Combobox: ComboboxType = /*#__PURE__*/ Object.assign(
         multiple={multipleProp}
         openOnInputClick={openOnInputClick}
       >
-        {("label" in props || !!labelProps) && (
-          <ComboboxLabel {...{ children: label, ...labelProps }} />
-        )}
+        {("label" in props || !!labelProps) && <ComboboxLabel children={label} {...labelProps} />}
         <ComboboxInputGroup
           {...inputGroupProps}
           className={cn(className, inputGroupProps?.className)}

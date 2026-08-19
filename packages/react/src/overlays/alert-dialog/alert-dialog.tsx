@@ -222,7 +222,7 @@ export const AlertDialog: AlertDialogComponentType = /*#__PURE__*/ Object.assign
     return (
       <AlertDialogRoot {...rootProps} handle={handle}>
         {(!!trigger || !!triggerProps) && (
-          <AlertDialogTrigger {...{ children: trigger!, ...triggerProps, handle }} />
+          <AlertDialogTrigger children={trigger!} {...triggerProps} handle={handle} />
         )}
         <AlertDialogPortal {...portalProps}>
           <AlertDialogBackdrop {...backdropProps} />
@@ -249,10 +249,10 @@ export const AlertDialog: AlertDialogComponentType = /*#__PURE__*/ Object.assign
                 </Button>
               </AlertDialogClose>
               {("title" in props || !!titleProps) && (
-                <AlertDialogTitle {...{ children: title, ...titleProps }} />
+                <AlertDialogTitle children={title} {...titleProps} />
               )}
               {("description" in props || !!descriptionProps) && (
-                <AlertDialogDescription {...{ children: description, ...descriptionProps }} />
+                <AlertDialogDescription children={description} {...descriptionProps} />
               )}
               {children}
               {("reject" in props || !!rejectProps || "accept" in props || !!acceptProps) && (

@@ -103,7 +103,7 @@ export const Meter: IComponent<MeterProps> = function SuiMeter(props) {
 
   return (
     <MeterRoot {...rootProps}>
-      {("label" in props || !!labelProps) && <MeterLabel {...{ children: label, ...labelProps }} />}
+      {("label" in props || !!labelProps) && <MeterLabel children={label} {...labelProps} />}
       {("label" in props || !!valueProps) && <MeterValue {...valueProps} />}
       <MeterTrack {...trackProps}>
         <MeterIndicator {...indicatorProps} />
