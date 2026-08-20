@@ -174,7 +174,12 @@ export const Dialog: DialogComponentType = /*#__PURE__*/ Object.assign(
           <DialogBackdrop {...backdropProps} />
           <DialogViewport {...viewportProps}>
             <DialogPopup {...popupProps}>
-              <DialogClose onClick={onClose} className="sui_dialog_close_button">
+              <DialogClose
+                {...mergeProps(
+                  { onClick: onClose, className: "sui_dialog_close_button" },
+                  closeProps,
+                )}
+              >
                 <Button color="grey" squared variant="naked" aria-label="閉じる">
                   <svg
                     fill="none"
