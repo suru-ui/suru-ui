@@ -5,8 +5,5 @@ export {
   type ResizableState,
   type ResizableDirection,
   type ResizableOrientation,
-  type ResizablePanelGroupProps,
-  type ResizablePanelGroupState,
   Resizable,
-  ResizablePanelGroup,
 } from "./resizable.jsx";

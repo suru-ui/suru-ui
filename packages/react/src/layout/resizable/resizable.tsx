@@ -3,11 +3,18 @@ import * as React from "react";
 import type { IComponent, IUseContext } from "../../types.js";
 import {
   type ResizableContext,
+  type ResizablePanelSize,
   type ResizableRootProps,
   type ResizableRootState,
+  type ResizablePanelProps,
+  type ResizablePanelState,
+  type ResizableHandleProps,
+  type ResizableHandleState,
   type ResizableRootDirection,
   type ResizableRootOrientation,
   ResizableRoot,
+  ResizablePanel,
+  ResizableHandle,
   useResizableContext,
 } from "./resizable.parts.jsx";
 
@@ -20,16 +27,6 @@ export type ResizableDirection = ResizableRootDirection;
  * {@link ResizableRootOrientation} です。
  */
 export type ResizableOrientation = ResizableRootOrientation;
-
-/**
- * {@link ResizablePanelGroup} の状態です。
- */
-export type ResizablePanelGroupState = ResizableRootState;
-
-/**
- * {@link ResizablePanelGroup} コンポーネントのプロパティーです。
- */
-export type ResizablePanelGroupProps = ResizableRootProps;
 
 /**
  * {@link Resizable} の状態です。
@@ -47,31 +44,24 @@ export type ResizableProps = Omit<ResizableRootProps, "children"> & {
 };
 
 /**
- * パネル群を表示するルートコンポーネントです。
- *
- * `ResizablePanel` と `ResizableHandle` は、パーツ API として直接組み合わせて使用します。
- */
-export const ResizablePanelGroup: IComponent<ResizablePanelGroupProps> = ResizableRoot;
-
-/**
- * {@link ResizablePanelGroup} の状態やプロパティーをまとめた型名前空間です。
- */
-export namespace ResizablePanelGroup {
-  /**
-   * {@link ResizablePanelGroupState} です。
-   */
-  export type State = ResizablePanelGroupState;
-
-  /**
-   * {@link ResizablePanelGroupProps} です。
-   */
-  export type Props = ResizablePanelGroupProps;
-}
-
-/**
  * リサイズ可能なパネル群を表示するコンポーネントです。
  */
 interface ResizableType extends IComponent<ResizableProps> {
+  /**
+   * 隣接するパネルのサイズを変更するハンドルです。
+   */
+  readonly Handle: IComponent<ResizableHandleProps>;
+
+  /**
+   * サイズを変更できるパネル要素です。
+   */
+  readonly Panel: IComponent<ResizablePanelProps>;
+
+  /**
+   * パネル群のルート要素です。
+   */
+  readonly PanelGroup: IComponent<ResizableRootProps>;
+
   /**
    * {@link useResizableContext} です。
    */
@@ -83,6 +73,9 @@ export const Resizable: ResizableType = /*#__PURE__*/ Object.assign(
     return <ResizableRoot {...props} />;
   },
   {
+    Panel: ResizablePanel,
+    Handle: ResizableHandle,
+    PanelGroup: ResizableRoot,
     useContext: useResizableContext,
   },
 );
@@ -115,4 +108,54 @@ export namespace Resizable {
    * {@link ResizableDirection} です。
    */
   export type Direction = ResizableDirection;
+
+  /**
+   * パネル群のルート要素の状態やプロパティーをまとめた型名前空間です。
+   */
+  export namespace PanelGroup {
+    /**
+     * {@link ResizableRootState} です。
+     */
+    export type State = ResizableRootState;
+
+    /**
+     * {@link ResizableRootProps} です。
+     */
+    export type Props = ResizableRootProps;
+  }
+
+  /**
+   * パネルの状態やプロパティーをまとめた型名前空間です。
+   */
+  export namespace Panel {
+    /**
+     * {@link ResizablePanelState} です。
+     */
+    export type State = ResizablePanelState;
+
+    /**
+     * {@link ResizablePanelProps} です。
+     */
+    export type Props = ResizablePanelProps;
+
+    /**
+     * {@link ResizablePanelSize} です。
+     */
+    export type Size = ResizablePanelSize;
+  }
+
+  /**
+   * ハンドルの状態やプロパティーをまとめた型名前空間です。
+   */
+  export namespace Handle {
+    /**
+     * {@link ResizableHandleState} です。
+     */
+    export type State = ResizableHandleState;
+
+    /**
+     * {@link ResizableHandleProps} です。
+     */
+    export type Props = ResizableHandleProps;
+  }
 }
