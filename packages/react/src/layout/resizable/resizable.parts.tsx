@@ -154,14 +154,12 @@ export const ResizableRoot: IComponent<ResizableRootProps> = function SuiResizab
   } = props;
   const direction = directionProp ?? orientationProp ?? "horizontal";
   const resizeTargetMinimumSize = {
-    coarse: Math.max(
-      resizeTargetMinimumSizeProp?.coarse ?? DEFAULT_RESIZE_TARGET_MINIMUM_SIZE.coarse,
-      RESIZABLE_HANDLE_HIT_SIZE,
-    ),
-    fine: Math.max(
-      resizeTargetMinimumSizeProp?.fine ?? DEFAULT_RESIZE_TARGET_MINIMUM_SIZE.fine,
-      RESIZABLE_HANDLE_HIT_SIZE,
-    ),
+    coarse:
+      resizeTargetMinimumSizeProp?.coarse ??
+      Math.max(DEFAULT_RESIZE_TARGET_MINIMUM_SIZE.coarse, RESIZABLE_HANDLE_HIT_SIZE),
+    fine:
+      resizeTargetMinimumSizeProp?.fine ??
+      Math.max(DEFAULT_RESIZE_TARGET_MINIMUM_SIZE.fine, RESIZABLE_HANDLE_HIT_SIZE),
   };
   const state: ResizableRootState = { direction };
 

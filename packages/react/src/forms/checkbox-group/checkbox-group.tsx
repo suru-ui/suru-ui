@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import type { IComponent, IUseContext } from "../../types.js";
 import {
   type CheckboxGroupContext,
@@ -47,14 +45,7 @@ export type CheckboxGroupState = CheckboxGroupRootState;
 /**
  * {@link CheckboxGroup} コンポーネントのプロパティーです。
  */
-export type CheckboxGroupProps = Omit<CheckboxGroupRootProps, "children"> & {
-  /**
-   * チェックボックス要素です。
-   *
-   * {@link CheckboxGroupRoot} にそのまま渡されます。
-   */
-  readonly children?: React.ReactNode | undefined;
-};
+export type CheckboxGroupProps = CheckboxGroupRootProps;
 
 interface CheckboxGroupType extends IComponent<CheckboxGroupProps> {
   /**

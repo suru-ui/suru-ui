@@ -182,56 +182,64 @@ export const Drawer: DrawerComponentType = /*#__PURE__*/ Object.assign(
       ...rootProps
     } = props;
 
+    const portal = (
+      <DrawerPortal {...portalProps}>
+        <DrawerBackdrop {...backdropProps} />
+        <DrawerViewport {...viewportProps}>
+          <DrawerPopup {...popupProps}>
+            <DrawerClose
+              children={
+                <Button color="grey" squared variant="naked" aria-label="閉じる">
+                  <svg
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    focusable="false"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M18 6 6 18" />
+                    <path d="m6 6 12 12" />
+                  </svg>
+                </Button>
+              }
+              {...mergeProps(
+                {
+                  onClick: onClose,
+                  className: "sui_drawer_close_button",
+                },
+                headerCloseProps,
+              )}
+            />
+            <DrawerContent {...contentProps}>
+              {("title" in props || !!titleProps) && (
+                <DrawerTitle children={title} {...titleProps} />
+              )}
+              {("description" in props || !!descriptionProps) && (
+                <DrawerDescription children={description} {...descriptionProps} />
+              )}
+              {children}
+            </DrawerContent>
+          </DrawerPopup>
+        </DrawerViewport>
+      </DrawerPortal>
+    );
+
     return (
       <DrawerRoot {...rootProps} handle={handle}>
         {trigger !== undefined && (
           <DrawerTrigger handle={handle} children={trigger} {...triggerProps} />
         )}
         {swipeAreaProps !== undefined && <DrawerSwipeArea {...swipeAreaProps} />}
-        <DrawerVirtualKeyboardProvider {...virtualKeyboardProviderProps}>
-          <DrawerPortal {...portalProps}>
-            <DrawerBackdrop {...backdropProps} />
-            <DrawerViewport {...viewportProps}>
-              <DrawerPopup {...popupProps}>
-                <DrawerClose
-                  children={
-                    <Button color="grey" squared variant="naked" aria-label="閉じる">
-                      <svg
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        focusable="false"
-                        strokeWidth={2}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        aria-hidden="true"
-                      >
-                        <path d="M18 6 6 18" />
-                        <path d="m6 6 12 12" />
-                      </svg>
-                    </Button>
-                  }
-                  {...mergeProps(
-                    {
-                      onClick: onClose,
-                      className: "sui_drawer_close_button",
-                    },
-                    headerCloseProps,
-                  )}
-                />
-                <DrawerContent {...contentProps}>
-                  {("title" in props || !!titleProps) && (
-                    <DrawerTitle children={title} {...titleProps} />
-                  )}
-                  {("description" in props || !!descriptionProps) && (
-                    <DrawerDescription children={description} {...descriptionProps} />
-                  )}
-                  {children}
-                </DrawerContent>
-              </DrawerPopup>
-            </DrawerViewport>
-          </DrawerPortal>
-        </DrawerVirtualKeyboardProvider>
+        {virtualKeyboardProviderProps !== undefined ? (
+          <DrawerVirtualKeyboardProvider {...virtualKeyboardProviderProps}>
+            {portal}
+          </DrawerVirtualKeyboardProvider>
+        ) : (
+          portal
+        )}
       </DrawerRoot>
     );
   },

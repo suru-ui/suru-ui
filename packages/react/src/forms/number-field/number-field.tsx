@@ -181,61 +181,39 @@ export const NumberField: NumberFieldType = /*#__PURE__*/ Object.assign(
     return (
       <NumberFieldRoot {...rootProps}>
         {("scrubArea" in props || !!scrubAreaProps) && (
-          <NumberFieldScrubArea
-            {...{
-              children: (
-                <>
-                  {scrubArea}
-                  <NumberFieldScrubAreaCursor
-                    {...{
-                      children: <SuiCursorGrowIcon />,
-                      ...scrubAreaCursorProps,
-                    }}
-                  />
-                </>
-              ),
-              ...scrubAreaProps,
-            }}
-          />
+          <NumberFieldScrubArea {...scrubAreaProps}>
+            {scrubAreaProps?.children ?? (
+              <>
+                {scrubArea}
+                <NumberFieldScrubAreaCursor {...scrubAreaCursorProps}>
+                  <SuiCursorGrowIcon />
+                </NumberFieldScrubAreaCursor>
+              </>
+            )}
+          </NumberFieldScrubArea>
         )}
         <NumberFieldGroup {...groupProps}>
-          {startAddons.map((addon, i) => (
-            <NumberFieldAddon
-              {...addonProps}
-              key={React.isValidElement(addon) ? (addon.key ?? i) : i}
-            >
-              {addon}
-            </NumberFieldAddon>
+          {React.Children.map(startAddons, (addon) => (
+            <NumberFieldAddon {...addonProps}>{addon}</NumberFieldAddon>
           ))}
           <NumberFieldInput placeholder={placeholder} {...inputProps} />
-          {endAddons.map((addon, i) => (
-            <NumberFieldAddon
-              {...addonProps}
-              key={React.isValidElement(addon) ? (addon.key ?? i) : i}
-            >
-              {addon}
-            </NumberFieldAddon>
+          {React.Children.map(endAddons, (addon) => (
+            <NumberFieldAddon {...addonProps}>{addon}</NumberFieldAddon>
           ))}
           {(("decrement" in props && (decrement === true || isLikelyVisibleNode(decrement))) ||
             !!decrementProps) && (
             <NumberFieldAddon disableFocusOnClick {...addonProps}>
-              <NumberFieldDecrement
-                {...{
-                  children: decrement === true ? <SuiMinusIcon /> : decrement,
-                  ...decrementProps,
-                }}
-              />
+              <NumberFieldDecrement>
+                {decrementProps?.children ?? (decrement === true ? <SuiMinusIcon /> : decrement)}
+              </NumberFieldDecrement>
             </NumberFieldAddon>
           )}
           {(("increment" in props && (increment === true || isLikelyVisibleNode(increment))) ||
             !!incrementProps) && (
             <NumberFieldAddon disableFocusOnClick {...addonProps}>
-              <NumberFieldIncrement
-                {...{
-                  children: increment === true ? <SuiPlusIcon /> : increment,
-                  ...incrementProps,
-                }}
-              />
+              <NumberFieldIncrement>
+                {incrementProps?.children ?? (increment === true ? <SuiPlusIcon /> : increment)}
+              </NumberFieldIncrement>
             </NumberFieldAddon>
           )}
         </NumberFieldGroup>

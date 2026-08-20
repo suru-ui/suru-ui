@@ -6,7 +6,6 @@ import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
 
 import "./context-menu.css";
-import "../menu/menu.css";
 
 // Handle
 // ------
@@ -154,10 +153,7 @@ export const ContextMenuPortal: IComponent<ContextMenuPortalProps> = function Su
   const { className, ...otherProps } = props;
 
   return (
-    <ContextMenu.Portal
-      {...otherProps}
-      className={cn(className, "sui_context_menu_portal", "sui_menu_portal")}
-    />
+    <ContextMenu.Portal {...otherProps} className={cn(className, "sui_context_menu_portal")} />
   );
 };
 
@@ -204,7 +200,7 @@ export const ContextMenuBackdrop: IComponent<ContextMenuBackdropProps> =
     return (
       <ContextMenu.Backdrop
         {...otherProps}
-        className={cn(className, "sui_context_menu_backdrop", "sui_menu_backdrop")}
+        className={cn(className, "sui_context_menu_backdrop")}
       />
     );
   };
@@ -252,7 +248,7 @@ export const ContextMenuPositioner: IComponent<ContextMenuPositionerProps> =
     return (
       <ContextMenu.Positioner
         {...otherProps}
-        className={cn(className, "sui_context_menu_positioner", "sui_menu_positioner")}
+        className={cn(className, "sui_context_menu_positioner")}
       />
     );
   };
@@ -298,12 +294,7 @@ export const ContextMenuPopup: IComponent<ContextMenuPopupProps> = function SuiC
 ) {
   const { className, ...otherProps } = props;
 
-  return (
-    <ContextMenu.Popup
-      {...otherProps}
-      className={cn(className, "sui_context_menu_popup", "sui_menu_popup")}
-    />
-  );
+  return <ContextMenu.Popup {...otherProps} className={cn(className, "sui_context_menu_popup")} />;
 };
 
 /**
@@ -347,12 +338,7 @@ export const ContextMenuArrow: IComponent<ContextMenuArrowProps> = function SuiC
 ) {
   const { className, ...otherProps } = props;
 
-  return (
-    <ContextMenu.Arrow
-      {...otherProps}
-      className={cn(className, "sui_context_menu_arrow", "sui_menu_arrow")}
-    />
-  );
+  return <ContextMenu.Arrow {...otherProps} className={cn(className, "sui_context_menu_arrow")} />;
 };
 
 /**
@@ -396,12 +382,7 @@ export const ContextMenuItem: IComponent<ContextMenuItemProps> = function SuiCon
 ) {
   const { className, ...otherProps } = props;
 
-  return (
-    <ContextMenu.Item
-      {...otherProps}
-      className={cn(className, "sui_context_menu_item", "sui_menu_item")}
-    />
-  );
+  return <ContextMenu.Item {...otherProps} className={cn(className, "sui_context_menu_item")} />;
 };
 
 /**
@@ -447,13 +428,7 @@ export const ContextMenuLinkItem: IComponent<ContextMenuLinkItemProps> =
     return (
       <ContextMenu.LinkItem
         {...otherProps}
-        className={cn(
-          className,
-          "sui_context_menu_item",
-          "sui_context_menu_link_item",
-          "sui_menu_item",
-          "sui_menu_link_item",
-        )}
+        className={cn(className, "sui_context_menu_item", "sui_context_menu_link_item")}
       />
     );
   };
@@ -546,13 +521,7 @@ export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProp
     return (
       <ContextMenu.SubmenuTrigger
         {...otherProps}
-        className={cn(
-          className,
-          "sui_context_menu_item",
-          "sui_context_menu_submenu_trigger",
-          "sui_menu_item",
-          "sui_menu_submenu_trigger",
-        )}
+        className={cn(className, "sui_context_menu_item", "sui_context_menu_submenu_trigger")}
       />
     );
   };
@@ -598,12 +567,7 @@ export const ContextMenuGroup: IComponent<ContextMenuGroupProps> = function SuiC
 ) {
   const { className, ...otherProps } = props;
 
-  return (
-    <ContextMenu.Group
-      {...otherProps}
-      className={cn(className, "sui_context_menu_group", "sui_menu_group")}
-    />
-  );
+  return <ContextMenu.Group {...otherProps} className={cn(className, "sui_context_menu_group")} />;
 };
 
 /**
@@ -649,7 +613,7 @@ export const ContextMenuGroupLabel: IComponent<ContextMenuGroupLabelProps> =
     return (
       <ContextMenu.GroupLabel
         {...otherProps}
-        className={cn(className, "sui_context_menu_group_label", "sui_menu_group_label")}
+        className={cn(className, "sui_context_menu_group_label")}
       />
     );
   };
@@ -697,7 +661,7 @@ export const ContextMenuRadioGroup: IComponent<ContextMenuRadioGroupProps> =
     return (
       <ContextMenu.RadioGroup
         {...otherProps}
-        className={cn(className, "sui_context_menu_radio_group", "sui_menu_radio_group")}
+        className={cn(className, "sui_context_menu_radio_group")}
       />
     );
   };
@@ -745,13 +709,7 @@ export const ContextMenuRadioItem: IComponent<ContextMenuRadioItemProps> =
     return (
       <ContextMenu.RadioItem
         {...otherProps}
-        className={cn(
-          className,
-          "sui_context_menu_item",
-          "sui_context_menu_radio_item",
-          "sui_menu_item",
-          "sui_menu_radio_item",
-        )}
+        className={cn(className, "sui_context_menu_item", "sui_context_menu_radio_item")}
       />
     );
   };
@@ -805,8 +763,6 @@ export const ContextMenuRadioItemIndicator: IComponent<ContextMenuRadioItemIndic
           className,
           "sui_context_menu_item_indicator",
           "sui_context_menu_radio_item_indicator",
-          "sui_menu_item_indicator",
-          "sui_menu_radio_item_indicator",
         )}
         keepMounted={keepMounted}
       />
@@ -857,13 +813,7 @@ export const ContextMenuCheckboxItem: IComponent<ContextMenuCheckboxItemProps> =
     return (
       <ContextMenu.CheckboxItem
         {...otherProps}
-        className={cn(
-          className,
-          "sui_context_menu_item",
-          "sui_context_menu_checkbox_item",
-          "sui_menu_item",
-          "sui_menu_checkbox_item",
-        )}
+        className={cn(className, "sui_context_menu_item", "sui_context_menu_checkbox_item")}
       />
     );
   };
@@ -917,8 +867,6 @@ export const ContextMenuCheckboxItemIndicator: IComponent<ContextMenuCheckboxIte
           className,
           "sui_context_menu_item_indicator",
           "sui_context_menu_checkbox_item_indicator",
-          "sui_menu_item_indicator",
-          "sui_menu_checkbox_item_indicator",
         )}
         keepMounted={keepMounted}
       />
@@ -969,7 +917,7 @@ export const ContextMenuSeparator: IComponent<ContextMenuSeparatorProps> =
     return (
       <ContextMenu.Separator
         {...otherProps}
-        className={cn(className, "sui_context_menu_separator", "sui_menu_separator")}
+        className={cn(className, "sui_context_menu_separator")}
       />
     );
   };
