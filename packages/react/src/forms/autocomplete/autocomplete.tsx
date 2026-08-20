@@ -142,8 +142,7 @@ export type AutocompleteProps = Omit<AutocompleteRootProps, "children"> & {
 
   /**
    * 入力欄のプレースホルダー文字列です。
-   * 指定した場合は `slotProps.input.placeholder` より優先されます。
-   * Combobox と異なり、トップレベルの `placeholder` が優先されます。
+   * `slotProps.input` の `placeholder` が優先されます。
    */
   placeholder?: string | undefined;
 
@@ -169,7 +168,7 @@ interface AutocompleteType extends IComponent<AutocompleteProps> {
  * クリアボタンと、ポップアップを開くボタンを自動で配置します。
  * Clear と Trigger に挿入するアイコンは、`slotProps` の `clear.children` と `icon.children` で差し替えられます。
  * `autoHighlight` と `openOnInputClick` の既定値はどちらも `true` です。
- * `placeholder` は `slotProps.input.placeholder` より優先されます。
+ * `placeholder` は `slotProps.input` の `placeholder` が優先されます。
  * クリアボタンは入力値がある場合だけ、ポップアップの内容は開いている場合だけ表示されます。
  */
 export const Autocomplete: AutocompleteType = /*#__PURE__*/ Object.assign(
@@ -252,7 +251,7 @@ export const Autocomplete: AutocompleteType = /*#__PURE__*/ Object.assign(
           {...inputGroupProps}
           className={cn(className, inputGroupProps?.className)}
         >
-          <AutocompleteInput {...inputProps} placeholder={placeholder ?? inputProps?.placeholder} />
+          <AutocompleteInput placeholder={placeholder} {...inputProps} />
           <AutocompleteClear {...restClearProps} aria-label={clearAriaLabel ?? "クリア"}>
             {clearChildren}
           </AutocompleteClear>
