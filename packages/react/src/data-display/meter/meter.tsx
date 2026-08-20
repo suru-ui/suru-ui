@@ -75,6 +75,8 @@ export type MeterState = MeterRootState;
 export type MeterProps = Omit<MeterRootProps, "children"> & {
   /**
    * ラベルです。
+   *
+   * 指定すると {@link MeterValue} も表示されます。
    */
   label?: MeterLabelProps["children"];
 
@@ -104,7 +106,9 @@ export const Meter: IComponent<MeterProps> = function SuiMeter(props) {
   return (
     <MeterRoot {...rootProps}>
       {("label" in props || !!labelProps) && <MeterLabel children={label} {...labelProps} />}
-      {("label" in props || !!valueProps) && <MeterValue {...valueProps} />}
+      {/* ラベルを指定したときは値も同時に表示されます。`slotProps.value` だけを渡しても
+          値は表示されず、表示はラベルの指定に従います。 */}
+      {("label" in props || !!labelProps) && <MeterValue {...valueProps} />}
       <MeterTrack {...trackProps}>
         <MeterIndicator {...indicatorProps} />
       </MeterTrack>

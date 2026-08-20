@@ -391,9 +391,8 @@ export const NumberFieldGroup: IComponent<NumberFieldGroupProps> = function SuiN
   props,
 ) {
   const { onClick, className, ...otherProps } = props;
+  // ユーザーの `onClick` はここでは呼び出さず、`handleClick` 側で 1 回だけ呼び出します。
   const focusInput: NonNullable<NumberFieldGroupProps["onClick"]> = (evt) => {
-    onClick?.(evt);
-
     if (evt.defaultPrevented || !(evt.target instanceof Element)) {
       return;
     }
