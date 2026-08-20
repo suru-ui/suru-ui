@@ -243,14 +243,24 @@ export namespace NumberField {
   export type Props = NumberFieldProps;
 
   /**
+   * {@link NumberFieldContext} です。
+   */
+  export type Context = NumberFieldContext;
+
+  /**
    * {@link NumberFieldSlotProps} です。
    */
   export type SlotProps = NumberFieldSlotProps;
 
   /**
-   * {@link NumberFieldContext} です。
+   * {@link NumberFieldChangeEventDetails} です。
    */
-  export type Context = NumberFieldContext;
+  export type ChangeEventDetails = NumberFieldChangeEventDetails;
+
+  /**
+   * {@link NumberFieldChangeEventReason} です。
+   */
+  export type ChangeEventReason = NumberFieldChangeEventReason;
 
   /**
    * {@link NumberFieldColor} です。
@@ -271,16 +281,6 @@ export namespace NumberField {
    * {@link NumberFieldVariant} です。
    */
   export type Variant = NumberFieldVariant;
-
-  /**
-   * {@link NumberFieldChangeEventReason} です。
-   */
-  export type ChangeEventReason = NumberFieldChangeEventReason;
-
-  /**
-   * {@link NumberFieldChangeEventDetails} です。
-   */
-  export type ChangeEventDetails = NumberFieldChangeEventDetails;
 }
 
 function SuiCursorGrowIcon(props: React.ComponentProps<"svg">) {

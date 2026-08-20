@@ -154,14 +154,24 @@ export const Tabs: IComponent<TabsProps> = function SuiTabs(props) {
  */
 export namespace Tabs {
   /**
-   * {@link TabsItem} です。
+   * {@link TabsState} です。
    */
-  export type Item = TabsItem;
+  export type State = TabsState;
 
   /**
    * {@link TabsProps} です。
    */
   export type Props = TabsProps;
+
+  /**
+   * {@link TabsSlotProps} です。
+   */
+  export type SlotProps = TabsSlotProps;
+
+  /**
+   * {@link TabsItem} です。
+   */
+  export type Item = TabsItem;
 
   /**
    * {@link TabsRadius} です。
@@ -172,14 +182,4 @@ export namespace Tabs {
    * {@link TabsSize} です。
    */
   export type Size = TabsSize;
-
-  /**
-   * {@link TabsSlotProps} です。
-   */
-  export type SlotProps = TabsSlotProps;
-
-  /**
-   * {@link TabsState} です。
-   */
-  export type State = TabsState;
 }

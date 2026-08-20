@@ -79,6 +79,16 @@ export namespace Input {
   export type Props = InputProps;
 
   /**
+   * {@link InputChangeEventDetails} です。
+   */
+  export type ChangeEventDetails = InputChangeEventDetails;
+
+  /**
+   * {@link InputChangeEventReason} です。
+   */
+  export type ChangeEventReason = InputChangeEventReason;
+
+  /**
    * {@link InputColor} です。
    */
   export type Color = InputColor;
@@ -102,14 +112,4 @@ export namespace Input {
    * {@link InputVariant} です。
    */
   export type Variant = InputVariant;
-
-  /**
-   * {@link InputChangeEventReason} です。
-   */
-  export type ChangeEventReason = InputChangeEventReason;
-
-  /**
-   * {@link InputChangeEventDetails} です。
-   */
-  export type ChangeEventDetails = InputChangeEventDetails;
 }

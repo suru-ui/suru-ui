@@ -162,14 +162,14 @@ export namespace Button {
   export type Props = ButtonProps;
 
   /**
-   * {@link ButtonSlotProps} です。
-   */
-  export type SlotProps = ButtonSlotProps;
-
-  /**
    * {@link ButtonContext} です。
    */
   export type Context = ButtonContext;
+
+  /**
+   * {@link ButtonSlotProps} です。
+   */
+  export type SlotProps = ButtonSlotProps;
 
   /**
    * {@link ButtonColor} です。

@@ -156,14 +156,14 @@ export namespace Control {
   export type Props = FieldControlProps;
 
   /**
-   * {@link FieldControlChangeEventReason} です。
-   */
-  export type ChangeEventReason = FieldControlChangeEventReason;
-
-  /**
    * {@link FieldControlChangeEventDetails} です。
    */
   export type ChangeEventDetails = FieldControlChangeEventDetails;
+
+  /**
+   * {@link FieldControlChangeEventReason} です。
+   */
+  export type ChangeEventReason = FieldControlChangeEventReason;
 }
 
 /**

@@ -73,19 +73,14 @@ export namespace Form {
   export type Props<TValues extends Values = Values> = FormProps<TValues>;
 
   /**
-   * {@link FormValues} です。
-   */
-  export type Values<TValues extends FormValues = FormValues> = FormValues<TValues>;
-
-  /**
    * {@link FormActions} です。
    */
   export type Actions = FormActions;
 
   /**
-   * {@link FormValidationMode} です。
+   * {@link FormSubmitEventDetails} です。
    */
-  export type ValidationMode = FormValidationMode;
+  export type SubmitEventDetails = FormSubmitEventDetails;
 
   /**
    * {@link FormSubmitEventReason} です。
@@ -93,7 +88,12 @@ export namespace Form {
   export type SubmitEventReason = FormSubmitEventReason;
 
   /**
-   * {@link FormSubmitEventDetails} です。
+   * {@link FormValidationMode} です。
    */
-  export type SubmitEventDetails = FormSubmitEventDetails;
+  export type ValidationMode = FormValidationMode;
+
+  /**
+   * {@link FormValues} です。
+   */
+  export type Values<TValues extends FormValues = FormValues> = FormValues<TValues>;
 }

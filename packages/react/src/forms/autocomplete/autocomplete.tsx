@@ -278,14 +278,14 @@ export namespace Autocomplete {
   export type Props = AutocompleteProps;
 
   /**
-   * {@link AutocompleteSlotProps} です。
-   */
-  export type SlotProps = AutocompleteSlotProps;
-
-  /**
    * {@link AutocompleteContext} です。
    */
   export type Context = AutocompleteContext;
+
+  /**
+   * {@link AutocompleteSlotProps} です。
+   */
+  export type SlotProps = AutocompleteSlotProps;
 
   /**
    * {@link AutocompleteColor} です。

@@ -253,6 +253,11 @@ export namespace Root {
   export type Color = ComboboxRootColor;
 
   /**
+   * {@link ComboboxRootItems} です。
+   */
+  export type Items<Value = unknown> = ComboboxRootItems<Value>;
+
+  /**
    * {@link ComboboxRootRadius} です。
    */
   export type Radius = ComboboxRootRadius;
@@ -266,11 +271,6 @@ export namespace Root {
    * {@link ComboboxRootVariant} です。
    */
   export type Variant = ComboboxRootVariant;
-
-  /**
-   * {@link ComboboxRootItems} です。
-   */
-  export type Items<Value = unknown> = ComboboxRootItems<Value>;
 }
 
 /**

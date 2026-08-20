@@ -262,6 +262,16 @@ export namespace Root {
   > = SelectRootProps<Value, Multiple>;
 
   /**
+   * {@link SelectRootItemGroup} です。
+   */
+  export type ItemGroup<Value = unknown> = SelectRootItemGroup<Value>;
+
+  /**
+   * {@link SelectRootItems} です。
+   */
+  export type Items<Value = unknown> = SelectRootItems<Value>;
+
+  /**
    * {@link SelectRootRadius} です。
    */
   export type Radius = SelectRootRadius;
@@ -275,16 +285,6 @@ export namespace Root {
    * {@link SelectRootVariant} です。
    */
   export type Variant = SelectRootVariant;
-
-  /**
-   * {@link SelectRootItemGroup} です。
-   */
-  export type ItemGroup<Value = unknown> = SelectRootItemGroup<Value>;
-
-  /**
-   * {@link SelectRootItems} です。
-   */
-  export type Items<Value = unknown> = SelectRootItems<Value>;
 }
 
 /**

@@ -80,19 +80,14 @@ export namespace Root {
   export type Props<TValues extends FormRootValues = FormRootValues> = FormRootProps<TValues>;
 
   /**
-   * {@link FormRootValues} です。
-   */
-  export type Values<TValues extends FormRootValues = FormRootValues> = FormRootValues<TValues>;
-
-  /**
    * {@link FormRootActions} です。
    */
   export type Actions = FormRootActions;
 
   /**
-   * {@link FormRootValidationMode} です。
+   * {@link FormRootSubmitEventDetails} です。
    */
-  export type ValidationMode = FormRootValidationMode;
+  export type SubmitEventDetails = FormRootSubmitEventDetails;
 
   /**
    * {@link FormRootSubmitEventReason} です。
@@ -100,9 +95,14 @@ export namespace Root {
   export type SubmitEventReason = FormRootSubmitEventReason;
 
   /**
-   * {@link FormRootSubmitEventDetails} です。
+   * {@link FormRootValidationMode} です。
    */
-  export type SubmitEventDetails = FormRootSubmitEventDetails;
+  export type ValidationMode = FormRootValidationMode;
+
+  /**
+   * {@link FormRootValues} です。
+   */
+  export type Values<TValues extends FormRootValues = FormRootValues> = FormRootValues<TValues>;
 }
 
 /**

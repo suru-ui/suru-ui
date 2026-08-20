@@ -236,6 +236,16 @@ export namespace Root {
   export type Props = NumberFieldRootProps;
 
   /**
+   * {@link NumberFieldRootChangeEventDetails} です。
+   */
+  export type ChangeEventDetails = NumberFieldRootChangeEventDetails;
+
+  /**
+   * {@link NumberFieldRootChangeEventReason} です。
+   */
+  export type ChangeEventReason = NumberFieldRootChangeEventReason;
+
+  /**
    * {@link NumberFieldRootColor} です。
    */
   export type Color = NumberFieldRootColor;
@@ -254,16 +264,6 @@ export namespace Root {
    * {@link NumberFieldRootVariant} です。
    */
   export type Variant = NumberFieldRootVariant;
-
-  /**
-   * {@link NumberFieldRootChangeEventReason} です。
-   */
-  export type ChangeEventReason = NumberFieldRootChangeEventReason;
-
-  /**
-   * {@link NumberFieldRootChangeEventDetails} です。
-   */
-  export type ChangeEventDetails = NumberFieldRootChangeEventDetails;
 }
 
 /**

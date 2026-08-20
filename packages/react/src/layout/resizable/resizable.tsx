@@ -100,28 +100,28 @@ export namespace Resizable {
   export type Context = ResizableContext;
 
   /**
-   * {@link ResizableOrientation} です。
-   */
-  export type Orientation = ResizableOrientation;
-
-  /**
    * {@link ResizableDirection} です。
    */
   export type Direction = ResizableDirection;
 
   /**
-   * パネル群のルート要素の状態やプロパティーをまとめた型名前空間です。
+   * {@link ResizableOrientation} です。
    */
-  export namespace PanelGroup {
+  export type Orientation = ResizableOrientation;
+
+  /**
+   * ハンドルの状態やプロパティーをまとめた型名前空間です。
+   */
+  export namespace Handle {
     /**
-     * {@link ResizableRootState} です。
+     * {@link ResizableHandleState} です。
      */
-    export type State = ResizableRootState;
+    export type State = ResizableHandleState;
 
     /**
-     * {@link ResizableRootProps} です。
+     * {@link ResizableHandleProps} です。
      */
-    export type Props = ResizableRootProps;
+    export type Props = ResizableHandleProps;
   }
 
   /**
@@ -145,17 +145,17 @@ export namespace Resizable {
   }
 
   /**
-   * ハンドルの状態やプロパティーをまとめた型名前空間です。
+   * パネル群のルート要素の状態やプロパティーをまとめた型名前空間です。
    */
-  export namespace Handle {
+  export namespace PanelGroup {
     /**
-     * {@link ResizableHandleState} です。
+     * {@link ResizableRootState} です。
      */
-    export type State = ResizableHandleState;
+    export type State = ResizableRootState;
 
     /**
-     * {@link ResizableHandleProps} です。
+     * {@link ResizableRootProps} です。
      */
-    export type Props = ResizableHandleProps;
+    export type Props = ResizableRootProps;
   }
 }

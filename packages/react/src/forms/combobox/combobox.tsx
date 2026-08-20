@@ -414,19 +414,24 @@ export namespace Combobox {
   >;
 
   /**
-   * {@link ComboboxSlotProps} です。
-   */
-  export type SlotProps = ComboboxSlotProps;
-
-  /**
    * {@link ComboboxContext} です。
    */
   export type Context = ComboboxContext;
 
   /**
+   * {@link ComboboxSlotProps} です。
+   */
+  export type SlotProps = ComboboxSlotProps;
+
+  /**
    * {@link ComboboxColor} です。
    */
   export type Color = ComboboxColor;
+
+  /**
+   * {@link ComboboxItems} です。
+   */
+  export type Items<Value = unknown> = ComboboxItems<Value>;
 
   /**
    * {@link ComboboxRadius} です。
@@ -442,11 +447,6 @@ export namespace Combobox {
    * {@link ComboboxVariant} です。
    */
   export type Variant = ComboboxVariant;
-
-  /**
-   * {@link ComboboxItems} です。
-   */
-  export type Items<Value = unknown> = ComboboxItems<Value>;
 }
 
 function isItemGroup<Value>(item: Value): item is Value & {

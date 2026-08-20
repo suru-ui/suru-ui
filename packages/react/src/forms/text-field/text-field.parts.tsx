@@ -337,14 +337,14 @@ export namespace Input {
   export type Props = TextFieldInputProps;
 
   /**
-   * {@link TextFieldInputChangeEventReason} です。
-   */
-  export type ChangeEventReason = TextFieldInputChangeEventReason;
-
-  /**
    * {@link TextFieldInputChangeEventDetails} です。
    */
   export type ChangeEventDetails = TextFieldInputChangeEventDetails;
+
+  /**
+   * {@link TextFieldInputChangeEventReason} です。
+   */
+  export type ChangeEventReason = TextFieldInputChangeEventReason;
 }
 
 /**

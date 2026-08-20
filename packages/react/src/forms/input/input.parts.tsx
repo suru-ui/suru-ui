@@ -175,6 +175,16 @@ export namespace Root {
   export type Props = InputRootProps;
 
   /**
+   * {@link InputRootChangeEventDetails} です。
+   */
+  export type ChangeEventDetails = InputRootChangeEventDetails;
+
+  /**
+   * {@link InputRootChangeEventReason} です。
+   */
+  export type ChangeEventReason = InputRootChangeEventReason;
+
+  /**
    * {@link InputRootColor} です。
    */
   export type Color = InputRootColor;
@@ -198,16 +208,6 @@ export namespace Root {
    * {@link InputRootVariant} です。
    */
   export type Variant = InputRootVariant;
-
-  /**
-   * {@link InputRootChangeEventReason} です。
-   */
-  export type ChangeEventReason = InputRootChangeEventReason;
-
-  /**
-   * {@link InputRootChangeEventDetails} です。
-   */
-  export type ChangeEventDetails = InputRootChangeEventDetails;
 }
 
 /**

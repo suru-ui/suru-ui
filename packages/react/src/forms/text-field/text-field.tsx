@@ -182,14 +182,24 @@ export namespace TextField {
   export type Props = TextFieldProps;
 
   /**
+   * {@link TextFieldContext} です。
+   */
+  export type Context = TextFieldContext;
+
+  /**
    * {@link TextFieldSlotProps} です。
    */
   export type SlotProps = TextFieldSlotProps;
 
   /**
-   * {@link TextFieldContext} です。
+   * {@link TextFieldChangeEventDetails} です。
    */
-  export type Context = TextFieldContext;
+  export type ChangeEventDetails = TextFieldChangeEventDetails;
+
+  /**
+   * {@link TextFieldChangeEventReason} です。
+   */
+  export type ChangeEventReason = TextFieldChangeEventReason;
 
   /**
    * {@link TextFieldColor} です。
@@ -215,14 +225,4 @@ export namespace TextField {
    * {@link TextFieldVariant} です。
    */
   export type Variant = TextFieldVariant;
-
-  /**
-   * {@link TextFieldChangeEventReason} です。
-   */
-  export type ChangeEventReason = TextFieldChangeEventReason;
-
-  /**
-   * {@link TextFieldChangeEventDetails} です。
-   */
-  export type ChangeEventDetails = TextFieldChangeEventDetails;
 }

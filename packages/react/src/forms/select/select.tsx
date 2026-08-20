@@ -395,14 +395,24 @@ export namespace Select {
   >;
 
   /**
+   * {@link SelectContext} です。
+   */
+  export type Context = SelectContext;
+
+  /**
    * {@link SelectSlotProps} です。
    */
   export type SlotProps = SelectSlotProps;
 
   /**
-   * {@link SelectContext} です。
+   * {@link SelectItemGroup} です。
    */
-  export type Context = SelectContext;
+  export type ItemGroup<Value = unknown> = SelectItemGroup<Value>;
+
+  /**
+   * {@link SelectItems} です。
+   */
+  export type Items<Value = unknown> = SelectItems<Value>;
 
   /**
    * {@link SelectRadius} です。
@@ -418,16 +428,6 @@ export namespace Select {
    * {@link SelectVariant} です。
    */
   export type Variant = SelectVariant;
-
-  /**
-   * {@link SelectItemGroup} です。
-   */
-  export type ItemGroup<Value = unknown> = SelectItemGroup<Value>;
-
-  /**
-   * {@link SelectItems} です。
-   */
-  export type Items<Value = unknown> = SelectItems<Value>;
 }
 
 interface SelectType extends IComponent<SelectProps<unknown, boolean | undefined>> {

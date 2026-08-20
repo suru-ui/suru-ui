@@ -162,14 +162,14 @@ export namespace ToggleButton {
   export type Props = ToggleButtonProps;
 
   /**
-   * {@link ToggleButtonSlotProps} です。
-   */
-  export type SlotProps = ToggleButtonSlotProps;
-
-  /**
    * {@link ToggleButtonContext} です。
    */
   export type Context = ToggleButtonContext;
+
+  /**
+   * {@link ToggleButtonSlotProps} です。
+   */
+  export type SlotProps = ToggleButtonSlotProps;
 
   /**
    * {@link ToggleButtonColor} です。
