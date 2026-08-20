@@ -2,6 +2,7 @@ import * as React from "react";
 
 import cn from "../../cn.js";
 import type { IComponent, IUseContext } from "../../types.js";
+import { getItemLabel } from "../_get-item-label.js";
 import {
   type AutocompleteContext,
   type AutocompleteRootSize,
@@ -224,7 +225,7 @@ export const Autocomplete: AutocompleteType = /*#__PURE__*/ Object.assign(
                   <AutocompleteItem {...itemProps} key={groupIndex} value={groupItem}>
                     {typeof children === "function"
                       ? children(groupItem as React.ReactNode, groupIndex)
-                      : String(groupItem)}
+                      : getItemLabel(groupItem, undefined)}
                   </AutocompleteItem>
                 )}
               </AutocompleteCollection>
@@ -235,7 +236,7 @@ export const Autocomplete: AutocompleteType = /*#__PURE__*/ Object.assign(
           <AutocompleteItem {...itemProps} key={index} value={item}>
             {typeof children === "function"
               ? children(item as React.ReactNode, index)
-              : String(item)}
+              : getItemLabel(item, undefined)}
           </AutocompleteItem>
         );
       };

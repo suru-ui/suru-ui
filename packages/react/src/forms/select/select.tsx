@@ -2,6 +2,7 @@ import * as React from "react";
 
 import cn from "../../cn.js";
 import type { IComponent, IUseContext } from "../../types.js";
+import { getItemLabel, isLabeledItem } from "../_get-item-label.js";
 import {
   type SelectContext,
   type SelectRootSize,
@@ -431,41 +432,6 @@ function renderItems<Value>(
 
 function isItemGroup<Value>(item: unknown): item is SelectItemGroup<Value> {
   return typeof item === "object" && item !== null && "items" in item && Array.isArray(item.items);
-}
-
-function isLabeledItem<Value>(
-  item: unknown,
-): item is { readonly label: React.ReactNode; readonly value: Value } {
-  return typeof item === "object" && item !== null && "value" in item && "label" in item;
-}
-
-function getItemLabel<Value>(
-  item: Value,
-  itemToStringLabel: ((item: Value) => string) | undefined,
-) {
-  if (itemToStringLabel) {
-    return itemToStringLabel(item);
-  }
-
-  if (typeof item === "object" && item !== null && "label" in item) {
-    const label = item.label;
-    if (typeof label === "string" || typeof label === "number") {
-      return String(label);
-    }
-  }
-
-  if (typeof item === "object" && item !== null && "value" in item) {
-    const value = item.value;
-    if (typeof value === "string" || typeof value === "number") {
-      return String(value);
-    }
-  }
-
-  if (typeof item === "string" || typeof item === "number" || typeof item === "bigint") {
-    return String(item);
-  }
-
-  return "";
 }
 
 function SuiChevronIcon(props: React.ComponentProps<"svg">) {

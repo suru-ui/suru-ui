@@ -2,6 +2,7 @@ import * as React from "react";
 
 import cn from "../../cn.js";
 import type { IComponent, IUseContext } from "../../types.js";
+import { getItemLabel } from "../_get-item-label.js";
 import {
   type ComboboxContext,
   type ComboboxRootSize,
@@ -453,35 +454,6 @@ function isItemGroup<Value>(item: Value): item is Value & {
   label?: React.ReactNode;
 } {
   return typeof item === "object" && item !== null && "items" in item && Array.isArray(item.items);
-}
-
-function getItemLabel<Value>(
-  item: Value,
-  itemToStringLabel: ((item: Value) => string) | undefined,
-): string {
-  if (itemToStringLabel) {
-    return itemToStringLabel(item);
-  }
-
-  if (typeof item === "object" && item !== null) {
-    if ("label" in item && (typeof item.label === "string" || typeof item.label === "number")) {
-      return String(item.label);
-    }
-    if ("value" in item && (typeof item.value === "string" || typeof item.value === "number")) {
-      return String(item.value);
-    }
-
-    return "";
-  }
-
-  if (typeof item === "string") {
-    return item;
-  }
-  if (typeof item === "number" || typeof item === "bigint" || typeof item === "boolean") {
-    return item.toString();
-  }
-
-  return "";
 }
 
 function SuiClearIcon(props: React.ComponentProps<"svg">) {
