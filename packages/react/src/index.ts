@@ -302,9 +302,11 @@ export {
 } from "./navigation/scroll-area/index.js";
 export {
   type TabsSize,
+  type TabsItem,
   type TabsProps,
   type TabsState,
   type TabsRadius,
+  type TabsSlotProps,
   Tabs,
 } from "./navigation/tabs/index.js";
 

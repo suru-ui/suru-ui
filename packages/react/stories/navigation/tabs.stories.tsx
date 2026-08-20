@@ -2,8 +2,14 @@ import { SIZES } from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
-import { Tabs } from "../../src/navigation/tabs/index.js";
-import * as TabsParts from "../../src/navigation/tabs/index.js";
+import {
+  Tabs,
+  TabsTab,
+  TabsList,
+  TabsRoot,
+  TabsPanel,
+  TabsIndicator,
+} from "../../src/navigation/tabs/index.js";
 
 const meta = preview.meta({
   title: "Navigation / Tabs",
@@ -30,6 +36,24 @@ const ctrl = controls(Tabs, {
   },
 });
 
+const usageItems = [
+  {
+    value: "overview",
+    label: "概要",
+    content: <p>ワークスペースの概要と最近のアクティビティを表示します。</p>,
+  },
+  {
+    value: "projects",
+    label: "プロジェクト",
+    content: <p>プロジェクトの進捗と期限を表示します。</p>,
+  },
+  {
+    value: "account",
+    label: "アカウント",
+    content: <p>プロフィールと設定を表示します。</p>,
+  },
+];
+
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
@@ -39,25 +63,7 @@ export const Usage = meta.story({
     size: "md",
   }),
   render(props) {
-    return (
-      <Tabs {...props} className="w-96" defaultValue="overview">
-        <TabsParts.List>
-          <TabsParts.Tab value="overview">概要</TabsParts.Tab>
-          <TabsParts.Tab value="projects">プロジェクト</TabsParts.Tab>
-          <TabsParts.Tab value="account">アカウント</TabsParts.Tab>
-          <TabsParts.Indicator />
-        </TabsParts.List>
-        <TabsParts.Panel value="overview">
-          <p>ワークスペースの概要と最近のアクティビティを表示します。</p>
-        </TabsParts.Panel>
-        <TabsParts.Panel value="projects">
-          <p>プロジェクトの進捗と期限を表示します。</p>
-        </TabsParts.Panel>
-        <TabsParts.Panel value="account">
-          <p>プロフィールと設定を表示します。</p>
-        </TabsParts.Panel>
-      </Tabs>
-    );
+    return <Tabs {...props} items={usageItems} className="w-96" defaultValue="overview" />;
   },
 });
 
@@ -71,21 +77,21 @@ export const Vertical = meta.story({
   }),
   render(props) {
     return (
-      <Tabs {...props} className="w-96" defaultValue="overview">
+      <TabsRoot {...props} className="w-96" defaultValue="overview">
         <div className="flex">
-          <TabsParts.List>
-            <TabsParts.Tab value="overview">概要</TabsParts.Tab>
-            <TabsParts.Tab value="projects">プロジェクト</TabsParts.Tab>
-            <TabsParts.Tab value="account">アカウント</TabsParts.Tab>
-            <TabsParts.Indicator />
-          </TabsParts.List>
+          <TabsList>
+            <TabsTab value="overview">概要</TabsTab>
+            <TabsTab value="projects">プロジェクト</TabsTab>
+            <TabsTab value="account">アカウント</TabsTab>
+            <TabsIndicator />
+          </TabsList>
           <div className="min-w-0 flex-1">
-            <TabsParts.Panel value="overview">ワークスペースの概要です。</TabsParts.Panel>
-            <TabsParts.Panel value="projects">プロジェクトの進捗です。</TabsParts.Panel>
-            <TabsParts.Panel value="account">アカウントの設定です。</TabsParts.Panel>
+            <TabsPanel value="overview">ワークスペースの概要です。</TabsPanel>
+            <TabsPanel value="projects">プロジェクトの進捗です。</TabsPanel>
+            <TabsPanel value="account">アカウントの設定です。</TabsPanel>
           </div>
         </div>
-      </Tabs>
+      </TabsRoot>
     );
   },
 });
@@ -105,18 +111,11 @@ export const Controlled = meta.story({
       <div className="flex w-96 flex-col gap-2">
         <Tabs
           {...props}
+          items={usageItems}
           value={value}
           className="w-96"
           onValueChange={(nextValue) => setValue(String(nextValue))}
-        >
-          <TabsParts.List>
-            <TabsParts.Tab value="overview">概要</TabsParts.Tab>
-            <TabsParts.Tab value="projects">プロジェクト</TabsParts.Tab>
-            <TabsParts.Indicator />
-          </TabsParts.List>
-          <TabsParts.Panel value="overview">概要を選択しています。</TabsParts.Panel>
-          <TabsParts.Panel value="projects">プロジェクトを選択しています。</TabsParts.Panel>
-        </Tabs>
+        />
         <span>現在の値: {value}</span>
       </div>
     );
@@ -133,19 +132,29 @@ export const DisabledTab = meta.story({
   }),
   render(props) {
     return (
-      <Tabs {...props} className="w-96" defaultValue="overview">
-        <TabsParts.List>
-          <TabsParts.Tab value="overview">概要</TabsParts.Tab>
-          <TabsParts.Tab value="projects" disabled>
-            プロジェクト
-          </TabsParts.Tab>
-          <TabsParts.Tab value="account">アカウント</TabsParts.Tab>
-          <TabsParts.Indicator />
-        </TabsParts.List>
-        <TabsParts.Panel value="overview">概要を表示しています。</TabsParts.Panel>
-        <TabsParts.Panel value="projects">プロジェクトを表示しています。</TabsParts.Panel>
-        <TabsParts.Panel value="account">アカウントを表示しています。</TabsParts.Panel>
-      </Tabs>
+      <Tabs
+        {...props}
+        items={[
+          {
+            value: "overview",
+            label: "概要",
+            content: <p>ワークスペースの概要と最近のアクティビティを表示します。</p>,
+          },
+          {
+            value: "projects",
+            label: "プロジェクト",
+            disabled: true,
+            content: <p>プロジェクトの進捗と期限を表示します。</p>,
+          },
+          {
+            value: "account",
+            label: "アカウント",
+            content: <p>プロフィールと設定を表示します。</p>,
+          },
+        ]}
+        className="w-96"
+        defaultValue="overview"
+      />
     );
   },
 });
@@ -162,13 +171,13 @@ export const Sizes = meta.story({
       <div className="flex flex-col gap-3">
         {SIZES.map((size) => (
           <div key={size}>
-            <Tabs {...props} size={size} className="w-96" defaultValue="overview">
-              <TabsParts.List>
-                <TabsParts.Tab value="overview">概要</TabsParts.Tab>
-                <TabsParts.Tab value="projects">プロジェクト</TabsParts.Tab>
-                <TabsParts.Indicator />
-              </TabsParts.List>
-            </Tabs>
+            <Tabs
+              {...props}
+              size={size}
+              items={usageItems}
+              className="w-96"
+              defaultValue="overview"
+            />
             <div>{size}</div>
           </div>
         ))}
@@ -189,13 +198,13 @@ export const Radius = meta.story({
       <div className="flex flex-col gap-3">
         {(["none", "sm", "md", "lg"] as const).map((radius) => (
           <div key={radius}>
-            <Tabs {...props} radius={radius} className="w-96" defaultValue="overview">
-              <TabsParts.List>
-                <TabsParts.Tab value="overview">概要</TabsParts.Tab>
-                <TabsParts.Tab value="projects">プロジェクト</TabsParts.Tab>
-                <TabsParts.Indicator />
-              </TabsParts.List>
-            </Tabs>
+            <Tabs
+              {...props}
+              items={usageItems}
+              radius={radius}
+              className="w-96"
+              defaultValue="overview"
+            />
             <div>{radius}</div>
           </div>
         ))}
