@@ -262,7 +262,10 @@ export const Trigger: IComponent<Trigger.Props> = AccordionTrigger;
 // ---------
 
 /**
- * {@link AccordionIndicatorState} です。
+ * 状態を持たない自前実装パーツの状態型です。
+ *
+ * {@link AccordionIndicator} は `useRender` で実装するため、状態を自前で明示定義します。
+ * このパーツは状態を持たないため、空オブジェクト型になります。
  */
 export type AccordionIndicatorState = {};
 

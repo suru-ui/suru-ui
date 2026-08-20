@@ -64,6 +64,11 @@ function useSuiNumberFieldContext(optional?: boolean): NumberFieldContext | null
 }
 
 /**
+ * {@link NumberFieldContext} を読み取るフックです。
+ */
+export const useNumberFieldContext: IUseContext<NumberFieldContext> = useSuiNumberFieldContext;
+
+/**
  * {@link NumberFieldContext} です。
  */
 export type Context = NumberFieldContext;
@@ -72,11 +77,6 @@ export type Context = NumberFieldContext;
  * {@link NumberFieldContext} です。
  */
 export const Context: React.Context<NumberFieldContext | null> = NumberFieldContext;
-
-/**
- * {@link NumberFieldContext} を読み取るフックです。
- */
-export const useNumberFieldContext: IUseContext<NumberFieldContext> = useSuiNumberFieldContext;
 
 /**
  * {@link useNumberFieldContext} です。

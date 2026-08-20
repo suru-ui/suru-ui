@@ -63,6 +63,11 @@ function useSuiComboboxContext(optional?: boolean): ComboboxContext | null {
 }
 
 /**
+ * {@link ComboboxContext} を読み取るフックです。
+ */
+export const useComboboxContext: IUseContext<ComboboxContext> = useSuiComboboxContext;
+
+/**
  * {@link ComboboxContext} です。
  */
 export type Context = ComboboxContext;
@@ -71,11 +76,6 @@ export type Context = ComboboxContext;
  * {@link ComboboxContext} です。
  */
 export const Context: React.Context<ComboboxContext | null> = ComboboxContext;
-
-/**
- * {@link ComboboxContext} を読み取るフックです。
- */
-export const useComboboxContext: IUseContext<ComboboxContext> = useSuiComboboxContext;
 
 /**
  * {@link useComboboxContext} です。

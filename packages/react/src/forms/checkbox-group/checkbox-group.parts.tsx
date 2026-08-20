@@ -69,6 +69,12 @@ function useSuiCheckboxGroupContext(optional?: boolean): CheckboxGroupContext | 
 }
 
 /**
+ * {@link CheckboxGroupContext} を読み取るフックです。
+ */
+export const useCheckboxGroupContext: IUseContext<CheckboxGroupContext> =
+  useSuiCheckboxGroupContext;
+
+/**
  * {@link CheckboxGroupContext} です。
  */
 export type Context = CheckboxGroupContext;
@@ -77,12 +83,6 @@ export type Context = CheckboxGroupContext;
  * {@link CheckboxGroupContext} です。
  */
 export const Context: React.Context<CheckboxGroupContext | null> = CheckboxGroupContext;
-
-/**
- * {@link CheckboxGroupContext} を読み取るフックです。
- */
-export const useCheckboxGroupContext: IUseContext<CheckboxGroupContext> =
-  useSuiCheckboxGroupContext;
 
 /**
  * {@link useCheckboxGroupContext} です。
