@@ -33,7 +33,7 @@ export type AlertDialogSlotProps = {
   /**
    * {@link AlertDialogClose|Close} (承諾ボタン) に渡すプロパティーです。
    */
-  readonly accept?: Omit<AlertDialogCloseProps, "children"> | undefined;
+  readonly accept?: AlertDialogCloseProps | undefined;
 
   /**
    * {@link AlertDialogBackdrop|Backdrop} に渡すプロパティーです。
@@ -58,7 +58,7 @@ export type AlertDialogSlotProps = {
   /**
    * {@link AlertDialogClose|Close} (拒否ボタン) に渡すプロパティーです。
    */
-  readonly reject?: Omit<AlertDialogCloseProps, "children"> | undefined;
+  readonly reject?: AlertDialogCloseProps | undefined;
 
   /**
    * {@link AlertDialogTitle|Title} に渡すプロパティーです。
@@ -221,8 +221,9 @@ export const AlertDialog: AlertDialogComponentType = /*#__PURE__*/ Object.assign
 
     return (
       <AlertDialogRoot {...rootProps} handle={handle}>
-        {trigger !== undefined && (
-          <AlertDialogTrigger handle={handle} children={trigger} {...triggerProps} />
+        {(!!trigger || !!triggerProps) && (
+          // `trigger` または `triggerProps` があれば、`children` は必ず指定されます。
+          <AlertDialogTrigger handle={handle} children={trigger!} {...triggerProps} />
         )}
         <AlertDialogPortal {...portalProps}>
           <AlertDialogBackdrop {...backdropProps} />
@@ -255,19 +256,21 @@ export const AlertDialog: AlertDialogComponentType = /*#__PURE__*/ Object.assign
                 <AlertDialogDescription children={description} {...descriptionProps} />
               )}
               {children}
-              {(reject !== undefined || accept !== undefined) && (
+              {(!!reject || !!rejectProps || !!accept || !!acceptProps) && (
                 <div className="sui_alert_dialog_actions">
-                  {reject !== undefined && (
+                  {(!!reject || !!rejectProps) && (
+                    // `reject` または `rejectProps` があれば、`children` は必ず指定されます。
                     <AlertDialogClose
                       onClick={createCloseClickHandler(rejectProps?.onClick, onReject)}
-                      children={reject}
+                      children={reject!}
                       {...rejectProps}
                     />
                   )}
-                  {accept !== undefined && (
+                  {(!!accept || !!acceptProps) && (
+                    // `accept` または `acceptProps` があれば、`children` は必ず指定されます。
                     <AlertDialogClose
                       onClick={createCloseClickHandler(acceptProps?.onClick, onAccept)}
-                      children={accept}
+                      children={accept!}
                       {...acceptProps}
                     />
                   )}

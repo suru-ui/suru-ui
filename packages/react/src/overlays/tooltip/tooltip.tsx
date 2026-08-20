@@ -110,7 +110,10 @@ export const Tooltip: TooltipComponentType = /*#__PURE__*/ Object.assign(
 
     return (
       <TooltipRoot {...rootProps}>
-        {trigger !== undefined && <TooltipTrigger children={trigger} {...triggerProps} />}
+        {(!!trigger || !!triggerProps) && (
+          // `trigger` または `triggerProps` があれば、`children` は必ず指定されます。
+          <TooltipTrigger children={trigger!} {...triggerProps} />
+        )}
         <TooltipPortal {...portalProps}>
           <TooltipPositioner {...otherPositionerProps} side={side} sideOffset={sideOffset}>
             <TooltipPopup {...popupProps}>

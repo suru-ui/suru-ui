@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import cn from "../../cn.js";
 import type { IComponent, IUseContext } from "../../types.js";
 import { getItemLabel } from "../_get-item-label.js";
 import {
@@ -128,22 +127,11 @@ export type AutocompleteProps = Omit<AutocompleteRootProps, "children"> & {
    * - 関数: 各行の内容を、項目の値とインデックスを受け取って作ります。
    * - それ以外の React ノード: リストにそのまま表示します（`Item` を列挙する場合など）
    * - 指定しない場合: アイテムの値をそのまま各行に表示します
-   * 項目の状態が変わると、関数形式の children は再び呼び出されます。
    */
-  children?:
-    | React.ReactNode
-    | ((item: React.ReactNode, index: number) => React.ReactNode)
-    | undefined;
-
-  /**
-   * 入力欄を含むグループ要素に適用するクラス名です。
-   * `slotProps.inputGroup.className` と結合されます。
-   */
-  className?: AutocompleteInputGroupProps["className"] | undefined;
+  children?: React.ReactNode | ((item: React.ReactNode, index: number) => React.ReactNode);
 
   /**
    * 入力欄のプレースホルダー文字列です。
-   * `slotProps.input` の `placeholder` が優先されます。
    */
   placeholder?: string | undefined;
 
@@ -151,7 +139,6 @@ export type AutocompleteProps = Omit<AutocompleteRootProps, "children"> & {
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
    *
    * 各パーツのプロパティーが優先されます。
-   * `clear`、`icon`、`input`、`inputGroup`、`item`、`list`、`portal`、`positioner`、`popup`、`trigger` を指定できます。
    */
   slotProps?: AutocompleteSlotProps | undefined;
 };
@@ -168,15 +155,11 @@ interface AutocompleteType extends IComponent<AutocompleteProps> {
  *
  * クリアボタンと、ポップアップを開くボタンを自動で配置します。
  * Clear と Trigger に挿入するアイコンは、`slotProps` の `clear.children` と `icon.children` で差し替えられます。
- * `autoHighlight` と `openOnInputClick` の既定値はどちらも `true` です。
- * `placeholder` は `slotProps.input` の `placeholder` が優先されます。
- * クリアボタンは入力値がある場合だけ、ポップアップの内容は開いている場合だけ表示されます。
  */
 export const Autocomplete: AutocompleteType = /*#__PURE__*/ Object.assign(
   function SuiAutocomplete(props: AutocompleteProps) {
     const {
       children,
-      className,
       slotProps: {
         icon: iconProps,
         item: itemProps,
@@ -197,15 +180,15 @@ export const Autocomplete: AutocompleteType = /*#__PURE__*/ Object.assign(
     const {
       children: clearChildren = <SuiClearIcon />,
       "aria-label": clearAriaLabel,
-      ...restClearProps
+      ...otherClearProps
     } = clearProps ?? {};
-    const { children: iconChildren = <SuiChevronIcon />, ...restIconProps } = iconProps ?? {};
-    const { "aria-label": triggerAriaLabel, ...restTriggerProps } = triggerProps ?? {};
+    const { children: iconChildren = <SuiChevronIcon />, ...otherIconProps } = iconProps ?? {};
+    const { "aria-label": triggerAriaLabel, ...otherTriggerProps } = triggerProps ?? {};
     const {
       side = "bottom",
       align = "start",
       sideOffset = 8,
-      ...restPositionerProps
+      ...otherPositionerProps
     } = positionerProps ?? {};
     const listChildren = React.useMemo(() => {
       if (typeof children !== "function" && children !== undefined) {
@@ -248,24 +231,21 @@ export const Autocomplete: AutocompleteType = /*#__PURE__*/ Object.assign(
         autoHighlight={autoHighlight}
         openOnInputClick={openOnInputClick}
       >
-        <AutocompleteInputGroup
-          {...inputGroupProps}
-          className={cn(className, inputGroupProps?.className)}
-        >
+        <AutocompleteInputGroup {...inputGroupProps}>
           <AutocompleteInput placeholder={placeholder} {...inputProps} />
-          <AutocompleteClear {...restClearProps} aria-label={clearAriaLabel ?? "クリア"}>
+          <AutocompleteClear {...otherClearProps} aria-label={clearAriaLabel ?? "クリア"}>
             {clearChildren}
           </AutocompleteClear>
           <AutocompleteTrigger
-            {...restTriggerProps}
+            {...otherTriggerProps}
             aria-label={triggerAriaLabel ?? "選択肢を選択"}
           >
-            <AutocompleteIcon {...restIconProps}>{iconChildren}</AutocompleteIcon>
+            <AutocompleteIcon {...otherIconProps}>{iconChildren}</AutocompleteIcon>
           </AutocompleteTrigger>
         </AutocompleteInputGroup>
         <AutocompletePortal {...portalProps}>
           <AutocompletePositioner
-            {...restPositionerProps}
+            {...otherPositionerProps}
             side={side}
             align={align}
             sideOffset={sideOffset}

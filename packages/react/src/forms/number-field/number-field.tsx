@@ -181,16 +181,17 @@ export const NumberField: NumberFieldType = /*#__PURE__*/ Object.assign(
     return (
       <NumberFieldRoot {...rootProps}>
         {("scrubArea" in props || !!scrubAreaProps) && (
-          <NumberFieldScrubArea {...scrubAreaProps}>
-            {scrubAreaProps?.children ?? (
+          <NumberFieldScrubArea
+            children={
               <>
                 {scrubArea}
                 <NumberFieldScrubAreaCursor {...scrubAreaCursorProps}>
                   <SuiCursorGrowIcon />
                 </NumberFieldScrubAreaCursor>
               </>
-            )}
-          </NumberFieldScrubArea>
+            }
+            {...scrubAreaProps}
+          />
         )}
         <NumberFieldGroup {...groupProps}>
           {React.Children.map(startAddons, (addon) => (
@@ -203,17 +204,19 @@ export const NumberField: NumberFieldType = /*#__PURE__*/ Object.assign(
           {(("decrement" in props && (decrement === true || isLikelyVisibleNode(decrement))) ||
             !!decrementProps) && (
             <NumberFieldAddon disableFocusOnClick {...addonProps}>
-              <NumberFieldDecrement>
-                {decrementProps?.children ?? (decrement === true ? <SuiMinusIcon /> : decrement)}
-              </NumberFieldDecrement>
+              <NumberFieldDecrement
+                children={decrement === true ? <SuiMinusIcon /> : decrement}
+                {...decrementProps}
+              />
             </NumberFieldAddon>
           )}
           {(("increment" in props && (increment === true || isLikelyVisibleNode(increment))) ||
             !!incrementProps) && (
             <NumberFieldAddon disableFocusOnClick {...addonProps}>
-              <NumberFieldIncrement>
-                {incrementProps?.children ?? (increment === true ? <SuiPlusIcon /> : increment)}
-              </NumberFieldIncrement>
+              <NumberFieldIncrement
+                children={increment === true ? <SuiPlusIcon /> : increment}
+                {...incrementProps}
+              />
             </NumberFieldAddon>
           )}
         </NumberFieldGroup>

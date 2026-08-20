@@ -229,16 +229,17 @@ export const Drawer: DrawerComponentType = /*#__PURE__*/ Object.assign(
 
     return (
       <DrawerRoot {...rootProps} handle={handle}>
-        {trigger !== undefined && (
-          <DrawerTrigger handle={handle} children={trigger} {...triggerProps} />
+        {(!!trigger || !!triggerProps) && (
+          // `trigger` または `triggerProps` があれば、`children` は必ず指定されます。
+          <DrawerTrigger handle={handle} children={trigger!} {...triggerProps} />
         )}
-        {swipeAreaProps !== undefined && <DrawerSwipeArea {...swipeAreaProps} />}
-        {virtualKeyboardProviderProps !== undefined ? (
+        {!!swipeAreaProps && <DrawerSwipeArea {...swipeAreaProps} />}
+        {!virtualKeyboardProviderProps ? (
+          portal
+        ) : (
           <DrawerVirtualKeyboardProvider {...virtualKeyboardProviderProps}>
             {portal}
           </DrawerVirtualKeyboardProvider>
-        ) : (
-          portal
         )}
       </DrawerRoot>
     );

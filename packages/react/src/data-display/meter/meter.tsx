@@ -106,9 +106,8 @@ export const Meter: IComponent<MeterProps> = function SuiMeter(props) {
   return (
     <MeterRoot {...rootProps}>
       {("label" in props || !!labelProps) && <MeterLabel children={label} {...labelProps} />}
-      {/* ラベルを指定したときは値も同時に表示されます。`slotProps.value` だけを渡しても
-          値は表示されず、表示はラベルの指定に従います。 */}
-      {("label" in props || !!labelProps) && <MeterValue {...valueProps} />}
+      {/* ラベルを指定したときは値も同時に表示されます。`slotProps.value` だけを渡しても値は表示されず、表示はラベルの指定に従います。 */}
+      {("label" in props || !!labelProps || !!valueProps) && <MeterValue {...valueProps} />}
       <MeterTrack {...trackProps}>
         <MeterIndicator {...indicatorProps} />
       </MeterTrack>

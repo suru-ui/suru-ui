@@ -93,7 +93,12 @@ export type ContextMenuTriggerState = ContextMenu.Trigger.State;
 /**
  * {@link ContextMenuTrigger} に渡すプロパティーです。
  */
-export type ContextMenuTriggerProps = React.ComponentProps<typeof ContextMenu.Trigger>;
+export type ContextMenuTriggerProps = Omit<
+  React.ComponentProps<typeof ContextMenu.Trigger>,
+  "children" | "render"
+> & {
+  children: NonNullable<React.ComponentProps<typeof ContextMenu.Trigger>["render"]>;
+};
 
 /**
  * 右クリックまたは長押しでコンテキストメニューを開く対象です。
@@ -102,10 +107,14 @@ export type ContextMenuTriggerProps = React.ComponentProps<typeof ContextMenu.Tr
  */
 export const ContextMenuTrigger: IComponent<ContextMenuTriggerProps> =
   function SuiContextMenuTrigger(props) {
-    const { className, ...otherProps } = props;
+    const { children, className, ...otherProps } = props;
 
     return (
-      <ContextMenu.Trigger {...otherProps} className={cn(className, "sui_context_menu_trigger")} />
+      <ContextMenu.Trigger
+        {...otherProps}
+        render={children}
+        className={cn(className, "sui_context_menu_trigger")}
+      />
     );
   };
 

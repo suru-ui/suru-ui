@@ -130,12 +130,12 @@ export const Root: IComponent<Root.Props> = AccordionRoot;
 // ----
 
 /**
- * {@link AccordionItemState} です。
+ * {@link AccordionItem} の状態です。
  */
 export type AccordionItemState = Accordion.Item.State;
 
 /**
- * {@link AccordionItemProps} です。
+ * {@link AccordionItem} に渡すプロパティーです。
  */
 export type AccordionItemProps = React.ComponentProps<typeof Accordion.Item>;
 
@@ -174,12 +174,12 @@ export const Item: IComponent<Item.Props> = AccordionItem;
 // ------
 
 /**
- * {@link Header} の状態です。
+ * {@link AccordionHeader} の状態です。
  */
 export type AccordionHeaderState = Accordion.Header.State;
 
 /**
- * {@link Header} に渡すプロパティーです。
+ * {@link AccordionHeader} に渡すプロパティーです。
  */
 export type AccordionHeaderProps = React.ComponentProps<typeof Accordion.Header>;
 
@@ -218,12 +218,12 @@ export const Header: IComponent<Header.Props> = AccordionHeader;
 // -------
 
 /**
- * {@link AccordionTriggerState} です。
+ * {@link AccordionTrigger} の状態です。
  */
 export type AccordionTriggerState = Accordion.Trigger.State;
 
 /**
- * {@link AccordionTriggerProps} です。
+ * {@link AccordionTrigger} に渡すプロパティーです。
  */
 export type AccordionTriggerProps = React.ComponentProps<typeof Accordion.Trigger>;
 
@@ -262,15 +262,12 @@ export const Trigger: IComponent<Trigger.Props> = AccordionTrigger;
 // ---------
 
 /**
- * 状態を持たない自前実装パーツの状態型です。
- *
- * {@link AccordionIndicator} は `useRender` で実装するため、状態を自前で明示定義します。
- * このパーツは状態を持たないため、空オブジェクト型になります。
+ * {@link AccordionIndicator} の状態です。
  */
 export type AccordionIndicatorState = {};
 
 /**
- * {@link AccordionIndicatorProps} です。
+ * {@link AccordionIndicator} に渡すプロパティーです。
  */
 export type AccordionIndicatorProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
   RenderProps<AccordionIndicatorState>;

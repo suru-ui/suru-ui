@@ -38,7 +38,7 @@ export type DialogSlotProps = {
   /**
    * {@link DialogClose} に渡すプロパティーです。
    */
-  readonly close?: Omit<DialogCloseProps, "children"> | undefined;
+  readonly close?: DialogCloseProps | undefined;
 
   /**
    * {@link DialogDescription} に渡すプロパティーです。
@@ -168,8 +168,9 @@ export const Dialog: DialogComponentType = /*#__PURE__*/ Object.assign(
 
     return (
       <DialogRoot {...rootProps} handle={handle}>
-        {trigger !== undefined && (
-          <DialogTrigger handle={handle} children={trigger} {...triggerProps} />
+        {(!!trigger || !!triggerProps) && (
+          // `trigger` または `triggerProps` があれば、`children` は必ず指定されます。
+          <DialogTrigger handle={handle} children={trigger!} {...triggerProps} />
         )}
         <DialogPortal {...portalProps}>
           <DialogBackdrop {...backdropProps} />
@@ -204,7 +205,8 @@ export const Dialog: DialogComponentType = /*#__PURE__*/ Object.assign(
                 <DialogDescription children={description} {...descriptionProps} />
               )}
               {children}
-              {("close" in props || !!closeProps) && (
+              {(!!close || !!closeProps) && (
+                // `close` または `closeProps` があれば、`children` は必ず指定されます。
                 <div className="sui_dialog_actions">
                   <DialogClose
                     children={close!}
