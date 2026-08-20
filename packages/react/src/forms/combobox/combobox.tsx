@@ -458,7 +458,15 @@ function isItemGroup<Value>(item: Value): item is Value & {
 
 function SuiClearIcon(props: React.ComponentProps<"svg">) {
   return (
-    <svg fill="none" stroke="currentColor" viewBox="0 0 16 16" strokeLinecap="round" {...props}>
+    <svg
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 16 16"
+      focusable="false"
+      strokeLinecap="round"
+      aria-hidden="true"
+      {...props}
+    >
       <path d="M4 4l8 8M12 4l-8 8" />
     </svg>
   );
@@ -466,7 +474,15 @@ function SuiClearIcon(props: React.ComponentProps<"svg">) {
 
 function SuiChevronIcon(props: React.ComponentProps<"svg">) {
   return (
-    <svg fill="none" stroke="currentColor" viewBox="0 0 16 16" strokeLinecap="round" {...props}>
+    <svg
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 16 16"
+      focusable="false"
+      strokeLinecap="round"
+      aria-hidden="true"
+      {...props}
+    >
       <path d="M4 6l4 4 4-4" />
     </svg>
   );
@@ -474,7 +490,15 @@ function SuiChevronIcon(props: React.ComponentProps<"svg">) {
 
 function SuiCheckIcon(props: React.ComponentProps<"svg">) {
   return (
-    <svg fill="none" stroke="currentColor" viewBox="0 0 16 16" strokeLinecap="round" {...props}>
+    <svg
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 16 16"
+      focusable="false"
+      strokeLinecap="round"
+      aria-hidden="true"
+      {...props}
+    >
       <path d="m3 8 3 3 7-7" />
     </svg>
   );

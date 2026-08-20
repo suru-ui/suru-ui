@@ -447,7 +447,15 @@ function isItemGroup<Value>(item: unknown): item is SelectItemGroup<Value> {
 
 function SuiChevronIcon(props: React.ComponentProps<"svg">) {
   return (
-    <svg fill="none" stroke="currentColor" viewBox="0 0 16 16" strokeLinecap="round" {...props}>
+    <svg
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 16 16"
+      focusable="false"
+      strokeLinecap="round"
+      aria-hidden="true"
+      {...props}
+    >
       <path d="M4 6l4 4 4-4" />
     </svg>
   );
@@ -455,7 +463,7 @@ function SuiChevronIcon(props: React.ComponentProps<"svg">) {
 
 function SuiChevronUpIcon(props: React.ComponentProps<"svg">) {
   return (
-    <svg fill="currentColor" viewBox="0 0 16 16" {...props}>
+    <svg fill="currentColor" viewBox="0 0 16 16" focusable="false" aria-hidden="true" {...props}>
       <path d="M12 10H4l4-4.5z" />
     </svg>
   );
@@ -463,7 +471,7 @@ function SuiChevronUpIcon(props: React.ComponentProps<"svg">) {
 
 function SuiChevronDownIcon(props: React.ComponentProps<"svg">) {
   return (
-    <svg fill="currentColor" viewBox="0 0 16 16" {...props}>
+    <svg fill="currentColor" viewBox="0 0 16 16" focusable="false" aria-hidden="true" {...props}>
       <path d="M12 6H4l4 4.5z" />
     </svg>
   );
@@ -471,7 +479,15 @@ function SuiChevronDownIcon(props: React.ComponentProps<"svg">) {
 
 function SuiCheckIcon(props: React.ComponentProps<"svg">) {
   return (
-    <svg fill="none" stroke="currentColor" viewBox="0 0 16 16" strokeLinecap="round" {...props}>
+    <svg
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 16 16"
+      focusable="false"
+      strokeLinecap="round"
+      aria-hidden="true"
+      {...props}
+    >
       <path d="m2.5 8.5 4 4 7-9" />
     </svg>
   );

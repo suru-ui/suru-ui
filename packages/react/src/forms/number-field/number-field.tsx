@@ -289,6 +289,7 @@ function SuiCursorGrowIcon(props: React.ComponentProps<"svg">) {
       height={24}
       stroke="currentColor"
       viewBox="0 0 24 24"
+      focusable="false"
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -308,6 +309,7 @@ function SuiMinusIcon(props: React.ComponentProps<"svg">) {
       fill="none"
       stroke="currentColor"
       viewBox="0 0 16 16"
+      focusable="false"
       strokeLinecap="round"
       aria-hidden="true"
       {...props}
@@ -324,6 +326,7 @@ function SuiPlusIcon(props: React.ComponentProps<"svg">) {
       xmlns="http://www.w3.org/2000/svg"
       stroke="currentColor"
       viewBox="0 0 16 16"
+      focusable="false"
       strokeLinecap="round"
       aria-hidden="true"
       {...props}
