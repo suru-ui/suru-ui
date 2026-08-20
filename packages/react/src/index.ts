@@ -273,15 +273,8 @@ export {
   type ResizableContext,
   type ResizableDirection,
   type ResizablePanelSize,
-  type ResizablePanelProps,
-  type ResizableHandleProps,
   type ResizableOrientation,
-  type ResizablePanelGroupProps,
-  type ResizablePanelGroupState,
   Resizable,
-  ResizablePanel,
-  ResizableHandle,
-  ResizablePanelGroup,
 } from "./layout/resizable/index.js";
 
 // navigation
