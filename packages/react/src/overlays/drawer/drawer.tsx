@@ -184,8 +184,8 @@ export const Drawer: DrawerComponentType = /*#__PURE__*/ Object.assign(
 
     return (
       <DrawerRoot {...rootProps} handle={handle}>
-        {("trigger" in props || !!triggerProps) && (
-          <DrawerTrigger handle={handle} {...triggerProps} children={trigger!} />
+        {trigger !== undefined && (
+          <DrawerTrigger handle={handle} children={trigger} {...triggerProps} />
         )}
         {swipeAreaProps !== undefined && <DrawerSwipeArea {...swipeAreaProps} />}
         <DrawerVirtualKeyboardProvider {...virtualKeyboardProviderProps}>

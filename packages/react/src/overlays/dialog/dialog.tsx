@@ -120,6 +120,7 @@ export type DialogProps = Omit<DialogRootProps, "children" | "handle"> & {
    * ダイアログを開くトリガーに表示するコンテンツです。
    *
    * {@link DialogTrigger|Trigger} の子要素として直接渡され、`render` に設定されます。
+   * `trigger` 未指定で `slotProps.trigger` のみ指定した場合は、トリガーは描画されません。
    */
   trigger?: DialogTriggerProps["children"] | undefined;
 };
@@ -167,8 +168,8 @@ export const Dialog: DialogComponentType = /*#__PURE__*/ Object.assign(
 
     return (
       <DialogRoot {...rootProps} handle={handle}>
-        {("trigger" in props || !!triggerProps) && (
-          <DialogTrigger handle={handle} {...triggerProps} children={trigger!} />
+        {trigger !== undefined && (
+          <DialogTrigger handle={handle} children={trigger} {...triggerProps} />
         )}
         <DialogPortal {...portalProps}>
           <DialogBackdrop {...backdropProps} />

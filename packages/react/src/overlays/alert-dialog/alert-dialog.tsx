@@ -149,6 +149,7 @@ export type AlertDialogProps = Omit<AlertDialogRootProps, "children" | "handle">
    *
    * {@link AlertDialogTrigger|Trigger} の子要素として直接渡されます。
    * 省略した場合、トリガーはレンダリングされません。
+   * `trigger` 未指定で `slotProps.trigger` のみ指定した場合も、トリガーは描画されません。
    */
   trigger?: AlertDialogTriggerProps["children"] | undefined;
 };
@@ -220,8 +221,8 @@ export const AlertDialog: AlertDialogComponentType = /*#__PURE__*/ Object.assign
 
     return (
       <AlertDialogRoot {...rootProps} handle={handle}>
-        {(!!trigger || !!triggerProps) && (
-          <AlertDialogTrigger handle={handle} {...triggerProps} children={trigger!} />
+        {trigger !== undefined && (
+          <AlertDialogTrigger handle={handle} children={trigger} {...triggerProps} />
         )}
         <AlertDialogPortal {...portalProps}>
           <AlertDialogBackdrop {...backdropProps} />
@@ -254,20 +255,20 @@ export const AlertDialog: AlertDialogComponentType = /*#__PURE__*/ Object.assign
                 <AlertDialogDescription children={description} {...descriptionProps} />
               )}
               {children}
-              {("reject" in props || !!rejectProps || "accept" in props || !!acceptProps) && (
+              {(reject !== undefined || accept !== undefined) && (
                 <div className="sui_alert_dialog_actions">
-                  {(!!reject || !!rejectProps) && (
+                  {reject !== undefined && (
                     <AlertDialogClose
                       onClick={createCloseClickHandler(rejectProps?.onClick, onReject)}
+                      children={reject}
                       {...rejectProps}
-                      children={reject!}
                     />
                   )}
-                  {("accept" in props || !!acceptProps) && (
+                  {accept !== undefined && (
                     <AlertDialogClose
                       onClick={createCloseClickHandler(acceptProps?.onClick, onAccept)}
+                      children={accept}
                       {...acceptProps}
-                      children={accept!}
                     />
                   )}
                 </div>

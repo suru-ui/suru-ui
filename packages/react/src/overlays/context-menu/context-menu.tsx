@@ -38,7 +38,11 @@ export type ContextMenuSlotProps = {
   /**
    * {@link ContextMenuTrigger|Trigger} に渡すプロパティーです。
    */
-  readonly trigger?: ContextMenuTriggerProps | undefined;
+  readonly trigger?:
+    | (Omit<ContextMenuTriggerProps, "children"> & {
+        readonly children: ContextMenuTriggerProps["children"];
+      })
+    | undefined;
 };
 
 /**
@@ -66,6 +70,7 @@ export type ContextMenuProps = Omit<ContextMenuRootProps, "children" | "handle">
    * コンテキストメニューを開く対象のコンテンツです。
    *
    * {@link ContextMenuTrigger|Trigger} の子要素として直接渡されます。
+   * `trigger` 未指定で `slotProps.trigger` のみ指定した場合は、トリガーは描画されません。
    */
   trigger?: ContextMenuTriggerProps["children"] | undefined;
 };
@@ -102,9 +107,7 @@ export const ContextMenu: ContextMenuComponentType = /*#__PURE__*/ Object.assign
 
     return (
       <ContextMenuRoot {...rootProps} handle={handle}>
-        {("trigger" in props || !!triggerProps) && (
-          <ContextMenuTrigger children={trigger} {...triggerProps} />
-        )}
+        {trigger !== undefined && <ContextMenuTrigger children={trigger} {...triggerProps} />}
         <ContextMenuPortal {...portalProps}>
           <ContextMenuPositioner {...positionerProps}>
             <ContextMenuPopup {...popupProps}>{children}</ContextMenuPopup>

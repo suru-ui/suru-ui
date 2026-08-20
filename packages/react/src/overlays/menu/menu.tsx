@@ -68,6 +68,7 @@ export type MenuProps = Omit<MenuRootProps, "children" | "handle"> &
      *
      * {@link MenuTrigger|Trigger} の子要素として直接渡されます。
      * 省略した場合、トリガーはレンダリングされません。
+     * `trigger` 未指定で `slotProps.trigger` のみ指定した場合も、トリガーは描画されません。
      */
     trigger?: MenuTriggerProps["children"] | undefined;
   };
@@ -109,9 +110,7 @@ export const Menu: MenuComponentType = /*#__PURE__*/ Object.assign(
 
     return (
       <MenuRoot {...rootProps}>
-        {("trigger" in props || !!triggerProps) && (
-          <MenuTrigger children={trigger!} {...triggerProps} />
-        )}
+        {trigger !== undefined && <MenuTrigger children={trigger} {...triggerProps} />}
         <MenuPortal {...portalProps}>
           <MenuBackdrop {...backdropProps} />
           <MenuPositioner

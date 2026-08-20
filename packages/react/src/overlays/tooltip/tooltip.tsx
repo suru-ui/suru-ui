@@ -73,6 +73,7 @@ export type TooltipProps = Omit<TooltipRootProps, "children" | "handle"> & {
    * ツールチップを表示する対象です。
    *
    * {@link TooltipTrigger|Trigger} の子要素として直接渡され、`render` に設定されます。
+   * `trigger` 未指定で `slotProps.trigger` のみ指定した場合は、トリガーは描画されません。
    */
   trigger?: TooltipTriggerProps["children"] | undefined;
 };
@@ -109,9 +110,7 @@ export const Tooltip: TooltipComponentType = /*#__PURE__*/ Object.assign(
 
     return (
       <TooltipRoot {...rootProps}>
-        {("trigger" in props || !!triggerProps) && (
-          <TooltipTrigger children={trigger!} {...triggerProps} />
-        )}
+        {trigger !== undefined && <TooltipTrigger children={trigger} {...triggerProps} />}
         <TooltipPortal {...portalProps}>
           <TooltipPositioner {...otherPositionerProps} side={side} sideOffset={sideOffset}>
             <TooltipPopup {...popupProps}>
