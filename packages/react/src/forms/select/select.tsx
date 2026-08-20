@@ -263,24 +263,74 @@ export const Select: SelectType = /*#__PURE__*/ Object.assign(
     const { children: itemTextChildren, ...restItemTextProps } = itemTextProps ?? {};
     const items = rootProps.items;
 
-    const renderItem = (item: Value, index: number, defaultLabel?: React.ReactNode) => {
-      const content =
-        typeof children === "function"
-          ? children(item, index)
-          : (defaultLabel ?? getItemLabel(item, rootProps.itemToStringLabel));
+    const listChildren = React.useMemo(() => {
+      if (typeof children !== "function" && children !== undefined) {
+        return children;
+      }
 
-      return (
-        <SelectItem {...itemProps} key={index} value={item}>
-          <SelectItemIndicator {...restIndicatorProps}>{indicatorChildren}</SelectItemIndicator>
-          <SelectItemText {...restItemTextProps}>{itemTextChildren ?? content}</SelectItemText>
-        </SelectItem>
-      );
-    };
+      const renderItem = (item: Value, index: number, defaultLabel?: React.ReactNode) => {
+        const content =
+          typeof children === "function"
+            ? children(item, index)
+            : (defaultLabel ?? getItemLabel(item, rootProps.itemToStringLabel));
 
-    const listChildren =
-      typeof children === "function" || children === undefined
-        ? renderItems(items, renderItem, groupProps, groupLabelProps, separatorProps)
-        : children;
+        return (
+          <SelectItem {...itemProps} key={index} value={item}>
+            <SelectItemIndicator {...restIndicatorProps}>{indicatorChildren}</SelectItemIndicator>
+            <SelectItemText {...restItemTextProps}>{itemTextChildren ?? content}</SelectItemText>
+          </SelectItem>
+        );
+      };
+
+      const renderItems = (items: SelectItems<Value> | undefined): React.ReactNode => {
+        if (items === undefined) {
+          return null;
+        }
+
+        if (!Array.isArray(items)) {
+          return Object.entries(items).map(([value, label], index) =>
+            renderItem(value as Value, index, label),
+          );
+        }
+
+        return items.map((entry, index) => {
+          if (isItemGroup(entry)) {
+            const label = entry.label ?? getItemLabel(entry, undefined);
+            return (
+              <React.Fragment key={index}>
+                <SelectGroup {...groupProps}>
+                  {label !== "" && (
+                    <SelectGroupLabel {...groupLabelProps}>{label}</SelectGroupLabel>
+                  )}
+                  {entry.items.map((item, itemIndex) => renderItem(item, itemIndex))}
+                </SelectGroup>
+                {index < items.length - 1 && <SelectSeparator {...separatorProps} />}
+              </React.Fragment>
+            );
+          }
+
+          if (isLabeledItem(entry)) {
+            return renderItem(entry.value, index, entry.label);
+          }
+
+          return renderItem(entry as Value, index);
+        });
+      };
+
+      return renderItems(items);
+    }, [
+      children,
+      groupProps,
+      groupLabelProps,
+      indicatorChildren,
+      itemProps,
+      items,
+      itemTextChildren,
+      restIndicatorProps,
+      restItemTextProps,
+      rootProps.itemToStringLabel,
+      separatorProps,
+    ]);
 
     return (
       <SelectRoot {...rootProps}>
@@ -389,45 +439,6 @@ interface SelectType extends IComponent<SelectProps<unknown, boolean | undefined
    * {@link useSelectContext} です。
    */
   readonly useContext: IUseContext<SelectContext>;
-}
-
-function renderItems<Value>(
-  items: SelectItems<Value> | undefined,
-  renderItem: (item: Value, index: number, defaultLabel?: React.ReactNode) => React.ReactNode,
-  groupProps: SelectGroupProps | undefined,
-  groupLabelProps: SelectGroupLabelProps | undefined,
-  separatorProps: SelectSeparatorProps | undefined,
-): React.ReactNode {
-  if (items === undefined) {
-    return null;
-  }
-
-  if (!Array.isArray(items)) {
-    return Object.entries(items).map(([value, label], index) =>
-      renderItem(value as Value, index, label),
-    );
-  }
-
-  return items.map((entry, index) => {
-    if (isItemGroup(entry)) {
-      const label = entry.label ?? getItemLabel(entry, undefined);
-      return (
-        <React.Fragment key={index}>
-          <SelectGroup {...groupProps}>
-            {label !== "" && <SelectGroupLabel {...groupLabelProps}>{label}</SelectGroupLabel>}
-            {entry.items.map((item, itemIndex) => renderItem(item, itemIndex))}
-          </SelectGroup>
-          {index < items.length - 1 && <SelectSeparator {...separatorProps} />}
-        </React.Fragment>
-      );
-    }
-
-    if (isLabeledItem(entry)) {
-      return renderItem(entry.value, index, entry.label);
-    }
-
-    return renderItem(entry as Value, index);
-  });
 }
 
 function isItemGroup<Value>(item: unknown): item is SelectItemGroup<Value> {
