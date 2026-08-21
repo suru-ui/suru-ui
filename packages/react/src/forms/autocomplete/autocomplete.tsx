@@ -143,7 +143,7 @@ export type AutocompleteSlotProps = {
   /**
    * {@link AutocompleteItem} に渡すプロパティーです。
    */
-  readonly item?: Omit<AutocompleteItemProps, "children"> | undefined;
+  readonly item?: Omit<AutocompleteItemProps, "children" | "value"> | undefined;
 
   /**
    * {@link AutocompleteList} に渡すプロパティーです。
@@ -184,6 +184,112 @@ export type AutocompleteSlotProps = {
    * {@link AutocompleteViewport} に渡すプロパティーです。
    */
   readonly viewport?: Omit<AutocompleteViewportProps, "children"> | undefined;
+};
+
+/**
+ * 各パーツに渡すプロパティーをまとめたものです。
+ */
+export type AutocompletePartsProps = {
+  /**
+   * Chevron アイコンを包む {@link AutocompleteAddon} に渡すプロパティーです。
+   *
+   * `children` にはデフォルトのアイコンが設定されています。
+   */
+  readonly chevronAddon: AutocompleteAddonProps;
+
+  /**
+   * {@link AutocompleteClear} に渡すプロパティーです。
+   */
+  readonly clear: AutocompleteClearProps | undefined;
+
+  /**
+   * {@link AutocompleteAddon} に渡すプロパティーです。
+   */
+  readonly clearAddon: AutocompleteAddonProps;
+
+  /**
+   * {@link AutocompleteContent} に渡すプロパティーです。
+   */
+  readonly content: AutocompleteContentProps;
+
+  /**
+   * {@link AutocompleteCorner} に渡すプロパティーです。
+   */
+  readonly corner: AutocompleteCornerProps;
+
+  /**
+   * {@link AutocompleteEmpty} に渡すプロパティーです。
+   *
+   * これを表示しないときは null になります。
+   */
+  readonly empty: AutocompleteEmptyProps | null;
+
+  /**
+   * 入力欄の末尾に表示する {@link AutocompleteAddon} の一覧です。
+   */
+  readonly endAddons: readonly AutocompleteAddonProps[];
+
+  /**
+   * {@link AutocompleteInput} に渡すプロパティーです。
+   */
+  readonly input: AutocompleteInputProps;
+
+  /**
+   * {@link AutocompleteInputGroup} に渡すプロパティーです。
+   */
+  readonly inputGroup: AutocompleteInputGroupProps;
+
+  /**
+   * {@link AutocompleteList} に渡すプロパティーです。
+   */
+  readonly list: AutocompleteListProps;
+
+  /**
+   * {@link AutocompletePopup} に渡すプロパティーです。
+   */
+  readonly popup: AutocompletePopupProps;
+
+  /**
+   * {@link AutocompletePortal} に渡すプロパティーです。
+   */
+  readonly portal: AutocompletePortalProps;
+
+  /**
+   * {@link AutocompletePositioner} に渡すプロパティーです。
+   */
+  readonly positioner: AutocompletePositionerProps;
+
+  /**
+   * {@link AutocompleteRoot} に渡すプロパティーです。
+   */
+  readonly root: AutocompleteRootProps;
+
+  /**
+   * {@link AutocompleteScrollArea} に渡すプロパティーです。
+   */
+  readonly scrollArea: AutocompleteScrollAreaProps;
+
+  /**
+   * {@link AutocompleteScrollbar} に渡すプロパティーです。
+   */
+  readonly scrollbar: AutocompleteScrollbarProps;
+
+  /**
+   * 入力欄の先頭に表示する {@link AutocompleteAddon} の一覧です。
+   *
+   * 内容は `children` に入ります。
+   */
+  readonly startAddons: readonly AutocompleteAddonProps[];
+
+  /**
+   * {@link AutocompleteThumb} に渡すプロパティーです。
+   */
+  readonly thumb: AutocompleteThumbProps;
+
+  /**
+   * {@link AutocompleteViewport} に渡すプロパティーです。
+   */
+  readonly viewport: AutocompleteViewportProps;
 };
 
 /**
@@ -235,12 +341,163 @@ export type AutocompleteProps<TItemValue = unknown> = Omit<
   startAddons?: readonly React.ReactNode[] | undefined;
 };
 
+/**
+ * {@link Autocomplete} の各パーツに渡すプロパティーを作るフックです。
+ */
+export function useAutocomplete(props: AutocompleteProps): AutocompletePartsProps {
+  const {
+    empty,
+    children: itemRenderer,
+    slotProps: {
+      item: itemProps,
+      list: listProps,
+      addon: addonProps,
+      clear: clearProps = {},
+      empty: emptyProps,
+      input: inputProps,
+      popup: popupProps = {},
+      thumb: thumbProps = {},
+      corner: cornerProps = {},
+      portal: portalProps = {},
+      content: contentProps = {},
+      viewport: viewportProps = {},
+      scrollbar: scrollbarProps = {},
+      inputGroup: inputGroupProps = {},
+      positioner: positionerProps = {},
+      scrollArea: scrollAreaProps = {},
+    } = {},
+    endAddons = [],
+    placeholder,
+    startAddons = [],
+    autoHighlight = true,
+    openOnInputClick = true,
+    ...otherRootProps
+  } = props;
+  const { "aria-label": clearAriaLabel = "クリア", ...otherClearProps } = clearProps;
+  const {
+    side = "bottom",
+    align = "start",
+    sideOffset = 8,
+    ...otherPositionerProps
+  } = positionerProps;
+  const listChildren = React.useMemo<AutocompleteListProps["children"]>(() => {
+    if (typeof itemRenderer !== "function" && itemRenderer !== undefined) {
+      return itemRenderer;
+    }
+
+    const renderItem = itemRenderer || getItemLabel;
+
+    return (item: unknown, index: number): React.ReactNode => {
+      if (!isItemGroup(item)) {
+        return (
+          <AutocompleteItem {...itemProps} key={index} value={item}>
+            {renderItem(item as React.ReactNode, index)}
+          </AutocompleteItem>
+        );
+      }
+
+      const group = item;
+
+      return (
+        <AutocompleteGroup key={index} items={group.items}>
+          {"label" in group && isLikelyVisibleNode(group["label"]) && (
+            <AutocompleteGroupLabel>{group["label"]}</AutocompleteGroupLabel>
+          )}
+          <AutocompleteCollection>
+            {(item, index) => (
+              <AutocompleteItem {...itemProps} key={index} value={item}>
+                {renderItem(item, index)}
+              </AutocompleteItem>
+            )}
+          </AutocompleteCollection>
+        </AutocompleteGroup>
+      );
+    };
+  }, [itemProps, itemRenderer]);
+
+  return {
+    list: {
+      ...listProps,
+      children: listChildren,
+    },
+    root: {
+      ...otherRootProps,
+      autoHighlight,
+      openOnInputClick,
+    },
+    clear: {
+      children: <SuiClearIcon />,
+      "aria-label": clearAriaLabel,
+      ...otherClearProps,
+    },
+    empty:
+      "empty" in props || !!emptyProps
+        ? {
+            children: empty,
+            ...emptyProps,
+          }
+        : null,
+    input: {
+      placeholder,
+      ...inputProps,
+    },
+    popup: popupProps,
+    thumb: thumbProps,
+    corner: cornerProps,
+    portal: portalProps,
+    content: contentProps,
+    viewport: viewportProps,
+    endAddons: React.Children.map(endAddons, (children) => ({
+      ...addonProps,
+      children,
+    }))!,
+    scrollbar: scrollbarProps,
+    clearAddon: {
+      ...addonProps,
+    },
+    inputGroup: inputGroupProps,
+    positioner: {
+      ...otherPositionerProps,
+      side,
+      align,
+      sideOffset,
+    },
+    scrollArea: scrollAreaProps,
+    startAddons: React.Children.map(startAddons, (children) => ({
+      ...addonProps,
+      children,
+    }))!,
+    chevronAddon: {
+      ...addonProps,
+      children: <SuiChevronIcon />,
+    },
+  };
+}
+
+/**
+ * {@link Autocomplete} のコンポーネント型です。
+ */
 interface AutocompleteType extends IComponent.Attributes {
+  /**
+   * 項目をグループにまとめて表示する場合のシグネチャーです。
+   *
+   * `items` は必須で、各要素は `{ items }` を持つグループである必要があります。
+   *
+   * @template TItems グループの一覧の型です。
+   */
   <TItems extends readonly ItemGroup[]>(
     props: Omit<AutocompleteProps<TItems[number]["items"][number]>, "items"> & {
       items: TItems;
     },
   ): IComponent.Return;
+
+  /**
+   * フラットな項目の一覧を表示する場合のシグネチャーです。
+   *
+   * `items` は省略でき、省略した場合は子要素をそのまま表示します。
+   *
+   * @template TItemValue 各項目の値の型です。
+   */
   <TItemValue>(
     props: Omit<AutocompleteProps<TItemValue>, "items"> & {
       items?: readonly TItemValue[] | undefined;
@@ -258,122 +515,37 @@ interface AutocompleteType extends IComponent.Attributes {
  */
 export const Autocomplete: AutocompleteType = /*#__PURE__*/ Object.assign(
   function SuiAutocomplete(props: AutocompleteProps) {
-    const {
-      empty,
-      children: itemRenderer,
-      slotProps: {
-        item: itemProps,
-        list: listProps,
-        addon: addonProps,
-        clear: clearProps = {},
-        empty: emptyProps,
-        input: inputProps,
-        popup: popupProps,
-        thumb: thumbProps,
-        corner: cornerProps,
-        portal: portalProps,
-        content: contentProps,
-        viewport: viewportProps,
-        scrollbar: scrollbarProps,
-        inputGroup: inputGroupProps,
-        positioner: positionerProps = {},
-        scrollArea: scrollAreaProps,
-      } = {},
-      endAddons = [],
-      placeholder,
-      startAddons = [],
-      autoHighlight = true,
-      openOnInputClick = true,
-      ...rootProps
-    } = props;
-    const { "aria-label": clearAriaLabel = "クリア", ...otherClearProps } = clearProps;
-    const {
-      side = "bottom",
-      align = "start",
-      sideOffset = 8,
-      ...otherPositionerProps
-    } = positionerProps;
-    const listChildren = React.useMemo<AutocompleteListProps["children"]>(() => {
-      if (typeof itemRenderer !== "function" && itemRenderer !== undefined) {
-        return itemRenderer;
-      }
-
-      const renderItem = itemRenderer || ((item) => getItemLabel(item));
-
-      return (item: unknown, index: number): React.ReactNode => {
-        if (!isItemGroup(item)) {
-          return (
-            <AutocompleteItem {...itemProps} key={index} value={item}>
-              {renderItem(item as React.ReactNode, index)}
-            </AutocompleteItem>
-          );
-        }
-
-        const group = item;
-
-        return (
-          <AutocompleteGroup key={index} items={group.items}>
-            {"label" in group && isLikelyVisibleNode(group["label"]) && (
-              <AutocompleteGroupLabel>{group["label"]}</AutocompleteGroupLabel>
-            )}
-            <AutocompleteCollection>
-              {(groupItem, groupIndex) => (
-                <AutocompleteItem {...itemProps} key={groupIndex} value={groupItem}>
-                  {renderItem(groupItem, groupIndex)}
-                </AutocompleteItem>
-              )}
-            </AutocompleteCollection>
-          </AutocompleteGroup>
-        );
-      };
-    }, [itemProps, itemRenderer]);
+    const partsProps = useAutocomplete(props);
 
     return (
-      <AutocompleteRoot
-        {...rootProps}
-        autoHighlight={autoHighlight}
-        openOnInputClick={openOnInputClick}
-      >
-        <AutocompleteInputGroup {...inputGroupProps}>
-          {React.Children.map(startAddons, (addon) => (
-            <AutocompleteAddon {...addonProps}>{addon}</AutocompleteAddon>
+      <AutocompleteRoot {...partsProps.root}>
+        <AutocompleteInputGroup {...partsProps.inputGroup}>
+          {partsProps.startAddons.map((addonProps, index) => (
+            <AutocompleteAddon key={index} {...addonProps} />
           ))}
-          <AutocompleteInput placeholder={placeholder} {...inputProps} />
-          <AutocompleteAddon {...addonProps}>
-            <AutocompleteClear
-              children={<SuiClearIcon />}
-              {...otherClearProps}
-              aria-label={clearAriaLabel}
-            />
+          <AutocompleteInput {...partsProps.input} />
+          <AutocompleteAddon {...partsProps.clearAddon}>
+            <AutocompleteClear {...partsProps.clear} />
           </AutocompleteAddon>
-          {React.Children.map(endAddons, (addon) => (
-            <AutocompleteAddon {...addonProps}>{addon}</AutocompleteAddon>
+          {partsProps.endAddons.map((addonProps, index) => (
+            <AutocompleteAddon key={index} {...addonProps} />
           ))}
-          <AutocompleteAddon {...addonProps}>
-            <SuiChevronIcon />
-          </AutocompleteAddon>
+          <AutocompleteAddon {...partsProps.chevronAddon} />
         </AutocompleteInputGroup>
-        <AutocompletePortal {...portalProps}>
-          <AutocompletePositioner
-            {...otherPositionerProps}
-            side={side}
-            align={align}
-            sideOffset={sideOffset}
-          >
-            <AutocompletePopup {...popupProps}>
-              {("empty" in props || !!emptyProps) && (
-                <AutocompleteEmpty children={empty} {...emptyProps} />
-              )}
-              <AutocompleteScrollArea {...scrollAreaProps}>
-                <AutocompleteViewport {...viewportProps}>
-                  <AutocompleteContent {...contentProps}>
-                    <AutocompleteList {...listProps}>{listChildren}</AutocompleteList>
+        <AutocompletePortal {...partsProps.portal}>
+          <AutocompletePositioner {...partsProps.positioner}>
+            <AutocompletePopup {...partsProps.popup}>
+              {partsProps.empty && <AutocompleteEmpty {...partsProps.empty} />}
+              <AutocompleteScrollArea {...partsProps.scrollArea}>
+                <AutocompleteViewport {...partsProps.viewport}>
+                  <AutocompleteContent {...partsProps.content}>
+                    <AutocompleteList {...partsProps.list} />
                   </AutocompleteContent>
                 </AutocompleteViewport>
-                <AutocompleteScrollbar {...scrollbarProps}>
-                  <AutocompleteThumb {...thumbProps} />
+                <AutocompleteScrollbar {...partsProps.scrollbar}>
+                  <AutocompleteThumb {...partsProps.thumb} />
                 </AutocompleteScrollbar>
-                <AutocompleteCorner {...cornerProps} />
+                <AutocompleteCorner {...partsProps.corner} />
               </AutocompleteScrollArea>
             </AutocompletePopup>
           </AutocompletePositioner>

@@ -219,12 +219,30 @@ export type AutocompleteRootProps<TItemValue = unknown> = Omit<
   variant?: AutocompleteRootVariant | undefined;
 };
 
+/**
+ * {@link AutocompleteRoot} のコンポーネント型です。
+ */
 interface AutocompleteRootType extends IComponent.Attributes {
+  /**
+   * 項目をグループにまとめて表示する場合のシグネチャーです。
+   *
+   * `items` は必須で、各要素は `{ items }` を持つグループである必要があります。
+   *
+   * @template TItems グループの一覧の型です。
+   */
   <TItems extends readonly ItemGroup[]>(
     props: Omit<AutocompleteRootProps<TItems[number]["items"][number]>, "items"> & {
       items: TItems;
     },
   ): IComponent.Return;
+
+  /**
+   * フラットな項目の一覧を表示する場合のシグネチャーです。
+   *
+   * `items` は省略でき、省略した場合は子要素をそのまま表示します。
+   *
+   * @template TItemValue 各項目の値の型です。
+   */
   <TItemValue>(
     props: Omit<AutocompleteRootProps<TItemValue>, "items"> & {
       items?: readonly TItemValue[] | undefined;
@@ -355,8 +373,6 @@ export type AutocompleteInputGroupProps = React.ComponentProps<typeof Autocomple
 
 /**
  * 入力欄とその付属コントロールをまとめるグループ要素です。
- *
- * {@link Root} のスタイルプロパティーが伝播され、入力欄の見た目を決定します。
  */
 export const AutocompleteInputGroup: IComponent<AutocompleteInputGroupProps> =
   function SuiAutocompleteInputGroup(props) {
@@ -477,7 +493,7 @@ export type AutocompleteAddonProps = Omit<
 /**
  * 入力欄の左右に表示する補助コンポーネントです。
  *
- * 接頭辞、接尾辞、アイコンなどを表示でき、Clear や Trigger などのコントロールを包むこともできます。
+ * 接頭辞、接尾辞、アイコンなどを表示できます。
  */
 export const AutocompleteAddon: IComponent<AutocompleteAddonProps> = function SuiAutocompleteAddon(
   props,
@@ -909,8 +925,7 @@ export type AutocompleteStatusProps = React.ComponentProps<typeof Autocomplete.S
 /**
  * リストの状態を読み上げるための非表示の要素です。
  *
- * この要素は常に DOM にマウントされたままにしてください。
- * 内容を変更するときは、要素を出し入れするのではなく children を差し替えます。
+ * この要素は常に DOM にマウントされたままにしてください。内容を変更するときは、要素を出し入れするのではなく children を差し替えます。
  */
 export const AutocompleteStatus: IComponent<AutocompleteStatusProps> =
   function SuiAutocompleteStatus(props) {
@@ -1299,8 +1314,7 @@ export type AutocompleteCollectionProps = React.ComponentProps<typeof Autocomple
 /**
  * フィルタリングされた項目を列挙する要素です。
  *
- * それ自身は HTML 要素をレンダリングしません。
- * 平坦なリストでは {@link List} の関数 children がこの要素を暗黙的に提供するため、通常は使いません。
+ * これ自身は HTML 要素をレンダリングしません。
  */
 export const AutocompleteCollection: IComponent<AutocompleteCollectionProps> =
   function SuiAutocompleteCollection(props) {

@@ -107,7 +107,9 @@ export {
   type AutocompleteContext,
   type AutocompleteVariant,
   type AutocompleteSlotProps,
+  type AutocompletePartsProps,
   Autocomplete,
+  useAutocomplete,
 } from "./forms/autocomplete/index.js";
 export {
   type CheckboxSize,

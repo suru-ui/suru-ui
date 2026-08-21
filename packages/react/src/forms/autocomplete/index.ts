@@ -8,5 +8,7 @@ export {
   type AutocompleteRadius,
   type AutocompleteVariant,
   type AutocompleteSlotProps,
+  type AutocompletePartsProps,
   Autocomplete,
+  useAutocomplete,
 } from "./autocomplete.jsx";
