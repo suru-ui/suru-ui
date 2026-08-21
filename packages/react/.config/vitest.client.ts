@@ -2,7 +2,7 @@ import react from "@vitejs/plugin-react";
 import { playwright } from "@vitest/browser-playwright";
 import { defineConfig } from "vitest/config";
 
-import isDebugMode from "./_is-debug-mode";
+import isDebugMode from "./_is-debug-mode.js";
 
 export default defineConfig({
   plugins: [react()],
