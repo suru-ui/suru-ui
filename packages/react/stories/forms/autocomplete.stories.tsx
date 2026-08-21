@@ -1,10 +1,12 @@
 import { SIZES, COLORS } from "@suru-ui/theme";
+import { SearchIcon } from "lucide-react";
 import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Autocomplete } from "../../src/forms/autocomplete/index.js";
 
 const RADII = ["none", ...SIZES, "full"] as const;
+const VARIANTS = ["naked", "liquid"] as const;
 
 const meta = preview.meta({
   title: "Forms / Autocomplete",
@@ -14,12 +16,15 @@ const meta = preview.meta({
 export default meta;
 
 const ctrl = controls(Autocomplete, {
-  accentColor: {
+  color: {
     options: COLORS,
     control: "select",
   },
   disabled: {
     control: "boolean",
+  },
+  empty: {
+    control: "text",
   },
   items: {
     control: "object",
@@ -39,7 +44,7 @@ const ctrl = controls(Autocomplete, {
     control: "select",
   },
   variant: {
-    options: ["naked", "liquid"],
+    options: VARIANTS,
     control: "select",
   },
 });
@@ -50,11 +55,11 @@ export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
     items: ["りんご", "バナナ", "ぶどう", "みかん", "いちご", "もも"],
-    variant: "naked",
-    accentColor: "grey",
+    variant: "liquid",
+    color: "grey",
     size: "md",
     radius: undefined,
-    outlined: undefined,
+    outlined: false,
     disabled: false,
     placeholder: "フルーツを検索",
   }),
@@ -62,7 +67,14 @@ export const Usage = meta.story({
     return (
       <div className="flex flex-col items-start gap-2">
         <label className="text-sm">フルーツ</label>
-        <Autocomplete {...props} className="w-64" />
+        <Autocomplete
+          {...props}
+          slotProps={{
+            inputGroup: {
+              className: "w-[200px]",
+            },
+          }}
+        />
       </div>
     );
   },
@@ -72,18 +84,30 @@ export const Variants = meta.story({
   name: "バリエーション",
   ...ctrl({
     items: ["りんご", "バナナ", "ぶどう", "みかん", "いちご", "もも"],
-    accentColor: "grey",
+    color: "grey",
     size: "md",
     radius: undefined,
-    outlined: undefined,
+    outlined: false,
     disabled: false,
     placeholder: "検索",
   }),
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <Autocomplete {...props} variant="naked" className="w-64" />
-        <Autocomplete {...props} variant="liquid" className="w-64" />
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col gap-2">
+            <span className="text-sm">{variant}</span>
+            <Autocomplete
+              {...props}
+              variant={variant}
+              slotProps={{
+                inputGroup: {
+                  className: "w-[200px]",
+                },
+              }}
+            />
+          </div>
+        ))}
       </div>
     );
   },
@@ -92,40 +116,93 @@ export const Variants = meta.story({
 export const Outlined = meta.story({
   name: "枠線",
   ...ctrl({
-    variant: "naked",
-    accentColor: "grey",
+    variant: "liquid",
+    color: "grey",
     size: "md",
     radius: undefined,
     outlined: true,
     disabled: false,
     placeholder: "検索",
+    empty: "該当なし",
   }),
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <Autocomplete {...props} className="w-64" />
-        <Autocomplete {...props} variant="liquid" className="w-64" />
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col gap-2">
+            <span className="text-sm">{variant}</span>
+            <Autocomplete
+              {...props}
+              variant={variant}
+              slotProps={{
+                inputGroup: {
+                  className: "w-[200px]",
+                },
+              }}
+            />
+          </div>
+        ))}
       </div>
     );
   },
 });
 
-export const AccentColors = meta.story({
-  name: "アクセントカラー",
+export const Colors = meta.story({
+  name: "色",
   ...ctrl({
     variant: "naked",
     size: "md",
     radius: undefined,
-    outlined: undefined,
+    outlined: true,
+    disabled: false,
+    placeholder: "検索",
+    empty: "該当なし",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        {COLORS.map((color) => (
+          <Autocomplete
+            key={color}
+            {...props}
+            color={color}
+            slotProps={{
+              inputGroup: {
+                className: "w-[200px]",
+              },
+            }}
+          />
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Addons = meta.story({
+  name: "付属要素",
+  ...ctrl({
+    items: ["りんご", "バナナ", "ぶどう", "みかん", "いちご", "もも"],
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
     disabled: false,
     placeholder: "検索",
   }),
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        {COLORS.map((color) => (
-          <Autocomplete key={color} {...props} className="w-64" accentColor={color} />
-        ))}
+        <Autocomplete
+          {...props}
+          slotProps={{
+            inputGroup: {
+              className: "w-[240px]",
+            },
+          }}
+          startAddons={[<SearchIcon key={0} />]}
+          endAddons={["について"]}
+        />
       </div>
     );
   },
@@ -134,20 +211,29 @@ export const AccentColors = meta.story({
 export const Sizes = meta.story({
   name: "大きさ",
   ...ctrl({
-    variant: "naked",
-    accentColor: "grey",
+    variant: "liquid",
+    color: "grey",
     radius: undefined,
-    outlined: undefined,
+    outlined: false,
     disabled: false,
     placeholder: "検索",
+    empty: "該当なし",
   }),
   render(props) {
     return (
       <div className="flex flex-col gap-3">
         {SIZES.map((size) => (
-          <div key={size}>
-            <Autocomplete {...props} size={size} className="w-64" />
-            <div>{size}</div>
+          <div key={size} className="flex flex-col gap-2">
+            <span className="text-sm">{size}</span>
+            <Autocomplete
+              {...props}
+              size={size}
+              slotProps={{
+                inputGroup: {
+                  className: "w-[200px]",
+                },
+              }}
+            />
           </div>
         ))}
       </div>
@@ -158,20 +244,29 @@ export const Sizes = meta.story({
 export const Radius = meta.story({
   name: "角丸",
   ...ctrl({
-    variant: "naked",
-    accentColor: "grey",
+    variant: "liquid",
+    color: "grey",
     size: "md",
     outlined: false,
     disabled: false,
     placeholder: "検索",
+    empty: "該当なし",
   }),
   render(props) {
     return (
       <div className="flex flex-col gap-3">
         {RADII.map((radius) => (
-          <div key={radius}>
-            <Autocomplete {...props} radius={radius} className="w-64" />
-            <div>{radius}</div>
+          <div key={radius} className="flex flex-col gap-2">
+            <span className="text-sm">{radius}</span>
+            <Autocomplete
+              {...props}
+              radius={radius}
+              slotProps={{
+                inputGroup: {
+                  className: "w-[200px]",
+                },
+              }}
+            />
           </div>
         ))}
       </div>
@@ -182,18 +277,27 @@ export const Radius = meta.story({
 export const Filled = meta.story({
   name: "入力済み",
   ...ctrl({
-    variant: "naked",
-    accentColor: "grey",
+    items: ["りんご", "バナナ", "ぶどう", "みかん", "いちご", "もも"],
+    variant: "liquid",
+    color: "grey",
     size: "md",
     radius: undefined,
-    outlined: undefined,
+    outlined: false,
     disabled: false,
     placeholder: "検索",
   }),
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <Autocomplete {...props} className="w-64" defaultValue="りんご" />
+        <Autocomplete
+          {...props}
+          slotProps={{
+            inputGroup: {
+              className: "w-[200px]",
+            },
+          }}
+          defaultValue="りんご"
+        />
       </div>
     );
   },
@@ -202,11 +306,11 @@ export const Filled = meta.story({
 export const Grouped = meta.story({
   name: "グループ化",
   ...ctrl({
-    variant: "naked",
-    accentColor: "grey",
+    variant: "liquid",
+    color: "grey",
     size: "md",
     radius: undefined,
-    outlined: undefined,
+    outlined: false,
     disabled: false,
     placeholder: "検索",
   }),
@@ -224,7 +328,11 @@ export const Grouped = meta.story({
             items: ["にんじん", "きゅうり", "トマト"],
           },
         ]}
-        className="w-96"
+        slotProps={{
+          inputGroup: {
+            className: "w-[200px]",
+          },
+        }}
       />
     );
   },
@@ -234,34 +342,66 @@ export const ManyItems = meta.story({
   name: "項目が多い場合",
   ...ctrl({
     items: manyItems,
-    variant: "naked",
-    accentColor: "grey",
+    variant: "liquid",
+    color: "grey",
     size: "md",
     radius: undefined,
-    outlined: undefined,
+    outlined: false,
     disabled: false,
     placeholder: "候補を検索",
   }),
   render(props) {
-    return <Autocomplete {...props} className="w-64" />;
+    return (
+      <Autocomplete
+        {...props}
+        slotProps={{
+          inputGroup: {
+            className: "w-[200px]",
+          },
+        }}
+      />
+    );
   },
 });
 
 export const Disabled = meta.story({
   name: "無効",
   ...ctrl({
-    variant: "naked",
-    accentColor: "grey",
+    color: "grey",
     size: "md",
     radius: undefined,
-    outlined: undefined,
-    placeholder: "検索",
+    outlined: false,
   }),
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <Autocomplete {...props} disabled className="w-96" defaultValue="りんご" />
-        <Autocomplete {...props} disabled className="w-64" placeholder="検索" />
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col gap-2">
+            <span className="text-sm">{variant}</span>
+            <Autocomplete
+              {...props}
+              variant={variant}
+              disabled
+              slotProps={{
+                inputGroup: {
+                  className: "w-[200px]",
+                },
+              }}
+              defaultValue="値"
+            />
+            <Autocomplete
+              {...props}
+              variant={variant}
+              disabled
+              slotProps={{
+                inputGroup: {
+                  className: "w-[200px]",
+                },
+              }}
+              placeholder="プレースホルダー"
+            />
+          </div>
+        ))}
       </div>
     );
   },

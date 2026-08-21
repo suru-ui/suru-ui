@@ -488,6 +488,10 @@
     justify-content: center;
     line-height: 1lh;
     white-space: nowrap;
+
+    &:empty {
+      display: none;
+    }
   }
 
   /* 動的 */

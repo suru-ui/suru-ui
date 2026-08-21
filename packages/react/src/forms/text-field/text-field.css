@@ -33,6 +33,10 @@
     vertical-align: middle;
     touch-action: manipulation;
 
+    &:empty {
+      display: none;
+    }
+
     &::after {
       position: absolute;
       inset: 0px;

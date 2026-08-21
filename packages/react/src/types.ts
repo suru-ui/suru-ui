@@ -1,14 +1,20 @@
 import type * as React from "react";
 
+export namespace IComponent {
+  export type Return = React.ReactElement | null;
+
+  export interface Attributes {
+    displayName?: string | undefined;
+  }
+}
+
 /**
  * Suru UI のコンポーネント型です。
  *
  * @template TProps コンポーネントのプロパティー型です。
  */
-export interface IComponent<TProps = {}> {
-  (props: TProps): React.ReactElement | null;
-
-  displayName?: string | undefined;
+export interface IComponent<TProps = {}> extends IComponent.Attributes {
+  (props: TProps): IComponent.Return;
 }
 
 /**
