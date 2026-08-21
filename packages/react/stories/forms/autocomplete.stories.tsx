@@ -195,13 +195,13 @@ export const Addons = meta.story({
       <div className="flex flex-col gap-3">
         <Autocomplete
           {...props}
+          endAddons={["について"]}
           slotProps={{
             inputGroup: {
               className: "w-[240px]",
             },
           }}
           startAddons={[<SearchIcon key={0} />]}
-          endAddons={["について"]}
         />
       </div>
     );

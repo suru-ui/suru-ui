@@ -265,6 +265,7 @@ export const Combobox: ComboboxType = /*#__PURE__*/ Object.assign(
       placeholder,
       autoHighlight = true,
       openOnInputClick = true,
+      itemToStringLabel,
       ...rootProps
     } = props;
     const {
@@ -294,7 +295,7 @@ export const Combobox: ComboboxType = /*#__PURE__*/ Object.assign(
       }
 
       const renderItem = (item: Value, index: number): React.ReactNode => {
-        const itemLabel = getItemLabel(item, rootProps.itemToStringLabel);
+        const itemLabel = itemToStringLabel?.(item) ?? getItemLabel(item);
         const content = typeof children === "function" ? children(item, index) : itemLabel;
 
         return (
@@ -321,7 +322,7 @@ export const Combobox: ComboboxType = /*#__PURE__*/ Object.assign(
 
         return renderItem(item, index);
       };
-    }, [children, indicatorChildren, itemProps, restIndicatorProps, rootProps.itemToStringLabel]);
+    }, [children, indicatorChildren, itemProps, restIndicatorProps, itemToStringLabel]);
 
     const input = <ComboboxInput placeholder={placeholder} {...inputProps} />;
 
@@ -344,7 +345,7 @@ export const Combobox: ComboboxType = /*#__PURE__*/ Object.assign(
                   <>
                     {Array.isArray(value) &&
                       value.map((item, index) => {
-                        const itemLabel = getItemLabel(item, rootProps.itemToStringLabel);
+                        const itemLabel = itemToStringLabel?.(item) ?? getItemLabel(item);
                         return (
                           <ComboboxChip {...restChipProps} key={index}>
                             {chipChildren ?? itemLabel}

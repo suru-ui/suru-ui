@@ -246,6 +246,7 @@ export const Select: SelectType = /*#__PURE__*/ Object.assign(
         scrollDownArrow: scrollDownArrowProps,
       } = {},
       placeholder = "選択してください",
+      itemToStringLabel,
       ...rootProps
     } = props;
     const { children: iconChildren = <SuiChevronIcon />, ...restIconProps } = iconProps ?? {};
@@ -272,7 +273,7 @@ export const Select: SelectType = /*#__PURE__*/ Object.assign(
         const content =
           typeof children === "function"
             ? children(item, index)
-            : (defaultLabel ?? getItemLabel(item, rootProps.itemToStringLabel));
+            : (defaultLabel ?? itemToStringLabel?.(item) ?? getItemLabel(item));
 
         return (
           <SelectItem {...itemProps} key={index} value={item}>
@@ -295,7 +296,7 @@ export const Select: SelectType = /*#__PURE__*/ Object.assign(
 
         return items.map((entry, index) => {
           if (isItemGroup(entry)) {
-            const label = entry.label ?? getItemLabel(entry, undefined);
+            const label = entry.label ?? getItemLabel(entry);
             return (
               <React.Fragment key={index}>
                 <SelectGroup {...groupProps}>
@@ -320,15 +321,15 @@ export const Select: SelectType = /*#__PURE__*/ Object.assign(
       return renderItems(items);
     }, [
       children,
-      groupProps,
       groupLabelProps,
+      groupProps,
       indicatorChildren,
       itemProps,
       items,
       itemTextChildren,
+      itemToStringLabel,
       restIndicatorProps,
       restItemTextProps,
-      rootProps.itemToStringLabel,
       separatorProps,
     ]);
 

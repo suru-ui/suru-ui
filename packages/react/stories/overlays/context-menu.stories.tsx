@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
+import cn from "../../src/cn.js";
 import { ContextMenu } from "../../src/overlays/context-menu/index.js";
 import * as ContextMenuParts from "../../src/overlays/context-menu/index.js";
 
@@ -28,36 +29,12 @@ export const Usage = meta.story({
   }),
   render(props) {
     return (
-      <ContextMenu {...props} trigger="右クリックしてください">
+      <ContextMenu {...props} trigger={<TriggerArea />}>
         <ContextMenuParts.Item>編集</ContextMenuParts.Item>
         <ContextMenuParts.Item>複製</ContextMenuParts.Item>
         <ContextMenuParts.Separator />
         <ContextMenuParts.Item>削除</ContextMenuParts.Item>
       </ContextMenu>
-    );
-  },
-});
-
-export const Parts = meta.story({
-  name: "パーツ",
-  ...ctrl({}),
-  render() {
-    return (
-      <ContextMenuParts.Root>
-        <ContextMenuParts.Trigger>
-          <div className="rounded-md border border-dashed border-neutral-400 p-8 text-center">
-            右クリックしてください
-          </div>
-        </ContextMenuParts.Trigger>
-        <ContextMenuParts.Portal>
-          <ContextMenuParts.Positioner>
-            <ContextMenuParts.Popup>
-              <ContextMenuParts.Item>編集</ContextMenuParts.Item>
-              <ContextMenuParts.Item>複製</ContextMenuParts.Item>
-            </ContextMenuParts.Popup>
-          </ContextMenuParts.Positioner>
-        </ContextMenuParts.Portal>
-      </ContextMenuParts.Root>
     );
   },
 });
@@ -70,7 +47,7 @@ export const CheckboxItems = meta.story({
     const [showMinimap, setShowMinimap] = React.useState(false);
 
     return (
-      <ContextMenu trigger="右クリックしてください">
+      <ContextMenu trigger={<TriggerArea />}>
         <ContextMenuParts.CheckboxItem checked={showSidebar} onCheckedChange={setShowSidebar}>
           <ContextMenuParts.CheckboxItemIndicator>✓</ContextMenuParts.CheckboxItemIndicator>
           サイドバー
@@ -89,7 +66,7 @@ export const Nested = meta.story({
   ...ctrl({}),
   render() {
     return (
-      <ContextMenu trigger="右クリックしてください">
+      <ContextMenu trigger={<TriggerArea />}>
         <ContextMenuParts.Item>編集</ContextMenuParts.Item>
         <ContextMenuParts.SubmenuRoot>
           <ContextMenuParts.SubmenuTrigger>
@@ -109,3 +86,19 @@ export const Nested = meta.story({
     );
   },
 });
+
+function TriggerArea(props: React.ComponentProps<"div">) {
+  const { className, ...otherProps } = props;
+
+  return (
+    <div
+      {...otherProps}
+      className={cn(
+        className,
+        "rounded-md border border-dashed border-neutral-400 p-8 text-center",
+      )}
+    >
+      右クリックしてください
+    </div>
+  );
+}

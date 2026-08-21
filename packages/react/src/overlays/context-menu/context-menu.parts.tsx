@@ -39,14 +39,7 @@ export type ContextMenuRootState = ContextMenu.Root.State;
 /**
  * {@link ContextMenuRoot} に渡すプロパティーです。
  */
-export type ContextMenuRootProps = Omit<React.ComponentProps<typeof ContextMenu.Root>, "handle"> & {
-  /**
-   * コンテキストメニューを制御するハンドルです。
-   *
-   * {@link createHandle} で作成します。
-   */
-  handle?: ContextMenuHandle | undefined;
-};
+export type ContextMenuRootProps = React.ComponentProps<typeof ContextMenu.Root>;
 
 /**
  * 右クリックまたは長押しで開くコンテキストメニューのルートです。
@@ -57,9 +50,7 @@ export type ContextMenuRootProps = Omit<React.ComponentProps<typeof ContextMenu.
 export const ContextMenuRoot: IComponent<ContextMenuRootProps> = function SuiContextMenuRoot(
   props,
 ) {
-  const { handle, ...otherProps } = props;
-
-  return <ContextMenu.Root {...otherProps} handle={handle} />;
+  return <ContextMenu.Root {...props} />;
 };
 
 /**

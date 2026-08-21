@@ -780,10 +780,7 @@ export const AutocompleteThumb: IComponent<AutocompleteThumbProps> = function Su
   const { className, ...otherProps } = props;
 
   return (
-    <BaseScrollAreaThumb
-      {...otherProps}
-        className={cn(className, "sui_autocomplete_thumb")}
-    />
+    <BaseScrollAreaThumb {...otherProps} className={cn(className, "sui_autocomplete_thumb")} />
   );
 };
 
@@ -828,10 +825,7 @@ export const AutocompleteCorner: IComponent<AutocompleteCornerProps> =
     const { className, ...otherProps } = props;
 
     return (
-      <BaseScrollAreaCorner
-        {...otherProps}
-        className={cn(className, "sui_autocomplete_corner")}
-      />
+      <BaseScrollAreaCorner {...otherProps} className={cn(className, "sui_autocomplete_corner")} />
     );
   };
 
