@@ -6,7 +6,7 @@ class FakeClient {
   #sleep = (t: number) => new Promise((r) => setTimeout(r, t));
 
   async connect() {
-    await this.#sleep(1e3);
+    await this.#sleep(2e3);
   }
 
   async stat(_resourceName: string) {
@@ -37,7 +37,7 @@ class FakeClient {
   }
 
   async disconnect() {
-    await this.#sleep(1e3);
+    await this.#sleep(2e3);
   }
 }
 

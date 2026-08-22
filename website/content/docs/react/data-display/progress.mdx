@@ -1,0 +1,274 @@
+---
+title: Progress
+description: 時間のかかる処理の進捗を表示するコンポーネントです。
+---
+
+## 使い方
+
+```tsx
+import { Progress } from "@suru-ui/react";
+// または、
+import { Progress } from "@suru-ui/react/progress";
+
+<Progress value={70} />;
+```
+
+`value` プロパティーには現在の値を指定します。既定では `0` から `100` の範囲に対する割合で表示されます。
+
+<Component path="react/progress/basic" />
+
+`label` プロパティーを指定するとラベルが表示され、現在値も同時に表示されます。
+
+<Component path="react/progress/label" />
+
+`value` プロパティーに `null` を指定すると、不確定状態になります。不確定状態ではインジケーターがアニメーションします。
+
+<Component path="react/progress/indeterminate" />
+
+## 例
+
+### 主な外観
+
+`"liquid"` は薄い塗りつぶしのトラック、`"naked"` は背景のないトラックになります。
+
+<Component path="react/progress/variants" />
+
+### 色
+
+<Component path="react/progress/colors" />
+
+### 角丸
+
+<Component path="react/progress/radius" />
+
+### 枠線
+
+`outlined` プロパティーを指定すると枠線を表示します。
+
+<Component path="react/progress/outlined" />
+
+### 大きさ
+
+<Component path="react/progress/sizes" />
+
+### 操作と連動
+
+`useProgress` フックで作った疑似ダウンロードの進捗を、ボタンの操作と連動させてゲージに表示します。ファイルサイズの取得中は不確定状態になり、読み込みが始まると現在値が表示されます。
+
+<Component path="react/progress/interactive" />
+
+## 構成
+
+```tsx
+import * as Progress from "@suru-ui/react/progress";
+
+<Progress.Root>
+  <Progress.Label />
+  <Progress.Value />
+  <Progress.Track>
+    <Progress.Indicator />
+  </Progress.Track>
+</Progress.Root>;
+```
+
+## API リファレンス
+
+### Progress
+
+`Progress` は `Root` のプロパティーに加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    label: {
+      type: "React.ReactNode",
+      description: "ラベルです。指定すると Label スロットと Value スロットも同時に表示されます。",
+    },
+    slotProps: {
+      type: "{ indicator?: ProgressIndicator.Props; label?: ProgressLabel.Props; track?: ProgressTrack.Props; value?: ProgressValue.Props }",
+      description:
+        "各パーツに個別のプロパティーを渡すためのオブジェクトです。各パーツのプロパティーが優先されます。",
+    },
+  }}
+/>
+
+### Root
+
+`ProgressRoot` は `<div>` 要素 (`role="progressbar"`) をレンダリングします。標準の HTML 属性に加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    "aria-valuetext": {
+      type: "string",
+      description:
+        "`aria-valuenow` (現在値) に対するユーザーフレンドリーな名前を提供する文字列です。",
+    },
+    className: {
+      type: "string | function",
+      description:
+        "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    color: {
+      type: '"blue" | "green" | "grey" | "magenta" | "orange" | "purple" | "red" | "yellow"',
+      default: '"grey"',
+      description: "進捗の色を指定します。",
+    },
+    format: {
+      type: "Intl.NumberFormatOptions",
+      description: "値を整形するためのオプションです。",
+    },
+    getAriaValueText: {
+      type: "function",
+      description:
+        "整形された値と現在値を受け取り、`aria-valuenow` (現在値) の代替テキストとなる人間が読める文字列を返す関数です。",
+    },
+    locale: {
+      type: "Intl.LocalesArgument",
+      description:
+        "`Intl.NumberFormat` が使用するロケールです。既定ではユーザーの実行環境のロケールが使われます。",
+    },
+    max: {
+      type: "number",
+      default: "100",
+      description: "最大値です。",
+    },
+    min: {
+      type: "number",
+      default: "0",
+      description: "最小値です。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "false",
+      description: "枠線を表示するかどうかを指定します。",
+    },
+    radius: {
+      type: '"none" | "sm" | "md" | "lg" | "full"',
+      default: '"full"',
+      description:
+        '進捗の角丸を指定します。"none" は角を直角にし、"sm"、"md"、"lg" はそれぞれ小さい・標準的な・大きい角丸に、"full" は完全な丸形になります。',
+    },
+    render: {
+      type: "React.ReactElement | function",
+      description:
+        "React 要素、またはそれを返す関数です。コンポーネントの HTML 要素を別のタグに置き換えたり、別のコンポーネントと組み合わせたりすることができます。",
+    },
+    size: {
+      type: '"sm" | "md" | "lg"',
+      default: '"md"',
+      description: "進捗のサイズを指定します。",
+    },
+    style: {
+      type: "React.CSSProperties | function",
+      description:
+        "要素に適用されるスタイルオブジェクト、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    value: {
+      type: "number | null",
+      description:
+        "現在値です。`null` を指定すると不確定状態になり、インジケーターがアニメーションします。",
+    },
+    variant: {
+      type: '"naked" | "liquid"',
+      default: '"liquid"',
+      description:
+        '進捗の主な外観を指定します。"naked" は背景のないトラック、"liquid" は薄い塗りつぶしのトラックになります。',
+    },
+  }}
+/>
+
+### Label
+
+<TypeTable
+  type={{
+    className: {
+      type: "string | function",
+      description:
+        "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    render: {
+      type: "React.ReactElement | function",
+      description:
+        "React 要素、またはそれを返す関数です。コンポーネントの HTML 要素を別のタグに置き換えたり、別のコンポーネントと組み合わせたりすることができます。",
+    },
+    style: {
+      type: "React.CSSProperties | function",
+      description:
+        "要素に適用されるスタイルオブジェクト、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+  }}
+/>
+
+### Value
+
+`children` には整形された値と現在値を受け取る関数を渡せます。
+
+<TypeTable
+  type={{
+    children: {
+      type: "null | function",
+      description:
+        "整形された値と現在値を受け取り、表示する内容を返す関数です。省略した場合は既定の形式で値を表示します。不確定状態では既定の表示は空になります。",
+    },
+    className: {
+      type: "string | function",
+      description:
+        "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    render: {
+      type: "React.ReactElement | function",
+      description:
+        "React 要素、またはそれを返す関数です。コンポーネントの HTML 要素を別のタグに置き換えたり、別のコンポーネントと組み合わせたりすることができます。",
+    },
+    style: {
+      type: "React.CSSProperties | function",
+      description:
+        "要素に適用されるスタイルオブジェクト、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+  }}
+/>
+
+ラベルを指定したときは値も同時に表示されます。`slotProps.value` だけを渡しても値は表示されず、表示はラベルの指定に従います。
+
+### Track
+
+<TypeTable
+  type={{
+    className: {
+      type: "string | function",
+      description:
+        "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    render: {
+      type: "React.ReactElement | function",
+      description:
+        "React 要素、またはそれを返す関数です。コンポーネントの HTML 要素を別のタグに置き換えたり、別のコンポーネントと組み合わせたりすることができます。",
+    },
+    style: {
+      type: "React.CSSProperties | function",
+      description:
+        "要素に適用されるスタイルオブジェクト、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+  }}
+/>
+
+### Indicator
+
+<TypeTable
+  type={{
+    className: {
+      type: "string | function",
+      description:
+        "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    render: {
+      type: "React.ReactElement | function",
+      description:
+        "React 要素、またはそれを返す関数です。コンポーネントの HTML 要素を別のタグに置き換えたり、別のコンポーネントと組み合わせたりすることができます。",
+    },
+    style: {
+      type: "React.CSSProperties | function",
+      description:
+        "要素に適用されるスタイルオブジェクト、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+  }}
+/>
