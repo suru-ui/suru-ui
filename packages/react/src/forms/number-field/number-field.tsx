@@ -223,7 +223,7 @@ export function useNumberField(props: NumberFieldProps): NumberFieldPartsProps {
     scrubArea,
     slotProps: {
       addon: addonProps,
-      group: groupProps,
+      group: groupProps = {},
       input: inputProps,
       decrement: decrementProps,
       increment: incrementProps,

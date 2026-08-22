@@ -107,7 +107,7 @@ export type ContextMenuPartsProps = {
  * {@link ContextMenu} の各パーツに渡すプロパティーを作るフックです。
  */
 export function useContextMenu(props: ContextMenuProps): ContextMenuPartsProps {
-  const [handle] = React.useState(createHandle);
+  // const [handle] = React.useState(createHandle);
   const {
     trigger,
     children,
@@ -123,7 +123,7 @@ export function useContextMenu(props: ContextMenuProps): ContextMenuPartsProps {
   return {
     root: {
       ...rootProps,
-      handle,
+      // handle,
     },
     trigger:
       !!trigger || !!triggerProps
