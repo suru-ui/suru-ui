@@ -44,6 +44,23 @@ export type CheckboxSlotProps = {
 };
 
 /**
+ * {@link Checkbox} の各パーツに渡すプロパティーです。
+ */
+export type CheckboxPartsProps = {
+  /**
+   * {@link CheckboxRoot} に渡すプロパティーです。
+   */
+  readonly root: CheckboxRootProps;
+
+  /**
+   * {@link CheckboxIndicator} に渡すプロパティーです。
+   *
+   * `children` も `slotProps.indicator` も指定しないときは null になります。
+   */
+  readonly indicator: CheckboxIndicatorProps | null;
+};
+
+/**
  * {@link Checkbox} の状態です。
  */
 export type CheckboxState = CheckboxRootState;
@@ -73,16 +90,32 @@ export type CheckboxProps = Omit<CheckboxRootProps, "children"> & {
 };
 
 /**
+ * {@link Checkbox} の各パーツに渡すプロパティーを作るフックです。
+ */
+export function useCheckbox(props: CheckboxProps): CheckboxPartsProps {
+  const { children, slotProps: { indicator: indicatorProps } = {}, ...rootProps } = props;
+
+  return {
+    root: rootProps,
+    indicator:
+      "children" in props || !!indicatorProps
+        ? {
+            children,
+            ...indicatorProps,
+          }
+        : null,
+  };
+}
+
+/**
  * チェックボックスを表示するコンポーネントです。
  */
 export const Checkbox: IComponent<CheckboxProps> = function SuiCheckbox(props) {
-  const { children, slotProps: { indicator: indicatorProps } = {}, ...rootProps } = props;
+  const partsProps = useCheckbox(props);
 
   return (
-    <CheckboxRoot {...rootProps}>
-      {("children" in props || !!indicatorProps) && (
-        <CheckboxIndicator children={children} {...indicatorProps} />
-      )}
+    <CheckboxRoot {...partsProps.root}>
+      {partsProps.indicator && <CheckboxIndicator {...partsProps.indicator} />}
     </CheckboxRoot>
   );
 };

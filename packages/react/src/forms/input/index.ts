@@ -10,5 +10,7 @@ export {
   type InputVariant,
   type InputChangeEventReason,
   type InputChangeEventDetails,
+  type InputPartsProps,
   Input,
+  useInput,
 } from "./input.jsx";

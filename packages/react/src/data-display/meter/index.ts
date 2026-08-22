@@ -8,5 +8,7 @@ export {
   type MeterRadius,
   type MeterVariant,
   type MeterSlotProps,
+  type MeterPartsProps,
   Meter,
+  useMeter,
 } from "./meter.jsx";

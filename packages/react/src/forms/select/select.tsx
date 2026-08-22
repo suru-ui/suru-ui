@@ -173,6 +173,87 @@ export type SelectSlotProps = {
 };
 
 /**
+ * {@link Select} の各パーツに渡すプロパティーです。
+ *
+ * @template Value 選択項目の値を表す型です。
+ * @template Multiple 複数選択を有効にするかどうかです。
+ */
+export type SelectPartsProps<Value = unknown, Multiple extends boolean | undefined = false> = {
+  /**
+   * {@link SelectArrow} に渡すプロパティーです。
+   */
+  readonly arrow: SelectArrowProps | undefined;
+
+  /**
+   * {@link SelectBackdrop} に渡すプロパティーです。
+   */
+  readonly backdrop: SelectBackdropProps | undefined;
+
+  /**
+   * {@link SelectIcon} に渡すプロパティーです。
+   *
+   * `children` にはデフォルトのアイコンが設定されています。
+   */
+  readonly icon: SelectIconProps;
+
+  /**
+   * {@link SelectLabel} に渡すプロパティーです。
+   *
+   * これを表示しないときは null になります。
+   */
+  readonly label: SelectLabelProps | null;
+
+  /**
+   * {@link SelectList} に渡すプロパティーです。
+   */
+  readonly list: SelectListProps;
+
+  /**
+   * {@link SelectPopup} に渡すプロパティーです。
+   */
+  readonly popup: SelectPopupProps | undefined;
+
+  /**
+   * {@link SelectPortal} に渡すプロパティーです。
+   */
+  readonly portal: SelectPortalProps | undefined;
+
+  /**
+   * {@link SelectPositioner} に渡すプロパティーです。
+   */
+  readonly positioner: SelectPositionerProps;
+
+  /**
+   * {@link SelectRoot} に渡すプロパティーです。
+   */
+  readonly root: SelectRootProps<Value, Multiple>;
+
+  /**
+   * {@link SelectScrollDownArrow} に渡すプロパティーです。
+   *
+   * `children` にはデフォルトのアイコンが設定されています。
+   */
+  readonly scrollDownArrow: SelectScrollDownArrowProps;
+
+  /**
+   * {@link SelectScrollUpArrow} に渡すプロパティーです。
+   *
+   * `children` にはデフォルトのアイコンが設定されています。
+   */
+  readonly scrollUpArrow: SelectScrollUpArrowProps;
+
+  /**
+   * {@link SelectTrigger} に渡すプロパティーです。
+   */
+  readonly trigger: SelectTriggerProps;
+
+  /**
+   * {@link SelectValue} に渡すプロパティーです。
+   */
+  readonly value: SelectValueProps;
+};
+
+/**
  * {@link Select} の状態です。
  */
 export type SelectState = SelectRootState;
@@ -213,6 +294,176 @@ export type SelectProps<Value = unknown, Multiple extends boolean | undefined = 
 };
 
 /**
+ * {@link Select} の各パーツに渡すプロパティーを作るフックです。
+ *
+ * @template Value 選択項目の値を表す型です。
+ * @template Multiple 複数選択を有効にするかどうかです。
+ */
+export function useSelect<Value = unknown, Multiple extends boolean | undefined = false>(
+  props: SelectProps<Value, Multiple>,
+): SelectPartsProps<Value, Multiple> {
+  const {
+    label,
+    children,
+    className,
+    slotProps: {
+      icon: iconProps,
+      item: itemProps,
+      list: listProps,
+      arrow: arrowProps,
+      group: groupProps,
+      label: labelProps,
+      popup: popupProps,
+      value: valueProps,
+      portal: portalProps,
+      trigger: triggerProps,
+      backdrop: backdropProps,
+      itemText: itemTextProps,
+      separator: separatorProps,
+      groupLabel: groupLabelProps,
+      positioner: positionerProps,
+      itemIndicator: itemIndicatorProps,
+      scrollUpArrow: scrollUpArrowProps,
+      scrollDownArrow: scrollDownArrowProps,
+    } = {},
+    placeholder = "選択してください",
+    itemToStringLabel,
+    ...rootProps
+  } = props;
+  const { children: iconChildren = <SuiChevronIcon />, ...restIconProps } = iconProps ?? {};
+  const { "aria-label": triggerAriaLabel, ...restTriggerProps } = triggerProps ?? {};
+  const {
+    side = "bottom",
+    align = "start",
+    sideOffset = 8,
+    alignItemWithTrigger = true,
+    ...restPositionerProps
+  } = positionerProps ?? {};
+  const { children: indicatorChildren = <SuiCheckIcon />, ...restIndicatorProps } =
+    itemIndicatorProps ?? {};
+  const { children: valueChildren, ...restValueProps } = valueProps ?? {};
+  const { children: itemTextChildren, ...restItemTextProps } = itemTextProps ?? {};
+  const items = rootProps.items;
+
+  const listChildren = React.useMemo(() => {
+    if (typeof children !== "function" && children !== undefined) {
+      return children;
+    }
+
+    const renderItem = (item: Value, index: number, defaultLabel?: React.ReactNode) => {
+      const content =
+        typeof children === "function"
+          ? children(item, index)
+          : (defaultLabel ?? itemToStringLabel?.(item) ?? getItemLabel(item));
+
+      return (
+        <SelectItem {...itemProps} key={index} value={item}>
+          <SelectItemIndicator {...restIndicatorProps}>{indicatorChildren}</SelectItemIndicator>
+          <SelectItemText {...restItemTextProps}>{itemTextChildren ?? content}</SelectItemText>
+        </SelectItem>
+      );
+    };
+
+    const renderItems = (items: SelectItems<Value> | undefined): React.ReactNode => {
+      if (items === undefined) {
+        return null;
+      }
+
+      if (!Array.isArray(items)) {
+        return Object.entries(items).map(([value, label], index) =>
+          renderItem(value as Value, index, label),
+        );
+      }
+
+      return items.map((entry, index) => {
+        if (isItemGroup(entry)) {
+          const label = entry.label ?? getItemLabel(entry);
+          return (
+            <React.Fragment key={index}>
+              <SelectGroup {...groupProps}>
+                {label !== "" && (
+                  <SelectGroupLabel {...groupLabelProps}>{label}</SelectGroupLabel>
+                )}
+                {entry.items.map((item, itemIndex) => renderItem(item, itemIndex))}
+              </SelectGroup>
+              {index < items.length - 1 && <SelectSeparator {...separatorProps} />}
+            </React.Fragment>
+          );
+        }
+
+        if (isLabeledItem(entry)) {
+          return renderItem(entry.value, index, entry.label);
+        }
+
+        return renderItem(entry as Value, index);
+      });
+    };
+
+    return renderItems(items);
+  }, [
+    children,
+    groupLabelProps,
+    groupProps,
+    indicatorChildren,
+    itemProps,
+    items,
+    itemTextChildren,
+    itemToStringLabel,
+    restIndicatorProps,
+    restItemTextProps,
+    separatorProps,
+  ]);
+
+  return {
+    arrow: arrowProps,
+    backdrop: backdropProps,
+    icon: {
+      ...restIconProps,
+      children: iconChildren,
+    },
+    label:
+      "label" in props || !!labelProps
+        ? {
+            children: label,
+            ...labelProps,
+          }
+        : null,
+    list: {
+      ...listProps,
+      children: listChildren,
+    },
+    popup: popupProps,
+    portal: portalProps,
+    positioner: {
+      ...restPositionerProps,
+      side,
+      align,
+      sideOffset,
+      alignItemWithTrigger,
+    },
+    root: rootProps,
+    scrollDownArrow: {
+      ...scrollDownArrowProps,
+      children: <SuiChevronDownIcon />,
+    },
+    scrollUpArrow: {
+      ...scrollUpArrowProps,
+      children: <SuiChevronUpIcon />,
+    },
+    trigger: {
+      ...restTriggerProps,
+      className: cn(className, restTriggerProps.className),
+      "aria-label": triggerAriaLabel ?? (label === undefined ? "選択肢を選択" : undefined),
+    },
+    value: {
+      placeholder,
+      ...restValueProps,
+      children: valueChildren,
+    },
+  };
+}
+
+/**
  * 定義済みの項目から値を選択するコンポーネントです。
  *
  * `multiple` を指定すると複数の値を選択できます。項目が多く、入力による絞り込みが必要な場合は {@link Combobox} を使用してください。
@@ -221,149 +472,23 @@ export const Select: SelectType = /*#__PURE__*/ Object.assign(
   function SuiSelect<Value, Multiple extends boolean | undefined = false>(
     props: SelectProps<Value, Multiple>,
   ) {
-    const {
-      label,
-      children,
-      className,
-      slotProps: {
-        icon: iconProps,
-        item: itemProps,
-        list: listProps,
-        arrow: arrowProps,
-        group: groupProps,
-        label: labelProps,
-        popup: popupProps,
-        value: valueProps,
-        portal: portalProps,
-        trigger: triggerProps,
-        backdrop: backdropProps,
-        itemText: itemTextProps,
-        separator: separatorProps,
-        groupLabel: groupLabelProps,
-        positioner: positionerProps,
-        itemIndicator: itemIndicatorProps,
-        scrollUpArrow: scrollUpArrowProps,
-        scrollDownArrow: scrollDownArrowProps,
-      } = {},
-      placeholder = "選択してください",
-      itemToStringLabel,
-      ...rootProps
-    } = props;
-    const { children: iconChildren = <SuiChevronIcon />, ...restIconProps } = iconProps ?? {};
-    const { "aria-label": triggerAriaLabel, ...restTriggerProps } = triggerProps ?? {};
-    const {
-      side = "bottom",
-      align = "start",
-      sideOffset = 8,
-      alignItemWithTrigger = true,
-      ...restPositionerProps
-    } = positionerProps ?? {};
-    const { children: indicatorChildren = <SuiCheckIcon />, ...restIndicatorProps } =
-      itemIndicatorProps ?? {};
-    const { children: valueChildren, ...restValueProps } = valueProps ?? {};
-    const { children: itemTextChildren, ...restItemTextProps } = itemTextProps ?? {};
-    const items = rootProps.items;
-
-    const listChildren = React.useMemo(() => {
-      if (typeof children !== "function" && children !== undefined) {
-        return children;
-      }
-
-      const renderItem = (item: Value, index: number, defaultLabel?: React.ReactNode) => {
-        const content =
-          typeof children === "function"
-            ? children(item, index)
-            : (defaultLabel ?? itemToStringLabel?.(item) ?? getItemLabel(item));
-
-        return (
-          <SelectItem {...itemProps} key={index} value={item}>
-            <SelectItemIndicator {...restIndicatorProps}>{indicatorChildren}</SelectItemIndicator>
-            <SelectItemText {...restItemTextProps}>{itemTextChildren ?? content}</SelectItemText>
-          </SelectItem>
-        );
-      };
-
-      const renderItems = (items: SelectItems<Value> | undefined): React.ReactNode => {
-        if (items === undefined) {
-          return null;
-        }
-
-        if (!Array.isArray(items)) {
-          return Object.entries(items).map(([value, label], index) =>
-            renderItem(value as Value, index, label),
-          );
-        }
-
-        return items.map((entry, index) => {
-          if (isItemGroup(entry)) {
-            const label = entry.label ?? getItemLabel(entry);
-            return (
-              <React.Fragment key={index}>
-                <SelectGroup {...groupProps}>
-                  {label !== "" && (
-                    <SelectGroupLabel {...groupLabelProps}>{label}</SelectGroupLabel>
-                  )}
-                  {entry.items.map((item, itemIndex) => renderItem(item, itemIndex))}
-                </SelectGroup>
-                {index < items.length - 1 && <SelectSeparator {...separatorProps} />}
-              </React.Fragment>
-            );
-          }
-
-          if (isLabeledItem(entry)) {
-            return renderItem(entry.value, index, entry.label);
-          }
-
-          return renderItem(entry as Value, index);
-        });
-      };
-
-      return renderItems(items);
-    }, [
-      children,
-      groupLabelProps,
-      groupProps,
-      indicatorChildren,
-      itemProps,
-      items,
-      itemTextChildren,
-      itemToStringLabel,
-      restIndicatorProps,
-      restItemTextProps,
-      separatorProps,
-    ]);
+    const partsProps = useSelect(props);
 
     return (
-      <SelectRoot {...rootProps}>
-        {("label" in props || !!labelProps) && <SelectLabel children={label} {...labelProps} />}
-        <SelectTrigger
-          {...restTriggerProps}
-          className={cn(className, restTriggerProps.className)}
-          aria-label={triggerAriaLabel ?? (label === undefined ? "選択肢を選択" : undefined)}
-        >
-          <SelectValue placeholder={placeholder} {...restValueProps}>
-            {valueChildren}
-          </SelectValue>
-          <SelectIcon {...restIconProps}>{iconChildren}</SelectIcon>
+      <SelectRoot {...partsProps.root}>
+        {partsProps.label && <SelectLabel {...partsProps.label} />}
+        <SelectTrigger {...partsProps.trigger}>
+          <SelectValue {...partsProps.value} />
+          <SelectIcon {...partsProps.icon} />
         </SelectTrigger>
-        <SelectPortal {...portalProps}>
-          <SelectBackdrop {...backdropProps} />
-          <SelectPositioner
-            {...restPositionerProps}
-            side={side}
-            align={align}
-            sideOffset={sideOffset}
-            alignItemWithTrigger={alignItemWithTrigger}
-          >
-            <SelectPopup {...popupProps}>
-              <SelectScrollUpArrow {...scrollUpArrowProps}>
-                <SuiChevronUpIcon />
-              </SelectScrollUpArrow>
-              <SelectArrow {...arrowProps} />
-              <SelectList {...listProps}>{listChildren}</SelectList>
-              <SelectScrollDownArrow {...scrollDownArrowProps}>
-                <SuiChevronDownIcon />
-              </SelectScrollDownArrow>
+        <SelectPortal {...partsProps.portal}>
+          <SelectBackdrop {...partsProps.backdrop} />
+          <SelectPositioner {...partsProps.positioner}>
+            <SelectPopup {...partsProps.popup}>
+              <SelectScrollUpArrow {...partsProps.scrollUpArrow} />
+              <SelectArrow {...partsProps.arrow} />
+              <SelectList {...partsProps.list} />
+              <SelectScrollDownArrow {...partsProps.scrollDownArrow} />
             </SelectPopup>
           </SelectPositioner>
         </SelectPortal>

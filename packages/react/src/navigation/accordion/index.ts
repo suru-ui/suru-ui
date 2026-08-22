@@ -6,5 +6,7 @@ export {
   type AccordionState,
   type AccordionRadius,
   type AccordionSlotProps,
+  type AccordionPartsProps,
   Accordion,
+  useAccordion,
 } from "./accordion.jsx";

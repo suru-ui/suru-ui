@@ -71,6 +71,76 @@ export type ContextMenuProps = Omit<ContextMenuRootProps, "children" | "handle">
   trigger?: ContextMenuTriggerProps["children"] | undefined;
 };
 
+/**
+ * {@link ContextMenu} の各パーツに渡すプロパティーです。
+ */
+export type ContextMenuPartsProps = {
+  /**
+   * {@link ContextMenuRoot} に渡すプロパティーです。
+   */
+  readonly root: ContextMenuRootProps;
+
+  /**
+   * {@link ContextMenuTrigger} に渡すプロパティーです。
+   *
+   * トリガーを表示しないときは null になります。
+   */
+  readonly trigger: ContextMenuTriggerProps | null;
+
+  /**
+   * {@link ContextMenuPortal} に渡すプロパティーです。
+   */
+  readonly portal: ContextMenuPortalProps | undefined;
+
+  /**
+   * {@link ContextMenuPositioner} に渡すプロパティーです。
+   */
+  readonly positioner: ContextMenuPositionerProps | undefined;
+
+  /**
+   * {@link ContextMenuPopup} に渡すプロパティーです。
+   */
+  readonly popup: ContextMenuPopupProps;
+};
+
+/**
+ * {@link ContextMenu} の各パーツに渡すプロパティーを作るフックです。
+ */
+export function useContextMenu(props: ContextMenuProps): ContextMenuPartsProps {
+  const [handle] = React.useState(createHandle);
+  const {
+    trigger,
+    children,
+    slotProps: {
+      popup: popupProps,
+      portal: portalProps,
+      trigger: triggerProps,
+      positioner: positionerProps,
+    } = {},
+    ...rootProps
+  } = props;
+
+  return {
+    root: {
+      ...rootProps,
+      handle,
+    },
+    trigger:
+      !!trigger || !!triggerProps
+        ? {
+            children: trigger!,
+            ...triggerProps,
+          }
+        : null,
+    portal: portalProps,
+    positioner: positionerProps,
+    popup: {
+      ...popupProps,
+      children,
+    },
+  };
+}
+
 interface ContextMenuComponentType extends IComponent<ContextMenuProps> {
   /**
    * コンテキストメニューを制御するハンドルを新しく作成します。
@@ -88,28 +158,14 @@ interface ContextMenuComponentType extends IComponent<ContextMenuProps> {
  */
 export const ContextMenu: ContextMenuComponentType = /*#__PURE__*/ Object.assign(
   function SuiContextMenu(props: ContextMenuProps) {
-    const [handle] = React.useState(createHandle);
-    const {
-      trigger,
-      children,
-      slotProps: {
-        popup: popupProps,
-        portal: portalProps,
-        trigger: triggerProps,
-        positioner: positionerProps,
-      } = {},
-      ...rootProps
-    } = props;
+    const partsProps = useContextMenu(props);
 
     return (
-      <ContextMenuRoot {...rootProps} handle={handle}>
-        {(!!trigger || !!triggerProps) && (
-          // `trigger` または `triggerProps` があれば、`children` は必ず指定されます。
-          <ContextMenuTrigger children={trigger!} {...triggerProps} />
-        )}
-        <ContextMenuPortal {...portalProps}>
-          <ContextMenuPositioner {...positionerProps}>
-            <ContextMenuPopup {...popupProps}>{children}</ContextMenuPopup>
+      <ContextMenuRoot {...partsProps.root}>
+        {partsProps.trigger && <ContextMenuTrigger {...partsProps.trigger} />}
+        <ContextMenuPortal {...partsProps.portal}>
+          <ContextMenuPositioner {...partsProps.positioner}>
+            <ContextMenuPopup {...partsProps.popup} />
           </ContextMenuPositioner>
         </ContextMenuPortal>
       </ContextMenuRoot>

@@ -5,7 +5,9 @@ export {
   type FieldState,
   type FieldActions,
   type FieldSlotProps,
+  type FieldPartsProps,
   type FieldErrorMatch,
   type FieldErrorMatches,
   Field,
+  useField,
 } from "./field.jsx";

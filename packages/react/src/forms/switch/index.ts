@@ -8,5 +8,7 @@ export {
   type SwitchRadius,
   type SwitchVariant,
   type SwitchSlotProps,
+  type SwitchPartsProps,
   Switch,
+  useSwitch,
 } from "./switch.jsx";

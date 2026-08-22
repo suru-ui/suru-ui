@@ -7,5 +7,7 @@ export {
   type ChipState,
   type ChipRadius,
   type ChipVariant,
+  type ChipPartsProps,
   Chip,
+  useChip,
 } from "./chip.jsx";

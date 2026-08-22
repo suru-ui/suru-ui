@@ -65,6 +65,47 @@ export type AccordionSlotProps = {
 };
 
 /**
+ * 各パーツに渡すプロパティーをまとめたものです。
+ */
+export type AccordionPartsProps = {
+  /**
+   * {@link AccordionHeader} に渡すプロパティーです。
+   */
+  readonly header: AccordionHeaderProps;
+
+  /**
+   * {@link AccordionIndicator} に渡すプロパティーです。
+   *
+   * `children` を指定しないときは、デフォルトの下向き矢印アイコンが設定されます。
+   */
+  readonly indicator: AccordionIndicatorProps;
+
+  /**
+   * {@link AccordionItem} に渡すプロパティーです。
+   */
+  readonly item: AccordionItemProps;
+
+  /**
+   * {@link AccordionPanel} に渡すプロパティーです。
+   *
+   * `children` にはパネルのコンテンツが設定されています。
+   */
+  readonly panel: AccordionPanelProps;
+
+  /**
+   * {@link AccordionRoot} に渡すプロパティーです。
+   */
+  readonly root: AccordionRootProps;
+
+  /**
+   * {@link AccordionTrigger} に渡すプロパティーです。
+   *
+   * `children` を指定しないときは、`title` と Indicator を表示する既定の内容が設定されます。
+   */
+  readonly trigger: AccordionTriggerProps;
+};
+
+/**
  * {@link Accordion} の状態です。
  */
 export type AccordionState = AccordionRootState;
@@ -93,12 +134,9 @@ export type AccordionProps = Omit<AccordionRootProps, "children"> & {
 };
 
 /**
- * アコーディオンの 1 項目を表示するコンポーネントです。
- *
- * 見出し（`title`）とコンテンツ（`children`）から、展開・折りたたみ可能なアコーディオンを組み立てます。
- * 複数の項目を扱う場合は、{@link AccordionRoot|Root} を直接組み立てます。
+ * {@link Accordion} の各パーツに渡すプロパティーを作るフックです。
  */
-export const Accordion: IComponent<AccordionProps> = function SuiAccordion(props) {
+export function useAccordion(props: AccordionProps): AccordionPartsProps {
   const { title, children, slotProps, ...rootProps } = props;
   const {
     item: itemProps,
@@ -108,23 +146,49 @@ export const Accordion: IComponent<AccordionProps> = function SuiAccordion(props
     indicator: indicatorProps,
   } = slotProps ?? {};
   const { children: triggerChildren, ...otherTriggerProps } = triggerProps ?? {};
+  const indicator: AccordionIndicatorProps = {
+    children: <SuiAccordionIcon />,
+    ...indicatorProps,
+  };
+
+  return {
+    root: rootProps,
+    item: itemProps ?? {},
+    header: headerProps ?? {},
+    trigger: {
+      ...otherTriggerProps,
+      children:
+        triggerChildren ?? (
+          <>
+            {title}
+            <AccordionIndicator {...indicator} />
+          </>
+        ),
+    },
+    indicator,
+    panel: {
+      ...panelProps,
+      children,
+    },
+  };
+}
+
+/**
+ * アコーディオンの 1 項目を表示するコンポーネントです。
+ *
+ * 見出し（`title`）とコンテンツ（`children`）から、展開・折りたたみ可能なアコーディオンを組み立てます。
+ * 複数の項目を扱う場合は、{@link AccordionRoot|Root} を直接組み立てます。
+ */
+export const Accordion: IComponent<AccordionProps> = function SuiAccordion(props) {
+  const partsProps = useAccordion(props);
 
   return (
-    <AccordionRoot {...rootProps}>
-      <AccordionItem {...itemProps}>
-        <AccordionHeader {...headerProps}>
-          <AccordionTrigger {...otherTriggerProps}>
-            {triggerChildren ?? (
-              <>
-                {title}
-                <AccordionIndicator {...indicatorProps}>
-                  {indicatorProps?.children ?? <SuiAccordionIcon />}
-                </AccordionIndicator>
-              </>
-            )}
-          </AccordionTrigger>
+    <AccordionRoot {...partsProps.root}>
+      <AccordionItem {...partsProps.item}>
+        <AccordionHeader {...partsProps.header}>
+          <AccordionTrigger {...partsProps.trigger} />
         </AccordionHeader>
-        <AccordionPanel {...panelProps}>{children}</AccordionPanel>
+        <AccordionPanel {...partsProps.panel} />
       </AccordionItem>
     </AccordionRoot>
   );

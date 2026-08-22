@@ -58,10 +58,29 @@ export type InputState = InputRootState;
 export type InputProps = InputRootProps;
 
 /**
+ * {@link Input} の各パーツに渡すプロパティーです。
+ */
+export type InputPartsProps = {
+  /**
+   * {@link InputRoot} に渡すプロパティーです。
+   */
+  readonly root: InputRootProps;
+};
+
+/**
+ * {@link Input} の各パーツに渡すプロパティーを作るフックです。
+ */
+export function useInput(props: InputProps): InputPartsProps {
+  return { root: props };
+}
+
+/**
  * テキスト入力欄を表示するコンポーネントです。
  */
 export const Input: IComponent<InputProps> = function SuiInput(props) {
-  return <InputRoot {...props} />;
+  const partsProps = useInput(props);
+
+  return <InputRoot {...partsProps.root} />;
 };
 
 /**

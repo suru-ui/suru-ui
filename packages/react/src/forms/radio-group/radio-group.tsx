@@ -49,6 +49,25 @@ export type RadioGroupState = RadioGroupRootState;
  */
 export type RadioGroupProps = RadioGroupRootProps;
 
+/**
+ * {@link RadioGroup} の各パーツに渡すプロパティーです。
+ */
+export type RadioGroupPartsProps = {
+  /**
+   * {@link RadioGroupRoot} に渡すプロパティーです。
+   */
+  readonly root: RadioGroupRootProps;
+};
+
+/**
+ * {@link RadioGroup} の各パーツに渡すプロパティーを作るフックです。
+ */
+export function useRadioGroup(props: RadioGroupProps): RadioGroupPartsProps {
+  return {
+    root: props,
+  };
+}
+
 interface RadioGroupType extends IComponent<RadioGroupProps> {
   /**
    * {@link useRadioGroupContext} です。
@@ -64,7 +83,9 @@ interface RadioGroupType extends IComponent<RadioGroupProps> {
  */
 export const RadioGroup: RadioGroupType = /*#__PURE__*/ Object.assign(
   function SuiRadioGroup(props: RadioGroupProps) {
-    return <RadioGroupRoot {...props} />;
+    const partsProps = useRadioGroup(props);
+
+    return <RadioGroupRoot {...partsProps.root} />;
   },
   {
     useContext: useRadioGroupContext,

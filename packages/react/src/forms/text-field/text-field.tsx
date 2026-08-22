@@ -109,6 +109,80 @@ export type TextFieldProps = Omit<TextFieldRootProps, "children"> &
     startAddons?: Iterable<React.ReactNode> | undefined;
   };
 
+/**
+ * {@link TextField} の各パーツに渡すプロパティーです。
+ */
+export type TextFieldPartsProps = {
+  /**
+   * 入力欄の末尾に表示する {@link TextFieldAddon} の一覧です。
+   *
+   * 内容は `children` に入ります。
+   */
+  readonly endAddons: readonly TextFieldAddonProps[];
+
+  /**
+   * {@link TextFieldInput} に渡すプロパティーです。
+   */
+  readonly input: TextFieldInputProps;
+
+  /**
+   * {@link TextFieldRoot} に渡すプロパティーです。
+   */
+  readonly root: TextFieldRootProps;
+
+  /**
+   * 入力欄の先頭に表示する {@link TextFieldAddon} の一覧です。
+   *
+   * 内容は `children` に入ります。
+   */
+  readonly startAddons: readonly TextFieldAddonProps[];
+};
+
+/**
+ * {@link TextField} の各パーツに渡すプロパティーを作るフックです。
+ */
+export function useTextField(props: TextFieldProps): TextFieldPartsProps {
+  const {
+    name,
+    type,
+    value,
+    disabled,
+    readOnly,
+    required,
+    endAddons = null,
+    slotProps: { addon: addonProps, input: inputProps } = {},
+    placeholder,
+    startAddons = null,
+    defaultValue,
+    onValueChange,
+    ...rootProps
+  } = props;
+
+  return {
+    root: rootProps,
+    startAddons: React.Children.map(startAddons, (addon) => ({
+      ...addonProps,
+      children: addon,
+    }))!,
+    input: {
+      name,
+      type,
+      value,
+      disabled,
+      readOnly,
+      required,
+      placeholder,
+      defaultValue,
+      onValueChange,
+      ...inputProps,
+    },
+    endAddons: React.Children.map(endAddons, (addon) => ({
+      ...addonProps,
+      children: addon,
+    }))!,
+  };
+}
+
 interface TextFieldComponentType extends IComponent<TextFieldProps> {
   /**
    * {@link useTextFieldContext} です。
@@ -121,43 +195,16 @@ interface TextFieldComponentType extends IComponent<TextFieldProps> {
  */
 export const TextField: TextFieldComponentType = /*#__PURE__*/ Object.assign(
   function SuiTextField(props: TextFieldProps) {
-    const {
-      name,
-      type,
-      value,
-      disabled,
-      readOnly,
-      required,
-      endAddons = null,
-      slotProps: { addon: addonProps, input: inputProps } = {},
-      placeholder,
-      startAddons = null,
-      defaultValue,
-      onValueChange,
-      ...rootProps
-    } = props;
+    const partsProps = useTextField(props);
 
     return (
-      <TextFieldRoot {...rootProps}>
-        {React.Children.map(startAddons, (addon) => (
-          <TextFieldAddon {...addonProps}>{addon}</TextFieldAddon>
+      <TextFieldRoot {...partsProps.root}>
+        {partsProps.startAddons.map((addonProps, index) => (
+          <TextFieldAddon key={index} {...addonProps} />
         ))}
-        <TextFieldInput
-          {...{
-            name,
-            type,
-            value,
-            disabled,
-            readOnly,
-            required,
-            placeholder,
-            defaultValue,
-            onValueChange,
-            ...inputProps,
-          }}
-        />
-        {React.Children.map(endAddons, (addon) => (
-          <TextFieldAddon {...addonProps}>{addon}</TextFieldAddon>
+        <TextFieldInput {...partsProps.input} />
+        {partsProps.endAddons.map((addonProps, index) => (
+          <TextFieldAddon key={index} {...addonProps} />
         ))}
       </TextFieldRoot>
     );

@@ -45,6 +45,30 @@ export type AvatarSlotProps = {
 };
 
 /**
+ * {@link Avatar} の各パーツに渡すプロパティーです。
+ */
+export type AvatarPartsProps = {
+  /**
+   * {@link AvatarFallback} に渡すプロパティーです。
+   *
+   * これを表示しないときは null になります。
+   */
+  readonly fallback: AvatarFallbackProps | null;
+
+  /**
+   * {@link AvatarImage} に渡すプロパティーです。
+   *
+   * これを表示しないときは null になります。
+   */
+  readonly image: AvatarImageProps | null;
+
+  /**
+   * {@link AvatarRoot} に渡すプロパティーです。
+   */
+  readonly root: AvatarRootProps;
+};
+
+/**
  * {@link Avatar} の状態です。
  */
 export type AvatarState = AvatarRootState;
@@ -64,9 +88,9 @@ export type AvatarProps = Omit<AvatarRootProps, "children"> &
   };
 
 /**
- * 画像またはフォールバックコンテンツを持つアバターを表示するコンポーネントです。
+ * {@link Avatar} の各パーツに渡すプロパティーを作るフックです。
  */
-export const Avatar: IComponent<AvatarProps> = function SuiAvatar(props) {
+export function useAvatar(props: AvatarProps): AvatarPartsProps {
   const {
     alt,
     src,
@@ -75,12 +99,36 @@ export const Avatar: IComponent<AvatarProps> = function SuiAvatar(props) {
     ...otherRootProps
   } = props;
 
+  return {
+    root: otherRootProps,
+    image:
+      "src" in props || !!imageProps
+        ? {
+            alt,
+            src,
+            ...imageProps,
+          }
+        : null,
+    fallback:
+      "children" in props || !!fallbackProps
+        ? {
+            children,
+            ...fallbackProps,
+          }
+        : null,
+  };
+}
+
+/**
+ * 画像またはフォールバックコンテンツを持つアバターを表示するコンポーネントです。
+ */
+export const Avatar: IComponent<AvatarProps> = function SuiAvatar(props) {
+  const partsProps = useAvatar(props);
+
   return (
-    <AvatarRoot {...otherRootProps}>
-      {("src" in props || !!imageProps) && <AvatarImage alt={alt} src={src} {...imageProps} />}
-      {("children" in props || !!fallbackProps) && (
-        <AvatarFallback children={children} {...fallbackProps} />
-      )}
+    <AvatarRoot {...partsProps.root}>
+      {partsProps.image && <AvatarImage {...partsProps.image} />}
+      {partsProps.fallback && <AvatarFallback {...partsProps.fallback} />}
     </AvatarRoot>
   );
 };

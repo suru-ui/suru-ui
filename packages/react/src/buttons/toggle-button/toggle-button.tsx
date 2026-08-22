@@ -79,6 +79,48 @@ export type ToggleButtonSlotProps = {
 };
 
 /**
+ * {@link ToggleButton} の各パーツに渡すプロパティーです。
+ */
+export type ToggleButtonPartsProps = {
+  /**
+   * {@link ToggleButtonRoot} に渡すプロパティーです。
+   */
+  readonly root: ToggleButtonRootProps;
+
+  /**
+   * {@link ToggleButtonContent} に渡すプロパティーです。
+   *
+   * `children` にはボタンの内容が設定されています。
+   */
+  readonly content: ToggleButtonContentProps;
+
+  /**
+   * {@link ToggleButtonPending} に渡すプロパティーです。
+   */
+  readonly pending: ToggleButtonPendingProps;
+
+  /**
+   * {@link ToggleButtonCircularProgress} に渡すプロパティーです。
+   */
+  readonly circularProgress: ToggleButtonCircularProgressProps;
+
+  /**
+   * {@link ToggleButtonCircularProgressTrack} に渡すプロパティーです。
+   */
+  readonly circularProgressTrack: ToggleButtonCircularProgressTrackProps | undefined;
+
+  /**
+   * {@link ToggleButtonCircularProgressFill} に渡すプロパティーです。
+   */
+  readonly circularProgressFill: ToggleButtonCircularProgressFillProps | undefined;
+
+  /**
+   * {@link ToggleButtonCircularProgressFillRotation} に渡すプロパティーです。
+   */
+  readonly circularProgressFillRotation: ToggleButtonCircularProgressFillRotationProps | undefined;
+};
+
+/**
  * {@link ToggleButton} の状態です。
  */
 export type ToggleButtonState = ToggleButtonRootState;
@@ -105,37 +147,62 @@ interface ToggleButtonType extends IComponent<ToggleButtonProps> {
 }
 
 /**
+ * {@link ToggleButton} の各パーツに渡すプロパティーを作るフックです。
+ */
+export function useToggleButton(props: ToggleButtonProps): ToggleButtonPartsProps {
+  const {
+    children,
+    slotProps: {
+      content: contentProps,
+      pending: { overlay = true, ...otherPendingProps } = {},
+      circularProgress: circularProgressProps,
+      circularProgressFill: circularProgressFillProps,
+      circularProgressTrack: circularProgressTrackProps,
+      circularProgressFillRotation: circularProgressFillRotationProps,
+    } = {},
+    percentage,
+    indeterminate,
+    ...rootProps
+  } = props;
+
+  return {
+    root: rootProps,
+    content: {
+      children,
+      ...contentProps,
+    },
+    pending: {
+      ...otherPendingProps,
+      overlay,
+    },
+    circularProgress: {
+      percentage,
+      indeterminate,
+      ...circularProgressProps,
+    },
+    circularProgressTrack: circularProgressTrackProps,
+    circularProgressFill: circularProgressFillProps,
+    circularProgressFillRotation: circularProgressFillRotationProps,
+  };
+}
+
+/**
  * トグルボタンを表示するコンポーネントです。
  */
 export const ToggleButton: ToggleButtonType = /*#__PURE__*/ Object.assign(
   function SuiToggleButton(props: ToggleButtonProps) {
-    const {
-      children,
-      slotProps: {
-        content: contentProps,
-        pending: { overlay = true, ...otherPendingProps } = {},
-        circularProgress: circularProgressProps,
-        circularProgressFill: circularProgressFillProps,
-        circularProgressTrack: circularProgressTrackProps,
-        circularProgressFillRotation: circularProgressFillRotationProps,
-      } = {},
-      percentage,
-      indeterminate,
-      ...rootProps
-    } = props;
+    const partsProps = useToggleButton(props);
 
     return (
-      <ToggleButtonRoot {...rootProps}>
-        <ToggleButtonContent children={children} {...contentProps} />
-        <ToggleButtonPending {...otherPendingProps} overlay={overlay}>
-          <ToggleButtonCircularProgress
-            percentage={percentage}
-            indeterminate={indeterminate}
-            {...circularProgressProps}
-          >
-            <ToggleButtonCircularProgressTrack {...circularProgressTrackProps} />
-            <ToggleButtonCircularProgressFill {...circularProgressFillProps}>
-              <ToggleButtonCircularProgressFillRotation {...circularProgressFillRotationProps} />
+      <ToggleButtonRoot {...partsProps.root}>
+        <ToggleButtonContent {...partsProps.content} />
+        <ToggleButtonPending {...partsProps.pending}>
+          <ToggleButtonCircularProgress {...partsProps.circularProgress}>
+            <ToggleButtonCircularProgressTrack {...partsProps.circularProgressTrack} />
+            <ToggleButtonCircularProgressFill {...partsProps.circularProgressFill}>
+              <ToggleButtonCircularProgressFillRotation
+                {...partsProps.circularProgressFillRotation}
+              />
             </ToggleButtonCircularProgressFill>
           </ToggleButtonCircularProgress>
         </ToggleButtonPending>

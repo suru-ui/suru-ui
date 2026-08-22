@@ -47,6 +47,25 @@ export type FormState = FormRootState;
  */
 export type FormProps<TValues extends FormValues = FormValues> = FormRootProps<TValues>;
 
+/**
+ * {@link Form} の各パーツに渡すプロパティーです。
+ */
+export type FormPartsProps<TValues extends FormValues = FormValues> = {
+  /**
+   * {@link FormRoot} に渡すプロパティーです。
+   */
+  readonly root: FormRootProps<TValues>;
+};
+
+/**
+ * {@link Form} の各パーツに渡すプロパティーを作るフックです。
+ */
+export function useForm<TValues extends FormValues = FormValues>(
+  props: FormProps<TValues>,
+): FormPartsProps<TValues> {
+  return { root: props };
+}
+
 interface FormComponentType extends IComponent<FormProps> {
   <TValues extends FormValues>(props: FormProps<TValues>): React.ReactElement | null;
 }
@@ -55,7 +74,9 @@ interface FormComponentType extends IComponent<FormProps> {
  * {@link FormRoot} です。
  */
 export const Form: FormComponentType = function SuiForm(props: FormProps) {
-  return <FormRoot {...props} />;
+  const partsProps = useForm(props);
+
+  return <FormRoot {...partsProps.root} />;
 };
 
 /**

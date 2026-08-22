@@ -8,5 +8,7 @@ export {
   type ButtonRadius,
   type ButtonVariant,
   type ButtonSlotProps,
+  type ButtonPartsProps,
   Button,
+  useButton,
 } from "./button.jsx";

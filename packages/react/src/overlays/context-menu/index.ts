@@ -4,5 +4,7 @@ export {
   type ContextMenuProps,
   type ContextMenuState,
   type ContextMenuSlotProps,
+  type ContextMenuPartsProps,
   ContextMenu,
+  useContextMenu,
 } from "./context-menu.jsx";

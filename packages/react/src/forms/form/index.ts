@@ -8,5 +8,7 @@ export {
   type FormValidationMode,
   type FormSubmitEventReason,
   type FormSubmitEventDetails,
+  type FormPartsProps,
   Form,
+  useForm,
 } from "./form.jsx";

@@ -65,6 +65,44 @@ export type AlertSlotProps = {
 };
 
 /**
+ * {@link Alert} の各パーツに渡すプロパティーです。
+ */
+export type AlertPartsProps = {
+  /**
+   * {@link AlertActions} に渡すプロパティーです。
+   *
+   * これを表示しないときは null になります。
+   */
+  readonly actions: AlertActionsProps | null;
+
+  /**
+   * {@link AlertDescription} に渡すプロパティーです。
+   *
+   * これを表示しないときは null になります。
+   */
+  readonly description: AlertDescriptionProps | null;
+
+  /**
+   * {@link AlertIcon} に渡すプロパティーです。
+   *
+   * これを表示しないときは null になります。
+   */
+  readonly icon: AlertIconProps | null;
+
+  /**
+   * {@link AlertRoot} に渡すプロパティーです。
+   */
+  readonly root: AlertRootProps;
+
+  /**
+   * {@link AlertTitle} に渡すプロパティーです。
+   *
+   * これを表示しないときは null になります。
+   */
+  readonly title: AlertTitleProps | null;
+};
+
+/**
  * {@link AlertRootState} です。
  */
 export type AlertState = AlertRootState;
@@ -98,9 +136,9 @@ export type AlertProps = Omit<AlertRootProps, "children"> &
   };
 
 /**
- * 重要なメッセージや通知をステータスインジケーター付きで表示するコンポーネントです。
+ * {@link Alert} の各パーツに渡すプロパティーを作るフックです。
  */
-export const Alert: IComponent<AlertProps> = function SuiAlert(props) {
+export function useAlert(props: AlertProps): AlertPartsProps {
   const {
     icon,
     title,
@@ -115,16 +153,28 @@ export const Alert: IComponent<AlertProps> = function SuiAlert(props) {
     ...rootProps
   } = props;
 
+  return {
+    root: rootProps,
+    icon: "icon" in props || !!iconProps ? { children: icon, ...iconProps } : null,
+    title: "title" in props || !!titleProps ? { children: title, ...titleProps } : null,
+    description:
+      "children" in props || !!descriptionProps ? { children, ...descriptionProps } : null,
+    actions: "actions" in props || !!actionsProps ? { children: actions, ...actionsProps } : null,
+  };
+}
+
+/**
+ * 重要なメッセージや通知をステータスインジケーター付きで表示するコンポーネントです。
+ */
+export const Alert: IComponent<AlertProps> = function SuiAlert(props) {
+  const partsProps = useAlert(props);
+
   return (
-    <AlertRoot {...rootProps}>
-      {("icon" in props || !!iconProps) && <AlertIcon children={icon} {...iconProps} />}
-      {("title" in props || !!titleProps) && <AlertTitle children={title} {...titleProps} />}
-      {("children" in props || !!descriptionProps) && (
-        <AlertDescription children={children} {...descriptionProps} />
-      )}
-      {("actions" in props || !!actionsProps) && (
-        <AlertActions children={actions} {...actionsProps} />
-      )}
+    <AlertRoot {...partsProps.root}>
+      {partsProps.icon && <AlertIcon {...partsProps.icon} />}
+      {partsProps.title && <AlertTitle {...partsProps.title} />}
+      {partsProps.description && <AlertDescription {...partsProps.description} />}
+      {partsProps.actions && <AlertActions {...partsProps.actions} />}
     </AlertRoot>
   );
 };

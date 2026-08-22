@@ -8,5 +8,7 @@ export {
   type SliderRadius,
   type SliderVariant,
   type SliderSlotProps,
+  type SliderPartsProps,
   Slider,
+  useSlider,
 } from "./slider.jsx";

@@ -6,5 +6,7 @@ export {
   type CollapsibleState,
   type CollapsibleRadius,
   type CollapsibleSlotProps,
+  type CollapsiblePartsProps,
   Collapsible,
+  useCollapsible,
 } from "./collapsible.jsx";

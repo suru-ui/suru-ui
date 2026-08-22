@@ -169,6 +169,94 @@ export type ComboboxSlotProps = {
 };
 
 /**
+ * {@link Combobox} の各パーツに渡すプロパティーです。
+ *
+ * @template Value 候補項目の値を表す型です。
+ * @template Multiple 複数選択を有効にするかどうかです。
+ */
+export type ComboboxPartsProps<Value = unknown, Multiple extends boolean | undefined = false> = {
+  /**
+   * {@link ComboboxChips} に渡すプロパティーです。
+   *
+   * `multiple` を指定しないときは null になります。
+   */
+  readonly chips: ComboboxChipsProps | null;
+
+  /**
+   * {@link ComboboxClear} に渡すプロパティーです。
+   *
+   * `children` にはデフォルトのアイコンが設定されています。
+   */
+  readonly clear: ComboboxClearProps;
+
+  /**
+   * {@link ComboboxEmpty} に渡すプロパティーです。
+   */
+  readonly empty: ComboboxEmptyProps;
+
+  /**
+   * {@link ComboboxIcon} に渡すプロパティーです。
+   *
+   * `children` にはデフォルトのアイコンが設定されています。
+   */
+  readonly icon: ComboboxIconProps;
+
+  /**
+   * {@link ComboboxInput} に渡すプロパティーです。
+   */
+  readonly input: ComboboxInputProps;
+
+  /**
+   * {@link ComboboxInputGroup} に渡すプロパティーです。
+   */
+  readonly inputGroup: ComboboxInputGroupProps;
+
+  /**
+   * {@link ComboboxLabel} に渡すプロパティーです。
+   *
+   * これを表示しないときは null になります。
+   */
+  readonly label: ComboboxLabelProps | null;
+
+  /**
+   * {@link ComboboxList} に渡すプロパティーです。
+   */
+  readonly list: ComboboxListProps;
+
+  /**
+   * {@link ComboboxPopup} に渡すプロパティーです。
+   */
+  readonly popup: ComboboxPopupProps | undefined;
+
+  /**
+   * {@link ComboboxPortal} に渡すプロパティーです。
+   */
+  readonly portal: ComboboxPortalProps | undefined;
+
+  /**
+   * {@link ComboboxPositioner} に渡すプロパティーです。
+   */
+  readonly positioner: ComboboxPositionerProps;
+
+  /**
+   * {@link ComboboxRoot} に渡すプロパティーです。
+   */
+  readonly root: ComboboxRootProps<Value, Multiple>;
+
+  /**
+   * {@link ComboboxTrigger} に渡すプロパティーです。
+   */
+  readonly trigger: ComboboxTriggerProps;
+
+  /**
+   * {@link ComboboxValue} に渡すプロパティーです。
+   *
+   * `multiple` を指定しないときは null になります。
+   */
+  readonly value: ComboboxValueProps | null;
+};
+
+/**
  * {@link Combobox} の状態です。
  */
 export type ComboboxState = ComboboxRootState;

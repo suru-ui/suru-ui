@@ -62,6 +62,34 @@ export type SwitchProps = Omit<SwitchRootProps, "children"> & {
 };
 
 /**
+ * {@link Switch} の各パーツに渡すプロパティーです。
+ */
+export type SwitchPartsProps = {
+  /**
+   * {@link SwitchRoot} に渡すプロパティーです。
+   */
+  readonly root: SwitchRootProps;
+
+  /**
+   * {@link SwitchThumb} に渡すプロパティーです。
+   */
+  readonly thumb: SwitchThumbProps | undefined;
+};
+
+/**
+ * {@link Switch} の各パーツに渡すプロパティーを作るフックです。
+ */
+export function useSwitch(props: SwitchProps): SwitchPartsProps {
+  const { slotProps, ...rootProps } = props;
+  const thumbProps = slotProps?.thumb;
+
+  return {
+    root: rootProps,
+    thumb: thumbProps,
+  };
+}
+
+/**
  * スイッチを表示するコンポーネントです。
  *
  * {@link SwitchThumb} はチェック状態を表示するために常に生成されます。
@@ -69,12 +97,11 @@ export type SwitchProps = Omit<SwitchRootProps, "children"> & {
  * `disabled` のときはユーザー操作による状態変更が無効になります。
  */
 export const Switch: IComponent<SwitchProps> = function SuiSwitch(props) {
-  const { slotProps, ...rootProps } = props;
-  const thumbProps = slotProps?.thumb;
+  const partsProps = useSwitch(props);
 
   return (
-    <SwitchRoot {...rootProps}>
-      <SwitchThumb {...thumbProps} />
+    <SwitchRoot {...partsProps.root}>
+      <SwitchThumb {...partsProps.thumb} />
     </SwitchRoot>
   );
 };

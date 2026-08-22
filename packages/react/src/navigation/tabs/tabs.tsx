@@ -90,6 +90,42 @@ export type TabsSlotProps = {
 };
 
 /**
+ * 各パーツに渡すプロパティーをまとめたものです。
+ */
+export type TabsPartsProps = {
+  /**
+   * {@link TabsIndicator} に渡すプロパティーです。
+   */
+  readonly indicator: TabsIndicatorProps;
+
+  /**
+   * {@link TabsList} に渡すプロパティーです。
+   *
+   * `items` を指定しないときは null になります。
+   */
+  readonly list: TabsListProps | null;
+
+  /**
+   * 各 {@link TabsPanel} に渡すプロパティーの一覧です。
+   *
+   * `items` の各項目に対応します。
+   */
+  readonly panel: readonly TabsPanelProps[];
+
+  /**
+   * {@link TabsRoot} に渡すプロパティーです。
+   */
+  readonly root: TabsRootProps;
+
+  /**
+   * 各 {@link TabsTab} に渡すプロパティーの一覧です。
+   *
+   * `items` の各項目に対応します。`children` にはタブのラベルが設定されています。
+   */
+  readonly tab: readonly TabsTabProps[];
+};
+
+/**
  * {@link Tabs} コンポーネントのプロパティーです。
  */
 export type TabsProps = Omit<TabsRootProps, "children"> & {
@@ -106,12 +142,9 @@ export type TabsProps = Omit<TabsRootProps, "children"> & {
 };
 
 /**
- * Tab とパネルを切り替えるコンポーネントです。
- *
- * `items` から Tab の並びとパネルを組み立てます。
- * レイアウトを細かく制御する場合は、{@link TabsRoot|Root} と各パーツを直接組み立てます。
+ * {@link Tabs} の各パーツに渡すプロパティーを作るフックです。
  */
-export const Tabs: IComponent<TabsProps> = function SuiTabs(props) {
+export function useTabs(props: TabsProps): TabsPartsProps {
   const { items, slotProps, ...rootProps } = props;
   const {
     list: listProps,
@@ -121,27 +154,47 @@ export const Tabs: IComponent<TabsProps> = function SuiTabs(props) {
   } = slotProps ?? {};
   const { children: tabChildren, ...otherTabProps } = tabProps ?? {};
 
+  return {
+    root: rootProps,
+    list: items === undefined ? null : listProps ?? {},
+    tab:
+      items?.map((item) => ({
+        ...otherTabProps,
+        value: item.value,
+        disabled: item.disabled,
+        children: tabChildren ?? item.label,
+      })) ?? [],
+    panel:
+      items?.map((item) => ({
+        ...tabPanelProps,
+        value: item.value,
+        children: item.content,
+      })) ?? [],
+    indicator: indicatorProps ?? {},
+  };
+}
+
+/**
+ * Tab とパネルを切り替えるコンポーネントです。
+ *
+ * `items` から Tab の並びとパネルを組み立てます。
+ * レイアウトを細かく制御する場合は、{@link TabsRoot|Root} と各パーツを直接組み立てます。
+ */
+export const Tabs: IComponent<TabsProps> = function SuiTabs(props) {
+  const partsProps = useTabs(props);
+
   return (
-    <TabsRoot {...rootProps}>
-      {items !== undefined && (
+    <TabsRoot {...partsProps.root}>
+      {partsProps.list && (
         <>
-          <TabsList {...listProps}>
-            {items.map((item) => (
-              <TabsTab
-                key={String(item.value)}
-                {...otherTabProps}
-                value={item.value}
-                disabled={item.disabled}
-              >
-                {tabChildren ?? item.label}
-              </TabsTab>
+          <TabsList {...partsProps.list}>
+            {partsProps.tab.map((tabProps) => (
+              <TabsTab key={String(tabProps.value)} {...tabProps} />
             ))}
-            <TabsIndicator {...indicatorProps} />
+            <TabsIndicator {...partsProps.indicator} />
           </TabsList>
-          {items.map((item) => (
-            <TabsPanel {...tabPanelProps} key={String(item.value)} value={item.value}>
-              {item.content}
-            </TabsPanel>
+          {partsProps.panel.map((panelProps) => (
+            <TabsPanel key={String(panelProps.value)} {...panelProps} />
           ))}
         </>
       )}

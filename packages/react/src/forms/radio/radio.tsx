@@ -62,14 +62,44 @@ export type RadioProps = Omit<RadioRootProps, "children"> &
   };
 
 /**
+ * {@link Radio} の各パーツに渡すプロパティーです。
+ */
+export type RadioPartsProps = {
+  /**
+   * {@link RadioIndicator} に渡すプロパティーです。
+   */
+  readonly indicator: RadioIndicatorProps;
+
+  /**
+   * {@link RadioRoot} に渡すプロパティーです。
+   */
+  readonly root: Omit<RadioRootProps, "children">;
+};
+
+/**
+ * {@link Radio} の各パーツに渡すプロパティーを作るフックです。
+ */
+export function useRadio(props: RadioProps): RadioPartsProps {
+  const { children, slotProps: { indicator: indicatorProps } = {}, ...rootProps } = props;
+
+  return {
+    indicator: {
+      children,
+      ...indicatorProps,
+    },
+    root: rootProps,
+  };
+}
+
+/**
  * ラジオボタンを表示するコンポーネントです。
  */
 export const Radio: IComponent<RadioProps> = function SuiRadio(props) {
-  const { children, slotProps: { indicator: indicatorProps } = {}, ...rootProps } = props;
+  const partsProps = useRadio(props);
 
   return (
-    <RadioRoot {...rootProps}>
-      <RadioIndicator children={children} {...indicatorProps} />
+    <RadioRoot {...partsProps.root}>
+      <RadioIndicator {...partsProps.indicator} />
     </RadioRoot>
   );
 };

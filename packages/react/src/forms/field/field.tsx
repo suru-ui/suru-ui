@@ -104,6 +104,105 @@ export type FieldProps = FieldRootProps & {
   validity?: FieldValidityProps["children"] | undefined;
 };
 
+/**
+ * {@link Field} の各パーツに渡すプロパティーです。
+ */
+export type FieldPartsProps = {
+  /**
+   * {@link FieldDescription} に渡すプロパティーです。
+   *
+   * 表示しないときは null になります。
+   */
+  readonly description: FieldDescriptionProps | null;
+
+  /**
+   * {@link FieldError} に渡すプロパティーの一覧です。
+   *
+   * エラーメッセージを表示しないときは空の配列になります。
+   */
+  readonly error: readonly FieldErrorProps[];
+
+  /**
+   * {@link FieldLabel} に渡すプロパティーです。
+   *
+   * 表示しないときは null になります。
+   */
+  readonly label: FieldLabelProps | null;
+
+  /**
+   * {@link FieldRoot} に渡すプロパティーです。
+   */
+  readonly root: FieldRootProps;
+
+  /**
+   * {@link FieldValidity} に渡すプロパティーです。
+   *
+   * 表示しないときは null になります。
+   */
+  readonly validity: FieldValidityProps | null;
+};
+
+/**
+ * {@link Field} の各パーツに渡すプロパティーを作るフックです。
+ */
+export function useField(props: FieldProps): FieldPartsProps {
+  const {
+    label,
+    validity,
+    slotProps: { error: errorProps, label: labelProps, description: descriptionProps } = {},
+    description,
+    errorMatches = true,
+    ...rootProps
+  } = props;
+
+  const errors: readonly FieldErrorProps[] = (() => {
+    if (!(errorMatches !== false || !!errorProps)) {
+      return [];
+    }
+
+    if (typeof errorMatches === "boolean" || typeof errorMatches === "string") {
+      return [{ match: errorMatches, ...errorProps }];
+    }
+
+    if (Array.isArray(errorMatches)) {
+      const matches = [...new Set(errorMatches)];
+      return matches.map((match) => ({ match, ...errorProps }));
+    }
+
+    const entries = Object.entries(errorMatches) as [FieldErrorMatch, React.ReactNode][];
+    return entries.map(([match, children]) => ({
+      match,
+      children,
+      ...errorProps,
+    }));
+  })();
+
+  return {
+    root: rootProps,
+    label:
+      "label" in props || !!labelProps
+        ? {
+            children: label,
+            ...labelProps,
+          }
+        : null,
+    description:
+      "description" in props || !!descriptionProps
+        ? {
+            children: description,
+            ...descriptionProps,
+          }
+        : null,
+    error: errors,
+    validity:
+      typeof validity === "function"
+        ? {
+            children: validity,
+          }
+        : null,
+  };
+}
+
 interface FieldComponentType extends IComponent<FieldProps> {
   /**
    * {@link FieldControl} です。
@@ -123,42 +222,17 @@ interface FieldComponentType extends IComponent<FieldProps> {
  */
 export const Field: FieldComponentType = /*#__PURE__*/ Object.assign(
   function SuiField(props: FieldProps) {
-    const {
-      label,
-      children,
-      validity,
-      slotProps: { error: errorProps, label: labelProps, description: descriptionProps } = {},
-      description,
-      errorMatches = true,
-      ...rootProps
-    } = props;
+    const partsProps = useField(props);
 
     return (
-      <FieldRoot {...rootProps}>
-        {("label" in props || !!labelProps) && <FieldLabel children={label} {...labelProps} />}
-        {children}
-        {("description" in props || !!descriptionProps) && (
-          <FieldDescription children={description} {...descriptionProps} />
-        )}
-        {(errorMatches !== false || !!errorProps) &&
-          ((matches, props) => {
-            if (typeof matches === "boolean" || typeof matches === "string") {
-              return <FieldError match={matches} {...props} />;
-            }
-
-            if (Array.isArray(matches)) {
-              matches = [...new Set(matches)];
-              return matches.length > 0
-                ? matches.map((match) => <FieldError key={match} match={match} {...props} />)
-                : null;
-            }
-
-            const entries = Object.entries(matches) as [FieldErrorMatch, React.ReactNode][];
-            return entries.map(([match, children]) => (
-              <FieldError key={match} match={match} children={children} {...props} />
-            ));
-          })(errorMatches, errorProps)}
-        {typeof validity === "function" && <FieldValidity>{validity}</FieldValidity>}
+      <FieldRoot {...partsProps.root}>
+        {partsProps.label && <FieldLabel {...partsProps.label} />}
+        {props.children}
+        {partsProps.description && <FieldDescription {...partsProps.description} />}
+        {partsProps.error.map((errorProps) => (
+          <FieldError key={String(errorProps.match)} {...errorProps} />
+        ))}
+        {partsProps.validity && <FieldValidity {...partsProps.validity} />}
       </FieldRoot>
     );
   },

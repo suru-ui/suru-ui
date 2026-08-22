@@ -6,5 +6,7 @@ export {
   type AvatarGroupProps,
   type AvatarGroupState,
   type AvatarGroupRadius,
+  type AvatarGroupPartsProps,
   AvatarGroup,
+  useAvatarGroup,
 } from "./avatar-group.jsx";

@@ -9,7 +9,9 @@ export {
   type TextFieldRadius,
   type TextFieldVariant,
   type TextFieldSlotProps,
+  type TextFieldPartsProps,
   type TextFieldChangeEventReason,
   type TextFieldChangeEventDetails,
   TextField,
+  useTextField,
 } from "./text-field.jsx";

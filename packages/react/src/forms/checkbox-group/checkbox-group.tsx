@@ -47,6 +47,25 @@ export type CheckboxGroupState = CheckboxGroupRootState;
  */
 export type CheckboxGroupProps = CheckboxGroupRootProps;
 
+/**
+ * {@link CheckboxGroup} の各パーツに渡すプロパティーです。
+ */
+export type CheckboxGroupPartsProps = {
+  /**
+   * {@link CheckboxGroupRoot} に渡すプロパティーです。
+   */
+  readonly root: CheckboxGroupRootProps;
+};
+
+/**
+ * {@link CheckboxGroup} の各パーツに渡すプロパティーを作るフックです。
+ */
+export function useCheckboxGroup(props: CheckboxGroupProps): CheckboxGroupPartsProps {
+  return {
+    root: props,
+  };
+}
+
 interface CheckboxGroupType extends IComponent<CheckboxGroupProps> {
   /**
    * {@link useCheckboxGroupContext} です。
@@ -62,7 +81,9 @@ interface CheckboxGroupType extends IComponent<CheckboxGroupProps> {
  */
 export const CheckboxGroup: CheckboxGroupType = /*#__PURE__*/ Object.assign(
   function SuiCheckboxGroup(props: CheckboxGroupProps) {
-    return <CheckboxGroupRoot {...props} />;
+    const partsProps = useCheckboxGroup(props);
+
+    return <CheckboxGroupRoot {...partsProps.root} />;
   },
   {
     useContext: useCheckboxGroupContext,

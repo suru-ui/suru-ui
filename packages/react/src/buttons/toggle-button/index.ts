@@ -8,5 +8,7 @@ export {
   type ToggleButtonRadius,
   type ToggleButtonVariant,
   type ToggleButtonSlotProps,
+  type ToggleButtonPartsProps,
   ToggleButton,
+  useToggleButton,
 } from "./toggle-button.jsx";

@@ -4,5 +4,7 @@ export {
   type ScrollAreaProps,
   type ScrollAreaState,
   type ScrollAreaSlotProps,
+  type ScrollAreaPartsProps,
   ScrollArea,
+  useScrollArea,
 } from "./scroll-area.jsx";

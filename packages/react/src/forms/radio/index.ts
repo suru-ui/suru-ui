@@ -8,5 +8,7 @@ export {
   type RadioRadius,
   type RadioVariant,
   type RadioSlotProps,
+  type RadioPartsProps,
   Radio,
+  useRadio,
 } from "./radio.jsx";

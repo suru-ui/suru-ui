@@ -7,5 +7,7 @@ export {
   type TabsState,
   type TabsRadius,
   type TabsSlotProps,
+  type TabsPartsProps,
   Tabs,
+  useTabs,
 } from "./tabs.jsx";

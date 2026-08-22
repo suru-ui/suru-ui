@@ -7,6 +7,7 @@ import {
   type AvatarGroupRootColor,
   type AvatarGroupRootProps,
   type AvatarGroupRootState,
+  type AvatarGroupSurplusProps,
   type AvatarGroupRootRadius,
   AvatarGroupRoot,
   AvatarGroupSurplus,
@@ -29,6 +30,23 @@ export type AvatarGroupRadius = AvatarGroupRootRadius;
 export type AvatarGroupSize = AvatarGroupRootSize;
 
 /**
+ * {@link AvatarGroup} の各パーツに渡すプロパティーです。
+ */
+export type AvatarGroupPartsProps = {
+  /**
+   * {@link AvatarGroupRoot} に渡すプロパティーです。
+   */
+  readonly root: AvatarGroupRootProps;
+
+  /**
+   * {@link AvatarGroupSurplus} に渡すプロパティーです。
+   *
+   * これを表示しないときは null になります。
+   */
+  readonly surplus: AvatarGroupSurplusProps | null;
+};
+
+/**
  * {@link AvatarGroupRootState} です。
  */
 export type AvatarGroupState = AvatarGroupRootState;
@@ -47,6 +65,28 @@ export type AvatarGroupProps = AvatarGroupRootProps & {
   max?: number | undefined;
 };
 
+/**
+ * {@link AvatarGroup} の各パーツに渡すプロパティーを作るフックです。
+ */
+export function useAvatarGroup(props: AvatarGroupProps): AvatarGroupPartsProps {
+  const { max = 4, children, ...otherRootProps } = props;
+  const childArray = React.Children.toArray(children);
+  const hasSurplus = childArray.length > max;
+  const renderedChildArray = childArray.slice(0, hasSurplus ? max - 1 : max);
+
+  return {
+    root: {
+      ...otherRootProps,
+      children: renderedChildArray,
+    },
+    surplus: hasSurplus
+      ? {
+          children: ["+", Math.max(0, childArray.length - renderedChildArray.length)],
+        }
+      : null,
+  };
+}
+
 interface AvatarGroupType extends IComponent<AvatarGroupProps> {
   /**
    * {@link useAvatarGroupContext} です。
@@ -59,16 +99,13 @@ interface AvatarGroupType extends IComponent<AvatarGroupProps> {
  */
 export const AvatarGroup: AvatarGroupType = /*#__PURE__*/ Object.assign(
   function SuiAvatarGroup(props: AvatarGroupProps) {
-    const { max = 4, children, ...otherRootProps } = props;
-    const childArray = React.Children.toArray(children);
-    const hasSurplus = childArray.length > max;
-    const renderedChildArray = childArray.slice(0, hasSurplus ? max - 1 : max);
-    if (hasSurplus) {
-      const surplus = Math.max(0, childArray.length - renderedChildArray.length);
-      renderedChildArray.push(<AvatarGroupSurplus>+{surplus}</AvatarGroupSurplus>);
-    }
+    const partsProps = useAvatarGroup(props);
 
-    return <AvatarGroupRoot {...otherRootProps}>{renderedChildArray}</AvatarGroupRoot>;
+    return (
+      <AvatarGroupRoot {...partsProps.root}>
+        {partsProps.surplus && <AvatarGroupSurplus {...partsProps.surplus} />}
+      </AvatarGroupRoot>
+    );
   },
   {
     useContext: useAvatarGroupContext,

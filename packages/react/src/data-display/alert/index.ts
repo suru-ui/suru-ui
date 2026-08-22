@@ -8,5 +8,7 @@ export {
   type AlertRadius,
   type AlertVariant,
   type AlertSlotProps,
+  type AlertPartsProps,
   Alert,
+  useAlert,
 } from "./alert.jsx";

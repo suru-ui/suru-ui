@@ -8,5 +8,7 @@ export {
   type CheckboxRadius,
   type CheckboxVariant,
   type CheckboxSlotProps,
+  type CheckboxPartsProps,
   Checkbox,
+  useCheckbox,
 } from "./checkbox.jsx";

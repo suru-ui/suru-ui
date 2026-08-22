@@ -30,6 +30,16 @@ export type ChipSize = ChipRootSize;
 export type ChipVariant = ChipRootVariant;
 
 /**
+ * {@link Chip} の各パーツに渡すプロパティーです。
+ */
+export type ChipPartsProps = {
+  /**
+   * {@link ChipRoot} に渡すプロパティーです。
+   */
+  readonly root: ChipRootProps;
+};
+
+/**
  * {@link Chip} の状態です。
  */
 export type ChipState = ChipRootState;
@@ -40,10 +50,21 @@ export type ChipState = ChipRootState;
 export type ChipProps = ChipRootProps;
 
 /**
+ * {@link Chip} の各パーツに渡すプロパティーを作るフックです。
+ */
+export function useChip(props: ChipProps): ChipPartsProps {
+  return {
+    root: props,
+  };
+}
+
+/**
  * 短いラベルや属性を表示するチップコンポーネントです。
  */
 export const Chip: IComponent<ChipProps> = function SuiChip(props) {
-  return <ChipRoot {...props} />;
+  const partsProps = useChip(props);
+
+  return <ChipRoot {...partsProps.root} />;
 };
 
 /**

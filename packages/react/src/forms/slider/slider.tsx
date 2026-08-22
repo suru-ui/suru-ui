@@ -80,6 +80,50 @@ export type SliderSlotProps = {
 };
 
 /**
+ * 各パーツに渡すプロパティーをまとめたものです。
+ */
+export type SliderPartsProps = {
+  /**
+   * {@link SliderControl} に渡すプロパティーです。
+   */
+  readonly control: SliderControlProps | undefined;
+
+  /**
+   * {@link SliderIndicator} に渡すプロパティーです。
+   */
+  readonly indicator: SliderIndicatorProps | undefined;
+
+  /**
+   * {@link SliderLabel} に渡すプロパティーです。
+   *
+   * これを表示しないときは undefined になります。
+   */
+  readonly label: SliderLabelProps | undefined;
+
+  /**
+   * {@link SliderRoot} に渡すプロパティーです。
+   */
+  readonly root: SliderRootProps;
+
+  /**
+   * スライダーの値の数に応じた {@link SliderThumb} に渡すプロパティーの一覧です。
+   */
+  readonly thumbs: readonly SliderThumbProps[];
+
+  /**
+   * {@link SliderTrack} に渡すプロパティーです。
+   */
+  readonly track: SliderTrackProps | undefined;
+
+  /**
+   * {@link SliderValue} に渡すプロパティーです。
+   *
+   * これを表示しないときは undefined になります。
+   */
+  readonly value: SliderValueProps | undefined;
+};
+
+/**
  * {@link Slider} の状態です。
  */
 export type SliderState = SliderRootState;
@@ -100,12 +144,9 @@ export type SliderProps = Omit<SliderRootProps, "children"> & {
 };
 
 /**
- * スライダーを表示するコンポーネントです。
- *
- * `value` または `defaultValue` が配列の場合は、値の数だけ Thumb を自動的に配置します。
- * Label と Value は `slotProps` を渡したときだけ表示します。
+ * {@link Slider} の各パーツに渡すプロパティーを作るフックです。
  */
-export const Slider: IComponent<SliderProps> = function SuiSlider(props) {
+export function useSlider(props: SliderProps): SliderPartsProps {
   const {
     slotProps: {
       label: labelProps,
@@ -118,20 +159,40 @@ export const Slider: IComponent<SliderProps> = function SuiSlider(props) {
     ...rootProps
   } = props;
   const value = rootProps.value ?? rootProps.defaultValue;
-  const thumbs = Array.isArray(value) ? (
-    value.map((_, index) => <SliderThumb key={index} index={index} {...thumbProps} />)
-  ) : (
-    <SliderThumb index={0} {...thumbProps} />
-  );
+  const thumbs = Array.isArray(value)
+    ? value.map((_, index) => ({ index, ...thumbProps }))
+    : [{ index: 0, ...thumbProps }];
+
+  return {
+    root: rootProps,
+    label: labelProps,
+    value: valueProps,
+    control: controlProps,
+    track: trackProps,
+    indicator: indicatorProps,
+    thumbs,
+  };
+}
+
+/**
+ * スライダーを表示するコンポーネントです。
+ *
+ * `value` または `defaultValue` が配列の場合は、値の数だけ Thumb を自動的に配置します。
+ * Label と Value は `slotProps` を渡したときだけ表示します。
+ */
+export const Slider: IComponent<SliderProps> = function SuiSlider(props) {
+  const partsProps = useSlider(props);
 
   return (
-    <SliderRoot {...rootProps}>
-      {labelProps ? <SliderLabel {...labelProps} /> : null}
-      {valueProps ? <SliderValue {...valueProps} /> : null}
-      <SliderControl {...controlProps}>
-        <SliderTrack {...trackProps}>
-          <SliderIndicator {...indicatorProps} />
-          {thumbs}
+    <SliderRoot {...partsProps.root}>
+      {partsProps.label ? <SliderLabel {...partsProps.label} /> : null}
+      {partsProps.value ? <SliderValue {...partsProps.value} /> : null}
+      <SliderControl {...partsProps.control}>
+        <SliderTrack {...partsProps.track}>
+          <SliderIndicator {...partsProps.indicator} />
+          {partsProps.thumbs.map((thumbProps, index) => (
+            <SliderThumb key={index} {...thumbProps} />
+          ))}
         </SliderTrack>
       </SliderControl>
     </SliderRoot>

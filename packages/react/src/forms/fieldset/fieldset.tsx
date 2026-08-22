@@ -20,6 +20,23 @@ export type FieldsetState = FieldsetRootState;
 export type FieldsetProps = FieldsetRootProps;
 
 /**
+ * {@link Fieldset} の各パーツに渡すプロパティーです。
+ */
+export type FieldsetPartsProps = {
+  /**
+   * {@link FieldsetRoot} に渡すプロパティーです。
+   */
+  readonly root: FieldsetRootProps;
+};
+
+/**
+ * {@link Fieldset} の各パーツに渡すプロパティーを作るフックです。
+ */
+export function useFieldset(props: FieldsetProps): FieldsetPartsProps {
+  return { root: props };
+}
+
+/**
  * {@link Fieldset} の複合コンポーネント型です。
  *
  * {@link Fieldset.Root} と {@link Fieldset.Legend} をプロパティーとして公開します。
@@ -37,7 +54,9 @@ interface FieldsetComponentType extends IComponent<FieldsetProps> {
  */
 export const Fieldset: FieldsetComponentType = /*#__PURE__*/ Object.assign(
   function SuiFieldset(props: FieldsetProps) {
-    return <FieldsetRoot {...props} />;
+    const partsProps = useFieldset(props);
+
+    return <FieldsetRoot {...partsProps.root} />;
   },
   {
     Legend: FieldsetLegend,

@@ -69,6 +69,90 @@ export type MenuProps = Omit<MenuRootProps, "children" | "handle"> &
     trigger?: MenuTriggerProps["children"] | undefined;
   };
 
+/**
+ * {@link Menu} の各パーツに渡すプロパティーです。
+ */
+export type MenuPartsProps = {
+  /**
+   * {@link MenuRoot} に渡すプロパティーです。
+   */
+  readonly root: MenuRootProps;
+
+  /**
+   * {@link MenuTrigger} に渡すプロパティーです。
+   *
+   * トリガーを表示しないときは null になります。
+   */
+  readonly trigger: Omit<MenuTriggerProps, "handle"> | null;
+
+  /**
+   * {@link MenuPortal} に渡すプロパティーです。
+   */
+  readonly portal: MenuPortalProps | undefined;
+
+  /**
+   * {@link MenuBackdrop} に渡すプロパティーです。
+   */
+  readonly backdrop: MenuBackdropProps | undefined;
+
+  /**
+   * {@link MenuPositioner} に渡すプロパティーです。
+   */
+  readonly positioner: MenuPositionerProps;
+
+  /**
+   * {@link MenuPopup} に渡すプロパティーです。
+   */
+  readonly popup: MenuPopupProps;
+};
+
+/**
+ * {@link Menu} の各パーツに渡すプロパティーを作るフックです。
+ */
+export function useMenu(props: MenuProps): MenuPartsProps {
+  const {
+    trigger,
+    children,
+    slotProps: {
+      popup: popupProps,
+      portal: portalProps,
+      trigger: triggerProps,
+      backdrop: backdropProps,
+      positioner: positionerProps,
+    } = {},
+    ...rootProps
+  } = props;
+  const {
+    side = "bottom",
+    align = "start",
+    sideOffset = 8,
+    ...otherPositionerProps
+  } = positionerProps ?? {};
+
+  return {
+    root: rootProps,
+    trigger:
+      !!trigger || !!triggerProps
+        ? {
+            children: trigger!,
+            ...triggerProps,
+          }
+        : null,
+    portal: portalProps,
+    backdrop: backdropProps,
+    positioner: {
+      ...otherPositionerProps,
+      side,
+      align,
+      sideOffset,
+    },
+    popup: {
+      ...popupProps,
+      children,
+    },
+  };
+}
+
 interface MenuComponentType extends IComponent<MenuProps> {
   /**
    * メニューを制御するハンドルを新しく作成します。
@@ -85,40 +169,15 @@ interface MenuComponentType extends IComponent<MenuProps> {
  */
 export const Menu: MenuComponentType = /*#__PURE__*/ Object.assign(
   function SuiMenu(props: MenuProps) {
-    const {
-      trigger,
-      children,
-      slotProps: {
-        popup: popupProps,
-        portal: portalProps,
-        trigger: triggerProps,
-        backdrop: backdropProps,
-        positioner: positionerProps,
-      } = {},
-      ...rootProps
-    } = props;
-    const {
-      side = "bottom",
-      align = "start",
-      sideOffset = 8,
-      ...otherPositionerProps
-    } = positionerProps ?? {};
+    const partsProps = useMenu(props);
 
     return (
-      <MenuRoot {...rootProps}>
-        {(!!trigger || !!triggerProps) && (
-          // `trigger` または `triggerProps` があれば、`children` は必ず指定されます。
-          <MenuTrigger children={trigger!} {...triggerProps} />
-        )}
-        <MenuPortal {...portalProps}>
-          <MenuBackdrop {...backdropProps} />
-          <MenuPositioner
-            {...otherPositionerProps}
-            side={side}
-            align={align}
-            sideOffset={sideOffset}
-          >
-            <MenuPopup {...popupProps}>{children}</MenuPopup>
+      <MenuRoot {...partsProps.root}>
+        {partsProps.trigger && <MenuTrigger {...partsProps.trigger} />}
+        <MenuPortal {...partsProps.portal}>
+          <MenuBackdrop {...partsProps.backdrop} />
+          <MenuPositioner {...partsProps.positioner}>
+            <MenuPopup {...partsProps.popup} />
           </MenuPositioner>
         </MenuPortal>
       </MenuRoot>

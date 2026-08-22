@@ -78,6 +78,85 @@ export type TooltipProps = Omit<TooltipRootProps, "children" | "handle"> & {
   trigger?: TooltipTriggerProps["children"] | undefined;
 };
 
+/**
+ * {@link Tooltip} の各パーツに渡すプロパティーです。
+ */
+export type TooltipPartsProps = {
+  /**
+   * {@link TooltipRoot} に渡すプロパティーです。
+   */
+  readonly root: TooltipRootProps;
+
+  /**
+   * {@link TooltipTrigger} に渡すプロパティーです。
+   *
+   * トリガーを表示しないときは null になります。
+   */
+  readonly trigger: Omit<TooltipTriggerProps, "handle"> | null;
+
+  /**
+   * {@link TooltipPortal} に渡すプロパティーです。
+   */
+  readonly portal: TooltipPortalProps | undefined;
+
+  /**
+   * {@link TooltipPositioner} に渡すプロパティーです。
+   */
+  readonly positioner: TooltipPositionerProps;
+
+  /**
+   * {@link TooltipPopup} に渡すプロパティーです。
+   *
+   * `children` には {@link TooltipArrow} とポップアップの内容が設定されています。
+   */
+  readonly popup: TooltipPopupProps;
+};
+
+/**
+ * {@link Tooltip} の各パーツに渡すプロパティーを作るフックです。
+ */
+export function useTooltip(props: TooltipProps): TooltipPartsProps {
+  const {
+    trigger,
+    children,
+    slotProps: {
+      arrow: arrowProps,
+      popup: popupProps,
+      portal: portalProps,
+      trigger: triggerProps,
+      positioner: positionerProps,
+    } = {},
+    ...rootProps
+  } = props;
+  const { side = "top", sideOffset = 8, ...otherPositionerProps } = positionerProps ?? {};
+
+  return {
+    root: rootProps,
+    trigger:
+      !!trigger || !!triggerProps
+        ? {
+            children: trigger!,
+            ...triggerProps,
+          }
+        : null,
+    portal: portalProps,
+    positioner: {
+      ...otherPositionerProps,
+      side,
+      sideOffset,
+    },
+    popup: {
+      ...popupProps,
+      children: (
+        <>
+          <TooltipArrow {...arrowProps} />
+          {children}
+        </>
+      ),
+    },
+  };
+}
+
 interface TooltipComponentType extends IComponent<TooltipProps> {
   /**
    * ツールチップを制御するハンドルを新しく作成します。
@@ -94,32 +173,14 @@ interface TooltipComponentType extends IComponent<TooltipProps> {
  */
 export const Tooltip: TooltipComponentType = /*#__PURE__*/ Object.assign(
   function SuiTooltip(props: TooltipProps) {
-    const {
-      trigger,
-      children,
-      slotProps: {
-        arrow: arrowProps,
-        popup: popupProps,
-        portal: portalProps,
-        trigger: triggerProps,
-        positioner: positionerProps,
-      } = {},
-      ...rootProps
-    } = props;
-    const { side = "top", sideOffset = 8, ...otherPositionerProps } = positionerProps ?? {};
+    const partsProps = useTooltip(props);
 
     return (
-      <TooltipRoot {...rootProps}>
-        {(!!trigger || !!triggerProps) && (
-          // `trigger` または `triggerProps` があれば、`children` は必ず指定されます。
-          <TooltipTrigger children={trigger!} {...triggerProps} />
-        )}
-        <TooltipPortal {...portalProps}>
-          <TooltipPositioner {...otherPositionerProps} side={side} sideOffset={sideOffset}>
-            <TooltipPopup {...popupProps}>
-              <TooltipArrow {...arrowProps} />
-              {children}
-            </TooltipPopup>
+      <TooltipRoot {...partsProps.root}>
+        {partsProps.trigger && <TooltipTrigger {...partsProps.trigger} />}
+        <TooltipPortal {...partsProps.portal}>
+          <TooltipPositioner {...partsProps.positioner}>
+            <TooltipPopup {...partsProps.popup} />
           </TooltipPositioner>
         </TooltipPortal>
       </TooltipRoot>

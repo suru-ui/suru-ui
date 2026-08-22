@@ -8,5 +8,7 @@ export {
   type ProgressRadius,
   type ProgressVariant,
   type ProgressSlotProps,
+  type ProgressPartsProps,
   Progress,
+  useProgress,
 } from "./progress.jsx";

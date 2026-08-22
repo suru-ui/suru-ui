@@ -79,6 +79,48 @@ export type ButtonSlotProps = {
 };
 
 /**
+ * {@link Button} の各パーツに渡すプロパティーです。
+ */
+export type ButtonPartsProps = {
+  /**
+   * {@link ButtonRoot} に渡すプロパティーです。
+   */
+  readonly root: ButtonRootProps;
+
+  /**
+   * {@link ButtonContent} に渡すプロパティーです。
+   *
+   * `children` にはボタンの内容が設定されています。
+   */
+  readonly content: ButtonContentProps;
+
+  /**
+   * {@link ButtonPending} に渡すプロパティーです。
+   */
+  readonly pending: ButtonPendingProps;
+
+  /**
+   * {@link ButtonCircularProgress} に渡すプロパティーです。
+   */
+  readonly circularProgress: ButtonCircularProgressProps;
+
+  /**
+   * {@link ButtonCircularProgressTrack} に渡すプロパティーです。
+   */
+  readonly circularProgressTrack: ButtonCircularProgressTrackProps | undefined;
+
+  /**
+   * {@link ButtonCircularProgressFill} に渡すプロパティーです。
+   */
+  readonly circularProgressFill: ButtonCircularProgressFillProps | undefined;
+
+  /**
+   * {@link ButtonCircularProgressFillRotation} に渡すプロパティーです。
+   */
+  readonly circularProgressFillRotation: ButtonCircularProgressFillRotationProps | undefined;
+};
+
+/**
  * {@link Button} の状態です。
  */
 export type ButtonState = ButtonRootState;
@@ -105,37 +147,60 @@ interface ButtonType extends IComponent<ButtonProps> {
 }
 
 /**
+ * {@link Button} の各パーツに渡すプロパティーを作るフックです。
+ */
+export function useButton(props: ButtonProps): ButtonPartsProps {
+  const {
+    children,
+    slotProps: {
+      content: contentProps,
+      pending: { overlay = true, ...otherPendingProps } = {},
+      circularProgress: circularProgressProps,
+      circularProgressFill: circularProgressFillProps,
+      circularProgressTrack: circularProgressTrackProps,
+      circularProgressFillRotation: circularProgressFillRotationProps,
+    } = {},
+    percentage,
+    indeterminate,
+    ...rootProps
+  } = props;
+
+  return {
+    root: rootProps,
+    content: {
+      children,
+      ...contentProps,
+    },
+    pending: {
+      ...otherPendingProps,
+      overlay,
+    },
+    circularProgress: {
+      percentage,
+      indeterminate,
+      ...circularProgressProps,
+    },
+    circularProgressTrack: circularProgressTrackProps,
+    circularProgressFill: circularProgressFillProps,
+    circularProgressFillRotation: circularProgressFillRotationProps,
+  };
+}
+
+/**
  * ボタンを表示するコンポーネントです。
  */
 export const Button: ButtonType = /*#__PURE__*/ Object.assign(
   function SuiButton(props: ButtonProps) {
-    const {
-      children,
-      slotProps: {
-        content: contentProps,
-        pending: { overlay = true, ...otherPendingProps } = {},
-        circularProgress: circularProgressProps,
-        circularProgressFill: circularProgressFillProps,
-        circularProgressTrack: circularProgressTrackProps,
-        circularProgressFillRotation: circularProgressFillRotationProps,
-      } = {},
-      percentage,
-      indeterminate,
-      ...rootProps
-    } = props;
+    const partsProps = useButton(props);
 
     return (
-      <ButtonRoot {...rootProps}>
-        <ButtonContent children={children} {...contentProps} />
-        <ButtonPending {...otherPendingProps} overlay={overlay}>
-          <ButtonCircularProgress
-            percentage={percentage}
-            indeterminate={indeterminate}
-            {...circularProgressProps}
-          >
-            <ButtonCircularProgressTrack {...circularProgressTrackProps} />
-            <ButtonCircularProgressFill {...circularProgressFillProps}>
-              <ButtonCircularProgressFillRotation {...circularProgressFillRotationProps} />
+      <ButtonRoot {...partsProps.root}>
+        <ButtonContent {...partsProps.content} />
+        <ButtonPending {...partsProps.pending}>
+          <ButtonCircularProgress {...partsProps.circularProgress}>
+            <ButtonCircularProgressTrack {...partsProps.circularProgressTrack} />
+            <ButtonCircularProgressFill {...partsProps.circularProgressFill}>
+              <ButtonCircularProgressFillRotation {...partsProps.circularProgressFillRotation} />
             </ButtonCircularProgressFill>
           </ButtonCircularProgress>
         </ButtonPending>

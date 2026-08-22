@@ -7,5 +7,7 @@ export {
   type AvatarState,
   type AvatarRadius,
   type AvatarSlotProps,
+  type AvatarPartsProps,
   Avatar,
+  useAvatar,
 } from "./avatar.jsx";

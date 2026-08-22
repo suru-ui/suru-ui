@@ -65,6 +65,40 @@ export type ProgressSlotProps = {
 };
 
 /**
+ * {@link Progress} の各パーツに渡すプロパティーです。
+ */
+export type ProgressPartsProps = {
+  /**
+   * {@link ProgressIndicator} に渡すプロパティーです。
+   */
+  readonly indicator: ProgressIndicatorProps;
+
+  /**
+   * {@link ProgressLabel} に渡すプロパティーです。
+   *
+   * これを表示しないときは null になります。
+   */
+  readonly label: ProgressLabelProps | null;
+
+  /**
+   * {@link ProgressRoot} に渡すプロパティーです。
+   */
+  readonly root: ProgressRootProps;
+
+  /**
+   * {@link ProgressTrack} に渡すプロパティーです。
+   */
+  readonly track: ProgressTrackProps;
+
+  /**
+   * {@link ProgressValue} に渡すプロパティーです。
+   *
+   * これを表示しないときは null になります。
+   */
+  readonly value: ProgressValueProps | null;
+};
+
+/**
  * {@link Progress} の状態です。
  */
 export type ProgressState = ProgressRootState;
@@ -87,26 +121,41 @@ export type ProgressProps = Omit<ProgressRootProps, "children"> & {
 };
 
 /**
- * 時間のかかる処理の進捗を表示するコンポーネントです。
+ * {@link Progress} の各パーツに渡すプロパティーを作るフックです。
  */
-export const Progress: IComponent<ProgressProps> = function SuiProgress(props) {
+export function useProgress(props: ProgressProps): ProgressPartsProps {
   const {
     label,
     slotProps: {
       label: labelProps,
-      track: trackProps,
+      track: trackProps = {},
       value: valueProps,
-      indicator: indicatorProps,
+      indicator: indicatorProps = {},
     } = {},
     ...rootProps
   } = props;
 
+  return {
+    root: rootProps,
+    label: "label" in props || !!labelProps ? { children: label, ...labelProps } : null,
+    value: "label" in props || !!valueProps ? { ...valueProps } : null,
+    track: trackProps,
+    indicator: indicatorProps,
+  };
+}
+
+/**
+ * 時間のかかる処理の進捗を表示するコンポーネントです。
+ */
+export const Progress: IComponent<ProgressProps> = function SuiProgress(props) {
+  const partsProps = useProgress(props);
+
   return (
-    <ProgressRoot {...rootProps}>
-      {("label" in props || !!labelProps) && <ProgressLabel children={label} {...labelProps} />}
-      {("label" in props || !!valueProps) && <ProgressValue {...valueProps} />}
-      <ProgressTrack {...trackProps}>
-        <ProgressIndicator {...indicatorProps} />
+    <ProgressRoot {...partsProps.root}>
+      {partsProps.label && <ProgressLabel {...partsProps.label} />}
+      {partsProps.value && <ProgressValue {...partsProps.value} />}
+      <ProgressTrack {...partsProps.track}>
+        <ProgressIndicator {...partsProps.indicator} />
       </ProgressTrack>
     </ProgressRoot>
   );

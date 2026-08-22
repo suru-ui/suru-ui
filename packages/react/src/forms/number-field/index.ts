@@ -10,5 +10,7 @@ export {
   type NumberFieldSlotProps,
   type NumberFieldChangeEventReason,
   type NumberFieldChangeEventDetails,
+  type NumberFieldPartsProps,
   NumberField,
+  useNumberField,
 } from "./number-field.jsx";

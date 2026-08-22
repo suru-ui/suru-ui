@@ -48,6 +48,37 @@ export type CollapsibleSlotProps = {
 };
 
 /**
+ * 各パーツに渡すプロパティーをまとめたものです。
+ */
+export type CollapsiblePartsProps = {
+  /**
+   * {@link CollapsibleIndicator} に渡すプロパティーです。
+   *
+   * `children` を指定しないときは、デフォルトのアイコンが設定されます。
+   */
+  readonly indicator: CollapsibleIndicatorProps;
+
+  /**
+   * {@link CollapsiblePanel} に渡すプロパティーです。
+   *
+   * `children` にはパネルのコンテンツが設定されています。
+   */
+  readonly panel: CollapsiblePanelProps;
+
+  /**
+   * {@link CollapsibleRoot} に渡すプロパティーです。
+   */
+  readonly root: CollapsibleRootProps;
+
+  /**
+   * {@link CollapsibleTrigger} に渡すプロパティーです。
+   *
+   * `children` には `title` と Indicator を表示する既定のレンダリングが設定されています。
+   */
+  readonly trigger: CollapsibleTriggerProps;
+};
+
+/**
  * {@link Collapsible} の状態です。
  */
 export type CollapsibleState = CollapsibleRootState;
@@ -73,25 +104,46 @@ export type CollapsibleProps = Omit<CollapsibleRootProps, "children"> & {
 };
 
 /**
+ * {@link Collapsible} の各パーツに渡すプロパティーを作るフックです。
+ */
+export function useCollapsible(props: CollapsibleProps): CollapsiblePartsProps {
+  const { title, children, slotProps, ...rootProps } = props;
+  const { panel: panelProps, trigger: triggerProps, indicator: indicatorProps } = slotProps ?? {};
+  const indicator: CollapsibleIndicatorProps = {
+    children: <SuiCollapsibleIcon />,
+    ...indicatorProps,
+  };
+  const trigger: CollapsibleTriggerProps = {
+    ...(triggerProps ?? {}),
+    children: (triggerRenderProps) => (
+      <button type="button" {...triggerRenderProps}>
+        {title}
+        <CollapsibleIndicator {...indicator} />
+      </button>
+    ),
+  };
+
+  return {
+    root: rootProps,
+    trigger,
+    indicator,
+    panel: {
+      ...panelProps,
+      children,
+    },
+  };
+}
+
+/**
  * 見出しのボタンで開閉できるパネルを表示します。
  */
 export const Collapsible: IComponent<CollapsibleProps> = function SuiCollapsible(props) {
-  const { title, children, slotProps, ...rootProps } = props;
-  const { panel: panelProps, trigger: triggerProps, indicator: indicatorProps } = slotProps ?? {};
+  const partsProps = useCollapsible(props);
 
   return (
-    <CollapsibleRoot {...rootProps}>
-      <CollapsibleTrigger {...triggerProps}>
-        {(triggerRenderProps) => (
-          <button type="button" {...triggerRenderProps}>
-            {title}
-            <CollapsibleIndicator {...indicatorProps}>
-              {indicatorProps?.children ?? <SuiCollapsibleIcon />}
-            </CollapsibleIndicator>
-          </button>
-        )}
-      </CollapsibleTrigger>
-      <CollapsiblePanel {...panelProps}>{children}</CollapsiblePanel>
+    <CollapsibleRoot {...partsProps.root}>
+      <CollapsibleTrigger {...partsProps.trigger} />
+      <CollapsiblePanel {...partsProps.panel} />
     </CollapsibleRoot>
   );
 };

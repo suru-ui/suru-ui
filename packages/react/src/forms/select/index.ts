@@ -9,5 +9,7 @@ export {
   type SelectVariant,
   type SelectItemGroup,
   type SelectSlotProps,
+  type SelectPartsProps,
   Select,
+  useSelect,
 } from "./select.jsx";

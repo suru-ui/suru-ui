@@ -65,6 +65,42 @@ export type MeterSlotProps = {
 };
 
 /**
+ * {@link Meter} の各パーツに渡すプロパティーです。
+ */
+export type MeterPartsProps = {
+  /**
+   * {@link MeterIndicator} に渡すプロパティーです。
+   */
+  readonly indicator: MeterIndicatorProps;
+
+  /**
+   * {@link MeterLabel} に渡すプロパティーです。
+   *
+   * これを表示しないときは null になります。
+   */
+  readonly label: MeterLabelProps | null;
+
+  /**
+   * {@link MeterRoot} に渡すプロパティーです。
+   */
+  readonly root: MeterRootProps;
+
+  /**
+   * {@link MeterTrack} に渡すプロパティーです。
+   */
+  readonly track: MeterTrackProps;
+
+  /**
+   * {@link MeterValue} に渡すプロパティーです。
+   *
+   * ラベルを指定したときは値も同時に表示されます。`slotProps.value` だけを渡しても値は表示されず、表示はラベルの指定に従います。
+   *
+   * これを表示しないときは null になります。
+   */
+  readonly value: MeterValueProps | null;
+};
+
+/**
  * {@link Meter} の状態です。
  */
 export type MeterState = MeterRootState;
@@ -89,27 +125,41 @@ export type MeterProps = Omit<MeterRootProps, "children"> & {
 };
 
 /**
- * 数値の範囲内にある現在値を表示するメーターコンテキストです。
+ * {@link Meter} の各パーツに渡すプロパティーを作るフックです。
  */
-export const Meter: IComponent<MeterProps> = function SuiMeter(props) {
+export function useMeter(props: MeterProps): MeterPartsProps {
   const {
     label,
     slotProps: {
       label: labelProps,
-      track: trackProps,
+      track: trackProps = {},
       value: valueProps,
-      indicator: indicatorProps,
+      indicator: indicatorProps = {},
     } = {},
     ...rootProps
   } = props;
 
+  return {
+    root: rootProps,
+    label: "label" in props || !!labelProps ? { children: label, ...labelProps } : null,
+    value: "label" in props || !!labelProps || !!valueProps ? { ...valueProps } : null,
+    track: trackProps,
+    indicator: indicatorProps,
+  };
+}
+
+/**
+ * 数値の範囲内にある現在値を表示するメーターコンテキストです。
+ */
+export const Meter: IComponent<MeterProps> = function SuiMeter(props) {
+  const partsProps = useMeter(props);
+
   return (
-    <MeterRoot {...rootProps}>
-      {("label" in props || !!labelProps) && <MeterLabel children={label} {...labelProps} />}
-      {/* ラベルを指定したときは値も同時に表示されます。`slotProps.value` だけを渡しても値は表示されず、表示はラベルの指定に従います。 */}
-      {("label" in props || !!labelProps || !!valueProps) && <MeterValue {...valueProps} />}
-      <MeterTrack {...trackProps}>
-        <MeterIndicator {...indicatorProps} />
+    <MeterRoot {...partsProps.root}>
+      {partsProps.label && <MeterLabel {...partsProps.label} />}
+      {partsProps.value && <MeterValue {...partsProps.value} />}
+      <MeterTrack {...partsProps.track}>
+        <MeterIndicator {...partsProps.indicator} />
       </MeterTrack>
     </MeterRoot>
   );
