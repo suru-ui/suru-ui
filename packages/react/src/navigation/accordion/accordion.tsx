@@ -157,13 +157,12 @@ export function useAccordion(props: AccordionProps): AccordionPartsProps {
     header: headerProps ?? {},
     trigger: {
       ...otherTriggerProps,
-      children:
-        triggerChildren ?? (
-          <>
-            {title}
-            <AccordionIndicator {...indicator} />
-          </>
-        ),
+      children: triggerChildren ?? (
+        <>
+          {title}
+          <AccordionIndicator {...indicator} />
+        </>
+      ),
     },
     indicator,
     panel: {

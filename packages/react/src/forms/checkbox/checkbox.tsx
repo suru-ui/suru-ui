@@ -48,16 +48,16 @@ export type CheckboxSlotProps = {
  */
 export type CheckboxPartsProps = {
   /**
-   * {@link CheckboxRoot} に渡すプロパティーです。
-   */
-  readonly root: CheckboxRootProps;
-
-  /**
    * {@link CheckboxIndicator} に渡すプロパティーです。
    *
    * `children` も `slotProps.indicator` も指定しないときは null になります。
    */
   readonly indicator: CheckboxIndicatorProps | null;
+
+  /**
+   * {@link CheckboxRoot} に渡すプロパティーです。
+   */
+  readonly root: CheckboxRootProps;
 };
 
 /**

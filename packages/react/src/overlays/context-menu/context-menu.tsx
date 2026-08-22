@@ -76,16 +76,9 @@ export type ContextMenuProps = Omit<ContextMenuRootProps, "children" | "handle">
  */
 export type ContextMenuPartsProps = {
   /**
-   * {@link ContextMenuRoot} に渡すプロパティーです。
+   * {@link ContextMenuPopup} に渡すプロパティーです。
    */
-  readonly root: ContextMenuRootProps;
-
-  /**
-   * {@link ContextMenuTrigger} に渡すプロパティーです。
-   *
-   * トリガーを表示しないときは null になります。
-   */
-  readonly trigger: ContextMenuTriggerProps | null;
+  readonly popup: ContextMenuPopupProps;
 
   /**
    * {@link ContextMenuPortal} に渡すプロパティーです。
@@ -98,9 +91,16 @@ export type ContextMenuPartsProps = {
   readonly positioner: ContextMenuPositionerProps | undefined;
 
   /**
-   * {@link ContextMenuPopup} に渡すプロパティーです。
+   * {@link ContextMenuRoot} に渡すプロパティーです。
    */
-  readonly popup: ContextMenuPopupProps;
+  readonly root: ContextMenuRootProps;
+
+  /**
+   * {@link ContextMenuTrigger} に渡すプロパティーです。
+   *
+   * トリガーを表示しないときは null になります。
+   */
+  readonly trigger: ContextMenuTriggerProps | null;
 };
 
 /**

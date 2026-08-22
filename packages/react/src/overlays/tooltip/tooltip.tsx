@@ -83,16 +83,11 @@ export type TooltipProps = Omit<TooltipRootProps, "children" | "handle"> & {
  */
 export type TooltipPartsProps = {
   /**
-   * {@link TooltipRoot} に渡すプロパティーです。
-   */
-  readonly root: TooltipRootProps;
-
-  /**
-   * {@link TooltipTrigger} に渡すプロパティーです。
+   * {@link TooltipPopup} に渡すプロパティーです。
    *
-   * トリガーを表示しないときは null になります。
+   * `children` には {@link TooltipArrow} とポップアップの内容が設定されています。
    */
-  readonly trigger: Omit<TooltipTriggerProps, "handle"> | null;
+  readonly popup: TooltipPopupProps;
 
   /**
    * {@link TooltipPortal} に渡すプロパティーです。
@@ -105,11 +100,16 @@ export type TooltipPartsProps = {
   readonly positioner: TooltipPositionerProps;
 
   /**
-   * {@link TooltipPopup} に渡すプロパティーです。
-   *
-   * `children` には {@link TooltipArrow} とポップアップの内容が設定されています。
+   * {@link TooltipRoot} に渡すプロパティーです。
    */
-  readonly popup: TooltipPopupProps;
+  readonly root: TooltipRootProps;
+
+  /**
+   * {@link TooltipTrigger} に渡すプロパティーです。
+   *
+   * トリガーを表示しないときは null になります。
+   */
+  readonly trigger: Omit<TooltipTriggerProps, "handle"> | null;
 };
 
 /**

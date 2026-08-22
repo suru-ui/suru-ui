@@ -381,9 +381,7 @@ export function useSelect<Value = unknown, Multiple extends boolean | undefined 
           return (
             <React.Fragment key={index}>
               <SelectGroup {...groupProps}>
-                {label !== "" && (
-                  <SelectGroupLabel {...groupLabelProps}>{label}</SelectGroupLabel>
-                )}
+                {label !== "" && <SelectGroupLabel {...groupLabelProps}>{label}</SelectGroupLabel>}
                 {entry.items.map((item, itemIndex) => renderItem(item, itemIndex))}
               </SelectGroup>
               {index < items.length - 1 && <SelectSeparator {...separatorProps} />}

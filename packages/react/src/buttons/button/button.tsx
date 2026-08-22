@@ -83,9 +83,24 @@ export type ButtonSlotProps = {
  */
 export type ButtonPartsProps = {
   /**
-   * {@link ButtonRoot} に渡すプロパティーです。
+   * {@link ButtonCircularProgress} に渡すプロパティーです。
    */
-  readonly root: ButtonRootProps;
+  readonly circularProgress: ButtonCircularProgressProps;
+
+  /**
+   * {@link ButtonCircularProgressFill} に渡すプロパティーです。
+   */
+  readonly circularProgressFill: ButtonCircularProgressFillProps | undefined;
+
+  /**
+   * {@link ButtonCircularProgressFillRotation} に渡すプロパティーです。
+   */
+  readonly circularProgressFillRotation: ButtonCircularProgressFillRotationProps | undefined;
+
+  /**
+   * {@link ButtonCircularProgressTrack} に渡すプロパティーです。
+   */
+  readonly circularProgressTrack: ButtonCircularProgressTrackProps | undefined;
 
   /**
    * {@link ButtonContent} に渡すプロパティーです。
@@ -100,24 +115,9 @@ export type ButtonPartsProps = {
   readonly pending: ButtonPendingProps;
 
   /**
-   * {@link ButtonCircularProgress} に渡すプロパティーです。
+   * {@link ButtonRoot} に渡すプロパティーです。
    */
-  readonly circularProgress: ButtonCircularProgressProps;
-
-  /**
-   * {@link ButtonCircularProgressTrack} に渡すプロパティーです。
-   */
-  readonly circularProgressTrack: ButtonCircularProgressTrackProps | undefined;
-
-  /**
-   * {@link ButtonCircularProgressFill} に渡すプロパティーです。
-   */
-  readonly circularProgressFill: ButtonCircularProgressFillProps | undefined;
-
-  /**
-   * {@link ButtonCircularProgressFillRotation} に渡すプロパティーです。
-   */
-  readonly circularProgressFillRotation: ButtonCircularProgressFillRotationProps | undefined;
+  readonly root: ButtonRootProps;
 };
 
 /**

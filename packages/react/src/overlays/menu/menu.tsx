@@ -74,6 +74,26 @@ export type MenuProps = Omit<MenuRootProps, "children" | "handle"> &
  */
 export type MenuPartsProps = {
   /**
+   * {@link MenuBackdrop} に渡すプロパティーです。
+   */
+  readonly backdrop: MenuBackdropProps | undefined;
+
+  /**
+   * {@link MenuPopup} に渡すプロパティーです。
+   */
+  readonly popup: MenuPopupProps;
+
+  /**
+   * {@link MenuPortal} に渡すプロパティーです。
+   */
+  readonly portal: MenuPortalProps | undefined;
+
+  /**
+   * {@link MenuPositioner} に渡すプロパティーです。
+   */
+  readonly positioner: MenuPositionerProps;
+
+  /**
    * {@link MenuRoot} に渡すプロパティーです。
    */
   readonly root: MenuRootProps;
@@ -84,26 +104,6 @@ export type MenuPartsProps = {
    * トリガーを表示しないときは null になります。
    */
   readonly trigger: Omit<MenuTriggerProps, "handle"> | null;
-
-  /**
-   * {@link MenuPortal} に渡すプロパティーです。
-   */
-  readonly portal: MenuPortalProps | undefined;
-
-  /**
-   * {@link MenuBackdrop} に渡すプロパティーです。
-   */
-  readonly backdrop: MenuBackdropProps | undefined;
-
-  /**
-   * {@link MenuPositioner} に渡すプロパティーです。
-   */
-  readonly positioner: MenuPositionerProps;
-
-  /**
-   * {@link MenuPopup} に渡すプロパティーです。
-   */
-  readonly popup: MenuPopupProps;
 };
 
 /**

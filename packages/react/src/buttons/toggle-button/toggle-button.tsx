@@ -83,9 +83,24 @@ export type ToggleButtonSlotProps = {
  */
 export type ToggleButtonPartsProps = {
   /**
-   * {@link ToggleButtonRoot} に渡すプロパティーです。
+   * {@link ToggleButtonCircularProgress} に渡すプロパティーです。
    */
-  readonly root: ToggleButtonRootProps;
+  readonly circularProgress: ToggleButtonCircularProgressProps;
+
+  /**
+   * {@link ToggleButtonCircularProgressFill} に渡すプロパティーです。
+   */
+  readonly circularProgressFill: ToggleButtonCircularProgressFillProps | undefined;
+
+  /**
+   * {@link ToggleButtonCircularProgressFillRotation} に渡すプロパティーです。
+   */
+  readonly circularProgressFillRotation: ToggleButtonCircularProgressFillRotationProps | undefined;
+
+  /**
+   * {@link ToggleButtonCircularProgressTrack} に渡すプロパティーです。
+   */
+  readonly circularProgressTrack: ToggleButtonCircularProgressTrackProps | undefined;
 
   /**
    * {@link ToggleButtonContent} に渡すプロパティーです。
@@ -100,24 +115,9 @@ export type ToggleButtonPartsProps = {
   readonly pending: ToggleButtonPendingProps;
 
   /**
-   * {@link ToggleButtonCircularProgress} に渡すプロパティーです。
+   * {@link ToggleButtonRoot} に渡すプロパティーです。
    */
-  readonly circularProgress: ToggleButtonCircularProgressProps;
-
-  /**
-   * {@link ToggleButtonCircularProgressTrack} に渡すプロパティーです。
-   */
-  readonly circularProgressTrack: ToggleButtonCircularProgressTrackProps | undefined;
-
-  /**
-   * {@link ToggleButtonCircularProgressFill} に渡すプロパティーです。
-   */
-  readonly circularProgressFill: ToggleButtonCircularProgressFillProps | undefined;
-
-  /**
-   * {@link ToggleButtonCircularProgressFillRotation} に渡すプロパティーです。
-   */
-  readonly circularProgressFillRotation: ToggleButtonCircularProgressFillRotationProps | undefined;
+  readonly root: ToggleButtonRootProps;
 };
 
 /**

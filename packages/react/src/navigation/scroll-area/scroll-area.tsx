@@ -167,7 +167,7 @@ export function useScrollArea(props: ScrollAreaProps): ScrollAreaPartsProps {
           orientation: "horizontal",
         }
       : null,
-    horizontalThumb: horizontal ? horizontalThumbProps ?? {} : null,
+    horizontalThumb: horizontal ? (horizontalThumbProps ?? {}) : null,
     corner: cornerProps ?? {},
   };
 }

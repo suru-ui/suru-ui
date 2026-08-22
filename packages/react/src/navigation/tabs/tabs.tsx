@@ -156,7 +156,7 @@ export function useTabs(props: TabsProps): TabsPartsProps {
 
   return {
     root: rootProps,
-    list: items === undefined ? null : listProps ?? {},
+    list: items === undefined ? null : (listProps ?? {}),
     tab:
       items?.map((item) => ({
         ...otherTabProps,
