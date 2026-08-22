@@ -66,7 +66,7 @@ export const Usage = meta.story({
   render(props) {
     return (
       <div className="flex flex-col items-start gap-2">
-        <label className="text-sm">フルーツ</label>
+        <label>フルーツ</label>
         <Autocomplete
           {...props}
           slotProps={{
@@ -81,7 +81,7 @@ export const Usage = meta.story({
 });
 
 export const Variants = meta.story({
-  name: "バリエーション",
+  name: "主な外観",
   ...ctrl({
     items: ["りんご", "バナナ", "ぶどう", "みかん", "いちご", "もも"],
     color: "grey",
@@ -96,7 +96,7 @@ export const Variants = meta.story({
       <div className="flex flex-col gap-3">
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col gap-2">
-            <span className="text-sm">{variant}</span>
+            <span>{variant}</span>
             <Autocomplete
               {...props}
               variant={variant}
@@ -130,7 +130,7 @@ export const Outlined = meta.story({
       <div className="flex flex-col gap-3">
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col gap-2">
-            <span className="text-sm">{variant}</span>
+            <span>{variant}</span>
             <Autocomplete
               {...props}
               variant={variant}
@@ -224,7 +224,7 @@ export const Sizes = meta.story({
       <div className="flex flex-col gap-3">
         {SIZES.map((size) => (
           <div key={size} className="flex flex-col gap-2">
-            <span className="text-sm">{size}</span>
+            <span>{size}</span>
             <Autocomplete
               {...props}
               size={size}
@@ -257,7 +257,7 @@ export const Radius = meta.story({
       <div className="flex flex-col gap-3">
         {RADII.map((radius) => (
           <div key={radius} className="flex flex-col gap-2">
-            <span className="text-sm">{radius}</span>
+            <span>{radius}</span>
             <Autocomplete
               {...props}
               radius={radius}
@@ -377,7 +377,7 @@ export const Disabled = meta.story({
       <div className="flex flex-col gap-3">
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col gap-2">
-            <span className="text-sm">{variant}</span>
+            <span>{variant}</span>
             <Autocomplete
               {...props}
               variant={variant}

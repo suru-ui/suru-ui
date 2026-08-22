@@ -41,7 +41,7 @@ export type ActionGroupContext = {
   readonly size: ActionGroupRootSize;
 
   /**
-   * グループアイテムのスタイルバリエーションです。
+   * グループアイテムの主な外観です。
    */
   readonly variant: ActionGroupRootVariant;
 };
@@ -177,7 +177,7 @@ export type ActionGroupRootProps = Omit<React.ComponentProps<"div">, keyof Rende
     size?: ActionGroupRootSize | undefined;
 
     /**
-     * グループアイテムのスタイルバリエーションを指定します。
+     * グループアイテムの主な外観を指定します。
      *
      * @default "solid"
      */

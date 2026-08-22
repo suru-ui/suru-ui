@@ -82,7 +82,7 @@ export type AlertRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps
     size?: AlertRootSize | undefined;
 
     /**
-     * アラートのスタイルバリエーションを指定します。
+     * アラートの主な外観を指定します。
      *
      * @default "muted"
      */

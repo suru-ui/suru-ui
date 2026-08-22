@@ -81,7 +81,7 @@ export const Usage = meta.story({
 });
 
 export const Variants = meta.story({
-  name: "バリエーション",
+  name: "主な外観",
   ...ctrl({
     color: "grey",
     size: "md",
@@ -95,7 +95,7 @@ export const Variants = meta.story({
       <div className="flex flex-col gap-3">
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col gap-2">
-            <span className="text-sm">{variant}</span>
+            <span>{variant}</span>
             <Input {...props} variant={variant} className="w-64" />
           </div>
         ))}
@@ -157,7 +157,7 @@ export const Radius = meta.story({
       <div className="flex flex-col gap-3">
         {RADII.map((radius) => (
           <div key={radius} className="flex flex-col gap-2">
-            <span className="text-sm">{radius}</span>
+            <span>{radius}</span>
             <Input {...props} radius={radius} className="w-64" />
           </div>
         ))}
@@ -180,7 +180,7 @@ export const Outlined = meta.story({
       <div className="flex flex-col gap-3">
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col gap-2">
-            <span className="text-sm">{variant}</span>
+            <span>{variant}</span>
             <Input {...props} variant={variant} outlined className="w-64" />
           </div>
         ))}
@@ -204,7 +204,7 @@ export const Sizes = meta.story({
       <div className="flex flex-col gap-3">
         {SIZES.map((size) => (
           <div key={size} className="flex flex-col gap-2">
-            <span className="text-sm">{size}</span>
+            <span>{size}</span>
             <Input {...props} size={size} className="w-64" />
           </div>
         ))}
@@ -246,7 +246,7 @@ export const Disabled = meta.story({
       <div className="flex flex-col gap-3">
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col gap-2">
-            <span className="text-sm">{variant}</span>
+            <span>{variant}</span>
             <Input {...props} variant={variant} disabled className="w-64" defaultValue="入力値" />
             <Input
               {...props}

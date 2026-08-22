@@ -38,7 +38,7 @@ export type SwitchRootRadius = "none" | Size | "full";
 export type SwitchRootSize = Size;
 
 /**
- * スイッチのスタイルバリエーションです。
+ * スイッチの主な外観です。
  *
  * {@link SwitchRootProps} で指定できます。
  *
@@ -94,7 +94,7 @@ export type SwitchRootProps = React.ComponentProps<typeof Switch.Root> & {
   size?: SwitchRootSize | undefined;
 
   /**
-   * スイッチのスタイルバリエーションを指定します。
+   * スイッチの主な外観を指定します。
    *
    * 値を変更すると、スイッチのスタイルが更新されます。
    *

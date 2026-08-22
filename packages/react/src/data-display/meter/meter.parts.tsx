@@ -81,7 +81,7 @@ export type MeterRootProps = React.ComponentProps<typeof Meter.Root> & {
   size?: MeterRootSize | undefined;
 
   /**
-   * メーターのスタイルバリエーションを指定します。
+   * メーターの主な外観を指定します。
    *
    * @default "liquid"
    */

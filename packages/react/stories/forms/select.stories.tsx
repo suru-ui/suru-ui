@@ -56,7 +56,7 @@ export const Usage = meta.story({
 });
 
 export const Variants = meta.story({
-  name: "バリエーション",
+  name: "主な外観",
   ...ctrl({
     items: fruits,
     size: "md",

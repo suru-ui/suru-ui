@@ -30,23 +30,6 @@ export type AvatarGroupRadius = AvatarGroupRootRadius;
 export type AvatarGroupSize = AvatarGroupRootSize;
 
 /**
- * {@link AvatarGroup} の各パーツに渡すプロパティーです。
- */
-export type AvatarGroupPartsProps = {
-  /**
-   * {@link AvatarGroupRoot} に渡すプロパティーです。
-   */
-  readonly root: AvatarGroupRootProps;
-
-  /**
-   * {@link AvatarGroupSurplus} に渡すプロパティーです。
-   *
-   * これを表示しないときは null になります。
-   */
-  readonly surplus: AvatarGroupSurplusProps | null;
-};
-
-/**
  * {@link AvatarGroupRootState} です。
  */
 export type AvatarGroupState = AvatarGroupRootState;
@@ -66,6 +49,23 @@ export type AvatarGroupProps = AvatarGroupRootProps & {
 };
 
 /**
+ * {@link AvatarGroup} の各パーツに渡すプロパティーです。
+ */
+export type AvatarGroupPartsProps = {
+  /**
+   * {@link AvatarGroupRoot} に渡すプロパティーです。
+   */
+  readonly root: AvatarGroupRootProps;
+
+  /**
+   * {@link AvatarGroupSurplus} に渡すプロパティーです。
+   *
+   * これを表示しないときは null になります。
+   */
+  readonly surplus: AvatarGroupSurplusProps | null;
+};
+
+/**
  * {@link AvatarGroup} の各パーツに渡すプロパティーを作るフックです。
  */
 export function useAvatarGroup(props: AvatarGroupProps): AvatarGroupPartsProps {
@@ -80,9 +80,7 @@ export function useAvatarGroup(props: AvatarGroupProps): AvatarGroupPartsProps {
       children: renderedChildArray,
     },
     surplus: hasSurplus
-      ? {
-          children: ["+", Math.max(0, childArray.length - renderedChildArray.length)],
-        }
+      ? { children: `+${Math.max(0, childArray.length - renderedChildArray.length)}` }
       : null,
   };
 }
@@ -103,6 +101,7 @@ export const AvatarGroup: AvatarGroupType = /*#__PURE__*/ Object.assign(
 
     return (
       <AvatarGroupRoot {...partsProps.root}>
+        {partsProps.root.children}
         {partsProps.surplus && <AvatarGroupSurplus {...partsProps.surplus} />}
       </AvatarGroupRoot>
     );

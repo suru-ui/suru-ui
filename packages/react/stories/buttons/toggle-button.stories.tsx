@@ -64,7 +64,7 @@ export const Usage = meta.story({
 });
 
 export const Variants = meta.story({
-  name: "バリエーション",
+  name: "主な外観",
   ...ctrl({
     children: "切り替え",
     color: "grey",
@@ -79,7 +79,7 @@ export const Variants = meta.story({
       <div className="flex flex-wrap gap-3">
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{variant}</span>
+            <span>{variant}</span>
             <ToggleButton {...props} variant={variant} />
           </div>
         ))}
@@ -213,7 +213,7 @@ export const Squared = meta.story({
       <div className="flex flex-wrap gap-3">
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{variant}</span>
+            <span>{variant}</span>
             <ToggleButton {...props} squared variant={variant}>
               <ItalicIcon />
             </ToggleButton>
@@ -287,7 +287,7 @@ export const Radius = meta.story({
       <div className="flex flex-wrap gap-3">
         {RADII.map((radius) => (
           <div key={radius} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{radius}</span>
+            <span>{radius}</span>
             <ToggleButton {...props} radius={radius} />
           </div>
         ))}
@@ -311,7 +311,7 @@ export const Outlined = meta.story({
       <div className="flex flex-wrap gap-3">
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{variant}</span>
+            <span>{variant}</span>
             <ToggleButton {...props} variant={variant} outlined />
           </div>
         ))}
@@ -337,7 +337,7 @@ export const Sizes = meta.story({
         <div className="flex items-center justify-center gap-3">
           {SIZES.map((size) => (
             <div key={size} className="flex flex-col items-center gap-2">
-              <span className="text-sm">{size}</span>
+              <span>{size}</span>
               <ToggleButton {...props} size={size}>
                 <ItalicIcon />
                 {props.children}
@@ -348,7 +348,7 @@ export const Sizes = meta.story({
         <div className="flex items-center justify-center gap-3">
           {SIZES.map((size) => (
             <div key={size} className="flex flex-col items-center gap-2">
-              <span className="text-sm">{size}</span>
+              <span>{size}</span>
               <ToggleButton {...props} size={size} squared>
                 <ItalicIcon />
               </ToggleButton>
@@ -356,7 +356,7 @@ export const Sizes = meta.story({
           ))}
         </div>
         <div className="flex flex-col items-center gap-2">
-          <span className="text-sm">親要素に合わせる</span>
+          <span>親要素に合わせる</span>
           <div className="flex justify-center gap-3 h-[50px]">
             <ToggleButton {...props}>
               <ItalicIcon />

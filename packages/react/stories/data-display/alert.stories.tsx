@@ -154,7 +154,7 @@ export const WithActions = meta.story({
 });
 
 export const Variants = meta.story({
-  name: "バリエーション",
+  name: "主な外観",
   ...ctrl({
     title: "更新完了",
     children: "プロフィールを更新しました。",
@@ -168,7 +168,7 @@ export const Variants = meta.story({
       <div className="flex flex-col gap-3">
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col gap-2 w-[450px]">
-            <span className="text-sm">{variant}</span>
+            <span>{variant}</span>
             <Alert {...props} icon={<InfoIcon />} variant={variant} />
           </div>
         ))}
@@ -192,7 +192,7 @@ export const Colors = meta.story({
       <div className="flex flex-col gap-3">
         {COLORS.map((color) => (
           <div key={color} className="flex flex-col gap-2 w-[450px]">
-            <span className="text-sm">{color}</span>
+            <span>{color}</span>
             <Alert {...props} icon={<InfoIcon />} color={color} />
           </div>
         ))}
@@ -216,7 +216,7 @@ export const Radius = meta.story({
       <div className="flex w-[450px] flex-col gap-3">
         {RADII.map((radius) => (
           <div key={radius} className="flex flex-col gap-2 w-[450px]">
-            <span className="text-sm">{radius}</span>
+            <span>{radius}</span>
             <Alert {...props} icon={<InfoIcon />} radius={radius} />
           </div>
         ))}
@@ -259,7 +259,7 @@ export const Sizes = meta.story({
       <div className="flex w-[450px] flex-col gap-3">
         {SIZES.map((size) => (
           <div key={size} className="flex flex-col gap-2 w-[450px]">
-            <span className="text-sm">{size}</span>
+            <span>{size}</span>
             <Alert {...props} icon={<InfoIcon />} size={size} />
           </div>
         ))}

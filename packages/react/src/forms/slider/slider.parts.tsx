@@ -79,7 +79,7 @@ export type SliderRootProps = React.ComponentProps<typeof Slider.Root> & {
   size?: SliderRootSize | undefined;
 
   /**
-   * スライダーのスタイルバリエーションを指定します。値を変更すると、ルートのクラスも更新されます。
+   * スライダーの主な外観を指定します。値を変更すると、ルートのクラスも更新されます。
    *
    * @default "liquid"
    */

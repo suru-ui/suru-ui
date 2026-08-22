@@ -319,8 +319,8 @@ export const Content: IComponent<Content.Props> = ButtonContent;
 /**
  * ボタンが保留状態でないときの表示モードです。
  *
- * - `"hidden"`: 非表示にするがレイアウトは維持します。
- * - `"none"`: レイアウトから除去します。
+ * - `"hidden"`: DOM を維持します。
+ * - `"none"`: DOM から除去します。
  */
 export type ButtonPendingVisibility = "hidden" | "none";
 
@@ -335,7 +335,7 @@ export type ButtonPendingState = {};
 export type ButtonPendingProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
   RenderProps<ButtonPendingState> & {
     /**
-     * {@link ButtonRootProps.pending|pending} が `false` のときの表示モードを指定します。
+     * ボタンが保留状態でないときの表示モードを指定します。
      *
      * @default "none"
      */
@@ -485,7 +485,7 @@ export type ButtonCircularProgressState = {};
 export type ButtonCircularProgressProps = Omit<React.ComponentProps<"svg">, keyof RenderProps> &
   RenderProps<ButtonCircularProgressState> & {
     /**
-     * プログレスバーを不定モードにするかどうかを指定します。
+     * 不定モードで表示するかどうかを指定します。
      *
      * @default false
      */

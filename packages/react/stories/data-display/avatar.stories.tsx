@@ -70,7 +70,7 @@ export const Colors = meta.story({
       <div className="flex flex-wrap gap-3">
         {COLORS.map((color) => (
           <div key={color} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{color}</span>
+            <span>{color}</span>
             <Avatar {...props} color={color} />
           </div>
         ))}
@@ -91,7 +91,7 @@ export const Radius = meta.story({
       <div className="flex gap-3">
         {RADII.map((radius) => (
           <div key={radius} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{radius}</span>
+            <span>{radius}</span>
             <Avatar {...props} radius={radius} />
           </div>
         ))}
@@ -112,7 +112,7 @@ export const Sizes = meta.story({
       <div className="flex items-center justify-center gap-3">
         {SIZES.map((size) => (
           <div key={size} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{size}</span>
+            <span>{size}</span>
             <Avatar {...props} size={size} />
           </div>
         ))}

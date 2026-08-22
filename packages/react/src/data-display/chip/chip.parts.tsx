@@ -83,7 +83,7 @@ export type ChipRootProps = Omit<React.ComponentProps<"span">, keyof RenderProps
     size?: ChipRootSize | undefined;
 
     /**
-     * チップのスタイルバリエーションを指定します。
+     * チップの主な外観を指定します。
      *
      * @default "liquid"
      */

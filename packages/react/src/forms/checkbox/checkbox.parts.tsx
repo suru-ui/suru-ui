@@ -56,7 +56,7 @@ export type CheckboxRootProps = React.ComponentProps<typeof Checkbox.Root> & {
   /**
    * チェックボックスの色を指定します。
    *
-   * {@link CheckboxGroupRoot} 内では、グループの値が優先されます。
+   * CheckboxGroup 内では、グループの値が優先されます。
    *
    * @default "grey"
    */
@@ -65,34 +65,34 @@ export type CheckboxRootProps = React.ComponentProps<typeof Checkbox.Root> & {
   /**
    * 枠線を表示するかどうかを指定します。
    *
-   * 未指定時は `variant` が `"naked"` の場合に表示します。
-   * {@link CheckboxGroupRoot} 内では、グループの値が優先されます。
+   * CheckboxGroup 内では、グループの値が優先されます。
+   *
+   * @default false
    */
   outlined?: boolean | undefined;
 
   /**
    * チェックボックスの角丸を指定します。
    *
-   * 既定値は {@link CheckboxRootProps.size|size} です。
-   * {@link CheckboxGroupRoot} 内では、グループの値が優先されます。
+   * 既定値は {@link CheckboxRootProps.size|size} です。CheckboxGroup 内では、グループの値が優先されます。
    */
   radius?: CheckboxRootRadius | undefined;
 
   /**
    * チェックボックスのサイズを指定します。
    *
-   * {@link CheckboxGroupRoot} 内では、グループの値が優先されます。
+   * CheckboxGroup 内では、グループの値が優先されます。
    *
    * @default "md"
    */
   size?: CheckboxRootSize | undefined;
 
   /**
-   * チェックボックスのスタイルバリエーションを指定します。
+   * チェックボックスの主な外観を指定します。
    *
-   * {@link CheckboxGroupRoot} 内では、グループの値が優先されます。
+   * CheckboxGroup 内では、グループの値が優先されます。
    *
-   * @default "naked"
+   * @default "liquid"
    */
   variant?: CheckboxRootVariant | undefined;
 };
@@ -106,9 +106,9 @@ export const CheckboxRoot: IComponent<CheckboxRootProps> = function SuiCheckboxR
     size: sizeProp = "md",
     color: colorProp = "grey",
     radius: radiusProp = sizeProp,
-    variant: variantProp = "naked",
+    variant: variantProp = "liquid",
     disabled: disabledProp = false,
-    outlined = variantProp === "naked",
+    outlined: outlinedProp = false,
     className,
     ...otherProps
   } = props;
@@ -116,7 +116,7 @@ export const CheckboxRoot: IComponent<CheckboxRootProps> = function SuiCheckboxR
   const color = group?.color ?? colorProp;
   const radius = group?.radius ?? radiusProp;
   const variant = group?.variant ?? variantProp;
-  const groupOutlined = group?.outlined ?? outlined;
+  const outlined = group?.outlined ?? outlinedProp;
   const disabled = group?.disabled || disabledProp;
 
   return (
@@ -130,7 +130,7 @@ export const CheckboxRoot: IComponent<CheckboxRootProps> = function SuiCheckboxR
         `sui_checkbox-color_${color}`,
         `sui_checkbox-radius_${radius}`,
         `sui_checkbox-variant_${variant}`,
-        groupOutlined && "sui_checkbox-outlined",
+        outlined && "sui_checkbox-outlined",
         disabled && "sui_checkbox-disabled",
       )}
     />

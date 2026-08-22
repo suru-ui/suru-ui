@@ -43,7 +43,7 @@ export type CheckboxGroupContext = {
   readonly size: CheckboxGroupRootSize;
 
   /**
-   * チェックボックスのスタイルバリエーションです。
+   * チェックボックスの主な外観です。
    */
   readonly variant: CheckboxGroupRootVariant;
 };
@@ -194,7 +194,7 @@ export type CheckboxGroupRootProps = React.ComponentProps<typeof CheckboxGroup> 
   size?: CheckboxGroupRootSize | undefined;
 
   /**
-   * チェックボックスのスタイルバリエーションを指定します。
+   * チェックボックスの主な外観を指定します。
    *
    * {@link CheckboxGroupRoot} の子要素に指定した値より優先されます。
    * 値を変更すると、グループ内のチェックボックスも更新されます。

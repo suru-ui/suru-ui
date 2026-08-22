@@ -37,7 +37,7 @@ export type ComboboxContext = {
   readonly size: ComboboxRootSize;
 
   /**
-   * 入力欄のスタイルバリエーションです。
+   * 入力欄の主な外観です。
    */
   readonly variant: ComboboxRootVariant;
 };
@@ -176,7 +176,7 @@ export type ComboboxRootProps<Value = unknown, Multiple extends boolean | undefi
   size?: ComboboxRootSize | undefined;
 
   /**
-   * 入力欄のスタイルバリエーションを指定します。
+   * 入力欄の主な外観を指定します。
    *
    * @default "naked"
    */

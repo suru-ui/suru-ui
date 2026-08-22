@@ -37,7 +37,7 @@ export type RadioRootRadius = "none" | Size | "full";
 export type RadioRootSize = Size;
 
 /**
- * ラジオボタンのスタイルバリエーションです。
+ * ラジオボタンの主な外観です。
  *
  * - `"naked"`: 背景のないインジケーターのみ、枠線なし
  * - `"liquid"`: 薄い塗りつぶし
@@ -95,7 +95,7 @@ export type RadioRootProps = React.ComponentProps<typeof Radio.Root> & {
   size?: RadioRootSize | undefined;
 
   /**
-   * ラジオボタンのスタイルバリエーションを指定します。
+   * ラジオボタンの主な外観を指定します。
    *
    * {@link RadioGroupRoot} 内では、グループの値が優先されます。
    * 値を変更すると、ラジオボタンのクラスが更新されます。

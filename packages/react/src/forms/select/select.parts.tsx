@@ -33,7 +33,7 @@ export type SelectContext = {
   readonly size: SelectRootSize;
 
   /**
-   * 選択欄のスタイルバリエーションです。
+   * 選択欄の主な外観です。
    */
   readonly variant: SelectRootVariant;
 };
@@ -173,7 +173,7 @@ export type SelectRootProps<Value = unknown, Multiple extends boolean | undefine
   size?: SelectRootSize | undefined;
 
   /**
-   * 選択欄のスタイルバリエーションを指定します。
+   * 選択欄の主な外観を指定します。
    */
   variant?: SelectRootVariant | undefined;
 };

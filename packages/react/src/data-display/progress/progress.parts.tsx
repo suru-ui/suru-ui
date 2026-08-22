@@ -81,7 +81,7 @@ export type ProgressRootProps = React.ComponentProps<typeof Progress.Root> & {
   size?: ProgressRootSize | undefined;
 
   /**
-   * 進捗のスタイルバリエーションを指定します。
+   * 進捗の主な外観を指定します。
    *
    * @default "liquid"
    */

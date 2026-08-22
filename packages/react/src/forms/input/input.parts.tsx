@@ -110,7 +110,7 @@ export type InputRootProps = Omit<
   type?: InputRootType | undefined;
 
   /**
-   * テキスト入力欄のスタイルバリエーションを指定します。
+   * テキスト入力欄の主な外観を指定します。
    *
    * @default "liquid"
    */

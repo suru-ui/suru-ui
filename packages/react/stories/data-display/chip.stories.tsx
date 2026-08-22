@@ -50,7 +50,7 @@ export const Usage = meta.story({
 });
 
 export const Variants = meta.story({
-  name: "バリエーション",
+  name: "主な外観",
   ...ctrl({
     children: "新着",
     color: "blue",
@@ -63,7 +63,7 @@ export const Variants = meta.story({
       <div className="flex flex-wrap gap-3">
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{variant}</span>
+            <span>{variant}</span>
             <Chip {...props} variant={variant} />
           </div>
         ))}
@@ -86,7 +86,7 @@ export const Colors = meta.story({
       <div className="flex flex-wrap gap-3">
         {COLORS.map((color) => (
           <div key={color} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{color}</span>
+            <span>{color}</span>
             <Chip {...props} color={color} />
           </div>
         ))}
@@ -133,7 +133,7 @@ export const Radius = meta.story({
       <div className="flex flex-wrap gap-3">
         {RADII.map((radius) => (
           <div key={radius} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{radius}</span>
+            <span>{radius}</span>
             <Chip {...props} radius={radius} />
           </div>
         ))}
@@ -155,7 +155,7 @@ export const Outlined = meta.story({
       <div className="flex flex-wrap gap-3">
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{variant}</span>
+            <span>{variant}</span>
             <Chip {...props} variant={variant} outlined />
           </div>
         ))}
@@ -178,7 +178,7 @@ export const Sizes = meta.story({
       <div className="flex flex-wrap items-center gap-3">
         {SIZES.map((size) => (
           <div key={size} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{size}</span>
+            <span>{size}</span>
             <Chip {...props} size={size}>
               <TagIcon />
               {props.children}
@@ -204,7 +204,7 @@ export const WithButton = meta.story({
       <div className="flex flex-wrap gap-3">
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{variant}</span>
+            <span>{variant}</span>
             <Chip {...props} render={<button type="button" />} variant={variant} className="pr-0">
               {props.children}
               <Button

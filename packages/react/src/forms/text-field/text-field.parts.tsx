@@ -37,7 +37,7 @@ export type TextFieldContext = {
   readonly size: TextFieldRootSize;
 
   /**
-   * 文字入力欄のスタイルバリエーションです。
+   * 文字入力欄の主な外観です。
    */
   readonly variant: TextFieldRootVariant;
 };
@@ -157,7 +157,7 @@ export type TextFieldRootProps = Omit<React.ComponentProps<"div">, keyof RenderP
     size?: TextFieldRootSize | undefined;
 
     /**
-     * 文字入力欄のスタイルバリエーションを指定します。
+     * 文字入力欄の主な外観を指定します。
      *
      * @default "liquid"
      */

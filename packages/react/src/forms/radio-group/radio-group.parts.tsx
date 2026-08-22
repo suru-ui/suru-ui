@@ -42,7 +42,7 @@ export type RadioGroupContext = {
   readonly size: RadioGroupRootSize;
 
   /**
-   * ラジオボタンのスタイルバリエーションです。
+   * ラジオボタンの主な外観です。
    */
   readonly variant: RadioGroupRootVariant;
 };
@@ -118,7 +118,7 @@ export type RadioGroupRootRadius = RadioRootRadius;
 export type RadioGroupRootSize = Size;
 
 /**
- * ラジオボタングループのスタイルバリエーションです。
+ * ラジオボタングループの主な外観です。
  */
 export type RadioGroupRootVariant = RadioRootVariant;
 
@@ -183,7 +183,7 @@ export type RadioGroupRootProps = React.ComponentProps<typeof RadioGroup> & {
   size?: RadioGroupRootSize | undefined;
 
   /**
-   * ラジオボタンのスタイルバリエーションを指定します。
+   * ラジオボタンの主な外観を指定します。
    *
    * {@link RadioGroupRoot} の子要素に指定した値より優先されます。
    * 値を変更すると、グループ内のラジオボタンも更新されます。

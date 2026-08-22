@@ -18,14 +18,24 @@ import "./avatar-group.css";
 export type AvatarGroupContextColor = Color;
 
 /**
- * {@link AvatarGroupRootRadius} です。
+ * アバターの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
  */
-export type AvatarGroupContextRadius = AvatarGroupRootRadius;
+export type AvatarGroupContextRadius = "none" | Size | "full";
 
 /**
- * {@link AvatarGroupRootSize} です。
+ * アバターの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
  */
-export type AvatarGroupContextSize = AvatarGroupRootSize;
+export type AvatarGroupContextSize = Size;
 
 /**
  * {@link AvatarGroupRoot} が子パーツへ提供するコンテキストです。
@@ -111,14 +121,14 @@ export const useContext: IUseContext<Context> = useAvatarGroupContext;
 // ----
 
 /**
- * アバターグループの色です。
+ * 各アバターの色です。
  *
  * `"auto"` を指定すると、子アバターごとに色を自動で割り当てます。
  */
 export type AvatarGroupRootColor = "auto" | Color;
 
 /**
- * アバターグループの角丸です。
+ * 各アバターの角丸です。
  *
  * - `"none"`: 角を直角にする
  * - `"sm"`: 小さい角丸
@@ -129,7 +139,7 @@ export type AvatarGroupRootColor = "auto" | Color;
 export type AvatarGroupRootRadius = "none" | Size | "full";
 
 /**
- * アバターグループの大きさです。
+ * 各アバターの大きさです。
  *
  * - `"sm"`: 小さいサイズ
  * - `"md"`: 標準的なサイズ

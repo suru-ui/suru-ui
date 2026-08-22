@@ -58,7 +58,7 @@ export type AutocompleteContext = {
   readonly size: AutocompleteRootSize;
 
   /**
-   * 入力欄のスタイルバリエーションです。
+   * 入力欄の主な外観です。
    */
   readonly variant: AutocompleteRootVariant;
 };
@@ -212,7 +212,7 @@ export type AutocompleteRootProps<TItemValue = unknown> = Omit<
   size?: AutocompleteRootSize | undefined;
 
   /**
-   * 入力欄のスタイルバリエーションを指定します。
+   * 入力欄の主な外観を指定します。
    *
    * @default "liquid"
    */

@@ -6,6 +6,7 @@ import { preview, controls } from "../../.config/storybook/preview.js";
 import { Checkbox } from "../../src/forms/checkbox/index.js";
 
 const RADII = ["none", ...SIZES, "full"] as const;
+const VARIANTS = ["naked", "liquid"] as const;
 
 const meta = preview.meta({
   title: "Forms / Checkbox",
@@ -42,11 +43,11 @@ const ctrl = controls(Checkbox, {
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: undefined,
-    outlined: undefined,
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -62,29 +63,25 @@ export const Usage = meta.story({
 });
 
 export const Variants = meta.story({
-  name: "バリエーション",
+  name: "主な外観",
   ...ctrl({
     color: "grey",
     size: "md",
     radius: undefined,
-    outlined: undefined,
+    outlined: false,
     disabled: false,
   }),
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <label className="flex items-center gap-2">
-          <Checkbox {...props} variant="naked">
-            <CheckIcon />
-          </Checkbox>
-          naked
-        </label>
-        <label className="flex items-center gap-2">
-          <Checkbox {...props} variant="liquid">
-            <CheckIcon />
-          </Checkbox>
-          liquid
-        </label>
+        {VARIANTS.map((variant) => (
+          <label key={variant} className="flex items-center gap-2">
+            <Checkbox {...props} variant={variant}>
+              <CheckIcon />
+            </Checkbox>
+            <span>{variant}</span>
+          </label>
+        ))}
       </div>
     );
   },
@@ -121,10 +118,10 @@ export const Outlined = meta.story({
 export const Colors = meta.story({
   name: "色",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     size: "md",
     radius: undefined,
-    outlined: undefined,
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -146,10 +143,10 @@ export const Colors = meta.story({
 export const Sizes = meta.story({
   name: "大きさ",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     radius: undefined,
-    outlined: undefined,
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -177,10 +174,10 @@ export const Sizes = meta.story({
 export const Radius = meta.story({
   name: "角丸",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
-    outlined: undefined,
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -202,11 +199,11 @@ export const Radius = meta.story({
 export const Checked = meta.story({
   name: "チェック状態",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: undefined,
-    outlined: undefined,
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -232,11 +229,11 @@ export const Checked = meta.story({
 export const Controlled = meta.story({
   name: "制御",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: undefined,
-    outlined: undefined,
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -258,11 +255,11 @@ export const Controlled = meta.story({
 export const Indeterminate = meta.story({
   name: "中間状態",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: undefined,
-    outlined: undefined,
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -282,11 +279,11 @@ export const Indeterminate = meta.story({
 export const Disabled = meta.story({
   name: "無効",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: undefined,
-    outlined: undefined,
+    outlined: false,
   }),
   render(props) {
     return (

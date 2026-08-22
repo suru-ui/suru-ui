@@ -160,7 +160,7 @@ export type ToggleButtonRootProps = React.ComponentProps<typeof Toggle> & {
   squared?: boolean | undefined;
 
   /**
-   * トグルボタンのスタイルバリエーションを指定します。
+   * トグルボタンの主な外観を指定します。
    *
    * @default "liquid"
    */

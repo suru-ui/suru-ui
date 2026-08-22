@@ -187,7 +187,7 @@ export function useButton(props: ButtonProps): ButtonPartsProps {
 }
 
 /**
- * ボタンを表示するコンポーネントです。
+ * 複数の主な外観と状態を持つクリック可能なボタンコンポーネントです。
  */
 export const Button: ButtonType = /*#__PURE__*/ Object.assign(
   function SuiButton(props: ButtonProps) {

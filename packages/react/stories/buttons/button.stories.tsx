@@ -66,7 +66,7 @@ export const Usage = meta.story({
 });
 
 export const Variants = meta.story({
-  name: "バリエーション",
+  name: "主な外観",
   ...ctrl({
     children: "ボタン",
     color: "grey",
@@ -82,7 +82,7 @@ export const Variants = meta.story({
       <div className="flex flex-wrap gap-3">
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{variant}</span>
+            <span>{variant}</span>
             <Button {...props} variant={variant} />
           </div>
         ))}
@@ -108,7 +108,7 @@ export const Colors = meta.story({
       <div className="flex flex-wrap gap-3">
         {COLORS.map((color) => (
           <div key={color} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{color}</span>
+            <span>{color}</span>
             <Button {...props} color={color} />
           </div>
         ))}
@@ -132,52 +132,34 @@ export const WithIcons = meta.story({
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <div className="flex justify-center gap-3">
-          <Button {...props}>
-            <GlobeIcon />
-            ボタン
-          </Button>
-          <Button {...props}>
-            ボタン
-            <DeleteIcon />
-          </Button>
+        <div className="flex flex-col items-center gap-2">
+          <span>水平</span>
+          <div className="flex justify-center gap-3">
+            <Button {...props}>
+              <GlobeIcon />
+              ボタン
+            </Button>
+            <Button {...props}>
+              ボタン
+              <DeleteIcon />
+            </Button>
+          </div>
         </div>
-        <div className="flex justify-center gap-3">
-          <Button
-            {...props}
-            slotProps={{
-              content: {
-                className: "flex-col",
-              },
-            }}
-          >
-            <GlobeIcon />
-            ボタン
-          </Button>
-          <Button
-            {...props}
-            slotProps={{
-              content: {
-                className: "flex-col",
-              },
-            }}
-          >
-            ボタン
-            <DeleteIcon />
-          </Button>
-        </div>
-        <div className="flex justify-center gap-3">
-          <Button
-            {...props}
-            slotProps={{
-              content: {
-                className: "flex-col gap-[8px]",
-              },
-            }}
-          >
-            <GlobeIcon className="size-[28px]" />
-            ボタン
-          </Button>
+        <div className="flex flex-col items-center gap-2">
+          <span>垂直</span>
+          <div className="flex justify-center gap-3">
+            <Button
+              {...props}
+              slotProps={{
+                content: {
+                  className: "flex-col gap-[8px]",
+                },
+              }}
+            >
+              <GlobeIcon className="size-[28px]" />
+              ボタン
+            </Button>
+          </div>
         </div>
       </div>
     );
@@ -200,7 +182,7 @@ export const Squared = meta.story({
       <div className="flex flex-wrap gap-3">
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{variant}</span>
+            <span>{variant}</span>
             <Button {...props} squared variant={variant}>
               <Trash2Icon />
             </Button>
@@ -343,8 +325,8 @@ export const Pending = meta.story({
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <div className="flex flex-col gap-3">
-          <span className="text-sm">読み込み中</span>
+        <div className="flex flex-col gap-2">
+          <span>不定</span>
           <div className="flex flex-wrap gap-3">
             <Button {...props} pending>
               検索
@@ -354,14 +336,14 @@ export const Pending = meta.story({
             </Button>
           </div>
         </div>
-        <div className="flex flex-col gap-3">
-          <span className="text-sm">進捗度付き</span>
+        <div className="flex flex-col gap-2">
+          <span>進捗度付き</span>
           <div>
             <PendingProgress {...props} />
           </div>
         </div>
-        <div className="flex flex-col gap-3">
-          <span className="text-sm">カスタマイズ</span>
+        <div className="flex flex-col gap-2">
+          <span>進捗度表記のカスタマイズ</span>
           <div>
             <PendingCustomStyle {...props} />
           </div>
@@ -388,7 +370,7 @@ export const Radius = meta.story({
       <div className="flex flex-wrap gap-3">
         {RADII.map((radius) => (
           <div key={radius} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{radius}</span>
+            <span>{radius}</span>
             <Button {...props} radius={radius} />
           </div>
         ))}
@@ -413,7 +395,7 @@ export const Muted = meta.story({
       <div className="flex flex-wrap gap-3">
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{variant}</span>
+            <span>{variant}</span>
             <Button {...props} muted variant={variant} />
           </div>
         ))}
@@ -438,7 +420,7 @@ export const Outlined = meta.story({
       <div className="flex flex-wrap gap-3">
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{variant}</span>
+            <span>{variant}</span>
             <Button {...props} variant={variant} outlined />
           </div>
         ))}
@@ -462,29 +444,32 @@ export const Sizes = meta.story({
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <div className="flex items-center justify-center gap-3">
-          {SIZES.map((size) => (
-            <div key={size} className="flex flex-col items-center gap-2">
-              <span className="text-sm">{size}</span>
-              <Button {...props} size={size}>
-                <Trash2Icon />
-                {props.children}
-              </Button>
-            </div>
-          ))}
-        </div>
-        <div className="flex items-center justify-center gap-3">
-          {SIZES.map((size) => (
-            <div key={size} className="flex flex-col items-center gap-2">
-              <span className="text-sm">{size}</span>
-              <Button {...props} size={size} squared>
-                <Trash2Icon />
-              </Button>
-            </div>
-          ))}
+        <div className="flex flex-col items-center gap-2">
+          <span>規定の高さ</span>
+          <div className="flex items-center justify-center gap-3">
+            {SIZES.map((size) => (
+              <div key={size} className="flex flex-col items-center gap-2">
+                <span>{size}</span>
+                <Button {...props} size={size}>
+                  <Trash2Icon />
+                  {props.children}
+                </Button>
+              </div>
+            ))}
+          </div>
+          <div className="flex items-center justify-center gap-3">
+            {SIZES.map((size) => (
+              <div key={size} className="flex flex-col items-center gap-2">
+                <span>{size}</span>
+                <Button {...props} size={size} squared>
+                  <Trash2Icon />
+                </Button>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="flex flex-col items-center gap-2">
-          <span className="text-sm">親要素に合わせる</span>
+          <span>親要素に自動で合わせる</span>
           <div className="flex justify-center gap-3 h-[50px]">
             <Button {...props}>
               <Trash2Icon />
@@ -514,7 +499,7 @@ export const FullWidth = meta.story({
   }),
   render(props) {
     return (
-      <div className="space-y-1">
+      <div className="space-y-3">
         <Button {...props} className="w-full">
           {"width: 100%"}
         </Button>
@@ -554,8 +539,8 @@ export const Disabled = meta.story({
       <div className="flex flex-col gap-3">
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{variant}</span>
-            <div className="flex flex-wrap gap-3">
+            <span>{variant}</span>
+            <div className="flex gap-1">
               <Button {...props} variant={variant} disabled>
                 送信
               </Button>
