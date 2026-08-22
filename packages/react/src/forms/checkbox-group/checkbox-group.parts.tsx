@@ -13,8 +13,6 @@ import "./checkbox-group.css";
 
 /**
  * {@link CheckboxGroupRoot} が子パーツへ提供する状態です。
- *
- * {@link CheckboxGroupRoot} に指定したスタイル値を子要素へ伝播します。
  */
 export type CheckboxGroupContext = {
   /**
@@ -93,12 +91,12 @@ export const useContext: IUseContext<Context> = useCheckboxGroupContext;
 // ----
 
 /**
- * チェックボックスグループの色です。
+ * チェックボックスの色です。
  */
 export type CheckboxGroupRootColor = Color;
 
 /**
- * チェックボックスグループの向きです。
+ * チェックボックスの向きです。
  *
  * - `"horizontal"`: 横並び
  * - `"vertical"`: 縦並び
@@ -106,7 +104,7 @@ export type CheckboxGroupRootColor = Color;
 export type CheckboxGroupRootOrientation = "horizontal" | "vertical";
 
 /**
- * チェックボックスグループの角丸です。
+ * チェックボックスの角丸です。
  *
  * - `"none"`: 角を直角にする
  * - `"sm"`: 小さい角丸
@@ -117,7 +115,7 @@ export type CheckboxGroupRootOrientation = "horizontal" | "vertical";
 export type CheckboxGroupRootRadius = "none" | Size | "full";
 
 /**
- * チェックボックスグループの大きさです。
+ * チェックボックスの大きさです。
  *
  * - `"sm"`: 小さいサイズ
  * - `"md"`: 標準的なサイズ
@@ -126,7 +124,7 @@ export type CheckboxGroupRootRadius = "none" | Size | "full";
 export type CheckboxGroupRootSize = Size;
 
 /**
- * チェックボックスグループの主な外観の種類です。
+ * チェックボックスの主な外観の種類です。
  *
  * - `"naked"`: 背景のないチェックマークのみ、枠線なし
  * - `"liquid"`: 薄い塗りつぶし
@@ -135,8 +133,6 @@ export type CheckboxGroupRootVariant = "naked" | "liquid";
 
 /**
  * {@link CheckboxGroupRoot} の状態です。
- *
- * {@link CheckboxGroupRoot} が公開する状態です。
  */
 export type CheckboxGroupRootState = CheckboxGroup.State;
 
@@ -144,14 +140,12 @@ export type CheckboxGroupRootState = CheckboxGroup.State;
  * {@link CheckboxGroupRoot} に渡すプロパティーです。
  *
  * グループに指定したスタイルプロパティーは、子要素のチェックボックス指定より優先されます。
- * 指定後に値を変更すると、グループと子要素のスタイルも更新されます。
  */
 export type CheckboxGroupRootProps = React.ComponentProps<typeof CheckboxGroup> & {
   /**
    * チェックボックスの色を指定します。
    *
-   * {@link CheckboxGroupRoot} の子要素に指定した値より優先されます。
-   * 値を変更すると、グループ内のチェックボックスも更新されます。
+   * 子要素のチェックボックスのプロパティーを上書きします。
    *
    * @default "grey"
    */
@@ -169,25 +163,21 @@ export type CheckboxGroupRootProps = React.ComponentProps<typeof CheckboxGroup> 
   /**
    * 枠線を表示するかどうかを指定します。
    *
-   * {@link CheckboxGroupRoot} の子要素に指定した値より優先されます。
-   * 値を変更すると、グループ内のチェックボックスも更新されます。
+   * 子要素のチェックボックスのプロパティーを上書きします。
    */
   outlined?: boolean | undefined;
 
   /**
    * チェックボックスの角丸を指定します。
    *
-   * 既定値は {@link CheckboxGroupRootProps.size|size} です。
-   * {@link CheckboxGroupRoot} の子要素に指定した値より優先されます。
-   * 値を変更すると、グループ内のチェックボックスも更新されます。
+   * 子要素のチェックボックスのプロパティーを上書きします。
    */
   radius?: CheckboxGroupRootRadius | undefined;
 
   /**
    * チェックボックスのサイズを指定します。
    *
-   * {@link CheckboxGroupRoot} の子要素に指定した値より優先されます。
-   * 値を変更すると、グループ内のチェックボックスも更新されます。
+   * 子要素のチェックボックスのプロパティーを上書きします。
    *
    * @default "md"
    */
@@ -196,44 +186,42 @@ export type CheckboxGroupRootProps = React.ComponentProps<typeof CheckboxGroup> 
   /**
    * チェックボックスの主な外観を指定します。
    *
-   * {@link CheckboxGroupRoot} の子要素に指定した値より優先されます。
-   * 値を変更すると、グループ内のチェックボックスも更新されます。
+   * 子要素のチェックボックスのプロパティーを上書きします。
    *
-   * @default "naked"
+   * @default "liquid"
    */
   variant?: CheckboxGroupRootVariant | undefined;
 };
 
 /**
- * チェックボックスグループのルート要素です。
+ * チェックボックスのルート要素です。
  *
  * 選択状態を管理し、子要素のチェックボックスにスタイルを伝播します。
- * スタイル値が変わらない再レンダーでは、コンテキストの値を再生成しません。
  */
 export const CheckboxGroupRoot: IComponent<CheckboxGroupRootProps> = function SuiCheckboxGroupRoot(
   props,
 ) {
   const {
-    size: sizeProp = "md",
-    color: colorProp = "grey",
-    radius: radiusProp = sizeProp,
-    variant: variantProp = "naked",
+    size = "md",
+    color = "grey",
+    radius = size,
+    variant = "liquid",
     disabled,
-    outlined = variantProp === "naked",
+    outlined = false,
     className,
     orientation = "vertical",
     ...otherProps
   } = props;
   const context = React.useMemo<CheckboxGroupContext>(
     () => ({
-      color: colorProp,
-      outlined,
-      radius: radiusProp,
-      size: sizeProp,
-      variant: variantProp,
+      size,
+      color,
+      radius,
+      variant,
       disabled,
+      outlined,
     }),
-    [colorProp, disabled, outlined, radiusProp, sizeProp, variantProp],
+    [size, color, radius, variant, disabled, outlined],
   );
 
   return (

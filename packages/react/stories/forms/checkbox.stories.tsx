@@ -1,5 +1,4 @@
 import { SIZES, COLORS } from "@suru-ui/theme";
-import { CheckIcon, MinusIcon } from "lucide-react";
 import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
@@ -35,7 +34,7 @@ const ctrl = controls(Checkbox, {
     control: "select",
   },
   variant: {
-    options: ["naked", "liquid"],
+    options: VARIANTS,
     control: "select",
   },
 });
@@ -53,9 +52,7 @@ export const Usage = meta.story({
   render(props) {
     return (
       <label className="flex items-center gap-2">
-        <Checkbox {...props}>
-          <CheckIcon />
-        </Checkbox>
+        <Checkbox {...props} />
         設定を有効にする
       </label>
     );
@@ -76,9 +73,7 @@ export const Variants = meta.story({
       <div className="flex flex-col gap-3">
         {VARIANTS.map((variant) => (
           <label key={variant} className="flex items-center gap-2">
-            <Checkbox {...props} variant={variant}>
-              <CheckIcon />
-            </Checkbox>
+            <Checkbox {...props} variant={variant} />
             <span>{variant}</span>
           </label>
         ))}
@@ -99,15 +94,11 @@ export const Outlined = meta.story({
     return (
       <div className="flex flex-col gap-3">
         <label className="flex items-center gap-2">
-          <Checkbox {...props} variant="naked" outlined>
-            <CheckIcon />
-          </Checkbox>
+          <Checkbox {...props} variant="naked" outlined />
           naked + outlined
         </label>
         <label className="flex items-center gap-2">
-          <Checkbox {...props} variant="liquid" outlined>
-            <CheckIcon />
-          </Checkbox>
+          <Checkbox {...props} variant="liquid" outlined />
           liquid + outlined
         </label>
       </div>
@@ -129,9 +120,7 @@ export const Colors = meta.story({
       <div className="flex flex-col gap-3">
         {COLORS.map((color) => (
           <label key={color} className="flex items-center gap-2">
-            <Checkbox {...props} color={color} defaultChecked>
-              <CheckIcon />
-            </Checkbox>
+            <Checkbox {...props} color={color} defaultChecked />
             {color}
           </label>
         ))}
@@ -154,9 +143,7 @@ export const Sizes = meta.story({
       <div className="flex flex-col gap-3">
         {SIZES.map((size) => (
           <label key={size} className="flex items-center gap-2">
-            <Checkbox {...props} size={size} defaultChecked>
-              <CheckIcon />
-            </Checkbox>
+            <Checkbox {...props} size={size} defaultChecked />
             {
               {
                 sm: "Small",
@@ -185,9 +172,7 @@ export const Radius = meta.story({
       <div className="flex flex-col gap-3">
         {RADII.map((radius) => (
           <label key={radius} className="flex items-center gap-2">
-            <Checkbox {...props} radius={radius} defaultChecked>
-              <CheckIcon />
-            </Checkbox>
+            <Checkbox {...props} radius={radius} defaultChecked />
             {radius}
           </label>
         ))}
@@ -210,15 +195,11 @@ export const Checked = meta.story({
     return (
       <div className="flex flex-col gap-3">
         <label className="flex items-center gap-2">
-          <Checkbox {...props} checked={false}>
-            <CheckIcon />
-          </Checkbox>
+          <Checkbox {...props} checked={false} />
           未チェック
         </label>
         <label className="flex items-center gap-2">
-          <Checkbox {...props} checked>
-            <CheckIcon />
-          </Checkbox>
+          <Checkbox {...props} checked />
           チェック済み
         </label>
       </div>
@@ -242,9 +223,7 @@ export const Controlled = meta.story({
     return (
       <div className="flex flex-col gap-3">
         <label className="flex items-center gap-2">
-          <Checkbox {...props} checked={checked} onCheckedChange={(next) => setChecked(next)}>
-            <CheckIcon />
-          </Checkbox>
+          <Checkbox {...props} checked={checked} onCheckedChange={(next) => setChecked(next)} />
           クリックで切り替え: {checked ? "ON" : "OFF"}
         </label>
       </div>
@@ -266,9 +245,10 @@ export const Indeterminate = meta.story({
     return (
       <div className="flex flex-col gap-3">
         <label className="flex items-center gap-2">
-          <Checkbox {...props} indeterminate>
+          {/* <Checkbox {...props} indeterminate>
             <MinusIcon />
-          </Checkbox>
+          </Checkbox> */}
+          <Checkbox {...props} indeterminate />
           中間状態
         </label>
       </div>
@@ -289,15 +269,11 @@ export const Disabled = meta.story({
     return (
       <div className="flex flex-col gap-3">
         <label className="flex items-center gap-2">
-          <Checkbox {...props} disabled>
-            <CheckIcon />
-          </Checkbox>
+          <Checkbox {...props} disabled />
           無効（未チェック）
         </label>
         <label className="flex items-center gap-2">
-          <Checkbox {...props} disabled defaultChecked>
-            <CheckIcon />
-          </Checkbox>
+          <Checkbox {...props} disabled defaultChecked />
           無効（チェック済み）
         </label>
       </div>

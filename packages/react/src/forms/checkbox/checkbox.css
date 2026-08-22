@@ -347,13 +347,51 @@
   /* 既定値設定: ここまで */
 }
 
+/* Icon */
+@layer sui.component {
+  /* 変数 */
+  .sui_checkbox {
+    /* 外観 */
+    --sui_checkbox_icon-dash-display: ;
+    --sui_checkbox_icon-check-display: ;
+  }
+
+  /* 静的: ここから */
+
+  .sui_checkbox_icon-check {
+    display: var(--sui_checkbox_icon-check-display);
+  }
+
+  .sui_checkbox_icon-dash {
+    display: var(--sui_checkbox_icon-dash-display);
+  }
+
+  /* 静的: ここまで */
+
+  /* 既定値設定: ここから */
+
+  .sui_checkbox-status_checked {
+    /* 外観 */
+    --sui_checkbox_icon-dash-display: none;
+    --sui_checkbox_icon-check-display: inline;
+  }
+
+  .sui_checkbox-status_indeterminate {
+    /* 外観 */
+    --sui_checkbox_icon-dash-display: inline;
+    --sui_checkbox_icon-check-display: none;
+  }
+
+  /* 既定値設定: ここまで */
+}
+
 /* disabled */
 @layer sui.important {
   .sui_checkbox-disabled {
     cursor: not-allowed !important;
     background-color: var(--sui-disabled-canvas) !important;
 
-    &.sui_checkbox:not([data-checked], [data-indeterminate]) {
+    &.sui_checkbox-status_unchecked {
       &.sui_checkbox-variant_naked {
         background-color: var(--sui-disabled-naked-canvas) !important;
 
@@ -377,7 +415,8 @@
       }
     }
 
-    &.sui_checkbox:is([data-checked], [data-indeterminate]) {
+    &.sui_checkbox-status_checked,
+    &.sui_checkbox-status_indeterminate {
       background-color: var(--sui-disabled-solid-canvas) !important;
     }
 

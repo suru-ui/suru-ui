@@ -49,10 +49,8 @@ export type CheckboxSlotProps = {
 export type CheckboxPartsProps = {
   /**
    * {@link CheckboxIndicator} に渡すプロパティーです。
-   *
-   * `children` も `slotProps.indicator` も指定しないときは null になります。
    */
-  readonly indicator: CheckboxIndicatorProps | null;
+  readonly indicator: CheckboxIndicatorProps;
 
   /**
    * {@link CheckboxRoot} に渡すプロパティーです。
@@ -75,7 +73,7 @@ export type CheckboxProps = Omit<CheckboxRootProps, "children"> & {
   /**
    * Indicator 内に表示するコンテンツ（チェックアイコンなど）です。
    *
-   * 未指定の場合、子要素の `Indicator` は生成されません。
+   * 未指定の場合、{@link CheckboxIcon} を表示します。
    */
   children?: React.ReactNode | undefined;
 
@@ -83,8 +81,6 @@ export type CheckboxProps = Omit<CheckboxRootProps, "children"> & {
    * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
    *
    * 各パーツのプロパティーが優先されます。
-   *
-   * `indicator` を指定した場合、子要素がなくても {@link CheckboxIndicator} を生成します。
    */
   slotProps?: CheckboxSlotProps | undefined;
 };
@@ -93,17 +89,18 @@ export type CheckboxProps = Omit<CheckboxRootProps, "children"> & {
  * {@link Checkbox} の各パーツに渡すプロパティーを作るフックです。
  */
 export function useCheckbox(props: CheckboxProps): CheckboxPartsProps {
-  const { children, slotProps: { indicator: indicatorProps } = {}, ...rootProps } = props;
+  const {
+    children = <SuiCheckboxIcon />,
+    slotProps: { indicator: indicatorProps } = {},
+    ...rootProps
+  } = props;
 
   return {
     root: rootProps,
-    indicator:
-      "children" in props || !!indicatorProps
-        ? {
-            children,
-            ...indicatorProps,
-          }
-        : null,
+    indicator: {
+      children,
+      ...indicatorProps,
+    },
   };
 }
 
@@ -115,7 +112,7 @@ export const Checkbox: IComponent<CheckboxProps> = function SuiCheckbox(props) {
 
   return (
     <CheckboxRoot {...partsProps.root}>
-      {partsProps.indicator && <CheckboxIndicator {...partsProps.indicator} />}
+      <CheckboxIndicator {...partsProps.indicator} />
     </CheckboxRoot>
   );
 };
@@ -158,4 +155,21 @@ export namespace Checkbox {
    * {@link CheckboxVariant} です。
    */
   export type Variant = CheckboxVariant;
+}
+
+function SuiCheckboxIcon(props: React.ComponentProps<"svg">) {
+  return (
+    <svg
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 16 16"
+      focusable="false"
+      strokeLinecap="round"
+      aria-hidden="true"
+      {...props}
+    >
+      <path d="M3 8h10" className="sui_checkbox_icon-dash" />
+      <path d="m2.5 8.5 4 4 7-9" className="sui_checkbox_icon-check" />
+    </svg>
+  );
 }

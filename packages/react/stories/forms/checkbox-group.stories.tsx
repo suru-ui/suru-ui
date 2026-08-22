@@ -1,12 +1,13 @@
 import { SIZES, COLORS } from "@suru-ui/theme";
-import { CheckIcon, MinusIcon } from "lucide-react";
 import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { CheckboxGroup } from "../../src/forms/checkbox-group/index.js";
 import { Checkbox } from "../../src/forms/checkbox/index.js";
 
+const ORIENTATIONS = ["vertical", "horizontal"] as const;
 const RADII = ["none", ...SIZES, "full"] as const;
+const VARIANTS = ["naked", "liquid"] as const;
 
 const meta = preview.meta({
   title: "Forms / Checkbox Group",
@@ -24,7 +25,7 @@ const ctrl = controls(CheckboxGroup, {
     control: "boolean",
   },
   orientation: {
-    options: ["vertical", "horizontal"],
+    options: ORIENTATIONS,
     control: "select",
   },
   outlined: {
@@ -39,37 +40,37 @@ const ctrl = controls(CheckboxGroup, {
     control: "select",
   },
   variant: {
-    options: ["naked", "liquid"],
+    options: VARIANTS,
     control: "select",
   },
 });
 
-const Item = ({ value, children }: { children: React.ReactNode; value: string }) => (
-  <label className="flex items-center gap-2">
-    <Checkbox value={value}>
-      <CheckIcon />
-    </Checkbox>
-    {children}
-  </label>
-);
-
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: undefined,
-    outlined: undefined,
+    outlined: false,
     disabled: false,
     orientation: "vertical",
   }),
   render(props) {
     return (
       <CheckboxGroup defaultValue={["option-a"]} {...props}>
-        <Item value="option-a">オプション A</Item>
-        <Item value="option-b">オプション B</Item>
-        <Item value="option-c">オプション C</Item>
+        <label className="flex items-center gap-2">
+          <Checkbox value="option-a" />
+          オプション A
+        </label>
+        <label className="flex items-center gap-2">
+          <Checkbox value="option-b" />
+          オプション B
+        </label>
+        <label className="flex items-center gap-2">
+          <Checkbox value="option-c" />
+          オプション C
+        </label>
       </CheckboxGroup>
     );
   },
@@ -80,11 +81,11 @@ const fruits = ["fuji-apple", "gala-apple", "granny-smith-apple"];
 export const Parent = meta.story({
   name: "親チェックボックス",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: undefined,
-    outlined: undefined,
+    outlined: false,
     disabled: false,
     orientation: "vertical",
   }),
@@ -92,97 +93,21 @@ export const Parent = meta.story({
     return (
       <CheckboxGroup allValues={fruits} {...props} className="gap-1">
         <label className="flex items-center gap-2">
-          <Checkbox
-            parent
-            slotProps={{
-              indicator: {
-                render: (indicatorProps, state) => (
-                  <span {...indicatorProps}>
-                    {state.indeterminate ? <MinusIcon /> : <CheckIcon />}
-                  </span>
-                ),
-              },
-            }}
-          />
+          <Checkbox parent />
           すべて選択
         </label>
-        <Item value="fuji-apple">ふじ</Item>
-        <Item value="gala-apple">ガラ</Item>
-        <Item value="granny-smith-apple">グラニースミス</Item>
-      </CheckboxGroup>
-    );
-  },
-});
-
-export const Colors = meta.story({
-  name: "色",
-  ...ctrl({
-    variant: "naked",
-    size: "md",
-    radius: undefined,
-    outlined: undefined,
-    disabled: false,
-    orientation: "vertical",
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-col gap-3">
-        {COLORS.map((color) => (
-          <CheckboxGroup key={color} color={color} {...props} defaultValue={[color]}>
-            <Item value={color}>{color}</Item>
-          </CheckboxGroup>
-        ))}
-      </div>
-    );
-  },
-});
-
-export const Sizes = meta.story({
-  name: "大きさ",
-  ...ctrl({
-    variant: "naked",
-    color: "grey",
-    radius: undefined,
-    outlined: undefined,
-    disabled: false,
-    orientation: "vertical",
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-col gap-3">
-        {SIZES.map((size) => (
-          <CheckboxGroup key={size} size={size} {...props} defaultValue={[size]}>
-            <Item value={size}>
-              {
-                {
-                  sm: "Small",
-                  md: "Medium",
-                  lg: "Large",
-                }[size]
-              }
-            </Item>
-          </CheckboxGroup>
-        ))}
-      </div>
-    );
-  },
-});
-
-export const Disabled = meta.story({
-  name: "無効",
-  ...ctrl({
-    variant: "naked",
-    color: "grey",
-    size: "md",
-    radius: undefined,
-    outlined: undefined,
-    orientation: "vertical",
-  }),
-  render(props) {
-    return (
-      <CheckboxGroup disabled {...props} defaultValue={["option-a"]}>
-        <Item value="option-a">無効（選択済み）</Item>
-        <Item value="option-b">無効（未選択）</Item>
+        <label className="flex items-center gap-2 pis-6">
+          <Checkbox value="fuji-apple" />
+          ふじ
+        </label>
+        <label className="flex items-center gap-2 pis-6">
+          <Checkbox value="gala-apple" />
+          ガラ
+        </label>
+        <label className="flex items-center gap-2 pis-6">
+          <Checkbox value="granny-smith-apple" />
+          グラニースミス
+        </label>
       </CheckboxGroup>
     );
   },
@@ -191,11 +116,11 @@ export const Disabled = meta.story({
 export const Horizontal = meta.story({
   name: "横並び",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: undefined,
-    outlined: undefined,
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -206,32 +131,41 @@ export const Horizontal = meta.story({
         orientation="horizontal"
         defaultValue={["option-a"]}
       >
-        <Item value="option-a">オプション A</Item>
-        <Item value="option-b">オプション B</Item>
+        <label className="flex items-center gap-2">
+          <Checkbox value="option-a" />
+          オプション A
+        </label>
+        <label className="flex items-center gap-2">
+          <Checkbox value="option-b" />
+          オプション B
+        </label>
       </CheckboxGroup>
     );
   },
 });
 
-export const Radius = meta.story({
-  name: "角丸",
+export const Disabled = meta.story({
+  name: "無効",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
+    radius: undefined,
     outlined: false,
-    disabled: false,
     orientation: "vertical",
   }),
   render(props) {
     return (
-      <div className="flex flex-col gap-3">
-        {RADII.map((radius) => (
-          <CheckboxGroup key={radius} radius={radius} {...props} defaultValue={[radius]}>
-            <Item value={radius}>{radius}</Item>
-          </CheckboxGroup>
-        ))}
-      </div>
+      <CheckboxGroup disabled {...props} defaultValue={["option-a"]}>
+        <label className="flex items-center gap-2">
+          <Checkbox value="option-b" />
+          無効（未選択）
+        </label>
+        <label className="flex items-center gap-2">
+          <Checkbox value="option-a" />
+          無効（選択済み）
+        </label>
+      </CheckboxGroup>
     );
   },
 });
