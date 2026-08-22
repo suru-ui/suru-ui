@@ -2,16 +2,20 @@ import "../../_fixture";
 import { Chip } from "@suru-ui/react/chip";
 
 export default function Sizes() {
-  const sizes = ["sm", "md", "lg"] as const;
-
   return (
     <div className="flex flex-wrap items-center gap-3">
-      {sizes.map((size) => (
-        <div key={size} className="flex flex-col items-center gap-2">
-          <span>{size}</span>
-          <Chip size={size}>ラベル</Chip>
-        </div>
-      ))}
+      <div className="flex flex-col items-center gap-2">
+        <span>sm</span>
+        <Chip size="sm">ラベル</Chip>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <span>md</span>
+        <Chip size="md">ラベル</Chip>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <span>lg</span>
+        <Chip size="lg">ラベル</Chip>
+      </div>
     </div>
   );
 }
