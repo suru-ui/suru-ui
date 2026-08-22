@@ -245,9 +245,6 @@ export const Indeterminate = meta.story({
     return (
       <div className="flex flex-col gap-3">
         <label className="flex items-center gap-2">
-          {/* <Checkbox {...props} indeterminate>
-            <MinusIcon />
-          </Checkbox> */}
           <Checkbox {...props} indeterminate />
           中間状態
         </label>
