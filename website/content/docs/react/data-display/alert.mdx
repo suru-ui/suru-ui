@@ -1,0 +1,230 @@
+---
+title: Alert
+description: 重要なメッセージや通知をステータスインジケーター付きで表示するコンポーネントです。
+---
+
+## 使い方
+
+```tsx
+import { Alert } from "@suru-ui/react";
+// または、
+import { Alert } from "@suru-ui/react/alert";
+
+<Alert title="タイトル">説明文</Alert>
+```
+
+<Component path="react/alert/basic" />
+
+`title` プロパティーを省略すると説明文のみを表示します。
+
+<Component path="react/alert/description-only" />
+
+## 例
+
+### 主な外観
+
+<Component path="react/alert/variants" />
+
+### 色
+
+<Component path="react/alert/colors" />
+
+### アイコン付き
+
+子要素を指定しないアイコンは状態色の丸いインジケーターとして表示されます。
+
+#### 既定のインジケーター
+
+<Component path="react/alert/with-icon.default" />
+
+#### カスタムアイコン
+
+<Component path="react/alert/with-icon.custom" />
+
+### 操作ボタン付き
+
+<Component path="react/alert/with-actions" />
+
+### 角丸
+
+<Component path="react/alert/radius" />
+
+### 枠線
+
+<Component path="react/alert/outlined" />
+
+### 大きさ
+
+<Component path="react/alert/sizes" />
+
+## 構成
+
+```tsx
+import * as Alert from "@suru-ui/react/alert";
+
+<Alert.Root>
+  <Alert.Icon />
+  <Alert.Title />
+  <Alert.Description />
+  <Alert.Actions />
+</Alert.Root>
+```
+
+## API リファレンス
+
+### Alert
+
+`Alert` は `Root` のプロパティーに加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "アラートの説明文です。",
+    },
+    actions: {
+      type: "React.ReactNode",
+      description: "アラートの操作ボタンです。Actions スロットとして表示されます。",
+    },
+    icon: {
+      type: "React.ReactNode",
+      description: "アラートに表示するアイコンです。Icon スロットとして表示されます。子要素を省略すると状態色の丸いインジケーターを表示します。",
+    },
+    title: {
+      type: "string | React.ReactNode",
+      description: "アラートのタイトルです。Title スロットとして表示されます。",
+    },
+    slotProps: {
+      type: "{ actions?: Alert.Actions.Props; description?: Alert.Description.Props; icon?: Alert.Icon.Props; title?: Alert.Title.Props }",
+      description: "各パーツに個別のプロパティーを渡すためのオブジェクトです。各パーツのプロパティーが優先されます。",
+    },
+  }}
+/>
+
+### Root
+
+`AlertRoot` は `<div>` 要素 (`role="alert"`) をレンダリングします。標準の HTML 属性に加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    className: {
+      type: "string | function",
+      description: "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    color: {
+      type: '"blue" | "green" | "grey" | "magenta" | "orange" | "purple" | "red" | "yellow"',
+      default: '"grey"',
+      description: "アラートの色を指定します。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "false",
+      description: "枠線を表示するかどうかを指定します。",
+    },
+    radius: {
+      type: '"none" | "sm" | "md" | "lg"',
+      default: 'size',
+      description:
+        'アラートの角丸を指定します。"none" は角を直角にし、"sm"、"md"、"lg" はそれぞれ小さい・標準的な・大きい角丸になります。',
+    },
+    render: {
+      type: "React.ReactElement | function",
+      description: "React 要素、またはそれを返す関数です。コンポーネントの HTML 要素を別のタグに置き換えたり、別のコンポーネントと組み合わせたりすることができます。",
+    },
+    size: {
+      type: '"sm" | "md" | "lg"',
+      default: '"md"',
+      description: "アラートのサイズを指定します。",
+    },
+    style: {
+      type: "React.CSSProperties | function",
+      description: "要素に適用されるスタイルオブジェクト、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    variant: {
+      type: '"muted" | "naked" | "liquid"',
+      default: '"muted"',
+      description:
+        'アラートの主な外観を指定します。"muted" は控えめな背景、"naked" は背景のないテキストのみ、"liquid" は薄い塗りつぶしになります。',
+    },
+  }}
+/>
+
+### Icon
+
+<TypeTable
+  type={{
+    className: {
+      type: "string | function",
+      description: "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    render: {
+      type: "React.ReactElement | function",
+      description: "React 要素、またはそれを返す関数です。コンポーネントの HTML 要素を別のタグに置き換えたり、別のコンポーネントと組み合わせたりすることができます。",
+    },
+    style: {
+      type: "React.CSSProperties | function",
+      description: "要素に適用されるスタイルオブジェクト、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+  }}
+/>
+
+既定では `aria-hidden="true"` が設定されます。
+
+### Title
+
+<TypeTable
+  type={{
+    className: {
+      type: "string | function",
+      description: "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    render: {
+      type: "React.ReactElement | function",
+      description: "React 要素、またはそれを返す関数です。コンポーネントの HTML 要素を別のタグに置き換えたり、別のコンポーネントと組み合わせたりすることができます。",
+    },
+    style: {
+      type: "React.CSSProperties | function",
+      description: "要素に適用されるスタイルオブジェクト、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+  }}
+/>
+
+### Description
+
+<TypeTable
+  type={{
+    className: {
+      type: "string | function",
+      description: "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    render: {
+      type: "React.ReactElement | function",
+      description: "React 要素、またはそれを返す関数です。コンポーネントの HTML 要素を別のタグに置き換えたり、別のコンポーネントと組み合わせたりすることができます。",
+    },
+    style: {
+      type: "React.CSSProperties | function",
+      description: "要素に適用されるスタイルオブジェクト、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+  }}
+/>
+
+### Actions
+
+操作ボタンを右寄せでまとめます。
+
+<TypeTable
+  type={{
+    className: {
+      type: "string | function",
+      description: "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    render: {
+      type: "React.ReactElement | function",
+      description: "React 要素、またはそれを返す関数です。コンポーネントの HTML 要素を別のタグに置き換えたり、別のコンポーネントと組み合わせたりすることができます。",
+    },
+    style: {
+      type: "React.CSSProperties | function",
+      description: "要素に適用されるスタイルオブジェクト、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+  }}
+/>

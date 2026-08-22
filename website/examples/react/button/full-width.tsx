@@ -4,7 +4,7 @@ import { EllipsisIcon } from "lucide-react";
 
 export default function FullWidth() {
   return (
-    <div className="space-y-1">
+    <div className="space-y-3">
       <Button className="w-full">{"width: 100%"}</Button>
       <div className="flex w-[200px] gap-1">
         <Button className="w-full">{"width: 100%"}</Button>

@@ -234,7 +234,7 @@ function isStringType(node: SchemaNode): boolean { ... }
 ## タグの記述順
 
 1. 説明（必須）
-2. バリエーションや動作の箇条書き（必要な場合）
+2. 主な外観や動作の箇条書き（必要な場合）
 3. `@param`（必要な場合）
 4. `@default`（デフォルト値が自明でない場合）
 5. `@returns`（必要な場合）

@@ -1,0 +1,179 @@
+---
+title: Avatar
+description: ユーザーやエンティティーを表す画像を表示するコンポーネントです。画像を読み込めないときはフォールバックを表示します。
+---
+
+## 使い方
+
+```tsx
+import { Avatar } from "@suru-ui/react";
+// または、
+import { Avatar } from "@suru-ui/react/avatar";
+
+<Avatar src="https://example.com/avatar.png" alt="山田 太郎" />
+```
+
+<Component path="react/avatar/basic" />
+
+`src` の代わりに `children` を指定すると、画像の代わりにフォールバックを表示します。イニシャルやアイコンなどを指定してください。
+
+<Component path="react/avatar/fallback" />
+
+## 例
+
+### 色
+
+フォールバックの背景色を指定します。
+
+<Component path="react/avatar/colors" />
+
+### 角丸
+
+<Component path="react/avatar/radius" />
+
+### 大きさ
+
+<Component path="react/avatar/sizes" />
+
+## 構成
+
+```tsx
+import * as Avatar from "@suru-ui/react/avatar";
+
+<Avatar.Root>
+  <Avatar.Image />
+  <Avatar.Fallback />
+</Avatar.Root>
+```
+
+## API リファレンス
+
+### Avatar
+
+`Avatar` は `Root` のプロパティーに加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "画像を表示できないときに表示するフォールバックコンテンツです。Fallback スロットとして表示されます。",
+    },
+    src: {
+      type: "string",
+      description: "表示する画像の URL です。Image スロットとして表示されます。",
+    },
+    alt: {
+      type: "string",
+      description: "画像の代替テキストです。",
+    },
+    slotProps: {
+      type: "{ fallback?: Avatar.Fallback.Props; image?: Avatar.Image.Props }",
+      description: "各パーツに個別のプロパティーを渡すためのオブジェクトです。各パーツのプロパティーが優先されます。",
+    },
+  }}
+/>
+
+### Root
+
+`AvatarRoot` は `<span>` 要素をレンダリングします。標準の HTML 属性と Base UI の Avatar Root プロパティーに加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    className: {
+      type: "string | function",
+      description: "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    color: {
+      type: '"blue" | "green" | "grey" | "magenta" | "orange" | "purple" | "red" | "yellow"',
+      default: '"grey"',
+      description: "フォールバックの背景色を指定します。",
+    },
+    radius: {
+      type: '"none" | "sm" | "md" | "lg" | "full"',
+      default: '"full"',
+      description:
+        'アバターの角丸を指定します。"none" は角を直角にし、"sm"、"md"、"lg" はそれぞれ小さい・標準的な・大きい角丸に、"full" は完全な丸形になります。',
+    },
+    size: {
+      type: '"sm" | "md" | "lg"',
+      default: '"md"',
+      description: "アバターのサイズを指定します。",
+    },
+    style: {
+      type: "React.CSSProperties | function",
+      description: "要素に適用されるスタイルオブジェクト、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+  }}
+/>
+
+### Image
+
+アバターの画像をレンダリングします。画像の読み込みに失敗すると、`Avatar.Fallback` を表示します。
+
+<TypeTable
+  type={{
+    alt: {
+      type: "string",
+      description: "画像の代替テキストです。",
+    },
+    className: {
+      type: "string | function",
+      description: "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    delay: {
+      type: "number",
+      description: "画像が表示されるまでの遅延時間 (ミリ秒) です。短時間で読み込みが完了する場合にフォールバックの点滅を防ぎます。",
+    },
+    keepMounted: {
+      type: "boolean",
+      default: "false",
+      description: "画像が表示されていないときも要素を DOM に保持するかどうかを指定します。",
+    },
+    render: {
+      type: "React.ReactElement | function",
+      description: "React 要素、またはそれを返す関数です。コンポーネントの HTML 要素を別のタグに置き換えたり、別のコンポーネントと組み合わせたりすることができます。",
+    },
+    sizes: {
+      type: "string",
+      description: "レスポンシブイメージの sizes 属性です。",
+    },
+    src: {
+      type: "string",
+      description: "表示する画像の URL です。",
+    },
+    srcSet: {
+      type: "string",
+      description: "レスポンシブイメージの srcSet 属性です。",
+    },
+  }}
+/>
+
+### Fallback
+
+画像を表示できないときのフォールバックをレンダリングします。
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "フォールバックとして表示するコンテンツです。イニシャルやアイコンなどを指定します。",
+    },
+    className: {
+      type: "string | function",
+      description: "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    delay: {
+      type: "number",
+      description: "フォールバックが表示されるまでの遅延時間 (ミリ秒) です。既定では画像の読み込み完了後に即座に切り替わります。",
+    },
+    keepMounted: {
+      type: "boolean",
+      default: "false",
+      description: "フォールバックが非表示のときも要素を DOM に保持するかどうかを指定します。",
+    },
+    render: {
+      type: "React.ReactElement | function",
+      description: "React 要素、またはそれを返す関数です。コンポーネントの HTML 要素を別のタグに置き換えたり、別のコンポーネントと組み合わせたりすることができます。",
+    },
+  }}
+/>

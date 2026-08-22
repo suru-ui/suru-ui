@@ -4,14 +4,38 @@ import { Button } from "@suru-ui/react/button";
 export default function Colors() {
   return (
     <div className="flex flex-wrap gap-3">
-      <Button color="grey">grey</Button>
-      <Button color="blue">blue</Button>
-      <Button color="purple">purple</Button>
-      <Button color="magenta">magenta</Button>
-      <Button color="red">red</Button>
-      <Button color="orange">orange</Button>
-      <Button color="yellow">yellow</Button>
-      <Button color="green">green</Button>
+      <div className="flex flex-col items-center gap-2">
+        <span>grey</span>
+        <Button color="grey">ボタン</Button>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <span>blue</span>
+        <Button color="blue">ボタン</Button>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <span>purple</span>
+        <Button color="purple">ボタン</Button>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <span>magenta</span>
+        <Button color="magenta">ボタン</Button>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <span>red</span>
+        <Button color="red">ボタン</Button>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <span>orange</span>
+        <Button color="orange">ボタン</Button>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <span>yellow</span>
+        <Button color="yellow">ボタン</Button>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <span>green</span>
+        <Button color="green">ボタン</Button>
+      </div>
     </div>
   );
 }

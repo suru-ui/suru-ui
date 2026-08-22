@@ -1,6 +1,5 @@
 import "../../_fixture";
 import { Button } from "@suru-ui/react/button";
-import * as React from "react";
 
 import useProgress from "../_use-progress";
 

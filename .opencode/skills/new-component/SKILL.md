@@ -1,6 +1,6 @@
 ---
 name: new-component
-description: Suru UI モノレポ (`packages/react`) に新しい React コンポーネントを追加するときに使用します。新しいコンポーネントの作成、コンポーネントの追加、`*.parts.tsx` の Base UI ラッパーとパーツ実装、Root と公開本体の型分離、ジェネリック型、`slotProps`、グループコンテキスト、CSS クラス設計、Storybook stories、テスト（`*.client.test.tsx`）、`package.json` のサブパスエクスポートを扱います。既存の Button、Field、Form、Checkbox と同じ方式で実装し、`@base-ui/react`（Base UI）を基盤としたヘッドレスコンポーネントをスタイル付きで公開するときに使います。
+description: Suru UI モノレポ (`packages/react`) に新しい React コンポーネントを追加するときに使用します。新しいコンポーネントの作成、コンポーネントの追加、`*.parts.tsx` の Base UI ラッパーとパーツ実装、Root と公開本体の型分離、ジェネリック型、`slotProps`、グループコンテキスト、CSS クラス設計、Storybook stories、web サイトの mdx ドキュメント（API リファレンスを含む）、テスト（`*.client.test.tsx`）、`package.json` のサブパスエクスポートを扱います。既存の Button、Field、Form、Checkbox と同じ方式で実装し、`@base-ui/react`（Base UI）を基盤としたヘッドレスコンポーネントをスタイル付きで公開するときに使います。
 ---
 
 # 新しい React コンポーネントの追加
@@ -684,7 +684,7 @@ export { type CheckboxProps, Checkbox } from "./forms/checkbox/index.js";
 ### Step 7 Storybook
 
 `packages/react/stories/<カテゴリー>/<名前>.stories.tsx` を作ります。
-`packages/react/stories/buttons/button.stories.tsx` を参考に、`meta.story` と `controls` を使って「使い方」を最初に置き、その後ろにバリエーション（色、サイズ、状態など）を加えます。
+`packages/react/stories/buttons/button.stories.tsx` を参考に、`meta.story` と `controls` を使って「使い方」を最初に置き、その後ろに主な外観（色、サイズ、状態など）を加えます。
 
 - `import { preview, controls } from "../../.config/storybook/preview.js";`
 - コンポーネント本体は `../../src/<カテゴリー>/<名前>/index.js` から import します。
@@ -706,11 +706,55 @@ export { type CheckboxProps, Checkbox } from "./forms/checkbox/index.js";
 
 - コンポーネントが `color`、`radius`、`size` のいずれかを公開する場合は、それぞれに対応する `Colors`、`Radius`、`Sizes` story を必ず作ります。該当しないプロパティーの story は作りません。
 - `Colors` は `COLORS`、`Sizes` は `SIZES`、`Radius` は `"none"`、`"rounded"`、`"full"` の全候補を列挙し、各候補の値が分かるラベルも表示します。配列の `map` で実装して構いません。
-- 「使い方」の story を最初に置き、その後に `Image` などの構造例、`Colors`、`Radius`、`Sizes` などのバリエーション story を置きます。
+- 「使い方」の story を最初に置き、その後に `Image` などの構造例、`Colors`、`Radius`、`Sizes` などの主な外観 story を置きます。
 
-完了条件: 「使い方」の story、公開している各スタイル系プロパティーのバリエーション story、複数行で書かれた `controls` があり、`controls` で主要プロパティーを操作できる。
+完了条件: 「使い方」の story、公開している各スタイル系プロパティーの主な外観 story、複数行で書かれた `controls` があり、`controls` で主要プロパティーを操作できる。
 
-### Step 8 テスト
+### Step 8 ドキュメント
+
+`website/content/docs/react/<カテゴリー>/<名前>.mdx` を作ります。
+模範例は `website/content/docs/react/data-display/avatar.mdx`（複合コンポーネントあり）と `website/content/docs/react/buttons/button.mdx`（パーツが多い）です。
+
+mdx の構成は frontmatter に続けて、次の順で置きます。
+
+1. frontmatter — `title` にコンポーネント名、`description` に公開本体の JSDoc の説明と同じ文を書きます。
+2. `## 使い方` — import 例と最小のコード例、`<Component path="react/<名前>/basic" />` を置きます。
+3. `## 例` — スタイル系プロパティーや状態ごとに `###` 見出しと `<Component path="react/<名前>/<story>" />` を置きます。
+4. `## 構成` — `import * as Xxx from "@suru-ui/react/<名前>"` のコードフェンスでパーツツリーを示します。
+5. `## API リファレンス` — 各セクションを `###` 見出しで置きます。
+
+API リファレンスでは、複合コンポーネント（パターン B）のプロパティーを `### Root` の上に文書化します。
+見出しは公開本体の名前（`### Avatar`、`### Button` など）にし、次の形式で書きます。
+
+```mdx
+### Avatar
+
+`Avatar` は `Root` のプロパティーに加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description:
+        "画像を表示できないときに表示するフォールバックコンテンツです。Fallback スロットとして表示されます。",
+    },
+    slotProps: {
+      type: "{ fallback?: Avatar.Fallback.Props; image?: Avatar.Image.Props }",
+      description:
+        "各パーツに個別のプロパティーを渡すためのオブジェクトです。各パーツのプロパティーが優先されます。",
+    },
+  }}
+/>
+```
+
+- 複合コンポーネント固有のプロパティーを列挙します。`children`（対応するスロットの名前を説明に書く）、便利なプロパティー（Button の `percentage` など。渡されるスロットを説明に書く）、`slotProps`（すべてのパーツの Props 型を列挙する）です。
+- Root 以降のセクションはパーツツリー順に置きます。Root は「`XxxRoot` は [Base UI が受け入れるプロパティー](...) に加えて、以下のプロパティーを受け入れます:」の形式で書き、子パーツは `className`、`render`、`style` などの共通プロパティーを並べます。
+- プロパティーはアルファベット順に並べます。既定値があるものは `default` を付けます。
+- `<Component path="..." />` の story が無い場合は、Step 7 で作った stories ファイルの story 名に合わせて追加します。
+
+完了条件: mdx に使い方、例、構成、API リファレンス（`### Root` の上に複合コンポーネントのセクションを含む）があり、参照している story が存在する。
+
+### Step 9 テスト
 
 `packages/react/tests/<名前>.client.test.tsx` を作り、`../vitest/SKILL.md` と、このスキルの「テスト」章を読んでから、既存の `tests/checkbox.client.test.tsx` を参考に次のテストを書きます。
 
@@ -725,7 +769,7 @@ export { type CheckboxProps, Checkbox } from "./forms/checkbox/index.js";
 
 完了条件: 公開 API の主要な振る舞いを検証するテストが `packages/react/tests/` に存在する。
 
-### Step 9 検証
+### Step 10 検証
 
 モノレポルートで次のコマンドを順に実行し、すべて通ることを確認します。
 
@@ -823,6 +867,7 @@ export { type XxxProps, Xxx } from "./xxx.jsx";
 - JSDoc の 1 行形式、`@default undefined`、`@example` ラベルなしフェンスコードを書かない（`../jsdoc/SKILL.md` 参照）。
 - 状態クラスの強制上書きを `@layer sui.important` の外に書かない（`../css/SKILL.md` 参照）。
 - `package.json` の `exports` と `packages/react/src/index.ts` の公開を忘れない。
+- `website/content/docs/react/` の mdx を書かずに完了としない。API リファレンスでは、複合コンポーネントのプロパティーを `### Root` の上に文書化する。
 - テストを書かずに完了としない。
 - ブラウザーで実行するテストを `*.client.test.tsx` 以外のファイル名にしない。ブラウザーを必要としないロジックのテストは `*.test.ts` に分ける。
 - 検証コマンド（test、format、lint、typecheck）を通さずに完了としない。

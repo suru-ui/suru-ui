@@ -1,7 +1,6 @@
 import "../../_fixture";
 import { Button } from "@suru-ui/react/button";
 import { Trash2Icon } from "lucide-react";
-import * as React from "react";
 
 export default function Pending() {
   return (
