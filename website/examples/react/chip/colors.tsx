@@ -5,36 +5,36 @@ export default function Colors() {
   return (
     <div className="flex flex-wrap gap-3">
       <div className="flex flex-col items-center gap-2">
-        <Chip color="grey">grey</Chip>
         <span>grey</span>
+        <Chip color="grey">新着</Chip>
       </div>
       <div className="flex flex-col items-center gap-2">
-        <Chip color="blue">blue</Chip>
         <span>blue</span>
+        <Chip color="blue">新着</Chip>
       </div>
       <div className="flex flex-col items-center gap-2">
-        <Chip color="green">green</Chip>
         <span>green</span>
+        <Chip color="green">新着</Chip>
       </div>
       <div className="flex flex-col items-center gap-2">
-        <Chip color="magenta">magenta</Chip>
         <span>magenta</span>
+        <Chip color="magenta">新着</Chip>
       </div>
       <div className="flex flex-col items-center gap-2">
-        <Chip color="orange">orange</Chip>
         <span>orange</span>
+        <Chip color="orange">新着</Chip>
       </div>
       <div className="flex flex-col items-center gap-2">
-        <Chip color="purple">purple</Chip>
         <span>purple</span>
+        <Chip color="purple">新着</Chip>
       </div>
       <div className="flex flex-col items-center gap-2">
-        <Chip color="red">red</Chip>
         <span>red</span>
+        <Chip color="red">新着</Chip>
       </div>
       <div className="flex flex-col items-center gap-2">
-        <Chip color="yellow">yellow</Chip>
         <span>yellow</span>
+        <Chip color="yellow">新着</Chip>
       </div>
     </div>
   );

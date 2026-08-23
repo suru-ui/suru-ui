@@ -5,36 +5,36 @@ export default function Colors() {
   return (
     <div className="flex flex-wrap gap-3">
       <div className="flex flex-col items-center gap-2">
-        <Avatar color="grey">G</Avatar>
         <span>grey</span>
+        <Avatar color="grey">名</Avatar>
       </div>
       <div className="flex flex-col items-center gap-2">
-        <Avatar color="blue">B</Avatar>
         <span>blue</span>
+        <Avatar color="blue">名</Avatar>
       </div>
       <div className="flex flex-col items-center gap-2">
-        <Avatar color="green">G</Avatar>
         <span>green</span>
+        <Avatar color="green">名</Avatar>
       </div>
       <div className="flex flex-col items-center gap-2">
-        <Avatar color="magenta">M</Avatar>
         <span>magenta</span>
+        <Avatar color="magenta">名</Avatar>
       </div>
       <div className="flex flex-col items-center gap-2">
-        <Avatar color="orange">O</Avatar>
         <span>orange</span>
+        <Avatar color="orange">名</Avatar>
       </div>
       <div className="flex flex-col items-center gap-2">
-        <Avatar color="purple">P</Avatar>
         <span>purple</span>
+        <Avatar color="purple">名</Avatar>
       </div>
       <div className="flex flex-col items-center gap-2">
-        <Avatar color="red">R</Avatar>
         <span>red</span>
+        <Avatar color="red">名</Avatar>
       </div>
       <div className="flex flex-col items-center gap-2">
-        <Avatar color="yellow">Y</Avatar>
         <span>yellow</span>
+        <Avatar color="yellow">名</Avatar>
       </div>
     </div>
   );

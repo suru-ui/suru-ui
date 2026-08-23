@@ -21,6 +21,24 @@ import { Alert } from "@suru-ui/react/alert";
 
 ## 例
 
+### アイコン付き
+
+<Component path="react/alert/with-icon" />
+
+### インジケーター付き
+
+`icon` に `true` を指定すると、状態色の丸いインジケーターを表示します。
+
+<Component path="react/alert/with-indicator" />
+
+### タイトル付き
+
+<Component path="react/alert/with-title" />
+
+### アクション付き
+
+<Component path="react/alert/with-actions" />
+
 ### 主な外観
 
 <Component path="react/alert/variants" />
@@ -28,22 +46,6 @@ import { Alert } from "@suru-ui/react/alert";
 ### 色
 
 <Component path="react/alert/colors" />
-
-### アイコン付き
-
-子要素を指定しないアイコンは状態色の丸いインジケーターとして表示されます。
-
-#### 既定のインジケーター
-
-<Component path="react/alert/with-icon.default" />
-
-#### カスタムアイコン
-
-<Component path="react/alert/with-icon.custom" />
-
-### 操作ボタン付き
-
-<Component path="react/alert/with-actions" />
 
 ### 角丸
 
@@ -90,13 +92,13 @@ import * as Alert from "@suru-ui/react/alert";
       type: "React.ReactNode",
       description: "アラートに表示するアイコンです。Icon スロットとして表示されます。子要素を省略すると状態色の丸いインジケーターを表示します。",
     },
-    title: {
-      type: "string | React.ReactNode",
-      description: "アラートのタイトルです。Title スロットとして表示されます。",
-    },
     slotProps: {
       type: "{ actions?: Alert.Actions.Props; description?: Alert.Description.Props; icon?: Alert.Icon.Props; title?: Alert.Title.Props }",
       description: "各パーツに個別のプロパティーを渡すためのオブジェクトです。各パーツのプロパティーが優先されます。",
+    },
+    title: {
+      type: "React.ReactNode",
+      description: "アラートのタイトルです。Title スロットとして表示されます。",
     },
   }}
 />

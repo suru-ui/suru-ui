@@ -1,6 +1,6 @@
 ---
 title: Avatar Group
-description: 複数のアバターを重ねて表示するコンポーネントです。表示するアバターの最大数を超えると、余剰分を省略アバターで表示します。
+description: 複数のアバターを重ねて表示するコンポーネントです。
 ---
 
 ## 使い方
@@ -20,13 +20,13 @@ import { AvatarGroup } from "@suru-ui/react/avatar-group";
 
 `AvatarGroup` の子に置かれた `Avatar` は、グループから色・角丸・大きさを受け取ります。個々の `Avatar` に明示的に指定した場合は、そちらが優先されます。
 
+## 例
+
 ### 余剰分
 
 子アバターが `max` (既定値: `4`) を超えると、超過分は `+N` の形式で省略アバターにまとめられます。省略アバターも `max` に含まれます。
 
 <Component path="react/avatar-group/surplus" />
-
-## 例
 
 ### 色
 
@@ -125,14 +125,12 @@ import * as AvatarGroup from "@suru-ui/react/avatar-group";
 
 ### Surplus
 
-余剰分のアバターの数などを表示するコンポーネントです。`Avatar` と同じ要素をレンダリングし、既定の背景色は `"grey"` です。
+余剰分のアバターの数などを表示するコンポーネントです。`Avatar` のルートと同じ要素をレンダリングし、既定の背景色は `"grey"` です。
+
+[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/avatar#api-reference) に加えて、以下のプロパティーを受け入れます:
 
 <TypeTable
   type={{
-    children: {
-      type: "React.ReactNode",
-      description: "省略アバターとして表示するコンテンツです。通常は \"+N\" 形式のテキストを指定します。",
-    },
     className: {
       type: "string | function",
       description: "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
@@ -144,12 +142,22 @@ import * as AvatarGroup from "@suru-ui/react/avatar-group";
     },
     radius: {
       type: '"none" | "sm" | "md" | "lg" | "full"',
+      default: '"full"',
       description:
         'アバターの角丸を指定します。"none" は角を直角にし、"sm"、"md"、"lg" はそれぞれ小さい・標準的な・大きい角丸に、"full" は完全な丸形になります。',
     },
+    render: {
+      type: "React.ReactElement | function",
+      description: "React 要素、またはそれを返す関数です。コンポーネントの HTML 要素を別のタグに置き換えたり、別のコンポーネントと組み合わせたりすることができます。",
+    },
     size: {
       type: '"sm" | "md" | "lg"',
+      default: '"md"',
       description: "アバターのサイズを指定します。",
+    },
+    style: {
+      type: "React.CSSProperties | function",
+      description: "要素に適用されるスタイルオブジェクト、またはコンポーネントの状態に基づいてそれを返す関数です。",
     },
   }}
 />

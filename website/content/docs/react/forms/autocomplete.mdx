@@ -1,0 +1,325 @@
+---
+title: Autocomplete
+description: 検索文字列に応じて候補を絞り込んで表示する入力欄コンポーネントです。
+---
+
+## 使い方
+
+```tsx
+import { Autocomplete } from "@suru-ui/react";
+// または、
+import { Autocomplete } from "@suru-ui/react/autocomplete";
+
+<Autocomplete items={["東京", "大阪", "京都", "福岡"]} placeholder="都市を検索" />;
+```
+
+`items` には文字列や数値などのプリミティブの配列、`{ label }` や `{ label, value }` の形のオブジェクトの配列を指定できます。表示ラベルは各項目から自動的に解決されます。
+
+<Component path="react/autocomplete/basic" />
+
+## 例
+
+### 主な外観
+
+<Component path="react/autocomplete/variants" />
+
+### 枠線
+
+<Component path="react/autocomplete/outlined" />
+
+### 検索結果がないとき
+
+`empty` プロパティーを指定すると、検索結果が空のときにだけその内容を表示します。指定しないときは何も表示しません。
+
+<Component path="react/autocomplete/empty-message" />
+
+### 色
+
+フォーカス時に枠線へ適用される色を指定します。
+
+<Component path="react/autocomplete/colors" />
+
+### アイコン付き
+
+<Component path="react/autocomplete/with-addons" />
+
+### 大きさ
+
+<Component path="react/autocomplete/sizes" />
+
+### 角丸
+
+<Component path="react/autocomplete/radius" />
+
+### 入力済み
+
+`defaultValue` プロパティーを指定すると、最初から入力された状態で表示します。
+
+<Component path="react/autocomplete/default-value" />
+
+### オブジェクトの項目
+
+項目をオブジェクトにしたときは、子に関数を渡して各行の内容を作れます。関数の第 1 引数には項目の値が渡ります。
+
+<Component path="react/autocomplete/object-items" />
+
+### グループ化
+
+`items` に `{ items }` を持つグループの配列を指定すると、項目をグループにまとめて表示します。`label` を持つグループはその内容を見出しとして表示します。
+
+<Component path="react/autocomplete/groups" />
+
+### 項目が多い場合
+
+<Component path="react/autocomplete/many-items" />
+
+### 無効
+
+<Component path="react/autocomplete/disabled" />
+
+## 構成
+
+```tsx
+import * as Autocomplete from "@suru-ui/react/autocomplete";
+
+<Autocomplete.Root>
+  <Autocomplete.InputGroup>
+    <Autocomplete.Addon />
+    <Autocomplete.Input />
+    <Autocomplete.Addon>
+      <Autocomplete.Clear />
+    </Autocomplete.Addon>
+    <Autocomplete.Addon />
+    <Autocomplete.Addon />
+  </Autocomplete.InputGroup>
+  <Autocomplete.Portal>
+    <Autocomplete.Positioner>
+      <Autocomplete.Popup>
+        <Autocomplete.Empty />
+        <Autocomplete.ScrollArea>
+          <Autocomplete.Viewport>
+            <Autocomplete.Content>
+              <Autocomplete.List>
+                <Autocomplete.Group>
+                  <Autocomplete.GroupLabel />
+                  <Autocomplete.Collection>
+                    <Autocomplete.Item />
+                  </Autocomplete.Collection>
+                </Autocomplete.Group>
+              </Autocomplete.List>
+            </Autocomplete.Content>
+          </Autocomplete.Viewport>
+          <Autocomplete.Scrollbar>
+            <Autocomplete.Thumb />
+          </Autocomplete.Scrollbar>
+          <Autocomplete.Corner />
+        </Autocomplete.ScrollArea>
+      </Autocomplete.Popup>
+    </Autocomplete.Positioner>
+  </Autocomplete.Portal>
+</Autocomplete.Root>
+```
+
+## API リファレンス
+
+### Autocomplete
+
+`Autocomplete` は `Root` のプロパティーに加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode | ((item: TItemValue, index: number) => React.ReactNode)",
+      description:
+        "検索結果リストの内容です。関数を渡すと各行の内容を、項目の値とインデックスを受け取って作ります。それ以外の React ノードはリストにそのまま表示されます（Item を列挙する場合など）。指定しない場合は項目の表示ラベルをそのまま各行に表示します。",
+    },
+    empty: {
+      type: "React.ReactNode",
+      description: "リストが空のときだけ表示する内容です。",
+    },
+    endAddons: {
+      type: "readonly React.ReactNode[]",
+      description: "入力欄の末尾に表示する内容の一覧です。",
+    },
+    placeholder: {
+      type: "string",
+      description: "入力欄のプレースホルダー文字列です。",
+    },
+    slotProps: {
+      type: "Autocomplete.SlotProps",
+      description:
+        "各パーツに個別のプロパティーを渡すためのオブジェクトです。各パーツのプロパティーが優先されます。",
+    },
+    startAddons: {
+      type: "readonly React.ReactNode[]",
+      description: "入力欄の先頭に表示する内容の一覧です。",
+    },
+  }}
+/>
+
+### Root
+
+`AutocompleteRoot` は [Base UI が受け入れるプロパティー](https://base-ui.com/react/components/autocomplete#api-reference) に加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    color: {
+      type: '"blue" | "green" | "grey" | "magenta" | "orange" | "purple" | "red" | "yellow"',
+      default: '"grey"',
+      description: "フォーカス時に枠線へ適用する色を指定します。",
+    },
+    items: {
+      type: "readonly TItemValue[] | readonly ItemGroup[]",
+      description:
+        "リストに表示する項目の一覧です。フラットな配列か、`{ items }` を持つグループの配列を指定します。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "false",
+      description: "枠線を表示するかどうかを指定します。",
+    },
+    radius: {
+      type: '"none" | "sm" | "md" | "lg" | "full"',
+      default: "size",
+      description:
+        '入力を含むグループ要素の角丸を指定します。"none" は角を直角にし、"full" は完全な丸形になります。',
+    },
+    size: {
+      type: '"sm" | "md" | "lg"',
+      default: '"md"',
+      description: "入力欄とリスト項目のサイズを指定します。",
+    },
+    variant: {
+      type: '"liquid" | "naked"',
+      default: '"liquid"',
+      description:
+        '入力欄の主な外観を指定します。"liquid" は薄い塗りつぶし、"naked" は背景のない入力欄になります。',
+    },
+  }}
+/>
+
+### InputGroup
+
+<TypeTable
+  type={{
+    className: {
+      type: "string | function",
+      description:
+        "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    render: {
+      type: "React.ReactElement | function",
+      description:
+        "React 要素、またはそれを返す関数です。コンポーネントの HTML 要素を別のタグに置き換えたり、別のコンポーネントと組み合わせたりすることができます。",
+    },
+    style: {
+      type: "React.CSSProperties | function",
+      description:
+        "要素に適用されるスタイルオブジェクト、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+  }}
+/>
+
+### Input
+
+`InputGroup` の中で検索文字列を入力するテキスト入力欄です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/autocomplete#api-reference) を受け入れます。
+
+### Addon
+
+入力欄の左右に表示する補助コンポーネントです。接頭辞、接尾辞、アイコンなどを表示できます。
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "アドオンの内容です。",
+    },
+    className: {
+      type: "string | function",
+      description:
+        "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    render: {
+      type: "React.ReactElement | function",
+      description:
+        "React 要素、またはそれを返す関数です。コンポーネントの HTML 要素を別のタグに置き換えたり、別のコンポーネントと組み合わせたりすることができます。",
+    },
+    style: {
+      type: "React.CSSProperties | function",
+      description:
+        "要素に適用されるスタイルオブジェクト、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+  }}
+/>
+
+### Clear
+
+入力値を消去するボタン要素です。入力値があるときだけ表示されます。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/autocomplete#api-reference) を受け入れます。
+
+### List
+
+検索結果のリストを表示するコンテナー要素です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/autocomplete#api-reference) を受け入れます。
+
+### Group
+
+関連する項目をまとめるグループ要素です。`Root` の `items` にグループの配列を渡したときに使います。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/autocomplete#api-reference) を受け入れます。
+
+### GroupLabel
+
+グループに自動的に対応付けられるラベル要素です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/autocomplete#api-reference) を受け入れます。
+
+### Item
+
+リストの個々の項目要素です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/autocomplete#api-reference) を受け入れます。
+
+### Row
+
+グリッドリストの 1 行を表示する要素です。`Root` の `grid` プロパティーと一緒に使います。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/autocomplete#api-reference) を受け入れます。
+
+### Collection
+
+フィルタリングされた項目を列挙する要素です。これ自身は HTML 要素をレンダリングしません。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/autocomplete#api-reference) を受け入れます。
+
+### Empty
+
+リストが空のときだけ、その children を表示する要素です。この要素自体は常に DOM に残ります。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/autocomplete#api-reference) を受け入れます。
+
+### Status
+
+リストの状態を読み上げるための非表示の要素です。この要素は常に DOM にマウントされたままにしてください。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/autocomplete#api-reference) を受け入れます。
+
+### Portal
+
+ポップアップを DOM の別の場所へ移動する要素です。既定ではポップアップを `<body>` の末尾に配置します。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/autocomplete#api-reference) を受け入れます。
+
+### Positioner
+
+ポップアップを入力欄に位置合わせする要素です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/autocomplete#api-reference) を受け入れます。
+
+### Popup
+
+検索結果リストを表示するポップアップ要素です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/autocomplete#api-reference) を受け入れます。
+
+### ScrollArea
+
+検索結果リストをスクロール可能にするスクロール領域のルート要素です。詳細は [ScrollArea](https://base-ui.com/react/components/scroll-area#api-reference) を参照してください。
+
+### Viewport
+
+スクロール領域のうち、コンテンツをクリップしてスクロール操作を受け付けるビューポート要素です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/scroll-area#api-reference) を受け入れます。
+
+### Content
+
+スクロール領域のうち、スクロールされるコンテンツを保持する要素です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/scroll-area#api-reference) を受け入れます。
+
+### Scrollbar
+
+スクロール領域のスクロールバー要素です。子要素として `Thumb` を配置します。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/scroll-area#api-reference) を受け入れます。
+
+### Thumb
+
+スクロール位置とスクロール可能な範囲を示す、スクロールバー内のつまみ要素です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/scroll-area#api-reference) を受け入れます。
+
+### Corner
+
+水平スクロールバーと垂直スクロールバーの交差部分を埋める要素です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/scroll-area#api-reference) を受け入れます。
