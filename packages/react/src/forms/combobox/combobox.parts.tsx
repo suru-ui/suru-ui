@@ -13,13 +13,33 @@ import "./combobox.css";
 // -------
 
 /**
+ * フォーカス時に枠線へ適用するアクセントカラーです。
+ */
+type ComboboxContextAccentColor = Color;
+
+/**
+ * 入力を含むグループ要素の角丸です。
+ */
+type ComboboxContextRadius = "none" | Size | "full";
+
+/**
+ * 入力欄とリスト項目のサイズです。
+ */
+type ComboboxContextSize = Size;
+
+/**
+ * 入力欄の主な外観です。
+ */
+type ComboboxContextVariant = "naked" | "liquid";
+
+/**
  * {@link ComboboxRoot} が子パーツへ提供する状態です。
  */
 export type ComboboxContext = {
   /**
    * フォーカス時に枠線へ適用するアクセントカラーです。
    */
-  readonly accentColor: ComboboxRootColor;
+  readonly accentColor: ComboboxContextAccentColor;
 
   /**
    * 枠線を表示するかどうかです。
@@ -29,17 +49,17 @@ export type ComboboxContext = {
   /**
    * 入力を含むグループ要素の角丸です。
    */
-  readonly radius: ComboboxRootRadius;
+  readonly radius: ComboboxContextRadius;
 
   /**
    * 入力欄とリスト項目のサイズです。
    */
-  readonly size: ComboboxRootSize;
+  readonly size: ComboboxContextSize;
 
   /**
    * 入力欄の主な外観です。
    */
-  readonly variant: ComboboxRootVariant;
+  readonly variant: ComboboxContextVariant;
 };
 
 /**
@@ -75,7 +95,32 @@ export type Context = ComboboxContext;
 /**
  * {@link ComboboxContext} です。
  */
-export const Context: React.Context<ComboboxContext | null> = ComboboxContext;
+export const Context: React.Context<Context | null> = ComboboxContext;
+
+/**
+ * {@link Context} の型名前空間です。
+ */
+export namespace Context {
+  /**
+   * {@link ComboboxContextAccentColor} です。
+   */
+  export type AccentColor = ComboboxContextAccentColor;
+
+  /**
+   * {@link ComboboxContextRadius} です。
+   */
+  export type Radius = ComboboxContextRadius;
+
+  /**
+   * {@link ComboboxContextSize} です。
+   */
+  export type Size = ComboboxContextSize;
+
+  /**
+   * {@link ComboboxContextVariant} です。
+   */
+  export type Variant = ComboboxContextVariant;
+}
 
 /**
  * {@link useComboboxContext} です。

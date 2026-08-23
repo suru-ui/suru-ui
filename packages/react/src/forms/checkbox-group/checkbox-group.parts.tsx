@@ -12,13 +12,33 @@ import "./checkbox-group.css";
 // -------
 
 /**
+ * チェックボックスの色です。
+ */
+type CheckboxGroupContextColor = Color;
+
+/**
+ * チェックボックスの角丸です。
+ */
+type CheckboxGroupContextRadius = "none" | Size | "full";
+
+/**
+ * チェックボックスのサイズです。
+ */
+type CheckboxGroupContextSize = Size;
+
+/**
+ * チェックボックスの主な外観です。
+ */
+type CheckboxGroupContextVariant = "naked" | "liquid";
+
+/**
  * {@link CheckboxGroupRoot} が子パーツへ提供する状態です。
  */
 export type CheckboxGroupContext = {
   /**
    * チェックボックスの色です。
    */
-  readonly color: CheckboxGroupRootColor;
+  readonly color: CheckboxGroupContextColor;
 
   /**
    * グループ全体を無効にするかどうかです。
@@ -33,17 +53,17 @@ export type CheckboxGroupContext = {
   /**
    * チェックボックスの角丸です。
    */
-  readonly radius: CheckboxGroupRootRadius;
+  readonly radius: CheckboxGroupContextRadius;
 
   /**
    * チェックボックスのサイズです。
    */
-  readonly size: CheckboxGroupRootSize;
+  readonly size: CheckboxGroupContextSize;
 
   /**
    * チェックボックスの主な外観です。
    */
-  readonly variant: CheckboxGroupRootVariant;
+  readonly variant: CheckboxGroupContextVariant;
 };
 
 /**
@@ -80,7 +100,32 @@ export type Context = CheckboxGroupContext;
 /**
  * {@link CheckboxGroupContext} です。
  */
-export const Context: React.Context<CheckboxGroupContext | null> = CheckboxGroupContext;
+export const Context: React.Context<Context | null> = CheckboxGroupContext;
+
+/**
+ * {@link Context} の型名前空間です。
+ */
+export namespace Context {
+  /**
+   * {@link CheckboxGroupContextColor} です。
+   */
+  export type Color = CheckboxGroupContextColor;
+
+  /**
+   * {@link CheckboxGroupContextRadius} です。
+   */
+  export type Radius = CheckboxGroupContextRadius;
+
+  /**
+   * {@link CheckboxGroupContextSize} です。
+   */
+  export type Size = CheckboxGroupContextSize;
+
+  /**
+   * {@link CheckboxGroupContextVariant} です。
+   */
+  export type Variant = CheckboxGroupContextVariant;
+}
 
 /**
  * {@link useCheckboxGroupContext} です。

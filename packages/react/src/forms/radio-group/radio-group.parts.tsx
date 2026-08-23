@@ -13,13 +13,33 @@ import "./radio-group.css";
 // -------
 
 /**
+ * ラジオボタンの色です。
+ */
+type RadioGroupContextColor = Color;
+
+/**
+ * ラジオボタンの角丸です。
+ */
+type RadioGroupContextRadius = "none" | Size | "full";
+
+/**
+ * ラジオボタンのサイズです。
+ */
+type RadioGroupContextSize = Size;
+
+/**
+ * ラジオボタンの主な外観です。
+ */
+type RadioGroupContextVariant = "naked" | "liquid";
+
+/**
  * {@link RadioGroupRoot} が子パーツへ提供する状態です。
  */
 export type RadioGroupContext = {
   /**
    * ラジオボタンの色です。
    */
-  readonly color: RadioGroupRootColor;
+  readonly color: RadioGroupContextColor;
 
   /**
    * グループ全体を無効にするかどうかです。
@@ -34,17 +54,17 @@ export type RadioGroupContext = {
   /**
    * ラジオボタンの角丸です。
    */
-  readonly radius: RadioGroupRootRadius;
+  readonly radius: RadioGroupContextRadius;
 
   /**
    * ラジオボタンのサイズです。
    */
-  readonly size: RadioGroupRootSize;
+  readonly size: RadioGroupContextSize;
 
   /**
    * ラジオボタンの主な外観です。
    */
-  readonly variant: RadioGroupRootVariant;
+  readonly variant: RadioGroupContextVariant;
 };
 
 /**
@@ -80,7 +100,32 @@ export type Context = RadioGroupContext;
 /**
  * {@link RadioGroupContext} です。
  */
-export const Context: React.Context<RadioGroupContext | null> = RadioGroupContext;
+export const Context: React.Context<Context | null> = RadioGroupContext;
+
+/**
+ * {@link Context} の型名前空間です。
+ */
+export namespace Context {
+  /**
+   * {@link RadioGroupContextColor} です。
+   */
+  export type Color = RadioGroupContextColor;
+
+  /**
+   * {@link RadioGroupContextRadius} です。
+   */
+  export type Radius = RadioGroupContextRadius;
+
+  /**
+   * {@link RadioGroupContextSize} です。
+   */
+  export type Size = RadioGroupContextSize;
+
+  /**
+   * {@link RadioGroupContextVariant} です。
+   */
+  export type Variant = RadioGroupContextVariant;
+}
 
 /**
  * {@link useRadioGroupContext} です。

@@ -21,13 +21,18 @@ import "./resizable.css";
 // -------
 
 /**
+ * パネル群の向きです。
+ */
+type ResizableContextDirection = "horizontal" | "vertical";
+
+/**
  * {@link ResizableRoot} が子パーツへ提供するコンテキストの型です。
  */
 export type ResizableContext = {
   /**
    * パネル群の向きです。
    */
-  readonly direction: ResizableRootDirection;
+  readonly direction: ResizableContextDirection;
 };
 
 /**
@@ -63,7 +68,17 @@ export type Context = ResizableContext;
 /**
  * {@link ResizableContext} です。
  */
-export const Context: React.Context<ResizableContext | null> = ResizableContext;
+export const Context: React.Context<Context | null> = ResizableContext;
+
+/**
+ * {@link Context} の型名前空間です。
+ */
+export namespace Context {
+  /**
+   * {@link ResizableContextDirection} です。
+   */
+  export type Direction = ResizableContextDirection;
+}
 
 /**
  * {@link useResizableContext} です。

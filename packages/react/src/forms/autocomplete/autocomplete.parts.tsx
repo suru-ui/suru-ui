@@ -33,13 +33,33 @@ import "./autocomplete.css";
 // -------
 
 /**
+ * フォーカス時に枠線へ適用する色です。
+ */
+type AutocompleteContextColor = Color;
+
+/**
+ * 入力を含むグループ要素の角丸です。
+ */
+type AutocompleteContextRadius = "none" | Size | "full";
+
+/**
+ * 入力欄とリスト項目のサイズです。
+ */
+type AutocompleteContextSize = Size;
+
+/**
+ * 入力欄の主な外観です。
+ */
+type AutocompleteContextVariant = "naked" | "liquid";
+
+/**
  * {@link AutocompleteRoot} が子パーツへ提供する状態です。
  */
 export type AutocompleteContext = {
   /**
    * フォーカス時に枠線へ適用する色です。
    */
-  readonly color: AutocompleteRootColor;
+  readonly color: AutocompleteContextColor;
 
   /**
    * 枠線を表示するかどうかです。
@@ -49,17 +69,17 @@ export type AutocompleteContext = {
   /**
    * 入力を含むグループ要素の角丸です。
    */
-  readonly radius: AutocompleteRootRadius;
+  readonly radius: AutocompleteContextRadius;
 
   /**
    * 入力欄とリスト項目のサイズです。
    */
-  readonly size: AutocompleteRootSize;
+  readonly size: AutocompleteContextSize;
 
   /**
    * 入力欄の主な外観です。
    */
-  readonly variant: AutocompleteRootVariant;
+  readonly variant: AutocompleteContextVariant;
 };
 
 /**
@@ -95,7 +115,32 @@ export type Context = AutocompleteContext;
 /**
  * {@link AutocompleteContext} です。
  */
-export const Context: React.Context<AutocompleteContext | null> = AutocompleteContext;
+export const Context: React.Context<Context | null> = AutocompleteContext;
+
+/**
+ * {@link Context} の型名前空間です。
+ */
+export namespace Context {
+  /**
+   * {@link AutocompleteContextColor} です。
+   */
+  export type Color = AutocompleteContextColor;
+
+  /**
+   * {@link AutocompleteContextRadius} です。
+   */
+  export type Radius = AutocompleteContextRadius;
+
+  /**
+   * {@link AutocompleteContextSize} です。
+   */
+  export type Size = AutocompleteContextSize;
+
+  /**
+   * {@link AutocompleteContextVariant} です。
+   */
+  export type Variant = AutocompleteContextVariant;
+}
 
 /**
  * {@link useAutocompleteContext} です。
@@ -217,18 +262,13 @@ export const AutocompleteRoot: IComponent<AutocompleteRootProps> = function SuiA
   props: AutocompleteRootProps,
 ) {
   const {
-    size: sizeProp = "md",
-    color: colorProp = "grey",
-    radius: radiusProp = sizeProp,
-    variant: variantProp = "liquid",
-    outlined: outlinedProp = false,
+    size = "md",
+    color = "grey",
+    radius = size,
+    variant = "liquid",
+    outlined = false,
     ...otherProps
   } = props;
-  const size = sizeProp;
-  const color = colorProp;
-  const radius = radiusProp;
-  const variant = variantProp;
-  const outlined = outlinedProp;
   const context = React.useMemo<AutocompleteContext>(
     () => ({ size, color, radius, variant, outlined }),
     [size, color, radius, variant, outlined],

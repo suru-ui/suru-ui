@@ -14,13 +14,33 @@ import "./number-field.css";
 // -------
 
 /**
+ * 数値入力欄の色です。
+ */
+type NumberFieldContextColor = Color;
+
+/**
+ * 数値入力欄の角丸です。
+ */
+type NumberFieldContextRadius = "none" | Size | "full";
+
+/**
+ * 数値入力欄のサイズです。
+ */
+type NumberFieldContextSize = Size;
+
+/**
+ * 数値入力欄の主な外観です。
+ */
+type NumberFieldContextVariant = "naked" | "liquid";
+
+/**
  * {@link NumberFieldRoot} が子パーツへ提供するスタイルです。
  */
 export type NumberFieldContext = {
   /**
    * 数値入力欄の色です。
    */
-  readonly color: NumberFieldRootColor;
+  readonly color: NumberFieldContextColor;
 
   /**
    * 枠線を表示するかどうかです。
@@ -30,17 +50,17 @@ export type NumberFieldContext = {
   /**
    * 数値入力欄の角丸です。
    */
-  readonly radius: NumberFieldRootRadius;
+  readonly radius: NumberFieldContextRadius;
 
   /**
    * 数値入力欄のサイズです。
    */
-  readonly size: NumberFieldRootSize;
+  readonly size: NumberFieldContextSize;
 
   /**
    * 数値入力欄の主な外観です。
    */
-  readonly variant: NumberFieldRootVariant;
+  readonly variant: NumberFieldContextVariant;
 };
 
 /**
@@ -76,7 +96,32 @@ export type Context = NumberFieldContext;
 /**
  * {@link NumberFieldContext} です。
  */
-export const Context: React.Context<NumberFieldContext | null> = NumberFieldContext;
+export const Context: React.Context<Context | null> = NumberFieldContext;
+
+/**
+ * {@link Context} の型名前空間です。
+ */
+export namespace Context {
+  /**
+   * {@link NumberFieldContextColor} です。
+   */
+  export type Color = NumberFieldContextColor;
+
+  /**
+   * {@link NumberFieldContextRadius} です。
+   */
+  export type Radius = NumberFieldContextRadius;
+
+  /**
+   * {@link NumberFieldContextSize} です。
+   */
+  export type Size = NumberFieldContextSize;
+
+  /**
+   * {@link NumberFieldContextVariant} です。
+   */
+  export type Variant = NumberFieldContextVariant;
+}
 
 /**
  * {@link useNumberFieldContext} です。

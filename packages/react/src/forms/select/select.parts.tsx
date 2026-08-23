@@ -14,6 +14,21 @@ import "./select.css";
 // -------
 
 /**
+ * 選択欄とリスト項目の角丸です。
+ */
+type SelectContextRadius = "none" | Size | "full";
+
+/**
+ * 選択欄とリスト項目のサイズです。
+ */
+type SelectContextSize = Size;
+
+/**
+ * 選択欄の主な外観です。
+ */
+type SelectContextVariant = "naked" | "liquid";
+
+/**
  * {@link SelectContext} の値です。
  */
 export type SelectContext = {
@@ -25,17 +40,17 @@ export type SelectContext = {
   /**
    * 選択欄とリスト項目の角丸です。
    */
-  readonly radius: SelectRootRadius;
+  readonly radius: SelectContextRadius;
 
   /**
    * 選択欄とリスト項目のサイズです。
    */
-  readonly size: SelectRootSize;
+  readonly size: SelectContextSize;
 
   /**
    * 選択欄の主な外観です。
    */
-  readonly variant: SelectRootVariant;
+  readonly variant: SelectContextVariant;
 };
 
 /**
@@ -71,7 +86,27 @@ export type Context = SelectContext;
 /**
  * {@link SelectContext} です。
  */
-export const Context: React.Context<SelectContext | null> = SelectContext;
+export const Context: React.Context<Context | null> = SelectContext;
+
+/**
+ * {@link Context} の型名前空間です。
+ */
+export namespace Context {
+  /**
+   * {@link SelectContextRadius} です。
+   */
+  export type Radius = SelectContextRadius;
+
+  /**
+   * {@link SelectContextSize} です。
+   */
+  export type Size = SelectContextSize;
+
+  /**
+   * {@link SelectContextVariant} です。
+   */
+  export type Variant = SelectContextVariant;
+}
 
 /**
  * {@link useSelectContext} です。

@@ -12,18 +12,43 @@ import "./action-group.css";
 // -------
 
 /**
+ * グループアイテムの色です。
+ */
+type ActionGroupContextColor = Color;
+
+/**
+ * グループアイテムの向きです。
+ */
+type ActionGroupContextOrientation = "horizontal" | "vertical";
+
+/**
+ * グループアイテムの角丸です。
+ */
+type ActionGroupContextRadius = "none" | Size | "full";
+
+/**
+ * グループアイテムのサイズです。
+ */
+type ActionGroupContextSize = Size;
+
+/**
+ * グループアイテムの主な外観です。
+ */
+type ActionGroupContextVariant = "naked" | "liquid";
+
+/**
  * {@link ActionGroupRoot} が子要素へ提供するスタイルです。
  */
 export type ActionGroupContext = {
   /**
    * グループアイテムの色です。
    */
-  readonly color: ActionGroupRootColor;
+  readonly color: ActionGroupContextColor;
 
   /**
    * グループアイテムの向きです。
    */
-  readonly orientation: ActionGroupRootOrientation;
+  readonly orientation: ActionGroupContextOrientation;
 
   /**
    * グループアイテムの枠線を表示するかどうかです。
@@ -33,17 +58,17 @@ export type ActionGroupContext = {
   /**
    * グループアイテムの角丸です。
    */
-  readonly radius: ActionGroupRootRadius;
+  readonly radius: ActionGroupContextRadius;
 
   /**
    * グループアイテムのサイズです。
    */
-  readonly size: ActionGroupRootSize;
+  readonly size: ActionGroupContextSize;
 
   /**
    * グループアイテムの主な外観です。
    */
-  readonly variant: ActionGroupRootVariant;
+  readonly variant: ActionGroupContextVariant;
 };
 
 /**
@@ -79,7 +104,37 @@ export type Context = ActionGroupContext;
 /**
  * {@link ActionGroupContext} です。
  */
-export const Context: React.Context<ActionGroupContext | null> = ActionGroupContext;
+export const Context: React.Context<Context | null> = ActionGroupContext;
+
+/**
+ * {@link Context} の型名前空間です。
+ */
+export namespace Context {
+  /**
+   * {@link ActionGroupContextColor} です。
+   */
+  export type Color = ActionGroupContextColor;
+
+  /**
+   * {@link ActionGroupContextOrientation} です。
+   */
+  export type Orientation = ActionGroupContextOrientation;
+
+  /**
+   * {@link ActionGroupContextRadius} です。
+   */
+  export type Radius = ActionGroupContextRadius;
+
+  /**
+   * {@link ActionGroupContextSize} です。
+   */
+  export type Size = ActionGroupContextSize;
+
+  /**
+   * {@link ActionGroupContextVariant} です。
+   */
+  export type Variant = ActionGroupContextVariant;
+}
 
 /**
  * {@link useActionGroupContext} です。

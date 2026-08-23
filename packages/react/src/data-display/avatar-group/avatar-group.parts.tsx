@@ -63,26 +63,6 @@ export type AvatarGroupContext = {
 export const AvatarGroupContext: React.Context<AvatarGroupContext | null> =
   React.createContext<AvatarGroupContext | null>(null);
 
-/**
- * {@link AvatarGroupContext} の型名前空間です。
- */
-export namespace AvatarGroupContext {
-  /**
-   * {@link AvatarGroupContextColor} です。
-   */
-  export type Color = AvatarGroupContextColor;
-
-  /**
-   * {@link AvatarGroupContextRadius} です。
-   */
-  export type Radius = AvatarGroupContextRadius;
-
-  /**
-   * {@link AvatarGroupContextSize} です。
-   */
-  export type Size = AvatarGroupContextSize;
-}
-
 function useSuiAvatarGroupContext(optional?: false): AvatarGroupContext;
 function useSuiAvatarGroupContext(optional?: boolean): AvatarGroupContext | null;
 function useSuiAvatarGroupContext(optional?: boolean): AvatarGroupContext | null {
@@ -110,7 +90,27 @@ export type Context = AvatarGroupContext;
 /**
  * {@link AvatarGroupContext} です。
  */
-export const Context: React.Context<AvatarGroupContext | null> = AvatarGroupContext;
+export const Context: React.Context<Context | null> = AvatarGroupContext;
+
+/**
+ * {@link Context} の型名前空間です。
+ */
+export namespace Context {
+  /**
+   * {@link AvatarGroupContextColor} です。
+   */
+  export type Color = AvatarGroupContextColor;
+
+  /**
+   * {@link AvatarGroupContextRadius} です。
+   */
+  export type Radius = AvatarGroupContextRadius;
+
+  /**
+   * {@link AvatarGroupContextSize} です。
+   */
+  export type Size = AvatarGroupContextSize;
+}
 
 /**
  * {@link useAvatarGroupContext} です。

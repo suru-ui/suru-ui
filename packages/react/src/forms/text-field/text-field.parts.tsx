@@ -13,13 +13,33 @@ import "./text-field.css";
 // -------
 
 /**
+ * 文字入力欄の色です。
+ */
+type TextFieldContextColor = Color;
+
+/**
+ * 文字入力欄の角丸です。
+ */
+type TextFieldContextRadius = "none" | Size | "full";
+
+/**
+ * 文字入力欄のサイズです。
+ */
+type TextFieldContextSize = Size;
+
+/**
+ * 文字入力欄の主な外観です。
+ */
+type TextFieldContextVariant = "naked" | "liquid";
+
+/**
  * {@link TextFieldRoot} が子パーツへ提供するスタイルです。
  */
 export type TextFieldContext = {
   /**
    * 文字入力欄の色です。
    */
-  readonly color: TextFieldRootColor;
+  readonly color: TextFieldContextColor;
 
   /**
    * 枠線を表示するかどうかです。
@@ -29,17 +49,17 @@ export type TextFieldContext = {
   /**
    * 文字入力欄の角丸です。
    */
-  readonly radius: TextFieldRootRadius;
+  readonly radius: TextFieldContextRadius;
 
   /**
    * 文字入力欄のサイズです。
    */
-  readonly size: TextFieldRootSize;
+  readonly size: TextFieldContextSize;
 
   /**
    * 文字入力欄の主な外観です。
    */
-  readonly variant: TextFieldRootVariant;
+  readonly variant: TextFieldContextVariant;
 };
 
 /**
@@ -75,7 +95,32 @@ export type Context = TextFieldContext;
 /**
  * {@link TextFieldContext} です。
  */
-export const Context: React.Context<TextFieldContext | null> = TextFieldContext;
+export const Context: React.Context<Context | null> = TextFieldContext;
+
+/**
+ * {@link Context} の型名前空間です。
+ */
+export namespace Context {
+  /**
+   * {@link TextFieldContextColor} です。
+   */
+  export type Color = TextFieldContextColor;
+
+  /**
+   * {@link TextFieldContextRadius} です。
+   */
+  export type Radius = TextFieldContextRadius;
+
+  /**
+   * {@link TextFieldContextSize} です。
+   */
+  export type Size = TextFieldContextSize;
+
+  /**
+   * {@link TextFieldContextVariant} です。
+   */
+  export type Variant = TextFieldContextVariant;
+}
 
 /**
  * {@link useTextFieldContext} です。
