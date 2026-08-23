@@ -1,0 +1,180 @@
+---
+title: Resizable
+description: リサイズ可能なパネル群を表示するコンポーネントです。
+---
+
+## 使い方
+
+```tsx
+import { Resizable } from "@suru-ui/react";
+// または、
+import { Resizable } from "@suru-ui/react/resizable";
+
+<Resizable>
+  <Resizable.Panel />
+  <Resizable.Handle />
+  <Resizable.Panel />
+</Resizable>;
+```
+
+<Component path="react/resizable/basic" />
+
+## 例
+
+### 縦方向
+
+<Component path="react/resizable/vertical" />
+
+### パーツ構成
+
+<Component path="react/resizable/parts" />
+
+## 構成
+
+```tsx
+import * as Resizable from "@suru-ui/react/resizable";
+
+<Resizable.Root>
+  <Resizable.Panel />
+  <Resizable.Handle />
+  <Resizable.Panel />
+</Resizable.Root>;
+```
+
+## API リファレンス
+
+### Resizable
+
+`Resizable` は `Root` のプロパティーに加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "リサイズ可能なパネルとハンドルです。",
+    },
+  }}
+/>
+
+### Root
+
+`Root` は [react-resizable-panels の Group が受け入れるプロパティー](https://react-resizable-panels.vercel.app/api/reference/group) に加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    className: {
+      type: "string | function",
+      description:
+        "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    direction: {
+      type: '"horizontal" | "vertical"',
+      default: '"horizontal"',
+      description:
+        'パネルを並べる向きです。"horizontal" は水平方向に、"vertical" は垂直方向にパネルを並べます。',
+    },
+    onLayout: {
+      type: "function",
+      description: "パネルサイズの配列が変化したときに呼び出されます。",
+    },
+    orientation: {
+      type: '"horizontal" | "vertical"',
+      description: "パネルを並べる向きです。direction の別名です。",
+    },
+    render: {
+      type: "React.ReactElement | function",
+      description:
+        "React 要素、またはそれを返す関数です。コンポーネントの HTML 要素を別のタグに置き換えたり、別のコンポーネントと組み合わせたりすることができます。",
+    },
+    style: {
+      type: "React.CSSProperties | function",
+      description:
+        "要素に適用されるスタイルオブジェクト、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+  }}
+/>
+
+### Panel
+
+`Panel` は [react-resizable-panels の Panel が受け入れるプロパティー](https://react-resizable-panels.vercel.app/api/reference/panel) に加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    className: {
+      type: "string | function",
+      description:
+        "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    defaultSize: {
+      type: "number | string",
+      description:
+        "パネルの初期サイズを指定します。数値はパーセントとして扱われ、単位付きの文字列も指定できます。",
+    },
+    maxSize: {
+      type: "number | string",
+      description:
+        "パネルが大きくなるときの最大サイズを指定します。数値はパーセントとして扱われ、単位付きの文字列も指定できます。",
+    },
+    minSize: {
+      type: "number | string",
+      description:
+        "パネルが小さくなるときの最小サイズを指定します。数値はパーセントとして扱われ、単位付きの文字列も指定できます。",
+    },
+    onResize: {
+      type: "function",
+      description: "パネルサイズが変化したときに呼び出されます。",
+    },
+    onSizeChange: {
+      type: "function",
+      description: "パネルサイズが変化したときに、パーセント値で呼び出されます。",
+    },
+    order: {
+      type: "number",
+      description: "パネルの並び順を明示します。",
+    },
+    size: {
+      type: "number | string",
+      description:
+        "パネルのサイズを制御します。数値はパーセントとして扱われ、単位付きの文字列も指定できます。",
+    },
+    render: {
+      type: "React.ReactElement | function",
+      description:
+        "React 要素、またはそれを返す関数です。コンポーネントの HTML 要素を別のタグに置き換えたり、別のコンポーネントと組み合わせたりすることができます。",
+    },
+    style: {
+      type: "React.CSSProperties | function",
+      description:
+        "要素に適用されるスタイルオブジェクト、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+  }}
+/>
+
+### Handle
+
+`Handle` は [react-resizable-panels の Separator が受け入れるプロパティー](https://react-resizable-panels.vercel.app/api/reference/separator) に加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    className: {
+      type: "string | function",
+      description:
+        "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    withHandle: {
+      type: "boolean",
+      default: "false",
+      description: "中央にグリップを表示します。",
+    },
+    render: {
+      type: "React.ReactElement | function",
+      description:
+        "React 要素、またはそれを返す関数です。コンポーネントの HTML 要素を別のタグに置き換えたり、別のコンポーネントと組み合わせたりすることができます。",
+    },
+    style: {
+      type: "React.CSSProperties | function",
+      description:
+        "要素に適用されるスタイルオブジェクト、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+  }}
+/>

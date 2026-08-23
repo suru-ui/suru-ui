@@ -1,0 +1,163 @@
+---
+title: Slider
+description: スライダーを表示するコンポーネントです。
+---
+
+## 使い方
+
+```tsx
+import { Slider } from "@suru-ui/react";
+// または、
+import { Slider } from "@suru-ui/react/slider";
+
+<Slider defaultValue={25} />;
+```
+
+<Component path="react/slider/basic" />
+
+## 例
+
+### 主な外観
+
+<Component path="react/slider/variants" />
+
+### 枠線
+
+`outlined` プロパティーを指定すると枠線を表示します。
+
+<Component path="react/slider/outlined" />
+
+### 色
+
+<Component path="react/slider/colors" />
+
+### 大きさ
+
+<Component path="react/slider/sizes" />
+
+### 角丸
+
+<Component path="react/slider/radius" />
+
+### ラベルと現在値
+
+`slotProps` に `label` と `value` を指定すると、ラベルと現在値を表示します。
+
+<Component path="react/slider/label-and-value" />
+
+### レンジ
+
+`defaultValue` に配列を指定すると、値の数だけ Thumb を配置するレンジスライダーになります。
+
+<Component path="react/slider/range" />
+
+### 縦方向
+
+`orientation` プロパティーに `"vertical"` を指定すると、縦方向のスライダーを表示します。
+
+<Component path="react/slider/vertical" />
+
+### 制御
+
+`value` と `onValueChange` の組み合わせで、値を制御できます。
+
+<Component path="react/slider/controlled" />
+
+### 無効
+
+`disabled` プロパティーを指定すると、操作できないスライダーを表示します。
+
+<Component path="react/slider/disabled" />
+
+## 構成
+
+```tsx
+import * as Slider from "@suru-ui/react/slider";
+
+<Slider.Root>
+  <Slider.Label />
+  <Slider.Value />
+  <Slider.Control>
+    <Slider.Track>
+      <Slider.Indicator />
+      <Slider.Thumb />
+    </Slider.Track>
+  </Slider.Control>
+</Slider.Root>;
+```
+
+## API リファレンス
+
+### Slider
+
+`Slider` は `Root` のプロパティーに加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    slotProps: {
+      type: "Slider.SlotProps",
+      description:
+        "各パーツに個別のプロパティーを渡すためのオブジェクトです。各パーツのプロパティーが優先されます。`label` または `value` を指定した場合だけ、対応するパーツが表示されます。",
+    },
+  }}
+/>
+
+### Root
+
+`Slider.Root` は [Base UI が受け入れるプロパティー](https://base-ui.com/react/components/slider#api-reference) に加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    color: {
+      type: '"blue" | "green" | "grey" | "magenta" | "orange" | "purple" | "red" | "yellow"',
+      default: '"grey"',
+      description: "スライダーの色を指定します。値を変更すると、ルートのクラスも更新されます。",
+    },
+    outlined: {
+      type: "boolean",
+      description:
+        "枠線を表示するかどうかを指定します。値を変更すると、ルートのクラスも更新されます。",
+    },
+    radius: {
+      type: '"none" | "sm" | "md" | "lg" | "full"',
+      default: '"full"',
+      description:
+        'スライダーの角丸を指定します。"none" は角を直角にし、"full" は完全な丸形になります。',
+    },
+    size: {
+      type: '"sm" | "md" | "lg"',
+      default: '"md"',
+      description: "スライダーのサイズを指定します。",
+    },
+    variant: {
+      type: '"naked" | "liquid"',
+      default: '"liquid"',
+      description:
+        'スライダーの主な外観を指定します。"naked" は背景のないトラックのみ、"liquid" は薄い塗りつぶしになります。',
+    },
+  }}
+/>
+
+### Label
+
+スライダーのラベル要素です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/slider#api-reference) を受け入れます。
+
+### Value
+
+スライダーの現在値を表示する要素です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/slider#api-reference) を受け入れます。
+
+### Control
+
+スライダーの操作可能な領域です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/slider#api-reference) を受け入れます。
+
+### Track
+
+スライダーのトラック要素です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/slider#api-reference) を受け入れます。
+
+### Indicator
+
+スライダーの現在値を示すインジケーター要素です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/slider#api-reference) を受け入れます。
+
+### Thumb
+
+スライダーのつまみ要素です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/slider#api-reference) を受け入れます。
