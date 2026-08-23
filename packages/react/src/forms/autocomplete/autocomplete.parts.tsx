@@ -26,7 +26,6 @@ import {
   ScrollAreaScrollbar as BaseScrollAreaScrollbar,
 } from "../../navigation/scroll-area/index.js";
 import type { IComponent, IUseContext } from "../../types.js";
-import type { ItemGroup } from "./_item-group.js";
 
 import "./autocomplete.css";
 
@@ -172,23 +171,13 @@ export type AutocompleteRootState = Autocomplete.Root.State;
 /**
  * {@link AutocompleteRoot} に渡すプロパティーです。
  */
-export type AutocompleteRootProps<TItemValue = unknown> = Omit<
-  Autocomplete.Root.Props<TItemValue>,
-  "items"
-> & {
+export type AutocompleteRootProps = Autocomplete.Root.Props<any> & {
   /**
    * フォーカス時に枠線へ適用する色を指定します。
    *
    * @default "grey"
    */
   color?: AutocompleteRootColor | undefined;
-
-  /**
-   * リストに表示する項目の一覧です。
-   *
-   * フラットな配列か、`{ items }` を持つグループの配列を指定します。
-   */
-  items?: readonly TItemValue[] | undefined;
 
   /**
    * 枠線を表示するかどうかを指定します。
@@ -220,42 +209,11 @@ export type AutocompleteRootProps<TItemValue = unknown> = Omit<
 };
 
 /**
- * {@link AutocompleteRoot} のコンポーネント型です。
- */
-interface AutocompleteRootType extends IComponent.Attributes {
-  /**
-   * 項目をグループにまとめて表示する場合のシグネチャーです。
-   *
-   * `items` は必須で、各要素は `{ items }` を持つグループである必要があります。
-   *
-   * @template TItems グループの一覧の型です。
-   */
-  <TItems extends readonly ItemGroup[]>(
-    props: Omit<AutocompleteRootProps<TItems[number]["items"][number]>, "items"> & {
-      items: TItems;
-    },
-  ): IComponent.Return;
-
-  /**
-   * フラットな項目の一覧を表示する場合のシグネチャーです。
-   *
-   * `items` は省略でき、省略した場合は子要素をそのまま表示します。
-   *
-   * @template TItemValue 各項目の値の型です。
-   */
-  <TItemValue>(
-    props: Omit<AutocompleteRootProps<TItemValue>, "items"> & {
-      items?: readonly TItemValue[] | undefined;
-    },
-  ): IComponent.Return;
-}
-
-/**
  * オートコンプリートのルート要素です。
  *
  * 入力値とポップアップの開閉状態を管理し、各パーツをグループ化します。
  */
-export const AutocompleteRoot: AutocompleteRootType = function SuiAutocompleteRoot(
+export const AutocompleteRoot: IComponent<AutocompleteRootProps> = function SuiAutocompleteRoot(
   props: AutocompleteRootProps,
 ) {
   const {

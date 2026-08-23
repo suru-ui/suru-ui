@@ -14,9 +14,5 @@ const prefectures: readonly Prefecture[] = [
 ];
 
 export default function ObjectItems() {
-  return (
-    <Autocomplete items={prefectures} placeholder="都道府県を検索">
-      {(item) => <strong>{item.label}</strong>}
-    </Autocomplete>
-  );
+  return <Autocomplete items={prefectures} placeholder="都道府県を検索" />;
 }

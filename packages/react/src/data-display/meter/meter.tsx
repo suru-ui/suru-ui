@@ -149,7 +149,7 @@ export function useMeter(props: MeterProps): MeterPartsProps {
 }
 
 /**
- * 数値の範囲内にある現在値を表示するメーターコンテキストです。
+ * 数値の範囲内にある現在値を表示するメーターコンポーネントです。
  */
 export const Meter: IComponent<MeterProps> = function SuiMeter(props) {
   const partsProps = useMeter(props);

@@ -1,9 +1,8 @@
 import * as React from "react";
 
-import isLikelyVisibleNode from "../../_is-likely-visible-node.js";
 import type { IComponent, IUseContext } from "../../types.js";
 import { getItemLabel } from "../_get-item-label.js";
-import { type ItemGroup, isItemGroup } from "./_item-group.js";
+import { isItemGroup } from "./_item-group.js";
 import {
   type AutocompleteContext,
   type AutocompleteRootSize,
@@ -49,11 +48,12 @@ import {
   AutocompleteViewport,
   AutocompleteScrollbar,
   AutocompleteCollection,
-  AutocompleteGroupLabel,
   AutocompleteInputGroup,
   AutocompletePositioner,
   AutocompleteScrollArea,
   useAutocompleteContext,
+  type AutocompleteGroupProps,
+  type AutocompleteCollectionProps,
 } from "./autocomplete.parts.jsx";
 
 /**
@@ -121,6 +121,11 @@ export type AutocompleteSlotProps = {
   readonly content?: Omit<AutocompleteContentProps, "children"> | undefined;
 
   /**
+   * {@link AutocompleteCollection} に渡すプロパティーです。
+   */
+  readonly collection?: Omit<AutocompleteCollectionProps, "children"> | undefined;
+
+  /**
    * {@link AutocompleteCorner} に渡すプロパティーです。
    */
   readonly corner?: AutocompleteCornerProps | undefined;
@@ -129,6 +134,11 @@ export type AutocompleteSlotProps = {
    * {@link AutocompleteEmpty} に渡すプロパティーです。
    */
   readonly empty?: AutocompleteEmptyProps | undefined;
+
+  /**
+   * {@link AutocompleteGroup} に渡すプロパティーです。
+   */
+  readonly group?: Omit<AutocompleteGroupProps, "children" | "items"> | undefined;
 
   /**
    * {@link AutocompleteInput} に渡すプロパティーです。
@@ -186,10 +196,24 @@ export type AutocompleteSlotProps = {
   readonly viewport?: Omit<AutocompleteViewportProps, "children"> | undefined;
 };
 
+export type AutocompleteItemPartsProps =
+  | {
+      readonly item: AutocompleteItemProps;
+    }
+  | {
+      readonly group: AutocompleteGroupProps;
+
+      readonly collection: Omit<AutocompleteCollectionProps, "children">;
+
+      readonly getItemProps: (item: any, index: number) => AutocompleteItemProps;
+    };
+
 /**
  * 各パーツに渡すプロパティーをまとめたものです。
  */
 export type AutocompletePartsProps = {
+  readonly getItemPartsProps: (item: any, index: number) => AutocompleteItemPartsProps;
+
   /**
    * Chevron アイコンを包む {@link AutocompleteAddon} に渡すプロパティーです。
    *
@@ -300,19 +324,7 @@ export type AutocompleteState = AutocompleteRootState;
 /**
  * {@link Autocomplete} コンポーネントのプロパティーです。
  */
-export type AutocompleteProps<TItemValue = unknown> = Omit<
-  AutocompleteRootProps<TItemValue>,
-  "children"
-> & {
-  /**
-   * 検索結果リストの内容です。
-   *
-   * - 関数: 各行の内容を、項目の値とインデックスを受け取って作ります。
-   * - それ以外の React ノード: リストにそのまま表示します（`Item` を列挙する場合など）
-   * - 指定しない場合: アイテムの値をそのまま各行に表示します
-   */
-  children?: React.ReactNode | ((item: React.ReactNode, index: number) => React.ReactNode);
-
+export type AutocompleteProps = Omit<AutocompleteRootProps, "children"> & {
   /**
    * リストが空のときだけ表示する内容です。
    */
@@ -322,6 +334,11 @@ export type AutocompleteProps<TItemValue = unknown> = Omit<
    * 入力欄の末尾に表示する内容です。
    */
   endAddons?: readonly React.ReactNode[] | undefined;
+
+  /**
+   * 検索結果リストの内容です。
+   */
+  itemToRenderedValue?: ((item: any, index: number) => React.ReactNode) | undefined;
 
   /**
    * 入力欄のプレースホルダー文字列です。
@@ -347,11 +364,11 @@ export type AutocompleteProps<TItemValue = unknown> = Omit<
 export function useAutocomplete(props: AutocompleteProps): AutocompletePartsProps {
   const {
     empty,
-    children: itemRenderer,
     slotProps: {
       item: itemProps,
       list: listProps,
       addon: addonProps,
+      group: groupProps,
       clear: clearProps = {},
       empty: emptyProps,
       input: inputProps,
@@ -362,6 +379,7 @@ export function useAutocomplete(props: AutocompleteProps): AutocompletePartsProp
       content: contentProps = {},
       viewport: viewportProps = {},
       scrollbar: scrollbarProps = {},
+      collection: collectionProps = {},
       inputGroup: inputGroupProps = {},
       positioner: positionerProps = {},
       scrollArea: scrollAreaProps = {},
@@ -371,6 +389,7 @@ export function useAutocomplete(props: AutocompleteProps): AutocompletePartsProp
     startAddons = [],
     autoHighlight = true,
     openOnInputClick = true,
+    itemToRenderedValue = getItemLabel,
     ...otherRootProps
   } = props;
   const { "aria-label": clearAriaLabel = "クリア", ...otherClearProps } = clearProps;
@@ -380,45 +399,10 @@ export function useAutocomplete(props: AutocompleteProps): AutocompletePartsProp
     sideOffset = 8,
     ...otherPositionerProps
   } = positionerProps;
-  const listChildren = React.useMemo<AutocompleteListProps["children"]>(() => {
-    if (typeof itemRenderer !== "function" && itemRenderer !== undefined) {
-      return itemRenderer;
-    }
-
-    const renderItem = itemRenderer || getItemLabel;
-
-    return (item: unknown, index: number): React.ReactNode => {
-      if (!isItemGroup(item)) {
-        return (
-          <AutocompleteItem {...itemProps} key={index} value={item}>
-            {renderItem(item as React.ReactNode, index)}
-          </AutocompleteItem>
-        );
-      }
-
-      const group = item;
-
-      return (
-        <AutocompleteGroup key={index} items={group.items}>
-          {"label" in group && isLikelyVisibleNode(group["label"]) && (
-            <AutocompleteGroupLabel>{group["label"]}</AutocompleteGroupLabel>
-          )}
-          <AutocompleteCollection>
-            {(item, index) => (
-              <AutocompleteItem {...itemProps} key={index} value={item}>
-                {renderItem(item, index)}
-              </AutocompleteItem>
-            )}
-          </AutocompleteCollection>
-        </AutocompleteGroup>
-      );
-    };
-  }, [itemProps, itemRenderer]);
 
   return {
     list: {
       ...listProps,
-      children: listChildren,
     },
     root: {
       ...otherRootProps,
@@ -471,39 +455,42 @@ export function useAutocomplete(props: AutocompleteProps): AutocompletePartsProp
       ...addonProps,
       children: <SuiChevronIcon />,
     },
+    getItemPartsProps: (item, index) => {
+      if (!isItemGroup(item)) {
+        return {
+          item: {
+            ...itemProps,
+            key: index,
+            value: item,
+            children: itemToRenderedValue(item, index),
+          },
+        };
+      }
+
+      return {
+        group: {
+          ...groupProps,
+          key: index,
+          items: item.items,
+        },
+        collection: {
+          ...collectionProps,
+        },
+        getItemProps: (item, index) => ({
+          ...itemProps,
+          key: index,
+          value: item,
+          children: itemToRenderedValue(item, index),
+        }),
+      };
+    },
   };
 }
 
 /**
  * {@link Autocomplete} のコンポーネント型です。
  */
-interface AutocompleteType extends IComponent.Attributes {
-  /**
-   * 項目をグループにまとめて表示する場合のシグネチャーです。
-   *
-   * `items` は必須で、各要素は `{ items }` を持つグループである必要があります。
-   *
-   * @template TItems グループの一覧の型です。
-   */
-  <TItems extends readonly ItemGroup[]>(
-    props: Omit<AutocompleteProps<TItems[number]["items"][number]>, "items"> & {
-      items: TItems;
-    },
-  ): IComponent.Return;
-
-  /**
-   * フラットな項目の一覧を表示する場合のシグネチャーです。
-   *
-   * `items` は省略でき、省略した場合は子要素をそのまま表示します。
-   *
-   * @template TItemValue 各項目の値の型です。
-   */
-  <TItemValue>(
-    props: Omit<AutocompleteProps<TItemValue>, "items"> & {
-      items?: readonly TItemValue[] | undefined;
-    },
-  ): IComponent.Return;
-
+interface AutocompleteType extends IComponent<AutocompleteProps> {
   /**
    * {@link useAutocompleteContext} です。
    */
@@ -539,7 +526,24 @@ export const Autocomplete: AutocompleteType = /*#__PURE__*/ Object.assign(
               <AutocompleteScrollArea {...partsProps.scrollArea}>
                 <AutocompleteViewport {...partsProps.viewport}>
                   <AutocompleteContent {...partsProps.content}>
-                    <AutocompleteList {...partsProps.list} />
+                    <AutocompleteList {...partsProps.list}>
+                      {(item, index) => {
+                        const itemPartsProps = partsProps.getItemPartsProps(item, index);
+                        if ("item" in itemPartsProps) {
+                          return <AutocompleteItem {...itemPartsProps.item} />;
+                        }
+
+                        return (
+                          <AutocompleteGroup {...itemPartsProps.group}>
+                            <AutocompleteCollection {...itemPartsProps.collection}>
+                              {(item, index) => (
+                                <AutocompleteItem {...itemPartsProps.getItemProps(item, index)} />
+                              )}
+                            </AutocompleteCollection>
+                          </AutocompleteGroup>
+                        );
+                      }}
+                    </AutocompleteList>
                   </AutocompleteContent>
                 </AutocompleteViewport>
                 <AutocompleteScrollbar {...partsProps.scrollbar}>
@@ -570,7 +574,7 @@ export namespace Autocomplete {
   /**
    * {@link AutocompleteProps} です。
    */
-  export type Props<TItemValue = unknown> = AutocompleteProps<TItemValue>;
+  export type Props = AutocompleteProps;
 
   /**
    * {@link AutocompleteContext} です。
