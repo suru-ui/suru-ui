@@ -10,6 +10,7 @@ export default defineMain({
   addons: ["@storybook/addon-docs", "@storybook/addon-themes", "@storybook/addon-vitest"],
   core: {
     builder: "@storybook/builder-vite",
+    allowedHosts: ["storybook.tai-kun.dev"],
     disableTelemetry: true,
   },
   async viteFinal(config) {

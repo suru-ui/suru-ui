@@ -12,7 +12,10 @@ run = [
 ]
 
 [tasks.dev]
-run = [{ task = "prepare" }, "npx blume dev"]
+run = [
+  { task = "prepare" },
+  "sh -c 'node ./scripts/watch-astro-config.mjs & WATCHER=$!; trap \"kill $WATCHER\" EXIT; npx blume dev'",
+]
 
 [tasks.build]
 run = [{ task = "prepare" }, "npx blume build"]
