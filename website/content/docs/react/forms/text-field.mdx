@@ -1,0 +1,167 @@
+---
+title: TextField
+description: 文字入力欄を表示するコンポーネントです。
+---
+
+## 使い方
+
+```tsx
+import { TextField } from "@suru-ui/react";
+// または、
+import { TextField } from "@suru-ui/react/text-field";
+
+<TextField placeholder="田中 太郎" />;
+```
+
+<Component path="react/text-field/basic" />
+
+## 例
+
+### アドオン付き
+
+`startAddons` と `endAddons` を指定すると、入力欄の先頭と末尾に接頭辞、接尾辞、アイコンなどを表示できます。
+
+<Component path="react/text-field/addons" />
+
+### 主な外観
+
+<Component path="react/text-field/variants" />
+
+### 色
+
+`color` プロパティーで指定した色は、フォーカス時の枠線に適用されます。
+
+<Component path="react/text-field/colors" />
+
+### 角丸
+
+<Component path="react/text-field/radius" />
+
+### 枠線
+
+`outlined` プロパティーを指定すると枠線を表示します。
+
+<Component path="react/text-field/outlined" />
+
+### 大きさ
+
+<Component path="react/text-field/sizes" />
+
+### エラー
+
+[Field](/docs/react/forms/field/) の検証に失敗すると、入力欄の枠線がエラー色になります。
+
+<Component path="react/text-field/error" />
+
+### 無効
+
+`disabled` プロパティーを指定すると、操作できない入力欄を表示します。
+
+<Component path="react/text-field/disabled" />
+
+## 構成
+
+```tsx
+import * as TextField from "@suru-ui/react/text-field";
+
+<TextField.Root>
+  <TextField.Addon />
+  <TextField.Input />
+  <TextField.Addon />
+</TextField.Root>
+```
+
+## API リファレンス
+
+### TextField
+
+`TextField` は `Root` のプロパティーに加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    endAddons: {
+      type: "Iterable<React.ReactNode>",
+      description: "入力欄の末尾に表示する内容です。",
+    },
+    slotProps: {
+      type: '{ addon?: Omit<TextField.Addon.Props, "children">; input?: TextField.Input.Props }',
+      description:
+        "各パーツに個別のプロパティーを渡すためのオブジェクトです。各パーツのプロパティーが優先されます。",
+    },
+    startAddons: {
+      type: "Iterable<React.ReactNode>",
+      description: "入力欄の先頭に表示する内容です。",
+    },
+  }}
+/>
+
+### Root
+
+文字入力欄の入力欄と Addon をまとめるルート要素です。指定したスタイルプロパティーは、子パーツへ継承されます。
+
+<TypeTable
+  type={{
+    color: {
+      type: '"blue" | "green" | "grey" | "magenta" | "orange" | "purple" | "red" | "yellow"',
+      default: '"grey"',
+      description: "フォーカス時に枠線へ適用する色を指定します。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "false",
+      description: "枠線を表示するかどうかを指定します。",
+    },
+    radius: {
+      type: '"none" | "sm" | "md" | "lg" | "full"',
+      default: "size",
+      description:
+        '角丸を指定します。"none" は角を直角にし、"full" は完全な丸形になります。既定値は size です。',
+    },
+    size: {
+      type: '"sm" | "md" | "lg"',
+      default: '"md"',
+      description: "サイズを指定します。",
+    },
+    variant: {
+      type: '"naked" | "liquid"',
+      default: '"liquid"',
+      description:
+        '主な外観を指定します。"liquid" は薄い塗りつぶし、"naked" は背景のないテキスト入力欄になります。',
+    },
+  }}
+/>
+
+### Input
+
+文字入力欄の入力欄です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/input#api-reference) を受け入れます。
+
+`type` プロパティーには、ボタンやチェックボックスなどの入力項目以外の値を指定できます。
+
+### Addon
+
+入力欄の左右に表示する補助コンポーネントです。接頭辞、接尾辞、アイコンなどを表示できます。
+
+<TypeTable
+  type={{
+    className: {
+      type: "string | function",
+      description:
+        "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    disableFocusOnClick: {
+      type: "boolean",
+      default: "false",
+      description: "クリック時の入力欄への自動フォーカスを無効にするかどうかを指定します。",
+    },
+    render: {
+      type: "React.ReactElement | function",
+      description:
+        "React 要素、またはそれを返す関数です。コンポーネントの HTML 要素を別のタグに置き換えたり、別のコンポーネントと組み合わせたりすることができます。",
+    },
+    style: {
+      type: "React.CSSProperties | function",
+      description:
+        "要素に適用されるスタイルオブジェクト、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+  }}
+/>

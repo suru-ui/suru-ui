@@ -224,3 +224,4 @@ $RECYCLE.BIN/
 dist/
 __screenshots__/
 reports/
+.blume-verify/

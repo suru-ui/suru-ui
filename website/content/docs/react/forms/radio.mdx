@@ -1,0 +1,132 @@
+---
+title: Radio
+description: ラジオボタンを表示するコンポーネントです。
+---
+
+## 使い方
+
+```tsx
+import { Radio } from "@suru-ui/react";
+// または、
+import { Radio } from "@suru-ui/react/radio";
+
+<RadioGroup defaultValue="option-a">
+  <label className="flex items-center gap-2">
+    <Radio value="option-a" />
+    オプション A
+  </label>
+</RadioGroup>;
+```
+
+`Radio` は単体では選択状態を管理しないため、RadioGroup の中に置いて使います。`label` 要素で囲むと、ラベルのテキストのクリックでも選択できます。
+
+<Component path="react/radio/basic" />
+
+## 例
+
+### 主な外観
+
+<Component path="react/radio/variants" />
+
+### 枠線
+
+`outlined` プロパティーを指定すると枠線を表示します。未指定時は `variant` が `"naked"` の場合に表示します。
+
+<Component path="react/radio/outlined" />
+
+### 色
+
+<Component path="react/radio/colors" />
+
+### 大きさ
+
+<Component path="react/radio/sizes" />
+
+### 角丸
+
+<Component path="react/radio/radius" />
+
+### 制御
+
+`value` と `onValueChange` の組み合わせで、選択状態を制御できます。
+
+<Component path="react/radio/controlled" />
+
+### 無効
+
+`disabled` プロパティーを指定すると、操作できないラジオボタンを表示します。RadioGroup に `disabled` を指定すると、グループ内のすべてのラジオボタンを無効化できます。
+
+<Component path="react/radio/disabled" />
+
+## 構成
+
+```tsx
+import * as Radio from "@suru-ui/react/radio";
+
+<Radio.Root>
+  <Radio.Indicator />
+</Radio.Root>;
+```
+
+## API リファレンス
+
+### Radio
+
+`Radio` は `Root` のプロパティーに加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description:
+        "Indicator 内に表示するコンテンツ（チェックアイコンなど）です。指定しない場合は既定のチェックアイコンを表示します。",
+    },
+    slotProps: {
+      type: "{ indicator?: Radio.Indicator.Props }",
+      description:
+        "各パーツに個別のプロパティーを渡すためのオブジェクトです。各パーツのプロパティーが優先されます。",
+    },
+  }}
+/>
+
+### Root
+
+`RadioRoot` は [Base UI が受け入れるプロパティー](https://base-ui.com/react/components/radio#api-reference) に加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    color: {
+      type: '"blue" | "green" | "grey" | "magenta" | "orange" | "purple" | "red" | "yellow"',
+      default: '"grey"',
+      description:
+        "ラジオボタンの色を指定します。RadioGroup 内では、グループの値が優先されます。",
+    },
+    outlined: {
+      type: "boolean",
+      description:
+        "枠線を表示するかどうかを指定します。未指定時は variant が \"naked\" の場合に表示します。RadioGroup 内では、グループの値が優先されます。",
+    },
+    radius: {
+      type: '"none" | "sm" | "md" | "lg" | "full"',
+      default: '"full"',
+      description:
+        '角丸を指定します。"none" は角を直角にし、"full" は完全な丸形になります。RadioGroup 内では、グループの値が優先されます。',
+    },
+    size: {
+      type: '"sm" | "md" | "lg"',
+      default: '"md"',
+      description:
+        "ラジオボタンのサイズを指定します。RadioGroup 内では、グループの値が優先されます。",
+    },
+    variant: {
+      type: '"liquid" | "naked"',
+      default: '"naked"',
+      description:
+        '主な外観を指定します。"liquid" は薄い塗りつぶし、"naked" は背景のないインジケーターのみの外観になります。RadioGroup 内では、グループの値が優先されます。',
+    },
+  }}
+/>
+
+### Indicator
+
+チェック状態に応じて子要素の表示・非表示を切り替えるインジケーター要素です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/radio#api-reference) を受け入れます。

@@ -1,0 +1,213 @@
+---
+title: NumberField
+description: 数値入力欄を表示するコンポーネントです。
+---
+
+## 使い方
+
+```tsx
+import { NumberField } from "@suru-ui/react";
+// または、
+import { NumberField } from "@suru-ui/react/number-field";
+
+<NumberField defaultValue={100} />;
+```
+
+`decrement` と `increment` を指定すると増減ボタンを表示し、`scrubArea` を指定するとラベルのドラッグで値を変更できます。
+
+<Component path="react/number-field/basic" />
+
+## 例
+
+### 主な外観
+
+<Component path="react/number-field/variants" />
+
+### 色
+
+`color` プロパティーで指定した色は、フォーカス時の枠線に適用されます。
+
+<Component path="react/number-field/colors" />
+
+### 角丸
+
+<Component path="react/number-field/radius" />
+
+### 枠線
+
+`outlined` プロパティーを指定すると枠線を表示します。
+
+<Component path="react/number-field/outlined" />
+
+### 大きさ
+
+<Component path="react/number-field/sizes" />
+
+### エラー
+
+[Field](/docs/react/forms/field/) の検証に失敗すると、入力欄の枠線がエラー色になります。
+
+<Component path="react/number-field/error" />
+
+### 無効
+
+`disabled` プロパティーを指定すると、操作できない数値入力欄を表示します。
+
+<Component path="react/number-field/disabled" />
+
+## 構成
+
+```tsx
+import * as NumberField from "@suru-ui/react/number-field";
+
+<NumberField.Root>
+  <NumberField.ScrubArea>
+    <NumberField.ScrubAreaCursor />
+  </NumberField.ScrubArea>
+  <NumberField.Group>
+    <NumberField.Addon />
+    <NumberField.Input />
+    <NumberField.Addon />
+    <NumberField.Addon>
+      <NumberField.Decrement />
+    </NumberField.Addon>
+    <NumberField.Addon>
+      <NumberField.Increment />
+    </NumberField.Addon>
+  </NumberField.Group>
+</NumberField.Root>
+```
+
+## API リファレンス
+
+### NumberField
+
+`NumberField` は `Root` のプロパティーに加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    decrement: {
+      type: "boolean | React.ReactNode",
+      description:
+        "値を減らすボタンを表示します。true の場合、デフォルトのマイナスアイコンを使って表示されます。",
+    },
+    endAddons: {
+      type: "readonly React.ReactNode[]",
+      description: "入力欄の末尾に表示する内容です。",
+    },
+    increment: {
+      type: "boolean | React.ReactNode",
+      description:
+        "値を増やすボタンを表示します。true の場合、デフォルトのプラスアイコンを使って表示されます。",
+    },
+    placeholder: {
+      type: "string",
+      description: "入力欄のプレースホルダー文字列です。",
+    },
+    scrubArea: {
+      type: "React.ReactNode",
+      description: "ドラッグで値を変更できる領域です。",
+    },
+    slotProps: {
+      type: "{ addon?: NumberField.Addon.Props; decrement?: NumberField.Decrement.Props; group?: NumberField.Group.Props; increment?: NumberField.Increment.Props; input?: NumberField.Input.Props; scrubArea?: NumberField.ScrubArea.Props; scrubAreaCursor?: NumberField.ScrubAreaCursor.Props }",
+      description:
+        "各パーツに個別のプロパティーを渡すためのオブジェクトです。各パーツのプロパティーが優先されます。",
+    },
+    startAddons: {
+      type: "readonly React.ReactNode[]",
+      description: "入力欄の先頭に表示する内容です。",
+    },
+  }}
+/>
+
+### Root
+
+`NumberField.Root` は [Base UI が受け入れるプロパティー](https://base-ui.com/react/components/number-field#api-reference) に加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    color: {
+      type: '"blue" | "green" | "grey" | "magenta" | "orange" | "purple" | "red" | "yellow"',
+      default: '"grey"',
+      description:
+        "フォーカス時に枠線へ適用する色を指定します。ActionGroup 内では、グループの値が優先されます。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "false",
+      description:
+        "枠線を表示するかどうかを指定します。ActionGroup 内では、グループの値が優先されます。",
+    },
+    radius: {
+      type: '"none" | "sm" | "md" | "lg" | "full"',
+      default: "size",
+      description:
+        '角丸を指定します。"none" は角を直角にし、"full" は完全な丸形になります。既定値は size です。ActionGroup 内では、グループの値が優先されます。',
+    },
+    size: {
+      type: '"sm" | "md" | "lg"',
+      default: '"md"',
+      description:
+        "サイズを指定します。ActionGroup 内では、グループの値が優先されます。",
+    },
+    variant: {
+      type: '"naked" | "liquid"',
+      default: '"liquid"',
+      description:
+        '主な外観を指定します。"liquid" は薄い塗りつぶし、"naked" は背景のない数値入力欄になります。ActionGroup 内では、グループの値が優先されます。',
+    },
+  }}
+/>
+
+### Group
+
+入力欄と増減ボタンをまとめるグループ要素です。入力欄以外の場所をクリックすると、入力欄へフォーカスします。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/number-field#api-reference) を受け入れます。
+
+### Input
+
+数値の入力欄です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/number-field#api-reference) を受け入れます。
+
+### Addon
+
+入力欄の左右に表示する補助コンポーネントです。接頭辞、接尾辞、アイコンなどを表示できます。
+
+<TypeTable
+  type={{
+    className: {
+      type: "string | function",
+      description:
+        "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    render: {
+      type: "React.ReactElement | function",
+      description:
+        "React 要素、またはそれを返す関数です。コンポーネントの HTML 要素を別のタグに置き換えたり、別のコンポーネントと組み合わせたりすることができます。",
+    },
+    style: {
+      type: "React.CSSProperties | function",
+      description:
+        "要素に適用されるスタイルオブジェクト、またはコンポーネントの状態に基づいてそれを返す関数です。",
+    },
+    disableFocusOnClick: {
+      type: "boolean",
+      default: "false",
+      description: "クリック時の入力欄への自動フォーカスを無効にするかどうかを指定します。",
+    },
+  }}
+/>
+
+### Decrement
+
+値を減らすボタンです。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/number-field#api-reference) を受け入れます。
+
+### Increment
+
+値を増やすボタンです。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/number-field#api-reference) を受け入れます。
+
+### ScrubArea
+
+ドラッグで値を変更できる領域を提供するコンポーネントです。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/number-field#api-reference) を受け入れます。
+
+### ScrubAreaCursor
+
+スクラブ中にネイティブカーソルの代わりに表示する要素です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/number-field#api-reference) を受け入れます。

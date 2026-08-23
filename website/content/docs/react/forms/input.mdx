@@ -1,0 +1,109 @@
+---
+title: Input
+description: テキスト入力欄を表示するコンポーネントです。
+---
+
+## 使い方
+
+```tsx
+import { Input } from "@suru-ui/react";
+// または、
+import { Input } from "@suru-ui/react/input";
+
+<Input placeholder="田中 太郎" />;
+```
+
+<Component path="react/input/basic" />
+
+## 例
+
+### 主な外観
+
+<Component path="react/input/variants" />
+
+### 色
+
+`color` プロパティーで指定した色は、フォーカス時の枠線に適用されます。
+
+<Component path="react/input/colors" />
+
+### 角丸
+
+<Component path="react/input/radius" />
+
+### 枠線
+
+`outlined` プロパティーを指定すると枠線を表示します。
+
+<Component path="react/input/outlined" />
+
+### 大きさ
+
+<Component path="react/input/sizes" />
+
+### エラー
+
+[Field](/docs/react/forms/field/) の検証に失敗すると、入力欄の枠線がエラー色になります。
+
+<Component path="react/input/error" />
+
+### 無効
+
+`disabled` プロパティーを指定すると、操作できない入力欄を表示します。
+
+<Component path="react/input/disabled" />
+
+## 構成
+
+```tsx
+import * as Input from "@suru-ui/react/input";
+
+<Input.Root />;
+```
+
+## API リファレンス
+
+### Root
+
+`Input.Root` は [Base UI が受け入れるプロパティー](https://base-ui.com/react/components/input#api-reference) に加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    color: {
+      type: '"blue" | "green" | "grey" | "magenta" | "orange" | "purple" | "red" | "yellow"',
+      default: '"grey"',
+      description:
+        "フォーカス時に枠線へ適用する色を指定します。ActionGroup 内では、グループの値が優先されます。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "false",
+      description:
+        "枠線を表示するかどうかを指定します。ActionGroup 内では、グループの値が優先されます。",
+    },
+    radius: {
+      type: '"none" | "sm" | "md" | "lg" | "full"',
+      default: "size",
+      description:
+        '角丸を指定します。"none" は角を直角にし、"full" は完全な丸形になります。既定値は size です。ActionGroup 内では、グループの値が優先されます。',
+    },
+    size: {
+      type: '"sm" | "md" | "lg"',
+      default: '"md"',
+      description:
+        "サイズを指定します。ActionGroup 内では、グループの値が優先されます。",
+    },
+    type: {
+      type:
+        '"date" | "datetime-local" | "email" | "file" | "hidden" | "month" | "number" | "password" | "search" | "tel" | "text" | "time" | "url" | "week"',
+      default: '"text"',
+      description: "入力項目です。",
+    },
+    variant: {
+      type: '"naked" | "liquid"',
+      default: '"liquid"',
+      description:
+        '主な外観を指定します。"liquid" は薄い塗りつぶし、"naked" は背景のないテキスト入力欄になります。ActionGroup 内では、グループの値が優先されます。',
+    },
+  }}
+/>

@@ -1,0 +1,40 @@
+---
+title: Form
+description: フォームのルートコンポーネントです。
+---
+
+## 使い方
+
+```tsx
+import { Form } from "@suru-ui/react";
+// または、
+import { Form } from "@suru-ui/react/form";
+
+<Form>
+  <Field name="url" label="ホームページ">
+    <Input type="url" />
+  </Field>
+</Form>;
+```
+
+`errors` プロパティーに項目名をキーとするエラーメッセージのオブジェクトを渡すと、対応するフィールドにエラーメッセージを表示します。`onFormSubmit` は検証に成功したときに呼び出され、引数でフォームの入力値を受け取ります。
+
+<Component path="react/form/basic" />
+
+## 構成
+
+```tsx
+import * as Form from "@suru-ui/react/form";
+
+<Form.Root />;
+```
+
+## API リファレンス
+
+### Form
+
+`Form` は `Root` と同じプロパティーを受け入れます。
+
+### Root
+
+`Form.Root` は [Base UI が受け入れるプロパティー](https://base-ui.com/react/components/form#api-reference) を受け入れます。
