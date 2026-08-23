@@ -845,16 +845,10 @@
     --sui_autocomplete_item-color-hover: ;
     --sui_autocomplete_item-color-active: ;
     --sui_autocomplete_item-letter_spacing: ;
+    --sui_autocomplete_item-background_color-active: ;
+    --sui_autocomplete_item-background_color-hover: ;
+    --sui_autocomplete_item-background_color-normal: ;
     --sui_autocomplete_item-border_radius: ;
-    --sui_autocomplete_item-canvas-active: ;
-    --sui_autocomplete_item-canvas-hover: ;
-    --sui_autocomplete_item-canvas-normal: ;
-    --sui_autocomplete_item-highlighted_canvas-active: ;
-    --sui_autocomplete_item-highlighted_canvas-hover: ;
-    --sui_autocomplete_item-highlighted_canvas-normal: ;
-    --sui_autocomplete_item-highlighted_color-active: ;
-    --sui_autocomplete_item-highlighted_color-hover: ;
-    --sui_autocomplete_item-highlighted_color-normal: ;
   }
 
   /* 静的 */
@@ -878,7 +872,7 @@
     color: var(--_sui_autocomplete_item-color, var(--sui_autocomplete_item-color-normal));
     letter-spacing: var(--sui_autocomplete_item-letter_spacing);
     background-color: var(--_sui_autocomplete_item-canvas,
-                        var(--sui_autocomplete_item-canvas-normal)
+                        var(--sui_autocomplete_item-background_color-normal)
                       );
     border-radius: var(--sui_autocomplete_item-border_radius);
   }
@@ -890,9 +884,9 @@
     --sui_autocomplete_item-color-normal: var(--sui-grey-naked-canvas_text-normal);
     --sui_autocomplete_item-color-hover: var(--sui-grey-naked-canvas_text-normal);
     --sui_autocomplete_item-color-active: var(--sui-grey-naked-canvas_text-strong);
-    --sui_autocomplete_item-canvas-active: var(--sui-grey-naked-canvas-strong);
-    --sui_autocomplete_item-canvas-hover: var(--sui-grey-naked-canvas-subtle);
-    --sui_autocomplete_item-canvas-normal: var(--sui-grey-naked-canvas-normal);
+    --sui_autocomplete_item-background_color-active: var(--sui-grey-naked-canvas-strong);
+    --sui_autocomplete_item-background_color-hover: var(--sui-grey-naked-canvas-subtle);
+    --sui_autocomplete_item-background_color-normal: var(--sui-grey-naked-canvas-normal);
   }
 
   .sui_autocomplete_portal-size_sm {
@@ -942,13 +936,13 @@
     @media (any-hover: hover) {
       &:hover {
         --_sui_autocomplete_item-color: var(--sui_autocomplete_item-color-hover);
-        --_sui_autocomplete_item-canvas: var(--sui_autocomplete_item-canvas-hover);
+        --_sui_autocomplete_item-canvas: var(--sui_autocomplete_item-background_color-hover);
       }
     }
 
     &:active {
       --_sui_autocomplete_item-color: var(--sui_autocomplete_item-color-active);
-      --_sui_autocomplete_item-canvas: var(--sui_autocomplete_item-canvas-active);
+      --_sui_autocomplete_item-canvas: var(--sui_autocomplete_item-background_color-active);
     }
   }
 
