@@ -1,0 +1,112 @@
+---
+title: Field
+description: ラベル、入力欄、エラーメッセージ、説明文をグループ化し、検証状態を管理するフィールドコンポーネントです。
+---
+
+## 使い方
+
+```tsx
+import { Field } from "@suru-ui/react";
+// または、
+import { Field } from "@suru-ui/react/field";
+
+<Field label="名前" description="プロフィールに表示されます。">
+  <TextField />
+</Field>;
+```
+
+`label` プロパティーで入力欄の上にラベルを、`description` プロパティーで入力欄の下に説明文を表示します。子要素には入力欄コンポーネントを指定します。
+
+<Component path="react/field/basic" />
+
+## 例
+
+### エラー
+
+`errorMatches` プロパティーに検証状態とエラーメッセージの対応を指定すると、検証に失敗したときにメッセージを表示します。
+
+<Component path="react/field/error" />
+
+## 構成
+
+```tsx
+import * as Field from "@suru-ui/react/field";
+
+<Field.Root>
+  <Field.Label />
+  <Field.Control />
+  <Field.Description />
+  <Field.Error />
+  <Field.Item>
+    <Field.Label />
+    <Field.Description />
+  </Field.Item>
+  <Field.Validity />
+</Field.Root>;
+```
+
+## API リファレンス
+
+### Field
+
+`Field` は `Root` のプロパティーに加えて、以下のプロパティーを受け入れます:
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "フィールドの内容です。Label の後、Description の前に表示されます。",
+    },
+    description: {
+      type: "React.ReactNode",
+      description: "入力欄の下に表示する説明文です。",
+    },
+    errorMatches: {
+      type: "boolean | string | readonly string[] | { [match in Field.ErrorMatch]?: React.ReactNode }",
+      default: "true",
+      description:
+        "表示するエラーメッセージの検証状態を指定します。文字列または文字列の配列を指定すると、対応する検証状態の既定メッセージを表示します。オブジェクトを指定すると、検証状態ごとのメッセージを指定できます。false を指定すると、エラーメッセージを表示しません。",
+    },
+    label: {
+      type: "React.ReactNode",
+      description: "入力欄の上に表示するラベルです。",
+    },
+    slotProps: {
+      type: "{ description?: Field.Description.Props; error?: Field.Error.Props; label?: Field.Label.Props }",
+      description:
+        "各パーツに個別のプロパティーを渡すためのオブジェクトです。各パーツのプロパティーが優先されます。",
+    },
+    validity: {
+      type: "(validity: ValidityState) => React.ReactNode",
+      description: "入力欄の検証状態に応じて表示する内容です。",
+    },
+  }}
+/>
+
+### Root
+
+`Field.Root` は [Base UI が受け入れるプロパティー](https://base-ui.com/react/components/field#api-reference) を受け入れます。
+
+### Label
+
+`Field.Label` は [Base UI が受け入れるプロパティー](https://base-ui.com/react/components/field#api-reference) を受け入れます。
+
+### Control
+
+`Field.Control` は [Base UI が受け入れるプロパティー](https://base-ui.com/react/components/field#api-reference) を受け入れます。
+
+### Description
+
+`Field.Description` は [Base UI が受け入れるプロパティー](https://base-ui.com/react/components/field#api-reference) を受け入れます。
+
+### Error
+
+`Field.Error` は [Base UI が受け入れるプロパティー](https://base-ui.com/react/components/field#api-reference) を受け入れます。
+
+### Item
+
+`Field.Item` は [Base UI が受け入れるプロパティー](https://base-ui.com/react/components/field#api-reference) を受け入れます。
+
+### Validity
+
+`Field.Validity` は [Base UI が受け入れるプロパティー](https://base-ui.com/react/components/field#api-reference) を受け入れます。
