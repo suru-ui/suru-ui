@@ -14,6 +14,7 @@ import {
   type AutocompleteAddonProps,
   type AutocompleteClearProps,
   type AutocompleteEmptyProps,
+  type AutocompleteGroupProps,
   type AutocompleteInputProps,
   type AutocompletePopupProps,
   type AutocompleteRootRadius,
@@ -25,6 +26,7 @@ import {
   type AutocompleteContentProps,
   type AutocompleteViewportProps,
   type AutocompleteScrollbarProps,
+  type AutocompleteCollectionProps,
   type AutocompleteInputGroupProps,
   type AutocompletePositionerProps,
   type AutocompleteScrollAreaProps,
@@ -52,8 +54,6 @@ import {
   AutocompletePositioner,
   AutocompleteScrollArea,
   useAutocompleteContext,
-  type AutocompleteGroupProps,
-  type AutocompleteCollectionProps,
 } from "./autocomplete.parts.jsx";
 
 /**
@@ -116,14 +116,14 @@ export type AutocompleteSlotProps = {
   readonly clear?: AutocompleteClearProps | undefined;
 
   /**
-   * {@link AutocompleteContent} に渡すプロパティーです。
-   */
-  readonly content?: Omit<AutocompleteContentProps, "children"> | undefined;
-
-  /**
    * {@link AutocompleteCollection} に渡すプロパティーです。
    */
   readonly collection?: Omit<AutocompleteCollectionProps, "children"> | undefined;
+
+  /**
+   * {@link AutocompleteContent} に渡すプロパティーです。
+   */
+  readonly content?: Omit<AutocompleteContentProps, "children"> | undefined;
 
   /**
    * {@link AutocompleteCorner} に渡すプロパティーです。
@@ -201,19 +201,17 @@ export type AutocompleteItemPartsProps =
       readonly item: AutocompleteItemProps;
     }
   | {
-      readonly group: AutocompleteGroupProps;
-
       readonly collection: Omit<AutocompleteCollectionProps, "children">;
 
       readonly getItemProps: (item: any, index: number) => AutocompleteItemProps;
+
+      readonly group: AutocompleteGroupProps;
     };
 
 /**
  * 各パーツに渡すプロパティーをまとめたものです。
  */
 export type AutocompletePartsProps = {
-  readonly getItemPartsProps: (item: any, index: number) => AutocompleteItemPartsProps;
-
   /**
    * Chevron アイコンを包む {@link AutocompleteAddon} に渡すプロパティーです。
    *
@@ -252,6 +250,8 @@ export type AutocompletePartsProps = {
    * 入力欄の末尾に表示する {@link AutocompleteAddon} の一覧です。
    */
   readonly endAddons: readonly AutocompleteAddonProps[];
+
+  readonly getItemPartsProps: (item: any, index: number) => AutocompleteItemPartsProps;
 
   /**
    * {@link AutocompleteInput} に渡すプロパティーです。
