@@ -1,6 +1,6 @@
 ---
 name: component-docs
-description: Suru UI モノレポのコンポーネントドキュメントを作成するときに使用します。`website/content/docs/react/` の MDX ドキュメント、`website/examples/` の埋め込みデモの作成、Storybook stories との対応付け、「構成」章のパーツツリー記述、TypeTable を使った API リファレンスの書き方を扱います。`packages/react/src/<カテゴリー>/<名前>/` の実装と `packages/react/stories/` の stories を情報源として、既存の Button ドキュメントと同じ方式でドキュメントを公開するときに使います。
+description: Suru UI のコンポーネントドキュメント (`website/` の MDX と examples) を作成・更新するときに使用します。
 ---
 
 # コンポーネントドキュメントの作成

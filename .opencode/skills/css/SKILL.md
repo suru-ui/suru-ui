@@ -1,18 +1,30 @@
 ---
 name: css
-description: Suru UI のコンポーネントスタイル (`packages/react/src/**/*.css`) を書く際に使用します。レイヤー、セクション構成、コメントと空行、変数グループの語彙、クラス命名、カスタムプロパティー命名、変数の参照、既定値設定、上書き設定、インタラクション、値と単位、セレクター、整形のルールと禁則をまとめています。
+description: Suru UI のコンポーネントスタイル (`packages/react/src/**/*.css`) を書くときに使用します。
 ---
 
 ## CSS のコーディングスタイル
 
-対象は `packages/react/src/**/*.css` のコンポーネントスタイルです。基準となる実例は `packages/react/src/buttons/button/button.css` です。このスキルと実例が矛盾するときは、このスキルの記述を優先します。このスキルの目的は、誰が書いても同じ CSS になることです。
+対象は `packages/react/src/**/*.css` のコンポーネントスタイルです。基準となる実例は `packages/react/src/buttons/button/button.css` と `packages/react/src/forms/input/input.css` です。このスキルと実例が矛盾するときは、このスキルの記述を優先します。このスキルの目的は、誰が書いても同じ CSS になることです。
 
-### ツール
+### ツールと自動整形
 
-- oxfmt は CSS を対象外にしています。`.oxfmtrc.json` の `ignorePatterns` に `**/*.css` が含まれます。
-- CSS の整形と検証は stylelint が担当します。`mise run format` が `format:stylelint` (`stylelint --fix`) を実行します。
-- stylelint の設定は `.stylelintrc.json` で、`stylelint-config-recess-order` を拡張しています。プロパティーは recess order のグループ順に並べます。
-- stylelint は宣言の順序だけを直します。列の揃え、改行、インデントは直さないため、このスキルの「整形」に従って手動で書きます。
+CSS の整形は `packages/react` ディレクトリーでの `mise run format` が担当します。何が自動で直るかを把握し、手作業と自動作業を混同しないことが重要です。
+
+- oxfmt は CSS を対象外にしています。`.config/.oxfmtrc.json` の `ignorePatterns` に `**/*.css` が含まれます。
+- `format:stylelint` (`npx stylelint --config ./.config/.stylelintrc.json --fix 'src/**/*.css'`) が、通常のプロパティー宣言の並び順 (recess order) を自動修正します。
+- `format:sort-css-variables` (`node scripts/sort-css-variables.ts`) が、CSS 変数 (`--sui_*`, `--_sui_*`) の宣言を recess order のプロパティー順に自動並べ替えします。
+  - 変数名の接尾部分を CSS プロパティー名と照合して並べます (例: `--sui_button-border_radius` → `border-radius`)。
+  - 同じプロパティーに対応する変種 (`normal` / `hover` / `active` など) の相対的な順序は元のまま維持されます。
+  - プロパティー判定できない変数はブロックの末尾に移動し、変数名順に並びます。
+  - 対象は CSS 変数の宣言だけで構成されるルールです。通常のプロパティーが混ざるルールは変更されません。
+- stylelint も sort スクリプトも宣言の順序しか直しません。列の揃え、改行、インデント、セクション構成、セレクターの順序はこのスキルに従って手動で書きます。
+
+したがって、ルール内の宣言の並び順を手動で管理する必要はありません。変数を追加するときは、同一プロパティーの変種 (例: `-normal` / `-hover` / `-active`) を隣接させておけば、あとは自動整形が整列します。
+
+禁止:
+
+- 通常のプロパティーや CSS 変数の並び順を手動で整えること (自動整形に任せる)。
 
 ### レイヤー
 
@@ -28,8 +40,8 @@ description: Suru UI のコンポーネントスタイル (`packages/react/src/*
 
 セクション内では同じセレクターを複数のルールに分け、ルールの直前にルール名のコメントを付けます。ルールの順序とコメントは次の通りです。
 
-1. `/* リセット */` — ブラウザー既定値のリセットです。コンポーネントの実装の HTML タグに合わせてリセットします。全パーツで `box-sizing: border-box` を宣言します。このセクションは省略できません。リセット対象は、ブラウザーがそのタグに適用する既定値の打ち消しだけです (例: `margin: 0px`, `padding: 0px`, `border: 0px`, `outline: none`, `background-color: transparent`, `border-radius: 0px`, フォントの`inherit`)。
-2. `/* 変数 */` — 公開カスタムプロパティー `--sui_<component>-*` を空の値で列挙します。後に「既定値設定」で代入される変数の目録です。
+1. `/* リセット */` — ブラウザー既定値の打ち消しが必要なときだけ置きます。現在のコンポーネントでは多くの場合不要で、要素の既定スタイルを持つ部品 (例: action-group の `box-sizing: border-box`) でのみ使われています。
+2. `/* 変数 */` — 公開カスタムプロパティー `--sui_<component>-*` を空の値で列挙する目録です。後に「既定値設定」で代入される変数の目録です。
 3. `/* 静的 */` — カスタムプロパティーを参照しない固定スタイルです。
 4. `/* 動的 */` — カスタムプロパティーを `var()` で参照するスタイルです。
 5. `/* 既定値設定: ここから */` … `/* 既定値設定: ここまで */` — 修飾クラスごとに公開変数へ既定値を代入します。派生変数の定義もここに置きます。
@@ -37,19 +49,19 @@ description: Suru UI のコンポーネントスタイル (`packages/react/src/*
 
 省略規則:
 
-- 「変数」は公開変数が 1 つもないとき、「静的」は固定スタイルがないとき、「動的」は `var()` 参照がないとき、「既定値設定」「上書き設定」は内容がないときに省略します。
-- 省略したルール番号を飛ばしても、残ったルールの順序は変わりません。例: リセット → 静的 → 動的。
+- 「リセット」は打ち消すべき既定値がないときに省略します。「変数」は公開変数が 1 つもないとき、「静的」は固定スタイルがないとき、「動的」は `var()` 参照がないとき、「既定値設定」「上書き設定」は内容がないときに省略します。
+- 省略したルール番号を飛ばしても、残ったルールの順序は変わりません。例: 変数 → 静的 → 動的。
 - 「動的」が存在するのに「変数」が存在することはありません。「動的」は「変数」の宣言を参照するためです。
-- 「リセット」だけのパーツ (例: CircularProgress) も許されます。
+- 「リセット」だけのパーツも許されます。
 
 禁止:
 
 - セクション見出しをパーツ名以外にする (`/* root */`, `/* Root part */` など)。
 - セクション見出しを日本語にする。
 - パーツツリー順を崩す。
-- ブラウザー既定値の打ち消しを「リセット」以外のセクションに書く。特に「動的」にリセット宣言を混ぜてはいけません (例: `outline: none` や `border: 0px solid transparent` は native input の既定値の打ち消しなので必ず「リセット」へ)。
+- ブラウザー既定値の打ち消しを「リセット」以外のセクションに書く。特に「動的」にリセット宣言を混ぜてはいけません (例: native input の `outline: none` や `border: 0px solid transparent` は必ず「リセット」へ)。
 - 「既定値設定」「上書き設定」の見出しに語を足さない (`/* 変数の既定値設定 */` などは禁止。正式名称はこの一覧のまま)。
-- セクション内の各ルールの直前にコメントを付けないこと。複数のルールが 1 つのセクションに続く場合 (例: 「静的」内の `.sui_a { }` と `.sui_b { }`)、そのセクションのコメントは先頭のルールの直前に 1 つだけ置きます。
+- 複数のルールが 1 つのセクションに続く場合 (例: 「静的」内の `.sui_a { }` と `.sui_b { }`)、そのセクションのコメントは先頭のルールの直前に 1 つだけ置きます。
 
 ### コメントと空行
 
@@ -59,7 +71,6 @@ description: Suru UI のコンポーネントスタイル (`packages/react/src/*
 - `/* リセット */`, `/* 変数 */`, `/* 静的 */`, `/* 動的 */` の直後には空行を置かず、すぐルールを書きます。
 - `/* 既定値設定: ここから */`, `/* 上書き設定: ここから */` の直前と直後には空行を 1 行置きます。
 - `/* 既定値設定: ここまで */`, `/* 上書き設定: ここまで */` の直前と直後には空行を 1 行置きます。
-- 変数グループのコメント (`/* 形状 */` など) の直前と直後には空行を置きません。
 - セクション見出し (`/* Root */`) の直後には空行を置かず、すぐ `@layer` ブロックを開きます。
 - `@layer` ブロックの閉じ括弧と次のセクション見出しの間には空行を 1 行置きます。
 - ファイルの末尾は 1 つの改行で終わります。
@@ -67,78 +78,27 @@ description: Suru UI のコンポーネントスタイル (`packages/react/src/*
 禁止:
 
 - `/* リセット */` や `/* 変数 */` とその直後のルールの間に空行を入れる。
-- 変数グループコメントとその直後の宣言の間に空行を入れる。
 - ルール同士を空行なしで続ける。
 - ファイルの末尾に空行を重ねる。
 
-### 変数グループの語彙
+### 色系変数の状態サフィックス
 
-変数宣言 (カスタムプロパティーへの代入) をまとめるコメントには、次の 9 語の語彙だけを使います。
+背景・枠線・前景などの色変数は、状態をサフィックスで区別します。サフィックスは部品が必要とするものだけを使い、部品内で語形を統一します。
 
-- `/* 形状 */` — 寸法・サイズ・比率。例: `--sui_button-min_height`, `--sui_checkbox-size`, `--sui_button_content_svg-size`, `--sui_checkbox-stroke_width`。
-- `/* 空白 */` — 余白。例: `--sui_button-padding_inline`, `--sui_button_content-gap`。
-- `/* 書体 */` — フォント関連。例: `--sui_button-font_size`, `--sui_button-letter_spacing`。
-- `/* 背景 */` — 背景色。例: `--sui_button-background_color-normal`, `--sui_checkbox-canvas-normal`。
-- `/* 枠線 */` — ボーダーとアウトライン。例: `--sui_button-border_color-normal`, `--sui_button-border_radius`, `--sui_button-outline_color`。
-- `/* 前景 */` — 文字・アイコンの色。例: `--sui_button_content-color-normal`, `--sui_checkbox-canvas_text-checked`。
-- `/* 位置 */` — 配置・位置。例: `--_sui_button_pending-position`。
-- `/* 外観 */` — 見た目の状態。例: `--_sui_button_pending-visibility`。
-- `/* 変形 */` — 変形。例: `--_sui_button_content-scale`。
+- インタラクション: `normal` → `hover` → `active` → `focus_visible` の順に並べます (例: `--sui_button-background_color-normal` / `-hover` / `-active`)。
+- フォーム検証: `invalid` (例: `--sui_input-border_color-invalid`)。
+- 選択・無効などの部品固有状態: `checked`, `indeterminate`, `disabled` など。語形は部品内で統一します。
 
-適用範囲:
-
-- 語彙コメントは、カスタムプロパティーへの代入宣言 (「変数」「既定値設定」「上書き設定」内の宣言) の直前にのみ付けます。
-- 「リセット」「静的」「動的」のルールに含まれる通常のプロパティー宣言には付けません。例: `gap: var(--sui_button_content-gap);` や `position: relative;` の前に語彙コメントを置いてはいけません。
-- どの語彙にも当てはまらない変数が生まれたら、語彙を増やさずに既存の語へ分類します。寸法・サイズは「形状」、色は「背景」「枠線」「前景」のいずれか、それ以外は「位置」「外観」「変形」から合う語を選びます。
-
-禁止:
-
-- 語彙以外のコメントを変数宣言のグループ付けに使う (例: `/* stroke */`)。
-- 通常のプロパティー宣言に語彙コメントを付ける。
-- 1 つのルール内で同じグループを 2 回に分ける。同じグループの変数宣言は連続させます。
-
-グループ順とグループ内の順序:
-
-- グループの順序は 形状 → 空白 → 書体 → 背景 → 枠線 → 前景 → 位置 → 外観 → 変形 の固定順です。使わないグループは飛ばします。
-- グループ内の宣言の順序は「変数」の目録で確定し、「既定値設定」「上書き設定」でも同じ順序を保ちます。
-- 色の変数は状態順に normal → subtle → action と並べます。checked 系の変数はその後に置きます (checkbox は `checked` → `subtle-checked` → `action-checked`、radio は `checked-normal` → `checked-subtle` → `checked-action` の語形)。語形は部品内で統一します。
-- 「枠線」グループの目録は `border_color-*` → `border_width` → `border_radius` → `outline_color` → `outline_offset` の順です。
-
-目録の実例 (`button.css` から):
-
-```text
-/* 変数 */
-.sui_button {
-  /* 形状 */
-  --sui_button-min_height: ;
-  /* 空白 */
-  --sui_button-padding_inline: ;
-  /* 書体 */
-  --sui_button-font_size: ;
-  --sui_button-font_weight: ;
-  --sui_button-line_height: ;
-  --sui_button-letter_spacing: ;
-  /* 背景 */
-  --sui_button-background_color-normal: ;
-  --sui_button-background_color-subtle: ;
-  --sui_button-background_color-action: ;
-  /* 枠線 */
-  --sui_button-border_color-normal: ;
-  --sui_button-border_color-subtle: ;
-  --sui_button-border_color-action: ;
-  --sui_button-border_width: ;
-  --sui_button-border_radius: ;
-  --sui_button-outline_color: ;
-  --sui_button-outline_offset: ;
-}
-```
+禁止: 同一部品内でサフィックスの語形を混在させる (`subtle` と `hover` を併用するなど)。
 
 ### クラス命名
 
 - パーツクラスは `sui_<component>_<part>` です。例: `sui_button_content`。
 - 修飾子は `sui_<component>-<prop>_<value>` です。単語は `_` で区切り、コンポーネント名とプロパティー名は `-` で区切ります。例: `sui_button-size_sm`, `sui_button-color_red`, `sui_button-variant_solid`。
+- ブール値の修飾子は `sui_<component>-<prop>` です。例: `sui_button-muted`, `sui_button-outlined`。
 - 状態クラスは `sui_<component>-<state>` です。例: `sui_button-pending`, `sui_button-disabled`。
 - 状態内部の修飾クラスは `sui_<component>_<part>-<state>` です。例: `sui_button_pending-overlay`。
+- Base UI 由来の状態は data 属性セレクターで受けて、Suru UI 固有の状態クラスへ反映します (実装側では `(state) => state.checked && "sui_checkbox-checked"` のように render props で付与)。
 - 禁止: セパレーターを混同する (`sui_button-size-sm` のように `-` だけで区切る、`sui_button_size_sm` のように `_` だけにする)。
 
 ### カスタムプロパティー命名
@@ -159,7 +119,7 @@ description: Suru UI のコンポーネントスタイル (`packages/react/src/*
 - 値を参照するときは常に `var()` を使います。テーマトークンも同じです。例: `var(--sui-size-sm)`, `var(--sui-focusring_color)`。
 - ユーティリティー関数トークンは `var()` を付けずに呼び出します。例: `--sui_button-padding_inline: --sui-space(4);`。関数の定義は `packages/theme/src/utilities.css` にあります。
 - private 変数の参照にはフォールバックを付けます。フォールバックは公開変数か既定の計算式です。例: `var(--_sui_button-background_color, var(--sui_button-background_color-normal))`。
-- フォールバックには、必ず実在する変数か、既定値として定義済みの値を書きます。`auto` のような既定値を書くときは、「既定値設定」で公開変数に代入してから `var()` で参照します (例: `--sui_accordion_panel-height: auto;` を定義し `var(--sui_accordion_panel-height)` を既定値に使う)。
+- フォールバックには、必ず実在する変数か、既定値として定義済みの値を書きます。`auto` のような既定値を書くときは、「既定値設定」で公開変数に代入してから `var()` で参照します。
 - 公開変数を参照するだけの場合はフォールバックを付けません。例: `min-height: var(--sui_button-min_height);`。
 - 状態の上書きは private 変数への代入で行い、「動的」ルールがその変数を参照します。
 - 禁止: テーマトークンを `var()` なしで書く。
@@ -169,14 +129,14 @@ description: Suru UI のコンポーネントスタイル (`packages/react/src/*
 
 ### 既定値設定
 
-- 公開変数 (`--sui_<component>-*`) への代入だけを書きます。
-- 派生変数をここで定義します。
+- 公開変数 (`--sui_<component>-*`) への代入と、派生変数の定義だけを書きます。
 - ルールの順序: 全修飾クラス共通の既定値 (セレクター `.sui_<component>`) を最初に置き、次に修飾クラスを サイズ → 角丸 → バリアント → 色 の順に並べます。
-- サイズは小 → 大 (sm → md → lg)、角丸は none → rounded → full、バリアントは solid → naked → liquid の順です。
+- サイズは sm → md → lg、角丸は none → sm → md → lg → full、バリアントは solid → naked → liquid の順です。
 - 色は grey → blue → purple → magenta → red → orange → yellow → green の順です。
-- 色とバリアントのトークンが色ごとに変わる部品 (button) では、色のルールの中に `&.sui_button-variant_*` をネストします。バリアントが色に依存しない部品 (checkbox, radio) ではバリアントのルールを先に並べます。
+- 色とバリアントの両方に依存するトークンは、色のルールの中に `&.<コンポーネント>-variant_*` をネストします。バリアントが色に依存しない部品ではバリアントのルールを先に並べます。
+- `muted` のようなブール修飾による例外は、色ルールの後ろに置きます (button の `.sui_button-muted:not(.sui_button-color_grey)` の形)。
+- 各ルール内の宣言の並びは自動整形されます (「ツールと自動整形」参照)。
 - 禁止: 「既定値設定」で private 変数に代入する。
-- 禁止: グループ順とグループ内の宣言順を「変数」の目録と変える。
 
 ### 上書き設定
 
@@ -200,7 +160,7 @@ description: Suru UI のコンポーネントスタイル (`packages/react/src/*
 ### 値と単位
 
 - 長さには単位を明示します (`0px`)。`0` だけは書きません。
-- 単位を持たないプロパティー (scale, opacity, line-height, stroke-width, z-index) と比率 (aspect-ratio の `1 / 1`) は単位なしで書きます。
+- 単位を持たないプロパティー (scale, opacity, z-index) と比率 (aspect-ratio の `1 / 1`) は単位なしで書きます。line-height は `1lh` のように単位付きで書きます。
 - 角度には `deg` を付けます (`-90deg`)。
 - パーセンテージは必要時に `%` を付けます (`75%`)。
 - 色のリテラルは `transparent` と `currentColor` だけを使えます。他の色はテーマトークンを参照します。
@@ -222,7 +182,7 @@ description: Suru UI のコンポーネントスタイル (`packages/react/src/*
 
 - 禁止: カンマで複数のセレクターを並べる (セレクターリスト)。
 - 禁止: 結合子以外の位置でセレクターを改行する。
-- 禁止: セレクターの長さに余白があるのに改行する。おおよそ 100 文字を超えたら改行します。
+- 禁止: おおよそ 100 文字を超えるセレクターを改行しない。
 
 ### 状態セクション (`@layer sui.important`)
 
@@ -249,36 +209,40 @@ description: Suru UI のコンポーネントスタイル (`packages/react/src/*
 }
 ```
 
-- 長い `var()` と `calc()` は引数ごとに改行します。ネストする関数と引数は、上の行の関数の開始列から 2 スペース後ろにインデントします。閉じ括弧は対応する関数の開始列に揃え、トップレベルの `var()` の終わり (`);`) は値の列に揃えます。例:
+- 長い `var()` と `calc()` は引数ごとに改行します。ネストする関数と引数は、上の行の関数の開始列から 2 スペース後ろにインデントします。閉じ括弧は対応する関数の開始列に揃えます。例:
 
 ```text
-.sui_button {
-  padding-inline: var(--_sui_button-padding_inline,
-                    calc(
-                      var(--sui_button-padding_inline) - var(--_sui_button-border_width, 0px)
-                    )
-                  );
+.sui_input {
+  --sui_input-padding_block: round(
+                               down,
+                               calc(
+                                 (var(--sui_input-min_height) - 1lh) / 2
+                                 - var(--_sui_input-border_width, 0px)
+                               ),
+                               1px
+                             );
 }
 ```
 
-- border や outline などの複合値は、構成要素ごとに改行して値の列に揃えます。例:
+- border などの複合値を改行するときも、継続行を値の開始列に揃えます。短ければ 1 行で構いません。
 
 ```text
-.sui_button {
-  outline: var(--_sui_button-outline_width, 0px)
-           solid
-           var(--sui_button-outline_color);
+.sui_button::after {
+  border: var(--_sui_button-border_color, transparent)
+          solid
+          var(--_sui_button-border_width, 0px);
 }
 ```
 
 - 禁止: 列揃えをタブで行う。
-- 禁止: ルール内のプロパティー名を再び並べ替える。順序は stylelint (recess-order) が決めます。
 
 ### 検証
 
-- 変更した CSS は次の順で検証します。検証せずに終わらせないでください。
-  - stylelint: `npx stylelint --config ./.config/.stylelintrc.json 'src/**/*.css'` を `packages/react` ディレクトリーから実行し、エラーがないことを確認します。修正が必要なときは `--fix` 付きで実行し、その後にこのスキルの指示 (列の揃え、改行、セクション構成) に従って手で直します。
-  - 目録との整合: 「変数」の目録に載っている公開変数が「既定値設定」で必ず代入されていることを確認します。目録に載っていない公開変数の代入がないか、目録の変数だけに共通しているか、代入の順序 (目録の順) を確認します。
-  - 変更に値の変更が含まれないこと: git diff で、移動・並べ替え・コメントの追加以外に値の変化がないことを確認します。
-  - テスト: 変更したコンポーネントのテスト (`*.client.test.tsx`, `*.server.test.ts`) が存在すれば実行して、回帰がないことを確認します。
-  - ファイル末尾は 1 つの改行で終わることを確認します。
+変更した CSS は次の順で検証します。検証せずに終わらせないでください。
+
+1. 自動整形: `packages/react` ディレクトリーで `mise run format` を実行し、stylelint と sort スクリプトに直させる。
+2. stylelint: `npx stylelint --config ./.config/.stylelintrc.json 'src/**/*.css'` でエラーが残っていないことを確認する。
+3. 目録との整合: 「変数」の目録に載っている公開変数が「既定値設定」で必ず代入されていること、目録に載っていない公開変数の代入がないことを確認する。
+4. git diff で、意図しない値の変化がないことを確認する (移動・並べ替え・コメントの追加以外)。
+5. 変更したコンポーネントのテストが存在すれば実行して、回帰がないことを確認する。
+6. ファイル末尾が 1 つの改行で終わることを確認する。

@@ -1,6 +1,6 @@
 ---
 name: new-component
-description: Suru UI モノレポ (`packages/react`) に新しい React コンポーネントを追加するときに使用します。新しいコンポーネントの作成、コンポーネントの追加、`*.parts.tsx` の Base UI ラッパーとパーツ実装、Root と公開本体の型分離、ジェネリック型、`slotProps`、グループコンテキスト、CSS クラス設計、Storybook stories、web サイトの mdx ドキュメント（API リファレンスを含む）、テスト（`*.client.test.tsx`）、`package.json` のサブパスエクスポートを扱います。既存の Button、Field、Form、Checkbox と同じ方式で実装し、`@base-ui/react`（Base UI）を基盤としたヘッドレスコンポーネントをスタイル付きで公開するときに使います。
+description: Suru UI モノレポ (`packages/react`) に新しい React コンポーネントを追加するときに使用します。
 ---
 
 # 新しい React コンポーネントの追加
@@ -9,7 +9,7 @@ description: Suru UI モノレポ (`packages/react`) に新しい React コン�
 
 Suru UI の `packages/react` に、新しい React コンポーネントを既存コーディング規約どおりに追加します。
 このスキルの目的は、書き手が変わっても同じ実装ができることです。
-既存コードを参考にするのではなく、ここで定めた規則を最優先で守ります。
+ここで定めた規則を最優先で守ります。ただし、このスキルと参照している実例が矛盾するときは、実例を優先してください。このスキルが古くなっている可能性があります。
 
 ## 併用する規範
 
@@ -17,8 +17,9 @@ Suru UI の `packages/react` に、新しい React コンポーネントを既�
 
 - `../japanese/SKILL.md` — 日本語文章の規範。JSDoc とコメントはこれに従います。
 - `../jsdoc/SKILL.md` — JSDoc の形式。パーツのドキュメントはこれに従います。
-- `../css/SKILL.md` — CSS のみ書くときのルールはこれに従います。このスキルは CSS の詳細を繰り返しません。
+- `../css/SKILL.md` — CSS を書くときのルールはこれに従います。このスキルは CSS の詳細を繰り返しません。
 - `../vitest/SKILL.md` — テストを書く場合。テスト API とモックパターンはこれに従います。
+- `../component-docs/SKILL.md` — web サイトのドキュメントを書く場合。mdx と example の詳細はこれに従います。
 
 ## 全体像
 
@@ -38,11 +39,25 @@ Suru UI は、[Base UI](https://github.com/mui/base-ui) のヘッドレスコン
 - `ColorTemplate = "solid" | "naked" | "liquid"`
 
 スタイル系プロパティーは `Size`、`Color`、`ColorTemplate`（または部品ごとの限定した union）を型に使います。
+角丸 (`radius`) の型はテーマにはなく、各部品で `"none" | Size | "full"` として定義します (例: `ButtonRootRadius`)。
+既定値は多くの場合 `radius = size` です。
+
+### カテゴリー
+
+コンポーネントは次のカテゴリーに分かれます。
+
+| カテゴリー | 内容 | 例 |
+| ---------- | ---- | -- |
+| `buttons` | ボタン系 | button, toggle-button |
+| `data-display` | 情報表示 | avatar, chip, meter, progress, alert |
+| `forms` | フォーム入力 | checkbox, input, select, slider, field, form |
+| `layout` | レイアウト | action-group, resizable |
+| `navigation` | ナビゲーション | accordion, collapsible, tabs, scroll-area |
+| `overlays` | オーバーレイ | dialog, menu, tooltip, toast |
 
 ### ディレクトリーとファイル
 
 コンポーネント 1 つは、`packages/react/src/<カテゴリー>/<名前>/` の 1 ディレクトリーにまとめます。
-カテゴリーは既存の `buttons` と `forms` に従います。既存のどちらにも合わない場合は、作業指示者に新しいカテゴリー名を確認します。
 
 ```
 packages/react/src/<カテゴリー>/<名前>/
@@ -56,469 +71,197 @@ packages/react/src/<カテゴリー>/<名前>/
 Base UI の型を Suru UI の型として公開し、`cn()` によるクラス名の合成と CSS の import を一箇所にまとめる層です。
 そのため、`Form` のように Root だけを持つコンポーネントでも、Root のラッパーは `*.parts.tsx` に置きます。
 
-カテゴリーの実例として、`buttons/button/` は `index.ts`、`button.tsx`、`button.parts.tsx`、`button.css` で構成されています（`packages/react/src/buttons/button/`）。
-
 Storybook の stories は `packages/react/stories/<カテゴリー>/<名前>.stories.tsx` に置きます。
-テストは `packages/react/tests/` に置きます。ブラウザーで実行するテストは `<名前>.client.test.tsx`、ブラウザーを必要としないロジックのテストは `<名前>.test.ts` です。
+テストは `packages/react/tests/<カテゴリー>/` に置きます。ブラウザーで実行するテストは `<名前>.client.test.tsx`、ブラウザーを必要としないロジックのテストは `<名前>.test.ts`（またはサーバー専用なら `<名前>.server.test.ts`）です。
 
-## 実装パターン
+## format による自動整形
 
-まず実装する前に、次の中からパターンを 1 つ選びます。
-選ぶ基準は次のとおりです。
+`packages/react` の `mise run format` は複数の整形器を実行します。次の項目は**手動で整える必要がありません**。意味的な正しさ (何を並べるか) だけ気にしてください。
 
-1. Base UI に同じ部品のコンポーネントがあるかどうかを、`@base-ui/react` のパッケージで調べます。
+| 整形対象 | 整形器 | 規則 |
+| -------- | ------ | ---- |
+| TS/TSX 全般 | oxfmt (`sortImports`) | import 宣言のグループ化と並び替え |
+| import/export の `{}` 内 | `scripts/sort-import-exports.ts` | 型 → 値の順。各グループ内は名前が短い順 (同長なら辞書順) |
+| JSX 属性 | `scripts/sort-jsx-props.ts` | 一般 → `aria-*` → `data-*` の順。各グループ内は短い順 (同長なら辞書順)。スプレッド属性は位置維持、コメント付き属性は対象外 |
+| 型リテラル/interface のメンバー | `scripts/sort-type-props.ts` | プロパティー・メソッド署名を名前順 (呼び出し署名など名前のないメンバーは位置維持) |
+| 型 namespace のメンバー | `scripts/sort-namespace-exports.ts` | `State` → `Props` → `Context` → `SlotProps` → その他の型 (名前順) → ネストした namespace |
+| CSS のプロパティー順 | stylelint (`--fix`) | recess order |
+| CSS 変数の宣言順 | `scripts/sort-css-variables.ts` | recess order のプロパティー順。変種の相対順序は維持 |
+
+たとえば「import の `{}` 内は `type` 付きを先に」という規則は自動整形されるため、覚える必要はありません。
+逆に、JSDoc、セクション見出し、コンポーネントの構造、命名などは自動整形されないため、このスキルの規則に従います。
+
+## パターンの選択
+
+まず実装する前に、次の中からパターンを 1 つ選びます。選ぶ基準は次のとおりです。
+
+1. Base UI に同じ部品のコンポーネントがあるかどうかを、`@base-ui/react` のパッケージ一覧で調べます。
 2. ある場合はパターン A（そのまま包む）かパターン B（パーツを組む）で、子パーツが複数で構造を持つ場合はパターン B を選びます。
 3. 複数の子をまとめて状態やスタイルを伝えるグループの場合はパターン C を併用します。
 4. Base UI にない単純な要素（`span`、`svg` など）はパターン D で `useRender` を使います。
 5. 既存の Suru UI コンポーネントの特殊形ならパターン E で既存のパーツへ委譲します。
 
-パターンを決めたら、次にパーツツリーを決めます。
-パーツは、実装したい部品の意味的な構造から決めます。
-既存の例を示します。
+パーツは、実装したい部品の意味的な構造から決めます。既存の例:
 
-| コンポーネント | パーツ（ファイル内の並び順）                                                                                        |
-| -------------- | ------------------------------------------------------------------------------------------------------------------- |
-| Button         | Root, Content, Pending, CircularProgress, CircularProgressTrack, CircularProgressFill, CircularProgressFillRotation |
-| Checkbox       | Root, Indicator                                                                                                     |
-| Field          | Root, Label, Control, Description, Error, Item, Validity                                                            |
-| Form           | Root                                                                                                                |
-| ButtonGroup    | Root                                                                                                                |
+| コンポーネント | パーツ（ファイル内の並び順） |
+| -------------- | ---------------------------- |
+| Button | Root, Content, Pending, CircularProgress, CircularProgressTrack, CircularProgressFill, CircularProgressFillRotation |
+| Checkbox | Root, Indicator |
+| Dialog | Handle(+createHandle), Root, Trigger, Popup, ... |
+| Form | Root |
 
-### パターン A（Base UI コンポーネントのラップ）
+## パーツファイルの共通構造
+
+`*.parts.tsx` では、パーツツリー順に、パーツごとにセクションを置きます。
+セクション見出しは英語で、`//` 見出しと区切り線を付けます。
+
+```ts
+// Context
+// -------
+
+// Root
+// ----
+
+// Content
+// -------
+```
+
+グループ全体のコンテキストはファイル先頭の `// Context` セクションに置きます。単一パーツに属するコンテキスト（Button の CircularProgressContext など）はそのパーツの直前に置きます。
+
+各パーツは次の順で定義します。
+
+1. スタイル系のサブ型 (`XxxRootColor`, `XxxRootRadius`, `XxxRootSize`, `XxxRootVariant`, `XxxRootOrientation` など)。JSDoc に候補値の箇条書きを付けます。
+
+   ```ts
+   /**
+    * チェックボックスの角丸です。
+    *
+    * - `"none"`: 角を直角にする
+    * - `"sm"`: 小さい角丸
+    * - `"md"`: 標準的な角丸
+    * - `"lg"`: 大きい角丸
+    * - `"full"`: 完全な丸形
+    */
+   export type CheckboxRootRadius = "none" | Size | "full";
+   ```
+
+2. `State` 型 — `/** {@link XxxRoot} の状態です。 */` の JSDoc を付ける。Base UI 由来の状態は namespace 経由で参照します (例: `Checkbox.Root.State`, `Dialog.Root.State`)。
+3. `Props` 型 — `/** {@link XxxRoot} に渡すプロパティーです。 */` の JSDoc を付ける。スタイル系プロパティーの型はサブ型を参照し、JSDoc に「CheckboxGroup 内では、グループの値が優先されます」のような上書き規則も書きます。
+4. コンポーネント本体 — 関数名は `Sui<コンポーネント名><パーツ名>` (例: `function SuiCheckboxRoot`)。`export const CheckboxRoot: IComponent<CheckboxRootProps> = function SuiCheckboxRoot(props) { ... };` の形です。
+5. `export namespace <Part>` — 「{@link XxxRoot} の状態やプロパティーをまとめた型名前空間です。」の JSDoc を付け、`State`、`Props`、必要ならサブ型 (`Color`, `Radius`, `Size`, `Variant`, `Orientation`) を `/** {@link Xxx} です。 */` の JSDoc 付きで入れます。
+6. 別名 — `export const Root: IComponent<Root.Props> = CheckboxRoot;` の形で、「{@link XxxRoot} です。」の JSDoc を付けます。
+
+コンポーネントの型は `types.ts` の `IComponent<TProps>` を使います。コンテキスト読み取りフックの型は `IUseContext<TContext>` です。
+`erasableSyntaxOnly` が有効です。`enum` と、値を持つ `namespace` は使えません。namespace には型だけを入れます。
+
+### import の規則
+
+- `import` のファイル拡張子は、コンパイル後の拡張子で書きます。`.ts` ファイルは `.js`、`.tsx` ファイルは `.jsx` です。`@base-ui/react/*`、`@suru-ui/theme` などのパッケージは拡張子なしです。
+- 宣言の並び (外部パッケージ → 相対パス → CSS) と `{}` 内の並びは oxfmt と sort スクリプトが自動整形します (「format による自動整形」参照)。CSS は最後に `import "./<名前>.css";` を書きます。
+- CSS はパーツファイル (`*.parts.tsx`) でのみ import します。本体ファイルや `index.ts` では import しません。
+- テーマの型は `import type { Size, Color } from "@suru-ui/theme";` で取り込みます。
+
+## パターン A（Base UI コンポーネントのラップ）
 
 Base UI のコンポーネントをそのまま使い、クラス名と共通プロパティーを追加します。
-参考実装は `packages/react/src/forms/field/field.parts.tsx`、`packages/react/src/forms/form/form.parts.tsx`、`packages/react/src/forms/checkbox-group/checkbox-group.parts.tsx` です。
+参考実装は `packages/react/src/forms/checkbox-group/checkbox-group.parts.tsx` です。
 
-````tsx
-import { CheckboxGroup } from "@base-ui/react/checkbox-group";
-import type { Size } from "@suru-ui/theme";
-import * as React from "react";
-
-import cn from "../../cn.js";
-import type { Component } from "../../types.js";
-
-import "./checkbox-group.css";
+```tsx
+export type CheckboxGroupRootColor = Color;
 
 /**
- * {@link Root} の状態です。
+ * {@link CheckboxGroupRoot} の状態です。
  */
 export type CheckboxGroupRootState = CheckboxGroup.State;
 
 /**
- * {@link Root} に渡すプロパティーです。
+ * {@link CheckboxGroupRoot} に渡すプロパティーです。
+ *
+ * グループに指定したスタイルプロパティーは、子要素のチェックボックス指定より優先されます。
  */
 export type CheckboxGroupRootProps = React.ComponentProps<typeof CheckboxGroup> & {
   /**
-   * チェックボックスのサイズを指定します。
+   * チェックボックスの色を指定します。
    *
-   * @default "md"
-   */
-  size?: Size | undefined;
-
-  /**
-   * チェックボックス群の向きを指定します。
+   * 子要素のチェックボックスのプロパティーを上書きします。
    *
-   * @default "vertical"
+   * @default "grey"
    */
-  orientation?: "horizontal" | "vertical" | undefined;
+  color?: CheckboxGroupRootColor | undefined;
+  // ...
 };
 
-/**
- * チェックボックスグループのルート要素です。
- *
- * @example
- * ```tsx
- * <CheckboxGroupParts.Root defaultValue={["a"]}>
- *   <Checkbox value="a" />
- * </CheckboxGroupParts.Root>
- * ```
- */
-export const CheckboxGroupRoot: Component<CheckboxGroupRootProps> = function SuiCheckboxGroupRoot(
+export const CheckboxGroupRoot: IComponent<CheckboxGroupRootProps> = function SuiCheckboxGroupRoot(
   props,
 ) {
-  const { size: sizeProp = "md", orientation = "vertical", className, ...otherProps } = props;
+  const {
+    size = "md",
+    color = "grey",
+    radius = size,
+    variant = "liquid",
+    disabled,
+    outlined = false,
+    className,
+    orientation = "vertical",
+    ...otherProps
+  } = props;
+  const context = React.useMemo<CheckboxGroupContext>(
+    () => ({ size, color, radius, variant, disabled, outlined }),
+    [size, color, radius, variant, disabled, outlined],
+  );
 
   return (
-    <CheckboxGroup
-      {...otherProps}
-      className={cn(
-        className,
-        "sui_checkbox_group",
-        `sui_checkbox_group-size_${sizeProp}`,
-        `sui_checkbox_group-orientation_${orientation}`,
-      )}
-    />
+    <Context value={context}>
+      <CheckboxGroup
+        {...otherProps}
+        disabled={disabled}
+        className={cn(
+          className,
+          "sui_checkbox_group",
+          `sui_checkbox_group-orientation_${orientation}`,
+        )}
+      />
+    </Context>
   );
 };
 
 export namespace Root {
   export type State = CheckboxGroupRootState;
+
   export type Props = CheckboxGroupRootProps;
 }
 
-export const Root: Component<Root.Props> = CheckboxGroupRoot;
-````
-
-- 既定値を付けるプロパティーは、分割代入で `プロップ名: プロップ名Prop = "既定値"` としてから上書きできるようにします。
-- クラス名は `cn(className, ...)` で利用者のクラス名と合成します。
-- Base UI のコンポーネントは、利用者の付けたイベントハンドラーと `className`、Render Props をそのまま通します。
-
-### パターン A の Root 層と公開本体
-
-`Field` と `Form` のように Base UI の Root を利用するコンポーネントは、パーツ層と公開本体を分けます。
-パーツ層の `XxxRoot` は Base UI の Root をラップし、公開本体の `Xxx` は `XxxRoot` に委譲します。
-
-`<名前>.parts.tsx` では、次の順で Root を定義します。
-
-1. Base UI の状態、プロパティー、アクション、イベント関連の型を `XxxRoot*` として再公開します。
-2. `React.ComponentProps<typeof BaseRoot>` を `XxxRootProps` の基礎にします。
-3. `className` を分割代入し、`cn(className, "sui_<名前>", ...)` で利用者の値と既定のクラスを合成します。
-4. `export namespace Root` に `State` と `Props` を置き、`export const Root` から Root パーツを公開します。
-5. CSS はこのパーツファイルだけで import します。
-
-```tsx
-export type XxxRootState = BaseRoot.State;
-
-export type XxxRootProps = React.ComponentProps<typeof BaseRoot>;
-
-export const XxxRoot: Component<XxxRootProps> = function SuiXxxRoot(props) {
-  const { className, ...otherProps } = props;
-
-  return <BaseRoot {...otherProps} className={cn(className, "sui_xxx")} />;
-};
-
-export namespace Root {
-  export type State = XxxRootState;
-  export type Props = XxxRootProps;
-}
-
-export const Root: Component<Root.Props> = XxxRoot;
+export const Root: IComponent<Root.Props> = CheckboxGroupRoot;
 ```
 
-`Form` のように入力値やイベントの型パラメーターを持つ場合は、Root の型パラメーターを公開本体まで保持します。
-`FormRootProps<TValues>` は `React.ComponentProps<typeof Form<TValues>>` を基礎にし、`FormRootComponentType` は `Component<FormRootProps>` を拡張したジェネリックな呼び出しシグネチャーを持ちます。
-この場合、`Root` も `Component<Root.Props>` に狭めず、`FormRootComponentType` をそのまま使います。
+(例を短くするため JSDoc を省略しています。実際のコードには全項目に JSDoc を付けます。)
 
-```tsx
-interface XxxRootComponentType extends Component<XxxRootProps> {
-  <TValues extends XxxRootValues>(props: XxxRootProps<TValues>): React.ReactElement | null;
-}
+- 既定値は分割代入で `size = "md"` のように書きます。他のプロパティーに依存する `radius` は `radius = size` です。グループから値を読む場合は `size: sizeProp = "md"` としてから `const size = group?.size ?? sizeProp;` の形にします。
+- クラス名は `cn(className, ...)` で利用者のクラス名と合成します。修飾クラスはテンプレートリテラル、ブール状態は `outlined && "sui_checkbox-outlined"` の形で並べます。
+- Base UI 由来の状態は render props で状態クラスを付けます (例: `(state) => state.checked && "sui_checkbox-checked"`)。
+- Base UI のコンポーネントは、利用者のイベントハンドラー、Render Props、`className` をそのまま通します。
+- Base UI の型は namespace 経由で参照します (`CheckboxGroup.State`, `Checkbox.Root.State`, `Dialog.Root.State`)。
 
-export const XxxRoot: XxxRootComponentType = function SuiXxxRoot(props: XxxRootProps) {
-  const { className, ...otherProps } = props;
-
-  return <BaseRoot {...otherProps} className={cn(className, "sui_xxx")} />;
-};
-
-export const Root: XxxRootComponentType = XxxRoot;
-```
-
-`<名前>.tsx` では、Root の型を別名として公開し、追加の API がなければ Root にそのまま委譲します。
-`Form` のように公開 API でもジェネリックを受け取る場合は、公開本体にも同じ呼び出しシグネチャーを定義します。
-
-```tsx
-export type XxxValues<TValues extends XxxRootValues = XxxRootValues> = XxxRootValues<TValues>;
-
-export type XxxState = XxxRootState;
-
-export type XxxProps<TValues extends XxxValues = XxxValues> = XxxRootProps<TValues>;
-
-interface XxxComponentType extends Component<XxxProps> {
-  <TValues extends XxxValues>(props: XxxProps<TValues>): React.ReactElement | null;
-}
-
-export const Xxx: XxxComponentType = function SuiXxx(props: XxxProps) {
-  return <XxxRoot {...props} />;
-};
-
-export namespace Xxx {
-  export type State = XxxState;
-  export type Props<TValues extends XxxValues = XxxValues> = XxxProps<TValues>;
-  export type Values<TValues extends XxxValues = XxxValues> = XxxValues<TValues>;
-}
-```
-
-`Form` の `Values`、`Actions`、`ValidationMode`、送信イベントのような Root 固有の型は、まず `FormRoot*` としてパーツ層に置き、公開本体で `Form*` として別名を付けます。
-型名前空間の別名も同じ規則でそろえます。
-ジェネリック型の既定値と制約を Root 層、本体層、型名前空間で一致させ、型パラメーターを失わないようにします。
-
-`Form` では `FormRootValues`、`FormRootActions`、`FormRootValidationMode`、`FormRootSubmitEventReason`、`FormRootSubmitEventDetails` をパーツ層に定義し、公開本体で `FormValues`、`FormActions`、`FormValidationMode`、`FormSubmitEventReason`、`FormSubmitEventDetails` として公開します。
-`Field` では `FieldRootState`、`FieldRootActions`、`FieldRootProps` を基礎に `FieldState`、`FieldActions`、`FieldProps` を定義し、`FieldErrorMatch`、`FieldErrorMatches`、`FieldSlotProps` のような公開 API 固有の型を本体層に追加します。
-
-`Field` のように複数の子パーツを組み立てる場合は、この Root 層に加えてパターン B を使います。
-Root 以外のパーツの生のプロパティーは `slotProps` にまとめ、`label`、`description`、`errorMatches`、`validity` のような公開本体固有の便利なプロパティーと区別します。
-`slotProps` の値はパーツの `Props` 型を参照し、各プロパティーに `readonly` を付けます。
-入力値が `undefined` でも明示的に指定されたことが意味を持つ場合は、`"label" in props` のようにプロパティーの存在を判定して条件付きパーツを描画します。
-
-公開本体に静的なパーツを付ける場合は、公開するものだけを `Object.assign` で付けます。
-`Field` は `Control` と `Item` を静的プロパティーとして公開し、その他のパーツは `*.parts.tsx` の `Root`、`Label`、`Description` などから公開します。
-静的パーツに対応する状態型とプロパティー型を公開本体の namespace にも付ける場合は、`Field.Item.State`、`Field.Item.Props` のような入れ子の型 namespace にまとめます。
-Root だけを公開する `Form` のようなコンポーネントに、不要な静的パーツを追加してはいけません。
-
-### パターン B（パーツ合成コンポーネント）
-
-公開コンポーネントが複数のパーツを組み立てます。
-参考実装は `packages/react/src/buttons/button/button.tsx:76` と `packages/react/src/forms/checkbox/checkbox.tsx:43` です。
-
-````tsx
-import * as React from "react";
-
-import type { Component } from "../../types.js";
-import * as CheckboxParts from "./checkbox.parts.jsx";
-
-/**
- * {@link Checkbox} の各パーツに渡すプロパティーです。
- */
-export type CheckboxSlotProps = {
-  /**
-   * {@link CheckboxParts.Indicator|Indicator} に渡すプロパティーです。
-   */
-  readonly indicator?: CheckboxParts.Indicator.Props | undefined;
-};
-
-/**
- * {@link Checkbox} コンポーネントのプロパティーです。
- */
-export type CheckboxProps = CheckboxParts.Root.Props & {
-  /**
-   * Indicator 内に表示するコンテンツ（チェックアイコンなど）です。
-   */
-  children?: React.ReactNode | undefined;
-
-  /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-   */
-  slotProps?: CheckboxSlotProps | undefined;
-};
-
-/**
- * チェックボックスを表示するコンポーネントです。
- *
- * @example 基本
- * ```tsx
- * <Checkbox>
- *   <CheckIcon />
- * </Checkbox>
- * ```
- */
-export const Checkbox: Component<CheckboxProps> = function SuiCheckbox(props) {
-  const { children, slotProps: { indicator: indicatorProps } = {}, ...rootProps } = props;
-
-  return (
-    <CheckboxParts.Root {...rootProps}>
-      <CheckboxParts.Indicator {...indicatorProps}>{children}</CheckboxParts.Indicator>
-    </CheckboxParts.Root>
-  );
-};
-````
-
-- 公開コンポーネントに渡せるパーツは、必ず `slotProps` として公開します。パーツ単体のプロパティーを 1 段目に直接公開しません。
-- `Field` の `label`、`description`、`errorMatches` のような1段目のプロパティーは、パーツの生のプロパティーではなく公開本体の便利な API です。これらは `slotProps` の規則と区別します。
-- `slotProps` の各プロパティーには `readonly` を付けます。
-- 本体のプロパティー（例: Button の `percentage`）とパーツのプロパティーが同名で重なるときは、パーツ側を優先し、本体側を既定値として供給します（`packages/react/src/buttons/button/button.tsx:91` の `percentage = percentageProp` の形）。
-- グループ化する部品には、公開コンポーネントは存在せずパターン A の Root だけを公開するものもあります（ButtonGroup）。
-  公開コンポーネントを設けるかどうかは、パーツツリーを持たない単純な部品であれば Root だけを公開します。
-
-### パターン C（コンテキストによるグループ）
+## コンテキスト (グループ)
 
 グループの Root が状態とスタイルをコンテキストで子に伝え、子がその値を読んで表示を決めます。
-参考実装は `packages/react/src/buttons/button-group/button-group.parts.tsx:19` と `packages/react/src/buttons/button/button.parts.tsx:128` です。
+参考実装は `packages/react/src/forms/checkbox-group/checkbox-group.parts.tsx` と `packages/react/src/layout/action-group/action-group.parts.tsx` です。
 
-グループ側（値の提供）:
+`// Context` セクションでは、次の要素をこの順で定義します。
 
-```tsx
-import type { Color, ColorTemplate as Variant, Size } from "@suru-ui/theme";
-import * as React from "react";
-
-import useRender, { type RenderProps } from "../../_use-render.js";
-import cn from "../../cn.js";
-import type { Component } from "../../types.js";
-
-import "./button-group.css";
-
-export type ButtonGroupRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<ButtonGroupRootState> & {
-    size?: Size | undefined;
-    color?: Color | undefined;
-    orientation?: "horizontal" | "vertical" | undefined;
-  };
-
-export const ButtonGroupRoot: Component<ButtonGroupRootProps> = function SuiButtonGroupRoot(props) {
-  const {
-    size = "md",
-    color = "grey",
-    orientation = "horizontal",
-    "aria-orientation": ariaOrientation = orientation,
-    ...otherProps
-  } = props;
-  const context: ButtonGroupContext = {
-    size,
-    color,
-    orientation,
-  };
-  const element = useRender({
-    defaultTagName: "div",
-    props: [
-      otherProps,
-      {
-        role: "group",
-        className: cn("sui_button_group", `sui_button_group-orientation_${orientation}`),
-        "aria-orientation": ariaOrientation,
-      },
-    ],
-  });
-
-  return <Context value={context}>{element}</Context>;
-};
-```
-
-子側（値の参照）:
+1. コンテキスト値のサブ型 (`CheckboxGroupContextColor` など)
+2. コンテキスト値の型 `XxxContext` (各プロパティーは `readonly` と JSDoc)
+3. `React.createContext<XxxContext | null>(null)` のインスタンス
+4. 内部フック `useSuiXxxContext(optional?)` — オーバーロード付き。見つからないときは `ContextMissingError` を投げる
+5. 公開フック `export const useXxxContext: IUseContext<XxxContext> = useSuiXxxContext;`
+6. エイリアス `export type Context = XxxContext;` と `export const Context: React.Context<Context | null> = XxxContext;`
+7. 必要なら `namespace Context { Color; Radius; Size; Variant; ... }`
+8. `export const useContext: IUseContext<Context> = useXxxContext;`
 
 ```tsx
-export const ButtonRoot: Component<ButtonRootProps> = function SuiButtonRoot(props) {
-  const group = useButtonGroupContext(true);
-  const { size: sizeProp = "md", color: colorProp = "grey", ...otherProps } = props;
-  const size = group?.size ?? sizeProp;
-  const color = group?.color ?? colorProp;
-  // ...
-};
-```
-
-- 子の読み取りは必ず `useXxxGroupContext(true)` にします。オプショナル引数により、グループの外で使ってもエラーになりません。
-- グループ外での既定値（例: `size = "md"`、`color = "grey"`）を子側に持ちます。
-- グループの Root は、描画する要素を `<Context value={context}>` で包みます。`useRender` の返り値（`element`）を children にします。
-
-### パターン D（Render Props パーツ）
-
-Base UI にない小物パーツ（`span`、`svg`、`circle` など）は、`useRender` で描画します。
-参考実装は `packages/react/src/buttons/button/button.parts.tsx:284`（Content）です。
-
-````tsx
-import type * as React from "react";
-
-import useRender, { type RenderProps } from "../../_use-render.js";
-import type { Component } from "../../types.js";
-
-export type ButtonContentState = {};
-
-/**
- * {@link Content} に渡すプロパティーです。
- */
-export type ButtonContentProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
-  RenderProps<ButtonContentState>;
-
-/**
- * ボタンのコンテンツを表示するラッパー要素です。
- *
- * @example
- * ```tsx
- * <ButtonParts.Content>ラベル</ButtonParts.Content>
- * ```
- */
-export const ButtonContent: Component<ButtonContentProps> = function SuiButtonContent(props) {
-  return useRender({
-    defaultTagName: "span",
-    props: [
-      props,
-      {
-        className: "sui_button_content",
-      },
-    ],
-  });
-};
-````
-
-- `useRender` の `props` は、利用者のプロパティーと固定プロパティーの配列、または 1 つのオブジェクトです。プロパティーは配列の先頭から順に合成されます。
-- 要素を条件付きで描画したいときは `enabled` に条件を渡します（`packages/react/src/buttons/button/button.parts.tsx:361`）。
-- 空状態の型（`{}`）は `ButtonContentState` のような名前で定義し、`RenderProps` の型引数に渡します。
-
-### パターン E（既存コンポーネントへの委譲）
-
-既存の Suru UI パーツと同じ構造の部品は、既存パーツへ委譲します。
-参考実装は `packages/react/src/buttons/toggle-button/toggle-button.parts.tsx` です。ToggleButton は Button の Root、Content、Pending、CircularProgress をそのまま再利用しています。
-
-```tsx
-import type { Component } from "../../types.js";
-import * as Button from "../button/button.parts.jsx";
-
-export const ToggleButtonRoot: Component<ToggleButtonRootProps> = function SuiToggleButtonRoot(
-  props,
-) {
-  const { active: activeProp, ...otherProps } = props;
-
-  return <Button.Root {...otherProps} aria-pressed={activeProp} />;
-};
-
-export type ToggleButtonContentState = Button.Content.State;
-
-export type ToggleButtonContentProps = Button.Content.Props;
-
-export const ToggleButtonContent: Component<ToggleButtonContentProps> = Button.Content;
-```
-
-- 委譲するパーツは、`export namespace Content` と `export const Content` の別名まで既存パターンどおりに定義し、内部は既存のパーツを再エクスポートします。
-- 既存のパーツの型（`Button.Root.State` など）を自分の型に再利用します。
-
-## コードの共通規則
-
-### import
-
-- `import` のファイル拡張子は、コンパイル後の拡張子で書きます。`.ts` ファイルは `.js`、`.tsx` ファイルは `.jsx` です。
-- `@base-ui/react/*`、`@suru-ui/theme` などのパッケージは拡張子なしです。
-- 外部パッケージ → 相対パス → CSS の順に並べます（`packages/react/src/forms/checkbox/checkbox.parts.tsx:1`）。
-- CSS はパーツファイル（`*.parts.tsx`）でのみ `import "./<名前>.css"` します。本体ファイルでは import しません。
-- テーマの型は `import type { Size, Color } from "@suru-ui/theme";` で取り込みます。
-- `import { ... } from "..."` と `export { ... } from "..."` の `{}` 内は、`type` 付きを先に、値は後ろに置きます。それぞれのグループ内は名前の長さが短い順（同じ長さは名前順）に並べます。
-
-### 型と関数名
-
-- コンポーネントの型は `types.ts` の `Component<TProps>` を使います。
-- コンポーネント関数には `Sui` プレフィックスを付けます。公開名 `Button` の関数は `function SuiButton` です（`packages/react/src/buttons/button/button.tsx:76`）。
-- 公開定数は `export const Button: Component<ButtonProps> = ...` の形です。
-- `erasableSyntaxOnly` が有効です（`packages/react/.config/tsconfig.build.json`）。`enum` と、値を持つ `namespace` は使えません。パーツと公開本体の `namespace` には型だけを入れ、パーツ固有の `Actions`、イベント型、ジェネリック型なども型エイリアスとして定義します。
-
-### パーツファイルのセクション構成
-
-パーツファイルは、コンテキストとパーツを次の順で並べます。
-
-1. `// Context` セクション（必要なら）。グループコンテキストのように複数パーツから参照するものはファイル先頭に置き、単一のパーツに属するもの（Button の CircularProgressContext）はそのパーツの直前に置きます。
-2. パーツツリー順に、パーツごとに `// Root`、`// Content` のようなセクション見出し（英語）と `// ----` の区切り線を置きます。
-3. パーツ内は次の順です。
-   - `State` 型（`/** {@link Root} の状態です。 */` の JSDoc を付ける）
-   - `Props` 型（`/** {@link Root} に渡すプロパティーです。 */` の JSDoc を付ける）
-   - コンポーネント本体（説明と `@example` の JSDoc を付ける）
-   - `export namespace Root { ... }` と `export const Root: Component<Root.Props> = ButtonRoot;`（ジェネリックな Root は専用のコンポーネント型をそのまま使う）
-
-見出しの例です。
-
-```ts
-// Root
-// ----
-
-export type ButtonRootState = Button.State;
-```
-
-### コンテキスト
-
-コンテキストは次の 4 点をセットで定義します。参考は `packages/react/src/forms/checkbox-group/checkbox-group.parts.tsx:14` です。
-
-- コンテキストの値の型 `XxxContext`（各プロパティーは `readonly`）
-- `React.createContext<XxxContext | null>(null)` のインスタンス
-- オーバーロード付きの読み取りフック `useXxxContext(optional?)`
-- `Context` と `useContext` のエイリアス
-
-```tsx
-export type CheckboxGroupContext = {
-  readonly variant: "naked" | "liquid";
-  readonly color: Color;
-};
-
-export const CheckboxGroupContext: React.Context<CheckboxGroupContext | null> =
-  React.createContext<CheckboxGroupContext | null>(null);
-
-export function useCheckboxGroupContext(optional?: false): CheckboxGroupContext;
-export function useCheckboxGroupContext(optional?: boolean): CheckboxGroupContext | null;
-export function useCheckboxGroupContext(optional?: boolean): CheckboxGroupContext | null {
+function useSuiCheckboxGroupContext(optional?: false): CheckboxGroupContext;
+function useSuiCheckboxGroupContext(optional?: boolean): CheckboxGroupContext | null;
+function useSuiCheckboxGroupContext(optional?: boolean): CheckboxGroupContext | null {
   const context = React.use(CheckboxGroupContext);
   if (context === null && !optional) {
     throw new ContextMissingError({
@@ -530,51 +273,216 @@ export function useCheckboxGroupContext(optional?: boolean): CheckboxGroupContex
   return context;
 }
 
-export type Context = CheckboxGroupContext;
-
-export const Context: React.Context<CheckboxGroupContext | null> = CheckboxGroupContext;
-
-export function useContext(optional?: false): CheckboxGroupContext;
-export function useContext(optional?: boolean): CheckboxGroupContext | null;
-export function useContext(optional?: boolean): CheckboxGroupContext | null {
-  return useCheckboxGroupContext(optional);
-}
+export const useCheckboxGroupContext: IUseContext<CheckboxGroupContext> =
+  useSuiCheckboxGroupContext;
 ```
 
-- コンテキストが見つからなかったときのエラーは `ContextMissingError`（`packages/react/src/errors.ts`）を使います。`contextName` と `providerName`（コンテキストを提供する Root の名前）を渡します。
-- コンテキスト値が利用者の渡す親コンポーネントの外で生成される場合は、`React.useMemo` で値を作ってレンダリングごとの再生成を防ぎます（`packages/react/src/buttons/button/button.parts.tsx:149`）。
-- コンテキストを提供するときは、その値を `<Context value={context}>` の children に要素を包んで返します。
+- `contextName` にはコンテキスト名、`providerName` には提供側 Root の名前を渡します (`src/errors.ts` の `ContextMissingError`)。
+- 子の読み取りは必ず `useXxxContext(true)` でオプショナルにし、グループ外での既定値を子側に持ちます (`const size = group?.size ?? sizeProp`)。
+- Root がコンテキストを提供するときは `<Context value={context}>` の children に要素を包みます。値は `React.useMemo` で作ります。`useRender` の返り値 (`element`) を包む形もあります。
 
-### JSDoc
+## 公開本体 (`<名前>.tsx`)
 
-- 公開する型、プロパティー、コンポーネントには必ず複数行 JSDoc を付けます。1 行形式の `/** ... */` は禁止です。
-- コンポーネントの JSDoc には説明に続けて `@example` を付けます。
+公開本体は、パーツを組み立てて利用者向け API を作る層です。
+参考実装は `packages/react/src/buttons/button/button.tsx` と `packages/react/src/forms/checkbox/checkbox.tsx` です。
+
+標準の構成要素は次のとおりです (上からこの順)。
+
+1. スタイル系の公開型エイリアス
+
+   ```tsx
+   export type CheckboxColor = CheckboxRootColor;
+   export type CheckboxRadius = CheckboxRootRadius;
+   export type CheckboxSize = CheckboxRootSize;
+   export type CheckboxVariant = CheckboxRootVariant;
+   ```
+
+2. `XxxSlotProps` — 各パーツに渡すオプションのプロパティー。全メンバーに `readonly` を付け、各メンバーの JSDoc でパーツに型をリンクします。
+
+   ```tsx
+   /**
+    * {@link Checkbox} の各パーツに渡すプロパティーです。
+    */
+   export type CheckboxSlotProps = {
+     /**
+      * {@link CheckboxIndicator} に渡すプロパティーです。
+      */
+     readonly indicator?: CheckboxIndicatorProps | undefined;
+   };
+   ```
+
+3. `XxxPartsProps` — `useXxx` フックの戻り値型。`root` と各パーツのキーを必須の `readonly` メンバーとして持ちます。`slotProps` と異なり `undefined` を許しません (明示的に `undefined` を入れるメンバーは除く)。
+
+4. `XxxState`, `XxxProps` — Root の型を別名として公開します。`XxxProps` は `Omit<XxxRootProps, "children">` を基礎に、本体固有の `children` と `slotProps` を加えます。
+
+5. `useXxx(props): XxxPartsProps` — 「{@link Xxx} の各パーツに渡すプロパティーを作るフックです。」という JSDoc を付ける。`slotProps` を展開し、`children` などの本体固有プロパティーを対応するパーツへ振り分けます。`slotProps` の各メンバーが常に勝つように、既定値を先に展開します (`{ children, ...contentProps }`)。
+
+6. 公開コンポーネント `export const Xxx: IComponent<XxxProps> = function SuiXxx(props) { ... };` — 内部で `const partsProps = useXxx(props);` を呼び、パーツツリー順に描画します。JSDoc にはコンポーネントの説明を書きます。
+
+7. `export namespace Xxx { State; Props; SlotProps?; Color?; Radius?; Size?; Variant? }` — 各メンバーに `/** {@link XxxXxx} です。 */` の JSDoc を付けます。namespace の説明は「{@link Xxx} の状態やプロパティーをまとめた型名前空間です。」です。
+
+8. 本体固有の非公開ヘルパー (デフォルトアイコンなど) はファイル末尾に置きます。
+
+```tsx
+export const Checkbox: IComponent<CheckboxProps> = function SuiCheckbox(props) {
+  const partsProps = useCheckbox(props);
+
+  return (
+    <CheckboxRoot {...partsProps.root}>
+      <CheckboxIndicator {...partsProps.indicator} />
+    </CheckboxRoot>
+  );
+};
+```
+
+### 静的メンバー (Object.assign)
+
+公開本体に静的メンバー (パーツやフック) を付ける場合は、interface で型を宣言し、`/*#__PURE__*/ Object.assign(...)` で結合します。
+参考実装は `button.tsx` (`Button.useContext`) と `field.tsx` (`Field.Item`, `Field.Control`) です。
+
+```tsx
+interface ButtonType extends IComponent<ButtonProps> {
+  /**
+   * {@link useButtonContext} です。
+   */
+  readonly useContext: IUseContext<ButtonContext>;
+}
+
+export const Button: ButtonType = /*#__PURE__*/ Object.assign(
+  function SuiButton(props: ButtonProps) {
+    const partsProps = useButton(props);
+    // ...
+  },
+  {
+    useContext: useButtonContext,
+  },
+);
+```
+
+- パーツツリーを持たない単純な部品 (Form のような Root だけのもの) に、不要な静的メンバーを追加してはいけません。
+- 静的パーツに対応する型は、公開本体の namespace に入れず、必要に応じて `Field.Item.State` のような入れ子の型 namespace を interface 上で宣言します。
+
+### ジェネリックな公開本体 (Form)
+
+入力値などの型パラメーターを持つ場合は、ジェネリックな呼び出しシグネチャーを interface で定義します。
+参考実装は `packages/react/src/forms/form/form.parts.tsx` と `form.tsx` です。
+
+```tsx
+export type FormRootValues<TValues extends Record<string, any> = Record<string, any>> = TValues;
+
+export type FormRootProps<TValues extends FormRootValues = FormRootValues> =
+  React.ComponentProps<typeof BaseForm<TValues>>;
+
+interface FormRootComponentType extends IComponent<FormRootProps> {
+  <TValues extends FormRootValues>(props: FormRootProps<TValues>): React.ReactElement | null;
+}
+
+export const FormRoot: FormRootComponentType = function SuiFormRoot(props: FormRootProps) {
+  return <BaseForm {...props} />;
+};
+
+export const Root: FormRootComponentType = FormRoot;
+```
+
+- Root 固有の型 (`Values`, `Actions`, `ValidationMode`, 送信イベントの理由と詳細) は、まず `FormRoot*` としてパーツ層に定義し、公開本体で `Form*` として別名を付けます。
+- ジェネリック型の既定値と制約を Root 層、本体層、namespace で一致させ、型パラメーターを失わないようにします。
+- 公開本体でも同じ `XxxComponentType` をそのまま使います (`IComponent<XxxProps>` に狭めない)。
+
+### 便利プロパティー (Field 型)
+
+`Field` の `label`、`description`、`errorMatches` のような 1 段目のプロパティーは、パーツの生のプロパティーではなく公開本体固有の便利な API です。これらは `slotProps` の規則と区別し、`XxxProps` の中で JSDoc 付きで定義します。`"label" in props` のようにプロパティーの存在が意味を持つ場合は、存在判定で条件付き描画します。
+
+## パターン D（Render Props パーツ）
+
+Base UI にない小物パーツ（`span`、`svg`、`circle` など）は、`useRender` で描画します。
+参考実装は `packages/react/src/buttons/button/button.parts.tsx` の `Content` です。
+
+```tsx
+export type ButtonContentState = {};
+
+/**
+ * {@link ButtonContent} に渡すプロパティーです。
+ */
+export type ButtonContentProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
+  RenderProps<ButtonContentState>;
+
+export const ButtonContent: IComponent<ButtonContentProps> = function SuiButtonContent(props) {
+  return useRender({
+    defaultTagName: "span",
+    props: [
+      props,
+      {
+        className: "sui_button_content",
+      },
+    ],
+  });
+};
+```
+
+- `useRender` の `props` は、利用者のプロパティーと固定プロパティーの配列、または 1 つのオブジェクトです。プロパティーは配列の先頭から順に合成されます。
+- 要素を条件付きで描画したいときは `enabled` に条件を渡します。
+- 空状態の型 (`{}`) は `ButtonContentState` のような名前で定義し、`RenderProps` の型引数に渡します。
+
+## パターン E（既存コンポーネントへの委譲）
+
+既存の Suru UI パーツと同じ構造の部品は、既存パーツへ委譲します。
+参考実装は `packages/react/src/buttons/toggle-button/toggle-button.parts.tsx` です。
+
+- 委譲するパーツも、`export namespace Content` と `export const Content` の別名まで通常どおり定義し、内部は既存のパーツを再利用します。
+- 既存のパーツの型 (`Button.Root.State` など) を自分の型に再利用します。
+
+## JSDoc
+
+- 公開する型、プロパティー、コンポーネント、namespace、namespace の各メンバーには必ず複数行 JSDoc を付けます。1 行形式の `/** ... */` は公開 API では禁止です。
+- namespace とそのメンバーの基本形は「{@link Xxx} です。」です。説明が自明な場合も省略しません。
+- スタイル系サブ型には候補値の箇条書きを付けます。
+- コンポーネントの JSDoc には説明を書きます (利用例は stories とドキュメントに任せます)。
 - 自明でない既定値には `@default` を付けます。`undefined` の場合は付けません。
-- `slotProps` の各パーツプロパティーには、パーツに型をリンクする JSDoc を付けます（`packages/react/src/buttons/button/button.tsx:12`）。
+- 詳細な形式は `../jsdoc/SKILL.md` に従います。
 
-### 型名前空間と再エクスポート
+## index.ts
 
-パーツは `XxxRootState`、`XxxRootProps` のような個別名を先に定義し、`Root.State`、`Root.Props` から参照できるようにします。
-`Actions`、値の型、検証モード、イベントの理由や詳細など、利用者が参照する型も同じ namespace にまとめます。
-公開本体では `XxxState`、`XxxProps` のような API 用の別名を定義し、`Xxx.State`、`Xxx.Props` から参照できるようにします。
-namespace に値を入れず、すべて `export type` で定義してください。
+コンポーネントの `index.ts` は、最初にパーツファイルを `export *` し、その後で本体ファイルから公開 API を明示的に export します。
 
-`index.ts` は最初に `*.parts.jsx` を `export *` し、その後で本体ファイルから公開本体と、その本体に属する型を明示的に export します。
-パーツの型を隠すために `export *` を本体ファイルへ適用してはいけません。
-`Field` のように公開本体の型が多い場合は、`FieldState`、`FieldActions`、`FieldSlotProps`、エラー関連の型を個別に export します。
-`Form` のようにジェネリックな型がある場合は、`FormValues` とイベント関連の型も個別に export します。
+```ts
+export * from "./checkbox.parts.jsx";
 
-### クラス名と CSS
+export {
+  type CheckboxSize,
+  type CheckboxColor,
+  type CheckboxProps,
+  type CheckboxState,
+  type CheckboxRadius,
+  type CheckboxVariant,
+  type CheckboxSlotProps,
+  type CheckboxPartsProps,
+  Checkbox,
+  useCheckbox,
+} from "./checkbox.jsx";
+```
 
-- クラス名と CSS の規則は `../css/SKILL.md` に従います。基準実装は `packages/react/src/buttons/button/button.css` です。
-- クラス名はコンポーネント名を基準に決めます。`sui_<名前>`（Root）、`sui_<名前>_<パーツ>`（Content）、`sui_<名前>-<プロップ>_<値>`（修飾子）、`sui_<名前>-<状態>`（状態）です。
-- ルートのクラス属性は `cn()` で合成し、`className` の関数（Render Props）を渡せるようにします（`packages/react/src/buttons/button/button.parts.tsx:162`）。
-- CSS は必ず `@layer sui.component` と、必要なら `@layer sui.important` を使い、テーマトークン（`--sui-*`）とユーティリティー関数（`--sui-space()` など）を参照します。
+- パーツの `export *` と本体の明示的な export を分ける点が重要です。本体へ `export *` してはいけません。
+- `{}` 内の並びは sort スクリプトが自動整形します。
+
+### `src/index.ts` への追加
+
+`packages/react/src/index.ts` の該当カテゴリーのコメント (`// buttons`, `// forms` など) の下に export ブロックを追加します。ブロック内の並びも自動整形されます。
+
+```ts
+// forms
+export {
+  type InputSize,
+  type InputType,
+  type InputColor,
+  type InputProps,
+  type InputState,
+  Input,
+} from "./forms/input/index.js";
+```
 
 ### `package.json` のエクスポート
 
-新しいコンポーネントを追加したら、`packages/react/package.json` の `exports` にサブパスを追加します。
-エクスポートはアルファベット順に並びます。既存の並びの該当箇所に挿入します。
+新しいコンポーネントを追加したら、`packages/react/package.json` の `exports` にサブパスを追加します。エクスポートはカテゴリーごとのブロックで並んでいるため、該当カテゴリーのブロックを見つけて挿入します。
 
 ```json
 "./<名前>": {
@@ -585,114 +493,60 @@ namespace に値を入れず、すべて `export type` で定義してくださ�
 
 ## テスト
 
-コンポーネントのテストは `packages/react/tests/` に置きます。書き方は `../vitest/SKILL.md` に従います。
+コンポーネントのテストは `packages/react/tests/<カテゴリー>/<名前>.client.test.tsx` に置きます。書き方は `../vitest/SKILL.md` に従います。現時点の模範例は `tests/forms/autocomplete.client.test.tsx` です。
 
-- ブラウザーで実行するテストは `<名前>.client.test.tsx` にします（例: `tests/button.client.test.tsx`）。Vitest の Browser Mode で Playwright の 3 ブラウザー（chromium、firefox、webkit）すべてに実行されます。
-- ブラウザーを必要としないロジック（`cn` など）のテストは `<名前>.test.ts` にします（例: `tests/cn.test.ts`）。サーバー専用のテストは `*.server.test.ts` です。
-- パーツ単体のテストは、同じ `*.client.test.tsx` に `describe("<名前>Parts.Root")` として並べます（`tests/accordion.client.test.tsx:211`）。
-- コンポーネントは `../src/<カテゴリー>/<名前>/index.js` から import します。
-- レンダリングには `vitest-browser-react` の `render` を使います。検証は `screen.getByRole()` などのロケーターと `await expect.element(...)` を使います（`tests/button.client.test.tsx:8`）。
-- クリックには `vitest/browser` の `userEvent.click` か、`./_click.js` の `clickElement`（DOM の `click()` を直接呼ぶ）を使います。
-- カバーする内容は次のとおりです（`tests/checkbox.client.test.tsx` 参照）。
-  1. レンダリング: ロール、テキスト、既定のスタイルクラス（`sui_<名前>-size_md` など）
-  2. スタイル系プロパティーの上書き: variant、color、size、radius などでクラスが変わる
-  3. インタラクション: クリックで状態が切り替わる、`onXxxChange` が通知する
-  4. disabled などの無効状態
-  5. `slotProps` が各パーツに適用される
-  6. パーツ単体の振る舞い
+```tsx
+import { describe, expect, test } from "vitest";
+import { render } from "vitest-browser-react";
+import { userEvent } from "vitest/browser";
 
-## 実装手順
+import "@suru-ui/theme/suru.css";
+import { Autocomplete, Root as AutocompletePartsRoot } from "../../src/forms/autocomplete/index.js";
 
-手順は、書き手が一度に 1 つの作業に集中できるよう、短い Step に分けています。
-各 Step の完了条件を満たしてから次の Step へ進みます。
+describe("Autocomplete", () => {
+  test("既定のスタイルクラスを入力グループへ適用する", async () => {
+    // 実行
+    const screen = await render(<Autocomplete items={items} />);
 
-### Step 1 設計
+    // 検証
+    await expect.element(screen.getByRole("combobox")).toHaveClass("sui_autocomplete-size_md");
+  });
+});
 
-追加する部品に合う Base UI のコンポーネントを調べ、パターン（A〜E）とパーツツリーを決めます。
-
-1. `node_modules/@base-ui/react` のパッケージ一覧から、対応する部品を探します（例: `@base-ui/react/checkbox`）。
-2. 無い場合はパターン D（`useRender`）で要素を組みます。
-3. 既存の Suru UI コンポーネントの特殊形ならパターン E を選びます。
-4. パターンが決まったら、パーツツリー（Root とその子パーツ）を決めます。
-
-完了条件: パターンとパーツツリー、カテゴリーが決まっている。
-
-### Step 2 ディレクトリーと index.ts
-
-1. `packages/react/src/<カテゴリー>/` に `<名前>/` ディレクトリーを作ります。
-2. `index.ts` を作り、パーツと本体を再エクスポートします（`packages/react/src/forms/checkbox/index.ts`）。
-
-```ts
-export * from "./checkbox.parts.jsx";
-
-export { type CheckboxProps, Checkbox } from "./checkbox.jsx";
+describe("AutocompleteParts.Root", () => {
+  // パーツ単体の振る舞い
+});
 ```
 
-パーツの `export *` と本体の明示的な export を分ける点が重要です。
-本体の型が複数ある場合は、`Field` や `Form` の `index.ts` のように、本体に属する公開型をすべて列挙します。
+- テスト名と describe 名は日本語の説明文にします。
+- 各 test は `// 準備` → `// 実行` → `// 検証` の順にコメント区切りで書きます (準備がない場合は省略)。
+- レンダリングには `@suru-ui/theme/suru.css` を読み込んだ上で `vitest-browser-react` の `render` を使い、検証は `await expect.element(...)` を使います。
+- クリックなどの操作には `vitest/browser` の `userEvent` を使います。
+- パーツ単体のテストは同じファイルに `describe("<名前>Parts.<Part>")` として並べます。
+- カバーする内容: レンダリングと既定のスタイルクラス、スタイル系プロパティーの上書き (size/color/radius/variant)、インタラクション、disabled などの無効状態、`slotProps` の適用、パーツ単体の振る舞い。
 
-完了条件: ディレクトリーと、パーツと本体を再エクスポートする `index.ts` が存在する。
-
-### Step 3 パーツファイル
-
-`<名前>.parts.tsx` を作り、パーツツリー順に全パーツを実装します。
-
-1. 必要な import を書きます（Base UI、`cn`、`errors`、`types`、`_use-render`、テーマ、CSS）。
-2. 各パーツについて、`XxxPartState` 型 → `XxxPartProps` 型 → コンポーネント本体 → `namespace` → 別名を書きます。
-3. Root だけのコンポーネントでも、Base UI の Root ラッパー、`Root` namespace、`Root` 別名を定義します。
-4. Root にジェネリックやイベント関連の型がある場合は、Root の個別型、namespace の型エイリアス、ジェネリックなコンポーネント型をそろえます。
-5. グループの場合はコンテキストのセットを書きます。
-6. パーツが状態を子に伝える必要がある場合は、その状態のコンテキストを追加し、`useRender` か Base UI のコンポーネントで包みます。
-
-完了条件: `index.ts` からパーツが import でき、参照コンポーネントと同じ形で全パーツが定義されている。
-
-### Step 4 本体
-
-`<名前>.tsx` を作り、公開コンポーネントを実装します。
-
-1. Root 以外のパーツを組み合わせる場合は、各パーツの生のプロパティーを `slotProps` で公開します。
-2. `Field` のように利用者向けの便利なプロパティーを追加する場合は、Root のプロパティーと `slotProps`、便利なプロパティーを別の型として定義します。
-3. 単純な包み込みなら `XxxParts.Root` にそのまま渡します（Form の例、`packages/react/src/forms/form/form.tsx:63`）。
-4. Root や本体がジェネリックな場合は、公開コンポーネントの型にジェネリックな呼び出しシグネチャーを持たせます。
-5. コンポーネント関数名は `Sui<名前>` にします。
-
-完了条件: 公開 API の型とコンポーネントが定義され、JSDoc と `@example` が書かれている。
-
-### Step 5 CSS
-
-`<名前>.css` を作ります。
-`../css/SKILL.md` を読み、`sui_<名前>-*` のクラスとカスタムプロパティーを定義します。
-必要な状態（pending、disabled など）を先に洗い出し、`@layer sui.important` の状態セクションを計画します。
-Suru UI 固有の規則がまだない Root は、`form.css` のようにセクション見出しだけを置いて空にできます。
-空の `@layer` や不要なカスタムプロパティーを追加せず、CSS の import はパーツファイルに残します。
-
-完了条件: パーツごとのセクションが `../css/SKILL.md` の構成に従っている。
-
-### Step 6 エクスポート
-
-1. `packages/react/src/index.ts` の、該当カテゴリーのコメントの下に export を追加します。
-
-```ts
-// forms
-export { type CheckboxProps, Checkbox } from "./forms/checkbox/index.js";
-```
-
-2. `packages/react/package.json` の `exports` にサブパスをアルファベット順で追加します。
-
-完了条件: `packages/react/src/index.ts` と `packages/react/package.json` に追加が入っている。
-
-### Step 7 Storybook
+## Storybook
 
 `packages/react/stories/<カテゴリー>/<名前>.stories.tsx` を作ります。
-`packages/react/stories/buttons/button.stories.tsx` を参考に、`meta.story` と `controls` を使って「使い方」を最初に置き、その後ろに主な外観（色、サイズ、状態など）を加えます。
+模範例は `packages/react/stories/buttons/button.stories.tsx` です。
 
-- `import { preview, controls } from "../../.config/storybook/preview.js";`
-- コンポーネント本体は `../../src/<カテゴリー>/<名前>/index.js` から import します。
-- テーマの配列（`COLORS`、`SIZES`、`COLOR_TEMPLATES`）は `@suru-ui/theme` から import します。
-- `controls` の第 2 引数は、各プロパティーの設定を必ず複数行のオブジェクトで記述します。プロパティー設定を 1 行に詰め込んではいけません。
+- import は `import { preview, controls } from "../../.config/storybook/preview.js";` と、コンポーネント本体の `../../src/<カテゴリー>/<名前>/index.js` を使います。
+- テーマの配列 (`SIZES`, `COLORS`, `COLOR_TEMPLATES`) は `@suru-ui/theme` から import します。角丸の候補は `const RADII = ["none", ...SIZES, "full"] as const;` として作ります。
+- meta は次の形です。
 
   ```tsx
-  const ctrl = controls(Component, {
+  const meta = preview.meta({
+    title: "<Category> / <Name>",
+    component: Xxx,
+  });
+
+  export default meta;
+  ```
+
+- controls の第 2 引数は、各プロパティーの設定を必ず複数行のオブジェクトで記述します。1 行に詰め込んではいけません。
+
+  ```tsx
+  const ctrl = controls(Xxx, {
     color: {
       options: COLORS,
       control: "select",
@@ -704,190 +558,113 @@ export { type CheckboxProps, Checkbox } from "./forms/checkbox/index.js";
   });
   ```
 
-- コンポーネントが `color`、`radius`、`size` のいずれかを公開する場合は、それぞれに対応する `Colors`、`Radius`、`Sizes` story を必ず作ります。該当しないプロパティーの story は作りません。
-- `Colors` は `COLORS`、`Sizes` は `SIZES`、`Radius` は `"none"`、`"rounded"`、`"full"` の全候補を列挙し、各候補の値が分かるラベルも表示します。配列の `map` で実装して構いません。
-- 「使い方」の story を最初に置き、その後に `Image` などの構造例、`Colors`、`Radius`、`Sizes` などの主な外観 story を置きます。
+- story は `meta.story({ name: "...", ...ctrl({...}), render(props) { ... } })` の形で作ります。
+- 最初に「使い方」(`name: "使い方"`) を置きます。その後、主な外観 (「主な外観」= バリアント一覧)、色、角丸、大きさなどの外観 story と、部品固有の機能 story を置きます。
+- `color`、`radius`、`size`、バリアントを公開する場合は、対応する一覧 story を必ず作ります。配列の `map` によるループで構いません。各候補の値が分かるようにラベルも表示します。
+- `ctrl({...})` には、その story で固定しないプロパティーの既定値をすべて渡します (他の story との見た目の一貫性のため)。
 
-完了条件: 「使い方」の story、公開している各スタイル系プロパティーの主な外観 story、複数行で書かれた `controls` があり、`controls` で主要プロパティーを操作できる。
+## ドキュメント
 
-### Step 8 ドキュメント
+web サイトの mdx ドキュメント (`website/content/docs/react/<カテゴリー>/<名前>.mdx`) と example (`website/examples/react/<名前>/<story>.tsx`) を書くときは、`../component-docs/SKILL.md` に従います。このスキルでは詳細を繰り返しません。
 
-`website/content/docs/react/<カテゴリー>/<名前>.mdx` を作ります。
-模範例は `website/content/docs/react/data-display/avatar.mdx`（複合コンポーネントあり）と `website/content/docs/react/buttons/button.mdx`（パーツが多い）です。
+## 実装手順
 
-mdx の構成は frontmatter に続けて、次の順で置きます。
+手順は、一度に 1 つの作業に集中できるよう、短い Step に分けています。各 Step の完了条件を満たしてから次へ進みます。
 
-1. frontmatter — `title` にコンポーネント名、`description` に公開本体の JSDoc の説明と同じ文を書きます。
-2. `## 使い方` — import 例と最小のコード例、`<Component path="react/<名前>/basic" />` を置きます。
-3. `## 例` — スタイル系プロパティーや状態ごとに `###` 見出しと `<Component path="react/<名前>/<story>" />` を置きます。
-4. `## 構成` — `import * as Xxx from "@suru-ui/react/<名前>"` のコードフェンスでパーツツリーを示します。
-   - パーツは必ず `Xxx.Root` のように名前空間経由で参照します。パーツを `import { XxxRoot } from ...` のように個別に import してはいけません。
-   - コード例は構成の提示に専念します。具体的な値（`value={70}` など）、サンプルデータ、スタイル系プロパティーを含めません。パーツツリーが分かる最小限の要素だけを書きます。
-5. `## API リファレンス` — 各セクションを `###` 見出しで置きます。
+### Step 1 設計
 
-API リファレンスでは、複合コンポーネント（パターン B）のプロパティーを `### Root` の上に文書化します。
-見出しは公開本体の名前（`### Avatar`、`### Button` など）にし、次の形式で書きます。
+1. `node_modules/@base-ui/react` のパッケージ一覧から、対応する部品を探します。
+2. パターン A〜E から選び、パーツツリー (Root とその子パーツ) とカテゴリーを決めます。
 
-```mdx
-### Avatar
+完了条件: パターンとパーツツリー、カテゴリーが決まっている。
 
-`Avatar` は `Root` のプロパティーに加えて、以下のプロパティーを受け入れます:
+### Step 2 パーツファイル
 
-<TypeTable
-  type={{
-    children: {
-      type: "React.ReactNode",
-      description:
-        "画像を表示できないときに表示するフォールバックコンテンツです。Fallback スロットとして表示されます。",
-    },
-    slotProps: {
-      type: "{ fallback?: Avatar.Fallback.Props; image?: Avatar.Image.Props }",
-      description:
-        "各パーツに個別のプロパティーを渡すためのオブジェクトです。各パーツのプロパティーが優先されます。",
-    },
-  }}
-/>
-```
+`<名前>.parts.tsx` を作り、パーツツリー順に全パーツを実装します。
 
-- 複合コンポーネント固有のプロパティーを列挙します。`children`（対応するスロットの名前を説明に書く）、便利なプロパティー（Button の `percentage` など。渡されるスロットを説明に書く）、`slotProps`（すべてのパーツの Props 型を列挙する）です。
-- Root 以降のセクションはパーツツリー順に置きます。Root は「`XxxRoot` は [Base UI が受け入れるプロパティー](...) に加えて、以下のプロパティーを受け入れます:」の形式で書き、子パーツは `className`、`render`、`style` などの共通プロパティーを並べます。
-- プロパティーはアルファベット順に並べます。既定値があるものは `default` を付けます。
-- `<Component path="..." />` の story が無い場合は、Step 7 で作った stories ファイルの story 名に合わせて追加します。
+1. 必要な import を書きます (Base UI、`cn`、`errors`、`types`、`_use-render`、テーマ、CSS)。
+2. コンテキストが必要なグループなら `// Context` セクションを先頭に置きます。
+3. 各パーツについて、サブ型 → State → Props → 本体 → namespace → 別名の順に書きます。
+4. Root だけのコンポーネントでも、Base UI の Root ラッパー、namespace、別名を定義します。
 
-#### example ファイル
+完了条件: 参照コンポーネントと同じ形で全パーツが定義されている。
 
-`<Component path="react/<名前>/<story>" />` が参照する example は `website/examples/react/<名前>/<story>.tsx` に置きます。
-example はドキュメントの本文領域（幅が閲覧環境によって変わる）に描画されるため、どの幅でもオーバーフローしないレイアウトで書きます。
+### Step 3 CSS
 
-- 複数のアイテムを並べるときは、列数を固定する `grid grid-cols-N` を使わず `flex flex-wrap` で折り返します。
-- アイテムに幅を固定するときは（`w-48` など）、親を `flex flex-wrap` にして折り返せるようにします。
-- 横並びにした結果が本文領域の幅を超える場合は、縦並び (`flex flex-col`) にするか、折り返しを前提にします。
-- 配列の変数定義と `.map()` によるループでアイテムを生成しません。色やサイズの候補はすべてベタ書きし、`color="grey"` のように各値をプロパティーに直接指定します。example は読者がコピーして値を変えて試すコードであり、ループで間接化すると読みにくくなります。
+`<名前>.css` を作ります。`../css/SKILL.md` を読み、`sui_<名前>-*` のクラスとカスタムプロパティーを定義します。必要な状態 (pending、disabled など) を先に洗い出し、`@layer sui.important` の状態セクションを計画します。CSS の import はパーツファイルに置いたままにします。
 
-完了条件: mdx に使い方、例、構成、API リファレンス（`### Root` の上に複合コンポーネントのセクションを含む）があり、参照している story が存在する。
+完了条件: パーツごとのセクションが `../css/SKILL.md` の構成に従っている。
 
-### Step 9 テスト
+### Step 4 公開本体
 
-`packages/react/tests/<名前>.client.test.tsx` を作り、`../vitest/SKILL.md` と、このスキルの「テスト」章を読んでから、既存の `tests/checkbox.client.test.tsx` を参考に次のテストを書きます。
+`<名前>.tsx` を作り、「公開本体」章の標準構成 (SlotProps / PartsProps / Props / useXxx / SuiXxx / namespace) に従って実装します。静的メンバーが必要なときだけ `Object.assign` を使います。ジェネリックが必要なときは専用のコンポーネント型を定義します。
 
-1. レンダリングと既定のスタイルクラス
-2. スタイル系プロパティーの上書き
-3. インタラクション（クリック、入力、開閉など）
-4. disabled などの無効状態
-5. `slotProps` が各パーツに適用される
-6. パーツ単体の振る舞い（`describe("<名前>Parts.Root")`）
+完了条件: 公開 API の型とコンポーネントが定義され、JSDoc が書かれている。
 
-ブラウザーを必要としない純粋なロジック（`cn` など）を書いた場合は、`<名前>.test.ts` に分けます。
+### Step 5 index.ts とエクスポート
 
-完了条件: 公開 API の主要な振る舞いを検証するテストが `packages/react/tests/` に存在する。
+1. `<名前>/index.ts` を作ります (パーツの `export *` + 本体の明示的 export)。
+2. `packages/react/src/index.ts` の該当カテゴリーに export ブロックを追加します。
+3. `packages/react/package.json` の `exports` にサブパスを追加します。
 
-### Step 10 検証
+完了条件: 3 つのファイルに追加が入っている。
 
-モノレポルートで次のコマンドを順に実行し、すべて通ることを確認します。
+### Step 6 Storybook
+
+`stories/<カテゴリー>/<名前>.stories.tsx` を作ります (「Storybook」章参照)。
+
+完了条件: 「使い方」と主な外観 story があり、controls で主要プロパティーを操作できる。
+
+### Step 7 ドキュメント
+
+必要に応じて `../component-docs/SKILL.md` に従い、mdx と example を作ります。
+
+### Step 8 テスト
+
+`tests/<カテゴリー>/<名前>.client.test.tsx` を作ります (「テスト」章参照)。ブラウザーを必要としない純粋なロジックを書いた場合は `<名前>.test.ts` に分けます。
+
+完了条件: 公開 API の主要な振る舞いを検証するテストが存在する。
+
+### Step 9 検証
+
+`packages/react` ディレクトリーで次を実行し、すべて通ることを確認します。
 
 ```sh
-mise run test
+mise run test        # server vitest → client vitest → format → lint → typecheck
 ```
 
-個別のステップを確認する場合は次のコマンドを使います。
+個別のステップ:
 
 ```sh
 mise run test:server      # npx vitest --config ./.config/vitest.server.ts
 mise run test:client      # npx vitest --config ./.config/vitest.client.ts
-mise run test:format      # npx oxfmt --config ./.config/.oxfmtrc.json --check
+mise run test:format      # oxfmt / sort スクリプトの --check
 mise run test:lint        # npx oxlint --config ./.config/.oxlintrc.json
-mise run test:typecheck   # npx tsc --noEmit
+mise run test:typecheck   # 複数の tsconfig に対する tsc --noEmit
 ```
 
-CSS を書いた場合、整形は `mise run format` の stylelint で整えます。
-ビルドは `npm run build` で確認します。
+ビルドは `npm run build` で確認します。型エラーがある場合はランダムにキャストせず (`as any` 禁止)、型を修正します。
 
 完了条件: 上記すべてがエラーなく終了する。
 
-## テンプレート集
-
-### パターン B の公開コンポーネント
-
-````tsx
-import * as React from "react";
-
-import type { Component } from "../../types.js";
-import * as XxxParts from "./xxx.parts.jsx";
-
-/**
- * {@link Xxx} の各パーツに渡すプロパティーです。
- */
-export type XxxSlotProps = {
-  /**
-   * {@link XxxParts.Content|Content} に渡すプロパティーです。
-   */
-  readonly content?: XxxParts.Content.Props | undefined;
-};
-
-/**
- * {@link Xxx} コンポーネントのプロパティーです。
- */
-export type XxxProps = XxxParts.Root.Props & {
-  /**
-   * 表示するコンテンツです。
-   */
-  children?: React.ReactNode | undefined;
-
-  /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-   */
-  slotProps?: XxxSlotProps | undefined;
-};
-
-/**
- * Xxx を表示するコンポーネントです。
- *
- * @example 基本
- * ```tsx
- * <Xxx>コンテンツ</Xxx>
- * ```
- */
-export const Xxx: Component<XxxProps> = function SuiXxx(props) {
-  const { children, slotProps: { content: contentProps } = {}, ...rootProps } = props;
-
-  return (
-    <XxxParts.Root {...rootProps}>
-      <XxxParts.Content {...contentProps}>{children}</XxxParts.Content>
-    </XxxParts.Root>
-  );
-};
-````
-
-### パターン A の `index.ts`
-
-```ts
-export * from "./xxx.parts.jsx";
-
-export { type XxxProps, Xxx } from "./xxx.jsx";
-```
-
 ## 禁則リスト
 
-- `.js` と `.jsx` の import 拡張子を間違えない。`.ts` は `.js`、`.tsx` は `.jsx` を使います。
-- CSS をパーツファイル以外（本体ファイルや `index.ts`）で import しない。
+- `.ts` は `.js`、`.tsx` は `.jsx` の import 拡張子を使う。間違えない。
+- CSS をパーツファイル以外 (本体ファイルや `index.ts`) で import しない。
 - `as any` などの型キャストで型エラーをごまかさない。
-- `enum` や値を持つ `namespace` を使わない。
+- `enum` や値を持つ `namespace` を使わない (`erasableSyntaxOnly`)。
 - コンポーネント関数名の `Sui` プレフィックスを付け忘れない。
-- パーツを `slotProps` にせず、1 段目のプロパティーで直接公開しない。
-- コンテキストの読み取りに `useXxxContext(true)`（オプショナル）を使わないと、グループ外でエラーになります。グループ外での既定値を必ず持ちます。
+- パーツを `slotProps` にせず、1 段目のプロパティーで直接公開しない (Field 型の便利プロパティーは除く)。
+- `slotProps` のメンバーから `readonly` を外さない。`XxxPartsProps` のメンバーは必須 (`readonly`) にする。
+- 子のコンテキスト読み取りを `useXxxContext(true)` (オプショナル) にせず、グループ外での既定値を持たない実装にしない。
 - `cn()` を使わずに `className` を文字列で直接結合しない。
-- JSDoc の 1 行形式、`@default undefined`、`@example` ラベルなしフェンスコードを書かない（`../jsdoc/SKILL.md` 参照）。
-- 状態クラスの強制上書きを `@layer sui.important` の外に書かない（`../css/SKILL.md` 参照）。
-- `package.json` の `exports` と `packages/react/src/index.ts` の公開を忘れない。
-- `website/content/docs/react/` の mdx を書かずに完了としない。API リファレンスでは、複合コンポーネントのプロパティーを `### Root` の上に文書化する。
-- mdx の「構成」セクションで、パーツを名前空間 (`import * as Xxx from ...`) 経由以外で import しない。コード例に具体的な値やサンプルデータを含めず、パーツツリーの提示に専念する。
-- `website/examples/` の example を、列数固定のグリッドなど本文領域でオーバーフローするレイアウトで書かない。複数アイテムは `flex flex-wrap` で折り返す。
-- `website/examples/` の example で、配列の `.map()` などループでアイテムを生成しない。色・サイズ・バリアントなどの候補はすべてベタ書きし、プロパティーに直接指定する。
-- テストを書かずに完了としない。
-- ブラウザーで実行するテストを `*.client.test.tsx` 以外のファイル名にしない。ブラウザーを必要としないロジックのテストは `*.test.ts` に分ける。
-- 検証コマンド（test、format、lint、typecheck）を通さずに完了としない。
+- 公開 API に 1 行形式の JSDoc を書かない。`@default undefined` を書かない。
+- 状態クラスの強制上書きを `@layer sui.important` の外に書かない (`../css/SKILL.md` 参照)。
+- `package.json` の `exports` と `packages/react/src/index.ts` への公開登録を忘れない。
+- テストを書かずに完了としない。ブラウザーで実行するテストを `*.client.test.tsx` 以外のファイル名にしない。
+- 検証コマンド (test、format、lint、typecheck) を通さずに完了としない。
 
 ## 既存コンポーネントへの対応
 
-既存コンポーネントの修正や拡張のときも、このスキルの「コードの共通規則」「禁則リスト」を守って進めてください。
+既存コンポーネントの修正や拡張のときも、このスキルの「format による自動整形」「禁則リスト」を守って進めてください。
 新規パーツを追加する場合は、パターン A〜E から該当するものを選び、既存のパーツファイル内のパーツツリー順どおりに挿入します。

@@ -1,6 +1,6 @@
 ---
 name: jsdoc
-description: TypeScript 向けの完全な JSDoc フォーマットガイド。`@example` の書き方（短い例・複数行・複数パターン）、各種タグ（`@default`、`@deprecated`、避けるべきタグなど）の使い方、プロパティ・列挙型・関数のドキュメントパターン、およびタグの記述順をまとめています。
+description: TypeScript の JSDoc を書くときに使用します。タグの使い方と記述順を定めます。
 ---
 
 # JSDoc
@@ -11,60 +11,6 @@ description: TypeScript 向けの完全な JSDoc フォーマットガイド。`
 
 作業前に `../japanese/SKILL.md` を読んでください。
 
-## `@example` の書き方
-
-### 短い 1 行の例
-
-ラベルは `@example` 行に記述し、コードは次の行にインラインコードとして記述します。
-
-```ts
-/**
- * @example 必須パラメーター
- * `name: Type`
- *
- * @example オプションパラメーター
- * `name?: Type`
- */
-```
-
-### 複数行の例
-
-`@example` の直後にフェンス付きコードブロックを書きます。
-
-````ts
-/**
- * @example
- * ```ts
- * const result = buildParams(node, {
- *   paramsType: "inline",
- * });
- * ```
- */
-````
-
-### 複数のパターンを示す場合
-
-それぞれを独立した `@example` ブロックとして記述します。
-
-```ts
-/**
- * @example オブジェクト形式
- * `{ id, data, params }: { id: string; data: Data; params?: QueryParams }`
- *
- * @example インライン形式
- * `id: string, data: Data, params?: QueryParams`
- */
-```
-
-### ルール
-
-| ルール                    | 正しい例                                   | 誤った例                                      |
-| ------------------------- | ------------------------------------------ | --------------------------------------------- |
-| ラベル + インラインコード | `@example 必須\nname: Type`                | `@example name: Type`（タグ行にコードを書く） |
-| 複数行のコード            | ` ```ts ``` ` のフェンス付きコードブロック | フェンスなしでコードを書く                    |
-| 短い例                    | インラインコードを使用                     | トリプルバッククォートを使う（大げさすぎる）  |
-| 1つの例につき1つの内容    | `@example` を分けて記述                    | 1つの `@example` にすべて詰め込む             |
-
 ## タグ
 
 ### よく使うタグ
@@ -72,7 +18,6 @@ description: TypeScript 向けの完全な JSDoc フォーマットガイド。`
 | タグ          | 用途                   | 補足                                                               |
 | ------------- | ---------------------- | ------------------------------------------------------------------ |
 | `@default`    | デフォルト値           | デフォルト値が自明でない場合のみ使用します（`undefined` は不要）。 |
-| `@example`    | 使用例                 | 複雑な API や複数パターンの API では積極的に使用します。           |
 | `@note`       | 注意事項               | バージョン情報や破壊的変更などを記載します。                       |
 | `@deprecated` | 非推奨であることを示す | 移行方法もあわせて記載します。                                     |
 
@@ -88,6 +33,7 @@ description: TypeScript 向けの完全な JSDoc フォーマットガイド。`
 
 - `@type`：TypeScript の型注釈を利用します
 - `@typedef`：`type` または `interface` を利用します
+- `@example`：使用しません
 - `@default undefined`：オプショナル (`?`) であることがすでに `undefined` を意味します
 
 ### 使用に留意点のあるタグ
@@ -219,8 +165,6 @@ function isStringType(node: SchemaNode): boolean { ... }
 - JSDoc は常に複数行で記述します。
 - 具体的で完結した文章を書きます。
 - `@default` はデフォルト値が自明でない場合のみ付けます。
-- 複数の使い方がある場合は `@example` を複数記述します。
-- `@example` のラベルは短く分かりやすくします。
 - JSDoc には、振る舞いを記述します。
 - 実装コードには、必要に応じて、読み手がコードの背景、意図、ロジックを即座に理解できるようなコメントを記述します。
 
@@ -228,7 +172,7 @@ function isStringType(node: SchemaNode): boolean { ... }
 
 - JSDoc で `/** 説明 */` のような 1 行形式を書きます。
 - `@default undefined` を書きます。
-- `@example` 行に直接コードを書きます。
+- `@example` を書きます。
 - 自明なプロパティーまで過剰に説明します。
 
 ## タグの記述順
@@ -238,7 +182,6 @@ function isStringType(node: SchemaNode): boolean { ... }
 3. `@param`（必要な場合）
 4. `@default`（デフォルト値が自明でない場合）
 5. `@returns`（必要な場合）
-6. `@example`（必要に応じて複数）
 7. `@note`（必要な場合）
 8. `@deprecated`（非推奨の場合）
 9. `@see`（関連資料を示す場合）

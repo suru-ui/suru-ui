@@ -1,6 +1,6 @@
 ---
 name: vitest
-description: Vite プロジェクトの単体テスト/統合テストを作成する際に使用します。テスト API、モックパターンを提供します。
+description: Vitest でテストを書くときに使用します。テスト API とモックパターンを定めます。
 ---
 
 # Vitest の指針
