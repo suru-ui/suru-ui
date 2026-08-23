@@ -2,7 +2,6 @@
 @layer sui.component {
   /* 変数 */
   .sui_fieldset {
-    /* 空白 */
     --sui_fieldset-gap: ;
   }
 
@@ -20,7 +19,6 @@
   /* 既定値設定: ここから */
 
   .sui_fieldset {
-    /* 空白 */
     --sui_fieldset-gap: --sui-gap(4);
   }
 
@@ -31,16 +29,13 @@
 @layer sui.component {
   /* 変数 */
   .sui_fieldset {
-    /* 書体 */
     --sui_fieldset_legend-font_size: ;
     --sui_fieldset_legend-font_weight: ;
     --sui_fieldset_legend-line_height: ;
+    --sui_fieldset_legend-color: ;
     --sui_fieldset_legend-letter_spacing: ;
-    /* 枠線 */
     --sui_fieldset_legend-border_color: ;
     --sui_fieldset_legend-border_width: ;
-    /* 前景 */
-    --sui_fieldset_legend-color: ;
   }
 
   /* 動的 */
@@ -59,16 +54,13 @@
   /* 既定値設定: ここから */
 
   .sui_fieldset {
-    /* 書体 */
     --sui_fieldset_legend-font_size: var(--sui-text-std-lg-b-font_size);
     --sui_fieldset_legend-font_weight: var(--sui-text-std-lg-b-font_weight);
     --sui_fieldset_legend-line_height: var(--sui-text-std-lg-b-line_height);
+    --sui_fieldset_legend-color: var(--sui-canvas_text-1);
     --sui_fieldset_legend-letter_spacing: var(--sui-text-std-lg-b-letter_spacing);
-    /* 枠線 */
     --sui_fieldset_legend-border_color: var(--sui-canvas_text-3);
     --sui_fieldset_legend-border_width: --sui-border_width(1);
-    /* 前景 */
-    --sui_fieldset_legend-color: var(--sui-canvas_text-1);
   }
 
   /* 既定値設定: ここまで */

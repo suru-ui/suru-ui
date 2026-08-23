@@ -78,10 +78,8 @@
 @layer sui.component {
   /* 変数 */
   .sui_scroll_area {
-    /* 形状 */
-    --sui_scroll_area_thumb-height: ;
     --sui_scroll_area_thumb-width: ;
-    /* 背景 */
+    --sui_scroll_area_thumb-height: ;
     --sui_scroll_area_thumb-background_color-normal: ;
     --sui_scroll_area_thumb-background_color-subtle: ;
   }
@@ -117,10 +115,8 @@
   /* 既定値設定: ここから */
 
   .sui_scroll_area {
-    /* 形状 */
-    --sui_scroll_area_thumb-height: var(--scroll-area-thumb-height);
     --sui_scroll_area_thumb-width: var(--scroll-area-thumb-width);
-    /* 背景 */
+    --sui_scroll_area_thumb-height: var(--scroll-area-thumb-height);
     --sui_scroll_area_thumb-background_color-normal:
       color-mix(in srgb, var(--sui-canvas_text-1) 38%, transparent);
     --sui_scroll_area_thumb-background_color-subtle:

@@ -26,28 +26,25 @@
 
   /* 変数 */
   .sui_resizable_handle {
-    /* 形状 */
-    --sui_resizable_handle-line_size: ;
-    --sui_resizable_handle-hit_size: ;
-    --sui_resizable_handle-grip_width: ;
-    --sui_resizable_handle-grip_height: ;
-    --sui_resizable_handle-grip_dot_size: ;
-    /* 背景 */
-    --sui_resizable_handle-line_color-normal: ;
-    --sui_resizable_handle-line_color-subtle: ;
-    --sui_resizable_handle-line_color-action: ;
-    --sui_resizable_handle-grip_background_color-normal: ;
-    --sui_resizable_handle-grip_background_color-subtle: ;
-    --sui_resizable_handle-grip_background_color-action: ;
-    /* 枠線 */
-    --sui_resizable_handle-grip_border_color-normal: ;
-    --sui_resizable_handle-grip_border_color-subtle: ;
-    --sui_resizable_handle-grip_border_color-action: ;
-    --sui_resizable_handle-grip_border_width: ;
-    --sui_resizable_handle-grip_border_radius: ;
+    --sui_resizable_handle-outline_width: ;
     --sui_resizable_handle-outline_color: ;
     --sui_resizable_handle-outline_offset: ;
-    --sui_resizable_handle-outline_width: ;
+    --sui_resizable_handle-grip_background_color-action: ;
+    --sui_resizable_handle-grip_background_color-normal: ;
+    --sui_resizable_handle-grip_background_color-subtle: ;
+    --sui_resizable_handle-grip_border_color-action: ;
+    --sui_resizable_handle-grip_border_color-normal: ;
+    --sui_resizable_handle-grip_border_color-subtle: ;
+    --sui_resizable_handle-grip_border_radius: ;
+    --sui_resizable_handle-grip_border_width: ;
+    --sui_resizable_handle-grip_dot_size: ;
+    --sui_resizable_handle-grip_height: ;
+    --sui_resizable_handle-grip_width: ;
+    --sui_resizable_handle-hit_size: ;
+    --sui_resizable_handle-line_color-action: ;
+    --sui_resizable_handle-line_color-normal: ;
+    --sui_resizable_handle-line_color-subtle: ;
+    --sui_resizable_handle-line_size: ;
   }
 
   /* 静的 */
@@ -172,28 +169,25 @@
   /* 既定値設定: ここから */
 
   .sui_resizable_handle {
-    /* 形状 */
-    --sui_resizable_handle-line_size: 1px;
-    --sui_resizable_handle-hit_size: 16px;
-    --sui_resizable_handle-grip_width: 12px;
-    --sui_resizable_handle-grip_height: 16px;
-    --sui_resizable_handle-grip_dot_size: 2px;
-    /* 背景 */
-    --sui_resizable_handle-line_color-normal: var(--sui-canvas_text-3);
-    --sui_resizable_handle-line_color-subtle: var(--sui-canvas_text-2);
-    --sui_resizable_handle-line_color-action: var(--sui-canvas_text-1);
-    --sui_resizable_handle-grip_background_color-normal: var(--sui-canvas-1);
-    --sui_resizable_handle-grip_background_color-subtle: var(--sui-canvas-2);
-    --sui_resizable_handle-grip_background_color-action: var(--sui-canvas-1);
-    /* 枠線 */
-    --sui_resizable_handle-grip_border_color-normal: var(--sui-canvas_text-3);
-    --sui_resizable_handle-grip_border_color-subtle: var(--sui-canvas_text-2);
-    --sui_resizable_handle-grip_border_color-action: var(--sui-canvas_text-1);
-    --sui_resizable_handle-grip_border_width: 1px;
-    --sui_resizable_handle-grip_border_radius: 2px;
+    --sui_resizable_handle-outline_width: 0px;
     --sui_resizable_handle-outline_color: var(--sui-focusring_color);
     --sui_resizable_handle-outline_offset: var(--sui-focusring_offset);
-    --sui_resizable_handle-outline_width: 0px;
+    --sui_resizable_handle-grip_background_color-action: var(--sui-canvas-1);
+    --sui_resizable_handle-grip_background_color-normal: var(--sui-canvas-1);
+    --sui_resizable_handle-grip_background_color-subtle: var(--sui-canvas-2);
+    --sui_resizable_handle-grip_border_color-action: var(--sui-canvas_text-1);
+    --sui_resizable_handle-grip_border_color-normal: var(--sui-canvas_text-3);
+    --sui_resizable_handle-grip_border_color-subtle: var(--sui-canvas_text-2);
+    --sui_resizable_handle-grip_border_radius: 2px;
+    --sui_resizable_handle-grip_border_width: 1px;
+    --sui_resizable_handle-grip_dot_size: 2px;
+    --sui_resizable_handle-grip_height: 16px;
+    --sui_resizable_handle-grip_width: 12px;
+    --sui_resizable_handle-hit_size: 16px;
+    --sui_resizable_handle-line_color-action: var(--sui-canvas_text-1);
+    --sui_resizable_handle-line_color-normal: var(--sui-canvas_text-3);
+    --sui_resizable_handle-line_color-subtle: var(--sui-canvas_text-2);
+    --sui_resizable_handle-line_size: 1px;
   }
 
   /* 既定値設定: ここまで */
@@ -202,26 +196,23 @@
 
   @media (any-hover: hover) {
     .sui_resizable_handle:not(.sui_resizable_handle-disabled):hover {
-      /* 背景 */
-      --_sui_resizable_handle-line_color: var(--sui_resizable_handle-line_color-subtle);
       --_sui_resizable_handle-grip_background_color:
         var(--sui_resizable_handle-grip_background_color-subtle);
       --_sui_resizable_handle-grip_border_color:
         var(--sui_resizable_handle-grip_border_color-subtle);
+      --_sui_resizable_handle-line_color: var(--sui_resizable_handle-line_color-subtle);
     }
   }
 
   .sui_resizable_handle:not(.sui_resizable_handle-disabled):active {
-    /* 背景 */
-    --_sui_resizable_handle-line_color: var(--sui_resizable_handle-line_color-action);
     --_sui_resizable_handle-grip_background_color:
       var(--sui_resizable_handle-grip_background_color-action);
     --_sui_resizable_handle-grip_border_color:
       var(--sui_resizable_handle-grip_border_color-action);
+    --_sui_resizable_handle-line_color: var(--sui_resizable_handle-line_color-action);
   }
 
   .sui_resizable_handle:focus-visible {
-    /* 枠線 */
     --_sui_resizable_handle-outline_width: var(--sui-focusring_width);
   }
 

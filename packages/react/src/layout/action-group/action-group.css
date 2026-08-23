@@ -7,15 +7,11 @@
 
   /* 変数 */
   .sui_action_group {
-    /* 背景 */
+    --sui_action_group-flex_direction: ;
+    --sui_action_group-item-color: ;
     --sui_action_group-item-background_color: ;
-    /* 枠線 */
     --sui_action_group-item-border_color: ;
     --sui_action_group-border_width: ;
-    /* 前景 */
-    --sui_action_group-item-color: ;
-    /* 位置 */
-    --sui_action_group-flex_direction: ;
   }
 
   /* 静的 */
@@ -38,192 +34,186 @@
   /* 既定値設定: ここから */
 
   .sui_action_group {
-    /* 枠線 */
     --sui_action_group-border_width: --sui-border_width(1);
   }
 
   .sui_action_group-size_sm {
-    /* 枠線 */
     --sui_action_group-border_width: --sui-border_width(1);
   }
 
   .sui_action_group-size_md {
-    /* 枠線 */
     --sui_action_group-border_width: --sui-border_width(1);
   }
 
   .sui_action_group-size_lg {
-    /* 枠線 */
     --sui_action_group-border_width: --sui-border_width(1);
   }
 
   .sui_action_group-orientation_horizontal {
-    /* 位置 */
     --sui_action_group-flex_direction: row;
   }
 
   .sui_action_group-orientation_vertical {
-    /* 位置 */
     --sui_action_group-flex_direction: column;
   }
 
   .sui_action_group-color_grey {
     &.sui_action_group-variant_solid {
+      --sui_action_group-item-color: var(--sui-grey-solid-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-grey-solid-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-grey-solid-border-normal);
-      --sui_action_group-item-color: var(--sui-grey-solid-canvas_text-normal);
     }
 
     &.sui_action_group-variant_naked {
+      --sui_action_group-item-color: var(--sui-grey-naked-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-grey-naked-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-grey-naked-border-normal);
-      --sui_action_group-item-color: var(--sui-grey-naked-canvas_text-normal);
     }
 
     &.sui_action_group-variant_liquid {
+      --sui_action_group-item-color: var(--sui-grey-liquid-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-grey-liquid-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-grey-liquid-border-normal);
-      --sui_action_group-item-color: var(--sui-grey-liquid-canvas_text-normal);
     }
   }
 
   .sui_action_group-color_blue {
     &.sui_action_group-variant_solid {
+      --sui_action_group-item-color: var(--sui-blue-solid-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-blue-solid-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-blue-solid-border-normal);
-      --sui_action_group-item-color: var(--sui-blue-solid-canvas_text-normal);
     }
 
     &.sui_action_group-variant_naked {
+      --sui_action_group-item-color: var(--sui-blue-naked-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-blue-naked-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-blue-naked-border-normal);
-      --sui_action_group-item-color: var(--sui-blue-naked-canvas_text-normal);
     }
 
     &.sui_action_group-variant_liquid {
+      --sui_action_group-item-color: var(--sui-blue-liquid-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-blue-liquid-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-blue-liquid-border-normal);
-      --sui_action_group-item-color: var(--sui-blue-liquid-canvas_text-normal);
     }
   }
 
   .sui_action_group-color_purple {
     &.sui_action_group-variant_solid {
+      --sui_action_group-item-color: var(--sui-purple-solid-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-purple-solid-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-purple-solid-border-normal);
-      --sui_action_group-item-color: var(--sui-purple-solid-canvas_text-normal);
     }
 
     &.sui_action_group-variant_naked {
+      --sui_action_group-item-color: var(--sui-purple-naked-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-purple-naked-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-purple-naked-border-normal);
-      --sui_action_group-item-color: var(--sui-purple-naked-canvas_text-normal);
     }
 
     &.sui_action_group-variant_liquid {
+      --sui_action_group-item-color: var(--sui-purple-liquid-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-purple-liquid-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-purple-liquid-border-normal);
-      --sui_action_group-item-color: var(--sui-purple-liquid-canvas_text-normal);
     }
   }
 
   .sui_action_group-color_magenta {
     &.sui_action_group-variant_solid {
+      --sui_action_group-item-color: var(--sui-magenta-solid-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-magenta-solid-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-magenta-solid-border-normal);
-      --sui_action_group-item-color: var(--sui-magenta-solid-canvas_text-normal);
     }
 
     &.sui_action_group-variant_naked {
+      --sui_action_group-item-color: var(--sui-magenta-naked-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-magenta-naked-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-magenta-naked-border-normal);
-      --sui_action_group-item-color: var(--sui-magenta-naked-canvas_text-normal);
     }
 
     &.sui_action_group-variant_liquid {
+      --sui_action_group-item-color: var(--sui-magenta-liquid-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-magenta-liquid-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-magenta-liquid-border-normal);
-      --sui_action_group-item-color: var(--sui-magenta-liquid-canvas_text-normal);
     }
   }
 
   .sui_action_group-color_red {
     &.sui_action_group-variant_solid {
+      --sui_action_group-item-color: var(--sui-red-solid-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-red-solid-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-red-solid-border-normal);
-      --sui_action_group-item-color: var(--sui-red-solid-canvas_text-normal);
     }
 
     &.sui_action_group-variant_naked {
+      --sui_action_group-item-color: var(--sui-red-naked-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-red-naked-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-red-naked-border-normal);
-      --sui_action_group-item-color: var(--sui-red-naked-canvas_text-normal);
     }
 
     &.sui_action_group-variant_liquid {
+      --sui_action_group-item-color: var(--sui-red-liquid-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-red-liquid-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-red-liquid-border-normal);
-      --sui_action_group-item-color: var(--sui-red-liquid-canvas_text-normal);
     }
   }
 
   .sui_action_group-color_orange {
     &.sui_action_group-variant_solid {
+      --sui_action_group-item-color: var(--sui-orange-solid-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-orange-solid-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-orange-solid-border-normal);
-      --sui_action_group-item-color: var(--sui-orange-solid-canvas_text-normal);
     }
 
     &.sui_action_group-variant_naked {
+      --sui_action_group-item-color: var(--sui-orange-naked-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-orange-naked-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-orange-naked-border-normal);
-      --sui_action_group-item-color: var(--sui-orange-naked-canvas_text-normal);
     }
 
     &.sui_action_group-variant_liquid {
+      --sui_action_group-item-color: var(--sui-orange-liquid-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-orange-liquid-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-orange-liquid-border-normal);
-      --sui_action_group-item-color: var(--sui-orange-liquid-canvas_text-normal);
     }
   }
 
   .sui_action_group-color_yellow {
     &.sui_action_group-variant_solid {
+      --sui_action_group-item-color: var(--sui-yellow-solid-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-yellow-solid-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-yellow-solid-border-normal);
-      --sui_action_group-item-color: var(--sui-yellow-solid-canvas_text-normal);
     }
 
     &.sui_action_group-variant_naked {
+      --sui_action_group-item-color: var(--sui-yellow-naked-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-yellow-naked-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-yellow-naked-border-normal);
-      --sui_action_group-item-color: var(--sui-yellow-naked-canvas_text-normal);
     }
 
     &.sui_action_group-variant_liquid {
+      --sui_action_group-item-color: var(--sui-yellow-liquid-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-yellow-liquid-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-yellow-liquid-border-normal);
-      --sui_action_group-item-color: var(--sui-yellow-liquid-canvas_text-normal);
     }
   }
 
   .sui_action_group-color_green {
     &.sui_action_group-variant_solid {
+      --sui_action_group-item-color: var(--sui-green-solid-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-green-solid-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-green-solid-border-normal);
-      --sui_action_group-item-color: var(--sui-green-solid-canvas_text-normal);
     }
 
     &.sui_action_group-variant_naked {
+      --sui_action_group-item-color: var(--sui-green-naked-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-green-naked-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-green-naked-border-normal);
-      --sui_action_group-item-color: var(--sui-green-naked-canvas_text-normal);
     }
 
     &.sui_action_group-variant_liquid {
+      --sui_action_group-item-color: var(--sui-green-liquid-canvas_text-normal);
       --sui_action_group-item-background_color: var(--sui-green-liquid-canvas-normal);
       --sui_action_group-item-border_color: var(--sui-green-liquid-border-normal);
-      --sui_action_group-item-color: var(--sui-green-liquid-canvas_text-normal);
     }
   }
 
@@ -233,21 +223,21 @@
 /* Root */
 @layer sui.component {
   .sui_action_group > .sui_action_group_item.sui_input {
+    --sui_input-color: var(--sui_action_group-item-color);
     --sui_input-background_color-normal: var(--sui_action_group-item-background_color);
     --sui_input-border_color-normal: var(--sui_action_group-item-border_color);
-    --sui_input-color: var(--sui_action_group-item-color);
   }
 
   .sui_action_group > .sui_action_group_item.sui_number_field {
-    --sui_number_field-group-canvas-normal: var(--sui_action_group-item-background_color);
-    --sui_number_field-border_color-normal: var(--sui_action_group-item-border_color);
     --sui_number_field-color: var(--sui_action_group-item-color);
+    --sui_number_field-border_color-normal: var(--sui_action_group-item-border_color);
+    --sui_number_field-group-canvas-normal: var(--sui_action_group-item-background_color);
   }
 
   .sui_action_group > .sui_action_group_item.sui_select {
-    --sui_select-canvas-normal: var(--sui_action_group-item-background_color);
-    --sui_select-border_color-normal: var(--sui_action_group-item-border_color);
     --sui_select-color: var(--sui_action_group-item-color);
+    --sui_select-border_color-normal: var(--sui_action_group-item-border_color);
+    --sui_select-canvas-normal: var(--sui_action_group-item-background_color);
   }
 }
 

@@ -21,6 +21,7 @@ run = [
   "node scripts/sort-import-exports.ts --check",
   "node scripts/sort-type-props.ts --check",
   "node scripts/sort-namespace-exports.ts --check",
+  "node scripts/sort-css-variables.ts --check",
 ]
 
 [tasks."test:lint"]
@@ -43,6 +44,7 @@ run = [
   { task = "format:sort-import-exports" },
   { task = "format:sort-type-props" },
   { task = "format:sort-namespace-exports" },
+  { task = "format:sort-css-variables" },
 ]
 
 [tasks."format:oxfmt"]
@@ -62,6 +64,9 @@ run = "node scripts/sort-type-props.ts"
 
 [tasks."format:sort-namespace-exports"]
 run = "node scripts/sort-namespace-exports.ts"
+
+[tasks."format:sort-css-variables"]
+run = "node scripts/sort-css-variables.ts"
 
 [tasks.lint]
 run = "npx oxlint --config ./.config/.oxlintrc.json"

@@ -2,7 +2,6 @@
 @layer sui.component {
   /* 変数 */
   .sui_field {
-    /* 空白 */
     --sui_field-gap: ;
   }
 
@@ -21,7 +20,6 @@
   /* 既定値設定: ここから */
 
   .sui_field {
-    /* 空白 */
     --sui_field-gap: --sui-gap(4);
   }
 
@@ -32,14 +30,12 @@
 @layer sui.component {
   /* 変数 */
   .sui_field {
-    /* 書体 */
     --sui_field_label-font_family: ;
     --sui_field_label-font_size: ;
     --sui_field_label-font_weight: ;
     --sui_field_label-line_height: ;
-    --sui_field_label-letter_spacing: ;
-    /* 前景 */
     --sui_field_label-color: ;
+    --sui_field_label-letter_spacing: ;
   }
 
   /* 動的 */
@@ -55,14 +51,12 @@
   /* 既定値設定: ここから */
 
   .sui_field {
-    /* 書体 */
     --sui_field_label-font_family: var(--sui-font-sans);
     --sui_field_label-font_size: var(--sui-text-dns-sm-b-font_size);
     --sui_field_label-font_weight: var(--sui-text-dns-sm-b-font_weight);
     --sui_field_label-line_height: var(--sui-text-dns-sm-b-line_height);
-    --sui_field_label-letter_spacing: var(--sui-text-dns-sm-b-letter_spacing);
-    /* 前景 */
     --sui_field_label-color: var(--sui-canvas_text-1);
+    --sui_field_label-letter_spacing: var(--sui-text-dns-sm-b-letter_spacing);
   }
 
   /* 既定値設定: ここまで */
@@ -72,14 +66,12 @@
 @layer sui.component {
   /* 変数 */
   .sui_field {
-    /* 書体 */
     --sui_field_description-font_family: ;
     --sui_field_description-font_size: ;
     --sui_field_description-font_weight: ;
     --sui_field_description-line_height: ;
-    --sui_field_description-letter_spacing: ;
-    /* 前景 */
     --sui_field_description-color: ;
+    --sui_field_description-letter_spacing: ;
   }
 
   /* 動的 */
@@ -95,14 +87,12 @@
   /* 既定値設定: ここから */
 
   .sui_field {
-    /* 書体 */
     --sui_field_description-font_family: var(--sui-font-sans);
     --sui_field_description-font_size: var(--sui-text-dns-sm-n-font_size);
     --sui_field_description-font_weight: var(--sui-text-dns-sm-n-font_weight);
     --sui_field_description-line_height: var(--sui-text-dns-sm-n-line_height);
-    --sui_field_description-letter_spacing: var(--sui-text-dns-sm-n-letter_spacing);
-    /* 前景 */
     --sui_field_description-color: var(--sui-canvas_text-2);
+    --sui_field_description-letter_spacing: var(--sui-text-dns-sm-n-letter_spacing);
   }
 
   /* 既定値設定: ここまで */
@@ -112,14 +102,12 @@
 @layer sui.component {
   /* 変数 */
   .sui_field {
-    /* 書体 */
     --sui_field_error-font_family: ;
     --sui_field_error-font_size: ;
     --sui_field_error-font_weight: ;
     --sui_field_error-line_height: ;
-    --sui_field_error-letter_spacing: ;
-    /* 前景 */
     --sui_field_error-color: ;
+    --sui_field_error-letter_spacing: ;
   }
 
   /* 動的 */
@@ -135,14 +123,12 @@
   /* 既定値設定: ここから */
 
   .sui_field {
-    /* 書体 */
     --sui_field_error-font_family: var(--sui-font-sans);
     --sui_field_error-font_size: var(--sui-text-dns-sm-n-font_size);
     --sui_field_error-font_weight: var(--sui-text-dns-sm-n-font_weight);
     --sui_field_error-line_height: var(--sui-text-dns-sm-n-line_height);
-    --sui_field_error-letter_spacing: var(--sui-text-dns-sm-n-letter_spacing);
-    /* 前景 */
     --sui_field_error-color: var(--sui-red-naked-canvas_text-normal);
+    --sui_field_error-letter_spacing: var(--sui-text-dns-sm-n-letter_spacing);
   }
 
   /* 既定値設定: ここまで */

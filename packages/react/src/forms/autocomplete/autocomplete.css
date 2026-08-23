@@ -2,14 +2,12 @@
 @layer sui.component {
   /* 変数 */
   .sui_autocomplete {
-    /* 形状 */
-    --sui_autocomplete-min_height: ;
-    /* 空白 */
     --sui_autocomplete-gap: ;
+    --sui_autocomplete-min_height: ;
     --sui_autocomplete-padding_inline: ;
-    /* 背景 */
+    --sui_autocomplete-outline_color: ;
+    --sui_autocomplete-outline_offset: ;
     --sui_autocomplete-background_color: ;
-    /* 枠線 */
     --sui_autocomplete-border_color-normal: ;
     --sui_autocomplete-border_color-hover: ;
     --sui_autocomplete-border_color-invalid: ;
@@ -19,8 +17,6 @@
     --sui_autocomplete-border_width-focus_visible: ;
     --sui_autocomplete-border_width-invalid: ;
     --sui_autocomplete-border_radius: ;
-    --sui_autocomplete-outline_color: ;
-    --sui_autocomplete-outline_offset: ;
   }
 
   /* 静的 */
@@ -64,7 +60,8 @@
   /* 既定値設定: ここから */
 
   .sui_autocomplete {
-    /* 枠線 */
+    --sui_autocomplete-outline_color: var(--sui-focusring_color);
+    --sui_autocomplete-outline_offset: var(--sui-focusring_offset);
     --sui_autocomplete-border_color-normal: var(--sui-grey-naked-border-normal);
     --sui_autocomplete-border_color-hover: var(--sui-grey-naked-border-subtle);
     --sui_autocomplete-border_color-invalid: var(--sui-red-naked-canvas_text-normal);
@@ -72,161 +69,130 @@
     --sui_autocomplete-border_width-hover: --sui-border_width(1);
     --sui_autocomplete-border_width-focus_visible: --sui-border_width(2);
     --sui_autocomplete-border_width-invalid: --sui-border_width(2);
-    --sui_autocomplete-outline_color: var(--sui-focusring_color);
-    --sui_autocomplete-outline_offset: var(--sui-focusring_offset);
   }
 
   .sui_autocomplete-size_sm {
-    /* 形状 */
-    --sui_autocomplete-min_height: var(--sui-size-sm);
-    /* 空白 */
     --sui_autocomplete-gap: --sui-space(2);
+    --sui_autocomplete-min_height: var(--sui-size-sm);
     --sui_autocomplete-padding_inline: --sui-space(3);
   }
 
   .sui_autocomplete-size_md {
-    /* 形状 */
-    --sui_autocomplete-min_height: var(--sui-size-md);
-    /* 空白 */
     --sui_autocomplete-gap: --sui-space(3);
+    --sui_autocomplete-min_height: var(--sui-size-md);
     --sui_autocomplete-padding_inline: --sui-space(4);
   }
 
   .sui_autocomplete-size_lg {
-    /* 形状 */
-    --sui_autocomplete-min_height: var(--sui-size-lg);
-    /* 空白 */
     --sui_autocomplete-gap: --sui-space(3);
+    --sui_autocomplete-min_height: var(--sui-size-lg);
     --sui_autocomplete-padding_inline: --sui-space(5);
   }
 
   .sui_autocomplete-radius_none {
-    /* 枠線 */
     --sui_autocomplete-border_radius: 0px;
   }
 
   .sui_autocomplete-radius_sm {
-    /* 枠線 */
     --sui_autocomplete-border_radius: var(--sui-radius-sm);
   }
 
   .sui_autocomplete-radius_md {
-    /* 枠線 */
     --sui_autocomplete-border_radius: var(--sui-radius-md);
   }
 
   .sui_autocomplete-radius_lg {
-    /* 枠線 */
     --sui_autocomplete-border_radius: var(--sui-radius-lg);
   }
 
   .sui_autocomplete-radius_full {
-    /* 枠線 */
     --sui_autocomplete-border_radius: calc(var(--sui_autocomplete-min_height) / 2);
   }
 
   .sui_autocomplete-variant_naked {
-    /* 背景 */
     --sui_autocomplete-background_color: var(--sui-grey-naked-canvas-normal);
   }
 
   .sui_autocomplete-variant_liquid {
-    /* 背景 */
     --sui_autocomplete-background_color: var(--sui-grey-liquid-canvas-normal);
   }
 
   .sui_autocomplete-color_grey {
     &.sui_autocomplete-variant_naked {
-      /* 枠線 */
       --sui_autocomplete-border_color-focus_visible: var(--sui-grey-naked-border-subtle);
     }
 
     &.sui_autocomplete-variant_liquid {
-      /* 枠線 */
       --sui_autocomplete-border_color-focus_visible: var(--sui-grey-liquid-border-subtle);
     }
   }
 
   .sui_autocomplete-color_blue {
     &.sui_autocomplete-variant_naked {
-      /* 枠線 */
       --sui_autocomplete-border_color-focus_visible: var(--sui-blue-naked-border-normal);
     }
 
     &.sui_autocomplete-variant_liquid {
-      /* 枠線 */
       --sui_autocomplete-border_color-focus_visible: var(--sui-blue-liquid-border-normal);
     }
   }
 
   .sui_autocomplete-color_purple {
     &.sui_autocomplete-variant_naked {
-      /* 枠線 */
       --sui_autocomplete-border_color-focus_visible: var(--sui-purple-naked-border-normal);
     }
 
     &.sui_autocomplete-variant_liquid {
-      /* 枠線 */
       --sui_autocomplete-border_color-focus_visible: var(--sui-purple-liquid-border-normal);
     }
   }
 
   .sui_autocomplete-color_magenta {
     &.sui_autocomplete-variant_naked {
-      /* 枠線 */
       --sui_autocomplete-border_color-focus_visible: var(--sui-magenta-naked-border-normal);
     }
 
     &.sui_autocomplete-variant_liquid {
-      /* 枠線 */
       --sui_autocomplete-border_color-focus_visible: var(--sui-magenta-liquid-border-normal);
     }
   }
 
   .sui_autocomplete-color_red {
     &.sui_autocomplete-variant_naked {
-      /* 枠線 */
       --sui_autocomplete-border_color-focus_visible: var(--sui-red-naked-border-normal);
     }
 
     &.sui_autocomplete-variant_liquid {
-      /* 枠線 */
       --sui_autocomplete-border_color-focus_visible: var(--sui-red-liquid-border-normal);
     }
   }
 
   .sui_autocomplete-color_orange {
     &.sui_autocomplete-variant_naked {
-      /* 枠線 */
       --sui_autocomplete-border_color-focus_visible: var(--sui-orange-naked-border-normal);
     }
 
     &.sui_autocomplete-variant_liquid {
-      /* 枠線 */
       --sui_autocomplete-border_color-focus_visible: var(--sui-orange-liquid-border-normal);
     }
   }
 
   .sui_autocomplete-color_yellow {
     &.sui_autocomplete-variant_naked {
-      /* 枠線 */
       --sui_autocomplete-border_color-focus_visible: var(--sui-yellow-naked-border-normal);
     }
 
     &.sui_autocomplete-variant_liquid {
-      /* 枠線 */
       --sui_autocomplete-border_color-focus_visible: var(--sui-yellow-liquid-border-normal);
     }
   }
 
   .sui_autocomplete-color_green {
     &.sui_autocomplete-variant_naked {
-      /* 枠線 */
       --sui_autocomplete-border_color-focus_visible: var(--sui-green-naked-border-normal);
     }
 
     &.sui_autocomplete-variant_liquid {
-      /* 枠線 */
       --sui_autocomplete-border_color-focus_visible: var(--sui-green-liquid-border-normal);
     }
   }
@@ -236,38 +202,32 @@
   /* 上書き設定: ここから */
 
   .sui_autocomplete:has(.sui_autocomplete_input:focus-visible) {
-    /* 枠線 */
     --_sui_autocomplete-outline_width: var(--sui-focusring_width);
   }
 
   .sui_autocomplete-outlined {
-    /* 枠線 */
     --_sui_autocomplete-border_color: var(--sui_autocomplete-border_color-normal);
     --_sui_autocomplete-border_width: var(--sui_autocomplete-border_width-normal);
 
     @media (any-hover: hover) {
       &:hover {
-        /* 枠線 */
         --_sui_autocomplete-border_color: var(--sui_autocomplete-border_color-hover);
         --_sui_autocomplete-border_width: var(--sui_autocomplete-border_width-hover);
       }
     }
 
     &:focus-within {
-      /* 枠線 */
       --_sui_autocomplete-border_color: var(--sui_autocomplete-border_color-focus_visible);
       --_sui_autocomplete-border_width: var(--sui_autocomplete-border_width-focus_visible);
     }
   }
 
   .sui_autocomplete:has(.sui_autocomplete_input-invalid) {
-    /* 枠線 */
     --_sui_autocomplete-border_color: var(--sui_autocomplete-border_color-invalid);
     --_sui_autocomplete-border_width: var(--sui_autocomplete-border_width-invalid);
   }
 
   .sui_autocomplete:has(.sui_autocomplete_input-unverified:user-invalid) {
-    /* 枠線 */
     --_sui_autocomplete-border_color: var(--sui_autocomplete-border_color-invalid);
     --_sui_autocomplete-border_width: var(--sui_autocomplete-border_width-invalid);
   }
@@ -279,14 +239,12 @@
 @layer sui.component {
   /* 変数 */
   .sui_autocomplete {
-    /* 書体 */
     --sui_autocomplete_input-font_family: ;
     --sui_autocomplete_input-font_size: ;
     --sui_autocomplete_input-font_weight: ;
-    --sui_autocomplete_input-letter_spacing: ;
-    /* 前景 */
     --sui_autocomplete_input-color: ;
     --sui_autocomplete_input-placeholder-color: ;
+    --sui_autocomplete_input-letter_spacing: ;
   }
 
   /* 静的 */
@@ -315,40 +273,33 @@
   /* 既定値設定: ここから */
 
   .sui_autocomplete {
-    /* 書体 */
     --sui_autocomplete_input-font_family: var(--sui-font-sans);
-    /* 前景 */
     --sui_autocomplete_input-placeholder-color: var(--sui-canvas_text-2);
   }
 
   .sui_autocomplete-size_sm {
-    /* 書体 */
     --sui_autocomplete_input-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_autocomplete_input-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_autocomplete_input-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
   }
 
   .sui_autocomplete-size_md {
-    /* 書体 */
     --sui_autocomplete_input-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_autocomplete_input-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_autocomplete_input-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   }
 
   .sui_autocomplete-size_lg {
-    /* 書体 */
     --sui_autocomplete_input-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_autocomplete_input-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_autocomplete_input-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
   }
 
   .sui_autocomplete-variant_naked {
-    /* 前景 */
     --sui_autocomplete_input-color: var(--sui-grey-naked-canvas_text-normal);
   }
 
   .sui_autocomplete-variant_liquid {
-    /* 前景 */
     --sui_autocomplete_input-color: var(--sui-grey-liquid-canvas_text-normal);
   }
 
@@ -359,15 +310,12 @@
 @layer sui.component {
   /* 変数 */
   .sui_autocomplete {
-    /* 形状 */
     --sui_autocomplete_addon_svg-size: ;
-    /* 書体 */
     --sui_autocomplete_addon-font_family: ;
     --sui_autocomplete_addon-font_size: ;
     --sui_autocomplete_addon-font_weight: ;
-    --sui_autocomplete_addon-letter_spacing: ;
-    /* 前景 */
     --sui_autocomplete_addon-color: ;
+    --sui_autocomplete_addon-letter_spacing: ;
   }
 
   /* 静的 */
@@ -401,43 +349,35 @@
   /* 既定値設定: ここから */
 
   .sui_autocomplete {
-    /* 書体 */
     --sui_autocomplete_addon-font_family: var(--sui-font-sans);
-    /* 前景 */
     --sui_autocomplete_addon-color: var(--sui-canvas_text-2);
   }
 
   .sui_autocomplete-size_sm {
-    /* 形状 */
     --sui_autocomplete_addon_svg-size: calc(
                                          var(--sui_autocomplete_addon-font_size)
                                          * var(--sui-text-oln-sm-n-line_height)
                                        );
-    /* 書体 */
     --sui_autocomplete_addon-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_autocomplete_addon-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_autocomplete_addon-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
   }
 
   .sui_autocomplete-size_md {
-    /* 形状 */
     --sui_autocomplete_addon_svg-size: calc(
                                          var(--sui_autocomplete_addon-font_size)
                                          * var(--sui-text-oln-md-n-line_height)
                                        );
-    /* 書体 */
     --sui_autocomplete_addon-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_autocomplete_addon-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_autocomplete_addon-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   }
 
   .sui_autocomplete-size_lg {
-    /* 形状 */
     --sui_autocomplete_addon_svg-size: calc(
                                          var(--sui_autocomplete_addon-font_size)
                                          * var(--sui-text-oln-lg-n-line_height)
                                        );
-    /* 書体 */
     --sui_autocomplete_addon-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_autocomplete_addon-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_autocomplete_addon-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
@@ -450,25 +390,20 @@
 @layer sui.component {
   /* 変数 */
   .sui_autocomplete {
-    /* 形状 */
     --sui_autocomplete_clear-size: ;
     --sui_autocomplete_clear_svg-size: ;
-    /* 書体 */
     --sui_autocomplete_clear-font_family: ;
     --sui_autocomplete_clear-font_size: ;
     --sui_autocomplete_clear-font_weight: ;
     --sui_autocomplete_clear-line_height: ;
-    --sui_autocomplete_clear-letter_spacing: ;
-    /* 背景 */
-    --sui_autocomplete_clear-background_color-normal: ;
-    --sui_autocomplete_clear-background_color-hover: ;
-    --sui_autocomplete_clear-background_color-active: ;
-    /* 枠線 */
-    --sui_autocomplete_clear-border_radius: ;
-    /* 前景 */
     --sui_autocomplete_clear-color-normal: ;
     --sui_autocomplete_clear-color-hover: ;
     --sui_autocomplete_clear-color-active: ;
+    --sui_autocomplete_clear-letter_spacing: ;
+    --sui_autocomplete_clear-background_color-normal: ;
+    --sui_autocomplete_clear-background_color-hover: ;
+    --sui_autocomplete_clear-background_color-active: ;
+    --sui_autocomplete_clear-border_radius: ;
   }
 
   /* 静的 */
@@ -515,14 +450,11 @@
   /* 既定値設定: ここから */
 
   .sui_autocomplete {
-    /* 書体 */
     --sui_autocomplete_clear-font_family: var(--sui-font-sans);
   }
 
   .sui_autocomplete-size_sm {
-    /* 形状 */
     --sui_autocomplete_clear-size: calc(var(--sui-size-sm) - --sui-space(2));
-    /* 書体 */
     --sui_autocomplete_clear-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_autocomplete_clear-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_autocomplete_clear-line_height: var(--sui-text-oln-sm-n-line_height);
@@ -530,9 +462,7 @@
   }
 
   .sui_autocomplete-size_md {
-    /* 形状 */
     --sui_autocomplete_clear-size: calc(var(--sui-size-md) - --sui-space(4));
-    /* 書体 */
     --sui_autocomplete_clear-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_autocomplete_clear-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_autocomplete_clear-line_height: var(--sui-text-oln-md-n-line_height);
@@ -540,9 +470,7 @@
   }
 
   .sui_autocomplete-size_lg {
-    /* 形状 */
     --sui_autocomplete_clear-size: calc(var(--sui-size-lg) - --sui-space(5));
-    /* 書体 */
     --sui_autocomplete_clear-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_autocomplete_clear-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_autocomplete_clear-line_height: var(--sui-text-oln-lg-n-line_height);
@@ -550,50 +478,41 @@
   }
 
   .sui_autocomplete-radius_none {
-    /* 枠線 */
     --sui_autocomplete_clear-border_radius: 0px;
   }
 
   .sui_autocomplete-radius_sm {
-    /* 枠線 */
     --sui_autocomplete_clear-border_radius: var(--sui-radius-sm);
   }
 
   .sui_autocomplete-radius_md {
-    /* 枠線 */
     --sui_autocomplete_clear-border_radius: var(--sui-radius-md);
   }
 
   .sui_autocomplete-radius_lg {
-    /* 枠線 */
     --sui_autocomplete_clear-border_radius: var(--sui-radius-lg);
   }
 
   .sui_autocomplete-radius_full {
-    /* 枠線 */
     --sui_autocomplete_clear-border_radius: calc(var(--sui_autocomplete_clear-size) / 2);
   }
 
   .sui_autocomplete-variant_naked {
-    /* 背景 */
-    --sui_autocomplete_clear-background_color-normal: transparent;
-    --sui_autocomplete_clear-background_color-hover: var(--sui-grey-naked-canvas-subtle);
-    --sui_autocomplete_clear-background_color-active: var(--sui-grey-naked-canvas-strong);
-    /* 前景 */
     --sui_autocomplete_clear-color-normal: var(--sui-grey-naked-canvas_text-normal);
     --sui_autocomplete_clear-color-hover: var(--sui-grey-naked-canvas_text-subtle);
     --sui_autocomplete_clear-color-active: var(--sui-grey-naked-canvas_text-strong);
+    --sui_autocomplete_clear-background_color-normal: transparent;
+    --sui_autocomplete_clear-background_color-hover: var(--sui-grey-naked-canvas-subtle);
+    --sui_autocomplete_clear-background_color-active: var(--sui-grey-naked-canvas-strong);
   }
 
   .sui_autocomplete-variant_liquid {
-    /* 背景 */
-    --sui_autocomplete_clear-background_color-normal: transparent;
-    --sui_autocomplete_clear-background_color-hover: var(--sui-grey-liquid-canvas-subtle);
-    --sui_autocomplete_clear-background_color-active: var(--sui-grey-liquid-canvas-strong);
-    /* 前景 */
     --sui_autocomplete_clear-color-normal: var(--sui-grey-liquid-canvas_text-normal);
     --sui_autocomplete_clear-color-hover: var(--sui-grey-liquid-canvas_text-subtle);
     --sui_autocomplete_clear-color-active: var(--sui-grey-liquid-canvas_text-strong);
+    --sui_autocomplete_clear-background_color-normal: transparent;
+    --sui_autocomplete_clear-background_color-hover: var(--sui-grey-liquid-canvas-subtle);
+    --sui_autocomplete_clear-background_color-active: var(--sui-grey-liquid-canvas-strong);
   }
 
   /* 既定値設定: ここまで */
@@ -603,20 +522,16 @@
   .sui_autocomplete_clear:not([data-disabled]) {
     @media (any-hover: hover) {
       &:hover {
-        /* 背景 */
+        --_sui_autocomplete_clear-color: var(--sui_autocomplete_clear-color-hover);
         --_sui_autocomplete_clear-background_color:
           var(--sui_autocomplete_clear-background_color-hover);
-        /* 前景 */
-        --_sui_autocomplete_clear-color: var(--sui_autocomplete_clear-color-hover);
       }
     }
 
     &:active {
-      /* 背景 */
+      --_sui_autocomplete_clear-color: var(--sui_autocomplete_clear-color-active);
       --_sui_autocomplete_clear-background_color:
         var(--sui_autocomplete_clear-background_color-active);
-      /* 前景 */
-      --_sui_autocomplete_clear-color: var(--sui_autocomplete_clear-color-active);
     }
   }
 
@@ -627,18 +542,15 @@
 @layer sui.component {
   /* 変数 */
   .sui_autocomplete_portal {
-    /* 形状 */
     --sui_autocomplete_popup-min_width: ;
     --sui_autocomplete_popup-max_width: ;
     --sui_autocomplete_popup-max_height: ;
-    /* 背景 */
+    --sui_autocomplete_popup-outline_color: ;
+    --sui_autocomplete_popup-outline_offset: ;
     --sui_autocomplete_popup-background_color: ;
-    /* 枠線 */
     --sui_autocomplete_popup-border_color: ;
     --sui_autocomplete_popup-border_width: ;
     --sui_autocomplete_popup-border_radius: ;
-    --sui_autocomplete_popup-outline_color: ;
-    --sui_autocomplete_popup-outline_offset: ;
   }
 
   /* 静的 */
@@ -668,29 +580,23 @@
   /* 既定値設定: ここから */
 
   .sui_autocomplete_popup {
-    /* 形状 */
     --sui_autocomplete_popup-min_width: var(--anchor-width);
     --sui_autocomplete_popup-max_width: var(--available-width);
     --sui_autocomplete_popup-max_height: var(--available-height);
   }
 
   .sui_autocomplete_portal {
-    /* 書体 */
     --sui_autocomplete_popup-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_autocomplete_popup-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_autocomplete_popup-line_height: var(--sui-text-oln-md-n-line_height);
     --sui_autocomplete_popup-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
-    /* 背景 */
+    --sui_autocomplete_popup-outline_color: var(--sui-focusring_color);
+    --sui_autocomplete_popup-outline_offset: var(--sui-focusring_offset);
     --sui_autocomplete_popup-background_color: var(--sui-canvas-2);
-    /* 枠線 */
     --sui_autocomplete_popup-border_color: var(--sui-border-1);
     --sui_autocomplete_popup-border_width: --sui-border_width(1);
     --sui_autocomplete_popup-border_radius: var(--sui-radius-md);
-    --sui_autocomplete_popup-outline_color: var(--sui-focusring_color);
-    --sui_autocomplete_popup-outline_offset: var(--sui-focusring_offset);
-    /* 外観 */
     --sui_autocomplete_popup-opacity: 1;
-    /* 変形 */
     --sui_autocomplete_popup-scale: 1;
   }
 
@@ -701,18 +607,14 @@
 @layer sui.component {
   /* 変数 */
   .sui_autocomplete_portal {
-    /* 形状 */
     --sui_autocomplete_empty-min_height: ;
-    /* 空白 */
     --sui_autocomplete_empty-padding: ;
-    /* 書体 */
     --sui_autocomplete_empty-font_family: ;
     --sui_autocomplete_empty-font_size: ;
     --sui_autocomplete_empty-font_weight: ;
     --sui_autocomplete_empty-line_height: ;
-    --sui_autocomplete_empty-letter_spacing: ;
-    /* 前景 */
     --sui_autocomplete_empty-color: ;
+    --sui_autocomplete_empty-letter_spacing: ;
   }
 
   /* 静的 */
@@ -736,16 +638,12 @@
   /* 既定値設定: ここから */
 
   .sui_autocomplete_portal {
-    /* 前景 */
-    --sui_autocomplete_empty-color: var(--sui-canvas_text-2);
-    /* 書体 */
     --sui_autocomplete_empty-font_family: var(--sui-font-sans);
+    --sui_autocomplete_empty-color: var(--sui-canvas_text-2);
   }
 
   .sui_autocomplete_portal-size_sm {
-    /* 形状 */
     --sui_autocomplete_empty-min_height: var(--sui-size-md);
-    /* 空白 */
     --sui_autocomplete_empty-padding_inline: --sui-space(4);
     --sui_autocomplete_empty-font_size: var(--sui-text-std-sm-n-font_size);
     --sui_autocomplete_empty-font_weight: var(--sui-text-std-sm-n-font_weight);
@@ -754,9 +652,7 @@
   }
 
   .sui_autocomplete_portal-size_md {
-    /* 形状 */
     --sui_autocomplete_empty-min_height: var(--sui-size-md);
-    /* 空白 */
     --sui_autocomplete_empty-padding_inline: --sui-space(5);
     --sui_autocomplete_empty-font_size: var(--sui-text-std-md-n-font_size);
     --sui_autocomplete_empty-font_weight: var(--sui-text-std-md-n-font_weight);
@@ -765,9 +661,7 @@
   }
 
   .sui_autocomplete_portal-size_lg {
-    /* 形状 */
     --sui_autocomplete_empty-min_height: var(--sui-size-md);
-    /* 空白 */
     --sui_autocomplete_empty-padding_inline: --sui-space(6);
     --sui_autocomplete_empty-font_size: var(--sui-text-std-lg-n-font_size);
     --sui_autocomplete_empty-font_weight: var(--sui-text-std-lg-n-font_weight);
@@ -783,7 +677,6 @@
 @layer sui.component {
   /* 変数 */
   .sui_autocomplete_portal {
-    /* 形状 */
     --sui_autocomplete_scroll_area-max_height: ;
   }
 
@@ -802,7 +695,6 @@
   /* 既定値設定: ここから */
 
   .sui_autocomplete_portal {
-    /* 形状 */
     --sui_autocomplete_scroll_area-max_height: 400px;
   }
 
@@ -813,7 +705,6 @@
 @layer sui.component {
   /* 変数 */
   .sui_autocomplete_portal {
-    /* 空白 */
     --sui_autocomplete_content-padding: ;
   }
 
@@ -825,17 +716,14 @@
   /* 既定値設定: ここから */
 
   .sui_autocomplete_portal-size_sm {
-    /* 空白 */
     --sui_autocomplete_content-padding: --sui-space(2);
   }
 
   .sui_autocomplete_portal-size_md {
-    /* 空白 */
     --sui_autocomplete_content-padding: --sui-space(3);
   }
 
   .sui_autocomplete_portal-size_lg {
-    /* 空白 */
     --sui_autocomplete_content-padding: --sui-space(4);
   }
 
@@ -846,7 +734,6 @@
 @layer sui.component {
   /* 変数 */
   .sui_autocomplete_portal {
-    /* 空白 */
     --sui_autocomplete_list-gap: ;
     --sui_autocomplete_list-padding: ;
   }
@@ -866,7 +753,6 @@
   /* 既定値設定: ここから */
 
   .sui_autocomplete_portal {
-    /* 空白 */
     --sui_autocomplete_list-gap: --sui-gap(2);
   }
 
@@ -877,7 +763,6 @@
 @layer sui.component {
   /* 変数 */
   .sui_autocomplete_portal {
-    /* 空白 */
     --sui_autocomplete_group-gap: ;
   }
 
@@ -895,7 +780,6 @@
   /* 既定値設定: ここから */
 
   .sui_autocomplete_portal {
-    /* 空白 */
     --sui_autocomplete_group-gap: var(--sui_autocomplete_list-gap);
   }
 
@@ -906,16 +790,13 @@
 @layer sui.component {
   /* 変数 */
   .sui_autocomplete_portal {
-    /* 空白 */
     --sui_autocomplete_group_label-padding: ;
-    /* 書体 */
     --sui_autocomplete_group_label-font_family: ;
     --sui_autocomplete_group_label-font_size: ;
     --sui_autocomplete_group_label-font_weight: ;
     --sui_autocomplete_group_label-line_height: ;
-    --sui_autocomplete_group_label-letter_spacing: ;
-    /* 前景 */
     --sui_autocomplete_group_label-color: ;
+    --sui_autocomplete_group_label-letter_spacing: ;
   }
 
   /* 静的 */
@@ -938,16 +819,13 @@
   /* 既定値設定: ここから */
 
   .sui_autocomplete_portal {
-    /* 空白 */
     --sui_autocomplete_group_label-padding: --sui-space(4) --sui-space(3);
-    /* 書体 */
     --sui_autocomplete_group_label-font_family: var(--sui-font-sans);
     --sui_autocomplete_group_label-font_size: var(--sui-text-std-sm-n-font_size);
     --sui_autocomplete_group_label-font_weight: var(--sui-text-std-sm-n-font_weight);
     --sui_autocomplete_group_label-line_height: var(--sui-text-std-sm-n-line_height);
-    --sui_autocomplete_group_label-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
-    /* 前景 */
     --sui_autocomplete_group_label-color: var(--sui-canvas_text-2);
+    --sui_autocomplete_group_label-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
   }
 
   /* 既定値設定: ここまで */
@@ -957,32 +835,26 @@
 @layer sui.component {
   /* 変数 */
   .sui_autocomplete_portal {
-    /* 形状 */
     --sui_autocomplete_item-min_height: ;
-    /* 空白 */
     --sui_autocomplete_item-padding_inline: ;
-    /* 書体 */
     --sui_autocomplete_item-font_family: ;
     --sui_autocomplete_item-font_size: ;
     --sui_autocomplete_item-font_weight: ;
     --sui_autocomplete_item-line_height: ;
-    --sui_autocomplete_item-letter_spacing: ;
-    /* 背景 */
-    --sui_autocomplete_item-canvas-normal: ;
-    --sui_autocomplete_item-canvas-hover: ;
-    --sui_autocomplete_item-canvas-active: ;
-    --sui_autocomplete_item-highlighted_canvas-normal: ;
-    --sui_autocomplete_item-highlighted_canvas-hover: ;
-    --sui_autocomplete_item-highlighted_canvas-active: ;
-    /* 枠線 */
-    --sui_autocomplete_item-border_radius: ;
-    /* 前景 */
     --sui_autocomplete_item-color-normal: ;
     --sui_autocomplete_item-color-hover: ;
     --sui_autocomplete_item-color-active: ;
-    --sui_autocomplete_item-highlighted_color-normal: ;
-    --sui_autocomplete_item-highlighted_color-hover: ;
+    --sui_autocomplete_item-letter_spacing: ;
+    --sui_autocomplete_item-border_radius: ;
+    --sui_autocomplete_item-canvas-active: ;
+    --sui_autocomplete_item-canvas-hover: ;
+    --sui_autocomplete_item-canvas-normal: ;
+    --sui_autocomplete_item-highlighted_canvas-active: ;
+    --sui_autocomplete_item-highlighted_canvas-hover: ;
+    --sui_autocomplete_item-highlighted_canvas-normal: ;
     --sui_autocomplete_item-highlighted_color-active: ;
+    --sui_autocomplete_item-highlighted_color-hover: ;
+    --sui_autocomplete_item-highlighted_color-normal: ;
   }
 
   /* 静的 */
@@ -1014,24 +886,18 @@
   /* 既定値設定: ここから */
 
   .sui_autocomplete_portal {
-    /* 書体 */
     --sui_autocomplete_item-font_family: var(--sui-font-sans);
-    /* 背景 */
-    --sui_autocomplete_item-canvas-normal: var(--sui-grey-naked-canvas-normal);
-    --sui_autocomplete_item-canvas-hover: var(--sui-grey-naked-canvas-subtle);
-    --sui_autocomplete_item-canvas-active: var(--sui-grey-naked-canvas-strong);
-    /* 前景 */
     --sui_autocomplete_item-color-normal: var(--sui-grey-naked-canvas_text-normal);
     --sui_autocomplete_item-color-hover: var(--sui-grey-naked-canvas_text-normal);
     --sui_autocomplete_item-color-active: var(--sui-grey-naked-canvas_text-strong);
+    --sui_autocomplete_item-canvas-active: var(--sui-grey-naked-canvas-strong);
+    --sui_autocomplete_item-canvas-hover: var(--sui-grey-naked-canvas-subtle);
+    --sui_autocomplete_item-canvas-normal: var(--sui-grey-naked-canvas-normal);
   }
 
   .sui_autocomplete_portal-size_sm {
-    /* 形状 */
     --sui_autocomplete_item-min_height: var(--sui-size-sm);
-    /* 空白 */
     --sui_autocomplete_item-padding_inline: --sui-space(4);
-    /* 書体 */
     --sui_autocomplete_item-font_size: var(--sui-text-oln-sm-m-font_size);
     --sui_autocomplete_item-font_weight: var(--sui-text-oln-sm-m-font_weight);
     --sui_autocomplete_item-line_height: var(--sui-text-oln-sm-m-line_height);
@@ -1039,11 +905,8 @@
   }
 
   .sui_autocomplete_portal-size_md {
-    /* 形状 */
     --sui_autocomplete_item-min_height: var(--sui-size-md);
-    /* 空白 */
     --sui_autocomplete_item-padding_inline: --sui-space(5);
-    /* 書体 */
     --sui_autocomplete_item-font_size: var(--sui-text-oln-md-m-font_size);
     --sui_autocomplete_item-font_weight: var(--sui-text-oln-md-m-font_weight);
     --sui_autocomplete_item-line_height: var(--sui-text-oln-md-m-line_height);
@@ -1051,11 +914,8 @@
   }
 
   .sui_autocomplete_portal-size_lg {
-    /* 形状 */
     --sui_autocomplete_item-min_height: var(--sui-size-lg);
-    /* 空白 */
     --sui_autocomplete_item-padding_inline: --sui-space(6);
-    /* 書体 */
     --sui_autocomplete_item-font_size: var(--sui-text-oln-lg-m-font_size);
     --sui_autocomplete_item-font_weight: var(--sui-text-oln-lg-m-font_weight);
     --sui_autocomplete_item-line_height: var(--sui-text-oln-lg-m-line_height);
@@ -1063,17 +923,14 @@
   }
 
   .sui_autocomplete_portal-radius_sm {
-    /* 枠線 */
     --sui_autocomplete_item-border_radius: var(--sui-radius-sm);
   }
 
   .sui_autocomplete_portal-radius_md {
-    /* 枠線 */
     --sui_autocomplete_item-border_radius: var(--sui-radius-md);
   }
 
   .sui_autocomplete_portal-radius_lg {
-    /* 枠線 */
     --sui_autocomplete_item-border_radius: var(--sui-radius-lg);
   }
 
@@ -1084,18 +941,14 @@
   .sui_autocomplete_item {
     @media (any-hover: hover) {
       &:hover {
-        /* 背景 */
-        --_sui_autocomplete_item-canvas: var(--sui_autocomplete_item-canvas-hover);
-        /* 前景 */
         --_sui_autocomplete_item-color: var(--sui_autocomplete_item-color-hover);
+        --_sui_autocomplete_item-canvas: var(--sui_autocomplete_item-canvas-hover);
       }
     }
 
     &:active {
-      /* 背景 */
-      --_sui_autocomplete_item-canvas: var(--sui_autocomplete_item-canvas-active);
-      /* 前景 */
       --_sui_autocomplete_item-color: var(--sui_autocomplete_item-color-active);
+      --_sui_autocomplete_item-canvas: var(--sui_autocomplete_item-canvas-active);
     }
   }
 

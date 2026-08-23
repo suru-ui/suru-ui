@@ -12,13 +12,10 @@
 @layer sui.component {
   /* 変数 */
   .sui_avatar_group {
-    /* 空白 */
+    --sui_avatar_group_avatar-z_index: ;
     --sui_avatar_group_avatar-overlap: ;
-    /* 枠線 */
     --sui_avatar_group_avatar-pseudo_ring_color: ;
     --sui_avatar_group_avatar-pseudo_ring_width: ;
-    /* 位置 */
-    --sui_avatar_group_avatar-z_index: ;
   }
 
   /* 動的 */
@@ -40,9 +37,7 @@
   /* 既定値設定: ここから */
 
   .sui_avatar_group {
-    /* 空白 */
     --sui_avatar_group_avatar-overlap: calc(-1 * --sui-space(4));
-    /* 枠線 */
     --sui_avatar_group_avatar-pseudo_ring_color: var(--sui-canvas-1);
     --sui_avatar_group_avatar-pseudo_ring_width: --sui-border_width(3);
   }

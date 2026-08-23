@@ -20,26 +20,18 @@
 @layer sui.component {
   /* 変数 */
   .sui_tooltip_popup {
-    /* 形状 */
     --sui_tooltip_popup-max_width: ;
-    /* 空白 */
     --sui_tooltip_popup-padding: ;
-    /* 書体 */
     --sui_tooltip_popup-font_size: ;
     --sui_tooltip_popup-font_weight: ;
     --sui_tooltip_popup-line_height: ;
-    --sui_tooltip_popup-letter_spacing: ;
-    /* 背景 */
-    --sui_tooltip_popup-background_color: ;
-    /* 枠線 */
-    --sui_tooltip_popup-border_radius: ;
-    /* 前景 */
     --sui_tooltip_popup-color: ;
-    /* 外観 */
+    --sui_tooltip_popup-letter_spacing: ;
+    --sui_tooltip_popup-background_color: ;
+    --sui_tooltip_popup-border_radius: ;
     --sui_tooltip_popup-opacity: ;
-    /* 変形 */
-    --sui_tooltip_popup-scale: ;
     --sui_tooltip_popup-transform_origin: ;
+    --sui_tooltip_popup-scale: ;
   }
 
   /* 静的 */
@@ -73,26 +65,18 @@
   /* 既定値設定: ここから */
 
   .sui_tooltip_popup {
-    /* 形状 */
     --sui_tooltip_popup-max_width: 320px;
-    /* 空白 */
     --sui_tooltip_popup-padding: --sui-space(2) --sui-space(3);
-    /* 書体 */
     --sui_tooltip_popup-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_tooltip_popup-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_tooltip_popup-line_height: var(--sui-text-oln-sm-n-line_height);
-    --sui_tooltip_popup-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
-    /* 背景 */
-    --sui_tooltip_popup-background_color: var(--sui-tooltip-canvas);
-    /* 枠線 */
-    --sui_tooltip_popup-border_radius: var(--sui-radius-sm);
-    /* 前景 */
     --sui_tooltip_popup-color: var(--sui-tooltip-canvas_text);
-    /* 外観 */
+    --sui_tooltip_popup-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+    --sui_tooltip_popup-background_color: var(--sui-tooltip-canvas);
+    --sui_tooltip_popup-border_radius: var(--sui-radius-sm);
     --sui_tooltip_popup-opacity: 1;
-    /* 変形 */
-    --sui_tooltip_popup-scale: 1;
     --sui_tooltip_popup-transform_origin: var(--transform-origin);
+    --sui_tooltip_popup-scale: 1;
   }
 
   /* 既定値設定: ここまで */
@@ -100,9 +84,7 @@
   /* 上書き設定: ここから */
 
   .sui_tooltip_popup:is([data-starting-style], [data-ending-style]) {
-    /* 外観 */
     --_sui_tooltip_popup-opacity: 0;
-    /* 変形 */
     --_sui_tooltip_popup-scale: 0.98;
   }
 
