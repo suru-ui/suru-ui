@@ -46,14 +46,14 @@ Suru UI は、[Base UI](https://github.com/mui/base-ui) のヘッドレスコン
 
 コンポーネントは次のカテゴリーに分かれます。
 
-| カテゴリー | 内容 | 例 |
-| ---------- | ---- | -- |
-| `buttons` | ボタン系 | button, toggle-button |
-| `data-display` | 情報表示 | avatar, chip, meter, progress, alert |
-| `forms` | フォーム入力 | checkbox, input, select, slider, field, form |
-| `layout` | レイアウト | action-group, resizable |
-| `navigation` | ナビゲーション | accordion, collapsible, tabs, scroll-area |
-| `overlays` | オーバーレイ | dialog, menu, tooltip, toast |
+| カテゴリー     | 内容           | 例                                           |
+| -------------- | -------------- | -------------------------------------------- |
+| `buttons`      | ボタン系       | button, toggle-button                        |
+| `data-display` | 情報表示       | avatar, chip, meter, progress, alert         |
+| `forms`        | フォーム入力   | checkbox, input, select, slider, field, form |
+| `layout`       | レイアウト     | action-group, resizable                      |
+| `navigation`   | ナビゲーション | accordion, collapsible, tabs, scroll-area    |
+| `overlays`     | オーバーレイ   | dialog, menu, tooltip, toast                 |
 
 ### ディレクトリーとファイル
 
@@ -78,15 +78,15 @@ Storybook の stories は `packages/react/stories/<カテゴリー>/<名前>.sto
 
 `packages/react` の `mise run format` は複数の整形器を実行します。次の項目は**手動で整える必要がありません**。意味的な正しさ (何を並べるか) だけ気にしてください。
 
-| 整形対象 | 整形器 | 規則 |
-| -------- | ------ | ---- |
-| TS/TSX 全般 | oxfmt (`sortImports`) | import 宣言のグループ化と並び替え |
-| import/export の `{}` 内 | `scripts/sort-import-exports.ts` | 型 → 値の順。各グループ内は名前が短い順 (同長なら辞書順) |
-| JSX 属性 | `scripts/sort-jsx-props.ts` | 一般 → `aria-*` → `data-*` の順。各グループ内は短い順 (同長なら辞書順)。スプレッド属性は位置維持、コメント付き属性は対象外 |
-| 型リテラル/interface のメンバー | `scripts/sort-type-props.ts` | プロパティー・メソッド署名を名前順 (呼び出し署名など名前のないメンバーは位置維持) |
-| 型 namespace のメンバー | `scripts/sort-namespace-exports.ts` | `State` → `Props` → `Context` → `SlotProps` → その他の型 (名前順) → ネストした namespace |
-| CSS のプロパティー順 | stylelint (`--fix`) | recess order |
-| CSS 変数の宣言順 | `scripts/sort-css-variables.ts` | recess order のプロパティー順。変種の相対順序は維持 |
+| 整形対象                        | 整形器                              | 規則                                                                                                                       |
+| ------------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| TS/TSX 全般                     | oxfmt (`sortImports`)               | import 宣言のグループ化と並び替え                                                                                          |
+| import/export の `{}` 内        | `scripts/sort-import-exports.ts`    | 型 → 値の順。各グループ内は名前が短い順 (同長なら辞書順)                                                                   |
+| JSX 属性                        | `scripts/sort-jsx-props.ts`         | 一般 → `aria-*` → `data-*` の順。各グループ内は短い順 (同長なら辞書順)。スプレッド属性は位置維持、コメント付き属性は対象外 |
+| 型リテラル/interface のメンバー | `scripts/sort-type-props.ts`        | プロパティー・メソッド署名を名前順 (呼び出し署名など名前のないメンバーは位置維持)                                          |
+| 型 namespace のメンバー         | `scripts/sort-namespace-exports.ts` | `State` → `Props` → `Context` → `SlotProps` → その他の型 (名前順) → ネストした namespace                                   |
+| CSS のプロパティー順            | stylelint (`--fix`)                 | recess order                                                                                                               |
+| CSS 変数の宣言順                | `scripts/sort-css-variables.ts`     | recess order のプロパティー順。変種の相対順序は維持                                                                        |
 
 たとえば「import の `{}` 内は `type` 付きを先に」という規則は自動整形されるため、覚える必要はありません。
 逆に、JSDoc、セクション見出し、コンポーネントの構造、命名などは自動整形されないため、このスキルの規則に従います。
@@ -103,12 +103,12 @@ Storybook の stories は `packages/react/stories/<カテゴリー>/<名前>.sto
 
 パーツは、実装したい部品の意味的な構造から決めます。既存の例:
 
-| コンポーネント | パーツ（ファイル内の並び順） |
-| -------------- | ---------------------------- |
-| Button | Root, Content, Pending, CircularProgress, CircularProgressTrack, CircularProgressFill, CircularProgressFillRotation |
-| Checkbox | Root, Indicator |
-| Dialog | Handle(+createHandle), Root, Trigger, Popup, ... |
-| Form | Root |
+| コンポーネント | パーツ（ファイル内の並び順）                                                                                        |
+| -------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Button         | Root, Content, Pending, CircularProgress, CircularProgressTrack, CircularProgressFill, CircularProgressFillRotation |
+| Checkbox       | Root, Indicator                                                                                                     |
+| Dialog         | Handle(+createHandle), Root, Trigger, Popup, ...                                                                    |
+| Form           | Root                                                                                                                |
 
 ## パーツファイルの共通構造
 
@@ -370,8 +370,9 @@ export const Button: ButtonType = /*#__PURE__*/ Object.assign(
 ```tsx
 export type FormRootValues<TValues extends Record<string, any> = Record<string, any>> = TValues;
 
-export type FormRootProps<TValues extends FormRootValues = FormRootValues> =
-  React.ComponentProps<typeof BaseForm<TValues>>;
+export type FormRootProps<TValues extends FormRootValues = FormRootValues> = React.ComponentProps<
+  typeof BaseForm<TValues>
+>;
 
 interface FormRootComponentType extends IComponent<FormRootProps> {
   <TValues extends FormRootValues>(props: FormRootProps<TValues>): React.ReactElement | null;

@@ -182,6 +182,6 @@ function isStringType(node: SchemaNode): boolean { ... }
 3. `@param`（必要な場合）
 4. `@default`（デフォルト値が自明でない場合）
 5. `@returns`（必要な場合）
-7. `@note`（必要な場合）
-8. `@deprecated`（非推奨の場合）
-9. `@see`（関連資料を示す場合）
+6. `@note`（必要な場合）
+7. `@deprecated`（非推奨の場合）
+8. `@see`（関連資料を示す場合）
