@@ -34,7 +34,7 @@ type ActionGroupContextSize = Size;
 /**
  * グループアイテムの主な外観です。
  */
-type ActionGroupContextVariant = "naked" | "liquid";
+type ActionGroupContextVariant = ColorTemplate;
 
 /**
  * {@link ActionGroupRoot} が子要素へ提供するスタイルです。

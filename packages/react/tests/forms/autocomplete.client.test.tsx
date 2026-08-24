@@ -78,7 +78,7 @@ describe("Autocomplete", () => {
   test("関数 children で項目を描画できる", async () => {
     // 準備
     const screen = await render(
-      <Autocomplete items={items}>{(item) => `候補: ${item as string}`}</Autocomplete>,
+      <Autocomplete items={items} itemToRenderedValue={(item) => `候補: ${item as string}`} />,
     );
 
     // 実行

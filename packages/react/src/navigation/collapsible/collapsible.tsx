@@ -114,7 +114,7 @@ export function useCollapsible(props: CollapsibleProps): CollapsiblePartsProps {
     ...indicatorProps,
   };
   const trigger: CollapsibleTriggerProps = {
-    ...(triggerProps ?? {}),
+    ...triggerProps,
     children: (triggerRenderProps) => (
       <button type="button" {...triggerRenderProps}>
         {title}

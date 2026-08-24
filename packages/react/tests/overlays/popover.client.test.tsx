@@ -105,7 +105,7 @@ describe("Popover", () => {
     );
     await userEvent.click(screen.getByRole("button", { name: "開く" }));
     await expect
-      .element(screen.baseElement.querySelector(".sui_popover_popup")!)
+      .element(screen.baseElement.querySelector<HTMLElement>(".sui_popover_popup")!)
       .toBeInTheDocument();
 
     // 実行

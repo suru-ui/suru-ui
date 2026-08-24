@@ -1,24 +1,24 @@
 import { SIZES, COLORS } from "@suru-ui/theme";
-import { type ReactVirtualizer, useVirtualizer } from "@tanstack/react-virtual";
+// import { type ReactVirtualizer, useVirtualizer } from "@tanstack/react-virtual";
 import { SearchIcon } from "lucide-react";
-import { matchSorter, rankings } from "match-sorter";
+// import { rankings, matchSorter } from "match-sorter";
 import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
 import {
+  // type AutocompleteProps,
   Autocomplete,
-  AutocompleteEmpty,
-  AutocompleteInput,
-  AutocompleteInputGroup,
-  AutocompleteItem,
-  AutocompleteList,
-  AutocompletePortal,
-  AutocompletePositioner,
-  AutocompletePopup,
-  AutocompleteRoot,
-  type AutocompleteProps,
-  useAutocompleteFilter,
-  useFilteredItems,
+  // AutocompleteItem,
+  // AutocompleteList,
+  // AutocompleteRoot,
+  // useFilteredItems,
+  // AutocompleteEmpty,
+  // AutocompleteInput,
+  // AutocompletePopup,
+  // AutocompletePortal,
+  // useAutocompleteFilter,
+  // AutocompleteInputGroup,
+  // AutocompletePositioner,
 } from "../../src/forms/autocomplete/index.js";
 
 const RADII = ["none", ...SIZES, "full"] as const;
@@ -65,249 +65,249 @@ const ctrl = controls(Autocomplete, {
   },
 });
 
-const manyItems = Array.from({ length: 50 }, (_, index) => `候補 ${index + 1}`);
+// const manyItems = Array.from({ length: 50 }, (_, index) => `候補 ${index + 1}`);
 
-const RESULT_LIMIT = 8;
-const VIRTUALIZED_ROW_HEIGHT = 32;
-const VIRTUALIZED_MAX_VIEWPORT_HEIGHT = VIRTUALIZED_ROW_HEIGHT * 9;
+// const RESULT_LIMIT = 8;
+// const VIRTUALIZED_ROW_HEIGHT = 32;
+// const VIRTUALIZED_MAX_VIEWPORT_HEIGHT = VIRTUALIZED_ROW_HEIGHT * 9;
 
-type Movie = {
-  readonly title: string;
-  readonly year: number;
-};
+// type Movie = {
+//   readonly title: string;
+//   readonly year: number;
+// };
 
-const movies: readonly Movie[] = [
-  { title: "千と千尋の神隠し", year: 2001 },
-  { title: "となりのトトロ", year: 1988 },
-  { title: "もののけ姫", year: 1997 },
-  { title: "天空の城ラピュタ", year: 1986 },
-  { title: "風の谷のナウシカ", year: 1984 },
-  { title: "魔女の宅急便", year: 1989 },
-  { title: "紅の豚", year: 1992 },
-  { title: "耳をすませば", year: 1995 },
-  { title: "ハウルの動く城", year: 2004 },
-  { title: "崖の上のポニョ", year: 2008 },
-  { title: "借りぐらしのアリエッティ", year: 2010 },
-  { title: "風立ちぬ", year: 2013 },
-  { title: "君たちはどう生きるか", year: 2023 },
-  { title: "すずめの戸締まり", year: 2022 },
-  { title: "君の名は。", year: 2016 },
-];
+// const movies: readonly Movie[] = [
+//   { title: "千と千尋の神隠し", year: 2001 },
+//   { title: "となりのトトロ", year: 1988 },
+//   { title: "もののけ姫", year: 1997 },
+//   { title: "天空の城ラピュタ", year: 1986 },
+//   { title: "風の谷のナウシカ", year: 1984 },
+//   { title: "魔女の宅急便", year: 1989 },
+//   { title: "紅の豚", year: 1992 },
+//   { title: "耳をすませば", year: 1995 },
+//   { title: "ハウルの動く城", year: 2004 },
+//   { title: "崖の上のポニョ", year: 2008 },
+//   { title: "借りぐらしのアリエッティ", year: 2010 },
+//   { title: "風立ちぬ", year: 2013 },
+//   { title: "君たちはどう生きるか", year: 2023 },
+//   { title: "すずめの戸締まり", year: 2022 },
+//   { title: "君の名は。", year: 2016 },
+// ];
 
-function searchMovies(query: string): Promise<readonly Movie[]> {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(
-        movies.filter((movie) => movie.title.includes(query) || String(movie.year).includes(query)),
-      );
-    }, 500);
-  });
-}
+// function searchMovies(query: string): Promise<readonly Movie[]> {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       resolve(
+//         movies.filter((movie) => movie.title.includes(query) || String(movie.year).includes(query)),
+//       );
+//     }, 500);
+//   });
+// }
 
-type DocItem = {
-  readonly title: string;
-  readonly description: string;
-};
+// type DocItem = {
+//   readonly description: string;
+//   readonly title: string;
+// };
 
-const docItems: readonly DocItem[] = [
-  { title: "React Hooks", description: "useState や useEffect の使い方" },
-  { title: "React Rendering", description: "再レンダリングの仕組みと最適化" },
-  {
-    title: "React Server Components",
-    description: "サーバーで動作するコンポーネント",
-  },
-  {
-    title: "TypeScript Generics",
-    description: "ジェネリクスで再利用可能な型を作る",
-  },
-  {
-    title: "TypeScript Utility Types",
-    description: "Partial や Pick などのユーティリティー型",
-  },
-  { title: "CSS Flexbox", description: "flex コンテナーとアイテムのレイアウト" },
-  { title: "CSS Grid", description: "2 次元グリッドレイアウト" },
-  {
-    title: "Accessibility Basics",
-    description: "WAI-ARIA とキーボード操作",
-  },
-];
+// const docItems: readonly DocItem[] = [
+//   { title: "React Hooks", description: "useState や useEffect の使い方" },
+//   { title: "React Rendering", description: "再レンダリングの仕組みと最適化" },
+//   {
+//     title: "React Server Components",
+//     description: "サーバーで動作するコンポーネント",
+//   },
+//   {
+//     title: "TypeScript Generics",
+//     description: "ジェネリクスで再利用可能な型を作る",
+//   },
+//   {
+//     title: "TypeScript Utility Types",
+//     description: "Partial や Pick などのユーティリティー型",
+//   },
+//   { title: "CSS Flexbox", description: "flex コンテナーとアイテムのレイアウト" },
+//   { title: "CSS Grid", description: "2 次元グリッドレイアウト" },
+//   {
+//     title: "Accessibility Basics",
+//     description: "WAI-ARIA とキーボード操作",
+//   },
+// ];
 
-function fuzzyFilter(item: DocItem, query: string): boolean {
-  if (query.trim() === "") {
-    return true;
-  }
+// function fuzzyFilter(item: DocItem, query: string): boolean {
+//   if (query.trim() === "") {
+//     return true;
+//   }
 
-  const results = matchSorter([item], query, {
-    keys: [
-      "title",
-      "description",
-      { key: "title", threshold: rankings.CONTAINS },
-      { key: "description", threshold: rankings.WORD_STARTS_WITH },
-    ],
-  });
+//   const results = matchSorter([item], query, {
+//     keys: [
+//       "title",
+//       "description",
+//       { key: "title", threshold: rankings.CONTAINS },
+//       { key: "description", threshold: rankings.WORD_STARTS_WITH },
+//     ],
+//   });
 
-  return results.length > 0;
-}
+//   return results.length > 0;
+// }
 
-function highlightMatch(text: string, query: string): React.ReactNode {
-  if (query.trim() === "") {
-    return text;
-  }
+// function highlightMatch(text: string, query: string): React.ReactNode {
+//   if (query.trim() === "") {
+//     return text;
+//   }
 
-  const lowerCasedQuery = Array.from(query.toLowerCase());
-  let queryIndex = 0;
+//   const lowerCasedQuery = Array.from(query.toLowerCase());
+//   let queryIndex = 0;
 
-  return Array.from(text).map((character, index) => {
-    if (
-      queryIndex < lowerCasedQuery.length &&
-      character.toLowerCase() === lowerCasedQuery[queryIndex]
-    ) {
-      queryIndex += 1;
-      return (
-        <mark key={index} className="bg-transparent font-bold">
-          {character}
-        </mark>
-      );
-    }
-    return character;
-  });
-}
+//   return Array.from(text).map((character, index) => {
+//     if (
+//       queryIndex < lowerCasedQuery.length &&
+//       character.toLowerCase() === lowerCasedQuery[queryIndex]
+//     ) {
+//       queryIndex += 1;
+//       return (
+//         <mark key={index} className="bg-transparent font-bold">
+//           {character}
+//         </mark>
+//       );
+//     }
+//     return character;
+//   });
+// }
 
-type VirtualizedItem = {
-  readonly id: string;
-  readonly name: string;
-};
+// type VirtualizedItem = {
+//   readonly id: string;
+//   readonly name: string;
+// };
 
-const virtualizedItems: readonly VirtualizedItem[] = Array.from({ length: 10000 }, (_, index) => ({
-  id: String(index + 1),
-  name: `項目 ${String(index + 1).padStart(4, "0")}`,
-}));
+// const virtualizedItems: readonly VirtualizedItem[] = Array.from({ length: 10000 }, (_, index) => ({
+//   id: String(index + 1),
+//   name: `項目 ${String(index + 1).padStart(4, "0")}`,
+// }));
 
-type VirtualizerInstance = ReactVirtualizer<HTMLDivElement, HTMLDivElement>;
+// type VirtualizerInstance = ReactVirtualizer<HTMLDivElement, HTMLDivElement>;
 
-function VirtualizedList({
-  virtualizerRef,
-}: {
-  virtualizerRef: React.RefObject<VirtualizerInstance | null>;
-}) {
-  const filteredItems = useFilteredItems<VirtualizedItem>();
-  const scrollElementRef = React.useRef<HTMLDivElement | null>(null);
+// function VirtualizedList({
+//   virtualizerRef,
+// }: {
+//   virtualizerRef: React.RefObject<VirtualizerInstance | null>;
+// }) {
+//   const filteredItems = useFilteredItems<VirtualizedItem>();
+//   const scrollElementRef = React.useRef<HTMLDivElement | null>(null);
 
-  const virtualizer = useVirtualizer({
-    count: filteredItems.length,
-    getScrollElement: () => scrollElementRef.current,
-    estimateSize: () => VIRTUALIZED_ROW_HEIGHT,
-    overscan: 20,
-    paddingStart: 4,
-    paddingEnd: 4,
-    scrollPaddingEnd: 4,
-    scrollPaddingStart: 4,
-  });
+//   const virtualizer = useVirtualizer({
+//     count: filteredItems.length,
+//     getScrollElement: () => scrollElementRef.current,
+//     estimateSize: () => VIRTUALIZED_ROW_HEIGHT,
+//     overscan: 20,
+//     paddingStart: 4,
+//     paddingEnd: 4,
+//     scrollPaddingEnd: 4,
+//     scrollPaddingStart: 4,
+//   });
 
-  React.useImperativeHandle(virtualizerRef, () => virtualizer);
+//   React.useImperativeHandle(virtualizerRef, () => virtualizer);
 
-  const handleScrollElementRef = React.useCallback(
-    (element: HTMLDivElement | null) => {
-      scrollElementRef.current = element;
-      if (element) {
-        virtualizer.measure();
-      }
-    },
-    [virtualizer],
-  );
+//   const handleScrollElementRef = React.useCallback(
+//     (element: HTMLDivElement | null) => {
+//       scrollElementRef.current = element;
+//       if (element) {
+//         virtualizer.measure();
+//       }
+//     },
+//     [virtualizer],
+//   );
 
-  if (filteredItems.length === 0) {
-    return null;
-  }
+//   if (filteredItems.length === 0) {
+//     return null;
+//   }
 
-  const totalSize = virtualizer.getTotalSize();
+//   const totalSize = virtualizer.getTotalSize();
 
-  return (
-    <div
-      role="presentation"
-      ref={handleScrollElementRef}
-      className="overflow-auto overscroll-contain"
-      style={{ height: Math.min(VIRTUALIZED_MAX_VIEWPORT_HEIGHT, totalSize) }}
-    >
-      <div role="presentation" className="relative w-full" style={{ height: totalSize }}>
-        {virtualizer.getVirtualItems().map((virtualItem) => {
-          const item = filteredItems[virtualItem.index];
-          if (!item) {
-            return null;
-          }
-          return (
-            <AutocompleteItem
-              key={virtualItem.key}
-              index={virtualItem.index}
-              value={item}
-              aria-setsize={filteredItems.length}
-              aria-posinset={virtualItem.index + 1}
-              className="absolute inset-x-0"
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: virtualItem.size,
-                transform: `translateY(${virtualItem.start}px)`,
-              }}
-            >
-              {item.name}
-            </AutocompleteItem>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
+//   return (
+//     <div
+//       ref={handleScrollElementRef}
+//       role="presentation"
+//       style={{ height: Math.min(VIRTUALIZED_MAX_VIEWPORT_HEIGHT, totalSize) }}
+//       className="overflow-auto overscroll-contain"
+//     >
+//       <div role="presentation" style={{ height: totalSize }} className="relative w-full">
+//         {virtualizer.getVirtualItems().map((virtualItem) => {
+//           const item = filteredItems[virtualItem.index];
+//           if (!item) {
+//             return null;
+//           }
+//           return (
+//             <AutocompleteItem
+//               key={virtualItem.key}
+//               index={virtualItem.index}
+//               style={{
+//                 position: "absolute",
+//                 top: 0,
+//                 left: 0,
+//                 width: "100%",
+//                 height: virtualItem.size,
+//                 transform: `translateY(${virtualItem.start}px)`,
+//               }}
+//               value={item}
+//               className="absolute inset-x-0"
+//               aria-setsize={filteredItems.length}
+//               aria-posinset={virtualItem.index + 1}
+//             >
+//               {item.name}
+//             </AutocompleteItem>
+//           );
+//         })}
+//       </div>
+//     </div>
+//   );
+// }
 
-function VirtualizedAutocomplete(props: Omit<AutocompleteProps, "children">) {
-  const virtualizerRef = React.useRef<VirtualizerInstance | null>(null);
+// function VirtualizedAutocomplete(props: Omit<AutocompleteProps, "children">) {
+//   const virtualizerRef = React.useRef<VirtualizerInstance | null>(null);
 
-  return (
-    <AutocompleteRoot
-      {...props}
-      virtualized
-      openOnInputClick
-      items={virtualizedItems}
-      itemToStringValue={(item: VirtualizedItem) => item.name}
-      onItemHighlighted={(item, eventDetails) => {
-        const virtualizer = virtualizerRef.current;
-        if (item === undefined || !virtualizer) {
-          return;
-        }
+//   return (
+//     <AutocompleteRoot
+//       {...props}
+//       items={virtualizedItems}
+//       virtualized
+//       openOnInputClick
+//       itemToStringValue={(item: VirtualizedItem) => item.name}
+//       onItemHighlighted={(item, eventDetails) => {
+//         const virtualizer = virtualizerRef.current;
+//         if (item === undefined || !virtualizer) {
+//           return;
+//         }
 
-        const isStart = eventDetails.index === 0;
-        const isEnd = eventDetails.index === virtualizer.options.count - 1;
-        const shouldScroll =
-          eventDetails.reason === "none" ||
-          (eventDetails.reason === "keyboard" && (isStart || isEnd));
+//         const isStart = eventDetails.index === 0;
+//         const isEnd = eventDetails.index === virtualizer.options.count - 1;
+//         const shouldScroll =
+//           eventDetails.reason === "none" ||
+//           (eventDetails.reason === "keyboard" && (isStart || isEnd));
 
-        if (shouldScroll) {
-          queueMicrotask(() => {
-            virtualizer.scrollToIndex(eventDetails.index, {
-              align: isEnd ? "start" : "end",
-            });
-          });
-        }
-      }}
-    >
-      <AutocompleteInputGroup className="w-[240px]">
-        <AutocompleteInput placeholder="項目を検索" />
-      </AutocompleteInputGroup>
-      <AutocompletePortal>
-        <AutocompletePositioner align="start" sideOffset={8}>
-          <AutocompletePopup>
-            <AutocompleteEmpty>該当なし</AutocompleteEmpty>
-            <AutocompleteList className="gap-0">
-              <VirtualizedList virtualizerRef={virtualizerRef} />
-            </AutocompleteList>
-          </AutocompletePopup>
-        </AutocompletePositioner>
-      </AutocompletePortal>
-    </AutocompleteRoot>
-  );
-}
+//         if (shouldScroll) {
+//           queueMicrotask(() => {
+//             virtualizer.scrollToIndex(eventDetails.index, {
+//               align: isEnd ? "start" : "end",
+//             });
+//           });
+//         }
+//       }}
+//     >
+//       <AutocompleteInputGroup className="w-[240px]">
+//         <AutocompleteInput placeholder="項目を検索" />
+//       </AutocompleteInputGroup>
+//       <AutocompletePortal>
+//         <AutocompletePositioner align="start" sideOffset={8}>
+//           <AutocompletePopup>
+//             <AutocompleteEmpty>該当なし</AutocompleteEmpty>
+//             <AutocompleteList className="gap-0">
+//               <VirtualizedList virtualizerRef={virtualizerRef} />
+//             </AutocompleteList>
+//           </AutocompletePopup>
+//         </AutocompletePositioner>
+//       </AutocompletePortal>
+//     </AutocompleteRoot>
+//   );
+// }
 
 export const Usage = meta.story({
   name: "使い方",
@@ -624,31 +624,31 @@ export const Grouped = meta.story({
   },
 });
 
-export const ManyItems = meta.story({
-  name: "項目が多い場合",
-  ...ctrl({
-    items: manyItems,
-    variant: "liquid",
-    color: "grey",
-    size: "md",
-    radius: undefined,
-    outlined: false,
-    disabled: false,
-    placeholder: "候補を検索",
-  }),
-  render(props) {
-    return (
-      <Autocomplete
-        {...props}
-        slotProps={{
-          inputGroup: {
-            className: "w-[200px]",
-          },
-        }}
-      />
-    );
-  },
-});
+// export const ManyItems = meta.story({
+//   name: "項目が多い場合",
+//   ...ctrl({
+//     items: manyItems,
+//     variant: "liquid",
+//     color: "grey",
+//     size: "md",
+//     radius: undefined,
+//     outlined: false,
+//     disabled: false,
+//     placeholder: "候補を検索",
+//   }),
+//   render(props) {
+//     return (
+//       <Autocomplete
+//         {...props}
+//         slotProps={{
+//           inputGroup: {
+//             className: "w-[200px]",
+//           },
+//         }}
+//       />
+//     );
+//   },
+// });
 
 export const Disabled = meta.story({
   name: "無効",
@@ -693,215 +693,215 @@ export const Disabled = meta.story({
   },
 });
 
-export const AsyncSearch = meta.story({
-  name: "非同期検索",
-  ...ctrl({
-    variant: "liquid",
-    color: "grey",
-    size: "md",
-    radius: undefined,
-    outlined: false,
-    disabled: false,
-    placeholder: "タイトルまたは公開年を検索",
-    empty: "該当する映画がありません",
-  }),
-  render(props) {
-    const [searchValue, setSearchValue] = React.useState("");
-    const [searchResults, setSearchResults] = React.useState<readonly Movie[]>([]);
-    const [isPending, startTransition] = React.useTransition();
-    const abortControllerRef = React.useRef<AbortController | null>(null);
+// export const AsyncSearch = meta.story({
+//   name: "非同期検索",
+//   ...ctrl({
+//     variant: "liquid",
+//     color: "grey",
+//     size: "md",
+//     radius: undefined,
+//     outlined: false,
+//     disabled: false,
+//     placeholder: "タイトルまたは公開年を検索",
+//     empty: "該当する映画がありません",
+//   }),
+//   render(props) {
+//     const [searchValue, setSearchValue] = React.useState("");
+//     const [searchResults, setSearchResults] = React.useState<readonly Movie[]>([]);
+//     const [isPending, startTransition] = React.useTransition();
+//     const abortControllerRef = React.useRef<AbortController | null>(null);
 
-    const handleSearchValueChange = (value: string) => {
-      setSearchValue(value);
+//     const handleSearchValueChange = (value: string) => {
+//       setSearchValue(value);
 
-      const controller = new AbortController();
-      abortControllerRef.current?.abort();
-      abortControllerRef.current = controller;
+//       const controller = new AbortController();
+//       abortControllerRef.current?.abort();
+//       abortControllerRef.current = controller;
 
-      startTransition(async () => {
-        if (value === "") {
-          setSearchResults([]);
-          return;
-        }
+//       startTransition(async () => {
+//         if (value === "") {
+//           setSearchResults([]);
+//           return;
+//         }
 
-        const results = await searchMovies(value);
-        if (!controller.signal.aborted) {
-          setSearchResults(results);
-        }
-      });
-    };
+//         const results = await searchMovies(value);
+//         if (!controller.signal.aborted) {
+//           setSearchResults(results);
+//         }
+//       });
+//     };
 
-    let status: React.ReactNode = null;
-    if (isPending) {
-      status = "検索中…";
-    } else if (searchValue !== "") {
-      status = `${searchResults.length} 件見つかりました`;
-    }
+//     let status: React.ReactNode = null;
+//     if (isPending) {
+//       status = "検索中…";
+//     } else if (searchValue !== "") {
+//       status = `${searchResults.length} 件見つかりました`;
+//     }
 
-    return (
-      <div className="flex flex-col items-start gap-2">
-        <label>映画</label>
-        <Autocomplete
-          {...props}
-          items={searchResults}
-          filter={null}
-          value={searchValue}
-          onValueChange={handleSearchValueChange}
-          itemToStringValue={(item: Movie) => item.title}
-          itemToRenderedValue={(item: Movie) => (
-            <span className="flex flex-col">
-              <span>{item.title}</span>
-              <span className="text-xs opacity-60">{item.year}</span>
-            </span>
-          )}
-          slotProps={{
-            inputGroup: {
-              className: "w-[240px]",
-            },
-          }}
-        />
-        <p aria-live="polite">{status}</p>
-      </div>
-    );
-  },
-});
+//     return (
+//       <div className="flex flex-col items-start gap-2">
+//         <label>映画</label>
+//         <Autocomplete
+//           {...props}
+//           items={searchResults}
+//           value={searchValue}
+//           filter={null}
+//           slotProps={{
+//             inputGroup: {
+//               className: "w-[240px]",
+//             },
+//           }}
+//           onValueChange={handleSearchValueChange}
+//           itemToStringValue={(item: Movie) => item.title}
+//           itemToRenderedValue={(item: Movie) => (
+//             <span className="flex flex-col">
+//               <span>{item.title}</span>
+//               <span className="text-xs opacity-60">{item.year}</span>
+//             </span>
+//           )}
+//         />
+//         <p aria-live="polite">{status}</p>
+//       </div>
+//     );
+//   },
+// });
 
-export const InlineAutocomplete = meta.story({
-  name: "インライン補完",
-  ...ctrl({
-    items: ["feature", "fix", "bug", "docs", "internal", "mobile"],
-    variant: "liquid",
-    color: "grey",
-    size: "md",
-    radius: undefined,
-    outlined: false,
-    disabled: false,
-    placeholder: "入力すると補完されます",
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-col items-start gap-2">
-        <label>タグ</label>
-        <Autocomplete
-          {...props}
-          mode="both"
-          slotProps={{
-            inputGroup: {
-              className: "w-[240px]",
-            },
-          }}
-        />
-      </div>
-    );
-  },
-});
+// export const InlineAutocomplete = meta.story({
+//   name: "インライン補完",
+//   ...ctrl({
+//     items: ["feature", "fix", "bug", "docs", "internal", "mobile"],
+//     variant: "liquid",
+//     color: "grey",
+//     size: "md",
+//     radius: undefined,
+//     outlined: false,
+//     disabled: false,
+//     placeholder: "入力すると補完されます",
+//   }),
+//   render(props) {
+//     return (
+//       <div className="flex flex-col items-start gap-2">
+//         <label>タグ</label>
+//         <Autocomplete
+//           {...props}
+//           mode="both"
+//           slotProps={{
+//             inputGroup: {
+//               className: "w-[240px]",
+//             },
+//           }}
+//         />
+//       </div>
+//     );
+//   },
+// });
 
-export const FuzzyMatching = meta.story({
-  name: "曖昧検索",
-  ...ctrl({
-    variant: "liquid",
-    color: "grey",
-    size: "md",
-    radius: undefined,
-    outlined: false,
-    disabled: false,
-    placeholder: "例: rhk",
-    empty: "該当なし",
-  }),
-  render(props) {
-    const [value, setValue] = React.useState("");
+// export const FuzzyMatching = meta.story({
+//   name: "曖昧検索",
+//   ...ctrl({
+//     variant: "liquid",
+//     color: "grey",
+//     size: "md",
+//     radius: undefined,
+//     outlined: false,
+//     disabled: false,
+//     placeholder: "例: rhk",
+//     empty: "該当なし",
+//   }),
+//   render(props) {
+//     const [value, setValue] = React.useState("");
 
-    return (
-      <div className="flex flex-col items-start gap-2">
-        <label>ドキュメント</label>
-        <Autocomplete
-          {...props}
-          items={docItems}
-          filter={fuzzyFilter}
-          value={value}
-          onValueChange={setValue}
-          itemToStringValue={(item: DocItem) => item.title}
-          itemToRenderedValue={(item: DocItem) => (
-            <span className="flex flex-col">
-              <span>{highlightMatch(item.title, value)}</span>
-              <span className="text-xs opacity-60">{highlightMatch(item.description, value)}</span>
-            </span>
-          )}
-          slotProps={{
-            inputGroup: {
-              className: "w-[240px]",
-            },
-          }}
-        />
-      </div>
-    );
-  },
-});
+//     return (
+//       <div className="flex flex-col items-start gap-2">
+//         <label>ドキュメント</label>
+//         <Autocomplete
+//           {...props}
+//           items={docItems}
+//           value={value}
+//           filter={fuzzyFilter}
+//           slotProps={{
+//             inputGroup: {
+//               className: "w-[240px]",
+//             },
+//           }}
+//           onValueChange={setValue}
+//           itemToStringValue={(item: DocItem) => item.title}
+//           itemToRenderedValue={(item: DocItem) => (
+//             <span className="flex flex-col">
+//               <span>{highlightMatch(item.title, value)}</span>
+//               <span className="text-xs opacity-60">{highlightMatch(item.description, value)}</span>
+//             </span>
+//           )}
+//         />
+//       </div>
+//     );
+//   },
+// });
 
-export const LimitResults = meta.story({
-  name: "表示件数の制限",
-  ...ctrl({
-    variant: "liquid",
-    color: "grey",
-    size: "md",
-    radius: undefined,
-    outlined: false,
-    disabled: false,
-    placeholder: "候補を検索",
-    empty: "該当なし",
-  }),
-  render(props) {
-    const [value, setValue] = React.useState("");
-    const { contains } = useAutocompleteFilter();
+// export const LimitResults = meta.story({
+//   name: "表示件数の制限",
+//   ...ctrl({
+//     variant: "liquid",
+//     color: "grey",
+//     size: "md",
+//     radius: undefined,
+//     outlined: false,
+//     disabled: false,
+//     placeholder: "候補を検索",
+//     empty: "該当なし",
+//   }),
+//   render(props) {
+//     const [value, setValue] = React.useState("");
+//     const { contains } = useAutocompleteFilter();
 
-    const matchedItems = React.useMemo(() => {
-      const query = value.trim();
-      if (query === "") {
-        return manyItems;
-      }
-      return manyItems.filter((item) => contains(item, query));
-    }, [value, contains]);
+//     const matchedItems = React.useMemo(() => {
+//       const query = value.trim();
+//       if (query === "") {
+//         return manyItems;
+//       }
+//       return manyItems.filter((item) => contains(item, query));
+//     }, [value, contains]);
 
-    const visibleItems = matchedItems.slice(0, RESULT_LIMIT);
-    const hiddenCount = matchedItems.length - visibleItems.length;
+//     const visibleItems = matchedItems.slice(0, RESULT_LIMIT);
+//     const hiddenCount = matchedItems.length - visibleItems.length;
 
-    return (
-      <div className="flex flex-col items-start gap-2">
-        <label>候補</label>
-        <Autocomplete
-          {...props}
-          items={manyItems}
-          filteredItems={visibleItems}
-          value={value}
-          onValueChange={setValue}
-          slotProps={{
-            inputGroup: {
-              className: "w-[240px]",
-            },
-          }}
-        />
-        {hiddenCount > 0 && <p>ほか {hiddenCount} 件を非表示中。キーワードで絞り込めます。</p>}
-      </div>
-    );
-  },
-});
+//     return (
+//       <div className="flex flex-col items-start gap-2">
+//         <label>候補</label>
+//         <Autocomplete
+//           {...props}
+//           items={manyItems}
+//           value={value}
+//           slotProps={{
+//             inputGroup: {
+//               className: "w-[240px]",
+//             },
+//           }}
+//           filteredItems={visibleItems}
+//           onValueChange={setValue}
+//         />
+//         {hiddenCount > 0 && <p>ほか {hiddenCount} 件を非表示中。キーワードで絞り込めます。</p>}
+//       </div>
+//     );
+//   },
+// });
 
-export const Virtualized = meta.story({
-  name: "仮想化",
-  ...ctrl({
-    variant: "liquid",
-    color: "grey",
-    size: "md",
-    radius: undefined,
-    outlined: false,
-    disabled: false,
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-col items-start gap-2">
-        <label>項目</label>
-        <VirtualizedAutocomplete {...props} />
-      </div>
-    );
-  },
-});
+// export const Virtualized = meta.story({
+//   name: "仮想化",
+//   ...ctrl({
+//     variant: "liquid",
+//     color: "grey",
+//     size: "md",
+//     radius: undefined,
+//     outlined: false,
+//     disabled: false,
+//   }),
+//   render(props) {
+//     return (
+//       <div className="flex flex-col items-start gap-2">
+//         <label>項目</label>
+//         <VirtualizedAutocomplete {...props} />
+//       </div>
+//     );
+//   },
+// });
