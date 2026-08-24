@@ -127,6 +127,10 @@
       "types": "./dist/src/data-display/chip/index.d.ts",
       "default": "./dist/src/data-display/chip/index.js"
     },
+    "./list": {
+      "types": "./dist/src/data-display/list/index.d.ts",
+      "default": "./dist/src/data-display/list/index.js"
+    },
     "./checkbox": {
       "types": "./dist/src/forms/checkbox/index.d.ts",
       "default": "./dist/src/forms/checkbox/index.js"

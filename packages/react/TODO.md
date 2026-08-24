@@ -45,7 +45,7 @@
 - [ ] `Stepper` / `Steps`（HeroUI, Mantine, Chakra UI, daisyUI, MUI, PrimeReact）
 - [x] `Tree` / `TreeView`（HeroUI, Mantine, Chakra UI, MUI X, PrimeReact）
 - [ ] `DataTable`（shadcn/ui, HeroUI, PrimeReact）
-- [ ] `List`（shadcn/ui, Mantine, Chakra UI, daisyUI, MUI）
+- [x] `List`（shadcn/ui, Mantine, Chakra UI, daisyUI, MUI）
 - [ ] `TransferList` / `PickList`（MUI, PrimeReact）
 - [ ] `ColorPicker`（HeroUI, Mantine, Chakra UI）
 - [x] `SegmentedControl`（HeroUI, Mantine, Chakra UI）
