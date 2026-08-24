@@ -1,0 +1,291 @@
+/* Root */
+@layer sui.component {
+  /* 変数 */
+  .sui_textarea {
+    --sui_textarea-min_height: ;
+    --sui_textarea-padding_block: ;
+    --sui_textarea-padding_inline: ;
+    --sui_textarea-font_family: ;
+    --sui_textarea-font_size: ;
+    --sui_textarea-font_weight: ;
+    --sui_textarea-line_height: ;
+    --sui_textarea-color: ;
+    --sui_textarea-placeholder-color: ;
+    --sui_textarea-letter_spacing: ;
+    --sui_textarea-outline_color: ;
+    --sui_textarea-outline_offset: ;
+    --sui_textarea-background_color: ;
+    --sui_textarea-border_color-normal: ;
+    --sui_textarea-border_color-hover: ;
+    --sui_textarea-border_color-invalid: ;
+    --sui_textarea-border_color-focus_visible: ;
+    --sui_textarea-border_width-normal: ;
+    --sui_textarea-border_width-hover: ;
+    --sui_textarea-border_width-focus_visible: ;
+    --sui_textarea-border_width-invalid: ;
+    --sui_textarea-border_radius: ;
+  }
+
+  /* 静的 */
+  .sui_textarea {
+    display: block;
+    width: 100%;
+    touch-action: manipulation;
+    caret-color: currentColor;
+    resize: vertical;
+  }
+
+  /* 動的 */
+  .sui_textarea {
+    min-height: var(--sui_textarea-min_height);
+    padding-block: var(--sui_textarea-padding_block);
+    padding-inline: calc(var(--sui_textarea-padding_inline) - var(--_sui_textarea-border_width, 0px));
+    font-family: var(--sui_textarea-font_family);
+    font-size: var(--sui_textarea-font_size);
+    font-weight: var(--sui_textarea-font_weight);
+    line-height: var(--sui_textarea-line_height);
+    color: var(--sui_textarea-color);
+    letter-spacing: var(--sui_textarea-letter_spacing);
+    outline: var(--_sui_textarea-outline_width, 0px) solid var(--sui_textarea-outline_color);
+    outline-offset: var(--sui_textarea-outline_offset);
+    background-color: var(--sui_textarea-background_color);
+    border: var(--_sui_textarea-border_color, transparent) solid var(--_sui_textarea-border_width, 0px);
+    border-radius: var(--sui_textarea-border_radius);
+
+    &::placeholder {
+      color: var(--sui_textarea-placeholder-color);
+    }
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_textarea {
+    --sui_textarea-padding_block: round(
+                                     down,
+                                     calc(
+                                       (var(--sui_textarea-min_height) - 1lh) / 2
+                                       - var(--_sui_textarea-border_width, 0px)
+                                     ),
+                                     1px
+                                   );
+    --sui_textarea-font_family: var(--sui-font-sans);
+    --sui_textarea-placeholder-color: var(--sui-canvas_text-2);
+    --sui_textarea-outline_color: var(--sui-focusring_color);
+    --sui_textarea-outline_offset: var(--sui-focusring_offset);
+    --sui_textarea-border_color-normal: var(--sui-grey-naked-border-normal);
+    --sui_textarea-border_color-hover: var(--sui-grey-naked-border-subtle);
+    --sui_textarea-border_color-invalid: var(--sui-red-naked-canvas_text-normal);
+    --sui_textarea-border_width-normal: --sui-border_width(1);
+    --sui_textarea-border_width-hover: --sui-border_width(1);
+    --sui_textarea-border_width-focus_visible: --sui-border_width(2);
+    --sui_textarea-border_width-invalid: --sui-border_width(2);
+  }
+
+  .sui_textarea-size_sm {
+    --sui_textarea-min_height: calc(var(--sui-size-sm) + 1lh);
+    --sui_textarea-padding_inline: --sui-space(3);
+    --sui_textarea-font_size: var(--sui-text-std-sm-n-font_size);
+    --sui_textarea-font_weight: var(--sui-text-std-sm-n-font_weight);
+    --sui_textarea-line_height: var(--sui-text-std-sm-n-line_height);
+    --sui_textarea-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+  }
+
+  .sui_textarea-size_md {
+    --sui_textarea-min_height: calc(var(--sui-size-md) + 1lh);
+    --sui_textarea-padding_inline: --sui-space(4);
+    --sui_textarea-font_size: var(--sui-text-std-md-n-font_size);
+    --sui_textarea-font_weight: var(--sui-text-std-md-n-font_weight);
+    --sui_textarea-line_height: var(--sui-text-std-md-n-line_height);
+    --sui_textarea-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
+  }
+
+  .sui_textarea-size_lg {
+    --sui_textarea-min_height: calc(var(--sui-size-lg) + 1lh);
+    --sui_textarea-padding_inline: --sui-space(5);
+    --sui_textarea-font_size: var(--sui-text-std-lg-n-font_size);
+    --sui_textarea-font_weight: var(--sui-text-std-lg-n-font_weight);
+    --sui_textarea-line_height: var(--sui-text-std-lg-n-line_height);
+    --sui_textarea-letter_spacing: var(--sui-text-std-lg-n-letter_spacing);
+  }
+
+  .sui_textarea-radius_none {
+    --sui_textarea-border_radius: 0px;
+  }
+
+  .sui_textarea-radius_sm {
+    --sui_textarea-border_radius: var(--sui-radius-sm);
+  }
+
+  .sui_textarea-radius_md {
+    --sui_textarea-border_radius: var(--sui-radius-md);
+  }
+
+  .sui_textarea-radius_lg {
+    --sui_textarea-border_radius: var(--sui-radius-lg);
+  }
+
+  .sui_textarea-radius_full {
+    --sui_textarea-border_radius: calc(var(--sui_textarea-min_height) / 2);
+  }
+
+  .sui_textarea-variant_naked {
+    --sui_textarea-color: var(--sui-grey-naked-canvas_text-normal);
+    --sui_textarea-background_color: var(--sui-grey-naked-canvas-normal);
+  }
+
+  .sui_textarea-variant_liquid {
+    --sui_textarea-color: var(--sui-grey-liquid-canvas_text-normal);
+    --sui_textarea-background_color: var(--sui-grey-liquid-canvas-normal);
+  }
+
+  .sui_textarea-color_grey {
+    &.sui_textarea-variant_naked {
+      --sui_textarea-border_color-focus_visible: var(--sui-grey-naked-border-subtle);
+    }
+
+    &.sui_textarea-variant_liquid {
+      --sui_textarea-border_color-focus_visible: var(--sui-grey-liquid-border-subtle);
+    }
+  }
+
+  .sui_textarea-color_blue {
+    &.sui_textarea-variant_naked {
+      --sui_textarea-border_color-focus_visible: var(--sui-blue-naked-border-normal);
+    }
+
+    &.sui_textarea-variant_liquid {
+      --sui_textarea-border_color-focus_visible: var(--sui-blue-liquid-border-normal);
+    }
+  }
+
+  .sui_textarea-color_purple {
+    &.sui_textarea-variant_naked {
+      --sui_textarea-border_color-focus_visible: var(--sui-purple-naked-border-normal);
+    }
+
+    &.sui_textarea-variant_liquid {
+      --sui_textarea-border_color-focus_visible: var(--sui-purple-liquid-border-normal);
+    }
+  }
+
+  .sui_textarea-color_magenta {
+    &.sui_textarea-variant_naked {
+      --sui_textarea-border_color-focus_visible: var(--sui-magenta-naked-border-normal);
+    }
+
+    &.sui_textarea-variant_liquid {
+      --sui_textarea-border_color-focus_visible: var(--sui-magenta-liquid-border-normal);
+    }
+  }
+
+  .sui_textarea-color_red {
+    &.sui_textarea-variant_naked {
+      --sui_textarea-border_color-focus_visible: var(--sui-red-naked-border-normal);
+    }
+
+    &.sui_textarea-variant_liquid {
+      --sui_textarea-border_color-focus_visible: var(--sui-red-liquid-border-normal);
+    }
+  }
+
+  .sui_textarea-color_orange {
+    &.sui_textarea-variant_naked {
+      --sui_textarea-border_color-focus_visible: var(--sui-orange-naked-border-normal);
+    }
+
+    &.sui_textarea-variant_liquid {
+      --sui_textarea-border_color-focus_visible: var(--sui-orange-liquid-border-normal);
+    }
+  }
+
+  .sui_textarea-color_yellow {
+    &.sui_textarea-variant_naked {
+      --sui_textarea-border_color-focus_visible: var(--sui-yellow-naked-border-normal);
+    }
+
+    &.sui_textarea-variant_liquid {
+      --sui_textarea-border_color-focus_visible: var(--sui-yellow-liquid-border-normal);
+    }
+  }
+
+  .sui_textarea-color_green {
+    &.sui_textarea-variant_naked {
+      --sui_textarea-border_color-focus_visible: var(--sui-green-naked-border-normal);
+    }
+
+    &.sui_textarea-variant_liquid {
+      --sui_textarea-border_color-focus_visible: var(--sui-green-liquid-border-normal);
+    }
+  }
+
+  /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  .sui_textarea:focus-visible {
+    --_sui_textarea-outline_width: var(--sui-focusring_width);
+  }
+
+  .sui_textarea-outlined {
+    --_sui_textarea-border_color: var(--sui_textarea-border_color-normal);
+    --_sui_textarea-border_width: var(--sui_textarea-border_width-normal);
+
+    @media (any-hover: hover) {
+      &:hover {
+        --_sui_textarea-border_color: var(--sui_textarea-border_color-hover);
+        --_sui_textarea-border_width: var(--sui_textarea-border_width-hover);
+      }
+    }
+
+    &:focus-visible {
+      --_sui_textarea-border_color: var(--sui_textarea-border_color-focus_visible);
+      --_sui_textarea-border_width: var(--sui_textarea-border_width-focus_visible);
+    }
+  }
+
+  .sui_textarea-invalid {
+    --_sui_textarea-border_color: var(--sui_textarea-border_color-invalid);
+    --_sui_textarea-border_width: var(--sui_textarea-border_width-invalid);
+  }
+
+  .sui_textarea-unverified:user-invalid {
+    --_sui_textarea-border_color: var(--sui_textarea-border_color-invalid);
+    --_sui_textarea-border_width: var(--sui_textarea-border_width-invalid);
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* disabled */
+@layer sui.important {
+  /* Root */
+  .sui_textarea-disabled {
+    color: var(--sui-canvas_text-2) !important;
+    cursor: not-allowed !important;
+    resize: none !important;
+
+    &.sui_textarea-variant_naked {
+      background-color: var(--sui-disabled-naked-canvas) !important;
+
+      &::placeholder {
+        color: var(--sui-disabled-naked-canvas_text) !important;
+      }
+
+      &.sui_textarea-outlined {
+        border: var(--sui-disabled-naked-border) solid var(--sui-disabled-border_width) !important;
+      }
+    }
+
+    &.sui_textarea-variant_liquid {
+      background-color: var(--sui-disabled-liquid-canvas) !important;
+
+      &::placeholder {
+        color: var(--sui-disabled-liquid-canvas_text) !important;
+      }
+
+      &.sui_textarea-outlined {
+        border: var(--sui-disabled-liquid-border) solid var(--sui-disabled-border_width) !important;
+      }
+    }
+  }
+}

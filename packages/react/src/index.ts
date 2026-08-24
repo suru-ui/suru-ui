@@ -177,6 +177,13 @@ export {
   Input,
 } from "./forms/input/index.js";
 export {
+  type LabelSize,
+  type LabelProps,
+  type LabelState,
+  type LabelPartsProps,
+  Label,
+} from "./forms/label/index.js";
+export {
   type NumberFieldSize,
   type NumberFieldColor,
   type NumberFieldProps,
@@ -256,6 +263,18 @@ export {
   type TextFieldChangeEventDetails,
   TextField,
 } from "./forms/text-field/index.js";
+export {
+  type TextareaSize,
+  type TextareaColor,
+  type TextareaProps,
+  type TextareaState,
+  type TextareaRadius,
+  type TextareaVariant,
+  type TextareaChangeEventReason,
+  type TextareaChangeEventDetails,
+  Textarea,
+  useTextarea,
+} from "./forms/textarea/index.js";
 
 // layout
 export {
@@ -339,6 +358,12 @@ export {
 } from "./overlays/drawer/index.js";
 export { type MenuProps, type MenuState, type MenuSlotProps, Menu } from "./overlays/menu/index.js";
 export { type MenubarProps, type MenubarState, Menubar } from "./overlays/menubar/index.js";
+export {
+  type PopoverProps,
+  type PopoverState,
+  type PopoverSlotProps,
+  Popover,
+} from "./overlays/popover/index.js";
 export {
   type ToastProps,
   type ToastState,

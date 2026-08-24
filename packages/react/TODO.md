@@ -8,10 +8,10 @@
 
 最初に実装する基盤的なコンポーネントです。
 
-- [ ] `Popover`（shadcn/ui, Base UI, HeroUI, Mantine, Chakra UI, MUI, PrimeReact）
+- [x] `Popover`（shadcn/ui, Base UI, HeroUI, Mantine, Chakra UI, MUI, PrimeReact）
 - [ ] `Separator` / `Divider`（shadcn/ui, Base UI, Chakra UI, daisyUI, MUI, PrimeReact）
-- [ ] `Textarea`（shadcn/ui, Mantine, Chakra UI, daisyUI, PrimeReact）
-- [ ] `Label`（shadcn/ui, Mantine, Chakra UI, daisyUI, PrimeReact）
+- [x] `Textarea`（shadcn/ui, Mantine, Chakra UI, daisyUI, PrimeReact）
+- [x] `Label`（shadcn/ui, Mantine, Chakra UI, daisyUI, PrimeReact）
 - [ ] `Badge`（shadcn/ui, HeroUI, Mantine, Chakra UI, daisyUI, MUI, PrimeReact）
 - [ ] `Card`（shadcn/ui, HeroUI, Mantine, Chakra UI, daisyUI, MUI, PrimeReact）
 - [ ] `Skeleton`（shadcn/ui, HeroUI, Mantine, Chakra UI, MUI, PrimeReact）

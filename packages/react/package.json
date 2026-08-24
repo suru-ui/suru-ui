@@ -75,6 +75,10 @@
       "types": "./dist/src/overlays/menubar/index.d.ts",
       "default": "./dist/src/overlays/menubar/index.js"
     },
+    "./popover": {
+      "types": "./dist/src/overlays/popover/index.d.ts",
+      "default": "./dist/src/overlays/popover/index.js"
+    },
     "./toast": {
       "types": "./dist/src/overlays/toast/index.d.ts",
       "default": "./dist/src/overlays/toast/index.js"
@@ -123,6 +127,10 @@
       "types": "./dist/src/forms/input/index.d.ts",
       "default": "./dist/src/forms/input/index.js"
     },
+    "./label": {
+      "types": "./dist/src/forms/label/index.d.ts",
+      "default": "./dist/src/forms/label/index.js"
+    },
     "./meter": {
       "types": "./dist/src/data-display/meter/index.d.ts",
       "default": "./dist/src/data-display/meter/index.js"
@@ -170,6 +178,10 @@
     "./text-field": {
       "types": "./dist/src/forms/text-field/index.d.ts",
       "default": "./dist/src/forms/text-field/index.js"
+    },
+    "./textarea": {
+      "types": "./dist/src/forms/textarea/index.d.ts",
+      "default": "./dist/src/forms/textarea/index.js"
     },
     "./suru.css": "./dist/suru.css"
   },
