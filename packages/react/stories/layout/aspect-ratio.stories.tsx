@@ -1,6 +1,6 @@
 import { preview, controls } from "../../.config/storybook/preview.js";
-import demoImage from "../assets/demo-image.svg";
 import { AspectRatio } from "../../src/layout/aspect-ratio/index.js";
+import demoImage from "../assets/demo-image.svg";
 
 const meta = preview.meta({
   title: "Layout / AspectRatio",
@@ -28,11 +28,7 @@ export const Usage = meta.story({
         ratio={16 / 9}
         className="w-full max-w-2xl overflow-hidden rounded-xl border-1 border-solid border-(--sui-canvas_text-3)"
       >
-        <img
-          alt="湖と山々の風景"
-          src={demoImage}
-          className="h-full w-full object-cover"
-        />
+        <img alt="湖と山々の風景" src={demoImage} className="h-full w-full object-cover" />
       </AspectRatio>
     );
   },

@@ -131,6 +131,10 @@
       "types": "./dist/src/data-display/list/index.d.ts",
       "default": "./dist/src/data-display/list/index.js"
     },
+    "./image": {
+      "types": "./dist/src/data-display/image/index.d.ts",
+      "default": "./dist/src/data-display/image/index.js"
+    },
     "./checkbox": {
       "types": "./dist/src/forms/checkbox/index.d.ts",
       "default": "./dist/src/forms/checkbox/index.js"

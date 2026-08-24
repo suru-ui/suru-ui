@@ -113,6 +113,15 @@ export {
   Progress,
 } from "./data-display/progress/index.js";
 export {
+  type ImageFit,
+  type ImageRadius,
+  type ImageProps,
+  type ImageState,
+  type ImagePartsProps,
+  Image,
+  useImage,
+} from "./data-display/image/index.js";
+export {
   type SkeletonRadius,
   type SkeletonProps,
   type SkeletonState,

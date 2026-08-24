@@ -1,0 +1,62 @@
+/* Root */
+@layer sui.component {
+  /* 変数 */
+  .sui_image {
+    --sui_image-border_radius: ;
+  }
+
+  /* 静的 */
+  .sui_image {
+    display: block;
+    max-width: 100%;
+  }
+
+  .sui_image-fit_cover {
+    object-fit: cover;
+  }
+
+  .sui_image-fit_contain {
+    object-fit: contain;
+  }
+
+  .sui_image-fit_fill {
+    object-fit: fill;
+  }
+
+  .sui_image-fit_none {
+    object-fit: none;
+  }
+
+  .sui_image-fit_scale-down {
+    object-fit: scale-down;
+  }
+
+  /* 動的 */
+  .sui_image {
+    border-radius: var(--sui_image-border_radius);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_image-radius_none {
+    --sui_image-border_radius: 0px;
+  }
+
+  .sui_image-radius_sm {
+    --sui_image-border_radius: var(--sui-radius-sm);
+  }
+
+  .sui_image-radius_md {
+    --sui_image-border_radius: var(--sui-radius-md);
+  }
+
+  .sui_image-radius_lg {
+    --sui_image-border_radius: var(--sui-radius-lg);
+  }
+
+  .sui_image-radius_full {
+    --sui_image-border_radius: 9999px;
+  }
+
+  /* 既定値設定: ここまで */
+}
