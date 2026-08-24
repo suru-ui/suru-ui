@@ -41,7 +41,7 @@
 
 複合 UI やナビゲーション、データ操作向けのコンポーネントです。
 
-- [ ] `Sidebar`（shadcn/ui, HeroUI, PrimeReact）
+- [x] `Sidebar`（shadcn/ui, HeroUI, PrimeReact）
 - [ ] `Stepper` / `Steps`（HeroUI, Mantine, Chakra UI, daisyUI, MUI, PrimeReact）
 - [x] `Tree` / `TreeView`（HeroUI, Mantine, Chakra UI, MUI X, PrimeReact）
 - [ ] `DataTable`（shadcn/ui, HeroUI, PrimeReact）

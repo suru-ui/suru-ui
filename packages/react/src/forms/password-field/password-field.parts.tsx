@@ -30,16 +30,16 @@ import "./password-field.css";
  */
 export type PasswordFieldContext = {
   /**
-   * パスワードを表示しているかどうかです。
-   */
-  readonly visible: boolean;
-
-  /**
    * パスワードの表示状態を更新します。
    *
    * 関数を渡すと、現在の表示状態から次の表示状態を計算できます。
    */
   readonly setVisible: (value: boolean | ((prevValue: boolean) => boolean)) => void;
+
+  /**
+   * パスワードを表示しているかどうかです。
+   */
+  readonly visible: boolean;
 };
 
 /**
@@ -129,13 +129,6 @@ export type PasswordFieldRootState = TextFieldRootState;
  */
 export type PasswordFieldRootProps = TextFieldRootProps & {
   /**
-   * パスワードを表示状態にします。
-   *
-   * 子パーツにはコンテキスト経由で伝播します。指定した場合は表示状態がこの値で固定され、内部の状態を使わなくなります。
-   */
-  visible?: boolean | undefined;
-
-  /**
    * パスワードの初期表示状態を指定します。
    *
    * {@link PasswordFieldRootProps.visible|visible} を指定しないときに使われます。
@@ -148,6 +141,13 @@ export type PasswordFieldRootProps = TextFieldRootProps & {
    * パスワードの表示状態が変わったときに呼ばれます。
    */
   onVisibleChange?: ((visible: boolean) => void) | undefined;
+
+  /**
+   * パスワードを表示状態にします。
+   *
+   * 子パーツにはコンテキスト経由で伝播します。指定した場合は表示状態がこの値で固定され、内部の状態を使わなくなります。
+   */
+  visible?: boolean | undefined;
 };
 
 /**

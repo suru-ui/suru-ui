@@ -1,0 +1,559 @@
+/* Provider */
+@layer sui.component {
+  /* 静的 */
+  .sui_sidebar_provider {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+  }
+}
+
+/* Root */
+@layer sui.component {
+  /* 変数 */
+  .sui_sidebar {
+    --sui_sidebar-width: ;
+    --sui_sidebar-margin_block: ;
+    --sui_sidebar-margin_inline: ;
+    --sui_sidebar-background_color: ;
+    --sui_sidebar-border_color: ;
+    --sui_sidebar-border_width: ;
+    --sui_sidebar-border_radius: ;
+    --sui_sidebar-transition_timing_function: ;
+    --sui_sidebar-transition_duration: ;
+    --sui_sidebar-collapsed_width: ;
+  }
+
+  /* 静的 */
+  .sui_sidebar {
+    position: relative;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+  }
+
+  /* 動的 */
+  .sui_sidebar {
+    width: var(--_sui_sidebar-width, var(--sui_sidebar-width));
+    margin-block: var(--sui_sidebar-margin_block);
+    margin-inline: var(--sui_sidebar-margin_inline);
+    background-color: var(--sui_sidebar-background_color);
+    border-radius: var(--sui_sidebar-border_radius);
+    transition:
+      width
+      var(--sui_sidebar-transition_duration)
+      var(--sui_sidebar-transition_timing_function);
+  }
+
+  .sui_sidebar[data-side="left"] {
+    border-inline-end: var(--_sui_sidebar-border_width, var(--sui_sidebar-border_width))
+                       solid
+                       var(--sui_sidebar-border_color);
+  }
+
+  .sui_sidebar[data-side="right"] {
+    border-inline-start: var(--_sui_sidebar-border_width, var(--sui_sidebar-border_width))
+                         solid
+                         var(--sui_sidebar-border_color);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_sidebar {
+    --sui_sidebar-width: 16rem;
+    --sui_sidebar-margin_block: 0px;
+    --sui_sidebar-margin_inline: 0px;
+    --sui_sidebar-background_color: var(--sui-canvas-1);
+    --sui_sidebar-border_color: var(--sui-border-2);
+    --sui_sidebar-border_width: --sui-border_width(1);
+    --sui_sidebar-border_radius: 0px;
+    --sui_sidebar-transition_timing_function: ease;
+    --sui_sidebar-transition_duration: 200ms;
+    --sui_sidebar-collapsed_width: 3rem;
+  }
+
+  .sui_sidebar-variant_floating {
+    --sui_sidebar-margin_block: var(--sui-space(2));
+    --sui_sidebar-margin_inline: var(--sui-space(2));
+    --sui_sidebar-border_radius: var(--sui-radius-xl);
+  }
+
+  /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  .sui_sidebar-collapsible_offcanvas[data-state="collapsed"] {
+    --_sui_sidebar-width: 0px;
+    --_sui_sidebar-border_width: 0px;
+  }
+
+  .sui_sidebar-collapsible_icon[data-state="collapsed"] {
+    --_sui_sidebar-width: var(--sui_sidebar-collapsed_width);
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* Header */
+@layer sui.component {
+  /* 変数 */
+  .sui_sidebar_header {
+    --sui_sidebar_header-gap: ;
+    --sui_sidebar_header-padding_block: ;
+    --sui_sidebar_header-padding_inline: ;
+  }
+
+  /* 静的 */
+  .sui_sidebar_header {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    align-items: stretch;
+    overflow: hidden;
+  }
+
+  /* 動的 */
+  .sui_sidebar_header {
+    gap: var(--sui_sidebar_header-gap);
+    padding-block: var(--sui_sidebar_header-padding_block);
+    padding-inline: var(--sui_sidebar_header-padding_inline);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_sidebar_header {
+    --sui_sidebar_header-gap: --sui-gap(2);
+    --sui_sidebar_header-padding_block: --sui-space(3);
+    --sui_sidebar_header-padding_inline: --sui-space(4);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* Content */
+@layer sui.component {
+  /* 変数 */
+  .sui_sidebar_content {
+    --sui_sidebar_content-gap: ;
+    --sui_sidebar_content-padding_block: ;
+    --sui_sidebar_content-padding_inline: ;
+  }
+
+  /* 静的 */
+  .sui_sidebar_content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  /* 動的 */
+  .sui_sidebar_content {
+    gap: var(--sui_sidebar_content-gap);
+    padding-block: var(--sui_sidebar_content-padding_block);
+    padding-inline: var(--sui_sidebar_content-padding_inline);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_sidebar_content {
+    --sui_sidebar_content-gap: --sui-gap(3);
+    --sui_sidebar_content-padding_block: --sui-space(2);
+    --sui_sidebar_content-padding_inline: --sui-space(3);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* Footer */
+@layer sui.component {
+  /* 変数 */
+  .sui_sidebar_footer {
+    --sui_sidebar_footer-gap: ;
+    --sui_sidebar_footer-padding_block: ;
+    --sui_sidebar_footer-padding_inline: ;
+  }
+
+  /* 静的 */
+  .sui_sidebar_footer {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    align-items: stretch;
+    overflow: hidden;
+  }
+
+  /* 動的 */
+  .sui_sidebar_footer {
+    gap: var(--sui_sidebar_footer-gap);
+    padding-block: var(--sui_sidebar_footer-padding_block);
+    padding-inline: var(--sui_sidebar_footer-padding_inline);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_sidebar_footer {
+    --sui_sidebar_footer-gap: --sui-gap(2);
+    --sui_sidebar_footer-padding_block: --sui-space(3);
+    --sui_sidebar_footer-padding_inline: --sui-space(4);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* Group */
+@layer sui.component {
+  /* 変数 */
+  .sui_sidebar_group {
+    --sui_sidebar_group-gap: ;
+    --sui_sidebar_group-padding_block: ;
+    --sui_sidebar_group-padding_inline: ;
+  }
+
+  /* 静的 */
+  .sui_sidebar_group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 動的 */
+  .sui_sidebar_group {
+    gap: var(--sui_sidebar_group-gap);
+    padding-block: var(--sui_sidebar_group-padding_block);
+    padding-inline: var(--sui_sidebar_group-padding_inline);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_sidebar_group {
+    --sui_sidebar_group-gap: --sui-gap(1);
+    --sui_sidebar_group-padding_block: --sui-space(2);
+    --sui_sidebar_group-padding_inline: --sui-space(1);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* GroupLabel */
+@layer sui.component {
+  /* 変数 */
+  .sui_sidebar_group_label {
+    --sui_sidebar_group_label-min_height: ;
+    --sui_sidebar_group_label-padding_inline: ;
+    --sui_sidebar_group_label-font_size: ;
+    --sui_sidebar_group_label-font_weight: ;
+    --sui_sidebar_group_label-line_height: ;
+    --sui_sidebar_group_label-color: ;
+    --sui_sidebar_group_label-letter_spacing: ;
+  }
+
+  /* 静的 */
+  .sui_sidebar_group_label {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+  }
+
+  /* 動的 */
+  .sui_sidebar_group_label {
+    min-height: var(--sui_sidebar_group_label-min_height);
+    padding-inline: var(--sui_sidebar_group_label-padding_inline);
+    font-size: var(--sui_sidebar_group_label-font_size);
+    font-weight: var(--sui_sidebar_group_label-font_weight);
+    line-height: var(--sui_sidebar_group_label-line_height);
+    color: var(--sui_sidebar_group_label-color);
+    letter-spacing: var(--sui_sidebar_group_label-letter_spacing);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_sidebar_group_label {
+    --sui_sidebar_group_label-min_height: --sui-space(6);
+    --sui_sidebar_group_label-padding_inline: --sui-space(3);
+    --sui_sidebar_group_label-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_sidebar_group_label-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_sidebar_group_label-line_height: var(--sui-text-oln-sm-n-line_height);
+    --sui_sidebar_group_label-color: var(--sui-canvas_text-3);
+    --sui_sidebar_group_label-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* GroupContent */
+@layer sui.component {
+  /* 変数 */
+  .sui_sidebar_group_content {
+    --sui_sidebar_group_content-gap: ;
+  }
+
+  /* 静的 */
+  .sui_sidebar_group_content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* 動的 */
+  .sui_sidebar_group_content {
+    gap: var(--sui_sidebar_group_content-gap);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_sidebar_group_content {
+    --sui_sidebar_group_content-gap: --sui-gap(1);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* Inset */
+@layer sui.component {
+  /* 変数 */
+  .sui_sidebar_inset {
+    --sui_sidebar_inset-padding_block: ;
+    --sui_sidebar_inset-padding_inline: ;
+    --sui_sidebar_inset-margin_block: ;
+    --sui_sidebar_inset-margin_inline: ;
+    --sui_sidebar_inset-background_color: ;
+    --sui_sidebar_inset-border_color: ;
+    --sui_sidebar_inset-border_width: ;
+    --sui_sidebar_inset-border_radius: ;
+  }
+
+  /* 静的 */
+  .sui_sidebar_inset {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-width: 0px;
+  }
+
+  /* 動的 */
+  .sui_sidebar_inset {
+    padding-block: var(--sui_sidebar_inset-padding_block);
+    padding-inline: var(--sui_sidebar_inset-padding_inline);
+    margin-block: var(--sui_sidebar_inset-margin_block);
+    margin-inline: var(--sui_sidebar_inset-margin_inline);
+    background-color: var(--_sui_sidebar_inset-background_color,
+                         var(--sui_sidebar_inset-background_color)
+                       );
+    border:
+      var(--_sui_sidebar_inset-border_width, var(--sui_sidebar_inset-border_width))
+      solid
+      var(--_sui_sidebar_inset-border_color, var(--sui_sidebar_inset-border_color));
+    border-radius: var(--_sui_sidebar_inset-border_radius,
+                     var(--sui_sidebar_inset-border_radius)
+                   );
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_sidebar_inset {
+    --sui_sidebar_inset-padding_block: 0px;
+    --sui_sidebar_inset-padding_inline: 0px;
+    --sui_sidebar_inset-margin_block: 0px;
+    --sui_sidebar_inset-margin_inline: 0px;
+    --sui_sidebar_inset-background_color: transparent;
+    --sui_sidebar_inset-border_color: transparent;
+    --sui_sidebar_inset-border_width: 0px;
+    --sui_sidebar_inset-border_radius: 0px;
+  }
+
+  /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  .sui_sidebar_provider:has(> .sui_sidebar-variant_inset) > .sui_sidebar_inset {
+    --_sui_sidebar_inset-margin_block: var(--sui-space(2));
+    --_sui_sidebar_inset-margin_inline: var(--sui-space(2));
+    --_sui_sidebar_inset-background_color: var(--sui-canvas-1);
+    --_sui_sidebar_inset-border_color: var(--sui-border-2);
+    --_sui_sidebar_inset-border_width: --sui-border_width(1);
+    --_sui_sidebar_inset-border_radius: var(--sui-radius-xl);
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* Rail */
+@layer sui.component {
+  /* 変数 */
+  .sui_sidebar_rail {
+    --sui_sidebar_rail-width: ;
+    --sui_sidebar_rail-outline_width: ;
+    --sui_sidebar_rail-outline_color: ;
+    --sui_sidebar_rail-outline_offset: ;
+    --sui_sidebar_rail-background_color-action: ;
+    --sui_sidebar_rail-background_color-normal: ;
+    --sui_sidebar_rail-background_color-subtle: ;
+  }
+
+  /* 静的 */
+  .sui_sidebar_rail {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    z-index: 1;
+    padding: 0px;
+    cursor: pointer;
+    border: 0px;
+  }
+
+  .sui_sidebar[data-side="left"] > .sui_sidebar_rail {
+    right: 0px;
+  }
+
+  .sui_sidebar[data-side="right"] > .sui_sidebar_rail {
+    left: 0px;
+  }
+
+  .sui_sidebar-collapsible_none .sui_sidebar_rail {
+    display: none;
+  }
+
+  /* 動的 */
+  .sui_sidebar_rail {
+    width: var(--sui_sidebar_rail-width);
+    outline: var(--_sui_sidebar_rail-outline_width,
+                 var(--sui_sidebar_rail-outline_width)
+               )
+               solid
+               var(--sui_sidebar_rail-outline_color);
+    outline-offset: var(--sui_sidebar_rail-outline_offset);
+    background-color: var(--_sui_sidebar_rail-background_color,
+                          var(--sui_sidebar_rail-background_color-normal)
+                        );
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_sidebar_rail {
+    --sui_sidebar_rail-width: 12px;
+    --sui_sidebar_rail-outline_width: 0px;
+    --sui_sidebar_rail-outline_color: var(--sui-focusring_color);
+    --sui_sidebar_rail-outline_offset: var(--sui-focusring_offset);
+    --sui_sidebar_rail-background_color-action: var(--sui-canvas-2);
+    --sui_sidebar_rail-background_color-normal: transparent;
+    --sui_sidebar_rail-background_color-subtle: var(--sui-canvas-2);
+  }
+
+  /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  @media (any-hover: hover) {
+    .sui_sidebar_rail:hover {
+      --_sui_sidebar_rail-background_color:
+        var(--sui_sidebar_rail-background_color-subtle);
+    }
+  }
+
+  .sui_sidebar_rail:active {
+    --_sui_sidebar_rail-background_color:
+      var(--sui_sidebar_rail-background_color-action);
+  }
+
+  .sui_sidebar_rail:focus-visible {
+    --_sui_sidebar_rail-outline_width: var(--sui-focusring_width);
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* Trigger */
+@layer sui.component {
+  /* 変数 */
+  .sui_sidebar_trigger {
+    --sui_sidebar_trigger-size: ;
+    --sui_sidebar_trigger-color-action: ;
+    --sui_sidebar_trigger-color-normal: ;
+    --sui_sidebar_trigger-color-subtle: ;
+    --sui_sidebar_trigger-outline_width: ;
+    --sui_sidebar_trigger-outline_color: ;
+    --sui_sidebar_trigger-outline_offset: ;
+    --sui_sidebar_trigger-background_color-action: ;
+    --sui_sidebar_trigger-background_color-normal: ;
+    --sui_sidebar_trigger-background_color-subtle: ;
+    --sui_sidebar_trigger-border_radius: ;
+    --sui_sidebar_trigger-icon_size: ;
+  }
+
+  /* 静的 */
+  .sui_sidebar_trigger {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+    cursor: pointer;
+    border: 0px;
+  }
+
+  /* 動的 */
+  .sui_sidebar_trigger {
+    width: var(--sui_sidebar_trigger-size);
+    height: var(--sui_sidebar_trigger-size);
+    color: var(--_sui_sidebar_trigger-color, var(--sui_sidebar_trigger-color-normal));
+    outline: var(--_sui_sidebar_trigger-outline_width,
+                 var(--sui_sidebar_trigger-outline_width)
+               )
+               solid
+               var(--sui_sidebar_trigger-outline_color);
+    outline-offset: var(--sui_sidebar_trigger-outline_offset);
+    background-color: var(--_sui_sidebar_trigger-background_color,
+                          var(--sui_sidebar_trigger-background_color-normal)
+                        );
+    border-radius: var(--sui_sidebar_trigger-border_radius);
+  }
+
+  .sui_sidebar_trigger_icon {
+    width: var(--sui_sidebar_trigger-icon_size);
+    height: var(--sui_sidebar_trigger-icon_size);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_sidebar_trigger {
+    --sui_sidebar_trigger-size: 32px;
+    --sui_sidebar_trigger-color-action: var(--sui-canvas_text-1);
+    --sui_sidebar_trigger-color-normal: var(--sui-canvas_text-2);
+    --sui_sidebar_trigger-color-subtle: var(--sui-canvas_text-1);
+    --sui_sidebar_trigger-outline_width: 0px;
+    --sui_sidebar_trigger-outline_color: var(--sui-focusring_color);
+    --sui_sidebar_trigger-outline_offset: var(--sui-focusring_offset);
+    --sui_sidebar_trigger-background_color-action: var(--sui-canvas-2);
+    --sui_sidebar_trigger-background_color-normal: transparent;
+    --sui_sidebar_trigger-background_color-subtle: var(--sui-canvas-2);
+    --sui_sidebar_trigger-border_radius: var(--sui-radius-md);
+    --sui_sidebar_trigger-icon_size: 16px;
+  }
+
+  /* 既定値設定: ここまで */
+
+  /* 上書き設定: ここから */
+
+  @media (any-hover: hover) {
+    .sui_sidebar_trigger:hover {
+      --_sui_sidebar_trigger-color: var(--sui_sidebar_trigger-color-subtle);
+      --_sui_sidebar_trigger-background_color:
+        var(--sui_sidebar_trigger-background_color-subtle);
+    }
+  }
+
+  .sui_sidebar_trigger:active {
+    --_sui_sidebar_trigger-color: var(--sui_sidebar_trigger-color-action);
+    --_sui_sidebar_trigger-background_color:
+      var(--sui_sidebar_trigger-background_color-action);
+  }
+
+  .sui_sidebar_trigger:focus-visible {
+    --_sui_sidebar_trigger-outline_width: var(--sui-focusring_width);
+  }
+
+  /* 上書き設定: ここまで */
+}

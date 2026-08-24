@@ -386,6 +386,16 @@ export {
   ScrollArea,
 } from "./navigation/scroll-area/index.js";
 export {
+  type SidebarCollapsible,
+  type SidebarContext,
+  type SidebarOpenState,
+  type SidebarProps,
+  type SidebarSide,
+  type SidebarState,
+  type SidebarVariant,
+  Sidebar,
+} from "./navigation/sidebar/index.js";
+export {
   type SegmentsItemOption,
   type SegmentsSize,
   type SegmentsColor,

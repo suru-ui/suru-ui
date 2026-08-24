@@ -47,6 +47,10 @@
       "types": "./dist/src/navigation/scroll-area/index.d.ts",
       "default": "./dist/src/navigation/scroll-area/index.js"
     },
+    "./sidebar": {
+      "types": "./dist/src/navigation/sidebar/index.d.ts",
+      "default": "./dist/src/navigation/sidebar/index.js"
+    },
     "./segments": {
       "types": "./dist/src/navigation/segments/index.d.ts",
       "default": "./dist/src/navigation/segments/index.js"
