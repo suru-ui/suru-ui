@@ -3,11 +3,11 @@ import * as React from "react";
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Sidebar } from "../../src/navigation/sidebar/index.js";
 import type {
-  SidebarCollapsible,
-  SidebarProps,
-  SidebarRootProps,
   SidebarSide,
+  SidebarProps,
   SidebarVariant,
+  SidebarRootProps,
+  SidebarCollapsible,
 } from "../../src/navigation/sidebar/index.js";
 
 const meta = preview.meta({
@@ -24,13 +24,14 @@ const ctrl = controls(Sidebar, {
 });
 
 function DemoSidebar(
-  props: Omit<SidebarProps, "children"> & Partial<Pick<SidebarRootProps, "collapsible" | "side" | "variant">>,
+  props: Omit<SidebarProps, "children"> &
+    Partial<Pick<SidebarRootProps, "collapsible" | "side" | "variant">>,
 ) {
   const { collapsible = "offcanvas", side = "left", variant = "sidebar", ...otherProps } = props;
 
   return (
     <Sidebar {...otherProps} className="h-96 overflow-hidden rounded-lg border">
-      <Sidebar.Root collapsible={collapsible} side={side} variant={variant}>
+      <Sidebar.Root side={side} variant={variant} collapsible={collapsible}>
         <Sidebar.Header>
           <p className="font-bold">Suru UI</p>
         </Sidebar.Header>
@@ -89,7 +90,7 @@ export const Sides = meta.story({
         {(["left", "right"] as readonly SidebarSide[]).map((side) => (
           <div key={side}>
             <p>{`辺 "${side}"`}</p>
-            <DemoSidebar defaultOpen={props.defaultOpen} side={side} />
+            <DemoSidebar side={side} defaultOpen={props.defaultOpen} />
           </div>
         ))}
       </div>
@@ -110,7 +111,7 @@ export const Variants = meta.story({
         {(["sidebar", "floating", "inset"] as readonly SidebarVariant[]).map((variant) => (
           <div key={variant}>
             <p>{`バリアント "${variant}"`}</p>
-            <DemoSidebar defaultOpen={props.defaultOpen} variant={variant} />
+            <DemoSidebar variant={variant} defaultOpen={props.defaultOpen} />
           </div>
         ))}
       </div>

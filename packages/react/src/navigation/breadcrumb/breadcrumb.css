@@ -64,13 +64,6 @@
 
 /* List */
 @layer sui.component {
-  /* リセット */
-  .sui_breadcrumb_list {
-    padding: 0px;
-    margin: 0px;
-    list-style: none;
-  }
-
   /* 静的 */
   .sui_breadcrumb_list {
     display: flex;

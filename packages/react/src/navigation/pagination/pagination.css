@@ -69,13 +69,6 @@
     --sui_pagination_ellipsis_input-width: ;
   }
 
-  /* リセット */
-  .sui_pagination_ellipsis_input {
-    appearance: none;
-    outline: 0px solid transparent;
-    border: 0px solid transparent;
-  }
-
   /* 静的 */
   .sui_pagination_ellipsis_input {
     font-family: inherit;

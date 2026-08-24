@@ -1,10 +1,5 @@
 /* Root */
 @layer sui.component {
-  /* リセット */
-  .sui_action_group {
-    box-sizing: border-box;
-  }
-
   /* 変数 */
   .sui_action_group {
     --sui_action_group-flex_direction: ;
@@ -243,12 +238,6 @@
 
 /* Separator */
 @layer sui.component {
-  /* リセット */
-  .sui_action_group_separator {
-    box-sizing: border-box;
-    border: 0px;
-  }
-
   /* 静的 */
   .sui_action_group_separator {
     flex: 0 0 auto;

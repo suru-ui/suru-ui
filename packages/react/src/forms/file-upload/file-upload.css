@@ -339,7 +339,7 @@
 
 /* HiddenInput */
 @layer sui.component {
-  /* リセット */
+  /* 静的 */
   .sui_file_upload_hidden_input {
     position: absolute;
     width: 1px;
@@ -517,18 +517,14 @@
 
 /* ItemGroup */
 @layer sui.component {
-  /* リセット */
-  .sui_file_upload_item_group {
-    padding: 0px;
-    margin: 0px;
-    list-style: none;
-  }
-
   /* 動的 */
   .sui_file_upload_item_group {
     display: flex;
     flex-direction: column;
     gap: var(--sui_file_upload-item_group-gap);
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
   }
 }
 
