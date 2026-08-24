@@ -326,6 +326,14 @@ export {
 
 // layout
 export {
+  type AspectRatioProps,
+  type AspectRatioState,
+  type AspectRatioRatio,
+  type AspectRatioPartsProps,
+  AspectRatio,
+  useAspectRatio,
+} from "./layout/aspect-ratio/index.js";
+export {
   type ActionGroupSize,
   type ActionGroupColor,
   type ActionGroupProps,

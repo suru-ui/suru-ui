@@ -179,6 +179,10 @@
       "types": "./dist/src/data-display/skeleton/index.d.ts",
       "default": "./dist/src/data-display/skeleton/index.js"
     },
+    "./aspect-ratio": {
+      "types": "./dist/src/layout/aspect-ratio/index.d.ts",
+      "default": "./dist/src/layout/aspect-ratio/index.js"
+    },
     "./action-group": {
       "types": "./dist/src/layout/action-group/index.d.ts",
       "default": "./dist/src/layout/action-group/index.js"

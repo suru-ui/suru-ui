@@ -60,7 +60,7 @@
 
 特定用途、表示専用、レイアウト補助、ライブラリー固有のコンポーネントです。必要なユースケースが発生した時点で実装します。
 
-- [ ] `AspectRatio`（shadcn/ui, HeroUI, Mantine, Chakra UI）
+- [x] `AspectRatio`（shadcn/ui, HeroUI, Mantine, Chakra UI）
 - [ ] `Image` / `ImageList` / `Gallery`（HeroUI, Mantine, MUI, PrimeReact）
 - [ ] `Typography` / `Text` / `Heading`（shadcn/ui, Mantine, Chakra UI, MUI）
 - [ ] `Kbd`（shadcn/ui, Mantine, Chakra UI, daisyUI）
