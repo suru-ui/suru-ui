@@ -50,6 +50,7 @@ import {
   AutocompleteViewport,
   AutocompleteScrollbar,
   AutocompleteCollection,
+  AutocompleteGroupLabel,
   AutocompleteInputGroup,
   AutocompletePositioner,
   AutocompleteScrollArea,
@@ -535,6 +536,9 @@ export const Autocomplete: AutocompleteType = /*#__PURE__*/ Object.assign(
 
                         return (
                           <AutocompleteGroup {...itemPartsProps.group}>
+                            {item.label !== undefined && (
+                              <AutocompleteGroupLabel>{item.label}</AutocompleteGroupLabel>
+                            )}
                             <AutocompleteCollection {...itemPartsProps.collection}>
                               {(item, index) => (
                                 <AutocompleteItem {...itemPartsProps.getItemProps(item, index)} />
