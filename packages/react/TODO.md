@@ -43,12 +43,12 @@
 
 - [ ] `Sidebar`（shadcn/ui, HeroUI, PrimeReact）
 - [ ] `Stepper` / `Steps`（HeroUI, Mantine, Chakra UI, daisyUI, MUI, PrimeReact）
-- [ ] `Tree` / `TreeView`（HeroUI, Mantine, Chakra UI, MUI X, PrimeReact）
+- [x] `Tree` / `TreeView`（HeroUI, Mantine, Chakra UI, MUI X, PrimeReact）
 - [ ] `DataTable`（shadcn/ui, HeroUI, PrimeReact）
 - [ ] `List`（shadcn/ui, Mantine, Chakra UI, daisyUI, MUI）
 - [ ] `TransferList` / `PickList`（MUI, PrimeReact）
 - [ ] `ColorPicker`（HeroUI, Mantine, Chakra UI）
-- [ ] `SegmentedControl`（HeroUI, Mantine, Chakra UI）
+- [x] `SegmentedControl`（HeroUI, Mantine, Chakra UI）
 - [ ] `PasswordInput`（HeroUI, Mantine, Chakra UI）
 - [ ] `NumberInput`（HeroUI, Mantine, Chakra UI）
 - [ ] `Editable` / `Inplace`（HeroUI, Chakra UI, PrimeReact）

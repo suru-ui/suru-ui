@@ -356,7 +356,6 @@ export {
   Collapsible,
 } from "./navigation/collapsible/index.js";
 export {
-  type PaginationSize,
   type PaginationColor,
   type PaginationProps,
   type PaginationState,
@@ -374,6 +373,18 @@ export {
   type ScrollAreaSlotProps,
   ScrollArea,
 } from "./navigation/scroll-area/index.js";
+export {
+  type SegmentsItemOption,
+  type SegmentsSize,
+  type SegmentsColor,
+  type SegmentsProps,
+  type SegmentsState,
+  type SegmentsRadius,
+  type SegmentsSlotProps,
+  type SegmentsPartsProps,
+  Segments,
+  useSegments,
+} from "./navigation/segments/index.js";
 export {
   type TabsSize,
   type TabsItem,
