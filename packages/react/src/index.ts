@@ -68,6 +68,15 @@ export {
   AvatarGroup,
 } from "./data-display/avatar-group/index.js";
 export {
+  type BadgeSize,
+  type BadgeColor,
+  type BadgeProps,
+  type BadgeState,
+  type BadgeRadius,
+  type BadgeVariant,
+  Badge,
+} from "./data-display/badge/index.js";
+export {
   type ChipSize,
   type ChipColor,
   type ChipProps,
@@ -96,6 +105,14 @@ export {
   type ProgressSlotProps,
   Progress,
 } from "./data-display/progress/index.js";
+export {
+  type SkeletonRadius,
+  type SkeletonProps,
+  type SkeletonState,
+  type SkeletonPartsProps,
+  Skeleton,
+  useSkeleton,
+} from "./data-display/skeleton/index.js";
 
 // forms
 export {
@@ -154,6 +171,18 @@ export {
   Field,
 } from "./forms/field/index.js";
 export { type FieldsetProps, type FieldsetState, Fieldset } from "./forms/fieldset/index.js";
+export {
+  type FileUploadSize,
+  type FileUploadColor,
+  type FileUploadProps,
+  type FileUploadState,
+  type FileUploadRadius,
+  type FileUploadVariant,
+  type FileUploadSlotProps,
+  type FileUploadPartsProps,
+  FileUpload,
+  useFileUpload,
+} from "./forms/file-upload/index.js";
 export {
   type FormProps,
   type FormState,
@@ -308,6 +337,17 @@ export {
   Accordion,
 } from "./navigation/accordion/index.js";
 export {
+  type BreadcrumbSize,
+  type BreadcrumbColor,
+  type BreadcrumbProps,
+  type BreadcrumbState,
+  type BreadcrumbSlotProps,
+  type BreadcrumbPartsProps,
+  type BreadcrumbItemsItem,
+  Breadcrumb,
+  useBreadcrumb,
+} from "./navigation/breadcrumb/index.js";
+export {
   type CollapsibleSize,
   type CollapsibleProps,
   type CollapsibleState,
@@ -315,6 +355,19 @@ export {
   type CollapsibleSlotProps,
   Collapsible,
 } from "./navigation/collapsible/index.js";
+export {
+  type PaginationSize,
+  type PaginationColor,
+  type PaginationProps,
+  type PaginationState,
+  type PaginationRadius,
+  type PaginationSlotProps,
+  type PaginationPartsProps,
+  type PaginationChangeEventDetails,
+  type PaginationChangeEventReason,
+  Pagination,
+  usePagination,
+} from "./navigation/pagination/index.js";
 export {
   type ScrollAreaProps,
   type ScrollAreaState,
@@ -330,6 +383,15 @@ export {
   type TabsSlotProps,
   Tabs,
 } from "./navigation/tabs/index.js";
+export {
+  type TreeSize,
+  type TreeProps,
+  type TreeState,
+  type TreeRadius,
+  type TreeSelectionMode,
+  type TreeSlotProps,
+  Tree,
+} from "./navigation/tree/index.js";
 
 // overlays
 export {
@@ -358,6 +420,12 @@ export {
 } from "./overlays/drawer/index.js";
 export { type MenuProps, type MenuState, type MenuSlotProps, Menu } from "./overlays/menu/index.js";
 export { type MenubarProps, type MenubarState, Menubar } from "./overlays/menubar/index.js";
+export {
+  type HoverCardProps,
+  type HoverCardState,
+  type HoverCardSlotProps,
+  HoverCard,
+} from "./overlays/hover-card/index.js";
 export {
   type PopoverProps,
   type PopoverState,

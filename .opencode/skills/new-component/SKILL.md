@@ -100,6 +100,7 @@ Storybook の stories は `packages/react/stories/<カテゴリー>/<名前>.sto
 3. 複数の子をまとめて状態やスタイルを伝えるグループの場合はパターン C を併用します。
 4. Base UI にない単純な要素（`span`、`svg` など）はパターン D で `useRender` を使います。
 5. 既存の Suru UI コンポーネントの特殊形ならパターン E で既存のパーツへ委譲します。
+6. Base UI にない複雑なコンポーネント (Tree など) でも、構成は変えません。Root パーツが状態とロジックを持ち、本体は「データ駆動なアイテム (Autocomplete 方式)」に従って組み立てます。
 
 パーツは、実装したい部品の意味的な構造から決めます。既存の例:
 
@@ -258,6 +259,13 @@ export const Root: IComponent<Root.Props> = CheckboxGroupRoot;
 7. 必要なら `namespace Context { Color; Radius; Size; Variant; ... }`
 8. `export const useContext: IUseContext<Context> = useXxxContext;`
 
+関数型のメンバーは、`this` を参照するかどうかで定義方法を変えます。
+
+- `this` を参照しない (コンテキスト値など、オブジェクトから切り離して呼び出される) 関数は、アロー式のプロパティーとして `readonly` 付きで型定義します。`readonly select: (itemId: string) => void;`
+- `this` を参照する関数のみ、メソッドシグネチャー (インターフェース式) で定義します。`select(itemId: string): void;`
+
+メソッドシグネチャーには `readonly` を付けられないため、`this` を使わない限りアロー式にします。
+
 ```tsx
 function useSuiCheckboxGroupContext(optional?: false): CheckboxGroupContext;
 function useSuiCheckboxGroupContext(optional?: boolean): CheckboxGroupContext | null;
@@ -284,7 +292,8 @@ export const useCheckboxGroupContext: IUseContext<CheckboxGroupContext> =
 ## 公開本体 (`<名前>.tsx`)
 
 公開本体は、パーツを組み立てて利用者向け API を作る層です。
-参考実装は `packages/react/src/buttons/button/button.tsx` と `packages/react/src/forms/checkbox/checkbox.tsx` です。
+参考実装は `packages/react/src/buttons/button/button.tsx`、`packages/react/src/forms/checkbox/checkbox.tsx` と、データ駆動なアイテムを持つ `packages/react/src/forms/autocomplete/autocomplete.tsx` です。
+公開本体は純粋な組み立て層です。状態はパーツ (Root) だけが持ち、本体で `useState` を使って状態を複製してはいけません。
 
 標準の構成要素は次のとおりです (上からこの順)。
 
@@ -423,6 +432,8 @@ export const ButtonContent: IComponent<ButtonContentProps> = function SuiButtonC
 - `useRender` の `props` は、利用者のプロパティーと固定プロパティーの配列、または 1 つのオブジェクトです。プロパティーは配列の先頭から順に合成されます。
 - 要素を条件付きで描画したいときは `enabled` に条件を渡します。
 - 空状態の型 (`{}`) は `ButtonContentState` のような名前で定義し、`RenderProps` の型引数に渡します。
+- Base UI を包まないパーツ (状態を持つ Root や Item を含む) も、DOM 要素を返すときは必ず `useRender` 経由にします。生の JSX (`<div {...}>`) を直接返してはいけません。`className`、`style` (Render Props 由来では関数になり得る)、`ref`、利用者の render prop はすべて `useRender` が合成します。
+  - 利用者のイベントハンドラーを壊さないときは、該当するハンドラーだけ分割代入して呼び出してから固定ハンドラーを実行します (`onKeyDown: onKeyDownProp` → `onKeyDownProp?.(event)` → 自前の処理)。
 
 ## パターン E（既存コンポーネントへの委譲）
 
@@ -431,6 +442,33 @@ export const ButtonContent: IComponent<ButtonContentProps> = function SuiButtonC
 
 - 委譲するパーツも、`export namespace Content` と `export const Content` の別名まで通常どおり定義し、内部は既存のパーツを再利用します。
 - 既存のパーツの型 (`Button.Root.State` など) を自分の型に再利用します。
+
+## データ駆動なアイテム (Autocomplete 方式)
+
+`items` や `data` のようなノード一覧から項目を描画するコンポーネントは、次の構成にします。参考実装は `packages/react/src/forms/autocomplete/autocomplete.tsx` です。
+
+1. **状態は Root だけが持つ** — 選択・展開などの状態は Root パーツが管理します。公開本体で状態を持ってはいけません (`useState` を複製しない)。
+2. **Root は関数子を受け取れるようにする** — Base UI の List と同じく、`children` に関数を指定すると、表示すべきアイテムごとに呼び出されます。関数子が受け取るのはコンテキストではなく「描画すべきアイテム」とその構造情報です。
+
+   ```tsx
+   children?:
+     | React.ReactNode
+     | ((node: Readonly<TreeNode>, level: number, posInSet: number, setSize: number) => React.ReactNode)
+     | undefined;
+   ```
+
+3. **パーツは最小単位** — アイテム一式を描画する複合パーツ (`TreeItems` など) は作りません。パーツは `Item` / `Indicator` / `Label` のような単一部品にとどめます。
+4. **組み立ては本体で** — `useXxx` は slotProps を振り分け、アイテムごとのパーツプロパティーを作る `getItemPartsProps(item, ...)` を返します。本体はそれを使って `.map` / 再帰描画するだけの純粋な組み立てにします。
+
+   ```tsx
+   export type AutocompletePartsProps = {
+     readonly root: AutocompleteRootProps;
+
+     readonly getItemPartsProps: (item: any, index: number) => AutocompleteItemPartsProps;
+   };
+   ```
+
+5. **slotProps は構造に関わるプロパティーを Omit する** — アイテムの識別子や位置など生成される値が優先されるプロパティーは、`Omit<XxxItemProps, "id" | "level">` のように型で除外し、「どのプロパティーが上書きされないか」を JSDoc に書きます。
 
 ## JSDoc
 
@@ -563,6 +601,8 @@ describe("AutocompleteParts.Root", () => {
 - 最初に「使い方」(`name: "使い方"`) を置きます。その後、主な外観 (「主な外観」= バリアント一覧)、色、角丸、大きさなどの外観 story と、部品固有の機能 story を置きます。
 - `color`、`radius`、`size`、バリアントを公開する場合は、対応する一覧 story を必ず作ります。配列の `map` によるループで構いません。各候補の値が分かるようにラベルも表示します。
 - `ctrl({...})` には、その story で固定しないプロパティーの既定値をすべて渡します (他の story との見た目の一貫性のため)。
+- 必須プロパティー (`items` や `data` など) も `ctrl({...})` の既定値に含めます (型エラーの原因になります)。UI で操作できない値は `data: { control: false }` を設定に加えます。
+- パーツを直接使う story (`Parts`) では、本体の props をそのままパーツへスプレッドしません。本体固有のプロパティーは分割代入で除外してから渡します (`const { data: _data, ...rootProps } = props;`)。
 
 ## ドキュメント
 
@@ -654,6 +694,13 @@ mise run test:typecheck   # 複数の tsconfig に対する tsc --noEmit
 - CSS をパーツファイル以外 (本体ファイルや `index.ts`) で import しない。
 - `as any` などの型キャストで型エラーをごまかさない。
 - `enum` や値を持つ `namespace` を使わない (`erasableSyntaxOnly`)。
+- `this` を参照しない関数型のメンバーをメソッドシグネチャーで定義しない (アロー式のプロパティーとして `readonly` 付きで定義する)。
+- DOM 要素を返すパーツを `useRender` 経由にせず、生の JSX で返さない (`style` や `ref` の合成を壊す)。
+- 複数のパーツを組み合わせた複合パーツを作らない。アイテム一式の組み立ては本体が `getItemPartsProps` を使って行う (「データ駆動なアイテム」参照)。
+- 公開本体で状態を持たない (`useState` を複製しない)。状態は Root パーツだけが持つ。
+- データ駆動な Root の関数子にコンテキストを渡さない。描画すべきアイテムとその構造情報を渡す (Autocomplete の List と同じ形)。
+- 未使用の分割代入はリントエラーになる。意図的に無視する変数は `_data` のように `_` で始める。
+- Render Props 型と交差したプロパティー (`className` や `style`) を手動でスプレッドして合成しない。`useRender` の props 配列に任せる。
 - コンポーネント関数名の `Sui` プレフィックスを付け忘れない。
 - パーツを `slotProps` にせず、1 段目のプロパティーで直接公開しない (Field 型の便利プロパティーは除く)。
 - `slotProps` のメンバーから `readonly` を外さない。`XxxPartsProps` のメンバーは必須 (`readonly`) にする。

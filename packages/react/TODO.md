@@ -12,12 +12,12 @@
 - [ ] `Separator` / `Divider`（shadcn/ui, Base UI, Chakra UI, daisyUI, MUI, PrimeReact）
 - [x] `Textarea`（shadcn/ui, Mantine, Chakra UI, daisyUI, PrimeReact）
 - [x] `Label`（shadcn/ui, Mantine, Chakra UI, daisyUI, PrimeReact）
-- [ ] `Badge`（shadcn/ui, HeroUI, Mantine, Chakra UI, daisyUI, MUI, PrimeReact）
+- [x] `Badge`（shadcn/ui, HeroUI, Mantine, Chakra UI, daisyUI, MUI, PrimeReact）
 - [ ] `Card`（shadcn/ui, HeroUI, Mantine, Chakra UI, daisyUI, MUI, PrimeReact）
-- [ ] `Skeleton`（shadcn/ui, HeroUI, Mantine, Chakra UI, MUI, PrimeReact）
+- [x] `Skeleton`（shadcn/ui, HeroUI, Mantine, Chakra UI, MUI, PrimeReact）
 - [ ] `Table`（shadcn/ui, HeroUI, Mantine, Chakra UI, daisyUI, MUI）
-- [ ] `Pagination`（shadcn/ui, HeroUI, Mantine, Chakra UI, daisyUI, MUI, PrimeReact）
-- [ ] `Breadcrumb`（shadcn/ui, HeroUI, Mantine, Chakra UI, daisyUI, MUI, PrimeReact）
+- [x] `Pagination`（shadcn/ui, HeroUI, Mantine, Chakra UI, daisyUI, MUI, PrimeReact）
+- [x] `Breadcrumb`（shadcn/ui, HeroUI, Mantine, Chakra UI, daisyUI, MUI, PrimeReact）
 
 ## 優先度 P1
 
@@ -25,12 +25,12 @@
 
 - [ ] `Calendar`（shadcn/ui, HeroUI, Mantine, Chakra UI, daisyUI, PrimeReact）
 - [ ] `DatePicker`（shadcn/ui, HeroUI, Mantine, Chakra UI, PrimeReact）
-- [ ] `FileInput` / `FileUpload`（shadcn/ui, HeroUI, Mantine, Chakra UI, daisyUI, PrimeReact）
+- [x] `FileInput` / `FileUpload`（shadcn/ui, HeroUI, Mantine, Chakra UI, daisyUI, PrimeReact）
 - [ ] `InputOTP` / `OTPField`（shadcn/ui, Base UI, daisyUI, PrimeReact）
 - [ ] `Rating`（HeroUI, Mantine, Chakra UI, daisyUI, MUI, PrimeReact）
 - [ ] `TagsInput`（HeroUI, Mantine, Chakra UI, PrimeReact）
 - [ ] `NativeSelect`（shadcn/ui, Mantine, Chakra UI）
-- [ ] `HoverCard`（shadcn/ui, Mantine, Chakra UI）
+- [x] `HoverCard`（shadcn/ui, Mantine, Chakra UI）
 - [ ] `NavigationMenu`（shadcn/ui, Base UI, Chakra UI, PrimeReact）
 - [ ] `Command` / `CommandPalette`（shadcn/ui, Base UI）
 - [ ] `Carousel`（shadcn/ui, HeroUI, Chakra UI, daisyUI, PrimeReact）

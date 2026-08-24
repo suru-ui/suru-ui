@@ -31,9 +31,17 @@
       "types": "./dist/src/navigation/accordion/index.d.ts",
       "default": "./dist/src/navigation/accordion/index.js"
     },
+    "./breadcrumb": {
+      "types": "./dist/src/navigation/breadcrumb/index.d.ts",
+      "default": "./dist/src/navigation/breadcrumb/index.js"
+    },
     "./collapsible": {
       "types": "./dist/src/navigation/collapsible/index.d.ts",
       "default": "./dist/src/navigation/collapsible/index.js"
+    },
+    "./pagination": {
+      "types": "./dist/src/navigation/pagination/index.d.ts",
+      "default": "./dist/src/navigation/pagination/index.js"
     },
     "./scroll-area": {
       "types": "./dist/src/navigation/scroll-area/index.d.ts",
@@ -42,6 +50,10 @@
     "./tabs": {
       "types": "./dist/src/navigation/tabs/index.d.ts",
       "default": "./dist/src/navigation/tabs/index.js"
+    },
+    "./tree": {
+      "types": "./dist/src/navigation/tree/index.d.ts",
+      "default": "./dist/src/navigation/tree/index.js"
     },
     "./avatar": {
       "types": "./dist/src/data-display/avatar/index.d.ts",
@@ -66,6 +78,10 @@
     "./drawer": {
       "types": "./dist/src/overlays/drawer/index.d.ts",
       "default": "./dist/src/overlays/drawer/index.js"
+    },
+    "./hover-card": {
+      "types": "./dist/src/overlays/hover-card/index.d.ts",
+      "default": "./dist/src/overlays/hover-card/index.js"
     },
     "./menu": {
       "types": "./dist/src/overlays/menu/index.d.ts",
@@ -95,6 +111,10 @@
       "types": "./dist/src/buttons/toggle-button/index.d.ts",
       "default": "./dist/src/buttons/toggle-button/index.js"
     },
+    "./badge": {
+      "types": "./dist/src/data-display/badge/index.d.ts",
+      "default": "./dist/src/data-display/badge/index.js"
+    },
     "./chip": {
       "types": "./dist/src/data-display/chip/index.d.ts",
       "default": "./dist/src/data-display/chip/index.js"
@@ -114,6 +134,10 @@
     "./field": {
       "types": "./dist/src/forms/field/index.d.ts",
       "default": "./dist/src/forms/field/index.js"
+    },
+    "./file-upload": {
+      "types": "./dist/src/forms/file-upload/index.d.ts",
+      "default": "./dist/src/forms/file-upload/index.js"
     },
     "./fieldset": {
       "types": "./dist/src/forms/fieldset/index.d.ts",
@@ -138,6 +162,10 @@
     "./progress": {
       "types": "./dist/src/data-display/progress/index.d.ts",
       "default": "./dist/src/data-display/progress/index.js"
+    },
+    "./skeleton": {
+      "types": "./dist/src/data-display/skeleton/index.d.ts",
+      "default": "./dist/src/data-display/skeleton/index.js"
     },
     "./action-group": {
       "types": "./dist/src/layout/action-group/index.d.ts",

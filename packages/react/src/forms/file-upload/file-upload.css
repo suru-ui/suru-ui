@@ -1,0 +1,658 @@
+/* Root */
+@layer sui.component {
+  /* 変数 */
+  .sui_file_upload {
+    --sui_file_upload-gap: ;
+    --sui_file_upload-item_group-gap: ;
+    --sui_file_upload-item-gap: ;
+    --sui_file_upload-item_delete_trigger-size: ;
+    --sui_file_upload-trigger-min_height: ;
+    --sui_file_upload-dropzone-min_height: ;
+    --sui_file_upload-clear_trigger-min_height: ;
+    --sui_file_upload-item-min_height: ;
+    --sui_file_upload-item-padding_block: ;
+    --sui_file_upload-trigger-padding_inline: ;
+    --sui_file_upload-dropzone-padding_inline: ;
+    --sui_file_upload-clear_trigger-padding_inline: ;
+    --sui_file_upload-item-padding_inline: ;
+    --sui_file_upload-font_family: ;
+    --sui_file_upload-trigger-font_size: ;
+    --sui_file_upload-dropzone-font_size: ;
+    --sui_file_upload-clear_trigger-font_size: ;
+    --sui_file_upload-item-font_size: ;
+    --sui_file_upload-item_size_text-font_size: ;
+    --sui_file_upload-item_delete_trigger-font_size: ;
+    --sui_file_upload-trigger-font_weight: ;
+    --sui_file_upload-dropzone-font_weight: ;
+    --sui_file_upload-clear_trigger-font_weight: ;
+    --sui_file_upload-item-font_weight: ;
+    --sui_file_upload-item_size_text-font_weight: ;
+    --sui_file_upload-trigger-color: ;
+    --sui_file_upload-dropzone-color: ;
+    --sui_file_upload-clear_trigger-color: ;
+    --sui_file_upload-item-color: ;
+    --sui_file_upload-item_size_text-color: ;
+    --sui_file_upload-item_delete_trigger-color: ;
+    --sui_file_upload-trigger-letter_spacing: ;
+    --sui_file_upload-dropzone-letter_spacing: ;
+    --sui_file_upload-clear_trigger-letter_spacing: ;
+    --sui_file_upload-item-letter_spacing: ;
+    --sui_file_upload-item_size_text-letter_spacing: ;
+    --sui_file_upload-trigger-background_color-normal: ;
+    --sui_file_upload-trigger-background_color-hover: ;
+    --sui_file_upload-trigger-background_color-active: ;
+    --sui_file_upload-dropzone-background_color: ;
+    --sui_file_upload-dropzone-background_color-dragover: ;
+    --sui_file_upload-clear_trigger-background_color-hover: ;
+    --sui_file_upload-item-background_color: ;
+    --sui_file_upload-item_delete_trigger-background_color-hover: ;
+    --sui_file_upload-dropzone-border_color-normal: ;
+    --sui_file_upload-dropzone-border_color-hover: ;
+    --sui_file_upload-dropzone-border_color-focus_visible: ;
+    --sui_file_upload-dropzone-border_color-dragover: ;
+    --sui_file_upload-item-border_color: ;
+    --sui_file_upload-dropzone-border_width: ;
+    --sui_file_upload-item-border_width: ;
+    --sui_file_upload-trigger-border_radius: ;
+    --sui_file_upload-dropzone-border_radius: ;
+    --sui_file_upload-clear_trigger-border_radius: ;
+    --sui_file_upload-item-border_radius: ;
+    --sui_file_upload-item_delete_trigger-border_radius: ;
+  }
+
+  /* 動的 */
+  .sui_file_upload {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sui_file_upload-gap);
+    font-family: var(--sui_file_upload-font_family);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_file_upload {
+    --sui_file_upload-item_group-gap: --sui-space(2);
+    --sui_file_upload-item-gap: --sui-space(2);
+    --sui_file_upload-font_family: var(--sui-font-sans);
+    --sui_file_upload-item_size_text-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_file_upload-item_size_text-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_file_upload-trigger-color: var(--sui-canvas_text-1);
+    --sui_file_upload-clear_trigger-color: var(--sui-canvas_text-2);
+    --sui_file_upload-item-color: var(--sui-canvas_text-1);
+    --sui_file_upload-item_size_text-color: var(--sui-canvas_text-2);
+    --sui_file_upload-item_delete_trigger-color: var(--sui-canvas_text-2);
+    --sui_file_upload-item_size_text-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+    --sui_file_upload-trigger-background_color-normal: transparent;
+    --sui_file_upload-trigger-background_color-hover: var(--sui-grey-naked-canvas-subtle);
+    --sui_file_upload-trigger-background_color-active: var(--sui-grey-naked-canvas-strong);
+    --sui_file_upload-clear_trigger-background_color-hover: var(--sui-grey-naked-canvas-subtle);
+    --sui_file_upload-item-background_color: var(--sui-grey-naked-canvas-normal);
+    --sui_file_upload-item_delete_trigger-background_color-hover: var(
+      --sui-grey-naked-canvas-subtle
+    );
+    --sui_file_upload-dropzone-border_color-normal: var(--sui-grey-naked-border-normal);
+    --sui_file_upload-dropzone-border_color-hover: var(--sui-grey-naked-border-subtle);
+    --sui_file_upload-item-border_color: var(--sui-grey-naked-border-normal);
+    --sui_file_upload-dropzone-border_width: --sui-border_width(1);
+    --sui_file_upload-item-border_width: --sui-border_width(1);
+  }
+
+  .sui_file_upload-size_sm {
+    --sui_file_upload-gap: --sui-space(2);
+    --sui_file_upload-item_delete_trigger-size: var(--sui-size-sm);
+    --sui_file_upload-trigger-min_height: var(--sui-size-sm);
+    --sui_file_upload-dropzone-min_height: 64px;
+    --sui_file_upload-clear_trigger-min_height: var(--sui-size-sm);
+    --sui_file_upload-item-min_height: var(--sui-size-sm);
+    --sui_file_upload-item-padding_block: --sui-space(1);
+    --sui_file_upload-trigger-padding_inline: --sui-space(3);
+    --sui_file_upload-dropzone-padding_inline: --sui-space(4);
+    --sui_file_upload-clear_trigger-padding_inline: --sui-space(2);
+    --sui_file_upload-item-padding_inline: --sui-space(3);
+    --sui_file_upload-trigger-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_file_upload-dropzone-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_file_upload-clear_trigger-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_file_upload-item-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_file_upload-item_delete_trigger-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_file_upload-trigger-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_file_upload-dropzone-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_file_upload-clear_trigger-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_file_upload-item-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_file_upload-trigger-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+    --sui_file_upload-dropzone-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+    --sui_file_upload-clear_trigger-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+    --sui_file_upload-item-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+  }
+
+  .sui_file_upload-size_md {
+    --sui_file_upload-gap: --sui-space(3);
+    --sui_file_upload-item_delete_trigger-size: var(--sui-size-md);
+    --sui_file_upload-trigger-min_height: var(--sui-size-md);
+    --sui_file_upload-dropzone-min_height: 80px;
+    --sui_file_upload-clear_trigger-min_height: var(--sui-size-md);
+    --sui_file_upload-item-min_height: var(--sui-size-md);
+    --sui_file_upload-item-padding_block: --sui-space(2);
+    --sui_file_upload-trigger-padding_inline: --sui-space(4);
+    --sui_file_upload-dropzone-padding_inline: --sui-space(5);
+    --sui_file_upload-clear_trigger-padding_inline: --sui-space(3);
+    --sui_file_upload-item-padding_inline: --sui-space(4);
+    --sui_file_upload-trigger-font_size: var(--sui-text-oln-md-n-font_size);
+    --sui_file_upload-dropzone-font_size: var(--sui-text-oln-md-n-font_size);
+    --sui_file_upload-clear_trigger-font_size: var(--sui-text-oln-md-n-font_size);
+    --sui_file_upload-item-font_size: var(--sui-text-oln-md-n-font_size);
+    --sui_file_upload-item_delete_trigger-font_size: var(--sui-text-oln-md-n-font_size);
+    --sui_file_upload-trigger-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_file_upload-dropzone-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_file_upload-clear_trigger-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_file_upload-item-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_file_upload-trigger-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
+    --sui_file_upload-dropzone-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
+    --sui_file_upload-clear_trigger-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
+    --sui_file_upload-item-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
+  }
+
+  .sui_file_upload-size_lg {
+    --sui_file_upload-gap: --sui-space(4);
+    --sui_file_upload-item_delete_trigger-size: var(--sui-size-lg);
+    --sui_file_upload-trigger-min_height: var(--sui-size-lg);
+    --sui_file_upload-dropzone-min_height: 96px;
+    --sui_file_upload-clear_trigger-min_height: var(--sui-size-lg);
+    --sui_file_upload-item-min_height: var(--sui-size-lg);
+    --sui_file_upload-item-padding_block: --sui-space(3);
+    --sui_file_upload-trigger-padding_inline: --sui-space(5);
+    --sui_file_upload-dropzone-padding_inline: --sui-space(6);
+    --sui_file_upload-clear_trigger-padding_inline: --sui-space(4);
+    --sui_file_upload-item-padding_inline: --sui-space(5);
+    --sui_file_upload-trigger-font_size: var(--sui-text-oln-lg-n-font_size);
+    --sui_file_upload-dropzone-font_size: var(--sui-text-oln-lg-n-font_size);
+    --sui_file_upload-clear_trigger-font_size: var(--sui-text-oln-lg-n-font_size);
+    --sui_file_upload-item-font_size: var(--sui-text-oln-lg-n-font_size);
+    --sui_file_upload-item_delete_trigger-font_size: var(--sui-text-oln-lg-n-font_size);
+    --sui_file_upload-trigger-font_weight: var(--sui-text-oln-lg-n-font_weight);
+    --sui_file_upload-dropzone-font_weight: var(--sui-text-oln-lg-n-font_weight);
+    --sui_file_upload-clear_trigger-font_weight: var(--sui-text-oln-lg-n-font_weight);
+    --sui_file_upload-item-font_weight: var(--sui-text-oln-lg-n-font_weight);
+    --sui_file_upload-trigger-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
+    --sui_file_upload-dropzone-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
+    --sui_file_upload-clear_trigger-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
+    --sui_file_upload-item-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
+  }
+
+  .sui_file_upload-radius_none {
+    --sui_file_upload-trigger-border_radius: 0px;
+    --sui_file_upload-dropzone-border_radius: 0px;
+    --sui_file_upload-clear_trigger-border_radius: 0px;
+    --sui_file_upload-item-border_radius: 0px;
+    --sui_file_upload-item_delete_trigger-border_radius: 0px;
+  }
+
+  .sui_file_upload-radius_sm {
+    --sui_file_upload-trigger-border_radius: var(--sui-radius-sm);
+    --sui_file_upload-dropzone-border_radius: var(--sui-radius-sm);
+    --sui_file_upload-clear_trigger-border_radius: var(--sui-radius-sm);
+    --sui_file_upload-item-border_radius: var(--sui-radius-sm);
+    --sui_file_upload-item_delete_trigger-border_radius: var(--sui-radius-sm);
+  }
+
+  .sui_file_upload-radius_md {
+    --sui_file_upload-trigger-border_radius: var(--sui-radius-md);
+    --sui_file_upload-dropzone-border_radius: var(--sui-radius-md);
+    --sui_file_upload-clear_trigger-border_radius: var(--sui-radius-md);
+    --sui_file_upload-item-border_radius: var(--sui-radius-md);
+    --sui_file_upload-item_delete_trigger-border_radius: var(--sui-radius-md);
+  }
+
+  .sui_file_upload-radius_lg {
+    --sui_file_upload-trigger-border_radius: var(--sui-radius-lg);
+    --sui_file_upload-dropzone-border_radius: var(--sui-radius-lg);
+    --sui_file_upload-clear_trigger-border_radius: var(--sui-radius-lg);
+    --sui_file_upload-item-border_radius: var(--sui-radius-lg);
+    --sui_file_upload-item_delete_trigger-border_radius: var(--sui-radius-lg);
+  }
+
+  .sui_file_upload-radius_full {
+    --sui_file_upload-trigger-border_radius: calc(var(--sui_file_upload-trigger-min_height) / 2);
+    --sui_file_upload-dropzone-border_radius: calc(
+      var(--sui_file_upload-dropzone-min_height) / 2
+    );
+    --sui_file_upload-clear_trigger-border_radius: calc(
+      var(--sui_file_upload-clear_trigger-min_height) / 2
+    );
+    --sui_file_upload-item-border_radius: calc(var(--sui_file_upload-item-min_height) / 2);
+    --sui_file_upload-item_delete_trigger-border_radius: calc(
+      var(--sui_file_upload-item_delete_trigger-size) / 2
+    );
+  }
+
+  .sui_file_upload-variant_naked {
+    --sui_file_upload-dropzone-color: var(--sui-grey-naked-canvas_text-normal);
+    --sui_file_upload-dropzone-background_color: transparent;
+    --sui_file_upload-dropzone-background_color-dragover: var(--sui-grey-naked-canvas-subtle);
+  }
+
+  .sui_file_upload-variant_liquid {
+    --sui_file_upload-dropzone-color: var(--sui-grey-liquid-canvas_text-normal);
+    --sui_file_upload-dropzone-background_color: var(--sui-grey-liquid-canvas-normal);
+    --sui_file_upload-dropzone-background_color-dragover: var(--sui-grey-liquid-canvas-subtle);
+  }
+
+  .sui_file_upload-color_grey {
+    &.sui_file_upload-variant_naked {
+      --sui_file_upload-dropzone-border_color-focus_visible: var(--sui-grey-naked-border-subtle);
+      --sui_file_upload-dropzone-border_color-dragover: var(--sui-grey-naked-border-strong);
+    }
+
+    &.sui_file_upload-variant_liquid {
+      --sui_file_upload-dropzone-border_color-focus_visible: var(--sui-grey-liquid-border-subtle);
+      --sui_file_upload-dropzone-border_color-dragover: var(--sui-grey-liquid-border-strong);
+    }
+  }
+
+  .sui_file_upload-color_blue {
+    &.sui_file_upload-variant_naked {
+      --sui_file_upload-dropzone-border_color-focus_visible: var(--sui-blue-naked-border-normal);
+      --sui_file_upload-dropzone-border_color-dragover: var(--sui-blue-naked-border-strong);
+    }
+
+    &.sui_file_upload-variant_liquid {
+      --sui_file_upload-dropzone-border_color-focus_visible: var(--sui-blue-liquid-border-normal);
+      --sui_file_upload-dropzone-border_color-dragover: var(--sui-blue-liquid-border-strong);
+    }
+  }
+
+  .sui_file_upload-color_purple {
+    &.sui_file_upload-variant_naked {
+      --sui_file_upload-dropzone-border_color-focus_visible: var(--sui-purple-naked-border-normal);
+      --sui_file_upload-dropzone-border_color-dragover: var(--sui-purple-naked-border-strong);
+    }
+
+    &.sui_file_upload-variant_liquid {
+      --sui_file_upload-dropzone-border_color-focus_visible: var(--sui-purple-liquid-border-normal);
+      --sui_file_upload-dropzone-border_color-dragover: var(--sui-purple-liquid-border-strong);
+    }
+  }
+
+  .sui_file_upload-color_magenta {
+    &.sui_file_upload-variant_naked {
+      --sui_file_upload-dropzone-border_color-focus_visible: var(--sui-magenta-naked-border-normal);
+      --sui_file_upload-dropzone-border_color-dragover: var(--sui-magenta-naked-border-strong);
+    }
+
+    &.sui_file_upload-variant_liquid {
+      --sui_file_upload-dropzone-border_color-focus_visible: var(
+        --sui-magenta-liquid-border-normal
+      );
+      --sui_file_upload-dropzone-border_color-dragover: var(--sui-magenta-liquid-border-strong);
+    }
+  }
+
+  .sui_file_upload-color_red {
+    &.sui_file_upload-variant_naked {
+      --sui_file_upload-dropzone-border_color-focus_visible: var(--sui-red-naked-border-normal);
+      --sui_file_upload-dropzone-border_color-dragover: var(--sui-red-naked-border-strong);
+    }
+
+    &.sui_file_upload-variant_liquid {
+      --sui_file_upload-dropzone-border_color-focus_visible: var(--sui-red-liquid-border-normal);
+      --sui_file_upload-dropzone-border_color-dragover: var(--sui-red-liquid-border-strong);
+    }
+  }
+
+  .sui_file_upload-color_orange {
+    &.sui_file_upload-variant_naked {
+      --sui_file_upload-dropzone-border_color-focus_visible: var(--sui-orange-naked-border-normal);
+      --sui_file_upload-dropzone-border_color-dragover: var(--sui-orange-naked-border-strong);
+    }
+
+    &.sui_file_upload-variant_liquid {
+      --sui_file_upload-dropzone-border_color-focus_visible: var(--sui-orange-liquid-border-normal);
+      --sui_file_upload-dropzone-border_color-dragover: var(--sui-orange-liquid-border-strong);
+    }
+  }
+
+  .sui_file_upload-color_yellow {
+    &.sui_file_upload-variant_naked {
+      --sui_file_upload-dropzone-border_color-focus_visible: var(--sui-yellow-naked-border-normal);
+      --sui_file_upload-dropzone-border_color-dragover: var(--sui-yellow-naked-border-strong);
+    }
+
+    &.sui_file_upload-variant_liquid {
+      --sui_file_upload-dropzone-border_color-focus_visible: var(--sui-yellow-liquid-border-normal);
+      --sui_file_upload-dropzone-border_color-dragover: var(--sui-yellow-liquid-border-strong);
+    }
+  }
+
+  .sui_file_upload-color_green {
+    &.sui_file_upload-variant_naked {
+      --sui_file_upload-dropzone-border_color-focus_visible: var(--sui-green-naked-border-normal);
+      --sui_file_upload-dropzone-border_color-dragover: var(--sui-green-naked-border-strong);
+    }
+
+    &.sui_file_upload-variant_liquid {
+      --sui_file_upload-dropzone-border_color-focus_visible: var(--sui-green-liquid-border-normal);
+      --sui_file_upload-dropzone-border_color-dragover: var(--sui-green-liquid-border-strong);
+    }
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* HiddenInput */
+@layer sui.component {
+  /* リセット */
+  .sui_file_upload_hidden_input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0px;
+    margin: -1px;
+    overflow: hidden;
+    white-space: nowrap;
+    border: 0px solid transparent;
+    clip-path: inset(50%);
+  }
+}
+
+/* Trigger */
+@layer sui.component {
+  /* 静的 */
+  .sui_file_upload_trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+    cursor: pointer;
+  }
+
+  /* 動的 */
+  .sui_file_upload_trigger {
+    min-height: var(--sui_file_upload-trigger-min_height);
+    padding-inline: var(--sui_file_upload-trigger-padding_inline);
+    font-size: var(--sui_file_upload-trigger-font_size);
+    font-weight: var(--sui_file_upload-trigger-font_weight);
+    color: var(--sui_file_upload-trigger-color);
+    letter-spacing: var(--sui_file_upload-trigger-letter_spacing);
+    outline: var(--_sui_file_upload-trigger-outline_width, 0px) solid var(--sui-focusring_color);
+    outline-offset: var(--sui-focusring_offset);
+    background-color: var(
+      --_sui_file_upload-trigger-background_color,
+      var(--sui_file_upload-trigger-background_color-normal)
+    );
+    border-radius: var(--sui_file_upload-trigger-border_radius);
+  }
+
+  /* 上書き設定: ここから */
+
+  .sui_file_upload_trigger {
+    @media (any-hover: hover) {
+      &:hover {
+        --_sui_file_upload-trigger-background_color: var(
+          --sui_file_upload-trigger-background_color-hover
+        );
+      }
+    }
+
+    &:active {
+      --_sui_file_upload-trigger-background_color: var(
+        --sui_file_upload-trigger-background_color-active
+      );
+    }
+
+    &:focus-visible {
+      --_sui_file_upload-trigger-outline_width: var(--sui-focusring_width);
+    }
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* Dropzone */
+@layer sui.component {
+  /* 静的 */
+  .sui_file_upload_dropzone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+    cursor: pointer;
+  }
+
+  /* 動的 */
+  .sui_file_upload_dropzone {
+    min-height: var(--sui_file_upload-dropzone-min_height);
+    padding-inline: var(--sui_file_upload-dropzone-padding_inline);
+    font-size: var(--sui_file_upload-dropzone-font_size);
+    font-weight: var(--sui_file_upload-dropzone-font_weight);
+    color: var(--sui_file_upload-dropzone-color);
+    letter-spacing: var(--sui_file_upload-dropzone-letter_spacing);
+    outline: var(--_sui_file_upload-dropzone-outline_width, 0px) solid var(--sui-focusring_color);
+    outline-offset: var(--sui-focusring_offset);
+    background-color: var(
+      --_sui_file_upload-dropzone-background_color,
+      var(--sui_file_upload-dropzone-background_color)
+    );
+    border: var(--_sui_file_upload-dropzone-border_color, transparent) solid
+      var(--sui_file_upload-dropzone-border_width);
+    border-radius: var(--sui_file_upload-dropzone-border_radius);
+  }
+
+  /* 上書き設定: ここから */
+
+  .sui_file_upload_dropzone {
+    @media (any-hover: hover) {
+      &:hover {
+        --_sui_file_upload-dropzone-border_color: var(
+          --sui_file_upload-dropzone-border_color-hover
+        );
+      }
+    }
+
+    &:focus-visible {
+      --_sui_file_upload-dropzone-outline_width: var(--sui-focusring_width);
+      --_sui_file_upload-dropzone-border_color: var(
+        --sui_file_upload-dropzone-border_color-focus_visible
+      );
+    }
+
+    &.sui_file_upload_dropzone-dragover {
+      --_sui_file_upload-dropzone-background_color: var(
+        --sui_file_upload-dropzone-background_color-dragover
+      );
+      --_sui_file_upload-dropzone-border_color: var(
+        --sui_file_upload-dropzone-border_color-dragover
+      );
+    }
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* ClearTrigger */
+@layer sui.component {
+  /* 静的 */
+  .sui_file_upload_clear_trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+    cursor: pointer;
+  }
+
+  /* 動的 */
+  .sui_file_upload_clear_trigger {
+    min-height: var(--sui_file_upload-clear_trigger-min_height);
+    padding-inline: var(--sui_file_upload-clear_trigger-padding_inline);
+    font-size: var(--sui_file_upload-clear_trigger-font_size);
+    font-weight: var(--sui_file_upload-clear_trigger-font_weight);
+    color: var(--sui_file_upload-clear_trigger-color);
+    letter-spacing: var(--sui_file_upload-clear_trigger-letter_spacing);
+    outline: var(--_sui_file_upload-clear_trigger-outline_width, 0px) solid
+      var(--sui-focusring_color);
+    outline-offset: var(--sui-focusring_offset);
+    background-color: var(
+      --_sui_file_upload-clear_trigger-background_color,
+      transparent
+    );
+    border-radius: var(--sui_file_upload-clear_trigger-border_radius);
+  }
+
+  /* 上書き設定: ここから */
+
+  .sui_file_upload_clear_trigger {
+    @media (any-hover: hover) {
+      &:hover {
+        --_sui_file_upload-clear_trigger-background_color: var(
+          --sui_file_upload-clear_trigger-background_color-hover
+        );
+      }
+    }
+
+    &:focus-visible {
+      --_sui_file_upload-clear_trigger-outline_width: var(--sui-focusring_width);
+    }
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* ItemGroup */
+@layer sui.component {
+  /* リセット */
+  .sui_file_upload_item_group {
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+  }
+
+  /* 動的 */
+  .sui_file_upload_item_group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sui_file_upload-item_group-gap);
+  }
+}
+
+/* Item */
+@layer sui.component {
+  /* 静的 */
+  .sui_file_upload_item {
+    display: flex;
+    gap: var(--sui_file_upload-item-gap);
+    align-items: center;
+  }
+
+  /* 動的 */
+  .sui_file_upload_item {
+    min-height: var(--sui_file_upload-item-min_height);
+    padding-block: var(--sui_file_upload-item-padding_block);
+    padding-inline: var(--sui_file_upload-item-padding_inline);
+    font-size: var(--sui_file_upload-item-font_size);
+    font-weight: var(--sui_file_upload-item-font_weight);
+    color: var(--sui_file_upload-item-color);
+    letter-spacing: var(--sui_file_upload-item-letter_spacing);
+    background-color: var(--sui_file_upload-item-background_color);
+    border: var(--sui_file_upload-item-border_color) solid
+      var(--sui_file_upload-item-border_width);
+    border-radius: var(--sui_file_upload-item-border_radius);
+  }
+}
+
+/* ItemName */
+@layer sui.component {
+  /* 静的 */
+  .sui_file_upload_item_name {
+    flex: 1;
+    min-width: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* ItemSizeText */
+@layer sui.component {
+  /* 動的 */
+  .sui_file_upload_item_size_text {
+    font-size: var(--sui_file_upload-item_size_text-font_size);
+    font-weight: var(--sui_file_upload-item_size_text-font_weight);
+    color: var(--sui_file_upload-item_size_text-color);
+    letter-spacing: var(--sui_file_upload-item_size_text-letter_spacing);
+  }
+}
+
+/* ItemDeleteTrigger */
+@layer sui.component {
+  /* 静的 */
+  .sui_file_upload_item_delete_trigger {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: var(--sui_file_upload-item_delete_trigger-size);
+    height: var(--sui_file_upload-item_delete_trigger-size);
+    touch-action: manipulation;
+    cursor: pointer;
+  }
+
+  /* 動的 */
+  .sui_file_upload_item_delete_trigger {
+    font-size: var(--sui_file_upload-item_delete_trigger-font_size);
+    color: var(--sui_file_upload-item_delete_trigger-color);
+    outline: var(--_sui_file_upload-item_delete_trigger-outline_width, 0px) solid
+      var(--sui-focusring_color);
+    outline-offset: var(--sui-focusring_offset);
+    background-color: var(
+      --_sui_file_upload-item_delete_trigger-background_color,
+      transparent
+    );
+    border-radius: var(--sui_file_upload-item_delete_trigger-border_radius);
+  }
+
+  /* 上書き設定: ここから */
+
+  .sui_file_upload_item_delete_trigger {
+    @media (any-hover: hover) {
+      &:hover {
+        --_sui_file_upload-item_delete_trigger-background_color: var(
+          --sui_file_upload-item_delete_trigger-background_color-hover
+        );
+      }
+    }
+
+    &:focus-visible {
+      --_sui_file_upload-item_delete_trigger-outline_width: var(--sui-focusring_width);
+    }
+  }
+
+  /* 上書き設定: ここまで */
+}
+
+/* disabled */
+@layer sui.important {
+  /* Trigger */
+  .sui_file_upload-disabled .sui_file_upload_trigger {
+    color: var(--sui-disabled-naked-canvas_text) !important;
+    cursor: not-allowed !important;
+    background-color: var(--sui-disabled-naked-canvas) !important;
+  }
+
+  /* Dropzone */
+  .sui_file_upload-disabled .sui_file_upload_dropzone {
+    color: var(--sui-disabled-naked-canvas_text) !important;
+    cursor: not-allowed !important;
+    background-color: var(--sui-disabled-naked-canvas) !important;
+    border: var(--sui-disabled-naked-border) solid var(--sui-disabled-border_width) !important;
+  }
+
+  /* ClearTrigger */
+  .sui_file_upload-disabled .sui_file_upload_clear_trigger {
+    color: var(--sui-disabled-naked-canvas_text) !important;
+    cursor: not-allowed !important;
+  }
+
+  /* ItemDeleteTrigger */
+  .sui_file_upload-disabled .sui_file_upload_item_delete_trigger {
+    color: var(--sui-disabled-naked-canvas_text) !important;
+    cursor: not-allowed !important;
+  }
+}

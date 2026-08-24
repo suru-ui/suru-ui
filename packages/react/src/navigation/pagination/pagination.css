@@ -1,0 +1,112 @@
+/* Root */
+@layer sui.component {
+  /* 変数 */
+  .sui_pagination {
+    --sui_pagination-gap: ;
+    --sui_pagination-min_height: ;
+    --sui_pagination-font_size: ;
+    --sui_pagination-border_radius: ;
+  }
+
+  /* 静的 */
+  .sui_pagination {
+    display: flex;
+    align-items: center;
+  }
+
+  /* 動的 */
+  .sui_pagination {
+    gap: var(--sui_pagination-gap);
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_pagination-size_sm {
+    --sui_pagination-gap: --sui-gap(1);
+    --sui_pagination-min_height: var(--sui-size-sm);
+    --sui_pagination-font_size: var(--sui-text-oln-sm-m-font_size);
+  }
+
+  .sui_pagination-size_md {
+    --sui_pagination-gap: --sui-gap(1);
+    --sui_pagination-min_height: var(--sui-size-md);
+    --sui_pagination-font_size: var(--sui-text-oln-md-m-font_size);
+  }
+
+  .sui_pagination-size_lg {
+    --sui_pagination-gap: --sui-gap(2);
+    --sui_pagination-min_height: var(--sui-size-lg);
+    --sui_pagination-font_size: var(--sui-text-oln-lg-m-font_size);
+  }
+
+  .sui_pagination-radius_none {
+    --sui_pagination-border_radius: 0px;
+  }
+
+  .sui_pagination-radius_sm {
+    --sui_pagination-border_radius: var(--sui-radius-sm);
+  }
+
+  .sui_pagination-radius_md {
+    --sui_pagination-border_radius: var(--sui-radius-md);
+  }
+
+  .sui_pagination-radius_lg {
+    --sui_pagination-border_radius: var(--sui-radius-lg);
+  }
+
+  .sui_pagination-radius_full {
+    --sui_pagination-border_radius: calc(var(--sui_pagination-min_height) / 2);
+  }
+
+  /* 既定値設定: ここまで */
+}
+
+/* Ellipsis */
+@layer sui.component {
+  /* 変数 */
+  .sui_pagination {
+    --sui_pagination_ellipsis_input-width: ;
+  }
+
+  /* リセット */
+  .sui_pagination_ellipsis_input {
+    appearance: none;
+    outline: 0px solid transparent;
+    border: 0px solid transparent;
+  }
+
+  /* 静的 */
+  .sui_pagination_ellipsis_input {
+    font-family: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    text-align: center;
+    letter-spacing: inherit;
+  }
+
+  /* 動的 */
+  .sui_pagination_ellipsis_input {
+    width: var(--sui_pagination_ellipsis_input-width);
+    min-height: var(--sui_pagination-min_height);
+    padding-block: 0px;
+    font-size: var(--sui_pagination-font_size);
+    color: var(--sui-grey-naked-canvas_text-normal);
+    outline-offset: var(--sui-focusring_offset);
+    background-color: var(--sui-grey-liquid-canvas-normal);
+    border-radius: var(--sui_pagination-border_radius);
+
+    &:focus {
+      outline-width: var(--sui-focusring_width);
+      outline-color: var(--sui-focusring_color);
+    }
+  }
+
+  /* 既定値設定: ここから */
+
+  .sui_pagination {
+    --sui_pagination_ellipsis_input-width: calc(var(--sui_pagination-min_height) * 2);
+  }
+
+  /* 既定値設定: ここまで */
+}
