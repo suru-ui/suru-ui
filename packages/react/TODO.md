@@ -67,7 +67,7 @@
 - [ ] `Timeline`（HeroUI, Mantine, Chakra UI, daisyUI, MUI, PrimeReact）
 - [ ] `DataList`（HeroUI, Mantine, Chakra UI）
 - [x] `Stat`（HeroUI, Chakra UI, daisyUI）
-- [ ] `Status` / `Indicator`（HeroUI, Mantine, Chakra UI, daisyUI）
+- [x] `Status` / `Indicator`（HeroUI, Mantine, Chakra UI, daisyUI）
 - [ ] `EmptyState` / `Empty`（shadcn/ui, HeroUI, Mantine, Chakra UI）
 - [ ] `AlertDialog` 相当ではないインライン `Message`（shadcn/ui, PrimeReact）
 - [ ] `Navbar` / `AppBar` / `BottomNavigation`（daisyUI, MUI）

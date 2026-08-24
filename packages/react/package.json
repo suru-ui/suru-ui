@@ -187,6 +187,10 @@
       "types": "./dist/src/data-display/stat/index.d.ts",
       "default": "./dist/src/data-display/stat/index.js"
     },
+    "./status": {
+      "types": "./dist/src/data-display/status/index.d.ts",
+      "default": "./dist/src/data-display/status/index.js"
+    },
     "./aspect-ratio": {
       "types": "./dist/src/layout/aspect-ratio/index.d.ts",
       "default": "./dist/src/layout/aspect-ratio/index.js"

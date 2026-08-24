@@ -137,6 +137,16 @@ export {
   Stat,
   useStat,
 } from "./data-display/stat/index.js";
+export {
+  type StatusColor,
+  type StatusSize,
+  type StatusProps,
+  type StatusState,
+  type StatusSlotProps,
+  type StatusPartsProps,
+  Status,
+  useStatus,
+} from "./data-display/status/index.js";
 
 // forms
 export {
