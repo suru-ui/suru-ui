@@ -187,6 +187,10 @@
       "types": "./dist/src/forms/number-field/index.d.ts",
       "default": "./dist/src/forms/number-field/index.js"
     },
+    "./password-field": {
+      "types": "./dist/src/forms/password-field/index.d.ts",
+      "default": "./dist/src/forms/password-field/index.js"
+    },
     "./radio": {
       "types": "./dist/src/forms/radio/index.d.ts",
       "default": "./dist/src/forms/radio/index.js"

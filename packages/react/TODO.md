@@ -49,7 +49,7 @@
 - [ ] `TransferList` / `PickList`（MUI, PrimeReact）
 - [ ] `ColorPicker`（HeroUI, Mantine, Chakra UI）
 - [x] `SegmentedControl`（HeroUI, Mantine, Chakra UI）
-- [ ] `PasswordInput`（HeroUI, Mantine, Chakra UI）
+- [x] `PasswordInput`（HeroUI, Mantine, Chakra UI）
 - [ ] `NumberInput`（HeroUI, Mantine, Chakra UI）
 - [ ] `Editable` / `Inplace`（HeroUI, Chakra UI, PrimeReact）
 - [ ] `ActionBar` / `FloatingActionButton` / `SpeedDial`（HeroUI, Chakra UI, MUI, PrimeReact）
@@ -83,7 +83,7 @@
 - `Accordion`, `Alert`, `AlertDialog`, `Autocomplete`, `Avatar`, `Button`, `ButtonGroup`
 - `Checkbox`, `CheckboxGroup`, `Collapsible`, `Combobox`, `ContextMenu`, `Dialog`, `Drawer`
 - `Field`, `Fieldset`, `Form`, `Input`, `Menu`, `Menubar`, `Meter`, `NumberField`
-- `Progress`, `Radio`, `RadioGroup`, `Resizable`, `ScrollArea`, `Select`, `Slider`
+- `PasswordField`, `Progress`, `Radio`, `RadioGroup`, `Resizable`, `ScrollArea`, `Select`, `Slider`
 - `Switch`, `Tabs`, `Toast`, `Toggle`, `ToggleGroup`, `Tooltip`
 - `Chip`, `AvatarGroup`
 

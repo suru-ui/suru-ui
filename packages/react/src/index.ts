@@ -226,6 +226,18 @@ export {
   NumberField,
 } from "./forms/number-field/index.js";
 export {
+  type PasswordFieldSize,
+  type PasswordFieldColor,
+  type PasswordFieldProps,
+  type PasswordFieldState,
+  type PasswordFieldRadius,
+  type PasswordFieldVariant,
+  type PasswordFieldSlotProps,
+  type PasswordFieldPartsProps,
+  PasswordField,
+  usePasswordField,
+} from "./forms/password-field/index.js";
+export {
   type RadioSize,
   type RadioColor,
   type RadioProps,
