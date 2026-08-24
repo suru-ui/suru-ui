@@ -129,6 +129,14 @@ export {
   Skeleton,
   useSkeleton,
 } from "./data-display/skeleton/index.js";
+export {
+  type StatSize,
+  type StatProps,
+  type StatState,
+  type StatPartsProps,
+  Stat,
+  useStat,
+} from "./data-display/stat/index.js";
 
 // forms
 export {

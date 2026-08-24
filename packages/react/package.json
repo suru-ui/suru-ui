@@ -183,6 +183,10 @@
       "types": "./dist/src/data-display/skeleton/index.d.ts",
       "default": "./dist/src/data-display/skeleton/index.js"
     },
+    "./stat": {
+      "types": "./dist/src/data-display/stat/index.d.ts",
+      "default": "./dist/src/data-display/stat/index.js"
+    },
     "./aspect-ratio": {
       "types": "./dist/src/layout/aspect-ratio/index.d.ts",
       "default": "./dist/src/layout/aspect-ratio/index.js"

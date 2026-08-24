@@ -66,7 +66,7 @@
 - [ ] `Kbd`（shadcn/ui, Mantine, Chakra UI, daisyUI）
 - [ ] `Timeline`（HeroUI, Mantine, Chakra UI, daisyUI, MUI, PrimeReact）
 - [ ] `DataList`（HeroUI, Mantine, Chakra UI）
-- [ ] `Stat`（HeroUI, Chakra UI, daisyUI）
+- [x] `Stat`（HeroUI, Chakra UI, daisyUI）
 - [ ] `Status` / `Indicator`（HeroUI, Mantine, Chakra UI, daisyUI）
 - [ ] `EmptyState` / `Empty`（shadcn/ui, HeroUI, Mantine, Chakra UI）
 - [ ] `AlertDialog` 相当ではないインライン `Message`（shadcn/ui, PrimeReact）
