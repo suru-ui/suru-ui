@@ -9,7 +9,7 @@ const RADII = ["none", ...SIZES, "full"] as const;
 const VARIANTS = COLOR_TEMPLATES;
 
 const meta = preview.meta({
-  title: "Data Display / Chip",
+  title: "Chip",
   component: Chip,
 });
 

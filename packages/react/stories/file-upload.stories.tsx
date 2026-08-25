@@ -21,7 +21,7 @@ const RADII = ["none", ...SIZES, "full"] as const;
 const VARIANTS = ["naked", "liquid"] as const;
 
 const meta = preview.meta({
-  title: "Forms / FileUpload",
+  title: "FileUpload",
   component: FileUpload,
 });
 

@@ -5,7 +5,7 @@ import { preview, controls } from "../.config/storybook/preview.js";
 import { Tabs, TabsTab, TabsList, TabsRoot, TabsPanel, TabsIndicator } from "../src/tabs/index.js";
 
 const meta = preview.meta({
-  title: "Navigation / Tabs",
+  title: "Tabs",
   component: Tabs,
 });
 

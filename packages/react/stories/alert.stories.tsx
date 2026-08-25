@@ -9,7 +9,7 @@ const RADII = ["none", ...SIZES] as const;
 const VARIANTS = ["muted", "naked", "liquid"] as const;
 
 const meta = preview.meta({
-  title: "Data Display / Alert",
+  title: "Alert",
   component: Alert,
 });
 

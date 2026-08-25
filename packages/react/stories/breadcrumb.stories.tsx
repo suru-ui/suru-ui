@@ -19,7 +19,7 @@ const items = [
 ];
 
 const meta = preview.meta({
-  title: "Navigation / Breadcrumb",
+  title: "Breadcrumb",
   component: Breadcrumb,
 });
 

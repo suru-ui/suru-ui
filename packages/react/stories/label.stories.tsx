@@ -6,7 +6,7 @@ import { Input } from "../src/input/index.js";
 import { Label } from "../src/label/index.js";
 
 const meta = preview.meta({
-  title: "Forms / Label",
+  title: "Label",
   component: Label,
 });
 

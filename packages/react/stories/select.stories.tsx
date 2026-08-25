@@ -7,7 +7,7 @@ import { Select } from "../src/select/index.js";
 const RADII = ["none", ...SIZES, "full"] as const;
 
 const meta = preview.meta({
-  title: "Forms / Select",
+  title: "Select",
   component: Select,
 });
 

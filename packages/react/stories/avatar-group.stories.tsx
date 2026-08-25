@@ -8,7 +8,7 @@ const RADII = ["none", ...SIZES, "full"] as const;
 const COLORS = ["auto", ...BASE_COLORS] as const;
 
 const meta = preview.meta({
-  title: "Data Display / Avatar Group",
+  title: "Avatar Group",
   component: AvatarGroup,
 });
 

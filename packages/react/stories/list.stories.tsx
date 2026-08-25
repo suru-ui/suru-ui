@@ -5,7 +5,7 @@ import { preview, controls } from "../.config/storybook/preview.js";
 import { List } from "../src/list/index.js";
 
 const meta = preview.meta({
-  title: "Data Display / List",
+  title: "List",
   component: List,
 });
 

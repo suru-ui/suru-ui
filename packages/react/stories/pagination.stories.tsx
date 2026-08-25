@@ -7,7 +7,7 @@ import { Pagination } from "../src/pagination/index.js";
 const RADII = ["none", ...SIZES, "full"] as const;
 
 const meta = preview.meta({
-  title: "Navigation / Pagination",
+  title: "Pagination",
   component: Pagination,
 });
 

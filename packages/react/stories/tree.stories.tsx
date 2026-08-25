@@ -7,7 +7,7 @@ import { Tree } from "../src/tree/index.js";
 import * as TreeParts from "../src/tree/index.js";
 
 const meta = preview.meta({
-  title: "Navigation / Tree",
+  title: "Tree",
   component: Tree,
 });
 

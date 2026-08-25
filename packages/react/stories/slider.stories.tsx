@@ -7,7 +7,7 @@ import { Slider } from "../src/slider/index.js";
 const RADII = ["none", ...SIZES, "full"] as const;
 
 const meta = preview.meta({
-  title: "Forms / Slider",
+  title: "Slider",
   component: Slider,
 });
 

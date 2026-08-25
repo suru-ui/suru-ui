@@ -6,7 +6,7 @@ import * as AlertDialogParts from "../src/alert-dialog/index.js";
 import { Button } from "../src/button/index.js";
 
 const meta = preview.meta({
-  title: "Overlays / AlertDialog",
+  title: "AlertDialog",
   component: AlertDialog,
 });
 

@@ -6,7 +6,7 @@ import { Menu } from "../src/menu/index.js";
 import * as MenuParts from "../src/menu/index.js";
 
 const meta = preview.meta({
-  title: "Overlays / Menu",
+  title: "Menu",
   component: Menu,
 });
 

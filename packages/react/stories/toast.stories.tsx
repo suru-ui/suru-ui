@@ -5,7 +5,7 @@ import { Toast, useToastManager } from "../src/toast/index.js";
 import * as ToastParts from "../src/toast/index.js";
 
 const meta = preview.meta({
-  title: "Overlays / Toast",
+  title: "Toast",
   component: Toast,
 });
 

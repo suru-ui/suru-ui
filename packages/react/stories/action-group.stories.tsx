@@ -9,7 +9,7 @@ import { Input } from "../src/input/index.js";
 const RADII = ["none", "sm", "md", "lg", "full"] as const;
 
 const meta = preview.meta({
-  title: "Layout / ActionGroup",
+  title: "ActionGroup",
   component: ActionGroupRoot,
 });
 

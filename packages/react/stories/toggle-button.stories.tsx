@@ -9,7 +9,7 @@ const RADII = ["none", ...SIZES, "full"] as const;
 const VARIANTS = COLOR_TEMPLATES.filter((variant) => variant !== "solid");
 
 const meta = preview.meta({
-  title: "Buttons / ToggleButton",
+  title: "ToggleButton",
   component: ToggleButton,
 });
 

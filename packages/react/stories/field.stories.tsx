@@ -9,7 +9,7 @@ import { TextField } from "../src/text-field/index.js";
 const VALIDATION_MODES = ["onSubmit", "onBlur", "onChange"] as const;
 
 const meta = preview.meta({
-  title: "Forms / Field",
+  title: "Field",
   component: Field,
 });
 

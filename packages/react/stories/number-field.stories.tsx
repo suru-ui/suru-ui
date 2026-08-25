@@ -10,7 +10,7 @@ const RADII = ["none", ...SIZES, "full"] as const;
 const VARIANTS = ["naked", "liquid"] as const;
 
 const meta = preview.meta({
-  title: "Forms / NumberField",
+  title: "NumberField",
   component: NumberField,
 });
 

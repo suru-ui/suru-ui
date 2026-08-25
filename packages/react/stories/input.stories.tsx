@@ -25,7 +25,7 @@ const TYPES = [
 const VARIANTS = ["naked", "liquid"] as const;
 
 const meta = preview.meta({
-  title: "Forms / Input",
+  title: "Input",
   component: Input,
 });
 

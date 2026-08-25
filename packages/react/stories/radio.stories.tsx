@@ -8,7 +8,7 @@ import { Radio } from "../src/radio/index.js";
 const RADII = ["none", ...SIZES, "full"] as const;
 
 const meta = preview.meta({
-  title: "Forms / Radio",
+  title: "Radio",
   component: Radio,
 });
 

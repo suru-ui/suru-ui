@@ -3,7 +3,7 @@ import demoImage from "../assets/demo-image.svg";
 import { AspectRatio } from "../src/aspect-ratio/index.js";
 
 const meta = preview.meta({
-  title: "Layout / AspectRatio",
+  title: "AspectRatio",
   component: AspectRatio,
 });
 

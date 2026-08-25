@@ -4,7 +4,7 @@ import { preview, controls } from "../.config/storybook/preview.js";
 import { Stat } from "../src/stat/index.js";
 
 const meta = preview.meta({
-  title: "Data Display / Stat",
+  title: "Stat",
   component: Stat,
 });
 

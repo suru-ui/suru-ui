@@ -7,7 +7,7 @@ import { Accordion } from "../src/accordion/index.js";
 import * as AccordionParts from "../src/accordion/index.js";
 
 const meta = preview.meta({
-  title: "Navigation / Accordion",
+  title: "Accordion",
   component: Accordion,
 });
 

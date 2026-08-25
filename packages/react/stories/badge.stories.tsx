@@ -8,7 +8,7 @@ const RADII = ["none", ...SIZES, "full"] as const;
 const VARIANTS = COLOR_TEMPLATES;
 
 const meta = preview.meta({
-  title: "Data Display / Badge",
+  title: "Badge",
   component: Badge,
 });
 

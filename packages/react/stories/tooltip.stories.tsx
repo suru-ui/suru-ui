@@ -6,7 +6,7 @@ import { Tooltip } from "../src/tooltip/index.js";
 import * as TooltipParts from "../src/tooltip/index.js";
 
 const meta = preview.meta({
-  title: "Overlays / Tooltip",
+  title: "Tooltip",
   component: Tooltip,
 });
 

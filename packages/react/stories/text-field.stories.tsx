@@ -26,7 +26,7 @@ const TYPES = [
 const VARIANTS = ["naked", "liquid"] as const;
 
 const meta = preview.meta({
-  title: "Forms / TextField",
+  title: "TextField",
   component: TextField,
 });
 

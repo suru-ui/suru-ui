@@ -6,7 +6,7 @@ import { Dialog } from "../src/dialog/index.js";
 import * as DialogParts from "../src/dialog/index.js";
 
 const meta = preview.meta({
-  title: "Overlays / Dialog",
+  title: "Dialog",
   component: Dialog,
 });
 

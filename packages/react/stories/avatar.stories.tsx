@@ -6,7 +6,7 @@ import { Avatar } from "../src/avatar/index.js";
 const RADII = ["none", ...SIZES, "full"] as const;
 
 const meta = preview.meta({
-  title: "Data Display / Avatar",
+  title: "Avatar",
   component: Avatar,
 });
 

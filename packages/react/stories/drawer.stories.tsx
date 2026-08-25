@@ -6,7 +6,7 @@ import { Drawer } from "../src/drawer/index.js";
 import * as DrawerParts from "../src/drawer/index.js";
 
 const meta = preview.meta({
-  title: "Overlays / Drawer",
+  title: "Drawer",
   component: Drawer,
 });
 

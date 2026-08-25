@@ -7,7 +7,7 @@ import { Combobox } from "../src/combobox/index.js";
 const RADII = ["none", ...SIZES, "full"] as const;
 
 const meta = preview.meta({
-  title: "Forms / Combobox",
+  title: "Combobox",
   component: Combobox,
 });
 

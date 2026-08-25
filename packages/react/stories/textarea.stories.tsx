@@ -9,7 +9,7 @@ const RADII = ["none", ...SIZES, "full"] as const;
 const VARIANTS = ["naked", "liquid"] as const;
 
 const meta = preview.meta({
-  title: "Forms / Textarea",
+  title: "Textarea",
   component: Textarea,
 });
 

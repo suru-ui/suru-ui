@@ -11,7 +11,7 @@ import type {
 } from "../src/sidebar/index.js";
 
 const meta = preview.meta({
-  title: "Navigation / Sidebar",
+  title: "Sidebar",
   component: Sidebar,
 });
 

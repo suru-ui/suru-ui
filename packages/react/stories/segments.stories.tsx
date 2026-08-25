@@ -11,7 +11,7 @@ import {
 } from "../src/segments/index.js";
 
 const meta = preview.meta({
-  title: "Navigation / Segments",
+  title: "Segments",
   component: Segments,
 });
 

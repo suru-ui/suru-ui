@@ -6,7 +6,7 @@ const RADII = ["none", "sm", "md", "lg", "full"] as const;
 const FITS = ["cover", "contain", "fill", "none", "scale-down"] as const;
 
 const meta = preview.meta({
-  title: "Data Display / Image",
+  title: "Image",
   component: Image,
 });
 

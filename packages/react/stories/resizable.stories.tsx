@@ -3,7 +3,7 @@ import { Resizable, ResizablePanel, ResizableHandle } from "../src/resizable/ind
 import * as ResizableParts from "../src/resizable/index.js";
 
 const meta = preview.meta({
-  title: "Layout / Resizable",
+  title: "Resizable",
   component: Resizable,
 });
 

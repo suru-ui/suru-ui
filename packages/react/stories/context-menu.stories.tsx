@@ -6,7 +6,7 @@ import { ContextMenu } from "../src/context-menu/index.js";
 import * as ContextMenuParts from "../src/context-menu/index.js";
 
 const meta = preview.meta({
-  title: "Overlays / ContextMenu",
+  title: "ContextMenu",
   component: ContextMenu,
 });
 

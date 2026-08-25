@@ -5,7 +5,7 @@ import * as MenuParts from "../src/menu/index.js";
 import { Menubar } from "../src/menubar/index.js";
 
 const meta = preview.meta({
-  title: "Overlays / Menubar",
+  title: "Menubar",
   component: Menubar,
 });
 

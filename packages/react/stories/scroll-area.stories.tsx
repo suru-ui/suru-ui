@@ -3,7 +3,7 @@ import { ScrollArea } from "../src/scroll-area/index.js";
 import * as ScrollAreaParts from "../src/scroll-area/index.js";
 
 const meta = preview.meta({
-  title: "Navigation / Scroll Area",
+  title: "Scroll Area",
   component: ScrollArea,
 });
 

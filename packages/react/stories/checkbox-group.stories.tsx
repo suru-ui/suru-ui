@@ -10,7 +10,7 @@ const RADII = ["none", ...SIZES, "full"] as const;
 const VARIANTS = ["naked", "liquid"] as const;
 
 const meta = preview.meta({
-  title: "Forms / Checkbox Group",
+  title: "Checkbox Group",
   component: CheckboxGroup,
 });
 

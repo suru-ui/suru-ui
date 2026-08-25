@@ -4,7 +4,7 @@ import { Popover } from "../src/popover/index.js";
 import * as PopoverParts from "../src/popover/index.js";
 
 const meta = preview.meta({
-  title: "Overlays / Popover",
+  title: "Popover",
   component: Popover,
 });
 

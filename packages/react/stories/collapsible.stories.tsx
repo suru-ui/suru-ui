@@ -8,7 +8,7 @@ import { Collapsible } from "../src/collapsible/index.js";
 import * as CollapsibleParts from "../src/collapsible/index.js";
 
 const meta = preview.meta({
-  title: "Navigation / Collapsible",
+  title: "Collapsible",
   component: Collapsible,
 });
 

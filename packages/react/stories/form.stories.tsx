@@ -7,7 +7,7 @@ import { Form } from "../src/form/index.js";
 import { Input } from "../src/input/index.js";
 
 const meta = preview.meta({
-  title: "Forms / Form",
+  title: "Form",
   component: Form,
 });
 

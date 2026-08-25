@@ -6,7 +6,7 @@ import { Skeleton } from "../src/skeleton/index.js";
 const RADII = ["none", "sm", "md", "lg", "full"] as const;
 
 const meta = preview.meta({
-  title: "Data Display / Skeleton",
+  title: "Skeleton",
   component: Skeleton,
 });
 
