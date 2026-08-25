@@ -20,7 +20,7 @@ export {
   type ButtonVariant,
   type ButtonSlotProps,
   Button,
-} from "./buttons/button/index.js";
+} from "./button/index.js";
 export {
   type ToggleButtonSize,
   type ToggleButtonColor,
@@ -31,7 +31,7 @@ export {
   type ToggleButtonVariant,
   type ToggleButtonSlotProps,
   ToggleButton,
-} from "./buttons/toggle-button/index.js";
+} from "./toggle-button/index.js";
 
 // data-display
 export {
@@ -43,7 +43,7 @@ export {
   type AlertVariant,
   type AlertSlotProps,
   Alert,
-} from "./data-display/alert/index.js";
+} from "./alert/index.js";
 export {
   type AvatarSize,
   type AvatarColor,
@@ -52,7 +52,7 @@ export {
   type AvatarRadius,
   type AvatarSlotProps,
   Avatar,
-} from "./data-display/avatar/index.js";
+} from "./avatar/index.js";
 export {
   type AvatarGroupSize,
   type AvatarGroupColor,
@@ -61,7 +61,7 @@ export {
   type AvatarGroupRadius,
   type AvatarGroupContext,
   AvatarGroup,
-} from "./data-display/avatar-group/index.js";
+} from "./avatar-group/index.js";
 export {
   type BadgeSize,
   type BadgeColor,
@@ -70,7 +70,7 @@ export {
   type BadgeRadius,
   type BadgeVariant,
   Badge,
-} from "./data-display/badge/index.js";
+} from "./badge/index.js";
 export {
   type ChipSize,
   type ChipColor,
@@ -79,14 +79,14 @@ export {
   type ChipRadius,
   type ChipVariant,
   Chip,
-} from "./data-display/chip/index.js";
+} from "./chip/index.js";
 export {
   type ListSize,
   type ListProps,
   type ListState,
   type ListPartsProps,
   List,
-} from "./data-display/list/index.js";
+} from "./list/index.js";
 export {
   type MeterSize,
   type MeterColor,
@@ -96,7 +96,7 @@ export {
   type MeterVariant,
   type MeterSlotProps,
   Meter,
-} from "./data-display/meter/index.js";
+} from "./meter/index.js";
 export {
   type ProgressSize,
   type ProgressColor,
@@ -106,7 +106,7 @@ export {
   type ProgressVariant,
   type ProgressSlotProps,
   Progress,
-} from "./data-display/progress/index.js";
+} from "./progress/index.js";
 export {
   type ImageFit,
   type ImageRadius,
@@ -115,7 +115,7 @@ export {
   type ImagePartsProps,
   Image,
   useImage,
-} from "./data-display/image/index.js";
+} from "./image/index.js";
 export {
   type SkeletonRadius,
   type SkeletonProps,
@@ -123,7 +123,7 @@ export {
   type SkeletonPartsProps,
   Skeleton,
   useSkeleton,
-} from "./data-display/skeleton/index.js";
+} from "./skeleton/index.js";
 export {
   type StatSize,
   type StatProps,
@@ -131,7 +131,7 @@ export {
   type StatPartsProps,
   Stat,
   useStat,
-} from "./data-display/stat/index.js";
+} from "./stat/index.js";
 export {
   type StatusColor,
   type StatusSize,
@@ -141,7 +141,7 @@ export {
   type StatusPartsProps,
   Status,
   useStatus,
-} from "./data-display/status/index.js";
+} from "./status/index.js";
 
 // forms
 export {
@@ -156,7 +156,7 @@ export {
   type AutocompletePartsProps,
   Autocomplete,
   useAutocomplete,
-} from "./forms/autocomplete/index.js";
+} from "./autocomplete/index.js";
 export {
   type CheckboxSize,
   type CheckboxColor,
@@ -166,7 +166,7 @@ export {
   type CheckboxVariant,
   type CheckboxSlotProps,
   Checkbox,
-} from "./forms/checkbox/index.js";
+} from "./checkbox/index.js";
 export {
   type CheckboxGroupSize,
   type CheckboxGroupColor,
@@ -177,7 +177,7 @@ export {
   type CheckboxGroupVariant,
   type CheckboxGroupOrientation,
   CheckboxGroup,
-} from "./forms/checkbox-group/index.js";
+} from "./checkbox-group/index.js";
 export {
   type ComboboxSize,
   type ComboboxColor,
@@ -189,7 +189,7 @@ export {
   type ComboboxVariant,
   type ComboboxSlotProps,
   Combobox,
-} from "./forms/combobox/index.js";
+} from "./combobox/index.js";
 export {
   type FieldProps,
   type FieldState,
@@ -198,8 +198,8 @@ export {
   type FieldErrorMatch,
   type FieldErrorMatches,
   Field,
-} from "./forms/field/index.js";
-export { type FieldsetProps, type FieldsetState, Fieldset } from "./forms/fieldset/index.js";
+} from "./field/index.js";
+export { type FieldsetProps, type FieldsetState, Fieldset } from "./fieldset/index.js";
 export {
   type FileUploadSize,
   type FileUploadColor,
@@ -211,7 +211,7 @@ export {
   type FileUploadPartsProps,
   FileUpload,
   useFileUpload,
-} from "./forms/file-upload/index.js";
+} from "./file-upload/index.js";
 export {
   type FormProps,
   type FormState,
@@ -221,7 +221,7 @@ export {
   type FormSubmitEventReason,
   type FormSubmitEventDetails,
   Form,
-} from "./forms/form/index.js";
+} from "./form/index.js";
 export {
   type InputSize,
   type InputType,
@@ -233,14 +233,14 @@ export {
   type InputChangeEventReason,
   type InputChangeEventDetails,
   Input,
-} from "./forms/input/index.js";
+} from "./input/index.js";
 export {
   type LabelSize,
   type LabelProps,
   type LabelState,
   type LabelPartsProps,
   Label,
-} from "./forms/label/index.js";
+} from "./label/index.js";
 export {
   type NumberFieldSize,
   type NumberFieldColor,
@@ -253,7 +253,7 @@ export {
   type NumberFieldChangeEventReason,
   type NumberFieldChangeEventDetails,
   NumberField,
-} from "./forms/number-field/index.js";
+} from "./number-field/index.js";
 export {
   type PasswordFieldSize,
   type PasswordFieldColor,
@@ -265,7 +265,7 @@ export {
   type PasswordFieldPartsProps,
   PasswordField,
   usePasswordField,
-} from "./forms/password-field/index.js";
+} from "./password-field/index.js";
 export {
   type RadioSize,
   type RadioColor,
@@ -275,7 +275,7 @@ export {
   type RadioVariant,
   type RadioSlotProps,
   Radio,
-} from "./forms/radio/index.js";
+} from "./radio/index.js";
 export {
   type RadioGroupSize,
   type RadioGroupColor,
@@ -286,7 +286,7 @@ export {
   type RadioGroupVariant,
   type RadioGroupOrientation,
   RadioGroup,
-} from "./forms/radio-group/index.js";
+} from "./radio-group/index.js";
 export {
   type SelectSize,
   type SelectItems,
@@ -298,7 +298,7 @@ export {
   type SelectItemGroup,
   type SelectSlotProps,
   Select,
-} from "./forms/select/index.js";
+} from "./select/index.js";
 export {
   type SliderSize,
   type SliderColor,
@@ -308,7 +308,7 @@ export {
   type SliderVariant,
   type SliderSlotProps,
   Slider,
-} from "./forms/slider/index.js";
+} from "./slider/index.js";
 export {
   type SwitchSize,
   type SwitchColor,
@@ -318,7 +318,7 @@ export {
   type SwitchVariant,
   type SwitchSlotProps,
   Switch,
-} from "./forms/switch/index.js";
+} from "./switch/index.js";
 export {
   type TextFieldSize,
   type TextFieldType,
@@ -332,7 +332,7 @@ export {
   type TextFieldChangeEventReason,
   type TextFieldChangeEventDetails,
   TextField,
-} from "./forms/text-field/index.js";
+} from "./text-field/index.js";
 export {
   type TextareaSize,
   type TextareaColor,
@@ -344,7 +344,7 @@ export {
   type TextareaChangeEventDetails,
   Textarea,
   useTextarea,
-} from "./forms/textarea/index.js";
+} from "./textarea/index.js";
 
 // layout
 export {
@@ -354,7 +354,7 @@ export {
   type AspectRatioPartsProps,
   AspectRatio,
   useAspectRatio,
-} from "./layout/aspect-ratio/index.js";
+} from "./aspect-ratio/index.js";
 export {
   type ActionGroupSize,
   type ActionGroupColor,
@@ -365,7 +365,7 @@ export {
   type ActionGroupVariant,
   type ActionGroupOrientation,
   ActionGroup,
-} from "./layout/action-group/index.js";
+} from "./action-group/index.js";
 export {
   type ResizableProps,
   type ResizableState,
@@ -374,7 +374,7 @@ export {
   type ResizablePanelSize,
   type ResizableOrientation,
   Resizable,
-} from "./layout/resizable/index.js";
+} from "./resizable/index.js";
 
 // navigation
 export {
@@ -384,7 +384,7 @@ export {
   type AccordionRadius,
   type AccordionSlotProps,
   Accordion,
-} from "./navigation/accordion/index.js";
+} from "./accordion/index.js";
 export {
   type BreadcrumbSize,
   type BreadcrumbColor,
@@ -395,7 +395,7 @@ export {
   type BreadcrumbItemsItem,
   Breadcrumb,
   useBreadcrumb,
-} from "./navigation/breadcrumb/index.js";
+} from "./breadcrumb/index.js";
 export {
   type CollapsibleSize,
   type CollapsibleProps,
@@ -403,7 +403,7 @@ export {
   type CollapsibleRadius,
   type CollapsibleSlotProps,
   Collapsible,
-} from "./navigation/collapsible/index.js";
+} from "./collapsible/index.js";
 export {
   type PaginationColor,
   type PaginationProps,
@@ -415,13 +415,13 @@ export {
   type PaginationChangeEventReason,
   Pagination,
   usePagination,
-} from "./navigation/pagination/index.js";
+} from "./pagination/index.js";
 export {
   type ScrollAreaProps,
   type ScrollAreaState,
   type ScrollAreaSlotProps,
   ScrollArea,
-} from "./navigation/scroll-area/index.js";
+} from "./scroll-area/index.js";
 export {
   type SidebarCollapsible,
   type SidebarContext,
@@ -431,7 +431,7 @@ export {
   type SidebarState,
   type SidebarVariant,
   Sidebar,
-} from "./navigation/sidebar/index.js";
+} from "./sidebar/index.js";
 export {
   type SegmentsItemOption,
   type SegmentsSize,
@@ -443,7 +443,7 @@ export {
   type SegmentsPartsProps,
   Segments,
   useSegments,
-} from "./navigation/segments/index.js";
+} from "./segments/index.js";
 export {
   type TabsSize,
   type TabsItem,
@@ -452,7 +452,7 @@ export {
   type TabsRadius,
   type TabsSlotProps,
   Tabs,
-} from "./navigation/tabs/index.js";
+} from "./tabs/index.js";
 export {
   type TreeSize,
   type TreeProps,
@@ -461,7 +461,7 @@ export {
   type TreeSelectionMode,
   type TreeSlotProps,
   Tree,
-} from "./navigation/tree/index.js";
+} from "./tree/index.js";
 
 // overlays
 export {
@@ -469,48 +469,43 @@ export {
   type AlertDialogState,
   type AlertDialogSlotProps,
   AlertDialog,
-} from "./overlays/alert-dialog/index.js";
+} from "./alert-dialog/index.js";
 export {
   type ContextMenuProps,
   type ContextMenuState,
   type ContextMenuSlotProps,
   ContextMenu,
-} from "./overlays/context-menu/index.js";
+} from "./context-menu/index.js";
 export {
   type DialogProps,
   type DialogState,
   type DialogSlotProps,
   Dialog,
-} from "./overlays/dialog/index.js";
+} from "./dialog/index.js";
 export {
   type DrawerProps,
   type DrawerState,
   type DrawerSlotProps,
   Drawer,
-} from "./overlays/drawer/index.js";
-export { type MenuProps, type MenuState, type MenuSlotProps, Menu } from "./overlays/menu/index.js";
-export { type MenubarProps, type MenubarState, Menubar } from "./overlays/menubar/index.js";
+} from "./drawer/index.js";
+export { type MenuProps, type MenuState, type MenuSlotProps, Menu } from "./menu/index.js";
+export { type MenubarProps, type MenubarState, Menubar } from "./menubar/index.js";
 export {
   type HoverCardProps,
   type HoverCardState,
   type HoverCardSlotProps,
   HoverCard,
-} from "./overlays/hover-card/index.js";
+} from "./hover-card/index.js";
 export {
   type PopoverProps,
   type PopoverState,
   type PopoverSlotProps,
   Popover,
-} from "./overlays/popover/index.js";
-export {
-  type ToastProps,
-  type ToastState,
-  type ToastSlotProps,
-  Toast,
-} from "./overlays/toast/index.js";
+} from "./popover/index.js";
+export { type ToastProps, type ToastState, type ToastSlotProps, Toast } from "./toast/index.js";
 export {
   type TooltipProps,
   type TooltipState,
   type TooltipSlotProps,
   Tooltip,
-} from "./overlays/tooltip/index.js";
+} from "./tooltip/index.js";
