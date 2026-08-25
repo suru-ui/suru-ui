@@ -7,11 +7,6 @@ export * from "./errors.js";
 
 export type * from "./types.js";
 
-/** hooks */
-
-export type * from "./hooks/use-focus-type.js";
-export { default as useFocusType } from "./hooks/use-focus-type.js";
-
 /** components */
 
 // buttons
