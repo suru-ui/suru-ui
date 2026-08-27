@@ -67,6 +67,34 @@ describe("sortNamespaceExports", () => {
     expect(sortNamespaceExports(source)).toBe(expected);
   });
 
+  it("「I + 大文字」で始まるインターフェースは先頭の「I」を除いた名前順に並べ替える", () => {
+    const source = [
+      "export namespace Root {",
+      "  export interface IVariant {",
+      "    variant: string;",
+      "  }",
+      "  export type Size = RootSize;",
+      "  export interface IColor {",
+      "    color: string;",
+      "  }",
+      "}",
+      "",
+    ].join("\n");
+    const expected = [
+      "export namespace Root {",
+      "  export interface IColor {",
+      "    color: string;",
+      "  }",
+      "  export type Size = RootSize;",
+      "  export interface IVariant {",
+      "    variant: string;",
+      "  }",
+      "}",
+      "",
+    ].join("\n");
+    expect(sortNamespaceExports(source)).toBe(expected);
+  });
+
   it("ネストした名前空間は末尾に名前順で並べ替える", () => {
     const source = [
       "export namespace Root {",

@@ -7,22 +7,32 @@ import type { Node, Statement, TSModuleBlock } from "@babel/types";
 /** 対象ファイルのディレクトリー。 */
 const TARGET_DIRS = ["src", "stories"];
 
+/**
+ * 名前順より先に固定で並べる型エクスポートの名前。
+ *
+ * 配列の順序がそのまま並び順になる。ここにない名前は名前順になる。
+ */
+const FIXED_ORDER_NAMES = ["State", "Props", "Context", "SlotProps"];
+
+/** 名前順の型エクスポートの分類グループ。 */
+const NAMED_GROUP = FIXED_ORDER_NAMES.length;
+
+/** ネストした名前空間の分類グループ。 */
+const NAMESPACE_GROUP = NAMED_GROUP + 1;
+
 /** 名前空間の本体 (`{ ... }` の部分)。 */
 type Block = TSModuleBlock;
 
 /**
  * 型名前空間のメンバーの分類グループ。
  *
- * `State`、`Props`、`Context`、`SlotProps` は固定の名前で先頭に並べ、
- * 残りの型エクスポート (グループ 4) とネストした名前空間 (グループ 5) は
- * 名前順にする。グループ番号がそのまま並び順になる。
+ * {@linkcode FIXED_ORDER_NAMES} にある名前はその位置をグループとし、
+ * 残りの型エクスポートとネストした名前空間は名前順にする。
+ * グループ番号がそのまま並び順になる。
  */
 function getGroup(name: string): number {
-  if (name === "State") return 0;
-  if (name === "Props") return 1;
-  if (name === "Context") return 2;
-  if (name === "SlotProps") return 3;
-  return 4;
+  const index = FIXED_ORDER_NAMES.indexOf(name);
+  return index === -1 ? NAMED_GROUP : index;
 }
 
 /**
@@ -75,7 +85,7 @@ function getMemberInfo(member: Statement): { name: string | null; group: number 
   const declaration = member.declaration;
 
   if (declaration?.type === "TSModuleDeclaration" && declaration.id.type === "Identifier") {
-    return { name: declaration.id.name, group: 5 };
+    return { name: declaration.id.name, group: NAMESPACE_GROUP };
   }
 
   if (
@@ -85,7 +95,13 @@ function getMemberInfo(member: Statement): { name: string | null; group: number 
     "id" in declaration &&
     (declaration as { id?: { name?: string } }).id?.name !== undefined
   ) {
+    // インターフェース名が「I + 大文字」で始まる場合は、先頭の「I」を並び順の
+    // 対象から除く (`IFoo` → `Foo` として扱う)。
     const name = (declaration as { id: { name: string } }).id.name;
+    if (declaration.type === "TSInterfaceDeclaration" && /^I[A-Z]/u.test(name)) {
+      return { name: name.slice(1), group: getGroup(name) };
+    }
+
     return { name, group: getGroup(name) };
   }
 
@@ -131,7 +147,7 @@ function extendedStart(member: Statement): number {
  * 名前空間の本体のメンバーを並べ替えた結果を返す。
  *
  * 名前を持たない文は位置を維持し、型エクスポートとネストした名前空間を
- * 「`State` → `Props` → `Context` → `SlotProps` → 名前順」の順に並べ替える。
+ * 「{@linkcode FIXED_ORDER_NAMES} の順 → 名前順」の順に並べ替える。
  * ネストした名前空間はその後に続き、やはり名前順になる。
  *
  * @returns 変更が必要な場合は計画、不要な場合は `null`。
@@ -275,7 +291,7 @@ function renderBody(
  * ソース内の型名前空間のメンバーを並べ替える。
  *
  * 名前空間 (`namespace X { ... }`) の型エクスポートとネストした名前空間を
- * 「`State` → `Props` → `Context` → `SlotProps` → 名前順」の順に並べ替える。
+ * 「{@linkcode FIXED_ORDER_NAMES} の順 → 名前順」の順に並べ替える。
  * パースできない場合は変更しない。
  */
 export function sortNamespaceExports(source: string): string {

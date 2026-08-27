@@ -15,6 +15,19 @@ const TARGET_PREFIX_RE = /^--(?:_)?sui_/;
 /** ソート対象の CSS 変数名。 */
 const TARGET_VARIABLE_RE = /^--(?:_)?sui_[a-z_]+-/;
 
+/**
+ * 独自のトークンを CSS プロパティーへ割り当てる設定。
+ *
+ * キーは変数名から判定したトークン名、値はそのトークンが同等とみなす
+ * CSS プロパティー名のリスト。並び順の解決では、リスト内で最初に
+ * stylelint の並び順が存在するプロパティーの位置を採用する。
+ *
+ * 例: `size` は `width` / `height` と同じグループとして扱う。
+ */
+const PROPERTY_ALIASES: Readonly<Record<string, readonly string[]>> = {
+  size: ["width", "height"],
+};
+
 /** stylelint-order の `order/properties-order` に渡すプロパティーグループ。 */
 interface PropertyGroup {
   properties: readonly string[];
@@ -72,14 +85,16 @@ const PROPERTY_ORDERS: ReadonlyMap<string, number> = (() => {
 /**
  * プロパティー名の stylelint の並び順での位置を返す。不明な場合は `null` を返す。
  *
- * `size` は `width` / `height` と同じグループとして扱う。
+ * `PROPERTY_ALIASES` に登録されたトークンは、割り当てられた CSS プロパティーの位置へ解決する。
  */
 function lookupOrder(name: string): number | null {
   const order = PROPERTY_ORDERS.get(name);
   if (order !== undefined) return order;
-  if (name === "size") {
-    const sizeOrder = PROPERTY_ORDERS.get("width") ?? PROPERTY_ORDERS.get("height");
-    if (sizeOrder !== undefined) return sizeOrder;
+  const aliases = PROPERTY_ALIASES[name];
+  if (aliases === undefined) return null;
+  for (const alias of aliases) {
+    const aliasOrder = PROPERTY_ORDERS.get(alias);
+    if (aliasOrder !== undefined) return aliasOrder;
   }
   return null;
 }
@@ -104,7 +119,7 @@ interface DeterminedProperty {
  * 例:
  * - `--sui_button-border_radius` → `border-radius`
  * - `--sui_button-background_color-normal` → `background-color` (バリアント `normal`)
- * - `--sui_button_content_svg-size` → `size` (`width` / `height` と同一視)
+ * - `--sui_button_content_svg-size` → `size` (`PROPERTY_ALIASES` により `width` / `height` と同一視)
  */
 function determineProperty(prop: string): DeterminedProperty | null {
   if (!TARGET_VARIABLE_RE.test(prop)) return null;
