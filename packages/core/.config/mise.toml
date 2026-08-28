@@ -15,10 +15,10 @@ run = "npx vitest --config ./.config/vitest.server.ts"
 run = "npx vitest --config ./.config/vitest.client.ts"
 
 [tasks."test:format"]
-run = "npx oxfmt --config ./.config/.oxfmtrc.json --check"
+run = { task = "format:oxfmt", args = ["--check"] }
 
 [tasks."test:lint"]
-run = "npx oxlint --config ./.config/.oxlintrc.json"
+run = { task = "lint" }
 
 [tasks."test:typecheck"]
 run = [
@@ -39,5 +39,5 @@ run = "npx oxlint --config ./.config/.oxlintrc.json"
 run = [
   "npx npm-check-updates --target minor -u --cooldown 7",
   "pnpm install",
-  "pnpm dlx playwright install --with-deps",
+  "npx playwright install --with-deps",
 ]

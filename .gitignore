@@ -219,9 +219,9 @@ $RECYCLE.BIN/
 
 ################################################################################
 
-.history/
-.vitest-attachments/
-dist/
-__screenshots__/
-reports/
-.blume-verify/
+__screenshots__
+.blume-verify
+.history
+.tmp-*
+.vitest-attachments
+reports

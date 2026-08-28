@@ -16,16 +16,30 @@ run = "npx vitest --config ./.config/vitest.client.ts"
 
 [tasks."test:format"]
 run = [
-  "npx oxfmt --config ./.config/.oxfmtrc.json --check",
-  "node scripts/sort-jsx-props.ts --check",
-  "node scripts/sort-import-exports.ts --check",
-  "node scripts/sort-type-props.ts --check",
-  "node scripts/sort-namespace-exports.ts --check",
-  "node scripts/sort-css-variables.ts --check",
+  { task = "test:format:oxfmt" },
+  { task = "test:format:extra" },
+  { task = "test:format:style" },
+]
+
+[tasks."test:format:oxfmt"]
+run = { task = "format:oxfmt", args = ["--check"] }
+
+[tasks."test:format:extra"]
+run = [
+  "node ./scripts/sort-jsx-props.ts --check",
+  "node ./scripts/sort-type-props.ts --check",
+  "node ./scripts/sort-import-exports.ts --check",
+  "node ./scripts/sort-namespace-exports.ts --check",
+]
+
+[tasks."test:format:style"]
+run = [
+  "node ./scripts/sort-css-variables.ts --check",
+  "npx stylelint --config ./.config/.stylelintrc.json './src/**/*.css'",
 ]
 
 [tasks."test:lint"]
-run = "npx oxlint --config ./.config/.oxlintrc.json"
+run = { task = "lint" }
 
 [tasks."test:typecheck"]
 run = [
@@ -37,45 +51,33 @@ run = [
 ]
 
 [tasks.format]
-run = [
-  { task = "format:oxfmt" },
-  { task = "format:stylelint" },
-  { task = "format:sort-jsx-props" },
-  { task = "format:sort-import-exports" },
-  { task = "format:sort-type-props" },
-  { task = "format:sort-namespace-exports" },
-  { task = "format:sort-css-variables" },
-]
+run = [{ task = "format:oxfmt" }, { task = "format:extra" }, { task = "format:style" }]
 
 [tasks."format:oxfmt"]
-run = "npx oxfmt --config ./.config/.oxfmtrc.json"
+run = "set -e; cp ./.config/.oxfmtrc.json ./.tmp-oxfmtrc.json; trap 'rm -f ./.tmp-oxfmtrc.json' EXIT; npx oxfmt --config ./.tmp-oxfmtrc.json"
 
-[tasks."format:stylelint"]
-run = "npx stylelint --config ./.config/.stylelintrc.json --fix 'src/**/*.css'"
+[tasks."format:extra"]
+run = [
+  "node ./scripts/sort-jsx-props.ts",
+  "node ./scripts/sort-type-props.ts",
+  "node ./scripts/sort-import-exports.ts",
+  "node ./scripts/sort-namespace-exports.ts",
+]
 
-[tasks."format:sort-jsx-props"]
-run = "node scripts/sort-jsx-props.ts"
-
-[tasks."format:sort-import-exports"]
-run = "node scripts/sort-import-exports.ts"
-
-[tasks."format:sort-type-props"]
-run = "node scripts/sort-type-props.ts"
-
-[tasks."format:sort-namespace-exports"]
-run = "node scripts/sort-namespace-exports.ts"
-
-[tasks."format:sort-css-variables"]
-run = "node scripts/sort-css-variables.ts"
+[tasks."format:style"]
+run = [
+  "node ./scripts/sort-css-variables.ts",
+  "npx stylelint --config ./.config/.stylelintrc.json './src/**/*.css' --fix",
+]
 
 [tasks.lint]
-run = "npx oxlint --config ./.config/.oxlintrc.json"
+run = "set -e; cp ./.config/.oxlintrc.json ./.tmp-oxlintrc.json; trap 'rm -f ./.tmp-oxlintrc.json' EXIT; npx oxlint --config ./.tmp-oxlintrc.json"
 
 [tasks.update]
 run = [
   "npx npm-check-updates --target minor -u --cooldown 7",
   "pnpm install",
-  "pnpm dlx playwright install --with-deps",
+  "npx playwright install --with-deps",
 ]
 
 [tasks.dev]
