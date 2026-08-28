@@ -8,9 +8,9 @@ export {
   type NumberFieldRadius,
   type NumberFieldVariant,
   type NumberFieldSlotProps,
+  type NumberFieldPartsProps,
   type NumberFieldChangeEventReason,
   type NumberFieldChangeEventDetails,
-  type NumberFieldPartsProps,
   NumberField,
   useNumberField,
 } from "./number-field.jsx";

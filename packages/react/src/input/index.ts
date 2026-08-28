@@ -8,9 +8,9 @@ export {
   type InputState,
   type InputRadius,
   type InputVariant,
+  type InputPartsProps,
   type InputChangeEventReason,
   type InputChangeEventDetails,
-  type InputPartsProps,
   Input,
   useInput,
 } from "./input.jsx";

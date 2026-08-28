@@ -8,8 +8,8 @@ export {
   type PaginationRadius,
   type PaginationSlotProps,
   type PaginationPartsProps,
-  type PaginationChangeEventDetails,
   type PaginationChangeEventReason,
+  type PaginationChangeEventDetails,
   Pagination,
   usePagination,
 } from "./pagination.jsx";

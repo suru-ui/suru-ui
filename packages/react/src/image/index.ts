@@ -2,9 +2,9 @@ export * from "./image.parts.jsx";
 
 export {
   type ImageFit,
-  type ImageRadius,
   type ImageProps,
   type ImageState,
+  type ImageRadius,
   type ImagePartsProps,
   Image,
   useImage,

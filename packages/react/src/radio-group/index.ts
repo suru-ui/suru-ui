@@ -7,8 +7,8 @@ export {
   type RadioGroupState,
   type RadioGroupRadius,
   type RadioGroupVariant,
-  type RadioGroupOrientation,
   type RadioGroupPartsProps,
+  type RadioGroupOrientation,
   RadioGroup,
   useRadioGroup,
 } from "./radio-group.jsx";

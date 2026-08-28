@@ -7,8 +7,8 @@ export {
   type CheckboxGroupState,
   type CheckboxGroupRadius,
   type CheckboxGroupVariant,
-  type CheckboxGroupOrientation,
   type CheckboxGroupPartsProps,
+  type CheckboxGroupOrientation,
   CheckboxGroup,
   useCheckboxGroup,
 } from "./checkbox-group.jsx";

@@ -1,13 +1,13 @@
 export * from "./tree.parts.jsx";
 
 export {
-  type TreePartsProps,
-  type TreeProps,
-  type TreeRadius,
-  type TreeSelectionMode,
   type TreeSize,
-  type TreeSlotProps,
+  type TreeProps,
   type TreeState,
+  type TreeRadius,
+  type TreeSlotProps,
+  type TreePartsProps,
+  type TreeSelectionMode,
   Tree,
   useTree,
 } from "./tree.jsx";

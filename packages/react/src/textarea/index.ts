@@ -7,9 +7,9 @@ export {
   type TextareaState,
   type TextareaRadius,
   type TextareaVariant,
+  type TextareaPartsProps,
   type TextareaChangeEventReason,
   type TextareaChangeEventDetails,
-  type TextareaPartsProps,
   Textarea,
   useTextarea,
 } from "./textarea.jsx";

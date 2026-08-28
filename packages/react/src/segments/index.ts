@@ -1,13 +1,13 @@
 export * from "./segments.parts.jsx";
 
 export {
-  type SegmentsItemOption,
   type SegmentsSize,
+  type SegmentsColor,
   type SegmentsProps,
   type SegmentsState,
-  type SegmentsColor,
   type SegmentsRadius,
   type SegmentsSlotProps,
+  type SegmentsItemOption,
   type SegmentsPartsProps,
   Segments,
   useSegments,

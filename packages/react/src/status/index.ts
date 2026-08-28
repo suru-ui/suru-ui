@@ -1,8 +1,8 @@
 export * from "./status.parts.jsx";
 
 export {
-  type StatusColor,
   type StatusSize,
+  type StatusColor,
   type StatusProps,
   type StatusState,
   type StatusSlotProps,

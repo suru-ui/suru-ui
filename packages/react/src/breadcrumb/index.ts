@@ -5,9 +5,9 @@ export {
   type BreadcrumbColor,
   type BreadcrumbProps,
   type BreadcrumbState,
+  type BreadcrumbItemsItem,
   type BreadcrumbSlotProps,
   type BreadcrumbPartsProps,
-  type BreadcrumbItemsItem,
   Breadcrumb,
   useBreadcrumb,
 } from "./breadcrumb.jsx";

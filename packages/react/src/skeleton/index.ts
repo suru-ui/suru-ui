@@ -1,9 +1,9 @@
 export * from "./skeleton.parts.jsx";
 
 export {
-  type SkeletonRadius,
   type SkeletonProps,
   type SkeletonState,
+  type SkeletonRadius,
   type SkeletonPartsProps,
   Skeleton,
   useSkeleton,

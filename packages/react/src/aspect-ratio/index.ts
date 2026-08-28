@@ -2,8 +2,8 @@ export * from "./aspect-ratio.parts.jsx";
 
 export {
   type AspectRatioProps,
-  type AspectRatioState,
   type AspectRatioRatio,
+  type AspectRatioState,
   type AspectRatioPartsProps,
   AspectRatio,
   useAspectRatio,

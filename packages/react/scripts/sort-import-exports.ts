@@ -195,7 +195,7 @@ export function sortImportExports(source: string): string {
 async function main(): Promise<void> {
   const isCheck = process.argv.includes("--check");
   const files = TARGET_DIRS.flatMap((dir) =>
-    fs.globSync("**/*.tsx", { cwd: dir }).map((fullpath) => path.join(dir, fullpath)),
+    fs.globSync("**/*.{ts,tsx}", { cwd: dir }).map((fullpath) => path.join(dir, fullpath)),
   );
 
   const changedFiles: string[] = [];
