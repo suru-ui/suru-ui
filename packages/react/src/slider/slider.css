@@ -89,12 +89,12 @@
   /* 変数 */
   .sui_slider {
     --sui_slider_track_size: ;
-    --sui_slider_track-canvas-normal: ;
     --sui_slider_track-border_color-normal: ;
     --sui_slider_track-border_color-subtle: ;
     --sui_slider_track-border_color-strong: ;
     --sui_slider_track-border_width: ;
     --sui_slider_track-border_radius: ;
+    --sui_slider_track-canvas-normal: ;
   }
 
   /* 静的 */
@@ -167,8 +167,8 @@
   /* 上書き設定: ここから */
 
   .sui_slider-outlined {
-    --_sui_slider_track-border_width: var(--sui_slider_track-border_width);
     --_sui_slider_track-border_color: var(--sui_slider_track-border_color-normal);
+    --_sui_slider_track-border_width: var(--sui_slider_track-border_width);
 
     @media (any-hover: hover) {
       &:hover {
@@ -328,8 +328,8 @@
   /* 上書き設定: ここから */
 
   .sui_slider_thumb {
-    --_sui_slider_thumb-border_width: var(--sui_slider_thumb-border_width);
     --_sui_slider_thumb-border_color: var(--sui_slider_thumb-border_color-normal);
+    --_sui_slider_thumb-border_width: var(--sui_slider_thumb-border_width);
 
     @media (any-hover: hover) {
       &:hover {

@@ -189,8 +189,8 @@
   }
 
   .sui_switch[data-checked] {
-    --_sui_switch-canvas: var(--sui_switch-canvas-checked);
     --_sui_switch-border_width: 0px;
+    --_sui_switch-canvas: var(--sui_switch-canvas-checked);
 
     @media (any-hover: hover) {
       &:hover {
@@ -210,8 +210,8 @@
   }
 
   .sui_switch-outlined {
-    --_sui_switch-border_width: var(--sui_switch-border_width);
     --_sui_switch-border_color: var(--sui_switch-border_color-normal);
+    --_sui_switch-border_width: var(--sui_switch-border_width);
 
     @media (any-hover: hover) {
       &:hover {
@@ -373,8 +373,8 @@
   }
 
   .sui_switch[data-checked] .sui_switch_thumb {
-    --_sui_switch_thumb-canvas: var(--sui_switch_thumb-canvas-checked);
     --_sui_switch_thumb-border_color: transparent;
+    --_sui_switch_thumb-canvas: var(--sui_switch_thumb-canvas-checked);
     --_sui_switch_thumb-translate_x: var(--sui_switch_thumb-translate_x);
 
     @media (any-hover: hover) {

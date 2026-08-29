@@ -186,9 +186,9 @@
   }
 
   .sui_checkbox:is(.sui_checkbox-checked, .sui_checkbox-indeterminate) {
-    --_sui_checkbox-canvas: var(--sui_checkbox-canvas-normal-checked);
     --_sui_checkbox-border_color: var(--sui_checkbox-border_color-checked);
     --_sui_checkbox-border_width: 0px;
+    --_sui_checkbox-canvas: var(--sui_checkbox-canvas-normal-checked);
 
     @media (any-hover: hover) {
       &:hover {

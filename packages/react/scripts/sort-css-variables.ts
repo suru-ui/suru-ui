@@ -172,7 +172,7 @@ function compareItems(a: DeclItem, b: DeclItem): number {
   return a.order - b.order;
 }
 
-/** ルール内の宣言領域の並べ替え計画。 */
+/** ブロック内の連続した宣言領域の並べ替え計画。 */
 interface SortPlan {
   /** 宣言領域の開始位置 (先頭の宣言の開始オフセット)。 */
   start: number;
@@ -193,25 +193,14 @@ function offsetEnd(node: CssNode): number {
 }
 
 /**
- * CSS 変数の定義のみで構成されるルールの並べ替え計画を作る。
+ * 連続する CSS 変数の宣言列の並べ替え計画を作る。
  *
- * コメントは宣言ではないため対象に含めるが、それ以外の節点や対象外の
- * CSS 変数が混在する場合は `null` を返してブロックごと対象外にする。
+ * `decls` は同じブロック内でネストしたルールなどの節点を挟まずに並んでいる
+ * CSS 変数の宣言のみとする。コメントは対象外だが宣言列を分断しないため、
+ * `renderRule` が宣言間の区切りとして元の位置に維持する。
+ * 宣言が 1 つ以下の場合や並べ替えが必要ない場合は `null` を返す。
  */
-function planRule(rule: CssNode): SortPlan | null {
-  const nodes = rule.nodes ?? [];
-  const decls: CssNode[] = [];
-  for (const node of nodes) {
-    if (node.type === "comment") continue;
-    if (
-      node.type !== "decl" ||
-      typeof node.prop !== "string" ||
-      !TARGET_VARIABLE_RE.test(node.prop)
-    ) {
-      return null;
-    }
-    decls.push(node);
-  }
+function planDecls(decls: CssNode[]): SortPlan | null {
   if (decls.length < 2) return null;
 
   const items: DeclItem[] = decls.map((decl, index) => {
@@ -236,18 +225,38 @@ function planRule(rule: CssNode): SortPlan | null {
   };
 }
 
-/** AST を走査して並べ替え計画を収集する。ネストしたルールも対象にする。 */
+/**
+ * AST を走査して並べ替え計画を収集する。ネストしたルールも対象にする。
+ *
+ * ブロック内の宣言は、ネストしたルールなどの節点を境界に分割された
+ * 連続した宣言列ごとに並べ替える。宣言を節点の前後へ移動すると
+ * 宣言同士のカスケードの結果が変わる可能性があるため、
+ * 宣言列をまたいだ移動は行わない。
+ */
 function collectPlans(root: CssNode): SortPlan[] {
   const plans: SortPlan[] = [];
   (function visit(nodes: CssNode[] | undefined): void {
     if (nodes === undefined) return;
+    let run: CssNode[] = [];
+    const flush = (): void => {
+      const plan = planDecls(run);
+      if (plan !== null) plans.push(plan);
+      run = [];
+    };
     for (const node of nodes) {
-      if (node.type === "rule") {
-        const plan = planRule(node);
-        if (plan !== null) plans.push(plan);
+      if (node.type === "comment") continue;
+      if (
+        node.type === "decl" &&
+        typeof node.prop === "string" &&
+        TARGET_VARIABLE_RE.test(node.prop)
+      ) {
+        run.push(node);
+        continue;
       }
+      flush();
       visit(node.nodes);
     }
+    flush();
   })(root.nodes);
   return plans.toSorted((a, b) => a.start - b.start);
 }
@@ -280,8 +289,9 @@ function renderRule(source: string, plan: SortPlan): string {
  * ソース内の CSS 変数の定義ブロックを、CSS プロパティーの stylelint の
  * 並び順に従って並べ替える。
  *
- * 対象は CSS 変数の定義のみで構成されるブロックで、さらに変数名が
+ * 対象はブロック内に連続して並んでいる CSS 変数の定義で、さらに変数名が
  * `--sui_<コンポーネント>-<プロパティー>` の形式を持つものに限られる。
+ * 宣言はネストしたルールなどの節点をまたいで移動しないため、
  * 対象外の CSS や CSS 変数は内容・順序ともに変更しない。
  *
  * @returns 変更が必要な場合は並べ替え後のテキスト、不要な場合は元の文字列。

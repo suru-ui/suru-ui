@@ -172,8 +172,8 @@
   }
 
   .sui_select-outlined {
-    --_sui_select-border_width: var(--sui_select-border_width);
     --_sui_select-border_color: var(--sui_select-border_color-normal);
+    --_sui_select-border_width: var(--sui_select-border_width);
 
     @media (any-hover: hover) {
       &:hover {

@@ -160,6 +160,56 @@ describe("sortCssVariables", () => {
     expect(sortCssVariables(source)).toBe(expected);
   });
 
+  it("宣言とネストしたルールが混在するブロックでも宣言を並べ替える", () => {
+    const source = `@scope (.sui_accordion) to ([data-scope]) {
+:scope {
+  --sui_accordion-border_radius: var(--sui-radius-md);
+  --sui_accordion-background_color: var(--sui-canvas-1);
+
+  &.sui_accordion-radius_none {
+    --sui_accordion-border_radius: 0px;
+  }
+
+  &.sui_accordion-size_sm {
+    --sui_accordion_trigger-line_height: ;
+    --sui_accordion_trigger-gap: ;
+    --sui_accordion_trigger-padding: ;
+  }
+}
+}
+`;
+    const expected = `@scope (.sui_accordion) to ([data-scope]) {
+:scope {
+  --sui_accordion-background_color: var(--sui-canvas-1);
+  --sui_accordion-border_radius: var(--sui-radius-md);
+
+  &.sui_accordion-radius_none {
+    --sui_accordion-border_radius: 0px;
+  }
+
+  &.sui_accordion-size_sm {
+    --sui_accordion_trigger-gap: ;
+    --sui_accordion_trigger-padding: ;
+    --sui_accordion_trigger-line_height: ;
+  }
+}
+}
+`;
+    expect(sortCssVariables(source)).toBe(expected);
+  });
+
+  it("ネストしたルールをまたいで宣言を移動しない", () => {
+    const source = `.sui_accordion {
+  --sui_button-border_radius: ;
+  &.sui_accordion-radius_none {
+    --sui_accordion-border_radius: 0px;
+  }
+  --sui_button-background_color: ;
+}
+`;
+    expect(sortCssVariables(source)).toBe(source);
+  });
+
   it("コメントや複数行の値を含むブロックの既存のコードを壊さない", () => {
     const source = `.sui_button {
   /* コメント A */

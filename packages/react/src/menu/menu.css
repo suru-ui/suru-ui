@@ -280,8 +280,8 @@
   }
 
   .sui_menu_item:is([data-checked], [data-selected]) {
-    --_sui_menu_item-background_color: var(--sui_menu_item-background_color-checked-normal);
     --_sui_menu_item-color: var(--sui_menu_item-color-checked-normal);
+    --_sui_menu_item-background_color: var(--sui_menu_item-background_color-checked-normal);
 
     @media (any-hover: hover) {
       &:hover {

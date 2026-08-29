@@ -220,8 +220,8 @@
   }
 
   .sui_combobox-outlined {
-    --_sui_combobox-border_width: var(--sui_combobox-border_width);
     --_sui_combobox-border_color: var(--sui_combobox-border_color-normal);
+    --_sui_combobox-border_width: var(--sui_combobox-border_width);
 
     @media (any-hover: hover) {
       &:hover {

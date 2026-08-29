@@ -195,9 +195,9 @@
   }
 
   .sui_radio[data-checked] {
-    --_sui_radio-canvas: var(--sui_radio-canvas-checked-normal);
     --_sui_radio-border_color: var(--sui_radio-border_color-checked);
     --_sui_radio-border_width: 0px;
+    --_sui_radio-canvas: var(--sui_radio-canvas-checked-normal);
 
     @media (any-hover: hover) {
       &:hover {
