@@ -1,10 +1,47 @@
-import { SIZES } from "@suru-ui/theme";
-import { PlusIcon, ChevronDownIcon } from "lucide-react";
+import * as theme from "@suru-ui/theme";
+import { ChevronUpIcon, ChevronDownIcon, MessageCircleQuestionIcon } from "lucide-react";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Accordion } from "../src/accordion/index.js";
-import * as AccordionParts from "../src/accordion/index.js";
+import * as Accordion_ from "../src/accordion/index.js";
+import { Button } from "../src/button/index.js";
+
+const ITEMS: readonly Accordion.ItemObject[] = [
+  {
+    value: "1",
+    title: "アコーディオンとは？",
+    content:
+      "複数の項目を折りたたんで表示し、ユーザーが必要な項目だけを展開して内容を確認できる UI コンポーネントです。情報量の多いページでも、画面をすっきりと整理して表示できます。",
+  },
+  {
+    value: "2",
+    title: "どのような場面で使いますか？",
+    content:
+      "FAQ や設定画面、商品の詳細情報など、関連する情報をまとめて表示したい場合に適しています。最初は概要だけを表示し、詳しい内容を必要とするユーザーにだけ提示できます。",
+  },
+  {
+    value: "3",
+    title: "複数の項目を同時に開けますか？",
+    content:
+      "コンポーネントの設定によって、複数の項目を同時に展開できるようにすることも、常に 1 つだけ展開するようにすることも可能です。用途に応じて適切な動作を選択できます。",
+  },
+  {
+    value: "4",
+    title: "キーボードでも操作できますか？",
+    content:
+      "はい。適切なセマンティック要素と ARIA 属性を使用することで、キーボードから項目の展開や折りたたみを操作できます。マウスを使用できないユーザーにも配慮した実装が重要です。",
+  },
+  {
+    value: "5",
+    title: "内容が長い場合はどうなりますか？",
+    content:
+      "展開された領域の高さは、内部に含まれるコンテンツの量に応じて自動的に調整されます。長い文章やリスト、複数の要素を含む場合でも、コンテンツが途中で隠れないよう自然にレイアウトされます。",
+  },
+];
+const RADII: readonly Accordion.Radius[] = ["none", ...theme.SIZES];
+const SIZES: readonly Accordion.Size[] = theme.SIZES;
+const VARIANTS: readonly Accordion.Variant[] = ["liquid", "naked"];
 
 const meta = preview.meta({
   title: "Accordion",
@@ -17,7 +54,7 @@ const ctrl = controls(Accordion, {
   disabled: {
     control: "boolean",
   },
-  divider: {
+  separator: {
     control: "boolean",
   },
   multiple: {
@@ -28,256 +65,125 @@ const ctrl = controls(Accordion, {
   },
   radius: {
     control: "select",
-    options: ["none", "sm", "md", "lg"],
+    options: RADII,
   },
   size: {
     control: "select",
     options: SIZES,
+  },
+  variant: {
+    control: "select",
+    options: VARIANTS,
   },
 });
 
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
-    disabled: false,
-    multiple: false,
-    divider: true,
-    outlined: true,
-    radius: "md",
+    variant: "liquid",
     size: "md",
+    radius: undefined,
+    multiple: false,
+    outlined: false,
+    separator: false,
+    disabled: false,
   }),
   render(props) {
     return (
       <div className="w-80">
-        <Accordion {...props} title="Suru UI とは">
-          Suru UI は、Base UI を基盤とした React
-          コンポーネントライブラリーです。ヘッドレスの振る舞いと、テーマに基づく見た目を両立しています。
-        </Accordion>
+        <Accordion {...props} items={ITEMS} />
       </div>
     );
   },
 });
 
-export const Multiple = meta.story({
-  name: "複数項目",
+export const WithIcon = meta.story({
+  name: "アイコン付き",
   ...ctrl({
-    disabled: false,
-    multiple: true,
-    divider: true,
-    outlined: true,
-    radius: "md",
+    variant: "liquid",
     size: "md",
+    radius: undefined,
+    multiple: false,
+    outlined: false,
+    separator: false,
+    disabled: false,
   }),
   render(props) {
     return (
       <div className="w-80">
-        <AccordionParts.Root {...props}>
-          <AccordionParts.Item>
-            <AccordionParts.Header>
-              <AccordionParts.Trigger>
-                Suru UI とは
-                <AccordionParts.Indicator>
-                  <ChevronDownIcon />
-                </AccordionParts.Indicator>
-              </AccordionParts.Trigger>
-            </AccordionParts.Header>
-            <AccordionParts.Panel>
-              Suru UI は、Base UI を基盤とした React コンポーネントライブラリーです。
-            </AccordionParts.Panel>
-          </AccordionParts.Item>
-          <AccordionParts.Item>
-            <AccordionParts.Header>
-              <AccordionParts.Trigger>
-                使い方は
-                <AccordionParts.Indicator>
-                  <ChevronDownIcon />
-                </AccordionParts.Indicator>
-              </AccordionParts.Trigger>
-            </AccordionParts.Header>
-            <AccordionParts.Panel>
-              `title` と `children` を渡すだけです。複数の項目を開くには `multiple` を指定します。
-            </AccordionParts.Panel>
-          </AccordionParts.Item>
-          <AccordionParts.Item>
-            <AccordionParts.Header>
-              <AccordionParts.Trigger>
-                利用条件は
-                <AccordionParts.Indicator>
-                  <ChevronDownIcon />
-                </AccordionParts.Indicator>
-              </AccordionParts.Trigger>
-            </AccordionParts.Header>
-            <AccordionParts.Panel>MIT ライセンスです。</AccordionParts.Panel>
-          </AccordionParts.Item>
-        </AccordionParts.Root>
+        <Accordion_.Root {...props} items={ITEMS}>
+          {(item, index) => (
+            <Accordion_.Item key={index}>
+              <Accordion_.Heading>
+                <Accordion_.Trigger>
+                  <div className="flex gap-2 items-center">
+                    <MessageCircleQuestionIcon />
+                    {item.title}
+                  </div>
+                  <Accordion_.Indicator />
+                </Accordion_.Trigger>
+              </Accordion_.Heading>
+              <Accordion_.Content>{item.content}</Accordion_.Content>
+            </Accordion_.Item>
+          )}
+        </Accordion_.Root>
       </div>
     );
   },
 });
 
-export const CustomIcon = meta.story({
-  name: "アイコン",
+export const CustomTrigger = meta.story({
+  name: "独自トリガー",
   ...ctrl({
-    disabled: false,
-    multiple: false,
-    divider: true,
-    outlined: true,
-    radius: "md",
+    variant: "liquid",
     size: "md",
+    radius: undefined,
+    multiple: false,
+    outlined: false,
+    separator: false,
+    disabled: false,
   }),
   render(props) {
-    return (
-      <div className="flex w-80 flex-col gap-4">
-        <Accordion
-          {...props}
-          title="アイコンの差し替え"
-          slotProps={{ indicator: { children: <PlusIcon /> } }}
-        >
-          `slotProps.indicator` に `children` を渡すと、既定のアイコンを差し替えられます。
-        </Accordion>
-        <Accordion
-          {...props}
-          title="アイコンを消す"
-          slotProps={{
-            trigger: {
-              children: "Trigger の children を渡すと見出し全体を自由に組み立てられます。",
-            },
-          }}
-        >
-          Trigger の children を渡した場合は、タイトルとインジケーターを描画しません。
-        </Accordion>
-      </div>
-    );
-  },
-});
-
-export const Controlled = meta.story({
-  name: "制御",
-  ...ctrl({
-    disabled: false,
-    multiple: false,
-    divider: true,
-    outlined: true,
-    radius: "md",
-    size: "md",
-  }),
-  render(props) {
-    const [open, setOpen] = React.useState(false);
-
     return (
       <div className="w-80">
-        <Accordion
-          {...props}
-          title="操作パネル"
-          value={open ? ["panel"] : []}
-          slotProps={{ item: { value: "panel" } }}
-          onValueChange={(next) => setOpen(next.length > 0)}
-        >
-          `value` と `onValueChange` で開閉を制御できます。
-        </Accordion>
-        <p className="mt-2">現在の状態: {open ? "開" : "閉"}</p>
+        <Accordion_.Root {...props} items={ITEMS}>
+          {(item, index) => (
+            <Accordion_.Item key={index}>
+              <Accordion_.Heading>
+                <span>{item.title}</span>
+                <Accordion_.Trigger
+                  render={(props: {}, state) => (
+                    <Button {...props} size="sm" squared disabled={state.disabled}>
+                      {state.open ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                    </Button>
+                  )}
+                  unstyled
+                />
+              </Accordion_.Heading>
+              <Accordion_.Content>{item.content}</Accordion_.Content>
+            </Accordion_.Item>
+          )}
+        </Accordion_.Root>
       </div>
     );
   },
 });
 
-export const Outlined = meta.story({
-  name: "枠線",
+export const Variants = meta.story({
+  name: "主な外観",
   ...ctrl({
-    disabled: false,
+    size: "md",
+    radius: undefined,
     multiple: false,
-    divider: true,
-    outlined: true,
-    radius: "md",
-    size: "md",
-  }),
-  render(props) {
-    return (
-      <div className="flex w-80 flex-col gap-4">
-        <Accordion {...props} title="枠線あり（既定）">
-          既定では、アコーディオンの外側に枠線が表示されます。
-        </Accordion>
-        <Accordion {...props} title="枠線なし" outlined={false}>
-          `outlined={false}` で枠線を非表示にできます。
-        </Accordion>
-      </div>
-    );
-  },
-});
-
-const accordionItems = [
-  {
-    title: "Suru UI とは",
-    panel: "Base UI を基盤としたヘッドレスコンポーネントライブラリーです。",
-  },
-  { title: "使い方は", panel: "`divider` プロパティーで項目間の区切り線を制御できます。" },
-  { title: "利用条件は", panel: "MIT ライセンスで公開されています。" },
-];
-
-function AccordionItems() {
-  return accordionItems.map(({ panel, title }) => (
-    <AccordionParts.Item key={title}>
-      <AccordionParts.Header>
-        <AccordionParts.Trigger>
-          {title}
-          <AccordionParts.Indicator>
-            <ChevronDownIcon />
-          </AccordionParts.Indicator>
-        </AccordionParts.Trigger>
-      </AccordionParts.Header>
-      <AccordionParts.Panel>{panel}</AccordionParts.Panel>
-    </AccordionParts.Item>
-  ));
-}
-
-export const Divider = meta.story({
-  name: "区切り線",
-  ...ctrl({
+    outlined: false,
+    separator: false,
     disabled: false,
-    multiple: true,
-    divider: true,
-    outlined: true,
-    radius: "md",
-    size: "md",
   }),
   render(props) {
     return (
-      <div className="flex w-80 flex-col gap-6">
-        <div>
-          <AccordionParts.Root {...props}>
-            <AccordionItems />
-          </AccordionParts.Root>
-          <p className="mt-1">区切り線あり（既定）</p>
-        </div>
-        <div>
-          <AccordionParts.Root {...props} divider={false}>
-            <AccordionItems />
-          </AccordionParts.Root>
-          <p className="mt-1">区切り線なし（`divider={false}`）</p>
-        </div>
-      </div>
-    );
-  },
-});
-
-export const Radius = meta.story({
-  name: "角丸",
-  ...ctrl({
-    disabled: false,
-    multiple: false,
-    divider: true,
-    outlined: true,
-    size: "md",
-  }),
-  render(props) {
-    return (
-      <div className="flex w-full flex-col gap-4">
-        {(["none", "sm", "md", "lg"] as const).map((radius) => (
-          <div key={radius} className="w-80">
-            <Accordion {...props} title={`角丸 "${radius}"`} radius={radius}>
-              `radius` プロパティーで角丸の大きさを指定できます。
-            </Accordion>
-          </div>
+      <div className="w-80 flex flex-col gap-6">
+        {VARIANTS.map((variant) => (
+          <Accordion {...props} key={variant} items={ITEMS} variant={variant} />
         ))}
       </div>
     );
@@ -287,49 +193,149 @@ export const Radius = meta.story({
 export const Sizes = meta.story({
   name: "大きさ",
   ...ctrl({
-    disabled: false,
+    variant: "liquid",
+    radius: undefined,
     multiple: false,
-    divider: true,
-    outlined: true,
-    radius: "md",
+    outlined: false,
+    separator: false,
+    disabled: false,
   }),
   render(props) {
     return (
-      <div className="flex w-80 flex-col gap-4">
+      <div className="w-80 flex flex-col gap-6">
         {SIZES.map((size) => (
-          <Accordion key={size} {...props} size={size} title={`サイズ "${size}"`}>
-            `size` プロパティーで見出しの大きさを指定できます。
-          </Accordion>
+          <Accordion {...props} key={size} size={size} items={ITEMS} />
         ))}
       </div>
     );
   },
 });
 
-export const Disabled = meta.story({
-  name: "無効",
+export const Radii = meta.story({
+  name: "角丸",
   ...ctrl({
-    disabled: true,
-    multiple: false,
-    divider: true,
-    outlined: true,
-    radius: "md",
+    variant: "liquid",
     size: "md",
+    multiple: false,
+    outlined: false,
+    separator: false,
+    disabled: false,
   }),
   render(props) {
     return (
-      <div className="flex w-80 flex-col gap-4">
-        <Accordion {...props} title="すべて無効">
-          `disabled` を渡すと、アコーディオンのすべての項目が操作できなくなります。
-        </Accordion>
-        <Accordion
-          {...props}
-          title="項目単位で無効"
-          disabled={false}
-          slotProps={{ item: { disabled: true } }}
-        >
-          `slotProps.item` に `disabled` を渡すと、項目単位で無効化できます。
-        </Accordion>
+      <div className="w-80 flex flex-col gap-6">
+        {RADII.map((radius) => (
+          <Accordion {...props} key={radius} items={ITEMS.slice(0, 2)} radius={radius} />
+        ))}
+      </div>
+    );
+  },
+});
+
+export const WithOutline = meta.story({
+  name: "枠線付き",
+  ...ctrl({
+    size: "md",
+    radius: undefined,
+    multiple: false,
+    separator: false,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="w-80 flex flex-col gap-6">
+        {VARIANTS.map((variant) => (
+          <Accordion {...props} key={variant} items={ITEMS} variant={variant} outlined />
+        ))}
+      </div>
+    );
+  },
+});
+
+export const WithSeparator = meta.story({
+  name: "区切り線付き",
+  ...ctrl({
+    variant: "liquid",
+    size: "md",
+    radius: undefined,
+    multiple: false,
+    outlined: false,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="w-80">
+        <Accordion {...props} items={ITEMS} separator />
+      </div>
+    );
+  },
+});
+
+export const MultipleExpanded = meta.story({
+  name: "複数展開",
+  ...ctrl({
+    variant: "liquid",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    separator: false,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="w-80">
+        <Accordion {...props} items={ITEMS} multiple />
+      </div>
+    );
+  },
+});
+
+export const FullyDisabled = meta.story({
+  name: "完全無効化",
+  ...ctrl({
+    variant: "liquid",
+    size: "md",
+    radius: undefined,
+    multiple: false,
+    outlined: false,
+    separator: false,
+  }),
+  render(props) {
+    return (
+      <div className="w-80">
+        <Accordion {...props} items={ITEMS} disabled defaultValue={["2"]} />
+      </div>
+    );
+  },
+});
+
+export const PartialDisabled = meta.story({
+  name: "一部無効化",
+  ...ctrl({
+    variant: "liquid",
+    size: "md",
+    radius: undefined,
+    multiple: false,
+    outlined: false,
+    separator: false,
+  }),
+  render(props) {
+    return (
+      <div className="w-80 flex flex-col gap-6">
+        {[
+          ["2", "3", "4"],
+          ["1", "3", "5"],
+        ].map((disabledValue) => (
+          <Accordion
+            {...props}
+            key={disabledValue.join()}
+            items={ITEMS.map((item) => ({
+              ...item,
+              disabled: disabledValue.includes(item.value),
+            }))}
+            defaultValue={["3"]}
+          />
+        ))}
       </div>
     );
   },

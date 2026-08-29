@@ -1,12 +1,19 @@
 export * from "./accordion.parts.jsx";
 
 export {
+  type AccordionAPI,
   type AccordionSize,
   type AccordionProps,
   type AccordionState,
+  type AccordionValue,
   type AccordionRadius,
+  type AccordionVariant,
   type AccordionSlotProps,
-  type AccordionPartsProps,
+  type AccordionItemObject,
+  type IAccordionItemRenderer,
+  type AccordionChangeEventReason,
+  type AccordionChangeEventDetails,
+  useAPI,
   Accordion,
-  useAccordion,
+  useAccordionAPI,
 } from "./accordion.jsx";

@@ -19,8 +19,8 @@
       )
   ) {
     all: unset;
-    display: revert;
     color-scheme: var(--sui-theme);
+    display: revert;
   }
 
   /* 推奨される box-sizing の値 */

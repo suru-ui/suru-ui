@@ -33,4 +33,8 @@
       var(--sui-border_width-offset)
     );
   }
+
+  @function --sui-icon_color(--canvas_text, --canvas) {
+    result: color-mix(in oklab, var(--canvas_text) 100%, var(--canvas) 20%);
+  }
 }

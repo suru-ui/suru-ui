@@ -1,238 +1,345 @@
 import * as React from "react";
 
+import type { LikelyVisibleNode } from "../_is-likely-visible-node.js";
+import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
+import { type $InferItemValue, isItemObject } from "./_accordion.jsx";
 import {
   type AccordionRootSize,
   type AccordionItemProps,
   type AccordionRootProps,
   type AccordionRootState,
-  type AccordionPanelProps,
+  type AccordionRootValue,
   type AccordionRootRadius,
-  type AccordionHeaderProps,
+  type AccordionRootVariant,
+  type AccordionContentProps,
+  type AccordionHeadingProps,
   type AccordionTriggerProps,
   type AccordionIndicatorProps,
+  type AccordionRootItemObject,
+  type IAccordionRootItemRenderer,
+  type AccordionRootChangeEventReason,
+  type AccordionRootChangeEventDetails,
   AccordionItem,
   AccordionRoot,
-  AccordionPanel,
-  AccordionHeader,
+  AccordionContent,
+  AccordionHeading,
   AccordionTrigger,
   AccordionIndicator,
 } from "./accordion.parts.jsx";
 
 /**
- * {@link AccordionRootRadius} です。
+ * {@link AccordionRootChangeEventDetails}
+ */
+export type AccordionChangeEventDetails = AccordionRootChangeEventDetails;
+
+/**
+ * {@link AccordionRootChangeEventReason}
+ */
+export type AccordionChangeEventReason = AccordionRootChangeEventReason;
+
+/**
+ * {@link AccordionRootItemObject}
+ */
+export type AccordionItemObject = AccordionRootItemObject;
+
+/**
+ * {@link IAccordionRootItemRenderer}
+ */
+export interface IAccordionItemRenderer<TItem = any> extends IAccordionRootItemRenderer<TItem> {}
+
+/**
+ * {@link AccordionRootRadius}
  */
 export type AccordionRadius = AccordionRootRadius;
 
 /**
- * {@link AccordionRootSize} です。
+ * {@link AccordionRootSize}
  */
 export type AccordionSize = AccordionRootSize;
 
 /**
- * {@link Accordion} の各パーツに渡すプロパティーです。
- *
- * 各パーツの指定値は、パーツに渡される既定のプロパティーより優先されます。
- * `trigger.children` を指定した場合は `title` と既定の Indicator が表示されません。
+ * {@link AccordionRootValue}
+ */
+export type AccordionValue<TValue = any> = AccordionRootValue<TValue>;
+
+/**
+ * {@link AccordionRootVariant}
+ */
+export type AccordionVariant = AccordionRootVariant;
+
+/**
+ * {@link Accordion} の各パーツに渡す props です。
  */
 export type AccordionSlotProps = {
   /**
-   * {@link AccordionHeader} に渡すプロパティーです。
+   * {@link AccordionContent} に渡す props です。
    */
-  readonly header?: AccordionHeaderProps | undefined;
+  readonly content?: Omit<AccordionContentProps, "children"> | undefined;
 
   /**
-   * {@link AccordionIndicator} に渡すプロパティーです。
-   * `children` を指定すると、既定の下向き矢印アイコンより優先されます。
+   * {@link AccordionHeading} に渡す props です。
+   */
+  readonly heading?: Omit<AccordionHeadingProps, "children"> | undefined;
+
+  /**
+   * {@link AccordionIndicator} に渡す props です。
    */
   readonly indicator?: AccordionIndicatorProps | undefined;
 
   /**
-   * {@link AccordionItem} に渡すプロパティーです。
+   * {@link AccordionItem} に渡す props です。
    */
-  readonly item?: AccordionItemProps | undefined;
+  readonly item?: Omit<AccordionItemProps, "children"> | undefined;
 
   /**
-   * {@link AccordionPanel} に渡すプロパティーです。
+   * {@link AccordionTrigger} に渡す props です。
    */
-  readonly panel?: AccordionPanelProps | undefined;
-
-  /**
-   * {@link AccordionTrigger} に渡すプロパティーです。
-   * `children` を指定すると、`title` より優先されてトリガー全体を置き換えます。
-   */
-  readonly trigger?: AccordionTriggerProps | undefined;
+  readonly trigger?: Omit<AccordionTriggerProps, "children"> | undefined;
 };
 
 /**
- * 各パーツに渡すプロパティーをまとめたものです。
+ * {@link Accordion} を構成する各パーツの props を作るための API です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AccordionPartsProps = {
+export interface AccordionAPI<TItem = any> {
   /**
-   * {@link AccordionHeader} に渡すプロパティーです。
-   */
-  readonly header: AccordionHeaderProps;
-
-  /**
-   * {@link AccordionIndicator} に渡すプロパティーです。
+   * {@link AccordionContent} に渡す props を取得します。
    *
-   * `children` を指定しないときは、デフォルトの下向き矢印アイコンが設定されます。
+   * @param item 項目です。
    */
-  readonly indicator: AccordionIndicatorProps;
+  getContentProps(item: TItem): AccordionContentProps;
 
   /**
-   * {@link AccordionItem} に渡すプロパティーです。
+   * {@link AccordionHeading} に渡す props を取得します。
    */
-  readonly item: AccordionItemProps;
+  getHeadingProps(): Omit<AccordionHeadingProps, "children">;
 
   /**
-   * {@link AccordionPanel} に渡すプロパティーです。
+   * {@link AccordionIndicator} に渡す props を取得します。
+   */
+  getIndicatorProps(): AccordionIndicatorProps;
+
+  /**
+   * {@link AccordionItem} に渡す props を取得します。
    *
-   * `children` にはパネルのコンテンツが設定されています。
+   * @param item 項目です。
    */
-  readonly panel: AccordionPanelProps;
+  getItemProps(item: TItem): Omit<AccordionItemProps, "children">;
 
   /**
-   * {@link AccordionRoot} に渡すプロパティーです。
+   * {@link AccordionRoot} に渡す props を取得します。
    */
-  readonly root: AccordionRootProps;
+  getRootProps(): Omit<AccordionRootProps, "children"> & {
+    children: LikelyVisibleNode | null;
+  };
 
   /**
-   * {@link AccordionTrigger} に渡すプロパティーです。
+   * 項目のタイトルを取得します。
    *
-   * `children` を指定しないときは、`title` と Indicator を表示する既定の内容が設定されます。
+   * @param item 項目です。
    */
-  readonly trigger: AccordionTriggerProps;
-};
+  getTitle(item: TItem): React.ReactNode;
+
+  /**
+   * {@link AccordionTrigger} に渡す props を取得します。
+   */
+  getTriggerProps(): Omit<AccordionTriggerProps, "children">;
+}
 
 /**
- * {@link Accordion} の状態です。
+ * {@link Accordion} が持つ状態です。
  */
 export type AccordionState = AccordionRootState;
 
 /**
- * {@link Accordion} コンポーネントのプロパティーです。
+ * {@link Accordion} に渡す props です。
+ *
+ * @template TItem 項目の型です。
+ * @template TValue 項目の値の型です。
  */
-export type AccordionProps = Omit<AccordionRootProps, "children"> & {
+export type AccordionProps<TItem = any, TValue = any> = AccordionRootProps<TItem, TValue> & {
   /**
-   * アコーディオンのパネルに表示するコンテンツです。
-   * パネルを閉じると、既定ではパネル要素が DOM から除去されます。
-   */
-  children?: React.ReactNode | undefined;
-
-  /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-   * `trigger.children` を指定すると、`title` と既定の Indicator は表示されません。
+   * 各パーツに個別の props を渡すためのオブジェクトです。
+   *
+   * 各パーツの props が優先されます。
    */
   slotProps?: AccordionSlotProps | undefined;
-
-  /**
-   * アコーディオンの見出し（Trigger に表示するラベル）です。
-   * `slotProps.trigger.children` を指定した場合は、そちらが優先されます。
-   */
-  title?: React.ReactNode | undefined;
 };
 
-/**
- * {@link Accordion} の各パーツに渡すプロパティーを作るフックです。
- */
-export function useAccordion(props: AccordionProps): AccordionPartsProps {
-  const { title, children, slotProps, ...rootProps } = props;
-  const {
-    item: itemProps,
-    panel: panelProps,
-    header: headerProps,
-    trigger: triggerProps,
-    indicator: indicatorProps,
-  } = slotProps ?? {};
-  const { children: triggerChildren, ...otherTriggerProps } = triggerProps ?? {};
-  const indicator: AccordionIndicatorProps = {
-    children: <SuiAccordionIcon />,
-    ...indicatorProps,
-  };
-
-  return {
-    root: rootProps,
-    item: itemProps ?? {},
-    header: headerProps ?? {},
-    trigger: {
-      ...otherTriggerProps,
-      children: triggerChildren ?? (
-        <>
-          {title}
-          <AccordionIndicator {...indicator} />
-        </>
-      ),
-    },
-    indicator,
-    panel: {
-      ...panelProps,
-      children,
-    },
-  };
+interface IUseAccordionAPI {
+  /**
+   * {@link Accordion} を構成する各パーツの props などを作成します。
+   *
+   * @template TItem 項目の型です。
+   * @template TValue 項目の値の型です。
+   * @param props {@link Accordion} の props です。
+   * @returns アコーディオンの API 群です
+   */
+  <TItem = never, TValue = $InferItemValue<TItem>>(
+    props: AccordionProps<TItem, TValue>,
+  ): AccordionAPI<TItem>;
 }
 
 /**
- * アコーディオンの 1 項目を表示するコンポーネントです。
- *
- * 見出し（`title`）とコンテンツ（`children`）から、展開・折りたたみ可能なアコーディオンを組み立てます。
- * 複数の項目を扱う場合は、{@link AccordionRoot|Root} を直接組み立てます。
+ * {@link Accordion} を構成する各パーツの props などを作るためのフックです。
  */
-export const Accordion: IComponent<AccordionProps> = function SuiAccordion(props) {
-  const partsProps = useAccordion(props);
+export const useAccordionAPI: IUseAccordionAPI = function useSuiAccordionAPI(props) {
+  const {
+    items = [],
+    children,
+    slotProps: {
+      item: itemProps = {},
+      content: contentProps = {},
+      heading: headingProps = {},
+      trigger: triggerProps = {},
+      indicator: indicatorProps = {},
+    } = {},
+    ...otherRootProps
+  } = props;
+
+  return {
+    getTitle(item) {
+      return isItemObject(item) ? toReactNode(item.title) : null;
+    },
+    getItemProps(item) {
+      if (!isItemObject(item)) {
+        return itemProps;
+      }
+
+      const {
+        // title と content を取り除いた props を AccordionItem の props とします。
+        title: _title,
+        content: _content,
+        htmlTitle: title,
+        ...otherItemprops
+      } = item as AccordionItemObject;
+
+      return {
+        ...otherItemprops,
+        title,
+        ...itemProps, // JSDoc 通り、`slotProps.item` を優先します。
+      };
+    },
+    getRootProps() {
+      return {
+        ...otherRootProps,
+        items,
+        children: typeof children === "function" ? items.map(children) : toReactNode(children),
+      };
+    },
+    getContentProps(item) {
+      return {
+        ...contentProps,
+        children: isItemObject(item) ? toReactNode(item.content) : null,
+      };
+    },
+    getHeadingProps() {
+      return headingProps;
+    },
+    getTriggerProps() {
+      return triggerProps;
+    },
+    getIndicatorProps() {
+      return indicatorProps;
+    },
+  };
+};
+
+/**
+ * {@link useAccordionAPI}
+ */
+export const useAPI: IUseAccordionAPI = useAccordionAPI;
+
+interface IAccordion extends IComponent<AccordionProps> {
+  /**
+   * @template TItem 項目の型です。
+   * @template TValue 項目の値の型です。
+   */
+  <TItem = never, TValue = $InferItemValue<TItem>>(
+    props: AccordionProps<TItem, TValue>,
+  ): IComponent.Return;
+}
+
+/**
+ * アコーディオンを表示するコンポーネントです。
+ */
+export const Accordion: IAccordion = function SuiAccordion(props: AccordionProps) {
+  const api = useAPI(props);
+  const { children, ...otherRootProps } = api.getRootProps();
 
   return (
-    <AccordionRoot {...partsProps.root}>
-      <AccordionItem {...partsProps.item}>
-        <AccordionHeader {...partsProps.header}>
-          <AccordionTrigger {...partsProps.trigger} />
-        </AccordionHeader>
-        <AccordionPanel {...partsProps.panel} />
-      </AccordionItem>
+    <AccordionRoot {...otherRootProps}>
+      {children ??
+        ((item, index) => (
+          <AccordionItem key={index} {...api.getItemProps(item)}>
+            <AccordionHeading {...api.getHeadingProps()}>
+              <AccordionTrigger {...api.getTriggerProps()}>
+                {api.getTitle(item)}
+                <AccordionIndicator {...api.getIndicatorProps()} />
+              </AccordionTrigger>
+            </AccordionHeading>
+            <AccordionContent {...api.getContentProps(item)} />
+          </AccordionItem>
+        ))}
     </AccordionRoot>
   );
 };
 
-/**
- * {@link Accordion} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Accordion {
   /**
-   * {@link AccordionState} です。
+   * {@link AccordionState}
    */
   export type State = AccordionState;
 
   /**
-   * {@link AccordionProps} です。
+   * {@link AccordionProps}
    */
   export type Props = AccordionProps;
 
   /**
-   * {@link AccordionSlotProps} です。
+   * {@link AccordionSlotProps}
    */
   export type SlotProps = AccordionSlotProps;
 
   /**
-   * {@link AccordionRadius} です。
+   * {@link AccordionChangeEventDetails}
+   */
+  export type ChangeEventDetails = AccordionChangeEventDetails;
+
+  /**
+   * {@link AccordionChangeEventReason}
+   */
+  export type ChangeEventReason = AccordionChangeEventReason;
+
+  /**
+   * {@link AccordionItemObject}
+   */
+  export type ItemObject = AccordionItemObject;
+
+  /**
+   * {@link IAccordionItemRenderer}
+   */
+  export interface IItemRenderer<TItem = any> extends IAccordionItemRenderer<TItem> {}
+
+  /**
+   * {@link AccordionRadius}
    */
   export type Radius = AccordionRadius;
 
   /**
-   * {@link AccordionSize} です。
+   * {@link AccordionSize}
    */
   export type Size = AccordionSize;
-}
 
-function SuiAccordionIcon() {
-  return (
-    <svg fill="none" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
-      <path
-        d="M6 9l6 6 6-6"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
+  /**
+   * {@link AccordionValue}
+   */
+  export type Value<TValue = any> = AccordionValue<TValue>;
+
+  /**
+   * {@link AccordionVariant}
+   */
+  export type Variant = AccordionVariant;
 }

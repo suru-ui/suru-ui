@@ -2,9 +2,11 @@ import { Accordion } from "@base-ui/react/accordion";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
+import toReactNode from "../_to-react-node.js";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import { type $InferItemValue, ChevronIcon, isItemObject } from "./_accordion.jsx";
 
 import "./accordion.css";
 
@@ -12,39 +14,118 @@ import "./accordion.css";
 // ----
 
 /**
+ * アコーディオンの項目の開閉状態が変更するイベントの詳細です。
+ */
+export type AccordionRootChangeEventDetails = Accordion.Root.ChangeEventDetails;
+
+/**
+ * アコーディオンの項目の開閉状態を変更する理由です。
+ */
+export type AccordionRootChangeEventReason = Accordion.Root.ChangeEventReason;
+
+/**
+ * アコーディオンの項目を表すオブジェクトです。
+ *
+ * `title` と `content` を含み、その他のプロパティーは {@link AccordionItem} に渡されます。
+ */
+export type AccordionRootItemObject = Omit<AccordionItemProps, "title"> & {
+  /**
+   * 項目のパネルに表示する内容です。
+   */
+  content: React.ReactNode;
+
+  /**
+   * {@link https://developer.mozilla.org/docs/Web/HTML/Reference/Global_attributes/title|title}
+   */
+  htmlTitle?: React.HTMLAttributes<HTMLDivElement>["title"];
+
+  /**
+   * 項目の見出しに表示するタイトルです。
+   */
+  title: React.ReactNode;
+};
+
+/**
+ * アコーディオンの各項目をレンダリングする関数のインターフェイスです。
+ *
+ * @template TItem 項目の型です。
+ */
+export interface IAccordionRootItemRenderer<TItem = any> {
+  /**
+   * 項目をレンダリングします。
+   *
+   * @param item 現在の項目です。
+   * @param index 項目のインデックスです。
+   * @param items すべての項目です。
+   * @returns レンダリングする内容です。
+   */
+  (item: TItem, index: number, items: readonly TItem[]): React.ReactNode;
+}
+
+/**
  * アコーディオンの角丸です。
  *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type AccordionRootRadius = "none" | Size;
 
 /**
  * アコーディオンの大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type AccordionRootSize = Size;
 
 /**
- * {@link AccordionRoot} の状態です。
+ * アコーディオンの主な外観の種類です。
+ *
+ * - `"naked"`: 背景なし
+ * - `"liquid"`: 薄い塗りつぶし
  */
-export type AccordionRootState = Accordion.Root.State;
+export type AccordionRootVariant = "naked" | "liquid";
 
 /**
- * {@link AccordionRoot} に渡すプロパティーです。
+ * アコーディオンの項目の値です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type AccordionRootProps = React.ComponentProps<typeof Accordion.Root> & {
+export type AccordionRootValue<TValue = any> = Accordion.Root.State<TValue>;
+
+/**
+ * {@link AccordionRoot} が持つ状態です。
+ *
+ * @template TValue 項目の値の型です。
+ */
+export type AccordionRootState<TValue = any> = Accordion.Root.State<TValue>;
+
+/**
+ * {@link AccordionRoot} に渡す props です。
+ *
+ * @template TItem 項目の型です。
+ * @template TValue 項目の値の型です。
+ */
+export type AccordionRootProps<TItem = any, TValue = any> = Omit<
+  React.ComponentProps<typeof Accordion.Root<TValue>>,
+  "children"
+> & {
   /**
-   * 隣接する項目の区切り線を表示するかどうかを指定します。
+   * アコーディオンの内容、または各項目をレンダリングする関数です。
    *
-   * @default true
+   * 関数を指定した場合は {@link AccordionRootProps.items|items} の各項目が引数として渡されます。
    */
-  divider?: boolean | undefined;
+  children?: React.ReactNode | IAccordionRootItemRenderer<TItem>;
+
+  /**
+   * アコーディオンの項目です。
+   *
+   * `children` に関数を指定した場合、この配列の各項目が引数として渡されます。
+   */
+  items?: readonly TItem[] | undefined;
 
   /**
    * アコーディオンの枠線を表示するかどうかを指定します。
@@ -56,28 +137,55 @@ export type AccordionRootProps = React.ComponentProps<typeof Accordion.Root> & {
   /**
    * アコーディオンの角丸を指定します。
    *
-   * @default "md"
+   * 既定値は {@link AccordionRootProps.size|size}
    */
   radius?: AccordionRootRadius | undefined;
 
   /**
-   * アコーディオンのサイズを指定します。
+   * アコーディオンの項目が隣接する項目の区切り線を表示するかどうかを指定します。
+   *
+   * @default false
+   */
+  separator?: boolean | undefined;
+
+  /**
+   * アコーディオンの大きさを指定します。
    *
    * @default "md"
    */
   size?: AccordionRootSize | undefined;
+
+  /**
+   * アコーディオンの主な外観を指定します。
+   *
+   * @default "liquid"
+   */
+  variant?: AccordionRootVariant | undefined;
 };
+
+interface IAccordionRoot extends IComponent<AccordionRootProps> {
+  /**
+   * @template TItem 項目の型です。
+   * @template TValue 項目の値の型です。
+   */
+  <TItem = never, TValue = $InferItemValue<TItem>>(
+    props: AccordionRootProps<TItem, TValue>,
+  ): IComponent.Return;
+}
 
 /**
  * アコーディオンのルート要素です。
  */
-export const AccordionRoot: IComponent<AccordionRootProps> = function SuiAccordionRoot(props) {
+export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: AccordionRootProps) {
   const {
     size = "md",
-    radius = "md",
-    divider = true,
+    items = [],
+    radius = size,
+    variant = "liquid",
+    children = defaultRootItemRenderer,
     outlined = false,
     className,
+    separator = false,
     ...otherProps
   } = props;
 
@@ -87,145 +195,238 @@ export const AccordionRoot: IComponent<AccordionRootProps> = function SuiAccordi
       className={cn(
         className,
         "sui_accordion",
-        divider && "sui_accordion-divider",
-        outlined && "sui_accordion-outlined",
-        `sui_accordion-radius_${radius}`,
         `sui_accordion-size_${size}`,
+        `sui_accordion-radius_${radius}`,
+        `sui_accordion-variant_${variant}`,
+        outlined && "sui_accordion-outlined",
+        separator && "sui_accordion-separator",
+        (state) => state.disabled && "sui_accordion-disabled",
       )}
-    />
+      data-scope=""
+    >
+      {typeof children === "function" ? items.map(children) : children}
+    </Accordion.Root>
   );
 };
 
-/**
- * {@link AccordionRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+const defaultRootItemRenderer: IAccordionRootItemRenderer = (item, index) => {
+  if (!isItemObject(item)) {
+    return toReactNode(item);
+  }
+
+  const { title, content, htmlTitle, ...otherItemProps } = item;
+
+  return (
+    <Item {...otherItemProps} key={index} title={htmlTitle}>
+      <Heading>
+        <Trigger>
+          {toReactNode(title)}
+          <Indicator />
+        </Trigger>
+      </Heading>
+      <Content>{toReactNode(content)}</Content>
+    </Item>
+  );
+};
+
 export namespace Root {
   /**
-   * {@link AccordionRootState} です。
+   * {@link AccordionRootState}
    */
-  export type State = AccordionRootState;
+  export type State<TValue = any> = AccordionRootState<TValue>;
 
   /**
-   * {@link AccordionRootProps} です。
+   * {@link AccordionRootProps}
    */
-  export type Props = AccordionRootProps;
+  export type Props<TItem = any, TValue = any> = AccordionRootProps<TItem, TValue>;
 
   /**
-   * {@link AccordionRootRadius} です。
+   * {@link AccordionRootChangeEventDetails}
+   */
+  export type ChangeEventDetails = AccordionRootChangeEventDetails;
+
+  /**
+   * {@link AccordionRootChangeEventReason}
+   */
+  export type ChangeEventReason = AccordionRootChangeEventReason;
+
+  /**
+   * {@link AccordionRootItemObject}
+   */
+  export type ItemObject = AccordionRootItemObject;
+
+  /**
+   * {@link IAccordionRootItemRenderer}
+   */
+  export interface IItemRenderer<TItem = any> extends IAccordionRootItemRenderer<TItem> {}
+
+  /**
+   * {@link AccordionRootRadius}
    */
   export type Radius = AccordionRootRadius;
 
   /**
-   * {@link AccordionRootSize} です。
+   * {@link AccordionRootSize}
    */
   export type Size = AccordionRootSize;
+
+  /**
+   * {@link AccordionRootValue}
+   */
+  export type Value<TValue = any> = AccordionRootValue<TValue>;
+
+  /**
+   * {@link AccordionRootVariant}
+   */
+  export type Variant = AccordionRootVariant;
+}
+
+interface IAccordion extends IComponent<Root.Props> {
+  /**
+   * @template TItem 項目の型です。
+   * @template TValue 項目の値の型です。
+   */
+  <TItem = never, TValue = $InferItemValue<TItem>>(
+    props: Root.Props<TItem, TValue>,
+  ): IComponent.Return;
 }
 
 /**
- * {@link AccordionRoot} です。
+ * {@link AccordionRoot}
  */
-export const Root: IComponent<Root.Props> = AccordionRoot;
+export const Root: IAccordion = AccordionRoot;
 
 // Item
 // ----
 
 /**
- * {@link AccordionItem} の状態です。
+ * アコーディオンの項目の開閉状態が変更するイベントの詳細です。
+ */
+export type AccordionItemChangeEventDetails = Accordion.Item.ChangeEventDetails;
+
+/**
+ * アコーディオンの項目の開閉状態を変更する理由です。
+ */
+export type AccordionItemChangeEventReason = Accordion.Item.ChangeEventReason;
+
+/**
+ * {@link AccordionItem} が持つ状態です。
  */
 export type AccordionItemState = Accordion.Item.State;
 
 /**
- * {@link AccordionItem} に渡すプロパティーです。
+ * {@link AccordionItem} に渡す props です。
  */
 export type AccordionItemProps = React.ComponentProps<typeof Accordion.Item>;
 
 /**
  * アコーディオンの項目要素です。
- *
- * 見出しとパネルを 1 組にしてまとめます。
  */
 export const AccordionItem: IComponent<AccordionItemProps> = function SuiAccordionItem(props) {
   const { className, ...otherProps } = props;
 
-  return <Accordion.Item {...otherProps} className={cn(className, "sui_accordion_item")} />;
+  return (
+    <Accordion.Item
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_accordion_item",
+        (state) => state.open && "sui_accordion_item-open",
+        (state) => state.disabled && "sui_accordion_item-disabled",
+      )}
+    />
+  );
 };
 
-/**
- * {@link AccordionItem} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Item {
   /**
-   * {@link AccordionItemState} です。
+   * {@link AccordionItemState}
    */
   export type State = AccordionItemState;
 
   /**
-   * {@link AccordionItemProps} です。
+   * {@link AccordionItemProps}
    */
   export type Props = AccordionItemProps;
+
+  /**
+   * {@link AccordionItemChangeEventDetails}
+   */
+  export type ChangeEventDetails = AccordionItemChangeEventDetails;
+
+  /**
+   * {@link AccordionItemChangeEventReason}
+   */
+  export type ChangeEventReason = AccordionItemChangeEventReason;
 }
 
 /**
- * {@link AccordionItem} です。
+ * {@link AccordionItem}
  */
 export const Item: IComponent<Item.Props> = AccordionItem;
 
-// Header
-// ------
+// Heading
+// -------
 
 /**
- * {@link AccordionHeader} の状態です。
+ * {@link AccordionHeading} が持つ状態です。
  */
-export type AccordionHeaderState = Accordion.Header.State;
+export type AccordionHeadingState = Accordion.Header.State;
 
 /**
- * {@link AccordionHeader} に渡すプロパティーです。
+ * {@link AccordionHeading} に渡す props です。
  */
-export type AccordionHeaderProps = React.ComponentProps<typeof Accordion.Header>;
+export type AccordionHeadingProps = React.ComponentProps<typeof Accordion.Header>;
 
 /**
  * アコーディオンの見出し要素です。
  */
-export const AccordionHeader: IComponent<AccordionHeaderProps> = function SuiAccordionHeader(
+export const AccordionHeading: IComponent<AccordionHeadingProps> = function SuiAccordionHeading(
   props,
 ) {
   const { className, ...otherProps } = props;
 
-  return <Accordion.Header {...otherProps} className={cn(className, "sui_accordion_header")} />;
+  return <Accordion.Header {...otherProps} className={cn(className, "sui_accordion_heading")} />;
 };
 
-/**
- * {@link AccordionHeader} の状態やプロパティーをまとめた型名前空間です。
- */
-export namespace Header {
+export namespace Heading {
   /**
-   * {@link AccordionHeaderState} です。
+   * {@link AccordionHeadingState}
    */
-  export type State = AccordionHeaderState;
+  export type State = AccordionHeadingState;
 
   /**
-   * {@link AccordionHeaderProps} です。
+   * {@link AccordionHeadingProps}
    */
-  export type Props = AccordionHeaderProps;
+  export type Props = AccordionHeadingProps;
 }
 
 /**
- * {@link AccordionHeader} です。
+ * {@link AccordionHeading}
  */
-export const Header: IComponent<Header.Props> = AccordionHeader;
+export const Heading: IComponent<Heading.Props> = AccordionHeading;
 
 // Trigger
 // -------
 
 /**
- * {@link AccordionTrigger} の状態です。
+ * {@link AccordionTrigger} が持つ状態です。
  */
 export type AccordionTriggerState = Accordion.Trigger.State;
 
 /**
- * {@link AccordionTrigger} に渡すプロパティーです。
+ * {@link AccordionTrigger} に渡す props です。
  */
-export type AccordionTriggerProps = React.ComponentProps<typeof Accordion.Trigger>;
+export type AccordionTriggerProps = React.ComponentProps<typeof Accordion.Trigger> & {
+  /**
+   * `true` にすると Suru UI のスタイルがつかなくなります。
+   *
+   * これは主に、`render`  props でボタンコンポーネントを描画する際に使用されます。
+   *
+   * @default false
+   */
+  unstyled?: boolean | undefined;
+};
 
 /**
  * アコーディオンの開閉ボタン要素です。
@@ -233,28 +434,34 @@ export type AccordionTriggerProps = React.ComponentProps<typeof Accordion.Trigge
 export const AccordionTrigger: IComponent<AccordionTriggerProps> = function SuiAccordionTrigger(
   props,
 ) {
-  const { className, ...otherProps } = props;
+  const { unstyled = false, className, ...otherProps } = props;
 
-  return <Accordion.Trigger {...otherProps} className={cn(className, "sui_accordion_trigger")} />;
+  return (
+    <Accordion.Trigger
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_accordion_trigger",
+        unstyled && "sui_accordion_trigger-unstyled",
+      )}
+    />
+  );
 };
 
-/**
- * {@link AccordionTrigger} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Trigger {
   /**
-   * {@link AccordionTriggerState} です。
+   * {@link AccordionTriggerState}
    */
   export type State = AccordionTriggerState;
 
   /**
-   * {@link AccordionTriggerProps} です。
+   * {@link AccordionTriggerProps}
    */
   export type Props = AccordionTriggerProps;
 }
 
 /**
- * {@link AccordionTrigger} です。
+ * {@link AccordionTrigger}
  */
 export const Trigger: IComponent<Trigger.Props> = AccordionTrigger;
 
@@ -262,12 +469,12 @@ export const Trigger: IComponent<Trigger.Props> = AccordionTrigger;
 // ---------
 
 /**
- * {@link AccordionIndicator} の状態です。
+ * {@link AccordionIndicator} が持つ状態です。
  */
 export type AccordionIndicatorState = {};
 
 /**
- * {@link AccordionIndicator} に渡すプロパティーです。
+ * {@link AccordionIndicator} に渡す props です。
  */
 export type AccordionIndicatorProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
   RenderProps<AccordionIndicatorState>;
@@ -277,75 +484,85 @@ export type AccordionIndicatorProps = Omit<React.ComponentProps<"span">, keyof R
  */
 export const AccordionIndicator: IComponent<AccordionIndicatorProps> =
   function SuiAccordionIndicator(props) {
+    const { children = <ChevronIcon />, ...otherProps } = props;
+
     return useRender({
       defaultTagName: "span",
       props: [
-        props,
+        otherProps,
         {
+          children,
           className: "sui_accordion_indicator",
         },
       ],
     });
   };
 
-/**
- * {@link AccordionIndicator} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Indicator {
   /**
-   * {@link AccordionIndicatorState} です。
+   * {@link AccordionIndicatorState}
    */
   export type State = AccordionIndicatorState;
 
   /**
-   * {@link AccordionIndicatorProps} です。
+   * {@link AccordionIndicatorProps}
    */
   export type Props = AccordionIndicatorProps;
 }
 
 /**
- * {@link AccordionIndicator} です。
+ * {@link AccordionIndicator}
  */
 export const Indicator: IComponent<Indicator.Props> = AccordionIndicator;
 
-// Panel
-// -----
+// Content
+// -------
 
 /**
- * {@link AccordionPanelState} です。
+ * {@link AccordionContentState}
  */
-export type AccordionPanelState = Accordion.Panel.State;
+export type AccordionContentState = Accordion.Panel.State;
 
 /**
- * {@link AccordionPanelProps} です。
+ * {@link AccordionContentProps}
  */
-export type AccordionPanelProps = React.ComponentProps<typeof Accordion.Panel>;
+export type AccordionContentProps = React.ComponentProps<typeof Accordion.Panel>;
 
 /**
  * アコーディオンのパネル要素です。
  */
-export const AccordionPanel: IComponent<AccordionPanelProps> = function SuiAccordionPanel(props) {
+export const AccordionContent: IComponent<AccordionContentProps> = function SuiAccordionContent(
+  props,
+) {
   const { className, ...otherProps } = props;
 
-  return <Accordion.Panel {...otherProps} className={cn(className, "sui_accordion_panel")} />;
+  return (
+    <Accordion.Panel
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_accordion_content",
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_accordion_content-transition_status_${state.transitionStatus}`,
+      )}
+    />
+  );
 };
 
-/**
- * {@link AccordionPanel} の状態やプロパティーをまとめた型名前空間です。
- */
-export namespace Panel {
+export namespace Content {
   /**
-   * {@link AccordionPanel} の状態です。
+   * {@link AccordionContentState}
    */
-  export type State = AccordionPanelState;
+  export type State = AccordionContentState;
 
   /**
-   * {@link AccordionPanel} に渡すプロパティーです。
+   * {@link AccordionContentProps}
    */
-  export type Props = AccordionPanelProps;
+  export type Props = AccordionContentProps;
 }
 
 /**
- * {@link AccordionPanel} です。
+ * {@link AccordionContent}
  */
-export const Panel: IComponent<Panel.Props> = AccordionPanel;
+export const Content: IComponent<Content.Props> = AccordionContent;
