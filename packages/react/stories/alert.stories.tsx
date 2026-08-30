@@ -201,6 +201,30 @@ export const Colors = meta.story({
   },
 });
 
+export const Sizes = meta.story({
+  name: "大きさ",
+  ...ctrl({
+    title: "更新完了",
+    children: "プロフィールを更新しました。",
+    variant: "muted",
+    color: "grey",
+    radius: undefined,
+    outlined: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex w-[450px] flex-col gap-3">
+        {SIZES.map((size) => (
+          <div key={size} className="flex flex-col gap-2 w-[450px]">
+            <span>{size}</span>
+            <Alert {...props} icon={<InfoIcon />} size={size} />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
 export const Radius = meta.story({
   name: "角丸",
   ...ctrl({
@@ -209,7 +233,7 @@ export const Radius = meta.story({
     variant: "muted",
     color: "grey",
     size: "md",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -239,30 +263,6 @@ export const Outlined = meta.story({
       <div className="flex w-[450px] flex-col gap-3">
         <Alert {...props} icon={<InfoIcon />} title="枠線付き" outlined />
         <Alert {...props} icon={<InfoIcon />} title="枠線無し" />
-      </div>
-    );
-  },
-});
-
-export const Sizes = meta.story({
-  name: "大きさ",
-  ...ctrl({
-    title: "更新完了",
-    children: "プロフィールを更新しました。",
-    variant: "muted",
-    color: "grey",
-    radius: undefined,
-    outlined: false,
-  }),
-  render(props) {
-    return (
-      <div className="flex w-[450px] flex-col gap-3">
-        {SIZES.map((size) => (
-          <div key={size} className="flex flex-col gap-2 w-[450px]">
-            <span>{size}</span>
-            <Alert {...props} icon={<InfoIcon />} size={size} />
-          </div>
-        ))}
       </div>
     );
   },

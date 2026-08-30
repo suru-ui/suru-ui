@@ -22,23 +22,35 @@ export {
   type IAccordionItemRenderer,
   type AccordionChangeEventReason,
   type AccordionChangeEventDetails,
-  useAPI,
   Accordion,
   useAccordionAPI,
 } from "./accordion/index.js";
-
-// buttons
 export {
+  type AlertAPI,
+  type AlertSize,
+  type AlertColor,
+  type AlertProps,
+  type AlertState,
+  type AlertRadius,
+  type AlertVariant,
+  type AlertSlotProps,
+  Alert,
+  useAlertAPI,
+} from "./alert/index.js";
+export {
+  type ButtonAPI,
   type ButtonSize,
   type ButtonColor,
   type ButtonProps,
   type ButtonState,
   type ButtonRadius,
-  type ButtonContext,
   type ButtonVariant,
   type ButtonSlotProps,
   Button,
+  useButtonAPI,
 } from "./button/index.js";
+
+// TODO: 以下のコンポーネントをすべて手直しする
 export {
   type ToggleButtonSize,
   type ToggleButtonColor,
@@ -50,18 +62,6 @@ export {
   type ToggleButtonSlotProps,
   ToggleButton,
 } from "./toggle-button/index.js";
-
-// data-display
-export {
-  type AlertSize,
-  type AlertColor,
-  type AlertProps,
-  type AlertState,
-  type AlertRadius,
-  type AlertVariant,
-  type AlertSlotProps,
-  Alert,
-} from "./alert/index.js";
 export {
   type AvatarSize,
   type AvatarColor,
@@ -160,8 +160,6 @@ export {
   Status,
   useStatus,
 } from "./status/index.js";
-
-// forms
 export {
   type AutocompleteSize,
   type AutocompleteColor,
@@ -363,8 +361,6 @@ export {
   Textarea,
   useTextarea,
 } from "./textarea/index.js";
-
-// layout
 export {
   type AspectRatioProps,
   type AspectRatioRatio,
@@ -472,8 +468,6 @@ export {
   type TreeSelectionMode,
   Tree,
 } from "./tree/index.js";
-
-// overlays
 export {
   type AlertDialogProps,
   type AlertDialogState,

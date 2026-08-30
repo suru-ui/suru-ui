@@ -1,7 +1,4 @@
----
-name: new-component
-description: Suru UI モノレポ (`packages/react`) に新しい React コンポーネントを追加するときに使用します。
----
+# Skill: new-component
 
 # 新しい React コンポーネントの追加
 
@@ -10,6 +7,11 @@ description: Suru UI モノレポ (`packages/react`) に新しい React コン�
 Suru UI の `packages/react` に、新しい React コンポーネントを既存コーディング規約どおりに追加します。
 このスキルの目的は、書き手が変わっても同じ実装ができることです。
 ここで定めた規則を最優先で守ります。ただし、このスキルと参照している実例が矛盾するときは、実例を優先してください。このスキルが古くなっている可能性があります。
+
+基準となる実装 (最新のコーディングスタイル) は、次の 2 つのコンポーネントです。
+
+- `packages/react/src/accordion/` — Base UI のパーツを組み合わせるコンポーネント、データ駆動なアイテム、ジェネリックな型推論
+- `packages/react/src/button/` — Base UI のコンポーネントのラップ、コンテキスト、静的メンバー (`Object.assign`)
 
 ## 併用する規範
 
@@ -42,37 +44,27 @@ Suru UI は、[Base UI](https://github.com/mui/base-ui) のヘッドレスコン
 角丸 (`radius`) の型はテーマにはなく、各部品で `"none" | Size | "full"` として定義します (例: `ButtonRootRadius`)。
 既定値は多くの場合 `radius = size` です。
 
-### カテゴリー
-
-コンポーネントは次のカテゴリーに分かれます。
-
-| カテゴリー     | 内容           | 例                                           |
-| -------------- | -------------- | -------------------------------------------- |
-| `buttons`      | ボタン系       | button, toggle-button                        |
-| `data-display` | 情報表示       | avatar, chip, meter, progress, alert         |
-| `forms`        | フォーム入力   | checkbox, input, select, slider, field, form |
-| `layout`       | レイアウト     | action-group, resizable                      |
-| `navigation`   | ナビゲーション | accordion, collapsible, tabs, scroll-area    |
-| `overlays`     | オーバーレイ   | dialog, menu, tooltip, toast                 |
-
 ### ディレクトリーとファイル
 
-コンポーネント 1 つは、`packages/react/src/<カテゴリー>/<名前>/` の 1 ディレクトリーにまとめます。
+コンポーネント 1 つは、`packages/react/src/<名前>/` の 1 ディレクトリーにまとめます。カテゴリーのディレクトリーは作りません。
 
 ```
-packages/react/src/<カテゴリー>/<名前>/
-  index.ts          // パーツと本体を再エクスポートする
+packages/react/src/<名前>/
+  index.ts         // パーツと本体を再エクスポートする
   <名前>.tsx        // 公開コンポーネント本体
   <名前>.parts.tsx  // Base UI のラッパーとパーツ（Root、Content、Indicator など）
   <名前>.css        // スタイル
+  _<名前>.tsx?      // (必要に応じて) このコンポーネント専用の非公開ヘルパー
 ```
 
 `*.parts.tsx` は子パーツがない場合も作ります。
 Base UI の型を Suru UI の型として公開し、`cn()` によるクラス名の合成と CSS の import を一箇所にまとめる層です。
 そのため、`Form` のように Root だけを持つコンポーネントでも、Root のラッパーは `*.parts.tsx` に置きます。
 
-Storybook の stories は `packages/react/stories/<カテゴリー>/<名前>.stories.tsx` に置きます。
-テストは `packages/react/tests/<カテゴリー>/` に置きます。ブラウザーで実行するテストは `<名前>.client.test.tsx`、ブラウザーを必要としないロジックのテストは `<名前>.test.ts`（またはサーバー専用なら `<名前>.server.test.ts`）です。
+非公開ヘルパー (項目オブジェクトの判定、値の型推論、既定アイコンなど) は、本体やパーツから分離して `_<名前>.tsx` に置きます (例: `src/accordion/_accordion.tsx`)。import の拡張子は `./_<名前>.jsx` です。
+
+Storybook の stories は `packages/react/stories/<名前>.stories.tsx` に置きます (カテゴリーのディレクトリーは作りません)。
+テストは `packages/react/tests/` に置きます。ブラウザーで実行するテストは `<名前>.client.test.tsx`、ブラウザーを必要としないロジックのテストは `<名前>.test.ts`（またはサーバー専用なら `<名前>.server.test.ts`）です。
 
 ## format による自動整形
 
@@ -100,16 +92,14 @@ Storybook の stories は `packages/react/stories/<カテゴリー>/<名前>.sto
 3. 複数の子をまとめて状態やスタイルを伝えるグループの場合はパターン C を併用します。
 4. Base UI にない単純な要素（`span`、`svg` など）はパターン D で `useRender` を使います。
 5. 既存の Suru UI コンポーネントの特殊形ならパターン E で既存のパーツへ委譲します。
-6. Base UI にない複雑なコンポーネント (Tree など) でも、構成は変えません。Root パーツが状態とロジックを持ち、本体は「データ駆動なアイテム (Autocomplete 方式)」に従って組み立てます。
+6. Base UI にない複雑なコンポーネントでも、構成は変えません。Root パーツが状態とロジックを持ち、本体は「データ駆動なアイテム (Accordion 方式)」に従って組み立てます。
 
 パーツは、実装したい部品の意味的な構造から決めます。既存の例:
 
-| コンポーネント | パーツ（ファイル内の並び順）                                                                                        |
-| -------------- | ------------------------------------------------------------------------------------------------------------------- |
-| Button         | Root, Content, Pending, CircularProgress, CircularProgressTrack, CircularProgressFill, CircularProgressFillRotation |
-| Checkbox       | Root, Indicator                                                                                                     |
-| Dialog         | Handle(+createHandle), Root, Trigger, Popup, ...                                                                    |
-| Form           | Root                                                                                                                |
+| コンポーネント | パーツ（ファイル内の並び順）                                                                                          |
+| -------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Button         | Root, Content, Pending, CircularProgress, CircularProgressTrack, CircularProgressFill, CircularProgressFillRotation   |
+| Accordion      | Root, Item, Heading, Trigger, Indicator, Content                                                                      |
 
 ## パーツファイルの共通構造
 
@@ -131,29 +121,69 @@ Storybook の stories は `packages/react/stories/<カテゴリー>/<名前>.sto
 
 各パーツは次の順で定義します。
 
-1. スタイル系のサブ型 (`XxxRootColor`, `XxxRootRadius`, `XxxRootSize`, `XxxRootVariant`, `XxxRootOrientation` など)。JSDoc に候補値の箇条書きを付けます。
+1. サブ型 — スタイル系 (`XxxRootColor`, `XxxRootRadius`, `XxxRootSize`, `XxxRootVariant`, `XxxRootOrientation` など)、イベント系 (`AccordionRootChangeEventDetails`, `AccordionRootChangeEventReason` など)、データ系 (`AccordionRootItemObject`, `IAccordionRootItemRenderer` など) を、アルファベット順で定義します。スタイル系の JSDoc には候補値の箇条書きを付けます。
 
    ```ts
    /**
-    * チェックボックスの角丸です。
+    * アコーディオンの角丸の大きさです。
     *
-    * - `"none"`: 角を直角にする
-    * - `"sm"`: 小さい角丸
-    * - `"md"`: 標準的な角丸
-    * - `"lg"`: 大きい角丸
-    * - `"full"`: 完全な丸形
+    * - `"none"`: 直角
+    * - `"sm"`: 小さめ
+    * - `"md"`: 標準的
+    * - `"lg"`: 大きめ
     */
-   export type CheckboxRootRadius = "none" | Size | "full";
+   export type AccordionRootRadius = "none" | Size;
    ```
 
-2. `State` 型 — `/** {@link XxxRoot} の状態です。 */` の JSDoc を付ける。Base UI 由来の状態は namespace 経由で参照します (例: `Checkbox.Root.State`, `Dialog.Root.State`)。
-3. `Props` 型 — `/** {@link XxxRoot} に渡すプロパティーです。 */` の JSDoc を付ける。スタイル系プロパティーの型はサブ型を参照し、JSDoc に「CheckboxGroup 内では、グループの値が優先されます」のような上書き規則も書きます。
-4. コンポーネント本体 — 関数名は `Sui<コンポーネント名><パーツ名>` (例: `function SuiCheckboxRoot`)。`export const CheckboxRoot: IComponent<CheckboxRootProps> = function SuiCheckboxRoot(props) { ... };` の形です。
-5. `export namespace <Part>` — 「{@link XxxRoot} の状態やプロパティーをまとめた型名前空間です。」の JSDoc を付け、`State`、`Props`、必要ならサブ型 (`Color`, `Radius`, `Size`, `Variant`, `Orientation`) を `/** {@link Xxx} です。 */` の JSDoc 付きで入れます。
-6. 別名 — `export const Root: IComponent<Root.Props> = CheckboxRoot;` の形で、「{@link XxxRoot} です。」の JSDoc を付けます。
+2. `State` 型 — `/** {@link XxxRoot} が持つ状態です。 */` の JSDoc を付ける。Base UI 由来の状態は namespace 経由で参照します (`Accordion.Item.State`, `Button.State`)。Base UI の状態を持たないパーツは空の型にします (`export type AccordionIndicatorState = {};`)。コンテキストを状態として持つパーツはコンテキスト型にします (`ButtonContentState = Context`)。
+3. `Props` 型 — `/** {@link XxxRoot} に渡す props です。 */` の JSDoc を付ける。スタイル系プロパティーの型はサブ型を参照し、JSDoc に「グループの値が優先されます」のような上書き規則も書きます。Base UI の型に `children` を関数にするなどの拡張をする場合は `Omit<..., "children">` してから拡張します (`AccordionRootProps` 参照)。`unstyled` のようなスタイル無効化プロップも同じ方法で拡張します (`AccordionTriggerProps` 参照)。
+4. コンポーネント本体 — 関数名は `Sui<コンポーネント名><パーツ名>` (例: `function SuiAccordionRoot`)。`export const AccordionRoot: IComponent<AccordionRootProps> = function SuiAccordionRoot(props) { ... };` の形です。
+5. 本体専用の非公開ヘルパー — 既定レンダラー (`defaultRootItemRenderer` など) は、本体の直後に置きます。
+6. `export namespace <Part>` — JSDoc は**付けません**。メンバーは `State` → `Props` → `Context` → `SlotProps` → その他の型 (名前順) の順に並びます (自動整形)。各メンバーの JSDoc は `{@link XxxXxx}` の形です。
+7. 別名 — `export const Root: IComponent<Root.Props> = AccordionRoot;` の形で、JSDoc は `/** {@link AccordionRoot} */` の形です。
 
 コンポーネントの型は `types.ts` の `IComponent<TProps>` を使います。コンテキスト読み取りフックの型は `IUseContext<TContext>` です。
 `erasableSyntaxOnly` が有効です。`enum` と、値を持つ `namespace` は使えません。namespace には型だけを入れます。
+
+### ジェネリックなパーツ
+
+型パラメーターを持つパーツは、`IComponent` を拡張した呼び出しシグネチャーの interface で型を定義し、戻り値は `IComponent.Return` にします。interface の型パラメーターの既定値は `never`、型エイリアスの既定値は `any` にします。
+
+```tsx
+interface IAccordionRoot extends IComponent<AccordionRootProps> {
+  /**
+   * @template TItem 項目の型です。
+   * @template TValue 項目の値の型です。
+   */
+  <TItem = never, TValue = $InferItemValue<TItem>>(
+    props: AccordionRootProps<TItem, TValue>,
+  ): IComponent.Return;
+}
+
+/**
+ * アコーディオンのルートコンポーネントです。
+ */
+export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: AccordionRootProps) {
+  // ...
+};
+```
+
+### Root への `data-scope` 属性
+
+Root パーツは、Base UI (または `useRender`) のルート要素に `data-scope=""` を付けます。CSS 側の `@scope (.sui_<component>) to ([data-scope])` と対になっており、ネストした別コンポーネントの内部にスタイルが漏れるのを防ぎます (`../css/SKILL.md` 参照)。
+
+```tsx
+<Accordion.Root
+  {...otherProps}
+  className={cn(
+    className,
+    "sui_accordion",
+    `sui_accordion-size_${size}`,
+    // ...
+  )}
+  data-scope=""
+>
+```
 
 ### import の規則
 
@@ -165,124 +195,126 @@ Storybook の stories は `packages/react/stories/<カテゴリー>/<名前>.sto
 ## パターン A（Base UI コンポーネントのラップ）
 
 Base UI のコンポーネントをそのまま使い、クラス名と共通プロパティーを追加します。
-参考実装は `packages/react/src/forms/checkbox-group/checkbox-group.parts.tsx` です。
+参考実装は `packages/react/src/button/button.parts.tsx` です。
 
 ```tsx
-export type CheckboxGroupRootColor = Color;
+export type ButtonRootColor = Color;
 
 /**
- * {@link CheckboxGroupRoot} の状態です。
+ * {@link ButtonRoot} が持つ状態です。
  */
-export type CheckboxGroupRootState = CheckboxGroup.State;
+export type ButtonRootState = Button.State;
 
 /**
- * {@link CheckboxGroupRoot} に渡すプロパティーです。
- *
- * グループに指定したスタイルプロパティーは、子要素のチェックボックス指定より優先されます。
+ * {@link ButtonRoot} に渡す props です。
  */
-export type CheckboxGroupRootProps = React.ComponentProps<typeof CheckboxGroup> & {
+export type ButtonRootProps = React.ComponentProps<typeof Button> & {
   /**
-   * チェックボックスの色を指定します。
-   *
-   * 子要素のチェックボックスのプロパティーを上書きします。
+   * ボタンの配色を指定します。
    *
    * @default "grey"
    */
-  color?: CheckboxGroupRootColor | undefined;
+  color?: ButtonRootColor | undefined;
   // ...
 };
 
-export const CheckboxGroupRoot: IComponent<CheckboxGroupRootProps> = function SuiCheckboxGroupRoot(
-  props,
-) {
+/**
+ * ボタンのルートコンポーネントです。
+ */
+export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(props) {
   const {
     size = "md",
+    type = "button",
     color = "grey",
     radius = size,
-    variant = "liquid",
-    disabled,
+    variant = "solid",
+    disabled = false,
     outlined = false,
     className,
-    orientation = "vertical",
     ...otherProps
   } = props;
-  const context = React.useMemo<CheckboxGroupContext>(
-    () => ({ size, color, radius, variant, disabled, outlined }),
-    [size, color, radius, variant, disabled, outlined],
-  );
 
   return (
-    <Context value={context}>
-      <CheckboxGroup
-        {...otherProps}
-        disabled={disabled}
-        className={cn(
-          className,
-          "sui_checkbox_group",
-          `sui_checkbox_group-orientation_${orientation}`,
-        )}
-      />
-    </Context>
+    <Button
+      {...otherProps}
+      type={type}
+      className={cn(
+        className,
+        "sui_button",
+        `sui_button-size_${size}`,
+        `sui_button-color_${color}`,
+        `sui_button-radius_${radius}`,
+        `sui_button-variant_${variant}`,
+        outlined && "sui_button-outlined",
+        disabled && "sui_button-disabled",
+      )}
+      data-scope=""
+    />
   );
 };
 
 export namespace Root {
-  export type State = CheckboxGroupRootState;
+  /**
+   * {@link ButtonRootState}
+   */
+  export type State = ButtonRootState;
 
-  export type Props = CheckboxGroupRootProps;
+  /**
+   * {@link ButtonRootProps}
+   */
+  export type Props = ButtonRootProps;
 }
 
-export const Root: IComponent<Root.Props> = CheckboxGroupRoot;
+/**
+ * {@link ButtonRoot}
+ */
+export const Root: IComponent<Root.Props> = ButtonRoot;
 ```
 
 (例を短くするため JSDoc を省略しています。実際のコードには全項目に JSDoc を付けます。)
 
 - 既定値は分割代入で `size = "md"` のように書きます。他のプロパティーに依存する `radius` は `radius = size` です。グループから値を読む場合は `size: sizeProp = "md"` としてから `const size = group?.size ?? sizeProp;` の形にします。
-- クラス名は `cn(className, ...)` で利用者のクラス名と合成します。修飾クラスはテンプレートリテラル、ブール状態は `outlined && "sui_checkbox-outlined"` の形で並べます。
-- Base UI 由来の状態は render props で状態クラスを付けます (例: `(state) => state.checked && "sui_checkbox-checked"`)。
+- クラス名は `cn(className, ...)` で利用者のクラス名と合成します。修飾クラスはテンプレートリテラル、ブール状態は `outlined && "sui_button-outlined"` の形で並べます。
+- Base UI 由来の状態は render props で状態クラスを付けます (例: `(state) => state.disabled && "sui_accordion-disabled"`)。
 - Base UI のコンポーネントは、利用者のイベントハンドラー、Render Props、`className` をそのまま通します。
-- Base UI の型は namespace 経由で参照します (`CheckboxGroup.State`, `Checkbox.Root.State`, `Dialog.Root.State`)。
+- Base UI の型は namespace 経由で参照します (`Button.State`, `Accordion.Root.State`)。
+- コンテキストで子に状態を伝えるときは、値を `React.useMemo` で作り、`<Context value={context}>` で包みます (ButtonRoot は pending 状態を提供します)。
 
 ## コンテキスト (グループ)
 
 グループの Root が状態とスタイルをコンテキストで子に伝え、子がその値を読んで表示を決めます。
-参考実装は `packages/react/src/forms/checkbox-group/checkbox-group.parts.tsx` と `packages/react/src/layout/action-group/action-group.parts.tsx` です。
+参考実装は `packages/react/src/button/button.parts.tsx` と `packages/react/src/layout/action-group/action-group.parts.tsx` です。
 
 `// Context` セクションでは、次の要素をこの順で定義します。
 
-1. コンテキスト値のサブ型 (`CheckboxGroupContextColor` など)
+1. コンテキスト値のサブ型 (`ActionGroupContextColor` など。複雑なコンテキストの場合のみ)
 2. コンテキスト値の型 `XxxContext` (各プロパティーは `readonly` と JSDoc)
 3. `React.createContext<XxxContext | null>(null)` のインスタンス
 4. 内部フック `useSuiXxxContext(optional?)` — オーバーロード付き。見つからないときは `ContextMissingError` を投げる
 5. 公開フック `export const useXxxContext: IUseContext<XxxContext> = useSuiXxxContext;`
 6. エイリアス `export type Context = XxxContext;` と `export const Context: React.Context<Context | null> = XxxContext;`
-7. 必要なら `namespace Context { Color; Radius; Size; Variant; ... }`
+7. 必要なら `namespace Context { Color; Radius; Size; Variant; ... }` (action-group.parts.tsx 参照)
 8. `export const useContext: IUseContext<Context> = useXxxContext;`
 
-関数型のメンバーは、`this` を参照するかどうかで定義方法を変えます。
-
-- `this` を参照しない (コンテキスト値など、オブジェクトから切り離して呼び出される) 関数は、アロー式のプロパティーとして `readonly` 付きで型定義します。`readonly select: (itemId: string) => void;`
-- `this` を参照する関数のみ、メソッドシグネチャー (インターフェース式) で定義します。`select(itemId: string): void;`
-
-メソッドシグネチャーには `readonly` を付けられないため、`this` を使わない限りアロー式にします。
-
 ```tsx
-function useSuiCheckboxGroupContext(optional?: false): CheckboxGroupContext;
-function useSuiCheckboxGroupContext(optional?: boolean): CheckboxGroupContext | null;
-function useSuiCheckboxGroupContext(optional?: boolean): CheckboxGroupContext | null {
-  const context = React.use(CheckboxGroupContext);
-  if (context === null && !optional) {
+function useSuiButtonContext(optional?: false): ButtonContext;
+function useSuiButtonContext(optional?: boolean): ButtonContext | null;
+function useSuiButtonContext(optional?: boolean): ButtonContext | null {
+  const ctx = React.use(ButtonContext);
+  if (ctx === null && !optional) {
     throw new ContextMissingError({
-      contextName: "CheckboxGroupContext",
-      providerName: "CheckboxGroupRoot",
+      contextName: "ButtonContext",
+      providerName: "ButtonRoot",
     });
   }
 
-  return context;
+  return ctx;
 }
 
-export const useCheckboxGroupContext: IUseContext<CheckboxGroupContext> =
-  useSuiCheckboxGroupContext;
+/**
+ * {@link ButtonContext} を読み取るフックです。
+ */
+export const useButtonContext: IUseContext<ButtonContext> = useSuiButtonContext;
 ```
 
 - `contextName` にはコンテキスト名、`providerName` には提供側 Root の名前を渡します (`src/errors.ts` の `ContextMissingError`)。
@@ -292,74 +324,170 @@ export const useCheckboxGroupContext: IUseContext<CheckboxGroupContext> =
 ## 公開本体 (`<名前>.tsx`)
 
 公開本体は、パーツを組み立てて利用者向け API を作る層です。
-参考実装は `packages/react/src/buttons/button/button.tsx`、`packages/react/src/forms/checkbox/checkbox.tsx` と、データ駆動なアイテムを持つ `packages/react/src/forms/autocomplete/autocomplete.tsx` です。
+参考実装は `packages/react/src/button/button.tsx` と `packages/react/src/accordion/accordion.tsx` です。
 公開本体は純粋な組み立て層です。状態はパーツ (Root) だけが持ち、本体で `useState` を使って状態を複製してはいけません。
 
 標準の構成要素は次のとおりです (上からこの順)。
 
-1. スタイル系の公開型エイリアス
-
-   ```tsx
-   export type CheckboxColor = CheckboxRootColor;
-   export type CheckboxRadius = CheckboxRootRadius;
-   export type CheckboxSize = CheckboxRootSize;
-   export type CheckboxVariant = CheckboxRootVariant;
-   ```
-
-2. `XxxSlotProps` — 各パーツに渡すオプションのプロパティー。全メンバーに `readonly` を付け、各メンバーの JSDoc でパーツに型をリンクします。
+1. 公開型エイリアス — Root 層のサブ型を本体名に置き換えた別名です。JSDoc は `{@link ButtonRootColor}` の形です。
 
    ```tsx
    /**
-    * {@link Checkbox} の各パーツに渡すプロパティーです。
+    * {@link ButtonRootColor}
     */
-   export type CheckboxSlotProps = {
+   export type ButtonColor = ButtonRootColor;
+   ```
+
+2. `XxxSlotProps` — 各パーツに渡すオプションのプロパティー。全メンバーに `readonly` を付け、各メンバーの JSDoc は `{@link XxxYyy} に渡す props です。` の形です。`children` を本体が管理するパーツは `Omit<XxxProps, "children">` にします。
+
+   ```tsx
+   /**
+    * {@link Accordion} の各パーツに渡す props です。
+    */
+   export type AccordionSlotProps = {
      /**
-      * {@link CheckboxIndicator} に渡すプロパティーです。
+      * {@link AccordionContent} に渡す props です。
       */
-     readonly indicator?: CheckboxIndicatorProps | undefined;
+     readonly content?: Omit<AccordionContentProps, "children"> | undefined;
+
+     /**
+      * {@link AccordionTrigger} に渡す props です。
+      */
+     readonly trigger?: Omit<AccordionTriggerProps, "children"> | undefined;
    };
    ```
 
-3. `XxxPartsProps` — `useXxx` フックの戻り値型。`root` と各パーツのキーを必須の `readonly` メンバーとして持ちます。`slotProps` と異なり `undefined` を許しません (明示的に `undefined` を入れるメンバーは除く)。
+3. `XxxAPI` — `useXxxAPI` フックの戻り値型。`getRootProps()` と、パーツごとの `getXxxProps()` をメソッドとして持ちます。interface の JSDoc は `{@link Xxx} を構成する各パーツの props を作成するための API です。` です。各メソッドの JSDoc は `{@link XxxYyy} に渡す props を取得します。` の形で、引数があるときは `@param` を付けます。メソッドの並び順は自動整形されます (名前順)。
 
-4. `XxxState`, `XxxProps` — Root の型を別名として公開します。`XxxProps` は `Omit<XxxRootProps, "children">` を基礎に、本体固有の `children` と `slotProps` を加えます。
+   ```tsx
+   /**
+    * {@link Button} を構成する各パーツの props を作成するための API です。
+    */
+   export interface ButtonAPI {
+     /**
+      * {@link ButtonContent} に渡す props を取得します。
+      */
+     getContentProps(): ButtonContentProps;
 
-5. `useXxx(props): XxxPartsProps` — 「{@link Xxx} の各パーツに渡すプロパティーを作るフックです。」という JSDoc を付ける。`slotProps` を展開し、`children` などの本体固有プロパティーを対応するパーツへ振り分けます。`slotProps` の各メンバーが常に勝つように、既定値を先に展開します (`{ children, ...contentProps }`)。
+     /**
+      * {@link ButtonRoot} に渡す props を取得します。
+      */
+     getRootProps(): Omit<ButtonRootProps, "children">;
+     // ...
+   }
+   ```
 
-6. 公開コンポーネント `export const Xxx: IComponent<XxxProps> = function SuiXxx(props) { ... };` — 内部で `const partsProps = useXxx(props);` を呼び、パーツツリー順に描画します。JSDoc にはコンポーネントの説明を書きます。
+4. `XxxState`, `XxxProps` — Root の状態と props を本体名で別名公開します。`XxxProps` は Root の型に `slotProps` を加え、本体が管理する `children` などを調整します。
 
-7. `export namespace Xxx { State; Props; SlotProps?; Color?; Radius?; Size?; Variant? }` — 各メンバーに `/** {@link XxxXxx} です。 */` の JSDoc を付けます。namespace の説明は「{@link Xxx} の状態やプロパティーをまとめた型名前空間です。」です。
+   ```tsx
+   /**
+    * {@link Button} に渡す props です。
+    */
+   export type ButtonProps = Omit<ButtonRootProps, "children"> &
+     Pick<ButtonContentProps, "children"> &
+     Pick<ButtonCircularProgressProps, "percentage" | "indeterminate"> & {
+       /**
+        * 各パーツに個別の props を渡すためのオブジェクトです。
+        *
+        * 各パーツの props が優先されます。
+        */
+       slotProps?: ButtonSlotProps | undefined;
+     };
+   ```
 
-8. 本体固有の非公開ヘルパー (デフォルトアイコンなど) はファイル末尾に置きます。
+5. `IUseXxxAPI` と `useXxxAPI` — API を作るフック。フックの型は呼び出しシグネチャーの interface にし、`@param` と `@returns` を付けます。実装は `function useSuiXxxAPI` という名前付き関数式にします。`slotProps` の各メンバーが常に勝つように、本体固有の値を先に展開します (children のようなパーツに必ず渡すべき値は後に展開します)。`useAPI` という別名も必ず公開します。
 
-```tsx
-export const Checkbox: IComponent<CheckboxProps> = function SuiCheckbox(props) {
-  const partsProps = useCheckbox(props);
+   ```tsx
+   interface IUseButtonAPI {
+     /**
+      * {@link ButtonAPI} を作成します。
+      *
+      * @param props {@link Button} の props です。
+      * @returns ボタンの API です
+      */
+     (props: ButtonProps): ButtonAPI;
+   }
 
-  return (
-    <CheckboxRoot {...partsProps.root}>
-      <CheckboxIndicator {...partsProps.indicator} />
-    </CheckboxRoot>
-  );
-};
-```
+   /**
+    * {@link ButtonAPI} を作成するフックです。
+    */
+   export const useButtonAPI: IUseButtonAPI = function useSuiButtonAPI(props) {
+     const {
+       children,
+       slotProps: {
+         content: contentProps,
+         pending: { overlay = true, ...otherPendingProps } = {},
+         // ...
+       } = {},
+       percentage,
+       indeterminate,
+       ...otherRootProps
+     } = props;
+
+     return {
+       getRootProps() {
+         return otherRootProps;
+       },
+       getContentProps() {
+         return {
+           ...contentProps,
+           children,
+         };
+       },
+       getPendingProps() {
+         return {
+           ...otherPendingProps,
+           overlay,
+         };
+       },
+       // ...
+     };
+   };
+
+   /**
+    * {@link useButtonAPI}
+    */
+   export const useAPI: IUseButtonAPI = useButtonAPI;
+   ```
+
+6. 公開コンポーネント — `IXxx` interface と `function SuiXxx` で定義します。内部で `useXxxAPI(props)` を呼び、パーツツリー順に描画します。JSDoc にはコンポーネントの説明を書きます。
+
+   ```tsx
+   /**
+    * 複数の主な外観と状態を持つクリック可能なボタンコンポーネントです。
+    */
+   export const Button: IButton = function SuiButton(props: ButtonProps) {
+     const api = useButtonAPI(props);
+
+     return (
+       <ButtonRoot {...api.getRootProps()}>
+         <ButtonContent {...api.getContentProps()} />
+         {/* ... */}
+       </ButtonRoot>
+     );
+   };
+   ```
+
+7. `export namespace Xxx` — JSDoc は付けません。`State`、`Props`、`Context`、`SlotProps`、`Color`、`Radius`、`Size`、`Variant` などのメンバーを持ち、各メンバーの JSDoc は `{@link XxxXxx}` の形です。メンバーの並び順は自動整形されます。ジェネリックな型は型パラメーターを失わないようにします (`AccordionProps` と `Accordion.Props` 参照)。
+
+8. 本体固有の非公開ヘルパー (デフォルトアイコンなど) は `_<名前>.tsx` に置きます。
 
 ### 静的メンバー (Object.assign)
 
 公開本体に静的メンバー (パーツやフック) を付ける場合は、interface で型を宣言し、`/*#__PURE__*/ Object.assign(...)` で結合します。
-参考実装は `button.tsx` (`Button.useContext`) と `field.tsx` (`Field.Item`, `Field.Control`) です。
+参考実装は `button.tsx` (`Button.useContext`) です。
 
 ```tsx
-interface ButtonType extends IComponent<ButtonProps> {
+interface IButton extends IComponent<ButtonProps> {
   /**
-   * {@link useButtonContext} です。
+   * {@link useButtonContext}
    */
   readonly useContext: IUseContext<ButtonContext>;
 }
 
-export const Button: ButtonType = /*#__PURE__*/ Object.assign(
+export const Button: IButton = /*#__PURE__*/ Object.assign(
   function SuiButton(props: ButtonProps) {
-    const partsProps = useButton(props);
+    const api = useButtonAPI(props);
     // ...
   },
   {
@@ -371,32 +499,50 @@ export const Button: ButtonType = /*#__PURE__*/ Object.assign(
 - パーツツリーを持たない単純な部品 (Form のような Root だけのもの) に、不要な静的メンバーを追加してはいけません。
 - 静的パーツに対応する型は、公開本体の namespace に入れず、必要に応じて `Field.Item.State` のような入れ子の型 namespace を interface 上で宣言します。
 
-### ジェネリックな公開本体 (Form)
+### ジェネリックな公開本体
 
-入力値などの型パラメーターを持つ場合は、ジェネリックな呼び出しシグネチャーを interface で定義します。
-参考実装は `packages/react/src/forms/form/form.parts.tsx` と `form.tsx` です。
+入力値や項目の型パラメーターを持つ場合は、ジェネリックな呼び出しシグネチャーを interface で定義します。
+参考実装は `packages/react/src/accordion/accordion.tsx` です。
 
 ```tsx
-export type FormRootValues<TValues extends Record<string, any> = Record<string, any>> = TValues;
-
-export type FormRootProps<TValues extends FormRootValues = FormRootValues> = React.ComponentProps<
-  typeof BaseForm<TValues>
->;
-
-interface FormRootComponentType extends IComponent<FormRootProps> {
-  <TValues extends FormRootValues>(props: FormRootProps<TValues>): React.ReactElement | null;
+interface IAccordion extends IComponent<AccordionProps> {
+  /**
+   * @template TItem 項目の型です。
+   * @template TValue 項目の値の型です。
+   */
+  <TItem = never, TValue = $InferItemValue<TItem>>(
+    props: AccordionProps<TItem, TValue>,
+  ): IComponent.Return;
 }
 
-export const FormRoot: FormRootComponentType = function SuiFormRoot(props: FormRootProps) {
-  return <BaseForm {...props} />;
-};
+/**
+ * アコーディオンを表示するコンポーネントです。
+ */
+export const Accordion: IAccordion = function SuiAccordion(props: AccordionProps) {
+  const api = useAPI(props);
+  const { children, ...otherRootProps } = api.getRootProps();
 
-export const Root: FormRootComponentType = FormRoot;
+  return (
+    <AccordionRoot {...otherRootProps}>
+      {children ??
+        ((item, index) => (
+          <AccordionItem key={index} {...api.getItemProps(item)}>
+            <AccordionHeading {...api.getHeadingProps()}>
+              <AccordionTrigger {...api.getTriggerProps()}>
+                {api.getTitle(item)}
+                <AccordionIndicator {...api.getIndicatorProps()} />
+              </AccordionTrigger>
+            </AccordionHeading>
+            <AccordionContent {...api.getContentProps(item)} />
+          </AccordionItem>
+        ))}
+    </AccordionRoot>
+  );
+};
 ```
 
-- Root 固有の型 (`Values`, `Actions`, `ValidationMode`, 送信イベントの理由と詳細) は、まず `FormRoot*` としてパーツ層に定義し、公開本体で `Form*` として別名を付けます。
 - ジェネリック型の既定値と制約を Root 層、本体層、namespace で一致させ、型パラメーターを失わないようにします。
-- 公開本体でも同じ `XxxComponentType` をそのまま使います (`IComponent<XxxProps>` に狭めない)。
+- 公開本体でも同じ `IXxx` 型をそのまま使います (`IComponent<XxxProps>` に狭めない)。
 
 ### 便利プロパティー (Field 型)
 
@@ -405,75 +551,120 @@ export const Root: FormRootComponentType = FormRoot;
 ## パターン D（Render Props パーツ）
 
 Base UI にない小物パーツ（`span`、`svg`、`circle` など）は、`useRender` で描画します。
-参考実装は `packages/react/src/buttons/button/button.parts.tsx` の `Content` です。
+参考実装は `packages/react/src/accordion/accordion.parts.tsx` の `Indicator` と `packages/react/src/button/button.parts.tsx` の `Content` です。
 
 ```tsx
-export type ButtonContentState = {};
+/**
+ * {@link AccordionIndicator} が持つ状態です。
+ */
+export type AccordionIndicatorState = {};
 
 /**
- * {@link ButtonContent} に渡すプロパティーです。
+ * {@link AccordionIndicator} に渡す props です。
  */
-export type ButtonContentProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
-  RenderProps<ButtonContentState>;
+export type AccordionIndicatorProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
+  RenderProps<AccordionIndicatorState>;
 
-export const ButtonContent: IComponent<ButtonContentProps> = function SuiButtonContent(props) {
-  return useRender({
-    defaultTagName: "span",
-    props: [
-      props,
-      {
-        className: "sui_button_content",
-      },
-    ],
-  });
-};
+/**
+ * アコーディオンの展開状態を示すアイコンを表示するコンポーネントです。
+ */
+export const AccordionIndicator: IComponent<AccordionIndicatorProps> =
+  function SuiAccordionIndicator(props) {
+    const { children = <ChevronIcon />, ...otherProps } = props;
+
+    return useRender({
+      defaultTagName: "span",
+      props: [
+        otherProps,
+        {
+          children,
+          className: "sui_accordion_indicator",
+        },
+      ],
+    });
+  };
 ```
 
 - `useRender` の `props` は、利用者のプロパティーと固定プロパティーの配列、または 1 つのオブジェクトです。プロパティーは配列の先頭から順に合成されます。
-- 要素を条件付きで描画したいときは `enabled` に条件を渡します。
-- 空状態の型 (`{}`) は `ButtonContentState` のような名前で定義し、`RenderProps` の型引数に渡します。
+- 要素を条件付きで描画したいときは `enabled` に条件を渡します (`ButtonPending` は `ctx.pending || keepMounted` を渡します)。
+- コンテキストを Render Props の状態として渡すときは `state` に渡します (`ButtonContent` は `state: ctx`)。
+- 空状態の型 (`{}`) は `AccordionIndicatorState` のような名前で定義し、`RenderProps` の型引数に渡します。
 - Base UI を包まないパーツ (状態を持つ Root や Item を含む) も、DOM 要素を返すときは必ず `useRender` 経由にします。生の JSX (`<div {...}>`) を直接返してはいけません。`className`、`style` (Render Props 由来では関数になり得る)、`ref`、利用者の render prop はすべて `useRender` が合成します。
-  - 利用者のイベントハンドラーを壊さないときは、該当するハンドラーだけ分割代入して呼び出してから固定ハンドラーを実行します (`onKeyDown: onKeyDownProp` → `onKeyDownProp?.(event)` → 自前の処理)。
+  - 利用者のイベントハンドラーを壊さないときは、該当するハンドラーだけ分割代入して呼び出してから固定ハンドラーを実行します。
 
 ## パターン E（既存コンポーネントへの委譲）
 
 既存の Suru UI パーツと同じ構造の部品は、既存パーツへ委譲します。
-参考実装は `packages/react/src/buttons/toggle-button/toggle-button.parts.tsx` です。
+参考実装は `packages/react/src/toggle-button/toggle-button.parts.tsx` です。
 
 - 委譲するパーツも、`export namespace Content` と `export const Content` の別名まで通常どおり定義し、内部は既存のパーツを再利用します。
 - 既存のパーツの型 (`Button.Root.State` など) を自分の型に再利用します。
 
-## データ駆動なアイテム (Autocomplete 方式)
+## データ駆動なアイテム (Accordion 方式)
 
-`items` や `data` のようなノード一覧から項目を描画するコンポーネントは、次の構成にします。参考実装は `packages/react/src/forms/autocomplete/autocomplete.tsx` です。
+`items` や `data` のようなノード一覧から項目を描画するコンポーネントは、次の構成にします。参考実装は `packages/react/src/accordion/` です。
 
 1. **状態は Root だけが持つ** — 選択・展開などの状態は Root パーツが管理します。公開本体で状態を持ってはいけません (`useState` を複製しない)。
-2. **Root は関数子を受け取れるようにする** — Base UI の List と同じく、`children` に関数を指定すると、表示すべきアイテムごとに呼び出されます。関数子が受け取るのはコンテキストではなく「描画すべきアイテム」とその構造情報です。
+2. **Root は関数子を受け取れるようにする** — `children` に項目レンダラーを指定できるようにし、既定値は `defaultRootItemRenderer` のような内部レンダラーにします。レンダラーの型は呼び出しシグネチャーの interface として公開します。
 
    ```tsx
-   children?:
-     | React.ReactNode
-     | ((node: Readonly<TreeNode>, level: number, posInSet: number, setSize: number) => React.ReactNode)
-     | undefined;
-   ```
+   /**
+    * アコーディオンの各項目をレンダリングする関数のインターフェイスです。
+    *
+    * @template TItem 項目の型です。
+    */
+   export interface IAccordionRootItemRenderer<TItem = any> {
+     /**
+      * 項目をレンダリングします。
+      *
+      * @param item 現在の項目です。
+      * @param index 項目のインデックスです。
+      * @param items すべての項目です。
+      * @returns レンダリングする内容です。
+      */
+     (item: TItem, index: number, items: readonly TItem[]): React.ReactNode;
+   }
 
-3. **パーツは最小単位** — アイテム一式を描画する複合パーツ (`TreeItems` など) は作りません。パーツは `Item` / `Indicator` / `Label` のような単一部品にとどめます。
-4. **組み立ては本体で** — `useXxx` は slotProps を振り分け、アイテムごとのパーツプロパティーを作る `getItemPartsProps(item, ...)` を返します。本体はそれを使って `.map` / 再帰描画するだけの純粋な組み立てにします。
+   export type AccordionRootProps<TItem = any, TValue = any> = Omit<
+     React.ComponentProps<typeof Accordion.Root<TValue>>,
+     "children"
+   > & {
+     /**
+      * アコーディオンの内容、または各項目をレンダリングする関数です。
+      */
+     children?: React.ReactNode | IAccordionRootItemRenderer<TItem>;
 
-   ```tsx
-   export type AutocompletePartsProps = {
-     readonly root: AutocompleteRootProps;
-
-     readonly getItemPartsProps: (item: any, index: number) => AutocompleteItemPartsProps;
+     /**
+      * アコーディオンの項目です。
+      */
+     items?: readonly TItem[] | undefined;
+     // ...
    };
    ```
 
+   Root の本体は `typeof children === "function" ? items.map(children) : children` で描画します。既定レンダラーは Root の直後に `const defaultRootItemRenderer: IAccordionRootItemRenderer = ...` として置きます。
+
+3. **項目オブジェクトの判定と推論は `_` ファイルに置く** — 項目がオブジェクトかどうかの判定 (`isItemObject`)、値の型推論 (`$InferItemValue`)、既定アイコン (`ChevronIcon`) は `_<名前>.tsx` に置きます。項目文字列の変換には `src/_to-react-node.ts` の `toReactNode` を使います。
+
+   ```tsx
+   export type $InferItemValue<TItem> = TItem extends {
+     content: any;
+     title: any;
+     value?: infer TItemValue;
+   }
+     ? TItemValue
+     : any;
+   ```
+
+4. **API が項目ごとの props を作る** — `useXxxAPI` は、`getItemProps(item)`、`getTitle(item)`、`getContentProps(item)` のように項目を引数に取るメソッドと、`getHeadingProps()` のような共通パーツのメソッドを提供します。本体は `children ?? ((item, index) => ...)` の形で既定の組み立てをします。
 5. **slotProps は構造に関わるプロパティーを Omit する** — アイテムの識別子や位置など生成される値が優先されるプロパティーは、`Omit<XxxItemProps, "id" | "level">` のように型で除外し、「どのプロパティーが上書きされないか」を JSDoc に書きます。
 
 ## JSDoc
 
-- 公開する型、プロパティー、コンポーネント、namespace、namespace の各メンバーには必ず複数行 JSDoc を付けます。1 行形式の `/** ... */` は公開 API では禁止です。
-- namespace とそのメンバーの基本形は「{@link Xxx} です。」です。説明が自明な場合も省略しません。
+- 公開する型、プロパティー、コンポーネント、namespace の各メンバーには必ず複数行 JSDoc を付けます。1 行形式の `/** ... */` は公開 API では禁止です。
+- 別名と namespace のメンバーの JSDoc は `{@link 元の名前}` の形にします (`/** {@link ButtonRootColor} */`)。「〜です。」は付けません。
+- `State` 型は `{@link XxxRoot} が持つ状態です。`、`Props` 型は `{@link XxxRoot} に渡す props です。` と書きます。
+- namespace 自体には JSDoc を付けません。
 - スタイル系サブ型には候補値の箇条書きを付けます。
 - コンポーネントの JSDoc には説明を書きます (利用例は stories とドキュメントに任せます)。
 - 自明でない既定値には `@default` を付けます。`undefined` の場合は付けません。
@@ -484,20 +675,21 @@ export const ButtonContent: IComponent<ButtonContentProps> = function SuiButtonC
 コンポーネントの `index.ts` は、最初にパーツファイルを `export *` し、その後で本体ファイルから公開 API を明示的に export します。
 
 ```ts
-export * from "./checkbox.parts.jsx";
+export * from "./button.parts.jsx";
 
 export {
-  type CheckboxSize,
-  type CheckboxColor,
-  type CheckboxProps,
-  type CheckboxState,
-  type CheckboxRadius,
-  type CheckboxVariant,
-  type CheckboxSlotProps,
-  type CheckboxPartsProps,
-  Checkbox,
-  useCheckbox,
-} from "./checkbox.jsx";
+  type ButtonAPI,
+  type ButtonSize,
+  type ButtonColor,
+  type ButtonProps,
+  type ButtonState,
+  type ButtonRadius,
+  type ButtonVariant,
+  type ButtonSlotProps,
+  Button,
+  useAPI,
+  useButtonAPI,
+} from "./button.jsx";
 ```
 
 - パーツの `export *` と本体の明示的な export を分ける点が重要です。本体へ `export *` してはいけません。
@@ -508,15 +700,14 @@ export {
 `packages/react/src/index.ts` の該当カテゴリーのコメント (`// buttons`, `// forms` など) の下に export ブロックを追加します。ブロック内の並びも自動整形されます。
 
 ```ts
-// forms
+// buttons
 export {
-  type InputSize,
-  type InputType,
-  type InputColor,
-  type InputProps,
-  type InputState,
-  Input,
-} from "./forms/input/index.js";
+  type ButtonSize,
+  type ButtonColor,
+  type ButtonProps,
+  type ButtonState,
+  Button,
+} from "./button/index.js";
 ```
 
 ### `package.json` のエクスポート
@@ -525,14 +716,14 @@ export {
 
 ```json
 "./<名前>": {
-  "types": "./dist/src/<カテゴリー>/<名前>/index.d.ts",
-  "default": "./dist/src/<カテゴリー>/<名前>/index.js"
+  "types": "./dist/src/<名前>/index.d.ts",
+  "default": "./dist/src/<名前>/index.js"
 },
 ```
 
 ## テスト
 
-コンポーネントのテストは `packages/react/tests/<カテゴリー>/<名前>.client.test.tsx` に置きます。書き方は `../vitest/SKILL.md` に従います。現時点の模範例は `tests/forms/autocomplete.client.test.tsx` です。
+コンポーネントのテストは `packages/react/tests/<名前>.client.test.tsx` に置きます。書き方は `../vitest/SKILL.md` に従います。現時点の模範例は `tests/autocomplete.client.test.tsx` です。
 
 ```tsx
 import { describe, expect, test } from "vitest";
@@ -540,19 +731,19 @@ import { render } from "vitest-browser-react";
 import { userEvent } from "vitest/browser";
 
 import "@suru-ui/theme/suru.css";
-import { Autocomplete, Root as AutocompletePartsRoot } from "../../src/forms/autocomplete/index.js";
+import { Button } from "../src/button/index.js";
 
-describe("Autocomplete", () => {
-  test("既定のスタイルクラスを入力グループへ適用する", async () => {
+describe("Button", () => {
+  test("既定のスタイルクラスをボタンへ適用する", async () => {
     // 実行
-    const screen = await render(<Autocomplete items={items} />);
+    const screen = await render(<Button>ボタン</Button>);
 
     // 検証
-    await expect.element(screen.getByRole("combobox")).toHaveClass("sui_autocomplete-size_md");
+    await expect.element(screen.getByRole("button")).toHaveClass("sui_button-size_md");
   });
 });
 
-describe("AutocompleteParts.Root", () => {
+describe("ButtonParts.Root", () => {
   // パーツ単体の振る舞い
 });
 ```
@@ -566,17 +757,17 @@ describe("AutocompleteParts.Root", () => {
 
 ## Storybook
 
-`packages/react/stories/<カテゴリー>/<名前>.stories.tsx` を作ります。
-模範例は `packages/react/stories/buttons/button.stories.tsx` です。
+`packages/react/stories/<名前>.stories.tsx` を作ります。
+模範例は `packages/react/stories/button.stories.tsx` と `packages/react/stories/accordion.stories.tsx` です。
 
-- import は `import { preview, controls } from "../../.config/storybook/preview.js";` と、コンポーネント本体の `../../src/<カテゴリー>/<名前>/index.js` を使います。
-- テーマの配列 (`SIZES`, `COLORS`, `COLOR_TEMPLATES`) は `@suru-ui/theme` から import します。角丸の候補は `const RADII = ["none", ...SIZES, "full"] as const;` として作ります。
-- meta は次の形です。
+- import は `import { preview, controls } from "../.config/storybook/preview.js";` と、コンポーネント本体の `../src/<名前>/index.js` を使います。
+- テーマの配列 (`SIZES`, `COLORS`, `COLOR_TEMPLATES`) は `@suru-ui/theme` から import します。角丸の候補は `const RADII = ["none", ...SIZES, "full"] as const;` として作ります。バリアントの候補はコンポーネントの型から作ります (`const VARIANTS: readonly Accordion.Variant[] = ["liquid", "naked"];`)。
+- meta は次の形です。title はカテゴリーを付けず、コンポーネント名だけにします。
 
   ```tsx
   const meta = preview.meta({
-    title: "<Category> / <Name>",
-    component: Xxx,
+    title: "Button",
+    component: Button,
   });
 
   export default meta;
@@ -600,7 +791,7 @@ describe("AutocompleteParts.Root", () => {
 - story は `meta.story({ name: "...", ...ctrl({...}), render(props) { ... } })` の形で作ります。
 - 最初に「使い方」(`name: "使い方"`) を置きます。その後、主な外観 (「主な外観」= バリアント一覧)、色、角丸、大きさなどの外観 story と、部品固有の機能 story を置きます。
 - `color`、`radius`、`size`、バリアントを公開する場合は、対応する一覧 story を必ず作ります。配列の `map` によるループで構いません。各候補の値が分かるようにラベルも表示します。
-- `ctrl({...})` には、その story で固定しないプロパティーの既定値をすべて渡します (他の story との見た目の一貫性のため)。
+- `ctrl({...})` には、その story で固定しないプロパティーの既定値をすべて渡します (他の story との見た目の一貫性のため)。他のプロパティーに依存するプロパティー (`radius` など) は `radius: undefined` を渡します。
 - 必須プロパティー (`items` や `data` など) も `ctrl({...})` の既定値に含めます (型エラーの原因になります)。UI で操作できない値は `data: { control: false }` を設定に加えます。
 - パーツを直接使う story (`Parts`) では、本体の props をそのままパーツへスプレッドしません。本体固有のプロパティーは分割代入で除外してから渡します (`const { data: _data, ...rootProps } = props;`)。
 
@@ -627,6 +818,7 @@ web サイトの mdx ドキュメント (`website/content/docs/react/<カテゴ�
 2. コンテキストが必要なグループなら `// Context` セクションを先頭に置きます。
 3. 各パーツについて、サブ型 → State → Props → 本体 → namespace → 別名の順に書きます。
 4. Root だけのコンポーネントでも、Base UI の Root ラッパー、namespace、別名を定義します。
+5. Root のルート要素に `data-scope=""` を付けます。
 
 完了条件: 参照コンポーネントと同じ形で全パーツが定義されている。
 
@@ -638,7 +830,7 @@ web サイトの mdx ドキュメント (`website/content/docs/react/<カテゴ�
 
 ### Step 4 公開本体
 
-`<名前>.tsx` を作り、「公開本体」章の標準構成 (SlotProps / PartsProps / Props / useXxx / SuiXxx / namespace) に従って実装します。静的メンバーが必要なときだけ `Object.assign` を使います。ジェネリックが必要なときは専用のコンポーネント型を定義します。
+`<名前>.tsx` を作り、「公開本体」章の標準構成 (SlotProps / API / useXxxAPI / SuiXxx / namespace) に従って実装します。静的メンバーが必要なときだけ `Object.assign` を使います。ジェネリックが必要なときは専用のコンポーネント型 (`IXxx`) を定義します。
 
 完了条件: 公開 API の型とコンポーネントが定義され、JSDoc が書かれている。
 
@@ -652,7 +844,7 @@ web サイトの mdx ドキュメント (`website/content/docs/react/<カテゴ�
 
 ### Step 6 Storybook
 
-`stories/<カテゴリー>/<名前>.stories.tsx` を作ります (「Storybook」章参照)。
+`stories/<名前>.stories.tsx` を作ります (「Storybook」章参照)。
 
 完了条件: 「使い方」と主な外観 story があり、controls で主要プロパティーを操作できる。
 
@@ -662,7 +854,7 @@ web サイトの mdx ドキュメント (`website/content/docs/react/<カテゴ�
 
 ### Step 8 テスト
 
-`tests/<カテゴリー>/<名前>.client.test.tsx` を作ります (「テスト」章参照)。ブラウザーを必要としない純粋なロジックを書いた場合は `<名前>.test.ts` に分けます。
+`tests/<名前>.client.test.tsx` を作ります (「テスト」章参照)。ブラウザーを必要としない純粋なロジックを書いた場合は `<名前>.test.ts` に分けます。
 
 完了条件: 公開 API の主要な振る舞いを検証するテストが存在する。
 
@@ -692,21 +884,24 @@ mise run test:typecheck   # 複数の tsconfig に対する tsc --noEmit
 
 - `.ts` は `.js`、`.tsx` は `.jsx` の import 拡張子を使う。間違えない。
 - CSS をパーツファイル以外 (本体ファイルや `index.ts`) で import しない。
+- Root パーツのルート要素に `data-scope=""` を付け忘れない (CSS の `@scope` と対になる)。
 - `as any` などの型キャストで型エラーをごまかさない。
 - `enum` や値を持つ `namespace` を使わない (`erasableSyntaxOnly`)。
 - `this` を参照しない関数型のメンバーをメソッドシグネチャーで定義しない (アロー式のプロパティーとして `readonly` 付きで定義する)。
 - DOM 要素を返すパーツを `useRender` 経由にせず、生の JSX で返さない (`style` や `ref` の合成を壊す)。
-- 複数のパーツを組み合わせた複合パーツを作らない。アイテム一式の組み立ては本体が `getItemPartsProps` を使って行う (「データ駆動なアイテム」参照)。
+- 複数のパーツを組み合わせた複合パーツを作らない。アイテム一式の組み立ては本体が `useXxxAPI` の `getXxxProps` メソッドで行う (「データ駆動なアイテム」参照)。
 - 公開本体で状態を持たない (`useState` を複製しない)。状態は Root パーツだけが持つ。
-- データ駆動な Root の関数子にコンテキストを渡さない。描画すべきアイテムとその構造情報を渡す (Autocomplete の List と同じ形)。
+- データ駆動な Root の関数子にコンテキストを渡さない。描画すべきアイテムとその構造情報を渡す (Accordion と同じ形)。
 - 未使用の分割代入はリントエラーになる。意図的に無視する変数は `_data` のように `_` で始める。
 - Render Props 型と交差したプロパティー (`className` や `style`) を手動でスプレッドして合成しない。`useRender` の props 配列に任せる。
 - コンポーネント関数名の `Sui` プレフィックスを付け忘れない。
 - パーツを `slotProps` にせず、1 段目のプロパティーで直接公開しない (Field 型の便利プロパティーは除く)。
-- `slotProps` のメンバーから `readonly` を外さない。`XxxPartsProps` のメンバーは必須 (`readonly`) にする。
+- `slotProps` のメンバーから `readonly` を外さない。
 - 子のコンテキスト読み取りを `useXxxContext(true)` (オプショナル) にせず、グループ外での既定値を持たない実装にしない。
 - `cn()` を使わずに `className` を文字列で直接結合しない。
 - 公開 API に 1 行形式の JSDoc を書かない。`@default undefined` を書かない。
+- 別名や namespace メンバーの JSDoc に「〜です。」を付けない (`/** {@link XxxRootColor} */` の形にする)。
+- namespace 自体に JSDoc を付けない。
 - 状態クラスの強制上書きを `@layer sui.important` の外に書かない (`../css/SKILL.md` 参照)。
 - `package.json` の `exports` と `packages/react/src/index.ts` への公開登録を忘れない。
 - テストを書かずに完了としない。ブラウザーで実行するテストを `*.client.test.tsx` 以外のファイル名にしない。
@@ -716,3 +911,4 @@ mise run test:typecheck   # 複数の tsconfig に対する tsc --noEmit
 
 既存コンポーネントの修正や拡張のときも、このスキルの「format による自動整形」「禁則リスト」を守って進めてください。
 新規パーツを追加する場合は、パターン A〜E から該当するものを選び、既存のパーツファイル内のパーツツリー順どおりに挿入します。
+古いスタイルで書かれた既存コンポーネント (checkbox-group など) を全面改修するときは、`src/accordion/` と `src/button/` の形に合わせてください。

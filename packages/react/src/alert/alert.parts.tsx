@@ -35,7 +35,7 @@ export type AlertRootRadius = "none" | Size;
 export type AlertRootSize = Size;
 
 /**
- * アラートの主な外観の種類です。
+ * アラートの主な外観です。
  *
  * - `"muted"`: 控えめな背景
  * - `"naked"`: 背景のないテキストのみ
@@ -44,12 +44,12 @@ export type AlertRootSize = Size;
 export type AlertRootVariant = "muted" | "naked" | "liquid";
 
 /**
- * {@link AlertRoot} の状態です。
+ * {@link AlertRoot} が持つ状態です。
  */
 export type AlertRootState = {};
 
 /**
- * {@link AlertRoot} に渡すプロパティーです。
+ * {@link AlertRoot} に渡す props です。
  */
 export type AlertRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
   RenderProps<AlertRootState> & {
@@ -117,48 +117,46 @@ export const AlertRoot: IComponent<AlertRootProps> = function SuiAlertRoot(props
           `sui_alert-variant_${variant}`,
           outlined && "sui_alert-outlined",
         ),
+        "data-scope": "",
       },
     ],
   });
 };
 
-/**
- * {@link AlertRoot} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Root {
   /**
-   * {@link AlertRootState} です。
+   * {@link AlertRootState}
    */
   export type State = AlertRootState;
 
   /**
-   * {@link AlertRootProps} です。
+   * {@link AlertRootProps}
    */
   export type Props = AlertRootProps;
 
   /**
-   * {@link AlertRootColor} です。
+   * {@link AlertRootColor}
    */
   export type Color = AlertRootColor;
 
   /**
-   * {@link AlertRootRadius} です。
+   * {@link AlertRootRadius}
    */
   export type Radius = AlertRootRadius;
 
   /**
-   * {@link AlertRootSize} です。
+   * {@link AlertRootSize}
    */
   export type Size = AlertRootSize;
 
   /**
-   * {@link AlertRootVariant} です。
+   * {@link AlertRootVariant}
    */
   export type Variant = AlertRootVariant;
 }
 
 /**
- * {@link AlertRoot} です。
+ * {@link AlertRoot}
  */
 export const Root: IComponent<Root.Props> = AlertRoot;
 
@@ -166,12 +164,12 @@ export const Root: IComponent<Root.Props> = AlertRoot;
 // ----
 
 /**
- * {@link AlertIcon} の状態です。
+ * {@link AlertIcon} が持つ状態です。
  */
 export type AlertIconState = {};
 
 /**
- * {@link AlertIcon} に渡すプロパティーです。
+ * {@link AlertIcon} に渡す props です。
  */
 export type AlertIconProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
   RenderProps<AlertIconState>;
@@ -196,23 +194,20 @@ export const AlertIcon: IComponent<AlertIconProps> = function SuiAlertIcon(props
   });
 };
 
-/**
- * {@link AlertIcon} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Icon {
   /**
-   * {@link AlertIconState} です。
+   * {@link AlertIconState}
    */
   export type State = AlertIconState;
 
   /**
-   * {@link AlertIconProps} です。
+   * {@link AlertIconProps}
    */
   export type Props = AlertIconProps;
 }
 
 /**
- * {@link AlertIcon} です。
+ * {@link AlertIcon}
  */
 export const Icon: IComponent<Icon.Props> = AlertIcon;
 
@@ -220,12 +215,12 @@ export const Icon: IComponent<Icon.Props> = AlertIcon;
 // -----
 
 /**
- * {@link AlertTitle} の状態です。
+ * {@link AlertTitle} が持つ状態です。
  */
 export type AlertTitleState = {};
 
 /**
- * {@link AlertTitle} に渡すプロパティーです。
+ * {@link AlertTitle} に渡す props です。
  */
 export type AlertTitleProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
   RenderProps<AlertTitleState>;
@@ -245,23 +240,20 @@ export const AlertTitle: IComponent<AlertTitleProps> = function SuiAlertTitle(pr
   });
 };
 
-/**
- * {@link AlertTitle} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Title {
   /**
-   * {@link AlertTitleState} です。
+   * {@link AlertTitleState}
    */
   export type State = AlertTitleState;
 
   /**
-   * {@link AlertTitleProps} です。
+   * {@link AlertTitleProps}
    */
   export type Props = AlertTitleProps;
 }
 
 /**
- * {@link AlertTitle} です。
+ * {@link AlertTitle}
  */
 export const Title: IComponent<Title.Props> = AlertTitle;
 
@@ -269,12 +261,12 @@ export const Title: IComponent<Title.Props> = AlertTitle;
 // -----------
 
 /**
- * {@link AlertDescription} の状態です。
+ * {@link AlertDescription} が持つ状態です。
  */
 export type AlertDescriptionState = {};
 
 /**
- * {@link AlertDescription} に渡すプロパティーです。
+ * {@link AlertDescription} に渡す props です。
  */
 export type AlertDescriptionProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
   RenderProps<AlertDescriptionState>;
@@ -296,23 +288,20 @@ export const AlertDescription: IComponent<AlertDescriptionProps> = function SuiA
   });
 };
 
-/**
- * {@link AlertDescription} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Description {
   /**
-   * {@link AlertDescriptionState} です。
+   * {@link AlertDescriptionState}
    */
   export type State = AlertDescriptionState;
 
   /**
-   * {@link AlertDescriptionProps} です。
+   * {@link AlertDescriptionProps}
    */
   export type Props = AlertDescriptionProps;
 }
 
 /**
- * {@link AlertDescription} の状態やプロパティーをまとめた型名前空間です。
+ * {@link AlertDescription}
  */
 export const Description: IComponent<Description.Props> = AlertDescription;
 
@@ -320,12 +309,12 @@ export const Description: IComponent<Description.Props> = AlertDescription;
 // -------
 
 /**
- * {@link AlertActions} の状態です。
+ * {@link AlertActions} が持つ状態です。
  */
 export type AlertActionsState = {};
 
 /**
- * {@link AlertActions} に渡すプロパティーです。
+ * {@link AlertActions} に渡す props です。
  */
 export type AlertActionsProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
   RenderProps<AlertActionsState>;
@@ -345,22 +334,19 @@ export const AlertActions: IComponent<AlertActionsProps> = function SuiAlertActi
   });
 };
 
-/**
- * {@link AlertActions} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Actions {
   /**
-   * {@link AlertActionsState} です。
+   * {@link AlertActionsState}
    */
   export type State = AlertActionsState;
 
   /**
-   * {@link AlertActionsProps} です。
+   * {@link AlertActionsProps}
    */
   export type Props = AlertActionsProps;
 }
 
 /**
- * {@link AlertActions} の状態やプロパティーをまとめた型名前空間です。
+ * {@link AlertActions}
  */
 export const Actions: IComponent<Actions.Props> = AlertActions;

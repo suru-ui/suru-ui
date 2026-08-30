@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import type { IComponent } from "../types.js";
 import {
   type AlertRootSize,
@@ -20,95 +18,95 @@ import {
 } from "./alert.parts.jsx";
 
 /**
- * {@link AlertRootColor} です。
+ * {@link AlertRootColor}
  */
 export type AlertColor = AlertRootColor;
 
 /**
- * {@link AlertRootRadius} です。
+ * {@link AlertRootRadius}
  */
 export type AlertRadius = AlertRootRadius;
 
 /**
- * {@link AlertRootSize} です。
+ * {@link AlertRootSize}
  */
 export type AlertSize = AlertRootSize;
 
 /**
- * {@link AlertRootVariant} です。
+ * {@link AlertRootVariant}
  */
 export type AlertVariant = AlertRootVariant;
 
 /**
- * {@link Alert} の各パーツに渡すプロパティーです。
+ * {@link Alert} の各パーツに渡す props です。
  */
 export type AlertSlotProps = {
   /**
-   * {@link AlertActions} に渡すプロパティーです。
+   * {@link AlertActions} に渡す props です。
    */
-  readonly actions?: AlertActionsProps | undefined;
+  readonly actions?: Omit<AlertActionsProps, "children"> | undefined;
 
   /**
-   * {@link AlertDescription} に渡すプロパティーです。
+   * {@link AlertDescription} に渡す props です。
    */
-  readonly description?: AlertDescriptionProps | undefined;
+  readonly description?: Omit<AlertDescriptionProps, "children"> | undefined;
 
   /**
-   * {@link AlertIcon} に渡すプロパティーです。
+   * {@link AlertIcon} に渡す props です。
    */
-  readonly icon?: AlertIconProps | undefined;
+  readonly icon?: Omit<AlertIconProps, "children"> | undefined;
 
   /**
-   * {@link AlertTitle} に渡すプロパティーです。
+   * {@link AlertTitle} に渡す props です。
    */
-  readonly title?: AlertTitleProps | undefined;
+  readonly title?: Omit<AlertTitleProps, "children"> | undefined;
 };
 
 /**
- * {@link Alert} の各パーツに渡すプロパティーです。
+ * {@link Alert} を構成する各パーツの props を作成するための API です。
  */
-export type AlertPartsProps = {
+export interface AlertAPI {
   /**
-   * {@link AlertActions} に渡すプロパティーです。
+   * {@link AlertActions} に渡す props を取得します。
    *
-   * これを表示しないときは null になります。
+   * 操作ボタンを表示しないときは `null` を返します。
    */
-  readonly actions: AlertActionsProps | null;
+  getActionsProps(): AlertActionsProps | null;
 
   /**
-   * {@link AlertDescription} に渡すプロパティーです。
+   * {@link AlertDescription} に渡す props を取得します。
    *
-   * これを表示しないときは null になります。
+   * 説明文を表示しないときは `null` を返します。
    */
-  readonly description: AlertDescriptionProps | null;
+  getDescriptionProps(): AlertDescriptionProps | null;
 
   /**
-   * {@link AlertIcon} に渡すプロパティーです。
+   * {@link AlertIcon} に渡す props を取得します。
    *
-   * これを表示しないときは null になります。
+   * アイコンを表示しないときは `null` を返します。
    */
-  readonly icon: AlertIconProps | null;
+  getIconProps(): AlertIconProps | null;
 
   /**
-   * {@link AlertRoot} に渡すプロパティーです。
+   * {@link AlertRoot} に渡す props を取得します。
    */
-  readonly root: AlertRootProps;
+  getRootProps(): Omit<AlertRootProps, "children">;
 
   /**
-   * {@link AlertTitle} に渡すプロパティーです。
+   * {@link AlertTitle} に渡す props を取得します。
    *
-   * これを表示しないときは null になります。
+   * タイトルを表示しないときは `null` を返します。
    */
-  readonly title: AlertTitleProps | null;
-};
+  getTitleProps(): AlertTitleProps | null;
+}
 
 /**
- * {@link AlertRootState} です。
+ * {@link Alert} が持つ状態です。
  */
 export type AlertState = AlertRootState;
 
 /**
- * {@link Alert} コンポーネントのプロパティーです。
+ * {@link Alert} に渡す props です。
  */
 export type AlertProps = Omit<AlertRootProps, "children"> &
   Pick<AlertDescriptionProps, "children"> & {
@@ -123,22 +121,32 @@ export type AlertProps = Omit<AlertRootProps, "children"> &
     icon?: AlertIconProps["children"];
 
     /**
-     * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+     * 各パーツに個別の props を渡すためのオブジェクトです。
      *
-     * 各パーツのプロパティーが優先されます。
+     * 各パーツの props が優先されます。
      */
     slotProps?: AlertSlotProps | undefined;
 
     /**
      * アラートのタイトルです。
      */
-    title?: AlertTitleProps["children"] | undefined;
+    title?: AlertTitleProps["children"];
   };
 
+interface IUseAlertAPI {
+  /**
+   * {@link AlertAPI} を作成します。
+   *
+   * @param props {@link Alert} の props です。
+   * @returns アラートの API です
+   */
+  (props: AlertProps): AlertAPI;
+}
+
 /**
- * {@link Alert} の各パーツに渡すプロパティーを作るフックです。
+ * {@link AlertAPI} を作成するフックです。
  */
-export function useAlert(props: AlertProps): AlertPartsProps {
+export const useAlertAPI: IUseAlertAPI = function useSuiAlertAPI(props) {
   const {
     icon,
     title,
@@ -150,71 +158,86 @@ export function useAlert(props: AlertProps): AlertPartsProps {
       actions: actionsProps,
       description: descriptionProps,
     } = {},
-    ...rootProps
+    ...otherRootProps
   } = props;
 
   return {
-    root: rootProps,
-    icon: "icon" in props || !!iconProps ? { children: icon, ...iconProps } : null,
-    title: "title" in props || !!titleProps ? { children: title, ...titleProps } : null,
-    description:
-      "children" in props || !!descriptionProps ? { children, ...descriptionProps } : null,
-    actions: "actions" in props || !!actionsProps ? { children: actions, ...actionsProps } : null,
+    getIconProps() {
+      return "icon" in props || !!iconProps ? { children: icon, ...iconProps } : null;
+    },
+    getRootProps() {
+      return otherRootProps;
+    },
+    getTitleProps() {
+      return "title" in props || !!titleProps ? { children: title, ...titleProps } : null;
+    },
+    getActionsProps() {
+      return "actions" in props || !!actionsProps ? { children: actions, ...actionsProps } : null;
+    },
+    getDescriptionProps() {
+      return "children" in props || !!descriptionProps ? { children, ...descriptionProps } : null;
+    },
   };
-}
+};
+
+/**
+ * {@link useAlertAPI}
+ */
+export const useAPI: IUseAlertAPI = useAlertAPI;
 
 /**
  * 重要なメッセージや通知をステータスインジケーター付きで表示するコンポーネントです。
  */
-export const Alert: IComponent<AlertProps> = function SuiAlert(props) {
-  const partsProps = useAlert(props);
+export const Alert: IComponent<AlertProps> = function SuiAlert(props: AlertProps) {
+  const api = useAPI(props);
+  const iconProps = api.getIconProps();
+  const titleProps = api.getTitleProps();
+  const descriptionProps = api.getDescriptionProps();
+  const actionsProps = api.getActionsProps();
 
   return (
-    <AlertRoot {...partsProps.root}>
-      {partsProps.icon && <AlertIcon {...partsProps.icon} />}
-      {partsProps.title && <AlertTitle {...partsProps.title} />}
-      {partsProps.description && <AlertDescription {...partsProps.description} />}
-      {partsProps.actions && <AlertActions {...partsProps.actions} />}
+    <AlertRoot {...api.getRootProps()}>
+      {iconProps && <AlertIcon {...iconProps} />}
+      {titleProps && <AlertTitle {...titleProps} />}
+      {descriptionProps && <AlertDescription {...descriptionProps} />}
+      {actionsProps && <AlertActions {...actionsProps} />}
     </AlertRoot>
   );
 };
 
-/**
- * {@link Alert} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Alert {
   /**
-   * {@link AlertState} です。
+   * {@link AlertState}
    */
   export type State = AlertState;
 
   /**
-   * {@link AlertProps} です。
+   * {@link AlertProps}
    */
   export type Props = AlertProps;
 
   /**
-   * {@link AlertSlotProps} です。
+   * {@link AlertSlotProps}
    */
   export type SlotProps = AlertSlotProps;
 
   /**
-   * {@link AlertColor} です。
+   * {@link AlertColor}
    */
   export type Color = AlertColor;
 
   /**
-   * {@link AlertRadius} です。
+   * {@link AlertRadius}
    */
   export type Radius = AlertRadius;
 
   /**
-   * {@link AlertSize} です。
+   * {@link AlertSize}
    */
   export type Size = AlertSize;
 
   /**
-   * {@link AlertVariant} です。
+   * {@link AlertVariant}
    */
   export type Variant = AlertVariant;
 }

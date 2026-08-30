@@ -65,58 +65,6 @@ export const Usage = meta.story({
   }),
 });
 
-export const Variants = meta.story({
-  name: "主な外観",
-  ...ctrl({
-    children: "ボタン",
-    color: "grey",
-    size: "md",
-    radius: undefined,
-    muted: false,
-    outlined: false,
-    pending: false,
-    disabled: false,
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-wrap gap-3">
-        {VARIANTS.map((variant) => (
-          <div key={variant} className="flex flex-col items-center gap-2">
-            <span>{variant}</span>
-            <Button {...props} variant={variant} />
-          </div>
-        ))}
-      </div>
-    );
-  },
-});
-
-export const Colors = meta.story({
-  name: "色",
-  ...ctrl({
-    children: "ボタン",
-    variant: "solid",
-    size: "md",
-    radius: undefined,
-    muted: false,
-    outlined: false,
-    pending: false,
-    disabled: false,
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-wrap gap-3">
-        {COLORS.map((color) => (
-          <div key={color} className="flex flex-col items-center gap-2">
-            <span>{color}</span>
-            <Button {...props} color={color} />
-          </div>
-        ))}
-      </div>
-    );
-  },
-});
-
 export const WithIcons = meta.story({
   name: "アイコン付き",
   ...ctrl({
@@ -354,138 +302,6 @@ export const Pending = meta.story({
   },
 });
 
-export const Radius = meta.story({
-  name: "角丸",
-  ...ctrl({
-    children: "ボタン",
-    variant: "solid",
-    color: "grey",
-    size: "md",
-    muted: false,
-    outlined: false,
-    pending: false,
-    disabled: false,
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-wrap gap-3">
-        {RADII.map((radius) => (
-          <div key={radius} className="flex flex-col items-center gap-2">
-            <span>{radius}</span>
-            <Button {...props} radius={radius} />
-          </div>
-        ))}
-      </div>
-    );
-  },
-});
-
-export const Muted = meta.story({
-  name: "控えめ",
-  ...ctrl({
-    children: "削除",
-    color: "red",
-    size: "md",
-    radius: undefined,
-    outlined: true,
-    pending: false,
-    disabled: false,
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-wrap gap-3">
-        {VARIANTS.map((variant) => (
-          <div key={variant} className="flex flex-col items-center gap-2">
-            <span>{variant}</span>
-            <Button {...props} muted variant={variant} />
-          </div>
-        ))}
-      </div>
-    );
-  },
-});
-
-export const Outlined = meta.story({
-  name: "枠線",
-  ...ctrl({
-    children: "ボタン",
-    color: "grey",
-    size: "md",
-    muted: false,
-    radius: undefined,
-    pending: false,
-    disabled: false,
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-wrap gap-3">
-        {VARIANTS.map((variant) => (
-          <div key={variant} className="flex flex-col items-center gap-2">
-            <span>{variant}</span>
-            <Button {...props} variant={variant} outlined />
-          </div>
-        ))}
-      </div>
-    );
-  },
-});
-
-export const Sizes = meta.story({
-  name: "大きさ",
-  ...ctrl({
-    children: "ボタン",
-    variant: "solid",
-    color: "grey",
-    radius: undefined,
-    muted: false,
-    outlined: false,
-    pending: false,
-    disabled: false,
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-col gap-3">
-        <div className="flex flex-col items-center gap-2">
-          <span>規定の高さ</span>
-          <div className="flex items-center justify-center gap-3">
-            {SIZES.map((size) => (
-              <div key={size} className="flex flex-col items-center gap-2">
-                <span>{size}</span>
-                <Button {...props} size={size}>
-                  <Trash2Icon />
-                  {props.children}
-                </Button>
-              </div>
-            ))}
-          </div>
-          <div className="flex items-center justify-center gap-3">
-            {SIZES.map((size) => (
-              <div key={size} className="flex flex-col items-center gap-2">
-                <span>{size}</span>
-                <Button {...props} size={size} squared>
-                  <Trash2Icon />
-                </Button>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          <span>親要素に自動で合わせる</span>
-          <div className="flex justify-center gap-3 h-[50px]">
-            <Button {...props}>
-              <Trash2Icon />
-              {props.children}
-            </Button>
-            <Button {...props} squared>
-              <Trash2Icon />
-            </Button>
-          </div>
-        </div>
-      </div>
-    );
-  },
-});
-
 export const FullWidth = meta.story({
   name: "最大幅",
   ...ctrl({
@@ -520,6 +336,109 @@ export const FullWidth = meta.story({
             <EllipsisIcon />
           </Button>
         </div>
+      </div>
+    );
+  },
+});
+
+export const Variants = meta.story({
+  name: "主な外観",
+  ...ctrl({
+    children: "ボタン",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    muted: false,
+    outlined: false,
+    pending: false,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-wrap gap-3">
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col items-center gap-2">
+            <span>{variant}</span>
+            <Button {...props} variant={variant} />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Muted = meta.story({
+  name: "控えめ",
+  ...ctrl({
+    children: "削除",
+    color: "red",
+    size: "md",
+    radius: undefined,
+    outlined: true,
+    pending: false,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-wrap gap-3">
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col items-center gap-2">
+            <span>{variant}</span>
+            <Button {...props} muted variant={variant} />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Colors = meta.story({
+  name: "色",
+  ...ctrl({
+    children: "ボタン",
+    variant: "solid",
+    size: "md",
+    radius: undefined,
+    muted: false,
+    outlined: false,
+    pending: false,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-wrap gap-3">
+        {COLORS.map((color) => (
+          <div key={color} className="flex flex-col items-center gap-2">
+            <span>{color}</span>
+            <Button {...props} color={color} />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Radius = meta.story({
+  name: "角丸",
+  ...ctrl({
+    children: "ボタン",
+    variant: "solid",
+    color: "grey",
+    size: "md",
+    muted: false,
+    outlined: false,
+    pending: false,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-wrap gap-3">
+        {RADII.map((radius) => (
+          <div key={radius} className="flex flex-col items-center gap-2">
+            <span>{radius}</span>
+            <Button {...props} radius={radius} />
+          </div>
+        ))}
       </div>
     );
   },
