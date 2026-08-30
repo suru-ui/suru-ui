@@ -1,4 +1,4 @@
-import { SIZES, COLORS, COLOR_TEMPLATES } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import { GlobeIcon, DeleteIcon, Trash2Icon, EllipsisIcon } from "lucide-react";
 import * as React from "react";
 
@@ -6,8 +6,10 @@ import { preview, controls } from "../.config/storybook/preview.js";
 import { Button } from "../src/button/index.js";
 import * as ButtonParts from "../src/button/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
-const VARIANTS = COLOR_TEMPLATES;
+const COLORS: readonly Button.Color[] = theme.COLORS;
+const RADII: readonly Button.Radius[] = ["none", ...theme.SIZES, "full"];
+const SIZES: readonly Button.Size[] = theme.SIZES;
+const VARIANTS: readonly Button.Variant[] = theme.COLOR_TEMPLATES;
 
 const meta = preview.meta({
   title: "Button",

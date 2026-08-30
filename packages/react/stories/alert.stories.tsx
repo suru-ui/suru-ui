@@ -1,12 +1,14 @@
-import { SIZES, COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import { InfoIcon, AlertCircleIcon, CheckCircle2Icon } from "lucide-react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Alert } from "../src/alert/index.js";
 import { Button } from "../src/button/index.js";
 
-const RADII = ["none", ...SIZES] as const;
-const VARIANTS = ["muted", "naked", "liquid"] as const;
+const COLORS: readonly Alert.Color[] = theme.COLORS;
+const RADII: readonly Alert.Radius[] = ["none", ...theme.SIZES];
+const SIZES: readonly Alert.Size[] = theme.SIZES;
+const VARIANTS: readonly Alert.Variant[] = ["muted", "naked", "liquid"];
 
 const meta = preview.meta({
   title: "Alert",
