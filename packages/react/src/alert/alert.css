@@ -465,6 +465,9 @@
 :scope {
   .sui_alert_title {
     grid-area: title;
+    line-break: strict;
+    word-break: normal;
+    overflow-wrap: anywhere;
   }
 }
 
@@ -629,6 +632,9 @@
 :scope {
   .sui_alert_description {
     grid-area: description;
+    line-break: strict;
+    word-break: normal;
+    overflow-wrap: anywhere;
   }
 }
 

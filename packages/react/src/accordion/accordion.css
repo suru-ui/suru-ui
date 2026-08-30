@@ -130,7 +130,6 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    text-align: left;
     line-break: strict;
     word-break: normal;
     overflow-wrap: anywhere;
@@ -258,7 +257,6 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    text-align: left;
     line-break: strict;
     word-break: normal;
     overflow-wrap: anywhere;
