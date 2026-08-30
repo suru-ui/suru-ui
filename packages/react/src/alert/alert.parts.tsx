@@ -257,53 +257,51 @@ export namespace Title {
  */
 export const Title: IComponent<Title.Props> = AlertTitle;
 
-// Description
-// -----------
+// Content
+// -------
 
 /**
- * {@link AlertDescription} が持つ状態です。
+ * {@link AlertContent} が持つ状態です。
  */
-export type AlertDescriptionState = {};
+export type AlertContentState = {};
 
 /**
- * {@link AlertDescription} に渡す props です。
+ * {@link AlertContent} に渡す props です。
  */
-export type AlertDescriptionProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<AlertDescriptionState>;
+export type AlertContentProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
+  RenderProps<AlertContentState>;
 
 /**
  * アラートのメッセージをまとめるコンテンツコンポーネントです。
  */
-export const AlertDescription: IComponent<AlertDescriptionProps> = function SuiAlertDescription(
-  props,
-) {
+export const AlertContent: IComponent<AlertContentProps> = function SuiAlertContent(props) {
   return useRender({
     defaultTagName: "div",
     props: [
       props,
       {
-        className: "sui_alert_description",
+        className: "sui_alert_content",
       },
     ],
   });
 };
 
-export namespace Description {
+export namespace Content {
   /**
-   * {@link AlertDescriptionState}
+   * {@link AlertContentState}
    */
-  export type State = AlertDescriptionState;
+  export type State = AlertContentState;
 
   /**
-   * {@link AlertDescriptionProps}
+   * {@link AlertContentProps}
    */
-  export type Props = AlertDescriptionProps;
+  export type Props = AlertContentProps;
 }
 
 /**
- * {@link AlertDescription}
+ * {@link AlertContent}
  */
-export const Description: IComponent<Description.Props> = AlertDescription;
+export const Content: IComponent<Content.Props> = AlertContent;
 
 // Actions
 // -------

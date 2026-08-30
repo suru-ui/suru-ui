@@ -38,10 +38,10 @@
       /auto   ;
   }
 
-  &:has(.sui_alert_description) {
+  &:has(.sui_alert_content) {
     grid-template:
-      "description" auto
-      /auto       ;
+      "content" auto
+      /auto   ;
   }
 
   &:has(.sui_alert_icon):has(.sui_alert_title) {
@@ -63,24 +63,24 @@
       /auto   ;
   }
 
-  &:has(.sui_alert_icon):has(.sui_alert_description) {
+  &:has(.sui_alert_icon):has(.sui_alert_content) {
     grid-template:
-      "icon description" auto
-      /auto 1fr        ;
+      "icon content" auto
+      /auto 1fr    ;
   }
 
-  &:has(.sui_alert_title):has(.sui_alert_description) {
+  &:has(.sui_alert_title):has(.sui_alert_content) {
     grid-template:
-      "title      " auto
-      "description" auto
-      /auto       ;
+      "title  " auto
+      "content" auto
+      /auto   ;
   }
 
-  &:has(.sui_alert_description):has(.sui_alert_actions) {
+  &:has(.sui_alert_content):has(.sui_alert_actions) {
     grid-template:
-      "description" auto
-      "actions    " auto
-      /auto       ;
+      "content" auto
+      "actions" auto
+      /auto   ;
   }
 
   &:has(.sui_alert_icon):has(.sui_alert_title):has(.sui_alert_actions) {
@@ -90,34 +90,34 @@
       /auto 1fr    ;
   }
 
-  &:has(.sui_alert_icon):has(.sui_alert_title):has(.sui_alert_description) {
+  &:has(.sui_alert_icon):has(.sui_alert_title):has(.sui_alert_content) {
     grid-template:
-      "icon title      " auto
-      ".    description" auto
-      /auto 1fr        ;
+      "icon title  " auto
+      ".    content" auto
+      /auto 1fr    ;
   }
 
-  &:has(.sui_alert_icon):has(.sui_alert_description):has(.sui_alert_actions) {
+  &:has(.sui_alert_icon):has(.sui_alert_content):has(.sui_alert_actions) {
     grid-template:
-      "icon description" auto
-      ".    actions    " auto
-      /auto 1fr        ;
+      "icon content" auto
+      ".    actions" auto
+      /auto 1fr    ;
   }
 
-  &:has(.sui_alert_title):has(.sui_alert_description):has(.sui_alert_actions) {
+  &:has(.sui_alert_title):has(.sui_alert_content):has(.sui_alert_actions) {
     grid-template:
-      "title      " auto
-      "description" auto
-      "actions    " auto
-      /auto       ;
+      "title  " auto
+      "content" auto
+      "actions" auto
+      /auto   ;
   }
 
-  &:has(.sui_alert_icon):has(.sui_alert_title):has(.sui_alert_description):has(.sui_alert_actions) {
+  &:has(.sui_alert_icon):has(.sui_alert_title):has(.sui_alert_content):has(.sui_alert_actions) {
     grid-template:
-      "icon title      " auto
-      ".    description" auto
-      ".    actions    " auto
-      /auto 1fr        ;
+      "icon title  " auto
+      ".    content" auto
+      ".    actions" auto
+      /auto 1fr    ;
   }
 }
 
@@ -614,24 +614,24 @@
 } /* @scope */
 } /* @layer */
 
-/* Description */
+/* Content */
 @layer sui.component {
 @scope (.sui_alert) to ([data-scope]) {
 
 /* 変数 */
 :scope {
-  --sui_alert_description-font_family: ;
-  --sui_alert_description-font_size: ;
-  --sui_alert_description-font_weight: ;
-  --sui_alert_description-line_height: ;
-  --sui_alert_description-color: ;
-  --sui_alert_description-letter_spacing: ;
+  --sui_alert_content-font_family: ;
+  --sui_alert_content-font_size: ;
+  --sui_alert_content-font_weight: ;
+  --sui_alert_content-line_height: ;
+  --sui_alert_content-color: ;
+  --sui_alert_content-letter_spacing: ;
 }
 
 /* 静的 */
 :scope {
-  .sui_alert_description {
-    grid-area: description;
+  .sui_alert_content {
+    grid-area: content;
     line-break: strict;
     word-break: normal;
     overflow-wrap: anywhere;
@@ -640,40 +640,40 @@
 
 /* 動的 */
 :scope {
-  .sui_alert_description {
-    font-family: var(--sui_alert_description-font_family);
-    font-size: var(--sui_alert_description-font_size);
-    font-weight: var(--sui_alert_description-font_weight);
-    line-height: var(--sui_alert_description-line_height);
-    color: var(--sui_alert_description-color);
-    letter-spacing: var(--sui_alert_description-letter_spacing);
+  .sui_alert_content {
+    font-family: var(--sui_alert_content-font_family);
+    font-size: var(--sui_alert_content-font_size);
+    font-weight: var(--sui_alert_content-font_weight);
+    line-height: var(--sui_alert_content-line_height);
+    color: var(--sui_alert_content-color);
+    letter-spacing: var(--sui_alert_content-letter_spacing);
   }
 }
 
 /* 既定値 */
 :scope {
-  --sui_alert_description-font_family: var(--sui-font-sans);
-  --sui_alert_description-color: var(--sui-canvas_text-1);
+  --sui_alert_content-font_family: var(--sui-font-sans);
+  --sui_alert_content-color: var(--sui-canvas_text-1);
 
   &.sui_alert-size_sm {
-    --sui_alert_description-font_size: var(--sui-text-std-sm-n-font_size);
-    --sui_alert_description-font_weight: var(--sui-text-std-sm-n-font_weight);
-    --sui_alert_description-line_height: var(--sui-text-std-sm-n-line_height);
-    --sui_alert_description-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+    --sui_alert_content-font_size: var(--sui-text-std-sm-n-font_size);
+    --sui_alert_content-font_weight: var(--sui-text-std-sm-n-font_weight);
+    --sui_alert_content-line_height: var(--sui-text-std-sm-n-line_height);
+    --sui_alert_content-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
   }
 
   &.sui_alert-size_md {
-    --sui_alert_description-font_size: var(--sui-text-std-md-n-font_size);
-    --sui_alert_description-font_weight: var(--sui-text-std-md-n-font_weight);
-    --sui_alert_description-line_height: var(--sui-text-std-md-n-line_height);
-    --sui_alert_description-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
+    --sui_alert_content-font_size: var(--sui-text-std-md-n-font_size);
+    --sui_alert_content-font_weight: var(--sui-text-std-md-n-font_weight);
+    --sui_alert_content-line_height: var(--sui-text-std-md-n-line_height);
+    --sui_alert_content-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
   }
 
   &.sui_alert-size_lg {
-    --sui_alert_description-font_size: var(--sui-text-std-lg-n-font_size);
-    --sui_alert_description-font_weight: var(--sui-text-std-lg-n-font_weight);
-    --sui_alert_description-line_height: var(--sui-text-std-lg-n-line_height);
-    --sui_alert_description-letter_spacing: var(--sui-text-std-lg-n-letter_spacing);
+    --sui_alert_content-font_size: var(--sui-text-std-lg-n-font_size);
+    --sui_alert_content-font_weight: var(--sui-text-std-lg-n-font_weight);
+    --sui_alert_content-line_height: var(--sui-text-std-lg-n-line_height);
+    --sui_alert_content-letter_spacing: var(--sui-text-std-lg-n-letter_spacing);
   }
 }
 
@@ -715,7 +715,7 @@
   &.sui_alert-size_sm {
     --sui_alert_actions-gap: --sui-gap(4);
 
-    &:has(.sui_alert_title, .sui_alert_description) {
+    &:has(.sui_alert_title, .sui_alert_content) {
       --sui_alert_actions-padding_block: --sui-gap(4) --sui-gap(3);
     }
   }
@@ -723,7 +723,7 @@
   &.sui_alert-size_md {
     --sui_alert_actions-gap: --sui-gap(4);
 
-    &:has(.sui_alert_title, .sui_alert_description) {
+    &:has(.sui_alert_title, .sui_alert_content) {
       --sui_alert_actions-padding_block: --sui-gap(5) --sui-gap(3);
     }
   }
@@ -731,7 +731,7 @@
   &.sui_alert-size_lg {
     --sui_alert_actions-gap: --sui-gap(4);
 
-    &:has(.sui_alert_title, .sui_alert_description) {
+    &:has(.sui_alert_title, .sui_alert_content) {
       --sui_alert_actions-padding_block: --sui-gap(6) --sui-gap(4);
     }
   }

@@ -1,3 +1,4 @@
+import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import type { IComponent } from "../types.js";
 import {
   type AlertRootSize,
@@ -9,12 +10,12 @@ import {
   type AlertTitleProps,
   type AlertRootVariant,
   type AlertActionsProps,
-  type AlertDescriptionProps,
+  type AlertContentProps,
   AlertIcon,
   AlertRoot,
   AlertTitle,
   AlertActions,
-  AlertDescription,
+  AlertContent,
 } from "./alert.parts.jsx";
 
 /**
@@ -47,9 +48,9 @@ export type AlertSlotProps = {
   readonly actions?: Omit<AlertActionsProps, "children"> | undefined;
 
   /**
-   * {@link AlertDescription} に渡す props です。
+   * {@link AlertContent} に渡す props です。
    */
-  readonly description?: Omit<AlertDescriptionProps, "children"> | undefined;
+  readonly content?: Omit<AlertContentProps, "children"> | undefined;
 
   /**
    * {@link AlertIcon} に渡す props です。
@@ -69,21 +70,21 @@ export interface AlertAPI {
   /**
    * {@link AlertActions} に渡す props を取得します。
    *
-   * 操作ボタンを表示しないときは `null` を返します。
+   * それを表示しないときは `null` を返します。
    */
   getActionsProps(): AlertActionsProps | null;
 
   /**
-   * {@link AlertDescription} に渡す props を取得します。
+   * {@link AlertContent} に渡す props を取得します。
    *
-   * 説明文を表示しないときは `null` を返します。
+   * それを表示しないときは `null` を返します。
    */
-  getDescriptionProps(): AlertDescriptionProps | null;
+  getContentProps(): AlertContentProps | null;
 
   /**
    * {@link AlertIcon} に渡す props を取得します。
    *
-   * アイコンを表示しないときは `null` を返します。
+   * それを表示しないときは `null` を返します。
    */
   getIconProps(): AlertIconProps | null;
 
@@ -95,7 +96,7 @@ export interface AlertAPI {
   /**
    * {@link AlertTitle} に渡す props を取得します。
    *
-   * タイトルを表示しないときは `null` を返します。
+   * それを表示しないときは `null` を返します。
    */
   getTitleProps(): AlertTitleProps | null;
 }
@@ -109,7 +110,7 @@ export type AlertState = AlertRootState;
  * {@link Alert} に渡す props です。
  */
 export type AlertProps = Omit<AlertRootProps, "children"> &
-  Pick<AlertDescriptionProps, "children"> & {
+  Pick<AlertContentProps, "children"> & {
     /**
      * アラートの操作ボタンです。
      */
@@ -156,26 +157,28 @@ export const useAlertAPI: IUseAlertAPI = function useSuiAlertAPI(props) {
       icon: iconProps,
       title: titleProps,
       actions: actionsProps,
-      description: descriptionProps,
+      content: contentProps,
     } = {},
     ...otherRootProps
   } = props;
 
   return {
     getIconProps() {
-      return "icon" in props || !!iconProps ? { children: icon, ...iconProps } : null;
+      return isLikelyVisibleNode(icon) || !!iconProps ? { ...iconProps, children: icon } : null;
     },
     getRootProps() {
       return otherRootProps;
     },
     getTitleProps() {
-      return "title" in props || !!titleProps ? { children: title, ...titleProps } : null;
+      return isLikelyVisibleNode(title) || !!titleProps ? { ...titleProps, children: title } : null;
     },
     getActionsProps() {
-      return "actions" in props || !!actionsProps ? { children: actions, ...actionsProps } : null;
+      return isLikelyVisibleNode(actions) || !!actionsProps
+        ? { ...actionsProps, children: actions }
+        : null;
     },
-    getDescriptionProps() {
-      return "children" in props || !!descriptionProps ? { children, ...descriptionProps } : null;
+    getContentProps() {
+      return isLikelyVisibleNode(children) || !!contentProps ? { ...contentProps, children } : null;
     },
   };
 };
@@ -192,14 +195,14 @@ export const Alert: IComponent<AlertProps> = function SuiAlert(props: AlertProps
   const api = useAPI(props);
   const iconProps = api.getIconProps();
   const titleProps = api.getTitleProps();
-  const descriptionProps = api.getDescriptionProps();
+  const contentProps = api.getContentProps();
   const actionsProps = api.getActionsProps();
 
   return (
     <AlertRoot {...api.getRootProps()}>
       {iconProps && <AlertIcon {...iconProps} />}
       {titleProps && <AlertTitle {...titleProps} />}
-      {descriptionProps && <AlertDescription {...descriptionProps} />}
+      {contentProps && <AlertContent {...contentProps} />}
       {actionsProps && <AlertActions {...actionsProps} />}
     </AlertRoot>
   );
