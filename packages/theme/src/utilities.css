@@ -2,9 +2,9 @@
   @function --_sui-exp-func(--level, --base, --growth, --offset) {
     --exp: calc(var(--growth) * var(--level));
     --coef: var(--level);
-    --space: calc(var(--coef) * pow(var(--base), var(--exp)) + var(--offset));
+    --value: calc(var(--coef) * pow(var(--base), var(--exp)) + var(--offset));
 
-    result: round(to-zero, calc(var(--space) * 1px), 1px);
+    result: calc((round(calc(var(--value) * 100)) / 100) * 1px);
   }
 
   @function --sui-space(--level) {

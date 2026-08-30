@@ -32,15 +32,15 @@ export const ButtonContext: React.Context<ButtonContext | null> =
 function useSuiButtonContext(optional?: false): ButtonContext;
 function useSuiButtonContext(optional?: boolean): ButtonContext | null;
 function useSuiButtonContext(optional?: boolean): ButtonContext | null {
-  const context = React.use(ButtonContext);
-  if (context === null && !optional) {
+  const ctx = React.use(ButtonContext);
+  if (ctx === null && !optional) {
     throw new ContextMissingError({
       contextName: "ButtonContext",
       providerName: "ButtonRoot",
     });
   }
 
-  return context;
+  return ctx;
 }
 
 /**
@@ -49,17 +49,17 @@ function useSuiButtonContext(optional?: boolean): ButtonContext | null {
 export const useButtonContext: IUseContext<ButtonContext> = useSuiButtonContext;
 
 /**
- * {@link ButtonContext} です。
+ * {@link ButtonContext}
  */
 export type Context = ButtonContext;
 
 /**
- * {@link ButtonContext} です。
+ * {@link ButtonContext}
  */
 export const Context: React.Context<ButtonContext | null> = ButtonContext;
 
 /**
- * {@link useButtonContext} です。
+ * {@link useButtonContext}
  */
 export const useContext: IUseContext<Context> = useButtonContext;
 
@@ -67,64 +67,64 @@ export const useContext: IUseContext<Context> = useButtonContext;
 // ----
 
 /**
- * ボタンの色です。
+ * ボタンの配色です。
  */
 export type ButtonRootColor = Color;
 
 /**
- * ボタンの角丸です。
+ * ボタンの角丸の大きさです。
  *
  * - `"none"`: 直角
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
- * - `"full"`: 完全な丸形
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ * - `"full"`: 丸形
  */
 export type ButtonRootRadius = "none" | Size | "full";
 
 /**
  * ボタンの大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type ButtonRootSize = Size;
 
 /**
- * ボタンの主な外観の種類です。
+ * ボタンの主な外観です。
  *
- * - `"solid"`: 塗りつぶしスタイル
- * - `"naked"`: 背景のないテキストのみ
+ * - `"solid"`: 塗りつぶし
+ * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
 export type ButtonRootVariant = ColorTemplate;
 
 /**
- * {@link ButtonRoot} の状態です。
+ * {@link ButtonRoot} が持つ状態です。
  */
 export type ButtonRootState = Button.State;
 
 /**
- * {@link ButtonRoot} に渡すプロパティーです。
+ * {@link ButtonRoot} に渡す props です。
  */
 export type ButtonRootProps = React.ComponentProps<typeof Button> & {
   /**
-   * ボタンの色を指定します。
+   * ボタンの配色を指定します。
    *
    * @default "grey"
    */
   color?: ButtonRootColor | undefined;
 
   /**
-   * 背景色を控えめにします。
+   * ボタンの背景色を控えめにします。
    *
    * @default false
    */
   muted?: boolean | undefined;
 
   /**
-   * 枠線を表示するかどうかを指定します。
+   * ボタンに枠線を表示するかどうかを指定します。
    *
    * @default false
    */
@@ -140,9 +140,9 @@ export type ButtonRootProps = React.ComponentProps<typeof Button> & {
   pending?: boolean | undefined;
 
   /**
-   * ボタンの角丸を指定します。
+   * ボタンの角丸の大きさを指定します。
    *
-   * 既定値は {@link ButtonRootProps.size|size} です。
+   * 既定値は {@link ButtonRootProps.size|size}
    */
   radius?: ButtonRootRadius | undefined;
 
@@ -219,48 +219,46 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
           disabled && "sui_button-disabled",
         )}
         focusableWhenDisabled={focusableWhenDisabled}
+        data-scope=""
       />
     </Context>
   );
 };
 
-/**
- * {@link ButtonRoot} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Root {
   /**
-   * {@link ButtonRootState} です。
+   * {@link ButtonRootState}
    */
   export type State = ButtonRootState;
 
   /**
-   * {@link ButtonRootProps} です。
+   * {@link ButtonRootProps}
    */
   export type Props = ButtonRootProps;
 
   /**
-   * {@link ButtonRootColor} です。
+   * {@link ButtonRootColor}
    */
   export type Color = ButtonRootColor;
 
   /**
-   * {@link ButtonRootRadius} です。
+   * {@link ButtonRootRadius}
    */
   export type Radius = ButtonRootRadius;
 
   /**
-   * {@link ButtonRootSize} です。
+   * {@link ButtonRootSize}
    */
   export type Size = ButtonRootSize;
 
   /**
-   * {@link ButtonRootVariant} です。
+   * {@link ButtonRootVariant}
    */
   export type Variant = ButtonRootVariant;
 }
 
 /**
- * {@link ButtonRoot} です。
+ * {@link ButtonRoot}
  */
 export const Root: IComponent<Root.Props> = ButtonRoot;
 
@@ -268,12 +266,12 @@ export const Root: IComponent<Root.Props> = ButtonRoot;
 // -------
 
 /**
- * {@link ButtonContent} の状態です。
+ * {@link ButtonContent} が持つ状態です。
  */
-export type ButtonContentState = {};
+export type ButtonContentState = Context;
 
 /**
- * {@link ButtonContent} に渡すプロパティーです。
+ * {@link ButtonContent} に渡す props です。
  */
 export type ButtonContentProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
   RenderProps<ButtonContentState>;
@@ -282,8 +280,11 @@ export type ButtonContentProps = Omit<React.ComponentProps<"span">, keyof Render
  * ボタンのコンテンツを表示するコンポーネントです。
  */
 export const ButtonContent: IComponent<ButtonContentProps> = function SuiButtonContent(props) {
+  const ctx = useContext();
+
   return useRender({
     defaultTagName: "span",
+    state: ctx,
     props: [
       props,
       {
@@ -293,23 +294,20 @@ export const ButtonContent: IComponent<ButtonContentProps> = function SuiButtonC
   });
 };
 
-/**
- * {@link ButtonContent} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Content {
   /**
-   * {@link ButtonContentState} です。
+   * {@link ButtonContentState}
    */
   export type State = ButtonContentState;
 
   /**
-   * {@link ButtonContentProps} です。
+   * {@link ButtonContentProps}
    */
   export type Props = ButtonContentProps;
 }
 
 /**
- * {@link ButtonContent} です。
+ * {@link ButtonContent}
  */
 export const Content: IComponent<Content.Props> = ButtonContent;
 
@@ -319,27 +317,27 @@ export const Content: IComponent<Content.Props> = ButtonContent;
 /**
  * ボタンが保留状態でないときの表示モードです。
  *
- * - `"hidden"`: DOM を維持します。
- * - `"none"`: DOM から除去します。
+ * - `"hidden"`: DOM に維持
+ * - `"none"`: DOM から除去
  */
 export type ButtonPendingVisibility = "hidden" | "none";
 
 /**
- * {@link ButtonPending} の状態です。
+ * {@link ButtonPending} が持つ状態です。
  */
-export type ButtonPendingState = {};
+export type ButtonPendingState = Context;
 
 /**
- * {@link ButtonPending} に渡すプロパティーです。
+ * {@link ButtonPending} に渡す props です。
  */
 export type ButtonPendingProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
   RenderProps<ButtonPendingState> & {
     /**
-     * ボタンが保留状態でないときの表示モードを指定します。
+     * ボタンが保留状態でないときも DOM に保持するかどうかを指定します。
      *
-     * @default "none"
+     * @default false
      */
-    defaultVisibility?: ButtonPendingVisibility | undefined;
+    keepMounted?: boolean | undefined;
 
     /**
      * 親要素を覆うオーバーレイとして表示するかどうかを指定します。
@@ -355,48 +353,46 @@ export type ButtonPendingProps = Omit<React.ComponentProps<"span">, keyof Render
  * 保留中のみ有効になります。
  */
 export const ButtonPending: IComponent<ButtonPendingProps> = function SuiButtonPending(props) {
-  const { pending } = useContext();
-  const { overlay = false, defaultVisibility = "none", ...otherProps } = props;
+  const ctx = useContext();
+  const { overlay = false, keepMounted = false, ...otherProps } = props;
 
   return useRender({
     defaultTagName: "span",
-    enabled: pending || defaultVisibility === "hidden",
+    enabled: ctx.pending || keepMounted,
+    state: ctx,
     props: [
       otherProps,
       {
         className: cn(
           "sui_button_pending",
-          pending && "sui_button_pending-enabled",
           overlay && "sui_button_pending-overlay",
-          !pending && defaultVisibility === "hidden" && "sui_button_pending-visibility_hidden",
+          ctx.pending && "sui_button_pending-enabled",
+          !ctx.pending && keepMounted && "sui_button_pending-visibility_hidden",
         ),
       },
     ],
   });
 };
 
-/**
- * {@link ButtonPending} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Pending {
   /**
-   * {@link ButtonPendingState} です。
+   * {@link ButtonPendingState}
    */
   export type State = ButtonPendingState;
 
   /**
-   * {@link ButtonPendingProps} です。
+   * {@link ButtonPendingProps}
    */
   export type Props = ButtonPendingProps;
 
   /**
-   * {@link ButtonPendingVisibility} です。
+   * {@link ButtonPendingVisibility}
    */
   export type Visibility = ButtonPendingVisibility;
 }
 
 /**
- * {@link ButtonPending} です。
+ * {@link ButtonPending}
  */
 export const Pending: IComponent<Pending.Props> = ButtonPending;
 
@@ -424,12 +420,6 @@ export type ButtonCircularProgressContext = {
 export const ButtonCircularProgressContext: React.Context<ButtonCircularProgressContext | null> =
   React.createContext<ButtonCircularProgressContext | null>(null);
 
-/**
- * {@link ButtonCircularProgressContext} を読み取るフックです。
- *
- * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
- * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
- */
 function useSuiButtonCircularProgressContext(optional?: false): ButtonCircularProgressContext;
 function useSuiButtonCircularProgressContext(
   optional?: boolean,
@@ -437,15 +427,15 @@ function useSuiButtonCircularProgressContext(
 function useSuiButtonCircularProgressContext(
   optional?: boolean,
 ): ButtonCircularProgressContext | null {
-  const CircularProgressContext = React.use(ButtonCircularProgressContext);
-  if (CircularProgressContext === null && !optional) {
+  const ctx = React.use(ButtonCircularProgressContext);
+  if (ctx === null && !optional) {
     throw new ContextMissingError({
       contextName: "CircularProgressContext",
       providerName: "CircularProgress",
     });
   }
 
-  return CircularProgressContext;
+  return ctx;
 }
 
 /**
@@ -455,18 +445,18 @@ export const useButtonCircularProgressContext: IUseContext<ButtonCircularProgres
   useSuiButtonCircularProgressContext;
 
 /**
- * {@link ButtonCircularProgressContext} です。
+ * {@link ButtonCircularProgressContext}
  */
 export type CircularProgressContext = ButtonCircularProgressContext;
 
 /**
- * {@link ButtonCircularProgressContext} です。
+ * {@link ButtonCircularProgressContext}
  */
 export const CircularProgressContext: React.Context<ButtonCircularProgressContext | null> =
   ButtonCircularProgressContext;
 
 /**
- * {@link useButtonCircularProgressContext} です。
+ * {@link useButtonCircularProgressContext}
  */
 export const useCircularProgressContext: IUseContext<CircularProgressContext> =
   useButtonCircularProgressContext;
@@ -475,12 +465,12 @@ export const useCircularProgressContext: IUseContext<CircularProgressContext> =
 // ----------------
 
 /**
- * {@link ButtonCircularProgress} の状態です。
+ * {@link ButtonCircularProgress} が持つ状態です。
  */
-export type ButtonCircularProgressState = {};
+export type ButtonCircularProgressState = CircularProgressContext;
 
 /**
- * {@link ButtonCircularProgress} に渡すプロパティーです。
+ * {@link ButtonCircularProgress} に渡す props です。
  */
 export type ButtonCircularProgressProps = Omit<React.ComponentProps<"svg">, keyof RenderProps> &
   RenderProps<ButtonCircularProgressState> & {
@@ -514,12 +504,10 @@ export const ButtonCircularProgress: IComponent<ButtonCircularProgressProps> =
       indeterminate = percentage === undefined || percentage < 0,
       ...otherProps
     } = props;
-    const context = React.useMemo(
-      () => ({ percentage, indeterminate }),
-      [percentage, indeterminate],
-    );
+    const ctx = React.useMemo(() => ({ percentage, indeterminate }), [percentage, indeterminate]);
     const element = useRender({
       defaultTagName: "svg",
+      state: ctx,
       props: [
         otherProps,
         {
@@ -533,26 +521,23 @@ export const ButtonCircularProgress: IComponent<ButtonCircularProgressProps> =
       ],
     });
 
-    return <CircularProgressContext value={context}>{element}</CircularProgressContext>;
+    return <CircularProgressContext value={ctx}>{element}</CircularProgressContext>;
   };
 
-/**
- * {@link ButtonCircularProgress} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace CircularProgress {
   /**
-   * {@link ButtonCircularProgressState} です。
+   * {@link ButtonCircularProgressState}
    */
   export type State = ButtonCircularProgressState;
 
   /**
-   * {@link ButtonCircularProgressProps} です。
+   * {@link ButtonCircularProgressProps}
    */
   export type Props = ButtonCircularProgressProps;
 }
 
 /**
- * {@link ButtonCircularProgress} です。
+ * {@link ButtonCircularProgress}
  */
 export const CircularProgress: IComponent<CircularProgress.Props> = ButtonCircularProgress;
 
@@ -560,12 +545,12 @@ export const CircularProgress: IComponent<CircularProgress.Props> = ButtonCircul
 // ---------------------
 
 /**
- * {@link ButtonCircularProgressTrack} の状態です。
+ * {@link ButtonCircularProgressTrack} が持つ状態です。
  */
-export type ButtonCircularProgressTrackState = {};
+export type ButtonCircularProgressTrackState = CircularProgressContext;
 
 /**
- * {@link ButtonCircularProgressTrack} に渡すプロパティーです。
+ * {@link ButtonCircularProgressTrack} に渡す props です。
  */
 export type ButtonCircularProgressTrackProps = Omit<
   React.ComponentProps<"circle">,
@@ -578,6 +563,7 @@ export type ButtonCircularProgressTrackProps = Omit<
  */
 export const ButtonCircularProgressTrack: IComponent<ButtonCircularProgressTrackProps> =
   function SuiButtonCircularProgressTrack(props) {
+    const ctx = useCircularProgressContext();
     const {
       r,
       cx = "50%",
@@ -590,6 +576,7 @@ export const ButtonCircularProgressTrack: IComponent<ButtonCircularProgressTrack
 
     return useRender({
       defaultTagName: "circle",
+      state: ctx,
       props: [
         otherProps,
         {
@@ -604,23 +591,20 @@ export const ButtonCircularProgressTrack: IComponent<ButtonCircularProgressTrack
     });
   };
 
-/**
- * {@link ButtonCircularProgressTrack} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace CircularProgressTrack {
   /**
-   * {@link ButtonCircularProgressTrackState} です。
+   * {@link ButtonCircularProgressTrackState}
    */
   export type State = ButtonCircularProgressTrackState;
 
   /**
-   * {@link ButtonCircularProgressTrackProps} です。
+   * {@link ButtonCircularProgressTrackProps}
    */
   export type Props = ButtonCircularProgressTrackProps;
 }
 
 /**
- * {@link ButtonCircularProgressTrack} です。
+ * {@link ButtonCircularProgressTrack}
  */
 export const CircularProgressTrack: IComponent<CircularProgressTrack.Props> =
   ButtonCircularProgressTrack;
@@ -629,25 +613,34 @@ export const CircularProgressTrack: IComponent<CircularProgressTrack.Props> =
 // --------------------
 
 /**
- * {@link ButtonCircularProgressFill} の状態です。
+ * {@link ButtonCircularProgressFill} が持つ状態です。
  */
-export type ButtonCircularProgressFillState = {};
+export type ButtonCircularProgressFillState = CircularProgressContext;
 
 /**
- * {@link ButtonCircularProgressFill} に渡すプロパティーです。
+ * {@link ButtonCircularProgressFill} に渡す props です。
  */
 export type ButtonCircularProgressFillProps = Omit<
   React.ComponentProps<"circle">,
-  keyof RenderProps
+  keyof RenderProps | "strokeDashoffset"
 > &
-  RenderProps<ButtonCircularProgressFillState>;
+  RenderProps<ButtonCircularProgressFillState> & {
+    /**
+     * {@link https://developer.mozilla.org/docs/Web/SVG/Reference/Attribute/stroke-dashoffset|stroke-dashoffset}
+     */
+    strokeDashoffset?:
+      | string
+      | number
+      | ((state: ButtonCircularProgressFillState) => string | number | undefined)
+      | undefined;
+  };
 
 /**
  * 円形プログレスバーのフィル（進捗を表す円弧）を描画するコンポーネントです。
  */
 export const ButtonCircularProgressFill: IComponent<ButtonCircularProgressFillProps> =
   function SuiButtonCircularProgressFill(props) {
-    const { percentage, indeterminate } = useCircularProgressContext();
+    const ctx = useCircularProgressContext();
     const {
       r,
       cx = "50%",
@@ -657,13 +650,15 @@ export const ButtonCircularProgressFill: IComponent<ButtonCircularProgressFillPr
       strokeWidth = 4,
       strokeLinecap = "round",
       strokeDasharray = "100 200",
-      strokeDashoffset = 100 - (indeterminate || percentage === undefined ? 25 : percentage),
+      strokeDashoffset = (state) =>
+        100 - (state.indeterminate || state.percentage === undefined ? 25 : state.percentage),
       ...otherProps
     } = props;
     const strokeWidthCss = typeof strokeWidth === "number" ? strokeWidth + "px" : strokeWidth;
 
     return useRender({
       defaultTagName: "circle",
+      state: ctx,
       props: [
         otherProps,
         {
@@ -676,29 +671,27 @@ export const ButtonCircularProgressFill: IComponent<ButtonCircularProgressFillPr
           strokeWidth: strokeWidthCss,
           strokeLinecap,
           strokeDasharray,
-          strokeDashoffset,
+          strokeDashoffset:
+            typeof strokeDashoffset === "function" ? strokeDashoffset(ctx) : strokeDashoffset,
         },
       ],
     });
   };
 
-/**
- * {@link ButtonCircularProgressFill} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace CircularProgressFill {
   /**
-   * {@link ButtonCircularProgressFillState} です。
+   * {@link ButtonCircularProgressFillState}
    */
   export type State = ButtonCircularProgressFillState;
 
   /**
-   * {@link ButtonCircularProgressFillProps} です。
+   * {@link ButtonCircularProgressFillProps}
    */
   export type Props = ButtonCircularProgressFillProps;
 }
 
 /**
- * {@link ButtonCircularProgressFill} です。
+ * {@link ButtonCircularProgressFill}
  */
 export const CircularProgressFill: IComponent<CircularProgressFill.Props> =
   ButtonCircularProgressFill;
@@ -707,18 +700,18 @@ export const CircularProgressFill: IComponent<CircularProgressFill.Props> =
 // ----------------------------
 
 /**
- * {@link ButtonCircularProgressFillRotation} の状態です。
+ * {@link ButtonCircularProgressFillRotation} が持つ状態です。
  */
 export type ButtonCircularProgressFillRotationState = {};
 
 /**
- * {@link ButtonCircularProgressFillRotation} に渡すプロパティーです。
+ * {@link ButtonCircularProgressFillRotation} に渡す props です。
  */
 export type ButtonCircularProgressFillRotationProps = Omit<
   React.ComponentProps<"animateTransform">,
   keyof RenderProps
 > &
-  RenderProps<ButtonCircularProgressFillState>;
+  RenderProps<ButtonCircularProgressFillRotationState>;
 
 /**
  * 不定モード時に円形プログレスバーを回転させるアニメーションコンポーネントです。
@@ -754,23 +747,20 @@ export const ButtonCircularProgressFillRotation: IComponent<ButtonCircularProgre
     });
   };
 
-/**
- * {@link ButtonCircularProgressFillRotation} のプロパティーをまとめた型名前空間です。
- */
 export namespace CircularProgressFillRotation {
   /**
-   * {@link ButtonCircularProgressFillRotationState} です。
+   * {@link ButtonCircularProgressFillRotationState}
    */
   export type State = ButtonCircularProgressFillRotationState;
 
   /**
-   * {@link ButtonCircularProgressFillRotationProps} です。
+   * {@link ButtonCircularProgressFillRotationProps}
    */
   export type Props = ButtonCircularProgressFillRotationProps;
 }
 
 /**
- * {@link ButtonCircularProgressFillRotation} です。
+ * {@link ButtonCircularProgressFillRotation}
  */
 export const CircularProgressFillRotation: IComponent<CircularProgressFillRotation.Props> =
   ButtonCircularProgressFillRotation;

@@ -26,6 +26,9 @@ const TARGET_VARIABLE_RE = /^--(?:_)?sui_[a-z_]+-/;
  */
 const PROPERTY_ALIASES: Readonly<Record<string, readonly string[]>> = {
   size: ["width", "height"],
+  "focusring-color": ["outline-color"],
+  "focusring-width": ["outline-width"],
+  "focusring-offset": ["outline-offset"],
 };
 
 /** stylelint-order の `order/properties-order` に渡すプロパティーグループ。 */

@@ -52,7 +52,7 @@ export type ContextMissingErrorArgs = ErrorOptions & {
 };
 
 /**
- * 必要な React コンテキストが見つからなかった場合にスローされるエラーです。
+ * 必要な React コンテキストが見つからなかった場合に投げられるエラーです。
  *
  * @example
  * ```ts

@@ -1,9 +1,9 @@
-import { describe, expect, it } from "vitest";
+import { describe, test } from "vitest";
 
 import { sortCssVariables } from "../../scripts/sort-css-variables.js";
 
 describe("sortCssVariables", () => {
-  it("CSS プロパティーを stylelint の並び順に従って並べ替える", () => {
+  test("CSS プロパティーを stylelint の並び順に従って並べ替える", ({ expect }) => {
     const source = `.sui_button {
   --sui_button-border_radius: ;
   --sui_button-color: ;
@@ -21,7 +21,7 @@ describe("sortCssVariables", () => {
     expect(sortCssVariables(source)).toBe(expected);
   });
 
-  it("アンダースコア区切りのプロパティー (`border_radius`) を判定する", () => {
+  test("アンダースコア区切りのプロパティー (`border_radius`) を判定する", ({ expect }) => {
     const source = `.sui_button {
   --sui_button-border_radius: ;
   --sui_button-border_color: ;
@@ -37,7 +37,7 @@ describe("sortCssVariables", () => {
     expect(sortCssVariables(source)).toBe(expected);
   });
 
-  it("`size` を `width` / `height` と同じ位置として扱う", () => {
+  test("`size` を `width` / `height` と同じ位置として扱う", ({ expect }) => {
     const source = `.sui_button {
   --sui_button-padding_inline: ;
   --sui_button-min_height: ;
@@ -53,7 +53,7 @@ describe("sortCssVariables", () => {
     expect(sortCssVariables(source)).toBe(expected);
   });
 
-  it("CSS プロパティーを判定できない変数を末尾へ移動する", () => {
+  test("CSS プロパティーを判定できない変数を末尾へ移動する", ({ expect }) => {
     const source = `.sui_button {
   --sui_button-unknown: ;
   --sui_button-color: ;
@@ -67,7 +67,7 @@ describe("sortCssVariables", () => {
     expect(sortCssVariables(source)).toBe(expected);
   });
 
-  it("判定できない変数同士を名前順で並べ替える", () => {
+  test("判定できない変数同士を名前順で並べ替える", ({ expect }) => {
     const source = `.sui_button {
   --sui_button-zzz: ;
   --sui_button-aaa: ;
@@ -83,7 +83,7 @@ describe("sortCssVariables", () => {
     expect(sortCssVariables(source)).toBe(expected);
   });
 
-  it("同一 CSS プロパティーのバリアントは元の順序を維持する", () => {
+  test("同一 CSS プロパティーのバリアントは元の順序を維持する", ({ expect }) => {
     const source = `.sui_button {
   --sui_button-color-hover: ;
   --sui_button-background-strong: ;
@@ -105,7 +105,7 @@ describe("sortCssVariables", () => {
     expect(sortCssVariables(source)).toBe(expected);
   });
 
-  it("対象外の CSS 変数が混在するブロックは変更しない", () => {
+  test("対象外の CSS 変数が混在するブロックは変更しない", ({ expect }) => {
     const source = `.sui_button {
   --sui_button-border_radius: ;
   --other_prop: ;
@@ -115,7 +115,7 @@ describe("sortCssVariables", () => {
     expect(sortCssVariables(source)).toBe(source);
   });
 
-  it("対象外の接頭辞を持つ CSS 変数のみのブロックは変更しない", () => {
+  test("対象外の接頭辞を持つ CSS 変数のみのブロックは変更しない", ({ expect }) => {
     const source = `.sui_theme {
   --sui-color: ;
   --sui-display: ;
@@ -124,7 +124,7 @@ describe("sortCssVariables", () => {
     expect(sortCssVariables(source)).toBe(source);
   });
 
-  it("CSS 変数以外の宣言を含むブロックは変更しない", () => {
+  test("CSS 変数以外の宣言を含むブロックは変更しない", ({ expect }) => {
     const source = `.sui_button {
   --sui_button-color: ;
   color: red;
@@ -134,7 +134,7 @@ describe("sortCssVariables", () => {
     expect(sortCssVariables(source)).toBe(source);
   });
 
-  it("@media やネストしたルール内のブロックも並べ替える", () => {
+  test("@media やネストしたルール内のブロックも並べ替える", ({ expect }) => {
     const source = `@layer sui.component {
   .sui_button {
     @media (any-hover: hover) {
@@ -160,7 +160,7 @@ describe("sortCssVariables", () => {
     expect(sortCssVariables(source)).toBe(expected);
   });
 
-  it("宣言とネストしたルールが混在するブロックでも宣言を並べ替える", () => {
+  test("宣言とネストしたルールが混在するブロックでも宣言を並べ替える", ({ expect }) => {
     const source = `@scope (.sui_accordion) to ([data-scope]) {
 :scope {
   --sui_accordion-border_radius: var(--sui-radius-md);
@@ -198,7 +198,7 @@ describe("sortCssVariables", () => {
     expect(sortCssVariables(source)).toBe(expected);
   });
 
-  it("ネストしたルールをまたいで宣言を移動しない", () => {
+  test("ネストしたルールをまたいで宣言を移動しない", ({ expect }) => {
     const source = `.sui_accordion {
   --sui_button-border_radius: ;
   &.sui_accordion-radius_none {
@@ -210,13 +210,13 @@ describe("sortCssVariables", () => {
     expect(sortCssVariables(source)).toBe(source);
   });
 
-  it("コメントや複数行の値を含むブロックの既存のコードを壊さない", () => {
+  test("コメントや複数行の値を含むブロックの既存のコードを壊さない", ({ expect }) => {
     const source = `.sui_button {
   /* コメント A */
   --sui_button-padding_inline: round(
-                                down,
-                                calc((1px / 2))
-                              );
+                                 down,
+                                 calc((1px / 2))
+                               );
   /* コメント B */
   --sui_button-display: ;
 }
@@ -226,15 +226,15 @@ describe("sortCssVariables", () => {
   --sui_button-display: ;
   /* コメント B */
   --sui_button-padding_inline: round(
-                                down,
-                                calc((1px / 2))
-                              );
+                                 down,
+                                 calc((1px / 2))
+                               );
 }
 `;
     expect(sortCssVariables(source)).toBe(expected);
   });
 
-  it("並べ替えが不要な場合は元の文字列をそのまま返す", () => {
+  test("並べ替えが不要な場合は元の文字列をそのまま返す", ({ expect }) => {
     const source = `.sui_button {
   --sui_button-display: ;
   --sui_button-color: ;

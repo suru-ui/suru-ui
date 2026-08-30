@@ -1,6 +1,7 @@
 export * from "./button.parts.jsx";
 
 export {
+  type ButtonAPI,
   type ButtonSize,
   type ButtonColor,
   type ButtonProps,
@@ -8,7 +9,7 @@ export {
   type ButtonRadius,
   type ButtonVariant,
   type ButtonSlotProps,
-  type ButtonPartsProps,
   Button,
-  useButton,
+  useAPI,
+  useButtonAPI,
 } from "./button.jsx";

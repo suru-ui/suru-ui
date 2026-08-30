@@ -150,6 +150,7 @@ export const WithIcons = meta.story({
           <div className="flex justify-center gap-3">
             <Button
               {...props}
+              className="[--sui_button_icon-size:28px] [--sui_button_pending_icon-size:28px]"
               slotProps={{
                 content: {
                   className: "flex-col gap-[8px]",
@@ -294,7 +295,7 @@ function PendingCustomStyle(props: {}) {
       onClick={progress.clickHandler}
       pending={progress.pending}
     >
-      <Button.Pending defaultVisibility="hidden">
+      <Button.Pending keepMounted>
         <Button.CircularProgress>
           <Button.CircularProgressTrack />
           <Button.CircularProgressFill>
