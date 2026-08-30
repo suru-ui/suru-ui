@@ -15,14 +15,14 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  border-style: solid;
 }
 
 /* 動的 */
 :scope {
   background-color: var(--sui_accordion-background_color);
-  border: var(--_sui_accordion-border_color, transparent)
-          solid
-          var(--_sui_accordion-border_width, 0px);
+  border-color: var(--_sui_accordion-border_color, transparent);
+  border-width: var(--_sui_accordion-border_width, 0px);
   border-radius: var(--sui_accordion-border_radius);
 }
 
@@ -71,12 +71,18 @@
   --sui_accordion_item-border_width: ;
 }
 
+/* 静的 */
+:scope {
+  .sui_accordion_item + .sui_accordion_item {
+    border-top-style: solid;
+  }
+}
+
 /* 動的 */
 :scope {
   .sui_accordion_item + .sui_accordion_item {
-    border-top: var(--_sui_accordion_item-border_color, transparent)
-                solid
-                var(--_sui_accordion_item-border_width, 0px);
+    border-top-color: var(--_sui_accordion_item-border_color, transparent);
+    border-top-width: var(--_sui_accordion_item-border_width, 0px);
   }
 }
 
@@ -236,8 +242,9 @@
   --sui_accordion_trigger-color: ;
   --sui_accordion_trigger_icon-color: ;
   --sui_accordion_trigger-letter_spacing: ;
-  --sui_accordion_trigger-outline_color: ;
-  --sui_accordion_trigger-outline_offset: ;
+  --sui_accordion_trigger-focusring_width: ;
+  --sui_accordion_trigger-focusring_color: ;
+  --sui_accordion_trigger-focusring_offset: ;
   --sui_accordion_trigger-background_color-normal: ;
   --sui_accordion_trigger-background_color-hover: ;
   --sui_accordion_trigger-background_color-active: ;
@@ -257,6 +264,7 @@
     overflow-wrap: anywhere;
     touch-action: manipulation;
     cursor: default;
+    outline-style: solid;
   }
 }
 
@@ -272,10 +280,9 @@
     line-height: var(--sui_accordion_trigger-line_height);
     color: var(--sui_accordion_trigger-color);
     letter-spacing: var(--sui_accordion_trigger-letter_spacing);
-    outline: var(--_sui_accordion_trigger-outline_width, 0px)
-             solid
-             var(--sui_accordion_trigger-outline_color);
-    outline-offset: var(--sui_accordion_trigger-outline_offset);
+    outline-width: var(--_sui_accordion_trigger-outline_width, 0px);
+    outline-color: var(--_sui_accordion_trigger-outline_color, transparent);
+    outline-offset: var(--_sui_accordion_trigger-outline_offset, 0px);
     background-color: var(--_sui_accordion_trigger-background_color,
                         var(--sui_accordion_trigger-background_color-normal)
                       );
@@ -300,7 +307,7 @@
   }
 }
 
-/* 既定値設定: ここから */
+/* 既定値 */
 :scope {
   --sui_accordion_trigger_icon-size: 1lh;
   --sui_accordion_trigger-font_family: var(--sui-font-sans);
@@ -309,8 +316,9 @@
                                         var(--sui-canvas_text-1),
                                         var(--sui-canvas-1)
                                       );
-  --sui_accordion_trigger-outline_color: var(--sui-focusring_color);
-  --sui_accordion_trigger-outline_offset: var(--sui-focusring_offset);
+  --sui_accordion_trigger-focusring_width: var(--sui-focusring_width);
+  --sui_accordion_trigger-focusring_color: var(--sui-focusring_color);
+  --sui_accordion_trigger-focusring_offset: var(--sui-focusring_offset);
   --sui_accordion_trigger-border_radius: var(--sui_accordion-border_radius);
 
   &.sui_accordion-size_sm {
@@ -373,6 +381,8 @@
     &:focus-visible {
       --_sui_accordion_trigger-z_index: 1;
       --_sui_accordion_trigger-outline_width: var(--sui-focusring_width);
+      --_sui_accordion_trigger-outline_color: var(--sui-focusring_color);
+      --_sui_accordion_trigger-outline_offset: var(--sui-focusring_offset);
     }
   }
 }

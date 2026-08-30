@@ -99,7 +99,7 @@ export type AccordionSlotProps = {
 };
 
 /**
- * {@link Accordion} を構成する各パーツの props を作るための API です。
+ * {@link Accordion} を構成する各パーツの props をなどを作成するための API です。
  *
  * @template TItem 項目の型です。
  */
@@ -170,12 +170,12 @@ export type AccordionProps<TItem = any, TValue = any> = AccordionRootProps<TItem
 
 interface IUseAccordionAPI {
   /**
-   * {@link Accordion} を構成する各パーツの props などを作成します。
+   * {@link AccordionAPI} を作成します。
    *
    * @template TItem 項目の型です。
    * @template TValue 項目の値の型です。
    * @param props {@link Accordion} の props です。
-   * @returns アコーディオンの API 群です
+   * @returns アコーディオンの API です
    */
   <TItem = never, TValue = $InferItemValue<TItem>>(
     props: AccordionProps<TItem, TValue>,
@@ -183,7 +183,7 @@ interface IUseAccordionAPI {
 }
 
 /**
- * {@link Accordion} を構成する各パーツの props などを作るためのフックです。
+ * {@link AccordionAPI} を作成するフックです。
  */
 export const useAccordionAPI: IUseAccordionAPI = function useSuiAccordionAPI(props) {
   const {

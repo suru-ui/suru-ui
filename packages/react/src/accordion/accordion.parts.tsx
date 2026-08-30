@@ -63,7 +63,7 @@ export interface IAccordionRootItemRenderer<TItem = any> {
 }
 
 /**
- * アコーディオンの角丸です。
+ * アコーディオンの角丸の大きさです。
  *
  * - `"none"`: 直角
  * - `"sm"`: 小さめ
@@ -82,7 +82,7 @@ export type AccordionRootRadius = "none" | Size;
 export type AccordionRootSize = Size;
 
 /**
- * アコーディオンの主な外観の種類です。
+ * アコーディオンの主な外観です。
  *
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
@@ -135,7 +135,7 @@ export type AccordionRootProps<TItem = any, TValue = any> = Omit<
   outlined?: boolean | undefined;
 
   /**
-   * アコーディオンの角丸を指定します。
+   * アコーディオンの角丸の大きさを指定します。
    *
    * 既定値は {@link AccordionRootProps.size|size}
    */
@@ -174,7 +174,7 @@ interface IAccordionRoot extends IComponent<AccordionRootProps> {
 }
 
 /**
- * アコーディオンのルート要素です。
+ * アコーディオンのルートコンポーネントです。
  */
 export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: AccordionRootProps) {
   const {
@@ -320,7 +320,7 @@ export type AccordionItemState = Accordion.Item.State;
 export type AccordionItemProps = React.ComponentProps<typeof Accordion.Item>;
 
 /**
- * アコーディオンの項目要素です。
+ * アコーディオンの項目コンポーネントです。
  */
 export const AccordionItem: IComponent<AccordionItemProps> = function SuiAccordionItem(props) {
   const { className, ...otherProps } = props;
@@ -379,7 +379,7 @@ export type AccordionHeadingState = Accordion.Header.State;
 export type AccordionHeadingProps = React.ComponentProps<typeof Accordion.Header>;
 
 /**
- * アコーディオンの見出し要素です。
+ * アコーディオンの見出しコンポーネントです。
  */
 export const AccordionHeading: IComponent<AccordionHeadingProps> = function SuiAccordionHeading(
   props,
@@ -429,7 +429,7 @@ export type AccordionTriggerProps = React.ComponentProps<typeof Accordion.Trigge
 };
 
 /**
- * アコーディオンの開閉ボタン要素です。
+ * アコーディオンの開閉ボタンコンポーネントです。
  */
 export const AccordionTrigger: IComponent<AccordionTriggerProps> = function SuiAccordionTrigger(
   props,
@@ -480,7 +480,7 @@ export type AccordionIndicatorProps = Omit<React.ComponentProps<"span">, keyof R
   RenderProps<AccordionIndicatorState>;
 
 /**
- * アコーディオンの展開状態を示すアイコンを表示する要素です。
+ * アコーディオンの展開状態を示すアイコンを表示するコンポーネントです。
  */
 export const AccordionIndicator: IComponent<AccordionIndicatorProps> =
   function SuiAccordionIndicator(props) {
@@ -529,7 +529,7 @@ export type AccordionContentState = Accordion.Panel.State;
 export type AccordionContentProps = React.ComponentProps<typeof Accordion.Panel>;
 
 /**
- * アコーディオンのパネル要素です。
+ * アコーディオンのパネルコンポーネントです。
  */
 export const AccordionContent: IComponent<AccordionContentProps> = function SuiAccordionContent(
   props,
