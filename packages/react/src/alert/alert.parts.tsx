@@ -16,21 +16,21 @@ import "./alert.css";
 export type AlertRootColor = Color;
 
 /**
- * アラートの角丸です。
+ * アラートの角丸の大きさです。
  *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type AlertRootRadius = "none" | Size;
 
 /**
  * アラートの大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type AlertRootSize = Size;
 
@@ -38,7 +38,7 @@ export type AlertRootSize = Size;
  * アラートの主な外観です。
  *
  * - `"muted"`: 控えめな背景
- * - `"naked"`: 背景のないテキストのみ
+ * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
 export type AlertRootVariant = "muted" | "naked" | "liquid";

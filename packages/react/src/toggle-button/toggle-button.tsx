@@ -24,184 +24,213 @@ import {
 } from "./toggle-button.parts.jsx";
 
 /**
- * {@link ToggleButtonRootColor} です。
+ * {@link ToggleButtonRootColor}
  */
 export type ToggleButtonColor = ToggleButtonRootColor;
 
 /**
- * {@link ToggleButtonRootRadius} です。
+ * {@link ToggleButtonRootRadius}
  */
 export type ToggleButtonRadius = ToggleButtonRootRadius;
 
 /**
- * {@link ToggleButtonRootSize} です。
+ * {@link ToggleButtonRootSize}
  */
 export type ToggleButtonSize = ToggleButtonRootSize;
 
 /**
- * {@link ToggleButtonRootVariant} です。
+ * {@link ToggleButtonRootVariant}
  */
 export type ToggleButtonVariant = ToggleButtonRootVariant;
 
 /**
- * {@link ToggleButton} の各パーツに渡すプロパティーです。
+ * {@link ToggleButton} の各パーツに渡す props です。
  */
 export type ToggleButtonSlotProps = {
   /**
-   * {@link ToggleButtonCircularProgress} に渡すプロパティーです。
+   * {@link ToggleButtonCircularProgress} に渡す props です。
    */
-  readonly circularProgress?: ToggleButtonCircularProgressProps | undefined;
+  readonly circularProgress?: Omit<ToggleButtonCircularProgressProps, "children"> | undefined;
 
   /**
-   * {@link ToggleButtonCircularProgressFill} に渡すプロパティーです。
+   * {@link ToggleButtonCircularProgressFill} に渡す props です。
    */
-  readonly circularProgressFill?: ToggleButtonCircularProgressFillProps | undefined;
+  readonly circularProgressFill?:
+    | Omit<ToggleButtonCircularProgressFillProps, "children">
+    | undefined;
 
   /**
-   * {@link ToggleButtonCircularProgressFillRotation} に渡すプロパティーです。
+   * {@link ToggleButtonCircularProgressFillRotation} に渡す props です。
    */
   readonly circularProgressFillRotation?: ToggleButtonCircularProgressFillRotationProps | undefined;
 
   /**
-   * {@link ToggleButtonCircularProgressTrack} に渡すプロパティーです。
+   * {@link ToggleButtonCircularProgressTrack} に渡す props です。
    */
   readonly circularProgressTrack?: ToggleButtonCircularProgressTrackProps | undefined;
 
   /**
-   * {@link ToggleButtonContent} に渡すプロパティーです。
+   * {@link ToggleButtonContent} に渡す props です。
    */
-  readonly content?: ToggleButtonContentProps | undefined;
+  readonly content?: Omit<ToggleButtonContentProps, "children"> | undefined;
 
   /**
-   * {@link ToggleButtonPending} に渡すプロパティーです。
+   * {@link ToggleButtonPending} に渡す props です。
    */
-  readonly pending?: ToggleButtonPendingProps | undefined;
+  readonly pending?: Omit<ToggleButtonPendingProps, "children"> | undefined;
 };
 
 /**
- * {@link ToggleButton} の各パーツに渡すプロパティーです。
+ * {@link ToggleButton} を構成する各パーツの props を作成するための API です。
  */
-export type ToggleButtonPartsProps = {
+export interface ToggleButtonAPI {
   /**
-   * {@link ToggleButtonCircularProgress} に渡すプロパティーです。
+   * {@link ToggleButtonCircularProgressFill} に渡す props を取得します。
    */
-  readonly circularProgress: ToggleButtonCircularProgressProps;
+  getCircularProgressFillProps(): Omit<ToggleButtonCircularProgressFillProps, "children">;
 
   /**
-   * {@link ToggleButtonCircularProgressFill} に渡すプロパティーです。
+   * {@link ToggleButtonCircularProgressFillRotation} に渡す props を取得します。
    */
-  readonly circularProgressFill: ToggleButtonCircularProgressFillProps | undefined;
+  getCircularProgressFillRotationProps(): ToggleButtonCircularProgressFillRotationProps;
 
   /**
-   * {@link ToggleButtonCircularProgressFillRotation} に渡すプロパティーです。
+   * {@link ToggleButtonCircularProgress} に渡す props を取得します。
    */
-  readonly circularProgressFillRotation: ToggleButtonCircularProgressFillRotationProps | undefined;
+  getCircularProgressProps(): Omit<ToggleButtonCircularProgressProps, "children">;
 
   /**
-   * {@link ToggleButtonCircularProgressTrack} に渡すプロパティーです。
+   * {@link ToggleButtonCircularProgressTrack} に渡す props を取得します。
    */
-  readonly circularProgressTrack: ToggleButtonCircularProgressTrackProps | undefined;
+  getCircularProgressTrackProps(): ToggleButtonCircularProgressTrackProps;
 
   /**
-   * {@link ToggleButtonContent} に渡すプロパティーです。
-   *
-   * `children` にはボタンの内容が設定されています。
+   * {@link ToggleButtonContent} に渡す props を取得します。
    */
-  readonly content: ToggleButtonContentProps;
+  getContentProps(): ToggleButtonContentProps;
 
   /**
-   * {@link ToggleButtonPending} に渡すプロパティーです。
+   * {@link ToggleButtonPending} に渡す props を取得します。
    */
-  readonly pending: ToggleButtonPendingProps;
+  getPendingProps(): Omit<ToggleButtonPendingProps, "children">;
 
   /**
-   * {@link ToggleButtonRoot} に渡すプロパティーです。
+   * {@link ToggleButtonRoot} に渡す props を取得します。
    */
-  readonly root: ToggleButtonRootProps;
-};
+  getRootProps(): Omit<ToggleButtonRootProps, "children">;
+}
 
 /**
- * {@link ToggleButton} の状態です。
+ * {@link ToggleButton} が持つ状態です。
  */
 export type ToggleButtonState = ToggleButtonRootState;
 
 /**
- * {@link ToggleButton} コンポーネントのプロパティーです。
+ * {@link ToggleButton} に渡す props です。
  */
 export type ToggleButtonProps = Omit<ToggleButtonRootProps, "children"> &
   Pick<ToggleButtonContentProps, "children"> &
   Pick<ToggleButtonCircularProgressProps, "percentage" | "indeterminate"> & {
     /**
-     * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+     * 各パーツに個別の props を渡すためのオブジェクトです。
      *
-     * 各パーツのプロパティーが優先されます。
+     * 各パーツの props が優先されます。
      */
     slotProps?: ToggleButtonSlotProps | undefined;
   };
 
-interface ToggleButtonType extends IComponent<ToggleButtonProps> {
+interface IUseToggleButtonAPI {
   /**
-   * {@link useToggleButtonContext} です。
+   * {@link ToggleButtonAPI} を作成します。
+   *
+   * @param props {@link ToggleButton} の props です。
+   * @returns トグルボタンの API です
    */
-  readonly useContext: IUseContext<ToggleButtonContext>;
+  (props: ToggleButtonProps): ToggleButtonAPI;
 }
 
 /**
- * {@link ToggleButton} の各パーツに渡すプロパティーを作るフックです。
+ * {@link ToggleButtonAPI} を作成するフックです。
  */
-export function useToggleButton(props: ToggleButtonProps): ToggleButtonPartsProps {
+export const useToggleButtonAPI: IUseToggleButtonAPI = function useSuiToggleButtonAPI(props) {
   const {
     children,
     slotProps: {
       content: contentProps,
       pending: { overlay = true, ...otherPendingProps } = {},
       circularProgress: circularProgressProps,
-      circularProgressFill: circularProgressFillProps,
-      circularProgressTrack: circularProgressTrackProps,
-      circularProgressFillRotation: circularProgressFillRotationProps,
+      circularProgressFill: circularProgressFillProps = {},
+      circularProgressTrack: circularProgressTrackProps = {},
+      circularProgressFillRotation: circularProgressFillRotationProps = {},
     } = {},
     percentage,
     indeterminate,
-    ...rootProps
+    ...otherRootProps
   } = props;
 
   return {
-    root: rootProps,
-    content: {
-      children,
-      ...contentProps,
+    getRootProps() {
+      return otherRootProps;
     },
-    pending: {
-      ...otherPendingProps,
-      overlay,
+    getContentProps() {
+      return {
+        ...contentProps,
+        children,
+      };
     },
-    circularProgress: {
-      percentage,
-      indeterminate,
-      ...circularProgressProps,
+    getPendingProps() {
+      return {
+        ...otherPendingProps,
+        overlay,
+      };
     },
-    circularProgressTrack: circularProgressTrackProps,
-    circularProgressFill: circularProgressFillProps,
-    circularProgressFillRotation: circularProgressFillRotationProps,
+    getCircularProgressProps() {
+      return {
+        percentage,
+        indeterminate,
+        ...circularProgressProps,
+      };
+    },
+    getCircularProgressFillProps() {
+      return circularProgressFillProps;
+    },
+    getCircularProgressTrackProps() {
+      return circularProgressTrackProps;
+    },
+    getCircularProgressFillRotationProps() {
+      return circularProgressFillRotationProps;
+    },
   };
+};
+
+/**
+ * {@link useToggleButtonAPI}
+ */
+export const useAPI: IUseToggleButtonAPI = useToggleButtonAPI;
+
+interface IToggleButton extends IComponent<ToggleButtonProps> {
+  /**
+   * {@link useToggleButtonContext}
+   */
+  readonly useContext: IUseContext<ToggleButtonContext>;
 }
 
 /**
- * トグルボタンを表示するコンポーネントです。
+ * 押すたびに押下状態を切り替えるボタンコンポーネントです。
  */
-export const ToggleButton: ToggleButtonType = /*#__PURE__*/ Object.assign(
+export const ToggleButton: IToggleButton = /*#__PURE__*/ Object.assign(
   function SuiToggleButton(props: ToggleButtonProps) {
-    const partsProps = useToggleButton(props);
+    const api = useToggleButtonAPI(props);
 
     return (
-      <ToggleButtonRoot {...partsProps.root}>
-        <ToggleButtonContent {...partsProps.content} />
-        <ToggleButtonPending {...partsProps.pending}>
-          <ToggleButtonCircularProgress {...partsProps.circularProgress}>
-            <ToggleButtonCircularProgressTrack {...partsProps.circularProgressTrack} />
-            <ToggleButtonCircularProgressFill {...partsProps.circularProgressFill}>
+      <ToggleButtonRoot {...api.getRootProps()}>
+        <ToggleButtonContent {...api.getContentProps()} />
+        <ToggleButtonPending {...api.getPendingProps()}>
+          <ToggleButtonCircularProgress {...api.getCircularProgressProps()}>
+            <ToggleButtonCircularProgressTrack {...api.getCircularProgressTrackProps()} />
+            <ToggleButtonCircularProgressFill {...api.getCircularProgressFillProps()}>
               <ToggleButtonCircularProgressFillRotation
-                {...partsProps.circularProgressFillRotation}
+                {...api.getCircularProgressFillRotationProps()}
               />
             </ToggleButtonCircularProgressFill>
           </ToggleButtonCircularProgress>
@@ -214,47 +243,44 @@ export const ToggleButton: ToggleButtonType = /*#__PURE__*/ Object.assign(
   },
 );
 
-/**
- * {@link ToggleButton} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace ToggleButton {
   /**
-   * {@link ToggleButtonState} です。
+   * {@link ToggleButtonState}
    */
   export type State = ToggleButtonState;
 
   /**
-   * {@link ToggleButtonProps} です。
+   * {@link ToggleButtonProps}
    */
   export type Props = ToggleButtonProps;
 
   /**
-   * {@link ToggleButtonContext} です。
+   * {@link ToggleButtonContext}
    */
   export type Context = ToggleButtonContext;
 
   /**
-   * {@link ToggleButtonSlotProps} です。
+   * {@link ToggleButtonSlotProps}
    */
   export type SlotProps = ToggleButtonSlotProps;
 
   /**
-   * {@link ToggleButtonColor} です。
+   * {@link ToggleButtonColor}
    */
   export type Color = ToggleButtonColor;
 
   /**
-   * {@link ToggleButtonRadius} です。
+   * {@link ToggleButtonRadius}
    */
   export type Radius = ToggleButtonRadius;
 
   /**
-   * {@link ToggleButtonSize} です。
+   * {@link ToggleButtonSize}
    */
   export type Size = ToggleButtonSize;
 
   /**
-   * {@link ToggleButtonVariant} です。
+   * {@link ToggleButtonVariant}
    */
   export type Variant = ToggleButtonVariant;
 }

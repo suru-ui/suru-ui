@@ -1,12 +1,14 @@
-import { SIZES, COLORS, COLOR_TEMPLATES } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import { ItalicIcon } from "lucide-react";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { ToggleButton } from "../src/toggle-button/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
-const VARIANTS = COLOR_TEMPLATES.filter((variant) => variant !== "solid");
+const COLORS: readonly ToggleButton.Color[] = theme.COLORS;
+const RADII: readonly ToggleButton.Radius[] = ["none", ...theme.SIZES, "full"];
+const SIZES: readonly ToggleButton.Size[] = theme.SIZES;
+const VARIANTS: readonly ToggleButton.Variant[] = ["naked", "liquid"];
 
 const meta = preview.meta({
   title: "ToggleButton",
@@ -61,53 +63,6 @@ export const Usage = meta.story({
     pending: false,
     disabled: false,
   }),
-});
-
-export const Variants = meta.story({
-  name: "主な外観",
-  ...ctrl({
-    children: "切り替え",
-    color: "grey",
-    size: "md",
-    radius: undefined,
-    outlined: false,
-    pending: false,
-    disabled: false,
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-wrap gap-3">
-        {VARIANTS.map((variant) => (
-          <div key={variant} className="flex flex-col items-center gap-2">
-            <span>{variant}</span>
-            <ToggleButton {...props} variant={variant} />
-          </div>
-        ))}
-      </div>
-    );
-  },
-});
-
-export const Colors = meta.story({
-  name: "色",
-  ...ctrl({
-    children: "切り替え",
-    variant: "liquid",
-    size: "md",
-    radius: undefined,
-    outlined: false,
-    pending: false,
-    disabled: false,
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-wrap gap-3">
-        {COLORS.map((color) => (
-          <ToggleButton {...props} key={color} color={color} defaultPressed />
-        ))}
-      </div>
-    );
-  },
 });
 
 export const Controlled = meta.story({
@@ -271,6 +226,91 @@ export const Pending = meta.story({
   },
 });
 
+export const FullWidth = meta.story({
+  name: "最大幅",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    pending: false,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="space-y-1">
+        <ToggleButton {...props} className="w-full">
+          {"width: 100%"}
+        </ToggleButton>
+        <div className="flex w-[200px] gap-1">
+          <ToggleButton {...props} className="w-full">
+            {"width: 100%"}
+          </ToggleButton>
+          <ToggleButton {...props} squared>
+            <ItalicIcon />
+          </ToggleButton>
+        </div>
+        <div className="flex w-[200px] gap-1">
+          <ToggleButton {...props} className="flex-1">
+            {"flex: 1"}
+          </ToggleButton>
+          <ToggleButton {...props} squared>
+            <ItalicIcon />
+          </ToggleButton>
+        </div>
+      </div>
+    );
+  },
+});
+
+export const Variants = meta.story({
+  name: "主な外観",
+  ...ctrl({
+    children: "切り替え",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    pending: false,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-wrap gap-3">
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col items-center gap-2">
+            <span>{variant}</span>
+            <ToggleButton {...props} variant={variant} />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Colors = meta.story({
+  name: "色",
+  ...ctrl({
+    children: "切り替え",
+    variant: "liquid",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    pending: false,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-wrap gap-3">
+        {COLORS.map((color) => (
+          <ToggleButton {...props} key={color} color={color} defaultPressed />
+        ))}
+      </div>
+    );
+  },
+});
+
 export const Radius = meta.story({
   name: "角丸",
   ...ctrl({
@@ -366,44 +406,6 @@ export const Sizes = meta.story({
               <ItalicIcon />
             </ToggleButton>
           </div>
-        </div>
-      </div>
-    );
-  },
-});
-
-export const FullWidth = meta.story({
-  name: "最大幅",
-  ...ctrl({
-    variant: "liquid",
-    color: "grey",
-    size: "md",
-    radius: undefined,
-    outlined: false,
-    pending: false,
-    disabled: false,
-  }),
-  render(props) {
-    return (
-      <div className="space-y-1">
-        <ToggleButton {...props} className="w-full">
-          {"width: 100%"}
-        </ToggleButton>
-        <div className="flex w-[200px] gap-1">
-          <ToggleButton {...props} className="w-full">
-            {"width: 100%"}
-          </ToggleButton>
-          <ToggleButton {...props} squared>
-            <ItalicIcon />
-          </ToggleButton>
-        </div>
-        <div className="flex w-[200px] gap-1">
-          <ToggleButton {...props} className="flex-1">
-            {"flex: 1"}
-          </ToggleButton>
-          <ToggleButton {...props} squared>
-            <ItalicIcon />
-          </ToggleButton>
         </div>
       </div>
     );

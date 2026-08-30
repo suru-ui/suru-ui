@@ -50,18 +50,20 @@ export {
   useButtonAPI,
 } from "./button/index.js";
 
-// TODO: 以下のコンポーネントをすべて手直しする
 export {
+  type ToggleButtonAPI,
   type ToggleButtonSize,
   type ToggleButtonColor,
   type ToggleButtonProps,
   type ToggleButtonState,
   type ToggleButtonRadius,
-  type ToggleButtonContext,
   type ToggleButtonVariant,
   type ToggleButtonSlotProps,
   ToggleButton,
+  useToggleButtonAPI,
 } from "./toggle-button/index.js";
+
+// TODO: 以下のコンポーネントをすべて手直しする
 export {
   type AvatarSize,
   type AvatarColor,
