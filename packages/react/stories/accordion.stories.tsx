@@ -4,7 +4,7 @@ import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Accordion } from "../src/accordion/index.js";
-import * as Accordion_ from "../src/accordion/index.js";
+import * as AccordionParts from "../src/accordion/index.js";
 import { Button } from "../src/button/index.js";
 
 const ITEMS: readonly Accordion.ItemObject[] = [
@@ -109,24 +109,26 @@ export const WithIcon = meta.story({
     disabled: false,
   }),
   render(props) {
+    const Accordion = AccordionParts;
+
     return (
       <div className="w-80">
-        <Accordion_.Root {...props} items={ITEMS}>
+        <Accordion.Root {...props} items={ITEMS}>
           {(item, index) => (
-            <Accordion_.Item key={index}>
-              <Accordion_.Heading>
-                <Accordion_.Trigger>
+            <Accordion.Item key={index}>
+              <Accordion.Heading>
+                <Accordion.Trigger>
                   <div className="flex gap-2 items-center">
                     <MessageCircleQuestionIcon />
                     {item.title}
                   </div>
-                  <Accordion_.Indicator />
-                </Accordion_.Trigger>
-              </Accordion_.Heading>
-              <Accordion_.Content>{item.content}</Accordion_.Content>
-            </Accordion_.Item>
+                  <Accordion.Indicator />
+                </Accordion.Trigger>
+              </Accordion.Heading>
+              <Accordion.Content>{item.content}</Accordion.Content>
+            </Accordion.Item>
           )}
-        </Accordion_.Root>
+        </Accordion.Root>
       </div>
     );
   },
@@ -144,14 +146,16 @@ export const CustomTrigger = meta.story({
     disabled: false,
   }),
   render(props) {
+    const Accordion = AccordionParts;
+
     return (
       <div className="w-80">
-        <Accordion_.Root {...props} items={ITEMS}>
+        <Accordion.Root {...props} items={ITEMS}>
           {(item, index) => (
-            <Accordion_.Item key={index}>
-              <Accordion_.Heading>
+            <Accordion.Item key={index}>
+              <Accordion.Heading>
                 <span>{item.title}</span>
-                <Accordion_.Trigger
+                <Accordion.Trigger
                   render={(props: {}, state) => (
                     <Button {...props} size="sm" squared disabled={state.disabled}>
                       {state.open ? <ChevronUpIcon /> : <ChevronDownIcon />}
@@ -159,11 +163,11 @@ export const CustomTrigger = meta.story({
                   )}
                   unstyled
                 />
-              </Accordion_.Heading>
-              <Accordion_.Content>{item.content}</Accordion_.Content>
-            </Accordion_.Item>
+              </Accordion.Heading>
+              <Accordion.Content>{item.content}</Accordion.Content>
+            </Accordion.Item>
           )}
-        </Accordion_.Root>
+        </Accordion.Root>
       </div>
     );
   },

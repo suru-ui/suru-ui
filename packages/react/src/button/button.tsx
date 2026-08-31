@@ -218,7 +218,7 @@ interface IButton extends IComponent<ButtonProps> {
  */
 export const Button: IButton = /*#__PURE__*/ Object.assign(
   function SuiButton(props: ButtonProps) {
-    const api = useButtonAPI(props);
+    const api = useAPI(props);
 
     return (
       <ButtonRoot {...api.getRootProps()}>

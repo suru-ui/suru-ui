@@ -244,7 +244,7 @@
   --sui_accordion_trigger-focusring_width: ;
   --sui_accordion_trigger-focusring_color: ;
   --sui_accordion_trigger-focusring_offset: ;
-  --sui_accordion_trigger-background_color-normal: ;
+  --sui_accordion_trigger-background_color-idle: ;
   --sui_accordion_trigger-background_color-hover: ;
   --sui_accordion_trigger-background_color-active: ;
   --sui_accordion_trigger-border_radius: ;
@@ -282,7 +282,7 @@
     outline-color: var(--_sui_accordion_trigger-outline_color, transparent);
     outline-offset: var(--_sui_accordion_trigger-outline_offset, 0px);
     background-color: var(--_sui_accordion_trigger-background_color,
-                        var(--sui_accordion_trigger-background_color-normal)
+                        var(--sui_accordion_trigger-background_color-idle)
                       );
 
     svg:not(.sui-ignore) {
@@ -292,8 +292,7 @@
     }
   }
 
-  .sui_accordion_item:first-child:not(.sui_accordion_item-open)
-    .sui_accordion_trigger:not(.sui_accordion_trigger-unstyled) {
+  .sui_accordion_item:first-child .sui_accordion_trigger:not(.sui_accordion_trigger-unstyled) {
     border-top-left-radius: var(--sui_accordion_trigger-border_radius);
     border-top-right-radius: var(--sui_accordion_trigger-border_radius);
   }
@@ -347,13 +346,13 @@
   }
 
   &.sui_accordion-variant_naked {
-    --sui_accordion_trigger-background_color-normal: var(--sui-grey-naked-canvas-normal);
+    --sui_accordion_trigger-background_color-idle: var(--sui-grey-naked-canvas-normal);
     --sui_accordion_trigger-background_color-hover: var(--sui-grey-naked-canvas-subtle);
     --sui_accordion_trigger-background_color-active: var(--sui-grey-naked-canvas-strong);
   }
 
   &.sui_accordion-variant_liquid {
-    --sui_accordion_trigger-background_color-normal: var(--sui-grey-liquid-canvas-normal);
+    --sui_accordion_trigger-background_color-idle: var(--sui-grey-liquid-canvas-normal);
     --sui_accordion_trigger-background_color-hover: var(--sui-grey-liquid-canvas-subtle);
     --sui_accordion_trigger-background_color-active: var(--sui-grey-liquid-canvas-strong);
   }

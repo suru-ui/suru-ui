@@ -7,18 +7,13 @@
   --sui_button-min_height: ;
   --sui_button-padding_block: ;
   --sui_button-padding_inline: ;
-  --sui_button-font_family: ;
-  --sui_button-font_size: ;
-  --sui_button-font_weight: ;
-  --sui_button-line_height: ;
-  --sui_button-letter_spacing: ;
   --sui_button-focusring_width: ;
   --sui_button-focusring_color: ;
   --sui_button-focusring_offset: ;
-  --sui_button-background_color-normal: ;
+  --sui_button-background_color-idle: ;
   --sui_button-background_color-hover: ;
   --sui_button-background_color-active: ;
-  --sui_button-border_color-normal: ;
+  --sui_button-border_color-idle: ;
   --sui_button-border_color-hover: ;
   --sui_button-border_color-active: ;
   --sui_button-border_width: ;
@@ -48,15 +43,10 @@
   aspect-ratio: var(--_sui_button-aspect_ratio, unset);
   padding-block: var(--_sui_button-padding, var(--sui_button-padding_block));
   padding-inline: var(--_sui_button-padding, var(--sui_button-padding_inline));
-  font-family: var(--sui_button-font_family);
-  font-size: var(--sui_button-font_size);
-  font-weight: var(--sui_button-font_weight);
-  line-height: var(--sui_button-line_height);
-  letter-spacing: var(--sui_button-letter_spacing);
   outline-width: var(--_sui_button-outline_width, 0px);
   outline-color: var(--_sui_button-outline_color, transparent);
   outline-offset: var(--_sui_button-outline_offset, 0px);
-  background-color: var(--_sui_button-background_color, var(--sui_button-background_color-normal));
+  background-color: var(--_sui_button-background_color, var(--sui_button-background_color-idle));
   border-color: var(--_sui_button-border_color, transparent);
   border-width: var(--_sui_button-border_width, 0px);
   border-radius: var(--sui_button-border_radius);
@@ -68,7 +58,6 @@
                                 (var(--sui_button-min_height) - 1lh) / 2
                                 - var(--_sui_button-border_width, 0px)
                               );
-  --sui_button-font_family: var(--sui-font-sans);
   --sui_button-focusring_width: var(--sui-focusring_width);
   --sui_button-focusring_color: var(--sui-focusring_color);
   --sui_button-focusring_offset: var(--sui-focusring_offset);
@@ -77,28 +66,16 @@
   &.sui_button-size_sm {
     --sui_button-min_height: var(--sui-size-sm);
     --sui_button-padding_inline: --sui-space(4);
-    --sui_button-font_size: var(--sui-text-oln-sm-m-font_size);
-    --sui_button-font_weight: var(--sui-text-oln-sm-m-font_weight);
-    --sui_button-line_height: var(--sui-text-oln-sm-m-line_height);
-    --sui_button-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
   }
 
   &.sui_button-size_md {
     --sui_button-min_height: var(--sui-size-md);
     --sui_button-padding_inline: --sui-space(5);
-    --sui_button-font_size: var(--sui-text-oln-md-m-font_size);
-    --sui_button-font_weight: var(--sui-text-oln-md-m-font_weight);
-    --sui_button-line_height: var(--sui-text-oln-md-m-line_height);
-    --sui_button-letter_spacing: var(--sui-text-oln-md-m-letter_spacing);
   }
 
   &.sui_button-size_lg {
     --sui_button-min_height: var(--sui-size-lg);
     --sui_button-padding_inline: --sui-space(6);
-    --sui_button-font_size: var(--sui-text-oln-lg-m-font_size);
-    --sui_button-font_weight: var(--sui-text-oln-lg-m-font_weight);
-    --sui_button-line_height: var(--sui-text-oln-lg-m-line_height);
-    --sui_button-letter_spacing: var(--sui-text-oln-lg-m-letter_spacing);
   }
 
   &.sui_button-radius_none {
@@ -123,28 +100,28 @@
 
   &.sui_button-color_grey {
     &.sui_button-variant_solid {
-      --sui_button-background_color-normal: var(--sui-grey-solid-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-grey-solid-canvas-normal);
       --sui_button-background_color-hover: var(--sui-grey-solid-canvas-subtle);
       --sui_button-background_color-active: var(--sui-grey-solid-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-grey-solid-border-normal);
+      --sui_button-border_color-idle: var(--sui-grey-solid-border-normal);
       --sui_button-border_color-hover: var(--sui-grey-solid-border-subtle);
       --sui_button-border_color-active: var(--sui-grey-solid-border-strong);
     }
 
     &.sui_button-variant_naked {
-      --sui_button-background_color-normal: var(--sui-grey-naked-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-grey-naked-canvas-normal);
       --sui_button-background_color-hover: var(--sui-grey-naked-canvas-subtle);
       --sui_button-background_color-active: var(--sui-grey-naked-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-grey-naked-border-normal);
+      --sui_button-border_color-idle: var(--sui-grey-naked-border-normal);
       --sui_button-border_color-hover: var(--sui-grey-naked-border-subtle);
       --sui_button-border_color-active: var(--sui-grey-naked-border-strong);
     }
 
     &.sui_button-variant_liquid {
-      --sui_button-background_color-normal: var(--sui-grey-liquid-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-grey-liquid-canvas-normal);
       --sui_button-background_color-hover: var(--sui-grey-liquid-canvas-subtle);
       --sui_button-background_color-active: var(--sui-grey-liquid-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-grey-liquid-border-normal);
+      --sui_button-border_color-idle: var(--sui-grey-liquid-border-normal);
       --sui_button-border_color-hover: var(--sui-grey-liquid-border-subtle);
       --sui_button-border_color-active: var(--sui-grey-liquid-border-strong);
     }
@@ -152,28 +129,28 @@
 
   &.sui_button-color_blue:not(.sui_button-muted) {
     &.sui_button-variant_solid {
-      --sui_button-background_color-normal: var(--sui-blue-solid-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-blue-solid-canvas-normal);
       --sui_button-background_color-hover: var(--sui-blue-solid-canvas-subtle);
       --sui_button-background_color-active: var(--sui-blue-solid-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-blue-solid-border-normal);
+      --sui_button-border_color-idle: var(--sui-blue-solid-border-normal);
       --sui_button-border_color-hover: var(--sui-blue-solid-border-subtle);
       --sui_button-border_color-active: var(--sui-blue-solid-border-strong);
     }
 
     &.sui_button-variant_naked {
-      --sui_button-background_color-normal: var(--sui-blue-naked-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-blue-naked-canvas-normal);
       --sui_button-background_color-hover: var(--sui-blue-naked-canvas-subtle);
       --sui_button-background_color-active: var(--sui-blue-naked-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-blue-naked-border-normal);
+      --sui_button-border_color-idle: var(--sui-blue-naked-border-normal);
       --sui_button-border_color-hover: var(--sui-blue-naked-border-subtle);
       --sui_button-border_color-active: var(--sui-blue-naked-border-strong);
     }
 
     &.sui_button-variant_liquid {
-      --sui_button-background_color-normal: var(--sui-blue-liquid-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-blue-liquid-canvas-normal);
       --sui_button-background_color-hover: var(--sui-blue-liquid-canvas-subtle);
       --sui_button-background_color-active: var(--sui-blue-liquid-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-blue-liquid-border-normal);
+      --sui_button-border_color-idle: var(--sui-blue-liquid-border-normal);
       --sui_button-border_color-hover: var(--sui-blue-liquid-border-subtle);
       --sui_button-border_color-active: var(--sui-blue-liquid-border-strong);
     }
@@ -181,28 +158,28 @@
 
   &.sui_button-color_purple:not(.sui_button-muted) {
     &.sui_button-variant_solid {
-      --sui_button-background_color-normal: var(--sui-purple-solid-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-purple-solid-canvas-normal);
       --sui_button-background_color-hover: var(--sui-purple-solid-canvas-subtle);
       --sui_button-background_color-active: var(--sui-purple-solid-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-purple-solid-border-normal);
+      --sui_button-border_color-idle: var(--sui-purple-solid-border-normal);
       --sui_button-border_color-hover: var(--sui-purple-solid-border-subtle);
       --sui_button-border_color-active: var(--sui-purple-solid-border-strong);
     }
 
     &.sui_button-variant_naked {
-      --sui_button-background_color-normal: var(--sui-purple-naked-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-purple-naked-canvas-normal);
       --sui_button-background_color-hover: var(--sui-purple-naked-canvas-subtle);
       --sui_button-background_color-active: var(--sui-purple-naked-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-purple-naked-border-normal);
+      --sui_button-border_color-idle: var(--sui-purple-naked-border-normal);
       --sui_button-border_color-hover: var(--sui-purple-naked-border-subtle);
       --sui_button-border_color-active: var(--sui-purple-naked-border-strong);
     }
 
     &.sui_button-variant_liquid {
-      --sui_button-background_color-normal: var(--sui-purple-liquid-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-purple-liquid-canvas-normal);
       --sui_button-background_color-hover: var(--sui-purple-liquid-canvas-subtle);
       --sui_button-background_color-active: var(--sui-purple-liquid-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-purple-liquid-border-normal);
+      --sui_button-border_color-idle: var(--sui-purple-liquid-border-normal);
       --sui_button-border_color-hover: var(--sui-purple-liquid-border-subtle);
       --sui_button-border_color-active: var(--sui-purple-liquid-border-strong);
     }
@@ -210,28 +187,28 @@
 
   &.sui_button-color_magenta:not(.sui_button-muted) {
     &.sui_button-variant_solid {
-      --sui_button-background_color-normal: var(--sui-magenta-solid-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-magenta-solid-canvas-normal);
       --sui_button-background_color-hover: var(--sui-magenta-solid-canvas-subtle);
       --sui_button-background_color-active: var(--sui-magenta-solid-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-magenta-solid-border-normal);
+      --sui_button-border_color-idle: var(--sui-magenta-solid-border-normal);
       --sui_button-border_color-hover: var(--sui-magenta-solid-border-subtle);
       --sui_button-border_color-active: var(--sui-magenta-solid-border-strong);
     }
 
     &.sui_button-variant_naked {
-      --sui_button-background_color-normal: var(--sui-magenta-naked-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-magenta-naked-canvas-normal);
       --sui_button-background_color-hover: var(--sui-magenta-naked-canvas-subtle);
       --sui_button-background_color-active: var(--sui-magenta-naked-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-magenta-naked-border-normal);
+      --sui_button-border_color-idle: var(--sui-magenta-naked-border-normal);
       --sui_button-border_color-hover: var(--sui-magenta-naked-border-subtle);
       --sui_button-border_color-active: var(--sui-magenta-naked-border-strong);
     }
 
     &.sui_button-variant_liquid {
-      --sui_button-background_color-normal: var(--sui-magenta-liquid-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-magenta-liquid-canvas-normal);
       --sui_button-background_color-hover: var(--sui-magenta-liquid-canvas-subtle);
       --sui_button-background_color-active: var(--sui-magenta-liquid-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-magenta-liquid-border-normal);
+      --sui_button-border_color-idle: var(--sui-magenta-liquid-border-normal);
       --sui_button-border_color-hover: var(--sui-magenta-liquid-border-subtle);
       --sui_button-border_color-active: var(--sui-magenta-liquid-border-strong);
     }
@@ -239,28 +216,28 @@
 
   &.sui_button-color_red:not(.sui_button-muted) {
     &.sui_button-variant_solid {
-      --sui_button-background_color-normal: var(--sui-red-solid-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-red-solid-canvas-normal);
       --sui_button-background_color-hover: var(--sui-red-solid-canvas-subtle);
       --sui_button-background_color-active: var(--sui-red-solid-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-red-solid-border-normal);
+      --sui_button-border_color-idle: var(--sui-red-solid-border-normal);
       --sui_button-border_color-hover: var(--sui-red-solid-border-subtle);
       --sui_button-border_color-active: var(--sui-red-solid-border-strong);
     }
 
     &.sui_button-variant_naked {
-      --sui_button-background_color-normal: var(--sui-red-naked-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-red-naked-canvas-normal);
       --sui_button-background_color-hover: var(--sui-red-naked-canvas-subtle);
       --sui_button-background_color-active: var(--sui-red-naked-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-red-naked-border-normal);
+      --sui_button-border_color-idle: var(--sui-red-naked-border-normal);
       --sui_button-border_color-hover: var(--sui-red-naked-border-subtle);
       --sui_button-border_color-active: var(--sui-red-naked-border-strong);
     }
 
     &.sui_button-variant_liquid {
-      --sui_button-background_color-normal: var(--sui-red-liquid-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-red-liquid-canvas-normal);
       --sui_button-background_color-hover: var(--sui-red-liquid-canvas-subtle);
       --sui_button-background_color-active: var(--sui-red-liquid-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-red-liquid-border-normal);
+      --sui_button-border_color-idle: var(--sui-red-liquid-border-normal);
       --sui_button-border_color-hover: var(--sui-red-liquid-border-subtle);
       --sui_button-border_color-active: var(--sui-red-liquid-border-strong);
     }
@@ -268,28 +245,28 @@
 
   &.sui_button-color_orange:not(.sui_button-muted) {
     &.sui_button-variant_solid {
-      --sui_button-background_color-normal: var(--sui-orange-solid-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-orange-solid-canvas-normal);
       --sui_button-background_color-hover: var(--sui-orange-solid-canvas-subtle);
       --sui_button-background_color-active: var(--sui-orange-solid-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-orange-solid-border-normal);
+      --sui_button-border_color-idle: var(--sui-orange-solid-border-normal);
       --sui_button-border_color-hover: var(--sui-orange-solid-border-subtle);
       --sui_button-border_color-active: var(--sui-orange-solid-border-strong);
     }
 
     &.sui_button-variant_naked {
-      --sui_button-background_color-normal: var(--sui-orange-naked-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-orange-naked-canvas-normal);
       --sui_button-background_color-hover: var(--sui-orange-naked-canvas-subtle);
       --sui_button-background_color-active: var(--sui-orange-naked-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-orange-naked-border-normal);
+      --sui_button-border_color-idle: var(--sui-orange-naked-border-normal);
       --sui_button-border_color-hover: var(--sui-orange-naked-border-subtle);
       --sui_button-border_color-active: var(--sui-orange-naked-border-strong);
     }
 
     &.sui_button-variant_liquid {
-      --sui_button-background_color-normal: var(--sui-orange-liquid-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-orange-liquid-canvas-normal);
       --sui_button-background_color-hover: var(--sui-orange-liquid-canvas-subtle);
       --sui_button-background_color-active: var(--sui-orange-liquid-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-orange-liquid-border-normal);
+      --sui_button-border_color-idle: var(--sui-orange-liquid-border-normal);
       --sui_button-border_color-hover: var(--sui-orange-liquid-border-subtle);
       --sui_button-border_color-active: var(--sui-orange-liquid-border-strong);
     }
@@ -297,28 +274,28 @@
 
   &.sui_button-color_yellow:not(.sui_button-muted) {
     &.sui_button-variant_solid {
-      --sui_button-background_color-normal: var(--sui-yellow-solid-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-yellow-solid-canvas-normal);
       --sui_button-background_color-hover: var(--sui-yellow-solid-canvas-subtle);
       --sui_button-background_color-active: var(--sui-yellow-solid-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-yellow-solid-border-normal);
+      --sui_button-border_color-idle: var(--sui-yellow-solid-border-normal);
       --sui_button-border_color-hover: var(--sui-yellow-solid-border-subtle);
       --sui_button-border_color-active: var(--sui-yellow-solid-border-strong);
     }
 
     &.sui_button-variant_naked {
-      --sui_button-background_color-normal: var(--sui-yellow-naked-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-yellow-naked-canvas-normal);
       --sui_button-background_color-hover: var(--sui-yellow-naked-canvas-subtle);
       --sui_button-background_color-active: var(--sui-yellow-naked-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-yellow-naked-border-normal);
+      --sui_button-border_color-idle: var(--sui-yellow-naked-border-normal);
       --sui_button-border_color-hover: var(--sui-yellow-naked-border-subtle);
       --sui_button-border_color-active: var(--sui-yellow-naked-border-strong);
     }
 
     &.sui_button-variant_liquid {
-      --sui_button-background_color-normal: var(--sui-yellow-liquid-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-yellow-liquid-canvas-normal);
       --sui_button-background_color-hover: var(--sui-yellow-liquid-canvas-subtle);
       --sui_button-background_color-active: var(--sui-yellow-liquid-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-yellow-liquid-border-normal);
+      --sui_button-border_color-idle: var(--sui-yellow-liquid-border-normal);
       --sui_button-border_color-hover: var(--sui-yellow-liquid-border-subtle);
       --sui_button-border_color-active: var(--sui-yellow-liquid-border-strong);
     }
@@ -326,28 +303,28 @@
 
   &.sui_button-color_green:not(.sui_button-muted) {
     &.sui_button-variant_solid {
-      --sui_button-background_color-normal: var(--sui-green-solid-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-green-solid-canvas-normal);
       --sui_button-background_color-hover: var(--sui-green-solid-canvas-subtle);
       --sui_button-background_color-active: var(--sui-green-solid-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-green-solid-border-normal);
+      --sui_button-border_color-idle: var(--sui-green-solid-border-normal);
       --sui_button-border_color-hover: var(--sui-green-solid-border-subtle);
       --sui_button-border_color-active: var(--sui-green-solid-border-strong);
     }
 
     &.sui_button-variant_naked {
-      --sui_button-background_color-normal: var(--sui-green-naked-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-green-naked-canvas-normal);
       --sui_button-background_color-hover: var(--sui-green-naked-canvas-subtle);
       --sui_button-background_color-active: var(--sui-green-naked-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-green-naked-border-normal);
+      --sui_button-border_color-idle: var(--sui-green-naked-border-normal);
       --sui_button-border_color-hover: var(--sui-green-naked-border-subtle);
       --sui_button-border_color-active: var(--sui-green-naked-border-strong);
     }
 
     &.sui_button-variant_liquid {
-      --sui_button-background_color-normal: var(--sui-green-liquid-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-green-liquid-canvas-normal);
       --sui_button-background_color-hover: var(--sui-green-liquid-canvas-subtle);
       --sui_button-background_color-active: var(--sui-green-liquid-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-green-liquid-border-normal);
+      --sui_button-border_color-idle: var(--sui-green-liquid-border-normal);
       --sui_button-border_color-hover: var(--sui-green-liquid-border-subtle);
       --sui_button-border_color-active: var(--sui-green-liquid-border-strong);
     }
@@ -355,28 +332,28 @@
 
   &.sui_button-muted:not(.sui_button-color_grey) {
     &.sui_button-variant_solid {
-      --sui_button-background_color-normal: var(--sui-grey-solid-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-grey-solid-canvas-normal);
       --sui_button-background_color-hover: var(--sui-grey-solid-canvas-subtle);
       --sui_button-background_color-active: var(--sui-grey-solid-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-grey-solid-border-normal);
+      --sui_button-border_color-idle: var(--sui-grey-solid-border-normal);
       --sui_button-border_color-hover: var(--sui-grey-solid-border-subtle);
       --sui_button-border_color-active: var(--sui-grey-solid-border-strong);
     }
 
     &.sui_button-variant_naked {
-      --sui_button-background_color-normal: var(--sui-grey-naked-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-grey-naked-canvas-normal);
       --sui_button-background_color-hover: var(--sui-grey-naked-canvas-subtle);
       --sui_button-background_color-active: var(--sui-grey-naked-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-grey-naked-border-normal);
+      --sui_button-border_color-idle: var(--sui-grey-naked-border-normal);
       --sui_button-border_color-hover: var(--sui-grey-naked-border-subtle);
       --sui_button-border_color-active: var(--sui-grey-naked-border-strong);
     }
 
     &.sui_button-variant_liquid {
-      --sui_button-background_color-normal: var(--sui-grey-liquid-canvas-normal);
+      --sui_button-background_color-idle: var(--sui-grey-liquid-canvas-normal);
       --sui_button-background_color-hover: var(--sui-grey-liquid-canvas-subtle);
       --sui_button-background_color-active: var(--sui-grey-liquid-canvas-strong);
-      --sui_button-border_color-normal: var(--sui-grey-liquid-border-normal);
+      --sui_button-border_color-idle: var(--sui-grey-liquid-border-normal);
       --sui_button-border_color-hover: var(--sui-grey-liquid-border-subtle);
       --sui_button-border_color-active: var(--sui-grey-liquid-border-strong);
     }
@@ -411,7 +388,7 @@
   }
 
   &.sui_button-outlined {
-    --_sui_button-border_color: var(--sui_button-border_color-normal);
+    --_sui_button-border_color: var(--sui_button-border_color-idle);
     --_sui_button-border_width: var(--sui_button-border_width);
 
     @media (any-hover: hover) {
@@ -437,11 +414,16 @@
 :scope {
   --sui_button_content-gap: ;
   --sui_button_content_icon-size: ;
+  --sui_button_content-font_family: ;
+  --sui_button_content-font_size: ;
+  --sui_button_content-font_weight: ;
+  --sui_button_content-line_height: ;
   --sui_button_content_icon-color: ;
-  --sui_button_content-color-normal: ;
+  --sui_button_content-color-idle: ;
   --sui_button_content-color-hover: ;
   --sui_button_content-color-active: ;
-  --sui_button_content-active-scale: 0.98;
+  --sui_button_content-letter_spacing: ;
+  --sui_button_content-active-scale: 0.95;
 }
 
 /* 静的 */
@@ -452,8 +434,13 @@
     align-items: center;
     justify-content: center;
     text-overflow: ellipsis;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
     font-feature-settings: "palt";
+    line-height: inherit;
     vertical-align: middle;
+    letter-spacing: inherit;
     white-space: nowrap;
     text-box: trim-both cap alphabetic;
   }
@@ -463,7 +450,12 @@
 :scope {
   .sui_button_content {
     gap: var(--sui_button_content-gap);
-    color: var(--_sui_button_content-color, var(--sui_button_content-color-normal));
+    font-family: var(--sui_button_content-font_family);
+    font-size: var(--sui_button_content-font_size);
+    font-weight: var(--sui_button_content-font_weight);
+    line-height: var(--sui_button_content-line_height);
+    color: var(--_sui_button_content-color, var(--sui_button_content-color-idle));
+    letter-spacing: var(--sui_button_content-letter_spacing);
     scale: var(--_sui_button_content-scale, 1);
 
     svg:not(.sui-ignore) {
@@ -477,42 +469,55 @@
 /* 既定値 */
 :scope {
   --sui_button_content_icon-size: 1lh;
+  --sui_button_content-font_family: var(--sui-font-sans);
   --sui_button_content_icon-color: --sui-icon_color(
                                      var(--_sui_button_content-color,
-                                       var(--sui_button_content-color-normal)
+                                       var(--sui_button_content-color-idle)
                                      ),
                                      var(--_sui_button-background_color,
-                                       var(--sui_button-background_color-normal)
+                                       var(--sui_button-background_color-idle)
                                      )
                                    );
 
   &.sui_button-size_sm {
     --sui_button_content-gap: --sui-gap(2);
+    --sui_button_content-font_size: var(--sui-text-oln-sm-m-font_size);
+    --sui_button_content-font_weight: var(--sui-text-oln-sm-m-font_weight);
+    --sui_button_content-line_height: var(--sui-text-oln-sm-m-line_height);
+    --sui_button_content-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
   }
 
   &.sui_button-size_md {
     --sui_button_content-gap: --sui-gap(3);
+    --sui_button_content-font_size: var(--sui-text-oln-md-m-font_size);
+    --sui_button_content-font_weight: var(--sui-text-oln-md-m-font_weight);
+    --sui_button_content-line_height: var(--sui-text-oln-md-m-line_height);
+    --sui_button_content-letter_spacing: var(--sui-text-oln-md-m-letter_spacing);
   }
 
   &.sui_button-size_lg {
     --sui_button_content-gap: --sui-gap(4);
+    --sui_button_content-font_size: var(--sui-text-oln-lg-m-font_size);
+    --sui_button_content-font_weight: var(--sui-text-oln-lg-m-font_weight);
+    --sui_button_content-line_height: var(--sui-text-oln-lg-m-line_height);
+    --sui_button_content-letter_spacing: var(--sui-text-oln-lg-m-letter_spacing);
   }
 
   &.sui_button-color_grey {
     &.sui_button-variant_solid {
-      --sui_button_content-color-normal: var(--sui-grey-solid-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-grey-solid-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-grey-solid-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-grey-solid-canvas_text-strong);
     }
 
     &.sui_button-variant_naked {
-      --sui_button_content-color-normal: var(--sui-grey-naked-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-grey-naked-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-grey-naked-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-grey-naked-canvas_text-strong);
     }
 
     &.sui_button-variant_liquid {
-      --sui_button_content-color-normal: var(--sui-grey-liquid-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-grey-liquid-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-grey-liquid-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-grey-liquid-canvas_text-strong);
     }
@@ -520,19 +525,19 @@
 
   &.sui_button-color_blue:not(.sui_button-muted) {
     &.sui_button-variant_solid {
-      --sui_button_content-color-normal: var(--sui-blue-solid-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-blue-solid-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-blue-solid-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-blue-solid-canvas_text-strong);
     }
 
     &.sui_button-variant_naked {
-      --sui_button_content-color-normal: var(--sui-blue-naked-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-blue-naked-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-blue-naked-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-blue-naked-canvas_text-strong);
     }
 
     &.sui_button-variant_liquid {
-      --sui_button_content-color-normal: var(--sui-blue-liquid-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-blue-liquid-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-blue-liquid-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-blue-liquid-canvas_text-strong);
     }
@@ -540,19 +545,19 @@
 
   &.sui_button-color_purple:not(.sui_button-muted) {
     &.sui_button-variant_solid {
-      --sui_button_content-color-normal: var(--sui-purple-solid-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-purple-solid-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-purple-solid-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-purple-solid-canvas_text-strong);
     }
 
     &.sui_button-variant_naked {
-      --sui_button_content-color-normal: var(--sui-purple-naked-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-purple-naked-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-purple-naked-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-purple-naked-canvas_text-strong);
     }
 
     &.sui_button-variant_liquid {
-      --sui_button_content-color-normal: var(--sui-purple-liquid-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-purple-liquid-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-purple-liquid-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-purple-liquid-canvas_text-strong);
     }
@@ -560,19 +565,19 @@
 
   &.sui_button-color_magenta:not(.sui_button-muted) {
     &.sui_button-variant_solid {
-      --sui_button_content-color-normal: var(--sui-magenta-solid-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-magenta-solid-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-magenta-solid-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-magenta-solid-canvas_text-strong);
     }
 
     &.sui_button-variant_naked {
-      --sui_button_content-color-normal: var(--sui-magenta-naked-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-magenta-naked-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-magenta-naked-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-magenta-naked-canvas_text-strong);
     }
 
     &.sui_button-variant_liquid {
-      --sui_button_content-color-normal: var(--sui-magenta-liquid-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-magenta-liquid-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-magenta-liquid-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-magenta-liquid-canvas_text-strong);
     }
@@ -580,19 +585,19 @@
 
   &.sui_button-color_red:not(.sui_button-muted) {
     &.sui_button-variant_solid {
-      --sui_button_content-color-normal: var(--sui-red-solid-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-red-solid-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-red-solid-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-red-solid-canvas_text-strong);
     }
 
     &.sui_button-variant_naked {
-      --sui_button_content-color-normal: var(--sui-red-naked-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-red-naked-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-red-naked-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-red-naked-canvas_text-strong);
     }
 
     &.sui_button-variant_liquid {
-      --sui_button_content-color-normal: var(--sui-red-liquid-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-red-liquid-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-red-liquid-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-red-liquid-canvas_text-strong);
     }
@@ -600,19 +605,19 @@
 
   &.sui_button-color_orange:not(.sui_button-muted) {
     &.sui_button-variant_solid {
-      --sui_button_content-color-normal: var(--sui-orange-solid-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-orange-solid-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-orange-solid-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-orange-solid-canvas_text-strong);
     }
 
     &.sui_button-variant_naked {
-      --sui_button_content-color-normal: var(--sui-orange-naked-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-orange-naked-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-orange-naked-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-orange-naked-canvas_text-strong);
     }
 
     &.sui_button-variant_liquid {
-      --sui_button_content-color-normal: var(--sui-orange-liquid-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-orange-liquid-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-orange-liquid-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-orange-liquid-canvas_text-strong);
     }
@@ -620,19 +625,19 @@
 
   &.sui_button-color_yellow:not(.sui_button-muted) {
     &.sui_button-variant_solid {
-      --sui_button_content-color-normal: var(--sui-yellow-solid-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-yellow-solid-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-yellow-solid-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-yellow-solid-canvas_text-strong);
     }
 
     &.sui_button-variant_naked {
-      --sui_button_content-color-normal: var(--sui-yellow-naked-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-yellow-naked-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-yellow-naked-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-yellow-naked-canvas_text-strong);
     }
 
     &.sui_button-variant_liquid {
-      --sui_button_content-color-normal: var(--sui-yellow-liquid-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-yellow-liquid-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-yellow-liquid-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-yellow-liquid-canvas_text-strong);
     }
@@ -640,19 +645,19 @@
 
   &.sui_button-color_green:not(.sui_button-muted) {
     &.sui_button-variant_solid {
-      --sui_button_content-color-normal: var(--sui-green-solid-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-green-solid-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-green-solid-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-green-solid-canvas_text-strong);
     }
 
     &.sui_button-variant_naked {
-      --sui_button_content-color-normal: var(--sui-green-naked-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-green-naked-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-green-naked-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-green-naked-canvas_text-strong);
     }
 
     &.sui_button-variant_liquid {
-      --sui_button_content-color-normal: var(--sui-green-liquid-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-green-liquid-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-green-liquid-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-green-liquid-canvas_text-strong);
     }
@@ -660,49 +665,49 @@
 
   &.sui_button-muted:not(.sui_button-color_grey) {
     &.sui_button-variant_solid {
-      --sui_button_content-color-normal: var(--sui-grey-solid-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-grey-solid-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-grey-solid-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-grey-solid-canvas_text-strong);
     }
 
     &.sui_button-color_blue:not(.sui_button-variant_solid) {
-      --sui_button_content-color-normal: var(--sui-blue-naked-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-blue-naked-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-blue-naked-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-blue-naked-canvas_text-strong);
     }
 
     &.sui_button-color_purple:not(.sui_button-variant_solid) {
-      --sui_button_content-color-normal: var(--sui-purple-naked-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-purple-naked-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-purple-naked-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-purple-naked-canvas_text-strong);
     }
 
     &.sui_button-color_magenta:not(.sui_button-variant_solid) {
-      --sui_button_content-color-normal: var(--sui-magenta-naked-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-magenta-naked-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-magenta-naked-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-magenta-naked-canvas_text-strong);
     }
 
     &.sui_button-color_red:not(.sui_button-variant_solid) {
-      --sui_button_content-color-normal: var(--sui-red-naked-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-red-naked-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-red-naked-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-red-naked-canvas_text-strong);
     }
 
     &.sui_button-color_orange:not(.sui_button-variant_solid) {
-      --sui_button_content-color-normal: var(--sui-orange-naked-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-orange-naked-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-orange-naked-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-orange-naked-canvas_text-strong);
     }
 
     &.sui_button-color_yellow:not(.sui_button-variant_solid) {
-      --sui_button_content-color-normal: var(--sui-yellow-naked-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-yellow-naked-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-yellow-naked-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-yellow-naked-canvas_text-strong);
     }
 
     &.sui_button-color_green:not(.sui_button-variant_solid) {
-      --sui_button_content-color-normal: var(--sui-green-naked-canvas_text-normal);
+      --sui_button_content-color-idle: var(--sui-green-naked-canvas_text-normal);
       --sui_button_content-color-hover: var(--sui-green-naked-canvas_text-subtle);
       --sui_button_content-color-active: var(--sui-green-naked-canvas_text-strong);
     }
@@ -733,6 +738,14 @@
 /* 変数 */
 :scope {
   --sui_button_pending_icon-size: ;
+  --sui_button_pending-font_family: ;
+  --sui_button_pending-font_size: ;
+  --sui_button_pending-font_weight: ;
+  --sui_button_pending-line_height: ;
+  --sui_button_pending_icon-color: ;
+  --sui_button_pending-color: ;
+  --sui_button_pending-letter_spacing: ;
+  --sui_button_pending-canvas: ;
 }
 
 /* 動的 */
@@ -740,10 +753,17 @@
   .sui_button_pending {
     position: var(--_sui_button_pending-position, relative);
     visibility: var(--_sui_button_pending-visibility, visible);
+    font-family: var(--sui_button_pending-font_family);
+    font-size: var(--sui_button_pending-font_size);
+    font-weight: var(--sui_button_pending-font_weight);
+    line-height: var(--sui_button_pending-line_height);
+    color: var(--sui_button_pending-color);
+    letter-spacing: var(--sui_button_pending-letter_spacing);
 
     svg:not(.sui-ignore) {
       width: var(--sui_button_pending_icon-size);
       height: var(--sui_button_pending_icon-size);
+      color: var(--sui_button_pending_icon-color);
     }
   }
 }
@@ -751,6 +771,179 @@
 /* 既定値 */
 :scope {
   --sui_button_pending_icon-size: 1lh;
+  --sui_button_pending-font_family: var(--sui-font-sans);
+  --sui_button_pending_icon-color: --sui-icon_color(
+                                     var(--sui_button_pending-color),
+                                     var(--sui_button_pending-canvas)
+                                   );
+  --sui_button_pending-canvas: var(--sui_button-background_color-idle);
+
+  &.sui_button-size_sm {
+    --sui_button_pending-font_size: var(--sui-text-oln-sm-m-font_size);
+    --sui_button_pending-font_weight: var(--sui-text-oln-sm-m-font_weight);
+    --sui_button_pending-line_height: var(--sui-text-oln-sm-m-line_height);
+    --sui_button_pending-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
+  }
+
+  &.sui_button-size_md {
+    --sui_button_pending-font_size: var(--sui-text-oln-md-m-font_size);
+    --sui_button_pending-font_weight: var(--sui-text-oln-md-m-font_weight);
+    --sui_button_pending-line_height: var(--sui-text-oln-md-m-line_height);
+    --sui_button_pending-letter_spacing: var(--sui-text-oln-md-m-letter_spacing);
+  }
+
+  &.sui_button-size_lg {
+    --sui_button_pending-font_size: var(--sui-text-oln-lg-m-font_size);
+    --sui_button_pending-font_weight: var(--sui-text-oln-lg-m-font_weight);
+    --sui_button_pending-line_height: var(--sui-text-oln-lg-m-line_height);
+    --sui_button_pending-letter_spacing: var(--sui-text-oln-lg-m-letter_spacing);
+  }
+
+  &.sui_button-color_grey {
+    &.sui_button-variant_solid {
+      --sui_button_pending-color: var(--sui-grey-solid-canvas_text-normal);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button_pending-color: var(--sui-grey-naked-canvas_text-normal);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button_pending-color: var(--sui-grey-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_button-color_blue:not(.sui_button-muted) {
+    &.sui_button-variant_solid {
+      --sui_button_pending-color: var(--sui-blue-solid-canvas_text-normal);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button_pending-color: var(--sui-blue-naked-canvas_text-normal);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button_pending-color: var(--sui-blue-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_button-color_purple:not(.sui_button-muted) {
+    &.sui_button-variant_solid {
+      --sui_button_pending-color: var(--sui-purple-solid-canvas_text-normal);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button_pending-color: var(--sui-purple-naked-canvas_text-normal);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button_pending-color: var(--sui-purple-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_button-color_magenta:not(.sui_button-muted) {
+    &.sui_button-variant_solid {
+      --sui_button_pending-color: var(--sui-magenta-solid-canvas_text-normal);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button_pending-color: var(--sui-magenta-naked-canvas_text-normal);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button_pending-color: var(--sui-magenta-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_button-color_red:not(.sui_button-muted) {
+    &.sui_button-variant_solid {
+      --sui_button_pending-color: var(--sui-red-solid-canvas_text-normal);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button_pending-color: var(--sui-red-naked-canvas_text-normal);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button_pending-color: var(--sui-red-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_button-color_orange:not(.sui_button-muted) {
+    &.sui_button-variant_solid {
+      --sui_button_pending-color: var(--sui-orange-solid-canvas_text-normal);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button_pending-color: var(--sui-orange-naked-canvas_text-normal);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button_pending-color: var(--sui-orange-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_button-color_yellow:not(.sui_button-muted) {
+    &.sui_button-variant_solid {
+      --sui_button_pending-color: var(--sui-yellow-solid-canvas_text-normal);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button_pending-color: var(--sui-yellow-naked-canvas_text-normal);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button_pending-color: var(--sui-yellow-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_button-color_green:not(.sui_button-muted) {
+    &.sui_button-variant_solid {
+      --sui_button_pending-color: var(--sui-green-solid-canvas_text-normal);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button_pending-color: var(--sui-green-naked-canvas_text-normal);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button_pending-color: var(--sui-green-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_button-muted:not(.sui_button-color_grey) {
+    &.sui_button-variant_solid {
+      --sui_button_pending-color: var(--sui-grey-solid-canvas_text-normal);
+    }
+
+    &.sui_button-color_blue:not(.sui_button-variant_solid) {
+      --sui_button_pending-color: var(--sui-blue-naked-canvas_text-normal);
+    }
+
+    &.sui_button-color_purple:not(.sui_button-variant_solid) {
+      --sui_button_pending-color: var(--sui-purple-naked-canvas_text-normal);
+    }
+
+    &.sui_button-color_magenta:not(.sui_button-variant_solid) {
+      --sui_button_pending-color: var(--sui-magenta-naked-canvas_text-normal);
+    }
+
+    &.sui_button-color_red:not(.sui_button-variant_solid) {
+      --sui_button_pending-color: var(--sui-red-naked-canvas_text-normal);
+    }
+
+    &.sui_button-color_orange:not(.sui_button-variant_solid) {
+      --sui_button_pending-color: var(--sui-orange-naked-canvas_text-normal);
+    }
+
+    &.sui_button-color_yellow:not(.sui_button-variant_solid) {
+      --sui_button_pending-color: var(--sui-yellow-naked-canvas_text-normal);
+    }
+
+    &.sui_button-color_green:not(.sui_button-variant_solid) {
+      --sui_button_pending-color: var(--sui-green-naked-canvas_text-normal);
+    }
+  }
 }
 
 /* 上書き */
@@ -779,161 +972,17 @@
 /* 動的 */
 :scope {
   .sui_button_circular_progress_track {
-    color: color-mix(
-             in oklab,
-             var(--sui_button_circular_progress_track-color) 30%,
-             var(--sui_button-background_color-normal) 100%
-           );
+    color: var(--sui_button_circular_progress_track-color);
   }
 }
 
 /* 既定値 */
 :scope {
-  &.sui_button-color_grey {
-    &.sui_button-variant_solid {
-      --sui_button_circular_progress_track-color: var(--sui-grey-solid-canvas_text-normal);
-    }
-
-    &.sui_button-variant_naked {
-      --sui_button_circular_progress_track-color: var(--sui-grey-naked-canvas_text-normal);
-    }
-
-    &.sui_button-variant_liquid {
-      --sui_button_circular_progress_track-color: var(--sui-grey-liquid-canvas_text-normal);
-    }
-  }
-
-  &.sui_button-color_blue:not(.sui_button-muted) {
-    &.sui_button-variant_solid {
-      --sui_button_circular_progress_track-color: var(--sui-blue-solid-canvas_text-normal);
-    }
-
-    &.sui_button-variant_naked {
-      --sui_button_circular_progress_track-color: var(--sui-blue-naked-canvas_text-normal);
-    }
-
-    &.sui_button-variant_liquid {
-      --sui_button_circular_progress_track-color: var(--sui-blue-liquid-canvas_text-normal);
-    }
-  }
-
-  &.sui_button-color_purple:not(.sui_button-muted) {
-    &.sui_button-variant_solid {
-      --sui_button_circular_progress_track-color: var(--sui-purple-solid-canvas_text-normal);
-    }
-
-    &.sui_button-variant_naked {
-      --sui_button_circular_progress_track-color: var(--sui-purple-naked-canvas_text-normal);
-    }
-
-    &.sui_button-variant_liquid {
-      --sui_button_circular_progress_track-color: var(--sui-purple-liquid-canvas_text-normal);
-    }
-  }
-
-  &.sui_button-color_magenta:not(.sui_button-muted) {
-    &.sui_button-variant_solid {
-      --sui_button_circular_progress_track-color: var(--sui-magenta-solid-canvas_text-normal);
-    }
-
-    &.sui_button-variant_naked {
-      --sui_button_circular_progress_track-color: var(--sui-magenta-naked-canvas_text-normal);
-    }
-
-    &.sui_button-variant_liquid {
-      --sui_button_circular_progress_track-color: var(--sui-magenta-liquid-canvas_text-normal);
-    }
-  }
-
-  &.sui_button-color_red:not(.sui_button-muted) {
-    &.sui_button-variant_solid {
-      --sui_button_circular_progress_track-color: var(--sui-red-solid-canvas_text-normal);
-    }
-
-    &.sui_button-variant_naked {
-      --sui_button_circular_progress_track-color: var(--sui-red-naked-canvas_text-normal);
-    }
-
-    &.sui_button-variant_liquid {
-      --sui_button_circular_progress_track-color: var(--sui-red-liquid-canvas_text-normal);
-    }
-  }
-
-  &.sui_button-color_orange:not(.sui_button-muted) {
-    &.sui_button-variant_solid {
-      --sui_button_circular_progress_track-color: var(--sui-orange-solid-canvas_text-normal);
-    }
-
-    &.sui_button-variant_naked {
-      --sui_button_circular_progress_track-color: var(--sui-orange-naked-canvas_text-normal);
-    }
-
-    &.sui_button-variant_liquid {
-      --sui_button_circular_progress_track-color: var(--sui-orange-liquid-canvas_text-normal);
-    }
-  }
-
-  &.sui_button-color_yellow:not(.sui_button-muted) {
-    &.sui_button-variant_solid {
-      --sui_button_circular_progress_track-color: var(--sui-yellow-solid-canvas_text-normal);
-    }
-
-    &.sui_button-variant_naked {
-      --sui_button_circular_progress_track-color: var(--sui-yellow-naked-canvas_text-normal);
-    }
-
-    &.sui_button-variant_liquid {
-      --sui_button_circular_progress_track-color: var(--sui-yellow-liquid-canvas_text-normal);
-    }
-  }
-
-  &.sui_button-color_green:not(.sui_button-muted) {
-    &.sui_button-variant_solid {
-      --sui_button_circular_progress_track-color: var(--sui-green-solid-canvas_text-normal);
-    }
-
-    &.sui_button-variant_naked {
-      --sui_button_circular_progress_track-color: var(--sui-green-naked-canvas_text-normal);
-    }
-
-    &.sui_button-variant_liquid {
-      --sui_button_circular_progress_track-color: var(--sui-green-liquid-canvas_text-normal);
-    }
-  }
-
-  &.sui_button-muted:not(.sui_button-color_grey) {
-    &.sui_button-variant_solid {
-      --sui_button_circular_progress_track-color: var(--sui-grey-solid-canvas_text-normal);
-    }
-
-    &.sui_button-color_blue:not(.sui_button-variant_solid) {
-      --sui_button_circular_progress_track-color: var(--sui-blue-naked-canvas_text-normal);
-    }
-
-    &.sui_button-color_purple:not(.sui_button-variant_solid) {
-      --sui_button_circular_progress_track-color: var(--sui-purple-naked-canvas_text-normal);
-    }
-
-    &.sui_button-color_magenta:not(.sui_button-variant_solid) {
-      --sui_button_circular_progress_track-color: var(--sui-magenta-naked-canvas_text-normal);
-    }
-
-    &.sui_button-color_red:not(.sui_button-variant_solid) {
-      --sui_button_circular_progress_track-color: var(--sui-red-naked-canvas_text-normal);
-    }
-
-    &.sui_button-color_orange:not(.sui_button-variant_solid) {
-      --sui_button_circular_progress_track-color: var(--sui-orange-naked-canvas_text-normal);
-    }
-
-    &.sui_button-color_yellow:not(.sui_button-variant_solid) {
-      --sui_button_circular_progress_track-color: var(--sui-yellow-naked-canvas_text-normal);
-    }
-
-    &.sui_button-color_green:not(.sui_button-variant_solid) {
-      --sui_button_circular_progress_track-color: var(--sui-green-naked-canvas_text-normal);
-    }
-  }
+  --sui_button_circular_progress_track-color: color-mix(
+                                                in oklab,
+                                                var(--sui_button_pending_icon-color) 30%,
+                                                var(--sui_button_pending-canvas) 100%
+                                              );
 }
 
 } /* @scope */
@@ -965,151 +1014,7 @@
 
 /* 既定値 */
 :scope {
-  &.sui_button-color_grey {
-    &.sui_button-variant_solid {
-      --sui_button_circular_progress_fill-color: var(--sui-grey-solid-canvas_text-normal);
-    }
-
-    &.sui_button-variant_naked {
-      --sui_button_circular_progress_fill-color: var(--sui-grey-naked-canvas_text-normal);
-    }
-
-    &.sui_button-variant_liquid {
-      --sui_button_circular_progress_fill-color: var(--sui-grey-liquid-canvas_text-normal);
-    }
-  }
-
-  &.sui_button-color_blue:not(.sui_button-muted) {
-    &.sui_button-variant_solid {
-      --sui_button_circular_progress_fill-color: var(--sui-blue-solid-canvas_text-normal);
-    }
-
-    &.sui_button-variant_naked {
-      --sui_button_circular_progress_fill-color: var(--sui-blue-naked-canvas_text-normal);
-    }
-
-    &.sui_button-variant_liquid {
-      --sui_button_circular_progress_fill-color: var(--sui-blue-liquid-canvas_text-normal);
-    }
-  }
-
-  &.sui_button-color_purple:not(.sui_button-muted) {
-    &.sui_button-variant_solid {
-      --sui_button_circular_progress_fill-color: var(--sui-purple-solid-canvas_text-normal);
-    }
-
-    &.sui_button-variant_naked {
-      --sui_button_circular_progress_fill-color: var(--sui-purple-naked-canvas_text-normal);
-    }
-
-    &.sui_button-variant_liquid {
-      --sui_button_circular_progress_fill-color: var(--sui-purple-liquid-canvas_text-normal);
-    }
-  }
-
-  &.sui_button-color_magenta:not(.sui_button-muted) {
-    &.sui_button-variant_solid {
-      --sui_button_circular_progress_fill-color: var(--sui-magenta-solid-canvas_text-normal);
-    }
-
-    &.sui_button-variant_naked {
-      --sui_button_circular_progress_fill-color: var(--sui-magenta-naked-canvas_text-normal);
-    }
-
-    &.sui_button-variant_liquid {
-      --sui_button_circular_progress_fill-color: var(--sui-magenta-liquid-canvas_text-normal);
-    }
-  }
-
-  &.sui_button-color_red:not(.sui_button-muted) {
-    &.sui_button-variant_solid {
-      --sui_button_circular_progress_fill-color: var(--sui-red-solid-canvas_text-normal);
-    }
-
-    &.sui_button-variant_naked {
-      --sui_button_circular_progress_fill-color: var(--sui-red-naked-canvas_text-normal);
-    }
-
-    &.sui_button-variant_liquid {
-      --sui_button_circular_progress_fill-color: var(--sui-red-liquid-canvas_text-normal);
-    }
-  }
-
-  &.sui_button-color_orange:not(.sui_button-muted) {
-    &.sui_button-variant_solid {
-      --sui_button_circular_progress_fill-color: var(--sui-orange-solid-canvas_text-normal);
-    }
-
-    &.sui_button-variant_naked {
-      --sui_button_circular_progress_fill-color: var(--sui-orange-naked-canvas_text-normal);
-    }
-
-    &.sui_button-variant_liquid {
-      --sui_button_circular_progress_fill-color: var(--sui-orange-liquid-canvas_text-normal);
-    }
-  }
-
-  &.sui_button-color_yellow:not(.sui_button-muted) {
-    &.sui_button-variant_solid {
-      --sui_button_circular_progress_fill-color: var(--sui-yellow-solid-canvas_text-normal);
-    }
-
-    &.sui_button-variant_naked {
-      --sui_button_circular_progress_fill-color: var(--sui-yellow-naked-canvas_text-normal);
-    }
-
-    &.sui_button-variant_liquid {
-      --sui_button_circular_progress_fill-color: var(--sui-yellow-liquid-canvas_text-normal);
-    }
-  }
-
-  &.sui_button-color_green:not(.sui_button-muted) {
-    &.sui_button-variant_solid {
-      --sui_button_circular_progress_fill-color: var(--sui-green-solid-canvas_text-normal);
-    }
-
-    &.sui_button-variant_naked {
-      --sui_button_circular_progress_fill-color: var(--sui-green-naked-canvas_text-normal);
-    }
-
-    &.sui_button-variant_liquid {
-      --sui_button_circular_progress_fill-color: var(--sui-green-liquid-canvas_text-normal);
-    }
-  }
-
-  &.sui_button-muted:not(.sui_button-color_grey) {
-    &.sui_button-variant_solid {
-      --sui_button_circular_progress_fill-color: var(--sui-grey-solid-canvas_text-normal);
-    }
-
-    &.sui_button-color_blue:not(.sui_button-variant_solid) {
-      --sui_button_circular_progress_fill-color: var(--sui-blue-naked-canvas_text-normal);
-    }
-
-    &.sui_button-color_purple:not(.sui_button-variant_solid) {
-      --sui_button_circular_progress_fill-color: var(--sui-purple-naked-canvas_text-normal);
-    }
-
-    &.sui_button-color_magenta:not(.sui_button-variant_solid) {
-      --sui_button_circular_progress_fill-color: var(--sui-magenta-naked-canvas_text-normal);
-    }
-
-    &.sui_button-color_red:not(.sui_button-variant_solid) {
-      --sui_button_circular_progress_fill-color: var(--sui-red-naked-canvas_text-normal);
-    }
-
-    &.sui_button-color_orange:not(.sui_button-variant_solid) {
-      --sui_button_circular_progress_fill-color: var(--sui-orange-naked-canvas_text-normal);
-    }
-
-    &.sui_button-color_yellow:not(.sui_button-variant_solid) {
-      --sui_button_circular_progress_fill-color: var(--sui-yellow-naked-canvas_text-normal);
-    }
-
-    &.sui_button-color_green:not(.sui_button-variant_solid) {
-      --sui_button_circular_progress_fill-color: var(--sui-green-naked-canvas_text-normal);
-    }
-  }
+  --sui_button_circular_progress_fill-color: var(--sui_button_pending-color);
 }
 
 } /* @scope */
@@ -1123,21 +1028,10 @@
 :scope {
   &.sui_button-pending {
     cursor: progress;
-
-    &.sui_button-variant_solid {
-      background-color: var(--sui_button-background_color-normal);
-    }
-
-    &.sui_button-variant_naked {
-      background-color: var(--sui_button-background_color-normal);
-    }
-
-    &.sui_button-variant_liquid {
-      background-color: var(--sui_button-background_color-normal);
-    }
+    background-color: var(--sui_button_pending-canvas);
 
     &.sui_button-outlined {
-      border-color: var(--sui_button-border_color-normal);
+      border-color: var(--sui_button-border_color-idle);
     }
   }
 }
