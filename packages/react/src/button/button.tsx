@@ -79,7 +79,7 @@ export type ButtonSlotProps = {
 };
 
 /**
- * {@link Button} を構成する各パーツの props をなどを作成するための API です。
+ * {@link Button} を構成する各パーツの props などを作成するための API です。
  */
 export interface ButtonAPI {
   /**

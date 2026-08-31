@@ -99,7 +99,7 @@ export type AccordionSlotProps = {
 };
 
 /**
- * {@link Accordion} を構成する各パーツの props をなどを作成するための API です。
+ * {@link Accordion} を構成する各パーツの props などを作成するための API です。
  *
  * @template TItem 項目の型です。
  */
