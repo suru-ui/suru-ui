@@ -423,7 +423,6 @@
   --sui_button_content-color-hover: ;
   --sui_button_content-color-active: ;
   --sui_button_content-letter_spacing: ;
-  --sui_button_content-active-scale: 0.95;
 }
 
 /* 静的 */
@@ -456,7 +455,6 @@
     line-height: var(--sui_button_content-line_height);
     color: var(--_sui_button_content-color, var(--sui_button_content-color-idle));
     letter-spacing: var(--sui_button_content-letter_spacing);
-    scale: var(--_sui_button_content-scale, 1);
 
     svg:not(.sui-ignore) {
       width: var(--sui_button_content_icon-size);
@@ -724,7 +722,6 @@
 
   &:active {
     --_sui_button_content-color: var(--sui_button_content-color-active);
-    --_sui_button_content-scale: var(--sui_button_content-active-scale);
   }
 }
 

@@ -205,7 +205,12 @@ export const WithButton = meta.story({
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col items-center gap-2">
             <span>{variant}</span>
-            <Chip {...props} render={<button type="button" />} variant={variant} className="pr-0">
+            <Chip
+              {...props}
+              render={<button type="button" />}
+              variant={variant}
+              className="pr-0 py-0"
+            >
               {props.children}
               <Button
                 size={props.size}
@@ -213,7 +218,6 @@ export const WithButton = meta.story({
                 radius={props.radius}
                 squared
                 variant={variant}
-                className="[--sui_button-background_color-normal:transparent]"
               >
                 <XIcon />
               </Button>

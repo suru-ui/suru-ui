@@ -11,46 +11,46 @@ import "./chip.css";
 // ----
 
 /**
- * チップの色です。
+ * チップの配色です。
  */
 export type ChipRootColor = Color;
 
 /**
- * チップの角丸です。
+ * チップの角丸の大きさです。
  *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
- * - `"full"`: 完全な丸形
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ * - `"full"`: 丸形
  */
 export type ChipRootRadius = "none" | Size | "full";
 
 /**
  * チップの大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type ChipRootSize = Size;
 
 /**
- * チップの主な外観の種類です。
+ * チップの主な外観です。
  *
- * - `"solid"`: 塗りつぶしスタイル
- * - `"naked"`: 背景のないテキストのみ
+ * - `"solid"`: 塗りつぶし
+ * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
 export type ChipRootVariant = ColorTemplate;
 
 /**
- * {@link ChipRoot} の状態です。
+ * {@link ChipRoot} が持つ状態です。
  */
 export type ChipRootState = {};
 
 /**
- * {@link ChipRoot} に渡すプロパティーです。
+ * {@link ChipRoot} に渡す props です。
  */
 export type ChipRootProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
   RenderProps<ChipRootState> & {
@@ -121,22 +121,19 @@ export const ChipRoot: IComponent<ChipRootProps> = function SuiChipRoot(props) {
   });
 };
 
-/**
- * {@link ChipRoot} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Root {
   /**
-   * {@link ChipRootState} です。
+   * {@link ChipRootState}
    */
   export type State = ChipRootState;
 
   /**
-   * {@link ChipRootProps} です。
+   * {@link ChipRootProps}
    */
   export type Props = ChipRootProps;
 }
 
 /**
- * {@link ChipRoot} です。
+ * {@link ChipRoot}
  */
 export const Root: IComponent<Root.Props> = ChipRoot;

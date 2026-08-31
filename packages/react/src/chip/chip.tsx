@@ -10,34 +10,34 @@ import {
 } from "./chip.parts.jsx";
 
 /**
- * {@link ChipRootColor} です。
+ * {@link ChipRootColor}
  */
 export type ChipColor = ChipRootColor;
 
 /**
- * {@link ChipRootRadius} です。
+ * {@link ChipRootRadius}
  */
 export type ChipRadius = ChipRootRadius;
 
 /**
- * {@link ChipRootSize} です。
+ * {@link ChipRootSize}
  */
 export type ChipSize = ChipRootSize;
 
 /**
- * {@link ChipRootVariant} です。
+ * {@link ChipRootVariant}
  */
 export type ChipVariant = ChipRootVariant;
 
 /**
- * {@link Chip} の各パーツに渡すプロパティーです。
+ * {@link Chip} を構成する各パーツの props などを作成するための API です。
  */
-export type ChipPartsProps = {
+export interface ChipAPI {
   /**
-   * {@link ChipRoot} に渡すプロパティーです。
+   * {@link ChipRoot} に渡す props を取得します。
    */
-  readonly root: ChipRootProps;
-};
+  getRootProps(): Omit<ChipRootProps, "children">;
+}
 
 /**
  * {@link Chip} の状態です。
@@ -49,55 +49,69 @@ export type ChipState = ChipRootState;
  */
 export type ChipProps = ChipRootProps;
 
-/**
- * {@link Chip} の各パーツに渡すプロパティーを作るフックです。
- */
-export function useChip(props: ChipProps): ChipPartsProps {
-  return {
-    root: props,
-  };
+interface IUseChipAPI {
+  /**
+   * {@link ChipAPI} を作成します。
+   *
+   * @param props {@link Chip} の props です。
+   * @returns ボタンの API です
+   */
+  (props: ChipProps): ChipAPI;
 }
+
+/**
+ * {@link ChipAPI} を作成するフックです。
+ */
+export const useChipAPI: IUseChipAPI = function useSuiChipAPI(props) {
+  return {
+    getRootProps() {
+      return props;
+    },
+  };
+};
+
+/**
+ * {@link useChipAPI}
+ */
+export const useAPI: IUseChipAPI = useChipAPI;
 
 /**
  * 短いラベルや属性を表示するチップコンポーネントです。
  */
 export const Chip: IComponent<ChipProps> = function SuiChip(props) {
-  const partsProps = useChip(props);
+  const api = useAPI(props);
 
-  return <ChipRoot {...partsProps.root} />;
+  return <ChipRoot {...api.getRootProps()} />;
 };
 
-/**
- * {@link Chip} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Chip {
   /**
-   * {@link ChipState} です。
+   * {@link ChipState}
    */
   export type State = ChipState;
 
   /**
-   * {@link ChipProps} です。
+   * {@link ChipProps}
    */
   export type Props = ChipProps;
 
   /**
-   * {@link ChipColor} です。
+   * {@link ChipColor}
    */
   export type Color = ChipColor;
 
   /**
-   * {@link ChipRadius} です。
+   * {@link ChipRadius}
    */
   export type Radius = ChipRadius;
 
   /**
-   * {@link ChipSize} です。
+   * {@link ChipSize}
    */
   export type Size = ChipSize;
 
   /**
-   * {@link ChipVariant} です。
+   * {@link ChipVariant}
    */
   export type Variant = ChipVariant;
 }

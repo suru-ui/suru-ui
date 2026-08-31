@@ -50,6 +50,17 @@ export {
   useButtonAPI,
 } from "./button/index.js";
 export {
+  type ChipAPI,
+  type ChipSize,
+  type ChipColor,
+  type ChipProps,
+  type ChipState,
+  type ChipRadius,
+  type ChipVariant,
+  Chip,
+  useChipAPI,
+} from "./chip/index.js";
+export {
   type ToggleButtonAPI,
   type ToggleButtonSize,
   type ToggleButtonColor,
@@ -90,15 +101,6 @@ export {
   type BadgeVariant,
   Badge,
 } from "./badge/index.js";
-export {
-  type ChipSize,
-  type ChipColor,
-  type ChipProps,
-  type ChipState,
-  type ChipRadius,
-  type ChipVariant,
-  Chip,
-} from "./chip/index.js";
 export {
   type ListSize,
   type ListProps,
