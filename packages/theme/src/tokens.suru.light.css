@@ -501,7 +501,8 @@
   --sui-border-2: var(--sui-grey-40);
   --sui-border-3: var(--sui-grey-50);
 
-  --sui-backdrop-opacity: 0.5;
+  --sui-backdrop-color: oklab(0 0 0 / 0.1);
+  --sui-backdrop-blur: 4px;
 
   --sui-focusring_color: color-mix(in oklab, var(--sui-yellow-40) 65%, transparent);
   --sui-focusring_width: 3px;

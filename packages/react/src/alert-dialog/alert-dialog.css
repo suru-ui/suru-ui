@@ -1,310 +1,993 @@
 /* Portal */
+@layer sui.component {
+@scope (.sui_alert_dialog_portal) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: fixed;
+  inset: 0;
+  z-index: calc(infinity);
+  min-height: 100dvh;
+
+  /* iOS 26以降: 背景が画面全体を覆うようにします。 */
+  @supports (-webkit-touch-callout: none) {
+    --sui_alert_dialog_portal-position: absolute;
+  }
+}
+
+} /* @scope */
+} /* @layer */
 
 /* Backdrop */
 @layer sui.component {
-  /* 変数 */
-  .sui_alert_dialog_backdrop {
-    --sui_alert_dialog_backdrop-background_color: ;
-    --sui_alert_dialog_backdrop-opacity: ;
-  }
+@scope (.sui_alert_dialog_portal) to ([data-scope]) {
 
-  /* 静的 */
+/* 固定 */
+:scope {
   .sui_alert_dialog_backdrop {
-    position: fixed;
+    position: absolute;
     inset: 0px;
-    transition: opacity 150ms ease-out;
   }
+}
 
-  /* 動的 */
+/* 変数 */
+:scope {
+  --sui_alert_dialog_backdrop-background_color: ;
+  --sui_alert_dialog_backdrop-filter-blur: ;
+}
+
+/* 可変 */
+:scope {
   .sui_alert_dialog_backdrop {
     background-color: var(--sui_alert_dialog_backdrop-background_color);
-    opacity: var(--_sui_alert_dialog_backdrop-opacity, var(--sui_alert_dialog_backdrop-opacity));
+    backdrop-filter: var(--sui_alert_dialog_backdrop-filter-blur);
   }
-
-  /* 既定値設定: ここから */
-
-  .sui_alert_dialog_backdrop {
-    --sui_alert_dialog_backdrop-background_color: var(--sui-canvas-1);
-    --sui_alert_dialog_backdrop-opacity: var(--sui-backdrop-opacity);
-  }
-
-  /* 既定値設定: ここまで */
-
-  /* 上書き設定: ここから */
-
-  .sui_alert_dialog_backdrop:is([data-starting-style], [data-ending-style]) {
-    --_sui_alert_dialog_backdrop-opacity: 0;
-  }
-
-  /* 上書き設定: ここまで */
 }
 
-/* Viewport */
-@layer sui.component {
-  /* 変数 */
-  .sui_alert_dialog_viewport {
-    --sui_alert_dialog_viewport-padding: ;
-  }
+/* 既定値 */
+:scope {
+  --sui_alert_dialog_backdrop-background_color: var(--sui-backdrop-color);
+  --sui_alert_dialog_backdrop-filter-blur: blur(var(--sui-backdrop-blur));
+}
 
-  /* 静的 */
-  .sui_alert_dialog_viewport {
+} /* @scope */
+} /* @layer */
+
+/* Content */
+@layer sui.component {
+@scope (.sui_alert_dialog_portal) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_alert_dialog_content {
     position: fixed;
-    inset: 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: auto;
-    pointer-events: none;
-  }
-
-  /* 動的 */
-  .sui_alert_dialog_viewport {
-    padding: var(--sui_alert_dialog_viewport-padding);
-  }
-
-  /* 既定値設定: ここから */
-
-  .sui_alert_dialog_viewport {
-    --sui_alert_dialog_viewport-padding: --sui-space(6);
-  }
-
-  /* 既定値設定: ここまで */
-}
-
-/* Popup */
-@layer sui.component {
-  /* 変数 */
-  .sui_alert_dialog_popup {
-    --sui_alert_dialog_popup-gap: ;
-    --sui_alert_dialog_popup-width: ;
-    --sui_alert_dialog_popup-max_width: ;
-    --sui_alert_dialog_popup-padding: ;
-    --sui_alert_dialog_title-padding_right: ;
-    --sui_alert_dialog_description-padding_right: ;
-    --sui_alert_dialog_title-font_size: ;
-    --sui_alert_dialog_description-font_size: ;
-    --sui_alert_dialog_title-font_weight: ;
-    --sui_alert_dialog_description-font_weight: ;
-    --sui_alert_dialog_title-line_height: ;
-    --sui_alert_dialog_description-line_height: ;
-    --sui_alert_dialog_popup-color: ;
-    --sui_alert_dialog_title-color: ;
-    --sui_alert_dialog_description-color: ;
-    --sui_alert_dialog_title-letter_spacing: ;
-    --sui_alert_dialog_description-letter_spacing: ;
-    --sui_alert_dialog_popup-outline_color: ;
-    --sui_alert_dialog_popup-outline_offset: ;
-    --sui_alert_dialog_popup-background_color: ;
-    --sui_alert_dialog_popup-border_color: ;
-    --sui_alert_dialog_popup-border_width: ;
-    --sui_alert_dialog_popup-border_radius: ;
-    --sui_alert_dialog_popup-opacity: ;
-    --sui_alert_dialog_popup-scale: ;
-  }
-
-  /* 静的 */
-  .sui_alert_dialog_popup {
-    position: relative;
+    top: 50%;
+    left: 50%;
     display: flex;
     flex-direction: column;
-    pointer-events: auto;
-    transition:
-      opacity 150ms ease-out,
-      scale 150ms ease-out;
+    border-style: solid;
+    transform: translate(-50%, -50%);
   }
-
-  /* 動的 */
-  .sui_alert_dialog_popup {
-    gap: var(--sui_alert_dialog_popup-gap);
-    width: var(--sui_alert_dialog_popup-width);
-    max-width: var(--sui_alert_dialog_popup-max_width);
-    padding: var(--sui_alert_dialog_popup-padding);
-    color: var(--sui_alert_dialog_popup-color);
-    outline: var(--_sui_alert_dialog_popup-outline_width, 0px)
-             solid
-             var(--sui_alert_dialog_popup-outline_color);
-    outline-offset: var(--sui_alert_dialog_popup-outline_offset);
-    background-color: var(--sui_alert_dialog_popup-background_color);
-    border: var(--sui_alert_dialog_popup-border_color)
-            solid
-            var(--sui_alert_dialog_popup-border_width);
-    border-radius: var(--sui_alert_dialog_popup-border_radius);
-    opacity: var(--_sui_alert_dialog_popup-opacity, var(--sui_alert_dialog_popup-opacity));
-    scale: var(--_sui_alert_dialog_popup-scale, var(--sui_alert_dialog_popup-scale));
-  }
-
-  /* 既定値設定: ここから */
-
-  .sui_alert_dialog_popup {
-    --sui_alert_dialog_popup-gap: --sui-gap(6);
-    --sui_alert_dialog_popup-width: 448px;
-    --sui_alert_dialog_popup-max_width: 100%;
-    --sui_alert_dialog_popup-padding: --sui-space(6);
-    --sui_alert_dialog_popup-color: var(--sui-canvas_text-1);
-    --sui_alert_dialog_popup-outline_color: var(--sui-focusring_color);
-    --sui_alert_dialog_popup-outline_offset: var(--sui-focusring_offset);
-    --sui_alert_dialog_popup-background_color: var(--sui-canvas-2);
-    --sui_alert_dialog_popup-border_color: var(--sui-grey-naked-border-normal);
-    --sui_alert_dialog_popup-border_width: --sui-border_width(1);
-    --sui_alert_dialog_popup-border_radius: var(--sui-radius-xl);
-    --sui_alert_dialog_popup-opacity: 1;
-    --sui_alert_dialog_popup-scale: 1;
-  }
-
-  /* 既定値設定: ここまで */
-
-  /* 上書き設定: ここから */
-
-  .sui_alert_dialog_popup:is([data-starting-style], [data-ending-style]) {
-    --_sui_alert_dialog_popup-opacity: 0;
-    --_sui_alert_dialog_popup-scale: 0.98;
-  }
-
-  .sui_alert_dialog_popup:focus-visible {
-    --_sui_alert_dialog_popup-outline_width: var(--sui-focusring_width);
-  }
-
-  /* 上書き設定: ここまで */
 }
 
-/* CloseButton */
-@layer sui.component {
-  /* 変数 */
-  .sui_alert_dialog_popup {
-    --sui_alert_dialog_close_button-size: ;
-    --sui_alert_dialog_close_button-position_right: ;
-    --sui_alert_dialog_close_button-position_top: ;
+/* 変数 */
+:scope {
+  --sui_alert_dialog_content-row_gap: ;
+  --sui_alert_dialog_content-width-desktop: ;
+  --sui_alert_dialog_content-width-modile: ;
+  --sui_alert_dialog_content-width: ;
+  --sui_alert_dialog_content-max_height: ;
+  --sui_alert_dialog_content-padding: ;
+  --sui_alert_dialog_content-background_color: ;
+  --sui_alert_dialog_content-border_color: ;
+  --sui_alert_dialog_content-border_width: ;
+  --sui_alert_dialog_content-border_radius: ;
+  --sui_alert_dialog_content-virtual_margin_block: ;
+  --sui_alert_dialog_content-virtual_margin_inline: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_alert_dialog_content {
+    row-gap: var(--sui_alert_dialog_content-row_gap);
+    width: var(--sui_alert_dialog_content-width);
+    max-height: var(--sui_alert_dialog_content-max_height);
+    padding: var(--sui_alert_dialog_content-padding);
+    background-color: var(--sui_alert_dialog_content-background_color);
+    border-color: var(--_sui_alert_dialog_content-border_color, transparent);
+    border-width: var(--_sui_alert_dialog_content-border_width, 0px);
+    border-radius: var(--sui_alert_dialog_content-border_radius);
+  }
+}
+
+/* 既定値 */
+:scope {
+  --sui_alert_dialog_content-row_gap: --sui-gap(7);
+  --sui_alert_dialog_content-width-desktop: calc(var(--sui-text-std-md-n-font_size) * 24);
+  --sui_alert_dialog_content-width-modile: calc(
+                                             100vw
+                                             - var(--sui_alert_dialog_content-virtual_margin_inline)
+                                             * 2
+                                           );
+  --sui_alert_dialog_content-width: min(
+                                      var(--sui_alert_dialog_content-width-desktop),
+                                      var(--sui_alert_dialog_content-width-modile)
+                                    );
+  --sui_alert_dialog_content-max_height: calc(
+                                           100%
+                                           - var(--sui_alert_dialog_content-virtual_margin_block)
+                                           * 2
+                                         );
+  --sui_alert_dialog_content-padding: --sui-space(5);
+  --sui_alert_dialog_content-background_color: var(--sui-canvas-2);
+  --sui_alert_dialog_content-border_color: var(--sui-border-1);
+  --sui_alert_dialog_content-border_width: --sui-border_width(1);
+  --sui_alert_dialog_content-virtual_margin_block: --sui-space(4);
+  --sui_alert_dialog_content-virtual_margin_inline: --sui-space(4);
+
+  &:has(.sui_alert_dialog_content-radius_none) {
+    --sui_alert_dialog_content-border_radius: 0px;
   }
 
-  /* 静的 */
-  .sui_alert_dialog_close_button {
+  &:has(.sui_alert_dialog_content-radius_sm) {
+    --sui_alert_dialog_content-border_radius: calc(
+                                                var(--sui-radius-sm)
+                                                + var(--sui_alert_dialog_content-padding) / 8
+                                              );
+  }
+
+  &:has(.sui_alert_dialog_content-radius_md) {
+    --sui_alert_dialog_content-border_radius: calc(
+                                                var(--sui-radius-md)
+                                                + var(--sui_alert_dialog_content-padding) / 2
+                                              );
+  }
+
+  &:has(.sui_alert_dialog_content-radius_lg) {
+    --sui_alert_dialog_content-border_radius: calc(
+                                                var(--sui-radius-lg)
+                                                + var(--sui_alert_dialog_content-padding)
+                                              );
+  }
+}
+
+/* 上書き */
+:scope {
+  .sui_alert_dialog_content-outlined {
+    --_sui_alert_dialog_content-border_color: var(--sui_alert_dialog_content-border_color);
+    --_sui_alert_dialog_content-border_width: var(--sui_alert_dialog_content-border_width);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Controls */
+@layer sui.component {
+@scope (.sui_alert_dialog_portal) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_alert_dialog_controls {
+    z-index: 1;
+    display: flex;
+    grid-area: controls;
+    margin-left: auto;
+  }
+
+  .sui_alert_dialog_controls-absolute {
     position: absolute;
   }
 
-  /* 動的 */
-  .sui_alert_dialog_close_button {
-    top: var(--sui_alert_dialog_close_button-position_top);
-    right: var(--sui_alert_dialog_close_button-position_right);
-    width: var(--sui_alert_dialog_close_button-size);
-    height: var(--sui_alert_dialog_close_button-size);
+  .sui_alert_dialog_controls-relative {
+    position: relative;
   }
-
-  /* 既定値設定: ここから */
-
-  .sui_alert_dialog_popup {
-    --sui_alert_dialog_close_button-size: var(--sui-size-md);
-    --sui_alert_dialog_close_button-position_right: --sui-space(4);
-    --sui_alert_dialog_close_button-position_top: --sui-space(4);
-  }
-
-  /* 既定値設定: ここまで */
 }
+
+/* 変数 */
+:scope {
+  --sui_alert_dialog_controls-gap: ;
+  --sui_alert_dialog_controls-margin_left: ;
+  --sui_alert_dialog_controls-virtual_margin: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_alert_dialog_controls {
+    top: var(--_sui_alert_dialog_controls-top, unset);
+    right: var(--_sui_alert_dialog_controls-right, unset);
+    gap: var(--sui_alert_dialog_controls-gap);
+    margin-left: var(--sui_alert_dialog_controls-margin_left);
+  }
+}
+
+/* 既定値 */
+:scope {
+  --sui_alert_dialog_controls-gap: --sui-space(4);
+  --sui_alert_dialog_controls-virtual_margin: var(--sui_alert_dialog_content-padding);
+
+  .sui_alert_dialog_controls-absolute {
+    --sui_alert_dialog_controls-margin_left: auto;
+  }
+
+  .sui_alert_dialog_controls-relative {
+    --sui_alert_dialog_controls-margin_left: var(--sui_alert_dialog_controls-virtual_margin);
+  }
+}
+
+/* 上書き */
+:scope {
+  .sui_alert_dialog_controls-absolute {
+    --_sui_alert_dialog_controls-top: var(--sui_alert_dialog_controls-virtual_margin);
+    --_sui_alert_dialog_controls-right: var(--sui_alert_dialog_controls-virtual_margin);
+  }
+
+  .sui_alert_dialog_header .sui_alert_dialog_controls-absolute {
+    --_sui_alert_dialog_controls-top: 0px;
+    --_sui_alert_dialog_controls-right: 0px;
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Header */
+@layer sui.component {
+@scope (.sui_alert_dialog_portal) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_alert_dialog_header {
+    position: relative;
+    display: grid;
+  }
+
+  .sui_alert_dialog_content-variant_default .sui_alert_dialog_header {
+    &:has(.sui_alert_dialog_icon) {
+      grid-template: "icon" auto
+                     /auto;
+    }
+
+    &:has(.sui_alert_dialog_title) {
+      grid-template: "title" auto
+                     /auto ;
+    }
+
+    &:has(.sui_alert_dialog_description) {
+      grid-template: "description" auto
+                     /auto       ;
+    }
+
+    &:has(.sui_alert_dialog_controls) {
+      grid-template: "controls" auto
+                     /auto    ;
+    }
+
+    &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_title) {
+      grid-template: "icon title" auto
+                     /auto 1fr  ;
+    }
+
+    &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_description) {
+      grid-template: "icon description" auto
+                     /auto 1fr        ;
+    }
+
+    &:has(.sui_alert_dialog_title):has(.sui_alert_dialog_description) {
+      grid-template: "title      " auto
+                     "description" auto
+                     /auto       ;
+    }
+
+    &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_controls) {
+      grid-template: "icon controls" auto
+                     /1fr  auto    ;
+    }
+
+    &:has(.sui_alert_dialog_title):has(.sui_alert_dialog_controls) {
+      grid-template: "title controls" auto
+                     /1fr   auto    ;
+    }
+
+    &:has(.sui_alert_dialog_controls):has(.sui_alert_dialog_description) {
+      grid-template: ".           controls   " auto
+                     "description description" auto
+                     /1fr         auto       ;
+    }
+
+    &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_title):has(.sui_alert_dialog_description) {
+      grid-template: "icon title      " auto
+                     "icon description" auto
+                     /auto 1fr        ;
+    }
+
+    &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_title):has(.sui_alert_dialog_controls) {
+      grid-template: "icon title controls" auto
+                     /auto 1fr   auto    ;
+    }
+
+    &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_controls):has(.sui_alert_dialog_description) {
+      grid-template: "icon .           controls   " auto
+                     "icon description description" auto
+                     /auto 1fr         auto       ;
+    }
+
+    &:has(.sui_alert_dialog_title):has(.sui_alert_dialog_controls):has(.sui_alert_dialog_description) {
+      grid-template: "title       controls   " auto
+                     "description description" auto
+                     /1fr         auto       ;
+    }
+
+    &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_title):has(.sui_alert_dialog_controls):has(.sui_alert_dialog_description) {
+      grid-template: "icon title       controls   " auto
+                     "icon description description" auto
+                     /auto 1fr         auto       ;
+    }
+  }
+
+  .sui_alert_dialog_content-variant_stacked .sui_alert_dialog_header {
+    &:has(.sui_alert_dialog_icon) {
+      grid-template: "icon" auto
+                     /auto;
+    }
+
+    &:has(.sui_alert_dialog_title) {
+      grid-template: "title" auto
+                     /auto ;
+    }
+
+    &:has(.sui_alert_dialog_description) {
+      grid-template: "description" auto
+                     /auto       ;
+    }
+
+    &:has(.sui_alert_dialog_controls) {
+      grid-template: "controls" auto
+                     /auto    ;
+    }
+
+    &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_title) {
+      grid-template: "icon " auto
+                     "title" auto
+                     /auto ;
+    }
+
+    &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_description) {
+      grid-template: "icon       " auto
+                     "description" auto
+                     /auto       ;
+    }
+
+    &:has(.sui_alert_dialog_title):has(.sui_alert_dialog_description) {
+      grid-template: "title      " auto
+                     "description" auto
+                     /auto       ;
+    }
+
+    &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_controls) {
+      grid-template: ".    controls" auto
+                     "icon icon    " auto
+                     /1fr  auto    ;
+    }
+
+    &:has(.sui_alert_dialog_title):has(.sui_alert_dialog_controls) {
+      grid-template: ".     controls" auto
+                     "title title   " auto
+                     /1fr   auto    ;
+    }
+
+    &:has(.sui_alert_dialog_controls):has(.sui_alert_dialog_description) {
+      grid-template: ".           controls   " auto
+                     "description description" auto
+                     /1fr         auto       ;
+    }
+
+    &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_title):has(.sui_alert_dialog_description) {
+      grid-template: "icon       " auto
+                     "title      " auto
+                     "description" auto
+                     /auto       ;
+    }
+
+    &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_title):has(.sui_alert_dialog_controls) {
+      grid-template: ".     controls" auto
+                     "icon  icon    " auto
+                     "title title   " auto
+                     /1fr   auto    ;
+    }
+
+    &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_controls):has(.sui_alert_dialog_description) {
+      grid-template: ".           controls   " auto
+                     "icon        icon       " auto
+                     "description description" auto
+                     /1fr         auto       ;
+    }
+
+    &:has(.sui_alert_dialog_title):has(.sui_alert_dialog_controls):has(.sui_alert_dialog_description) {
+      grid-template: ".           controls   " auto
+                     "title       title      " auto
+                     "description description" auto
+                     /1fr         auto       ;
+    }
+
+    &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_title):has(.sui_alert_dialog_controls):has(.sui_alert_dialog_description) {
+      grid-template: ".           controls   " auto
+                     "icon        icon       " auto
+                     "title       title      " auto
+                     "description description" auto
+                     /1fr         auto       ;
+    }
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_alert_dialog_header-row_gap: ;
+  --sui_alert_dialog_header-virtual_column_gap: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_alert_dialog_header {
+    row-gap: var(--sui_alert_dialog_header-row_gap);
+  }
+}
+
+/* 既定値 */
+:scope {
+  --sui_alert_dialog_header-row_gap: --sui-gap(2);
+  --sui_alert_dialog_header-virtual_column_gap: --sui-gap(6);
+
+  &:has(.sui_alert_dialog_icon) {
+    --sui_alert_dialog_icon-font_size: 1em;
+    --sui_alert_dialog_icon-line_height: 1lh;
+  }
+
+  &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_title) {
+    --sui_alert_dialog_icon-font_size: var(--sui_alert_dialog_title-font_size);
+    --sui_alert_dialog_icon-line_height: var(--sui_alert_dialog_title-line_height);
+  }
+
+  &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_description) {
+    --sui_alert_dialog_icon-font_size: var(--sui_alert_dialog_description-font_size);
+    --sui_alert_dialog_icon-line_height: var(--sui_alert_dialog_description-line_height);
+  }
+
+  &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_cancel_icon_button) {
+    --sui_alert_dialog_icon-font_size: 1em;
+    --sui_alert_dialog_icon-line_height: 1lh;
+  }
+
+  &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_title):has(.sui_alert_dialog_description) {
+    --sui_alert_dialog_icon-font_size: var(--sui_alert_dialog_title-font_size);
+    --sui_alert_dialog_icon-line_height: var(--sui_alert_dialog_title-line_height);
+  }
+
+  &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_title):has(.sui_alert_dialog_cancel_icon_button) {
+    --sui_alert_dialog_icon-font_size: var(--sui_alert_dialog_title-font_size);
+    --sui_alert_dialog_icon-line_height: var(--sui_alert_dialog_title-line_height);
+  }
+
+  &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_cancel_icon_button):has(.sui_alert_dialog_description) {
+    --sui_alert_dialog_icon-font_size: var(--sui_alert_dialog_description-font_size);
+    --sui_alert_dialog_icon-line_height: var(--sui_alert_dialog_description-line_height);
+  }
+
+  &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_title):has(.sui_alert_dialog_cancel_icon_button):has(.sui_alert_dialog_description) {
+    --sui_alert_dialog_icon-font_size: var(--sui_alert_dialog_title-font_size);
+    --sui_alert_dialog_icon-line_height: var(--sui_alert_dialog_title-line_height);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Icon */
+@layer sui.component {
+@scope (.sui_alert_dialog_portal) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_alert_dialog_icon {
+    display: flex;
+    grid-area: icon;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1/1;
+    margin-inline: auto;
+    border-style: solid;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_alert_dialog_icon-size: ;
+  --sui_alert_dialog_icon__svg-size: ;
+  --sui_alert_dialog_icon-margin_right: ;
+  --sui_alert_dialog_icon-font_size: ;
+  --sui_alert_dialog_icon-line_height: ;
+  --sui_alert_dialog_icon-color: ;
+  --sui_alert_dialog_icon-background_color: ;
+  --sui_alert_dialog_icon-border_color: ;
+  --sui_alert_dialog_icon-border_width: ;
+  --sui_alert_dialog_icon-border_radius: ;
+  --sui_alert_dialog_icon-floating: ;
+  --sui_alert_dialog_icon-virtual_padding: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_alert_dialog_icon {
+    width: var(--sui_alert_dialog_icon-size);
+    margin-right: var(--_sui_alert_dialog_icon-margin_right, auto);
+    margin-bottom: var(--_sui_alert_dialog_icon-margin_bottom, auto);
+    font-size: var(--sui_alert_dialog_icon-font_size);
+    line-height: var(--sui_alert_dialog_icon-line_height);
+    color: var(--sui_alert_dialog_icon-color);
+    background-color: var(--sui_alert_dialog_icon-background_color);
+    border-color: var(--_sui_alert_dialog_icon-border_color, transparent);
+    border-width: var(--_sui_alert_dialog_icon-border_width, 0px);
+    border-radius: var(--sui_alert_dialog_icon-border_radius);
+
+    svg:not(.sui-ignore) {
+      width: var(--sui_alert_dialog_icon__svg-size);
+      height: var(--sui_alert_dialog_icon__svg-size);
+      color: var(--sui_alert_dialog_icon-color);
+    }
+  }
+}
+
+/* 既定値 */
+:scope {
+  --sui_alert_dialog_icon__svg-size: calc(
+                                       var(--sui_alert_dialog_icon-size)
+                                       - var(--sui_alert_dialog_icon-virtual_padding) * 2
+                                     );
+  --sui_alert_dialog_icon-color: var(--sui-canvas_text-1);
+  --sui_alert_dialog_icon-border_width: --sui-border_width(1);
+  --sui_alert_dialog_icon-floating: --sui-space(4);
+
+  &:has(.sui_alert_dialog_icon-size_sm) {
+    --sui_alert_dialog_icon-size: calc(
+                                    var(--sui-size-sm)
+                                    + var(--sui_alert_dialog_icon-virtual_padding) * 2
+                                  );
+    --sui_alert_dialog_icon-virtual_padding: --sui-space(3);
+  }
+
+  &:has(.sui_alert_dialog_icon-size_md) {
+    --sui_alert_dialog_icon-size: calc(
+                                    var(--sui-size-md)
+                                    + var(--sui_alert_dialog_icon-virtual_padding) * 2
+                                  );
+    --sui_alert_dialog_icon-virtual_padding: --sui-space(4);
+  }
+
+  &:has(.sui_alert_dialog_icon-size_lg) {
+    --sui_alert_dialog_icon-min_height: calc(
+                                          var(--sui-size-lg)
+                                          + var(--sui_alert_dialog_icon-virtual_padding) * 2
+                                        );
+    --sui_alert_dialog_icon-virtual_padding: --sui-space(5);
+  }
+
+  &:has(.sui_alert_dialog_icon-radius_none) {
+    --sui_alert_dialog_icon-border_radius: 0px;
+  }
+
+  &:has(.sui_alert_dialog_icon-radius_sm) {
+    --sui_alert_dialog_icon-border_radius: var(--sui-radius-sm);
+  }
+
+  &:has(.sui_alert_dialog_icon-radius_md) {
+    --sui_alert_dialog_icon-border_radius: var(--sui-radius-md);
+  }
+
+  &:has(.sui_alert_dialog_icon-radius_lg) {
+    --sui_alert_dialog_icon-border_radius: var(--sui-radius-lg);
+  }
+
+  &:has(.sui_alert_dialog_icon-radius_full) {
+    --sui_alert_dialog_icon-border_radius: calc(var(--sui_alert_dialog_icon-size) / 2);
+  }
+
+  &:has(.sui_alert_dialog_icon-color_grey.sui_alert_dialog_icon-variant_solid) {
+    --sui_alert_dialog_icon-color: var(--sui-grey-solid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-grey-solid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-grey-solid-border-normal);
+  }
+  &:has(.sui_alert_dialog_icon-color_grey.sui_alert_dialog_icon-variant_naked) {
+    --sui_alert_dialog_icon-color: var(--sui-grey-naked-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-grey-naked-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-grey-naked-border-normal);
+  }
+  &:has(.sui_alert_dialog_icon-color_grey.sui_alert_dialog_icon-variant_liquid) {
+    --sui_alert_dialog_icon-color: var(--sui-grey-liquid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-grey-liquid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-grey-liquid-border-normal);
+  }
+
+  &:has(.sui_alert_dialog_icon-color_blue.sui_alert_dialog_icon-variant_solid) {
+    --sui_alert_dialog_icon-color: var(--sui-blue-solid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-blue-solid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-blue-solid-border-normal);
+  }
+  &:has(.sui_alert_dialog_icon-color_blue.sui_alert_dialog_icon-variant_naked) {
+    --sui_alert_dialog_icon-color: var(--sui-blue-naked-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-blue-naked-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-blue-naked-border-normal);
+  }
+  &:has(.sui_alert_dialog_icon-color_blue.sui_alert_dialog_icon-variant_liquid) {
+    --sui_alert_dialog_icon-color: var(--sui-blue-liquid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-blue-liquid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-blue-liquid-border-normal);
+  }
+
+  &:has(.sui_alert_dialog_icon-color_purple.sui_alert_dialog_icon-variant_solid) {
+    --sui_alert_dialog_icon-color: var(--sui-purple-solid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-purple-solid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-purple-solid-border-normal);
+  }
+  &:has(.sui_alert_dialog_icon-color_purple.sui_alert_dialog_icon-variant_naked) {
+    --sui_alert_dialog_icon-color: var(--sui-purple-naked-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-purple-naked-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-purple-naked-border-normal);
+  }
+  &:has(.sui_alert_dialog_icon-color_purple.sui_alert_dialog_icon-variant_liquid) {
+    --sui_alert_dialog_icon-color: var(--sui-purple-liquid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-purple-liquid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-purple-liquid-border-normal);
+  }
+
+  &:has(.sui_alert_dialog_icon-color_magenta.sui_alert_dialog_icon-variant_solid) {
+    --sui_alert_dialog_icon-color: var(--sui-magenta-solid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-magenta-solid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-magenta-solid-border-normal);
+  }
+  &:has(.sui_alert_dialog_icon-color_magenta.sui_alert_dialog_icon-variant_naked) {
+    --sui_alert_dialog_icon-color: var(--sui-magenta-naked-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-magenta-naked-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-magenta-naked-border-normal);
+  }
+  &:has(.sui_alert_dialog_icon-color_magenta.sui_alert_dialog_icon-variant_liquid) {
+    --sui_alert_dialog_icon-color: var(--sui-magenta-liquid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-magenta-liquid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-magenta-liquid-border-normal);
+  }
+
+  &:has(.sui_alert_dialog_icon-color_red.sui_alert_dialog_icon-variant_solid) {
+    --sui_alert_dialog_icon-color: var(--sui-red-solid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-red-solid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-red-solid-border-normal);
+  }
+  &:has(.sui_alert_dialog_icon-color_red.sui_alert_dialog_icon-variant_naked) {
+    --sui_alert_dialog_icon-color: var(--sui-red-naked-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-red-naked-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-red-naked-border-normal);
+  }
+  &:has(.sui_alert_dialog_icon-color_red.sui_alert_dialog_icon-variant_liquid) {
+    --sui_alert_dialog_icon-color: var(--sui-red-liquid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-red-liquid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-red-liquid-border-normal);
+  }
+
+  &:has(.sui_alert_dialog_icon-color_orange.sui_alert_dialog_icon-variant_solid) {
+    --sui_alert_dialog_icon-color: var(--sui-orange-solid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-orange-solid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-orange-solid-border-normal);
+  }
+  &:has(.sui_alert_dialog_icon-color_orange.sui_alert_dialog_icon-variant_naked) {
+    --sui_alert_dialog_icon-color: var(--sui-orange-naked-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-orange-naked-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-orange-naked-border-normal);
+  }
+  &:has(.sui_alert_dialog_icon-color_orange.sui_alert_dialog_icon-variant_liquid) {
+    --sui_alert_dialog_icon-color: var(--sui-orange-liquid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-orange-liquid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-orange-liquid-border-normal);
+  }
+
+  &:has(.sui_alert_dialog_icon-color_yellow.sui_alert_dialog_icon-variant_solid) {
+    --sui_alert_dialog_icon-color: var(--sui-yellow-solid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-yellow-solid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-yellow-solid-border-normal);
+  }
+  &:has(.sui_alert_dialog_icon-color_yellow.sui_alert_dialog_icon-variant_naked) {
+    --sui_alert_dialog_icon-color: var(--sui-yellow-naked-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-yellow-naked-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-yellow-naked-border-normal);
+  }
+  &:has(.sui_alert_dialog_icon-color_yellow.sui_alert_dialog_icon-variant_liquid) {
+    --sui_alert_dialog_icon-color: var(--sui-yellow-liquid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-yellow-liquid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-yellow-liquid-border-normal);
+  }
+
+  &:has(.sui_alert_dialog_icon-color_green.sui_alert_dialog_icon-variant_solid) {
+    --sui_alert_dialog_icon-color: var(--sui-green-solid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-green-solid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-green-solid-border-normal);
+  }
+  &:has(.sui_alert_dialog_icon-color_green.sui_alert_dialog_icon-variant_naked) {
+    --sui_alert_dialog_icon-color: var(--sui-green-naked-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-green-naked-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-green-naked-border-normal);
+  }
+  &:has(.sui_alert_dialog_icon-color_green.sui_alert_dialog_icon-variant_liquid) {
+    --sui_alert_dialog_icon-color: var(--sui-green-liquid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-green-liquid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-green-liquid-border-normal);
+  }
+
+  &:has(.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-variant_solid) {
+    --sui_alert_dialog_icon-color: var(--sui-grey-solid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-grey-solid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-grey-solid-border-normal);
+  }
+  &:has(.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-variant_naked) {
+    --sui_alert_dialog_icon-color: var(--sui-grey-naked-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-grey-naked-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-grey-naked-border-normal);
+  }
+  &:has(.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-variant_liquid) {
+    --sui_alert_dialog_icon-color: var(--sui-grey-liquid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-grey-liquid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-grey-liquid-border-normal);
+  }
+
+  &:has(.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-variant_solid) {
+    --sui_alert_dialog_icon-color: var(--sui-grey-solid-canvas_text-normal);
+  }
+
+  &:has(.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-color_blue:not(.sui_alert_dialog_icon-variant_solid)) {
+    --sui_alert_dialog_icon-color: var(--sui-blue-naked-canvas_text-normal);
+  }
+
+  &:has(.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-color_purple:not(.sui_alert_dialog_icon-variant_solid)) {
+    --sui_alert_dialog_icon-color: var(--sui-purple-naked-canvas_text-normal);
+  }
+
+  &:has(.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-color_magenta:not(.sui_alert_dialog_icon-variant_solid)) {
+    --sui_alert_dialog_icon-color: var(--sui-magenta-naked-canvas_text-normal);
+  }
+
+  &:has(.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-color_red:not(.sui_alert_dialog_icon-variant_solid)) {
+    --sui_alert_dialog_icon-color: var(--sui-red-naked-canvas_text-normal);
+  }
+
+  &:has(.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-color_orange:not(.sui_alert_dialog_icon-variant_solid)) {
+    --sui_alert_dialog_icon-color: var(--sui-orange-naked-canvas_text-normal);
+  }
+
+  &:has(.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-color_yellow:not(.sui_alert_dialog_icon-variant_solid)) {
+    --sui_alert_dialog_icon-color: var(--sui-yellow-naked-canvas_text-normal);
+  }
+
+  &:has(.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-color_green:not(.sui_alert_dialog_icon-variant_solid)) {
+    --sui_alert_dialog_icon-color: var(--sui-green-naked-canvas_text-normal);
+  }
+}
+
+/* 上書き */
+:scope {
+  &:has(.sui_alert_dialog_icon-outlined) {
+    --_sui_alert_dialog_icon-border_color: var(--sui_alert_dialog_icon-border_color);
+    --_sui_alert_dialog_icon-border_width: var(--sui_alert_dialog_icon-border_width);
+  }
+
+  &:has(.sui_alert_dialog_content-variant_default) {
+    --_sui_alert_dialog_icon-margin_right: var(--sui_alert_dialog_header-virtual_column_gap);
+  }
+
+  &:has(.sui_alert_dialog_content-variant_stacked) {
+    --_sui_alert_dialog_icon-margin_bottom: var(--sui_alert_dialog_icon-floating);
+  }
+}
+
+} /* @scope */
+} /* @layer */
 
 /* Title */
 @layer sui.component {
-  /* 変数 */
-  .sui_alert_dialog_popup {
-    --sui_alert_dialog_title-padding_right: ;
-    --sui_alert_dialog_title-font_size: ;
-    --sui_alert_dialog_title-font_weight: ;
-    --sui_alert_dialog_title-line_height: ;
-    --sui_alert_dialog_title-color: ;
-    --sui_alert_dialog_title-letter_spacing: ;
+@scope (.sui_alert_dialog_portal) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_alert_dialog_title {
+    display: block;
+    grid-area: title;
+    align-self: center;
+    line-break: strict;
+    word-break: normal;
+    overflow-wrap: anywhere;
   }
 
-  /* 動的 */
+  .sui_alert_dialog_content-variant_default .sui_alert_dialog_title {
+    text-align: start;
+  }
+
+  .sui_alert_dialog_content-variant_stacked .sui_alert_dialog_title {
+    text-align: center;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_alert_dialog_title-font_family: ;
+  --sui_alert_dialog_title-font_size: ;
+  --sui_alert_dialog_title-font_weight: ;
+  --sui_alert_dialog_title-line_height: ;
+  --sui_alert_dialog_title-color: ;
+  --sui_alert_dialog_title-letter_spacing: ;
+}
+
+/* 可変 */
+:scope {
   .sui_alert_dialog_title {
-    padding-right: var(--sui_alert_dialog_title-padding_right);
+    font-family: var(--sui_alert_dialog_title-font_family);
     font-size: var(--sui_alert_dialog_title-font_size);
     font-weight: var(--sui_alert_dialog_title-font_weight);
     line-height: var(--sui_alert_dialog_title-line_height);
     color: var(--sui_alert_dialog_title-color);
     letter-spacing: var(--sui_alert_dialog_title-letter_spacing);
   }
-
-  /* 既定値設定: ここから */
-
-  .sui_alert_dialog_popup {
-    --sui_alert_dialog_title-padding_right: calc(
-      var(--sui_alert_dialog_close_button-size)
-      + var(--sui_alert_dialog_close_button-position_right)
-      + var(--sui_alert_dialog_close_button-position_right)
-      - var(--sui_alert_dialog_popup-padding)
-    );
-    --sui_alert_dialog_title-font_size: var(--sui-text-std-md-b-font_size);
-    --sui_alert_dialog_title-font_weight: var(--sui-text-std-md-b-font_weight);
-    --sui_alert_dialog_title-line_height: var(--sui-text-std-md-b-line_height);
-    --sui_alert_dialog_title-color: var(--sui-canvas_text-1);
-    --sui_alert_dialog_title-letter_spacing: var(--sui-text-std-md-b-letter_spacing);
-  }
-
-  /* 既定値設定: ここまで */
 }
+
+/* 既定値 */
+:scope {
+  --sui_alert_dialog_title-font_family: var(--sui-font-sans);
+  --sui_alert_dialog_title-font_size: var(--sui-text-std-md-b-font_size);
+  --sui_alert_dialog_title-font_weight: var(--sui-text-std-md-b-font_weight);
+  --sui_alert_dialog_title-line_height: var(--sui-text-std-md-b-line_height);
+  --sui_alert_dialog_title-color: var(--sui-canvas_text-1);
+  --sui_alert_dialog_title-letter_spacing: var(--sui-text-std-md-b-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */
 
 /* Description */
 @layer sui.component {
-  /* 変数 */
-  .sui_alert_dialog_popup {
-    --sui_alert_dialog_description-padding_right: ;
-    --sui_alert_dialog_description-font_size: ;
-    --sui_alert_dialog_description-font_weight: ;
-    --sui_alert_dialog_description-line_height: ;
-    --sui_alert_dialog_description-color: ;
-    --sui_alert_dialog_description-letter_spacing: ;
+@scope (.sui_alert_dialog_portal) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_alert_dialog_description {
+    display: block;
+    grid-area: description;
+    line-break: strict;
+    word-break: normal;
+    overflow-wrap: anywhere;
   }
 
-  /* 動的 */
+  .sui_alert_dialog_content-variant_stacked .sui_alert_dialog_description {
+    text-align: center;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_alert_dialog_description-font_family: ;
+  --sui_alert_dialog_description-font_size: ;
+  --sui_alert_dialog_description-font_weight: ;
+  --sui_alert_dialog_description-line_height: ;
+  --sui_alert_dialog_description-color: ;
+  --sui_alert_dialog_description-letter_spacing: ;
+}
+
+/* 可変 */
+:scope {
   .sui_alert_dialog_description {
-    padding-right: var(--sui_alert_dialog_description-padding_right);
+    font-family: var(--sui_alert_dialog_description-font_family);
     font-size: var(--sui_alert_dialog_description-font_size);
     font-weight: var(--sui_alert_dialog_description-font_weight);
     line-height: var(--sui_alert_dialog_description-line_height);
     color: var(--sui_alert_dialog_description-color);
     letter-spacing: var(--sui_alert_dialog_description-letter_spacing);
   }
-
-  /* 既定値設定: ここから */
-
-  .sui_alert_dialog_popup {
-    --sui_alert_dialog_description-padding_right: calc(
-      var(--sui_alert_dialog_close_button-size)
-      + var(--sui_alert_dialog_close_button-position_right)
-      + var(--sui_alert_dialog_close_button-position_right)
-      - var(--sui_alert_dialog_popup-padding)
-    );
-    --sui_alert_dialog_description-font_size: var(--sui-text-std-sm-n-font_size);
-    --sui_alert_dialog_description-font_weight: var(--sui-text-std-sm-n-font_weight);
-    --sui_alert_dialog_description-line_height: var(--sui-text-std-sm-n-line_height);
-    --sui_alert_dialog_description-color: var(--sui-canvas_text-2);
-    --sui_alert_dialog_description-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
-  }
-
-  /* 既定値設定: ここまで */
 }
 
-/* Actions */
+/* 既定値 */
+:scope {
+  --sui_alert_dialog_description-font_family: var(--sui-font-sans);
+  --sui_alert_dialog_description-font_size: var(--sui-text-std-md-n-font_size);
+  --sui_alert_dialog_description-font_weight: var(--sui-text-std-md-n-font_weight);
+  --sui_alert_dialog_description-line_height: var(--sui-text-std-md-n-line_height);
+  --sui_alert_dialog_description-color: var(--sui-canvas_text-2);
+  --sui_alert_dialog_description-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Body */
 @layer sui.component {
-  /* 変数 */
-  .sui_alert_dialog_actions {
-    --sui_alert_dialog_actions-gap: ;
+@scope (.sui_alert_dialog_portal) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_alert_dialog_body {
+    position: relative;
+    line-break: strict;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_alert_dialog_body-font_family: ;
+  --sui_alert_dialog_body-font_size: ;
+  --sui_alert_dialog_body-font_weight: ;
+  --sui_alert_dialog_body-line_height: ;
+  --sui_alert_dialog_body-color: ;
+  --sui_alert_dialog_body-letter_spacing: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_alert_dialog_body {
+    font-family: var(--sui_alert_dialog_body-font_family);
+    font-size: var(--sui_alert_dialog_body-font_size);
+    font-weight: var(--sui_alert_dialog_body-font_weight);
+    line-height: var(--sui_alert_dialog_body-line_height);
+    color: var(--sui_alert_dialog_body-color);
+    letter-spacing: var(--sui_alert_dialog_body-letter_spacing);
+  }
+}
+
+/* 既定値 */
+:scope {
+  --sui_alert_dialog_body-font_family: var(--sui-font-sans);
+  --sui_alert_dialog_body-font_size: var(--sui-text-std-md-n-font_size);
+  --sui_alert_dialog_body-font_weight: var(--sui-text-std-md-n-font_weight);
+  --sui_alert_dialog_body-line_height: var(--sui-text-std-md-n-line_height);
+  --sui_alert_dialog_body-color: var(--sui-canvas-1);
+  --sui_alert_dialog_body-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Footer */
+@layer sui.component {
+@scope (.sui_alert_dialog_portal) to ([data-scope]) {
+
+/* 変数 */
+:scope {
+  --sui_alert_dialog_footer-gap: ;
+}
+
+/* 固定 */
+:scope {
+  .sui_alert_dialog_footer {
+    position: relative;
+    align-items: center;
   }
 
-  /* 静的 */
-  .sui_alert_dialog_actions {
+  .sui_alert_dialog_content-variant_default .sui_alert_dialog_footer {
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-end;
   }
 
-  /* 動的 */
-  .sui_alert_dialog_actions {
-    gap: var(--sui_alert_dialog_actions-gap);
+  .sui_alert_dialog_content-variant_stacked .sui_alert_dialog_footer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
-
-  /* 既定値設定: ここから */
-
-  .sui_alert_dialog_actions {
-    --sui_alert_dialog_actions-gap: --sui-gap(4);
-  }
-
-  /* 既定値設定: ここまで */
 }
+
+/* 可変 */
+:scope {
+  .sui_alert_dialog_footer {
+    gap: var(--sui_alert_dialog_footer-gap);
+  }
+}
+
+/* 既定値 */
+:scope {
+  --sui_alert_dialog_footer-gap: --sui-gap(4);
+}
+
+} /* @scope */
+} /* @layer */

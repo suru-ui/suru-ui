@@ -1,9 +1,13 @@
+import * as theme from "@suru-ui/theme";
+import { Trash2Icon } from "lucide-react";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { AlertDialog } from "../src/alert-dialog/index.js";
-import * as AlertDialogParts from "../src/alert-dialog/index.js";
 import { Button } from "../src/button/index.js";
+
+const RADII: readonly AlertDialog.Radius[] = ["none", ...theme.SIZES];
+const VARIANTS: readonly AlertDialog.Variant[] = ["default", "stacked"];
 
 const meta = preview.meta({
   title: "AlertDialog",
@@ -12,85 +16,260 @@ const meta = preview.meta({
 
 export default meta;
 
-const ctrl = controls(AlertDialog, {});
+const ctrl = controls(AlertDialog, {
+  description: {
+    control: "text",
+  },
+  icon: {
+    control: "boolean",
+  },
+  outlined: {
+    control: "boolean",
+  },
+  radius: {
+    control: "select",
+    options: RADII,
+  },
+  showCancelIconButton: {
+    control: "boolean",
+  },
+  title: {
+    control: "text",
+  },
+  variant: {
+    control: "select",
+    options: VARIANTS,
+  },
+});
 
 export const Usage = meta.story({
   name: "使い方",
-  ...ctrl({}),
-  render() {
+  ...ctrl({
+    variant: "default",
+    radius: "md",
+    outlined: false,
+    showCancelIconButton: false,
+    icon: false,
+    title: "プロジェクトを削除しますか？",
+    description:
+      "このプロジェクトに含まれるすべてのデータが削除されます。この操作は取り消せません。",
+    // defaultOpen: true,
+  }),
+  render(props) {
     return (
-      <div className="flex flex-col items-center gap-4">
-        <AlertDialog
-          title="下書きを破棄しますか?"
-          accept={<Button color="red">破棄する</Button>}
-          reject={<Button>キャンセル</Button>}
-          trigger={<Button color="red">下書きを破棄</Button>}
-          onAccept={() => {
-            alert("下書きを破棄しました");
-          }}
-          description="この操作は元に戻せません。"
-        />
-        <p className="text-sm text-neutral-500">
-          トリガーをクリックすると、ポップアップが中央に表示されます。
-        </p>
-      </div>
+      <AlertDialog
+        {...props}
+        icon={props.icon && <Trash2Icon />}
+        cancel={
+          <Button variant="liquid" outlined>
+            キャンセル
+          </Button>
+        }
+        confirm={<Button color="red">削除する</Button>}
+        trigger={<Button color="red">プロジェクトを削除</Button>}
+        onConfirm={(evt) => {
+          evt.preventBaseUIHandler();
+        }}
+        slotProps={{
+          icon: {
+            color: "red",
+            muted: true,
+          },
+        }}
+      />
     );
   },
 });
 
-export const Parts = meta.story({
-  name: "パーツ",
-  ...ctrl({}),
-  render() {
-    const handle = AlertDialogParts.createHandle();
-
+export const Stacked = meta.story({
+  name: "積み上げ式",
+  ...ctrl({
+    radius: "md",
+    outlined: false,
+    showCancelIconButton: false,
+    icon: false,
+    title: "プロジェクトを削除しますか？",
+    description:
+      "このプロジェクトに含まれるすべてのデータが削除されます。この操作は取り消せません。",
+    // defaultOpen: true,
+  }),
+  render(props) {
     return (
-      <>
-        <AlertDialogParts.Trigger handle={handle}>
-          <Button color="red">削除</Button>
-        </AlertDialogParts.Trigger>
-
-        <AlertDialogParts.Root handle={handle}>
-          <AlertDialogParts.Portal>
-            <AlertDialogParts.Backdrop />
-            <AlertDialogParts.Viewport>
-              <AlertDialogParts.Popup>
-                <AlertDialogParts.Title>プロジェクトを削除しますか?</AlertDialogParts.Title>
-                <AlertDialogParts.Description>
-                  削除したプロジェクトは元に戻せません。この操作は取り消せないため、ご注意ください。
-                </AlertDialogParts.Description>
-                <div className="flex justify-end gap-2">
-                  <AlertDialogParts.Close>
-                    <Button variant="naked">キャンセル</Button>
-                  </AlertDialogParts.Close>
-                  <AlertDialogParts.Close>
-                    <Button color="red">削除</Button>
-                  </AlertDialogParts.Close>
-                </div>
-              </AlertDialogParts.Popup>
-            </AlertDialogParts.Viewport>
-          </AlertDialogParts.Portal>
-        </AlertDialogParts.Root>
-      </>
+      <AlertDialog
+        {...props}
+        icon={props.icon && <Trash2Icon />}
+        cancel={
+          <Button variant="liquid" outlined>
+            キャンセル
+          </Button>
+        }
+        confirm={<Button color="red">削除する</Button>}
+        trigger={<Button color="red">プロジェクトを削除</Button>}
+        variant="stacked"
+        onConfirm={(evt) => {
+          evt.preventBaseUIHandler();
+        }}
+        slotProps={{
+          icon: {
+            color: "red",
+            muted: true,
+          },
+        }}
+      />
     );
   },
 });
 
-export const Controlled = meta.story({
-  name: "制御",
-  ...ctrl({}),
-  render() {
-    const [open, setOpen] = React.useState(false);
-
+export const WithIcon = meta.story({
+  name: "アイコン付き",
+  ...ctrl({
+    variant: "default",
+    radius: "md",
+    outlined: false,
+    showCancelIconButton: false,
+    title: "プロジェクトを削除しますか？",
+    description:
+      "このプロジェクトに含まれるすべてのデータが削除されます。この操作は取り消せません。",
+    // defaultOpen: true,
+  }),
+  render(props) {
     return (
-      <>
-        <AlertDialog open={open} title="制御されたダイアログ" onOpenChange={setOpen}>
-          <p className="text-sm text-neutral-500">
-            `open` と `onOpenChange` でダイアログを制御できます。
-          </p>
-        </AlertDialog>
-        <Button onClick={() => setOpen(true)}>開く</Button>
-      </>
+      <AlertDialog
+        {...props}
+        icon={<Trash2Icon />}
+        cancel={
+          <Button variant="liquid" outlined>
+            キャンセル
+          </Button>
+        }
+        confirm={<Button color="red">削除する</Button>}
+        trigger={<Button color="red">プロジェクトを削除</Button>}
+        onConfirm={(evt) => {
+          evt.preventBaseUIHandler();
+        }}
+        slotProps={{
+          icon: {
+            color: "red",
+            muted: true,
+          },
+        }}
+      />
+    );
+  },
+});
+
+export const StackedWithIcon = meta.story({
+  name: "アイコン付きの積み上げ式",
+  ...ctrl({
+    radius: "md",
+    outlined: false,
+    showCancelIconButton: false,
+    title: "プロジェクトを削除しますか？",
+    description:
+      "このプロジェクトに含まれるすべてのデータが削除されます。この操作は取り消せません。",
+    // defaultOpen: true,
+  }),
+  render(props) {
+    return (
+      <AlertDialog
+        {...props}
+        icon={<Trash2Icon />}
+        cancel={
+          <Button variant="liquid" outlined>
+            キャンセル
+          </Button>
+        }
+        confirm={<Button color="red">削除する</Button>}
+        trigger={<Button color="red">プロジェクトを削除</Button>}
+        variant="stacked"
+        onConfirm={(evt) => {
+          evt.preventBaseUIHandler();
+        }}
+        slotProps={{
+          icon: {
+            color: "red",
+            muted: true,
+          },
+        }}
+      />
+    );
+  },
+});
+
+export const WithCancelIconButton = meta.story({
+  name: "隅に閉じるアイコンを表示",
+  ...ctrl({
+    variant: "default",
+    radius: "md",
+    outlined: false,
+    icon: false,
+    title: "プロジェクトを削除しますか？",
+    description:
+      "このプロジェクトに含まれるすべてのデータが削除されます。この操作は取り消せません。",
+    // defaultOpen: true,
+  }),
+  render(props) {
+    return (
+      <AlertDialog
+        {...props}
+        icon={props.icon && <Trash2Icon />}
+        cancel={
+          <Button variant="liquid" outlined>
+            キャンセル
+          </Button>
+        }
+        confirm={<Button color="red">削除する</Button>}
+        trigger={<Button color="red">プロジェクトを削除</Button>}
+        onConfirm={(evt) => {
+          evt.preventBaseUIHandler();
+        }}
+        slotProps={{
+          icon: {
+            color: "red",
+            muted: true,
+          },
+        }}
+        showCancelIconButton
+      />
+    );
+  },
+});
+
+export const Outlined = meta.story({
+  name: "枠線",
+  ...ctrl({
+    variant: "default",
+    radius: "md",
+    showCancelIconButton: false,
+    icon: false,
+    title: "プロジェクトを削除しますか？",
+    description:
+      "このプロジェクトに含まれるすべてのデータが削除されます。この操作は取り消せません。",
+    // defaultOpen: true,
+  }),
+  render(props) {
+    return (
+      <AlertDialog
+        {...props}
+        icon={props.icon && <Trash2Icon />}
+        cancel={
+          <Button variant="liquid" outlined>
+            キャンセル
+          </Button>
+        }
+        confirm={<Button color="red">削除する</Button>}
+        trigger={<Button color="red">プロジェクトを削除</Button>}
+        outlined
+        onConfirm={(evt) => {
+          evt.preventBaseUIHandler();
+        }}
+        slotProps={{
+          icon: {
+            color: "red",
+            muted: true,
+          },
+        }}
+      />
     );
   },
 });

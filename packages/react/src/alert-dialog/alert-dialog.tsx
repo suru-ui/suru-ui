@@ -1,79 +1,150 @@
-import { makeEventPreventable } from "@base-ui/react";
 import * as React from "react";
 
-import { Button } from "../button/index.js";
+import { XIcon } from "../_icons.jsx";
+import isLikelyVisibleNode from "../_is-likely-visible-node.js";
+import * as Button from "../button/button.parts.jsx";
 import type { IComponent } from "../types.js";
 import {
+  type AlertDialogHandle,
+  type AlertDialogBodyProps,
+  type AlertDialogIconProps,
   type AlertDialogRootProps,
   type AlertDialogRootState,
-  type AlertDialogCloseProps,
-  type AlertDialogPopupProps,
   type AlertDialogTitleProps,
+  type AlertDialogFooterProps,
+  type AlertDialogHeaderProps,
   type AlertDialogPortalProps,
-  type AlertDialogTriggerProps,
+  type AlertDialogRootActions,
+  type AlertDialogContentProps,
   type AlertDialogBackdropProps,
+  type AlertDialogContentRadius,
+  type AlertDialogControlsProps,
   type AlertDialogViewportProps,
+  type AlertDialogContentVariant,
   type AlertDialogDescriptionProps,
-  createHandle,
+  type AlertDialogCloseTriggerProps,
+  type AlertDialogToggleTriggerProps,
+  type AlertDialogRootChangeEventReason,
+  type AlertDialogRootChangeEventDetails,
+  AlertDialogBody,
+  AlertDialogIcon,
   AlertDialogRoot,
-  AlertDialogClose,
-  AlertDialogPopup,
   AlertDialogTitle,
+  AlertDialogFooter,
+  AlertDialogHeader,
   AlertDialogPortal,
-  AlertDialogTrigger,
+  AlertDialogContent,
   AlertDialogBackdrop,
+  AlertDialogControls,
   AlertDialogViewport,
   AlertDialogDescription,
+  AlertDialogCloseTrigger,
+  createAlertDialogHandle,
+  AlertDialogToggleTrigger,
 } from "./alert-dialog.parts.jsx";
 
-/**
- * {@link AlertDialog} の各パーツに渡すプロパティーです。
- */
-export type AlertDialogSlotProps = {
-  /**
-   * {@link AlertDialogClose|Close} (承諾ボタン) に渡すプロパティーです。
-   */
-  readonly accept?: AlertDialogCloseProps | undefined;
+// Types
+// -----
 
+/**
+ * {@link AlertDialogRootActions}
+ */
+export type AlertDialogActions = AlertDialogRootActions;
+
+/**
+ * {@link AlertDialogRootChangeEventDetails}
+ */
+export type AlertDialogChangeEventDetails = AlertDialogRootChangeEventDetails;
+
+/**
+ * {@link AlertDialogRootChangeEventReason}
+ */
+export type AlertDialogChangeEventReason = AlertDialogRootChangeEventReason;
+
+/**
+ * {@link AlertDialogContentRadius}
+ */
+export type AlertDialogRadius = AlertDialogContentRadius;
+
+/**
+ * {@link AlertDialogContentVariant}
+ */
+export type AlertDialogVariant = AlertDialogContentVariant;
+
+/**
+ * {@link AlertDialog} の各パーツに渡す props です。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
+ */
+export type AlertDialogSlotProps<TPayload = any> = {
   /**
-   * {@link AlertDialogBackdrop|Backdrop} に渡すプロパティーです。
+   * {@link AlertDialogBackdrop} に渡す props です。
    */
   readonly backdrop?: AlertDialogBackdropProps | undefined;
 
   /**
-   * {@link AlertDialogDescription|Description} に渡すプロパティーです。
+   * {@link AlertDialogCloseTrigger} に渡す props です。
    */
-  readonly description?: AlertDialogDescriptionProps | undefined;
+  readonly cancelTrigger?: Omit<AlertDialogCloseTriggerProps, "children"> | undefined;
 
   /**
-   * {@link AlertDialogPopup|Popup} に渡すプロパティーです。
+   * {@link AlertDialogCloseTrigger} に渡す props です。
    */
-  readonly popup?: AlertDialogPopupProps | undefined;
+  readonly confirmTrigger?: Omit<AlertDialogCloseTriggerProps, "children"> | undefined;
 
   /**
-   * {@link AlertDialogPortal|Portal} に渡すプロパティーです。
+   * {@link AlertDialogContent} に渡す props です。
    */
-  readonly portal?: AlertDialogPortalProps | undefined;
+  readonly content?:
+    | Omit<AlertDialogContentProps, "children" | keyof AlertDialogPropsContent>
+    | undefined;
 
   /**
-   * {@link AlertDialogClose|Close} (拒否ボタン) に渡すプロパティーです。
+   * {@link AlertDialogControls} に渡す props です。
    */
-  readonly reject?: AlertDialogCloseProps | undefined;
+  readonly controls?: Omit<AlertDialogControlsProps, "children"> | undefined;
 
   /**
-   * {@link AlertDialogTitle|Title} に渡すプロパティーです。
+   * {@link AlertDialogDescription} に渡す props です。
    */
-  readonly title?: AlertDialogTitleProps | undefined;
+  readonly description?: Omit<AlertDialogDescriptionProps, "children"> | undefined;
 
   /**
-   * {@link AlertDialogTrigger|Trigger} に渡すプロパティーです。
+   * {@link AlertDialogFooter} に渡す props です。
    */
-  readonly trigger?: Omit<AlertDialogTriggerProps, "handle"> | undefined;
+  readonly footer?: Omit<AlertDialogFooterProps, "children"> | undefined;
 
   /**
-   * {@link AlertDialogViewport|Viewport} に渡すプロパティーです。
+   * {@link AlertDialogHeader} に渡す props です。
    */
-  readonly viewport?: AlertDialogViewportProps | undefined;
+  readonly header?: Omit<AlertDialogHeaderProps, "children"> | undefined;
+
+  /**
+   * {@link AlertDialogIcon} に渡す props です。
+   */
+  readonly icon?: Omit<AlertDialogIconProps, "children"> | undefined;
+
+  /**
+   * {@link AlertDialogPortal} に渡す props です。
+   */
+  readonly portal?: Omit<AlertDialogPortalProps, "children"> | undefined;
+
+  /**
+   * {@link AlertDialogTitle} に渡す props です。
+   */
+  readonly title?: Omit<AlertDialogTitleProps, "children"> | undefined;
+
+  /**
+   * {@link AlertDialogToggleTrigger} に渡す props です。
+   */
+  readonly toggleTrigger?:
+    | Omit<AlertDialogToggleTriggerProps<TPayload>, "children" | "handle">
+    | undefined;
+
+  /**
+   * {@link AlertDialogViewport} に渡す props です。
+   */
+  readonly viewport?: Omit<AlertDialogViewportProps, "children"> | undefined;
 };
 
 /**
@@ -81,213 +152,476 @@ export type AlertDialogSlotProps = {
  */
 export type AlertDialogState = AlertDialogRootState;
 
-/**
- * {@link AlertDialog} コンポーネントのプロパティーです。
- *
- * {@link AlertDialogRoot|Root} から継承した `open` を指定すると開閉状態を制御でき、`defaultOpen` は初期状態だけを指定します。`open` を指定した場合は `defaultOpen` より優先されます。
- * いずれも省略した場合の初期状態は閉じています。
- */
-export type AlertDialogProps = Omit<AlertDialogRootProps, "children" | "handle"> & {
+type AlertDialogPropsMain<TPayload = any> = {
   /**
-   * 承諾してダイアログを閉じるボタンに表示するコンテンツです。
+   * 中止してアラートダイアログを閉じるボタンです。
+   */
+  cancel?: AlertDialogCloseTriggerProps["children"] | undefined;
+
+  /**
+   * 確認してアラートダイアログを閉じるボタンです。
+   */
+  confirm?: AlertDialogCloseTriggerProps["children"] | undefined;
+
+  /**
+   * コントロールコンポーネントに表示する内容です。
    *
-   * {@link AlertDialogClose|Close} の子要素として直接渡されます。
-   * 省略した場合、承諾ボタンはレンダリングされません。
+   * アラートダイアログの内側から順に配置されます。
+   * {@link AlertDialogPropsMain.showCancelIconButton|showCancelIconButton} が `true` の場合、それが一番外側に配置されます。
    */
-  accept?: AlertDialogCloseProps["children"] | undefined;
+  controls?: AlertDialogControlsProps["children"] | undefined;
 
   /**
-   * ダイアログの本文に表示するコンテンツです。
-   * `title` と `description` の後、アクションボタンの前に表示されます。
-   */
-  children?: React.ReactNode | undefined;
-
-  /**
-   * ダイアログの説明文です。
-   * 省略した場合、説明要素はレンダリングされません。
+   * アラートダイアログの説明文です。
    */
   description?: React.ReactNode | undefined;
 
   /**
-   * 承諾ボタンがクリックされたときに呼ばれるコールバックです。
-   * {@link slotProps} の `accept.onClick` が先に実行され、`preventBaseUIHandler()` が呼ばれていない場合だけ呼ばれます。
-   * クリックイベントを引数として受け取ります。
+   * トリガーとアラートダイアログに関連付けるためのハンドルです。
    */
-  onAccept?: ((event: CloseClickEvent) => void) | undefined;
+  handle?: AlertDialogHandle<TPayload> | undefined;
 
   /**
-   * 拒否ボタンがクリックされたときに呼ばれるコールバックです。
-   * {@link slotProps} の `reject.onClick` が先に実行され、`preventBaseUIHandler()` が呼ばれていない場合だけ呼ばれます。
-   * クリックイベントを引数として受け取ります。
+   * アラートのアイコンです。
    */
-  onReject?: ((event: CloseClickEvent) => void) | undefined;
+  icon?: AlertDialogIconProps["children"] | undefined;
 
   /**
-   * 承諾せずにダイアログを閉じるボタンに表示するコンテンツです。
+   * 中止ボタンがクリックされたときに呼ばれるコールバックです。
+   */
+  onCancel?: AlertDialogCloseTriggerProps["onClick"] | undefined;
+
+  /**
+   * 確認ボタンがクリックされたときに呼ばれるコールバックです。
+   */
+  onConfirm?: AlertDialogCloseTriggerProps["onClick"] | undefined;
+
+  /**
+   * アラートダイアログを閉じるアイコンボタンを表示にします。
    *
-   * {@link AlertDialogClose|Close} の子要素として直接渡されます。
-   * 省略した場合、拒否ボタンはレンダリングされません。
+   * @default false
    */
-  reject?: AlertDialogCloseProps["children"] | undefined;
+  showCancelIconButton?: boolean | undefined;
 
   /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   * 各パーツに個別の props を渡すためのオブジェクトです。
    *
-   * 各パーツのプロパティーが優先されます。
-   * クラス名は既定のクラス名と結合され、拒否・承諾ボタンの `onClick` はこのオブジェクトのハンドラーが先に実行されます。
+   * 各パーツの props が優先されます。
    */
-  slotProps?: AlertDialogSlotProps | undefined;
+  slotProps?: AlertDialogSlotProps<TPayload> | undefined;
 
   /**
-   * ダイアログのタイトルです。
-   * 省略した場合、タイトル要素はレンダリングされません。
+   * アラートダイアログの見出しです。
    */
   title?: React.ReactNode | undefined;
 
   /**
-   * ダイアログを開くトリガーに表示するコンテンツです。
-   *
-   * {@link AlertDialogTrigger|Trigger} の子要素として直接渡されます。
-   * 省略した場合、トリガーはレンダリングされません。
-   * `trigger` 未指定で `slotProps.trigger` のみ指定した場合も、トリガーは描画されません。
+   * アラートダイアログを開くトリガーです。
    */
-  trigger?: AlertDialogTriggerProps["children"] | undefined;
+  trigger?: AlertDialogToggleTriggerProps["children"] | undefined;
 };
 
-type CloseClickHandler = AlertDialogCloseProps["onClick"];
-type CloseClickEvent = Parameters<NonNullable<CloseClickHandler>>[0];
+type AlertDialogPropsRoot<TPayload = any> = Omit<
+  AlertDialogRootProps<TPayload>,
+  "children" | keyof AlertDialogPropsMain
+>;
 
-interface AlertDialogComponentType extends IComponent<AlertDialogProps> {
+type AlertDialogPropsBody = Omit<
+  AlertDialogBodyProps,
+  keyof AlertDialogPropsMain | keyof AlertDialogPropsRoot
+> & {
   /**
-   * アラートダイアログを制御するハンドルを新しく作成します。
-   *
-   * 作成したハンドルは {@link AlertDialogRoot} と {@link AlertDialogTrigger} の `handle` プロパティーに渡します。
+   * {@link https://developer.mozilla.org/docs/Web/HTML/Reference/Global_attributes/title|title}
    */
-  readonly createHandle: typeof createHandle;
+  htmlTitle?: React.HTMLAttributes<HTMLDivElement>["title"];
+};
+
+type AlertDialogPropsContent = Pick<AlertDialogContentProps, "outlined" | "radius" | "variant">;
+
+/**
+ * {@link AlertDialog} に渡す props です。 props です。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
+ */
+export type AlertDialogProps<TPayload = any> = AlertDialogPropsMain<TPayload> &
+  AlertDialogPropsRoot<TPayload> &
+  AlertDialogPropsBody &
+  AlertDialogPropsContent;
+
+// API
+// ---
+
+/**
+ * {@link AlertDialog} を構成する各パーツの props などを作成するための API です。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
+ */
+export interface AlertDialogAPI<TPayload = any> {
+  /**
+   * {@link AlertDialogBackdrop} に渡す props を取得します。
+   */
+  getBackdropProps(): AlertDialogBackdropProps;
+
+  /**
+   * {@link AlertDialogBody} に渡す props を取得します。
+   */
+  getBodyProps(): AlertDialogBodyProps | null;
+
+  /**
+   * {@link AlertDialogCloseTrigger} に渡す props を取得します。
+   */
+  getCancelTriggerProps(): AlertDialogCloseTriggerProps | null;
+
+  /**
+   * {@link AlertDialogCloseTrigger} に渡す props を取得します。
+   */
+  getConfirmTriggerProps(): AlertDialogCloseTriggerProps | null;
+
+  /**
+   * {@link AlertDialogContent} に渡す props を取得します。
+   */
+  getContentProps(): Omit<AlertDialogContentProps, "children">;
+
+  /**
+   * {@link AlertDialogControls} に渡す props を取得します。
+   */
+  getControlsProps(): AlertDialogControlsProps | null;
+
+  /**
+   * {@link AlertDialogDescription} に渡す props を取得します。
+   */
+  getDescriptionProps(): AlertDialogDescriptionProps | null;
+
+  /**
+   * {@link AlertDialogFooter} に渡す props を取得します。
+   */
+  getFooterProps(): Omit<AlertDialogFooterProps, "children"> | null;
+
+  /**
+   * {@link AlertDialogHeader} に渡す props を取得します。
+   */
+  getHeaderProps(): Omit<AlertDialogHeaderProps, "children">;
+
+  /**
+   * {@link AlertDialogIcon} に渡す props を取得します。
+   */
+  getIconProps(): AlertDialogIconProps | null;
+
+  /**
+   * {@link AlertDialogPortal} に渡す props を取得します。
+   */
+  getPortalProps(): Omit<AlertDialogPortalProps, "children">;
+
+  /**
+   * {@link AlertDialogRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<AlertDialogRootProps, "children">;
+
+  /**
+   * {@link AlertDialogTitle} に渡す props を取得します。
+   */
+  getTitleProps(): AlertDialogTitleProps | null;
+
+  /**
+   * {@link AlertDialogToggleTrigger} に渡す props を取得します。
+   */
+  getToggleTriggerProps(): AlertDialogToggleTriggerProps<TPayload> | null;
+
+  /**
+   * {@link AlertDialogViewport} に渡す props を取得します。
+   */
+  getViewportProps(): Omit<AlertDialogViewportProps, "children">;
 }
 
-function createCloseClickHandler(
-  onClick: CloseClickHandler | undefined,
-  callback: ((event: CloseClickEvent) => void) | undefined,
-): CloseClickHandler {
-  if (onClick === undefined && callback === undefined) {
-    return undefined;
-  }
+interface IUseAlertDialogAPI {
+  /**
+   * {@link AlertDialogAPI} を作成します。
+   *
+   * @template TPayload トリガーが送信するデータの型です。
+   * @param props {@link AlertDialog} の props です。
+   * @returns アラートダイアログの API です
+   */
+  <TPayload = any>(props: AlertDialogProps<TPayload>): AlertDialogAPI<TPayload>;
+}
 
-  return (event) => {
-    if (typeof event.preventBaseUIHandler !== "function") {
-      makeEventPreventable(event);
-    }
-    onClick?.(event);
-    if (!event.baseUIHandlerPrevented) {
-      callback?.(event);
-    }
+/**
+ * {@link AlertDialogAPI} を作成するフックです。
+ */
+export const useAlertDialogAPI: IUseAlertDialogAPI = function useSuiAlertDialogAPI(props) {
+  const {
+    icon,
+    open,
+    title,
+    cancel,
+    handle: handleProp,
+    radius,
+    confirm,
+    trigger,
+    variant,
+    children,
+    controls,
+    onCancel,
+    outlined,
+    htmlTitle,
+    onConfirm,
+    slotProps: {
+      icon: iconProps = {},
+      title: titleProps = {},
+      footer: footerProps = {},
+      header: headerProps = {},
+      portal: portalProps = {},
+      content: contentProps = {},
+      backdrop: backdropProps = {},
+      controls: controlsProps = {},
+      viewport: viewportProps = {},
+      description: descriptionProps = {},
+      cancelTrigger: cancelTriggerProps = {},
+      toggleTrigger: toggleTriggerProps = {},
+      confirmTrigger: confirmTriggerProps = {},
+    } = {},
+    triggerId,
+    actionsRef,
+    defaultOpen,
+    description,
+    onOpenChange,
+    defaultTriggerId,
+    onOpenChangeComplete,
+    showCancelIconButton = false,
+    ...otherBodyProps
+  } = props;
+  const handle = React.useMemo(() => handleProp || createAlertDialogHandle(), [handleProp]);
+
+  return {
+    getBodyProps() {
+      if (isLikelyVisibleNode(children)) {
+        return {
+          ...otherBodyProps,
+          title: htmlTitle,
+          children,
+        };
+      }
+
+      return null;
+    },
+    getIconProps() {
+      if (isLikelyVisibleNode(icon)) {
+        return {
+          ...iconProps,
+          children: icon,
+        };
+      }
+
+      return null;
+    },
+    getRootProps(): Required<Omit<AlertDialogRootProps, "children">> {
+      return {
+        open,
+        handle,
+        triggerId,
+        actionsRef,
+        defaultOpen,
+        onOpenChange,
+        defaultTriggerId,
+        onOpenChangeComplete,
+      };
+    },
+    getTitleProps() {
+      if (isLikelyVisibleNode(title)) {
+        return {
+          ...titleProps,
+          children: title,
+        };
+      }
+
+      return null;
+    },
+    getFooterProps() {
+      if (isLikelyVisibleNode(cancel) || isLikelyVisibleNode(confirm)) {
+        return footerProps;
+      }
+
+      return null;
+    },
+    getHeaderProps() {
+      return headerProps;
+    },
+    getPortalProps() {
+      return portalProps;
+    },
+    getContentProps() {
+      const requiredProps: Required<AlertDialogPropsContent> = {
+        radius,
+        variant,
+        outlined,
+      };
+
+      return {
+        ...requiredProps,
+        ...contentProps,
+      };
+    },
+    getBackdropProps() {
+      return backdropProps;
+    },
+    getControlsProps() {
+      if (isLikelyVisibleNode(controls) || showCancelIconButton) {
+        return {
+          ...controlsProps,
+          children: (
+            <>
+              {controls}
+              <AlertDialogCloseTrigger>
+                <Button.Root radius="full" squared variant="naked">
+                  <Button.Content>
+                    <XIcon />
+                  </Button.Content>
+                </Button.Root>
+              </AlertDialogCloseTrigger>
+            </>
+          ),
+        };
+      }
+
+      return null;
+    },
+    getViewportProps() {
+      return viewportProps;
+    },
+    getDescriptionProps() {
+      if (isLikelyVisibleNode(description)) {
+        return {
+          ...descriptionProps,
+          children: description,
+        };
+      }
+
+      return null;
+    },
+    getCancelTriggerProps() {
+      if (isLikelyVisibleNode(cancel)) {
+        const { onClick, ...ohterCancelButtonProps } = cancelTriggerProps;
+
+        return {
+          ...ohterCancelButtonProps,
+          children: cancel,
+          onClick(evt) {
+            onClick?.(evt);
+            if (evt.defaultPrevented) {
+              return;
+            }
+
+            onCancel?.(evt);
+          },
+        };
+      }
+
+      return null;
+    },
+    getToggleTriggerProps() {
+      if (trigger) {
+        return {
+          ...toggleTriggerProps,
+          handle,
+          children: trigger,
+        };
+      }
+
+      return null;
+    },
+    getConfirmTriggerProps() {
+      if (isLikelyVisibleNode(confirm)) {
+        const { onClick, ...ohterConfirmButtonProps } = confirmTriggerProps;
+
+        return {
+          ...ohterConfirmButtonProps,
+          children: confirm,
+          onClick(evt) {
+            onClick?.(evt);
+            if (evt.defaultPrevented) {
+              return;
+            }
+
+            onConfirm?.(evt);
+          },
+        };
+      }
+
+      return null;
+    },
   };
+};
+
+export { type AlertDialogAPI as API, useAlertDialogAPI as useAPI };
+
+// Component
+// ---------
+
+interface IAlertDialog extends IComponent<AlertDialogProps> {
+  /**
+   * @template TPayload トリガーが送信するデータの型です。
+   */
+  <TPayload = any>(props: AlertDialogProps<TPayload>): IComponent.Return;
+
+  /**
+   * {@link AlertDialogHandle} を作成する関数です。
+   */
+  readonly createHandle: typeof createAlertDialogHandle;
 }
 
 /**
  * アラートダイアログを表示するコンポーネントです。
- *
- * タイトル（`title`）と説明文（`description`）、本文（`children`）、拒否（`reject`）と承諾（`accept`）のボタンから、確認を求めるダイアログを組み立てます。
- * ボタンのクリックはそれぞれ `onReject` と `onAccept` で受け取れます。
- * 右上の閉じるボタンのクリックは `onReject` で受け取れます。
- * 構成を細かく制御したい場合は、{@link AlertDialogRoot|Root} を直接組み立てます。
  */
-export const AlertDialog: AlertDialogComponentType = /*#__PURE__*/ Object.assign(
+export const AlertDialog: IAlertDialog = /*#__PURE__*/ Object.assign(
   function SuiAlertDialog(props: AlertDialogProps) {
-    const [handle] = React.useState(AlertDialog.createHandle);
-    const {
-      title,
-      accept,
-      reject,
-      trigger,
-      children,
-      onAccept,
-      onReject,
-      slotProps: {
-        popup: popupProps,
-        title: titleProps,
-        accept: acceptProps,
-        portal: portalProps,
-        reject: rejectProps,
-        trigger: triggerProps,
-        backdrop: backdropProps,
-        viewport: viewportProps,
-        description: descriptionProps,
-      } = {},
-      description,
-      ...rootProps
-    } = props;
+    const api = useAlertDialogAPI(props);
+    const toggleTriggerProps = api.getToggleTriggerProps();
+    const contentProps = api.getContentProps();
+    const controlsProps = api.getControlsProps();
+    const iconProps = api.getIconProps();
+    const titleProps = api.getTitleProps();
+    const descriptionProps = api.getDescriptionProps();
+    const bodyProps = api.getBodyProps();
+    const footerProps = api.getFooterProps();
+    const cancelTriggerProps = api.getCancelTriggerProps();
+    const confirmTriggerProps = api.getConfirmTriggerProps();
 
     return (
-      <AlertDialogRoot {...rootProps} handle={handle}>
-        {(!!trigger || !!triggerProps) && (
-          // `trigger` または `triggerProps` があれば、`children` は必ず指定されます。
-          <AlertDialogTrigger handle={handle} children={trigger!} {...triggerProps} />
-        )}
-        <AlertDialogPortal {...portalProps}>
-          <AlertDialogBackdrop {...backdropProps} />
-          <AlertDialogViewport {...viewportProps}>
-            <AlertDialogPopup {...popupProps}>
-              <AlertDialogClose
-                onClick={createCloseClickHandler(undefined, onReject)}
-                className="sui_alert_dialog_close_button"
-              >
-                <Button color="grey" squared variant="naked" aria-label="閉じる">
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    focusable="false"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M18 6 6 18" />
-                    <path d="m6 6 12 12" />
-                  </svg>
-                </Button>
-              </AlertDialogClose>
-              {("title" in props || !!titleProps) && (
-                <AlertDialogTitle children={title} {...titleProps} />
+      <AlertDialogRoot {...api.getRootProps()}>
+        {toggleTriggerProps && <AlertDialogToggleTrigger {...toggleTriggerProps} />}
+        <AlertDialogPortal {...api.getPortalProps()}>
+          <AlertDialogBackdrop {...api.getBackdropProps()} />
+          <AlertDialogViewport {...api.getViewportProps()}>
+            <AlertDialogContent {...contentProps}>
+              <AlertDialogHeader {...api.getHeaderProps()}>
+                {iconProps && <AlertDialogIcon {...iconProps} />}
+                {titleProps && <AlertDialogTitle {...titleProps} />}
+                {descriptionProps && <AlertDialogDescription {...descriptionProps} />}
+                {contentProps.variant === "default" && controlsProps && (
+                  <AlertDialogControls {...controlsProps} />
+                )}
+              </AlertDialogHeader>
+              {bodyProps && <AlertDialogBody {...bodyProps} />}
+              {footerProps && (
+                <AlertDialogFooter {...footerProps}>
+                  {cancelTriggerProps && <AlertDialogCloseTrigger {...cancelTriggerProps} />}
+                  {confirmTriggerProps && <AlertDialogCloseTrigger {...confirmTriggerProps} />}
+                </AlertDialogFooter>
               )}
-              {("description" in props || !!descriptionProps) && (
-                <AlertDialogDescription children={description} {...descriptionProps} />
+              {contentProps.variant === "stacked" && controlsProps && (
+                <AlertDialogControls
+                  {...controlsProps}
+                  absolute={controlsProps?.absolute ?? true}
+                />
               )}
-              {children}
-              {(!!reject || !!rejectProps || !!accept || !!acceptProps) && (
-                <div className="sui_alert_dialog_actions">
-                  {(!!reject || !!rejectProps) && (
-                    // `reject` または `rejectProps` があれば、`children` は必ず指定されます。
-                    <AlertDialogClose
-                      onClick={createCloseClickHandler(rejectProps?.onClick, onReject)}
-                      children={reject!}
-                      {...rejectProps}
-                    />
-                  )}
-                  {(!!accept || !!acceptProps) && (
-                    // `accept` または `acceptProps` があれば、`children` は必ず指定されます。
-                    <AlertDialogClose
-                      onClick={createCloseClickHandler(acceptProps?.onClick, onAccept)}
-                      children={accept!}
-                      {...acceptProps}
-                    />
-                  )}
-                </div>
-              )}
-            </AlertDialogPopup>
+            </AlertDialogContent>
           </AlertDialogViewport>
         </AlertDialogPortal>
       </AlertDialogRoot>
     );
   },
-  { createHandle },
+  { createHandle: createAlertDialogHandle },
 );
 
-/**
- * {@link AlertDialog} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace AlertDialog {
   /**
    * {@link AlertDialogState} です。
@@ -303,4 +637,29 @@ export namespace AlertDialog {
    * {@link AlertDialogSlotProps} です。
    */
   export type SlotProps = AlertDialogSlotProps;
+
+  /**
+   * {@link AlertDialogActions}
+   */
+  export type Actions = AlertDialogActions;
+
+  /**
+   * {@link AlertDialogChangeEventDetails}
+   */
+  export type ChangeEventDetails = AlertDialogChangeEventDetails;
+
+  /**
+   * {@link AlertDialogChangeEventReason}
+   */
+  export type ChangeEventReason = AlertDialogChangeEventReason;
+
+  /**
+   * {@link AlertDialogRadius}
+   */
+  export type Radius = AlertDialogRadius;
+
+  /**
+   * {@link AlertDialogVariant}
+   */
+  export type Variant = AlertDialogVariant;
 }

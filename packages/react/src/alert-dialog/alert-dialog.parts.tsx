@@ -1,6 +1,8 @@
 import { AlertDialog } from "@base-ui/react/alert-dialog";
+import type { Size, Color, ColorTemplate } from "@suru-ui/theme";
 import * as React from "react";
 
+import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
@@ -10,106 +12,147 @@ import "./alert-dialog.css";
 // ------
 
 /**
- * アラートダイアログに渡すハンドルです。
+ * アラートダイアログを命令的に制御するハンドルです。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
  */
-export type AlertDialogHandle = AlertDialog.Handle<unknown>;
+export interface AlertDialogHandle<TPayload = any> extends AlertDialog.Handle<TPayload> {}
+
+interface ICreateHandle {
+  /**
+   * @template TPayload トリガーが送信するデータの型です。
+   * @returns アラートダイアログを命令的に制御するハンドルです。
+   */
+  <TPayload = any>(): AlertDialogHandle<TPayload>;
+}
 
 /**
- * アラートダイアログを制御するハンドルを新しく作成します。
- *
- * 作成したハンドルを {@link Root} と {@link Trigger} または {@link AlertDialog} の `handle` プロパティーに渡すことで、トリガーとダイアログの内容を関連付けます。
+ * {@link AlertDialogHandle} を作成する関数です。
  */
-export const createHandle: typeof AlertDialog.createHandle = AlertDialog.createHandle;
+export const createAlertDialogHandle: ICreateHandle = function createSuiAlertDialogHandle() {
+  return AlertDialog.createHandle();
+};
+
+export { type AlertDialogHandle as Handle, createAlertDialogHandle as createHandle };
 
 // Root
 // ----
 
 /**
- * {@link AlertDialogRoot} の状態です。
+ * アラートダイアログを命令的に操作するためのオブジェクトです。
+ */
+export type AlertDialogRootActions = AlertDialog.Root.Actions;
+
+/**
+ * アラートダイアログの開閉状態を変更されるイベントの詳細です。
+ */
+export type AlertDialogRootChangeEventDetails = AlertDialog.Root.ChangeEventDetails;
+
+/**
+ * アラートダイアログの開閉状態が変更される理由です。
+ */
+export type AlertDialogRootChangeEventReason = AlertDialog.Root.ChangeEventReason;
+
+/**
+ * {@link AlertDialogRoot} が持つ状態です。
  */
 export type AlertDialogRootState = AlertDialog.Root.State;
 
 /**
- * {@link AlertDialogRoot} に渡すプロパティーです。
+ * {@link AlertDialogRoot} に渡す props です。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
  */
-export type AlertDialogRootProps = Omit<React.ComponentProps<typeof AlertDialog.Root>, "handle"> & {
+export type AlertDialogRootProps<TPayload = any> = Omit<
+  React.ComponentProps<typeof AlertDialog.Root>,
+  "handle"
+> & {
   /**
-   * アラートダイアログとトリガー ({@link Trigger}) を関連付けるハンドルです。
-   *
-   * {@link createHandle} で作成します。
+   * トリガーとアラートダイアログに関連付けるためのハンドルです。
    */
-  handle: AlertDialogHandle;
+  handle: AlertDialogHandle<TPayload>;
 };
 
+interface IAlertDialogRoot extends IComponent<AlertDialogRootProps> {
+  /**
+   * @template TPayload トリガーが送信するデータの型です。
+   */
+  <TPayload = any>(props: AlertDialogRootProps<TPayload>): IComponent.Return;
+}
+
 /**
- * アラートダイアログのルート要素です。
+ * アラートダイアログのルートコンポーネントです。
  *
- * ダイアログの開閉状態を管理し、各パーツをグループ化します。
- * それ自身は HTML 要素をレンダリングしません。
+ * ダイアログの開閉状態を管理し、各パーツをグループ化します。それ自身は HTML 要素をレンダリングしません。
  */
-export const AlertDialogRoot: IComponent<AlertDialogRootProps> = function SuiAlertDialogRoot(
-  props,
+export const AlertDialogRoot: IAlertDialogRoot = function SuiAlertDialogRoot(
+  props: AlertDialogRootProps,
 ) {
   return <AlertDialog.Root {...props} />;
 };
 
-/**
- * {@link AlertDialogRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { AlertDialogRoot as Root };
+
 export namespace Root {
   /**
-   * {@link AlertDialogRootState} です。
+   * {@link AlertDialogRootState}
    */
   export type State = AlertDialogRootState;
 
   /**
-   * {@link AlertDialogRootProps} です。
+   * {@link AlertDialogRootProps}
    */
-  export type Props = AlertDialogRootProps;
+  export type Props<TPayload = any> = AlertDialogRootProps<TPayload>;
+
+  /**
+   * {@link AlertDialogRootActions}
+   */
+  export type Actions = AlertDialogRootActions;
+
+  /**
+   * {@link AlertDialogRootChangeEventDetails}
+   */
+  export type ChangeEventDetails = AlertDialogRootChangeEventDetails;
+
+  /**
+   * {@link AlertDialogRootChangeEventReason}
+   */
+  export type ChangeEventReason = AlertDialogRootChangeEventReason;
 }
 
-/**
- * {@link AlertDialogRoot} です。
- */
-export const Root: IComponent<Root.Props> = AlertDialogRoot;
-
-// Trigger
-// -------
+// ToggleTrigger
+// -------------
 
 /**
- * {@link AlertDialogTrigger} の状態です。
+ * {@link AlertDialogToggleTrigger} が持つ状態です。
  */
-export type AlertDialogTriggerState = AlertDialog.Trigger.State;
+export type AlertDialogToggleTriggerState = AlertDialog.Trigger.State;
 
 /**
- * {@link AlertDialogTrigger} に渡すプロパティーです。
+ * {@link AlertDialogToggleTrigger} に渡す props です。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
  */
-export type AlertDialogTriggerProps = Omit<
+export type AlertDialogToggleTriggerProps<TPayload = any> = Omit<
   React.ComponentProps<typeof AlertDialog.Trigger>,
   "handle" | "children" | "render"
 > & {
   /**
    * ボタンとしてレンダリングする要素です。
-   *
-   * {@link AlertDialog.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
    */
   children: NonNullable<React.ComponentProps<typeof AlertDialog.Trigger>["render"]>;
 
   /**
-   * アラートダイアログ ({@link Root}) を関連付けるハンドルです。
-   *
-   * {@link createHandle} で作成し、{@link Root} と共有します。
+   * トリガーとアラートダイアログに関連付けるためのハンドルです。
    */
-  handle: AlertDialogHandle;
+  handle: AlertDialogHandle<TPayload>;
 };
 
 /**
- * アラートダイアログを開くボタン要素です。
- *
- * 子要素は何にもラップされず、そのまま {@link AlertDialog.Trigger} の `render` プロパティーに渡されます。
+ * アラートダイアログを開くボタンコンポーネントです。
  */
-export const AlertDialogTrigger: IComponent<AlertDialogTriggerProps> =
-  function SuiAlertDialogTrigger(props) {
+export const AlertDialogToggleTrigger: IComponent<AlertDialogToggleTriggerProps> =
+  function SuiAlertDialogToggleTrigger(props) {
     const { handle, children, className, ...otherProps } = props;
 
     return (
@@ -122,43 +165,37 @@ export const AlertDialogTrigger: IComponent<AlertDialogTriggerProps> =
     );
   };
 
-/**
- * {@link AlertDialogTrigger} の状態やプロパティーをまとめた型名前空間です。
- */
-export namespace Trigger {
+export { AlertDialogToggleTrigger as ToggleTrigger };
+
+export namespace ToggleTrigger {
   /**
-   * {@link AlertDialogTriggerState} です。
+   * {@link AlertDialogToggleTriggerState}
    */
-  export type State = AlertDialogTriggerState;
+  export type State = AlertDialogToggleTriggerState;
 
   /**
-   * {@link AlertDialogTriggerProps} です。
+   * {@link AlertDialogToggleTriggerProps}
    */
-  export type Props = AlertDialogTriggerProps;
+  export type Props = AlertDialogToggleTriggerProps;
 }
-
-/**
- * {@link AlertDialogTrigger} です。
- */
-export const Trigger: IComponent<Trigger.Props> = AlertDialogTrigger;
 
 // Portal
 // ------
 
 /**
- * {@link AlertDialogPortal} の状態です。
+ * {@link AlertDialogPortal} が持つ状態です。
  */
 export type AlertDialogPortalState = AlertDialog.Portal.State;
 
 /**
- * {@link AlertDialogPortal} に渡すプロパティーです。
+ * {@link AlertDialogPortal} に渡す props です。
  */
 export type AlertDialogPortalProps = React.ComponentProps<typeof AlertDialog.Portal>;
 
 /**
- * アラートダイアログを DOM の別の場所へ移動する要素です。
+ * アラートダイアログを DOM の別の場所に配置するコンポーネントです。
  *
- * 既定では ポップアップを `<body>` の末尾に配置します。
+ * 既定ではポップアップを `<body>` の末尾に配置します。
  */
 export const AlertDialogPortal: IComponent<AlertDialogPortalProps> = function SuiAlertDialogPortal(
   props,
@@ -166,45 +203,43 @@ export const AlertDialogPortal: IComponent<AlertDialogPortalProps> = function Su
   const { className, ...otherProps } = props;
 
   return (
-    <AlertDialog.Portal {...otherProps} className={cn(className, "sui_alert_dialog_portal")} />
+    <AlertDialog.Portal
+      {...otherProps}
+      className={cn(className, "sui_alert_dialog_portal")}
+      data-scope=""
+    />
   );
 };
 
-/**
- * {@link AlertDialogPortal} の状態やプロパティーをまとめた型名前空間です。
- */
+export { AlertDialogPortal as Portal };
+
 export namespace Portal {
   /**
-   * {@link AlertDialogPortalState} です。
+   * {@link AlertDialogPortalState}
    */
   export type State = AlertDialogPortalState;
 
   /**
-   * {@link AlertDialogPortalProps} です。
+   * {@link AlertDialogPortalProps}
    */
   export type Props = AlertDialogPortalProps;
 }
-
-/**
- * {@link AlertDialogPortal} です。
- */
-export const Portal: IComponent<Portal.Props> = AlertDialogPortal;
 
 // Backdrop
 // --------
 
 /**
- * {@link AlertDialogBackdrop} の状態です。
+ * {@link AlertDialogBackdrop} が持つ状態です。
  */
 export type AlertDialogBackdropState = AlertDialog.Backdrop.State;
 
 /**
- * {@link AlertDialogBackdrop} に渡すプロパティーです。
+ * {@link AlertDialogBackdrop} に渡す props です。
  */
 export type AlertDialogBackdropProps = React.ComponentProps<typeof AlertDialog.Backdrop>;
 
 /**
- * ポップアップの背後に表示されるオーバーレイ要素です。
+ * ポップアップの背後に表示されるオーバーレイコンポーネントです。
  */
 export const AlertDialogBackdrop: IComponent<AlertDialogBackdropProps> =
   function SuiAlertDialogBackdrop(props) {
@@ -218,41 +253,35 @@ export const AlertDialogBackdrop: IComponent<AlertDialogBackdropProps> =
     );
   };
 
-/**
- * {@link AlertDialogBackdrop} の状態やプロパティーをまとめた型名前空間です。
- */
+export { AlertDialogBackdrop as Backdrop };
+
 export namespace Backdrop {
   /**
-   * {@link AlertDialogBackdropState} です。
+   * {@link AlertDialogBackdropState}
    */
   export type State = AlertDialogBackdropState;
 
   /**
-   * {@link AlertDialogBackdropProps} です。
+   * {@link AlertDialogBackdropProps}
    */
   export type Props = AlertDialogBackdropProps;
 }
-
-/**
- * {@link AlertDialogBackdrop} です。
- */
-export const Backdrop: IComponent<Backdrop.Props> = AlertDialogBackdrop;
 
 // Viewport
 // --------
 
 /**
- * {@link AlertDialogViewport} の状態です。
+ * {@link AlertDialogViewport} が持つ状態です。
  */
 export type AlertDialogViewportState = AlertDialog.Viewport.State;
 
 /**
- * {@link AlertDialogViewport} に渡すプロパティーです。
+ * {@link AlertDialogViewport} に渡す props です。
  */
 export type AlertDialogViewportProps = React.ComponentProps<typeof AlertDialog.Viewport>;
 
 /**
- * ポップアップの配置コンテナー要素です。
+ * ポップアップの配置コンテナーコンポーネントです。
  *
  * スクロール可能なオーバーレイを作り、ポップアップを中央に配置します。
  */
@@ -268,85 +297,399 @@ export const AlertDialogViewport: IComponent<AlertDialogViewportProps> =
     );
   };
 
-/**
- * {@link AlertDialogViewport} の状態やプロパティーをまとめた型名前空間です。
- */
+export { AlertDialogViewport as Viewport };
+
 export namespace Viewport {
   /**
-   * {@link AlertDialogViewportState} です。
+   * {@link AlertDialogViewportState}
    */
   export type State = AlertDialogViewportState;
 
   /**
-   * {@link AlertDialogViewportProps} です。
+   * {@link AlertDialogViewportProps}
    */
   export type Props = AlertDialogViewportProps;
 }
 
-/**
- * {@link AlertDialogViewport} です。
- */
-export const Viewport: IComponent<Viewport.Props> = AlertDialogViewport;
-
-// Popup
-// -----
+// Content
+// -------
 
 /**
- * {@link AlertDialogPopup} の状態です。
+ * アラートダイアログの角丸の大きさです。
+ *
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
-export type AlertDialogPopupState = AlertDialog.Popup.State;
+export type AlertDialogContentRadius = "none" | Size;
 
 /**
- * {@link AlertDialogPopup} に渡すプロパティーです。
+ * アラートダイアログの主な外観です。
+ *
+ * - `"default"`: 規定のスタイル
+ * - `"stacked"`: 積み重なっているスタイル
  */
-export type AlertDialogPopupProps = React.ComponentProps<typeof AlertDialog.Popup>;
+export type AlertDialogContentVariant = "default" | "stacked";
 
 /**
- * アラートダイアログの本文を表示する要素です。
+ * {@link AlertDialogContent} が持つ状態です。
  */
-export const AlertDialogPopup: IComponent<AlertDialogPopupProps> = function SuiAlertDialogPopup(
-  props,
-) {
-  const { className, ...otherProps } = props;
+export type AlertDialogContentState = AlertDialog.Popup.State;
 
-  return <AlertDialog.Popup {...otherProps} className={cn(className, "sui_alert_dialog_popup")} />;
+/**
+ * {@link AlertDialogContent} に渡す props です。
+ */
+export type AlertDialogContentProps = React.ComponentProps<typeof AlertDialog.Popup> & {
+  /**
+   * アラートダイアログに枠線を表示するかどうかを指定します。
+   *
+   * @default false
+   */
+  outlined?: boolean | undefined;
+
+  /**
+   * アラートダイアログの角丸の大きさを指定します。
+   *
+   * @default "md"
+   */
+  radius?: AlertDialogContentRadius | undefined;
+
+  /**
+   * アラートダイアログの主な外観を指定します。
+   *
+   * @default "default"
+   */
+  variant?: AlertDialogContentVariant | undefined;
 };
 
 /**
- * {@link AlertDialogPopup} の状態やプロパティーをまとめた型名前空間です。
+ * アラートダイアログを表示するコンポーネントです。
  */
-export namespace Popup {
+export const AlertDialogContent: IComponent<AlertDialogContentProps> =
+  function SuiAlertDialogContent(props) {
+    const {
+      radius = "md",
+      variant = "default",
+      outlined = false,
+      className,
+      ...otherProps
+    } = props;
+
+    return (
+      <AlertDialog.Popup
+        {...otherProps}
+        className={cn(
+          className,
+          "sui_alert_dialog_content",
+          `sui_alert_dialog_content-radius_${radius}`,
+          `sui_alert_dialog_content-variant_${variant}`,
+          outlined && "sui_alert_dialog_content-outlined",
+        )}
+      />
+    );
+  };
+
+export { AlertDialogContent as Content };
+
+export namespace Content {
   /**
-   * {@link AlertDialogPopupState} です。
+   * {@link AlertDialogContentState}
    */
-  export type State = AlertDialogPopupState;
+  export type State = AlertDialogContentState;
 
   /**
-   * {@link AlertDialogPopupProps} です。
+   * {@link AlertDialogContentProps}
    */
-  export type Props = AlertDialogPopupProps;
+  export type Props = AlertDialogContentProps;
+
+  /**
+   * {@link AlertDialogContentRadius}
+   */
+  export type Radius = AlertDialogContentRadius;
+
+  /**
+   * {@link AlertDialogContentVariant}
+   */
+  export type Variant = AlertDialogContentVariant;
 }
 
+// Controls
+// --------
+
 /**
- * {@link AlertDialogPopup} です。
+ * {@link AlertDialogControls} が持つ状態です。
  */
-export const Popup: IComponent<Popup.Props> = AlertDialogPopup;
+export type AlertDialogControlsState = {};
+
+/**
+ * {@link AlertDialogControls} に渡す props です。
+ */
+export type AlertDialogControlsProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
+  RenderProps<AlertDialogControlsState> & {
+    /**
+     * 絶対位置として配置するかを指定します。
+     *
+     * @default false
+     */
+    absolute?: boolean | undefined;
+  };
+
+/**
+ * アラートダイアログのコントロールコンポーネントです。
+ */
+export const AlertDialogControls: IComponent<AlertDialogControlsProps> =
+  function SuiAlertDialogControls(props) {
+    const { absolute = false, ...htmlProps } = props;
+
+    return useRender({
+      defaultTagName: "div",
+      props: [
+        htmlProps,
+        {
+          className: cn(
+            "sui_alert_dialog_controls",
+            absolute && "sui_alert_dialog_controls-absolute",
+            !absolute && "sui_alert_dialog_controls-relative",
+          ),
+        },
+      ],
+    });
+  };
+
+export { AlertDialogControls as Controls };
+
+export namespace Controls {
+  /**
+   * {@link AlertDialogControlsState}
+   */
+  export type State = AlertDialogControlsState;
+
+  /**
+   * {@link AlertDialogControlsProps}
+   */
+  export type Props = AlertDialogControlsProps;
+}
+
+// Header
+// ------
+
+/**
+ * {@link AlertDialogHeader} が持つ状態です。
+ */
+export type AlertDialogHeaderState = {};
+
+/**
+ * {@link AlertDialogHeader} に渡す props です。
+ */
+export type AlertDialogHeaderProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
+  RenderProps<AlertDialogHeaderState>;
+
+/**
+ * アラートダイアログのヘッダーコンポーネントです。
+ */
+export const AlertDialogHeader: IComponent<AlertDialogHeaderProps> = function SuiAlertDialogHeader(
+  htmlProps,
+) {
+  return useRender({
+    defaultTagName: "div",
+    props: [
+      htmlProps,
+      {
+        className: "sui_alert_dialog_header",
+      },
+    ],
+  });
+};
+
+export { AlertDialogHeader as Header };
+
+export namespace Header {
+  /**
+   * {@link AlertDialogHeaderState}
+   */
+  export type State = AlertDialogHeaderState;
+
+  /**
+   * {@link AlertDialogHeaderProps}
+   */
+  export type Props = AlertDialogHeaderProps;
+}
+
+// Icon
+// ----
+
+/**
+ * アラートダイアログのアイコンの配色です。
+ */
+export type AlertDialogIconColor = Color;
+
+/**
+ * アラートダイアログのアイコンの角丸の大きさです。
+ *
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ * - `"full"`: 丸形
+ */
+export type AlertDialogIconRadius = "none" | Size | "full";
+
+/**
+ * アラートダイアログのアイコンの大きさです。
+ *
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ */
+export type AlertDialogIconSize = Size;
+
+/**
+ * アラートダイアログのアイコンの主な外観です。
+ *
+ * - `"solid"`: 塗りつぶし
+ * - `"naked"`: 背景なし
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type AlertDialogIconVariant = ColorTemplate;
+
+/**
+ * {@link AlertDialogIcon} が持つ状態です。
+ */
+export type AlertDialogIconState = {};
+
+/**
+ * {@link AlertDialogIcon} に渡す props です。
+ */
+export type AlertDialogIconProps = Omit<React.ComponentProps<"div">, keyof RenderProps | "color"> &
+  RenderProps<AlertDialogIconState> & {
+    /**
+     * アラートダイアログのアイコンの配色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: AlertDialogIconColor | undefined;
+
+    /**
+     * アラートダイアログのアイコンの背景色を控えめにします。
+     *
+     * @default false
+     */
+    muted?: boolean | undefined;
+
+    /**
+     * アラートダイアログのアイコンに枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * アラートダイアログのアイコンの角丸の大きさを指定します。
+     *
+     * 既定値は {@link AlertDialogIconProps.size|size}
+     */
+    radius?: AlertDialogIconRadius | undefined;
+
+    /**
+     * アラートダイアログのアイコンの大きさを指定します。
+     *
+     * @default "md"
+     */
+    size?: AlertDialogIconSize | undefined;
+
+    /**
+     * アラートダイアログのアイコンの主な外観を指定します。
+     *
+     * @default "liquid"
+     */
+    variant?: AlertDialogIconVariant | undefined;
+  };
+
+/**
+ * アラートダイアログのアイコンコンポーネントです。
+ */
+export const AlertDialogIcon: IComponent<AlertDialogIconProps> = function SuiAlertDialogIcon(
+  props,
+) {
+  const {
+    size = "md",
+    color = "grey",
+    muted = false,
+    radius = size,
+    variant = "liquid",
+    outlined = false,
+    ...otherHtmlProps
+  } = props;
+
+  return useRender({
+    defaultTagName: "div",
+    props: [
+      otherHtmlProps,
+      {
+        className: cn(
+          "sui_alert_dialog_icon",
+          `sui_alert_dialog_icon-size_${size}`,
+          `sui_alert_dialog_icon-color_${color}`,
+          `sui_alert_dialog_icon-radius_${radius}`,
+          `sui_alert_dialog_icon-variant_${variant}`,
+          muted && "sui_alert_dialog_icon-muted",
+          outlined && "sui_alert_dialog_icon-outlined",
+        ),
+      },
+    ],
+  });
+};
+
+export { AlertDialogIcon as Icon };
+
+export namespace Icon {
+  /**
+   * {@link AlertDialogIconState}
+   */
+  export type State = AlertDialogIconState;
+
+  /**
+   * {@link AlertDialogIconProps}
+   */
+  export type Props = AlertDialogIconProps;
+
+  /**
+   * {@link AlertDialogIconColor}
+   */
+  export type Color = AlertDialogIconColor;
+
+  /**
+   * {@link AlertDialogIconRadius}
+   */
+  export type Radius = AlertDialogIconRadius;
+
+  /**
+   * {@link AlertDialogIconSize}
+   */
+  export type Size = AlertDialogIconSize;
+
+  /**
+   * {@link AlertDialogIconVariant}
+   */
+  export type Variant = AlertDialogIconVariant;
+}
 
 // Title
 // -----
 
 /**
- * {@link AlertDialogTitle} の状態です。
+ * {@link AlertDialogTitle} が持つ状態です。
  */
 export type AlertDialogTitleState = AlertDialog.Title.State;
 
 /**
- * {@link AlertDialogTitle} に渡すプロパティーです。
+ * {@link AlertDialogTitle} に渡す props です。
  */
 export type AlertDialogTitleProps = React.ComponentProps<typeof AlertDialog.Title>;
 
 /**
- * アラートダイアログのタイトルを表示する見出し要素です。
+ * アラートダイアログの見出しを表示するコンポーネントです。
  */
 export const AlertDialogTitle: IComponent<AlertDialogTitleProps> = function SuiAlertDialogTitle(
   props,
@@ -356,41 +699,35 @@ export const AlertDialogTitle: IComponent<AlertDialogTitleProps> = function SuiA
   return <AlertDialog.Title {...otherProps} className={cn(className, "sui_alert_dialog_title")} />;
 };
 
-/**
- * {@link AlertDialogTitle} の状態やプロパティーをまとめた型名前空間です。
- */
+export { AlertDialogTitle as Title };
+
 export namespace Title {
   /**
-   * {@link AlertDialogTitleState} です。
+   * {@link AlertDialogTitleState}
    */
   export type State = AlertDialogTitleState;
 
   /**
-   * {@link AlertDialogTitleProps} です。
+   * {@link AlertDialogTitleProps}
    */
   export type Props = AlertDialogTitleProps;
 }
-
-/**
- * {@link AlertDialogTitle} です。
- */
-export const Title: IComponent<Title.Props> = AlertDialogTitle;
 
 // Description
 // -----------
 
 /**
- * {@link AlertDialogDescription} の状態です。
+ * {@link AlertDialogDescription} が持つ状態です。
  */
 export type AlertDialogDescriptionState = AlertDialog.Description.State;
 
 /**
- * {@link AlertDialogDescription} に渡すプロパティーです。
+ * {@link AlertDialogDescription} に渡す props です。
  */
 export type AlertDialogDescriptionProps = React.ComponentProps<typeof AlertDialog.Description>;
 
 /**
- * アラートダイアログの説明文を表示する段落要素です。
+ * アラートダイアログの内容を表示するコンポーネントです。
  */
 export const AlertDialogDescription: IComponent<AlertDialogDescriptionProps> =
   function SuiAlertDialogDescription(props) {
@@ -404,84 +741,157 @@ export const AlertDialogDescription: IComponent<AlertDialogDescriptionProps> =
     );
   };
 
-/**
- * {@link AlertDialogDescription} の状態やプロパティーをまとめた型名前空間です。
- */
+export { AlertDialogDescription as Description };
+
 export namespace Description {
   /**
-   * {@link AlertDialogDescriptionState} です。
+   * {@link AlertDialogDescriptionState}
    */
   export type State = AlertDialogDescriptionState;
 
   /**
-   * {@link AlertDialogDescriptionProps} です。
+   * {@link AlertDialogDescriptionProps}
    */
   export type Props = AlertDialogDescriptionProps;
 }
 
-/**
- * {@link AlertDialogDescription} です。
- */
-export const Description: IComponent<Description.Props> = AlertDialogDescription;
-
-// Close
-// -----
+// Body
+// ----
 
 /**
- * {@link AlertDialogClose} の状態です。
+ * {@link AlertDialogBody} が持つ状態です。
  */
-export type AlertDialogCloseState = AlertDialog.Close.State;
+export type AlertDialogBodyState = {};
 
 /**
- * {@link AlertDialogClose} に渡すプロパティーです。
+ * {@link AlertDialogBody} に渡す props です。
  */
-export type AlertDialogCloseProps = Omit<
+export type AlertDialogBodyProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
+  RenderProps<AlertDialogBodyState>;
+
+/**
+ * アラートダイアログのボディーコンポーネントです。
+ */
+export const AlertDialogBody: IComponent<AlertDialogBodyProps> = function SuiAlertDialogBody(
+  props,
+) {
+  return useRender({
+    defaultTagName: "div",
+    props: [
+      props,
+      {
+        className: "sui_alert_dialog_body",
+      },
+    ],
+  });
+};
+
+export { AlertDialogBody as Body };
+
+export namespace Body {
+  /**
+   * {@link AlertDialogBodyState}
+   */
+  export type State = AlertDialogBodyState;
+
+  /**
+   * {@link AlertDialogBodyProps}
+   */
+  export type Props = AlertDialogBodyProps;
+}
+
+// Footer
+// ------
+
+/**
+ * {@link AlertDialogFooter} が持つ状態です。
+ */
+export type AlertDialogFooterState = {};
+
+/**
+ * {@link AlertDialogFooter} に渡す props です。
+ */
+export type AlertDialogFooterProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
+  RenderProps<AlertDialogFooterState>;
+
+/**
+ * アラートダイアログのフッターコンポーネントです。
+ */
+export const AlertDialogFooter: IComponent<AlertDialogFooterProps> = function SuiAlertDialogFooter(
+  props,
+) {
+  return useRender({
+    defaultTagName: "div",
+    props: [
+      props,
+      {
+        className: "sui_alert_dialog_footer",
+      },
+    ],
+  });
+};
+
+export { AlertDialogFooter as Footer };
+
+export namespace Footer {
+  /**
+   * {@link AlertDialogFooterState}
+   */
+  export type State = AlertDialogFooterState;
+
+  /**
+   * {@link AlertDialogFooterProps}
+   */
+  export type Props = AlertDialogFooterProps;
+}
+
+// CloseTrigger
+// ------------
+
+/**
+ * {@link AlertDialogCloseTrigger} が持つ状態です。
+ */
+export type AlertDialogCloseTriggerState = AlertDialog.Close.State;
+
+/**
+ * {@link AlertDialogCloseTrigger} に渡す props です。
+ */
+export type AlertDialogCloseTriggerProps = Omit<
   React.ComponentProps<typeof AlertDialog.Close>,
   "children" | "render"
 > & {
   /**
    * ボタンとしてレンダリングする要素です。
-   *
-   * {@link AlertDialog.Close} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
    */
   children: NonNullable<React.ComponentProps<typeof AlertDialog.Close>["render"]>;
 };
 
 /**
- * アラートダイアログを閉じるボタン要素です。
- *
- * 子要素は何にもラップされず、そのまま {@link AlertDialog.Close} の `render` プロパティーに渡されます。
+ * アラートダイアログを閉じるボタンコンポーネントです。
  */
-export const AlertDialogClose: IComponent<AlertDialogCloseProps> = function SuiAlertDialogClose(
-  props,
-) {
-  const { children, className, ...otherProps } = props;
+export const AlertDialogCloseTrigger: IComponent<AlertDialogCloseTriggerProps> =
+  function SuiAlertDialogCloseTrigger(props) {
+    const { children, className, ...otherProps } = props;
 
-  return (
-    <AlertDialog.Close
-      {...otherProps}
-      render={children}
-      className={cn(className, "sui_alert_dialog_close")}
-    />
-  );
-};
+    return (
+      <AlertDialog.Close
+        {...otherProps}
+        render={children}
+        className={cn(className, "sui_alert_dialog_close")}
+      />
+    );
+  };
 
-/**
- * {@link AlertDialogClose} の状態やプロパティーをまとめた型名前空間です。
- */
-export namespace Close {
+export { AlertDialogCloseTrigger as CloseTrigger };
+
+export namespace CloseTrigger {
   /**
-   * {@link AlertDialogCloseState} です。
+   * {@link AlertDialogCloseTriggerState}
    */
-  export type State = AlertDialogCloseState;
+  export type State = AlertDialogCloseTriggerState;
 
   /**
-   * {@link AlertDialogCloseProps} です。
+   * {@link AlertDialogCloseTriggerProps}
    */
-  export type Props = AlertDialogCloseProps;
+  export type Props = AlertDialogCloseTriggerProps;
 }
-
-/**
- * {@link AlertDialogClose} です。
- */
-export const Close: IComponent<Close.Props> = AlertDialogClose;
