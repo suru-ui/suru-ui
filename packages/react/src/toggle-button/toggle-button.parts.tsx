@@ -7,7 +7,6 @@ import {
   type ButtonContentState,
   type ButtonPendingProps,
   type ButtonPendingState,
-  type ButtonPendingVisibility,
   type ButtonCircularProgressProps,
   type ButtonCircularProgressState,
   type ButtonCircularProgressFillProps,
@@ -48,20 +47,7 @@ export const ToggleButtonContext: React.Context<ToggleButtonContext | null> = Bu
  */
 export const useToggleButtonContext: IUseContext<ToggleButtonContext> = useButtonContext;
 
-/**
- * {@link ToggleButtonContext}
- */
-export type Context = ToggleButtonContext;
-
-/**
- * {@link ToggleButtonContext}
- */
-export const Context: React.Context<ToggleButtonContext | null> = ToggleButtonContext;
-
-/**
- * {@link useToggleButtonContext}
- */
-export const useContext: IUseContext<Context> = useToggleButtonContext;
+export { ToggleButtonContext as Context, useToggleButtonContext as useContext };
 
 // Root
 // ----
@@ -213,6 +199,8 @@ export const ToggleButtonRoot: IComponent<ToggleButtonRootProps> = function SuiT
   );
 };
 
+export { ToggleButtonRoot as Root };
+
 export namespace Root {
   /**
    * {@link ToggleButtonRootState}
@@ -245,11 +233,6 @@ export namespace Root {
   export type Variant = ToggleButtonRootVariant;
 }
 
-/**
- * {@link ToggleButtonRoot}
- */
-export const Root: IComponent<Root.Props> = ToggleButtonRoot;
-
 // Content
 // -------
 
@@ -271,6 +254,8 @@ export const ToggleButtonContent: IComponent<ToggleButtonContentProps> =
     return <ButtonContent {...props} />;
   };
 
+export { ToggleButtonContent as Content };
+
 export namespace Content {
   /**
    * {@link ToggleButtonContentState}
@@ -283,18 +268,8 @@ export namespace Content {
   export type Props = ToggleButtonContentProps;
 }
 
-/**
- * {@link ToggleButtonContent}
- */
-export const Content: IComponent<Content.Props> = ToggleButtonContent;
-
 // Pending
 // -------
-
-/**
- * {@link ButtonPendingVisibility}
- */
-export type ToggleButtonPendingVisibility = ButtonPendingVisibility;
 
 /**
  * {@link ToggleButtonPending} が持つ状態です。
@@ -316,6 +291,8 @@ export const ToggleButtonPending: IComponent<ToggleButtonPendingProps> =
     return <ButtonPending {...props} />;
   };
 
+export { ToggleButtonPending as Pending };
+
 export namespace Pending {
   /**
    * {@link ToggleButtonPendingState}
@@ -326,17 +303,7 @@ export namespace Pending {
    * {@link ToggleButtonPendingProps}
    */
   export type Props = ToggleButtonPendingProps;
-
-  /**
-   * {@link ToggleButtonPendingVisibility}
-   */
-  export type Visibility = ToggleButtonPendingVisibility;
 }
-
-/**
- * {@link ToggleButtonPending}
- */
-export const Pending: IComponent<Pending.Props> = ToggleButtonPending;
 
 // CircularProgressContext
 // -----------------------
@@ -358,22 +325,10 @@ export const ToggleButtonCircularProgressContext: React.Context<ToggleButtonCirc
 export const useToggleButtonCircularProgressContext: IUseContext<ToggleButtonCircularProgressContext> =
   useButtonCircularProgressContext;
 
-/**
- * {@link ToggleButtonCircularProgressContext}
- */
-export type CircularProgressContext = ToggleButtonCircularProgressContext;
-
-/**
- * {@link ToggleButtonCircularProgressContext}
- */
-export const CircularProgressContext: React.Context<CircularProgressContext | null> =
-  ToggleButtonCircularProgressContext;
-
-/**
- * {@link useToggleButtonCircularProgressContext}
- */
-export const useCircularProgressContext: IUseContext<CircularProgressContext> =
-  useToggleButtonCircularProgressContext;
+export {
+  ToggleButtonCircularProgressContext as CircularProgressContext,
+  useToggleButtonCircularProgressContext as useCircularProgressContext,
+};
 
 // CircularProgress
 // ----------------
@@ -396,6 +351,8 @@ export const ToggleButtonCircularProgress: IComponent<ToggleButtonCircularProgre
     return <ButtonCircularProgress {...props} />;
   };
 
+export { ToggleButtonCircularProgress as CircularProgress };
+
 export namespace CircularProgress {
   /**
    * {@link ToggleButtonCircularProgressState}
@@ -407,11 +364,6 @@ export namespace CircularProgress {
    */
   export type Props = ToggleButtonCircularProgressProps;
 }
-
-/**
- * {@link ToggleButtonCircularProgress}
- */
-export const CircularProgress: IComponent<CircularProgress.Props> = ToggleButtonCircularProgress;
 
 // CircularProgressTrack
 // ---------------------
@@ -434,6 +386,8 @@ export const ToggleButtonCircularProgressTrack: IComponent<ToggleButtonCircularP
     return <ButtonCircularProgressTrack {...props} />;
   };
 
+export { ToggleButtonCircularProgressTrack as CircularProgressTrack };
+
 export namespace CircularProgressTrack {
   /**
    * {@link ToggleButtonCircularProgressTrackState}
@@ -445,12 +399,6 @@ export namespace CircularProgressTrack {
    */
   export type Props = ToggleButtonCircularProgressTrackProps;
 }
-
-/**
- * {@link ToggleButtonCircularProgressTrack}
- */
-export const CircularProgressTrack: IComponent<CircularProgressTrack.Props> =
-  ToggleButtonCircularProgressTrack;
 
 // CircularProgressFill
 // --------------------
@@ -473,6 +421,8 @@ export const ToggleButtonCircularProgressFill: IComponent<ToggleButtonCircularPr
     return <ButtonCircularProgressFill {...props} />;
   };
 
+export { ToggleButtonCircularProgressFill as CircularProgressFill };
+
 export namespace CircularProgressFill {
   /**
    * {@link ToggleButtonCircularProgressFillState}
@@ -484,12 +434,6 @@ export namespace CircularProgressFill {
    */
   export type Props = ToggleButtonCircularProgressFillProps;
 }
-
-/**
- * {@link ToggleButtonCircularProgressFill}
- */
-export const CircularProgressFill: IComponent<CircularProgressFill.Props> =
-  ToggleButtonCircularProgressFill;
 
 // CircularProgressFillRotation
 // ----------------------------
@@ -514,6 +458,8 @@ export const ToggleButtonCircularProgressFillRotation: IComponent<ToggleButtonCi
     return <ButtonCircularProgressFillRotation {...props} />;
   };
 
+export { ToggleButtonCircularProgressFillRotation as CircularProgressFillRotation };
+
 export namespace CircularProgressFillRotation {
   /**
    * {@link ToggleButtonCircularProgressFillRotationState}
@@ -525,9 +471,3 @@ export namespace CircularProgressFillRotation {
    */
   export type Props = ToggleButtonCircularProgressFillRotationProps;
 }
-
-/**
- * {@link ToggleButtonCircularProgressFillRotation}
- */
-export const CircularProgressFillRotation: IComponent<CircularProgressFillRotation.Props> =
-  ToggleButtonCircularProgressFillRotation;

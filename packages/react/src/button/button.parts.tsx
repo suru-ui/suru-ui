@@ -48,20 +48,7 @@ function useSuiButtonContext(optional?: boolean): ButtonContext | null {
  */
 export const useButtonContext: IUseContext<ButtonContext> = useSuiButtonContext;
 
-/**
- * {@link ButtonContext}
- */
-export type Context = ButtonContext;
-
-/**
- * {@link ButtonContext}
- */
-export const Context: React.Context<ButtonContext | null> = ButtonContext;
-
-/**
- * {@link useButtonContext}
- */
-export const useContext: IUseContext<Context> = useButtonContext;
+export { ButtonContext as Context, useButtonContext as useContext };
 
 // Root
 // ----
@@ -199,7 +186,7 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
   const context = React.useMemo(() => ({ pending }), [pending]);
 
   return (
-    <Context value={context}>
+    <ButtonContext value={context}>
       <Button
         {...otherProps}
         type={type}
@@ -221,9 +208,11 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
         focusableWhenDisabled={focusableWhenDisabled}
         data-scope=""
       />
-    </Context>
+    </ButtonContext>
   );
 };
+
+export { ButtonRoot as Root };
 
 export namespace Root {
   /**
@@ -257,18 +246,13 @@ export namespace Root {
   export type Variant = ButtonRootVariant;
 }
 
-/**
- * {@link ButtonRoot}
- */
-export const Root: IComponent<Root.Props> = ButtonRoot;
-
 // Content
 // -------
 
 /**
  * {@link ButtonContent} が持つ状態です。
  */
-export type ButtonContentState = Context;
+export type ButtonContentState = ButtonContext;
 
 /**
  * {@link ButtonContent} に渡す props です。
@@ -280,7 +264,7 @@ export type ButtonContentProps = Omit<React.ComponentProps<"span">, keyof Render
  * ボタンのコンテンツを表示するコンポーネントです。
  */
 export const ButtonContent: IComponent<ButtonContentProps> = function SuiButtonContent(props) {
-  const ctx = useContext();
+  const ctx = useButtonContext();
 
   return useRender({
     defaultTagName: "span",
@@ -294,6 +278,8 @@ export const ButtonContent: IComponent<ButtonContentProps> = function SuiButtonC
   });
 };
 
+export { ButtonContent as Content };
+
 export namespace Content {
   /**
    * {@link ButtonContentState}
@@ -306,26 +292,13 @@ export namespace Content {
   export type Props = ButtonContentProps;
 }
 
-/**
- * {@link ButtonContent}
- */
-export const Content: IComponent<Content.Props> = ButtonContent;
-
 // Pending
 // -------
 
 /**
- * ボタンが保留状態でないときの表示モードです。
- *
- * - `"hidden"`: DOM に維持
- * - `"none"`: DOM から除去
- */
-export type ButtonPendingVisibility = "hidden" | "none";
-
-/**
  * {@link ButtonPending} が持つ状態です。
  */
-export type ButtonPendingState = Context;
+export type ButtonPendingState = ButtonContext;
 
 /**
  * {@link ButtonPending} に渡す props です。
@@ -353,7 +326,7 @@ export type ButtonPendingProps = Omit<React.ComponentProps<"span">, keyof Render
  * 保留中のみ有効になります。
  */
 export const ButtonPending: IComponent<ButtonPendingProps> = function SuiButtonPending(props) {
-  const ctx = useContext();
+  const ctx = useButtonContext();
   const { overlay = false, keepMounted = false, ...otherProps } = props;
 
   return useRender({
@@ -374,6 +347,8 @@ export const ButtonPending: IComponent<ButtonPendingProps> = function SuiButtonP
   });
 };
 
+export { ButtonPending as Pending };
+
 export namespace Pending {
   /**
    * {@link ButtonPendingState}
@@ -384,17 +359,7 @@ export namespace Pending {
    * {@link ButtonPendingProps}
    */
   export type Props = ButtonPendingProps;
-
-  /**
-   * {@link ButtonPendingVisibility}
-   */
-  export type Visibility = ButtonPendingVisibility;
 }
-
-/**
- * {@link ButtonPending}
- */
-export const Pending: IComponent<Pending.Props> = ButtonPending;
 
 // CircularProgressContext
 // -----------------------
@@ -444,22 +409,10 @@ function useSuiButtonCircularProgressContext(
 export const useButtonCircularProgressContext: IUseContext<ButtonCircularProgressContext> =
   useSuiButtonCircularProgressContext;
 
-/**
- * {@link ButtonCircularProgressContext}
- */
-export type CircularProgressContext = ButtonCircularProgressContext;
-
-/**
- * {@link ButtonCircularProgressContext}
- */
-export const CircularProgressContext: React.Context<ButtonCircularProgressContext | null> =
-  ButtonCircularProgressContext;
-
-/**
- * {@link useButtonCircularProgressContext}
- */
-export const useCircularProgressContext: IUseContext<CircularProgressContext> =
-  useButtonCircularProgressContext;
+export {
+  ButtonCircularProgressContext as CircularProgressContext,
+  useButtonCircularProgressContext as useCircularProgressContext,
+};
 
 // CircularProgress
 // ----------------
@@ -467,7 +420,7 @@ export const useCircularProgressContext: IUseContext<CircularProgressContext> =
 /**
  * {@link ButtonCircularProgress} が持つ状態です。
  */
-export type ButtonCircularProgressState = CircularProgressContext;
+export type ButtonCircularProgressState = ButtonCircularProgressContext;
 
 /**
  * {@link ButtonCircularProgress} に渡す props です。
@@ -521,8 +474,10 @@ export const ButtonCircularProgress: IComponent<ButtonCircularProgressProps> =
       ],
     });
 
-    return <CircularProgressContext value={ctx}>{element}</CircularProgressContext>;
+    return <ButtonCircularProgressContext value={ctx}>{element}</ButtonCircularProgressContext>;
   };
+
+export { ButtonCircularProgress as CircularProgress };
 
 export namespace CircularProgress {
   /**
@@ -536,18 +491,13 @@ export namespace CircularProgress {
   export type Props = ButtonCircularProgressProps;
 }
 
-/**
- * {@link ButtonCircularProgress}
- */
-export const CircularProgress: IComponent<CircularProgress.Props> = ButtonCircularProgress;
-
 // CircularProgressTrack
 // ---------------------
 
 /**
  * {@link ButtonCircularProgressTrack} が持つ状態です。
  */
-export type ButtonCircularProgressTrackState = CircularProgressContext;
+export type ButtonCircularProgressTrackState = ButtonCircularProgressContext;
 
 /**
  * {@link ButtonCircularProgressTrack} に渡す props です。
@@ -563,7 +513,7 @@ export type ButtonCircularProgressTrackProps = Omit<
  */
 export const ButtonCircularProgressTrack: IComponent<ButtonCircularProgressTrackProps> =
   function SuiButtonCircularProgressTrack(props) {
-    const ctx = useCircularProgressContext();
+    const ctx = useButtonCircularProgressContext();
     const {
       r,
       cx = "50%",
@@ -591,6 +541,8 @@ export const ButtonCircularProgressTrack: IComponent<ButtonCircularProgressTrack
     });
   };
 
+export { ButtonCircularProgressTrack as CircularProgressTrack };
+
 export namespace CircularProgressTrack {
   /**
    * {@link ButtonCircularProgressTrackState}
@@ -603,19 +555,13 @@ export namespace CircularProgressTrack {
   export type Props = ButtonCircularProgressTrackProps;
 }
 
-/**
- * {@link ButtonCircularProgressTrack}
- */
-export const CircularProgressTrack: IComponent<CircularProgressTrack.Props> =
-  ButtonCircularProgressTrack;
-
 // CircularProgressFill
 // --------------------
 
 /**
  * {@link ButtonCircularProgressFill} が持つ状態です。
  */
-export type ButtonCircularProgressFillState = CircularProgressContext;
+export type ButtonCircularProgressFillState = ButtonCircularProgressContext;
 
 /**
  * {@link ButtonCircularProgressFill} に渡す props です。
@@ -640,7 +586,7 @@ export type ButtonCircularProgressFillProps = Omit<
  */
 export const ButtonCircularProgressFill: IComponent<ButtonCircularProgressFillProps> =
   function SuiButtonCircularProgressFill(props) {
-    const ctx = useCircularProgressContext();
+    const ctx = useButtonCircularProgressContext();
     const {
       r,
       cx = "50%",
@@ -678,6 +624,8 @@ export const ButtonCircularProgressFill: IComponent<ButtonCircularProgressFillPr
     });
   };
 
+export { ButtonCircularProgressFill as CircularProgressFill };
+
 export namespace CircularProgressFill {
   /**
    * {@link ButtonCircularProgressFillState}
@@ -689,12 +637,6 @@ export namespace CircularProgressFill {
    */
   export type Props = ButtonCircularProgressFillProps;
 }
-
-/**
- * {@link ButtonCircularProgressFill}
- */
-export const CircularProgressFill: IComponent<CircularProgressFill.Props> =
-  ButtonCircularProgressFill;
 
 // CircularProgressFillRotation
 // ----------------------------
@@ -720,7 +662,7 @@ export type ButtonCircularProgressFillRotationProps = Omit<
  */
 export const ButtonCircularProgressFillRotation: IComponent<ButtonCircularProgressFillRotationProps> =
   function SuiButtonCircularProgressFillRotation(props) {
-    const { indeterminate } = useCircularProgressContext();
+    const { indeterminate } = useButtonCircularProgressContext();
     const {
       dur = "0.75s",
       type = "rotate",
@@ -747,6 +689,8 @@ export const ButtonCircularProgressFillRotation: IComponent<ButtonCircularProgre
     });
   };
 
+export { ButtonCircularProgressFillRotation as CircularProgressFillRotation };
+
 export namespace CircularProgressFillRotation {
   /**
    * {@link ButtonCircularProgressFillRotationState}
@@ -758,9 +702,3 @@ export namespace CircularProgressFillRotation {
    */
   export type Props = ButtonCircularProgressFillRotationProps;
 }
-
-/**
- * {@link ButtonCircularProgressFillRotation}
- */
-export const CircularProgressFillRotation: IComponent<CircularProgressFillRotation.Props> =
-  ButtonCircularProgressFillRotation;

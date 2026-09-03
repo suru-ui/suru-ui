@@ -30,7 +30,7 @@ export function isItemObject(item: unknown): item is {
 /**
  * アコーディオンの開閉状態を示す既定の矢印アイコンです。
  */
-export const ChevronIcon: IComponent = function SuiAccordionChevronIcon() {
+export const ChevronIcon: IComponent = function SuiChevronIcon() {
   return (
     <svg fill="none" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
       <path

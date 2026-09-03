@@ -28,6 +28,9 @@ import {
   AccordionIndicator,
 } from "./accordion.parts.jsx";
 
+// Types
+// -----
+
 /**
  * {@link AccordionRootChangeEventDetails}
  */
@@ -99,6 +102,29 @@ export type AccordionSlotProps = {
 };
 
 /**
+ * {@link Accordion} が持つ状態です。
+ */
+export type AccordionState = AccordionRootState;
+
+/**
+ * {@link Accordion} に渡す props です。
+ *
+ * @template TItem 項目の型です。
+ * @template TValue 項目の値の型です。
+ */
+export type AccordionProps<TItem = any, TValue = any> = AccordionRootProps<TItem, TValue> & {
+  /**
+   * 各パーツに個別の props を渡すためのオブジェクトです。
+   *
+   * 各パーツの props が優先されます。
+   */
+  slotProps?: AccordionSlotProps | undefined;
+};
+
+// API
+// ---
+
+/**
  * {@link Accordion} を構成する各パーツの props などを作成するための API です。
  *
  * @template TItem 項目の型です。
@@ -147,26 +173,6 @@ export interface AccordionAPI<TItem = any> {
    */
   getTriggerProps(): Omit<AccordionTriggerProps, "children">;
 }
-
-/**
- * {@link Accordion} が持つ状態です。
- */
-export type AccordionState = AccordionRootState;
-
-/**
- * {@link Accordion} に渡す props です。
- *
- * @template TItem 項目の型です。
- * @template TValue 項目の値の型です。
- */
-export type AccordionProps<TItem = any, TValue = any> = AccordionRootProps<TItem, TValue> & {
-  /**
-   * 各パーツに個別の props を渡すためのオブジェクトです。
-   *
-   * 各パーツの props が優先されます。
-   */
-  slotProps?: AccordionSlotProps | undefined;
-};
 
 interface IUseAccordionAPI {
   /**
@@ -247,10 +253,10 @@ export const useAccordionAPI: IUseAccordionAPI = function useSuiAccordionAPI(pro
   };
 };
 
-/**
- * {@link useAccordionAPI}
- */
-export const useAPI: IUseAccordionAPI = useAccordionAPI;
+export { type AccordionAPI as API, useAccordionAPI as useAPI };
+
+// Component
+// ---------
 
 interface IAccordion extends IComponent<AccordionProps> {
   /**
@@ -266,7 +272,7 @@ interface IAccordion extends IComponent<AccordionProps> {
  * アコーディオンを表示するコンポーネントです。
  */
 export const Accordion: IAccordion = function SuiAccordion(props: AccordionProps) {
-  const api = useAPI(props);
+  const api = useAccordionAPI(props);
   const { children, ...otherRootProps } = api.getRootProps();
 
   return (

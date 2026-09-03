@@ -8,6 +8,8 @@
   --sui_alert-column_gap: ;
   --sui_alert-padding_block: ;
   --sui_alert-padding_inline: ;
+  --sui_alert_icon-font_size: ;
+  --sui_alert_icon-line_height: ;
   --sui_alert-background_color: ;
   --sui_alert-border_color: ;
   --sui_alert-border_width: ;
@@ -16,108 +18,92 @@
 
 /* 静的 */
 :scope {
-  position: relative;
   display: grid;
   border-style: solid;
 
   &:has(.sui_alert_icon) {
-    grid-template:
-      "icon" auto
-      /auto;
+    grid-template: "icon" auto
+                   /auto;
   }
 
   &:has(.sui_alert_title) {
-    grid-template:
-      "title" auto
-      /auto ;
+    grid-template: "title" auto
+                   /auto ;
   }
 
   &:has(.sui_alert_actions) {
-    grid-template:
-      "actions" auto
-      /auto   ;
+    grid-template: "actions" auto
+                   /auto   ;
   }
 
   &:has(.sui_alert_content) {
-    grid-template:
-      "content" auto
-      /auto   ;
+    grid-template: "content" auto
+                   /auto   ;
   }
 
   &:has(.sui_alert_icon):has(.sui_alert_title) {
-    grid-template:
-      "icon title" auto
-      /auto 1fr  ;
+    grid-template: "icon title" auto
+                   /auto 1fr  ;
   }
 
   &:has(.sui_alert_icon):has(.sui_alert_actions) {
-    grid-template:
-      "icon actions" auto
-      /auto 1fr    ;
+    grid-template: "icon actions" auto
+                   /auto 1fr    ;
   }
 
   &:has(.sui_alert_title):has(.sui_alert_actions) {
-    grid-template:
-      "title  " auto
-      "actions" auto
-      /auto   ;
+    grid-template: "title  " auto
+                   "actions" auto
+                   /auto   ;
   }
 
   &:has(.sui_alert_icon):has(.sui_alert_content) {
-    grid-template:
-      "icon content" auto
-      /auto 1fr    ;
+    grid-template: "icon content" auto
+                   /auto 1fr    ;
   }
 
   &:has(.sui_alert_title):has(.sui_alert_content) {
-    grid-template:
-      "title  " auto
-      "content" auto
-      /auto   ;
+    grid-template: "title  " auto
+                   "content" auto
+                   /auto   ;
   }
 
   &:has(.sui_alert_content):has(.sui_alert_actions) {
-    grid-template:
-      "content" auto
-      "actions" auto
-      /auto   ;
+    grid-template: "content" auto
+                   "actions" auto
+                   /auto   ;
   }
 
   &:has(.sui_alert_icon):has(.sui_alert_title):has(.sui_alert_actions) {
-    grid-template:
-      "icon title  " auto
-      ".    actions" auto
-      /auto 1fr    ;
+    grid-template: "icon    title  " auto
+                   "actions actions" auto
+                   /auto    1fr    ;
   }
 
   &:has(.sui_alert_icon):has(.sui_alert_title):has(.sui_alert_content) {
-    grid-template:
-      "icon title  " auto
-      ".    content" auto
-      /auto 1fr    ;
+    grid-template: "icon title  " auto
+                   "icon content" auto
+                   /auto 1fr    ;
   }
 
   &:has(.sui_alert_icon):has(.sui_alert_content):has(.sui_alert_actions) {
-    grid-template:
-      "icon content" auto
-      ".    actions" auto
-      /auto 1fr    ;
+    grid-template: "icon    content" auto
+                   "actions actions" auto
+                   /auto    1fr    ;
   }
 
   &:has(.sui_alert_title):has(.sui_alert_content):has(.sui_alert_actions) {
-    grid-template:
-      "title  " auto
-      "content" auto
-      "actions" auto
-      /auto   ;
+    grid-template: "title  " auto
+                   "content" auto
+                   "actions" auto
+                   /auto   ;
   }
 
   &:has(.sui_alert_icon):has(.sui_alert_title):has(.sui_alert_content):has(.sui_alert_actions) {
-    grid-template:
-      "icon title  " auto
-      ".    content" auto
-      ".    actions" auto
-      /auto 1fr    ;
+    grid-template: "icon    title  " auto
+                   "icon    content" auto
+                   "actions actions" auto
+                   /auto    1fr    ;
   }
 }
 
@@ -135,6 +121,41 @@
 
 /* 既定値 */
 :scope {
+  &:has(.sui_alert_icon) {
+    --sui_alert_icon-font_size: 1em;
+    --sui_alert_icon-line_height: 1lh;
+  }
+
+  &:has(.sui_alert_icon):has(.sui_alert_title) {
+    --sui_alert_icon-font_size: var(--sui_alert_title-font_size);
+    --sui_alert_icon-line_height: var(--sui_alert_title-line_height)
+  }
+
+  &:has(.sui_alert_icon):has(.sui_alert_content) {
+    --sui_alert_icon-font_size: var(--sui_alert_content-font_size);
+    --sui_alert_icon-line_height: var(--sui_alert_content-line_height)
+  }
+
+  &:has(.sui_alert_icon):has(.sui_alert_title):has(.sui_alert_actions) {
+    --sui_alert_icon-font_size: var(--sui_alert_title-font_size);
+    --sui_alert_icon-line_height: var(--sui_alert_title-line_height)
+  }
+
+  &:has(.sui_alert_icon):has(.sui_alert_title):has(.sui_alert_content) {
+    --sui_alert_icon-font_size: var(--sui_alert_title-font_size);
+    --sui_alert_icon-line_height: var(--sui_alert_title-line_height)
+  }
+
+  &:has(.sui_alert_icon):has(.sui_alert_content):has(.sui_alert_actions) {
+    --sui_alert_icon-font_size: var(--sui_alert_content-font_size);
+    --sui_alert_icon-line_height: var(--sui_alert_content-line_height)
+  }
+
+  &:has(.sui_alert_icon):has(.sui_alert_title):has(.sui_alert_content):has(.sui_alert_actions) {
+    --sui_alert_icon-font_size: var(--sui_alert_content-font_size);
+    --sui_alert_icon-line_height: var(--sui_alert_content-line_height)
+  }
+
   &.sui_alert-size_sm {
     --sui_alert-row_gap: --sui-gap(1);
     --sui_alert-column_gap: --sui-gap(4);
@@ -295,30 +316,22 @@
 /* 変数 */
 :scope {
   --sui_alert_icon-size: ;
+  --sui_alert_icon-margin_top: ;
   --sui_alert_icon-color: ;
 }
 
 /* 静的 */
 :scope {
   .sui_alert_icon {
-    display: inline-flex;
-    flex: 0 0 auto;
+    display: flex;
     grid-area: icon;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    margin-block: auto;
 
     &:empty::before {
       display: block;
-      width: 100%;
-      height: 100%;
       content: "";
       border-radius: 50%;
-    }
-
-    svg:not(.sui-ignore) {
-      width: 100%;
-      height: 100%;
     }
   }
 }
@@ -326,20 +339,28 @@
 /* 動的 */
 :scope {
   .sui_alert_icon {
-    width: var(--sui_alert_icon-size);
-    height: var(--sui_alert_icon-size);
-    color: var(--sui_alert_icon-color);
+    margin-top: var(--sui_alert_icon-margin_top);
+    font-size: var(--sui_alert_icon-font_size);
+    line-height: var(--sui_alert_icon-line_height);
 
     &:empty::before {
+      width: var(--sui_alert_icon-size);
       height: var(--sui_alert_icon-size);
       background-color: var(--sui_alert_icon-color);
+    }
+
+    svg:not(.sui-ignore) {
+      width: var(--sui_alert_icon-size);
+      height: var(--sui_alert_icon-size);
+      color: var(--sui_alert_icon-color);
     }
   }
 }
 
 /* 既定値 */
 :scope {
-  --sui_alert_icon-size: 0.8lh;
+  --sui_alert_icon-size: calc(var(--sui_alert_icon-font_size) * 1.2);
+  --sui_alert_icon-margin_top: max(0px, calc((1lh - var(--sui_alert_icon-size)) / 2));
 
   &.sui_alert-color_grey {
     --sui_alert_icon-color: var(--sui-canvas_text-1);

@@ -23,6 +23,9 @@ import {
   ButtonCircularProgressFillRotation,
 } from "./button.parts.jsx";
 
+// Types
+// -----
+
 /**
  * {@link ButtonRootColor}
  */
@@ -79,6 +82,28 @@ export type ButtonSlotProps = {
 };
 
 /**
+ * {@link Button} が持つ状態です。
+ */
+export type ButtonState = ButtonRootState;
+
+/**
+ * {@link Button} に渡す props です。
+ */
+export type ButtonProps = Omit<ButtonRootProps, "children"> &
+  Pick<ButtonContentProps, "children"> &
+  Pick<ButtonCircularProgressProps, "percentage" | "indeterminate"> & {
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     *
+     * 各パーツの props が優先されます。
+     */
+    slotProps?: ButtonSlotProps | undefined;
+  };
+
+// API
+// ---
+
+/**
  * {@link Button} を構成する各パーツの props などを作成するための API です。
  */
 export interface ButtonAPI {
@@ -117,25 +142,6 @@ export interface ButtonAPI {
    */
   getRootProps(): Omit<ButtonRootProps, "children">;
 }
-
-/**
- * {@link Button} が持つ状態です。
- */
-export type ButtonState = ButtonRootState;
-
-/**
- * {@link Button} に渡す props です。
- */
-export type ButtonProps = Omit<ButtonRootProps, "children"> &
-  Pick<ButtonContentProps, "children"> &
-  Pick<ButtonCircularProgressProps, "percentage" | "indeterminate"> & {
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     *
-     * 各パーツの props が優先されます。
-     */
-    slotProps?: ButtonSlotProps | undefined;
-  };
 
 interface IUseButtonAPI {
   /**
@@ -201,10 +207,10 @@ export const useButtonAPI: IUseButtonAPI = function useSuiButtonAPI(props) {
   };
 };
 
-/**
- * {@link useButtonAPI}
- */
-export const useAPI: IUseButtonAPI = useButtonAPI;
+export { type ButtonAPI as API, useButtonAPI as useAPI };
+
+// Component
+// ---------
 
 interface IButton extends IComponent<ButtonProps> {
   /**
@@ -218,7 +224,7 @@ interface IButton extends IComponent<ButtonProps> {
  */
 export const Button: IButton = /*#__PURE__*/ Object.assign(
   function SuiButton(props: ButtonProps) {
-    const api = useAPI(props);
+    const api = useButtonAPI(props);
 
     return (
       <ButtonRoot {...api.getRootProps()}>

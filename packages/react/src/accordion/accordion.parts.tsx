@@ -14,7 +14,7 @@ import "./accordion.css";
 // ----
 
 /**
- * アコーディオンの項目の開閉状態が変更するイベントの詳細です。
+ * アコーディオンの項目の開閉状態を変更するイベントの詳細です。
  */
 export type AccordionRootChangeEventDetails = Accordion.Root.ChangeEventDetails;
 
@@ -217,17 +217,19 @@ const defaultRootItemRenderer: IAccordionRootItemRenderer = (item, index) => {
   const { title, content, htmlTitle, ...otherItemProps } = item;
 
   return (
-    <Item {...otherItemProps} key={index} title={htmlTitle}>
-      <Heading>
-        <Trigger>
+    <AccordionItem {...otherItemProps} key={index} title={htmlTitle}>
+      <AccordionHeading>
+        <AccordionTrigger>
           {toReactNode(title)}
-          <Indicator />
-        </Trigger>
-      </Heading>
-      <Content>{toReactNode(content)}</Content>
-    </Item>
+          <AccordionIndicator />
+        </AccordionTrigger>
+      </AccordionHeading>
+      <AccordionContent>{toReactNode(content)}</AccordionContent>
+    </AccordionItem>
   );
 };
+
+export { AccordionRoot as Root };
 
 export namespace Root {
   /**
@@ -281,21 +283,6 @@ export namespace Root {
   export type Variant = AccordionRootVariant;
 }
 
-interface IAccordion extends IComponent<Root.Props> {
-  /**
-   * @template TItem 項目の型です。
-   * @template TValue 項目の値の型です。
-   */
-  <TItem = never, TValue = $InferItemValue<TItem>>(
-    props: Root.Props<TItem, TValue>,
-  ): IComponent.Return;
-}
-
-/**
- * {@link AccordionRoot}
- */
-export const Root: IAccordion = AccordionRoot;
-
 // Item
 // ----
 
@@ -338,6 +325,8 @@ export const AccordionItem: IComponent<AccordionItemProps> = function SuiAccordi
   );
 };
 
+export { AccordionItem as Item };
+
 export namespace Item {
   /**
    * {@link AccordionItemState}
@@ -359,11 +348,6 @@ export namespace Item {
    */
   export type ChangeEventReason = AccordionItemChangeEventReason;
 }
-
-/**
- * {@link AccordionItem}
- */
-export const Item: IComponent<Item.Props> = AccordionItem;
 
 // Heading
 // -------
@@ -389,6 +373,8 @@ export const AccordionHeading: IComponent<AccordionHeadingProps> = function SuiA
   return <Accordion.Header {...otherProps} className={cn(className, "sui_accordion_heading")} />;
 };
 
+export { AccordionHeading as Heading };
+
 export namespace Heading {
   /**
    * {@link AccordionHeadingState}
@@ -400,11 +386,6 @@ export namespace Heading {
    */
   export type Props = AccordionHeadingProps;
 }
-
-/**
- * {@link AccordionHeading}
- */
-export const Heading: IComponent<Heading.Props> = AccordionHeading;
 
 // Trigger
 // -------
@@ -448,6 +429,8 @@ export const AccordionTrigger: IComponent<AccordionTriggerProps> = function SuiA
   );
 };
 
+export { AccordionTrigger as Trigger };
+
 export namespace Trigger {
   /**
    * {@link AccordionTriggerState}
@@ -459,11 +442,6 @@ export namespace Trigger {
    */
   export type Props = AccordionTriggerProps;
 }
-
-/**
- * {@link AccordionTrigger}
- */
-export const Trigger: IComponent<Trigger.Props> = AccordionTrigger;
 
 // Indicator
 // ---------
@@ -498,6 +476,8 @@ export const AccordionIndicator: IComponent<AccordionIndicatorProps> =
     });
   };
 
+export { AccordionIndicator as Indicator };
+
 export namespace Indicator {
   /**
    * {@link AccordionIndicatorState}
@@ -509,11 +489,6 @@ export namespace Indicator {
    */
   export type Props = AccordionIndicatorProps;
 }
-
-/**
- * {@link AccordionIndicator}
- */
-export const Indicator: IComponent<Indicator.Props> = AccordionIndicator;
 
 // Content
 // -------
@@ -550,6 +525,8 @@ export const AccordionContent: IComponent<AccordionContentProps> = function SuiA
   );
 };
 
+export { AccordionContent as Content };
+
 export namespace Content {
   /**
    * {@link AccordionContentState}
@@ -561,8 +538,3 @@ export namespace Content {
    */
   export type Props = AccordionContentProps;
 }
-
-/**
- * {@link AccordionContent}
- */
-export const Content: IComponent<Content.Props> = AccordionContent;

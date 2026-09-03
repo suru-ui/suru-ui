@@ -446,6 +446,31 @@ export const Radius = meta.story({
   },
 });
 
+export const Outlined = meta.story({
+  name: "枠線",
+  ...ctrl({
+    children: "ボタン",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    muted: false,
+    pending: false,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-wrap gap-3">
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col items-center gap-2">
+            <span>{variant}</span>
+            <Button {...props} variant={variant} outlined />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
 export const Disabled = meta.story({
   name: "無効",
   ...ctrl({

@@ -96,7 +96,7 @@ export const WithIndicator = meta.story({
   render(props) {
     return (
       <div className="w-[450px]">
-        <Alert {...props} icon />
+        <Alert {...props} icon="" />
       </div>
     );
   },

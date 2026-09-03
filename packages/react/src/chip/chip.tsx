@@ -49,7 +49,7 @@ export type ChipState = ChipRootState;
  */
 export type ChipProps = ChipRootProps;
 
-interface IUseChipAPI {
+interface IUseAPI {
   /**
    * {@link ChipAPI} を作成します。
    *
@@ -62,7 +62,7 @@ interface IUseChipAPI {
 /**
  * {@link ChipAPI} を作成するフックです。
  */
-export const useChipAPI: IUseChipAPI = function useSuiChipAPI(props) {
+export const useChipAPI: IUseAPI = function useSuiChipAPI(props) {
   return {
     getRootProps() {
       return props;
@@ -73,7 +73,7 @@ export const useChipAPI: IUseChipAPI = function useSuiChipAPI(props) {
 /**
  * {@link useChipAPI}
  */
-export const useAPI: IUseChipAPI = useChipAPI;
+export const useAPI: IUseAPI = useChipAPI;
 
 /**
  * 短いラベルや属性を表示するチップコンポーネントです。
