@@ -17,12 +17,12 @@ import "./avatar.css";
 export type AvatarRootColor = Color;
 
 /**
- * アバターの角丸です。
+ * アバターの角丸の大きさです。
  *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  * - `"full"`: 完全な丸形
  */
 export type AvatarRootRadius = "none" | Size | "full";
@@ -30,23 +30,23 @@ export type AvatarRootRadius = "none" | Size | "full";
 /**
  * アバターの大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type AvatarRootSize = Size;
 
 /**
- * {@link AvatarRoot} の状態です。
+ * {@link AvatarRoot} が持つ状態です。
  */
 export type AvatarRootState = Avatar.Root.State;
 
 /**
- * {@link AvatarRoot} に渡すプロパティーです。
+ * {@link AvatarRoot} に渡す props です。
  */
 export type AvatarRootProps = React.ComponentProps<typeof Avatar.Root> & {
   /**
-   * フォールバックの背景色を指定します。
+   * アバターの色を指定します。
    *
    * @default "grey"
    */
@@ -60,7 +60,7 @@ export type AvatarRootProps = React.ComponentProps<typeof Avatar.Root> & {
   radius?: AvatarRootRadius | undefined;
 
   /**
-   * アバターのサイズを指定します。
+   * アバターの大きさを指定します。
    *
    * @default "md"
    */
@@ -91,55 +91,50 @@ export const AvatarRoot: IComponent<AvatarRootProps> = function SuiAvatarRoot(pr
         `sui_avatar-color_${color}`,
         `sui_avatar-radius_${radius}`,
       )}
+      data-scope=""
     />
   );
 };
 
-/**
- * {@link AvatarRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { AvatarRoot as Root };
+
 export namespace Root {
   /**
-   * {@link AvatarRootState} です。
+   * {@link AvatarRootState}
    */
   export type State = AvatarRootState;
 
   /**
-   * {@link AvatarRootProps} です。
+   * {@link AvatarRootProps}
    */
   export type Props = AvatarRootProps;
 
   /**
-   * {@link AvatarRootColor} です。
+   * {@link AvatarRootColor}
    */
   export type Color = AvatarRootColor;
 
   /**
-   * {@link AvatarRootRadius} です。
+   * {@link AvatarRootRadius}
    */
   export type Radius = AvatarRootRadius;
 
   /**
-   * {@link AvatarRootSize} です。
+   * {@link AvatarRootSize}
    */
   export type Size = AvatarRootSize;
 }
-
-/**
- * {@link AvatarRoot} です。
- */
-export const Root: IComponent<Root.Props> = AvatarRoot;
 
 // Image
 // -----
 
 /**
- * {@link AvatarImage} の状態です。
+ * {@link AvatarImage} が持つ状態です。
  */
 export type AvatarImageState = Avatar.Image.State;
 
 /**
- * {@link AvatarImage} に渡すプロパティーです。
+ * {@link AvatarImage} に渡す props です。
  */
 export type AvatarImageProps = React.ComponentProps<typeof Avatar.Image>;
 
@@ -154,41 +149,35 @@ export const AvatarImage: IComponent<AvatarImageProps> = function SuiAvatarImage
   return <Avatar.Image {...otherProps} className={cn(className, "sui_avatar_image")} />;
 };
 
-/**
- * {@link AvatarImage} の状態やプロパティーをまとめた型名前空間です。
- */
+export { AvatarImage as Image };
+
 export namespace Image {
   /**
-   * {@link AvatarImageState} です。
+   * {@link AvatarImageState}
    */
   export type State = AvatarImageState;
 
   /**
-   * {@link AvatarImageProps} です。
+   * {@link AvatarImageProps}
    */
   export type Props = AvatarImageProps;
 }
-
-/**
- * {@link AvatarImage} です。
- */
-export const Image: IComponent<Image.Props> = AvatarImage;
 
 // Fallback
 // --------
 
 /**
- * {@link AvatarFallback} の状態です。
+ * {@link AvatarFallback} が持つ状態です。
  */
 export type AvatarFallbackState = Avatar.Fallback.State;
 
 /**
- * {@link AvatarFallback} に渡すプロパティーです。
+ * {@link AvatarFallback} に渡す props です。
  */
 export type AvatarFallbackProps = React.ComponentProps<typeof Avatar.Fallback>;
 
 /**
- * 画像を表示できないときのアバターフォールバックコンポーネントです。
+ * アバターのフォールバックを表示するコンポーネントです。
  */
 export const AvatarFallback: IComponent<AvatarFallbackProps> = function SuiAvatarFallback(props) {
   const { className, ...otherProps } = props;
@@ -196,22 +185,16 @@ export const AvatarFallback: IComponent<AvatarFallbackProps> = function SuiAvata
   return <Avatar.Fallback {...otherProps} className={cn(className, "sui_avatar_fallback")} />;
 };
 
-/**
- * {@link AvatarFallback} の状態やプロパティーをまとめた型名前空間です。
- */
+export { AvatarFallback as Fallback };
+
 export namespace Fallback {
   /**
-   * {@link AvatarFallbackState} です。
+   * {@link AvatarFallbackState}
    */
   export type State = AvatarFallbackState;
 
   /**
-   * {@link AvatarFallbackProps} です。
+   * {@link AvatarFallbackProps}
    */
   export type Props = AvatarFallbackProps;
 }
-
-/**
- * {@link AvatarFallback} です。
- */
-export const Fallback: IComponent<Fallback.Props> = AvatarFallback;

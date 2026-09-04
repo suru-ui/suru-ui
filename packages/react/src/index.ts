@@ -38,6 +38,61 @@ export {
   useAlertAPI,
 } from "./alert/index.js";
 export {
+  type AlertDialogAPI,
+  type AlertDialogProps,
+  type AlertDialogState,
+  type AlertDialogRadius,
+  type AlertDialogActions,
+  type AlertDialogVariant,
+  type AlertDialogSlotProps,
+  type AlertDialogChangeEventReason,
+  type AlertDialogChangeEventDetails,
+  AlertDialog,
+  useAlertDialogAPI,
+} from "./alert-dialog/index.js";
+export {
+  type AspectRatioAPI,
+  type AspectRatioProps,
+  type AspectRatioRatio,
+  type AspectRatioState,
+  type AspectRatioRadius,
+  AspectRatio,
+  useAspectRatioAPI,
+} from "./aspect-ratio/index.js";
+export {
+  type AutocompleteAPI,
+  type AutocompleteSize,
+  type AutocompleteColor,
+  type AutocompleteProps,
+  type AutocompleteState,
+  type AutocompleteRadius,
+  type AutocompleteActions,
+  type AutocompleteContext,
+  type AutocompleteVariant,
+  type AutocompleteGroupItem,
+  type AutocompleteSlotProps,
+  type AutocompleteChangeEventReason,
+  type AutocompleteChangeEventDetails,
+  type AutocompleteHighlightEventReason,
+  type AutocompleteHighlightEventDetails,
+  Autocomplete,
+  useAutocompleteAPI,
+} from "./autocomplete/index.js";
+export {
+  type AvatarAPI,
+  type AvatarSize,
+  type AvatarColor,
+  type AvatarProps,
+  type AvatarState,
+  type AvatarRadius,
+  type AvatarSlotProps,
+  Avatar,
+  useAvatarAPI,
+} from "./avatar/index.js";
+
+// TODO: 以下のコンポーネントをすべて手直しする
+
+export {
   type ButtonAPI,
   type ButtonSize,
   type ButtonColor,
@@ -72,17 +127,6 @@ export {
   ToggleButton,
   useToggleButtonAPI,
 } from "./toggle-button/index.js";
-
-// TODO: 以下のコンポーネントをすべて手直しする
-export {
-  type AvatarSize,
-  type AvatarColor,
-  type AvatarProps,
-  type AvatarState,
-  type AvatarRadius,
-  type AvatarSlotProps,
-  Avatar,
-} from "./avatar/index.js";
 export {
   type AvatarGroupSize,
   type AvatarGroupColor,
@@ -163,25 +207,6 @@ export {
   Status,
   useStatus,
 } from "./status/index.js";
-export {
-  type AutocompleteAPI,
-  type AutocompleteSize,
-  type AutocompleteColor,
-  type AutocompleteProps,
-  type AutocompleteState,
-  type AutocompleteRadius,
-  type AutocompleteActions,
-  type AutocompleteContext,
-  type AutocompleteVariant,
-  type AutocompleteGroupItem,
-  type AutocompleteSlotProps,
-  type AutocompleteChangeEventReason,
-  type AutocompleteChangeEventDetails,
-  type AutocompleteHighlightEventReason,
-  type AutocompleteHighlightEventDetails,
-  Autocomplete,
-  useAutocompleteAPI,
-} from "./autocomplete/index.js";
 export {
   type CheckboxSize,
   type CheckboxColor,
@@ -371,15 +396,6 @@ export {
   useTextarea,
 } from "./textarea/index.js";
 export {
-  type AspectRatioAPI,
-  type AspectRatioProps,
-  type AspectRatioRatio,
-  type AspectRatioState,
-  type AspectRatioRadius,
-  AspectRatio,
-  useAspectRatioAPI,
-} from "./aspect-ratio/index.js";
-export {
   type ActionGroupSize,
   type ActionGroupColor,
   type ActionGroupProps,
@@ -478,12 +494,6 @@ export {
   type TreeSelectionMode,
   Tree,
 } from "./tree/index.js";
-export {
-  type AlertDialogProps,
-  type AlertDialogState,
-  type AlertDialogSlotProps,
-  AlertDialog,
-} from "./alert-dialog/index.js";
 export {
   type ContextMenuProps,
   type ContextMenuState,
