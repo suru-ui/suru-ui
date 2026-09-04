@@ -2,6 +2,21 @@
 @layer sui.component {
 @scope (.sui_chip) to ([data-scope]) {
 
+/* 固定 */
+:scope {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-decoration: none;
+  touch-action: manipulation;
+  cursor: default;
+  user-select: none;
+  outline-style: solid;
+  border-style: solid;
+}
+
 /* 変数 */
 :scope {
   --sui_chip-gap: ;
@@ -27,25 +42,11 @@
   --sui_chip-border_color-active: ;
   --sui_chip-border_width: ;
   --sui_chip-border_radius: ;
-  --sui_chip_icon_size: ;
+  --sui_chip__svg-size: ;
+  --sui_chip__svg-color: ;
 }
 
-/* 静的 */
-:scope {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  text-decoration: none;
-  touch-action: manipulation;
-  cursor: default;
-  user-select: none;
-  outline-style: solid;
-  border-style: solid;
-}
-
-/* 動的 */
+/* 可変 */
 :scope {
   gap: var(--sui_chip-gap);
   min-width: calc(var(--sui_chip-min_height) * 2);
@@ -67,12 +68,13 @@
   border-radius: var(--sui_chip-border_radius);
 
   svg:not(.sui-ignore) {
-    width: var(--sui_chip_icon_size);
-    height: var(--sui_chip_icon_size);
+    width: var(--sui_chip__svg-size);
+    height: var(--sui_chip__svg-size);
+    color: var(--sui_chip__svg-color);
   }
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
   --sui_chip-padding_block: calc(
                               (var(--sui_chip-min_height) - 1lh) / 2
@@ -82,7 +84,8 @@
   --sui_chip-focusring_width: var(--sui-focusring_width);
   --sui_chip-focusring_color: var(--sui-focusring_color);
   --sui_chip-focusring_offset: var(--sui-focusring_offset);
-  --sui_chip_icon_size: 1lh;
+  --sui_chip__svg-size: 1lh;
+  --sui_chip__svg-color: var(--_sui_chip-color, var(--sui_chip-color-idle));
 
   &.sui_chip-size_sm {
     --sui_chip-gap: --sui-space(2);
@@ -442,7 +445,7 @@
   }
 }
 
-/* 上書き */
+/* 変異 */
 :scope {
   &:enabled {
     @media (any-hover: hover) {
@@ -480,17 +483,6 @@
       }
     }
   }
-}
-
-} /* @scope */
-} /* @layer */
-
-/* SuiButton */
-@layer sui.overrides {
-@scope (.sui_chip) {
-
-:scope .sui_button {
-  --sui_button-background_color-idle: transparent;
 }
 
 } /* @scope */

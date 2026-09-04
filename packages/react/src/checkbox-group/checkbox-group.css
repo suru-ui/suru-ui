@@ -1,12 +1,20 @@
 /* Root */
 @layer sui.component {
-  /* 静的 */
-  .sui_checkbox_group {
-    display: flex;
-    flex-direction: column;
-  }
+@scope (.sui_checkbox_group) to ([data-scope]) {
 
-  .sui_checkbox_group-orientation_horizontal {
+/* 固定 */
+:scope {
+  display: flex;
+  flex-direction: column;
+
+  &.sui_checkbox_group-orientation_horizontal {
     flex-direction: row;
   }
+
+  &.sui_checkbox_group-orientation_vertical {
+    flex-direction: column;
+  }
 }
+
+} /* @scope */
+} /* @layer */

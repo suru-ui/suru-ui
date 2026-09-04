@@ -1,12 +1,16 @@
 /* Root */
 @layer sui.component {
-  /* 静的 */
-  .sui_radio_group {
-    display: flex;
-    flex-direction: column;
-  }
+@scope (.sui_radio_group) to ([data-scope]) {
 
-  .sui_radio_group-orientation_horizontal {
+/* 固定 */
+:scope {
+  display: flex;
+  flex-direction: column;
+
+  &.sui_radio_group-orientation_horizontal {
     flex-direction: row;
   }
 }
+
+} /* @scope */
+} /* @layer */

@@ -1,13 +1,17 @@
 /* Root */
 @layer sui.component {
-  /* 静的 */
-  .sui_menubar {
-    display: flex;
-    align-items: center;
-  }
+@scope (.sui_menubar) to ([data-scope]) {
 
-  .sui_menubar-orientation_vertical {
+/* 固定 */
+:scope {
+  display: flex;
+  align-items: center;
+
+  &.sui_menubar-orientation_vertical {
     flex-direction: column;
     align-items: stretch;
   }
 }
+
+} /* @scope */
+} /* @layer */

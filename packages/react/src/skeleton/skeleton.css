@@ -1,81 +1,86 @@
 /* Root */
 @layer sui.component {
-  /* 変数 */
-  .sui_skeleton {
-    --sui_skeleton-width: ;
-    --sui_skeleton-height: ;
-    --sui_skeleton-background_color: ;
-    --sui_skeleton-border_radius: ;
-    --sui_skeleton-opacity-max: ;
-    --sui_skeleton-opacity-min: ;
-    --sui_skeleton-animation_duration: ;
-  }
+@scope (.sui_skeleton) to ([data-scope]) {
 
-  /* 静的 */
-  .sui_skeleton {
-    display: block;
-    pointer-events: none;
-    user-select: none;
-  }
+/* 固定 */
+:scope {
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
 
-  /* 動的 */
-  .sui_skeleton {
-    width: var(--sui_skeleton-width);
-    height: var(--sui_skeleton-height);
-    background-color: var(--sui_skeleton-background_color);
-    border-radius: var(--sui_skeleton-border_radius);
-    animation-duration: var(--sui_skeleton-animation_duration);
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-  }
+/* 変数 */
+:scope {
+  --sui_skeleton-width: ;
+  --sui_skeleton-height: ;
+  --sui_skeleton-background_color: ;
+  --sui_skeleton-border_radius: ;
+  --sui_skeleton-opacity-max: ;
+  --sui_skeleton-opacity-min: ;
+  --sui_skeleton-animation_duration: ;
+}
 
-  .sui_skeleton-animated {
-    animation-name: sui_skeleton-pulse;
-  }
+/* 可変 */
+:scope {
+  width: var(--sui_skeleton-width);
+  height: var(--sui_skeleton-height);
+  background-color: var(--sui_skeleton-background_color);
+  border-radius: var(--sui_skeleton-border_radius);
+  animation-name: var(--_sui_skeleton-animation_name, none);
+  animation-duration: var(--sui_skeleton-animation_duration);
+}
 
-  /* 既定値設定: ここから */
+/* 代入 */
+:scope {
+  --sui_skeleton-width: 100%;
+  --sui_skeleton-height: --sui-space(4);
+  --sui_skeleton-background_color: var(--sui-grey-liquid-canvas-subtle);
+  --sui_skeleton-opacity-max: 1;
+  --sui_skeleton-opacity-min: 0.5;
+  --sui_skeleton-animation_duration: 1.5s;
 
-  .sui_skeleton {
-    --sui_skeleton-width: 100%;
-    --sui_skeleton-height: --sui-space(4);
-    --sui_skeleton-background_color: var(--sui-grey-liquid-canvas-subtle);
-    --sui_skeleton-opacity-max: 1;
-    --sui_skeleton-opacity-min: 0.5;
-    --sui_skeleton-animation_duration: 1.5s;
-  }
-
-  .sui_skeleton-radius_none {
+  &.sui_skeleton-radius_none {
     --sui_skeleton-border_radius: 0px;
   }
 
-  .sui_skeleton-radius_sm {
+  &.sui_skeleton-radius_sm {
     --sui_skeleton-border_radius: var(--sui-radius-sm);
   }
 
-  .sui_skeleton-radius_md {
+  &.sui_skeleton-radius_md {
     --sui_skeleton-border_radius: var(--sui-radius-md);
   }
 
-  .sui_skeleton-radius_lg {
+  &.sui_skeleton-radius_lg {
     --sui_skeleton-border_radius: var(--sui-radius-lg);
   }
 
-  .sui_skeleton-radius_full {
+  &.sui_skeleton-radius_full {
     --sui_skeleton-border_radius: calc(var(--sui_skeleton-height) / 2);
   }
-
-  /* 既定値設定: ここまで */
 }
 
-@layer sui.component {
-  @keyframes sui_skeleton-pulse {
-    from {
-      opacity: var(--sui_skeleton-opacity-max);
-    }
-
-    to {
-      opacity: var(--sui_skeleton-opacity-min);
-    }
+/* 変異 */
+:scope {
+  &.sui_skeleton-animated {
+    --_sui_skeleton-animation_name: sui_skeleton-pulse;
   }
+}
+
+} /* @scope */
+} /* @layer */
+
+@layer sui.component {
+@keyframes sui_skeleton-pulse {
+  from {
+    opacity: var(--sui_skeleton-opacity-max);
+  }
+
+  to {
+    opacity: var(--sui_skeleton-opacity-min);
+  }
+}
 }

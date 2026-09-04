@@ -1,49 +1,55 @@
 /* Root */
 @layer sui.component {
-  /* 変数 */
-  .sui_meter {
-    --sui_meter-gap: ;
-  }
+@scope (.sui_meter) to ([data-scope]) {
 
-  /* 静的 */
-  .sui_meter {
-    display: grid;
-    grid-template-columns: minmax(0px, 1fr) auto;
-    width: 100%;
-  }
-
-  /* 動的 */
-  .sui_meter {
-    gap: var(--sui_meter-gap);
-  }
-
-  /* 既定値設定: ここから */
-
-  .sui_meter {
-    --sui_meter-gap: --sui-gap(4);
-  }
-
-  /* 既定値設定: ここまで */
+/* 固定 */
+:scope {
+  display: grid;
+  grid-template-columns: minmax(0px, 1fr) auto;
+  width: 100%;
 }
+
+/* 変数 */
+:scope {
+  --sui_meter-gap: ;
+}
+
+/* 可変 */
+:scope {
+  gap: var(--sui_meter-gap);
+}
+
+/* 代入 */
+:scope {
+  --sui_meter-gap: --sui-gap(4);
+}
+
+} /* @scope */
+} /* @layer */
 
 /* Label */
 @layer sui.component {
-  /* 変数 */
-  .sui_meter {
-    --sui_meter_label-font_family: ;
-    --sui_meter_label-font_size: ;
-    --sui_meter_label-font_weight: ;
-    --sui_meter_label-line_height: ;
-    --sui_meter_label-color: ;
-    --sui_meter_label-letter_spacing: ;
-  }
+@scope (.sui_meter) to ([data-scope]) {
 
-  /* 静的 */
+/* 固定 */
+:scope {
   .sui_meter_label {
     min-width: 0px;
   }
+}
 
-  /* 動的 */
+/* 変数 */
+:scope {
+  --sui_meter_label-font_family: ;
+  --sui_meter_label-font_size: ;
+  --sui_meter_label-font_weight: ;
+  --sui_meter_label-line_height: ;
+  --sui_meter_label-color: ;
+  --sui_meter_label-letter_spacing: ;
+}
+
+/* 可変 */
+:scope {
   .sui_meter_label {
     font-family: var(--sui_meter_label-font_family);
     font-size: var(--sui_meter_label-font_size);
@@ -52,56 +58,61 @@
     color: var(--sui_meter_label-color);
     letter-spacing: var(--sui_meter_label-letter_spacing);
   }
+}
 
-  /* 既定値設定: ここから */
+/* 代入 */
+:scope {
+  --sui_meter_label-font_family: var(--sui-font-sans);
+  --sui_meter_label-color: var(--sui-canvas_text-1);
 
-  .sui_meter {
-    --sui_meter_label-font_family: var(--sui-font-sans);
-    --sui_meter_label-color: var(--sui-canvas_text-1);
-  }
-
-  .sui_meter-size_sm {
+  &.sui_meter-size_sm {
     --sui_meter_label-font_size: var(--sui-text-dns-sm-b-font_size);
     --sui_meter_label-font_weight: var(--sui-text-dns-sm-b-font_weight);
     --sui_meter_label-line_height: var(--sui-text-dns-sm-b-line_height);
     --sui_meter_label-letter_spacing: var(--sui-text-dns-sm-b-letter_spacing);
   }
 
-  .sui_meter-size_md {
+  &.sui_meter-size_md {
     --sui_meter_label-font_size: var(--sui-text-dns-md-b-font_size);
     --sui_meter_label-font_weight: var(--sui-text-dns-md-b-font_weight);
     --sui_meter_label-line_height: var(--sui-text-dns-md-b-line_height);
     --sui_meter_label-letter_spacing: var(--sui-text-dns-md-b-letter_spacing);
   }
 
-  .sui_meter-size_lg {
+  &.sui_meter-size_lg {
     --sui_meter_label-font_size: var(--sui-text-dns-lg-b-font_size);
     --sui_meter_label-font_weight: var(--sui-text-dns-lg-b-font_weight);
     --sui_meter_label-line_height: var(--sui-text-dns-lg-b-line_height);
     --sui_meter_label-letter_spacing: var(--sui-text-dns-lg-b-letter_spacing);
   }
-
-  /* 既定値設定: ここまで */
 }
+
+} /* @scope */
+} /* @layer */
 
 /* Value */
 @layer sui.component {
-  /* 変数 */
-  .sui_meter {
-    --sui_meter_value-font_family: ;
-    --sui_meter_value-font_size: ;
-    --sui_meter_value-font_weight: ;
-    --sui_meter_value-line_height: ;
-    --sui_meter_value-color: ;
-    --sui_meter_value-letter_spacing: ;
-  }
+@scope (.sui_meter) to ([data-scope]) {
 
-  /* 静的 */
+/* 固定 */
+:scope {
   .sui_meter_value {
     font-variant-numeric: tabular-nums;
   }
+}
 
-  /* 動的 */
+/* 変数 */
+:scope {
+  --sui_meter_value-font_family: ;
+  --sui_meter_value-font_size: ;
+  --sui_meter_value-font_weight: ;
+  --sui_meter_value-line_height: ;
+  --sui_meter_value-color: ;
+  --sui_meter_value-letter_spacing: ;
+}
+
+/* 可変 */
+:scope {
   .sui_meter_value {
     font-family: var(--sui_meter_value-font_family);
     font-size: var(--sui_meter_value-font_size);
@@ -110,135 +121,137 @@
     color: var(--sui_meter_value-color);
     letter-spacing: var(--sui_meter_value-letter_spacing);
   }
+}
 
-  /* 既定値設定: ここから */
+/* 代入 */
+:scope {
+  --sui_meter_value-font_family: var(--sui-font-sans);
+  --sui_meter_value-color: var(--sui-canvas_text-2);
 
-  .sui_meter {
-    --sui_meter_value-font_family: var(--sui-font-sans);
-    --sui_meter_value-color: var(--sui-canvas_text-2);
-  }
-
-  .sui_meter-size_sm {
+  &.sui_meter-size_sm {
     --sui_meter_value-font_size: var(--sui-text-dns-sm-n-font_size);
     --sui_meter_value-font_weight: var(--sui-text-dns-sm-n-font_weight);
     --sui_meter_value-line_height: var(--sui-text-dns-sm-n-line_height);
     --sui_meter_value-letter_spacing: var(--sui-text-dns-sm-n-letter_spacing);
   }
 
-  .sui_meter-size_md {
+  &.sui_meter-size_md {
     --sui_meter_value-font_size: var(--sui-text-dns-md-n-font_size);
     --sui_meter_value-font_weight: var(--sui-text-dns-md-n-font_weight);
     --sui_meter_value-line_height: var(--sui-text-dns-md-n-line_height);
     --sui_meter_value-letter_spacing: var(--sui-text-dns-md-n-letter_spacing);
   }
 
-  .sui_meter-size_lg {
+  &.sui_meter-size_lg {
     --sui_meter_value-font_size: var(--sui-text-dns-lg-n-font_size);
     --sui_meter_value-font_weight: var(--sui-text-dns-lg-n-font_weight);
     --sui_meter_value-line_height: var(--sui-text-dns-lg-n-line_height);
     --sui_meter_value-letter_spacing: var(--sui-text-dns-lg-n-letter_spacing);
   }
-
-  /* 既定値設定: ここまで */
 }
+
+} /* @scope */
+} /* @layer */
 
 /* Track */
 @layer sui.component {
-  /* 変数 */
-  .sui_meter {
-    --sui_meter_track-height: ;
-    --sui_meter_track-background_color: ;
-    --sui_meter_track-border_color: ;
-    --sui_meter_track-border_width: ;
-    --sui_meter_track-border_radius: ;
-  }
+@scope (.sui_meter) to ([data-scope]) {
 
-  /* 静的 */
+/* 固定 */
+:scope {
   .sui_meter_track {
     position: relative;
     grid-column: 1 / -1;
     width: 100%;
     overflow: hidden;
+    border-style: solid;
   }
+}
 
-  /* 動的 */
+/* 変数 */
+:scope {
+  --sui_meter_track-height: ;
+  --sui_meter_track-background_color: ;
+  --sui_meter_track-border_color: ;
+  --sui_meter_track-border_width: ;
+  --sui_meter_track-border_radius: ;
+}
+
+/* 可変 */
+:scope {
   .sui_meter_track {
     height: var(--sui_meter_track-height);
     background-color: var(--sui_meter_track-background_color);
-    border: var(--_sui_meter_track-border_color, transparent)
-            solid
-            var(--_sui_meter_track-border_width, 0px);
+    border-color: var(--_sui_meter_track-border_color, transparent);
+    border-width: var(--_sui_meter_track-border_width, 0px);
     border-radius: var(--sui_meter_track-border_radius);
   }
+}
 
-  /* 既定値設定: ここから */
+/* 代入 */
+:scope {
+  --sui_meter_track-border_width: --sui-border_width(1);
 
-  .sui_meter {
-    --sui_meter_track-border_width: --sui-border_width(1);
-  }
-
-  .sui_meter-size_sm {
+  &.sui_meter-size_sm {
     --sui_meter_track-height: --sui-border_width(3);
   }
 
-  .sui_meter-size_md {
+  &.sui_meter-size_md {
     --sui_meter_track-height: --sui-border_width(5);
   }
 
-  .sui_meter-size_lg {
+  &.sui_meter-size_lg {
     --sui_meter_track-height: --sui-border_width(7);
   }
 
-  .sui_meter-radius_none {
+  &.sui_meter-radius_none {
     --sui_meter_track-border_radius: 0px;
   }
 
-  .sui_meter-radius_sm {
+  &.sui_meter-radius_sm {
     --sui_meter_track-border_radius: var(--sui-radius-sm);
   }
 
-  .sui_meter-radius_md {
+  &.sui_meter-radius_md {
     --sui_meter_track-border_radius: var(--sui-radius-md);
   }
 
-  .sui_meter-radius_lg {
+  &.sui_meter-radius_lg {
     --sui_meter_track-border_radius: var(--sui-radius-lg);
   }
 
-  .sui_meter-radius_full {
+  &.sui_meter-radius_full {
     --sui_meter_track-border_radius: calc(var(--sui_meter_track-height) / 2);
   }
 
-  .sui_meter-variant_naked {
+  &.sui_meter-variant_naked {
     --sui_meter_track-background_color: var(--sui-grey-naked-canvas-normal);
     --sui_meter_track-border_color: var(--sui-border-1);
   }
 
-  .sui_meter-variant_liquid {
+  &.sui_meter-variant_liquid {
     --sui_meter_track-background_color: var(--sui-grey-liquid-canvas-normal);
     --sui_meter_track-border_color: var(--sui-border-1);
   }
+}
 
-  /* 既定値設定: ここまで */
-
-  /* 上書き設定: ここから */
-
-  .sui_meter-outlined {
+/* 変異 */
+:scope {
+  &.sui_meter-outlined .sui_meter_track {
     --_sui_meter_track-border_color: var(--sui_meter_track-border_color);
     --_sui_meter_track-border_width: var(--sui_meter_track-border_width);
   }
-
-  /* 上書き設定: ここまで */
 }
+
+} /* @scope */
+} /* @layer */
 
 /* Indicator */
 @layer sui.component {
-  /* 変数 */
-  .sui_meter {
-    --sui_meter_indicator-background_color: ;
-  }
+@scope (.sui_meter) to ([data-scope]) {
 
-  /* 静的 */
+/* 固定 */
+:scope {
   .sui_meter_indicator {
     position: absolute;
     inset-block: 0px;
@@ -246,45 +259,54 @@
     display: block;
     border-radius: inherit;
   }
+}
 
-  /* 動的 */
+/* 変数 */
+:scope {
+  --sui_meter_indicator-background_color: ;
+}
+
+/* 可変 */
+:scope {
   .sui_meter_indicator {
     background-color: var(--sui_meter_indicator-background_color);
   }
+}
 
-  /* 既定値設定: ここから */
-
-  .sui_meter-color_grey {
+/* 代入 */
+:scope {
+  &.sui_meter-color_grey {
     --sui_meter_indicator-background_color: var(--sui-grey-solid-canvas-normal);
   }
 
-  .sui_meter-color_blue {
+  &.sui_meter-color_blue {
     --sui_meter_indicator-background_color: var(--sui-blue-solid-canvas-normal);
   }
 
-  .sui_meter-color_purple {
+  &.sui_meter-color_purple {
     --sui_meter_indicator-background_color: var(--sui-purple-solid-canvas-normal);
   }
 
-  .sui_meter-color_magenta {
+  &.sui_meter-color_magenta {
     --sui_meter_indicator-background_color: var(--sui-magenta-solid-canvas-normal);
   }
 
-  .sui_meter-color_red {
+  &.sui_meter-color_red {
     --sui_meter_indicator-background_color: var(--sui-red-solid-canvas-normal);
   }
 
-  .sui_meter-color_orange {
+  &.sui_meter-color_orange {
     --sui_meter_indicator-background_color: var(--sui-orange-solid-canvas-normal);
   }
 
-  .sui_meter-color_yellow {
+  &.sui_meter-color_yellow {
     --sui_meter_indicator-background_color: var(--sui-yellow-solid-canvas-normal);
   }
 
-  .sui_meter-color_green {
+  &.sui_meter-color_green {
     --sui_meter_indicator-background_color: var(--sui-green-solid-canvas-normal);
   }
-
-  /* 既定値設定: ここまで */
 }
+
+} /* @scope */
+} /* @layer */

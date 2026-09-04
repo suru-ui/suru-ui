@@ -564,10 +564,10 @@
   }
 
   &:has(.sui_alert_dialog_icon-size_lg) {
-    --sui_alert_dialog_icon-min_height: calc(
-                                          var(--sui-size-lg)
-                                          + var(--sui_alert_dialog_icon-virtual_padding) * 2
-                                        );
+    --sui_alert_dialog_icon-size: calc(
+                                    var(--sui-size-lg)
+                                    + var(--sui_alert_dialog_icon-virtual_padding) * 2
+                                  );
     --sui_alert_dialog_icon-virtual_padding: --sui-space(5);
   }
 
@@ -733,10 +733,6 @@
     --sui_alert_dialog_icon-color: var(--sui-grey-liquid-canvas_text-normal);
     --sui_alert_dialog_icon-background_color: var(--sui-grey-liquid-canvas-normal);
     --sui_alert_dialog_icon-border_color: var(--sui-grey-liquid-border-normal);
-  }
-
-  &:has(.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-variant_solid) {
-    --sui_alert_dialog_icon-color: var(--sui-grey-solid-canvas_text-normal);
   }
 
   &:has(.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-color_blue:not(.sui_alert_dialog_icon-variant_solid)) {
@@ -953,11 +949,6 @@
 @layer sui.component {
 @scope (.sui_alert_dialog_portal) to ([data-scope]) {
 
-/* 変数 */
-:scope {
-  --sui_alert_dialog_footer-gap: ;
-}
-
 /* 固定 */
 :scope {
   .sui_alert_dialog_footer {
@@ -975,6 +966,11 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+/* 変数 */
+:scope {
+  --sui_alert_dialog_footer-gap: ;
 }
 
 /* 可変 */

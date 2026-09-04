@@ -1,92 +1,98 @@
 /* Root */
 @layer sui.component {
-  /* 変数 */
-  .sui_input {
-    --sui_input-min_height: ;
-    --sui_input-padding_block: ;
-    --sui_input-padding_inline: ;
-    --sui_input-font_family: ;
-    --sui_input-font_size: ;
-    --sui_input-font_weight: ;
-    --sui_input-color: ;
-    --sui_input-placeholder-color: ;
-    --sui_input-letter_spacing: ;
-    --sui_input-outline_color: ;
-    --sui_input-outline_offset: ;
-    --sui_input-background_color: ;
-    --sui_input-border_color-normal: ;
-    --sui_input-border_color-hover: ;
-    --sui_input-border_color-invalid: ;
-    --sui_input-border_color-focus_visible: ;
-    --sui_input-border_width-normal: ;
-    --sui_input-border_width-hover: ;
-    --sui_input-border_width-focus_visible: ;
-    --sui_input-border_width-invalid: ;
-    --sui_input-border_radius: ;
+@scope (.sui_input) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: inline-block;
+  line-height: 1lh;
+  vertical-align: middle;
+  touch-action: manipulation;
+  caret-color: currentColor;
+  outline-style: solid;
+  border-style: solid;
+
+  &::after {
+    position: absolute;
+    inset: 0px;
+    pointer-events: none;
+    content: "";
   }
+}
 
-  /* 静的 */
-  .sui_input {
-    display: inline-block;
-    line-height: 1lh;
-    vertical-align: middle;
-    touch-action: manipulation;
-    caret-color: currentColor;
+/* 変数 */
+:scope {
+  --sui_input-min_height: ;
+  --sui_input-padding_block: ;
+  --sui_input-padding_inline: ;
+  --sui_input-font_family: ;
+  --sui_input-font_size: ;
+  --sui_input-font_weight: ;
+  --sui_input-color: ;
+  --sui_input-placeholder-color: ;
+  --sui_input-letter_spacing: ;
+  --sui_input-focusring_width: ;
+  --sui_input-outline_color: ;
+  --sui_input-outline_offset: ;
+  --sui_input-background_color: ;
+  --sui_input-border_color-normal: ;
+  --sui_input-border_color-hover: ;
+  --sui_input-border_color-invalid: ;
+  --sui_input-border_color-focus_visible: ;
+  --sui_input-border_width-normal: ;
+  --sui_input-border_width-hover: ;
+  --sui_input-border_width-focus_visible: ;
+  --sui_input-border_width-invalid: ;
+  --sui_input-border_radius: ;
+}
 
-    &::after {
-      position: absolute;
-      inset: 0px;
-      pointer-events: none;
-      content: "";
-    }
+/* 可変 */
+:scope {
+  min-height: var(--sui_input-min_height);
+  padding-block: var(--sui_input-padding_block);
+  padding-inline: calc(var(--sui_input-padding_inline) - var(--_sui_input-border_width, 0px));
+  font-family: var(--sui_input-font_family);
+  font-size: var(--sui_input-font_size);
+  font-weight: var(--sui_input-font_weight);
+  color: var(--sui_input-color);
+  letter-spacing: var(--sui_input-letter_spacing);
+  outline-width: var(--_sui_input-outline_width, 0px);
+  outline-color: var(--sui_input-outline_color);
+  outline-offset: var(--sui_input-outline_offset);
+  background-color: var(--sui_input-background_color);
+  border-color: var(--_sui_input-border_color, transparent);
+  border-width: var(--_sui_input-border_width, 0px);
+  border-radius: var(--sui_input-border_radius);
+
+  &::placeholder {
+    color: var(--sui_input-placeholder-color);
   }
+}
 
-  /* 動的 */
-  .sui_input {
-    min-height: var(--sui_input-min_height);
-    padding-block: var(--sui_input-padding_block);
-    padding-inline: calc(var(--sui_input-padding_inline) - var(--_sui_input-border_width, 0px));
-    font-family: var(--sui_input-font_family);
-    font-size: var(--sui_input-font_size);
-    font-weight: var(--sui_input-font_weight);
-    color: var(--sui_input-color);
-    letter-spacing: var(--sui_input-letter_spacing);
-    outline: var(--_sui_input-outline_width, 0px) solid var(--sui_input-outline_color);
-    outline-offset: var(--sui_input-outline_offset);
-    background-color: var(--sui_input-background_color);
-    border: var(--_sui_input-border_color, transparent) solid var(--_sui_input-border_width, 0px);
-    border-radius: var(--sui_input-border_radius);
+/* 代入 */
+:scope {
+  --sui_input-padding_block: round(
+                               down,
+                               calc(
+                                 (var(--sui_input-min_height) - 1lh) / 2
+                                 - var(--_sui_input-border_width, 0px)
+                               ),
+                               1px
+                             );
+  --sui_input-font_family: var(--sui-font-sans);
+  --sui_input-placeholder-color: var(--sui-canvas_text-2);
+  --sui_input-focusring_width: var(--sui-focusring_width);
+  --sui_input-outline_color: var(--sui-focusring_color);
+  --sui_input-outline_offset: var(--sui-focusring_offset);
+  --sui_input-border_color-normal: var(--sui-grey-naked-border-normal);
+  --sui_input-border_color-hover: var(--sui-grey-naked-border-subtle);
+  --sui_input-border_color-invalid: var(--sui-red-naked-canvas_text-normal);
+  --sui_input-border_width-normal: --sui-border_width(1);
+  --sui_input-border_width-hover: --sui-border_width(1);
+  --sui_input-border_width-focus_visible: --sui-border_width(2);
+  --sui_input-border_width-invalid: --sui-border_width(2);
 
-    &::placeholder {
-      color: var(--sui_input-placeholder-color);
-    }
-  }
-
-  /* 既定値設定: ここから */
-
-  .sui_input {
-    --sui_input-padding_block: round(
-                                 down,
-                                 calc(
-                                   (var(--sui_input-min_height) - 1lh) / 2
-                                   - var(--_sui_input-border_width, 0px)
-                                 ),
-                                 1px
-                               );
-    --sui_input-font_family: var(--sui-font-sans);
-    --sui_input-placeholder-color: var(--sui-canvas_text-2);
-    --sui_input-outline_color: var(--sui-focusring_color);
-    --sui_input-outline_offset: var(--sui-focusring_offset);
-    --sui_input-border_color-normal: var(--sui-grey-naked-border-normal);
-    --sui_input-border_color-hover: var(--sui-grey-naked-border-subtle);
-    --sui_input-border_color-invalid: var(--sui-red-naked-canvas_text-normal);
-    --sui_input-border_width-normal: --sui-border_width(1);
-    --sui_input-border_width-hover: --sui-border_width(1);
-    --sui_input-border_width-focus_visible: --sui-border_width(2);
-    --sui_input-border_width-invalid: --sui-border_width(2);
-  }
-
-  .sui_input-size_sm {
+  &.sui_input-size_sm {
     --sui_input-min_height: var(--sui-size-sm);
     --sui_input-padding_inline: --sui-space(3);
     --sui_input-font_size: var(--sui-text-oln-sm-n-font_size);
@@ -94,7 +100,7 @@
     --sui_input-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
   }
 
-  .sui_input-size_md {
+  &.sui_input-size_md {
     --sui_input-min_height: var(--sui-size-md);
     --sui_input-padding_inline: --sui-space(4);
     --sui_input-font_size: var(--sui-text-oln-md-n-font_size);
@@ -102,7 +108,7 @@
     --sui_input-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   }
 
-  .sui_input-size_lg {
+  &.sui_input-size_lg {
     --sui_input-min_height: var(--sui-size-lg);
     --sui_input-padding_inline: --sui-space(5);
     --sui_input-font_size: var(--sui-text-oln-lg-n-font_size);
@@ -110,183 +116,177 @@
     --sui_input-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
   }
 
-  .sui_input-radius_none {
+  &.sui_input-radius_none {
     --sui_input-border_radius: 0px;
   }
 
-  .sui_input-radius_sm {
+  &.sui_input-radius_sm {
     --sui_input-border_radius: var(--sui-radius-sm);
   }
 
-  .sui_input-radius_md {
+  &.sui_input-radius_md {
     --sui_input-border_radius: var(--sui-radius-md);
   }
 
-  .sui_input-radius_lg {
+  &.sui_input-radius_lg {
     --sui_input-border_radius: var(--sui-radius-lg);
   }
 
-  .sui_input-radius_full {
+  &.sui_input-radius_full {
     --sui_input-border_radius: calc(var(--sui_input-min_height) / 2);
   }
 
-  .sui_input-variant_naked {
+  &.sui_input-variant_naked {
     --sui_input-color: var(--sui-grey-naked-canvas_text-normal);
     --sui_input-background_color: var(--sui-grey-naked-canvas-normal);
   }
 
-  .sui_input-variant_liquid {
+  &.sui_input-variant_liquid {
     --sui_input-color: var(--sui-grey-liquid-canvas_text-normal);
     --sui_input-background_color: var(--sui-grey-liquid-canvas-normal);
   }
 
-  .sui_input-color_grey {
-    &.sui_input-variant_naked {
-      --sui_input-border_color-focus_visible: var(--sui-grey-naked-border-subtle);
-    }
-
-    &.sui_input-variant_liquid {
-      --sui_input-border_color-focus_visible: var(--sui-grey-liquid-border-subtle);
-    }
+  &.sui_input-color_grey.sui_input-variant_naked {
+    --sui_input-border_color-focus_visible: var(--sui-grey-naked-border-subtle);
   }
 
-  .sui_input-color_blue {
-    &.sui_input-variant_naked {
-      --sui_input-border_color-focus_visible: var(--sui-blue-naked-border-normal);
-    }
-
-    &.sui_input-variant_liquid {
-      --sui_input-border_color-focus_visible: var(--sui-blue-liquid-border-normal);
-    }
+  &.sui_input-color_grey.sui_input-variant_liquid {
+    --sui_input-border_color-focus_visible: var(--sui-grey-liquid-border-subtle);
   }
 
-  .sui_input-color_purple {
-    &.sui_input-variant_naked {
-      --sui_input-border_color-focus_visible: var(--sui-purple-naked-border-normal);
-    }
-
-    &.sui_input-variant_liquid {
-      --sui_input-border_color-focus_visible: var(--sui-purple-liquid-border-normal);
-    }
+  &.sui_input-color_blue.sui_input-variant_naked {
+    --sui_input-border_color-focus_visible: var(--sui-blue-naked-border-normal);
   }
 
-  .sui_input-color_magenta {
-    &.sui_input-variant_naked {
-      --sui_input-border_color-focus_visible: var(--sui-magenta-naked-border-normal);
-    }
-
-    &.sui_input-variant_liquid {
-      --sui_input-border_color-focus_visible: var(--sui-magenta-liquid-border-normal);
-    }
+  &.sui_input-color_blue.sui_input-variant_liquid {
+    --sui_input-border_color-focus_visible: var(--sui-blue-liquid-border-normal);
   }
 
-  .sui_input-color_red {
-    &.sui_input-variant_naked {
-      --sui_input-border_color-focus_visible: var(--sui-red-naked-border-normal);
-    }
-
-    &.sui_input-variant_liquid {
-      --sui_input-border_color-focus_visible: var(--sui-red-liquid-border-normal);
-    }
+  &.sui_input-color_purple.sui_input-variant_naked {
+    --sui_input-border_color-focus_visible: var(--sui-purple-naked-border-normal);
   }
 
-  .sui_input-color_orange {
-    &.sui_input-variant_naked {
-      --sui_input-border_color-focus_visible: var(--sui-orange-naked-border-normal);
-    }
-
-    &.sui_input-variant_liquid {
-      --sui_input-border_color-focus_visible: var(--sui-orange-liquid-border-normal);
-    }
+  &.sui_input-color_purple.sui_input-variant_liquid {
+    --sui_input-border_color-focus_visible: var(--sui-purple-liquid-border-normal);
   }
 
-  .sui_input-color_yellow {
-    &.sui_input-variant_naked {
-      --sui_input-border_color-focus_visible: var(--sui-yellow-naked-border-normal);
-    }
-
-    &.sui_input-variant_liquid {
-      --sui_input-border_color-focus_visible: var(--sui-yellow-liquid-border-normal);
-    }
+  &.sui_input-color_magenta.sui_input-variant_naked {
+    --sui_input-border_color-focus_visible: var(--sui-magenta-naked-border-normal);
   }
 
-  .sui_input-color_green {
-    &.sui_input-variant_naked {
-      --sui_input-border_color-focus_visible: var(--sui-green-naked-border-normal);
-    }
-
-    &.sui_input-variant_liquid {
-      --sui_input-border_color-focus_visible: var(--sui-green-liquid-border-normal);
-    }
+  &.sui_input-color_magenta.sui_input-variant_liquid {
+    --sui_input-border_color-focus_visible: var(--sui-magenta-liquid-border-normal);
   }
 
-  /* 既定値設定: ここまで */
-
-  /* 上書き設定: ここから */
-
-  .sui_input:focus-visible {
-    --_sui_input-outline_width: var(--sui-focusring_width);
+  &.sui_input-color_red.sui_input-variant_naked {
+    --sui_input-border_color-focus_visible: var(--sui-red-naked-border-normal);
   }
 
-  .sui_input-outlined {
+  &.sui_input-color_red.sui_input-variant_liquid {
+    --sui_input-border_color-focus_visible: var(--sui-red-liquid-border-normal);
+  }
+
+  &.sui_input-color_orange.sui_input-variant_naked {
+    --sui_input-border_color-focus_visible: var(--sui-orange-naked-border-normal);
+  }
+
+  &.sui_input-color_orange.sui_input-variant_liquid {
+    --sui_input-border_color-focus_visible: var(--sui-orange-liquid-border-normal);
+  }
+
+  &.sui_input-color_yellow.sui_input-variant_naked {
+    --sui_input-border_color-focus_visible: var(--sui-yellow-naked-border-normal);
+  }
+
+  &.sui_input-color_yellow.sui_input-variant_liquid {
+    --sui_input-border_color-focus_visible: var(--sui-yellow-liquid-border-normal);
+  }
+
+  &.sui_input-color_green.sui_input-variant_naked {
+    --sui_input-border_color-focus_visible: var(--sui-green-naked-border-normal);
+  }
+
+  &.sui_input-color_green.sui_input-variant_liquid {
+    --sui_input-border_color-focus_visible: var(--sui-green-liquid-border-normal);
+  }
+}
+
+/* 変異 */
+:scope {
+  &:focus-visible {
+    --_sui_input-outline_width: var(--sui_input-focusring_width);
+  }
+
+  &.sui_input-outlined {
     --_sui_input-border_color: var(--sui_input-border_color-normal);
     --_sui_input-border_width: var(--sui_input-border_width-normal);
+  }
 
+  &.sui_input-outlined:hover {
     @media (any-hover: hover) {
-      &:hover {
-        --_sui_input-border_color: var(--sui_input-border_color-hover);
-        --_sui_input-border_width: var(--sui_input-border_width-hover);
-      }
-    }
-
-    &:focus-visible {
-      --_sui_input-border_color: var(--sui_input-border_color-focus_visible);
-      --_sui_input-border_width: var(--sui_input-border_width-focus_visible);
+      --_sui_input-border_color: var(--sui_input-border_color-hover);
+      --_sui_input-border_width: var(--sui_input-border_width-hover);
     }
   }
 
-  .sui_input-invalid {
+  &.sui_input-outlined:focus-visible {
+    --_sui_input-border_color: var(--sui_input-border_color-focus_visible);
+    --_sui_input-border_width: var(--sui_input-border_width-focus_visible);
+  }
+
+  &.sui_input-invalid {
     --_sui_input-border_color: var(--sui_input-border_color-invalid);
     --_sui_input-border_width: var(--sui_input-border_width-invalid);
   }
 
-  .sui_input-unverified:user-invalid {
+  &.sui_input-unverified:user-invalid {
     --_sui_input-border_color: var(--sui_input-border_color-invalid);
     --_sui_input-border_width: var(--sui_input-border_width-invalid);
   }
-
-  /* 上書き設定: ここまで */
 }
+
+} /* @scope */
+} /* @layer */
 
 /* disabled */
 @layer sui.important {
-  /* Root */
-  .sui_input-disabled {
-    color: var(--sui-canvas_text-2) !important;
-    cursor: not-allowed !important;
+@scope (.sui_input) to ([data-scope]) {
 
-    &.sui_input-variant_naked {
-      background-color: var(--sui-disabled-naked-canvas) !important;
+/* Root */
+:scope {
+  &.sui_input-disabled {
+    color: var(--sui-canvas_text-2);
+    cursor: not-allowed;
+  }
 
-      &::placeholder {
-        color: var(--sui-disabled-naked-canvas_text) !important;
-      }
+  &.sui_input-disabled.sui_input-variant_naked {
+    background-color: var(--sui-disabled-naked-canvas);
+  }
 
-      &.sui_input-outlined {
-        border: var(--sui-disabled-naked-border) solid var(--sui-disabled-border_width) !important;
-      }
-    }
+  &.sui_input-disabled.sui_input-variant_naked::placeholder {
+    color: var(--sui-disabled-naked-canvas_text);
+  }
 
-    &.sui_input-variant_liquid {
-      background-color: var(--sui-disabled-liquid-canvas) !important;
+  &.sui_input-disabled.sui_input-variant_naked.sui_input-outlined {
+    border-color: var(--sui-disabled-naked-border);
+    border-style: solid;
+    border-width: var(--sui-disabled-border_width);
+  }
 
-      &::placeholder {
-        color: var(--sui-disabled-liquid-canvas_text) !important;
-      }
+  &.sui_input-disabled.sui_input-variant_liquid {
+    background-color: var(--sui-disabled-liquid-canvas);
+  }
 
-      &.sui_input-outlined {
-        border: var(--sui-disabled-liquid-border) solid var(--sui-disabled-border_width) !important;
-      }
-    }
+  &.sui_input-disabled.sui_input-variant_liquid::placeholder {
+    color: var(--sui-disabled-liquid-canvas_text);
+  }
+
+  &.sui_input-disabled.sui_input-variant_liquid.sui_input-outlined {
+    border-color: var(--sui-disabled-liquid-border);
+    border-style: solid;
+    border-width: var(--sui-disabled-border_width);
   }
 }
+
+} /* @scope */
+} /* @layer */

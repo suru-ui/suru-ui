@@ -2,26 +2,7 @@
 @layer sui.component {
 @scope (.sui_button) to ([data-scope]) {
 
-/* 変数 */
-:scope {
-  --sui_button-min_height: ;
-  --sui_button-padding_block: ;
-  --sui_button-padding_inline: ;
-  --sui_button-focusring_width: ;
-  --sui_button-focusring_color: ;
-  --sui_button-focusring_offset: ;
-  --sui_button--content-leading: ;
-  --sui_button-background_color-idle: ;
-  --sui_button-background_color-hover: ;
-  --sui_button-background_color-active: ;
-  --sui_button-border_color-idle: ;
-  --sui_button-border_color-hover: ;
-  --sui_button-border_color-active: ;
-  --sui_button-border_width: ;
-  --sui_button-border_radius: ;
-}
-
-/* 静的 */
+/* 固定 */
 :scope {
   position: relative;
   display: inline-flex;
@@ -36,7 +17,26 @@
   border-style: solid;
 }
 
-/* 動的 */
+/* 変数 */
+:scope {
+  --sui_button-min_height: ;
+  --sui_button-padding_block: ;
+  --sui_button-padding_inline: ;
+  --sui_button-focusring_width: ;
+  --sui_button-focusring_color: ;
+  --sui_button-focusring_offset: ;
+  --sui_button-virtual_content-leading: ;
+  --sui_button-background_color-idle: ;
+  --sui_button-background_color-hover: ;
+  --sui_button-background_color-active: ;
+  --sui_button-border_color-idle: ;
+  --sui_button-border_color-hover: ;
+  --sui_button-border_color-active: ;
+  --sui_button-border_width: ;
+  --sui_button-border_radius: ;
+}
+
+/* 可変 */
 :scope {
   z-index: var(--_sui_button-z_index, 0);
   min-width: var(--_sui_button-min_width, calc(var(--sui_button-min_height) * 2));
@@ -53,10 +53,10 @@
   border-radius: var(--sui_button-border_radius);
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
   --sui_button-padding_block: calc(
-                                (var(--sui_button-min_height) - var(--sui_button--content-leading))
+                                (var(--sui_button-min_height) - var(--sui_button-virtual_content-leading))
                                 / 2
                                 - var(--_sui_button-border_width, 0px)
                               );
@@ -362,7 +362,7 @@
   }
 }
 
-/* 上書き */
+/* 変異 */
 :scope {
   @media (any-hover: hover) {
     &:hover {
@@ -412,6 +412,21 @@
 @layer sui.component {
 @scope (.sui_button) to ([data-scope]) {
 
+/* 固定 */
+:scope {
+  .sui_button_content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-overflow: ellipsis;
+    font-feature-settings: "palt";
+    vertical-align: middle;
+    white-space: nowrap;
+    text-box: trim-both cap alphabetic;
+  }
+}
+
 /* 変数 */
 :scope {
   --sui_button_content-gap: ;
@@ -427,27 +442,7 @@
   --sui_button_content__svg-color: ;
 }
 
-/* 静的 */
-:scope {
-  .sui_button_content {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    text-overflow: ellipsis;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    font-feature-settings: "palt";
-    line-height: inherit;
-    vertical-align: middle;
-    letter-spacing: inherit;
-    white-space: nowrap;
-    text-box: trim-both cap alphabetic;
-  }
-}
-
-/* 動的 */
+/* 可変 */
 :scope {
   .sui_button_content {
     gap: var(--sui_button_content-gap);
@@ -466,9 +461,9 @@
   }
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
-  --sui_button--content-leading: max(1lh, var(--sui_button_content__svg-size));
+  --sui_button-virtual_content-leading: max(1lh, var(--sui_button_content__svg-size));
   --sui_button_content-font_family: var(--sui-font-sans);
   --sui_button_content__svg-size: calc(
                                     var(--sui_button_content-font_size)
@@ -718,7 +713,7 @@
   }
 }
 
-/* 上書き */
+/* 変異 */
 :scope {
   @media (any-hover: hover) {
     &:hover {
@@ -751,7 +746,7 @@
   --sui_button_pending__svg-color: ;
 }
 
-/* 動的 */
+/* 可変 */
 :scope {
   .sui_button_pending {
     position: var(--_sui_button_pending-position, relative);
@@ -771,7 +766,7 @@
   }
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
   --sui_button_pending-font_family: var(--sui-font-sans);
   --sui_button_pending-canvas: var(--sui_button-background_color-idle);
@@ -952,7 +947,7 @@
   }
 }
 
-/* 上書き */
+/* 変異 */
 :scope {
   .sui_button_pending-overlay {
     --_sui_button_pending-position: absolute;
@@ -975,14 +970,14 @@
   --sui_button_circular_progress_track-color: ;
 }
 
-/* 動的 */
+/* 可変 */
 :scope {
   .sui_button_circular_progress_track {
     color: var(--sui_button_circular_progress_track-color);
   }
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
   --sui_button_circular_progress_track-color: color-mix(
                                                 in oklab,
@@ -998,12 +993,7 @@
 @layer sui.component {
 @scope (.sui_button) to ([data-scope]) {
 
-/* 変数 */
-:scope {
-  --sui_button_circular_progress_fill-color: ;
-}
-
-/* 静的 */
+/* 固定 */
 :scope {
   .sui_button_circular_progress_fill {
     transform-origin: center center;
@@ -1011,14 +1001,19 @@
   }
 }
 
-/* 動的 */
+/* 変数 */
+:scope {
+  --sui_button_circular_progress_fill-color: ;
+}
+
+/* 可変 */
 :scope {
   .sui_button_circular_progress_fill {
     color: var(--sui_button_circular_progress_fill-color);
   }
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
   --sui_button_circular_progress_fill-color: var(--sui_button_pending-color);
 }

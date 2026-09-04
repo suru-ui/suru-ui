@@ -1,49 +1,49 @@
 /* Root */
 @layer sui.component {
-  /* 変数 */
-  .sui_avatar {
-    --sui_avatar-size: ;
-    --sui_avatar-font_family: ;
-    --sui_avatar-font_size: ;
-    --sui_avatar-font_weight: ;
-    --sui_avatar-line_height: ;
-    --sui_avatar-color: ;
-    --sui_avatar-letter_spacing: ;
-    --sui_avatar-background_color: ;
-    --sui_avatar-border_radius: ;
-  }
+@scope (.sui_avatar) to ([data-scope]) {
 
-  /* 静的 */
-  .sui_avatar {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    vertical-align: middle;
-    user-select: none;
-  }
+/* 固定 */
+:scope {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  vertical-align: middle;
+  user-select: none;
+}
 
-  /* 動的 */
-  .sui_avatar {
-    width: var(--sui_avatar-size);
-    height: var(--sui_avatar-size);
-    font-family: var(--sui_avatar-font_family);
-    font-size: var(--sui_avatar-font_size);
-    font-weight: var(--sui_avatar-font_weight);
-    line-height: var(--sui_avatar-line_height);
-    color: var(--sui_avatar-color);
-    letter-spacing: var(--sui_avatar-letter_spacing);
-    background-color: var(--sui_avatar-background_color);
-    border-radius: var(--sui_avatar-border_radius);
-  }
+/* 変数 */
+:scope {
+  --sui_avatar-size: ;
+  --sui_avatar-font_family: ;
+  --sui_avatar-font_size: ;
+  --sui_avatar-font_weight: ;
+  --sui_avatar-line_height: ;
+  --sui_avatar-color: ;
+  --sui_avatar-letter_spacing: ;
+  --sui_avatar-background_color: ;
+  --sui_avatar-border_radius: ;
+}
 
-  /* 既定値設定: ここから */
+/* 可変 */
+:scope {
+  width: var(--sui_avatar-size);
+  height: var(--sui_avatar-size);
+  font-family: var(--sui_avatar-font_family);
+  font-size: var(--sui_avatar-font_size);
+  font-weight: var(--sui_avatar-font_weight);
+  line-height: var(--sui_avatar-line_height);
+  color: var(--sui_avatar-color);
+  letter-spacing: var(--sui_avatar-letter_spacing);
+  background-color: var(--sui_avatar-background_color);
+  border-radius: var(--sui_avatar-border_radius);
+}
 
-  .sui_avatar {
-    --sui_avatar-font_family: var(--sui-font-sans);
-  }
+/* 代入 */
+:scope {
+  --sui_avatar-font_family: var(--sui-font-sans);
 
-  .sui_avatar-size_sm {
+  &.sui_avatar-size_sm {
     --sui_avatar-size: var(--sui-size-sm);
     --sui_avatar-font_size: var(--sui-text-oln-sm-b-font_size);
     --sui_avatar-font_weight: var(--sui-text-oln-sm-b-font_weight);
@@ -51,7 +51,7 @@
     --sui_avatar-letter_spacing: var(--sui-text-oln-sm-b-letter_spacing);
   }
 
-  .sui_avatar-size_md {
+  &.sui_avatar-size_md {
     --sui_avatar-size: var(--sui-size-md);
     --sui_avatar-font_size: var(--sui-text-oln-md-b-font_size);
     --sui_avatar-font_weight: var(--sui-text-oln-md-b-font_weight);
@@ -59,7 +59,7 @@
     --sui_avatar-letter_spacing: var(--sui-text-oln-md-b-letter_spacing);
   }
 
-  .sui_avatar-size_lg {
+  &.sui_avatar-size_lg {
     --sui_avatar-size: var(--sui-size-lg);
     --sui_avatar-font_size: var(--sui-text-oln-lg-b-font_size);
     --sui_avatar-font_weight: var(--sui-text-oln-lg-b-font_weight);
@@ -67,72 +67,76 @@
     --sui_avatar-letter_spacing: var(--sui-text-oln-lg-b-letter_spacing);
   }
 
-  .sui_avatar-radius_none {
+  &.sui_avatar-radius_none {
     --sui_avatar-border_radius: 0px;
   }
 
-  .sui_avatar-radius_sm {
+  &.sui_avatar-radius_sm {
     --sui_avatar-border_radius: var(--sui-radius-sm);
   }
 
-  .sui_avatar-radius_md {
+  &.sui_avatar-radius_md {
     --sui_avatar-border_radius: var(--sui-radius-md);
   }
 
-  .sui_avatar-radius_lg {
+  &.sui_avatar-radius_lg {
     --sui_avatar-border_radius: var(--sui-radius-lg);
   }
 
-  .sui_avatar-radius_full {
+  &.sui_avatar-radius_full {
     --sui_avatar-border_radius: 50%;
   }
 
-  .sui_avatar-color_grey {
+  &.sui_avatar-color_grey {
     --sui_avatar-color: var(--sui-grey-solid-canvas_text-normal);
     --sui_avatar-background_color: var(--sui-grey-solid-canvas-normal);
   }
 
-  .sui_avatar-color_blue {
+  &.sui_avatar-color_blue {
     --sui_avatar-color: var(--sui-blue-solid-canvas_text-normal);
     --sui_avatar-background_color: var(--sui-blue-solid-canvas-normal);
   }
 
-  .sui_avatar-color_purple {
+  &.sui_avatar-color_purple {
     --sui_avatar-color: var(--sui-purple-solid-canvas_text-normal);
     --sui_avatar-background_color: var(--sui-purple-solid-canvas-normal);
   }
 
-  .sui_avatar-color_magenta {
+  &.sui_avatar-color_magenta {
     --sui_avatar-color: var(--sui-magenta-solid-canvas_text-normal);
     --sui_avatar-background_color: var(--sui-magenta-solid-canvas-normal);
   }
 
-  .sui_avatar-color_red {
+  &.sui_avatar-color_red {
     --sui_avatar-color: var(--sui-red-solid-canvas_text-normal);
     --sui_avatar-background_color: var(--sui-red-solid-canvas-normal);
   }
 
-  .sui_avatar-color_orange {
+  &.sui_avatar-color_orange {
     --sui_avatar-color: var(--sui-orange-solid-canvas_text-normal);
     --sui_avatar-background_color: var(--sui-orange-solid-canvas-normal);
   }
 
-  .sui_avatar-color_yellow {
+  &.sui_avatar-color_yellow {
     --sui_avatar-color: var(--sui-yellow-solid-canvas_text-normal);
     --sui_avatar-background_color: var(--sui-yellow-solid-canvas-normal);
   }
 
-  .sui_avatar-color_green {
+  &.sui_avatar-color_green {
     --sui_avatar-color: var(--sui-green-solid-canvas_text-normal);
     --sui_avatar-background_color: var(--sui-green-solid-canvas-normal);
   }
-
-  /* 既定値設定: ここまで */
 }
+
+} /* @scope */
+} /* @layer */
 
 /* Image */
 @layer sui.component {
-  /* 静的 */
+@scope (.sui_avatar) to ([data-scope]) {
+
+/* 固定 */
+:scope {
   .sui_avatar_image {
     display: block;
     width: 100%;
@@ -141,19 +145,15 @@
   }
 }
 
+} /* @scope */
+} /* @layer */
+
 /* Fallback */
 @layer sui.component {
-  /* 変数 */
-  .sui_avatar {
-    --sui_avatar_fallback-font_family: ;
-    --sui_avatar_fallback-font_size: ;
-    --sui_avatar_fallback-font_weight: ;
-    --sui_avatar_fallback-line_height: ;
-    --sui_avatar_fallback-color: ;
-    --sui_avatar_fallback-letter_spacing: ;
-  }
+@scope (.sui_avatar) to ([data-scope]) {
 
-  /* 静的 */
+/* 固定 */
+:scope {
   .sui_avatar_fallback {
     display: inline-flex;
     align-items: center;
@@ -161,8 +161,20 @@
     width: 100%;
     height: 100%;
   }
+}
 
-  /* 動的 */
+/* 変数 */
+:scope {
+  --sui_avatar_fallback-font_family: ;
+  --sui_avatar_fallback-font_size: ;
+  --sui_avatar_fallback-font_weight: ;
+  --sui_avatar_fallback-line_height: ;
+  --sui_avatar_fallback-color: ;
+  --sui_avatar_fallback-letter_spacing: ;
+}
+
+/* 可変 */
+:scope {
   .sui_avatar_fallback {
     font-family: var(--sui_avatar_fallback-font_family);
     font-size: var(--sui_avatar_fallback-font_size);
@@ -171,17 +183,17 @@
     color: var(--sui_avatar_fallback-color);
     letter-spacing: var(--sui_avatar_fallback-letter_spacing);
   }
-
-  /* 既定値設定: ここから */
-
-  .sui_avatar {
-    --sui_avatar_fallback-font_family: var(--sui-font-sans);
-    --sui_avatar_fallback-font_size: var(--sui_avatar-font_size);
-    --sui_avatar_fallback-font_weight: var(--sui_avatar-font_weight);
-    --sui_avatar_fallback-line_height: var(--sui_avatar-line_height);
-    --sui_avatar_fallback-color: var(--sui_avatar-color);
-    --sui_avatar_fallback-letter_spacing: var(--sui_avatar-letter_spacing);
-  }
-
-  /* 既定値設定: ここまで */
 }
+
+/* 代入 */
+:scope {
+  --sui_avatar_fallback-font_family: var(--sui-font-sans);
+  --sui_avatar_fallback-font_size: var(--sui_avatar-font_size);
+  --sui_avatar_fallback-font_weight: var(--sui_avatar-font_weight);
+  --sui_avatar_fallback-line_height: var(--sui_avatar-line_height);
+  --sui_avatar_fallback-color: var(--sui_avatar-color);
+  --sui_avatar_fallback-letter_spacing: var(--sui_avatar-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */

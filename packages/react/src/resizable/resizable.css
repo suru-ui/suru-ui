@@ -1,53 +1,32 @@
 /* Root */
 @layer sui.component {
-  /* 静的 */
-  .sui_resizable {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
+@scope (.sui_resizable) to ([data-scope]) {
 
-  .sui_resizable[data-direction="horizontal"] {
+/* 固定 */
+:scope {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  &[data-direction="horizontal"] {
     flex-direction: row;
   }
 
-  .sui_resizable[data-direction="vertical"] {
+  &[data-direction="vertical"] {
     flex-direction: column;
   }
 }
 
+} /* @scope */
+} /* @layer */
+
 /* Handle */
 @layer sui.component {
-  .sui_resizable_handle_grip {
-    box-sizing: border-box;
-    border: 0px;
-  }
+@scope (.sui_resizable) to ([data-scope]) {
 
-  /* 変数 */
-  .sui_resizable_handle {
-    --sui_resizable_handle-outline_width: ;
-    --sui_resizable_handle-outline_color: ;
-    --sui_resizable_handle-outline_offset: ;
-    --sui_resizable_handle-grip_background_color-action: ;
-    --sui_resizable_handle-grip_background_color-normal: ;
-    --sui_resizable_handle-grip_background_color-subtle: ;
-    --sui_resizable_handle-grip_border_color-action: ;
-    --sui_resizable_handle-grip_border_color-normal: ;
-    --sui_resizable_handle-grip_border_color-subtle: ;
-    --sui_resizable_handle-grip_border_radius: ;
-    --sui_resizable_handle-grip_border_width: ;
-    --sui_resizable_handle-grip_dot_size: ;
-    --sui_resizable_handle-grip_height: ;
-    --sui_resizable_handle-grip_width: ;
-    --sui_resizable_handle-hit_size: ;
-    --sui_resizable_handle-line_color-action: ;
-    --sui_resizable_handle-line_color-normal: ;
-    --sui_resizable_handle-line_color-subtle: ;
-    --sui_resizable_handle-line_size: ;
-  }
-
-  /* 静的 */
+/* 固定 */
+:scope {
   .sui_resizable_handle {
     position: relative;
     z-index: 1;
@@ -55,6 +34,7 @@
     flex: 0 0 auto;
     align-items: center;
     justify-content: center;
+    height: 100%;
     padding: 0px;
     touch-action: none;
     cursor: col-resize;
@@ -62,6 +42,7 @@
   }
 
   .sui_resizable_handle[aria-orientation="horizontal"] {
+    width: 100%;
     cursor: row-resize;
   }
 
@@ -71,66 +52,46 @@
     content: "";
   }
 
-  .sui_resizable_handle_grip {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex: 0 0 auto;
-    align-items: center;
-    justify-content: center;
-    padding: 0px;
-  }
-
-  .sui_resizable_handle {
-    height: 100%;
-  }
-
-  .sui_resizable_handle[aria-orientation="horizontal"] {
-    width: 100%;
-  }
-
-  .sui_resizable_handle[aria-orientation="horizontal"] > .sui_resizable_handle_grip {
-    transform: rotate(90deg);
-  }
-
   .sui_resizable_handle[aria-orientation="vertical"]::after {
     top: 0px;
     bottom: 0px;
     left: 50%;
+    transform: translateX(-50%);
   }
 
   .sui_resizable_handle[aria-orientation="horizontal"]::after {
     top: 50%;
     right: 0px;
     left: 0px;
+    transform: translateY(-50%);
   }
+}
 
-  /* 動的 */
+/* 変数 */
+:scope {
+  --sui_resizable_handle-outline_width: ;
+  --sui_resizable_handle-outline_color: ;
+  --sui_resizable_handle-outline_offset: ;
+  --sui_resizable_handle-hit_size: ;
+  --sui_resizable_handle-line_color-action: ;
+  --sui_resizable_handle-line_color-normal: ;
+  --sui_resizable_handle-line_color-subtle: ;
+  --sui_resizable_handle-line_size: ;
+}
+
+/* 可変 */
+:scope {
   .sui_resizable_handle {
     width: var(--sui_resizable_handle-line_size);
-    outline: var(--_sui_resizable_handle-outline_width,
-                 var(--sui_resizable_handle-outline_width)
-               )
-               solid
-               var(--sui_resizable_handle-outline_color);
+    outline-width: var(--_sui_resizable_handle-outline_width,
+                     var(--sui_resizable_handle-outline_width)
+                   );
+    outline-style: solid;
+    outline-color: var(--sui_resizable_handle-outline_color);
     outline-offset: var(--sui_resizable_handle-outline_offset);
     background-color: var(--_sui_resizable_handle-line_color,
-                          var(--sui_resizable_handle-line_color-normal)
-                        );
-  }
-
-  .sui_resizable_handle_grip {
-    width: var(--sui_resizable_handle-grip_width);
-    height: var(--sui_resizable_handle-grip_height);
-    background-color: var(--_sui_resizable_handle-grip_background_color,
-                          var(--sui_resizable_handle-grip_background_color-normal)
-                        );
-    border: var(--sui_resizable_handle-grip_border_width)
-            solid
-            var(--_sui_resizable_handle-grip_border_color,
-                 var(--sui_resizable_handle-grip_border_color-normal)
-               );
-    border-radius: var(--sui_resizable_handle-grip_border_radius);
+                        var(--sui_resizable_handle-line_color-normal)
+                      );
   }
 
   .sui_resizable_handle[aria-orientation="horizontal"] {
@@ -139,23 +100,112 @@
 
   .sui_resizable_handle[aria-orientation="vertical"]::after {
     width: var(--sui_resizable_handle-hit_size);
-    transform: translateX(-50%);
   }
 
   .sui_resizable_handle[aria-orientation="horizontal"]::after {
     height: var(--sui_resizable_handle-hit_size);
-    transform: translateY(-50%);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_resizable_handle-outline_width: 0px;
+  --sui_resizable_handle-outline_color: var(--sui-focusring_color);
+  --sui_resizable_handle-outline_offset: var(--sui-focusring_offset);
+  --sui_resizable_handle-hit_size: 16px;
+  --sui_resizable_handle-line_color-action: var(--sui-canvas_text-1);
+  --sui_resizable_handle-line_color-normal: var(--sui-canvas_text-3);
+  --sui_resizable_handle-line_color-subtle: var(--sui-canvas_text-2);
+  --sui_resizable_handle-line_size: 1px;
+}
+
+/* 変異 */
+:scope {
+  .sui_resizable_handle {
+    @media (any-hover: hover) {
+      &:not(.sui_resizable_handle-disabled):hover {
+        --_sui_resizable_handle-line_color: var(--sui_resizable_handle-line_color-subtle);
+      }
+    }
+
+    &:not(.sui_resizable_handle-disabled):active {
+      --_sui_resizable_handle-line_color: var(--sui_resizable_handle-line_color-action);
+    }
+
+    &:focus-visible {
+      --_sui_resizable_handle-outline_width: var(--sui-focusring_width);
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Grip */
+@layer sui.component {
+@scope (.sui_resizable) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_resizable_handle_grip {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+    border: 0px;
+  }
+
+  .sui_resizable_handle[aria-orientation="horizontal"] > .sui_resizable_handle_grip {
+    transform: rotate(90deg);
   }
 
   .sui_resizable_handle_grip:empty::before {
     display: block;
+    content: "";
+    border-radius: 999px;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_resizable_handle-grip_background_color-action: ;
+  --sui_resizable_handle-grip_background_color-normal: ;
+  --sui_resizable_handle-grip_background_color-subtle: ;
+  --sui_resizable_handle-grip_border_color-action: ;
+  --sui_resizable_handle-grip_border_color-normal: ;
+  --sui_resizable_handle-grip_border_color-subtle: ;
+  --sui_resizable_handle-grip_border_radius: ;
+  --sui_resizable_handle-grip_border_width: ;
+  --sui_resizable_handle-grip_dot_size: ;
+  --sui_resizable_handle-grip_height: ;
+  --sui_resizable_handle-grip_width: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_resizable_handle_grip {
+    width: var(--sui_resizable_handle-grip_width);
+    height: var(--sui_resizable_handle-grip_height);
+    background-color: var(--_sui_resizable_handle-grip_background_color,
+                        var(--sui_resizable_handle-grip_background_color-normal)
+                      );
+    border-color: var(--_sui_resizable_handle-grip_border_color,
+                    var(--sui_resizable_handle-grip_border_color-normal)
+                  );
+    border-style: solid;
+    border-width: var(--sui_resizable_handle-grip_border_width);
+    border-radius: var(--sui_resizable_handle-grip_border_radius);
+  }
+
+  .sui_resizable_handle_grip:empty::before {
     width: var(--sui_resizable_handle-grip_dot_size);
     height: var(--sui_resizable_handle-grip_dot_size);
-    content: "";
     background-color: var(--_sui_resizable_handle-line_color,
-                          var(--sui_resizable_handle-line_color-normal)
-                        );
-    border-radius: 999px;
+                        var(--sui_resizable_handle-line_color-normal)
+                      );
     box-shadow: 0px -4px 0px
                   var(--_sui_resizable_handle-line_color,
                        var(--sui_resizable_handle-line_color-normal)
@@ -165,65 +215,62 @@
                        var(--sui_resizable_handle-line_color-normal)
                      );
   }
+}
 
-  /* 既定値設定: ここから */
+/* 代入 */
+:scope {
+  --sui_resizable_handle-grip_background_color-action: var(--sui-canvas-1);
+  --sui_resizable_handle-grip_background_color-normal: var(--sui-canvas-1);
+  --sui_resizable_handle-grip_background_color-subtle: var(--sui-canvas-2);
+  --sui_resizable_handle-grip_border_color-action: var(--sui-canvas_text-1);
+  --sui_resizable_handle-grip_border_color-normal: var(--sui-canvas_text-3);
+  --sui_resizable_handle-grip_border_color-subtle: var(--sui-canvas_text-2);
+  --sui_resizable_handle-grip_border_radius: 2px;
+  --sui_resizable_handle-grip_border_width: 1px;
+  --sui_resizable_handle-grip_dot_size: 2px;
+  --sui_resizable_handle-grip_height: 16px;
+  --sui_resizable_handle-grip_width: 12px;
+}
 
+/* 変異 */
+:scope {
   .sui_resizable_handle {
-    --sui_resizable_handle-outline_width: 0px;
-    --sui_resizable_handle-outline_color: var(--sui-focusring_color);
-    --sui_resizable_handle-outline_offset: var(--sui-focusring_offset);
-    --sui_resizable_handle-grip_background_color-action: var(--sui-canvas-1);
-    --sui_resizable_handle-grip_background_color-normal: var(--sui-canvas-1);
-    --sui_resizable_handle-grip_background_color-subtle: var(--sui-canvas-2);
-    --sui_resizable_handle-grip_border_color-action: var(--sui-canvas_text-1);
-    --sui_resizable_handle-grip_border_color-normal: var(--sui-canvas_text-3);
-    --sui_resizable_handle-grip_border_color-subtle: var(--sui-canvas_text-2);
-    --sui_resizable_handle-grip_border_radius: 2px;
-    --sui_resizable_handle-grip_border_width: 1px;
-    --sui_resizable_handle-grip_dot_size: 2px;
-    --sui_resizable_handle-grip_height: 16px;
-    --sui_resizable_handle-grip_width: 12px;
-    --sui_resizable_handle-hit_size: 16px;
-    --sui_resizable_handle-line_color-action: var(--sui-canvas_text-1);
-    --sui_resizable_handle-line_color-normal: var(--sui-canvas_text-3);
-    --sui_resizable_handle-line_color-subtle: var(--sui-canvas_text-2);
-    --sui_resizable_handle-line_size: 1px;
-  }
+    @media (any-hover: hover) {
+      &:not(.sui_resizable_handle-disabled):hover {
+        --_sui_resizable_handle-grip_background_color:
+          var(--sui_resizable_handle-grip_background_color-subtle);
+        --_sui_resizable_handle-grip_border_color:
+          var(--sui_resizable_handle-grip_border_color-subtle);
+      }
+    }
 
-  /* 既定値設定: ここまで */
-
-  /* 上書き設定: ここから */
-
-  @media (any-hover: hover) {
-    .sui_resizable_handle:not(.sui_resizable_handle-disabled):hover {
+    &:not(.sui_resizable_handle-disabled):active {
       --_sui_resizable_handle-grip_background_color:
-        var(--sui_resizable_handle-grip_background_color-subtle);
+        var(--sui_resizable_handle-grip_background_color-action);
       --_sui_resizable_handle-grip_border_color:
-        var(--sui_resizable_handle-grip_border_color-subtle);
-      --_sui_resizable_handle-line_color: var(--sui_resizable_handle-line_color-subtle);
+        var(--sui_resizable_handle-grip_border_color-action);
     }
   }
-
-  .sui_resizable_handle:not(.sui_resizable_handle-disabled):active {
-    --_sui_resizable_handle-grip_background_color:
-      var(--sui_resizable_handle-grip_background_color-action);
-    --_sui_resizable_handle-grip_border_color:
-      var(--sui_resizable_handle-grip_border_color-action);
-    --_sui_resizable_handle-line_color: var(--sui_resizable_handle-line_color-action);
-  }
-
-  .sui_resizable_handle:focus-visible {
-    --_sui_resizable_handle-outline_width: var(--sui-focusring_width);
-  }
-
-  /* 上書き設定: ここまで */
 }
+
+} /* @scope */
+} /* @layer */
 
 /* disabled */
 @layer sui.important {
-  /* Handle */
+@scope (.sui_resizable) to ([data-scope]) {
+
+/* Handle */
+:scope {
   .sui_resizable_handle-disabled {
-    cursor: not-allowed !important;
-    opacity: 0.5 !important;
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .sui_resizable_handle-disabled .sui_resizable_handle_grip {
+    cursor: not-allowed;
   }
 }
+
+} /* @scope */
+} /* @layer */

@@ -478,8 +478,10 @@
   --sui_accordion_content-padding_bottom: ;
   --sui_accordion_content-font_family: ;
   --sui_accordion_content-font_size: ;
+  --sui_accordion_content-font_weight: ;
   --sui_accordion_content-line_height: ;
   --sui_accordion_content-color: ;
+  --sui_accordion_content-letter_spacing: ;
   --sui_accordion_content-background_color: ;
   --sui_accordion_content-border_radius: ;
 }

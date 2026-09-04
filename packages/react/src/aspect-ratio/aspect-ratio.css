@@ -1,35 +1,36 @@
 /* Root */
 @layer sui.component {
-  /* 変数 */
-  .sui_aspect_ratio {
-    --sui_aspect_ratio-width: ;
-    --sui_aspect_ratio-ratio: ;
-  }
+@scope (.sui_aspect_ratio) to ([data-scope]) {
 
-  /* 静的 */
-  .sui_aspect_ratio {
-    position: relative;
-  }
+/* 固定 */
+:scope {
+  position: relative;
 
-  .sui_aspect_ratio > * {
+  > * {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
   }
-
-  /* 動的 */
-  .sui_aspect_ratio {
-    width: var(--sui_aspect_ratio-width);
-    aspect-ratio: var(--sui_aspect_ratio-ratio);
-  }
-
-  /* 既定値設定: ここから */
-
-  .sui_aspect_ratio {
-    --sui_aspect_ratio-width: 100%;
-    --sui_aspect_ratio-ratio: 1;
-  }
-
-  /* 既定値設定: ここまで */
 }
+
+/* 変数 */
+:scope {
+  --sui_aspect_ratio-width: ;
+  --sui_aspect_ratio-ratio: ;
+}
+
+/* 可変 */
+:scope {
+  width: var(--sui_aspect_ratio-width);
+  aspect-ratio: var(--sui_aspect_ratio-ratio);
+}
+
+/* 代入 */
+:scope {
+  --sui_aspect_ratio-width: 100%;
+  --sui_aspect_ratio-ratio: 1;
+}
+
+} /* @scope */
+} /* @layer */

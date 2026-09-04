@@ -1,41 +1,41 @@
 /* Root */
 @layer sui.component {
-  /* 変数 */
-  .sui_status {
-    --sui_status-gap: ;
-    --sui_status-font_family: ;
-    --sui_status-font_size: ;
-    --sui_status-font_weight: ;
-    --sui_status-line_height: ;
-    --sui_status-color-normal: ;
-    --sui_status-letter_spacing: ;
-  }
+@scope (.sui_status) to ([data-scope]) {
 
-  /* 静的 */
-  .sui_status {
-    display: inline-flex;
-    align-items: center;
-  }
+/* 固定 */
+:scope {
+  display: inline-flex;
+  align-items: center;
+}
 
-  /* 動的 */
-  .sui_status {
-    gap: var(--sui_status-gap);
-    font-family: var(--sui_status-font_family);
-    font-size: var(--sui_status-font_size);
-    font-weight: var(--sui_status-font_weight);
-    line-height: var(--sui_status-line_height);
-    color: var(--sui_status-color-normal);
-    letter-spacing: var(--sui_status-letter_spacing);
-  }
+/* 変数 */
+:scope {
+  --sui_status-gap: ;
+  --sui_status-font_family: ;
+  --sui_status-font_size: ;
+  --sui_status-font_weight: ;
+  --sui_status-line_height: ;
+  --sui_status-color-normal: ;
+  --sui_status-letter_spacing: ;
+}
 
-  /* 既定値設定: ここから */
+/* 可変 */
+:scope {
+  gap: var(--sui_status-gap);
+  font-family: var(--sui_status-font_family);
+  font-size: var(--sui_status-font_size);
+  font-weight: var(--sui_status-font_weight);
+  line-height: var(--sui_status-line_height);
+  color: var(--sui_status-color-normal);
+  letter-spacing: var(--sui_status-letter_spacing);
+}
 
-  .sui_status {
-    --sui_status-font_family: var(--sui-font-sans);
-    --sui_status-color-normal: var(--sui-canvas_text-1);
-  }
+/* 代入 */
+:scope {
+  --sui_status-font_family: var(--sui-font-sans);
+  --sui_status-color-normal: var(--sui-canvas_text-1);
 
-  .sui_status-size_sm {
+  &.sui_status-size_sm {
     --sui_status-gap: --sui-space(1);
     --sui_status-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_status-font_weight: var(--sui-text-oln-sm-n-font_weight);
@@ -43,7 +43,7 @@
     --sui_status-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
   }
 
-  .sui_status-size_md {
+  &.sui_status-size_md {
     --sui_status-gap: --sui-space(2);
     --sui_status-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_status-font_weight: var(--sui-text-oln-md-n-font_weight);
@@ -51,33 +51,49 @@
     --sui_status-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   }
 
-  .sui_status-size_lg {
+  &.sui_status-size_lg {
     --sui_status-gap: --sui-space(2);
     --sui_status-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_status-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_status-line_height: var(--sui-text-oln-lg-n-line_height);
     --sui_status-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
   }
-
-  /* 既定値設定: ここまで */
 }
+
+} /* @scope */
+} /* @layer */
 
 /* Indicator */
 @layer sui.component {
-  /* 変数 */
-  .sui_status_indicator {
-    --sui_status_indicator-size: ;
-    --sui_status_indicator-background_color: ;
-    --sui_status_indicator-animation_duration: ;
-  }
+@scope (.sui_status) to ([data-scope]) {
 
-  /* 静的 */
+/* 固定 */
+:scope {
   .sui_status_indicator {
     display: block;
     flex-shrink: 0;
   }
 
-  /* 動的 */
+  .sui_status_indicator-processing::after {
+    position: absolute;
+    inset: 0px;
+    content: "";
+    border-radius: inherit;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_status_indicator-size: ;
+  --sui_status_indicator-background_color: ;
+  --sui_status_indicator-border_radius: ;
+  --sui_status_indicator-animation_duration: ;
+}
+
+/* 可変 */
+:scope {
   .sui_status_indicator {
     width: var(--sui_status_indicator-size);
     height: var(--sui_status_indicator-size);
@@ -87,80 +103,82 @@
   }
 
   .sui_status_indicator-processing::after {
-    position: absolute;
-    inset: 0px;
-    content: "";
     background-color: var(--sui_status_indicator-background_color);
-    border-radius: inherit;
-    animation-name: sui_status-ping;
-    animation-timing-function: ease-out;
-    animation-iteration-count: infinite;
+    animation-name: var(--_sui_status_indicator-animation_name, none);
+    animation-duration: var(--sui_status_indicator-animation_duration);
   }
+}
 
-  /* 既定値設定: ここから */
+/* 代入 */
+:scope {
+  --sui_status_indicator-border_radius: calc(var(--sui_status_indicator-size) / 2);
+  --sui_status_indicator-animation_duration: 1.5s;
 
-  .sui_status_indicator {
-    --sui_status_indicator-border_radius: calc(var(--sui_status_indicator-size) / 2);
-    --sui_status_indicator-animation_duration: 1.5s;
-  }
-
-  .sui_status_indicator-size_sm {
+  &:has(.sui_status_indicator-size_sm) {
     --sui_status_indicator-size: 6px;
   }
 
-  .sui_status_indicator-size_md {
+  &:has(.sui_status_indicator-size_md) {
     --sui_status_indicator-size: 8px;
   }
 
-  .sui_status_indicator-size_lg {
+  &:has(.sui_status_indicator-size_lg) {
     --sui_status_indicator-size: 10px;
   }
 
-  .sui_status_indicator-color_grey {
+  &:has(.sui_status_indicator-color_grey) {
     --sui_status_indicator-background_color: var(--sui-grey-solid-canvas-normal);
   }
 
-  .sui_status_indicator-color_blue {
+  &:has(.sui_status_indicator-color_blue) {
     --sui_status_indicator-background_color: var(--sui-blue-solid-canvas-normal);
   }
 
-  .sui_status_indicator-color_purple {
+  &:has(.sui_status_indicator-color_purple) {
     --sui_status_indicator-background_color: var(--sui-purple-solid-canvas-normal);
   }
 
-  .sui_status_indicator-color_magenta {
+  &:has(.sui_status_indicator-color_magenta) {
     --sui_status_indicator-background_color: var(--sui-magenta-solid-canvas-normal);
   }
 
-  .sui_status_indicator-color_red {
+  &:has(.sui_status_indicator-color_red) {
     --sui_status_indicator-background_color: var(--sui-red-solid-canvas-normal);
   }
 
-  .sui_status_indicator-color_orange {
+  &:has(.sui_status_indicator-color_orange) {
     --sui_status_indicator-background_color: var(--sui-orange-solid-canvas-normal);
   }
 
-  .sui_status_indicator-color_yellow {
+  &:has(.sui_status_indicator-color_yellow) {
     --sui_status_indicator-background_color: var(--sui-yellow-solid-canvas-normal);
   }
 
-  .sui_status_indicator-color_green {
+  &:has(.sui_status_indicator-color_green) {
     --sui_status_indicator-background_color: var(--sui-green-solid-canvas-normal);
   }
-
-  /* 既定値設定: ここまで */
 }
 
-@layer sui.component {
-  @keyframes sui_status-ping {
-    from {
-      opacity: 0.75;
-      transform: scale(1);
-    }
-
-    to {
-      opacity: 0;
-      transform: scale(2.25);
-    }
+/* 変異 */
+:scope {
+  .sui_status_indicator-processing::after {
+    --_sui_status_indicator-animation_name: sui_status-ping;
   }
+}
+
+} /* @scope */
+} /* @layer */
+
+@layer sui.component {
+@keyframes sui_status-ping {
+  from {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(2.25);
+  }
+}
 }

@@ -1,17 +1,24 @@
 /* Root */
 @layer sui.component {
-  /* 静的 */
-  .sui_scroll_area {
-    position: relative;
-    min-width: 0px;
-    min-height: 0px;
-    overflow: hidden;
-  }
+@scope (.sui_scroll_area) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: relative;
+  min-width: 0px;
+  min-height: 0px;
+  overflow: hidden;
 }
+
+} /* @scope */
+} /* @layer */
 
 /* Viewport */
 @layer sui.component {
-  /* 静的 */
+@scope (.sui_scroll_area) to ([data-scope]) {
+
+/* 固定 */
+:scope {
   .sui_scroll_area_viewport {
     width: 100%;
     height: 100%;
@@ -26,9 +33,15 @@
   }
 }
 
+} /* @scope */
+} /* @layer */
+
 /* Scrollbar */
 @layer sui.component {
-  /* 静的 */
+@scope (.sui_scroll_area) to ([data-scope]) {
+
+/* 固定 */
+:scope {
   .sui_scroll_area_scrollbar {
     position: absolute;
     z-index: 1;
@@ -37,7 +50,6 @@
     padding: 2px;
     touch-action: none;
     user-select: none;
-    opacity: 0;
     transition: opacity 150ms ease-out;
   }
 
@@ -48,43 +60,41 @@
   .sui_scroll_area_scrollbar[data-orientation="horizontal"] {
     height: 10px;
   }
+}
 
-  .sui_scroll_area[data-has-overflow-x] {
-    .sui_scroll_area_scrollbar {
-      opacity: 1;
-    }
+/* 可変 */
+:scope {
+  .sui_scroll_area_scrollbar {
+    opacity: var(--_sui_scroll_area_scrollbar-opacity, 0);
+  }
+}
+
+/* 変異 */
+:scope {
+  [data-has-overflow-x] .sui_scroll_area_scrollbar,
+  [data-has-overflow-y] .sui_scroll_area_scrollbar,
+  [data-scrolling] .sui_scroll_area_scrollbar {
+    --_sui_scroll_area_scrollbar-opacity: 1;
   }
 
-  .sui_scroll_area[data-has-overflow-y] {
-    .sui_scroll_area_scrollbar {
-      opacity: 1;
-    }
-  }
-
-  .sui_scroll_area[data-scrolling] {
-    .sui_scroll_area_scrollbar {
-      opacity: 1;
-    }
-  }
-
-  @media (any-hover: hover) {
-    .sui_scroll_area_scrollbar:hover {
-      opacity: 1;
+  .sui_scroll_area_scrollbar {
+    @media (any-hover: hover) {
+      &:hover {
+        --_sui_scroll_area_scrollbar-opacity: 1;
+      }
     }
   }
 }
 
+} /* @scope */
+} /* @layer */
+
 /* Thumb */
 @layer sui.component {
-  /* 変数 */
-  .sui_scroll_area {
-    --sui_scroll_area_thumb-width: ;
-    --sui_scroll_area_thumb-height: ;
-    --sui_scroll_area_thumb-background_color-normal: ;
-    --sui_scroll_area_thumb-background_color-subtle: ;
-  }
+@scope (.sui_scroll_area) to ([data-scope]) {
 
-  /* 静的 */
+/* 固定 */
+:scope {
   .sui_scroll_area_thumb {
     flex: none;
     border-radius: 999px;
@@ -98,10 +108,22 @@
   .sui_scroll_area_thumb[data-orientation="horizontal"] {
     height: 100%;
   }
+}
 
-  /* 動的 */
+/* 変数 */
+:scope {
+  --sui_scroll_area_thumb-width: ;
+  --sui_scroll_area_thumb-height: ;
+  --sui_scroll_area_thumb-background_color-normal: ;
+  --sui_scroll_area_thumb-background_color-subtle: ;
+}
+
+/* 可変 */
+:scope {
   .sui_scroll_area_thumb {
-    background-color: var(--sui_scroll_area_thumb-background_color-normal);
+    background-color: var(--_sui_scroll_area_thumb-background_color,
+                        var(--sui_scroll_area_thumb-background_color-normal)
+                      );
   }
 
   .sui_scroll_area_thumb[data-orientation="vertical"] {
@@ -111,31 +133,43 @@
   .sui_scroll_area_thumb[data-orientation="horizontal"] {
     width: var(--sui_scroll_area_thumb-width);
   }
+}
 
-  /* 既定値設定: ここから */
+/* 代入 */
+:scope {
+  --sui_scroll_area_thumb-width: var(--scroll-area-thumb-width);
+  --sui_scroll_area_thumb-height: var(--scroll-area-thumb-height);
+  --sui_scroll_area_thumb-background_color-normal:
+    color-mix(in srgb, var(--sui-canvas_text-1) 38%, transparent);
+  --sui_scroll_area_thumb-background_color-subtle:
+    color-mix(in srgb, var(--sui-canvas_text-1) 58%, transparent);
+}
 
-  .sui_scroll_area {
-    --sui_scroll_area_thumb-width: var(--scroll-area-thumb-width);
-    --sui_scroll_area_thumb-height: var(--scroll-area-thumb-height);
-    --sui_scroll_area_thumb-background_color-normal:
-      color-mix(in srgb, var(--sui-canvas_text-1) 38%, transparent);
-    --sui_scroll_area_thumb-background_color-subtle:
-      color-mix(in srgb, var(--sui-canvas_text-1) 58%, transparent);
-  }
-
-  /* 既定値設定: ここまで */
-
-  @media (any-hover: hover) {
-    .sui_scroll_area_thumb:hover {
-      background-color: var(--sui_scroll_area_thumb-background_color-subtle);
+/* 変異 */
+:scope {
+  .sui_scroll_area_thumb {
+    @media (any-hover: hover) {
+      &:hover {
+        --_sui_scroll_area_thumb-background_color:
+          var(--sui_scroll_area_thumb-background_color-subtle);
+      }
     }
   }
 }
 
+} /* @scope */
+} /* @layer */
+
 /* Corner */
 @layer sui.component {
-  /* 静的 */
+@scope (.sui_scroll_area) to ([data-scope]) {
+
+/* 固定 */
+:scope {
   .sui_scroll_area_corner {
     background-color: transparent;
   }
 }
+
+} /* @scope */
+} /* @layer */
