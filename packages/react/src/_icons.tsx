@@ -18,3 +18,33 @@ export const XIcon: IComponent = function SuiXIcon() {
     </svg>
   );
 };
+
+export const ClearIcon: IComponent = function SuiClearIcon() {
+  return (
+    <svg
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 16 16"
+      focusable="false"
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <path d="M4 4l8 8M12 4l-8 8" />
+    </svg>
+  );
+};
+
+export const ChevronIcon: IComponent = function SuiChevronIcon() {
+  return (
+    <svg
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 16 16"
+      focusable="false"
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <path d="M4 6l4 4 4-4" />
+    </svg>
+  );
+};

@@ -349,7 +349,10 @@
 :scope {
   --sui_autocomplete_addon-font_family: var(--sui-font-sans);
   --sui_autocomplete_addon-color: var(--sui-canvas_text-2);
-  --sui_autocomplete_addon__svg-color: var(--sui_autocomplete_addon-color);
+  --sui_autocomplete_addon__svg-color: --sui-icon_color(
+                                         var(--sui_autocomplete_addon-color),
+                                         var(--sui_autocomplete-background_color)
+                                       );
 
   &.sui_autocomplete-size_sm {
     --sui_autocomplete_addon-font_size: var(--sui-text-oln-sm-n-font_size);
@@ -462,7 +465,14 @@
 /* 代入 */
 :scope {
   --sui_autocomplete_clear-font_family: var(--sui-font-sans);
-  --sui_autocomplete_clear__svg-color: var(--sui_autocomplete_clear-color-normal);
+  --sui_autocomplete_clear__svg-color: --sui-icon_color(
+                                         var(--_sui_autocomplete_clear-color,
+                                           var(--sui_autocomplete_clear-color-normal)
+                                         ),
+                                         var(--_sui_autocomplete_clear-background_color,
+                                           var(--sui_autocomplete-background_color)
+                                         )
+                                       );
 
   &.sui_autocomplete-size_sm {
     --sui_autocomplete_clear-size: calc(var(--sui-size-sm) - --sui-space(2));
@@ -606,13 +616,16 @@
 
 /* 代入 */
 :scope {
-  --sui_autocomplete_popup-min_width: var(--anchor-width);
-  --sui_autocomplete_popup-max_width: var(--available-width);
-  --sui_autocomplete_popup-max_height: var(--available-height);
   --sui_autocomplete_popup-background_color: var(--sui-canvas-2);
   --sui_autocomplete_popup-border_color: var(--sui-border-1);
   --sui_autocomplete_popup-border_width: --sui-border_width(1);
   --sui_autocomplete_popup-border_radius: var(--sui-radius-md);
+
+  .sui_autocomplete_popup {
+    --sui_autocomplete_popup-min_width: var(--anchor-width);
+    --sui_autocomplete_popup-max_width: var(--available-width);
+    --sui_autocomplete_popup-max_height: var(--available-height);
+  }
 }
 
 } /* @scope */
@@ -627,6 +640,10 @@
   .sui_autocomplete_empty {
     display: flex;
     align-items: center;
+
+    &:empty {
+      display: none;
+    }
   }
 }
 
@@ -698,7 +715,7 @@
 
 /* 固定 */
 :scope {
-  .sui_autocomplete_scroll_area {
+  .sui_scroll_area {
     height: fit-content;
   }
 }
@@ -710,7 +727,7 @@
 
 /* 可変 */
 :scope {
-  .sui_autocomplete_scroll_area {
+  .sui_scroll_area {
     max-height: min(var(--sui_autocomplete_scroll_area-max_height), var(--available-height));
   }
 }
@@ -729,14 +746,14 @@
 
 /* 固定 */
 :scope {
-  .sui_autocomplete_viewport {
+  .sui_scroll_area_viewport {
     height: fit-content;
   }
 }
 
 /* 可変 */
 :scope {
-  .sui_autocomplete_viewport {
+  .sui_scroll_area_viewport {
     max-height: min(var(--sui_autocomplete_scroll_area-max_height), var(--available-height));
   }
 }
@@ -755,7 +772,7 @@
 
 /* 可変 */
 :scope {
-  .sui_autocomplete_content:not(:has(.sui_autocomplete_list:empty)) {
+  .sui_scroll_area_content:not(:has(.sui_autocomplete_list:empty)) {
     padding: var(--sui_autocomplete_content-padding);
   }
 }
@@ -1078,9 +1095,35 @@
     color: var(--sui-disabled-naked-canvas_text);
   }
 
+  &.sui_autocomplete-variant_naked
+    .sui_autocomplete_input-disabled
+      ~ .sui_autocomplete_addon
+        svg:not(.sui-ignore),
+  &.sui_autocomplete-variant_naked:has(.sui_autocomplete_input-disabled)
+    .sui_autocomplete_addon
+      svg:not(.sui-ignore) {
+    color: --sui-icon_color(
+             var(--sui-disabled-naked-canvas_text),
+             var(--sui-disabled-naked-canvas)
+           );
+  }
+
   &.sui_autocomplete-variant_liquid .sui_autocomplete_input-disabled ~ .sui_autocomplete_addon,
   &.sui_autocomplete-variant_liquid:has(.sui_autocomplete_input-disabled) .sui_autocomplete_addon {
     color: var(--sui-disabled-liquid-canvas_text);
+  }
+
+  &.sui_autocomplete-variant_liquid
+    .sui_autocomplete_input-disabled
+      ~ .sui_autocomplete_addon
+        svg:not(.sui-ignore),
+  &.sui_autocomplete-variant_liquid:has(.sui_autocomplete_input-disabled)
+    .sui_autocomplete_addon
+      svg:not(.sui-ignore) {
+    color: --sui-icon_color(
+             var(--sui-disabled-liquid-canvas_text),
+             var(--sui-disabled-liquid-canvas)
+           );
   }
 }
 
@@ -1095,8 +1138,26 @@
     color: var(--sui-disabled-naked-canvas_text);
   }
 
+  &.sui_autocomplete-variant_naked:has(.sui_autocomplete_input-disabled)
+    .sui_autocomplete_clear
+      svg:not(.sui-ignore) {
+    color: --sui-icon_color(
+             var(--sui-disabled-naked-canvas_text),
+             var(--sui-disabled-naked-canvas)
+           );
+  }
+
   &.sui_autocomplete-variant_liquid:has(.sui_autocomplete_input-disabled) .sui_autocomplete_clear {
     color: var(--sui-disabled-liquid-canvas_text);
+  }
+
+  &.sui_autocomplete-variant_liquid:has(.sui_autocomplete_input-disabled)
+    .sui_autocomplete_clear
+      svg:not(.sui-ignore) {
+    color: --sui-icon_color(
+             var(--sui-disabled-liquid-canvas_text),
+             var(--sui-disabled-liquid-canvas)
+           );
   }
 }
 

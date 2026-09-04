@@ -164,17 +164,23 @@ export {
   useStatus,
 } from "./status/index.js";
 export {
+  type AutocompleteAPI,
   type AutocompleteSize,
   type AutocompleteColor,
   type AutocompleteProps,
   type AutocompleteState,
   type AutocompleteRadius,
+  type AutocompleteActions,
   type AutocompleteContext,
   type AutocompleteVariant,
+  type AutocompleteGroupItem,
   type AutocompleteSlotProps,
-  type AutocompletePartsProps,
+  type AutocompleteChangeEventReason,
+  type AutocompleteChangeEventDetails,
+  type AutocompleteHighlightEventReason,
+  type AutocompleteHighlightEventDetails,
   Autocomplete,
-  useAutocomplete,
+  useAutocompleteAPI,
 } from "./autocomplete/index.js";
 export {
   type CheckboxSize,
@@ -369,6 +375,7 @@ export {
   type AspectRatioProps,
   type AspectRatioRatio,
   type AspectRatioState,
+  type AspectRatioRadius,
   AspectRatio,
   useAspectRatioAPI,
 } from "./aspect-ratio/index.js";

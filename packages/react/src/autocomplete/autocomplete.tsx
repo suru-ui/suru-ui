@@ -1,8 +1,24 @@
 import * as React from "react";
 
 import { getItemLabel } from "../_get-item-label.js";
+import { ClearIcon, ChevronIcon } from "../_icons.jsx";
+import isLikelyVisibleNode from "../_is-likely-visible-node.js";
+import {
+  type ScrollAreaRootProps,
+  type ScrollAreaThumbProps,
+  type ScrollAreaCornerProps,
+  type ScrollAreaContentProps,
+  type ScrollAreaViewportProps,
+  type ScrollAreaScrollbarProps,
+  ScrollAreaRoot,
+  ScrollAreaThumb,
+  ScrollAreaCorner,
+  ScrollAreaContent,
+  ScrollAreaViewport,
+  ScrollAreaScrollbar,
+} from "../scroll-area/scroll-area.parts.jsx";
 import type { IComponent, IUseContext } from "../types.js";
-import { isItemGroup } from "./_item-group.js";
+import { type ItemGroup, isItemGroup } from "./_autocomplete.jsx";
 import {
   type AutocompleteContext,
   type AutocompleteRootSize,
@@ -18,18 +34,12 @@ import {
   type AutocompleteInputProps,
   type AutocompletePopupProps,
   type AutocompleteRootRadius,
-  type AutocompleteThumbProps,
-  type AutocompleteCornerProps,
   type AutocompletePortalProps,
   type AutocompleteRootActions,
   type AutocompleteRootVariant,
-  type AutocompleteContentProps,
-  type AutocompleteViewportProps,
-  type AutocompleteScrollbarProps,
   type AutocompleteCollectionProps,
   type AutocompleteInputGroupProps,
   type AutocompletePositionerProps,
-  type AutocompleteScrollAreaProps,
   type AutocompleteRootChangeEventReason,
   type AutocompleteRootChangeEventDetails,
   type AutocompleteRootHighlightEventReason,
@@ -43,64 +53,68 @@ import {
   AutocompleteGroup,
   AutocompleteInput,
   AutocompletePopup,
-  AutocompleteThumb,
-  AutocompleteCorner,
   AutocompletePortal,
-  AutocompleteContent,
-  AutocompleteViewport,
-  AutocompleteScrollbar,
   AutocompleteCollection,
   AutocompleteGroupLabel,
   AutocompleteInputGroup,
   AutocompletePositioner,
-  AutocompleteScrollArea,
   useAutocompleteContext,
 } from "./autocomplete.parts.jsx";
 
-/**
- * {@link AutocompleteRootColor} です。
- */
-export type AutocompleteColor = AutocompleteRootColor;
+// Types
+// -----
 
 /**
- * {@link AutocompleteRootRadius} です。
- */
-export type AutocompleteRadius = AutocompleteRootRadius;
-
-/**
- * {@link AutocompleteRootSize} です。
- */
-export type AutocompleteSize = AutocompleteRootSize;
-
-/**
- * {@link AutocompleteRootVariant} です。
- */
-export type AutocompleteVariant = AutocompleteRootVariant;
-
-/**
- * {@link AutocompleteRootActions} です。
+ * {@link AutocompleteRootActions}
  */
 export type AutocompleteActions = AutocompleteRootActions;
 
 /**
- * {@link AutocompleteRootChangeEventReason} です。
- */
-export type AutocompleteChangeEventReason = AutocompleteRootChangeEventReason;
-
-/**
- * {@link AutocompleteRootChangeEventDetails} です。
+ * {@link AutocompleteRootChangeEventDetails}
  */
 export type AutocompleteChangeEventDetails = AutocompleteRootChangeEventDetails;
 
 /**
- * {@link AutocompleteRootHighlightEventReason} です。
+ * {@link AutocompleteRootChangeEventReason}
+ */
+export type AutocompleteChangeEventReason = AutocompleteRootChangeEventReason;
+
+/**
+ * {@link AutocompleteRootColor}
+ */
+export type AutocompleteColor = AutocompleteRootColor;
+
+/**
+ * {@link AutocompleteRootHighlightEventDetails}
+ */
+export type AutocompleteHighlightEventDetails = AutocompleteRootHighlightEventDetails;
+
+/**
+ * {@link AutocompleteRootHighlightEventReason}
  */
 export type AutocompleteHighlightEventReason = AutocompleteRootHighlightEventReason;
 
 /**
- * {@link AutocompleteRootHighlightEventDetails} です。
+ * {@link AutocompleteRootRadius}
  */
-export type AutocompleteHighlightEventDetails = AutocompleteRootHighlightEventDetails;
+export type AutocompleteRadius = AutocompleteRootRadius;
+
+/**
+ * {@link AutocompleteRootSize}
+ */
+export type AutocompleteSize = AutocompleteRootSize;
+
+/**
+ * {@link AutocompleteRootVariant}
+ */
+export type AutocompleteVariant = AutocompleteRootVariant;
+
+/**
+ * 関連する項目を {@link AutocompleteGroup} にまとめるためのオブジェクトです。
+ *
+ * @template TItem 項目の値の型です。
+ */
+export type AutocompleteGroupItem<TItem = any> = ItemGroup<TItem>;
 
 /**
  * {@link Autocomplete} の各パーツに渡すプロパティーです。
@@ -122,19 +136,19 @@ export type AutocompleteSlotProps = {
   readonly collection?: Omit<AutocompleteCollectionProps, "children"> | undefined;
 
   /**
-   * {@link AutocompleteContent} に渡すプロパティーです。
+   * {@link ScrollAreaContent} に渡すプロパティーです。
    */
-  readonly content?: Omit<AutocompleteContentProps, "children"> | undefined;
+  readonly content?: Omit<ScrollAreaContentProps, "children"> | undefined;
 
   /**
-   * {@link AutocompleteCorner} に渡すプロパティーです。
+   * {@link ScrollAreaCorner} に渡すプロパティーです。
    */
-  readonly corner?: AutocompleteCornerProps | undefined;
+  readonly corner?: ScrollAreaCornerProps | undefined;
 
   /**
    * {@link AutocompleteEmpty} に渡すプロパティーです。
    */
-  readonly empty?: AutocompleteEmptyProps | undefined;
+  readonly empty?: Omit<AutocompleteEmptyProps, "children"> | undefined;
 
   /**
    * {@link AutocompleteGroup} に渡すプロパティーです。
@@ -144,7 +158,7 @@ export type AutocompleteSlotProps = {
   /**
    * {@link AutocompleteInput} に渡すプロパティーです。
    */
-  readonly input?: AutocompleteInputProps | undefined;
+  readonly input?: Omit<AutocompleteInputProps, "placeholder"> | undefined;
 
   /**
    * {@link AutocompleteInputGroup} に渡すプロパティーです。
@@ -177,144 +191,24 @@ export type AutocompleteSlotProps = {
   readonly positioner?: Omit<AutocompletePositionerProps, "children"> | undefined;
 
   /**
-   * {@link AutocompleteScrollArea} に渡すプロパティーです。
+   * {@link ScrollAreaRoot} に渡すプロパティーです。
    */
-  readonly scrollArea?: Omit<AutocompleteScrollAreaProps, "children"> | undefined;
+  readonly scrollArea?: Omit<ScrollAreaRootProps, "children"> | undefined;
 
   /**
-   * {@link AutocompleteScrollbar} に渡すプロパティーです。
+   * {@link ScrollAreaScrollbar} に渡すプロパティーです。
    */
-  readonly scrollbar?: Omit<AutocompleteScrollbarProps, "children"> | undefined;
+  readonly scrollbar?: Omit<ScrollAreaScrollbarProps, "children"> | undefined;
 
   /**
-   * {@link AutocompleteThumb} に渡すプロパティーです。
+   * {@link ScrollAreaThumb} に渡すプロパティーです。
    */
-  readonly thumb?: AutocompleteThumbProps | undefined;
+  readonly thumb?: ScrollAreaThumbProps | undefined;
 
   /**
-   * {@link AutocompleteViewport} に渡すプロパティーです。
+   * {@link ScrollAreaViewport} に渡すプロパティーです。
    */
-  readonly viewport?: Omit<AutocompleteViewportProps, "children"> | undefined;
-};
-
-export type AutocompleteItemPartsProps =
-  | {
-      readonly item: AutocompleteItemProps;
-    }
-  | {
-      readonly collection: Omit<AutocompleteCollectionProps, "children">;
-
-      readonly getItemProps: (item: any, index: number) => AutocompleteItemProps;
-
-      readonly group: AutocompleteGroupProps;
-    };
-
-/**
- * 各パーツに渡すプロパティーをまとめたものです。
- */
-export type AutocompletePartsProps = {
-  /**
-   * Chevron アイコンを包む {@link AutocompleteAddon} に渡すプロパティーです。
-   *
-   * `children` にはデフォルトのアイコンが設定されています。
-   */
-  readonly chevronAddon: AutocompleteAddonProps;
-
-  /**
-   * {@link AutocompleteClear} に渡すプロパティーです。
-   */
-  readonly clear: AutocompleteClearProps | undefined;
-
-  /**
-   * {@link AutocompleteAddon} に渡すプロパティーです。
-   */
-  readonly clearAddon: AutocompleteAddonProps;
-
-  /**
-   * {@link AutocompleteContent} に渡すプロパティーです。
-   */
-  readonly content: AutocompleteContentProps;
-
-  /**
-   * {@link AutocompleteCorner} に渡すプロパティーです。
-   */
-  readonly corner: AutocompleteCornerProps;
-
-  /**
-   * {@link AutocompleteEmpty} に渡すプロパティーです。
-   *
-   * これを表示しないときは null になります。
-   */
-  readonly empty: AutocompleteEmptyProps | null;
-
-  /**
-   * 入力欄の末尾に表示する {@link AutocompleteAddon} の一覧です。
-   */
-  readonly endAddons: readonly AutocompleteAddonProps[];
-
-  readonly getItemPartsProps: (item: any, index: number) => AutocompleteItemPartsProps;
-
-  /**
-   * {@link AutocompleteInput} に渡すプロパティーです。
-   */
-  readonly input: AutocompleteInputProps;
-
-  /**
-   * {@link AutocompleteInputGroup} に渡すプロパティーです。
-   */
-  readonly inputGroup: AutocompleteInputGroupProps;
-
-  /**
-   * {@link AutocompleteList} に渡すプロパティーです。
-   */
-  readonly list: AutocompleteListProps;
-
-  /**
-   * {@link AutocompletePopup} に渡すプロパティーです。
-   */
-  readonly popup: AutocompletePopupProps;
-
-  /**
-   * {@link AutocompletePortal} に渡すプロパティーです。
-   */
-  readonly portal: AutocompletePortalProps;
-
-  /**
-   * {@link AutocompletePositioner} に渡すプロパティーです。
-   */
-  readonly positioner: AutocompletePositionerProps;
-
-  /**
-   * {@link AutocompleteRoot} に渡すプロパティーです。
-   */
-  readonly root: AutocompleteRootProps;
-
-  /**
-   * {@link AutocompleteScrollArea} に渡すプロパティーです。
-   */
-  readonly scrollArea: AutocompleteScrollAreaProps;
-
-  /**
-   * {@link AutocompleteScrollbar} に渡すプロパティーです。
-   */
-  readonly scrollbar: AutocompleteScrollbarProps;
-
-  /**
-   * 入力欄の先頭に表示する {@link AutocompleteAddon} の一覧です。
-   *
-   * 内容は `children` に入ります。
-   */
-  readonly startAddons: readonly AutocompleteAddonProps[];
-
-  /**
-   * {@link AutocompleteThumb} に渡すプロパティーです。
-   */
-  readonly thumb: AutocompleteThumbProps;
-
-  /**
-   * {@link AutocompleteViewport} に渡すプロパティーです。
-   */
-  readonly viewport: AutocompleteViewportProps;
+  readonly viewport?: Omit<ScrollAreaViewportProps, "children"> | undefined;
 };
 
 /**
@@ -323,56 +217,206 @@ export type AutocompletePartsProps = {
 export type AutocompleteState = AutocompleteRootState;
 
 /**
- * {@link Autocomplete} コンポーネントのプロパティーです。
+ * {@link Autocomplete} に渡すプロパティーです。
+ *
+ * @template TItem 項目の値の型です。
  */
-export type AutocompleteProps = Omit<AutocompleteRootProps, "children"> & {
-  /**
-   * リストが空のときだけ表示する内容です。
-   */
-  empty?: React.ReactNode;
+export type AutocompleteProps<TItem = any> = Omit<AutocompleteRootProps<TItem>, "children"> &
+  Pick<AutocompleteListProps, "children"> & {
+    /**
+     * リストが空のときだけ表示する内容です。
+     */
+    empty?: React.ReactNode | undefined;
 
-  /**
-   * 入力欄の末尾に表示する内容です。
-   */
-  endAddons?: readonly React.ReactNode[] | undefined;
+    /**
+     * 入力欄の末尾に表示する内容です。
+     */
+    endAddons?: readonly React.ReactNode[] | undefined;
 
-  /**
-   * 検索結果リストの内容です。
-   */
-  itemToRenderedValue?: ((item: any, index: number) => React.ReactNode) | undefined;
+    /**
+     * 検索結果リストの内容です。
+     */
+    itemToRenderedValue?: ((item: TItem, index: number) => React.ReactNode) | undefined;
 
-  /**
-   * 入力欄のプレースホルダー文字列です。
-   */
-  placeholder?: string | undefined;
+    /**
+     * 入力欄のプレースホルダー文字列です。
+     */
+    placeholder?: string | undefined;
 
-  /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-   *
-   * 各パーツのプロパティーが優先されます。
-   */
-  slotProps?: AutocompleteSlotProps | undefined;
+    /**
+     * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+     *
+     * 各パーツのプロパティーが優先されます。
+     */
+    slotProps?: AutocompleteSlotProps | undefined;
 
-  /**
-   * 入力欄の先頭に表示する内容です。
-   */
-  startAddons?: readonly React.ReactNode[] | undefined;
-};
+    /**
+     * 入力欄の先頭に表示する内容です。
+     */
+    startAddons?: readonly React.ReactNode[] | undefined;
+  };
+
+// API
+// ---
 
 /**
- * {@link Autocomplete} の各パーツに渡すプロパティーを作るフックです。
+ * {@link Autocomplete} を構成する各パーツのプロパティーを作成するための API です。
+ *
+ * @template TItem 項目の値の型です。
  */
-export function useAutocomplete(props: AutocompleteProps): AutocompletePartsProps {
+export interface AutocompleteAPI<TItem = any> {
+  /**
+   * 入力欄の末尾に表示する {@link AutocompleteAddon} に渡すプロパティーを取得します。
+   */
+  getChevronAddonProps(): AutocompleteAddonProps;
+
+  /**
+   * {@link AutocompleteClear} を包む {@link AutocompleteAddon} に渡すプロパティーを取得します。
+   */
+  getClearAddonProps(): AutocompleteAddonProps;
+
+  /**
+   * {@link AutocompleteClear} に渡すプロパティーを取得します。
+   */
+  getClearProps(): AutocompleteClearProps;
+
+  /**
+   * {@link AutocompleteCollection} に渡すプロパティーを取得します。
+   */
+  getCollectionProps(): Omit<AutocompleteCollectionProps, "children">;
+
+  /**
+   * {@link ScrollAreaContent} に渡すプロパティーを取得します。
+   */
+  getContentProps(): Omit<ScrollAreaContentProps, "children">;
+
+  /**
+   * {@link ScrollAreaCorner} に渡すプロパティーを取得します。
+   */
+  getCornerProps(): ScrollAreaCornerProps;
+
+  /**
+   * {@link AutocompleteEmpty} に渡すプロパティーを取得します。
+   */
+  getEmptyProps(): AutocompleteEmptyProps | null;
+
+  /**
+   * 入力欄の末尾に表示する {@link AutocompleteAddon} の一覧を取得します。
+   */
+  getEndAddonsProps(): readonly AutocompleteAddonProps[];
+
+  /**
+   * {@link AutocompleteGroup} に渡すプロパティーを取得します。
+   *
+   * @param item グループの項目です。
+   * @param index 項目のインデックスです。
+   */
+  getGroupProps(item: AutocompleteGroupItem<TItem>, index: number): AutocompleteGroupProps;
+
+  /**
+   * グループ内の {@link AutocompleteItem} に渡すプロパティーを取得します。
+   *
+   * @param item 項目の値です。
+   * @param index 項目のインデックスです。
+   */
+  getGroupedItemProps(item: TItem, index: number): AutocompleteItemProps;
+
+  /**
+   * {@link AutocompleteInputGroup} に渡すプロパティーを取得します。
+   */
+  getInputGroupProps(): Omit<AutocompleteInputGroupProps, "children">;
+
+  /**
+   * {@link AutocompleteInput} に渡すプロパティーを取得します。
+   */
+  getInputProps(): AutocompleteInputProps;
+
+  /**
+   * {@link AutocompleteItem} に渡すプロパティーを取得します。
+   *
+   * @param item 項目の値です。
+   * @param index 項目のインデックスです。
+   */
+  getItemProps(item: TItem, index: number): AutocompleteItemProps;
+
+  /**
+   * {@link AutocompleteList} に渡すプロパティーを取得します。
+   */
+  getListProps(): AutocompleteListProps;
+
+  /**
+   * {@link AutocompletePopup} に渡すプロパティーを取得します。
+   */
+  getPopupProps(): Omit<AutocompletePopupProps, "children">;
+
+  /**
+   * {@link AutocompletePortal} に渡すプロパティーを取得します。
+   */
+  getPortalProps(): Omit<AutocompletePortalProps, "children">;
+
+  /**
+   * {@link AutocompletePositioner} に渡すプロパティーを取得します。
+   */
+  getPositionerProps(): Omit<AutocompletePositionerProps, "children">;
+
+  /**
+   * {@link AutocompleteRoot} に渡すプロパティーを取得します。
+   */
+  getRootProps(): Omit<AutocompleteRootProps<TItem>, "children">;
+
+  /**
+   * {@link ScrollAreaRoot} に渡すプロパティーを取得します。
+   */
+  getScrollAreaProps(): Omit<ScrollAreaRootProps, "children">;
+
+  /**
+   * {@link ScrollAreaScrollbar} に渡すプロパティーを取得します。
+   */
+  getScrollbarProps(): Omit<ScrollAreaScrollbarProps, "children">;
+
+  /**
+   * 入力欄の先頭に表示する {@link AutocompleteAddon} の一覧を取得します。
+   */
+  getStartAddonsProps(): readonly AutocompleteAddonProps[];
+
+  /**
+   * {@link ScrollAreaThumb} に渡すプロパティーを取得します。
+   */
+  getThumbProps(): ScrollAreaThumbProps;
+
+  /**
+   * {@link ScrollAreaViewport} に渡すプロパティーを取得します。
+   */
+  getViewportProps(): Omit<ScrollAreaViewportProps, "children">;
+}
+
+interface IUseAutocompleteAPI {
+  /**
+   * {@link AutocompleteAPI} を作成します。
+   *
+   * @template TItem 項目の値の型です。
+   * @param props {@link Autocomplete} のプロパティーです。
+   * @returns オートコンプリートの API です
+   */
+  <TItem = any>(props: AutocompleteProps<TItem>): AutocompleteAPI<TItem>;
+}
+
+/**
+ * {@link AutocompleteAPI} を作成するフックです。
+ */
+export const useAutocompleteAPI: IUseAutocompleteAPI = function useSuiAutocompleteAPI(props) {
   const {
     empty,
+    children,
+    endAddons = [],
     slotProps: {
-      item: itemProps,
-      list: listProps,
-      addon: addonProps,
-      group: groupProps,
+      item: itemProps = {},
+      list: listProps = {},
+      addon: addonProps = {},
       clear: clearProps = {},
-      empty: emptyProps,
-      input: inputProps,
+      empty: emptyProps = {},
+      group: groupProps = {},
+      input: inputProps = {},
       popup: popupProps = {},
       thumb: thumbProps = {},
       corner: cornerProps = {},
@@ -385,7 +429,6 @@ export function useAutocomplete(props: AutocompleteProps): AutocompletePartsProp
       positioner: positionerProps = {},
       scrollArea: scrollAreaProps = {},
     } = {},
-    endAddons = [],
     placeholder,
     startAddons = [],
     autoHighlight = true,
@@ -402,98 +445,148 @@ export function useAutocomplete(props: AutocompleteProps): AutocompletePartsProp
   } = positionerProps;
 
   return {
-    list: {
-      ...listProps,
+    getItemProps(item, index) {
+      return {
+        ...itemProps,
+        key: index,
+        value: item,
+        children: itemToRenderedValue(item, index),
+      };
     },
-    root: {
-      ...otherRootProps,
-      autoHighlight,
-      openOnInputClick,
+    getListProps() {
+      return {
+        ...listProps,
+        children,
+      };
     },
-    clear: {
-      children: <SuiClearIcon />,
-      "aria-label": clearAriaLabel,
-      ...otherClearProps,
+    getRootProps() {
+      return {
+        ...otherRootProps,
+        autoHighlight,
+        openOnInputClick,
+      };
     },
-    empty:
-      "empty" in props || !!emptyProps
-        ? {
-            children: empty,
-            ...emptyProps,
-          }
-        : null,
-    input: {
-      placeholder,
-      ...inputProps,
+    getClearProps() {
+      return {
+        children: <ClearIcon />,
+        "aria-label": clearAriaLabel,
+        ...otherClearProps,
+      };
     },
-    popup: popupProps,
-    thumb: thumbProps,
-    corner: cornerProps,
-    portal: portalProps,
-    content: contentProps,
-    viewport: viewportProps,
-    endAddons: React.Children.map(endAddons, (children) => ({
-      ...addonProps,
-      children,
-    }))!,
-    scrollbar: scrollbarProps,
-    clearAddon: {
-      ...addonProps,
-    },
-    inputGroup: inputGroupProps,
-    positioner: {
-      ...otherPositionerProps,
-      side,
-      align,
-      sideOffset,
-    },
-    scrollArea: scrollAreaProps,
-    startAddons: React.Children.map(startAddons, (children) => ({
-      ...addonProps,
-      children,
-    }))!,
-    chevronAddon: {
-      ...addonProps,
-      children: <SuiChevronIcon />,
-    },
-    getItemPartsProps: (item, index) => {
-      if (!isItemGroup(item)) {
-        return {
-          item: {
-            ...itemProps,
-            key: index,
-            value: item,
-            children: itemToRenderedValue(item, index),
-          },
-        };
+    getEmptyProps() {
+      if (!isLikelyVisibleNode(empty)) {
+        return null;
       }
 
       return {
-        group: {
-          ...groupProps,
-          key: index,
-          items: item.items,
-        },
-        collection: {
-          ...collectionProps,
-        },
-        getItemProps: (item, index) => ({
-          ...itemProps,
-          key: index,
-          value: item,
-          children: itemToRenderedValue(item, index),
+        ...emptyProps,
+        children: empty,
+      };
+    },
+    getGroupProps(item, index) {
+      return {
+        ...groupProps,
+        key: index,
+        items: item.items,
+      };
+    },
+    getInputProps() {
+      return {
+        placeholder,
+        ...inputProps,
+      };
+    },
+    getPopupProps() {
+      return popupProps;
+    },
+    getThumbProps() {
+      return thumbProps;
+    },
+    getCornerProps() {
+      return cornerProps;
+    },
+    getPortalProps() {
+      return portalProps;
+    },
+    getContentProps() {
+      return contentProps;
+    },
+    getViewportProps() {
+      return viewportProps;
+    },
+    getEndAddonsProps() {
+      return endAddons.map(
+        (children): AutocompleteAddonProps => ({
+          ...addonProps,
+          children,
         }),
+      );
+    },
+    getScrollbarProps() {
+      return scrollbarProps;
+    },
+    getClearAddonProps() {
+      return {
+        ...addonProps,
+      };
+    },
+    getCollectionProps() {
+      return {
+        ...collectionProps,
+      };
+    },
+    getInputGroupProps() {
+      return inputGroupProps;
+    },
+    getPositionerProps() {
+      return {
+        ...otherPositionerProps,
+        side,
+        align,
+        sideOffset,
+      };
+    },
+    getScrollAreaProps() {
+      return scrollAreaProps;
+    },
+    getGroupedItemProps(item, index) {
+      return {
+        ...itemProps,
+        key: index,
+        value: item,
+        children: itemToRenderedValue(item, index),
+      };
+    },
+    getStartAddonsProps() {
+      return startAddons.map(
+        (children): AutocompleteAddonProps => ({
+          ...addonProps,
+          children,
+        }),
+      );
+    },
+    getChevronAddonProps() {
+      return {
+        ...addonProps,
+        children: <ChevronIcon />,
       };
     },
   };
-}
+};
 
-/**
- * {@link Autocomplete} のコンポーネント型です。
- */
-interface AutocompleteType extends IComponent<AutocompleteProps> {
+export { type AutocompleteAPI as API, useAutocompleteAPI as useAPI };
+
+// Component
+// ---------
+
+interface IAutocomplete extends IComponent<AutocompleteProps> {
   /**
-   * {@link useAutocompleteContext} です。
+   * @template TItem 項目の値の型です。
+   */
+  <TItem = any>(props: AutocompleteProps<TItem>): IComponent.Return;
+
+  /**
+   * {@link useAutocompleteContext}
    */
   readonly useContext: IUseContext<AutocompleteContext>;
 }
@@ -501,60 +594,82 @@ interface AutocompleteType extends IComponent<AutocompleteProps> {
 /**
  * 検索文字列に応じて候補を絞り込んで表示する入力欄です。
  */
-export const Autocomplete: AutocompleteType = /*#__PURE__*/ Object.assign(
+export const Autocomplete: IAutocomplete = /*#__PURE__*/ Object.assign(
   function SuiAutocomplete(props: AutocompleteProps) {
-    const partsProps = useAutocomplete(props);
+    const api = useAutocompleteAPI(props);
+    const rootProps = api.getRootProps();
+    const inputGroupProps = api.getInputGroupProps();
+    const startAddonsProps = api.getStartAddonsProps();
+    const inputProps = api.getInputProps();
+    const clearAddonProps = api.getClearAddonProps();
+    const clearProps = api.getClearProps();
+    const endAddonsProps = api.getEndAddonsProps();
+    const chevronAddonProps = api.getChevronAddonProps();
+    const portalProps = api.getPortalProps();
+    const positionerProps = api.getPositionerProps();
+    const popupProps = api.getPopupProps();
+    const emptyProps = api.getEmptyProps();
+    const scrollAreaProps = api.getScrollAreaProps();
+    const viewportProps = api.getViewportProps();
+    const contentProps = api.getContentProps();
+    const listProps = api.getListProps();
+    const scrollbarProps = api.getScrollbarProps();
+    const thumbProps = api.getThumbProps();
+    const cornerProps = api.getCornerProps();
 
     return (
-      <AutocompleteRoot {...partsProps.root}>
-        <AutocompleteInputGroup {...partsProps.inputGroup}>
-          {partsProps.startAddons.map((addonProps, index) => (
+      <AutocompleteRoot {...rootProps}>
+        <AutocompleteInputGroup {...inputGroupProps}>
+          {startAddonsProps.map((addonProps, index) => (
             <AutocompleteAddon key={index} {...addonProps} />
           ))}
-          <AutocompleteInput {...partsProps.input} />
-          <AutocompleteAddon {...partsProps.clearAddon}>
-            <AutocompleteClear {...partsProps.clear} />
+          <AutocompleteInput {...inputProps} />
+          <AutocompleteAddon {...clearAddonProps}>
+            <AutocompleteClear {...clearProps} />
           </AutocompleteAddon>
-          {partsProps.endAddons.map((addonProps, index) => (
+          {endAddonsProps.map((addonProps, index) => (
             <AutocompleteAddon key={index} {...addonProps} />
           ))}
-          <AutocompleteAddon {...partsProps.chevronAddon} />
+          <AutocompleteAddon {...chevronAddonProps} />
         </AutocompleteInputGroup>
-        <AutocompletePortal {...partsProps.portal}>
-          <AutocompletePositioner {...partsProps.positioner}>
-            <AutocompletePopup {...partsProps.popup}>
-              {partsProps.empty && <AutocompleteEmpty {...partsProps.empty} />}
-              <AutocompleteScrollArea {...partsProps.scrollArea}>
-                <AutocompleteViewport {...partsProps.viewport}>
-                  <AutocompleteContent {...partsProps.content}>
-                    <AutocompleteList {...partsProps.list}>
-                      {(item, index) => {
-                        const itemPartsProps = partsProps.getItemPartsProps(item, index);
-                        if ("item" in itemPartsProps) {
-                          return <AutocompleteItem {...itemPartsProps.item} />;
-                        }
+        <AutocompletePortal {...portalProps}>
+          <AutocompletePositioner {...positionerProps}>
+            <AutocompletePopup {...popupProps}>
+              {emptyProps && <AutocompleteEmpty {...emptyProps} />}
+              <ScrollAreaRoot {...scrollAreaProps}>
+                <ScrollAreaViewport {...viewportProps}>
+                  <ScrollAreaContent {...contentProps}>
+                    <AutocompleteList {...listProps}>
+                      {listProps.children ??
+                        ((item, index) => {
+                          if (!isItemGroup(item)) {
+                            return <AutocompleteItem {...api.getItemProps(item, index)} />;
+                          }
 
-                        return (
-                          <AutocompleteGroup {...itemPartsProps.group}>
-                            {item.label !== undefined && (
-                              <AutocompleteGroupLabel>{item.label}</AutocompleteGroupLabel>
-                            )}
-                            <AutocompleteCollection {...itemPartsProps.collection}>
-                              {(item, index) => (
-                                <AutocompleteItem {...itemPartsProps.getItemProps(item, index)} />
+                          const groupProps = api.getGroupProps(item, index);
+                          const collectionProps = api.getCollectionProps();
+
+                          return (
+                            <AutocompleteGroup {...groupProps}>
+                              {item.label !== undefined && (
+                                <AutocompleteGroupLabel>{item.label}</AutocompleteGroupLabel>
                               )}
-                            </AutocompleteCollection>
-                          </AutocompleteGroup>
-                        );
-                      }}
+                              <AutocompleteCollection {...collectionProps}>
+                                {(item, index) => (
+                                  <AutocompleteItem {...api.getGroupedItemProps(item, index)} />
+                                )}
+                              </AutocompleteCollection>
+                            </AutocompleteGroup>
+                          );
+                        })}
                     </AutocompleteList>
-                  </AutocompleteContent>
-                </AutocompleteViewport>
-                <AutocompleteScrollbar {...partsProps.scrollbar}>
-                  <AutocompleteThumb {...partsProps.thumb} />
-                </AutocompleteScrollbar>
-                <AutocompleteCorner {...partsProps.corner} />
-              </AutocompleteScrollArea>
+                  </ScrollAreaContent>
+                </ScrollAreaViewport>
+                <ScrollAreaScrollbar {...scrollbarProps}>
+                  <ScrollAreaThumb {...thumbProps} />
+                </ScrollAreaScrollbar>
+                <ScrollAreaCorner {...cornerProps} />
+              </ScrollAreaRoot>
             </AutocompletePopup>
           </AutocompletePositioner>
         </AutocompletePortal>
@@ -566,110 +681,69 @@ export const Autocomplete: AutocompleteType = /*#__PURE__*/ Object.assign(
   },
 );
 
-/**
- * {@link Autocomplete} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Autocomplete {
   /**
-   * {@link AutocompleteState} です。
+   * {@link AutocompleteState}
    */
   export type State = AutocompleteState;
 
   /**
-   * {@link AutocompleteProps} です。
+   * {@link AutocompleteProps}
    */
   export type Props = AutocompleteProps;
 
   /**
-   * {@link AutocompleteContext} です。
-   */
-  export type Context = AutocompleteContext;
-
-  /**
-   * {@link AutocompleteSlotProps} です。
+   * {@link AutocompleteSlotProps}
    */
   export type SlotProps = AutocompleteSlotProps;
 
   /**
-   * {@link AutocompleteActions} です。
+   * {@link AutocompleteActions}
    */
   export type Actions = AutocompleteActions;
 
   /**
-   * {@link AutocompleteChangeEventDetails} です。
+   * {@link AutocompleteChangeEventDetails}
    */
   export type ChangeEventDetails = AutocompleteChangeEventDetails;
 
   /**
-   * {@link AutocompleteChangeEventReason} です。
+   * {@link AutocompleteChangeEventReason}
    */
   export type ChangeEventReason = AutocompleteChangeEventReason;
 
   /**
-   * {@link AutocompleteColor} です。
+   * {@link AutocompleteColor}
    */
   export type Color = AutocompleteColor;
 
   /**
-   * {@link AutocompleteHighlightEventDetails} です。
+   * {@link AutocompleteGroupItem}
+   */
+  export type GroupItem<TItem = any> = AutocompleteGroupItem<TItem>;
+
+  /**
+   * {@link AutocompleteHighlightEventDetails}
    */
   export type HighlightEventDetails = AutocompleteHighlightEventDetails;
 
   /**
-   * {@link AutocompleteHighlightEventReason} です。
+   * {@link AutocompleteHighlightEventReason}
    */
   export type HighlightEventReason = AutocompleteHighlightEventReason;
 
   /**
-   * {@link AutocompleteRadius} です。
+   * {@link AutocompleteRadius}
    */
   export type Radius = AutocompleteRadius;
 
   /**
-   * {@link AutocompleteSize} です。
+   * {@link AutocompleteSize}
    */
   export type Size = AutocompleteSize;
 
   /**
-   * {@link AutocompleteVariant} です。
+   * {@link AutocompleteVariant}
    */
   export type Variant = AutocompleteVariant;
-}
-
-/**
- * {@link Autocomplete} の Clear に使う既定のアイコンです。
- */
-function SuiClearIcon(props: React.ComponentProps<"svg">) {
-  return (
-    <svg
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 16 16"
-      focusable="false"
-      strokeLinecap="round"
-      aria-hidden="true"
-      {...props}
-    >
-      <path d="M4 4l8 8M12 4l-8 8" />
-    </svg>
-  );
-}
-
-/**
- * {@link Autocomplete} の Trigger に使う既定のアイコンです。
- */
-function SuiChevronIcon(props: React.ComponentProps<"svg">) {
-  return (
-    <svg
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 16 16"
-      focusable="false"
-      strokeLinecap="round"
-      aria-hidden="true"
-      {...props}
-    >
-      <path d="M4 6l4 4 4-4" />
-    </svg>
-  );
 }

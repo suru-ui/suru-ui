@@ -112,7 +112,7 @@ cn(
 
 ### 短名と namespace
 
-各パーツの直後に短名再輸出と namespace を置きます。namespace には `State` と `Props` を必ず入れ、値型があれば追加します。汎型は既定値付きで引き継ぎます。
+各パーツの直後に短名再輸出と namespace を置きます。namespace には `State` と `Props` を必ず入れ、値型があれば追加します。汎型は既定値付きで引き継ぎます。再輸出の JSDoc は `{@link X}` のみとし、「 です。」は付けません。短名再輸出 (`export { X as Y }`) はローカル束縛を作らないため、ファイル内部の参照 (JSX を含む) は正式名 `X` のままにします。
 
 ```tsx
 export { AccordionItem as Item };
@@ -145,7 +145,7 @@ export namespace Item {
 
 ### Types
 
-Root 由来の再命名は `{@link 元型}` のみの JSDoc にします。
+Root 由来の再命名は `{@link 元型}` のみの JSDoc にします。「 です。」は付けません。
 
 `SlotProps` はキー昇順、`readonly` + `| undefined` にします。子要素は原則 `Omit` で除き、合成 `Props` に持ち上げたキーも除きます。
 
@@ -203,7 +203,7 @@ export const useAccordionAPI: IUseAccordionAPI = function useSuiAccordionAPI(pro
 汎型 interface + 実装にします。描画では先に `api.get*Props()` を変数化し、取得値の有無で条件描画します (`{xProps && <Part {...xProps} />}`)。
 変数化の順序は長さ順ではなく React 要素の構築順 (JSX の描画順) にします。
 
-末尾に namespace を置き、`State`、`Props`、`SlotProps` と再命名型を列挙します。JSDoc は `{@link X}` 形式にします。
+末尾に namespace を置き、`State`、`Props`、`SlotProps` と再命名型を列挙します。JSDoc は `{@link X}` 形式にします。「 です。」は付けません。
 
 ## _<kebab>.tsx
 
@@ -218,9 +218,13 @@ export const useAccordionAPI: IUseAccordionAPI = function useSuiAccordionAPI(pro
 import { XIcon } from "../_icons.jsx";
 ```
 
+## 見直し
+
+実装が終わったら、検証の前にこのスキルを最初から読み直し、変更がすべての規則に従っているかを確認します。読み直しで見つけた違反は、フォーマッターやリンターに頼らず自分の手で直します。
+
 ## 検証
 
-作業の最後に `packages/react/` で次の 3 つを実行し、自分の変更分に由来するエラーがあれば修正します。
+見直しが終わったら `packages/react/` で次の 3 つを実行し、自分の変更分に由来するエラーがあれば修正します。
 
 ```sh
 mise run test:format
@@ -245,5 +249,7 @@ mise run test:typecheck
 - パーツ別指定より直 prop を優先しない。コールバック合成で中止判定を省略しない。
 - `data-scope=""` を起点以外の要素に付けない。付け忘れない。
 - namespace の `State` / `Props` を省略しない。短名再輸出を省略しない。
+- 再輸出の JSDoc に「 です。」を付けない。`{@link X}` のみにする。
+- 短名をファイル内部で参照しない。内部参照 (JSX を含む) は正式名にする。
 - `index.ts` に実装を書かない。再輸出以外を足さない。
 - アイコンを `_<kebab>.tsx` や `.parts.tsx` に実装しない。共有ファイルに置きます。

@@ -261,6 +261,32 @@ description: Suru UI のコンポーネント CSS を書くときに使用しま
 }
 ```
 
+## セレクターの改行と字下げ
+
+長いセレクターは次の形に改行します。短いものは 1 行にします。
+
+- 子孫結合子で連なる複合セレクターが 3 つ以上になる場合は、1 つずつ改行し、1 段ずつ深く字下げします。
+- カンマ区切りのセレクターは 1 つずつ改行します。
+- `:is()` / `:has()` / `:not()` の引数が長くなる場合は、1 つずつ改行します。
+
+```css
+  &.sui_accordion-variant_naked
+    .sui_accordion_item-disabled
+      .sui_accordion_trigger:not(.sui_accordion_trigger-unstyled) {
+    color: var(--sui-disabled-naked-canvas_text);
+  }
+
+  .sui_accordion_content-transition_status_starting,
+  .sui_accordion_content-transition_status_ending {
+    --_sui_accordion_content-height: 0px;
+  }
+
+  &.sui_accordion-variant_naked .sui_accordion_heading:is(
+    :not(:has(.sui_accordion_trigger)),
+    :has(.sui_accordion_trigger-unstyled)
+  ) {
+```
+
 ## 定型パターン
 
 該当する場合は次の形に従います。該当しない場合は書きません。
@@ -324,5 +350,6 @@ description: Suru UI のコンポーネント CSS を書くときに使用しま
 - 同一セレクターへの `代入` を重複させない。例: 同じ `&:has(...)` を二度書いて後の定義で上書きしない。
 - 1 つの公開変数に複数の値を半角スペース区切りで代入しない。例: `--sui_alert_actions-padding_block: --sui-gap(4) --sui-gap(3)` は禁止。`padding_block_start` / `padding_block_end` のように変数を分けます。
 - `svg` に素の `svg` セレクターを使わない。例: `svg:not(.sui-ignore)` にし、大きさと色を明示します。継承に任せない。
+- 長いセレクターを 1 行に書かない。子孫の連なりは 1 つずつ改行して 1 段ずつ深く字下げし、カンマ区切りと関数引数は 1 つずつ改行します。
 - `sui.important` を無効状態以外に使わない。
 - `!important` を書かない。
