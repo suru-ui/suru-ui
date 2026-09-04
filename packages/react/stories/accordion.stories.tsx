@@ -187,7 +187,10 @@ export const Variants = meta.story({
     return (
       <div className="w-80 flex flex-col gap-6">
         {VARIANTS.map((variant) => (
-          <Accordion {...props} key={variant} items={ITEMS} variant={variant} />
+          <div key={variant} className="flex flex-col gap-2">
+            <span>{variant}</span>
+            <Accordion {...props} key={variant} items={ITEMS} variant={variant} />
+          </div>
         ))}
       </div>
     );
@@ -208,7 +211,10 @@ export const Sizes = meta.story({
     return (
       <div className="w-80 flex flex-col gap-6">
         {SIZES.map((size) => (
-          <Accordion {...props} key={size} size={size} items={ITEMS} />
+          <div key={size} className="flex flex-col gap-2">
+            <span>{size}</span>
+            <Accordion {...props} key={size} size={size} items={ITEMS} />
+          </div>
         ))}
       </div>
     );
@@ -229,15 +235,18 @@ export const Radii = meta.story({
     return (
       <div className="w-80 flex flex-col gap-6">
         {RADII.map((radius) => (
-          <Accordion {...props} key={radius} items={ITEMS.slice(0, 2)} radius={radius} />
+          <div key={radius} className="flex flex-col gap-2">
+            <span>{radius}</span>
+            <Accordion {...props} key={radius} items={ITEMS.slice(0, 2)} radius={radius} />
+          </div>
         ))}
       </div>
     );
   },
 });
 
-export const WithOutline = meta.story({
-  name: "枠線付き",
+export const Outlined = meta.story({
+  name: "枠線",
   ...ctrl({
     size: "md",
     radius: undefined,
@@ -249,15 +258,18 @@ export const WithOutline = meta.story({
     return (
       <div className="w-80 flex flex-col gap-6">
         {VARIANTS.map((variant) => (
-          <Accordion {...props} key={variant} items={ITEMS} variant={variant} outlined />
+          <div key={variant} className="flex flex-col gap-2">
+            <span>{variant}</span>
+            <Accordion {...props} key={variant} items={ITEMS} variant={variant} outlined />
+          </div>
         ))}
       </div>
     );
   },
 });
 
-export const WithSeparator = meta.story({
-  name: "区切り線付き",
+export const Separated = meta.story({
+  name: "区切り線",
   ...ctrl({
     variant: "liquid",
     size: "md",

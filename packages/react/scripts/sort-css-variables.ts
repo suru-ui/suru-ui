@@ -29,10 +29,10 @@ const PROPERTY_ALIASES: Readonly<Record<string, readonly string[]>> = {
   "focusring-width": ["outline-width"],
   "focusring-offset": ["outline-offset"],
 
-  "outline-color": ["border-color"],
-  "outline-width": ["border-width"],
+  // "outline-color": ["border-color"],
+  // "outline-width": ["border-width"],
 
-  radius: ["border-radius"],
+  // radius: ["border-radius"],
 
   size: ["width", "height"],
 };
