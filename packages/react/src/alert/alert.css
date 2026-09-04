@@ -121,41 +121,6 @@
 :scope {
   --sui_alert-border_width: --sui-border_width(1);
 
-  &:has(.sui_alert_icon) {
-    --sui_alert_icon-font_size: 1em;
-    --sui_alert_icon-line_height: 1lh;
-  }
-
-  &:has(.sui_alert_icon):has(.sui_alert_title) {
-    --sui_alert_icon-font_size: var(--sui_alert_title-font_size);
-    --sui_alert_icon-line_height: var(--sui_alert_title-line_height);
-  }
-
-  &:has(.sui_alert_icon):has(.sui_alert_content) {
-    --sui_alert_icon-font_size: var(--sui_alert_content-font_size);
-    --sui_alert_icon-line_height: var(--sui_alert_content-line_height);
-  }
-
-  &:has(.sui_alert_icon):has(.sui_alert_title):has(.sui_alert_actions) {
-    --sui_alert_icon-font_size: var(--sui_alert_title-font_size);
-    --sui_alert_icon-line_height: var(--sui_alert_title-line_height);
-  }
-
-  &:has(.sui_alert_icon):has(.sui_alert_title):has(.sui_alert_content) {
-    --sui_alert_icon-font_size: var(--sui_alert_title-font_size);
-    --sui_alert_icon-line_height: var(--sui_alert_title-line_height);
-  }
-
-  &:has(.sui_alert_icon):has(.sui_alert_content):has(.sui_alert_actions) {
-    --sui_alert_icon-font_size: var(--sui_alert_content-font_size);
-    --sui_alert_icon-line_height: var(--sui_alert_content-line_height);
-  }
-
-  &:has(.sui_alert_icon):has(.sui_alert_title):has(.sui_alert_content):has(.sui_alert_actions) {
-    --sui_alert_icon-font_size: var(--sui_alert_content-font_size);
-    --sui_alert_icon-line_height: var(--sui_alert_content-line_height);
-  }
-
   &.sui_alert-size_sm {
     --sui_alert-row_gap: --sui-gap(1);
     --sui_alert-column_gap: --sui-gap(4);
@@ -339,8 +304,6 @@
 :scope {
   .sui_alert_icon {
     margin-top: var(--sui_alert_icon-margin_top);
-    font-size: var(--sui_alert_icon-font_size);
-    line-height: var(--sui_alert_icon-line_height);
 
     &:empty::before {
       width: var(--sui_alert_icon-size);
@@ -358,8 +321,56 @@
 
 /* 代入 */
 :scope {
-  --sui_alert_icon-size: calc(var(--sui_alert_icon-font_size) * 1.2);
-  --sui_alert_icon-margin_top: max(0px, calc((1lh - var(--sui_alert_icon-size)) / 2));
+  --sui_alert_icon-size: calc(
+                           var(--sui_alert_icon-font_size)
+                           * min(1.25, var(--sui_alert_icon-line_height))
+                         );
+  --sui_alert_icon-margin_top: max(
+                                 0px,
+                                 calc(
+                                   (
+                                     var(--sui_alert_icon-font_size)
+                                     * var(--sui_alert_icon-line_height)
+                                     - var(--sui_alert_icon-size)
+                                   )
+                                   / 2
+                                 )
+                               );
+
+  &:has(.sui_alert_icon) {
+    --sui_alert_icon-font_size: 0px;
+    --sui_alert_icon-line_height: 0;
+  }
+
+  &:has(.sui_alert_icon):has(.sui_alert_title) {
+    --sui_alert_icon-font_size: var(--sui_alert_title-font_size);
+    --sui_alert_icon-line_height: var(--sui_alert_title-line_height);
+  }
+
+  &:has(.sui_alert_icon):has(.sui_alert_content) {
+    --sui_alert_icon-font_size: var(--sui_alert_content-font_size);
+    --sui_alert_icon-line_height: var(--sui_alert_content-line_height);
+  }
+
+  &:has(.sui_alert_icon):has(.sui_alert_title):has(.sui_alert_actions) {
+    --sui_alert_icon-font_size: var(--sui_alert_title-font_size);
+    --sui_alert_icon-line_height: var(--sui_alert_title-line_height);
+  }
+
+  &:has(.sui_alert_icon):has(.sui_alert_title):has(.sui_alert_content) {
+    --sui_alert_icon-font_size: var(--sui_alert_title-font_size);
+    --sui_alert_icon-line_height: var(--sui_alert_title-line_height);
+  }
+
+  &:has(.sui_alert_icon):has(.sui_alert_content):has(.sui_alert_actions) {
+    --sui_alert_icon-font_size: var(--sui_alert_content-font_size);
+    --sui_alert_icon-line_height: var(--sui_alert_content-line_height);
+  }
+
+  &:has(.sui_alert_icon):has(.sui_alert_title):has(.sui_alert_content):has(.sui_alert_actions) {
+    --sui_alert_icon-font_size: var(--sui_alert_content-font_size);
+    --sui_alert_icon-line_height: var(--sui_alert_content-line_height);
+  }
 
   &.sui_alert-color_grey {
     --sui_alert_icon-color: var(--sui-canvas_text-1);
