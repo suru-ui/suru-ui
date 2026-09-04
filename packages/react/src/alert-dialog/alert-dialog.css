@@ -11,7 +11,7 @@
 
   /* iOS 26以降: 背景が画面全体を覆うようにします。 */
   @supports (-webkit-touch-callout: none) {
-    --sui_alert_dialog_portal-position: absolute;
+    position: absolute;
   }
 }
 
