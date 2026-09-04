@@ -635,11 +635,40 @@
 /* Indicator */
 :scope {
   .sui_accordion_item-disabled .sui_accordion_indicator {
-    color: var(--sui-disabled-naked-canvas_text);
     cursor: not-allowed;
+  }
+
+  &.sui_accordion-variant_naked
+    .sui_accordion_item-disabled
+      .sui_accordion_trigger:not(.sui_accordion_trigger-unstyled)
+        .sui_accordion_indicator {
+    color: --sui-icon_color(
+             var(--sui-disabled-naked-canvas_text),
+             var(--sui-disabled-naked-canvas)
+           );
 
     svg:not(.sui-ignore) {
-      color: var(--sui-disabled-naked-canvas_text);
+      color: --sui-icon_color(
+               var(--sui-disabled-naked-canvas_text),
+               var(--sui-disabled-naked-canvas)
+             );
+    }
+  }
+
+  &.sui_accordion-variant_liquid
+    .sui_accordion_item-disabled
+      .sui_accordion_trigger:not(.sui_accordion_trigger-unstyled)
+        .sui_accordion_indicator {
+    color: --sui-icon_color(
+             var(--sui-disabled-liquid-canvas_text),
+             var(--sui-disabled-liquid-canvas)
+           );
+
+    svg:not(.sui-ignore) {
+      color: --sui-icon_color(
+               var(--sui-disabled-liquid-canvas_text),
+               var(--sui-disabled-liquid-canvas)
+             );
     }
   }
 }
