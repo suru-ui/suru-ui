@@ -3,17 +3,17 @@
   /* 変数 */
   .sui_breadcrumb {
     --sui_breadcrumb-gap: ;
-    --sui_breadcrumb_list-gap: ;
-    --sui_breadcrumb_separator-svg-size: ;
     --sui_breadcrumb-font_size: ;
     --sui_breadcrumb-font_weight: ;
     --sui_breadcrumb-line_height: ;
+    --sui_breadcrumb-letter_spacing: ;
+    --sui_breadcrumb_list-gap: ;
+    --sui_breadcrumb_separator-svg-size: ;
     --sui_breadcrumb_link-color-normal: ;
     --sui_breadcrumb_link-color-hover: ;
     --sui_breadcrumb_link-color-active: ;
     --sui_breadcrumb_link-color-current: ;
     --sui_breadcrumb_separator-color: ;
-    --sui_breadcrumb-letter_spacing: ;
     --sui_breadcrumb_link-outline_color: ;
     --sui_breadcrumb_link-outline_offset: ;
   }

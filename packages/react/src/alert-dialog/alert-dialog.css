@@ -78,12 +78,12 @@
   --sui_alert_dialog_content-width: ;
   --sui_alert_dialog_content-max_height: ;
   --sui_alert_dialog_content-padding: ;
+  --sui_alert_dialog_content-virtual_margin_block: ;
+  --sui_alert_dialog_content-virtual_margin_inline: ;
   --sui_alert_dialog_content-background_color: ;
   --sui_alert_dialog_content-border_color: ;
   --sui_alert_dialog_content-border_width: ;
   --sui_alert_dialog_content-border_radius: ;
-  --sui_alert_dialog_content-virtual_margin_block: ;
-  --sui_alert_dialog_content-virtual_margin_inline: ;
 }
 
 /* 可変 */
@@ -119,11 +119,11 @@
                                            * 2
                                          );
   --sui_alert_dialog_content-padding: --sui-space(5);
+  --sui_alert_dialog_content-virtual_margin_block: --sui-space(4);
+  --sui_alert_dialog_content-virtual_margin_inline: --sui-space(4);
   --sui_alert_dialog_content-background_color: var(--sui-canvas-2);
   --sui_alert_dialog_content-border_color: var(--sui-border-1);
   --sui_alert_dialog_content-border_width: --sui-border_width(1);
-  --sui_alert_dialog_content-virtual_margin_block: --sui-space(4);
-  --sui_alert_dialog_content-virtual_margin_inline: --sui-space(4);
 
   &:has(.sui_alert_dialog_content-radius_none) {
     --sui_alert_dialog_content-border_radius: 0px;
@@ -187,8 +187,8 @@
 /* 変数 */
 :scope {
   --sui_alert_dialog_controls-gap: ;
-  --sui_alert_dialog_controls-margin_left: ;
   --sui_alert_dialog_controls-virtual_margin: ;
+  --sui_alert_dialog_controls-margin_left: ;
 }
 
 /* 可変 */
@@ -502,7 +502,7 @@
 /* 変数 */
 :scope {
   --sui_alert_dialog_icon-size: ;
-  --sui_alert_dialog_icon__svg-size: ;
+  --sui_alert_dialog_icon-virtual_padding: ;
   --sui_alert_dialog_icon-margin_right: ;
   --sui_alert_dialog_icon-font_size: ;
   --sui_alert_dialog_icon-line_height: ;
@@ -512,7 +512,7 @@
   --sui_alert_dialog_icon-border_width: ;
   --sui_alert_dialog_icon-border_radius: ;
   --sui_alert_dialog_icon-floating: ;
-  --sui_alert_dialog_icon-virtual_padding: ;
+  --sui_alert_dialog_icon__svg-size: ;
 }
 
 /* 可変 */
@@ -539,13 +539,13 @@
 
 /* 既定値 */
 :scope {
+  --sui_alert_dialog_icon-color: var(--sui-canvas_text-1);
+  --sui_alert_dialog_icon-border_width: --sui-border_width(1);
+  --sui_alert_dialog_icon-floating: --sui-space(4);
   --sui_alert_dialog_icon__svg-size: calc(
                                        var(--sui_alert_dialog_icon-size)
                                        - var(--sui_alert_dialog_icon-virtual_padding) * 2
                                      );
-  --sui_alert_dialog_icon-color: var(--sui-canvas_text-1);
-  --sui_alert_dialog_icon-border_width: --sui-border_width(1);
-  --sui_alert_dialog_icon-floating: --sui-space(4);
 
   &:has(.sui_alert_dialog_icon-size_sm) {
     --sui_alert_dialog_icon-size: calc(

@@ -52,12 +52,12 @@
 
   .sui_switch {
     --sui_switch-width: calc(var(--sui_switch-size) * 1.75);
-    --sui_switch_thumb-size: calc(var(--sui_switch-size) - var(--sui_switch-thumb_offset) * 2);
     --sui_switch-outline_color: var(--sui-focusring_color);
     --sui_switch-outline_offset: var(--sui-focusring_offset);
     --sui_switch-thumb_offset: calc(
                                  (var(--sui_switch-size) - var(--sui_switch-border_width) * 2) / 4
                                );
+    --sui_switch_thumb-size: calc(var(--sui_switch-size) - var(--sui_switch-thumb_offset) * 2);
     --sui_switch_thumb-translate_x: calc(
                                       var(--sui_switch-width) - var(--sui_switch_thumb-size)
                                       - var(--sui_switch-thumb_offset) * 2

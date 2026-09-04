@@ -25,10 +25,16 @@ const TARGET_VARIABLE_RE = /^--(?:_)?sui_[a-z_]+-/;
  * 例: `size` は `width` / `height` と同じグループとして扱う。
  */
 const PROPERTY_ALIASES: Readonly<Record<string, readonly string[]>> = {
-  size: ["width", "height"],
   "focusring-color": ["outline-color"],
   "focusring-width": ["outline-width"],
   "focusring-offset": ["outline-offset"],
+
+  "outline-color": ["border-color"],
+  "outline-width": ["border-width"],
+
+  radius: ["border-radius"],
+
+  size: ["width", "height"],
 };
 
 /** stylelint-order の `order/properties-order` に渡すプロパティーグループ。 */
@@ -114,7 +120,7 @@ interface DeterminedProperty {
  * CSS 変数名から CSS プロパティーを判定する。
  *
  * 変数名は接頭辞 (`--sui_button-` など) 以降を `-` で分割し、後方の部分列を
- * アンダースコアをハイフンに置き換えて CSS プロパティーと照合する。最も長い
+ * アンダースコアをハイフンに置き換えて CSS プロパティーと照合する。各セグメントの先頭に `virtual_` があればそれを取り除いた文字列で照合する。最も長い
  * 候補を優先し、末尾のセグメントはバリアント (`normal` など) として除外した
  * 候補もその次に試す。どの候補も CSS プロパティーと一致しない場合は
  * `null` を返す。
@@ -123,6 +129,7 @@ interface DeterminedProperty {
  * - `--sui_button-border_radius` → `border-radius`
  * - `--sui_button-background_color-normal` → `background-color` (バリアント `normal`)
  * - `--sui_button_content_svg-size` → `size` (`PROPERTY_ALIASES` により `width` / `height` と同一視)
+ * - `--sui_alert_dialog_content-virtual_margin_block` → `margin-block` (`virtual_` を取り除いて判定)
  */
 function determineProperty(prop: string): DeterminedProperty | null {
   if (!TARGET_VARIABLE_RE.test(prop)) return null;
@@ -133,13 +140,25 @@ function determineProperty(prop: string): DeterminedProperty | null {
     for (let start = 0; start < limit; start++) {
       const name = segments
         .slice(start, limit)
-        .map((segment) => segment.replaceAll("_", "-"))
+        .map((segment) => segment.replace(/^virtual_/, "").replaceAll("_", "-"))
         .join("-");
       const order = lookupOrder(name);
       if (order !== null) return { name, order };
     }
   }
   return null;
+}
+
+/**
+ * CSS 変数名からコンポーネント名部分のネストの深さを求める。
+ *
+ * `--` 以降の最初の `-` までをコンポーネント名とみなす。
+ * その部分を 1 つ以上の `_` で区切ったときの要素数を深さとする。
+ * 先頭の `_` (非公開変数の接頭辞) は数えない。
+ */
+function componentDepth(prop: string): number {
+  const component = prop.slice(2).split("-", 1)[0] ?? "";
+  return component.split(/_+/).filter((part) => part !== "").length;
 }
 
 /** ブロック内の各宣言の情報。 */
@@ -157,16 +176,24 @@ interface DeclItem {
    * stylelint の並び順での位置。CSS プロパティーを判定できない場合は `null`。
    */
   order: number | null;
+  /**
+   * コンポーネント名部分のネストの深さ。
+   */
+  depth: number;
 }
 
 /**
- * 同一 CSS プロパティー内では元の順序を維持する比較関数。
+ * 宣言の並べ替えに使う比較関数。
  *
- * `Array.prototype.toSorted` は安定ソートであるため、同じ `order` を持つ項目
- * (バリアント違いの変数群) の相対的な順序は変更されない。
- * CSS プロパティーを判定できない変数はブロックの末尾へ移動し、変数名順に並べる。
+ * コンポーネントのネストが浅い順に並べ、同じ深さでは CSS プロパティーを
+ * 判定できた変数を先に stylelint の並び順に従って並べる。深さと並び順が
+ * ともに同じ項目 (バリアント違いの変数群) は `Array.prototype.toSorted` の
+ * 安定ソートにより元の順序を維持する。
+ * CSS プロパティーを判定できない変数は同じ深さの末尾へ移動し、
+ * 変数名順に並べる。
  */
 function compareItems(a: DeclItem, b: DeclItem): number {
+  if (a.depth !== b.depth) return a.depth - b.depth;
   if (a.order === null && b.order === null) {
     return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
   }
@@ -214,6 +241,7 @@ function planDecls(decls: CssNode[]): SortPlan | null {
       name,
       propertyName: determined?.name ?? name,
       order: determined?.order ?? null,
+      depth: componentDepth(name),
     };
   });
   const newOrder = items.toSorted(compareItems).map((item) => item.index);
@@ -289,8 +317,8 @@ function renderRule(source: string, plan: SortPlan): string {
 }
 
 /**
- * ソース内の CSS 変数の定義ブロックを、CSS プロパティーの stylelint の
- * 並び順に従って並べ替える。
+ * ソース内の CSS 変数の定義ブロックを、コンポーネントのネストの深さと
+ * CSS プロパティーの stylelint の並び順に従って並べ替える。
  *
  * 対象はブロック内に連続して並んでいる CSS 変数の定義で、さらに変数名が
  * `--sui_<コンポーネント>-<プロパティー>` の形式を持つものに限られる。

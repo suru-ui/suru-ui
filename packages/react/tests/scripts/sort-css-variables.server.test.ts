@@ -53,6 +53,114 @@ describe("sortCssVariables", () => {
     expect(sortCssVariables(source)).toBe(expected);
   });
 
+  test("`virtual_` を取り除いて CSS プロパティーを判定する", ({ expect }) => {
+    const source = `.sui_button {
+  --sui_button-border_radius: ;
+  --sui_button-background_color: ;
+  --sui_button-virtual_margin_block: ;
+}
+`;
+    const expected = `.sui_button {
+  --sui_button-virtual_margin_block: ;
+  --sui_button-background_color: ;
+  --sui_button-border_radius: ;
+}
+`;
+    expect(sortCssVariables(source)).toBe(expected);
+  });
+
+  test("`virtual_` 付きの変数のバリアントを判定する", ({ expect }) => {
+    const source = `.sui_button {
+  --sui_button-color-hover: ;
+  --sui_button-color-normal: ;
+  --sui_button-virtual_margin_block-normal: ;
+}
+`;
+    const expected = `.sui_button {
+  --sui_button-virtual_margin_block-normal: ;
+  --sui_button-color-hover: ;
+  --sui_button-color-normal: ;
+}
+`;
+    expect(sortCssVariables(source)).toBe(expected);
+  });
+
+  test("`virtual_` を取り除いた名前でエイリアスを解決する", ({ expect }) => {
+    const source = `.sui_button {
+  --sui_button-padding_inline: ;
+  --sui_button-min_height: ;
+  --sui_button-virtual_size: ;
+}
+`;
+    const expected = `.sui_button {
+  --sui_button-virtual_size: ;
+  --sui_button-min_height: ;
+  --sui_button-padding_inline: ;
+}
+`;
+    expect(sortCssVariables(source)).toBe(expected);
+  });
+
+  test("ネストが深いコンポーネントの変数を下に移動する", ({ expect }) => {
+    const source = `.sui_alert_dialog_icon {
+  --sui_alert_dialog_icon__svg-size: ;
+  --sui_alert_dialog_icon-margin_right: ;
+}
+`;
+    const expected = `.sui_alert_dialog_icon {
+  --sui_alert_dialog_icon-margin_right: ;
+  --sui_alert_dialog_icon__svg-size: ;
+}
+`;
+    expect(sortCssVariables(source)).toBe(expected);
+  });
+
+  test("同じ深さではプロパティーの並び順に従う", ({ expect }) => {
+    const source = `.sui_badge {
+  --sui_aaa-color: ;
+  --sui_zzz-virtual_margin: ;
+}
+`;
+    const expected = `.sui_badge {
+  --sui_zzz-virtual_margin: ;
+  --sui_aaa-color: ;
+}
+`;
+    expect(sortCssVariables(source)).toBe(expected);
+  });
+
+  test("判定できない変数は深さ順にし同じ深さでは名前順にする", ({ expect }) => {
+    const source = `.sui_button {
+  --sui_button__icon-zzz: ;
+  --sui_button-mmm: ;
+  --sui_button__icon-aaa: ;
+  --sui_button-zzz: ;
+}
+`;
+    const expected = `.sui_button {
+  --sui_button-mmm: ;
+  --sui_button-zzz: ;
+  --sui_button__icon-aaa: ;
+  --sui_button__icon-zzz: ;
+}
+`;
+    expect(sortCssVariables(source)).toBe(expected);
+  });
+
+  test("判定できない変数でも深さが浅ければ先に移動する", ({ expect }) => {
+    const source = `.sui_alert_dialog_icon {
+  --sui_alert_dialog_icon__svg-size: ;
+  --sui_alert_dialog_icon-floating: ;
+}
+`;
+    const expected = `.sui_alert_dialog_icon {
+  --sui_alert_dialog_icon-floating: ;
+  --sui_alert_dialog_icon__svg-size: ;
+}
+`;
+    expect(sortCssVariables(source)).toBe(expected);
+  });
+
   test("CSS プロパティーを判定できない変数を末尾へ移動する", ({ expect }) => {
     const source = `.sui_button {
   --sui_button-unknown: ;

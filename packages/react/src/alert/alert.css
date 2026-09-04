@@ -8,12 +8,12 @@
   --sui_alert-column_gap: ;
   --sui_alert-padding_block: ;
   --sui_alert-padding_inline: ;
-  --sui_alert_icon-font_size: ;
-  --sui_alert_icon-line_height: ;
   --sui_alert-background_color: ;
   --sui_alert-border_color: ;
   --sui_alert-border_width: ;
   --sui_alert-border_radius: ;
+  --sui_alert_icon-font_size: ;
+  --sui_alert_icon-line_height: ;
 }
 
 /* 静的 */

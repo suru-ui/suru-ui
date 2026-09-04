@@ -410,12 +410,12 @@
 @layer sui.component {
   /* 変数 */
   .sui_number_field {
-    --sui_number_field_addon_svg-size: ;
     --sui_number_field_addon-font_family: ;
     --sui_number_field_addon-font_size: ;
     --sui_number_field_addon-font_weight: ;
     --sui_number_field_addon-color: ;
     --sui_number_field_addon-letter_spacing: ;
+    --sui_number_field_addon_svg-size: ;
   }
 
   /* 静的 */
@@ -454,33 +454,33 @@
   }
 
   .sui_number_field-size_sm {
+    --sui_number_field_addon-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_number_field_addon-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_number_field_addon-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
     --sui_number_field_addon_svg-size: calc(
                                          var(--sui_number_field_addon-font_size)
                                          * var(--sui-text-oln-sm-n-line_height)
                                        );
-    --sui_number_field_addon-font_size: var(--sui-text-oln-sm-n-font_size);
-    --sui_number_field_addon-font_weight: var(--sui-text-oln-sm-n-font_weight);
-    --sui_number_field_addon-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
   }
 
   .sui_number_field-size_md {
+    --sui_number_field_addon-font_size: var(--sui-text-oln-md-n-font_size);
+    --sui_number_field_addon-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_number_field_addon-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
     --sui_number_field_addon_svg-size: calc(
                                          var(--sui_number_field_addon-font_size)
                                          * var(--sui-text-oln-md-n-line_height)
                                        );
-    --sui_number_field_addon-font_size: var(--sui-text-oln-md-n-font_size);
-    --sui_number_field_addon-font_weight: var(--sui-text-oln-md-n-font_weight);
-    --sui_number_field_addon-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   }
 
   .sui_number_field-size_lg {
+    --sui_number_field_addon-font_size: var(--sui-text-oln-lg-n-font_size);
+    --sui_number_field_addon-font_weight: var(--sui-text-oln-lg-n-font_weight);
+    --sui_number_field_addon-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
     --sui_number_field_addon_svg-size: calc(
                                          var(--sui_number_field_addon-font_size)
                                          * var(--sui-text-oln-lg-n-line_height)
                                        );
-    --sui_number_field_addon-font_size: var(--sui-text-oln-lg-n-font_size);
-    --sui_number_field_addon-font_weight: var(--sui-text-oln-lg-n-font_weight);
-    --sui_number_field_addon-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
   }
 
   /* 既定値設定: ここまで */
@@ -492,7 +492,6 @@
   /* 変数 */
   .sui_number_field {
     --sui_number_field_stepper-size: ;
-    --sui_number_field_stepper_svg-size: ;
     --sui_number_field_stepper-font_family: ;
     --sui_number_field_stepper-font_size: ;
     --sui_number_field_stepper-font_weight: ;
@@ -505,6 +504,7 @@
     --sui_number_field_stepper-background_color-hover: ;
     --sui_number_field_stepper-background_color-active: ;
     --sui_number_field_stepper-border_radius: ;
+    --sui_number_field_stepper_svg-size: ;
   }
 
   /* 静的 */

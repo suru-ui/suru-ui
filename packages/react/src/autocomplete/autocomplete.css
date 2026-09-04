@@ -310,12 +310,12 @@
 @layer sui.component {
   /* 変数 */
   .sui_autocomplete {
-    --sui_autocomplete_addon_svg-size: ;
     --sui_autocomplete_addon-font_family: ;
     --sui_autocomplete_addon-font_size: ;
     --sui_autocomplete_addon-font_weight: ;
     --sui_autocomplete_addon-color: ;
     --sui_autocomplete_addon-letter_spacing: ;
+    --sui_autocomplete_addon_svg-size: ;
   }
 
   /* 静的 */
@@ -354,33 +354,33 @@
   }
 
   .sui_autocomplete-size_sm {
+    --sui_autocomplete_addon-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_autocomplete_addon-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_autocomplete_addon-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
     --sui_autocomplete_addon_svg-size: calc(
                                          var(--sui_autocomplete_addon-font_size)
                                          * var(--sui-text-oln-sm-n-line_height)
                                        );
-    --sui_autocomplete_addon-font_size: var(--sui-text-oln-sm-n-font_size);
-    --sui_autocomplete_addon-font_weight: var(--sui-text-oln-sm-n-font_weight);
-    --sui_autocomplete_addon-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
   }
 
   .sui_autocomplete-size_md {
+    --sui_autocomplete_addon-font_size: var(--sui-text-oln-md-n-font_size);
+    --sui_autocomplete_addon-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_autocomplete_addon-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
     --sui_autocomplete_addon_svg-size: calc(
                                          var(--sui_autocomplete_addon-font_size)
                                          * var(--sui-text-oln-md-n-line_height)
                                        );
-    --sui_autocomplete_addon-font_size: var(--sui-text-oln-md-n-font_size);
-    --sui_autocomplete_addon-font_weight: var(--sui-text-oln-md-n-font_weight);
-    --sui_autocomplete_addon-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   }
 
   .sui_autocomplete-size_lg {
+    --sui_autocomplete_addon-font_size: var(--sui-text-oln-lg-n-font_size);
+    --sui_autocomplete_addon-font_weight: var(--sui-text-oln-lg-n-font_weight);
+    --sui_autocomplete_addon-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
     --sui_autocomplete_addon_svg-size: calc(
                                          var(--sui_autocomplete_addon-font_size)
                                          * var(--sui-text-oln-lg-n-line_height)
                                        );
-    --sui_autocomplete_addon-font_size: var(--sui-text-oln-lg-n-font_size);
-    --sui_autocomplete_addon-font_weight: var(--sui-text-oln-lg-n-font_weight);
-    --sui_autocomplete_addon-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
   }
 
   /* 既定値設定: ここまで */
@@ -391,7 +391,6 @@
   /* 変数 */
   .sui_autocomplete {
     --sui_autocomplete_clear-size: ;
-    --sui_autocomplete_clear_svg-size: ;
     --sui_autocomplete_clear-font_family: ;
     --sui_autocomplete_clear-font_size: ;
     --sui_autocomplete_clear-font_weight: ;
@@ -404,6 +403,7 @@
     --sui_autocomplete_clear-background_color-hover: ;
     --sui_autocomplete_clear-background_color-active: ;
     --sui_autocomplete_clear-border_radius: ;
+    --sui_autocomplete_clear_svg-size: ;
   }
 
   /* 静的 */
