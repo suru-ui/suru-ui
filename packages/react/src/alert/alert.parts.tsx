@@ -100,16 +100,18 @@ export const AlertRoot: IComponent<AlertRootProps> = function SuiAlertRoot(props
     radius = size,
     variant = "muted",
     outlined = false,
-    ...otherProps
+    className,
+    ...otherDivProps
   } = props;
 
   return useRender({
     defaultTagName: "div",
     props: [
-      otherProps,
+      otherDivProps,
       {
         role,
         className: cn(
+          className,
           "sui_alert",
           `sui_alert-size_${size}`,
           `sui_alert-color_${color}`,
@@ -122,6 +124,8 @@ export const AlertRoot: IComponent<AlertRootProps> = function SuiAlertRoot(props
     ],
   });
 };
+
+export { AlertRoot as Root };
 
 export namespace Root {
   /**
@@ -155,11 +159,6 @@ export namespace Root {
   export type Variant = AlertRootVariant;
 }
 
-/**
- * {@link AlertRoot}
- */
-export const Root: IComponent<Root.Props> = AlertRoot;
-
 // Icon
 // ----
 
@@ -180,19 +179,21 @@ export type AlertIconProps = Omit<React.ComponentProps<"div">, keyof RenderProps
  * 子要素を省略すると、状態色の丸いインジケーターを表示します。
  */
 export const AlertIcon: IComponent<AlertIconProps> = function SuiAlertIcon(props) {
-  const { "aria-hidden": ariaHidden = true, ...otherProps } = props;
+  const { className, "aria-hidden": ariaHidden = true, ...otherDivProps } = props;
 
   return useRender({
     defaultTagName: "div",
     props: [
-      otherProps,
+      otherDivProps,
       {
-        className: "sui_alert_icon",
+        className: cn(className, "sui_alert_icon"),
         "aria-hidden": ariaHidden,
       },
     ],
   });
 };
+
+export { AlertIcon as Icon };
 
 export namespace Icon {
   /**
@@ -205,11 +206,6 @@ export namespace Icon {
    */
   export type Props = AlertIconProps;
 }
-
-/**
- * {@link AlertIcon}
- */
-export const Icon: IComponent<Icon.Props> = AlertIcon;
 
 // Title
 // -----
@@ -240,6 +236,8 @@ export const AlertTitle: IComponent<AlertTitleProps> = function SuiAlertTitle(pr
   });
 };
 
+export { AlertTitle as Title };
+
 export namespace Title {
   /**
    * {@link AlertTitleState}
@@ -251,11 +249,6 @@ export namespace Title {
    */
   export type Props = AlertTitleProps;
 }
-
-/**
- * {@link AlertTitle}
- */
-export const Title: IComponent<Title.Props> = AlertTitle;
 
 // Content
 // -------
@@ -286,6 +279,8 @@ export const AlertContent: IComponent<AlertContentProps> = function SuiAlertCont
   });
 };
 
+export { AlertContent as Content };
+
 export namespace Content {
   /**
    * {@link AlertContentState}
@@ -297,11 +292,6 @@ export namespace Content {
    */
   export type Props = AlertContentProps;
 }
-
-/**
- * {@link AlertContent}
- */
-export const Content: IComponent<Content.Props> = AlertContent;
 
 // Actions
 // -------
@@ -332,6 +322,8 @@ export const AlertActions: IComponent<AlertActionsProps> = function SuiAlertActi
   });
 };
 
+export { AlertActions as Actions };
+
 export namespace Actions {
   /**
    * {@link AlertActionsState}
@@ -343,8 +335,3 @@ export namespace Actions {
    */
   export type Props = AlertActionsProps;
 }
-
-/**
- * {@link AlertActions}
- */
-export const Actions: IComponent<Actions.Props> = AlertActions;

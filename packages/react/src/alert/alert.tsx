@@ -18,6 +18,9 @@ import {
   AlertContent,
 } from "./alert.parts.jsx";
 
+// Types
+// -----
+
 /**
  * {@link AlertRootColor}
  */
@@ -64,6 +67,42 @@ export type AlertSlotProps = {
 };
 
 /**
+ * {@link Alert} が持つ状態です。
+ */
+export type AlertState = AlertRootState;
+
+/**
+ * {@link Alert} に渡す props です。
+ */
+export type AlertProps = Omit<AlertRootProps, "children"> &
+  Pick<AlertContentProps, "children"> & {
+    /**
+     * アラートの操作ボタンです。
+     */
+    actions?: AlertActionsProps["children"];
+
+    /**
+     * アラートに表示するアイコンです。
+     */
+    icon?: AlertIconProps["children"];
+
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     *
+     * 各パーツの props が優先されます。
+     */
+    slotProps?: AlertSlotProps | undefined;
+
+    /**
+     * アラートのタイトルです。
+     */
+    title?: AlertTitleProps["children"];
+  };
+
+// API
+// ---
+
+/**
  * {@link Alert} を構成する各パーツの props を作成するための API です。
  */
 export interface AlertAPI {
@@ -101,39 +140,6 @@ export interface AlertAPI {
   getTitleProps(): AlertTitleProps | null;
 }
 
-/**
- * {@link Alert} が持つ状態です。
- */
-export type AlertState = AlertRootState;
-
-/**
- * {@link Alert} に渡す props です。
- */
-export type AlertProps = Omit<AlertRootProps, "children"> &
-  Pick<AlertContentProps, "children"> & {
-    /**
-     * アラートの操作ボタンです。
-     */
-    actions?: AlertActionsProps["children"];
-
-    /**
-     * アラートに表示するアイコンです。
-     */
-    icon?: AlertIconProps["children"];
-
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     *
-     * 各パーツの props が優先されます。
-     */
-    slotProps?: AlertSlotProps | undefined;
-
-    /**
-     * アラートのタイトルです。
-     */
-    title?: AlertTitleProps["children"];
-  };
-
 interface IUseAlertAPI {
   /**
    * {@link AlertAPI} を作成します。
@@ -154,45 +160,43 @@ export const useAlertAPI: IUseAlertAPI = function useSuiAlertAPI(props) {
     actions,
     children,
     slotProps: {
-      icon: iconProps,
-      title: titleProps,
-      actions: actionsProps,
-      content: contentProps,
+      icon: iconProps = {},
+      title: titleProps = {},
+      actions: actionsProps = {},
+      content: contentProps = {},
     } = {},
     ...otherRootProps
   } = props;
 
   return {
     getIconProps() {
-      return isLikelyVisibleNode(icon) || !!iconProps ? { ...iconProps, children: icon } : null;
+      return isLikelyVisibleNode(icon) ? { ...iconProps, children: icon } : null;
     },
     getRootProps() {
       return otherRootProps;
     },
     getTitleProps() {
-      return isLikelyVisibleNode(title) || !!titleProps ? { ...titleProps, children: title } : null;
+      return isLikelyVisibleNode(title) ? { ...titleProps, children: title } : null;
     },
     getActionsProps() {
-      return isLikelyVisibleNode(actions) || !!actionsProps
-        ? { ...actionsProps, children: actions }
-        : null;
+      return isLikelyVisibleNode(actions) ? { ...actionsProps, children: actions } : null;
     },
     getContentProps() {
-      return isLikelyVisibleNode(children) || !!contentProps ? { ...contentProps, children } : null;
+      return isLikelyVisibleNode(children) ? { ...contentProps, children } : null;
     },
   };
 };
 
-/**
- * {@link useAlertAPI}
- */
-export const useAPI: IUseAlertAPI = useAlertAPI;
+export { type AlertAPI as API, useAlertAPI as useAPI };
+
+// Component
+// ---------
 
 /**
  * 重要なメッセージや通知をステータスインジケーター付きで表示するコンポーネントです。
  */
 export const Alert: IComponent<AlertProps> = function SuiAlert(props: AlertProps) {
-  const api = useAPI(props);
+  const api = useAlertAPI(props);
   const iconProps = api.getIconProps();
   const titleProps = api.getTitleProps();
   const contentProps = api.getContentProps();
