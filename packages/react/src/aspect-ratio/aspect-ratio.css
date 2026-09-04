@@ -5,6 +5,7 @@
 /* 固定 */
 :scope {
   position: relative;
+  overflow: hidden;
 
   > * {
     position: absolute;
@@ -18,18 +19,36 @@
 :scope {
   --sui_aspect_ratio-width: ;
   --sui_aspect_ratio-ratio: ;
+  --sui_aspect_ratio-border_radius: ;
 }
 
 /* 可変 */
 :scope {
   width: var(--sui_aspect_ratio-width);
   aspect-ratio: var(--sui_aspect_ratio-ratio);
+  border-radius: var(--sui_aspect_ratio-border_radius);
 }
 
 /* 代入 */
 :scope {
   --sui_aspect_ratio-width: 100%;
   --sui_aspect_ratio-ratio: 1;
+
+  &.sui_aspect_ratio-radius_none {
+    --sui_aspect_ratio-border_radius: 0px;
+  }
+
+  &.sui_aspect_ratio-radius_sm {
+    --sui_aspect_ratio-border_radius: var(--sui-radius-sm);
+  }
+
+  &.sui_aspect_ratio-radius_md {
+    --sui_aspect_ratio-border_radius: var(--sui-radius-md);
+  }
+
+  &.sui_aspect_ratio-radius_lg {
+    --sui_aspect_ratio-border_radius: var(--sui-radius-lg);
+  }
 }
 
 } /* @scope */

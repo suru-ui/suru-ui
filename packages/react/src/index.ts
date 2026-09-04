@@ -365,12 +365,12 @@ export {
   useTextarea,
 } from "./textarea/index.js";
 export {
+  type AspectRatioAPI,
   type AspectRatioProps,
   type AspectRatioRatio,
   type AspectRatioState,
-  type AspectRatioPartsProps,
   AspectRatio,
-  useAspectRatio,
+  useAspectRatioAPI,
 } from "./aspect-ratio/index.js";
 export {
   type ActionGroupSize,

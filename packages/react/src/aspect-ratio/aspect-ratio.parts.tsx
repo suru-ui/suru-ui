@@ -1,3 +1,4 @@
+import type { Size } from "@suru-ui/theme";
 import type * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
@@ -10,6 +11,16 @@ import "./aspect-ratio.css";
 // ----
 
 /**
+ * アスペクト比コンテナーの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ */
+export type AspectRatioRootRadius = "none" | Size;
+
+/**
  * アスペクト比です。
  *
  * 数値は「幅 / 高さ」として解釈されます。CSS の `aspect-ratio` プロパティーと同じ形式の値を指定できます。
@@ -17,24 +28,22 @@ import "./aspect-ratio.css";
 export type AspectRatioRootRatio = number | string;
 
 /**
- * {@link AspectRatioRoot} のインラインスタイルです。
- *
- * 比率の指定に使う CSS 変数を含みます。
- */
-type AspectRatioRootStyle = React.CSSProperties & {
-  "--sui_aspect_ratio-ratio"?: AspectRatioRootRatio;
-};
-
-/**
- * {@link AspectRatioRoot} の状態です。
+ * {@link AspectRatioRoot} が持つ状態です。
  */
 export type AspectRatioRootState = {};
 
 /**
- * {@link AspectRatioRoot} に渡すプロパティーです。
+ * {@link AspectRatioRoot} に渡す props です.
  */
 export type AspectRatioRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
   RenderProps<AspectRatioRootState> & {
+    /**
+     * コンテナーの角丸を指定します。
+     *
+     * @default "none"
+     */
+    radius?: AspectRatioRootRadius | undefined;
+
     /**
      * コンテンツの幅と高さの比率を指定します。
      *
@@ -53,43 +62,43 @@ export type AspectRatioRootProps = Omit<React.ComponentProps<"div">, keyof Rende
 export const AspectRatioRoot: IComponent<AspectRatioRootProps> = function SuiAspectRatioRoot(
   props,
 ) {
-  const { ratio, className, ...otherProps } = props;
+  const { ratio = 1, radius = "none", className, ...otherDivProps } = props;
 
   return useRender({
     defaultTagName: "div",
     props: [
-      otherProps,
+      otherDivProps,
       {
-        className: cn(className, "sui_aspect_ratio"),
-        style: (ratio === undefined
-          ? {}
-          : { "--sui_aspect_ratio-ratio": ratio }) as AspectRatioRootStyle,
+        style: {
+          "--sui_aspect_ratio-ratio": ratio,
+        },
+        className: cn(className, "sui_aspect_ratio", `sui_aspect_ratio-radius_${radius}`),
+        "data-scope": "",
       },
     ],
   });
 };
 
-/**
- * {@link AspectRatioRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { AspectRatioRoot as Root };
+
 export namespace Root {
   /**
-   * {@link AspectRatioRootState} です。
+   * {@link AspectRatioRootState}
    */
   export type State = AspectRatioRootState;
 
   /**
-   * {@link AspectRatioRootProps} です。
+   * {@link AspectRatioRootProps}
    */
   export type Props = AspectRatioRootProps;
 
   /**
-   * {@link AspectRatioRootRatio} です。
+   * {@link AspectRatioRootRadius}
+   */
+  export type Radius = AspectRatioRootRadius;
+
+  /**
+   * {@link AspectRatioRootRatio}
    */
   export type Ratio = AspectRatioRootRatio;
 }
-
-/**
- * {@link AspectRatioRoot} です。
- */
-export const Root: IComponent<Root.Props> = AspectRatioRoot;
