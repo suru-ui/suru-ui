@@ -1,341 +1,328 @@
-# Skill: css
+---
+name: css
+description: Suru UI のコンポーネント CSS を書くときに使用します。scope・layer・5区分・変数命名を定めます。
+---
 
-## CSS のコーディングスタイル
+# コンポーネント CSS
 
-対象は `packages/react/src/**/*.css` のコンポーネントスタイルです。基準となる実例は `packages/react/src/accordion/accordion.css` と `packages/react/src/button/button.css` です。このスキルと実例が矛盾するときは、このスキルの記述を優先します。このスキルの目的は、誰が書いても同じ CSS になることです。
+基準となる実装は次の 2 ファイルです。
 
-### ツールと自動整形
+- `packages/react/src/accordion/accordion.css`
+- `packages/react/src/alert-dialog/alert-dialog.css`
 
-CSS の整形は `packages/react` ディレクトリーでの `mise run format` が担当します。
+## 全体構造
 
-禁止:
-
-- 通常のプロパティーや CSS 変数の並び順を手動で整えること (自動整形に任せる)。
-
-### レイヤーと @scope
-
-- ファイルはパーツごとにセクションへ分け、各セクションを `@layer sui.component` ブロックで包みます。さらにブロックの中を `@scope (.sui_<component>) to ([data-scope])` で包みます。同じレイヤー名のブロックは複数置けます。
+パーツごとに `/* パーツ名 */` + `@layer` + `@scope` のブロックを置きます。パーツツリー順に並べます。
 
 ```css
 /* Root */
 @layer sui.component {
-@scope (.sui_button) to ([data-scope]) {
+@scope (.sui_accordion) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+}
 
 /* 変数 */
 :scope {
-  /* ... */
+}
+
+/* 可変 */
+:scope {
+}
+
+/* 代入 */
+:scope {
+}
+
+/* 変異 */
+:scope {
 }
 
 } /* @scope */
 } /* @layer */
 ```
 
-- `@layer` と `@scope` の行、および `} /* @scope */` と `} /* @layer */` の行はインデントしません (すべて列 0)。ブロック内のルールもインデントを深くしません。
-- 閉じ括弧には `/* @scope */` と `/* @layer */` のコメントを付けます。
-- `@scope` の対象はルートクラス 1 つです。`to ([data-scope])` により、ネストした別コンポーネント (子の中に置かれた別の Suru UI コンポーネント) の内部へスタイルが漏れるのを防ぎます。対応する Root パーツは、ルート要素に `data-scope=""` を付ける必要があります (`../new-component/SKILL.md` 参照)。
-- ルート自身のスタイルは `:scope { ... }` に直接書き、子パーツは `:scope { .sui_button_content { ... } }` のようにネストして選択します。
-- レイヤーの優先順位は `packages/theme/src/layers.css` で宣言されています。`sui.important` は `sui.component` より後にあります。
-- 状態クラス (例: `sui_button-pending`, `sui_button-disabled`) の強制上書きは、ファイル末尾の `@layer sui.important` ブロックにまとめます。このブロックも `@scope` で包みます。
-- 禁止: レイヤー名を誤記しない (`sui.importnant` は禁止。正しい名前は `sui.important`)。
-- 禁止: `sui.important` ブロックをファイルの途中に置かない。常にすべての `sui.component` ブロックが閉じた後に置きます。
-
-### セクション構成
-
-パーツごとのセクションには見出しコメントを付けます。見出しは英語のパーツ名で `/* Root */` の形にします。セクションの並びはコンポーネントのパーツツリー順です。ボタンの例では Root → Content → Pending → CircularProgressTrack → CircularProgressFill の順です。
-
-セクション内では同じセレクターを複数のルールに分け、ルールの直前にルール名のコメントを付けます。ルールの順序とコメントは次の通りです。
-
-1. `/* 変数 */` — 公開カスタムプロパティー `--sui_<component>-*` を列挙する目録です。後に「既定値」で代入される変数の目録です。
-2. `/* 静的 */` — カスタムプロパティーを参照しない固定スタイルです。
-3. `/* 動的 */` — カスタムプロパティーを `var()` で参照するスタイルです。
-4. `/* 既定値 */` — 修飾クラスごとに公開変数へ既定値を代入します。派生変数の定義もここに置きます。
-5. `/* 上書き */` — 状態 (`:hover`, `:active`, `:focus-visible`) と修飾クラスで private 変数へ代入します。
-
-省略規則:
-
-- 省略したルールを飛ばしても、残ったルールの順序は変わりません。例: 変数 → 静的 → 動的 → 既定値 → 上書き。
-- 「動的」が存在するのに「変数」が存在することはほとんどありません。基本的に「動的」は「変数」の宣言を参照するためです。
-
-禁止:
-
-- セクション見出しをパーツ名以外にする (`/* root */`, `/* Root part */` など)。
-- セクション見出しを日本語にする。
-- パーツツリー順を崩す。
-- ルール名のコメントに語を足さない (`/* 変数の既定値 */`、`/* 既定値設定: ここから */` などは禁止。正式名称は上の一覧のまま)。
-- 複数のルールが 1 つのルール名コメントに続く場合、そのコメントは先頭のルールの直前に 1 つだけ置きます (通常はルール名コメント 1 つに `:scope { ... }` ルール 1 つを対応させます)。
-
-### コメントと空行
-
-空行の有無はコメントの種類で決まります。
-
-- ルール同士は空行 1 行で区切ります。
-- `/* 変数 */`, `/* 静的 */`, `/* 動的 */`, `/* 既定値 */`, `/* 上書き */` の直後には空行を置かず、すぐルールを書きます。
-- セクション見出し (`/* Root */`) の直後には空行を置かず、すぐ `@layer` ブロックを開きます。
-- `@scope (.sui_<component>) to ([data-scope]) {` の直後には空行を 1 行置きます。
-- `} /* @scope */` の直前には空行を 1 行置きます。`} /* @scope */` と `} /* @layer */` の間には空行を置きません。
-- `} /* @layer */` と次のセクション見出しの間には空行を 1 行置きます。
-- ファイルの末尾は 1 つの改行で終わります。
-
-禁止:
-
-- `/* 変数 */` や `/* 静的 */` とその直後のルールの間に空行を入れる。
-- ルール同士を空行なしで続ける。
-- ファイルの末尾に空行を重ねる。
-
-### 色系変数の状態サフィックス
-
-背景・枠線・前景などの色変数は、状態をサフィックスで区別します。サフィックスは部品が必要とするものだけを使い、部品内で語形を統一します。
-
-- インタラクション: `normal` → `hover` → `active` → `focus_visible` の順に並べます (例: `--sui_button-background_color-normal` / `-hover` / `-active`)。
-- フォーム検証: `invalid` (例: `--sui_input-border_color-invalid`)。
-- 選択・無効などの部品固有状態: `checked`, `indeterminate`, `disabled` など。語形は部品内で統一します。
-
-禁止
-
-- 同一部品内でサフィックスの語形を混在させる (`subtle` と `hover` を併用するなど)。
-
-### クラス命名
-
-- パーツクラスは `sui_<component>_<part>` です。例: `sui_button_content`。
-- 修飾子は `sui_<component>-<prop>_<value>` です。単語は `_` で区切り、コンポーネント名とプロパティー名は `-` で区切ります。例: `sui_button-size_sm`, `sui_button-color_red`, `sui_button-variant_solid`。
-- ブール値の修飾子は `sui_<component>-<prop>` です。例: `sui_button-muted`, `sui_button-outlined`, `sui_accordion-separator`。
-- 状態クラスは `sui_<component>-<state>` です。例: `sui_button-pending`, `sui_button-disabled`。パーツ単位の状態は `sui_<component>_<part>-<state>` です。例: `sui_button_pending-overlay`, `sui_accordion_item-open`, `sui_accordion_content-transition_status_starting`。
-- Base UI 由来の状態は data 属性セレクターで受けて、Suru UI 固有の状態クラスへ反映します (実装側では `(state) => state.disabled && "sui_accordion-disabled"` のように render props で付与)。
-- スタイルを無効化する脱出ハッチが必要な場合は `sui_<component>_<part>-unstyled` のようなクラスを付け、スタイル側は `:not(.sui_accordion_trigger-unstyled)` の形で除外します。
-- 禁止: セパレーターを混同する (`sui_button-size-sm` のように `-` だけで区切る、`sui_button_size_sm` のように `_` だけにする)。
-
-### カスタムプロパティー命名
-
-- 公開変数は `--sui_<component>-<prop>` です。プロパティー名の単語区切りは `_` です。例: `--sui_button-background_color`。
-- コンポーネント内部の上書き用変数は先頭に `_` を付けます。例: `--_sui_button-background_color`。
-- 子パーツが読む変数は `--sui_<component>_<part>-<prop>` の形にし、宣言セレクターはルート (`:scope`) です。例: `--sui_button_content-gap`。
-- 派生変数 (例: `--sui_button-padding_block`) は「既定値」で計算式とともに定義します。
-- 目録 (`/* 変数 */`) の宣言は原則として空の値 (`--sui_button-min_height: ;`) です。既定値が固定の変数は、目録に値付きで宣言してもかまいません (例: `--sui_button_content-active-scale: 0.98;`)。
-- 補助的な変数は、目録に載せずに「既定値」で直接定義してもかまいません (例: `--sui_accordion_content-letter_spacing`)。
-
-禁止:
-
-- 目録に載せた公開変数を「既定値」で代入し忘れる。
-- 目録に private 変数を載せる。
-- 「既定値」以外で派生変数を定義する。
-- 公開変数と private 変数の `_` の数を間違える (private は先頭に 1 個だけ)。
-- `--sui_*` や `--_sui_*` の接頭辞を持たない変数を参照する (`--accordion-panel-height` のような名前は作らない。接頭辞を付けた公開変数を「既定値」で定義してから参照する)。
-
-### 変数の参照
-
-- 値を参照するときは常に `var()` を使います。テーマトークンも同じです。例: `var(--sui-size-sm)`, `var(--sui-focusring_color)`。
-- ユーティリティー関数トークンは `var()` を付けずに呼び出します。例: `--sui_button-padding_inline: --sui-space(4);`。関数の定義は `packages/theme/src/utilities.css` にあります。
-- private 変数の参照にはフォールバックを付けます。フォールバックは公開変数か既定の計算式です。例: `var(--_sui_button-background_color, var(--sui_button-background_color-normal))`。
-- フォールバックには、必ず実在する変数か、既定値として定義済みの値を書きます。`auto` のような既定値を書くときは、「既定値」で公開変数に代入してから `var()` で参照します。
-- 公開変数を参照するだけの場合はフォールバックを付けません。例: `min-height: var(--sui_button-min_height);`。
-- 状態の上書きは private 変数への代入で行い、「動的」ルールがその変数を参照します。
-
-禁止:
-
-- テーマトークンを `var()` なしで書く。
-- ユーティリティー関数トークンを `var()` で包む。
-- 「動的」セクションの宣言にリテラル値を書く。「動的」の値はすべて `var()` 参照です。
-- private 変数の参照にフォールバックを付け忘れる。
-
-### アイコン
-
-- SVG アイコンのサイズと色は、`svg:not(.sui-ignore)` セレクターで変数化します。`sui-ignore` クラスを付けた SVG は対象外です (利用者が自前でサイズを指定できる抜け道です)。
+- `@layer` は通常 `sui.component` です。無効状態だけ `sui.important` を末尾に 1 つ置きます。
+- `@scope` の始点は Root 要素 (`.sui_accordion`) か Portal (`.sui_alert_dialog_portal`) です。終点は必ず `to ([data-scope])` です。
+- ブロック内はすべて `:scope { ... }` に書きます。
+- 閉じ括弧に `} /* @scope */` と `} /* @layer */` のコメントを付けます。
+- 同じ起点でもパーツごとにブロックを分けます。
 
 ```css
-/* 動的 */
+/* Root */
+@layer sui.component {
+@scope (.sui_accordion) to ([data-scope]) {
+} /* @scope */
+} /* @layer */
+
+/* Item */
+@layer sui.component {
+@scope (.sui_accordion) to ([data-scope]) {
+} /* @scope */
+} /* @layer */
+```
+
+## 5 区分
+
+`:scope` は次の順で置きます。1 区分に `:scope` は 1 つだけ置きます。
+
+- 使わない区分は省略します。例: Portal は `固定` のみ、Backdrop は `変異` なしです。
+- 省略しても順序は変えません。
+
+| 区分 | 役割 | 書く内容 |
+| --- | --- | --- |
+| 固定 | コンポーネントによって固定されているスタイル | `var()` は使わない |
+| 変数 | 公開カスタムプロパティーの宣言 | `--sui_<部品>-<属性>: ;` の空宣言のみ |
+| 可変 | CSS 変数によるスタイリング | `prop: var(--sui_...)` のみ。条件付きは私的変数経由 |
+| 代入 | 代入と修飾クラス | 公開変数への代入 + 修飾クラスによる分岐 |
+| 変異 | 状態による変異 | 私的変数 `--_sui_...` への代入のみ |
+
+区分の判断はプロパティー名ではなく次の問いで行います。同じプロパティー名が複数の区分に現れても構いません。
+
+1. 利用者が変数で変えられるべきか。いいえ → `固定` に直接書きます。はい → 次へ進みます。
+2. 状態で切り替わるか。いいえ → 公開変数を `変数` で宣言し、`可変` で適用し、`代入` で値を入れます。はい → 公開変数に加えて私的変数を `可変` でフォールバック付きで参照し、切替は `変異` に集めます。
+
+## 命名
+
+### クラス名
+
+- 基底は `sui_<コンポーネント>_<パーツ>` の snake_case です (`sui_accordion_trigger`、`sui_alert_dialog_content`)。
+- Root / Portal 自体はパーツ名なしです (`sui_accordion`、`sui_alert_dialog_portal`)。
+- 値を持つ修飾は `sui_<基底>-<属性>_<値>` です。ハイフン 1 つで属性、`_` 1 つで値にします。
+- 真偽値の修飾は値なしです。例: `sui_accordion-outlined`、`sui_accordion-separator` です。
+- 状態はパーツの接尾に付けます。例: `sui_accordion_item-open`、`sui_accordion_item-disabled`、`sui_accordion_trigger-unstyled` です。
+- 例: `sui_accordion-size_sm`、`sui_accordion-variant_naked`、`sui_accordion-radius_md`、`sui_alert_dialog_content-variant_stacked`、`sui_alert_dialog_icon-color_blue`、`sui_alert_dialog_controls-absolute`。
+
+### 公開変数 `--sui_...`
+
+- 形式は `--sui_<基底>-<属性>(-<状態>)?(__<内側>-<属性>)?` です。
+- 状態で値が変わる属性だけ `-状態` を付けます。例: `--sui_accordion_trigger-background_color-hover` です。変わらない属性には付けません。例: `--sui_accordion_heading-gap` です。
+- 部品内の要素だけ `__<内側>` を付けます。例: `--sui_alert_dialog_icon__svg-size` です。それ以外には付けません。
+- `prop` に直接適用しない中間値だけ `-virtual_` を付けます。例: `--sui_alert_dialog_content-virtual_margin_block` です。`prop` に適用する値には付けません。
+- `変数` 区分では空宣言 (`: ;`) します。利用者による変異点として列挙するのが目的です。
+
+### 私的変数 `--_sui_...`
+
+- 先頭に `_` を 1 つ付けます (`--_sui_accordion_trigger-background_color`)。
+- `可変` で `var(--_sui_x, <フォールバック>)` として参照し、`変異` でだけ代入します。
+- フォールバックは次から選びます。色は `transparent`、幅は `0px`、位置は `unset`、余白は `auto` です。`-idle` がある属性は公開変数の `-idle` にします。
+
+```css
+/* 可変 */
 :scope {
-  .sui_button_content {
-    svg:not(.sui-ignore) {
-      width: var(--sui_button_content_icon-size);
-      height: var(--sui_button_content_icon-size);
-      color: var(--sui_button_content_icon-color);
+  .sui_accordion_trigger:not(.sui_accordion_trigger-unstyled) {
+    outline-width: var(--_sui_accordion_trigger-outline_width, 0px);
+    background-color: var(--_sui_accordion_trigger-background_color,
+                        var(--sui_accordion_trigger-background_color-idle)
+                      );
+  }
+}
+
+/* 変異 */
+:scope {
+  .sui_accordion_trigger {
+    &:active {
+      --_sui_accordion_trigger-background_color:
+        var(--sui_accordion_trigger-background_color-active);
+    }
+
+    &:focus-visible {
+      --_sui_accordion_trigger-outline_width: var(--sui_accordion_trigger-focusring_width);
     }
   }
 }
 ```
 
-- 既定のアイコンサイズは `1lh` にします (テキストの行の高さに揃えます)。
+## 区分ごとの書き方
 
-### フォーカスリング
+### 固定
 
-- フォーカスリングは outline で表現します。「静的」に `outline-style: solid;` を置き、幅・色・オフセットは「動的」で private 変数 (`--_sui_<component>-outline_width` など) 経由にします。既定は幅 `0px`・色 `transparent`・オフセット `0px` で、`:focus-visible` の「上書き」で有効化します。
-- フォーカスリングのトークンはテーマの `--sui-focusring_width`, `--sui-focusring_color`, `--sui-focusring_offset` を公開変数 (`--sui_<component>_focusring_*`) に代入してから使います。
+- 規則: コンポーネントの構造や振る舞いを決める値は直接書きます。デザイントークンや代入値、利用者による変更を介さないものが対象です。
+- 規則: `var()` は使いません。
+- 例: `position`、`display`、`flex` / `grid`、`overflow`、`cursor`、`touch-action`、`border-style`、`outline-style`、`line-break` などです。これらのプロパティーが `可変` で使えないわけではありません。
 
 ```css
-/* 静的 */
+/* 固定 */
 :scope {
-  outline-style: solid;
-}
+  position: fixed;
+  inset: 0;
+  z-index: calc(infinity);
+  min-height: 100dvh;
 
-/* 動的 */
-:scope {
-  outline-width: var(--_sui_button-outline_width, 0px);
-  outline-color: var(--_sui_button-outline_color, transparent);
-  outline-offset: var(--_sui_button-outline_offset, 0px);
-}
-
-/* 上書き */
-:scope {
-  &:focus-visible {
-    --_sui_button-outline_width: var(--sui_button-focusring_width);
-    --_sui_button-outline_color: var(--sui_button-focusring_color);
-    --_sui_button-outline_offset: var(--sui_button-focusring_offset);
+  /* iOS 26以降: 背景が画面全体を覆うようにします。 */
+  @supports (-webkit-touch-callout: none) {
+    position: absolute;
   }
 }
 ```
 
-### 既定値
+### 変数
 
-- 公開変数 (`--sui_<component>-*`) への代入と、派生変数の定義だけを書きます。
-- ルールの順序: 全修飾クラス共通の既定値 (セレクター `:scope`) を最初に置き、次に修飾クラスを サイズ → 角丸 → バリアント → 色 の順に並べます。
-- サイズは sm → md → lg、角丸は none → sm → md → lg → full、バリアントは solid → naked → liquid の順です。
-- 色は grey → blue → purple → magenta → red → orange → yellow → green の順です。
-- 色とバリアントの両方に依存するトークンは、色のルールの中に `&.<コンポーネント>-variant_*` をネストします。バリアントだけに依存する部品ではバリアントのルールを先に並べます (accordion の Heading/Trigger/Content は variant だけに依存するため、size の後に variant を並べます)。
-- `muted` のようなブール修飾による例外は、色ルールの後ろに置きます (button の `&.sui_button-muted:not(.sui_button-color_grey)` の形)。
-- 各ルール内の宣言の並びは自動整形されます (「ツールと自動整形」参照)。
-
-禁止:
-
-- 「既定値」で private 変数に代入する。private 変数をフォールバック付きで「参照」するのはかまいません。
-
-### 上書き
-
-- private 変数 (`--_sui_<component>-*`) への代入だけを書きます。
-- ルールの順序: 状態のルールを先に、修飾クラスのルールを後に置きます。
-- 状態のルール内の順序は `@media (any-hover: hover)` の `&:hover` → `&:active` → `&:focus-visible` です。該当する状態だけを書きます。
-- 修飾クラスの中にさらに状態を書くときは、`&.sui_button-outlined { ... @media (any-hover: hover) { &:hover { ... } } }` のようにネストします。
-
-禁止:
-
-- 「上書き」で公開変数に代入する。
-- `:hover` を `@media (any-hover: hover)` で囲まずに書く。
-
-### インタラクションの記述
-
-- hover は `@media (any-hover: hover)` の中に `&:hover` をネストします。タッチ環境で hover スタイルが固定されるのを防ぎます。
-- `:active` と `:focus-visible` は直接書きます。
-- 複合セレクターは `&` でネストします。例: 状態セクションの `&.sui_accordion-disabled { &.sui_accordion-outlined { ... } }`。
-- Base UI 由来の開閉状態は data 属性セレクターか、render props で付けた状態クラスで書きます。例: `.sui_accordion_item-open .sui_accordion_indicator`。
-- 同じ宣言を複数のセレクターで共有するときは、カンマ区切りのセレクターリストにしてよいです。セレクターは 1 行に 1 つずつ並べます。
+- そのパーツの公開変数をすべて空宣言します。
 
 ```css
-&:not(:has(.sui_accordion_trigger)),
-&:has(.sui_accordion_trigger-unstyled) {
-  padding: var(--sui_accordion_heading-padding);
-  background-color: var(--sui_accordion_heading-background_color);
+/* 変数 */
+:scope {
+  --sui_accordion-border_color: ;
+  --sui_accordion-border_width: ;
+  --sui_accordion-border_radius: ;
 }
 ```
 
-- `:is()` の引数が長いときは、引数ごとに改行し、開き括弧の次の行からインデントします。
+### 可変
+
+- 規則: デザイントークンや代入値、利用者による変更を受けられるよう、公開変数・私的変数を `prop` へ適用します。
+- 規則: 生の値や生トークンは書きません。必ず自部品の変数を経由します。
+- 規則: 条件付きで変わる値は私的変数 + フォールバックにします。
+- 例: `border-color: var(--_sui_accordion-border_color, transparent)`、`svg:not(.sui-ignore)` などです。これらのプロパティーが `固定` で使えないわけではありません。
 
 ```css
-&.sui_accordion-variant_naked .sui_accordion_heading:is(
-  :not(:has(.sui_accordion_trigger)),
-  :has(.sui_accordion_trigger-unstyled)
-) {
-  background-color: var(--sui-disabled-naked-canvas);
-}
-```
-
-- hover / active / focus-visible で要素を手前に出すときは、`z-index` を private 変数 (`--_sui_button-z_index`, 既定 `0` → `1`) で制御します。
-- `!important` は書きません。優先度はレイヤー (`sui.important`) の順序で担保します。
-
-禁止:
-
-- 疑似クラスを `&` なしでネストする (`:hover { }` を直接置く)。
-- `(any-hover: hover)` 以外のメディアクエリーを使う (幅ベースのブレークポイントは使わない)。
-
-### 値と単位
-
-- 長さには単位を明示します (`0px`)。`0` だけは書きません。
-- 単位を持たないプロパティー (scale, opacity, z-index) と比率 (aspect-ratio の `1 / 1`) は単位なしで書きます。line-height は `1lh` のように単位付きで書きます。
-- 角度には `deg` を付けます (`-90deg`, `180deg`)。
-- パーセンテージは必要時に `%` を付けます (`75%`)。
-- 色のリテラルは `transparent` と `currentColor` だけを使えます。他の色はテーマトークンを参照します。
-
-禁止:
-
-- 長さの `0` を単位なしで書く。
-- 比率を `1/1` のようにスペースなしで書く。
-
-### セレクター
-
-- 原則として、ルールには 1 つのセレクターだけを書きます。同じ宣言を共有する複数のセレクターはカンマで並べてよいです (「インタラクションの記述」参照)。
-- 複合は `&` ネストで書きます。
-- セレクターが長い場合は、結合子 (`>`, 子孫結合子) の前で改行し、継続行を 2 スペースインデントします。例:
-
-```text
-.sui_accordion_item:first-child:not(.sui_accordion_item-open)
-  .sui_accordion_trigger:not(.sui_accordion_trigger-unstyled) {
-  border-top-left-radius: var(--sui_accordion_trigger-border_radius);
-  border-top-right-radius: var(--sui_accordion_trigger-border_radius);
-}
-```
-
-禁止:
-
-- 結合子以外の位置でセレクターを改行する。
-- おおよそ 100 文字を超えるセレクターを改行しない。
-
-### 状態セクション (`@layer sui.important`)
-
-- ファイル末尾に、状態ごとに 1 ブロックを置きます。見出しは小文字の状態名で `/* pending */`, `/* disabled */` の形にします。状態の並びは部品の状態定義順です。
-- ブロックも `@layer sui.important` の中に `@scope (.sui_<component>) to ([data-scope])` で包みます。
-- ブロックの中はパーツのサブ見出し (`/* Root */`, `/* Content */`) をパーツツリー順に並べ、上書きが必要なパーツだけ書きます。
-- 宣言は private 変数への代入ではなく、プロパティーへの直接の代入で書きます。無効状態の色はテーマの `--sui-disabled-*` トークンを使います。
-- 状態クラスは `:scope { &.sui_button-pending { ... } }` の形で書き、バリアントは `&.sui_button-variant_solid` でネストします。
-- 宣言に `!important` は付けません。優先度はレイヤーの順序で担保します。
-
-禁止:
-
-- レイヤー名の誤字 (`sui.importnant`)。
-- 状態セクションでパーツツリー順を崩す。
-- `sui.important` ブロック内で `!important` 宣言を書く。
-
-### 整形
-
-- インデントは 2 スペースです。ネスト (`&`, `@media`) ごとに 2 スペース追加します。`{` はセレクターと同じ行に置き、`}` は単独の行に置きます。
-- `@layer` と `@scope` のブロックはインデントを深くしません (「レイヤーと @scope」参照)。
-- 宣言の値は、その宣言の `プロパティー名: ` の直後の列から始めます。複数の宣言を縦の列で揃えようとしないでください (プロパティー名ごとに値の開始位置は個別です)。例:
-
-```text
-/* 静的 */
+/* 可変 */
 :scope {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  background-color: var(--sui_accordion-background_color);
+  border-color: var(--_sui_accordion-border_color, transparent);
+  border-width: var(--_sui_accordion-border_width, 0px);
+
+  svg:not(.sui-ignore) {
+    width: var(--sui_accordion_trigger__svg-size);
+    color: var(--sui_accordion_trigger__svg-color);
+  }
 }
 ```
 
-- 長い `var()` と `calc()` は引数ごとに改行します。ネストする関数と引数は、上の行の関数の開始列から 2 スペース後ろにインデントします。閉じ括弧は対応する関数の開始列に揃えます。例:
+### 代入
 
-```text
+- 規則: 公開変数への代入と修飾クラス分岐を書きます。生の `prop` は書きません。
+- 規則: 値はデザイントークンや動的関数を使います。
+- 規則: 1 つの公開変数には 1 つの値だけを代入します。ショートハンドに複数値をまとめず、ロングハンドごとに変数を分けます。
+- 規則: 修飾対象が起点自身か子孫かで分岐の書き方を使い分けます。起点自身は `&.`、子孫は `&:has(...)` にします。
+- 規則: 分岐は既定値の後に `size` → `radius` → `color` / `variant` の順に置きます。
+
+```css
+&.sui_accordion-size_sm {
+  --sui_accordion_heading-gap: --sui-gap(2);
+}
+
+&.sui_accordion-variant_naked {
+  --sui_accordion_heading-background_color: var(--sui-grey-naked-canvas-normal);
+}
+```
+
+- 例: 上下で値が異なる余白は `padding_block_start` / `padding_block_end` に分けます (alert)。
+
+```css
+&.sui_alert-size_sm:has(.sui_alert_title, .sui_alert_content) {
+  --sui_alert_actions-padding_block_start: --sui-gap(4);
+  --sui_alert_actions-padding_block_end: --sui-gap(3);
+}
+```
+
+- 例: 起点が Portal で修飾対象が子孫の場合は `&:has(...)` を使います (alert-dialog)。
+
+```css
+&:has(.sui_alert_dialog_icon-size_sm) {
+  --sui_alert_dialog_icon-size: calc(
+                                  var(--sui-size-sm)
+                                  + var(--sui_alert_dialog_icon-virtual_padding) * 2
+                                );
+}
+
+&:has(.sui_alert_dialog_icon-color_blue.sui_alert_dialog_icon-variant_solid) {
+  --sui_alert_dialog_icon-color: var(--sui-blue-solid-canvas_text-normal);
+}
+```
+
+- 例: 親パーツの値を子が引き継ぐときはそのまま参照します。
+
+### 変異
+
+- 規則: 私的変数への代入だけを書きます。公開変数への代入や生の `prop` は書きません。
+- 規則: 状態変化による切替をここに集めます。
+- 例: `-outlined` による有効化、開閉や遷移状態による切替などです。
+
+```css
+&.sui_accordion-outlined {
+  --_sui_accordion-border_color: var(--sui_accordion-border_color);
+  --_sui_accordion-border_width: var(--sui_accordion-border_width);
+}
+```
+
+- 例: 開閉・遷移・位置調整などです。
+
+```css
+.sui_accordion_item-open .sui_accordion_indicator {
+  --_sui_accordion_indicator-rotate: var(--sui_accordion_indicator-rotate-open);
+}
+
+.sui_accordion_content-transition_status_starting,
+.sui_accordion_content-transition_status_ending {
+  --_sui_accordion_content-height: 0px;
+}
+```
+
+## 定型パターン
+
+該当する場合は次の形に従います。該当しない場合は書きません。
+
+- 角丸がある場合は公開変数 `border_radius` と `radius_*` 修飾で切り替え、子は親の値を参照します。
+- 枠線の有無切替がある場合は `固定` の線種 + `可変` の私的変数 + `代入` のトークン + `変異` の `-outlined` で有効化します。
+- フォーカスリングがある場合は `focusring_width` / `focusring_color` / `focusring_offset` の 3 点を `可変` + `代入` + `変異` (`:focus-visible`) で扱います。`outline-style: solid` は `固定` に置きます。
+- 文字がある場合は `font_family` / `font_size` / `font_weight` / `line_height` / `letter_spacing` / `color` を一式で持ちます。
+- 色違い × 質感 (`color_*` × `variant_*`) がある場合はすべての組合せを列挙します。省略しません。
+- `svg` がある場合は `svg:not(.sui-ignore)` にし、大きさと色を明示します。大きさは文字や箱に連動する `calc()` にします。
+- 適用外のクラスがある場合は `:not()` で除外します。
+
+## 無効状態
+
+- 末尾に 1 つの `@layer sui.important` ブロックを置きます。パーツごとに `/* Root */` などの小見出しを付け、小見出しごとに `:scope` を 1 つ置きます。
+- 変数は使わず、生の `prop` と `var(--sui-disabled-*)` を直接書きます。
+- 対象は Root の無効クラスと各パーツの無効クラスです。`variant` があるパーツは `variant` ごとに書きます。
+- 無効になる要素すべてに `cursor: not-allowed` を付けます。
+
+```css
+/* disabled */
+@layer sui.important {
+@scope (.sui_accordion) to ([data-scope]) {
+
+/* Root */
 :scope {
-  --sui_button-padding_block: calc(
-                                (var(--sui_button-min_height) - 1lh) / 2
-                                - var(--_sui_button-border_width, 0px)
-                              );
+  &.sui_accordion-disabled {
+    cursor: not-allowed;
+  }
 }
+
+/* Trigger */
+:scope {
+  .sui_accordion_item-disabled .sui_accordion_trigger {
+    cursor: not-allowed;
+  }
+
+  &.sui_accordion-variant_naked
+    .sui_accordion_item-disabled
+      .sui_accordion_trigger:not(.sui_accordion_trigger-unstyled) {
+    color: var(--sui-disabled-naked-canvas_text);
+    background-color: var(--sui-disabled-naked-canvas);
+  }
+}
+
+} /* @scope */
+} /* @layer */
 ```
 
-- border などの複合値やフォールバック付きの `var()` を改行するときも、継続行を値の開始列に揃えます。短ければ 1 行で構いません。
+## 禁則
 
-```text
-background-color: var(--_sui_accordion_trigger-background_color,
-                    var(--sui_accordion_trigger-background_color-normal)
-                  );
-```
-
-- 禁止: 列揃えをタブで行う。
-
-### 検証
-
-変更した CSS は次の順で検証します。検証せずに終わらせないでください。
-
-1. 自動整形: `packages/react` ディレクトリーで `mise run format` を実行し、stylelint と sort スクリプトに直させる。
-2. stylelint: `npx stylelint --config ./.config/.stylelintrc.json 'src/**/*.css'` でエラーが残っていないことを確認する。
-3. 目録との整合: 「変数」の目録に載っている公開変数が「既定値」で必ず代入されていることを確認する。
-4. git diff で、意図しない値の変化がないことを確認する (移動・並べ替え・コメントの追加以外)。
-5. 変更したコンポーネントのテストが存在すれば実行して、回帰がないことを確認する。
-6. ファイル末尾が 1 つの改行で終わることを確認する。
+- `固定` に `var()` を書かない。`可変` に生の値を書かない。`代入` に生の `prop` を書かない。`変異` に公開変数への代入や生の `prop` を書かない。
+- `変数` で宣言していない変数を参照・代入しない。ファイル内で宣言した変数に限ります。
+- 私的変数 (`--_sui_...`) を `変異` 以外で代入しない。
+- 私的変数をフォールバックなしで参照しない。例: `var(--_sui_accordion-border_color, transparent)` のように書きます。
+- `可変` で全体トークンを直接参照しない。例: `var(--sui-canvas-1)` や `var(--sui-radius-md)` は `代入` に書き、`可変` は自部品の変数を経由します。
+- パーツごとに `@layer` + `@scope` ブロックを分ける。複数パーツを 1 ブロックにまとめない。
+- 5 区分の順序を入れ替えない。例: Footer のように `変数` を `固定` より先に置かない。
+- 修飾の書き方を取り違えない。例: 起点自身の修飾は `&.sui_accordion-size_sm`、子孫の修飾は `&:has(.sui_alert_dialog_icon-size_sm)` にします。
+- 変数名・クラス名の綴りは `変数`・`可変`・`代入` で一致させる。例: 対応しない変数に代入しない (`size_lg` の代入先が `min_height` になっているような不一致を残さない)。
+- 同一セレクターへの `代入` を重複させない。例: 同じ `&:has(...)` を二度書いて後の定義で上書きしない。
+- 1 つの公開変数に複数の値を半角スペース区切りで代入しない。例: `--sui_alert_actions-padding_block: --sui-gap(4) --sui-gap(3)` は禁止。`padding_block_start` / `padding_block_end` のように変数を分けます。
+- `svg` に素の `svg` セレクターを使わない。例: `svg:not(.sui-ignore)` にし、大きさと色を明示します。継承に任せない。
+- `sui.important` を無効状態以外に使わない。
+- `!important` を書かない。

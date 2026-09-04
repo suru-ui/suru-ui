@@ -26,7 +26,7 @@
   border-radius: var(--sui_accordion-border_radius);
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
   --sui_accordion-background_color: var(--sui-canvas-1);
   --sui_accordion-border_color: var(--sui-grey-naked-border-normal);
@@ -50,7 +50,7 @@
   }
 }
 
-/* 上書き */
+/* 変異 */
 :scope {
   &.sui_accordion-outlined {
     --_sui_accordion-border_color: var(--sui_accordion-border_color);
@@ -86,13 +86,13 @@
   }
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
   --sui_accordion_item-separator_color: var(--sui-grey-naked-border-normal);
   --sui_accordion_item-separator_width: --sui-border_width(1);
 }
 
-/* 上書き */
+/* 変異 */
 :scope {
   &.sui_accordion-separator {
     --_sui_accordion_item-border_top_color: var(--sui_accordion_item-separator_color);
@@ -173,7 +173,7 @@
   }
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
   --sui_accordion_heading-font_family: var(--sui-font-sans);
   --sui_accordion_heading-color: var(--sui-canvas_text-1);
@@ -318,7 +318,7 @@
   }
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
   --sui_accordion_trigger-font_family: var(--sui-font-sans);
   --sui_accordion_trigger-color: var(--sui-canvas_text-1);
@@ -375,7 +375,7 @@
   }
 }
 
-/* 上書き */
+/* 変異 */
 :scope {
   .sui_accordion_trigger {
     @media (any-hover: hover) {
@@ -439,7 +439,7 @@
   }
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
   --sui_accordion_indicator-size: var(--sui_accordion_trigger__svg-size);
   --sui_accordion_indicator-color: var(--sui_accordion_trigger__svg-color);
@@ -447,7 +447,7 @@
   --sui_accordion_indicator-rotate-open: 180deg;
 }
 
-/* 上書き */
+/* 変異 */
 :scope {
   .sui_accordion_item-open .sui_accordion_indicator {
     --_sui_accordion_indicator-rotate: var(--sui_accordion_indicator-rotate-open);
@@ -505,7 +505,7 @@
   }
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
   --sui_accordion_content-height: auto;
   --sui_accordion_content-font_family: var(--sui-font-sans);
@@ -548,7 +548,7 @@
   }
 }
 
-/* 上書き */
+/* 変異 */
 :scope {
   .sui_accordion_content-transition_status_starting,
   .sui_accordion_content-transition_status_ending {

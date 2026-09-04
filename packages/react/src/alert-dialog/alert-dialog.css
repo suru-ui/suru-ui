@@ -44,7 +44,7 @@
   }
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
   --sui_alert_dialog_backdrop-background_color: var(--sui-backdrop-color);
   --sui_alert_dialog_backdrop-filter-blur: blur(var(--sui-backdrop-blur));
@@ -100,7 +100,7 @@
   }
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
   --sui_alert_dialog_content-row_gap: --sui-gap(7);
   --sui_alert_dialog_content-width-desktop: calc(var(--sui-text-std-md-n-font_size) * 24);
@@ -151,7 +151,7 @@
   }
 }
 
-/* 上書き */
+/* 変異 */
 :scope {
   .sui_alert_dialog_content-outlined {
     --_sui_alert_dialog_content-border_color: var(--sui_alert_dialog_content-border_color);
@@ -201,7 +201,7 @@
   }
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
   --sui_alert_dialog_controls-gap: --sui-space(4);
   --sui_alert_dialog_controls-virtual_margin: var(--sui_alert_dialog_content-padding);
@@ -215,7 +215,7 @@
   }
 }
 
-/* 上書き */
+/* 変異 */
 :scope {
   .sui_alert_dialog_controls-absolute {
     --_sui_alert_dialog_controls-top: var(--sui_alert_dialog_controls-virtual_margin);
@@ -433,7 +433,7 @@
   }
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
   --sui_alert_dialog_header-row_gap: --sui-gap(2);
   --sui_alert_dialog_header-virtual_column_gap: --sui-gap(6);
@@ -537,7 +537,7 @@
   }
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
   --sui_alert_dialog_icon-color: var(--sui-canvas_text-1);
   --sui_alert_dialog_icon-border_width: --sui-border_width(1);
@@ -768,7 +768,7 @@
   }
 }
 
-/* 上書き */
+/* 変異 */
 :scope {
   &:has(.sui_alert_dialog_icon-outlined) {
     --_sui_alert_dialog_icon-border_color: var(--sui_alert_dialog_icon-border_color);
@@ -833,7 +833,7 @@
   }
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
   --sui_alert_dialog_title-font_family: var(--sui-font-sans);
   --sui_alert_dialog_title-font_size: var(--sui-text-std-md-b-font_size);
@@ -887,7 +887,7 @@
   }
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
   --sui_alert_dialog_description-font_family: var(--sui-font-sans);
   --sui_alert_dialog_description-font_size: var(--sui-text-std-md-n-font_size);
@@ -936,7 +936,7 @@
   }
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
   --sui_alert_dialog_body-font_family: var(--sui-font-sans);
   --sui_alert_dialog_body-font_size: var(--sui-text-std-md-n-font_size);
@@ -984,7 +984,7 @@
   }
 }
 
-/* 既定値 */
+/* 代入 */
 :scope {
   --sui_alert_dialog_footer-gap: --sui-gap(4);
 }
