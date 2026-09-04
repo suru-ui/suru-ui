@@ -89,6 +89,17 @@ export {
   Avatar,
   useAvatarAPI,
 } from "./avatar/index.js";
+export {
+  type AvatarGroupAPI,
+  type AvatarGroupSize,
+  type AvatarGroupColor,
+  type AvatarGroupProps,
+  type AvatarGroupState,
+  type AvatarGroupRadius,
+  type AvatarGroupSlotProps,
+  AvatarGroup,
+  useAvatarGroupAPI,
+} from "./avatar-group/index.js";
 
 // TODO: 以下のコンポーネントをすべて手直しする
 
@@ -127,15 +138,6 @@ export {
   ToggleButton,
   useToggleButtonAPI,
 } from "./toggle-button/index.js";
-export {
-  type AvatarGroupSize,
-  type AvatarGroupColor,
-  type AvatarGroupProps,
-  type AvatarGroupState,
-  type AvatarGroupRadius,
-  type AvatarGroupContext,
-  AvatarGroup,
-} from "./avatar-group/index.js";
 export {
   type BadgeSize,
   type BadgeColor,

@@ -20,10 +20,10 @@ export type AvatarGroupContextColor = Color;
 /**
  * アバターの角丸です。
  *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  * - `"full"`: 完全な丸形
  */
 export type AvatarGroupContextRadius = "none" | Size | "full";
@@ -31,9 +31,9 @@ export type AvatarGroupContextRadius = "none" | Size | "full";
 /**
  * アバターの大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type AvatarGroupContextSize = Size;
 
@@ -52,13 +52,13 @@ export type AvatarGroupContext = {
   readonly radius: AvatarGroupContextRadius;
 
   /**
-   * アバターの大きさを指定します。
+   * アバターの大きさです。
    */
   readonly size: AvatarGroupContextSize;
 };
 
 /**
- * {@link AvatarGroupRoot} が子パーツへ提供するコンテキストです。
+ * アバターグループのスタイルを子要素へ伝播するコンテキストです。
  */
 export const AvatarGroupContext: React.Context<AvatarGroupContext | null> =
   React.createContext<AvatarGroupContext | null>(null);
@@ -82,40 +82,24 @@ function useSuiAvatarGroupContext(optional?: boolean): AvatarGroupContext | null
  */
 export const useAvatarGroupContext: IUseContext<AvatarGroupContext> = useSuiAvatarGroupContext;
 
-/**
- * {@link AvatarGroupContext} です。
- */
-export type Context = AvatarGroupContext;
+export { AvatarGroupContext as Context, useAvatarGroupContext as useContext };
 
-/**
- * {@link AvatarGroupContext} です。
- */
-export const Context: React.Context<Context | null> = AvatarGroupContext;
-
-/**
- * {@link Context} の型名前空間です。
- */
 export namespace Context {
   /**
-   * {@link AvatarGroupContextColor} です。
+   * {@link AvatarGroupContextColor}
    */
   export type Color = AvatarGroupContextColor;
 
   /**
-   * {@link AvatarGroupContextRadius} です。
+   * {@link AvatarGroupContextRadius}
    */
   export type Radius = AvatarGroupContextRadius;
 
   /**
-   * {@link AvatarGroupContextSize} です。
+   * {@link AvatarGroupContextSize}
    */
   export type Size = AvatarGroupContextSize;
 }
-
-/**
- * {@link useAvatarGroupContext} です。
- */
-export const useContext: IUseContext<Context> = useAvatarGroupContext;
 
 // Root
 // ----
@@ -130,10 +114,10 @@ export type AvatarGroupRootColor = "auto" | Color;
 /**
  * 各アバターの角丸です。
  *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  * - `"full"`: 完全な丸形
  */
 export type AvatarGroupRootRadius = "none" | Size | "full";
@@ -141,32 +125,30 @@ export type AvatarGroupRootRadius = "none" | Size | "full";
 /**
  * 各アバターの大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type AvatarGroupRootSize = Size;
 
 /**
- * {@link AvatarGroupRoot} の状態です。
+ * {@link AvatarGroupRoot} が持つ状態です。
  */
 export type AvatarGroupRootState = {};
 
 /**
- * {@link AvatarGroupRoot} に渡すプロパティーです。
+ * {@link AvatarGroupRoot} に渡す props です。
  */
 export type AvatarGroupRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
   RenderProps<AvatarGroupRootState> & {
     /**
-     * フォールバックの背景色を指定します。
+     * 各アバターの背景色を指定します。
      *
      * アバターに色が指定されている場合、それを優先します。
      *
      * @default "auto"
      */
     color?: AvatarGroupRootColor | undefined;
-
-    // opticallyCenter?: boolean | undefined;
 
     /**
      * アバターの角丸を指定します。
@@ -208,8 +190,8 @@ export const AvatarGroupRoot: IComponent<AvatarGroupRootProps> = function SuiAva
     radius = "full",
     reverse = false,
     children: childrenProp,
-    // opticallyCenter = false,
-    ...otherProps
+    className,
+    ...otherDivProps
   } = props;
   // oxlint-disable-next-line react/jsx-key
   const children = React.Children.map(childrenProp, (child, i) => {
@@ -233,50 +215,60 @@ export const AvatarGroupRoot: IComponent<AvatarGroupRootProps> = function SuiAva
   return useRender({
     defaultTagName: "div",
     props: [
-      otherProps,
+      otherDivProps,
       {
         children,
         className: cn(
+          className,
           "sui_avatar_group",
           reverse && "sui_avatar_group-reverse",
           !reverse && "sui_avatar_group-forward",
-          // opticallyCenter && "sui_avatar_group-optically_center",
         ),
+        "data-scope": "",
       },
     ],
   });
 };
 
-/**
- * {@link AvatarGroupRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { AvatarGroupRoot as Root };
+
 export namespace Root {
   /**
-   * {@link AvatarGroupRootState} です。
+   * {@link AvatarGroupRootState}
    */
   export type State = AvatarGroupRootState;
 
   /**
-   * {@link AvatarGroupRootProps} です。
+   * {@link AvatarGroupRootProps}
    */
   export type Props = AvatarGroupRootProps;
-}
 
-/**
- * {@link AvatarGroupRoot} です。
- */
-export const Root: IComponent<Root.Props> = AvatarGroupRoot;
+  /**
+   * {@link AvatarGroupRootColor}
+   */
+  export type Color = AvatarGroupRootColor;
+
+  /**
+   * {@link AvatarGroupRootRadius}
+   */
+  export type Radius = AvatarGroupRootRadius;
+
+  /**
+   * {@link AvatarGroupRootSize}
+   */
+  export type Size = AvatarGroupRootSize;
+}
 
 // Surplus
 // -------
 
 /**
- * {@link AvatarGroupSurplus} の状態です。
+ * {@link AvatarGroupSurplus} が持つ状態です。
  */
 export type AvatarGroupSurplusState = AvatarRootState;
 
 /**
- * {@link AvatarGroupSurplus} に渡すプロパティーです。
+ * {@link AvatarGroupSurplus} に渡す props です。
  */
 export type AvatarGroupSurplusProps = AvatarRootProps;
 
@@ -285,27 +277,21 @@ export type AvatarGroupSurplusProps = AvatarRootProps;
  */
 export const AvatarGroupSurplus: IComponent<AvatarGroupSurplusProps> =
   function SuiAvatarGroupSurplus(props) {
-    const { color = "grey", ...otherProps } = props;
+    const { color = "grey", className, ...otherProps } = props;
 
-    return <AvatarRoot {...otherProps} color={color} />;
+    return <AvatarRoot {...otherProps} color={color} className={className} />;
   };
 
-/**
- * {@link AvatarGroupSurplus} の状態やプロパティーをまとめた型名前空間です。
- */
+export { AvatarGroupSurplus as Surplus };
+
 export namespace Surplus {
   /**
-   * {@link AvatarGroupSurplusState} です。
+   * {@link AvatarGroupSurplusState}
    */
   export type State = AvatarGroupSurplusState;
 
   /**
-   * {@link AvatarGroupSurplusProps} です。
+   * {@link AvatarGroupSurplusProps}
    */
   export type Props = AvatarGroupSurplusProps;
 }
-
-/**
- * {@link AvatarGroupSurplus} です。
- */
-export const Surplus: IComponent<Surplus.Props> = AvatarGroupSurplus;

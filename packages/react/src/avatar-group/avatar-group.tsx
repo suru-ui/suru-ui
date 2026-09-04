@@ -14,28 +14,46 @@ import {
   useAvatarGroupContext,
 } from "./avatar-group.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link AvatarGroupRootColor} です。
+ * {@link AvatarGroupRootColor}
  */
 export type AvatarGroupColor = AvatarGroupRootColor;
 
 /**
- * {@link AvatarGroupRootRadius} です。
+ * {@link AvatarGroupRootRadius}
  */
 export type AvatarGroupRadius = AvatarGroupRootRadius;
 
 /**
- * {@link AvatarGroupRootSize} です。
+ * {@link AvatarGroupRootSize}
  */
 export type AvatarGroupSize = AvatarGroupRootSize;
 
 /**
- * {@link AvatarGroupRootState} です。
+ * {@link AvatarGroup} の各パーツに渡す props です。
+ */
+export type AvatarGroupSlotProps = {
+  /**
+   * {@link AvatarGroupRoot} に渡す props です。
+   */
+  readonly root?: Omit<AvatarGroupRootProps, "children"> | undefined;
+
+  /**
+   * {@link AvatarGroupSurplus} に渡す props です。
+   */
+  readonly surplus?: Omit<AvatarGroupSurplusProps, "children"> | undefined;
+};
+
+/**
+ * {@link AvatarGroup} が持つ状態です。
  */
 export type AvatarGroupState = AvatarGroupRootState;
 
 /**
- * {@link AvatarGroup} コンポーネントのプロパティーです。
+ * {@link AvatarGroup} に渡す props です。
  */
 export type AvatarGroupProps = AvatarGroupRootProps & {
   /**
@@ -46,48 +64,90 @@ export type AvatarGroupProps = AvatarGroupRootProps & {
    * @default 4
    */
   max?: number | undefined;
-};
-
-/**
- * {@link AvatarGroup} の各パーツに渡すプロパティーです。
- */
-export type AvatarGroupPartsProps = {
-  /**
-   * {@link AvatarGroupRoot} に渡すプロパティーです。
-   */
-  readonly root: AvatarGroupRootProps;
 
   /**
-   * {@link AvatarGroupSurplus} に渡すプロパティーです。
+   * 各パーツに個別の props を渡すためのオブジェクトです。
    *
-   * これを表示しないときは null になります。
+   * 各パーツの props が優先されます。
    */
-  readonly surplus: AvatarGroupSurplusProps | null;
+  slotProps?: AvatarGroupSlotProps | undefined;
 };
 
+// API
+// ---
+
 /**
- * {@link AvatarGroup} の各パーツに渡すプロパティーを作るフックです。
+ * {@link AvatarGroup} を構成する各パーツの props を作成するための API です。
  */
-export function useAvatarGroup(props: AvatarGroupProps): AvatarGroupPartsProps {
-  const { max = 4, children, ...otherRootProps } = props;
+export interface AvatarGroupAPI {
+  /**
+   * {@link AvatarGroupRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<AvatarGroupRootProps, "children"> & {
+    children: React.ReactNode;
+  };
+
+  /**
+   * {@link AvatarGroupSurplus} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
+   */
+  getSurplusProps(): AvatarGroupSurplusProps | null;
+}
+
+interface IUseAvatarGroupAPI {
+  /**
+   * {@link AvatarGroupAPI} を作成します。
+   *
+   * @param props {@link AvatarGroup} の props です。
+   * @returns アバターグループの API です
+   */
+  (props: AvatarGroupProps): AvatarGroupAPI;
+}
+
+/**
+ * {@link AvatarGroupAPI} を作成するフックです。
+ */
+export const useAvatarGroupAPI: IUseAvatarGroupAPI = function useSuiAvatarGroupAPI(props) {
+  const {
+    max = 4,
+    children,
+    slotProps: { root: rootProps = {}, surplus: surplusProps = {} } = {},
+    ...otherRootProps
+  } = props;
   const childArray = React.Children.toArray(children);
   const hasSurplus = childArray.length > max;
   const renderedChildArray = childArray.slice(0, hasSurplus ? max - 1 : max);
 
   return {
-    root: {
-      ...otherRootProps,
-      children: renderedChildArray,
+    getRootProps() {
+      return {
+        ...otherRootProps,
+        ...rootProps,
+        children: renderedChildArray,
+      };
     },
-    surplus: hasSurplus
-      ? { children: `+${Math.max(0, childArray.length - renderedChildArray.length)}` }
-      : null,
-  };
-}
+    getSurplusProps() {
+      if (!hasSurplus) {
+        return null;
+      }
 
-interface AvatarGroupType extends IComponent<AvatarGroupProps> {
+      return {
+        ...surplusProps,
+        children: `+${Math.max(0, childArray.length - renderedChildArray.length)}`,
+      };
+    },
+  };
+};
+
+export { type AvatarGroupAPI as API, useAvatarGroupAPI as useAPI };
+
+// Component
+// ---------
+
+interface IAvatarGroup extends IComponent<AvatarGroupProps> {
   /**
-   * {@link useAvatarGroupContext} です。
+   * {@link AvatarGroupContext} を読み取るフックです。
    */
   readonly useContext: IUseContext<AvatarGroupContext>;
 }
@@ -95,14 +155,16 @@ interface AvatarGroupType extends IComponent<AvatarGroupProps> {
 /**
  * 複数のアバターを重ねて表示するコンポーネントです。
  */
-export const AvatarGroup: AvatarGroupType = /*#__PURE__*/ Object.assign(
+export const AvatarGroup: IAvatarGroup = /*#__PURE__*/ Object.assign(
   function SuiAvatarGroup(props: AvatarGroupProps) {
-    const partsProps = useAvatarGroup(props);
+    const api = useAvatarGroupAPI(props);
+    const { children, ...otherRootProps } = api.getRootProps();
+    const surplusProps = api.getSurplusProps();
 
     return (
-      <AvatarGroupRoot {...partsProps.root}>
-        {partsProps.root.children}
-        {partsProps.surplus && <AvatarGroupSurplus {...partsProps.surplus} />}
+      <AvatarGroupRoot {...otherRootProps}>
+        {children}
+        {surplusProps && <AvatarGroupSurplus {...surplusProps} />}
       </AvatarGroupRoot>
     );
   },
@@ -111,37 +173,39 @@ export const AvatarGroup: AvatarGroupType = /*#__PURE__*/ Object.assign(
   },
 );
 
-/**
- * {@link AvatarGroup} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace AvatarGroup {
   /**
-   * {@link AvatarGroupState} です。
+   * {@link AvatarGroupState}
    */
   export type State = AvatarGroupState;
 
   /**
-   * {@link AvatarGroupProps} です。
+   * {@link AvatarGroupProps}
    */
   export type Props = AvatarGroupProps;
 
   /**
-   * {@link AvatarGroupContext} です。
+   * {@link AvatarGroupContext}
    */
   export type Context = AvatarGroupContext;
 
   /**
-   * {@link AvatarGroupColor} です。
+   * {@link AvatarGroupSlotProps}
+   */
+  export type SlotProps = AvatarGroupSlotProps;
+
+  /**
+   * {@link AvatarGroupColor}
    */
   export type Color = AvatarGroupColor;
 
   /**
-   * {@link AvatarGroupRadius} です。
+   * {@link AvatarGroupRadius}
    */
   export type Radius = AvatarGroupRadius;
 
   /**
-   * {@link AvatarGroupSize} です。
+   * {@link AvatarGroupSize}
    */
   export type Size = AvatarGroupSize;
 }

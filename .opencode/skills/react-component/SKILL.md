@@ -45,6 +45,16 @@ export * from "./<kebab>.jsx";
 
 パーツツリー順に置きます。見出しは `// <名>` の次の行に同文字数の `-` を置きます。
 
+### Context
+
+子パーツへ値を伝える場合は、先頭セクションに置きます。短名は値とフックをまとめた次の 1 行にし、別名の `type` や `const` 宣言を足しません。再輸出行に JSDoc は付けません。
+
+```tsx
+export { AutocompleteContext as Context, useAutocompleteContext as useContext };
+```
+
+namespace には値型があれば追加します。ファイル内部の参照 (JSX を含む) は正式名のままにします。
+
 ### 型の並び
 
 1 つのパーツ内では Base UI 由来、独自の値型、`Value`・`State`、`Props` の順にします。`Props` を最後にします。
@@ -249,6 +259,7 @@ mise run test:typecheck
 - パーツ別指定より直 prop を優先しない。コールバック合成で中止判定を省略しない。
 - `data-scope=""` を起点以外の要素に付けない。付け忘れない。
 - namespace の `State` / `Props` を省略しない。短名再輸出を省略しない。
+- `Context` や `useContext` の短名を別名の `type` / `const` 宣言で作らない。`export { X as Y }` の 1 行にまとめる。
 - 再輸出の JSDoc に「 です。」を付けない。`{@link X}` のみにする。
 - 短名をファイル内部で参照しない。内部参照 (JSX を含む) は正式名にする。
 - `index.ts` に実装を書かない。再輸出以外を足さない。
