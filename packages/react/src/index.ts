@@ -165,3 +165,14 @@ export {
   CheckboxGroup,
   useCheckboxGroupAPI,
 } from "./checkbox-group/index.js";
+export {
+  type ChipAPI,
+  type ChipSize,
+  type ChipColor,
+  type ChipProps,
+  type ChipState,
+  type ChipRadius,
+  type ChipVariant,
+  Chip,
+  useChipAPI,
+} from "./chip/index.js";

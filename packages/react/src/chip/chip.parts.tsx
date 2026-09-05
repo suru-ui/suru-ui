@@ -100,15 +100,17 @@ export const ChipRoot: IComponent<ChipRootProps> = function SuiChipRoot(props) {
     radius = "full",
     variant = "liquid",
     outlined = false,
-    ...otherProps
+    className,
+    ...otherSpanProps
   } = props;
 
   return useRender({
     defaultTagName: "span",
     props: [
-      otherProps,
+      otherSpanProps,
       {
         className: cn(
+          className,
           "sui_chip",
           `sui_chip-size_${size}`,
           `sui_chip-color_${color}`,
@@ -116,10 +118,13 @@ export const ChipRoot: IComponent<ChipRootProps> = function SuiChipRoot(props) {
           `sui_chip-variant_${variant}`,
           outlined && "sui_chip-outlined",
         ),
+        "data-scope": "",
       },
     ],
   });
 };
+
+export { ChipRoot as Root };
 
 export namespace Root {
   /**
@@ -131,9 +136,24 @@ export namespace Root {
    * {@link ChipRootProps}
    */
   export type Props = ChipRootProps;
-}
 
-/**
- * {@link ChipRoot}
- */
-export const Root: IComponent<Root.Props> = ChipRoot;
+  /**
+   * {@link ChipRootColor}
+   */
+  export type Color = ChipRootColor;
+
+  /**
+   * {@link ChipRootRadius}
+   */
+  export type Radius = ChipRootRadius;
+
+  /**
+   * {@link ChipRootSize}
+   */
+  export type Size = ChipRootSize;
+
+  /**
+   * {@link ChipRootVariant}
+   */
+  export type Variant = ChipRootVariant;
+}

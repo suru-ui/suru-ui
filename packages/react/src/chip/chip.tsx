@@ -9,6 +9,9 @@ import {
   ChipRoot,
 } from "./chip.parts.jsx";
 
+// Types
+// -----
+
 /**
  * {@link ChipRootColor}
  */
@@ -30,31 +33,34 @@ export type ChipSize = ChipRootSize;
 export type ChipVariant = ChipRootVariant;
 
 /**
- * {@link Chip} を構成する各パーツの props などを作成するための API です。
+ * {@link Chip} が持つ状態です。
+ */
+export type ChipState = ChipRootState;
+
+/**
+ * {@link Chip} に渡す props です。
+ */
+export type ChipProps = ChipRootProps;
+
+// API
+// ---
+
+/**
+ * {@link Chip} を構成する各パーツの props を作成するための API です。
  */
 export interface ChipAPI {
   /**
    * {@link ChipRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<ChipRootProps, "children">;
+  getRootProps(): ChipRootProps;
 }
 
-/**
- * {@link Chip} の状態です。
- */
-export type ChipState = ChipRootState;
-
-/**
- * {@link Chip} コンポーネントのプロパティーです。
- */
-export type ChipProps = ChipRootProps;
-
-interface IUseAPI {
+interface IUseChipAPI {
   /**
    * {@link ChipAPI} を作成します。
    *
    * @param props {@link Chip} の props です。
-   * @returns ボタンの API です
+   * @returns チップの API です
    */
   (props: ChipProps): ChipAPI;
 }
@@ -62,7 +68,7 @@ interface IUseAPI {
 /**
  * {@link ChipAPI} を作成するフックです。
  */
-export const useChipAPI: IUseAPI = function useSuiChipAPI(props) {
+export const useChipAPI: IUseChipAPI = function useSuiChipAPI(props) {
   return {
     getRootProps() {
       return props;
@@ -70,16 +76,16 @@ export const useChipAPI: IUseAPI = function useSuiChipAPI(props) {
   };
 };
 
-/**
- * {@link useChipAPI}
- */
-export const useAPI: IUseAPI = useChipAPI;
+export { type ChipAPI as API, useChipAPI as useAPI };
+
+// Component
+// ---------
 
 /**
  * 短いラベルや属性を表示するチップコンポーネントです。
  */
 export const Chip: IComponent<ChipProps> = function SuiChip(props) {
-  const api = useAPI(props);
+  const api = useChipAPI(props);
 
   return <ChipRoot {...api.getRootProps()} />;
 };

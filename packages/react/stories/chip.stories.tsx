@@ -1,12 +1,14 @@
-import { SIZES, COLORS, COLOR_TEMPLATES } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import { XIcon, TagIcon, CheckIcon } from "lucide-react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Button } from "../src/button/index.js";
 import { Chip } from "../src/chip/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
-const VARIANTS = COLOR_TEMPLATES;
+const COLORS: readonly Chip.Color[] = theme.COLORS;
+const SIZES: readonly Chip.Size[] = theme.SIZES;
+const RADII: readonly Chip.Radius[] = ["none", ...SIZES, "full"];
+const VARIANTS: readonly Chip.Variant[] = theme.COLOR_TEMPLATES;
 
 const meta = preview.meta({
   title: "Chip",
@@ -17,23 +19,23 @@ export default meta;
 
 const ctrl = controls(Chip, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   outlined: {
     control: "boolean",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   variant: {
-    options: VARIANTS,
     control: "select",
+    options: VARIANTS,
   },
 });
 
