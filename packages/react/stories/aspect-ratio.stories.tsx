@@ -1,3 +1,5 @@
+import * as theme from "@suru-ui/theme";
+
 import { preview, controls } from "../.config/storybook/preview.js";
 import { AspectRatio } from "../src/aspect-ratio/index.js";
 
@@ -11,7 +13,7 @@ const RATIOS = [
   { label: "21 / 9", value: 21 / 9 },
 ] as const;
 
-const RADII = ["none", "sm", "md", "lg"] as const;
+const RADII: readonly AspectRatio.Radius[] = ["none", ...theme.SIZES];
 
 const meta = preview.meta({
   title: "AspectRatio",
@@ -22,12 +24,12 @@ export default meta;
 
 const ctrl = controls(AspectRatio, {
   ratio: {
-    options: [1, 4 / 3, 16 / 9, 21 / 9, 9 / 16, "16 / 9"],
     control: "select",
+    options: [1, 4 / 3, 16 / 9, 21 / 9, 9 / 16, "16 / 9"],
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
 });
 

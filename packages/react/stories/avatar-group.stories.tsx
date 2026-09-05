@@ -1,11 +1,12 @@
-import { SIZES, COLORS as BASE_COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { AvatarGroup } from "../src/avatar-group/index.js";
 import { Avatar } from "../src/avatar/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
-const COLORS = ["auto", ...BASE_COLORS] as const;
+const COLORS: readonly AvatarGroup.Color[] = ["auto", ...theme.COLORS];
+const SIZES: readonly AvatarGroup.Size[] = theme.SIZES;
+const RADII: readonly AvatarGroup.Radius[] = ["none", ...SIZES, "full"];
 
 const meta = preview.meta({
   title: "Avatar Group",
@@ -16,22 +17,22 @@ export default meta;
 
 const ctrl = controls(AvatarGroup, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   max: {
     control: "number",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   reverse: {
     control: "boolean",
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
 });
 

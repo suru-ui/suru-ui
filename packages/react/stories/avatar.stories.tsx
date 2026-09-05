@@ -1,9 +1,11 @@
-import { SIZES, COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Avatar } from "../src/avatar/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
+const COLORS: readonly Avatar.Color[] = theme.COLORS;
+const SIZES: readonly Avatar.Size[] = theme.SIZES;
+const RADII: readonly Avatar.Radius[] = ["none", ...SIZES, "full"];
 
 const meta = preview.meta({
   title: "Avatar",
@@ -20,16 +22,16 @@ const ctrl = controls(Avatar, {
     control: "text",
   },
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   src: {
     control: "text",

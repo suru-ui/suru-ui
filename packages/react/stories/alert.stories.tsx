@@ -22,26 +22,26 @@ const ctrl = controls(Alert, {
     control: "text",
   },
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   outlined: {
     control: "boolean",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   title: {
     control: "text",
   },
   variant: {
-    options: VARIANTS,
     control: "select",
+    options: VARIANTS,
   },
 });
 

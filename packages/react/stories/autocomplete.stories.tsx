@@ -1,4 +1,4 @@
-import { SIZES, COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import { type ReactVirtualizer, useVirtualizer } from "@tanstack/react-virtual";
 import { SearchIcon } from "lucide-react";
 import * as React from "react";
@@ -7,8 +7,10 @@ import { preview, controls } from "../.config/storybook/preview.js";
 import * as Autocomplete_ from "../src/autocomplete/autocomplete.parts.jsx";
 import { Autocomplete } from "../src/autocomplete/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
-const VARIANTS = ["naked", "liquid"] as const;
+const COLORS: readonly Autocomplete.Color[] = theme.COLORS;
+const SIZES: readonly Autocomplete.Size[] = theme.SIZES;
+const RADII: readonly Autocomplete.Radius[] = ["none", ...SIZES, "full"];
+const VARIANTS: readonly Autocomplete.Variant[] = ["naked", "liquid"];
 
 const meta = preview.meta({
   title: "Autocomplete",
@@ -19,8 +21,8 @@ export default meta;
 
 const ctrl = controls(Autocomplete, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   disabled: {
     control: "boolean",
@@ -38,16 +40,16 @@ const ctrl = controls(Autocomplete, {
     control: "text",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   variant: {
-    options: VARIANTS,
     control: "select",
+    options: VARIANTS,
   },
 });
 
