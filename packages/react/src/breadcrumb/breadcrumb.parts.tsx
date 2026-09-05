@@ -1,6 +1,8 @@
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import { ChevronRightIcon } from "../_icons.jsx";
+import toReactNode from "../_to-react-node.js";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
@@ -12,25 +14,34 @@ import "./breadcrumb.css";
 // -------
 
 /**
- * パンくずリストの色です。
+ * パンくずリストの配色です。
  */
-type BreadcrumbContextColor = Color;
+export type BreadcrumbContextColor = Color;
 
 /**
  * パンくずリストの大きさです。
+ *
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
-type BreadcrumbContextSize = Size;
+export type BreadcrumbContextSize = Size;
 
 /**
  * {@link BreadcrumbRoot} が子パーツへ提供するコンテキストです。
  */
 export type BreadcrumbContext = {
   /**
-   * パンくずリストの色です。
+   * パンくずリストの配色です。
    *
    * 色はリンクに適用されます。
    */
   readonly color: BreadcrumbContextColor;
+
+  /**
+   * パンくずリストの項目です。
+   */
+  readonly items: readonly BreadcrumbRootItemObject[];
 
   /**
    * パンくずリストの大きさです。
@@ -63,60 +74,68 @@ function useSuiBreadcrumbContext(optional?: boolean): BreadcrumbContext | null {
  */
 export const useBreadcrumbContext: IUseContext<BreadcrumbContext> = useSuiBreadcrumbContext;
 
-/**
- * {@link BreadcrumbContext} です。
- */
-export type Context = BreadcrumbContext;
+export { BreadcrumbContext as Context, useBreadcrumbContext as useContext };
 
-/**
- * {@link BreadcrumbContext} です。
- */
-export const Context: React.Context<Context | null> = BreadcrumbContext;
-
-/**
- * {@link Context} の型名前空間です。
- */
 export namespace Context {
   /**
-   * {@link BreadcrumbContextColor} です。
+   * {@link BreadcrumbContextColor}
    */
   export type Color = BreadcrumbContextColor;
 
   /**
-   * {@link BreadcrumbContextSize} です。
+   * {@link BreadcrumbContextSize}
    */
   export type Size = BreadcrumbContextSize;
 }
-
-/**
- * {@link useBreadcrumbContext} です。
- */
-export const useContext: IUseContext<Context> = useBreadcrumbContext;
 
 // Root
 // ----
 
 /**
- * パンくずリストの色です。
+ * パンくずリストの配色です。
  */
 export type BreadcrumbRootColor = Color;
 
 /**
  * パンくずリストの大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type BreadcrumbRootSize = Size;
 
 /**
- * {@link BreadcrumbRoot} の状態です。
+ * {@link BreadcrumbRoot} の各項目です。
+ */
+export type BreadcrumbRootItemObject = {
+  /**
+   * 現在のページかどうかを指定します。
+   *
+   * 最後の項目は、指定しない場合に現在位置として描画します。
+   */
+  readonly current?: boolean | undefined;
+
+  /**
+   * リンク先の URL です。
+   *
+   * 未指定の場合、リンクにならない要素として描画します。
+   */
+  readonly href?: string | undefined;
+
+  /**
+   * 項目のラベルです。
+   */
+  readonly label: React.ReactNode;
+};
+
+/**
+ * {@link BreadcrumbRoot} が持つ状態です。
  */
 export type BreadcrumbRootState = {};
 
 /**
- * {@link BreadcrumbRoot} に渡すプロパティーです。
+ * {@link BreadcrumbRoot} に渡す props です。
  */
 export type BreadcrumbRootProps = Omit<React.ComponentProps<"nav">, keyof RenderProps> &
   RenderProps<BreadcrumbRootState> & {
@@ -128,6 +147,11 @@ export type BreadcrumbRootProps = Omit<React.ComponentProps<"nav">, keyof Render
      * @default "grey"
      */
     color?: BreadcrumbRootColor | undefined;
+
+    /**
+     * パンくずリストの項目です。
+     */
+    items?: readonly BreadcrumbRootItemObject[] | undefined;
 
     /**
      * パンくずリストの大きさを指定します。
@@ -144,135 +168,191 @@ export const BreadcrumbRoot: IComponent<BreadcrumbRootProps> = function SuiBread
   const {
     size = "md",
     color = "grey",
+    items = [],
     className,
     "aria-label": ariaLabel = "パンくずリスト",
-    ...otherProps
+    ...otherNavProps
   } = props;
-  const context = React.useMemo<BreadcrumbContext>(() => ({ color, size }), [color, size]);
+  const context = React.useMemo<BreadcrumbContext>(
+    () => ({ color, size, items }),
+    [color, size, items],
+  );
   const element = useRender({
     defaultTagName: "nav",
     props: [
-      otherProps,
+      otherNavProps,
       {
-        "aria-label": ariaLabel,
         className: cn(
           className,
           "sui_breadcrumb",
           `sui_breadcrumb-size_${size}`,
           `sui_breadcrumb-color_${color}`,
         ),
+        "aria-label": ariaLabel,
+        "data-scope": "",
       },
     ],
   });
 
-  return <Context value={context}>{element}</Context>;
+  return <BreadcrumbContext value={context}>{element}</BreadcrumbContext>;
 };
 
-/**
- * {@link BreadcrumbRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { BreadcrumbRoot as Root };
+
 export namespace Root {
   /**
-   * {@link BreadcrumbRootState} です。
+   * {@link BreadcrumbRootState}
    */
   export type State = BreadcrumbRootState;
 
   /**
-   * {@link BreadcrumbRootProps} です。
+   * {@link BreadcrumbRootProps}
    */
   export type Props = BreadcrumbRootProps;
 
   /**
-   * {@link BreadcrumbRootColor} です。
+   * {@link BreadcrumbRootColor}
    */
   export type Color = BreadcrumbRootColor;
 
   /**
-   * {@link BreadcrumbRootSize} です。
+   * {@link BreadcrumbRootItemObject}
+   */
+  export type ItemObject = BreadcrumbRootItemObject;
+
+  /**
+   * {@link BreadcrumbRootSize}
    */
   export type Size = BreadcrumbRootSize;
 }
-
-/**
- * {@link BreadcrumbRoot} です。
- */
-export const Root: IComponent<Root.Props> = BreadcrumbRoot;
 
 // List
 // ----
 
 /**
- * {@link BreadcrumbList} の状態です。
+ * パンくずリストの各項目をレンダリングする関数のインターフェイスです。
+ */
+export interface IBreadcrumbListItemRenderer {
+  /**
+   * 項目をレンダリングします。
+   *
+   * @param item 現在の項目です。
+   * @param index 項目のインデックスです。
+   * @param items すべての項目です。
+   * @returns レンダリングする内容です。
+   */
+  (
+    item: BreadcrumbRootItemObject,
+    index: number,
+    items: readonly BreadcrumbRootItemObject[],
+  ): React.ReactNode;
+}
+
+/**
+ * {@link BreadcrumbList} が持つ状態です。
  */
 export type BreadcrumbListState = {};
 
 /**
- * {@link BreadcrumbList} に渡すプロパティーです。
+ * {@link BreadcrumbList} に渡す props です。
  */
-export type BreadcrumbListProps = Omit<React.ComponentProps<"ol">, keyof RenderProps> &
-  RenderProps<BreadcrumbListState> & {};
+export type BreadcrumbListProps = Omit<React.ComponentProps<"ol">, keyof RenderProps | "children"> &
+  RenderProps<BreadcrumbListState> & {
+    /**
+     * パンくずリストの内容、または各項目をレンダリングする関数です。
+     *
+     * 関数を指定した場合は {@link BreadcrumbRootProps.items|items} の各項目が引数として渡されます。
+     */
+    children?: React.ReactNode | IBreadcrumbListItemRenderer;
+  };
 
 /**
  * パンくずの項目を並べるリストコンポーネントです。
  */
 export const BreadcrumbList: IComponent<BreadcrumbListProps> = function SuiBreadcrumbList(props) {
-  const { className, ...otherProps } = props;
+  const group = useSuiBreadcrumbContext(true);
+  const { children = defaultListItemRenderer, className, ...otherOlProps } = props;
+  const items = group?.items ?? [];
 
   return useRender({
     defaultTagName: "ol",
     props: [
-      otherProps,
+      otherOlProps,
       {
+        children: typeof children === "function" ? items.map(children) : children,
         className: cn(className, "sui_breadcrumb_list"),
       },
     ],
   });
 };
 
-/**
- * {@link BreadcrumbList} の状態やプロパティーをまとめた型名前空間です。
- */
+const defaultListItemRenderer: IBreadcrumbListItemRenderer = (item, index, items) => {
+  if (!isListItemObject(item)) {
+    return toReactNode(item);
+  }
+
+  const { label, href, current: currentProp } = item;
+  const current = currentProp ?? index === items.length - 1;
+
+  return (
+    <React.Fragment key={index}>
+      {index > 0 && <BreadcrumbSeparator />}
+      <BreadcrumbItem>
+        <BreadcrumbLink href={current ? undefined : href} current={current}>
+          {toReactNode(label)}
+        </BreadcrumbLink>
+      </BreadcrumbItem>
+    </React.Fragment>
+  );
+};
+
+function isListItemObject(item: unknown): item is BreadcrumbRootItemObject {
+  return typeof item === "object" && item !== null && "label" in item;
+}
+
+export { BreadcrumbList as List };
+
 export namespace List {
   /**
-   * {@link BreadcrumbListState} です。
+   * {@link BreadcrumbListState}
    */
   export type State = BreadcrumbListState;
 
   /**
-   * {@link BreadcrumbListProps} です。
+   * {@link BreadcrumbListProps}
    */
   export type Props = BreadcrumbListProps;
-}
 
-/**
- * {@link BreadcrumbList} です。
- */
-export const List: IComponent<List.Props> = BreadcrumbList;
+  /**
+   * {@link IBreadcrumbListItemRenderer}
+   */
+  export interface IItemRenderer extends IBreadcrumbListItemRenderer {}
+}
 
 // Item
 // ----
 
 /**
- * {@link BreadcrumbItem} の状態です。
+ * {@link BreadcrumbItem} が持つ状態です。
  */
 export type BreadcrumbItemState = {};
 
 /**
- * {@link BreadcrumbItem} に渡すプロパティーです。
+ * {@link BreadcrumbItem} に渡す props です。
  */
 export type BreadcrumbItemProps = Omit<React.ComponentProps<"li">, keyof RenderProps> &
-  RenderProps<BreadcrumbItemState> & {};
+  RenderProps<BreadcrumbItemState>;
 
 /**
  * パンくずの項目コンポーネントです。
  */
 export const BreadcrumbItem: IComponent<BreadcrumbItemProps> = function SuiBreadcrumbItem(props) {
-  const { className, ...otherProps } = props;
+  const { className, ...otherLiProps } = props;
 
   return useRender({
     defaultTagName: "li",
     props: [
-      otherProps,
+      otherLiProps,
       {
         className: cn(className, "sui_breadcrumb_item"),
       },
@@ -280,36 +360,30 @@ export const BreadcrumbItem: IComponent<BreadcrumbItemProps> = function SuiBread
   });
 };
 
-/**
- * {@link BreadcrumbItem} の状態やプロパティーをまとめた型名前空間です。
- */
+export { BreadcrumbItem as Item };
+
 export namespace Item {
   /**
-   * {@link BreadcrumbItemState} です。
+   * {@link BreadcrumbItemState}
    */
   export type State = BreadcrumbItemState;
 
   /**
-   * {@link BreadcrumbItemProps} です。
+   * {@link BreadcrumbItemProps}
    */
   export type Props = BreadcrumbItemProps;
 }
-
-/**
- * {@link BreadcrumbItem} です。
- */
-export const Item: IComponent<Item.Props> = BreadcrumbItem;
 
 // Link
 // ----
 
 /**
- * {@link BreadcrumbLink} の状態です。
+ * {@link BreadcrumbLink} が持つ状態です。
  */
 export type BreadcrumbLinkState = {};
 
 /**
- * {@link BreadcrumbLink} に渡すプロパティーです。
+ * {@link BreadcrumbLink} に渡す props です。
  */
 export type BreadcrumbLinkProps = Omit<React.ComponentProps<"a">, keyof RenderProps> &
   RenderProps<BreadcrumbLinkState> & {
@@ -329,103 +403,78 @@ export type BreadcrumbLinkProps = Omit<React.ComponentProps<"a">, keyof RenderPr
  * `current` を `true` にすると、現在位置を示す要素として描画します。
  */
 export const BreadcrumbLink: IComponent<BreadcrumbLinkProps> = function SuiBreadcrumbLink(props) {
-  const { current = false, className, ...otherProps } = props;
+  const { current = false, className, ...otherAnchorProps } = props;
 
   return useRender({
     defaultTagName: current ? "span" : "a",
     props: [
-      otherProps,
+      otherAnchorProps,
       {
-        "aria-current": current ? "page" : undefined,
         className: cn(className, "sui_breadcrumb_link", current && "sui_breadcrumb_link-current"),
+        "aria-current": current ? "page" : undefined,
       },
     ],
   });
 };
 
-/**
- * {@link BreadcrumbLink} の状態やプロパティーをまとめた型名前空間です。
- */
+export { BreadcrumbLink as Link };
+
 export namespace Link {
   /**
-   * {@link BreadcrumbLinkState} です。
+   * {@link BreadcrumbLinkState}
    */
   export type State = BreadcrumbLinkState;
 
   /**
-   * {@link BreadcrumbLinkProps} です。
+   * {@link BreadcrumbLinkProps}
    */
   export type Props = BreadcrumbLinkProps;
 }
-
-/**
- * {@link BreadcrumbLink} です。
- */
-export const Link: IComponent<Link.Props> = BreadcrumbLink;
 
 // Separator
 // ---------
 
 /**
- * {@link BreadcrumbSeparator} の状態です。
+ * {@link BreadcrumbSeparator} が持つ状態です。
  */
 export type BreadcrumbSeparatorState = {};
 
 /**
- * {@link BreadcrumbSeparator} に渡すプロパティーです。
+ * {@link BreadcrumbSeparator} に渡す props です。
  */
 export type BreadcrumbSeparatorProps = Omit<React.ComponentProps<"li">, keyof RenderProps> &
-  RenderProps<BreadcrumbSeparatorState> & {};
+  RenderProps<BreadcrumbSeparatorState>;
 
 /**
  * パンくずの項目を区切るセパレーターコンポーネントです。
  */
 export const BreadcrumbSeparator: IComponent<BreadcrumbSeparatorProps> =
   function SuiBreadcrumbSeparator(props) {
-    const { className, children = <SuiBreadcrumbChevronRightIcon />, ...otherProps } = props;
+    const { children = <ChevronRightIcon />, className, ...otherLiProps } = props;
 
     return useRender({
       defaultTagName: "li",
       props: [
-        { ...otherProps, children },
+        otherLiProps,
         {
-          "aria-hidden": true,
+          children,
           className: cn(className, "sui_breadcrumb_separator"),
+          "aria-hidden": true,
         },
       ],
     });
   };
 
-/**
- * {@link BreadcrumbSeparator} の状態やプロパティーをまとめた型名前空間です。
- */
+export { BreadcrumbSeparator as Separator };
+
 export namespace Separator {
   /**
-   * {@link BreadcrumbSeparatorState} です。
+   * {@link BreadcrumbSeparatorState}
    */
   export type State = BreadcrumbSeparatorState;
 
   /**
-   * {@link BreadcrumbSeparatorProps} です。
+   * {@link BreadcrumbSeparatorProps}
    */
   export type Props = BreadcrumbSeparatorProps;
-}
-
-/**
- * {@link BreadcrumbSeparator} です。
- */
-export const Separator: IComponent<Separator.Props> = BreadcrumbSeparator;
-
-function SuiBreadcrumbChevronRightIcon() {
-  return (
-    <svg fill="none" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
-      <path
-        d="M9 18l6-6-6-6"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
 }

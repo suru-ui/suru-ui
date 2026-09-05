@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import type { LikelyVisibleNode } from "../_is-likely-visible-node.js";
+import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
 import {
   type BreadcrumbRootSize,
@@ -9,7 +11,9 @@ import {
   type BreadcrumbRootColor,
   type BreadcrumbRootProps,
   type BreadcrumbRootState,
+  type BreadcrumbRootItemObject,
   type BreadcrumbSeparatorProps,
+  type IBreadcrumbListItemRenderer,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
@@ -17,121 +21,193 @@ import {
   BreadcrumbSeparator,
 } from "./breadcrumb.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link BreadcrumbRootColor} です。
+ * {@link BreadcrumbRootColor}
  */
 export type BreadcrumbColor = BreadcrumbRootColor;
 
 /**
- * {@link BreadcrumbRootSize} です。
+ * {@link BreadcrumbRootSize}
  */
 export type BreadcrumbSize = BreadcrumbRootSize;
 
 /**
- * {@link Breadcrumb} の各項目です。
+ * {@link BreadcrumbRootItemObject}
  */
-export type BreadcrumbItemsItem = {
-  /**
-   * 現在のページかどうかを指定します。
-   *
-   * 最後の項目は、指定しない場合に現在位置として描画します。
-   *
-   * @default false
-   */
-  readonly current?: boolean | undefined;
-
-  /**
-   * リンク先の URL です。
-   *
-   * 未指定の場合、リンクにならない要素として描画します。
-   */
-  readonly href?: string | undefined;
-
-  /**
-   * 項目のラベルです。
-   */
-  readonly label: React.ReactNode;
-};
+export type BreadcrumbItemsItem = BreadcrumbRootItemObject;
 
 /**
- * {@link Breadcrumb} の状態です。
+ * {@link IBreadcrumbListItemRenderer}
+ */
+export interface IBreadcrumbItemRenderer extends IBreadcrumbListItemRenderer {}
+
+/**
+ * {@link Breadcrumb} が持つ状態です。
  */
 export type BreadcrumbState = BreadcrumbRootState;
 
 /**
- * {@link Breadcrumb} の各パーツに渡すプロパティーです。
+ * {@link Breadcrumb} の各パーツに渡す props です。
  */
 export type BreadcrumbSlotProps = {
   /**
-   * {@link BreadcrumbItem} に渡すプロパティーです。
+   * {@link BreadcrumbItem} に渡す props です。
    *
-   * すべての項目に同じプロパティーが渡されます。
+   * すべての項目に同じ props が渡されます。
    */
-  readonly item?: BreadcrumbItemProps | undefined;
+  readonly item?: Omit<BreadcrumbItemProps, "children"> | undefined;
 
   /**
-   * {@link BreadcrumbLink} に渡すプロパティーです。
+   * {@link BreadcrumbLink} に渡す props です。
    *
-   * すべてのリンクに同じプロパティーが渡されます。`current` と `href` は上書きされません。
+   * すべてのリンクに同じ props が渡されます。`children` と `current` と `href` は上書きされません。
    */
-  readonly link?: Omit<BreadcrumbLinkProps, "current" | "href"> | undefined;
+  readonly link?: Omit<BreadcrumbLinkProps, "children" | "current" | "href"> | undefined;
 
   /**
-   * {@link BreadcrumbList} に渡すプロパティーです。
+   * {@link BreadcrumbList} に渡す props です。
    */
-  readonly list?: BreadcrumbListProps | undefined;
+  readonly list?: Omit<BreadcrumbListProps, "children"> | undefined;
 
   /**
-   * {@link BreadcrumbSeparator} に渡すプロパティーです。
+   * {@link BreadcrumbSeparator} に渡す props です。
    *
-   * すべてのセパレーターに同じプロパティーが渡されます。`children` と `aria-hidden` は上書きされません。
+   * すべてのセパレーターに同じ props が渡されます。`children` と `aria-hidden` は上書きされません。
    */
   readonly separator?: Omit<BreadcrumbSeparatorProps, "aria-hidden" | "children"> | undefined;
 };
 
 /**
- * {@link Breadcrumb} の各パーツに渡すプロパティーです。
+ * {@link Breadcrumb} に渡す props です。
  */
-export type BreadcrumbPartsProps = {
-  /**
-   * {@link BreadcrumbList} に渡すプロパティーです。
-   */
-  readonly list: BreadcrumbListProps;
+export type BreadcrumbProps = Omit<BreadcrumbRootProps, "children"> &
+  Pick<BreadcrumbListProps, "children"> & {
+    /**
+     * パンくずリストの項目です。
+     */
+    items: readonly BreadcrumbItemsItem[];
 
-  /**
-   * {@link BreadcrumbRoot} に渡すプロパティーです。
-   */
-  readonly root: BreadcrumbRootProps;
-};
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     *
+     * 各パーツの props が優先されます。
+     */
+    slotProps?: BreadcrumbSlotProps | undefined;
+  };
+
+// API
+// ---
 
 /**
- * {@link Breadcrumb} コンポーネントのプロパティーです。
+ * {@link Breadcrumb} を構成する各パーツの props などを作成するための API です。
  */
-export type BreadcrumbProps = Omit<BreadcrumbRootProps, "children"> & {
+export interface BreadcrumbAPI {
   /**
-   * パンくずの項目を先頭から順に指定します。
+   * {@link BreadcrumbItem} に渡す props を取得します。
    */
-  items: readonly BreadcrumbItemsItem[];
+  getItemProps(): Omit<BreadcrumbItemProps, "children">;
 
   /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   * 項目のラベルを取得します。
    *
-   * 各パーツのプロパティーが優先されます。
+   * @param item 項目です。
    */
-  slotProps?: BreadcrumbSlotProps | undefined;
-};
+  getLabel(item: BreadcrumbItemsItem): React.ReactNode;
+
+  /**
+   * {@link BreadcrumbLink} に渡す props を取得します。
+   *
+   * @param item 項目です。
+   * @param index 項目のインデックスです。
+   */
+  getLinkProps(item: BreadcrumbItemsItem, index: number): BreadcrumbLinkProps;
+
+  /**
+   * {@link BreadcrumbList} に渡す props を取得します。
+   */
+  getListProps(): Omit<BreadcrumbListProps, "children"> & {
+    children: LikelyVisibleNode | null;
+  };
+
+  /**
+   * {@link BreadcrumbRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<BreadcrumbRootProps, "children">;
+
+  /**
+   * {@link BreadcrumbSeparator} に渡す props を取得します。
+   */
+  getSeparatorProps(): Omit<BreadcrumbSeparatorProps, "children">;
+}
+
+interface IUseBreadcrumbAPI {
+  /**
+   * {@link BreadcrumbAPI} を作成します。
+   *
+   * @param props {@link Breadcrumb} の props です。
+   * @returns パンくずリストの API です
+   */
+  (props: BreadcrumbProps): BreadcrumbAPI;
+}
 
 /**
- * {@link Breadcrumb} の各パーツに渡すプロパティーを作るフックです。
+ * {@link BreadcrumbAPI} を作成するフックです。
  */
-export function useBreadcrumb(props: BreadcrumbProps): BreadcrumbPartsProps {
-  const { slotProps: { list: listProps } = {}, items: _items, ...rootProps } = props;
+export const useBreadcrumbAPI: IUseBreadcrumbAPI = function useSuiBreadcrumbAPI(props) {
+  const {
+    items,
+    children,
+    slotProps: {
+      item: itemProps = {},
+      link: linkProps = {},
+      list: listProps = {},
+      separator: separatorProps = {},
+    } = {},
+    ...otherRootProps
+  } = props;
 
   return {
-    root: rootProps,
-    list: { ...listProps },
+    getLabel(item) {
+      return item.label;
+    },
+    getItemProps() {
+      return itemProps;
+    },
+    getLinkProps(item, index) {
+      const current = item.current ?? index === items.length - 1;
+
+      return {
+        ...linkProps,
+        href: current ? undefined : item.href,
+        current,
+        children: item.label,
+      };
+    },
+    getListProps() {
+      return {
+        ...listProps,
+        children: typeof children === "function" ? items.map(children) : toReactNode(children),
+      };
+    },
+    getRootProps() {
+      return {
+        ...otherRootProps,
+        items,
+      };
+    },
+    getSeparatorProps() {
+      return separatorProps;
+    },
   };
-}
+};
+
+export { type BreadcrumbAPI as API, useBreadcrumbAPI as useAPI };
+
+// Component
+// ---------
 
 /**
  * パンくずリストを表示するコンポーネントです。
@@ -139,62 +215,62 @@ export function useBreadcrumb(props: BreadcrumbProps): BreadcrumbPartsProps {
  * {@link BreadcrumbProps.items|items} に指定した順に項目を並べ、項目の間にセパレーターを挿入します。最後の項目は、{@link BreadcrumbItemsItem.current|current} を指定しない限り現在位置として描画します。
  */
 export const Breadcrumb: IComponent<BreadcrumbProps> = function SuiBreadcrumb(props) {
-  const partsProps = useBreadcrumb(props);
-  const { slotProps: { item: itemProps, link: linkProps, separator: separatorProps } = {}, items } =
-    props;
+  const api = useBreadcrumbAPI(props);
+  const rootProps = api.getRootProps();
+  const { children, ...otherListProps } = api.getListProps();
+  const separatorProps = api.getSeparatorProps();
+  const itemProps = api.getItemProps();
 
   return (
-    <BreadcrumbRoot {...partsProps.root}>
-      <BreadcrumbList {...partsProps.list}>
-        {items.map((item, index) => {
-          const current = item.current ?? index === items.length - 1;
-
-          return (
+    <BreadcrumbRoot {...rootProps}>
+      <BreadcrumbList {...otherListProps}>
+        {children ??
+          ((item, index) => (
             <React.Fragment key={index}>
               {index > 0 && <BreadcrumbSeparator {...separatorProps} />}
               <BreadcrumbItem {...itemProps}>
-                <BreadcrumbLink
-                  {...linkProps}
-                  href={current ? undefined : item.href}
-                  current={current}
-                >
-                  {item.label}
-                </BreadcrumbLink>
+                <BreadcrumbLink {...api.getLinkProps(item, index)} />
               </BreadcrumbItem>
             </React.Fragment>
-          );
-        })}
+          ))}
       </BreadcrumbList>
     </BreadcrumbRoot>
   );
 };
 
-/**
- * {@link Breadcrumb} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Breadcrumb {
   /**
-   * {@link BreadcrumbState} です。
+   * {@link BreadcrumbState}
    */
   export type State = BreadcrumbState;
 
   /**
-   * {@link BreadcrumbProps} です。
+   * {@link BreadcrumbProps}
    */
   export type Props = BreadcrumbProps;
 
   /**
-   * {@link BreadcrumbSlotProps} です。
+   * {@link BreadcrumbSlotProps}
    */
   export type SlotProps = BreadcrumbSlotProps;
 
   /**
-   * {@link BreadcrumbColor} です。
+   * {@link BreadcrumbColor}
    */
   export type Color = BreadcrumbColor;
 
   /**
-   * {@link BreadcrumbSize} です。
+   * {@link BreadcrumbItemsItem}
+   */
+  export type Item = BreadcrumbItemsItem;
+
+  /**
+   * {@link IBreadcrumbItemRenderer}
+   */
+  export interface IItemRenderer extends IBreadcrumbItemRenderer {}
+
+  /**
+   * {@link BreadcrumbSize}
    */
   export type Size = BreadcrumbSize;
 }

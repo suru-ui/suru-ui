@@ -113,3 +113,15 @@ export {
   Badge,
   useBadgeAPI,
 } from "./badge/index.js";
+export {
+  type BreadcrumbAPI,
+  type BreadcrumbSize,
+  type BreadcrumbColor,
+  type BreadcrumbProps,
+  type BreadcrumbState,
+  type BreadcrumbItemsItem,
+  type BreadcrumbSlotProps,
+  type IBreadcrumbItemRenderer,
+  Breadcrumb,
+  useBreadcrumbAPI,
+} from "./breadcrumb/index.js";

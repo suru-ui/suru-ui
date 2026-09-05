@@ -5,10 +5,11 @@ description: Suru UI の React コンポーネント (`packages/react/src/<名�
 
 # React コンポーネント
 
-基準となる実装は次の 2 件です。
+基準となる実装は次の 3 件です。
 
 - `packages/react/src/accordion/`
 - `packages/react/src/alert-dialog/`
+- `packages/react/src/breadcrumb/` (項目の所有と描画を分ける場合の見本です)
 
 CSS は `../css/SKILL.md`、JSDoc と日本語は `../jsdoc/SKILL.md` と `../japanese/SKILL.md` に従います。
 
@@ -120,6 +121,50 @@ cn(
 
 `data-scope=""` は CSS の `@scope` 始点になる要素だけに付けます。
 
+### 項目の一覧描画
+
+項目の配列から子要素を組み立てるパーツ (例: `AccordionRoot`) は `items` とレンダラー関数を受けます。所有と描画のパーツが違う場合 (例: `BreadcrumbRoot` と `BreadcrumbList`) は、項目データを `Context` で渡し、`items` を二重に持たせません。描画側のパーツには `children` のみを足し、`items` は `Context` から読みます。
+
+型は項目オブジェクト、レンダラー、`State`、`Props` の順にします。
+
+```tsx
+export type XxxItemObject = { ... };
+export interface IXxxItemRenderer<TItem = any> {
+  (item: TItem, index: number, items: readonly TItem[]): React.ReactNode;
+}
+```
+
+`Props` には次の 2 つを足します。素の要素の `children` は `ReactNode` のため、そのまま交差させると関数が代入できなくなります。要素側から `"children"` を除きます。
+
+```tsx
+export type XxxProps<TItem = any> = Omit<React.ComponentProps<"ol">, keyof RenderProps | "children"> &
+  RenderProps<XxxState> & {
+    /**
+     * 内容、または各項目をレンダリングする関数です。
+     *
+     * 関数を指定した場合は {@link XxxProps.items|items} の各項目が引数として渡されます。
+     */
+    children?: React.ReactNode | IXxxItemRenderer<TItem>;
+
+    /**
+     * 項目です。
+     *
+     * `children` に関数を指定した場合、この配列の各項目が引数として渡されます。
+     */
+    items?: readonly TItem[] | undefined;
+  };
+```
+
+描画では関数か否かで分けます。既定子に既定レンダラーを与えます。
+
+```tsx
+children: typeof children === "function" ? items.map(children) : children,
+```
+
+既定レンダラーはコンポーネントの直後に置きます。項目オブジェクト以外は `toReactNode` に逃がし、反復する要素には `key` を付けます。判定関数はそのファイル内にとどめ、公開しません。
+
+namespace には `ItemObject` と `IItemRenderer` を足します。汎型は既定値付きで引き継ぎます。
+
 ### 短名と namespace
 
 各パーツの直後に短名再輸出と namespace を置きます。namespace には `State` と `Props` を必ず入れ、値型があれば追加します。汎型は既定値付きで引き継ぎます。再輸出の JSDoc は `{@link X}` のみとし、「 です。」は付けません。短名再輸出 (`export { X as Y }`) はローカル束縛を作らないため、ファイル内部の参照 (JSX を含む) は正式名 `X` のままにします。
@@ -178,7 +223,7 @@ export type AccordionProps<TItem = any, TValue = any> = AccordionRootProps<TItem
 };
 ```
 
-子相当やコールバックはパーツ Props から参照し、二重定義しません (例: `XxxProps["children"]`、`XxxProps["onClick"]`)。
+子相当やコールバックはパーツ Props から参照し、二重定義しません (例: `XxxProps["children"]`、`XxxProps["onClick"]`)。レンダラーを受け取る側の `children` は `Pick` で取り込みます (例: `Pick<BreadcrumbListProps, "children">`)。
 
 ### API
 
@@ -204,6 +249,11 @@ export const useAccordionAPI: IUseAccordionAPI = function useSuiAccordionAPI(pro
 フック内では `slotProps` を各パーツ既定 `{}` 付きで分解します。分解の残余は行き先を 1 つにします。
 `slotProps` の展開と返り値オブジェクトの getter は文字数が短い順にし、同長のもの同士だけ辞書順にします。`interface` (型) の getter 宣言順はパーツ名昇順のままにします。
 任意表示の props は可否を判定し、駄目は `null` を返します。ノード系はノード化を通します。
+項目を所有するパーツの getter は子要素を先に確定します。返り値は `Omit<PartProps, "children"> & { children: LikelyVisibleNode | null }` にします。
+
+```ts
+children: typeof children === "function" ? items.map(children) : toReactNode(children),
+```
 パーツ別 props は利用者指定 (`slotProps.<part>`) を後に spread します。
 コールバック合成は `slotProps` 側を先に呼び、中止なら利用者側を呼びません。
 末尾に短名を付けます (例: `export { type AlertDialogAPI as API, useAlertDialogAPI as useAPI };`)。
@@ -212,6 +262,7 @@ export const useAccordionAPI: IUseAccordionAPI = function useSuiAccordionAPI(pro
 
 汎型 interface + 実装にします。描画では先に `api.get*Props()` を変数化し、取得値の有無で条件描画します (`{xProps && <Part {...xProps} />}`)。
 変数化の順序は長さ順ではなく React 要素の構築順 (JSX の描画順) にします。
+項目の一覧は `{children ?? ((item, index) => (...))}` の形にし、フォールバック関数を所有パーツに渡して写像させます。引数の型が推論できない場合は明示型を付けます。
 
 末尾に namespace を置き、`State`、`Props`、`SlotProps` と再命名型を列挙します。JSDoc は `{@link X}` 形式にします。「 です。」は付けません。
 
@@ -264,3 +315,6 @@ mise run test:typecheck
 - 短名をファイル内部で参照しない。内部参照 (JSX を含む) は正式名にする。
 - `index.ts` に実装を書かない。再輸出以外を足さない。
 - アイコンを `_<kebab>.tsx` や `.parts.tsx` に実装しない。共有ファイルに置きます。
+- レンダラー付き `children` を素要素由来の `children` と交差させない。要素側から `"children"` を除きます。
+- 反復描画する要素に `key` を付け忘れない。
+- `items` を所有と描画の両パーツに二重定義しない。描画側は `Context` で受けます。

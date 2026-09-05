@@ -48,3 +48,18 @@ export const ChevronIcon: IComponent = function SuiChevronIcon() {
     </svg>
   );
 };
+
+export const ChevronRightIcon: IComponent = function SuiChevronRightIcon() {
+  return (
+    <svg
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 16 16"
+      focusable="false"
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <path d="M6 4l4 4-4 4" />
+    </svg>
+  );
+};

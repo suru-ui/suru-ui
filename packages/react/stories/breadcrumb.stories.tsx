@@ -1,4 +1,4 @@
-import { SIZES, COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
@@ -10,6 +10,9 @@ import {
   Separator as BreadcrumbPartsSeparator,
   Breadcrumb,
 } from "../src/breadcrumb/index.js";
+
+const COLORS: readonly Breadcrumb.Color[] = theme.COLORS;
+const SIZES: readonly Breadcrumb.Size[] = theme.SIZES;
 
 const items = [
   { label: "ホーム", href: "#" },
@@ -27,12 +30,12 @@ export default meta;
 
 const ctrl = controls(Breadcrumb, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
 });
 
@@ -57,7 +60,7 @@ export const Colors = meta.story({
   }),
   render(props) {
     return (
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-6">
         {COLORS.map((color) => (
           <div key={color} className="flex flex-col items-start gap-1">
             <span>{color}</span>
@@ -78,9 +81,9 @@ export const Sizes = meta.story({
   }),
   render(props) {
     return (
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-6">
         {SIZES.map((size) => (
-          <div key={size} className="flex flex-col items-start gap-1">
+          <div key={size} className="flex flex-col items-start gap-3">
             <span>{size}</span>
             <Breadcrumb {...props} size={size} />
           </div>
