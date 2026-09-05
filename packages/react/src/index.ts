@@ -125,3 +125,15 @@ export {
   Breadcrumb,
   useBreadcrumbAPI,
 } from "./breadcrumb/index.js";
+export {
+  type ButtonAPI,
+  type ButtonSize,
+  type ButtonColor,
+  type ButtonProps,
+  type ButtonState,
+  type ButtonRadius,
+  type ButtonVariant,
+  type ButtonSlotProps,
+  Button,
+  useButtonAPI,
+} from "./button/index.js";

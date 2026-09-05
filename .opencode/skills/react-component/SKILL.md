@@ -260,7 +260,7 @@ children: typeof children === "function" ? items.map(children) : toReactNode(chi
 
 ### Component
 
-汎型 interface + 実装にします。描画では先に `api.get*Props()` を変数化し、取得値の有無で条件描画します (`{xProps && <Part {...xProps} />}`)。
+汎型 interface + 実装にします。条件付きで描画するパーツ (`| null` を返す getter) は先に `api.get*Props()` を変数化し、取得値の有無で条件描画します (`{xProps && <Part {...xProps} />}`)。常に描画するパーツは変数化せず、実行結果をそのまま渡します (`<Part {...api.getXProps()} />`)。
 変数化の順序は長さ順ではなく React 要素の構築順 (JSX の描画順) にします。
 項目の一覧は `{children ?? ((item, index) => (...))}` の形にし、フォールバック関数を所有パーツに渡して写像させます。引数の型が推論できない場合は明示型を付けます。
 
@@ -307,6 +307,7 @@ mise run test:typecheck
 - `SlotProps` のキーに子要素や持上げキーを残さない。`readonly` と `| undefined` を省略しない。キー順を崩さない。
 - API の getter 名を `get*Props` 以外にしない。宣言順をパーツ順から変えない。条件付き getter から `| null` を省略しない。
 - 可視判定なしにオプショナルな子要素を描画しない。
+- 常に描画するパーツの props を変数化しない。実行結果をそのまま渡します。
 - パーツ別指定より直 prop を優先しない。コールバック合成で中止判定を省略しない。
 - `data-scope=""` を起点以外の要素に付けない。付け忘れない。
 - namespace の `State` / `Props` を省略しない。短名再輸出を省略しない。

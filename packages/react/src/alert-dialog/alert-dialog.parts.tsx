@@ -520,7 +520,7 @@ export namespace Header {
 // ----
 
 /**
- * アラートダイアログのアイコンの配配色です。
+ * アラートダイアログのアイコンの配色です。
  */
 export type AlertDialogIconColor = Color;
 

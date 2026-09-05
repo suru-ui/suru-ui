@@ -53,7 +53,9 @@ export type ButtonSlotProps = {
   /**
    * {@link ButtonCircularProgress} に渡す props です。
    */
-  readonly circularProgress?: Omit<ButtonCircularProgressProps, "children"> | undefined;
+  readonly circularProgress?:
+    | Omit<ButtonCircularProgressProps, "children" | "percentage" | "indeterminate">
+    | undefined;
 
   /**
    * {@link ButtonCircularProgressFill} に渡す props です。
@@ -68,7 +70,7 @@ export type ButtonSlotProps = {
   /**
    * {@link ButtonCircularProgressTrack} に渡す props です。
    */
-  readonly circularProgressTrack?: ButtonCircularProgressTrackProps | undefined;
+  readonly circularProgressTrack?: Omit<ButtonCircularProgressTrackProps, "children"> | undefined;
 
   /**
    * {@link ButtonContent} に渡す props です。
@@ -160,9 +162,9 @@ export const useButtonAPI: IUseButtonAPI = function useSuiButtonAPI(props) {
   const {
     children,
     slotProps: {
-      content: contentProps,
+      content: contentProps = {},
       pending: { overlay = true, ...otherPendingProps } = {},
-      circularProgress: circularProgressProps,
+      circularProgress: circularProgressProps = {},
       circularProgressFill: circularProgressFillProps = {},
       circularProgressTrack: circularProgressTrackProps = {},
       circularProgressFillRotation: circularProgressFillRotationProps = {},

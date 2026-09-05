@@ -54,7 +54,7 @@ export { ButtonContext as Context, useButtonContext as useContext };
 // ----
 
 /**
- * ボタンの配配色です。
+ * ボタンの配色です。
  */
 export type ButtonRootColor = Color;
 
@@ -166,20 +166,19 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
     size: sizeProp = "md",
     type = "button",
     color: colorProp = "grey",
-    muted: mutedProp = false,
+    muted = false,
     radius: radiusProp = sizeProp,
     pending = false,
     squared = false,
     variant: variantProp = "solid",
     disabled = false,
     outlined: outlinedProp = false,
-    className,
     focusableWhenDisabled = !disabled && pending,
+    className,
     ...otherProps
   } = props;
   const size = actionGroupCtx?.size ?? sizeProp;
   const color = actionGroupCtx?.color ?? colorProp;
-  const muted = /* actionGroupCtx?.muted ?? */ mutedProp;
   const radius = actionGroupCtx?.radius ?? radiusProp;
   const variant = actionGroupCtx?.variant ?? variantProp;
   const outlined = actionGroupCtx?.outlined ?? outlinedProp;
@@ -202,8 +201,8 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
           muted && "sui_button-muted",
           pending && "sui_button-pending",
           squared && "sui_button-squared",
-          outlined && "sui_button-outlined",
           disabled && "sui_button-disabled",
+          outlined && "sui_button-outlined",
         )}
         focusableWhenDisabled={focusableWhenDisabled}
         data-scope=""
@@ -327,20 +326,21 @@ export type ButtonPendingProps = Omit<React.ComponentProps<"span">, keyof Render
  */
 export const ButtonPending: IComponent<ButtonPendingProps> = function SuiButtonPending(props) {
   const ctx = useButtonContext();
-  const { overlay = false, keepMounted = false, ...otherProps } = props;
+  const { overlay = false, keepMounted = false, ...otherSpanProps } = props;
 
   return useRender({
     defaultTagName: "span",
     enabled: ctx.pending || keepMounted,
     state: ctx,
     props: [
-      otherProps,
+      otherSpanProps,
       {
         className: cn(
           "sui_button_pending",
           overlay && "sui_button_pending-overlay",
-          ctx.pending && "sui_button_pending-enabled",
-          !ctx.pending && keepMounted && "sui_button_pending-visibility_hidden",
+          (state: ButtonPendingState) => state.pending && "sui_button_pending-enabled",
+          (state: ButtonPendingState) =>
+            !state.pending && keepMounted && "sui_button_pending-visibility_hidden",
         ),
       },
     ],
@@ -395,8 +395,8 @@ function useSuiButtonCircularProgressContext(
   const ctx = React.use(ButtonCircularProgressContext);
   if (ctx === null && !optional) {
     throw new ContextMissingError({
-      contextName: "CircularProgressContext",
-      providerName: "CircularProgress",
+      contextName: "ButtonCircularProgressContext",
+      providerName: "ButtonCircularProgress",
     });
   }
 
@@ -455,14 +455,14 @@ export const ButtonCircularProgress: IComponent<ButtonCircularProgressProps> =
       viewBox = "0 0 24 24",
       percentage,
       indeterminate = percentage === undefined || percentage < 0,
-      ...otherProps
+      ...otherSvgProps
     } = props;
     const ctx = React.useMemo(() => ({ percentage, indeterminate }), [percentage, indeterminate]);
     const element = useRender({
       defaultTagName: "svg",
       state: ctx,
       props: [
-        otherProps,
+        otherSvgProps,
         {
           fill,
           width,
@@ -520,7 +520,7 @@ export const ButtonCircularProgressTrack: IComponent<ButtonCircularProgressTrack
       cy = "50%",
       stroke = "currentColor",
       strokeWidth = 4,
-      ...otherProps
+      ...otherCircleProps
     } = props;
     const strokeWidthCss = typeof strokeWidth === "number" ? strokeWidth + "px" : strokeWidth;
 
@@ -528,7 +528,7 @@ export const ButtonCircularProgressTrack: IComponent<ButtonCircularProgressTrack
       defaultTagName: "circle",
       state: ctx,
       props: [
-        otherProps,
+        otherCircleProps,
         {
           r: r ?? `calc(50% - ${strokeWidthCss} / 2)`,
           cx,
@@ -572,6 +572,10 @@ export type ButtonCircularProgressFillProps = Omit<
 > &
   RenderProps<ButtonCircularProgressFillState> & {
     /**
+     * 円弧の開始位置のずれです。
+     *
+     * 関数の場合は現在の状態から値を求めます。
+     *
      * {@link https://developer.mozilla.org/docs/Web/SVG/Reference/Attribute/stroke-dashoffset|stroke-dashoffset}
      */
     strokeDashoffset?:
@@ -598,7 +602,7 @@ export const ButtonCircularProgressFill: IComponent<ButtonCircularProgressFillPr
       strokeDasharray = "100 200",
       strokeDashoffset = (state) =>
         100 - (state.indeterminate || state.percentage === undefined ? 25 : state.percentage),
-      ...otherProps
+      ...otherCircleProps
     } = props;
     const strokeWidthCss = typeof strokeWidth === "number" ? strokeWidth + "px" : strokeWidth;
 
@@ -606,7 +610,7 @@ export const ButtonCircularProgressFill: IComponent<ButtonCircularProgressFillPr
       defaultTagName: "circle",
       state: ctx,
       props: [
-        otherProps,
+        otherCircleProps,
         {
           r: r ?? `calc(50% - ${strokeWidthCss} / 2)`,
           cx,
@@ -669,14 +673,14 @@ export const ButtonCircularProgressFillRotation: IComponent<ButtonCircularProgre
       values = "0;360",
       repeatCount = "indefinite",
       attributeName = "transform",
-      ...otherProps
+      ...otherAnimateTransformProps
     } = props;
 
     return useRender({
       defaultTagName: "animateTransform",
       enabled: indeterminate,
       props: [
-        otherProps,
+        otherAnimateTransformProps,
         {
           dur,
           type,
