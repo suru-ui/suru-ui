@@ -1,5 +1,4 @@
-import * as React from "react";
-
+import { CheckboxIcon } from "../_icons.jsx";
 import type { IComponent } from "../types.js";
 import {
   type CheckboxRootSize,
@@ -9,167 +8,185 @@ import {
   type CheckboxRootRadius,
   type CheckboxRootVariant,
   type CheckboxIndicatorProps,
+  type CheckboxRootChangeEventReason,
+  type CheckboxRootChangeEventDetails,
   CheckboxRoot,
   CheckboxIndicator,
 } from "./checkbox.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link CheckboxRootColor} です。
+ * {@link CheckboxRootChangeEventDetails}
+ */
+export type CheckboxChangeEventDetails = CheckboxRootChangeEventDetails;
+
+/**
+ * {@link CheckboxRootChangeEventReason}
+ */
+export type CheckboxChangeEventReason = CheckboxRootChangeEventReason;
+
+/**
+ * {@link CheckboxRootColor}
  */
 export type CheckboxColor = CheckboxRootColor;
 
 /**
- * {@link CheckboxRootRadius} です。
+ * {@link CheckboxRootRadius}
  */
 export type CheckboxRadius = CheckboxRootRadius;
 
 /**
- * {@link CheckboxRootSize} です。
+ * {@link CheckboxRootSize}
  */
 export type CheckboxSize = CheckboxRootSize;
 
 /**
- * {@link CheckboxRootVariant} です。
+ * {@link CheckboxRootVariant}
  */
 export type CheckboxVariant = CheckboxRootVariant;
 
 /**
- * {@link Checkbox} の各パーツに渡すプロパティーです。
+ * {@link Checkbox} の各パーツに渡す props です。
  */
 export type CheckboxSlotProps = {
   /**
-   * {@link CheckboxIndicator} に渡すプロパティーです。
+   * {@link CheckboxIndicator} に渡す props です。
    */
-  readonly indicator?: CheckboxIndicatorProps | undefined;
+  readonly indicator?: Omit<CheckboxIndicatorProps, "children"> | undefined;
 };
 
 /**
- * {@link Checkbox} の各パーツに渡すプロパティーです。
- */
-export type CheckboxPartsProps = {
-  /**
-   * {@link CheckboxIndicator} に渡すプロパティーです。
-   */
-  readonly indicator: CheckboxIndicatorProps;
-
-  /**
-   * {@link CheckboxRoot} に渡すプロパティーです。
-   */
-  readonly root: CheckboxRootProps;
-};
-
-/**
- * {@link Checkbox} の状態です。
+ * {@link Checkbox} が持つ状態です。
  */
 export type CheckboxState = CheckboxRootState;
 
 /**
- * {@link Checkbox} コンポーネントのプロパティーです。
- *
- * スタイルに関するプロパティーは、{@link CheckboxGroup} 内ではグループの指定が優先されます。
- * 指定後に値を変更すると、チェックボックスのスタイルも更新されます。
+ * {@link Checkbox} に渡す props です。
  */
-export type CheckboxProps = Omit<CheckboxRootProps, "children"> & {
-  /**
-   * Indicator 内に表示するコンテンツ（チェックアイコンなど）です。
-   *
-   * 未指定の場合、{@link CheckboxIcon} を表示します。
-   */
-  children?: React.ReactNode | undefined;
+export type CheckboxProps = Omit<CheckboxRootProps, "children"> &
+  Pick<CheckboxIndicatorProps, "children"> & {
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     *
+     * 各パーツの props が優先されます。
+     */
+    slotProps?: CheckboxSlotProps | undefined;
+  };
 
-  /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-   *
-   * 各パーツのプロパティーが優先されます。
-   */
-  slotProps?: CheckboxSlotProps | undefined;
-};
+// API
+// ---
 
 /**
- * {@link Checkbox} の各パーツに渡すプロパティーを作るフックです。
+ * {@link Checkbox} を構成する各パーツの props を作成するための API です。
  */
-export function useCheckbox(props: CheckboxProps): CheckboxPartsProps {
+export interface CheckboxAPI {
+  /**
+   * {@link CheckboxIndicator} に渡す props を取得します。
+   */
+  getIndicatorProps(): CheckboxIndicatorProps;
+
+  /**
+   * {@link CheckboxRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<CheckboxRootProps, "children">;
+}
+
+interface IUseCheckboxAPI {
+  /**
+   * {@link CheckboxAPI} を作成します。
+   *
+   * @param props {@link Checkbox} の props です。
+   * @returns チェックボックスの API です
+   */
+  (props: CheckboxProps): CheckboxAPI;
+}
+
+/**
+ * {@link CheckboxAPI} を作成するフックです。
+ */
+export const useCheckboxAPI: IUseCheckboxAPI = function useSuiCheckboxAPI(props) {
   const {
-    children = <SuiCheckboxIcon />,
-    slotProps: { indicator: indicatorProps } = {},
-    ...rootProps
+    children = <CheckboxIcon />,
+    slotProps: { indicator: indicatorProps = {} } = {},
+    ...otherRootProps
   } = props;
 
   return {
-    root: rootProps,
-    indicator: {
-      children,
-      ...indicatorProps,
+    getRootProps() {
+      return otherRootProps;
+    },
+    getIndicatorProps() {
+      return {
+        children,
+        ...indicatorProps,
+      };
     },
   };
-}
+};
+
+export { type CheckboxAPI as API, useCheckboxAPI as useAPI };
+
+// Component
+// ---------
 
 /**
  * チェックボックスを表示するコンポーネントです。
  */
 export const Checkbox: IComponent<CheckboxProps> = function SuiCheckbox(props) {
-  const partsProps = useCheckbox(props);
+  const api = useCheckboxAPI(props);
 
   return (
-    <CheckboxRoot {...partsProps.root}>
-      <CheckboxIndicator {...partsProps.indicator} />
+    <CheckboxRoot {...api.getRootProps()}>
+      <CheckboxIndicator {...api.getIndicatorProps()} />
     </CheckboxRoot>
   );
 };
 
-/**
- * {@link Checkbox} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Checkbox {
   /**
-   * {@link CheckboxState} です。
+   * {@link CheckboxState}
    */
   export type State = CheckboxState;
 
   /**
-   * {@link CheckboxProps} です。
+   * {@link CheckboxProps}
    */
   export type Props = CheckboxProps;
 
   /**
-   * {@link CheckboxSlotProps} です。
+   * {@link CheckboxSlotProps}
    */
   export type SlotProps = CheckboxSlotProps;
 
   /**
-   * {@link CheckboxColor} です。
+   * {@link CheckboxChangeEventDetails}
+   */
+  export type ChangeEventDetails = CheckboxChangeEventDetails;
+
+  /**
+   * {@link CheckboxChangeEventReason}
+   */
+  export type ChangeEventReason = CheckboxChangeEventReason;
+
+  /**
+   * {@link CheckboxColor}
    */
   export type Color = CheckboxColor;
 
   /**
-   * {@link CheckboxRadius} です。
+   * {@link CheckboxRadius}
    */
   export type Radius = CheckboxRadius;
 
   /**
-   * {@link CheckboxSize} です。
+   * {@link CheckboxSize}
    */
   export type Size = CheckboxSize;
 
   /**
-   * {@link CheckboxVariant} です。
+   * {@link CheckboxVariant}
    */
   export type Variant = CheckboxVariant;
-}
-
-function SuiCheckboxIcon(props: React.ComponentProps<"svg">) {
-  return (
-    <svg
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 16 16"
-      focusable="false"
-      strokeLinecap="round"
-      aria-hidden="true"
-      {...props}
-    >
-      <path d="M3 8h10" className="sui_checkbox_icon-dash" />
-      <path d="m2.5 8.5 4 4 7-9" className="sui_checkbox_icon-check" />
-    </svg>
-  );
 }

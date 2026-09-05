@@ -63,3 +63,22 @@ export const ChevronRightIcon: IComponent = function SuiChevronRightIcon() {
     </svg>
   );
 };
+
+/**
+ * チェックボックスの既定のアイコンです。
+ */
+export const CheckboxIcon: IComponent = function SuiCheckboxIcon() {
+  return (
+    <svg
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 16 16"
+      focusable="false"
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <path d="M3 8h10" className="sui_checkbox_icon-dash" />
+      <path d="m2.5 8.5 4 4 7-9" className="sui_checkbox_icon-check" />
+    </svg>
+  );
+};

@@ -1,13 +1,15 @@
-import { SIZES, COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { CheckboxGroup } from "../src/checkbox-group/index.js";
 import { Checkbox } from "../src/checkbox/index.js";
 
-const ORIENTATIONS = ["vertical", "horizontal"] as const;
-const RADII = ["none", ...SIZES, "full"] as const;
-const VARIANTS = ["naked", "liquid"] as const;
+const COLORS: readonly CheckboxGroup.Color[] = theme.COLORS;
+const SIZES: readonly CheckboxGroup.Size[] = theme.SIZES;
+const RADII: readonly CheckboxGroup.Radius[] = ["none", ...SIZES, "full"];
+const VARIANTS: readonly CheckboxGroup.Variant[] = ["naked", "liquid"];
+const ORIENTATIONS: readonly CheckboxGroup.Orientation[] = ["vertical", "horizontal"];
 
 const meta = preview.meta({
   title: "Checkbox Group",
@@ -18,30 +20,30 @@ export default meta;
 
 const ctrl = controls(CheckboxGroup, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   disabled: {
     control: "boolean",
   },
   orientation: {
-    options: ORIENTATIONS,
     control: "select",
+    options: ORIENTATIONS,
   },
   outlined: {
     control: "boolean",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   variant: {
-    options: VARIANTS,
     control: "select",
+    options: VARIANTS,
   },
 });
 

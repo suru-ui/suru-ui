@@ -8,129 +8,168 @@ import {
   type CheckboxGroupRootRadius,
   type CheckboxGroupRootVariant,
   type CheckboxGroupRootOrientation,
+  type CheckboxGroupRootChangeEventReason,
+  type CheckboxGroupRootChangeEventDetails,
   CheckboxGroupRoot,
   useCheckboxGroupContext,
 } from "./checkbox-group.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link CheckboxGroupRootColor} です。
+ * {@link CheckboxGroupRootChangeEventDetails}
+ */
+export type CheckboxGroupChangeEventDetails = CheckboxGroupRootChangeEventDetails;
+
+/**
+ * {@link CheckboxGroupRootChangeEventReason}
+ */
+export type CheckboxGroupChangeEventReason = CheckboxGroupRootChangeEventReason;
+
+/**
+ * {@link CheckboxGroupRootColor}
  */
 export type CheckboxGroupColor = CheckboxGroupRootColor;
 
 /**
- * {@link CheckboxGroupRootOrientation} です。
+ * {@link CheckboxGroupRootOrientation}
  */
 export type CheckboxGroupOrientation = CheckboxGroupRootOrientation;
 
 /**
- * {@link CheckboxGroupRootRadius} です。
+ * {@link CheckboxGroupRootRadius}
  */
 export type CheckboxGroupRadius = CheckboxGroupRootRadius;
 
 /**
- * {@link CheckboxGroupRootSize} です。
+ * {@link CheckboxGroupRootSize}
  */
 export type CheckboxGroupSize = CheckboxGroupRootSize;
 
 /**
- * {@link CheckboxGroupRootVariant} です。
+ * {@link CheckboxGroupRootVariant}
  */
 export type CheckboxGroupVariant = CheckboxGroupRootVariant;
 
 /**
- * {@link CheckboxGroup} の状態です。
+ * {@link CheckboxGroup} が持つ状態です。
  */
 export type CheckboxGroupState = CheckboxGroupRootState;
 
 /**
- * {@link CheckboxGroup} コンポーネントのプロパティーです。
+ * {@link CheckboxGroup} に渡す props です。
  */
 export type CheckboxGroupProps = CheckboxGroupRootProps;
 
-/**
- * {@link CheckboxGroup} の各パーツに渡すプロパティーです。
- */
-export type CheckboxGroupPartsProps = {
-  /**
-   * {@link CheckboxGroupRoot} に渡すプロパティーです。
-   */
-  readonly root: CheckboxGroupRootProps;
-};
+// API
+// ---
 
 /**
- * {@link CheckboxGroup} の各パーツに渡すプロパティーを作るフックです。
+ * {@link CheckboxGroup} を構成する各パーツの props を作成するための API です。
  */
-export function useCheckboxGroup(props: CheckboxGroupProps): CheckboxGroupPartsProps {
-  return {
-    root: props,
-  };
+export interface CheckboxGroupAPI {
+  /**
+   * {@link CheckboxGroupRoot} に渡す props を取得します。
+   */
+  getRootProps(): CheckboxGroupRootProps;
 }
 
-interface CheckboxGroupType extends IComponent<CheckboxGroupProps> {
+interface IUseCheckboxGroupAPI {
   /**
-   * {@link useCheckboxGroupContext} です。
+   * {@link CheckboxGroupAPI} を作成します。
+   *
+   * @param props {@link CheckboxGroup} の props です。
+   * @returns チェックボックスグループの API です
+   */
+  (props: CheckboxGroupProps): CheckboxGroupAPI;
+}
+
+/**
+ * {@link CheckboxGroupAPI} を作成するフックです。
+ */
+export const useCheckboxGroupAPI: IUseCheckboxGroupAPI = function useSuiCheckboxGroupAPI(props) {
+  return {
+    getRootProps() {
+      return props;
+    },
+  };
+};
+
+export { type CheckboxGroupAPI as API, useCheckboxGroupAPI as useAPI };
+
+// Component
+// ---------
+
+interface ICheckboxGroup extends IComponent<CheckboxGroupProps> {
+  /**
+   * {@link useCheckboxGroupContext}
    */
   readonly useContext: IUseContext<CheckboxGroupContext>;
 }
 
 /**
  * チェックボックスをグループ化するコンポーネントです。
- *
- * グループの選択状態を管理し、子要素のチェックボックスにスタイルを強制します。
- * スタイルの指定は子要素の指定より優先され、値を変更するとグループ内へ反映されます。
  */
-export const CheckboxGroup: CheckboxGroupType = /*#__PURE__*/ Object.assign(
+export const CheckboxGroup: ICheckboxGroup = /*#__PURE__*/ Object.assign(
   function SuiCheckboxGroup(props: CheckboxGroupProps) {
-    const partsProps = useCheckboxGroup(props);
+    const api = useCheckboxGroupAPI(props);
 
-    return <CheckboxGroupRoot {...partsProps.root} />;
+    return <CheckboxGroupRoot {...api.getRootProps()} />;
   },
   {
     useContext: useCheckboxGroupContext,
   },
 );
 
-/**
- * {@link CheckboxGroup} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace CheckboxGroup {
   /**
-   * {@link CheckboxGroupState} です。
+   * {@link CheckboxGroupState}
    */
   export type State = CheckboxGroupState;
 
   /**
-   * {@link CheckboxGroupProps} です。
+   * {@link CheckboxGroupProps}
    */
   export type Props = CheckboxGroupProps;
 
   /**
-   * {@link CheckboxGroupContext} です。
+   * {@link CheckboxGroupContext}
    */
   export type Context = CheckboxGroupContext;
 
   /**
-   * {@link CheckboxGroupColor} です。
+   * {@link CheckboxGroupChangeEventDetails}
+   */
+  export type ChangeEventDetails = CheckboxGroupChangeEventDetails;
+
+  /**
+   * {@link CheckboxGroupChangeEventReason}
+   */
+  export type ChangeEventReason = CheckboxGroupChangeEventReason;
+
+  /**
+   * {@link CheckboxGroupColor}
    */
   export type Color = CheckboxGroupColor;
 
   /**
-   * {@link CheckboxGroupOrientation} です。
+   * {@link CheckboxGroupOrientation}
    */
   export type Orientation = CheckboxGroupOrientation;
 
   /**
-   * {@link CheckboxGroupRadius} です。
+   * {@link CheckboxGroupRadius}
    */
   export type Radius = CheckboxGroupRadius;
 
   /**
-   * {@link CheckboxGroupSize} です。
+   * {@link CheckboxGroupSize}
    */
   export type Size = CheckboxGroupSize;
 
   /**
-   * {@link CheckboxGroupVariant} です。
+   * {@link CheckboxGroupVariant}
    */
   export type Variant = CheckboxGroupVariant;
 }

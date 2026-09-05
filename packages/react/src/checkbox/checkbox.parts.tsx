@@ -12,49 +12,59 @@ import "./checkbox.css";
 // ----
 
 /**
+ * チェックボックスの選択状態が変更されたイベントの詳細です。
+ */
+export type CheckboxRootChangeEventDetails = Checkbox.Root.ChangeEventDetails;
+
+/**
+ * チェックボックスの選択状態が変更された理由です。
+ */
+export type CheckboxRootChangeEventReason = Checkbox.Root.ChangeEventReason;
+
+/**
  * チェックボックスの配色です。
  */
 export type CheckboxRootColor = Color;
 
 /**
- * チェックボックスの角丸です。
+ * チェックボックスの角丸の大きさです。
  *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
- * - `"full"`: 完全な丸形
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ * - `"full"`: 丸形
  */
 export type CheckboxRootRadius = "none" | Size | "full";
 
 /**
  * チェックボックスの大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type CheckboxRootSize = Size;
 
 /**
- * チェックボックスの主な外観の種類です。
+ * チェックボックスの主な外観です。
  *
- * - `"naked"`: 背景のないチェックマークのみ、枠線なし
+ * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
 export type CheckboxRootVariant = "naked" | "liquid";
 
 /**
- * {@link CheckboxRoot} の状態です。
+ * {@link CheckboxRoot} が持つ状態です。
  */
 export type CheckboxRootState = Checkbox.Root.State;
 
 /**
- * {@link CheckboxRoot} に渡すプロパティーです。
+ * {@link CheckboxRoot} に渡す props です。
  */
 export type CheckboxRootProps = React.ComponentProps<typeof Checkbox.Root> & {
   /**
-   * チェックボックスの色を指定します。
+   * チェックボックスの配色を指定します。
    *
    * CheckboxGroup 内では、グループの値が優先されます。
    *
@@ -63,7 +73,7 @@ export type CheckboxRootProps = React.ComponentProps<typeof Checkbox.Root> & {
   color?: CheckboxRootColor | undefined;
 
   /**
-   * 枠線を表示するかどうかを指定します。
+   * チェックボックスに枠線を表示するかどうかを指定します。
    *
    * CheckboxGroup 内では、グループの値が優先されます。
    *
@@ -72,14 +82,16 @@ export type CheckboxRootProps = React.ComponentProps<typeof Checkbox.Root> & {
   outlined?: boolean | undefined;
 
   /**
-   * チェックボックスの角丸を指定します。
+   * チェックボックスの角丸の大きさを指定します。
    *
-   * 既定値は {@link CheckboxRootProps.size|size} です。CheckboxGroup 内では、グループの値が優先されます。
+   * CheckboxGroup 内では、グループの値が優先されます。
+   *
+   * 既定値は {@link CheckboxRootProps.size|size}
    */
   radius?: CheckboxRootRadius | undefined;
 
   /**
-   * チェックボックスのサイズを指定します。
+   * チェックボックスの大きさを指定します。
    *
    * CheckboxGroup 内では、グループの値が優先されます。
    *
@@ -98,7 +110,7 @@ export type CheckboxRootProps = React.ComponentProps<typeof Checkbox.Root> & {
 };
 
 /**
- * チェックボックスのルート要素です。
+ * チェックボックスのルートコンポーネントです。
  */
 export const CheckboxRoot: IComponent<CheckboxRootProps> = function SuiCheckboxRoot(props) {
   const group = useCheckboxGroupContext(true);
@@ -135,69 +147,70 @@ export const CheckboxRoot: IComponent<CheckboxRootProps> = function SuiCheckboxR
         (state) => state.indeterminate && "sui_checkbox-indeterminate",
         (state) => state.disabled && "sui_checkbox-disabled",
       )}
+      data-scope=""
     />
   );
 };
 
-/**
- * {@link CheckboxRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { CheckboxRoot as Root };
+
 export namespace Root {
   /**
-   * {@link CheckboxRootState} です。
+   * {@link CheckboxRootState}
    */
   export type State = CheckboxRootState;
 
   /**
-   * {@link CheckboxRootProps} です。
+   * {@link CheckboxRootProps}
    */
   export type Props = CheckboxRootProps;
 
   /**
-   * {@link CheckboxRootColor} です。
+   * {@link CheckboxRootChangeEventDetails}
+   */
+  export type ChangeEventDetails = CheckboxRootChangeEventDetails;
+
+  /**
+   * {@link CheckboxRootChangeEventReason}
+   */
+  export type ChangeEventReason = CheckboxRootChangeEventReason;
+
+  /**
+   * {@link CheckboxRootColor}
    */
   export type Color = CheckboxRootColor;
 
   /**
-   * {@link CheckboxRootRadius} です。
+   * {@link CheckboxRootRadius}
    */
   export type Radius = CheckboxRootRadius;
 
   /**
-   * {@link CheckboxRootSize} です。
+   * {@link CheckboxRootSize}
    */
   export type Size = CheckboxRootSize;
 
   /**
-   * {@link CheckboxRootVariant} です。
+   * {@link CheckboxRootVariant}
    */
   export type Variant = CheckboxRootVariant;
 }
-
-/**
- * {@link CheckboxRoot} です。
- */
-export const Root: IComponent<Root.Props> = CheckboxRoot;
 
 // Indicator
 // ---------
 
 /**
- * チェックボックスのインジケーター要素です。
- *
- * チェック状態に応じて子要素の表示・非表示を切り替えます。
- *
- * {@link CheckboxIndicator} の状態型として利用できます。
+ * {@link CheckboxIndicator} が持つ状態です。
  */
-export type CheckboxIndicatorState = {};
+export type CheckboxIndicatorState = Checkbox.Indicator.State;
 
 /**
- * {@link CheckboxIndicator} に渡すプロパティーです。
+ * {@link CheckboxIndicator} に渡す props です。
  */
 export type CheckboxIndicatorProps = React.ComponentProps<typeof Checkbox.Indicator>;
 
 /**
- * {@link CheckboxIndicator} のインジケーター要素を表示します。
+ * チェックボックスのインジケーターコンポーネントです。
  */
 export const CheckboxIndicator: IComponent<CheckboxIndicatorProps> = function SuiCheckboxIndicator(
   props,
@@ -207,22 +220,16 @@ export const CheckboxIndicator: IComponent<CheckboxIndicatorProps> = function Su
   return <Checkbox.Indicator {...otherProps} className={cn(className, "sui_checkbox_indicator")} />;
 };
 
-/**
- * {@link CheckboxIndicator} の状態やプロパティーをまとめた型名前空間です。
- */
+export { CheckboxIndicator as Indicator };
+
 export namespace Indicator {
   /**
-   * {@link CheckboxIndicatorState} です。
+   * {@link CheckboxIndicatorState}
    */
   export type State = CheckboxIndicatorState;
 
   /**
-   * {@link CheckboxIndicatorProps} です。
+   * {@link CheckboxIndicatorProps}
    */
   export type Props = CheckboxIndicatorProps;
 }
-
-/**
- * {@link CheckboxIndicator} です。
- */
-export const Indicator: IComponent<Indicator.Props> = CheckboxIndicator;

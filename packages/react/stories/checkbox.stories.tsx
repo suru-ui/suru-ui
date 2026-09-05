@@ -1,11 +1,13 @@
-import { SIZES, COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Checkbox } from "../src/checkbox/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
-const VARIANTS = ["naked", "liquid"] as const;
+const COLORS: readonly Checkbox.Color[] = theme.COLORS;
+const RADII: readonly Checkbox.Radius[] = ["none", ...theme.SIZES, "full"];
+const SIZES: readonly Checkbox.Size[] = theme.SIZES;
+const VARIANTS: readonly Checkbox.Variant[] = ["naked", "liquid"];
 
 const meta = preview.meta({
   title: "Checkbox",
@@ -16,8 +18,8 @@ export default meta;
 
 const ctrl = controls(Checkbox, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   disabled: {
     control: "boolean",
@@ -26,16 +28,16 @@ const ctrl = controls(Checkbox, {
     control: "boolean",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   variant: {
-    options: VARIANTS,
     control: "select",
+    options: VARIANTS,
   },
 });
 
