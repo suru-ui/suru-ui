@@ -12,7 +12,7 @@ import "./action-group.css";
 // -------
 
 /**
- * グループアイテムの色です。
+ * グループアイテムの配色です。
  */
 type ActionGroupContextColor = Color;
 
@@ -41,7 +41,7 @@ type ActionGroupContextVariant = ColorTemplate;
  */
 export type ActionGroupContext = {
   /**
-   * グループアイテムの色です。
+   * グループアイテムの配色です。
    */
   readonly color: ActionGroupContextColor;
 
@@ -145,7 +145,7 @@ export const useContext: IUseContext<Context> = useActionGroupContext;
 // ----
 
 /**
- * アクショングループの色です。
+ * アクショングループの配色です。
  */
 export type ActionGroupRootColor = Color;
 

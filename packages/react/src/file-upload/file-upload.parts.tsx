@@ -120,7 +120,7 @@ export const useContext: IUseContext<Context> = useFileUploadContext;
 // ----
 
 /**
- * ファイルアップロードの色です。
+ * ファイルアップロードの配色です。
  */
 export type FileUploadRootColor = Color;
 

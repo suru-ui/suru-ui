@@ -12,7 +12,7 @@ import "./radio.css";
 // ----
 
 /**
- * ラジオボタンの色です。
+ * ラジオボタンの配色です。
  */
 export type RadioRootColor = Color;
 

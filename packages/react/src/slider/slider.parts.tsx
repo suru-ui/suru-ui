@@ -11,7 +11,7 @@ import "./slider.css";
 // ----
 
 /**
- * スライダーの色です。
+ * スライダーの配色です。
  */
 export type SliderRootColor = Color;
 

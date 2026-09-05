@@ -12,7 +12,7 @@ import "./checkbox.css";
 // ----
 
 /**
- * チェックボックスの色です。
+ * チェックボックスの配色です。
  */
 export type CheckboxRootColor = Color;
 

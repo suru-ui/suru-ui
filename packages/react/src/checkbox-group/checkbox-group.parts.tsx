@@ -12,7 +12,7 @@ import "./checkbox-group.css";
 // -------
 
 /**
- * チェックボックスの色です。
+ * チェックボックスの配色です。
  */
 type CheckboxGroupContextColor = Color;
 
@@ -36,7 +36,7 @@ type CheckboxGroupContextVariant = "naked" | "liquid";
  */
 export type CheckboxGroupContext = {
   /**
-   * チェックボックスの色です。
+   * チェックボックスの配色です。
    */
   readonly color: CheckboxGroupContextColor;
 
@@ -136,7 +136,7 @@ export const useContext: IUseContext<Context> = useCheckboxGroupContext;
 // ----
 
 /**
- * チェックボックスの色です。
+ * チェックボックスの配色です。
  */
 export type CheckboxGroupRootColor = Color;
 

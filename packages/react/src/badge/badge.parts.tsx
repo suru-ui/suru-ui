@@ -11,7 +11,7 @@ import "./badge.css";
 // ----
 
 /**
- * バッジの色です。
+ * バッジの配色です。
  */
 export type BadgeRootColor = Color;
 

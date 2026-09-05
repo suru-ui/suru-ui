@@ -11,7 +11,7 @@ import "./segments.css";
 // ----
 
 /**
- * Segments の色です。
+ * Segments の配色です。
  */
 export type SegmentsRootColor = Color;
 

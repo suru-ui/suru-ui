@@ -43,7 +43,7 @@ export type PaginationRootChangeEventDetails = {
 export type PaginationGoToPage = (page: number, details: PaginationRootChangeEventDetails) => void;
 
 /**
- * ページネーションの色です。
+ * ページネーションの配色です。
  */
 type PaginationContextColor = Color;
 
@@ -62,7 +62,7 @@ type PaginationContextSize = Size;
  */
 export type PaginationContext = {
   /**
-   * ページネーションの色です。
+   * ページネーションの配色です。
    */
   readonly color: PaginationContextColor;
 
@@ -161,7 +161,7 @@ export const useContext: IUseContext<Context> = usePaginationContext;
 // ----
 
 /**
- * ページネーションの色です。
+ * ページネーションの配色です。
  */
 export type PaginationRootColor = Color;
 

@@ -54,7 +54,7 @@ export { ButtonContext as Context, useButtonContext as useContext };
 // ----
 
 /**
- * ボタンの配色です。
+ * ボタンの配配色です。
  */
 export type ButtonRootColor = Color;
 

@@ -12,7 +12,7 @@ import "./avatar.css";
 // ----
 
 /**
- * アバターの色です。
+ * アバターの配色です。
  */
 export type AvatarRootColor = Color;
 

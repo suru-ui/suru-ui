@@ -11,7 +11,7 @@ import "./chip.css";
 // ----
 
 /**
- * チップの配色です。
+ * チップの配配色です。
  */
 export type ChipRootColor = Color;
 

@@ -13,7 +13,7 @@ import "./avatar-group.css";
 // -------
 
 /**
- * アバターの色です。
+ * アバターの配色です。
  */
 export type AvatarGroupContextColor = Color;
 
@@ -42,7 +42,7 @@ export type AvatarGroupContextSize = Size;
  */
 export type AvatarGroupContext = {
   /**
-   * アバターの背景色です。
+   * アバターの背景配色です。
    */
   readonly color: AvatarGroupContextColor;
 
@@ -105,7 +105,7 @@ export namespace Context {
 // ----
 
 /**
- * 各アバターの色です。
+ * 各アバターの配色です。
  *
  * `"auto"` を指定すると、子アバターごとに色を自動で割り当てます。
  */

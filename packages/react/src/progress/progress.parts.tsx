@@ -11,7 +11,7 @@ import "./progress.css";
 // ----
 
 /**
- * 進捗の色です。
+ * 進捗の配色です。
  */
 export type ProgressRootColor = Color;
 

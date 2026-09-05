@@ -131,7 +131,7 @@ export const useContext: IUseContext<Context> = useComboboxContext;
 // ----
 
 /**
- * コンボボックスの色です。
+ * コンボボックスの配色です。
  */
 export type ComboboxRootColor = Color;
 

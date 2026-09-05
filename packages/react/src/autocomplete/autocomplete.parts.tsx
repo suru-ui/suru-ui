@@ -13,7 +13,7 @@ import "./autocomplete.css";
 // -------
 
 /**
- * フォーカス時に枠線へ適用する色です。
+ * フォーカス時に枠線へ適用する配色です。
  */
 type AutocompleteContextColor = Color;
 
@@ -37,7 +37,7 @@ type AutocompleteContextVariant = "naked" | "liquid";
  */
 export type AutocompleteContext = {
   /**
-   * フォーカス時に枠線へ適用する色です。
+   * フォーカス時に枠線へ適用する配色です。
    */
   readonly color: AutocompleteContextColor;
 
@@ -143,7 +143,7 @@ export type AutocompleteRootHighlightEventDetails = Autocomplete.Root.HighlightE
 export type AutocompleteRootHighlightEventReason = Autocomplete.Root.HighlightEventReason;
 
 /**
- * オートコンプリートの色です。
+ * オートコンプリートの配色です。
  */
 export type AutocompleteRootColor = Color;
 

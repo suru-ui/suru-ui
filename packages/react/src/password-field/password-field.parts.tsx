@@ -87,7 +87,7 @@ export const useContext: IUseContext<Context> = usePasswordFieldContext;
 // ----
 
 /**
- * パスワード入力欄の色です。
+ * パスワード入力欄の配色です。
  */
 export type PasswordFieldRootColor = TextFieldRootColor;
 

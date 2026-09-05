@@ -12,7 +12,7 @@ import "./input.css";
 // ----
 
 /**
- * テキスト入力欄の色です。
+ * テキスト入力欄の配色です。
  */
 export type InputRootColor = Color;
 

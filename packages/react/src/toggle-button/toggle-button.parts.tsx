@@ -53,7 +53,7 @@ export { ToggleButtonContext as Context, useToggleButtonContext as useContext };
 // ----
 
 /**
- * トグルボタンの配色です。
+ * トグルボタンの配配色です。
  */
 export type ToggleButtonRootColor = Color;
 

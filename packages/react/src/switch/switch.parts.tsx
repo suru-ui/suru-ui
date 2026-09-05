@@ -11,7 +11,7 @@ import "./switch.css";
 // ----
 
 /**
- * スイッチの色です。
+ * スイッチの配色です。
  */
 export type SwitchRootColor = Color;
 

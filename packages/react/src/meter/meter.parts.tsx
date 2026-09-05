@@ -11,7 +11,7 @@ import "./meter.css";
 // ----
 
 /**
- * メーターの色です。
+ * メーターの配色です。
  */
 export type MeterRootColor = Color;
 

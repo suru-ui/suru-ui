@@ -11,7 +11,7 @@ import "./alert.css";
 // ----
 
 /**
- * アラートの色です。
+ * アラートの配色です。
  */
 export type AlertRootColor = Color;
 

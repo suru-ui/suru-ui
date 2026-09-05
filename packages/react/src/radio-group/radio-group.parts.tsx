@@ -13,7 +13,7 @@ import "./radio-group.css";
 // -------
 
 /**
- * ラジオボタンの色です。
+ * ラジオボタンの配色です。
  */
 type RadioGroupContextColor = Color;
 
@@ -37,7 +37,7 @@ type RadioGroupContextVariant = "naked" | "liquid";
  */
 export type RadioGroupContext = {
   /**
-   * ラジオボタンの色です。
+   * ラジオボタンの配色です。
    */
   readonly color: RadioGroupContextColor;
 
@@ -136,7 +136,7 @@ export const useContext: IUseContext<Context> = useRadioGroupContext;
 // ----
 
 /**
- * ラジオボタングループの色です。
+ * ラジオボタングループの配色です。
  */
 export type RadioGroupRootColor = Color;
 

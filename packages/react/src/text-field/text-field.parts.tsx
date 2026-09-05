@@ -13,7 +13,7 @@ import "./text-field.css";
 // -------
 
 /**
- * 文字入力欄の色です。
+ * 文字入力欄の配色です。
  */
 type TextFieldContextColor = Color;
 
@@ -37,7 +37,7 @@ type TextFieldContextVariant = "naked" | "liquid";
  */
 export type TextFieldContext = {
   /**
-   * 文字入力欄の色です。
+   * 文字入力欄の配色です。
    */
   readonly color: TextFieldContextColor;
 
@@ -131,7 +131,7 @@ export const useContext: IUseContext<Context> = useTextFieldContext;
 // ----
 
 /**
- * 文字入力欄の色です。
+ * 文字入力欄の配色です。
  */
 export type TextFieldRootColor = Color;
 

@@ -11,7 +11,7 @@ import "./textarea.css";
 // ----
 
 /**
- * テキストエリアの色です。
+ * テキストエリアの配色です。
  */
 export type TextareaRootColor = Color;
 

@@ -12,7 +12,7 @@ import "./status.css";
 // -------
 
 /**
- * ステータスの色です。
+ * ステータスの配色です。
  */
 type StatusContextColor = Color;
 
@@ -31,7 +31,7 @@ type StatusContextSize = Size;
  */
 export type StatusContext = {
   /**
-   * ステータスの色です。
+   * ステータスの配色です。
    */
   readonly color: StatusContextColor;
 
@@ -110,7 +110,7 @@ export const useContext: IUseContext<Context> = useStatusContext;
 // ----
 
 /**
- * ステータスの色です。
+ * ステータスの配色です。
  */
 export type StatusRootColor = Color;
 
@@ -228,7 +228,7 @@ export const Root: IComponent<Root.Props> = StatusRoot;
 // ---------
 
 /**
- * インジケーターの色です。
+ * インジケーターの配色です。
  */
 export type StatusIndicatorColor = Color;
 

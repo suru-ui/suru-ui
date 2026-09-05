@@ -14,7 +14,7 @@ import "./number-field.css";
 // -------
 
 /**
- * 数値入力欄の色です。
+ * 数値入力欄の配色です。
  */
 type NumberFieldContextColor = Color;
 
@@ -38,7 +38,7 @@ type NumberFieldContextVariant = "naked" | "liquid";
  */
 export type NumberFieldContext = {
   /**
-   * 数値入力欄の色です。
+   * 数値入力欄の配色です。
    */
   readonly color: NumberFieldContextColor;
 
@@ -132,7 +132,7 @@ export const useContext: IUseContext<Context> = useNumberFieldContext;
 // ----
 
 /**
- * 数値入力欄の色です。
+ * 数値入力欄の配色です。
  */
 export type NumberFieldRootColor = Color;
 
