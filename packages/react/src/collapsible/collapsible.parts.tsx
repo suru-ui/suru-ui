@@ -2,6 +2,7 @@ import { Collapsible } from "@base-ui/react/collapsible";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
+import { ChevronRightIcon } from "../_icons.jsx";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
@@ -12,49 +13,25 @@ import "./collapsible.css";
 // ----
 
 /**
- * コラプシブルの角丸です。
- *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
- */
-export type CollapsibleRootRadius = "none" | Size;
-
-/**
  * コラプシブルの大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type CollapsibleRootSize = Size;
 
 /**
- * {@link CollapsibleRootState} です。
+ * {@link CollapsibleRoot} が持つ状態です。
  */
 export type CollapsibleRootState = Collapsible.Root.State;
 
 /**
- * {@link CollapsibleRootProps} です。
+ * {@link CollapsibleRoot} に渡す props です。
  */
 export type CollapsibleRootProps = React.ComponentProps<typeof Collapsible.Root> & {
   /**
-   * パネルの枠線を表示するかどうかを指定します。
-   *
-   * @default false
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * パネルの角丸を指定します。
-   *
-   * @default "md"
-   */
-  radius?: CollapsibleRootRadius | undefined;
-
-  /**
-   * パネルのサイズを指定します。
+   * コラプシブルの大きさを指定します。
    *
    * @default "md"
    */
@@ -62,12 +39,12 @@ export type CollapsibleRootProps = React.ComponentProps<typeof Collapsible.Root>
 };
 
 /**
- * コラプシブルのルート要素です。
+ * コラプシブルのルートコンポーネントです。
  */
 export const CollapsibleRoot: IComponent<CollapsibleRootProps> = function SuiCollapsibleRoot(
   props,
 ) {
-  const { size = "md", radius = "md", outlined = false, className, ...otherProps } = props;
+  const { size = "md", className, ...otherProps } = props;
 
   return (
     <Collapsible.Root
@@ -75,71 +52,64 @@ export const CollapsibleRoot: IComponent<CollapsibleRootProps> = function SuiCol
       className={cn(
         className,
         "sui_collapsible",
-        outlined && "sui_collapsible-outlined",
-        `sui_collapsible-radius_${radius}`,
         `sui_collapsible-size_${size}`,
+        (state) => (state.open ? "sui_collapsible-open" : "sui_collapsible-closed"),
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_collapsible-transition_status_${state.transitionStatus}`,
+        (state) => state.disabled && "sui_collapsible-disabled",
       )}
+      data-scope=""
     />
   );
 };
 
-/**
- * {@link CollapsibleRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { CollapsibleRoot as Root };
+
 export namespace Root {
   /**
-   * {@link CollapsibleRootState} です。
+   * {@link CollapsibleRootState}
    */
   export type State = CollapsibleRootState;
 
   /**
-   * {@link CollapsibleRootProps} です。
+   * {@link CollapsibleRootProps}
    */
   export type Props = CollapsibleRootProps;
 
   /**
-   * {@link CollapsibleRootRadius} です。
-   */
-  export type Radius = CollapsibleRootRadius;
-
-  /**
-   * {@link CollapsibleRootSize} です。
+   * {@link CollapsibleRootSize}
    */
   export type Size = CollapsibleRootSize;
 }
-
-/**
- * {@link CollapsibleRoot} です。
- */
-export const Root: IComponent<Root.Props> = CollapsibleRoot;
 
 // Trigger
 // -------
 
 /**
- * {@link CollapsibleTriggerState} です。
+ * {@link CollapsibleTrigger} が持つ状態です。
  */
 export type CollapsibleTriggerState = Collapsible.Trigger.State;
 
 /**
- * {@link CollapsibleTriggerProps} です。
+ * {@link CollapsibleTrigger} に渡す props です。
  */
 export type CollapsibleTriggerProps = Omit<
   React.ComponentProps<typeof Collapsible.Trigger>,
   "children" | "render"
 > & {
   /**
-   * ボタンとしてレンダリングする要素です。
+   * ボタンとして描画する内容です。
    *
-   * {@link Collapsible.Trigger} の `render` プロパティーと同じ型で、そのまま渡されます。
+   * {@link Collapsible.Trigger} の `render` と同じ型で、そのまま渡されます。
    */
   children: NonNullable<React.ComponentProps<typeof Collapsible.Trigger>["render"]>;
 };
 
 /**
- * コラプシブルを開閉するボタン要素です。
+ * コラプシブルの開閉ボタンコンポーネントです。
  *
- * 子要素は何にもラップされず、そのまま {@link Collapsible.Trigger} の `render` プロパティーに渡されます。
+ * 子要素は何にもラップされず、そのまま {@link Collapsible.Trigger} の `render` に渡されます。
  */
 export const CollapsibleTrigger: IComponent<CollapsibleTriggerProps> =
   function SuiCollapsibleTrigger(props) {
@@ -154,116 +124,102 @@ export const CollapsibleTrigger: IComponent<CollapsibleTriggerProps> =
     );
   };
 
-/**
- * {@link CollapsibleTrigger} の状態やプロパティーをまとめた型名前空間です。
- */
+export { CollapsibleTrigger as Trigger };
+
 export namespace Trigger {
   /**
-   * {@link CollapsibleTriggerState} です。
+   * {@link CollapsibleTriggerState}
    */
   export type State = CollapsibleTriggerState;
 
   /**
-   * {@link CollapsibleTriggerProps} です。
+   * {@link CollapsibleTriggerProps}
    */
   export type Props = CollapsibleTriggerProps;
 }
-
-/**
- * {@link CollapsibleTrigger} です。
- */
-export const Trigger: IComponent<Trigger.Props> = CollapsibleTrigger;
 
 // Indicator
 // ---------
 
 /**
- * {@link CollapsibleIndicatorState} です。
+ * {@link CollapsibleIndicator} が持つ状態です。
  */
 export type CollapsibleIndicatorState = {};
 
 /**
- * {@link CollapsibleIndicatorProps} です。
+ * {@link CollapsibleIndicator} に渡す props です。
  */
 export type CollapsibleIndicatorProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
   RenderProps<CollapsibleIndicatorState>;
 
 /**
- * コラプシブルの展開状態を示すアイコンのラッパー要素です。
+ * コラプシブルの展開状態を示すアイコンを表示するコンポーネントです。
  */
 export const CollapsibleIndicator: IComponent<CollapsibleIndicatorProps> =
   function SuiCollapsibleIndicator(props) {
+    const { children = <ChevronRightIcon />, ...otherSpanProps } = props;
+
     return useRender({
       defaultTagName: "span",
       props: [
-        props,
+        otherSpanProps,
         {
+          children,
           className: "sui_collapsible_indicator",
         },
       ],
     });
   };
 
-/**
- * {@link CollapsibleIndicator} の状態やプロパティーをまとめた型名前空間です。
- */
+export { CollapsibleIndicator as Indicator };
+
 export namespace Indicator {
   /**
-   * {@link CollapsibleIndicatorState} です。
+   * {@link CollapsibleIndicatorState}
    */
   export type State = CollapsibleIndicatorState;
 
   /**
-   * {@link CollapsibleIndicatorProps} です。
+   * {@link CollapsibleIndicatorProps}
    */
   export type Props = CollapsibleIndicatorProps;
 }
 
-/**
- * {@link CollapsibleIndicator} です。
- */
-export const Indicator: IComponent<Indicator.Props> = CollapsibleIndicator;
-
-// Panel
-// -----
+// Content
+// -------
 
 /**
- * {@link CollapsiblePanelState} です。
+ * {@link CollapsibleContent} が持つ状態です。
  */
-export type CollapsiblePanelState = Collapsible.Panel.State;
+export type CollapsibleContentState = Collapsible.Panel.State;
 
 /**
- * {@link CollapsiblePanelProps} です。
+ * {@link CollapsibleContent} に渡す props です。
  */
-export type CollapsiblePanelProps = React.ComponentProps<typeof Collapsible.Panel>;
+export type CollapsibleContentProps = React.ComponentProps<typeof Collapsible.Panel>;
 
 /**
- * コラプシブルのコンテンツを表示するパネル要素です。
+ * コラプシブルのコンテンツコンポーネントです。
  */
-export const CollapsiblePanel: IComponent<CollapsiblePanelProps> = function SuiCollapsiblePanel(
-  props,
-) {
-  const { className, ...otherProps } = props;
+export const CollapsibleContent: IComponent<CollapsibleContentProps> =
+  function SuiCollapsibleContent(props) {
+    const { className, ...otherProps } = props;
 
-  return <Collapsible.Panel {...otherProps} className={cn(className, "sui_collapsible_panel")} />;
-};
+    return (
+      <Collapsible.Panel {...otherProps} className={cn(className, "sui_collapsible_content")} />
+    );
+  };
 
-/**
- * {@link CollapsiblePanel} の状態やプロパティーをまとめた型名前空間です。
- */
-export namespace Panel {
+export { CollapsibleContent as Content };
+
+export namespace Content {
   /**
-   * {@link CollapsiblePanelState} です。
+   * {@link CollapsibleContentState}
    */
-  export type State = CollapsiblePanelState;
+  export type State = CollapsibleContentState;
 
   /**
-   * {@link CollapsiblePanelProps} です。
+   * {@link CollapsibleContentProps}
    */
-  export type Props = CollapsiblePanelProps;
+  export type Props = CollapsibleContentProps;
 }
-
-/**
- * {@link CollapsiblePanel} です。
- */
-export const Panel: IComponent<Panel.Props> = CollapsiblePanel;

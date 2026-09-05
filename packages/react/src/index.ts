@@ -176,3 +176,12 @@ export {
   Chip,
   useChipAPI,
 } from "./chip/index.js";
+export {
+  type CollapsibleAPI,
+  type CollapsibleSize,
+  type CollapsibleProps,
+  type CollapsibleState,
+  type CollapsibleSlotProps,
+  Collapsible,
+  useCollapsibleAPI,
+} from "./collapsible/index.js";
