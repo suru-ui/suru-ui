@@ -1,6 +1,17 @@
 import * as React from "react";
 
 type Config = {
+  /**
+   * `children` 以外のプロパティーを設定に結合して子孫に提供するコンポーネントです。
+   *
+   * 親の設定を引き継ぎ、変更されたキーのみを上書きします。
+   * すべての値が `Object.is` で等しい場合は親の設定を使い回すため、余分な再レンダーを起こしません。
+   */
+  readonly Context: {
+    (props: { children?: React.ReactNode; [key: string]: unknown }): React.ReactElement;
+    displayName?: string | undefined;
+  };
+
   readonly get: {
     /**
      * キーに対応する値をそのまま返します。
@@ -34,17 +45,6 @@ type Config = {
       typeGuard: (value: any) => value is TValue,
       defaultValue: TDefaultValue,
     ): TValue | TDefaultValue;
-  };
-
-  /**
-   * `children` 以外のプロパティーを設定に結合して子孫に提供するコンポーネントです。
-   *
-   * 親の設定を引き継ぎ、変更されたキーのみを上書きします。
-   * すべての値が `Object.is` で等しい場合は親の設定を使い回すため、余分な再レンダーを起こしません。
-   */
-  readonly Context: {
-    (props: { children?: React.ReactNode; [key: string]: unknown }): React.ReactElement;
-    displayName?: string | undefined;
   };
 };
 

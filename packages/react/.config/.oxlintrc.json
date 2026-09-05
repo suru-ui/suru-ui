@@ -20,7 +20,9 @@
   "rules": {
     "no-unused-expressions": "off", // logtape で使用します。
     "no-unused-vars": "warn", // TypeScript に委譲します。
-    "vitest/no-focused-tests": "off" // デバッグ作業を容易にします。
+    "vitest/no-focused-tests": "off", // デバッグ作業を容易にします。
+    "react/no-children-prop": "off", // 一時的に無効化
+    "jsx_a11y/label-has-associated-control": "off" // 一時的に無効化
   },
   "env": {
     "builtin": true

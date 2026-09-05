@@ -1,11 +1,14 @@
-import { SIZES, COLORS, COLOR_TEMPLATES } from "@suru-ui/theme";
-import { TagIcon, CheckIcon } from "lucide-react";
+import * as theme from "@suru-ui/theme";
 
 import { preview, controls } from "../.config/storybook/preview.js";
+import { Avatar } from "../src/avatar/index.js";
 import { Badge } from "../src/badge/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
-const VARIANTS = COLOR_TEMPLATES;
+const COLORS: readonly Badge.Color[] = theme.COLORS;
+const SIZES: readonly Badge.Size[] = theme.SIZES;
+const RADII: readonly Badge.Radius[] = ["none", ...SIZES, "full"];
+const OVERLAPS: readonly Badge.Overlap[] = ["rectangular", "circular"];
+const VARIANTS: readonly Badge.Variant[] = ["standard", "dot"];
 
 const meta = preview.meta({
   title: "Badge",
@@ -16,32 +19,39 @@ export default meta;
 
 const ctrl = controls(Badge, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   outlined: {
     control: "boolean",
   },
-  radius: {
-    options: RADII,
+  overlap: {
     control: "select",
+    options: OVERLAPS,
+  },
+  radius: {
+    control: "select",
+    options: RADII,
+  },
+  ring: {
+    control: "boolean",
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   variant: {
-    options: VARIANTS,
     control: "select",
+    options: VARIANTS,
   },
 });
 
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
-    children: "新着",
-    variant: "liquid",
-    color: "blue",
+    children: "42",
+    variant: "standard",
+    color: "grey",
     size: "sm",
     radius: "full",
     outlined: false,
@@ -51,8 +61,8 @@ export const Usage = meta.story({
 export const Variants = meta.story({
   name: "主な外観",
   ...ctrl({
-    children: "新着",
-    color: "blue",
+    children: "42",
+    color: "grey",
     size: "sm",
     radius: "full",
     outlined: false,
@@ -74,8 +84,8 @@ export const Variants = meta.story({
 export const Colors = meta.story({
   name: "色",
   ...ctrl({
-    children: "新着",
-    variant: "liquid",
+    children: "42",
+    variant: "standard",
     size: "sm",
     radius: "full",
     outlined: false,
@@ -94,36 +104,12 @@ export const Colors = meta.story({
   },
 });
 
-export const WithIcons = meta.story({
-  name: "アイコン付き",
-  ...ctrl({
-    variant: "liquid",
-    size: "sm",
-    radius: "full",
-    outlined: false,
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-wrap gap-3">
-        <Badge {...props}>
-          <TagIcon />
-          タグ
-        </Badge>
-        <Badge {...props} color="green">
-          <CheckIcon />
-          完了
-        </Badge>
-      </div>
-    );
-  },
-});
-
 export const Radius = meta.story({
   name: "角丸",
   ...ctrl({
-    children: "新着",
-    variant: "liquid",
-    color: "blue",
+    children: "42",
+    variant: "standard",
+    color: "grey",
     size: "sm",
     outlined: false,
   }),
@@ -144,8 +130,8 @@ export const Radius = meta.story({
 export const Outlined = meta.story({
   name: "枠線",
   ...ctrl({
-    children: "新着",
-    color: "blue",
+    children: "42",
+    color: "grey",
     size: "sm",
     radius: "full",
   }),
@@ -166,9 +152,9 @@ export const Outlined = meta.story({
 export const Sizes = meta.story({
   name: "大きさ",
   ...ctrl({
-    children: "タグ",
-    variant: "liquid",
-    color: "blue",
+    children: "42",
+    variant: "standard",
+    color: "grey",
     radius: "full",
     outlined: false,
   }),
@@ -178,12 +164,43 @@ export const Sizes = meta.story({
         {SIZES.map((size) => (
           <div key={size} className="flex flex-col items-center gap-2">
             <span>{size}</span>
-            <Badge {...props} size={size}>
-              <TagIcon />
-              {props.children}
-            </Badge>
+            <Badge {...props} size={size} />
           </div>
         ))}
+      </div>
+    );
+  },
+});
+
+export const Overlap = meta.story({
+  name: "重ね合わせ",
+  ...ctrl({
+    variant: "dot",
+    color: "red",
+    size: "sm",
+    radius: "full",
+    outlined: false,
+    position: "top-right",
+    overlap: "rectangular",
+    ring: true,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-wrap gap-6">
+        <div className="flex flex-col items-center gap-2">
+          <span>rectangular</span>
+          <Avatar size="lg" color="blue" radius="none">
+            四
+            <Badge {...props} overlap="rectangular" />
+          </Avatar>
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          <span>circular</span>
+          <Avatar size="lg" color="blue" radius="full">
+            円
+            <Badge {...props} overlap="circular" />
+          </Avatar>
+        </div>
       </div>
     );
   },
@@ -192,8 +209,8 @@ export const Sizes = meta.story({
 export const Counts = meta.story({
   name: "数値",
   ...ctrl({
-    variant: "solid",
-    color: "red",
+    variant: "standard",
+    color: "grey",
     size: "sm",
     radius: "full",
     outlined: false,
@@ -202,7 +219,7 @@ export const Counts = meta.story({
     return (
       <div className="flex flex-wrap gap-3">
         <Badge {...props}>1</Badge>
-        <Badge {...props}>24</Badge>
+        <Badge {...props}>42</Badge>
         <Badge {...props}>999+</Badge>
       </div>
     );

@@ -35,6 +35,8 @@ const PROPERTY_ALIASES: Readonly<Record<string, readonly string[]>> = {
   // radius: ["border-radius"],
 
   size: ["width", "height"],
+  "max-size": ["max-width", "max-height"],
+  "min-size": ["min-width", "min-height"],
 };
 
 /** stylelint-order の `order/properties-order` に渡すプロパティーグループ。 */

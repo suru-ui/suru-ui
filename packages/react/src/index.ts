@@ -100,3 +100,16 @@ export {
   AvatarGroup,
   useAvatarGroupAPI,
 } from "./avatar-group/index.js";
+export {
+  type BadgeAPI,
+  type BadgeSize,
+  type BadgeColor,
+  type BadgeProps,
+  type BadgeState,
+  type BadgeRadius,
+  type BadgeOverlap,
+  type BadgeVariant,
+  type BadgePosition,
+  Badge,
+  useBadgeAPI,
+} from "./badge/index.js";
