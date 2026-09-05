@@ -80,6 +80,66 @@
   .sui_breadcrumb_item {
     display: flex;
     align-items: center;
+    outline-style: solid;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_breadcrumb_item-focusring_width: ;
+  --sui_breadcrumb_item-focusring_color: ;
+  --sui_breadcrumb_item-focusring_offset: ;
+  --sui_breadcrumb_item-border_radius: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_breadcrumb_item {
+    outline-width: var(--_sui_breadcrumb_item-outline_width, 0px);
+    outline-color: var(--sui_breadcrumb_item-focusring_color);
+    outline-offset: var(--sui_breadcrumb_item-focusring_offset);
+    border-radius: var(--sui_breadcrumb_item-border_radius);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_breadcrumb_item-focusring_width: var(--sui-focusring_width);
+  --sui_breadcrumb_item-focusring_color: var(--sui-focusring_color);
+  --sui_breadcrumb_item-focusring_offset: var(--sui-focusring_offset);
+
+  &.sui_breadcrumb-size_sm {
+    --sui_breadcrumb_item-border_radius: calc(
+                                           var(--sui_breadcrumb_link-font_size)
+                                           * var(--sui_breadcrumb_link-line_height)
+                                           * var(--sui-radius-sm)
+                                           / var(--sui-size-sm)
+                                         );
+  }
+
+  &.sui_breadcrumb-size_md {
+    --sui_breadcrumb_item-border_radius: calc(
+                                           var(--sui_breadcrumb_link-font_size)
+                                           * var(--sui_breadcrumb_link-line_height)
+                                           * var(--sui-radius-md)
+                                           / var(--sui-size-md)
+                                         );
+  }
+
+  &.sui_breadcrumb-size_lg {
+    --sui_breadcrumb_item-border_radius: calc(
+                                           var(--sui_breadcrumb_link-font_size)
+                                           * var(--sui_breadcrumb_link-line_height)
+                                           * var(--sui-radius-lg)
+                                           / var(--sui-size-lg)
+                                         );
+  }
+}
+
+/* 変異 */
+:scope {
+  .sui_breadcrumb_item:has(.sui_breadcrumb_link:focus-visible) {
+    --_sui_breadcrumb_item-outline_width: var(--sui_breadcrumb_item-focusring_width);
   }
 }
 
@@ -94,7 +154,7 @@
 :scope {
   .sui_breadcrumb_link {
     text-decoration: none;
-    outline-style: solid;
+    outline: none;
   }
 }
 
@@ -109,10 +169,6 @@
   --sui_breadcrumb_link-color-hover: ;
   --sui_breadcrumb_link-color-current: ;
   --sui_breadcrumb_link-letter_spacing: ;
-  --sui_breadcrumb_link-focusring_width: ;
-  --sui_breadcrumb_link-focusring_color: ;
-  --sui_breadcrumb_link-focusring_offset: ;
-  --sui_breadcrumb_link-border_radius: ;
 }
 
 /* 可変 */
@@ -125,31 +181,20 @@
     line-height: var(--sui_breadcrumb_link-line_height);
     color: var(--_sui_breadcrumb_link-color, var(--sui_breadcrumb_link-color-idle));
     letter-spacing: var(--sui_breadcrumb_link-letter_spacing);
-    outline-width: var(--_sui_breadcrumb_link-outline_width, 0px);
-    outline-color: var(--sui_breadcrumb_link-focusring_color);
-    outline-offset: var(--sui_breadcrumb_link-focusring_offset);
-    border-radius: var(--sui_breadcrumb_link-border_radius);
   }
 }
 
 /* 代入 */
 :scope {
   --sui_breadcrumb_link-padding_inline: var(--sui_breadcrumb-gap);
-  --sui_breadcrumb_link-focusring_width: var(--sui-focusring_width);
-  --sui_breadcrumb_link-focusring_color: var(--sui-focusring_color);
-  --sui_breadcrumb_link-focusring_offset: var(--sui-focusring_offset);
+  --sui_breadcrumb_link-color-idle: var(--sui-canvas_text-2);
+  --sui_breadcrumb_link-color-hover: var(--sui-grey-naked-canvas_text-normal);
 
   &.sui_breadcrumb-size_sm {
     --sui_breadcrumb_link-font_size: var(--sui-text-oln-sm-m-font_size);
     --sui_breadcrumb_link-font_weight: var(--sui-text-oln-sm-m-font_weight);
     --sui_breadcrumb_link-line_height: var(--sui-text-oln-sm-m-line_height);
     --sui_breadcrumb_link-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
-    --sui_breadcrumb_link-border_radius: calc(
-                                           var(--sui_breadcrumb_link-font_size)
-                                           * var(--sui_breadcrumb_link-line_height)
-                                           * var(--sui-radius-sm)
-                                           / var(--sui-size-sm)
-                                         );
   }
 
   &.sui_breadcrumb-size_md {
@@ -157,12 +202,6 @@
     --sui_breadcrumb_link-font_weight: var(--sui-text-oln-md-m-font_weight);
     --sui_breadcrumb_link-line_height: var(--sui-text-oln-md-m-line_height);
     --sui_breadcrumb_link-letter_spacing: var(--sui-text-oln-md-m-letter_spacing);
-    --sui_breadcrumb_link-border_radius: calc(
-                                           var(--sui_breadcrumb_link-font_size)
-                                           * var(--sui_breadcrumb_link-line_height)
-                                           * var(--sui-radius-md)
-                                           / var(--sui-size-md)
-                                         );
   }
 
   &.sui_breadcrumb-size_lg {
@@ -170,91 +209,37 @@
     --sui_breadcrumb_link-font_weight: var(--sui-text-oln-lg-m-font_weight);
     --sui_breadcrumb_link-line_height: var(--sui-text-oln-lg-m-line_height);
     --sui_breadcrumb_link-letter_spacing: var(--sui-text-oln-lg-m-letter_spacing);
-    --sui_breadcrumb_link-border_radius: calc(
-                                           var(--sui_breadcrumb_link-font_size)
-                                           * var(--sui_breadcrumb_link-line_height)
-                                           * var(--sui-radius-lg)
-                                           / var(--sui-size-lg)
-                                         );
   }
 
   &.sui_breadcrumb-color_grey {
-    --sui_breadcrumb_link-color-idle: color-mix(
-                                        in oklab,
-                                        var(--sui-grey-naked-canvas_text-normal) 100%,
-                                        var(--sui-canvas-1) 30%
-                                      );
-    --sui_breadcrumb_link-color-hover: var(--sui-grey-naked-canvas_text-normal);
     --sui_breadcrumb_link-color-current: var(--sui-grey-naked-canvas_text-normal);
   }
 
   &.sui_breadcrumb-color_blue {
-    --sui_breadcrumb_link-color-idle: color-mix(
-                                        in oklab,
-                                        var(--sui-blue-naked-canvas_text-normal) 100%,
-                                        var(--sui-canvas-1) 30%
-                                      );
-    --sui_breadcrumb_link-color-hover: var(--sui-blue-naked-canvas_text-normal);
     --sui_breadcrumb_link-color-current: var(--sui-blue-naked-canvas_text-normal);
   }
 
   &.sui_breadcrumb-color_purple {
-    --sui_breadcrumb_link-color-idle: color-mix(
-                                        in oklab,
-                                        var(--sui-purple-naked-canvas_text-normal) 100%,
-                                        var(--sui-canvas-1) 30%
-                                      );
-    --sui_breadcrumb_link-color-hover: var(--sui-purple-naked-canvas_text-normal);
     --sui_breadcrumb_link-color-current: var(--sui-purple-naked-canvas_text-normal);
   }
 
   &.sui_breadcrumb-color_magenta {
-    --sui_breadcrumb_link-color-idle: color-mix(
-                                        in oklab,
-                                        var(--sui-magenta-naked-canvas_text-normal) 100%,
-                                        var(--sui-canvas-1) 30%
-                                      );
-    --sui_breadcrumb_link-color-hover: var(--sui-magenta-naked-canvas_text-normal);
     --sui_breadcrumb_link-color-current: var(--sui-magenta-naked-canvas_text-normal);
   }
 
   &.sui_breadcrumb-color_red {
-    --sui_breadcrumb_link-color-idle: color-mix(
-                                        in oklab,
-                                        var(--sui-red-naked-canvas_text-normal) 100%,
-                                        var(--sui-canvas-1) 30%
-                                      );
-    --sui_breadcrumb_link-color-hover: var(--sui-red-naked-canvas_text-normal);
     --sui_breadcrumb_link-color-current: var(--sui-red-naked-canvas_text-normal);
   }
 
   &.sui_breadcrumb-color_orange {
-    --sui_breadcrumb_link-color-idle: color-mix(
-                                        in oklab,
-                                        var(--sui-orange-naked-canvas_text-normal) 100%,
-                                        var(--sui-canvas-1) 30%
-                                      );
-    --sui_breadcrumb_link-color-hover: var(--sui-orange-naked-canvas_text-normal);
     --sui_breadcrumb_link-color-current: var(--sui-orange-naked-canvas_text-normal);
   }
 
   &.sui_breadcrumb-color_yellow {
-    --sui_breadcrumb_link-color-idle: color-mix(
-                                        in oklab,
-                                        var(--sui-yellow-naked-canvas_text-normal) 100%,
-                                        var(--sui-canvas-1) 30%
-                                      );
-    --sui_breadcrumb_link-color-hover: var(--sui-yellow-naked-canvas_text-normal);
     --sui_breadcrumb_link-color-current: var(--sui-yellow-naked-canvas_text-normal);
   }
 
   &.sui_breadcrumb-color_green {
-    --sui_breadcrumb_link-color-idle: color-mix(
-                                        in oklab,
-                                        var(--sui-green-naked-canvas_text-normal) 100%,
-                                        var(--sui-canvas-1) 30%
-                                      );
-    --sui_breadcrumb_link-color-hover: var(--sui-green-naked-canvas_text-normal);
     --sui_breadcrumb_link-color-current: var(--sui-green-naked-canvas_text-normal);
   }
 }
@@ -271,10 +256,6 @@
         --_sui_breadcrumb_link-color: var(--sui_breadcrumb_link-color-hover);
       }
     }
-  }
-
-  .sui_breadcrumb_link:focus-visible {
-    --_sui_breadcrumb_link-outline_width: var(--sui_breadcrumb_link-focusring_width);
   }
 }
 
@@ -352,6 +333,21 @@
     --sui_breadcrumb_separator-font_weight: var(--sui-text-oln-lg-m-font_weight);
     --sui_breadcrumb_separator-line_height: var(--sui-text-oln-lg-m-line_height);
     --sui_breadcrumb_separator-letter_spacing: var(--sui-text-oln-lg-m-letter_spacing);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+@layer sui.important {
+@scope (.sui_breadcrumb) to ([data-scope]) {
+
+/* Link */
+:scope {
+  .sui_breadcrumb_link-disabled {
+    color: var(--sui-disabled-naked-canvas_text);
+    cursor: not-allowed;
   }
 }
 

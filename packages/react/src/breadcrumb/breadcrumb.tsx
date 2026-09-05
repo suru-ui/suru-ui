@@ -183,6 +183,7 @@ export const useBreadcrumbAPI: IUseBreadcrumbAPI = function useSuiBreadcrumbAPI(
         ...linkProps,
         href: current ? undefined : item.href,
         current,
+        disabled: item.disabled ?? linkProps.disabled ?? false,
         children: item.label,
       };
     },

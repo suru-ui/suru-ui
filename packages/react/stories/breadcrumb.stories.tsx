@@ -93,6 +93,27 @@ export const Sizes = meta.story({
   },
 });
 
+export const Disabled = meta.story({
+  name: "無効なリンク",
+  ...ctrl({
+    color: "grey",
+    size: "md",
+    items,
+  }),
+  render(props) {
+    return (
+      <Breadcrumb
+        {...props}
+        items={[
+          { label: "ホーム", href: "#" },
+          { label: "製品", href: "#", disabled: true },
+          { label: "パンくずリスト" },
+        ]}
+      />
+    );
+  },
+});
+
 export const Parts = meta.story({
   name: "パーツで組み立てる",
   ...ctrl({

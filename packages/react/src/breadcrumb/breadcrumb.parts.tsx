@@ -34,7 +34,7 @@ export type BreadcrumbContext = {
   /**
    * パンくずリストの配色です。
    *
-   * 色はリンクに適用されます。
+   * 色は現在のページのリンクに適用されます。
    */
   readonly color: BreadcrumbContextColor;
 
@@ -58,15 +58,15 @@ export const BreadcrumbContext: React.Context<BreadcrumbContext | null> =
 function useSuiBreadcrumbContext(optional?: false): BreadcrumbContext;
 function useSuiBreadcrumbContext(optional?: boolean): BreadcrumbContext | null;
 function useSuiBreadcrumbContext(optional?: boolean): BreadcrumbContext | null {
-  const context = React.use(BreadcrumbContext);
-  if (context === null && !optional) {
+  const ctx = React.use(BreadcrumbContext);
+  if (ctx === null && !optional) {
     throw new ContextMissingError({
       contextName: "BreadcrumbContext",
       providerName: "BreadcrumbRoot",
     });
   }
 
-  return context;
+  return ctx;
 }
 
 /**
@@ -115,6 +115,15 @@ export type BreadcrumbRootItemObject = {
    * 最後の項目は、指定しない場合に現在位置として描画します。
    */
   readonly current?: boolean | undefined;
+
+  /**
+   * 項目を無効にするかどうかを指定します。
+   *
+   * `true` の場合、リンク先へ遷移できなくなります。
+   *
+   * @default false
+   */
+  readonly disabled?: boolean | undefined;
 
   /**
    * リンク先の URL です。
@@ -173,7 +182,7 @@ export const BreadcrumbRoot: IComponent<BreadcrumbRootProps> = function SuiBread
     "aria-label": ariaLabel = "パンくずリスト",
     ...otherNavProps
   } = props;
-  const context = React.useMemo<BreadcrumbContext>(
+  const ctx = React.useMemo<BreadcrumbContext>(
     () => ({ color, size, items }),
     [color, size, items],
   );
@@ -194,7 +203,7 @@ export const BreadcrumbRoot: IComponent<BreadcrumbRootProps> = function SuiBread
     ],
   });
 
-  return <BreadcrumbContext value={context}>{element}</BreadcrumbContext>;
+  return <BreadcrumbContext value={ctx}>{element}</BreadcrumbContext>;
 };
 
 export { BreadcrumbRoot as Root };
@@ -291,14 +300,14 @@ const defaultListItemRenderer: IBreadcrumbListItemRenderer = (item, index, items
     return toReactNode(item);
   }
 
-  const { label, href, current: currentProp } = item;
+  const { label, href, disabled, current: currentProp } = item;
   const current = currentProp ?? index === items.length - 1;
 
   return (
     <React.Fragment key={index}>
       {index > 0 && <BreadcrumbSeparator />}
       <BreadcrumbItem>
-        <BreadcrumbLink href={current ? undefined : href} current={current}>
+        <BreadcrumbLink href={current ? undefined : href} current={current} disabled={disabled}>
           {toReactNode(label)}
         </BreadcrumbLink>
       </BreadcrumbItem>
@@ -395,6 +404,15 @@ export type BreadcrumbLinkProps = Omit<React.ComponentProps<"a">, keyof RenderPr
      * @default false
      */
     current?: boolean | undefined;
+
+    /**
+     * リンクを無効にするかどうかを指定します。
+     *
+     * `true` の場合、リンク先へ遷移できなくなります。
+     *
+     * @default false
+     */
+    disabled?: boolean | undefined;
   };
 
 /**
@@ -403,15 +421,22 @@ export type BreadcrumbLinkProps = Omit<React.ComponentProps<"a">, keyof RenderPr
  * `current` を `true` にすると、現在位置を示す要素として描画します。
  */
 export const BreadcrumbLink: IComponent<BreadcrumbLinkProps> = function SuiBreadcrumbLink(props) {
-  const { current = false, className, ...otherAnchorProps } = props;
+  const { current = false, disabled = false, className, ...otherAnchorProps } = props;
 
   return useRender({
     defaultTagName: current ? "span" : "a",
     props: [
       otherAnchorProps,
       {
-        className: cn(className, "sui_breadcrumb_link", current && "sui_breadcrumb_link-current"),
+        href: disabled ? undefined : otherAnchorProps.href,
+        className: cn(
+          className,
+          "sui_breadcrumb_link",
+          current && "sui_breadcrumb_link-current",
+          disabled && "sui_breadcrumb_link-disabled",
+        ),
         "aria-current": current ? "page" : undefined,
+        "aria-disabled": disabled || undefined,
       },
     ],
   });
