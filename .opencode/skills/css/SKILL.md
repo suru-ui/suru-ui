@@ -44,7 +44,7 @@ description: Suru UI のコンポーネント CSS を書くときに使用しま
 ```
 
 - `@layer` は通常 `sui.component` です。無効状態だけ `sui.important` を末尾に 1 つ置きます。
-- `@scope` の始点は Root 要素 (`.sui_accordion`) か Portal (`.sui_alert_dialog_portal`) です。終点は必ず `to ([data-scope])` です。
+- `@scope` の始点は Root 要素 (`.sui_accordion`) か Portal (`.sui_alert_dialog_portal`) です。終点は原則 `to ([data-scope])` です。例外として、子孫の `[data-scope]` を跨いで状態を参照する必要があるスタイル (例: ボタン内の Indicator の回転) は、下限なしの別ブロックに分離し、理由をコメントで注記します。
 - ブロック内はすべて `:scope { ... }` に書きます。
 - 閉じ括弧に `} /* @scope */` と `} /* @layer */` のコメントを付けます。
 - 同じ起点でもパーツごとにブロックを分けます。
@@ -269,6 +269,7 @@ description: Suru UI のコンポーネント CSS を書くときに使用しま
 
 - 規則: 私的変数への代入だけを書きます。公開変数への代入や生の `prop` は書きません。
 - 規則: 状態変化による切替をここに集めます。
+- 規則: 状態クラスは DOM ツリー上のルート起点で付けます (例: `.sui_collapsible-transition_status_*`)。Portal で Root が DOM ルートでない場合や、子が独立した状態を持つ場合 (例: Item ごとの `-disabled`) は例外とします。
 - 例: `-outlined` による有効化、開閉や遷移状態による切替などです。
 
 ```css
@@ -278,18 +279,20 @@ description: Suru UI のコンポーネント CSS を書くときに使用しま
 }
 ```
 
-- 例: 開閉・遷移・位置調整などです。
+- 例: 開閉・遷移・位置調整などです。遷移状態はルート起点で書きます。項目が独立した状態を持つ場合 (例: アコーディオンの各 Item) は、その状態を持つ要素起点で書きます。
 
 ```css
 .sui_accordion_item-open .sui_accordion_indicator {
   --_sui_accordion_indicator-rotate: var(--sui_accordion_indicator-rotate-open);
 }
 
-.sui_accordion_content-transition_status_starting,
-.sui_accordion_content-transition_status_ending {
-  --_sui_accordion_content-height: 0px;
+.sui_collapsible-transition_status_starting,
+.sui_collapsible-transition_status_ending {
+  --_sui_collapsible_content-height: 0px;
 }
 ```
+
+- インタラクティブな要素 (`button`、`a`、単体で操作できる chip など) の `:hover` / `:active` / `:focus-visible` は `&:enabled` 配下に置き、無効時に発火させません。
 
 ## セレクターの改行と字下げ
 
@@ -324,7 +327,7 @@ description: Suru UI のコンポーネント CSS を書くときに使用しま
 - 角丸がある場合は公開変数 `border_radius` と `radius_*` 修飾で切り替え、子は親の値を参照します。
 - 枠線の有無切替がある場合は `固定` の線種 + `可変` の私的変数 + `代入` のトークン + `変異` の `-outlined` で有効化します。
 - フォーカスリングがある場合は `focusring_width` / `focusring_color` / `focusring_offset` の 3 点を `可変` + `代入` + `変異` (`:focus-visible`) で扱います。`outline-style: solid` は `固定` に置きます。
-- 文字がある場合は `font_family` / `font_size` / `font_weight` / `line_height` / `letter_spacing` / `color` を一式で持ちます。行の高さは `calc(<font_size> * <line_height>)` で求め、`1lh` は使いません。
+- 文字がある場合は `font_family` / `font_size` / `font_weight` / `line_height` / `letter_spacing` / `color` を一式で持ちます。`line-height` プロパティー自体には `var(--sui_<部品>-line_height)` を直接指定します。`calc(<font_size> * <line_height>)` を使うのは、テキスト高さが必要な派生値 (`-virtual_text_height`、`__svg-size` など) で `1lh` 相当を求めるときのみです。`1lh` は使いません。
 - 色違い × 質感 (`color_*` × `variant_*`) がある場合はすべての組合せを列挙します。省略しません。
 - `svg` がある場合は `svg:not(.sui-ignore)` にし、大きさと色を明示します。大きさは文字や箱に連動する `calc()` にします。色は `--sui-icon_color(<前景色>, <背景色>)` で計算します。
 
@@ -380,7 +383,8 @@ description: Suru UI のコンポーネント CSS を書くときに使用しま
 - 私的変数 (`--_sui_...`) を `変異` 以外で代入しない。
 - 私的変数をフォールバックなしで参照しない。例: `var(--_sui_accordion-border_color, transparent)` のように書きます。
 - `可変` で全体トークンを直接参照しない。例: `var(--sui-canvas-1)` や `var(--sui-radius-md)` は `代入` に書き、`可変` は自部品の変数を経由します。
-- パーツごとに `@layer` + `@scope` ブロックを分ける。複数パーツを 1 ブロックにまとめない。
+- パーツごとに `@layer` + `@scope` ブロックを分ける。複数パーツを 1 ブロックにまとめない。ただし `[data-scope]` の下限の有無が異なるスタイルは、理由のコメント付きで別ブロックに分けます。
+- 状態クラスを子起点に分散させない。DOM ツリー上のルート起点にします (Portal や独立状態の子は例外)。
 - 5 区分の順序を入れ替えない。例: Footer のように `変数` を `固定` より先に置かない。
 - 修飾の書き方を取り違えない。例: 起点自身の修飾は `&.sui_accordion-size_sm`、子孫の修飾は `&:has(.sui_alert_dialog_icon-size_sm)` にします。
 - 変数名・クラス名の綴りは `変数`・`可変`・`代入` で一致させる。例: 対応しない変数に代入しない (`size_lg` の代入先が `min_height` になっているような不一致を残さない)。
@@ -388,9 +392,10 @@ description: Suru UI のコンポーネント CSS を書くときに使用しま
 - 1 つの公開変数に複数の値を半角スペース区切りで代入しない。例: `--sui_alert_actions-padding_block: --sui-gap(4) --sui-gap(3)` は禁止。`padding_block_start` / `padding_block_end` のように変数を分けます。
 - `svg` に素の `svg` セレクターを使わない。例: `svg:not(.sui-ignore)` にし、大きさと色を明示します。継承に任せない。
 - インタラクティブな要素の状態名に `-idle` / `-hover` / `-active` 以外を使わない。デザインシステムの `-normal` / `-subtle` / `-strong` をそれぞれ割り当てます。
-- `1lh` を使わない。行の高さは `calc(<font_size> * <line_height>)` で求めます。
+- `1lh` を使わない。`line-height` には変数を直接指定し、行の高さの計算が必要な派生値のみ `calc(<font_size> * <line_height>)` にします (例: `--sui_chip-virtual_text_height`)。
 - `currentColor` を使わない。色は CSS 変数で明示します。
 - (重要) 他パーツの変数を `可変` で直接参照しない。継承を強調する場合を除き、部品専用の変数を定義して `代入` で引き継ぎます。
 - 長いセレクターを 1 行に書かない。子孫の連なりは 1 つずつ改行して 1 段ずつ深く字下げし、カンマ区切りと関数引数は 1 つずつ改行します。
+- インタラクティブな要素の `:hover` / `:active` / `:focus-visible` から `&:enabled` を外さない。無効時に発火させないためです。
 - `sui.important` を無効状態以外に使わない。
 - `!important` を書かない。

@@ -50,6 +50,59 @@ export const useButtonContext: IUseContext<ButtonContext> = useSuiButtonContext;
 
 export { ButtonContext as Context, useButtonContext as useContext };
 
+// CircularProgressContext
+// -----------------------
+
+/**
+ * {@link ButtonCircularProgress} が子パーツへ提供するコンテキストです。
+ */
+export type ButtonCircularProgressContext = {
+  /**
+   * 不定モードで表示するかどうかです。
+   */
+  readonly indeterminate: boolean;
+
+  /**
+   * 進捗率です。
+   */
+  readonly percentage: number | undefined;
+};
+
+/**
+ * {@link ButtonCircularProgress} が子パーツへ提供するコンテキストです。
+ */
+export const ButtonCircularProgressContext: React.Context<ButtonCircularProgressContext | null> =
+  React.createContext<ButtonCircularProgressContext | null>(null);
+
+function useSuiButtonCircularProgressContext(optional?: false): ButtonCircularProgressContext;
+function useSuiButtonCircularProgressContext(
+  optional?: boolean,
+): ButtonCircularProgressContext | null;
+function useSuiButtonCircularProgressContext(
+  optional?: boolean,
+): ButtonCircularProgressContext | null {
+  const ctx = React.use(ButtonCircularProgressContext);
+  if (ctx === null && !optional) {
+    throw new ContextMissingError({
+      contextName: "ButtonCircularProgressContext",
+      providerName: "ButtonCircularProgress",
+    });
+  }
+
+  return ctx;
+}
+
+/**
+ * {@link ButtonCircularProgressContext} を読み取るフックです。
+ */
+export const useButtonCircularProgressContext: IUseContext<ButtonCircularProgressContext> =
+  useSuiButtonCircularProgressContext;
+
+export {
+  ButtonCircularProgressContext as CircularProgressContext,
+  useButtonCircularProgressContext as useCircularProgressContext,
+};
+
 // Root
 // ----
 
@@ -182,10 +235,10 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
   const radius = actionGroupCtx?.radius ?? radiusProp;
   const variant = actionGroupCtx?.variant ?? variantProp;
   const outlined = actionGroupCtx?.outlined ?? outlinedProp;
-  const context = React.useMemo(() => ({ pending }), [pending]);
+  const ctx = React.useMemo<ButtonContext>(() => ({ pending }), [pending]);
 
   return (
-    <ButtonContext value={context}>
+    <ButtonContext value={ctx}>
       <Button
         {...otherProps}
         type={type}
@@ -360,59 +413,6 @@ export namespace Pending {
    */
   export type Props = ButtonPendingProps;
 }
-
-// CircularProgressContext
-// -----------------------
-
-/**
- * {@link ButtonCircularProgress} が子パーツへ提供するコンテキストです。
- */
-export type ButtonCircularProgressContext = {
-  /**
-   * 不定モードで表示するかどうかです。
-   */
-  readonly indeterminate: boolean;
-
-  /**
-   * 進捗率です。
-   */
-  readonly percentage: number | undefined;
-};
-
-/**
- * {@link ButtonCircularProgress} が子パーツへ提供するコンテキストです。
- */
-export const ButtonCircularProgressContext: React.Context<ButtonCircularProgressContext | null> =
-  React.createContext<ButtonCircularProgressContext | null>(null);
-
-function useSuiButtonCircularProgressContext(optional?: false): ButtonCircularProgressContext;
-function useSuiButtonCircularProgressContext(
-  optional?: boolean,
-): ButtonCircularProgressContext | null;
-function useSuiButtonCircularProgressContext(
-  optional?: boolean,
-): ButtonCircularProgressContext | null {
-  const ctx = React.use(ButtonCircularProgressContext);
-  if (ctx === null && !optional) {
-    throw new ContextMissingError({
-      contextName: "ButtonCircularProgressContext",
-      providerName: "ButtonCircularProgress",
-    });
-  }
-
-  return ctx;
-}
-
-/**
- * {@link ButtonCircularProgressContext} を読み取るフックです。
- */
-export const useButtonCircularProgressContext: IUseContext<ButtonCircularProgressContext> =
-  useSuiButtonCircularProgressContext;
-
-export {
-  ButtonCircularProgressContext as CircularProgressContext,
-  useButtonCircularProgressContext as useCircularProgressContext,
-};
 
 // CircularProgress
 // ----------------
@@ -666,7 +666,7 @@ export type ButtonCircularProgressFillRotationProps = Omit<
  */
 export const ButtonCircularProgressFillRotation: IComponent<ButtonCircularProgressFillRotationProps> =
   function SuiButtonCircularProgressFillRotation(props) {
-    const { indeterminate } = useButtonCircularProgressContext();
+    const ctx = useButtonCircularProgressContext();
     const {
       dur = "0.75s",
       type = "rotate",
@@ -678,7 +678,7 @@ export const ButtonCircularProgressFillRotation: IComponent<ButtonCircularProgre
 
     return useRender({
       defaultTagName: "animateTransform",
-      enabled: indeterminate,
+      enabled: ctx.indeterminate,
       props: [
         otherAnimateTransformProps,
         {

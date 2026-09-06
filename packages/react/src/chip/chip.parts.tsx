@@ -62,7 +62,7 @@ export type ChipRootProps = Omit<React.ComponentProps<"span">, keyof RenderProps
     color?: ChipRootColor | undefined;
 
     /**
-     * 枠線を表示するかどうかを指定します。
+     * チップに枠線を表示するかどうかを指定します。
      *
      * @default false
      */

@@ -34,7 +34,7 @@ export type BreadcrumbContext = {
   /**
    * パンくずリストの配色です。
    *
-   * 色は現在のページのリンクに適用されます。
+   * 配色は現在のページのリンクに適用されます。
    */
   readonly color: BreadcrumbContextColor;
 
@@ -97,15 +97,6 @@ export namespace Context {
 export type BreadcrumbRootColor = Color;
 
 /**
- * パンくずリストの大きさです。
- *
- * - `"sm"`: 小さめ
- * - `"md"`: 標準的
- * - `"lg"`: 大きめ
- */
-export type BreadcrumbRootSize = Size;
-
-/**
  * {@link BreadcrumbRoot} の各項目です。
  */
 export type BreadcrumbRootItemObject = {
@@ -139,6 +130,15 @@ export type BreadcrumbRootItemObject = {
 };
 
 /**
+ * パンくずリストの大きさです。
+ *
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ */
+export type BreadcrumbRootSize = Size;
+
+/**
  * {@link BreadcrumbRoot} が持つ状態です。
  */
 export type BreadcrumbRootState = {};
@@ -149,9 +149,9 @@ export type BreadcrumbRootState = {};
 export type BreadcrumbRootProps = Omit<React.ComponentProps<"nav">, keyof RenderProps> &
   RenderProps<BreadcrumbRootState> & {
     /**
-     * パンくずリストの色を指定します。
+     * パンくずリストの配色を指定します。
      *
-     * 色はリンクに適用されます。
+     * 配色はリンクに適用されます。
      *
      * @default "grey"
      */
@@ -183,8 +183,8 @@ export const BreadcrumbRoot: IComponent<BreadcrumbRootProps> = function SuiBread
     ...otherNavProps
   } = props;
   const ctx = React.useMemo<BreadcrumbContext>(
-    () => ({ color, size, items }),
-    [color, size, items],
+    () => ({ size, color, items }),
+    [size, color, items],
   );
   const element = useRender({
     defaultTagName: "nav",
@@ -279,9 +279,9 @@ export type BreadcrumbListProps = Omit<React.ComponentProps<"ol">, keyof RenderP
  * パンくずの項目を並べるリストコンポーネントです。
  */
 export const BreadcrumbList: IComponent<BreadcrumbListProps> = function SuiBreadcrumbList(props) {
-  const group = useSuiBreadcrumbContext(true);
+  const ctx = useSuiBreadcrumbContext(true);
   const { children = defaultListItemRenderer, className, ...otherOlProps } = props;
-  const items = group?.items ?? [];
+  const items = ctx?.items ?? [];
 
   return useRender({
     defaultTagName: "ol",
@@ -300,7 +300,7 @@ const defaultListItemRenderer: IBreadcrumbListItemRenderer = (item, index, items
     return toReactNode(item);
   }
 
-  const { label, href, disabled, current: currentProp } = item;
+  const { href, label, current: currentProp, disabled } = item;
   const current = currentProp ?? index === items.length - 1;
 
   return (
@@ -331,6 +331,11 @@ export namespace List {
    * {@link BreadcrumbListProps}
    */
   export type Props = BreadcrumbListProps;
+
+  /**
+   * {@link BreadcrumbRootItemObject}
+   */
+  export type ItemObject = BreadcrumbRootItemObject;
 
   /**
    * {@link IBreadcrumbListItemRenderer}

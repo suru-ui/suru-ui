@@ -11,12 +11,12 @@ import "./aspect-ratio.css";
 // ----
 
 /**
- * アスペクト比コンテナーの角丸です。
+ * アスペクト比コンテナーの角丸の大きさです。
  *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type AspectRatioRootRadius = "none" | Size;
 
@@ -33,7 +33,16 @@ export type AspectRatioRootRatio = number | string;
 export type AspectRatioRootState = {};
 
 /**
- * {@link AspectRatioRoot} に渡す props です.
+ * {@link AspectRatioRoot} のインラインスタイルです。
+ *
+ * 比率の計算に使う CSS 変数を含みます。
+ */
+type AspectRatioRootStyle = React.CSSProperties & {
+  "--sui_aspect_ratio-ratio"?: AspectRatioRootRatio;
+};
+
+/**
+ * {@link AspectRatioRoot} に渡す props です。
  */
 export type AspectRatioRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
   RenderProps<AspectRatioRootState> & {
@@ -71,7 +80,7 @@ export const AspectRatioRoot: IComponent<AspectRatioRootProps> = function SuiAsp
       {
         style: {
           "--sui_aspect_ratio-ratio": ratio,
-        },
+        } as AspectRatioRootStyle,
         className: cn(className, "sui_aspect_ratio", `sui_aspect_ratio-radius_${radius}`),
         "data-scope": "",
       },

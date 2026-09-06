@@ -67,7 +67,6 @@ export {
   type AutocompleteState,
   type AutocompleteRadius,
   type AutocompleteActions,
-  type AutocompleteContext,
   type AutocompleteVariant,
   type AutocompleteGroupItem,
   type AutocompleteSlotProps,
@@ -77,6 +76,8 @@ export {
   type AutocompleteHighlightEventDetails,
   Autocomplete,
   useAutocompleteAPI,
+  AutocompleteContext,
+  useAutocompleteContext,
 } from "./autocomplete/index.js";
 export {
   type AvatarAPI,
@@ -99,6 +100,8 @@ export {
   type AvatarGroupSlotProps,
   AvatarGroup,
   useAvatarGroupAPI,
+  AvatarGroupContext,
+  useAvatarGroupContext,
 } from "./avatar-group/index.js";
 export {
   type BadgeAPI,
@@ -119,11 +122,13 @@ export {
   type BreadcrumbColor,
   type BreadcrumbProps,
   type BreadcrumbState,
-  type BreadcrumbItemsItem,
   type BreadcrumbSlotProps,
+  type BreadcrumbItemObject,
   type IBreadcrumbItemRenderer,
   Breadcrumb,
   useBreadcrumbAPI,
+  BreadcrumbContext,
+  useBreadcrumbContext,
 } from "./breadcrumb/index.js";
 export {
   type ButtonAPI,
@@ -136,6 +141,8 @@ export {
   type ButtonSlotProps,
   Button,
   useButtonAPI,
+  ButtonContext,
+  useButtonContext,
 } from "./button/index.js";
 export {
   type CheckboxAPI,
@@ -164,6 +171,8 @@ export {
   type CheckboxGroupChangeEventDetails,
   CheckboxGroup,
   useCheckboxGroupAPI,
+  CheckboxGroupContext,
+  useCheckboxGroupContext,
 } from "./checkbox-group/index.js";
 export {
   type ChipAPI,

@@ -2,6 +2,7 @@ import { Checkbox } from "@base-ui/react/checkbox";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import { CheckboxIcon } from "../_icons.jsx";
 import { useCheckboxGroupContext } from "../checkbox-group/checkbox-group.parts.jsx";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
@@ -119,7 +120,7 @@ export const CheckboxRoot: IComponent<CheckboxRootProps> = function SuiCheckboxR
     color: colorProp = "grey",
     radius: radiusProp = sizeProp,
     variant: variantProp = "liquid",
-    disabled: disabledProp = false,
+    disabled: disabledProp,
     outlined: outlinedProp = false,
     className,
     ...otherProps
@@ -129,7 +130,7 @@ export const CheckboxRoot: IComponent<CheckboxRootProps> = function SuiCheckboxR
   const radius = group?.radius ?? radiusProp;
   const variant = group?.variant ?? variantProp;
   const outlined = group?.outlined ?? outlinedProp;
-  const disabled = group?.disabled || disabledProp;
+  const disabled = group?.disabled ?? disabledProp;
 
   return (
     <Checkbox.Root
@@ -215,9 +216,13 @@ export type CheckboxIndicatorProps = React.ComponentProps<typeof Checkbox.Indica
 export const CheckboxIndicator: IComponent<CheckboxIndicatorProps> = function SuiCheckboxIndicator(
   props,
 ) {
-  const { className, ...otherProps } = props;
+  const { children = <CheckboxIcon />, className, ...otherProps } = props;
 
-  return <Checkbox.Indicator {...otherProps} className={cn(className, "sui_checkbox_indicator")} />;
+  return (
+    <Checkbox.Indicator {...otherProps} className={cn(className, "sui_checkbox_indicator")}>
+      {children}
+    </Checkbox.Indicator>
+  );
 };
 
 export { CheckboxIndicator as Indicator };

@@ -589,25 +589,27 @@
 
 /* Heading */
 :scope {
-  .sui_accordion_item-disabled {
-    .sui_accordion_heading {
-      color: var(--sui-disabled-naked-canvas_text);
-      cursor: not-allowed;
-    }
+  .sui_accordion_item-disabled .sui_accordion_heading {
+    color: var(--sui-disabled-naked-canvas_text);
+    cursor: not-allowed;
+  }
 
-    &.sui_accordion-variant_naked .sui_accordion_heading:is(
-      :not(:has(.sui_accordion_trigger)),
-      :has(.sui_accordion_trigger-unstyled)
-    ) {
-      background-color: var(--sui-disabled-naked-canvas);
-    }
+  &.sui_accordion-variant_naked
+    .sui_accordion_item-disabled
+      .sui_accordion_heading:is(
+        :not(:has(.sui_accordion_trigger)),
+        :has(.sui_accordion_trigger-unstyled)
+      ) {
+    background-color: var(--sui-disabled-naked-canvas);
+  }
 
-    &.sui_accordion-variant_liquid .sui_accordion_heading:is(
-      :not(:has(.sui_accordion_trigger)),
-      :has(.sui_accordion_trigger-unstyled)
-    ) {
-      background-color: var(--sui-disabled-liquid-canvas);
-    }
+  &.sui_accordion-variant_liquid
+    .sui_accordion_item-disabled
+      .sui_accordion_heading:is(
+        :not(:has(.sui_accordion_trigger)),
+        :has(.sui_accordion_trigger-unstyled)
+      ) {
+    background-color: var(--sui-disabled-liquid-canvas);
   }
 }
 
@@ -679,12 +681,16 @@
     cursor: not-allowed;
   }
 
-  &.sui_accordion-variant_naked .sui_accordion_item-disabled .sui_accordion_content {
+  &.sui_accordion-variant_naked
+    .sui_accordion_item-disabled
+      .sui_accordion_content {
     color: var(--sui-disabled-naked-canvas_text);
     background-color: var(--sui-disabled-naked-canvas);
   }
 
-  &.sui_accordion-variant_liquid .sui_accordion_item-disabled .sui_accordion_content {
+  &.sui_accordion-variant_liquid
+    .sui_accordion_item-disabled
+      .sui_accordion_content {
     color: var(--sui-disabled-liquid-canvas_text);
     background-color: var(--sui-disabled-liquid-canvas);
   }

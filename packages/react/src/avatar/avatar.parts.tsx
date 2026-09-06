@@ -74,12 +74,14 @@ export const AvatarRoot: IComponent<AvatarRootProps> = function SuiAvatarRoot(pr
   const group = useAvatarGroupContext(true);
   const {
     size: sizeProp = "md",
-    color = group?.color ?? "grey",
-    radius = group?.radius ?? "full",
+    color: colorProp,
+    radius: radiusProp,
     className,
     ...otherProps
   } = props;
   const size = group?.size ?? sizeProp;
+  const color = colorProp ?? group?.color ?? "grey";
+  const radius = radiusProp ?? group?.radius ?? "full";
 
   return (
     <Avatar.Root

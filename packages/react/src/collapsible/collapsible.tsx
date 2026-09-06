@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import type { IComponent } from "../types.js";
 import {
@@ -51,11 +49,11 @@ export type CollapsibleState = CollapsibleRootState;
 /**
  * {@link Collapsible} に渡す props です。
  */
-export type CollapsibleProps = Omit<CollapsibleRootProps, "children" | "title"> & {
+export type CollapsibleProps = Omit<CollapsibleRootProps, "children"> & {
   /**
    * コンテンツに表示する内容です。
    */
-  children?: React.ReactNode | undefined;
+  children?: CollapsibleContentProps["children"] | undefined;
 
   /**
    * 各パーツに個別の props を渡すためのオブジェクトです。

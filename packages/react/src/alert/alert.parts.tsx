@@ -70,7 +70,7 @@ export type AlertRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps
     /**
      * アラートの角丸を指定します。
      *
-     * 既定値は {@link AlertRootProps.size|size} です。
+     * 既定値は {@link AlertRootProps.size|size}
      */
     radius?: AlertRootRadius | undefined;
 

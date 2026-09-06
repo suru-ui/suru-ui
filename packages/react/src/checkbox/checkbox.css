@@ -42,8 +42,8 @@
   width: var(--sui_checkbox-size);
   height: var(--sui_checkbox-size);
   outline-width: var(--_sui_checkbox-outline_width, 0px);
-  outline-color: var(--sui_checkbox-focusring_color);
-  outline-offset: var(--sui_checkbox-focusring_offset);
+  outline-color: var(--_sui_checkbox-outline_color, transparent);
+  outline-offset: var(--_sui_checkbox-outline_offset, 0px);
   background-color: var(--_sui_checkbox-canvas, var(--sui_checkbox-canvas-idle));
   border-color: var(--_sui_checkbox-border_color, transparent);
   border-width: var(--_sui_checkbox-border_width, 0px);
@@ -93,24 +93,6 @@
 
   &.sui_checkbox-radius_full {
     --sui_checkbox-border_radius: calc(var(--sui_checkbox-size) / 2);
-  }
-
-  &.sui_checkbox-variant_naked {
-    --sui_checkbox-border_color-idle: var(--sui-grey-naked-border-normal);
-    --sui_checkbox-border_color-hover: var(--sui-grey-naked-border-subtle);
-    --sui_checkbox-border_color-active: var(--sui-grey-naked-border-strong);
-    --sui_checkbox-canvas-active: var(--sui-grey-naked-canvas-strong);
-    --sui_checkbox-canvas-hover: var(--sui-grey-naked-canvas-subtle);
-    --sui_checkbox-canvas-idle: var(--sui-grey-naked-canvas-normal);
-  }
-
-  &.sui_checkbox-variant_liquid {
-    --sui_checkbox-border_color-idle: var(--sui-grey-liquid-border-normal);
-    --sui_checkbox-border_color-hover: var(--sui-grey-liquid-border-subtle);
-    --sui_checkbox-border_color-active: var(--sui-grey-liquid-border-strong);
-    --sui_checkbox-canvas-active: var(--sui-grey-liquid-canvas-strong);
-    --sui_checkbox-canvas-hover: var(--sui-grey-liquid-canvas-subtle);
-    --sui_checkbox-canvas-idle: var(--sui-grey-liquid-canvas-normal);
   }
 
   &.sui_checkbox-color_grey {
@@ -168,6 +150,24 @@
     --sui_checkbox-canvas-hover-checked: var(--sui-green-solid-canvas-subtle);
     --sui_checkbox-canvas-idle-checked: var(--sui-green-solid-canvas-normal);
   }
+
+  &.sui_checkbox-variant_naked {
+    --sui_checkbox-border_color-idle: var(--sui-grey-naked-border-normal);
+    --sui_checkbox-border_color-hover: var(--sui-grey-naked-border-subtle);
+    --sui_checkbox-border_color-active: var(--sui-grey-naked-border-strong);
+    --sui_checkbox-canvas-active: var(--sui-grey-naked-canvas-strong);
+    --sui_checkbox-canvas-hover: var(--sui-grey-naked-canvas-subtle);
+    --sui_checkbox-canvas-idle: var(--sui-grey-naked-canvas-normal);
+  }
+
+  &.sui_checkbox-variant_liquid {
+    --sui_checkbox-border_color-idle: var(--sui-grey-liquid-border-normal);
+    --sui_checkbox-border_color-hover: var(--sui-grey-liquid-border-subtle);
+    --sui_checkbox-border_color-active: var(--sui-grey-liquid-border-strong);
+    --sui_checkbox-canvas-active: var(--sui-grey-liquid-canvas-strong);
+    --sui_checkbox-canvas-hover: var(--sui-grey-liquid-canvas-subtle);
+    --sui_checkbox-canvas-idle: var(--sui-grey-liquid-canvas-normal);
+  }
 }
 
 /* 変異 */
@@ -200,6 +200,8 @@
 
   &:focus-visible {
     --_sui_checkbox-outline_width: var(--sui_checkbox-focusring_width);
+    --_sui_checkbox-outline_color: var(--sui_checkbox-focusring_color);
+    --_sui_checkbox-outline_offset: var(--sui_checkbox-focusring_offset);
   }
 
   &.sui_checkbox-outlined:not(.sui_checkbox-checked, .sui_checkbox-indeterminate) {

@@ -127,7 +127,7 @@ export interface ButtonAPI {
   /**
    * {@link ButtonCircularProgressTrack} に渡す props を取得します。
    */
-  getCircularProgressTrackProps(): ButtonCircularProgressTrackProps;
+  getCircularProgressTrackProps(): Omit<ButtonCircularProgressTrackProps, "children">;
 
   /**
    * {@link ButtonContent} に渡す props を取得します。

@@ -297,7 +297,7 @@
 
 /* 変異 */
 :scope {
-  &:enabled:focus-visible {
+  &:focus-visible {
     --_sui_badge-outline_width: var(--sui_badge-focusring_width);
   }
 

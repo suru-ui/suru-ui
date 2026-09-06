@@ -19,16 +19,29 @@ type AutocompleteContextColor = Color;
 
 /**
  * 入力を含むグループ要素の角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
  */
 type AutocompleteContextRadius = "none" | Size | "full";
 
 /**
  * 入力欄とリスト項目のサイズです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
  */
 type AutocompleteContextSize = Size;
 
 /**
  * 入力欄の主な外観です。
+ *
+ * - `"naked"`: 背景のない入力欄
+ * - `"liquid"`: 薄い塗りつぶし
  */
 type AutocompleteContextVariant = "naked" | "liquid";
 
@@ -71,15 +84,15 @@ export const AutocompleteContext: React.Context<AutocompleteContext | null> =
 function useSuiAutocompleteContext(optional?: false): AutocompleteContext;
 function useSuiAutocompleteContext(optional?: boolean): AutocompleteContext | null;
 function useSuiAutocompleteContext(optional?: boolean): AutocompleteContext | null {
-  const context = React.use(AutocompleteContext);
-  if (context === null && !optional) {
+  const ctx = React.use(AutocompleteContext);
+  if (ctx === null && !optional) {
     throw new ContextMissingError({
       contextName: "AutocompleteContext",
       providerName: "AutocompleteRoot",
     });
   }
 
-  return context;
+  return ctx;
 }
 
 /**
@@ -89,9 +102,6 @@ export const useAutocompleteContext: IUseContext<AutocompleteContext> = useSuiAu
 
 export { AutocompleteContext as Context, useAutocompleteContext as useContext };
 
-/**
- * {@link Context} の型名前空間です。
- */
 export namespace Context {
   /**
    * {@link AutocompleteContextColor}
@@ -245,13 +255,13 @@ export const AutocompleteRoot: IAutocompleteRoot = function SuiAutocompleteRoot(
     outlined = false,
     ...otherProps
   } = props;
-  const context = React.useMemo<AutocompleteContext>(
+  const ctx = React.useMemo<AutocompleteContext>(
     () => ({ size, color, radius, variant, outlined }),
     [size, color, radius, variant, outlined],
   );
 
   return (
-    <AutocompleteContext value={context}>
+    <AutocompleteContext value={ctx}>
       <Autocomplete.Root {...otherProps} />
     </AutocompleteContext>
   );
@@ -259,9 +269,6 @@ export const AutocompleteRoot: IAutocompleteRoot = function SuiAutocompleteRoot(
 
 export { AutocompleteRoot as Root };
 
-/**
- * {@link AutocompleteRoot} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Root {
   /**
    * {@link AutocompleteRootState}
@@ -360,9 +367,6 @@ export const AutocompleteInputGroup: IComponent<AutocompleteInputGroupProps> =
 
 export { AutocompleteInputGroup as InputGroup };
 
-/**
- * {@link AutocompleteInputGroup} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace InputGroup {
   /**
    * {@link AutocompleteInputGroupState}
@@ -414,9 +418,6 @@ export const AutocompleteInput: IComponent<AutocompleteInputProps> = function Su
 
 export { AutocompleteInput as Input };
 
-/**
- * {@link AutocompleteInput} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Input {
   /**
    * {@link AutocompleteInputState}
@@ -469,9 +470,6 @@ export const AutocompleteAddon: IComponent<AutocompleteAddonProps> = function Su
 
 export { AutocompleteAddon as Addon };
 
-/**
- * {@link AutocompleteAddon} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Addon {
   /**
    * {@link AutocompleteAddonState}
@@ -512,9 +510,6 @@ export const AutocompleteClear: IComponent<AutocompleteClearProps> = function Su
 
 export { AutocompleteClear as Clear };
 
-/**
- * {@link AutocompleteClear} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Clear {
   /**
    * {@link AutocompleteClearState}
@@ -553,9 +548,6 @@ export const AutocompleteList: IComponent<AutocompleteListProps> = function SuiA
 
 export { AutocompleteList as List };
 
-/**
- * {@link AutocompleteList} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace List {
   /**
    * {@link AutocompleteListState}
@@ -597,9 +589,6 @@ export const AutocompleteStatus: IComponent<AutocompleteStatusProps> =
 
 export { AutocompleteStatus as Status };
 
-/**
- * {@link AutocompleteStatus} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Status {
   /**
    * {@link AutocompleteStatusState}
@@ -651,9 +640,6 @@ export const AutocompletePortal: IComponent<AutocompletePortalProps> =
 
 export { AutocompletePortal as Portal };
 
-/**
- * {@link AutocompletePortal} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Portal {
   /**
    * {@link AutocompletePortalState}
@@ -696,9 +682,6 @@ export const AutocompletePositioner: IComponent<AutocompletePositionerProps> =
 
 export { AutocompletePositioner as Positioner };
 
-/**
- * {@link AutocompletePositioner} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Positioner {
   /**
    * {@link AutocompletePositionerState}
@@ -737,9 +720,6 @@ export const AutocompletePopup: IComponent<AutocompletePopupProps> = function Su
 
 export { AutocompletePopup as Popup };
 
-/**
- * {@link AutocompletePopup} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Popup {
   /**
    * {@link AutocompletePopupState}
@@ -780,9 +760,6 @@ export const AutocompleteGroup: IComponent<AutocompleteGroupProps> = function Su
 
 export { AutocompleteGroup as Group };
 
-/**
- * {@link AutocompleteGroup} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Group {
   /**
    * {@link AutocompleteGroupState}
@@ -825,9 +802,6 @@ export const AutocompleteGroupLabel: IComponent<AutocompleteGroupLabelProps> =
 
 export { AutocompleteGroupLabel as GroupLabel };
 
-/**
- * {@link AutocompleteGroupLabel} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace GroupLabel {
   /**
    * {@link AutocompleteGroupLabelState}
@@ -866,9 +840,6 @@ export const AutocompleteItem: IComponent<AutocompleteItemProps> = function SuiA
 
 export { AutocompleteItem as Item };
 
-/**
- * {@link AutocompleteItem} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Item {
   /**
    * {@link AutocompleteItemState}
@@ -909,9 +880,6 @@ export const AutocompleteRow: IComponent<AutocompleteRowProps> = function SuiAut
 
 export { AutocompleteRow as Row };
 
-/**
- * {@link AutocompleteRow} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Row {
   /**
    * {@link AutocompleteRowState}
@@ -949,9 +917,6 @@ export const AutocompleteCollection: IComponent<AutocompleteCollectionProps> =
 
 export { AutocompleteCollection as Collection };
 
-/**
- * {@link AutocompleteCollection} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Collection {
   /**
    * {@link AutocompleteCollectionState}
@@ -992,9 +957,6 @@ export const AutocompleteEmpty: IComponent<AutocompleteEmptyProps> = function Su
 
 export { AutocompleteEmpty as Empty };
 
-/**
- * {@link AutocompleteEmpty} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Empty {
   /**
    * {@link AutocompleteEmptyState}
@@ -1035,9 +997,6 @@ export interface IUseAutocompleteFilter {
   (options?: IUseAutocompleteFilterOptions): IUseAutocompleteFilterReturn;
 }
 
-/**
- * {@link IUseAutocompleteFilter} に対応する型名前空間です。
- */
 export namespace IUseAutocompleteFilter {
   /**
    * {@link IUseAutocompleteFilterOptions}
@@ -1059,10 +1018,7 @@ function useSuiAutocompleteFilter(options?: IUseAutocompleteFilterOptions): Auto
  */
 export const useAutocompleteFilter: IUseAutocompleteFilter = useSuiAutocompleteFilter;
 
-/**
- * {@link useAutocompleteFilter}
- */
-export const useFilter: IUseAutocompleteFilter = useAutocompleteFilter;
+export { useAutocompleteFilter as useFilter };
 
 // useFilteredItems
 // ----------------
@@ -1070,28 +1026,25 @@ export const useFilter: IUseAutocompleteFilter = useAutocompleteFilter;
 /**
  * フィルタリングされた項目の一覧です。
  */
-export type AutocompleteFilteredItems<TItem = unknown> = readonly TItem[];
+export type AutocompleteFilteredItems<TItem = any> = readonly TItem[];
 
 /**
  * {@link useAutocompleteFilteredItems} の戻り値です。
  */
-export type IUseAutocompleteFilteredItemsReturn<TItem = unknown> = AutocompleteFilteredItems<TItem>;
+export type IUseAutocompleteFilteredItemsReturn<TItem = any> = AutocompleteFilteredItems<TItem>;
 
 /**
  * {@link useAutocompleteFilteredItems} の型です。
  */
 export interface IUseAutocompleteFilteredItems {
-  <TItem = unknown>(): IUseAutocompleteFilteredItemsReturn<TItem>;
+  <TItem = any>(): IUseAutocompleteFilteredItemsReturn<TItem>;
 }
 
-/**
- * {@link IUseAutocompleteFilteredItems} に対応する型名前空間です。
- */
 export namespace IUseAutocompleteFilteredItems {
   /**
    * {@link IUseAutocompleteFilteredItemsReturn}
    */
-  export type Return<TItem = unknown> = IUseAutocompleteFilteredItemsReturn<TItem>;
+  export type Return<TItem = any> = IUseAutocompleteFilteredItemsReturn<TItem>;
 }
 
 function useSuiAutocompleteFilteredItems(): AutocompleteFilteredItems<any> {
@@ -1104,7 +1057,4 @@ function useSuiAutocompleteFilteredItems(): AutocompleteFilteredItems<any> {
 export const useAutocompleteFilteredItems: IUseAutocompleteFilteredItems =
   useSuiAutocompleteFilteredItems;
 
-/**
- * {@link useAutocompleteFilteredItems}
- */
-export const useFilteredItems: IUseAutocompleteFilteredItems = useAutocompleteFilteredItems;
+export { useAutocompleteFilteredItems as useFilteredItems };

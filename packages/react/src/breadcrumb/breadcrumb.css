@@ -20,8 +20,6 @@
 
 /* 代入 */
 :scope {
-  --sui_breadcrumb-font_family: var(--sui-font-sans);
-
   &.sui_breadcrumb-size_sm {
     --sui_breadcrumb-gap: --sui-gap(1.5);
   }
@@ -96,8 +94,8 @@
 :scope {
   .sui_breadcrumb_item {
     outline-width: var(--_sui_breadcrumb_item-outline_width, 0px);
-    outline-color: var(--sui_breadcrumb_item-focusring_color);
-    outline-offset: var(--sui_breadcrumb_item-focusring_offset);
+    outline-color: var(--_sui_breadcrumb_item-outline_color, transparent);
+    outline-offset: var(--_sui_breadcrumb_item-outline_offset, 0px);
     border-radius: var(--sui_breadcrumb_item-border_radius);
   }
 }
@@ -140,6 +138,8 @@
 :scope {
   .sui_breadcrumb_item:has(.sui_breadcrumb_link:focus-visible) {
     --_sui_breadcrumb_item-outline_width: var(--sui_breadcrumb_item-focusring_width);
+    --_sui_breadcrumb_item-outline_color: var(--sui_breadcrumb_item-focusring_color);
+    --_sui_breadcrumb_item-outline_offset: var(--sui_breadcrumb_item-focusring_offset);
   }
 }
 
@@ -187,6 +187,7 @@
 /* 代入 */
 :scope {
   --sui_breadcrumb_link-padding_inline: var(--sui_breadcrumb-gap);
+  --sui_breadcrumb_link-font_family: var(--sui-font-sans);
   --sui_breadcrumb_link-color-idle: var(--sui-canvas_text-2);
   --sui_breadcrumb_link-color-hover: var(--sui-grey-naked-canvas_text-normal);
 
@@ -306,12 +307,16 @@
 
 /* 代入 */
 :scope {
+  --sui_breadcrumb_separator-font_family: var(--sui-font-sans);
   --sui_breadcrumb_separator-color: color-mix(
                                       in oklab,
                                       var(--sui-grey-naked-canvas_text-normal) 100%,
                                       var(--sui-canvas-1) 30%
                                     );
-  --sui_breadcrumb_separator__svg-size: var(--sui_breadcrumb_separator-font_size);
+  --sui_breadcrumb_separator__svg-size: calc(
+                                          var(--sui_breadcrumb_separator-font_size)
+                                          * var(--sui_breadcrumb_separator-line_height)
+                                        );
   --sui_breadcrumb_separator__svg-color: var(--sui_breadcrumb_separator-color);
 
   &.sui_breadcrumb-size_sm {

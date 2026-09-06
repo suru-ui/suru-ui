@@ -1,5 +1,6 @@
 /* Indicator */
 @layer sui.component {
+/* 例外: 回転に関するスタイルは [data-scope] の下限を設けません。ボタンコンポーネントが [data-scope] を持つため、下限があると Indicator が回転できません。 */
 @scope (.sui_collapsible) {
 
 /* 固定 */
@@ -49,9 +50,12 @@
 
 /* 変数 */
 :scope {
+  --sui_collapsible_indicator-size: ;
+  --sui_collapsible_indicator-font_family: ;
   --sui_collapsible_indicator-font_size: ;
   --sui_collapsible_indicator-font_weight: ;
   --sui_collapsible_indicator-line_height: ;
+  --sui_collapsible_indicator-color: ;
   --sui_collapsible_indicator-letter_spacing: ;
 }
 
@@ -81,6 +85,7 @@
                                       var(--sui_collapsible_indicator-font_size)
                                       * var(--sui_collapsible_indicator-line_height)
                                     );
+  --sui_collapsible_indicator-font_family: var(--sui-font-sans);
   --sui_collapsible_indicator-color: --sui-icon_color(
                                        var(--sui-grey-solid-canvas_text-normal),
                                        var(--sui-canvas-1)
@@ -169,8 +174,8 @@
 
 /* 変異 */
 :scope {
-  .sui_collapsible-transition_status_ending,
-  .sui_collapsible-transition_status_starting {
+  .sui_collapsible-transition_status_starting,
+  .sui_collapsible-transition_status_ending {
     --_sui_collapsible_content-height: 0px;
   }
 }
@@ -181,6 +186,13 @@
 /* disabled */
 @layer sui.important {
 @scope (.sui_collapsible) to ([data-scope]) {
+
+/* Root */
+:scope {
+  &.sui_collapsible-disabled {
+    cursor: not-allowed;
+  }
+}
 
 /* Indicator */
 :scope {

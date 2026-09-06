@@ -42,6 +42,7 @@
   --sui_chip-border_color-active: ;
   --sui_chip-border_width: ;
   --sui_chip-border_radius: ;
+  --sui_chip-virtual_text_height: ;
   --sui_chip__svg-size: ;
   --sui_chip__svg-color: ;
 }
@@ -77,18 +78,31 @@
 /* 代入 */
 :scope {
   --sui_chip-padding_block: calc(
-                              (var(--sui_chip-min_height) - 1lh) / 2
+                              (
+                                var(--sui_chip-min_height)
+                                - var(--sui_chip-virtual_text_height)
+                              ) / 2
                               - var(--_sui_chip-border_width, 0px)
                             );
   --sui_chip-font_family: var(--sui-font-sans);
   --sui_chip-focusring_width: var(--sui-focusring_width);
   --sui_chip-focusring_color: var(--sui-focusring_color);
   --sui_chip-focusring_offset: var(--sui-focusring_offset);
-  --sui_chip__svg-size: 1lh;
-  --sui_chip__svg-color: var(--_sui_chip-color, var(--sui_chip-color-idle));
+  --sui_chip-virtual_text_height: calc(
+                                    var(--sui_chip-font_size)
+                                    * var(--sui_chip-line_height)
+                                  );
+  --sui_chip__svg-size: var(--sui_chip-virtual_text_height);
+  --sui_chip__svg-color: --sui-icon_color(
+                           var(--_sui_chip-color, var(--sui_chip-color-idle)),
+                           var(
+                             --_sui_chip-background_color,
+                             var(--sui_chip-background_color-idle)
+                           )
+                         );
 
   &.sui_chip-size_sm {
-    --sui_chip-gap: --sui-space(2);
+    --sui_chip-gap: --sui-gap(2);
     --sui_chip-min_height: var(--sui-size-sm);
     --sui_chip-padding_inline: --sui-space(4);
     --sui_chip-font_size: var(--sui-text-oln-sm-m-font_size);
@@ -99,7 +113,7 @@
   }
 
   &.sui_chip-size_md {
-    --sui_chip-gap: --sui-space(3);
+    --sui_chip-gap: --sui-gap(3);
     --sui_chip-min_height: var(--sui-size-md);
     --sui_chip-padding_inline: --sui-space(5);
     --sui_chip-font_size: var(--sui-text-oln-md-m-font_size);
@@ -110,7 +124,7 @@
   }
 
   &.sui_chip-size_lg {
-    --sui_chip-gap: --sui-space(4);
+    --sui_chip-gap: --sui-gap(4);
     --sui_chip-min_height: var(--sui-size-lg);
     --sui_chip-padding_inline: --sui-space(6);
     --sui_chip-font_size: var(--sui-text-oln-lg-m-font_size);

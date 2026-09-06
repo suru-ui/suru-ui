@@ -219,11 +219,11 @@ export const useAccordionAPI: IUseAccordionAPI = function useSuiAccordionAPI(pro
         title: _title,
         content: _content,
         htmlTitle: title,
-        ...otherItemprops
+        ...otherItemProps
       } = item as AccordionItemObject;
 
       return {
-        ...otherItemprops,
+        ...otherItemProps,
         title,
         ...itemProps, // JSDoc 通り、`slotProps.item` を優先します。
       };

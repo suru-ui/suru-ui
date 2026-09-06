@@ -8,7 +8,6 @@
   display: inline-flex;
   align-items: stretch;
   overflow: hidden;
-  line-height: 1lh;
   vertical-align: middle;
   touch-action: manipulation;
 
@@ -231,9 +230,7 @@
     display: block;
     flex: 1 1 auto;
     min-width: 0px;
-    line-height: 1lh;
     touch-action: manipulation;
-    caret-color: currentColor;
   }
 }
 
@@ -242,6 +239,7 @@
   --sui_autocomplete_input-font_family: ;
   --sui_autocomplete_input-font_size: ;
   --sui_autocomplete_input-font_weight: ;
+  --sui_autocomplete_input-line_height: ;
   --sui_autocomplete_input-color: ;
   --sui_autocomplete_input-placeholder-color: ;
   --sui_autocomplete_input-letter_spacing: ;
@@ -253,8 +251,10 @@
     font-family: var(--sui_autocomplete_input-font_family);
     font-size: var(--sui_autocomplete_input-font_size);
     font-weight: var(--sui_autocomplete_input-font_weight);
+    line-height: var(--sui_autocomplete_input-line_height);
     color: var(--sui_autocomplete_input-color);
     letter-spacing: var(--sui_autocomplete_input-letter_spacing);
+    caret-color: var(--sui_autocomplete_input-color);
 
     &::placeholder {
       color: var(--sui_autocomplete_input-placeholder-color);
@@ -270,18 +270,21 @@
   &.sui_autocomplete-size_sm {
     --sui_autocomplete_input-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_autocomplete_input-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_autocomplete_input-line_height: var(--sui-text-oln-sm-n-line_height);
     --sui_autocomplete_input-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
   }
 
   &.sui_autocomplete-size_md {
     --sui_autocomplete_input-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_autocomplete_input-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_autocomplete_input-line_height: var(--sui-text-oln-md-n-line_height);
     --sui_autocomplete_input-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   }
 
   &.sui_autocomplete-size_lg {
     --sui_autocomplete_input-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_autocomplete_input-font_weight: var(--sui-text-oln-lg-n-font_weight);
+    --sui_autocomplete_input-line_height: var(--sui-text-oln-lg-n-line_height);
     --sui_autocomplete_input-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
   }
 
@@ -308,7 +311,6 @@
     flex: 0 0 auto;
     align-items: center;
     justify-content: center;
-    line-height: 1lh;
     white-space: nowrap;
 
     &:empty {

@@ -1,5 +1,3 @@
-import type { IComponent } from "../types.js";
-
 /**
  * 項目オブジェクトの値を推論します。
  *
@@ -26,20 +24,3 @@ export function isItemObject(item: unknown): item is {
 } {
   return typeof item === "object" && item !== null && "title" in item && "content" in item;
 }
-
-/**
- * アコーディオンの開閉状態を示す既定の矢印アイコンです。
- */
-export const ChevronIcon: IComponent = function SuiChevronIcon() {
-  return (
-    <svg fill="none" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
-      <path
-        d="M6 9l6 6 6-6"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-};

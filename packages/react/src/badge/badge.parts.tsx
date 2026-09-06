@@ -16,6 +16,24 @@ import "./badge.css";
 export type BadgeRootColor = Color;
 
 /**
+ * バッジを重ねる要素の形状です。
+ *
+ * - `"rectangular"`: 四角形
+ * - `"circular"`: 円形
+ */
+export type BadgeRootOverlap = "rectangular" | "circular";
+
+/**
+ * バッジの配置です。
+ *
+ * - `"top-left"`: 左上
+ * - `"top-right"`: 右上
+ * - `"bottom-left"`: 左下
+ * - `"bottom-right"`: 右下
+ */
+export type BadgeRootPosition = "top-left" | "top-right" | "bottom-left" | "bottom-right";
+
+/**
  * バッジの角丸の大きさです。
  *
  * - `"none"`: 直角
@@ -34,24 +52,6 @@ export type BadgeRootRadius = "none" | Size | "full";
  * - `"lg"`: 大きめ
  */
 export type BadgeRootSize = Size;
-
-/**
- * バッジを重ねる要素の形状です。
- *
- * - `"rectangular"`: 四角形
- * - `"circular"`: 円形
- */
-export type BadgeRootOverlap = "rectangular" | "circular";
-
-/**
- * バッジの配置です。
- *
- * - `"top-left"`: 左上
- * - `"top-right"`: 右上
- * - `"bottom-left"`: 左下
- * - `"bottom-right"`: 右下
- */
-export type BadgeRootPosition = "top-left" | "top-right" | "bottom-left" | "bottom-right";
 
 /**
  * バッジの主な外観です。
@@ -141,8 +141,8 @@ export const BadgeRoot: IComponent<BadgeRootProps> = function SuiBadgeRoot(props
     radius = "full",
     overlap = "rectangular",
     variant = "standard",
+    children,
     outlined = false,
-    children: childrenProp,
     position,
     className,
     ...otherSpanProps
@@ -153,7 +153,7 @@ export const BadgeRoot: IComponent<BadgeRootProps> = function SuiBadgeRoot(props
     props: [
       otherSpanProps,
       {
-        children: variant === "dot" ? null : childrenProp,
+        children: variant === "dot" ? null : children,
         className: cn(
           className,
           "sui_badge",

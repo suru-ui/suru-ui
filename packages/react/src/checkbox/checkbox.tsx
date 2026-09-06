@@ -1,4 +1,3 @@
-import { CheckboxIcon } from "../_icons.jsx";
 import type { IComponent } from "../types.js";
 import {
   type CheckboxRootSize,
@@ -107,11 +106,7 @@ interface IUseCheckboxAPI {
  * {@link CheckboxAPI} を作成するフックです。
  */
 export const useCheckboxAPI: IUseCheckboxAPI = function useSuiCheckboxAPI(props) {
-  const {
-    children = <CheckboxIcon />,
-    slotProps: { indicator: indicatorProps = {} } = {},
-    ...otherRootProps
-  } = props;
+  const { children, slotProps: { indicator: indicatorProps = {} } = {}, ...otherRootProps } = props;
 
   return {
     getRootProps() {

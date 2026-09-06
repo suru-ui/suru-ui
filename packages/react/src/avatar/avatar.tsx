@@ -144,7 +144,7 @@ export { type AvatarAPI as API, useAvatarAPI as useAPI };
 /**
  * 画像またはフォールバックコンテンツを持つアバターを表示するコンポーネントです。
  */
-export const Avatar: IComponent<AvatarProps> = function SuiAvatar(props: AvatarProps) {
+export const Avatar: IComponent<AvatarProps> = function SuiAvatar(props) {
   const api = useAvatarAPI(props);
   const imageProps = api.getImageProps();
   const fallbackProps = api.getFallbackProps();

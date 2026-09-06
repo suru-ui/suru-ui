@@ -113,6 +113,23 @@ const { size = "md", radius = size, variant = "liquid", outlined = false, classN
 
 Base UI は JSX で包み、素の要素は `useRender` にします。`render` 受領型は `render={children}` に渡します。独自なしの素要素は引数ごと渡し、独自ありは独自を分解して残りを渡します。既定子ありは `children` に既定値を与えます。
 
+`useRender` は `props` 配列の `className` を自動マージするため、`cn` を使いません。利用者の `className` は分解せず残余に残し、第 2 要素には基底クラスのみを渡します。
+
+```tsx
+const { children = <ChevronIcon />, ...otherSpanProps } = props;
+
+return useRender({
+  defaultTagName: "span",
+  props: [
+    otherSpanProps,
+    {
+      children,
+      className: "sui_collapsible_indicator",
+    },
+  ],
+});
+```
+
 `useRender` に渡す props の命名は次の通りにします。そのまま渡す場合は `props` にします。分解する場合は残余を `other<DefaultTagName>Props` にします (例: `otherDivProps`)。ただし `defaultTagName` の HTML 属性を取り出しておらず残余がそのまま渡せる場合は `<defaultTagName>Props` にします (例: `divProps`)。
 
 `cn` は利用者の `className` を先頭にし、基底クラス、値つき修飾、真偽修飾、状態関数の順にします。
@@ -128,6 +145,8 @@ cn(
 ```
 
 `data-scope=""` は CSS の `@scope` 始点になる要素だけに付けます。
+
+状態クラス (`-open` / `-closed`、`-transition_status_*`、`-disabled` など) は基本的に DOM ツリー上のルート (起点要素) に付けます。Portal を持ち Root が DOM ツリー上のルートでない場合や、子が独立した状態を持つ場合 (例: List の Item ごとの `-disabled`) は、その状態を持つ要素に付けます。
 
 ### 項目の一覧描画
 
@@ -208,9 +227,9 @@ export namespace Item {
 
 ### Types
 
-Root 由来の再命名は `{@link 元型}` のみの JSDoc にします。「 です。」は付けません。
+Root 由来の再命名は `{@link 元型}` のみの JSDoc にします。「 です。」は付けません。再命名型の名は `<Comp><型名>` にし、パーツ名を重ねません (例: `BreadcrumbRootItemObject` → `BreadcrumbItemObject`。`BreadcrumbItemsItem` のような `<Comp><パーツ名><型名>` は使いません)。
 
-`SlotProps` はキー昇順、`readonly` + `| undefined` にします。子要素は原則 `Omit` で除き、合成 `Props` に持ち上げたキーも除きます。
+`SlotProps` はキー昇順、`readonly` + `| undefined` にします。子要素は原則 `Omit` で除き、合成 `Props` に持ち上げたキーも除きます。ただし API / Component が `children` を生成・上書きしないパーツ (既定子を持つだけの Indicator など) は `children` を残し、利用者の上書きを許します。
 
 ```ts
 readonly content?: Omit<AlertDialogContentProps, "children" | keyof AlertDialogPropsContent> | undefined;
@@ -235,7 +254,7 @@ export type AccordionProps<TItem = any, TValue = any> = AccordionRootProps<TItem
 
 ### API
 
-getter 名は `get<Part>Props`、宣言順はパーツ名昇順にします。常に描画するパーツは Props を返し、条件付きで描画するパーツは `| null` を付けます。
+getter 名は `get<Part>Props`、宣言順はパーツ名昇順にします。常に描画するパーツは Props を返し、条件付きで描画するパーツは `| null` を付けます。配列 (props のリスト) を返す getter は `get<Part>PropsList` にします (例: `getStartAddonsPropsList`)。
 
 フックは interface + 実装の 2 段にします。
 
@@ -330,10 +349,12 @@ mise run test:typecheck
 - `enum`、パラメータープロパティーなど `erasableSyntaxOnly` に反する構文を書かない。
 - `IComponent` 以外の関数型でコンポーネントを宣言しない。実装名の `Sui` 接頭辞を省略しない。
 - `className` を `cn` の先頭以外に置かない。利用者の `className` を上書きしない。
+- `useRender` 対象で `cn` を使わない。`className` を分解せず残余に残し、マージに任せます。
+- `SlotProps` や API の返り値から、既定子を持つだけのパーツの `children` を `Omit` しない。
 - `useRender` 対象の素要素に JSX 直書きしない。Base UI 対象に `useRender` を使わない。
 - `useRender` の残余に `otherProps` などの汎名を使わない。
 - `SlotProps` のキーに子要素や持上げキーを残さない。`readonly` と `| undefined` を省略しない。キー順を崩さない。
-- API の getter 名を `get*Props` 以外にしない。宣言順をパーツ順から変えない。条件付き getter から `| null` を省略しない。
+- API の getter 名を `get*Props` / `get*PropsList` 以外にしない。単体とリストを取り違えない。宣言順をパーツ順から変えない。条件付き getter から `| null` を省略しない。
 - 可視判定なしにオプショナルな子要素を描画しない。
 - 常に描画するパーツの props を変数化しない。実行結果をそのまま渡します。
 - パーツ別指定より直 prop を優先しない。コールバック合成で中止判定を省略しない。
@@ -348,4 +369,6 @@ mise run test:typecheck
 - レンダラー付き `children` を素要素由来の `children` と交差させない。要素側から `"children"` を除きます。
 - 反復描画する要素に `key` を付け忘れない。
 - 型引数名の先頭に `T` を付け忘れない (例: `TValue`、`TMultiple`)。
+- 合成の再命名型にパーツ名を重ねない (例: `BreadcrumbItemObject`。`BreadcrumbItemsItem` は禁止)。
+- 状態クラスを Content などの子に分散させない。DOM ツリー上のルートに集約します (Portal や独立状態の子は例外)。
 - `items` を所有と描画の両パーツに二重定義しない。描画側は `Context` で受けます。

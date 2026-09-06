@@ -2,11 +2,12 @@ import { Accordion } from "@base-ui/react/accordion";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
+import { ChevronIcon } from "../_icons.jsx";
 import toReactNode from "../_to-react-node.js";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { type $InferItemValue, ChevronIcon, isItemObject } from "./_accordion.jsx";
+import { type $InferItemValue, isItemObject } from "./_accordion.jsx";
 
 import "./accordion.css";
 
@@ -184,8 +185,8 @@ export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: Ac
     variant = "liquid",
     children = defaultRootItemRenderer,
     outlined = false,
-    className,
     separator = false,
+    className,
     ...otherProps
   } = props;
 
@@ -462,12 +463,12 @@ export type AccordionIndicatorProps = Omit<React.ComponentProps<"span">, keyof R
  */
 export const AccordionIndicator: IComponent<AccordionIndicatorProps> =
   function SuiAccordionIndicator(props) {
-    const { children = <ChevronIcon />, ...otherProps } = props;
+    const { children = <ChevronIcon />, ...otherSpanProps } = props;
 
     return useRender({
       defaultTagName: "span",
       props: [
-        otherProps,
+        otherSpanProps,
         {
           children,
           className: "sui_accordion_indicator",
@@ -494,12 +495,12 @@ export namespace Indicator {
 // -------
 
 /**
- * {@link AccordionContentState}
+ * {@link AccordionContent} が持つ状態です。
  */
 export type AccordionContentState = Accordion.Panel.State;
 
 /**
- * {@link AccordionContentProps}
+ * {@link AccordionContent} に渡す props です。
  */
 export type AccordionContentProps = React.ComponentProps<typeof Accordion.Panel>;
 

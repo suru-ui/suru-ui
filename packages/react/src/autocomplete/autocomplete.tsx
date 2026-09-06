@@ -303,7 +303,7 @@ export interface AutocompleteAPI<TItem = any> {
   /**
    * 入力欄の末尾に表示する {@link AutocompleteAddon} の一覧を取得します。
    */
-  getEndAddonsProps(): readonly AutocompleteAddonProps[];
+  getEndAddonsPropsList(): readonly AutocompleteAddonProps[];
 
   /**
    * {@link AutocompleteGroup} に渡すプロパティーを取得します。
@@ -377,7 +377,7 @@ export interface AutocompleteAPI<TItem = any> {
   /**
    * 入力欄の先頭に表示する {@link AutocompleteAddon} の一覧を取得します。
    */
-  getStartAddonsProps(): readonly AutocompleteAddonProps[];
+  getStartAddonsPropsList(): readonly AutocompleteAddonProps[];
 
   /**
    * {@link ScrollAreaThumb} に渡すプロパティーを取得します。
@@ -514,7 +514,7 @@ export const useAutocompleteAPI: IUseAutocompleteAPI = function useSuiAutocomple
     getViewportProps() {
       return viewportProps;
     },
-    getEndAddonsProps() {
+    getEndAddonsPropsList() {
       return endAddons.map(
         (children): AutocompleteAddonProps => ({
           ...addonProps,
@@ -531,9 +531,7 @@ export const useAutocompleteAPI: IUseAutocompleteAPI = function useSuiAutocomple
       };
     },
     getCollectionProps() {
-      return {
-        ...collectionProps,
-      };
+      return collectionProps;
     },
     getInputGroupProps() {
       return inputGroupProps;
@@ -557,7 +555,7 @@ export const useAutocompleteAPI: IUseAutocompleteAPI = function useSuiAutocomple
         children: itemToRenderedValue(item, index),
       };
     },
-    getStartAddonsProps() {
+    getStartAddonsPropsList() {
       return startAddons.map(
         (children): AutocompleteAddonProps => ({
           ...addonProps,
@@ -597,64 +595,44 @@ interface IAutocomplete extends IComponent<AutocompleteProps> {
 export const Autocomplete: IAutocomplete = /*#__PURE__*/ Object.assign(
   function SuiAutocomplete(props: AutocompleteProps) {
     const api = useAutocompleteAPI(props);
-    const rootProps = api.getRootProps();
-    const inputGroupProps = api.getInputGroupProps();
-    const startAddonsProps = api.getStartAddonsProps();
-    const inputProps = api.getInputProps();
-    const clearAddonProps = api.getClearAddonProps();
-    const clearProps = api.getClearProps();
-    const endAddonsProps = api.getEndAddonsProps();
-    const chevronAddonProps = api.getChevronAddonProps();
-    const portalProps = api.getPortalProps();
-    const positionerProps = api.getPositionerProps();
-    const popupProps = api.getPopupProps();
     const emptyProps = api.getEmptyProps();
-    const scrollAreaProps = api.getScrollAreaProps();
-    const viewportProps = api.getViewportProps();
-    const contentProps = api.getContentProps();
-    const listProps = api.getListProps();
-    const scrollbarProps = api.getScrollbarProps();
-    const thumbProps = api.getThumbProps();
-    const cornerProps = api.getCornerProps();
+    const { children, ...otherListProps } = api.getListProps();
 
     return (
-      <AutocompleteRoot {...rootProps}>
-        <AutocompleteInputGroup {...inputGroupProps}>
-          {startAddonsProps.map((addonProps, index) => (
+      <AutocompleteRoot {...api.getRootProps()}>
+        <AutocompleteInputGroup {...api.getInputGroupProps()}>
+          {api.getStartAddonsPropsList().map((addonProps, index) => (
             <AutocompleteAddon key={index} {...addonProps} />
           ))}
-          <AutocompleteInput {...inputProps} />
-          <AutocompleteAddon {...clearAddonProps}>
-            <AutocompleteClear {...clearProps} />
+          <AutocompleteInput {...api.getInputProps()} />
+          <AutocompleteAddon {...api.getClearAddonProps()}>
+            <AutocompleteClear {...api.getClearProps()} />
           </AutocompleteAddon>
-          {endAddonsProps.map((addonProps, index) => (
+          {api.getEndAddonsPropsList().map((addonProps, index) => (
             <AutocompleteAddon key={index} {...addonProps} />
           ))}
-          <AutocompleteAddon {...chevronAddonProps} />
+          <AutocompleteAddon {...api.getChevronAddonProps()} />
         </AutocompleteInputGroup>
-        <AutocompletePortal {...portalProps}>
-          <AutocompletePositioner {...positionerProps}>
-            <AutocompletePopup {...popupProps}>
+        <AutocompletePortal {...api.getPortalProps()}>
+          <AutocompletePositioner {...api.getPositionerProps()}>
+            <AutocompletePopup {...api.getPopupProps()}>
               {emptyProps && <AutocompleteEmpty {...emptyProps} />}
-              <ScrollAreaRoot {...scrollAreaProps}>
-                <ScrollAreaViewport {...viewportProps}>
-                  <ScrollAreaContent {...contentProps}>
-                    <AutocompleteList {...listProps}>
-                      {listProps.children ??
+              <ScrollAreaRoot {...api.getScrollAreaProps()}>
+                <ScrollAreaViewport {...api.getViewportProps()}>
+                  <ScrollAreaContent {...api.getContentProps()}>
+                    <AutocompleteList {...otherListProps}>
+                      {children ??
                         ((item, index) => {
                           if (!isItemGroup(item)) {
                             return <AutocompleteItem {...api.getItemProps(item, index)} />;
                           }
 
-                          const groupProps = api.getGroupProps(item, index);
-                          const collectionProps = api.getCollectionProps();
-
                           return (
-                            <AutocompleteGroup {...groupProps}>
+                            <AutocompleteGroup {...api.getGroupProps(item, index)}>
                               {item.label !== undefined && (
                                 <AutocompleteGroupLabel>{item.label}</AutocompleteGroupLabel>
                               )}
-                              <AutocompleteCollection {...collectionProps}>
+                              <AutocompleteCollection {...api.getCollectionProps()}>
                                 {(item, index) => (
                                   <AutocompleteItem {...api.getGroupedItemProps(item, index)} />
                                 )}
@@ -665,10 +643,10 @@ export const Autocomplete: IAutocomplete = /*#__PURE__*/ Object.assign(
                     </AutocompleteList>
                   </ScrollAreaContent>
                 </ScrollAreaViewport>
-                <ScrollAreaScrollbar {...scrollbarProps}>
-                  <ScrollAreaThumb {...thumbProps} />
+                <ScrollAreaScrollbar {...api.getScrollbarProps()}>
+                  <ScrollAreaThumb {...api.getThumbProps()} />
                 </ScrollAreaScrollbar>
-                <ScrollAreaCorner {...cornerProps} />
+                <ScrollAreaCorner {...api.getCornerProps()} />
               </ScrollAreaRoot>
             </AutocompletePopup>
           </AutocompletePositioner>
