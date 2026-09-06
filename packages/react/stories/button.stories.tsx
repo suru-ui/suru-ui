@@ -499,6 +499,42 @@ export const RootOnly = meta.story({
   },
 });
 
+export const Dense = meta.story({
+  name: "狭い余白",
+  ...ctrl({
+    variant: "solid",
+    color: "grey",
+    radius: undefined,
+    muted: false,
+    outlined: false,
+    pending: false,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="grid grid-cols-4 items-center justify-items-start gap-3">
+        <span />
+        {SIZES.map((size) => (
+          <span key={size} className="justify-self-center">
+            {size}
+          </span>
+        ))}
+        <span>通常</span>
+        {SIZES.map((size) => (
+          <Button key={size} {...props} size={size}>
+            {size.toUpperCase()} ボタン
+          </Button>
+        ))}
+        <span>dense</span>
+        {SIZES.map((size) => (
+          <Button key={size} {...props} size={size} dense>
+            {size.toUpperCase()} ボタン
+          </Button>
+        ))}
+      </div>
+    );
+  },
+});
 export const Disabled = meta.story({
   name: "無効",
   ...ctrl({

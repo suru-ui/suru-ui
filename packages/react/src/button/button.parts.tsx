@@ -157,6 +157,13 @@ export type ButtonRootProps = React.ComponentProps<typeof Button> & {
   color?: ButtonRootColor | undefined;
 
   /**
+   * ボタンの左右の余白を狭くするかどうかを指定します。
+   *
+   * @default false
+   */
+  dense?: boolean | undefined;
+
+  /**
    * ボタンの背景色を控えめにします。
    *
    * @default false
@@ -219,6 +226,7 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
     size: sizeProp = "md",
     type = "button",
     color: colorProp = "grey",
+    dense = false,
     muted = false,
     radius: radiusProp = sizeProp,
     pending = false,
@@ -251,6 +259,7 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
           `sui_button-color_${color}`,
           `sui_button-radius_${radius}`,
           `sui_button-variant_${variant}`,
+          dense && "sui_button-dense",
           muted && "sui_button-muted",
           pending && "sui_button-pending",
           squared && "sui_button-squared",

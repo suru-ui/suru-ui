@@ -100,6 +100,20 @@
     --sui_button-padding_inline: --sui-space(6);
   }
 
+  &.sui_button-dense {
+    &.sui_button-size_sm {
+      --sui_button-padding_inline: --sui-space(3);
+    }
+
+    &.sui_button-size_md {
+      --sui_button-padding_inline: --sui-space(3);
+    }
+
+    &.sui_button-size_lg {
+      --sui_button-padding_inline: --sui-space(4);
+    }
+  }
+
   &.sui_button-radius_none {
     --sui_button-border_radius: 0px;
   }
