@@ -10,6 +10,11 @@
   justify-content: center;
   overflow: hidden;
   text-decoration: none;
+  text-overflow: ellipsis;
+  font-feature-settings: "palt";
+  vertical-align: middle;
+  white-space: nowrap;
+  text-box: trim-both cap alphabetic;
   touch-action: manipulation;
   cursor: default;
   user-select: none;
@@ -44,6 +49,13 @@
   aspect-ratio: var(--_sui_button-aspect_ratio, unset);
   padding-block: var(--_sui_button-padding, var(--sui_button-padding_block));
   padding-inline: var(--_sui_button-padding, var(--sui_button-padding_inline));
+  gap: var(--sui_button_content-gap);
+  font-family: var(--sui_button_content-font_family);
+  font-size: var(--sui_button_content-font_size);
+  font-weight: var(--sui_button_content-font_weight);
+  line-height: var(--sui_button_content-line_height);
+  color: var(--_sui_button_content-color, var(--sui_button_content-color-idle));
+  letter-spacing: var(--sui_button_content-letter_spacing);
   outline-width: var(--_sui_button-outline_width, 0px);
   outline-color: var(--_sui_button-outline_color, transparent);
   outline-offset: var(--_sui_button-outline_offset, 0px);
@@ -51,6 +63,12 @@
   border-color: var(--_sui_button-border_color, transparent);
   border-width: var(--_sui_button-border_width, 0px);
   border-radius: var(--sui_button-border_radius);
+
+  svg:not(.sui-ignore) {
+    width: var(--sui_button_content__svg-size);
+    height: var(--sui_button_content__svg-size);
+    color: var(--sui_button_content__svg-color);
+  }
 }
 
 /* 代入 */
@@ -1061,14 +1079,17 @@
 
     &.sui_button-variant_solid {
       background-color: var(--sui-disabled-solid-canvas);
+      color: var(--sui-disabled-solid-canvas_text);
     }
 
     &.sui_button-variant_naked {
       background-color: var(--sui-disabled-naked-canvas);
+      color: var(--sui-disabled-naked-canvas_text);
     }
 
     &.sui_button-variant_liquid {
       background-color: var(--sui-disabled-liquid-canvas);
+      color: var(--sui-disabled-liquid-canvas_text);
     }
 
     &.sui_button-outlined {

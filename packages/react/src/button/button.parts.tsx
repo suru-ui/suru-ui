@@ -254,8 +254,8 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
           muted && "sui_button-muted",
           pending && "sui_button-pending",
           squared && "sui_button-squared",
-          disabled && "sui_button-disabled",
           outlined && "sui_button-outlined",
+          disabled && "sui_button-disabled",
         )}
         focusableWhenDisabled={focusableWhenDisabled}
         data-scope=""

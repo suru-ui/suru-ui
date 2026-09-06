@@ -471,6 +471,34 @@ export const Outlined = meta.story({
   },
 });
 
+export const RootOnly = meta.story({
+  name: "ルートのみ",
+  ...ctrl({
+    variant: "solid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    muted: false,
+    outlined: false,
+    pending: false,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-wrap gap-3">
+        <ButtonParts.Root {...props}>ボタン</ButtonParts.Root>
+        <ButtonParts.Root {...props}>
+          <GlobeIcon />
+          ボタン
+        </ButtonParts.Root>
+        <ButtonParts.Root {...props} squared>
+          <Trash2Icon />
+        </ButtonParts.Root>
+      </div>
+    );
+  },
+});
+
 export const Disabled = meta.story({
   name: "無効",
   ...ctrl({
