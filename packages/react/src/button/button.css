@@ -9,17 +9,17 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  text-decoration: none;
   text-overflow: ellipsis;
   font-feature-settings: "palt";
   vertical-align: middle;
   white-space: nowrap;
-  text-box: trim-both cap alphabetic;
+  text-decoration: none;
   touch-action: manipulation;
   cursor: default;
   user-select: none;
   outline-style: solid;
   border-style: solid;
+  text-box: trim-both cap alphabetic;
 }
 
 /* 変数 */
@@ -44,12 +44,12 @@
 /* 可変 */
 :scope {
   z-index: var(--_sui_button-z_index, 0);
+  gap: var(--sui_button_content-gap);
   min-width: var(--_sui_button-min_width, calc(var(--sui_button-min_height) * 2));
   min-height: var(--sui_button-min_height);
   aspect-ratio: var(--_sui_button-aspect_ratio, unset);
   padding-block: var(--_sui_button-padding, var(--sui_button-padding_block));
   padding-inline: var(--_sui_button-padding, var(--sui_button-padding_inline));
-  gap: var(--sui_button_content-gap);
   font-family: var(--sui_button_content-font_family);
   font-size: var(--sui_button_content-font_size);
   font-weight: var(--sui_button_content-font_weight);
@@ -1078,18 +1078,39 @@
     cursor: not-allowed;
 
     &.sui_button-variant_solid {
-      background-color: var(--sui-disabled-solid-canvas);
       color: var(--sui-disabled-solid-canvas_text);
+      background-color: var(--sui-disabled-solid-canvas);
+
+      svg:not(.sui-ignore) {
+        color: --sui-icon_color(
+                 var(--sui-disabled-solid-canvas_text),
+                 var(--sui-disabled-solid-canvas)
+               );
+      }
     }
 
     &.sui_button-variant_naked {
-      background-color: var(--sui-disabled-naked-canvas);
       color: var(--sui-disabled-naked-canvas_text);
+      background-color: var(--sui-disabled-naked-canvas);
+
+      svg:not(.sui-ignore) {
+        color: --sui-icon_color(
+                 var(--sui-disabled-naked-canvas_text),
+                 var(--sui-disabled-naked-canvas)
+               );
+      }
     }
 
     &.sui_button-variant_liquid {
-      background-color: var(--sui-disabled-liquid-canvas);
       color: var(--sui-disabled-liquid-canvas_text);
+      background-color: var(--sui-disabled-liquid-canvas);
+
+      svg:not(.sui-ignore) {
+        color: --sui-icon_color(
+                 var(--sui-disabled-liquid-canvas_text),
+                 var(--sui-disabled-liquid-canvas)
+               );
+      }
     }
 
     &.sui_button-outlined {
@@ -1123,14 +1144,35 @@
 
     &.sui_button-variant_solid .sui_button_content {
       color: var(--sui-disabled-solid-canvas_text);
+
+      svg:not(.sui-ignore) {
+        color: --sui-icon_color(
+                 var(--sui-disabled-solid-canvas_text),
+                 var(--sui-disabled-solid-canvas)
+               );
+      }
     }
 
     &.sui_button-variant_naked .sui_button_content {
       color: var(--sui-disabled-naked-canvas_text);
+
+      svg:not(.sui-ignore) {
+        color: --sui-icon_color(
+                 var(--sui-disabled-naked-canvas_text),
+                 var(--sui-disabled-naked-canvas)
+               );
+      }
     }
 
     &.sui_button-variant_liquid .sui_button_content {
       color: var(--sui-disabled-liquid-canvas_text);
+
+      svg:not(.sui-ignore) {
+        color: --sui-icon_color(
+                 var(--sui-disabled-liquid-canvas_text),
+                 var(--sui-disabled-liquid-canvas)
+               );
+      }
     }
   }
 }
