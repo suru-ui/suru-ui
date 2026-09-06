@@ -13,7 +13,7 @@ export default function Grouped() {
       label="食材"
       placeholder="食材を選択"
       variant="naked"
-      accentColor="grey"
+      color="grey"
       size="md"
       className="w-80"
     />

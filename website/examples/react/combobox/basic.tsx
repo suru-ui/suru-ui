@@ -10,7 +10,7 @@ export default function Basic() {
       label="果物"
       placeholder="果物を選択"
       variant="naked"
-      accentColor="grey"
+      color="grey"
       size="md"
       className="w-64"
     />

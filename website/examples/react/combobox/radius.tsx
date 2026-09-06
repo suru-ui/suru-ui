@@ -14,7 +14,7 @@ export default function Radius() {
             radius={radius}
             items={fruits}
             variant="naked"
-            accentColor="grey"
+            color="grey"
             size="md"
             placeholder="選択"
             className="w-64"

@@ -64,6 +64,21 @@ export const ChevronRightIcon: IComponent = function SuiChevronRightIcon() {
   );
 };
 
+export const CheckIcon: IComponent = function SuiCheckIcon() {
+  return (
+    <svg
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 16 16"
+      focusable="false"
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <path d="m3 8 3 3 7-7" />
+    </svg>
+  );
+};
+
 /**
  * チェックボックスの既定のアイコンです。
  */

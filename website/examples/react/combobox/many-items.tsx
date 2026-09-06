@@ -9,7 +9,7 @@ export default function ManyItems() {
       items={manyItems}
       placeholder="候補を検索"
       variant="naked"
-      accentColor="grey"
+      color="grey"
       size="md"
       className="w-64"
     />

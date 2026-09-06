@@ -98,6 +98,15 @@ description: Suru UI のコンポーネント CSS を書くときに使用しま
 
 - 形式は `--sui_<基底>-<属性>(-<状態>)?(__<内側>-<属性>)?` です。
 - 状態で値が変わる属性だけ `-状態` を付けます。例: `--sui_accordion_trigger-background_color-hover` です。変わらない属性には付けません。例: `--sui_accordion_heading-gap` です。
+- インタラクティブな要素の状態は `-idle` / `-hover` / `-active` にします。デザインシステムの `-normal` / `-subtle` / `-strong` をそれぞれ割り当てます。
+
+```css
+&.sui_chip-variant_solid {
+  --sui_chip-color-idle: var(--sui-grey-solid-canvas_text-normal);
+  --sui_chip-color-hover: var(--sui-grey-solid-canvas_text-subtle);
+  --sui_chip-color-active: var(--sui-grey-solid-canvas_text-strong);
+}
+```
 - 部品内の要素だけ `__<内側>` を付けます。例: `--sui_alert_dialog_icon__svg-size` です。それ以外には付けません。
 - `prop` に直接適用しない中間値だけ `-virtual_` を付けます。例: `--sui_alert_dialog_content-virtual_margin_block` です。`prop` に適用する値には付けません。
 - `変数` 区分では空宣言 (`: ;`) します。利用者による変異点として列挙するのが目的です。
@@ -173,7 +182,28 @@ description: Suru UI のコンポーネント CSS を書くときに使用しま
 ### 可変
 
 - 規則: デザイントークンや代入値、利用者による変更を受けられるよう、公開変数・私的変数を `prop` へ適用します。
-- 規則: 生の値や生トークンは書きません。必ず自部品の変数を経由します。
+- 規則: 生の値や生トークンは書きません。必ず自部品の変数を経由します。他パーツの変数を直接参照しません。継承を強調する場合を除き、部品専用の変数を定義し、`代入` で値を引き継ぎます。
+
+```css
+/* 変数 */
+:scope {
+  --sui_combobox_input-color: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_combobox_input {
+    color: var(--sui_combobox_input-color);
+    caret-color: var(--sui_combobox_input-color);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_combobox_input-color: var(--sui_combobox-color);
+}
+```
+
 - 規則: 条件付きで変わる値は私的変数 + フォールバックにします。
 - 例: `border-color: var(--_sui_accordion-border_color, transparent)`、`svg:not(.sui-ignore)` などです。これらのプロパティーが `固定` で使えないわけではありません。
 
@@ -294,9 +324,16 @@ description: Suru UI のコンポーネント CSS を書くときに使用しま
 - 角丸がある場合は公開変数 `border_radius` と `radius_*` 修飾で切り替え、子は親の値を参照します。
 - 枠線の有無切替がある場合は `固定` の線種 + `可変` の私的変数 + `代入` のトークン + `変異` の `-outlined` で有効化します。
 - フォーカスリングがある場合は `focusring_width` / `focusring_color` / `focusring_offset` の 3 点を `可変` + `代入` + `変異` (`:focus-visible`) で扱います。`outline-style: solid` は `固定` に置きます。
-- 文字がある場合は `font_family` / `font_size` / `font_weight` / `line_height` / `letter_spacing` / `color` を一式で持ちます。
+- 文字がある場合は `font_family` / `font_size` / `font_weight` / `line_height` / `letter_spacing` / `color` を一式で持ちます。行の高さは `calc(<font_size> * <line_height>)` で求め、`1lh` は使いません。
 - 色違い × 質感 (`color_*` × `variant_*`) がある場合はすべての組合せを列挙します。省略しません。
-- `svg` がある場合は `svg:not(.sui-ignore)` にし、大きさと色を明示します。大きさは文字や箱に連動する `calc()` にします。
+- `svg` がある場合は `svg:not(.sui-ignore)` にし、大きさと色を明示します。大きさは文字や箱に連動する `calc()` にします。色は `--sui-icon_color(<前景色>, <背景色>)` で計算します。
+
+```css
+--sui_combobox_clear__svg-color: --sui-icon_color(
+                                   var(--sui_combobox_clear-color-idle),
+                                   var(--sui_combobox-background_color)
+                                 );
+```
 - 適用外のクラスがある場合は `:not()` で除外します。
 
 ## 無効状態
@@ -350,6 +387,10 @@ description: Suru UI のコンポーネント CSS を書くときに使用しま
 - 同一セレクターへの `代入` を重複させない。例: 同じ `&:has(...)` を二度書いて後の定義で上書きしない。
 - 1 つの公開変数に複数の値を半角スペース区切りで代入しない。例: `--sui_alert_actions-padding_block: --sui-gap(4) --sui-gap(3)` は禁止。`padding_block_start` / `padding_block_end` のように変数を分けます。
 - `svg` に素の `svg` セレクターを使わない。例: `svg:not(.sui-ignore)` にし、大きさと色を明示します。継承に任せない。
+- インタラクティブな要素の状態名に `-idle` / `-hover` / `-active` 以外を使わない。デザインシステムの `-normal` / `-subtle` / `-strong` をそれぞれ割り当てます。
+- `1lh` を使わない。行の高さは `calc(<font_size> * <line_height>)` で求めます。
+- `currentColor` を使わない。色は CSS 変数で明示します。
+- (重要) 他パーツの変数を `可変` で直接参照しない。継承を強調する場合を除き、部品専用の変数を定義して `代入` で引き継ぎます。
 - 長いセレクターを 1 行に書かない。子孫の連なりは 1 つずつ改行して 1 段ずつ深く字下げし、カンマ区切りと関数引数は 1 つずつ改行します。
 - `sui.important` を無効状態以外に使わない。
 - `!important` を書かない。

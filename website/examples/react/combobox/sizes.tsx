@@ -14,7 +14,7 @@ export default function Sizes() {
             size={size}
             items={fruits}
             variant="naked"
-            accentColor="grey"
+            color="grey"
             placeholder="選択"
             className="w-64"
           />

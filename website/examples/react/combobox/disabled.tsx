@@ -11,7 +11,7 @@ export default function Disabled() {
         disabled
         defaultValue="りんご"
         variant="naked"
-        accentColor="grey"
+        color="grey"
         size="md"
         className="w-64"
       />
@@ -20,7 +20,7 @@ export default function Disabled() {
         disabled
         placeholder="選択"
         variant="naked"
-        accentColor="grey"
+        color="grey"
         size="md"
         className="w-64"
       />

@@ -54,12 +54,20 @@ export * from "./<kebab>.jsx";
 export { AutocompleteContext as Context, useAutocompleteContext as useContext };
 ```
 
+ローカル変数は短縮形の `ctx` にし、`context` などの長い名前は使いません。読み取りと `useMemo` の両方で同じ名前にします。
+
+```tsx
+const ctx = React.use(XxxContext);
+const ctx = React.useMemo<XxxContext>(() => ({ ... }), [ ... ]);
+```
+
 namespace には値型があれば追加します。ファイル内部の参照 (JSX を含む) は正式名のままにします。
 
 ### 型の並び
 
 1 つのパーツ内では Base UI 由来、独自の値型、`Value`・`State`、`Props` の順にします。`Props` を最後にします。
 `State` は Base UI から取ります。状態を持たない素の要素では空オブジェクトにします。
+型引数の名前は必ず `T` で始めます (例: `TItem`、`TValue`、`TMultiple`)。`Value` や `Multiple` のような `T` なしの名前は使いません。
 
 独自の修飾値型は union リテラルで列挙し、各値を箇条書きで説明します。
 
@@ -270,6 +278,26 @@ children: typeof children === "function" ? items.map(children) : toReactNode(chi
 
 公開 `index.ts` から再輸出しません。`.parts.tsx` と `.tsx` からのみ import します。
 
+## src/index.ts (公開 API)
+
+`src/index.ts` には合成 (`.tsx`) の公開型と値を列挙します。パーツ単体の型 (例: `ComboboxRootProps`) は列挙せず、合成の再命名型 (例: `ComboboxProps`) を使います。
+
+値として使うもの (例: `ComboboxContext`、`useComboboxContext`) は `type` を付けずに export します。型のみのものには `type` を付けます。
+
+```ts
+export {
+  type ComboboxAPI,
+  type ComboboxProps,
+  ...
+  Combobox,
+  useComboboxAPI,
+  ComboboxContext,
+  useComboboxContext,
+} from "./combobox/index.js";
+```
+
+順序はフォーマッターが自動整形するため規定しません。
+
 ## アイコン (`../_icons.tsx`)
 
 既定アイコンはコンポーネント専用ファイルに置かず、共有ファイルに実装します。
@@ -312,10 +340,12 @@ mise run test:typecheck
 - `data-scope=""` を起点以外の要素に付けない。付け忘れない。
 - namespace の `State` / `Props` を省略しない。短名再輸出を省略しない。
 - `Context` や `useContext` の短名を別名の `type` / `const` 宣言で作らない。`export { X as Y }` の 1 行にまとめる。
+- Context のローカル変数に `context` などの長い名前を使わない。`ctx` にする。
 - 再輸出の JSDoc に「 です。」を付けない。`{@link X}` のみにする。
 - 短名をファイル内部で参照しない。内部参照 (JSX を含む) は正式名にする。
 - `index.ts` に実装を書かない。再輸出以外を足さない。
 - アイコンを `_<kebab>.tsx` や `.parts.tsx` に実装しない。共有ファイルに置きます。
 - レンダラー付き `children` を素要素由来の `children` と交差させない。要素側から `"children"` を除きます。
 - 反復描画する要素に `key` を付け忘れない。
+- 型引数名の先頭に `T` を付け忘れない (例: `TValue`、`TMultiple`)。
 - `items` を所有と描画の両パーツに二重定義しない。描画側は `Context` で受けます。

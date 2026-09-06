@@ -14,13 +14,13 @@ const colors = [
   "green",
 ] as const;
 
-export default function AccentColors() {
+export default function Colors() {
   return (
     <div className="flex flex-col gap-3">
       {colors.map((color) => (
         <Combobox
           key={color}
-          accentColor={color}
+          color={color}
           items={fruits}
           variant="naked"
           size="md"

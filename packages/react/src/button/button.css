@@ -56,8 +56,10 @@
 /* 代入 */
 :scope {
   --sui_button-padding_block: calc(
-                                (var(--sui_button-min_height) - var(--sui_button-virtual_content-leading))
-                                / 2
+                                (
+                                  var(--sui_button-min_height) 
+                                  - var(--sui_button-virtual_content-leading)
+                                ) / 2
                                 - var(--_sui_button-border_width, 0px)
                               );
   --sui_button-focusring_width: var(--sui-focusring_width);

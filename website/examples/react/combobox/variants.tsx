@@ -9,7 +9,7 @@ export default function Variants() {
       <Combobox
         items={fruits}
         variant="naked"
-        accentColor="grey"
+        color="grey"
         size="md"
         placeholder="選択"
         className="w-64"
@@ -17,7 +17,7 @@ export default function Variants() {
       <Combobox
         items={fruits}
         variant="liquid"
-        accentColor="grey"
+        color="grey"
         size="md"
         placeholder="選択"
         className="w-64"

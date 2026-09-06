@@ -12,7 +12,7 @@ export default function Multiple() {
       defaultValue={["TypeScript"]}
       placeholder="言語を追加"
       variant="naked"
-      accentColor="grey"
+      color="grey"
       size="md"
       className="w-80"
     />
