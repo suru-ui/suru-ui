@@ -442,7 +442,11 @@ export const ContextMenuTrigger: IComponent<ContextMenuTriggerProps> =
       <ContextMenu.Trigger
         {...otherProps}
         render={children}
-        className={cn(className, "sui_context_menu_trigger")}
+        className={cn(
+          className,
+          "sui_context_menu_trigger",
+          (state) => state.open && "sui_context_menu_trigger-open",
+        )}
       />
     );
   };
@@ -647,7 +651,16 @@ export const ContextMenuContent: IComponent<ContextMenuContentProps> =
     const { children = defaultContentItemRenderer, className, ...otherProps } = props;
 
     return (
-      <ContextMenu.Popup {...otherProps} className={cn(className, "sui_context_menu_content")}>
+      <ContextMenu.Popup
+        {...otherProps}
+        className={cn(
+          className,
+          "sui_context_menu_content",
+          (state) =>
+            state.transitionStatus !== undefined &&
+            `sui_context_menu_content-transition_status_${state.transitionStatus}`,
+        )}
+      >
         {typeof children === "function" ? ctx.items.map(children) : children}
       </ContextMenu.Popup>
     );
@@ -839,7 +852,12 @@ export const ContextMenuItem: IComponent<ContextMenuItemProps> = function SuiCon
           nativeButton={false}
         />
       )}
-      className={cn(className, "sui_context_menu_item")}
+      className={cn(
+        className,
+        "sui_context_menu_item",
+        (state) => state.disabled && "sui_context_menu_item-disabled",
+        (state) => state.highlighted && "sui_context_menu_item-highlighted",
+      )}
     />
   );
 };
@@ -934,7 +952,12 @@ export const ContextMenuLinkItem: IComponent<ContextMenuLinkItemProps> =
             nativeButton={false}
           />
         )}
-        className={cn(className, "sui_context_menu_item", "sui_context_menu_link_item")}
+        className={cn(
+          className,
+          "sui_context_menu_item",
+          "sui_context_menu_link_item",
+          (state) => state.highlighted && "sui_context_menu_item-highlighted",
+        )}
       />
     );
   };
@@ -1088,7 +1111,14 @@ export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProp
             nativeButton={false}
           />
         )}
-        className={cn(className, "sui_context_menu_item", "sui_context_menu_submenu_trigger")}
+        className={cn(
+          className,
+          "sui_context_menu_item",
+          "sui_context_menu_submenu_trigger",
+          (state) => state.disabled && "sui_context_menu_item-disabled",
+          (state) => state.highlighted && "sui_context_menu_item-highlighted",
+          (state) => state.open && "sui_context_menu_item-open",
+        )}
       />
     );
   };
@@ -1230,7 +1260,11 @@ export const ContextMenuRadioGroup: IComponent<ContextMenuRadioGroupProps> =
     return (
       <ContextMenu.RadioGroup
         {...otherProps}
-        className={cn(className, "sui_context_menu_radio_group")}
+        className={cn(
+          className,
+          "sui_context_menu_radio_group",
+          (state) => state.disabled && "sui_context_menu_radio_group-disabled",
+        )}
       />
     );
   };
@@ -1325,7 +1359,14 @@ export const ContextMenuRadioItem: IComponent<ContextMenuRadioItemProps> =
             nativeButton={false}
           />
         )}
-        className={cn(className, "sui_context_menu_item", "sui_context_menu_radio_item")}
+        className={cn(
+          className,
+          "sui_context_menu_item",
+          "sui_context_menu_radio_item",
+          (state) => state.checked && "sui_context_menu_item-checked",
+          (state) => state.highlighted && "sui_context_menu_item-highlighted",
+          (state) => state.disabled && "sui_context_menu_item-disabled",
+        )}
       />
     );
   };
@@ -1383,6 +1424,7 @@ export const ContextMenuRadioItemIndicator: IComponent<ContextMenuRadioItemIndic
           className,
           "sui_context_menu_item_indicator",
           "sui_context_menu_radio_item_indicator",
+          (state) => !state.checked && "sui_context_menu_item_indicator-unchecked",
         )}
         keepMounted={keepMounted}
       />
@@ -1479,7 +1521,14 @@ export const ContextMenuCheckboxItem: IComponent<ContextMenuCheckboxItemProps> =
             nativeButton={false}
           />
         )}
-        className={cn(className, "sui_context_menu_item", "sui_context_menu_checkbox_item")}
+        className={cn(
+          className,
+          "sui_context_menu_item",
+          "sui_context_menu_checkbox_item",
+          (state) => state.checked && "sui_context_menu_item-checked",
+          (state) => state.highlighted && "sui_context_menu_item-highlighted",
+          (state) => state.disabled && "sui_context_menu_item-disabled",
+        )}
       />
     );
   };
@@ -1547,6 +1596,7 @@ export const ContextMenuCheckboxItemIndicator: IComponent<ContextMenuCheckboxIte
           className,
           "sui_context_menu_item_indicator",
           "sui_context_menu_checkbox_item_indicator",
+          (state) => !state.checked && "sui_context_menu_item_indicator-unchecked",
         )}
       />
     );

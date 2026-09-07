@@ -50,6 +50,7 @@ export * from "./<kebab>.jsx";
 - 公開メンバーは漏らさず再輸出します。`State` と `Props` だけを輸出して終わりにしません。
 - `Handle` / `createHandle` の有無も確認します。ないものは作りません (例: ContextMenu にはありません)。あるものは `Handle` セクションに置きます (例: Menu、Dialog、AlertDialog)。
 - 他から再輸出されているパーツ (例: `Separator`) は `index.parts.d.ts` と `index.d.ts` で実体と型の両方を確認します。
+- 各パーツの `State` のフィールドを列挙し、状態クラス化の対象を決めます。`State` にない状態は扱いません (例: `State` が `{ open }` のみのパーツに無効状態はありません)。
 
 ### セクション
 
@@ -156,6 +157,20 @@ cn(
 `data-scope=""` は CSS の `@scope` 始点になる要素だけに付けます。
 
 状態クラス (`-open` / `-closed`、`-transition_status_*`、`-disabled` など) は基本的に DOM ツリー上のルート (起点要素) に付けます。Portal を持ち Root が DOM ツリー上のルートでない場合や、子が独立した状態を持つ場合 (例: List の Item ごとの `-disabled`) は、その状態を持つ要素に付けます。
+
+Base UI が付与する `data-*` 属性 (`data-open`、`data-checked`、`data-disabled` など) を CSS セレクターに使わない (`[data-scope]` は自前の目印のため例外)。状態の装飾は `cn` の状態関数で付ける自前の状態クラスで行う。真偽状態は `sui_<基底>-<状態>`、値付き状態は `sui_<基底>-<属性>_<値>` にする。
+
+```tsx
+cn(
+  className,
+  "sui_context_menu_item",
+  (state) => state.highlighted && "sui_context_menu_item-highlighted",
+  (state) => state.checked && "sui_context_menu_item-checked",
+  (state) => state.disabled && "sui_context_menu_item-disabled",
+)
+```
+
+対象は各パーツの Base UI `State` 型にあるフィールドに限る。`State` にないフィールドは `cn` の状態関数で参照できない (型エラーになる)。対応する `data-*` 属性も Base UI が発行しないため、CSS 側に書いても死んだ指定になる (例: `State` が `{ open }` のみの Trigger に対する `[data-disabled]`)。装飾に偽側が必要な場合は否定でクラス化する (例: `(state) => !state.checked && "sui_context_menu_item_indicator-unchecked"`)。
 
 ### 項目の一覧描画
 
@@ -381,4 +396,6 @@ mise run test:typecheck
 - 型引数名の先頭に `T` を付け忘れない (例: `TValue`、`TMultiple`)。
 - 合成の再命名型にパーツ名を重ねない (例: `BreadcrumbItemObject`。`BreadcrumbItemsItem` は禁止)。
 - 状態クラスを Content などの子に分散させない。DOM ツリー上のルートに集約します (Portal や独立状態の子は例外)。
+- CSS セレクターに Base UI の `data-*` 属性を使わない (`[data-scope]` を除く)。状態の装飾は `cn` の状態関数によるクラスで行う。
+- `State` 型にない状態のクラスや CSS 指定を書かない。Base UI が発行しない属性への指定は死になる。
 - `items` を所有と描画の両パーツに二重定義しない。描画側は `Context` で受けます。

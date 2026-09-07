@@ -258,7 +258,7 @@
 
 /* 変異 */
 :scope {
-  .sui_context_menu_item_indicator[data-unchecked] {
+  .sui_context_menu_item_indicator-unchecked {
     --_sui_context_menu_item_indicator-opacity: 0;
   }
 }
@@ -430,9 +430,9 @@
 @layer sui.important {
 @scope (.sui_context_menu_portal) to ([data-scope]) {
 
-/* Trigger */
+/* Item */
 :scope {
-  .sui_context_menu_trigger[data-disabled] {
+  .sui_context_menu_item-disabled {
     cursor: not-allowed;
   }
 }
