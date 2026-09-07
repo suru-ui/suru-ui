@@ -131,26 +131,6 @@ export type ContextMenuRootChangeEventDetails = ContextMenu.Root.ChangeEventDeta
 export type ContextMenuRootChangeEventReason = ContextMenu.Root.ChangeEventReason;
 
 /**
- * コンテキストメニューの角丸です。
- *
- * - `"none"`: 直角
- * - `"sm"`: 小さめ
- * - `"md"`: 標準的
- * - `"lg"`: 大きめ
- * - `"full"`: 完全な丸形
- */
-export type ContextMenuRootRadius = "none" | Size | "full";
-
-/**
- * コンテキストメニューの大きさです。
- *
- * - `"sm"`: 小さめ
- * - `"md"`: 標準的
- * - `"lg"`: 大きめ
- */
-export type ContextMenuRootSize = Size;
-
-/**
  * {@link ContextMenuRoot} の通常項目です。
  *
  * `label` を含み、その他のプロパティーは {@link ContextMenuItem} に渡されます。
@@ -201,6 +181,26 @@ export type ContextMenuRootCheckboxItemObject = Omit<
 };
 
 /**
+ * {@link ContextMenuRoot} のラジオグループです。
+ *
+ * `items` を含み、その他のプロパティーは {@link ContextMenuRadioGroup} に渡されます。
+ * 子項目には {@link ContextMenuRootRadioItemObject} を指定します。
+ */
+export type ContextMenuRootRadioGroupObject = Omit<ContextMenuRadioGroupProps, "children"> & {
+  /**
+   * ラジオ項目です。
+   */
+  readonly items: readonly ContextMenuRootRadioItemObject[];
+
+  /**
+   * 項目の種類です。
+   *
+   * - `"radio-group"`: ラジオグループ
+   */
+  readonly type: "radio-group";
+};
+
+/**
  * {@link ContextMenuRoot} のラジオ項目です。
  *
  * `label` と `value` を含み、その他のプロパティーは {@link ContextMenuRadioItem} に渡されます。
@@ -221,26 +221,6 @@ export type ContextMenuRootRadioItemObject = Omit<
    * - `"radio"`: ラジオ項目
    */
   readonly type: "radio";
-};
-
-/**
- * {@link ContextMenuRoot} のラジオグループです。
- *
- * `items` を含み、その他のプロパティーは {@link ContextMenuRadioGroup} に渡されます。
- * 子項目には {@link ContextMenuRootRadioItemObject} を指定します。
- */
-export type ContextMenuRootRadioGroupObject = Omit<ContextMenuRadioGroupProps, "children"> & {
-  /**
-   * ラジオ項目です。
-   */
-  readonly items: readonly ContextMenuRootRadioItemObject[];
-
-  /**
-   * 項目の種類です。
-   *
-   * - `"radio-group"`: ラジオグループ
-   */
-  readonly type: "radio-group";
 };
 
 /**
@@ -266,9 +246,29 @@ export type ContextMenuRootSeparatorObject = Omit<ContextMenuSeparatorProps, "ch
 export type ContextMenuRootItemObject =
   | ContextMenuRootActionItemObject
   | ContextMenuRootCheckboxItemObject
-  | ContextMenuRootRadioItemObject
   | ContextMenuRootRadioGroupObject
+  | ContextMenuRootRadioItemObject
   | ContextMenuRootSeparatorObject;
+
+/**
+ * コンテキストメニューの角丸です。
+ *
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ * - `"full"`: 完全な丸形
+ */
+export type ContextMenuRootRadius = "none" | Size | "full";
+
+/**
+ * コンテキストメニューの大きさです。
+ *
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ */
+export type ContextMenuRootSize = Size;
 
 /**
  * {@link ContextMenuRoot} が持つ状態です。
@@ -643,7 +643,7 @@ export type ContextMenuContentProps = Omit<
  */
 export const ContextMenuContent: IComponent<ContextMenuContentProps> =
   function SuiContextMenuContent(props) {
-    const ctx = useSuiContextMenuContext();
+    const ctx = useContextMenuContext();
     const { children = defaultContentItemRenderer, className, ...otherProps } = props;
 
     return (
@@ -1374,7 +1374,7 @@ export type ContextMenuRadioItemIndicatorProps = React.ComponentProps<
  */
 export const ContextMenuRadioItemIndicator: IComponent<ContextMenuRadioItemIndicatorProps> =
   function SuiContextMenuRadioItemIndicator(props) {
-    const { className, keepMounted = true, ...otherProps } = props;
+    const { keepMounted = true, className, ...otherProps } = props;
 
     return (
       <ContextMenu.RadioItemIndicator
@@ -1407,6 +1407,16 @@ export namespace RadioItemIndicator {
 // ------------
 
 /**
+ * {@link ContextMenuCheckboxItem} のチェック状態を変更されるイベントの詳細です。
+ */
+export type ContextMenuCheckboxItemChangeEventDetails = ContextMenu.CheckboxItem.ChangeEventDetails;
+
+/**
+ * {@link ContextMenuCheckboxItem} のチェック状態が変更される理由です。
+ */
+export type ContextMenuCheckboxItemChangeEventReason = ContextMenu.CheckboxItem.ChangeEventReason;
+
+/**
  * チェックボックス項目の配色です。
  */
 export type ContextMenuCheckboxItemColor = ButtonRootColor;
@@ -1419,16 +1429,6 @@ export type ContextMenuCheckboxItemColor = ButtonRootColor;
  * - `"liquid"`: 薄い塗りつぶし
  */
 export type ContextMenuCheckboxItemVariant = ButtonRootVariant;
-
-/**
- * {@link ContextMenuCheckboxItem} のチェック状態を変更されるイベントの詳細です。
- */
-export type ContextMenuCheckboxItemChangeEventDetails = ContextMenu.CheckboxItem.ChangeEventDetails;
-
-/**
- * {@link ContextMenuCheckboxItem} のチェック状態が変更される理由です。
- */
-export type ContextMenuCheckboxItemChangeEventReason = ContextMenu.CheckboxItem.ChangeEventReason;
 
 /**
  * {@link ContextMenuCheckboxItem} が持つ状態です。

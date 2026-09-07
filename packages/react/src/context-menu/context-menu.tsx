@@ -90,14 +90,14 @@ export type ContextMenuActionItemObject = ContextMenuRootActionItemObject;
 export type ContextMenuCheckboxItemObject = ContextMenuRootCheckboxItemObject;
 
 /**
- * {@link ContextMenuRootRadioItemObject}
- */
-export type ContextMenuRadioItemObject = ContextMenuRootRadioItemObject;
-
-/**
  * {@link ContextMenuRootRadioGroupObject}
  */
 export type ContextMenuRadioGroupObject = ContextMenuRootRadioGroupObject;
+
+/**
+ * {@link ContextMenuRootRadioItemObject}
+ */
+export type ContextMenuRadioItemObject = ContextMenuRootRadioItemObject;
 
 /**
  * {@link ContextMenuRootSeparatorObject}
@@ -226,11 +226,6 @@ export type ContextMenuProps<TItem = any> = Omit<ContextMenuRootProps<TItem>, "c
  */
 export interface ContextMenuAPI {
   /**
-   * {@link ContextMenuCheckboxItemIndicator} に渡す props を取得します。
-   */
-  getCheckboxItemIndicatorProps(): ContextMenuCheckboxItemIndicatorProps;
-
-  /**
    * {@link ContextMenuCheckboxItem} に渡す props を取得します。
    *
    * @param item 項目です。
@@ -241,6 +236,11 @@ export interface ContextMenuAPI {
   > & {
     children: LikelyVisibleNode | null;
   };
+
+  /**
+   * {@link ContextMenuCheckboxItemIndicator} に渡す props を取得します。
+   */
+  getCheckboxItemIndicatorProps(): ContextMenuCheckboxItemIndicatorProps;
 
   /**
    * {@link ContextMenuContent} に渡す props を取得します。
@@ -280,11 +280,6 @@ export interface ContextMenuAPI {
   ): Omit<ContextMenuRadioGroupProps, "children">;
 
   /**
-   * {@link ContextMenuRadioItemIndicator} に渡す props を取得します。
-   */
-  getRadioItemIndicatorProps(): ContextMenuRadioItemIndicatorProps;
-
-  /**
    * {@link ContextMenuRadioItem} に渡す props を取得します。
    *
    * @param item 項目です。
@@ -295,6 +290,11 @@ export interface ContextMenuAPI {
   > & {
     children: LikelyVisibleNode | null;
   };
+
+  /**
+   * {@link ContextMenuRadioItemIndicator} に渡す props を取得します。
+   */
+  getRadioItemIndicatorProps(): ContextMenuRadioItemIndicatorProps;
 
   /**
    * {@link ContextMenuRoot} に渡す props を取得します。
@@ -337,7 +337,7 @@ interface IUseContextMenuAPI {
    *
    * @template TItem 項目の型です。
    * @param props {@link ContextMenu} の props です。
-   * @returns コンテキストメニューの API です
+   * @returns コンテキストメニューの API です。
    */
   <TItem = any>(props: ContextMenuProps<TItem>): ContextMenuAPI;
 }
