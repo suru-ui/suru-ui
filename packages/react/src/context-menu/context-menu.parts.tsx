@@ -7,6 +7,7 @@ import renderer from "../_renderer.js";
 import toReactNode from "../_to-react-node.js";
 import {
   type ButtonRootColor,
+  type ButtonRootRadius,
   type ButtonRootVariant,
   ButtonRoot,
 } from "../button/button.parts.jsx";
@@ -877,6 +878,11 @@ function getItemVariant(state: object, variant: ButtonRootVariant): ButtonRootVa
 export type ContextMenuItemColor = ButtonRootColor;
 
 /**
+ * コンテキストメニューの操作項目の角丸です。
+ */
+export type ContextMenuItemRadius = ButtonRootRadius;
+
+/**
  * コンテキストメニューの操作項目の主な外観です。
  *
  * - `"solid"`: 塗りつぶし
@@ -902,6 +908,13 @@ export type ContextMenuItemProps = React.ComponentProps<typeof ContextMenu.Item>
   color?: ContextMenuItemColor | undefined;
 
   /**
+   * 項目の角丸を指定します。
+   *
+   * 既定値は {@link ContextMenuRootProps.radius|radius} です。
+   */
+  radius?: ContextMenuItemRadius | undefined;
+
+  /**
    * チェック状態のときの外観を指定します。
    *
    * チェックされていないときは常に `"naked"` になります。
@@ -918,7 +931,14 @@ export const ContextMenuItem: IComponent<ContextMenuItemProps> = function SuiCon
   props,
 ) {
   const ctx = useContextMenuContext();
-  const { color = "grey", render = <div />, variant = "naked", className, ...otherProps } = props;
+  const {
+    color = "grey",
+    radius = ctx.radius,
+    render = <div />,
+    variant = "naked",
+    className,
+    ...otherProps
+  } = props;
 
   return (
     <ContextMenu.Item
@@ -929,6 +949,7 @@ export const ContextMenuItem: IComponent<ContextMenuItemProps> = function SuiCon
           item
           size={ctx.size}
           color={color}
+          radius={radius}
           render={renderer(render, state)}
           variant={getItemVariant(state, variant)}
           disabled={state.disabled}
@@ -964,6 +985,11 @@ export namespace Item {
   export type Color = ContextMenuItemColor;
 
   /**
+   * {@link ContextMenuItemRadius}
+   */
+  export type Radius = ContextMenuItemRadius;
+
+  /**
    * {@link ContextMenuItemVariant}
    */
   export type Variant = ContextMenuItemVariant;
@@ -976,6 +1002,11 @@ export namespace Item {
  * コンテキストメニューのリンク項目の配色です。
  */
 export type ContextMenuLinkItemColor = ButtonRootColor;
+
+/**
+ * コンテキストメニューのリンク項目の角丸です。
+ */
+export type ContextMenuLinkItemRadius = ButtonRootRadius;
 
 /**
  * コンテキストメニューのリンク項目の主な外観です。
@@ -1003,6 +1034,13 @@ export type ContextMenuLinkItemProps = React.ComponentProps<typeof ContextMenu.L
   color?: ContextMenuLinkItemColor | undefined;
 
   /**
+   * 項目の角丸を指定します。
+   *
+   * 既定値は {@link ContextMenuRootProps.radius|radius} です。
+   */
+  radius?: ContextMenuLinkItemRadius | undefined;
+
+  /**
    * チェック状態のときの外観を指定します。
    *
    * チェックされていないときは常に `"naked"` になります。
@@ -1018,8 +1056,15 @@ export type ContextMenuLinkItemProps = React.ComponentProps<typeof ContextMenu.L
 export const ContextMenuLinkItem: IComponent<ContextMenuLinkItemProps> =
   function SuiContextMenuLinkItem(props) {
     const ctx = useContextMenuContext();
-    // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
-    const { color = "grey", render = <a />, variant = "naked", className, ...otherProps } = props;
+    const {
+      color = "grey",
+      radius = ctx.radius,
+      // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
+      render = <a />,
+      variant = "naked",
+      className,
+      ...otherProps
+    } = props;
 
     return (
       <ContextMenu.LinkItem
@@ -1030,6 +1075,7 @@ export const ContextMenuLinkItem: IComponent<ContextMenuLinkItemProps> =
             item
             size={ctx.size}
             color={color}
+            radius={radius}
             render={renderer(render, state)}
             variant={getItemVariant(state, variant)}
             nativeButton={false}
@@ -1062,6 +1108,11 @@ export namespace LinkItem {
    * {@link ContextMenuLinkItemColor}
    */
   export type Color = ContextMenuLinkItemColor;
+
+  /**
+   * {@link ContextMenuLinkItemRadius}
+   */
+  export type Radius = ContextMenuLinkItemRadius;
 
   /**
    * {@link ContextMenuLinkItemVariant}
@@ -1135,6 +1186,11 @@ export namespace SubmenuRoot {
 export type ContextMenuSubmenuTriggerColor = ButtonRootColor;
 
 /**
+ * サブメニュー項目の角丸です。
+ */
+export type ContextMenuSubmenuTriggerRadius = ButtonRootRadius;
+
+/**
  * サブメニュー項目の主な外観です。
  *
  * - `"solid"`: 塗りつぶし
@@ -1162,6 +1218,13 @@ export type ContextMenuSubmenuTriggerProps = React.ComponentProps<
   color?: ContextMenuSubmenuTriggerColor | undefined;
 
   /**
+   * 項目の角丸を指定します。
+   *
+   * 既定値は {@link ContextMenuRootProps.radius|radius} です。
+   */
+  radius?: ContextMenuSubmenuTriggerRadius | undefined;
+
+  /**
    * チェック状態のときの外観を指定します。
    *
    * チェックされていないときは常に `"naked"` になります。
@@ -1177,7 +1240,14 @@ export type ContextMenuSubmenuTriggerProps = React.ComponentProps<
 export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProps> =
   function SuiContextMenuSubmenuTrigger(props) {
     const ctx = useContextMenuContext();
-    const { color = "grey", render = <div />, variant = "naked", className, ...otherProps } = props;
+    const {
+      color = "grey",
+      radius = ctx.radius,
+      render = <div />,
+      variant = "naked",
+      className,
+      ...otherProps
+    } = props;
 
     return (
       <ContextMenu.SubmenuTrigger
@@ -1188,6 +1258,7 @@ export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProp
             item
             size={ctx.size}
             color={color}
+            radius={radius}
             render={renderer(render, state)}
             variant={getItemVariant(state, variant)}
             disabled={state.disabled}
@@ -1223,6 +1294,11 @@ export namespace SubmenuTrigger {
    * {@link ContextMenuSubmenuTriggerColor}
    */
   export type Color = ContextMenuSubmenuTriggerColor;
+
+  /**
+   * {@link ContextMenuSubmenuTriggerRadius}
+   */
+  export type Radius = ContextMenuSubmenuTriggerRadius;
 
   /**
    * {@link ContextMenuSubmenuTriggerVariant}
@@ -1385,6 +1461,11 @@ export namespace RadioGroup {
 export type ContextMenuRadioItemColor = ButtonRootColor;
 
 /**
+ * ラジオ項目の角丸です。
+ */
+export type ContextMenuRadioItemRadius = ButtonRootRadius;
+
+/**
  * ラジオ項目の主な外観です。
  *
  * - `"solid"`: 塗りつぶし
@@ -1410,6 +1491,13 @@ export type ContextMenuRadioItemProps = React.ComponentProps<typeof ContextMenu.
   color?: ContextMenuRadioItemColor | undefined;
 
   /**
+   * 項目の角丸を指定します。
+   *
+   * 既定値は {@link ContextMenuRootProps.radius|radius} です。
+   */
+  radius?: ContextMenuRadioItemRadius | undefined;
+
+  /**
    * チェック状態のときの外観を指定します。
    *
    * チェックされていないときは常に `"naked"` になります。
@@ -1425,7 +1513,14 @@ export type ContextMenuRadioItemProps = React.ComponentProps<typeof ContextMenu.
 export const ContextMenuRadioItem: IComponent<ContextMenuRadioItemProps> =
   function SuiContextMenuRadioItem(props) {
     const ctx = useContextMenuContext();
-    const { color = "grey", render = <div />, variant = "naked", className, ...otherProps } = props;
+    const {
+      color = "grey",
+      radius = ctx.radius,
+      render = <div />,
+      variant = "naked",
+      className,
+      ...otherProps
+    } = props;
 
     return (
       <ContextMenu.RadioItem
@@ -1436,6 +1531,7 @@ export const ContextMenuRadioItem: IComponent<ContextMenuRadioItemProps> =
             item
             size={ctx.size}
             color={color}
+            radius={radius}
             render={renderer(render, state)}
             variant={getItemVariant(state, variant)}
             disabled={state.disabled}
@@ -1471,6 +1567,11 @@ export namespace RadioItem {
    * {@link ContextMenuRadioItemColor}
    */
   export type Color = ContextMenuRadioItemColor;
+
+  /**
+   * {@link ContextMenuRadioItemRadius}
+   */
+  export type Radius = ContextMenuRadioItemRadius;
 
   /**
    * {@link ContextMenuRadioItemVariant}
@@ -1547,6 +1648,11 @@ export type ContextMenuCheckboxItemChangeEventReason = ContextMenu.CheckboxItem.
 export type ContextMenuCheckboxItemColor = ButtonRootColor;
 
 /**
+ * チェックボックス項目の角丸です。
+ */
+export type ContextMenuCheckboxItemRadius = ButtonRootRadius;
+
+/**
  * チェックボックス項目の主な外観です。
  *
  * - `"solid"`: 塗りつぶし
@@ -1572,6 +1678,13 @@ export type ContextMenuCheckboxItemProps = React.ComponentProps<typeof ContextMe
   color?: ContextMenuCheckboxItemColor | undefined;
 
   /**
+   * 項目の角丸を指定します。
+   *
+   * 既定値は {@link ContextMenuRootProps.radius|radius} です。
+   */
+  radius?: ContextMenuCheckboxItemRadius | undefined;
+
+  /**
    * チェック状態のときの外観を指定します。
    *
    * チェックされていないときは常に `"naked"` になります。
@@ -1587,7 +1700,14 @@ export type ContextMenuCheckboxItemProps = React.ComponentProps<typeof ContextMe
 export const ContextMenuCheckboxItem: IComponent<ContextMenuCheckboxItemProps> =
   function SuiContextMenuCheckboxItem(props) {
     const ctx = useContextMenuContext();
-    const { color = "grey", render = <div />, variant = "naked", className, ...otherProps } = props;
+    const {
+      color = "grey",
+      radius = ctx.radius,
+      render = <div />,
+      variant = "naked",
+      className,
+      ...otherProps
+    } = props;
 
     return (
       <ContextMenu.CheckboxItem
@@ -1598,6 +1718,7 @@ export const ContextMenuCheckboxItem: IComponent<ContextMenuCheckboxItemProps> =
             item
             size={ctx.size}
             color={color}
+            radius={radius}
             render={renderer(render, state)}
             variant={getItemVariant(state, variant)}
             disabled={state.disabled}
@@ -1643,6 +1764,11 @@ export namespace CheckboxItem {
    * {@link ContextMenuCheckboxItemColor}
    */
   export type Color = ContextMenuCheckboxItemColor;
+
+  /**
+   * {@link ContextMenuCheckboxItemRadius}
+   */
+  export type Radius = ContextMenuCheckboxItemRadius;
 
   /**
    * {@link ContextMenuCheckboxItemVariant}
