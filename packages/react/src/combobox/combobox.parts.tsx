@@ -2,6 +2,7 @@ import { Combobox } from "@base-ui/react/combobox";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import { ButtonRoot } from "../button/button.parts.jsx";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
 import type { IComponent, IUseContext } from "../types.js";
@@ -1189,11 +1190,30 @@ export type ComboboxItemProps = React.ComponentProps<typeof Combobox.Item>;
  * 候補リストの個々の項目要素です。
  */
 export const ComboboxItem: IComponent<ComboboxItemProps> = function SuiComboboxItem(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useComboboxContext();
+  const { render = <div />, className, ...otherProps } = props;
 
   return (
     <Combobox.Item
       {...otherProps}
+      render={(htmlProps: {}, state) => (
+        <ButtonRoot
+          {...htmlProps}
+          item
+          size={ctx.size}
+          color="grey"
+          render={
+            typeof render !== "function"
+              ? render
+              : (htmlProps: {}) => {
+                  return render(htmlProps, state);
+                }
+          }
+          variant="naked"
+          disabled={state.disabled}
+          nativeButton={false}
+        />
+      )}
       className={cn(
         className,
         "sui_combobox_item",

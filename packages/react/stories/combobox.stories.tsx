@@ -83,24 +83,8 @@ export const Variants = meta.story({
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <Combobox
-          {...props}
-          variant="naked"
-          slotProps={{
-            inputGroup: {
-              className: "w-[200px]",
-            },
-          }}
-        />
-        <Combobox
-          {...props}
-          variant="liquid"
-          slotProps={{
-            inputGroup: {
-              className: "w-[200px]",
-            },
-          }}
-        />
+        <Combobox {...props} variant="naked" className="w-[200px]" />
+        <Combobox {...props} variant="liquid" className="w-[200px]" />
       </div>
     );
   },
@@ -128,7 +112,7 @@ export const Multiple = meta.story({
         items={["TypeScript", "Rust", "Go", "Python"]}
         label="言語"
         multiple
-        className="w-80"
+        className="w-[300px]"
         placeholder="言語を追加"
         defaultValue={["TypeScript"]}
       />
@@ -157,7 +141,7 @@ export const Grouped = meta.story({
           { label: "野菜", items: ["にんじん", "きゅうり", "トマト"] },
         ]}
         label="食材"
-        className="w-80"
+        className="w-[300px]"
         placeholder="食材を選択"
       />
     );
@@ -178,16 +162,7 @@ export const ManyItems = meta.story({
     placeholder: "候補を検索",
   }),
   render(props) {
-    return (
-      <Combobox
-        {...props}
-        slotProps={{
-          inputGroup: {
-            className: "w-[200px]",
-          },
-        }}
-      />
-    );
+    return <Combobox {...props} className="w-[200px]" />;
   },
 });
 
@@ -208,16 +183,7 @@ export const Sizes = meta.story({
       <div className="flex flex-col gap-3">
         {SIZES.map((size) => (
           <div key={size}>
-            <Combobox
-              {...props}
-              size={size}
-              items={fruits}
-              slotProps={{
-                inputGroup: {
-                  className: "w-[200px]",
-                },
-              }}
-            />
+            <Combobox {...props} size={size} items={fruits} className="w-[200px]" />
             <div>{size}</div>
           </div>
         ))}
@@ -233,7 +199,7 @@ export const Colors = meta.story({
     variant: "liquid",
     size: "md",
     radius: undefined,
-    outlined: false,
+    outlined: true,
     disabled: false,
     multiple: false,
     placeholder: "選択",
@@ -242,17 +208,7 @@ export const Colors = meta.story({
     return (
       <div className="flex flex-col gap-3">
         {COLORS.map((color) => (
-          <Combobox
-            {...props}
-            key={color}
-            color={color}
-            items={fruits}
-            slotProps={{
-              inputGroup: {
-                className: "w-[200px]",
-              },
-            }}
-          />
+          <Combobox {...props} key={color} color={color} items={fruits} className="w-[200px]" />
         ))}
       </div>
     );
@@ -274,28 +230,8 @@ export const Disabled = meta.story({
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <Combobox
-          {...props}
-          items={fruits}
-          disabled
-          slotProps={{
-            inputGroup: {
-              className: "w-[200px]",
-            },
-          }}
-          defaultValue="りんご"
-        />
-        <Combobox
-          {...props}
-          items={fruits}
-          disabled
-          slotProps={{
-            inputGroup: {
-              className: "w-[200px]",
-            },
-          }}
-          placeholder="選択"
-        />
+        <Combobox {...props} items={fruits} disabled className="w-[200px]" defaultValue="りんご" />
+        <Combobox {...props} items={fruits} disabled className="w-[200px]" placeholder="選択" />
       </div>
     );
   },
@@ -318,15 +254,7 @@ export const Radius = meta.story({
       <div className="flex flex-col gap-3">
         {RADII.map((radius) => (
           <div key={radius}>
-            <Combobox
-              {...props}
-              radius={radius}
-              slotProps={{
-                inputGroup: {
-                  className: "w-[200px]",
-                },
-              }}
-            />
+            <Combobox {...props} radius={radius} className="w-[200px]" />
             <div>{radius}</div>
           </div>
         ))}
