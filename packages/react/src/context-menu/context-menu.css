@@ -418,7 +418,7 @@
 /* 代入 */
 :scope {
   --sui_context_menu_separator-height: --sui-border_width(1);
-  --sui_context_menu_separator-margin_block: --sui-space(1);
+  --sui_context_menu_separator-margin_block: --sui-space(3);
   --sui_context_menu_separator-margin_inline: 0px;
   --sui_context_menu_separator-color: var(--sui-border-1);
 }

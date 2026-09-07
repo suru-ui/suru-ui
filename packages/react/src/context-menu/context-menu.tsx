@@ -1,7 +1,7 @@
 import { mergePropsN } from "@base-ui/react";
 import * as React from "react";
 
-import { CheckIcon } from "../_icons.jsx";
+import { CheckIcon, ChevronRightIcon } from "../_icons.jsx";
 import isLikelyVisibleNode, { type LikelyVisibleNode } from "../_is-likely-visible-node.js";
 import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
@@ -570,7 +570,12 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
 
       return {
         ...mergePropsN([submenuTriggerProps, otherItemProps]),
-        children: toReactNode(label),
+        children: (
+          <>
+            {toReactNode(label)}
+            <ChevronRightIcon />
+          </>
+        ),
       };
     },
     getRadioItemIndicatorProps() {

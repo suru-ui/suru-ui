@@ -2,7 +2,7 @@ import { ContextMenu } from "@base-ui/react/context-menu";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
-import { CheckIcon } from "../_icons.jsx";
+import { CheckIcon, ChevronRightIcon } from "../_icons.jsx";
 import renderer from "../_renderer.js";
 import toReactNode from "../_to-react-node.js";
 import {
@@ -863,6 +863,7 @@ const defaultContentItemRenderer: IContextMenuContentItemRenderer = (item, index
     <ContextMenuSubmenuRoot key={index}>
       <ContextMenuSubmenuTrigger {...otherItemProps}>
         {toReactNode(label)}
+        <ChevronRightIcon />
       </ContextMenuSubmenuTrigger>
       <ContextMenuPortal>
         <ContextMenuPositioner>
