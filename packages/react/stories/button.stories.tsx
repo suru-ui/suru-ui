@@ -499,8 +499,8 @@ export const RootOnly = meta.story({
   },
 });
 
-export const Dense = meta.story({
-  name: "狭い余白",
+export const Item = meta.story({
+  name: "リストアイテム",
   ...ctrl({
     variant: "solid",
     color: "grey",
@@ -521,15 +521,17 @@ export const Dense = meta.story({
         ))}
         <span>通常</span>
         {SIZES.map((size) => (
-          <Button key={size} {...props} size={size}>
+          <ButtonParts.Root key={size} {...props} size={size} className="w-64">
+            <GlobeIcon />
             {size.toUpperCase()} ボタン
-          </Button>
+          </ButtonParts.Root>
         ))}
-        <span>dense</span>
+        <span>item</span>
         {SIZES.map((size) => (
-          <Button key={size} {...props} size={size} dense>
+          <ButtonParts.Root key={size} {...props} item size={size} className="w-64">
+            <GlobeIcon />
             {size.toUpperCase()} ボタン
-          </Button>
+          </ButtonParts.Root>
         ))}
       </div>
     );

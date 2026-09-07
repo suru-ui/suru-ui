@@ -7,7 +7,6 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   overflow: hidden;
   text-overflow: ellipsis;
   font-feature-settings: "palt";
@@ -45,6 +44,7 @@
 :scope {
   z-index: var(--_sui_button-z_index, 0);
   gap: var(--sui_button_content-gap);
+  justify-content: var(--_sui_button-justify_content, center);
   min-width: var(--_sui_button-min_width, calc(var(--sui_button-min_height) * 2));
   min-height: var(--sui_button-min_height);
   aspect-ratio: var(--_sui_button-aspect_ratio, unset);
@@ -100,7 +100,7 @@
     --sui_button-padding_inline: --sui-space(6);
   }
 
-  &.sui_button-dense {
+  &.sui_button-item {
     &.sui_button-size_sm {
       --sui_button-padding_inline: --sui-space(3);
     }
@@ -423,6 +423,10 @@
     --_sui_button-padding: 0px;
   }
 
+  &.sui_button-item {
+    --_sui_button-justify_content: space-between;
+  }
+
   &.sui_button-outlined {
     --_sui_button-border_color: var(--sui_button-border_color-idle);
     --_sui_button-border_width: var(--sui_button-border_width);
@@ -452,7 +456,6 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
     text-overflow: ellipsis;
     font-feature-settings: "palt";
     vertical-align: middle;
@@ -480,6 +483,7 @@
 :scope {
   .sui_button_content {
     gap: var(--sui_button_content-gap);
+    justify-content: var(--_sui_button_content-justify_content, center);
     font-family: var(--sui_button_content-font_family);
     font-size: var(--sui_button_content-font_size);
     font-weight: var(--sui_button_content-font_weight);
@@ -757,6 +761,10 @@
 
   &:active {
     --_sui_button_content-color: var(--sui_button_content-color-active);
+  }
+
+  &.sui_button-item .sui_button_content {
+    --_sui_button_content-justify_content: space-between;
   }
 }
 

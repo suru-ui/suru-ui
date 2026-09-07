@@ -157,11 +157,13 @@ export type ButtonRootProps = React.ComponentProps<typeof Button> & {
   color?: ButtonRootColor | undefined;
 
   /**
-   * ボタンの左右の余白を狭くするかどうかを指定します。
+   * ボタンをメニューなどのリストアイテムとして使うかどうかを指定します。
+   *
+   * `true` の場合、左右の余白が狭くなり、内容が両端揃え (`space-between`) になります。
    *
    * @default false
    */
-  dense?: boolean | undefined;
+  item?: boolean | undefined;
 
   /**
    * ボタンの背景色を控えめにします。
@@ -223,10 +225,10 @@ export type ButtonRootProps = React.ComponentProps<typeof Button> & {
 export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(props) {
   const actionGroupCtx = useActionGroupContext(true);
   const {
+    item = false,
     size: sizeProp = "md",
     type = "button",
     color: colorProp = "grey",
-    dense = false,
     muted = false,
     radius: radiusProp = sizeProp,
     pending = false,
@@ -259,7 +261,7 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
           `sui_button-color_${color}`,
           `sui_button-radius_${radius}`,
           `sui_button-variant_${variant}`,
-          dense && "sui_button-dense",
+          item && "sui_button-item",
           muted && "sui_button-muted",
           pending && "sui_button-pending",
           squared && "sui_button-squared",
