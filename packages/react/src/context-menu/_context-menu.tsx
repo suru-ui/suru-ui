@@ -80,3 +80,39 @@ export function isSeparatorObject(item: unknown): item is {
     (item as { type: unknown }).type === "separator"
   );
 }
+
+/**
+ * 項目がグループのオブジェクトかどうかを判定します。
+ *
+ * @param item 判定する値です。
+ * @returns グループのオブジェクトの場合に `true` を返します。
+ */
+export function isGroupObject(item: unknown): item is {
+  readonly items: readonly unknown[];
+  readonly label?: unknown;
+  readonly type: "group";
+  readonly [key: string]: any;
+} {
+  return (
+    typeof item === "object" &&
+    item !== null &&
+    "type" in item &&
+    (item as { type: unknown }).type === "group" &&
+    "items" in item &&
+    Array.isArray((item as { items: unknown }).items)
+  );
+}
+
+/**
+ * 項目がリンク項目のオブジェクトかどうかを判定します。
+ *
+ * @param item 判定する値です。
+ * @returns リンク項目のオブジェクトの場合に `true` を返します。
+ */
+export function isLinkItemObject(item: unknown): item is {
+  readonly label: unknown;
+  readonly type: "link";
+  readonly [key: string]: any;
+} {
+  return isItemObject(item) && item.type === "link";
+}

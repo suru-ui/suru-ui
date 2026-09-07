@@ -2,11 +2,13 @@ import { mergePropsN } from "@base-ui/react";
 import * as React from "react";
 
 import { CheckIcon } from "../_icons.jsx";
-import type { LikelyVisibleNode } from "../_is-likely-visible-node.js";
+import isLikelyVisibleNode, { type LikelyVisibleNode } from "../_is-likely-visible-node.js";
 import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
 import {
   isItemObject,
+  isGroupObject,
+  isLinkItemObject,
   isRadioItemObject,
   isSeparatorObject,
   isRadioGroupObject,
@@ -17,18 +19,23 @@ import {
   type ContextMenuItemProps,
   type ContextMenuRootProps,
   type ContextMenuRootState,
+  type ContextMenuGroupProps,
   type ContextMenuRootRadius,
   type ContextMenuPortalProps,
   type ContextMenuRootActions,
   type ContextMenuContentProps,
   type ContextMenuTriggerProps,
+  type ContextMenuLinkItemProps,
   type ContextMenuRadioItemProps,
   type ContextMenuRootItemObject,
   type ContextMenuSeparatorProps,
+  type ContextMenuGroupLabelProps,
   type ContextMenuPositionerProps,
   type ContextMenuRadioGroupProps,
+  type ContextMenuRootGroupObject,
   type ContextMenuSubmenuRootProps,
   type ContextMenuCheckboxItemProps,
+  type ContextMenuRootLinkItemObject,
   type ContextMenuRootRadioItemObject,
   type ContextMenuRootSeparatorObject,
   type ContextMenuSubmenuTriggerProps,
@@ -42,11 +49,14 @@ import {
   type ContextMenuCheckboxItemIndicatorProps,
   ContextMenuItem,
   ContextMenuRoot,
+  ContextMenuGroup,
   ContextMenuPortal,
   ContextMenuContent,
   ContextMenuTrigger,
+  ContextMenuLinkItem,
   ContextMenuRadioItem,
   ContextMenuSeparator,
+  ContextMenuGroupLabel,
   ContextMenuPositioner,
   ContextMenuRadioGroup,
   ContextMenuSubmenuRoot,
@@ -88,6 +98,16 @@ export type ContextMenuActionItemObject = ContextMenuRootActionItemObject;
  * {@link ContextMenuRootCheckboxItemObject}
  */
 export type ContextMenuCheckboxItemObject = ContextMenuRootCheckboxItemObject;
+
+/**
+ * {@link ContextMenuRootGroupObject}
+ */
+export type ContextMenuGroupObject = ContextMenuRootGroupObject;
+
+/**
+ * {@link ContextMenuRootLinkItemObject}
+ */
+export type ContextMenuLinkItemObject = ContextMenuRootLinkItemObject;
 
 /**
  * {@link ContextMenuRootRadioGroupObject}
@@ -141,9 +161,24 @@ export type ContextMenuSlotProps = {
   readonly content?: Omit<ContextMenuContentProps, "children"> | undefined;
 
   /**
+   * {@link ContextMenuGroup} に渡す props です。
+   */
+  readonly group?: Omit<ContextMenuGroupProps, "children"> | undefined;
+
+  /**
+   * {@link ContextMenuGroupLabel} に渡す props です。
+   */
+  readonly groupLabel?: Omit<ContextMenuGroupLabelProps, "children"> | undefined;
+
+  /**
    * {@link ContextMenuItem} に渡す props です。
    */
   readonly item?: Omit<ContextMenuItemProps, "children"> | undefined;
+
+  /**
+   * {@link ContextMenuLinkItem} に渡す props です。
+   */
+  readonly linkItem?: Omit<ContextMenuLinkItemProps, "children"> | undefined;
 
   /**
    * {@link ContextMenuPortal} に渡す props です。
@@ -252,11 +287,34 @@ export interface ContextMenuAPI {
   };
 
   /**
+   * {@link ContextMenuGroupLabel} に渡す props を取得します。
+   *
+   * @param item 項目です。
+   */
+  getGroupLabelProps(item: ContextMenuGroupObject): ContextMenuGroupLabelProps | null;
+
+  /**
+   * {@link ContextMenuGroup} に渡す props を取得します。
+   *
+   * @param item 項目です。
+   */
+  getGroupProps(item: ContextMenuGroupObject): Omit<ContextMenuGroupProps, "children">;
+
+  /**
    * {@link ContextMenuItem} に渡す props を取得します。
    *
    * @param item 項目です。
    */
   getItemProps(item: ContextMenuItemObject): Omit<ContextMenuItemProps, "children"> & {
+    children: LikelyVisibleNode | null;
+  };
+
+  /**
+   * {@link ContextMenuLinkItem} に渡す props を取得します。
+   *
+   * @param item 項目です。
+   */
+  getLinkItemProps(item: ContextMenuLinkItemObject): Omit<ContextMenuLinkItemProps, "children"> & {
     children: LikelyVisibleNode | null;
   };
 
@@ -351,11 +409,14 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
     children,
     slotProps: {
       item: itemProps = {},
+      group: groupProps = {},
       portal: portalProps = {},
       content: contentProps = {},
       trigger: triggerProps = {},
+      linkItem: linkItemProps = {},
       radioItem: radioItemProps = {},
       separator: separatorProps = {},
+      groupLabel: groupLabelProps = {},
       positioner: positionerProps = {},
       radioGroup: radioGroupProps = {},
       submenuRoot: submenuRootProps = {},
@@ -378,6 +439,11 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
     },
     getRootProps() {
       return rootProps;
+    },
+    getGroupProps(item) {
+      const { items: _, label: __, type: ___, ...otherGroupProps } = item;
+
+      return mergePropsN([groupProps, otherGroupProps]);
     },
     getPortalProps() {
       return portalProps;
@@ -404,6 +470,14 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
 
       return null;
     },
+    getLinkItemProps(item) {
+      const { label, type: _, ...otherItemProps } = item;
+
+      return {
+        ...mergePropsN([linkItemProps, otherItemProps]),
+        children: toReactNode(label),
+      };
+    },
     getRadioItemProps(item) {
       const { label, type: _, value, ...otherItemProps } = item;
 
@@ -417,6 +491,16 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
       const { type: _, ...otherProps } = item;
 
       return mergePropsN([separatorProps, otherProps]);
+    },
+    getGroupLabelProps(item) {
+      if (!isLikelyVisibleNode(item.label)) {
+        return null;
+      }
+
+      return {
+        ...groupLabelProps,
+        children: toReactNode(item.label),
+      };
     },
     getPositionerProps() {
       return positionerProps;
@@ -516,6 +600,18 @@ export const ContextMenu: IContextMenu = function SuiContextMenu(props: ContextM
       );
     }
 
+    if (isGroupObject(item)) {
+      const groupItem = item as ContextMenuGroupObject;
+      const labelProps = api.getGroupLabelProps(groupItem);
+
+      return (
+        <ContextMenuGroup key={index} {...api.getGroupProps(groupItem)}>
+          {labelProps && <ContextMenuGroupLabel {...labelProps} />}
+          {groupItem.items.map(defaultContentItemRenderer)}
+        </ContextMenuGroup>
+      );
+    }
+
     if (!isItemObject(item)) {
       return toReactNode(item);
     }
@@ -539,6 +635,15 @@ export const ContextMenu: IContextMenu = function SuiContextMenu(props: ContextM
 
     if (isRadioItemObject(item)) {
       return defaultRadioItemRenderer(item, index, items);
+    }
+
+    if (isLinkItemObject(item)) {
+      return (
+        <ContextMenuLinkItem
+          key={index}
+          {...api.getLinkItemProps(item as ContextMenuLinkItemObject)}
+        />
+      );
     }
 
     const { items: subItems } = item as ContextMenuActionItemObject;
@@ -616,6 +721,11 @@ export namespace ContextMenu {
   export type CheckboxItemObject = ContextMenuCheckboxItemObject;
 
   /**
+   * {@link ContextMenuGroupObject}
+   */
+  export type GroupObject = ContextMenuGroupObject;
+
+  /**
    * {@link ContextMenuItemObject}
    */
   export type ItemObject = ContextMenuItemObject;
@@ -624,6 +734,11 @@ export namespace ContextMenu {
    * {@link IContextMenuItemRenderer}
    */
   export interface IItemRenderer<TItem = any> extends IContextMenuItemRenderer<TItem> {}
+
+  /**
+   * {@link ContextMenuLinkItemObject}
+   */
+  export type LinkItemObject = ContextMenuLinkItemObject;
 
   /**
    * {@link ContextMenuRadioGroupObject}

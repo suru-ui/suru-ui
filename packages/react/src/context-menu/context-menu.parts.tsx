@@ -15,6 +15,8 @@ import { ContextMissingError } from "../errors.js";
 import type { IComponent, IUseContext } from "../types.js";
 import {
   isItemObject,
+  isGroupObject,
+  isLinkItemObject,
   isRadioItemObject,
   isSeparatorObject,
   isRadioGroupObject,
@@ -181,6 +183,53 @@ export type ContextMenuRootCheckboxItemObject = Omit<
 };
 
 /**
+ * {@link ContextMenuRoot} のグループです。
+ *
+ * `label` と `items` を含み、その他のプロパティーは {@link ContextMenuGroup} に渡されます。
+ * `label` を指定した場合は {@link ContextMenuGroupLabel} として描画されます。
+ * 子項目には {@link ContextMenuRootItemObject} を指定します。
+ */
+export type ContextMenuRootGroupObject = Omit<ContextMenuGroupProps, "children"> & {
+  /**
+   * 子項目です。
+   */
+  readonly items: readonly ContextMenuRootItemObject[];
+
+  /**
+   * グループのラベルです。
+   *
+   * 指定した場合は {@link ContextMenuGroupLabel} として描画されます。
+   */
+  readonly label?: React.ReactNode | undefined;
+
+  /**
+   * 項目の種類です。
+   *
+   * - `"group"`: グループ
+   */
+  readonly type: "group";
+};
+
+/**
+ * {@link ContextMenuRoot} のリンク項目です。
+ *
+ * `label` を含み、その他のプロパティーは {@link ContextMenuLinkItem} に渡されます。
+ */
+export type ContextMenuRootLinkItemObject = Omit<ContextMenuLinkItemProps, "children" | "label"> & {
+  /**
+   * 項目のラベルです。
+   */
+  readonly label: React.ReactNode;
+
+  /**
+   * 項目の種類です。
+   *
+   * - `"link"`: リンク項目
+   */
+  readonly type: "link";
+};
+
+/**
  * {@link ContextMenuRoot} のラジオグループです。
  *
  * `items` を含み、その他のプロパティーは {@link ContextMenuRadioGroup} に渡されます。
@@ -240,12 +289,14 @@ export type ContextMenuRootSeparatorObject = Omit<ContextMenuSeparatorProps, "ch
 /**
  * {@link ContextMenuRoot} の各項目です。
  *
- * `type` によって通常項目、チェックボックス項目、ラジオ項目、ラジオグループ、区切り線を使い分けます。
+ * `type` によって通常項目、チェックボックス項目、グループ、リンク項目、ラジオ項目、ラジオグループ、区切り線を使い分けます。
  * `type` を省略した場合は通常項目として描画されます。
  */
 export type ContextMenuRootItemObject =
   | ContextMenuRootActionItemObject
   | ContextMenuRootCheckboxItemObject
+  | ContextMenuRootGroupObject
+  | ContextMenuRootLinkItemObject
   | ContextMenuRootRadioGroupObject
   | ContextMenuRootRadioItemObject
   | ContextMenuRootSeparatorObject;
@@ -376,9 +427,19 @@ export namespace Root {
   export type CheckboxItemObject = ContextMenuRootCheckboxItemObject;
 
   /**
+   * {@link ContextMenuRootGroupObject}
+   */
+  export type GroupObject = ContextMenuRootGroupObject;
+
+  /**
    * {@link ContextMenuRootItemObject}
    */
   export type ItemObject = ContextMenuRootItemObject;
+
+  /**
+   * {@link ContextMenuRootLinkItemObject}
+   */
+  export type LinkItemObject = ContextMenuRootLinkItemObject;
 
   /**
    * {@link ContextMenuRootRadioGroupObject}
@@ -700,6 +761,18 @@ const defaultContentItemRenderer: IContextMenuContentItemRenderer = (item, index
     );
   }
 
+  if (isGroupObject(item)) {
+    const { items: groupItems, label, type: _, ...otherGroupProps } = item;
+    const labelNode = toReactNode(label);
+
+    return (
+      <ContextMenuGroup key={index} {...otherGroupProps}>
+        {labelNode === null ? null : <ContextMenuGroupLabel>{labelNode}</ContextMenuGroupLabel>}
+        {groupItems.map(defaultContentItemRenderer)}
+      </ContextMenuGroup>
+    );
+  }
+
   if (!isItemObject(item)) {
     return toReactNode(item);
   }
@@ -719,6 +792,16 @@ const defaultContentItemRenderer: IContextMenuContentItemRenderer = (item, index
 
   if (isRadioItemObject(item)) {
     return defaultRadioItemRenderer(item, index, items);
+  }
+
+  if (isLinkItemObject(item)) {
+    const { label, type: _, ...otherItemProps } = item;
+
+    return (
+      <ContextMenuLinkItem key={index} {...otherItemProps}>
+        {toReactNode(label)}
+      </ContextMenuLinkItem>
+    );
   }
 
   const { label, items: subItems, type: _, ...otherItemProps } = item;
