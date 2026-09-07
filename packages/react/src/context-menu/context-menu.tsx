@@ -1,10 +1,17 @@
 import { mergePropsN } from "@base-ui/react";
 import * as React from "react";
 
+import { CheckIcon } from "../_icons.jsx";
 import type { LikelyVisibleNode } from "../_is-likely-visible-node.js";
 import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
-import { isItemObject } from "./_context-menu.jsx";
+import {
+  isItemObject,
+  isRadioItemObject,
+  isSeparatorObject,
+  isRadioGroupObject,
+  isCheckboxItemObject,
+} from "./_context-menu.jsx";
 import {
   type ContextMenuRootSize,
   type ContextMenuItemProps,
@@ -15,21 +22,38 @@ import {
   type ContextMenuRootActions,
   type ContextMenuContentProps,
   type ContextMenuTriggerProps,
+  type ContextMenuRadioItemProps,
   type ContextMenuRootItemObject,
+  type ContextMenuSeparatorProps,
   type ContextMenuPositionerProps,
+  type ContextMenuRadioGroupProps,
   type ContextMenuSubmenuRootProps,
+  type ContextMenuCheckboxItemProps,
+  type ContextMenuRootRadioItemObject,
+  type ContextMenuRootSeparatorObject,
   type ContextMenuSubmenuTriggerProps,
+  type ContextMenuRootActionItemObject,
+  type ContextMenuRootRadioGroupObject,
   type IContextMenuContentItemRenderer,
   type ContextMenuRootChangeEventReason,
   type ContextMenuRootChangeEventDetails,
+  type ContextMenuRootCheckboxItemObject,
+  type ContextMenuRadioItemIndicatorProps,
+  type ContextMenuCheckboxItemIndicatorProps,
   ContextMenuItem,
   ContextMenuRoot,
   ContextMenuPortal,
   ContextMenuContent,
   ContextMenuTrigger,
+  ContextMenuRadioItem,
+  ContextMenuSeparator,
   ContextMenuPositioner,
+  ContextMenuRadioGroup,
   ContextMenuSubmenuRoot,
+  ContextMenuCheckboxItem,
   ContextMenuSubmenuTrigger,
+  ContextMenuRadioItemIndicator,
+  ContextMenuCheckboxItemIndicator,
 } from "./context-menu.parts.jsx";
 
 // Types
@@ -56,6 +80,31 @@ export type ContextMenuChangeEventReason = ContextMenuRootChangeEventReason;
 export type ContextMenuItemObject = ContextMenuRootItemObject;
 
 /**
+ * {@link ContextMenuRootActionItemObject}
+ */
+export type ContextMenuActionItemObject = ContextMenuRootActionItemObject;
+
+/**
+ * {@link ContextMenuRootCheckboxItemObject}
+ */
+export type ContextMenuCheckboxItemObject = ContextMenuRootCheckboxItemObject;
+
+/**
+ * {@link ContextMenuRootRadioItemObject}
+ */
+export type ContextMenuRadioItemObject = ContextMenuRootRadioItemObject;
+
+/**
+ * {@link ContextMenuRootRadioGroupObject}
+ */
+export type ContextMenuRadioGroupObject = ContextMenuRootRadioGroupObject;
+
+/**
+ * {@link ContextMenuRootSeparatorObject}
+ */
+export type ContextMenuSeparatorObject = ContextMenuRootSeparatorObject;
+
+/**
  * {@link IContextMenuContentItemRenderer}
  */
 export interface IContextMenuItemRenderer<
@@ -77,6 +126,16 @@ export type ContextMenuSize = ContextMenuRootSize;
  */
 export type ContextMenuSlotProps = {
   /**
+   * {@link ContextMenuCheckboxItem} に渡す props です。
+   */
+  readonly checkboxItem?: Omit<ContextMenuCheckboxItemProps, "children"> | undefined;
+
+  /**
+   * {@link ContextMenuCheckboxItemIndicator} に渡す props です。
+   */
+  readonly checkboxItemIndicator?: ContextMenuCheckboxItemIndicatorProps | undefined;
+
+  /**
    * {@link ContextMenuContent} に渡す props です。
    */
   readonly content?: Omit<ContextMenuContentProps, "children"> | undefined;
@@ -95,6 +154,26 @@ export type ContextMenuSlotProps = {
    * {@link ContextMenuPositioner} に渡す props です。
    */
   readonly positioner?: Omit<ContextMenuPositionerProps, "children"> | undefined;
+
+  /**
+   * {@link ContextMenuRadioGroup} に渡す props です。
+   */
+  readonly radioGroup?: Omit<ContextMenuRadioGroupProps, "children"> | undefined;
+
+  /**
+   * {@link ContextMenuRadioItem} に渡す props です。
+   */
+  readonly radioItem?: Omit<ContextMenuRadioItemProps, "children"> | undefined;
+
+  /**
+   * {@link ContextMenuRadioItemIndicator} に渡す props です。
+   */
+  readonly radioItemIndicator?: ContextMenuRadioItemIndicatorProps | undefined;
+
+  /**
+   * {@link ContextMenuSeparator} に渡す props です。
+   */
+  readonly separator?: Omit<ContextMenuSeparatorProps, "children"> | undefined;
 
   /**
    * {@link ContextMenuSubmenuRoot} に渡す props です。
@@ -147,6 +226,23 @@ export type ContextMenuProps<TItem = any> = Omit<ContextMenuRootProps<TItem>, "c
  */
 export interface ContextMenuAPI {
   /**
+   * {@link ContextMenuCheckboxItemIndicator} に渡す props を取得します。
+   */
+  getCheckboxItemIndicatorProps(): ContextMenuCheckboxItemIndicatorProps;
+
+  /**
+   * {@link ContextMenuCheckboxItem} に渡す props を取得します。
+   *
+   * @param item 項目です。
+   */
+  getCheckboxItemProps(item: ContextMenuCheckboxItemObject): Omit<
+    ContextMenuCheckboxItemProps,
+    "children"
+  > & {
+    children: LikelyVisibleNode | null;
+  };
+
+  /**
    * {@link ContextMenuContent} に渡す props を取得します。
    *
    * @param item 項目です。
@@ -175,9 +271,42 @@ export interface ContextMenuAPI {
   getPositionerProps(): Omit<ContextMenuPositionerProps, "children">;
 
   /**
+   * {@link ContextMenuRadioGroup} に渡す props を取得します。
+   *
+   * @param item 項目です。
+   */
+  getRadioGroupProps(
+    item: ContextMenuRadioGroupObject,
+  ): Omit<ContextMenuRadioGroupProps, "children">;
+
+  /**
+   * {@link ContextMenuRadioItemIndicator} に渡す props を取得します。
+   */
+  getRadioItemIndicatorProps(): ContextMenuRadioItemIndicatorProps;
+
+  /**
+   * {@link ContextMenuRadioItem} に渡す props を取得します。
+   *
+   * @param item 項目です。
+   */
+  getRadioItemProps(item: ContextMenuRadioItemObject): Omit<
+    ContextMenuRadioItemProps,
+    "children"
+  > & {
+    children: LikelyVisibleNode | null;
+  };
+
+  /**
    * {@link ContextMenuRoot} に渡す props を取得します。
    */
   getRootProps(): Omit<ContextMenuRootProps, "children">;
+
+  /**
+   * {@link ContextMenuSeparator} に渡す props を取得します。
+   *
+   * @param item 項目です。
+   */
+  getSeparatorProps(item: ContextMenuSeparatorObject): Omit<ContextMenuSeparatorProps, "children">;
 
   /**
    * {@link ContextMenuSubmenuRoot} に渡す props を取得します。
@@ -225,16 +354,22 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
       portal: portalProps = {},
       content: contentProps = {},
       trigger: triggerProps = {},
+      radioItem: radioItemProps = {},
+      separator: separatorProps = {},
       positioner: positionerProps = {},
+      radioGroup: radioGroupProps = {},
       submenuRoot: submenuRootProps = {},
+      checkboxItem: checkboxItemProps = {},
       submenuTrigger: submenuTriggerProps = {},
+      radioItemIndicator: radioItemIndicatorProps = {},
+      checkboxItemIndicator: checkboxItemIndicatorProps = {},
     } = {},
     ...rootProps
   } = props;
 
   return {
     getItemProps(item) {
-      const { label, items: _, ...otherItemProps } = item;
+      const { label, items: _, type: __, ...otherItemProps } = item as ContextMenuActionItemObject;
 
       return {
         ...mergePropsN([itemProps, otherItemProps]),
@@ -269,19 +404,52 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
 
       return null;
     },
+    getRadioItemProps(item) {
+      const { label, type: _, value, ...otherItemProps } = item;
+
+      return {
+        ...mergePropsN([radioItemProps, otherItemProps]),
+        value,
+        children: toReactNode(label),
+      };
+    },
+    getSeparatorProps(item) {
+      const { type: _, ...otherProps } = item;
+
+      return mergePropsN([separatorProps, otherProps]);
+    },
     getPositionerProps() {
       return positionerProps;
+    },
+    getRadioGroupProps(item) {
+      const { items: _, type: __, ...otherGroupProps } = item;
+
+      return mergePropsN([radioGroupProps, otherGroupProps]);
     },
     getSubmenuRootProps() {
       return submenuRootProps;
     },
+    getCheckboxItemProps(item) {
+      const { label, type: _, ...otherItemProps } = item;
+
+      return {
+        ...mergePropsN([checkboxItemProps, otherItemProps]),
+        children: toReactNode(label),
+      };
+    },
     getSubmenuTriggerProps(item) {
-      const { label, items: _, ...otherItemProps } = item;
+      const { label, items: _, type: __, ...otherItemProps } = item as ContextMenuActionItemObject;
 
       return {
         ...mergePropsN([submenuTriggerProps, otherItemProps]),
         children: toReactNode(label),
       };
+    },
+    getRadioItemIndicatorProps() {
+      return radioItemIndicatorProps;
+    },
+    getCheckboxItemIndicatorProps() {
+      return checkboxItemIndicatorProps;
     },
   };
 };
@@ -307,12 +475,73 @@ export const ContextMenu: IContextMenu = function SuiContextMenu(props: ContextM
   const api = useContextMenuAPI(props);
   const triggerProps = api.getTriggerProps();
   const { children, ...otherContentProps } = api.getContentProps();
-  const defaultContentItemRenderer: IContextMenuContentItemRenderer = (item, index) => {
+  const defaultRadioItemRenderer: IContextMenuContentItemRenderer = (item, index) => {
+    if (!isRadioItemObject(item)) {
+      return toReactNode(item);
+    }
+
+    const { children: label, ...otherItemProps } = api.getRadioItemProps(
+      item as ContextMenuRadioItemObject,
+    );
+    const { children: indicatorChildren, ...otherIndicatorProps } =
+      api.getRadioItemIndicatorProps();
+
+    return (
+      <ContextMenuRadioItem key={index} {...otherItemProps}>
+        {label}
+        <ContextMenuRadioItemIndicator {...otherIndicatorProps}>
+          {indicatorChildren ?? <CheckIcon />}
+        </ContextMenuRadioItemIndicator>
+      </ContextMenuRadioItem>
+    );
+  };
+  const defaultContentItemRenderer: IContextMenuContentItemRenderer = (item, index, items) => {
+    if (isSeparatorObject(item)) {
+      return (
+        <ContextMenuSeparator
+          key={index}
+          {...api.getSeparatorProps(item as ContextMenuSeparatorObject)}
+        />
+      );
+    }
+
+    if (isRadioGroupObject(item)) {
+      return (
+        <ContextMenuRadioGroup
+          key={index}
+          {...api.getRadioGroupProps(item as ContextMenuRadioGroupObject)}
+        >
+          {item.items.map(defaultRadioItemRenderer)}
+        </ContextMenuRadioGroup>
+      );
+    }
+
     if (!isItemObject(item)) {
       return toReactNode(item);
     }
 
-    const { items: subItems } = item;
+    if (isCheckboxItemObject(item)) {
+      const { children: label, ...otherItemProps } = api.getCheckboxItemProps(
+        item as ContextMenuCheckboxItemObject,
+      );
+      const { children: indicatorChildren, ...otherIndicatorProps } =
+        api.getCheckboxItemIndicatorProps();
+
+      return (
+        <ContextMenuCheckboxItem key={index} {...otherItemProps}>
+          {label}
+          <ContextMenuCheckboxItemIndicator {...otherIndicatorProps}>
+            {indicatorChildren ?? <CheckIcon />}
+          </ContextMenuCheckboxItemIndicator>
+        </ContextMenuCheckboxItem>
+      );
+    }
+
+    if (isRadioItemObject(item)) {
+      return defaultRadioItemRenderer(item, index, items);
+    }
+
+    const { items: subItems } = item as ContextMenuActionItemObject;
     if (!subItems) {
       return <ContextMenuItem key={index} {...api.getItemProps(item as ContextMenuItemObject)} />;
     }
@@ -362,6 +591,11 @@ export namespace ContextMenu {
   export type SlotProps = ContextMenuSlotProps;
 
   /**
+   * {@link ContextMenuActionItemObject}
+   */
+  export type ActionItemObject = ContextMenuActionItemObject;
+
+  /**
    * {@link ContextMenuActions}
    */
   export type Actions = ContextMenuActions;
@@ -377,6 +611,11 @@ export namespace ContextMenu {
   export type ChangeEventReason = ContextMenuChangeEventReason;
 
   /**
+   * {@link ContextMenuCheckboxItemObject}
+   */
+  export type CheckboxItemObject = ContextMenuCheckboxItemObject;
+
+  /**
    * {@link ContextMenuItemObject}
    */
   export type ItemObject = ContextMenuItemObject;
@@ -387,9 +626,24 @@ export namespace ContextMenu {
   export interface IItemRenderer<TItem = any> extends IContextMenuItemRenderer<TItem> {}
 
   /**
+   * {@link ContextMenuRadioGroupObject}
+   */
+  export type RadioGroupObject = ContextMenuRadioGroupObject;
+
+  /**
+   * {@link ContextMenuRadioItemObject}
+   */
+  export type RadioItemObject = ContextMenuRadioItemObject;
+
+  /**
    * {@link ContextMenuRadius}
    */
   export type Radius = ContextMenuRadius;
+
+  /**
+   * {@link ContextMenuSeparatorObject}
+   */
+  export type SeparatorObject = ContextMenuSeparatorObject;
 
   /**
    * {@link ContextMenuSize}

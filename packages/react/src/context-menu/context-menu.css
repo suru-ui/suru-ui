@@ -183,48 +183,6 @@
 } /* @scope */
 } /* @layer */
 
-/* Arrow */
-@layer sui.component {
-@scope (.sui_context_menu_portal) to ([data-scope]) {
-
-/* 固定 */
-:scope {
-  .sui_context_menu_arrow {
-    border-style: solid;
-    rotate: 45deg;
-  }
-}
-
-/* 変数 */
-:scope {
-  --sui_context_menu_arrow-size: ;
-  --sui_context_menu_arrow-background_color: ;
-  --sui_context_menu_arrow-border_color: ;
-  --sui_context_menu_arrow-border_width: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_context_menu_arrow {
-    width: var(--sui_context_menu_arrow-size);
-    height: var(--sui_context_menu_arrow-size);
-    background-color: var(--sui_context_menu_arrow-background_color);
-    border-color: var(--sui_context_menu_arrow-border_color);
-    border-width: var(--sui_context_menu_arrow-border_width);
-  }
-}
-
-/* 代入 */
-:scope {
-  --sui_context_menu_arrow-size: calc(--sui-space(2) * 2);
-  --sui_context_menu_arrow-background_color: var(--sui_context_menu_content-background_color);
-  --sui_context_menu_arrow-border_color: var(--sui_context_menu_content-border_color);
-  --sui_context_menu_arrow-border_width: var(--sui_context_menu_content-border_width);
-}
-
-} /* @scope */
-} /* @layer */
-
 /* ItemIndicator */
 @layer sui.component {
 @scope (.sui_context_menu_portal) to ([data-scope]) {
@@ -251,9 +209,6 @@
   .sui_context_menu_item_indicator {
     width: var(--sui_context_menu_item_indicator-size);
     height: var(--sui_context_menu_item_indicator-size);
-    opacity: var(--_sui_context_menu_item_indicator-opacity,
-                  var(--sui_context_menu_item_indicator-opacity)
-                );
 
     svg:not(.sui-ignore) {
       width: var(--sui_context_menu_item_indicator__svg-size);
@@ -266,12 +221,39 @@
 /* 代入 */
 :scope {
   --sui_context_menu_item_indicator-size: calc(
-                                            var(--sui_context_menu_item-font_size)
-                                            * var(--sui_context_menu_item-line_height)
+                                            var(--sui_button_content-font_size)
+                                            * var(--sui_button_content-line_height)
                                           );
   --sui_context_menu_item_indicator-opacity: 1;
   --sui_context_menu_item_indicator__svg-size: 100%;
   --sui_context_menu_item_indicator__svg-color: currentColor;
+}
+
+} /* @scope */
+} /* @layer */
+
+/* ItemIndicator */
+/* 項目は ButtonRoot 経由で描画され、ButtonRoot が data-scope を持つため、選択状態による表示切替だけ下限なしの別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_context_menu_portal) {
+
+/* 変数 */
+:scope {
+  --sui_context_menu_item_indicator-opacity: ;
+}
+
+/* 代入 */
+:scope {
+  --sui_context_menu_item_indicator-opacity: 1;
+}
+
+/* 可変 */
+:scope {
+  .sui_context_menu_item_indicator {
+    opacity: var(--_sui_context_menu_item_indicator-opacity,
+               var(--sui_context_menu_item_indicator-opacity)
+             );
+  }
 }
 
 /* 変異 */
@@ -367,6 +349,38 @@
   --sui_context_menu_group_label-line_height: var(--sui-text-std-sm-n-line_height);
   --sui_context_menu_group_label-color: var(--sui-canvas_text-2);
   --sui_context_menu_group_label-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* RadioGroup */
+@layer sui.component {
+@scope (.sui_context_menu_portal) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_context_menu_radio_group {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_context_menu_radio_group-gap: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_context_menu_radio_group {
+    gap: var(--sui_context_menu_radio_group-gap);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_context_menu_radio_group-gap: --sui-gap(1);
 }
 
 } /* @scope */

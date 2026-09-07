@@ -44,7 +44,7 @@ description: Suru UI のコンポーネント CSS を書くときに使用しま
 ```
 
 - `@layer` は通常 `sui.component` です。無効状態だけ `sui.important` を末尾に 1 つ置きます。
-- `@scope` の始点は Root 要素 (`.sui_accordion`) か Portal (`.sui_alert_dialog_portal`) です。終点は原則 `to ([data-scope])` です。例外として、子孫の `[data-scope]` を跨いで状態を参照する必要があるスタイル (例: ボタン内の Indicator の回転) は、下限なしの別ブロックに分離し、理由をコメントで注記します。
+- `@scope` の始点は Root 要素 (`.sui_accordion`) か Portal (`.sui_alert_dialog_portal`) です。終点は原則 `to ([data-scope])` です。子孫の `[data-scope]` を跨ぐ宣言の扱いは `### 例外スコープの分離` に従います。
 - ブロック内はすべて `:scope { ... }` に書きます。
 - 閉じ括弧に `} /* @scope */` と `} /* @layer */` のコメントを付けます。
 - 同じ起点でもパーツごとにブロックを分けます。
@@ -59,6 +59,63 @@ description: Suru UI のコンポーネント CSS を書くときに使用しま
 /* Item */
 @layer sui.component {
 @scope (.sui_accordion) to ([data-scope]) {
+} /* @scope */
+} /* @layer */
+```
+
+### 例外スコープの分離
+
+子孫の `[data-scope]` (例: 項目内の `ButtonRoot`) を跨いで適用する必要がある宣言だけを、下限なしの別ブロックに分離します。
+境界を跨がない宣言は元のブロックに残し、影響範囲を最小化します。
+
+- 分離するブロックには理由をコメントで注記します。
+
+```css
+/* ItemIndicator */
+@layer sui.component {
+@scope (.sui_context_menu_portal) to ([data-scope]) {
+
+/* 可変 */
+:scope {
+  .sui_context_menu_item_indicator {
+    width: var(--sui_context_menu_item_indicator-size);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* ItemIndicator */
+/* 項目は ButtonRoot 経由で描画され、ButtonRoot が data-scope を持つため、選択状態による表示切替だけ下限なしの別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_context_menu_portal) {
+
+/* 変数 */
+:scope {
+  --sui_context_menu_item_indicator-opacity: ;
+}
+
+/* 代入 */
+:scope {
+  --sui_context_menu_item_indicator-opacity: 1;
+}
+
+/* 可変 */
+:scope {
+  .sui_context_menu_item_indicator {
+    opacity: var(--_sui_context_menu_item_indicator-opacity,
+               var(--sui_context_menu_item_indicator-opacity)
+             );
+  }
+}
+
+/* 変異 */
+:scope {
+  .sui_context_menu_item_indicator-unchecked {
+    --_sui_context_menu_item_indicator-opacity: 0;
+  }
+}
+
 } /* @scope */
 } /* @layer */
 ```
@@ -383,7 +440,7 @@ description: Suru UI のコンポーネント CSS を書くときに使用しま
 - 私的変数 (`--_sui_...`) を `変異` 以外で代入しない。
 - 私的変数をフォールバックなしで参照しない。例: `var(--_sui_accordion-border_color, transparent)` のように書きます。
 - `可変` で全体トークンを直接参照しない。例: `var(--sui-canvas-1)` や `var(--sui-radius-md)` は `代入` に書き、`可変` は自部品の変数を経由します。
-- パーツごとに `@layer` + `@scope` ブロックを分ける。複数パーツを 1 ブロックにまとめない。ただし `[data-scope]` の下限の有無が異なるスタイルは、理由のコメント付きで別ブロックに分けます。
+- パーツごとに `@layer` + `@scope` ブロックを分ける。複数パーツを 1 ブロックにまとめない。ただし `[data-scope]` の下限の有無が異なるスタイルは、理由のコメント付きで別ブロックに分けます。分離するのは境界を跨ぐ宣言だけにし、適用する `可変` と `変異` はペアで移します。
 - 状態クラスを子起点に分散させない。DOM ツリー上のルート起点にします (Portal や独立状態の子は例外)。
 - 5 区分の順序を入れ替えない。例: Footer のように `変数` を `固定` より先に置かない。
 - 修飾の書き方を取り違えない。例: 起点自身の修飾は `&.sui_accordion-size_sm`、子孫の修飾は `&:has(.sui_alert_dialog_icon-size_sm)` にします。

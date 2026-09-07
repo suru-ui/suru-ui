@@ -2,13 +2,24 @@ import { ContextMenu } from "@base-ui/react/context-menu";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
+import { CheckIcon } from "../_icons.jsx";
 import renderer from "../_renderer.js";
 import toReactNode from "../_to-react-node.js";
-import { ButtonRoot } from "../button/button.parts.jsx";
+import {
+  type ButtonRootColor,
+  type ButtonRootVariant,
+  ButtonRoot,
+} from "../button/button.parts.jsx";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
 import type { IComponent, IUseContext } from "../types.js";
-import { isItemObject } from "./_context-menu.jsx";
+import {
+  isItemObject,
+  isRadioItemObject,
+  isSeparatorObject,
+  isRadioGroupObject,
+  isCheckboxItemObject,
+} from "./_context-menu.jsx";
 
 import "./context-menu.css";
 
@@ -140,12 +151,12 @@ export type ContextMenuRootRadius = "none" | Size | "full";
 export type ContextMenuRootSize = Size;
 
 /**
- * {@link ContextMenuRoot} の各項目です。
+ * {@link ContextMenuRoot} の通常項目です。
  *
  * `label` を含み、その他のプロパティーは {@link ContextMenuItem} に渡されます。
  * `items` を指定した場合はサブメニューとして描画されます。
  */
-export type ContextMenuRootItemObject = Omit<ContextMenuItemProps, "children" | "label"> & {
+export type ContextMenuRootActionItemObject = Omit<ContextMenuItemProps, "children" | "label"> & {
   /**
    * 子項目です。
    *
@@ -157,7 +168,107 @@ export type ContextMenuRootItemObject = Omit<ContextMenuItemProps, "children" | 
    * 項目のラベルです。
    */
   readonly label: React.ReactNode;
+
+  /**
+   * 項目の種類です。
+   *
+   * - `"item"`: 通常項目
+   * - `"submenu"`: サブメニュー
+   */
+  readonly type?: "item" | "submenu" | undefined;
 };
+
+/**
+ * {@link ContextMenuRoot} のチェックボックス項目です。
+ *
+ * `label` を含み、その他のプロパティーは {@link ContextMenuCheckboxItem} に渡されます。
+ */
+export type ContextMenuRootCheckboxItemObject = Omit<
+  ContextMenuCheckboxItemProps,
+  "children" | "label"
+> & {
+  /**
+   * 項目のラベルです。
+   */
+  readonly label: React.ReactNode;
+
+  /**
+   * 項目の種類です。
+   *
+   * - `"checkbox"`: チェックボックス項目
+   */
+  readonly type: "checkbox";
+};
+
+/**
+ * {@link ContextMenuRoot} のラジオ項目です。
+ *
+ * `label` と `value` を含み、その他のプロパティーは {@link ContextMenuRadioItem} に渡されます。
+ * 単体では選択状態を保持できないため、`items` ではなく {@link ContextMenuRootRadioGroupObject} の子項目として指定します。
+ */
+export type ContextMenuRootRadioItemObject = Omit<
+  ContextMenuRadioItemProps,
+  "children" | "label"
+> & {
+  /**
+   * 項目のラベルです。
+   */
+  readonly label: React.ReactNode;
+
+  /**
+   * 項目の種類です。
+   *
+   * - `"radio"`: ラジオ項目
+   */
+  readonly type: "radio";
+};
+
+/**
+ * {@link ContextMenuRoot} のラジオグループです。
+ *
+ * `items` を含み、その他のプロパティーは {@link ContextMenuRadioGroup} に渡されます。
+ * 子項目には {@link ContextMenuRootRadioItemObject} を指定します。
+ */
+export type ContextMenuRootRadioGroupObject = Omit<ContextMenuRadioGroupProps, "children"> & {
+  /**
+   * ラジオ項目です。
+   */
+  readonly items: readonly ContextMenuRootRadioItemObject[];
+
+  /**
+   * 項目の種類です。
+   *
+   * - `"radio-group"`: ラジオグループ
+   */
+  readonly type: "radio-group";
+};
+
+/**
+ * {@link ContextMenuRoot} の区切り線です。
+ *
+ * その他のプロパティーは {@link ContextMenuSeparator} に渡されます。
+ */
+export type ContextMenuRootSeparatorObject = Omit<ContextMenuSeparatorProps, "children"> & {
+  /**
+   * 項目の種類です。
+   *
+   * - `"separator"`: 区切り線
+   */
+  readonly type: "separator";
+};
+
+/**
+ * {@link ContextMenuRoot} の各項目です。
+ *
+ * `type` によって通常項目、チェックボックス項目、ラジオ項目、ラジオグループ、区切り線を使い分けます。
+ * `type` を省略した場合は通常項目として描画されます。
+ */
+export type ContextMenuRootItemObject =
+  | ContextMenuRootActionItemObject
+  | ContextMenuRootCheckboxItemObject
+  | ContextMenuRootRadioItemObject
+  | ContextMenuRootRadioGroupObject
+  | ContextMenuRootSeparatorObject;
 
 /**
  * {@link ContextMenuRoot} が持つ状態です。
@@ -240,6 +351,11 @@ export namespace Root {
   export type Props<TItem = any> = ContextMenuRootProps<TItem>;
 
   /**
+   * {@link ContextMenuRootActionItemObject}
+   */
+  export type ActionItemObject = ContextMenuRootActionItemObject;
+
+  /**
    * {@link ContextMenuRootActions}
    */
   export type Actions = ContextMenuRootActions;
@@ -255,14 +371,34 @@ export namespace Root {
   export type ChangeEventReason = ContextMenuRootChangeEventReason;
 
   /**
+   * {@link ContextMenuRootCheckboxItemObject}
+   */
+  export type CheckboxItemObject = ContextMenuRootCheckboxItemObject;
+
+  /**
    * {@link ContextMenuRootItemObject}
    */
   export type ItemObject = ContextMenuRootItemObject;
 
   /**
+   * {@link ContextMenuRootRadioGroupObject}
+   */
+  export type RadioGroupObject = ContextMenuRootRadioGroupObject;
+
+  /**
+   * {@link ContextMenuRootRadioItemObject}
+   */
+  export type RadioItemObject = ContextMenuRootRadioItemObject;
+
+  /**
    * {@link ContextMenuRootRadius}
    */
   export type Radius = ContextMenuRootRadius;
+
+  /**
+   * {@link ContextMenuRootSeparatorObject}
+   */
+  export type SeparatorObject = ContextMenuRootSeparatorObject;
 
   /**
    * {@link ContextMenuRootSize}
@@ -517,12 +653,62 @@ export const ContextMenuContent: IComponent<ContextMenuContentProps> =
     );
   };
 
-const defaultContentItemRenderer: IContextMenuContentItemRenderer = (item, index) => {
+const defaultRadioItemRenderer: IContextMenuContentItemRenderer = (item, index) => {
+  if (!isRadioItemObject(item)) {
+    return toReactNode(item);
+  }
+
+  const { label, type: _, ...otherItemProps } = item;
+
+  return (
+    <ContextMenuRadioItem key={index} {...otherItemProps}>
+      {toReactNode(label)}
+      <ContextMenuRadioItemIndicator>
+        <CheckIcon />
+      </ContextMenuRadioItemIndicator>
+    </ContextMenuRadioItem>
+  );
+};
+
+const defaultContentItemRenderer: IContextMenuContentItemRenderer = (item, index, items) => {
+  if (isSeparatorObject(item)) {
+    const { type: _, ...otherProps } = item;
+
+    return <ContextMenuSeparator key={index} {...otherProps} />;
+  }
+
+  if (isRadioGroupObject(item)) {
+    const { items: radioItems, type: _, ...otherGroupProps } = item;
+
+    return (
+      <ContextMenuRadioGroup key={index} {...otherGroupProps}>
+        {radioItems.map(defaultRadioItemRenderer)}
+      </ContextMenuRadioGroup>
+    );
+  }
+
   if (!isItemObject(item)) {
     return toReactNode(item);
   }
 
-  const { label, items: subItems, ...otherItemProps } = item;
+  if (isCheckboxItemObject(item)) {
+    const { label, type: _, ...otherItemProps } = item;
+
+    return (
+      <ContextMenuCheckboxItem key={index} {...otherItemProps}>
+        {toReactNode(label)}
+        <ContextMenuCheckboxItemIndicator>
+          <CheckIcon />
+        </ContextMenuCheckboxItemIndicator>
+      </ContextMenuCheckboxItem>
+    );
+  }
+
+  if (isRadioItemObject(item)) {
+    return defaultRadioItemRenderer(item, index, items);
+  }
+
+  const { label, items: subItems, type: _, ...otherItemProps } = item;
   if (!subItems) {
     return (
       <ContextMenuItem key={index} {...otherItemProps}>
@@ -573,6 +759,37 @@ export namespace Content {
 // ----
 
 /**
+ * 項目の状態に応じた外観を返します。
+ *
+ * チェックされている場合は指定された外観を返し、それ以外の場合は `"naked"` を返します。
+ *
+ * @param state 項目の状態です。
+ * @param variant チェック状態のときの外観です。
+ * @returns 適用する外観です。
+ */
+function getItemVariant(state: object, variant: ButtonRootVariant): ButtonRootVariant {
+  if ("checked" in state && state.checked === true) {
+    return variant;
+  }
+
+  return "naked";
+}
+
+/**
+ * コンテキストメニューの操作項目の配色です。
+ */
+export type ContextMenuItemColor = ButtonRootColor;
+
+/**
+ * コンテキストメニューの操作項目の主な外観です。
+ *
+ * - `"solid"`: 塗りつぶし
+ * - `"naked"`: 背景なし
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type ContextMenuItemVariant = ButtonRootVariant;
+
+/**
  * {@link ContextMenuItem} が持つ状態です。
  */
 export type ContextMenuItemState = ContextMenu.Item.State;
@@ -580,7 +797,23 @@ export type ContextMenuItemState = ContextMenu.Item.State;
 /**
  * {@link ContextMenuItem} に渡す props です。
  */
-export type ContextMenuItemProps = React.ComponentProps<typeof ContextMenu.Item>;
+export type ContextMenuItemProps = React.ComponentProps<typeof ContextMenu.Item> & {
+  /**
+   * 項目の配色を指定します。
+   *
+   * @default "grey"
+   */
+  color?: ContextMenuItemColor | undefined;
+
+  /**
+   * チェック状態のときの外観を指定します。
+   *
+   * チェックされていないときは常に `"naked"` になります。
+   *
+   * @default "naked"
+   */
+  variant?: ContextMenuItemVariant | undefined;
+};
 
 /**
  * コンテキストメニューの操作項目です。
@@ -589,7 +822,7 @@ export const ContextMenuItem: IComponent<ContextMenuItemProps> = function SuiCon
   props,
 ) {
   const ctx = useContextMenuContext();
-  const { render = <div />, className, ...otherProps } = props;
+  const { color = "grey", render = <div />, variant = "naked", className, ...otherProps } = props;
 
   return (
     <ContextMenu.Item
@@ -599,9 +832,9 @@ export const ContextMenuItem: IComponent<ContextMenuItemProps> = function SuiCon
           {...htmlProps}
           item
           size={ctx.size}
-          color="grey"
+          color={color}
           render={renderer(render, state)}
-          variant="naked"
+          variant={getItemVariant(state, variant)}
           disabled={state.disabled}
           nativeButton={false}
         />
@@ -623,10 +856,34 @@ export namespace Item {
    * {@link ContextMenuItemProps}
    */
   export type Props = ContextMenuItemProps;
+
+  /**
+   * {@link ContextMenuItemColor}
+   */
+  export type Color = ContextMenuItemColor;
+
+  /**
+   * {@link ContextMenuItemVariant}
+   */
+  export type Variant = ContextMenuItemVariant;
 }
 
 // LinkItem
 // --------
+
+/**
+ * コンテキストメニューのリンク項目の配色です。
+ */
+export type ContextMenuLinkItemColor = ButtonRootColor;
+
+/**
+ * コンテキストメニューのリンク項目の主な外観です。
+ *
+ * - `"solid"`: 塗りつぶし
+ * - `"naked"`: 背景なし
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type ContextMenuLinkItemVariant = ButtonRootVariant;
 
 /**
  * {@link ContextMenuLinkItem} が持つ状態です。
@@ -636,7 +893,23 @@ export type ContextMenuLinkItemState = ContextMenu.LinkItem.State;
 /**
  * {@link ContextMenuLinkItem} に渡す props です。
  */
-export type ContextMenuLinkItemProps = React.ComponentProps<typeof ContextMenu.LinkItem>;
+export type ContextMenuLinkItemProps = React.ComponentProps<typeof ContextMenu.LinkItem> & {
+  /**
+   * 項目の配色を指定します。
+   *
+   * @default "grey"
+   */
+  color?: ContextMenuLinkItemColor | undefined;
+
+  /**
+   * チェック状態のときの外観を指定します。
+   *
+   * チェックされていないときは常に `"naked"` になります。
+   *
+   * @default "naked"
+   */
+  variant?: ContextMenuLinkItemVariant | undefined;
+};
 
 /**
  * 別のページやセクションへ移動するコンテキストメニュー項目です。
@@ -645,7 +918,7 @@ export const ContextMenuLinkItem: IComponent<ContextMenuLinkItemProps> =
   function SuiContextMenuLinkItem(props) {
     const ctx = useContextMenuContext();
     // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
-    const { render = <a />, className, ...otherProps } = props;
+    const { color = "grey", render = <a />, variant = "naked", className, ...otherProps } = props;
 
     return (
       <ContextMenu.LinkItem
@@ -655,9 +928,9 @@ export const ContextMenuLinkItem: IComponent<ContextMenuLinkItemProps> =
             {...htmlProps}
             item
             size={ctx.size}
-            color="grey"
+            color={color}
             render={renderer(render, state)}
-            variant="naked"
+            variant={getItemVariant(state, variant)}
             nativeButton={false}
           />
         )}
@@ -678,6 +951,16 @@ export namespace LinkItem {
    * {@link ContextMenuLinkItemProps}
    */
   export type Props = ContextMenuLinkItemProps;
+
+  /**
+   * {@link ContextMenuLinkItemColor}
+   */
+  export type Color = ContextMenuLinkItemColor;
+
+  /**
+   * {@link ContextMenuLinkItemVariant}
+   */
+  export type Variant = ContextMenuLinkItemVariant;
 }
 
 // SubmenuRoot
@@ -741,6 +1024,20 @@ export namespace SubmenuRoot {
 // --------------
 
 /**
+ * サブメニュー項目の配色です。
+ */
+export type ContextMenuSubmenuTriggerColor = ButtonRootColor;
+
+/**
+ * サブメニュー項目の主な外観です。
+ *
+ * - `"solid"`: 塗りつぶし
+ * - `"naked"`: 背景なし
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type ContextMenuSubmenuTriggerVariant = ButtonRootVariant;
+
+/**
  * {@link ContextMenuSubmenuTrigger} が持つ状態です。
  */
 export type ContextMenuSubmenuTriggerState = ContextMenu.SubmenuTrigger.State;
@@ -750,7 +1047,23 @@ export type ContextMenuSubmenuTriggerState = ContextMenu.SubmenuTrigger.State;
  */
 export type ContextMenuSubmenuTriggerProps = React.ComponentProps<
   typeof ContextMenu.SubmenuTrigger
->;
+> & {
+  /**
+   * 項目の配色を指定します。
+   *
+   * @default "grey"
+   */
+  color?: ContextMenuSubmenuTriggerColor | undefined;
+
+  /**
+   * チェック状態のときの外観を指定します。
+   *
+   * チェックされていないときは常に `"naked"` になります。
+   *
+   * @default "naked"
+   */
+  variant?: ContextMenuSubmenuTriggerVariant | undefined;
+};
 
 /**
  * サブメニューを開くコンテキストメニュー項目です。
@@ -758,7 +1071,7 @@ export type ContextMenuSubmenuTriggerProps = React.ComponentProps<
 export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProps> =
   function SuiContextMenuSubmenuTrigger(props) {
     const ctx = useContextMenuContext();
-    const { render = <div />, className, ...otherProps } = props;
+    const { color = "grey", render = <div />, variant = "naked", className, ...otherProps } = props;
 
     return (
       <ContextMenu.SubmenuTrigger
@@ -768,9 +1081,9 @@ export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProp
             {...htmlProps}
             item
             size={ctx.size}
-            color="grey"
+            color={color}
             render={renderer(render, state)}
-            variant="naked"
+            variant={getItemVariant(state, variant)}
             disabled={state.disabled}
             nativeButton={false}
           />
@@ -792,6 +1105,16 @@ export namespace SubmenuTrigger {
    * {@link ContextMenuSubmenuTriggerProps}
    */
   export type Props = ContextMenuSubmenuTriggerProps;
+
+  /**
+   * {@link ContextMenuSubmenuTriggerColor}
+   */
+  export type Color = ContextMenuSubmenuTriggerColor;
+
+  /**
+   * {@link ContextMenuSubmenuTriggerVariant}
+   */
+  export type Variant = ContextMenuSubmenuTriggerVariant;
 }
 
 // Group
@@ -940,6 +1263,20 @@ export namespace RadioGroup {
 // ---------
 
 /**
+ * ラジオ項目の配色です。
+ */
+export type ContextMenuRadioItemColor = ButtonRootColor;
+
+/**
+ * ラジオ項目の主な外観です。
+ *
+ * - `"solid"`: 塗りつぶし
+ * - `"naked"`: 背景なし
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type ContextMenuRadioItemVariant = ButtonRootVariant;
+
+/**
  * {@link ContextMenuRadioItem} が持つ状態です。
  */
 export type ContextMenuRadioItemState = ContextMenu.RadioItem.State;
@@ -947,18 +1284,47 @@ export type ContextMenuRadioItemState = ContextMenu.RadioItem.State;
 /**
  * {@link ContextMenuRadioItem} に渡す props です。
  */
-export type ContextMenuRadioItemProps = React.ComponentProps<typeof ContextMenu.RadioItem>;
+export type ContextMenuRadioItemProps = React.ComponentProps<typeof ContextMenu.RadioItem> & {
+  /**
+   * 項目の配色を指定します。
+   *
+   * @default "grey"
+   */
+  color?: ContextMenuRadioItemColor | undefined;
+
+  /**
+   * チェック状態のときの外観を指定します。
+   *
+   * チェックされていないときは常に `"naked"` になります。
+   *
+   * @default "naked"
+   */
+  variant?: ContextMenuRadioItemVariant | undefined;
+};
 
 /**
  * ラジオグループ内のコンテキストメニュー項目です。
  */
 export const ContextMenuRadioItem: IComponent<ContextMenuRadioItemProps> =
   function SuiContextMenuRadioItem(props) {
-    const { className, ...otherProps } = props;
+    const ctx = useContextMenuContext();
+    const { color = "grey", render = <div />, variant = "naked", className, ...otherProps } = props;
 
     return (
       <ContextMenu.RadioItem
         {...otherProps}
+        render={(htmlProps: {}, state) => (
+          <ButtonRoot
+            {...htmlProps}
+            item
+            size={ctx.size}
+            color={color}
+            render={renderer(render, state)}
+            variant={getItemVariant(state, variant)}
+            disabled={state.disabled}
+            nativeButton={false}
+          />
+        )}
         className={cn(className, "sui_context_menu_item", "sui_context_menu_radio_item")}
       />
     );
@@ -976,6 +1342,16 @@ export namespace RadioItem {
    * {@link ContextMenuRadioItemProps}
    */
   export type Props = ContextMenuRadioItemProps;
+
+  /**
+   * {@link ContextMenuRadioItemColor}
+   */
+  export type Color = ContextMenuRadioItemColor;
+
+  /**
+   * {@link ContextMenuRadioItemVariant}
+   */
+  export type Variant = ContextMenuRadioItemVariant;
 }
 
 // RadioItemIndicator
@@ -1031,6 +1407,20 @@ export namespace RadioItemIndicator {
 // ------------
 
 /**
+ * チェックボックス項目の配色です。
+ */
+export type ContextMenuCheckboxItemColor = ButtonRootColor;
+
+/**
+ * チェックボックス項目の主な外観です。
+ *
+ * - `"solid"`: 塗りつぶし
+ * - `"naked"`: 背景なし
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type ContextMenuCheckboxItemVariant = ButtonRootVariant;
+
+/**
  * {@link ContextMenuCheckboxItem} のチェック状態を変更されるイベントの詳細です。
  */
 export type ContextMenuCheckboxItemChangeEventDetails = ContextMenu.CheckboxItem.ChangeEventDetails;
@@ -1048,18 +1438,47 @@ export type ContextMenuCheckboxItemState = ContextMenu.CheckboxItem.State;
 /**
  * {@link ContextMenuCheckboxItem} に渡す props です。
  */
-export type ContextMenuCheckboxItemProps = React.ComponentProps<typeof ContextMenu.CheckboxItem>;
+export type ContextMenuCheckboxItemProps = React.ComponentProps<typeof ContextMenu.CheckboxItem> & {
+  /**
+   * 項目の配色を指定します。
+   *
+   * @default "grey"
+   */
+  color?: ContextMenuCheckboxItemColor | undefined;
+
+  /**
+   * チェック状態のときの外観を指定します。
+   *
+   * チェックされていないときは常に `"naked"` になります。
+   *
+   * @default "naked"
+   */
+  variant?: ContextMenuCheckboxItemVariant | undefined;
+};
 
 /**
  * 設定をオンまたはオフにできるコンテキストメニュー項目です。
  */
 export const ContextMenuCheckboxItem: IComponent<ContextMenuCheckboxItemProps> =
   function SuiContextMenuCheckboxItem(props) {
-    const { className, ...otherProps } = props;
+    const ctx = useContextMenuContext();
+    const { color = "grey", render = <div />, variant = "naked", className, ...otherProps } = props;
 
     return (
       <ContextMenu.CheckboxItem
         {...otherProps}
+        render={(htmlProps: {}, state) => (
+          <ButtonRoot
+            {...htmlProps}
+            item
+            size={ctx.size}
+            color={color}
+            render={renderer(render, state)}
+            variant={getItemVariant(state, variant)}
+            disabled={state.disabled}
+            nativeButton={false}
+          />
+        )}
         className={cn(className, "sui_context_menu_item", "sui_context_menu_checkbox_item")}
       />
     );
@@ -1087,6 +1506,16 @@ export namespace CheckboxItem {
    * {@link ContextMenuCheckboxItemChangeEventReason}
    */
   export type ChangeEventReason = ContextMenuCheckboxItemChangeEventReason;
+
+  /**
+   * {@link ContextMenuCheckboxItemColor}
+   */
+  export type Color = ContextMenuCheckboxItemColor;
+
+  /**
+   * {@link ContextMenuCheckboxItemVariant}
+   */
+  export type Variant = ContextMenuCheckboxItemVariant;
 }
 
 // CheckboxItemIndicator

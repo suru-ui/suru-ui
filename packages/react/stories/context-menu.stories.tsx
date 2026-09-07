@@ -52,7 +52,11 @@ export const Usage = meta.story({
         label: "複製",
       },
       {
+        type: "separator",
+      },
+      {
         label: "削除",
+        color: "red",
       },
     ],
     outlined: false,
@@ -64,35 +68,12 @@ export const Usage = meta.story({
   },
 });
 
-// export const CheckboxItems = meta.story({
-//   name: "チェック項目",
-//   ...ctrl({}),
-//   render() {
-//     const [showSidebar, setShowSidebar] = React.useState(true);
-//     const [showMinimap, setShowMinimap] = React.useState(false);
-
-//     return (
-//       <ContextMenu trigger={<TriggerArea />}>
-//         <ContextMenuParts.CheckboxItem checked={showSidebar} onCheckedChange={setShowSidebar}>
-//           <ContextMenuParts.CheckboxItemIndicator>✓</ContextMenuParts.CheckboxItemIndicator>
-//           サイドバー
-//         </ContextMenuParts.CheckboxItem>
-//         <ContextMenuParts.CheckboxItem checked={showMinimap} onCheckedChange={setShowMinimap}>
-//           <ContextMenuParts.CheckboxItemIndicator>✓</ContextMenuParts.CheckboxItemIndicator>
-//           ミニマップ
-//         </ContextMenuParts.CheckboxItem>
-//       </ContextMenu>
-//     );
-//   },
-// });
-
 export const Nested = meta.story({
   name: "サブメニュー",
   ...ctrl({}),
   render() {
     return (
       <ContextMenu
-        trigger={<TriggerArea />}
         items={[
           {
             label: "編集",
@@ -109,6 +90,69 @@ export const Nested = meta.story({
             ],
           },
         ]}
+        trigger={<TriggerArea />}
+      />
+    );
+  },
+});
+
+export const CheckboxItems = meta.story({
+  name: "チェック項目",
+  ...ctrl({}),
+  render() {
+    const [showSidebar, setShowSidebar] = React.useState(true);
+    const [showMinimap, setShowMinimap] = React.useState(false);
+
+    return (
+      <ContextMenu
+        items={[
+          {
+            type: "checkbox",
+            label: "サイドバー",
+            checked: showSidebar,
+            onCheckedChange: setShowSidebar,
+          },
+          {
+            type: "checkbox",
+            label: "ミニマップ",
+            checked: showMinimap,
+            onCheckedChange: setShowMinimap,
+          },
+        ]}
+        trigger={<TriggerArea />}
+      />
+    );
+  },
+});
+
+export const RadioItems = meta.story({
+  name: "ラジオ項目",
+  ...ctrl({}),
+  render() {
+    const [value, setValue] = React.useState("name");
+
+    return (
+      <ContextMenu
+        items={[
+          {
+            type: "radio-group",
+            value,
+            onValueChange: setValue,
+            items: [
+              {
+                type: "radio",
+                label: "名前",
+                value: "name",
+              },
+              {
+                type: "radio",
+                label: "日付",
+                value: "date",
+              },
+            ],
+          },
+        ]}
+        trigger={<TriggerArea />}
       />
     );
   },
