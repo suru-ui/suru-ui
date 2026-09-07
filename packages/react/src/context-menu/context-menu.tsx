@@ -156,11 +156,6 @@ export type ContextMenuSlotProps = {
   readonly checkboxItemIndicator?: ContextMenuCheckboxItemIndicatorProps | undefined;
 
   /**
-   * {@link ContextMenuContent} に渡す props です。
-   */
-  readonly content?: Omit<ContextMenuContentProps, "children"> | undefined;
-
-  /**
    * {@link ContextMenuGroup} に渡す props です。
    */
   readonly group?: Omit<ContextMenuGroupProps, "children"> | undefined;
@@ -231,27 +226,40 @@ export type ContextMenuSlotProps = {
  */
 export type ContextMenuState = ContextMenuRootState;
 
+type ContextMenuPropsMain = {
+  /**
+   * 各パーツに個別の props を渡すためのオブジェクトです。
+   *
+   * 各パーツの props が優先されます。
+   */
+  slotProps?: ContextMenuSlotProps | undefined;
+
+  /**
+   * コンテキストメニューを開く対象のコンテンツです。
+   *
+   * {@link ContextMenuTrigger} の子要素として直接渡されます。
+   */
+  trigger?: ContextMenuTriggerProps["children"] | undefined;
+};
+
+type ContextMenuPropsRoot<TItem = any> = Omit<
+  ContextMenuRootProps<TItem>,
+  "children" | keyof ContextMenuPropsMain
+>;
+
+type ContextMenuPropsContent = Omit<
+  ContextMenuContentProps,
+  keyof ContextMenuPropsMain | keyof ContextMenuPropsRoot
+>;
+
 /**
  * {@link ContextMenu} に渡す props です。
  *
  * @template TItem 項目の型です。
  */
-export type ContextMenuProps<TItem = any> = Omit<ContextMenuRootProps<TItem>, "children"> &
-  Pick<ContextMenuContentProps, "children"> & {
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     *
-     * 各パーツの props が優先されます。
-     */
-    slotProps?: ContextMenuSlotProps | undefined;
-
-    /**
-     * コンテキストメニューを開く対象のコンテンツです。
-     *
-     * {@link ContextMenuTrigger} の子要素として直接渡されます。
-     */
-    trigger?: ContextMenuTriggerProps["children"] | undefined;
-  };
+export type ContextMenuProps<TItem = any> = ContextMenuPropsMain &
+  ContextMenuPropsRoot<TItem> &
+  ContextMenuPropsContent;
 
 // API
 // ---
@@ -405,13 +413,18 @@ interface IUseContextMenuAPI {
  */
 export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuAPI(props) {
   const {
+    open,
+    size,
+    items,
+    radius,
     trigger,
-    children,
+    disabled,
+    outlined,
+    loopFocus,
     slotProps: {
       item: itemProps = {},
       group: groupProps = {},
       portal: portalProps = {},
-      content: contentProps = {},
       trigger: triggerProps = {},
       linkItem: linkItemProps = {},
       radioItem: radioItemProps = {},
@@ -425,7 +438,14 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
       radioItemIndicator: radioItemIndicatorProps = {},
       checkboxItemIndicator: checkboxItemIndicatorProps = {},
     } = {},
-    ...rootProps
+    actionsRef,
+    defaultOpen,
+    orientation,
+    onOpenChange,
+    closeParentOnEsc,
+    highlightItemOnHover,
+    onOpenChangeComplete,
+    ...contentProps
   } = props;
 
   return {
@@ -437,8 +457,23 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
         children: toReactNode(label),
       };
     },
-    getRootProps() {
-      return rootProps;
+    getRootProps(): Required<Omit<ContextMenuRootProps, "children">> {
+      return {
+        open,
+        size,
+        items,
+        radius,
+        disabled,
+        outlined,
+        loopFocus,
+        actionsRef,
+        defaultOpen,
+        orientation,
+        onOpenChange,
+        closeParentOnEsc,
+        highlightItemOnHover,
+        onOpenChangeComplete,
+      };
     },
     getGroupProps(item) {
       const { items: _, label: __, type: ___, ...otherGroupProps } = item;
@@ -450,9 +485,10 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
     },
     getContentProps(item) {
       const { items = [] } = this.getRootProps();
+      const { children, ...otherContentProps } = contentProps;
 
       return {
-        ...contentProps,
+        ...otherContentProps,
         children: item
           ? null
           : typeof children === "function"
