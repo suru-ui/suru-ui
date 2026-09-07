@@ -46,7 +46,7 @@
     "npm-check-updates": "^22.2.9",
     "npm-run-all2": "^9.0.3",
     "playwright": "^1.62.1",
-    "vite": "^8.2.1",
+    "vite": "^8.2.2",
     "vitest": "^4.1.11"
   }
 }

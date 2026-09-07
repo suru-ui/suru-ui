@@ -12,4 +12,7 @@ trustPolicyExclude:
   - "chokidar"
 allowBuilds:
   esbuild: true
+update:
+  ignoreDeps:
+    - "*" # パッケージの更新は ncu に任せる
 packages: ["packages/core", "packages/theme", "packages/react", "website"]
