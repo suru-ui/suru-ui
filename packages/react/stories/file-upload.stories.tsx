@@ -13,6 +13,7 @@ import {
   HiddenInput as FileUploadPartsHiddenInput,
   ClearTrigger as FileUploadPartsClearTrigger,
   ItemSizeText as FileUploadPartsItemSizeText,
+  useFileUploadAPI,
   ItemDeleteTrigger as FileUploadPartsItemDeleteTrigger,
   useFileUploadContext,
 } from "../src/file-upload/index.js";
@@ -115,13 +116,186 @@ export const WithAccept = meta.story({
     radius: undefined,
     disabled: false,
     required: false,
-    multiple: false,
+    multiple: true,
     accept: "image/*",
     minFileSize: undefined,
     maxFileSize: undefined,
     maxFiles: undefined,
     name: undefined,
   }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-2">
+        <FileUpload {...props} />
+        <p className="text-sm text-slate-500">
+          画像のみ受け付けます。ドラッグアンドドロップでもブラウザーが対応していれば絞り込まれます。
+        </p>
+      </div>
+    );
+  },
+});
+
+export const WithAcceptArray = meta.story({
+  name: "配列での絞り込み",
+  render() {
+    return (
+      <div className="w-80">
+        <FileUpload accept={["image/png", ".pdf"]} multiple>
+          PNG 画像か PDF を選択
+        </FileUpload>
+      </div>
+    );
+  },
+});
+
+export const Controlled = meta.story({
+  name: "制御された選択",
+  render() {
+    const [files, setFiles] = React.useState<File[]>([]);
+
+    return (
+      <div className="flex w-80 flex-col gap-2">
+        <FileUpload value={files} multiple onValueChange={setFiles} />
+        <p className="text-sm text-slate-500">{files.length} 件選択中です。</p>
+        <button type="button" onClick={() => setFiles([])} className="text-sm underline">
+          リセット
+        </button>
+      </div>
+    );
+  },
+});
+
+export const WithValidation = meta.story({
+  name: "検証と拒否の報告",
+  render() {
+    const [accepted, setAccepted] = React.useState<readonly File[]>([]);
+    const [rejected, setRejected] = React.useState<readonly string[]>([]);
+
+    return (
+      <div className="flex w-80 flex-col gap-2">
+        <FileUpload
+          maxFiles={3}
+          multiple
+          maxFileSize={1024 * 1024}
+          minFileSize={1}
+          onFileAccept={(details) => setAccepted(details.files)}
+          onFileReject={(details) => {
+            setAccepted(details.acceptedFiles);
+            setRejected(
+              details.rejectedFiles.map((entry) => `${entry.file.name}: ${entry.reason}`),
+            );
+          }}
+        />
+        <p className="text-sm text-slate-500">最大 3 件、各 1B から 1MB まで受け付けます。</p>
+        {accepted.length > 0 && (
+          <p className="text-sm">受け入れ: {accepted.map((file) => file.name).join(", ")}</p>
+        )}
+        {rejected.length > 0 && (
+          <ul className="text-sm text-red-600">
+            {rejected.map((message) => (
+              <li key={message}>{message}</li>
+            ))}
+          </ul>
+        )}
+      </div>
+    );
+  },
+});
+
+export const SingleReplace = meta.story({
+  name: "単一選択の置き換え",
+  render() {
+    const [files, setFiles] = React.useState<File[]>([]);
+
+    return (
+      <div className="flex w-80 flex-col gap-2">
+        <FileUpload value={files} onValueChange={setFiles} />
+        <p className="text-sm text-slate-500">
+          新しい選択で既存の選択を置き換えます。現在: {files[0]?.name ?? "未選択"}
+        </p>
+      </div>
+    );
+  },
+});
+
+export const WithClearTrigger = meta.story({
+  name: "すべて削除ボタン",
+  render() {
+    return (
+      <div className="w-80">
+        <FileUploadPartsRoot multiple className="flex flex-col gap-2">
+          <FileUploadPartsHiddenInput />
+          <FileUploadPartsDropzone>ここにドラッグアンドドロップ</FileUploadPartsDropzone>
+          <FileUploadPartsClearTrigger>すべて削除</FileUploadPartsClearTrigger>
+          <PartsItems />
+        </FileUploadPartsRoot>
+      </div>
+    );
+  },
+});
+
+export const Disabled = meta.story({
+  name: "無効状態",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    disabled: true,
+    required: false,
+    multiple: true,
+    accept: undefined,
+    minFileSize: undefined,
+    maxFileSize: undefined,
+    maxFiles: undefined,
+    name: undefined,
+  }),
+});
+
+export const InForm = meta.story({
+  name: "フォームでの利用",
+  render() {
+    return (
+      <form onSubmit={(event) => event.preventDefault()} className="flex w-80 flex-col gap-2">
+        <FileUpload name="attachments" multiple required />
+        <button type="submit" className="text-sm underline">
+          送信
+        </button>
+      </form>
+    );
+  },
+});
+
+export const WithSlotProps = meta.story({
+  name: "slotPropsでの調整",
+  render() {
+    return (
+      <div className="w-80">
+        <FileUpload
+          multiple
+          slotProps={{
+            dropzone: { "aria-label": "ファイルを添付" },
+            itemDeleteTrigger: { "aria-label": "削除" },
+          }}
+        />
+      </div>
+    );
+  },
+});
+
+export const WithAPI = meta.story({
+  name: "APIフックの利用",
+  render() {
+    const api = useFileUploadAPI({ multiple: true });
+
+    return (
+      <FileUploadPartsRoot {...api.getRootProps()} className="flex w-80 flex-col gap-2">
+        <FileUploadPartsHiddenInput {...api.getHiddenInputProps()} />
+        <FileUploadPartsDropzone {...api.getDropzoneProps()} />
+        <ApiItems api={api} />
+      </FileUploadPartsRoot>
+    );
+  },
 });
 
 export const Variants = meta.story({
@@ -217,6 +391,37 @@ export const Sizes = meta.story({
   },
 });
 
+export const Radii = meta.story({
+  name: "角丸",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    disabled: false,
+    required: false,
+    multiple: true,
+    accept: undefined,
+    minFileSize: undefined,
+    maxFileSize: undefined,
+    maxFiles: undefined,
+    name: undefined,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-wrap gap-3">
+        {RADII.map((radius) => (
+          <div key={radius} className="flex flex-col items-center gap-2">
+            <span>{radius}</span>
+            <div className="w-80">
+              <FileUpload {...props} radius={radius} />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
 export const WithTriggers = meta.story({
   name: "トリガーとの組み合わせ",
   ...ctrl({
@@ -238,7 +443,7 @@ export const WithTriggers = meta.story({
       <FileUploadPartsRoot {...props} className="flex flex-col gap-2">
         <FileUploadPartsHiddenInput />
         <FileUploadPartsTrigger>ファイルを選択</FileUploadPartsTrigger>
-        <FileUploadPartsDropzone>ここにドラッグ&ドロップ</FileUploadPartsDropzone>
+        <FileUploadPartsDropzone>ここにドラッグアンドドロップ</FileUploadPartsDropzone>
         <PartsItems />
       </FileUploadPartsRoot>
     );
@@ -267,6 +472,34 @@ function PartsItems(): React.ReactElement | null {
         ))}
       </FileUploadPartsItemGroup>
     </div>
+  );
+}
+
+function ApiItems(props: {
+  readonly api: ReturnType<typeof useFileUploadAPI>;
+}): React.ReactElement | null {
+  const { api } = props;
+  const { files } = useFileUploadContext();
+
+  if (files.length === 0) {
+    return null;
+  }
+
+  return (
+    <FileUploadPartsItemGroup {...api.getItemGroupProps()}>
+      {files.map((file) => (
+        <FileUploadPartsItem key={getFileKey(file)} {...api.getItemProps(file)}>
+          <FileUploadPartsItemName {...api.getItemNameProps()} />
+          <FileUploadPartsItemSizeText {...api.getItemSizeTextProps()} />
+          <FileUploadPartsItemDeleteTrigger
+            {...api.getItemDeleteTriggerProps()}
+            aria-label={`${file.name} を削除`}
+          >
+            ×
+          </FileUploadPartsItemDeleteTrigger>
+        </FileUploadPartsItem>
+      ))}
+    </FileUploadPartsItemGroup>
   );
 }
 

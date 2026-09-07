@@ -2,71 +2,95 @@ import * as React from "react";
 
 import type { IComponent } from "../types.js";
 import {
+  type HoverCardHandle,
   type HoverCardRootProps,
   type HoverCardRootState,
   type HoverCardArrowProps,
   type HoverCardPopupProps,
   type HoverCardPortalProps,
+  type HoverCardRootActions,
   type HoverCardTriggerProps,
+  type HoverCardBackdropProps,
   type HoverCardPositionerProps,
-  createHandle,
+  type HoverCardRootChangeEventReason,
+  type HoverCardRootChangeEventDetails,
   HoverCardRoot,
   HoverCardArrow,
   HoverCardPopup,
   HoverCardPortal,
   HoverCardTrigger,
+  HoverCardBackdrop,
   HoverCardPositioner,
+  createHoverCardHandle,
 } from "./hover-card.parts.jsx";
+
+// Types
+// -----
+
 /**
- * {@link HoverCard} の各パーツに渡すプロパティーです。
+ * {@link HoverCardRootActions}
  */
-export type HoverCardSlotProps = {
+export type HoverCardActions = HoverCardRootActions;
+
+/**
+ * {@link HoverCardRootChangeEventDetails}
+ */
+export type HoverCardChangeEventDetails = HoverCardRootChangeEventDetails;
+
+/**
+ * {@link HoverCardRootChangeEventReason}
+ */
+export type HoverCardChangeEventReason = HoverCardRootChangeEventReason;
+
+/**
+ * {@link HoverCard} の各パーツに渡す props です。
+ *
+ * @template TPayload トリガーから受け取るデータの型です。
+ */
+export type HoverCardSlotProps<TPayload = any> = {
   /**
-   * {@link HoverCardArrow} に渡すプロパティーです。
+   * {@link HoverCardArrow} に渡す props です。
    */
   readonly arrow?: HoverCardArrowProps | undefined;
 
   /**
-   * {@link HoverCardPopup} に渡すプロパティーです。
+   * {@link HoverCardBackdrop} に渡す props です。
+   */
+  readonly backdrop?: HoverCardBackdropProps | undefined;
+
+  /**
+   * {@link HoverCardPopup} に渡す props です。
    */
   readonly popup?: Omit<HoverCardPopupProps, "children"> | undefined;
 
   /**
-   * {@link HoverCardPortal} に渡すプロパティーです。
+   * {@link HoverCardPortal} に渡す props です。
    */
-  readonly portal?: HoverCardPortalProps | undefined;
+  readonly portal?: Omit<HoverCardPortalProps, "children"> | undefined;
 
   /**
-   * {@link HoverCardPositioner} に渡すプロパティーです。
+   * {@link HoverCardPositioner} に渡す props です。
    */
   readonly positioner?: HoverCardPositionerProps | undefined;
 
   /**
-   * {@link HoverCardTrigger} に渡すプロパティーです。
-   *
-   * `delay` と `closeDelay` を除くプロパティーが優先されます。
+   * {@link HoverCardTrigger} に渡す props です。
    */
-  readonly trigger?: Omit<HoverCardTriggerProps, "handle" | "delay" | "closeDelay"> | undefined;
+  readonly trigger?:
+    | Omit<HoverCardTriggerProps<TPayload>, "children" | "handle" | "delay" | "closeDelay">
+    | undefined;
 };
 
 /**
- * {@link HoverCard} の状態です。
+ * {@link HoverCard} が持つ状態です。
  */
 export type HoverCardState = HoverCardRootState;
 
-/**
- * {@link HoverCard} コンポーネントのプロパティーです。
- *
- * @template TPayload トリガーから受け取るデータの型です。
- */
-export type HoverCardProps<TPayload = unknown> = Omit<
-  HoverCardRootProps<TPayload>,
-  "children" | "handle"
-> & {
+type HoverCardPropsMain<TPayload = any> = {
   /**
    * ポップアップに表示する内容です。
    */
-  children?: React.ReactNode | undefined;
+  children?: HoverCardPopupProps["children"] | undefined;
 
   /**
    * ホバーカードが閉じるまでの遅延時間 (ミリ秒) です。
@@ -85,11 +109,16 @@ export type HoverCardProps<TPayload = unknown> = Omit<
   delay?: number | undefined;
 
   /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-   *
-   * 各パーツのプロパティーが優先されます。
+   * トリガーとホバーカードに関連付けるためのハンドルです。
    */
-  slotProps?: HoverCardSlotProps | undefined;
+  handle?: HoverCardHandle<TPayload> | undefined;
+
+  /**
+   * 各パーツに個別の props を渡すためのオブジェクトです。
+   *
+   * 各パーツの props が優先されます。
+   */
+  slotProps?: HoverCardSlotProps<TPayload> | undefined;
 
   /**
    * ホバーの反応対象です。
@@ -100,108 +129,180 @@ export type HoverCardProps<TPayload = unknown> = Omit<
   trigger?: HoverCardTriggerProps["children"] | undefined;
 };
 
+type HoverCardPropsRoot<TPayload = any> = Omit<
+  HoverCardRootProps<TPayload>,
+  "children" | keyof HoverCardPropsMain
+>;
+
 /**
- * {@link HoverCard} の各パーツに渡すプロパティーです。
+ * {@link HoverCard} に渡す props です。
  *
  * @template TPayload トリガーから受け取るデータの型です。
  */
-export type HoverCardPartsProps<TPayload = unknown> = {
-  /**
-   * {@link HoverCardPopup} に渡すプロパティーです。
-   *
-   * `slotProps.arrow` を指定すると、`children` の先頭に {@link HoverCardArrow} が設定されます。
-   */
-  readonly popup: HoverCardPopupProps;
+export type HoverCardProps<TPayload = any> = HoverCardPropsMain<TPayload> &
+  HoverCardPropsRoot<TPayload>;
 
-  /**
-   * {@link HoverCardPortal} に渡すプロパティーです。
-   */
-  readonly portal: HoverCardPortalProps | undefined;
-
-  /**
-   * {@link HoverCardPositioner} に渡すプロパティーです。
-   */
-  readonly positioner: HoverCardPositionerProps;
-
-  /**
-   * {@link HoverCardRoot} に渡すプロパティーです。
-   */
-  readonly root: HoverCardRootProps<TPayload>;
-
-  /**
-   * {@link HoverCardTrigger} に渡すプロパティーです。
-   *
-   * トリガーを表示しないときは null になります。
-   */
-  readonly trigger: Omit<HoverCardTriggerProps, "handle"> | null;
-};
+// API
+// ---
 
 /**
- * {@link HoverCard} の各パーツに渡すプロパティーを作るフックです。
+ * {@link HoverCard} を構成する各パーツの props などを作成するための API です。
  *
  * @template TPayload トリガーから受け取るデータの型です。
  */
-export function useHoverCard<TPayload>(
-  props: HoverCardProps<TPayload>,
-): HoverCardPartsProps<TPayload> {
+export interface HoverCardAPI<TPayload = any> {
+  /**
+   * {@link HoverCardArrow} に渡す props を取得します。
+   */
+  getArrowProps(): HoverCardArrowProps | null;
+
+  /**
+   * {@link HoverCardBackdrop} に渡す props を取得します。
+   */
+  getBackdropProps(): HoverCardBackdropProps;
+
+  /**
+   * {@link HoverCardPopup} に渡す props を取得します。
+   */
+  getPopupProps(): Omit<HoverCardPopupProps, "children">;
+
+  /**
+   * {@link HoverCardPortal} に渡す props を取得します。
+   */
+  getPortalProps(): Omit<HoverCardPortalProps, "children">;
+
+  /**
+   * {@link HoverCardPositioner} に渡す props を取得します。
+   */
+  getPositionerProps(): HoverCardPositionerProps;
+
+  /**
+   * {@link HoverCardRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<HoverCardRootProps<TPayload>, "children">;
+
+  /**
+   * {@link HoverCardTrigger} に渡す props を取得します。
+   */
+  getTriggerProps(): Omit<HoverCardTriggerProps<TPayload>, "handle"> | null;
+}
+
+interface IUseHoverCardAPI {
+  /**
+   * {@link HoverCardAPI} を作成します。
+   *
+   * @template TPayload トリガーから受け取るデータの型です。
+   * @param props {@link HoverCard} の props です。
+   * @returns ホバーカードの API です
+   */
+  <TPayload = any>(props: HoverCardProps<TPayload>): HoverCardAPI<TPayload>;
+}
+
+/**
+ * {@link HoverCardAPI} を作成するフックです。
+ */
+export const useHoverCardAPI: IUseHoverCardAPI = function useSuiHoverCardAPI(
+  props: HoverCardProps<any>,
+) {
   const {
+    open,
+    delay,
     trigger,
     children,
+    handle: handleProp,
+    closeDelay,
     slotProps: {
       arrow: arrowProps,
-      popup: popupProps,
-      portal: portalProps,
-      positioner: positionerProps,
-      trigger: triggerProps,
+      popup: popupProps = {},
+      portal: portalProps = {},
+      backdrop: backdropProps = {},
+      positioner: positionerProps = {},
+      trigger: triggerProps = {},
     } = {},
-    delay,
-    closeDelay,
-    ...rootProps
+    triggerId,
+    actionsRef,
+    defaultOpen,
+    onOpenChange,
+    defaultTriggerId,
+    onOpenChangeComplete,
+    ...otherRootProps
   } = props;
+  const handle = React.useMemo(() => handleProp, [handleProp]);
   const {
     side = "bottom",
     align = "start",
     sideOffset = 8,
     ...otherPositionerProps
-  } = positionerProps ?? {};
+  } = positionerProps;
 
   return {
-    root: rootProps as HoverCardRootProps<TPayload>,
-    trigger:
-      !!trigger || !!triggerProps
-        ? {
-            children: trigger!,
-            delay,
-            closeDelay,
-            ...triggerProps,
-          }
-        : null,
-    portal: portalProps,
-    positioner: {
-      ...otherPositionerProps,
-      side,
-      align,
-      sideOffset,
+    getArrowProps() {
+      if (arrowProps) {
+        return arrowProps;
+      }
+
+      return null;
     },
-    popup: {
-      ...popupProps,
-      children: (
-        <>
-          {arrowProps && <HoverCardArrow {...arrowProps} />}
-          {children}
-        </>
-      ),
+    getBackdropProps() {
+      return backdropProps;
+    },
+    getPopupProps() {
+      return popupProps;
+    },
+    getPortalProps() {
+      return portalProps;
+    },
+    getPositionerProps() {
+      return {
+        ...otherPositionerProps,
+        align,
+        side,
+        sideOffset,
+      };
+    },
+    getRootProps(): Required<Omit<HoverCardRootProps<any>, "children">> {
+      return {
+        ...otherRootProps,
+        open,
+        handle,
+        triggerId,
+        actionsRef,
+        defaultOpen,
+        onOpenChange,
+        defaultTriggerId,
+        onOpenChangeComplete,
+      };
+    },
+    getTriggerProps() {
+      if (trigger) {
+        return {
+          ...triggerProps,
+          children: trigger,
+          closeDelay,
+          delay,
+        };
+      }
+
+      return null;
     },
   };
-}
+};
 
-interface HoverCardComponentType extends IComponent<HoverCardProps> {
+export { type HoverCardAPI as API, useHoverCardAPI as useAPI };
+
+// Component
+// ---------
+
+interface IHoverCard extends IComponent<HoverCardProps> {
   /**
-   * ホバーカードを制御するハンドルを新しく作成します。
-   *
-   * 作成したハンドルは {@link HoverCardRoot|Root} と {@link HoverCardTrigger|Trigger} の `handle` プロパティーに渡します。
+   * @template TPayload トリガーから受け取るデータの型です。
    */
-  readonly createHandle: typeof createHandle;
+  <TPayload = any>(props: HoverCardProps<TPayload>): IComponent.Return;
+
+  /**
+   * {@link HoverCardHandle} を作成する関数です。
+   */
+  readonly createHandle: typeof createHoverCardHandle;
 }
 
 /**
@@ -210,44 +311,60 @@ interface HoverCardComponentType extends IComponent<HoverCardProps> {
  * トリガーにマウスカーソルを重ねると、遅延の後に内容を表示します。
  * 構成を細かく制御する場合は、{@link HoverCardRoot|Root} を直接組み立てます。
  */
-export const HoverCard: HoverCardComponentType = /*#__PURE__*/ Object.assign(
+export const HoverCard: IHoverCard = /*#__PURE__*/ Object.assign(
   function SuiHoverCard(props: HoverCardProps) {
-    const partsProps = useHoverCard(props);
+    const api = useHoverCardAPI(props);
+    const arrowProps = api.getArrowProps();
+    const triggerProps = api.getTriggerProps();
 
     return (
-      <HoverCardRoot {...partsProps.root}>
-        {partsProps.trigger && <HoverCardTrigger {...partsProps.trigger} />}
-        <HoverCardPortal {...partsProps.portal}>
-          <HoverCardPositioner {...partsProps.positioner}>
-            <HoverCardPopup {...partsProps.popup} />
+      <HoverCardRoot {...api.getRootProps()}>
+        {triggerProps && <HoverCardTrigger {...triggerProps} />}
+        <HoverCardPortal {...api.getPortalProps()}>
+          <HoverCardBackdrop {...api.getBackdropProps()} />
+          <HoverCardPositioner {...api.getPositionerProps()}>
+            <HoverCardPopup {...api.getPopupProps()}>
+              {arrowProps && <HoverCardArrow {...arrowProps} />}
+              {props.children}
+            </HoverCardPopup>
           </HoverCardPositioner>
         </HoverCardPortal>
       </HoverCardRoot>
     );
   },
-  { createHandle },
+  {
+    createHandle: createHoverCardHandle,
+  },
 );
 
-/**
- * {@link HoverCard} の状態やプロパティーをまとめた型名前空間です。
- *
- * @template TPayload トリガーから受け取るデータの型です。
- */
 export namespace HoverCard {
   /**
-   * {@link HoverCardState} です。
+   * {@link HoverCardState}
    */
   export type State = HoverCardState;
 
   /**
-   * {@link HoverCardProps} です。
-   *
-   * @template TPayload トリガーから受け取るデータの型です。
+   * {@link HoverCardProps}
    */
-  export type Props<TPayload = unknown> = HoverCardProps<TPayload>;
+  export type Props<TPayload = any> = HoverCardProps<TPayload>;
 
   /**
-   * {@link HoverCardSlotProps} です。
+   * {@link HoverCardSlotProps}
    */
   export type SlotProps = HoverCardSlotProps;
+
+  /**
+   * {@link HoverCardActions}
+   */
+  export type Actions = HoverCardActions;
+
+  /**
+   * {@link HoverCardChangeEventDetails}
+   */
+  export type ChangeEventDetails = HoverCardChangeEventDetails;
+
+  /**
+   * {@link HoverCardChangeEventReason}
+   */
+  export type ChangeEventReason = HoverCardChangeEventReason;
 }

@@ -85,15 +85,15 @@ export const FileUploadContext: React.Context<FileUploadContext | null> =
 function useSuiFileUploadContext(optional?: false): FileUploadContext;
 function useSuiFileUploadContext(optional?: boolean): FileUploadContext | null;
 function useSuiFileUploadContext(optional?: boolean): FileUploadContext | null {
-  const context = React.use(FileUploadContext);
-  if (context === null && !optional) {
+  const ctx = React.use(FileUploadContext);
+  if (ctx === null && !optional) {
     throw new ContextMissingError({
       contextName: "FileUploadContext",
       providerName: "FileUploadRoot",
     });
   }
 
-  return context;
+  return ctx;
 }
 
 /**
@@ -101,20 +101,7 @@ function useSuiFileUploadContext(optional?: boolean): FileUploadContext | null {
  */
 export const useFileUploadContext: IUseContext<FileUploadContext> = useSuiFileUploadContext;
 
-/**
- * {@link FileUploadContext} です。
- */
-export type Context = FileUploadContext;
-
-/**
- * {@link FileUploadContext} です。
- */
-export const Context: React.Context<Context | null> = FileUploadContext;
-
-/**
- * {@link useFileUploadContext} です。
- */
-export const useContext: IUseContext<Context> = useFileUploadContext;
+export { FileUploadContext as Context, useFileUploadContext as useContext };
 
 // Root
 // ----
@@ -202,12 +189,12 @@ export type FileUploadRejectEventDetails = {
 };
 
 /**
- * {@link FileUploadRoot} の状態です。
+ * {@link FileUploadRoot} が持つ状態です。
  */
 export type FileUploadRootState = {};
 
 /**
- * {@link FileUploadRoot} に渡すプロパティーです。
+ * {@link FileUploadRoot} に渡す props です。
  */
 export type FileUploadRootProps = Omit<React.ComponentProps<"div">, "defaultValue"> & {
   /**
@@ -237,7 +224,7 @@ export type FileUploadRootProps = Omit<React.ComponentProps<"div">, "defaultValu
   /**
    * ファイルアップロード全体を無効にするかどうかを指定します。
    *
-   * 子パーツのプロパティーより優先されます。
+   * 子パーツの props より優先されます。
    *
    * @default false
    */
@@ -416,7 +403,7 @@ export const FileUploadRoot: IComponent<FileUploadRootProps> = function SuiFileU
     [commit, files, maxFileSize, maxFiles, minFileSize, multiple, onFileAccept, onFileReject],
   );
 
-  const context = React.useMemo<FileUploadContext>(
+  const ctx = React.useMemo<FileUploadContext>(
     () => ({
       accept:
         typeof accept === "string" ? accept : accept === undefined ? undefined : accept.join(","),
@@ -447,7 +434,7 @@ export const FileUploadRoot: IComponent<FileUploadRootProps> = function SuiFileU
   );
 
   return (
-    <Context value={context}>
+    <FileUploadContext value={ctx}>
       <div
         {...otherProps}
         className={cn(
@@ -459,83 +446,81 @@ export const FileUploadRoot: IComponent<FileUploadRootProps> = function SuiFileU
           `sui_file_upload-variant_${variant}`,
           disabled && "sui_file_upload-disabled",
         )}
+        data-scope=""
       >
         {children}
       </div>
-    </Context>
+    </FileUploadContext>
   );
 };
 
+export { FileUploadRoot as Root };
+
 /**
- * {@link FileUploadRoot} の状態やプロパティーをまとめた型名前空間です。
+ * {@link FileUploadRoot} の状態や props をまとめた型名前空間です。
  */
 export namespace Root {
   /**
-   * {@link FileUploadRootState} です。
+   * {@link FileUploadRootState}
    */
   export type State = FileUploadRootState;
 
   /**
-   * {@link FileUploadRootProps} です。
+   * {@link FileUploadRootProps}
    */
   export type Props = FileUploadRootProps;
 
   /**
-   * {@link FileUploadAcceptEventDetails} です。
+   * {@link FileUploadAcceptEventDetails}
    */
   export type AcceptEventDetails = FileUploadAcceptEventDetails;
 
   /**
-   * {@link FileUploadRootColor} です。
+   * {@link FileUploadRootColor}
    */
   export type Color = FileUploadRootColor;
 
   /**
-   * {@link FileUploadFileError} です。
+   * {@link FileUploadFileError}
    */
   export type FileError = FileUploadFileError;
 
   /**
-   * {@link FileUploadFileErrorReason} です。
+   * {@link FileUploadFileErrorReason}
    */
   export type FileErrorReason = FileUploadFileErrorReason;
 
   /**
-   * {@link FileUploadRootRadius} です。
+   * {@link FileUploadRootRadius}
    */
   export type Radius = FileUploadRootRadius;
 
   /**
-   * {@link FileUploadRejectEventDetails} です。
+   * {@link FileUploadRejectEventDetails}
    */
   export type RejectEventDetails = FileUploadRejectEventDetails;
 
   /**
-   * {@link FileUploadRootSize} です。
+   * {@link FileUploadRootSize}
    */
   export type Size = FileUploadRootSize;
 
   /**
-   * {@link FileUploadRootVariant} です。
+   * {@link FileUploadRootVariant}
    */
   export type Variant = FileUploadRootVariant;
 }
-
-/**
- * {@link FileUploadRoot} です。
- */
-export const Root: IComponent<Root.Props> = FileUploadRoot;
 
 // HiddenInput
 // -----------
 
 /**
- * {@link FileUploadHiddenInput} の状態です。
+ * {@link FileUploadHiddenInput} が持つ状態です。
  */
 export type FileUploadHiddenInputState = {};
 
 /**
- * {@link FileUploadHiddenInput} に渡すプロパティーです。
+ * {@link FileUploadHiddenInput} に渡す props です。
  *
  * `type`、`accept`、`multiple`、`required`、`name`、`onChange` はルートの設定から自動的に与えられます。
  */
@@ -552,26 +537,25 @@ export type FileUploadHiddenInputProps = Omit<
  */
 export const FileUploadHiddenInput: IComponent<FileUploadHiddenInputProps> =
   function SuiFileUploadHiddenInput(props) {
-    const { accept, disabled, multiple, name, required, selectFiles, setInputElement } =
-      useSuiFileUploadContext();
+    const ctx = useFileUploadContext();
 
     return useRender({
       defaultTagName: "input",
       props: [
         props,
         {
-          ref: setInputElement,
-          accept,
-          disabled,
-          multiple,
-          name,
-          required,
+          ref: ctx.setInputElement,
+          accept: ctx.accept,
+          disabled: ctx.disabled,
+          multiple: ctx.multiple,
+          name: ctx.name,
+          required: ctx.required,
           type: "file",
           onChange(event: React.ChangeEvent<HTMLInputElement>) {
             const selectedFiles = Array.from(event.target.files ?? []);
             // 同じファイルを再度選んでも change イベントが発火するように、値を必ずリセットします。
             event.target.value = "";
-            selectFiles(selectedFiles);
+            ctx.selectFiles(selectedFiles);
           },
           className: "sui_file_upload_hidden_input",
         },
@@ -579,36 +563,33 @@ export const FileUploadHiddenInput: IComponent<FileUploadHiddenInputProps> =
     });
   };
 
+export { FileUploadHiddenInput as HiddenInput };
+
 /**
- * {@link FileUploadHiddenInput} の状態やプロパティーをまとめた型名前空間です。
+ * {@link FileUploadHiddenInput} の状態や props をまとめた型名前空間です。
  */
 export namespace HiddenInput {
   /**
-   * {@link FileUploadHiddenInputState} です。
+   * {@link FileUploadHiddenInputState}
    */
   export type State = FileUploadHiddenInputState;
 
   /**
-   * {@link FileUploadHiddenInputProps} です。
+   * {@link FileUploadHiddenInputProps}
    */
   export type Props = FileUploadHiddenInputProps;
 }
-
-/**
- * {@link FileUploadHiddenInput} です。
- */
-export const HiddenInput: IComponent<HiddenInput.Props> = FileUploadHiddenInput;
 
 // Trigger
 // -------
 
 /**
- * {@link FileUploadTrigger} の状態です。
+ * {@link FileUploadTrigger} が持つ状態です。
  */
 export type FileUploadTriggerState = {};
 
 /**
- * {@link FileUploadTrigger} に渡すプロパティーです。
+ * {@link FileUploadTrigger} に渡す props です。
  *
  * `disabled` を指定しない場合、{@link FileUploadRootProps.disabled|Root の disabled} に従います。
  */
@@ -624,19 +605,19 @@ export type FileUploadTriggerProps = Omit<
 export const FileUploadTrigger: IComponent<FileUploadTriggerProps> = function SuiFileUploadTrigger(
   props,
 ) {
-  const context = useSuiFileUploadContext(true);
-  const { disabled: disabledProp, ...otherProps } = props;
-  const disabled = context?.disabled ?? disabledProp ?? false;
+  const ctx = useFileUploadContext(true);
+  const { disabled: disabledProp, ...otherButtonProps } = props;
+  const disabled = ctx?.disabled ?? disabledProp ?? false;
 
   return useRender({
     defaultTagName: "button",
     props: [
-      otherProps,
+      otherButtonProps,
       {
         disabled,
         type: "button",
         onClick() {
-          context?.open();
+          ctx?.open();
         },
         className: "sui_file_upload_trigger",
       },
@@ -644,31 +625,28 @@ export const FileUploadTrigger: IComponent<FileUploadTriggerProps> = function Su
   });
 };
 
+export { FileUploadTrigger as Trigger };
+
 /**
- * {@link FileUploadTrigger} の状態やプロパティーをまとめた型名前空間です。
+ * {@link FileUploadTrigger} の状態や props をまとめた型名前空間です。
  */
 export namespace Trigger {
   /**
-   * {@link FileUploadTriggerState} です。
+   * {@link FileUploadTriggerState}
    */
   export type State = FileUploadTriggerState;
 
   /**
-   * {@link FileUploadTriggerProps} です。
+   * {@link FileUploadTriggerProps}
    */
   export type Props = FileUploadTriggerProps;
 }
-
-/**
- * {@link FileUploadTrigger} です。
- */
-export const Trigger: IComponent<Trigger.Props> = FileUploadTrigger;
 
 // Dropzone
 // --------
 
 /**
- * {@link FileUploadDropzone} の状態です。
+ * {@link FileUploadDropzone} が持つ状態です。
  */
 export type FileUploadDropzoneState = {
   /**
@@ -678,7 +656,7 @@ export type FileUploadDropzoneState = {
 };
 
 /**
- * {@link FileUploadDropzone} に渡すプロパティーです。
+ * {@link FileUploadDropzone} に渡す props です。
  *
  * クリックと Enter・Space キーでファイル選択ダイアログを開きます。
  * `disabled` を指定しない場合、{@link FileUploadRootProps.disabled|Root の disabled} に従います。
@@ -694,21 +672,21 @@ export type FileUploadDropzoneProps = Omit<
  */
 export const FileUploadDropzone: IComponent<FileUploadDropzoneProps> =
   function SuiFileUploadDropzone(props) {
-    const context = useSuiFileUploadContext(true);
-    const { disabled: disabledProp, ...otherProps } = props;
-    const disabled = context?.disabled ?? disabledProp ?? false;
+    const ctx = useFileUploadContext(true);
+    const { disabled: disabledProp, ...otherButtonProps } = props;
+    const disabled = ctx?.disabled ?? disabledProp ?? false;
     const [dragging, setDragging] = React.useState(false);
 
     return useRender({
       defaultTagName: "button",
       state: { dragging },
       props: [
-        otherProps,
+        otherButtonProps,
         {
           disabled,
           type: "button",
           onClick() {
-            context?.open();
+            ctx?.open();
           },
           onDragEnter(event: React.DragEvent<HTMLButtonElement>) {
             event.preventDefault();
@@ -727,7 +705,7 @@ export const FileUploadDropzone: IComponent<FileUploadDropzoneProps> =
             setDragging(false);
             if (!disabled) {
               const droppedFiles = Array.from(event.dataTransfer?.files ?? []);
-              context?.selectFiles(droppedFiles);
+              ctx?.selectFiles(droppedFiles);
             }
           },
           className: cn(
@@ -739,36 +717,33 @@ export const FileUploadDropzone: IComponent<FileUploadDropzoneProps> =
     });
   };
 
+export { FileUploadDropzone as Dropzone };
+
 /**
- * {@link FileUploadDropzone} の状態やプロパティーをまとめた型名前空間です。
+ * {@link FileUploadDropzone} の状態や props をまとめた型名前空間です。
  */
 export namespace Dropzone {
   /**
-   * {@link FileUploadDropzoneState} です。
+   * {@link FileUploadDropzoneState}
    */
   export type State = FileUploadDropzoneState;
 
   /**
-   * {@link FileUploadDropzoneProps} です。
+   * {@link FileUploadDropzoneProps}
    */
   export type Props = FileUploadDropzoneProps;
 }
-
-/**
- * {@link FileUploadDropzone} です。
- */
-export const Dropzone: IComponent<Dropzone.Props> = FileUploadDropzone;
 
 // ClearTrigger
 // ------------
 
 /**
- * {@link FileUploadClearTrigger} の状態です。
+ * {@link FileUploadClearTrigger} が持つ状態です。
  */
 export type FileUploadClearTriggerState = {};
 
 /**
- * {@link FileUploadClearTrigger} に渡すプロパティーです。
+ * {@link FileUploadClearTrigger} に渡す props です。
  *
  * `disabled` を指定しない場合、ファイルが選択されていないときと {@link FileUploadRootProps.disabled|Root の disabled} のときに無効化されます。
  */
@@ -783,22 +758,22 @@ export type FileUploadClearTriggerProps = Omit<
  */
 export const FileUploadClearTrigger: IComponent<FileUploadClearTriggerProps> =
   function SuiFileUploadClearTrigger(props) {
-    const context = useSuiFileUploadContext(true);
-    const { disabled: disabledProp, ...otherProps } = props;
+    const ctx = useFileUploadContext(true);
+    const { disabled: disabledProp, ...otherButtonProps } = props;
     const disabled =
-      context === null
+      ctx === null
         ? (disabledProp ?? false)
-        : context.disabled || disabledProp || context.files.length === 0;
+        : ctx.disabled || disabledProp || ctx.files.length === 0;
 
     return useRender({
       defaultTagName: "button",
       props: [
-        otherProps,
+        otherButtonProps,
         {
           disabled,
           type: "button",
           onClick() {
-            context?.clear();
+            ctx?.clear();
           },
           className: "sui_file_upload_clear_trigger",
         },
@@ -806,36 +781,33 @@ export const FileUploadClearTrigger: IComponent<FileUploadClearTriggerProps> =
     });
   };
 
+export { FileUploadClearTrigger as ClearTrigger };
+
 /**
- * {@link FileUploadClearTrigger} の状態やプロパティーをまとめた型名前空間です。
+ * {@link FileUploadClearTrigger} の状態や props をまとめた型名前空間です。
  */
 export namespace ClearTrigger {
   /**
-   * {@link FileUploadClearTriggerState} です。
+   * {@link FileUploadClearTriggerState}
    */
   export type State = FileUploadClearTriggerState;
 
   /**
-   * {@link FileUploadClearTriggerProps} です。
+   * {@link FileUploadClearTriggerProps}
    */
   export type Props = FileUploadClearTriggerProps;
 }
-
-/**
- * {@link FileUploadClearTrigger} です。
- */
-export const ClearTrigger: IComponent<ClearTrigger.Props> = FileUploadClearTrigger;
 
 // ItemGroup
 // ---------
 
 /**
- * {@link FileUploadItemGroup} の状態です。
+ * {@link FileUploadItemGroup} が持つ状態です。
  */
 export type FileUploadItemGroupState = {};
 
 /**
- * {@link FileUploadItemGroup} に渡すプロパティーです。
+ * {@link FileUploadItemGroup} に渡す props です。
  */
 export type FileUploadItemGroupProps = Omit<React.ComponentProps<"ul">, keyof RenderProps> &
   RenderProps<FileUploadItemGroupState>;
@@ -856,25 +828,22 @@ export const FileUploadItemGroup: IComponent<FileUploadItemGroupProps> =
     });
   };
 
+export { FileUploadItemGroup as ItemGroup };
+
 /**
- * {@link FileUploadItemGroup} の状態やプロパティーをまとめた型名前空間です。
+ * {@link FileUploadItemGroup} の状態や props をまとめた型名前空間です。
  */
 export namespace ItemGroup {
   /**
-   * {@link FileUploadItemGroupState} です。
+   * {@link FileUploadItemGroupState}
    */
   export type State = FileUploadItemGroupState;
 
   /**
-   * {@link FileUploadItemGroupProps} です。
+   * {@link FileUploadItemGroupProps}
    */
   export type Props = FileUploadItemGroupProps;
 }
-
-/**
- * {@link FileUploadItemGroup} です。
- */
-export const ItemGroup: IComponent<ItemGroup.Props> = FileUploadItemGroup;
 
 // ItemContext
 // -----------
@@ -898,15 +867,15 @@ export const FileUploadItemContext: React.Context<FileUploadItemContext | null> 
 function useSuiFileUploadItemContext(optional?: false): FileUploadItemContext;
 function useSuiFileUploadItemContext(optional?: boolean): FileUploadItemContext | null;
 function useSuiFileUploadItemContext(optional?: boolean): FileUploadItemContext | null {
-  const context = React.use(FileUploadItemContext);
-  if (context === null && !optional) {
+  const ctx = React.use(FileUploadItemContext);
+  if (ctx === null && !optional) {
     throw new ContextMissingError({
       contextName: "FileUploadItemContext",
       providerName: "FileUploadItem",
     });
   }
 
-  return context;
+  return ctx;
 }
 
 /**
@@ -915,31 +884,18 @@ function useSuiFileUploadItemContext(optional?: boolean): FileUploadItemContext 
 export const useFileUploadItemContext: IUseContext<FileUploadItemContext> =
   useSuiFileUploadItemContext;
 
-/**
- * {@link FileUploadItemContext} です。
- */
-export type ItemContext = FileUploadItemContext;
-
-/**
- * {@link FileUploadItemContext} です。
- */
-export const ItemContext: React.Context<ItemContext | null> = FileUploadItemContext;
-
-/**
- * {@link useFileUploadItemContext} です。
- */
-export const useItemContext: IUseContext<ItemContext> = useFileUploadItemContext;
+export { FileUploadItemContext as ItemContext, useFileUploadItemContext as useItemContext };
 
 // Item
 // ----
 
 /**
- * {@link FileUploadItem} の状態です。
+ * {@link FileUploadItem} が持つ状態です。
  */
 export type FileUploadItemState = {};
 
 /**
- * {@link FileUploadItem} に渡すプロパティーです。
+ * {@link FileUploadItem} に渡す props です。
  */
 export type FileUploadItemProps = Omit<React.ComponentProps<"li">, keyof RenderProps> &
   RenderProps<FileUploadItemState> & {
@@ -955,51 +911,48 @@ export type FileUploadItemProps = Omit<React.ComponentProps<"li">, keyof RenderP
  * 子パーツへファイルを伝播します。
  */
 export const FileUploadItem: IComponent<FileUploadItemProps> = function SuiFileUploadItem(props) {
-  const { file, ...otherProps } = props;
-  const context = React.useMemo<FileUploadItemContext>(() => ({ file }), [file]);
+  const { file, ...otherLiProps } = props;
+  const ctx = React.useMemo<FileUploadItemContext>(() => ({ file }), [file]);
   const element = useRender({
     defaultTagName: "li",
     props: [
-      otherProps,
+      otherLiProps,
       {
         className: "sui_file_upload_item",
       },
     ],
   });
 
-  return <ItemContext value={context}>{element}</ItemContext>;
+  return <FileUploadItemContext value={ctx}>{element}</FileUploadItemContext>;
 };
 
+export { FileUploadItem as Item };
+
 /**
- * {@link FileUploadItem} の状態やプロパティーをまとめた型名前空間です。
+ * {@link FileUploadItem} の状態や props をまとめた型名前空間です。
  */
 export namespace Item {
   /**
-   * {@link FileUploadItemState} です。
+   * {@link FileUploadItemState}
    */
   export type State = FileUploadItemState;
 
   /**
-   * {@link FileUploadItemProps} です。
+   * {@link FileUploadItemProps}
    */
   export type Props = FileUploadItemProps;
 }
-
-/**
- * {@link FileUploadItem} です。
- */
-export const Item: IComponent<Item.Props> = FileUploadItem;
 
 // ItemName
 // --------
 
 /**
- * {@link FileUploadItemName} の状態です。
+ * {@link FileUploadItemName} が持つ状態です。
  */
 export type FileUploadItemNameState = {};
 
 /**
- * {@link FileUploadItemName} に渡すプロパティーです。
+ * {@link FileUploadItemName} に渡す props です。
  */
 export type FileUploadItemNameProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
   RenderProps<FileUploadItemNameState>;
@@ -1009,7 +962,7 @@ export type FileUploadItemNameProps = Omit<React.ComponentProps<"span">, keyof R
  */
 export const FileUploadItemName: IComponent<FileUploadItemNameProps> =
   function SuiFileUploadItemName(props) {
-    const { file } = useSuiFileUploadItemContext();
+    const { file } = useFileUploadItemContext();
 
     return useRender({
       defaultTagName: "span",
@@ -1023,36 +976,33 @@ export const FileUploadItemName: IComponent<FileUploadItemNameProps> =
     });
   };
 
+export { FileUploadItemName as ItemName };
+
 /**
- * {@link FileUploadItemName} の状態やプロパティーをまとめた型名前空間です。
+ * {@link FileUploadItemName} の状態や props をまとめた型名前空間です。
  */
 export namespace ItemName {
   /**
-   * {@link FileUploadItemNameState} です。
+   * {@link FileUploadItemNameState}
    */
   export type State = FileUploadItemNameState;
 
   /**
-   * {@link FileUploadItemNameProps} です。
+   * {@link FileUploadItemNameProps}
    */
   export type Props = FileUploadItemNameProps;
 }
-
-/**
- * {@link FileUploadItemName} です。
- */
-export const ItemName: IComponent<ItemName.Props> = FileUploadItemName;
 
 // ItemSizeText
 // ------------
 
 /**
- * {@link FileUploadItemSizeText} の状態です。
+ * {@link FileUploadItemSizeText} が持つ状態です。
  */
 export type FileUploadItemSizeTextState = {};
 
 /**
- * {@link FileUploadItemSizeText} に渡すプロパティーです。
+ * {@link FileUploadItemSizeText} に渡す props です。
  */
 export type FileUploadItemSizeTextProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
   RenderProps<FileUploadItemSizeTextState>;
@@ -1062,7 +1012,7 @@ export type FileUploadItemSizeTextProps = Omit<React.ComponentProps<"span">, key
  */
 export const FileUploadItemSizeText: IComponent<FileUploadItemSizeTextProps> =
   function SuiFileUploadItemSizeText(props) {
-    const { file } = useSuiFileUploadItemContext();
+    const { file } = useFileUploadItemContext();
 
     return useRender({
       defaultTagName: "span",
@@ -1076,36 +1026,33 @@ export const FileUploadItemSizeText: IComponent<FileUploadItemSizeTextProps> =
     });
   };
 
+export { FileUploadItemSizeText as ItemSizeText };
+
 /**
- * {@link FileUploadItemSizeText} の状態やプロパティーをまとめた型名前空間です。
+ * {@link FileUploadItemSizeText} の状態や props をまとめた型名前空間です。
  */
 export namespace ItemSizeText {
   /**
-   * {@link FileUploadItemSizeTextState} です。
+   * {@link FileUploadItemSizeTextState}
    */
   export type State = FileUploadItemSizeTextState;
 
   /**
-   * {@link FileUploadItemSizeTextProps} です。
+   * {@link FileUploadItemSizeTextProps}
    */
   export type Props = FileUploadItemSizeTextProps;
 }
-
-/**
- * {@link FileUploadItemSizeText} です。
- */
-export const ItemSizeText: IComponent<ItemSizeText.Props> = FileUploadItemSizeText;
 
 // ItemDeleteTrigger
 // -----------------
 
 /**
- * {@link FileUploadItemDeleteTrigger} の状態です。
+ * {@link FileUploadItemDeleteTrigger} が持つ状態です。
  */
 export type FileUploadItemDeleteTriggerState = {};
 
 /**
- * {@link FileUploadItemDeleteTrigger} に渡すプロパティーです。
+ * {@link FileUploadItemDeleteTrigger} に渡す props です。
  *
  * `disabled` を指定しない場合、{@link FileUploadRootProps.disabled|Root の disabled} に従います。
  */
@@ -1120,21 +1067,21 @@ export type FileUploadItemDeleteTriggerProps = Omit<
  */
 export const FileUploadItemDeleteTrigger: IComponent<FileUploadItemDeleteTriggerProps> =
   function SuiFileUploadItemDeleteTrigger(props) {
-    const context = useSuiFileUploadContext(true);
-    const { file } = useSuiFileUploadItemContext();
-    const { disabled: disabledProp, ...otherProps } = props;
+    const ctx = useFileUploadContext(true);
+    const { file } = useFileUploadItemContext();
+    const { disabled: disabledProp, ...otherButtonProps } = props;
     const disabled =
-      context === null ? (disabledProp ?? false) : context.disabled || (disabledProp ?? false);
+      ctx === null ? (disabledProp ?? false) : ctx.disabled || (disabledProp ?? false);
 
     return useRender({
       defaultTagName: "button",
       props: [
-        otherProps,
+        otherButtonProps,
         {
           disabled,
           type: "button",
           onClick() {
-            context?.remove(file);
+            ctx?.remove(file);
           },
           className: "sui_file_upload_item_delete_trigger",
         },
@@ -1142,25 +1089,22 @@ export const FileUploadItemDeleteTrigger: IComponent<FileUploadItemDeleteTrigger
     });
   };
 
+export { FileUploadItemDeleteTrigger as ItemDeleteTrigger };
+
 /**
- * {@link FileUploadItemDeleteTrigger} の状態やプロパティーをまとめた型名前空間です。
+ * {@link FileUploadItemDeleteTrigger} の状態や props をまとめた型名前空間です。
  */
 export namespace ItemDeleteTrigger {
   /**
-   * {@link FileUploadItemDeleteTriggerState} です。
+   * {@link FileUploadItemDeleteTriggerState}
    */
   export type State = FileUploadItemDeleteTriggerState;
 
   /**
-   * {@link FileUploadItemDeleteTriggerProps} です。
+   * {@link FileUploadItemDeleteTriggerProps}
    */
   export type Props = FileUploadItemDeleteTriggerProps;
 }
-
-/**
- * {@link FileUploadItemDeleteTrigger} です。
- */
-export const ItemDeleteTrigger: IComponent<ItemDeleteTrigger.Props> = FileUploadItemDeleteTrigger;
 
 // Helpers
 // -------

@@ -4,20 +4,25 @@ import * as React from "react";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
+import "./form.css";
+
 // Root
 // ----
-
-/**
- * {@link FormRoot} の入力値を表す型です。
- *
- * @template TValues フォームの入力値を表す型です。
- */
-export type FormRootValues<TValues extends Record<string, any> = Record<string, any>> = TValues;
 
 /**
  * {@link FormRoot} を命令的に操作するためのオブジェクトです。
  */
 export type FormRootActions = Form.Actions;
+
+/**
+ * {@link FormRoot} が送信されたイベントの詳細です。
+ */
+export type FormRootSubmitEventDetails = Form.SubmitEventDetails;
+
+/**
+ * {@link FormRoot} が送信された理由です。
+ */
+export type FormRootSubmitEventReason = Form.SubmitEventReason;
 
 /**
  * {@link FormRoot} の検証を行うタイミングを決定します。
@@ -29,22 +34,19 @@ export type FormRootActions = Form.Actions;
 export type FormRootValidationMode = Form.ValidationMode;
 
 /**
- * {@link FormRoot} が送信された理由です。
+ * {@link FormRoot} の入力値を表す型です。
+ *
+ * @template TValues フォームの入力値を表す型です。
  */
-export type FormRootSubmitEventReason = Form.SubmitEventReason;
+export type FormRootValues<TValues extends Record<string, any> = Record<string, any>> = TValues;
 
 /**
- * {@link FormRoot} が送信されたイベントの詳細です。
- */
-export type FormRootSubmitEventDetails = Form.SubmitEventDetails;
-
-/**
- * {@link FormRoot} の状態です。
+ * {@link FormRoot} が持つ状態です。
  */
 export type FormRootState = Form.State;
 
 /**
- * {@link FormRoot} に渡すプロパティーです。
+ * {@link FormRoot} に渡す props です。
  *
  * @template TValues フォームの入力値を表す型です。
  */
@@ -52,60 +54,57 @@ export type FormRootProps<TValues extends FormRootValues = FormRootValues> = Rea
   typeof Form<TValues>
 >;
 
-interface FormRootComponentType extends IComponent<FormRootProps> {
-  <TValues extends FormRootValues>(props: FormRootProps<TValues>): React.ReactElement | null;
+interface IFormRoot extends IComponent<FormRootProps> {
+  /**
+   * @template TValues フォームの入力値を表す型です。
+   */
+  <TValues extends FormRootValues>(props: FormRootProps<TValues>): IComponent.Return;
 }
 
 /**
  * フォームのルートコンポーネントです。
  */
-export const FormRoot: FormRootComponentType = function SuiFormRoot(props: FormRootProps) {
+export const FormRoot: IFormRoot = function SuiFormRoot(props: FormRootProps) {
   const { className, ...otherProps } = props;
 
-  return <Form {...otherProps} className={cn(className, "sui_form")} />;
+  return <Form {...otherProps} className={cn(className, "sui_form")} data-scope="" />;
 };
 
-/**
- * {@link FormRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { FormRoot as Root };
+
 export namespace Root {
   /**
-   * {@link FormRootState} です。
+   * {@link FormRootState}
    */
   export type State = FormRootState;
 
   /**
-   * {@link FormRootProps} です。
+   * {@link FormRootProps}
    */
   export type Props<TValues extends FormRootValues = FormRootValues> = FormRootProps<TValues>;
 
   /**
-   * {@link FormRootActions} です。
+   * {@link FormRootActions}
    */
   export type Actions = FormRootActions;
 
   /**
-   * {@link FormRootSubmitEventDetails} です。
+   * {@link FormRootSubmitEventDetails}
    */
   export type SubmitEventDetails = FormRootSubmitEventDetails;
 
   /**
-   * {@link FormRootSubmitEventReason} です。
+   * {@link FormRootSubmitEventReason}
    */
   export type SubmitEventReason = FormRootSubmitEventReason;
 
   /**
-   * {@link FormRootValidationMode} です。
+   * {@link FormRootValidationMode}
    */
   export type ValidationMode = FormRootValidationMode;
 
   /**
-   * {@link FormRootValues} です。
+   * {@link FormRootValues}
    */
   export type Values<TValues extends FormRootValues = FormRootValues> = FormRootValues<TValues>;
 }
-
-/**
- * {@link FormRoot} です。
- */
-export const Root: FormRootComponentType = FormRoot;

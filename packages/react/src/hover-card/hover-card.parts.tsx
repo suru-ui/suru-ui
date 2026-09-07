@@ -11,26 +11,53 @@ import "./hover-card.css";
 
 /**
  * ホバーカードを制御するハンドルです。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
  */
-export type HoverCardHandle<TPayload = unknown> = PreviewCard.Handle<TPayload>;
+export interface HoverCardHandle<TPayload = any> extends PreviewCard.Handle<TPayload> {}
+
+interface ICreateHoverCardHandle {
+  /**
+   * @template TPayload トリガーが送信するデータの型です。
+   * @returns ホバーカードを制御するハンドルです。
+   */
+  <TPayload = any>(): HoverCardHandle<TPayload>;
+}
 
 /**
- * ホバーカードを制御するハンドルを新しく作成します。
- *
- * 作成したハンドルを {@link Root} と {@link Trigger} の `handle` プロパティーに渡すことで、トリガーとホバーカードの内容を関連付けます。
+ * {@link HoverCardHandle} を作成する関数です。
  */
-export const createHandle: typeof PreviewCard.createHandle = PreviewCard.createHandle;
+export const createHoverCardHandle: ICreateHoverCardHandle = function createSuiHoverCardHandle() {
+  return PreviewCard.createHandle();
+};
+
+export { type HoverCardHandle as Handle, createHoverCardHandle as createHandle };
 
 // Root
 // ----
 
 /**
- * {@link HoverCardRoot} の状態です。
+ * {@link HoverCardRoot} を命令的に操作するためのオブジェクトです。
+ */
+export type HoverCardRootActions = PreviewCard.Root.Actions;
+
+/**
+ * {@link HoverCardRoot} の開閉状態を変更するイベントの詳細です。
+ */
+export type HoverCardRootChangeEventDetails = PreviewCard.Root.ChangeEventDetails;
+
+/**
+ * {@link HoverCardRoot} の開閉状態を変更する理由です。
+ */
+export type HoverCardRootChangeEventReason = PreviewCard.Root.ChangeEventReason;
+
+/**
+ * {@link HoverCardRoot} が持つ状態です。
  */
 export type HoverCardRootState = PreviewCard.Root.State;
 
 /**
- * {@link HoverCardRoot} に渡すプロパティーです。
+ * {@link HoverCardRoot} に渡す props です。
  *
  * @template TPayload トリガーから受け取るデータの型です。
  */
@@ -65,38 +92,47 @@ export const HoverCardRoot: HoverCardRootComponent = function SuiHoverCardRoot<T
   return <PreviewCard.Root {...props} />;
 };
 
-/**
- * {@link HoverCardRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { HoverCardRoot as Root };
+
 export namespace Root {
   /**
-   * {@link HoverCardRootState} です。
+   * {@link HoverCardRootState}
    */
   export type State = HoverCardRootState;
 
   /**
-   * {@link HoverCardRootProps} です。
+   * {@link HoverCardRootProps}
    */
   export type Props<TPayload = unknown> = HoverCardRootProps<TPayload>;
-}
 
-/**
- * {@link HoverCardRoot} です。
- */
-export const Root: HoverCardRootComponent = HoverCardRoot;
+  /**
+   * {@link HoverCardRootActions}
+   */
+  export type Actions = HoverCardRootActions;
+
+  /**
+   * {@link HoverCardRootChangeEventDetails}
+   */
+  export type ChangeEventDetails = HoverCardRootChangeEventDetails;
+
+  /**
+   * {@link HoverCardRootChangeEventReason}
+   */
+  export type ChangeEventReason = HoverCardRootChangeEventReason;
+}
 
 // Trigger
 // -------
 
 /**
- * {@link HoverCardTrigger} の状態です。
+ * {@link HoverCardTrigger} が持つ状態です。
  *
  * @template TPayload トリガーから渡すデータの型です。
  */
 export type HoverCardTriggerState = PreviewCard.Trigger.State;
 
 /**
- * {@link HoverCardTrigger} に渡すプロパティーです。
+ * {@link HoverCardTrigger} に渡す props です。
  *
  * @template TPayload トリガーから渡すデータの型です。
  */
@@ -142,41 +178,35 @@ export const HoverCardTrigger: HoverCardTriggerComponent = function SuiHoverCard
       {...otherProps}
       handle={handle}
       render={children}
-      className={cn(className, "sui_hovercard_trigger")}
+      className={cn(className, "sui_hover_card_trigger")}
     />
   );
 };
 
-/**
- * {@link HoverCardTrigger} の状態やプロパティーをまとめた型名前空間です。
- */
+export { HoverCardTrigger as Trigger };
+
 export namespace Trigger {
   /**
-   * {@link HoverCardTriggerState} です。
+   * {@link HoverCardTriggerState}
    */
   export type State = HoverCardTriggerState;
 
   /**
-   * {@link HoverCardTriggerProps} です。
+   * {@link HoverCardTriggerProps}
    */
   export type Props<TPayload = unknown> = HoverCardTriggerProps<TPayload>;
 }
-
-/**
- * {@link HoverCardTrigger} です。
- */
-export const Trigger: HoverCardTriggerComponent = HoverCardTrigger;
 
 // Portal
 // ------
 
 /**
- * {@link HoverCardPortal} の状態です。
+ * {@link HoverCardPortal} が持つ状態です。
  */
 export type HoverCardPortalState = PreviewCard.Portal.State;
 
 /**
- * {@link HoverCardPortal} に渡すプロパティーです。
+ * {@link HoverCardPortal} に渡す props です。
  */
 export type HoverCardPortalProps = React.ComponentProps<typeof PreviewCard.Portal>;
 
@@ -190,39 +220,79 @@ export const HoverCardPortal: IComponent<HoverCardPortalProps> = function SuiHov
 ) {
   const { className, ...otherProps } = props;
 
-  return <PreviewCard.Portal {...otherProps} className={cn(className, "sui_hovercard_portal")} />;
+  return (
+    <PreviewCard.Portal
+      {...otherProps}
+      className={cn(className, "sui_hover_card_portal")}
+      data-scope=""
+    />
+  );
 };
 
-/**
- * {@link HoverCardPortal} の状態やプロパティーをまとめた型名前空間です。
- */
+export { HoverCardPortal as Portal };
+
 export namespace Portal {
   /**
-   * {@link HoverCardPortalState} です。
+   * {@link HoverCardPortalState}
    */
   export type State = HoverCardPortalState;
 
   /**
-   * {@link HoverCardPortalProps} です。
+   * {@link HoverCardPortalProps}
    */
   export type Props = HoverCardPortalProps;
 }
 
+// Backdrop
+// --------
+
 /**
- * {@link HoverCardPortal} です。
+ * {@link HoverCardBackdrop} が持つ状態です。
  */
-export const Portal: IComponent<Portal.Props> = HoverCardPortal;
+export type HoverCardBackdropState = PreviewCard.Backdrop.State;
+
+/**
+ * {@link HoverCardBackdrop} に渡す props です。
+ */
+export type HoverCardBackdropProps = React.ComponentProps<typeof PreviewCard.Backdrop>;
+
+/**
+ * ポップアップの背後に表示されるオーバーレイ要素です。
+ */
+export const HoverCardBackdrop: IComponent<HoverCardBackdropProps> = function SuiHoverCardBackdrop(
+  props,
+) {
+  const { className, ...otherProps } = props;
+
+  return (
+    <PreviewCard.Backdrop {...otherProps} className={cn(className, "sui_hover_card_backdrop")} />
+  );
+};
+
+export { HoverCardBackdrop as Backdrop };
+
+export namespace Backdrop {
+  /**
+   * {@link HoverCardBackdropState}
+   */
+  export type State = HoverCardBackdropState;
+
+  /**
+   * {@link HoverCardBackdropProps}
+   */
+  export type Props = HoverCardBackdropProps;
+}
 
 // Positioner
 // ----------
 
 /**
- * {@link HoverCardPositioner} の状態です。
+ * {@link HoverCardPositioner} が持つ状態です。
  */
 export type HoverCardPositionerState = PreviewCard.Positioner.State;
 
 /**
- * {@link HoverCardPositioner} に渡すプロパティーです。
+ * {@link HoverCardPositioner} に渡す props です。
  */
 export type HoverCardPositionerProps = React.ComponentProps<typeof PreviewCard.Positioner>;
 
@@ -236,41 +306,35 @@ export const HoverCardPositioner: IComponent<HoverCardPositionerProps> =
     return (
       <PreviewCard.Positioner
         {...otherProps}
-        className={cn(className, "sui_hovercard_positioner")}
+        className={cn(className, "sui_hover_card_positioner")}
       />
     );
   };
 
-/**
- * {@link HoverCardPositioner} の状態やプロパティーをまとめた型名前空間です。
- */
+export { HoverCardPositioner as Positioner };
+
 export namespace Positioner {
   /**
-   * {@link HoverCardPositionerState} です。
+   * {@link HoverCardPositionerState}
    */
   export type State = HoverCardPositionerState;
 
   /**
-   * {@link HoverCardPositionerProps} です。
+   * {@link HoverCardPositionerProps}
    */
   export type Props = HoverCardPositionerProps;
 }
-
-/**
- * {@link HoverCardPositioner} です。
- */
-export const Positioner: IComponent<Positioner.Props> = HoverCardPositioner;
 
 // Popup
 // -----
 
 /**
- * {@link HoverCardPopup} の状態です。
+ * {@link HoverCardPopup} が持つ状態です。
  */
 export type HoverCardPopupState = PreviewCard.Popup.State;
 
 /**
- * {@link HoverCardPopup} に渡すプロパティーです。
+ * {@link HoverCardPopup} に渡す props です。
  */
 export type HoverCardPopupProps = React.ComponentProps<typeof PreviewCard.Popup>;
 
@@ -280,39 +344,33 @@ export type HoverCardPopupProps = React.ComponentProps<typeof PreviewCard.Popup>
 export const HoverCardPopup: IComponent<HoverCardPopupProps> = function SuiHoverCardPopup(props) {
   const { className, ...otherProps } = props;
 
-  return <PreviewCard.Popup {...otherProps} className={cn(className, "sui_hovercard_popup")} />;
+  return <PreviewCard.Popup {...otherProps} className={cn(className, "sui_hover_card_popup")} />;
 };
 
-/**
- * {@link HoverCardPopup} の状態やプロパティーをまとめた型名前空間です。
- */
+export { HoverCardPopup as Popup };
+
 export namespace Popup {
   /**
-   * {@link HoverCardPopupState} です。
+   * {@link HoverCardPopupState}
    */
   export type State = HoverCardPopupState;
 
   /**
-   * {@link HoverCardPopupProps} です。
+   * {@link HoverCardPopupProps}
    */
   export type Props = HoverCardPopupProps;
 }
-
-/**
- * {@link HoverCardPopup} です。
- */
-export const Popup: IComponent<Popup.Props> = HoverCardPopup;
 
 // Arrow
 // -----
 
 /**
- * {@link HoverCardArrow} の状態です。
+ * {@link HoverCardArrow} が持つ状態です。
  */
 export type HoverCardArrowState = PreviewCard.Arrow.State;
 
 /**
- * {@link HoverCardArrow} に渡すプロパティーです。
+ * {@link HoverCardArrow} に渡す props です。
  */
 export type HoverCardArrowProps = React.ComponentProps<typeof PreviewCard.Arrow>;
 
@@ -322,25 +380,61 @@ export type HoverCardArrowProps = React.ComponentProps<typeof PreviewCard.Arrow>
 export const HoverCardArrow: IComponent<HoverCardArrowProps> = function SuiHoverCardArrow(props) {
   const { className, ...otherProps } = props;
 
-  return <PreviewCard.Arrow {...otherProps} className={cn(className, "sui_hovercard_arrow")} />;
+  return <PreviewCard.Arrow {...otherProps} className={cn(className, "sui_hover_card_arrow")} />;
 };
 
-/**
- * {@link HoverCardArrow} の状態やプロパティーをまとめた型名前空間です。
- */
+export { HoverCardArrow as Arrow };
+
 export namespace Arrow {
   /**
-   * {@link HoverCardArrowState} です。
+   * {@link HoverCardArrowState}
    */
   export type State = HoverCardArrowState;
 
   /**
-   * {@link HoverCardArrowProps} です。
+   * {@link HoverCardArrowProps}
    */
   export type Props = HoverCardArrowProps;
 }
 
+// Viewport
+// --------
+
 /**
- * {@link HoverCardArrow} です。
+ * {@link HoverCardViewport} が持つ状態です。
  */
-export const Arrow: IComponent<Arrow.Props> = HoverCardArrow;
+export type HoverCardViewportState = PreviewCard.Viewport.State;
+
+/**
+ * {@link HoverCardViewport} に渡す props です。
+ */
+export type HoverCardViewportProps = React.ComponentProps<typeof PreviewCard.Viewport>;
+
+/**
+ * 複数のトリガー間で内容を切り替えるときのアニメーション領域です。
+ *
+ * 1 つのホバーカードを複数のトリガーで共有し、内容をトリガーごとに変える場合に使います。
+ */
+export const HoverCardViewport: IComponent<HoverCardViewportProps> = function SuiHoverCardViewport(
+  props,
+) {
+  const { className, ...otherProps } = props;
+
+  return (
+    <PreviewCard.Viewport {...otherProps} className={cn(className, "sui_hover_card_viewport")} />
+  );
+};
+
+export { HoverCardViewport as Viewport };
+
+export namespace Viewport {
+  /**
+   * {@link HoverCardViewportState}
+   */
+  export type State = HoverCardViewportState;
+
+  /**
+   * {@link HoverCardViewportProps}
+   */
+  export type Props = HoverCardViewportProps;
+}

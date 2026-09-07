@@ -1,3 +1,4 @@
+import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import type { IComponent } from "../types.js";
 import {
   type FieldsetRootProps,
@@ -7,74 +8,148 @@ import {
   FieldsetLegend,
 } from "./fieldset.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link Fieldset} の状態です。
+ * {@link Fieldset} が持つ状態です。
  */
 export type FieldsetState = FieldsetRootState;
 
 /**
- * {@link Fieldset} コンポーネントのプロパティーです。
- *
- * {@link Fieldset.Root} と同じプロパティーを受け取ります。`disabled` の既定値は `false` で、指定した値が子孫のコントロールを無効化します。`className` と `render` は既定の値より優先され、`disabled` の変化は子孫の状態に反映されます。
+ * {@link Fieldset} の各パーツに渡す props です。
  */
-export type FieldsetProps = FieldsetRootProps;
-
-/**
- * {@link Fieldset} の各パーツに渡すプロパティーです。
- */
-export type FieldsetPartsProps = {
+export type FieldsetSlotProps = {
   /**
-   * {@link FieldsetRoot} に渡すプロパティーです。
+   * {@link FieldsetLegend} に渡す props です。
    */
-  readonly root: FieldsetRootProps;
+  readonly legend?: Omit<FieldsetLegendProps, "children"> | undefined;
+
+  /**
+   * {@link FieldsetRoot} に渡す props です。
+   */
+  readonly root?: Omit<FieldsetRootProps, "children"> | undefined;
 };
 
 /**
- * {@link Fieldset} の各パーツに渡すプロパティーを作るフックです。
+ * {@link Fieldset} に渡す props です。
  */
-export function useFieldset(props: FieldsetProps): FieldsetPartsProps {
-  return { root: props };
+export type FieldsetProps = Omit<FieldsetRootProps, "children"> & {
+  /**
+   * フィールドセットに含める内容です。
+   */
+  children?: FieldsetRootProps["children"] | undefined;
+
+  /**
+   * フィールドセットの凡例です。
+   */
+  legend?: FieldsetLegendProps["children"] | undefined;
+
+  /**
+   * 各パーツに個別の props を渡すためのオブジェクトです。
+   *
+   * 各パーツの props が優先されます。
+   */
+  slotProps?: FieldsetSlotProps | undefined;
+};
+
+// API
+// ---
+
+/**
+ * {@link Fieldset} を構成する各パーツの props を作成するための API です。
+ */
+export interface FieldsetAPI {
+  /**
+   * {@link FieldsetLegend} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
+   */
+  getLegendProps(): FieldsetLegendProps | null;
+
+  /**
+   * {@link FieldsetRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<FieldsetRootProps, "children">;
+}
+
+interface IUseFieldsetAPI {
+  /**
+   * {@link FieldsetAPI} を作成します。
+   *
+   * @param props {@link Fieldset} の props です。
+   * @returns フィールドセットの API です
+   */
+  (props: FieldsetProps): FieldsetAPI;
 }
 
 /**
- * {@link Fieldset} の複合コンポーネント型です。
- *
- * {@link Fieldset.Root} と {@link Fieldset.Legend} をプロパティーとして公開します。
+ * {@link FieldsetAPI} を作成するフックです。
  */
-interface FieldsetComponentType extends IComponent<FieldsetProps> {
-  readonly Legend: IComponent<FieldsetLegendProps>;
-  readonly Root: IComponent<FieldsetRootProps>;
-}
+export const useFieldsetAPI: IUseFieldsetAPI = function useSuiFieldsetAPI(props) {
+  const {
+    legend,
+    // children は合成側でそのまま描画するため、ルートの props から取り除きます。
+    children: _children,
+    slotProps: { root: rootProps = {}, legend: legendProps = {} } = {},
+    ...otherRootProps
+  } = props;
+
+  return {
+    getRootProps() {
+      return {
+        ...rootProps,
+        ...otherRootProps,
+      };
+    },
+    getLegendProps() {
+      if (isLikelyVisibleNode(legend)) {
+        return {
+          ...legendProps,
+          children: legend,
+        };
+      }
+
+      return null;
+    },
+  };
+};
+
+export { type FieldsetAPI as API, useFieldsetAPI as useAPI };
+
+// Component
+// ---------
 
 /**
  * 関連するコントロールを凡例とともにグループ化するコンポーネントです。
  *
- * `disabled` を指定すると、グループ内のすべてのコントロールが無効になります。
- * `<Field.Root>` と組み合わせて使用します。
+ * `disabled` を指定すると、グループ内のコントロールも無効になります。
  */
-export const Fieldset: FieldsetComponentType = /*#__PURE__*/ Object.assign(
-  function SuiFieldset(props: FieldsetProps) {
-    const partsProps = useFieldset(props);
+export const Fieldset: IComponent<FieldsetProps> = function SuiFieldset(props) {
+  const api = useFieldsetAPI(props);
+  const legendProps = api.getLegendProps();
 
-    return <FieldsetRoot {...partsProps.root} />;
-  },
-  {
-    Legend: FieldsetLegend,
-    Root: FieldsetRoot,
-  },
-);
+  return (
+    <FieldsetRoot {...api.getRootProps()}>
+      {legendProps && <FieldsetLegend {...legendProps} />}
+      {props.children}
+    </FieldsetRoot>
+  );
+};
 
-/**
- * {@link Fieldset} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Fieldset {
   /**
-   * {@link FieldsetState} です。
+   * {@link FieldsetState}
    */
   export type State = FieldsetState;
 
   /**
-   * {@link FieldsetProps} です。
+   * {@link FieldsetProps}
    */
   export type Props = FieldsetProps;
+
+  /**
+   * {@link FieldsetSlotProps}
+   */
+  export type SlotProps = FieldsetSlotProps;
 }

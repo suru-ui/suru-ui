@@ -15,12 +15,12 @@ import "./field.css";
 export type FieldRootActions = Field.Root.Actions;
 
 /**
- * {@link FieldRoot} の状態です。
+ * {@link FieldRoot} が持つ状態です。
  */
 export type FieldRootState = Field.Root.State;
 
 /**
- * {@link FieldRoot} に渡すプロパティーです。
+ * {@link FieldRoot} に渡す props です。
  */
 export type FieldRootProps = React.ComponentProps<typeof Field.Root>;
 
@@ -36,45 +36,43 @@ export const FieldRoot: IComponent<FieldRootProps> = function SuiFieldRoot(props
     <Field.Root
       {...otherProps}
       className={cn(className, "sui_field", (state) => state.disabled && "sui_field-disabled")}
+      data-scope=""
     />
   );
 };
 
 /**
- * {@link FieldRoot} の状態やプロパティーをまとめた型名前空間です。
+ * {@link FieldRoot} の状態や props をまとめた型名前空間です。
  */
 export namespace Root {
   /**
-   * {@link FieldRootState} です。
+   * {@link FieldRootState}
    */
   export type State = FieldRootState;
 
   /**
-   * {@link FieldRootProps} です。
+   * {@link FieldRootProps}
    */
   export type Props = FieldRootProps;
 
   /**
-   * {@link FieldRootActions} です。
+   * {@link FieldRootActions}
    */
   export type Actions = FieldRootActions;
 }
 
-/**
- * {@link FieldRoot} です。
- */
-export const Root: IComponent<Root.Props> = FieldRoot;
+export { FieldRoot as Root };
 
 // Label
 // -----
 
 /**
- * {@link FieldLabel} の状態です。
+ * {@link FieldLabel} が持つ状態です。
  */
 export type FieldLabelState = Field.Label.State;
 
 /**
- * {@link FieldLabel} に渡すプロパティーです。
+ * {@link FieldLabel} に渡す props です。
  */
 export type FieldLabelProps = React.ComponentProps<typeof Field.Label>;
 
@@ -90,24 +88,21 @@ export const FieldLabel: IComponent<FieldLabelProps> = function SuiFieldLabel(pr
 };
 
 /**
- * {@link FieldLabel} の状態やプロパティーをまとめた型名前空間です。
+ * {@link FieldLabel} の状態や props をまとめた型名前空間です。
  */
 export namespace Label {
   /**
-   * {@link FieldLabelState} です。
+   * {@link FieldLabelState}
    */
   export type State = FieldLabelState;
 
   /**
-   * {@link FieldLabelProps} です。
+   * {@link FieldLabelProps}
    */
   export type Props = FieldLabelProps;
 }
 
-/**
- * {@link FieldLabel} です。
- */
-export const Label: IComponent<Label.Props> = FieldLabel;
+export { FieldLabel as Label };
 
 // Control
 // -------
@@ -123,12 +118,12 @@ export type FieldControlChangeEventReason = Field.Control.ChangeEventReason;
 export type FieldControlChangeEventDetails = Field.Control.ChangeEventDetails;
 
 /**
- * {@link FieldControl} の状態です。
+ * {@link FieldControl} が持つ状態です。
  */
 export type FieldControlState = Field.Control.State;
 
 /**
- * {@link FieldControl} に渡すプロパティーです。
+ * {@link FieldControl} に渡す props です。
  */
 export type FieldControlProps = React.ComponentProps<typeof Field.Control>;
 
@@ -142,45 +137,42 @@ export const FieldControl: IComponent<FieldControlProps> = function SuiFieldCont
 };
 
 /**
- * {@link FieldControl} の状態やプロパティーをまとめた型名前空間です。
+ * {@link FieldControl} の状態や props をまとめた型名前空間です。
  */
 export namespace Control {
   /**
-   * {@link FieldControlState} です。
+   * {@link FieldControlState}
    */
   export type State = FieldControlState;
 
   /**
-   * {@link FieldControlProps} です。
+   * {@link FieldControlProps}
    */
   export type Props = FieldControlProps;
 
   /**
-   * {@link FieldControlChangeEventDetails} です。
+   * {@link FieldControlChangeEventDetails}
    */
   export type ChangeEventDetails = FieldControlChangeEventDetails;
 
   /**
-   * {@link FieldControlChangeEventReason} です。
+   * {@link FieldControlChangeEventReason}
    */
   export type ChangeEventReason = FieldControlChangeEventReason;
 }
 
-/**
- * {@link FieldControl} です。
- */
-export const Control: IComponent<Control.Props> = FieldControl;
+export { FieldControl as Control };
 
 // Description
 // -----------
 
 /**
- * {@link FieldDescription} の状態です。
+ * {@link FieldDescription} が持つ状態です。
  */
 export type FieldDescriptionState = Field.Description.State;
 
 /**
- * {@link FieldDescription} に渡すプロパティーです。
+ * {@link FieldDescription} に渡す props です。
  */
 export type FieldDescriptionProps = React.ComponentProps<typeof Field.Description>;
 
@@ -198,35 +190,32 @@ export const FieldDescription: IComponent<FieldDescriptionProps> = function SuiF
 };
 
 /**
- * {@link FieldDescription} の状態やプロパティーをまとめた型名前空間です。
+ * {@link FieldDescription} の状態や props をまとめた型名前空間です。
  */
 export namespace Description {
   /**
-   * {@link FieldDescriptionState} です。
+   * {@link FieldDescriptionState}
    */
   export type State = FieldDescriptionState;
 
   /**
-   * {@link FieldDescriptionProps} です。
+   * {@link FieldDescriptionProps}
    */
   export type Props = FieldDescriptionProps;
 }
 
-/**
- * {@link FieldDescription} です。
- */
-export const Description: IComponent<Description.Props> = FieldDescription;
+export { FieldDescription as Description };
 
 // Error
 // -----
 
 /**
- * {@link FieldError} の状態です。
+ * {@link FieldError} が持つ状態です。
  */
 export type FieldErrorState = Field.Error.State;
 
 /**
- * {@link FieldError} に渡すプロパティーです。
+ * {@link FieldError} に渡す props です。
  */
 export type FieldErrorProps = React.ComponentProps<typeof Field.Error>;
 
@@ -242,35 +231,32 @@ export const FieldError: IComponent<FieldErrorProps> = function SuiFieldError(pr
 };
 
 /**
- * {@link FieldError} の状態やプロパティーをまとめた型名前空間です。
+ * {@link FieldError} の状態や props をまとめた型名前空間です。
  */
 export namespace Error {
   /**
-   * {@link FieldErrorState} です。
+   * {@link FieldErrorState}
    */
   export type State = FieldErrorState;
 
   /**
-   * {@link FieldErrorProps} です。
+   * {@link FieldErrorProps}
    */
   export type Props = FieldErrorProps;
 }
 
-/**
- * {@link FieldError} です。
- */
-export const Error: IComponent<Error.Props> = FieldError;
+export { FieldError as Error };
 
 // Item
 // ----
 
 /**
- * {@link FieldItem} の状態です。
+ * {@link FieldItem} が持つ状態です。
  */
 export type FieldItemState = Field.Item.State;
 
 /**
- * {@link FieldItem} に渡すプロパティーです。
+ * {@link FieldItem} に渡す props です。
  */
 export type FieldItemProps = React.ComponentProps<typeof Field.Item>;
 
@@ -286,35 +272,32 @@ export const FieldItem: IComponent<FieldItemProps> = function SuiFieldItem(props
 };
 
 /**
- * {@link FieldItem} の状態やプロパティーをまとめた型名前空間です。
+ * {@link FieldItem} の状態や props をまとめた型名前空間です。
  */
 export namespace Item {
   /**
-   * {@link FieldItemState} です。
+   * {@link FieldItemState}
    */
   export type State = FieldItemState;
 
   /**
-   * {@link FieldItemProps} です。
+   * {@link FieldItemProps}
    */
   export type Props = FieldItemProps;
 }
 
-/**
- * {@link FieldItem} です。
- */
-export const Item: IComponent<Item.Props> = FieldItem;
+export { FieldItem as Item };
 
 // Validity
 // --------
 
 /**
- * {@link FieldValidity} の状態です。
+ * {@link FieldValidity} が持つ状態です。
  */
 export type FieldValidityState = Field.Validity.State;
 
 /**
- * {@link FieldValidity} に渡すプロパティーです。
+ * {@link FieldValidity} に渡す props です。
  */
 export type FieldValidityProps = React.ComponentProps<typeof Field.Validity>;
 
@@ -328,21 +311,18 @@ export const FieldValidity: IComponent<FieldValidityProps> = function SuiFieldVa
 };
 
 /**
- * {@link FieldValidity} の状態やプロパティーをまとめた型名前空間です。
+ * {@link FieldValidity} の状態や props をまとめた型名前空間です。
  */
 export namespace Validity {
   /**
-   * {@link FieldValidityState} です。
+   * {@link FieldValidityState}
    */
   export type State = FieldValidityState;
 
   /**
-   * {@link FieldValidityProps} です。
+   * {@link FieldValidityProps}
    */
   export type Props = FieldValidityProps;
 }
 
-/**
- * {@link FieldValidity} です。
- */
-export const Validity: IComponent<Validity.Props> = FieldValidity;
+export { FieldValidity as Validity };

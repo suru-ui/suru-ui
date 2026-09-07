@@ -45,8 +45,8 @@
   --sui_fieldset_legend-line_height: ;
   --sui_fieldset_legend-color: ;
   --sui_fieldset_legend-letter_spacing: ;
-  --sui_fieldset_legend-border_color: ;
-  --sui_fieldset_legend-border_width: ;
+  --sui_fieldset_legend-border_bottom_color: ;
+  --sui_fieldset_legend-border_bottom_width: ;
 }
 
 /* 可変 */
@@ -58,8 +58,8 @@
     line-height: var(--sui_fieldset_legend-line_height);
     color: var(--sui_fieldset_legend-color);
     letter-spacing: var(--sui_fieldset_legend-letter_spacing);
-    border-bottom-color: var(--sui_fieldset_legend-border_color);
-    border-bottom-width: var(--sui_fieldset_legend-border_width);
+    border-bottom-color: var(--sui_fieldset_legend-border_bottom_color);
+    border-bottom-width: var(--sui_fieldset_legend-border_bottom_width);
   }
 }
 
@@ -71,8 +71,8 @@
   --sui_fieldset_legend-line_height: var(--sui-text-std-lg-b-line_height);
   --sui_fieldset_legend-color: var(--sui-canvas_text-1);
   --sui_fieldset_legend-letter_spacing: var(--sui-text-std-lg-b-letter_spacing);
-  --sui_fieldset_legend-border_color: var(--sui-canvas_text-3);
-  --sui_fieldset_legend-border_width: --sui-border_width(1);
+  --sui_fieldset_legend-border_bottom_color: var(--sui-canvas_text-3);
+  --sui_fieldset_legend-border_bottom_width: --sui-border_width(1);
 }
 
 } /* @scope */
@@ -92,7 +92,7 @@
 /* Legend */
 :scope {
   .sui_fieldset_legend-disabled {
-    color: var(--sui-disabled-canvas_text);
+    color: var(--sui-disabled-naked-canvas_text);
     cursor: not-allowed;
   }
 }

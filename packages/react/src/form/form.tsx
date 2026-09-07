@@ -1,5 +1,3 @@
-import type * as React from "react";
-
 import type { IComponent } from "../types.js";
 import {
   type FormRootProps,
@@ -12,109 +10,134 @@ import {
   FormRoot,
 } from "./form.parts.jsx";
 
-/**
- * {@link FormRootValues} です。
- */
-export type FormValues<TValues extends FormRootValues = FormRootValues> = FormRootValues<TValues>;
+// Types
+// -----
 
 /**
- * {@link FormRootActions} です。
+ * {@link FormRootActions}
  */
 export type FormActions = FormRootActions;
 
 /**
- * {@link FormRootValidationMode} です。
- */
-export type FormValidationMode = FormRootValidationMode;
-
-/**
- * {@link FormRootSubmitEventReason} です。
- */
-export type FormSubmitEventReason = FormRootSubmitEventReason;
-
-/**
- * {@link FormRootSubmitEventDetails} です。
+ * {@link FormRootSubmitEventDetails}
  */
 export type FormSubmitEventDetails = FormRootSubmitEventDetails;
 
 /**
- * {@link FormRootState} です。
+ * {@link FormRootSubmitEventReason}
+ */
+export type FormSubmitEventReason = FormRootSubmitEventReason;
+
+/**
+ * {@link FormRootValidationMode}
+ */
+export type FormValidationMode = FormRootValidationMode;
+
+/**
+ * {@link FormRootValues}
+ */
+export type FormValues<TValues extends FormRootValues = FormRootValues> = FormRootValues<TValues>;
+
+/**
+ * {@link Form} が持つ状態です。
  */
 export type FormState = FormRootState;
 
 /**
- * {@link FormRootProps} です。
+ * {@link Form} に渡す props です。
  */
 export type FormProps<TValues extends FormValues = FormValues> = FormRootProps<TValues>;
 
+// API
+// ---
+
 /**
- * {@link Form} の各パーツに渡すプロパティーです。
+ * {@link Form} を構成する各パーツの props を作成するための API です。
  */
-export type FormPartsProps<TValues extends FormValues = FormValues> = {
+export interface FormAPI<TValues extends FormValues = FormValues> {
   /**
-   * {@link FormRoot} に渡すプロパティーです。
+   * {@link FormRoot} に渡す props を取得します。
    */
-  readonly root: FormRootProps<TValues>;
-};
-
-/**
- * {@link Form} の各パーツに渡すプロパティーを作るフックです。
- */
-export function useForm<TValues extends FormValues = FormValues>(
-  props: FormProps<TValues>,
-): FormPartsProps<TValues> {
-  return { root: props };
+  getRootProps(): FormRootProps<TValues>;
 }
 
-interface FormComponentType extends IComponent<FormProps> {
-  <TValues extends FormValues>(props: FormProps<TValues>): React.ReactElement | null;
+interface IUseFormAPI {
+  /**
+   * {@link FormAPI} を作成します。
+   *
+   * @param props {@link Form} の props です。
+   * @returns フォームの API です
+   */
+  <TValues extends FormValues = FormValues>(props: FormProps<TValues>): FormAPI<TValues>;
 }
 
 /**
- * {@link FormRoot} です。
+ * {@link FormAPI} を作成するフックです。
  */
-export const Form: FormComponentType = function SuiForm(props: FormProps) {
-  const partsProps = useForm(props);
-
-  return <FormRoot {...partsProps.root} />;
+export const useFormAPI: IUseFormAPI = function useSuiFormAPI(props) {
+  return {
+    getRootProps() {
+      return props;
+    },
+  };
 };
 
+export { type FormAPI as API, useFormAPI as useAPI };
+
+// Component
+// ---------
+
+interface IForm extends IComponent<FormProps> {
+  /**
+   * @template TValues フォームの入力値を表す型です。
+   */
+  <TValues extends FormValues>(props: FormProps<TValues>): IComponent.Return;
+}
+
 /**
- * {@link Form} の状態やプロパティーをまとめた型名前空間です。
+ * フォームを表示するコンポーネントです。
+ *
+ * フィールドの検証状態をまとめ、送信時に値を集めます。
  */
+export const Form: IForm = function SuiForm(props: FormProps) {
+  const api = useFormAPI(props);
+
+  return <FormRoot {...api.getRootProps()} />;
+};
+
 export namespace Form {
   /**
-   * {@link FormState} です。
+   * {@link FormState}
    */
   export type State = FormState;
 
   /**
-   * {@link FormProps} です。
+   * {@link FormProps}
    */
   export type Props<TValues extends Values = Values> = FormProps<TValues>;
 
   /**
-   * {@link FormActions} です。
+   * {@link FormActions}
    */
   export type Actions = FormActions;
 
   /**
-   * {@link FormSubmitEventDetails} です。
+   * {@link FormSubmitEventDetails}
    */
   export type SubmitEventDetails = FormSubmitEventDetails;
 
   /**
-   * {@link FormSubmitEventReason} です。
+   * {@link FormSubmitEventReason}
    */
   export type SubmitEventReason = FormSubmitEventReason;
 
   /**
-   * {@link FormValidationMode} です。
+   * {@link FormValidationMode}
    */
   export type ValidationMode = FormValidationMode;
 
   /**
-   * {@link FormValues} です。
+   * {@link FormValues}
    */
   export type Values<TValues extends FormValues = FormValues> = FormValues<TValues>;
 }
