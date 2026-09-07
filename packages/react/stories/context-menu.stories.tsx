@@ -18,7 +18,7 @@ import cn from "../src/cn.js";
 import { ContextMenu } from "../src/context-menu/index.js";
 
 const SIZES: readonly ContextMenu.Size[] = theme.SIZES;
-const RADII: readonly ContextMenu.Radius[] = ["none", ...SIZES, "full"];
+const RADII: readonly ContextMenu.Radius[] = ["none", ...SIZES];
 const VARIANTS: readonly ContextMenu.Variant[] = theme.COLOR_TEMPLATES;
 
 const meta = preview.meta({

@@ -36,9 +36,8 @@ import "./context-menu.css";
  * - `"sm"`: 小さめ
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
- * - `"full"`: 完全な丸形
  */
-type ContextMenuContextRadius = "none" | Size | "full";
+type ContextMenuContextRadius = "none" | Size;
 
 /**
  * ポップアップと項目の大きさです。
@@ -328,9 +327,8 @@ export type ContextMenuRootItemObject =
  * - `"sm"`: 小さめ
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
- * - `"full"`: 完全な丸形
  */
-export type ContextMenuRootRadius = "none" | Size | "full";
+export type ContextMenuRootRadius = "none" | Size;
 
 /**
  * コンテキストメニューの大きさです。
