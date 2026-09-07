@@ -10,27 +10,39 @@ import "./drawer.css";
 // ------
 
 /**
- * ドロワーを制御するハンドルです。
+ * ドロワーを命令的に制御するハンドルです。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
  */
-export type DrawerHandle<Payload = unknown> = Drawer.Handle<Payload>;
+export interface DrawerHandle<TPayload = any> extends Drawer.Handle<TPayload> {}
+
+interface ICreateHandle {
+  /**
+   * @template TPayload トリガーが送信するデータの型です。
+   * @returns ドロワーを命令的に制御するハンドルです。
+   */
+  <TPayload = any>(): DrawerHandle<TPayload>;
+}
 
 /**
- * ドロワーを制御するハンドルを新しく作成します。
- *
- * 作成したハンドルを {@link Root} と {@link Trigger} の `handle` プロパティーに渡すことで、トリガーとドロワーの内容を関連付けます。
+ * {@link DrawerHandle} を作成する関数です。
  */
-export const createHandle: typeof Drawer.createHandle = Drawer.createHandle;
+export const createDrawerHandle: ICreateHandle = function createSuiDrawerHandle() {
+  return Drawer.createHandle();
+};
+
+export { type DrawerHandle as Handle, createDrawerHandle as createHandle };
 
 // Provider
 // --------
 
 /**
- * {@link DrawerProvider} の状態です。
+ * {@link DrawerProvider} が持つ状態です。
  */
 export type DrawerProviderState = Drawer.Provider.State;
 
 /**
- * {@link DrawerProvider} に渡すプロパティーです。
+ * {@link DrawerProvider} に渡す props です。
  */
 export type DrawerProviderProps = React.ComponentProps<typeof Drawer.Provider>;
 
@@ -43,36 +55,30 @@ export const DrawerProvider: IComponent<DrawerProviderProps> = function SuiDrawe
   return <Drawer.Provider {...props} />;
 };
 
-/**
- * {@link DrawerProvider} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DrawerProvider as Provider };
+
 export namespace Provider {
   /**
-   * {@link DrawerProviderState} です。
+   * {@link DrawerProviderState}
    */
   export type State = DrawerProviderState;
 
   /**
-   * {@link DrawerProviderProps} です。
+   * {@link DrawerProviderProps}
    */
   export type Props = DrawerProviderProps;
 }
-
-/**
- * {@link DrawerProvider} です。
- */
-export const Provider: IComponent<Provider.Props> = DrawerProvider;
 
 // IndentBackground
 // ----------------
 
 /**
- * {@link DrawerIndentBackground} の状態です。
+ * {@link DrawerIndentBackground} が持つ状態です。
  */
 export type DrawerIndentBackgroundState = Drawer.IndentBackground.State;
 
 /**
- * {@link DrawerIndentBackground} に渡すプロパティーです。
+ * {@link DrawerIndentBackground} に渡す props です。
  */
 export type DrawerIndentBackgroundProps = React.ComponentProps<typeof Drawer.IndentBackground>;
 
@@ -93,36 +99,30 @@ export const DrawerIndentBackground: IComponent<DrawerIndentBackgroundProps> =
     );
   };
 
-/**
- * {@link DrawerIndentBackground} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DrawerIndentBackground as IndentBackground };
+
 export namespace IndentBackground {
   /**
-   * {@link DrawerIndentBackgroundState} です。
+   * {@link DrawerIndentBackgroundState}
    */
   export type State = DrawerIndentBackgroundState;
 
   /**
-   * {@link DrawerIndentBackgroundProps} です。
+   * {@link DrawerIndentBackgroundProps}
    */
   export type Props = DrawerIndentBackgroundProps;
 }
-
-/**
- * {@link DrawerIndentBackground} です。
- */
-export const IndentBackground: IComponent<IndentBackground.Props> = DrawerIndentBackground;
 
 // Indent
 // ------
 
 /**
- * {@link DrawerIndent} の状態です。
+ * {@link DrawerIndent} が持つ状態です。
  */
 export type DrawerIndentState = Drawer.Indent.State;
 
 /**
- * {@link DrawerIndent} に渡すプロパティーです。
+ * {@link DrawerIndent} に渡す props です。
  */
 export type DrawerIndentProps = React.ComponentProps<typeof Drawer.Indent>;
 
@@ -135,164 +135,208 @@ export const DrawerIndent: IComponent<DrawerIndentProps> = function SuiDrawerInd
   return <Drawer.Indent {...otherProps} className={cn(className, "sui_drawer_indent")} />;
 };
 
-/**
- * {@link DrawerIndent} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DrawerIndent as Indent };
+
 export namespace Indent {
   /**
-   * {@link DrawerIndentState} です。
+   * {@link DrawerIndentState}
    */
   export type State = DrawerIndentState;
 
   /**
-   * {@link DrawerIndentProps} です。
+   * {@link DrawerIndentProps}
    */
   export type Props = DrawerIndentProps;
 }
-
-/**
- * {@link DrawerIndent} です。
- */
-export const Indent: IComponent<Indent.Props> = DrawerIndent;
 
 // Root
 // ----
 
 /**
- * {@link DrawerRoot} の状態です。
+ * ドロワーを命令的に操作するためのオブジェクトです。
+ */
+export type DrawerRootActions = Drawer.Root.Actions;
+
+/**
+ * ドロワーの開閉状態が変更されるイベントの詳細です。
+ */
+export type DrawerRootChangeEventDetails = Drawer.Root.ChangeEventDetails;
+
+/**
+ * ドロワーの開閉状態が変更される理由です。
+ */
+export type DrawerRootChangeEventReason = Drawer.Root.ChangeEventReason;
+
+/**
+ * ドロワーのスナップポイントです。
+ */
+export type DrawerRootSnapPoint = Drawer.Root.SnapPoint;
+
+/**
+ * ドロワーのスナップポイントが変更されるイベントの詳細です。
+ */
+export type DrawerRootSnapPointChangeEventDetails = Drawer.Root.SnapPointChangeEventDetails;
+
+/**
+ * ドロワーのスナップポイントが変更される理由です。
+ */
+export type DrawerRootSnapPointChangeEventReason = Drawer.Root.SnapPointChangeEventReason;
+
+/**
+ * {@link DrawerRoot} が持つ状態です。
  */
 export type DrawerRootState = Drawer.Root.State;
 
 /**
- * {@link DrawerRoot} に渡すプロパティーです。
+ * {@link DrawerRoot} に渡す props です。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
  */
-export type DrawerRootProps<Payload = unknown> = Drawer.Root.Props<Payload>;
+export type DrawerRootProps<TPayload = any> = Omit<
+  React.ComponentProps<typeof Drawer.Root>,
+  "handle"
+> & {
+  /**
+   * トリガーとドロワーに関連付けるためのハンドルです。
+   */
+  handle: DrawerHandle<TPayload>;
+};
 
-/**
- * {@link DrawerRoot} のコンポーネント型です。
- */
-export interface DrawerRootComponent extends IComponent<DrawerRootProps> {
-  <Payload = unknown>(props: DrawerRootProps<Payload>): React.ReactElement | null;
+interface IDrawerRoot extends IComponent<DrawerRootProps> {
+  /**
+   * @template TPayload トリガーが送信するデータの型です。
+   */
+  <TPayload = any>(props: DrawerRootProps<TPayload>): IComponent.Return;
 }
 
 /**
- * ドロワーのルートです。
+ * ドロワーのルートコンポーネントです。
  *
- * ドロワーの開閉状態を管理し、各パーツをグループ化します。
- * それ自身は HTML 要素をレンダリングしません。
+ * ドロワーの開閉状態を管理し、各パーツをグループ化します。それ自身は HTML 要素をレンダリングしません。
  */
-export const DrawerRoot: DrawerRootComponent = function SuiDrawerRoot<Payload>(
-  props: DrawerRootProps<Payload>,
-) {
-  const { swipeDirection = "left", ...otherProps } = props;
-
-  return <Drawer.Root {...otherProps} swipeDirection={swipeDirection} />;
+export const DrawerRoot: IDrawerRoot = function SuiDrawerRoot(props: DrawerRootProps) {
+  return <Drawer.Root {...props} />;
 };
 
-/**
- * {@link DrawerRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DrawerRoot as Root };
+
 export namespace Root {
   /**
-   * {@link DrawerRootState} です。
+   * {@link DrawerRootState}
    */
   export type State = DrawerRootState;
 
   /**
-   * {@link DrawerRootProps} です。
+   * {@link DrawerRootProps}
    */
-  export type Props<Payload = unknown> = DrawerRootProps<Payload>;
-}
+  export type Props<TPayload = any> = DrawerRootProps<TPayload>;
 
-/**
- * {@link DrawerRoot} です。
- */
-export const Root: DrawerRootComponent = DrawerRoot;
+  /**
+   * {@link DrawerRootActions}
+   */
+  export type Actions = DrawerRootActions;
+
+  /**
+   * {@link DrawerRootChangeEventDetails}
+   */
+  export type ChangeEventDetails = DrawerRootChangeEventDetails;
+
+  /**
+   * {@link DrawerRootChangeEventReason}
+   */
+  export type ChangeEventReason = DrawerRootChangeEventReason;
+
+  /**
+   * {@link DrawerRootSnapPoint}
+   */
+  export type SnapPoint = DrawerRootSnapPoint;
+
+  /**
+   * {@link DrawerRootSnapPointChangeEventDetails}
+   */
+  export type SnapPointChangeEventDetails = DrawerRootSnapPointChangeEventDetails;
+
+  /**
+   * {@link DrawerRootSnapPointChangeEventReason}
+   */
+  export type SnapPointChangeEventReason = DrawerRootSnapPointChangeEventReason;
+}
 
 // Trigger
 // -------
 
 /**
- * {@link DrawerTrigger} の状態です。
+ * {@link DrawerTrigger} が持つ状態です。
  */
 export type DrawerTriggerState = Drawer.Trigger.State;
 
 /**
- * {@link DrawerTrigger} に渡すプロパティーです。
+ * {@link DrawerTrigger} に渡す props です。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
  */
-export type DrawerTriggerProps<Payload = unknown> = Omit<
-  Drawer.Trigger.Props<Payload>,
-  "children" | "handle" | "render"
+export type DrawerTriggerProps<TPayload = any> = Omit<
+  React.ComponentProps<typeof Drawer.Trigger>,
+  "handle" | "children" | "render"
 > & {
   /**
    * ボタンとしてレンダリングする要素です。
-   *
-   * {@link Drawer.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
    */
   children: NonNullable<React.ComponentProps<typeof Drawer.Trigger>["render"]>;
 
   /**
-   * ドロワー ({@link Root}) を関連付けるハンドルです。
-   *
-   * {@link createHandle} で作成し、{@link Root} と共有します。
+   * トリガーとドロワーに関連付けるためのハンドルです。
    */
-  handle: DrawerHandle<Payload>;
+  handle: DrawerHandle<TPayload>;
 };
 
-/**
- * {@link DrawerTrigger} のコンポーネント型です。
- */
-export interface DrawerTriggerComponent extends IComponent<DrawerTriggerProps> {
-  <Payload = unknown>(props: DrawerTriggerProps<Payload>): React.ReactElement | null;
+interface IDrawerTrigger extends IComponent<DrawerTriggerProps> {
+  /**
+   * @template TPayload トリガーが送信するデータの型です。
+   */
+  <TPayload = any>(props: DrawerTriggerProps<TPayload>): IComponent.Return;
 }
 
 /**
- * ドロワーを開くボタン要素です。
+ * ドロワーを開くボタンコンポーネントです。
  */
-export const DrawerTrigger: DrawerTriggerComponent = function SuiDrawerTrigger<Payload>(
-  props: DrawerTriggerProps<Payload>,
-) {
-  const { children, className, ...otherProps } = props;
+export const DrawerTrigger: IDrawerTrigger = function SuiDrawerTrigger(props: DrawerTriggerProps) {
+  const { handle, children, className, ...otherProps } = props;
 
   return (
     <Drawer.Trigger
       {...otherProps}
+      handle={handle}
       render={children}
       className={cn(className, "sui_drawer_trigger")}
     />
   );
 };
 
-/**
- * {@link DrawerTrigger} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DrawerTrigger as Trigger };
+
 export namespace Trigger {
   /**
-   * {@link DrawerTriggerState} です。
+   * {@link DrawerTriggerState}
    */
   export type State = DrawerTriggerState;
 
   /**
-   * {@link DrawerTriggerProps} です。
+   * {@link DrawerTriggerProps}
    */
-  export type Props<Payload = unknown> = DrawerTriggerProps<Payload>;
+  export type Props<TPayload = any> = DrawerTriggerProps<TPayload>;
 }
-
-/**
- * {@link DrawerTrigger} です。
- */
-export const Trigger: DrawerTriggerComponent = DrawerTrigger;
 
 // SwipeArea
 // ---------
 
 /**
- * {@link DrawerSwipeArea} の状態です。
+ * {@link DrawerSwipeArea} が持つ状態です。
  */
 export type DrawerSwipeAreaState = Drawer.SwipeArea.State;
 
 /**
- * {@link DrawerSwipeArea} に渡すプロパティーです。
+ * {@link DrawerSwipeArea} に渡す props です。
  */
 export type DrawerSwipeAreaProps = React.ComponentProps<typeof Drawer.SwipeArea>;
 
@@ -307,36 +351,30 @@ export const DrawerSwipeArea: IComponent<DrawerSwipeAreaProps> = function SuiDra
   return <Drawer.SwipeArea {...otherProps} className={cn(className, "sui_drawer_swipe_area")} />;
 };
 
-/**
- * {@link DrawerSwipeArea} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DrawerSwipeArea as SwipeArea };
+
 export namespace SwipeArea {
   /**
-   * {@link DrawerSwipeAreaState} です。
+   * {@link DrawerSwipeAreaState}
    */
   export type State = DrawerSwipeAreaState;
 
   /**
-   * {@link DrawerSwipeAreaProps} です。
+   * {@link DrawerSwipeAreaProps}
    */
   export type Props = DrawerSwipeAreaProps;
 }
-
-/**
- * {@link DrawerSwipeArea} です。
- */
-export const SwipeArea: IComponent<SwipeArea.Props> = DrawerSwipeArea;
 
 // VirtualKeyboardProvider
 // -----------------------
 
 /**
- * {@link DrawerVirtualKeyboardProvider} の状態です。
+ * {@link DrawerVirtualKeyboardProvider} が持つ状態です。
  */
 export type DrawerVirtualKeyboardProviderState = Drawer.VirtualKeyboardProvider.State;
 
 /**
- * {@link DrawerVirtualKeyboardProvider} に渡すプロパティーです。
+ * {@link DrawerVirtualKeyboardProvider} に渡す props です。
  */
 export type DrawerVirtualKeyboardProviderProps = React.ComponentProps<
   typeof Drawer.VirtualKeyboardProvider
@@ -352,86 +390,75 @@ export const DrawerVirtualKeyboardProvider: IComponent<DrawerVirtualKeyboardProv
     return <Drawer.VirtualKeyboardProvider {...props} />;
   };
 
-/**
- * {@link DrawerVirtualKeyboardProvider} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DrawerVirtualKeyboardProvider as VirtualKeyboardProvider };
+
 export namespace VirtualKeyboardProvider {
   /**
-   * {@link DrawerVirtualKeyboardProviderState} です。
+   * {@link DrawerVirtualKeyboardProviderState}
    */
   export type State = DrawerVirtualKeyboardProviderState;
 
   /**
-   * {@link DrawerVirtualKeyboardProviderProps} です。
+   * {@link DrawerVirtualKeyboardProviderProps}
    */
   export type Props = DrawerVirtualKeyboardProviderProps;
 }
-
-/**
- * {@link DrawerVirtualKeyboardProvider} です。
- */
-export const VirtualKeyboardProvider: IComponent<VirtualKeyboardProvider.Props> =
-  DrawerVirtualKeyboardProvider;
 
 // Portal
 // ------
 
 /**
- * {@link DrawerPortal} の状態です。
+ * {@link DrawerPortal} が持つ状態です。
  */
 export type DrawerPortalState = Drawer.Portal.State;
 
 /**
- * {@link DrawerPortal} に渡すプロパティーです。
+ * {@link DrawerPortal} に渡す props です。
  */
 export type DrawerPortalProps = React.ComponentProps<typeof Drawer.Portal>;
 
 /**
- * ドロワーを DOM の別の場所へ移動する要素です。
+ * ドロワーを DOM の別の場所に配置するコンポーネントです。
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
 export const DrawerPortal: IComponent<DrawerPortalProps> = function SuiDrawerPortal(props) {
   const { className, ...otherProps } = props;
 
-  return <Drawer.Portal {...otherProps} className={cn(className, "sui_drawer_portal")} />;
+  return (
+    <Drawer.Portal {...otherProps} className={cn(className, "sui_drawer_portal")} data-scope="" />
+  );
 };
 
-/**
- * {@link DrawerPortal} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DrawerPortal as Portal };
+
 export namespace Portal {
   /**
-   * {@link DrawerPortalState} です。
+   * {@link DrawerPortalState}
    */
   export type State = DrawerPortalState;
 
   /**
-   * {@link DrawerPortalProps} です。
+   * {@link DrawerPortalProps}
    */
   export type Props = DrawerPortalProps;
 }
-
-/**
- * {@link DrawerPortal} です。
- */
-export const Portal: IComponent<Portal.Props> = DrawerPortal;
 
 // Backdrop
 // --------
 
 /**
- * {@link DrawerBackdrop} の状態です。
+ * {@link DrawerBackdrop} が持つ状態です。
  */
 export type DrawerBackdropState = Drawer.Backdrop.State;
 
 /**
- * {@link DrawerBackdrop} に渡すプロパティーです。
+ * {@link DrawerBackdrop} に渡す props です。
  */
 export type DrawerBackdropProps = React.ComponentProps<typeof Drawer.Backdrop>;
 
 /**
- * ドロワーの背後に表示されるオーバーレイ要素です。
+ * ポップアップの背後に表示されるオーバーレイコンポーネントです。
  */
 export const DrawerBackdrop: IComponent<DrawerBackdropProps> = function SuiDrawerBackdrop(props) {
   const { className, ...otherProps } = props;
@@ -439,41 +466,37 @@ export const DrawerBackdrop: IComponent<DrawerBackdropProps> = function SuiDrawe
   return <Drawer.Backdrop {...otherProps} className={cn(className, "sui_drawer_backdrop")} />;
 };
 
-/**
- * {@link DrawerBackdrop} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DrawerBackdrop as Backdrop };
+
 export namespace Backdrop {
   /**
-   * {@link DrawerBackdropState} です。
+   * {@link DrawerBackdropState}
    */
   export type State = DrawerBackdropState;
 
   /**
-   * {@link DrawerBackdropProps} です。
+   * {@link DrawerBackdropProps}
    */
   export type Props = DrawerBackdropProps;
 }
-
-/**
- * {@link DrawerBackdrop} です。
- */
-export const Backdrop: IComponent<Backdrop.Props> = DrawerBackdrop;
 
 // Viewport
 // --------
 
 /**
- * {@link DrawerViewport} の状態です。
+ * {@link DrawerViewport} が持つ状態です。
  */
 export type DrawerViewportState = Drawer.Viewport.State;
 
 /**
- * {@link DrawerViewport} に渡すプロパティーです。
+ * {@link DrawerViewport} に渡す props です。
  */
 export type DrawerViewportProps = React.ComponentProps<typeof Drawer.Viewport>;
 
 /**
- * ドロワーのポップアップを配置するコンテナー要素です。
+ * ポップアップの配置コンテナーコンポーネントです。
+ *
+ * スクロール可能なオーバーレイを作り、ポップアップを配置します。
  */
 export const DrawerViewport: IComponent<DrawerViewportProps> = function SuiDrawerViewport(props) {
   const { className, ...otherProps } = props;
@@ -481,41 +504,35 @@ export const DrawerViewport: IComponent<DrawerViewportProps> = function SuiDrawe
   return <Drawer.Viewport {...otherProps} className={cn(className, "sui_drawer_viewport")} />;
 };
 
-/**
- * {@link DrawerViewport} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DrawerViewport as Viewport };
+
 export namespace Viewport {
   /**
-   * {@link DrawerViewportState} です。
+   * {@link DrawerViewportState}
    */
   export type State = DrawerViewportState;
 
   /**
-   * {@link DrawerViewportProps} です。
+   * {@link DrawerViewportProps}
    */
   export type Props = DrawerViewportProps;
 }
-
-/**
- * {@link DrawerViewport} です。
- */
-export const Viewport: IComponent<Viewport.Props> = DrawerViewport;
 
 // Popup
 // -----
 
 /**
- * {@link DrawerPopup} の状態です。
+ * {@link DrawerPopup} が持つ状態です。
  */
 export type DrawerPopupState = Drawer.Popup.State;
 
 /**
- * {@link DrawerPopup} に渡すプロパティーです。
+ * {@link DrawerPopup} に渡す props です。
  */
 export type DrawerPopupProps = React.ComponentProps<typeof Drawer.Popup>;
 
 /**
- * ドロワーの本文を表示する要素です。
+ * ドロワーの本文を表示するコンポーネントです。
  *
  * `initialFocus` と `finalFocus` を使うと、開閉時に移動するフォーカス先を指定できます。
  */
@@ -525,41 +542,35 @@ export const DrawerPopup: IComponent<DrawerPopupProps> = function SuiDrawerPopup
   return <Drawer.Popup {...otherProps} className={cn(className, "sui_drawer_popup")} />;
 };
 
-/**
- * {@link DrawerPopup} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DrawerPopup as Popup };
+
 export namespace Popup {
   /**
-   * {@link DrawerPopupState} です。
+   * {@link DrawerPopupState}
    */
   export type State = DrawerPopupState;
 
   /**
-   * {@link DrawerPopupProps} です。
+   * {@link DrawerPopupProps}
    */
   export type Props = DrawerPopupProps;
 }
-
-/**
- * {@link DrawerPopup} です。
- */
-export const Popup: IComponent<Popup.Props> = DrawerPopup;
 
 // Content
 // -------
 
 /**
- * {@link DrawerContent} の状態です。
+ * {@link DrawerContent} が持つ状態です。
  */
 export type DrawerContentState = Drawer.Content.State;
 
 /**
- * {@link DrawerContent} に渡すプロパティーです。
+ * {@link DrawerContent} に渡す props です。
  */
 export type DrawerContentProps = React.ComponentProps<typeof Drawer.Content>;
 
 /**
- * ドロワー内のテキスト選択とスワイプ操作を分けるコンテンツ要素です。
+ * ドロワー内のテキスト選択とスワイプ操作を分けるコンテンツコンポーネントです。
  */
 export const DrawerContent: IComponent<DrawerContentProps> = function SuiDrawerContent(props) {
   const { className, ...otherProps } = props;
@@ -567,41 +578,35 @@ export const DrawerContent: IComponent<DrawerContentProps> = function SuiDrawerC
   return <Drawer.Content {...otherProps} className={cn(className, "sui_drawer_content")} />;
 };
 
-/**
- * {@link DrawerContent} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DrawerContent as Content };
+
 export namespace Content {
   /**
-   * {@link DrawerContentState} です。
+   * {@link DrawerContentState}
    */
   export type State = DrawerContentState;
 
   /**
-   * {@link DrawerContentProps} です。
+   * {@link DrawerContentProps}
    */
   export type Props = DrawerContentProps;
 }
-
-/**
- * {@link DrawerContent} です。
- */
-export const Content: IComponent<Content.Props> = DrawerContent;
 
 // Title
 // -----
 
 /**
- * {@link DrawerTitle} の状態です。
+ * {@link DrawerTitle} が持つ状態です。
  */
 export type DrawerTitleState = Drawer.Title.State;
 
 /**
- * {@link DrawerTitle} に渡すプロパティーです。
+ * {@link DrawerTitle} に渡す props です。
  */
 export type DrawerTitleProps = React.ComponentProps<typeof Drawer.Title>;
 
 /**
- * ドロワーのタイトルを表示する見出し要素です。
+ * ドロワーの見出しを表示するコンポーネントです。
  */
 export const DrawerTitle: IComponent<DrawerTitleProps> = function SuiDrawerTitle(props) {
   const { className, ...otherProps } = props;
@@ -609,41 +614,35 @@ export const DrawerTitle: IComponent<DrawerTitleProps> = function SuiDrawerTitle
   return <Drawer.Title {...otherProps} className={cn(className, "sui_drawer_title")} />;
 };
 
-/**
- * {@link DrawerTitle} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DrawerTitle as Title };
+
 export namespace Title {
   /**
-   * {@link DrawerTitleState} です。
+   * {@link DrawerTitleState}
    */
   export type State = DrawerTitleState;
 
   /**
-   * {@link DrawerTitleProps} です。
+   * {@link DrawerTitleProps}
    */
   export type Props = DrawerTitleProps;
 }
-
-/**
- * {@link DrawerTitle} です。
- */
-export const Title: IComponent<Title.Props> = DrawerTitle;
 
 // Description
 // -----------
 
 /**
- * {@link DrawerDescription} の状態です。
+ * {@link DrawerDescription} が持つ状態です。
  */
 export type DrawerDescriptionState = Drawer.Description.State;
 
 /**
- * {@link DrawerDescription} に渡すプロパティーです。
+ * {@link DrawerDescription} に渡す props です。
  */
 export type DrawerDescriptionProps = React.ComponentProps<typeof Drawer.Description>;
 
 /**
- * ドロワーの説明文を表示する段落要素です。
+ * ドロワーの内容を表示するコンポーネントです。
  */
 export const DrawerDescription: IComponent<DrawerDescriptionProps> = function SuiDrawerDescription(
   props,
@@ -653,36 +652,30 @@ export const DrawerDescription: IComponent<DrawerDescriptionProps> = function Su
   return <Drawer.Description {...otherProps} className={cn(className, "sui_drawer_description")} />;
 };
 
-/**
- * {@link DrawerDescription} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DrawerDescription as Description };
+
 export namespace Description {
   /**
-   * {@link DrawerDescriptionState} です。
+   * {@link DrawerDescriptionState}
    */
   export type State = DrawerDescriptionState;
 
   /**
-   * {@link DrawerDescriptionProps} です。
+   * {@link DrawerDescriptionProps}
    */
   export type Props = DrawerDescriptionProps;
 }
-
-/**
- * {@link DrawerDescription} です。
- */
-export const Description: IComponent<Description.Props> = DrawerDescription;
 
 // Close
 // -----
 
 /**
- * {@link DrawerClose} の状態です。
+ * {@link DrawerClose} が持つ状態です。
  */
 export type DrawerCloseState = Drawer.Close.State;
 
 /**
- * {@link DrawerClose} に渡すプロパティーです。
+ * {@link DrawerClose} に渡す props です。
  */
 export type DrawerCloseProps = Omit<
   React.ComponentProps<typeof Drawer.Close>,
@@ -690,14 +683,12 @@ export type DrawerCloseProps = Omit<
 > & {
   /**
    * ボタンとしてレンダリングする要素です。
-   *
-   * {@link Drawer.Close} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
    */
   children: NonNullable<React.ComponentProps<typeof Drawer.Close>["render"]>;
 };
 
 /**
- * ドロワーを閉じるボタン要素です。
+ * ドロワーを閉じるボタンコンポーネントです。
  */
 export const DrawerClose: IComponent<DrawerCloseProps> = function SuiDrawerClose(props) {
   const { children, className, ...otherProps } = props;
@@ -707,22 +698,16 @@ export const DrawerClose: IComponent<DrawerCloseProps> = function SuiDrawerClose
   );
 };
 
-/**
- * {@link DrawerClose} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DrawerClose as Close };
+
 export namespace Close {
   /**
-   * {@link DrawerCloseState} です。
+   * {@link DrawerCloseState}
    */
   export type State = DrawerCloseState;
 
   /**
-   * {@link DrawerCloseProps} です。
+   * {@link DrawerCloseProps}
    */
   export type Props = DrawerCloseProps;
 }
-
-/**
- * {@link DrawerClose} です。
- */
-export const Close: IComponent<Close.Props> = DrawerClose;

@@ -423,39 +423,39 @@
 } /* @scope */
 } /* @layer */
 
-/* CloseButton */
+/* Close */
 @layer sui.component {
 @scope (.sui_drawer_portal) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_drawer_close_button {
+  .sui_drawer_close {
     position: absolute;
   }
 }
 
 /* 変数 */
 :scope {
-  --sui_drawer_close_button-size: ;
-  --sui_drawer_close_button-position_right: ;
-  --sui_drawer_close_button-position_top: ;
+  --sui_drawer_close-size: ;
+  --sui_drawer_close-position_right: ;
+  --sui_drawer_close-position_top: ;
 }
 
 /* 可変 */
 :scope {
-  .sui_drawer_close_button {
-    top: var(--sui_drawer_close_button-position_top);
-    right: var(--sui_drawer_close_button-position_right);
-    width: var(--sui_drawer_close_button-size);
-    height: var(--sui_drawer_close_button-size);
+  .sui_drawer_close {
+    top: var(--sui_drawer_close-position_top);
+    right: var(--sui_drawer_close-position_right);
+    width: var(--sui_drawer_close-size);
+    height: var(--sui_drawer_close-size);
   }
 }
 
 /* 代入 */
 :scope {
-  --sui_drawer_close_button-size: var(--sui-size-md);
-  --sui_drawer_close_button-position_right: --sui-space(4);
-  --sui_drawer_close_button-position_top: --sui-space(4);
+  --sui_drawer_close-size: var(--sui-size-md);
+  --sui_drawer_close-position_right: --sui-space(4);
+  --sui_drawer_close-position_top: --sui-space(4);
 }
 
 } /* @scope */

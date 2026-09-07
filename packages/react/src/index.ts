@@ -253,3 +253,18 @@ export {
   Dialog,
   useDialogAPI,
 } from "./dialog/index.js";
+// Drawer はまだ公開できるレベルにない。
+// export {
+//   type DrawerAPI,
+//   type DrawerProps,
+//   type DrawerState,
+//   type DrawerActions,
+//   type DrawerSlotProps,
+//   type DrawerSnapPoint,
+//   type DrawerChangeEventReason,
+//   type DrawerChangeEventDetails,
+//   type DrawerSnapPointChangeEventReason,
+//   type DrawerSnapPointChangeEventDetails,
+//   Drawer,
+//   useDrawerAPI,
+// } from "./drawer/index.js";
