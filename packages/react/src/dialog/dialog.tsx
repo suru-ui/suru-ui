@@ -1,74 +1,136 @@
-import { mergeProps } from "@base-ui/react";
 import * as React from "react";
 
-import { Button } from "../button/index.js";
+import { XIcon } from "../_icons.jsx";
+import isLikelyVisibleNode from "../_is-likely-visible-node.js";
+import * as Button from "../button/button.parts.jsx";
 import type { IComponent } from "../types.js";
 import {
+  type DialogHandle,
+  type DialogBodyProps,
   type DialogRootProps,
   type DialogRootState,
-  type DialogCloseProps,
-  type DialogPopupProps,
   type DialogTitleProps,
+  type DialogFooterProps,
+  type DialogHeaderProps,
   type DialogPortalProps,
-  type DialogTriggerProps,
+  type DialogRootActions,
+  type DialogContentProps,
   type DialogBackdropProps,
+  type DialogContentRadius,
+  type DialogControlsProps,
   type DialogViewportProps,
+  type DialogContentVariant,
   type DialogDescriptionProps,
+  type DialogCloseTriggerProps,
+  type DialogToggleTriggerProps,
+  type DialogRootChangeEventReason,
+  type DialogRootChangeEventDetails,
+  DialogBody,
   DialogRoot,
-  DialogClose,
-  DialogPopup,
   DialogTitle,
+  DialogFooter,
+  DialogHeader,
   DialogPortal,
-  createHandle,
-  DialogTrigger,
+  DialogContent,
   DialogBackdrop,
+  DialogControls,
   DialogViewport,
   DialogDescription,
+  DialogCloseTrigger,
+  createDialogHandle,
+  DialogToggleTrigger,
 } from "./dialog.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link Dialog} の各パーツに渡すプロパティーです。
+ * {@link DialogRootActions}
  */
-export type DialogSlotProps = {
+export type DialogActions = DialogRootActions;
+
+/**
+ * {@link DialogRootChangeEventDetails}
+ */
+export type DialogChangeEventDetails = DialogRootChangeEventDetails;
+
+/**
+ * {@link DialogRootChangeEventReason}
+ */
+export type DialogChangeEventReason = DialogRootChangeEventReason;
+
+/**
+ * {@link DialogContentRadius}
+ */
+export type DialogRadius = DialogContentRadius;
+
+/**
+ * {@link DialogContentVariant}
+ */
+export type DialogVariant = DialogContentVariant;
+
+/**
+ * {@link Dialog} の各パーツに渡す props です。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
+ */
+export type DialogSlotProps<TPayload = any> = {
   /**
-   * {@link DialogBackdrop} に渡すプロパティーです。
+   * {@link DialogBackdrop} に渡す props です。
    */
   readonly backdrop?: DialogBackdropProps | undefined;
 
   /**
-   * {@link DialogClose} に渡すプロパティーです。
+   * {@link DialogCloseTrigger} に渡す props です。
    */
-  readonly close?: DialogCloseProps | undefined;
+  readonly closeTrigger?: Omit<DialogCloseTriggerProps, "children"> | undefined;
 
   /**
-   * {@link DialogDescription} に渡すプロパティーです。
+   * {@link DialogContent} に渡す props です。
    */
-  readonly description?: DialogDescriptionProps | undefined;
+  readonly content?: Omit<DialogContentProps, "children" | keyof DialogPropsContent> | undefined;
 
   /**
-   * {@link DialogPopup} に渡すプロパティーです。
+   * {@link DialogControls} に渡す props です。
    */
-  readonly popup?: DialogPopupProps | undefined;
+  readonly controls?: Omit<DialogControlsProps, "children"> | undefined;
 
   /**
-   * {@link DialogPortal} に渡すプロパティーです。
+   * {@link DialogDescription} に渡す props です。
    */
-  readonly portal?: DialogPortalProps | undefined;
+  readonly description?: Omit<DialogDescriptionProps, "children"> | undefined;
 
   /**
-   * {@link DialogTitle} に渡すプロパティーです。
+   * {@link DialogFooter} に渡す props です。
    */
-  readonly title?: DialogTitleProps | undefined;
+  readonly footer?: Omit<DialogFooterProps, "children"> | undefined;
 
   /**
-   * {@link DialogTrigger} に渡すプロパティーです。
+   * {@link DialogHeader} に渡す props です。
    */
-  readonly trigger?: Omit<DialogTriggerProps, "handle"> | undefined;
+  readonly header?: Omit<DialogHeaderProps, "children"> | undefined;
 
   /**
-   * {@link DialogViewport} に渡すプロパティーです。
+   * {@link DialogPortal} に渡す props です。
    */
-  readonly viewport?: DialogViewportProps | undefined;
+  readonly portal?: Omit<DialogPortalProps, "children"> | undefined;
+
+  /**
+   * {@link DialogTitle} に渡す props です。
+   */
+  readonly title?: Omit<DialogTitleProps, "children"> | undefined;
+
+  /**
+   * {@link DialogToggleTrigger} に渡す props です。
+   */
+  readonly toggleTrigger?:
+    | Omit<DialogToggleTriggerProps<TPayload>, "children" | "handle">
+    | undefined;
+
+  /**
+   * {@link DialogViewport} に渡す props です。
+   */
+  readonly viewport?: Omit<DialogViewportProps, "children"> | undefined;
 };
 
 /**
@@ -76,21 +138,19 @@ export type DialogSlotProps = {
  */
 export type DialogState = DialogRootState;
 
-/**
- * {@link Dialog} コンポーネントのプロパティーです。
- *
- * {@link DialogRoot|Root} から継承した `open` を指定すると開閉状態を制御でき、`defaultOpen` は初期状態だけを指定します。
- */
-export type DialogProps = Omit<DialogRootProps, "children" | "handle"> & {
+type DialogPropsMain<TPayload = any> = {
   /**
-   * ダイアログの本文に表示するコンテンツです。
+   * ダイアログを閉じるボタンです。
    */
-  children?: React.ReactNode | undefined;
+  close?: DialogCloseTriggerProps["children"] | undefined;
 
   /**
-   * フッターに表示する閉じるボタンのコンテンツです。
+   * コントロールコンポーネントに表示する内容です。
+   *
+   * ダイアログの内側から順に配置されます。
+   * {@link DialogPropsMain.showCloseIconButton|showCloseIconButton} が `true` の場合、それが一番外側に配置されます。
    */
-  close?: DialogCloseProps["children"] | undefined;
+  controls?: DialogControlsProps["children"] | undefined;
 
   /**
    * ダイアログの説明文です。
@@ -98,134 +158,392 @@ export type DialogProps = Omit<DialogRootProps, "children" | "handle"> & {
   description?: React.ReactNode | undefined;
 
   /**
-   * いずれかの閉じるボタンがクリックされたときに呼ばれるコールバックです。
-   *
-   * `slotProps.close` の `onClick` が先に実行され、`preventBaseUIHandler()` が呼ばれていない場合に呼ばれます。
+   * トリガーとダイアログに関連付けるためのハンドルです。
    */
-  onClose?: ((event: CloseClickEvent) => void) | undefined;
+  handle?: DialogHandle<TPayload> | undefined;
 
   /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-   *
-   * 各パーツのプロパティーが優先されます。
+   * 閉じるボタンがクリックされたときに呼ばれるコールバックです。
    */
-  slotProps?: DialogSlotProps | undefined;
+  onClose?: DialogCloseTriggerProps["onClick"] | undefined;
 
   /**
-   * ダイアログのタイトルです。
+   * ダイアログを閉じるアイコンボタンを表示にします。
+   *
+   * @default true
+   */
+  showCloseIconButton?: boolean | undefined;
+
+  /**
+   * 各パーツに個別の props を渡すためのオブジェクトです。
+   *
+   * 各パーツの props が優先されます。
+   */
+  slotProps?: DialogSlotProps<TPayload> | undefined;
+
+  /**
+   * ダイアログの見出しです。
    */
   title?: React.ReactNode | undefined;
 
   /**
-   * ダイアログを開くトリガーに表示するコンテンツです。
-   *
-   * {@link DialogTrigger|Trigger} の子要素として直接渡され、`render` に設定されます。
-   * `trigger` 未指定で `slotProps.trigger` のみ指定した場合は、トリガーは描画されません。
+   * ダイアログを開くトリガーです。
    */
-  trigger?: DialogTriggerProps["children"] | undefined;
+  trigger?: DialogToggleTriggerProps["children"] | undefined;
 };
 
-type CloseClickHandler = DialogCloseProps["onClick"];
-type CloseClickEvent = Parameters<NonNullable<CloseClickHandler>>[0];
+type DialogPropsRoot<TPayload = any> = Omit<
+  DialogRootProps<TPayload>,
+  "children" | keyof DialogPropsMain
+>;
 
-interface DialogComponentType extends IComponent<DialogProps> {
+type DialogPropsBody = Omit<DialogBodyProps, keyof DialogPropsMain | keyof DialogPropsRoot> & {
   /**
-   * ダイアログを制御するハンドルを新しく作成します。
-   *
-   * 作成したハンドルは {@link DialogRoot} と {@link DialogTrigger} の `handle` プロパティーに渡します。
+   * {@link https://developer.mozilla.org/docs/Web/HTML/Reference/Global_attributes/title|title}
    */
-  readonly createHandle: typeof createHandle;
+  htmlTitle?: React.HTMLAttributes<HTMLDivElement>["title"];
+};
+
+type DialogPropsContent = Pick<DialogContentProps, "outlined" | "radius" | "variant">;
+
+/**
+ * {@link Dialog} に渡す props です。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
+ */
+export type DialogProps<TPayload = any> = DialogPropsMain<TPayload> &
+  DialogPropsRoot<TPayload> &
+  DialogPropsBody &
+  DialogPropsContent;
+
+// API
+// ---
+
+/**
+ * {@link Dialog} を構成する各パーツの props などを作成するための API です。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
+ */
+export interface DialogAPI<TPayload = any> {
+  /**
+   * {@link DialogBackdrop} に渡す props を取得します。
+   */
+  getBackdropProps(): DialogBackdropProps;
+
+  /**
+   * {@link DialogBody} に渡す props を取得します。
+   */
+  getBodyProps(): DialogBodyProps | null;
+
+  /**
+   * {@link DialogCloseTrigger} に渡す props を取得します。
+   */
+  getCloseTriggerProps(): DialogCloseTriggerProps | null;
+
+  /**
+   * {@link DialogContent} に渡す props を取得します。
+   */
+  getContentProps(): Omit<DialogContentProps, "children">;
+
+  /**
+   * {@link DialogControls} に渡す props を取得します。
+   */
+  getControlsProps(): DialogControlsProps | null;
+
+  /**
+   * {@link DialogDescription} に渡す props を取得します。
+   */
+  getDescriptionProps(): DialogDescriptionProps | null;
+
+  /**
+   * {@link DialogFooter} に渡す props を取得します。
+   */
+  getFooterProps(): Omit<DialogFooterProps, "children"> | null;
+
+  /**
+   * {@link DialogHeader} に渡す props を取得します。
+   */
+  getHeaderProps(): Omit<DialogHeaderProps, "children">;
+
+  /**
+   * {@link DialogPortal} に渡す props を取得します。
+   */
+  getPortalProps(): Omit<DialogPortalProps, "children">;
+
+  /**
+   * {@link DialogRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<DialogRootProps, "children">;
+
+  /**
+   * {@link DialogTitle} に渡す props を取得します。
+   */
+  getTitleProps(): DialogTitleProps | null;
+
+  /**
+   * {@link DialogToggleTrigger} に渡す props を取得します。
+   */
+  getToggleTriggerProps(): DialogToggleTriggerProps<TPayload> | null;
+
+  /**
+   * {@link DialogViewport} に渡す props を取得します。
+   */
+  getViewportProps(): Omit<DialogViewportProps, "children">;
+}
+
+interface IUseDialogAPI {
+  /**
+   * {@link DialogAPI} を作成します。
+   *
+   * @template TPayload トリガーが送信するデータの型です。
+   * @param props {@link Dialog} の props です。
+   * @returns ダイアログの API です
+   */
+  <TPayload = any>(props: DialogProps<TPayload>): DialogAPI<TPayload>;
+}
+
+/**
+ * {@link DialogAPI} を作成するフックです。
+ */
+export const useDialogAPI: IUseDialogAPI = function useSuiDialogAPI(props) {
+  const {
+    open,
+    close,
+    modal,
+    title,
+    handle: handleProp,
+    radius,
+    onClose,
+    trigger,
+    variant,
+    children,
+    controls,
+    outlined,
+    htmlTitle,
+    slotProps: {
+      title: titleProps = {},
+      footer: footerProps = {},
+      header: headerProps = {},
+      portal: portalProps = {},
+      content: contentProps = {},
+      backdrop: backdropProps = {},
+      controls: controlsProps = {},
+      viewport: viewportProps = {},
+      description: descriptionProps = {},
+      closeTrigger: closeTriggerProps = {},
+      toggleTrigger: toggleTriggerProps = {},
+    } = {},
+    triggerId,
+    actionsRef,
+    defaultOpen,
+    description,
+    onOpenChange,
+    defaultTriggerId,
+    showCloseIconButton = true,
+    onOpenChangeComplete,
+    disablePointerDismissal,
+    ...otherBodyProps
+  } = props;
+  const handle = React.useMemo(() => handleProp || createDialogHandle(), [handleProp]);
+
+  return {
+    getBodyProps() {
+      if (isLikelyVisibleNode(children)) {
+        return {
+          ...otherBodyProps,
+          title: htmlTitle,
+          children,
+        };
+      }
+
+      return null;
+    },
+    getRootProps(): Required<Omit<DialogRootProps, "children">> {
+      return {
+        open,
+        handle,
+        triggerId,
+        actionsRef,
+        defaultOpen,
+        onOpenChange,
+        defaultTriggerId,
+        onOpenChangeComplete,
+        modal,
+        disablePointerDismissal,
+      };
+    },
+    getTitleProps() {
+      if (isLikelyVisibleNode(title)) {
+        return {
+          ...titleProps,
+          children: title,
+        };
+      }
+
+      return null;
+    },
+    getFooterProps() {
+      if (isLikelyVisibleNode(close)) {
+        return footerProps;
+      }
+
+      return null;
+    },
+    getHeaderProps() {
+      return headerProps;
+    },
+    getPortalProps() {
+      return portalProps;
+    },
+    getContentProps() {
+      const requiredProps: Required<DialogPropsContent> = {
+        radius,
+        variant,
+        outlined,
+      };
+
+      return {
+        ...requiredProps,
+        ...contentProps,
+      };
+    },
+    getBackdropProps() {
+      return backdropProps;
+    },
+    getControlsProps() {
+      if (isLikelyVisibleNode(controls) || showCloseIconButton) {
+        return {
+          ...controlsProps,
+          children: (
+            <>
+              {controls}
+              <DialogCloseTrigger>
+                <Button.Root radius="full" squared variant="naked">
+                  <Button.Content>
+                    <XIcon />
+                  </Button.Content>
+                </Button.Root>
+              </DialogCloseTrigger>
+            </>
+          ),
+        };
+      }
+
+      return null;
+    },
+    getViewportProps() {
+      return viewportProps;
+    },
+    getDescriptionProps() {
+      if (isLikelyVisibleNode(description)) {
+        return {
+          ...descriptionProps,
+          children: description,
+        };
+      }
+
+      return null;
+    },
+    getCloseTriggerProps() {
+      if (isLikelyVisibleNode(close)) {
+        const { onClick, ...otherCloseButtonProps } = closeTriggerProps;
+
+        return {
+          ...otherCloseButtonProps,
+          children: close,
+          onClick(evt) {
+            onClick?.(evt);
+            if (evt.defaultPrevented) {
+              return;
+            }
+
+            onClose?.(evt);
+          },
+        };
+      }
+
+      return null;
+    },
+    getToggleTriggerProps() {
+      if (trigger) {
+        return {
+          ...toggleTriggerProps,
+          handle,
+          children: trigger,
+        };
+      }
+
+      return null;
+    },
+  };
+};
+
+export { type DialogAPI as API, useDialogAPI as useAPI };
+
+// Component
+// ---------
+
+interface IDialog extends IComponent<DialogProps> {
+  /**
+   * @template TPayload トリガーが送信するデータの型です。
+   */
+  <TPayload = any>(props: DialogProps<TPayload>): IComponent.Return;
+
+  /**
+   * {@link DialogHandle} を作成する関数です。
+   */
+  readonly createHandle: typeof createDialogHandle;
 }
 
 /**
  * ダイアログを表示するコンポーネントです。
- *
- * トリガー、タイトル、説明文、本文、閉じる操作からダイアログを組み立てます。
- * 構成を細かく制御したい場合は、{@link DialogRoot|Root} を直接組み立てます。
  */
-export const Dialog: DialogComponentType = /*#__PURE__*/ Object.assign(
+export const Dialog: IDialog = /*#__PURE__*/ Object.assign(
   function SuiDialog(props: DialogProps) {
-    const [handle] = React.useState(createHandle);
-    const {
-      close,
-      title,
-      onClose,
-      trigger,
-      children,
-      slotProps: {
-        close: closeProps,
-        popup: popupProps,
-        title: titleProps,
-        portal: portalProps,
-        trigger: triggerProps,
-        backdrop: backdropProps,
-        viewport: viewportProps,
-        description: descriptionProps,
-      } = {},
-      description,
-      ...rootProps
-    } = props;
+    const api = useDialogAPI(props);
+    const toggleTriggerProps = api.getToggleTriggerProps();
+    const contentProps = api.getContentProps();
+    const controlsProps = api.getControlsProps();
+    const titleProps = api.getTitleProps();
+    const descriptionProps = api.getDescriptionProps();
+    const bodyProps = api.getBodyProps();
+    const footerProps = api.getFooterProps();
+    const closeTriggerProps = api.getCloseTriggerProps();
 
     return (
-      <DialogRoot {...rootProps} handle={handle}>
-        {(!!trigger || !!triggerProps) && (
-          // `trigger` または `triggerProps` があれば、`children` は必ず指定されます。
-          <DialogTrigger handle={handle} children={trigger!} {...triggerProps} />
-        )}
-        <DialogPortal {...portalProps}>
-          <DialogBackdrop {...backdropProps} />
-          <DialogViewport {...viewportProps}>
-            <DialogPopup {...popupProps}>
-              <DialogClose
-                {...mergeProps(
-                  { onClick: onClose, className: "sui_dialog_close_button" },
-                  closeProps,
+      <DialogRoot {...api.getRootProps()}>
+        {toggleTriggerProps && <DialogToggleTrigger {...toggleTriggerProps} />}
+        <DialogPortal {...api.getPortalProps()}>
+          <DialogBackdrop {...api.getBackdropProps()} />
+          <DialogViewport {...api.getViewportProps()}>
+            <DialogContent {...contentProps}>
+              <DialogHeader {...api.getHeaderProps()}>
+                {titleProps && <DialogTitle {...titleProps} />}
+                {descriptionProps && <DialogDescription {...descriptionProps} />}
+                {contentProps.variant === "default" && controlsProps && (
+                  <DialogControls {...controlsProps} />
                 )}
-              >
-                <Button color="grey" squared variant="naked" aria-label="閉じる">
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    focusable="false"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M18 6 6 18" />
-                    <path d="m6 6 12 12" />
-                  </svg>
-                </Button>
-              </DialogClose>
-              {("title" in props || !!titleProps) && (
-                <DialogTitle children={title} {...titleProps} />
+              </DialogHeader>
+              {bodyProps && <DialogBody {...bodyProps} />}
+              {footerProps && (
+                <DialogFooter {...footerProps}>
+                  {closeTriggerProps && <DialogCloseTrigger {...closeTriggerProps} />}
+                </DialogFooter>
               )}
-              {("description" in props || !!descriptionProps) && (
-                <DialogDescription children={description} {...descriptionProps} />
+              {contentProps.variant === "stacked" && controlsProps && (
+                <DialogControls {...controlsProps} absolute={controlsProps?.absolute ?? true} />
               )}
-              {children}
-              {(!!close || !!closeProps) && (
-                // `close` または `closeProps` があれば、`children` は必ず指定されます。
-                <div className="sui_dialog_actions">
-                  <DialogClose
-                    children={close!}
-                    {...mergeProps({ onClick: onClose }, closeProps)}
-                  />
-                </div>
-              )}
-            </DialogPopup>
+            </DialogContent>
           </DialogViewport>
         </DialogPortal>
       </DialogRoot>
     );
   },
-  { createHandle },
+  {
+    createHandle: createDialogHandle,
+  },
 );
 
-/**
- * {@link Dialog} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Dialog {
   /**
    * {@link DialogState} です。
@@ -241,4 +559,29 @@ export namespace Dialog {
    * {@link DialogSlotProps} です。
    */
   export type SlotProps = DialogSlotProps;
+
+  /**
+   * {@link DialogActions}
+   */
+  export type Actions = DialogActions;
+
+  /**
+   * {@link DialogChangeEventDetails}
+   */
+  export type ChangeEventDetails = DialogChangeEventDetails;
+
+  /**
+   * {@link DialogChangeEventReason}
+   */
+  export type ChangeEventReason = DialogChangeEventReason;
+
+  /**
+   * {@link DialogRadius}
+   */
+  export type Radius = DialogRadius;
+
+  /**
+   * {@link DialogVariant}
+   */
+  export type Variant = DialogVariant;
 }

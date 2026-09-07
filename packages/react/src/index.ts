@@ -240,3 +240,16 @@ export {
   ContextMenuContext,
   useContextMenuContext,
 } from "./context-menu/index.js";
+export {
+  type DialogAPI,
+  type DialogProps,
+  type DialogState,
+  type DialogRadius,
+  type DialogActions,
+  type DialogVariant,
+  type DialogSlotProps,
+  type DialogChangeEventReason,
+  type DialogChangeEventDetails,
+  Dialog,
+  useDialogAPI,
+} from "./dialog/index.js";

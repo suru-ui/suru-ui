@@ -1,6 +1,8 @@
 import { Dialog } from "@base-ui/react/dialog";
+import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
+import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
@@ -10,194 +12,226 @@ import "./dialog.css";
 // ------
 
 /**
- * ダイアログを制御するハンドルです。
+ * ダイアログを命令的に制御するハンドルです。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
  */
-export type DialogHandle = Dialog.Handle<unknown>;
+export interface DialogHandle<TPayload = any> extends Dialog.Handle<TPayload> {}
+
+interface ICreateHandle {
+  /**
+   * @template TPayload トリガーが送信するデータの型です。
+   * @returns ダイアログを命令的に制御するハンドルです。
+   */
+  <TPayload = any>(): DialogHandle<TPayload>;
+}
 
 /**
- * ダイアログを制御するハンドルを新しく作成します。
- *
- * 作成したハンドルを {@link Root} と {@link Trigger} の `handle` プロパティーに渡すことで、トリガーとダイアログの内容を関連付けます。
+ * {@link DialogHandle} を作成する関数です。
  */
-export const createHandle: typeof Dialog.createHandle = Dialog.createHandle;
+export const createDialogHandle: ICreateHandle = function createSuiDialogHandle() {
+  return Dialog.createHandle();
+};
+
+export { type DialogHandle as Handle, createDialogHandle as createHandle };
 
 // Root
 // ----
 
 /**
- * {@link DialogRoot} の状態です。
+ * ダイアログを命令的に操作するためのオブジェクトです。
+ */
+export type DialogRootActions = Dialog.Root.Actions;
+
+/**
+ * ダイアログの開閉状態を変更されるイベントの詳細です。
+ */
+export type DialogRootChangeEventDetails = Dialog.Root.ChangeEventDetails;
+
+/**
+ * ダイアログの開閉状態が変更される理由です。
+ */
+export type DialogRootChangeEventReason = Dialog.Root.ChangeEventReason;
+
+/**
+ * {@link DialogRoot} が持つ状態です。
  */
 export type DialogRootState = Dialog.Root.State;
 
 /**
- * {@link DialogRoot} に渡すプロパティーです。
+ * {@link DialogRoot} に渡す props です。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
  */
-export type DialogRootProps = Omit<React.ComponentProps<typeof Dialog.Root>, "handle"> & {
+export type DialogRootProps<TPayload = any> = Omit<
+  React.ComponentProps<typeof Dialog.Root>,
+  "handle"
+> & {
   /**
-   * ダイアログとトリガー ({@link Trigger}) を関連付けるハンドルです。
-   *
-   * {@link createHandle} で作成します。
+   * トリガーとダイアログに関連付けるためのハンドルです。
    */
-  handle: DialogHandle;
+  handle: DialogHandle<TPayload>;
 };
 
+interface IDialogRoot extends IComponent<DialogRootProps> {
+  /**
+   * @template TPayload トリガーが送信するデータの型です。
+   */
+  <TPayload = any>(props: DialogRootProps<TPayload>): IComponent.Return;
+}
+
 /**
- * ダイアログのルートです。
+ * ダイアログのルートコンポーネントです。
  *
- * ダイアログの開閉状態を管理し、各パーツをグループ化します。
- * それ自身は HTML 要素をレンダリングしません。
+ * ダイアログの開閉状態を管理し、各パーツをグループ化します。それ自身は HTML 要素をレンダリングしません。
  */
-export const DialogRoot: IComponent<DialogRootProps> = function SuiDialogRoot(props) {
+export const DialogRoot: IDialogRoot = function SuiDialogRoot(props: DialogRootProps) {
   return <Dialog.Root {...props} />;
 };
 
-/**
- * {@link DialogRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DialogRoot as Root };
+
 export namespace Root {
   /**
-   * {@link DialogRootState} です。
+   * {@link DialogRootState}
    */
   export type State = DialogRootState;
 
   /**
-   * {@link DialogRootProps} です。
+   * {@link DialogRootProps}
    */
-  export type Props = DialogRootProps;
+  export type Props<TPayload = any> = DialogRootProps<TPayload>;
+
+  /**
+   * {@link DialogRootActions}
+   */
+  export type Actions = DialogRootActions;
+
+  /**
+   * {@link DialogRootChangeEventDetails}
+   */
+  export type ChangeEventDetails = DialogRootChangeEventDetails;
+
+  /**
+   * {@link DialogRootChangeEventReason}
+   */
+  export type ChangeEventReason = DialogRootChangeEventReason;
 }
 
-/**
- * {@link DialogRoot} です。
- */
-export const Root: IComponent<Root.Props> = DialogRoot;
-
-// Trigger
-// -------
+// ToggleTrigger
+// -------------
 
 /**
- * {@link DialogTrigger} の状態です。
+ * {@link DialogToggleTrigger} が持つ状態です。
  */
-export type DialogTriggerState = Dialog.Trigger.State;
+export type DialogToggleTriggerState = Dialog.Trigger.State;
 
 /**
- * {@link DialogTrigger} に渡すプロパティーです。
+ * {@link DialogToggleTrigger} に渡す props です。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
  */
-export type DialogTriggerProps = Omit<
+export type DialogToggleTriggerProps<TPayload = any> = Omit<
   React.ComponentProps<typeof Dialog.Trigger>,
   "handle" | "children" | "render"
 > & {
   /**
    * ボタンとしてレンダリングする要素です。
-   *
-   * {@link Dialog.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
    */
   children: NonNullable<React.ComponentProps<typeof Dialog.Trigger>["render"]>;
 
   /**
-   * ダイアログ ({@link Root}) を関連付けるハンドルです。
-   *
-   * {@link createHandle} で作成し、{@link Root} と共有します。
+   * トリガーとダイアログに関連付けるためのハンドルです。
    */
-  handle: DialogHandle;
+  handle: DialogHandle<TPayload>;
 };
 
 /**
- * ダイアログを開くボタン要素です。
- *
- * 子要素は何にもラップされず、そのまま {@link Dialog.Trigger} の `render` プロパティーに渡されます。
+ * ダイアログを開くボタンコンポーネントです。
  */
-export const DialogTrigger: IComponent<DialogTriggerProps> = function SuiDialogTrigger(props) {
-  const { handle, children, className, ...otherProps } = props;
+export const DialogToggleTrigger: IComponent<DialogToggleTriggerProps> =
+  function SuiDialogToggleTrigger(props) {
+    const { handle, children, className, ...otherProps } = props;
 
-  return (
-    <Dialog.Trigger
-      {...otherProps}
-      handle={handle}
-      render={children}
-      className={cn(className, "sui_dialog_trigger")}
-    />
-  );
-};
+    return (
+      <Dialog.Trigger
+        {...otherProps}
+        handle={handle}
+        render={children}
+        className={cn(className, "sui_dialog_trigger")}
+      />
+    );
+  };
 
-/**
- * {@link DialogTrigger} の状態やプロパティーをまとめた型名前空間です。
- */
-export namespace Trigger {
+export { DialogToggleTrigger as ToggleTrigger };
+
+export namespace ToggleTrigger {
   /**
-   * {@link DialogTriggerState} です。
+   * {@link DialogToggleTriggerState}
    */
-  export type State = DialogTriggerState;
+  export type State = DialogToggleTriggerState;
 
   /**
-   * {@link DialogTriggerProps} です。
+   * {@link DialogToggleTriggerProps}
    */
-  export type Props = DialogTriggerProps;
+  export type Props = DialogToggleTriggerProps;
 }
-
-/**
- * {@link DialogTrigger} です。
- */
-export const Trigger: IComponent<Trigger.Props> = DialogTrigger;
 
 // Portal
 // ------
 
 /**
- * {@link DialogPortal} の状態です。
+ * {@link DialogPortal} が持つ状態です。
  */
 export type DialogPortalState = Dialog.Portal.State;
 
 /**
- * {@link DialogPortal} に渡すプロパティーです。
+ * {@link DialogPortal} に渡す props です。
  */
 export type DialogPortalProps = React.ComponentProps<typeof Dialog.Portal>;
 
 /**
- * ダイアログを DOM の別の場所へ移動する要素です。
+ * ダイアログを DOM の別の場所に配置するコンポーネントです。
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
 export const DialogPortal: IComponent<DialogPortalProps> = function SuiDialogPortal(props) {
   const { className, ...otherProps } = props;
 
-  return <Dialog.Portal {...otherProps} className={cn(className, "sui_dialog_portal")} />;
+  return (
+    <Dialog.Portal {...otherProps} className={cn(className, "sui_dialog_portal")} data-scope="" />
+  );
 };
 
-/**
- * {@link DialogPortal} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DialogPortal as Portal };
+
 export namespace Portal {
   /**
-   * {@link DialogPortalState} です。
+   * {@link DialogPortalState}
    */
   export type State = DialogPortalState;
 
   /**
-   * {@link DialogPortalProps} です。
+   * {@link DialogPortalProps}
    */
   export type Props = DialogPortalProps;
 }
-
-/**
- * {@link DialogPortal} です。
- */
-export const Portal: IComponent<Portal.Props> = DialogPortal;
 
 // Backdrop
 // --------
 
 /**
- * {@link DialogBackdrop} の状態です。
+ * {@link DialogBackdrop} が持つ状態です。
  */
 export type DialogBackdropState = Dialog.Backdrop.State;
 
 /**
- * {@link DialogBackdrop} に渡すプロパティーです。
+ * {@link DialogBackdrop} に渡す props です。
  */
 export type DialogBackdropProps = React.ComponentProps<typeof Dialog.Backdrop>;
 
 /**
- * ポップアップの背後に表示されるオーバーレイ要素です。
+ * ポップアップの背後に表示されるオーバーレイコンポーネントです。
  */
 export const DialogBackdrop: IComponent<DialogBackdropProps> = function SuiDialogBackdrop(props) {
   const { className, ...otherProps } = props;
@@ -205,41 +239,35 @@ export const DialogBackdrop: IComponent<DialogBackdropProps> = function SuiDialo
   return <Dialog.Backdrop {...otherProps} className={cn(className, "sui_dialog_backdrop")} />;
 };
 
-/**
- * {@link DialogBackdrop} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DialogBackdrop as Backdrop };
+
 export namespace Backdrop {
   /**
-   * {@link DialogBackdropState} です。
+   * {@link DialogBackdropState}
    */
   export type State = DialogBackdropState;
 
   /**
-   * {@link DialogBackdropProps} です。
+   * {@link DialogBackdropProps}
    */
   export type Props = DialogBackdropProps;
 }
-
-/**
- * {@link DialogBackdrop} です。
- */
-export const Backdrop: IComponent<Backdrop.Props> = DialogBackdrop;
 
 // Viewport
 // --------
 
 /**
- * {@link DialogViewport} の状態です。
+ * {@link DialogViewport} が持つ状態です。
  */
 export type DialogViewportState = Dialog.Viewport.State;
 
 /**
- * {@link DialogViewport} に渡すプロパティーです。
+ * {@link DialogViewport} に渡す props です。
  */
 export type DialogViewportProps = React.ComponentProps<typeof Dialog.Viewport>;
 
 /**
- * ポップアップの配置コンテナー要素です。
+ * ポップアップの配置コンテナーコンポーネントです。
  *
  * スクロール可能なオーバーレイを作り、ポップアップを中央に配置します。
  */
@@ -249,85 +277,230 @@ export const DialogViewport: IComponent<DialogViewportProps> = function SuiDialo
   return <Dialog.Viewport {...otherProps} className={cn(className, "sui_dialog_viewport")} />;
 };
 
-/**
- * {@link DialogViewport} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DialogViewport as Viewport };
+
 export namespace Viewport {
   /**
-   * {@link DialogViewportState} です。
+   * {@link DialogViewportState}
    */
   export type State = DialogViewportState;
 
   /**
-   * {@link DialogViewportProps} です。
+   * {@link DialogViewportProps}
    */
   export type Props = DialogViewportProps;
 }
 
-/**
- * {@link DialogViewport} です。
- */
-export const Viewport: IComponent<Viewport.Props> = DialogViewport;
-
-// Popup
-// -----
+// Content
+// -------
 
 /**
- * {@link DialogPopup} の状態です。
- */
-export type DialogPopupState = Dialog.Popup.State;
-
-/**
- * {@link DialogPopup} に渡すプロパティーです。
- */
-export type DialogPopupProps = React.ComponentProps<typeof Dialog.Popup>;
-
-/**
- * ダイアログの本文を表示する要素です。
+ * ダイアログの角丸の大きさです。
  *
- * `initialFocus` と `finalFocus` を使うと、開閉時に移動するフォーカス先を指定できます。
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
-export const DialogPopup: IComponent<DialogPopupProps> = function SuiDialogPopup(props) {
-  const { className, ...otherProps } = props;
+export type DialogContentRadius = "none" | Size;
 
-  return <Dialog.Popup {...otherProps} className={cn(className, "sui_dialog_popup")} />;
+/**
+ * ダイアログの主な外観です。
+ *
+ * - `"default"`: 規定のスタイル
+ * - `"stacked"`: 積み重なっているスタイル
+ */
+export type DialogContentVariant = "default" | "stacked";
+
+/**
+ * {@link DialogContent} が持つ状態です。
+ */
+export type DialogContentState = Dialog.Popup.State;
+
+/**
+ * {@link DialogContent} に渡す props です。
+ */
+export type DialogContentProps = React.ComponentProps<typeof Dialog.Popup> & {
+  /**
+   * ダイアログに枠線を表示するかどうかを指定します。
+   *
+   * @default false
+   */
+  outlined?: boolean | undefined;
+
+  /**
+   * ダイアログの角丸の大きさを指定します。
+   *
+   * @default "md"
+   */
+  radius?: DialogContentRadius | undefined;
+
+  /**
+   * ダイアログの主な外観を指定します。
+   *
+   * @default "default"
+   */
+  variant?: DialogContentVariant | undefined;
 };
 
 /**
- * {@link DialogPopup} の状態やプロパティーをまとめた型名前空間です。
+ * ダイアログを表示するコンポーネントです。
  */
-export namespace Popup {
+export const DialogContent: IComponent<DialogContentProps> = function SuiDialogContent(props) {
+  const { radius = "md", variant = "default", outlined = false, className, ...otherProps } = props;
+
+  return (
+    <Dialog.Popup
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_dialog_content",
+        `sui_dialog_content-radius_${radius}`,
+        `sui_dialog_content-variant_${variant}`,
+        outlined && "sui_dialog_content-outlined",
+      )}
+    />
+  );
+};
+
+export { DialogContent as Content };
+
+export namespace Content {
   /**
-   * {@link DialogPopupState} です。
+   * {@link DialogContentState}
    */
-  export type State = DialogPopupState;
+  export type State = DialogContentState;
 
   /**
-   * {@link DialogPopupProps} です。
+   * {@link DialogContentProps}
    */
-  export type Props = DialogPopupProps;
+  export type Props = DialogContentProps;
+
+  /**
+   * {@link DialogContentRadius}
+   */
+  export type Radius = DialogContentRadius;
+
+  /**
+   * {@link DialogContentVariant}
+   */
+  export type Variant = DialogContentVariant;
 }
 
+// Controls
+// --------
+
 /**
- * {@link DialogPopup} です。
+ * {@link DialogControls} が持つ状態です。
  */
-export const Popup: IComponent<Popup.Props> = DialogPopup;
+export type DialogControlsState = {};
+
+/**
+ * {@link DialogControls} に渡す props です。
+ */
+export type DialogControlsProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
+  RenderProps<DialogControlsState> & {
+    /**
+     * 絶対位置として配置するかを指定します。
+     *
+     * @default false
+     */
+    absolute?: boolean | undefined;
+  };
+
+/**
+ * ダイアログのコントロールコンポーネントです。
+ */
+export const DialogControls: IComponent<DialogControlsProps> = function SuiDialogControls(props) {
+  const { absolute = false, ...htmlProps } = props;
+
+  return useRender({
+    defaultTagName: "div",
+    props: [
+      htmlProps,
+      {
+        className: cn(
+          "sui_dialog_controls",
+          absolute && "sui_dialog_controls-absolute",
+          !absolute && "sui_dialog_controls-relative",
+        ),
+      },
+    ],
+  });
+};
+
+export { DialogControls as Controls };
+
+export namespace Controls {
+  /**
+   * {@link DialogControlsState}
+   */
+  export type State = DialogControlsState;
+
+  /**
+   * {@link DialogControlsProps}
+   */
+  export type Props = DialogControlsProps;
+}
+
+// Header
+// ------
+
+/**
+ * {@link DialogHeader} が持つ状態です。
+ */
+export type DialogHeaderState = {};
+
+/**
+ * {@link DialogHeader} に渡す props です。
+ */
+export type DialogHeaderProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
+  RenderProps<DialogHeaderState>;
+
+/**
+ * ダイアログのヘッダーコンポーネントです。
+ */
+export const DialogHeader: IComponent<DialogHeaderProps> = function SuiDialogHeader(htmlProps) {
+  return useRender({
+    defaultTagName: "div",
+    props: [
+      htmlProps,
+      {
+        className: "sui_dialog_header",
+      },
+    ],
+  });
+};
+
+export { DialogHeader as Header };
+
+export namespace Header {
+  /**
+   * {@link DialogHeaderState}
+   */
+  export type State = DialogHeaderState;
+
+  /**
+   * {@link DialogHeaderProps}
+   */
+  export type Props = DialogHeaderProps;
+}
 
 // Title
 // -----
 
 /**
- * {@link DialogTitle} の状態です。
+ * {@link DialogTitle} が持つ状態です。
  */
 export type DialogTitleState = Dialog.Title.State;
 
 /**
- * {@link DialogTitle} に渡すプロパティーです。
+ * {@link DialogTitle} に渡す props です。
  */
 export type DialogTitleProps = React.ComponentProps<typeof Dialog.Title>;
 
 /**
- * ダイアログのタイトルを表示する見出し要素です。
+ * ダイアログの見出しを表示するコンポーネントです。
  */
 export const DialogTitle: IComponent<DialogTitleProps> = function SuiDialogTitle(props) {
   const { className, ...otherProps } = props;
@@ -335,41 +508,35 @@ export const DialogTitle: IComponent<DialogTitleProps> = function SuiDialogTitle
   return <Dialog.Title {...otherProps} className={cn(className, "sui_dialog_title")} />;
 };
 
-/**
- * {@link DialogTitle} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DialogTitle as Title };
+
 export namespace Title {
   /**
-   * {@link DialogTitleState} です。
+   * {@link DialogTitleState}
    */
   export type State = DialogTitleState;
 
   /**
-   * {@link DialogTitleProps} です。
+   * {@link DialogTitleProps}
    */
   export type Props = DialogTitleProps;
 }
-
-/**
- * {@link DialogTitle} です。
- */
-export const Title: IComponent<Title.Props> = DialogTitle;
 
 // Description
 // -----------
 
 /**
- * {@link DialogDescription} の状態です。
+ * {@link DialogDescription} が持つ状態です。
  */
 export type DialogDescriptionState = Dialog.Description.State;
 
 /**
- * {@link DialogDescription} に渡すプロパティーです。
+ * {@link DialogDescription} に渡す props です。
  */
 export type DialogDescriptionProps = React.ComponentProps<typeof Dialog.Description>;
 
 /**
- * ダイアログの説明文を表示する段落要素です。
+ * ダイアログの内容を表示するコンポーネントです。
  */
 export const DialogDescription: IComponent<DialogDescriptionProps> = function SuiDialogDescription(
   props,
@@ -379,78 +546,153 @@ export const DialogDescription: IComponent<DialogDescriptionProps> = function Su
   return <Dialog.Description {...otherProps} className={cn(className, "sui_dialog_description")} />;
 };
 
-/**
- * {@link DialogDescription} の状態やプロパティーをまとめた型名前空間です。
- */
+export { DialogDescription as Description };
+
 export namespace Description {
   /**
-   * {@link DialogDescriptionState} です。
+   * {@link DialogDescriptionState}
    */
   export type State = DialogDescriptionState;
 
   /**
-   * {@link DialogDescriptionProps} です。
+   * {@link DialogDescriptionProps}
    */
   export type Props = DialogDescriptionProps;
 }
 
-/**
- * {@link DialogDescription} です。
- */
-export const Description: IComponent<Description.Props> = DialogDescription;
-
-// Close
-// -----
+// Body
+// ----
 
 /**
- * {@link DialogClose} の状態です。
+ * {@link DialogBody} が持つ状態です。
  */
-export type DialogCloseState = Dialog.Close.State;
+export type DialogBodyState = {};
 
 /**
- * {@link DialogClose} に渡すプロパティーです。
+ * {@link DialogBody} に渡す props です。
  */
-export type DialogCloseProps = Omit<
+export type DialogBodyProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
+  RenderProps<DialogBodyState>;
+
+/**
+ * ダイアログのボディーコンポーネントです。
+ */
+export const DialogBody: IComponent<DialogBodyProps> = function SuiDialogBody(props) {
+  return useRender({
+    defaultTagName: "div",
+    props: [
+      props,
+      {
+        className: "sui_dialog_body",
+      },
+    ],
+  });
+};
+
+export { DialogBody as Body };
+
+export namespace Body {
+  /**
+   * {@link DialogBodyState}
+   */
+  export type State = DialogBodyState;
+
+  /**
+   * {@link DialogBodyProps}
+   */
+  export type Props = DialogBodyProps;
+}
+
+// Footer
+// ------
+
+/**
+ * {@link DialogFooter} が持つ状態です。
+ */
+export type DialogFooterState = {};
+
+/**
+ * {@link DialogFooter} に渡す props です。
+ */
+export type DialogFooterProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
+  RenderProps<DialogFooterState>;
+
+/**
+ * ダイアログのフッターコンポーネントです。
+ */
+export const DialogFooter: IComponent<DialogFooterProps> = function SuiDialogFooter(props) {
+  return useRender({
+    defaultTagName: "div",
+    props: [
+      props,
+      {
+        className: "sui_dialog_footer",
+      },
+    ],
+  });
+};
+
+export { DialogFooter as Footer };
+
+export namespace Footer {
+  /**
+   * {@link DialogFooterState}
+   */
+  export type State = DialogFooterState;
+
+  /**
+   * {@link DialogFooterProps}
+   */
+  export type Props = DialogFooterProps;
+}
+
+// CloseTrigger
+// ------------
+
+/**
+ * {@link DialogCloseTrigger} が持つ状態です。
+ */
+export type DialogCloseTriggerState = Dialog.Close.State;
+
+/**
+ * {@link DialogCloseTrigger} に渡す props です。
+ */
+export type DialogCloseTriggerProps = Omit<
   React.ComponentProps<typeof Dialog.Close>,
   "children" | "render"
 > & {
   /**
    * ボタンとしてレンダリングする要素です。
-   *
-   * {@link Dialog.Close} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
    */
   children: NonNullable<React.ComponentProps<typeof Dialog.Close>["render"]>;
 };
 
 /**
- * ダイアログを閉じるボタン要素です。
- *
- * 子要素は何にもラップされず、そのまま {@link Dialog.Close} の `render` プロパティーに渡されます。
+ * ダイアログを閉じるボタンコンポーネントです。
  */
-export const DialogClose: IComponent<DialogCloseProps> = function SuiDialogClose(props) {
-  const { children, className, ...otherProps } = props;
+export const DialogCloseTrigger: IComponent<DialogCloseTriggerProps> =
+  function SuiDialogCloseTrigger(props) {
+    const { children, className, ...otherProps } = props;
 
-  return (
-    <Dialog.Close {...otherProps} render={children} className={cn(className, "sui_dialog_close")} />
-  );
-};
+    return (
+      <Dialog.Close
+        {...otherProps}
+        render={children}
+        className={cn(className, "sui_dialog_close")}
+      />
+    );
+  };
 
-/**
- * {@link DialogClose} の状態やプロパティーをまとめた型名前空間です。
- */
-export namespace Close {
+export { DialogCloseTrigger as CloseTrigger };
+
+export namespace CloseTrigger {
   /**
-   * {@link DialogCloseState} です。
+   * {@link DialogCloseTriggerState}
    */
-  export type State = DialogCloseState;
+  export type State = DialogCloseTriggerState;
 
   /**
-   * {@link DialogCloseProps} です。
+   * {@link DialogCloseTriggerProps}
    */
-  export type Props = DialogCloseProps;
+  export type Props = DialogCloseTriggerProps;
 }
-
-/**
- * {@link DialogClose} です。
- */
-export const Close: IComponent<Close.Props> = DialogClose;

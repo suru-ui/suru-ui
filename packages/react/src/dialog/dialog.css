@@ -1,4 +1,22 @@
 /* Portal */
+@layer sui.component {
+@scope (.sui_dialog_portal) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: fixed;
+  inset: 0;
+  z-index: calc(infinity);
+  min-height: 100dvh;
+
+  /* iOS 26以降: 背景が画面全体を覆うようにします。 */
+  @supports (-webkit-touch-callout: none) {
+    position: absolute;
+  }
+}
+
+} /* @scope */
+} /* @layer */
 
 /* Backdrop */
 @layer sui.component {
@@ -7,167 +25,321 @@
 /* 固定 */
 :scope {
   .sui_dialog_backdrop {
-    position: fixed;
+    position: absolute;
     inset: 0px;
-    transition: opacity 150ms ease-out;
   }
 }
 
 /* 変数 */
 :scope {
   --sui_dialog_backdrop-background_color: ;
-  --sui_dialog_backdrop-opacity: ;
+  --sui_dialog_backdrop-filter-blur: ;
 }
 
 /* 可変 */
 :scope {
   .sui_dialog_backdrop {
     background-color: var(--sui_dialog_backdrop-background_color);
-    opacity: var(--_sui_dialog_backdrop-opacity, var(--sui_dialog_backdrop-opacity));
+    backdrop-filter: var(--sui_dialog_backdrop-filter-blur);
   }
 }
 
 /* 代入 */
 :scope {
-  --sui_dialog_backdrop-background_color: var(--sui-canvas-1);
-  --sui_dialog_backdrop-opacity: var(--sui-backdrop-opacity);
-}
-
-/* 変異 */
-:scope {
-  .sui_dialog_backdrop:is([data-starting-style], [data-ending-style]) {
-    --_sui_dialog_backdrop-opacity: 0;
-  }
+  --sui_dialog_backdrop-background_color: var(--sui-backdrop-color);
+  --sui_dialog_backdrop-filter-blur: blur(var(--sui-backdrop-blur));
 }
 
 } /* @scope */
 } /* @layer */
 
-/* Viewport */
+/* Content */
 @layer sui.component {
 @scope (.sui_dialog_portal) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_dialog_viewport {
+  .sui_dialog_content {
     position: fixed;
-    inset: 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: auto;
-    pointer-events: none;
-  }
-}
-
-/* 変数 */
-:scope {
-  --sui_dialog_viewport-padding: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_dialog_viewport {
-    padding: var(--sui_dialog_viewport-padding);
-  }
-}
-
-/* 代入 */
-:scope {
-  --sui_dialog_viewport-padding: --sui-space(6);
-}
-
-} /* @scope */
-} /* @layer */
-
-/* Popup */
-@layer sui.component {
-@scope (.sui_dialog_portal) to ([data-scope]) {
-
-/* 固定 */
-:scope {
-  .sui_dialog_popup {
-    position: relative;
+    top: 50%;
+    left: 50%;
     display: flex;
     flex-direction: column;
-    pointer-events: auto;
-    outline-style: solid;
     border-style: solid;
-    transition:
-      opacity 150ms ease-out,
-      scale 150ms ease-out;
+    transform: translate(-50%, -50%);
   }
 }
 
 /* 変数 */
 :scope {
-  --sui_dialog_popup-gap: ;
-  --sui_dialog_popup-width: ;
-  --sui_dialog_popup-max_width: ;
-  --sui_dialog_popup-padding: ;
-  --sui_dialog_popup-font_family: ;
-  --sui_dialog_popup-color: ;
-  --sui_dialog_popup-focusring_width: ;
-  --sui_dialog_popup-focusring_color: ;
-  --sui_dialog_popup-focusring_offset: ;
-  --sui_dialog_popup-background_color: ;
-  --sui_dialog_popup-border_color: ;
-  --sui_dialog_popup-border_width: ;
-  --sui_dialog_popup-border_radius: ;
-  --sui_dialog_popup-opacity: ;
-  --sui_dialog_popup-scale: ;
+  --sui_dialog_content-row_gap: ;
+  --sui_dialog_content-width-desktop: ;
+  --sui_dialog_content-width-modile: ;
+  --sui_dialog_content-width: ;
+  --sui_dialog_content-max_height: ;
+  --sui_dialog_content-padding: ;
+  --sui_dialog_content-virtual_margin_block: ;
+  --sui_dialog_content-virtual_margin_inline: ;
+  --sui_dialog_content-background_color: ;
+  --sui_dialog_content-border_color: ;
+  --sui_dialog_content-border_width: ;
+  --sui_dialog_content-border_radius: ;
 }
 
 /* 可変 */
 :scope {
-  .sui_dialog_popup {
-    gap: var(--sui_dialog_popup-gap);
-    width: var(--sui_dialog_popup-width);
-    max-width: var(--sui_dialog_popup-max_width);
-    padding: var(--sui_dialog_popup-padding);
-    font-family: var(--sui_dialog_popup-font_family);
-    color: var(--sui_dialog_popup-color);
-    outline-width: var(--_sui_dialog_popup-outline_width, 0px);
-    outline-color: var(--sui_dialog_popup-focusring_color);
-    outline-offset: var(--sui_dialog_popup-focusring_offset);
-    background-color: var(--sui_dialog_popup-background_color);
-    border-color: var(--sui_dialog_popup-border_color);
-    border-width: var(--sui_dialog_popup-border_width);
-    border-radius: var(--sui_dialog_popup-border_radius);
-    opacity: var(--_sui_dialog_popup-opacity, var(--sui_dialog_popup-opacity));
-    scale: var(--_sui_dialog_popup-scale, var(--sui_dialog_popup-scale));
+  .sui_dialog_content {
+    row-gap: var(--sui_dialog_content-row_gap);
+    width: var(--sui_dialog_content-width);
+    max-height: var(--sui_dialog_content-max_height);
+    padding: var(--sui_dialog_content-padding);
+    background-color: var(--sui_dialog_content-background_color);
+    border-color: var(--_sui_dialog_content-border_color, transparent);
+    border-width: var(--_sui_dialog_content-border_width, 0px);
+    border-radius: var(--sui_dialog_content-border_radius);
   }
 }
 
 /* 代入 */
 :scope {
-  --sui_dialog_popup-gap: --sui-gap(6);
-  --sui_dialog_popup-width: 448px;
-  --sui_dialog_popup-max_width: 100%;
-  --sui_dialog_popup-padding: --sui-space(6);
-  --sui_dialog_popup-font_family: var(--sui-font-sans);
-  --sui_dialog_popup-color: var(--sui-canvas_text-1);
-  --sui_dialog_popup-focusring_width: var(--sui-focusring_width);
-  --sui_dialog_popup-focusring_color: var(--sui-focusring_color);
-  --sui_dialog_popup-focusring_offset: var(--sui-focusring_offset);
-  --sui_dialog_popup-background_color: var(--sui-canvas-2);
-  --sui_dialog_popup-border_color: var(--sui-grey-naked-border-normal);
-  --sui_dialog_popup-border_width: --sui-border_width(1);
-  --sui_dialog_popup-border_radius: var(--sui-radius-xl);
-  --sui_dialog_popup-opacity: 1;
-  --sui_dialog_popup-scale: 1;
+  --sui_dialog_content-row_gap: --sui-gap(7);
+  --sui_dialog_content-width-desktop: 448px;
+  --sui_dialog_content-width-modile: calc(
+                                       100vw
+                                       - var(--sui_dialog_content-virtual_margin_inline)
+                                       * 2
+                                     );
+  --sui_dialog_content-width: min(
+                                var(--sui_dialog_content-width-desktop),
+                                var(--sui_dialog_content-width-modile)
+                              );
+  --sui_dialog_content-max_height: calc(
+                                     100%
+                                     - var(--sui_dialog_content-virtual_margin_block)
+                                     * 2
+                                   );
+  --sui_dialog_content-padding: --sui-space(5);
+  --sui_dialog_content-virtual_margin_block: --sui-space(4);
+  --sui_dialog_content-virtual_margin_inline: --sui-space(4);
+  --sui_dialog_content-background_color: var(--sui-canvas-2);
+  --sui_dialog_content-border_color: var(--sui-border-1);
+  --sui_dialog_content-border_width: --sui-border_width(1);
+
+  &:has(.sui_dialog_content-radius_none) {
+    --sui_dialog_content-border_radius: 0px;
+  }
+
+  &:has(.sui_dialog_content-radius_sm) {
+    --sui_dialog_content-border_radius: calc(
+                                          var(--sui-radius-sm)
+                                          + var(--sui_dialog_content-padding) / 8
+                                        );
+  }
+
+  &:has(.sui_dialog_content-radius_md) {
+    --sui_dialog_content-border_radius: calc(
+                                          var(--sui-radius-md)
+                                          + var(--sui_dialog_content-padding) / 2
+                                        );
+  }
+
+  &:has(.sui_dialog_content-radius_lg) {
+    --sui_dialog_content-border_radius: calc(
+                                          var(--sui-radius-lg)
+                                          + var(--sui_dialog_content-padding)
+                                        );
+  }
 }
 
 /* 変異 */
 :scope {
-  .sui_dialog_popup:is([data-starting-style], [data-ending-style]) {
-    --_sui_dialog_popup-opacity: 0;
-    --_sui_dialog_popup-scale: 0.98;
+  .sui_dialog_content-outlined {
+    --_sui_dialog_content-border_color: var(--sui_dialog_content-border_color);
+    --_sui_dialog_content-border_width: var(--sui_dialog_content-border_width);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Controls */
+@layer sui.component {
+@scope (.sui_dialog_portal) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_dialog_controls {
+    z-index: 1;
+    display: flex;
+    grid-area: controls;
+    margin-left: auto;
   }
 
-  .sui_dialog_popup:focus-visible {
-    --_sui_dialog_popup-outline_width: var(--sui_dialog_popup-focusring_width);
+  .sui_dialog_controls-absolute {
+    position: absolute;
   }
+
+  .sui_dialog_controls-relative {
+    position: relative;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_dialog_controls-gap: ;
+  --sui_dialog_controls-virtual_margin: ;
+  --sui_dialog_controls-margin_left: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_dialog_controls {
+    top: var(--_sui_dialog_controls-top, unset);
+    right: var(--_sui_dialog_controls-right, unset);
+    gap: var(--sui_dialog_controls-gap);
+    margin-left: var(--sui_dialog_controls-margin_left);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_dialog_controls-gap: --sui-space(4);
+  --sui_dialog_controls-virtual_margin: var(--sui_dialog_content-padding);
+
+  .sui_dialog_controls-absolute {
+    --sui_dialog_controls-margin_left: auto;
+  }
+
+  .sui_dialog_controls-relative {
+    --sui_dialog_controls-margin_left: var(--sui_dialog_controls-virtual_margin);
+  }
+}
+
+/* 変異 */
+:scope {
+  .sui_dialog_controls-absolute {
+    --_sui_dialog_controls-top: var(--sui_dialog_controls-virtual_margin);
+    --_sui_dialog_controls-right: var(--sui_dialog_controls-virtual_margin);
+  }
+
+  .sui_dialog_header .sui_dialog_controls-absolute {
+    --_sui_dialog_controls-top: 0px;
+    --_sui_dialog_controls-right: 0px;
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Header */
+@layer sui.component {
+@scope (.sui_dialog_portal) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_dialog_header {
+    position: relative;
+    display: grid;
+  }
+
+  .sui_dialog_content-variant_default .sui_dialog_header {
+    &:has(.sui_dialog_title) {
+      grid-template: "title" auto
+                     /auto ;
+    }
+
+    &:has(.sui_dialog_description) {
+      grid-template: "description" auto
+                     /auto       ;
+    }
+
+    &:has(.sui_dialog_controls) {
+      grid-template: "controls" auto
+                     /auto    ;
+    }
+
+    &:has(.sui_dialog_title):has(.sui_dialog_description) {
+      grid-template: "title      " auto
+                     "description" auto
+                     /auto       ;
+    }
+
+    &:has(.sui_dialog_title):has(.sui_dialog_controls) {
+      grid-template: "title controls" auto
+                     /1fr   auto    ;
+    }
+
+    &:has(.sui_dialog_controls):has(.sui_dialog_description) {
+      grid-template: ".           controls   " auto
+                     "description description" auto
+                     /1fr         auto       ;
+    }
+
+    &:has(.sui_dialog_title):has(.sui_dialog_controls):has(.sui_dialog_description) {
+      grid-template: "title       controls   " auto
+                     "description description" auto
+                     /1fr         auto       ;
+    }
+  }
+
+  .sui_dialog_content-variant_stacked .sui_dialog_header {
+    &:has(.sui_dialog_title) {
+      grid-template: "title" auto
+                     /auto ;
+    }
+
+    &:has(.sui_dialog_description) {
+      grid-template: "description" auto
+                     /auto       ;
+    }
+
+    &:has(.sui_dialog_controls) {
+      grid-template: "controls" auto
+                     /auto    ;
+    }
+
+    &:has(.sui_dialog_title):has(.sui_dialog_description) {
+      grid-template: "title      " auto
+                     "description" auto
+                     /auto       ;
+    }
+
+    &:has(.sui_dialog_title):has(.sui_dialog_controls) {
+      grid-template: ".     controls" auto
+                     "title title   " auto
+                     /1fr   auto    ;
+    }
+
+    &:has(.sui_dialog_controls):has(.sui_dialog_description) {
+      grid-template: ".           controls   " auto
+                     "description description" auto
+                     /1fr         auto       ;
+    }
+
+    &:has(.sui_dialog_title):has(.sui_dialog_controls):has(.sui_dialog_description) {
+      grid-template: ".           controls   " auto
+                     "title       title      " auto
+                     "description description" auto
+                     /1fr         auto       ;
+    }
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_dialog_header-row_gap: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_dialog_header {
+    row-gap: var(--sui_dialog_header-row_gap);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_dialog_header-row_gap: --sui-gap(2);
 }
 
 } /* @scope */
@@ -181,9 +353,19 @@
 :scope {
   .sui_dialog_title {
     display: block;
+    grid-area: title;
+    align-self: center;
     line-break: strict;
     word-break: normal;
     overflow-wrap: anywhere;
+  }
+
+  .sui_dialog_content-variant_default .sui_dialog_title {
+    text-align: start;
+  }
+
+  .sui_dialog_content-variant_stacked .sui_dialog_title {
+    text-align: center;
   }
 }
 
@@ -230,9 +412,14 @@
 :scope {
   .sui_dialog_description {
     display: block;
+    grid-area: description;
     line-break: strict;
     word-break: normal;
     overflow-wrap: anywhere;
+  }
+
+  .sui_dialog_content-variant_stacked .sui_dialog_description {
+    text-align: center;
   }
 }
 
@@ -271,71 +458,93 @@
 } /* @scope */
 } /* @layer */
 
-/* CloseButton */
+/* Body */
 @layer sui.component {
 @scope (.sui_dialog_portal) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_dialog_close_button {
-    position: absolute;
+  .sui_dialog_body {
+    position: relative;
+    line-break: strict;
+    word-break: normal;
+    overflow-wrap: anywhere;
   }
 }
 
 /* 変数 */
 :scope {
-  --sui_dialog_close_button-size: ;
-  --sui_dialog_close_button-position_right: ;
-  --sui_dialog_close_button-position_top: ;
+  --sui_dialog_body-font_family: ;
+  --sui_dialog_body-font_size: ;
+  --sui_dialog_body-font_weight: ;
+  --sui_dialog_body-line_height: ;
+  --sui_dialog_body-color: ;
+  --sui_dialog_body-letter_spacing: ;
 }
 
 /* 可変 */
 :scope {
-  .sui_dialog_close_button {
-    top: var(--sui_dialog_close_button-position_top);
-    right: var(--sui_dialog_close_button-position_right);
-    width: var(--sui_dialog_close_button-size);
-    height: var(--sui_dialog_close_button-size);
+  .sui_dialog_body {
+    font-family: var(--sui_dialog_body-font_family);
+    font-size: var(--sui_dialog_body-font_size);
+    font-weight: var(--sui_dialog_body-font_weight);
+    line-height: var(--sui_dialog_body-line_height);
+    color: var(--sui_dialog_body-color);
+    letter-spacing: var(--sui_dialog_body-letter_spacing);
   }
 }
 
 /* 代入 */
 :scope {
-  --sui_dialog_close_button-size: var(--sui-size-md);
-  --sui_dialog_close_button-position_right: --sui-space(4);
-  --sui_dialog_close_button-position_top: --sui-space(4);
+  --sui_dialog_body-font_family: var(--sui-font-sans);
+  --sui_dialog_body-font_size: var(--sui-text-std-md-n-font_size);
+  --sui_dialog_body-font_weight: var(--sui-text-std-md-n-font_weight);
+  --sui_dialog_body-line_height: var(--sui-text-std-md-n-line_height);
+  --sui_dialog_body-color: var(--sui-canvas_text-1);
+  --sui_dialog_body-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
 }
 
 } /* @scope */
 } /* @layer */
 
-/* Actions */
+/* Footer */
 @layer sui.component {
 @scope (.sui_dialog_portal) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_dialog_actions {
+  .sui_dialog_footer {
+    position: relative;
+    align-items: center;
+  }
+
+  .sui_dialog_content-variant_default .sui_dialog_footer {
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-end;
+  }
+
+  .sui_dialog_content-variant_stacked .sui_dialog_footer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 /* 変数 */
 :scope {
-  --sui_dialog_actions-gap: ;
+  --sui_dialog_footer-gap: ;
 }
 
 /* 可変 */
 :scope {
-  .sui_dialog_actions {
-    gap: var(--sui_dialog_actions-gap);
+  .sui_dialog_footer {
+    gap: var(--sui_dialog_footer-gap);
   }
 }
 
 /* 代入 */
 :scope {
-  --sui_dialog_actions-gap: --sui-gap(4);
+  --sui_dialog_footer-gap: --sui-gap(4);
 }
 
 } /* @scope */

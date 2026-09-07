@@ -160,10 +160,11 @@ export function useTextField(props: TextFieldProps): TextFieldPartsProps {
 
   return {
     root: rootProps,
-    startAddons: React.Children.map(startAddons, (addon) => ({
-      ...addonProps,
-      children: addon,
-    }))!,
+    startAddons:
+      React.Children.map(startAddons, (addon) => ({
+        ...addonProps,
+        children: addon,
+      })) ?? [],
     input: {
       name,
       type,
@@ -176,10 +177,11 @@ export function useTextField(props: TextFieldProps): TextFieldPartsProps {
       onValueChange,
       ...inputProps,
     },
-    endAddons: React.Children.map(endAddons, (addon) => ({
-      ...addonProps,
-      children: addon,
-    }))!,
+    endAddons:
+      React.Children.map(endAddons, (addon) => ({
+        ...addonProps,
+        children: addon,
+      })) ?? [],
   };
 }
 
