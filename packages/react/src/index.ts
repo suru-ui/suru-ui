@@ -215,3 +215,20 @@ export {
   ComboboxContext,
   useComboboxContext,
 } from "./combobox/index.js";
+export {
+  type ContextMenuAPI,
+  type ContextMenuSize,
+  type ContextMenuProps,
+  type ContextMenuState,
+  type ContextMenuRadius,
+  type ContextMenuActions,
+  type ContextMenuSlotProps,
+  type ContextMenuItemObject,
+  type IContextMenuItemRenderer,
+  type ContextMenuChangeEventReason,
+  type ContextMenuChangeEventDetails,
+  ContextMenu,
+  useContextMenuAPI,
+  ContextMenuContext,
+  useContextMenuContext,
+} from "./context-menu/index.js";

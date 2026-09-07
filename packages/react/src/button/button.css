@@ -412,9 +412,12 @@
 
   &:focus-visible {
     --_sui_button-z_index: 1;
-    --_sui_button-outline_width: var(--sui_button-focusring_width);
-    --_sui_button-outline_color: var(--sui_button-focusring_color);
-    --_sui_button-outline_offset: var(--sui_button-focusring_offset);
+
+    &:not([data-highlighted]) {
+      --_sui_button-outline_width: var(--sui_button-focusring_width);
+      --_sui_button-outline_color: var(--sui_button-focusring_color);
+      --_sui_button-outline_offset: var(--sui_button-focusring_offset);
+    }
   }
 
   &.sui_button-squared {

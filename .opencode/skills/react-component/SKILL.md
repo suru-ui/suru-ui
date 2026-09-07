@@ -42,6 +42,15 @@ export * from "./<kebab>.jsx";
 順序はフォーマッターが自動整形するため規定しません。
 `./<kebab>.css` を import します。
 
+### Base UI の型確認
+
+各パーツを書く前に、対応する Base UI の `.d.ts` (`node_modules/@base-ui/react/<コンポーネント>/`) を開き、公開メンバーに漏れがないかを確認します。
+
+- `<パート>/*.d.ts` の namespace が公開する型を列挙します (`State` と `Props` のほか、`Actions`、`ChangeEventDetails`、`ChangeEventReason` があれば含めます。例: `ContextMenuRoot` の `Actions`、`ChangeEventDetails`、`ChangeEventReason`)。
+- 公開メンバーは漏らさず再輸出します。`State` と `Props` だけを輸出して終わりにしません。
+- `Handle` / `createHandle` の有無も確認します。ないものは作りません (例: ContextMenu にはありません)。あるものは `Handle` セクションに置きます (例: Menu、Dialog、AlertDialog)。
+- 他から再輸出されているパーツ (例: `Separator`) は `index.parts.d.ts` と `index.d.ts` で実体と型の両方を確認します。
+
 ### セクション
 
 パーツツリー順に置きます。見出しは `// <名>` の次の行に同文字数の `-` を置きます。
@@ -360,6 +369,7 @@ mise run test:typecheck
 - パーツ別指定より直 prop を優先しない。コールバック合成で中止判定を省略しない。
 - `data-scope=""` を起点以外の要素に付けない。付け忘れない。
 - namespace の `State` / `Props` を省略しない。短名再輸出を省略しない。
+- Base UI が公開する型 (`Actions`、`ChangeEventDetails`、`ChangeEventReason` など) を輸出し忘れない。`State` と `Props` だけを輸出して終わりにしない。
 - `Context` や `useContext` の短名を別名の `type` / `const` 宣言で作らない。`export { X as Y }` の 1 行にまとめる。
 - Context のローカル変数に `context` などの長い名前を使わない。`ctx` にする。
 - 再輸出の JSDoc に「 です。」を付けない。`{@link X}` のみにする。
