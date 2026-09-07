@@ -208,7 +208,7 @@ export const useHoverCardAPI: IUseHoverCardAPI = function useSuiHoverCardAPI(
     open,
     delay,
     trigger,
-    children,
+    children: _children,
     handle: handleProp,
     closeDelay,
     slotProps: {

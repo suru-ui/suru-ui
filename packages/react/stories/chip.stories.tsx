@@ -209,6 +209,7 @@ export const WithButton = meta.story({
             <span>{variant}</span>
             <Chip
               {...props}
+              // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- `render` 先のボタンは子要素にテキストを含む
               render={<button type="button" />}
               variant={variant}
               className="pr-0 py-0"
@@ -220,6 +221,7 @@ export const WithButton = meta.story({
                 radius={props.radius}
                 squared
                 variant={variant}
+                aria-label="閉じる"
               >
                 <XIcon />
               </Button>

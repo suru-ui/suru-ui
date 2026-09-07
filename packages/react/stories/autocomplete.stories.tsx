@@ -438,6 +438,7 @@ function VirtualizedList(props: { virtualizerRef: React.RefObject<VirtualizerIns
   const filteredItems = Autocomplete.useFilteredItems<VirtualizedItem>();
   const scrollElementRef = React.useRef<HTMLDivElement | null>(null);
 
+  // oxlint-disable-next-line react/incompatible-library -- サードパーティーフックのため
   const virtualizer = useVirtualizer<HTMLDivElement, HTMLDivElement>({
     count: filteredItems.length,
     overscan: 20,

@@ -18,6 +18,7 @@
     "correctness": "error"
   },
   "rules": {
+    "import/namespace": "off", // `export * from "./*.jsx"` を解決できないため無効化
     "no-unused-expressions": "off", // logtape で使用します。
     "no-unused-vars": "warn", // TypeScript に委譲します。
     "vitest/no-focused-tests": "off", // デバッグ作業を容易にします。

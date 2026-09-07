@@ -179,14 +179,12 @@ export const SubmitValues = meta.story({
           <Field name="sui:company" label="会社名">
             <Input className="w-full" placeholder="例: Suru UI 株式会社" defaultValue="Suru UI" />
           </Field>
-          <Field name="sui:email" label="メールアドレス">
-            <TextField
-              type="email"
-              required
-              className="w-full"
-              placeholder="you@example.com"
-              errorMatches={{ valueMissing: "メールアドレスを入力してください。" }}
-            />
+          <Field
+            name="sui:email"
+            label="メールアドレス"
+            errorMatches={{ valueMissing: "メールアドレスを入力してください。" }}
+          >
+            <TextField type="email" required className="w-full" placeholder="you@example.com" />
           </Field>
           <Button type="submit">送信</Button>
         </Form>

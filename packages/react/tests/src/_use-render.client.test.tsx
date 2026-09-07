@@ -320,6 +320,7 @@ describe("useRender", () => {
           ref: (element) => {
             captured = element;
           },
+          // oxlint-disable-next-line jsx-a11y/control-has-associated-label -- ref 転送の検証が目的で内容は不要
           render: <button type="button" />,
         },
       });
