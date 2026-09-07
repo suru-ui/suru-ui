@@ -50,6 +50,15 @@ type ContextMenuContextRadius = "none" | Size | "full";
 type ContextMenuContextSize = Size;
 
 /**
+ * 項目の主な外観です。
+ *
+ * - `"solid"`: 塗りつぶし
+ * - `"naked"`: 背景なし
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+type ContextMenuContextVariant = ButtonRootVariant;
+
+/**
  * {@link ContextMenuRoot} が子パーツへ提供する状態です。
  *
  * @template TItem 項目の型です。
@@ -74,6 +83,11 @@ export type ContextMenuContext<TItem = any> = {
    * ポップアップと項目の大きさです。
    */
   readonly size: ContextMenuContextSize;
+
+  /**
+   * 項目の主な外観です。
+   */
+  readonly variant: ContextMenuContextVariant;
 };
 
 /**
@@ -113,6 +127,11 @@ export namespace Context {
    * {@link ContextMenuContextSize}
    */
   export type Size = ContextMenuContextSize;
+
+  /**
+   * {@link ContextMenuContextVariant}
+   */
+  export type Variant = ContextMenuContextVariant;
 }
 
 // Root
@@ -323,6 +342,15 @@ export type ContextMenuRootRadius = "none" | Size | "full";
 export type ContextMenuRootSize = Size;
 
 /**
+ * コンテキストメニューの項目の主な外観です。
+ *
+ * - `"solid"`: 塗りつぶし
+ * - `"naked"`: 背景なし
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type ContextMenuRootVariant = ButtonRootVariant;
+
+/**
  * {@link ContextMenuRoot} が持つ状態です。
  */
 export type ContextMenuRootState = ContextMenu.Root.State;
@@ -358,6 +386,13 @@ export type ContextMenuRootProps<TItem = any> = React.ComponentProps<typeof Cont
    * @default "md"
    */
   size?: ContextMenuRootSize | undefined;
+
+  /**
+   * 項目の主な外観を指定します。
+   *
+   * @default "naked"
+   */
+  variant?: ContextMenuRootVariant | undefined;
 };
 
 interface IContextMenuRoot extends IComponent<ContextMenuRootProps> {
@@ -376,10 +411,17 @@ interface IContextMenuRoot extends IComponent<ContextMenuRootProps> {
 export const ContextMenuRoot: IContextMenuRoot = function SuiContextMenuRoot(
   props: ContextMenuRootProps,
 ) {
-  const { size = "md", items = [], radius = size, outlined = false, ...otherProps } = props;
+  const {
+    size = "md",
+    items = [],
+    radius = size,
+    variant = "naked",
+    outlined = false,
+    ...otherProps
+  } = props;
   const ctx = React.useMemo<ContextMenuContext>(
-    () => ({ size, items, radius, outlined }),
-    [size, items, radius, outlined],
+    () => ({ size, items, radius, variant, outlined }),
+    [size, items, radius, variant, outlined],
   );
 
   return (
@@ -466,6 +508,11 @@ export namespace Root {
    * {@link ContextMenuRootSize}
    */
   export type Size = ContextMenuRootSize;
+
+  /**
+   * {@link ContextMenuRootVariant}
+   */
+  export type Variant = ContextMenuRootVariant;
 }
 
 // Trigger
@@ -919,7 +966,7 @@ export type ContextMenuItemProps = React.ComponentProps<typeof ContextMenu.Item>
    *
    * チェックされていないときは常に `"naked"` になります。
    *
-   * @default "naked"
+   * 既定値は {@link ContextMenuRootProps.variant|variant} です。
    */
   variant?: ContextMenuItemVariant | undefined;
 };
@@ -935,7 +982,7 @@ export const ContextMenuItem: IComponent<ContextMenuItemProps> = function SuiCon
     color = "grey",
     radius = ctx.radius,
     render = <div />,
-    variant = "naked",
+    variant = ctx.variant,
     className,
     ...otherProps
   } = props;
@@ -1045,7 +1092,7 @@ export type ContextMenuLinkItemProps = React.ComponentProps<typeof ContextMenu.L
    *
    * チェックされていないときは常に `"naked"` になります。
    *
-   * @default "naked"
+   * 既定値は {@link ContextMenuRootProps.variant|variant} です。
    */
   variant?: ContextMenuLinkItemVariant | undefined;
 };
@@ -1061,7 +1108,7 @@ export const ContextMenuLinkItem: IComponent<ContextMenuLinkItemProps> =
       radius = ctx.radius,
       // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
       render = <a />,
-      variant = "naked",
+      variant = ctx.variant,
       className,
       ...otherProps
     } = props;
@@ -1229,7 +1276,7 @@ export type ContextMenuSubmenuTriggerProps = React.ComponentProps<
    *
    * チェックされていないときは常に `"naked"` になります。
    *
-   * @default "naked"
+   * 既定値は {@link ContextMenuRootProps.variant|variant} です。
    */
   variant?: ContextMenuSubmenuTriggerVariant | undefined;
 };
@@ -1244,7 +1291,7 @@ export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProp
       color = "grey",
       radius = ctx.radius,
       render = <div />,
-      variant = "naked",
+      variant = ctx.variant,
       className,
       ...otherProps
     } = props;
@@ -1502,7 +1549,7 @@ export type ContextMenuRadioItemProps = React.ComponentProps<typeof ContextMenu.
    *
    * チェックされていないときは常に `"naked"` になります。
    *
-   * @default "naked"
+   * 既定値は {@link ContextMenuRootProps.variant|variant} です。
    */
   variant?: ContextMenuRadioItemVariant | undefined;
 };
@@ -1517,7 +1564,7 @@ export const ContextMenuRadioItem: IComponent<ContextMenuRadioItemProps> =
       color = "grey",
       radius = ctx.radius,
       render = <div />,
-      variant = "naked",
+      variant = ctx.variant,
       className,
       ...otherProps
     } = props;
@@ -1689,7 +1736,7 @@ export type ContextMenuCheckboxItemProps = React.ComponentProps<typeof ContextMe
    *
    * チェックされていないときは常に `"naked"` になります。
    *
-   * @default "naked"
+   * 既定値は {@link ContextMenuRootProps.variant|variant} です。
    */
   variant?: ContextMenuCheckboxItemVariant | undefined;
 };
@@ -1704,7 +1751,7 @@ export const ContextMenuCheckboxItem: IComponent<ContextMenuCheckboxItemProps> =
       color = "grey",
       radius = ctx.radius,
       render = <div />,
-      variant = "naked",
+      variant = ctx.variant,
       className,
       ...otherProps
     } = props;

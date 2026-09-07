@@ -23,6 +23,7 @@ import {
   type ContextMenuRootRadius,
   type ContextMenuPortalProps,
   type ContextMenuRootActions,
+  type ContextMenuRootVariant,
   type ContextMenuContentProps,
   type ContextMenuTriggerProps,
   type ContextMenuLinkItemProps,
@@ -140,6 +141,11 @@ export type ContextMenuRadius = ContextMenuRootRadius;
  * {@link ContextMenuRootSize}
  */
 export type ContextMenuSize = ContextMenuRootSize;
+
+/**
+ * {@link ContextMenuRootVariant}
+ */
+export type ContextMenuVariant = ContextMenuRootVariant;
 
 /**
  * {@link ContextMenu} の各パーツに渡す props です。
@@ -418,6 +424,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
     items,
     radius,
     trigger,
+    variant,
     disabled,
     outlined,
     loopFocus,
@@ -463,6 +470,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
         size,
         items,
         radius,
+        variant,
         disabled,
         outlined,
         loopFocus,
@@ -800,4 +808,9 @@ export namespace ContextMenu {
    * {@link ContextMenuSize}
    */
   export type Size = ContextMenuSize;
+
+  /**
+   * {@link ContextMenuVariant}
+   */
+  export type Variant = ContextMenuVariant;
 }

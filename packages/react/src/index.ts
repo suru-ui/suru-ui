@@ -222,6 +222,7 @@ export {
   type ContextMenuState,
   type ContextMenuRadius,
   type ContextMenuActions,
+  type ContextMenuVariant,
   type ContextMenuSlotProps,
   type ContextMenuItemObject,
   type ContextMenuGroupObject,

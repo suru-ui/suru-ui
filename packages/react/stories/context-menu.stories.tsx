@@ -19,6 +19,7 @@ import { ContextMenu } from "../src/context-menu/index.js";
 
 const SIZES: readonly ContextMenu.Size[] = theme.SIZES;
 const RADII: readonly ContextMenu.Radius[] = ["none", ...SIZES, "full"];
+const VARIANTS: readonly ContextMenu.Variant[] = theme.COLOR_TEMPLATES;
 
 const meta = preview.meta({
   title: "ContextMenu",
@@ -42,6 +43,10 @@ const ctrl = controls(ContextMenu, {
     control: "select",
     options: SIZES,
   },
+  variant: {
+    control: "select",
+    options: VARIANTS,
+  },
 });
 
 export const Usage = meta.story({
@@ -62,6 +67,7 @@ export const Usage = meta.story({
         color: "red",
       },
     ],
+    variant: "naked",
     size: "md",
     radius: undefined,
     outlined: false,
@@ -91,6 +97,7 @@ export const Nested = meta.story({
         ],
       },
     ],
+    variant: "naked",
     size: "md",
     radius: undefined,
     outlined: false,
@@ -104,6 +111,7 @@ export const Nested = meta.story({
 export const CheckboxItems = meta.story({
   name: "チェック項目",
   ...ctrl({
+    variant: "naked",
     size: "md",
     radius: undefined,
     outlined: false,
@@ -139,6 +147,7 @@ export const CheckboxItems = meta.story({
 export const RadioItems = meta.story({
   name: "ラジオ項目",
   ...ctrl({
+    variant: "naked",
     size: "md",
     radius: undefined,
     outlined: false,
@@ -218,6 +227,7 @@ export const Groups = meta.story({
         ],
       },
     ],
+    variant: "naked",
     size: "md",
     radius: undefined,
     outlined: false,
@@ -260,6 +270,7 @@ export const Shortcuts = meta.story({
         ),
       },
     ],
+    variant: "naked",
     size: "md",
     radius: undefined,
     outlined: false,
@@ -311,6 +322,7 @@ export const Icons = meta.story({
         ),
       },
     ],
+    variant: "naked",
     size: "md",
     radius: undefined,
     outlined: false,
@@ -342,6 +354,7 @@ export const Destructive = meta.story({
         color: "red",
       },
     ],
+    variant: "naked",
     size: "md",
     radius: undefined,
     outlined: false,
@@ -375,6 +388,7 @@ export const LinkItems = meta.story({
         href: "https://example.com",
       },
     ],
+    variant: "naked",
     size: "md",
     radius: undefined,
     outlined: false,
@@ -432,6 +446,7 @@ export const Outlined = meta.story({
         label: "複製",
       },
     ],
+    variant: "naked",
     size: "md",
     radius: undefined,
     disabled: false,
@@ -445,7 +460,7 @@ export const Outlined = meta.story({
         </div>
         <div>
           <p className="mb-2 text-sm">あり</p>
-          <ContextMenu {...props} outlined trigger={<TriggerArea />} />
+          <ContextMenu {...props} trigger={<TriggerArea />} outlined />
         </div>
       </div>
     );
@@ -479,6 +494,7 @@ export const DisabledItems = meta.story({
         disabled: true,
       },
     ],
+    variant: "naked",
     size: "md",
     radius: undefined,
     outlined: false,
@@ -507,6 +523,7 @@ export const Sides = meta.story({
         ],
       },
     ],
+    variant: "naked",
     size: "md",
     radius: undefined,
     outlined: false,
@@ -616,6 +633,7 @@ export const FileActions = meta.story({
         color: "red",
       },
     ],
+    variant: "naked",
     size: "md",
     radius: undefined,
     outlined: false,
@@ -676,6 +694,7 @@ export const TextEdit = meta.story({
         ),
       },
     ],
+    variant: "naked",
     size: "md",
     radius: undefined,
     outlined: false,
