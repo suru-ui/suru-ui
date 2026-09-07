@@ -31,12 +31,6 @@ const ctrl = controls(ContextMenu, {
   disabled: {
     control: "boolean",
   },
-  highlightItemOnHover: {
-    control: "boolean",
-  },
-  items: {
-    control: "object",
-  },
   outlined: {
     control: "boolean",
   },
@@ -53,8 +47,6 @@ const ctrl = controls(ContextMenu, {
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
-    disabled: false,
-    highlightItemOnHover: true,
     items: [
       {
         label: "編集",
@@ -70,9 +62,10 @@ export const Usage = meta.story({
         color: "red",
       },
     ],
-    outlined: false,
-    radius: undefined,
     size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
   }),
   render(props) {
     return <ContextMenu {...props} trigger={<TriggerArea />} />;
@@ -81,41 +74,48 @@ export const Usage = meta.story({
 
 export const Nested = meta.story({
   name: "サブメニュー",
-  ...ctrl({}),
-  render() {
-    return (
-      <ContextMenu
-        items={[
+  ...ctrl({
+    items: [
+      {
+        label: "編集",
+      },
+      {
+        label: "共有",
+        items: [
           {
-            label: "編集",
+            label: "リンクをコピー",
           },
           {
-            label: "共有",
-            items: [
-              {
-                label: "リンクをコピー",
-              },
-              {
-                label: "メールで送る",
-              },
-            ],
+            label: "メールで送る",
           },
-        ]}
-        trigger={<TriggerArea />}
-      />
-    );
+        ],
+      },
+    ],
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+  }),
+  render(props) {
+    return <ContextMenu {...props} trigger={<TriggerArea />} />;
   },
 });
 
 export const CheckboxItems = meta.story({
   name: "チェック項目",
-  ...ctrl({}),
-  render() {
+  ...ctrl({
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+  }),
+  render(props) {
     const [showSidebar, setShowSidebar] = React.useState(true);
     const [showMinimap, setShowMinimap] = React.useState(false);
 
     return (
       <ContextMenu
+        {...props}
         items={[
           {
             type: "checkbox",
@@ -138,12 +138,18 @@ export const CheckboxItems = meta.story({
 
 export const RadioItems = meta.story({
   name: "ラジオ項目",
-  ...ctrl({}),
-  render() {
+  ...ctrl({
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+  }),
+  render(props) {
     const [value, setValue] = React.useState("name");
 
     return (
       <ContextMenu
+        {...props}
         items={[
           {
             type: "radio-group",
@@ -171,237 +177,243 @@ export const RadioItems = meta.story({
 
 export const Groups = meta.story({
   name: "グループ",
-  ...ctrl({}),
-  render() {
-    return (
-      <ContextMenu
-        items={[
+  ...ctrl({
+    items: [
+      {
+        type: "group",
+        label: "アカウント",
+        items: [
           {
-            type: "group",
-            label: "アカウント",
-            items: [
-              {
-                label: "プロフィール",
-              },
-              {
-                label: "設定",
-              },
-            ],
+            label: "プロフィール",
           },
           {
-            type: "separator",
+            label: "設定",
+          },
+        ],
+      },
+      {
+        type: "separator",
+      },
+      {
+        type: "group",
+        label: "チーム",
+        items: [
+          {
+            label: "新しいチーム",
           },
           {
-            type: "group",
-            label: "チーム",
-            items: [
-              {
-                label: "新しいチーム",
-              },
-              {
-                label: "メンバーを招待",
-              },
-            ],
+            label: "メンバーを招待",
           },
+        ],
+      },
+      {
+        type: "separator",
+      },
+      {
+        type: "group",
+        items: [
           {
-            type: "separator",
+            label: "ログアウト",
           },
-          {
-            type: "group",
-            items: [
-              {
-                label: "ログアウト",
-              },
-            ],
-          },
-        ]}
-        trigger={<TriggerArea />}
-      />
-    );
+        ],
+      },
+    ],
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+  }),
+  render(props) {
+    return <ContextMenu {...props} trigger={<TriggerArea />} />;
   },
 });
 
 export const Shortcuts = meta.story({
   name: "ショートカット",
-  ...ctrl({}),
-  render() {
-    return (
-      <ContextMenu
-        items={[
-          {
-            label: (
-              <>
-                コピー
-                <Shortcut>⌘C</Shortcut>
-              </>
-            ),
-          },
-          {
-            label: (
-              <>
-                貼り付け
-                <Shortcut>⌘V</Shortcut>
-              </>
-            ),
-          },
-          {
-            type: "separator",
-          },
-          {
-            label: (
-              <>
-                すべて選択
-                <Shortcut>⌘A</Shortcut>
-              </>
-            ),
-          },
-        ]}
-        trigger={<TriggerArea />}
-      />
-    );
+  ...ctrl({
+    items: [
+      {
+        label: (
+          <>
+            コピー
+            <Shortcut>⌘C</Shortcut>
+          </>
+        ),
+      },
+      {
+        label: (
+          <>
+            貼り付け
+            <Shortcut>⌘V</Shortcut>
+          </>
+        ),
+      },
+      {
+        type: "separator",
+      },
+      {
+        label: (
+          <>
+            すべて選択
+            <Shortcut>⌘A</Shortcut>
+          </>
+        ),
+      },
+    ],
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+  }),
+  render(props) {
+    return <ContextMenu {...props} trigger={<TriggerArea />} />;
   },
 });
 
 export const Icons = meta.story({
   name: "アイコン",
-  ...ctrl({}),
-  render() {
-    return (
-      <ContextMenu
-        items={[
-          {
-            label: (
-              <>
-                <span className="flex items-center gap-2">
-                  <CopyIcon />
-                  コピー
-                </span>
-                <Shortcut>⌘C</Shortcut>
-              </>
-            ),
-          },
-          {
-            label: (
-              <>
-                <span className="flex items-center gap-2">
-                  <ClipboardPasteIcon />
-                  貼り付け
-                </span>
-                <Shortcut>⌘V</Shortcut>
-              </>
-            ),
-          },
-          {
-            type: "separator",
-          },
-          {
-            label: (
-              <>
-                <span className="flex items-center gap-2">
-                  <ScissorsIcon />
-                  切り取り
-                </span>
-                <Shortcut>⌘X</Shortcut>
-              </>
-            ),
-          },
-        ]}
-        trigger={<TriggerArea />}
-      />
-    );
+  ...ctrl({
+    items: [
+      {
+        label: (
+          <>
+            <span className="flex items-center gap-2">
+              <CopyIcon />
+              コピー
+            </span>
+            <Shortcut>⌘C</Shortcut>
+          </>
+        ),
+      },
+      {
+        label: (
+          <>
+            <span className="flex items-center gap-2">
+              <ClipboardPasteIcon />
+              貼り付け
+            </span>
+            <Shortcut>⌘V</Shortcut>
+          </>
+        ),
+      },
+      {
+        type: "separator",
+      },
+      {
+        label: (
+          <>
+            <span className="flex items-center gap-2">
+              <ScissorsIcon />
+              切り取り
+            </span>
+            <Shortcut>⌘X</Shortcut>
+          </>
+        ),
+      },
+    ],
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+  }),
+  render(props) {
+    return <ContextMenu {...props} trigger={<TriggerArea />} />;
   },
 });
 
 export const Destructive = meta.story({
   name: "破壊的操作",
-  ...ctrl({}),
-  render() {
-    return (
-      <ContextMenu
-        items={[
-          {
-            label: "名前を変更",
-          },
-          {
-            label: "複製",
-          },
-          {
-            type: "separator",
-          },
-          {
-            label: "アーカイブ",
-          },
-          {
-            label: "削除",
-            color: "red",
-          },
-        ]}
-        trigger={<TriggerArea />}
-      />
-    );
+  ...ctrl({
+    items: [
+      {
+        label: "名前を変更",
+      },
+      {
+        label: "複製",
+      },
+      {
+        type: "separator",
+      },
+      {
+        label: "アーカイブ",
+      },
+      {
+        label: "削除",
+        color: "red",
+      },
+    ],
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+  }),
+  render(props) {
+    return <ContextMenu {...props} trigger={<TriggerArea />} />;
   },
 });
 
 export const LinkItems = meta.story({
   name: "リンク項目",
-  ...ctrl({}),
-  render() {
-    return (
-      <ContextMenu
-        items={[
-          {
-            type: "link",
-            label: "ドキュメント",
-            href: "https://example.com/docs",
-          },
-          {
-            type: "link",
-            label: "サポート",
-            href: "https://example.com/support",
-          },
-          {
-            type: "separator",
-          },
-          {
-            type: "link",
-            label: "外部サイト",
-            href: "https://example.com",
-          },
-        ]}
-        trigger={<TriggerArea />}
-      />
-    );
+  ...ctrl({
+    items: [
+      {
+        type: "link",
+        label: "ドキュメント",
+        href: "https://example.com/docs",
+      },
+      {
+        type: "link",
+        label: "サポート",
+        href: "https://example.com/support",
+      },
+      {
+        type: "separator",
+      },
+      {
+        type: "link",
+        label: "外部サイト",
+        href: "https://example.com",
+      },
+    ],
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+  }),
+  render(props) {
+    return <ContextMenu {...props} trigger={<TriggerArea />} />;
   },
 });
 
 export const Sizes = meta.story({
   name: "大きさ",
-  ...ctrl({}),
-  render() {
+  ...ctrl({
+    items: [
+      {
+        label: "編集",
+      },
+      {
+        label: "複製",
+      },
+      {
+        type: "separator",
+      },
+      {
+        label: "削除",
+        color: "red",
+      },
+    ],
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+  }),
+  render(props) {
     return (
       <div className="flex flex-col gap-4">
-        {(["sm", "md", "lg"] as const).map((size) => (
+        {SIZES.map((size) => (
           <div key={size}>
             <p className="mb-2 text-sm">{size}</p>
-            <ContextMenu
-              size={size}
-              items={[
-                {
-                  label: "編集",
-                },
-                {
-                  label: "複製",
-                },
-                {
-                  type: "separator",
-                },
-                {
-                  label: "削除",
-                  color: "red",
-                },
-              ]}
-              trigger={<TriggerArea />}
-            />
+            <ContextMenu {...props} size={size} trigger={<TriggerArea />} />
           </div>
         ))}
       </div>
@@ -411,38 +423,29 @@ export const Sizes = meta.story({
 
 export const Outlined = meta.story({
   name: "枠線",
-  ...ctrl({}),
-  render() {
+  ...ctrl({
+    items: [
+      {
+        label: "編集",
+      },
+      {
+        label: "複製",
+      },
+    ],
+    size: "md",
+    radius: undefined,
+    disabled: false,
+  }),
+  render(props) {
     return (
       <div className="flex flex-col gap-4">
         <div>
           <p className="mb-2 text-sm">なし</p>
-          <ContextMenu
-            items={[
-              {
-                label: "編集",
-              },
-              {
-                label: "複製",
-              },
-            ]}
-            trigger={<TriggerArea />}
-          />
+          <ContextMenu {...props} trigger={<TriggerArea />} />
         </div>
         <div>
           <p className="mb-2 text-sm">あり</p>
-          <ContextMenu
-            items={[
-              {
-                label: "編集",
-              },
-              {
-                label: "複製",
-              },
-            ]}
-            trigger={<TriggerArea />}
-            outlined
-          />
+          <ContextMenu {...props} outlined trigger={<TriggerArea />} />
         </div>
       </div>
     );
@@ -451,45 +454,44 @@ export const Outlined = meta.story({
 
 export const DisabledItems = meta.story({
   name: "無効項目",
-  ...ctrl({}),
-  render() {
-    return (
-      <ContextMenu
-        items={[
-          {
-            label: "編集",
-          },
-          {
-            label: "複製",
-            disabled: true,
-          },
-          {
-            type: "separator",
-          },
-          {
-            type: "checkbox",
-            label: "サイドバー",
-            checked: true,
-            disabled: true,
-            onCheckedChange: () => {},
-          },
-          {
-            label: "削除",
-            color: "red",
-            disabled: true,
-          },
-        ]}
-        trigger={<TriggerArea />}
-      />
-    );
+  ...ctrl({
+    items: [
+      {
+        label: "編集",
+      },
+      {
+        label: "複製",
+        disabled: true,
+      },
+      {
+        type: "separator",
+      },
+      {
+        type: "checkbox",
+        label: "サイドバー",
+        checked: true,
+        disabled: true,
+        onCheckedChange: () => {},
+      },
+      {
+        label: "削除",
+        color: "red",
+        disabled: true,
+      },
+    ],
+    size: "md",
+    radius: undefined,
+    outlined: false,
+  }),
+  render(props) {
+    return <ContextMenu {...props} trigger={<TriggerArea />} />;
   },
 });
 
 export const Sides = meta.story({
   name: "配置",
-  ...ctrl({}),
-  render() {
-    const items = [
+  ...ctrl({
+    items: [
       {
         label: "編集",
       },
@@ -504,20 +506,30 @@ export const Sides = meta.story({
           },
         ],
       },
-    ];
-
+    ],
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+  }),
+  render(props) {
     return (
       <div className="flex flex-col gap-4">
         <div>
           <p className="mb-2 text-sm">既定</p>
-          <ContextMenu items={items} trigger={<TriggerArea />} />
+          <ContextMenu {...props} trigger={<TriggerArea />} />
         </div>
         <div>
           <p className="mb-2 text-sm">sideOffset + align</p>
           <ContextMenu
-            items={items}
+            {...props}
             trigger={<TriggerArea />}
-            slotProps={{ positioner: { sideOffset: 24, align: "end" } }}
+            slotProps={{
+              positioner: {
+                sideOffset: 24,
+                align: "end",
+              },
+            }}
           />
         </div>
       </div>
@@ -527,148 +539,150 @@ export const Sides = meta.story({
 
 export const FileActions = meta.story({
   name: "実践例：ファイル操作",
-  ...ctrl({}),
-  render() {
-    return (
-      <ContextMenu
-        items={[
+  ...ctrl({
+    items: [
+      {
+        label: (
+          <>
+            <span className="flex items-center gap-2">
+              <PlusIcon />
+              新規ファイル
+            </span>
+            <Shortcut>⌘N</Shortcut>
+          </>
+        ),
+      },
+      {
+        label: (
+          <>
+            <span className="flex items-center gap-2">
+              <PencilIcon />
+              名前を変更
+            </span>
+            <Shortcut>F2</Shortcut>
+          </>
+        ),
+      },
+      {
+        label: (
+          <>
+            <span className="flex items-center gap-2">
+              <FilesIcon />
+              複製
+            </span>
+            <Shortcut>⌘D</Shortcut>
+          </>
+        ),
+      },
+      {
+        type: "separator",
+      },
+      {
+        label: (
+          <span className="flex items-center gap-2">
+            <Share2Icon />
+            共有
+          </span>
+        ),
+        items: [
           {
             label: (
-              <>
-                <span className="flex items-center gap-2">
-                  <PlusIcon />
-                  新規ファイル
-                </span>
-                <Shortcut>⌘N</Shortcut>
-              </>
+              <span className="flex items-center gap-2">
+                <LinkIcon />
+                リンクをコピー
+              </span>
             ),
-          },
-          {
-            label: (
-              <>
-                <span className="flex items-center gap-2">
-                  <PencilIcon />
-                  名前を変更
-                </span>
-                <Shortcut>F2</Shortcut>
-              </>
-            ),
-          },
-          {
-            label: (
-              <>
-                <span className="flex items-center gap-2">
-                  <FilesIcon />
-                  複製
-                </span>
-                <Shortcut>⌘D</Shortcut>
-              </>
-            ),
-          },
-          {
-            type: "separator",
           },
           {
             label: (
               <span className="flex items-center gap-2">
-                <Share2Icon />
-                共有
+                <MailIcon />
+                メールで送る
               </span>
             ),
-            items: [
-              {
-                label: (
-                  <span className="flex items-center gap-2">
-                    <LinkIcon />
-                    リンクをコピー
-                  </span>
-                ),
-              },
-              {
-                label: (
-                  <span className="flex items-center gap-2">
-                    <MailIcon />
-                    メールで送る
-                  </span>
-                ),
-              },
-            ],
           },
-          {
-            type: "separator",
-          },
-          {
-            label: (
-              <span className="flex items-center gap-2">
-                <Trash2Icon />
-                削除
-              </span>
-            ),
-            color: "red",
-          },
-        ]}
-        trigger={<TriggerArea />}
-      />
-    );
+        ],
+      },
+      {
+        type: "separator",
+      },
+      {
+        label: (
+          <span className="flex items-center gap-2">
+            <Trash2Icon />
+            削除
+          </span>
+        ),
+        color: "red",
+      },
+    ],
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+  }),
+  render(props) {
+    return <ContextMenu {...props} trigger={<TriggerArea />} />;
   },
 });
 
 export const TextEdit = meta.story({
   name: "実践例：テキスト編集",
-  ...ctrl({}),
-  render() {
-    return (
-      <ContextMenu
-        items={[
-          {
-            label: (
-              <>
-                <span className="flex items-center gap-2">
-                  <ScissorsIcon />
-                  切り取り
-                </span>
-                <Shortcut>⌘X</Shortcut>
-              </>
-            ),
-          },
-          {
-            label: (
-              <>
-                <span className="flex items-center gap-2">
-                  <CopyIcon />
-                  コピー
-                </span>
-                <Shortcut>⌘C</Shortcut>
-              </>
-            ),
-          },
-          {
-            label: (
-              <>
-                <span className="flex items-center gap-2">
-                  <ClipboardPasteIcon />
-                  貼り付け
-                </span>
-                <Shortcut>⌘V</Shortcut>
-              </>
-            ),
-            disabled: true,
-          },
-          {
-            type: "separator",
-          },
-          {
-            label: (
-              <>
-                すべて選択
-                <Shortcut>⌘A</Shortcut>
-              </>
-            ),
-          },
-        ]}
-        trigger={<TriggerArea />}
-      />
-    );
+  ...ctrl({
+    items: [
+      {
+        label: (
+          <>
+            <span className="flex items-center gap-2">
+              <ScissorsIcon />
+              切り取り
+            </span>
+            <Shortcut>⌘X</Shortcut>
+          </>
+        ),
+      },
+      {
+        label: (
+          <>
+            <span className="flex items-center gap-2">
+              <CopyIcon />
+              コピー
+            </span>
+            <Shortcut>⌘C</Shortcut>
+          </>
+        ),
+      },
+      {
+        label: (
+          <>
+            <span className="flex items-center gap-2">
+              <ClipboardPasteIcon />
+              貼り付け
+            </span>
+            <Shortcut>⌘V</Shortcut>
+          </>
+        ),
+        disabled: true,
+      },
+      {
+        type: "separator",
+      },
+      {
+        label: (
+          <>
+            すべて選択
+            <Shortcut>⌘A</Shortcut>
+          </>
+        ),
+      },
+    ],
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+  }),
+  render(props) {
+    return <ContextMenu {...props} trigger={<TriggerArea />} />;
   },
 });
 
