@@ -515,12 +515,10 @@ export const useAutocompleteAPI: IUseAutocompleteAPI = function useSuiAutocomple
       return viewportProps;
     },
     getEndAddonsPropsList() {
-      return endAddons.map(
-        (children): AutocompleteAddonProps => ({
-          ...addonProps,
-          children,
-        }),
-      );
+      return endAddons.map((children): AutocompleteAddonProps => ({
+        ...addonProps,
+        children,
+      }));
     },
     getScrollbarProps() {
       return scrollbarProps;
@@ -556,12 +554,10 @@ export const useAutocompleteAPI: IUseAutocompleteAPI = function useSuiAutocomple
       };
     },
     getStartAddonsPropsList() {
-      return startAddons.map(
-        (children): AutocompleteAddonProps => ({
-          ...addonProps,
-          children,
-        }),
-      );
+      return startAddons.map((children): AutocompleteAddonProps => ({
+        ...addonProps,
+        children,
+      }));
     },
     getChevronAddonProps() {
       return {

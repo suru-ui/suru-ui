@@ -226,6 +226,11 @@ export type ContextMenuProps<TItem = any> = Omit<ContextMenuRootProps<TItem>, "c
  */
 export interface ContextMenuAPI {
   /**
+   * {@link ContextMenuCheckboxItemIndicator} に渡す props を取得します。
+   */
+  getCheckboxItemIndicatorProps(): ContextMenuCheckboxItemIndicatorProps;
+
+  /**
    * {@link ContextMenuCheckboxItem} に渡す props を取得します。
    *
    * @param item 項目です。
@@ -236,11 +241,6 @@ export interface ContextMenuAPI {
   > & {
     children: LikelyVisibleNode | null;
   };
-
-  /**
-   * {@link ContextMenuCheckboxItemIndicator} に渡す props を取得します。
-   */
-  getCheckboxItemIndicatorProps(): ContextMenuCheckboxItemIndicatorProps;
 
   /**
    * {@link ContextMenuContent} に渡す props を取得します。
@@ -280,6 +280,11 @@ export interface ContextMenuAPI {
   ): Omit<ContextMenuRadioGroupProps, "children">;
 
   /**
+   * {@link ContextMenuRadioItemIndicator} に渡す props を取得します。
+   */
+  getRadioItemIndicatorProps(): ContextMenuRadioItemIndicatorProps;
+
+  /**
    * {@link ContextMenuRadioItem} に渡す props を取得します。
    *
    * @param item 項目です。
@@ -290,11 +295,6 @@ export interface ContextMenuAPI {
   > & {
     children: LikelyVisibleNode | null;
   };
-
-  /**
-   * {@link ContextMenuRadioItemIndicator} に渡す props を取得します。
-   */
-  getRadioItemIndicatorProps(): ContextMenuRadioItemIndicatorProps;
 
   /**
    * {@link ContextMenuRoot} に渡す props を取得します。
