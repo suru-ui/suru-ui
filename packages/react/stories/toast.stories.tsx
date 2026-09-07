@@ -1,8 +1,7 @@
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
-import { Toast, useToastManager } from "../src/toast/index.js";
-import * as ToastParts from "../src/toast/index.js";
+import { Toast, useToastManager, createToastManager } from "../src/toast/index.js";
 
 const meta = preview.meta({
   title: "Toast",
@@ -44,32 +43,6 @@ function CreateToastButton() {
   );
 }
 
-function PartsExample() {
-  const { toasts } = ToastParts.useToastManager();
-
-  return (
-    <>
-      <CreateToastButton />
-      <ToastParts.Portal>
-        <ToastParts.Viewport>
-          {toasts.map((toast) => (
-            <ToastParts.Root key={toast.id} toast={toast}>
-              <ToastParts.Content>
-                <div className="flex flex-col">
-                  <ToastParts.Title />
-                  <ToastParts.Description />
-                </div>
-                <ToastParts.Action />
-                <ToastParts.Close>閉じる</ToastParts.Close>
-              </ToastParts.Content>
-            </ToastParts.Root>
-          ))}
-        </ToastParts.Viewport>
-      </ToastParts.Portal>
-    </>
-  );
-}
-
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
@@ -85,26 +58,14 @@ export const Usage = meta.story({
   },
 });
 
-export const Parts = meta.story({
-  name: "パーツ",
-  ...ctrl({}),
-  render() {
-    return (
-      <ToastParts.Provider>
-        <PartsExample />
-      </ToastParts.Provider>
-    );
-  },
-});
-
 export const Types = meta.story({
   name: "種類",
   ...ctrl({}),
   render() {
-    const [toastManager] = React.useState(ToastParts.createToastManager);
+    const [toastManager] = React.useState(createToastManager);
 
     return (
-      <ToastParts.Provider toastManager={toastManager}>
+      <Toast toastManager={toastManager}>
         <button
           type="button"
           onClick={() => {
@@ -115,8 +76,22 @@ export const Types = meta.story({
         >
           3 種類の通知を追加
         </button>
-        <PartsExample />
-      </ToastParts.Provider>
+      </Toast>
+    );
+  },
+});
+
+export const NoAutoDismiss = meta.story({
+  name: "自動で閉じない",
+  ...ctrl({
+    limit: 3,
+    timeout: 0,
+  }),
+  render(props) {
+    return (
+      <Toast {...props}>
+        <CreateToastButton />
+      </Toast>
     );
   },
 });

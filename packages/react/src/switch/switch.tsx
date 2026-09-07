@@ -7,141 +7,177 @@ import {
   type SwitchRootRadius,
   type SwitchThumbProps,
   type SwitchRootVariant,
+  type SwitchRootChangeEventReason,
+  type SwitchRootChangeEventDetails,
   SwitchRoot,
   SwitchThumb,
 } from "./switch.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link SwitchRootColor} です。
+ * {@link SwitchRootChangeEventDetails}
+ */
+export type SwitchChangeEventDetails = SwitchRootChangeEventDetails;
+
+/**
+ * {@link SwitchRootChangeEventReason}
+ */
+export type SwitchChangeEventReason = SwitchRootChangeEventReason;
+
+/**
+ * {@link SwitchRootColor}
  */
 export type SwitchColor = SwitchRootColor;
 
 /**
- * {@link SwitchRootRadius} です。
+ * {@link SwitchRootRadius}
  */
 export type SwitchRadius = SwitchRootRadius;
 
 /**
- * {@link SwitchRootSize} です。
+ * {@link SwitchRootSize}
  */
 export type SwitchSize = SwitchRootSize;
 
 /**
- * {@link SwitchRootVariant} です。
+ * {@link SwitchRootVariant}
  */
 export type SwitchVariant = SwitchRootVariant;
 
 /**
- * {@link Switch} の各パーツに渡すプロパティーです。
+ * {@link Switch} の各パーツに渡す props です。
  */
 export type SwitchSlotProps = {
   /**
-   * {@link SwitchThumb} に渡すプロパティーです。
+   * {@link SwitchThumb} に渡す props です。
    */
   readonly thumb?: SwitchThumbProps | undefined;
 };
 
 /**
- * {@link Switch} の状態です。
+ * {@link Switch} が持つ状態です。
  */
 export type SwitchState = SwitchRootState;
 
 /**
- * {@link Switch} コンポーネントのプロパティーです。
- *
- * `checked` が指定されている場合は `defaultChecked` より優先され、状態の変更は `onCheckedChange` に通知されます。
+ * {@link Switch} に渡す props です。
  */
 export type SwitchProps = Omit<SwitchRootProps, "children"> & {
   /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   * 各パーツに個別の props を渡すためのオブジェクトです。
    *
-   * 指定したプロパティーは対応するパーツへそのまま渡され、パーツ側の既定値より優先されます。
-   * {@link SwitchSlotProps} を参照してください。
+   * 各パーツの props が優先されます。
    */
   slotProps?: SwitchSlotProps | undefined;
 };
 
-/**
- * {@link Switch} の各パーツに渡すプロパティーです。
- */
-export type SwitchPartsProps = {
-  /**
-   * {@link SwitchRoot} に渡すプロパティーです。
-   */
-  readonly root: SwitchRootProps;
-
-  /**
-   * {@link SwitchThumb} に渡すプロパティーです。
-   */
-  readonly thumb: SwitchThumbProps | undefined;
-};
+// API
+// ---
 
 /**
- * {@link Switch} の各パーツに渡すプロパティーを作るフックです。
+ * {@link Switch} を構成する各パーツの props を作成するための API です。
  */
-export function useSwitch(props: SwitchProps): SwitchPartsProps {
-  const { slotProps, ...rootProps } = props;
-  const thumbProps = slotProps?.thumb;
+export interface SwitchAPI {
+  /**
+   * {@link SwitchRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<SwitchRootProps, "children">;
 
-  return {
-    root: rootProps,
-    thumb: thumbProps,
-  };
+  /**
+   * {@link SwitchThumb} に渡す props を取得します。
+   */
+  getThumbProps(): SwitchThumbProps;
+}
+
+interface IUseSwitchAPI {
+  /**
+   * {@link SwitchAPI} を作成します。
+   *
+   * @param props {@link Switch} の props です。
+   * @returns スイッチの API です
+   */
+  (props: SwitchProps): SwitchAPI;
 }
 
 /**
+ * {@link SwitchAPI} を作成するフックです。
+ */
+export const useSwitchAPI: IUseSwitchAPI = function useSuiSwitchAPI(props) {
+  const { slotProps: { thumb: thumbProps = {} } = {}, ...otherRootProps } = props;
+
+  return {
+    getRootProps() {
+      return otherRootProps;
+    },
+    getThumbProps() {
+      return thumbProps;
+    },
+  };
+};
+
+export { type SwitchAPI as API, useSwitchAPI as useAPI };
+
+// Component
+// ---------
+
+/**
  * スイッチを表示するコンポーネントです。
- *
- * {@link SwitchThumb} はチェック状態を表示するために常に生成されます。
- * `defaultChecked` は初期状態だけを指定し、`checked` を指定すると制御された状態になります。
- * `disabled` のときはユーザー操作による状態変更が無効になります。
  */
 export const Switch: IComponent<SwitchProps> = function SuiSwitch(props) {
-  const partsProps = useSwitch(props);
+  const api = useSwitchAPI(props);
 
   return (
-    <SwitchRoot {...partsProps.root}>
-      <SwitchThumb {...partsProps.thumb} />
+    <SwitchRoot {...api.getRootProps()}>
+      <SwitchThumb {...api.getThumbProps()} />
     </SwitchRoot>
   );
 };
 
-/**
- * {@link Switch} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Switch {
   /**
-   * {@link SwitchState} です。
+   * {@link SwitchState}
    */
   export type State = SwitchState;
 
   /**
-   * {@link SwitchProps} です。
+   * {@link SwitchProps}
    */
   export type Props = SwitchProps;
 
   /**
-   * {@link SwitchSlotProps} です。
+   * {@link SwitchSlotProps}
    */
   export type SlotProps = SwitchSlotProps;
 
   /**
-   * {@link SwitchColor} です。
+   * {@link SwitchChangeEventDetails}
+   */
+  export type ChangeEventDetails = SwitchChangeEventDetails;
+
+  /**
+   * {@link SwitchChangeEventReason}
+   */
+  export type ChangeEventReason = SwitchChangeEventReason;
+
+  /**
+   * {@link SwitchColor}
    */
   export type Color = SwitchColor;
 
   /**
-   * {@link SwitchRadius} です。
+   * {@link SwitchRadius}
    */
   export type Radius = SwitchRadius;
 
   /**
-   * {@link SwitchSize} です。
+   * {@link SwitchSize}
    */
   export type Size = SwitchSize;
 
   /**
-   * {@link SwitchVariant} です。
+   * {@link SwitchVariant}
    */
   export type Variant = SwitchVariant;
 }

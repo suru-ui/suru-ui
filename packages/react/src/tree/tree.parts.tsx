@@ -1,6 +1,8 @@
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
+import { ChevronRightIcon } from "../_icons.jsx";
+import toReactNode from "../_to-react-node.js";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
@@ -97,15 +99,15 @@ export const TreeContext: React.Context<TreeContext | null> =
 function useSuiTreeContext(optional?: false): TreeContext;
 function useSuiTreeContext(optional?: boolean): TreeContext | null;
 function useSuiTreeContext(optional?: boolean): TreeContext | null {
-  const context = React.use(TreeContext);
-  if (context === null && !optional) {
+  const ctx = React.use(TreeContext);
+  if (ctx === null && !optional) {
     throw new ContextMissingError({
       contextName: "TreeContext",
       providerName: "TreeRoot",
     });
   }
 
-  return context;
+  return ctx;
 }
 
 /**
@@ -113,32 +115,31 @@ function useSuiTreeContext(optional?: boolean): TreeContext | null {
  */
 export const useTreeContext: IUseContext<TreeContext> = useSuiTreeContext;
 
-/**
- * {@link TreeContext} です。
- */
-export type Context = TreeContext;
+export { TreeContext as Context, useTreeContext as useContext };
 
-/**
- * {@link TreeContext} です。
- */
-export const Context: React.Context<Context | null> = TreeContext;
+export namespace Context {
+  /**
+   * {@link TreeSelectAction}
+   */
+  export type SelectAction = TreeSelectAction;
 
-/**
- * {@link useTreeContext} です。
- */
-export const useContext: IUseContext<Context> = useTreeContext;
+  /**
+   * {@link TreeRootSelectionMode}
+   */
+  export type SelectionMode = TreeRootSelectionMode;
+}
 
 // Root
 // ----
 
 /**
- * ツリーのノードです。
+ * {@link TreeRoot} の項目を表すオブジェクトです。
  */
-export type TreeNode = {
+export type TreeRootItemObject = {
   /**
    * 子ノードです。
    */
-  readonly children?: readonly TreeNode[] | undefined;
+  readonly children?: readonly TreeRootItemObject[] | undefined;
 
   /**
    * ノードを無効にするかどうかを指定します。
@@ -157,6 +158,27 @@ export type TreeNode = {
    */
   readonly label: React.ReactNode;
 };
+
+/**
+ * {@link TreeRoot} の各ノードをレンダリングする関数のインターフェイスです。
+ */
+export interface ITreeRootItemRenderer {
+  /**
+   * ノードをレンダリングします。
+   *
+   * @param node 対応するノードです。
+   * @param level ノードの深さです。ルートの直接の子が `1` です。
+   * @param posInSet 同じ深さの中での位置です。1 起点です。
+   * @param setSize 同じ深さの項目数です。
+   * @returns レンダリングする内容です。
+   */
+  (
+    node: Readonly<TreeRootItemObject>,
+    level: number,
+    posInSet: number,
+    setSize: number,
+  ): React.ReactNode;
+}
 
 /**
  * ツリーの角丸です。
@@ -200,111 +222,96 @@ export type TreeRootState = {
 /**
  * {@link TreeRoot} に渡すプロパティーです。
  */
-export type TreeRootProps = Omit<
-  React.ComponentProps<"div"> & RenderProps<TreeRootState>,
-  "children"
-> & {
-  /**
-   * ツリーの子要素です。
-   *
-   * {@link TreeItem} を配置します。関数を指定すると、表示中のノードごとに子要素を描画できます。
-   *
-   * @param node 対応するノードです。
-   * @param level ノードの深さです。ルートの直接の子が `1` です。
-   * @param posInSet 同じ深さの中での位置です。1 起点です。
-   * @param setSize 同じ深さの項目数です。
-   */
-  children?:
-    | React.ReactNode
-    | ((
-        node: Readonly<TreeNode>,
-        level: number,
-        posInSet: number,
-        setSize: number,
-      ) => React.ReactNode)
-    | undefined;
+export type TreeRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps | "children"> &
+  RenderProps<TreeRootState> & {
+    /**
+     * ツリーの内容、または各ノードをレンダリングする関数です。
+     *
+     * 関数を指定した場合は {@link TreeRootProps.items|items} のうち表示中のノードが順に引数として渡されます。
+     */
+    children?: React.ReactNode | ITreeRootItemRenderer | undefined;
 
-  /**
-   * ツリーのノードデータです。
-   *
-   * `children` に関数を指定したとき、展開状態に応じて表示中のノードだけが順に関数へ渡されます。
-   */
-  data?: readonly TreeNode[] | undefined;
+    /**
+     * 初期状態で展開するノードの識別子の一覧を指定します。
+     */
+    defaultExpandedValue?: readonly string[] | undefined;
 
-  /**
-   * 初期状態で展開するノードの識別子の一覧を指定します。
-   */
-  defaultExpandedValue?: readonly string[] | undefined;
+    /**
+     * 初期状態で選択するノードの識別子の一覧を指定します。
+     */
+    defaultValue?: readonly string[] | undefined;
 
-  /**
-   * 初期状態で選択するノードの識別子の一覧を指定します。
-   */
-  defaultValue?: readonly string[] | undefined;
+    /**
+     * 子を持つ項目のクリックで展開を切り替えるかどうかを指定します。
+     *
+     * インジケーターのクリックは常に展開を切り替えます。
+     *
+     * @default true
+     */
+    expandOnClick?: boolean | undefined;
 
-  /**
-   * 子を持つ項目のクリックで展開を切り替えるかどうかを指定します。
-   *
-   * インジケーターのクリックは常に展開を切り替えます。
-   *
-   * @default true
-   */
-  expandOnClick?: boolean | undefined;
+    /**
+     * 展開されているノードの識別子の一覧を指定します。
+     *
+     * 指定すると展開状態がこの値に固定され、{@link TreeRootProps.onExpandedValueChange|onExpandedValueChange} でのみ変化します。
+     */
+    expandedValue?: readonly string[] | undefined;
 
-  /**
-   * 展開されているノードの識別子の一覧を指定します。
-   *
-   * 指定すると展開状態がこの値に固定され、{@link TreeRootProps.onExpandedValueChange|onExpandedValueChange} でのみ変化します。
-   */
-  expandedValue?: readonly string[] | undefined;
+    /**
+     * ツリーの項目です。
+     *
+     * `children` に関数を指定した場合、展開状態に応じて表示中のノードだけが順に関数へ渡されます。
+     */
+    items?: readonly TreeRootItemObject[] | undefined;
 
-  /**
-   * 展開状態が変化したときに呼び出されます。
-   *
-   * @param event 変化のきっかけになったイベントです。
-   */
-  onExpandedValueChange?:
-    | ((value: readonly string[], event: React.SyntheticEvent) => void)
-    | undefined;
+    /**
+     * 展開状態が変化したときに呼び出されます。
+     *
+     * @param event 変化のきっかけになったイベントです。
+     */
+    onExpandedValueChange?:
+      | ((value: readonly string[], event: React.SyntheticEvent) => void)
+      | undefined;
 
-  /**
-   * 選択状態が変化したときに呼び出されます。
-   *
-   * @param event 変化のきっかけになったイベントです。
-   */
-  onValueChange?: ((value: readonly string[], event: React.SyntheticEvent) => void) | undefined;
+    /**
+     * 選択状態が変化したときに呼び出されます。
+     *
+     * @param event 変化のきっかけになったイベントです。
+     */
+    onValueChange?: ((value: readonly string[], event: React.SyntheticEvent) => void) | undefined;
 
-  /**
-   * 項目のハイライトの角丸を指定します。
-   *
-   * 既定値は {@link TreeRootProps.size|size} です。
-   */
-  radius?: TreeRootRadius | undefined;
+    /**
+     * 項目のハイライトの角丸を指定します。
+     *
+     * 既定値は {@link TreeRootProps.size|size} です。
+     */
+    radius?: TreeRootRadius | undefined;
 
-  /**
-   * 選択モードを指定します。
-   *
-   * @default "none"
-   */
-  selectionMode?: TreeRootSelectionMode | undefined;
+    /**
+     * 選択モードを指定します。
+     *
+     * @default "none"
+     */
+    selectionMode?: TreeRootSelectionMode | undefined;
 
-  /**
-   * ツリーの大きさを指定します。
-   *
-   * @default "md"
-   */
-  size?: TreeRootSize | undefined;
+    /**
+     * ツリーの大きさを指定します。
+     *
+     * @default "md"
+     */
+    size?: TreeRootSize | undefined;
 
-  /**
-   * 選択されているノードの識別子の一覧を指定します。
-   *
-   * 指定すると選択状態がこの値に固定され、{@link TreeRootProps.onValueChange|onValueChange} でのみ変化します。
-   */
-  value?: readonly string[] | undefined;
-};
+    /**
+     * 選択されているノードの識別子の一覧を指定します。
+     *
+     * 指定すると選択状態がこの値に固定され、{@link TreeRootProps.onValueChange|onValueChange} でのみ変化します。
+     */
+    value?: readonly string[] | undefined;
+  };
 
 const EMPTY: readonly string[] = [];
 
-const EMPTY_NODES: readonly TreeNode[] = [];
+const EMPTY_NODES: readonly TreeRootItemObject[] = [];
 
 function isBranchElement(element: Element): boolean {
   return element.getAttribute("aria-expanded") != null;
@@ -317,22 +324,22 @@ function isBranchElement(element: Element): boolean {
  */
 export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
   const {
-    onKeyDown: onKeyDownProp,
-    onFocus: onFocusProp,
-    children,
-    data = EMPTY_NODES,
+    items = EMPTY_NODES,
     value: valueProp,
     defaultValue = EMPTY,
     expandedValue: expandedValueProp,
     defaultExpandedValue = EMPTY,
     expandOnClick = true,
+    children = defaultRootItemRenderer,
     onValueChange,
     onExpandedValueChange,
+    onKeyDown: onKeyDownProp,
+    onFocus: onFocusProp,
     radius = "md",
     selectionMode = "none",
     size = "md",
     className,
-    ...otherProps
+    ...otherDivProps
   } = props;
 
   const rootRef = React.useRef<HTMLDivElement | null>(null);
@@ -349,12 +356,12 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
   const visibleNodes = React.useMemo(() => {
     const result: {
       level: number;
-      node: Readonly<TreeNode>;
+      node: Readonly<TreeRootItemObject>;
       posInSet: number;
       setSize: number;
     }[] = [];
 
-    const walk = (nodes: readonly TreeNode[], level: number): void => {
+    const walk = (nodes: readonly TreeRootItemObject[], level: number): void => {
       for (const [index, node] of nodes.entries()) {
         const hasChildren = node.children != null && node.children.length > 0;
 
@@ -364,10 +371,10 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
         }
       }
     };
-    walk(data, 1);
+    walk(items, 1);
 
     return result;
-  }, [data, expanded]);
+  }, [items, expanded]);
 
   const getItemId = React.useCallback((itemId: string) => `${baseId}-${itemId}`, [baseId]);
 
@@ -413,7 +420,7 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
     [expanded, expandedValue, expandedValueProp, onExpandedValueChange],
   );
 
-  const context = React.useMemo<TreeContext>(
+  const ctx = React.useMemo<TreeContext>(
     () => ({
       activeId,
       expandOnClick,
@@ -545,6 +552,21 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
         }
         break;
       }
+      case "*": {
+        event.preventDefault();
+        const collapsedIds = elements
+          .filter((element) => element.getAttribute("aria-expanded") === "false")
+          .map((element) => element.dataset["id"] ?? "")
+          .filter((itemId) => itemId !== "" && !expanded.has(itemId));
+        if (collapsedIds.length > 0) {
+          const nextValue = [...expandedValue, ...collapsedIds];
+          if (expandedValueProp == null) {
+            setExpandedState(nextValue);
+          }
+          onExpandedValueChange?.(nextValue, event);
+        }
+        break;
+      }
       default:
         break;
     }
@@ -567,11 +589,11 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
   };
 
   return (
-    <Context value={context}>
+    <TreeContext value={ctx}>
       {useRender<HTMLDivElement, {}>({
         defaultTagName: "div",
         props: [
-          otherProps,
+          otherDivProps,
           {
             "aria-activedescendant": activeId != null ? getItemId(activeId) : undefined,
             "aria-multiselectable": selectionMode === "multiple" ? true : undefined,
@@ -582,7 +604,8 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
                       {children(node, level, posInSet, setSize)}
                     </React.Fragment>
                   ))
-                : children,
+                : toReactNode(children),
+            "data-scope": "",
             className: cn(
               className,
               "sui_tree",
@@ -597,44 +620,79 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
           },
         ],
       })}
-    </Context>
+    </TreeContext>
   );
 };
+
+const defaultRootItemRenderer: ITreeRootItemRenderer = (node, level, posInSet, setSize) => {
+  if (!isItemObject(node)) {
+    return toReactNode(node);
+  }
+
+  const hasChildren = node.children != null && node.children.length > 0;
+
+  return (
+    <TreeItem
+      id={node.id}
+      key={node.id}
+      label={node.label}
+      level={level}
+      setSize={setSize}
+      disabled={node.disabled}
+      posInSet={posInSet}
+      hasChildren={hasChildren}
+    >
+      <TreeItemIndicator visible={hasChildren} />
+      <TreeItemLabel>{toReactNode(node.label)}</TreeItemLabel>
+    </TreeItem>
+  );
+};
+
+function isItemObject(item: unknown): item is TreeRootItemObject {
+  return typeof item === "object" && item !== null && "id" in item && "label" in item;
+}
 
 /**
  * {@link TreeRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
   /**
-   * {@link TreeRootState} です。
+   * {@link TreeRootState}
    */
   export type State = TreeRootState;
 
   /**
-   * {@link TreeRootProps} です。
+   * {@link TreeRootProps}
    */
   export type Props = TreeRootProps;
 
   /**
-   * {@link TreeRootRadius} です。
+   * {@link TreeRootItemObject}
+   */
+  export type ItemObject = TreeRootItemObject;
+
+  /**
+   * {@link ITreeRootItemRenderer}
+   */
+  export interface IItemRenderer extends ITreeRootItemRenderer {}
+
+  /**
+   * {@link TreeRootRadius}
    */
   export type Radius = TreeRootRadius;
 
   /**
-   * {@link TreeRootSelectionMode} です。
+   * {@link TreeRootSelectionMode}
    */
   export type SelectionMode = TreeRootSelectionMode;
 
   /**
-   * {@link TreeRootSize} です。
+   * {@link TreeRootSize}
    */
   export type Size = TreeRootSize;
 }
 
-/**
- * {@link TreeRoot} です。
- */
-export const Root: IComponent<Root.Props> = TreeRoot;
+export { TreeRoot as Root };
 
 // Item
 // ----
@@ -682,7 +740,7 @@ export type TreeItemProps = Omit<
   /**
    * 対応するノードの識別子です。
    *
-   * `data` プロパティーから描画した項目には自動的に渡されます。
+   * `items` プロパティーから描画した項目には自動的に渡されます。
    */
   id: string;
 
@@ -696,21 +754,21 @@ export type TreeItemProps = Omit<
   /**
    * ノードの深さです。ルートの直接の子が `1` です。
    *
-   * `data` プロパティーから描画した項目には自動的に渡されます。
+   * `items` プロパティーから描画した項目には自動的に渡されます。
    */
   level: number;
 
   /**
    * 同じ深さの中での位置です。1 起点です。
    *
-   * `data` プロパティーから描画した項目には自動的に渡されます。
+   * `items` プロパティーから描画した項目には自動的に渡されます。
    */
   posInSet?: number | undefined;
 
   /**
    * 同じ深さの項目数です。
    *
-   * `data` プロパティーから描画した項目には自動的に渡されます。
+   * `items` プロパティーから描画した項目には自動的に渡されます。
    */
   setSize?: number | undefined;
 };
@@ -721,7 +779,7 @@ export type TreeItemProps = Omit<
  * {@link TreeRoot} の中で配置します。
  */
 export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
-  const context = useSuiTreeContext(true);
+  const ctx = useSuiTreeContext(true);
   const {
     id: itemId,
     level,
@@ -733,48 +791,44 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
     children,
     className,
     onClick: onClickProp,
-    ...otherProps
+    ...otherDivProps
   } = props;
 
-  const domId = context?.getItemId(itemId) ?? itemId;
-  const expanded = context?.expanded.has(itemId) ?? false;
-  const selected = context?.selectionMode !== "none" && (context?.selected.has(itemId) ?? false);
-  const active = context?.activeId === itemId;
+  const domId = ctx?.getItemId(itemId) ?? itemId;
+  const expanded = ctx?.expanded.has(itemId) ?? false;
+  const selected = ctx?.selectionMode !== "none" && (ctx?.selected.has(itemId) ?? false);
+  const active = ctx?.activeId === itemId;
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     onClickProp?.(event);
-    if (context == null || disabled || event.defaultPrevented) {
+    if (ctx == null || disabled || event.defaultPrevented) {
       return;
     }
 
-    context.setActive(itemId);
-    context.focus();
+    ctx.setActive(itemId);
+    ctx.focus();
 
     const target = event.target instanceof Element ? event.target : null;
     const indicatorClicked = target?.closest("[data-sui_tree_item_indicator]") != null;
-    if (hasChildren && (indicatorClicked || context.expandOnClick)) {
-      context.toggleExpansion(itemId, event);
+    if (hasChildren && (indicatorClicked || ctx.expandOnClick)) {
+      ctx.toggleExpansion(itemId, event);
     }
-    if (context.selectionMode !== "none") {
+    if (ctx.selectionMode !== "none") {
       const additive = event.metaKey || event.ctrlKey;
-      context.select(
-        itemId,
-        context.selectionMode === "multiple" && additive ? "toggle" : "only",
-        event,
-      );
+      ctx.select(itemId, ctx.selectionMode === "multiple" && additive ? "toggle" : "only", event);
     }
   };
 
   return useRender({
     defaultTagName: "div",
     props: [
-      otherProps,
+      otherDivProps,
       {
         "aria-disabled": disabled || undefined,
         "aria-expanded": hasChildren ? expanded : undefined,
         "aria-level": level,
         "aria-posinset": posInSet,
-        "aria-selected": context?.selectionMode !== "none" ? selected : undefined,
+        "aria-selected": ctx?.selectionMode !== "none" ? selected : undefined,
         "aria-setsize": setSize,
         children: children ?? (label != null ? <TreeItemLabel>{label}</TreeItemLabel> : null),
         className: cn(
@@ -795,25 +849,19 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
   });
 };
 
-/**
- * {@link TreeItem} の状態やプロパティーをまとめた型名前空間です。
- */
+export { TreeItem as Item };
+
 export namespace Item {
   /**
-   * {@link TreeItemState} です。
+   * {@link TreeItemState}
    */
   export type State = TreeItemState;
 
   /**
-   * {@link TreeItemProps} です。
+   * {@link TreeItemProps}
    */
   export type Props = TreeItemProps;
 }
-
-/**
- * {@link TreeItem} です。
- */
-export const Item: IComponent<Item.Props> = TreeItem;
 
 // Indicator
 // ---------
@@ -846,17 +894,12 @@ export type TreeItemIndicatorProps = Omit<React.ComponentProps<"span">, keyof Re
 export const TreeItemIndicator: IComponent<TreeItemIndicatorProps> = function SuiTreeItemIndicator(
   props,
 ) {
-  const {
-    visible = true,
-    className,
-    children = <SuiTreeChevronRightIcon />,
-    ...otherProps
-  } = props;
+  const { visible = true, className, children = <ChevronRightIcon />, ...otherSpanProps } = props;
 
   return useRender({
     defaultTagName: "span",
     props: [
-      { ...otherProps, children },
+      { ...otherSpanProps, children },
       {
         "data-sui_tree_item_indicator": "",
         className: cn(
@@ -869,25 +912,19 @@ export const TreeItemIndicator: IComponent<TreeItemIndicatorProps> = function Su
   });
 };
 
-/**
- * {@link TreeItemIndicator} の状態やプロパティーをまとめた型名前空間です。
- */
+export { TreeItemIndicator as Indicator };
+
 export namespace Indicator {
   /**
-   * {@link TreeItemIndicatorState} です。
+   * {@link TreeItemIndicatorState}
    */
   export type State = TreeItemIndicatorState;
 
   /**
-   * {@link TreeItemIndicatorProps} です。
+   * {@link TreeItemIndicatorProps}
    */
   export type Props = TreeItemIndicatorProps;
 }
-
-/**
- * {@link TreeItemIndicator} です。
- */
-export const Indicator: IComponent<Indicator.Props> = TreeItemIndicator;
 
 // Label
 // -----
@@ -918,45 +955,16 @@ export const TreeItemLabel: IComponent<TreeItemLabelProps> = function SuiTreeIte
   });
 };
 
-/**
- * {@link TreeItemLabel} の状態やプロパティーをまとめた型名前空間です。
- */
+export { TreeItemLabel as Label };
+
 export namespace Label {
   /**
-   * {@link TreeItemLabelState} です。
+   * {@link TreeItemLabelState}
    */
   export type State = TreeItemLabelState;
 
   /**
-   * {@link TreeItemLabelProps} です。
+   * {@link TreeItemLabelProps}
    */
   export type Props = TreeItemLabelProps;
-}
-
-/**
- * {@link TreeItemLabel} です。
- */
-export const Label: IComponent<Label.Props> = TreeItemLabel;
-
-// SuiTreeChevronRightIcon
-// -----------------------
-
-function SuiTreeChevronRightIcon() {
-  return (
-    <svg
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      focusable="false"
-      aria-hidden="true"
-    >
-      <path
-        d="M9 5l7 7-7 7"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
 }

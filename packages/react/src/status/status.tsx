@@ -1,4 +1,4 @@
-import * as React from "react";
+import type * as React from "react";
 
 import type { IComponent } from "../types.js";
 import {
@@ -11,120 +11,138 @@ import {
   StatusIndicator,
 } from "./status.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link StatusRootColor} です。
+ * {@link StatusRootColor}
  */
 export type StatusColor = StatusRootColor;
 
 /**
- * {@link StatusRootSize} です。
+ * {@link StatusRootSize}
  */
 export type StatusSize = StatusRootSize;
 
 /**
- * {@link Status} の各パーツに渡すプロパティーです。
- */
-export type StatusSlotProps = {
-  /**
-   * {@link StatusIndicator} に渡すプロパティーです。
-   */
-  readonly indicator?: StatusIndicatorProps | undefined;
-};
-
-/**
- * {@link Status} の各パーツに渡すプロパティーです。
- */
-export type StatusPartsProps = {
-  /**
-   * {@link StatusIndicator} に渡すプロパティーです。
-   */
-  readonly indicator: StatusIndicatorProps;
-
-  /**
-   * {@link StatusRoot} に渡すプロパティーです。
-   */
-  readonly root: StatusRootProps;
-};
-
-/**
- * {@link Status} の状態です。
+ * {@link Status} が持つ状態です。
  */
 export type StatusState = StatusRootState;
 
 /**
- * {@link Status} コンポーネントのプロパティーです。
+ * {@link Status} の各パーツに渡す props です。
+ */
+export type StatusSlotProps = {
+  /**
+   * {@link StatusIndicator} に渡す props です。
+   */
+  readonly indicator?: Omit<StatusIndicatorProps, "children"> | undefined;
+};
+
+/**
+ * {@link Status} に渡す props です。
  */
 export type StatusProps = Omit<StatusRootProps, "children"> & {
   /**
    * ステータスのラベルです。
-   *
-   * インジケーターの後に表示します。スクリーンリーダーの利用者にも状態が伝わるように、視覚的に隠したテキストを含めてください。
    */
   children?: React.ReactNode;
 
   /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   * 各パーツに個別の props を渡すためのオブジェクトです。
    *
-   * 各パーツのプロパティーが優先されます。
+   * 各パーツの props が優先されます。
    */
   slotProps?: StatusSlotProps | undefined;
 };
 
-/**
- * {@link Status} の各パーツに渡すプロパティーを作るフックです。
- */
-export function useStatus(props: StatusProps): StatusPartsProps {
-  const { slotProps: { indicator: indicatorProps = {} } = {}, ...rootProps } = props;
+// API
+// ---
 
-  return {
-    root: rootProps,
-    indicator: indicatorProps,
-  };
+/**
+ * {@link Status} を構成する各パーツの props を作成するための API です。
+ */
+export interface StatusAPI {
+  /**
+   * {@link StatusIndicator} に渡す props を取得します。
+   */
+  getIndicatorProps(): StatusIndicatorProps;
+
+  /**
+   * {@link StatusRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<StatusRootProps, "children">;
+}
+
+interface IUseStatusAPI {
+  /**
+   * {@link StatusAPI} を作成します。
+   *
+   * @param props {@link Status} の props です。
+   * @returns ステータスの API です
+   */
+  (props: StatusProps): StatusAPI;
 }
 
 /**
- * 状態を示すドットとラベルを並べて表示するステータスコンポーネントです。
- *
- * `color` プロパティーでドットの色を、`processing` プロパティーで処理中を示すアニメーションを指定できます。
+ * {@link StatusAPI} を作成するフックです。
+ */
+export const useStatusAPI: IUseStatusAPI = function useSuiStatusAPI(props) {
+  const { slotProps: { indicator: indicatorProps = {} } = {}, ...otherRootProps } = props;
+
+  return {
+    getIndicatorProps() {
+      return indicatorProps;
+    },
+    getRootProps() {
+      return otherRootProps;
+    },
+  };
+};
+
+export { type StatusAPI as API, useStatusAPI as useAPI };
+
+// Component
+// ---------
+
+/**
+ * 状態を示すドットとラベルを並べて表示するコンポーネントです。
  */
 export const Status: IComponent<StatusProps> = function SuiStatus(props) {
   const { children } = props;
-  const partsProps = useStatus(props);
+  const api = useStatusAPI(props);
 
   return (
-    <StatusRoot {...partsProps.root}>
-      <StatusIndicator {...partsProps.indicator} />
+    <StatusRoot {...api.getRootProps()}>
+      <StatusIndicator {...api.getIndicatorProps()} />
       {children}
     </StatusRoot>
   );
 };
 
-/**
- * {@link Status} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Status {
   /**
-   * {@link StatusState} です。
+   * {@link StatusState}
    */
   export type State = StatusState;
 
   /**
-   * {@link StatusProps} です。
+   * {@link StatusProps}
    */
   export type Props = StatusProps;
 
   /**
-   * {@link StatusSlotProps} です。
+   * {@link StatusSlotProps}
    */
   export type SlotProps = StatusSlotProps;
 
   /**
-   * {@link StatusColor} です。
+   * {@link StatusColor}
    */
   export type Color = StatusColor;
 
   /**
-   * {@link StatusSize} です。
+   * {@link StatusSize}
    */
   export type Size = StatusSize;
 }

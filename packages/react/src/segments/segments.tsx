@@ -1,6 +1,9 @@
 import * as React from "react";
 
+import type { LikelyVisibleNode } from "../_is-likely-visible-node.js";
+import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
+import { isItemObject } from "./_segments.jsx";
 import {
   type SegmentsRootSize,
   type SegmentsItemProps,
@@ -10,205 +13,269 @@ import {
   type SegmentsRootState,
   type SegmentsRootRadius,
   type SegmentsIndicatorProps,
+  type SegmentsListItemObject,
+  type ISegmentsListItemRenderer,
   SegmentsItem,
   SegmentsList,
   SegmentsRoot,
   SegmentsIndicator,
 } from "./segments.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link SegmentsRootColor} です。
+ * {@link SegmentsRootColor}
  */
 export type SegmentsColor = SegmentsRootColor;
 
 /**
- * {@link SegmentsRootRadius} です。
+ * {@link SegmentsListItemObject}
+ */
+export type SegmentsItemObject = SegmentsListItemObject;
+
+/**
+ * {@link ISegmentsListItemRenderer}
+ */
+export interface ISegmentsItemRenderer<TItem = any> extends ISegmentsListItemRenderer<TItem> {}
+
+/**
+ * {@link SegmentsRootRadius}
  */
 export type SegmentsRadius = SegmentsRootRadius;
 
 /**
- * {@link SegmentsRootSize} です。
+ * {@link SegmentsRootSize}
  */
 export type SegmentsSize = SegmentsRootSize;
 
 /**
- * {@link Segments} の状態です。
+ * {@link Segments} が持つ状態です。
  */
 export type SegmentsState = SegmentsRootState;
 
 /**
- * {@link Segments} の 1 つのセグメントを表す項目です。
- */
-export type SegmentsItemOption = {
-  /**
-   * セグメントを無効にするかどうかです。
-   *
-   * @default false
-   */
-  readonly disabled?: boolean | undefined;
-
-  /**
-   * セグメントに表示するラベルです。
-   * `slotProps.item.children` を指定した場合は、そちらが優先されます。
-   */
-  readonly label: React.ReactNode;
-
-  /**
-   * セグメントの値です。
-   */
-  readonly value: unknown;
-};
-
-/**
- * {@link Segments} の各パーツに渡すプロパティーです。
- *
- * 各パーツの指定値は、パーツに渡される既定のプロパティーより優先されます。
- * `item.children` を指定した場合は、すべてのセグメントのラベルより優先されます。
+ * {@link Segments} の各パーツに渡す props です。
  */
 export type SegmentsSlotProps = {
   /**
-   * {@link SegmentsIndicator} に渡すプロパティーです。
+   * {@link SegmentsIndicator} に渡す props です。
    */
   readonly indicator?: SegmentsIndicatorProps | undefined;
 
   /**
-   * {@link SegmentsItem} に渡すプロパティーです。
-   * `children` を指定すると、すべてのセグメントのラベルより優先されます。
-   */
-  readonly item?: SegmentsItemProps | undefined;
-
-  /**
-   * {@link SegmentsList} に渡すプロパティーです。
-   */
-  readonly list?: SegmentsListProps | undefined;
-};
-
-/**
- * 各パーツに渡すプロパティーをまとめたものです。
- */
-export type SegmentsPartsProps = {
-  /**
-   * {@link SegmentsIndicator} に渡すプロパティーです。
-   */
-  readonly indicator: SegmentsIndicatorProps;
-
-  /**
-   * 各 {@link SegmentsItem} に渡すプロパティーの一覧です。
+   * {@link SegmentsItem} に渡す props です。
    *
-   * `items` の各項目に対応します。`children` にはセグメントのラベルが設定されています。
+   * すべての項目に同じ props が渡されます。`children` と `value` は上書きされません。
    */
-  readonly item: readonly SegmentsItemProps[];
+  readonly item?: Omit<SegmentsItemProps, "children" | "value"> | undefined;
 
   /**
-   * {@link SegmentsList} に渡すプロパティーです。
+   * {@link SegmentsList} に渡す props です。
    *
-   * `items` を指定しないときは null になります。
+   * `children` と `items` は上書きされません。
    */
-  readonly list: SegmentsListProps | null;
-
-  /**
-   * {@link SegmentsRoot} に渡すプロパティーです。
-   */
-  readonly root: SegmentsRootProps;
+  readonly list?: Omit<SegmentsListProps, "children" | "items"> | undefined;
 };
 
 /**
- * {@link Segments} コンポーネントのプロパティーです。
+ * {@link Segments} に渡す props です。
+ *
+ * @template TItem 項目の型です。
  */
-export type SegmentsProps = Omit<SegmentsRootProps, "children"> & {
-  /**
-   * セグメントの項目です。
-   */
-  items?: SegmentsItemOption[] | undefined;
+export type SegmentsProps<TItem = any> = Omit<SegmentsRootProps, "children"> &
+  Pick<SegmentsListProps<TItem>, "children"> & {
+    /**
+     * セグメントの項目です。
+     */
+    items?: readonly TItem[] | undefined;
 
-  /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-   * `item.children` を指定すると、すべてのセグメントのラベルより優先されます。
-   */
-  slotProps?: SegmentsSlotProps | undefined;
-};
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     *
+     * 各パーツの props が優先されます。
+     */
+    slotProps?: SegmentsSlotProps | undefined;
+  };
+
+// API
+// ---
 
 /**
- * {@link Segments} の各パーツに渡すプロパティーを作るフックです。
+ * {@link Segments} を構成する各パーツの props などを作成するための API です。
+ *
+ * @template TItem 項目の型です。
  */
-export function useSegments(props: SegmentsProps): SegmentsPartsProps {
-  const { items, slotProps, ...rootProps } = props;
-  const { list: listProps, item: itemProps, indicator: indicatorProps } = slotProps ?? {};
-  const { children: itemChildren, ...otherItemProps } = itemProps ?? {};
+export interface SegmentsAPI<TItem = any> {
+  /**
+   * {@link SegmentsIndicator} に渡す props を取得します。
+   */
+  getIndicatorProps(): SegmentsIndicatorProps;
+
+  /**
+   * {@link SegmentsItem} に渡す props を取得します。
+   *
+   * @param item 項目です。
+   */
+  getItemProps(item: TItem): Omit<SegmentsItemProps, "children">;
+
+  /**
+   * 項目のラベルを取得します。
+   *
+   * @param item 項目です。
+   */
+  getLabel(item: TItem): React.ReactNode;
+
+  /**
+   * {@link SegmentsList} に渡す props を取得します。
+   */
+  getListProps(): Omit<SegmentsListProps, "children"> & {
+    children: LikelyVisibleNode | null;
+  };
+
+  /**
+   * {@link SegmentsRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<SegmentsRootProps, "children">;
+}
+
+interface IUseSegmentsAPI {
+  /**
+   * {@link SegmentsAPI} を作成します。
+   *
+   * @template TItem 項目の型です。
+   * @param props {@link Segments} の props です。
+   * @returns セグメントの API です
+   */
+  <TItem = never>(props: SegmentsProps<TItem>): SegmentsAPI<TItem>;
+}
+
+/**
+ * {@link SegmentsAPI} を作成するフックです。
+ */
+export const useSegmentsAPI: IUseSegmentsAPI = function useSuiSegmentsAPI(props) {
+  const {
+    items = [],
+    children,
+    slotProps: { item: itemProps = {}, list: listProps = {}, indicator: indicatorProps = {} } = {},
+    ...otherRootProps
+  } = props;
 
   return {
-    root: rootProps,
-    list: items === undefined ? null : (listProps ?? {}),
-    item:
-      items?.map((option) => ({
+    getLabel(item) {
+      return isItemObject(item) ? toReactNode(item.label) : toReactNode(item);
+    },
+    getItemProps(item) {
+      if (!isItemObject(item)) {
+        return {
+          ...itemProps,
+          value: item,
+        };
+      }
+
+      const {
+        // label を取り除いた props を SegmentsItem の props とします。
+        label: _label,
+        value,
+        ...otherItemProps
+      } = item;
+
+      return {
         ...otherItemProps,
-        value: option.value,
-        disabled: option.disabled,
-        children: itemChildren ?? option.label,
-      })) ?? [],
-    indicator: indicatorProps ?? {},
+        value,
+        ...itemProps, // JSDoc 通り、`slotProps.item` を優先します。
+      };
+    },
+    getListProps() {
+      return {
+        ...listProps,
+        items,
+        children: typeof children === "function" ? items.map(children) : toReactNode(children),
+      };
+    },
+    getRootProps() {
+      return otherRootProps;
+    },
+    getIndicatorProps() {
+      return indicatorProps;
+    },
   };
+};
+
+export { type SegmentsAPI as API, useSegmentsAPI as useAPI };
+
+// Component
+// ---------
+
+interface ISegments extends IComponent<SegmentsProps> {
+  /**
+   * @template TItem 項目の型です。
+   */
+  <TItem = never>(props: SegmentsProps<TItem>): IComponent.Return;
 }
 
 /**
  * 関連する選択肢から 1 つを選ばせるセグメントコントロールです。
  *
- * `items` からセグメントの並びを組み立てます。
- * レイアウトを細かく制御する場合は、{@link SegmentsRoot|Root} と各パーツを直接組み立てます。
+ * `items` からセグメントの並びを組み立てます。レイアウトを細かく制御する場合は、{@link SegmentsRoot} と各パーツを直接組み立てます。
  */
-export const Segments: IComponent<SegmentsProps> = function SuiSegments(props) {
-  const partsProps = useSegments(props);
+export const Segments: ISegments = function SuiSegments(props: SegmentsProps) {
+  const api = useSegmentsAPI(props);
+  const { children, items = [], ...otherListProps } = api.getListProps();
 
   return (
-    <SegmentsRoot {...partsProps.root}>
-      {partsProps.list && (
-        <SegmentsList {...partsProps.list}>
-          {partsProps.item.map((itemProps) => (
-            <SegmentsItem key={String(itemProps.value)} {...itemProps} />
+    <SegmentsRoot {...api.getRootProps()}>
+      <SegmentsList {...otherListProps} items={items}>
+        {children ??
+          items.map((item, index) => (
+            <SegmentsItem key={index} {...api.getItemProps(item)}>
+              {api.getLabel(item)}
+            </SegmentsItem>
           ))}
-          <SegmentsIndicator {...partsProps.indicator} />
-        </SegmentsList>
-      )}
+        <SegmentsIndicator {...api.getIndicatorProps()} />
+      </SegmentsList>
     </SegmentsRoot>
   );
 };
 
-/**
- * {@link Segments} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Segments {
   /**
-   * {@link SegmentsState} です。
+   * {@link SegmentsState}
    */
   export type State = SegmentsState;
 
   /**
-   * {@link SegmentsProps} です。
+   * {@link SegmentsProps}
    */
   export type Props = SegmentsProps;
 
   /**
-   * {@link SegmentsSlotProps} です。
+   * {@link SegmentsSlotProps}
    */
   export type SlotProps = SegmentsSlotProps;
 
   /**
-   * {@link SegmentsColor} です。
+   * {@link SegmentsColor}
    */
   export type Color = SegmentsColor;
 
   /**
-   * {@link SegmentsItemOption} です。
+   * {@link SegmentsItemObject}
    */
-  export type Item = SegmentsItemOption;
+  export type ItemObject = SegmentsItemObject;
 
   /**
-   * {@link SegmentsRadius} です。
+   * {@link ISegmentsItemRenderer}
+   */
+  export interface IItemRenderer<TItem = any> extends ISegmentsItemRenderer<TItem> {}
+
+  /**
+   * {@link SegmentsRadius}
    */
   export type Radius = SegmentsRadius;
 
   /**
-   * {@link SegmentsSize} です。
+   * {@link SegmentsSize}
    */
   export type Size = SegmentsSize;
 }

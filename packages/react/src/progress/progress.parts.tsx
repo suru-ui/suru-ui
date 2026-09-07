@@ -11,45 +11,54 @@ import "./progress.css";
 // ----
 
 /**
+ * 進捗の状態です。
+ *
+ * - `"indeterminate"`: 不確定状態
+ * - `"progressing"`: 進行中
+ * - `"complete"`: 完了
+ */
+export type ProgressRootStatus = Progress.Status;
+
+/**
  * 進捗の配色です。
  */
 export type ProgressRootColor = Color;
 
 /**
- * 進捗の角丸です。
+ * 進捗の角丸の大きさです。
  *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
- * - `"full"`: 完全な丸形
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ * - `"full"`: 丸形
  */
 export type ProgressRootRadius = "none" | Size | "full";
 
 /**
  * 進捗の大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type ProgressRootSize = Size;
 
 /**
- * 進捗の主な外観の種類です。
+ * 進捗の主な外観です。
  *
- * - `"naked"`: 背景のないトラック
- * - `"liquid"`: 薄い塗りつぶしのトラック
+ * - `"naked"`: 背景なし
+ * - `"liquid"`: 薄い塗りつぶし
  */
 export type ProgressRootVariant = "naked" | "liquid";
 
 /**
- * {@link ProgressRoot} の状態です。
+ * {@link ProgressRoot} が持つ状態です。
  */
 export type ProgressRootState = Progress.Root.State;
 
 /**
- * {@link ProgressRoot} に渡すプロパティーです。
+ * {@link ProgressRoot} に渡す props です。
  */
 export type ProgressRootProps = React.ComponentProps<typeof Progress.Root> & {
   /**
@@ -115,61 +124,62 @@ export const ProgressRoot: IComponent<ProgressRootProps> = function SuiProgressR
         `sui_progress-radius_${radius}`,
         `sui_progress-variant_${variant}`,
         outlined && "sui_progress-outlined",
+        (state) => `sui_progress-status_${state.status}`,
       )}
+      data-scope=""
     />
   );
 };
 
-/**
- * {@link ProgressRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { ProgressRoot as Root };
+
 export namespace Root {
   /**
-   * {@link ProgressRootState} です。
+   * {@link ProgressRootState}
    */
   export type State = ProgressRootState;
 
   /**
-   * {@link ProgressRootProps} です。
+   * {@link ProgressRootProps}
    */
   export type Props = ProgressRootProps;
 
   /**
-   * {@link ProgressRootColor} です。
+   * {@link ProgressRootColor}
    */
   export type Color = ProgressRootColor;
 
   /**
-   * {@link ProgressRootRadius} です。
+   * {@link ProgressRootRadius}
    */
   export type Radius = ProgressRootRadius;
 
   /**
-   * {@link ProgressRootSize} です。
+   * {@link ProgressRootSize}
    */
   export type Size = ProgressRootSize;
 
   /**
-   * {@link ProgressRootVariant} です。
+   * {@link ProgressRootStatus}
+   */
+  export type Status = ProgressRootStatus;
+
+  /**
+   * {@link ProgressRootVariant}
    */
   export type Variant = ProgressRootVariant;
 }
-
-/**
- * {@link ProgressRoot} です。
- */
-export const Root: IComponent<Root.Props> = ProgressRoot;
 
 // Label
 // -----
 
 /**
- * {@link ProgressLabel} の状態です。
+ * {@link ProgressLabel} が持つ状態です。
  */
 export type ProgressLabelState = Progress.Label.State;
 
 /**
- * {@link ProgressLabel} に渡すプロパティーです。
+ * {@link ProgressLabel} に渡す props です。
  */
 export type ProgressLabelProps = React.ComponentProps<typeof Progress.Label>;
 
@@ -182,36 +192,30 @@ export const ProgressLabel: IComponent<ProgressLabelProps> = function SuiProgres
   return <Progress.Label {...otherProps} className={cn(className, "sui_progress_label")} />;
 };
 
-/**
- * {@link ProgressLabel} の状態やプロパティーをまとめた型名前空間です。
- */
+export { ProgressLabel as Label };
+
 export namespace Label {
   /**
-   * {@link ProgressLabelState} です。
+   * {@link ProgressLabelState}
    */
   export type State = ProgressLabelState;
 
   /**
-   * {@link ProgressLabelProps} です。
+   * {@link ProgressLabelProps}
    */
   export type Props = ProgressLabelProps;
 }
-
-/**
- * {@link ProgressLabel} です。
- */
-export const Label: IComponent<Label.Props> = ProgressLabel;
 
 // Value
 // -----
 
 /**
- * {@link ProgressValue} の状態です。
+ * {@link ProgressValue} が持つ状態です。
  */
 export type ProgressValueState = Progress.Value.State;
 
 /**
- * {@link ProgressValue} に渡すプロパティーです。
+ * {@link ProgressValue} に渡す props です。
  */
 export type ProgressValueProps = React.ComponentProps<typeof Progress.Value>;
 
@@ -226,36 +230,30 @@ export const ProgressValue: IComponent<ProgressValueProps> = function SuiProgres
   return <Progress.Value {...otherProps} className={cn(className, "sui_progress_value")} />;
 };
 
-/**
- * {@link ProgressValue} の状態やプロパティーをまとめた型名前空間です。
- */
+export { ProgressValue as Value };
+
 export namespace Value {
   /**
-   * {@link ProgressValueState} です。
+   * {@link ProgressValueState}
    */
   export type State = ProgressValueState;
 
   /**
-   * {@link ProgressValueProps} です。
+   * {@link ProgressValueProps}
    */
   export type Props = ProgressValueProps;
 }
-
-/**
- * {@link ProgressValue} です。
- */
-export const Value: IComponent<Value.Props> = ProgressValue;
 
 // Track
 // -----
 
 /**
- * {@link ProgressTrack} の状態です。
+ * {@link ProgressTrack} が持つ状態です。
  */
 export type ProgressTrackState = Progress.Track.State;
 
 /**
- * {@link ProgressTrack} に渡すプロパティーです。
+ * {@link ProgressTrack} に渡す props です。
  */
 export type ProgressTrackProps = React.ComponentProps<typeof Progress.Track>;
 
@@ -268,36 +266,30 @@ export const ProgressTrack: IComponent<ProgressTrackProps> = function SuiProgres
   return <Progress.Track {...otherProps} className={cn(className, "sui_progress_track")} />;
 };
 
-/**
- * {@link ProgressTrack} の状態やプロパティーをまとめた型名前空間です。
- */
+export { ProgressTrack as Track };
+
 export namespace Track {
   /**
-   * {@link ProgressTrackState} です。
+   * {@link ProgressTrackState}
    */
   export type State = ProgressTrackState;
 
   /**
-   * {@link ProgressTrackProps} です。
+   * {@link ProgressTrackProps}
    */
   export type Props = ProgressTrackProps;
 }
-
-/**
- * {@link ProgressTrack} です。
- */
-export const Track: IComponent<Track.Props> = ProgressTrack;
 
 // Indicator
 // ---------
 
 /**
- * {@link ProgressIndicator} の状態です。
+ * {@link ProgressIndicator} が持つ状態です。
  */
 export type ProgressIndicatorState = Progress.Indicator.State;
 
 /**
- * {@link ProgressIndicator} に渡すプロパティーです。
+ * {@link ProgressIndicator} に渡す props です。
  */
 export type ProgressIndicatorProps = React.ComponentProps<typeof Progress.Indicator>;
 
@@ -312,22 +304,16 @@ export const ProgressIndicator: IComponent<ProgressIndicatorProps> = function Su
   return <Progress.Indicator {...otherProps} className={cn(className, "sui_progress_indicator")} />;
 };
 
-/**
- * {@link ProgressIndicator} の状態やプロパティーをまとめた型名前空間です。
- */
+export { ProgressIndicator as Indicator };
+
 export namespace Indicator {
   /**
-   * {@link ProgressIndicatorState} です。
+   * {@link ProgressIndicatorState}
    */
   export type State = ProgressIndicatorState;
 
   /**
-   * {@link ProgressIndicatorProps} です。
+   * {@link ProgressIndicatorProps}
    */
   export type Props = ProgressIndicatorProps;
 }
-
-/**
- * {@link ProgressIndicator} です。
- */
-export const Indicator: IComponent<Indicator.Props> = ProgressIndicator;

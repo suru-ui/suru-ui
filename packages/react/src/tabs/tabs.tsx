@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
 import {
   type TabsRootSize,
@@ -17,32 +18,35 @@ import {
   TabsIndicator,
 } from "./tabs.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link TabsRootRadius} です。
+ * {@link TabsRootRadius}
  */
 export type TabsRadius = TabsRootRadius;
 
 /**
- * {@link TabsRootSize} です。
+ * {@link TabsRootSize}
  */
 export type TabsSize = TabsRootSize;
 
 /**
- * {@link Tabs} の状態です。
+ * {@link Tabs} が持つ状態です。
  */
 export type TabsState = TabsRootState;
 
 /**
- * {@link Tabs} の 1 つのタブとパネルを表す項目です。
+ * {@link Tabs} の1つのタブとパネルを表す項目オブジェクトです。
  */
-export type TabsItem = {
+export type TabsItemObject = {
   /**
-   * タブに対応するパネルに表示するコンテンツです。
+   * タブに対応するパネルに表示する内容です。
    */
   readonly content?: React.ReactNode | undefined;
 
   /**
-   * タブを無効にするかどうかです。
+   * タブを無効にするかどうかを指定します。
    *
    * @default false
    */
@@ -50,151 +54,195 @@ export type TabsItem = {
 
   /**
    * タブに表示するラベルです。
-   * `slotProps.tab.children` を指定した場合は、そちらが優先されます。
    */
   readonly label: React.ReactNode;
 
   /**
    * タブの値です。
    */
-  readonly value: unknown;
+  readonly value: TabsTabProps["value"];
 };
 
 /**
- * {@link Tabs} の各パーツに渡すプロパティーです。
- *
- * 各パーツの指定値は、パーツに渡される既定のプロパティーより優先されます。
- * `tab.children` を指定した場合は、すべてのタブのラベルより優先されます。
+ * {@link TabsItemObject}
+ */
+export type TabsItem = TabsItemObject;
+
+/**
+ * {@link Tabs} の各パーツに渡す props です。
  */
 export type TabsSlotProps = {
   /**
-   * {@link TabsIndicator} に渡すプロパティーです。
+   * {@link TabsIndicator} に渡す props です。
    */
   readonly indicator?: TabsIndicatorProps | undefined;
 
   /**
-   * {@link TabsList} に渡すプロパティーです。
+   * {@link TabsList} に渡す props です。
    */
   readonly list?: TabsListProps | undefined;
 
   /**
-   * {@link TabsTab} に渡すプロパティーです。
-   * `children` を指定すると、すべてのタブのラベルより優先されます。
+   * {@link TabsPanel} に渡す props です。
+   *
+   * すべてのパネルに同じ props が渡されます。`children` と `value` は上書きされません。
    */
-  readonly tab?: TabsTabProps | undefined;
+  readonly panel?: Omit<TabsPanelProps, "children" | "value"> | undefined;
 
   /**
-   * {@link TabsPanel} に渡すプロパティーです。
+   * {@link TabsTab} に渡す props です。
+   *
+   * すべてのタブに同じ props が渡されます。`children` と `disabled` と `value` は上書きされません。
    */
-  readonly tabPanel?: TabsPanelProps | undefined;
+  readonly tab?: Omit<TabsTabProps, "children" | "disabled" | "value"> | undefined;
 };
 
 /**
- * 各パーツに渡すプロパティーをまとめたものです。
- */
-export type TabsPartsProps = {
-  /**
-   * {@link TabsIndicator} に渡すプロパティーです。
-   */
-  readonly indicator: TabsIndicatorProps;
-
-  /**
-   * {@link TabsList} に渡すプロパティーです。
-   *
-   * `items` を指定しないときは null になります。
-   */
-  readonly list: TabsListProps | null;
-
-  /**
-   * 各 {@link TabsPanel} に渡すプロパティーの一覧です。
-   *
-   * `items` の各項目に対応します。
-   */
-  readonly panel: readonly TabsPanelProps[];
-
-  /**
-   * {@link TabsRoot} に渡すプロパティーです。
-   */
-  readonly root: TabsRootProps;
-
-  /**
-   * 各 {@link TabsTab} に渡すプロパティーの一覧です。
-   *
-   * `items` の各項目に対応します。`children` にはタブのラベルが設定されています。
-   */
-  readonly tab: readonly TabsTabProps[];
-};
-
-/**
- * {@link Tabs} コンポーネントのプロパティーです。
+ * {@link Tabs} に渡す props です。
+ *
+ * `value` を指定すると制御コンポーネントになり、`defaultValue` を指定すると非制御コンポーネントになります。
  */
 export type TabsProps = Omit<TabsRootProps, "children"> & {
   /**
    * タブとパネルの項目です。
    */
-  items?: TabsItem[] | undefined;
+  items?: readonly TabsItemObject[] | undefined;
 
   /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-   * `tab.children` を指定すると、すべてのタブのラベルより優先されます。
+   * 各パーツに個別の props を渡すためのオブジェクトです。
+   *
+   * 各パーツの props が優先されます。
    */
   slotProps?: TabsSlotProps | undefined;
 };
 
-/**
- * {@link Tabs} の各パーツに渡すプロパティーを作るフックです。
- */
-export function useTabs(props: TabsProps): TabsPartsProps {
-  const { items, slotProps, ...rootProps } = props;
-  const {
-    list: listProps,
-    tab: tabProps,
-    indicator: indicatorProps,
-    tabPanel: tabPanelProps,
-  } = slotProps ?? {};
-  const { children: tabChildren, ...otherTabProps } = tabProps ?? {};
+// API
+// ---
 
-  return {
-    root: rootProps,
-    list: items === undefined ? null : (listProps ?? {}),
-    tab:
-      items?.map((item) => ({
-        ...otherTabProps,
-        value: item.value,
-        disabled: item.disabled,
-        children: tabChildren ?? item.label,
-      })) ?? [],
-    panel:
-      items?.map((item) => ({
-        ...tabPanelProps,
-        value: item.value,
-        children: item.content,
-      })) ?? [],
-    indicator: indicatorProps ?? {},
-  };
+/**
+ * {@link Tabs} を構成する各パーツの props を作成するための API です。
+ */
+export interface TabsAPI {
+  /**
+   * {@link TabsIndicator} に渡す props を取得します。
+   */
+  getIndicatorProps(): TabsIndicatorProps;
+
+  /**
+   * {@link TabsList} に渡す props を取得します。
+   */
+  getListProps(): TabsListProps | null;
+
+  /**
+   * 各 {@link TabsPanel} に渡す props の一覧を取得します。
+   */
+  getPanelPropsList(): TabsPanelProps[];
+
+  /**
+   * {@link TabsRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<TabsRootProps, "children">;
+
+  /**
+   * 各 {@link TabsTab} に渡す props の一覧を取得します。
+   */
+  getTabPropsList(): TabsTabProps[];
+}
+
+interface IUseTabsAPI {
+  /**
+   * {@link TabsAPI} を作成します。
+   *
+   * @param props {@link Tabs} の props です。
+   * @returns タブの API です
+   */
+  (props: TabsProps): TabsAPI;
 }
 
 /**
- * Tab とパネルを切り替えるコンポーネントです。
+ * {@link TabsAPI} を作成するフックです。
+ */
+export const useTabsAPI: IUseTabsAPI = function useSuiTabsAPI(props) {
+  const {
+    items,
+    slotProps: {
+      tab: tabProps = {},
+      list: listProps = {},
+      panel: panelProps = {},
+      indicator: indicatorProps = {},
+    } = {},
+    ...otherRootProps
+  } = props;
+
+  return {
+    getListProps() {
+      if (items === undefined) {
+        return null;
+      }
+
+      return listProps;
+    },
+    getRootProps() {
+      return otherRootProps;
+    },
+    getTabPropsList() {
+      return (
+        items?.map((item) => ({
+          ...tabProps,
+          value: item.value,
+          disabled: item.disabled,
+          children: toReactNode(item.label),
+        })) ?? []
+      );
+    },
+    getPanelPropsList() {
+      return (
+        items?.map((item) => ({
+          ...panelProps,
+          value: item.value,
+          children: toReactNode(item.content),
+        })) ?? []
+      );
+    },
+    getIndicatorProps() {
+      return indicatorProps;
+    },
+  };
+};
+
+export { type TabsAPI as API, useTabsAPI as useAPI };
+
+/**
+ * {@link useTabsAPI}
+ */
+export const useTabs = useTabsAPI;
+
+// Component
+// ---------
+
+/**
+ * タブとパネルを切り替えるコンポーネントです。
  *
- * `items` から Tab の並びとパネルを組み立てます。
- * レイアウトを細かく制御する場合は、{@link TabsRoot|Root} と各パーツを直接組み立てます。
+ * `items` からタブの並びとパネルを組み立てます。
+ * 矢印キーでタブ間を移動でき、`Enter` または `Space` で選択します。
+ * レイアウトを細かく制御する場合は、`Root` と各パーツを直接組み立てます。
  */
 export const Tabs: IComponent<TabsProps> = function SuiTabs(props) {
-  const partsProps = useTabs(props);
+  const api = useTabsAPI(props);
+  const listProps = api.getListProps();
 
   return (
-    <TabsRoot {...partsProps.root}>
-      {partsProps.list && (
+    <TabsRoot {...api.getRootProps()}>
+      {listProps && (
         <>
-          <TabsList {...partsProps.list}>
-            {partsProps.tab.map((tabProps) => (
-              <TabsTab key={String(tabProps.value)} {...tabProps} />
+          <TabsList {...listProps}>
+            {api.getTabPropsList().map((tabProps, index) => (
+              <TabsTab key={index} {...tabProps} />
             ))}
-            <TabsIndicator {...partsProps.indicator} />
+            <TabsIndicator {...api.getIndicatorProps()} />
           </TabsList>
-          {partsProps.panel.map((panelProps) => (
-            <TabsPanel key={String(panelProps.value)} {...panelProps} />
+          {api.getPanelPropsList().map((panelProps, index) => (
+            <TabsPanel key={index} {...panelProps} />
           ))}
         </>
       )}
@@ -202,37 +250,39 @@ export const Tabs: IComponent<TabsProps> = function SuiTabs(props) {
   );
 };
 
-/**
- * {@link Tabs} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Tabs {
   /**
-   * {@link TabsState} です。
+   * {@link TabsState}
    */
   export type State = TabsState;
 
   /**
-   * {@link TabsProps} です。
+   * {@link TabsProps}
    */
   export type Props = TabsProps;
 
   /**
-   * {@link TabsSlotProps} です。
+   * {@link TabsSlotProps}
    */
   export type SlotProps = TabsSlotProps;
 
   /**
-   * {@link TabsItem} です。
+   * {@link TabsItem}
    */
   export type Item = TabsItem;
 
   /**
-   * {@link TabsRadius} です。
+   * {@link TabsItemObject}
+   */
+  export type ItemObject = TabsItemObject;
+
+  /**
+   * {@link TabsRadius}
    */
   export type Radius = TabsRadius;
 
   /**
-   * {@link TabsSize} です。
+   * {@link TabsSize}
    */
   export type Size = TabsSize;
 }

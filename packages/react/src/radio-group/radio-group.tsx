@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import type { IComponent, IUseContext } from "../types.js";
 import {
   type RadioGroupContext,
@@ -10,129 +8,168 @@ import {
   type RadioGroupRootRadius,
   type RadioGroupRootVariant,
   type RadioGroupRootOrientation,
+  type RadioGroupRootChangeEventReason,
+  type RadioGroupRootChangeEventDetails,
   RadioGroupRoot,
   useRadioGroupContext,
 } from "./radio-group.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link RadioGroupRootColor} です。
+ * {@link RadioGroupRootChangeEventDetails}
+ */
+export type RadioGroupChangeEventDetails = RadioGroupRootChangeEventDetails;
+
+/**
+ * {@link RadioGroupRootChangeEventReason}
+ */
+export type RadioGroupChangeEventReason = RadioGroupRootChangeEventReason;
+
+/**
+ * {@link RadioGroupRootColor}
  */
 export type RadioGroupColor = RadioGroupRootColor;
 
 /**
- * {@link RadioGroupRootOrientation} です。
+ * {@link RadioGroupRootOrientation}
  */
 export type RadioGroupOrientation = RadioGroupRootOrientation;
 
 /**
- * {@link RadioGroupRootRadius} です。
+ * {@link RadioGroupRootRadius}
  */
 export type RadioGroupRadius = RadioGroupRootRadius;
 
 /**
- * {@link RadioGroupRootSize} です。
+ * {@link RadioGroupRootSize}
  */
 export type RadioGroupSize = RadioGroupRootSize;
 
 /**
- * {@link RadioGroupRootVariant} です。
+ * {@link RadioGroupRootVariant}
  */
 export type RadioGroupVariant = RadioGroupRootVariant;
 
 /**
- * {@link RadioGroup} の状態です。
+ * {@link RadioGroup} が持つ状態です。
  */
 export type RadioGroupState = RadioGroupRootState;
 
 /**
- * {@link RadioGroup} コンポーネントのプロパティーです。
+ * {@link RadioGroup} に渡す props です。
  */
 export type RadioGroupProps = RadioGroupRootProps;
 
-/**
- * {@link RadioGroup} の各パーツに渡すプロパティーです。
- */
-export type RadioGroupPartsProps = {
-  /**
-   * {@link RadioGroupRoot} に渡すプロパティーです。
-   */
-  readonly root: RadioGroupRootProps;
-};
+// API
+// ---
 
 /**
- * {@link RadioGroup} の各パーツに渡すプロパティーを作るフックです。
+ * {@link RadioGroup} を構成する各パーツの props を作成するための API です。
  */
-export function useRadioGroup(props: RadioGroupProps): RadioGroupPartsProps {
-  return {
-    root: props,
-  };
+export interface RadioGroupAPI {
+  /**
+   * {@link RadioGroupRoot} に渡す props を取得します。
+   */
+  getRootProps(): RadioGroupRootProps;
 }
 
-interface RadioGroupType extends IComponent<RadioGroupProps> {
+interface IUseRadioGroupAPI {
   /**
-   * {@link useRadioGroupContext} です。
+   * {@link RadioGroupAPI} を作成します。
+   *
+   * @param props {@link RadioGroup} の props です。
+   * @returns ラジオボタングループの API です
+   */
+  (props: RadioGroupProps): RadioGroupAPI;
+}
+
+/**
+ * {@link RadioGroupAPI} を作成するフックです。
+ */
+export const useRadioGroupAPI: IUseRadioGroupAPI = function useSuiRadioGroupAPI(props) {
+  return {
+    getRootProps() {
+      return props;
+    },
+  };
+};
+
+export { type RadioGroupAPI as API, useRadioGroupAPI as useAPI };
+
+// Component
+// ---------
+
+interface IRadioGroup extends IComponent<RadioGroupProps> {
+  /**
+   * {@link useRadioGroupContext}
    */
   readonly useContext: IUseContext<RadioGroupContext>;
 }
 
 /**
  * ラジオボタンをグループ化するコンポーネントです。
- *
- * グループの選択状態を管理し、子要素のラジオボタンにスタイルを強制します。
- * スタイルの指定は子要素の指定より優先され、値を変更するとグループ内へ反映されます。
  */
-export const RadioGroup: RadioGroupType = /*#__PURE__*/ Object.assign(
+export const RadioGroup: IRadioGroup = /*#__PURE__*/ Object.assign(
   function SuiRadioGroup(props: RadioGroupProps) {
-    const partsProps = useRadioGroup(props);
+    const api = useRadioGroupAPI(props);
 
-    return <RadioGroupRoot {...partsProps.root} />;
+    return <RadioGroupRoot {...api.getRootProps()} />;
   },
   {
     useContext: useRadioGroupContext,
   },
 );
 
-/**
- * {@link RadioGroup} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace RadioGroup {
   /**
-   * {@link RadioGroupState} です。
+   * {@link RadioGroupState}
    */
   export type State = RadioGroupState;
 
   /**
-   * {@link RadioGroupProps} です。
+   * {@link RadioGroupProps}
    */
   export type Props = RadioGroupProps;
 
   /**
-   * {@link RadioGroupContext} です。
+   * {@link RadioGroupContext}
    */
   export type Context = RadioGroupContext;
 
   /**
-   * {@link RadioGroupColor} です。
+   * {@link RadioGroupChangeEventDetails}
+   */
+  export type ChangeEventDetails = RadioGroupChangeEventDetails;
+
+  /**
+   * {@link RadioGroupChangeEventReason}
+   */
+  export type ChangeEventReason = RadioGroupChangeEventReason;
+
+  /**
+   * {@link RadioGroupColor}
    */
   export type Color = RadioGroupColor;
 
   /**
-   * {@link RadioGroupOrientation} です。
+   * {@link RadioGroupOrientation}
    */
   export type Orientation = RadioGroupOrientation;
 
   /**
-   * {@link RadioGroupRadius} です。
+   * {@link RadioGroupRadius}
    */
   export type Radius = RadioGroupRadius;
 
   /**
-   * {@link RadioGroupSize} です。
+   * {@link RadioGroupSize}
    */
   export type Size = RadioGroupSize;
 
   /**
-   * {@link RadioGroupVariant} です。
+   * {@link RadioGroupVariant}
    */
   export type Variant = RadioGroupVariant;
 }

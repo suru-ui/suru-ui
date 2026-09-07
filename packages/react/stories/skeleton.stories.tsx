@@ -3,7 +3,7 @@ import * as React from "react";
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Skeleton } from "../src/skeleton/index.js";
 
-const RADII = ["none", "sm", "md", "lg", "full"] as const;
+const RADII: readonly Skeleton.Radius[] = ["none", "sm", "md", "lg", "full"];
 
 const meta = preview.meta({
   title: "Skeleton",
@@ -75,6 +75,26 @@ export const Radius = meta.story({
             <Skeleton {...props} style={{ height: 24 }} radius={radius} />
           </div>
         ))}
+      </div>
+    );
+  },
+});
+
+export const Article = meta.story({
+  name: "記事",
+  ...ctrl({
+    animated: true,
+    radius: "md",
+  }),
+  render(props) {
+    return (
+      <div className="flex w-[300px] flex-col gap-4">
+        <Skeleton {...props} style={{ height: 24, width: "40%" }} />
+        <div className="flex flex-col gap-2">
+          <Skeleton {...props} />
+          <Skeleton {...props} />
+          <Skeleton {...props} style={{ width: "80%" }} />
+        </div>
       </div>
     );
   },

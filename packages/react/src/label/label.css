@@ -2,6 +2,12 @@
 @layer sui.component {
 @scope (.sui_label) to ([data-scope]) {
 
+/* 固定 */
+:scope {
+  display: inline-block;
+  overflow-wrap: break-word;
+}
+
 /* 変数 */
 :scope {
   --sui_label-font_family: ;

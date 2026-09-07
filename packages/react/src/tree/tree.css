@@ -107,9 +107,9 @@
   --sui_tree_item-focusring_width: ;
   --sui_tree_item-focusring_color: ;
   --sui_tree_item-focusring_offset: ;
-  --sui_tree_item-background_color-normal: ;
-  --sui_tree_item-background_color-subtle: ;
-  --sui_tree_item-background_color-strong: ;
+  --sui_tree_item-background_color-idle: ;
+  --sui_tree_item-background_color-hover: ;
+  --sui_tree_item-background_color-active: ;
   --sui_tree_item-border_radius: ;
   --sui_tree_item-indent: ;
   --sui_tree_item-level: ;
@@ -136,7 +136,7 @@
     outline-offset: var(--_sui_tree_item-outline_offset, 0px);
     background-color: var(
       --_sui_tree_item-background_color,
-      var(--sui_tree_item-background_color-normal)
+      var(--sui_tree_item-background_color-idle)
     );
     border-radius: var(--sui_tree_item-border_radius);
   }
@@ -151,9 +151,9 @@
   --sui_tree_item-focusring_width: var(--sui-focusring_width);
   --sui_tree_item-focusring_color: var(--sui-focusring_color);
   --sui_tree_item-focusring_offset: calc(var(--sui-focusring_offset) * -1);
-  --sui_tree_item-background_color-normal: transparent;
-  --sui_tree_item-background_color-subtle: var(--sui-grey-naked-canvas-subtle);
-  --sui_tree_item-background_color-strong: var(--sui-grey-naked-canvas-strong);
+  --sui_tree_item-background_color-idle: transparent;
+  --sui_tree_item-background_color-hover: var(--sui-grey-naked-canvas-subtle);
+  --sui_tree_item-background_color-active: var(--sui-grey-naked-canvas-strong);
 
   &.sui_tree-size_sm {
     --sui_tree_item-gap: --sui-gap(2);
@@ -208,19 +208,19 @@
     @media (any-hover: hover) {
       &:hover {
         --_sui_tree_item-background_color:
-          var(--sui_tree_item-background_color-subtle);
+          var(--sui_tree_item-background_color-hover);
       }
     }
 
     &:active {
       --_sui_tree_item-background_color:
-        var(--sui_tree_item-background_color-strong);
+        var(--sui_tree_item-background_color-active);
     }
   }
 
   .sui_tree_item-selected {
     --_sui_tree_item-background_color:
-      var(--sui_tree_item-background_color-strong);
+      var(--sui_tree_item-background_color-active);
   }
 
   .sui_tree_item-active {

@@ -2,6 +2,7 @@ import { NumberField } from "@base-ui/react/number-field";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import { PlusIcon, MinusIcon } from "../_icons.jsx";
 import useRender, { type RenderProps } from "../_use-render.js";
 import { useActionGroupContext } from "../action-group/action-group.parts.jsx";
 import cn from "../cn.js";
@@ -72,15 +73,15 @@ export const NumberFieldContext: React.Context<NumberFieldContext | null> =
 function useSuiNumberFieldContext(optional?: false): NumberFieldContext;
 function useSuiNumberFieldContext(optional?: boolean): NumberFieldContext | null;
 function useSuiNumberFieldContext(optional?: boolean): NumberFieldContext | null {
-  const context = React.use(NumberFieldContext);
-  if (context === null && !optional) {
+  const ctx = React.use(NumberFieldContext);
+  if (ctx === null && !optional) {
     throw new ContextMissingError({
       contextName: "NumberFieldContext",
       providerName: "NumberFieldRoot",
     });
   }
 
-  return context;
+  return ctx;
 }
 
 /**
@@ -88,45 +89,29 @@ function useSuiNumberFieldContext(optional?: boolean): NumberFieldContext | null
  */
 export const useNumberFieldContext: IUseContext<NumberFieldContext> = useSuiNumberFieldContext;
 
-/**
- * {@link NumberFieldContext} です。
- */
-export type Context = NumberFieldContext;
+export { NumberFieldContext as Context, useNumberFieldContext as useContext };
 
-/**
- * {@link NumberFieldContext} です。
- */
-export const Context: React.Context<Context | null> = NumberFieldContext;
-
-/**
- * {@link Context} の型名前空間です。
- */
 export namespace Context {
   /**
-   * {@link NumberFieldContextColor} です。
+   * {@link NumberFieldContextColor}
    */
   export type Color = NumberFieldContextColor;
 
   /**
-   * {@link NumberFieldContextRadius} です。
+   * {@link NumberFieldContextRadius}
    */
   export type Radius = NumberFieldContextRadius;
 
   /**
-   * {@link NumberFieldContextSize} です。
+   * {@link NumberFieldContextSize}
    */
   export type Size = NumberFieldContextSize;
 
   /**
-   * {@link NumberFieldContextVariant} です。
+   * {@link NumberFieldContextVariant}
    */
   export type Variant = NumberFieldContextVariant;
 }
-
-/**
- * {@link useNumberFieldContext} です。
- */
-export const useContext: IUseContext<Context> = useNumberFieldContext;
 
 // Root
 // ----
@@ -241,13 +226,13 @@ export const NumberFieldRoot: IComponent<NumberFieldRootProps> = function SuiNum
   const variant =
     (actionGroupCtx?.variant === "solid" ? null : actionGroupCtx?.variant) ?? variantProp;
   const outlined = actionGroupCtx?.outlined ?? outlinedProp;
-  const context = React.useMemo<NumberFieldContext>(
+  const ctx = React.useMemo<NumberFieldContext>(
     () => ({ size, color, radius, variant, outlined }),
     [size, color, radius, variant, outlined],
   );
 
   return (
-    <Context value={context}>
+    <NumberFieldContext value={ctx}>
       <NumberField.Root
         {...otherProps}
         className={cn(
@@ -261,60 +246,55 @@ export const NumberFieldRoot: IComponent<NumberFieldRootProps> = function SuiNum
           outlined && "sui_number_field-outlined",
           (state) => state.disabled && "sui_number_field-disabled",
         )}
+        data-scope=""
       />
-    </Context>
+    </NumberFieldContext>
   );
 };
 
-/**
- * {@link NumberFieldRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { NumberFieldRoot as Root };
+
 export namespace Root {
   /**
-   * {@link NumberFieldRootState} です。
+   * {@link NumberFieldRootState}
    */
   export type State = NumberFieldRootState;
 
   /**
-   * {@link NumberFieldRootProps} です。
+   * {@link NumberFieldRootProps}
    */
   export type Props = NumberFieldRootProps;
 
   /**
-   * {@link NumberFieldRootChangeEventDetails} です。
+   * {@link NumberFieldRootChangeEventDetails}
    */
   export type ChangeEventDetails = NumberFieldRootChangeEventDetails;
 
   /**
-   * {@link NumberFieldRootChangeEventReason} です。
+   * {@link NumberFieldRootChangeEventReason}
    */
   export type ChangeEventReason = NumberFieldRootChangeEventReason;
 
   /**
-   * {@link NumberFieldRootColor} です。
+   * {@link NumberFieldRootColor}
    */
   export type Color = NumberFieldRootColor;
 
   /**
-   * {@link NumberFieldRootRadius} です。
+   * {@link NumberFieldRootRadius}
    */
   export type Radius = NumberFieldRootRadius;
 
   /**
-   * {@link NumberFieldRootSize} です。
+   * {@link NumberFieldRootSize}
    */
   export type Size = NumberFieldRootSize;
 
   /**
-   * {@link NumberFieldRootVariant} です。
+   * {@link NumberFieldRootVariant}
    */
   export type Variant = NumberFieldRootVariant;
 }
-
-/**
- * {@link NumberFieldRoot} です。
- */
-export const Root: IComponent<Root.Props> = NumberFieldRoot;
 
 // ScrubArea
 // ---------
@@ -344,25 +324,19 @@ export const NumberFieldScrubArea: IComponent<NumberFieldScrubAreaProps> =
     );
   };
 
-/**
- * {@link NumberFieldScrubArea} の状態やプロパティーをまとめた型名前空間です。
- */
+export { NumberFieldScrubArea as ScrubArea };
+
 export namespace ScrubArea {
   /**
-   * {@link NumberFieldScrubAreaState} です。
+   * {@link NumberFieldScrubAreaState}
    */
   export type State = NumberFieldScrubAreaState;
 
   /**
-   * {@link NumberFieldScrubAreaProps} です。
+   * {@link NumberFieldScrubAreaProps}
    */
   export type Props = NumberFieldScrubAreaProps;
 }
-
-/**
- * {@link NumberFieldScrubArea} です。
- */
-export const ScrubArea: IComponent<ScrubArea.Props> = NumberFieldScrubArea;
 
 // ScrubAreaCursor
 // ---------------
@@ -394,25 +368,19 @@ export const NumberFieldScrubAreaCursor: IComponent<NumberFieldScrubAreaCursorPr
     );
   };
 
-/**
- * {@link NumberFieldScrubAreaCursor} の状態やプロパティーをまとめた型名前空間です。
- */
+export { NumberFieldScrubAreaCursor as ScrubAreaCursor };
+
 export namespace ScrubAreaCursor {
   /**
-   * {@link NumberFieldScrubAreaCursorState} です。
+   * {@link NumberFieldScrubAreaCursorState}
    */
   export type State = NumberFieldScrubAreaCursorState;
 
   /**
-   * {@link NumberFieldScrubAreaCursorProps} です。
+   * {@link NumberFieldScrubAreaCursorProps}
    */
   export type Props = NumberFieldScrubAreaCursorProps;
 }
-
-/**
- * {@link NumberFieldScrubAreaCursor} です。
- */
-export const ScrubAreaCursor: IComponent<ScrubAreaCursor.Props> = NumberFieldScrubAreaCursor;
 
 // Group
 // -----
@@ -436,8 +404,8 @@ export const NumberFieldGroup: IComponent<NumberFieldGroupProps> = function SuiN
   props,
 ) {
   const { onClick, className, ...otherProps } = props;
-  // ユーザーの `onClick` はここでは呼び出さず、`handleClick` 側で 1 回だけ呼び出します。
-  const focusInput: NonNullable<NumberFieldGroupProps["onClick"]> = (evt) => {
+  const handleClick: NonNullable<NumberFieldGroupProps["onClick"]> = (evt) => {
+    onClick?.(evt);
     if (evt.defaultPrevented || !(evt.target instanceof Element)) {
       return;
     }
@@ -454,10 +422,6 @@ export const NumberFieldGroup: IComponent<NumberFieldGroupProps> = function SuiN
       input.focus();
     }
   };
-  const handleClick: NonNullable<NumberFieldGroupProps["onClick"]> = (evt) => {
-    onClick?.(evt);
-    focusInput(evt);
-  };
 
   return (
     <NumberField.Group
@@ -468,25 +432,19 @@ export const NumberFieldGroup: IComponent<NumberFieldGroupProps> = function SuiN
   );
 };
 
-/**
- * {@link NumberFieldGroup} の状態やプロパティーをまとめた型名前空間です。
- */
+export { NumberFieldGroup as Group };
+
 export namespace Group {
   /**
-   * {@link NumberFieldGroupState} です。
+   * {@link NumberFieldGroupState}
    */
   export type State = NumberFieldGroupState;
 
   /**
-   * {@link NumberFieldGroupProps} です。
+   * {@link NumberFieldGroupProps}
    */
   export type Props = NumberFieldGroupProps;
 }
-
-/**
- * {@link NumberFieldGroup} です。
- */
-export const Group: IComponent<Group.Props> = NumberFieldGroup;
 
 // Input
 // -----
@@ -523,25 +481,19 @@ export const NumberFieldInput: IComponent<NumberFieldInputProps> = function SuiN
   );
 };
 
-/**
- * {@link NumberFieldInput} の状態やプロパティーをまとめた型名前空間です。
- */
+export { NumberFieldInput as Input };
+
 export namespace Input {
   /**
-   * {@link NumberFieldInputState} です。
+   * {@link NumberFieldInputState}
    */
   export type State = NumberFieldInputState;
 
   /**
-   * {@link NumberFieldInputProps} です。
+   * {@link NumberFieldInputProps}
    */
   export type Props = NumberFieldInputProps;
 }
-
-/**
- * {@link NumberFieldInput} です。
- */
-export const Input: IComponent<Input.Props> = NumberFieldInput;
 
 // Addon
 // -----
@@ -575,12 +527,12 @@ export type NumberFieldAddonProps = Omit<
 export const NumberFieldAddon: IComponent<NumberFieldAddonProps> = function SuiNumberFieldAddon(
   props,
 ) {
-  const { disableFocusOnClick = false, ...otherProps } = props;
+  const { disableFocusOnClick = false, ...otherSpanProps } = props;
 
   return useRender({
     defaultTagName: "span",
     props: [
-      otherProps,
+      otherSpanProps,
       {
         className: "sui_number_field_addon",
         [DISABLE_FOCUS_ON_CLICK_DATA]: disableFocusOnClick ? "true" : undefined,
@@ -589,25 +541,19 @@ export const NumberFieldAddon: IComponent<NumberFieldAddonProps> = function SuiN
   });
 };
 
-/**
- * {@link NumberFieldAddon} の状態やプロパティーをまとめた型名前空間です。
- */
+export { NumberFieldAddon as Addon };
+
 export namespace Addon {
   /**
-   * {@link NumberFieldAddonState} です。
+   * {@link NumberFieldAddonState}
    */
   export type State = NumberFieldAddonState;
 
   /**
-   * {@link NumberFieldAddonProps} です。
+   * {@link NumberFieldAddonProps}
    */
   export type Props = NumberFieldAddonProps;
 }
-
-/**
- * {@link NumberFieldAddon} です。
- */
-export const Addon: IComponent<Addon.Props> = NumberFieldAddon;
 
 // Decrement
 // ---------
@@ -627,35 +573,31 @@ export type NumberFieldDecrementProps = React.ComponentProps<typeof NumberField.
  */
 export const NumberFieldDecrement: IComponent<NumberFieldDecrementProps> =
   function SuiNumberFieldDecrement(props) {
-    const { className, ...otherProps } = props;
+    const { children = <MinusIcon />, className, ...otherProps } = props;
 
     return (
       <NumberField.Decrement
         {...otherProps}
         className={cn(className, "sui_number_field_stepper", "sui_number_field_decrement")}
-      />
+      >
+        {children}
+      </NumberField.Decrement>
     );
   };
 
-/**
- * {@link NumberFieldDecrement} の状態やプロパティーをまとめた型名前空間です。
- */
+export { NumberFieldDecrement as Decrement };
+
 export namespace Decrement {
   /**
-   * {@link NumberFieldDecrementState} です。
+   * {@link NumberFieldDecrementState}
    */
   export type State = NumberFieldDecrementState;
 
   /**
-   * {@link NumberFieldDecrementProps} です。
+   * {@link NumberFieldDecrementProps}
    */
   export type Props = NumberFieldDecrementProps;
 }
-
-/**
- * {@link NumberFieldDecrement} です。
- */
-export const Decrement: IComponent<Decrement.Props> = NumberFieldDecrement;
 
 // Increment
 // ---------
@@ -675,32 +617,28 @@ export type NumberFieldIncrementProps = React.ComponentProps<typeof NumberField.
  */
 export const NumberFieldIncrement: IComponent<NumberFieldIncrementProps> =
   function SuiNumberFieldIncrement(props) {
-    const { className, ...otherProps } = props;
+    const { children = <PlusIcon />, className, ...otherProps } = props;
 
     return (
       <NumberField.Increment
         {...otherProps}
         className={cn(className, "sui_number_field_stepper", "sui_number_field_increment")}
-      />
+      >
+        {children}
+      </NumberField.Increment>
     );
   };
 
-/**
- * {@link NumberFieldIncrement} の状態やプロパティーをまとめた型名前空間です。
- */
+export { NumberFieldIncrement as Increment };
+
 export namespace Increment {
   /**
-   * {@link NumberFieldIncrementState} です。
+   * {@link NumberFieldIncrementState}
    */
   export type State = NumberFieldIncrementState;
 
   /**
-   * {@link NumberFieldIncrementProps} です。
+   * {@link NumberFieldIncrementProps}
    */
   export type Props = NumberFieldIncrementProps;
 }
-
-/**
- * {@link NumberFieldIncrement} です。
- */
-export const Increment: IComponent<Increment.Props> = NumberFieldIncrement;

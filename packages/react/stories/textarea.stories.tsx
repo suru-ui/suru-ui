@@ -275,3 +275,161 @@ export const Disabled = meta.story({
     );
   },
 });
+
+export const Controlled = meta.story({
+  name: "制御",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+    placeholder: "問い合わせ内容",
+  }),
+  render(props) {
+    const [value, setValue] = React.useState("初期の問い合わせ内容");
+    return (
+      <div className="flex flex-col gap-2">
+        <Textarea {...props} value={value} className="w-64" onValueChange={setValue} />
+        <span>
+          入力値:
+          {value === "" ? "(空)" : value}
+        </span>
+        <div>
+          <button type="button" onClick={() => setValue("")}>
+            クリア
+          </button>
+        </div>
+      </div>
+    );
+  },
+});
+
+export const ReadOnly = meta.story({
+  name: "読み取り専用",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        <Textarea {...props} readOnly className="w-64" defaultValue="読み取り専用の値" />
+        <Textarea {...props} readOnly className="w-64" placeholder="プレースホルダー" />
+      </div>
+    );
+  },
+});
+
+export const Empty = meta.story({
+  name: "空と長い入力値",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex w-64 flex-col gap-3">
+        <Textarea {...props} placeholder="空の入力欄" />
+        <Textarea
+          {...props}
+          defaultValue="とても長い入力値がどのように表示されるかを確認するためのテキストです。複数行にわたる場合の折り返しと高さを確認します。"
+        />
+        <Textarea {...props} maxLength={10} placeholder="最大10文字" defaultValue="1234567890" />
+      </div>
+    );
+  },
+});
+
+export const WithField = meta.story({
+  name: "ラベルと説明",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-4">
+        <Field label="問い合わせ内容" description="できるだけ詳しく入力します。">
+          <Textarea {...props} className="w-64" placeholder="問い合わせ内容" />
+        </Field>
+        <Field label="問い合わせ内容" invalid description="10文字以上で入力します。">
+          <Textarea {...props} className="w-64" defaultValue="短い" />
+        </Field>
+      </div>
+    );
+  },
+});
+
+export const Required = meta.story({
+  name: "必須と検証",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: true,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <form onSubmit={(event) => event.preventDefault()} className="flex flex-col gap-3">
+        <Field label="問い合わせ内容" description="空のまま送信すると枠線が赤くなります。">
+          <Textarea {...props} required className="w-64" minLength={10} placeholder="10文字以上" />
+        </Field>
+        <div>
+          <button type="submit">送信</button>
+        </div>
+      </form>
+    );
+  },
+});
+
+export const ContactForm = meta.story({
+  name: "実践例: 問い合わせ",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+  }),
+  render(props) {
+    const [submitted, setSubmitted] = React.useState<string | null>(null);
+    return (
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          const data = new FormData(event.currentTarget);
+          const message = data.get("message");
+          setSubmitted(typeof message === "string" ? message : "");
+        }}
+        className="flex w-64 flex-col gap-3"
+      >
+        <Field label="問い合わせ内容">
+          <Textarea {...props} name="message" rows={4} placeholder="問い合わせ内容" />
+        </Field>
+        <div>
+          <button type="submit">送信</button>
+        </div>
+        {submitted !== null && (
+          <span>{submitted === "" ? "(空)" : submitted} を受け付けました。</span>
+        )}
+      </form>
+    );
+  },
+});

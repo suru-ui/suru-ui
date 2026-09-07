@@ -2,8 +2,10 @@ import { Tabs as BaseTabs } from "@base-ui/react/tabs";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import toReactNode from "../_to-react-node.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import { isItemObject } from "./_segments.jsx";
 
 import "./segments.css";
 
@@ -16,36 +18,36 @@ import "./segments.css";
 export type SegmentsRootColor = Color;
 
 /**
- * Segments の角丸です。
+ * Segments の角丸の大きさです。
  *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
- * - `"full"`: 完全な丸形
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ * - `"full"`: 円形
  */
 export type SegmentsRootRadius = "none" | Size | "full";
 
 /**
  * Segments の大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type SegmentsRootSize = Size;
 
 /**
- * {@link SegmentsRoot} の状態です。
+ * {@link SegmentsRoot} が持つ状態です。
  */
 export type SegmentsRootState = BaseTabs.Root.State;
 
 /**
- * {@link SegmentsRoot} に渡すプロパティーです。
+ * {@link SegmentsRoot} に渡す props です。
  */
-export type SegmentsRootProps = React.ComponentProps<typeof BaseTabs.Root> & {
+export type SegmentsRootProps = Omit<React.ComponentProps<typeof BaseTabs.Root>, "children"> & {
   /**
-   * Segments の色を指定します。
+   * Segments の配色を指定します。
    *
    * 選択されている項目の背景と文字色に使われます。
    *
@@ -54,14 +56,14 @@ export type SegmentsRootProps = React.ComponentProps<typeof BaseTabs.Root> & {
   color?: SegmentsRootColor | undefined;
 
   /**
-   * Segments の角丸を指定します。
+   * Segments の角丸の大きさを指定します。
    *
-   * 既定値は {@link SegmentsRootProps.size|size} です。
+   * 既定値は {@link SegmentsRootProps.size|size}
    */
   radius?: SegmentsRootRadius | undefined;
 
   /**
-   * Segments のサイズを指定します。
+   * Segments の大きさを指定します。
    *
    * @default "md"
    */
@@ -82,101 +84,173 @@ export const SegmentsRoot: IComponent<SegmentsRootProps> = function SuiSegmentsR
       className={cn(
         className,
         "sui_segments",
-        `sui_segments-color_${color}`,
-        `sui_segments-radius_${radius}`,
         `sui_segments-size_${size}`,
+        `sui_segments-radius_${radius}`,
+        `sui_segments-color_${color}`,
       )}
+      data-scope=""
     />
   );
 };
 
-/**
- * {@link SegmentsRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { SegmentsRoot as Root };
+
 export namespace Root {
   /**
-   * {@link SegmentsRootState} です。
+   * {@link SegmentsRootState}
    */
   export type State = SegmentsRootState;
 
   /**
-   * {@link SegmentsRootProps} です。
+   * {@link SegmentsRootProps}
    */
   export type Props = SegmentsRootProps;
 
   /**
-   * {@link SegmentsRootColor} です。
+   * {@link SegmentsRootColor}
    */
   export type Color = SegmentsRootColor;
 
   /**
-   * {@link SegmentsRootRadius} です。
+   * {@link SegmentsRootRadius}
    */
   export type Radius = SegmentsRootRadius;
 
   /**
-   * {@link SegmentsRootSize} です。
+   * {@link SegmentsRootSize}
    */
   export type Size = SegmentsRootSize;
 }
-
-/**
- * {@link SegmentsRoot} です。
- */
-export const Root: IComponent<Root.Props> = SegmentsRoot;
 
 // List
 // ----
 
 /**
- * {@link SegmentsListState} です。
+ * {@link SegmentsList} の項目を表すオブジェクトです。
+ *
+ * `label` を含み、その他のプロパティーは {@link SegmentsItem} に渡されます。
+ */
+export type SegmentsListItemObject = Omit<SegmentsItemProps, "children"> & {
+  /**
+   * 項目に表示するラベルです。
+   */
+  label: React.ReactNode;
+};
+
+/**
+ * {@link SegmentsList} の各項目をレンダリングする関数のインターフェイスです。
+ *
+ * @template TItem 項目の型です。
+ */
+export interface ISegmentsListItemRenderer<TItem = any> {
+  /**
+   * 項目をレンダリングします。
+   *
+   * @param item 現在の項目です。
+   * @param index 項目のインデックスです。
+   * @param items すべての項目です。
+   * @returns レンダリングする内容です。
+   */
+  (item: TItem, index: number, items: readonly TItem[]): React.ReactNode;
+}
+
+/**
+ * {@link SegmentsList} が持つ状態です。
  */
 export type SegmentsListState = BaseTabs.List.State;
 
 /**
- * {@link SegmentsListProps} です。
+ * {@link SegmentsList} に渡す props です。
+ *
+ * @template TItem 項目の型です。
  */
-export type SegmentsListProps = React.ComponentProps<typeof BaseTabs.List>;
+export type SegmentsListProps<TItem = any> = Omit<
+  React.ComponentProps<typeof BaseTabs.List>,
+  "children"
+> & {
+  /**
+   * リストの内容、または各項目をレンダリングする関数です。
+   *
+   * 関数を指定した場合は {@link SegmentsListProps.items|items} の各項目が引数として渡されます。
+   */
+  children?: React.ReactNode | ISegmentsListItemRenderer<TItem>;
+
+  /**
+   * リストの項目です。
+   *
+   * `children` に関数を指定した場合、この配列の各項目が引数として渡されます。
+   */
+  items?: readonly TItem[] | undefined;
+};
+
+interface ISegmentsList extends IComponent<SegmentsListProps> {
+  /**
+   * @template TItem 項目の型です。
+   */
+  <TItem = never>(props: SegmentsListProps<TItem>): IComponent.Return;
+}
 
 /**
  * 個々のセグメントをまとめるリスト要素です。
  */
-export const SegmentsList: IComponent<SegmentsListProps> = function SuiSegmentsList(props) {
-  const { className, ...otherProps } = props;
+export const SegmentsList: ISegmentsList = function SuiSegmentsList(props: SegmentsListProps) {
+  const { items = [], children = defaultListItemRenderer, className, ...otherProps } = props;
 
-  return <BaseTabs.List {...otherProps} className={cn(className, "sui_segments_list")} />;
+  return (
+    <BaseTabs.List {...otherProps} className={cn(className, "sui_segments_list")}>
+      {typeof children === "function" ? items.map(children) : children}
+    </BaseTabs.List>
+  );
 };
 
-/**
- * {@link SegmentsList} の状態やプロパティーをまとめた型名前空間です。
- */
+const defaultListItemRenderer: ISegmentsListItemRenderer = (item, index) => {
+  if (!isItemObject(item)) {
+    return toReactNode(item);
+  }
+
+  const { label, value, ...otherItemProps } = item;
+
+  return (
+    <SegmentsItem {...otherItemProps} key={index} value={value}>
+      {toReactNode(label)}
+    </SegmentsItem>
+  );
+};
+
+export { SegmentsList as List };
+
 export namespace List {
   /**
-   * {@link SegmentsListState} です。
+   * {@link SegmentsListState}
    */
   export type State = SegmentsListState;
 
   /**
-   * {@link SegmentsListProps} です。
+   * {@link SegmentsListProps}
    */
-  export type Props = SegmentsListProps;
-}
+  export type Props<TItem = any> = SegmentsListProps<TItem>;
 
-/**
- * {@link SegmentsList} です。
- */
-export const List: IComponent<List.Props> = SegmentsList;
+  /**
+   * {@link SegmentsListItemObject}
+   */
+  export type ItemObject = SegmentsListItemObject;
+
+  /**
+   * {@link ISegmentsListItemRenderer}
+   */
+  export interface IItemRenderer<TItem = any> extends ISegmentsListItemRenderer<TItem> {}
+}
 
 // Item
 // ----
 
 /**
- * {@link SegmentsItemState} です。
+ * {@link SegmentsItem} が持つ状態です。
  */
 export type SegmentsItemState = BaseTabs.Tab.State;
 
 /**
- * {@link SegmentsItemProps} です。
+ * {@link SegmentsItem} に渡す props です。
  */
 export type SegmentsItemProps = React.ComponentProps<typeof BaseTabs.Tab>;
 
@@ -186,46 +260,50 @@ export type SegmentsItemProps = React.ComponentProps<typeof BaseTabs.Tab>;
 export const SegmentsItem: IComponent<SegmentsItemProps> = function SuiSegmentsItem(props) {
   const { className, ...otherProps } = props;
 
-  return <BaseTabs.Tab {...otherProps} className={cn(className, "sui_segments_item")} />;
+  return (
+    <BaseTabs.Tab
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_segments_item",
+        (state) => state.active && "sui_segments_item-active",
+        (state) => state.disabled && "sui_segments_item-disabled",
+      )}
+    />
+  );
 };
 
-/**
- * {@link SegmentsItem} の状態やプロパティーをまとめた型名前空間です。
- */
+export { SegmentsItem as Item };
+
 export namespace Item {
   /**
-   * {@link SegmentsItemState} です。
+   * {@link SegmentsItemState}
    */
   export type State = SegmentsItemState;
 
   /**
-   * {@link SegmentsItemProps} です。
+   * {@link SegmentsItemProps}
    */
   export type Props = SegmentsItemProps;
 }
-
-/**
- * {@link SegmentsItem} です。
- */
-export const Item: IComponent<Item.Props> = SegmentsItem;
 
 // Indicator
 // ---------
 
 /**
- * {@link SegmentsIndicatorState} です。
+ * {@link SegmentsIndicator} が持つ状態です。
  */
 export type SegmentsIndicatorState = BaseTabs.Indicator.State;
 
 /**
- * {@link SegmentsIndicatorProps} に渡すプロパティーです。
+ * {@link SegmentsIndicator} に渡す props です。
  */
 export type SegmentsIndicatorProps = React.ComponentProps<typeof BaseTabs.Indicator>;
 
 /**
- * 選択されているセグメントの位置に追従するインジケーター要素です。
+ * 選択されているセグメントの位置に追従するインジケーターです。
  *
- * `SegmentsParts.List` の子要素として配置します。
+ * {@link SegmentsList} の子要素として配置します。
  */
 export const SegmentsIndicator: IComponent<SegmentsIndicatorProps> = function SuiSegmentsIndicator(
   props,
@@ -235,22 +313,16 @@ export const SegmentsIndicator: IComponent<SegmentsIndicatorProps> = function Su
   return <BaseTabs.Indicator {...otherProps} className={cn(className, "sui_segments_indicator")} />;
 };
 
-/**
- * {@link SegmentsIndicator} の状態やプロパティーをまとめた型名前空間です。
- */
+export { SegmentsIndicator as Indicator };
+
 export namespace Indicator {
   /**
-   * {@link SegmentsIndicatorState} です。
+   * {@link SegmentsIndicatorState}
    */
   export type State = SegmentsIndicatorState;
 
   /**
-   * {@link SegmentsIndicatorProps} です。
+   * {@link SegmentsIndicatorProps}
    */
   export type Props = SegmentsIndicatorProps;
 }
-
-/**
- * {@link SegmentsIndicator} です。
- */
-export const Indicator: IComponent<Indicator.Props> = SegmentsIndicator;

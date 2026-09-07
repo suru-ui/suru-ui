@@ -117,7 +117,6 @@
     display: inline-flex;
     align-items: stretch;
     overflow: hidden;
-    line-height: 1lh;
     vertical-align: middle;
     touch-action: manipulation;
     outline-style: solid;
@@ -137,7 +136,6 @@
   --sui_number_field_group-gap: ;
   --sui_number_field_group-min_height: ;
   --sui_number_field_group-padding_inline: ;
-  --sui_number_field_group-font_family: ;
   --sui_number_field_group-focusring_width: ;
   --sui_number_field_group-outline_color: ;
   --sui_number_field_group-outline_offset: ;
@@ -175,7 +173,6 @@
 
 /* 代入 */
 :scope {
-  --sui_number_field_group-font_family: var(--sui-font-sans);
   --sui_number_field_group-focusring_width: var(--sui-focusring_width);
   --sui_number_field_group-outline_color: var(--sui-focusring_color);
   --sui_number_field_group-outline_offset: var(--sui-focusring_offset);
@@ -346,9 +343,7 @@
     flex: 1 1 auto;
     min-width: 0px;
     font-variant-numeric: tabular-nums;
-    line-height: 1lh;
     touch-action: manipulation;
-    caret-color: currentColor;
   }
 }
 
@@ -357,9 +352,11 @@
   --sui_number_field_input-font_family: ;
   --sui_number_field_input-font_size: ;
   --sui_number_field_input-font_weight: ;
+  --sui_number_field_input-line_height: ;
   --sui_number_field_input-color: ;
   --sui_number_field_input-placeholder-color: ;
   --sui_number_field_input-letter_spacing: ;
+  --sui_number_field_input-caret_color: ;
 }
 
 /* 可変 */
@@ -368,8 +365,10 @@
     font-family: var(--sui_number_field_input-font_family);
     font-size: var(--sui_number_field_input-font_size);
     font-weight: var(--sui_number_field_input-font_weight);
+    line-height: var(--sui_number_field_input-line_height);
     color: var(--sui_number_field_input-color);
     letter-spacing: var(--sui_number_field_input-letter_spacing);
+    caret-color: var(--sui_number_field_input-caret_color);
 
     &::placeholder {
       color: var(--sui_number_field_input-placeholder-color);
@@ -385,27 +384,32 @@
   &.sui_number_field-size_sm {
     --sui_number_field_input-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_number_field_input-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_number_field_input-line_height: var(--sui-text-oln-sm-n-line_height);
     --sui_number_field_input-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
   }
 
   &.sui_number_field-size_md {
     --sui_number_field_input-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_number_field_input-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_number_field_input-line_height: var(--sui-text-oln-md-n-line_height);
     --sui_number_field_input-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   }
 
   &.sui_number_field-size_lg {
     --sui_number_field_input-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_number_field_input-font_weight: var(--sui-text-oln-lg-n-font_weight);
+    --sui_number_field_input-line_height: var(--sui-text-oln-lg-n-line_height);
     --sui_number_field_input-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
   }
 
   &.sui_number_field-variant_naked {
     --sui_number_field_input-color: var(--sui-grey-naked-canvas_text-normal);
+    --sui_number_field_input-caret_color: var(--sui_number_field_input-color);
   }
 
   &.sui_number_field-variant_liquid {
     --sui_number_field_input-color: var(--sui-grey-liquid-canvas_text-normal);
+    --sui_number_field_input-caret_color: var(--sui_number_field_input-color);
   }
 }
 
@@ -423,7 +427,6 @@
     flex: 0 0 auto;
     align-items: center;
     justify-content: center;
-    line-height: 1lh;
     white-space: nowrap;
 
     &:empty {
@@ -437,9 +440,11 @@
   --sui_number_field_addon-font_family: ;
   --sui_number_field_addon-font_size: ;
   --sui_number_field_addon-font_weight: ;
+  --sui_number_field_addon-line_height: ;
   --sui_number_field_addon-color: ;
   --sui_number_field_addon-letter_spacing: ;
-  --sui_number_field_addon_svg-size: ;
+  --sui_number_field_addon__svg-size: ;
+  --sui_number_field_addon__svg-color: ;
 }
 
 /* 可変 */
@@ -448,13 +453,14 @@
     font-family: var(--sui_number_field_addon-font_family);
     font-size: var(--sui_number_field_addon-font_size);
     font-weight: var(--sui_number_field_addon-font_weight);
+    line-height: var(--sui_number_field_addon-line_height);
     color: var(--sui_number_field_addon-color);
     letter-spacing: var(--sui_number_field_addon-letter_spacing);
 
     svg:not(.sui-ignore) {
-      width: var(--sui_number_field_addon_svg-size);
-      height: var(--sui_number_field_addon_svg-size);
-      color: var(--sui_number_field_addon-color);
+      width: var(--sui_number_field_addon__svg-size);
+      height: var(--sui_number_field_addon__svg-size);
+      color: var(--sui_number_field_addon__svg-color);
     }
   }
 }
@@ -463,35 +469,42 @@
 :scope {
   --sui_number_field_addon-font_family: var(--sui-font-sans);
   --sui_number_field_addon-color: var(--sui-canvas_text-2);
+  --sui_number_field_addon__svg-color: --sui-icon_color(
+                                         var(--sui_number_field_addon-color),
+                                         var(--sui_number_field_group-background_color)
+                                       );
 
   &.sui_number_field-size_sm {
     --sui_number_field_addon-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_number_field_addon-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_number_field_addon-line_height: var(--sui-text-oln-sm-n-line_height);
     --sui_number_field_addon-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
-    --sui_number_field_addon_svg-size: calc(
-                                         var(--sui_number_field_addon-font_size)
-                                         * var(--sui-text-oln-sm-n-line_height)
-                                       );
+    --sui_number_field_addon__svg-size: calc(
+                                           var(--sui_number_field_addon-font_size)
+                                           * var(--sui_number_field_addon-line_height)
+                                         );
   }
 
   &.sui_number_field-size_md {
     --sui_number_field_addon-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_number_field_addon-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_number_field_addon-line_height: var(--sui-text-oln-md-n-line_height);
     --sui_number_field_addon-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
-    --sui_number_field_addon_svg-size: calc(
-                                         var(--sui_number_field_addon-font_size)
-                                         * var(--sui-text-oln-md-n-line_height)
-                                       );
+    --sui_number_field_addon__svg-size: calc(
+                                           var(--sui_number_field_addon-font_size)
+                                           * var(--sui_number_field_addon-line_height)
+                                         );
   }
 
   &.sui_number_field-size_lg {
     --sui_number_field_addon-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_number_field_addon-font_weight: var(--sui-text-oln-lg-n-font_weight);
+    --sui_number_field_addon-line_height: var(--sui-text-oln-lg-n-line_height);
     --sui_number_field_addon-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
-    --sui_number_field_addon_svg-size: calc(
-                                         var(--sui_number_field_addon-font_size)
-                                         * var(--sui-text-oln-lg-n-line_height)
-                                       );
+    --sui_number_field_addon__svg-size: calc(
+                                           var(--sui_number_field_addon-font_size)
+                                           * var(--sui_number_field_addon-line_height)
+                                         );
   }
 }
 
@@ -499,13 +512,12 @@
 } /* @layer */
 
 /* Decrement */
-/* Increment */
 @layer sui.component {
 @scope (.sui_number_field) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_number_field_stepper {
+  .sui_number_field_decrement {
     position: relative;
     z-index: 0;
     display: inline-flex;
@@ -545,12 +557,15 @@
   --sui_number_field_stepper-background_color-hover: ;
   --sui_number_field_stepper-background_color-active: ;
   --sui_number_field_stepper-border_radius: ;
-  --sui_number_field_stepper_svg-size: ;
+  --sui_number_field_stepper__svg-size: ;
+  --sui_number_field_stepper__svg-color-normal: ;
+  --sui_number_field_stepper__svg-color-hover: ;
+  --sui_number_field_stepper__svg-color-active: ;
 }
 
 /* 可変 */
 :scope {
-  .sui_number_field_stepper {
+  .sui_number_field_decrement {
     width: var(--sui_number_field_stepper-size);
     height: var(--sui_number_field_stepper-size);
     font-family: var(--sui_number_field_stepper-font_family);
@@ -567,10 +582,10 @@
     border-radius: var(--sui_number_field_stepper-border_radius);
 
     svg:not(.sui-ignore) {
-      width: var(--sui_number_field_stepper_svg-size);
-      height: var(--sui_number_field_stepper_svg-size);
-      color: var(--_sui_number_field_stepper-color,
-              var(--sui_number_field_stepper-color-normal)
+      width: var(--sui_number_field_stepper__svg-size);
+      height: var(--sui_number_field_stepper__svg-size);
+      color: var(--_sui_number_field_stepper__svg-color,
+              var(--sui_number_field_stepper__svg-color-normal)
             );
     }
   }
@@ -586,10 +601,10 @@
     --sui_number_field_stepper-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_number_field_stepper-line_height: var(--sui-text-oln-sm-n-line_height);
     --sui_number_field_stepper-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
-    --sui_number_field_stepper_svg-size: calc(
-                                           var(--sui_number_field_stepper-font_size)
-                                           * var(--sui_number_field_stepper-line_height)
-                                         );
+    --sui_number_field_stepper__svg-size: calc(
+                                             var(--sui_number_field_stepper-font_size)
+                                             * var(--sui_number_field_stepper-line_height)
+                                           );
   }
 
   &.sui_number_field-size_md {
@@ -598,10 +613,10 @@
     --sui_number_field_stepper-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_number_field_stepper-line_height: var(--sui-text-oln-md-n-line_height);
     --sui_number_field_stepper-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
-    --sui_number_field_stepper_svg-size: calc(
-                                           var(--sui_number_field_stepper-font_size)
-                                           * var(--sui_number_field_stepper-line_height)
-                                         );
+    --sui_number_field_stepper__svg-size: calc(
+                                             var(--sui_number_field_stepper-font_size)
+                                             * var(--sui_number_field_stepper-line_height)
+                                           );
   }
 
   &.sui_number_field-size_lg {
@@ -610,10 +625,10 @@
     --sui_number_field_stepper-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_number_field_stepper-line_height: var(--sui-text-oln-lg-n-line_height);
     --sui_number_field_stepper-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
-    --sui_number_field_stepper_svg-size: calc(
-                                           var(--sui_number_field_stepper-font_size)
-                                           * var(--sui_number_field_stepper-line_height)
-                                         );
+    --sui_number_field_stepper__svg-size: calc(
+                                             var(--sui_number_field_stepper-font_size)
+                                             * var(--sui_number_field_stepper-line_height)
+                                           );
   }
 
   &.sui_number_field-radius_none {
@@ -643,6 +658,18 @@
     --sui_number_field_stepper-background_color-normal: transparent;
     --sui_number_field_stepper-background_color-hover: var(--sui-grey-naked-canvas-subtle);
     --sui_number_field_stepper-background_color-active: var(--sui-grey-naked-canvas-strong);
+    --sui_number_field_stepper__svg-color-normal: --sui-icon_color(
+                                                   var(--sui_number_field_stepper-color-normal),
+                                                   var(--sui_number_field_stepper-background_color-normal)
+                                                 );
+    --sui_number_field_stepper__svg-color-hover: --sui-icon_color(
+                                                  var(--sui_number_field_stepper-color-hover),
+                                                  var(--sui_number_field_stepper-background_color-hover)
+                                                );
+    --sui_number_field_stepper__svg-color-active: --sui-icon_color(
+                                                   var(--sui_number_field_stepper-color-active),
+                                                   var(--sui_number_field_stepper-background_color-active)
+                                                 );
   }
 
   &.sui_number_field-variant_liquid {
@@ -652,17 +679,30 @@
     --sui_number_field_stepper-background_color-normal: transparent;
     --sui_number_field_stepper-background_color-hover: var(--sui-grey-liquid-canvas-subtle);
     --sui_number_field_stepper-background_color-active: var(--sui-grey-liquid-canvas-strong);
+    --sui_number_field_stepper__svg-color-normal: --sui-icon_color(
+                                                   var(--sui_number_field_stepper-color-normal),
+                                                   var(--sui_number_field_stepper-background_color-normal)
+                                                 );
+    --sui_number_field_stepper__svg-color-hover: --sui-icon_color(
+                                                  var(--sui_number_field_stepper-color-hover),
+                                                  var(--sui_number_field_stepper-background_color-hover)
+                                                );
+    --sui_number_field_stepper__svg-color-active: --sui-icon_color(
+                                                   var(--sui_number_field_stepper-color-active),
+                                                   var(--sui_number_field_stepper-background_color-active)
+                                                 );
   }
 }
 
 /* 変異 */
 :scope {
-  .sui_number_field_stepper:not([data-disabled]) {
+  .sui_number_field_decrement:not([data-disabled]) {
     @media (any-hover: hover) {
       &:hover {
         --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-hover);
         --_sui_number_field_stepper-background_color:
           var(--sui_number_field_stepper-background_color-hover);
+        --_sui_number_field_stepper__svg-color: var(--sui_number_field_stepper__svg-color-hover);
       }
     }
 
@@ -670,6 +710,90 @@
       --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-active);
       --_sui_number_field_stepper-background_color:
         var(--sui_number_field_stepper-background_color-active);
+      --_sui_number_field_stepper__svg-color: var(--sui_number_field_stepper__svg-color-active);
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Increment */
+@layer sui.component {
+@scope (.sui_number_field) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_number_field_increment {
+    position: relative;
+    z-index: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    text-decoration: none;
+    touch-action: manipulation;
+    cursor: default;
+    user-select: none;
+
+    @media (any-hover: hover) {
+      &:hover {
+        z-index: 1;
+      }
+    }
+
+    &:focus-visible {
+      z-index: 1;
+    }
+  }
+}
+
+/* 可変 */
+:scope {
+  .sui_number_field_increment {
+    width: var(--sui_number_field_stepper-size);
+    height: var(--sui_number_field_stepper-size);
+    font-family: var(--sui_number_field_stepper-font_family);
+    font-size: var(--sui_number_field_stepper-font_size);
+    font-weight: var(--sui_number_field_stepper-font_weight);
+    line-height: var(--sui_number_field_stepper-line_height);
+    color: var(--_sui_number_field_stepper-color,
+            var(--sui_number_field_stepper-color-normal)
+          );
+    letter-spacing: var(--sui_number_field_stepper-letter_spacing);
+    background-color: var(--_sui_number_field_stepper-background_color,
+                        var(--sui_number_field_stepper-background_color-normal)
+                      );
+    border-radius: var(--sui_number_field_stepper-border_radius);
+
+    svg:not(.sui-ignore) {
+      width: var(--sui_number_field_stepper__svg-size);
+      height: var(--sui_number_field_stepper__svg-size);
+      color: var(--_sui_number_field_stepper__svg-color,
+              var(--sui_number_field_stepper__svg-color-normal)
+            );
+    }
+  }
+}
+
+/* 変異 */
+:scope {
+  .sui_number_field_increment:not([data-disabled]) {
+    @media (any-hover: hover) {
+      &:hover {
+        --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-hover);
+        --_sui_number_field_stepper-background_color:
+          var(--sui_number_field_stepper-background_color-hover);
+        --_sui_number_field_stepper__svg-color: var(--sui_number_field_stepper__svg-color-hover);
+      }
+    }
+
+    &:active {
+      --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-active);
+      --_sui_number_field_stepper-background_color:
+        var(--sui_number_field_stepper-background_color-active);
+      --_sui_number_field_stepper__svg-color: var(--sui_number_field_stepper__svg-color-active);
     }
   }
 }
@@ -769,18 +893,33 @@
 }
 
 /* Decrement */
-/* Increment */
 :scope {
-  &.sui_number_field-disabled .sui_number_field_stepper {
+  &.sui_number_field-disabled .sui_number_field_decrement {
     cursor: not-allowed;
     background-color: transparent;
   }
 
-  &.sui_number_field-disabled.sui_number_field-variant_naked .sui_number_field_stepper {
+  &.sui_number_field-disabled.sui_number_field-variant_naked .sui_number_field_decrement {
     color: var(--sui-disabled-naked-canvas_text);
   }
 
-  &.sui_number_field-disabled.sui_number_field-variant_liquid .sui_number_field_stepper {
+  &.sui_number_field-disabled.sui_number_field-variant_liquid .sui_number_field_decrement {
+    color: var(--sui-disabled-liquid-canvas_text);
+  }
+}
+
+/* Increment */
+:scope {
+  &.sui_number_field-disabled .sui_number_field_increment {
+    cursor: not-allowed;
+    background-color: transparent;
+  }
+
+  &.sui_number_field-disabled.sui_number_field-variant_naked .sui_number_field_increment {
+    color: var(--sui-disabled-naked-canvas_text);
+  }
+
+  &.sui_number_field-disabled.sui_number_field-variant_liquid .sui_number_field_increment {
     color: var(--sui-disabled-liquid-canvas_text);
   }
 }

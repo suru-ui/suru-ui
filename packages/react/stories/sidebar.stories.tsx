@@ -155,12 +155,22 @@ export const Controlled = meta.story({
   },
 });
 
-export const Parts = meta.story({
-  name: "パーツ構成",
+export const Closed = meta.story({
+  name: "閉じた状態",
+  ...ctrl({
+    defaultOpen: false,
+  }),
+  render(props) {
+    return <DemoSidebar defaultOpen={props.defaultOpen} />;
+  },
+});
+
+export const CustomTrigger = meta.story({
+  name: "独自トリガー",
   ...ctrl({}),
   render() {
     return (
-      <Sidebar.Provider className="h-96 overflow-hidden rounded-lg border">
+      <Sidebar className="h-96 overflow-hidden rounded-lg border" defaultOpen>
         <Sidebar.Root>
           <Sidebar.Header>
             <p className="font-bold">Suru UI</p>
@@ -170,22 +180,20 @@ export const Parts = meta.story({
               <Sidebar.GroupLabel>プラットフォーム</Sidebar.GroupLabel>
               <Sidebar.GroupContent>
                 <a href="#dashboard">ダッシュボード</a>
-                <a href="#projects">プロジェクト</a>
               </Sidebar.GroupContent>
             </Sidebar.Group>
           </Sidebar.Content>
           <Sidebar.Footer>
             <p>footer@example.com</p>
           </Sidebar.Footer>
-          <Sidebar.Rail />
         </Sidebar.Root>
         <Sidebar.Inset>
           <div className="flex items-center gap-2 p-4">
-            <Sidebar.Trigger />
+            <Sidebar.Trigger>開閉</Sidebar.Trigger>
             <p>メインコンテンツ</p>
           </div>
         </Sidebar.Inset>
-      </Sidebar.Provider>
+      </Sidebar>
     );
   },
 });

@@ -71,9 +71,9 @@
 
 /* 変異 */
 :scope {
-  [data-has-overflow-x] .sui_scroll_area_scrollbar,
-  [data-has-overflow-y] .sui_scroll_area_scrollbar,
-  [data-scrolling] .sui_scroll_area_scrollbar {
+  &[data-has-overflow-y] .sui_scroll_area_scrollbar[data-orientation="vertical"],
+  &[data-has-overflow-x] .sui_scroll_area_scrollbar[data-orientation="horizontal"],
+  &[data-scrolling] .sui_scroll_area_scrollbar {
     --_sui_scroll_area_scrollbar-opacity: 1;
   }
 
@@ -114,15 +114,15 @@
 :scope {
   --sui_scroll_area_thumb-width: ;
   --sui_scroll_area_thumb-height: ;
-  --sui_scroll_area_thumb-background_color-normal: ;
-  --sui_scroll_area_thumb-background_color-subtle: ;
+  --sui_scroll_area_thumb-background_color-idle: ;
+  --sui_scroll_area_thumb-background_color-hover: ;
 }
 
 /* 可変 */
 :scope {
   .sui_scroll_area_thumb {
     background-color: var(--_sui_scroll_area_thumb-background_color,
-                        var(--sui_scroll_area_thumb-background_color-normal)
+                        var(--sui_scroll_area_thumb-background_color-idle)
                       );
   }
 
@@ -139,9 +139,9 @@
 :scope {
   --sui_scroll_area_thumb-width: var(--scroll-area-thumb-width);
   --sui_scroll_area_thumb-height: var(--scroll-area-thumb-height);
-  --sui_scroll_area_thumb-background_color-normal:
+  --sui_scroll_area_thumb-background_color-idle:
     color-mix(in srgb, var(--sui-canvas_text-1) 38%, transparent);
-  --sui_scroll_area_thumb-background_color-subtle:
+  --sui_scroll_area_thumb-background_color-hover:
     color-mix(in srgb, var(--sui-canvas_text-1) 58%, transparent);
 }
 
@@ -151,7 +151,7 @@
     @media (any-hover: hover) {
       &:hover {
         --_sui_scroll_area_thumb-background_color:
-          var(--sui_scroll_area_thumb-background_color-subtle);
+          var(--sui_scroll_area_thumb-background_color-hover);
       }
     }
   }

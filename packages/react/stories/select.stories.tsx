@@ -120,6 +120,111 @@ export const Radius = meta.story({
   },
 });
 
+export const Controlled = meta.story({
+  name: "制御された選択",
+  ...ctrl({
+    items: fruits,
+    variant: "naked",
+    size: "md",
+    radius: undefined,
+    outlined: undefined,
+    disabled: false,
+    placeholder: "果物を選択",
+  }),
+  render(props) {
+    const [value, setValue] = React.useState<string | null>(fruits[0] ?? null);
+
+    return (
+      <div className="flex flex-col gap-3">
+        <Select
+          {...props}
+          items={fruits}
+          label="果物"
+          value={value}
+          className="w-64"
+          onValueChange={(next) => {
+            if (typeof next === "string" || next === null) {
+              setValue(next);
+            }
+          }}
+        />
+        <div>選択値: {value ?? "未選択"}</div>
+      </div>
+    );
+  },
+});
+
+export const Uncontrolled = meta.story({
+  name: "制御されていない選択",
+  ...ctrl({
+    items: fruits,
+    variant: "naked",
+    size: "md",
+    radius: undefined,
+    outlined: undefined,
+    disabled: false,
+    placeholder: "果物を選択",
+  }),
+  render(props) {
+    return (
+      <Select
+        {...props}
+        items={fruits}
+        label="果物"
+        className="w-64"
+        defaultValue={fruits[1]}
+        onValueChange={(value) => console.log(value)}
+      />
+    );
+  },
+});
+
+export const ObjectItems = meta.story({
+  name: "オブジェクトの項目",
+  ...ctrl({
+    variant: "naked",
+    size: "md",
+    radius: undefined,
+    outlined: undefined,
+    disabled: false,
+    placeholder: "言語を選択",
+  }),
+  render(props) {
+    return (
+      <Select
+        {...props}
+        items={[
+          { label: "TypeScript", value: "ts" },
+          { label: "Rust", value: "rs" },
+          { label: "Go", value: "go" },
+        ]}
+        label="言語"
+        className="w-64"
+      />
+    );
+  },
+});
+
+export const CustomRenderer = meta.story({
+  name: "描画の上書き",
+  ...ctrl({
+    items: fruits,
+    variant: "naked",
+    size: "md",
+    radius: undefined,
+    outlined: undefined,
+    disabled: false,
+    placeholder: "果物を選択",
+  }),
+  render(props) {
+    return (
+      <Select {...props} items={fruits} label="果物" className="w-64">
+        {(item) => `🍎 ${String(item)}`}
+      </Select>
+    );
+  },
+});
+
 export const Multiple = meta.story({
   name: "複数選択",
   ...ctrl({

@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import type { IComponent } from "../types.js";
 import {
   type RadioRootSize,
@@ -13,133 +11,155 @@ import {
   RadioIndicator,
 } from "./radio.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link RadioRootColor} です。
+ * {@link RadioRootColor}
  */
 export type RadioColor = RadioRootColor;
 
 /**
- * {@link RadioRootRadius} です。
+ * {@link RadioRootRadius}
  */
 export type RadioRadius = RadioRootRadius;
 
 /**
- * {@link RadioRootSize} です。
+ * {@link RadioRootSize}
  */
 export type RadioSize = RadioRootSize;
 
 /**
- * {@link RadioRootVariant} です。
+ * {@link RadioRootVariant}
  */
 export type RadioVariant = RadioRootVariant;
 
 /**
- * {@link Radio} の状態です。
+ * {@link Radio} の各パーツに渡す props です。
+ */
+export type RadioSlotProps = {
+  /**
+   * {@link RadioIndicator} に渡す props です。
+   */
+  readonly indicator?: Omit<RadioIndicatorProps, "children"> | undefined;
+};
+
+/**
+ * {@link Radio} が持つ状態です。
  */
 export type RadioState = RadioRootState;
 
 /**
- * {@link Radio} の各パーツに渡すプロパティーです。
- */
-export type RadioSlotProps = {
-  /**
-   * {@link RadioIndicator} に渡すプロパティーです。
-   */
-  readonly indicator?: RadioIndicatorProps | undefined;
-};
-
-/**
- * {@link Radio} コンポーネントのプロパティーです。
+ * {@link Radio} に渡す props です。
  */
 export type RadioProps = Omit<RadioRootProps, "children"> &
   Pick<RadioIndicatorProps, "children"> & {
     /**
-     * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+     * 各パーツに個別の props を渡すためのオブジェクトです。
      *
-     * 各パーツのプロパティーが優先されます。
+     * 各パーツの props が優先されます。
      */
     slotProps?: RadioSlotProps | undefined;
   };
 
-/**
- * {@link Radio} の各パーツに渡すプロパティーです。
- */
-export type RadioPartsProps = {
-  /**
-   * {@link RadioIndicator} に渡すプロパティーです。
-   */
-  readonly indicator: RadioIndicatorProps;
-
-  /**
-   * {@link RadioRoot} に渡すプロパティーです。
-   */
-  readonly root: Omit<RadioRootProps, "children">;
-};
+// API
+// ---
 
 /**
- * {@link Radio} の各パーツに渡すプロパティーを作るフックです。
+ * {@link Radio} を構成する各パーツの props を作成するための API です。
  */
-export function useRadio(props: RadioProps): RadioPartsProps {
-  const { children, slotProps: { indicator: indicatorProps } = {}, ...rootProps } = props;
+export interface RadioAPI {
+  /**
+   * {@link RadioIndicator} に渡す props を取得します。
+   */
+  getIndicatorProps(): RadioIndicatorProps;
+
+  /**
+   * {@link RadioRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<RadioRootProps, "children">;
+}
+
+interface IUseRadioAPI {
+  /**
+   * {@link RadioAPI} を作成します。
+   *
+   * @param props {@link Radio} の props です。
+   * @returns ラジオボタンの API です
+   */
+  (props: RadioProps): RadioAPI;
+}
+
+/**
+ * {@link RadioAPI} を作成するフックです。
+ */
+export const useRadioAPI: IUseRadioAPI = function useSuiRadioAPI(props) {
+  const { children, slotProps: { indicator: indicatorProps = {} } = {}, ...otherRootProps } = props;
 
   return {
-    indicator: {
-      children,
-      ...indicatorProps,
+    getIndicatorProps() {
+      return {
+        children,
+        ...indicatorProps,
+      };
     },
-    root: rootProps,
+    getRootProps() {
+      return otherRootProps;
+    },
   };
-}
+};
+
+export { type RadioAPI as API, useRadioAPI as useAPI };
+
+// Component
+// ---------
 
 /**
  * ラジオボタンを表示するコンポーネントです。
  */
 export const Radio: IComponent<RadioProps> = function SuiRadio(props) {
-  const partsProps = useRadio(props);
+  const api = useRadioAPI(props);
 
   return (
-    <RadioRoot {...partsProps.root}>
-      <RadioIndicator {...partsProps.indicator} />
+    <RadioRoot {...api.getRootProps()}>
+      <RadioIndicator {...api.getIndicatorProps()} />
     </RadioRoot>
   );
 };
 
-/**
- * {@link Radio} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Radio {
   /**
-   * {@link RadioState} です。
+   * {@link RadioState}
    */
   export type State = RadioState;
 
   /**
-   * {@link RadioProps} です。
+   * {@link RadioProps}
    */
   export type Props = RadioProps;
 
   /**
-   * {@link RadioSlotProps} です。
+   * {@link RadioSlotProps}
    */
   export type SlotProps = RadioSlotProps;
 
   /**
-   * {@link RadioColor} です。
+   * {@link RadioColor}
    */
   export type Color = RadioColor;
 
   /**
-   * {@link RadioRadius} です。
+   * {@link RadioRadius}
    */
   export type Radius = RadioRadius;
 
   /**
-   * {@link RadioSize} です。
+   * {@link RadioSize}
    */
   export type Size = RadioSize;
 
   /**
-   * {@link RadioVariant} です。
+   * {@link RadioVariant}
    */
   export type Variant = RadioVariant;
 }

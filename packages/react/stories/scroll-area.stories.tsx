@@ -1,6 +1,5 @@
 import { preview, controls } from "../.config/storybook/preview.js";
 import { ScrollArea } from "../src/scroll-area/index.js";
-import * as ScrollAreaParts from "../src/scroll-area/index.js";
 
 const meta = preview.meta({
   title: "Scroll Area",
@@ -9,7 +8,11 @@ const meta = preview.meta({
 
 export default meta;
 
-const ctrl = controls(ScrollArea, {});
+const ctrl = controls(ScrollArea, {
+  horizontal: {
+    control: "boolean",
+  },
+});
 
 const paragraphs = Array.from({ length: 8 }, (_, index) => (
   <p key={index} className="mb-4 last:mb-0">
@@ -20,7 +23,9 @@ const paragraphs = Array.from({ length: 8 }, (_, index) => (
 
 export const Usage = meta.story({
   name: "使い方",
-  ...ctrl({}),
+  ...ctrl({
+    horizontal: false,
+  }),
   render(props) {
     return (
       <ScrollArea {...props} className="h-64 w-80 rounded-lg bg-(--sui-canvas-1) p-4">
@@ -32,10 +37,12 @@ export const Usage = meta.story({
 
 export const BothScrollbars = meta.story({
   name: "縦横スクロール",
-  ...ctrl({}),
+  ...ctrl({
+    horizontal: true,
+  }),
   render(props) {
     return (
-      <ScrollArea {...props} className="h-64 w-80 rounded-lg bg-(--sui-canvas-1) p-4" horizontal>
+      <ScrollArea {...props} className="h-64 w-80 rounded-lg bg-(--sui-canvas-1) p-4">
         <div className="grid w-[720px] grid-cols-8 gap-2">
           {Array.from({ length: 80 }, (_, index) => (
             <div key={index} className="rounded-md bg-(--sui-canvas-2) p-3 text-center">
@@ -48,19 +55,44 @@ export const BothScrollbars = meta.story({
   },
 });
 
-export const Parts = meta.story({
-  name: "パーツ構成",
-  ...ctrl({}),
-  render() {
+export const KeepMounted = meta.story({
+  name: "常時表示",
+  ...ctrl({
+    horizontal: false,
+  }),
+  render(props) {
     return (
-      <ScrollAreaParts.Root className="h-64 w-80">
-        <ScrollAreaParts.Viewport className="rounded-lg bg-(--sui-canvas-1) p-4">
-          <ScrollAreaParts.Content>{paragraphs}</ScrollAreaParts.Content>
-        </ScrollAreaParts.Viewport>
-        <ScrollAreaParts.Scrollbar>
-          <ScrollAreaParts.Thumb />
-        </ScrollAreaParts.Scrollbar>
-      </ScrollAreaParts.Root>
+      <div className="flex flex-col gap-4">
+        <ScrollArea
+          {...props}
+          className="h-64 w-80 rounded-lg bg-(--sui-canvas-1) p-4"
+          slotProps={{ scrollbar: { keepMounted: true } }}
+        >
+          {paragraphs.slice(0, 2)}
+        </ScrollArea>
+        <p className="w-80">
+          `slotProps.scrollbar.keepMounted` を指定すると、スクロール不要な場合もスクロールバーを DOM
+          に保持します。
+        </p>
+      </div>
+    );
+  },
+});
+
+export const CustomThumb = meta.story({
+  name: "つまみの差し替え",
+  ...ctrl({
+    horizontal: false,
+  }),
+  render(props) {
+    return (
+      <ScrollArea
+        {...props}
+        className="h-64 w-80 rounded-lg bg-(--sui-canvas-1) p-4"
+        slotProps={{ thumb: { className: "bg-(--sui-accent-9)" } }}
+      >
+        {paragraphs}
+      </ScrollArea>
     );
   },
 });

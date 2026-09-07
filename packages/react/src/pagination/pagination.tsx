@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import type { LikelyVisibleNode } from "../_is-likely-visible-node.js";
+import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
 import {
   type PaginationGoToPage,
@@ -21,126 +23,200 @@ import {
   PaginationPreviousButton,
 } from "./pagination.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link PaginationRootColor} です。
+ * {@link PaginationRootColor}
  */
 export type PaginationColor = PaginationRootColor;
 
 /**
- * {@link PaginationRootRadius} です。
+ * {@link PaginationRootRadius}
  */
 export type PaginationRadius = PaginationRootRadius;
 
 /**
- * {@link PaginationRootSize} です。
+ * {@link PaginationRootSize}
  */
 export type PaginationSize = PaginationRootSize;
 
 /**
- * {@link PaginationRootChangeEventReason} です。
+ * {@link PaginationRootChangeEventReason}
  */
 export type PaginationChangeEventReason = PaginationRootChangeEventReason;
 
 /**
- * {@link PaginationRootChangeEventDetails} です。
+ * {@link PaginationRootChangeEventDetails}
  */
 export type PaginationChangeEventDetails = PaginationRootChangeEventDetails;
 
 /**
- * {@link Pagination} の状態です。
+ * {@link Pagination} が表示する項目のオブジェクトです。
+ */
+export type PaginationItemObject =
+  | {
+      /**
+       * 項目のページ番号です。
+       */
+      readonly page: number;
+
+      /**
+       * 項目の種類です。
+       */
+      readonly type: "item";
+    }
+  | {
+      /**
+       * 省略範囲の終了ページです。
+       */
+      readonly end: number;
+
+      /**
+       * 省略範囲の開始ページです。
+       */
+      readonly start: number;
+
+      /**
+       * 項目の種類です。
+       */
+      readonly type: "ellipsis";
+    };
+
+/**
+ * {@link Pagination} が持つ状態です。
  */
 export type PaginationState = PaginationRootState;
 
 /**
- * {@link Pagination} の各パーツに渡すプロパティーです。
+ * {@link Pagination} の各パーツに渡す props です。
  */
 export type PaginationSlotProps = {
   /**
-   * {@link PaginationEllipsis} に渡すプロパティーです。
+   * {@link PaginationEllipsis} に渡す props です。
    *
-   * すべての省略記号に同じプロパティーが渡されます。
+   * すべての省略記号に同じ props が渡されます。`start` と `end` は上書きされません。
    */
-  readonly ellipsis?: PaginationEllipsisProps | undefined;
+  readonly ellipsis?: Omit<PaginationEllipsisProps, "start" | "end"> | undefined;
 
   /**
-   * {@link PaginationItem} に渡すプロパティーです。
+   * {@link PaginationItem} に渡す props です。
    *
-   * すべてのページ番号ボタンに同じプロパティーが渡されます。`page` と `selected` は上書きされません。
+   * すべてのページ番号ボタンに同じ props が渡されます。`page` と `selected` は上書きされません。
    */
   readonly item?: Omit<PaginationItemProps, "page" | "selected"> | undefined;
 
   /**
-   * {@link PaginationNextButton} に渡すプロパティーです。
+   * {@link PaginationNextButton} に渡す props です。
    */
   readonly next?: PaginationNextButtonProps | undefined;
 
   /**
-   * {@link PaginationPreviousButton} に渡すプロパティーです。
+   * {@link PaginationPreviousButton} に渡す props です。
    */
   readonly previous?: PaginationPreviousButtonProps | undefined;
 };
 
 /**
- * {@link Pagination} の各パーツに渡すプロパティーです。
- */
-export type PaginationPartsProps = {
-  /**
-   * {@link PaginationNextButton} に渡すプロパティーです。
-   */
-  readonly next: PaginationNextButtonProps;
-
-  /**
-   * {@link PaginationPreviousButton} に渡すプロパティーです。
-   */
-  readonly previous: PaginationPreviousButtonProps;
-
-  /**
-   * {@link PaginationRoot} に渡すプロパティーです。
-   */
-  readonly root: PaginationRootProps;
-};
-
-/**
- * {@link Pagination} コンポーネントのプロパティーです。
+ * {@link Pagination} に渡す props です。
  */
 export type PaginationProps = Omit<PaginationRootProps, "children"> & {
   /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   * 先頭と末尾に常に表示するページ数を指定します。
    *
-   * 各パーツのプロパティーが優先されます。
+   * @default 1
+   */
+  boundaryCount?: number | undefined;
+
+  /**
+   * 現在のページの前後に表示するページ数を指定します。
+   *
+   * @default 1
+   */
+  siblingCount?: number | undefined;
+
+  /**
+   * 各パーツに個別の props を渡すためのオブジェクトです。
+   *
+   * 各パーツの props が優先されます。
    */
   slotProps?: PaginationSlotProps | undefined;
 };
 
-/**
- * {@link Pagination} の各パーツに渡すプロパティーを作るフックです。
- */
-export function usePagination(props: PaginationProps): PaginationPartsProps {
-  const { slotProps: { next: nextProps, previous: previousProps } = {}, ...rootProps } = props;
+// API
+// ---
 
-  return {
-    root: rootProps,
-    previous: { ...previousProps },
-    next: { ...nextProps },
+/**
+ * {@link Pagination} を構成する各パーツの props などを作成するための API です。
+ */
+export interface PaginationAPI {
+  /**
+   * {@link PaginationEllipsis} に渡す props を取得します。
+   *
+   * @param start 省略範囲の開始ページです。
+   * @param end 省略範囲の終了ページです。
+   */
+  getEllipsisProps(start: number, end: number): PaginationEllipsisProps;
+
+  /**
+   * {@link PaginationItem} に渡す props を取得します。
+   *
+   * @param page 項目のページ番号です。
+   */
+  getItemProps(page: number): Omit<PaginationItemProps, "children"> & {
+    children: LikelyVisibleNode | null;
   };
+
+  /**
+   * 表示する項目の一覧を取得します。
+   */
+  getItems(): PaginationItemObject[];
+
+  /**
+   * {@link PaginationNextButton} に渡す props を取得します。
+   */
+  getNextProps(): PaginationNextButtonProps;
+
+  /**
+   * {@link PaginationPreviousButton} に渡す props を取得します。
+   */
+  getPreviousProps(): PaginationPreviousButtonProps;
+
+  /**
+   * {@link PaginationRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<PaginationRootProps, "children">;
+}
+
+interface IUsePaginationAPI {
+  /**
+   * {@link PaginationAPI} を作成します。
+   *
+   * @param props {@link Pagination} の props です。
+   * @returns ページネーションの API です
+   */
+  (props: PaginationProps): PaginationAPI;
 }
 
 /**
- * ページ移動を行うページネーションコンポーネントです。
- *
- * 省略記号（…）をクリックすると入力欄が表示され、ページ番号を入力してそのページへ直接移動できます。
+ * {@link PaginationAPI} を作成するフックです。
  */
-export const Pagination: IComponent<PaginationProps> = function SuiPagination(props) {
-  const partsProps = usePagination(props);
-  const { slotProps: { ellipsis: ellipsisProps, item: itemProps } = {}, ...rootProps } = props;
+export const usePaginationAPI: IUsePaginationAPI = function useSuiPaginationAPI(props) {
   const {
-    boundaryCount = 1,
+    page: pageProp,
+    slotProps: {
+      item: itemProps = {},
+      next: nextProps = {},
+      ellipsis: ellipsisProps = {},
+      previous: previousProps = {},
+    } = {},
+    totalPages,
     defaultPage = 1,
     onPageChange,
-    page: pageProp,
     siblingCount = 1,
-    totalPages,
-  } = rootProps;
+    boundaryCount = 1,
+    ...otherRootProps
+  } = props;
   const maxPage = Math.max(totalPages, 1);
   const [innerPage, setInnerPage] = React.useState(() =>
     Math.min(Math.max(Math.trunc(defaultPage), 1), maxPage),
@@ -155,81 +231,127 @@ export const Pagination: IComponent<PaginationProps> = function SuiPagination(pr
   };
   const items = getPaginationItems(totalPages, page, siblingCount, boundaryCount);
 
+  return {
+    getItems() {
+      return items;
+    },
+    getItemProps(itemPage) {
+      return {
+        ...itemProps,
+        page: itemPage,
+        children: toReactNode(itemPage),
+        selected: itemPage === page,
+      };
+    },
+    getNextProps() {
+      return nextProps;
+    },
+    getRootProps() {
+      return {
+        ...otherRootProps,
+        page,
+        totalPages,
+        onPageChange: handlePageChange,
+      };
+    },
+    getEllipsisProps(start, end) {
+      return {
+        ...ellipsisProps,
+        end,
+        start,
+      };
+    },
+    getPreviousProps() {
+      return previousProps;
+    },
+  };
+};
+
+export { type PaginationAPI as API, usePaginationAPI as useAPI };
+
+// Component
+// ---------
+
+/**
+ * ページ移動を行うページネーションコンポーネントです。
+ *
+ * 総ページ数から表示する項目を組み立て、前後の移動ボタンとページ番号ボタンを並べます。省略記号（…）を押下すると入力欄が表示され、ページ番号を入力してそのページへ直接移動できます。
+ */
+export const Pagination: IComponent<PaginationProps> = function SuiPagination(props) {
+  const api = usePaginationAPI(props);
+  const items = api.getItems();
+
   return (
-    <PaginationRoot {...partsProps.root} page={page} onPageChange={handlePageChange}>
-      <PaginationPreviousButton {...partsProps.previous} />
-      {items.map((item, index) =>
+    <PaginationRoot {...api.getRootProps()}>
+      <PaginationPreviousButton {...api.getPreviousProps()} />
+      {items.map((item) =>
         item.type === "item" ? (
-          <PaginationItem
-            key={index}
-            {...itemProps}
-            page={item.page}
-            selected={item.page === page}
-          />
+          <PaginationItem {...api.getItemProps(item.page)} key={`page-${item.page}`} />
         ) : (
-          <PaginationEllipsis end={item.end} {...ellipsisProps} key={index} start={item.start} />
+          <PaginationEllipsis
+            {...api.getEllipsisProps(item.start, item.end)}
+            key={`ellipsis-${item.start}-${item.end}`}
+          />
         ),
       )}
-      <PaginationNextButton {...partsProps.next} />
+      <PaginationNextButton {...api.getNextProps()} />
     </PaginationRoot>
   );
 };
 
-/**
- * {@link Pagination} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Pagination {
   /**
-   * {@link PaginationState} です。
+   * {@link PaginationState}
    */
   export type State = PaginationState;
 
   /**
-   * {@link PaginationProps} です。
+   * {@link PaginationProps}
    */
   export type Props = PaginationProps;
 
   /**
-   * {@link PaginationSlotProps} です。
+   * {@link PaginationSlotProps}
    */
   export type SlotProps = PaginationSlotProps;
 
   /**
-   * {@link PaginationChangeEventDetails} です。
+   * {@link PaginationChangeEventDetails}
    */
   export type ChangeEventDetails = PaginationChangeEventDetails;
 
   /**
-   * {@link PaginationChangeEventReason} です。
+   * {@link PaginationChangeEventReason}
    */
   export type ChangeEventReason = PaginationChangeEventReason;
 
   /**
-   * {@link PaginationColor} です。
+   * {@link PaginationColor}
    */
   export type Color = PaginationColor;
 
   /**
-   * {@link PaginationRadius} です。
+   * {@link PaginationItemObject}
+   */
+  export type ItemObject = PaginationItemObject;
+
+  /**
+   * {@link PaginationRadius}
    */
   export type Radius = PaginationRadius;
 
   /**
-   * {@link PaginationSize} です。
+   * {@link PaginationSize}
    */
   export type Size = PaginationSize;
 }
-
-type PaginationItemsItem =
-  | { readonly page: number; readonly type: "item" }
-  | { readonly end: number; readonly start: number; readonly type: "ellipsis" };
 
 function getPaginationItems(
   totalPages: number,
   page: number,
   siblingCount: number,
   boundaryCount: number,
-): PaginationItemsItem[] {
+): PaginationItemObject[] {
   const maxPage = Math.max(totalPages, 1);
   const pages = new Set<number>();
 
@@ -246,7 +368,7 @@ function getPaginationItems(
   }
 
   const sorted = [...pages].sort((a, b) => a - b);
-  const items: PaginationItemsItem[] = [];
+  const items: PaginationItemObject[] = [];
   let previous = 0;
 
   for (const current of sorted) {

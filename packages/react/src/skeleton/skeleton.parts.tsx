@@ -11,28 +11,28 @@ import "./skeleton.css";
 // ----
 
 /**
- * スケルトンの角丸です。
+ * スケルトンの角丸の大きさです。
  *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
- * - `"full"`: 完全な丸形
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ * - `"full"`: 丸形
  */
 export type SkeletonRootRadius = "none" | Size | "full";
 
 /**
- * {@link SkeletonRoot} の状態です。
+ * {@link SkeletonRoot} が持つ状態です。
  */
 export type SkeletonRootState = {};
 
 /**
- * {@link SkeletonRoot} に渡すプロパティーです。
+ * {@link SkeletonRoot} に渡す props です。
  */
 export type SkeletonRootProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
   RenderProps<SkeletonRootState> & {
     /**
-     * スケルトンに波打つようなアニメーションを表示します。
+     * 波打つようなアニメーションを表示するかどうかを指定します。
      *
      * @default true
      */
@@ -50,44 +50,40 @@ export type SkeletonRootProps = Omit<React.ComponentProps<"span">, keyof RenderP
  * スケルトンのルートコンポーネントです。
  */
 export const SkeletonRoot: IComponent<SkeletonRootProps> = function SuiSkeletonRoot(props) {
-  const { animated = true, radius = "md", ...otherProps } = props;
+  const { radius = "md", animated = true, className, ...otherSpanProps } = props;
 
   return useRender({
     defaultTagName: "span",
     props: [
-      otherProps,
+      otherSpanProps,
       {
         className: cn(
+          className,
           "sui_skeleton",
           `sui_skeleton-radius_${radius}`,
           animated && "sui_skeleton-animated",
         ),
+        "data-scope": "",
       },
     ],
   });
 };
 
-/**
- * {@link SkeletonRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { SkeletonRoot as Root };
+
 export namespace Root {
   /**
-   * {@link SkeletonRootState} です。
+   * {@link SkeletonRootState}
    */
   export type State = SkeletonRootState;
 
   /**
-   * {@link SkeletonRootProps} です。
+   * {@link SkeletonRootProps}
    */
   export type Props = SkeletonRootProps;
 
   /**
-   * {@link SkeletonRootRadius} です。
+   * {@link SkeletonRootRadius}
    */
   export type Radius = SkeletonRootRadius;
 }
-
-/**
- * {@link SkeletonRoot} です。
- */
-export const Root: IComponent<Root.Props> = SkeletonRoot;

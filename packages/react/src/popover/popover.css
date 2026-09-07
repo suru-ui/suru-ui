@@ -181,6 +181,9 @@
 /* 変数 */
 :scope {
   --sui_popover_arrow-size: ;
+  --sui_popover_arrow-background_color: ;
+  --sui_popover_arrow-border_color: ;
+  --sui_popover_arrow-border_width: ;
 }
 
 /* 可変 */
@@ -188,15 +191,18 @@
   .sui_popover_arrow {
     width: var(--sui_popover_arrow-size);
     height: var(--sui_popover_arrow-size);
-    background-color: var(--sui_popover_popup-background_color);
-    border-color: var(--sui_popover_popup-border_color);
-    border-width: var(--sui_popover_popup-border_width);
+    background-color: var(--sui_popover_arrow-background_color);
+    border-color: var(--sui_popover_arrow-border_color);
+    border-width: var(--sui_popover_arrow-border_width);
   }
 }
 
 /* 代入 */
 :scope {
   --sui_popover_arrow-size: calc(--sui-space(2) * 2);
+  --sui_popover_arrow-background_color: var(--sui_popover_popup-background_color);
+  --sui_popover_arrow-border_color: var(--sui_popover_popup-border_color);
+  --sui_popover_arrow-border_width: var(--sui_popover_popup-border_width);
 }
 
 } /* @scope */
@@ -206,8 +212,19 @@
 @layer sui.component {
 @scope (.sui_popover_portal) to ([data-scope]) {
 
+/* 固定 */
+:scope {
+  .sui_popover_title {
+    display: block;
+    line-break: strict;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
 /* 変数 */
 :scope {
+  --sui_popover_title-font_family: ;
   --sui_popover_title-font_size: ;
   --sui_popover_title-font_weight: ;
   --sui_popover_title-line_height: ;
@@ -218,6 +235,7 @@
 /* 可変 */
 :scope {
   .sui_popover_title {
+    font-family: var(--sui_popover_title-font_family);
     font-size: var(--sui_popover_title-font_size);
     font-weight: var(--sui_popover_title-font_weight);
     line-height: var(--sui_popover_title-line_height);
@@ -228,6 +246,7 @@
 
 /* 代入 */
 :scope {
+  --sui_popover_title-font_family: var(--sui-font-sans);
   --sui_popover_title-font_size: var(--sui-text-std-sm-b-font_size);
   --sui_popover_title-font_weight: var(--sui-text-std-sm-b-font_weight);
   --sui_popover_title-line_height: var(--sui-text-std-sm-b-line_height);
@@ -242,8 +261,19 @@
 @layer sui.component {
 @scope (.sui_popover_portal) to ([data-scope]) {
 
+/* 固定 */
+:scope {
+  .sui_popover_description {
+    display: block;
+    line-break: strict;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
 /* 変数 */
 :scope {
+  --sui_popover_description-font_family: ;
   --sui_popover_description-font_size: ;
   --sui_popover_description-font_weight: ;
   --sui_popover_description-line_height: ;
@@ -254,6 +284,7 @@
 /* 可変 */
 :scope {
   .sui_popover_description {
+    font-family: var(--sui_popover_description-font_family);
     font-size: var(--sui_popover_description-font_size);
     font-weight: var(--sui_popover_description-font_weight);
     line-height: var(--sui_popover_description-line_height);
@@ -264,11 +295,27 @@
 
 /* 代入 */
 :scope {
+  --sui_popover_description-font_family: var(--sui-font-sans);
   --sui_popover_description-font_size: var(--sui-text-std-sm-n-font_size);
   --sui_popover_description-font_weight: var(--sui-text-std-sm-n-font_weight);
   --sui_popover_description-line_height: var(--sui-text-std-sm-n-line_height);
   --sui_popover_description-color: var(--sui-canvas_text-2);
   --sui_popover_description-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Viewport */
+@layer sui.component {
+@scope (.sui_popover_portal) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_popover_viewport {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 } /* @scope */

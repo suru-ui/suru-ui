@@ -1,94 +1,259 @@
+import * as React from "react";
+
+import type { LikelyVisibleNode } from "../_is-likely-visible-node.js";
+import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
 import {
   type ListRootSize,
   type ListItemProps,
   type ListRootProps,
   type ListRootState,
+  type ListRootItemObject,
+  type IListRootItemRenderer,
   type ListItemIndicatorProps,
   ListItem,
   ListRoot,
   ListItemIndicator,
 } from "./list.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link ListRootSize} です。
+ * {@link ListRootItemObject}
+ */
+export type ListItemObject = ListRootItemObject;
+
+/**
+ * {@link IListRootItemRenderer}
+ */
+export interface IListItemRenderer<TItem = any> extends IListRootItemRenderer<TItem> {}
+
+/**
+ * {@link ListRootSize}
  */
 export type ListSize = ListRootSize;
 
 /**
- * {@link List} の各パーツに渡すプロパティーです。
- */
-export type ListPartsProps = {
-  /**
-   * {@link ListRoot} に渡すプロパティーです。
-   */
-  readonly root: ListRootProps;
-};
-
-/**
- * {@link List} の状態です。
+ * {@link List} が持つ状態です。
  */
 export type ListState = ListRootState;
 
 /**
- * {@link List} コンポーネントのプロパティーです。
+ * {@link List} の各パーツに渡す props です。
  */
-export type ListProps = ListRootProps;
+export type ListSlotProps = {
+  /**
+   * {@link ListItemIndicator} に渡す props です。
+   *
+   * すべてのインジケーターに同じ props が渡されます。`children` は上書きされません。
+   */
+  readonly indicator?: Omit<ListItemIndicatorProps, "children"> | undefined;
+
+  /**
+   * {@link ListItem} に渡す props です。
+   *
+   * すべての項目に同じ props が渡されます。`children` は上書きされません。
+   */
+  readonly item?: Omit<ListItemProps, "children"> | undefined;
+};
 
 /**
- * {@link List} の各パーツに渡すプロパティーを作るフックです。
+ * {@link List} に渡す props です。
+ *
+ * @template TItem 項目の型です。
  */
-export function useList(props: ListProps): ListPartsProps {
-  return {
-    root: props,
+export type ListProps<TItem = any> = ListRootProps<TItem> & {
+  /**
+   * 各パーツに個別の props を渡すためのオブジェクトです。
+   *
+   * 各パーツの props が優先されます。
+   */
+  slotProps?: ListSlotProps | undefined;
+};
+
+// API
+// ---
+
+/**
+ * {@link List} を構成する各パーツの props などを作成するための API です。
+ *
+ * @template TItem 項目の型です。
+ */
+export interface ListAPI<TItem = any> {
+  /**
+   * 項目の内容を取得します。
+   *
+   * @param item 項目です。
+   */
+  getContent(item: TItem): React.ReactNode;
+
+  /**
+   * {@link ListItemIndicator} に渡す props を取得します。
+   *
+   * @param item 項目です。
+   */
+  getIndicatorProps(item: TItem): Omit<ListItemIndicatorProps, "children"> & {
+    children: LikelyVisibleNode | null;
+  };
+
+  /**
+   * {@link ListItem} に渡す props を取得します。
+   *
+   * @param item 項目です。
+   */
+  getItemProps(item: TItem): Omit<ListItemProps, "children">;
+
+  /**
+   * {@link ListRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<ListRootProps<TItem>, "children"> & {
+    children: LikelyVisibleNode | null;
   };
 }
 
-interface ListComponentType extends IComponent<ListProps> {
+interface IUseListAPI {
   /**
-   * {@link ListIndicator} です。
+   * {@link ListAPI} を作成します。
+   *
+   * @template TItem 項目の型です。
+   * @param props {@link List} の props です。
+   * @returns リストの API です
    */
-  readonly Indicator: IComponent<ListItemIndicatorProps>;
+  <TItem = any>(props: ListProps<TItem>): ListAPI<TItem>;
+}
+
+/**
+ * {@link ListAPI} を作成するフックです。
+ */
+export const useListAPI: IUseListAPI = function useSuiListAPI(props) {
+  const {
+    items = [],
+    children,
+    slotProps: { item: itemProps = {}, indicator: indicatorProps = {} } = {},
+    ...otherRootProps
+  } = props;
+
+  return {
+    getContent(item) {
+      return isItemObject(item) ? toReactNode(item.content) : toReactNode(item);
+    },
+    getItemProps(item) {
+      if (!isItemObject(item)) {
+        return itemProps;
+      }
+
+      const { content: _content, indicator: _indicator, ...otherItemProps } = item;
+
+      return {
+        ...otherItemProps,
+        ...itemProps,
+      };
+    },
+    getRootProps() {
+      return {
+        ...otherRootProps,
+        items,
+        children: typeof children === "function" ? items.map(children) : toReactNode(children),
+      };
+    },
+    getIndicatorProps(item) {
+      return {
+        ...indicatorProps,
+        children: isItemObject(item) ? toReactNode(item.indicator) : null,
+      };
+    },
+  };
+};
+
+function isItemObject(item: unknown): item is ListItemObject {
+  return typeof item === "object" && item !== null && "content" in item;
+}
+
+export { type ListAPI as API, useListAPI as useAPI };
+
+// Component
+// ---------
+
+interface IList extends IComponent<ListProps> {
+  /**
+   * @template TItem 項目の型です。
+   */
+  <TItem = any>(props: ListProps<TItem>): IComponent.Return;
 
   /**
-   * {@link ListItem} です。
+   * {@link ListItemIndicator}
    */
-  readonly Item: IComponent<ListItemProps>;
+  readonly Indicator: typeof ListItemIndicator;
+
+  /**
+   * {@link ListItem}
+   */
+  readonly Item: typeof ListItem;
 }
 
 /**
  * 項目を一覧表示するリストコンポーネントです。
  *
- * {@link List.Item} で項目を、{@link List.Indicator} で項目の先頭に表示するマーカーやアイコンを指定します。
+ * {@link ListProps.items|items} に項目の配列を渡すと、各項目を {@link List.Item} で描画します。項目の描画内容を変える場合は `children` に関数を指定します。
  */
-export const List: ListComponentType = /*#__PURE__*/ Object.assign(
+export const List: IList = /*#__PURE__*/ Object.assign(
   function SuiList(props: ListProps) {
-    const partsProps = useList(props);
+    const api = useListAPI(props);
+    const { children, ...otherRootProps } = api.getRootProps();
 
-    return <ListRoot {...partsProps.root} />;
+    return (
+      <ListRoot {...otherRootProps}>
+        {children ??
+          ((item, index) => {
+            const { children: indicatorNode, ...otherIndicatorProps } = api.getIndicatorProps(item);
+
+            return (
+              <ListItem key={index} {...api.getItemProps(item)}>
+                {indicatorNode && (
+                  <ListItemIndicator {...otherIndicatorProps}>{indicatorNode}</ListItemIndicator>
+                )}
+                {api.getContent(item)}
+              </ListItem>
+            );
+          })}
+      </ListRoot>
+    );
   },
   {
-    Item: ListItem,
     Indicator: ListItemIndicator,
+    Item: ListItem,
   },
 );
 
-/**
- * {@link List} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace List {
   /**
-   * {@link ListState} です。
+   * {@link ListState}
    */
   export type State = ListState;
 
   /**
-   * {@link ListProps} です。
+   * {@link ListProps}
    */
-  export type Props = ListProps;
+  export type Props<TItem = any> = ListProps<TItem>;
 
   /**
-   * {@link ListSize} です。
+   * {@link ListSlotProps}
+   */
+  export type SlotProps = ListSlotProps;
+
+  /**
+   * {@link ListItemObject}
+   */
+  export type ItemObject = ListItemObject;
+
+  /**
+   * {@link IListItemRenderer}
+   */
+  export interface IItemRenderer<TItem = any> extends IListItemRenderer<TItem> {}
+
+  /**
+   * {@link ListSize}
    */
   export type Size = ListSize;
 }

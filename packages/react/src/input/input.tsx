@@ -12,123 +12,145 @@ import {
   InputRoot,
 } from "./input.parts.jsx";
 
-/**
- * {@link InputRootColor} です。
- */
-export type InputColor = InputRootColor;
+// Types
+// -----
 
 /**
- * {@link InputRootRadius} です。
- */
-export type InputRadius = InputRootRadius;
-
-/**
- * {@link InputRootSize} です。
- */
-export type InputSize = InputRootSize;
-
-/**
- * {@link InputRootType} です。
- */
-export type InputType = InputRootType;
-
-/**
- * {@link InputRootVariant} です。
- */
-export type InputVariant = InputRootVariant;
-
-/**
- * {@link InputRootChangeEventReason} です。
- */
-export type InputChangeEventReason = InputRootChangeEventReason;
-
-/**
- * {@link InputRootChangeEventDetails} です。
+ * {@link InputRootChangeEventDetails}
  */
 export type InputChangeEventDetails = InputRootChangeEventDetails;
 
 /**
- * {@link Input} の状態です。
+ * {@link InputRootChangeEventReason}
+ */
+export type InputChangeEventReason = InputRootChangeEventReason;
+
+/**
+ * {@link InputRootColor}
+ */
+export type InputColor = InputRootColor;
+
+/**
+ * {@link InputRootRadius}
+ */
+export type InputRadius = InputRootRadius;
+
+/**
+ * {@link InputRootSize}
+ */
+export type InputSize = InputRootSize;
+
+/**
+ * {@link InputRootType}
+ */
+export type InputType = InputRootType;
+
+/**
+ * {@link InputRootVariant}
+ */
+export type InputVariant = InputRootVariant;
+
+/**
+ * {@link Input} が持つ状態です。
  */
 export type InputState = InputRootState;
 
 /**
- * {@link Input} コンポーネントのプロパティーです。
+ * {@link Input} に渡す props です。
  */
 export type InputProps = InputRootProps;
 
-/**
- * {@link Input} の各パーツに渡すプロパティーです。
- */
-export type InputPartsProps = {
-  /**
-   * {@link InputRoot} に渡すプロパティーです。
-   */
-  readonly root: InputRootProps;
-};
+// API
+// ---
 
 /**
- * {@link Input} の各パーツに渡すプロパティーを作るフックです。
+ * {@link Input} を構成する各パーツの props を作成するための API です。
  */
-export function useInput(props: InputProps): InputPartsProps {
-  return { root: props };
+export interface InputAPI {
+  /**
+   * {@link InputRoot} に渡す props を取得します。
+   */
+  getRootProps(): InputRootProps;
 }
+
+interface IUseInputAPI {
+  /**
+   * {@link InputAPI} を作成します。
+   *
+   * @param props {@link Input} の props です。
+   * @returns テキスト入力欄の API です
+   */
+  (props: InputProps): InputAPI;
+}
+
+/**
+ * {@link InputAPI} を作成するフックです。
+ */
+export const useInputAPI: IUseInputAPI = function useSuiInputAPI(props) {
+  return {
+    getRootProps() {
+      return props;
+    },
+  };
+};
+
+export { type InputAPI as API, useInputAPI as useAPI };
+
+// Component
+// ---------
 
 /**
  * テキスト入力欄を表示するコンポーネントです。
  */
 export const Input: IComponent<InputProps> = function SuiInput(props) {
-  const partsProps = useInput(props);
+  const api = useInputAPI(props);
 
-  return <InputRoot {...partsProps.root} />;
+  return <InputRoot {...api.getRootProps()} />;
 };
 
-/**
- * {@link Input} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Input {
   /**
-   * {@link InputState} です。
+   * {@link InputState}
    */
   export type State = InputState;
 
   /**
-   * {@link InputProps} です。
+   * {@link InputProps}
    */
   export type Props = InputProps;
 
   /**
-   * {@link InputChangeEventDetails} です。
+   * {@link InputChangeEventDetails}
    */
   export type ChangeEventDetails = InputChangeEventDetails;
 
   /**
-   * {@link InputChangeEventReason} です。
+   * {@link InputChangeEventReason}
    */
   export type ChangeEventReason = InputChangeEventReason;
 
   /**
-   * {@link InputColor} です。
+   * {@link InputColor}
    */
   export type Color = InputColor;
 
   /**
-   * {@link InputRadius} です。
+   * {@link InputRadius}
    */
   export type Radius = InputRadius;
 
   /**
-   * {@link InputSize} です。
+   * {@link InputSize}
    */
   export type Size = InputSize;
 
   /**
-   * {@link InputType} です。
+   * {@link InputType}
    */
   export type Type = InputType;
 
   /**
-   * {@link InputVariant} です。
+   * {@link InputVariant}
    */
   export type Variant = InputVariant;
 }

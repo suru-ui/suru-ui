@@ -87,6 +87,38 @@ export const Controlled = meta.story({
   },
 });
 
+export const Pressed = meta.story({
+  name: "押下状態",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    pending: false,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col items-center gap-2">
+            <span>{variant}</span>
+            <div className="flex gap-3">
+              <ToggleButton {...props} variant={variant}>
+                OFF
+              </ToggleButton>
+              <ToggleButton {...props} variant={variant} defaultPressed>
+                ON
+              </ToggleButton>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
 export const WithIcons = meta.story({
   name: "アイコン付き",
   ...ctrl({
@@ -198,6 +230,31 @@ function useToggleFeature() {
   };
 }
 
+function useToggleProgress() {
+  const [percentage, setPercentage] = React.useState<number>();
+  const [pending, startTransition] = React.useTransition();
+  const clickHandler = () => {
+    startTransition(async () => {
+      const sleep = (t: number) => new Promise((r) => setTimeout(r, t));
+
+      setPercentage(0);
+      for (let value = 0; value <= 100; value += 20) {
+        await sleep(200);
+        setPercentage(value);
+      }
+
+      await sleep(200);
+      setPercentage(undefined);
+    });
+  };
+
+  return {
+    pending,
+    percentage,
+    clickHandler,
+  };
+}
+
 export const Pending = meta.story({
   name: "保留",
   ...ctrl({
@@ -210,17 +267,39 @@ export const Pending = meta.story({
   }),
   render(props) {
     const feature = useToggleFeature();
+    const progress = useToggleProgress();
 
     return (
-      <div className="flex flex-wrap gap-3">
-        <ToggleButton
-          {...props}
-          onClick={feature.clickHandler}
-          pending={feature.pending}
-          pressed={feature.flag}
-        >
-          {feature.flag ? "有効化済み" : "有効化する"}
-        </ToggleButton>
+      <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
+          <span>不定</span>
+          <div className="flex flex-wrap gap-3">
+            <ToggleButton
+              {...props}
+              onClick={feature.clickHandler}
+              pending={feature.pending}
+              pressed={feature.flag}
+            >
+              {feature.flag ? "有効化済み" : "有効化する"}
+            </ToggleButton>
+            <ToggleButton {...props} pending squared>
+              <ItalicIcon />
+            </ToggleButton>
+          </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <span>進捗度付き</span>
+          <div>
+            <ToggleButton
+              {...props}
+              onClick={progress.clickHandler}
+              pending={progress.pending}
+              percentage={progress.percentage}
+            >
+              ダウンロード
+            </ToggleButton>
+          </div>
+        </div>
       </div>
     );
   },
@@ -304,7 +383,12 @@ export const Colors = meta.story({
     return (
       <div className="flex flex-wrap gap-3">
         {COLORS.map((color) => (
-          <ToggleButton {...props} key={color} color={color} defaultPressed />
+          <div key={color} className="flex flex-col items-center gap-2">
+            <span>{color}</span>
+            <ToggleButton {...props} color={color} defaultPressed>
+              切り替え
+            </ToggleButton>
+          </div>
         ))}
       </div>
     );
@@ -424,16 +508,23 @@ export const Disabled = meta.story({
   }),
   render(props) {
     return (
-      <div className="flex flex-wrap gap-3">
-        <ToggleButton {...props} variant="liquid" disabled>
-          OFF
-        </ToggleButton>
-        <ToggleButton {...props} variant="liquid" disabled defaultPressed>
-          ON
-        </ToggleButton>
-        <ToggleButton {...props} squared disabled>
-          <ItalicIcon />
-        </ToggleButton>
+      <div className="flex flex-col gap-3">
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col items-center gap-2">
+            <span>{variant}</span>
+            <div className="flex gap-3">
+              <ToggleButton {...props} variant={variant} disabled>
+                OFF
+              </ToggleButton>
+              <ToggleButton {...props} variant={variant} disabled defaultPressed>
+                ON
+              </ToggleButton>
+              <ToggleButton {...props} squared variant={variant} disabled>
+                <ItalicIcon />
+              </ToggleButton>
+            </div>
+          </div>
+        ))}
       </div>
     );
   },

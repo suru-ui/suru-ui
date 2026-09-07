@@ -1,6 +1,7 @@
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
+import toReactNode from "../_to-react-node.js";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
@@ -12,22 +13,22 @@ import "./list.css";
 // -------
 
 /**
- * リストアイテムのサイズです。
+ * リストの大きさです。
  */
-type ListContextSize = Size;
+export type ListContextSize = Size;
 
 /**
- * {@link ListRoot} が子要素へ提供するスタイルです。
+ * {@link ListRoot} が子パーツへ提供するコンテキストです。
  */
 export type ListContext = {
   /**
-   * リストアイテムのサイズです。
+   * リストの大きさです。
    */
   readonly size: ListContextSize;
 };
 
 /**
- * {@link ListRoot} のスタイルを子要素へ伝播するコンテキストです。
+ * {@link ListRoot} が子パーツへ提供するコンテキストです。
  */
 export const ListContext: React.Context<ListContext | null> =
   React.createContext<ListContext | null>(null);
@@ -35,15 +36,15 @@ export const ListContext: React.Context<ListContext | null> =
 function useSuiListContext(optional?: false): ListContext;
 function useSuiListContext(optional?: boolean): ListContext | null;
 function useSuiListContext(optional?: boolean): ListContext | null {
-  const context = React.use(ListContext);
-  if (context === null && !optional) {
+  const ctx = React.use(ListContext);
+  if (ctx === null && !optional) {
     throw new ContextMissingError({
       contextName: "ListContext",
       providerName: "ListRoot",
     });
   }
 
-  return context;
+  return ctx;
 }
 
 /**
@@ -51,55 +52,92 @@ function useSuiListContext(optional?: boolean): ListContext | null {
  */
 export const useListContext: IUseContext<ListContext> = useSuiListContext;
 
-/**
- * {@link ListContext} です。
- */
-export type Context = ListContext;
+export { ListContext as Context, useListContext as useContext };
 
-/**
- * {@link ListContext} です。
- */
-export const Context: React.Context<Context | null> = ListContext;
-
-/**
- * {@link Context} の型名前空間です。
- */
 export namespace Context {
   /**
-   * {@link ListContextSize} です。
+   * {@link ListContextSize}
    */
   export type Size = ListContextSize;
 }
-
-/**
- * {@link useListContext} です。
- */
-export const useContext: IUseContext<Context> = useListContext;
 
 // Root
 // ----
 
 /**
+ * {@link ListRoot} の項目を表すオブジェクトです。
+ *
+ * `content` と `indicator` を含み、その他のプロパティーは {@link ListItem} に渡されます。
+ */
+export type ListRootItemObject = Omit<ListItemProps, "children"> & {
+  /**
+   * 項目に表示する内容です。
+   */
+  readonly content: React.ReactNode;
+
+  /**
+   * 項目の先頭に表示するマーカーやアイコンです。
+   *
+   * 指定しない場合、インジケーターを描画しません。
+   */
+  readonly indicator?: React.ReactNode | undefined;
+};
+
+/**
+ * {@link ListRoot} の各項目をレンダリングする関数のインターフェイスです。
+ *
+ * @template TItem 項目の型です。
+ */
+export interface IListRootItemRenderer<TItem = any> {
+  /**
+   * 項目をレンダリングします。
+   *
+   * @param item 現在の項目です。
+   * @param index 項目のインデックスです。
+   * @param items すべての項目です。
+   * @returns レンダリングする内容です。
+   */
+  (item: TItem, index: number, items: readonly TItem[]): React.ReactNode;
+}
+
+/**
  * リストの大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type ListRootSize = Size;
 
 /**
- * {@link ListRoot} の状態です。
+ * {@link ListRoot} が持つ状態です。
  */
 export type ListRootState = {};
 
 /**
- * {@link ListRoot} に渡すプロパティーです。
+ * {@link ListRoot} に渡す props です。
  *
- * ルートに指定したスタイルプロパティーは、リストアイテムの指定より優先されます。
+ * @template TItem 項目の型です。
  */
-export type ListRootProps = Omit<React.ComponentProps<"ul">, keyof RenderProps> &
+export type ListRootProps<TItem = any> = Omit<
+  React.ComponentProps<"ul">,
+  keyof RenderProps | "children"
+> &
   RenderProps<ListRootState> & {
+    /**
+     * リストの内容、または各項目をレンダリングする関数です。
+     *
+     * 関数を指定した場合は {@link ListRootProps.items|items} の各項目が引数として渡されます。
+     */
+    children?: React.ReactNode | IListRootItemRenderer<TItem>;
+
+    /**
+     * リストの項目です。
+     *
+     * `children` に関数を指定した場合、この配列の各項目が引数として渡されます。
+     */
+    items?: readonly TItem[] | undefined;
+
     /**
      * 順序付きリストにするかどうかを指定します。
      *
@@ -110,80 +148,117 @@ export type ListRootProps = Omit<React.ComponentProps<"ul">, keyof RenderProps> 
     ordered?: boolean | undefined;
 
     /**
-     * リストアイテムのサイズを指定します。
+     * リストの大きさを指定します。
      *
      * @default "md"
      */
     size?: ListRootSize | undefined;
   };
 
+interface IListRoot extends IComponent<ListRootProps> {
+  /**
+   * @template TItem 項目の型です。
+   */
+  <TItem = any>(props: ListRootProps<TItem>): IComponent.Return;
+}
+
 /**
- * 項目を一覧表示するリストのルート要素です。
+ * 項目を一覧表示するリストのルートコンポーネントです。
  *
- * スタイルプロパティーをコンテキストでリストアイテムへ伝播します。
+ * 大きさをコンテキストで {@link ListItem} へ伝播します。
  */
-export const ListRoot: IComponent<ListRootProps> = function SuiListRoot(props) {
-  const { ordered = false, size = "md", ...otherProps } = props;
-  const context = React.useMemo<ListContext>(() => ({ size }), [size]);
+export const ListRoot: IListRoot = function SuiListRoot(props: ListRootProps) {
+  const {
+    size = "md",
+    items = [],
+    ordered = false,
+    children = defaultRootItemRenderer,
+    ...otherListProps
+  } = props;
+  const ctx = React.useMemo<ListContext>(() => ({ size }), [size]);
   const element = useRender({
     defaultTagName: ordered ? "ol" : "ul",
     props: [
-      otherProps,
+      otherListProps,
       {
+        children: typeof children === "function" ? items.map(children) : children,
         className: cn("sui_list", `sui_list-size_${size}`, ordered && "sui_list-ordered"),
+        "data-scope": "",
       },
     ],
   });
 
-  return <Context value={context}>{element}</Context>;
+  return <ListContext value={ctx}>{element}</ListContext>;
 };
 
-/**
- * {@link ListRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+const defaultRootItemRenderer: IListRootItemRenderer = (item, index) => {
+  if (!isItemObject(item)) {
+    return <ListItem key={index}>{toReactNode(item)}</ListItem>;
+  }
+
+  const { content, indicator, ...otherItemProps } = item;
+  const indicatorNode = toReactNode(indicator);
+
+  return (
+    <ListItem key={index} {...otherItemProps}>
+      {indicatorNode && <ListItemIndicator>{indicatorNode}</ListItemIndicator>}
+      {toReactNode(content)}
+    </ListItem>
+  );
+};
+
+function isItemObject(item: unknown): item is ListRootItemObject {
+  return typeof item === "object" && item !== null && "content" in item;
+}
+
+export { ListRoot as Root };
+
 export namespace Root {
   /**
-   * {@link ListRootState} です。
+   * {@link ListRootState}
    */
   export type State = ListRootState;
 
   /**
-   * {@link ListRootProps} です。
+   * {@link ListRootProps}
    */
-  export type Props = ListRootProps;
+  export type Props<TItem = any> = ListRootProps<TItem>;
 
   /**
-   * {@link ListRootSize} です。
+   * {@link ListRootItemObject}
+   */
+  export type ItemObject = ListRootItemObject;
+
+  /**
+   * {@link IListRootItemRenderer}
+   */
+  export interface IItemRenderer<TItem = any> extends IListRootItemRenderer<TItem> {}
+
+  /**
+   * {@link ListRootSize}
    */
   export type Size = ListRootSize;
 }
-
-/**
- * {@link ListRoot} です。
- */
-export const Root: IComponent<Root.Props> = ListRoot;
 
 // Item
 // ----
 
 /**
- * リストアイテムの大きさです。
+ * リストの項目の大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type ListItemSize = Size;
 
 /**
- * {@link ListItem} の状態です。
+ * {@link ListItem} が持つ状態です。
  */
 export type ListItemState = {};
 
 /**
- * {@link ListItem} に渡すプロパティーです。
- *
- * 親 {@link ListRoot} 内で使うときは、サイズを省略するとルートの値を使用します。
+ * {@link ListItem} に渡す props です。
  */
 export type ListItemProps = Omit<React.ComponentProps<"li">, keyof RenderProps> &
   RenderProps<ListItemState> & {
@@ -195,28 +270,27 @@ export type ListItemProps = Omit<React.ComponentProps<"li">, keyof RenderProps> 
     disabled?: boolean | undefined;
 
     /**
-     * リストアイテムのサイズを指定します。
+     * リストの項目の大きさを指定します。
      *
-     * 親 {@link ListRoot} 内では、ルートに指定した値が優先されます。
+     * {@link ListRoot} の内側ではルートの値が優先されます。
      */
     size?: ListItemSize | undefined;
   };
 
 /**
- * リストの項目を表す要素です。
+ * リストの項目コンポーネントです。
  */
 export const ListItem: IComponent<ListItemProps> = function SuiListItem(props) {
-  const group = useSuiListContext(true);
-  const { className, disabled = false, size: sizeProp, ...otherProps } = props;
-  const size = group?.size ?? sizeProp ?? "md";
+  const ctx = useSuiListContext(true);
+  const { size: sizeProp, disabled = false, ...otherLiProps } = props;
+  const size = ctx?.size ?? sizeProp ?? "md";
 
   return useRender({
     defaultTagName: "li",
     props: [
-      otherProps,
+      otherLiProps,
       {
         className: cn(
-          className,
           "sui_list_item",
           `sui_list_item-size_${size}`,
           disabled && "sui_list_item-disabled",
@@ -226,80 +300,66 @@ export const ListItem: IComponent<ListItemProps> = function SuiListItem(props) {
   });
 };
 
-/**
- * {@link ListItem} の状態やプロパティーをまとめた型名前空間です。
- */
+export { ListItem as Item };
+
 export namespace Item {
   /**
-   * {@link ListItemState} です。
+   * {@link ListItemState}
    */
   export type State = ListItemState;
 
   /**
-   * {@link ListItemProps} です。
+   * {@link ListItemProps}
    */
   export type Props = ListItemProps;
 
   /**
-   * {@link ListItemSize} です。
+   * {@link ListItemSize}
    */
   export type Size = ListItemSize;
 }
-
-/**
- * {@link ListItem} です。
- */
-export const Item: IComponent<Item.Props> = ListItem;
 
 // Indicator
 // ---------
 
 /**
- * {@link ListItemIndicator} の状態です。
+ * {@link ListItemIndicator} が持つ状態です。
  */
 export type ListItemIndicatorState = {};
 
 /**
- * {@link ListItemIndicator} に渡すプロパティーです。
+ * {@link ListItemIndicator} に渡す props です。
  */
 export type ListItemIndicatorProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
   RenderProps<ListItemIndicatorState>;
 
 /**
- * リストアイテムの先頭に表示するマーカーやアイコンのコンテナーです。
+ * リストの項目の先頭に表示するマーカーやアイコンのコンテナーです。
  */
 export const ListItemIndicator: IComponent<ListItemIndicatorProps> = function SuiListItemIndicator(
   props,
 ) {
-  const { className, ...otherProps } = props;
-
   return useRender({
     defaultTagName: "span",
     props: [
-      otherProps,
+      props,
       {
-        className: cn(className, "sui_list_item_indicator"),
+        className: "sui_list_item_indicator",
       },
     ],
   });
 };
 
-/**
- * {@link ListItemIndicator} の状態やプロパティーをまとめた型名前空間です。
- */
+export { ListItemIndicator as Indicator };
+
 export namespace Indicator {
   /**
-   * {@link ListItemIndicatorState} です。
+   * {@link ListItemIndicatorState}
    */
   export type State = ListItemIndicatorState;
 
   /**
-   * {@link ListItemIndicatorProps} です。
+   * {@link ListItemIndicatorProps}
    */
   export type Props = ListItemIndicatorProps;
 }
-
-/**
- * {@link ListItemIndicator} です。
- */
-export const Indicator: IComponent<Indicator.Props> = ListItemIndicator;

@@ -156,10 +156,35 @@
   }
 }
 
+/* 変数 */
+:scope {
+  --sui_tooltip_arrow-background_color: ;
+}
+
 /* 可変 */
 :scope {
   .sui_tooltip_arrow::before {
-    background-color: var(--sui_tooltip_popup-background_color);
+    background-color: var(--sui_tooltip_arrow-background_color);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_tooltip_arrow-background_color: var(--sui_tooltip_popup-background_color);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Viewport */
+@layer sui.component {
+@scope (.sui_tooltip_portal) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_tooltip_viewport {
+    display: flex;
+    flex-direction: column;
   }
 }
 

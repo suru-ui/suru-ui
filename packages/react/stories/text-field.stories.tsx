@@ -318,3 +318,168 @@ export const Disabled = meta.story({
     );
   },
 });
+
+export const Controlled = meta.story({
+  name: "制御",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+    placeholder: "田中 太郎",
+    type: "text",
+  }),
+  render(props) {
+    const [value, setValue] = React.useState("田中 太郎");
+    return (
+      <div className="flex flex-col gap-2">
+        <TextField {...props} value={value} className="w-[320px]" onValueChange={setValue} />
+        <span>
+          入力値:
+          {value === "" ? "(空)" : value}
+        </span>
+        <div>
+          <button type="button" onClick={() => setValue("")}>
+            クリア
+          </button>
+        </div>
+      </div>
+    );
+  },
+});
+
+export const ReadOnly = meta.story({
+  name: "読み取り専用",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+    placeholder: "田中 太郎",
+    type: "text",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        <TextField {...props} readOnly className="w-[320px]" defaultValue="読み取り専用の値" />
+        <TextField {...props} readOnly className="w-[320px]" placeholder="プレースホルダー" />
+      </div>
+    );
+  },
+});
+
+export const EmptyAndLong = meta.story({
+  name: "空と長い入力値",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+    type: "text",
+  }),
+  render(props) {
+    return (
+      <div className="flex w-[320px] flex-col gap-3">
+        <TextField {...props} placeholder="空の入力欄" />
+        <TextField
+          {...props}
+          defaultValue="とても長い入力値がどのように表示されるかを確認するためのテキストです"
+        />
+        <TextField {...props} radius="full" defaultValue="角丸の入力欄" />
+      </div>
+    );
+  },
+});
+
+export const WithField = meta.story({
+  name: "ラベルと説明",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+    type: "text",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-4">
+        <Field label="氏名" description="本名を入力します。">
+          <TextField {...props} className="w-[320px]" placeholder="田中 太郎" />
+        </Field>
+        <Field label="サイト" invalid description="正しい住所を入力します。">
+          <TextField
+            {...props}
+            className="w-[320px]"
+            startAddons={["https://"]}
+            defaultValue="不正な値"
+          />
+        </Field>
+      </div>
+    );
+  },
+});
+
+export const Required = meta.story({
+  name: "必須と検証",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: true,
+    disabled: false,
+    placeholder: "田中 太郎",
+    type: "text",
+  }),
+  render(props) {
+    return (
+      <form onSubmit={(event) => event.preventDefault()} className="flex flex-col gap-3">
+        <Field label="氏名" description="空のまま送信すると枠線が赤くなります。">
+          <TextField
+            {...props}
+            required
+            className="w-[320px]"
+            slotProps={{ input: { minLength: 2 } }}
+          />
+        </Field>
+        <div>
+          <button type="submit">送信</button>
+        </div>
+      </form>
+    );
+  },
+});
+
+export const Keyboard = meta.story({
+  name: "キーボード操作",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+    type: "text",
+  }),
+  render(props) {
+    return (
+      <div className="flex w-[320px] flex-col gap-2">
+        <TextField
+          {...props}
+          slotProps={{ input: { "aria-label": "氏名" } }}
+          startAddons={["https://"]}
+          defaultValue="example.com"
+        />
+        <p>Tab キーで入力欄へ移動します。枠線の余白を選んでも入力欄へ焦点が移ります。</p>
+      </div>
+    );
+  },
+});

@@ -97,10 +97,52 @@ export const Sizes = meta.story({
             <Stat {...props} size={size}>
               <Stat.Label>総ページビュー</Stat.Label>
               <Stat.Value>89,400</Stat.Value>
-              <Stat.Description>21% more than last month</Stat.Description>
+              <Stat.Description>先月より21%増加しました</Stat.Description>
             </Stat>
           </div>
         ))}
+      </div>
+    );
+  },
+});
+
+export const Dashboard = meta.story({
+  name: "指標の一覧",
+  ...ctrl({
+    size: "md",
+  }),
+  render(props) {
+    return (
+      <div className="grid grid-cols-2 gap-6">
+        <Stat {...props}>
+          <Stat.Label>総ページビュー</Stat.Label>
+          <Stat.Value>
+            89,400
+            <Stat.Change direction="up">12 (8%)</Stat.Change>
+          </Stat.Value>
+          <Stat.Description>先月から増加しました</Stat.Description>
+        </Stat>
+        <Stat {...props}>
+          <Stat.Label>直帰率</Stat.Label>
+          <Stat.Value>
+            32.1%
+            <Stat.Change direction="down">1.4 (4%)</Stat.Change>
+          </Stat.Value>
+          <Stat.Description>先月から改善しました</Stat.Description>
+        </Stat>
+        <Stat {...props}>
+          <Stat.Label>平均滞在時間</Stat.Label>
+          <Stat.Value>2:48</Stat.Value>
+          <Stat.Description>先月と変わりありません</Stat.Description>
+        </Stat>
+        <Stat {...props}>
+          <Stat.Label>新規ユーザー</Stat.Label>
+          <Stat.Value>
+            4,200
+            <Stat.Change direction="flat">0 (0%)</Stat.Change>
+          </Stat.Value>
+          <Stat.Description>先月から変化ありません</Stat.Description>
+        </Stat>
       </div>
     );
   },

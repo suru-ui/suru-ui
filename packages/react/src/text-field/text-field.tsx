@@ -20,63 +20,66 @@ import {
   useTextFieldContext,
 } from "./text-field.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link TextFieldRootColor} です。
+ * {@link TextFieldRootColor}
  */
 export type TextFieldColor = TextFieldRootColor;
 
 /**
- * {@link TextFieldRootRadius} です。
+ * {@link TextFieldRootRadius}
  */
 export type TextFieldRadius = TextFieldRootRadius;
 
 /**
- * {@link TextFieldRootSize} です。
+ * {@link TextFieldRootSize}
  */
 export type TextFieldSize = TextFieldRootSize;
 
 /**
- * {@link TextFieldRootVariant} です。
+ * {@link TextFieldRootVariant}
  */
 export type TextFieldVariant = TextFieldRootVariant;
 
 /**
- * {@link TextFieldInputType} です。
+ * {@link TextFieldInputType}
  */
 export type TextFieldType = TextFieldInputType;
 
 /**
- * {@link TextFieldInputChangeEventReason} です。
+ * {@link TextFieldInputChangeEventReason}
  */
 export type TextFieldChangeEventReason = TextFieldInputChangeEventReason;
 
 /**
- * {@link TextFieldInputChangeEventDetails} です。
+ * {@link TextFieldInputChangeEventDetails}
  */
 export type TextFieldChangeEventDetails = TextFieldInputChangeEventDetails;
 
 /**
- * {@link TextField} の各パーツに渡すプロパティーです。
+ * {@link TextField} の各パーツに渡す props です。
  */
 export type TextFieldSlotProps = {
   /**
-   * {@link TextFieldAddon} に渡すプロパティーです。
+   * {@link TextFieldAddon} に渡す props です。
    */
   readonly addon?: Omit<TextFieldAddonProps, "children"> | undefined;
 
   /**
-   * {@link TextFieldInput} に渡すプロパティーです。
+   * {@link TextFieldInput} に渡す props です。
    */
   readonly input?: TextFieldInputProps | undefined;
 };
 
 /**
- * {@link TextField} の状態です。
+ * {@link TextField} が持つ状態です。
  */
 export type TextFieldState = TextFieldRootState;
 
 /**
- * {@link TextField} コンポーネントのプロパティーです。
+ * {@link TextField} に渡す props です。
  */
 export type TextFieldProps = Omit<TextFieldRootProps, "children"> &
   Pick<
@@ -97,9 +100,9 @@ export type TextFieldProps = Omit<TextFieldRootProps, "children"> &
     endAddons?: Iterable<React.ReactNode> | undefined;
 
     /**
-     * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+     * 各パーツに個別の props を渡すためのオブジェクトです。
      *
-     * 各パーツのプロパティーが優先されます。
+     * 各パーツの props が優先されます。
      */
     slotProps?: TextFieldSlotProps | undefined;
 
@@ -109,39 +112,48 @@ export type TextFieldProps = Omit<TextFieldRootProps, "children"> &
     startAddons?: Iterable<React.ReactNode> | undefined;
   };
 
-/**
- * {@link TextField} の各パーツに渡すプロパティーです。
- */
-export type TextFieldPartsProps = {
-  /**
-   * 入力欄の末尾に表示する {@link TextFieldAddon} の一覧です。
-   *
-   * 内容は `children` に入ります。
-   */
-  readonly endAddons: readonly TextFieldAddonProps[];
-
-  /**
-   * {@link TextFieldInput} に渡すプロパティーです。
-   */
-  readonly input: TextFieldInputProps;
-
-  /**
-   * {@link TextFieldRoot} に渡すプロパティーです。
-   */
-  readonly root: TextFieldRootProps;
-
-  /**
-   * 入力欄の先頭に表示する {@link TextFieldAddon} の一覧です。
-   *
-   * 内容は `children` に入ります。
-   */
-  readonly startAddons: readonly TextFieldAddonProps[];
-};
+// API
+// ---
 
 /**
- * {@link TextField} の各パーツに渡すプロパティーを作るフックです。
+ * {@link TextField} を構成する各パーツの props を作成するための API です。
  */
-export function useTextField(props: TextFieldProps): TextFieldPartsProps {
+export interface TextFieldAPI {
+  /**
+   * 末尾の {@link TextFieldAddon} に渡す props の一覧を取得します。
+   */
+  getEndAddonsPropsList(): readonly TextFieldAddonProps[];
+
+  /**
+   * {@link TextFieldInput} に渡す props を取得します。
+   */
+  getInputProps(): TextFieldInputProps;
+
+  /**
+   * {@link TextFieldRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<TextFieldRootProps, "children">;
+
+  /**
+   * 先頭の {@link TextFieldAddon} に渡す props の一覧を取得します。
+   */
+  getStartAddonsPropsList(): readonly TextFieldAddonProps[];
+}
+
+interface IUseTextFieldAPI {
+  /**
+   * {@link TextFieldAPI} を作成します。
+   *
+   * @param props {@link TextField} の props です。
+   * @returns 文字入力欄の API です
+   */
+  (props: TextFieldProps): TextFieldAPI;
+}
+
+/**
+ * {@link TextFieldAPI} を作成するフックです。
+ */
+export const useTextFieldAPI: IUseTextFieldAPI = function useSuiTextFieldAPI(props) {
   const {
     name,
     type,
@@ -149,63 +161,80 @@ export function useTextField(props: TextFieldProps): TextFieldPartsProps {
     disabled,
     readOnly,
     required,
-    endAddons = null,
-    slotProps: { addon: addonProps, input: inputProps } = {},
+    endAddons = [],
+    startAddons = [],
     placeholder,
-    startAddons = null,
     defaultValue,
     onValueChange,
-    ...rootProps
+    slotProps: { addon: addonProps = {}, input: inputProps = {} } = {},
+    ...otherRootProps
   } = props;
 
   return {
-    root: rootProps,
-    startAddons:
-      React.Children.map(startAddons, (addon) => ({
-        ...addonProps,
-        children: addon,
-      })) ?? [],
-    input: {
-      name,
-      type,
-      value,
-      disabled,
-      readOnly,
-      required,
-      placeholder,
-      defaultValue,
-      onValueChange,
-      ...inputProps,
+    getRootProps() {
+      return otherRootProps;
     },
-    endAddons:
-      React.Children.map(endAddons, (addon) => ({
-        ...addonProps,
-        children: addon,
-      })) ?? [],
+    getInputProps() {
+      return {
+        name,
+        type,
+        value,
+        disabled,
+        readOnly,
+        required,
+        placeholder,
+        defaultValue,
+        onValueChange,
+        ...inputProps,
+      };
+    },
+    getEndAddonsPropsList() {
+      return (
+        React.Children.map(endAddons, (addon) => ({
+          ...addonProps,
+          children: addon,
+        })) ?? []
+      );
+    },
+    getStartAddonsPropsList() {
+      return (
+        React.Children.map(startAddons, (addon) => ({
+          ...addonProps,
+          children: addon,
+        })) ?? []
+      );
+    },
   };
-}
+};
 
-interface TextFieldComponentType extends IComponent<TextFieldProps> {
+export { type TextFieldAPI as API, useTextFieldAPI as useAPI };
+
+// Component
+// ---------
+
+interface ITextField extends IComponent<TextFieldProps> {
   /**
-   * {@link useTextFieldContext} です。
+   * {@link useTextFieldContext}
    */
   readonly useContext: IUseContext<TextFieldContext>;
 }
 
 /**
  * 文字入力欄を表示するコンポーネントです。
+ *
+ * 枠線の内側に入力欄と補助表示を並べ、枠線全体への操作で入力欄へ焦点を移します。
  */
-export const TextField: TextFieldComponentType = /*#__PURE__*/ Object.assign(
+export const TextField: ITextField = /*#__PURE__*/ Object.assign(
   function SuiTextField(props: TextFieldProps) {
-    const partsProps = useTextField(props);
+    const api = useTextFieldAPI(props);
 
     return (
-      <TextFieldRoot {...partsProps.root}>
-        {partsProps.startAddons.map((addonProps, index) => (
+      <TextFieldRoot {...api.getRootProps()}>
+        {api.getStartAddonsPropsList().map((addonProps, index) => (
           <TextFieldAddon key={index} {...addonProps} />
         ))}
-        <TextFieldInput {...partsProps.input} />
-        {partsProps.endAddons.map((addonProps, index) => (
+        <TextFieldInput {...api.getInputProps()} />
+        {api.getEndAddonsPropsList().map((addonProps, index) => (
           <TextFieldAddon key={index} {...addonProps} />
         ))}
       </TextFieldRoot>
@@ -216,62 +245,59 @@ export const TextField: TextFieldComponentType = /*#__PURE__*/ Object.assign(
   },
 );
 
-/**
- * {@link TextField} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace TextField {
   /**
-   * {@link TextFieldState} です。
+   * {@link TextFieldState}
    */
   export type State = TextFieldState;
 
   /**
-   * {@link TextFieldProps} です。
+   * {@link TextFieldProps}
    */
   export type Props = TextFieldProps;
 
   /**
-   * {@link TextFieldContext} です。
+   * {@link TextFieldContext}
    */
   export type Context = TextFieldContext;
 
   /**
-   * {@link TextFieldSlotProps} です。
+   * {@link TextFieldSlotProps}
    */
   export type SlotProps = TextFieldSlotProps;
 
   /**
-   * {@link TextFieldChangeEventDetails} です。
+   * {@link TextFieldChangeEventDetails}
    */
   export type ChangeEventDetails = TextFieldChangeEventDetails;
 
   /**
-   * {@link TextFieldChangeEventReason} です。
+   * {@link TextFieldChangeEventReason}
    */
   export type ChangeEventReason = TextFieldChangeEventReason;
 
   /**
-   * {@link TextFieldColor} です。
+   * {@link TextFieldColor}
    */
   export type Color = TextFieldColor;
 
   /**
-   * {@link TextFieldRadius} です。
+   * {@link TextFieldRadius}
    */
   export type Radius = TextFieldRadius;
 
   /**
-   * {@link TextFieldSize} です。
+   * {@link TextFieldSize}
    */
   export type Size = TextFieldSize;
 
   /**
-   * {@link TextFieldType} です。
+   * {@link TextFieldType}
    */
   export type Type = TextFieldType;
 
   /**
-   * {@link TextFieldVariant} です。
+   * {@link TextFieldVariant}
    */
   export type Variant = TextFieldVariant;
 }

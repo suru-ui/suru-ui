@@ -209,6 +209,66 @@ export const Range = meta.story({
   },
 });
 
+export const Step = meta.story({
+  name: "刻み幅",
+  ...ctrl({
+    variant: "liquid",
+    color: "blue",
+    size: "md",
+    radius: "full",
+    outlined: false,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex w-80 flex-col gap-6">
+        <Slider {...props} max={100} min={0} step={10} defaultValue={25} />
+        <Slider
+          {...props}
+          max={100}
+          min={0}
+          step={5}
+          slotProps={{
+            label: { children: "音量" },
+            value: {},
+          }}
+          defaultValue={50}
+        />
+      </div>
+    );
+  },
+});
+
+export const RangeControlled = meta.story({
+  name: "レンジの制御",
+  ...ctrl({
+    variant: "liquid",
+    color: "blue",
+    size: "md",
+    radius: "full",
+    outlined: false,
+    disabled: false,
+  }),
+  render(props) {
+    const [value, setValue] = React.useState<number[]>([25, 75]);
+
+    return (
+      <div className="w-80">
+        <Slider
+          {...props}
+          max={100}
+          min={0}
+          value={value}
+          onValueChange={(next) => setValue(next as number[])}
+        />
+        <p className="mt-2">
+          現在値: {value[0]}から{value[1]}
+        </p>
+      </div>
+    );
+  },
+});
+
 export const Vertical = meta.story({
   name: "縦方向",
   ...ctrl({

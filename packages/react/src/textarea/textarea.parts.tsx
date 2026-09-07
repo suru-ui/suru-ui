@@ -11,6 +11,16 @@ import "./textarea.css";
 // ----
 
 /**
+ * {@link TextareaRoot} の値が変更されたイベントの詳細です。
+ */
+export type TextareaRootChangeEventDetails = Input.ChangeEventDetails;
+
+/**
+ * {@link TextareaRoot} の値が変更された理由です。
+ */
+export type TextareaRootChangeEventReason = Input.ChangeEventReason;
+
+/**
  * テキストエリアの配色です。
  */
 export type TextareaRootColor = Color;
@@ -44,22 +54,12 @@ export type TextareaRootSize = Size;
 export type TextareaRootVariant = "naked" | "liquid";
 
 /**
- * {@link TextareaRoot} の値が変更された理由です。
- */
-export type TextareaRootChangeEventReason = Input.ChangeEventReason;
-
-/**
- * {@link TextareaRoot} の値が変更されたイベントの詳細です。
- */
-export type TextareaRootChangeEventDetails = Input.ChangeEventDetails;
-
-/**
- * {@link TextareaRoot} の状態です。
+ * {@link TextareaRoot} が持つ状態です。
  */
 export type TextareaRootState = Input.State;
 
 /**
- * {@link TextareaRoot} に渡すプロパティーです。
+ * {@link TextareaRoot} に渡す props です。
  */
 export type TextareaRootProps = Omit<
   React.ComponentProps<typeof Input>,
@@ -82,7 +82,7 @@ export type TextareaRootProps = Omit<
   /**
    * テキストエリアの角丸を指定します。
    *
-   * 既定値は {@link TextareaRootProps.size|size} です。
+   * 既定値は {@link TextareaRootProps.size|size}
    */
   radius?: TextareaRootRadius | undefined;
 
@@ -137,56 +137,51 @@ export const TextareaRoot: IComponent<TextareaRootProps> = function SuiTextareaR
         (state) => state.valid === null && "sui_textarea-unverified",
         (state) => state.disabled && "sui_textarea-disabled",
       )}
+      data-scope=""
     />
   );
 };
 
-/**
- * {@link TextareaRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { TextareaRoot as Root };
+
 export namespace Root {
   /**
-   * {@link TextareaRootState} です。
+   * {@link TextareaRootState}
    */
   export type State = TextareaRootState;
 
   /**
-   * {@link TextareaRootProps} です。
+   * {@link TextareaRootProps}
    */
   export type Props = TextareaRootProps;
 
   /**
-   * {@link TextareaRootChangeEventDetails} です。
+   * {@link TextareaRootChangeEventDetails}
    */
   export type ChangeEventDetails = TextareaRootChangeEventDetails;
 
   /**
-   * {@link TextareaRootChangeEventReason} です。
+   * {@link TextareaRootChangeEventReason}
    */
   export type ChangeEventReason = TextareaRootChangeEventReason;
 
   /**
-   * {@link TextareaRootColor} です。
+   * {@link TextareaRootColor}
    */
   export type Color = TextareaRootColor;
 
   /**
-   * {@link TextareaRootRadius} です。
+   * {@link TextareaRootRadius}
    */
   export type Radius = TextareaRootRadius;
 
   /**
-   * {@link TextareaRootSize} です。
+   * {@link TextareaRootSize}
    */
   export type Size = TextareaRootSize;
 
   /**
-   * {@link TextareaRootVariant} です。
+   * {@link TextareaRootVariant}
    */
   export type Variant = TextareaRootVariant;
 }
-
-/**
- * {@link TextareaRoot} です。
- */
-export const Root: IComponent<Root.Props> = TextareaRoot;

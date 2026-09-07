@@ -171,8 +171,8 @@ export const ToggleButtonRoot: IComponent<ToggleButtonRootProps> = function SuiT
     squared = false,
     variant = "liquid",
     disabled = false,
-    outlined,
-    focusableWhenDisabled,
+    outlined = false,
+    focusableWhenDisabled = !disabled && pending,
     ...toggleButtonProps
   } = props;
   const { render, ...otherToggleButtonProps } = toggleButtonProps;

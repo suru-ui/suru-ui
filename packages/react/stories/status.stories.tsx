@@ -111,3 +111,20 @@ export const Processing = meta.story({
     );
   },
 });
+
+export const WithoutLabel = meta.story({
+  name: "ラベルなし",
+  ...ctrl({
+    color: "green",
+    size: "md",
+    processing: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-wrap items-center gap-3">
+        <Status {...props} />
+        <Status {...props} processing />
+      </div>
+    );
+  },
+});

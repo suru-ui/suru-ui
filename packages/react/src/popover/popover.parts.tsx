@@ -11,26 +11,53 @@ import "./popover.css";
 
 /**
  * ポップオーバーを制御するハンドルです。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
  */
-export type PopoverHandle<TPayload = unknown> = Popover.Handle<TPayload>;
+export interface PopoverHandle<TPayload = any> extends Popover.Handle<TPayload> {}
+
+interface ICreatePopoverHandle {
+  /**
+   * @template TPayload トリガーが送信するデータの型です。
+   * @returns ポップオーバーを制御するハンドルです。
+   */
+  <TPayload = any>(): PopoverHandle<TPayload>;
+}
 
 /**
- * ポップオーバーを制御するハンドルを新しく作成します。
- *
- * 作成したハンドルを {@link Root} と {@link Trigger} の `handle` プロパティーに渡すことで、トリガーとポップオーバーの内容を関連付けます。
+ * {@link PopoverHandle} を作成する関数です。
  */
-export const createHandle: typeof Popover.createHandle = Popover.createHandle;
+export const createPopoverHandle: ICreatePopoverHandle = function createSuiPopoverHandle() {
+  return Popover.createHandle();
+};
+
+export { type PopoverHandle as Handle, createPopoverHandle as createHandle };
 
 // Root
 // ----
 
 /**
- * {@link PopoverRoot} の状態です。
+ * {@link PopoverRoot} を命令的に操作するためのオブジェクトです。
+ */
+export type PopoverRootActions = Popover.Root.Actions;
+
+/**
+ * {@link PopoverRoot} の開閉状態を変更するイベントの詳細です。
+ */
+export type PopoverRootChangeEventDetails = Popover.Root.ChangeEventDetails;
+
+/**
+ * {@link PopoverRoot} の開閉状態を変更する理由です。
+ */
+export type PopoverRootChangeEventReason = Popover.Root.ChangeEventReason;
+
+/**
+ * {@link PopoverRoot} が持つ状態です。
  */
 export type PopoverRootState = Popover.Root.State;
 
 /**
- * {@link PopoverRoot} に渡すプロパティーです。
+ * {@link PopoverRoot} に渡す props です。
  *
  * @template TPayload トリガーから受け取るデータの型です。
  */
@@ -62,38 +89,47 @@ export const PopoverRoot: PopoverRootComponent = function SuiPopoverRoot<TPayloa
   return <Popover.Root {...props} />;
 };
 
-/**
- * {@link PopoverRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { PopoverRoot as Root };
+
 export namespace Root {
   /**
-   * {@link PopoverRootState} です。
+   * {@link PopoverRootState}
    */
   export type State = PopoverRootState;
 
   /**
-   * {@link PopoverRootProps} です。
+   * {@link PopoverRootProps}
    */
   export type Props<TPayload = unknown> = PopoverRootProps<TPayload>;
-}
 
-/**
- * {@link PopoverRoot} です。
- */
-export const Root: PopoverRootComponent = PopoverRoot;
+  /**
+   * {@link PopoverRootActions}
+   */
+  export type Actions = PopoverRootActions;
+
+  /**
+   * {@link PopoverRootChangeEventDetails}
+   */
+  export type ChangeEventDetails = PopoverRootChangeEventDetails;
+
+  /**
+   * {@link PopoverRootChangeEventReason}
+   */
+  export type ChangeEventReason = PopoverRootChangeEventReason;
+}
 
 // Trigger
 // -------
 
 /**
- * {@link PopoverTrigger} の状態です。
+ * {@link PopoverTrigger} が持つ状態です。
  *
  * @template TPayload トリガーから渡すデータの型です。
  */
 export type PopoverTriggerState = Popover.Trigger.State;
 
 /**
- * {@link PopoverTrigger} に渡すプロパティーです。
+ * {@link PopoverTrigger} に渡す props です。
  *
  * @template TPayload トリガーから渡すデータの型です。
  */
@@ -143,36 +179,30 @@ export const PopoverTrigger: PopoverTriggerComponent = function SuiPopoverTrigge
   );
 };
 
-/**
- * {@link PopoverTrigger} の状態やプロパティーをまとめた型名前空間です。
- */
+export { PopoverTrigger as Trigger };
+
 export namespace Trigger {
   /**
-   * {@link PopoverTriggerState} です。
+   * {@link PopoverTriggerState}
    */
   export type State = PopoverTriggerState;
 
   /**
-   * {@link PopoverTriggerProps} です。
+   * {@link PopoverTriggerProps}
    */
   export type Props<TPayload = unknown> = PopoverTriggerProps<TPayload>;
 }
-
-/**
- * {@link PopoverTrigger} です。
- */
-export const Trigger: PopoverTriggerComponent = PopoverTrigger;
 
 // Portal
 // ------
 
 /**
- * {@link PopoverPortal} の状態です。
+ * {@link PopoverPortal} が持つ状態です。
  */
 export type PopoverPortalState = Popover.Portal.State;
 
 /**
- * {@link PopoverPortal} に渡すプロパティーです。
+ * {@link PopoverPortal} に渡す props です。
  */
 export type PopoverPortalProps = React.ComponentProps<typeof Popover.Portal>;
 
@@ -184,39 +214,35 @@ export type PopoverPortalProps = React.ComponentProps<typeof Popover.Portal>;
 export const PopoverPortal: IComponent<PopoverPortalProps> = function SuiPopoverPortal(props) {
   const { className, ...otherProps } = props;
 
-  return <Popover.Portal {...otherProps} className={cn(className, "sui_popover_portal")} />;
+  return (
+    <Popover.Portal {...otherProps} className={cn(className, "sui_popover_portal")} data-scope="" />
+  );
 };
 
-/**
- * {@link PopoverPortal} の状態やプロパティーをまとめた型名前空間です。
- */
+export { PopoverPortal as Portal };
+
 export namespace Portal {
   /**
-   * {@link PopoverPortalState} です。
+   * {@link PopoverPortalState}
    */
   export type State = PopoverPortalState;
 
   /**
-   * {@link PopoverPortalProps} です。
+   * {@link PopoverPortalProps}
    */
   export type Props = PopoverPortalProps;
 }
-
-/**
- * {@link PopoverPortal} です。
- */
-export const Portal: IComponent<Portal.Props> = PopoverPortal;
 
 // Backdrop
 // --------
 
 /**
- * {@link PopoverBackdrop} の状態です。
+ * {@link PopoverBackdrop} が持つ状態です。
  */
 export type PopoverBackdropState = Popover.Backdrop.State;
 
 /**
- * {@link PopoverBackdrop} に渡すプロパティーです。
+ * {@link PopoverBackdrop} に渡す props です。
  */
 export type PopoverBackdropProps = React.ComponentProps<typeof Popover.Backdrop>;
 
@@ -231,36 +257,30 @@ export const PopoverBackdrop: IComponent<PopoverBackdropProps> = function SuiPop
   return <Popover.Backdrop {...otherProps} className={cn(className, "sui_popover_backdrop")} />;
 };
 
-/**
- * {@link PopoverBackdrop} の状態やプロパティーをまとめた型名前空間です。
- */
+export { PopoverBackdrop as Backdrop };
+
 export namespace Backdrop {
   /**
-   * {@link PopoverBackdropState} です。
+   * {@link PopoverBackdropState}
    */
   export type State = PopoverBackdropState;
 
   /**
-   * {@link PopoverBackdropProps} です。
+   * {@link PopoverBackdropProps}
    */
   export type Props = PopoverBackdropProps;
 }
-
-/**
- * {@link PopoverBackdrop} です。
- */
-export const Backdrop: IComponent<Backdrop.Props> = PopoverBackdrop;
 
 // Positioner
 // ----------
 
 /**
- * {@link PopoverPositioner} の状態です。
+ * {@link PopoverPositioner} が持つ状態です。
  */
 export type PopoverPositionerState = Popover.Positioner.State;
 
 /**
- * {@link PopoverPositioner} に渡すプロパティーです。
+ * {@link PopoverPositioner} に渡す props です。
  */
 export type PopoverPositionerProps = React.ComponentProps<typeof Popover.Positioner>;
 
@@ -275,36 +295,30 @@ export const PopoverPositioner: IComponent<PopoverPositionerProps> = function Su
   return <Popover.Positioner {...otherProps} className={cn(className, "sui_popover_positioner")} />;
 };
 
-/**
- * {@link PopoverPositioner} の状態やプロパティーをまとめた型名前空間です。
- */
+export { PopoverPositioner as Positioner };
+
 export namespace Positioner {
   /**
-   * {@link PopoverPositionerState} です。
+   * {@link PopoverPositionerState}
    */
   export type State = PopoverPositionerState;
 
   /**
-   * {@link PopoverPositionerProps} です。
+   * {@link PopoverPositionerProps}
    */
   export type Props = PopoverPositionerProps;
 }
-
-/**
- * {@link PopoverPositioner} です。
- */
-export const Positioner: IComponent<Positioner.Props> = PopoverPositioner;
 
 // Popup
 // -----
 
 /**
- * {@link PopoverPopup} の状態です。
+ * {@link PopoverPopup} が持つ状態です。
  */
 export type PopoverPopupState = Popover.Popup.State;
 
 /**
- * {@link PopoverPopup} に渡すプロパティーです。
+ * {@link PopoverPopup} に渡す props です。
  */
 export type PopoverPopupProps = React.ComponentProps<typeof Popover.Popup>;
 
@@ -317,36 +331,30 @@ export const PopoverPopup: IComponent<PopoverPopupProps> = function SuiPopoverPo
   return <Popover.Popup {...otherProps} className={cn(className, "sui_popover_popup")} />;
 };
 
-/**
- * {@link PopoverPopup} の状態やプロパティーをまとめた型名前空間です。
- */
+export { PopoverPopup as Popup };
+
 export namespace Popup {
   /**
-   * {@link PopoverPopupState} です。
+   * {@link PopoverPopupState}
    */
   export type State = PopoverPopupState;
 
   /**
-   * {@link PopoverPopupProps} です。
+   * {@link PopoverPopupProps}
    */
   export type Props = PopoverPopupProps;
 }
-
-/**
- * {@link PopoverPopup} です。
- */
-export const Popup: IComponent<Popup.Props> = PopoverPopup;
 
 // Arrow
 // -----
 
 /**
- * {@link PopoverArrow} の状態です。
+ * {@link PopoverArrow} が持つ状態です。
  */
 export type PopoverArrowState = Popover.Arrow.State;
 
 /**
- * {@link PopoverArrow} に渡すプロパティーです。
+ * {@link PopoverArrow} に渡す props です。
  */
 export type PopoverArrowProps = React.ComponentProps<typeof Popover.Arrow>;
 
@@ -359,36 +367,30 @@ export const PopoverArrow: IComponent<PopoverArrowProps> = function SuiPopoverAr
   return <Popover.Arrow {...otherProps} className={cn(className, "sui_popover_arrow")} />;
 };
 
-/**
- * {@link PopoverArrow} の状態やプロパティーをまとめた型名前空間です。
- */
+export { PopoverArrow as Arrow };
+
 export namespace Arrow {
   /**
-   * {@link PopoverArrowState} です。
+   * {@link PopoverArrowState}
    */
   export type State = PopoverArrowState;
 
   /**
-   * {@link PopoverArrowProps} です。
+   * {@link PopoverArrowProps}
    */
   export type Props = PopoverArrowProps;
 }
-
-/**
- * {@link PopoverArrow} です。
- */
-export const Arrow: IComponent<Arrow.Props> = PopoverArrow;
 
 // Title
 // -----
 
 /**
- * {@link PopoverTitle} の状態です。
+ * {@link PopoverTitle} が持つ状態です。
  */
 export type PopoverTitleState = Popover.Title.State;
 
 /**
- * {@link PopoverTitle} に渡すプロパティーです。
+ * {@link PopoverTitle} に渡す props です。
  */
 export type PopoverTitleProps = React.ComponentProps<typeof Popover.Title>;
 
@@ -401,36 +403,30 @@ export const PopoverTitle: IComponent<PopoverTitleProps> = function SuiPopoverTi
   return <Popover.Title {...otherProps} className={cn(className, "sui_popover_title")} />;
 };
 
-/**
- * {@link PopoverTitle} の状態やプロパティーをまとめた型名前空間です。
- */
+export { PopoverTitle as Title };
+
 export namespace Title {
   /**
-   * {@link PopoverTitleState} です。
+   * {@link PopoverTitleState}
    */
   export type State = PopoverTitleState;
 
   /**
-   * {@link PopoverTitleProps} です。
+   * {@link PopoverTitleProps}
    */
   export type Props = PopoverTitleProps;
 }
-
-/**
- * {@link PopoverTitle} です。
- */
-export const Title: IComponent<Title.Props> = PopoverTitle;
 
 // Description
 // -----------
 
 /**
- * {@link PopoverDescription} の状態です。
+ * {@link PopoverDescription} が持つ状態です。
  */
 export type PopoverDescriptionState = Popover.Description.State;
 
 /**
- * {@link PopoverDescription} に渡すプロパティーです。
+ * {@link PopoverDescription} に渡す props です。
  */
 export type PopoverDescriptionProps = React.ComponentProps<typeof Popover.Description>;
 
@@ -446,36 +442,30 @@ export const PopoverDescription: IComponent<PopoverDescriptionProps> =
     );
   };
 
-/**
- * {@link PopoverDescription} の状態やプロパティーをまとめた型名前空間です。
- */
+export { PopoverDescription as Description };
+
 export namespace Description {
   /**
-   * {@link PopoverDescriptionState} です。
+   * {@link PopoverDescriptionState}
    */
   export type State = PopoverDescriptionState;
 
   /**
-   * {@link PopoverDescriptionProps} です。
+   * {@link PopoverDescriptionProps}
    */
   export type Props = PopoverDescriptionProps;
 }
-
-/**
- * {@link PopoverDescription} です。
- */
-export const Description: IComponent<Description.Props> = PopoverDescription;
 
 // Close
 // -----
 
 /**
- * {@link PopoverClose} の状態です。
+ * {@link PopoverClose} が持つ状態です。
  */
 export type PopoverCloseState = Popover.Close.State;
 
 /**
- * {@link PopoverClose} に渡すプロパティーです。
+ * {@link PopoverClose} に渡す props です。
  */
 export type PopoverCloseProps = Omit<
   React.ComponentProps<typeof Popover.Close>,
@@ -506,36 +496,30 @@ export const PopoverClose: IComponent<PopoverCloseProps> = function SuiPopoverCl
   );
 };
 
-/**
- * {@link PopoverClose} の状態やプロパティーをまとめた型名前空間です。
- */
+export { PopoverClose as Close };
+
 export namespace Close {
   /**
-   * {@link PopoverCloseState} です。
+   * {@link PopoverCloseState}
    */
   export type State = PopoverCloseState;
 
   /**
-   * {@link PopoverCloseProps} です。
+   * {@link PopoverCloseProps}
    */
   export type Props = PopoverCloseProps;
 }
-
-/**
- * {@link PopoverClose} です。
- */
-export const Close: IComponent<Close.Props> = PopoverClose;
 
 // Viewport
 // --------
 
 /**
- * {@link PopoverViewport} の状態です。
+ * {@link PopoverViewport} が持つ状態です。
  */
 export type PopoverViewportState = Popover.Viewport.State;
 
 /**
- * {@link PopoverViewport} に渡すプロパティーです。
+ * {@link PopoverViewport} に渡す props です。
  */
 export type PopoverViewportProps = React.ComponentProps<typeof Popover.Viewport>;
 
@@ -552,22 +536,16 @@ export const PopoverViewport: IComponent<PopoverViewportProps> = function SuiPop
   return <Popover.Viewport {...otherProps} className={cn(className, "sui_popover_viewport")} />;
 };
 
-/**
- * {@link PopoverViewport} の状態やプロパティーをまとめた型名前空間です。
- */
+export { PopoverViewport as Viewport };
+
 export namespace Viewport {
   /**
-   * {@link PopoverViewportState} です。
+   * {@link PopoverViewportState}
    */
   export type State = PopoverViewportState;
 
   /**
-   * {@link PopoverViewportProps} です。
+   * {@link PopoverViewportProps}
    */
   export type Props = PopoverViewportProps;
 }
-
-/**
- * {@link PopoverViewport} です。
- */
-export const Viewport: IComponent<Viewport.Props> = PopoverViewport;

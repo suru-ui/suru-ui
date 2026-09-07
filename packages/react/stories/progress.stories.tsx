@@ -231,3 +231,148 @@ export const Indeterminate = meta.story({
     );
   },
 });
+
+export const Status = meta.story({
+  name: "状態",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: "full",
+    outlined: false,
+    max: 100,
+    min: 0,
+  }),
+  render(props) {
+    return (
+      <div className="flex w-[300px] flex-col gap-6">
+        <Progress {...props} label="進行中" value={24} />
+        <Progress {...props} label="完了" value={100} />
+        <Progress {...props} label="不確定" value={null} />
+      </div>
+    );
+  },
+});
+
+export const Edge = meta.story({
+  name: "境界値",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: "full",
+    outlined: false,
+    min: 0,
+    max: 100,
+  }),
+  render(props) {
+    return (
+      <div className="flex w-[300px] flex-col gap-6">
+        <Progress {...props} label="開始直後" value={0} />
+        <Progress {...props} label="完了直前" value={99} />
+        <Progress {...props} label="完了" value={100} />
+      </div>
+    );
+  },
+});
+
+export const Format = meta.story({
+  name: "表示形式",
+  ...ctrl({
+    label: "アップロード中",
+    variant: "liquid",
+    color: "blue",
+    size: "md",
+    radius: "full",
+    outlined: false,
+    max: 100,
+    value: 42,
+    min: 0,
+  }),
+  render(props) {
+    return (
+      <div className="flex w-[300px] flex-col gap-6">
+        <Progress {...props} />
+        <Progress
+          {...props}
+          label="残り時間つき"
+          slotProps={{
+            value: {
+              children: (formatted) => `${formatted} 完了`,
+            },
+          }}
+        />
+      </div>
+    );
+  },
+});
+
+export const RealWorld = meta.story({
+  name: "実利用例",
+  ...ctrl({
+    label: "ファイルをアップロードしています",
+    variant: "liquid",
+    color: "green",
+    size: "md",
+    radius: "full",
+    outlined: false,
+    max: 100,
+    min: 0,
+  }),
+  render(props) {
+    const [value, setValue] = React.useState(0);
+    const done = value >= 100;
+
+    React.useEffect(() => {
+      if (done) {
+        return;
+      }
+      const timer = setInterval(() => {
+        setValue((current) => Math.min(100, current + 10));
+      }, 500);
+
+      return () => clearInterval(timer);
+    }, [done]);
+
+    return (
+      <div className="flex w-[300px] flex-col gap-2">
+        <Progress {...props} label={done ? "アップロード完了" : props.label} value={value} />
+        <button
+          type="button"
+          onClick={() => setValue(0)}
+          disabled={!done}
+          className="w-fit text-sm underline"
+        >
+          はじめからやり直す
+        </button>
+      </div>
+    );
+  },
+});
+
+export const Accessibility = meta.story({
+  name: "アクセシビリティー",
+  ...ctrl({
+    label: "プロフィールを保存しています",
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: "full",
+    outlined: false,
+    max: 100,
+    value: 60,
+    min: 0,
+  }),
+  render(props) {
+    return (
+      <div className="w-[300px]">
+        <Progress
+          {...props}
+          locale="ja-JP"
+          getAriaValueText={(formatted) => `${formatted}完了`}
+          aria-valuetext="60パーセント完了"
+        />
+      </div>
+    );
+  },
+});

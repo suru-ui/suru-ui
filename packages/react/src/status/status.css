@@ -70,6 +70,7 @@
 /* 固定 */
 :scope {
   .sui_status_indicator {
+    position: relative;
     display: block;
     flex-shrink: 0;
   }
@@ -99,7 +100,6 @@
     height: var(--sui_status_indicator-size);
     background-color: var(--sui_status_indicator-background_color);
     border-radius: var(--sui_status_indicator-border_radius);
-    animation-duration: var(--sui_status_indicator-animation_duration);
   }
 
   .sui_status_indicator-processing::after {

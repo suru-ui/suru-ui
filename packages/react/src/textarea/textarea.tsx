@@ -11,113 +11,135 @@ import {
   TextareaRoot,
 } from "./textarea.parts.jsx";
 
-/**
- * {@link TextareaRootColor} です。
- */
-export type TextareaColor = TextareaRootColor;
+// Types
+// -----
 
 /**
- * {@link TextareaRootRadius} です。
- */
-export type TextareaRadius = TextareaRootRadius;
-
-/**
- * {@link TextareaRootSize} です。
- */
-export type TextareaSize = TextareaRootSize;
-
-/**
- * {@link TextareaRootVariant} です。
- */
-export type TextareaVariant = TextareaRootVariant;
-
-/**
- * {@link TextareaRootChangeEventReason} です。
- */
-export type TextareaChangeEventReason = TextareaRootChangeEventReason;
-
-/**
- * {@link TextareaRootChangeEventDetails} です。
+ * {@link TextareaRootChangeEventDetails}
  */
 export type TextareaChangeEventDetails = TextareaRootChangeEventDetails;
 
 /**
- * {@link Textarea} の状態です。
+ * {@link TextareaRootChangeEventReason}
+ */
+export type TextareaChangeEventReason = TextareaRootChangeEventReason;
+
+/**
+ * {@link TextareaRootColor}
+ */
+export type TextareaColor = TextareaRootColor;
+
+/**
+ * {@link TextareaRootRadius}
+ */
+export type TextareaRadius = TextareaRootRadius;
+
+/**
+ * {@link TextareaRootSize}
+ */
+export type TextareaSize = TextareaRootSize;
+
+/**
+ * {@link TextareaRootVariant}
+ */
+export type TextareaVariant = TextareaRootVariant;
+
+/**
+ * {@link Textarea} が持つ状態です。
  */
 export type TextareaState = TextareaRootState;
 
 /**
- * {@link Textarea} コンポーネントのプロパティーです。
+ * {@link Textarea} に渡す props です。
  */
 export type TextareaProps = TextareaRootProps;
 
-/**
- * {@link Textarea} の各パーツに渡すプロパティーです。
- */
-export type TextareaPartsProps = {
-  /**
-   * {@link TextareaRoot} に渡すプロパティーです。
-   */
-  readonly root: TextareaRootProps;
-};
+// API
+// ---
 
 /**
- * {@link Textarea} の各パーツに渡すプロパティーを作るフックです。
+ * {@link Textarea} を構成する各パーツの props を作成するための API です。
  */
-export function useTextarea(props: TextareaProps): TextareaPartsProps {
-  return { root: props };
+export interface TextareaAPI {
+  /**
+   * {@link TextareaRoot} に渡す props を取得します。
+   */
+  getRootProps(): TextareaRootProps;
 }
+
+interface IUseTextareaAPI {
+  /**
+   * {@link TextareaAPI} を作成します。
+   *
+   * @param props {@link Textarea} の props です。
+   * @returns テキストエリアの API です
+   */
+  (props: TextareaProps): TextareaAPI;
+}
+
+/**
+ * {@link TextareaAPI} を作成するフックです。
+ */
+export const useTextareaAPI: IUseTextareaAPI = function useSuiTextareaAPI(props) {
+  return {
+    getRootProps() {
+      return props;
+    },
+  };
+};
+
+export { type TextareaAPI as API, useTextareaAPI as useAPI };
+
+// Component
+// ---------
 
 /**
  * 複数行のテキストを入力するテキストエリアを表示するコンポーネントです。
  */
 export const Textarea: IComponent<TextareaProps> = function SuiTextarea(props) {
-  const partsProps = useTextarea(props);
+  const api = useTextareaAPI(props);
 
-  return <TextareaRoot {...partsProps.root} />;
+  return <TextareaRoot {...api.getRootProps()} />;
 };
 
-/**
- * {@link Textarea} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Textarea {
   /**
-   * {@link TextareaState} です。
+   * {@link TextareaState}
    */
   export type State = TextareaState;
 
   /**
-   * {@link TextareaProps} です。
+   * {@link TextareaProps}
    */
   export type Props = TextareaProps;
 
   /**
-   * {@link TextareaChangeEventDetails} です。
+   * {@link TextareaChangeEventDetails}
    */
   export type ChangeEventDetails = TextareaChangeEventDetails;
 
   /**
-   * {@link TextareaChangeEventReason} です。
+   * {@link TextareaChangeEventReason}
    */
   export type ChangeEventReason = TextareaChangeEventReason;
 
   /**
-   * {@link TextareaColor} です。
+   * {@link TextareaColor}
    */
   export type Color = TextareaColor;
 
   /**
-   * {@link TextareaRadius} です。
+   * {@link TextareaRadius}
    */
   export type Radius = TextareaRadius;
 
   /**
-   * {@link TextareaSize} です。
+   * {@link TextareaSize}
    */
   export type Size = TextareaSize;
 
   /**
-   * {@link TextareaVariant} です。
+   * {@link TextareaVariant}
    */
   export type Variant = TextareaVariant;
 }

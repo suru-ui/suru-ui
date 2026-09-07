@@ -1,276 +1,273 @@
 /* Root */
 @layer sui.component {
-@scope (.sui_resizable) to ([data-scope]) {
+  @scope (.sui_resizable) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
 
-/* 固定 */
-:scope {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+      &[data-direction="horizontal"] {
+        flex-direction: row;
+      }
 
-  &[data-direction="horizontal"] {
-    flex-direction: row;
-  }
-
-  &[data-direction="vertical"] {
-    flex-direction: column;
-  }
-}
-
-} /* @scope */
+      &[data-direction="vertical"] {
+        flex-direction: column;
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* Handle */
 @layer sui.component {
-@scope (.sui_resizable) to ([data-scope]) {
+  @scope (.sui_resizable) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      .sui_resizable_handle {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        padding: 0px;
+        touch-action: none;
+        cursor: col-resize;
+        user-select: none;
+        outline-style: solid;
+      }
 
-/* 固定 */
-:scope {
-  .sui_resizable_handle {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex: 0 0 auto;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    padding: 0px;
-    touch-action: none;
-    cursor: col-resize;
-    user-select: none;
-  }
+      .sui_resizable_handle[aria-orientation="horizontal"] {
+        width: 100%;
+        cursor: row-resize;
+      }
 
-  .sui_resizable_handle[aria-orientation="horizontal"] {
-    width: 100%;
-    cursor: row-resize;
-  }
+      .sui_resizable_handle::after {
+        position: absolute;
+        z-index: 0;
+        content: "";
+      }
 
-  .sui_resizable_handle::after {
-    position: absolute;
-    z-index: 0;
-    content: "";
-  }
+      .sui_resizable_handle[aria-orientation="vertical"]::after {
+        top: 0px;
+        bottom: 0px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
 
-  .sui_resizable_handle[aria-orientation="vertical"]::after {
-    top: 0px;
-    bottom: 0px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .sui_resizable_handle[aria-orientation="horizontal"]::after {
-    top: 50%;
-    right: 0px;
-    left: 0px;
-    transform: translateY(-50%);
-  }
-}
-
-/* 変数 */
-:scope {
-  --sui_resizable_handle-outline_width: ;
-  --sui_resizable_handle-outline_color: ;
-  --sui_resizable_handle-outline_offset: ;
-  --sui_resizable_handle-hit_size: ;
-  --sui_resizable_handle-line_color-action: ;
-  --sui_resizable_handle-line_color-normal: ;
-  --sui_resizable_handle-line_color-subtle: ;
-  --sui_resizable_handle-line_size: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_resizable_handle {
-    width: var(--sui_resizable_handle-line_size);
-    outline-width: var(--_sui_resizable_handle-outline_width,
-                     var(--sui_resizable_handle-outline_width)
-                   );
-    outline-style: solid;
-    outline-color: var(--sui_resizable_handle-outline_color);
-    outline-offset: var(--sui_resizable_handle-outline_offset);
-    background-color: var(--_sui_resizable_handle-line_color,
-                        var(--sui_resizable_handle-line_color-normal)
-                      );
-  }
-
-  .sui_resizable_handle[aria-orientation="horizontal"] {
-    height: var(--sui_resizable_handle-line_size);
-  }
-
-  .sui_resizable_handle[aria-orientation="vertical"]::after {
-    width: var(--sui_resizable_handle-hit_size);
-  }
-
-  .sui_resizable_handle[aria-orientation="horizontal"]::after {
-    height: var(--sui_resizable_handle-hit_size);
-  }
-}
-
-/* 代入 */
-:scope {
-  --sui_resizable_handle-outline_width: 0px;
-  --sui_resizable_handle-outline_color: var(--sui-focusring_color);
-  --sui_resizable_handle-outline_offset: var(--sui-focusring_offset);
-  --sui_resizable_handle-hit_size: 16px;
-  --sui_resizable_handle-line_color-action: var(--sui-canvas_text-1);
-  --sui_resizable_handle-line_color-normal: var(--sui-canvas_text-3);
-  --sui_resizable_handle-line_color-subtle: var(--sui-canvas_text-2);
-  --sui_resizable_handle-line_size: 1px;
-}
-
-/* 変異 */
-:scope {
-  .sui_resizable_handle {
-    @media (any-hover: hover) {
-      &:not(.sui_resizable_handle-disabled):hover {
-        --_sui_resizable_handle-line_color: var(--sui_resizable_handle-line_color-subtle);
+      .sui_resizable_handle[aria-orientation="horizontal"]::after {
+        top: 50%;
+        right: 0px;
+        left: 0px;
+        transform: translateY(-50%);
       }
     }
 
-    &:not(.sui_resizable_handle-disabled):active {
-      --_sui_resizable_handle-line_color: var(--sui_resizable_handle-line_color-action);
+    /* 変数 */
+    :scope {
+      --sui_resizable_handle-outline_width: ;
+      --sui_resizable_handle-outline_color: ;
+      --sui_resizable_handle-outline_offset: ;
+      --sui_resizable_handle-hit_size: ;
+      --sui_resizable_handle-line_color-active: ;
+      --sui_resizable_handle-line_color-hover: ;
+      --sui_resizable_handle-line_color-idle: ;
+      --sui_resizable_handle-line_size: ;
     }
 
-    &:focus-visible {
-      --_sui_resizable_handle-outline_width: var(--sui-focusring_width);
-    }
-  }
-}
+    /* 可変 */
+    :scope {
+      .sui_resizable_handle {
+        width: var(--sui_resizable_handle-line_size);
+        outline-width: var(--_sui_resizable_handle-outline_width, 0px);
+        outline-color: var(--_sui_resizable_handle-outline_color, transparent);
+        outline-offset: var(--_sui_resizable_handle-outline_offset, 0px);
+        background-color: var(
+          --_sui_resizable_handle-line_color,
+          var(--sui_resizable_handle-line_color-idle)
+        );
+      }
 
-} /* @scope */
+      .sui_resizable_handle[aria-orientation="horizontal"] {
+        height: var(--sui_resizable_handle-line_size);
+      }
+
+      .sui_resizable_handle[aria-orientation="vertical"]::after {
+        width: var(--sui_resizable_handle-hit_size);
+      }
+
+      .sui_resizable_handle[aria-orientation="horizontal"]::after {
+        height: var(--sui_resizable_handle-hit_size);
+      }
+    }
+
+    /* 代入 */
+    :scope {
+      --sui_resizable_handle-outline_width: var(--sui-focusring_width);
+      --sui_resizable_handle-outline_color: var(--sui-focusring_color);
+      --sui_resizable_handle-outline_offset: var(--sui-focusring_offset);
+      --sui_resizable_handle-hit_size: 16px;
+      --sui_resizable_handle-line_color-active: var(--sui-canvas_text-1);
+      --sui_resizable_handle-line_color-hover: var(--sui-canvas_text-2);
+      --sui_resizable_handle-line_color-idle: var(--sui-canvas_text-3);
+      --sui_resizable_handle-line_size: 1px;
+    }
+
+    /* 変異 */
+    :scope {
+      .sui_resizable_handle {
+        @media (any-hover: hover) {
+          &:not(.sui_resizable_handle-disabled):hover {
+            --_sui_resizable_handle-line_color: var(--sui_resizable_handle-line_color-hover);
+          }
+        }
+
+        &:not(.sui_resizable_handle-disabled):active {
+          --_sui_resizable_handle-line_color: var(--sui_resizable_handle-line_color-active);
+        }
+
+        &:not(.sui_resizable_handle-disabled):focus-visible {
+          --_sui_resizable_handle-outline_width: var(--sui_resizable_handle-outline_width);
+          --_sui_resizable_handle-outline_color: var(--sui_resizable_handle-outline_color);
+          --_sui_resizable_handle-outline_offset: var(--sui_resizable_handle-outline_offset);
+        }
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* Grip */
 @layer sui.component {
-@scope (.sui_resizable) to ([data-scope]) {
+  @scope (.sui_resizable) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      .sui_resizable_handle_grip {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: center;
+        padding: 0px;
+        border: 0px;
+      }
 
-/* 固定 */
-:scope {
-  .sui_resizable_handle_grip {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex: 0 0 auto;
-    align-items: center;
-    justify-content: center;
-    padding: 0px;
-    border: 0px;
-  }
+      .sui_resizable_handle[aria-orientation="horizontal"] > .sui_resizable_handle_grip {
+        transform: rotate(90deg);
+      }
 
-  .sui_resizable_handle[aria-orientation="horizontal"] > .sui_resizable_handle_grip {
-    transform: rotate(90deg);
-  }
-
-  .sui_resizable_handle_grip:empty::before {
-    display: block;
-    content: "";
-    border-radius: 999px;
-  }
-}
-
-/* 変数 */
-:scope {
-  --sui_resizable_handle-grip_background_color-action: ;
-  --sui_resizable_handle-grip_background_color-normal: ;
-  --sui_resizable_handle-grip_background_color-subtle: ;
-  --sui_resizable_handle-grip_border_color-action: ;
-  --sui_resizable_handle-grip_border_color-normal: ;
-  --sui_resizable_handle-grip_border_color-subtle: ;
-  --sui_resizable_handle-grip_border_radius: ;
-  --sui_resizable_handle-grip_border_width: ;
-  --sui_resizable_handle-grip_dot_size: ;
-  --sui_resizable_handle-grip_height: ;
-  --sui_resizable_handle-grip_width: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_resizable_handle_grip {
-    width: var(--sui_resizable_handle-grip_width);
-    height: var(--sui_resizable_handle-grip_height);
-    background-color: var(--_sui_resizable_handle-grip_background_color,
-                        var(--sui_resizable_handle-grip_background_color-normal)
-                      );
-    border-color: var(--_sui_resizable_handle-grip_border_color,
-                    var(--sui_resizable_handle-grip_border_color-normal)
-                  );
-    border-style: solid;
-    border-width: var(--sui_resizable_handle-grip_border_width);
-    border-radius: var(--sui_resizable_handle-grip_border_radius);
-  }
-
-  .sui_resizable_handle_grip:empty::before {
-    width: var(--sui_resizable_handle-grip_dot_size);
-    height: var(--sui_resizable_handle-grip_dot_size);
-    background-color: var(--_sui_resizable_handle-line_color,
-                        var(--sui_resizable_handle-line_color-normal)
-                      );
-    box-shadow: 0px -4px 0px
-                  var(--_sui_resizable_handle-line_color,
-                       var(--sui_resizable_handle-line_color-normal)
-                     ),
-                0px 4px 0px
-                  var(--_sui_resizable_handle-line_color,
-                       var(--sui_resizable_handle-line_color-normal)
-                     );
-  }
-}
-
-/* 代入 */
-:scope {
-  --sui_resizable_handle-grip_background_color-action: var(--sui-canvas-1);
-  --sui_resizable_handle-grip_background_color-normal: var(--sui-canvas-1);
-  --sui_resizable_handle-grip_background_color-subtle: var(--sui-canvas-2);
-  --sui_resizable_handle-grip_border_color-action: var(--sui-canvas_text-1);
-  --sui_resizable_handle-grip_border_color-normal: var(--sui-canvas_text-3);
-  --sui_resizable_handle-grip_border_color-subtle: var(--sui-canvas_text-2);
-  --sui_resizable_handle-grip_border_radius: 2px;
-  --sui_resizable_handle-grip_border_width: 1px;
-  --sui_resizable_handle-grip_dot_size: 2px;
-  --sui_resizable_handle-grip_height: 16px;
-  --sui_resizable_handle-grip_width: 12px;
-}
-
-/* 変異 */
-:scope {
-  .sui_resizable_handle {
-    @media (any-hover: hover) {
-      &:not(.sui_resizable_handle-disabled):hover {
-        --_sui_resizable_handle-grip_background_color:
-          var(--sui_resizable_handle-grip_background_color-subtle);
-        --_sui_resizable_handle-grip_border_color:
-          var(--sui_resizable_handle-grip_border_color-subtle);
+      .sui_resizable_handle_grip:empty::before {
+        display: block;
+        content: "";
+        border-radius: 999px;
       }
     }
 
-    &:not(.sui_resizable_handle-disabled):active {
-      --_sui_resizable_handle-grip_background_color:
-        var(--sui_resizable_handle-grip_background_color-action);
-      --_sui_resizable_handle-grip_border_color:
-        var(--sui_resizable_handle-grip_border_color-action);
+    /* 変数 */
+    :scope {
+      --sui_resizable_handle-grip_background_color-active: ;
+      --sui_resizable_handle-grip_background_color-hover: ;
+      --sui_resizable_handle-grip_background_color-idle: ;
+      --sui_resizable_handle-grip_border_color-active: ;
+      --sui_resizable_handle-grip_border_color-hover: ;
+      --sui_resizable_handle-grip_border_color-idle: ;
+      --sui_resizable_handle-grip_border_radius: ;
+      --sui_resizable_handle-grip_border_width: ;
+      --sui_resizable_handle-grip_dot_size: ;
+      --sui_resizable_handle-grip_height: ;
+      --sui_resizable_handle-grip_width: ;
     }
-  }
-}
 
-} /* @scope */
+    /* 可変 */
+    :scope {
+      .sui_resizable_handle_grip {
+        width: var(--sui_resizable_handle-grip_width);
+        height: var(--sui_resizable_handle-grip_height);
+        background-color: var(
+          --_sui_resizable_handle-grip_background_color,
+          var(--sui_resizable_handle-grip_background_color-idle)
+        );
+        border-color: var(
+          --_sui_resizable_handle-grip_border_color,
+          var(--sui_resizable_handle-grip_border_color-idle)
+        );
+        border-style: solid;
+        border-width: var(--sui_resizable_handle-grip_border_width);
+        border-radius: var(--sui_resizable_handle-grip_border_radius);
+      }
+
+      .sui_resizable_handle_grip:empty::before {
+        width: var(--sui_resizable_handle-grip_dot_size);
+        height: var(--sui_resizable_handle-grip_dot_size);
+        background-color: var(
+          --_sui_resizable_handle-line_color,
+          var(--sui_resizable_handle-line_color-idle)
+        );
+        box-shadow:
+          0px -4px 0px
+            var(--_sui_resizable_handle-line_color, var(--sui_resizable_handle-line_color-idle)),
+          0px 4px 0px
+            var(--_sui_resizable_handle-line_color, var(--sui_resizable_handle-line_color-idle));
+      }
+    }
+
+    /* 代入 */
+    :scope {
+      --sui_resizable_handle-grip_background_color-active: var(--sui-canvas-1);
+      --sui_resizable_handle-grip_background_color-hover: var(--sui-canvas-2);
+      --sui_resizable_handle-grip_background_color-idle: var(--sui-canvas-1);
+      --sui_resizable_handle-grip_border_color-active: var(--sui-canvas_text-1);
+      --sui_resizable_handle-grip_border_color-hover: var(--sui-canvas_text-2);
+      --sui_resizable_handle-grip_border_color-idle: var(--sui-canvas_text-3);
+      --sui_resizable_handle-grip_border_radius: 2px;
+      --sui_resizable_handle-grip_border_width: 1px;
+      --sui_resizable_handle-grip_dot_size: 2px;
+      --sui_resizable_handle-grip_height: 16px;
+      --sui_resizable_handle-grip_width: 12px;
+    }
+
+    /* 変異 */
+    :scope {
+      .sui_resizable_handle {
+        @media (any-hover: hover) {
+          &:not(.sui_resizable_handle-disabled):hover {
+            --_sui_resizable_handle-grip_background_color: var(
+              --sui_resizable_handle-grip_background_color-hover
+            );
+            --_sui_resizable_handle-grip_border_color: var(
+              --sui_resizable_handle-grip_border_color-hover
+            );
+          }
+        }
+
+        &:not(.sui_resizable_handle-disabled):active {
+          --_sui_resizable_handle-grip_background_color: var(
+            --sui_resizable_handle-grip_background_color-active
+          );
+          --_sui_resizable_handle-grip_border_color: var(
+            --sui_resizable_handle-grip_border_color-active
+          );
+        }
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* disabled */
 @layer sui.important {
-@scope (.sui_resizable) to ([data-scope]) {
+  @scope (.sui_resizable) to ([data-scope]) {
+    /* Handle */
+    :scope {
+      .sui_resizable_handle-disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+      }
 
-/* Handle */
-:scope {
-  .sui_resizable_handle-disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-
-  .sui_resizable_handle-disabled .sui_resizable_handle_grip {
-    cursor: not-allowed;
-  }
-}
-
-} /* @scope */
+      .sui_resizable_handle-disabled .sui_resizable_handle_grip {
+        cursor: not-allowed;
+      }
+    }
+  } /* @scope */
 } /* @layer */

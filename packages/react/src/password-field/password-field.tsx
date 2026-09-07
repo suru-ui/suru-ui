@@ -1,8 +1,9 @@
 import * as React from "react";
 
 import { type TextFieldInputProps } from "../text-field/text-field.parts.jsx";
-import type { IComponent } from "../types.js";
+import type { IComponent, IUseContext } from "../types.js";
 import {
+  type PasswordFieldContext,
   type PasswordFieldRootSize,
   type PasswordFieldRootColor,
   type PasswordFieldRootProps,
@@ -14,51 +15,55 @@ import {
   PasswordFieldRoot,
   PasswordFieldAddon,
   PasswordFieldInput,
+  usePasswordFieldContext,
   PasswordFieldToggleButton,
 } from "./password-field.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link PasswordFieldRootColor} です。
+ * {@link PasswordFieldRootColor}
  */
 export type PasswordFieldColor = PasswordFieldRootColor;
 
 /**
- * {@link PasswordFieldRootRadius} です。
+ * {@link PasswordFieldRootRadius}
  */
 export type PasswordFieldRadius = PasswordFieldRootRadius;
 
 /**
- * {@link PasswordFieldRootSize} です。
+ * {@link PasswordFieldRootSize}
  */
 export type PasswordFieldSize = PasswordFieldRootSize;
 
 /**
- * {@link PasswordFieldRootVariant} です。
+ * {@link PasswordFieldRootVariant}
  */
 export type PasswordFieldVariant = PasswordFieldRootVariant;
 
 /**
- * {@link PasswordField} の各パーツに渡すプロパティーです。
+ * {@link PasswordField} の各パーツに渡す props です。
  */
 export type PasswordFieldSlotProps = {
   /**
-   * {@link PasswordFieldAddon} に渡すプロパティーです。
+   * {@link PasswordFieldAddon} に渡す props です。
    */
   readonly addon?: Omit<PasswordFieldAddonProps, "children"> | undefined;
 
   /**
-   * {@link PasswordFieldInput} に渡すプロパティーです。
+   * {@link PasswordFieldInput} に渡す props です。
    */
   readonly input?: PasswordFieldInputProps | undefined;
 
   /**
-   * {@link PasswordFieldToggleButton} に渡すプロパティーです。
+   * {@link PasswordFieldToggleButton} に渡す props です。
    */
   readonly toggle?: PasswordFieldToggleButtonProps | undefined;
 };
 
 /**
- * {@link PasswordField} の状態です。
+ * {@link PasswordField} が持つ状態です。
  */
 export type PasswordFieldState = {
   /**
@@ -68,7 +73,7 @@ export type PasswordFieldState = {
 };
 
 /**
- * {@link PasswordField} コンポーネントのプロパティーです。
+ * {@link PasswordField} に渡す props です。
  */
 export type PasswordFieldProps = Omit<PasswordFieldRootProps, "children"> &
   Pick<
@@ -83,26 +88,14 @@ export type PasswordFieldProps = Omit<PasswordFieldRootProps, "children"> &
     | "value"
   > & {
     /**
-     * パスワードの初期表示状態を指定します。
-     *
-     * @default false
-     */
-    defaultVisible?: boolean | undefined;
-
-    /**
      * 入力欄の末尾に表示する内容です。
      */
     endAddons?: Iterable<React.ReactNode> | undefined;
 
     /**
-     * パスワードの表示状態が変わったときに呼ばれます。
-     */
-    onVisibleChange?: ((visible: boolean) => void) | undefined;
-
-    /**
-     * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+     * 各パーツに個別の props を渡すためのオブジェクトです。
      *
-     * 各パーツのプロパティーが優先されます。
+     * 各パーツの props が優先されます。
      */
     slotProps?: PasswordFieldSlotProps | undefined;
 
@@ -114,67 +107,62 @@ export type PasswordFieldProps = Omit<PasswordFieldRootProps, "children"> &
     /**
      * パスワードの表示と非表示を切り替えるボタンを表示するかどうかを指定します。
      *
-     * ボタンの内容やプロパティーを変更するときは {@link PasswordFieldProps.slotProps|slotProps.toggle} を使います。
+     * ボタンの内容や props を変更するときは {@link PasswordFieldProps.slotProps|slotProps.toggle} を使います。
      *
      * @default true
      */
     visibilityToggle?: boolean | undefined;
-
-    /**
-     * パスワードを表示状態にします。
-     *
-     * 指定した場合は表示状態がこの値で固定され、内部の状態を使わなくなります。
-     */
-    visible?: boolean | undefined;
   };
 
-/**
- * {@link PasswordField} の各パーツに渡すプロパティーです。
- */
-export type PasswordFieldPartsProps = {
-  /**
-   * 入力欄の末尾に表示する {@link PasswordFieldAddon} の一覧です。
-   *
-   * 内容は `children` に入ります。
-   */
-  readonly endAddons: readonly PasswordFieldAddonProps[];
-
-  /**
-   * {@link PasswordFieldInput} に渡すプロパティーです。
-   */
-  readonly input: TextFieldInputProps;
-
-  /**
-   * {@link PasswordFieldRoot} に渡すプロパティーです。
-   */
-  readonly root: PasswordFieldRootProps;
-
-  /**
-   * 入力欄の先頭に表示する {@link PasswordFieldAddon} の一覧です。
-   *
-   * 内容は `children` に入ります。
-   */
-  readonly startAddons: readonly PasswordFieldAddonProps[];
-
-  /**
-   * 表示切替ボタンを包む {@link PasswordFieldAddon} に渡すプロパティーです。
-   *
-   * 表示切替ボタンを表示しないときは null になります。
-   */
-  readonly toggleAddon: Omit<PasswordFieldAddonProps, "children"> | null;
-
-  /**
-   * {@link PasswordFieldToggleButton} に渡すプロパティーです。
-   *
-   * 表示切替ボタンを表示しないときは null になります。
-   */
-  readonly toggleButton: PasswordFieldToggleButtonProps | null;
-};
+// API
+// ---
 
 /**
- * {@link PasswordField} の各パーツに渡すプロパティーを作るフックです。
+ * {@link PasswordField} を構成する各パーツの props を作成するための API です。
  */
-export function usePasswordField(props: PasswordFieldProps): PasswordFieldPartsProps {
+export interface PasswordFieldAPI {
+  /**
+   * 末尾の {@link PasswordFieldAddon} に渡す props の一覧を取得します。
+   */
+  getEndAddonsPropsList(): readonly PasswordFieldAddonProps[];
+
+  /**
+   * {@link PasswordFieldInput} に渡す props を取得します。
+   */
+  getInputProps(): PasswordFieldInputProps;
+
+  /**
+   * {@link PasswordFieldRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<PasswordFieldRootProps, "children">;
+
+  /**
+   * 先頭の {@link PasswordFieldAddon} に渡す props の一覧を取得します。
+   */
+  getStartAddonsPropsList(): readonly PasswordFieldAddonProps[];
+
+  /**
+   * {@link PasswordFieldToggleButton} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
+   */
+  getToggleButtonProps(): PasswordFieldToggleButtonProps | null;
+}
+
+interface IUsePasswordFieldAPI {
+  /**
+   * {@link PasswordFieldAPI} を作成します。
+   *
+   * @param props {@link PasswordField} の props です。
+   * @returns パスワード入力欄の API です
+   */
+  (props: PasswordFieldProps): PasswordFieldAPI;
+}
+
+/**
+ * {@link PasswordFieldAPI} を作成するフックです。
+ */
+export const usePasswordFieldAPI: IUsePasswordFieldAPI = function useSuiPasswordFieldAPI(props) {
   const {
     name,
     value,
@@ -182,67 +170,72 @@ export function usePasswordField(props: PasswordFieldProps): PasswordFieldPartsP
     readOnly,
     required,
     endAddons = [],
-    slotProps: { addon: addonProps, input: inputProps, toggle: toggleProps } = {},
     placeholder,
     startAddons = [],
     defaultValue,
     onValueChange,
     visibilityToggle = true,
-    visible: visibleProp,
-    defaultVisible = false,
-    onVisibleChange,
-    ...rootProps
+    slotProps: { addon: addonProps = {}, input: inputProps = {}, toggle: toggleProps = {} } = {},
+    ...otherRootProps
   } = props;
-  const [defaultVisibleState, setDefaultVisibleState] = React.useState(defaultVisible);
-  const visible = visibleProp ?? defaultVisibleState;
-  const handleToggleClick = () => {
-    const nextVisible = !visible;
-
-    if (visibleProp === undefined) {
-      setDefaultVisibleState(nextVisible);
-    }
-    onVisibleChange?.(nextVisible);
-  };
+  const showToggle = visibilityToggle || Object.keys(toggleProps).length > 0;
 
   return {
-    root: {
-      visible,
-      ...rootProps,
+    getRootProps() {
+      return otherRootProps;
     },
-    startAddons: React.Children.map(startAddons, (addon) => ({
-      ...addonProps,
-      children: addon,
-    }))!,
-    input: {
-      name,
-      value,
-      disabled,
-      readOnly,
-      required,
-      placeholder,
-      defaultValue,
-      onValueChange,
-      type: visible ? "text" : "password",
-      ...inputProps,
+    getInputProps() {
+      return {
+        name,
+        value,
+        disabled,
+        readOnly,
+        required,
+        placeholder,
+        defaultValue,
+        onValueChange,
+        ...inputProps,
+      };
     },
-    endAddons: React.Children.map(endAddons, (addon) => ({
-      ...addonProps,
-      children: addon,
-    }))!,
-    toggleAddon: visibilityToggle
-      ? {
-          disableFocusOnClick: true,
+    getToggleButtonProps() {
+      if (!showToggle) {
+        return null;
+      }
+
+      return {
+        disabled,
+        ...toggleProps,
+      };
+    },
+    getEndAddonsPropsList() {
+      return (
+        React.Children.map(endAddons, (addon) => ({
           ...addonProps,
-        }
-      : null,
-    toggleButton: visibilityToggle
-      ? {
-          disabled,
-          onClick: handleToggleClick,
-          ...toggleProps,
-        }
-      : null,
+          children: addon,
+        })) ?? []
+      );
+    },
+    getStartAddonsPropsList() {
+      return (
+        React.Children.map(startAddons, (addon) => ({
+          ...addonProps,
+          children: addon,
+        })) ?? []
+      );
+    },
   };
+};
+
+export { type PasswordFieldAPI as API, usePasswordFieldAPI as useAPI };
+
+// Component
+// ---------
+
+interface IPasswordField extends IComponent<PasswordFieldProps> {
+  /**
+   * {@link usePasswordFieldContext}
+   */
+  readonly useContext: IUseContext<PasswordFieldContext>;
 }
 
 /**
@@ -250,63 +243,71 @@ export function usePasswordField(props: PasswordFieldProps): PasswordFieldPartsP
  *
  * 文字入力欄と同じ外観を持ち、既定で表示切替ボタン付きのパスワード入力欄として振る舞います。
  */
-export const PasswordField: IComponent<PasswordFieldProps> = function SuiPasswordField(props) {
-  const partsProps = usePasswordField(props);
+export const PasswordField: IPasswordField = /*#__PURE__*/ Object.assign(
+  function SuiPasswordField(props: PasswordFieldProps) {
+    const api = usePasswordFieldAPI(props);
+    const toggleButtonProps = api.getToggleButtonProps();
 
-  return (
-    <PasswordFieldRoot {...partsProps.root}>
-      {partsProps.startAddons.map((addonProps, index) => (
-        <PasswordFieldAddon key={index} {...addonProps} />
-      ))}
-      <PasswordFieldInput {...partsProps.input} />
-      {partsProps.endAddons.map((addonProps, index) => (
-        <PasswordFieldAddon key={index} {...addonProps} />
-      ))}
-      {partsProps.toggleAddon !== null && partsProps.toggleButton !== null && (
-        <PasswordFieldAddon {...partsProps.toggleAddon}>
-          <PasswordFieldToggleButton {...partsProps.toggleButton} />
-        </PasswordFieldAddon>
-      )}
-    </PasswordFieldRoot>
-  );
-};
+    return (
+      <PasswordFieldRoot {...api.getRootProps()}>
+        {api.getStartAddonsPropsList().map((addonProps, index) => (
+          <PasswordFieldAddon key={index} {...addonProps} />
+        ))}
+        <PasswordFieldInput {...api.getInputProps()} />
+        {api.getEndAddonsPropsList().map((addonProps, index) => (
+          <PasswordFieldAddon key={index} {...addonProps} />
+        ))}
+        {toggleButtonProps && (
+          <PasswordFieldAddon disableFocusOnClick>
+            <PasswordFieldToggleButton {...toggleButtonProps} />
+          </PasswordFieldAddon>
+        )}
+      </PasswordFieldRoot>
+    );
+  },
+  {
+    useContext: usePasswordFieldContext,
+  },
+);
 
-/**
- * {@link PasswordField} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace PasswordField {
   /**
-   * {@link PasswordFieldState} です。
+   * {@link PasswordFieldState}
    */
   export type State = PasswordFieldState;
 
   /**
-   * {@link PasswordFieldProps} です。
+   * {@link PasswordFieldProps}
    */
   export type Props = PasswordFieldProps;
 
   /**
-   * {@link PasswordFieldSlotProps} です。
+   * {@link PasswordFieldContext}
+   */
+  export type Context = PasswordFieldContext;
+
+  /**
+   * {@link PasswordFieldSlotProps}
    */
   export type SlotProps = PasswordFieldSlotProps;
 
   /**
-   * {@link PasswordFieldColor} です。
+   * {@link PasswordFieldColor}
    */
   export type Color = PasswordFieldColor;
 
   /**
-   * {@link PasswordFieldRadius} です。
+   * {@link PasswordFieldRadius}
    */
   export type Radius = PasswordFieldRadius;
 
   /**
-   * {@link PasswordFieldSize} です。
+   * {@link PasswordFieldSize}
    */
   export type Size = PasswordFieldSize;
 
   /**
-   * {@link PasswordFieldVariant} です。
+   * {@link PasswordFieldVariant}
    */
   export type Variant = PasswordFieldVariant;
 }

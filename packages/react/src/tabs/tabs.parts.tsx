@@ -13,29 +13,29 @@ import "./tabs.css";
 /**
  * Tabs の角丸です。
  *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type TabsRootRadius = "none" | Size;
 
 /**
  * Tabs の大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type TabsRootSize = Size;
 
 /**
- * {@link TabsRoot} の状態です。
+ * {@link TabsRoot} が持つ状態です。
  */
 export type TabsRootState = BaseTabs.Root.State;
 
 /**
- * {@link TabsRoot} に渡すプロパティーです。
+ * {@link TabsRoot} に渡す props です。
  */
 export type TabsRootProps = React.ComponentProps<typeof BaseTabs.Root> & {
   /**
@@ -46,14 +46,14 @@ export type TabsRootProps = React.ComponentProps<typeof BaseTabs.Root> & {
   outlined?: boolean | undefined;
 
   /**
-   * Tabs の角丸を指定します。
+   * Tabs の角丸の大きさを指定します。
    *
-   * @default "md"
+   * 既定値は {@link TabsRootProps.size|size}
    */
   radius?: TabsRootRadius | undefined;
 
   /**
-   * Tabs のサイズを指定します。
+   * Tabs の大きさを指定します。
    *
    * @default "md"
    */
@@ -64,16 +64,10 @@ export type TabsRootProps = React.ComponentProps<typeof BaseTabs.Root> & {
  * Tabs のルート要素です。
  *
  * 各タブと対応するパネルをグループ化します。
+ * 矢印キーによるタブ間の移動は Base UI が提供します。
  */
 export const TabsRoot: IComponent<TabsRootProps> = function SuiTabsRoot(props) {
-  const {
-    size = "md",
-    radius = "md",
-    outlined = false,
-    className,
-    orientation = "horizontal",
-    ...otherProps
-  } = props;
+  const { size = "md", radius = size, outlined = false, className, ...otherProps } = props;
 
   return (
     <BaseTabs.Root
@@ -81,98 +75,99 @@ export const TabsRoot: IComponent<TabsRootProps> = function SuiTabsRoot(props) {
       className={cn(
         className,
         "sui_tabs",
-        outlined && "sui_tabs-outlined",
-        `sui_tabs-orientation_${orientation}`,
-        `sui_tabs-radius_${radius}`,
         `sui_tabs-size_${size}`,
+        `sui_tabs-radius_${radius}`,
+        outlined && "sui_tabs-outlined",
       )}
-      orientation={orientation}
+      data-scope=""
     />
   );
 };
 
+export { TabsRoot as Root };
+
 /**
- * {@link TabsRoot} の状態やプロパティーをまとめた型名前空間です。
+ * {@link TabsRoot}
  */
 export namespace Root {
   /**
-   * {@link TabsRootState} です。
+   * {@link TabsRootState}
    */
   export type State = TabsRootState;
 
   /**
-   * {@link TabsRootProps} です。
+   * {@link TabsRootProps}
    */
   export type Props = TabsRootProps;
 
   /**
-   * {@link TabsRootRadius} です。
+   * {@link TabsRootRadius}
    */
   export type Radius = TabsRootRadius;
 
   /**
-   * {@link TabsRootSize} です。
+   * {@link TabsRootSize}
    */
   export type Size = TabsRootSize;
 }
-
-/**
- * {@link TabsRoot} です。
- */
-export const Root: IComponent<Root.Props> = TabsRoot;
 
 // List
 // ----
 
 /**
- * {@link TabsListState} です。
+ * {@link TabsList} が持つ状態です。
  */
 export type TabsListState = BaseTabs.List.State;
 
 /**
- * {@link TabsListProps} です。
+ * {@link TabsList} に渡す props です。
  */
 export type TabsListProps = React.ComponentProps<typeof BaseTabs.List>;
 
 /**
  * 個々の Tab ボタンをまとめるリスト要素です。
+ *
+ * 矢印キーによるフォーカス移動の起点になります。
  */
 export const TabsList: IComponent<TabsListProps> = function SuiTabsList(props) {
-  const { className, ...otherProps } = props;
+  const { className, "aria-label": ariaLabel = "タブ", ...otherProps } = props;
 
-  return <BaseTabs.List {...otherProps} className={cn(className, "sui_tabs_list")} />;
+  return (
+    <BaseTabs.List
+      {...otherProps}
+      className={cn(className, "sui_tabs_list")}
+      aria-label={ariaLabel}
+    />
+  );
 };
 
+export { TabsList as List };
+
 /**
- * {@link TabsList} の状態やプロパティーをまとめた型名前空間です。
+ * {@link TabsList}
  */
 export namespace List {
   /**
-   * {@link TabsListState} です。
+   * {@link TabsListState}
    */
   export type State = TabsListState;
 
   /**
-   * {@link TabsListProps} です。
+   * {@link TabsListProps}
    */
   export type Props = TabsListProps;
 }
-
-/**
- * {@link TabsList} です。
- */
-export const List: IComponent<List.Props> = TabsList;
 
 // Tab
 // ---
 
 /**
- * {@link TabsTabState} です。
+ * {@link TabsTab} が持つ状態です。
  */
 export type TabsTabState = BaseTabs.Tab.State;
 
 /**
- * {@link TabsTabProps} です。
+ * {@link TabsTab} に渡す props です。
  */
 export type TabsTabProps = React.ComponentProps<typeof BaseTabs.Tab>;
 
@@ -185,36 +180,33 @@ export const TabsTab: IComponent<TabsTabProps> = function SuiTabsTab(props) {
   return <BaseTabs.Tab {...otherProps} className={cn(className, "sui_tabs_tab")} />;
 };
 
+export { TabsTab as Tab };
+
 /**
- * {@link TabsTab} の状態やプロパティーをまとめた型名前空間です。
+ * {@link TabsTab}
  */
 export namespace Tab {
   /**
-   * {@link TabsTabState} です。
+   * {@link TabsTabState}
    */
   export type State = TabsTabState;
 
   /**
-   * {@link TabsTabProps} です。
+   * {@link TabsTabProps}
    */
   export type Props = TabsTabProps;
 }
-
-/**
- * {@link TabsTab} です。
- */
-export const Tab: IComponent<Tab.Props> = TabsTab;
 
 // Indicator
 // ---------
 
 /**
- * {@link TabsIndicator} の状態です。
+ * {@link TabsIndicator} が持つ状態です。
  */
 export type TabsIndicatorState = BaseTabs.Indicator.State;
 
 /**
- * {@link TabsIndicator} に渡すプロパティーです。
+ * {@link TabsIndicator} に渡す props です。
  */
 export type TabsIndicatorProps = React.ComponentProps<typeof BaseTabs.Indicator>;
 
@@ -229,36 +221,33 @@ export const TabsIndicator: IComponent<TabsIndicatorProps> = function SuiTabsInd
   return <BaseTabs.Indicator {...otherProps} className={cn(className, "sui_tabs_indicator")} />;
 };
 
+export { TabsIndicator as Indicator };
+
 /**
- * {@link TabsIndicator} の状態やプロパティーをまとめた型名前空間です。
+ * {@link TabsIndicator}
  */
 export namespace Indicator {
   /**
-   * {@link TabsIndicatorState} です。
+   * {@link TabsIndicatorState}
    */
   export type State = TabsIndicatorState;
 
   /**
-   * {@link TabsIndicatorProps} です。
+   * {@link TabsIndicatorProps}
    */
   export type Props = TabsIndicatorProps;
 }
-
-/**
- * {@link TabsIndicator} です。
- */
-export const Indicator: IComponent<Indicator.Props> = TabsIndicator;
 
 // Panel
 // -----
 
 /**
- * {@link TabsPanel} の状態です。
+ * {@link TabsPanel} が持つ状態です。
  */
 export type TabsPanelState = BaseTabs.Panel.State;
 
 /**
- * {@link TabsPanel} に渡すプロパティーです。
+ * {@link TabsPanel} に渡す props です。
  */
 export type TabsPanelProps = React.ComponentProps<typeof BaseTabs.Panel>;
 
@@ -271,22 +260,19 @@ export const TabsPanel: IComponent<TabsPanelProps> = function SuiTabsPanel(props
   return <BaseTabs.Panel {...otherProps} className={cn(className, "sui_tabs_panel")} />;
 };
 
+export { TabsPanel as Panel };
+
 /**
- * {@link TabsPanel} の状態やプロパティーをまとめた型名前空間です。
+ * {@link TabsPanel}
  */
 export namespace Panel {
   /**
-   * {@link TabsPanelState} です。
+   * {@link TabsPanelState}
    */
   export type State = TabsPanelState;
 
   /**
-   * {@link TabsPanelProps} です。
+   * {@link TabsPanelProps}
    */
   export type Props = TabsPanelProps;
 }
-
-/**
- * {@link TabsPanel} です。
- */
-export const Panel: IComponent<Panel.Props> = TabsPanel;

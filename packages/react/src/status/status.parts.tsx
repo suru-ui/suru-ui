@@ -55,15 +55,15 @@ export const StatusContext: React.Context<StatusContext | null> =
 function useSuiStatusContext(optional?: false): StatusContext;
 function useSuiStatusContext(optional?: boolean): StatusContext | null;
 function useSuiStatusContext(optional?: boolean): StatusContext | null {
-  const context = React.use(StatusContext);
-  if (context === null && !optional) {
+  const ctx = React.use(StatusContext);
+  if (ctx === null && !optional) {
     throw new ContextMissingError({
       contextName: "StatusContext",
       providerName: "StatusRoot",
     });
   }
 
-  return context;
+  return ctx;
 }
 
 /**
@@ -71,40 +71,24 @@ function useSuiStatusContext(optional?: boolean): StatusContext | null {
  */
 export const useStatusContext: IUseContext<StatusContext> = useSuiStatusContext;
 
-/**
- * {@link StatusContext} です。
- */
-export type Context = StatusContext;
+export { StatusContext as Context, useStatusContext as useContext };
 
-/**
- * {@link StatusContext} です。
- */
-export const Context: React.Context<Context | null> = StatusContext;
-
-/**
- * {@link Context} の型名前空間です。
- */
 export namespace Context {
   /**
-   * {@link StatusContextColor} です。
+   * {@link StatusContextColor}
    */
   export type Color = StatusContextColor;
 
   /**
-   * {@link StatusContextProcessing} です。
+   * {@link StatusContextProcessing}
    */
   export type Processing = StatusContextProcessing;
 
   /**
-   * {@link StatusContextSize} です。
+   * {@link StatusContextSize}
    */
   export type Size = StatusContextSize;
 }
-
-/**
- * {@link useStatusContext} です。
- */
-export const useContext: IUseContext<Context> = useStatusContext;
 
 // Root
 // ----
@@ -124,14 +108,12 @@ export type StatusRootColor = Color;
 export type StatusRootSize = Size;
 
 /**
- * {@link StatusRoot} の状態です。
+ * {@link StatusRoot} が持つ状態です。
  */
 export type StatusRootState = {};
 
 /**
- * {@link StatusRoot} に渡すプロパティーです。
- *
- * ルートに指定したスタイルプロパティーは、子要素の指定より優先されます。
+ * {@link StatusRoot} に渡す props です。
  */
 export type StatusRootProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
   RenderProps<StatusRootState> & {
@@ -160,20 +142,18 @@ export type StatusRootProps = Omit<React.ComponentProps<"span">, keyof RenderPro
   };
 
 /**
- * 状態を示すドットとラベルを並べて表示するルート要素です。
- *
- * スタイルプロパティーをコンテキストで子パーツへ伝播します。
+ * 状態を示すドットとラベルを並べて表示するルートコンポーネントです。
  */
 export const StatusRoot: IComponent<StatusRootProps> = function SuiStatusRoot(props) {
-  const { size = "md", color = "grey", processing = false, className, ...otherProps } = props;
-  const context = React.useMemo<StatusContext>(
+  const { size = "md", color = "grey", processing = false, className, ...otherSpanProps } = props;
+  const ctx = React.useMemo<StatusContext>(
     () => ({ size, color, processing }),
     [size, color, processing],
   );
   const element = useRender({
     defaultTagName: "span",
     props: [
-      otherProps,
+      otherSpanProps,
       {
         className: cn(
           className,
@@ -182,47 +162,37 @@ export const StatusRoot: IComponent<StatusRootProps> = function SuiStatusRoot(pr
           `sui_status-color_${color}`,
           processing && "sui_status-processing",
         ),
+        "data-scope": "",
       },
     ],
   });
 
-  return <Context value={context}>{element}</Context>;
+  return <StatusContext value={ctx}>{element}</StatusContext>;
 };
 
-/**
- * {@link StatusRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { StatusRoot as Root };
+
 export namespace Root {
   /**
-   * {@link StatusRootState} です。
+   * {@link StatusRootState}
    */
   export type State = StatusRootState;
 
   /**
-   * {@link StatusRootProps} です。
+   * {@link StatusRootProps}
    */
   export type Props = StatusRootProps;
 
   /**
-   * {@link StatusRootColor} です。
+   * {@link StatusRootColor}
    */
   export type Color = StatusRootColor;
 
   /**
-   * {@link StatusRootProcessing} です。
-   */
-  export type Processing = boolean;
-
-  /**
-   * {@link StatusRootSize} です。
+   * {@link StatusRootSize}
    */
   export type Size = StatusRootSize;
 }
-
-/**
- * {@link StatusRoot} です。
- */
-export const Root: IComponent<Root.Props> = StatusRoot;
 
 // Indicator
 // ---------
@@ -242,14 +212,12 @@ export type StatusIndicatorColor = Color;
 export type StatusIndicatorSize = Size;
 
 /**
- * {@link StatusIndicator} の状態です。
+ * {@link StatusIndicator} が持つ状態です。
  */
 export type StatusIndicatorState = {};
 
 /**
- * {@link StatusIndicator} に渡すプロパティーです。
- *
- * 親 {@link StatusRoot} 内で使うときは、スタイルプロパティーを省略するとルートの値を使用します。
+ * {@link StatusIndicator} に渡す props です。
  */
 export type StatusIndicatorProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
   RenderProps<StatusIndicatorState> & {
@@ -276,29 +244,27 @@ export type StatusIndicatorProps = Omit<React.ComponentProps<"span">, keyof Rend
   };
 
 /**
- * 状態を示すドットを表すインジケーターコンポーネントです。
- *
- * 装飾要素として描画するため、既定で `aria-hidden` 属性を付けます。
+ * 状態を示すドットを表示するインジケーターコンポーネントです。
  */
 export const StatusIndicator: IComponent<StatusIndicatorProps> = function SuiStatusIndicator(
   props,
 ) {
-  const group = useSuiStatusContext(true);
+  const ctx = useSuiStatusContext(true);
   const {
+    size: sizeProp,
     color: colorProp,
     processing: processingProp,
-    size: sizeProp,
     className,
-    ...otherProps
+    ...otherSpanProps
   } = props;
-  const color = group?.color ?? colorProp ?? "grey";
-  const processing = group?.processing ?? processingProp ?? false;
-  const size = group?.size ?? sizeProp ?? "md";
+  const size = ctx?.size ?? sizeProp ?? "md";
+  const color = ctx?.color ?? colorProp ?? "grey";
+  const processing = ctx?.processing ?? processingProp ?? false;
 
   return useRender({
     defaultTagName: "span",
     props: [
-      otherProps,
+      otherSpanProps,
       {
         "aria-hidden": true,
         className: cn(
@@ -313,37 +279,26 @@ export const StatusIndicator: IComponent<StatusIndicatorProps> = function SuiSta
   });
 };
 
-/**
- * {@link StatusIndicator} の状態やプロパティーをまとめた型名前空間です。
- */
+export { StatusIndicator as Indicator };
+
 export namespace Indicator {
   /**
-   * {@link StatusIndicatorState} です。
+   * {@link StatusIndicatorState}
    */
   export type State = StatusIndicatorState;
 
   /**
-   * {@link StatusIndicatorProps} です。
+   * {@link StatusIndicatorProps}
    */
   export type Props = StatusIndicatorProps;
 
   /**
-   * {@link StatusIndicatorColor} です。
+   * {@link StatusIndicatorColor}
    */
   export type Color = StatusIndicatorColor;
 
   /**
-   * {@link StatusIndicatorProps} の `processing` プロパティーです。
-   */
-  export type Processing = boolean;
-
-  /**
-   * {@link StatusIndicatorSize} です。
+   * {@link StatusIndicatorSize}
    */
   export type Size = StatusIndicatorSize;
 }
-
-/**
- * {@link StatusIndicator} です。
- */
-export const Indicator: IComponent<Indicator.Props> = StatusIndicator;

@@ -258,6 +258,7 @@
     inset-inline-start: 0px;
     display: block;
     border-radius: inherit;
+    transition: width 500ms;
   }
 }
 

@@ -275,3 +275,242 @@ export const Disabled = meta.story({
     );
   },
 });
+
+export const ControlledVisibility = meta.story({
+  name: "制御",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+    visibilityToggle: true,
+    placeholder: "パスワード",
+  }),
+  render(props) {
+    const [value, setValue] = React.useState("secret123");
+    const [visible, setVisible] = React.useState(false);
+    return (
+      <div className="flex flex-col gap-2">
+        <PasswordField
+          {...props}
+          value={value}
+          visible={visible}
+          className="w-[320px]"
+          onValueChange={(next) => setValue(next)}
+          onVisibleChange={setVisible}
+        />
+        <span>{visible ? "表示中" : "非表示中"}</span>
+        <div className="flex gap-2">
+          <button type="button" onClick={() => setVisible((prev) => !prev)}>
+            表示を切り替える
+          </button>
+          <button type="button" onClick={() => setValue("")}>
+            クリア
+          </button>
+        </div>
+      </div>
+    );
+  },
+});
+
+export const ReadOnly = meta.story({
+  name: "読み取り専用",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+    visibilityToggle: true,
+    placeholder: "パスワード",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        <PasswordField {...props} readOnly className="w-[320px]" defaultValue="secret123" />
+        <PasswordField {...props} readOnly className="w-[320px]" placeholder="プレースホルダー" />
+      </div>
+    );
+  },
+});
+
+export const EmptyAndLong = meta.story({
+  name: "空と長い入力値",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+    visibilityToggle: true,
+    placeholder: "パスワード",
+  }),
+  render(props) {
+    return (
+      <div className="flex w-[320px] flex-col gap-3">
+        <PasswordField {...props} placeholder="空の入力欄" />
+        <PasswordField {...props} defaultValue={"とても長いパスワード".repeat(10)} />
+        <PasswordField {...props} radius="full" defaultValue="secret123" />
+      </div>
+    );
+  },
+});
+
+export const Addons = meta.story({
+  name: "接頭辞と接尾辞",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+    visibilityToggle: true,
+    placeholder: "パスワード",
+  }),
+  render(props) {
+    return (
+      <div className="flex w-[320px] flex-col gap-3">
+        <PasswordField {...props} startAddons={["🔒"]} defaultValue="secret123" />
+        <PasswordField
+          {...props}
+          endAddons={["8 文字以上"]}
+          defaultValue="secret123"
+          visibilityToggle={false}
+        />
+        <PasswordField
+          {...props}
+          endAddons={["8 文字以上"]}
+          startAddons={["🔒"]}
+          defaultValue="secret123"
+        />
+      </div>
+    );
+  },
+});
+
+export const WithField = meta.story({
+  name: "ラベルと説明",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+    visibilityToggle: true,
+    placeholder: "パスワード",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-4">
+        <Field label="パスワード" description="8 文字以上で入力します。">
+          <PasswordField {...props} className="w-[320px]" defaultValue="secret123" />
+        </Field>
+        <Field label="パスワード" invalid description="8 文字以上で入力します。">
+          <PasswordField {...props} required className="w-[320px]" defaultValue="short" />
+        </Field>
+      </div>
+    );
+  },
+});
+
+export const Required = meta.story({
+  name: "必須と検証",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: true,
+    disabled: false,
+    visibilityToggle: true,
+    placeholder: "パスワード",
+  }),
+  render(props) {
+    return (
+      <form onSubmit={(event) => event.preventDefault()} className="flex flex-col gap-3">
+        <Field label="パスワード" description="空のまま送信すると枠線が赤くなります。">
+          <PasswordField {...props} required className="w-[320px]" />
+        </Field>
+        <div>
+          <button type="submit">送信</button>
+        </div>
+      </form>
+    );
+  },
+});
+
+export const Keyboard = meta.story({
+  name: "キーボード操作",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+    visibilityToggle: true,
+    placeholder: "パスワード",
+  }),
+  render(props) {
+    return (
+      <div className="flex w-[320px] flex-col gap-2">
+        <PasswordField
+          {...props}
+          slotProps={{ input: { "aria-label": "パスワード" } }}
+          defaultValue="secret123"
+        />
+        <p>
+          Tab キーで入力欄と表示切替ボタンへ移動し、ボタン上で Enter キーや Space
+          キーで表示を切り替えます。
+        </p>
+      </div>
+    );
+  },
+});
+
+export const LoginForm = meta.story({
+  name: "実践例: ログインフォーム",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+    visibilityToggle: true,
+    placeholder: "パスワード",
+  }),
+  render(props) {
+    const [submitted, setSubmitted] = React.useState<string | null>(null);
+    return (
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          const data = new FormData(event.currentTarget);
+          const password = data.get("password");
+          setSubmitted(typeof password === "string" ? password : null);
+        }}
+        className="flex w-[320px] flex-col gap-3"
+      >
+        <Field label="パスワード" description="8 文字以上で入力します。">
+          <PasswordField
+            {...props}
+            name="password"
+            required
+            slotProps={{ input: { minLength: 8 } }}
+          />
+        </Field>
+        <div>
+          <button type="submit">ログイン</button>
+        </div>
+        {submitted !== null && <span>{submitted.length} 文字で送信しました。</span>}
+      </form>
+    );
+  },
+});

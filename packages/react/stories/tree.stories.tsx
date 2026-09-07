@@ -4,7 +4,6 @@ import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Tree } from "../src/tree/index.js";
-import * as TreeParts from "../src/tree/index.js";
 
 const meta = preview.meta({
   title: "Tree",
@@ -13,7 +12,7 @@ const meta = preview.meta({
 
 export default meta;
 
-type FileNode = Tree.Node;
+type FileNode = Tree.ItemObject;
 
 const FILE_TREE: readonly FileNode[] = [
   {
@@ -58,7 +57,7 @@ const MEDIA_TREE: readonly FileNode[] = [
 ];
 
 const ctrl = controls(Tree, {
-  data: {
+  items: {
     control: false,
   },
   expandOnClick: {
@@ -81,7 +80,7 @@ const ctrl = controls(Tree, {
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
-    data: FILE_TREE,
+    items: FILE_TREE,
     defaultExpandedValue: ["src"],
     expandOnClick: true,
     radius: "md",
@@ -93,7 +92,7 @@ export const Usage = meta.story({
 export const SelectionModes = meta.story({
   name: "選択モード",
   ...ctrl({
-    data: FILE_TREE,
+    items: FILE_TREE,
     defaultExpandedValue: ["src"],
     expandOnClick: true,
     radius: "md",
@@ -116,7 +115,7 @@ export const SelectionModes = meta.story({
 export const Sizes = meta.story({
   name: "大きさ",
   ...ctrl({
-    data: FILE_TREE,
+    items: FILE_TREE,
     defaultExpandedValue: ["src"],
     expandOnClick: true,
     radius: "md",
@@ -136,10 +135,54 @@ export const Sizes = meta.story({
   },
 });
 
+export const ExpandOnClick = meta.story({
+  name: "クリックでの展開",
+  ...ctrl({
+    items: FILE_TREE,
+    defaultExpandedValue: [],
+    radius: "md",
+    selectionMode: "single",
+    size: "md",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-4">
+        {([true, false] as const).map((expandOnClick) => (
+          <div key={String(expandOnClick)} className="w-80">
+            <p>{`expandOnClick "${String(expandOnClick)}"`}</p>
+            <Tree {...props} expandOnClick={expandOnClick} />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Keyboard = meta.story({
+  name: "キーボード操作",
+  ...ctrl({
+    items: FILE_TREE,
+    defaultExpandedValue: ["src", "components"],
+    radius: "md",
+    selectionMode: "single",
+    size: "md",
+  }),
+  render(props) {
+    return (
+      <div className="w-80">
+        <Tree {...props} />
+        <p className="mt-2">
+          上下で移動し、左右で折りたたみと展開を切り替え、` * ` ですべて展開します。
+        </p>
+      </div>
+    );
+  },
+});
+
 export const Controlled = meta.story({
   name: "制御",
   ...ctrl({
-    data: FILE_TREE,
+    items: FILE_TREE,
     expandOnClick: true,
     radius: "md",
     selectionMode: "multiple",
@@ -167,7 +210,7 @@ export const Controlled = meta.story({
 export const CustomParts = meta.story({
   name: "パーツの差し替え",
   ...ctrl({
-    data: MEDIA_TREE,
+    items: MEDIA_TREE,
     defaultExpandedValue: ["documents"],
     expandOnClick: true,
     radius: "md",
@@ -178,35 +221,6 @@ export const CustomParts = meta.story({
     return (
       <div className="h-64 w-80 overflow-auto">
         <Tree {...props} slotProps={{ indicator: { children: <FolderIcon /> } }} />
-      </div>
-    );
-  },
-});
-
-export const Parts = meta.story({
-  name: "パーツ構成",
-  ...ctrl({
-    data: FILE_TREE,
-    expandOnClick: true,
-    radius: "md",
-    selectionMode: "single",
-    size: "md",
-  }),
-  render(props) {
-    const { data: _data, ...rootProps } = props;
-
-    return (
-      <div className="w-80">
-        <TreeParts.Root {...rootProps} defaultExpandedValue={["src"]}>
-          <TreeParts.Item id="src" level={1} setSize={2} posInSet={1} hasChildren>
-            <TreeParts.Indicator />
-            <TreeParts.Label>src</TreeParts.Label>
-          </TreeParts.Item>
-          <TreeParts.Item id="package" level={1} setSize={2} posInSet={2}>
-            <TreeParts.Indicator visible={false} />
-            <TreeParts.Label>package.json</TreeParts.Label>
-          </TreeParts.Item>
-        </TreeParts.Root>
       </div>
     );
   },

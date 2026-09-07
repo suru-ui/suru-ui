@@ -12,6 +12,16 @@ import "./input.css";
 // ----
 
 /**
+ * {@link InputRoot} の値が変更されたイベントの詳細です。
+ */
+export type InputRootChangeEventDetails = Input.ChangeEventDetails;
+
+/**
+ * {@link InputRoot} の値が変更された理由です。
+ */
+export type InputRootChangeEventReason = Input.ChangeEventReason;
+
+/**
  * テキスト入力欄の配色です。
  */
 export type InputRootColor = Color;
@@ -38,6 +48,8 @@ export type InputRootSize = Size;
 
 /**
  * 入力欄で使用できる入力項目の種類です。
+ *
+ * ボタンや選択系 (`"button"`、`"checkbox"`、`"radio"` など) は除きます。
  */
 export type InputRootType = Exclude<
   React.HTMLInputTypeAttribute,
@@ -51,16 +63,6 @@ export type InputRootType = Exclude<
  * - `"liquid"`: 薄い塗りつぶし
  */
 export type InputRootVariant = "naked" | "liquid";
-
-/**
- * {@link InputRoot} の値が変更された理由です。
- */
-export type InputRootChangeEventReason = Input.ChangeEventReason;
-
-/**
- * {@link InputRoot} の値が変更されたイベントの詳細です。
- */
-export type InputRootChangeEventDetails = Input.ChangeEventDetails;
 
 /**
  * {@link InputRoot} の状態です。
@@ -91,7 +93,7 @@ export type InputRootProps = Omit<
   /**
    * テキスト入力欄の角丸を指定します。
    *
-   * 既定値は {@link InputRootProps.size|size} です。
+   * 既定値は {@link InputRootProps.size|size}
    */
   radius?: InputRootRadius | undefined;
 
@@ -156,61 +158,56 @@ export const InputRoot: IComponent<InputRootProps> = function SuiInputRoot(props
         (state) => state.valid === null && "sui_input-unverified",
         (state) => state.disabled && "sui_input-disabled",
       )}
+      data-scope=""
     />
   );
 };
 
-/**
- * {@link InputRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { InputRoot as Root };
+
 export namespace Root {
   /**
-   * {@link InputRootState} です。
+   * {@link InputRootState}
    */
   export type State = InputRootState;
 
   /**
-   * {@link InputRootProps} です。
+   * {@link InputRootProps}
    */
   export type Props = InputRootProps;
 
   /**
-   * {@link InputRootChangeEventDetails} です。
+   * {@link InputRootChangeEventDetails}
    */
   export type ChangeEventDetails = InputRootChangeEventDetails;
 
   /**
-   * {@link InputRootChangeEventReason} です。
+   * {@link InputRootChangeEventReason}
    */
   export type ChangeEventReason = InputRootChangeEventReason;
 
   /**
-   * {@link InputRootColor} です。
+   * {@link InputRootColor}
    */
   export type Color = InputRootColor;
 
   /**
-   * {@link InputRootRadius} です。
+   * {@link InputRootRadius}
    */
   export type Radius = InputRootRadius;
 
   /**
-   * {@link InputRootSize} です。
+   * {@link InputRootSize}
    */
   export type Size = InputRootSize;
 
   /**
-   * {@link InputRootType} です。
+   * {@link InputRootType}
    */
   export type Type = InputRootType;
 
   /**
-   * {@link InputRootVariant} です。
+   * {@link InputRootVariant}
    */
   export type Variant = InputRootVariant;
 }
-
-/**
- * {@link InputRoot} です。
- */
-export const Root: IComponent<Root.Props> = InputRoot;

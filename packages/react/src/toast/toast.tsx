@@ -25,52 +25,55 @@ import {
   ToastDescription,
 } from "./toast.parts.jsx";
 
+// Types
+// -----
+
 /**
  * {@link ToastRootToastObject} です。
  */
 export type ToastToastObject<TData extends object = object> = ToastRootToastObject<TData>;
 
 /**
- * {@link Toast} の各パーツに渡すプロパティーです。
+ * {@link Toast} の各パーツに渡す props です。
  */
 export type ToastSlotProps = {
   /**
-   * {@link ToastAction} に渡すプロパティーです。
+   * {@link ToastAction} に渡す props です。
    */
   readonly action?: ToastActionProps | undefined;
 
   /**
-   * {@link ToastClose} に渡すプロパティーです。
+   * {@link ToastClose} に渡す props です。
    */
   readonly close?: ToastCloseProps | undefined;
 
   /**
-   * {@link ToastContent} に渡すプロパティーです。
+   * {@link ToastContent} に渡す props です。
    */
   readonly content?: ToastContentProps | undefined;
 
   /**
-   * {@link ToastDescription} に渡すプロパティーです。
+   * {@link ToastDescription} に渡す props です。
    */
   readonly description?: ToastDescriptionProps | undefined;
 
   /**
-   * {@link ToastPortal} に渡すプロパティーです。
+   * {@link ToastPortal} に渡す props です。
    */
   readonly portal?: ToastPortalProps | undefined;
 
   /**
-   * {@link ToastRoot} に渡すプロパティーです。
+   * {@link ToastRoot} に渡す props です。
    */
   readonly root?: Omit<ToastRootProps, "toast"> | undefined;
 
   /**
-   * {@link ToastTitle} に渡すプロパティーです。
+   * {@link ToastTitle} に渡す props です。
    */
   readonly title?: ToastTitleProps | undefined;
 
   /**
-   * {@link ToastViewport} に渡すプロパティーです。
+   * {@link ToastViewport} に渡す props です。
    */
   readonly viewport?: ToastViewportProps | undefined;
 };
@@ -81,16 +84,19 @@ export type ToastSlotProps = {
 export type ToastState = ToastProviderState;
 
 /**
- * {@link Toast} コンポーネントのプロパティーです。
+ * {@link Toast} コンポーネントの props です。
  */
 export type ToastProps = ToastProviderProps & {
   /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   * 各パーツに個別の props を渡すためのオブジェクトです。
    *
-   * 各パーツのプロパティーが優先されます。
+   * 各パーツの props が優先されます。
    */
   slotProps?: ToastSlotProps | undefined;
 };
+
+// Component
+// ---------
 
 /**
  * 通知を管理する Provider と、通知一覧を組み立てるコンポーネントです。

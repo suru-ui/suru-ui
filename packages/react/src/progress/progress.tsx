@@ -1,5 +1,4 @@
-import * as React from "react";
-
+import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import type { IComponent } from "../types.js";
 import {
   type ProgressRootSize,
@@ -8,6 +7,7 @@ import {
   type ProgressRootState,
   type ProgressLabelProps,
   type ProgressRootRadius,
+  type ProgressRootStatus,
   type ProgressTrackProps,
   type ProgressValueProps,
   type ProgressRootVariant,
@@ -19,184 +19,231 @@ import {
   ProgressIndicator,
 } from "./progress.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link ProgressRootColor} です。
+ * {@link ProgressRootStatus}
+ */
+export type ProgressStatus = ProgressRootStatus;
+
+/**
+ * {@link ProgressRootColor}
  */
 export type ProgressColor = ProgressRootColor;
 
 /**
- * {@link ProgressRootRadius} です。
+ * {@link ProgressRootRadius}
  */
 export type ProgressRadius = ProgressRootRadius;
 
 /**
- * {@link ProgressRootSize} です。
+ * {@link ProgressRootSize}
  */
 export type ProgressSize = ProgressRootSize;
 
 /**
- * {@link ProgressRootVariant} です。
+ * {@link ProgressRootVariant}
  */
 export type ProgressVariant = ProgressRootVariant;
 
 /**
- * {@link Progress} の各パーツに渡すプロパティーです。
+ * {@link Progress} の各パーツに渡す props です。
  */
 export type ProgressSlotProps = {
   /**
-   * {@link ProgressIndicator} に渡すプロパティーです。
+   * {@link ProgressIndicator} に渡す props です。
    */
   readonly indicator?: ProgressIndicatorProps | undefined;
 
   /**
-   * {@link ProgressLabel} に渡すプロパティーです。
+   * {@link ProgressLabel} に渡す props です。
    */
-  readonly label?: ProgressLabelProps | undefined;
+  readonly label?: Omit<ProgressLabelProps, "children"> | undefined;
 
   /**
-   * {@link ProgressTrack} に渡すプロパティーです。
+   * {@link ProgressTrack} に渡す props です。
    */
-  readonly track?: ProgressTrackProps | undefined;
+  readonly track?: Omit<ProgressTrackProps, "children"> | undefined;
 
   /**
-   * {@link ProgressValue} に渡すプロパティーです。
+   * {@link ProgressValue} に渡す props です。
    */
   readonly value?: ProgressValueProps | undefined;
 };
 
 /**
- * {@link Progress} の各パーツに渡すプロパティーです。
- */
-export type ProgressPartsProps = {
-  /**
-   * {@link ProgressIndicator} に渡すプロパティーです。
-   */
-  readonly indicator: ProgressIndicatorProps;
-
-  /**
-   * {@link ProgressLabel} に渡すプロパティーです。
-   *
-   * これを表示しないときは null になります。
-   */
-  readonly label: ProgressLabelProps | null;
-
-  /**
-   * {@link ProgressRoot} に渡すプロパティーです。
-   */
-  readonly root: ProgressRootProps;
-
-  /**
-   * {@link ProgressTrack} に渡すプロパティーです。
-   */
-  readonly track: ProgressTrackProps;
-
-  /**
-   * {@link ProgressValue} に渡すプロパティーです。
-   *
-   * これを表示しないときは null になります。
-   */
-  readonly value: ProgressValueProps | null;
-};
-
-/**
- * {@link Progress} の状態です。
+ * {@link Progress} が持つ状態です。
  */
 export type ProgressState = ProgressRootState;
 
 /**
- * {@link Progress} コンポーネントのプロパティーです。
+ * {@link Progress} に渡す props です。
  */
-export type ProgressProps = Omit<ProgressRootProps, "children"> & {
+export type ProgressProps = Omit<ProgressRootProps, "children" | "value"> & {
   /**
-   * ラベルです。
+   * 進捗の説明ラベルです。
    */
-  label?: ProgressLabelProps["children"];
+  label?: ProgressLabelProps["children"] | undefined;
 
   /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   * 各パーツに個別の props を渡すためのオブジェクトです。
    *
-   * 各パーツのプロパティーが優先されます。
+   * 各パーツの props が優先されます。
    */
   slotProps?: ProgressSlotProps | undefined;
+
+  /**
+   * 現在値です。`null` を指定すると不確定状態になります。
+   *
+   * @default null
+   */
+  value?: number | null | undefined;
 };
 
-/**
- * {@link Progress} の各パーツに渡すプロパティーを作るフックです。
- */
-export function useProgress(props: ProgressProps): ProgressPartsProps {
-  const {
-    label,
-    slotProps: {
-      label: labelProps,
-      track: trackProps = {},
-      value: valueProps,
-      indicator: indicatorProps = {},
-    } = {},
-    ...rootProps
-  } = props;
+// API
+// ---
 
-  return {
-    root: rootProps,
-    label: "label" in props || !!labelProps ? { children: label, ...labelProps } : null,
-    value: "label" in props || !!valueProps ? { ...valueProps } : null,
-    track: trackProps,
-    indicator: indicatorProps,
-  };
+/**
+ * {@link Progress} を構成する各パーツの props を作成するための API です。
+ */
+export interface ProgressAPI {
+  /**
+   * {@link ProgressIndicator} に渡す props を取得します。
+   */
+  getIndicatorProps(): ProgressIndicatorProps;
+
+  /**
+   * {@link ProgressLabel} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
+   */
+  getLabelProps(): ProgressLabelProps | null;
+
+  /**
+   * {@link ProgressRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<ProgressRootProps, "children">;
+
+  /**
+   * {@link ProgressTrack} に渡す props を取得します。
+   */
+  getTrackProps(): Omit<ProgressTrackProps, "children">;
+
+  /**
+   * {@link ProgressValue} に渡す props を取得します。
+   */
+  getValueProps(): ProgressValueProps;
+}
+
+interface IUseProgressAPI {
+  /**
+   * {@link ProgressAPI} を作成します。
+   *
+   * @param props {@link Progress} の props です。
+   * @returns 進捗の API です
+   */
+  (props: ProgressProps): ProgressAPI;
 }
 
 /**
+ * {@link ProgressAPI} を作成するフックです。
+ */
+export const useProgressAPI: IUseProgressAPI = function useSuiProgressAPI(props) {
+  const {
+    label,
+    value = null,
+    slotProps: {
+      label: labelProps = {},
+      track: trackProps = {},
+      value: valueProps = {},
+      indicator: indicatorProps = {},
+    } = {},
+    ...otherRootProps
+  } = props;
+
+  return {
+    getRootProps() {
+      return { value, ...otherRootProps };
+    },
+    getLabelProps() {
+      return isLikelyVisibleNode(label) ? { ...labelProps, children: label } : null;
+    },
+    getTrackProps() {
+      return trackProps;
+    },
+    getValueProps() {
+      return valueProps;
+    },
+    getIndicatorProps() {
+      return indicatorProps;
+    },
+  };
+};
+
+export { type ProgressAPI as API, useProgressAPI as useAPI };
+
+// Component
+// ---------
+
+/**
  * 時間のかかる処理の進捗を表示するコンポーネントです。
+ *
+ * `value` に `null` を指定すると不確定状態になります。
  */
 export const Progress: IComponent<ProgressProps> = function SuiProgress(props) {
-  const partsProps = useProgress(props);
+  const api = useProgressAPI(props);
+  const labelProps = api.getLabelProps();
 
   return (
-    <ProgressRoot {...partsProps.root}>
-      {partsProps.label && <ProgressLabel {...partsProps.label} />}
-      {partsProps.value && <ProgressValue {...partsProps.value} />}
-      <ProgressTrack {...partsProps.track}>
-        <ProgressIndicator {...partsProps.indicator} />
+    <ProgressRoot {...api.getRootProps()}>
+      {labelProps && <ProgressLabel {...labelProps} />}
+      <ProgressValue {...api.getValueProps()} />
+      <ProgressTrack {...api.getTrackProps()}>
+        <ProgressIndicator {...api.getIndicatorProps()} />
       </ProgressTrack>
     </ProgressRoot>
   );
 };
 
-/**
- * {@link Progress} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Progress {
   /**
-   * {@link ProgressState} です。
+   * {@link ProgressState}
    */
   export type State = ProgressState;
 
   /**
-   * {@link ProgressProps} です。
+   * {@link ProgressProps}
    */
   export type Props = ProgressProps;
 
   /**
-   * {@link ProgressSlotProps} です。
+   * {@link ProgressSlotProps}
    */
   export type SlotProps = ProgressSlotProps;
 
   /**
-   * {@link ProgressColor} です。
+   * {@link ProgressColor}
    */
   export type Color = ProgressColor;
 
   /**
-   * {@link ProgressRadius} です。
+   * {@link ProgressRadius}
    */
   export type Radius = ProgressRadius;
 
   /**
-   * {@link ProgressSize} です。
+   * {@link ProgressSize}
    */
   export type Size = ProgressSize;
 
   /**
-   * {@link ProgressVariant} です。
+   * {@link ProgressStatus}
+   */
+  export type Status = ProgressStatus;
+
+  /**
+   * {@link ProgressVariant}
    */
   export type Variant = ProgressVariant;
 }

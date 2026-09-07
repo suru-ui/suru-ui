@@ -80,8 +80,10 @@
 /* 変数 */
 :scope {
   --sui_pagination_ellipsis_input-width: ;
+  --sui_pagination_ellipsis_input-min_height: ;
   --sui_pagination_ellipsis_input-padding_block: ;
   --sui_pagination_ellipsis_input-font_family: ;
+  --sui_pagination_ellipsis_input-font_size: ;
   --sui_pagination_ellipsis_input-font_weight: ;
   --sui_pagination_ellipsis_input-line_height: ;
   --sui_pagination_ellipsis_input-color: ;
@@ -90,16 +92,17 @@
   --sui_pagination_ellipsis_input-focusring_color: ;
   --sui_pagination_ellipsis_input-focusring_offset: ;
   --sui_pagination_ellipsis_input-background_color: ;
+  --sui_pagination_ellipsis_input-border_radius: ;
 }
 
 /* 可変 */
 :scope {
   .sui_pagination_ellipsis_input {
     width: var(--sui_pagination_ellipsis_input-width);
-    min-height: var(--sui_pagination-min_height);
+    min-height: var(--sui_pagination_ellipsis_input-min_height);
     padding-block: var(--sui_pagination_ellipsis_input-padding_block);
     font-family: var(--sui_pagination_ellipsis_input-font_family);
-    font-size: var(--sui_pagination-font_size);
+    font-size: var(--sui_pagination_ellipsis_input-font_size);
     font-weight: var(--sui_pagination_ellipsis_input-font_weight);
     line-height: var(--sui_pagination_ellipsis_input-line_height);
     color: var(--sui_pagination_ellipsis_input-color);
@@ -108,15 +111,17 @@
     outline-color: var(--_sui_pagination_ellipsis_input-outline_color, transparent);
     outline-offset: var(--sui_pagination_ellipsis_input-focusring_offset);
     background-color: var(--sui_pagination_ellipsis_input-background_color);
-    border-radius: var(--sui_pagination-border_radius);
+    border-radius: var(--sui_pagination_ellipsis_input-border_radius);
   }
 }
 
 /* 代入 */
 :scope {
   --sui_pagination_ellipsis_input-width: calc(var(--sui_pagination-min_height) * 2);
+  --sui_pagination_ellipsis_input-min_height: var(--sui_pagination-min_height);
   --sui_pagination_ellipsis_input-padding_block: 0px;
   --sui_pagination_ellipsis_input-font_family: inherit;
+  --sui_pagination_ellipsis_input-font_size: var(--sui_pagination-font_size);
   --sui_pagination_ellipsis_input-font_weight: inherit;
   --sui_pagination_ellipsis_input-line_height: inherit;
   --sui_pagination_ellipsis_input-color: var(--sui-grey-naked-canvas_text-normal);
@@ -125,13 +130,28 @@
   --sui_pagination_ellipsis_input-focusring_color: var(--sui-focusring_color);
   --sui_pagination_ellipsis_input-focusring_offset: var(--sui-focusring_offset);
   --sui_pagination_ellipsis_input-background_color: var(--sui-grey-liquid-canvas-normal);
+  --sui_pagination_ellipsis_input-border_radius: var(--sui_pagination-border_radius);
 }
 
 /* 変異 */
 :scope {
-  .sui_pagination_ellipsis_input:focus {
+  .sui_pagination_ellipsis_input:enabled:focus-visible {
     --_sui_pagination_ellipsis_input-outline_width: var(--sui_pagination_ellipsis_input-focusring_width);
     --_sui_pagination_ellipsis_input-outline_color: var(--sui_pagination_ellipsis_input-focusring_color);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+@layer sui.important {
+@scope (.sui_pagination) to ([data-scope]) {
+
+/* Root */
+:scope {
+  &.sui_pagination-disabled {
+    cursor: not-allowed;
   }
 }
 

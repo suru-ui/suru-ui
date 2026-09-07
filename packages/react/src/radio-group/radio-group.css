@@ -10,6 +10,10 @@
   &.sui_radio_group-orientation_horizontal {
     flex-direction: row;
   }
+
+  &.sui_radio_group-orientation_vertical {
+    flex-direction: column;
+  }
 }
 
 } /* @scope */

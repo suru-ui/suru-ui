@@ -7,9 +7,42 @@
   display: flex;
   align-items: center;
 
+  &.sui_menubar-orientation_horizontal {
+    flex-direction: row;
+  }
+
   &.sui_menubar-orientation_vertical {
     flex-direction: column;
     align-items: stretch;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_menubar-gap: ;
+}
+
+/* 可変 */
+:scope {
+  gap: var(--sui_menubar-gap);
+}
+
+/* 代入 */
+:scope {
+  --sui_menubar-gap: --sui-gap(1);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+@layer sui.important {
+@scope (.sui_menubar) to ([data-scope]) {
+
+/* Root */
+:scope {
+  &.sui_menubar-disabled {
+    cursor: not-allowed;
   }
 }
 

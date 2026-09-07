@@ -12,22 +12,26 @@ import "./stat.css";
 // -------
 
 /**
- * 統計のサイズです。
+ * 統計の大きさです。
+ *
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 type StatContextSize = Size;
 
 /**
- * {@link StatRoot} が子要素へ提供するスタイルです。
+ * {@link StatRoot} が子パーツへ提供するコンテキストです。
  */
 export type StatContext = {
   /**
-   * 統計のサイズです。
+   * 統計の大きさです。
    */
   readonly size: StatContextSize;
 };
 
 /**
- * {@link StatRoot} のスタイルを子要素へ伝播するコンテキストです。
+ * {@link StatRoot} が子パーツへ提供するコンテキストです。
  */
 export const StatContext: React.Context<StatContext | null> =
   React.createContext<StatContext | null>(null);
@@ -35,15 +39,15 @@ export const StatContext: React.Context<StatContext | null> =
 function useSuiStatContext(optional?: false): StatContext;
 function useSuiStatContext(optional?: boolean): StatContext | null;
 function useSuiStatContext(optional?: boolean): StatContext | null {
-  const context = React.use(StatContext);
-  if (context === null && !optional) {
+  const ctx = React.use(StatContext);
+  if (ctx === null && !optional) {
     throw new ContextMissingError({
       contextName: "StatContext",
       providerName: "StatRoot",
     });
   }
 
-  return context;
+  return ctx;
 }
 
 /**
@@ -51,30 +55,14 @@ function useSuiStatContext(optional?: boolean): StatContext | null {
  */
 export const useStatContext: IUseContext<StatContext> = useSuiStatContext;
 
-/**
- * {@link StatContext} です。
- */
-export type Context = StatContext;
+export { StatContext as Context, useStatContext as useContext };
 
-/**
- * {@link StatContext} です。
- */
-export const Context: React.Context<Context | null> = StatContext;
-
-/**
- * {@link Context} の型名前空間です。
- */
 export namespace Context {
   /**
-   * {@link StatContextSize} です。
+   * {@link StatContextSize}
    */
   export type Size = StatContextSize;
 }
-
-/**
- * {@link useStatContext} です。
- */
-export const useContext: IUseContext<Context> = useStatContext;
 
 // Root
 // ----
@@ -82,26 +70,24 @@ export const useContext: IUseContext<Context> = useStatContext;
 /**
  * 統計の大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type StatRootSize = Size;
 
 /**
- * {@link StatRoot} の状態です。
+ * {@link StatRoot} が持つ状態です。
  */
 export type StatRootState = {};
 
 /**
- * {@link StatRoot} に渡すプロパティーです。
- *
- * ルートに指定したスタイルプロパティーは、子要素の指定より優先されます。
+ * {@link StatRoot} に渡す props です。
  */
 export type StatRootProps = Omit<React.ComponentProps<"dl">, keyof RenderProps> &
   RenderProps<StatRootState> & {
     /**
-     * 統計のサイズを指定します。
+     * 統計の大きさを指定します。
      *
      * @default "md"
      */
@@ -109,50 +95,45 @@ export type StatRootProps = Omit<React.ComponentProps<"dl">, keyof RenderProps> 
   };
 
 /**
- * ラベルと値の組で統計を表示するルート要素です。
+ * ラベルと値の組で統計を表示するルートコンポーネントです。
  *
- * `dl` 要素を描画し、スタイルプロパティーをコンテキストで子パーツへ伝播します。
+ * `dl` 要素を描画し、大きさをコンテキストで子パーツへ伝えます。
  */
 export const StatRoot: IComponent<StatRootProps> = function SuiStatRoot(props) {
-  const { size = "md", ...otherProps } = props;
-  const context = React.useMemo<StatContext>(() => ({ size }), [size]);
+  const { size = "md", className, ...otherDlProps } = props;
+  const ctx = React.useMemo<StatContext>(() => ({ size }), [size]);
   const element = useRender({
     defaultTagName: "dl",
     props: [
-      otherProps,
+      otherDlProps,
       {
-        className: cn("sui_stat", `sui_stat-size_${size}`),
+        className: cn(className, "sui_stat", `sui_stat-size_${size}`),
+        "data-scope": "",
       },
     ],
   });
 
-  return <Context value={context}>{element}</Context>;
+  return <StatContext value={ctx}>{element}</StatContext>;
 };
 
-/**
- * {@link StatRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { StatRoot as Root };
+
 export namespace Root {
   /**
-   * {@link StatRootState} です。
+   * {@link StatRootState}
    */
   export type State = StatRootState;
 
   /**
-   * {@link StatRootProps} です。
+   * {@link StatRootProps}
    */
   export type Props = StatRootProps;
 
   /**
-   * {@link StatRootSize} です。
+   * {@link StatRootSize}
    */
   export type Size = StatRootSize;
 }
-
-/**
- * {@link StatRoot} です。
- */
-export const Root: IComponent<Root.Props> = StatRoot;
 
 // Label
 // -----
@@ -160,26 +141,24 @@ export const Root: IComponent<Root.Props> = StatRoot;
 /**
  * 統計ラベルの大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type StatLabelSize = Size;
 
 /**
- * {@link StatLabel} の状態です。
+ * {@link StatLabel} が持つ状態です。
  */
 export type StatLabelState = {};
 
 /**
- * {@link StatLabel} に渡すプロパティーです。
- *
- * 親 {@link StatRoot} 内で使うときは、サイズを省略するとルートの値を使用します。
+ * {@link StatLabel} に渡す props です。
  */
 export type StatLabelProps = Omit<React.ComponentProps<"dt">, keyof RenderProps> &
   RenderProps<StatLabelState> & {
     /**
-     * 統計ラベルのサイズを指定します。
+     * 統計ラベルの大きさを指定します。
      *
      * 親 {@link StatRoot} 内では、ルートに指定した値が優先されます。
      */
@@ -187,19 +166,19 @@ export type StatLabelProps = Omit<React.ComponentProps<"dt">, keyof RenderProps>
   };
 
 /**
- * 統計のラベルを表す要素です。
+ * 統計のラベルを表すコンポーネントです。
  *
  * `dt` 要素を描画します。
  */
 export const StatLabel: IComponent<StatLabelProps> = function SuiStatLabel(props) {
-  const group = useSuiStatContext(true);
-  const { className, size: sizeProp, ...otherProps } = props;
-  const size = group?.size ?? sizeProp ?? "md";
+  const ctx = useSuiStatContext(true);
+  const { size: sizeProp, className, ...otherDtProps } = props;
+  const size = ctx?.size ?? sizeProp ?? "md";
 
   return useRender({
     defaultTagName: "dt",
     props: [
-      otherProps,
+      otherDtProps,
       {
         className: cn(className, "sui_stat_label", `sui_stat_label-size_${size}`),
       },
@@ -207,30 +186,24 @@ export const StatLabel: IComponent<StatLabelProps> = function SuiStatLabel(props
   });
 };
 
-/**
- * {@link StatLabel} の状態やプロパティーをまとめた型名前空間です。
- */
+export { StatLabel as Label };
+
 export namespace Label {
   /**
-   * {@link StatLabelState} です。
+   * {@link StatLabelState}
    */
   export type State = StatLabelState;
 
   /**
-   * {@link StatLabelProps} です。
+   * {@link StatLabelProps}
    */
   export type Props = StatLabelProps;
 
   /**
-   * {@link StatLabelSize} です。
+   * {@link StatLabelSize}
    */
   export type Size = StatLabelSize;
 }
-
-/**
- * {@link StatLabel} です。
- */
-export const Label: IComponent<Label.Props> = StatLabel;
 
 // Value
 // -----
@@ -238,26 +211,24 @@ export const Label: IComponent<Label.Props> = StatLabel;
 /**
  * 統計値の大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type StatValueSize = Size;
 
 /**
- * {@link StatValue} の状態です。
+ * {@link StatValue} が持つ状態です。
  */
 export type StatValueState = {};
 
 /**
- * {@link StatValue} に渡すプロパティーです。
- *
- * 親 {@link StatRoot} 内で使うときは、サイズを省略するとルートの値を使用します。
+ * {@link StatValue} に渡す props です。
  */
 export type StatValueProps = Omit<React.ComponentProps<"dd">, keyof RenderProps> &
   RenderProps<StatValueState> & {
     /**
-     * 統計値のサイズを指定します。
+     * 統計値の大きさを指定します。
      *
      * 親 {@link StatRoot} 内では、ルートに指定した値が優先されます。
      */
@@ -265,19 +236,19 @@ export type StatValueProps = Omit<React.ComponentProps<"dd">, keyof RenderProps>
   };
 
 /**
- * 統計の値を表す要素です。
+ * 統計の値を表すコンポーネントです。
  *
  * `dd` 要素を描画します。変化の方向を示すときは、内側に {@link StatChange} を配置します。
  */
 export const StatValue: IComponent<StatValueProps> = function SuiStatValue(props) {
-  const group = useSuiStatContext(true);
-  const { className, size: sizeProp, ...otherProps } = props;
-  const size = group?.size ?? sizeProp ?? "md";
+  const ctx = useSuiStatContext(true);
+  const { size: sizeProp, className, ...otherDdProps } = props;
+  const size = ctx?.size ?? sizeProp ?? "md";
 
   return useRender({
     defaultTagName: "dd",
     props: [
-      otherProps,
+      otherDdProps,
       {
         className: cn(className, "sui_stat_value", `sui_stat_value-size_${size}`),
       },
@@ -285,30 +256,24 @@ export const StatValue: IComponent<StatValueProps> = function SuiStatValue(props
   });
 };
 
-/**
- * {@link StatValue} の状態やプロパティーをまとめた型名前空間です。
- */
+export { StatValue as Value };
+
 export namespace Value {
   /**
-   * {@link StatValueState} です。
+   * {@link StatValueState}
    */
   export type State = StatValueState;
 
   /**
-   * {@link StatValueProps} です。
+   * {@link StatValueProps}
    */
   export type Props = StatValueProps;
 
   /**
-   * {@link StatValueSize} です。
+   * {@link StatValueSize}
    */
   export type Size = StatValueSize;
 }
-
-/**
- * {@link StatValue} です。
- */
-export const Value: IComponent<Value.Props> = StatValue;
 
 // Change
 // ------
@@ -323,12 +288,12 @@ export const Value: IComponent<Value.Props> = StatValue;
 export type StatChangeDirection = "up" | "down" | "flat";
 
 /**
- * {@link StatChange} の状態です。
+ * {@link StatChange} が持つ状態です。
  */
 export type StatChangeState = {};
 
 /**
- * {@link StatChange} に渡すプロパティーです。
+ * {@link StatChange} に渡す props です。
  */
 export type StatChangeProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
   RenderProps<StatChangeState> & {
@@ -348,12 +313,12 @@ export type StatChangeProps = Omit<React.ComponentProps<"span">, keyof RenderPro
  * {@link StatValue} の内側に配置して、前回からの増減を矢印と色で示します。
  */
 export const StatChange: IComponent<StatChangeProps> = function SuiStatChange(props) {
-  const { direction = "up", className, ...otherProps } = props;
+  const { direction = "up", className, ...otherSpanProps } = props;
 
   return useRender({
     defaultTagName: "span",
     props: [
-      otherProps,
+      otherSpanProps,
       {
         className: cn(className, "sui_stat_change", `sui_stat_change-direction_${direction}`),
       },
@@ -361,30 +326,24 @@ export const StatChange: IComponent<StatChangeProps> = function SuiStatChange(pr
   });
 };
 
-/**
- * {@link StatChange} の状態やプロパティーをまとめた型名前空間です。
- */
+export { StatChange as Change };
+
 export namespace Change {
   /**
-   * {@link StatChangeState} です。
+   * {@link StatChangeState}
    */
   export type State = StatChangeState;
 
   /**
-   * {@link StatChangeProps} です。
+   * {@link StatChangeProps}
    */
   export type Props = StatChangeProps;
 
   /**
-   * {@link StatChangeDirection} です。
+   * {@link StatChangeDirection}
    */
   export type Direction = StatChangeDirection;
 }
-
-/**
- * {@link StatChange} です。
- */
-export const Change: IComponent<Change.Props> = StatChange;
 
 // Description
 // -----------
@@ -392,26 +351,24 @@ export const Change: IComponent<Change.Props> = StatChange;
 /**
  * 統計の説明文の大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type StatDescriptionSize = Size;
 
 /**
- * {@link StatDescription} の状態です。
+ * {@link StatDescription} が持つ状態です。
  */
 export type StatDescriptionState = {};
 
 /**
- * {@link StatDescription} に渡すプロパティーです。
- *
- * 親 {@link StatRoot} 内で使うときは、サイズを省略するとルートの値を使用します。
+ * {@link StatDescription} に渡す props です。
  */
 export type StatDescriptionProps = Omit<React.ComponentProps<"dd">, keyof RenderProps> &
   RenderProps<StatDescriptionState> & {
     /**
-     * 統計の説明文のサイズを指定します。
+     * 統計の説明文の大きさを指定します。
      *
      * 親 {@link StatRoot} 内では、ルートに指定した値が優先されます。
      */
@@ -419,21 +376,21 @@ export type StatDescriptionProps = Omit<React.ComponentProps<"dd">, keyof Render
   };
 
 /**
- * 統計の補足説明を表す要素です。
+ * 統計の補足説明を表すコンポーネントです。
  *
  * `dd` 要素を描画します。
  */
 export const StatDescription: IComponent<StatDescriptionProps> = function SuiStatDescription(
   props,
 ) {
-  const group = useSuiStatContext(true);
-  const { className, size: sizeProp, ...otherProps } = props;
-  const size = group?.size ?? sizeProp ?? "md";
+  const ctx = useSuiStatContext(true);
+  const { size: sizeProp, className, ...otherDdProps } = props;
+  const size = ctx?.size ?? sizeProp ?? "md";
 
   return useRender({
     defaultTagName: "dd",
     props: [
-      otherProps,
+      otherDdProps,
       {
         className: cn(className, "sui_stat_description", `sui_stat_description-size_${size}`),
       },
@@ -441,27 +398,21 @@ export const StatDescription: IComponent<StatDescriptionProps> = function SuiSta
   });
 };
 
-/**
- * {@link StatDescription} の状態やプロパティーをまとめた型名前空間です。
- */
+export { StatDescription as Description };
+
 export namespace Description {
   /**
-   * {@link StatDescriptionState} です。
+   * {@link StatDescriptionState}
    */
   export type State = StatDescriptionState;
 
   /**
-   * {@link StatDescriptionProps} です。
+   * {@link StatDescriptionProps}
    */
   export type Props = StatDescriptionProps;
 
   /**
-   * {@link StatDescriptionSize} です。
+   * {@link StatDescriptionSize}
    */
   export type Size = StatDescriptionSize;
 }
-
-/**
- * {@link StatDescription} です。
- */
-export const Description: IComponent<Description.Props> = StatDescription;

@@ -1,82 +1,106 @@
+import * as React from "react";
+
 import type { IComponent } from "../types.js";
 import {
+  type PopoverHandle,
   type PopoverRootProps,
   type PopoverRootState,
   type PopoverArrowProps,
   type PopoverPopupProps,
   type PopoverPortalProps,
+  type PopoverRootActions,
   type PopoverTriggerProps,
   type PopoverBackdropProps,
   type PopoverPositionerProps,
+  type PopoverRootChangeEventReason,
+  type PopoverRootChangeEventDetails,
   PopoverRoot,
   PopoverArrow,
   PopoverPopup,
-  createHandle,
   PopoverPortal,
   PopoverTrigger,
   PopoverBackdrop,
   PopoverPositioner,
+  createPopoverHandle,
 } from "./popover.parts.jsx";
+
+// Types
+// -----
+
 /**
- * {@link Popover} の各パーツに渡すプロパティーです。
+ * {@link PopoverRootActions}
  */
-export type PopoverSlotProps = {
+export type PopoverActions = PopoverRootActions;
+
+/**
+ * {@link PopoverRootChangeEventDetails}
+ */
+export type PopoverChangeEventDetails = PopoverRootChangeEventDetails;
+
+/**
+ * {@link PopoverRootChangeEventReason}
+ */
+export type PopoverChangeEventReason = PopoverRootChangeEventReason;
+
+/**
+ * {@link Popover} の各パーツに渡す props です。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
+ */
+export type PopoverSlotProps<TPayload = any> = {
   /**
-   * {@link PopoverArrow} に渡すプロパティーです。
+   * {@link PopoverArrow} に渡す props です。
    */
   readonly arrow?: PopoverArrowProps | undefined;
 
   /**
-   * {@link PopoverBackdrop} に渡すプロパティーです。
+   * {@link PopoverBackdrop} に渡す props です。
    */
   readonly backdrop?: PopoverBackdropProps | undefined;
 
   /**
-   * {@link PopoverPopup} に渡すプロパティーです。
+   * {@link PopoverPopup} に渡す props です。
    */
   readonly popup?: Omit<PopoverPopupProps, "children"> | undefined;
 
   /**
-   * {@link PopoverPortal} に渡すプロパティーです。
+   * {@link PopoverPortal} に渡す props です。
    */
-  readonly portal?: PopoverPortalProps | undefined;
+  readonly portal?: Omit<PopoverPortalProps, "children"> | undefined;
 
   /**
-   * {@link PopoverPositioner} に渡すプロパティーです。
+   * {@link PopoverPositioner} に渡す props です。
    */
   readonly positioner?: PopoverPositionerProps | undefined;
 
   /**
-   * {@link PopoverTrigger} に渡すプロパティーです。
+   * {@link PopoverTrigger} に渡す props です。
    */
-  readonly trigger?: Omit<PopoverTriggerProps, "handle"> | undefined;
+  readonly trigger?: Omit<PopoverTriggerProps<TPayload>, "children" | "handle"> | undefined;
 };
 
 /**
- * {@link Popover} の状態です。
+ * {@link Popover} が持つ状態です。
  */
 export type PopoverState = PopoverRootState;
 
-/**
- * {@link Popover} コンポーネントのプロパティーです。
- *
- * @template TPayload トリガーから受け取るデータの型です。
- */
-export type PopoverProps<TPayload = unknown> = Omit<
-  PopoverRootProps<TPayload>,
-  "children" | "handle"
-> & {
+type PopoverPropsMain<TPayload = any> = {
   /**
    * ポップアップに表示する内容です。
    */
-  children?: React.ReactNode | undefined;
+  children?: PopoverPopupProps["children"] | undefined;
 
   /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-   *
-   * 各パーツのプロパティーが優先されます。
+   * トリガーとポップオーバーに関連付けるためのハンドルです。
    */
-  slotProps?: PopoverSlotProps | undefined;
+  handle?: PopoverHandle<TPayload> | undefined;
+
+  /**
+   * 各パーツに個別の props を渡すためのオブジェクトです。
+   *
+   * 各パーツの props が優先されます。
+   */
+  slotProps?: PopoverSlotProps<TPayload> | undefined;
 
   /**
    * ポップオーバーを開く対象です。
@@ -87,155 +111,235 @@ export type PopoverProps<TPayload = unknown> = Omit<
   trigger?: PopoverTriggerProps["children"] | undefined;
 };
 
-/**
- * {@link Popover} の各パーツに渡すプロパティーです。
- *
- * @template TPayload トリガーから受け取るデータの型です。
- */
-export type PopoverPartsProps<TPayload = unknown> = {
-  /**
-   * {@link PopoverBackdrop} に渡すプロパティーです。
-   */
-  readonly backdrop: PopoverBackdropProps | undefined;
-
-  /**
-   * {@link PopoverPopup} に渡すプロパティーです。
-   *
-   * `slotProps.arrow` を指定すると、`children` の先頭に {@link PopoverArrow} が設定されます。
-   */
-  readonly popup: PopoverPopupProps;
-
-  /**
-   * {@link PopoverPortal} に渡すプロパティーです。
-   */
-  readonly portal: PopoverPortalProps | undefined;
-
-  /**
-   * {@link PopoverPositioner} に渡すプロパティーです。
-   */
-  readonly positioner: PopoverPositionerProps;
-
-  /**
-   * {@link PopoverRoot} に渡すプロパティーです。
-   */
-  readonly root: PopoverRootProps<TPayload>;
-
-  /**
-   * {@link PopoverTrigger} に渡すプロパティーです。
-   *
-   * トリガーを表示しないときは null になります。
-   */
-  readonly trigger: Omit<PopoverTriggerProps, "handle"> | null;
-};
+type PopoverPropsRoot<TPayload = any> = Omit<
+  PopoverRootProps<TPayload>,
+  "children" | keyof PopoverPropsMain
+>;
 
 /**
- * {@link Popover} の各パーツに渡すプロパティーを作るフックです。
+ * {@link Popover} に渡す props です。
  *
- * @template TPayload トリガーから受け取るデータの型です。
+ * @template TPayload トリガーが送信するデータの型です。
  */
-export function usePopover<TPayload>(props: PopoverProps<TPayload>): PopoverPartsProps<TPayload> {
+export type PopoverProps<TPayload = any> = PopoverPropsMain<TPayload> & PopoverPropsRoot<TPayload>;
+
+// API
+// ---
+
+/**
+ * {@link Popover} を構成する各パーツの props などを作成するための API です。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
+ */
+export interface PopoverAPI<TPayload = any> {
+  /**
+   * {@link PopoverArrow} に渡す props を取得します。
+   */
+  getArrowProps(): PopoverArrowProps | null;
+
+  /**
+   * {@link PopoverBackdrop} に渡す props を取得します。
+   */
+  getBackdropProps(): PopoverBackdropProps;
+
+  /**
+   * {@link PopoverPopup} に渡す props を取得します。
+   */
+  getPopupProps(): Omit<PopoverPopupProps, "children">;
+
+  /**
+   * {@link PopoverPortal} に渡す props を取得します。
+   */
+  getPortalProps(): Omit<PopoverPortalProps, "children">;
+
+  /**
+   * {@link PopoverPositioner} に渡す props を取得します。
+   */
+  getPositionerProps(): PopoverPositionerProps;
+
+  /**
+   * {@link PopoverRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<PopoverRootProps<TPayload>, "children">;
+
+  /**
+   * {@link PopoverTrigger} に渡す props を取得します。
+   */
+  getTriggerProps(): Omit<PopoverTriggerProps<TPayload>, "handle"> | null;
+}
+
+interface IUsePopoverAPI {
+  /**
+   * {@link PopoverAPI} を作成します。
+   *
+   * @template TPayload トリガーが送信するデータの型です。
+   * @param props {@link Popover} の props です。
+   * @returns ポップオーバーの API です
+   */
+  <TPayload = any>(props: PopoverProps<TPayload>): PopoverAPI<TPayload>;
+}
+
+/**
+ * {@link PopoverAPI} を作成するフックです。
+ */
+export const usePopoverAPI: IUsePopoverAPI = function useSuiPopoverAPI(props: PopoverProps<any>) {
   const {
+    open,
+    handle: handleProp,
     trigger,
-    children,
+    children: _children,
     slotProps: {
       arrow: arrowProps,
-      backdrop: backdropProps,
-      popup: popupProps,
-      portal: portalProps,
-      positioner: positionerProps,
-      trigger: triggerProps,
+      popup: popupProps = {},
+      portal: portalProps = {},
+      trigger: triggerProps = {},
+      backdrop: backdropProps = {},
+      positioner: positionerProps = {},
     } = {},
-    ...rootProps
+    triggerId,
+    actionsRef,
+    defaultOpen,
+    onOpenChange,
+    defaultTriggerId,
+    onOpenChangeComplete,
+    ...otherRootProps
   } = props;
+  const handle = React.useMemo(() => handleProp, [handleProp]);
   const {
     side = "bottom",
     align = "start",
     sideOffset = 8,
     ...otherPositionerProps
-  } = positionerProps ?? {};
+  } = positionerProps;
 
   return {
-    root: rootProps as PopoverRootProps<TPayload>,
-    trigger:
-      !!trigger || !!triggerProps
-        ? {
-            children: trigger!,
-            ...triggerProps,
-          }
-        : null,
-    portal: portalProps,
-    backdrop: backdropProps,
-    positioner: {
-      ...otherPositionerProps,
-      side,
-      align,
-      sideOffset,
+    getRootProps(): Omit<PopoverRootProps<any>, "children"> {
+      return {
+        ...otherRootProps,
+        open,
+        handle,
+        triggerId,
+        actionsRef,
+        defaultOpen,
+        onOpenChange,
+        defaultTriggerId,
+        onOpenChangeComplete,
+      };
     },
-    popup: {
-      ...popupProps,
-      children: (
-        <>
-          {arrowProps && <PopoverArrow {...arrowProps} />}
-          {children}
-        </>
-      ),
+    getArrowProps() {
+      if (arrowProps) {
+        return arrowProps;
+      }
+
+      return null;
+    },
+    getPopupProps() {
+      return popupProps;
+    },
+    getPortalProps() {
+      return portalProps;
+    },
+    getTriggerProps() {
+      if (trigger) {
+        return {
+          ...triggerProps,
+          children: trigger,
+        };
+      }
+
+      return null;
+    },
+    getBackdropProps() {
+      return backdropProps;
+    },
+    getPositionerProps() {
+      return {
+        ...otherPositionerProps,
+        align,
+        side,
+        sideOffset,
+      };
     },
   };
-}
+};
 
-interface PopoverComponentType extends IComponent<PopoverProps> {
+export { type PopoverAPI as API, usePopoverAPI as useAPI };
+
+// Component
+// ---------
+
+interface IPopover extends IComponent<PopoverProps> {
   /**
-   * ポップオーバーを制御するハンドルを新しく作成します。
-   *
-   * 作成したハンドルは {@link PopoverRoot|Root} と {@link PopoverTrigger|Trigger} の `handle` プロパティーに渡します。
+   * @template TPayload トリガーが送信するデータの型です。
    */
-  readonly createHandle: typeof createHandle;
+  <TPayload = any>(props: PopoverProps<TPayload>): IComponent.Return;
+
+  /**
+   * {@link PopoverHandle} を作成する関数です。
+   */
+  readonly createHandle: typeof createPopoverHandle;
 }
 
 /**
  * トリガーとポップアップを組み立てたポップオーバーです。
  *
- * タイトルや説明、閉じるボタンなどの構成を細かく制御する場合は、{@link PopoverRoot|Root} を直接組み立てます。
+ * ボタンを押すと内容を表示します。
+ * 構成を細かく制御する場合は、{@link PopoverRoot|Root} を直接組み立てます。
  */
-export const Popover: PopoverComponentType = /*#__PURE__*/ Object.assign(
+export const Popover: IPopover = /*#__PURE__*/ Object.assign(
   function SuiPopover(props: PopoverProps) {
-    const partsProps = usePopover(props);
+    const api = usePopoverAPI(props);
+    const triggerProps = api.getTriggerProps();
+    const arrowProps = api.getArrowProps();
 
     return (
-      <PopoverRoot {...partsProps.root}>
-        {partsProps.trigger && <PopoverTrigger {...partsProps.trigger} />}
-        <PopoverPortal {...partsProps.portal}>
-          <PopoverBackdrop {...partsProps.backdrop} />
-          <PopoverPositioner {...partsProps.positioner}>
-            <PopoverPopup {...partsProps.popup} />
+      <PopoverRoot {...api.getRootProps()}>
+        {triggerProps && <PopoverTrigger {...triggerProps} />}
+        <PopoverPortal {...api.getPortalProps()}>
+          <PopoverBackdrop {...api.getBackdropProps()} />
+          <PopoverPositioner {...api.getPositionerProps()}>
+            <PopoverPopup {...api.getPopupProps()}>
+              {arrowProps && <PopoverArrow {...arrowProps} />}
+              {props.children}
+            </PopoverPopup>
           </PopoverPositioner>
         </PopoverPortal>
       </PopoverRoot>
     );
   },
-  { createHandle },
+  {
+    createHandle: createPopoverHandle,
+  },
 );
 
-/**
- * {@link Popover} の状態やプロパティーをまとめた型名前空間です。
- *
- * @template TPayload トリガーから受け取るデータの型です。
- */
 export namespace Popover {
   /**
-   * {@link PopoverState} です。
+   * {@link PopoverState}
    */
   export type State = PopoverState;
 
   /**
-   * {@link PopoverProps} です。
-   *
-   * @template TPayload トリガーから受け取るデータの型です。
+   * {@link PopoverProps}
    */
-  export type Props<TPayload = unknown> = PopoverProps<TPayload>;
+  export type Props<TPayload = any> = PopoverProps<TPayload>;
 
   /**
-   * {@link PopoverSlotProps} です。
+   * {@link PopoverSlotProps}
    */
   export type SlotProps = PopoverSlotProps;
+
+  /**
+   * {@link PopoverActions}
+   */
+  export type Actions = PopoverActions;
+
+  /**
+   * {@link PopoverChangeEventDetails}
+   */
+  export type ChangeEventDetails = PopoverChangeEventDetails;
+
+  /**
+   * {@link PopoverChangeEventReason}
+   */
+  export type ChangeEventReason = PopoverChangeEventReason;
 }

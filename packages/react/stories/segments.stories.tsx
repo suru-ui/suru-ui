@@ -2,13 +2,7 @@ import { SIZES, COLORS } from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
-import {
-  Segments,
-  SegmentsItem,
-  SegmentsList,
-  SegmentsRoot,
-  SegmentsIndicator,
-} from "../src/segments/index.js";
+import { Segments, SegmentsItem } from "../src/segments/index.js";
 
 const meta = preview.meta({
   title: "Segments",
@@ -83,6 +77,26 @@ export const Controlled = meta.story({
   },
 });
 
+export const Renderer = meta.story({
+  name: "描画の上書き",
+  ...ctrl({
+    color: "grey",
+    radius: "full",
+    size: "md",
+  }),
+  render(props) {
+    return (
+      <Segments {...props} items={usageItems} defaultValue="week">
+        {(item, index) => (
+          <SegmentsItem key={index} value={item.value}>
+            「{item.label}」
+          </SegmentsItem>
+        )}
+      </Segments>
+    );
+  },
+});
+
 export const DisabledItem = meta.story({
   name: "無効な項目",
   ...ctrl({
@@ -111,27 +125,6 @@ export const DisabledItem = meta.story({
         ]}
         defaultValue="month"
       />
-    );
-  },
-});
-
-export const Parts = meta.story({
-  name: "パーツを組み立てる",
-  ...ctrl({
-    color: "grey",
-    radius: "full",
-    size: "md",
-  }),
-  render(props) {
-    return (
-      <SegmentsRoot {...props} defaultValue="week">
-        <SegmentsList>
-          <SegmentsItem value="day">日</SegmentsItem>
-          <SegmentsItem value="week">週</SegmentsItem>
-          <SegmentsItem value="month">月</SegmentsItem>
-          <SegmentsIndicator />
-        </SegmentsList>
-      </SegmentsRoot>
     );
   },
 });

@@ -1,10 +1,13 @@
-import { SIZES, COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Switch } from "../src/switch/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
+const COLORS: readonly Switch.Color[] = theme.COLORS;
+const RADII: readonly Switch.Radius[] = ["none", ...theme.SIZES, "full"];
+const SIZES: readonly Switch.Size[] = theme.SIZES;
+const VARIANTS: readonly Switch.Variant[] = ["naked", "liquid"];
 
 const meta = preview.meta({
   title: "Switch",
@@ -15,8 +18,8 @@ export default meta;
 
 const ctrl = controls(Switch, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   disabled: {
     control: "boolean",
@@ -25,16 +28,16 @@ const ctrl = controls(Switch, {
     control: "boolean",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   variant: {
-    options: ["naked", "liquid"],
     control: "select",
+    options: VARIANTS,
   },
 });
 
@@ -70,14 +73,12 @@ export const Variants = meta.story({
   render(props) {
     return (
       <div className="flex flex-col gap-3">
-        <label className="flex items-center gap-2">
-          <Switch {...props} variant="naked" defaultChecked />
-          naked
-        </label>
-        <label className="flex items-center gap-2">
-          <Switch {...props} variant="liquid" defaultChecked />
-          liquid
-        </label>
+        {VARIANTS.map((variant) => (
+          <label key={variant} className="flex items-center gap-2">
+            <Switch {...props} variant={variant} defaultChecked />
+            <span>{variant}</span>
+          </label>
+        ))}
       </div>
     );
   },
@@ -208,6 +209,32 @@ export const Checked = meta.story({
   },
 });
 
+export const Uncontrolled = meta.story({
+  name: "非制御",
+  ...ctrl({
+    variant: "naked",
+    color: "grey",
+    size: "md",
+    radius: "full",
+    outlined: undefined,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        <label className="flex items-center gap-2">
+          <Switch {...props} defaultChecked={false} />
+          初期オフ
+        </label>
+        <label className="flex items-center gap-2">
+          <Switch {...props} defaultChecked />
+          初期オン
+        </label>
+      </div>
+    );
+  },
+});
+
 export const Controlled = meta.story({
   name: "制御",
   ...ctrl({
@@ -219,7 +246,7 @@ export const Controlled = meta.story({
     disabled: false,
   }),
   render(props) {
-    const [checked, setChecked] = React.useState(true);
+    const [checked, setChecked] = React.useState(false);
 
     return (
       <div className="flex flex-col gap-3">

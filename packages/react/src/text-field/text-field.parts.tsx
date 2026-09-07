@@ -71,15 +71,15 @@ export const TextFieldContext: React.Context<TextFieldContext | null> =
 function useSuiTextFieldContext(optional?: false): TextFieldContext;
 function useSuiTextFieldContext(optional?: boolean): TextFieldContext | null;
 function useSuiTextFieldContext(optional?: boolean): TextFieldContext | null {
-  const context = React.use(TextFieldContext);
-  if (context === null && !optional) {
+  const ctx = React.use(TextFieldContext);
+  if (ctx === null && !optional) {
     throw new ContextMissingError({
       contextName: "TextFieldContext",
       providerName: "TextFieldRoot",
     });
   }
 
-  return context;
+  return ctx;
 }
 
 /**
@@ -87,45 +87,29 @@ function useSuiTextFieldContext(optional?: boolean): TextFieldContext | null {
  */
 export const useTextFieldContext: IUseContext<TextFieldContext> = useSuiTextFieldContext;
 
-/**
- * {@link TextFieldContext} です。
- */
-export type Context = TextFieldContext;
+export { TextFieldContext as Context, useTextFieldContext as useContext };
 
-/**
- * {@link TextFieldContext} です。
- */
-export const Context: React.Context<Context | null> = TextFieldContext;
-
-/**
- * {@link Context} の型名前空間です。
- */
 export namespace Context {
   /**
-   * {@link TextFieldContextColor} です。
+   * {@link TextFieldContextColor}
    */
   export type Color = TextFieldContextColor;
 
   /**
-   * {@link TextFieldContextRadius} です。
+   * {@link TextFieldContextRadius}
    */
   export type Radius = TextFieldContextRadius;
 
   /**
-   * {@link TextFieldContextSize} です。
+   * {@link TextFieldContextSize}
    */
   export type Size = TextFieldContextSize;
 
   /**
-   * {@link TextFieldContextVariant} です。
+   * {@link TextFieldContextVariant}
    */
   export type Variant = TextFieldContextVariant;
 }
-
-/**
- * {@link useTextFieldContext} です。
- */
-export const useContext: IUseContext<Context> = useTextFieldContext;
 
 // Root
 // ----
@@ -164,12 +148,12 @@ export type TextFieldRootSize = Size;
 export type TextFieldRootVariant = "naked" | "liquid";
 
 /**
- * {@link TextFieldRoot} の状態です。
+ * {@link TextFieldRoot} が持つ状態です。
  */
 export type TextFieldRootState = {};
 
 /**
- * {@link TextFieldRoot} に渡すプロパティーです。
+ * {@link TextFieldRoot} に渡す props です。
  */
 export type TextFieldRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps<{}>> &
   RenderProps<TextFieldRootState> & {
@@ -190,7 +174,7 @@ export type TextFieldRootProps = Omit<React.ComponentProps<"div">, keyof RenderP
     /**
      * 文字入力欄の角丸を指定します。
      *
-     * 省略時は {@link TextFieldRootProps.size|size} と同じ値になります。
+     * 既定値は {@link TextFieldRootProps.size|size}
      */
     radius?: TextFieldRootRadius | undefined;
 
@@ -223,9 +207,12 @@ export const TextFieldRoot: IComponent<TextFieldRootProps> = function SuiTextFie
     radius = size,
     variant = "liquid",
     outlined = false,
-    ...otherProps
+    className,
+    onClick,
+    ...otherDivProps
   } = props;
-  const focusInput: NonNullable<TextFieldRootProps["onClick"]> = (evt) => {
+  const handleClick: NonNullable<TextFieldRootProps["onClick"]> = (evt) => {
+    onClick?.(evt);
     if (evt.defaultPrevented || !(evt.target instanceof Element)) {
       return;
     }
@@ -242,17 +229,18 @@ export const TextFieldRoot: IComponent<TextFieldRootProps> = function SuiTextFie
       input.focus();
     }
   };
-  const context = React.useMemo<TextFieldContext>(
+  const ctx = React.useMemo<TextFieldContext>(
     () => ({ size, color, radius, variant, outlined }),
     [size, color, radius, variant, outlined],
   );
   const element = useRender({
     defaultTagName: "div",
     props: [
-      otherProps,
+      otherDivProps,
       {
-        onClick: focusInput,
+        onClick: handleClick,
         className: cn(
+          className,
           "sui_text_field",
           `sui_text_field-size_${size}`,
           `sui_text_field-color_${color}`,
@@ -260,52 +248,47 @@ export const TextFieldRoot: IComponent<TextFieldRootProps> = function SuiTextFie
           `sui_text_field-variant_${variant}`,
           outlined && "sui_text_field-outlined",
         ),
+        "data-scope": "",
       },
     ],
   });
 
-  return <Context value={context}>{element}</Context>;
+  return <TextFieldContext value={ctx}>{element}</TextFieldContext>;
 };
 
-/**
- * {@link TextFieldRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { TextFieldRoot as Root };
+
 export namespace Root {
   /**
-   * {@link TextFieldRootState} です。
+   * {@link TextFieldRootState}
    */
   export type State = TextFieldRootState;
 
   /**
-   * {@link TextFieldRootProps} です。
+   * {@link TextFieldRootProps}
    */
   export type Props = TextFieldRootProps;
 
   /**
-   * {@link TextFieldRootColor} です。
+   * {@link TextFieldRootColor}
    */
   export type Color = TextFieldRootColor;
 
   /**
-   * {@link TextFieldRootRadius} です。
+   * {@link TextFieldRootRadius}
    */
   export type Radius = TextFieldRootRadius;
 
   /**
-   * {@link TextFieldRootSize} です。
+   * {@link TextFieldRootSize}
    */
   export type Size = TextFieldRootSize;
 
   /**
-   * {@link TextFieldRootVariant} です。
+   * {@link TextFieldRootVariant}
    */
   export type Variant = TextFieldRootVariant;
 }
-
-/**
- * {@link TextFieldRoot} です。
- */
-export const Root: IComponent<Root.Props> = TextFieldRoot;
 
 // Input
 // -----
@@ -334,7 +317,7 @@ export type TextFieldInputChangeEventDetails = BaseInput.ChangeEventDetails;
 export type TextFieldInputState = BaseInput.State;
 
 /**
- * {@link TextFieldInput} に渡すプロパティーです。
+ * {@link TextFieldInput} に渡す props です。
  */
 export type TextFieldInputProps = Omit<React.ComponentProps<typeof BaseInput>, "type"> & {
   /**
@@ -367,35 +350,29 @@ export const TextFieldInput: IComponent<TextFieldInputProps> = function SuiTextF
   );
 };
 
-/**
- * {@link TextFieldInput} の状態やプロパティーをまとめた型名前空間です。
- */
+export { TextFieldInput as Input };
+
 export namespace Input {
   /**
-   * {@link TextFieldInputState} です。
+   * {@link TextFieldInputState}
    */
   export type State = TextFieldInputState;
 
   /**
-   * {@link TextFieldInputProps} です。
+   * {@link TextFieldInputProps}
    */
   export type Props = TextFieldInputProps;
 
   /**
-   * {@link TextFieldInputChangeEventDetails} です。
+   * {@link TextFieldInputChangeEventDetails}
    */
   export type ChangeEventDetails = TextFieldInputChangeEventDetails;
 
   /**
-   * {@link TextFieldInputChangeEventReason} です。
+   * {@link TextFieldInputChangeEventReason}
    */
   export type ChangeEventReason = TextFieldInputChangeEventReason;
 }
-
-/**
- * {@link TextFieldInput} です。
- */
-export const Input: IComponent<Input.Props> = TextFieldInput;
 
 // Addon
 // -----
@@ -406,7 +383,7 @@ export const Input: IComponent<Input.Props> = TextFieldInput;
 export type TextFieldAddonState = {};
 
 /**
- * {@link TextFieldAddon} に渡すプロパティーです。
+ * {@link TextFieldAddon} に渡す props です。
  */
 export type TextFieldAddonProps = Omit<
   React.ComponentProps<"span">,
@@ -427,12 +404,12 @@ export type TextFieldAddonProps = Omit<
  * 接頭辞、接尾辞、アイコンなどを表示できます。
  */
 export const TextFieldAddon: IComponent<TextFieldAddonProps> = function SuiTextFieldAddon(props) {
-  const { disableFocusOnClick = false, ...otherProps } = props;
+  const { disableFocusOnClick = false, ...otherSpanProps } = props;
 
   return useRender({
     defaultTagName: "span",
     props: [
-      otherProps,
+      otherSpanProps,
       {
         className: "sui_text_field_addon",
         [DISABLE_FOCUS_ON_CLICK_DATA]: disableFocusOnClick ? "true" : undefined,
@@ -441,22 +418,16 @@ export const TextFieldAddon: IComponent<TextFieldAddonProps> = function SuiTextF
   });
 };
 
-/**
- * {@link TextFieldAddon} の状態やプロパティーをまとめた型名前空間です。
- */
+export { TextFieldAddon as Addon };
+
 export namespace Addon {
   /**
-   * {@link TextFieldAddonState} です。
+   * {@link TextFieldAddonState}
    */
   export type State = TextFieldAddonState;
 
   /**
-   * {@link TextFieldAddonProps} です。
+   * {@link TextFieldAddonProps}
    */
   export type Props = TextFieldAddonProps;
 }
-
-/**
- * {@link TextFieldAddon} です。
- */
-export const Addon: IComponent<Addon.Props> = TextFieldAddon;

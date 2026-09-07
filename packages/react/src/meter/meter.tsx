@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import type { IComponent } from "../types.js";
 import {
   type MeterRootSize,
@@ -19,188 +17,235 @@ import {
   MeterIndicator,
 } from "./meter.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link MeterRootColor} です。
+ * {@link MeterRootColor}
  */
 export type MeterColor = MeterRootColor;
 
 /**
- * {@link MeterRootRadius} です。
+ * {@link MeterRootRadius}
  */
 export type MeterRadius = MeterRootRadius;
 
 /**
- * {@link MeterRootSize} です。
+ * {@link MeterRootSize}
  */
 export type MeterSize = MeterRootSize;
 
 /**
- * {@link MeterRootVariant} です。
+ * {@link MeterRootVariant}
  */
 export type MeterVariant = MeterRootVariant;
 
 /**
- * {@link Meter} の各パーツに渡すプロパティーです。
+ * {@link Meter} の各パーツに渡す props です。
  */
 export type MeterSlotProps = {
   /**
-   * {@link MeterIndicator} に渡すプロパティーです。
+   * {@link MeterIndicator} に渡す props です。
    */
   readonly indicator?: MeterIndicatorProps | undefined;
 
   /**
-   * {@link MeterLabel} に渡すプロパティーです。
+   * {@link MeterLabel} に渡す props です。
    */
-  readonly label?: MeterLabelProps | undefined;
+  readonly label?: Omit<MeterLabelProps, "children"> | undefined;
 
   /**
-   * {@link MeterTrack} に渡すプロパティーです。
+   * {@link MeterTrack} に渡す props です。
    */
-  readonly track?: MeterTrackProps | undefined;
+  readonly track?: Omit<MeterTrackProps, "children"> | undefined;
 
   /**
-   * {@link MeterValue} に渡すプロパティーです。
+   * {@link MeterValue} に渡す props です。
    */
   readonly value?: MeterValueProps | undefined;
 };
 
 /**
- * {@link Meter} の各パーツに渡すプロパティーです。
- */
-export type MeterPartsProps = {
-  /**
-   * {@link MeterIndicator} に渡すプロパティーです。
-   */
-  readonly indicator: MeterIndicatorProps;
-
-  /**
-   * {@link MeterLabel} に渡すプロパティーです。
-   *
-   * これを表示しないときは null になります。
-   */
-  readonly label: MeterLabelProps | null;
-
-  /**
-   * {@link MeterRoot} に渡すプロパティーです。
-   */
-  readonly root: MeterRootProps;
-
-  /**
-   * {@link MeterTrack} に渡すプロパティーです。
-   */
-  readonly track: MeterTrackProps;
-
-  /**
-   * {@link MeterValue} に渡すプロパティーです。
-   *
-   * ラベルを指定したときは値も同時に表示されます。`slotProps.value` だけを渡しても値は表示されず、表示はラベルの指定に従います。
-   *
-   * これを表示しないときは null になります。
-   */
-  readonly value: MeterValueProps | null;
-};
-
-/**
- * {@link Meter} の状態です。
+ * {@link Meter} が持つ状態です。
  */
 export type MeterState = MeterRootState;
 
 /**
- * {@link Meter} コンポーネントのプロパティーです。
+ * {@link Meter} に渡す props です。
  */
-export type MeterProps = Omit<MeterRootProps, "children"> & {
+export type MeterProps = Omit<MeterRootProps, "children" | "value"> & {
   /**
    * ラベルです。
    *
    * 指定すると {@link MeterValue} も表示されます。
    */
-  label?: MeterLabelProps["children"];
+  label?: MeterLabelProps["children"] | undefined;
 
   /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+   * 各パーツに個別の props を渡すためのオブジェクトです。
    *
-   * 各パーツのプロパティーが優先されます。
+   * 各パーツの props が優先されます。
    */
   slotProps?: MeterSlotProps | undefined;
+
+  /**
+   * 現在値です。
+   *
+   * @default 0
+   */
+  value?: number | undefined;
 };
 
+// API
+// ---
+
 /**
- * {@link Meter} の各パーツに渡すプロパティーを作るフックです。
+ * {@link Meter} を構成する各パーツの props を作成するための API です。
  */
-export function useMeter(props: MeterProps): MeterPartsProps {
+export interface MeterAPI {
+  /**
+   * {@link MeterIndicator} に渡す props を取得します。
+   */
+  getIndicatorProps(): MeterIndicatorProps;
+
+  /**
+   * {@link MeterLabel} に渡す props を取得します。
+   */
+  getLabelProps(): MeterLabelProps | null;
+
+  /**
+   * {@link MeterRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<MeterRootProps, "children">;
+
+  /**
+   * {@link MeterTrack} に渡す props を取得します。
+   */
+  getTrackProps(): Omit<MeterTrackProps, "children">;
+
+  /**
+   * {@link MeterValue} に渡す props を取得します。
+   */
+  getValueProps(): MeterValueProps | null;
+}
+
+interface IUseMeterAPI {
+  /**
+   * {@link MeterAPI} を作成します。
+   *
+   * @param props {@link Meter} の props です。
+   * @returns メーターの API です
+   */
+  (props: MeterProps): MeterAPI;
+}
+
+/**
+ * {@link MeterAPI} を作成するフックです。
+ */
+export const useMeterAPI: IUseMeterAPI = function useSuiMeterAPI(props) {
   const {
     label,
+    value = 0,
     slotProps: {
       label: labelProps,
       track: trackProps = {},
       value: valueProps,
       indicator: indicatorProps = {},
     } = {},
-    ...rootProps
+    ...otherRootProps
   } = props;
 
   return {
-    root: rootProps,
-    label: "label" in props || !!labelProps ? { children: label, ...labelProps } : null,
-    value: "label" in props || !!labelProps || !!valueProps ? { ...valueProps } : null,
-    track: trackProps,
-    indicator: indicatorProps,
+    getIndicatorProps() {
+      return indicatorProps;
+    },
+    getLabelProps() {
+      if ("label" in props || labelProps) {
+        return {
+          children: label,
+          ...labelProps,
+        };
+      }
+
+      return null;
+    },
+    getRootProps() {
+      return { value, ...otherRootProps };
+    },
+    getTrackProps() {
+      return trackProps;
+    },
+    getValueProps() {
+      if ("label" in props || labelProps || valueProps) {
+        return {
+          ...valueProps,
+        };
+      }
+
+      return null;
+    },
   };
-}
+};
+
+export { type MeterAPI as API, useMeterAPI as useAPI };
+
+// Component
+// ---------
 
 /**
  * 数値の範囲内にある現在値を表示するメーターコンポーネントです。
+ *
+ * 測定値や使用量など、既知の範囲に対する割合を示します。ラベルを指定すると現在値もあわせて表示されます。
  */
 export const Meter: IComponent<MeterProps> = function SuiMeter(props) {
-  const partsProps = useMeter(props);
+  const api = useMeterAPI(props);
+  const labelProps = api.getLabelProps();
+  const valueProps = api.getValueProps();
 
   return (
-    <MeterRoot {...partsProps.root}>
-      {partsProps.label && <MeterLabel {...partsProps.label} />}
-      {partsProps.value && <MeterValue {...partsProps.value} />}
-      <MeterTrack {...partsProps.track}>
-        <MeterIndicator {...partsProps.indicator} />
+    <MeterRoot {...api.getRootProps()}>
+      {labelProps && <MeterLabel {...labelProps} />}
+      {valueProps && <MeterValue {...valueProps} />}
+      <MeterTrack {...api.getTrackProps()}>
+        <MeterIndicator {...api.getIndicatorProps()} />
       </MeterTrack>
     </MeterRoot>
   );
 };
 
-/**
- * {@link Meter} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Meter {
   /**
-   * {@link MeterState} です。
+   * {@link MeterState}
    */
   export type State = MeterState;
 
   /**
-   * {@link MeterProps} です。
+   * {@link MeterProps}
    */
   export type Props = MeterProps;
 
   /**
-   * {@link MeterSlotProps} です。
+   * {@link MeterSlotProps}
    */
   export type SlotProps = MeterSlotProps;
 
   /**
-   * {@link MeterColor} です。
+   * {@link MeterColor}
    */
   export type Color = MeterColor;
 
   /**
-   * {@link MeterRadius} です。
+   * {@link MeterRadius}
    */
   export type Radius = MeterRadius;
 
   /**
-   * {@link MeterSize} です。
+   * {@link MeterSize}
    */
   export type Size = MeterSize;
 
   /**
-   * {@link MeterVariant} です。
+   * {@link MeterVariant}
    */
   export type Variant = MeterVariant;
 }

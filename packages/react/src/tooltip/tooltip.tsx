@@ -2,72 +2,98 @@ import * as React from "react";
 
 import type { IComponent } from "../types.js";
 import {
+  type TooltipHandle,
   type TooltipRootProps,
   type TooltipRootState,
   type TooltipArrowProps,
   type TooltipPopupProps,
   type TooltipPortalProps,
+  type TooltipRootActions,
   type TooltipTriggerProps,
   type TooltipPositionerProps,
+  type TooltipRootChangeEventReason,
+  type TooltipRootChangeEventDetails,
   TooltipRoot,
   TooltipArrow,
   TooltipPopup,
-  createHandle,
   TooltipPortal,
   TooltipTrigger,
   TooltipPositioner,
+  createTooltipHandle,
 } from "./tooltip.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link Tooltip} の各パーツに渡すプロパティーです。
+ * {@link TooltipRootActions}
  */
-export type TooltipSlotProps = {
+export type TooltipActions = TooltipRootActions;
+
+/**
+ * {@link TooltipRootChangeEventDetails}
+ */
+export type TooltipChangeEventDetails = TooltipRootChangeEventDetails;
+
+/**
+ * {@link TooltipRootChangeEventReason}
+ */
+export type TooltipChangeEventReason = TooltipRootChangeEventReason;
+
+/**
+ * {@link Tooltip} の各パーツに渡す props です。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
+ */
+export type TooltipSlotProps<TPayload = any> = {
   /**
-   * {@link TooltipArrow} に渡すプロパティーです。
+   * {@link TooltipArrow} に渡す props です。
    */
   readonly arrow?: TooltipArrowProps | undefined;
 
   /**
-   * {@link TooltipPopup} に渡すプロパティーです。
+   * {@link TooltipPopup} に渡す props です。
    */
-  readonly popup?: TooltipPopupProps | undefined;
+  readonly popup?: Omit<TooltipPopupProps, "children"> | undefined;
 
   /**
-   * {@link TooltipPortal} に渡すプロパティーです。
+   * {@link TooltipPortal} に渡す props です。
    */
-  readonly portal?: TooltipPortalProps | undefined;
+  readonly portal?: Omit<TooltipPortalProps, "children"> | undefined;
 
   /**
-   * {@link TooltipPositioner} に渡すプロパティーです。
+   * {@link TooltipPositioner} に渡す props です。
    */
   readonly positioner?: TooltipPositionerProps | undefined;
 
   /**
-   * {@link TooltipTrigger} に渡すプロパティーです。
+   * {@link TooltipTrigger} に渡す props です。
    */
-  readonly trigger?: Omit<TooltipTriggerProps, "handle"> | undefined;
+  readonly trigger?: Omit<TooltipTriggerProps<TPayload>, "children" | "handle"> | undefined;
 };
 
 /**
- * {@link Tooltip} の状態です。
+ * {@link Tooltip} が持つ状態です。
  */
 export type TooltipState = TooltipRootState;
 
-/**
- * {@link Tooltip} コンポーネントのプロパティーです。
- */
-export type TooltipProps = Omit<TooltipRootProps, "children" | "handle"> & {
+type TooltipPropsMain<TPayload = any> = {
   /**
    * ポップアップに表示する内容です。
    */
-  children?: React.ReactNode | undefined;
+  children?: TooltipPopupProps["children"] | undefined;
 
   /**
-   * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
-   *
-   * 各パーツのプロパティーが優先されます。
+   * トリガーとツールチップに関連付けるためのハンドルです。
    */
-  slotProps?: TooltipSlotProps | undefined;
+  handle?: TooltipHandle<TPayload> | undefined;
+
+  /**
+   * 各パーツに個別の props を渡すためのオブジェクトです。
+   *
+   * 各パーツの props が優先されます。
+   */
+  slotProps?: TooltipSlotProps<TPayload> | undefined;
 
   /**
    * ツールチップを表示する対象です。
@@ -78,133 +104,217 @@ export type TooltipProps = Omit<TooltipRootProps, "children" | "handle"> & {
   trigger?: TooltipTriggerProps["children"] | undefined;
 };
 
-/**
- * {@link Tooltip} の各パーツに渡すプロパティーです。
- */
-export type TooltipPartsProps = {
-  /**
-   * {@link TooltipPopup} に渡すプロパティーです。
-   *
-   * `children` には {@link TooltipArrow} とポップアップの内容が設定されています。
-   */
-  readonly popup: TooltipPopupProps;
-
-  /**
-   * {@link TooltipPortal} に渡すプロパティーです。
-   */
-  readonly portal: TooltipPortalProps | undefined;
-
-  /**
-   * {@link TooltipPositioner} に渡すプロパティーです。
-   */
-  readonly positioner: TooltipPositionerProps;
-
-  /**
-   * {@link TooltipRoot} に渡すプロパティーです。
-   */
-  readonly root: TooltipRootProps;
-
-  /**
-   * {@link TooltipTrigger} に渡すプロパティーです。
-   *
-   * トリガーを表示しないときは null になります。
-   */
-  readonly trigger: Omit<TooltipTriggerProps, "handle"> | null;
-};
+type TooltipPropsRoot<TPayload = any> = Omit<
+  TooltipRootProps<TPayload>,
+  "children" | keyof TooltipPropsMain
+>;
 
 /**
- * {@link Tooltip} の各パーツに渡すプロパティーを作るフックです。
+ * {@link Tooltip} に渡す props です。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
  */
-export function useTooltip(props: TooltipProps): TooltipPartsProps {
-  const {
-    trigger,
-    children,
-    slotProps: {
-      arrow: arrowProps,
-      popup: popupProps,
-      portal: portalProps,
-      trigger: triggerProps,
-      positioner: positionerProps,
-    } = {},
-    ...rootProps
-  } = props;
-  const { side = "top", sideOffset = 8, ...otherPositionerProps } = positionerProps ?? {};
+export type TooltipProps<TPayload = any> = TooltipPropsMain<TPayload> & TooltipPropsRoot<TPayload>;
 
-  return {
-    root: rootProps,
-    trigger:
-      !!trigger || !!triggerProps
-        ? {
-            children: trigger!,
-            ...triggerProps,
-          }
-        : null,
-    portal: portalProps,
-    positioner: {
-      ...otherPositionerProps,
-      side,
-      sideOffset,
-    },
-    popup: {
-      ...popupProps,
-      children: (
-        <>
-          <TooltipArrow {...arrowProps} />
-          {children}
-        </>
-      ),
-    },
-  };
+// API
+// ---
+
+/**
+ * {@link Tooltip} を構成する各パーツの props などを作成するための API です。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
+ */
+export interface TooltipAPI<TPayload = any> {
+  /**
+   * {@link TooltipArrow} に渡す props を取得します。
+   */
+  getArrowProps(): TooltipArrowProps | null;
+
+  /**
+   * {@link TooltipPopup} に渡す props を取得します。
+   */
+  getPopupProps(): Omit<TooltipPopupProps, "children">;
+
+  /**
+   * {@link TooltipPortal} に渡す props を取得します。
+   */
+  getPortalProps(): Omit<TooltipPortalProps, "children">;
+
+  /**
+   * {@link TooltipPositioner} に渡す props を取得します。
+   */
+  getPositionerProps(): TooltipPositionerProps;
+
+  /**
+   * {@link TooltipRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<TooltipRootProps<TPayload>, "children">;
+
+  /**
+   * {@link TooltipTrigger} に渡す props を取得します。
+   */
+  getTriggerProps(): Omit<TooltipTriggerProps<TPayload>, "handle"> | null;
 }
 
-interface TooltipComponentType extends IComponent<TooltipProps> {
+interface IUseTooltipAPI {
   /**
-   * ツールチップを制御するハンドルを新しく作成します。
+   * {@link TooltipAPI} を作成します。
    *
-   * 作成したハンドルは {@link TooltipRoot} と {@link TooltipTrigger} の `handle` プロパティーに渡します。
+   * @template TPayload トリガーが送信するデータの型です。
+   * @param props {@link Tooltip} の props です。
+   * @returns ツールチップの API です
    */
-  readonly createHandle: typeof createHandle;
+  <TPayload = any>(props: TooltipProps<TPayload>): TooltipAPI<TPayload>;
+}
+
+/**
+ * {@link TooltipAPI} を作成するフックです。
+ */
+export const useTooltipAPI: IUseTooltipAPI = function useSuiTooltipAPI(props: TooltipProps<any>) {
+  const {
+    open,
+    handle: handleProp,
+    trigger,
+    children: _children,
+    slotProps: {
+      arrow: arrowProps,
+      popup: popupProps = {},
+      portal: portalProps = {},
+      trigger: triggerProps = {},
+      positioner: positionerProps = {},
+    } = {},
+    triggerId,
+    actionsRef,
+    defaultOpen,
+    onOpenChange,
+    defaultTriggerId,
+    ...otherRootProps
+  } = props;
+  const handle = React.useMemo(() => handleProp, [handleProp]);
+  const { side = "top", sideOffset = 8, ...otherPositionerProps } = positionerProps;
+
+  return {
+    getRootProps(): Omit<TooltipRootProps<any>, "children"> {
+      return {
+        ...otherRootProps,
+        open,
+        handle,
+        triggerId,
+        actionsRef,
+        defaultOpen,
+        onOpenChange,
+        defaultTriggerId,
+      };
+    },
+    getArrowProps() {
+      if (arrowProps) {
+        return arrowProps;
+      }
+
+      return null;
+    },
+    getPopupProps() {
+      return popupProps;
+    },
+    getPortalProps() {
+      return portalProps;
+    },
+    getTriggerProps() {
+      if (trigger) {
+        return {
+          ...triggerProps,
+          children: trigger,
+        };
+      }
+
+      return null;
+    },
+    getPositionerProps() {
+      return {
+        ...otherPositionerProps,
+        side,
+        sideOffset,
+      };
+    },
+  };
+};
+
+export { type TooltipAPI as API, useTooltipAPI as useAPI };
+
+// Component
+// ---------
+
+interface ITooltip extends IComponent<TooltipProps> {
+  /**
+   * @template TPayload トリガーが送信するデータの型です。
+   */
+  <TPayload = any>(props: TooltipProps<TPayload>): IComponent.Return;
+
+  /**
+   * {@link TooltipHandle} を作成する関数です。
+   */
+  readonly createHandle: typeof createTooltipHandle;
 }
 
 /**
  * トリガーとポップアップを組み立てたツールチップです。
  *
- * 複数のトリガーで内容を共有する場合や構成を細かく制御する場合は、{@link TooltipRoot|Root} を直接組み立てます。
+ * ホバーまたはフォーカスで内容を表示します。
+ * 構成を細かく制御する場合は、{@link TooltipRoot|Root} を直接組み立てます。
  */
-export const Tooltip: TooltipComponentType = /*#__PURE__*/ Object.assign(
+export const Tooltip: ITooltip = /*#__PURE__*/ Object.assign(
   function SuiTooltip(props: TooltipProps) {
-    const partsProps = useTooltip(props);
+    const api = useTooltipAPI(props);
+    const triggerProps = api.getTriggerProps();
+    const arrowProps = api.getArrowProps();
 
     return (
-      <TooltipRoot {...partsProps.root}>
-        {partsProps.trigger && <TooltipTrigger {...partsProps.trigger} />}
-        <TooltipPortal {...partsProps.portal}>
-          <TooltipPositioner {...partsProps.positioner}>
-            <TooltipPopup {...partsProps.popup} />
+      <TooltipRoot {...api.getRootProps()}>
+        {triggerProps && <TooltipTrigger {...triggerProps} />}
+        <TooltipPortal {...api.getPortalProps()}>
+          <TooltipPositioner {...api.getPositionerProps()}>
+            <TooltipPopup {...api.getPopupProps()}>
+              {arrowProps && <TooltipArrow {...arrowProps} />}
+              {props.children}
+            </TooltipPopup>
           </TooltipPositioner>
         </TooltipPortal>
       </TooltipRoot>
     );
   },
-  { createHandle },
+  {
+    createHandle: createTooltipHandle,
+  },
 );
 
-/**
- * {@link Tooltip} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Tooltip {
   /**
-   * {@link TooltipState} です。
+   * {@link TooltipState}
    */
   export type State = TooltipState;
 
   /**
-   * {@link TooltipProps} です。
+   * {@link TooltipProps}
    */
-  export type Props = TooltipProps;
+  export type Props<TPayload = any> = TooltipProps<TPayload>;
 
   /**
-   * {@link TooltipSlotProps} です。
+   * {@link TooltipSlotProps}
    */
   export type SlotProps = TooltipSlotProps;
+
+  /**
+   * {@link TooltipActions}
+   */
+  export type Actions = TooltipActions;
+
+  /**
+   * {@link TooltipChangeEventDetails}
+   */
+  export type ChangeEventDetails = TooltipChangeEventDetails;
+
+  /**
+   * {@link TooltipChangeEventReason}
+   */
+  export type ChangeEventReason = TooltipChangeEventReason;
 }

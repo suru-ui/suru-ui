@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import type { IComponent } from "../types.js";
 import {
   type ScrollAreaRootProps,
@@ -17,106 +15,56 @@ import {
   ScrollAreaScrollbar,
 } from "./scroll-area.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link ScrollArea} の各パーツに渡すプロパティーです。
- *
- * 各パーツの指定値は、パーツに渡される既定のプロパティーより優先されます。
+ * {@link ScrollArea} の各パーツに渡す props です。
  */
 export type ScrollAreaSlotProps = {
   /**
-   * {@link ScrollAreaContent|Content} に渡すプロパティーです。
+   * {@link ScrollAreaContent} に渡す props です。
    */
-  readonly content?: ScrollAreaContentProps | undefined;
+  readonly content?: Omit<ScrollAreaContentProps, "children"> | undefined;
 
   /**
-   * {@link ScrollAreaCorner|Corner} に渡すプロパティーです。
+   * {@link ScrollAreaCorner} に渡す props です。
    */
   readonly corner?: ScrollAreaCornerProps | undefined;
 
   /**
-   * 水平方向の {@link ScrollAreaScrollbar|Scrollbar} に渡すプロパティーです。
+   * 水平方向の {@link ScrollAreaScrollbar} に渡す props です。
    */
-  readonly horizontalScrollbar?: ScrollAreaScrollbarProps | undefined;
+  readonly horizontalScrollbar?: Omit<ScrollAreaScrollbarProps, "orientation"> | undefined;
 
   /**
-   * 水平方向の {@link ScrollAreaThumb|Thumb} に渡すプロパティーです。
+   * 水平方向の {@link ScrollAreaThumb} に渡す props です。
    */
   readonly horizontalThumb?: ScrollAreaThumbProps | undefined;
 
   /**
-   * {@link ScrollAreaScrollbar|Scrollbar} に渡すプロパティーです。
+   * {@link ScrollAreaScrollbar} に渡す props です。
    */
-  readonly scrollbar?: ScrollAreaScrollbarProps | undefined;
+  readonly scrollbar?: Omit<ScrollAreaScrollbarProps, "orientation"> | undefined;
 
   /**
-   * {@link ScrollAreaThumb|Thumb} に渡すプロパティーです。
+   * {@link ScrollAreaThumb} に渡す props です。
    */
   readonly thumb?: ScrollAreaThumbProps | undefined;
 
   /**
-   * {@link ScrollAreaViewport|Viewport} に渡すプロパティーです。
+   * {@link ScrollAreaViewport} に渡す props です。
    */
   readonly viewport?: ScrollAreaViewportProps | undefined;
 };
 
 /**
- * 各パーツに渡すプロパティーをまとめたものです。
- */
-export type ScrollAreaPartsProps = {
-  /**
-   * {@link ScrollAreaContent} に渡すプロパティーです。
-   *
-   * `children` にはコンテンツが設定されています。
-   */
-  readonly content: ScrollAreaContentProps;
-
-  /**
-   * {@link ScrollAreaCorner} に渡すプロパティーです。
-   */
-  readonly corner: ScrollAreaCornerProps;
-
-  /**
-   * 水平方向の {@link ScrollAreaScrollbar} に渡すプロパティーです。
-   *
-   * 水平方向のスクロールバーを表示しないときは null になります。
-   */
-  readonly horizontalScrollbar: ScrollAreaScrollbarProps | null;
-
-  /**
-   * 水平方向の {@link ScrollAreaThumb} に渡すプロパティーです。
-   *
-   * 水平方向のスクロールバーを表示しないときは null になります。
-   */
-  readonly horizontalThumb: ScrollAreaThumbProps | null;
-
-  /**
-   * {@link ScrollAreaRoot} に渡すプロパティーです。
-   */
-  readonly root: ScrollAreaRootProps;
-
-  /**
-   * {@link ScrollAreaScrollbar} に渡すプロパティーです。
-   */
-  readonly scrollbar: ScrollAreaScrollbarProps;
-
-  /**
-   * {@link ScrollAreaThumb} に渡すプロパティーです。
-   */
-  readonly thumb: ScrollAreaThumbProps;
-
-  /**
-   * {@link ScrollAreaViewport} に渡すプロパティーです。
-   */
-  readonly viewport: ScrollAreaViewportProps;
-};
-
-/**
- * {@link ScrollArea} の状態です。
+ * {@link ScrollArea} が持つ状態です。
  */
 export type ScrollAreaState = ScrollAreaRootState;
 
 /**
- * {@link ScrollArea} コンポーネントのプロパティーです。
+ * {@link ScrollArea} に渡す props です。
  */
 export type ScrollAreaProps = Omit<ScrollAreaRootProps, "children"> &
   Pick<ScrollAreaContentProps, "children"> & {
@@ -128,90 +76,174 @@ export type ScrollAreaProps = Omit<ScrollAreaRootProps, "children"> &
     horizontal?: boolean | undefined;
 
     /**
-     * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     *
+     * 各パーツの props が優先されます。
      */
     slotProps?: ScrollAreaSlotProps | undefined;
   };
 
+// API
+// ---
+
 /**
- * {@link ScrollArea} の各パーツに渡すプロパティーを作るフックです。
+ * {@link ScrollArea} を構成する各パーツの props を作成するための API です。
  */
-export function useScrollArea(props: ScrollAreaProps): ScrollAreaPartsProps {
+export interface ScrollAreaAPI {
+  /**
+   * {@link ScrollAreaContent} に渡す props を取得します。
+   */
+  getContentProps(): ScrollAreaContentProps;
+
+  /**
+   * {@link ScrollAreaCorner} に渡す props を取得します。
+   */
+  getCornerProps(): ScrollAreaCornerProps;
+
+  /**
+   * 水平方向の {@link ScrollAreaScrollbar} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
+   */
+  getHorizontalScrollbarProps(): ScrollAreaScrollbarProps | null;
+
+  /**
+   * 水平方向の {@link ScrollAreaThumb} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
+   */
+  getHorizontalThumbProps(): ScrollAreaThumbProps | null;
+
+  /**
+   * {@link ScrollAreaRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<ScrollAreaRootProps, "children">;
+
+  /**
+   * {@link ScrollAreaScrollbar} に渡す props を取得します。
+   */
+  getScrollbarProps(): ScrollAreaScrollbarProps;
+
+  /**
+   * {@link ScrollAreaThumb} に渡す props を取得します。
+   */
+  getThumbProps(): ScrollAreaThumbProps;
+
+  /**
+   * {@link ScrollAreaViewport} に渡す props を取得します。
+   */
+  getViewportProps(): ScrollAreaViewportProps;
+}
+
+interface IUseScrollAreaAPI {
+  /**
+   * {@link ScrollAreaAPI} を作成します。
+   *
+   * @param props {@link ScrollArea} の props です。
+   * @returns スクロール領域の API です
+   */
+  (props: ScrollAreaProps): ScrollAreaAPI;
+}
+
+/**
+ * {@link ScrollAreaAPI} を作成するフックです。
+ */
+export const useScrollAreaAPI: IUseScrollAreaAPI = function useSuiScrollAreaAPI(props) {
   const {
     children,
-    slotProps: {
-      thumb: thumbProps,
-      corner: cornerProps,
-      content: contentProps,
-      viewport: viewportProps,
-      scrollbar: scrollbarProps,
-      horizontalThumb: horizontalThumbProps,
-      horizontalScrollbar: horizontalScrollbarProps,
-    } = {},
     horizontal = false,
-    ...rootProps
+    slotProps: {
+      thumb: thumbProps = {},
+      corner: cornerProps = {},
+      content: contentProps = {},
+      viewport: viewportProps = {},
+      scrollbar: scrollbarProps = {},
+      horizontalThumb: horizontalThumbProps = {},
+      horizontalScrollbar: horizontalScrollbarProps = {},
+    } = {},
+    ...otherRootProps
   } = props;
 
   return {
-    root: rootProps,
-    viewport: viewportProps ?? {},
-    content: {
-      ...contentProps,
-      children,
+    getRootProps() {
+      return otherRootProps;
     },
-    scrollbar: scrollbarProps ?? {},
-    thumb: thumbProps ?? {},
-    horizontalScrollbar: horizontal
-      ? {
-          ...horizontalScrollbarProps,
-          orientation: "horizontal",
-        }
-      : null,
-    horizontalThumb: horizontal ? (horizontalThumbProps ?? {}) : null,
-    corner: cornerProps ?? {},
+    getThumbProps() {
+      return thumbProps;
+    },
+    getCornerProps() {
+      return cornerProps;
+    },
+    getContentProps() {
+      return {
+        ...contentProps,
+        children,
+      };
+    },
+    getScrollbarProps() {
+      return {
+        ...scrollbarProps,
+        orientation: "vertical",
+      };
+    },
+    getViewportProps() {
+      return viewportProps;
+    },
+    getHorizontalThumbProps() {
+      return horizontal ? horizontalThumbProps : null;
+    },
+    getHorizontalScrollbarProps() {
+      return horizontal ? { ...horizontalScrollbarProps, orientation: "horizontal" } : null;
+    },
   };
-}
+};
+
+export { type ScrollAreaAPI as API, useScrollAreaAPI as useAPI };
+
+// Component
+// ---------
 
 /**
  * スクロール可能なコンテンツを表示するコンポーネントです。
  */
-export const ScrollArea: IComponent<ScrollAreaProps> = function SuiScrollArea(props) {
-  const partsProps = useScrollArea(props);
+export const ScrollArea: IComponent<ScrollAreaProps> = function SuiScrollArea(
+  props: ScrollAreaProps,
+) {
+  const api = useScrollAreaAPI(props);
+  const horizontalScrollbarProps = api.getHorizontalScrollbarProps();
+  const horizontalThumbProps = api.getHorizontalThumbProps();
 
   return (
-    <ScrollAreaRoot {...partsProps.root}>
-      <ScrollAreaViewport {...partsProps.viewport}>
-        <ScrollAreaContent {...partsProps.content} />
+    <ScrollAreaRoot {...api.getRootProps()}>
+      <ScrollAreaViewport {...api.getViewportProps()}>
+        <ScrollAreaContent {...api.getContentProps()} />
       </ScrollAreaViewport>
-      <ScrollAreaScrollbar {...partsProps.scrollbar}>
-        <ScrollAreaThumb {...partsProps.thumb} />
+      <ScrollAreaScrollbar {...api.getScrollbarProps()}>
+        <ScrollAreaThumb {...api.getThumbProps()} />
       </ScrollAreaScrollbar>
-      {partsProps.horizontalScrollbar && (
-        <ScrollAreaScrollbar {...partsProps.horizontalScrollbar}>
-          {partsProps.horizontalThumb && <ScrollAreaThumb {...partsProps.horizontalThumb} />}
+      {horizontalScrollbarProps && (
+        <ScrollAreaScrollbar {...horizontalScrollbarProps}>
+          {horizontalThumbProps && <ScrollAreaThumb {...horizontalThumbProps} />}
         </ScrollAreaScrollbar>
       )}
-      <ScrollAreaCorner {...partsProps.corner} />
+      <ScrollAreaCorner {...api.getCornerProps()} />
     </ScrollAreaRoot>
   );
 };
 
-/**
- * {@link ScrollArea} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace ScrollArea {
   /**
-   * {@link ScrollAreaState} です。
+   * {@link ScrollAreaState}
    */
   export type State = ScrollAreaState;
 
   /**
-   * {@link ScrollAreaProps} です。
+   * {@link ScrollAreaProps}
    */
   export type Props = ScrollAreaProps;
 
   /**
-   * {@link ScrollAreaSlotProps} です。
+   * {@link ScrollAreaSlotProps}
    */
   export type SlotProps = ScrollAreaSlotProps;
 }

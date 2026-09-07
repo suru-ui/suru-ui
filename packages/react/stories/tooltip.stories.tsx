@@ -38,24 +38,18 @@ export const Usage = meta.story({
         <div className="flex gap-3">
           <Tooltip
             {...props}
+            trigger={<Button>保存</Button>}
             slotProps={{
-              trigger: {
-                children: <Button>保存</Button>,
-                delay: 0,
-                "aria-label": "保存",
-              },
+              trigger: { delay: 0, "aria-label": "保存" },
             }}
           >
             保存します
           </Tooltip>
           <Tooltip
             {...props}
+            trigger={<Button>共有</Button>}
             slotProps={{
-              trigger: {
-                children: <Button>共有</Button>,
-                delay: 0,
-                "aria-label": "共有",
-              },
+              trigger: { delay: 0, "aria-label": "共有" },
             }}
           >
             リンクを共有します
@@ -123,17 +117,106 @@ export const Controlled = meta.story({
     return (
       <Tooltip
         open={open}
+        trigger={<Button>詳細</Button>}
         slotProps={{
-          trigger: {
-            children: <Button>詳細</Button>,
-            delay: 0,
-            "aria-label": "詳細",
-          },
+          trigger: { delay: 0, "aria-label": "詳細" },
         }}
         onOpenChange={setOpen}
       >
         詳細を表示します
       </Tooltip>
+    );
+  },
+});
+
+export const Positions = meta.story({
+  name: "配置",
+  ...ctrl({
+    disabled: false,
+    disableHoverablePopup: false,
+    trackCursorAxis: "none",
+  }),
+  render(props) {
+    const sides = ["top", "bottom", "left", "right"] as const;
+
+    return (
+      <div className="flex flex-wrap items-center gap-4">
+        {sides.map((side) => (
+          <Tooltip
+            key={side}
+            {...props}
+            trigger={<Button variant="liquid">{side}</Button>}
+            slotProps={{
+              trigger: { delay: 0, "aria-label": `${side}のヒント` },
+              positioner: { side, sideOffset: 8 },
+              arrow: {},
+            }}
+          >
+            {side} に表示されます。
+          </Tooltip>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const WithArrow = meta.story({
+  name: "矢印",
+  ...ctrl({
+    disabled: false,
+    disableHoverablePopup: false,
+    trackCursorAxis: "none",
+  }),
+  render(props) {
+    return (
+      <div className="flex items-center gap-4">
+        <Tooltip
+          {...props}
+          trigger={<Button>矢印あり</Button>}
+          slotProps={{
+            trigger: { delay: 0, "aria-label": "矢印あり" },
+            arrow: {},
+          }}
+        >
+          矢印付きのツールチップです。
+        </Tooltip>
+        <Tooltip
+          {...props}
+          trigger={<Button variant="liquid">矢印なし</Button>}
+          slotProps={{
+            trigger: { delay: 0, "aria-label": "矢印なし" },
+          }}
+        >
+          矢印なしのツールチップです。
+        </Tooltip>
+      </div>
+    );
+  },
+});
+
+export const Keyboard = meta.story({
+  name: "キーボード操作",
+  ...ctrl({
+    disabled: false,
+    disableHoverablePopup: false,
+    trackCursorAxis: "none",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-2 text-sm">
+        <p>Tab でトリガーに移動し、フォーカスで開きます。Escape で閉じます。</p>
+        <div>
+          <Tooltip
+            {...props}
+            trigger={<Button>キーボードで開く</Button>}
+            slotProps={{
+              trigger: { delay: 0, "aria-label": "キーボードで開く" },
+            }}
+          >
+            キーボードフォーカスでも表示されます。
+          </Tooltip>
+        </div>
+      </div>
     );
   },
 });

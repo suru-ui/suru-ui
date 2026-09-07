@@ -44,12 +44,12 @@ export type MeterRootSize = Size;
 export type MeterRootVariant = "naked" | "liquid";
 
 /**
- * {@link MeterRoot} の状態です。
+ * {@link MeterRoot} が持つ状態です。
  */
 export type MeterRootState = Meter.Root.State;
 
 /**
- * {@link MeterRoot} に渡すプロパティーです。
+ * {@link MeterRoot} に渡す props です。
  */
 export type MeterRootProps = React.ComponentProps<typeof Meter.Root> & {
   /**
@@ -114,60 +114,61 @@ export const MeterRoot: IComponent<MeterRootProps> = function SuiMeterRoot(props
         `sui_meter-variant_${variant}`,
         outlined && "sui_meter-outlined",
       )}
+      data-scope=""
     />
   );
 };
 
 /**
- * {@link MeterRoot} の状態やプロパティーをまとめた型名前空間です。
+ * {@link MeterRoot}
+ */
+export { MeterRoot as Root };
+
+/**
+ * {@link MeterRoot} の状態や props をまとめた型名前空間です。
  */
 export namespace Root {
   /**
-   * {@link MeterRootState} です。
+   * {@link MeterRootState}
    */
   export type State = MeterRootState;
 
   /**
-   * {@link MeterRootProps} です。
+   * {@link MeterRootProps}
    */
   export type Props = MeterRootProps;
 
   /**
-   * {@link MeterRootColor} です。
+   * {@link MeterRootColor}
    */
   export type Color = MeterRootColor;
 
   /**
-   * {@link MeterRootRadius} です。
+   * {@link MeterRootRadius}
    */
   export type Radius = MeterRootRadius;
 
   /**
-   * {@link MeterRootSize} です。
+   * {@link MeterRootSize}
    */
   export type Size = MeterRootSize;
 
   /**
-   * {@link MeterRootVariant} です。
+   * {@link MeterRootVariant}
    */
   export type Variant = MeterRootVariant;
 }
-
-/**
- * {@link MeterRoot} です。
- */
-export const Root: IComponent<Root.Props> = MeterRoot;
 
 // Label
 // -----
 
 /**
- * {@link MeterLabel} の状態です。
+ * {@link MeterLabel} が持つ状態です。
  */
 export type MeterLabelState = Meter.Label.State;
 
 /**
- * {@link MeterLabel} に渡すプロパティーです。
+ * {@link MeterLabel} に渡す props です。
  */
 export type MeterLabelProps = React.ComponentProps<typeof Meter.Label>;
 
@@ -181,35 +182,35 @@ export const MeterLabel: IComponent<MeterLabelProps> = function SuiMeterLabel(pr
 };
 
 /**
- * {@link MeterLabel} の状態やプロパティーをまとめた型名前空間です。
+ * {@link MeterLabel}
+ */
+export { MeterLabel as Label };
+
+/**
+ * {@link MeterLabel} の状態や props をまとめた型名前空間です。
  */
 export namespace Label {
   /**
-   * {@link MeterLabelState} です。
+   * {@link MeterLabelState}
    */
   export type State = MeterLabelState;
 
   /**
-   * {@link MeterLabelProps} です。
+   * {@link MeterLabelProps}
    */
   export type Props = MeterLabelProps;
 }
-
-/**
- * {@link MeterLabel} です。
- */
-export const Label: IComponent<Label.Props> = MeterLabel;
 
 // Value
 // -----
 
 /**
- * {@link MeterValue} の状態です。
+ * {@link MeterValue} が持つ状態です。
  */
 export type MeterValueState = Meter.Value.State;
 
 /**
- * {@link MeterValue} に渡すプロパティーです。
+ * {@link MeterValue} に渡す props です。
  */
 export type MeterValueProps = React.ComponentProps<typeof Meter.Value>;
 
@@ -223,35 +224,35 @@ export const MeterValue: IComponent<MeterValueProps> = function SuiMeterValue(pr
 };
 
 /**
- * {@link MeterValue} の状態やプロパティーをまとめた型名前空間です。
+ * {@link MeterValue}
+ */
+export { MeterValue as Value };
+
+/**
+ * {@link MeterValue} の状態や props をまとめた型名前空間です。
  */
 export namespace Value {
   /**
-   * {@link MeterValueState} です。
+   * {@link MeterValueState}
    */
   export type State = MeterValueState;
 
   /**
-   * {@link MeterValueProps} です。
+   * {@link MeterValueProps}
    */
   export type Props = MeterValueProps;
 }
-
-/**
- * {@link MeterValue} です。
- */
-export const Value: IComponent<Value.Props> = MeterValue;
 
 // Track
 // -----
 
 /**
- * {@link MeterTrack} の状態です。
+ * {@link MeterTrack} が持つ状態です。
  */
 export type MeterTrackState = Meter.Track.State;
 
 /**
- * {@link MeterTrack} に渡すプロパティーです。
+ * {@link MeterTrack} に渡す props です。
  */
 export type MeterTrackProps = React.ComponentProps<typeof Meter.Track>;
 
@@ -265,35 +266,35 @@ export const MeterTrack: IComponent<MeterTrackProps> = function SuiMeterTrack(pr
 };
 
 /**
- * {@link MeterTrack} の状態やプロパティーをまとめた型名前空間です。
+ * {@link MeterTrack}
+ */
+export { MeterTrack as Track };
+
+/**
+ * {@link MeterTrack} の状態や props をまとめた型名前空間です。
  */
 export namespace Track {
   /**
-   * {@link MeterTrackState} です。
+   * {@link MeterTrackState}
    */
   export type State = MeterTrackState;
 
   /**
-   * {@link MeterTrackProps} です。
+   * {@link MeterTrackProps}
    */
   export type Props = MeterTrackProps;
 }
-
-/**
- * {@link MeterTrack} です。
- */
-export const Track: IComponent<Track.Props> = MeterTrack;
 
 // Indicator
 // ---------
 
 /**
- * {@link MeterIndicator} の状態です。
+ * {@link MeterIndicator} が持つ状態です。
  */
 export type MeterIndicatorState = Meter.Indicator.State;
 
 /**
- * {@link MeterIndicator} に渡すプロパティーです。
+ * {@link MeterIndicator} に渡す props です。
  */
 export type MeterIndicatorProps = React.ComponentProps<typeof Meter.Indicator>;
 
@@ -307,21 +308,21 @@ export const MeterIndicator: IComponent<MeterIndicatorProps> = function SuiMeter
 };
 
 /**
- * {@link MeterIndicator} の状態やプロパティーをまとめた型名前空間です。
+ * {@link MeterIndicator}
+ */
+export { MeterIndicator as Indicator };
+
+/**
+ * {@link MeterIndicator} の状態や props をまとめた型名前空間です。
  */
 export namespace Indicator {
   /**
-   * {@link MeterIndicatorState} です。
+   * {@link MeterIndicatorState}
    */
   export type State = MeterIndicatorState;
 
   /**
-   * {@link MeterIndicatorProps} です。
+   * {@link MeterIndicatorProps}
    */
   export type Props = MeterIndicatorProps;
 }
-
-/**
- * {@link MeterIndicator} です。
- */
-export const Indicator: IComponent<Indicator.Props> = MeterIndicator;

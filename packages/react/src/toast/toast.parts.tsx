@@ -1,4 +1,4 @@
-import { Toast as BaseToast } from "@base-ui/react/toast";
+import { Toast } from "@base-ui/react/toast";
 import * as React from "react";
 
 import cn from "../cn.js";
@@ -10,54 +10,48 @@ import "./toast.css";
 // --------
 
 /**
- * {@link ToastProvider} の状態です。
+ * {@link ToastProvider} が持つ状態です。
  */
-export type ToastProviderState = BaseToast.Provider.State;
+export type ToastProviderState = Toast.Provider.State;
 
 /**
- * {@link ToastProvider} に渡すプロパティーです。
+ * {@link ToastProvider} に渡す props です。
  */
-export type ToastProviderProps = BaseToast.Provider.Props;
+export type ToastProviderProps = React.ComponentProps<typeof Toast.Provider>;
 
 /**
  * 通知の作成と管理を行うコンテキストを提供します。
  */
 export const ToastProvider: IComponent<ToastProviderProps> = function SuiToastProvider(props) {
-  return <BaseToast.Provider {...props} />;
+  return <Toast.Provider {...props} />;
 };
 
-/**
- * {@link ToastProvider} の状態やプロパティーをまとめた型名前空間です。
- */
+export { ToastProvider as Provider };
+
 export namespace Provider {
   /**
-   * {@link ToastProviderState} です。
+   * {@link ToastProviderState}
    */
   export type State = ToastProviderState;
 
   /**
-   * {@link ToastProviderProps} です。
+   * {@link ToastProviderProps}
    */
   export type Props = ToastProviderProps;
 }
-
-/**
- * {@link ToastProvider} です。
- */
-export const Provider: IComponent<Provider.Props> = ToastProvider;
 
 // Portal
 // ------
 
 /**
- * {@link ToastPortal} の状態です。
+ * {@link ToastPortal} が持つ状態です。
  */
-export type ToastPortalState = BaseToast.Portal.State;
+export type ToastPortalState = Toast.Portal.State;
 
 /**
- * {@link ToastPortal} に渡すプロパティーです。
+ * {@link ToastPortal} に渡す props です。
  */
-export type ToastPortalProps = BaseToast.Portal.Props;
+export type ToastPortalProps = React.ComponentProps<typeof Toast.Portal>;
 
 /**
  * 通知の表示領域を DOM の別の場所へ移動する要素です。
@@ -67,41 +61,37 @@ export type ToastPortalProps = BaseToast.Portal.Props;
 export const ToastPortal: IComponent<ToastPortalProps> = function SuiToastPortal(props) {
   const { className, ...otherProps } = props;
 
-  return <BaseToast.Portal {...otherProps} className={cn(className, "sui_toast_portal")} />;
+  return (
+    <Toast.Portal {...otherProps} className={cn(className, "sui_toast_portal")} data-scope="" />
+  );
 };
 
-/**
- * {@link ToastPortal} の状態やプロパティーをまとめた型名前空間です。
- */
+export { ToastPortal as Portal };
+
 export namespace Portal {
   /**
-   * {@link ToastPortalState} です。
+   * {@link ToastPortalState}
    */
   export type State = ToastPortalState;
 
   /**
-   * {@link ToastPortalProps} です。
+   * {@link ToastPortalProps}
    */
   export type Props = ToastPortalProps;
 }
-
-/**
- * {@link ToastPortal} です。
- */
-export const Portal: IComponent<Portal.Props> = ToastPortal;
 
 // Viewport
 // --------
 
 /**
- * {@link ToastViewport} の状態です。
+ * {@link ToastViewport} が持つ状態です。
  */
-export type ToastViewportState = BaseToast.Viewport.State;
+export type ToastViewportState = Toast.Viewport.State;
 
 /**
- * {@link ToastViewport} に渡すプロパティーです。
+ * {@link ToastViewport} に渡す props です。
  */
-export type ToastViewportProps = BaseToast.Viewport.Props;
+export type ToastViewportProps = React.ComponentProps<typeof Toast.Viewport>;
 
 /**
  * 通知を表示するビューポートです。
@@ -109,28 +99,22 @@ export type ToastViewportProps = BaseToast.Viewport.Props;
 export const ToastViewport: IComponent<ToastViewportProps> = function SuiToastViewport(props) {
   const { className, ...otherProps } = props;
 
-  return <BaseToast.Viewport {...otherProps} className={cn(className, "sui_toast_viewport")} />;
+  return <Toast.Viewport {...otherProps} className={cn(className, "sui_toast_viewport")} />;
 };
 
-/**
- * {@link ToastViewport} の状態やプロパティーをまとめた型名前空間です。
- */
+export { ToastViewport as Viewport };
+
 export namespace Viewport {
   /**
-   * {@link ToastViewportState} です。
+   * {@link ToastViewportState}
    */
   export type State = ToastViewportState;
 
   /**
-   * {@link ToastViewportProps} です。
+   * {@link ToastViewportProps}
    */
   export type Props = ToastViewportProps;
 }
-
-/**
- * {@link ToastViewport} です。
- */
-export const Viewport: IComponent<Viewport.Props> = ToastViewport;
 
 // Root
 // ----
@@ -140,19 +124,22 @@ export const Viewport: IComponent<Viewport.Props> = ToastViewport;
  *
  * @template TData 通知に含める追加データの型です。
  */
-export type ToastRootToastObject<TData extends object = object> = BaseToast.Root.ToastObject<TData>;
+export type ToastRootToastObject<TData extends object = object> = Toast.Root.ToastObject<TData>;
 
 /**
- * {@link ToastRoot} の状態です。
+ * {@link ToastRoot} が持つ状態です。
  */
-export type ToastRootState = BaseToast.Root.State;
+export type ToastRootState = Toast.Root.State;
 
 /**
- * {@link ToastRoot} に渡すプロパティーです。
+ * {@link ToastRoot} に渡す props です。
  *
  * @template TData 通知に含める追加データの型です。
  */
-export type ToastRootProps<TData extends object = object> = Omit<BaseToast.Root.Props, "toast"> & {
+export type ToastRootProps<TData extends object = object> = Omit<
+  React.ComponentProps<typeof Toast.Root>,
+  "toast"
+> & {
   /**
    * 表示する通知オブジェクトです。
    */
@@ -163,6 +150,9 @@ export type ToastRootProps<TData extends object = object> = Omit<BaseToast.Root.
  * {@link ToastRoot} のコンポーネント型です。
  */
 export interface ToastRootComponent extends IComponent<ToastRootProps> {
+  /**
+   * @template TData 通知に含める追加データの型です。
+   */
   <TData extends object = object>(props: ToastRootProps<TData>): React.ReactElement | null;
 }
 
@@ -176,45 +166,40 @@ export const ToastRoot: ToastRootComponent = function SuiToastRoot<TData extends
 ) {
   const { className, ...otherProps } = props;
 
-  return <BaseToast.Root {...otherProps} className={cn(className, "sui_toast")} />;
+  return <Toast.Root {...otherProps} className={cn(className, "sui_toast")} />;
 };
 
-/**
- * {@link ToastRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { ToastRoot as Root };
+
 export namespace Root {
   /**
-   * {@link ToastRootState} です。
+   * {@link ToastRootState}
    */
   export type State = ToastRootState;
 
   /**
-   * {@link ToastRootProps} です。
+   * {@link ToastRootProps}
    */
   export type Props<TData extends object = object> = ToastRootProps<TData>;
+
   /**
-   * {@link ToastRootToastObject} です。
+   * {@link ToastRootToastObject}
    */
   export type ToastObject<TData extends object = object> = ToastRootToastObject<TData>;
 }
-
-/**
- * {@link ToastRoot} です。
- */
-export const Root: ToastRootComponent = ToastRoot;
 
 // Content
 // -------
 
 /**
- * {@link ToastContent} の状態です。
+ * {@link ToastContent} が持つ状態です。
  */
-export type ToastContentState = BaseToast.Content.State;
+export type ToastContentState = Toast.Content.State;
 
 /**
- * {@link ToastContent} に渡すプロパティーです。
+ * {@link ToastContent} に渡す props です。
  */
-export type ToastContentProps = BaseToast.Content.Props;
+export type ToastContentProps = React.ComponentProps<typeof Toast.Content>;
 
 /**
  * 通知の内容をまとめるコンテナー要素です。
@@ -222,41 +207,35 @@ export type ToastContentProps = BaseToast.Content.Props;
 export const ToastContent: IComponent<ToastContentProps> = function SuiToastContent(props) {
   const { className, ...otherProps } = props;
 
-  return <BaseToast.Content {...otherProps} className={cn(className, "sui_toast_content")} />;
+  return <Toast.Content {...otherProps} className={cn(className, "sui_toast_content")} />;
 };
 
-/**
- * {@link ToastContent} の状態やプロパティーをまとめた型名前空間です。
- */
+export { ToastContent as Content };
+
 export namespace Content {
   /**
-   * {@link ToastContentState} です。
+   * {@link ToastContentState}
    */
   export type State = ToastContentState;
 
   /**
-   * {@link ToastContentProps} です。
+   * {@link ToastContentProps}
    */
   export type Props = ToastContentProps;
 }
-
-/**
- * {@link ToastContent} です。
- */
-export const Content: IComponent<Content.Props> = ToastContent;
 
 // Title
 // -----
 
 /**
- * {@link ToastTitle} の状態です。
+ * {@link ToastTitle} が持つ状態です。
  */
-export type ToastTitleState = BaseToast.Title.State;
+export type ToastTitleState = Toast.Title.State;
 
 /**
- * {@link ToastTitle} に渡すプロパティーです。
+ * {@link ToastTitle} に渡す props です。
  */
-export type ToastTitleProps = BaseToast.Title.Props;
+export type ToastTitleProps = React.ComponentProps<typeof Toast.Title>;
 
 /**
  * 通知のタイトルを表示する見出し要素です。
@@ -266,41 +245,35 @@ export type ToastTitleProps = BaseToast.Title.Props;
 export const ToastTitle: IComponent<ToastTitleProps> = function SuiToastTitle(props) {
   const { className, ...otherProps } = props;
 
-  return <BaseToast.Title {...otherProps} className={cn(className, "sui_toast_title")} />;
+  return <Toast.Title {...otherProps} className={cn(className, "sui_toast_title")} />;
 };
 
-/**
- * {@link ToastTitle} の状態やプロパティーをまとめた型名前空間です。
- */
+export { ToastTitle as Title };
+
 export namespace Title {
   /**
-   * {@link ToastTitleState} です。
+   * {@link ToastTitleState}
    */
   export type State = ToastTitleState;
 
   /**
-   * {@link ToastTitleProps} です。
+   * {@link ToastTitleProps}
    */
   export type Props = ToastTitleProps;
 }
-
-/**
- * {@link ToastTitle} です。
- */
-export const Title: IComponent<Title.Props> = ToastTitle;
 
 // Description
 // -----------
 
 /**
- * {@link ToastDescription} の状態です。
+ * {@link ToastDescription} が持つ状態です。
  */
-export type ToastDescriptionState = BaseToast.Description.State;
+export type ToastDescriptionState = Toast.Description.State;
 
 /**
- * {@link ToastDescription} に渡すプロパティーです。
+ * {@link ToastDescription} に渡す props です。
  */
-export type ToastDescriptionProps = BaseToast.Description.Props;
+export type ToastDescriptionProps = React.ComponentProps<typeof Toast.Description>;
 
 /**
  * 通知の説明文を表示する段落要素です。
@@ -312,43 +285,35 @@ export const ToastDescription: IComponent<ToastDescriptionProps> = function SuiT
 ) {
   const { className, ...otherProps } = props;
 
-  return (
-    <BaseToast.Description {...otherProps} className={cn(className, "sui_toast_description")} />
-  );
+  return <Toast.Description {...otherProps} className={cn(className, "sui_toast_description")} />;
 };
 
-/**
- * {@link ToastDescription} の状態やプロパティーをまとめた型名前空間です。
- */
+export { ToastDescription as Description };
+
 export namespace Description {
   /**
-   * {@link ToastDescriptionState} です。
+   * {@link ToastDescriptionState}
    */
   export type State = ToastDescriptionState;
 
   /**
-   * {@link ToastDescriptionProps} です。
+   * {@link ToastDescriptionProps}
    */
   export type Props = ToastDescriptionProps;
 }
-
-/**
- * {@link ToastDescription} です。
- */
-export const Description: IComponent<Description.Props> = ToastDescription;
 
 // Action
 // ------
 
 /**
- * {@link ToastAction} の状態です。
+ * {@link ToastAction} が持つ状態です。
  */
-export type ToastActionState = BaseToast.Action.State;
+export type ToastActionState = Toast.Action.State;
 
 /**
- * {@link ToastAction} に渡すプロパティーです。
+ * {@link ToastAction} に渡す props です。
  */
-export type ToastActionProps = BaseToast.Action.Props;
+export type ToastActionProps = React.ComponentProps<typeof Toast.Action>;
 
 /**
  * 通知に設定されたアクションを実行するボタン要素です。
@@ -358,41 +323,35 @@ export type ToastActionProps = BaseToast.Action.Props;
 export const ToastAction: IComponent<ToastActionProps> = function SuiToastAction(props) {
   const { className, ...otherProps } = props;
 
-  return <BaseToast.Action {...otherProps} className={cn(className, "sui_toast_action")} />;
+  return <Toast.Action {...otherProps} className={cn(className, "sui_toast_action")} />;
 };
 
-/**
- * {@link ToastAction} の状態やプロパティーをまとめた型名前空間です。
- */
+export { ToastAction as Action };
+
 export namespace Action {
   /**
-   * {@link ToastActionState} です。
+   * {@link ToastActionState}
    */
   export type State = ToastActionState;
 
   /**
-   * {@link ToastActionProps} です。
+   * {@link ToastActionProps}
    */
   export type Props = ToastActionProps;
 }
-
-/**
- * {@link ToastAction} です。
- */
-export const Action: IComponent<Action.Props> = ToastAction;
 
 // Close
 // -----
 
 /**
- * {@link ToastClose} の状態です。
+ * {@link ToastClose} が持つ状態です。
  */
-export type ToastCloseState = BaseToast.Close.State;
+export type ToastCloseState = Toast.Close.State;
 
 /**
- * {@link ToastClose} に渡すプロパティーです。
+ * {@link ToastClose} に渡す props です。
  */
-export type ToastCloseProps = BaseToast.Close.Props;
+export type ToastCloseProps = React.ComponentProps<typeof Toast.Close>;
 
 /**
  * 通知を閉じるボタン要素です。
@@ -400,41 +359,35 @@ export type ToastCloseProps = BaseToast.Close.Props;
 export const ToastClose: IComponent<ToastCloseProps> = function SuiToastClose(props) {
   const { className, ...otherProps } = props;
 
-  return <BaseToast.Close {...otherProps} className={cn(className, "sui_toast_close")} />;
+  return <Toast.Close {...otherProps} className={cn(className, "sui_toast_close")} />;
 };
 
-/**
- * {@link ToastClose} の状態やプロパティーをまとめた型名前空間です。
- */
+export { ToastClose as Close };
+
 export namespace Close {
   /**
-   * {@link ToastCloseState} です。
+   * {@link ToastCloseState}
    */
   export type State = ToastCloseState;
 
   /**
-   * {@link ToastCloseProps} です。
+   * {@link ToastCloseProps}
    */
   export type Props = ToastCloseProps;
 }
-
-/**
- * {@link ToastClose} です。
- */
-export const Close: IComponent<Close.Props> = ToastClose;
 
 // Positioner
 // ----------
 
 /**
- * {@link ToastPositioner} の状態です。
+ * {@link ToastPositioner} が持つ状態です。
  */
-export type ToastPositionerState = BaseToast.Positioner.State;
+export type ToastPositionerState = Toast.Positioner.State;
 
 /**
- * {@link ToastPositioner} に渡すプロパティーです。
+ * {@link ToastPositioner} に渡す props です。
  */
-export type ToastPositionerProps = BaseToast.Positioner.Props;
+export type ToastPositionerProps = React.ComponentProps<typeof Toast.Positioner>;
 
 /**
  * 通知を特定の要素に対して配置する要素です。
@@ -444,41 +397,35 @@ export const ToastPositioner: IComponent<ToastPositionerProps> = function SuiToa
 ) {
   const { className, ...otherProps } = props;
 
-  return <BaseToast.Positioner {...otherProps} className={cn(className, "sui_toast_positioner")} />;
+  return <Toast.Positioner {...otherProps} className={cn(className, "sui_toast_positioner")} />;
 };
 
-/**
- * {@link ToastPositioner} の状態やプロパティーをまとめた型名前空間です。
- */
+export { ToastPositioner as Positioner };
+
 export namespace Positioner {
   /**
-   * {@link ToastPositionerState} です。
+   * {@link ToastPositionerState}
    */
   export type State = ToastPositionerState;
 
   /**
-   * {@link ToastPositionerProps} です。
+   * {@link ToastPositionerProps}
    */
   export type Props = ToastPositionerProps;
 }
-
-/**
- * {@link ToastPositioner} です。
- */
-export const Positioner: IComponent<Positioner.Props> = ToastPositioner;
 
 // Arrow
 // -----
 
 /**
- * {@link ToastArrow} の状態です。
+ * {@link ToastArrow} が持つ状態です。
  */
-export type ToastArrowState = BaseToast.Arrow.State;
+export type ToastArrowState = Toast.Arrow.State;
 
 /**
- * {@link ToastArrow} に渡すプロパティーです。
+ * {@link ToastArrow} に渡す props です。
  */
-export type ToastArrowProps = BaseToast.Arrow.Props;
+export type ToastArrowProps = React.ComponentProps<typeof Toast.Arrow>;
 
 /**
  * アンカーと通知をつなぐ矢印要素です。
@@ -486,28 +433,22 @@ export type ToastArrowProps = BaseToast.Arrow.Props;
 export const ToastArrow: IComponent<ToastArrowProps> = function SuiToastArrow(props) {
   const { className, ...otherProps } = props;
 
-  return <BaseToast.Arrow {...otherProps} className={cn(className, "sui_toast_arrow")} />;
+  return <Toast.Arrow {...otherProps} className={cn(className, "sui_toast_arrow")} />;
 };
 
-/**
- * {@link ToastArrow} の状態やプロパティーをまとめた型名前空間です。
- */
+export { ToastArrow as Arrow };
+
 export namespace Arrow {
   /**
-   * {@link ToastArrowState} です。
+   * {@link ToastArrowState}
    */
   export type State = ToastArrowState;
 
   /**
-   * {@link ToastArrowProps} です。
+   * {@link ToastArrowProps}
    */
   export type Props = ToastArrowProps;
 }
-
-/**
- * {@link ToastArrow} です。
- */
-export const Arrow: IComponent<Arrow.Props> = ToastArrow;
 
 // Manager
 // -------
@@ -517,11 +458,11 @@ export const Arrow: IComponent<Arrow.Props> = ToastArrow;
  *
  * {@link Provider} の配下で、通知一覧と追加、更新、削除の操作を取得します。
  */
-export const useToastManager: typeof BaseToast.useToastManager = BaseToast.useToastManager;
+export const useToastManager: typeof Toast.useToastManager = Toast.useToastManager;
 
 /**
  * Provider の外から通知を管理するマネージャーを作成します。
  *
  * 作成したマネージャーは {@link Provider} の `toastManager` に渡します。
  */
-export const createToastManager: typeof BaseToast.createToastManager = BaseToast.createToastManager;
+export const createToastManager: typeof Toast.createToastManager = Toast.createToastManager;

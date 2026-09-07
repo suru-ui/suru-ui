@@ -37,6 +37,7 @@
 
 /* 変数 */
 :scope {
+  --sui_stat_label-font_family: ;
   --sui_stat_label-font_size: ;
   --sui_stat_label-font_weight: ;
   --sui_stat_label-line_height: ;
@@ -47,6 +48,7 @@
 /* 可変 */
 :scope {
   .sui_stat_label {
+    font-family: var(--sui_stat_label-font_family);
     font-size: var(--sui_stat_label-font_size);
     font-weight: var(--sui_stat_label-font_weight);
     line-height: var(--sui_stat_label-line_height);
@@ -57,6 +59,7 @@
 
 /* 代入 */
 :scope {
+  --sui_stat_label-font_family: var(--sui-font-sans);
   --sui_stat_label-font_size: var(--sui-text-oln-sm-n-font_size);
   --sui_stat_label-font_weight: var(--sui-text-oln-sm-n-font_weight);
   --sui_stat_label-line_height: var(--sui-text-oln-sm-n-line_height);
@@ -87,6 +90,7 @@
 
 /* 変数 */
 :scope {
+  --sui_stat_value-font_family: ;
   --sui_stat_value-font_size: ;
   --sui_stat_value-font_weight: ;
   --sui_stat_value-line_height: ;
@@ -97,6 +101,7 @@
 /* 可変 */
 :scope {
   .sui_stat_value {
+    font-family: var(--sui_stat_value-font_family);
     font-size: var(--sui_stat_value-font_size);
     font-weight: var(--sui_stat_value-font_weight);
     line-height: var(--sui_stat_value-line_height);
@@ -107,6 +112,7 @@
 
 /* 代入 */
 :scope {
+  --sui_stat_value-font_family: var(--sui-font-sans);
   --sui_stat_value-color: inherit;
 
   &:has(.sui_stat_value-size_sm) {
@@ -148,6 +154,7 @@
 
 /* 変数 */
 :scope {
+  --sui_stat_change-font_family: ;
   --sui_stat_change-font_size: ;
   --sui_stat_change-font_weight: ;
   --sui_stat_change-line_height: ;
@@ -161,6 +168,7 @@
 :scope {
   .sui_stat_change {
     gap: var(--sui_stat_change-arrow_gap);
+    font-family: var(--sui_stat_change-font_family);
     font-size: var(--sui_stat_change-font_size);
     font-weight: var(--sui_stat_change-font_weight);
     line-height: var(--sui_stat_change-line_height);
@@ -175,6 +183,7 @@
 
 /* 代入 */
 :scope {
+  --sui_stat_change-font_family: var(--sui-font-sans);
   --sui_stat_change-font_size: var(--sui-text-oln-sm-m-font_size);
   --sui_stat_change-font_weight: var(--sui-text-oln-sm-m-font_weight);
   --sui_stat_change-line_height: var(--sui-text-oln-sm-m-line_height);
@@ -215,6 +224,7 @@
 
 /* 変数 */
 :scope {
+  --sui_stat_description-font_family: ;
   --sui_stat_description-font_size: ;
   --sui_stat_description-font_weight: ;
   --sui_stat_description-line_height: ;
@@ -225,6 +235,7 @@
 /* 可変 */
 :scope {
   .sui_stat_description {
+    font-family: var(--sui_stat_description-font_family);
     font-size: var(--sui_stat_description-font_size);
     font-weight: var(--sui_stat_description-font_weight);
     line-height: var(--sui_stat_description-line_height);
@@ -235,6 +246,7 @@
 
 /* 代入 */
 :scope {
+  --sui_stat_description-font_family: var(--sui-font-sans);
   --sui_stat_description-font_size: var(--sui-text-oln-sm-n-font_size);
   --sui_stat_description-font_weight: var(--sui-text-oln-sm-n-font_weight);
   --sui_stat_description-line_height: var(--sui-text-oln-sm-n-line_height);

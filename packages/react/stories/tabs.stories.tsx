@@ -205,3 +205,45 @@ export const Radius = meta.story({
     );
   },
 });
+
+export const Keyboard = meta.story({
+  name: "キーボード操作",
+  ...ctrl({
+    orientation: "horizontal",
+    outlined: false,
+    radius: "md",
+    size: "md",
+  }),
+  render(props) {
+    return (
+      <Tabs
+        {...props}
+        items={usageItems}
+        className="w-96"
+        slotProps={{ list: { activateOnFocus: true, loopFocus: true } }}
+        defaultValue="overview"
+      />
+    );
+  },
+});
+
+export const SlotProps = meta.story({
+  name: "パーツの調整",
+  ...ctrl({
+    orientation: "horizontal",
+    outlined: true,
+    radius: "md",
+    size: "md",
+  }),
+  render(props) {
+    return (
+      <Tabs
+        {...props}
+        items={usageItems}
+        className="w-96"
+        slotProps={{ list: { "aria-label": "ワークスペースの切替" } }}
+        defaultValue="overview"
+      />
+    );
+  },
+});

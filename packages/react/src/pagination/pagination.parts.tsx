@@ -1,6 +1,7 @@
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import { MoreIcon, ChevronLeftIcon, ChevronRightIcon } from "../_icons.jsx";
 import useRender, { type RenderProps } from "../_use-render.js";
 import { type ButtonRootProps, ButtonRoot } from "../button/button.parts.jsx";
 import cn from "../cn.js";
@@ -39,23 +40,36 @@ export type PaginationRootChangeEventDetails = {
 
 /**
  * 指定したページへ移動する関数です。
+ *
+ * @param page 移動先のページ番号です。
+ * @param details ページが変更されたイベントの詳細です。
  */
 export type PaginationGoToPage = (page: number, details: PaginationRootChangeEventDetails) => void;
 
 /**
  * ページネーションの配色です。
  */
-type PaginationContextColor = Color;
+export type PaginationContextColor = Color;
 
 /**
  * ページネーションの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
  */
-type PaginationContextRadius = "none" | Size | "full";
+export type PaginationContextRadius = "none" | Size | "full";
 
 /**
  * ページネーションの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
  */
-type PaginationContextSize = Size;
+export type PaginationContextSize = Size;
 
 /**
  * {@link PaginationRoot} が子パーツへ提供するコンテキストです。
@@ -106,15 +120,15 @@ export const PaginationContext: React.Context<PaginationContext | null> =
 function useSuiPaginationContext(optional?: false): PaginationContext;
 function useSuiPaginationContext(optional?: boolean): PaginationContext | null;
 function useSuiPaginationContext(optional?: boolean): PaginationContext | null {
-  const context = React.use(PaginationContext);
-  if (context === null && !optional) {
+  const ctx = React.use(PaginationContext);
+  if (ctx === null && !optional) {
     throw new ContextMissingError({
       contextName: "PaginationContext",
       providerName: "PaginationRoot",
     });
   }
 
-  return context;
+  return ctx;
 }
 
 /**
@@ -122,40 +136,24 @@ function useSuiPaginationContext(optional?: boolean): PaginationContext | null {
  */
 export const usePaginationContext: IUseContext<PaginationContext> = useSuiPaginationContext;
 
-/**
- * {@link PaginationContext} です。
- */
-export type Context = PaginationContext;
+export { PaginationContext as Context, usePaginationContext as useContext };
 
-/**
- * {@link PaginationContext} です。
- */
-export const Context: React.Context<Context | null> = PaginationContext;
-
-/**
- * {@link Context} の型名前空間です。
- */
 export namespace Context {
   /**
-   * {@link PaginationContextColor} です。
+   * {@link PaginationContextColor}
    */
   export type Color = PaginationContextColor;
 
   /**
-   * {@link PaginationContextRadius} です。
+   * {@link PaginationContextRadius}
    */
   export type Radius = PaginationContextRadius;
 
   /**
-   * {@link PaginationContextSize} です。
+   * {@link PaginationContextSize}
    */
   export type Size = PaginationContextSize;
 }
-
-/**
- * {@link usePaginationContext} です。
- */
-export const useContext: IUseContext<Context> = usePaginationContext;
 
 // Root
 // ----
@@ -186,26 +184,19 @@ export type PaginationRootRadius = "none" | Size | "full";
 export type PaginationRootSize = Size;
 
 /**
- * {@link PaginationRoot} の状態です。
+ * {@link PaginationRoot} が持つ状態です。
  */
 export type PaginationRootState = {};
 
 /**
- * {@link PaginationRoot} に渡すプロパティーです。
+ * {@link PaginationRoot} に渡す props です。
  */
 export type PaginationRootProps = Omit<React.ComponentProps<"nav">, keyof RenderProps> &
   RenderProps<PaginationRootState> & {
     /**
-     * 先頭と末尾に常に表示するページ数を指定します。
+     * ページネーションの配色を指定します。
      *
-     * @default 1
-     */
-    boundaryCount?: number | undefined;
-
-    /**
-     * ページネーションの色を指定します。
-     *
-     * 色は現在のページのボタンに適用されます。
+     * 配色は現在のページのボタンに適用されます。
      *
      * @default "grey"
      */
@@ -229,6 +220,9 @@ export type PaginationRootProps = Omit<React.ComponentProps<"nav">, keyof Render
 
     /**
      * ページが変更されたときに呼び出されるコールバックです。
+     *
+     * @param page 移動先のページ番号です。
+     * @param details ページが変更されたイベントの詳細です。
      */
     onPageChange?: ((page: number, details: PaginationRootChangeEventDetails) => void) | undefined;
 
@@ -247,13 +241,6 @@ export type PaginationRootProps = Omit<React.ComponentProps<"nav">, keyof Render
     radius?: PaginationRootRadius | undefined;
 
     /**
-     * 現在のページの前後に表示するページ数を指定します。
-     *
-     * @default 1
-     */
-    siblingCount?: number | undefined;
-
-    /**
      * ページネーションの大きさを指定します。
      *
      * @default "md"
@@ -268,6 +255,8 @@ export type PaginationRootProps = Omit<React.ComponentProps<"nav">, keyof Render
 
 /**
  * ページネーションのルートコンポーネントです。
+ *
+ * 現在のページを内部状態で管理し、子パーツへ配色や大きさとともに提供します。前後の移動ボタンやページ番号ボタンは利用者が組み立てます。一括で組み立てる場合は {@link Pagination} を使います。
  */
 export const PaginationRoot: IComponent<PaginationRootProps> = function SuiPaginationRoot(props) {
   const {
@@ -275,16 +264,19 @@ export const PaginationRoot: IComponent<PaginationRootProps> = function SuiPagin
     color = "grey",
     radius = size,
     disabled = false,
-    totalPages,
     page: pageProp,
+    totalPages,
     defaultPage = 1,
     onPageChange,
     className,
     "aria-label": ariaLabel = "ページネーション",
-    ...otherProps
+    ...otherNavProps
   } = props;
   const maxPage = Math.max(totalPages, 1);
-  const page = Math.min(Math.max(pageProp ?? defaultPage, 1), maxPage);
+  const [innerPage, setInnerPage] = React.useState(() =>
+    Math.min(Math.max(Math.trunc(defaultPage), 1), maxPage),
+  );
+  const page = Math.min(Math.max(pageProp ?? innerPage, 1), maxPage);
   const goToPage = React.useCallback<PaginationGoToPage>(
     (nextPage, details) => {
       if (disabled || totalPages < 1) {
@@ -292,82 +284,93 @@ export const PaginationRoot: IComponent<PaginationRootProps> = function SuiPagin
       }
 
       const target = Math.min(Math.max(Math.trunc(nextPage), 1), maxPage);
-      if (target !== page) {
-        onPageChange?.(target, details);
+      if (target === page) {
+        return;
       }
+
+      if (pageProp === undefined) {
+        setInnerPage(target);
+      }
+
+      onPageChange?.(target, details);
     },
-    [disabled, maxPage, onPageChange, page, totalPages],
+    [disabled, maxPage, onPageChange, page, pageProp, totalPages],
   );
-  const context = React.useMemo<PaginationContext>(
+  const ctx = React.useMemo<PaginationContext>(
     () => ({ color, disabled, goToPage, page, radius, size, totalPages }),
     [color, disabled, goToPage, page, radius, size, totalPages],
   );
   const element = useRender({
     defaultTagName: "nav",
     props: [
-      otherProps,
+      otherNavProps,
       {
         "aria-label": ariaLabel,
         className: cn(
           className,
           "sui_pagination",
           `sui_pagination-size_${size}`,
-          `sui_pagination-color_${color}`,
           `sui_pagination-radius_${radius}`,
+          `sui_pagination-color_${color}`,
           disabled && "sui_pagination-disabled",
         ),
+        "data-scope": "",
       },
     ],
   });
 
-  return <Context value={context}>{element}</Context>;
+  return <PaginationContext value={ctx}>{element}</PaginationContext>;
 };
 
-/**
- * {@link PaginationRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { PaginationRoot as Root };
+
 export namespace Root {
   /**
-   * {@link PaginationRootState} です。
+   * {@link PaginationRootState}
    */
   export type State = PaginationRootState;
 
   /**
-   * {@link PaginationRootProps} です。
+   * {@link PaginationRootProps}
    */
   export type Props = PaginationRootProps;
 
   /**
-   * {@link PaginationRootColor} です。
+   * {@link PaginationRootChangeEventDetails}
+   */
+  export type ChangeEventDetails = PaginationRootChangeEventDetails;
+
+  /**
+   * {@link PaginationRootChangeEventReason}
+   */
+  export type ChangeEventReason = PaginationRootChangeEventReason;
+
+  /**
+   * {@link PaginationRootColor}
    */
   export type Color = PaginationRootColor;
 
   /**
-   * {@link PaginationRootRadius} です。
+   * {@link PaginationRootRadius}
    */
   export type Radius = PaginationRootRadius;
 
   /**
-   * {@link PaginationRootSize} です。
+   * {@link PaginationRootSize}
    */
   export type Size = PaginationRootSize;
 }
-
-/**
- * {@link PaginationRoot} です。
- */
-export const Root: IComponent<Root.Props> = PaginationRoot;
 
 // PreviousButton
 // --------------
 
 /**
- * {@link PaginationPreviousButton} の状態です。
+ * {@link PaginationPreviousButton} が持つ状態です。
  */
 export type PaginationPreviousButtonState = {};
 
 /**
- * {@link PaginationPreviousButton} に渡すプロパティーです。
+ * {@link PaginationPreviousButton} に渡す props です。
  */
 export type PaginationPreviousButtonProps = Omit<ButtonRootProps, "children"> & {};
 
@@ -378,64 +381,64 @@ export type PaginationPreviousButtonProps = Omit<ButtonRootProps, "children"> & 
  */
 export const PaginationPreviousButton: IComponent<PaginationPreviousButtonProps> =
   function SuiPaginationPreviousButton(props) {
-    const context = useContext(true);
-    const { disabled = false, onClick, className, ...otherProps } = props;
-    const isDisabled = context?.disabled || disabled || (context?.page ?? 1) <= 1;
+    const ctx = usePaginationContext(true);
+    const {
+      onClick,
+      disabled = false,
+      className,
+      "aria-label": ariaLabel = "前のページへ",
+      ...otherProps
+    } = props;
+    const isDisabled = ctx?.disabled || disabled || (ctx?.page ?? 1) <= 1;
     const handleClick: NonNullable<ButtonRootProps["onClick"]> = (event) => {
       onClick?.(event);
-      if (!event.defaultPrevented && !isDisabled && context !== null) {
-        context.goToPage(context.page - 1, { reason: "previous", event });
+      if (!event.defaultPrevented && !isDisabled && ctx !== null) {
+        ctx.goToPage(ctx.page - 1, { reason: "previous", event });
       }
     };
 
     return (
       <ButtonRoot
         {...otherProps}
-        size={context?.size ?? "md"}
-        color={context?.color ?? "grey"}
-        radius={context?.radius}
+        size={ctx?.size ?? "md"}
+        color={ctx?.color ?? "grey"}
+        radius={ctx?.radius}
         onClick={handleClick}
         squared
         variant="naked"
         disabled={isDisabled}
         className={cn(className, "sui_pagination_previous")}
-        aria-label="前のページへ"
+        aria-label={ariaLabel}
       >
-        <SuiPaginationChevronLeftIcon />
+        <ChevronLeftIcon />
       </ButtonRoot>
     );
   };
 
-/**
- * {@link PaginationPreviousButton} の状態やプロパティーをまとめた型名前空間です。
- */
+export { PaginationPreviousButton as PreviousButton };
+
 export namespace PreviousButton {
   /**
-   * {@link PaginationPreviousButtonState} です。
+   * {@link PaginationPreviousButtonState}
    */
   export type State = PaginationPreviousButtonState;
 
   /**
-   * {@link PaginationPreviousButtonProps} です。
+   * {@link PaginationPreviousButtonProps}
    */
   export type Props = PaginationPreviousButtonProps;
 }
-
-/**
- * {@link PaginationPreviousButton} です。
- */
-export const PreviousButton: IComponent<PreviousButton.Props> = PaginationPreviousButton;
 
 // NextButton
 // ----------
 
 /**
- * {@link PaginationNextButton} の状態です。
+ * {@link PaginationNextButton} が持つ状態です。
  */
 export type PaginationNextButtonState = {};
 
 /**
- * {@link PaginationNextButton} に渡すプロパティーです。
+ * {@link PaginationNextButton} に渡す props です。
  */
 export type PaginationNextButtonProps = Omit<ButtonRootProps, "children"> & {};
 
@@ -446,69 +449,69 @@ export type PaginationNextButtonProps = Omit<ButtonRootProps, "children"> & {};
  */
 export const PaginationNextButton: IComponent<PaginationNextButtonProps> =
   function SuiPaginationNextButton(props) {
-    const context = useContext(true);
-    const { disabled = false, onClick, className, ...otherProps } = props;
+    const ctx = usePaginationContext(true);
+    const {
+      onClick,
+      disabled = false,
+      className,
+      "aria-label": ariaLabel = "次のページへ",
+      ...otherProps
+    } = props;
     const isDisabled =
-      context?.disabled ||
+      ctx?.disabled ||
       disabled ||
-      (context?.page ?? 1) >= (context?.totalPages ?? Number.POSITIVE_INFINITY);
+      (ctx?.page ?? 1) >= (ctx?.totalPages ?? Number.POSITIVE_INFINITY);
     const handleClick: NonNullable<ButtonRootProps["onClick"]> = (event) => {
       onClick?.(event);
-      if (!event.defaultPrevented && !isDisabled && context !== null) {
-        context.goToPage(context.page + 1, { reason: "next", event });
+      if (!event.defaultPrevented && !isDisabled && ctx !== null) {
+        ctx.goToPage(ctx.page + 1, { reason: "next", event });
       }
     };
 
     return (
       <ButtonRoot
         {...otherProps}
-        size={context?.size ?? "md"}
-        color={context?.color ?? "grey"}
-        radius={context?.radius}
+        size={ctx?.size ?? "md"}
+        color={ctx?.color ?? "grey"}
+        radius={ctx?.radius}
         onClick={handleClick}
         squared
         variant="naked"
         disabled={isDisabled}
         className={cn(className, "sui_pagination_next")}
-        aria-label="次のページへ"
+        aria-label={ariaLabel}
       >
-        <SuiPaginationChevronRightIcon />
+        <ChevronRightIcon />
       </ButtonRoot>
     );
   };
 
-/**
- * {@link PaginationNextButton} の状態やプロパティーをまとめた型名前空間です。
- */
+export { PaginationNextButton as NextButton };
+
 export namespace NextButton {
   /**
-   * {@link PaginationNextButtonState} です。
+   * {@link PaginationNextButtonState}
    */
   export type State = PaginationNextButtonState;
 
   /**
-   * {@link PaginationNextButtonProps} です。
+   * {@link PaginationNextButtonProps}
    */
   export type Props = PaginationNextButtonProps;
 }
-
-/**
- * {@link PaginationNextButton} です。
- */
-export const NextButton: IComponent<NextButton.Props> = PaginationNextButton;
 
 // Item
 // ----
 
 /**
- * {@link PaginationItem} の状態です。
+ * {@link PaginationItem} が持つ状態です。
  */
 export type PaginationItemState = {};
 
 /**
- * {@link PaginationItem} に渡すプロパティーです。
+ * {@link PaginationItem} に渡す props です。
  */
-export type PaginationItemProps = Omit<ButtonRootProps, "children" | "color" | "variant"> & {
+export type PaginationItemProps = Omit<ButtonRootProps, "color" | "variant"> & {
   /**
    * 表示するページ番号を指定します。
    */
@@ -526,24 +529,34 @@ export type PaginationItemProps = Omit<ButtonRootProps, "children" | "color" | "
 
 /**
  * ページ番号のボタンコンポーネントです。
+ *
+ * 子要素を指定しない場合、{@link PaginationItemProps.page|page} をラベルとして表示します。現在のページは `aria-current="page"` で示します。
  */
 export const PaginationItem: IComponent<PaginationItemProps> = function SuiPaginationItem(props) {
-  const context = useContext(true);
-  const { page, selected = false, disabled = false, onClick, className, ...otherProps } = props;
-  const isDisabled = context?.disabled || disabled;
+  const ctx = usePaginationContext(true);
+  const {
+    page,
+    onClick,
+    children = page,
+    disabled = false,
+    selected = false,
+    className,
+    ...otherProps
+  } = props;
+  const isDisabled = ctx?.disabled || disabled;
   const handleClick: NonNullable<ButtonRootProps["onClick"]> = (event) => {
     onClick?.(event);
-    if (!event.defaultPrevented && !isDisabled && context !== null) {
-      context.goToPage(page, { reason: "item", event });
+    if (!event.defaultPrevented && !isDisabled && ctx !== null) {
+      ctx.goToPage(page, { reason: "item", event });
     }
   };
 
   return (
     <ButtonRoot
       {...otherProps}
-      size={context?.size ?? "md"}
-      color={selected ? (context?.color ?? "grey") : "grey"}
-      radius={context?.radius}
+      size={ctx?.size ?? "md"}
+      color={selected ? (ctx?.color ?? "grey") : "grey"}
+      radius={ctx?.radius}
       onClick={handleClick}
       squared
       variant={selected ? "solid" : "naked"}
@@ -551,41 +564,35 @@ export const PaginationItem: IComponent<PaginationItemProps> = function SuiPagin
       className={cn(className, "sui_pagination_item", selected && "sui_pagination_item-selected")}
       aria-current={selected ? "page" : undefined}
     >
-      {page}
+      {children}
     </ButtonRoot>
   );
 };
 
-/**
- * {@link PaginationItem} の状態やプロパティーをまとめた型名前空間です。
- */
+export { PaginationItem as Item };
+
 export namespace Item {
   /**
-   * {@link PaginationItemState} です。
+   * {@link PaginationItemState}
    */
   export type State = PaginationItemState;
 
   /**
-   * {@link PaginationItemProps} です。
+   * {@link PaginationItemProps}
    */
   export type Props = PaginationItemProps;
 }
-
-/**
- * {@link PaginationItem} です。
- */
-export const Item: IComponent<Item.Props> = PaginationItem;
 
 // Ellipsis
 // --------
 
 /**
- * {@link PaginationEllipsis} の状態です。
+ * {@link PaginationEllipsis} が持つ状態です。
  */
 export type PaginationEllipsisState = {};
 
 /**
- * {@link PaginationEllipsis} に渡すプロパティーです。
+ * {@link PaginationEllipsis} に渡す props です。
  */
 export type PaginationEllipsisProps = Omit<ButtonRootProps, "children"> & {
   /**
@@ -602,12 +609,21 @@ export type PaginationEllipsisProps = Omit<ButtonRootProps, "children"> & {
 /**
  * 飛ばされたページ範囲を表す省略記号コンポーネントです。
  *
- * クリックすると入力欄が表示され、範囲内のページ番号を入力してそのページへ移動できます。`Enter` で決定、`Escape` でキャンセルします。
+ * 押下すると入力欄が表示され、範囲内のページ番号を入力してそのページへ移動できます。`Enter` で決定、`Escape` で取り消します。
  */
 export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
   function SuiPaginationEllipsis(props) {
-    const context = useContext(true);
-    const { start = 2, end = start, disabled = false, onClick, className, ...otherProps } = props;
+    const ctx = usePaginationContext(true);
+    const {
+      start = 2,
+      end = start,
+      onClick,
+      disabled = false,
+      className,
+      "aria-label": ariaLabel,
+      ...otherProps
+    } = props;
+    const label = ariaLabel ?? `${start}〜${end}ページへ移動`;
     const [editing, setEditing] = React.useState(false);
     const inputElement = useRender<HTMLInputElement, {}, boolean>({
       defaultTagName: "input",
@@ -615,7 +631,7 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
       props: [
         otherProps,
         {
-          "aria-label": `${start}〜${end}ページへ移動`,
+          "aria-label": label,
           autoFocus: true,
           className: cn(className, "sui_pagination_ellipsis_input"),
           defaultValue: "",
@@ -643,7 +659,7 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
               return;
             }
 
-            context?.goToPage(Math.min(Math.max(value, start), end), {
+            ctx?.goToPage(Math.min(Math.max(value, start), end), {
               reason: "ellipsis",
               event,
             });
@@ -656,7 +672,7 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
       return inputElement;
     }
 
-    const isDisabled = context?.disabled || disabled;
+    const isDisabled = ctx?.disabled || disabled;
     const handleClick: NonNullable<ButtonRootProps["onClick"]> = (event) => {
       onClick?.(event);
       if (!event.defaultPrevented && !isDisabled) {
@@ -667,79 +683,31 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
     return (
       <ButtonRoot
         {...otherProps}
-        size={context?.size ?? "md"}
+        size={ctx?.size ?? "md"}
         color="grey"
-        radius={context?.radius}
+        radius={ctx?.radius}
         onClick={handleClick}
         squared
         variant="naked"
         disabled={isDisabled}
         className={cn(className, "sui_pagination_ellipsis")}
-        aria-label={`${start}〜${end}ページへ移動`}
+        aria-label={label}
       >
-        <SuiPaginationMoreIcon />
+        <MoreIcon />
       </ButtonRoot>
     );
   };
 
-/**
- * {@link PaginationEllipsis} の状態やプロパティーをまとめた型名前空間です。
- */
+export { PaginationEllipsis as Ellipsis };
+
 export namespace Ellipsis {
   /**
-   * {@link PaginationEllipsisState} です。
+   * {@link PaginationEllipsisState}
    */
   export type State = PaginationEllipsisState;
 
   /**
-   * {@link PaginationEllipsisProps} です。
+   * {@link PaginationEllipsisProps}
    */
   export type Props = PaginationEllipsisProps;
-}
-
-/**
- * {@link PaginationEllipsis} です。
- */
-export const Ellipsis: IComponent<Ellipsis.Props> = PaginationEllipsis;
-
-function SuiPaginationChevronLeftIcon() {
-  return (
-    <svg fill="none" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
-      <path
-        d="M15 18l-6-6 6-6"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function SuiPaginationChevronRightIcon() {
-  return (
-    <svg fill="none" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
-      <path
-        d="M9 18l6-6-6-6"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function SuiPaginationMoreIcon() {
-  return (
-    <svg fill="none" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
-      <path
-        d="M5 12h.01M12 12h.01M19 12h.01"
-        stroke="currentColor"
-        strokeWidth={3}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
 }

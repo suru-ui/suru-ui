@@ -261,7 +261,7 @@
     transition: width 500ms;
   }
 
-  .sui_progress_indicator[data-indeterminate] {
+  &.sui_progress-status_indeterminate .sui_progress_indicator {
     animation: sui_progress-indeterminate 1.5s infinite linear;
   }
 }
@@ -316,7 +316,7 @@
 
 /* 変異 */
 :scope {
-  .sui_progress_indicator[data-indeterminate] {
+  &.sui_progress-status_indeterminate .sui_progress_indicator {
     --_sui_progress_indicator-width: 40%;
   }
 }

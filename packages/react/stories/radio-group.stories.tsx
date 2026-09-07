@@ -1,11 +1,15 @@
-import { SIZES, COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { RadioGroup } from "../src/radio-group/index.js";
 import { Radio } from "../src/radio/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
+const COLORS: readonly RadioGroup.Color[] = theme.COLORS;
+const SIZES: readonly RadioGroup.Size[] = theme.SIZES;
+const RADII: readonly RadioGroup.Radius[] = ["none", ...SIZES, "full"];
+const VARIANTS: readonly RadioGroup.Variant[] = ["naked", "liquid"];
+const ORIENTATIONS: readonly RadioGroup.Orientation[] = ["vertical", "horizontal"];
 
 const meta = preview.meta({
   title: "Radio Group",
@@ -16,30 +20,30 @@ export default meta;
 
 const ctrl = controls(RadioGroup, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   disabled: {
     control: "boolean",
   },
   orientation: {
-    options: ["vertical", "horizontal"],
     control: "select",
+    options: ORIENTATIONS,
   },
   outlined: {
     control: "boolean",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   variant: {
-    options: ["naked", "liquid"],
     control: "select",
+    options: VARIANTS,
   },
 });
 
@@ -64,6 +68,38 @@ export const Usage = meta.story({
   render(props) {
     return (
       <RadioGroup defaultValue="option-a" {...props}>
+        <Item value="option-a">オプション A</Item>
+        <Item value="option-b">オプション B</Item>
+        <Item value="option-c">オプション C</Item>
+      </RadioGroup>
+    );
+  },
+});
+
+export const Controlled = meta.story({
+  name: "制御",
+  ...ctrl({
+    variant: "naked",
+    color: "grey",
+    size: "md",
+    radius: "full",
+    outlined: undefined,
+    disabled: false,
+    orientation: "vertical",
+  }),
+  render(props) {
+    const [value, setValue] = React.useState("option-a");
+
+    return (
+      <RadioGroup
+        {...props}
+        value={value}
+        onValueChange={(next) => {
+          if (typeof next === "string") {
+            setValue(next);
+          }
+        }}
+      >
         <Item value="option-a">オプション A</Item>
         <Item value="option-b">オプション B</Item>
         <Item value="option-c">オプション C</Item>

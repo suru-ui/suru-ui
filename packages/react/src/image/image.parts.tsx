@@ -33,12 +33,12 @@ export type ImageRootRadius = "none" | Size | "full";
 export type ImageRootFit = "cover" | "contain" | "fill" | "none" | "scale-down";
 
 /**
- * {@link ImageRoot} の状態です。
+ * {@link ImageRoot} が持つ状態です。
  */
 export type ImageRootState = {};
 
 /**
- * {@link ImageRoot} に渡すプロパティーです。
+ * {@link ImageRoot} に渡す props です。
  */
 export type ImageRootProps = Omit<React.ComponentProps<"img">, keyof RenderProps> &
   RenderProps<ImageRootState> & {
@@ -61,45 +61,48 @@ export type ImageRootProps = Omit<React.ComponentProps<"img">, keyof RenderProps
  * 画像のルートコンポーネントです。
  */
 export const ImageRoot: IComponent<ImageRootProps> = function SuiImageRoot(props) {
-  const { fit, radius = "none", ...otherProps } = props;
+  const { fit, radius = "none", className, ...otherImgProps } = props;
 
   return useRender({
     defaultTagName: "img",
     props: [
-      otherProps,
+      otherImgProps,
       {
-        className: cn("sui_image", `sui_image-radius_${radius}`, fit && `sui_image-fit_${fit}`),
+        className: cn(
+          className,
+          "sui_image",
+          `sui_image-radius_${radius}`,
+          fit && `sui_image-fit_${fit}`,
+        ),
+        "data-scope": "",
       },
     ],
   });
 };
 
 /**
- * {@link ImageRoot} の状態やプロパティーをまとめた型名前空間です。
+ * {@link ImageRoot}
  */
+export { ImageRoot as Root };
+
 export namespace Root {
   /**
-   * {@link ImageRootState} です。
+   * {@link ImageRootState}
    */
   export type State = ImageRootState;
 
   /**
-   * {@link ImageRootProps} です。
+   * {@link ImageRootProps}
    */
   export type Props = ImageRootProps;
 
   /**
-   * {@link ImageRootFit} です。
+   * {@link ImageRootFit}
    */
   export type Fit = ImageRootFit;
 
   /**
-   * {@link ImageRootRadius} です。
+   * {@link ImageRootRadius}
    */
   export type Radius = ImageRootRadius;
 }
-
-/**
- * {@link ImageRoot} です。
- */
-export const Root: IComponent<Root.Props> = ImageRoot;

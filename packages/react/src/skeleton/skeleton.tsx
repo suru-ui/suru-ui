@@ -6,39 +6,62 @@ import {
   SkeletonRoot,
 } from "./skeleton.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link SkeletonRootRadius} です。
+ * {@link SkeletonRootRadius}
  */
 export type SkeletonRadius = SkeletonRootRadius;
 
 /**
- * {@link Skeleton} の各パーツに渡すプロパティーです。
- */
-export type SkeletonPartsProps = {
-  /**
-   * {@link SkeletonRoot} に渡すプロパティーです。
-   */
-  readonly root: SkeletonRootProps;
-};
-
-/**
- * {@link Skeleton} の状態です。
+ * {@link Skeleton} が持つ状態です。
  */
 export type SkeletonState = SkeletonRootState;
 
 /**
- * {@link Skeleton} コンポーネントのプロパティーです。
+ * {@link Skeleton} に渡す props です。
  */
 export type SkeletonProps = SkeletonRootProps;
 
+// API
+// ---
+
 /**
- * {@link Skeleton} の各パーツに渡すプロパティーを作るフックです。
+ * {@link Skeleton} を構成する各パーツの props を作成するための API です。
  */
-export function useSkeleton(props: SkeletonProps): SkeletonPartsProps {
-  return {
-    root: props,
-  };
+export interface SkeletonAPI {
+  /**
+   * {@link SkeletonRoot} に渡す props を取得します。
+   */
+  getRootProps(): SkeletonRootProps;
 }
+
+interface IUseSkeletonAPI {
+  /**
+   * {@link SkeletonAPI} を作成します。
+   *
+   * @param props {@link Skeleton} の props です。
+   * @returns スケルトンの API です
+   */
+  (props: SkeletonProps): SkeletonAPI;
+}
+
+/**
+ * {@link SkeletonAPI} を作成するフックです。
+ */
+export const useSkeletonAPI: IUseSkeletonAPI = function useSuiSkeletonAPI(props) {
+  return {
+    getRootProps() {
+      return props;
+    },
+  };
+};
+
+export { type SkeletonAPI as API, useSkeletonAPI as useAPI };
+
+// Component
+// ---------
 
 /**
  * コンテンツの読み込み中を表すプレースホルダーコンポーネントです。
@@ -46,27 +69,24 @@ export function useSkeleton(props: SkeletonProps): SkeletonPartsProps {
  * 大きさは `width` と `height` プロパティーや CSS で指定します。テキストの行を模す場合は既定の高さが使われます。
  */
 export const Skeleton: IComponent<SkeletonProps> = function SuiSkeleton(props) {
-  const partsProps = useSkeleton(props);
+  const api = useSkeletonAPI(props);
 
-  return <SkeletonRoot {...partsProps.root} />;
+  return <SkeletonRoot {...api.getRootProps()} />;
 };
 
-/**
- * {@link Skeleton} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Skeleton {
   /**
-   * {@link SkeletonState} です。
+   * {@link SkeletonState}
    */
   export type State = SkeletonState;
 
   /**
-   * {@link SkeletonProps} です。
+   * {@link SkeletonProps}
    */
   export type Props = SkeletonProps;
 
   /**
-   * {@link SkeletonRadius} です。
+   * {@link SkeletonRadius}
    */
   export type Radius = SkeletonRadius;
 }

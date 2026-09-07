@@ -7,7 +7,6 @@
   display: block;
   width: 100%;
   touch-action: manipulation;
-  caret-color: currentColor;
   resize: vertical;
   outline-style: solid;
   border-style: solid;
@@ -16,7 +15,8 @@
 /* 変数 */
 :scope {
   --sui_textarea-min_height: ;
-  --sui_textarea-padding_block: ;
+  --sui_textarea-padding_block_start: ;
+  --sui_textarea-padding_block_end: ;
   --sui_textarea-padding_inline: ;
   --sui_textarea-font_family: ;
   --sui_textarea-font_size: ;
@@ -25,6 +25,7 @@
   --sui_textarea-color: ;
   --sui_textarea-placeholder-color: ;
   --sui_textarea-letter_spacing: ;
+  --sui_textarea-caret_color: ;
   --sui_textarea-focusring_width: ;
   --sui_textarea-focusring_color: ;
   --sui_textarea-focusring_offset: ;
@@ -38,12 +39,14 @@
   --sui_textarea-border_width-focus_visible: ;
   --sui_textarea-border_width-invalid: ;
   --sui_textarea-border_radius: ;
+  --sui_textarea-virtual_text_height: ;
 }
 
 /* 可変 */
 :scope {
   min-height: var(--sui_textarea-min_height);
-  padding-block: var(--sui_textarea-padding_block);
+  padding-block-start: var(--sui_textarea-padding_block_start);
+  padding-block-end: var(--sui_textarea-padding_block_end);
   padding-inline: calc(var(--sui_textarea-padding_inline) - var(--_sui_textarea-border_width, 0px));
   font-family: var(--sui_textarea-font_family);
   font-size: var(--sui_textarea-font_size);
@@ -51,6 +54,7 @@
   line-height: var(--sui_textarea-line_height);
   color: var(--sui_textarea-color);
   letter-spacing: var(--sui_textarea-letter_spacing);
+  caret-color: var(--sui_textarea-caret_color);
   outline-width: var(--_sui_textarea-outline_width, 0px);
   outline-color: var(--_sui_textarea-outline_color, transparent);
   outline-offset: var(--_sui_textarea-outline_offset, 0px);
@@ -66,16 +70,31 @@
 
 /* 代入 */
 :scope {
-  --sui_textarea-padding_block: round(
-                                  down,
-                                  calc(
-                                    (var(--sui_textarea-min_height) - 1lh) / 2
-                                    - var(--_sui_textarea-border_width, 0px)
-                                  ),
-                                  1px
-                                );
+  --sui_textarea-padding_block_start: round(
+                                        down,
+                                        calc(
+                                          (
+                                            var(--sui_textarea-min_height)
+                                            - var(--sui_textarea-virtual_text_height)
+                                          ) / 2
+                                          - var(--_sui_textarea-border_width, 0px)
+                                        ),
+                                        1px
+                                      );
+  --sui_textarea-padding_block_end: round(
+                                      down,
+                                      calc(
+                                        (
+                                          var(--sui_textarea-min_height)
+                                          - var(--sui_textarea-virtual_text_height)
+                                        ) / 2
+                                        - var(--_sui_textarea-border_width, 0px)
+                                      ),
+                                      1px
+                                    );
   --sui_textarea-font_family: var(--sui-font-sans);
   --sui_textarea-placeholder-color: var(--sui-canvas_text-2);
+  --sui_textarea-caret_color: var(--sui_textarea-color);
   --sui_textarea-focusring_width: var(--sui-focusring_width);
   --sui_textarea-focusring_color: var(--sui-focusring_color);
   --sui_textarea-focusring_offset: var(--sui-focusring_offset);
@@ -86,9 +105,13 @@
   --sui_textarea-border_width-hover: --sui-border_width(1);
   --sui_textarea-border_width-focus_visible: --sui-border_width(2);
   --sui_textarea-border_width-invalid: --sui-border_width(2);
+  --sui_textarea-virtual_text_height: calc(
+                                        var(--sui_textarea-font_size)
+                                        * var(--sui_textarea-line_height)
+                                      );
 
   &.sui_textarea-size_sm {
-    --sui_textarea-min_height: calc(var(--sui-size-sm) + 1lh);
+    --sui_textarea-min_height: calc(var(--sui-size-sm) + var(--sui_textarea-virtual_text_height));
     --sui_textarea-padding_inline: --sui-space(3);
     --sui_textarea-font_size: var(--sui-text-std-sm-n-font_size);
     --sui_textarea-font_weight: var(--sui-text-std-sm-n-font_weight);
@@ -97,7 +120,7 @@
   }
 
   &.sui_textarea-size_md {
-    --sui_textarea-min_height: calc(var(--sui-size-md) + 1lh);
+    --sui_textarea-min_height: calc(var(--sui-size-md) + var(--sui_textarea-virtual_text_height));
     --sui_textarea-padding_inline: --sui-space(4);
     --sui_textarea-font_size: var(--sui-text-std-md-n-font_size);
     --sui_textarea-font_weight: var(--sui-text-std-md-n-font_weight);
@@ -106,7 +129,7 @@
   }
 
   &.sui_textarea-size_lg {
-    --sui_textarea-min_height: calc(var(--sui-size-lg) + 1lh);
+    --sui_textarea-min_height: calc(var(--sui-size-lg) + var(--sui_textarea-virtual_text_height));
     --sui_textarea-padding_inline: --sui-space(5);
     --sui_textarea-font_size: var(--sui-text-std-lg-n-font_size);
     --sui_textarea-font_weight: var(--sui-text-std-lg-n-font_weight);
@@ -211,7 +234,7 @@
 
 /* 変異 */
 :scope {
-  &:focus-visible {
+  &:enabled:focus-visible {
     --_sui_textarea-outline_width: var(--sui_textarea-focusring_width);
     --_sui_textarea-outline_color: var(--sui_textarea-focusring_color);
     --_sui_textarea-outline_offset: var(--sui_textarea-focusring_offset);
@@ -220,18 +243,18 @@
   &.sui_textarea-outlined {
     --_sui_textarea-border_color: var(--sui_textarea-border_color-normal);
     --_sui_textarea-border_width: var(--sui_textarea-border_width-normal);
+  }
 
+  &.sui_textarea-outlined:enabled:hover {
     @media (any-hover: hover) {
-      &:hover {
-        --_sui_textarea-border_color: var(--sui_textarea-border_color-hover);
-        --_sui_textarea-border_width: var(--sui_textarea-border_width-hover);
-      }
+      --_sui_textarea-border_color: var(--sui_textarea-border_color-hover);
+      --_sui_textarea-border_width: var(--sui_textarea-border_width-hover);
     }
+  }
 
-    &:focus-visible {
-      --_sui_textarea-border_color: var(--sui_textarea-border_color-focus_visible);
-      --_sui_textarea-border_width: var(--sui_textarea-border_width-focus_visible);
-    }
+  &.sui_textarea-outlined:enabled:focus-visible {
+    --_sui_textarea-border_color: var(--sui_textarea-border_color-focus_visible);
+    --_sui_textarea-border_width: var(--sui_textarea-border_width-focus_visible);
   }
 
   &.sui_textarea-invalid {
@@ -258,26 +281,34 @@
     color: var(--sui-canvas_text-2);
     cursor: not-allowed;
     resize: none;
-
-    &::placeholder {
-      color: var(--sui-disabled-naked-canvas_text);
-    }
   }
 
-  &.sui_textarea-variant_naked.sui_textarea-disabled {
+  &.sui_textarea-disabled.sui_textarea-variant_naked {
     background-color: var(--sui-disabled-naked-canvas);
   }
 
-  &.sui_textarea-variant_naked.sui_textarea-outlined.sui_textarea-disabled {
-    border: var(--sui-disabled-naked-border) solid var(--sui-disabled-border_width);
+  &.sui_textarea-disabled.sui_textarea-variant_naked::placeholder {
+    color: var(--sui-disabled-naked-canvas_text);
   }
 
-  &.sui_textarea-variant_liquid.sui_textarea-disabled {
+  &.sui_textarea-disabled.sui_textarea-variant_naked.sui_textarea-outlined {
+    border-color: var(--sui-disabled-naked-border);
+    border-style: solid;
+    border-width: var(--sui-disabled-border_width);
+  }
+
+  &.sui_textarea-disabled.sui_textarea-variant_liquid {
     background-color: var(--sui-disabled-liquid-canvas);
   }
 
-  &.sui_textarea-variant_liquid.sui_textarea-outlined.sui_textarea-disabled {
-    border: var(--sui-disabled-liquid-border) solid var(--sui-disabled-border_width);
+  &.sui_textarea-disabled.sui_textarea-variant_liquid::placeholder {
+    color: var(--sui-disabled-liquid-canvas_text);
+  }
+
+  &.sui_textarea-disabled.sui_textarea-variant_liquid.sui_textarea-outlined {
+    border-color: var(--sui-disabled-liquid-border);
+    border-style: solid;
+    border-width: var(--sui-disabled-border_width);
   }
 }
 

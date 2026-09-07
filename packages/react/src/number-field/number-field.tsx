@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { CursorGrowIcon } from "../_icons.jsx";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import type { IComponent, IUseContext } from "../types.js";
 import {
@@ -30,293 +31,341 @@ import {
   NumberFieldScrubAreaCursor,
 } from "./number-field.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link NumberFieldRootColor} です。
+ * {@link NumberFieldRootColor}
  */
 export type NumberFieldColor = NumberFieldRootColor;
 
 /**
- * {@link NumberFieldRootRadius} です。
+ * {@link NumberFieldRootRadius}
  */
 export type NumberFieldRadius = NumberFieldRootRadius;
 
 /**
- * {@link NumberFieldRootSize} です。
+ * {@link NumberFieldRootSize}
  */
 export type NumberFieldSize = NumberFieldRootSize;
 
 /**
- * {@link NumberFieldRootVariant} です。
+ * {@link NumberFieldRootVariant}
  */
 export type NumberFieldVariant = NumberFieldRootVariant;
 
 /**
- * {@link NumberFieldRootChangeEventReason} です。
+ * {@link NumberFieldRootChangeEventReason}
  */
 export type NumberFieldChangeEventReason = NumberFieldRootChangeEventReason;
 
 /**
- * {@link NumberFieldRootChangeEventDetails} です。
+ * {@link NumberFieldRootChangeEventDetails}
  */
 export type NumberFieldChangeEventDetails = NumberFieldRootChangeEventDetails;
 
 /**
- * {@link NumberField} の各パーツに渡すプロパティーです。
+ * {@link NumberField} の各パーツに渡す props です。
  */
 export type NumberFieldSlotProps = {
   /**
-   * {@link NumberFieldAddon} に渡すプロパティーです。
+   * {@link NumberFieldAddon} に渡す props です。
    */
   readonly addon?: Omit<NumberFieldAddonProps, "children"> | undefined;
 
   /**
-   * {@link NumberFieldDecrement} に渡すプロパティーです。
+   * {@link NumberFieldDecrement} に渡す props です。
    */
-  readonly decrement?: NumberFieldDecrementProps | undefined;
+  readonly decrement?: Omit<NumberFieldDecrementProps, "children"> | undefined;
 
   /**
-   * {@link NumberFieldGroup} に渡すプロパティーです。
+   * {@link NumberFieldGroup} に渡す props です。
    */
-  readonly group?: NumberFieldGroupProps | undefined;
+  readonly group?: Omit<NumberFieldGroupProps, "children"> | undefined;
 
   /**
-   * {@link NumberFieldIncrement} に渡すプロパティーです。
+   * {@link NumberFieldIncrement} に渡す props です。
    */
-  readonly increment?: NumberFieldIncrementProps | undefined;
+  readonly increment?: Omit<NumberFieldIncrementProps, "children"> | undefined;
 
   /**
-   * {@link NumberFieldInput} に渡すプロパティーです。
+   * {@link NumberFieldInput} に渡す props です。
    */
   readonly input?: NumberFieldInputProps | undefined;
 
   /**
-   * {@link NumberFieldScrubArea} に渡すプロパティーです。
+   * {@link NumberFieldScrubArea} に渡す props です。
    */
-  readonly scrubArea?: NumberFieldScrubAreaProps | undefined;
+  readonly scrubArea?: Omit<NumberFieldScrubAreaProps, "children"> | undefined;
 
   /**
-   * {@link NumberFieldScrubAreaCursor} に渡すプロパティーです。
+   * {@link NumberFieldScrubAreaCursor} に渡す props です。
    */
-  readonly scrubAreaCursor?: NumberFieldScrubAreaCursorProps | undefined;
+  readonly scrubAreaCursor?: Omit<NumberFieldScrubAreaCursorProps, "children"> | undefined;
 };
 
 /**
- * 各パーツに渡すプロパティーをまとめたものです。
- */
-export type NumberFieldPartsProps = {
-  /**
-   * 値を減らすボタンを包む {@link NumberFieldAddon} に渡すプロパティーです。
-   *
-   * `children` には {@link NumberFieldDecrement} が設定されています。
-   * これを表示しないときは null になります。
-   */
-  readonly decrementAddon: NumberFieldAddonProps | null;
-
-  /**
-   * 入力欄の末尾に表示する {@link NumberFieldAddon} の一覧です。
-   *
-   * 内容は `children` に入ります。
-   */
-  readonly endAddons: readonly NumberFieldAddonProps[];
-
-  /**
-   * {@link NumberFieldGroup} に渡すプロパティーです。
-   */
-  readonly group: NumberFieldGroupProps;
-
-  /**
-   * 値を増やすボタンを包む {@link NumberFieldAddon} に渡すプロパティーです。
-   *
-   * `children` には {@link NumberFieldIncrement} が設定されています。
-   * これを表示しないときは null になります。
-   */
-  readonly incrementAddon: NumberFieldAddonProps | null;
-
-  /**
-   * {@link NumberFieldInput} に渡すプロパティーです。
-   */
-  readonly input: NumberFieldInputProps;
-
-  /**
-   * {@link NumberFieldRoot} に渡すプロパティーです。
-   */
-  readonly root: NumberFieldRootProps;
-
-  /**
-   * {@link NumberFieldScrubArea} に渡すプロパティーです。
-   *
-   * `children` には {@link NumberFieldScrubAreaCursor} とデフォルトのアイコンが設定されています。
-   * これを表示しないときは null になります。
-   */
-  readonly scrubArea: NumberFieldScrubAreaProps | null;
-
-  /**
-   * 入力欄の先頭に表示する {@link NumberFieldAddon} の一覧です。
-   *
-   * 内容は `children` に入ります。
-   */
-  readonly startAddons: readonly NumberFieldAddonProps[];
-};
-
-/**
- * {@link NumberField} の状態です。
+ * {@link NumberField} が持つ状態です。
  */
 export type NumberFieldState = NumberFieldRootState;
 
 /**
- * {@link NumberField} コンポーネントのプロパティーです。
+ * {@link NumberField} に渡す props です。
  */
 export type NumberFieldProps = Omit<NumberFieldRootProps, "children"> &
   Pick<NumberFieldInputProps, "placeholder"> & {
     /**
-     * 値を減らずボタンを表示します。
+     * 値を減らすボタンを表示します。
      *
-     * `true` の場合、デフォルトのマイナスアイコンを使って表示されます。
+     * `true` を指定すると、既定のマイナスアイコンで表示します。
      */
-    decrement?: NumberFieldDecrementProps["children"];
+    decrement?: NumberFieldDecrementProps["children"] | undefined;
 
     /**
      * 入力欄の末尾に表示する内容です。
      */
-    endAddons?: readonly React.ReactNode[] | undefined;
+    endAddons?: Iterable<React.ReactNode> | undefined;
 
     /**
      * 値を増やすボタンを表示します。
      *
-     * `true` の場合、デフォルトのプラスアイコンを使って表示されます。
+     * `true` を指定すると、既定のプラスアイコンで表示します。
      */
-    increment?: NumberFieldIncrementProps["children"];
+    increment?: NumberFieldIncrementProps["children"] | undefined;
 
     /**
-     * ドラッグで値を変更できる領域です。
+     * ドラッグで値を変更できる領域に表示する内容です。
      */
-    scrubArea?: NumberFieldScrubAreaProps["children"];
+    scrubArea?: NumberFieldScrubAreaProps["children"] | undefined;
 
     /**
-     * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+     * 各パーツに個別の props を渡すためのオブジェクトです。
      *
-     * 各パーツのプロパティーが優先されます。
+     * 各パーツの props が優先されます。
      */
     slotProps?: NumberFieldSlotProps | undefined;
 
     /**
      * 入力欄の先頭に表示する内容です。
      */
-    startAddons?: readonly React.ReactNode[] | undefined;
+    startAddons?: Iterable<React.ReactNode> | undefined;
   };
 
-interface NumberFieldType extends IComponent<NumberFieldProps> {
+// API
+// ---
+
+/**
+ * {@link NumberField} を構成する各パーツの props を作成するための API です。
+ */
+export interface NumberFieldAPI {
   /**
-   * {@link useNumberFieldContext} です。
+   * {@link NumberFieldDecrement} に渡す props を取得します。
+   */
+  getDecrementProps(): NumberFieldDecrementProps | null;
+
+  /**
+   * 末尾の {@link NumberFieldAddon} に渡す props の一覧を取得します。
+   */
+  getEndAddonsPropsList(): readonly NumberFieldAddonProps[];
+
+  /**
+   * {@link NumberFieldGroup} に渡す props を取得します。
+   */
+  getGroupProps(): Omit<NumberFieldGroupProps, "children">;
+
+  /**
+   * {@link NumberFieldIncrement} に渡す props を取得します。
+   */
+  getIncrementProps(): NumberFieldIncrementProps | null;
+
+  /**
+   * {@link NumberFieldInput} に渡す props を取得します。
+   */
+  getInputProps(): NumberFieldInputProps;
+
+  /**
+   * {@link NumberFieldRoot} に渡す props を取得します。
+   */
+  getRootProps(): Omit<NumberFieldRootProps, "children">;
+
+  /**
+   * {@link NumberFieldScrubAreaCursor} に渡す props を取得します。
+   */
+  getScrubAreaCursorProps(): NumberFieldScrubAreaCursorProps;
+
+  /**
+   * {@link NumberFieldScrubArea} に渡す props を取得します。
+   */
+  getScrubAreaProps(): NumberFieldScrubAreaProps | null;
+
+  /**
+   * 先頭の {@link NumberFieldAddon} に渡す props の一覧を取得します。
+   */
+  getStartAddonsPropsList(): readonly NumberFieldAddonProps[];
+}
+
+interface IUseNumberFieldAPI {
+  /**
+   * {@link NumberFieldAPI} を作成します。
+   *
+   * @param props {@link NumberField} の props です。
+   * @returns 数値入力欄の API です
+   */
+  (props: NumberFieldProps): NumberFieldAPI;
+}
+
+/**
+ * {@link NumberFieldAPI} を作成するフックです。
+ */
+export const useNumberFieldAPI: IUseNumberFieldAPI = function useSuiNumberFieldAPI(props) {
+  const {
+    decrement,
+    increment,
+    endAddons = [],
+    placeholder,
+    scrubArea,
+    startAddons = [],
+    slotProps: {
+      addon: addonProps = {},
+      group: groupProps = {},
+      input: inputProps = {},
+      decrement: decrementProps = {},
+      increment: incrementProps = {},
+      scrubArea: scrubAreaProps = {},
+      scrubAreaCursor: scrubAreaCursorProps = {},
+    } = {},
+    ...otherRootProps
+  } = props;
+  const showDecrement =
+    ("decrement" in props && (decrement === true || isLikelyVisibleNode(decrement))) ||
+    Object.keys(decrementProps).length > 0;
+  const showIncrement =
+    ("increment" in props && (increment === true || isLikelyVisibleNode(increment))) ||
+    Object.keys(incrementProps).length > 0;
+  const showScrubArea =
+    isLikelyVisibleNode(scrubArea) ||
+    Object.keys(scrubAreaProps).length > 0 ||
+    Object.keys(scrubAreaCursorProps).length > 0;
+  const scrubAreaCursor: NumberFieldScrubAreaCursorProps = {
+    children: <CursorGrowIcon />,
+    ...scrubAreaCursorProps,
+  };
+
+  return {
+    getRootProps() {
+      return otherRootProps;
+    },
+    getGroupProps() {
+      return groupProps;
+    },
+    getInputProps() {
+      return {
+        placeholder,
+        ...inputProps,
+      };
+    },
+    getDecrementProps() {
+      if (!showDecrement) {
+        return null;
+      }
+
+      return {
+        ...decrementProps,
+        children: decrement === true ? undefined : decrement,
+      };
+    },
+    getIncrementProps() {
+      if (!showIncrement) {
+        return null;
+      }
+
+      return {
+        ...incrementProps,
+        children: increment === true ? undefined : increment,
+      };
+    },
+    getScrubAreaProps() {
+      if (!showScrubArea) {
+        return null;
+      }
+
+      return {
+        ...scrubAreaProps,
+        children: (
+          <>
+            {scrubArea}
+            <NumberFieldScrubAreaCursor {...scrubAreaCursor} />
+          </>
+        ),
+      };
+    },
+    getEndAddonsPropsList() {
+      return (
+        React.Children.map(endAddons, (addon) => ({
+          ...addonProps,
+          children: addon,
+        })) ?? []
+      );
+    },
+    getScrubAreaCursorProps() {
+      return scrubAreaCursor;
+    },
+    getStartAddonsPropsList() {
+      return (
+        React.Children.map(startAddons, (addon) => ({
+          ...addonProps,
+          children: addon,
+        })) ?? []
+      );
+    },
+  };
+};
+
+export { type NumberFieldAPI as API, useNumberFieldAPI as useAPI };
+
+// Component
+// ---------
+
+interface INumberField extends IComponent<NumberFieldProps> {
+  /**
+   * {@link useNumberFieldContext}
    */
   readonly useContext: IUseContext<NumberFieldContext>;
 }
 
 /**
- * {@link NumberField} の各パーツに渡すプロパティーを作るフックです。
- */
-export function useNumberField(props: NumberFieldProps): NumberFieldPartsProps {
-  const {
-    decrement,
-    endAddons = [],
-    increment,
-    scrubArea,
-    slotProps: {
-      addon: addonProps,
-      group: groupProps = {},
-      input: inputProps,
-      decrement: decrementProps,
-      increment: incrementProps,
-      scrubArea: scrubAreaProps,
-      scrubAreaCursor: scrubAreaCursorProps,
-    } = {},
-    placeholder,
-    startAddons = [],
-    ...rootProps
-  } = props;
-  const showScrubArea = "scrubArea" in props || !!scrubAreaProps;
-  const showDecrement =
-    ("decrement" in props && (decrement === true || isLikelyVisibleNode(decrement))) ||
-    !!decrementProps;
-  const showIncrement =
-    ("increment" in props && (increment === true || isLikelyVisibleNode(increment))) ||
-    !!incrementProps;
-
-  return {
-    root: rootProps,
-    scrubArea: showScrubArea
-      ? {
-          children: (
-            <>
-              {scrubArea}
-              <NumberFieldScrubAreaCursor {...scrubAreaCursorProps}>
-                <SuiCursorGrowIcon />
-              </NumberFieldScrubAreaCursor>
-            </>
-          ),
-          ...scrubAreaProps,
-        }
-      : null,
-    group: groupProps,
-    startAddons: React.Children.map(startAddons, (addon) => ({
-      ...addonProps,
-      children: addon,
-    }))!,
-    input: {
-      placeholder,
-      ...inputProps,
-    },
-    endAddons: React.Children.map(endAddons, (addon) => ({
-      ...addonProps,
-      children: addon,
-    }))!,
-    decrementAddon: showDecrement
-      ? {
-          disableFocusOnClick: true,
-          ...addonProps,
-          children: (
-            <NumberFieldDecrement
-              children={decrement === true ? <SuiMinusIcon /> : decrement}
-              {...decrementProps}
-            />
-          ),
-        }
-      : null,
-    incrementAddon: showIncrement
-      ? {
-          disableFocusOnClick: true,
-          ...addonProps,
-          children: (
-            <NumberFieldIncrement
-              children={increment === true ? <SuiPlusIcon /> : increment}
-              {...incrementProps}
-            />
-          ),
-        }
-      : null,
-  };
-}
-
-/**
  * 数値入力欄を表示するコンポーネントです。
+ *
+ * 矢印キーで値を増減でき、ステッパーボタンやドラッグ操作にも対応します。
  */
-export const NumberField: NumberFieldType = /*#__PURE__*/ Object.assign(
+export const NumberField: INumberField = /*#__PURE__*/ Object.assign(
   function SuiNumberField(props: NumberFieldProps) {
-    const partsProps = useNumberField(props);
+    const api = useNumberFieldAPI(props);
+    const scrubAreaProps = api.getScrubAreaProps();
+    const decrementProps = api.getDecrementProps();
+    const incrementProps = api.getIncrementProps();
 
     return (
-      <NumberFieldRoot {...partsProps.root}>
-        {partsProps.scrubArea && <NumberFieldScrubArea {...partsProps.scrubArea} />}
-        <NumberFieldGroup {...partsProps.group}>
-          {partsProps.startAddons.map((addonProps, index) => (
+      <NumberFieldRoot {...api.getRootProps()}>
+        {scrubAreaProps && <NumberFieldScrubArea {...scrubAreaProps} />}
+        <NumberFieldGroup {...api.getGroupProps()}>
+          {api.getStartAddonsPropsList().map((addonProps, index) => (
             <NumberFieldAddon key={index} {...addonProps} />
           ))}
-          <NumberFieldInput {...partsProps.input} />
-          {partsProps.endAddons.map((addonProps, index) => (
+          <NumberFieldInput {...api.getInputProps()} />
+          {api.getEndAddonsPropsList().map((addonProps, index) => (
             <NumberFieldAddon key={index} {...addonProps} />
           ))}
-          {partsProps.decrementAddon && <NumberFieldAddon {...partsProps.decrementAddon} />}
-          {partsProps.incrementAddon && <NumberFieldAddon {...partsProps.incrementAddon} />}
+          {decrementProps && (
+            <NumberFieldAddon disableFocusOnClick>
+              <NumberFieldDecrement {...decrementProps} />
+            </NumberFieldAddon>
+          )}
+          {incrementProps && (
+            <NumberFieldAddon disableFocusOnClick>
+              <NumberFieldIncrement {...incrementProps} />
+            </NumberFieldAddon>
+          )}
         </NumberFieldGroup>
       </NumberFieldRoot>
     );
@@ -326,113 +375,54 @@ export const NumberField: NumberFieldType = /*#__PURE__*/ Object.assign(
   },
 );
 
-/**
- * {@link NumberField} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace NumberField {
   /**
-   * {@link NumberFieldState} です。
+   * {@link NumberFieldState}
    */
   export type State = NumberFieldState;
 
   /**
-   * {@link NumberFieldProps} です。
+   * {@link NumberFieldProps}
    */
   export type Props = NumberFieldProps;
 
   /**
-   * {@link NumberFieldContext} です。
+   * {@link NumberFieldContext}
    */
   export type Context = NumberFieldContext;
 
   /**
-   * {@link NumberFieldSlotProps} です。
+   * {@link NumberFieldSlotProps}
    */
   export type SlotProps = NumberFieldSlotProps;
 
   /**
-   * {@link NumberFieldChangeEventDetails} です。
+   * {@link NumberFieldChangeEventDetails}
    */
   export type ChangeEventDetails = NumberFieldChangeEventDetails;
 
   /**
-   * {@link NumberFieldChangeEventReason} です。
+   * {@link NumberFieldChangeEventReason}
    */
   export type ChangeEventReason = NumberFieldChangeEventReason;
 
   /**
-   * {@link NumberFieldColor} です。
+   * {@link NumberFieldColor}
    */
   export type Color = NumberFieldColor;
 
   /**
-   * {@link NumberFieldRadius} です。
+   * {@link NumberFieldRadius}
    */
   export type Radius = NumberFieldRadius;
 
   /**
-   * {@link NumberFieldSize} です。
+   * {@link NumberFieldSize}
    */
   export type Size = NumberFieldSize;
 
   /**
-   * {@link NumberFieldVariant} です。
+   * {@link NumberFieldVariant}
    */
   export type Variant = NumberFieldVariant;
-}
-
-function SuiCursorGrowIcon(props: React.ComponentProps<"svg">) {
-  return (
-    <svg
-      fill="none"
-      width={24}
-      xmlns="http://www.w3.org/2000/svg"
-      height={24}
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-      focusable="false"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      {...props}
-    >
-      <line x1="4" x2="20" y1="12" y2="12" />
-      <polyline points="8 8 4 12 8 16" />
-      <polyline points="16 8 20 12 16 16" />
-    </svg>
-  );
-}
-
-function SuiMinusIcon(props: React.ComponentProps<"svg">) {
-  return (
-    <svg
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 16 16"
-      focusable="false"
-      strokeLinecap="round"
-      aria-hidden="true"
-      {...props}
-    >
-      <path d="M3 8h10" />
-    </svg>
-  );
-}
-
-function SuiPlusIcon(props: React.ComponentProps<"svg">) {
-  return (
-    <svg
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      stroke="currentColor"
-      viewBox="0 0 16 16"
-      focusable="false"
-      strokeLinecap="round"
-      aria-hidden="true"
-      {...props}
-    >
-      <path d="M8 3v10M3 8h10" />
-    </svg>
-  );
 }

@@ -14,41 +14,64 @@ import {
   StatDescription,
 } from "./stat.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link StatRootSize} です。
+ * {@link StatRootSize}
  */
 export type StatSize = StatRootSize;
 
 /**
- * {@link Stat} の各パーツに渡すプロパティーです。
- */
-export type StatPartsProps = {
-  /**
-   * {@link StatRoot} に渡すプロパティーです。
-   */
-  readonly root: StatRootProps;
-};
-
-/**
- * {@link Stat} の状態です。
+ * {@link Stat} が持つ状態です。
  */
 export type StatState = StatRootState;
 
 /**
- * {@link Stat} コンポーネントのプロパティーです。
+ * {@link Stat} に渡す props です。
  */
 export type StatProps = StatRootProps;
 
+// API
+// ---
+
 /**
- * {@link Stat} の各パーツに渡すプロパティーを作るフックです。
+ * {@link Stat} を構成する各パーツの props を作成するための API です。
  */
-export function useStat(props: StatProps): StatPartsProps {
-  return {
-    root: props,
-  };
+export interface StatAPI {
+  /**
+   * {@link StatRoot} に渡す props を取得します。
+   */
+  getRootProps(): StatRootProps;
 }
 
-interface StatComponentType extends IComponent<StatProps> {
+interface IUseStatAPI {
+  /**
+   * {@link StatAPI} を作成します。
+   *
+   * @param props {@link Stat} の props です。
+   * @returns 統計の API です
+   */
+  (props: StatProps): StatAPI;
+}
+
+/**
+ * {@link StatAPI} を作成するフックです。
+ */
+export const useStatAPI: IUseStatAPI = function useSuiStatAPI(props) {
+  return {
+    getRootProps() {
+      return props;
+    },
+  };
+};
+
+export { type StatAPI as API, useStatAPI as useAPI };
+
+// Component
+// ---------
+
+interface IStat extends IComponent<StatProps> {
   /**
    * {@link StatChange} です。
    */
@@ -80,11 +103,11 @@ interface StatComponentType extends IComponent<StatProps> {
  *
  * {@link Stat.Label} でラベルを、{@link Stat.Value} で値を、{@link Stat.Description} で補足説明を指定します。値の増減を示すときは {@link Stat.Value} の内側に {@link Stat.Change} を配置します。
  */
-export const Stat: StatComponentType = /*#__PURE__*/ Object.assign(
+export const Stat: IStat = /*#__PURE__*/ Object.assign(
   function SuiStat(props: StatProps) {
-    const partsProps = useStat(props);
+    const api = useStatAPI(props);
 
-    return <StatRoot {...partsProps.root} />;
+    return <StatRoot {...api.getRootProps()} />;
   },
   {
     Change: StatChange,
@@ -95,22 +118,19 @@ export const Stat: StatComponentType = /*#__PURE__*/ Object.assign(
   },
 );
 
-/**
- * {@link Stat} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Stat {
   /**
-   * {@link StatState} です。
+   * {@link StatState}
    */
   export type State = StatState;
 
   /**
-   * {@link StatProps} です。
+   * {@link StatProps}
    */
   export type Props = StatProps;
 
   /**
-   * {@link StatSize} です。
+   * {@link StatSize}
    */
   export type Size = StatSize;
 }

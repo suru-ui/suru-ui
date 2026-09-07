@@ -5,32 +5,26 @@
 /* 固定 */
 :scope {
   display: inline-block;
-  line-height: 1lh;
   vertical-align: middle;
   touch-action: manipulation;
-  caret-color: currentColor;
   outline-style: solid;
   border-style: solid;
-
-  &::after {
-    position: absolute;
-    inset: 0px;
-    pointer-events: none;
-    content: "";
-  }
 }
 
 /* 変数 */
 :scope {
   --sui_input-min_height: ;
-  --sui_input-padding_block: ;
+  --sui_input-padding_block_start: ;
+  --sui_input-padding_block_end: ;
   --sui_input-padding_inline: ;
   --sui_input-font_family: ;
   --sui_input-font_size: ;
   --sui_input-font_weight: ;
+  --sui_input-line_height: ;
   --sui_input-color: ;
   --sui_input-placeholder-color: ;
   --sui_input-letter_spacing: ;
+  --sui_input-caret_color: ;
   --sui_input-focusring_width: ;
   --sui_input-outline_color: ;
   --sui_input-outline_offset: ;
@@ -44,18 +38,22 @@
   --sui_input-border_width-focus_visible: ;
   --sui_input-border_width-invalid: ;
   --sui_input-border_radius: ;
+  --sui_input-virtual_text_height: ;
 }
 
 /* 可変 */
 :scope {
   min-height: var(--sui_input-min_height);
-  padding-block: var(--sui_input-padding_block);
+  padding-block-start: var(--sui_input-padding_block_start);
+  padding-block-end: var(--sui_input-padding_block_end);
   padding-inline: calc(var(--sui_input-padding_inline) - var(--_sui_input-border_width, 0px));
   font-family: var(--sui_input-font_family);
   font-size: var(--sui_input-font_size);
   font-weight: var(--sui_input-font_weight);
+  line-height: var(--sui_input-line_height);
   color: var(--sui_input-color);
   letter-spacing: var(--sui_input-letter_spacing);
+  caret-color: var(--sui_input-caret_color);
   outline-width: var(--_sui_input-outline_width, 0px);
   outline-color: var(--sui_input-outline_color);
   outline-offset: var(--sui_input-outline_offset);
@@ -71,16 +69,31 @@
 
 /* 代入 */
 :scope {
-  --sui_input-padding_block: round(
-                               down,
-                               calc(
-                                 (var(--sui_input-min_height) - 1lh) / 2
-                                 - var(--_sui_input-border_width, 0px)
-                               ),
-                               1px
-                             );
+  --sui_input-padding_block_start: round(
+                                     down,
+                                     calc(
+                                       (
+                                         var(--sui_input-min_height)
+                                         - var(--sui_input-virtual_text_height)
+                                       ) / 2
+                                       - var(--_sui_input-border_width, 0px)
+                                     ),
+                                     1px
+                                   );
+  --sui_input-padding_block_end: round(
+                                    down,
+                                    calc(
+                                      (
+                                        var(--sui_input-min_height)
+                                        - var(--sui_input-virtual_text_height)
+                                      ) / 2
+                                      - var(--_sui_input-border_width, 0px)
+                                    ),
+                                    1px
+                                  );
   --sui_input-font_family: var(--sui-font-sans);
   --sui_input-placeholder-color: var(--sui-canvas_text-2);
+  --sui_input-caret_color: var(--sui_input-color);
   --sui_input-focusring_width: var(--sui-focusring_width);
   --sui_input-outline_color: var(--sui-focusring_color);
   --sui_input-outline_offset: var(--sui-focusring_offset);
@@ -91,12 +104,17 @@
   --sui_input-border_width-hover: --sui-border_width(1);
   --sui_input-border_width-focus_visible: --sui-border_width(2);
   --sui_input-border_width-invalid: --sui-border_width(2);
+  --sui_input-virtual_text_height: calc(
+                                    var(--sui_input-font_size)
+                                    * var(--sui_input-line_height)
+                                  );
 
   &.sui_input-size_sm {
     --sui_input-min_height: var(--sui-size-sm);
     --sui_input-padding_inline: --sui-space(3);
     --sui_input-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_input-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_input-line_height: var(--sui-text-oln-sm-n-line_height);
     --sui_input-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
   }
 
@@ -105,6 +123,7 @@
     --sui_input-padding_inline: --sui-space(4);
     --sui_input-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_input-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_input-line_height: var(--sui-text-oln-md-n-line_height);
     --sui_input-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   }
 
@@ -113,6 +132,7 @@
     --sui_input-padding_inline: --sui-space(5);
     --sui_input-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_input-font_weight: var(--sui-text-oln-lg-n-font_weight);
+    --sui_input-line_height: var(--sui-text-oln-lg-n-line_height);
     --sui_input-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
   }
 
@@ -213,7 +233,7 @@
 
 /* 変異 */
 :scope {
-  &:focus-visible {
+  &:enabled:focus-visible {
     --_sui_input-outline_width: var(--sui_input-focusring_width);
   }
 
@@ -222,14 +242,14 @@
     --_sui_input-border_width: var(--sui_input-border_width-normal);
   }
 
-  &.sui_input-outlined:hover {
+  &.sui_input-outlined:enabled:hover {
     @media (any-hover: hover) {
       --_sui_input-border_color: var(--sui_input-border_color-hover);
       --_sui_input-border_width: var(--sui_input-border_width-hover);
     }
   }
 
-  &.sui_input-outlined:focus-visible {
+  &.sui_input-outlined:enabled:focus-visible {
     --_sui_input-border_color: var(--sui_input-border_color-focus_visible);
     --_sui_input-border_width: var(--sui_input-border_width-focus_visible);
   }

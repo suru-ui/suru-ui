@@ -1,6 +1,5 @@
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Resizable, ResizablePanel, ResizableHandle } from "../src/resizable/index.js";
-import * as ResizableParts from "../src/resizable/index.js";
 
 const meta = preview.meta({
   title: "Resizable",
@@ -66,23 +65,46 @@ export const Vertical = meta.story({
   },
 });
 
-export const Parts = meta.story({
-  name: "パーツ構成",
+export const WithoutGrip = meta.story({
+  name: "グリップなし",
   ...ctrl({}),
-  render() {
+  render(props) {
     return (
-      <ResizableParts.Root
+      <Resizable
+        {...props}
         style={{ height: "28rem" }}
         className="w-full max-w-5xl overflow-hidden rounded-xl border-1 border-solid border-(--sui-canvas_text-3) bg-(--sui-canvas-1) shadow-sm"
       >
-        <ResizableParts.Panel className="bg-(--sui-canvas-2) p-6" defaultSize={40}>
+        <ResizablePanel className="bg-(--sui-canvas-2) p-6" defaultSize={40}>
           左側
-        </ResizableParts.Panel>
-        <ResizableParts.Handle />
-        <ResizableParts.Panel className="bg-(--sui-canvas-1) p-6" defaultSize={60}>
+        </ResizablePanel>
+        <ResizableHandle />
+        <ResizablePanel className="bg-(--sui-canvas-1) p-6" defaultSize={60}>
           右側
-        </ResizableParts.Panel>
-      </ResizableParts.Root>
+        </ResizablePanel>
+      </Resizable>
+    );
+  },
+});
+
+export const Disabled = meta.story({
+  name: "無効",
+  ...ctrl({}),
+  render(props) {
+    return (
+      <Resizable
+        {...props}
+        style={{ height: "28rem" }}
+        className="w-full max-w-5xl overflow-hidden rounded-xl border-1 border-solid border-(--sui-canvas_text-3) bg-(--sui-canvas-1) shadow-sm"
+      >
+        <ResizablePanel className="bg-(--sui-canvas-2) p-6" defaultSize={40}>
+          左側
+        </ResizablePanel>
+        <ResizableHandle disabled withHandle />
+        <ResizablePanel className="bg-(--sui-canvas-1) p-6" defaultSize={60}>
+          右側
+        </ResizablePanel>
+      </Resizable>
     );
   },
 });

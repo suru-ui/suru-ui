@@ -183,7 +183,7 @@
 
 /* 変異 */
 :scope {
-  &:not([data-checked]) {
+  &:not(.sui_radio-checked) {
     @media (any-hover: hover) {
       &:hover {
         --_sui_radio-canvas: var(--sui_radio-canvas-subtle);
@@ -195,7 +195,7 @@
     }
   }
 
-  &[data-checked] {
+  &.sui_radio-checked {
     --_sui_radio-border_color: var(--sui_radio-border_color-checked);
     --_sui_radio-border_width: 0px;
     --_sui_radio-canvas: var(--sui_radio-canvas-checked-normal);
@@ -234,7 +234,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: currentColor;
   }
 }
 
@@ -251,6 +250,7 @@
     width: var(--sui_radio_indicator-size);
     height: var(--sui_radio_indicator-size);
     color: var(--sui_radio_indicator-color);
+    background-color: var(--sui_radio_indicator-color);
     border-radius: var(--sui_radio_indicator-border_radius);
   }
 }

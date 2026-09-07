@@ -1,6 +1,7 @@
 export * from "./radio.parts.jsx";
 
 export {
+  type RadioAPI,
   type RadioSize,
   type RadioColor,
   type RadioProps,
@@ -8,7 +9,6 @@ export {
   type RadioRadius,
   type RadioVariant,
   type RadioSlotProps,
-  type RadioPartsProps,
   Radio,
-  useRadio,
+  useRadioAPI,
 } from "./radio.jsx";

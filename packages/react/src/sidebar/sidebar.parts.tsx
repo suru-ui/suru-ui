@@ -68,20 +68,7 @@ function useSuiSidebarContext(optional?: boolean): SidebarContext | null {
  */
 export const useSidebarContext: IUseContext<SidebarContext> = useSuiSidebarContext;
 
-/**
- * {@link SidebarContext} です。
- */
-export type Context = SidebarContext;
-
-/**
- * {@link SidebarContext} です。
- */
-export const Context: React.Context<Context | null> = SidebarContext;
-
-/**
- * {@link useSidebarContext} です。
- */
-export const useContext: IUseContext<Context> = useSidebarContext;
+export { SidebarContext as Context, useSidebarContext as useContext };
 
 // Provider
 // --------
@@ -127,7 +114,14 @@ export type SidebarProviderProps = Omit<React.ComponentProps<"div">, keyof Rende
 export const SidebarProvider: IComponent<SidebarProviderProps> = function SuiSidebarProvider(
   props,
 ) {
-  const { ref, defaultOpen = true, open: openProp, onOpenChange, className, ...otherProps } = props;
+  const {
+    ref,
+    defaultOpen = true,
+    open: openProp,
+    onOpenChange,
+    className,
+    ...otherDivProps
+  } = props;
   const [openState, setOpenState] = React.useState(defaultOpen);
   const open = openProp ?? openState;
   const setOpen = React.useCallback(
@@ -156,36 +150,31 @@ export const SidebarProvider: IComponent<SidebarProviderProps> = function SuiSid
     defaultTagName: "div",
     ref,
     state: renderState,
-    props: {
-      ...otherProps,
-      className: cn(className, "sui_sidebar_provider"),
-      "data-open": open,
-      "data-state": openStateValue,
-    },
+    props: [
+      otherDivProps,
+      {
+        className: cn(className, "sui_sidebar_provider"),
+        "data-open": open,
+        "data-state": openStateValue,
+      },
+    ],
   });
 
-  return <Context value={context}>{element}</Context>;
+  return <SidebarContext value={context}>{element}</SidebarContext>;
 };
 
-/**
- * {@link SidebarProvider} の状態やプロパティーをまとめた型名前空間です。
- */
+export { SidebarProvider as Provider };
 export namespace Provider {
   /**
-   * {@link SidebarProviderState} です。
+   * {@link SidebarProviderState}
    */
   export type State = SidebarProviderState;
 
   /**
-   * {@link SidebarProviderProps} です。
+   * {@link SidebarProviderProps}
    */
   export type Props = SidebarProviderProps;
 }
-
-/**
- * {@link SidebarProvider} です。
- */
-export const Provider: IComponent<Provider.Props> = SidebarProvider;
 
 // Root
 // ----
@@ -280,16 +269,16 @@ export type SidebarRootProps = Omit<React.ComponentProps<"aside">, keyof RenderP
  * {@link SidebarGroup}、{@link SidebarRail} を配置します。
  */
 export const SidebarRoot: IComponent<SidebarRootProps> = function SuiSidebarRoot(props) {
-  const group = useSuiSidebarContext(true);
+  const ctx = useSuiSidebarContext(true);
   const {
     ref,
     side = "left",
     variant = "sidebar",
     collapsible = "offcanvas",
     className,
-    ...otherProps
+    ...otherAsideProps
   } = props;
-  const open = group?.open ?? true;
+  const open = ctx?.open ?? true;
   const state: SidebarOpenState = open ? "expanded" : "collapsed";
   const renderState = React.useMemo<SidebarRootState>(
     () => ({ collapsible, open, side, state, variant }),
@@ -300,58 +289,53 @@ export const SidebarRoot: IComponent<SidebarRootProps> = function SuiSidebarRoot
     defaultTagName: "aside",
     ref,
     state: renderState,
-    props: {
-      ...otherProps,
-      className: cn(
-        className,
-        "sui_sidebar",
-        `sui_sidebar-side_${side}`,
-        `sui_sidebar-variant_${variant}`,
-        `sui_sidebar-collapsible_${collapsible}`,
-      ),
-      "data-collapsible": collapsible,
-      "data-open": open,
-      "data-side": side,
-      "data-state": state,
-      "data-variant": variant,
-    },
+    props: [
+      otherAsideProps,
+      {
+        className: cn(
+          className,
+          "sui_sidebar",
+          `sui_sidebar-side_${side}`,
+          `sui_sidebar-variant_${variant}`,
+          `sui_sidebar-collapsible_${collapsible}`,
+        ),
+        "data-collapsible": collapsible,
+        "data-open": open,
+        "data-side": side,
+        "data-state": state,
+        "data-variant": variant,
+      },
+    ],
   });
 };
 
-/**
- * {@link SidebarRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { SidebarRoot as Root };
 export namespace Root {
   /**
-   * {@link SidebarRootState} です。
+   * {@link SidebarRootState}
    */
   export type State = SidebarRootState;
 
   /**
-   * {@link SidebarRootProps} です。
+   * {@link SidebarRootProps}
    */
   export type Props = SidebarRootProps;
 
   /**
-   * {@link SidebarRootCollapsible} です。
+   * {@link SidebarRootCollapsible}
    */
   export type Collapsible = SidebarRootCollapsible;
 
   /**
-   * {@link SidebarRootSide} です。
+   * {@link SidebarRootSide}
    */
   export type Side = SidebarRootSide;
 
   /**
-   * {@link SidebarRootVariant} です。
+   * {@link SidebarRootVariant}
    */
   export type Variant = SidebarRootVariant;
 }
-
-/**
- * {@link SidebarRoot} です。
- */
-export const Root: IComponent<Root.Props> = SidebarRoot;
 
 // Header
 // ------
@@ -384,25 +368,18 @@ export const SidebarHeader: IComponent<SidebarHeaderProps> = function SuiSidebar
   });
 };
 
-/**
- * {@link SidebarHeader} の状態やプロパティーをまとめた型名前空間です。
- */
+export { SidebarHeader as Header };
 export namespace Header {
   /**
-   * {@link SidebarHeaderState} です。
+   * {@link SidebarHeaderState}
    */
   export type State = SidebarHeaderState;
 
   /**
-   * {@link SidebarHeaderProps} です。
+   * {@link SidebarHeaderProps}
    */
   export type Props = SidebarHeaderProps;
 }
-
-/**
- * {@link SidebarHeader} です。
- */
-export const Header: IComponent<Header.Props> = SidebarHeader;
 
 // Content
 // -------
@@ -435,25 +412,18 @@ export const SidebarContent: IComponent<SidebarContentProps> = function SuiSideb
   });
 };
 
-/**
- * {@link SidebarContent} の状態やプロパティーをまとめた型名前空間です。
- */
+export { SidebarContent as Content };
 export namespace Content {
   /**
-   * {@link SidebarContentState} です。
+   * {@link SidebarContentState}
    */
   export type State = SidebarContentState;
 
   /**
-   * {@link SidebarContentProps} です。
+   * {@link SidebarContentProps}
    */
   export type Props = SidebarContentProps;
 }
-
-/**
- * {@link SidebarContent} です。
- */
-export const Content: IComponent<Content.Props> = SidebarContent;
 
 // Footer
 // ------
@@ -486,25 +456,18 @@ export const SidebarFooter: IComponent<SidebarFooterProps> = function SuiSidebar
   });
 };
 
-/**
- * {@link SidebarFooter} の状態やプロパティーをまとめた型名前空間です。
- */
+export { SidebarFooter as Footer };
 export namespace Footer {
   /**
-   * {@link SidebarFooterState} です。
+   * {@link SidebarFooterState}
    */
   export type State = SidebarFooterState;
 
   /**
-   * {@link SidebarFooterProps} です。
+   * {@link SidebarFooterProps}
    */
   export type Props = SidebarFooterProps;
 }
-
-/**
- * {@link SidebarFooter} です。
- */
-export const Footer: IComponent<Footer.Props> = SidebarFooter;
 
 // Group
 // -----
@@ -537,25 +500,18 @@ export const SidebarGroup: IComponent<SidebarGroupProps> = function SuiSidebarGr
   });
 };
 
-/**
- * {@link SidebarGroup} の状態やプロパティーをまとめた型名前空間です。
- */
+export { SidebarGroup as Group };
 export namespace Group {
   /**
-   * {@link SidebarGroupState} です。
+   * {@link SidebarGroupState}
    */
   export type State = SidebarGroupState;
 
   /**
-   * {@link SidebarGroupProps} です。
+   * {@link SidebarGroupProps}
    */
   export type Props = SidebarGroupProps;
 }
-
-/**
- * {@link SidebarGroup} です。
- */
-export const Group: IComponent<Group.Props> = SidebarGroup;
 
 // GroupLabel
 // ----------
@@ -588,25 +544,18 @@ export const SidebarGroupLabel: IComponent<SidebarGroupLabelProps> = function Su
   });
 };
 
-/**
- * {@link SidebarGroupLabel} の状態やプロパティーをまとめた型名前空間です。
- */
+export { SidebarGroupLabel as GroupLabel };
 export namespace GroupLabel {
   /**
-   * {@link SidebarGroupLabelState} です。
+   * {@link SidebarGroupLabelState}
    */
   export type State = SidebarGroupLabelState;
 
   /**
-   * {@link SidebarGroupLabelProps} です。
+   * {@link SidebarGroupLabelProps}
    */
   export type Props = SidebarGroupLabelProps;
 }
-
-/**
- * {@link SidebarGroupLabel} です。
- */
-export const GroupLabel: IComponent<GroupLabel.Props> = SidebarGroupLabel;
 
 // GroupContent
 // ------------
@@ -640,25 +589,18 @@ export const SidebarGroupContent: IComponent<SidebarGroupContentProps> =
     });
   };
 
-/**
- * {@link SidebarGroupContent} の状態やプロパティーをまとめた型名前空間です。
- */
+export { SidebarGroupContent as GroupContent };
 export namespace GroupContent {
   /**
-   * {@link SidebarGroupContentState} です。
+   * {@link SidebarGroupContentState}
    */
   export type State = SidebarGroupContentState;
 
   /**
-   * {@link SidebarGroupContentProps} です。
+   * {@link SidebarGroupContentProps}
    */
   export type Props = SidebarGroupContentProps;
 }
-
-/**
- * {@link SidebarGroupContent} です。
- */
-export const GroupContent: IComponent<GroupContent.Props> = SidebarGroupContent;
 
 // Inset
 // -----
@@ -691,25 +633,18 @@ export const SidebarInset: IComponent<SidebarInsetProps> = function SuiSidebarIn
   });
 };
 
-/**
- * {@link SidebarInset} の状態やプロパティーをまとめた型名前空間です。
- */
+export { SidebarInset as Inset };
 export namespace Inset {
   /**
-   * {@link SidebarInsetState} です。
+   * {@link SidebarInsetState}
    */
   export type State = SidebarInsetState;
 
   /**
-   * {@link SidebarInsetProps} です。
+   * {@link SidebarInsetProps}
    */
   export type Props = SidebarInsetProps;
 }
-
-/**
- * {@link SidebarInset} です。
- */
-export const Inset: IComponent<Inset.Props> = SidebarInset;
 
 // Rail
 // ----
@@ -736,15 +671,15 @@ export type SidebarRailProps = Omit<React.ComponentProps<"button">, keyof Render
  * {@link SidebarRoot} の内側に配置します。折りたたみ不可のサイドバーでは表示されません。
  */
 export const SidebarRail: IComponent<SidebarRailProps> = function SuiSidebarRail(props) {
-  const { state: openState, toggle } = useSuiSidebarContext();
-  const { ref, onClick, children, className, ...otherProps } = props;
+  const ctx = useSuiSidebarContext();
+  const { ref, onClick, children, className, ...otherButtonProps } = props;
   const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
     if (!event.defaultPrevented) {
-      toggle();
+      ctx.toggle();
     }
   };
-  const renderState = React.useMemo<SidebarRailState>(() => ({ state: openState }), [openState]);
+  const renderState = React.useMemo<SidebarRailState>(() => ({ state: ctx.state }), [ctx.state]);
 
   return useRender({
     defaultTagName: "button",
@@ -757,31 +692,24 @@ export const SidebarRail: IComponent<SidebarRailProps> = function SuiSidebarRail
         onClick: handleOnClick,
         className: cn(className, "sui_sidebar_rail"),
       },
-      otherProps,
+      otherButtonProps,
       { children },
     ],
   });
 };
 
-/**
- * {@link SidebarRail} の状態やプロパティーをまとめた型名前空間です。
- */
+export { SidebarRail as Rail };
 export namespace Rail {
   /**
-   * {@link SidebarRailState} です。
+   * {@link SidebarRailState}
    */
   export type State = SidebarRailState;
 
   /**
-   * {@link SidebarRailProps} です。
+   * {@link SidebarRailProps}
    */
   export type Props = SidebarRailProps;
 }
-
-/**
- * {@link SidebarRail} です。
- */
-export const Rail: IComponent<Rail.Props> = SidebarRail;
 
 // Trigger
 // -------
@@ -808,15 +736,15 @@ export type SidebarTriggerProps = Omit<React.ComponentProps<"button">, keyof Ren
  * 子要素を省略すると既定のアイコンが表示されます。
  */
 export const SidebarTrigger: IComponent<SidebarTriggerProps> = function SuiSidebarTrigger(props) {
-  const { open, state: openState, toggle } = useSuiSidebarContext();
-  const { ref, onClick, children, className, ...otherProps } = props;
+  const ctx = useSuiSidebarContext();
+  const { ref, onClick, children, className, ...otherButtonProps } = props;
   const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
     if (!event.defaultPrevented) {
-      toggle();
+      ctx.toggle();
     }
   };
-  const renderState = React.useMemo<SidebarTriggerState>(() => ({ state: openState }), [openState]);
+  const renderState = React.useMemo<SidebarTriggerState>(() => ({ state: ctx.state }), [ctx.state]);
 
   return useRender({
     defaultTagName: "button",
@@ -826,35 +754,28 @@ export const SidebarTrigger: IComponent<SidebarTriggerProps> = function SuiSideb
       {
         type: "button",
         ...(children === undefined ? { "aria-label": "サイドバーを切り替える" } : {}),
-        "aria-expanded": open,
+        "aria-expanded": ctx.open,
         onClick: handleOnClick,
         className: cn(className, "sui_sidebar_trigger"),
       },
-      otherProps,
+      otherButtonProps,
       { children: children ?? <DefaultTriggerIcon /> },
     ],
   });
 };
 
-/**
- * {@link SidebarTrigger} の状態やプロパティーをまとめた型名前空間です。
- */
+export { SidebarTrigger as Trigger };
 export namespace Trigger {
   /**
-   * {@link SidebarTriggerState} です。
+   * {@link SidebarTriggerState}
    */
   export type State = SidebarTriggerState;
 
   /**
-   * {@link SidebarTriggerProps} です。
+   * {@link SidebarTriggerProps}
    */
   export type Props = SidebarTriggerProps;
 }
-
-/**
- * {@link SidebarTrigger} です。
- */
-export const Trigger: IComponent<Trigger.Props> = SidebarTrigger;
 
 function DefaultTriggerIcon() {
   return (
@@ -863,6 +784,7 @@ function DefaultTriggerIcon() {
       stroke="currentColor"
       viewBox="0 0 24 24"
       className="sui_sidebar_trigger_icon"
+      focusable="false"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"

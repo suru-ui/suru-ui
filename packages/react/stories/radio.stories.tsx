@@ -253,3 +253,29 @@ export const Disabled = meta.story({
     );
   },
 });
+
+export const GroupDisabled = meta.story({
+  name: "グループ無効",
+  ...ctrl({
+    variant: "naked",
+    color: "grey",
+    size: "md",
+    radius: "full",
+    outlined: undefined,
+    value: "",
+  }),
+  render(props) {
+    return (
+      <RadioGroup disabled className="flex flex-col gap-3" defaultValue="option-a">
+        <label className="flex items-center gap-2">
+          <Radio {...props} value="option-a" />
+          選択肢 A
+        </label>
+        <label className="flex items-center gap-2">
+          <Radio {...props} value="option-b" />
+          選択肢 B
+        </label>
+      </RadioGroup>
+    );
+  },
+});

@@ -51,15 +51,15 @@ export const PasswordFieldContext: React.Context<PasswordFieldContext | null> =
 function useSuiPasswordFieldContext(optional?: false): PasswordFieldContext;
 function useSuiPasswordFieldContext(optional?: boolean): PasswordFieldContext | null;
 function useSuiPasswordFieldContext(optional?: boolean): PasswordFieldContext | null {
-  const context = React.use(PasswordFieldContext);
-  if (context === null && !optional) {
+  const ctx = React.use(PasswordFieldContext);
+  if (ctx === null && !optional) {
     throw new ContextMissingError({
       contextName: "PasswordFieldContext",
       providerName: "PasswordFieldRoot",
     });
   }
 
-  return context;
+  return ctx;
 }
 
 /**
@@ -68,20 +68,7 @@ function useSuiPasswordFieldContext(optional?: boolean): PasswordFieldContext | 
 export const usePasswordFieldContext: IUseContext<PasswordFieldContext> =
   useSuiPasswordFieldContext;
 
-/**
- * {@link PasswordFieldContext} です。
- */
-export type Context = PasswordFieldContext;
-
-/**
- * {@link PasswordFieldContext} です。
- */
-export const Context: React.Context<Context | null> = PasswordFieldContext;
-
-/**
- * {@link usePasswordFieldContext} です。
- */
-export const useContext: IUseContext<Context> = usePasswordFieldContext;
+export { PasswordFieldContext as Context, usePasswordFieldContext as useContext };
 
 // Root
 // ----
@@ -159,10 +146,10 @@ export const PasswordFieldRoot: IComponent<PasswordFieldRootProps> = function Su
   props,
 ) {
   const {
-    className,
     visible: visibleProp,
     defaultVisible = false,
     onVisibleChange,
+    className,
     ...otherProps
   } = props;
   const [visible, setVisible] = useControlled<boolean>({
@@ -171,7 +158,7 @@ export const PasswordFieldRoot: IComponent<PasswordFieldRootProps> = function Su
     name: "PasswordField",
     state: "visible",
   });
-  const context = React.useMemo<PasswordFieldContext>(
+  const ctx = React.useMemo<PasswordFieldContext>(
     () => ({
       visible,
       setVisible(value) {
@@ -187,51 +174,49 @@ export const PasswordFieldRoot: IComponent<PasswordFieldRootProps> = function Su
   );
 
   return (
-    <Context value={context}>
-      <TextFieldRoot {...otherProps} className={cn(className, "sui_password_field")} />
-    </Context>
+    <PasswordFieldContext value={ctx}>
+      <TextFieldRoot
+        {...otherProps}
+        className={cn(className, "sui_password_field")}
+        data-scope=""
+      />
+    </PasswordFieldContext>
   );
 };
 
-/**
- * {@link PasswordFieldRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { PasswordFieldRoot as Root };
+
 export namespace Root {
   /**
-   * {@link PasswordFieldRootState} です。
+   * {@link PasswordFieldRootState}
    */
   export type State = PasswordFieldRootState;
 
   /**
-   * {@link PasswordFieldRootProps} です。
+   * {@link PasswordFieldRootProps}
    */
   export type Props = PasswordFieldRootProps;
 
   /**
-   * {@link PasswordFieldRootColor} です。
+   * {@link PasswordFieldRootColor}
    */
   export type Color = PasswordFieldRootColor;
 
   /**
-   * {@link PasswordFieldRootRadius} です。
+   * {@link PasswordFieldRootRadius}
    */
   export type Radius = PasswordFieldRootRadius;
 
   /**
-   * {@link PasswordFieldRootSize} です。
+   * {@link PasswordFieldRootSize}
    */
   export type Size = PasswordFieldRootSize;
 
   /**
-   * {@link PasswordFieldRootVariant} です。
+   * {@link PasswordFieldRootVariant}
    */
   export type Variant = PasswordFieldRootVariant;
 }
-
-/**
- * {@link PasswordFieldRoot} です。
- */
-export const Root: IComponent<Root.Props> = PasswordFieldRoot;
 
 // Input
 // -----
@@ -255,31 +240,25 @@ export type PasswordFieldInputProps = Omit<TextFieldInputProps, "type">;
  */
 export const PasswordFieldInput: IComponent<PasswordFieldInputProps> =
   function SuiPasswordFieldInput(props) {
-    const context = useSuiPasswordFieldContext();
+    const ctx = usePasswordFieldContext();
 
     // 表示状態は必ずコンテキストから決まるため、利用者の指定より優先します。
-    return <TextFieldInput {...props} type={context.visible ? "text" : "password"} />;
+    return <TextFieldInput {...props} type={ctx.visible ? "text" : "password"} />;
   };
 
-/**
- * {@link PasswordFieldInput} の状態やプロパティーをまとめた型名前空間です。
- */
+export { PasswordFieldInput as Input };
+
 export namespace Input {
   /**
-   * {@link PasswordFieldInputState} です。
+   * {@link PasswordFieldInputState}
    */
   export type State = PasswordFieldInputState;
 
   /**
-   * {@link PasswordFieldInputProps} です。
+   * {@link PasswordFieldInputProps}
    */
   export type Props = PasswordFieldInputProps;
 }
-
-/**
- * {@link PasswordFieldInput} です。
- */
-export const Input: IComponent<Input.Props> = PasswordFieldInput;
 
 // Addon
 // -----
@@ -306,25 +285,19 @@ export const PasswordFieldAddon: IComponent<PasswordFieldAddonProps> =
     return <TextFieldAddon {...otherProps} className={cn(className, "sui_password_field_addon")} />;
   };
 
-/**
- * {@link PasswordFieldAddon} の状態やプロパティーをまとめた型名前空間です。
- */
+export { PasswordFieldAddon as Addon };
+
 export namespace Addon {
   /**
-   * {@link PasswordFieldAddonState} です。
+   * {@link PasswordFieldAddonState}
    */
   export type State = PasswordFieldAddonState;
 
   /**
-   * {@link PasswordFieldAddonProps} です。
+   * {@link PasswordFieldAddonProps}
    */
   export type Props = PasswordFieldAddonProps;
 }
-
-/**
- * {@link PasswordFieldAddon} です。
- */
-export const Addon: IComponent<Addon.Props> = PasswordFieldAddon;
 
 // ToggleButton
 // ------------
@@ -339,7 +312,7 @@ export type PasswordFieldToggleButtonState = {};
  */
 export type PasswordFieldToggleButtonProps = Omit<
   React.ComponentProps<"button">,
-  keyof RenderProps<PasswordFieldToggleButtonState>
+  keyof RenderProps<PasswordFieldToggleButtonState> | "onClick" | "type"
 > &
   RenderProps<PasswordFieldToggleButtonState>;
 
@@ -350,31 +323,30 @@ export type PasswordFieldToggleButtonProps = Omit<
  */
 export const PasswordFieldToggleButton: IComponent<PasswordFieldToggleButtonProps> =
   function SuiPasswordFieldToggleButton(props) {
-    const context = useSuiPasswordFieldContext();
-    const { visible } = context;
+    const ctx = usePasswordFieldContext();
+    const { visible, setVisible } = ctx;
     const {
-      type = "button",
+      children = visible ? <SuiEyeOffIcon /> : <SuiEyeIcon />,
       disabled = false,
-      className,
       "aria-label": ariaLabel,
-      ...otherProps
+      ...otherButtonProps
     } = props;
     const label = ariaLabel ?? (visible ? "パスワードを隠す" : "パスワードを表示");
 
     return useRender({
       defaultTagName: "button",
       props: [
-        otherProps,
+        otherButtonProps,
         {
-          children: visible ? <SuiEyeOffIcon /> : <SuiEyeIcon />,
+          children,
           disabled,
-          type,
+          type: "button",
           "aria-label": label,
           "aria-pressed": visible,
-        },
-        {
+          onClick() {
+            setVisible(!visible);
+          },
           className: cn(
-            className,
             "sui_password_field_toggle",
             visible && "sui_password_field_toggle-visible",
           ),
@@ -383,33 +355,25 @@ export const PasswordFieldToggleButton: IComponent<PasswordFieldToggleButtonProp
     });
   };
 
-/**
- * {@link PasswordFieldToggleButton} の状態やプロパティーをまとめた型名前空間です。
- */
+export { PasswordFieldToggleButton as ToggleButton };
+
 export namespace ToggleButton {
   /**
-   * {@link PasswordFieldToggleButtonState} です。
+   * {@link PasswordFieldToggleButtonState}
    */
   export type State = PasswordFieldToggleButtonState;
 
   /**
-   * {@link PasswordFieldToggleButtonProps} です。
+   * {@link PasswordFieldToggleButtonProps}
    */
   export type Props = PasswordFieldToggleButtonProps;
 }
 
-/**
- * {@link PasswordFieldToggleButton} です。
- */
-export const ToggleButton: IComponent<ToggleButton.Props> = PasswordFieldToggleButton;
-
-function SuiEyeIcon(props: React.ComponentProps<"svg">) {
+const SuiEyeIcon: IComponent = function SuiEyeIcon() {
   return (
     <svg
       fill="none"
-      width={24}
       xmlns="http://www.w3.org/2000/svg"
-      height={24}
       stroke="currentColor"
       viewBox="0 0 24 24"
       focusable="false"
@@ -417,21 +381,18 @@ function SuiEyeIcon(props: React.ComponentProps<"svg">) {
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
-      {...props}
     >
       <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
       <circle r="3" cx="12" cy="12" />
     </svg>
   );
-}
+};
 
-function SuiEyeOffIcon(props: React.ComponentProps<"svg">) {
+const SuiEyeOffIcon: IComponent = function SuiEyeOffIcon() {
   return (
     <svg
       fill="none"
-      width={24}
       xmlns="http://www.w3.org/2000/svg"
-      height={24}
       stroke="currentColor"
       viewBox="0 0 24 24"
       focusable="false"
@@ -439,7 +400,6 @@ function SuiEyeOffIcon(props: React.ComponentProps<"svg">) {
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
-      {...props}
     >
       <path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49" />
       <path d="M14.084 14.158a3 3 0 0 1-4.242-4.242" />
@@ -447,4 +407,4 @@ function SuiEyeOffIcon(props: React.ComponentProps<"svg">) {
       <path d="m2 2 20 20" />
     </svg>
   );
-}
+};

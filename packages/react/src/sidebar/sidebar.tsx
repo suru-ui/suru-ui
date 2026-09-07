@@ -136,7 +136,7 @@ interface SidebarType extends IComponent<SidebarProps> {
   readonly Trigger: IComponent<SidebarTriggerProps>;
 
   /**
-   * {@link useSidebarContext} です。
+   * {@link useSidebarContext}
    */
   readonly useContext: IUseContext<SidebarContext>;
 }
@@ -166,37 +166,37 @@ export const Sidebar: SidebarType = /*#__PURE__*/ Object.assign(
  */
 export namespace Sidebar {
   /**
-   * {@link SidebarState} です。
+   * {@link SidebarState}
    */
   export type State = SidebarState;
 
   /**
-   * {@link SidebarProps} です。
+   * {@link SidebarProps}
    */
   export type Props = SidebarProps;
 
   /**
-   * {@link SidebarContext} です。
+   * {@link SidebarContext}
    */
   export type Context = SidebarContext;
 
   /**
-   * {@link SidebarCollapsible} です。
+   * {@link SidebarCollapsible}
    */
   export type Collapsible = SidebarCollapsible;
 
   /**
-   * {@link SidebarOpenState} です。
+   * {@link SidebarOpenState}
    */
   export type OpenState = SidebarOpenState;
 
   /**
-   * {@link SidebarSide} です。
+   * {@link SidebarSide}
    */
   export type Side = SidebarSide;
 
   /**
-   * {@link SidebarVariant} です。
+   * {@link SidebarVariant}
    */
   export type Variant = SidebarVariant;
 

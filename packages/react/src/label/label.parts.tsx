@@ -13,19 +13,19 @@ import "./label.css";
 /**
  * ラベルの大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type LabelRootSize = Size;
 
 /**
- * {@link LabelRoot} の状態です。
+ * {@link LabelRoot} が持つ状態です。
  */
 export type LabelRootState = {};
 
 /**
- * {@link LabelRoot} に渡すプロパティーです。
+ * {@link LabelRoot} に渡す props です。
  */
 export type LabelRootProps = Omit<React.ComponentProps<"label">, keyof RenderProps> &
   RenderProps<LabelRootState> & {
@@ -41,40 +41,35 @@ export type LabelRootProps = Omit<React.ComponentProps<"label">, keyof RenderPro
  * ラベルのルートコンポーネントです。
  */
 export const LabelRoot: IComponent<LabelRootProps> = function SuiLabelRoot(props) {
-  const { size = "md", ...otherProps } = props;
+  const { size = "md", className, ...otherLabelProps } = props;
 
   return useRender({
     defaultTagName: "label",
     props: [
-      otherProps,
+      otherLabelProps,
       {
-        className: cn("sui_label", `sui_label-size_${size}`),
+        className: cn(className, "sui_label", `sui_label-size_${size}`),
+        "data-scope": "",
       },
     ],
   });
 };
 
-/**
- * {@link LabelRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { LabelRoot as Root };
+
 export namespace Root {
   /**
-   * {@link LabelRootState} です。
+   * {@link LabelRootState}
    */
   export type State = LabelRootState;
 
   /**
-   * {@link LabelRootProps} です。
+   * {@link LabelRootProps}
    */
   export type Props = LabelRootProps;
 
   /**
-   * {@link LabelRootSize} です。
+   * {@link LabelRootSize}
    */
   export type Size = LabelRootSize;
 }
-
-/**
- * {@link LabelRoot} です。
- */
-export const Root: IComponent<Root.Props> = LabelRoot;

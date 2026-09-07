@@ -53,7 +53,9 @@ export type ToggleButtonSlotProps = {
   /**
    * {@link ToggleButtonCircularProgress} に渡す props です。
    */
-  readonly circularProgress?: Omit<ToggleButtonCircularProgressProps, "children"> | undefined;
+  readonly circularProgress?:
+    | Omit<ToggleButtonCircularProgressProps, "children" | "percentage" | "indeterminate">
+    | undefined;
 
   /**
    * {@link ToggleButtonCircularProgressFill} に渡す props です。
@@ -70,7 +72,9 @@ export type ToggleButtonSlotProps = {
   /**
    * {@link ToggleButtonCircularProgressTrack} に渡す props です。
    */
-  readonly circularProgressTrack?: ToggleButtonCircularProgressTrackProps | undefined;
+  readonly circularProgressTrack?:
+    | Omit<ToggleButtonCircularProgressTrackProps, "children">
+    | undefined;
 
   /**
    * {@link ToggleButtonContent} に渡す props です。
@@ -106,7 +110,7 @@ export type ToggleButtonProps = Omit<ToggleButtonRootProps, "children"> &
 // ---
 
 /**
- * {@link ToggleButton} を構成する各パーツの props を作成するための API です。
+ * {@link ToggleButton} を構成する各パーツの props などを作成するための API です。
  */
 export interface ToggleButtonAPI {
   /**
@@ -127,7 +131,7 @@ export interface ToggleButtonAPI {
   /**
    * {@link ToggleButtonCircularProgressTrack} に渡す props を取得します。
    */
-  getCircularProgressTrackProps(): ToggleButtonCircularProgressTrackProps;
+  getCircularProgressTrackProps(): Omit<ToggleButtonCircularProgressTrackProps, "children">;
 
   /**
    * {@link ToggleButtonContent} に渡す props を取得します。
@@ -145,7 +149,7 @@ export interface ToggleButtonAPI {
   getRootProps(): Omit<ToggleButtonRootProps, "children">;
 }
 
-interface IUseAPI {
+interface IUseToggleButtonAPI {
   /**
    * {@link ToggleButtonAPI} を作成します。
    *
@@ -158,13 +162,13 @@ interface IUseAPI {
 /**
  * {@link ToggleButtonAPI} を作成するフックです。
  */
-export const useToggleButtonAPI: IUseAPI = function useSuiToggleButtonAPI(props) {
+export const useToggleButtonAPI: IUseToggleButtonAPI = function useSuiToggleButtonAPI(props) {
   const {
     children,
     slotProps: {
-      content: contentProps,
+      content: contentProps = {},
       pending: { overlay = true, ...otherPendingProps } = {},
-      circularProgress: circularProgressProps,
+      circularProgress: circularProgressProps = {},
       circularProgressFill: circularProgressFillProps = {},
       circularProgressTrack: circularProgressTrackProps = {},
       circularProgressFillRotation: circularProgressFillRotationProps = {},
