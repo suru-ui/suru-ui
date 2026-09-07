@@ -26,6 +26,18 @@ export {
   useAccordionAPI,
 } from "./accordion/index.js";
 export {
+  type ActionGroupSize,
+  type ActionGroupColor,
+  type ActionGroupProps,
+  type ActionGroupState,
+  type ActionGroupRadius,
+  type ActionGroupVariant,
+  type ActionGroupOrientation,
+  ActionGroup,
+  ActionGroupContext,
+  useActionGroupContext,
+} from "./action-group/index.js";
+export {
   type AlertAPI,
   type AlertSize,
   type AlertColor,
@@ -274,6 +286,7 @@ export {
 } from "./field/index.js";
 export {
   type FileUploadAPI,
+  type FileUploadSize,
   type FileUploadColor,
   type FileUploadProps,
   type FileUploadState,
