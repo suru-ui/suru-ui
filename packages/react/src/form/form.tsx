@@ -45,6 +45,8 @@ export type FormState = FormRootState;
 
 /**
  * {@link Form} に渡す props です。
+ *
+ * @template TValues フォームの入力値を表す型です。
  */
 export type FormProps<TValues extends FormValues = FormValues> = FormRootProps<TValues>;
 
@@ -65,6 +67,7 @@ interface IUseFormAPI {
   /**
    * {@link FormAPI} を作成します。
    *
+   * @template TValues フォームの入力値を表す型です。
    * @param props {@link Form} の props です。
    * @returns フォームの API です
    */

@@ -193,6 +193,26 @@
     --sui_badge-border_width: --sui-border_width(1);
   }
 
+  &.sui_badge-radius_none {
+    --sui_badge-border_radius: 0px;
+  }
+
+  &.sui_badge-radius_sm {
+    --sui_badge-border_radius: var(--sui-radius-sm);
+  }
+
+  &.sui_badge-radius_md {
+    --sui_badge-border_radius: var(--sui-radius-md);
+  }
+
+  &.sui_badge-radius_lg {
+    --sui_badge-border_radius: var(--sui-radius-lg);
+  }
+
+  &.sui_badge-radius_full {
+    --sui_badge-border_radius: calc(var(--sui_badge-min_size) / 2);
+  }
+
   &.sui_badge-variant_standard {
     &.sui_badge-size_sm {
       --sui_badge-min_size: var(--sui-size-sm);
@@ -224,26 +244,6 @@
     &.sui_badge-size_lg {
       --sui_badge-min_size: calc(var(--sui-size-lg) / 2);
     }
-  }
-
-  &.sui_badge-radius_none {
-    --sui_badge-border_radius: 0px;
-  }
-
-  &.sui_badge-radius_sm {
-    --sui_badge-border_radius: var(--sui-radius-sm);
-  }
-
-  &.sui_badge-radius_md {
-    --sui_badge-border_radius: var(--sui-radius-md);
-  }
-
-  &.sui_badge-radius_lg {
-    --sui_badge-border_radius: var(--sui-radius-lg);
-  }
-
-  &.sui_badge-radius_full {
-    --sui_badge-border_radius: calc(var(--sui_badge-min_size) / 2);
   }
 
   &.sui_badge-color_grey {

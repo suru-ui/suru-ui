@@ -35,6 +35,7 @@ import {
   type MenuPositionerProps,
   type MenuRadioGroupProps,
   type MenuRootGroupObject,
+  type MenuRootOrientation,
   type MenuSubmenuRootProps,
   type MenuCheckboxItemProps,
   type IMenuPopupItemRenderer,
@@ -126,6 +127,11 @@ export type MenuRadioItemObject = MenuRootRadioItemObject;
  * {@link MenuRootSeparatorObject}
  */
 export type MenuSeparatorObject = MenuRootSeparatorObject;
+
+/**
+ * {@link MenuRootOrientation}
+ */
+export type MenuOrientation = MenuRootOrientation;
 
 /**
  * {@link IMenuPopupItemRenderer}
@@ -543,6 +549,11 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
         children: toReactNode(label),
       };
     },
+    getSeparatorProps(item) {
+      const { type: _, ...otherProps } = item;
+
+      return mergePropsN([separatorProps, otherProps]);
+    },
     getGroupLabelProps(item) {
       if (!isLikelyVisibleNode(item.label)) {
         return null;
@@ -572,11 +583,6 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
       const { items: _, type: __, ...otherGroupProps } = item;
 
       return mergePropsN([radioGroupProps, otherGroupProps]);
-    },
-    getSeparatorProps(item) {
-      const { type: _, ...otherProps } = item;
-
-      return mergePropsN([separatorProps, otherProps]);
     },
     getSubmenuRootProps() {
       return submenuRootProps;
@@ -798,6 +804,11 @@ export namespace Menu {
    * {@link MenuLinkItemObject}
    */
   export type LinkItemObject = MenuLinkItemObject;
+
+  /**
+   * {@link MenuOrientation}
+   */
+  export type Orientation = MenuOrientation;
 
   /**
    * {@link MenuRadioGroupObject}

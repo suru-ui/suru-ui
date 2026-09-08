@@ -75,9 +75,9 @@ export type BreadcrumbSlotProps = {
   /**
    * {@link BreadcrumbSeparator} に渡す props です。
    *
-   * すべてのセパレーターに同じ props が渡されます。`children` と `aria-hidden` は上書きされません。
+   * すべてのセパレーターに同じ props が渡されます。`aria-hidden` は上書きされません。
    */
-  readonly separator?: Omit<BreadcrumbSeparatorProps, "aria-hidden" | "children"> | undefined;
+  readonly separator?: Omit<BreadcrumbSeparatorProps, "aria-hidden"> | undefined;
 };
 
 /**
@@ -140,7 +140,7 @@ export interface BreadcrumbAPI {
   /**
    * {@link BreadcrumbSeparator} に渡す props を取得します。
    */
-  getSeparatorProps(): Omit<BreadcrumbSeparatorProps, "children">;
+  getSeparatorProps(): Omit<BreadcrumbSeparatorProps, "aria-hidden">;
 }
 
 interface IUseBreadcrumbAPI {

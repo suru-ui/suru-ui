@@ -569,7 +569,7 @@
 :scope {
   &.sui_accordion-disabled {
     cursor: not-allowed;
-    
+
     &.sui_accordion-outlined {
       border: var(--sui-disabled-naked-border) solid var(--sui-disabled-border_width);
     }

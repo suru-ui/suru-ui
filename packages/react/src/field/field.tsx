@@ -12,6 +12,7 @@ import {
   type FieldControlProps,
   type FieldValidityProps,
   type FieldDescriptionProps,
+  type FieldRootValidityData,
   FieldItem,
   FieldRoot,
   FieldError,
@@ -47,6 +48,11 @@ export type FieldErrorMatches =
   | FieldErrorMatch
   | readonly FieldErrorMatch[]
   | { readonly [_ in FieldErrorMatch]?: React.ReactNode };
+
+/**
+ * {@link FieldRootValidityData}
+ */
+export type FieldValidityData = FieldRootValidityData;
 
 /**
  * {@link Field} の各パーツに渡す props です。
@@ -166,10 +172,10 @@ interface IUseFieldAPI {
 export const useFieldAPI: IUseFieldAPI = function useSuiFieldAPI(props) {
   const {
     label,
+    children: _children,
     validity,
     description,
     errorMatches = true,
-    children: _children,
     slotProps: {
       error: errorProps = {},
       label: labelProps = {},
@@ -180,38 +186,8 @@ export const useFieldAPI: IUseFieldAPI = function useSuiFieldAPI(props) {
   } = props;
 
   return {
-    getDescriptionProps() {
-      if (isLikelyVisibleNode(description)) {
-        return {
-          ...descriptionProps,
-          children: description,
-        };
-      }
-
-      return null;
-    },
-    getErrorPropsList() {
-      if (errorMatches === false && Object.keys(errorProps).length === 0) {
-        return [];
-      }
-
-      if (typeof errorMatches === "boolean" || typeof errorMatches === "string") {
-        return [{ match: errorMatches, ...errorProps }];
-      }
-
-      if (Array.isArray(errorMatches)) {
-        const matches = [...new Set(errorMatches)];
-
-        return matches.map((match) => ({ match, ...errorProps }));
-      }
-
-      const entries = Object.entries(errorMatches) as [FieldErrorMatch, React.ReactNode][];
-
-      return entries.map(([match, children]) => ({
-        match,
-        children,
-        ...errorProps,
-      }));
+    getRootProps() {
+      return otherRootProps;
     },
     getLabelProps() {
       if (isLikelyVisibleNode(label)) {
@@ -223,14 +199,44 @@ export const useFieldAPI: IUseFieldAPI = function useSuiFieldAPI(props) {
 
       return null;
     },
-    getRootProps() {
-      return otherRootProps;
-    },
     getValidityProps() {
       if (typeof validity === "function") {
         return {
           ...validityProps,
           children: validity,
+        };
+      }
+
+      return null;
+    },
+    getErrorPropsList() {
+      if (errorMatches === false) {
+        return [];
+      }
+
+      if (typeof errorMatches === "boolean" || typeof errorMatches === "string") {
+        return [{ ...errorProps, match: errorMatches }];
+      }
+
+      if (Array.isArray(errorMatches)) {
+        const matches = [...new Set(errorMatches)];
+
+        return matches.map((match) => ({ ...errorProps, match }));
+      }
+
+      const entries = Object.entries(errorMatches) as [FieldErrorMatch, React.ReactNode][];
+
+      return entries.map(([match, children]) => ({
+        ...errorProps,
+        match,
+        children,
+      }));
+    },
+    getDescriptionProps() {
+      if (isLikelyVisibleNode(description)) {
+        return {
+          ...descriptionProps,
+          children: description,
         };
       }
 
@@ -266,8 +272,8 @@ export const Field: IField = /*#__PURE__*/ Object.assign(
     const { children } = props;
     const api = useFieldAPI(props);
     const labelProps = api.getLabelProps();
-    const validityProps = api.getValidityProps();
     const descriptionProps = api.getDescriptionProps();
+    const validityProps = api.getValidityProps();
 
     return (
       <FieldRoot {...api.getRootProps()}>
@@ -317,4 +323,9 @@ export namespace Field {
    * {@link FieldErrorMatches}
    */
   export type ErrorMatches = FieldErrorMatches;
+
+  /**
+   * {@link FieldValidityData}
+   */
+  export type ValidityData = FieldValidityData;
 }

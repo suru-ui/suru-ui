@@ -12,6 +12,10 @@ import {
   type SliderRootVariant,
   type SliderControlProps,
   type SliderIndicatorProps,
+  type SliderRootChangeEventReason,
+  type SliderRootCommitEventReason,
+  type SliderRootChangeEventDetails,
+  type SliderRootCommitEventDetails,
   SliderRoot,
   SliderLabel,
   SliderThumb,
@@ -23,6 +27,26 @@ import {
 
 // Types
 // -----
+
+/**
+ * {@link SliderRootChangeEventDetails}
+ */
+export type SliderChangeEventDetails = SliderRootChangeEventDetails;
+
+/**
+ * {@link SliderRootChangeEventReason}
+ */
+export type SliderChangeEventReason = SliderRootChangeEventReason;
+
+/**
+ * {@link SliderRootCommitEventDetails}
+ */
+export type SliderCommitEventDetails = SliderRootCommitEventDetails;
+
+/**
+ * {@link SliderRootCommitEventReason}
+ */
+export type SliderCommitEventReason = SliderRootCommitEventReason;
 
 /**
  * {@link SliderRootColor}
@@ -89,23 +113,28 @@ export type SliderState = SliderRootState;
  *
  * `value` を指定すると制御コンポーネントになり、`onValueChange` とあわせて使います。
  * `value` が配列のときは値の数だけつまみが表示されます。
+ *
+ * @template TValue 値の型です。
  */
-export type SliderProps = Omit<SliderRootProps, "children"> & {
-  /**
-   * 各パーツに個別の props を渡すためのオブジェクトです。
-   *
-   * 各パーツの props が優先されます。
-   */
-  slotProps?: SliderSlotProps | undefined;
-};
+export type SliderProps<TValue extends number | readonly number[] = number | readonly number[]> =
+  Omit<SliderRootProps<TValue>, "children"> & {
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     *
+     * 各パーツの props が優先されます。
+     */
+    slotProps?: SliderSlotProps | undefined;
+  };
 
 // API
 // ---
 
 /**
  * {@link Slider} を構成する各パーツの props を作成するための API です。
+ *
+ * @template TValue 値の型です。
  */
-export interface SliderAPI {
+export interface SliderAPI<TValue extends number | readonly number[] = number | readonly number[]> {
   /**
    * {@link SliderControl} に渡す props を取得します。
    */
@@ -126,7 +155,7 @@ export interface SliderAPI {
   /**
    * {@link SliderRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<SliderRootProps, "children">;
+  getRootProps(): Omit<SliderRootProps<TValue>, "children">;
 
   /**
    * {@link SliderThumb} に渡す props の一覧を取得します。
@@ -152,10 +181,13 @@ interface IUseSliderAPI {
   /**
    * {@link SliderAPI} を作成します。
    *
+   * @template TValue 値の型です。
    * @param props {@link Slider} の props です。
    * @returns スライダーの API です
    */
-  (props: SliderProps): SliderAPI;
+  <TValue extends number | readonly number[] = number | readonly number[]>(
+    props: SliderProps<TValue>,
+  ): SliderAPI<TValue>;
 }
 
 /**
@@ -177,11 +209,8 @@ export const useSliderAPI: IUseSliderAPI = function useSuiSliderAPI(props) {
   const thumbCount = Array.isArray(current) ? current.length : 1;
 
   return {
-    getControlProps() {
-      return controlProps;
-    },
-    getIndicatorProps() {
-      return indicatorProps;
+    getRootProps() {
+      return otherRootProps;
     },
     getLabelProps() {
       if (!labelProps) {
@@ -191,15 +220,6 @@ export const useSliderAPI: IUseSliderAPI = function useSuiSliderAPI(props) {
       return {
         ...labelProps,
       };
-    },
-    getRootProps() {
-      return otherRootProps;
-    },
-    getThumbPropsList() {
-      return Array.from({ length: thumbCount }, (_, index) => ({
-        ...thumbProps,
-        index,
-      }));
     },
     getTrackProps() {
       return trackProps;
@@ -212,6 +232,18 @@ export const useSliderAPI: IUseSliderAPI = function useSuiSliderAPI(props) {
       return {
         ...valueProps,
       };
+    },
+    getControlProps() {
+      return controlProps;
+    },
+    getIndicatorProps() {
+      return indicatorProps;
+    },
+    getThumbPropsList() {
+      return Array.from({ length: thumbCount }, (_, index) => ({
+        ...thumbProps,
+        index,
+      }));
     },
   };
 };
@@ -227,7 +259,16 @@ export { type SliderAPI as API, useSliderAPI as useAPI };
  * 単一値のときはつまみを 1 つ、配列のときは値の数だけつまみを表示します。
  * つまみは矢印キーで操作でき、ラベルと現在値は `slotProps` を渡したときだけ表示します。
  */
-export const Slider: IComponent<SliderProps> = function SuiSlider(props) {
+interface ISlider extends IComponent<SliderProps> {
+  /**
+   * @template TValue 値の型です。
+   */
+  <TValue extends number | readonly number[] = number | readonly number[]>(
+    props: SliderProps<TValue>,
+  ): IComponent.Return;
+}
+
+export const Slider: ISlider = function SuiSlider(props: SliderProps) {
   const api = useSliderAPI(props);
   const labelProps = api.getLabelProps();
   const valueProps = api.getValueProps();
@@ -257,7 +298,8 @@ export namespace Slider {
   /**
    * {@link SliderProps}
    */
-  export type Props = SliderProps;
+  export type Props<TValue extends number | readonly number[] = number | readonly number[]> =
+    SliderProps<TValue>;
 
   /**
    * {@link SliderSlotProps}
@@ -265,9 +307,29 @@ export namespace Slider {
   export type SlotProps = SliderSlotProps;
 
   /**
+   * {@link SliderChangeEventDetails}
+   */
+  export type ChangeEventDetails = SliderChangeEventDetails;
+
+  /**
+   * {@link SliderChangeEventReason}
+   */
+  export type ChangeEventReason = SliderChangeEventReason;
+
+  /**
    * {@link SliderColor}
    */
   export type Color = SliderColor;
+
+  /**
+   * {@link SliderCommitEventDetails}
+   */
+  export type CommitEventDetails = SliderCommitEventDetails;
+
+  /**
+   * {@link SliderCommitEventReason}
+   */
+  export type CommitEventReason = SliderCommitEventReason;
 
   /**
    * {@link SliderRadius}

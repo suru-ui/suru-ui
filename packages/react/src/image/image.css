@@ -6,40 +6,42 @@
 :scope {
   display: block;
   max-width: 100%;
-
-  &.sui_image-fit_cover {
-    object-fit: cover;
-  }
-
-  &.sui_image-fit_contain {
-    object-fit: contain;
-  }
-
-  &.sui_image-fit_fill {
-    object-fit: fill;
-  }
-
-  &.sui_image-fit_none {
-    object-fit: none;
-  }
-
-  &.sui_image-fit_scale-down {
-    object-fit: scale-down;
-  }
 }
 
 /* 変数 */
 :scope {
+  --sui_image-object_fit: ;
   --sui_image-border_radius: ;
 }
 
 /* 可変 */
 :scope {
+  object-fit: var(--sui_image-object_fit);
   border-radius: var(--sui_image-border_radius);
 }
 
 /* 代入 */
 :scope {
+  &.sui_image-fit_cover {
+    --sui_image-object_fit: cover;
+  }
+
+  &.sui_image-fit_contain {
+    --sui_image-object_fit: contain;
+  }
+
+  &.sui_image-fit_fill {
+    --sui_image-object_fit: fill;
+  }
+
+  &.sui_image-fit_none {
+    --sui_image-object_fit: none;
+  }
+
+  &.sui_image-fit_scale-down {
+    --sui_image-object_fit: scale-down;
+  }
+
   &.sui_image-radius_none {
     --sui_image-border_radius: 0px;
   }

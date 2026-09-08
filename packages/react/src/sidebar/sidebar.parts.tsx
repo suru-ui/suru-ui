@@ -52,15 +52,15 @@ export const SidebarContext: React.Context<SidebarContext | null> =
 function useSuiSidebarContext(optional?: false): SidebarContext;
 function useSuiSidebarContext(optional?: boolean): SidebarContext | null;
 function useSuiSidebarContext(optional?: boolean): SidebarContext | null {
-  const context = React.use(SidebarContext);
-  if (context === null && !optional) {
+  const ctx = React.use(SidebarContext);
+  if (ctx === null && !optional) {
     throw new ContextMissingError({
       contextName: "SidebarContext",
       providerName: "SidebarProvider",
     });
   }
 
-  return context;
+  return ctx;
 }
 
 /**
@@ -114,14 +114,7 @@ export type SidebarProviderProps = Omit<React.ComponentProps<"div">, keyof Rende
 export const SidebarProvider: IComponent<SidebarProviderProps> = function SuiSidebarProvider(
   props,
 ) {
-  const {
-    ref,
-    defaultOpen = true,
-    open: openProp,
-    onOpenChange,
-    className,
-    ...otherDivProps
-  } = props;
+  const { open: openProp, defaultOpen = true, onOpenChange, ...otherDivProps } = props;
   const [openState, setOpenState] = React.useState(defaultOpen);
   const open = openProp ?? openState;
   const setOpen = React.useCallback(
@@ -141,26 +134,28 @@ export const SidebarProvider: IComponent<SidebarProviderProps> = function SuiSid
     () => ({ state: openStateValue }),
     [openStateValue],
   );
-  const context = React.useMemo<SidebarContext>(
+  const ctx = React.useMemo<SidebarContext>(
     () => ({ open, setOpen, state: openStateValue, toggle }),
     [open, openStateValue, setOpen, toggle],
   );
 
   const element = useRender({
     defaultTagName: "div",
-    ref,
     state: renderState,
     props: [
       otherDivProps,
       {
-        className: cn(className, "sui_sidebar_provider"),
-        "data-open": open,
-        "data-state": openStateValue,
+        className: cn<SidebarProviderState>(
+          "sui_sidebar_provider",
+          (state) => state.state === "expanded" && "sui_sidebar_provider-expanded",
+          (state) => state.state === "collapsed" && "sui_sidebar_provider-collapsed",
+        ),
+        "data-scope": "",
       },
     ],
   });
 
-  return <SidebarContext value={context}>{element}</SidebarContext>;
+  return <SidebarContext value={ctx}>{element}</SidebarContext>;
 };
 
 export { SidebarProvider as Provider };
@@ -271,11 +266,9 @@ export type SidebarRootProps = Omit<React.ComponentProps<"aside">, keyof RenderP
 export const SidebarRoot: IComponent<SidebarRootProps> = function SuiSidebarRoot(props) {
   const ctx = useSuiSidebarContext(true);
   const {
-    ref,
     side = "left",
     variant = "sidebar",
     collapsible = "offcanvas",
-    className,
     ...otherAsideProps
   } = props;
   const open = ctx?.open ?? true;
@@ -287,23 +280,18 @@ export const SidebarRoot: IComponent<SidebarRootProps> = function SuiSidebarRoot
 
   return useRender({
     defaultTagName: "aside",
-    ref,
     state: renderState,
     props: [
       otherAsideProps,
       {
-        className: cn(
-          className,
+        className: cn<SidebarRootState>(
           "sui_sidebar",
           `sui_sidebar-side_${side}`,
           `sui_sidebar-variant_${variant}`,
           `sui_sidebar-collapsible_${collapsible}`,
+          (renderState) => `sui_sidebar-${renderState.state}`,
         ),
-        "data-collapsible": collapsible,
-        "data-open": open,
-        "data-side": side,
-        "data-state": state,
-        "data-variant": variant,
+        "data-scope": "",
       },
     ],
   });
@@ -672,7 +660,7 @@ export type SidebarRailProps = Omit<React.ComponentProps<"button">, keyof Render
  */
 export const SidebarRail: IComponent<SidebarRailProps> = function SuiSidebarRail(props) {
   const ctx = useSuiSidebarContext();
-  const { ref, onClick, children, className, ...otherButtonProps } = props;
+  const { onClick, children, ...otherButtonProps } = props;
   const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
     if (!event.defaultPrevented) {
@@ -683,17 +671,20 @@ export const SidebarRail: IComponent<SidebarRailProps> = function SuiSidebarRail
 
   return useRender({
     defaultTagName: "button",
-    ref,
     state: renderState,
     props: [
+      otherButtonProps,
       {
         type: "button",
         "aria-label": "サイドバーを切り替える",
         onClick: handleOnClick,
-        className: cn(className, "sui_sidebar_rail"),
+        children,
+        className: cn<SidebarRailState>(
+          "sui_sidebar_rail",
+          (state) => state.state === "expanded" && "sui_sidebar_rail-expanded",
+          (state) => state.state === "collapsed" && "sui_sidebar_rail-collapsed",
+        ),
       },
-      otherButtonProps,
-      { children },
     ],
   });
 };
@@ -737,7 +728,7 @@ export type SidebarTriggerProps = Omit<React.ComponentProps<"button">, keyof Ren
  */
 export const SidebarTrigger: IComponent<SidebarTriggerProps> = function SuiSidebarTrigger(props) {
   const ctx = useSuiSidebarContext();
-  const { ref, onClick, children, className, ...otherButtonProps } = props;
+  const { onClick, children, ...otherButtonProps } = props;
   const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
     if (!event.defaultPrevented) {
@@ -748,18 +739,21 @@ export const SidebarTrigger: IComponent<SidebarTriggerProps> = function SuiSideb
 
   return useRender({
     defaultTagName: "button",
-    ref,
     state: renderState,
     props: [
+      otherButtonProps,
       {
         type: "button",
+        onClick: handleOnClick,
+        children: children ?? <DefaultTriggerIcon />,
+        className: cn<SidebarTriggerState>(
+          "sui_sidebar_trigger",
+          (renderState) => `sui_sidebar_trigger-${renderState.state}`,
+        ),
         ...(children === undefined ? { "aria-label": "サイドバーを切り替える" } : {}),
         "aria-expanded": ctx.open,
-        onClick: handleOnClick,
-        className: cn(className, "sui_sidebar_trigger"),
+        "data-scope": "",
       },
-      otherButtonProps,
-      { children: children ?? <DefaultTriggerIcon /> },
     ],
   });
 };
@@ -777,13 +771,12 @@ export namespace Trigger {
   export type Props = SidebarTriggerProps;
 }
 
-function DefaultTriggerIcon() {
+const DefaultTriggerIcon: IComponent = function SuiDefaultTriggerIcon() {
   return (
     <svg
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
-      className="sui_sidebar_trigger_icon"
       focusable="false"
       strokeWidth="2"
       strokeLinecap="round"
@@ -794,4 +787,4 @@ function DefaultTriggerIcon() {
       <path d="M9 3v18" />
     </svg>
   );
-}
+};

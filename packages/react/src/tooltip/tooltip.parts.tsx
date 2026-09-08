@@ -335,7 +335,17 @@ export const TooltipPopup: IComponent<TooltipPopupProps> = function SuiTooltipPo
   const { className, ...otherProps } = props;
 
   return (
-    <Tooltip.Popup role="tooltip" {...otherProps} className={cn(className, "sui_tooltip_popup")} />
+    <Tooltip.Popup
+      role="tooltip"
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_tooltip_popup",
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_tooltip_popup-transition_status_${state.transitionStatus}`,
+      )}
+    />
   );
 };
 
@@ -372,7 +382,16 @@ export type TooltipArrowProps = React.ComponentProps<typeof Tooltip.Arrow>;
 export const TooltipArrow: IComponent<TooltipArrowProps> = function SuiTooltipArrow(props) {
   const { className, ...otherProps } = props;
 
-  return <Tooltip.Arrow {...otherProps} className={cn(className, "sui_tooltip_arrow")} />;
+  return (
+    <Tooltip.Arrow
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_tooltip_arrow",
+        (state) => `sui_tooltip_arrow-side_${state.side}`,
+      )}
+    />
+  );
 };
 
 export { TooltipArrow as Arrow };

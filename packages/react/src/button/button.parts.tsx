@@ -265,8 +265,8 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
           muted && "sui_button-muted",
           pending && "sui_button-pending",
           squared && "sui_button-squared",
-          outlined && "sui_button-outlined",
           disabled && "sui_button-disabled",
+          outlined && "sui_button-outlined",
         )}
         focusableWhenDisabled={focusableWhenDisabled}
         data-scope=""
@@ -468,7 +468,10 @@ export const ButtonCircularProgress: IComponent<ButtonCircularProgressProps> =
       indeterminate = percentage === undefined || percentage < 0,
       ...otherSvgProps
     } = props;
-    const ctx = React.useMemo(() => ({ percentage, indeterminate }), [percentage, indeterminate]);
+    const ctx = React.useMemo<ButtonCircularProgressContext>(
+      () => ({ percentage, indeterminate }),
+      [percentage, indeterminate],
+    );
     const element = useRender({
       defaultTagName: "svg",
       state: ctx,

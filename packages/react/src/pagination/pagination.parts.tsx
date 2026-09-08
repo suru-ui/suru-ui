@@ -260,15 +260,14 @@ export type PaginationRootProps = Omit<React.ComponentProps<"nav">, keyof Render
  */
 export const PaginationRoot: IComponent<PaginationRootProps> = function SuiPaginationRoot(props) {
   const {
+    page: pageProp,
     size = "md",
     color = "grey",
     radius = size,
     disabled = false,
-    page: pageProp,
     totalPages,
     defaultPage = 1,
     onPageChange,
-    className,
     "aria-label": ariaLabel = "ページネーション",
     ...otherNavProps
   } = props;
@@ -307,7 +306,6 @@ export const PaginationRoot: IComponent<PaginationRootProps> = function SuiPagin
       {
         "aria-label": ariaLabel,
         className: cn(
-          className,
           "sui_pagination",
           `sui_pagination-size_${size}`,
           `sui_pagination-radius_${radius}`,
@@ -621,51 +619,48 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
       disabled = false,
       className,
       "aria-label": ariaLabel,
-      ...otherProps
+      ...otherButtonProps
     } = props;
     const label = ariaLabel ?? `${start}〜${end}ページへ移動`;
     const [editing, setEditing] = React.useState(false);
     const inputElement = useRender<HTMLInputElement, {}, boolean>({
       defaultTagName: "input",
       enabled: editing,
-      props: [
-        otherProps,
-        {
-          "aria-label": label,
-          autoFocus: true,
-          className: cn(className, "sui_pagination_ellipsis_input"),
-          defaultValue: "",
-          inputMode: "numeric",
-          pattern: "[0-9]*",
-          placeholder: String(start),
-          type: "text",
-          onBlur() {
-            setEditing(false);
-          },
-          onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
-            if (event.key === "Escape") {
-              setEditing(false);
-
-              return;
-            }
-
-            if (event.key !== "Enter") {
-              return;
-            }
-
-            const value = Number.parseInt(event.currentTarget.value, 10);
-            setEditing(false);
-            if (Number.isNaN(value)) {
-              return;
-            }
-
-            ctx?.goToPage(Math.min(Math.max(value, start), end), {
-              reason: "ellipsis",
-              event,
-            });
-          },
+      props: {
+        "aria-label": label,
+        autoFocus: true,
+        className: "sui_pagination_ellipsis_input",
+        defaultValue: "",
+        inputMode: "numeric",
+        pattern: "[0-9]*",
+        placeholder: String(start),
+        type: "text",
+        onBlur() {
+          setEditing(false);
         },
-      ],
+        onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+          if (event.key === "Escape") {
+            setEditing(false);
+
+            return;
+          }
+
+          if (event.key !== "Enter") {
+            return;
+          }
+
+          const value = Number.parseInt(event.currentTarget.value, 10);
+          setEditing(false);
+          if (Number.isNaN(value)) {
+            return;
+          }
+
+          ctx?.goToPage(Math.min(Math.max(value, start), end), {
+            reason: "ellipsis",
+            event,
+          });
+        },
+      },
     });
 
     if (editing) {
@@ -682,7 +677,7 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
 
     return (
       <ButtonRoot
-        {...otherProps}
+        {...otherButtonProps}
         size={ctx?.size ?? "md"}
         color="grey"
         radius={ctx?.radius}

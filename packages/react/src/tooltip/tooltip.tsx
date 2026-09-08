@@ -188,6 +188,7 @@ export const useTooltipAPI: IUseTooltipAPI = function useSuiTooltipAPI(props: To
     defaultOpen,
     onOpenChange,
     defaultTriggerId,
+    onOpenChangeComplete,
     ...otherRootProps
   } = props;
   const handle = React.useMemo(() => handleProp, [handleProp]);
@@ -204,6 +205,7 @@ export const useTooltipAPI: IUseTooltipAPI = function useSuiTooltipAPI(props: To
         defaultOpen,
         onOpenChange,
         defaultTriggerId,
+        onOpenChangeComplete,
       };
     },
     getArrowProps() {

@@ -164,22 +164,14 @@ export const useTreeAPI: IUseTreeAPI = function useSuiTreeAPI(props) {
     items,
     children,
     slotProps: {
-      indicator: indicatorProps = {},
       item: itemProps = {},
       label: labelProps = {},
+      indicator: indicatorProps = {},
     } = {},
     ...otherRootProps
   } = props;
 
   return {
-    getIndicatorProps(node) {
-      const hasChildren = node.children != null && node.children.length > 0;
-
-      return {
-        ...indicatorProps,
-        visible: hasChildren,
-      };
-    },
     getItemProps(node, level, posInSet, setSize) {
       const hasChildren = node.children != null && node.children.length > 0;
 
@@ -194,17 +186,25 @@ export const useTreeAPI: IUseTreeAPI = function useSuiTreeAPI(props) {
         setSize,
       };
     },
+    getRootProps() {
+      return {
+        ...otherRootProps,
+        items,
+        children: typeof children === "function" ? children : toReactNode(children),
+      };
+    },
     getLabelProps(node) {
       return {
         ...labelProps,
         children: toReactNode(node.label),
       };
     },
-    getRootProps() {
+    getIndicatorProps(node) {
+      const hasChildren = node.children != null && node.children.length > 0;
+
       return {
-        ...otherRootProps,
-        items,
-        children: typeof children === "function" ? children : (toReactNode(children) ?? null),
+        ...indicatorProps,
+        visible: hasChildren,
       };
     },
   };

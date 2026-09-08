@@ -25,11 +25,6 @@ export type StatusColor = StatusRootColor;
 export type StatusSize = StatusRootSize;
 
 /**
- * {@link Status} が持つ状態です。
- */
-export type StatusState = StatusRootState;
-
-/**
  * {@link Status} の各パーツに渡す props です。
  */
 export type StatusSlotProps = {
@@ -38,6 +33,11 @@ export type StatusSlotProps = {
    */
   readonly indicator?: Omit<StatusIndicatorProps, "children"> | undefined;
 };
+
+/**
+ * {@link Status} が持つ状態です。
+ */
+export type StatusState = StatusRootState;
 
 /**
  * {@link Status} に渡す props です。
@@ -91,11 +91,11 @@ export const useStatusAPI: IUseStatusAPI = function useSuiStatusAPI(props) {
   const { slotProps: { indicator: indicatorProps = {} } = {}, ...otherRootProps } = props;
 
   return {
-    getIndicatorProps() {
-      return indicatorProps;
-    },
     getRootProps() {
       return otherRootProps;
+    },
+    getIndicatorProps() {
+      return indicatorProps;
     },
   };
 };

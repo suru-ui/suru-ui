@@ -13,19 +13,19 @@
 /* 変数 */
 :scope {
   --sui_stat-gap: ;
-  --sui_stat-color-normal: ;
+  --sui_stat-color: ;
 }
 
 /* 可変 */
 :scope {
   gap: var(--sui_stat-gap);
-  color: var(--sui_stat-color-normal);
+  color: var(--sui_stat-color);
 }
 
 /* 代入 */
 :scope {
   --sui_stat-gap: --sui-space(1);
-  --sui_stat-color-normal: var(--sui-canvas_text-1);
+  --sui_stat-color: var(--sui-canvas_text-1);
 }
 
 } /* @scope */
@@ -113,7 +113,7 @@
 /* 代入 */
 :scope {
   --sui_stat_value-font_family: var(--sui-font-sans);
-  --sui_stat_value-color: inherit;
+  --sui_stat_value-color: var(--sui_stat-color);
 
   &:has(.sui_stat_value-size_sm) {
     --sui_stat_value-font_size: calc(var(--sui-text-std-md-b-font_size) * 1.5);

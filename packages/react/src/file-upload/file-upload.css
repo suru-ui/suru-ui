@@ -91,7 +91,7 @@
   --sui_file_upload_trigger-focusring_width: ;
   --sui_file_upload_trigger-focusring_color: ;
   --sui_file_upload_trigger-focusring_offset: ;
-  --sui_file_upload_trigger-background_color-normal: ;
+  --sui_file_upload_trigger-background_color-idle: ;
   --sui_file_upload_trigger-background_color-hover: ;
   --sui_file_upload_trigger-background_color-active: ;
   --sui_file_upload_trigger-border_radius: ;
@@ -110,7 +110,7 @@
     outline-color: var(--sui_file_upload_trigger-focusring_color);
     outline-offset: var(--sui_file_upload_trigger-focusring_offset);
     background-color: var(--_sui_file_upload_trigger-background_color,
-                        var(--sui_file_upload_trigger-background_color-normal)
+                        var(--sui_file_upload_trigger-background_color-idle)
                       );
     border-radius: var(--sui_file_upload_trigger-border_radius);
   }
@@ -122,7 +122,7 @@
   --sui_file_upload_trigger-focusring_width: var(--sui-focusring_width);
   --sui_file_upload_trigger-focusring_color: var(--sui-focusring_color);
   --sui_file_upload_trigger-focusring_offset: var(--sui-focusring_offset);
-  --sui_file_upload_trigger-background_color-normal: transparent;
+  --sui_file_upload_trigger-background_color-idle: var(--sui-grey-naked-canvas-normal);
   --sui_file_upload_trigger-background_color-hover: var(--sui-grey-naked-canvas-subtle);
   --sui_file_upload_trigger-background_color-active: var(--sui-grey-naked-canvas-strong);
 
@@ -225,7 +225,7 @@
   --sui_file_upload_dropzone-focusring_offset: ;
   --sui_file_upload_dropzone-background_color: ;
   --sui_file_upload_dropzone-background_color-dragover: ;
-  --sui_file_upload_dropzone-border_color-normal: ;
+  --sui_file_upload_dropzone-border_color-idle: ;
   --sui_file_upload_dropzone-border_color-hover: ;
   --sui_file_upload_dropzone-border_color-focus_visible: ;
   --sui_file_upload_dropzone-border_color-dragover: ;
@@ -249,7 +249,7 @@
                         var(--sui_file_upload_dropzone-background_color)
                       );
     border-color: var(--_sui_file_upload_dropzone-border_color,
-                    var(--sui_file_upload_dropzone-border_color-normal)
+                    var(--sui_file_upload_dropzone-border_color-idle)
                   );
     border-width: var(--sui_file_upload_dropzone-border_width);
     border-radius: var(--sui_file_upload_dropzone-border_radius);
@@ -261,7 +261,7 @@
   --sui_file_upload_dropzone-focusring_width: var(--sui-focusring_width);
   --sui_file_upload_dropzone-focusring_color: var(--sui-focusring_color);
   --sui_file_upload_dropzone-focusring_offset: var(--sui-focusring_offset);
-  --sui_file_upload_dropzone-border_color-normal: var(--sui-grey-naked-border-normal);
+  --sui_file_upload_dropzone-border_color-idle: var(--sui-grey-naked-border-normal);
   --sui_file_upload_dropzone-border_color-hover: var(--sui-grey-naked-border-subtle);
   --sui_file_upload_dropzone-border_width: --sui-border_width(1);
 

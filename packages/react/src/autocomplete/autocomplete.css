@@ -553,7 +553,7 @@
 
 /* 変異 */
 :scope {
-  .sui_autocomplete_clear:not([data-disabled]) {
+  .sui_autocomplete_clear:not(.sui_autocomplete_clear-disabled) {
     @media (any-hover: hover) {
       &:hover {
         --_sui_autocomplete_clear-color: var(--sui_autocomplete_clear-color-hover);
@@ -812,14 +812,12 @@
 /* 変数 */
 :scope {
   --sui_autocomplete_list-gap: ;
-  --sui_autocomplete_list-padding: ;
 }
 
 /* 可変 */
 :scope {
   .sui_autocomplete_list {
     gap: var(--sui_autocomplete_list-gap);
-    padding: var(--sui_autocomplete_list-padding);
   }
 }
 

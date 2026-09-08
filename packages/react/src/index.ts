@@ -320,21 +320,20 @@ export {
   Form,
   useFormAPI,
 } from "./form/index.js";
-// Drawer はまだ公開できるレベルにない。
-// export {
-//   type DrawerAPI,
-//   type DrawerProps,
-//   type DrawerState,
-//   type DrawerActions,
-//   type DrawerSlotProps,
-//   type DrawerSnapPoint,
-//   type DrawerChangeEventReason,
-//   type DrawerChangeEventDetails,
-//   type DrawerSnapPointChangeEventReason,
-//   type DrawerSnapPointChangeEventDetails,
-//   Drawer,
-//   useDrawerAPI,
-// } from "./drawer/index.js";
+export {
+  type DrawerAPI,
+  type DrawerProps,
+  type DrawerState,
+  type DrawerActions,
+  type DrawerSlotProps,
+  type DrawerSnapPoint,
+  type DrawerChangeEventReason,
+  type DrawerChangeEventDetails,
+  type DrawerSnapPointChangeEventReason,
+  type DrawerSnapPointChangeEventDetails,
+  Drawer,
+  useDrawerAPI,
+} from "./drawer/index.js";
 export {
   type HoverCardAPI,
   type HoverCardProps,
@@ -448,7 +447,9 @@ export {
   type NumberFieldVariant,
   type NumberFieldSlotProps,
   type NumberFieldChangeEventReason,
+  type NumberFieldCommitEventReason,
   type NumberFieldChangeEventDetails,
+  type NumberFieldCommitEventDetails,
   NumberField,
   useNumberFieldAPI,
   NumberFieldContext,
@@ -694,11 +695,15 @@ export {
   useTextareaAPI,
 } from "./textarea/index.js";
 export {
+  type ToastAPI,
   type ToastProps,
   type ToastState,
   type ToastSlotProps,
   type ToastToastObject,
   Toast,
+  useToastAPI,
+  useToastManager,
+  createToastManager,
 } from "./toast/index.js";
 export {
   type ToggleButtonAPI,

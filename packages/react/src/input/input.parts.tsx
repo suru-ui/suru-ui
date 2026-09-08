@@ -137,7 +137,8 @@ export const InputRoot: IComponent<InputRootProps> = function SuiInputRoot(props
   const size = actionGroupCtx?.size ?? sizeProp;
   const color = actionGroupCtx?.color ?? colorProp;
   const radius = actionGroupCtx?.radius ?? radiusProp;
-  const variant = actionGroupCtx?.variant ?? variantProp;
+  const variant =
+    (actionGroupCtx?.variant === "solid" ? null : actionGroupCtx?.variant) ?? variantProp;
   const outlined = actionGroupCtx?.outlined ?? outlinedProp;
 
   return (

@@ -203,7 +203,7 @@ export const AvatarGroupRoot: IComponent<AvatarGroupRootProps> = function SuiAva
       <AvatarGroupContext
         value={{
           size,
-          color: color === "auto" ? colors[i % colors.length]! : color,
+          color: color === "auto" ? (colors[i % colors.length] ?? "grey") : color,
           radius,
         }}
       >

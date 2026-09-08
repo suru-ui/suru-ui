@@ -504,7 +504,13 @@
 
 /* 代入 */
 :scope {
-  --sui_button-virtual_content-leading: max(1lh, var(--sui_button_content__svg-size));
+  --sui_button-virtual_content-leading: max(
+                                          calc(
+                                            var(--sui_button_content-font_size)
+                                            * var(--sui_button_content-line_height)
+                                          ),
+                                          var(--sui_button_content__svg-size)
+                                        );
   --sui_button_content-font_family: var(--sui-font-sans);
   --sui_button_content__svg-size: calc(
                                     var(--sui_button_content-font_size)

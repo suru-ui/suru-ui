@@ -211,8 +211,9 @@ export type RadioGroupRootProps = React.ComponentProps<typeof RadioGroup> & {
   /**
    * ラジオボタンに枠線を表示するかどうかを指定します。
    *
-   * 未指定時は `variant` が `"naked"` の場合に表示します。
    * グループ内のラジオボタンより優先されます。
+   *
+   * 既定値は {@link RadioGroupRootProps.variant|variant} が `"naked"` かどうかです。
    */
   outlined?: boolean | undefined;
 
@@ -276,7 +277,12 @@ export const RadioGroupRoot: IComponent<RadioGroupRootProps> = function SuiRadio
       <RadioGroup
         {...otherProps}
         disabled={disabled}
-        className={cn(className, "sui_radio_group", `sui_radio_group-orientation_${orientation}`)}
+        className={cn(
+          className,
+          "sui_radio_group",
+          `sui_radio_group-orientation_${orientation}`,
+          (state) => state.disabled && "sui_radio_group-disabled",
+        )}
         data-scope=""
       />
     </RadioGroupContext>

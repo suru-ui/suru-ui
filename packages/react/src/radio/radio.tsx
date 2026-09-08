@@ -97,14 +97,14 @@ export const useRadioAPI: IUseRadioAPI = function useSuiRadioAPI(props) {
   const { children, slotProps: { indicator: indicatorProps = {} } = {}, ...otherRootProps } = props;
 
   return {
-    getIndicatorProps() {
-      return {
-        children,
-        ...indicatorProps,
-      };
-    },
     getRootProps() {
       return otherRootProps;
+    },
+    getIndicatorProps() {
+      return {
+        ...indicatorProps,
+        children,
+      };
     },
   };
 };

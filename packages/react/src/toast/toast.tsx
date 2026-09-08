@@ -29,7 +29,7 @@ import {
 // -----
 
 /**
- * {@link ToastRootToastObject} です。
+ * {@link ToastRootToastObject}
  */
 export type ToastToastObject<TData extends object = object> = ToastRootToastObject<TData>;
 
@@ -50,7 +50,7 @@ export type ToastSlotProps = {
   /**
    * {@link ToastContent} に渡す props です。
    */
-  readonly content?: ToastContentProps | undefined;
+  readonly content?: Omit<ToastContentProps, "children"> | undefined;
 
   /**
    * {@link ToastDescription} に渡す props です。
@@ -60,12 +60,12 @@ export type ToastSlotProps = {
   /**
    * {@link ToastPortal} に渡す props です。
    */
-  readonly portal?: ToastPortalProps | undefined;
+  readonly portal?: Omit<ToastPortalProps, "children"> | undefined;
 
   /**
    * {@link ToastRoot} に渡す props です。
    */
-  readonly root?: Omit<ToastRootProps, "toast"> | undefined;
+  readonly root?: Omit<ToastRootProps, "toast" | "children"> | undefined;
 
   /**
    * {@link ToastTitle} に渡す props です。
@@ -75,7 +75,7 @@ export type ToastSlotProps = {
   /**
    * {@link ToastViewport} に渡す props です。
    */
-  readonly viewport?: ToastViewportProps | undefined;
+  readonly viewport?: Omit<ToastViewportProps, "children"> | undefined;
 };
 
 /**
@@ -95,6 +95,125 @@ export type ToastProps = ToastProviderProps & {
   slotProps?: ToastSlotProps | undefined;
 };
 
+// API
+// ---
+
+/**
+ * {@link Toast} を構成する各パーツの props を作成するための API です。
+ */
+export interface ToastAPI {
+  /**
+   * {@link ToastAction} に渡す props を取得します。
+   */
+  getActionProps(): ToastActionProps;
+
+  /**
+   * {@link ToastClose} に渡す props を取得します。
+   */
+  getCloseProps(): ToastCloseProps;
+
+  /**
+   * {@link ToastContent} に渡す props を取得します。
+   */
+  getContentProps(): Omit<ToastContentProps, "children">;
+
+  /**
+   * {@link ToastDescription} に渡す props を取得します。
+   */
+  getDescriptionProps(): ToastDescriptionProps;
+
+  /**
+   * {@link ToastPortal} に渡す props を取得します。
+   */
+  getPortalProps(): Omit<ToastPortalProps, "children">;
+
+  /**
+   * {@link ToastProvider} に渡す props を取得します。
+   */
+  getProviderProps(): Omit<ToastProviderProps, "children"> & {
+    children: React.ReactNode;
+  };
+
+  /**
+   * {@link ToastRoot} に渡す props を取得します。
+   *
+   * @param toast 表示する通知オブジェクトです。
+   */
+  getRootProps(toast: ToastToastObject): Omit<ToastRootProps, "children">;
+
+  /**
+   * {@link ToastTitle} に渡す props を取得します。
+   */
+  getTitleProps(): ToastTitleProps;
+
+  /**
+   * {@link ToastViewport} に渡す props を取得します。
+   */
+  getViewportProps(): Omit<ToastViewportProps, "children">;
+}
+
+interface IUseToastAPI {
+  /**
+   * {@link ToastAPI} を作成します。
+   *
+   * @param props {@link Toast} の props です。
+   * @returns トーストの API です
+   */
+  (props: ToastProps): ToastAPI;
+}
+
+/**
+ * {@link ToastAPI} を作成するフックです。
+ */
+export const useToastAPI: IUseToastAPI = function useSuiToastAPI(props) {
+  const {
+    children,
+    slotProps: {
+      root: rootProps = {},
+      close: closeProps = {},
+      title: titleProps = {},
+      action: actionProps = {},
+      portal: portalProps = {},
+      content: contentProps = {},
+      viewport: viewportProps = {},
+      description: descriptionProps = {},
+    } = {},
+    ...otherProviderProps
+  } = props;
+
+  return {
+    getRootProps(toast) {
+      return { ...rootProps, toast };
+    },
+    getCloseProps() {
+      return { children: "閉じる", ...closeProps };
+    },
+    getTitleProps() {
+      return titleProps;
+    },
+    getActionProps() {
+      return actionProps;
+    },
+    getPortalProps() {
+      return portalProps;
+    },
+    getContentProps() {
+      return contentProps;
+    },
+    getProviderProps() {
+      return { ...otherProviderProps, children };
+    },
+    getViewportProps() {
+      return viewportProps;
+    },
+    getDescriptionProps() {
+      return descriptionProps;
+    },
+  };
+};
+
+export { type ToastAPI as API, useToastAPI as useAPI };
+
 // Component
 // ---------
 
@@ -105,12 +224,13 @@ export type ToastProps = ToastProviderProps & {
  * 複雑なレイアウトやアンカー付き通知を使う場合は、{@link ToastProvider|Provider} と各パーツを直接組み立てます。
  */
 export const Toast: IComponent<ToastProps> = function SuiToast(props) {
-  const { children, slotProps, ...providerProps } = props;
+  const api = useToastAPI(props);
+  const { children, ...otherProviderProps } = api.getProviderProps();
 
   return (
-    <ToastProvider {...providerProps}>
+    <ToastProvider {...otherProviderProps}>
       {children}
-      <ToastList {...slotProps} />
+      <ToastList api={api} />
     </ToastProvider>
   );
 };
@@ -120,53 +240,46 @@ export const Toast: IComponent<ToastProps> = function SuiToast(props) {
  */
 export namespace Toast {
   /**
-   * {@link ToastState} です。
+   * {@link ToastState}
    */
   export type State = ToastState;
 
   /**
-   * {@link ToastProps} です。
+   * {@link ToastProps}
    */
   export type Props = ToastProps;
 
   /**
-   * {@link ToastSlotProps} です。
+   * {@link ToastSlotProps}
    */
   export type SlotProps = ToastSlotProps;
 
   /**
-   * {@link ToastToastObject} です。
+   * {@link ToastToastObject}
    */
   export type ToastObject<TData extends object = object> = ToastToastObject<TData>;
 }
 
-type ToastListProps = ToastSlotProps;
+type ToastListProps = {
+  readonly api: ToastAPI;
+};
 
 function ToastList(props: ToastListProps): React.ReactElement {
-  const {
-    root: rootProps,
-    close: closeProps,
-    title: titleProps,
-    action: actionProps,
-    portal: portalProps,
-    content: contentProps,
-    viewport: viewportProps,
-    description: descriptionProps,
-  } = props;
+  const { api } = props;
   const { toasts } = useToastManager();
 
   return (
-    <ToastPortal {...portalProps}>
-      <ToastViewport {...viewportProps}>
+    <ToastPortal {...api.getPortalProps()}>
+      <ToastViewport {...api.getViewportProps()}>
         {toasts.map((toast) => (
-          <ToastRoot key={toast.id} {...rootProps} toast={toast}>
-            <ToastContent {...contentProps}>
+          <ToastRoot key={toast.id} {...api.getRootProps(toast)}>
+            <ToastContent {...api.getContentProps()}>
               <div className="sui_toast_text">
-                <ToastTitle {...titleProps} />
-                <ToastDescription {...descriptionProps} />
+                <ToastTitle {...api.getTitleProps()} />
+                <ToastDescription {...api.getDescriptionProps()} />
               </div>
-              <ToastAction {...actionProps} />
-              <ToastClose {...closeProps}>{closeProps?.children ?? "閉じる"}</ToastClose>
+              <ToastAction {...api.getActionProps()} />
+              <ToastClose {...api.getCloseProps()} />
             </ToastContent>
           </ToastRoot>
         ))}

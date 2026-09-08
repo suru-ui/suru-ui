@@ -73,27 +73,27 @@ export { type StatAPI as API, useStatAPI as useAPI };
 
 interface IStat extends IComponent<StatProps> {
   /**
-   * {@link StatChange} です。
+   * {@link StatChange}
    */
   readonly Change: IComponent<StatChangeProps>;
 
   /**
-   * {@link StatDescription} です。
+   * {@link StatDescription}
    */
   readonly Description: IComponent<StatDescriptionProps>;
 
   /**
-   * {@link StatLabel} です。
+   * {@link StatLabel}
    */
   readonly Label: IComponent<StatLabelProps>;
 
   /**
-   * {@link StatRoot} です。
+   * {@link StatRoot}
    */
   readonly Root: IComponent<StatRootProps>;
 
   /**
-   * {@link StatValue} です。
+   * {@link StatValue}
    */
   readonly Value: IComponent<StatValueProps>;
 }

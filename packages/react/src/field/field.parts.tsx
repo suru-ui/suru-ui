@@ -20,6 +20,11 @@ export type FieldRootActions = Field.Root.Actions;
 export type FieldRootState = Field.Root.State;
 
 /**
+ * {@link FieldRoot} の妥当性の詳細です。
+ */
+export type FieldRootValidityData = Field.ValidityData;
+
+/**
  * {@link FieldRoot} に渡す props です。
  */
 export type FieldRootProps = React.ComponentProps<typeof Field.Root>;
@@ -41,6 +46,8 @@ export const FieldRoot: IComponent<FieldRootProps> = function SuiFieldRoot(props
   );
 };
 
+export { FieldRoot as Root };
+
 /**
  * {@link FieldRoot} の状態や props をまとめた型名前空間です。
  */
@@ -59,9 +66,12 @@ export namespace Root {
    * {@link FieldRootActions}
    */
   export type Actions = FieldRootActions;
-}
 
-export { FieldRoot as Root };
+  /**
+   * {@link FieldRootValidityData}
+   */
+  export type ValidityData = FieldRootValidityData;
+}
 
 // Label
 // -----
@@ -87,6 +97,8 @@ export const FieldLabel: IComponent<FieldLabelProps> = function SuiFieldLabel(pr
   return <Field.Label {...otherProps} className={cn(className, "sui_field_label")} />;
 };
 
+export { FieldLabel as Label };
+
 /**
  * {@link FieldLabel} の状態や props をまとめた型名前空間です。
  */
@@ -101,8 +113,6 @@ export namespace Label {
    */
   export type Props = FieldLabelProps;
 }
-
-export { FieldLabel as Label };
 
 // Control
 // -------
@@ -136,6 +146,8 @@ export const FieldControl: IComponent<FieldControlProps> = function SuiFieldCont
   return <Field.Control {...otherProps} className={cn(className, "sui_field_control")} />;
 };
 
+export { FieldControl as Control };
+
 /**
  * {@link FieldControl} の状態や props をまとめた型名前空間です。
  */
@@ -160,8 +172,6 @@ export namespace Control {
    */
   export type ChangeEventReason = FieldControlChangeEventReason;
 }
-
-export { FieldControl as Control };
 
 // Description
 // -----------
@@ -189,6 +199,8 @@ export const FieldDescription: IComponent<FieldDescriptionProps> = function SuiF
   return <Field.Description {...otherProps} className={cn(className, "sui_field_description")} />;
 };
 
+export { FieldDescription as Description };
+
 /**
  * {@link FieldDescription} の状態や props をまとめた型名前空間です。
  */
@@ -203,8 +215,6 @@ export namespace Description {
    */
   export type Props = FieldDescriptionProps;
 }
-
-export { FieldDescription as Description };
 
 // Error
 // -----
@@ -230,6 +240,8 @@ export const FieldError: IComponent<FieldErrorProps> = function SuiFieldError(pr
   return <Field.Error {...otherProps} className={cn(className, "sui_field_error")} />;
 };
 
+export { FieldError as Error };
+
 /**
  * {@link FieldError} の状態や props をまとめた型名前空間です。
  */
@@ -244,8 +256,6 @@ export namespace Error {
    */
   export type Props = FieldErrorProps;
 }
-
-export { FieldError as Error };
 
 // Item
 // ----
@@ -271,6 +281,8 @@ export const FieldItem: IComponent<FieldItemProps> = function SuiFieldItem(props
   return <Field.Item {...otherProps} className={cn(className, "sui_field_item")} />;
 };
 
+export { FieldItem as Item };
+
 /**
  * {@link FieldItem} の状態や props をまとめた型名前空間です。
  */
@@ -285,8 +297,6 @@ export namespace Item {
    */
   export type Props = FieldItemProps;
 }
-
-export { FieldItem as Item };
 
 // Validity
 // --------
@@ -310,6 +320,8 @@ export const FieldValidity: IComponent<FieldValidityProps> = function SuiFieldVa
   return <Field.Validity {...props} />;
 };
 
+export { FieldValidity as Validity };
+
 /**
  * {@link FieldValidity} の状態や props をまとめた型名前空間です。
  */
@@ -324,5 +336,3 @@ export namespace Validity {
    */
   export type Props = FieldValidityProps;
 }
-
-export { FieldValidity as Validity };

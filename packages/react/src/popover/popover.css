@@ -34,7 +34,8 @@
 
 /* 変異 */
 :scope {
-  .sui_popover_backdrop:is([data-starting-style], [data-ending-style]) {
+  .sui_popover_backdrop-transition_status_starting,
+  .sui_popover_backdrop-transition_status_ending {
     --_sui_popover_backdrop-opacity: 0;
   }
 }
@@ -153,7 +154,8 @@
 
 /* 変異 */
 :scope {
-  .sui_popover_popup:is([data-starting-style], [data-ending-style]) {
+  .sui_popover_popup-transition_status_starting,
+  .sui_popover_popup-transition_status_ending {
     --_sui_popover_popup-opacity: 0;
     --_sui_popover_popup-scale: 0.98;
   }

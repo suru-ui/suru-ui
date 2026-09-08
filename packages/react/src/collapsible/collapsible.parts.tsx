@@ -13,6 +13,16 @@ import "./collapsible.css";
 // ----
 
 /**
+ * コラプシブルの開閉状態が変更されるイベントの詳細です。
+ */
+export type CollapsibleRootChangeEventDetails = Collapsible.Root.ChangeEventDetails;
+
+/**
+ * コラプシブルの開閉状態が変更される理由です。
+ */
+export type CollapsibleRootChangeEventReason = Collapsible.Root.ChangeEventReason;
+
+/**
  * コラプシブルの大きさです。
  *
  * - `"sm"`: 小さめ
@@ -53,7 +63,7 @@ export const CollapsibleRoot: IComponent<CollapsibleRootProps> = function SuiCol
         className,
         "sui_collapsible",
         `sui_collapsible-size_${size}`,
-        (state) => (state.open ? "sui_collapsible-open" : "sui_collapsible-closed"),
+        (state) => state.open && "sui_collapsible-open",
         (state) =>
           state.transitionStatus !== undefined &&
           `sui_collapsible-transition_status_${state.transitionStatus}`,
@@ -76,6 +86,16 @@ export namespace Root {
    * {@link CollapsibleRootProps}
    */
   export type Props = CollapsibleRootProps;
+
+  /**
+   * {@link CollapsibleRootChangeEventDetails}
+   */
+  export type ChangeEventDetails = CollapsibleRootChangeEventDetails;
+
+  /**
+   * {@link CollapsibleRootChangeEventReason}
+   */
+  export type ChangeEventReason = CollapsibleRootChangeEventReason;
 
   /**
    * {@link CollapsibleRootSize}

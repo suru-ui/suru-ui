@@ -505,7 +505,16 @@ export const AutocompleteClear: IComponent<AutocompleteClearProps> = function Su
 ) {
   const { className, ...otherProps } = props;
 
-  return <Autocomplete.Clear {...otherProps} className={cn(className, "sui_autocomplete_clear")} />;
+  return (
+    <Autocomplete.Clear
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_autocomplete_clear",
+        (state) => state.disabled && "sui_autocomplete_clear-disabled",
+      )}
+    />
+  );
 };
 
 export { AutocompleteClear as Clear };

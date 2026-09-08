@@ -6,9 +6,9 @@ import {
   type HoverCardRootProps,
   type HoverCardRootState,
   type HoverCardArrowProps,
-  type HoverCardPopupProps,
   type HoverCardPortalProps,
   type HoverCardRootActions,
+  type HoverCardContentProps,
   type HoverCardTriggerProps,
   type HoverCardBackdropProps,
   type HoverCardPositionerProps,
@@ -16,8 +16,8 @@ import {
   type HoverCardRootChangeEventDetails,
   HoverCardRoot,
   HoverCardArrow,
-  HoverCardPopup,
   HoverCardPortal,
+  HoverCardContent,
   HoverCardTrigger,
   HoverCardBackdrop,
   HoverCardPositioner,
@@ -59,11 +59,6 @@ export type HoverCardSlotProps<TPayload = any> = {
   readonly backdrop?: HoverCardBackdropProps | undefined;
 
   /**
-   * {@link HoverCardPopup} に渡す props です。
-   */
-  readonly popup?: Omit<HoverCardPopupProps, "children"> | undefined;
-
-  /**
    * {@link HoverCardPortal} に渡す props です。
    */
   readonly portal?: Omit<HoverCardPortalProps, "children"> | undefined;
@@ -86,33 +81,10 @@ export type HoverCardSlotProps<TPayload = any> = {
  */
 export type HoverCardState = HoverCardRootState;
 
-type HoverCardPropsMain<TPayload = any> = {
-  /**
-   * ポップアップに表示する内容です。
-   */
-  children?: HoverCardPopupProps["children"] | undefined;
-
-  /**
-   * ホバーカードが閉じるまでの遅延時間 (ミリ秒) です。
-   *
-   * ポップアップ上にマウスカーソルを移動しても閉じずに済むように、0 より大きい値を指定することを推奨します。
-   *
-   * @default 300
-   */
-  closeDelay?: number | undefined;
-
-  /**
-   * ホバーカードが開くまでの遅延時間 (ミリ秒) です。
-   *
-   * @default 600
-   */
-  delay?: number | undefined;
-
-  /**
-   * トリガーとホバーカードに関連付けるためのハンドルです。
-   */
-  handle?: HoverCardHandle<TPayload> | undefined;
-
+type HoverCardPropsMain<TPayload = any> = Pick<
+  HoverCardTriggerProps<TPayload>,
+  "closeDelay" | "delay"
+> & {
   /**
    * 各パーツに個別の props を渡すためのオブジェクトです。
    *
@@ -134,13 +106,19 @@ type HoverCardPropsRoot<TPayload = any> = Omit<
   "children" | keyof HoverCardPropsMain
 >;
 
+type HoverCardPropsContent = Omit<
+  HoverCardContentProps,
+  keyof HoverCardPropsMain | keyof HoverCardPropsRoot
+>;
+
 /**
  * {@link HoverCard} に渡す props です。
  *
  * @template TPayload トリガーから受け取るデータの型です。
  */
 export type HoverCardProps<TPayload = any> = HoverCardPropsMain<TPayload> &
-  HoverCardPropsRoot<TPayload>;
+  HoverCardPropsRoot<TPayload> &
+  HoverCardPropsContent;
 
 // API
 // ---
@@ -162,9 +140,9 @@ export interface HoverCardAPI<TPayload = any> {
   getBackdropProps(): HoverCardBackdropProps;
 
   /**
-   * {@link HoverCardPopup} に渡す props を取得します。
+   * {@link HoverCardContent} に渡す props を取得します。
    */
-  getPopupProps(): Omit<HoverCardPopupProps, "children">;
+  getContentProps(): HoverCardContentProps;
 
   /**
    * {@link HoverCardPortal} に渡す props を取得します。
@@ -207,25 +185,23 @@ export const useHoverCardAPI: IUseHoverCardAPI = function useSuiHoverCardAPI(
   const {
     open,
     delay,
-    trigger,
-    children: _children,
     handle: handleProp,
-    closeDelay,
+    trigger,
     slotProps: {
       arrow: arrowProps,
-      popup: popupProps = {},
       portal: portalProps = {},
+      trigger: triggerProps = {},
       backdrop: backdropProps = {},
       positioner: positionerProps = {},
-      trigger: triggerProps = {},
     } = {},
     triggerId,
     actionsRef,
+    closeDelay,
     defaultOpen,
     onOpenChange,
     defaultTriggerId,
     onOpenChangeComplete,
-    ...otherRootProps
+    ...contentProps
   } = props;
   const handle = React.useMemo(() => handleProp, [handleProp]);
   const {
@@ -236,33 +212,8 @@ export const useHoverCardAPI: IUseHoverCardAPI = function useSuiHoverCardAPI(
   } = positionerProps;
 
   return {
-    getArrowProps() {
-      if (arrowProps) {
-        return arrowProps;
-      }
-
-      return null;
-    },
-    getBackdropProps() {
-      return backdropProps;
-    },
-    getPopupProps() {
-      return popupProps;
-    },
-    getPortalProps() {
-      return portalProps;
-    },
-    getPositionerProps() {
+    getRootProps(): Required<HoverCardPropsRoot> {
       return {
-        ...otherPositionerProps,
-        align,
-        side,
-        sideOffset,
-      };
-    },
-    getRootProps(): Required<Omit<HoverCardRootProps<any>, "children">> {
-      return {
-        ...otherRootProps,
         open,
         handle,
         triggerId,
@@ -273,17 +224,41 @@ export const useHoverCardAPI: IUseHoverCardAPI = function useSuiHoverCardAPI(
         onOpenChangeComplete,
       };
     },
+    getArrowProps() {
+      if (arrowProps) {
+        return arrowProps;
+      }
+
+      return null;
+    },
+    getPortalProps() {
+      return portalProps;
+    },
+    getContentProps() {
+      return contentProps;
+    },
     getTriggerProps() {
       if (trigger) {
         return {
           ...triggerProps,
+          delay,
           children: trigger,
           closeDelay,
-          delay,
         };
       }
 
       return null;
+    },
+    getBackdropProps() {
+      return backdropProps;
+    },
+    getPositionerProps() {
+      return {
+        ...otherPositionerProps,
+        align,
+        side,
+        sideOffset,
+      };
     },
   };
 };
@@ -314,8 +289,9 @@ interface IHoverCard extends IComponent<HoverCardProps> {
 export const HoverCard: IHoverCard = /*#__PURE__*/ Object.assign(
   function SuiHoverCard(props: HoverCardProps) {
     const api = useHoverCardAPI(props);
-    const arrowProps = api.getArrowProps();
     const triggerProps = api.getTriggerProps();
+    const arrowProps = api.getArrowProps();
+    const contentProps = api.getContentProps();
 
     return (
       <HoverCardRoot {...api.getRootProps()}>
@@ -323,10 +299,10 @@ export const HoverCard: IHoverCard = /*#__PURE__*/ Object.assign(
         <HoverCardPortal {...api.getPortalProps()}>
           <HoverCardBackdrop {...api.getBackdropProps()} />
           <HoverCardPositioner {...api.getPositionerProps()}>
-            <HoverCardPopup {...api.getPopupProps()}>
+            <HoverCardContent {...contentProps}>
               {arrowProps && <HoverCardArrow {...arrowProps} />}
-              {props.children}
-            </HoverCardPopup>
+              {contentProps.children}
+            </HoverCardContent>
           </HoverCardPositioner>
         </HoverCardPortal>
       </HoverCardRoot>

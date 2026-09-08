@@ -1,3 +1,4 @@
+import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import type { IComponent } from "../types.js";
 import {
   type MeterRootSize,
@@ -110,6 +111,8 @@ export interface MeterAPI {
 
   /**
    * {@link MeterLabel} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getLabelProps(): MeterLabelProps | null;
 
@@ -125,6 +128,8 @@ export interface MeterAPI {
 
   /**
    * {@link MeterValue} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getValueProps(): MeterValueProps | null;
 }
@@ -147,42 +152,40 @@ export const useMeterAPI: IUseMeterAPI = function useSuiMeterAPI(props) {
     label,
     value = 0,
     slotProps: {
-      label: labelProps,
+      label: labelProps = {},
       track: trackProps = {},
-      value: valueProps,
+      value: valueProps = {},
       indicator: indicatorProps = {},
     } = {},
     ...otherRootProps
   } = props;
 
   return {
-    getIndicatorProps() {
-      return indicatorProps;
+    getRootProps() {
+      return { value, ...otherRootProps };
     },
     getLabelProps() {
-      if ("label" in props || labelProps) {
+      if (isLikelyVisibleNode(label)) {
         return {
-          children: label,
           ...labelProps,
+          children: label,
         };
       }
 
       return null;
-    },
-    getRootProps() {
-      return { value, ...otherRootProps };
     },
     getTrackProps() {
       return trackProps;
     },
     getValueProps() {
-      if ("label" in props || labelProps || valueProps) {
-        return {
-          ...valueProps,
-        };
+      if (isLikelyVisibleNode(label)) {
+        return valueProps;
       }
 
       return null;
+    },
+    getIndicatorProps() {
+      return indicatorProps;
     },
   };
 };

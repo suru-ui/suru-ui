@@ -179,14 +179,14 @@ export type AlertIconProps = Omit<React.ComponentProps<"div">, keyof RenderProps
  * 子要素を省略すると、状態色の丸いインジケーターを表示します。
  */
 export const AlertIcon: IComponent<AlertIconProps> = function SuiAlertIcon(props) {
-  const { className, "aria-hidden": ariaHidden = true, ...otherDivProps } = props;
+  const { "aria-hidden": ariaHidden = true, ...otherDivProps } = props;
 
   return useRender({
     defaultTagName: "div",
     props: [
       otherDivProps,
       {
-        className: cn(className, "sui_alert_icon"),
+        className: "sui_alert_icon",
         "aria-hidden": ariaHidden,
       },
     ],

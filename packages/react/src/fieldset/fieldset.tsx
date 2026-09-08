@@ -24,22 +24,12 @@ export type FieldsetSlotProps = {
    * {@link FieldsetLegend} に渡す props です。
    */
   readonly legend?: Omit<FieldsetLegendProps, "children"> | undefined;
-
-  /**
-   * {@link FieldsetRoot} に渡す props です。
-   */
-  readonly root?: Omit<FieldsetRootProps, "children"> | undefined;
 };
 
 /**
  * {@link Fieldset} に渡す props です。
  */
-export type FieldsetProps = Omit<FieldsetRootProps, "children"> & {
-  /**
-   * フィールドセットに含める内容です。
-   */
-  children?: FieldsetRootProps["children"] | undefined;
-
+export type FieldsetProps = FieldsetRootProps & {
   /**
    * フィールドセットの凡例です。
    */
@@ -70,7 +60,7 @@ export interface FieldsetAPI {
   /**
    * {@link FieldsetRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<FieldsetRootProps, "children">;
+  getRootProps(): FieldsetRootProps;
 }
 
 interface IUseFieldsetAPI {
@@ -87,20 +77,11 @@ interface IUseFieldsetAPI {
  * {@link FieldsetAPI} を作成するフックです。
  */
 export const useFieldsetAPI: IUseFieldsetAPI = function useSuiFieldsetAPI(props) {
-  const {
-    legend,
-    // children は合成側でそのまま描画するため、ルートの props から取り除きます。
-    children: _children,
-    slotProps: { root: rootProps = {}, legend: legendProps = {} } = {},
-    ...otherRootProps
-  } = props;
+  const { legend, slotProps: { legend: legendProps = {} } = {}, ...rootProps } = props;
 
   return {
     getRootProps() {
-      return {
-        ...rootProps,
-        ...otherRootProps,
-      };
+      return rootProps;
     },
     getLegendProps() {
       if (isLikelyVisibleNode(legend)) {
@@ -127,12 +108,13 @@ export { type FieldsetAPI as API, useFieldsetAPI as useAPI };
  */
 export const Fieldset: IComponent<FieldsetProps> = function SuiFieldset(props) {
   const api = useFieldsetAPI(props);
+  const rootProps = api.getRootProps();
   const legendProps = api.getLegendProps();
 
   return (
-    <FieldsetRoot {...api.getRootProps()}>
+    <FieldsetRoot {...rootProps}>
       {legendProps && <FieldsetLegend {...legendProps} />}
-      {props.children}
+      {rootProps.children}
     </FieldsetRoot>
   );
 };

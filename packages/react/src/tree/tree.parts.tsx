@@ -1,3 +1,4 @@
+import { useControlled } from "@base-ui/utils/useControlled";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
@@ -324,31 +325,39 @@ function isBranchElement(element: Element): boolean {
  */
 export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
   const {
+    size = "md",
     items = EMPTY_NODES,
     value: valueProp,
-    defaultValue = EMPTY,
-    expandedValue: expandedValueProp,
-    defaultExpandedValue = EMPTY,
-    expandOnClick = true,
-    children = defaultRootItemRenderer,
-    onValueChange,
-    onExpandedValueChange,
-    onKeyDown: onKeyDownProp,
-    onFocus: onFocusProp,
     radius = "md",
+    children = defaultRootItemRenderer,
+    defaultValue = EMPTY,
+    expandOnClick = true,
+    expandedValue: expandedValueProp,
+    onValueChange,
     selectionMode = "none",
-    size = "md",
+    defaultExpandedValue = EMPTY,
+    onExpandedValueChange,
     className,
+    onFocus: onFocusProp,
+    onKeyDown: onKeyDownProp,
     ...otherDivProps
   } = props;
 
   const rootRef = React.useRef<HTMLDivElement | null>(null);
-  const [valueState, setValueState] = React.useState<readonly string[]>(defaultValue);
-  const [expandedState, setExpandedState] = React.useState<readonly string[]>(defaultExpandedValue);
+  const [value, setValue] = useControlled<readonly string[]>({
+    controlled: valueProp,
+    default: defaultValue,
+    name: "Tree",
+    state: "value",
+  });
+  const [expandedValue, setExpandedValue] = useControlled<readonly string[]>({
+    controlled: expandedValueProp,
+    default: defaultExpandedValue,
+    name: "Tree",
+    state: "expandedValue",
+  });
   const [activeId, setActiveId] = React.useState<string | null>(null);
 
-  const value = valueProp ?? valueState;
-  const expandedValue = expandedValueProp ?? expandedState;
   const selected = React.useMemo(() => new Set(value), [value]);
   const expanded = React.useMemo(() => new Set(expandedValue), [expandedValue]);
   const baseId = React.useId();
@@ -398,12 +407,10 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
         nextValue = [itemId];
       }
 
-      if (valueProp == null) {
-        setValueState(nextValue);
-      }
+      setValue(nextValue);
       onValueChange?.(nextValue, event);
     },
-    [onValueChange, selected, selectionMode, value, valueProp],
+    [onValueChange, selected, selectionMode, setValue, value],
   );
 
   const toggleExpansion = React.useCallback(
@@ -412,12 +419,10 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
         ? expandedValue.filter((id) => id !== itemId)
         : [...expandedValue, itemId];
 
-      if (expandedValueProp == null) {
-        setExpandedState(nextValue);
-      }
+      setExpandedValue(nextValue);
       onExpandedValueChange?.(nextValue, event);
     },
-    [expanded, expandedValue, expandedValueProp, onExpandedValueChange],
+    [expanded, expandedValue, onExpandedValueChange, setExpandedValue],
   );
 
   const ctx = React.useMemo<TreeContext>(
@@ -560,9 +565,7 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
           .filter((itemId) => itemId !== "" && !expanded.has(itemId));
         if (collapsedIds.length > 0) {
           const nextValue = [...expandedValue, ...collapsedIds];
-          if (expandedValueProp == null) {
-            setExpandedState(nextValue);
-          }
+          setExpandedValue(nextValue);
           onExpandedValueChange?.(nextValue, event);
         }
         break;
@@ -714,64 +717,62 @@ type TreeItemStyle = React.CSSProperties & {
 /**
  * {@link TreeItem} に渡すプロパティーです。
  */
-export type TreeItemProps = Omit<
-  React.ComponentProps<"div"> & RenderProps<TreeItemState>,
-  "children"
-> & {
-  /**
-   * 項目の内容です。
-   */
-  children?: React.ReactNode | undefined;
+export type TreeItemProps = Omit<React.ComponentProps<"div">, keyof RenderProps | "children"> &
+  RenderProps<TreeItemState> & {
+    /**
+     * 項目の内容です。
+     */
+    children?: React.ReactNode | undefined;
 
-  /**
-   * 項目を無効にするかどうかを指定します。
-   *
-   * @default false
-   */
-  disabled?: boolean | undefined;
+    /**
+     * 項目を無効にするかどうかを指定します。
+     *
+     * @default false
+     */
+    disabled?: boolean | undefined;
 
-  /**
-   * 子ノードを持つかどうかを指定します。
-   *
-   * @default false
-   */
-  hasChildren?: boolean | undefined;
+    /**
+     * 子ノードを持つかどうかを指定します。
+     *
+     * @default false
+     */
+    hasChildren?: boolean | undefined;
 
-  /**
-   * 対応するノードの識別子です。
-   *
-   * `items` プロパティーから描画した項目には自動的に渡されます。
-   */
-  id: string;
+    /**
+     * 対応するノードの識別子です。
+     *
+     * `items` プロパティーから描画した項目には自動的に渡されます。
+     */
+    id: string;
 
-  /**
-   * 項目のラベルです。
-   *
-   * `children` を指定しないとき、{@link TreeItemLabel} として描画されます。
-   */
-  label?: React.ReactNode | undefined;
+    /**
+     * 項目のラベルです。
+     *
+     * `children` を指定しないとき、{@link TreeItemLabel} として描画されます。
+     */
+    label?: React.ReactNode | undefined;
 
-  /**
-   * ノードの深さです。ルートの直接の子が `1` です。
-   *
-   * `items` プロパティーから描画した項目には自動的に渡されます。
-   */
-  level: number;
+    /**
+     * ノードの深さです。ルートの直接の子が `1` です。
+     *
+     * `items` プロパティーから描画した項目には自動的に渡されます。
+     */
+    level: number;
 
-  /**
-   * 同じ深さの中での位置です。1 起点です。
-   *
-   * `items` プロパティーから描画した項目には自動的に渡されます。
-   */
-  posInSet?: number | undefined;
+    /**
+     * 同じ深さの中での位置です。1 起点です。
+     *
+     * `items` プロパティーから描画した項目には自動的に渡されます。
+     */
+    posInSet?: number | undefined;
 
-  /**
-   * 同じ深さの項目数です。
-   *
-   * `items` プロパティーから描画した項目には自動的に渡されます。
-   */
-  setSize?: number | undefined;
-};
+    /**
+     * 同じ深さの項目数です。
+     *
+     * `items` プロパティーから描画した項目には自動的に渡されます。
+     */
+    setSize?: number | undefined;
+  };
 
 /**
  * ツリーの項目要素です。
@@ -782,14 +783,13 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
   const ctx = useSuiTreeContext(true);
   const {
     id: itemId,
+    label,
     level,
     setSize,
+    children,
+    disabled = false,
     posInSet,
     hasChildren = false,
-    disabled = false,
-    label,
-    children,
-    className,
     onClick: onClickProp,
     ...otherDivProps
   } = props;
@@ -831,8 +831,7 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
         "aria-selected": ctx?.selectionMode !== "none" ? selected : undefined,
         "aria-setsize": setSize,
         children: children ?? (label != null ? <TreeItemLabel>{label}</TreeItemLabel> : null),
-        className: cn(
-          className,
+        className: cn<TreeItemState>(
           "sui_tree_item",
           expanded && "sui_tree_item-expanded",
           selected && "sui_tree_item-selected",
@@ -894,19 +893,19 @@ export type TreeItemIndicatorProps = Omit<React.ComponentProps<"span">, keyof Re
 export const TreeItemIndicator: IComponent<TreeItemIndicatorProps> = function SuiTreeItemIndicator(
   props,
 ) {
-  const { visible = true, className, children = <ChevronRightIcon />, ...otherSpanProps } = props;
+  const { visible = true, children = <ChevronRightIcon />, ...otherSpanProps } = props;
 
   return useRender({
     defaultTagName: "span",
     props: [
-      { ...otherSpanProps, children },
+      otherSpanProps,
       {
-        "data-sui_tree_item_indicator": "",
-        className: cn(
-          className,
+        children,
+        className: cn<TreeItemIndicatorState>(
           "sui_tree_item_indicator",
           !visible && "sui_tree_item_indicator-hidden",
         ),
+        "data-sui_tree_item_indicator": "",
       },
     ],
   });

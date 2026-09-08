@@ -7,6 +7,8 @@ import {
   type CollapsibleContentProps,
   type CollapsibleTriggerProps,
   type CollapsibleIndicatorProps,
+  type CollapsibleRootChangeEventReason,
+  type CollapsibleRootChangeEventDetails,
   CollapsibleRoot,
   CollapsibleContent,
   CollapsibleTrigger,
@@ -15,6 +17,16 @@ import {
 
 // Types
 // -----
+
+/**
+ * {@link CollapsibleRootChangeEventDetails}
+ */
+export type CollapsibleChangeEventDetails = CollapsibleRootChangeEventDetails;
+
+/**
+ * {@link CollapsibleRootChangeEventReason}
+ */
+export type CollapsibleChangeEventReason = CollapsibleRootChangeEventReason;
 
 /**
  * {@link CollapsibleRootSize}
@@ -138,7 +150,7 @@ export const useCollapsibleAPI: IUseCollapsibleAPI = function useSuiCollapsibleA
       return null;
     },
     getTriggerProps() {
-      if (trigger === undefined) {
+      if (!trigger) {
         return null;
       }
 
@@ -201,6 +213,16 @@ export namespace Collapsible {
    * {@link CollapsibleSlotProps}
    */
   export type SlotProps = CollapsibleSlotProps;
+
+  /**
+   * {@link CollapsibleChangeEventDetails}
+   */
+  export type ChangeEventDetails = CollapsibleChangeEventDetails;
+
+  /**
+   * {@link CollapsibleChangeEventReason}
+   */
+  export type ChangeEventReason = CollapsibleChangeEventReason;
 
   /**
    * {@link CollapsibleSize}

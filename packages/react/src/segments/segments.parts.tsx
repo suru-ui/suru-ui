@@ -45,7 +45,7 @@ export type SegmentsRootState = BaseTabs.Root.State;
 /**
  * {@link SegmentsRoot} に渡す props です。
  */
-export type SegmentsRootProps = Omit<React.ComponentProps<typeof BaseTabs.Root>, "children"> & {
+export type SegmentsRootProps = React.ComponentProps<typeof BaseTabs.Root> & {
   /**
    * Segments の配色を指定します。
    *

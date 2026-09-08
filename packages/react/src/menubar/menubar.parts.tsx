@@ -6,6 +6,7 @@ import { Button } from "../button/button.jsx";
 import cn from "../cn.js";
 import { type MenuProps, Menu } from "../menu/menu.jsx";
 import type { IComponent } from "../types.js";
+import { isItemObject } from "./_menubar.jsx";
 
 import "./menubar.css";
 
@@ -148,10 +149,6 @@ const defaultRootItemRenderer: IMenubarRootItemRenderer = (item, index) => {
     </Menu>
   );
 };
-
-function isItemObject(item: unknown): item is MenubarRootItemObject {
-  return typeof item === "object" && item !== null && "label" in item;
-}
 
 export { MenubarRoot as Root };
 

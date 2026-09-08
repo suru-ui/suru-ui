@@ -117,7 +117,8 @@ export const useAvatarGroupAPI: IUseAvatarGroupAPI = function useSuiAvatarGroupA
   } = props;
   const childArray = React.Children.toArray(children);
   const hasSurplus = childArray.length > max;
-  const renderedChildArray = childArray.slice(0, hasSurplus ? max - 1 : max);
+  const visibleCount = hasSurplus ? Math.max(0, max - 1) : Math.max(0, max);
+  const renderedChildArray = childArray.slice(0, visibleCount);
 
   return {
     getRootProps() {

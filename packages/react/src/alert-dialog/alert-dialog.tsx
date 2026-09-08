@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { XIcon } from "../_icons.jsx";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
-import * as Button from "../button/button.parts.jsx";
+import { ButtonRoot } from "../button/button.parts.jsx";
 import type { IComponent, IUseContext } from "../types.js";
 import {
   type AlertDialogHandle,
@@ -241,7 +241,7 @@ type AlertDialogPropsBody = Omit<
 type AlertDialogPropsContent = Pick<AlertDialogContentProps, "outlined" | "radius" | "variant">;
 
 /**
- * {@link AlertDialog} に渡す props です。 props です。
+ * {@link AlertDialog} に渡す props です。
  *
  * @template TPayload トリガーが送信するデータの型です。
  */
@@ -258,9 +258,9 @@ function CancelIconButton() {
 
   return (
     <AlertDialogCloseTrigger>
-      <Button.Root radius={ctx?.radius} squared variant="naked">
+      <ButtonRoot radius={ctx?.radius} squared variant="naked">
         <XIcon />
-      </Button.Root>
+      </ButtonRoot>
     </AlertDialogCloseTrigger>
   );
 }
@@ -507,10 +507,10 @@ export const useAlertDialogAPI: IUseAlertDialogAPI = function useSuiAlertDialogA
     },
     getCancelTriggerProps() {
       if (isLikelyVisibleNode(cancel)) {
-        const { onClick, ...ohterCancelButtonProps } = cancelTriggerProps;
+        const { onClick, ...otherCancelButtonProps } = cancelTriggerProps;
 
         return {
-          ...ohterCancelButtonProps,
+          ...otherCancelButtonProps,
           children: cancel,
           onClick(evt) {
             onClick?.(evt);
@@ -538,10 +538,10 @@ export const useAlertDialogAPI: IUseAlertDialogAPI = function useSuiAlertDialogA
     },
     getConfirmTriggerProps() {
       if (isLikelyVisibleNode(confirm)) {
-        const { onClick, ...ohterConfirmButtonProps } = confirmTriggerProps;
+        const { onClick, ...otherConfirmButtonProps } = confirmTriggerProps;
 
         return {
-          ...ohterConfirmButtonProps,
+          ...otherConfirmButtonProps,
           children: confirm,
           onClick(evt) {
             onClick?.(evt);

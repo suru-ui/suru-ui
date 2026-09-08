@@ -938,7 +938,7 @@
   --sui_alert_dialog_body-font_size: var(--sui-text-std-md-n-font_size);
   --sui_alert_dialog_body-font_weight: var(--sui-text-std-md-n-font_weight);
   --sui_alert_dialog_body-line_height: var(--sui-text-std-md-n-line_height);
-  --sui_alert_dialog_body-color: var(--sui-canvas-1);
+  --sui_alert_dialog_body-color: var(--sui-canvas_text-1);
   --sui_alert_dialog_body-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
 }
 

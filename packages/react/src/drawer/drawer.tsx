@@ -125,7 +125,7 @@ export type DrawerSlotProps<TPayload = any> = {
   /**
    * {@link DrawerHeader} に渡す props です。
    */
-  readonly header?: DrawerHeaderProps | undefined;
+  readonly header?: Omit<DrawerHeaderProps, "children"> | undefined;
 
   /**
    * {@link DrawerPopup} に渡す props です。
@@ -288,7 +288,7 @@ export interface DrawerAPI<TPayload = any> {
   /**
    * {@link DrawerHeader} に渡す props を取得します。
    */
-  getHeaderProps(): DrawerHeaderProps | null;
+  getHeaderProps(): Omit<DrawerHeaderProps, "children"> | null;
 
   /**
    * {@link DrawerPopup} に渡す props を取得します。

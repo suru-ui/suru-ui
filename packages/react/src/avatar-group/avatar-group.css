@@ -20,8 +20,8 @@
 :scope {
   --sui_avatar_group_avatar-z_index: ;
   --sui_avatar_group_avatar-overlap: ;
-  --sui_avatar_group_avatar-virtual_ring_color: ;
-  --sui_avatar_group_avatar-virtual_ring_width: ;
+  --sui_avatar_group_avatar-ring_color: ;
+  --sui_avatar_group_avatar-ring_width: ;
 }
 
 /* 可変 */
@@ -31,8 +31,8 @@
     box-shadow: 0px
                 0px
                 0px
-                var(--sui_avatar_group_avatar-virtual_ring_width)
-                var(--sui_avatar_group_avatar-virtual_ring_color);
+                var(--sui_avatar_group_avatar-ring_width)
+                var(--sui_avatar_group_avatar-ring_color);
   }
 
   &.sui_avatar_group-forward .sui_avatar:not(:first-child) {
@@ -46,17 +46,10 @@
 
 /* 代入 */
 :scope {
+  --sui_avatar_group_avatar-z_index: auto;
   --sui_avatar_group_avatar-overlap: calc(-1 * --sui-space(4));
-  --sui_avatar_group_avatar-virtual_ring_color: var(--sui-canvas-1);
-  --sui_avatar_group_avatar-virtual_ring_width: --sui-border_width(3);
-
-  &.sui_avatar_group-forward {
-    --sui_avatar_group_avatar-z_index: sibling-index();
-  }
-
-  &.sui_avatar_group-reverse {
-    --sui_avatar_group_avatar-z_index: calc(sibling-count() - sibling-index());
-  }
+  --sui_avatar_group_avatar-ring_color: var(--sui-canvas-1);
+  --sui_avatar_group_avatar-ring_width: --sui-border_width(3);
 }
 
 /* 変異 */
