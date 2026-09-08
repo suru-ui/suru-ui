@@ -5,6 +5,7 @@ import toReactNode from "../_to-react-node.js";
 import { Button } from "../button/button.jsx";
 import { type MenuProps, Menu } from "../menu/menu.jsx";
 import type { IComponent } from "../types.js";
+import { isItemObject } from "./_menubar.jsx";
 import {
   type MenubarRootProps,
   type MenubarRootState,
@@ -147,10 +148,6 @@ export const useMenubarAPI: IUseMenubarAPI = function useSuiMenubarAPI(props) {
     },
   };
 };
-
-function isItemObject(item: unknown): item is MenubarItemObject {
-  return typeof item === "object" && item !== null && "label" in item;
-}
 
 export { type MenubarAPI as API, useMenubarAPI as useAPI };
 

@@ -11,17 +11,6 @@ import "./image.css";
 // ----
 
 /**
- * 画像の角丸です。
- *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
- * - `"full"`: 完全な丸形
- */
-export type ImageRootRadius = "none" | Size | "full";
-
-/**
  * 画像の表示方法 (`object-fit`) です。
  *
  * - `"cover"`: 余白を残さずコンテナーに収める (はみ出した部分は切り取る)
@@ -31,6 +20,17 @@ export type ImageRootRadius = "none" | Size | "full";
  * - `"scale-down"`: `none` と `contain` の小さいほうで表示する
  */
 export type ImageRootFit = "cover" | "contain" | "fill" | "none" | "scale-down";
+
+/**
+ * 画像の角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
+ */
+export type ImageRootRadius = "none" | Size | "full";
 
 /**
  * {@link ImageRoot} が持つ状態です。
@@ -61,19 +61,14 @@ export type ImageRootProps = Omit<React.ComponentProps<"img">, keyof RenderProps
  * 画像のルートコンポーネントです。
  */
 export const ImageRoot: IComponent<ImageRootProps> = function SuiImageRoot(props) {
-  const { fit, radius = "none", className, ...otherImgProps } = props;
+  const { fit, radius = "none", ...otherImgProps } = props;
 
   return useRender({
     defaultTagName: "img",
     props: [
       otherImgProps,
       {
-        className: cn(
-          className,
-          "sui_image",
-          `sui_image-radius_${radius}`,
-          fit && `sui_image-fit_${fit}`,
-        ),
+        className: cn("sui_image", fit && `sui_image-fit_${fit}`, `sui_image-radius_${radius}`),
         "data-scope": "",
       },
     ],

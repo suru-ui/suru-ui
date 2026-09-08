@@ -167,6 +167,11 @@ export type MenuRootChangeEventDetails = Menu.Root.ChangeEventDetails;
 export type MenuRootChangeEventReason = Menu.Root.ChangeEventReason;
 
 /**
+ * {@link MenuRoot} の向きです。
+ */
+export type MenuRootOrientation = Menu.Root.Orientation;
+
+/**
  * {@link MenuRoot} の通常項目です。
  *
  * `label` を含み、その他の props は {@link MenuItem} に渡されます。
@@ -502,6 +507,11 @@ export namespace Root {
   export type LinkItemObject = MenuRootLinkItemObject;
 
   /**
+   * {@link MenuRootOrientation}
+   */
+  export type Orientation = MenuRootOrientation;
+
+  /**
    * {@link MenuRootRadioGroupObject}
    */
   export type RadioGroupObject = MenuRootRadioGroupObject;
@@ -588,6 +598,7 @@ export const MenuTrigger: IMenuTrigger = function SuiMenuTrigger(props: MenuTrig
         className,
         "sui_menu_trigger",
         (state) => state.open && "sui_menu_trigger-open",
+        (state) => state.disabled && "sui_menu_trigger-disabled",
       )}
     />
   );
