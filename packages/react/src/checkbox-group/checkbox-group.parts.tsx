@@ -281,6 +281,7 @@ export const CheckboxGroupRoot: IComponent<CheckboxGroupRootProps> = function Su
           className,
           "sui_checkbox_group",
           `sui_checkbox_group-orientation_${orientation}`,
+          (state) => state.disabled && "sui_checkbox_group-disabled",
         )}
         data-scope=""
       />
