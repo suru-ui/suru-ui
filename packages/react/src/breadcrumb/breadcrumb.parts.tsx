@@ -426,13 +426,21 @@ export type BreadcrumbLinkProps = Omit<React.ComponentProps<"a">, keyof RenderPr
  * `current` を `true` にすると、現在位置を示す要素として描画します。
  */
 export const BreadcrumbLink: IComponent<BreadcrumbLinkProps> = function SuiBreadcrumbLink(props) {
-  const { current = false, disabled = false, className, ...otherAnchorProps } = props;
+  const { current = false, onClick, disabled = false, className, ...otherAnchorProps } = props;
+  const handleOnClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    onClick?.(event);
+    if (disabled && !event.defaultPrevented) {
+      event.preventDefault();
+    }
+  };
 
   return useRender({
     props: [
       otherAnchorProps,
       {
         href: disabled ? undefined : otherAnchorProps.href,
+        onClick: handleOnClick,
+        tabIndex: disabled && !current ? -1 : otherAnchorProps.tabIndex,
         className: cn(
           className,
           "sui_breadcrumb_link",

@@ -23,6 +23,13 @@ export type SidebarOpenState = "expanded" | "collapsed";
  */
 export type SidebarContext = {
   /**
+   * 折りたたみの方法です。
+   *
+   * {@link SidebarRoot} の内側ではその値が入ります。外側では `undefined` です。
+   */
+  readonly collapsible?: SidebarRootCollapsible | undefined;
+
+  /**
    * サイドバーが開いているかどうかです。
    */
   readonly open: boolean;
@@ -124,6 +131,10 @@ export const SidebarProvider: IComponent<SidebarProviderProps> = function SuiSid
   } = props;
   const [openState, setOpenState] = React.useState(defaultOpen);
   const open = openProp ?? openState;
+  const openRef = React.useRef(open);
+  React.useEffect(() => {
+    openRef.current = open;
+  }, [open]);
   const setOpen = React.useCallback(
     (nextOpen: boolean) => {
       if (openProp === undefined) {
@@ -134,8 +145,8 @@ export const SidebarProvider: IComponent<SidebarProviderProps> = function SuiSid
     [openProp, onOpenChange],
   );
   const toggle = React.useCallback(() => {
-    setOpen(!open);
-  }, [open, setOpen]);
+    setOpen(!openRef.current);
+  }, [setOpen]);
   const openStateValue: SidebarOpenState = open ? "expanded" : "collapsed";
   const renderState = React.useMemo<SidebarProviderState>(
     () => ({ state: openStateValue }),
@@ -287,8 +298,12 @@ export const SidebarRoot: IComponent<SidebarRootProps> = function SuiSidebarRoot
     () => ({ open, side, state, variant, collapsible }),
     [collapsible, open, side, state, variant],
   );
+  const childCtx = React.useMemo<SidebarContext>(
+    () => ({ ...(ctx ?? { open, state, toggle: () => {}, setOpen: () => {} }), collapsible }),
+    [collapsible, ctx, open, state],
+  );
 
-  return useRender({
+  const element = useRender({
     props: [
       otherAsideProps,
       {
@@ -305,6 +320,8 @@ export const SidebarRoot: IComponent<SidebarRootProps> = function SuiSidebarRoot
     state: renderState,
     defaultTagName: "aside",
   });
+
+  return <SidebarContext value={childCtx}>{element}</SidebarContext>;
 };
 
 export { SidebarRoot as Root };
@@ -681,11 +698,15 @@ export const SidebarRail: IComponent<SidebarRailProps> = function SuiSidebarRail
   const { onClick, children, ...otherButtonProps } = props;
   const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
-    if (!event.defaultPrevented) {
+    if (!event.defaultPrevented && ctx.collapsible !== "none") {
       ctx.toggle();
     }
   };
   const renderState = React.useMemo<SidebarRailState>(() => ({ state: ctx.state }), [ctx.state]);
+
+  if (ctx.collapsible === "none") {
+    return null;
+  }
 
   return useRender({
     props: [
@@ -750,13 +771,15 @@ export const SidebarTrigger: IComponent<SidebarTriggerProps> = function SuiSideb
   const {
     onClick,
     children,
+    disabled,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherButtonProps
   } = props;
+  const triggerDisabled = disabled ?? ctx.collapsible === "none";
   const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
-    if (!event.defaultPrevented) {
+    if (!event.defaultPrevented && !triggerDisabled) {
       ctx.toggle();
     }
   };
@@ -769,6 +792,7 @@ export const SidebarTrigger: IComponent<SidebarTriggerProps> = function SuiSideb
         type: "button",
         onClick: handleOnClick,
         children: children ?? <DefaultTriggerIcon />,
+        disabled: triggerDisabled || undefined,
         className: cn<SidebarTriggerState>(
           "sui_sidebar_trigger",
           (state) => `sui_sidebar_trigger-${state.state}`,

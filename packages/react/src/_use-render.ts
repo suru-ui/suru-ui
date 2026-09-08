@@ -59,25 +59,32 @@ export default function useRender<
   if (Array.isArray(props)) {
     const propsList = props;
     const renderPropsList: RenderProps<TState>[] = [];
-    for (const props of propsList) {
-      const { ref, style, render, className, ...elementProps } = props;
+    for (const propsItem of propsList) {
+      const { ref: itemRef, style, render, className, ...elementProps } = propsItem;
 
       const renderProps: RenderProps<TState> = { style, className };
-      if ("render" in props) {
+      if ("render" in propsItem) {
         renderProps.render = render;
       }
 
-      refList.push(ref);
+      if (itemRef !== undefined) {
+        refList.push(itemRef);
+      }
       renderPropsList.push(renderProps);
       elementPropsList.push(elementProps);
     }
 
     renderProps = mergePropsN(renderPropsList);
   } else {
-    const { ref, style, render, className, ...elementProps } = props;
+    const { ref: itemRef, style, render, className, ...elementProps } = props;
 
-    refList.push(ref);
-    renderProps = { style, render, className };
+    if (itemRef !== undefined) {
+      refList.push(itemRef);
+    }
+    renderProps = { style, className };
+    if ("render" in props) {
+      renderProps.render = render;
+    }
     elementPropsList.push(elementProps);
   }
 

@@ -150,7 +150,7 @@ export type ComboboxSlotProps = {
   /**
    * {@link ComboboxChipRemove} に渡すプロパティーです。
    */
-  readonly chipRemove?: Omit<ComboboxChipRemoveProps, "children"> | undefined;
+  readonly chipRemove?: ComboboxChipRemoveProps | undefined;
 
   /**
    * {@link ComboboxChips} に渡すプロパティーです。
@@ -160,7 +160,7 @@ export type ComboboxSlotProps = {
   /**
    * {@link ComboboxClear} に渡すプロパティーです。
    */
-  readonly clear?: Omit<ComboboxClearProps, "children"> | undefined;
+  readonly clear?: ComboboxClearProps | undefined;
 
   /**
    * {@link ComboboxCollection} に渡すプロパティーです。
@@ -195,7 +195,7 @@ export type ComboboxSlotProps = {
   /**
    * {@link ComboboxIcon} に渡すプロパティーです。
    */
-  readonly icon?: Omit<ComboboxIconProps, "children"> | undefined;
+  readonly icon?: ComboboxIconProps | undefined;
 
   /**
    * {@link ComboboxInput} に渡すプロパティーです。
@@ -215,7 +215,7 @@ export type ComboboxSlotProps = {
   /**
    * {@link ComboboxItemIndicator} に渡すプロパティーです。
    */
-  readonly itemIndicator?: Omit<ComboboxItemIndicatorProps, "children"> | undefined;
+  readonly itemIndicator?: ComboboxItemIndicatorProps | undefined;
 
   /**
    * {@link ComboboxLabel} に渡すプロパティーです。
@@ -557,9 +557,11 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI(props)
       };
     },
     getIconProps() {
+      const { children = <ChevronIcon />, ...otherIconProps } = iconProps;
+
       return {
-        ...iconProps,
-        children: <ChevronIcon />,
+        ...otherIconProps,
+        children,
       };
     },
     getItemProps(item, index) {
@@ -667,11 +669,16 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI(props)
     },
     getChipRemoveProps(item) {
       const itemLabel = itemToStringLabel?.(item) ?? getItemLabel(item);
+      const {
+        children = <ClearIcon />,
+        "aria-label": ariaLabel = `${itemLabel}を削除`,
+        ...otherChipRemoveProps
+      } = chipRemoveProps;
 
       return {
-        ...chipRemoveProps,
-        children: <ClearIcon />,
-        "aria-label": `${itemLabel}を削除`,
+        ...otherChipRemoveProps,
+        children,
+        "aria-label": ariaLabel,
       };
     },
     getCollectionProps() {
@@ -701,9 +708,11 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI(props)
       return scrollAreaProps;
     },
     getItemIndicatorProps() {
+      const { children = <CheckIcon />, ...otherItemIndicatorProps } = itemIndicatorProps;
+
       return {
-        ...itemIndicatorProps,
-        children: <CheckIcon />,
+        ...otherItemIndicatorProps,
+        children,
       };
     },
   };

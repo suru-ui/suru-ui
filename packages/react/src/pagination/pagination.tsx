@@ -202,6 +202,7 @@ interface IUsePaginationAPI {
 export const usePaginationAPI: IUsePaginationAPI = function useSuiPaginationAPI(props) {
   const {
     page: pageProp,
+    disabled = false,
     slotProps: {
       item: itemProps = {},
       next: nextProps = {},
@@ -221,11 +222,20 @@ export const usePaginationAPI: IUsePaginationAPI = function useSuiPaginationAPI(
   );
   const page = Math.min(Math.max(pageProp ?? innerPage, 1), maxPage);
   const handlePageChange: PaginationGoToPage = (nextPage, details) => {
-    if (pageProp === undefined) {
-      setInnerPage(nextPage);
+    if (disabled || totalPages < 1) {
+      return;
     }
 
-    onPageChange?.(nextPage, details);
+    const target = Math.min(Math.max(Math.trunc(nextPage), 1), maxPage);
+    if (target === page) {
+      return;
+    }
+
+    if (pageProp === undefined) {
+      setInnerPage(target);
+    }
+
+    onPageChange?.(target, details);
   };
   const items = getPaginationItems(totalPages, page, siblingCount, boundaryCount);
 
@@ -248,6 +258,7 @@ export const usePaginationAPI: IUsePaginationAPI = function useSuiPaginationAPI(
       return {
         ...otherRootProps,
         page,
+        disabled,
         totalPages,
         onPageChange: handlePageChange,
       };

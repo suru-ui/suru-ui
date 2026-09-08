@@ -121,7 +121,7 @@ export const RadioRoot: IComponent<RadioRootProps> = function SuiRadioRoot(props
   const radius = group?.radius ?? radiusProp;
   const variant = group?.variant ?? variantProp;
   const outlined = group?.outlined ?? outlinedProp;
-  const disabled = group?.disabled ?? disabledProp;
+  const disabled = (group?.disabled || disabledProp) ?? undefined;
 
   return (
     <Radio.Root

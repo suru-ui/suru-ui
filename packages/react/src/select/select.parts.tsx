@@ -300,6 +300,7 @@ export const SelectRoot: ISelectRoot = function SuiSelectRoot<
 };
 
 type BaseSelectItems = NonNullable<BaseSelect.Root.Props<unknown>["items"]>;
+type BaseSelectItem = Extract<BaseSelectItems, readonly unknown[]>[number];
 
 function getBaseItems<TValue>(
   items: SelectRootItems<TValue> | undefined,
@@ -308,16 +309,23 @@ function getBaseItems<TValue>(
     return items;
   }
 
-  const first = items[0];
-  if (
-    typeof first === "object" &&
-    first !== null &&
-    (("items" in first && Array.isArray(first.items)) || ("label" in first && "value" in first))
-  ) {
-    return items as BaseSelectItems;
+  if (items.length === 0) {
+    return [];
   }
 
-  return undefined;
+  return items.map((item) => {
+    if (typeof item === "object" && item !== null) {
+      if ("items" in item && Array.isArray((item as { items: unknown }).items)) {
+        return item as BaseSelectItem;
+      }
+
+      if ("label" in item && "value" in item) {
+        return item as BaseSelectItem;
+      }
+    }
+
+    return { label: item as React.ReactNode, value: item } as BaseSelectItem;
+  }) as BaseSelectItems;
 }
 
 export { SelectRoot as Root };

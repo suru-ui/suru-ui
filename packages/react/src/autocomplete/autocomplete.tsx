@@ -123,7 +123,7 @@ export type AutocompleteSlotProps = {
   /**
    * {@link AutocompleteAddon} に渡すプロパティーです。
    */
-  readonly addon?: Omit<AutocompleteAddonProps, "children"> | undefined;
+  readonly addon?: AutocompleteAddonProps | undefined;
 
   /**
    * {@link AutocompleteClear} に渡すプロパティーです。
@@ -548,9 +548,11 @@ export const useAutocompleteAPI: IUseAutocompleteAPI = function useSuiAutocomple
       };
     },
     getChevronAddonProps() {
+      const { children = <ChevronIcon />, ...otherAddonProps } = addonProps;
+
       return {
-        ...addonProps,
-        children: <ChevronIcon />,
+        ...otherAddonProps,
+        children,
       };
     },
     getEndAddonsPropsList() {

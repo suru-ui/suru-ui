@@ -61,46 +61,57 @@ type ConfigState = Config & {
 };
 
 /**
+ * 対応表から設定を作成します。
+ *
+ * `get` を対応表へのクロージャーにすることで、分割代入しても動作します。
+ */
+function createConfigState(map: Record<string, unknown>): ConfigState {
+  const state: ConfigState = {
+    get(
+      key: string,
+      typeGuard: (value: any) => boolean = () => true,
+      defaultValue: unknown = null,
+    ): unknown {
+      const value = state.map[key];
+      if (typeGuard(value)) {
+        return value;
+      }
+
+      return defaultValue;
+    },
+
+    map,
+
+    Context(props: { children?: React.ReactNode; [key: string]: unknown }): React.ReactElement {
+      const config = React.use(Config) as ConfigState;
+      const { children, ...values } = props;
+
+      const set: Record<string, unknown> = {};
+      let dirty = false;
+      for (const key in values) {
+        if (!Object.is(config.map[key], values[key])) {
+          set[key] = values[key];
+          dirty = true;
+        }
+      }
+
+      return (
+        <Config value={dirty ? createConfigState({ ...config.map, ...set }) : config}>
+          {children}
+        </Config>
+      );
+    },
+  };
+
+  return state;
+}
+
+/**
  * 何も持たない初期設定です。
  *
  * コンテキストの既定値として使います。
  */
-const config: ConfigState = {
-  get(
-    key: string,
-    typeGuard: (value: any) => boolean = () => true,
-    defaultValue: unknown = null,
-  ): unknown {
-    const value = this.map[key];
-    if (typeGuard(value)) {
-      return value;
-    }
-
-    return defaultValue;
-  },
-
-  map: {},
-
-  Context(props: { children?: React.ReactNode; [key: string]: unknown }): React.ReactElement {
-    const config = React.use(Config) as ConfigState;
-    const { children, ...values } = props;
-
-    const set: Record<string, unknown> = {};
-    let dirty = false;
-    for (const key in values) {
-      if (!Object.is(config.map[key], values[key])) {
-        set[key] = values[key];
-        dirty = true;
-      }
-    }
-
-    return (
-      <Config value={dirty ? { ...config, map: { ...config.map, ...set } } : config}>
-        {children}
-      </Config>
-    );
-  },
-};
+const config: ConfigState = createConfigState({});
 
 /**
  * グローバルな値を共有するコンテキストです。

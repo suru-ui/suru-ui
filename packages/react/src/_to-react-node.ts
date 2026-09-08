@@ -1,3 +1,5 @@
+import type * as React from "react";
+
 import isLikelyVisibleNode, { type LikelyVisibleNode } from "./_is-likely-visible-node.js";
 
 function toReactNode(node: unknown): LikelyVisibleNode | null;

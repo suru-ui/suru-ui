@@ -130,7 +130,7 @@ export type SelectSlotProps = {
   /**
    * {@link SelectIcon} に渡す props です。
    */
-  readonly icon?: Omit<SelectIconProps, "children"> | undefined;
+  readonly icon?: SelectIconProps | undefined;
 
   /**
    * {@link SelectItem} に渡す props です。
@@ -140,7 +140,7 @@ export type SelectSlotProps = {
   /**
    * {@link SelectItemIndicator} に渡す props です。
    */
-  readonly itemIndicator?: Omit<SelectItemIndicatorProps, "children"> | undefined;
+  readonly itemIndicator?: SelectItemIndicatorProps | undefined;
 
   /**
    * {@link SelectItemText} に渡す props です。
@@ -175,12 +175,12 @@ export type SelectSlotProps = {
   /**
    * {@link SelectScrollDownArrow} に渡す props です。
    */
-  readonly scrollDownArrow?: Omit<SelectScrollDownArrowProps, "children"> | undefined;
+  readonly scrollDownArrow?: SelectScrollDownArrowProps | undefined;
 
   /**
    * {@link SelectScrollUpArrow} に渡す props です。
    */
-  readonly scrollUpArrow?: Omit<SelectScrollUpArrowProps, "children"> | undefined;
+  readonly scrollUpArrow?: SelectScrollUpArrowProps | undefined;
 
   /**
    * {@link SelectSeparator} に渡す props です。
@@ -407,9 +407,11 @@ export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI(props) {
 
   return {
     getIconProps() {
+      const { children = <ChevronIcon />, ...otherIconProps } = iconProps;
+
       return {
-        ...iconProps,
-        children: <ChevronIcon />,
+        ...otherIconProps,
+        children,
       };
     },
     getItemProps(item, index) {
@@ -488,21 +490,27 @@ export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI(props) {
       };
     },
     getItemIndicatorProps() {
+      const { children = <CheckIcon />, ...otherItemIndicatorProps } = itemIndicatorProps;
+
       return {
-        ...itemIndicatorProps,
-        children: <CheckIcon />,
+        ...otherItemIndicatorProps,
+        children,
       };
     },
     getScrollUpArrowProps() {
+      const { children = <ChevronIcon />, ...otherScrollUpArrowProps } = scrollUpArrowProps;
+
       return {
-        ...scrollUpArrowProps,
-        children: <ChevronIcon />,
+        ...otherScrollUpArrowProps,
+        children,
       };
     },
     getScrollDownArrowProps() {
+      const { children = <ChevronIcon />, ...otherScrollDownArrowProps } = scrollDownArrowProps;
+
       return {
-        ...scrollDownArrowProps,
-        children: <ChevronIcon />,
+        ...otherScrollDownArrowProps,
+        children,
       };
     },
   };
