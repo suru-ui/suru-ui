@@ -1,3 +1,4 @@
+import { useControlled } from "@base-ui/utils/useControlled";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
@@ -196,129 +197,133 @@ export type FileUploadRootState = {};
 /**
  * {@link FileUploadRoot} に渡す props です。
  */
-export type FileUploadRootProps = Omit<React.ComponentProps<"div">, "defaultValue"> & {
-  /**
-   * 選択できるファイルの種類を指定します。
-   *
-   * HTML の `accept` 属性と同じ形式の文字列、またはその配列を指定します。
-   *
-   * - 文字列の例: `"image/png,.pdf"`
-   * - 配列の例: `["image/png", ".pdf"]`
-   *
-   * この指定はファイル選択ダイアログのフィルターに使われ、ブラウザーが対応している場合はドラッグ&ドロップにも適用されます。
-   */
-  accept?: string | readonly string[] | undefined;
+export type FileUploadRootProps = Omit<
+  React.ComponentProps<"div">,
+  keyof RenderProps | "defaultValue"
+> &
+  RenderProps<FileUploadRootState> & {
+    /**
+     * 選択できるファイルの種類を指定します。
+     *
+     * HTML の `accept` 属性と同じ形式の文字列、またはその配列を指定します。
+     *
+     * - 文字列の例: `"image/png,.pdf"`
+     * - 配列の例: `["image/png", ".pdf"]`
+     *
+     * この指定はファイル選択ダイアログのフィルターに使われ、ブラウザーが対応している場合はドラッグ&ドロップにも適用されます。
+     */
+    accept?: string | readonly string[] | undefined;
 
-  /**
-   * ファイルの色を指定します。
-   *
-   * @default "grey"
-   */
-  color?: FileUploadRootColor | undefined;
+    /**
+     * ファイルの色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: FileUploadRootColor | undefined;
 
-  /**
-   * 非制御で初期表示するファイルのリストを指定します。
-   */
-  defaultValue?: readonly File[] | undefined;
+    /**
+     * 非制御で初期表示するファイルのリストを指定します。
+     */
+    defaultValue?: readonly File[] | undefined;
 
-  /**
-   * ファイルアップロード全体を無効にするかどうかを指定します。
-   *
-   * 子パーツの props より優先されます。
-   *
-   * @default false
-   */
-  disabled?: boolean | undefined;
+    /**
+     * ファイルアップロード全体を無効にするかどうかを指定します。
+     *
+     * 子パーツの props より優先されます。
+     *
+     * @default false
+     */
+    disabled?: boolean | undefined;
 
-  /**
-   * 1 つのファイルのサイズの上限をバイト単位で指定します。
-   *
-   * 上限を超えたファイルは {@link FileUploadRootProps.onFileReject|onFileReject} へ報告されます。
-   *
-   * @default Number.POSITIVE_INFINITY
-   */
-  maxFileSize?: number | undefined;
+    /**
+     * 1 つのファイルのサイズの上限をバイト単位で指定します。
+     *
+     * 上限を超えたファイルは {@link FileUploadRootProps.onFileReject|onFileReject} へ報告されます。
+     *
+     * @default Number.POSITIVE_INFINITY
+     */
+    maxFileSize?: number | undefined;
 
-  /**
-   * 選択できるファイル数の上限を指定します。
-   *
-   * 上限を超えたファイルは {@link FileUploadRootProps.onFileReject|onFileReject} へ報告されます。
-   *
-   * @default Infinity
-   */
-  maxFiles?: number | undefined;
+    /**
+     * 選択できるファイル数の上限を指定します。
+     *
+     * 上限を超えたファイルは {@link FileUploadRootProps.onFileReject|onFileReject} へ報告されます。
+     *
+     * @default Number.POSITIVE_INFINITY
+     */
+    maxFiles?: number | undefined;
 
-  /**
-   * 1 つのファイルのサイズの下限をバイト単位で指定します。
-   *
-   * 下限に満たないファイルは {@link FileUploadRootProps.onFileReject|onFileReject} へ報告されます。
-   *
-   * @default 0
-   */
-  minFileSize?: number | undefined;
+    /**
+     * 1 つのファイルのサイズの下限をバイト単位で指定します。
+     *
+     * 下限に満たないファイルは {@link FileUploadRootProps.onFileReject|onFileReject} へ報告されます。
+     *
+     * @default 0
+     */
+    minFileSize?: number | undefined;
 
-  /**
-   * 複数のファイルを選択できるかどうかを指定します。
-   *
-   * `false` の場合、新しい選択で既存の選択を置き換えます。
-   *
-   * @default false
-   */
-  multiple?: boolean | undefined;
+    /**
+     * 複数のファイルを選択できるかどうかを指定します。
+     *
+     * `false` の場合、新しい選択で既存の選択を置き換えます。
+     *
+     * @default false
+     */
+    multiple?: boolean | undefined;
 
-  /**
-   * フォーム送信時に使う入力項目の名前を指定します。
-   */
-  name?: string | undefined;
+    /**
+     * フォーム送信時に使う入力項目の名前を指定します。
+     */
+    name?: string | undefined;
 
-  /**
-   * ファイルが検証に合格したときに呼ばれます。
-   */
-  onFileAccept?: ((details: FileUploadAcceptEventDetails) => void) | undefined;
+    /**
+     * ファイルが検証に合格したときに呼ばれます。
+     */
+    onFileAccept?: ((details: FileUploadAcceptEventDetails) => void) | undefined;
 
-  /**
-   * ファイルが検証で拒否されたときに呼ばれます。
-   */
-  onFileReject?: ((details: FileUploadRejectEventDetails) => void) | undefined;
+    /**
+     * ファイルが検証で拒否されたときに呼ばれます。
+     */
+    onFileReject?: ((details: FileUploadRejectEventDetails) => void) | undefined;
 
-  /**
-   * 選択済みファイルのリストが変わったときに呼ばれます。
-   */
-  onValueChange?: ((files: File[]) => void) | undefined;
+    /**
+     * 選択済みファイルのリストが変わったときに呼ばれます。
+     */
+    onValueChange?: ((files: File[]) => void) | undefined;
 
-  /**
-   * ファイルアップロードの角丸を指定します。
-   *
-   * 既定値は {@link FileUploadRootProps.size|size} です。
-   */
-  radius?: FileUploadRootRadius | undefined;
+    /**
+     * ファイルアップロードの角丸を指定します。
+     *
+     * 既定値は {@link FileUploadRootProps.size|size} です。
+     */
+    radius?: FileUploadRootRadius | undefined;
 
-  /**
-   * 必須入力かどうかを指定します。
-   *
-   * @default false
-   */
-  required?: boolean | undefined;
+    /**
+     * 必須入力かどうかを指定します。
+     *
+     * @default false
+     */
+    required?: boolean | undefined;
 
-  /**
-   * ファイルアップロードのサイズを指定します。
-   *
-   * @default "md"
-   */
-  size?: FileUploadRootSize | undefined;
+    /**
+     * ファイルアップロードのサイズを指定します。
+     *
+     * @default "md"
+     */
+    size?: FileUploadRootSize | undefined;
 
-  /**
-   * 制御されたファイルのリストを指定します。
-   */
-  value?: readonly File[] | undefined;
+    /**
+     * 制御されたファイルのリストを指定します。
+     */
+    value?: readonly File[] | undefined;
 
-  /**
-   * ファイルアップロードの主な外観を指定します。
-   *
-   * @default "liquid"
-   */
-  variant?: FileUploadRootVariant | undefined;
-};
+    /**
+     * ファイルアップロードの主な外観を指定します。
+     *
+     * @default "liquid"
+     */
+    variant?: FileUploadRootVariant | undefined;
+  };
 
 /**
  * ファイルアップロードのルートコンポーネントです。
@@ -327,39 +332,41 @@ export type FileUploadRootProps = Omit<React.ComponentProps<"div">, "defaultValu
  */
 export const FileUploadRoot: IComponent<FileUploadRootProps> = function SuiFileUploadRoot(props) {
   const {
+    name,
     size = "md",
     color = "grey",
+    value,
+    accept,
     radius = size,
     variant = "liquid",
-    accept,
-    defaultValue,
+    children,
     disabled = false,
     maxFiles = Number.POSITIVE_INFINITY,
+    multiple = false,
+    required = false,
+    className,
     maxFileSize = Number.POSITIVE_INFINITY,
     minFileSize = 0,
-    multiple = false,
-    name,
-    required = false,
-    value,
-    onValueChange,
+    defaultValue,
     onFileAccept,
     onFileReject,
-    className,
-    children,
-    ...otherProps
+    onValueChange,
+    ...otherDivProps
   } = props;
   const inputRef = React.useRef<HTMLInputElement | null>(null);
-  const [filesState, setFilesState] = React.useState<readonly File[]>(defaultValue ?? []);
-  const files = value ?? filesState;
+  const [files, setFiles] = useControlled<readonly File[]>({
+    controlled: value,
+    default: defaultValue ?? [],
+    name: "FileUpload",
+    state: "value",
+  });
 
   const commit = React.useCallback(
     (nextFiles: readonly File[]) => {
-      if (value === undefined) {
-        setFilesState(nextFiles);
-      }
+      setFiles(nextFiles);
       onValueChange?.(nextFiles.slice());
     },
-    [onValueChange, value],
+    [onValueChange, setFiles],
   );
 
   const setInputElement = React.useCallback((element: HTMLInputElement | null) => {
@@ -433,11 +440,13 @@ export const FileUploadRoot: IComponent<FileUploadRootProps> = function SuiFileU
     ],
   );
 
-  return (
-    <FileUploadContext value={ctx}>
-      <div
-        {...otherProps}
-        className={cn(
+  const element = useRender({
+    defaultTagName: "div",
+    props: [
+      otherDivProps,
+      {
+        children,
+        className: cn(
           className,
           "sui_file_upload",
           `sui_file_upload-size_${size}`,
@@ -445,13 +454,13 @@ export const FileUploadRoot: IComponent<FileUploadRootProps> = function SuiFileU
           `sui_file_upload-radius_${radius}`,
           `sui_file_upload-variant_${variant}`,
           disabled && "sui_file_upload-disabled",
-        )}
-        data-scope=""
-      >
-        {children}
-      </div>
-    </FileUploadContext>
-  );
+        ),
+        "data-scope": "",
+      },
+    ],
+  });
+
+  return <FileUploadContext value={ctx}>{element}</FileUploadContext>;
 };
 
 export { FileUploadRoot as Root };
@@ -607,7 +616,7 @@ export const FileUploadTrigger: IComponent<FileUploadTriggerProps> = function Su
 ) {
   const ctx = useFileUploadContext(true);
   const { disabled: disabledProp, ...otherButtonProps } = props;
-  const disabled = ctx?.disabled ?? disabledProp ?? false;
+  const disabled = ctx?.disabled || disabledProp || false;
 
   return useRender({
     defaultTagName: "button",
@@ -652,7 +661,7 @@ export type FileUploadDropzoneState = {
   /**
    * ファイルがドラッグされているかどうかです。
    */
-  dragging?: boolean;
+  readonly dragging?: boolean;
 };
 
 /**
@@ -674,7 +683,7 @@ export const FileUploadDropzone: IComponent<FileUploadDropzoneProps> =
   function SuiFileUploadDropzone(props) {
     const ctx = useFileUploadContext(true);
     const { disabled: disabledProp, ...otherButtonProps } = props;
-    const disabled = ctx?.disabled ?? disabledProp ?? false;
+    const disabled = ctx?.disabled || disabledProp || false;
     const [dragging, setDragging] = React.useState(false);
 
     return useRender({
@@ -708,9 +717,9 @@ export const FileUploadDropzone: IComponent<FileUploadDropzoneProps> =
               ctx?.selectFiles(droppedFiles);
             }
           },
-          className: cn(
+          className: cn<FileUploadDropzoneState>(
             "sui_file_upload_dropzone",
-            dragging && "sui_file_upload_dropzone-dragover",
+            (state) => state.dragging && "sui_file_upload_dropzone-dragover",
           ),
         },
       ],
