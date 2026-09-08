@@ -148,7 +148,7 @@ export const SharedPayload = meta.story({
           {({ payload }) => (
             <HoverCardParts.Portal>
               <HoverCardParts.Positioner side="bottom" align="start" sideOffset={8}>
-                <HoverCardParts.Popup>
+                <HoverCardParts.Content>
                   <HoverCardParts.Viewport>
                     {payload ? (
                       <div className="flex flex-col gap-1">
@@ -157,7 +157,7 @@ export const SharedPayload = meta.story({
                       </div>
                     ) : null}
                   </HoverCardParts.Viewport>
-                </HoverCardParts.Popup>
+                </HoverCardParts.Content>
               </HoverCardParts.Positioner>
             </HoverCardParts.Portal>
           )}
@@ -223,10 +223,10 @@ export const Parts = meta.story({
         <HoverCardParts.Portal>
           <HoverCardParts.Backdrop />
           <HoverCardParts.Positioner side="bottom" align="start" sideOffset={8}>
-            <HoverCardParts.Popup>
+            <HoverCardParts.Content>
               <HoverCardParts.Arrow />
               ここに内容を表示します。
-            </HoverCardParts.Popup>
+            </HoverCardParts.Content>
           </HoverCardParts.Positioner>
         </HoverCardParts.Portal>
       </HoverCardParts.Root>

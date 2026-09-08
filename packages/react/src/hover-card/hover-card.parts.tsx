@@ -265,7 +265,16 @@ export const HoverCardBackdrop: IComponent<HoverCardBackdropProps> = function Su
   const { className, ...otherProps } = props;
 
   return (
-    <PreviewCard.Backdrop {...otherProps} className={cn(className, "sui_hover_card_backdrop")} />
+    <PreviewCard.Backdrop
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_hover_card_backdrop",
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_hover_card_backdrop-transition_status_${state.transitionStatus}`,
+      )}
+    />
   );
 };
 
@@ -325,40 +334,53 @@ export namespace Positioner {
   export type Props = HoverCardPositionerProps;
 }
 
-// Popup
-// -----
+// Content
+// -------
 
 /**
- * {@link HoverCardPopup} が持つ状態です。
+ * {@link HoverCardContent} が持つ状態です。
  */
-export type HoverCardPopupState = PreviewCard.Popup.State;
+export type HoverCardContentState = PreviewCard.Popup.State;
 
 /**
- * {@link HoverCardPopup} に渡す props です。
+ * {@link HoverCardContent} に渡す props です。
  */
-export type HoverCardPopupProps = React.ComponentProps<typeof PreviewCard.Popup>;
+export type HoverCardContentProps = React.ComponentProps<typeof PreviewCard.Popup>;
 
 /**
  * ホバーカードの内容を表示するポップアップ要素です。
  */
-export const HoverCardPopup: IComponent<HoverCardPopupProps> = function SuiHoverCardPopup(props) {
+export const HoverCardContent: IComponent<HoverCardContentProps> = function SuiHoverCardContent(
+  props,
+) {
   const { className, ...otherProps } = props;
 
-  return <PreviewCard.Popup {...otherProps} className={cn(className, "sui_hover_card_popup")} />;
+  return (
+    <PreviewCard.Popup
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_hover_card_content",
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_hover_card_content-transition_status_${state.transitionStatus}`,
+      )}
+    />
+  );
 };
 
-export { HoverCardPopup as Popup };
+export { HoverCardContent as Content };
 
-export namespace Popup {
+export namespace Content {
   /**
-   * {@link HoverCardPopupState}
+   * {@link HoverCardContentState}
    */
-  export type State = HoverCardPopupState;
+  export type State = HoverCardContentState;
 
   /**
-   * {@link HoverCardPopupProps}
+   * {@link HoverCardContentProps}
    */
-  export type Props = HoverCardPopupProps;
+  export type Props = HoverCardContentProps;
 }
 
 // Arrow
