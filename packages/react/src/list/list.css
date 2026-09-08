@@ -103,7 +103,7 @@
 
 /* 代入 */
 :scope {
-  --sui_list_item-color: inherit;
+  --sui_list_item-color: var(--sui_list-color);
 
   .sui_list_item-size_sm {
     --sui_list_item-gap: --sui-gap(1);
@@ -114,18 +114,6 @@
   }
 
   .sui_list_item-size_lg {
-    --sui_list_item-gap: --sui-gap(3);
-  }
-
-  &.sui_list-size_sm {
-    --sui_list_item-gap: --sui-gap(1);
-  }
-
-  &.sui_list-size_md {
-    --sui_list_item-gap: --sui-gap(2);
-  }
-
-  &.sui_list-size_lg {
     --sui_list_item-gap: --sui-gap(3);
   }
 }
@@ -178,7 +166,7 @@
                                     var(--sui_list-font_size)
                                     * var(--sui_list-line_height)
                                   );
-  --sui_list_item_indicator-color: inherit;
+  --sui_list_item_indicator-color: var(--sui_list_item-color);
   --sui_list_item_indicator__svg-color: var(--sui_list_item_indicator-color);
 }
 

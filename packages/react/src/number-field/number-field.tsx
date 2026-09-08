@@ -113,7 +113,7 @@ export type NumberFieldSlotProps = {
   /**
    * {@link NumberFieldScrubAreaCursor} に渡す props です。
    */
-  readonly scrubAreaCursor?: Omit<NumberFieldScrubAreaCursorProps, "children"> | undefined;
+  readonly scrubAreaCursor?: NumberFieldScrubAreaCursorProps | undefined;
 };
 
 /**

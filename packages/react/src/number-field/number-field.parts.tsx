@@ -117,6 +117,26 @@ export namespace Context {
 // ----
 
 /**
+ * {@link NumberFieldRoot} の値が変更されたイベントの詳細です。
+ */
+export type NumberFieldRootChangeEventDetails = NumberField.Root.ChangeEventDetails;
+
+/**
+ * {@link NumberFieldRoot} の値が変更された理由です。
+ */
+export type NumberFieldRootChangeEventReason = NumberField.Root.ChangeEventReason;
+
+/**
+ * {@link NumberFieldRoot} の値が確定されたイベントの詳細です。
+ */
+export type NumberFieldRootCommitEventDetails = NumberField.Root.CommitEventDetails;
+
+/**
+ * {@link NumberFieldRoot} の値が確定された理由です。
+ */
+export type NumberFieldRootCommitEventReason = NumberField.Root.CommitEventReason;
+
+/**
  * 数値入力欄の配色です。
  */
 export type NumberFieldRootColor = Color;
@@ -150,26 +170,6 @@ export type NumberFieldRootSize = Size;
 export type NumberFieldRootVariant = "naked" | "liquid";
 
 /**
- * {@link NumberFieldRoot} の値が変更された理由です。
- */
-export type NumberFieldRootChangeEventReason = NumberField.Root.ChangeEventReason;
-
-/**
- * {@link NumberFieldRoot} の値が変更されたイベントの詳細です。
- */
-export type NumberFieldRootChangeEventDetails = NumberField.Root.ChangeEventDetails;
-
-/**
- * {@link NumberFieldRoot} の値が確定された理由です。
- */
-export type NumberFieldRootCommitEventReason = NumberField.Root.CommitEventReason;
-
-/**
- * {@link NumberFieldRoot} の値が確定されたイベントの詳細です。
- */
-export type NumberFieldRootCommitEventDetails = NumberField.Root.CommitEventDetails;
-
-/**
  * {@link NumberFieldRoot} の状態です。
  */
 export type NumberFieldRootState = NumberField.Root.State;
@@ -195,7 +195,7 @@ export type NumberFieldRootProps = React.ComponentProps<typeof NumberField.Root>
   /**
    * 数値入力欄の角丸を指定します。
    *
-   * 既定値は {@link NumberFieldRootProps.size|size} です。
+   * 既定値は {@link NumberFieldRootProps.size|size}
    */
   radius?: NumberFieldRootRadius | undefined;
 

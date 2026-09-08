@@ -549,16 +549,16 @@
   --sui_number_field_stepper-font_size: ;
   --sui_number_field_stepper-font_weight: ;
   --sui_number_field_stepper-line_height: ;
-  --sui_number_field_stepper-color-normal: ;
+  --sui_number_field_stepper-color-idle: ;
   --sui_number_field_stepper-color-hover: ;
   --sui_number_field_stepper-color-active: ;
   --sui_number_field_stepper-letter_spacing: ;
-  --sui_number_field_stepper-background_color-normal: ;
+  --sui_number_field_stepper-background_color-idle: ;
   --sui_number_field_stepper-background_color-hover: ;
   --sui_number_field_stepper-background_color-active: ;
   --sui_number_field_stepper-border_radius: ;
   --sui_number_field_stepper__svg-size: ;
-  --sui_number_field_stepper__svg-color-normal: ;
+  --sui_number_field_stepper__svg-color-idle: ;
   --sui_number_field_stepper__svg-color-hover: ;
   --sui_number_field_stepper__svg-color-active: ;
 }
@@ -572,12 +572,10 @@
     font-size: var(--sui_number_field_stepper-font_size);
     font-weight: var(--sui_number_field_stepper-font_weight);
     line-height: var(--sui_number_field_stepper-line_height);
-    color: var(--_sui_number_field_stepper-color,
-            var(--sui_number_field_stepper-color-normal)
-          );
+    color: var(--_sui_number_field_stepper-color, var(--sui_number_field_stepper-color-idle));
     letter-spacing: var(--sui_number_field_stepper-letter_spacing);
     background-color: var(--_sui_number_field_stepper-background_color,
-                        var(--sui_number_field_stepper-background_color-normal)
+                        var(--sui_number_field_stepper-background_color-idle)
                       );
     border-radius: var(--sui_number_field_stepper-border_radius);
 
@@ -585,8 +583,8 @@
       width: var(--sui_number_field_stepper__svg-size);
       height: var(--sui_number_field_stepper__svg-size);
       color: var(--_sui_number_field_stepper__svg-color,
-              var(--sui_number_field_stepper__svg-color-normal)
-            );
+               var(--sui_number_field_stepper__svg-color-idle)
+             );
     }
   }
 }
@@ -602,9 +600,9 @@
     --sui_number_field_stepper-line_height: var(--sui-text-oln-sm-n-line_height);
     --sui_number_field_stepper-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
     --sui_number_field_stepper__svg-size: calc(
-                                             var(--sui_number_field_stepper-font_size)
-                                             * var(--sui_number_field_stepper-line_height)
-                                           );
+                                            var(--sui_number_field_stepper-font_size)
+                                            * var(--sui_number_field_stepper-line_height)
+                                          );
   }
 
   &.sui_number_field-size_md {
@@ -614,9 +612,9 @@
     --sui_number_field_stepper-line_height: var(--sui-text-oln-md-n-line_height);
     --sui_number_field_stepper-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
     --sui_number_field_stepper__svg-size: calc(
-                                             var(--sui_number_field_stepper-font_size)
-                                             * var(--sui_number_field_stepper-line_height)
-                                           );
+                                            var(--sui_number_field_stepper-font_size)
+                                            * var(--sui_number_field_stepper-line_height)
+                                          );
   }
 
   &.sui_number_field-size_lg {
@@ -626,9 +624,9 @@
     --sui_number_field_stepper-line_height: var(--sui-text-oln-lg-n-line_height);
     --sui_number_field_stepper-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
     --sui_number_field_stepper__svg-size: calc(
-                                             var(--sui_number_field_stepper-font_size)
-                                             * var(--sui_number_field_stepper-line_height)
-                                           );
+                                            var(--sui_number_field_stepper-font_size)
+                                            * var(--sui_number_field_stepper-line_height)
+                                          );
   }
 
   &.sui_number_field-radius_none {
@@ -652,65 +650,67 @@
   }
 
   &.sui_number_field-variant_naked {
-    --sui_number_field_stepper-color-normal: var(--sui-grey-naked-canvas_text-normal);
+    --sui_number_field_stepper-color-idle: var(--sui-grey-naked-canvas_text-normal);
     --sui_number_field_stepper-color-hover: var(--sui-grey-naked-canvas_text-subtle);
     --sui_number_field_stepper-color-active: var(--sui-grey-naked-canvas_text-strong);
-    --sui_number_field_stepper-background_color-normal: transparent;
+    --sui_number_field_stepper-background_color-idle: transparent;
     --sui_number_field_stepper-background_color-hover: var(--sui-grey-naked-canvas-subtle);
     --sui_number_field_stepper-background_color-active: var(--sui-grey-naked-canvas-strong);
-    --sui_number_field_stepper__svg-color-normal: --sui-icon_color(
-                                                   var(--sui_number_field_stepper-color-normal),
-                                                   var(--sui_number_field_stepper-background_color-normal)
-                                                 );
-    --sui_number_field_stepper__svg-color-hover: --sui-icon_color(
-                                                  var(--sui_number_field_stepper-color-hover),
-                                                  var(--sui_number_field_stepper-background_color-hover)
+    --sui_number_field_stepper__svg-color-idle: --sui-icon_color(
+                                                  var(--sui_number_field_stepper-color-idle),
+                                                  var(--sui_number_field_stepper-background_color-idle)
                                                 );
-    --sui_number_field_stepper__svg-color-active: --sui-icon_color(
-                                                   var(--sui_number_field_stepper-color-active),
-                                                   var(--sui_number_field_stepper-background_color-active)
+    --sui_number_field_stepper__svg-color-hover: --sui-icon_color(
+                                                   var(--sui_number_field_stepper-color-hover),
+                                                   var(--sui_number_field_stepper-background_color-hover)
                                                  );
+    --sui_number_field_stepper__svg-color-active: --sui-icon_color(
+                                                    var(--sui_number_field_stepper-color-active),
+                                                    var(--sui_number_field_stepper-background_color-active)
+                                                  );
   }
 
   &.sui_number_field-variant_liquid {
-    --sui_number_field_stepper-color-normal: var(--sui-grey-liquid-canvas_text-normal);
+    --sui_number_field_stepper-color-idle: var(--sui-grey-liquid-canvas_text-normal);
     --sui_number_field_stepper-color-hover: var(--sui-grey-liquid-canvas_text-subtle);
     --sui_number_field_stepper-color-active: var(--sui-grey-liquid-canvas_text-strong);
-    --sui_number_field_stepper-background_color-normal: transparent;
+    --sui_number_field_stepper-background_color-idle: transparent;
     --sui_number_field_stepper-background_color-hover: var(--sui-grey-liquid-canvas-subtle);
     --sui_number_field_stepper-background_color-active: var(--sui-grey-liquid-canvas-strong);
-    --sui_number_field_stepper__svg-color-normal: --sui-icon_color(
-                                                   var(--sui_number_field_stepper-color-normal),
-                                                   var(--sui_number_field_stepper-background_color-normal)
-                                                 );
-    --sui_number_field_stepper__svg-color-hover: --sui-icon_color(
-                                                  var(--sui_number_field_stepper-color-hover),
-                                                  var(--sui_number_field_stepper-background_color-hover)
+    --sui_number_field_stepper__svg-color-idle: --sui-icon_color(
+                                                  var(--sui_number_field_stepper-color-idle),
+                                                  var(--sui_number_field_stepper-background_color-idle)
                                                 );
-    --sui_number_field_stepper__svg-color-active: --sui-icon_color(
-                                                   var(--sui_number_field_stepper-color-active),
-                                                   var(--sui_number_field_stepper-background_color-active)
+    --sui_number_field_stepper__svg-color-hover: --sui-icon_color(
+                                                   var(--sui_number_field_stepper-color-hover),
+                                                   var(--sui_number_field_stepper-background_color-hover)
                                                  );
+    --sui_number_field_stepper__svg-color-active: --sui-icon_color(
+                                                    var(--sui_number_field_stepper-color-active),
+                                                    var(--sui_number_field_stepper-background_color-active)
+                                                  );
   }
 }
 
 /* 変異 */
 :scope {
-  .sui_number_field_decrement:not([data-disabled]) {
-    @media (any-hover: hover) {
-      &:hover {
-        --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-hover);
-        --_sui_number_field_stepper-background_color:
-          var(--sui_number_field_stepper-background_color-hover);
-        --_sui_number_field_stepper__svg-color: var(--sui_number_field_stepper__svg-color-hover);
+  .sui_number_field_decrement {
+    &:enabled {
+      @media (any-hover: hover) {
+        &:hover {
+          --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-hover);
+          --_sui_number_field_stepper-background_color:
+            var(--sui_number_field_stepper-background_color-hover);
+          --_sui_number_field_stepper__svg-color: var(--sui_number_field_stepper__svg-color-hover);
+        }
       }
-    }
 
-    &:active {
-      --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-active);
-      --_sui_number_field_stepper-background_color:
-        var(--sui_number_field_stepper-background_color-active);
-      --_sui_number_field_stepper__svg-color: var(--sui_number_field_stepper__svg-color-active);
+      &:active {
+        --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-active);
+        --_sui_number_field_stepper-background_color:
+          var(--sui_number_field_stepper-background_color-active);
+        --_sui_number_field_stepper__svg-color: var(--sui_number_field_stepper__svg-color-active);
+      }
     }
   }
 }
@@ -758,12 +758,10 @@
     font-size: var(--sui_number_field_stepper-font_size);
     font-weight: var(--sui_number_field_stepper-font_weight);
     line-height: var(--sui_number_field_stepper-line_height);
-    color: var(--_sui_number_field_stepper-color,
-            var(--sui_number_field_stepper-color-normal)
-          );
+    color: var(--_sui_number_field_stepper-color, var(--sui_number_field_stepper-color-idle));
     letter-spacing: var(--sui_number_field_stepper-letter_spacing);
     background-color: var(--_sui_number_field_stepper-background_color,
-                        var(--sui_number_field_stepper-background_color-normal)
+                        var(--sui_number_field_stepper-background_color-idle)
                       );
     border-radius: var(--sui_number_field_stepper-border_radius);
 
@@ -771,15 +769,15 @@
       width: var(--sui_number_field_stepper__svg-size);
       height: var(--sui_number_field_stepper__svg-size);
       color: var(--_sui_number_field_stepper__svg-color,
-              var(--sui_number_field_stepper__svg-color-normal)
-            );
+               var(--sui_number_field_stepper__svg-color-idle)
+             );
     }
   }
 }
 
 /* 変異 */
 :scope {
-  .sui_number_field_increment:not([data-disabled]) {
+  .sui_number_field_increment {
     @media (any-hover: hover) {
       &:hover {
         --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-hover);
