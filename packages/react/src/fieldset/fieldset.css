@@ -91,7 +91,7 @@
 
 /* Legend */
 :scope {
-  .sui_fieldset_legend-disabled {
+  &.sui_fieldset-disabled .sui_fieldset_legend {
     color: var(--sui-disabled-naked-canvas_text);
     cursor: not-allowed;
   }

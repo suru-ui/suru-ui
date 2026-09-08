@@ -411,8 +411,25 @@
 :scope {
   &.sui_switch-disabled {
     cursor: not-allowed;
-    background-color: var(--sui-disabled-canvas);
-    border-color: var(--sui-disabled-border_color);
+  }
+
+  &.sui_switch-disabled:not(.sui_switch-checked) {
+    &.sui_switch-variant_naked {
+      background-color: var(--sui-disabled-naked-canvas);
+    }
+
+    &.sui_switch-variant_liquid {
+      background-color: var(--sui-disabled-liquid-canvas);
+    }
+
+    &.sui_switch-outlined {
+      border-color: var(--sui-disabled-naked-border);
+      border-width: var(--sui-disabled-border_width);
+    }
+  }
+
+  &.sui_switch-disabled.sui_switch-checked {
+    background-color: var(--sui-disabled-solid-canvas);
   }
 }
 
@@ -420,8 +437,15 @@
 :scope {
   &.sui_switch-disabled .sui_switch_thumb {
     cursor: not-allowed;
-    background-color: var(--sui-disabled-canvas_text);
-    border-color: var(--sui-disabled-border_color);
+    border-color: var(--sui-disabled-naked-border);
+  }
+
+  &.sui_switch-disabled:not(.sui_switch-checked) .sui_switch_thumb {
+    background-color: var(--sui-disabled-naked-canvas_text);
+  }
+
+  &.sui_switch-disabled.sui_switch-checked .sui_switch_thumb {
+    background-color: var(--sui-disabled-solid-canvas_text);
   }
 }
 

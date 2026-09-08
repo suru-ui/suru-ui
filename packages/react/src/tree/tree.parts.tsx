@@ -284,7 +284,7 @@ export type TreeRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps 
     /**
      * 項目のハイライトの角丸を指定します。
      *
-     * 既定値は {@link TreeRootProps.size|size} です。
+     * 既定値は {@link TreeRootProps.size|size}
      */
     radius?: TreeRootRadius | undefined;
 
@@ -328,7 +328,7 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
     size = "md",
     items = EMPTY_NODES,
     value: valueProp,
-    radius = "md",
+    radius = size,
     children = defaultRootItemRenderer,
     defaultValue = EMPTY,
     expandOnClick = true,

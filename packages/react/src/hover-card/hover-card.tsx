@@ -290,8 +290,8 @@ export const HoverCard: IHoverCard = /*#__PURE__*/ Object.assign(
   function SuiHoverCard(props: HoverCardProps) {
     const api = useHoverCardAPI(props);
     const triggerProps = api.getTriggerProps();
-    const arrowProps = api.getArrowProps();
     const contentProps = api.getContentProps();
+    const arrowProps = api.getArrowProps();
 
     return (
       <HoverCardRoot {...api.getRootProps()}>

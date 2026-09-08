@@ -26,7 +26,7 @@ import {
 // -----
 
 /**
- * {@link Field} を命令的に操作するためのオブジェクトです。
+ * {@link FieldRootActions}
  */
 export type FieldActions = FieldRootActions;
 

@@ -105,8 +105,8 @@
   --sui_badge-color-normal: ;
   --sui_badge-letter_spacing: ;
   --sui_badge-focusring_width: ;
-  --sui_badge-outline_color: ;
-  --sui_badge-outline_offset: ;
+  --sui_badge-focusring_color: ;
+  --sui_badge-focusring_offset: ;
   --sui_badge-background_color-normal: ;
   --sui_badge-border_color-normal: ;
   --sui_badge-border_width: ;
@@ -131,8 +131,8 @@
   color: var(--sui_badge-color-normal);
   letter-spacing: var(--sui_badge-letter_spacing);
   outline-width: var(--_sui_badge-outline_width, 0px);
-  outline-color: var(--sui_badge-outline_color);
-  outline-offset: var(--sui_badge-outline_offset);
+  outline-color: var(--_sui_badge-outline_color, transparent);
+  outline-offset: var(--_sui_badge-outline_offset, 0px);
   background-color: var(--sui_badge-background_color-normal);
   border-radius: var(--sui_badge-border_radius);
   box-shadow: 0px
@@ -158,8 +158,8 @@
 :scope {
   --sui_badge-font_family: var(--sui-font-sans);
   --sui_badge-focusring_width: var(--sui-focusring_width);
-  --sui_badge-outline_color: var(--sui-focusring_color);
-  --sui_badge-outline_offset: var(--sui-focusring_offset);
+  --sui_badge-focusring_color: var(--sui-focusring_color);
+  --sui_badge-focusring_offset: var(--sui-focusring_offset);
   --sui_badge-virtual_ring_color: var(--sui-canvas-1);
   --sui_badge-virtual_ring_width: --sui-border_width(3);
   --sui_badge-virtual_text_height: calc(var(--sui_badge-font_size) * var(--sui_badge-line_height));
@@ -299,6 +299,8 @@
 :scope {
   &:focus-visible {
     --_sui_badge-outline_width: var(--sui_badge-focusring_width);
+    --_sui_badge-outline_color: var(--sui_badge-focusring_color);
+    --_sui_badge-outline_offset: var(--sui_badge-focusring_offset);
   }
 
   &.sui_badge-outlined {

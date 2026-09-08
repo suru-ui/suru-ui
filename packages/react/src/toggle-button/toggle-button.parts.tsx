@@ -140,6 +140,8 @@ export type ToggleButtonRootProps = React.ComponentProps<typeof Toggle> & {
 
   /**
    * トグルボタンが無効になっている場合でも、フォーカス可能かどうかを指定します。
+   *
+   * 既定値は {@link ToggleButtonRootProps.disabled|disabled} と {@link ToggleButtonRootProps.pending|pending} に連動します。
    */
   focusableWhenDisabled?: boolean | undefined;
 

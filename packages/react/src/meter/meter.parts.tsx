@@ -119,14 +119,8 @@ export const MeterRoot: IComponent<MeterRootProps> = function SuiMeterRoot(props
   );
 };
 
-/**
- * {@link MeterRoot}
- */
 export { MeterRoot as Root };
 
-/**
- * {@link MeterRoot} の状態や props をまとめた型名前空間です。
- */
 export namespace Root {
   /**
    * {@link MeterRootState}
@@ -181,14 +175,8 @@ export const MeterLabel: IComponent<MeterLabelProps> = function SuiMeterLabel(pr
   return <Meter.Label {...otherProps} className={cn(className, "sui_meter_label")} />;
 };
 
-/**
- * {@link MeterLabel}
- */
 export { MeterLabel as Label };
 
-/**
- * {@link MeterLabel} の状態や props をまとめた型名前空間です。
- */
 export namespace Label {
   /**
    * {@link MeterLabelState}
@@ -223,14 +211,8 @@ export const MeterValue: IComponent<MeterValueProps> = function SuiMeterValue(pr
   return <Meter.Value {...otherProps} className={cn(className, "sui_meter_value")} />;
 };
 
-/**
- * {@link MeterValue}
- */
 export { MeterValue as Value };
 
-/**
- * {@link MeterValue} の状態や props をまとめた型名前空間です。
- */
 export namespace Value {
   /**
    * {@link MeterValueState}
@@ -265,14 +247,8 @@ export const MeterTrack: IComponent<MeterTrackProps> = function SuiMeterTrack(pr
   return <Meter.Track {...otherProps} className={cn(className, "sui_meter_track")} />;
 };
 
-/**
- * {@link MeterTrack}
- */
 export { MeterTrack as Track };
 
-/**
- * {@link MeterTrack} の状態や props をまとめた型名前空間です。
- */
 export namespace Track {
   /**
    * {@link MeterTrackState}
@@ -307,14 +283,8 @@ export const MeterIndicator: IComponent<MeterIndicatorProps> = function SuiMeter
   return <Meter.Indicator {...otherProps} className={cn(className, "sui_meter_indicator")} />;
 };
 
-/**
- * {@link MeterIndicator}
- */
 export { MeterIndicator as Indicator };
 
-/**
- * {@link MeterIndicator} の状態や props をまとめた型名前空間です。
- */
 export namespace Indicator {
   /**
    * {@link MeterIndicatorState}

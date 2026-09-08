@@ -67,7 +67,7 @@ export type RadioRootProps = React.ComponentProps<typeof Radio.Root> & {
    *
    * RadioGroup 内では、グループの値が優先されます。
    *
-   * 既定値は {@link RadioRootProps.variant|variant}
+   * @default false
    */
   outlined?: boolean | undefined;
 
@@ -110,7 +110,7 @@ export const RadioRoot: IComponent<RadioRootProps> = function SuiRadioRoot(props
     radius: radiusProp = "full",
     variant: variantProp = "naked",
     disabled: disabledProp,
-    outlined: outlinedProp = variantProp === "naked",
+    outlined: outlinedProp = false,
     className,
     ...otherProps
   } = props;

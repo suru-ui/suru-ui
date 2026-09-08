@@ -313,7 +313,7 @@ export type TabsIndicatorProps = React.ComponentProps<typeof BaseTabs.Indicator>
 /**
  * アクティブな Tab の位置に追従するインジケーター要素です。
  *
- * `TabsParts.List` の子要素として配置します。
+ * {@link TabsList} の子要素として配置します。
  */
 export const TabsIndicator: IComponent<TabsIndicatorProps> = function SuiTabsIndicator(props) {
   const { className, ...otherProps } = props;

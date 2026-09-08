@@ -53,7 +53,7 @@ export type CheckboxSlotProps = {
   /**
    * {@link CheckboxIndicator} に渡す props です。
    */
-  readonly indicator?: Omit<CheckboxIndicatorProps, "children"> | undefined;
+  readonly indicator?: CheckboxIndicatorProps | undefined;
 };
 
 /**

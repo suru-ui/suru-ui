@@ -348,13 +348,12 @@ interface IUseDrawerAPI {
 export const useDrawerAPI: IUseDrawerAPI = function useSuiDrawerAPI(props) {
   const {
     title,
+    footer,
     handle: handleProp,
     onClose,
     trigger,
     children,
     controls,
-    description,
-    footer,
     slotProps: {
       body: bodyProps = {},
       close: closeProps = {},
@@ -372,6 +371,7 @@ export const useDrawerAPI: IUseDrawerAPI = function useSuiDrawerAPI(props) {
       description: descriptionProps = {},
       virtualKeyboardProvider: virtualKeyboardProviderProp,
     } = {},
+    description,
     showCloseIconButton = true,
     ...otherRootProps
   } = props;
@@ -405,6 +405,16 @@ export const useDrawerAPI: IUseDrawerAPI = function useSuiDrawerAPI(props) {
   }
 
   return {
+    getBodyProps() {
+      if (isLikelyVisibleNode(children)) {
+        return {
+          ...bodyProps,
+          children,
+        };
+      }
+
+      return null;
+    },
     getRootProps() {
       return {
         ...otherRootProps,
@@ -422,69 +432,6 @@ export const useDrawerAPI: IUseDrawerAPI = function useSuiDrawerAPI(props) {
         return {
           ...titleProps,
           children: title,
-        };
-      }
-
-      return null;
-    },
-    getPortalProps() {
-      return portalProps;
-    },
-    getContentProps() {
-      return contentProps;
-    },
-    getBodyProps() {
-      if (isLikelyVisibleNode(children)) {
-        return {
-          ...bodyProps,
-          children,
-        };
-      }
-
-      return null;
-    },
-    getTriggerProps() {
-      if (trigger) {
-        return {
-          ...triggerProps,
-          handle,
-          children: trigger,
-        };
-      }
-
-      return null;
-    },
-    getControlsProps() {
-      if (isLikelyVisibleNode(controls) || showCloseIconButton) {
-        const iconButtonProps = buildCloseProps();
-
-        return {
-          ...controlsProps,
-          children: (
-            <>
-              {controls}
-              {iconButtonProps && <DrawerClose {...iconButtonProps} />}
-            </>
-          ),
-        };
-      }
-
-      return null;
-    },
-    getBackdropProps() {
-      return backdropProps;
-    },
-    getViewportProps() {
-      return viewportProps;
-    },
-    getSwipeAreaProps() {
-      return swipeAreaProp ?? null;
-    },
-    getDescriptionProps() {
-      if (isLikelyVisibleNode(description)) {
-        return {
-          ...descriptionProps,
-          children: description,
         };
       }
 
@@ -508,6 +455,59 @@ export const useDrawerAPI: IUseDrawerAPI = function useSuiDrawerAPI(props) {
         showCloseIconButton
       ) {
         return headerProps;
+      }
+
+      return null;
+    },
+    getPortalProps() {
+      return portalProps;
+    },
+    getContentProps() {
+      return contentProps;
+    },
+    getTriggerProps() {
+      if (trigger) {
+        return {
+          ...triggerProps,
+          handle,
+          children: trigger,
+        };
+      }
+
+      return null;
+    },
+    getBackdropProps() {
+      return backdropProps;
+    },
+    getControlsProps() {
+      if (isLikelyVisibleNode(controls) || showCloseIconButton) {
+        const iconButtonProps = buildCloseProps();
+
+        return {
+          ...controlsProps,
+          children: (
+            <>
+              {controls}
+              {iconButtonProps && <DrawerClose {...iconButtonProps} />}
+            </>
+          ),
+        };
+      }
+
+      return null;
+    },
+    getViewportProps() {
+      return viewportProps;
+    },
+    getSwipeAreaProps() {
+      return swipeAreaProp ?? null;
+    },
+    getDescriptionProps() {
+      if (isLikelyVisibleNode(description)) {
+        return {
+          ...descriptionProps,
+          children: description,
+        };
       }
 
       return null;
@@ -541,15 +541,14 @@ interface IDrawer extends IComponent<DrawerProps> {
 export const Drawer: IDrawer = /*#__PURE__*/ Object.assign(
   function SuiDrawer(props: DrawerProps) {
     const api = useDrawerAPI(props);
-    const titleProps = api.getTitleProps();
+    const triggerProps = api.getTriggerProps();
+    const swipeAreaProps = api.getSwipeAreaProps();
     const headerProps = api.getHeaderProps();
-    const contentProps = api.getContentProps();
+    const titleProps = api.getTitleProps();
+    const descriptionProps = api.getDescriptionProps();
     const controlsProps = api.getControlsProps();
     const bodyProps = api.getBodyProps();
     const footerProps = api.getFooterProps();
-    const triggerProps = api.getTriggerProps();
-    const swipeAreaProps = api.getSwipeAreaProps();
-    const descriptionProps = api.getDescriptionProps();
     const virtualKeyboardProviderProps = api.getVirtualKeyboardProviderProps();
 
     const portal = (
@@ -557,7 +556,7 @@ export const Drawer: IDrawer = /*#__PURE__*/ Object.assign(
         <DrawerBackdrop {...api.getBackdropProps()} />
         <DrawerViewport {...api.getViewportProps()}>
           <DrawerPopup {...api.getPopupProps()}>
-            <DrawerContent {...contentProps}>
+            <DrawerContent {...api.getContentProps()}>
               {headerProps && (
                 <DrawerHeader {...headerProps}>
                   {titleProps && <DrawerTitle {...titleProps} />}

@@ -41,14 +41,14 @@ export type LabelRootProps = Omit<React.ComponentProps<"label">, keyof RenderPro
  * ラベルのルートコンポーネントです。
  */
 export const LabelRoot: IComponent<LabelRootProps> = function SuiLabelRoot(props) {
-  const { size = "md", className, ...otherLabelProps } = props;
+  const { size = "md", ...otherLabelProps } = props;
 
   return useRender({
     defaultTagName: "label",
     props: [
       otherLabelProps,
       {
-        className: cn(className, "sui_label", `sui_label-size_${size}`),
+        className: cn<LabelRootState>("sui_label", `sui_label-size_${size}`),
         "data-scope": "",
       },
     ],

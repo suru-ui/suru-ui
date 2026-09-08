@@ -68,7 +68,11 @@ export const ImageRoot: IComponent<ImageRootProps> = function SuiImageRoot(props
     props: [
       otherImgProps,
       {
-        className: cn("sui_image", fit && `sui_image-fit_${fit}`, `sui_image-radius_${radius}`),
+        className: cn<ImageRootState>(
+          "sui_image",
+          `sui_image-radius_${radius}`,
+          fit && `sui_image-fit_${fit}`,
+        ),
         "data-scope": "",
       },
     ],

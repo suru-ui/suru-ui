@@ -21,6 +21,11 @@ import {
 export type ActionGroupColor = ActionGroupRootColor;
 
 /**
+ * {@link ActionGroupRootOrientation}
+ */
+export type ActionGroupOrientation = ActionGroupRootOrientation;
+
+/**
  * {@link ActionGroupRootRadius}
  */
 export type ActionGroupRadius = ActionGroupRootRadius;
@@ -36,17 +41,12 @@ export type ActionGroupSize = ActionGroupRootSize;
 export type ActionGroupVariant = ActionGroupRootVariant;
 
 /**
- * {@link ActionGroupRootOrientation}
- */
-export type ActionGroupOrientation = ActionGroupRootOrientation;
-
-/**
- * {@link ActionGroupRoot} の状態です。
+ * {@link ActionGroup} が持つ状態です。
  */
 export type ActionGroupState = ActionGroupRootState;
 
 /**
- * {@link ActionGroup} コンポーネントのプロパティーです。
+ * {@link ActionGroup} に渡す props です。
  */
 export type ActionGroupProps = ActionGroupRootProps;
 
@@ -55,7 +55,7 @@ export type ActionGroupProps = ActionGroupRootProps;
 
 interface IActionGroup extends IComponent<ActionGroupProps> {
   /**
-   * {@link ActionGroupContext} を読み取るフックです。
+   * {@link useActionGroupContext}
    */
   readonly useContext: IUseContext<ActionGroupContext>;
 }

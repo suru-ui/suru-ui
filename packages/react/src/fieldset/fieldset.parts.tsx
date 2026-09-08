@@ -78,11 +78,7 @@ export const FieldsetLegend: IComponent<FieldsetLegendProps> = function SuiField
   return (
     <Fieldset.Legend
       {...otherProps}
-      className={cn(
-        className,
-        "sui_fieldset_legend",
-        (state) => state.disabled && "sui_fieldset_legend-disabled",
-      )}
+      className={cn(className, "sui_fieldset_legend")}
     />
   );
 };

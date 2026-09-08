@@ -484,7 +484,7 @@ export const useAlertDialogAPI: IUseAlertDialogAPI = function useSuiAlertDialogA
           children: (
             <>
               {controls}
-              <CancelIconButton />
+              {showCancelIconButton && <CancelIconButton />}
             </>
           ),
         };

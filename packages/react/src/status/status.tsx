@@ -42,12 +42,7 @@ export type StatusState = StatusRootState;
 /**
  * {@link Status} に渡す props です。
  */
-export type StatusProps = Omit<StatusRootProps, "children"> & {
-  /**
-   * ステータスのラベルです。
-   */
-  children?: React.ReactNode;
-
+export type StatusProps = StatusRootProps & {
   /**
    * 各パーツに個別の props を渡すためのオブジェクトです。
    *
@@ -71,7 +66,7 @@ export interface StatusAPI {
   /**
    * {@link StatusRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<StatusRootProps, "children">;
+  getRootProps(): StatusRootProps;
 }
 
 interface IUseStatusAPI {
@@ -88,11 +83,11 @@ interface IUseStatusAPI {
  * {@link StatusAPI} を作成するフックです。
  */
 export const useStatusAPI: IUseStatusAPI = function useSuiStatusAPI(props) {
-  const { slotProps: { indicator: indicatorProps = {} } = {}, ...otherRootProps } = props;
+  const { slotProps: { indicator: indicatorProps = {} } = {}, ...rootProps } = props;
 
   return {
     getRootProps() {
-      return otherRootProps;
+      return rootProps;
     },
     getIndicatorProps() {
       return indicatorProps;
@@ -109,13 +104,13 @@ export { type StatusAPI as API, useStatusAPI as useAPI };
  * 状態を示すドットとラベルを並べて表示するコンポーネントです。
  */
 export const Status: IComponent<StatusProps> = function SuiStatus(props) {
-  const { children } = props;
   const api = useStatusAPI(props);
+  const rootProps = api.getRootProps();
 
   return (
-    <StatusRoot {...api.getRootProps()}>
+    <StatusRoot {...rootProps}>
       <StatusIndicator {...api.getIndicatorProps()} />
-      {children}
+      {rootProps.children}
     </StatusRoot>
   );
 };

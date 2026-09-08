@@ -159,6 +159,7 @@ export const SidebarProvider: IComponent<SidebarProviderProps> = function SuiSid
 };
 
 export { SidebarProvider as Provider };
+
 export namespace Provider {
   /**
    * {@link SidebarProviderState}
@@ -289,7 +290,7 @@ export const SidebarRoot: IComponent<SidebarRootProps> = function SuiSidebarRoot
           `sui_sidebar-side_${side}`,
           `sui_sidebar-variant_${variant}`,
           `sui_sidebar-collapsible_${collapsible}`,
-          (renderState) => `sui_sidebar-${renderState.state}`,
+          (state) => `sui_sidebar-${state.state}`,
         ),
         "data-scope": "",
       },
@@ -298,6 +299,7 @@ export const SidebarRoot: IComponent<SidebarRootProps> = function SuiSidebarRoot
 };
 
 export { SidebarRoot as Root };
+
 export namespace Root {
   /**
    * {@link SidebarRootState}
@@ -357,6 +359,7 @@ export const SidebarHeader: IComponent<SidebarHeaderProps> = function SuiSidebar
 };
 
 export { SidebarHeader as Header };
+
 export namespace Header {
   /**
    * {@link SidebarHeaderState}
@@ -401,6 +404,7 @@ export const SidebarContent: IComponent<SidebarContentProps> = function SuiSideb
 };
 
 export { SidebarContent as Content };
+
 export namespace Content {
   /**
    * {@link SidebarContentState}
@@ -445,6 +449,7 @@ export const SidebarFooter: IComponent<SidebarFooterProps> = function SuiSidebar
 };
 
 export { SidebarFooter as Footer };
+
 export namespace Footer {
   /**
    * {@link SidebarFooterState}
@@ -489,6 +494,7 @@ export const SidebarGroup: IComponent<SidebarGroupProps> = function SuiSidebarGr
 };
 
 export { SidebarGroup as Group };
+
 export namespace Group {
   /**
    * {@link SidebarGroupState}
@@ -533,6 +539,7 @@ export const SidebarGroupLabel: IComponent<SidebarGroupLabelProps> = function Su
 };
 
 export { SidebarGroupLabel as GroupLabel };
+
 export namespace GroupLabel {
   /**
    * {@link SidebarGroupLabelState}
@@ -578,6 +585,7 @@ export const SidebarGroupContent: IComponent<SidebarGroupContentProps> =
   };
 
 export { SidebarGroupContent as GroupContent };
+
 export namespace GroupContent {
   /**
    * {@link SidebarGroupContentState}
@@ -622,6 +630,7 @@ export const SidebarInset: IComponent<SidebarInsetProps> = function SuiSidebarIn
 };
 
 export { SidebarInset as Inset };
+
 export namespace Inset {
   /**
    * {@link SidebarInsetState}
@@ -690,6 +699,7 @@ export const SidebarRail: IComponent<SidebarRailProps> = function SuiSidebarRail
 };
 
 export { SidebarRail as Rail };
+
 export namespace Rail {
   /**
    * {@link SidebarRailState}
@@ -748,7 +758,7 @@ export const SidebarTrigger: IComponent<SidebarTriggerProps> = function SuiSideb
         children: children ?? <DefaultTriggerIcon />,
         className: cn<SidebarTriggerState>(
           "sui_sidebar_trigger",
-          (renderState) => `sui_sidebar_trigger-${renderState.state}`,
+          (state) => `sui_sidebar_trigger-${state.state}`,
         ),
         ...(children === undefined ? { "aria-label": "サイドバーを切り替える" } : {}),
         "aria-expanded": ctx.open,
@@ -759,6 +769,7 @@ export const SidebarTrigger: IComponent<SidebarTriggerProps> = function SuiSideb
 };
 
 export { SidebarTrigger as Trigger };
+
 export namespace Trigger {
   /**
    * {@link SidebarTriggerState}

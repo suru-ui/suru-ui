@@ -95,7 +95,7 @@ export type AccordionRootVariant = "naked" | "liquid";
  *
  * @template TValue 項目の値の型です。
  */
-export type AccordionRootValue<TValue = any> = Accordion.Root.State<TValue>;
+export type AccordionRootValue<TValue = any> = Accordion.Root.Value<TValue>;
 
 /**
  * {@link AccordionRoot} が持つ状態です。

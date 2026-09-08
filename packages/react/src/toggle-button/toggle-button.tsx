@@ -126,6 +126,11 @@ export type ToggleButtonProps = Omit<ToggleButtonRootProps, "children"> &
  */
 export interface ToggleButtonAPI {
   /**
+   * {@link ToggleButtonCircularProgress} に渡す props を取得します。
+   */
+  getCircularProgressProps(): Omit<ToggleButtonCircularProgressProps, "children">;
+
+  /**
    * {@link ToggleButtonCircularProgressFill} に渡す props を取得します。
    */
   getCircularProgressFillProps(): Omit<ToggleButtonCircularProgressFillProps, "children">;
@@ -134,11 +139,6 @@ export interface ToggleButtonAPI {
    * {@link ToggleButtonCircularProgressFillRotation} に渡す props を取得します。
    */
   getCircularProgressFillRotationProps(): ToggleButtonCircularProgressFillRotationProps;
-
-  /**
-   * {@link ToggleButtonCircularProgress} に渡す props を取得します。
-   */
-  getCircularProgressProps(): Omit<ToggleButtonCircularProgressProps, "children">;
 
   /**
    * {@link ToggleButtonCircularProgressTrack} に渡す props を取得します。

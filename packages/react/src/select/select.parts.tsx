@@ -1013,7 +1013,7 @@ export const SelectItem: IComponent<SelectItemProps> = function SuiSelectItem(pr
       className={cn(
         className,
         "sui_select_item",
-        `sui_select-size_${size}`,
+        `sui_select_item-size_${size}`,
         (state) => state.disabled && "sui_select_item-disabled",
         (state) => state.highlighted && "sui_select_item-highlighted",
         (state) => state.selected && "sui_select_item-selected",

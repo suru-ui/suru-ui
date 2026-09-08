@@ -61,7 +61,7 @@ export type PopoverRootState = Popover.Root.State;
  *
  * @template TPayload トリガーから受け取るデータの型です。
  */
-export type PopoverRootProps<TPayload = unknown> = Omit<Popover.Root.Props<TPayload>, "handle"> & {
+export type PopoverRootProps<TPayload = any> = Omit<Popover.Root.Props<TPayload>, "handle"> & {
   /**
    * ポップオーバーとトリガー ({@link Trigger}) を関連付けるハンドルです。
    *
@@ -74,7 +74,7 @@ export type PopoverRootProps<TPayload = unknown> = Omit<Popover.Root.Props<TPayl
  * {@link PopoverRoot} のコンポーネント型です。
  */
 export interface PopoverRootComponent extends IComponent<PopoverRootProps> {
-  <TPayload = unknown>(props: PopoverRootProps<TPayload>): React.ReactElement | null;
+  <TPayload = any>(props: PopoverRootProps<TPayload>): React.ReactElement | null;
 }
 
 /**
@@ -100,7 +100,7 @@ export namespace Root {
   /**
    * {@link PopoverRootProps}
    */
-  export type Props<TPayload = unknown> = PopoverRootProps<TPayload>;
+  export type Props<TPayload = any> = PopoverRootProps<TPayload>;
 
   /**
    * {@link PopoverRootActions}
@@ -133,7 +133,7 @@ export type PopoverTriggerState = Popover.Trigger.State;
  *
  * @template TPayload トリガーから渡すデータの型です。
  */
-export type PopoverTriggerProps<TPayload = unknown> = Omit<
+export type PopoverTriggerProps<TPayload = any> = Omit<
   Popover.Trigger.Props<TPayload>,
   "handle" | "children" | "render"
 > & {

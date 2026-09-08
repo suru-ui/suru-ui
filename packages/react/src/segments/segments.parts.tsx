@@ -13,6 +13,24 @@ import "./segments.css";
 // ----
 
 /**
+ * Segments のアクティブなセグメントが変更されるイベントの詳細です。
+ */
+export type SegmentsRootChangeEventDetails = BaseTabs.Root.ChangeEventDetails;
+
+/**
+ * Segments のアクティブなセグメントを変更する理由です。
+ */
+export type SegmentsRootChangeEventReason = BaseTabs.Root.ChangeEventReason;
+
+/**
+ * Segments の方向です。
+ *
+ * - `"horizontal"`: 水平方向
+ * - `"vertical"`: 垂直方向
+ */
+export type SegmentsRootOrientation = BaseTabs.Root.Orientation;
+
+/**
  * Segments の配色です。
  */
 export type SegmentsRootColor = Color;
@@ -107,6 +125,21 @@ export namespace Root {
   export type Props = SegmentsRootProps;
 
   /**
+   * {@link SegmentsRootChangeEventDetails}
+   */
+  export type ChangeEventDetails = SegmentsRootChangeEventDetails;
+
+  /**
+   * {@link SegmentsRootChangeEventReason}
+   */
+  export type ChangeEventReason = SegmentsRootChangeEventReason;
+
+  /**
+   * {@link SegmentsRootOrientation}
+   */
+  export type Orientation = SegmentsRootOrientation;
+
+  /**
    * {@link SegmentsRootColor}
    */
   export type Color = SegmentsRootColor;
@@ -134,7 +167,7 @@ export type SegmentsListItemObject = Omit<SegmentsItemProps, "children"> & {
   /**
    * 項目に表示するラベルです。
    */
-  label: React.ReactNode;
+  readonly label: React.ReactNode;
 };
 
 /**
@@ -245,6 +278,37 @@ export namespace List {
 // ----
 
 /**
+ * セグメントをアクティブ化する方向です。
+ *
+ * - `"left"`: 左方向
+ * - `"right"`: 右方向
+ * - `"up"`: 上方向
+ * - `"down"`: 下方向
+ * - `"none"`: 方向なし
+ */
+export type SegmentsItemActivationDirection = BaseTabs.Tab.ActivationDirection;
+
+/**
+ * Segments のセグメントのメタデータです。
+ */
+export type SegmentsItemMetadata = BaseTabs.Tab.Metadata;
+
+/**
+ * アクティブなセグメントの位置です。
+ */
+export type SegmentsItemPosition = BaseTabs.Tab.Position;
+
+/**
+ * アクティブなセグメントの大きさです。
+ */
+export type SegmentsItemSize = BaseTabs.Tab.Size;
+
+/**
+ * Segments のセグメントの値です。
+ */
+export type SegmentsItemValue = BaseTabs.Tab.Value;
+
+/**
  * {@link SegmentsItem} が持つ状態です。
  */
 export type SegmentsItemState = BaseTabs.Tab.State;
@@ -285,6 +349,31 @@ export namespace Item {
    * {@link SegmentsItemProps}
    */
   export type Props = SegmentsItemProps;
+
+  /**
+   * {@link SegmentsItemActivationDirection}
+   */
+  export type ActivationDirection = SegmentsItemActivationDirection;
+
+  /**
+   * {@link SegmentsItemMetadata}
+   */
+  export type Metadata = SegmentsItemMetadata;
+
+  /**
+   * {@link SegmentsItemPosition}
+   */
+  export type Position = SegmentsItemPosition;
+
+  /**
+   * {@link SegmentsItemSize}
+   */
+  export type Size = SegmentsItemSize;
+
+  /**
+   * {@link SegmentsItemValue}
+   */
+  export type Value = SegmentsItemValue;
 }
 
 // Indicator

@@ -226,6 +226,8 @@ export type SelectProps<TValue = unknown, TMultiple extends boolean | undefined 
 
     /**
      * 選択値がないときに表示するプレースホルダーです。
+     *
+     * @default "選択してください"
      */
     placeholder?: React.ReactNode | undefined;
 
@@ -261,6 +263,11 @@ export interface SelectAPI<
   getBackdropProps(): Omit<SelectBackdropProps, "children">;
 
   /**
+   * {@link SelectGroup} に渡す props を取得します。
+   */
+  getGroupProps(): Omit<SelectGroupProps, "children">;
+
+  /**
    * {@link SelectGroupLabel} に渡す props を取得します。
    *
    * @param label グループの見出しです。
@@ -268,19 +275,9 @@ export interface SelectAPI<
   getGroupLabelProps(label: React.ReactNode): SelectGroupLabelProps;
 
   /**
-   * {@link SelectGroup} に渡す props を取得します。
-   */
-  getGroupProps(): Omit<SelectGroupProps, "children">;
-
-  /**
    * {@link SelectIcon} に渡す props を取得します。
    */
   getIconProps(): SelectIconProps;
-
-  /**
-   * {@link SelectItemIndicator} に渡す props を取得します。
-   */
-  getItemIndicatorProps(): SelectItemIndicatorProps;
 
   /**
    * {@link SelectItem} に渡す props を取得します。
@@ -289,6 +286,11 @@ export interface SelectAPI<
    * @param index 項目のインデックスです。
    */
   getItemProps(item: TValue, index: number): Omit<SelectItemProps, "children">;
+
+  /**
+   * {@link SelectItemIndicator} に渡す props を取得します。
+   */
+  getItemIndicatorProps(): SelectItemIndicatorProps;
 
   /**
    * {@link SelectItemText} に渡す props を取得します。

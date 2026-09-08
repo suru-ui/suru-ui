@@ -177,13 +177,13 @@ export const useTreeAPI: IUseTreeAPI = function useSuiTreeAPI(props) {
 
       return {
         ...itemProps,
-        disabled: node.disabled,
-        hasChildren,
         id: node.id,
         label: node.label,
         level,
-        posInSet,
         setSize,
+        disabled: node.disabled || itemProps.disabled,
+        posInSet,
+        hasChildren,
       };
     },
     getRootProps() {
@@ -222,11 +222,11 @@ export { type TreeAPI as API, useTreeAPI as useAPI };
  */
 export const Tree: IComponent<TreeProps> = function SuiTree(props) {
   const api = useTreeAPI(props);
-  const { children, ...otherRootProps } = api.getRootProps();
+  const rootProps = api.getRootProps();
 
   return (
-    <TreeRoot {...otherRootProps}>
-      {children ??
+    <TreeRoot {...rootProps}>
+      {rootProps.children ??
         ((node, level, posInSet, setSize) => (
           <TreeItem key={node.id} {...api.getItemProps(node, level, posInSet, setSize)}>
             <TreeItemIndicator {...api.getIndicatorProps(node)} />

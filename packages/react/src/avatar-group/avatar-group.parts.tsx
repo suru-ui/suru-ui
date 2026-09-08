@@ -66,15 +66,15 @@ export const AvatarGroupContext: React.Context<AvatarGroupContext | null> =
 function useSuiAvatarGroupContext(optional?: false): AvatarGroupContext;
 function useSuiAvatarGroupContext(optional?: boolean): AvatarGroupContext | null;
 function useSuiAvatarGroupContext(optional?: boolean): AvatarGroupContext | null {
-  const context = React.use(AvatarGroupContext);
-  if (context === null && !optional) {
+  const ctx = React.use(AvatarGroupContext);
+  if (ctx === null && !optional) {
     throw new ContextMissingError({
       contextName: "AvatarGroupContext",
       providerName: "AvatarGroupRoot",
     });
   }
 
-  return context;
+  return ctx;
 }
 
 /**
@@ -193,7 +193,6 @@ export const AvatarGroupRoot: IComponent<AvatarGroupRootProps> = function SuiAva
     className,
     ...otherDivProps
   } = props;
-  // oxlint-disable-next-line react/jsx-key
   const children = React.Children.map(childrenProp, (child, i) => {
     if (!React.isValidElement(child)) {
       return child;

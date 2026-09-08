@@ -70,7 +70,7 @@
     border-style: solid;
     transition:
       opacity 150ms ease-out,
-      transform 150ms ease-out;
+      scale 150ms ease-out;
   }
 }
 

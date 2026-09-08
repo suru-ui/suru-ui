@@ -15,14 +15,14 @@ import "./field.css";
 export type FieldRootActions = Field.Root.Actions;
 
 /**
- * {@link FieldRoot} が持つ状態です。
- */
-export type FieldRootState = Field.Root.State;
-
-/**
  * {@link FieldRoot} の妥当性の詳細です。
  */
 export type FieldRootValidityData = Field.ValidityData;
+
+/**
+ * {@link FieldRoot} が持つ状態です。
+ */
+export type FieldRootState = Field.Root.State;
 
 /**
  * {@link FieldRoot} に渡す props です。
@@ -118,14 +118,14 @@ export namespace Label {
 // -------
 
 /**
- * {@link FieldControl} の値が変更された理由です。
- */
-export type FieldControlChangeEventReason = Field.Control.ChangeEventReason;
-
-/**
  * {@link FieldControl} の値が変更されたイベントの詳細です。
  */
 export type FieldControlChangeEventDetails = Field.Control.ChangeEventDetails;
+
+/**
+ * {@link FieldControl} の値が変更された理由です。
+ */
+export type FieldControlChangeEventReason = Field.Control.ChangeEventReason;
 
 /**
  * {@link FieldControl} が持つ状態です。

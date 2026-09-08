@@ -55,6 +55,8 @@ export type FormProps<TValues extends FormValues = FormValues> = FormRootProps<T
 
 /**
  * {@link Form} を構成する各パーツの props を作成するための API です。
+ *
+ * @template TValues フォームの入力値を表す型です。
  */
 export interface FormAPI<TValues extends FormValues = FormValues> {
   /**
@@ -94,7 +96,7 @@ interface IForm extends IComponent<FormProps> {
   /**
    * @template TValues フォームの入力値を表す型です。
    */
-  <TValues extends FormValues>(props: FormProps<TValues>): IComponent.Return;
+  <TValues extends FormValues = FormValues>(props: FormProps<TValues>): IComponent.Return;
 }
 
 /**

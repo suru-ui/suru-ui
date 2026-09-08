@@ -84,8 +84,10 @@
 :scope {
   --sui_file_upload_trigger-min_height: ;
   --sui_file_upload_trigger-padding_inline: ;
+  --sui_file_upload_trigger-font_family: ;
   --sui_file_upload_trigger-font_size: ;
   --sui_file_upload_trigger-font_weight: ;
+  --sui_file_upload_trigger-line_height: ;
   --sui_file_upload_trigger-color: ;
   --sui_file_upload_trigger-letter_spacing: ;
   --sui_file_upload_trigger-focusring_width: ;
@@ -102,8 +104,10 @@
   .sui_file_upload_trigger {
     min-height: var(--sui_file_upload_trigger-min_height);
     padding-inline: var(--sui_file_upload_trigger-padding_inline);
+    font-family: var(--sui_file_upload_trigger-font_family);
     font-size: var(--sui_file_upload_trigger-font_size);
     font-weight: var(--sui_file_upload_trigger-font_weight);
+    line-height: var(--sui_file_upload_trigger-line_height);
     color: var(--sui_file_upload_trigger-color);
     letter-spacing: var(--sui_file_upload_trigger-letter_spacing);
     outline-width: var(--_sui_file_upload_trigger-outline_width, 0px);
@@ -118,6 +122,7 @@
 
 /* 代入 */
 :scope {
+  --sui_file_upload_trigger-font_family: var(--sui-font-sans);
   --sui_file_upload_trigger-color: var(--sui-canvas_text-1);
   --sui_file_upload_trigger-focusring_width: var(--sui-focusring_width);
   --sui_file_upload_trigger-focusring_color: var(--sui-focusring_color);
@@ -131,6 +136,7 @@
     --sui_file_upload_trigger-padding_inline: --sui-space(3);
     --sui_file_upload_trigger-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_file_upload_trigger-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_file_upload_trigger-line_height: var(--sui-text-oln-sm-n-line_height);
     --sui_file_upload_trigger-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
   }
 
@@ -139,6 +145,7 @@
     --sui_file_upload_trigger-padding_inline: --sui-space(4);
     --sui_file_upload_trigger-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_file_upload_trigger-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_file_upload_trigger-line_height: var(--sui-text-oln-md-n-line_height);
     --sui_file_upload_trigger-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   }
 
@@ -147,6 +154,7 @@
     --sui_file_upload_trigger-padding_inline: --sui-space(5);
     --sui_file_upload_trigger-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_file_upload_trigger-font_weight: var(--sui-text-oln-lg-n-font_weight);
+    --sui_file_upload_trigger-line_height: var(--sui-text-oln-lg-n-line_height);
     --sui_file_upload_trigger-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
   }
 
@@ -216,8 +224,10 @@
 :scope {
   --sui_file_upload_dropzone-min_height: ;
   --sui_file_upload_dropzone-padding_inline: ;
+  --sui_file_upload_dropzone-font_family: ;
   --sui_file_upload_dropzone-font_size: ;
   --sui_file_upload_dropzone-font_weight: ;
+  --sui_file_upload_dropzone-line_height: ;
   --sui_file_upload_dropzone-color: ;
   --sui_file_upload_dropzone-letter_spacing: ;
   --sui_file_upload_dropzone-focusring_width: ;
@@ -238,8 +248,10 @@
   .sui_file_upload_dropzone {
     min-height: var(--sui_file_upload_dropzone-min_height);
     padding-inline: var(--sui_file_upload_dropzone-padding_inline);
+    font-family: var(--sui_file_upload_dropzone-font_family);
     font-size: var(--sui_file_upload_dropzone-font_size);
     font-weight: var(--sui_file_upload_dropzone-font_weight);
+    line-height: var(--sui_file_upload_dropzone-line_height);
     color: var(--sui_file_upload_dropzone-color);
     letter-spacing: var(--sui_file_upload_dropzone-letter_spacing);
     outline-width: var(--_sui_file_upload_dropzone-outline_width, 0px);
@@ -258,6 +270,7 @@
 
 /* 代入 */
 :scope {
+  --sui_file_upload_dropzone-font_family: var(--sui-font-sans);
   --sui_file_upload_dropzone-focusring_width: var(--sui-focusring_width);
   --sui_file_upload_dropzone-focusring_color: var(--sui-focusring_color);
   --sui_file_upload_dropzone-focusring_offset: var(--sui-focusring_offset);
@@ -270,6 +283,7 @@
     --sui_file_upload_dropzone-padding_inline: --sui-space(4);
     --sui_file_upload_dropzone-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_file_upload_dropzone-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_file_upload_dropzone-line_height: var(--sui-text-oln-sm-n-line_height);
     --sui_file_upload_dropzone-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
   }
 
@@ -278,6 +292,7 @@
     --sui_file_upload_dropzone-padding_inline: --sui-space(5);
     --sui_file_upload_dropzone-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_file_upload_dropzone-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_file_upload_dropzone-line_height: var(--sui-text-oln-md-n-line_height);
     --sui_file_upload_dropzone-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   }
 
@@ -286,6 +301,7 @@
     --sui_file_upload_dropzone-padding_inline: --sui-space(6);
     --sui_file_upload_dropzone-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_file_upload_dropzone-font_weight: var(--sui-text-oln-lg-n-font_weight);
+    --sui_file_upload_dropzone-line_height: var(--sui-text-oln-lg-n-line_height);
     --sui_file_upload_dropzone-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
   }
 
@@ -450,8 +466,10 @@
 :scope {
   --sui_file_upload_clear_trigger-min_height: ;
   --sui_file_upload_clear_trigger-padding_inline: ;
+  --sui_file_upload_clear_trigger-font_family: ;
   --sui_file_upload_clear_trigger-font_size: ;
   --sui_file_upload_clear_trigger-font_weight: ;
+  --sui_file_upload_clear_trigger-line_height: ;
   --sui_file_upload_clear_trigger-color: ;
   --sui_file_upload_clear_trigger-letter_spacing: ;
   --sui_file_upload_clear_trigger-focusring_width: ;
@@ -466,8 +484,10 @@
   .sui_file_upload_clear_trigger {
     min-height: var(--sui_file_upload_clear_trigger-min_height);
     padding-inline: var(--sui_file_upload_clear_trigger-padding_inline);
+    font-family: var(--sui_file_upload_clear_trigger-font_family);
     font-size: var(--sui_file_upload_clear_trigger-font_size);
     font-weight: var(--sui_file_upload_clear_trigger-font_weight);
+    line-height: var(--sui_file_upload_clear_trigger-line_height);
     color: var(--sui_file_upload_clear_trigger-color);
     letter-spacing: var(--sui_file_upload_clear_trigger-letter_spacing);
     outline-width: var(--_sui_file_upload_clear_trigger-outline_width, 0px);
@@ -480,6 +500,7 @@
 
 /* 代入 */
 :scope {
+  --sui_file_upload_clear_trigger-font_family: var(--sui-font-sans);
   --sui_file_upload_clear_trigger-color: var(--sui-canvas_text-2);
   --sui_file_upload_clear_trigger-focusring_width: var(--sui-focusring_width);
   --sui_file_upload_clear_trigger-focusring_color: var(--sui-focusring_color);
@@ -491,6 +512,7 @@
     --sui_file_upload_clear_trigger-padding_inline: --sui-space(2);
     --sui_file_upload_clear_trigger-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_file_upload_clear_trigger-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_file_upload_clear_trigger-line_height: var(--sui-text-oln-sm-n-line_height);
     --sui_file_upload_clear_trigger-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
   }
 
@@ -499,6 +521,7 @@
     --sui_file_upload_clear_trigger-padding_inline: --sui-space(3);
     --sui_file_upload_clear_trigger-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_file_upload_clear_trigger-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_file_upload_clear_trigger-line_height: var(--sui-text-oln-md-n-line_height);
     --sui_file_upload_clear_trigger-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   }
 
@@ -507,6 +530,7 @@
     --sui_file_upload_clear_trigger-padding_inline: --sui-space(4);
     --sui_file_upload_clear_trigger-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_file_upload_clear_trigger-font_weight: var(--sui-text-oln-lg-n-font_weight);
+    --sui_file_upload_clear_trigger-line_height: var(--sui-text-oln-lg-n-line_height);
     --sui_file_upload_clear_trigger-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
   }
 
@@ -605,8 +629,10 @@
   --sui_file_upload_item-min_height: ;
   --sui_file_upload_item-padding_block: ;
   --sui_file_upload_item-padding_inline: ;
+  --sui_file_upload_item-font_family: ;
   --sui_file_upload_item-font_size: ;
   --sui_file_upload_item-font_weight: ;
+  --sui_file_upload_item-line_height: ;
   --sui_file_upload_item-color: ;
   --sui_file_upload_item-letter_spacing: ;
   --sui_file_upload_item-background_color: ;
@@ -622,8 +648,10 @@
     min-height: var(--sui_file_upload_item-min_height);
     padding-block: var(--sui_file_upload_item-padding_block);
     padding-inline: var(--sui_file_upload_item-padding_inline);
+    font-family: var(--sui_file_upload_item-font_family);
     font-size: var(--sui_file_upload_item-font_size);
     font-weight: var(--sui_file_upload_item-font_weight);
+    line-height: var(--sui_file_upload_item-line_height);
     color: var(--sui_file_upload_item-color);
     letter-spacing: var(--sui_file_upload_item-letter_spacing);
     background-color: var(--sui_file_upload_item-background_color);
@@ -636,6 +664,7 @@
 /* 代入 */
 :scope {
   --sui_file_upload_item-gap: --sui-space(2);
+  --sui_file_upload_item-font_family: var(--sui-font-sans);
   --sui_file_upload_item-color: var(--sui-canvas_text-1);
   --sui_file_upload_item-background_color: var(--sui-grey-naked-canvas-normal);
   --sui_file_upload_item-border_color: var(--sui-grey-naked-border-normal);
@@ -647,6 +676,7 @@
     --sui_file_upload_item-padding_inline: --sui-space(3);
     --sui_file_upload_item-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_file_upload_item-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_file_upload_item-line_height: var(--sui-text-oln-sm-n-line_height);
     --sui_file_upload_item-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
   }
 
@@ -656,6 +686,7 @@
     --sui_file_upload_item-padding_inline: --sui-space(4);
     --sui_file_upload_item-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_file_upload_item-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_file_upload_item-line_height: var(--sui-text-oln-md-n-line_height);
     --sui_file_upload_item-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   }
 
@@ -665,6 +696,7 @@
     --sui_file_upload_item-padding_inline: --sui-space(5);
     --sui_file_upload_item-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_file_upload_item-font_weight: var(--sui-text-oln-lg-n-font_weight);
+    --sui_file_upload_item-line_height: var(--sui-text-oln-lg-n-line_height);
     --sui_file_upload_item-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
   }
 
@@ -716,8 +748,10 @@
 
 /* 変数 */
 :scope {
+  --sui_file_upload_item_size_text-font_family: ;
   --sui_file_upload_item_size_text-font_size: ;
   --sui_file_upload_item_size_text-font_weight: ;
+  --sui_file_upload_item_size_text-line_height: ;
   --sui_file_upload_item_size_text-color: ;
   --sui_file_upload_item_size_text-letter_spacing: ;
 }
@@ -725,8 +759,10 @@
 /* 可変 */
 :scope {
   .sui_file_upload_item_size_text {
+    font-family: var(--sui_file_upload_item_size_text-font_family);
     font-size: var(--sui_file_upload_item_size_text-font_size);
     font-weight: var(--sui_file_upload_item_size_text-font_weight);
+    line-height: var(--sui_file_upload_item_size_text-line_height);
     color: var(--sui_file_upload_item_size_text-color);
     letter-spacing: var(--sui_file_upload_item_size_text-letter_spacing);
   }
@@ -734,8 +770,10 @@
 
 /* 代入 */
 :scope {
+  --sui_file_upload_item_size_text-font_family: var(--sui-font-sans);
   --sui_file_upload_item_size_text-font_size: var(--sui-text-oln-sm-n-font_size);
   --sui_file_upload_item_size_text-font_weight: var(--sui-text-oln-sm-n-font_weight);
+  --sui_file_upload_item_size_text-line_height: var(--sui-text-oln-sm-n-line_height);
   --sui_file_upload_item_size_text-color: var(--sui-canvas_text-2);
   --sui_file_upload_item_size_text-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
 }

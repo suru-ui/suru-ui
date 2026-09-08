@@ -294,12 +294,9 @@ export namespace Root {
 // -----
 
 /**
- * {@link TextFieldInput} で使用できる入力項目の種類です。
+ * {@link TextFieldInput} の値が変更されたイベントの詳細です。
  */
-export type TextFieldInputType = Exclude<
-  React.HTMLInputTypeAttribute,
-  "button" | "checkbox" | "color" | "image" | "radio" | "range" | "reset" | "submit"
->;
+export type TextFieldInputChangeEventDetails = BaseInput.ChangeEventDetails;
 
 /**
  * {@link TextFieldInput} の値が変更された理由です。
@@ -307,9 +304,12 @@ export type TextFieldInputType = Exclude<
 export type TextFieldInputChangeEventReason = BaseInput.ChangeEventReason;
 
 /**
- * {@link TextFieldInput} の値が変更されたイベントの詳細です。
+ * {@link TextFieldInput} で使用できる入力項目の種類です。
  */
-export type TextFieldInputChangeEventDetails = BaseInput.ChangeEventDetails;
+export type TextFieldInputType = Exclude<
+  React.HTMLInputTypeAttribute,
+  "button" | "checkbox" | "color" | "image" | "radio" | "range" | "reset" | "submit"
+>;
 
 /**
  * {@link TextFieldInput} の状態です。
