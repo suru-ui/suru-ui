@@ -220,6 +220,11 @@
       --_sui_checkbox-border_width: var(--sui_checkbox-border_width);
     }
   }
+
+  &.sui_checkbox-outlined:is(.sui_checkbox-checked, .sui_checkbox-indeterminate) {
+    --_sui_checkbox-border_color: var(--sui_checkbox-border_color-checked);
+    --_sui_checkbox-border_width: var(--sui_checkbox-border_width);
+  }
 }
 
 } /* @scope */
@@ -340,24 +345,34 @@
 /* 可変 */
 :scope {
   .sui_checkbox_icon-check {
-    display: var(--sui_checkbox_icon-check-display);
+    display: var(--_sui_checkbox_icon-check-display,
+               var(--sui_checkbox_icon-check-display)
+             );
   }
 
   .sui_checkbox_icon-dash {
-    display: var(--sui_checkbox_icon-dash-display);
+    display: var(--_sui_checkbox_icon-dash-display,
+               var(--sui_checkbox_icon-dash-display)
+             );
   }
 }
 
 /* 代入 */
 :scope {
+  --sui_checkbox_icon-check-display: none;
+  --sui_checkbox_icon-dash-display: none;
+}
+
+/* 変異 */
+:scope {
   &.sui_checkbox-checked {
-    --sui_checkbox_icon-check-display: inline;
-    --sui_checkbox_icon-dash-display: none;
+    --_sui_checkbox_icon-check-display: inline;
+    --_sui_checkbox_icon-dash-display: none;
   }
 
   &.sui_checkbox-indeterminate {
-    --sui_checkbox_icon-check-display: none;
-    --sui_checkbox_icon-dash-display: inline;
+    --_sui_checkbox_icon-check-display: none;
+    --_sui_checkbox_icon-dash-display: inline;
   }
 }
 

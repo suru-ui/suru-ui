@@ -120,6 +120,16 @@
 @layer sui.component {
 @scope (.sui_collapsible) to ([data-scope]) {
 
+/* 固定 */
+:scope {
+  .sui_collapsible_content {
+    overflow: hidden;
+    line-break: strict;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
 /* 変数 */
 :scope {
   --sui_collapsible_content-height: ;
@@ -197,7 +207,8 @@
 /* Indicator */
 :scope {
   .sui_collapsible-disabled .sui_collapsible_indicator {
-    color: var(--sui-disabled-canvas_text);
+    color: var(--sui-disabled-naked-canvas_text);
+    cursor: not-allowed;
   }
 }
 

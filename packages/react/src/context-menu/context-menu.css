@@ -70,6 +70,7 @@
     flex-direction: column;
     overflow: auto;
     pointer-events: auto;
+    border-style: solid;
   }
 }
 
@@ -108,7 +109,6 @@
     letter-spacing: var(--sui_context_menu_content-letter_spacing);
     background-color: var(--sui_context_menu_content-background_color);
     border-color: var(--sui_context_menu_content-border_color);
-    border-style: solid;
     border-width: var(--_sui_context_menu_content-border_width, 0px);
     border-radius: var(--sui_context_menu_content-border_radius);
   }
