@@ -15,7 +15,7 @@
   --sui_status-font_size: ;
   --sui_status-font_weight: ;
   --sui_status-line_height: ;
-  --sui_status-color-normal: ;
+  --sui_status-color: ;
   --sui_status-letter_spacing: ;
 }
 
@@ -26,14 +26,14 @@
   font-size: var(--sui_status-font_size);
   font-weight: var(--sui_status-font_weight);
   line-height: var(--sui_status-line_height);
-  color: var(--sui_status-color-normal);
+  color: var(--sui_status-color);
   letter-spacing: var(--sui_status-letter_spacing);
 }
 
 /* 代入 */
 :scope {
   --sui_status-font_family: var(--sui-font-sans);
-  --sui_status-color-normal: var(--sui-canvas_text-1);
+  --sui_status-color: var(--sui-canvas_text-1);
 
   &.sui_status-size_sm {
     --sui_status-gap: --sui-space(1);

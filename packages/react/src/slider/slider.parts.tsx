@@ -112,9 +112,6 @@ export type SliderRootProps<
   variant?: SliderRootVariant | undefined;
 };
 
-/**
- * スライダーのルートコンポーネントです。
- */
 interface ISliderRoot extends IComponent<SliderRootProps> {
   /**
    * @template TValue 値の型です。
@@ -124,6 +121,9 @@ interface ISliderRoot extends IComponent<SliderRootProps> {
   ): IComponent.Return;
 }
 
+/**
+ * スライダーのルートコンポーネントです。
+ */
 export const SliderRoot: ISliderRoot = function SuiSliderRoot(props: SliderRootProps) {
   const {
     size = "md",

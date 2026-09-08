@@ -145,7 +145,7 @@ export type StatusRootProps = Omit<React.ComponentProps<"span">, keyof RenderPro
  * 状態を示すドットとラベルを並べて表示するルートコンポーネントです。
  */
 export const StatusRoot: IComponent<StatusRootProps> = function SuiStatusRoot(props) {
-  const { size = "md", color = "grey", processing = false, className, ...otherSpanProps } = props;
+  const { size = "md", color = "grey", processing = false, ...otherSpanProps } = props;
   const ctx = React.useMemo<StatusContext>(
     () => ({ size, color, processing }),
     [size, color, processing],
@@ -155,8 +155,7 @@ export const StatusRoot: IComponent<StatusRootProps> = function SuiStatusRoot(pr
     props: [
       otherSpanProps,
       {
-        className: cn(
-          className,
+        className: cn<StatusRootState>(
           "sui_status",
           `sui_status-size_${size}`,
           `sui_status-color_${color}`,
@@ -224,21 +223,21 @@ export type StatusIndicatorProps = Omit<React.ComponentProps<"span">, keyof Rend
     /**
      * インジケーターの色を指定します。
      *
-     * 親 {@link StatusRoot} 内では、ルートに指定した値が優先されます。
+     * 親 {@link StatusRoot} 内では {@link StatusRootProps.color|color} が優先されます。
      */
     color?: StatusIndicatorColor | undefined;
 
     /**
      * 処理中を示すアニメーションを表示します。
      *
-     * 親 {@link StatusRoot} 内では、ルートに指定した値が優先されます。
+     * 親 {@link StatusRoot} 内では {@link StatusRootProps.processing|processing} が優先されます。
      */
     processing?: boolean | undefined;
 
     /**
      * インジケーターの大きさを指定します。
      *
-     * 親 {@link StatusRoot} 内では、ルートに指定した値が優先されます。
+     * 親 {@link StatusRoot} 内では {@link StatusRootProps.size|size} が優先されます。
      */
     size?: StatusIndicatorSize | undefined;
   };

@@ -66,7 +66,21 @@
   --sui_stat_label-color: var(--sui-canvas_text-3);
   --sui_stat_label-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
 
-  &:has(.sui_stat_label-size_lg) {
+  &.sui_stat-size_sm {
+    --sui_stat_label-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_stat_label-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_stat_label-line_height: var(--sui-text-oln-sm-n-line_height);
+    --sui_stat_label-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+  }
+
+  &.sui_stat-size_md {
+    --sui_stat_label-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_stat_label-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_stat_label-line_height: var(--sui-text-oln-sm-n-line_height);
+    --sui_stat_label-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+  }
+
+  &.sui_stat-size_lg {
     --sui_stat_label-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_stat_label-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_stat_label-line_height: var(--sui-text-oln-md-n-line_height);
@@ -115,21 +129,21 @@
   --sui_stat_value-font_family: var(--sui-font-sans);
   --sui_stat_value-color: var(--sui_stat-color);
 
-  &:has(.sui_stat_value-size_sm) {
+  &.sui_stat-size_sm {
     --sui_stat_value-font_size: calc(var(--sui-text-std-md-b-font_size) * 1.5);
     --sui_stat_value-font_weight: var(--sui-text-std-md-b-font_weight);
     --sui_stat_value-line_height: calc(var(--sui-text-std-md-b-line_height) * 0.8);
     --sui_stat_value-letter_spacing: var(--sui-text-std-md-b-letter_spacing);
   }
 
-  &:has(.sui_stat_value-size_md) {
+  &.sui_stat-size_md {
     --sui_stat_value-font_size: calc(var(--sui-text-std-md-b-font_size) * 2);
     --sui_stat_value-font_weight: var(--sui-text-std-md-b-font_weight);
     --sui_stat_value-line_height: calc(var(--sui-text-std-md-b-line_height) * 0.8);
     --sui_stat_value-letter_spacing: var(--sui-text-std-md-b-letter_spacing);
   }
 
-  &:has(.sui_stat_value-size_lg) {
+  &.sui_stat-size_lg {
     --sui_stat_value-font_size: calc(var(--sui-text-std-lg-b-font_size) * 2);
     --sui_stat_value-font_weight: var(--sui-text-std-lg-b-font_weight);
     --sui_stat_value-line_height: calc(var(--sui-text-std-lg-b-line_height) * 0.8);
@@ -190,7 +204,7 @@
   --sui_stat_change-color: var(--sui-grey-naked-canvas_text-subtle);
   --sui_stat_change-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
   --sui_stat_change-arrow_content: "—";
-  --sui_stat_change-arrow_gap: 0.25em;
+  --sui_stat_change-arrow_gap: --sui-space(1);
 
   &:has(.sui_stat_change-direction_up) {
     --sui_stat_change-color: var(--sui-green-naked-canvas_text-normal);
@@ -253,7 +267,21 @@
   --sui_stat_description-color: var(--sui-canvas_text-3);
   --sui_stat_description-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
 
-  &:has(.sui_stat_description-size_lg) {
+  &.sui_stat-size_sm {
+    --sui_stat_description-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_stat_description-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_stat_description-line_height: var(--sui-text-oln-sm-n-line_height);
+    --sui_stat_description-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+  }
+
+  &.sui_stat-size_md {
+    --sui_stat_description-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_stat_description-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_stat_description-line_height: var(--sui-text-oln-sm-n-line_height);
+    --sui_stat_description-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+  }
+
+  &.sui_stat-size_lg {
     --sui_stat_description-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_stat_description-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_stat_description-line_height: var(--sui-text-oln-md-n-line_height);

@@ -7,6 +7,7 @@ import { isItemObject } from "./_segments.jsx";
 import {
   type SegmentsRootSize,
   type SegmentsItemProps,
+  type SegmentsItemValue,
   type SegmentsListProps,
   type SegmentsRootColor,
   type SegmentsRootProps,
@@ -14,7 +15,10 @@ import {
   type SegmentsRootRadius,
   type SegmentsIndicatorProps,
   type SegmentsListItemObject,
+  type SegmentsRootOrientation,
   type ISegmentsListItemRenderer,
+  type SegmentsRootChangeEventDetails,
+  type SegmentsRootChangeEventReason,
   SegmentsItem,
   SegmentsList,
   SegmentsRoot,
@@ -23,6 +27,16 @@ import {
 
 // Types
 // -----
+
+/**
+ * {@link SegmentsRootChangeEventDetails}
+ */
+export type SegmentsChangeEventDetails = SegmentsRootChangeEventDetails;
+
+/**
+ * {@link SegmentsRootChangeEventReason}
+ */
+export type SegmentsChangeEventReason = SegmentsRootChangeEventReason;
 
 /**
  * {@link SegmentsRootColor}
@@ -48,6 +62,16 @@ export type SegmentsRadius = SegmentsRootRadius;
  * {@link SegmentsRootSize}
  */
 export type SegmentsSize = SegmentsRootSize;
+
+/**
+ * {@link SegmentsRootOrientation}
+ */
+export type SegmentsOrientation = SegmentsRootOrientation;
+
+/**
+ * {@link SegmentsItemValue}
+ */
+export type SegmentsValue = SegmentsItemValue;
 
 /**
  * {@link Segments} が持つ状態です。
@@ -255,6 +279,16 @@ export namespace Segments {
   export type SlotProps = SegmentsSlotProps;
 
   /**
+   * {@link SegmentsChangeEventDetails}
+   */
+  export type ChangeEventDetails = SegmentsChangeEventDetails;
+
+  /**
+   * {@link SegmentsChangeEventReason}
+   */
+  export type ChangeEventReason = SegmentsChangeEventReason;
+
+  /**
    * {@link SegmentsColor}
    */
   export type Color = SegmentsColor;
@@ -270,6 +304,11 @@ export namespace Segments {
   export interface IItemRenderer<TItem = any> extends ISegmentsItemRenderer<TItem> {}
 
   /**
+   * {@link SegmentsOrientation}
+   */
+  export type Orientation = SegmentsOrientation;
+
+  /**
    * {@link SegmentsRadius}
    */
   export type Radius = SegmentsRadius;
@@ -278,4 +317,9 @@ export namespace Segments {
    * {@link SegmentsSize}
    */
   export type Size = SegmentsSize;
+
+  /**
+   * {@link SegmentsValue}
+   */
+  export type Value = SegmentsValue;
 }
