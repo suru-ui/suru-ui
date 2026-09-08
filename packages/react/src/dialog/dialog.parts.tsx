@@ -255,10 +255,19 @@ export type DialogPortalProps = React.ComponentProps<typeof Dialog.Portal>;
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
 export const DialogPortal: IComponent<DialogPortalProps> = function SuiDialogPortal(props) {
-  const { className, ...otherProps } = props;
+  const {
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherProps
+  } = props;
 
   return (
-    <Dialog.Portal {...otherProps} className={cn(className, "sui_dialog_portal")} data-scope="" />
+    <Dialog.Portal
+      {...otherProps}
+      className={cn(className, "sui_dialog_portal")}
+      data-scope={dataScope}
+    />
   );
 };
 

@@ -110,6 +110,8 @@ export const MenubarRoot: IMenubarRoot = function SuiMenubarRoot(props: MenubarR
     children = defaultRootItemRenderer,
     disabled = false,
     orientation = "horizontal",
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     ...otherProps
   } = props;
@@ -125,7 +127,7 @@ export const MenubarRoot: IMenubarRoot = function SuiMenubarRoot(props: MenubarR
         disabled && "sui_menubar-disabled",
       )}
       orientation={orientation}
-      data-scope=""
+      data-scope={dataScope}
     >
       {typeof children === "function" ? items.map(children) : children}
     </BaseMenubar>

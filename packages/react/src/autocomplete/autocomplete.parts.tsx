@@ -347,7 +347,12 @@ export type AutocompleteInputGroupProps = React.ComponentProps<typeof Autocomple
 export const AutocompleteInputGroup: IComponent<AutocompleteInputGroupProps> =
   function SuiAutocompleteInputGroup(props) {
     const { size, color, radius, variant, outlined } = useAutocompleteContext();
-    const { className, ...otherProps } = props;
+    const {
+      // @ts-expect-error
+      "data-scope": dataScope = "",
+      className,
+      ...otherProps
+    } = props;
 
     return (
       <Autocomplete.InputGroup
@@ -362,7 +367,7 @@ export const AutocompleteInputGroup: IComponent<AutocompleteInputGroupProps> =
           outlined && "sui_autocomplete-outlined",
           (state) => state.disabled && "sui_autocomplete-disabled",
         )}
-        data-scope=""
+        data-scope={dataScope}
       />
     );
   };
@@ -633,7 +638,12 @@ export type AutocompletePortalProps = React.ComponentProps<typeof Autocomplete.P
 export const AutocompletePortal: IComponent<AutocompletePortalProps> =
   function SuiAutocompletePortal(props) {
     const { size, radius } = useAutocompleteContext();
-    const { className, ...otherProps } = props;
+    const {
+      // @ts-expect-error
+      "data-scope": dataScope = "",
+      className,
+      ...otherProps
+    } = props;
 
     return (
       <Autocomplete.Portal
@@ -644,7 +654,7 @@ export const AutocompletePortal: IComponent<AutocompletePortalProps> =
           `sui_autocomplete_portal-size_${size}`,
           `sui_autocomplete_portal-radius_${radius}`,
         )}
-        data-scope=""
+        data-scope={dataScope}
       />
     );
   };

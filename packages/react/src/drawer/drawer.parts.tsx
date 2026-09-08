@@ -442,10 +442,19 @@ export type DrawerPortalProps = React.ComponentProps<typeof Drawer.Portal>;
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
 export const DrawerPortal: IComponent<DrawerPortalProps> = function SuiDrawerPortal(props) {
-  const { className, ...otherProps } = props;
+  const {
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherProps
+  } = props;
 
   return (
-    <Drawer.Portal {...otherProps} className={cn(className, "sui_drawer_portal")} data-scope="" />
+    <Drawer.Portal
+      {...otherProps}
+      className={cn(className, "sui_drawer_portal")}
+      data-scope={dataScope}
+    />
   );
 };
 

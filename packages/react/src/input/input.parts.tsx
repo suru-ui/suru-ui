@@ -131,6 +131,8 @@ export const InputRoot: IComponent<InputRootProps> = function SuiInputRoot(props
     radius: radiusProp = sizeProp,
     variant: variantProp = "liquid",
     outlined: outlinedProp = false,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     ...otherProps
   } = props;
@@ -159,7 +161,7 @@ export const InputRoot: IComponent<InputRootProps> = function SuiInputRoot(props
         (state) => state.valid === null && "sui_input-unverified",
         (state) => state.disabled && "sui_input-disabled",
       )}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };

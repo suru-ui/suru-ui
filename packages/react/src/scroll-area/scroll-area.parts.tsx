@@ -23,7 +23,12 @@ export type ScrollAreaRootProps = React.ComponentProps<typeof BaseScrollArea.Roo
  * スクロール領域の各パーツをまとめるルート要素です。
  */
 export const ScrollAreaRoot: IComponent<ScrollAreaRootProps> = function SuiScrollAreaRoot(props) {
-  const { className, ...otherProps } = props;
+  const {
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherProps
+  } = props;
   return (
     <BaseScrollArea.Root
       {...otherProps}
@@ -34,7 +39,7 @@ export const ScrollAreaRoot: IComponent<ScrollAreaRootProps> = function SuiScrol
         (state) => state.hasOverflowX && "sui_scroll_area-has_overflow_x",
         (state) => state.hasOverflowY && "sui_scroll_area-has_overflow_y",
       )}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };

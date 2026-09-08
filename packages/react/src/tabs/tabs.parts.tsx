@@ -85,7 +85,15 @@ export type TabsRootProps = React.ComponentProps<typeof BaseTabs.Root> & {
  * 矢印キーによるタブ間の移動は Base UI が提供します。
  */
 export const TabsRoot: IComponent<TabsRootProps> = function SuiTabsRoot(props) {
-  const { size = "md", radius = size, outlined = false, className, ...otherProps } = props;
+  const {
+    size = "md",
+    radius = size,
+    outlined = false,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherProps
+  } = props;
 
   return (
     <BaseTabs.Root
@@ -98,7 +106,7 @@ export const TabsRoot: IComponent<TabsRootProps> = function SuiTabsRoot(props) {
         outlined && "sui_tabs-outlined",
         (state) => `sui_tabs-orientation_${state.orientation}`,
       )}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };

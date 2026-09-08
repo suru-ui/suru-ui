@@ -178,6 +178,8 @@ export const BreadcrumbRoot: IComponent<BreadcrumbRootProps> = function SuiBread
     size = "md",
     color = "grey",
     items = [],
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     "aria-label": ariaLabel = "パンくずリスト",
     ...otherNavProps
@@ -198,7 +200,7 @@ export const BreadcrumbRoot: IComponent<BreadcrumbRootProps> = function SuiBread
           `sui_breadcrumb-color_${color}`,
         ),
         "aria-label": ariaLabel,
-        "data-scope": "",
+        "data-scope": dataScope,
       },
     ],
   });

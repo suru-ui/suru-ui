@@ -208,6 +208,8 @@ export const TextFieldRoot: IComponent<TextFieldRootProps> = function SuiTextFie
     onClick,
     variant = "liquid",
     outlined = false,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     ...otherDivProps
   } = props;
@@ -248,7 +250,7 @@ export const TextFieldRoot: IComponent<TextFieldRootProps> = function SuiTextFie
           `sui_text_field-variant_${variant}`,
           outlined && "sui_text_field-outlined",
         ),
-        "data-scope": "",
+        "data-scope": dataScope,
       },
     ],
   });

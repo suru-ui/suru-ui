@@ -178,10 +178,10 @@
       --sui_resizable_handle_grip-border_color-idle: ;
       --sui_resizable_handle_grip-border_width: ;
       --sui_resizable_handle_grip-border_radius: ;
-      --sui_resizable_handle_grip-dot_size: ;
-      --sui_resizable_handle_grip-dot_color-idle: ;
-      --sui_resizable_handle_grip-dot_color-hover: ;
       --sui_resizable_handle_grip-dot_color-active: ;
+      --sui_resizable_handle_grip-dot_color-hover: ;
+      --sui_resizable_handle_grip-dot_color-idle: ;
+      --sui_resizable_handle_grip-dot_size: ;
     }
 
     /* 可変 */
@@ -233,10 +233,10 @@
       --sui_resizable_handle_grip-border_color-idle: var(--sui-canvas_text-3);
       --sui_resizable_handle_grip-border_width: 1px;
       --sui_resizable_handle_grip-border_radius: 2px;
-      --sui_resizable_handle_grip-dot_size: 2px;
-      --sui_resizable_handle_grip-dot_color-idle: var(--sui_resizable_handle-line_color-idle);
-      --sui_resizable_handle_grip-dot_color-hover: var(--sui_resizable_handle-line_color-hover);
       --sui_resizable_handle_grip-dot_color-active: var(--sui_resizable_handle-line_color-active);
+      --sui_resizable_handle_grip-dot_color-hover: var(--sui_resizable_handle-line_color-hover);
+      --sui_resizable_handle_grip-dot_color-idle: var(--sui_resizable_handle-line_color-idle);
+      --sui_resizable_handle_grip-dot_size: 2px;
     }
 
     /* 変異 */

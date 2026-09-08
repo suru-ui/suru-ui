@@ -59,16 +59,23 @@ interface IFormRoot extends IComponent<FormRootProps> {
   /**
    * @template TValues フォームの入力値を表す型です。
    */
-  <TValues extends FormRootValues = FormRootValues>(props: FormRootProps<TValues>): IComponent.Return;
+  <TValues extends FormRootValues = FormRootValues>(
+    props: FormRootProps<TValues>,
+  ): IComponent.Return;
 }
 
 /**
  * フォームのルートコンポーネントです。
  */
 export const FormRoot: IFormRoot = function SuiFormRoot(props: FormRootProps) {
-  const { className, ...otherProps } = props;
+  const {
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherProps
+  } = props;
 
-  return <Form {...otherProps} className={cn(className, "sui_form")} data-scope="" />;
+  return <Form {...otherProps} className={cn(className, "sui_form")} data-scope={dataScope} />;
 };
 
 export { FormRoot as Root };

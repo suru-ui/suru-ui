@@ -109,6 +109,8 @@ export const ProgressRoot: IComponent<ProgressRootProps> = function SuiProgressR
     radius = "full",
     variant = "liquid",
     outlined = false,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     ...otherProps
   } = props;
@@ -126,7 +128,7 @@ export const ProgressRoot: IComponent<ProgressRootProps> = function SuiProgressR
         outlined && "sui_progress-outlined",
         (state) => `sui_progress-status_${state.status}`,
       )}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };

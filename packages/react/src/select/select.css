@@ -803,8 +803,8 @@
 /* 変数 */
 :scope {
   --sui_select_item_indicator-size: ;
-  --sui_select_item_indicator-opacity: ;
   --sui_select_item_indicator-color: ;
+  --sui_select_item_indicator-opacity: ;
 }
 
 /* 可変 */
@@ -812,8 +812,8 @@
   .sui_select_item_indicator {
     width: var(--sui_select_item_indicator-size);
     height: var(--sui_select_item_indicator-size);
-    opacity: var(--_sui_select_item_indicator-opacity, var(--sui_select_item_indicator-opacity));
     color: var(--sui_select_item_indicator-color);
+    opacity: var(--_sui_select_item_indicator-opacity, var(--sui_select_item_indicator-opacity));
 
     svg:not(.sui-ignore) {
       width: var(--sui_select_item_indicator-size);
@@ -829,8 +829,8 @@
                                       var(--sui_select_item-font_size)
                                       * var(--sui_select_item-line_height)
                                     );
-  --sui_select_item_indicator-opacity: 1;
   --sui_select_item_indicator-color: var(--sui_select_item-color-normal);
+  --sui_select_item_indicator-opacity: 1;
 }
 
 /* 変異 */

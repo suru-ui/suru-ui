@@ -144,6 +144,8 @@ export const BadgeRoot: IComponent<BadgeRootProps> = function SuiBadgeRoot(props
     children,
     outlined = false,
     position,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     ...otherSpanProps
   } = props;
@@ -166,7 +168,7 @@ export const BadgeRoot: IComponent<BadgeRootProps> = function SuiBadgeRoot(props
           ring && "sui_badge-ring",
           outlined && "sui_badge-outlined",
         ),
-        "data-scope": "",
+        "data-scope": dataScope,
       },
     ],
   });

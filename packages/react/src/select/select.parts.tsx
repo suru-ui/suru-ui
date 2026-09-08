@@ -441,7 +441,12 @@ export type SelectTriggerProps = React.ComponentProps<typeof BaseSelect.Trigger>
 export const SelectTrigger: IComponent<SelectTriggerProps> = function SuiSelectTrigger(props) {
   const actionGroup = useActionGroupContext(true);
   const ctx = useSelectContext(true);
-  const { className, ...otherProps } = props;
+  const {
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherProps
+  } = props;
   const size = actionGroup?.size ?? ctx?.size ?? "md";
   const radius = actionGroup?.radius ?? ctx?.radius ?? "md";
   const variant = actionGroup?.variant ?? ctx?.variant ?? "naked";
@@ -462,7 +467,7 @@ export const SelectTrigger: IComponent<SelectTriggerProps> = function SuiSelectT
         (state) => state.valid === false && "sui_select-invalid",
         (state) => state.open && "sui_select-open",
       )}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };
@@ -591,7 +596,12 @@ export type SelectPortalProps = React.ComponentProps<typeof BaseSelect.Portal>;
  */
 export const SelectPortal: IComponent<SelectPortalProps> = function SuiSelectPortal(props) {
   const ctx = useSelectContext();
-  const { className, ...otherProps } = props;
+  const {
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherProps
+  } = props;
 
   return (
     <BaseSelect.Portal
@@ -603,7 +613,7 @@ export const SelectPortal: IComponent<SelectPortalProps> = function SuiSelectPor
         `sui_select_portal-radius_${ctx.radius}`,
         ctx.outlined && "sui_select_portal-outlined",
       )}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };

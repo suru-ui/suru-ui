@@ -25,7 +25,12 @@ export type FieldsetRootProps = React.ComponentProps<typeof Fieldset.Root>;
  * 関連するコントロールを凡例とともにグループ化します。
  */
 export const FieldsetRoot: IComponent<FieldsetRootProps> = function SuiFieldsetRoot(props) {
-  const { className, ...otherProps } = props;
+  const {
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherProps
+  } = props;
 
   return (
     <Fieldset.Root
@@ -35,7 +40,7 @@ export const FieldsetRoot: IComponent<FieldsetRootProps> = function SuiFieldsetR
         "sui_fieldset",
         (state) => state.disabled && "sui_fieldset-disabled",
       )}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };
@@ -75,12 +80,7 @@ export type FieldsetLegendProps = React.ComponentProps<typeof Fieldset.Legend>;
 export const FieldsetLegend: IComponent<FieldsetLegendProps> = function SuiFieldsetLegend(props) {
   const { className, ...otherProps } = props;
 
-  return (
-    <Fieldset.Legend
-      {...otherProps}
-      className={cn(className, "sui_fieldset_legend")}
-    />
-  );
+  return <Fieldset.Legend {...otherProps} className={cn(className, "sui_fieldset_legend")} />;
 };
 
 export { FieldsetLegend as Legend };

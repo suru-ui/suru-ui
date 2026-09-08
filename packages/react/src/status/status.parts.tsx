@@ -145,7 +145,14 @@ export type StatusRootProps = Omit<React.ComponentProps<"span">, keyof RenderPro
  * 状態を示すドットとラベルを並べて表示するルートコンポーネントです。
  */
 export const StatusRoot: IComponent<StatusRootProps> = function SuiStatusRoot(props) {
-  const { size = "md", color = "grey", processing = false, ...otherSpanProps } = props;
+  const {
+    size = "md",
+    color = "grey",
+    processing = false,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    ...otherSpanProps
+  } = props;
   const ctx = React.useMemo<StatusContext>(
     () => ({ size, color, processing }),
     [size, color, processing],
@@ -161,7 +168,7 @@ export const StatusRoot: IComponent<StatusRootProps> = function SuiStatusRoot(pr
           `sui_status-color_${color}`,
           processing && "sui_status-processing",
         ),
-        "data-scope": "",
+        "data-scope": dataScope,
       },
     ],
   });

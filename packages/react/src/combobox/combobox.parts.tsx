@@ -422,7 +422,12 @@ export type ComboboxInputGroupProps = React.ComponentProps<typeof Combobox.Input
 export const ComboboxInputGroup: IComponent<ComboboxInputGroupProps> =
   function SuiComboboxInputGroup(props) {
     const { size, color, radius, variant, outlined } = useComboboxContext();
-    const { className, ...otherProps } = props;
+    const {
+      // @ts-expect-error
+      "data-scope": dataScope = "",
+      className,
+      ...otherProps
+    } = props;
 
     return (
       <Combobox.InputGroup
@@ -438,7 +443,7 @@ export const ComboboxInputGroup: IComponent<ComboboxInputGroupProps> =
           (state) => state.disabled && "sui_combobox_input_group-disabled",
           (state) => state.valid === false && "sui_combobox_input_group-invalid",
         )}
-        data-scope=""
+        data-scope={dataScope}
       />
     );
   };
@@ -898,7 +903,12 @@ export type ComboboxPortalProps = React.ComponentProps<typeof Combobox.Portal>;
  */
 export const ComboboxPortal: IComponent<ComboboxPortalProps> = function SuiComboboxPortal(props) {
   const { size, radius } = useComboboxContext();
-  const { className, ...otherProps } = props;
+  const {
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherProps
+  } = props;
 
   return (
     <Combobox.Portal
@@ -909,7 +919,7 @@ export const ComboboxPortal: IComponent<ComboboxPortalProps> = function SuiCombo
         `sui_combobox_portal-size_${size}`,
         `sui_combobox_portal-radius_${radius}`,
       )}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };

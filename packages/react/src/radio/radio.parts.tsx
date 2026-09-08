@@ -111,6 +111,8 @@ export const RadioRoot: IComponent<RadioRootProps> = function SuiRadioRoot(props
     variant: variantProp = "naked",
     disabled: disabledProp,
     outlined: outlinedProp = false,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     ...otherProps
   } = props;
@@ -136,7 +138,7 @@ export const RadioRoot: IComponent<RadioRootProps> = function SuiRadioRoot(props
         (state) => state.checked && "sui_radio-checked",
         (state) => state.disabled && "sui_radio-disabled",
       )}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };

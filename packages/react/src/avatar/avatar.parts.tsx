@@ -76,6 +76,8 @@ export const AvatarRoot: IComponent<AvatarRootProps> = function SuiAvatarRoot(pr
     size: sizeProp = "md",
     color: colorProp,
     radius: radiusProp,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     ...otherProps
   } = props;
@@ -93,7 +95,7 @@ export const AvatarRoot: IComponent<AvatarRootProps> = function SuiAvatarRoot(pr
         `sui_avatar-color_${color}`,
         `sui_avatar-radius_${radius}`,
       )}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };

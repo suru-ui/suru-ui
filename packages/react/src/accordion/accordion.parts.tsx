@@ -186,6 +186,8 @@ export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: Ac
     children = defaultRootItemRenderer,
     outlined = false,
     separator = false,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     ...otherProps
   } = props;
@@ -203,7 +205,7 @@ export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: Ac
         separator && "sui_accordion-separator",
         (state) => state.disabled && "sui_accordion-disabled",
       )}
-      data-scope=""
+      data-scope={dataScope}
     >
       {typeof children === "function" ? items.map(children) : children}
     </Accordion.Root>

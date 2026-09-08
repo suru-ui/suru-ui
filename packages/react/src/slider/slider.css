@@ -274,15 +274,15 @@
 :scope {
   --sui_slider_thumb-size: ;
   --sui_slider_thumb-cursor: ;
+  --sui_slider_thumb-focusring_width: ;
+  --sui_slider_thumb-focusring_color: ;
+  --sui_slider_thumb-focusring_offset: ;
   --sui_slider_thumb-border_color-idle: ;
   --sui_slider_thumb-border_color-hover: ;
   --sui_slider_thumb-border_color-active: ;
   --sui_slider_thumb-border_width: ;
   --sui_slider_thumb-border_radius: ;
   --sui_slider_thumb-canvas: ;
-  --sui_slider_thumb-focusring_width: ;
-  --sui_slider_thumb-focusring_color: ;
-  --sui_slider_thumb-focusring_offset: ;
 }
 
 /* 可変 */
@@ -307,14 +307,14 @@
 /* 代入 */
 :scope {
   --sui_slider_thumb-cursor: auto;
+  --sui_slider_thumb-focusring_width: var(--sui-focusring_width);
+  --sui_slider_thumb-focusring_color: var(--sui-focusring_color);
+  --sui_slider_thumb-focusring_offset: var(--sui-focusring_offset);
   --sui_slider_thumb-border_color-idle: var(--sui-grey-naked-border-normal);
   --sui_slider_thumb-border_color-hover: var(--sui-grey-naked-border-subtle);
   --sui_slider_thumb-border_color-active: var(--sui-grey-naked-border-strong);
   --sui_slider_thumb-border_width: --sui-border_width(2);
   --sui_slider_thumb-canvas: var(--sui-canvas-1);
-  --sui_slider_thumb-focusring_width: var(--sui-focusring_width);
-  --sui_slider_thumb-focusring_color: var(--sui-focusring_color);
-  --sui_slider_thumb-focusring_offset: var(--sui-focusring_offset);
 
   &.sui_slider-size_sm {
     --sui_slider_thumb-size: calc(

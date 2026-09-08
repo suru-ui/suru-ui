@@ -54,7 +54,13 @@ export type CollapsibleRootProps = React.ComponentProps<typeof Collapsible.Root>
 export const CollapsibleRoot: IComponent<CollapsibleRootProps> = function SuiCollapsibleRoot(
   props,
 ) {
-  const { size = "md", className, ...otherProps } = props;
+  const {
+    size = "md",
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherProps
+  } = props;
 
   return (
     <Collapsible.Root
@@ -69,7 +75,7 @@ export const CollapsibleRoot: IComponent<CollapsibleRootProps> = function SuiCol
           `sui_collapsible-transition_status_${state.transitionStatus}`,
         (state) => state.disabled && "sui_collapsible-disabled",
       )}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };

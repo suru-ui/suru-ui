@@ -218,13 +218,18 @@ export type HoverCardPortalProps = React.ComponentProps<typeof PreviewCard.Porta
 export const HoverCardPortal: IComponent<HoverCardPortalProps> = function SuiHoverCardPortal(
   props,
 ) {
-  const { className, ...otherProps } = props;
+  const {
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherProps
+  } = props;
 
   return (
     <PreviewCard.Portal
       {...otherProps}
       className={cn(className, "sui_hover_card_portal")}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };

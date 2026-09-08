@@ -100,6 +100,8 @@ export const AlertRoot: IComponent<AlertRootProps> = function SuiAlertRoot(props
     radius = size,
     variant = "muted",
     outlined = false,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     ...otherDivProps
   } = props;
@@ -119,7 +121,7 @@ export const AlertRoot: IComponent<AlertRootProps> = function SuiAlertRoot(props
           `sui_alert-variant_${variant}`,
           outlined && "sui_alert-outlined",
         ),
-        "data-scope": "",
+        "data-scope": dataScope,
       },
     ],
   });

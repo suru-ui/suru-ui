@@ -98,6 +98,8 @@ export const MeterRoot: IComponent<MeterRootProps> = function SuiMeterRoot(props
     radius = "full",
     variant = "liquid",
     outlined = false,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     ...otherProps
   } = props;
@@ -114,7 +116,7 @@ export const MeterRoot: IComponent<MeterRootProps> = function SuiMeterRoot(props
         `sui_meter-variant_${variant}`,
         outlined && "sui_meter-outlined",
       )}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };

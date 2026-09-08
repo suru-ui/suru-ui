@@ -35,13 +35,18 @@ export type FieldRootProps = React.ComponentProps<typeof Field.Root>;
  * ラベル、入力欄、エラーメッセージ、説明文をグループ化し、検証状態を管理します。
  */
 export const FieldRoot: IComponent<FieldRootProps> = function SuiFieldRoot(props) {
-  const { className, ...otherProps } = props;
+  const {
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherProps
+  } = props;
 
   return (
     <Field.Root
       {...otherProps}
       className={cn(className, "sui_field", (state) => state.disabled && "sui_field-disabled")}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };

@@ -638,7 +638,12 @@ export type MenuPortalProps = React.ComponentProps<typeof Menu.Portal>;
  */
 export const MenuPortal: IComponent<MenuPortalProps> = function SuiMenuPortal(props) {
   const { size, radius, outlined } = useMenuContext();
-  const { className, ...otherProps } = props;
+  const {
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherProps
+  } = props;
 
   return (
     <Menu.Portal
@@ -650,7 +655,7 @@ export const MenuPortal: IComponent<MenuPortalProps> = function SuiMenuPortal(pr
         `sui_menu_portal-radius_${radius}`,
         outlined && "sui_menu_portal-outlined",
       )}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };

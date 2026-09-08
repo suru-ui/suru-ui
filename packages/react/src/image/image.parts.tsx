@@ -61,7 +61,13 @@ export type ImageRootProps = Omit<React.ComponentProps<"img">, keyof RenderProps
  * 画像のルートコンポーネントです。
  */
 export const ImageRoot: IComponent<ImageRootProps> = function SuiImageRoot(props) {
-  const { fit, radius = "none", ...otherImgProps } = props;
+  const {
+    fit,
+    radius = "none",
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    ...otherImgProps
+  } = props;
 
   return useRender({
     defaultTagName: "img",
@@ -73,7 +79,7 @@ export const ImageRoot: IComponent<ImageRootProps> = function SuiImageRoot(props
           `sui_image-radius_${radius}`,
           fit && `sui_image-fit_${fit}`,
         ),
-        "data-scope": "",
+        "data-scope": dataScope,
       },
     ],
   });

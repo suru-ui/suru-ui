@@ -256,6 +256,8 @@ export const CheckboxGroupRoot: IComponent<CheckboxGroupRootProps> = function Su
     variant = "liquid",
     disabled,
     outlined = false,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     orientation = "vertical",
     ...otherProps
@@ -283,7 +285,7 @@ export const CheckboxGroupRoot: IComponent<CheckboxGroupRootProps> = function Su
           `sui_checkbox_group-orientation_${orientation}`,
           (state) => state.disabled && "sui_checkbox_group-disabled",
         )}
-        data-scope=""
+        data-scope={dataScope}
       />
     </CheckboxGroupContext>
   );

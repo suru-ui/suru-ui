@@ -256,6 +256,8 @@ export const RadioGroupRoot: IComponent<RadioGroupRootProps> = function SuiRadio
     variant = "naked",
     disabled,
     outlined = variant === "naked",
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     orientation = "vertical",
     ...otherProps
@@ -283,7 +285,7 @@ export const RadioGroupRoot: IComponent<RadioGroupRootProps> = function SuiRadio
           `sui_radio_group-orientation_${orientation}`,
           (state) => state.disabled && "sui_radio_group-disabled",
         )}
-        data-scope=""
+        data-scope={dataScope}
       />
     </RadioGroupContext>
   );

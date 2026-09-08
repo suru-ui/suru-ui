@@ -150,6 +150,8 @@ export const ResizableRoot: IComponent<ResizableRootProps> = function SuiResizab
     orientation: orientationProp,
     onLayoutChange,
     resizeTargetMinimumSize: resizeTargetMinimumSizeProp,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     ...otherDivProps
   } = props;
   const direction = directionProp ?? orientationProp ?? "horizontal";
@@ -180,7 +182,7 @@ export const ResizableRoot: IComponent<ResizableRootProps> = function SuiResizab
         onLayoutChange: handleLayoutChange,
         resizeTargetMinimumSize,
         "data-direction": direction,
-        "data-scope": "",
+        "data-scope": dataScope,
       },
     ],
   });

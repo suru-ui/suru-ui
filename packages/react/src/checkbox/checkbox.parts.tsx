@@ -122,6 +122,8 @@ export const CheckboxRoot: IComponent<CheckboxRootProps> = function SuiCheckboxR
     variant: variantProp = "liquid",
     disabled: disabledProp,
     outlined: outlinedProp = false,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     ...otherProps
   } = props;
@@ -148,7 +150,7 @@ export const CheckboxRoot: IComponent<CheckboxRootProps> = function SuiCheckboxR
         (state) => state.indeterminate && "sui_checkbox-indeterminate",
         (state) => state.disabled && "sui_checkbox-disabled",
       )}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };

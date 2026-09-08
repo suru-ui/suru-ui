@@ -227,6 +227,8 @@ export const NumberFieldRoot: IComponent<NumberFieldRootProps> = function SuiNum
     radius: radiusProp = sizeProp,
     variant: variantProp = "liquid",
     outlined: outlinedProp = false,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     ...otherProps
   } = props;
@@ -256,7 +258,7 @@ export const NumberFieldRoot: IComponent<NumberFieldRootProps> = function SuiNum
           outlined && "sui_number_field-outlined",
           (state) => state.disabled && "sui_number_field-disabled",
         )}
-        data-scope=""
+        data-scope={dataScope}
       />
     </NumberFieldContext>
   );

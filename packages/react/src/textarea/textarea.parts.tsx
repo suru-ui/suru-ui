@@ -116,6 +116,8 @@ export const TextareaRoot: IComponent<TextareaRootProps> = function SuiTextareaR
     radius = size,
     variant = "liquid",
     outlined = false,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     ...otherProps
   } = props;
@@ -137,7 +139,7 @@ export const TextareaRoot: IComponent<TextareaRootProps> = function SuiTextareaR
         (state) => state.valid === null && "sui_textarea-unverified",
         (state) => state.disabled && "sui_textarea-disabled",
       )}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };

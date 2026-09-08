@@ -138,13 +138,6 @@ export interface FileUploadAPI {
   getHiddenInputProps(): FileUploadHiddenInputProps;
 
   /**
-   * {@link FileUploadItem} に渡す props を取得します。
-   *
-   * @param file 表示するファイルです。
-   */
-  getItemProps(file: File): Omit<FileUploadItemProps, "children">;
-
-  /**
    * {@link FileUploadItemDeleteTrigger} に渡す props を取得します。
    */
   getItemDeleteTriggerProps(): FileUploadItemDeleteTriggerProps;
@@ -158,6 +151,13 @@ export interface FileUploadAPI {
    * {@link FileUploadItemName} に渡す props を取得します。
    */
   getItemNameProps(): Omit<FileUploadItemNameProps, "children">;
+
+  /**
+   * {@link FileUploadItem} に渡す props を取得します。
+   *
+   * @param file 表示するファイルです。
+   */
+  getItemProps(file: File): Omit<FileUploadItemProps, "children">;
 
   /**
    * {@link FileUploadItemSizeText} に渡す props を取得します。

@@ -594,7 +594,12 @@ export const ContextMenuPortal: IComponent<ContextMenuPortalProps> = function Su
   props,
 ) {
   const { size, radius, outlined } = useContextMenuContext();
-  const { className, ...otherProps } = props;
+  const {
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherProps
+  } = props;
 
   return (
     <ContextMenu.Portal
@@ -606,7 +611,7 @@ export const ContextMenuPortal: IComponent<ContextMenuPortalProps> = function Su
         `sui_context_menu_portal-radius_${radius}`,
         outlined && "sui_context_menu_portal-outlined",
       )}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };

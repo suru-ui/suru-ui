@@ -250,10 +250,19 @@ export type TooltipPortalProps = React.ComponentProps<typeof Tooltip.Portal>;
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
 export const TooltipPortal: IComponent<TooltipPortalProps> = function SuiTooltipPortal(props) {
-  const { className, ...otherProps } = props;
+  const {
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherProps
+  } = props;
 
   return (
-    <Tooltip.Portal {...otherProps} className={cn(className, "sui_tooltip_portal")} data-scope="" />
+    <Tooltip.Portal
+      {...otherProps}
+      className={cn(className, "sui_tooltip_portal")}
+      data-scope={dataScope}
+    />
   );
 };
 

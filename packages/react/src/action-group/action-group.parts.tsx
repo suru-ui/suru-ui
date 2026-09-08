@@ -239,6 +239,8 @@ export const ActionGroupRoot: IComponent<ActionGroupRootProps> = function SuiAct
     variant = "solid",
     outlined = false,
     orientation = "horizontal",
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     role = "group",
     "aria-orientation": ariaOrientation = orientation,
@@ -265,7 +267,7 @@ export const ActionGroupRoot: IComponent<ActionGroupRootProps> = function SuiAct
           outlined && "sui_action_group-outlined",
         ),
         "aria-orientation": ariaOrientation,
-        "data-scope": "",
+        "data-scope": dataScope,
       },
     ],
   });

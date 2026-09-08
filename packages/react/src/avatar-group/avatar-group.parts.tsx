@@ -190,6 +190,8 @@ export const AvatarGroupRoot: IComponent<AvatarGroupRootProps> = function SuiAva
     radius = "full",
     reverse = false,
     children: childrenProp,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     ...otherDivProps
   } = props;
@@ -223,7 +225,7 @@ export const AvatarGroupRoot: IComponent<AvatarGroupRootProps> = function SuiAva
           reverse && "sui_avatar_group-reverse",
           !reverse && "sui_avatar_group-forward",
         ),
-        "data-scope": "",
+        "data-scope": dataScope,
       },
     ],
   });

@@ -131,6 +131,8 @@ export const SliderRoot: ISliderRoot = function SuiSliderRoot(props: SliderRootP
     radius = "full",
     variant = "liquid",
     outlined = false,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     ...otherProps
   } = props;
@@ -150,7 +152,7 @@ export const SliderRoot: ISliderRoot = function SuiSliderRoot(props: SliderRootP
         (state) => state.dragging && "sui_slider-dragging",
         (state) => `sui_slider-orientation_${state.orientation}`,
       )}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };

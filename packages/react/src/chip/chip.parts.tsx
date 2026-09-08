@@ -100,6 +100,8 @@ export const ChipRoot: IComponent<ChipRootProps> = function SuiChipRoot(props) {
     radius = "full",
     variant = "liquid",
     outlined = false,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     ...otherSpanProps
   } = props;
@@ -118,7 +120,7 @@ export const ChipRoot: IComponent<ChipRootProps> = function SuiChipRoot(props) {
           `sui_chip-variant_${variant}`,
           outlined && "sui_chip-outlined",
         ),
-        "data-scope": "",
+        "data-scope": dataScope,
       },
     ],
   });

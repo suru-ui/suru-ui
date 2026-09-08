@@ -96,8 +96,8 @@
 
   > .sui_action_group_item.sui_number_field {
     --sui_number_field_input-color: var(--sui_action_group-item-color);
-    --sui_number_field_group-border_color-normal: var(--sui_action_group-item-border_color);
     --sui_number_field_group-background_color: var(--sui_action_group-item-background_color);
+    --sui_number_field_group-border_color-normal: var(--sui_action_group-item-border_color);
   }
 
   > .sui_action_group_item.sui_select {

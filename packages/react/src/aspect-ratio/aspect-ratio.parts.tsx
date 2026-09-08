@@ -74,7 +74,14 @@ export type AspectRatioRootProps = Omit<React.ComponentProps<"div">, keyof Rende
 export const AspectRatioRoot: IComponent<AspectRatioRootProps> = function SuiAspectRatioRoot(
   props,
 ) {
-  const { ratio = 1, radius = "none", className, ...otherDivProps } = props;
+  const {
+    ratio = 1,
+    radius = "none",
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherDivProps
+  } = props;
 
   return useRender({
     defaultTagName: "div",
@@ -85,7 +92,7 @@ export const AspectRatioRoot: IComponent<AspectRatioRootProps> = function SuiAsp
           "--sui_aspect_ratio-ratio": ratio,
         } as AspectRatioRootStyle,
         className: cn(className, "sui_aspect_ratio", `sui_aspect_ratio-radius_${radius}`),
-        "data-scope": "",
+        "data-scope": dataScope,
       },
     ],
   });

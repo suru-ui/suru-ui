@@ -269,6 +269,8 @@ export const PaginationRoot: IComponent<PaginationRootProps> = function SuiPagin
     defaultPage = 1,
     onPageChange,
     "aria-label": ariaLabel = "ページネーション",
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     ...otherNavProps
   } = props;
   const maxPage = Math.max(totalPages, 1);
@@ -312,7 +314,7 @@ export const PaginationRoot: IComponent<PaginationRootProps> = function SuiPagin
           `sui_pagination-color_${color}`,
           disabled && "sui_pagination-disabled",
         ),
-        "data-scope": "",
+        "data-scope": dataScope,
       },
     ],
   });

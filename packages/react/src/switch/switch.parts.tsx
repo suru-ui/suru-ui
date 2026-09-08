@@ -108,6 +108,8 @@ export const SwitchRoot: IComponent<SwitchRootProps> = function SuiSwitchRoot(pr
     radius = "full",
     variant = "naked",
     outlined = variant === "naked",
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     ...otherProps
   } = props;
@@ -126,7 +128,7 @@ export const SwitchRoot: IComponent<SwitchRootProps> = function SuiSwitchRoot(pr
         (state) => state.checked && "sui_switch-checked",
         (state) => state.disabled && "sui_switch-disabled",
       )}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };

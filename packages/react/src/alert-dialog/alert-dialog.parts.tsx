@@ -262,13 +262,18 @@ export type AlertDialogPortalProps = React.ComponentProps<typeof AlertDialog.Por
 export const AlertDialogPortal: IComponent<AlertDialogPortalProps> = function SuiAlertDialogPortal(
   props,
 ) {
-  const { className, ...otherProps } = props;
+  const {
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherProps
+  } = props;
 
   return (
     <AlertDialog.Portal
       {...otherProps}
       className={cn(className, "sui_alert_dialog_portal")}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };

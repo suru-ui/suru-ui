@@ -59,10 +59,19 @@ export type ToastPortalProps = React.ComponentProps<typeof Toast.Portal>;
  * 既定では表示領域を `<body>` の末尾に配置します。
  */
 export const ToastPortal: IComponent<ToastPortalProps> = function SuiToastPortal(props) {
-  const { className, ...otherProps } = props;
+  const {
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherProps
+  } = props;
 
   return (
-    <Toast.Portal {...otherProps} className={cn(className, "sui_toast_portal")} data-scope="" />
+    <Toast.Portal
+      {...otherProps}
+      className={cn(className, "sui_toast_portal")}
+      data-scope={dataScope}
+    />
   );
 };
 

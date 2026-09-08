@@ -50,7 +50,14 @@ export type SkeletonRootProps = Omit<React.ComponentProps<"span">, keyof RenderP
  * スケルトンのルートコンポーネントです。
  */
 export const SkeletonRoot: IComponent<SkeletonRootProps> = function SuiSkeletonRoot(props) {
-  const { radius = "md", animated = true, className, ...otherSpanProps } = props;
+  const {
+    radius = "md",
+    animated = true,
+    className,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    ...otherSpanProps
+  } = props;
 
   return useRender({
     defaultTagName: "span",
@@ -63,7 +70,7 @@ export const SkeletonRoot: IComponent<SkeletonRootProps> = function SuiSkeletonR
           `sui_skeleton-radius_${radius}`,
           animated && "sui_skeleton-animated",
         ),
-        "data-scope": "",
+        "data-scope": dataScope,
       },
     ],
   });

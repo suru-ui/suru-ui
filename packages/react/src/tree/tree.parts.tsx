@@ -355,6 +355,8 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
     selectionMode = "none",
     defaultExpandedValue = EMPTY,
     onExpandedValueChange,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     ...otherDivProps
   } = props;
 
@@ -625,7 +627,7 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
             onKeyDown: handleKeyDown,
             "aria-activedescendant": activeId != null ? getItemId(activeId) : undefined,
             "aria-multiselectable": selectionMode === "multiple" ? true : undefined,
-            "data-scope": "",
+            "data-scope": dataScope,
           },
         ],
       })}

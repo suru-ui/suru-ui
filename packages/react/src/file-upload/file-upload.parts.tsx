@@ -350,6 +350,8 @@ export const FileUploadRoot: IComponent<FileUploadRootProps> = function SuiFileU
     onFileAccept,
     onFileReject,
     onValueChange,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     ...otherDivProps
   } = props;
   const inputRef = React.useRef<HTMLInputElement | null>(null);
@@ -453,7 +455,7 @@ export const FileUploadRoot: IComponent<FileUploadRootProps> = function SuiFileU
           `sui_file_upload-variant_${variant}`,
           disabled && "sui_file_upload-disabled",
         ),
-        "data-scope": "",
+        "data-scope": dataScope,
       },
     ],
   });

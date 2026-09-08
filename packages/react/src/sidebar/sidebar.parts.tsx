@@ -114,7 +114,14 @@ export type SidebarProviderProps = Omit<React.ComponentProps<"div">, keyof Rende
 export const SidebarProvider: IComponent<SidebarProviderProps> = function SuiSidebarProvider(
   props,
 ) {
-  const { open: openProp, defaultOpen = true, onOpenChange, ...otherDivProps } = props;
+  const {
+    open: openProp,
+    defaultOpen = true,
+    onOpenChange,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    ...otherDivProps
+  } = props;
   const [openState, setOpenState] = React.useState(defaultOpen);
   const open = openProp ?? openState;
   const setOpen = React.useCallback(
@@ -150,7 +157,7 @@ export const SidebarProvider: IComponent<SidebarProviderProps> = function SuiSid
           (state) => state.state === "expanded" && "sui_sidebar_provider-expanded",
           (state) => state.state === "collapsed" && "sui_sidebar_provider-collapsed",
         ),
-        "data-scope": "",
+        "data-scope": dataScope,
       },
     ],
   });
@@ -270,6 +277,8 @@ export const SidebarRoot: IComponent<SidebarRootProps> = function SuiSidebarRoot
     side = "left",
     variant = "sidebar",
     collapsible = "offcanvas",
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     ...otherAsideProps
   } = props;
   const open = ctx?.open ?? true;
@@ -292,7 +301,7 @@ export const SidebarRoot: IComponent<SidebarRootProps> = function SuiSidebarRoot
           `sui_sidebar-collapsible_${collapsible}`,
           (state) => `sui_sidebar-${state.state}`,
         ),
-        "data-scope": "",
+        "data-scope": dataScope,
       },
     ],
   });
@@ -738,7 +747,13 @@ export type SidebarTriggerProps = Omit<React.ComponentProps<"button">, keyof Ren
  */
 export const SidebarTrigger: IComponent<SidebarTriggerProps> = function SuiSidebarTrigger(props) {
   const ctx = useSuiSidebarContext();
-  const { onClick, children, ...otherButtonProps } = props;
+  const {
+    onClick,
+    children,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    ...otherButtonProps
+  } = props;
   const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
     if (!event.defaultPrevented) {
@@ -762,7 +777,7 @@ export const SidebarTrigger: IComponent<SidebarTriggerProps> = function SuiSideb
         ),
         ...(children === undefined ? { "aria-label": "サイドバーを切り替える" } : {}),
         "aria-expanded": ctx.open,
-        "data-scope": "",
+        "data-scope": dataScope,
       },
     ],
   });

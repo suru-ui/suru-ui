@@ -376,6 +376,13 @@ export interface ComboboxAPI<
   getEmptyProps(): ComboboxEmptyProps | null;
 
   /**
+   * {@link ComboboxGroupLabel} に渡すプロパティーを取得します。
+   *
+   * @param item グループの項目です。
+   */
+  getGroupLabelProps(item: ComboboxGroupItem<TValue>): ComboboxGroupLabelProps;
+
+  /**
    * {@link ComboboxGroup} に渡すプロパティーを取得します。
    *
    * @param item グループの項目です。
@@ -384,16 +391,14 @@ export interface ComboboxAPI<
   getGroupProps(item: ComboboxGroupItem<TValue>, index: number): ComboboxGroupProps;
 
   /**
-   * {@link ComboboxGroupLabel} に渡すプロパティーを取得します。
-   *
-   * @param item グループの項目です。
-   */
-  getGroupLabelProps(item: ComboboxGroupItem<TValue>): ComboboxGroupLabelProps;
-
-  /**
    * {@link ComboboxIcon} に渡すプロパティーを取得します。
    */
   getIconProps(): ComboboxIconProps;
+
+  /**
+   * {@link ComboboxInputGroup} に渡すプロパティーを取得します。
+   */
+  getInputGroupProps(): Omit<ComboboxInputGroupProps, "children">;
 
   /**
    * {@link ComboboxInput} に渡すプロパティーを取得します。
@@ -401,9 +406,9 @@ export interface ComboboxAPI<
   getInputProps(): ComboboxInputProps;
 
   /**
-   * {@link ComboboxInputGroup} に渡すプロパティーを取得します。
+   * {@link ComboboxItemIndicator} に渡すプロパティーを取得します。
    */
-  getInputGroupProps(): Omit<ComboboxInputGroupProps, "children">;
+  getItemIndicatorProps(): ComboboxItemIndicatorProps;
 
   /**
    * {@link ComboboxItem} に渡すプロパティーを取得します。
@@ -412,11 +417,6 @@ export interface ComboboxAPI<
    * @param index 項目のインデックスです。
    */
   getItemProps(item: TValue, index: number): ComboboxItemProps;
-
-  /**
-   * {@link ComboboxItemIndicator} に渡すプロパティーを取得します。
-   */
-  getItemIndicatorProps(): ComboboxItemIndicatorProps;
 
   /**
    * {@link ComboboxLabel} に渡すプロパティーを取得します。

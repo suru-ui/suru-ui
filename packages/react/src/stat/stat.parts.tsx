@@ -100,7 +100,13 @@ export type StatRootProps = Omit<React.ComponentProps<"dl">, keyof RenderProps> 
  * `dl` 要素を描画し、大きさをコンテキストで子パーツへ伝えます。
  */
 export const StatRoot: IComponent<StatRootProps> = function SuiStatRoot(props) {
-  const { size = "md", className, ...otherDlProps } = props;
+  const {
+    size = "md",
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherDlProps
+  } = props;
   const ctx = React.useMemo<StatContext>(() => ({ size }), [size]);
   const element = useRender({
     defaultTagName: "dl",
@@ -108,7 +114,7 @@ export const StatRoot: IComponent<StatRootProps> = function SuiStatRoot(props) {
       otherDlProps,
       {
         className: cn(className, "sui_stat", `sui_stat-size_${size}`),
-        "data-scope": "",
+        "data-scope": dataScope,
       },
     ],
   });

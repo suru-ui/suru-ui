@@ -151,6 +151,8 @@ export const PasswordFieldRoot: IComponent<PasswordFieldRootProps> = function Su
     radius = size,
     variant = "liquid",
     visible: visibleProp,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     defaultVisible = false,
     onVisibleChange,
@@ -191,7 +193,7 @@ export const PasswordFieldRoot: IComponent<PasswordFieldRootProps> = function Su
           `sui_password_field-radius_${radius}`,
           `sui_password_field-variant_${variant}`,
         )}
-        data-scope=""
+        data-scope={dataScope}
       />
     </PasswordFieldContext>
   );

@@ -94,7 +94,15 @@ export type SegmentsRootProps = React.ComponentProps<typeof BaseTabs.Root> & {
  * 個々のセグメントをグループ化し、選択値を管理します。
  */
 export const SegmentsRoot: IComponent<SegmentsRootProps> = function SuiSegmentsRoot(props) {
-  const { size = "md", color = "grey", radius = size, className, ...otherProps } = props;
+  const {
+    size = "md",
+    color = "grey",
+    radius = size,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherProps
+  } = props;
 
   return (
     <BaseTabs.Root
@@ -106,7 +114,7 @@ export const SegmentsRoot: IComponent<SegmentsRootProps> = function SuiSegmentsR
         `sui_segments-radius_${radius}`,
         `sui_segments-color_${color}`,
       )}
-      data-scope=""
+      data-scope={dataScope}
     />
   );
 };
@@ -135,14 +143,14 @@ export namespace Root {
   export type ChangeEventReason = SegmentsRootChangeEventReason;
 
   /**
-   * {@link SegmentsRootOrientation}
-   */
-  export type Orientation = SegmentsRootOrientation;
-
-  /**
    * {@link SegmentsRootColor}
    */
   export type Color = SegmentsRootColor;
+
+  /**
+   * {@link SegmentsRootOrientation}
+   */
+  export type Orientation = SegmentsRootOrientation;
 
   /**
    * {@link SegmentsRootRadius}

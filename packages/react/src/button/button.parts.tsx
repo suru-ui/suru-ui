@@ -237,6 +237,8 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
     disabled = false,
     outlined: outlinedProp = false,
     focusableWhenDisabled = !disabled && pending,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     className,
     ...otherProps
   } = props;
@@ -269,7 +271,7 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
           outlined && "sui_button-outlined",
         )}
         focusableWhenDisabled={focusableWhenDisabled}
-        data-scope=""
+        data-scope={dataScope}
       />
     </ButtonContext>
   );

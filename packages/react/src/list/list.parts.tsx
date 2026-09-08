@@ -173,6 +173,8 @@ export const ListRoot: IListRoot = function SuiListRoot(props: ListRootProps) {
     items = [],
     ordered = false,
     children = defaultRootItemRenderer,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     ...otherListProps
   } = props;
   const ctx = React.useMemo<ListContext>(() => ({ size }), [size]);
@@ -183,7 +185,7 @@ export const ListRoot: IListRoot = function SuiListRoot(props: ListRootProps) {
       {
         children: typeof children === "function" ? items.map(children) : children,
         className: cn("sui_list", `sui_list-size_${size}`, ordered && "sui_list-ordered"),
-        "data-scope": "",
+        "data-scope": dataScope,
       },
     ],
   });

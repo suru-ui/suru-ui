@@ -212,10 +212,19 @@ export type PopoverPortalProps = React.ComponentProps<typeof Popover.Portal>;
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
 export const PopoverPortal: IComponent<PopoverPortalProps> = function SuiPopoverPortal(props) {
-  const { className, ...otherProps } = props;
+  const {
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    className,
+    ...otherProps
+  } = props;
 
   return (
-    <Popover.Portal {...otherProps} className={cn(className, "sui_popover_portal")} data-scope="" />
+    <Popover.Portal
+      {...otherProps}
+      className={cn(className, "sui_popover_portal")}
+      data-scope={dataScope}
+    />
   );
 };
 
