@@ -321,7 +321,7 @@
     max-width: var(--sui_drawer_popup-max_width);
     max-height: var(--_sui_drawer_popup-max_height, var(--sui_drawer_popup-max_height));
     padding: var(--sui_drawer_popup-padding);
-    padding-bottom: var(--sui_drawer_popup-padding_block_end);
+    padding-block-end: var(--sui_drawer_popup-padding_block_end);
     color: var(--sui_drawer_popup-color);
     user-select: var(--_sui_drawer_popup-user_select, var(--sui_drawer_popup-user_select));
     outline-width: var(--_sui_drawer_popup-outline_width, 0px);
@@ -598,6 +598,7 @@
     flex: 1 1 auto;
     flex-direction: column;
     min-height: 0px;
+    margin-inline: auto;
     overflow: visible;
   }
 }
@@ -613,7 +614,6 @@
   .sui_drawer_content {
     width: var(--sui_drawer_content-width);
     max-width: var(--sui_drawer_content-max_width);
-    margin-inline: auto;
   }
 }
 

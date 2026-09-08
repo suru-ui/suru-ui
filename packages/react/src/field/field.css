@@ -196,6 +196,13 @@
   }
 }
 
+/* Control */
+:scope {
+  &.sui_field-disabled .sui_field_control {
+    cursor: not-allowed;
+  }
+}
+
 /* Description */
 :scope {
   &.sui_field-disabled .sui_field_description {
