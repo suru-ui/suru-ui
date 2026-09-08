@@ -11,6 +11,26 @@ import "./slider.css";
 // ----
 
 /**
+ * {@link SliderRoot} の値が変更されたイベントの詳細です。
+ */
+export type SliderRootChangeEventDetails = Slider.Root.ChangeEventDetails;
+
+/**
+ * {@link SliderRoot} の値が変更された理由です。
+ */
+export type SliderRootChangeEventReason = Slider.Root.ChangeEventReason;
+
+/**
+ * {@link SliderRoot} の値の変更が確定したイベントの詳細です。
+ */
+export type SliderRootCommitEventDetails = Slider.Root.CommitEventDetails;
+
+/**
+ * {@link SliderRoot} の値の変更が確定した理由です。
+ */
+export type SliderRootCommitEventReason = Slider.Root.CommitEventReason;
+
+/**
  * スライダーの配色です。
  */
 export type SliderRootColor = Color;
@@ -50,8 +70,12 @@ export type SliderRootState = Slider.Root.State;
 
 /**
  * {@link SliderRoot} に渡す props です。
+ *
+ * @template TValue 値の型です。
  */
-export type SliderRootProps = React.ComponentProps<typeof Slider.Root> & {
+export type SliderRootProps<
+  TValue extends number | readonly number[] = number | readonly number[],
+> = React.ComponentProps<typeof Slider.Root<TValue>> & {
   /**
    * スライダーの色を指定します。
    *
@@ -91,7 +115,16 @@ export type SliderRootProps = React.ComponentProps<typeof Slider.Root> & {
 /**
  * スライダーのルートコンポーネントです。
  */
-export const SliderRoot: IComponent<SliderRootProps> = function SuiSliderRoot(props) {
+interface ISliderRoot extends IComponent<SliderRootProps> {
+  /**
+   * @template TValue 値の型です。
+   */
+  <TValue extends number | readonly number[] = number | readonly number[]>(
+    props: SliderRootProps<TValue>,
+  ): IComponent.Return;
+}
+
+export const SliderRoot: ISliderRoot = function SuiSliderRoot(props: SliderRootProps) {
   const {
     size = "md",
     color = "grey",
@@ -114,6 +147,8 @@ export const SliderRoot: IComponent<SliderRootProps> = function SuiSliderRoot(pr
         `sui_slider-variant_${variant}`,
         outlined && "sui_slider-outlined",
         (state) => state.disabled && "sui_slider-disabled",
+        (state) => state.dragging && "sui_slider-dragging",
+        (state) => `sui_slider-orientation_${state.orientation}`,
       )}
       data-scope=""
     />
@@ -137,12 +172,33 @@ export namespace Root {
   /**
    * {@link SliderRootProps}
    */
-  export type Props = SliderRootProps;
+  export type Props<TValue extends number | readonly number[] = number | readonly number[]> =
+    SliderRootProps<TValue>;
+
+  /**
+   * {@link SliderRootChangeEventDetails}
+   */
+  export type ChangeEventDetails = SliderRootChangeEventDetails;
+
+  /**
+   * {@link SliderRootChangeEventReason}
+   */
+  export type ChangeEventReason = SliderRootChangeEventReason;
 
   /**
    * {@link SliderRootColor}
    */
   export type Color = SliderRootColor;
+
+  /**
+   * {@link SliderRootCommitEventDetails}
+   */
+  export type CommitEventDetails = SliderRootCommitEventDetails;
+
+  /**
+   * {@link SliderRootCommitEventReason}
+   */
+  export type CommitEventReason = SliderRootCommitEventReason;
 
   /**
    * {@link SliderRootRadius}
@@ -393,7 +449,16 @@ export type SliderThumbProps = React.ComponentProps<typeof Slider.Thumb>;
 export const SliderThumb: IComponent<SliderThumbProps> = function SuiSliderThumb(props) {
   const { className, ...otherProps } = props;
 
-  return <Slider.Thumb {...otherProps} className={cn(className, "sui_slider_thumb")} />;
+  return (
+    <Slider.Thumb
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_slider_thumb",
+        (state) => state.dragging && "sui_slider_thumb-dragging",
+      )}
+    />
+  );
 };
 
 /**

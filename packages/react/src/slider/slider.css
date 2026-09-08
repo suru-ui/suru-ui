@@ -8,7 +8,7 @@
   grid-template-columns: 1fr auto;
   width: 100%;
 
-  :root:has(.sui_slider[data-dragging]) {
+  :root:has(.sui_slider-dragging) {
     cursor: grabbing;
   }
 }
@@ -76,9 +76,7 @@
     padding-block: var(--_sui_slider_control-padding_block,
                      var(--sui_slider_control-padding_block)
                    );
-    padding-inline: var(--_sui_slider_control-padding_inline,
-                      var(--sui_slider_control-padding_inline)
-                    );
+    padding-inline: var(--sui_slider_control-padding_inline);
   }
 }
 
@@ -91,7 +89,7 @@
 
 /* 変異 */
 :scope {
-  .sui_slider_control[data-orientation="vertical"] {
+  &.sui_slider-orientation_vertical .sui_slider_control {
     --_sui_slider_control-width: calc(var(--sui_slider_track_size) + var(--sui_slider_thumb-size));
     --_sui_slider_control-padding_block: 0px;
   }
@@ -112,7 +110,7 @@
     border-style: solid;
   }
 
-  .sui_slider_track[data-orientation="vertical"] {
+  &.sui_slider-orientation_vertical .sui_slider_track {
     height: 100%;
   }
 }
@@ -135,10 +133,10 @@
     background-color: var(--sui_slider_track-canvas-normal);
     border-color: var(--_sui_slider_track-border_color, transparent);
     border-width: var(--_sui_slider_track-border_width, 0px);
-    border-radius: var(--_sui_slider_track-border_radius, var(--sui_slider_track-border_radius));
+    border-radius: var(--sui_slider_track-border_radius);
   }
 
-  .sui_slider_track[data-orientation="vertical"] {
+  &.sui_slider-orientation_vertical .sui_slider_track {
     width: var(--sui_slider_track_size);
   }
 }
@@ -188,9 +186,7 @@
   &.sui_slider-outlined .sui_slider_track {
     --_sui_slider_track-border_color: var(--sui_slider_track-border_color-normal);
     --_sui_slider_track-border_width: var(--sui_slider_track-border_width);
-  }
 
-  &.sui_slider-outlined .sui_slider_track {
     @media (any-hover: hover) {
       &:hover {
         --_sui_slider_track-border_color: var(--sui_slider_track-border_color-subtle);
@@ -273,6 +269,10 @@
 
 /* 固定 */
 :scope {
+  .sui_slider_thumb {
+    border-style: solid;
+  }
+
   .sui_slider_thumb:has(:focus-visible) {
     outline-style: solid;
   }
@@ -296,12 +296,10 @@
     width: var(--sui_slider_thumb-size);
     height: var(--sui_slider_thumb-size);
     cursor: var(--_sui_slider_thumb-cursor, var(--sui_slider_thumb-cursor));
-    background-color: var(--_sui_slider_thumb-canvas, var(--sui_slider_thumb-canvas-normal));
+    background-color: var(--sui_slider_thumb-canvas-normal);
     border-color: var(--_sui_slider_thumb-border_color, transparent);
-    border-style: solid;
     border-width: var(--_sui_slider_thumb-border_width, 0px);
-    border-radius: var(--_sui_slider_thumb-border_radius, var(--sui_slider_thumb-border_radius));
-    translate: var(--_sui_slider_thumb-translate_x, 0px) 0px;
+    border-radius: var(--sui_slider_thumb-border_radius);
   }
 
   .sui_slider_thumb:has(:focus-visible) {
@@ -378,10 +376,10 @@
     &:active {
       --_sui_slider_thumb-border_color: var(--sui_slider_thumb-border_color-strong);
     }
+  }
 
-    &[data-dragging] {
-      --_sui_slider_thumb-cursor: grabbing;
-    }
+  .sui_slider_thumb-dragging {
+    --_sui_slider_thumb-cursor: grabbing;
   }
 
   .sui_slider_thumb:has(:focus-visible) {

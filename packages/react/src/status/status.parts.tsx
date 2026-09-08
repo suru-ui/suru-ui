@@ -250,13 +250,7 @@ export const StatusIndicator: IComponent<StatusIndicatorProps> = function SuiSta
   props,
 ) {
   const ctx = useSuiStatusContext(true);
-  const {
-    size: sizeProp,
-    color: colorProp,
-    processing: processingProp,
-    className,
-    ...otherSpanProps
-  } = props;
+  const { size: sizeProp, color: colorProp, processing: processingProp, ...otherSpanProps } = props;
   const size = ctx?.size ?? sizeProp ?? "md";
   const color = ctx?.color ?? colorProp ?? "grey";
   const processing = ctx?.processing ?? processingProp ?? false;
@@ -266,14 +260,13 @@ export const StatusIndicator: IComponent<StatusIndicatorProps> = function SuiSta
     props: [
       otherSpanProps,
       {
-        "aria-hidden": true,
-        className: cn(
-          className,
+        className: cn<StatusIndicatorState>(
           "sui_status_indicator",
           `sui_status_indicator-size_${size}`,
           `sui_status_indicator-color_${color}`,
           processing && "sui_status_indicator-processing",
         ),
+        "aria-hidden": true,
       },
     ],
   });

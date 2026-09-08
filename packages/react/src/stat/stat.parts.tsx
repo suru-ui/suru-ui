@@ -160,7 +160,7 @@ export type StatLabelProps = Omit<React.ComponentProps<"dt">, keyof RenderProps>
     /**
      * 統計ラベルの大きさを指定します。
      *
-     * 親 {@link StatRoot} 内では、ルートに指定した値が優先されます。
+     * 親 {@link StatRoot} 内では {@link StatRootProps.size|size} が優先されます。
      */
     size?: StatLabelSize | undefined;
   };
@@ -230,7 +230,7 @@ export type StatValueProps = Omit<React.ComponentProps<"dd">, keyof RenderProps>
     /**
      * 統計値の大きさを指定します。
      *
-     * 親 {@link StatRoot} 内では、ルートに指定した値が優先されます。
+     * 親 {@link StatRoot} 内では {@link StatRootProps.size|size} が優先されます。
      */
     size?: StatValueSize | undefined;
   };
@@ -370,7 +370,7 @@ export type StatDescriptionProps = Omit<React.ComponentProps<"dd">, keyof Render
     /**
      * 統計の説明文の大きさを指定します。
      *
-     * 親 {@link StatRoot} 内では、ルートに指定した値が優先されます。
+     * 親 {@link StatRoot} 内では {@link StatRootProps.size|size} が優先されます。
      */
     size?: StatDescriptionSize | undefined;
   };

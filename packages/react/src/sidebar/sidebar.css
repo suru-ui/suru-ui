@@ -73,21 +73,21 @@
 
     /* 変異 */
     :scope {
-      &[data-side="left"] {
+      &.sui_sidebar-side_left {
         --_sui_sidebar-border_inline_end_width: var(--sui_sidebar-border_width);
       }
 
-      &[data-side="right"] {
+      &.sui_sidebar-side_right {
         --_sui_sidebar-border_inline_start_width: var(--sui_sidebar-border_width);
       }
 
-      &.sui_sidebar-collapsible_offcanvas[data-state="collapsed"] {
+      &.sui_sidebar-collapsible_offcanvas.sui_sidebar-collapsed {
         --_sui_sidebar-width: 0px;
         --_sui_sidebar-border_inline_start_width: 0px;
         --_sui_sidebar-border_inline_end_width: 0px;
       }
 
-      &.sui_sidebar-collapsible_icon[data-state="collapsed"] {
+      &.sui_sidebar-collapsible_icon.sui_sidebar-collapsed {
         --_sui_sidebar-width: var(--sui_sidebar-collapsed_width);
       }
     }
@@ -265,6 +265,7 @@
     :scope {
       --sui_sidebar_group_label-min_height: ;
       --sui_sidebar_group_label-padding_inline: ;
+      --sui_sidebar_group_label-font_family: ;
       --sui_sidebar_group_label-font_size: ;
       --sui_sidebar_group_label-font_weight: ;
       --sui_sidebar_group_label-line_height: ;
@@ -277,6 +278,7 @@
       .sui_sidebar_group_label {
         min-height: var(--sui_sidebar_group_label-min_height);
         padding-inline: var(--sui_sidebar_group_label-padding_inline);
+        font-family: var(--sui_sidebar_group_label-font_family);
         font-size: var(--sui_sidebar_group_label-font_size);
         font-weight: var(--sui_sidebar_group_label-font_weight);
         line-height: var(--sui_sidebar_group_label-line_height);
@@ -289,6 +291,7 @@
     :scope {
       --sui_sidebar_group_label-min_height: --sui-space(6);
       --sui_sidebar_group_label-padding_inline: --sui-space(3);
+      --sui_sidebar_group_label-font_family: var(--sui-text-oln-sm-n-font_family);
       --sui_sidebar_group_label-font_size: var(--sui-text-oln-sm-n-font_size);
       --sui_sidebar_group_label-font_weight: var(--sui-text-oln-sm-n-font_weight);
       --sui_sidebar_group_label-line_height: var(--sui-text-oln-sm-n-line_height);
@@ -408,11 +411,11 @@
         border: 0px;
       }
 
-      &[data-side="left"] > .sui_sidebar_rail {
+      &.sui_sidebar-side_left > .sui_sidebar_rail {
         right: 0px;
       }
 
-      &[data-side="right"] > .sui_sidebar_rail {
+      &.sui_sidebar-side_right > .sui_sidebar_rail {
         left: 0px;
       }
 
@@ -528,6 +531,7 @@
       svg:not(.sui-ignore) {
         width: var(--sui_sidebar_trigger-icon_size);
         height: var(--sui_sidebar_trigger-icon_size);
+        color: var(--_sui_sidebar_trigger-color, var(--sui_sidebar_trigger-color-idle));
       }
     }
 

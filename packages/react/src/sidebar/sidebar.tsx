@@ -43,35 +43,99 @@ import {
   SidebarGroupContent,
 } from "./sidebar.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link SidebarRootCollapsible} です。
+ * {@link SidebarRootCollapsible}
  */
 export type SidebarCollapsible = SidebarRootCollapsible;
 
 /**
- * {@link SidebarRootSide} です。
+ * {@link SidebarRootSide}
  */
 export type SidebarSide = SidebarRootSide;
 
 /**
- * {@link SidebarRootVariant} です。
+ * {@link SidebarRootVariant}
  */
 export type SidebarVariant = SidebarRootVariant;
 
 /**
- * {@link Sidebar} の状態です。
+ * {@link Sidebar} が持つ状態です。
  */
-export type SidebarState = SidebarRootState;
+export type SidebarState = SidebarProviderState;
 
 /**
- * {@link Sidebar} コンポーネントのプロパティーです。
+ * {@link Sidebar} の各パーツに渡す props です。
+ */
+export type SidebarSlotProps = {
+  /**
+   * {@link SidebarProvider} に渡す props です。
+   */
+  readonly provider?: Omit<SidebarProviderProps, "children"> | undefined;
+};
+
+/**
+ * {@link Sidebar} に渡す props です。
  */
 export type SidebarProps = Omit<SidebarProviderProps, "children"> & {
   /**
    * サイドバーとメインコンテンツです。
    */
   readonly children?: React.ReactNode | undefined;
+
+  /**
+   * 各パーツに個別の props を渡すためのオブジェクトです。
+   *
+   * 各パーツの props が優先されます。
+   */
+  slotProps?: SidebarSlotProps | undefined;
 };
+
+// API
+// ---
+
+/**
+ * {@link Sidebar} を構成する各パーツの props を作成するための API です。
+ */
+export interface SidebarAPI {
+  /**
+   * {@link SidebarProvider} に渡す props を取得します。
+   */
+  getProviderProps(): SidebarProviderProps;
+}
+
+interface IUseSidebarAPI {
+  /**
+   * {@link SidebarAPI} を作成します。
+   *
+   * @param props {@link Sidebar} の props です。
+   * @returns サイドバーの API です
+   */
+  (props: SidebarProps): SidebarAPI;
+}
+
+/**
+ * {@link SidebarAPI} を作成するフックです。
+ */
+export const useSidebarAPI: IUseSidebarAPI = function useSuiSidebarAPI(props) {
+  const { slotProps: { provider: providerProps = {} } = {}, ...otherProviderProps } = props;
+
+  return {
+    getProviderProps() {
+      return {
+        ...otherProviderProps,
+        ...providerProps,
+      };
+    },
+  };
+};
+
+export { type SidebarAPI as API, useSidebarAPI as useAPI };
+
+// Component
+// ---------
 
 /**
  * サイドバーを表示するコンポーネントです。
@@ -79,7 +143,7 @@ export type SidebarProps = Omit<SidebarProviderProps, "children"> & {
  * 呼び出しは {@link Sidebar.Provider} と同じです。子要素には
  * {@link Sidebar.Root}、{@link Sidebar.Trigger}、{@link Sidebar.Inset} を配置します。
  */
-interface SidebarType extends IComponent<SidebarProps> {
+interface ISidebar extends IComponent<SidebarProps> {
   /**
    * サイドバーのスクロール領域です。
    */
@@ -141,9 +205,11 @@ interface SidebarType extends IComponent<SidebarProps> {
   readonly useContext: IUseContext<SidebarContext>;
 }
 
-export const Sidebar: SidebarType = /*#__PURE__*/ Object.assign(
+export const Sidebar: ISidebar = /*#__PURE__*/ Object.assign(
   function SuiSidebar(props: SidebarProps) {
-    return <SidebarProvider {...props} />;
+    const api = useSidebarAPI(props);
+
+    return <SidebarProvider {...api.getProviderProps()} />;
   },
   {
     Content: SidebarContent,
@@ -176,6 +242,11 @@ export namespace Sidebar {
   export type Props = SidebarProps;
 
   /**
+   * {@link SidebarSlotProps}
+   */
+  export type SlotProps = SidebarSlotProps;
+
+  /**
    * {@link SidebarContext}
    */
   export type Context = SidebarContext;
@@ -205,12 +276,12 @@ export namespace Sidebar {
    */
   export namespace Content {
     /**
-     * {@link SidebarContentState} です。
+     * {@link SidebarContentState}
      */
     export type State = SidebarContentState;
 
     /**
-     * {@link SidebarContentProps} です。
+     * {@link SidebarContentProps}
      */
     export type Props = SidebarContentProps;
   }
@@ -220,12 +291,12 @@ export namespace Sidebar {
    */
   export namespace Footer {
     /**
-     * {@link SidebarFooterState} です。
+     * {@link SidebarFooterState}
      */
     export type State = SidebarFooterState;
 
     /**
-     * {@link SidebarFooterProps} です。
+     * {@link SidebarFooterProps}
      */
     export type Props = SidebarFooterProps;
   }
@@ -235,12 +306,12 @@ export namespace Sidebar {
    */
   export namespace Group {
     /**
-     * {@link SidebarGroupState} です。
+     * {@link SidebarGroupState}
      */
     export type State = SidebarGroupState;
 
     /**
-     * {@link SidebarGroupProps} です。
+     * {@link SidebarGroupProps}
      */
     export type Props = SidebarGroupProps;
   }
@@ -250,12 +321,12 @@ export namespace Sidebar {
    */
   export namespace GroupContent {
     /**
-     * {@link SidebarGroupContentState} です。
+     * {@link SidebarGroupContentState}
      */
     export type State = SidebarGroupContentState;
 
     /**
-     * {@link SidebarGroupContentProps} です。
+     * {@link SidebarGroupContentProps}
      */
     export type Props = SidebarGroupContentProps;
   }
@@ -265,12 +336,12 @@ export namespace Sidebar {
    */
   export namespace GroupLabel {
     /**
-     * {@link SidebarGroupLabelState} です。
+     * {@link SidebarGroupLabelState}
      */
     export type State = SidebarGroupLabelState;
 
     /**
-     * {@link SidebarGroupLabelProps} です。
+     * {@link SidebarGroupLabelProps}
      */
     export type Props = SidebarGroupLabelProps;
   }
@@ -280,12 +351,12 @@ export namespace Sidebar {
    */
   export namespace Header {
     /**
-     * {@link SidebarHeaderState} です。
+     * {@link SidebarHeaderState}
      */
     export type State = SidebarHeaderState;
 
     /**
-     * {@link SidebarHeaderProps} です。
+     * {@link SidebarHeaderProps}
      */
     export type Props = SidebarHeaderProps;
   }
@@ -295,12 +366,12 @@ export namespace Sidebar {
    */
   export namespace Inset {
     /**
-     * {@link SidebarInsetState} です。
+     * {@link SidebarInsetState}
      */
     export type State = SidebarInsetState;
 
     /**
-     * {@link SidebarInsetProps} です。
+     * {@link SidebarInsetProps}
      */
     export type Props = SidebarInsetProps;
   }
@@ -310,12 +381,12 @@ export namespace Sidebar {
    */
   export namespace Provider {
     /**
-     * {@link SidebarProviderState} です。
+     * {@link SidebarProviderState}
      */
     export type State = SidebarProviderState;
 
     /**
-     * {@link SidebarProviderProps} です。
+     * {@link SidebarProviderProps}
      */
     export type Props = SidebarProviderProps;
   }
@@ -325,12 +396,12 @@ export namespace Sidebar {
    */
   export namespace Rail {
     /**
-     * {@link SidebarRailState} です。
+     * {@link SidebarRailState}
      */
     export type State = SidebarRailState;
 
     /**
-     * {@link SidebarRailProps} です。
+     * {@link SidebarRailProps}
      */
     export type Props = SidebarRailProps;
   }
@@ -340,27 +411,27 @@ export namespace Sidebar {
    */
   export namespace Root {
     /**
-     * {@link SidebarRootState} です。
+     * {@link SidebarRootState}
      */
     export type State = SidebarRootState;
 
     /**
-     * {@link SidebarRootProps} です。
+     * {@link SidebarRootProps}
      */
     export type Props = SidebarRootProps;
 
     /**
-     * {@link SidebarRootCollapsible} です。
+     * {@link SidebarRootCollapsible}
      */
     export type Collapsible = SidebarRootCollapsible;
 
     /**
-     * {@link SidebarRootSide} です。
+     * {@link SidebarRootSide}
      */
     export type Side = SidebarRootSide;
 
     /**
-     * {@link SidebarRootVariant} です。
+     * {@link SidebarRootVariant}
      */
     export type Variant = SidebarRootVariant;
   }
@@ -370,12 +441,12 @@ export namespace Sidebar {
    */
   export namespace Trigger {
     /**
-     * {@link SidebarTriggerState} です。
+     * {@link SidebarTriggerState}
      */
     export type State = SidebarTriggerState;
 
     /**
-     * {@link SidebarTriggerProps} です。
+     * {@link SidebarTriggerProps}
      */
     export type Props = SidebarTriggerProps;
   }
