@@ -71,6 +71,9 @@
     overflow: auto;
     pointer-events: auto;
     border-style: solid;
+    transition:
+      opacity 150ms ease-out,
+      scale 150ms ease-out;
   }
 }
 
@@ -91,6 +94,9 @@
   --sui_context_menu_content-border_color: ;
   --sui_context_menu_content-border_width: ;
   --sui_context_menu_content-border_radius: ;
+  --sui_context_menu_content-opacity: ;
+  --sui_context_menu_content-transform_origin: ;
+  --sui_context_menu_content-scale: ;
 }
 
 /* 可変 */
@@ -111,6 +117,9 @@
     border-color: var(--sui_context_menu_content-border_color);
     border-width: var(--_sui_context_menu_content-border_width, 0px);
     border-radius: var(--sui_context_menu_content-border_radius);
+    opacity: var(--_sui_context_menu_content-opacity, var(--sui_context_menu_content-opacity));
+    transform-origin: var(--sui_context_menu_content-transform_origin);
+    scale: var(--_sui_context_menu_content-scale, var(--sui_context_menu_content-scale));
   }
 }
 
@@ -131,6 +140,9 @@
   --sui_context_menu_content-border_color: var(--sui-border-1);
   --sui_context_menu_content-border_width: --sui-border_width(1);
   --sui_context_menu_content-border_radius: var(--sui-radius-md);
+  --sui_context_menu_content-opacity: 1;
+  --sui_context_menu_content-transform_origin: var(--transform-origin);
+  --sui_context_menu_content-scale: 1;
 
   &.sui_context_menu_portal-size_sm {
     --sui_context_menu_content-padding: --sui-space(2);
@@ -178,6 +190,12 @@
   &.sui_context_menu_portal-outlined {
     --_sui_context_menu_content-border_width: var(--sui_context_menu_content-border_width);
   }
+
+  .sui_context_menu_content-transition_status_starting,
+  .sui_context_menu_content-transition_status_ending {
+    --_sui_context_menu_content-opacity: 0;
+    --_sui_context_menu_content-scale: 0.98;
+  }
 }
 
 } /* @scope */
@@ -199,7 +217,6 @@
 /* 変数 */
 :scope {
   --sui_context_menu_item_indicator-size: ;
-  --sui_context_menu_item_indicator-opacity: ;
   --sui_context_menu_item_indicator__svg-size: ;
   --sui_context_menu_item_indicator__svg-color: ;
 }
@@ -224,9 +241,11 @@
                                             var(--sui_button_content-font_size)
                                             * var(--sui_button_content-line_height)
                                           );
-  --sui_context_menu_item_indicator-opacity: 1;
   --sui_context_menu_item_indicator__svg-size: 100%;
-  --sui_context_menu_item_indicator__svg-color: currentColor;
+  --sui_context_menu_item_indicator__svg-color: --sui-icon_color(
+                                                  var(--sui_context_menu_content-color),
+                                                  var(--sui_context_menu_content-background_color)
+                                                );
 }
 
 } /* @scope */
@@ -242,11 +261,6 @@
   --sui_context_menu_item_indicator-opacity: ;
 }
 
-/* 代入 */
-:scope {
-  --sui_context_menu_item_indicator-opacity: 1;
-}
-
 /* 可変 */
 :scope {
   .sui_context_menu_item_indicator {
@@ -254,6 +268,11 @@
                var(--sui_context_menu_item_indicator-opacity)
              );
   }
+}
+
+/* 代入 */
+:scope {
+  --sui_context_menu_item_indicator-opacity: 1;
 }
 
 /* 変異 */

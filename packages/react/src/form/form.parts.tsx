@@ -38,7 +38,8 @@ export type FormRootValidationMode = Form.ValidationMode;
  *
  * @template TValues フォームの入力値を表す型です。
  */
-export type FormRootValues<TValues extends Record<string, any> = Record<string, any>> = TValues;
+export type FormRootValues<TValues extends Record<string, any> = Record<string, any>> =
+  Form.Values<TValues>;
 
 /**
  * {@link FormRoot} が持つ状態です。
@@ -58,7 +59,7 @@ interface IFormRoot extends IComponent<FormRootProps> {
   /**
    * @template TValues フォームの入力値を表す型です。
    */
-  <TValues extends FormRootValues>(props: FormRootProps<TValues>): IComponent.Return;
+  <TValues extends FormRootValues = FormRootValues>(props: FormRootProps<TValues>): IComponent.Return;
 }
 
 /**

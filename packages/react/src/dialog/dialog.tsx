@@ -433,7 +433,7 @@ export const useDialogAPI: IUseDialogAPI = function useSuiDialogAPI(props) {
           children: (
             <>
               {controls}
-              <CloseIconButton />
+              {showCloseIconButton && <CloseIconButton />}
             </>
           ),
         };

@@ -64,7 +64,7 @@ export type FileUploadContext = {
   /**
    * ファイルのリストを選択済みリストへ追加します。
    *
-   * ドラッグ&ドロップなど、隠し input 以外の経路からファイルを受け取るときに使います。
+   * ドラッグアンドドロップなど、隠し input 以外の経路からファイルを受け取るときに使います。
    * 検証に失敗したファイルは {@link FileUploadRootProps.onFileReject|onFileReject} へ報告されます。
    */
   readonly selectFiles: (incomingFiles: readonly File[]) => void;
@@ -344,7 +344,6 @@ export const FileUploadRoot: IComponent<FileUploadRootProps> = function SuiFileU
     maxFiles = Number.POSITIVE_INFINITY,
     multiple = false,
     required = false,
-    className,
     maxFileSize = Number.POSITIVE_INFINITY,
     minFileSize = 0,
     defaultValue,
@@ -446,8 +445,7 @@ export const FileUploadRoot: IComponent<FileUploadRootProps> = function SuiFileU
       otherDivProps,
       {
         children,
-        className: cn(
-          className,
+        className: cn<FileUploadRootState>(
           "sui_file_upload",
           `sui_file_upload-size_${size}`,
           `sui_file_upload-color_${color}`,
@@ -772,7 +770,7 @@ export const FileUploadClearTrigger: IComponent<FileUploadClearTriggerProps> =
     const disabled =
       ctx === null
         ? (disabledProp ?? false)
-        : ctx.disabled || disabledProp || ctx.files.length === 0;
+        : ctx.disabled || (disabledProp ?? false) || ctx.files.length === 0;
 
     return useRender({
       defaultTagName: "button",
