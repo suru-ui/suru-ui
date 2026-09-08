@@ -265,14 +265,14 @@ export namespace ToggleButton {
   export type Props = ToggleButtonProps;
 
   /**
-   * {@link ToggleButtonContext}
-   */
-  export type Context = ToggleButtonContext;
-
-  /**
    * {@link ToggleButtonSlotProps}
    */
   export type SlotProps = ToggleButtonSlotProps;
+
+  /**
+   * {@link ToggleButtonContext}
+   */
+  export type Context = ToggleButtonContext;
 
   /**
    * {@link ToggleButtonColor}

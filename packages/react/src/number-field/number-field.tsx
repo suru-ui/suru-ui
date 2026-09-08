@@ -387,14 +387,14 @@ export namespace NumberField {
   export type Props = NumberFieldProps;
 
   /**
-   * {@link NumberFieldContext}
-   */
-  export type Context = NumberFieldContext;
-
-  /**
    * {@link NumberFieldSlotProps}
    */
   export type SlotProps = NumberFieldSlotProps;
+
+  /**
+   * {@link NumberFieldContext}
+   */
+  export type Context = NumberFieldContext;
 
   /**
    * {@link NumberFieldChangeEventDetails}

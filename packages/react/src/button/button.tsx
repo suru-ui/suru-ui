@@ -259,14 +259,14 @@ export namespace Button {
   export type Props = ButtonProps;
 
   /**
-   * {@link ButtonContext}
-   */
-  export type Context = ButtonContext;
-
-  /**
    * {@link ButtonSlotProps}
    */
   export type SlotProps = ButtonSlotProps;
+
+  /**
+   * {@link ButtonContext}
+   */
+  export type Context = ButtonContext;
 
   /**
    * {@link ButtonColor}

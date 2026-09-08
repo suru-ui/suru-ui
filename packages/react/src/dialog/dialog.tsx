@@ -554,7 +554,10 @@ export const Dialog: IDialog = /*#__PURE__*/ Object.assign(
       </DialogRoot>
     );
   },
-  { createHandle: createDialogHandle, useContentContext: useDialogContentContext },
+  {
+    createHandle: createDialogHandle,
+    useContentContext: useDialogContentContext,
+  },
 );
 
 export namespace Dialog {
@@ -574,6 +577,11 @@ export namespace Dialog {
   export type SlotProps = DialogSlotProps;
 
   /**
+   * {@link DialogContentContext}
+   */
+  export type ContentContext = DialogContentContext;
+
+  /**
    * {@link DialogActions}
    */
   export type Actions = DialogActions;
@@ -587,11 +595,6 @@ export namespace Dialog {
    * {@link DialogChangeEventReason}
    */
   export type ChangeEventReason = DialogChangeEventReason;
-
-  /**
-   * {@link DialogContentContext}
-   */
-  export type ContentContext = DialogContentContext;
 
   /**
    * {@link DialogRadius}

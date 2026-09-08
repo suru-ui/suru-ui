@@ -632,7 +632,10 @@ export const AlertDialog: IAlertDialog = /*#__PURE__*/ Object.assign(
       </AlertDialogRoot>
     );
   },
-  { createHandle: createAlertDialogHandle, useContentContext: useAlertDialogContentContext },
+  {
+    createHandle: createAlertDialogHandle,
+    useContentContext: useAlertDialogContentContext,
+  },
 );
 
 export namespace AlertDialog {
@@ -652,6 +655,11 @@ export namespace AlertDialog {
   export type SlotProps = AlertDialogSlotProps;
 
   /**
+   * {@link AlertDialogContentContext}
+   */
+  export type ContentContext = AlertDialogContentContext;
+
+  /**
    * {@link AlertDialogActions}
    */
   export type Actions = AlertDialogActions;
@@ -665,11 +673,6 @@ export namespace AlertDialog {
    * {@link AlertDialogChangeEventReason}
    */
   export type ChangeEventReason = AlertDialogChangeEventReason;
-
-  /**
-   * {@link AlertDialogContentContext}
-   */
-  export type ContentContext = AlertDialogContentContext;
 
   /**
    * {@link AlertDialogRadius}

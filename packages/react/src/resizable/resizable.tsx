@@ -185,14 +185,14 @@ export namespace Resizable {
   export type Props = ResizableProps;
 
   /**
-   * {@link ResizableContext}
-   */
-  export type Context = ResizableContext;
-
-  /**
    * {@link ResizableSlotProps}
    */
   export type SlotProps = ResizableSlotProps;
+
+  /**
+   * {@link ResizableContext}
+   */
+  export type Context = ResizableContext;
 
   /**
    * {@link ResizableDirection}

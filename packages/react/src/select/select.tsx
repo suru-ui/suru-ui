@@ -623,14 +623,14 @@ export namespace Select {
   >;
 
   /**
-   * {@link SelectContext}
-   */
-  export type Context<TValue = any> = SelectContext<TValue>;
-
-  /**
    * {@link SelectSlotProps}
    */
   export type SlotProps = SelectSlotProps;
+
+  /**
+   * {@link SelectContext}
+   */
+  export type Context<TValue = any> = SelectContext<TValue>;
 
   /**
    * {@link SelectItemGroup}

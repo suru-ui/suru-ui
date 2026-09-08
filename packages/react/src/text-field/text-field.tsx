@@ -257,14 +257,14 @@ export namespace TextField {
   export type Props = TextFieldProps;
 
   /**
-   * {@link TextFieldContext}
-   */
-  export type Context = TextFieldContext;
-
-  /**
    * {@link TextFieldSlotProps}
    */
   export type SlotProps = TextFieldSlotProps;
+
+  /**
+   * {@link TextFieldContext}
+   */
+  export type Context = TextFieldContext;
 
   /**
    * {@link TextFieldChangeEventDetails}

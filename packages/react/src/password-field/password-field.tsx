@@ -282,14 +282,14 @@ export namespace PasswordField {
   export type Props = PasswordFieldProps;
 
   /**
-   * {@link PasswordFieldContext}
-   */
-  export type Context = PasswordFieldContext;
-
-  /**
    * {@link PasswordFieldSlotProps}
    */
   export type SlotProps = PasswordFieldSlotProps;
+
+  /**
+   * {@link PasswordFieldContext}
+   */
+  export type Context = PasswordFieldContext;
 
   /**
    * {@link PasswordFieldColor}

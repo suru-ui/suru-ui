@@ -185,14 +185,14 @@ export namespace AvatarGroup {
   export type Props = AvatarGroupProps;
 
   /**
-   * {@link AvatarGroupContext}
-   */
-  export type Context = AvatarGroupContext;
-
-  /**
    * {@link AvatarGroupSlotProps}
    */
   export type SlotProps = AvatarGroupSlotProps;
+
+  /**
+   * {@link AvatarGroupContext}
+   */
+  export type Context = AvatarGroupContext;
 
   /**
    * {@link AvatarGroupColor}

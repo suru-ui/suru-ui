@@ -10,9 +10,16 @@ const TARGET_DIRS = ["src", "stories"];
 /**
  * 名前順より先に固定で並べる型エクスポートの名前。
  *
+ * 文字列は完全一致、正規表現はパターン一致で判定する。
  * 配列の順序がそのまま並び順になる。ここにない名前は名前順になる。
  */
-const FIXED_ORDER_NAMES = ["State", "Props", "Context", "SlotProps"];
+const FIXED_ORDER_NAMES: readonly (string | RegExp)[] = [
+  "State",
+  "Props",
+  "SlotProps",
+  "Context",
+  /[a-z]Context$/,
+];
 
 /** 名前順の型エクスポートの分類グループ。 */
 const NAMED_GROUP = FIXED_ORDER_NAMES.length;
@@ -24,6 +31,18 @@ const NAMESPACE_GROUP = NAMED_GROUP + 1;
 type Block = TSModuleBlock;
 
 /**
+ * 固定順の指定に名前が一致するかを返す。
+ *
+ * 文字列は完全一致、正規表現はパターン一致で判定する。
+ * `g` フラグ付き正規表現の `lastIndex` の影響を受けないようにする。
+ */
+function matchesFixedName(pattern: string | RegExp, name: string): boolean {
+  if (typeof pattern === "string") return pattern === name;
+  pattern.lastIndex = 0;
+  return pattern.test(name);
+}
+
+/**
  * 型名前空間のメンバーの分類グループ。
  *
  * {@linkcode FIXED_ORDER_NAMES} にある名前はその位置をグループとし、
@@ -31,7 +50,7 @@ type Block = TSModuleBlock;
  * グループ番号がそのまま並び順になる。
  */
 function getGroup(name: string): number {
-  const index = FIXED_ORDER_NAMES.indexOf(name);
+  const index = FIXED_ORDER_NAMES.findIndex((pattern) => matchesFixedName(pattern, name));
   return index === -1 ? NAMED_GROUP : index;
 }
 
