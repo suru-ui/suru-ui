@@ -253,8 +253,8 @@ export const useHoverCardAPI: IUseHoverCardAPI = function useSuiHoverCardAPI(
     getPositionerProps() {
       return {
         ...otherPositionerProps,
-        align,
         side,
+        align,
         sideOffset,
       };
     },

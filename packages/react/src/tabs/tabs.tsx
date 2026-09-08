@@ -214,8 +214,8 @@ export const useTabsAPI: IUseTabsAPI = function useSuiTabsAPI(props) {
         items?.map((item) => ({
           ...tabProps,
           value: item.value,
-          disabled: item.disabled,
           children: toReactNode(item.label),
+          disabled: item.disabled,
         })) ?? []
       );
     },

@@ -210,18 +210,18 @@ export const Sidebar: ISidebar = /*#__PURE__*/ Object.assign(
     return <SidebarProvider {...api.getProviderProps()} />;
   },
   {
-    Content: SidebarContent,
-    Footer: SidebarFooter,
-    Group: SidebarGroup,
-    GroupContent: SidebarGroupContent,
-    GroupLabel: SidebarGroupLabel,
-    Header: SidebarHeader,
-    Inset: SidebarInset,
-    Provider: SidebarProvider,
     Rail: SidebarRail,
     Root: SidebarRoot,
+    Group: SidebarGroup,
+    Inset: SidebarInset,
+    Footer: SidebarFooter,
+    Header: SidebarHeader,
+    Content: SidebarContent,
     Trigger: SidebarTrigger,
+    Provider: SidebarProvider,
+    GroupLabel: SidebarGroupLabel,
     useContext: useSidebarContext,
+    GroupContent: SidebarGroupContent,
   },
 );
 

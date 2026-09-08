@@ -60,7 +60,6 @@ export const SkeletonRoot: IComponent<SkeletonRootProps> = function SuiSkeletonR
   } = props;
 
   return useRender({
-    defaultTagName: "span",
     props: [
       otherSpanProps,
       {
@@ -73,6 +72,7 @@ export const SkeletonRoot: IComponent<SkeletonRootProps> = function SuiSkeletonR
         "data-scope": dataScope,
       },
     ],
+    defaultTagName: "span",
   });
 };
 

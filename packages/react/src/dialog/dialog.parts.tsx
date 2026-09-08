@@ -256,9 +256,9 @@ export type DialogPortalProps = React.ComponentProps<typeof Dialog.Portal>;
  */
 export const DialogPortal: IComponent<DialogPortalProps> = function SuiDialogPortal(props) {
   const {
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 
@@ -486,7 +486,6 @@ export const DialogControls: IComponent<DialogControlsProps> = function SuiDialo
   const { absolute = false, ...htmlProps } = props;
 
   return useRender({
-    defaultTagName: "div",
     props: [
       htmlProps,
       {
@@ -497,6 +496,7 @@ export const DialogControls: IComponent<DialogControlsProps> = function SuiDialo
         ),
       },
     ],
+    defaultTagName: "div",
   });
 };
 
@@ -533,13 +533,13 @@ export type DialogHeaderProps = Omit<React.ComponentProps<"div">, keyof RenderPr
  */
 export const DialogHeader: IComponent<DialogHeaderProps> = function SuiDialogHeader(htmlProps) {
   return useRender({
-    defaultTagName: "div",
     props: [
       htmlProps,
       {
         className: "sui_dialog_header",
       },
     ],
+    defaultTagName: "div",
   });
 };
 
@@ -650,13 +650,13 @@ export type DialogBodyProps = Omit<React.ComponentProps<"div">, keyof RenderProp
  */
 export const DialogBody: IComponent<DialogBodyProps> = function SuiDialogBody(props) {
   return useRender({
-    defaultTagName: "div",
     props: [
       props,
       {
         className: "sui_dialog_body",
       },
     ],
+    defaultTagName: "div",
   });
 };
 
@@ -693,13 +693,13 @@ export type DialogFooterProps = Omit<React.ComponentProps<"div">, keyof RenderPr
  */
 export const DialogFooter: IComponent<DialogFooterProps> = function SuiDialogFooter(props) {
   return useRender({
-    defaultTagName: "div",
     props: [
       props,
       {
         className: "sui_dialog_footer",
       },
     ],
+    defaultTagName: "div",
   });
 };
 

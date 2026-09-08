@@ -142,13 +142,11 @@ export const SidebarProvider: IComponent<SidebarProviderProps> = function SuiSid
     [openStateValue],
   );
   const ctx = React.useMemo<SidebarContext>(
-    () => ({ open, setOpen, state: openStateValue, toggle }),
+    () => ({ open, state: openStateValue, toggle, setOpen }),
     [open, openStateValue, setOpen, toggle],
   );
 
   const element = useRender({
-    defaultTagName: "div",
-    state: renderState,
     props: [
       otherDivProps,
       {
@@ -160,6 +158,8 @@ export const SidebarProvider: IComponent<SidebarProviderProps> = function SuiSid
         "data-scope": dataScope,
       },
     ],
+    state: renderState,
+    defaultTagName: "div",
   });
 
   return <SidebarContext value={ctx}>{element}</SidebarContext>;
@@ -284,13 +284,11 @@ export const SidebarRoot: IComponent<SidebarRootProps> = function SuiSidebarRoot
   const open = ctx?.open ?? true;
   const state: SidebarOpenState = open ? "expanded" : "collapsed";
   const renderState = React.useMemo<SidebarRootState>(
-    () => ({ collapsible, open, side, state, variant }),
+    () => ({ open, side, state, variant, collapsible }),
     [collapsible, open, side, state, variant],
   );
 
   return useRender({
-    defaultTagName: "aside",
-    state: renderState,
     props: [
       otherAsideProps,
       {
@@ -304,6 +302,8 @@ export const SidebarRoot: IComponent<SidebarRootProps> = function SuiSidebarRoot
         "data-scope": dataScope,
       },
     ],
+    state: renderState,
+    defaultTagName: "aside",
   });
 };
 
@@ -357,13 +357,13 @@ export type SidebarHeaderProps = Omit<React.ComponentProps<"div">, keyof RenderP
  */
 export const SidebarHeader: IComponent<SidebarHeaderProps> = function SuiSidebarHeader(props) {
   return useRender({
-    defaultTagName: "div",
     props: [
       props,
       {
         className: "sui_sidebar_header",
       },
     ],
+    defaultTagName: "div",
   });
 };
 
@@ -402,13 +402,13 @@ export type SidebarContentProps = Omit<React.ComponentProps<"div">, keyof Render
  */
 export const SidebarContent: IComponent<SidebarContentProps> = function SuiSidebarContent(props) {
   return useRender({
-    defaultTagName: "div",
     props: [
       props,
       {
         className: "sui_sidebar_content",
       },
     ],
+    defaultTagName: "div",
   });
 };
 
@@ -447,13 +447,13 @@ export type SidebarFooterProps = Omit<React.ComponentProps<"div">, keyof RenderP
  */
 export const SidebarFooter: IComponent<SidebarFooterProps> = function SuiSidebarFooter(props) {
   return useRender({
-    defaultTagName: "div",
     props: [
       props,
       {
         className: "sui_sidebar_footer",
       },
     ],
+    defaultTagName: "div",
   });
 };
 
@@ -492,13 +492,13 @@ export type SidebarGroupProps = Omit<React.ComponentProps<"div">, keyof RenderPr
  */
 export const SidebarGroup: IComponent<SidebarGroupProps> = function SuiSidebarGroup(props) {
   return useRender({
-    defaultTagName: "div",
     props: [
       props,
       {
         className: "sui_sidebar_group",
       },
     ],
+    defaultTagName: "div",
   });
 };
 
@@ -537,13 +537,13 @@ export const SidebarGroupLabel: IComponent<SidebarGroupLabelProps> = function Su
   props,
 ) {
   return useRender({
-    defaultTagName: "div",
     props: [
       props,
       {
         className: "sui_sidebar_group_label",
       },
     ],
+    defaultTagName: "div",
   });
 };
 
@@ -583,13 +583,13 @@ export type SidebarGroupContentProps = Omit<React.ComponentProps<"div">, keyof R
 export const SidebarGroupContent: IComponent<SidebarGroupContentProps> =
   function SuiSidebarGroupContent(props) {
     return useRender({
-      defaultTagName: "div",
       props: [
         props,
         {
           className: "sui_sidebar_group_content",
         },
       ],
+      defaultTagName: "div",
     });
   };
 
@@ -628,13 +628,13 @@ export type SidebarInsetProps = Omit<React.ComponentProps<"main">, keyof RenderP
  */
 export const SidebarInset: IComponent<SidebarInsetProps> = function SuiSidebarInset(props) {
   return useRender({
-    defaultTagName: "main",
     props: [
       props,
       {
         className: "sui_sidebar_inset",
       },
     ],
+    defaultTagName: "main",
   });
 };
 
@@ -688,13 +688,10 @@ export const SidebarRail: IComponent<SidebarRailProps> = function SuiSidebarRail
   const renderState = React.useMemo<SidebarRailState>(() => ({ state: ctx.state }), [ctx.state]);
 
   return useRender({
-    defaultTagName: "button",
-    state: renderState,
     props: [
       otherButtonProps,
       {
         type: "button",
-        "aria-label": "サイドバーを切り替える",
         onClick: handleOnClick,
         children,
         className: cn<SidebarRailState>(
@@ -702,8 +699,11 @@ export const SidebarRail: IComponent<SidebarRailProps> = function SuiSidebarRail
           (state) => state.state === "expanded" && "sui_sidebar_rail-expanded",
           (state) => state.state === "collapsed" && "sui_sidebar_rail-collapsed",
         ),
+        "aria-label": "サイドバーを切り替える",
       },
     ],
+    state: renderState,
+    defaultTagName: "button",
   });
 };
 
@@ -763,8 +763,6 @@ export const SidebarTrigger: IComponent<SidebarTriggerProps> = function SuiSideb
   const renderState = React.useMemo<SidebarTriggerState>(() => ({ state: ctx.state }), [ctx.state]);
 
   return useRender({
-    defaultTagName: "button",
-    state: renderState,
     props: [
       otherButtonProps,
       {
@@ -780,6 +778,8 @@ export const SidebarTrigger: IComponent<SidebarTriggerProps> = function SuiSideb
         "data-scope": dataScope,
       },
     ],
+    state: renderState,
+    defaultTagName: "button",
   });
 };
 

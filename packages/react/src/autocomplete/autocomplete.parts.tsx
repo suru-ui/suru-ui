@@ -348,9 +348,9 @@ export const AutocompleteInputGroup: IComponent<AutocompleteInputGroupProps> =
   function SuiAutocompleteInputGroup(props) {
     const { size, color, radius, variant, outlined } = useAutocompleteContext();
     const {
+      className,
       // @ts-expect-error
       "data-scope": dataScope = "",
-      className,
       ...otherProps
     } = props;
 
@@ -465,13 +465,13 @@ export const AutocompleteAddon: IComponent<AutocompleteAddonProps> = function Su
   const { className, ...otherSpanProps } = props;
 
   return useRender({
-    defaultTagName: "span",
     props: [
       otherSpanProps,
       {
         className: cn(className, "sui_autocomplete_addon"),
       },
     ],
+    defaultTagName: "span",
   });
 };
 
@@ -639,9 +639,9 @@ export const AutocompletePortal: IComponent<AutocompletePortalProps> =
   function SuiAutocompletePortal(props) {
     const { size, radius } = useAutocompleteContext();
     const {
+      className,
       // @ts-expect-error
       "data-scope": dataScope = "",
-      className,
       ...otherProps
     } = props;
 

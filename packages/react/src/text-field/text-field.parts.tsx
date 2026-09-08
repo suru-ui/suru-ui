@@ -236,7 +236,6 @@ export const TextFieldRoot: IComponent<TextFieldRootProps> = function SuiTextFie
     [size, color, radius, variant, outlined],
   );
   const element = useRender({
-    defaultTagName: "div",
     props: [
       otherDivProps,
       {
@@ -253,6 +252,7 @@ export const TextFieldRoot: IComponent<TextFieldRootProps> = function SuiTextFie
         "data-scope": dataScope,
       },
     ],
+    defaultTagName: "div",
   });
 
   return <TextFieldContext value={ctx}>{element}</TextFieldContext>;
@@ -414,7 +414,6 @@ export const TextFieldAddon: IComponent<TextFieldAddonProps> = function SuiTextF
   const { disableFocusOnClick = false, ...otherSpanProps } = props;
 
   return useRender({
-    defaultTagName: "span",
     props: [
       otherSpanProps,
       {
@@ -422,6 +421,7 @@ export const TextFieldAddon: IComponent<TextFieldAddonProps> = function SuiTextF
         [DISABLE_FOCUS_ON_CLICK_DATA]: disableFocusOnClick ? "true" : undefined,
       },
     ],
+    defaultTagName: "span",
   });
 };
 

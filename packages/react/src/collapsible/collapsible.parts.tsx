@@ -56,9 +56,9 @@ export const CollapsibleRoot: IComponent<CollapsibleRootProps> = function SuiCol
 ) {
   const {
     size = "md",
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 
@@ -186,7 +186,6 @@ export const CollapsibleIndicator: IComponent<CollapsibleIndicatorProps> =
     const { children = <ChevronRightIcon />, ...otherSpanProps } = props;
 
     return useRender({
-      defaultTagName: "span",
       props: [
         otherSpanProps,
         {
@@ -194,6 +193,7 @@ export const CollapsibleIndicator: IComponent<CollapsibleIndicatorProps> =
           className: "sui_collapsible_indicator",
         },
       ],
+      defaultTagName: "span",
     });
   };
 

@@ -509,7 +509,6 @@ export const useAlertDialogAPI: IUseAlertDialogAPI = function useSuiAlertDialogA
 
         return {
           ...otherCancelButtonProps,
-          children: cancel,
           onClick(evt) {
             onClick?.(evt);
             if (evt.defaultPrevented) {
@@ -518,6 +517,7 @@ export const useAlertDialogAPI: IUseAlertDialogAPI = function useSuiAlertDialogA
 
             onCancel?.(evt);
           },
+          children: cancel,
         };
       }
 
@@ -540,7 +540,6 @@ export const useAlertDialogAPI: IUseAlertDialogAPI = function useSuiAlertDialogA
 
         return {
           ...otherConfirmButtonProps,
-          children: confirm,
           onClick(evt) {
             onClick?.(evt);
             if (evt.defaultPrevented) {
@@ -549,6 +548,7 @@ export const useAlertDialogAPI: IUseAlertDialogAPI = function useSuiAlertDialogA
 
             onConfirm?.(evt);
           },
+          children: confirm,
         };
       }
 

@@ -443,9 +443,9 @@ export type DrawerPortalProps = React.ComponentProps<typeof Drawer.Portal>;
  */
 export const DrawerPortal: IComponent<DrawerPortalProps> = function SuiDrawerPortal(props) {
   const {
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 
@@ -638,7 +638,6 @@ export const DrawerControls: IComponent<DrawerControlsProps> = function SuiDrawe
   const { absolute = true, ...htmlProps } = props;
 
   return useRender({
-    defaultTagName: "div",
     props: [
       htmlProps,
       {
@@ -649,6 +648,7 @@ export const DrawerControls: IComponent<DrawerControlsProps> = function SuiDrawe
         ),
       },
     ],
+    defaultTagName: "div",
   });
 };
 
@@ -721,13 +721,13 @@ export type DrawerHeaderProps = Omit<React.ComponentProps<"div">, keyof RenderPr
  */
 export const DrawerHeader: IComponent<DrawerHeaderProps> = function SuiDrawerHeader(htmlProps) {
   return useRender({
-    defaultTagName: "div",
     props: [
       htmlProps,
       {
         className: "sui_drawer_header",
       },
     ],
+    defaultTagName: "div",
   });
 };
 
@@ -838,13 +838,13 @@ export type DrawerBodyProps = Omit<React.ComponentProps<"div">, keyof RenderProp
  */
 export const DrawerBody: IComponent<DrawerBodyProps> = function SuiDrawerBody(props) {
   return useRender({
-    defaultTagName: "div",
     props: [
       props,
       {
         className: "sui_drawer_body",
       },
     ],
+    defaultTagName: "div",
   });
 };
 
@@ -881,13 +881,13 @@ export type DrawerFooterProps = Omit<React.ComponentProps<"div">, keyof RenderPr
  */
 export const DrawerFooter: IComponent<DrawerFooterProps> = function SuiDrawerFooter(props) {
   return useRender({
-    defaultTagName: "div",
     props: [
       props,
       {
         className: "sui_drawer_footer",
       },
     ],
+    defaultTagName: "div",
   });
 };
 

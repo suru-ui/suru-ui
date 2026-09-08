@@ -36,9 +36,9 @@ export type FieldRootProps = React.ComponentProps<typeof Field.Root>;
  */
 export const FieldRoot: IComponent<FieldRootProps> = function SuiFieldRoot(props) {
   const {
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 

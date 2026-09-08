@@ -423,9 +423,9 @@ export const ComboboxInputGroup: IComponent<ComboboxInputGroupProps> =
   function SuiComboboxInputGroup(props) {
     const { size, color, radius, variant, outlined } = useComboboxContext();
     const {
+      className,
       // @ts-expect-error
       "data-scope": dataScope = "",
-      className,
       ...otherProps
     } = props;
 
@@ -904,9 +904,9 @@ export type ComboboxPortalProps = React.ComponentProps<typeof Combobox.Portal>;
 export const ComboboxPortal: IComponent<ComboboxPortalProps> = function SuiComboboxPortal(props) {
   const { size, radius } = useComboboxContext();
   const {
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 

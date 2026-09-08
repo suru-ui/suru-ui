@@ -468,7 +468,6 @@ export const AccordionIndicator: IComponent<AccordionIndicatorProps> =
     const { children = <ChevronIcon />, ...otherSpanProps } = props;
 
     return useRender({
-      defaultTagName: "span",
       props: [
         otherSpanProps,
         {
@@ -476,6 +475,7 @@ export const AccordionIndicator: IComponent<AccordionIndicatorProps> =
           className: "sui_accordion_indicator",
         },
       ],
+      defaultTagName: "span",
     });
   };
 

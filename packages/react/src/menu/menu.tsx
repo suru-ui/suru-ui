@@ -457,8 +457,8 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
     defaultOpen,
     orientation,
     onOpenChange,
-    defaultTriggerId,
     closeParentOnEsc,
+    defaultTriggerId,
     highlightItemOnHover,
     onOpenChangeComplete,
     ...contentProps
@@ -466,7 +466,7 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
 
   return {
     getItemProps(item) {
-      const { label, items: _, type: __, ...otherProps } = item as MenuActionItemObject;
+      const { type: __, items: _, label, ...otherProps } = item as MenuActionItemObject;
 
       return {
         ...mergePropsN([otherProps, itemProps]),
@@ -479,8 +479,8 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
         size,
         items,
         modal,
-        radius,
         handle,
+        radius,
         variant,
         disabled,
         outlined,
@@ -490,14 +490,14 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
         defaultOpen,
         orientation,
         onOpenChange,
-        defaultTriggerId,
         closeParentOnEsc,
+        defaultTriggerId,
         highlightItemOnHover,
         onOpenChangeComplete,
       };
     },
     getGroupProps(item) {
-      const { items: _, label: __, type: ___, ...otherProps } = item;
+      const { type: ___, items: _, label: __, ...otherProps } = item;
 
       return mergePropsN([otherProps, groupProps]);
     },
@@ -531,7 +531,7 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
       return backdropProps;
     },
     getLinkItemProps(item) {
-      const { label, type: _, ...otherProps } = item;
+      const { type: _, label, ...otherProps } = item;
 
       return {
         ...mergePropsN([otherProps, linkItemProps]),
@@ -539,7 +539,7 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
       };
     },
     getRadioItemProps(item) {
-      const { label, type: _, value, ...otherProps } = item;
+      const { type: _, label, value, ...otherProps } = item;
 
       return {
         ...mergePropsN([otherProps, radioItemProps]),
@@ -578,7 +578,7 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
       };
     },
     getRadioGroupProps(item) {
-      const { items: _, type: __, ...otherProps } = item;
+      const { type: __, items: _, ...otherProps } = item;
 
       return mergePropsN([otherProps, radioGroupProps]);
     },
@@ -586,7 +586,7 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
       return submenuRootProps;
     },
     getCheckboxItemProps(item) {
-      const { label, type: _, ...otherProps } = item;
+      const { type: _, label, ...otherProps } = item;
 
       return {
         ...mergePropsN([otherProps, checkboxItemProps]),
@@ -594,7 +594,7 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
       };
     },
     getSubmenuTriggerProps(item) {
-      const { label, items: _, type: __, ...otherProps } = item as MenuActionItemObject;
+      const { type: __, items: _, label, ...otherProps } = item as MenuActionItemObject;
 
       return {
         ...mergePropsN([otherProps, submenuTriggerProps]),

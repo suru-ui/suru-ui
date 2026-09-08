@@ -384,13 +384,6 @@ export const useDrawerAPI: IUseDrawerAPI = function useSuiDrawerAPI(props) {
 
     return {
       ...otherCloseProps,
-      children: (
-        <Button.Root radius="full" squared variant="naked">
-          <Button.Content>
-            <XIcon />
-          </Button.Content>
-        </Button.Root>
-      ),
       onClick(evt) {
         onClick?.(evt);
         if (evt.defaultPrevented) {
@@ -399,6 +392,13 @@ export const useDrawerAPI: IUseDrawerAPI = function useSuiDrawerAPI(props) {
 
         onClose?.(evt);
       },
+      children: (
+        <Button.Root radius="full" squared variant="naked">
+          <Button.Content>
+            <XIcon />
+          </Button.Content>
+        </Button.Root>
+      ),
     };
   }
 

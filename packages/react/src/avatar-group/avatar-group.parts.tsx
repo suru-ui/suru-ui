@@ -190,9 +190,9 @@ export const AvatarGroupRoot: IComponent<AvatarGroupRootProps> = function SuiAva
     radius = "full",
     reverse = false,
     children: childrenProp,
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherDivProps
   } = props;
   const children = React.Children.map(childrenProp, (child, i) => {
@@ -214,7 +214,6 @@ export const AvatarGroupRoot: IComponent<AvatarGroupRootProps> = function SuiAva
   });
 
   return useRender({
-    defaultTagName: "div",
     props: [
       otherDivProps,
       {
@@ -228,6 +227,7 @@ export const AvatarGroupRoot: IComponent<AvatarGroupRootProps> = function SuiAva
         "data-scope": dataScope,
       },
     ],
+    defaultTagName: "div",
   });
 };
 

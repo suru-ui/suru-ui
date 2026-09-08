@@ -283,11 +283,11 @@ export const SelectRoot: ISelectRoot = function SuiSelectRoot<
   } = props;
   const ctx = React.useMemo<SelectContext>(
     () => ({
-      items,
-      outlined,
-      radius,
       size,
+      items,
+      radius,
       variant,
+      outlined,
     }),
     [items, outlined, radius, size, variant],
   );
@@ -442,9 +442,9 @@ export const SelectTrigger: IComponent<SelectTriggerProps> = function SuiSelectT
   const actionGroup = useActionGroupContext(true);
   const ctx = useSelectContext(true);
   const {
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
   const size = actionGroup?.size ?? ctx?.size ?? "md";
@@ -597,9 +597,9 @@ export type SelectPortalProps = React.ComponentProps<typeof BaseSelect.Portal>;
 export const SelectPortal: IComponent<SelectPortalProps> = function SuiSelectPortal(props) {
   const ctx = useSelectContext();
   const {
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 

@@ -172,14 +172,14 @@ export const useFieldAPI: IUseFieldAPI = function useSuiFieldAPI(props) {
     label,
     children: _children,
     validity,
-    description,
-    errorMatches = true,
     slotProps: {
       error: errorProps = {},
       label: labelProps = {},
       validity: validityProps = {},
       description: descriptionProps = {},
     } = {},
+    description,
+    errorMatches = true,
     ...otherRootProps
   } = props;
 

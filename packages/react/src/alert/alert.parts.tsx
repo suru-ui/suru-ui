@@ -107,7 +107,6 @@ export const AlertRoot: IComponent<AlertRootProps> = function SuiAlertRoot(props
   } = props;
 
   return useRender({
-    defaultTagName: "div",
     props: [
       otherDivProps,
       {
@@ -124,6 +123,7 @@ export const AlertRoot: IComponent<AlertRootProps> = function SuiAlertRoot(props
         "data-scope": dataScope,
       },
     ],
+    defaultTagName: "div",
   });
 };
 
@@ -184,7 +184,6 @@ export const AlertIcon: IComponent<AlertIconProps> = function SuiAlertIcon(props
   const { "aria-hidden": ariaHidden = true, ...otherDivProps } = props;
 
   return useRender({
-    defaultTagName: "div",
     props: [
       otherDivProps,
       {
@@ -192,6 +191,7 @@ export const AlertIcon: IComponent<AlertIconProps> = function SuiAlertIcon(props
         "aria-hidden": ariaHidden,
       },
     ],
+    defaultTagName: "div",
   });
 };
 
@@ -228,13 +228,13 @@ export type AlertTitleProps = Omit<React.ComponentProps<"div">, keyof RenderProp
  */
 export const AlertTitle: IComponent<AlertTitleProps> = function SuiAlertTitle(props) {
   return useRender({
-    defaultTagName: "div",
     props: [
       props,
       {
         className: "sui_alert_title",
       },
     ],
+    defaultTagName: "div",
   });
 };
 
@@ -271,13 +271,13 @@ export type AlertContentProps = Omit<React.ComponentProps<"div">, keyof RenderPr
  */
 export const AlertContent: IComponent<AlertContentProps> = function SuiAlertContent(props) {
   return useRender({
-    defaultTagName: "div",
     props: [
       props,
       {
         className: "sui_alert_content",
       },
     ],
+    defaultTagName: "div",
   });
 };
 
@@ -314,13 +314,13 @@ export type AlertActionsProps = Omit<React.ComponentProps<"div">, keyof RenderPr
  */
 export const AlertActions: IComponent<AlertActionsProps> = function SuiAlertActions(props) {
   return useRender({
-    defaultTagName: "div",
     props: [
       props,
       {
         className: "sui_alert_actions",
       },
     ],
+    defaultTagName: "div",
   });
 };
 

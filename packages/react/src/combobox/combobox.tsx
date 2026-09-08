@@ -503,8 +503,8 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI(props)
     empty,
     label,
     children,
-    className,
     multiple: multipleProp,
+    className,
     slotProps: {
       chip: chipProps = {},
       icon: iconProps = {},
@@ -534,9 +534,9 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI(props)
       itemIndicator: itemIndicatorProps = {},
     } = {},
     placeholder,
-    itemToStringLabel,
     autoHighlight = true,
     openOnInputClick = true,
+    itemToStringLabel,
     ...otherRootProps
   } = props;
   const { "aria-label": clearAriaLabel = "クリア", ...otherClearProps } = clearProps;

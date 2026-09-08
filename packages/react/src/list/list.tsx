@@ -219,8 +219,8 @@ export const List: IList = /*#__PURE__*/ Object.assign(
     );
   },
   {
-    Indicator: ListItemIndicator,
     Item: ListItem,
+    Indicator: ListItemIndicator,
   },
 );
 

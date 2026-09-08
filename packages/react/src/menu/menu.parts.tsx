@@ -639,9 +639,9 @@ export type MenuPortalProps = React.ComponentProps<typeof Menu.Portal>;
 export const MenuPortal: IComponent<MenuPortalProps> = function SuiMenuPortal(props) {
   const { size, radius, outlined } = useMenuContext();
   const {
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 
@@ -811,7 +811,7 @@ const defaultRadioItemRenderer: IMenuPopupItemRenderer = (item, index) => {
     return toReactNode(item);
   }
 
-  const { label, type: _, ...otherItemProps } = item;
+  const { type: _, label, ...otherItemProps } = item;
 
   return (
     <MenuRadioItem key={index} {...otherItemProps}>
@@ -831,7 +831,7 @@ const defaultPopupItemRenderer: IMenuPopupItemRenderer = (item, index, items) =>
   }
 
   if (isRadioGroupObject(item)) {
-    const { items: radioItems, type: _, ...otherGroupProps } = item;
+    const { type: _, items: radioItems, ...otherGroupProps } = item;
 
     return (
       <MenuRadioGroup key={index} {...otherGroupProps}>
@@ -841,7 +841,7 @@ const defaultPopupItemRenderer: IMenuPopupItemRenderer = (item, index, items) =>
   }
 
   if (isGroupObject(item)) {
-    const { items: groupItems, label, type: _, ...otherGroupProps } = item;
+    const { type: _, items: groupItems, label, ...otherGroupProps } = item;
     const labelNode = toReactNode(label);
 
     return (
@@ -857,7 +857,7 @@ const defaultPopupItemRenderer: IMenuPopupItemRenderer = (item, index, items) =>
   }
 
   if (isCheckboxItemObject(item)) {
-    const { label, type: _, ...otherItemProps } = item;
+    const { type: _, label, ...otherItemProps } = item;
 
     return (
       <MenuCheckboxItem key={index} {...otherItemProps}>
@@ -874,7 +874,7 @@ const defaultPopupItemRenderer: IMenuPopupItemRenderer = (item, index, items) =>
   }
 
   if (isLinkItemObject(item)) {
-    const { label, type: _, ...otherItemProps } = item;
+    const { type: _, label, ...otherItemProps } = item;
 
     return (
       <MenuLinkItem key={index} {...otherItemProps}>
@@ -883,7 +883,7 @@ const defaultPopupItemRenderer: IMenuPopupItemRenderer = (item, index, items) =>
     );
   }
 
-  const { label, items: subItems, type: _, ...otherItemProps } = item;
+  const { type: _, items: subItems, label, ...otherItemProps } = item;
   if (!subItems) {
     return (
       <MenuItem key={index} {...otherItemProps}>
@@ -1734,7 +1734,7 @@ export type MenuRadioItemIndicatorProps = React.ComponentProps<typeof Menu.Radio
  */
 export const MenuRadioItemIndicator: IComponent<MenuRadioItemIndicatorProps> =
   function SuiMenuRadioItemIndicator(props) {
-    const { keepMounted = true, className, ...otherProps } = props;
+    const { className, keepMounted = true, ...otherProps } = props;
 
     return (
       <Menu.RadioItemIndicator

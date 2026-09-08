@@ -110,11 +110,11 @@ export const Stat: IStat = /*#__PURE__*/ Object.assign(
     return <StatRoot {...api.getRootProps()} />;
   },
   {
+    Root: StatRoot,
+    Label: StatLabel,
+    Value: StatValue,
     Change: StatChange,
     Description: StatDescription,
-    Label: StatLabel,
-    Root: StatRoot,
-    Value: StatValue,
   },
 );
 

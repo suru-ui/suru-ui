@@ -49,7 +49,6 @@ export const LabelRoot: IComponent<LabelRootProps> = function SuiLabelRoot(props
   } = props;
 
   return useRender({
-    defaultTagName: "label",
     props: [
       otherLabelProps,
       {
@@ -57,6 +56,7 @@ export const LabelRoot: IComponent<LabelRootProps> = function SuiLabelRoot(props
         "data-scope": dataScope,
       },
     ],
+    defaultTagName: "label",
   });
 };
 

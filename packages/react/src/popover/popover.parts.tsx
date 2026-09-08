@@ -213,9 +213,9 @@ export type PopoverPortalProps = React.ComponentProps<typeof Popover.Portal>;
  */
 export const PopoverPortal: IComponent<PopoverPortalProps> = function SuiPopoverPortal(props) {
   const {
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 

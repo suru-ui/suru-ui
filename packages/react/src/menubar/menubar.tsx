@@ -128,7 +128,7 @@ export const useMenubarAPI: IUseMenubarAPI = function useSuiMenubarAPI(props) {
         };
       }
 
-      const { label, children: popupChildren, trigger, ...otherItemProps } = item;
+      const { label, trigger, children: popupChildren, ...otherItemProps } = item;
 
       return {
         ...otherItemProps,

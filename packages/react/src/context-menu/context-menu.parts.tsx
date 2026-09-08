@@ -595,9 +595,9 @@ export const ContextMenuPortal: IComponent<ContextMenuPortalProps> = function Su
 ) {
   const { size, radius, outlined } = useContextMenuContext();
   const {
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 
@@ -783,7 +783,7 @@ const defaultRadioItemRenderer: IContextMenuContentItemRenderer = (item, index) 
     return toReactNode(item);
   }
 
-  const { label, type: _, ...otherItemProps } = item;
+  const { type: _, label, ...otherItemProps } = item;
 
   return (
     <ContextMenuRadioItem key={index} {...otherItemProps}>
@@ -803,7 +803,7 @@ const defaultContentItemRenderer: IContextMenuContentItemRenderer = (item, index
   }
 
   if (isRadioGroupObject(item)) {
-    const { items: radioItems, type: _, ...otherGroupProps } = item;
+    const { type: _, items: radioItems, ...otherGroupProps } = item;
 
     return (
       <ContextMenuRadioGroup key={index} {...otherGroupProps}>
@@ -813,7 +813,7 @@ const defaultContentItemRenderer: IContextMenuContentItemRenderer = (item, index
   }
 
   if (isGroupObject(item)) {
-    const { items: groupItems, label, type: _, ...otherGroupProps } = item;
+    const { type: _, items: groupItems, label, ...otherGroupProps } = item;
     const labelNode = toReactNode(label);
 
     return (
@@ -829,7 +829,7 @@ const defaultContentItemRenderer: IContextMenuContentItemRenderer = (item, index
   }
 
   if (isCheckboxItemObject(item)) {
-    const { label, type: _, ...otherItemProps } = item;
+    const { type: _, label, ...otherItemProps } = item;
 
     return (
       <ContextMenuCheckboxItem key={index} {...otherItemProps}>
@@ -846,7 +846,7 @@ const defaultContentItemRenderer: IContextMenuContentItemRenderer = (item, index
   }
 
   if (isLinkItemObject(item)) {
-    const { label, type: _, ...otherItemProps } = item;
+    const { type: _, label, ...otherItemProps } = item;
 
     return (
       <ContextMenuLinkItem key={index} {...otherItemProps}>
@@ -855,7 +855,7 @@ const defaultContentItemRenderer: IContextMenuContentItemRenderer = (item, index
     );
   }
 
-  const { label, items: subItems, type: _, ...otherItemProps } = item;
+  const { type: _, items: subItems, label, ...otherItemProps } = item;
   if (!subItems) {
     return (
       <ContextMenuItem key={index} {...otherItemProps}>
@@ -1650,7 +1650,7 @@ export type ContextMenuRadioItemIndicatorProps = React.ComponentProps<
  */
 export const ContextMenuRadioItemIndicator: IComponent<ContextMenuRadioItemIndicatorProps> =
   function SuiContextMenuRadioItemIndicator(props) {
-    const { keepMounted = true, className, ...otherProps } = props;
+    const { className, keepMounted = true, ...otherProps } = props;
 
     return (
       <ContextMenu.RadioItemIndicator

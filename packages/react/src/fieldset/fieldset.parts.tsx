@@ -26,9 +26,9 @@ export type FieldsetRootProps = React.ComponentProps<typeof Fieldset.Root>;
  */
 export const FieldsetRoot: IComponent<FieldsetRootProps> = function SuiFieldsetRoot(props) {
   const {
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 

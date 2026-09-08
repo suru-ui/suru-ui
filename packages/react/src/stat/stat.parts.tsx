@@ -102,14 +102,13 @@ export type StatRootProps = Omit<React.ComponentProps<"dl">, keyof RenderProps> 
 export const StatRoot: IComponent<StatRootProps> = function SuiStatRoot(props) {
   const {
     size = "md",
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherDlProps
   } = props;
   const ctx = React.useMemo<StatContext>(() => ({ size }), [size]);
   const element = useRender({
-    defaultTagName: "dl",
     props: [
       otherDlProps,
       {
@@ -117,6 +116,7 @@ export const StatRoot: IComponent<StatRootProps> = function SuiStatRoot(props) {
         "data-scope": dataScope,
       },
     ],
+    defaultTagName: "dl",
   });
 
   return <StatContext value={ctx}>{element}</StatContext>;
@@ -182,13 +182,13 @@ export const StatLabel: IComponent<StatLabelProps> = function SuiStatLabel(props
   const size = ctx?.size ?? sizeProp ?? "md";
 
   return useRender({
-    defaultTagName: "dt",
     props: [
       otherDtProps,
       {
         className: cn(className, "sui_stat_label", `sui_stat_label-size_${size}`),
       },
     ],
+    defaultTagName: "dt",
   });
 };
 
@@ -252,13 +252,13 @@ export const StatValue: IComponent<StatValueProps> = function SuiStatValue(props
   const size = ctx?.size ?? sizeProp ?? "md";
 
   return useRender({
-    defaultTagName: "dd",
     props: [
       otherDdProps,
       {
         className: cn(className, "sui_stat_value", `sui_stat_value-size_${size}`),
       },
     ],
+    defaultTagName: "dd",
   });
 };
 
@@ -319,16 +319,16 @@ export type StatChangeProps = Omit<React.ComponentProps<"span">, keyof RenderPro
  * {@link StatValue} の内側に配置して、前回からの増減を矢印と色で示します。
  */
 export const StatChange: IComponent<StatChangeProps> = function SuiStatChange(props) {
-  const { direction = "up", className, ...otherSpanProps } = props;
+  const { className, direction = "up", ...otherSpanProps } = props;
 
   return useRender({
-    defaultTagName: "span",
     props: [
       otherSpanProps,
       {
         className: cn(className, "sui_stat_change", `sui_stat_change-direction_${direction}`),
       },
     ],
+    defaultTagName: "span",
   });
 };
 
@@ -394,13 +394,13 @@ export const StatDescription: IComponent<StatDescriptionProps> = function SuiSta
   const size = ctx?.size ?? sizeProp ?? "md";
 
   return useRender({
-    defaultTagName: "dd",
     props: [
       otherDdProps,
       {
         className: cn(className, "sui_stat_description", `sui_stat_description-size_${size}`),
       },
     ],
+    defaultTagName: "dd",
   });
 };
 

@@ -158,7 +158,6 @@ export const StatusRoot: IComponent<StatusRootProps> = function SuiStatusRoot(pr
     [size, color, processing],
   );
   const element = useRender({
-    defaultTagName: "span",
     props: [
       otherSpanProps,
       {
@@ -171,6 +170,7 @@ export const StatusRoot: IComponent<StatusRootProps> = function SuiStatusRoot(pr
         "data-scope": dataScope,
       },
     ],
+    defaultTagName: "span",
   });
 
   return <StatusContext value={ctx}>{element}</StatusContext>;
@@ -262,7 +262,6 @@ export const StatusIndicator: IComponent<StatusIndicatorProps> = function SuiSta
   const processing = ctx?.processing ?? processingProp ?? false;
 
   return useRender({
-    defaultTagName: "span",
     props: [
       otherSpanProps,
       {
@@ -275,6 +274,7 @@ export const StatusIndicator: IComponent<StatusIndicatorProps> = function SuiSta
         "aria-hidden": true,
       },
     ],
+    defaultTagName: "span",
   });
 };
 

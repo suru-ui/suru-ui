@@ -298,15 +298,13 @@ export const PaginationRoot: IComponent<PaginationRootProps> = function SuiPagin
     [disabled, maxPage, onPageChange, page, pageProp, totalPages],
   );
   const ctx = React.useMemo<PaginationContext>(
-    () => ({ color, disabled, goToPage, page, radius, size, totalPages }),
+    () => ({ page, size, color, radius, disabled, goToPage, totalPages }),
     [color, disabled, goToPage, page, radius, size, totalPages],
   );
   const element = useRender({
-    defaultTagName: "nav",
     props: [
       otherNavProps,
       {
-        "aria-label": ariaLabel,
         className: cn<PaginationRootState>(
           "sui_pagination",
           `sui_pagination-size_${size}`,
@@ -314,9 +312,11 @@ export const PaginationRoot: IComponent<PaginationRootProps> = function SuiPagin
           `sui_pagination-color_${color}`,
           disabled && "sui_pagination-disabled",
         ),
+        "aria-label": ariaLabel,
         "data-scope": dataScope,
       },
     ],
+    defaultTagName: "nav",
   });
 
   return <PaginationContext value={ctx}>{element}</PaginationContext>;
@@ -393,7 +393,7 @@ export const PaginationPreviousButton: IComponent<PaginationPreviousButtonProps>
     const handleClick: NonNullable<ButtonRootProps["onClick"]> = (event) => {
       onClick?.(event);
       if (!event.defaultPrevented && !isDisabled && ctx !== null) {
-        ctx.goToPage(ctx.page - 1, { reason: "previous", event });
+        ctx.goToPage(ctx.page - 1, { event, reason: "previous" });
       }
     };
 
@@ -464,7 +464,7 @@ export const PaginationNextButton: IComponent<PaginationNextButtonProps> =
     const handleClick: NonNullable<ButtonRootProps["onClick"]> = (event) => {
       onClick?.(event);
       if (!event.defaultPrevented && !isDisabled && ctx !== null) {
-        ctx.goToPage(ctx.page + 1, { reason: "next", event });
+        ctx.goToPage(ctx.page + 1, { event, reason: "next" });
       }
     };
 
@@ -547,7 +547,7 @@ export const PaginationItem: IComponent<PaginationItemProps> = function SuiPagin
   const handleClick: NonNullable<ButtonRootProps["onClick"]> = (event) => {
     onClick?.(event);
     if (!event.defaultPrevented && !isDisabled && ctx !== null) {
-      ctx.goToPage(page, { reason: "item", event });
+      ctx.goToPage(page, { event, reason: "item" });
     }
   };
 
@@ -626,20 +626,15 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
     const label = ariaLabel ?? `${start}〜${end}ページへ移動`;
     const [editing, setEditing] = React.useState(false);
     const inputElement = useRender<HTMLInputElement, {}, boolean>({
-      defaultTagName: "input",
-      enabled: editing,
       props: {
-        "aria-label": label,
-        autoFocus: true,
-        className: "sui_pagination_ellipsis_input",
-        defaultValue: "",
-        inputMode: "numeric",
-        pattern: "[0-9]*",
-        placeholder: String(start),
         type: "text",
         onBlur() {
           setEditing(false);
         },
+        pattern: "[0-9]*",
+        autoFocus: true,
+        className: "sui_pagination_ellipsis_input",
+        inputMode: "numeric",
         onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
           if (event.key === "Escape") {
             setEditing(false);
@@ -658,11 +653,16 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
           }
 
           ctx?.goToPage(Math.min(Math.max(value, start), end), {
-            reason: "ellipsis",
             event,
+            reason: "ellipsis",
           });
         },
+        placeholder: String(start),
+        defaultValue: "",
+        "aria-label": label,
       },
+      enabled: editing,
+      defaultTagName: "input",
     });
 
     if (editing) {

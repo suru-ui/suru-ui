@@ -76,9 +76,9 @@ export const AvatarRoot: IComponent<AvatarRootProps> = function SuiAvatarRoot(pr
     size: sizeProp = "md",
     color: colorProp,
     radius: radiusProp,
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
   const size = group?.size ?? sizeProp;

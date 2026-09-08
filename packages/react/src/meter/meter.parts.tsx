@@ -98,9 +98,9 @@ export const MeterRoot: IComponent<MeterRootProps> = function SuiMeterRoot(props
     radius = "full",
     variant = "liquid",
     outlined = false,
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 

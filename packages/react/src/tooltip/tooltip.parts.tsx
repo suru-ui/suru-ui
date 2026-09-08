@@ -251,9 +251,9 @@ export type TooltipPortalProps = React.ComponentProps<typeof Tooltip.Portal>;
  */
 export const TooltipPortal: IComponent<TooltipPortalProps> = function SuiTooltipPortal(props) {
   const {
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 
@@ -299,7 +299,7 @@ export type TooltipPositionerProps = React.ComponentProps<typeof Tooltip.Positio
 export const TooltipPositioner: IComponent<TooltipPositionerProps> = function SuiTooltipPositioner(
   props,
 ) {
-  const { positionMethod = "fixed", className, ...otherProps } = props;
+  const { className, positionMethod = "fixed", ...otherProps } = props;
 
   return (
     <Tooltip.Positioner

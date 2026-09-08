@@ -159,10 +159,10 @@ export const PasswordFieldRoot: IComponent<PasswordFieldRootProps> = function Su
     ...otherProps
   } = props;
   const [visible, setVisible] = useControlled<boolean>({
-    controlled: visibleProp,
-    default: defaultVisible,
     name: "PasswordField",
     state: "visible",
+    default: defaultVisible,
+    controlled: visibleProp,
   });
   const ctx = React.useMemo<PasswordFieldContext>(
     () => ({
@@ -349,7 +349,6 @@ export const PasswordFieldToggleButton: IComponent<PasswordFieldToggleButtonProp
     const label = ariaLabel ?? (visible ? "パスワードを隠す" : "パスワードを表示");
 
     return useRender({
-      defaultTagName: "button",
       props: [
         otherButtonProps,
         {
@@ -367,6 +366,7 @@ export const PasswordFieldToggleButton: IComponent<PasswordFieldToggleButtonProp
           "aria-pressed": visible,
         },
       ],
+      defaultTagName: "button",
     });
   };
 

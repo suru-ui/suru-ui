@@ -375,6 +375,7 @@ export const useDialogAPI: IUseDialogAPI = function useSuiDialogAPI(props) {
     getRootProps(): Required<Omit<DialogRootProps, "children">> {
       return {
         open,
+        modal,
         handle,
         triggerId,
         actionsRef,
@@ -382,7 +383,6 @@ export const useDialogAPI: IUseDialogAPI = function useSuiDialogAPI(props) {
         onOpenChange,
         defaultTriggerId,
         onOpenChangeComplete,
-        modal,
         disablePointerDismissal,
       };
     },
@@ -458,7 +458,6 @@ export const useDialogAPI: IUseDialogAPI = function useSuiDialogAPI(props) {
 
         return {
           ...otherCloseButtonProps,
-          children: close,
           onClick(evt) {
             onClick?.(evt);
             if (evt.defaultPrevented) {
@@ -467,6 +466,7 @@ export const useDialogAPI: IUseDialogAPI = function useSuiDialogAPI(props) {
 
             onClose?.(evt);
           },
+          children: close,
         };
       }
 

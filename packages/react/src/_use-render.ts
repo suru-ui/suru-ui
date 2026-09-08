@@ -83,8 +83,8 @@ export default function useRender<
 
   return useRenderElement(defaultTagName, renderProps, {
     ref: refList,
-    state,
     props: elementPropsList,
+    state,
     enabled,
     stateAttributesMapping,
   });

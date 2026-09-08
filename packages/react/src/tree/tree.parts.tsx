@@ -362,16 +362,16 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
 
   const rootRef = React.useRef<HTMLDivElement | null>(null);
   const [value, setValue] = useControlled<readonly string[]>({
-    controlled: valueProp,
-    default: defaultValue,
     name: "Tree",
     state: "value",
+    default: defaultValue,
+    controlled: valueProp,
   });
   const [expandedValue, setExpandedValue] = useControlled<readonly string[]>({
-    controlled: expandedValueProp,
-    default: defaultExpandedValue,
     name: "Tree",
     state: "expandedValue",
+    default: defaultExpandedValue,
+    controlled: expandedValueProp,
   });
   const [activeId, setActiveId] = React.useState<string | null>(null);
 
@@ -391,7 +391,7 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
       for (const [index, node] of nodes.entries()) {
         const hasChildren = node.children != null && node.children.length > 0;
 
-        result.push({ node, level, posInSet: index + 1, setSize: nodes.length });
+        result.push({ node, level, setSize: nodes.length, posInSet: index + 1 });
         if (hasChildren && expanded.has(node.id) && node.children != null) {
           walk(node.children, level + 1);
         }
@@ -444,14 +444,14 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
 
   const ctx = React.useMemo<TreeContext>(
     () => ({
-      activeId,
-      expandOnClick,
-      expanded,
       focus,
-      getItemId,
       select,
+      activeId,
+      expanded,
       selected,
+      getItemId,
       setActive: setActiveId,
+      expandOnClick,
       selectionMode,
       toggleExpansion,
     }),
@@ -607,7 +607,6 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
   return (
     <TreeContext value={ctx}>
       {useRender<HTMLDivElement, {}>({
-        defaultTagName: "div",
         props: [
           otherDivProps,
           {
@@ -616,7 +615,7 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
             onFocus: handleFocus,
             children:
               typeof children === "function"
-                ? visibleNodes.map(({ node, level, posInSet, setSize }) => (
+                ? visibleNodes.map(({ node, level, setSize, posInSet }) => (
                     <React.Fragment key={node.id}>
                       {children(node, level, posInSet, setSize)}
                     </React.Fragment>
@@ -625,11 +624,12 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
             tabIndex: 0,
             className: cn("sui_tree", `sui_tree-radius_${radius}`, `sui_tree-size_${size}`),
             onKeyDown: handleKeyDown,
-            "aria-activedescendant": activeId != null ? getItemId(activeId) : undefined,
             "aria-multiselectable": selectionMode === "multiple" ? true : undefined,
+            "aria-activedescendant": activeId != null ? getItemId(activeId) : undefined,
             "data-scope": dataScope,
           },
         ],
+        defaultTagName: "div",
       })}
     </TreeContext>
   );
@@ -821,7 +821,6 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
   };
 
   return useRender({
-    defaultTagName: "div",
     props: [
       otherDivProps,
       {
@@ -837,15 +836,16 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
           active && "sui_tree_item-active",
           disabled && "sui_tree_item-disabled",
         ),
+        "aria-level": level,
+        "aria-setsize": setSize,
         "aria-disabled": disabled || undefined,
         "aria-expanded": hasChildren ? expanded : undefined,
-        "aria-level": level,
         "aria-posinset": posInSet,
         "aria-selected": ctx?.selectionMode !== "none" ? selected : undefined,
-        "aria-setsize": setSize,
         "data-id": itemId,
       },
     ],
+    defaultTagName: "div",
   });
 };
 
@@ -897,7 +897,6 @@ export const TreeItemIndicator: IComponent<TreeItemIndicatorProps> = function Su
   const { visible = true, children = <ChevronRightIcon />, ...otherSpanProps } = props;
 
   return useRender({
-    defaultTagName: "span",
     props: [
       otherSpanProps,
       {
@@ -909,6 +908,7 @@ export const TreeItemIndicator: IComponent<TreeItemIndicatorProps> = function Su
         "data-sui_tree_item_indicator": "",
       },
     ],
+    defaultTagName: "span",
   });
 };
 
@@ -945,13 +945,13 @@ export type TreeItemLabelProps = Omit<React.ComponentProps<"span">, keyof Render
  */
 export const TreeItemLabel: IComponent<TreeItemLabelProps> = function SuiTreeItemLabel(props) {
   return useRender({
-    defaultTagName: "span",
     props: [
       props,
       {
         className: "sui_tree_item_label",
       },
     ],
+    defaultTagName: "span",
   });
 };
 

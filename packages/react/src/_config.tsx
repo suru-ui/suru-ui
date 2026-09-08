@@ -66,8 +66,6 @@ type ConfigState = Config & {
  * コンテキストの既定値として使います。
  */
 const config: ConfigState = {
-  map: {},
-
   get(
     key: string,
     typeGuard: (value: any) => boolean = () => true,
@@ -80,6 +78,8 @@ const config: ConfigState = {
 
     return defaultValue;
   },
+
+  map: {},
 
   Context(props: { children?: React.ReactNode; [key: string]: unknown }): React.ReactElement {
     const config = React.use(Config) as ConfigState;

@@ -243,7 +243,7 @@ interface ISegments extends IComponent<SegmentsProps> {
  */
 export const Segments: ISegments = function SuiSegments(props: SegmentsProps) {
   const api = useSegmentsAPI(props);
-  const { children, items = [], ...otherListProps } = api.getListProps();
+  const { items = [], children, ...otherListProps } = api.getListProps();
 
   return (
     <SegmentsRoot {...api.getRootProps()}>

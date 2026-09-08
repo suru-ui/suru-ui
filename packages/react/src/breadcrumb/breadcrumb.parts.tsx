@@ -178,10 +178,10 @@ export const BreadcrumbRoot: IComponent<BreadcrumbRootProps> = function SuiBread
     size = "md",
     color = "grey",
     items = [],
-    // @ts-expect-error
-    "data-scope": dataScope = "",
     className,
     "aria-label": ariaLabel = "パンくずリスト",
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     ...otherNavProps
   } = props;
   const ctx = React.useMemo<BreadcrumbContext>(
@@ -189,7 +189,6 @@ export const BreadcrumbRoot: IComponent<BreadcrumbRootProps> = function SuiBread
     [size, color, items],
   );
   const element = useRender({
-    defaultTagName: "nav",
     props: [
       otherNavProps,
       {
@@ -203,6 +202,7 @@ export const BreadcrumbRoot: IComponent<BreadcrumbRootProps> = function SuiBread
         "data-scope": dataScope,
       },
     ],
+    defaultTagName: "nav",
   });
 
   return <BreadcrumbContext value={ctx}>{element}</BreadcrumbContext>;
@@ -286,7 +286,6 @@ export const BreadcrumbList: IComponent<BreadcrumbListProps> = function SuiBread
   const items = ctx?.items ?? [];
 
   return useRender({
-    defaultTagName: "ol",
     props: [
       otherOlProps,
       {
@@ -294,6 +293,7 @@ export const BreadcrumbList: IComponent<BreadcrumbListProps> = function SuiBread
         className: "sui_breadcrumb_list",
       },
     ],
+    defaultTagName: "ol",
   });
 };
 
@@ -364,13 +364,13 @@ export type BreadcrumbItemProps = Omit<React.ComponentProps<"li">, keyof RenderP
  */
 export const BreadcrumbItem: IComponent<BreadcrumbItemProps> = function SuiBreadcrumbItem(props) {
   return useRender({
-    defaultTagName: "li",
     props: [
       props,
       {
         className: "sui_breadcrumb_item",
       },
     ],
+    defaultTagName: "li",
   });
 };
 
@@ -429,7 +429,6 @@ export const BreadcrumbLink: IComponent<BreadcrumbLinkProps> = function SuiBread
   const { current = false, disabled = false, className, ...otherAnchorProps } = props;
 
   return useRender({
-    defaultTagName: current ? "span" : "a",
     props: [
       otherAnchorProps,
       {
@@ -444,6 +443,7 @@ export const BreadcrumbLink: IComponent<BreadcrumbLinkProps> = function SuiBread
         "aria-disabled": disabled || undefined,
       },
     ],
+    defaultTagName: current ? "span" : "a",
   });
 };
 
@@ -483,7 +483,6 @@ export const BreadcrumbSeparator: IComponent<BreadcrumbSeparatorProps> =
     const { children = <ChevronRightIcon />, ...otherLiProps } = props;
 
     return useRender({
-      defaultTagName: "li",
       props: [
         otherLiProps,
         {
@@ -492,6 +491,7 @@ export const BreadcrumbSeparator: IComponent<BreadcrumbSeparatorProps> =
           "aria-hidden": true,
         },
       ],
+      defaultTagName: "li",
     });
   };
 

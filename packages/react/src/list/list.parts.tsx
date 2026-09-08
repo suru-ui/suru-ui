@@ -179,7 +179,6 @@ export const ListRoot: IListRoot = function SuiListRoot(props: ListRootProps) {
   } = props;
   const ctx = React.useMemo<ListContext>(() => ({ size }), [size]);
   const element = useRender({
-    defaultTagName: ordered ? "ol" : "ul",
     props: [
       otherListProps,
       {
@@ -188,6 +187,7 @@ export const ListRoot: IListRoot = function SuiListRoot(props: ListRootProps) {
         "data-scope": dataScope,
       },
     ],
+    defaultTagName: ordered ? "ol" : "ul",
   });
 
   return <ListContext value={ctx}>{element}</ListContext>;
@@ -288,7 +288,6 @@ export const ListItem: IComponent<ListItemProps> = function SuiListItem(props) {
   const size = ctx?.size ?? sizeProp ?? "md";
 
   return useRender({
-    defaultTagName: "li",
     props: [
       otherLiProps,
       {
@@ -299,6 +298,7 @@ export const ListItem: IComponent<ListItemProps> = function SuiListItem(props) {
         ),
       },
     ],
+    defaultTagName: "li",
   });
 };
 
@@ -342,13 +342,13 @@ export const ListItemIndicator: IComponent<ListItemIndicatorProps> = function Su
   props,
 ) {
   return useRender({
-    defaultTagName: "span",
     props: [
       props,
       {
         className: "sui_list_item_indicator",
       },
     ],
+    defaultTagName: "span",
   });
 };
 

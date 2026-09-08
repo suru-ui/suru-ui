@@ -552,7 +552,6 @@ export const NumberFieldAddon: IComponent<NumberFieldAddonProps> = function SuiN
   const { disableFocusOnClick = false, ...otherSpanProps } = props;
 
   return useRender({
-    defaultTagName: "span",
     props: [
       otherSpanProps,
       {
@@ -560,6 +559,7 @@ export const NumberFieldAddon: IComponent<NumberFieldAddonProps> = function SuiN
         [DISABLE_FOCUS_ON_CLICK_DATA]: disableFocusOnClick ? "true" : undefined,
       },
     ],
+    defaultTagName: "span",
   });
 };
 

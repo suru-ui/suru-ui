@@ -181,8 +181,8 @@ export const useBreadcrumbAPI: IUseBreadcrumbAPI = function useSuiBreadcrumbAPI(
         ...linkProps,
         href: current ? undefined : item.href,
         current,
-        disabled: item.disabled ?? linkProps.disabled ?? false,
         children: toReactNode(item.label),
+        disabled: item.disabled ?? linkProps.disabled ?? false,
       };
     },
     getListProps() {

@@ -251,7 +251,6 @@ export const ActionGroupRoot: IComponent<ActionGroupRootProps> = function SuiAct
     [size, color, radius, variant, outlined, orientation],
   );
   const element = useRender({
-    defaultTagName: "div",
     props: [
       otherDivProps,
       {
@@ -270,6 +269,7 @@ export const ActionGroupRoot: IComponent<ActionGroupRootProps> = function SuiAct
         "data-scope": dataScope,
       },
     ],
+    defaultTagName: "div",
   });
 
   return <ActionGroupContext value={ctx}>{element}</ActionGroupContext>;
@@ -351,7 +351,6 @@ export const ActionGroupSeparator: IComponent<ActionGroupSeparatorProps> =
     const orientation = orientationProp ?? ctx?.orientation ?? "horizontal";
 
     return useRender({
-      defaultTagName: "div",
       props: [
         otherDivProps,
         {
@@ -364,6 +363,7 @@ export const ActionGroupSeparator: IComponent<ActionGroupSeparatorProps> =
           "aria-orientation": ariaOrientation,
         },
       ],
+      defaultTagName: "div",
     });
   };
 

@@ -356,10 +356,10 @@ export const FileUploadRoot: IComponent<FileUploadRootProps> = function SuiFileU
   } = props;
   const inputRef = React.useRef<HTMLInputElement | null>(null);
   const [files, setFiles] = useControlled<readonly File[]>({
-    controlled: value,
-    default: defaultValue ?? [],
     name: "FileUpload",
     state: "value",
+    default: defaultValue ?? [],
+    controlled: value,
   });
 
   const commit = React.useCallback(
@@ -394,10 +394,10 @@ export const FileUploadRoot: IComponent<FileUploadRootProps> = function SuiFileU
   const selectFiles = React.useCallback(
     (incomingFiles: readonly File[]) => {
       const { accepted, rejected } = validateFiles(incomingFiles, files, {
-        maxFileSize,
         maxFiles,
-        minFileSize,
         multiple,
+        maxFileSize,
+        minFileSize,
       });
       if (rejected.length > 0) {
         onFileReject?.({ acceptedFiles: accepted, rejectedFiles: rejected });
@@ -413,16 +413,16 @@ export const FileUploadRoot: IComponent<FileUploadRootProps> = function SuiFileU
 
   const ctx = React.useMemo<FileUploadContext>(
     () => ({
+      name,
+      open,
+      clear,
+      files,
       accept:
         typeof accept === "string" ? accept : accept === undefined ? undefined : accept.join(","),
-      disabled,
-      files,
-      multiple,
-      name,
-      required,
-      clear,
-      open,
       remove,
+      disabled,
+      multiple,
+      required,
       selectFiles,
       setInputElement,
     }),
@@ -442,7 +442,6 @@ export const FileUploadRoot: IComponent<FileUploadRootProps> = function SuiFileU
   );
 
   const element = useRender({
-    defaultTagName: "div",
     props: [
       otherDivProps,
       {
@@ -458,6 +457,7 @@ export const FileUploadRoot: IComponent<FileUploadRootProps> = function SuiFileU
         "data-scope": dataScope,
       },
     ],
+    defaultTagName: "div",
   });
 
   return <FileUploadContext value={ctx}>{element}</FileUploadContext>;
@@ -549,26 +549,26 @@ export const FileUploadHiddenInput: IComponent<FileUploadHiddenInputProps> =
     const ctx = useFileUploadContext();
 
     return useRender({
-      defaultTagName: "input",
       props: [
         props,
         {
           ref: ctx.setInputElement,
+          name: ctx.name,
+          type: "file",
           accept: ctx.accept,
           disabled: ctx.disabled,
           multiple: ctx.multiple,
-          name: ctx.name,
-          required: ctx.required,
-          type: "file",
           onChange(event: React.ChangeEvent<HTMLInputElement>) {
             const selectedFiles = Array.from(event.target.files ?? []);
             // 同じファイルを再度選んでも change イベントが発火するように、値を必ずリセットします。
             event.target.value = "";
             ctx.selectFiles(selectedFiles);
           },
+          required: ctx.required,
           className: "sui_file_upload_hidden_input",
         },
       ],
+      defaultTagName: "input",
     });
   };
 
@@ -619,18 +619,18 @@ export const FileUploadTrigger: IComponent<FileUploadTriggerProps> = function Su
   const disabled = ctx?.disabled || disabledProp || false;
 
   return useRender({
-    defaultTagName: "button",
     props: [
       otherButtonProps,
       {
-        disabled,
         type: "button",
         onClick() {
           ctx?.open();
         },
+        disabled,
         className: "sui_file_upload_trigger",
       },
     ],
+    defaultTagName: "button",
   });
 };
 
@@ -687,28 +687,10 @@ export const FileUploadDropzone: IComponent<FileUploadDropzoneProps> =
     const [dragging, setDragging] = React.useState(false);
 
     return useRender({
-      defaultTagName: "button",
-      state: { dragging },
       props: [
         otherButtonProps,
         {
-          disabled,
           type: "button",
-          onClick() {
-            ctx?.open();
-          },
-          onDragEnter(event: React.DragEvent<HTMLButtonElement>) {
-            event.preventDefault();
-            if (!disabled) {
-              setDragging(true);
-            }
-          },
-          onDragOver(event: React.DragEvent<HTMLButtonElement>) {
-            event.preventDefault();
-          },
-          onDragLeave() {
-            setDragging(false);
-          },
           onDrop(event: React.DragEvent<HTMLButtonElement>) {
             event.preventDefault();
             setDragging(false);
@@ -717,12 +699,30 @@ export const FileUploadDropzone: IComponent<FileUploadDropzoneProps> =
               ctx?.selectFiles(droppedFiles);
             }
           },
+          onClick() {
+            ctx?.open();
+          },
+          disabled,
           className: cn<FileUploadDropzoneState>(
             "sui_file_upload_dropzone",
             (state) => state.dragging && "sui_file_upload_dropzone-dragover",
           ),
+          onDragOver(event: React.DragEvent<HTMLButtonElement>) {
+            event.preventDefault();
+          },
+          onDragEnter(event: React.DragEvent<HTMLButtonElement>) {
+            event.preventDefault();
+            if (!disabled) {
+              setDragging(true);
+            }
+          },
+          onDragLeave() {
+            setDragging(false);
+          },
         },
       ],
+      state: { dragging },
+      defaultTagName: "button",
     });
   };
 
@@ -775,18 +775,18 @@ export const FileUploadClearTrigger: IComponent<FileUploadClearTriggerProps> =
         : ctx.disabled || (disabledProp ?? false) || ctx.files.length === 0;
 
     return useRender({
-      defaultTagName: "button",
       props: [
         otherButtonProps,
         {
-          disabled,
           type: "button",
           onClick() {
             ctx?.clear();
           },
+          disabled,
           className: "sui_file_upload_clear_trigger",
         },
       ],
+      defaultTagName: "button",
     });
   };
 
@@ -827,13 +827,13 @@ export type FileUploadItemGroupProps = Omit<React.ComponentProps<"ul">, keyof Re
 export const FileUploadItemGroup: IComponent<FileUploadItemGroupProps> =
   function SuiFileUploadItemGroup(props) {
     return useRender({
-      defaultTagName: "ul",
       props: [
         props,
         {
           className: "sui_file_upload_item_group",
         },
       ],
+      defaultTagName: "ul",
     });
   };
 
@@ -923,13 +923,13 @@ export const FileUploadItem: IComponent<FileUploadItemProps> = function SuiFileU
   const { file, ...otherLiProps } = props;
   const ctx = React.useMemo<FileUploadItemContext>(() => ({ file }), [file]);
   const element = useRender({
-    defaultTagName: "li",
     props: [
       otherLiProps,
       {
         className: "sui_file_upload_item",
       },
     ],
+    defaultTagName: "li",
   });
 
   return <FileUploadItemContext value={ctx}>{element}</FileUploadItemContext>;
@@ -974,7 +974,6 @@ export const FileUploadItemName: IComponent<FileUploadItemNameProps> =
     const { file } = useFileUploadItemContext();
 
     return useRender({
-      defaultTagName: "span",
       props: [
         props,
         {
@@ -982,6 +981,7 @@ export const FileUploadItemName: IComponent<FileUploadItemNameProps> =
           className: "sui_file_upload_item_name",
         },
       ],
+      defaultTagName: "span",
     });
   };
 
@@ -1024,7 +1024,6 @@ export const FileUploadItemSizeText: IComponent<FileUploadItemSizeTextProps> =
     const { file } = useFileUploadItemContext();
 
     return useRender({
-      defaultTagName: "span",
       props: [
         props,
         {
@@ -1032,6 +1031,7 @@ export const FileUploadItemSizeText: IComponent<FileUploadItemSizeTextProps> =
           className: "sui_file_upload_item_size_text",
         },
       ],
+      defaultTagName: "span",
     });
   };
 
@@ -1083,18 +1083,18 @@ export const FileUploadItemDeleteTrigger: IComponent<FileUploadItemDeleteTrigger
       ctx === null ? (disabledProp ?? false) : ctx.disabled || (disabledProp ?? false);
 
     return useRender({
-      defaultTagName: "button",
       props: [
         otherButtonProps,
         {
-          disabled,
           type: "button",
           onClick() {
             ctx?.remove(file);
           },
+          disabled,
           className: "sui_file_upload_item_delete_trigger",
         },
       ],
+      defaultTagName: "button",
     });
   };
 

@@ -455,7 +455,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
 
   return {
     getItemProps(item) {
-      const { label, items: _, type: __, ...otherItemProps } = item as ContextMenuActionItemObject;
+      const { type: __, items: _, label, ...otherItemProps } = item as ContextMenuActionItemObject;
 
       return {
         ...mergePropsN([itemProps, otherItemProps]),
@@ -482,7 +482,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
       };
     },
     getGroupProps(item) {
-      const { items: _, label: __, type: ___, ...otherGroupProps } = item;
+      const { type: ___, items: _, label: __, ...otherGroupProps } = item;
 
       return mergePropsN([groupProps, otherGroupProps]);
     },
@@ -513,7 +513,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
       return null;
     },
     getLinkItemProps(item) {
-      const { label, type: _, ...otherItemProps } = item;
+      const { type: _, label, ...otherItemProps } = item;
 
       return {
         ...mergePropsN([linkItemProps, otherItemProps]),
@@ -521,7 +521,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
       };
     },
     getRadioItemProps(item) {
-      const { label, type: _, value, ...otherItemProps } = item;
+      const { type: _, label, value, ...otherItemProps } = item;
 
       return {
         ...mergePropsN([radioItemProps, otherItemProps]),
@@ -548,7 +548,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
       return positionerProps;
     },
     getRadioGroupProps(item) {
-      const { items: _, type: __, ...otherGroupProps } = item;
+      const { type: __, items: _, ...otherGroupProps } = item;
 
       return mergePropsN([radioGroupProps, otherGroupProps]);
     },
@@ -556,7 +556,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
       return submenuRootProps;
     },
     getCheckboxItemProps(item) {
-      const { label, type: _, ...otherItemProps } = item;
+      const { type: _, label, ...otherItemProps } = item;
 
       return {
         ...mergePropsN([checkboxItemProps, otherItemProps]),
@@ -564,7 +564,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
       };
     },
     getSubmenuTriggerProps(item) {
-      const { label, items: _, type: __, ...otherItemProps } = item as ContextMenuActionItemObject;
+      const { type: __, items: _, label, ...otherItemProps } = item as ContextMenuActionItemObject;
 
       return {
         ...mergePropsN([submenuTriggerProps, otherItemProps]),

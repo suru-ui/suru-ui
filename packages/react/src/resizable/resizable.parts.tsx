@@ -79,8 +79,8 @@ function normalizePanelSize(value: ResizablePanelSize | undefined): ResizablePan
 const RESIZABLE_HANDLE_HIT_SIZE = 16;
 
 const DEFAULT_RESIZE_TARGET_MINIMUM_SIZE = {
-  coarse: 20,
   fine: RESIZABLE_HANDLE_HIT_SIZE,
+  coarse: 20,
 };
 
 // Root
@@ -156,12 +156,12 @@ export const ResizableRoot: IComponent<ResizableRootProps> = function SuiResizab
   } = props;
   const direction = directionProp ?? orientationProp ?? "horizontal";
   const resizeTargetMinimumSize = {
-    coarse:
-      resizeTargetMinimumSizeProp?.coarse ??
-      Math.max(DEFAULT_RESIZE_TARGET_MINIMUM_SIZE.coarse, RESIZABLE_HANDLE_HIT_SIZE),
     fine:
       resizeTargetMinimumSizeProp?.fine ??
       Math.max(DEFAULT_RESIZE_TARGET_MINIMUM_SIZE.fine, RESIZABLE_HANDLE_HIT_SIZE),
+    coarse:
+      resizeTargetMinimumSizeProp?.coarse ??
+      Math.max(DEFAULT_RESIZE_TARGET_MINIMUM_SIZE.coarse, RESIZABLE_HANDLE_HIT_SIZE),
   };
   const state: ResizableRootState = { direction };
 
@@ -170,8 +170,6 @@ export const ResizableRoot: IComponent<ResizableRootProps> = function SuiResizab
     onLayout?.(Object.values(layout));
   };
   const element = useRender({
-    defaultTagName: "div",
-    state,
     props: [
       otherDivProps,
       {
@@ -181,10 +179,12 @@ export const ResizableRoot: IComponent<ResizableRootProps> = function SuiResizab
         orientation: direction,
         onLayoutChange: handleLayoutChange,
         resizeTargetMinimumSize,
-        "data-direction": direction,
         "data-scope": dataScope,
+        "data-direction": direction,
       },
     ],
+    state,
+    defaultTagName: "div",
   });
 
   const ctx = React.useMemo<ResizableContext>(() => ({ direction }), [direction]);
@@ -329,8 +329,6 @@ export const ResizablePanel: IComponent<ResizablePanelProps> = function SuiResiz
     onSizeChange?.(nextSize.asPercentage);
   };
   const element = useRender({
-    defaultTagName: "div",
-    state,
     props: [
       otherDivProps,
       {
@@ -345,6 +343,8 @@ export const ResizablePanel: IComponent<ResizablePanelProps> = function SuiResiz
         "data-order": order === undefined ? undefined : String(order),
       },
     ],
+    state,
+    defaultTagName: "div",
   });
 
   return element;
@@ -418,11 +418,9 @@ export const ResizableHandle: IComponent<ResizableHandleProps> = function SuiRes
     withHandle = false,
     ...otherDivProps
   } = props;
-  const state: ResizableHandleState = { direction, disabled };
+  const state: ResizableHandleState = { disabled, direction };
 
   return useRender({
-    defaultTagName: "div",
-    state,
     props: [
       otherDivProps,
       {
@@ -437,10 +435,12 @@ export const ResizableHandle: IComponent<ResizableHandleProps> = function SuiRes
           "sui_resizable_handle",
           (state: ResizableHandleState) => state.disabled && "sui_resizable_handle-disabled",
         ),
-        "data-direction": direction,
         "aria-orientation": direction === "horizontal" ? "vertical" : "horizontal",
+        "data-direction": direction,
       },
     ],
+    state,
+    defaultTagName: "div",
   });
 };
 

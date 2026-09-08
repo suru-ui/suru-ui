@@ -70,7 +70,6 @@ export const ImageRoot: IComponent<ImageRootProps> = function SuiImageRoot(props
   } = props;
 
   return useRender({
-    defaultTagName: "img",
     props: [
       otherImgProps,
       {
@@ -82,6 +81,7 @@ export const ImageRoot: IComponent<ImageRootProps> = function SuiImageRoot(props
         "data-scope": dataScope,
       },
     ],
+    defaultTagName: "img",
   });
 };
 

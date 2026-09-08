@@ -219,9 +219,9 @@ export const HoverCardPortal: IComponent<HoverCardPortalProps> = function SuiHov
   props,
 ) {
   const {
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 

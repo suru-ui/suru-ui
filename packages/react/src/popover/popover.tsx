@@ -253,8 +253,8 @@ export const usePopoverAPI: IUsePopoverAPI = function useSuiPopoverAPI(props: Po
     getPositionerProps() {
       return {
         ...otherPositionerProps,
-        align,
         side,
+        align,
         sideOffset,
       };
     },

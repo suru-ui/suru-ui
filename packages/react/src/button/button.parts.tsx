@@ -332,14 +332,14 @@ export const ButtonContent: IComponent<ButtonContentProps> = function SuiButtonC
   const ctx = useButtonContext();
 
   return useRender({
-    defaultTagName: "span",
-    state: ctx,
     props: [
       props,
       {
         className: "sui_button_content",
       },
     ],
+    state: ctx,
+    defaultTagName: "span",
   });
 };
 
@@ -395,9 +395,6 @@ export const ButtonPending: IComponent<ButtonPendingProps> = function SuiButtonP
   const { overlay = false, keepMounted = false, ...otherSpanProps } = props;
 
   return useRender({
-    defaultTagName: "span",
-    enabled: ctx.pending || keepMounted,
-    state: ctx,
     props: [
       otherSpanProps,
       {
@@ -410,6 +407,9 @@ export const ButtonPending: IComponent<ButtonPendingProps> = function SuiButtonP
         ),
       },
     ],
+    state: ctx,
+    enabled: ctx.pending || keepMounted,
+    defaultTagName: "span",
   });
 };
 
@@ -475,8 +475,6 @@ export const ButtonCircularProgress: IComponent<ButtonCircularProgressProps> =
       [percentage, indeterminate],
     );
     const element = useRender({
-      defaultTagName: "svg",
-      state: ctx,
       props: [
         otherSvgProps,
         {
@@ -488,6 +486,8 @@ export const ButtonCircularProgress: IComponent<ButtonCircularProgressProps> =
           className: "sui_button_circular_progress",
         },
       ],
+      state: ctx,
+      defaultTagName: "svg",
     });
 
     return <ButtonCircularProgressContext value={ctx}>{element}</ButtonCircularProgressContext>;
@@ -541,8 +541,6 @@ export const ButtonCircularProgressTrack: IComponent<ButtonCircularProgressTrack
     const strokeWidthCss = typeof strokeWidth === "number" ? strokeWidth + "px" : strokeWidth;
 
     return useRender({
-      defaultTagName: "circle",
-      state: ctx,
       props: [
         otherCircleProps,
         {
@@ -554,6 +552,8 @@ export const ButtonCircularProgressTrack: IComponent<ButtonCircularProgressTrack
           strokeWidth: strokeWidthCss,
         },
       ],
+      state: ctx,
+      defaultTagName: "circle",
     });
   };
 
@@ -623,8 +623,6 @@ export const ButtonCircularProgressFill: IComponent<ButtonCircularProgressFillPr
     const strokeWidthCss = typeof strokeWidth === "number" ? strokeWidth + "px" : strokeWidth;
 
     return useRender({
-      defaultTagName: "circle",
-      state: ctx,
       props: [
         otherCircleProps,
         {
@@ -641,6 +639,8 @@ export const ButtonCircularProgressFill: IComponent<ButtonCircularProgressFillPr
             typeof strokeDashoffset === "function" ? strokeDashoffset(ctx) : strokeDashoffset,
         },
       ],
+      state: ctx,
+      defaultTagName: "circle",
     });
   };
 
@@ -693,8 +693,6 @@ export const ButtonCircularProgressFillRotation: IComponent<ButtonCircularProgre
     } = props;
 
     return useRender({
-      defaultTagName: "animateTransform",
-      enabled: ctx.indeterminate,
       props: [
         otherAnimateTransformProps,
         {
@@ -706,6 +704,8 @@ export const ButtonCircularProgressFillRotation: IComponent<ButtonCircularProgre
           attributeName,
         },
       ],
+      enabled: ctx.indeterminate,
+      defaultTagName: "animateTransform",
     });
   };
 

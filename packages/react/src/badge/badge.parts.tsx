@@ -144,14 +144,13 @@ export const BadgeRoot: IComponent<BadgeRootProps> = function SuiBadgeRoot(props
     children,
     outlined = false,
     position,
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherSpanProps
   } = props;
 
   return useRender({
-    defaultTagName: "span",
     props: [
       otherSpanProps,
       {
@@ -171,6 +170,7 @@ export const BadgeRoot: IComponent<BadgeRootProps> = function SuiBadgeRoot(props
         "data-scope": dataScope,
       },
     ],
+    defaultTagName: "span",
   });
 };
 

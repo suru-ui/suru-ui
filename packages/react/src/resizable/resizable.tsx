@@ -163,10 +163,10 @@ export const Resizable: ResizableType = /*#__PURE__*/ Object.assign(
     return <ResizableRoot {...api.getRootProps()} />;
   },
   {
+    Root: ResizableRoot,
     Panel: ResizablePanel,
     Handle: ResizableHandle,
     PanelGroup: ResizableRoot,
-    Root: ResizableRoot,
     useContext: useResizableContext,
   },
 );

@@ -263,9 +263,9 @@ export const AlertDialogPortal: IComponent<AlertDialogPortalProps> = function Su
   props,
 ) {
   const {
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 
@@ -513,7 +513,6 @@ export const AlertDialogControls: IComponent<AlertDialogControlsProps> =
     const { absolute = false, ...htmlProps } = props;
 
     return useRender({
-      defaultTagName: "div",
       props: [
         htmlProps,
         {
@@ -524,6 +523,7 @@ export const AlertDialogControls: IComponent<AlertDialogControlsProps> =
           ),
         },
       ],
+      defaultTagName: "div",
     });
   };
 
@@ -562,13 +562,13 @@ export const AlertDialogHeader: IComponent<AlertDialogHeaderProps> = function Su
   htmlProps,
 ) {
   return useRender({
-    defaultTagName: "div",
     props: [
       htmlProps,
       {
         className: "sui_alert_dialog_header",
       },
     ],
+    defaultTagName: "div",
   });
 };
 
@@ -693,7 +693,6 @@ export const AlertDialogIcon: IComponent<AlertDialogIconProps> = function SuiAle
   } = props;
 
   return useRender({
-    defaultTagName: "div",
     props: [
       otherHtmlProps,
       {
@@ -708,6 +707,7 @@ export const AlertDialogIcon: IComponent<AlertDialogIconProps> = function SuiAle
         ),
       },
     ],
+    defaultTagName: "div",
   });
 };
 
@@ -846,13 +846,13 @@ export const AlertDialogBody: IComponent<AlertDialogBodyProps> = function SuiAle
   props,
 ) {
   return useRender({
-    defaultTagName: "div",
     props: [
       props,
       {
         className: "sui_alert_dialog_body",
       },
     ],
+    defaultTagName: "div",
   });
 };
 
@@ -891,13 +891,13 @@ export const AlertDialogFooter: IComponent<AlertDialogFooterProps> = function Su
   props,
 ) {
   return useRender({
-    defaultTagName: "div",
     props: [
       props,
       {
         className: "sui_alert_dialog_footer",
       },
     ],
+    defaultTagName: "div",
   });
 };
 

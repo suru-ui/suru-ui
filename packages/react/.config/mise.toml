@@ -27,6 +27,7 @@ run = { task = "format:oxfmt", args = ["--check"] }
 [tasks."test:format:extra"]
 run = [
   "node ./scripts/sort-jsx-props.ts --check",
+  "node ./scripts/sort-object-props.ts --check",
   "node ./scripts/sort-type-props.ts --check",
   "node ./scripts/sort-import-exports.ts --check",
   "node ./scripts/sort-namespace-exports.ts --check",
@@ -59,6 +60,7 @@ run = "set -e; cp ./.config/.oxfmtrc.json ./.tmp-oxfmtrc.json; trap 'rm -f ./.tm
 [tasks."format:extra"]
 run = [
   "node ./scripts/sort-jsx-props.ts",
+  "node ./scripts/sort-object-props.ts",
   "node ./scripts/sort-type-props.ts",
   "node ./scripts/sort-import-exports.ts",
   "node ./scripts/sort-namespace-exports.ts",

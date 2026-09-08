@@ -77,14 +77,13 @@ export const AspectRatioRoot: IComponent<AspectRatioRootProps> = function SuiAsp
   const {
     ratio = 1,
     radius = "none",
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherDivProps
   } = props;
 
   return useRender({
-    defaultTagName: "div",
     props: [
       otherDivProps,
       {
@@ -95,6 +94,7 @@ export const AspectRatioRoot: IComponent<AspectRatioRootProps> = function SuiAsp
         "data-scope": dataScope,
       },
     ],
+    defaultTagName: "div",
   });
 };
 

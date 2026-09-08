@@ -109,10 +109,10 @@ export const MenubarRoot: IMenubarRoot = function SuiMenubarRoot(props: MenubarR
     items = [],
     children = defaultRootItemRenderer,
     disabled = false,
+    className,
     orientation = "horizontal",
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 
@@ -139,7 +139,7 @@ const defaultRootItemRenderer: IMenubarRootItemRenderer = (item, index) => {
     return toReactNode(item);
   }
 
-  const { label, children: popupChildren, trigger, ...otherMenuProps } = item;
+  const { label, trigger, children: popupChildren, ...otherMenuProps } = item;
 
   return (
     <Menu

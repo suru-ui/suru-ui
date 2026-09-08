@@ -100,14 +100,13 @@ export const ChipRoot: IComponent<ChipRootProps> = function SuiChipRoot(props) {
     radius = "full",
     variant = "liquid",
     outlined = false,
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherSpanProps
   } = props;
 
   return useRender({
-    defaultTagName: "span",
     props: [
       otherSpanProps,
       {
@@ -123,6 +122,7 @@ export const ChipRoot: IComponent<ChipRootProps> = function SuiChipRoot(props) {
         "data-scope": dataScope,
       },
     ],
+    defaultTagName: "span",
   });
 };
 

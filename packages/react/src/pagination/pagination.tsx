@@ -371,12 +371,12 @@ function getPaginationItems(
 
   for (const current of sorted) {
     if (current - previous > 2) {
-      items.push({ type: "ellipsis", start: previous + 1, end: current - 1 });
+      items.push({ end: current - 1, type: "ellipsis", start: previous + 1 });
     } else if (current - previous === 2) {
-      items.push({ type: "item", page: previous + 1 });
+      items.push({ page: previous + 1, type: "item" });
     }
 
-    items.push({ type: "item", page: current });
+    items.push({ page: current, type: "item" });
     previous = current;
   }
 

@@ -230,11 +230,9 @@ interface IUseNumberFieldAPI {
 export const useNumberFieldAPI: IUseNumberFieldAPI = function useSuiNumberFieldAPI(props) {
   const {
     decrement,
-    increment,
     endAddons = [],
-    placeholder,
+    increment,
     scrubArea,
-    startAddons = [],
     slotProps: {
       addon: addonProps = {},
       group: groupProps = {},
@@ -244,6 +242,8 @@ export const useNumberFieldAPI: IUseNumberFieldAPI = function useSuiNumberFieldA
       scrubArea: scrubAreaProps = {},
       scrubAreaCursor: scrubAreaCursorProps = {},
     } = {},
+    placeholder,
+    startAddons = [],
     ...otherRootProps
   } = props;
   const showDecrement =

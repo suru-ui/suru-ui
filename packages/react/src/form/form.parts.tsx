@@ -69,9 +69,9 @@ interface IFormRoot extends IComponent<FormRootProps> {
  */
 export const FormRoot: IFormRoot = function SuiFormRoot(props: FormRootProps) {
   const {
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 

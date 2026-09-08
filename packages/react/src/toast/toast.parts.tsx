@@ -60,9 +60,9 @@ export type ToastPortalProps = React.ComponentProps<typeof Toast.Portal>;
  */
 export const ToastPortal: IComponent<ToastPortalProps> = function SuiToastPortal(props) {
   const {
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 

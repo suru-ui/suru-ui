@@ -24,9 +24,9 @@ export type ScrollAreaRootProps = React.ComponentProps<typeof BaseScrollArea.Roo
  */
 export const ScrollAreaRoot: IComponent<ScrollAreaRootProps> = function SuiScrollAreaRoot(props) {
   const {
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
   return (
@@ -158,7 +158,7 @@ export type ScrollAreaScrollbarProps = React.ComponentProps<typeof BaseScrollAre
  */
 export const ScrollAreaScrollbar: IComponent<ScrollAreaScrollbarProps> =
   function SuiScrollAreaScrollbar(props) {
-    const { orientation = "vertical", className, ...otherProps } = props;
+    const { className, orientation = "vertical", ...otherProps } = props;
     return (
       <BaseScrollArea.Scrollbar
         {...otherProps}

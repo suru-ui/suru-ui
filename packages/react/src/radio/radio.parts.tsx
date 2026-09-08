@@ -111,9 +111,9 @@ export const RadioRoot: IComponent<RadioRootProps> = function SuiRadioRoot(props
     variant: variantProp = "naked",
     disabled: disabledProp,
     outlined: outlinedProp = false,
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
   const size = group?.size ?? sizeProp;
