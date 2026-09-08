@@ -70,7 +70,20 @@ export type TextFieldSlotProps = {
   /**
    * {@link TextFieldInput} に渡す props です。
    */
-  readonly input?: TextFieldInputProps | undefined;
+  readonly input?:
+    | Omit<
+        TextFieldInputProps,
+        | "defaultValue"
+        | "disabled"
+        | "name"
+        | "onValueChange"
+        | "placeholder"
+        | "readOnly"
+        | "required"
+        | "type"
+        | "value"
+      >
+    | undefined;
 };
 
 /**
@@ -162,11 +175,11 @@ export const useTextFieldAPI: IUseTextFieldAPI = function useSuiTextFieldAPI(pro
     readOnly,
     required,
     endAddons = [],
-    startAddons = [],
+    slotProps: { addon: addonProps = {}, input: inputProps = {} } = {},
     placeholder,
+    startAddons = [],
     defaultValue,
     onValueChange,
-    slotProps: { addon: addonProps = {}, input: inputProps = {} } = {},
     ...otherRootProps
   } = props;
 

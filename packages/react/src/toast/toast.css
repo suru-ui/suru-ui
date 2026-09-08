@@ -147,20 +147,21 @@
 
 /* 変異 */
 :scope {
-  .sui_toast:is([data-starting-style], [data-ending-style]) {
+  .sui_toast-transition_status_starting,
+  .sui_toast-transition_status_ending {
     --_sui_toast-opacity: 0;
     --_sui_toast-scale: 0.98;
   }
 
-  .sui_toast[data-type="success"] {
+  .sui_toast-type_success {
     --_sui_toast-border_color: var(--sui-green-naked-border-normal);
   }
 
-  .sui_toast[data-type="error"] {
+  .sui_toast-type_error {
     --_sui_toast-border_color: var(--sui-red-naked-border-normal);
   }
 
-  .sui_toast[data-type="info"] {
+  .sui_toast-type_info {
     --_sui_toast-border_color: var(--sui-blue-naked-border-normal);
   }
 

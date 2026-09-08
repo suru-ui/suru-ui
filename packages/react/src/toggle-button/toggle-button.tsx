@@ -10,6 +10,8 @@ import {
   type ToggleButtonContentProps,
   type ToggleButtonPendingProps,
   type ToggleButtonCircularProgressProps,
+  type ToggleButtonRootChangeEventReason,
+  type ToggleButtonRootChangeEventDetails,
   type ToggleButtonCircularProgressFillProps,
   type ToggleButtonCircularProgressTrackProps,
   type ToggleButtonCircularProgressFillRotationProps,
@@ -25,6 +27,16 @@ import {
 
 // Types
 // -----
+
+/**
+ * {@link ToggleButtonRootChangeEventDetails}
+ */
+export type ToggleButtonChangeEventDetails = ToggleButtonRootChangeEventDetails;
+
+/**
+ * {@link ToggleButtonRootChangeEventReason}
+ */
+export type ToggleButtonChangeEventReason = ToggleButtonRootChangeEventReason;
 
 /**
  * {@link ToggleButtonRootColor}
@@ -273,6 +285,16 @@ export namespace ToggleButton {
    * {@link ToggleButtonContext}
    */
   export type Context = ToggleButtonContext;
+
+  /**
+   * {@link ToggleButtonChangeEventDetails}
+   */
+  export type ChangeEventDetails = ToggleButtonChangeEventDetails;
+
+  /**
+   * {@link ToggleButtonChangeEventReason}
+   */
+  export type ChangeEventReason = ToggleButtonChangeEventReason;
 
   /**
    * {@link ToggleButtonColor}

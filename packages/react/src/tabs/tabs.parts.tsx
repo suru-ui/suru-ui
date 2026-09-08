@@ -11,6 +11,24 @@ import "./tabs.css";
 // ----
 
 /**
+ * Tabs のアクティブなタブが変更されるイベントの詳細です。
+ */
+export type TabsRootChangeEventDetails = BaseTabs.Root.ChangeEventDetails;
+
+/**
+ * Tabs のアクティブなタブを変更する理由です。
+ */
+export type TabsRootChangeEventReason = BaseTabs.Root.ChangeEventReason;
+
+/**
+ * Tabs の方向です。
+ *
+ * - `"horizontal"`: 水平方向
+ * - `"vertical"`: 垂直方向
+ */
+export type TabsRootOrientation = BaseTabs.Root.Orientation;
+
+/**
  * Tabs の角丸です。
  *
  * - `"none"`: 直角
@@ -78,6 +96,7 @@ export const TabsRoot: IComponent<TabsRootProps> = function SuiTabsRoot(props) {
         `sui_tabs-size_${size}`,
         `sui_tabs-radius_${radius}`,
         outlined && "sui_tabs-outlined",
+        (state) => `sui_tabs-orientation_${state.orientation}`,
       )}
       data-scope=""
     />
@@ -99,6 +118,21 @@ export namespace Root {
    * {@link TabsRootProps}
    */
   export type Props = TabsRootProps;
+
+  /**
+   * {@link TabsRootChangeEventDetails}
+   */
+  export type ChangeEventDetails = TabsRootChangeEventDetails;
+
+  /**
+   * {@link TabsRootChangeEventReason}
+   */
+  export type ChangeEventReason = TabsRootChangeEventReason;
+
+  /**
+   * {@link TabsRootOrientation}
+   */
+  export type Orientation = TabsRootOrientation;
 
   /**
    * {@link TabsRootRadius}
@@ -162,6 +196,37 @@ export namespace List {
 // ---
 
 /**
+ * タブをアクティブ化する方向です。
+ *
+ * - `"left"`: 左方向
+ * - `"right"`: 右方向
+ * - `"up"`: 上方向
+ * - `"down"`: 下方向
+ * - `"none"`: 方向なし
+ */
+export type TabsTabActivationDirection = BaseTabs.Tab.ActivationDirection;
+
+/**
+ * Tabs のタブのメタデータです。
+ */
+export type TabsTabMetadata = BaseTabs.Tab.Metadata;
+
+/**
+ * アクティブなタブの位置です。
+ */
+export type TabsTabPosition = BaseTabs.Tab.Position;
+
+/**
+ * アクティブなタブの大きさです。
+ */
+export type TabsTabSize = BaseTabs.Tab.Size;
+
+/**
+ * Tabs のタブの値です。
+ */
+export type TabsTabValue = BaseTabs.Tab.Value;
+
+/**
  * {@link TabsTab} が持つ状態です。
  */
 export type TabsTabState = BaseTabs.Tab.State;
@@ -177,7 +242,17 @@ export type TabsTabProps = React.ComponentProps<typeof BaseTabs.Tab>;
 export const TabsTab: IComponent<TabsTabProps> = function SuiTabsTab(props) {
   const { className, ...otherProps } = props;
 
-  return <BaseTabs.Tab {...otherProps} className={cn(className, "sui_tabs_tab")} />;
+  return (
+    <BaseTabs.Tab
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_tabs_tab",
+        (state) => state.active && "sui_tabs_tab-active",
+        (state) => state.disabled && "sui_tabs_tab-disabled",
+      )}
+    />
+  );
 };
 
 export { TabsTab as Tab };
@@ -195,6 +270,31 @@ export namespace Tab {
    * {@link TabsTabProps}
    */
   export type Props = TabsTabProps;
+
+  /**
+   * {@link TabsTabActivationDirection}
+   */
+  export type ActivationDirection = TabsTabActivationDirection;
+
+  /**
+   * {@link TabsTabMetadata}
+   */
+  export type Metadata = TabsTabMetadata;
+
+  /**
+   * {@link TabsTabPosition}
+   */
+  export type Position = TabsTabPosition;
+
+  /**
+   * {@link TabsTabSize}
+   */
+  export type Size = TabsTabSize;
+
+  /**
+   * {@link TabsTabValue}
+   */
+  export type Value = TabsTabValue;
 }
 
 // Indicator
@@ -242,6 +342,11 @@ export namespace Indicator {
 // -----
 
 /**
+ * Tabs のパネルのメタデータです。
+ */
+export type TabsPanelMetadata = BaseTabs.Panel.Metadata;
+
+/**
  * {@link TabsPanel} が持つ状態です。
  */
 export type TabsPanelState = BaseTabs.Panel.State;
@@ -275,4 +380,9 @@ export namespace Panel {
    * {@link TabsPanelProps}
    */
   export type Props = TabsPanelProps;
+
+  /**
+   * {@link TabsPanelMetadata}
+   */
+  export type Metadata = TabsPanelMetadata;
 }

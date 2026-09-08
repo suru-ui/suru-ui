@@ -101,7 +101,8 @@
 
 /* 変異 */
 :scope {
-  .sui_tooltip_popup:is([data-starting-style], [data-ending-style]) {
+  .sui_tooltip_popup-transition_status_starting,
+  .sui_tooltip_popup-transition_status_ending {
     --_sui_tooltip_popup-opacity: 0;
     --_sui_tooltip_popup-scale: 0.98;
   }
@@ -124,21 +125,21 @@
     overflow: clip;
   }
 
-  .sui_tooltip_arrow[data-side="top"] {
+  .sui_tooltip_arrow-side_top {
     bottom: -6px;
     rotate: 180deg;
   }
 
-  .sui_tooltip_arrow[data-side="bottom"] {
+  .sui_tooltip_arrow-side_bottom {
     top: -6px;
   }
 
-  .sui_tooltip_arrow[data-side="left"] {
+  .sui_tooltip_arrow-side_left {
     right: -9px;
     rotate: 90deg;
   }
 
-  .sui_tooltip_arrow[data-side="right"] {
+  .sui_tooltip_arrow-side_right {
     left: -9px;
     rotate: -90deg;
   }

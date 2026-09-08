@@ -49,8 +49,43 @@ export const useToggleButtonContext: IUseContext<ToggleButtonContext> = useButto
 
 export { ToggleButtonContext as Context, useToggleButtonContext as useContext };
 
+// CircularProgressContext
+// -----------------------
+
+/**
+ * {@link ButtonCircularProgressContext}
+ */
+export type ToggleButtonCircularProgressContext = ButtonCircularProgressContext;
+
+/**
+ * {@link ButtonCircularProgressContext}
+ */
+export const ToggleButtonCircularProgressContext: React.Context<ToggleButtonCircularProgressContext | null> =
+  ButtonCircularProgressContext;
+
+/**
+ * {@link useButtonCircularProgressContext}
+ */
+export const useToggleButtonCircularProgressContext: IUseContext<ToggleButtonCircularProgressContext> =
+  useButtonCircularProgressContext;
+
+export {
+  ToggleButtonCircularProgressContext as CircularProgressContext,
+  useToggleButtonCircularProgressContext as useCircularProgressContext,
+};
+
 // Root
 // ----
+
+/**
+ * トグルボタンの押下状態が変更されたイベントの詳細です。
+ */
+export type ToggleButtonRootChangeEventDetails = Toggle.ChangeEventDetails;
+
+/**
+ * トグルボタンの押下状態が変更された理由です。
+ */
+export type ToggleButtonRootChangeEventReason = Toggle.ChangeEventReason;
 
 /**
  * トグルボタンの配色です。
@@ -213,6 +248,16 @@ export namespace Root {
   export type Props = ToggleButtonRootProps;
 
   /**
+   * {@link ToggleButtonRootChangeEventDetails}
+   */
+  export type ChangeEventDetails = ToggleButtonRootChangeEventDetails;
+
+  /**
+   * {@link ToggleButtonRootChangeEventReason}
+   */
+  export type ChangeEventReason = ToggleButtonRootChangeEventReason;
+
+  /**
    * {@link ToggleButtonRootColor}
    */
   export type Color = ToggleButtonRootColor;
@@ -304,31 +349,6 @@ export namespace Pending {
    */
   export type Props = ToggleButtonPendingProps;
 }
-
-// CircularProgressContext
-// -----------------------
-
-/**
- * {@link ButtonCircularProgressContext}
- */
-export type ToggleButtonCircularProgressContext = ButtonCircularProgressContext;
-
-/**
- * {@link ButtonCircularProgressContext}
- */
-export const ToggleButtonCircularProgressContext: React.Context<ToggleButtonCircularProgressContext | null> =
-  ButtonCircularProgressContext;
-
-/**
- * {@link useButtonCircularProgressContext}
- */
-export const useToggleButtonCircularProgressContext: IUseContext<ToggleButtonCircularProgressContext> =
-  useButtonCircularProgressContext;
-
-export {
-  ToggleButtonCircularProgressContext as CircularProgressContext,
-  useToggleButtonCircularProgressContext as useCircularProgressContext,
-};
 
 // CircularProgress
 // ----------------

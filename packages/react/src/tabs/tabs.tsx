@@ -5,12 +5,16 @@ import type { IComponent } from "../types.js";
 import {
   type TabsRootSize,
   type TabsTabProps,
+  type TabsTabValue,
   type TabsListProps,
   type TabsRootProps,
   type TabsRootState,
   type TabsPanelProps,
   type TabsRootRadius,
   type TabsIndicatorProps,
+  type TabsRootOrientation,
+  type TabsRootChangeEventReason,
+  type TabsRootChangeEventDetails,
   TabsTab,
   TabsList,
   TabsRoot,
@@ -30,6 +34,26 @@ export type TabsRadius = TabsRootRadius;
  * {@link TabsRootSize}
  */
 export type TabsSize = TabsRootSize;
+
+/**
+ * {@link TabsRootOrientation}
+ */
+export type TabsOrientation = TabsRootOrientation;
+
+/**
+ * {@link TabsTabValue}
+ */
+export type TabsValue = TabsTabValue;
+
+/**
+ * {@link TabsRootChangeEventDetails}
+ */
+export type TabsChangeEventDetails = TabsRootChangeEventDetails;
+
+/**
+ * {@link TabsRootChangeEventReason}
+ */
+export type TabsChangeEventReason = TabsRootChangeEventReason;
 
 /**
  * {@link Tabs} が持つ状態です。
@@ -267,6 +291,16 @@ export namespace Tabs {
   export type SlotProps = TabsSlotProps;
 
   /**
+   * {@link TabsChangeEventDetails}
+   */
+  export type ChangeEventDetails = TabsChangeEventDetails;
+
+  /**
+   * {@link TabsChangeEventReason}
+   */
+  export type ChangeEventReason = TabsChangeEventReason;
+
+  /**
    * {@link TabsItem}
    */
   export type Item = TabsItem;
@@ -277,6 +311,11 @@ export namespace Tabs {
   export type ItemObject = TabsItemObject;
 
   /**
+   * {@link TabsOrientation}
+   */
+  export type Orientation = TabsOrientation;
+
+  /**
    * {@link TabsRadius}
    */
   export type Radius = TabsRadius;
@@ -285,4 +324,9 @@ export namespace Tabs {
    * {@link TabsSize}
    */
   export type Size = TabsSize;
+
+  /**
+   * {@link TabsValue}
+   */
+  export type Value = TabsValue;
 }

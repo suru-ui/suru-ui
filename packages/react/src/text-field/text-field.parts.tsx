@@ -205,10 +205,10 @@ export const TextFieldRoot: IComponent<TextFieldRootProps> = function SuiTextFie
     size = "md",
     color = "grey",
     radius = size,
+    onClick,
     variant = "liquid",
     outlined = false,
     className,
-    onClick,
     ...otherDivProps
   } = props;
   const handleClick: NonNullable<TextFieldRootProps["onClick"]> = (evt) => {
@@ -372,6 +372,11 @@ export namespace Input {
    * {@link TextFieldInputChangeEventReason}
    */
   export type ChangeEventReason = TextFieldInputChangeEventReason;
+
+  /**
+   * {@link TextFieldInputType}
+   */
+  export type Type = TextFieldInputType;
 }
 
 // Addon

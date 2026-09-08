@@ -166,7 +166,19 @@ export const ToastRoot: ToastRootComponent = function SuiToastRoot<TData extends
 ) {
   const { className, ...otherProps } = props;
 
-  return <Toast.Root {...otherProps} className={cn(className, "sui_toast")} />;
+  return (
+    <Toast.Root
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_toast",
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_toast-transition_status_${state.transitionStatus}`,
+        (state) => state.type !== undefined && `sui_toast-type_${state.type}`,
+      )}
+    />
+  );
 };
 
 export { ToastRoot as Root };
