@@ -103,8 +103,10 @@ export type TabsSlotProps = {
 
   /**
    * {@link TabsList} に渡す props です。
+   *
+   * `children` は上書きされます。
    */
-  readonly list?: TabsListProps | undefined;
+  readonly list?: Omit<TabsListProps, "children"> | undefined;
 
   /**
    * {@link TabsPanel} に渡す props です。
@@ -155,7 +157,7 @@ export interface TabsAPI {
   /**
    * {@link TabsList} に渡す props を取得します。
    */
-  getListProps(): TabsListProps | null;
+  getListProps(): Omit<TabsListProps, "children"> | null;
 
   /**
    * 各 {@link TabsPanel} に渡す props の一覧を取得します。
@@ -219,6 +221,9 @@ export const useTabsAPI: IUseTabsAPI = function useSuiTabsAPI(props) {
         })) ?? []
       );
     },
+    getIndicatorProps() {
+      return indicatorProps;
+    },
     getPanelPropsList() {
       return (
         items?.map((item) => ({
@@ -227,9 +232,6 @@ export const useTabsAPI: IUseTabsAPI = function useSuiTabsAPI(props) {
           children: toReactNode(item.content),
         })) ?? []
       );
-    },
-    getIndicatorProps() {
-      return indicatorProps;
     },
   };
 };

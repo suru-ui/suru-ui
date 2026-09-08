@@ -24,6 +24,16 @@ import {
 // -----
 
 /**
+ * {@link TextFieldInputChangeEventDetails}
+ */
+export type TextFieldChangeEventDetails = TextFieldInputChangeEventDetails;
+
+/**
+ * {@link TextFieldInputChangeEventReason}
+ */
+export type TextFieldChangeEventReason = TextFieldInputChangeEventReason;
+
+/**
  * {@link TextFieldRootColor}
  */
 export type TextFieldColor = TextFieldRootColor;
@@ -39,24 +49,14 @@ export type TextFieldRadius = TextFieldRootRadius;
 export type TextFieldSize = TextFieldRootSize;
 
 /**
- * {@link TextFieldRootVariant}
- */
-export type TextFieldVariant = TextFieldRootVariant;
-
-/**
  * {@link TextFieldInputType}
  */
 export type TextFieldType = TextFieldInputType;
 
 /**
- * {@link TextFieldInputChangeEventReason}
+ * {@link TextFieldRootVariant}
  */
-export type TextFieldChangeEventReason = TextFieldInputChangeEventReason;
-
-/**
- * {@link TextFieldInputChangeEventDetails}
- */
-export type TextFieldChangeEventDetails = TextFieldInputChangeEventDetails;
+export type TextFieldVariant = TextFieldRootVariant;
 
 /**
  * {@link TextField} の各パーツに渡す props です。
