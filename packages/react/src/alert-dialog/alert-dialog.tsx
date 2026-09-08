@@ -3,7 +3,7 @@ import * as React from "react";
 import { XIcon } from "../_icons.jsx";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import * as Button from "../button/button.parts.jsx";
-import type { IComponent } from "../types.js";
+import type { IComponent, IUseContext } from "../types.js";
 import {
   type AlertDialogHandle,
   type AlertDialogBodyProps,
@@ -20,6 +20,7 @@ import {
   type AlertDialogContentRadius,
   type AlertDialogControlsProps,
   type AlertDialogViewportProps,
+  type AlertDialogContentContext,
   type AlertDialogContentVariant,
   type AlertDialogDescriptionProps,
   type AlertDialogCloseTriggerProps,
@@ -41,6 +42,7 @@ import {
   AlertDialogCloseTrigger,
   createAlertDialogHandle,
   AlertDialogToggleTrigger,
+  useAlertDialogContentContext,
 } from "./alert-dialog.parts.jsx";
 
 // Types
@@ -250,6 +252,18 @@ export type AlertDialogProps<TPayload = any> = AlertDialogPropsMain<TPayload> &
 
 // API
 // ---
+
+function CancelIconButton() {
+  const ctx = useAlertDialogContentContext(true);
+
+  return (
+    <AlertDialogCloseTrigger>
+      <Button.Root radius={ctx?.radius} squared variant="naked">
+        <XIcon />
+      </Button.Root>
+    </AlertDialogCloseTrigger>
+  );
+}
 
 /**
  * {@link AlertDialog} を構成する各パーツの props などを作成するための API です。
@@ -470,13 +484,7 @@ export const useAlertDialogAPI: IUseAlertDialogAPI = function useSuiAlertDialogA
           children: (
             <>
               {controls}
-              <AlertDialogCloseTrigger>
-                <Button.Root radius="full" squared variant="naked">
-                  <Button.Content>
-                    <XIcon />
-                  </Button.Content>
-                </Button.Root>
-              </AlertDialogCloseTrigger>
+              <CancelIconButton />
             </>
           ),
         };
@@ -566,6 +574,11 @@ interface IAlertDialog extends IComponent<AlertDialogProps> {
    * {@link AlertDialogHandle} を作成する関数です。
    */
   readonly createHandle: typeof createAlertDialogHandle;
+
+  /**
+   * {@link useAlertDialogContentContext}
+   */
+  readonly useContentContext: IUseContext<AlertDialogContentContext>;
 }
 
 /**
@@ -619,7 +632,7 @@ export const AlertDialog: IAlertDialog = /*#__PURE__*/ Object.assign(
       </AlertDialogRoot>
     );
   },
-  { createHandle: createAlertDialogHandle },
+  { createHandle: createAlertDialogHandle, useContentContext: useAlertDialogContentContext },
 );
 
 export namespace AlertDialog {
@@ -652,6 +665,11 @@ export namespace AlertDialog {
    * {@link AlertDialogChangeEventReason}
    */
   export type ChangeEventReason = AlertDialogChangeEventReason;
+
+  /**
+   * {@link AlertDialogContentContext}
+   */
+  export type ContentContext = AlertDialogContentContext;
 
   /**
    * {@link AlertDialogRadius}

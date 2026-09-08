@@ -3,7 +3,7 @@ import * as React from "react";
 import { XIcon } from "../_icons.jsx";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import * as Button from "../button/button.parts.jsx";
-import type { IComponent } from "../types.js";
+import type { IComponent, IUseContext } from "../types.js";
 import {
   type DialogHandle,
   type DialogBodyProps,
@@ -19,6 +19,7 @@ import {
   type DialogContentRadius,
   type DialogControlsProps,
   type DialogViewportProps,
+  type DialogContentContext,
   type DialogContentVariant,
   type DialogDescriptionProps,
   type DialogCloseTriggerProps,
@@ -39,6 +40,7 @@ import {
   DialogCloseTrigger,
   createDialogHandle,
   DialogToggleTrigger,
+  useDialogContentContext,
 } from "./dialog.parts.jsx";
 
 // Types
@@ -218,6 +220,20 @@ export type DialogProps<TPayload = any> = DialogPropsMain<TPayload> &
 
 // API
 // ---
+
+function CloseIconButton() {
+  const ctx = useDialogContentContext(true);
+
+  return (
+    <DialogCloseTrigger>
+      <Button.Root radius={ctx?.radius} squared variant="naked">
+        <Button.Content>
+          <XIcon />
+        </Button.Content>
+      </Button.Root>
+    </DialogCloseTrigger>
+  );
+}
 
 /**
  * {@link Dialog} を構成する各パーツの props などを作成するための API です。
@@ -417,13 +433,7 @@ export const useDialogAPI: IUseDialogAPI = function useSuiDialogAPI(props) {
           children: (
             <>
               {controls}
-              <DialogCloseTrigger>
-                <Button.Root radius="full" squared variant="naked">
-                  <Button.Content>
-                    <XIcon />
-                  </Button.Content>
-                </Button.Root>
-              </DialogCloseTrigger>
+              <CloseIconButton />
             </>
           ),
         };
@@ -493,6 +503,11 @@ interface IDialog extends IComponent<DialogProps> {
    * {@link DialogHandle} を作成する関数です。
    */
   readonly createHandle: typeof createDialogHandle;
+
+  /**
+   * {@link useDialogContentContext}
+   */
+  readonly useContentContext: IUseContext<DialogContentContext>;
 }
 
 /**
@@ -539,9 +554,7 @@ export const Dialog: IDialog = /*#__PURE__*/ Object.assign(
       </DialogRoot>
     );
   },
-  {
-    createHandle: createDialogHandle,
-  },
+  { createHandle: createDialogHandle, useContentContext: useDialogContentContext },
 );
 
 export namespace Dialog {
@@ -574,6 +587,11 @@ export namespace Dialog {
    * {@link DialogChangeEventReason}
    */
   export type ChangeEventReason = DialogChangeEventReason;
+
+  /**
+   * {@link DialogContentContext}
+   */
+  export type ContentContext = DialogContentContext;
 
   /**
    * {@link DialogRadius}

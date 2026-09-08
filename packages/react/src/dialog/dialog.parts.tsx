@@ -4,9 +4,68 @@ import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import { ContextMissingError } from "../errors.js";
+import type { IComponent, IUseContext } from "../types.js";
 
 import "./dialog.css";
+
+// Context
+// -------
+
+/**
+ * ダイアログの角丸の大きさです。
+ *
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ */
+export type DialogContentContextRadius = "none" | Size;
+
+/**
+ * {@link DialogContent} が子パーツへ提供するコンテキストです。
+ */
+export type DialogContentContext = {
+  /**
+   * ダイアログの角丸の大きさです。
+   */
+  readonly radius: DialogContentContextRadius;
+};
+
+/**
+ * {@link DialogContent} が子パーツへ提供するコンテキストです。
+ */
+export const DialogContentContext: React.Context<DialogContentContext | null> =
+  React.createContext<DialogContentContext | null>(null);
+
+function useSuiDialogContentContext(optional?: false): DialogContentContext;
+function useSuiDialogContentContext(optional?: boolean): DialogContentContext | null;
+function useSuiDialogContentContext(optional?: boolean): DialogContentContext | null {
+  const ctx = React.use(DialogContentContext);
+  if (ctx === null && !optional) {
+    throw new ContextMissingError({
+      contextName: "DialogContentContext",
+      providerName: "DialogContent",
+    });
+  }
+
+  return ctx;
+}
+
+/**
+ * {@link DialogContentContext} を読み取るフックです。
+ */
+export const useDialogContentContext: IUseContext<DialogContentContext> =
+  useSuiDialogContentContext;
+
+export { DialogContentContext as ContentContext, useDialogContentContext as useContentContext };
+
+export namespace ContentContext {
+  /**
+   * {@link DialogContentContextRadius}
+   */
+  export type Radius = DialogContentContextRadius;
+}
 
 // Handle
 // ------
@@ -348,18 +407,21 @@ export type DialogContentProps = React.ComponentProps<typeof Dialog.Popup> & {
  */
 export const DialogContent: IComponent<DialogContentProps> = function SuiDialogContent(props) {
   const { radius = "md", variant = "default", outlined = false, className, ...otherProps } = props;
+  const ctx = React.useMemo<DialogContentContext>(() => ({ radius }), [radius]);
 
   return (
-    <Dialog.Popup
-      {...otherProps}
-      className={cn(
-        className,
-        "sui_dialog_content",
-        `sui_dialog_content-radius_${radius}`,
-        `sui_dialog_content-variant_${variant}`,
-        outlined && "sui_dialog_content-outlined",
-      )}
-    />
+    <DialogContentContext value={ctx}>
+      <Dialog.Popup
+        {...otherProps}
+        className={cn(
+          className,
+          "sui_dialog_content",
+          `sui_dialog_content-radius_${radius}`,
+          `sui_dialog_content-variant_${variant}`,
+          outlined && "sui_dialog_content-outlined",
+        )}
+      />
+    </DialogContentContext>
   );
 };
 

@@ -4,9 +4,71 @@ import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import { ContextMissingError } from "../errors.js";
+import type { IComponent, IUseContext } from "../types.js";
 
 import "./alert-dialog.css";
+
+// Context
+// -------
+
+/**
+ * アラートダイアログの角丸の大きさです。
+ *
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ */
+export type AlertDialogContentContextRadius = "none" | Size;
+
+/**
+ * {@link AlertDialogContent} が子パーツへ提供するコンテキストです。
+ */
+export type AlertDialogContentContext = {
+  /**
+   * アラートダイアログの角丸の大きさです。
+   */
+  readonly radius: AlertDialogContentContextRadius;
+};
+
+/**
+ * {@link AlertDialogContent} が子パーツへ提供するコンテキストです。
+ */
+export const AlertDialogContentContext: React.Context<AlertDialogContentContext | null> =
+  React.createContext<AlertDialogContentContext | null>(null);
+
+function useSuiAlertDialogContentContext(optional?: false): AlertDialogContentContext;
+function useSuiAlertDialogContentContext(optional?: boolean): AlertDialogContentContext | null;
+function useSuiAlertDialogContentContext(optional?: boolean): AlertDialogContentContext | null {
+  const ctx = React.use(AlertDialogContentContext);
+  if (ctx === null && !optional) {
+    throw new ContextMissingError({
+      contextName: "AlertDialogContentContext",
+      providerName: "AlertDialogContent",
+    });
+  }
+
+  return ctx;
+}
+
+/**
+ * {@link AlertDialogContentContext} を読み取るフックです。
+ */
+export const useAlertDialogContentContext: IUseContext<AlertDialogContentContext> =
+  useSuiAlertDialogContentContext;
+
+export {
+  AlertDialogContentContext as ContentContext,
+  useAlertDialogContentContext as useContentContext,
+};
+
+export namespace ContentContext {
+  /**
+   * {@link AlertDialogContentContextRadius}
+   */
+  export type Radius = AlertDialogContentContextRadius;
+}
 
 // Handle
 // ------
@@ -375,18 +437,21 @@ export const AlertDialogContent: IComponent<AlertDialogContentProps> =
       className,
       ...otherProps
     } = props;
+    const ctx = React.useMemo<AlertDialogContentContext>(() => ({ radius }), [radius]);
 
     return (
-      <AlertDialog.Popup
-        {...otherProps}
-        className={cn(
-          className,
-          "sui_alert_dialog_content",
-          `sui_alert_dialog_content-radius_${radius}`,
-          `sui_alert_dialog_content-variant_${variant}`,
-          outlined && "sui_alert_dialog_content-outlined",
-        )}
-      />
+      <AlertDialogContentContext value={ctx}>
+        <AlertDialog.Popup
+          {...otherProps}
+          className={cn(
+            className,
+            "sui_alert_dialog_content",
+            `sui_alert_dialog_content-radius_${radius}`,
+            `sui_alert_dialog_content-variant_${variant}`,
+            outlined && "sui_alert_dialog_content-outlined",
+          )}
+        />
+      </AlertDialogContentContext>
     );
   };
 

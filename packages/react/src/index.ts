@@ -61,6 +61,8 @@ export {
   type AlertDialogChangeEventDetails,
   AlertDialog,
   useAlertDialogAPI,
+  AlertDialogContentContext,
+  useAlertDialogContentContext,
 } from "./alert-dialog/index.js";
 export {
   type AspectRatioAPI,
@@ -264,6 +266,8 @@ export {
   type DialogChangeEventDetails,
   Dialog,
   useDialogAPI,
+  DialogContentContext,
+  useDialogContentContext,
 } from "./dialog/index.js";
 export {
   type FieldsetAPI,
