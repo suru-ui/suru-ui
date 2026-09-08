@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import type { LikelyVisibleNode } from "../_is-likely-visible-node.js";
 import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
 import {
@@ -94,8 +95,6 @@ export type TreeProps = Omit<TreeRootProps, "children" | "items"> &
 
     /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
-     *
-     * 各パーツの props が優先されます。
      */
     slotProps?: TreeSlotProps | undefined;
   };
@@ -110,14 +109,14 @@ export interface TreeAPI {
   /**
    * {@link TreeItemIndicator} に渡す props を取得します。
    *
-   * @param node 対応するノードです。
+   * @param node 描画対象のノードです。
    */
   getIndicatorProps(node: Readonly<TreeItemObject>): TreeItemIndicatorProps;
 
   /**
    * {@link TreeItem} に渡す props を取得します。
    *
-   * @param node 対応するノードです。
+   * @param node 描画対象のノードです。
    * @param level ノードの深さです。ルートの直接の子が `1` です。
    * @param posInSet 同じ深さの中での位置です。1 起点です。
    * @param setSize 同じ深さの項目数です。
@@ -132,7 +131,7 @@ export interface TreeAPI {
   /**
    * {@link TreeItemLabel} に渡す props を取得します。
    *
-   * @param node 対応するノードです。
+   * @param node 描画対象のノードです。
    */
   getLabelProps(node: Readonly<TreeItemObject>): TreeItemLabelProps;
 
@@ -142,7 +141,7 @@ export interface TreeAPI {
    * 関数を指定した場合はそのまま渡し、{@link TreeRoot} が表示中のノードへ適用します。
    */
   getRootProps(): Omit<TreeRootProps, "children"> & {
-    children: TreeRootProps["children"] | null;
+    children: LikelyVisibleNode | ITreeRootItemRenderer | null;
   };
 }
 
