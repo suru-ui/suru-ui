@@ -1,6 +1,7 @@
 import { Drawer } from "@base-ui/react/drawer";
 import * as React from "react";
 
+import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
@@ -132,7 +133,16 @@ export type DrawerIndentProps = React.ComponentProps<typeof Drawer.Indent>;
 export const DrawerIndent: IComponent<DrawerIndentProps> = function SuiDrawerIndent(props) {
   const { className, ...otherProps } = props;
 
-  return <Drawer.Indent {...otherProps} className={cn(className, "sui_drawer_indent")} />;
+  return (
+    <Drawer.Indent
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_drawer_indent",
+        (state) => state.active && "sui_drawer_indent-active",
+      )}
+    />
+  );
 };
 
 export { DrawerIndent as Indent };
@@ -348,7 +358,16 @@ export const DrawerSwipeArea: IComponent<DrawerSwipeAreaProps> = function SuiDra
 ) {
   const { className, ...otherProps } = props;
 
-  return <Drawer.SwipeArea {...otherProps} className={cn(className, "sui_drawer_swipe_area")} />;
+  return (
+    <Drawer.SwipeArea
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_drawer_swipe_area",
+        (state) => `sui_drawer_swipe_area-swipe_direction_${state.swipeDirection}`,
+      )}
+    />
+  );
 };
 
 export { DrawerSwipeArea as SwipeArea };
@@ -463,7 +482,18 @@ export type DrawerBackdropProps = React.ComponentProps<typeof Drawer.Backdrop>;
 export const DrawerBackdrop: IComponent<DrawerBackdropProps> = function SuiDrawerBackdrop(props) {
   const { className, ...otherProps } = props;
 
-  return <Drawer.Backdrop {...otherProps} className={cn(className, "sui_drawer_backdrop")} />;
+  return (
+    <Drawer.Backdrop
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_drawer_backdrop",
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_drawer_backdrop-transition_status_${state.transitionStatus}`,
+      )}
+    />
+  );
 };
 
 export { DrawerBackdrop as Backdrop };
@@ -539,7 +569,22 @@ export type DrawerPopupProps = React.ComponentProps<typeof Drawer.Popup>;
 export const DrawerPopup: IComponent<DrawerPopupProps> = function SuiDrawerPopup(props) {
   const { className, ...otherProps } = props;
 
-  return <Drawer.Popup {...otherProps} className={cn(className, "sui_drawer_popup")} />;
+  return (
+    <Drawer.Popup
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_drawer_popup",
+        (state) => `sui_drawer_popup-swipe_direction_${state.swipeDirection}`,
+        (state) => state.swiping && "sui_drawer_popup-swiping",
+        (state) => state.nestedDrawerSwiping && "sui_drawer_popup-nested_drawer_swiping",
+        (state) => state.nestedDrawerOpen && "sui_drawer_popup-nested_drawer_open",
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_drawer_popup-transition_status_${state.transitionStatus}`,
+      )}
+    />
+  );
 };
 
 export { DrawerPopup as Popup };
@@ -554,6 +599,62 @@ export namespace Popup {
    * {@link DrawerPopupProps}
    */
   export type Props = DrawerPopupProps;
+}
+
+// Controls
+// --------
+
+/**
+ * {@link DrawerControls} が持つ状態です。
+ */
+export type DrawerControlsState = {};
+
+/**
+ * {@link DrawerControls} に渡す props です。
+ */
+export type DrawerControlsProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
+  RenderProps<DrawerControlsState> & {
+    /**
+     * 絶対位置として配置するかを指定します。
+     *
+     * @default true
+     */
+    absolute?: boolean | undefined;
+  };
+
+/**
+ * ドロワーのコントロールコンポーネントです。
+ */
+export const DrawerControls: IComponent<DrawerControlsProps> = function SuiDrawerControls(props) {
+  const { absolute = true, ...htmlProps } = props;
+
+  return useRender({
+    defaultTagName: "div",
+    props: [
+      htmlProps,
+      {
+        className: cn(
+          "sui_drawer_controls",
+          absolute && "sui_drawer_controls-absolute",
+          !absolute && "sui_drawer_controls-relative",
+        ),
+      },
+    ],
+  });
+};
+
+export { DrawerControls as Controls };
+
+export namespace Controls {
+  /**
+   * {@link DrawerControlsState}
+   */
+  export type State = DrawerControlsState;
+
+  /**
+   * {@link DrawerControlsProps}
+   */
+  export type Props = DrawerControlsProps;
 }
 
 // Content
@@ -590,6 +691,49 @@ export namespace Content {
    * {@link DrawerContentProps}
    */
   export type Props = DrawerContentProps;
+}
+
+// Header
+// ------
+
+/**
+ * {@link DrawerHeader} が持つ状態です。
+ */
+export type DrawerHeaderState = {};
+
+/**
+ * {@link DrawerHeader} に渡す props です。
+ */
+export type DrawerHeaderProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
+  RenderProps<DrawerHeaderState>;
+
+/**
+ * ドロワーのヘッダーコンポーネントです。
+ */
+export const DrawerHeader: IComponent<DrawerHeaderProps> = function SuiDrawerHeader(htmlProps) {
+  return useRender({
+    defaultTagName: "div",
+    props: [
+      htmlProps,
+      {
+        className: "sui_drawer_header",
+      },
+    ],
+  });
+};
+
+export { DrawerHeader as Header };
+
+export namespace Header {
+  /**
+   * {@link DrawerHeaderState}
+   */
+  export type State = DrawerHeaderState;
+
+  /**
+   * {@link DrawerHeaderProps}
+   */
+  export type Props = DrawerHeaderProps;
 }
 
 // Title
@@ -664,6 +808,92 @@ export namespace Description {
    * {@link DrawerDescriptionProps}
    */
   export type Props = DrawerDescriptionProps;
+}
+
+// Body
+// ----
+
+/**
+ * {@link DrawerBody} が持つ状態です。
+ */
+export type DrawerBodyState = {};
+
+/**
+ * {@link DrawerBody} に渡す props です。
+ */
+export type DrawerBodyProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
+  RenderProps<DrawerBodyState>;
+
+/**
+ * ドロワーのボディーコンポーネントです。
+ */
+export const DrawerBody: IComponent<DrawerBodyProps> = function SuiDrawerBody(props) {
+  return useRender({
+    defaultTagName: "div",
+    props: [
+      props,
+      {
+        className: "sui_drawer_body",
+      },
+    ],
+  });
+};
+
+export { DrawerBody as Body };
+
+export namespace Body {
+  /**
+   * {@link DrawerBodyState}
+   */
+  export type State = DrawerBodyState;
+
+  /**
+   * {@link DrawerBodyProps}
+   */
+  export type Props = DrawerBodyProps;
+}
+
+// Footer
+// ------
+
+/**
+ * {@link DrawerFooter} が持つ状態です。
+ */
+export type DrawerFooterState = {};
+
+/**
+ * {@link DrawerFooter} に渡す props です。
+ */
+export type DrawerFooterProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
+  RenderProps<DrawerFooterState>;
+
+/**
+ * ドロワーのフッターコンポーネントです。
+ */
+export const DrawerFooter: IComponent<DrawerFooterProps> = function SuiDrawerFooter(props) {
+  return useRender({
+    defaultTagName: "div",
+    props: [
+      props,
+      {
+        className: "sui_drawer_footer",
+      },
+    ],
+  });
+};
+
+export { DrawerFooter as Footer };
+
+export namespace Footer {
+  /**
+   * {@link DrawerFooterState}
+   */
+  export type State = DrawerFooterState;
+
+  /**
+   * {@link DrawerFooterProps}
+   */
+  export type Props = DrawerFooterProps;
 }
 
 // Close

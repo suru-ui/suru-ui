@@ -6,16 +6,20 @@ import * as Button from "../button/button.parts.jsx";
 import type { IComponent } from "../types.js";
 import {
   type DrawerHandle,
+  type DrawerBodyProps,
   type DrawerRootProps,
   type DrawerRootState,
   type DrawerCloseProps,
   type DrawerPopupProps,
   type DrawerTitleProps,
+  type DrawerFooterProps,
+  type DrawerHeaderProps,
   type DrawerPortalProps,
   type DrawerRootActions,
   type DrawerContentProps,
   type DrawerTriggerProps,
   type DrawerBackdropProps,
+  type DrawerControlsProps,
   type DrawerRootSnapPoint,
   type DrawerViewportProps,
   type DrawerSwipeAreaProps,
@@ -25,14 +29,18 @@ import {
   type DrawerVirtualKeyboardProviderProps,
   type DrawerRootSnapPointChangeEventReason,
   type DrawerRootSnapPointChangeEventDetails,
+  DrawerBody,
   DrawerRoot,
   DrawerClose,
   DrawerPopup,
   DrawerTitle,
+  DrawerFooter,
+  DrawerHeader,
   DrawerPortal,
   DrawerContent,
   DrawerTrigger,
   DrawerBackdrop,
+  DrawerControls,
   DrawerViewport,
   DrawerSwipeArea,
   DrawerDescription,
@@ -85,6 +93,11 @@ export type DrawerSlotProps<TPayload = any> = {
   readonly backdrop?: DrawerBackdropProps | undefined;
 
   /**
+   * {@link DrawerBody} に渡す props です。
+   */
+  readonly body?: Omit<DrawerBodyProps, "children"> | undefined;
+
+  /**
    * {@link DrawerClose} に渡す props です。
    */
   readonly close?: Omit<DrawerCloseProps, "children"> | undefined;
@@ -95,9 +108,24 @@ export type DrawerSlotProps<TPayload = any> = {
   readonly content?: Omit<DrawerContentProps, "children"> | undefined;
 
   /**
+   * {@link DrawerControls} に渡す props です。
+   */
+  readonly controls?: Omit<DrawerControlsProps, "children"> | undefined;
+
+  /**
    * {@link DrawerDescription} に渡す props です。
    */
   readonly description?: Omit<DrawerDescriptionProps, "children"> | undefined;
+
+  /**
+   * {@link DrawerFooter} に渡す props です。
+   */
+  readonly footer?: Omit<DrawerFooterProps, "children"> | undefined;
+
+  /**
+   * {@link DrawerHeader} に渡す props です。
+   */
+  readonly header?: DrawerHeaderProps | undefined;
 
   /**
    * {@link DrawerPopup} に渡す props です。
@@ -146,12 +174,25 @@ type DrawerPropsMain<TPayload = any> = {
   /**
    * ドロワーの本文です。
    */
-  children?: DrawerContentProps["children"] | undefined;
+  children?: DrawerBodyProps["children"] | undefined;
+
+  /**
+   * コントロールコンポーネントに表示する内容です。
+   *
+   * ドロワーの内側から順に配置されます。
+   * {@link DrawerPropsMain.showCloseIconButton|showCloseIconButton} が `true` の場合、それが一番外側に配置されます。
+   */
+  controls?: DrawerControlsProps["children"] | undefined;
 
   /**
    * ドロワーの説明文です。
    */
   description?: React.ReactNode | undefined;
+
+  /**
+   * ドロワーのフッターです。
+   */
+  footer?: React.ReactNode | undefined;
 
   /**
    * トリガーとドロワーに関連付けるためのハンドルです。
@@ -215,6 +256,11 @@ export interface DrawerAPI<TPayload = any> {
   getBackdropProps(): DrawerBackdropProps;
 
   /**
+   * {@link DrawerBody} に渡す props を取得します。
+   */
+  getBodyProps(): DrawerBodyProps | null;
+
+  /**
    * {@link DrawerClose} に渡す props を取得します。
    */
   getCloseProps(): DrawerCloseProps | null;
@@ -222,12 +268,27 @@ export interface DrawerAPI<TPayload = any> {
   /**
    * {@link DrawerContent} に渡す props を取得します。
    */
-  getContentProps(): DrawerContentProps;
+  getContentProps(): Omit<DrawerContentProps, "children">;
+
+  /**
+   * {@link DrawerControls} に渡す props を取得します。
+   */
+  getControlsProps(): DrawerControlsProps | null;
 
   /**
    * {@link DrawerDescription} に渡す props を取得します。
    */
   getDescriptionProps(): DrawerDescriptionProps | null;
+
+  /**
+   * {@link DrawerFooter} に渡す props を取得します。
+   */
+  getFooterProps(): DrawerFooterProps | null;
+
+  /**
+   * {@link DrawerHeader} に渡す props を取得します。
+   */
+  getHeaderProps(): DrawerHeaderProps | null;
 
   /**
    * {@link DrawerPopup} に渡す props を取得します。
@@ -291,15 +352,21 @@ export const useDrawerAPI: IUseDrawerAPI = function useSuiDrawerAPI(props) {
     onClose,
     trigger,
     children,
+    controls,
     description,
+    footer,
     slotProps: {
+      body: bodyProps = {},
       close: closeProps = {},
       popup: popupProps = {},
       title: titleProps = {},
+      footer: footerProps = {},
+      header: headerProps = {},
       portal: portalProps = {},
       content: contentProps = {},
       trigger: triggerProps = {},
       backdrop: backdropProps = {},
+      controls: controlsProps = {},
       viewport: viewportProps = {},
       swipeArea: swipeAreaProp,
       description: descriptionProps = {},
@@ -310,6 +377,33 @@ export const useDrawerAPI: IUseDrawerAPI = function useSuiDrawerAPI(props) {
   } = props;
   const handle = React.useMemo(() => handleProp ?? createDrawerHandle(), [handleProp]);
 
+  function buildCloseProps(): DrawerCloseProps | null {
+    if (!showCloseIconButton) {
+      return null;
+    }
+
+    const { onClick, ...otherCloseProps } = closeProps;
+
+    return {
+      ...otherCloseProps,
+      children: (
+        <Button.Root radius="full" squared variant="naked">
+          <Button.Content>
+            <XIcon />
+          </Button.Content>
+        </Button.Root>
+      ),
+      onClick(evt) {
+        onClick?.(evt);
+        if (evt.defaultPrevented) {
+          return;
+        }
+
+        onClose?.(evt);
+      },
+    };
+  }
+
   return {
     getRootProps() {
       return {
@@ -318,30 +412,7 @@ export const useDrawerAPI: IUseDrawerAPI = function useSuiDrawerAPI(props) {
       };
     },
     getCloseProps() {
-      if (!showCloseIconButton) {
-        return null;
-      }
-
-      const { onClick, ...otherCloseProps } = closeProps;
-
-      return {
-        ...otherCloseProps,
-        children: (
-          <Button.Root radius="full" squared variant="naked">
-            <Button.Content>
-              <XIcon />
-            </Button.Content>
-          </Button.Root>
-        ),
-        onClick(evt) {
-          onClick?.(evt);
-          if (evt.defaultPrevented) {
-            return;
-          }
-
-          onClose?.(evt);
-        },
-      };
+      return buildCloseProps();
     },
     getPopupProps() {
       return popupProps;
@@ -360,10 +431,17 @@ export const useDrawerAPI: IUseDrawerAPI = function useSuiDrawerAPI(props) {
       return portalProps;
     },
     getContentProps() {
-      return {
-        ...contentProps,
-        children,
-      };
+      return contentProps;
+    },
+    getBodyProps() {
+      if (isLikelyVisibleNode(children)) {
+        return {
+          ...bodyProps,
+          children,
+        };
+      }
+
+      return null;
     },
     getTriggerProps() {
       if (trigger) {
@@ -371,6 +449,23 @@ export const useDrawerAPI: IUseDrawerAPI = function useSuiDrawerAPI(props) {
           ...triggerProps,
           handle,
           children: trigger,
+        };
+      }
+
+      return null;
+    },
+    getControlsProps() {
+      if (isLikelyVisibleNode(controls) || showCloseIconButton) {
+        const iconButtonProps = buildCloseProps();
+
+        return {
+          ...controlsProps,
+          children: (
+            <>
+              {controls}
+              {iconButtonProps && <DrawerClose {...iconButtonProps} />}
+            </>
+          ),
         };
       }
 
@@ -391,6 +486,28 @@ export const useDrawerAPI: IUseDrawerAPI = function useSuiDrawerAPI(props) {
           ...descriptionProps,
           children: description,
         };
+      }
+
+      return null;
+    },
+    getFooterProps() {
+      if (isLikelyVisibleNode(footer)) {
+        return {
+          ...footerProps,
+          children: footer,
+        };
+      }
+
+      return null;
+    },
+    getHeaderProps() {
+      if (
+        isLikelyVisibleNode(title) ||
+        isLikelyVisibleNode(description) ||
+        isLikelyVisibleNode(controls) ||
+        showCloseIconButton
+      ) {
+        return headerProps;
       }
 
       return null;
@@ -424,25 +541,32 @@ interface IDrawer extends IComponent<DrawerProps> {
 export const Drawer: IDrawer = /*#__PURE__*/ Object.assign(
   function SuiDrawer(props: DrawerProps) {
     const api = useDrawerAPI(props);
-    const closeProps = api.getCloseProps();
     const titleProps = api.getTitleProps();
+    const headerProps = api.getHeaderProps();
     const contentProps = api.getContentProps();
+    const controlsProps = api.getControlsProps();
+    const bodyProps = api.getBodyProps();
+    const footerProps = api.getFooterProps();
     const triggerProps = api.getTriggerProps();
     const swipeAreaProps = api.getSwipeAreaProps();
     const descriptionProps = api.getDescriptionProps();
     const virtualKeyboardProviderProps = api.getVirtualKeyboardProviderProps();
-    const { children, ...otherContentProps } = contentProps;
 
     const portal = (
       <DrawerPortal {...api.getPortalProps()}>
         <DrawerBackdrop {...api.getBackdropProps()} />
         <DrawerViewport {...api.getViewportProps()}>
           <DrawerPopup {...api.getPopupProps()}>
-            {closeProps && <DrawerClose {...closeProps} />}
-            <DrawerContent {...otherContentProps}>
-              {titleProps && <DrawerTitle {...titleProps} />}
-              {descriptionProps && <DrawerDescription {...descriptionProps} />}
-              {children}
+            <DrawerContent {...contentProps}>
+              {headerProps && (
+                <DrawerHeader {...headerProps}>
+                  {titleProps && <DrawerTitle {...titleProps} />}
+                  {descriptionProps && <DrawerDescription {...descriptionProps} />}
+                  {controlsProps && <DrawerControls {...controlsProps} />}
+                </DrawerHeader>
+              )}
+              {bodyProps && <DrawerBody {...bodyProps} />}
+              {footerProps && <DrawerFooter {...footerProps} />}
             </DrawerContent>
           </DrawerPopup>
         </DrawerViewport>
