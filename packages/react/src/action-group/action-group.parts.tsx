@@ -80,15 +80,15 @@ export const ActionGroupContext: React.Context<ActionGroupContext | null> =
 function useSuiActionGroupContext(optional?: false): ActionGroupContext;
 function useSuiActionGroupContext(optional?: boolean): ActionGroupContext | null;
 function useSuiActionGroupContext(optional?: boolean): ActionGroupContext | null {
-  const context = React.use(ActionGroupContext);
-  if (context === null && !optional) {
+  const ctx = React.use(ActionGroupContext);
+  if (ctx === null && !optional) {
     throw new ContextMissingError({
       contextName: "ActionGroupContext",
       providerName: "ActionGroupRoot",
     });
   }
 
-  return context;
+  return ctx;
 }
 
 /**
@@ -96,50 +96,34 @@ function useSuiActionGroupContext(optional?: boolean): ActionGroupContext | null
  */
 export const useActionGroupContext: IUseContext<ActionGroupContext> = useSuiActionGroupContext;
 
-/**
- * {@link ActionGroupContext} です。
- */
-export type Context = ActionGroupContext;
+export { ActionGroupContext as Context, useActionGroupContext as useContext };
 
-/**
- * {@link ActionGroupContext} です。
- */
-export const Context: React.Context<Context | null> = ActionGroupContext;
-
-/**
- * {@link Context} の型名前空間です。
- */
 export namespace Context {
   /**
-   * {@link ActionGroupContextColor} です。
+   * {@link ActionGroupContextColor}
    */
   export type Color = ActionGroupContextColor;
 
   /**
-   * {@link ActionGroupContextOrientation} です。
+   * {@link ActionGroupContextOrientation}
    */
   export type Orientation = ActionGroupContextOrientation;
 
   /**
-   * {@link ActionGroupContextRadius} です。
+   * {@link ActionGroupContextRadius}
    */
   export type Radius = ActionGroupContextRadius;
 
   /**
-   * {@link ActionGroupContextSize} です。
+   * {@link ActionGroupContextSize}
    */
   export type Size = ActionGroupContextSize;
 
   /**
-   * {@link ActionGroupContextVariant} です。
+   * {@link ActionGroupContextVariant}
    */
   export type Variant = ActionGroupContextVariant;
 }
-
-/**
- * {@link useActionGroupContext} です。
- */
-export const useContext: IUseContext<Context> = useActionGroupContext;
 
 // Root
 // ----
@@ -249,27 +233,29 @@ export const ActionGroupRoot: IComponent<ActionGroupRootProps> = function SuiAct
   props,
 ) {
   const {
-    role = "group",
     size = "md",
     color = "grey",
     radius = "md",
     variant = "solid",
     outlined = false,
     orientation = "horizontal",
+    className,
+    role = "group",
     "aria-orientation": ariaOrientation = orientation,
-    ...otherProps
+    ...otherDivProps
   } = props;
-  const context = React.useMemo<ActionGroupContext>(
+  const ctx = React.useMemo<ActionGroupContext>(
     () => ({ size, color, radius, variant, outlined, orientation }),
     [size, color, radius, variant, outlined, orientation],
   );
   const element = useRender({
     defaultTagName: "div",
     props: [
-      otherProps,
+      otherDivProps,
       {
         role,
         className: cn(
+          className,
           "sui_action_group",
           `sui_action_group-variant_${variant}`,
           `sui_action_group-color_${color}`,
@@ -279,57 +265,52 @@ export const ActionGroupRoot: IComponent<ActionGroupRootProps> = function SuiAct
           outlined && "sui_action_group-outlined",
         ),
         "aria-orientation": ariaOrientation,
+        "data-scope": "",
       },
     ],
   });
 
-  return <Context value={context}>{element}</Context>;
+  return <ActionGroupContext value={ctx}>{element}</ActionGroupContext>;
 };
 
-/**
- * {@link ActionGroupRoot} の状態やプロパティーをまとめた型名前空間です。
- */
+export { ActionGroupRoot as Root };
+
 export namespace Root {
   /**
-   * {@link ActionGroupRootState} です。
+   * {@link ActionGroupRootState}
    */
   export type State = ActionGroupRootState;
 
   /**
-   * {@link ActionGroupRootProps} です。
+   * {@link ActionGroupRootProps}
    */
   export type Props = ActionGroupRootProps;
 
   /**
-   * {@link ActionGroupRootColor} です。
+   * {@link ActionGroupRootColor}
    */
   export type Color = ActionGroupRootColor;
 
   /**
-   * {@link ActionGroupRootOrientation} です。
+   * {@link ActionGroupRootOrientation}
    */
   export type Orientation = ActionGroupRootOrientation;
 
   /**
-   * {@link ActionGroupRootRadius} です。
+   * {@link ActionGroupRootRadius}
    */
   export type Radius = ActionGroupRootRadius;
 
   /**
-   * {@link ActionGroupRootSize} です。
+   * {@link ActionGroupRootSize}
    */
   export type Size = ActionGroupRootSize;
 
   /**
-   * {@link ActionGroupRootVariant} です。
+   * {@link ActionGroupRootVariant}
    */
   export type Variant = ActionGroupRootVariant;
 }
-
-/**
- * {@link ActionGroupRoot} です。
- */
-export const Root: IComponent<Root.Props> = ActionGroupRoot;
 
 // Separator
 // ---------
@@ -358,19 +339,19 @@ export type ActionGroupSeparatorProps = Omit<
  */
 export const ActionGroupSeparator: IComponent<ActionGroupSeparatorProps> =
   function SuiActionGroupSeparator(props) {
-    const context = useActionGroupContext(true);
+    const ctx = useActionGroupContext(true);
     const {
-      className,
       orientation: orientationProp,
-      "aria-orientation": ariaOrientation = orientationProp ?? context?.orientation ?? "horizontal",
-      ...otherProps
+      className,
+      "aria-orientation": ariaOrientation = orientationProp ?? ctx?.orientation ?? "horizontal",
+      ...otherDivProps
     } = props;
-    const orientation = orientationProp ?? context?.orientation ?? "horizontal";
+    const orientation = orientationProp ?? ctx?.orientation ?? "horizontal";
 
     return useRender({
       defaultTagName: "div",
       props: [
-        otherProps,
+        otherDivProps,
         {
           role: "separator",
           className: cn(
@@ -384,22 +365,16 @@ export const ActionGroupSeparator: IComponent<ActionGroupSeparatorProps> =
     });
   };
 
-/**
- * {@link ActionGroupSeparator} の状態やプロパティーをまとめた型名前空間です。
- */
+export { ActionGroupSeparator as Separator };
+
 export namespace Separator {
   /**
-   * {@link ActionGroupSeparatorState} です。
+   * {@link ActionGroupSeparatorState}
    */
   export type State = ActionGroupSeparatorState;
 
   /**
-   * {@link ActionGroupSeparatorProps} です。
+   * {@link ActionGroupSeparatorProps}
    */
   export type Props = ActionGroupSeparatorProps;
 }
-
-/**
- * {@link ActionGroupSeparator} です。
- */
-export const Separator: IComponent<Separator.Props> = ActionGroupSeparator;

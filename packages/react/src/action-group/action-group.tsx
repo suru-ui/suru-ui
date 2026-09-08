@@ -12,28 +12,31 @@ import {
   useActionGroupContext,
 } from "./action-group.parts.jsx";
 
+// Types
+// -----
+
 /**
- * {@link ActionGroupRootColor} です。
+ * {@link ActionGroupRootColor}
  */
 export type ActionGroupColor = ActionGroupRootColor;
 
 /**
- * {@link ActionGroupRootRadius} です。
+ * {@link ActionGroupRootRadius}
  */
 export type ActionGroupRadius = ActionGroupRootRadius;
 
 /**
- * {@link ActionGroupRootSize} です。
+ * {@link ActionGroupRootSize}
  */
 export type ActionGroupSize = ActionGroupRootSize;
 
 /**
- * {@link ActionGroupRootVariant} です。
+ * {@link ActionGroupRootVariant}
  */
 export type ActionGroupVariant = ActionGroupRootVariant;
 
 /**
- * {@link ActionGroupRootOrientation} です。
+ * {@link ActionGroupRootOrientation}
  */
 export type ActionGroupOrientation = ActionGroupRootOrientation;
 
@@ -47,9 +50,12 @@ export type ActionGroupState = ActionGroupRootState;
  */
 export type ActionGroupProps = ActionGroupRootProps;
 
-interface ActionGroupType extends IComponent<ActionGroupProps> {
+// Component
+// ---------
+
+interface IActionGroup extends IComponent<ActionGroupProps> {
   /**
-   * {@link useActionGroupContext} です。
+   * {@link ActionGroupContext} を読み取るフックです。
    */
   readonly useContext: IUseContext<ActionGroupContext>;
 }
@@ -57,7 +63,7 @@ interface ActionGroupType extends IComponent<ActionGroupProps> {
 /**
  * アクションをグループ化するコンポーネントです。
  */
-export const ActionGroup: ActionGroupType = /*#__PURE__*/ Object.assign(
+export const ActionGroup: IActionGroup = /*#__PURE__*/ Object.assign(
   function SuiActionGroup(props: ActionGroupProps) {
     return <ActionGroupRoot {...props} />;
   },
@@ -71,42 +77,42 @@ export const ActionGroup: ActionGroupType = /*#__PURE__*/ Object.assign(
  */
 export namespace ActionGroup {
   /**
-   * {@link ActionGroupState} です。
+   * {@link ActionGroupState}
    */
   export type State = ActionGroupState;
 
   /**
-   * {@link ActionGroupProps} です。
+   * {@link ActionGroupProps}
    */
   export type Props = ActionGroupProps;
 
   /**
-   * {@link ActionGroupContext} です。
+   * {@link ActionGroupContext}
    */
   export type Context = ActionGroupContext;
 
   /**
-   * {@link ActionGroupColor} です。
+   * {@link ActionGroupColor}
    */
   export type Color = ActionGroupColor;
 
   /**
-   * {@link ActionGroupOrientation} です。
+   * {@link ActionGroupOrientation}
    */
   export type Orientation = ActionGroupOrientation;
 
   /**
-   * {@link ActionGroupRadius} です。
+   * {@link ActionGroupRadius}
    */
   export type Radius = ActionGroupRadius;
 
   /**
-   * {@link ActionGroupSize} です。
+   * {@link ActionGroupSize}
    */
   export type Size = ActionGroupSize;
 
   /**
-   * {@link ActionGroupVariant} です。
+   * {@link ActionGroupVariant}
    */
   export type Variant = ActionGroupVariant;
 }
