@@ -280,7 +280,7 @@ export type BreadcrumbListProps = Omit<React.ComponentProps<"ol">, keyof RenderP
  */
 export const BreadcrumbList: IComponent<BreadcrumbListProps> = function SuiBreadcrumbList(props) {
   const ctx = useSuiBreadcrumbContext(true);
-  const { children = defaultListItemRenderer, className, ...otherOlProps } = props;
+  const { children = defaultListItemRenderer, ...otherOlProps } = props;
   const items = ctx?.items ?? [];
 
   return useRender({
@@ -289,7 +289,7 @@ export const BreadcrumbList: IComponent<BreadcrumbListProps> = function SuiBread
       otherOlProps,
       {
         children: typeof children === "function" ? items.map(children) : children,
-        className: cn(className, "sui_breadcrumb_list"),
+        className: "sui_breadcrumb_list",
       },
     ],
   });
@@ -361,14 +361,12 @@ export type BreadcrumbItemProps = Omit<React.ComponentProps<"li">, keyof RenderP
  * パンくずの項目コンポーネントです。
  */
 export const BreadcrumbItem: IComponent<BreadcrumbItemProps> = function SuiBreadcrumbItem(props) {
-  const { className, ...otherLiProps } = props;
-
   return useRender({
     defaultTagName: "li",
     props: [
-      otherLiProps,
+      props,
       {
-        className: cn(className, "sui_breadcrumb_item"),
+        className: "sui_breadcrumb_item",
       },
     ],
   });
@@ -480,7 +478,7 @@ export type BreadcrumbSeparatorProps = Omit<React.ComponentProps<"li">, keyof Re
  */
 export const BreadcrumbSeparator: IComponent<BreadcrumbSeparatorProps> =
   function SuiBreadcrumbSeparator(props) {
-    const { children = <ChevronRightIcon />, className, ...otherLiProps } = props;
+    const { children = <ChevronRightIcon />, ...otherLiProps } = props;
 
     return useRender({
       defaultTagName: "li",
@@ -488,7 +486,7 @@ export const BreadcrumbSeparator: IComponent<BreadcrumbSeparatorProps> =
         otherLiProps,
         {
           children,
-          className: cn(className, "sui_breadcrumb_separator"),
+          className: "sui_breadcrumb_separator",
           "aria-hidden": true,
         },
       ],

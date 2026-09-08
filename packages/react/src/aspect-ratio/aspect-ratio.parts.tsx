@@ -23,7 +23,8 @@ export type AspectRatioRootRadius = "none" | Size;
 /**
  * アスペクト比です。
  *
- * 数値は「幅 / 高さ」として解釈されます。CSS の `aspect-ratio` プロパティーと同じ形式の値を指定できます。
+ * 数値は「幅 / 高さ」として解釈されます。
+ * CSS の `aspect-ratio` プロパティーと同じ形式の値を指定できます。
  */
 export type AspectRatioRootRatio = number | string;
 
@@ -56,7 +57,8 @@ export type AspectRatioRootProps = Omit<React.ComponentProps<"div">, keyof Rende
     /**
      * コンテンツの幅と高さの比率を指定します。
      *
-     * 数値は「幅 / 高さ」として解釈されます。`16 / 9` のような計算式や、CSS の `aspect-ratio` プロパティーと同じ形式の文字列も指定できます。
+     * 数値は「幅 / 高さ」として解釈されます。
+     * `16 / 9` のような計算式や、CSS の `aspect-ratio` プロパティーと同じ形式の文字列も指定できます。
      *
      * @default 1
      */
@@ -66,7 +68,8 @@ export type AspectRatioRootProps = Omit<React.ComponentProps<"div">, keyof Rende
 /**
  * 指定した比率で幅と高さを保つコンテナーのルート要素です。
  *
- * 直接の子要素はコンテナーいっぱいに広がるように配置されます。画像や動画、地図の埋め込みなどの表示に使います。
+ * 直接の子要素はコンテナーいっぱいに広がるように配置されます。
+ * 画像や動画、地図の埋め込みなどの表示に使います。
  */
 export const AspectRatioRoot: IComponent<AspectRatioRootProps> = function SuiAspectRatioRoot(
   props,

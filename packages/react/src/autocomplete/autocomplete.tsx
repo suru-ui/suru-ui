@@ -514,12 +514,6 @@ export const useAutocompleteAPI: IUseAutocompleteAPI = function useSuiAutocomple
     getViewportProps() {
       return viewportProps;
     },
-    getEndAddonsPropsList() {
-      return endAddons.map((children): AutocompleteAddonProps => ({
-        ...addonProps,
-        children,
-      }));
-    },
     getScrollbarProps() {
       return scrollbarProps;
     },
@@ -553,17 +547,23 @@ export const useAutocompleteAPI: IUseAutocompleteAPI = function useSuiAutocomple
         children: itemToRenderedValue(item, index),
       };
     },
-    getStartAddonsPropsList() {
-      return startAddons.map((children): AutocompleteAddonProps => ({
-        ...addonProps,
-        children,
-      }));
-    },
     getChevronAddonProps() {
       return {
         ...addonProps,
         children: <ChevronIcon />,
       };
+    },
+    getEndAddonsPropsList() {
+      return endAddons.map((children): AutocompleteAddonProps => ({
+        ...addonProps,
+        children,
+      }));
+    },
+    getStartAddonsPropsList() {
+      return startAddons.map((children): AutocompleteAddonProps => ({
+        ...addonProps,
+        children,
+      }));
     },
   };
 };
@@ -592,7 +592,7 @@ export const Autocomplete: IAutocomplete = /*#__PURE__*/ Object.assign(
   function SuiAutocomplete(props: AutocompleteProps) {
     const api = useAutocompleteAPI(props);
     const emptyProps = api.getEmptyProps();
-    const { children, ...otherListProps } = api.getListProps();
+    const listProps = api.getListProps();
 
     return (
       <AutocompleteRoot {...api.getRootProps()}>
@@ -616,8 +616,8 @@ export const Autocomplete: IAutocomplete = /*#__PURE__*/ Object.assign(
               <ScrollAreaRoot {...api.getScrollAreaProps()}>
                 <ScrollAreaViewport {...api.getViewportProps()}>
                   <ScrollAreaContent {...api.getContentProps()}>
-                    <AutocompleteList {...otherListProps}>
-                      {children ??
+                    <AutocompleteList {...listProps}>
+                      {listProps.children ??
                         ((item, index) => {
                           if (!isItemGroup(item)) {
                             return <AutocompleteItem {...api.getItemProps(item, index)} />;

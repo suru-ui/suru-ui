@@ -14,30 +14,30 @@ import "./action-group.css";
 /**
  * グループアイテムの配色です。
  */
-type ActionGroupContextColor = Color;
+export type ActionGroupContextColor = Color;
 
 /**
  * グループアイテムの向きです。
  */
-type ActionGroupContextOrientation = "horizontal" | "vertical";
+export type ActionGroupContextOrientation = "horizontal" | "vertical";
 
 /**
  * グループアイテムの角丸です。
  */
-type ActionGroupContextRadius = "none" | Size | "full";
+export type ActionGroupContextRadius = "none" | Size | "full";
 
 /**
  * グループアイテムのサイズです。
  */
-type ActionGroupContextSize = Size;
+export type ActionGroupContextSize = Size;
 
 /**
  * グループアイテムの主な外観です。
  */
-type ActionGroupContextVariant = ColorTemplate;
+export type ActionGroupContextVariant = ColorTemplate;
 
 /**
- * {@link ActionGroupRoot} が子要素へ提供するスタイルです。
+ * {@link ActionGroupRoot} が子パーツへ提供するコンテキストです。
  */
 export type ActionGroupContext = {
   /**
@@ -134,6 +134,14 @@ export namespace Context {
 export type ActionGroupRootColor = Color;
 
 /**
+ * アクショングループの向きです。
+ *
+ * - `"horizontal"`: 横並び
+ * - `"vertical"`: 縦並び
+ */
+export type ActionGroupRootOrientation = "horizontal" | "vertical";
+
+/**
  * アクショングループの角丸です。
  *
  * - `"none"`: 角を直角にする
@@ -163,20 +171,12 @@ export type ActionGroupRootSize = Size;
 export type ActionGroupRootVariant = ColorTemplate;
 
 /**
- * アクショングループの向きです。
- *
- * - `"horizontal"`: 横並び
- * - `"vertical"`: 縦並び
- */
-export type ActionGroupRootOrientation = "horizontal" | "vertical";
-
-/**
- * {@link ActionGroupRoot} の状態です。
+ * {@link ActionGroupRoot} が持つ状態です。
  */
 export type ActionGroupRootState = {};
 
 /**
- * {@link ActionGroupRoot} に渡すプロパティーです。
+ * {@link ActionGroupRoot} に渡す props です。
  *
  * グループに指定したスタイルプロパティーは、グループアイテムの指定より優先されます。
  */
@@ -204,7 +204,7 @@ export type ActionGroupRootProps = Omit<React.ComponentProps<"div">, keyof Rende
     /**
      * グループアイテムの角丸を指定します。
      *
-     * @default "md"
+     * 既定値は {@link ActionGroupRootProps.size|size}
      */
     radius?: ActionGroupRootRadius | undefined;
 
@@ -235,7 +235,7 @@ export const ActionGroupRoot: IComponent<ActionGroupRootProps> = function SuiAct
   const {
     size = "md",
     color = "grey",
-    radius = "md",
+    radius = size,
     variant = "solid",
     outlined = false,
     orientation = "horizontal",
@@ -257,10 +257,10 @@ export const ActionGroupRoot: IComponent<ActionGroupRootProps> = function SuiAct
         className: cn(
           className,
           "sui_action_group",
-          `sui_action_group-variant_${variant}`,
-          `sui_action_group-color_${color}`,
           `sui_action_group-size_${size}`,
+          `sui_action_group-color_${color}`,
           `sui_action_group-radius_${radius}`,
+          `sui_action_group-variant_${variant}`,
           `sui_action_group-orientation_${orientation}`,
           outlined && "sui_action_group-outlined",
         ),
@@ -316,16 +316,16 @@ export namespace Root {
 // ---------
 
 /**
- * {@link ActionGroupSeparator} の状態です。
+ * {@link ActionGroupSeparator} が持つ状態です。
  */
 export type ActionGroupSeparatorState = {};
 
 /**
- * {@link ActionGroupSeparator} に渡すプロパティーです。
+ * {@link ActionGroupSeparator} に渡す props です。
  */
 export type ActionGroupSeparatorProps = Omit<
   React.ComponentProps<"div">,
-  keyof RenderProps<ActionGroupSeparatorState> | "role"
+  keyof RenderProps | "role"
 > &
   RenderProps<ActionGroupSeparatorState> & {
     /**

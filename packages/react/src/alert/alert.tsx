@@ -79,12 +79,12 @@ export type AlertProps = Omit<AlertRootProps, "children"> &
     /**
      * アラートの操作ボタンです。
      */
-    actions?: AlertActionsProps["children"];
+    actions?: AlertActionsProps["children"] | undefined;
 
     /**
      * アラートに表示するアイコンです。
      */
-    icon?: AlertIconProps["children"];
+    icon?: AlertIconProps["children"] | undefined;
 
     /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
@@ -96,7 +96,7 @@ export type AlertProps = Omit<AlertRootProps, "children"> &
     /**
      * アラートのタイトルです。
      */
-    title?: AlertTitleProps["children"];
+    title?: AlertTitleProps["children"] | undefined;
   };
 
 // API

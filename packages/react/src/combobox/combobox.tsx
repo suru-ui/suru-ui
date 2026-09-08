@@ -2,7 +2,8 @@ import * as React from "react";
 
 import { getItemLabel } from "../_get-item-label.js";
 import { CheckIcon, ClearIcon, ChevronIcon } from "../_icons.jsx";
-import isLikelyVisibleNode from "../_is-likely-visible-node.js";
+import isLikelyVisibleNode, { type LikelyVisibleNode } from "../_is-likely-visible-node.js";
+import toReactNode from "../_to-react-node.js";
 import {
   type ScrollAreaRootProps,
   type ScrollAreaThumbProps,
@@ -375,13 +376,6 @@ export interface ComboboxAPI<
   getEmptyProps(): ComboboxEmptyProps | null;
 
   /**
-   * {@link ComboboxGroupLabel} に渡すプロパティーを取得します。
-   *
-   * @param item グループの項目です。
-   */
-  getGroupLabelProps(item: ComboboxGroupItem<TValue>): ComboboxGroupLabelProps;
-
-  /**
    * {@link ComboboxGroup} に渡すプロパティーを取得します。
    *
    * @param item グループの項目です。
@@ -390,14 +384,16 @@ export interface ComboboxAPI<
   getGroupProps(item: ComboboxGroupItem<TValue>, index: number): ComboboxGroupProps;
 
   /**
+   * {@link ComboboxGroupLabel} に渡すプロパティーを取得します。
+   *
+   * @param item グループの項目です。
+   */
+  getGroupLabelProps(item: ComboboxGroupItem<TValue>): ComboboxGroupLabelProps;
+
+  /**
    * {@link ComboboxIcon} に渡すプロパティーを取得します。
    */
   getIconProps(): ComboboxIconProps;
-
-  /**
-   * {@link ComboboxInputGroup} に渡すプロパティーを取得します。
-   */
-  getInputGroupProps(): Omit<ComboboxInputGroupProps, "children">;
 
   /**
    * {@link ComboboxInput} に渡すプロパティーを取得します。
@@ -405,9 +401,9 @@ export interface ComboboxAPI<
   getInputProps(): ComboboxInputProps;
 
   /**
-   * {@link ComboboxItemIndicator} に渡すプロパティーを取得します。
+   * {@link ComboboxInputGroup} に渡すプロパティーを取得します。
    */
-  getItemIndicatorProps(): ComboboxItemIndicatorProps;
+  getInputGroupProps(): Omit<ComboboxInputGroupProps, "children">;
 
   /**
    * {@link ComboboxItem} に渡すプロパティーを取得します。
@@ -418,6 +414,11 @@ export interface ComboboxAPI<
   getItemProps(item: TValue, index: number): ComboboxItemProps;
 
   /**
+   * {@link ComboboxItemIndicator} に渡すプロパティーを取得します。
+   */
+  getItemIndicatorProps(): ComboboxItemIndicatorProps;
+
+  /**
    * {@link ComboboxLabel} に渡すプロパティーを取得します。
    */
   getLabelProps(): ComboboxLabelProps | null;
@@ -425,7 +426,9 @@ export interface ComboboxAPI<
   /**
    * {@link ComboboxList} に渡すプロパティーを取得します。
    */
-  getListProps(): ComboboxListProps;
+  getListProps(): Omit<ComboboxListProps, "children"> & {
+    children: LikelyVisibleNode | Extract<ComboboxListProps["children"], Function> | null;
+  };
 
   /**
    * {@link ComboboxPopup} に渡すプロパティーを取得します。
@@ -570,7 +573,7 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI(props)
     getListProps() {
       return {
         ...listProps,
-        children,
+        children: typeof children === "function" ? children : toReactNode(children),
       };
     },
     getRootProps() {

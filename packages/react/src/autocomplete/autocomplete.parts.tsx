@@ -2,7 +2,9 @@ import { Autocomplete } from "@base-ui/react/autocomplete";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import renderer from "../_renderer.js";
 import useRender, { type RenderProps } from "../_use-render.js";
+import { ButtonRoot } from "../button/button.parts.jsx";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
 import type { IComponent, IUseContext } from "../types.js";
@@ -842,9 +844,24 @@ export type AutocompleteItemProps = React.ComponentProps<typeof Autocomplete.Ite
 export const AutocompleteItem: IComponent<AutocompleteItemProps> = function SuiAutocompleteItem(
   props,
 ) {
-  const { className, ...otherProps } = props;
+  const { render = <div />, className, ...otherProps } = props;
 
-  return <Autocomplete.Item {...otherProps} className={cn(className, "sui_autocomplete_item")} />;
+  return (
+    <Autocomplete.Item
+      {...otherProps}
+      render={(htmlProps: {}, state) => (
+        <ButtonRoot
+          {...htmlProps}
+          item
+          render={renderer(render, state)}
+          variant="naked"
+          disabled={state.disabled}
+          nativeButton={false}
+        />
+      )}
+      className={cn(className, "sui_autocomplete_item")}
+    />
+  );
 };
 
 export { AutocompleteItem as Item };
