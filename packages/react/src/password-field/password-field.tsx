@@ -170,12 +170,12 @@ export const usePasswordFieldAPI: IUsePasswordFieldAPI = function useSuiPassword
     readOnly,
     required,
     endAddons = [],
+    slotProps: { addon: addonProps = {}, input: inputProps = {}, toggle: toggleProps = {} } = {},
     placeholder,
     startAddons = [],
     defaultValue,
     onValueChange,
     visibilityToggle = true,
-    slotProps: { addon: addonProps = {}, input: inputProps = {}, toggle: toggleProps = {} } = {},
     ...otherRootProps
   } = props;
   const showToggle = visibilityToggle || Object.keys(toggleProps).length > 0;

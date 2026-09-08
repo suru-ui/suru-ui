@@ -179,6 +179,9 @@
       --sui_resizable_handle_grip-border_width: ;
       --sui_resizable_handle_grip-border_radius: ;
       --sui_resizable_handle_grip-dot_size: ;
+      --sui_resizable_handle_grip-dot_color-idle: ;
+      --sui_resizable_handle_grip-dot_color-hover: ;
+      --sui_resizable_handle_grip-dot_color-active: ;
     }
 
     /* 可変 */
@@ -201,15 +204,20 @@
       .sui_resizable_handle_grip:empty::before {
         width: var(--sui_resizable_handle_grip-dot_size);
         height: var(--sui_resizable_handle_grip-dot_size);
-        background-color: var(
-          --_sui_resizable_handle-line_color,
-          var(--sui_resizable_handle-line_color-idle)
-        );
+        background-color: var(--_sui_resizable_handle_grip-dot_color,
+                            var(--sui_resizable_handle_grip-dot_color-idle)
+                          );
         box-shadow:
           0px -4px 0px
-            var(--_sui_resizable_handle-line_color, var(--sui_resizable_handle-line_color-idle)),
+            var(
+              --_sui_resizable_handle_grip-dot_color,
+              var(--sui_resizable_handle_grip-dot_color-idle)
+            ),
           0px 4px 0px
-            var(--_sui_resizable_handle-line_color, var(--sui_resizable_handle-line_color-idle));
+            var(
+              --_sui_resizable_handle_grip-dot_color,
+              var(--sui_resizable_handle_grip-dot_color-idle)
+            );
       }
     }
 
@@ -226,6 +234,9 @@
       --sui_resizable_handle_grip-border_width: 1px;
       --sui_resizable_handle_grip-border_radius: 2px;
       --sui_resizable_handle_grip-dot_size: 2px;
+      --sui_resizable_handle_grip-dot_color-idle: var(--sui_resizable_handle-line_color-idle);
+      --sui_resizable_handle_grip-dot_color-hover: var(--sui_resizable_handle-line_color-hover);
+      --sui_resizable_handle_grip-dot_color-active: var(--sui_resizable_handle-line_color-active);
     }
 
     /* 変異 */
@@ -237,6 +248,8 @@
               var(--sui_resizable_handle_grip-background_color-hover);
             --_sui_resizable_handle_grip-border_color:
               var(--sui_resizable_handle_grip-border_color-hover);
+            --_sui_resizable_handle_grip-dot_color:
+              var(--sui_resizable_handle_grip-dot_color-hover);
           }
         }
 
@@ -245,6 +258,8 @@
             var(--sui_resizable_handle_grip-background_color-active);
           --_sui_resizable_handle_grip-border_color:
             var(--sui_resizable_handle_grip-border_color-active);
+          --_sui_resizable_handle_grip-dot_color:
+            var(--sui_resizable_handle_grip-dot_color-active);
         }
       }
     }

@@ -36,6 +36,20 @@
 } /* @scope */
 } /* @layer */
 
+/* Content */
+@layer sui.component {
+@scope (.sui_scroll_area) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_scroll_area_content {
+    display: block;
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
 /* Scrollbar */
 @layer sui.component {
 @scope (.sui_scroll_area) to ([data-scope]) {
@@ -58,6 +72,7 @@
   }
 
   .sui_scroll_area_scrollbar-orientation_horizontal {
+    flex-direction: row;
     height: 10px;
   }
 }

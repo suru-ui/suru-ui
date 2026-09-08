@@ -184,7 +184,7 @@ export const PasswordFieldRoot: IComponent<PasswordFieldRootProps> = function Su
         size={size}
         radius={radius}
         variant={variant}
-        className={cn(
+        className={cn<PasswordFieldRootState>(
           className,
           "sui_password_field",
           `sui_password_field-size_${size}`,
@@ -351,18 +351,18 @@ export const PasswordFieldToggleButton: IComponent<PasswordFieldToggleButtonProp
       props: [
         otherButtonProps,
         {
-          children,
-          disabled,
           type: "button",
-          "aria-label": label,
-          "aria-pressed": visible,
           onClick() {
             setVisible(!visible);
           },
+          children,
+          disabled,
           className: cn(
             "sui_password_field_toggle",
             visible && "sui_password_field_toggle-visible",
           ),
+          "aria-label": label,
+          "aria-pressed": visible,
         },
       ],
     });

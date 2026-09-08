@@ -259,16 +259,15 @@
     display: block;
     border-radius: inherit;
     transition: width 500ms;
-  }
-
-  &.sui_progress-status_indeterminate .sui_progress_indicator {
-    animation: sui_progress-indeterminate 1.5s infinite linear;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
   }
 }
 
 /* 変数 */
 :scope {
   --sui_progress_indicator-background_color: ;
+  --sui_progress_indicator-animation_duration: ;
 }
 
 /* 可変 */
@@ -276,11 +275,15 @@
   .sui_progress_indicator {
     width: var(--_sui_progress_indicator-width, auto);
     background-color: var(--sui_progress_indicator-background_color);
+    animation-name: var(--_sui_progress_indicator-animation_name, none);
+    animation-duration: var(--sui_progress_indicator-animation_duration);
   }
 }
 
 /* 代入 */
 :scope {
+  --sui_progress_indicator-animation_duration: 1.5s;
+
   &.sui_progress-color_grey {
     --sui_progress_indicator-background_color: var(--sui-grey-solid-canvas-normal);
   }
@@ -318,6 +321,7 @@
 :scope {
   &.sui_progress-status_indeterminate .sui_progress_indicator {
     --_sui_progress_indicator-width: 40%;
+    --_sui_progress_indicator-animation_name: sui_progress-indeterminate;
   }
 }
 

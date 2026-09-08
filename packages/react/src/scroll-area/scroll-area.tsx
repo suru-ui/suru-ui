@@ -171,14 +171,14 @@ export const useScrollAreaAPI: IUseScrollAreaAPI = function useSuiScrollAreaAPI(
     getThumbProps() {
       return thumbProps;
     },
-    getCornerProps() {
-      return cornerProps;
-    },
     getContentProps() {
       return {
         ...contentProps,
         children,
       };
+    },
+    getCornerProps() {
+      return cornerProps;
     },
     getViewportProps() {
       return viewportProps;

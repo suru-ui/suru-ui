@@ -98,24 +98,6 @@
     --sui_radio-border_radius: calc(var(--sui_radio-size) / 2);
   }
 
-  &.sui_radio-variant_naked {
-    --sui_radio-border_color-idle: var(--sui-grey-naked-border-normal);
-    --sui_radio-border_color-hover: var(--sui-grey-naked-border-subtle);
-    --sui_radio-border_color-active: var(--sui-grey-naked-border-strong);
-    --sui_radio-canvas-active: var(--sui-grey-naked-canvas-strong);
-    --sui_radio-canvas-hover: var(--sui-grey-naked-canvas-subtle);
-    --sui_radio-canvas-idle: var(--sui-grey-naked-canvas-normal);
-  }
-
-  &.sui_radio-variant_liquid {
-    --sui_radio-border_color-idle: var(--sui-grey-liquid-border-normal);
-    --sui_radio-border_color-hover: var(--sui-grey-liquid-border-subtle);
-    --sui_radio-border_color-active: var(--sui-grey-liquid-border-strong);
-    --sui_radio-canvas-active: var(--sui-grey-liquid-canvas-strong);
-    --sui_radio-canvas-hover: var(--sui-grey-liquid-canvas-subtle);
-    --sui_radio-canvas-idle: var(--sui-grey-liquid-canvas-normal);
-  }
-
   &.sui_radio-color_grey {
     --sui_radio-border_color-checked: var(--sui-grey-solid-border-normal);
     --sui_radio-canvas-active-checked: var(--sui-grey-solid-canvas-strong);
@@ -178,6 +160,24 @@
     --sui_radio-canvas-hover-checked: var(--sui-green-solid-canvas-subtle);
     --sui_radio-canvas-idle-checked: var(--sui-green-solid-canvas-normal);
     --sui_radio-text-checked: var(--sui-green-solid-canvas_text-normal);
+  }
+
+  &.sui_radio-variant_naked {
+    --sui_radio-border_color-idle: var(--sui-grey-naked-border-normal);
+    --sui_radio-border_color-hover: var(--sui-grey-naked-border-subtle);
+    --sui_radio-border_color-active: var(--sui-grey-naked-border-strong);
+    --sui_radio-canvas-active: var(--sui-grey-naked-canvas-strong);
+    --sui_radio-canvas-hover: var(--sui-grey-naked-canvas-subtle);
+    --sui_radio-canvas-idle: var(--sui-grey-naked-canvas-normal);
+  }
+
+  &.sui_radio-variant_liquid {
+    --sui_radio-border_color-idle: var(--sui-grey-liquid-border-normal);
+    --sui_radio-border_color-hover: var(--sui-grey-liquid-border-subtle);
+    --sui_radio-border_color-active: var(--sui-grey-liquid-border-strong);
+    --sui_radio-canvas-active: var(--sui-grey-liquid-canvas-strong);
+    --sui_radio-canvas-hover: var(--sui-grey-liquid-canvas-subtle);
+    --sui_radio-canvas-idle: var(--sui-grey-liquid-canvas-normal);
   }
 }
 

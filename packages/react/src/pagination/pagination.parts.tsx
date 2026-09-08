@@ -305,7 +305,7 @@ export const PaginationRoot: IComponent<PaginationRootProps> = function SuiPagin
       otherNavProps,
       {
         "aria-label": ariaLabel,
-        className: cn(
+        className: cn<PaginationRootState>(
           "sui_pagination",
           `sui_pagination-size_${size}`,
           `sui_pagination-radius_${radius}`,
@@ -370,7 +370,7 @@ export type PaginationPreviousButtonState = {};
 /**
  * {@link PaginationPreviousButton} に渡す props です。
  */
-export type PaginationPreviousButtonProps = Omit<ButtonRootProps, "children"> & {};
+export type PaginationPreviousButtonProps = Omit<ButtonRootProps, "children">;
 
 /**
  * 前のページへ移動するボタンコンポーネントです。
@@ -438,7 +438,7 @@ export type PaginationNextButtonState = {};
 /**
  * {@link PaginationNextButton} に渡す props です。
  */
-export type PaginationNextButtonProps = Omit<ButtonRootProps, "children"> & {};
+export type PaginationNextButtonProps = Omit<ButtonRootProps, "children">;
 
 /**
  * 次のページへ移動するボタンコンポーネントです。

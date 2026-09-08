@@ -143,9 +143,9 @@ export type ResizableRootProps = Omit<
  */
 export const ResizableRoot: IComponent<ResizableRootProps> = function SuiResizableRoot(props) {
   const {
-    onLayout,
     render = <ExternalGroup />,
     children,
+    onLayout,
     direction: directionProp,
     orientation: orientationProp,
     onLayoutChange,

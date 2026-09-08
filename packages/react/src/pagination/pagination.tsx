@@ -104,7 +104,7 @@ export type PaginationSlotProps = {
    *
    * すべてのページ番号ボタンに同じ props が渡されます。`page` と `selected` は上書きされません。
    */
-  readonly item?: Omit<PaginationItemProps, "page" | "selected"> | undefined;
+  readonly item?: Omit<PaginationItemProps, "children" | "page" | "selected"> | undefined;
 
   /**
    * {@link PaginationNextButton} に渡す props です。
