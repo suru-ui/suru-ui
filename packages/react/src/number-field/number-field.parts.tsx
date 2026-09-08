@@ -160,6 +160,16 @@ export type NumberFieldRootChangeEventReason = NumberField.Root.ChangeEventReaso
 export type NumberFieldRootChangeEventDetails = NumberField.Root.ChangeEventDetails;
 
 /**
+ * {@link NumberFieldRoot} の値が確定された理由です。
+ */
+export type NumberFieldRootCommitEventReason = NumberField.Root.CommitEventReason;
+
+/**
+ * {@link NumberFieldRoot} の値が確定されたイベントの詳細です。
+ */
+export type NumberFieldRootCommitEventDetails = NumberField.Root.CommitEventDetails;
+
+/**
  * {@link NumberFieldRoot} の状態です。
  */
 export type NumberFieldRootState = NumberField.Root.State;
@@ -279,6 +289,16 @@ export namespace Root {
    * {@link NumberFieldRootColor}
    */
   export type Color = NumberFieldRootColor;
+
+  /**
+   * {@link NumberFieldRootCommitEventDetails}
+   */
+  export type CommitEventDetails = NumberFieldRootCommitEventDetails;
+
+  /**
+   * {@link NumberFieldRootCommitEventReason}
+   */
+  export type CommitEventReason = NumberFieldRootCommitEventReason;
 
   /**
    * {@link NumberFieldRootRadius}

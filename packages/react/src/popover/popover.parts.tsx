@@ -254,7 +254,18 @@ export const PopoverBackdrop: IComponent<PopoverBackdropProps> = function SuiPop
 ) {
   const { className, ...otherProps } = props;
 
-  return <Popover.Backdrop {...otherProps} className={cn(className, "sui_popover_backdrop")} />;
+  return (
+    <Popover.Backdrop
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_popover_backdrop",
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_popover_backdrop-transition_status_${state.transitionStatus}`,
+      )}
+    />
+  );
 };
 
 export { PopoverBackdrop as Backdrop };
@@ -328,7 +339,18 @@ export type PopoverPopupProps = React.ComponentProps<typeof Popover.Popup>;
 export const PopoverPopup: IComponent<PopoverPopupProps> = function SuiPopoverPopup(props) {
   const { className, ...otherProps } = props;
 
-  return <Popover.Popup {...otherProps} className={cn(className, "sui_popover_popup")} />;
+  return (
+    <Popover.Popup
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_popover_popup",
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_popover_popup-transition_status_${state.transitionStatus}`,
+      )}
+    />
+  );
 };
 
 export { PopoverPopup as Popup };

@@ -1,6 +1,7 @@
 import { useControlled } from "@base-ui/utils/useControlled";
 import * as React from "react";
 
+import { EyeIcon, EyeOffIcon } from "../_icons.jsx";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
@@ -146,10 +147,13 @@ export const PasswordFieldRoot: IComponent<PasswordFieldRootProps> = function Su
   props,
 ) {
   const {
+    size = "md",
+    radius = size,
+    variant = "liquid",
     visible: visibleProp,
+    className,
     defaultVisible = false,
     onVisibleChange,
-    className,
     ...otherProps
   } = props;
   const [visible, setVisible] = useControlled<boolean>({
@@ -177,7 +181,16 @@ export const PasswordFieldRoot: IComponent<PasswordFieldRootProps> = function Su
     <PasswordFieldContext value={ctx}>
       <TextFieldRoot
         {...otherProps}
-        className={cn(className, "sui_password_field")}
+        size={size}
+        radius={radius}
+        variant={variant}
+        className={cn(
+          className,
+          "sui_password_field",
+          `sui_password_field-size_${size}`,
+          `sui_password_field-radius_${radius}`,
+          `sui_password_field-variant_${variant}`,
+        )}
         data-scope=""
       />
     </PasswordFieldContext>
@@ -326,7 +339,7 @@ export const PasswordFieldToggleButton: IComponent<PasswordFieldToggleButtonProp
     const ctx = usePasswordFieldContext();
     const { visible, setVisible } = ctx;
     const {
-      children = visible ? <SuiEyeOffIcon /> : <SuiEyeIcon />,
+      children = visible ? <EyeOffIcon /> : <EyeIcon />,
       disabled = false,
       "aria-label": ariaLabel,
       ...otherButtonProps
@@ -368,43 +381,3 @@ export namespace ToggleButton {
    */
   export type Props = PasswordFieldToggleButtonProps;
 }
-
-const SuiEyeIcon: IComponent = function SuiEyeIcon() {
-  return (
-    <svg
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-      focusable="false"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
-      <circle r="3" cx="12" cy="12" />
-    </svg>
-  );
-};
-
-const SuiEyeOffIcon: IComponent = function SuiEyeOffIcon() {
-  return (
-    <svg
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-      focusable="false"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49" />
-      <path d="M14.084 14.158a3 3 0 0 1-4.242-4.242" />
-      <path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143" />
-      <path d="m2 2 20 20" />
-    </svg>
-  );
-};

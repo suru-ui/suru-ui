@@ -19,7 +19,9 @@ import {
   type NumberFieldScrubAreaProps,
   type NumberFieldScrubAreaCursorProps,
   type NumberFieldRootChangeEventReason,
+  type NumberFieldRootCommitEventReason,
   type NumberFieldRootChangeEventDetails,
+  type NumberFieldRootCommitEventDetails,
   NumberFieldRoot,
   NumberFieldAddon,
   NumberFieldGroup,
@@ -63,6 +65,16 @@ export type NumberFieldChangeEventReason = NumberFieldRootChangeEventReason;
  * {@link NumberFieldRootChangeEventDetails}
  */
 export type NumberFieldChangeEventDetails = NumberFieldRootChangeEventDetails;
+
+/**
+ * {@link NumberFieldRootCommitEventReason}
+ */
+export type NumberFieldCommitEventReason = NumberFieldRootCommitEventReason;
+
+/**
+ * {@link NumberFieldRootCommitEventDetails}
+ */
+export type NumberFieldCommitEventDetails = NumberFieldRootCommitEventDetails;
 
 /**
  * {@link NumberField} の各パーツに渡す props です。
@@ -410,6 +422,16 @@ export namespace NumberField {
    * {@link NumberFieldColor}
    */
   export type Color = NumberFieldColor;
+
+  /**
+   * {@link NumberFieldCommitEventDetails}
+   */
+  export type CommitEventDetails = NumberFieldCommitEventDetails;
+
+  /**
+   * {@link NumberFieldCommitEventReason}
+   */
+  export type CommitEventReason = NumberFieldCommitEventReason;
 
   /**
    * {@link NumberFieldRadius}
