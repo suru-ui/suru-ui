@@ -175,11 +175,11 @@
     }
   }
 
-  &[data-invalid] {
+  &.sui_select-invalid {
     --_sui_select-border_color: var(--sui_select-border_color-invalid);
   }
 
-  &:not([data-disabled]) {
+  &:not(.sui_select-disabled) {
     @media (any-hover: hover) {
       &:hover {
         --_sui_select_button-color: var(--sui_select_button-color-subtle);
@@ -263,7 +263,7 @@
 
 /* 可変 */
 :scope {
-  .sui_select_value[data-placeholder] {
+  .sui_select_value.sui_select_value-placeholder {
     color: var(--sui_select_placeholder-color);
   }
 }
@@ -360,7 +360,8 @@
 
 /* 変異 */
 :scope {
-  .sui_select_backdrop:is([data-starting-style], [data-ending-style]) {
+  .sui_select_backdrop-transition_status_starting,
+  .sui_select_backdrop-transition_status_ending {
     --_sui_select_backdrop-opacity: 0;
   }
 }
@@ -726,14 +727,13 @@
 
 /* 変異 */
 :scope {
-  .sui_select_item:not([data-disabled]) {
+  .sui_select_item:not(.sui_select_item-disabled) {
     @media (any-hover: hover) {
       &:hover {
         --_sui_select_item-color: var(--sui_select_item-color-subtle);
         --_sui_select_item-canvas: var(--sui_select_item-canvas-subtle);
       }
 
-      &[data-highlighted],
       &.sui_select_item-highlighted {
         --_sui_select_item-color: var(--sui_select_item-color-subtle);
         --_sui_select_item-canvas: var(--sui_select_item-canvas-subtle);
@@ -746,7 +746,6 @@
     }
   }
 
-  .sui_select_item[aria-selected="true"],
   .sui_select_item-selected {
     --_sui_select_item-color: var(--sui_select_item-color-subtle);
     --_sui_select_item-canvas: var(--sui_select_item-canvas-subtle);
@@ -816,7 +815,7 @@
 
 /* 変異 */
 :scope {
-  .sui_select_item[aria-selected="false"] .sui_select_item_indicator {
+  .sui_select_item:not(.sui_select_item-selected) .sui_select_item_indicator {
     --_sui_select_item_indicator-opacity: 0;
   }
 }
@@ -946,7 +945,7 @@
 
 /* Item */
 :scope {
-  .sui_select_item[data-disabled] {
+  .sui_select_item-disabled {
     color: var(--sui-disabled-canvas_text);
     cursor: not-allowed;
     background-color: transparent;

@@ -151,7 +151,6 @@ interface IUseScrollAreaAPI {
 export const useScrollAreaAPI: IUseScrollAreaAPI = function useSuiScrollAreaAPI(props) {
   const {
     children,
-    horizontal = false,
     slotProps: {
       thumb: thumbProps = {},
       corner: cornerProps = {},
@@ -161,6 +160,7 @@ export const useScrollAreaAPI: IUseScrollAreaAPI = function useSuiScrollAreaAPI(
       horizontalThumb: horizontalThumbProps = {},
       horizontalScrollbar: horizontalScrollbarProps = {},
     } = {},
+    horizontal = false,
     ...otherRootProps
   } = props;
 
@@ -180,14 +180,14 @@ export const useScrollAreaAPI: IUseScrollAreaAPI = function useSuiScrollAreaAPI(
         children,
       };
     },
+    getViewportProps() {
+      return viewportProps;
+    },
     getScrollbarProps() {
       return {
         ...scrollbarProps,
         orientation: "vertical",
       };
-    },
-    getViewportProps() {
-      return viewportProps;
     },
     getHorizontalThumbProps() {
       return horizontal ? horizontalThumbProps : null;

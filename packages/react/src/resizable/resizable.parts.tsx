@@ -95,7 +95,7 @@ const DEFAULT_RESIZE_TARGET_MINIMUM_SIZE = {
 export type ResizableRootDirection = "horizontal" | "vertical";
 
 /**
- * {@link ResizableRootDirection} です。
+ * {@link ResizableRootDirection}
  */
 export type ResizableRootOrientation = ResizableRootDirection;
 
@@ -149,7 +149,6 @@ export const ResizableRoot: IComponent<ResizableRootProps> = function SuiResizab
     direction: directionProp,
     orientation: orientationProp,
     onLayoutChange,
-    className,
     resizeTargetMinimumSize: resizeTargetMinimumSizeProp,
     ...otherDivProps
   } = props;
@@ -176,7 +175,7 @@ export const ResizableRoot: IComponent<ResizableRootProps> = function SuiResizab
       {
         render,
         children,
-        className: cn(className, "sui_resizable"),
+        className: "sui_resizable",
         orientation: direction,
         onLayoutChange: handleLayoutChange,
         resizeTargetMinimumSize,
@@ -186,7 +185,7 @@ export const ResizableRoot: IComponent<ResizableRootProps> = function SuiResizab
     ],
   });
 
-  const ctx = React.useMemo(() => ({ direction }), [direction]);
+  const ctx = React.useMemo<ResizableContext>(() => ({ direction }), [direction]);
   return <ResizableContext value={ctx}>{element}</ResizableContext>;
 };
 
@@ -305,7 +304,6 @@ export const ResizablePanel: IComponent<ResizablePanelProps> = function SuiResiz
     children,
     onResize,
     panelRef: panelRefProp,
-    className,
     defaultSize,
     onSizeChange,
     ...otherDivProps
@@ -338,9 +336,9 @@ export const ResizablePanel: IComponent<ResizablePanelProps> = function SuiResiz
         maxSize: normalizePanelSize(maxSize),
         minSize: normalizePanelSize(minSize),
         children,
-        panelRef,
         onResize: handleResize,
-        className: cn(className, "sui_resizable_panel"),
+        panelRef,
+        className: "sui_resizable_panel",
         defaultSize: panelSize,
         "data-order": order === undefined ? undefined : String(order),
       },
@@ -415,7 +413,6 @@ export const ResizableHandle: IComponent<ResizableHandleProps> = function SuiRes
     render = <Separator />,
     children,
     disabled = false,
-    className,
     withHandle = false,
     ...otherDivProps
   } = props;
@@ -435,9 +432,8 @@ export const ResizableHandle: IComponent<ResizableHandleProps> = function SuiRes
         ),
         disabled,
         className: cn(
-          className,
           "sui_resizable_handle",
-          disabled && "sui_resizable_handle-disabled",
+          (state: ResizableHandleState) => state.disabled && "sui_resizable_handle-disabled",
         ),
         "data-direction": direction,
         "aria-orientation": direction === "horizontal" ? "vertical" : "horizontal",

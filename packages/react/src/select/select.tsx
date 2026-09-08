@@ -20,6 +20,7 @@ import {
   type SelectRootRadius,
   type SelectValueProps,
   type SelectPortalProps,
+  type SelectRootActions,
   type SelectRootVariant,
   type SelectTriggerProps,
   type SelectBackdropProps,
@@ -31,6 +32,8 @@ import {
   type SelectItemIndicatorProps,
   type SelectScrollUpArrowProps,
   type SelectScrollDownArrowProps,
+  type SelectRootChangeEventReason,
+  type SelectRootChangeEventDetails,
   SelectIcon,
   SelectItem,
   SelectList,
@@ -55,6 +58,21 @@ import {
 
 // Types
 // -----
+
+/**
+ * {@link SelectRootActions}
+ */
+export type SelectActions = SelectRootActions;
+
+/**
+ * {@link SelectRootChangeEventDetails}
+ */
+export type SelectChangeEventDetails = SelectRootChangeEventDetails;
+
+/**
+ * {@link SelectRootChangeEventReason}
+ */
+export type SelectChangeEventReason = SelectRootChangeEventReason;
 
 /**
  * {@link SelectRootRadius}
@@ -356,9 +374,9 @@ export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI(props) {
     children,
     className,
     slotProps: {
+      icon: iconProps = {},
       item: itemProps = {},
       list: listProps = {},
-      icon: iconProps = {},
       arrow: arrowProps = {},
       group: groupProps = {},
       label: labelProps = {},
@@ -388,31 +406,10 @@ export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI(props) {
   } = positionerProps;
 
   return {
-    getArrowProps() {
-      return arrowProps;
-    },
-    getBackdropProps() {
-      return backdropProps;
-    },
-    getGroupLabelProps(labelContent) {
-      return {
-        ...groupLabelProps,
-        children: labelContent,
-      };
-    },
-    getGroupProps() {
-      return groupProps;
-    },
     getIconProps() {
       return {
         ...iconProps,
         children: <ChevronIcon />,
-      };
-    },
-    getItemIndicatorProps() {
-      return {
-        ...itemIndicatorProps,
-        children: <CheckIcon />,
       };
     },
     getItemProps(item, index) {
@@ -422,8 +419,20 @@ export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI(props) {
         value: item,
       };
     },
-    getItemTextProps() {
-      return itemTextProps;
+    getListProps() {
+      return {
+        ...listProps,
+        children,
+      };
+    },
+    getRootProps() {
+      return otherRootProps;
+    },
+    getArrowProps() {
+      return arrowProps;
+    },
+    getGroupProps() {
+      return groupProps;
     },
     getLabelProps() {
       if (!isLikelyVisibleNode(label) && !isLikelyVisibleNode(labelProps.children)) {
@@ -435,17 +444,39 @@ export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI(props) {
         children: label ?? labelProps.children,
       };
     },
-    getListProps() {
-      return {
-        ...listProps,
-        children,
-      };
-    },
     getPopupProps() {
       return popupProps;
     },
+    getValueProps() {
+      return {
+        placeholder,
+        ...valueProps,
+      };
+    },
     getPortalProps() {
       return portalProps;
+    },
+    getTriggerProps() {
+      return {
+        ...otherTriggerProps,
+        className,
+        "aria-label": triggerAriaLabel ?? (label === undefined ? "選択肢を選択" : undefined),
+      };
+    },
+    getBackdropProps() {
+      return backdropProps;
+    },
+    getItemTextProps() {
+      return itemTextProps;
+    },
+    getSeparatorProps() {
+      return separatorProps;
+    },
+    getGroupLabelProps(labelContent) {
+      return {
+        ...groupLabelProps,
+        children: labelContent,
+      };
     },
     getPositionerProps() {
       return {
@@ -456,13 +487,10 @@ export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI(props) {
         alignItemWithTrigger,
       };
     },
-    getRootProps() {
-      return otherRootProps;
-    },
-    getScrollDownArrowProps() {
+    getItemIndicatorProps() {
       return {
-        ...scrollDownArrowProps,
-        children: <ChevronIcon />,
+        ...itemIndicatorProps,
+        children: <CheckIcon />,
       };
     },
     getScrollUpArrowProps() {
@@ -471,20 +499,10 @@ export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI(props) {
         children: <ChevronIcon />,
       };
     },
-    getSeparatorProps() {
-      return separatorProps;
-    },
-    getTriggerProps() {
+    getScrollDownArrowProps() {
       return {
-        ...otherTriggerProps,
-        className,
-        "aria-label": triggerAriaLabel ?? (label === undefined ? "選択肢を選択" : undefined),
-      };
-    },
-    getValueProps() {
-      return {
-        placeholder,
-        ...valueProps,
+        ...scrollDownArrowProps,
+        children: <ChevronIcon />,
       };
     },
   };
@@ -631,6 +649,21 @@ export namespace Select {
    * {@link SelectContext}
    */
   export type Context<TValue = any> = SelectContext<TValue>;
+
+  /**
+   * {@link SelectActions}
+   */
+  export type Actions = SelectActions;
+
+  /**
+   * {@link SelectChangeEventDetails}
+   */
+  export type ChangeEventDetails = SelectChangeEventDetails;
+
+  /**
+   * {@link SelectChangeEventReason}
+   */
+  export type ChangeEventReason = SelectChangeEventReason;
 
   /**
    * {@link SelectItemGroup}

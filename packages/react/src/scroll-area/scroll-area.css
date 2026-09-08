@@ -53,11 +53,11 @@
     transition: opacity 150ms ease-out;
   }
 
-  .sui_scroll_area_scrollbar[data-orientation="vertical"] {
+  .sui_scroll_area_scrollbar-orientation_vertical {
     width: 10px;
   }
 
-  .sui_scroll_area_scrollbar[data-orientation="horizontal"] {
+  .sui_scroll_area_scrollbar-orientation_horizontal {
     height: 10px;
   }
 }
@@ -71,9 +71,9 @@
 
 /* 変異 */
 :scope {
-  &[data-has-overflow-y] .sui_scroll_area_scrollbar[data-orientation="vertical"],
-  &[data-has-overflow-x] .sui_scroll_area_scrollbar[data-orientation="horizontal"],
-  &[data-scrolling] .sui_scroll_area_scrollbar {
+  &.sui_scroll_area-has_overflow_y .sui_scroll_area_scrollbar-orientation_vertical,
+  &.sui_scroll_area-has_overflow_x .sui_scroll_area_scrollbar-orientation_horizontal,
+  &.sui_scroll_area-scrolling .sui_scroll_area_scrollbar {
     --_sui_scroll_area_scrollbar-opacity: 1;
   }
 
@@ -101,11 +101,11 @@
     transition: background-color 150ms ease-out;
   }
 
-  .sui_scroll_area_thumb[data-orientation="vertical"] {
+  .sui_scroll_area_thumb-orientation_vertical {
     width: 100%;
   }
 
-  .sui_scroll_area_thumb[data-orientation="horizontal"] {
+  .sui_scroll_area_thumb-orientation_horizontal {
     height: 100%;
   }
 }
@@ -126,11 +126,11 @@
                       );
   }
 
-  .sui_scroll_area_thumb[data-orientation="vertical"] {
+  .sui_scroll_area_thumb-orientation_vertical {
     height: var(--sui_scroll_area_thumb-height);
   }
 
-  .sui_scroll_area_thumb[data-orientation="horizontal"] {
+  .sui_scroll_area_thumb-orientation_horizontal {
     width: var(--sui_scroll_area_thumb-width);
   }
 }

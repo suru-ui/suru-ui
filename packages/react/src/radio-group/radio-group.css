@@ -18,3 +18,17 @@
 
 } /* @scope */
 } /* @layer */
+
+/* disabled */
+@layer sui.important {
+@scope (.sui_radio_group) to ([data-scope]) {
+
+/* Root */
+:scope {
+  &.sui_radio_group-disabled {
+    cursor: not-allowed;
+  }
+}
+
+} /* @scope */
+} /* @layer */

@@ -18,16 +18,29 @@ import "./select.css";
 
 /**
  * 選択欄とリスト項目の角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
  */
 type SelectContextRadius = "none" | Size | "full";
 
 /**
  * 選択欄とリスト項目のサイズです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
  */
 type SelectContextSize = Size;
 
 /**
  * 選択欄の主な外観です。
+ *
+ * - `"naked"`: 背景のない選択欄
+ * - `"liquid"`: 薄い塗りつぶし
  */
 type SelectContextVariant = "naked" | "liquid";
 
@@ -140,6 +153,21 @@ export type SelectRootSize = Size;
  * - `"liquid"`: 薄い塗りつぶし
  */
 export type SelectRootVariant = "naked" | "liquid";
+
+/**
+ * {@link SelectRoot} のアクションです。
+ */
+export type SelectRootActions = BaseSelect.Root.Actions;
+
+/**
+ * {@link SelectRoot} の値が変更するイベントの詳細です。
+ */
+export type SelectRootChangeEventDetails = BaseSelect.Root.ChangeEventDetails;
+
+/**
+ * {@link SelectRoot} の値が変更する理由です。
+ */
+export type SelectRootChangeEventReason = BaseSelect.Root.ChangeEventReason;
 
 /**
  * Select のグループ項目です。
@@ -312,6 +340,21 @@ export namespace Root {
   > = SelectRootProps<TValue, TMultiple>;
 
   /**
+   * {@link SelectRootActions}
+   */
+  export type Actions = SelectRootActions;
+
+  /**
+   * {@link SelectRootChangeEventDetails}
+   */
+  export type ChangeEventDetails = SelectRootChangeEventDetails;
+
+  /**
+   * {@link SelectRootChangeEventReason}
+   */
+  export type ChangeEventReason = SelectRootChangeEventReason;
+
+  /**
    * {@link SelectRootItemGroup}
    */
   export type ItemGroup<TValue = unknown> = SelectRootItemGroup<TValue>;
@@ -412,10 +455,11 @@ export const SelectTrigger: IComponent<SelectTriggerProps> = function SuiSelectT
         "sui_select",
         "sui_action_group_item",
         `sui_select-size_${size}`,
-        `sui_select-variant_${variant}`,
         `sui_select-radius_${radius}`,
+        `sui_select-variant_${variant}`,
         outlined && "sui_select-outlined",
         (state) => state.disabled && "sui_select-disabled",
+        (state) => state.valid === false && "sui_select-invalid",
         (state) => state.open && "sui_select-open",
       )}
       data-scope=""
@@ -459,7 +503,16 @@ export type SelectValueProps = React.ComponentProps<typeof BaseSelect.Value>;
 export const SelectValue: IComponent<SelectValueProps> = function SuiSelectValue(props) {
   const { className, ...otherProps } = props;
 
-  return <BaseSelect.Value {...otherProps} className={cn(className, "sui_select_value")} />;
+  return (
+    <BaseSelect.Value
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_select_value",
+        (state) => state.placeholder && "sui_select_value-placeholder",
+      )}
+    />
+  );
 };
 
 export { SelectValue as Value };
@@ -591,7 +644,18 @@ export type SelectBackdropProps = React.ComponentProps<typeof BaseSelect.Backdro
 export const SelectBackdrop: IComponent<SelectBackdropProps> = function SuiSelectBackdrop(props) {
   const { className, ...otherProps } = props;
 
-  return <BaseSelect.Backdrop {...otherProps} className={cn(className, "sui_select_backdrop")} />;
+  return (
+    <BaseSelect.Backdrop
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_select_backdrop",
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_select_backdrop-transition_status_${state.transitionStatus}`,
+      )}
+    />
+  );
 };
 
 export { SelectBackdrop as Backdrop };
@@ -750,7 +814,6 @@ export type SelectListProps<TValue = any> = Omit<
  * 選択項目を列挙するリスト要素です。
  *
  * {@link SelectRoot} の `items` を読み取り、関数子を受け取った場合は各項目に適用します。
- * キーボード操作によるハイライトは `data-highlighted` 属性で表されます。
  */
 export const SelectList: IComponent<SelectListProps> = function SuiSelectList(props) {
   const ctx = useSelectContext(true);

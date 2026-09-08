@@ -27,7 +27,13 @@ export const ScrollAreaRoot: IComponent<ScrollAreaRootProps> = function SuiScrol
   return (
     <BaseScrollArea.Root
       {...otherProps}
-      className={cn(className, "sui_scroll_area")}
+      className={cn(
+        className,
+        "sui_scroll_area",
+        (state) => state.scrolling && "sui_scroll_area-scrolling",
+        (state) => state.hasOverflowX && "sui_scroll_area-has_overflow_x",
+        (state) => state.hasOverflowY && "sui_scroll_area-has_overflow_y",
+      )}
       data-scope=""
     />
   );
@@ -147,11 +153,16 @@ export type ScrollAreaScrollbarProps = React.ComponentProps<typeof BaseScrollAre
  */
 export const ScrollAreaScrollbar: IComponent<ScrollAreaScrollbarProps> =
   function SuiScrollAreaScrollbar(props) {
-    const { className, ...otherProps } = props;
+    const { orientation = "vertical", className, ...otherProps } = props;
     return (
       <BaseScrollArea.Scrollbar
         {...otherProps}
-        className={cn(className, "sui_scroll_area_scrollbar")}
+        className={cn(
+          className,
+          "sui_scroll_area_scrollbar",
+          `sui_scroll_area_scrollbar-orientation_${orientation}`,
+        )}
+        orientation={orientation}
       />
     );
   };
@@ -191,7 +202,14 @@ export const ScrollAreaThumb: IComponent<ScrollAreaThumbProps> = function SuiScr
 ) {
   const { className, ...otherProps } = props;
   return (
-    <BaseScrollArea.Thumb {...otherProps} className={cn(className, "sui_scroll_area_thumb")} />
+    <BaseScrollArea.Thumb
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_scroll_area_thumb",
+        (state) => `sui_scroll_area_thumb-orientation_${state.orientation}`,
+      )}
+    />
   );
 };
 
