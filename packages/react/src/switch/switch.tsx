@@ -67,8 +67,6 @@ export type SwitchState = SwitchRootState;
 export type SwitchProps = Omit<SwitchRootProps, "children"> & {
   /**
    * 各パーツに個別の props を渡すためのオブジェクトです。
-   *
-   * 各パーツの props が優先されます。
    */
   slotProps?: SwitchSlotProps | undefined;
 };

@@ -115,8 +115,6 @@ export type AccordionState = AccordionRootState;
 export type AccordionProps<TItem = any, TValue = any> = AccordionRootProps<TItem, TValue> & {
   /**
    * 各パーツに個別の props を渡すためのオブジェクトです。
-   *
-   * 各パーツの props が優先されます。
    */
   slotProps?: AccordionSlotProps | undefined;
 };

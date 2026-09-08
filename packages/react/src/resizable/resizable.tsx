@@ -59,8 +59,6 @@ export type ResizableProps = Omit<ResizableRootProps, "children"> & {
 
   /**
    * 各パーツに個別の props を渡すためのオブジェクトです。
-   *
-   * 各パーツの props が優先されます。
    */
   readonly slotProps?: ResizableSlotProps | undefined;
 };

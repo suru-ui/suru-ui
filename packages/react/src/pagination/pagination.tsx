@@ -137,8 +137,6 @@ export type PaginationProps = Omit<PaginationRootProps, "children"> & {
 
   /**
    * 各パーツに個別の props を渡すためのオブジェクトです。
-   *
-   * 各パーツの props が優先されます。
    */
   slotProps?: PaginationSlotProps | undefined;
 };

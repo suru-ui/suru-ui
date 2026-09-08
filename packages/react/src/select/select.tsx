@@ -233,8 +233,6 @@ export type SelectProps<TValue = unknown, TMultiple extends boolean | undefined 
 
     /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
-     *
-     * 各パーツの props が優先されます。
      */
     slotProps?: SelectSlotProps | undefined;
   };

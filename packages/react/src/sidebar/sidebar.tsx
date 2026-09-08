@@ -87,8 +87,6 @@ export type SidebarProps = Omit<SidebarProviderProps, "children"> & {
 
   /**
    * 各パーツに個別の props を渡すためのオブジェクトです。
-   *
-   * 各パーツの props が優先されます。
    */
   slotProps?: SidebarSlotProps | undefined;
 };

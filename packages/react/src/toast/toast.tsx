@@ -89,8 +89,6 @@ export type ToastState = ToastProviderState;
 export type ToastProps = ToastProviderProps & {
   /**
    * 各パーツに個別の props を渡すためのオブジェクトです。
-   *
-   * 各パーツの props が優先されます。
    */
   slotProps?: ToastSlotProps | undefined;
 };

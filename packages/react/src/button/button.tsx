@@ -96,8 +96,6 @@ export type ButtonProps = Omit<ButtonRootProps, "children"> &
   Pick<ButtonCircularProgressProps, "percentage" | "indeterminate"> & {
     /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
-     *
-     * 各パーツの props が優先されます。
      */
     slotProps?: ButtonSlotProps | undefined;
   };

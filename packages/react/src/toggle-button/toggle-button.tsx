@@ -112,8 +112,6 @@ export type ToggleButtonProps = Omit<ToggleButtonRootProps, "children"> &
   Pick<ToggleButtonCircularProgressProps, "percentage" | "indeterminate"> & {
     /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
-     *
-     * 各パーツの props が優先されます。
      */
     slotProps?: ToggleButtonSlotProps | undefined;
   };

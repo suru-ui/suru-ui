@@ -88,8 +88,6 @@ export type ProgressProps = Omit<ProgressRootProps, "children" | "value"> & {
 
   /**
    * 各パーツに個別の props を渡すためのオブジェクトです。
-   *
-   * 各パーツの props が優先されます。
    */
   slotProps?: ProgressSlotProps | undefined;
 

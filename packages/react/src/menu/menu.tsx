@@ -251,8 +251,6 @@ export type MenuState = MenuRootState;
 type MenuPropsMain = {
   /**
    * 各パーツに個別の props を渡すためのオブジェクトです。
-   *
-   * 各パーツの props が優先されます。
    */
   slotProps?: MenuSlotProps | undefined;
 

@@ -37,8 +37,6 @@ export type FieldsetProps = FieldsetRootProps & {
 
   /**
    * 各パーツに個別の props を渡すためのオブジェクトです。
-   *
-   * 各パーツの props が優先されます。
    */
   slotProps?: FieldsetSlotProps | undefined;
 };
