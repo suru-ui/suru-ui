@@ -19,8 +19,8 @@ export default meta;
 
 const ctrl = controls(ToggleButton, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   defaultPressed: {
     control: "boolean",
@@ -35,19 +35,19 @@ const ctrl = controls(ToggleButton, {
     control: "boolean",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   squared: {
     control: "boolean",
   },
   variant: {
-    options: VARIANTS,
     control: "select",
+    options: VARIANTS,
   },
 });
 
