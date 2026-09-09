@@ -22,21 +22,14 @@ import "./tree.css";
 // -------
 
 /**
- * {@link TreeRoot} の選択モードです。
- *
- * - `"none"`: 選択できない
- * - `"single"`: 1 つだけ選択できる
- * - `"multiple"`: 複数選択できる
- */
-export type TreeRootSelectionMode = "none" | "single" | "multiple";
-
-/**
  * 項目の選択を変更するアクションです。
  *
  * - `"only"`: 指定した項目だけを選択する
  * - `"toggle"`: 指定した項目の選択を切り替える
+ * - `"range"`: 起点から指定した項目までの表示中の項目を選択する
+ * - `"add-range"`: 起点から指定した項目までの表示中の項目を選択状態に追加する
  */
-export type TreeSelectAction = "only" | "toggle";
+export type TreeSelectAction = "only" | "toggle" | "range" | "add-range";
 
 /**
  * {@link TreeRoot} が子パーツへ提供するコンテキストです。
@@ -99,11 +92,6 @@ export type TreeContext = {
   readonly selected: ReadonlySet<string>;
 
   /**
-   * 選択モードです。
-   */
-  readonly selectionMode: TreeRootSelectionMode;
-
-  /**
    * キーボードフォーカスの対象にするノードを変更する関数です。
    *
    * @param itemId フォーカス対象にするノードの識別子です。
@@ -161,11 +149,6 @@ export namespace Context {
    * {@link TreeSelectAction}
    */
   export type SelectAction = TreeSelectAction;
-
-  /**
-   * {@link TreeRootSelectionMode}
-   */
-  export type SelectionMode = TreeRootSelectionMode;
 }
 
 // Root
@@ -235,8 +218,9 @@ export type TreeRootColor = ButtonRootColor;
  * - `"sm"`: 小さい角丸
  * - `"md"`: 標準的な角丸
  * - `"lg"`: 大きい角丸
+ * - `"full"`: 丸形
  */
-export type TreeRootRadius = "none" | Size;
+export type TreeRootRadius = "none" | Size | "full";
 
 /**
  * ツリーの大きさです。
@@ -251,10 +235,9 @@ export type TreeRootSize = Size;
  * ツリーの項目の主な外観です。
  *
  * - `"solid"`: 塗りつぶし
- * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type TreeRootVariant = ButtonRootVariant;
+export type TreeRootVariant = "liquid" | "solid";
 
 /**
  * {@link TreeRoot} の状態です。
@@ -363,13 +346,6 @@ export type TreeRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps 
     radius?: TreeRootRadius | undefined;
 
     /**
-     * 選択モードを指定します。
-     *
-     * @default "none"
-     */
-    selectionMode?: TreeRootSelectionMode | undefined;
-
-    /**
      * ツリーの大きさを指定します。
      *
      * @default "md"
@@ -386,10 +362,6 @@ export type TreeRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps 
     /**
      * 選択されている項目の主な外観を指定します。
      *
-     * - `"solid"`: 塗りつぶし
-     * - `"naked"`: 背景なし
-     * - `"liquid"`: 薄い塗りつぶし
-     *
      * @default "liquid"
      */
     variant?: TreeRootVariant | undefined;
@@ -401,6 +373,23 @@ const EMPTY_NODES: readonly TreeRootItemObject[] = [];
 
 function isBranchElement(element: Element): boolean {
   return element.getAttribute("aria-expanded") != null;
+}
+
+function getSelectAction(event: React.SyntheticEvent): TreeSelectAction {
+  const native = event.nativeEvent as MouseEvent | KeyboardEvent;
+  const additive = native.ctrlKey || native.metaKey;
+  const ranged = native.shiftKey;
+  if (ranged && additive) {
+    return "add-range";
+  }
+  if (ranged) {
+    return "range";
+  }
+  if (additive) {
+    return "toggle";
+  }
+
+  return "only";
 }
 
 /**
@@ -424,7 +413,6 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
     defaultValue = EMPTY,
     expandedValue: expandedValueProp,
     onValueChange,
-    selectionMode = "none",
     defaultExpandedValue = EMPTY,
     onExpandedValueChange,
     // @ts-expect-error
@@ -480,26 +468,43 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
     rootRef.current?.focus();
   }, []);
 
+  const anchorRef = React.useRef<string | null>(null);
+
   const select = React.useCallback(
     (itemId: string, action: TreeSelectAction, event: React.SyntheticEvent) => {
-      if (selectionMode === "none") {
-        return;
-      }
-
       let nextValue: readonly string[];
-      if (action === "toggle" || selectionMode === "multiple") {
+      if (action === "toggle") {
+        anchorRef.current = itemId;
         nextValue = selected.has(itemId) ? value.filter((id) => id !== itemId) : [...value, itemId];
-        if (selectionMode === "single") {
+      } else if (action === "range" || action === "add-range") {
+        const ids = visibleNodes.map(({ node }) => node.id);
+        const anchorId = anchorRef.current;
+        const fromIndex = anchorId != null ? ids.indexOf(anchorId) : -1;
+        const toIndex = ids.indexOf(itemId);
+        if (fromIndex < 0 || toIndex < 0) {
+          anchorRef.current = itemId;
           nextValue = [itemId];
+        } else {
+          const [start, end] = fromIndex <= toIndex ? [fromIndex, toIndex] : [toIndex, fromIndex];
+          const range = visibleNodes
+            .slice(start, end + 1)
+            .filter(({ node }) => !node.disabled)
+            .map(({ node }) => node.id);
+          if (action === "add-range") {
+            nextValue = [...new Set([...value, ...range])];
+          } else {
+            nextValue = range;
+          }
         }
       } else {
+        anchorRef.current = itemId;
         nextValue = [itemId];
       }
 
       setValue(nextValue);
       onValueChange?.(nextValue, event);
     },
-    [onValueChange, selected, selectionMode, setValue, value],
+    [onValueChange, selected, setValue, value, visibleNodes],
   );
 
   const toggleExpansion = React.useCallback(
@@ -529,7 +534,6 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
       selected,
       getItemId,
       setActive: setActiveId,
-      selectionMode,
       toggleExpansion,
     }),
     [
@@ -543,7 +547,6 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
       radius,
       select,
       selected,
-      selectionMode,
       size,
       toggleExpansion,
       variant,
@@ -650,9 +653,9 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
       }
       case "Enter":
       case " ": {
-        if (currentElement != null && currentItemId != null && selectionMode !== "none") {
+        if (currentElement != null && currentItemId != null) {
           event.preventDefault();
-          select(currentItemId, selectionMode === "multiple" ? "toggle" : "only", event);
+          select(currentItemId, getSelectAction(event), event);
         }
         break;
       }
@@ -696,17 +699,17 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
             role: "tree",
             onFocus: handleFocus,
             children:
-              typeof children === "function"
-                ? visibleNodes.map(({ node, level, setSize, posInSet }) => (
+              typeof children !== "function"
+                ? children
+                : visibleNodes.map(({ node, level, setSize, posInSet }) => (
                     <React.Fragment key={node.id}>
                       {children(node, level, posInSet, setSize)}
                     </React.Fragment>
-                  ))
-                : toReactNode(children),
+                  )),
             tabIndex: 0,
             className: cn("sui_tree", `sui_tree-radius_${radius}`, `sui_tree-size_${size}`),
             onKeyDown: handleKeyDown,
-            "aria-multiselectable": selectionMode === "multiple" ? true : undefined,
+            "aria-multiselectable": true,
             "aria-activedescendant": activeId != null ? getItemId(activeId) : undefined,
             "data-scope": dataScope,
           },
@@ -779,11 +782,6 @@ export namespace Root {
   export type Radius = TreeRootRadius;
 
   /**
-   * {@link TreeRootSelectionMode}
-   */
-  export type SelectionMode = TreeRootSelectionMode;
-
-  /**
    * {@link TreeRootSize}
    */
   export type Size = TreeRootSize;
@@ -819,9 +817,8 @@ export type TreeItemSize = ButtonRootSize;
  *
  * - `"solid"`: 塗りつぶし
  * - `"naked"`: 背景なし
- * - `"liquid"`: 薄い塗りつぶし
  */
-export type TreeItemVariant = ButtonRootVariant;
+export type TreeItemVariant = "liquid" | "solid";
 
 /**
  * {@link TreeItem} の状態です。
@@ -942,9 +939,9 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
     ...otherButtonProps
   } = props;
 
-  const domId = ctx.getItemId(itemId) ?? itemId;
-  const expanded = ctx.expanded.has(itemId) ?? false;
-  const selected = ctx.selectionMode !== "none" && (ctx.selected.has(itemId) ?? false);
+  const domId = ctx.getItemId(itemId);
+  const expanded = ctx.expanded.has(itemId);
+  const selected = ctx.selected.has(itemId);
 
   const handleClick: NonNullable<TreeItemProps["onClick"]> = (event) => {
     onClickProp?.(event);
@@ -953,15 +950,14 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
     }
 
     ctx.setActive(itemId);
-    ctx.focus();
+    if (event.detail !== 0) {
+      ctx.focus();
+    }
 
-    if (hasChildren) {
+    if (hasChildren && !event.shiftKey && !event.ctrlKey && !event.metaKey) {
       ctx.toggleExpansion(itemId, event);
     }
-    if (ctx.selectionMode !== "none") {
-      const additive = event.metaKey || event.ctrlKey;
-      ctx.select(itemId, ctx.selectionMode === "multiple" && additive ? "toggle" : "only", event);
-    }
+    ctx.select(itemId, getSelectAction(event), event);
   };
 
   return (
@@ -985,7 +981,7 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
       aria-setsize={setSize}
       aria-expanded={hasChildren ? expanded : undefined}
       aria-posinset={posInSet}
-      aria-selected={ctx.selectionMode !== "none" ? selected : undefined}
+      aria-selected={selected}
       data-id={itemId}
     />
   );

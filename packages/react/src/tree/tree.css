@@ -11,8 +11,7 @@
 
 /* 変数 */
 :scope {
-  --sui_tree-padding_block: ;
-  --sui_tree-padding_inline: ;
+  --sui_tree-gap: ;
   --sui_tree-font_family: ;
   --sui_tree-color: ;
   --sui_tree-focusring_width: ;
@@ -23,8 +22,7 @@
 
 /* 可変 */
 :scope {
-  padding-block: var(--sui_tree-padding_block);
-  padding-inline: var(--sui_tree-padding_inline);
+  gap: var(--sui_tree-gap);
   font-family: var(--sui_tree-font_family);
   color: var(--sui_tree-color);
   outline-width: var(--_sui_tree-outline_width, 0px);
@@ -35,8 +33,7 @@
 
 /* 代入 */
 :scope {
-  --sui_tree-padding_block: --sui-space(2);
-  --sui_tree-padding_inline: --sui-space(2);
+  --sui_tree-gap: --sui-gap(1);
   --sui_tree-font_family: var(--sui-font-sans);
   --sui_tree-color: var(--sui-canvas_text-1);
   --sui_tree-focusring_width: var(--sui-focusring_width);

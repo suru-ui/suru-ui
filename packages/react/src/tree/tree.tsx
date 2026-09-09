@@ -13,7 +13,6 @@ import {
   type TreeRootVariant,
   type TreeRootItemObject,
   type ITreeRootItemRenderer,
-  type TreeRootSelectionMode,
   type TreeItemIndicatorProps,
   TreeItem,
   TreeRoot,
@@ -42,11 +41,6 @@ export interface ITreeItemRenderer extends ITreeRootItemRenderer {}
  * {@link TreeRootRadius}
  */
 export type TreeRadius = TreeRootRadius;
-
-/**
- * {@link TreeRootSelectionMode}
- */
-export type TreeSelectionMode = TreeRootSelectionMode;
 
 /**
  * {@link TreeRootSize}
@@ -267,11 +261,6 @@ export namespace Tree {
    * {@link TreeRadius}
    */
   export type Radius = TreeRadius;
-
-  /**
-   * {@link TreeSelectionMode}
-   */
-  export type SelectionMode = TreeSelectionMode;
 
   /**
    * {@link TreeSize}

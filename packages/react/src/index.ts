@@ -741,7 +741,6 @@ export {
   type TreeSlotProps,
   type TreeItemObject,
   type ITreeItemRenderer,
-  type TreeSelectionMode,
   Tree,
   useTreeAPI,
   TreeContext,
