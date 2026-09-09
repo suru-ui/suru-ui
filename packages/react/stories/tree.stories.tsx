@@ -22,11 +22,11 @@ const FILE_TREE: readonly FileNode[] = [
   {
     id: "src",
     label: "src",
-    children: [
+    items: [
       {
         id: "components",
         label: "components",
-        children: [
+        items: [
           {
             id: "button",
             label: "Button.tsx",
@@ -40,7 +40,7 @@ const FILE_TREE: readonly FileNode[] = [
       {
         id: "hooks",
         label: "hooks",
-        children: [
+        items: [
           {
             id: "use-theme",
             label: "useTheme.ts",
@@ -57,7 +57,7 @@ const FILE_TREE: readonly FileNode[] = [
     id: "public",
     label: "public",
     disabled: true,
-    children: [
+    items: [
       {
         id: "favicon",
         label: "favicon.ico",
@@ -106,6 +106,7 @@ export const Usage = meta.story({
     outlined: false,
     items: FILE_TREE,
     defaultExpandedValue: ["src"],
+    className: "w-[240px]",
   }),
 });
 
@@ -124,7 +125,7 @@ export const Sizes = meta.story({
     return (
       <div className="flex flex-col gap-4">
         {SIZES.map((size) => (
-          <div key={size} className="w-80">
+          <div key={size} className="w-[240px]">
             <p>{size}</p>
             <Tree {...props} size={size} />
           </div>

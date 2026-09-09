@@ -9,7 +9,6 @@ import {
   type ButtonRootSize,
   type ButtonRootColor,
   type ButtonRootRadius,
-  type ButtonRootVariant,
   ButtonRoot,
 } from "../button/button.parts.jsx";
 import cn from "../cn.js";
@@ -156,28 +155,26 @@ export namespace Context {
 
 /**
  * {@link TreeRoot} の項目を表すオブジェクトです。
+ *
+ * `id` と `label` と `items` を含み、その他のプロパティーは {@link TreeItem} に渡されます。
  */
-export type TreeRootItemObject = {
-  /**
-   * 子ノードの一覧です。
-   *
-   * 空でない場合に展開可能な分岐として扱います。
-   */
-  readonly children?: readonly TreeRootItemObject[] | undefined;
-
-  /**
-   * ノードを無効にするかどうかを指定します。
-   *
-   * @default false
-   */
-  readonly disabled?: boolean | undefined;
-
+export type TreeRootItemObject = Omit<
+  TreeItemProps,
+  "children" | "hasItems" | "id" | "level" | "posInSet" | "setSize"
+> & {
   /**
    * ノードの一意な識別子です。
    *
    * 展開や選択の状態管理に使います。
    */
   readonly id: string;
+
+  /**
+   * 子ノードの一覧です。
+   *
+   * 空でない場合に展開可能な分岐として扱います。
+   */
+  readonly items?: readonly TreeRootItemObject[] | undefined;
 
   /**
    * ノードのラベルです。
@@ -449,11 +446,11 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
 
     const walk = (nodes: readonly TreeRootItemObject[], level: number): void => {
       for (const [index, node] of nodes.entries()) {
-        const hasChildren = node.children != null && node.children.length > 0;
+        const hasItems = node.items != null && node.items.length > 0;
 
         result.push({ node, level, setSize: nodes.length, posInSet: index + 1 });
-        if (hasChildren && expanded.has(node.id) && node.children != null) {
-          walk(node.children, level + 1);
+        if (hasItems && expanded.has(node.id) && node.items != null) {
+          walk(node.items, level + 1);
         }
       }
     };
@@ -725,20 +722,21 @@ const defaultRootItemRenderer: ITreeRootItemRenderer = (node, level, posInSet, s
     return toReactNode(node);
   }
 
-  const hasChildren = node.children != null && node.children.length > 0;
+  const { id, items, label, ...otherItemProps } = node;
+  const hasItems = items != null && items.length > 0;
 
   return (
     <TreeItem
-      id={node.id}
-      key={node.id}
+      {...otherItemProps}
+      id={id}
+      key={id}
       level={level}
       setSize={setSize}
-      disabled={node.disabled}
+      hasItems={hasItems}
       posInSet={posInSet}
-      hasChildren={hasChildren}
     >
-      <TreeItemIndicator visible={hasChildren} />
-      {toReactNode(node.label)}
+      <TreeItemIndicator visible={hasItems} />
+      {toReactNode(label)}
     </TreeItem>
   );
 };
@@ -845,7 +843,7 @@ export type TreeItemProps = React.ComponentProps<typeof ButtonRoot> & {
    *
    * @default false
    */
-  hasChildren?: boolean | undefined;
+  hasItems?: boolean | undefined;
 
   /**
    * 対応するノードの識別子です。
@@ -932,10 +930,10 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
     setSize,
     variant = ctx.variant ?? "liquid",
     disabled = false,
+    hasItems = false,
     outlined = ctx.outlined ?? false,
     posInSet,
     className,
-    hasChildren = false,
     ...otherButtonProps
   } = props;
 
@@ -954,7 +952,7 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
       ctx.focus();
     }
 
-    if (hasChildren && !event.shiftKey && !event.ctrlKey && !event.metaKey) {
+    if (hasItems && !event.shiftKey && !event.ctrlKey && !event.metaKey) {
       ctx.toggleExpansion(itemId, event);
     }
     ctx.select(itemId, getSelectAction(event), event);
@@ -979,7 +977,7 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
       nativeButton={false}
       aria-level={level}
       aria-setsize={setSize}
-      aria-expanded={hasChildren ? expanded : undefined}
+      aria-expanded={hasItems ? expanded : undefined}
       aria-posinset={posInSet}
       aria-selected={selected}
       data-id={itemId}

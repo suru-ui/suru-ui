@@ -74,7 +74,7 @@ export type TreeSlotProps = {
    * すべての項目に同じ props が渡されます。ツリーの構造に関わる props は上書きされません。
    */
   readonly item?:
-    | Omit<TreeItemProps, "hasChildren" | "id" | "label" | "level" | "posInSet" | "setSize">
+    | Omit<TreeItemProps, "hasItems" | "id" | "label" | "level" | "posInSet" | "setSize">
     | undefined;
 };
 
@@ -168,17 +168,19 @@ export const useTreeAPI: IUseTreeAPI = function useSuiTreeAPI(props) {
       return node.label;
     },
     getItemProps(node, level, posInSet, setSize) {
-      const hasChildren = node.children != null && node.children.length > 0;
+      const { id, items, label, ...otherNodeProps } = node;
+      const hasItems = items != null && items.length > 0;
 
       return {
         ...itemProps,
-        id: node.id,
-        label: node.label,
+        ...otherNodeProps,
+        id,
+        label,
         level,
         setSize,
         disabled: node.disabled || itemProps.disabled,
+        hasItems,
         posInSet,
-        hasChildren,
       };
     },
     getRootProps() {
@@ -189,11 +191,11 @@ export const useTreeAPI: IUseTreeAPI = function useSuiTreeAPI(props) {
       };
     },
     getIndicatorProps(node) {
-      const hasChildren = node.children != null && node.children.length > 0;
+      const hasItems = node.items != null && node.items.length > 0;
 
       return {
         ...indicatorProps,
-        visible: hasChildren,
+        visible: hasItems,
       };
     },
   };
