@@ -236,10 +236,10 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
     variant: variantProp = "solid",
     disabled = false,
     outlined: outlinedProp = false,
+    className,
     focusableWhenDisabled = !disabled && pending,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
   const size = actionGroupCtx?.size ?? sizeProp;

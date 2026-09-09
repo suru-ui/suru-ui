@@ -151,11 +151,11 @@ export const PasswordFieldRoot: IComponent<PasswordFieldRootProps> = function Su
     radius = size,
     variant = "liquid",
     visible: visibleProp,
-    // @ts-expect-error
-    "data-scope": dataScope = "",
     className,
     defaultVisible = false,
     onVisibleChange,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     ...otherProps
   } = props;
   const [visible, setVisible] = useControlled<boolean>({

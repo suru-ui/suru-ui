@@ -233,17 +233,17 @@ export const ActionGroupRoot: IComponent<ActionGroupRootProps> = function SuiAct
   props,
 ) {
   const {
+    role = "group",
     size = "md",
     color = "grey",
     radius = size,
     variant = "solid",
     outlined = false,
+    className,
     orientation = "horizontal",
+    "aria-orientation": ariaOrientation = orientation,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
-    role = "group",
-    "aria-orientation": ariaOrientation = orientation,
     ...otherDivProps
   } = props;
   const ctx = React.useMemo<ActionGroupContext>(
@@ -343,8 +343,8 @@ export const ActionGroupSeparator: IComponent<ActionGroupSeparatorProps> =
   function SuiActionGroupSeparator(props) {
     const ctx = useActionGroupContext(true);
     const {
-      orientation: orientationProp,
       className,
+      orientation: orientationProp,
       "aria-orientation": ariaOrientation = orientationProp ?? ctx?.orientation ?? "horizontal",
       ...otherDivProps
     } = props;

@@ -116,9 +116,9 @@ export const TextareaRoot: IComponent<TextareaRootProps> = function SuiTextareaR
     radius = size,
     variant = "liquid",
     outlined = false,
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 

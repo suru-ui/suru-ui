@@ -185,10 +185,10 @@ export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: Ac
     variant = "liquid",
     children = defaultRootItemRenderer,
     outlined = false,
+    className,
     separator = false,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 

@@ -98,9 +98,9 @@ export const SegmentsRoot: IComponent<SegmentsRootProps> = function SuiSegmentsR
     size = "md",
     color = "grey",
     radius = size,
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 

@@ -102,151 +102,6 @@ function getSortName(prop: Prop): string | null {
 }
 
 /**
- * パターンが束縛する名前を収集する。
- */
-function collectBoundNames(node: Node, names: Set<string>): void {
-  if (node.type === "Identifier") {
-    names.add(node.name);
-    return;
-  }
-  if (node.type === "AssignmentPattern") {
-    collectBoundNames(node.left, names);
-    return;
-  }
-  if (node.type === "ObjectPattern") {
-    for (const prop of node.properties) {
-      if (prop.type === "ObjectProperty") {
-        collectBoundNames(prop.value, names);
-      } else {
-        collectBoundNames(prop.argument, names);
-      }
-    }
-    return;
-  }
-  if (node.type === "ArrayPattern") {
-    for (const element of node.elements) {
-      if (element !== null) {
-        collectBoundNames(element, names);
-      }
-    }
-    return;
-  }
-  if (node.type === "RestElement") {
-    collectBoundNames(node.argument, names);
-  }
-}
-
-/**
- * 式が参照する名前を収集する。
- *
- * メンバーアクセスのプロパティーやオブジェクトのキーなど、参照ではない位置の
- * 識別子は除く。判定できない位置は参照として扱い、安全側に倒す。
- */
-function collectReferencedNames(node: Node, names: Set<string>): void {
-  if (node.type === "Identifier") {
-    names.add(node.name);
-    return;
-  }
-  if (node.type === "MemberExpression" || node.type === "OptionalMemberExpression") {
-    collectReferencedNames(node.object, names);
-    if (node.computed) {
-      collectReferencedNames(node.property, names);
-    }
-    return;
-  }
-  if (node.type === "ObjectProperty" || node.type === "ObjectMethod") {
-    if (node.computed) {
-      collectReferencedNames(node.key, names);
-    }
-    if (node.type === "ObjectProperty") {
-      collectReferencedNames(node.value, names);
-    } else {
-      for (const param of node.params) {
-        collectReferencedNames(param, names);
-      }
-      collectReferencedNames(node.body, names);
-    }
-    return;
-  }
-  for (const key of Object.keys(node) as (keyof Node)[]) {
-    if (key === "leadingComments" || key === "trailingComments" || key === "innerComments") {
-      continue;
-    }
-    const value = node[key];
-    if (isNode(value)) {
-      collectReferencedNames(value, names);
-    } else if (Array.isArray(value)) {
-      for (const item of value) {
-        if (isNode(item)) {
-          collectReferencedNames(item, names);
-        }
-      }
-    }
-  }
-}
-
-/**
- * パターン内の既定値 (`= ...`) と計算されたキーが参照する名前を収集する。
- */
-function collectPatternRefs(node: Node, names: Set<string>): void {
-  if (node.type === "AssignmentPattern") {
-    collectReferencedNames(node.right, names);
-    collectPatternRefs(node.left, names);
-    return;
-  }
-  if (node.type === "ObjectProperty") {
-    if (node.computed) {
-      collectReferencedNames(node.key, names);
-    }
-    collectPatternRefs(node.value, names);
-    return;
-  }
-  if (node.type === "ObjectPattern") {
-    for (const prop of node.properties) {
-      collectPatternRefs(prop, names);
-    }
-    return;
-  }
-  if (node.type === "ArrayPattern") {
-    for (const element of node.elements) {
-      if (element !== null) {
-        collectPatternRefs(element, names);
-      }
-    }
-    return;
-  }
-  if (node.type === "RestElement") {
-    collectPatternRefs(node.argument, names);
-  }
-}
-
-/**
- * 分割代入のパターンに初期化順の依存があるかを返す。
- *
- * 既定値 (`end = start`) や計算されたキー (`[prefix]`) がパターン内で束縛される
- * 名前を参照している場合、並べ替えると評価順が変わり、未初期化の変数を参照する
- * 可能性があるため、並べ替え対象から除く。
- */
-function hasInitOrderDependency(pattern: ObjectPattern): boolean {
-  const bound = new Set<string>();
-  for (const prop of pattern.properties) {
-    if (prop.type === "ObjectProperty") {
-      collectBoundNames(prop.value, bound);
-    } else {
-      collectBoundNames(prop.argument, bound);
-    }
-  }
-  if (bound.size === 0) return false;
-
-  const referenced = new Set<string>();
-  collectPatternRefs(pattern, referenced);
-  for (const name of referenced) {
-    if (bound.has(name)) return true;
-  }
-  return false;
-}
-
-/**
  * プロパティーの開始位置を返す。
  *
  * プロパティーに付随するコメントはプロパティーと一緒に移動するため、
@@ -272,8 +127,6 @@ function extendedStart(prop: Prop): number {
  *
  * 名前を持たないプロパティー (スプレッド・レスト・計算されたキー) は位置を維持し、
  * それ以外のプロパティーを「一般 → `aria-*` → `data-*`」の順で並べ替える。
- * ただし分割代入のパターンに初期化順の依存がある場合 (既定値が兄弟の束縛を
- * 参照している場合) は並べ替えない。
  *
  * @returns 変更が必要な場合は計画、不要な場合は `null`。
  */
@@ -284,8 +137,6 @@ function planReplacement(container: Container): {
   /** 新しい位置 `i` に置くプロパティーの元インデックス。 */
   newOrder: number[];
 } | null {
-  if (container.type === "ObjectPattern" && hasInitOrderDependency(container)) return null;
-
   const props: Prop[] = [];
   for (const prop of container.properties) {
     props.push(prop);

@@ -256,10 +256,10 @@ export const CheckboxGroupRoot: IComponent<CheckboxGroupRootProps> = function Su
     variant = "liquid",
     disabled,
     outlined = false,
-    // @ts-expect-error
-    "data-scope": dataScope = "",
     className,
     orientation = "vertical",
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     ...otherProps
   } = props;
   const ctx = React.useMemo<CheckboxGroupContext>(

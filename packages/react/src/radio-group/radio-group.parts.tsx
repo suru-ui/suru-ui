@@ -256,10 +256,10 @@ export const RadioGroupRoot: IComponent<RadioGroupRootProps> = function SuiRadio
     variant = "naked",
     disabled,
     outlined = variant === "naked",
-    // @ts-expect-error
-    "data-scope": dataScope = "",
     className,
     orientation = "vertical",
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     ...otherProps
   } = props;
   const ctx = React.useMemo<RadioGroupContext>(

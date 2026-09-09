@@ -122,9 +122,9 @@ export const CheckboxRoot: IComponent<CheckboxRootProps> = function SuiCheckboxR
     variant: variantProp = "liquid",
     disabled: disabledProp,
     outlined: outlinedProp = false,
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
   const size = group?.size ?? sizeProp;

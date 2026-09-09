@@ -89,9 +89,9 @@ export const TabsRoot: IComponent<TabsRootProps> = function SuiTabsRoot(props) {
     size = "md",
     radius = size,
     outlined = false,
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 

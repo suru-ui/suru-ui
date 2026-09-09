@@ -208,9 +208,9 @@ export const TextFieldRoot: IComponent<TextFieldRootProps> = function SuiTextFie
     onClick,
     variant = "liquid",
     outlined = false,
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherDivProps
   } = props;
   const handleClick: NonNullable<TextFieldRootProps["onClick"]> = (evt) => {

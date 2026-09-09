@@ -107,14 +107,16 @@ describe("sortObjectProps", () => {
     expect(sortObjectProps(source)).toBe(expected);
   });
 
-  it("既定値が兄弟の束縛を参照する分割代入は変更しない", () => {
+  it("既定値が兄弟の束縛を参照する場合でも並べ替える", () => {
     const source = `const { start = 2, end = start } = props;`;
-    expect(sortObjectProps(source)).toBe(source);
+    const expected = `const { end = start, start = 2 } = props;`;
+    expect(sortObjectProps(source)).toBe(expected);
   });
 
-  it("既定値が後の兄弟を参照する分割代入は変更しない", () => {
+  it("既定値が後の兄弟を参照する場合でも並べ替える", () => {
     const source = `const { radius = size, size = "md" } = props;`;
-    expect(sortObjectProps(source)).toBe(source);
+    const expected = `const { size = "md", radius = size } = props;`;
+    expect(sortObjectProps(source)).toBe(expected);
   });
 
   it("既に並べ替え済みなら変更しない", () => {

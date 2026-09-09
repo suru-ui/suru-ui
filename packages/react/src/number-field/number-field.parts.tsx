@@ -227,9 +227,9 @@ export const NumberFieldRoot: IComponent<NumberFieldRootProps> = function SuiNum
     radius: radiusProp = sizeProp,
     variant: variantProp = "liquid",
     outlined: outlinedProp = false,
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
   const size = actionGroupCtx?.size ?? sizeProp;

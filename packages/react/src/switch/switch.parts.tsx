@@ -108,9 +108,9 @@ export const SwitchRoot: IComponent<SwitchRootProps> = function SuiSwitchRoot(pr
     radius = "full",
     variant = "naked",
     outlined = variant === "naked",
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherProps
   } = props;
 

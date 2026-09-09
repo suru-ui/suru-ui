@@ -615,8 +615,8 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
   function SuiPaginationEllipsis(props) {
     const ctx = usePaginationContext(true);
     const {
-      start = 2,
       end = start,
+      start = 2,
       onClick,
       disabled = false,
       className,

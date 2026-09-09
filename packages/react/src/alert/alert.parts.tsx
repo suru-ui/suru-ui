@@ -100,9 +100,9 @@ export const AlertRoot: IComponent<AlertRootProps> = function SuiAlertRoot(props
     radius = size,
     variant = "muted",
     outlined = false,
+    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    className,
     ...otherDivProps
   } = props;
 
