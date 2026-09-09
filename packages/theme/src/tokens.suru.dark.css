@@ -496,7 +496,7 @@
 
   --sui-disabled-border_width: --sui-border_width(1);
 
-  --sui-tooltip-canvas: #6a6a6a;
+  --sui-tooltip-canvas: #5a5a5a;
   --sui-tooltip-canvas_text: #fff;
 
   --sui-border-1: var(--sui-grey-30);

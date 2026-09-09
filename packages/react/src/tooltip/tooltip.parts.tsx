@@ -1,10 +1,62 @@
 import { Tooltip } from "@base-ui/react/tooltip";
+import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import { ContextMissingError } from "../errors.js";
+import type { IComponent, IUseContext } from "../types.js";
 
 import "./tooltip.css";
+
+// Context
+// -------
+
+/**
+ * {@link TooltipRoot} が子パーツへ提供するコンテキストです。
+ */
+export type TooltipContext = {
+  /**
+   * ツールチップに枠線を表示するかどうかです。
+   */
+  readonly outlined: boolean;
+
+  /**
+   * ツールチップの角丸の大きさです。
+   */
+  readonly radius: TooltipRootRadius;
+
+  /**
+   * ツールチップの大きさです。
+   */
+  readonly size: TooltipRootSize;
+};
+
+/**
+ * {@link TooltipRoot} が子パーツへ提供するコンテキストです。
+ */
+export const TooltipContext: React.Context<TooltipContext | null> =
+  React.createContext<TooltipContext | null>(null);
+
+function useSuiTooltipContext(optional?: false): TooltipContext;
+function useSuiTooltipContext(optional?: boolean): TooltipContext | null;
+function useSuiTooltipContext(optional?: boolean): TooltipContext | null {
+  const ctx = React.use(TooltipContext);
+  if (ctx === null && !optional) {
+    throw new ContextMissingError({
+      contextName: "TooltipContext",
+      providerName: "TooltipRoot",
+    });
+  }
+
+  return ctx;
+}
+
+/**
+ * {@link TooltipContext} を読み取るフックです。
+ */
+export const useTooltipContext: IUseContext<TooltipContext> = useSuiTooltipContext;
+
+export { TooltipContext as Context, useTooltipContext as useContext };
 
 // Handle
 // ------
@@ -14,14 +66,14 @@ import "./tooltip.css";
  *
  * @template TPayload トリガーが送信するデータの型です。
  */
-export interface TooltipHandle<TPayload = unknown> extends Tooltip.Handle<TPayload> {}
+export interface TooltipHandle<TPayload = any> extends Tooltip.Handle<TPayload> {}
 
 interface ICreateTooltipHandle {
   /**
    * @template TPayload トリガーが送信するデータの型です。
    * @returns ツールチップを制御するハンドルです。
    */
-  <TPayload = unknown>(): TooltipHandle<TPayload>;
+  <TPayload = any>(): TooltipHandle<TPayload>;
 }
 
 /**
@@ -32,44 +84,6 @@ export const createTooltipHandle: ICreateTooltipHandle = function createSuiToolt
 };
 
 export { type TooltipHandle as Handle, createTooltipHandle as createHandle };
-
-// Provider
-// --------
-
-/**
- * {@link TooltipProvider} が持つ状態です。
- */
-export type TooltipProviderState = Tooltip.Provider.State;
-
-/**
- * {@link TooltipProvider} に渡す props です。
- */
-export type TooltipProviderProps = Tooltip.Provider.Props;
-
-/**
- * 複数のツールチップで開閉の遅延を共有するプロバイダーです。
- *
- * 近接したツールチップを続けて表示するとき、先に表示したツールチップが閉じてから一定時間内であれば、次のツールチップをすぐに表示します。
- */
-export const TooltipProvider: IComponent<TooltipProviderProps> = function SuiTooltipProvider(
-  props,
-) {
-  return <Tooltip.Provider {...props} />;
-};
-
-export { TooltipProvider as Provider };
-
-export namespace Provider {
-  /**
-   * {@link TooltipProviderState}
-   */
-  export type State = TooltipProviderState;
-
-  /**
-   * {@link TooltipProviderProps}
-   */
-  export type Props = TooltipProviderProps;
-}
 
 // Root
 // ----
@@ -90,6 +104,25 @@ export type TooltipRootChangeEventDetails = Tooltip.Root.ChangeEventDetails;
 export type TooltipRootChangeEventReason = Tooltip.Root.ChangeEventReason;
 
 /**
+ * ツールチップの角丸の大きさです。
+ *
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ */
+export type TooltipRootRadius = "none" | Size;
+
+/**
+ * ツールチップの大きさです。
+ *
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ */
+export type TooltipRootSize = Size;
+
+/**
  * {@link TooltipRoot} が持つ状態です。
  */
 export type TooltipRootState = Tooltip.Root.State;
@@ -99,20 +132,44 @@ export type TooltipRootState = Tooltip.Root.State;
  *
  * @template TPayload トリガーから受け取るデータの型です。
  */
-export type TooltipRootProps<TPayload = unknown> = Omit<Tooltip.Root.Props<TPayload>, "handle"> & {
+export type TooltipRootProps<TPayload = any> = Omit<
+  React.ComponentProps<typeof Tooltip.Root<TPayload>>,
+  "handle"
+> & {
   /**
-   * ツールチップとトリガー ({@link Trigger}) を関連付けるハンドルです。
+   * ツールチップとトリガーを関連付けるハンドルです。
    *
    * {@link createHandle} で作成します。Root 内に {@link Trigger} を配置する場合は省略できます。
    */
   handle?: TooltipHandle<TPayload> | undefined;
+
+  /**
+   * ツールチップに枠線を表示するかどうかを指定します。
+   *
+   * @default false
+   */
+  outlined?: boolean | undefined;
+
+  /**
+   * ツールチップの角丸を指定します。
+   *
+   * 既定値は {@link TooltipRootProps.size|size} です。
+   */
+  radius?: TooltipRootRadius | undefined;
+
+  /**
+   * ツールチップのサイズを指定します。
+   *
+   * @default "md"
+   */
+  size?: TooltipRootSize | undefined;
 };
 
 /**
  * {@link TooltipRoot} のコンポーネント型です。
  */
-export interface TooltipRootComponent extends IComponent<TooltipRootProps> {
-  <TPayload = unknown>(props: TooltipRootProps<TPayload>): React.ReactElement | null;
+export interface ITooltipRoot extends IComponent<TooltipRootProps> {
+  <TPayload = any>(props: TooltipRootProps<TPayload>): React.ReactElement | null;
 }
 
 /**
@@ -121,10 +178,20 @@ export interface TooltipRootComponent extends IComponent<TooltipRootProps> {
  * 開閉状態を管理し、トリガーとポップアップをグループ化します。
  * それ自身は HTML 要素をレンダリングしません。
  */
-export const TooltipRoot: TooltipRootComponent = function SuiTooltipRoot<TPayload>(
+export const TooltipRoot: ITooltipRoot = function SuiTooltipRoot<TPayload>(
   props: TooltipRootProps<TPayload>,
 ) {
-  return <Tooltip.Root {...props} />;
+  const { size = "md", radius = size, outlined = false, ...otherProps } = props;
+  const ctx = React.useMemo<TooltipContext>(
+    () => ({ size, radius, outlined }),
+    [size, radius, outlined],
+  );
+
+  return (
+    <TooltipContext.Provider value={ctx}>
+      <Tooltip.Root {...otherProps} />
+    </TooltipContext.Provider>
+  );
 };
 
 export { TooltipRoot as Root };
@@ -138,7 +205,7 @@ export namespace Root {
   /**
    * {@link TooltipRootProps}
    */
-  export type Props<TPayload = unknown> = TooltipRootProps<TPayload>;
+  export type Props<TPayload = any> = TooltipRootProps<TPayload>;
 
   /**
    * {@link TooltipRootActions}
@@ -154,6 +221,16 @@ export namespace Root {
    * {@link TooltipRootChangeEventReason}
    */
   export type ChangeEventReason = TooltipRootChangeEventReason;
+
+  /**
+   * {@link TooltipRootRadius}
+   */
+  export type Radius = TooltipRootRadius;
+
+  /**
+   * {@link TooltipRootSize}
+   */
+  export type Size = TooltipRootSize;
 }
 
 // Trigger
@@ -171,9 +248,9 @@ export type TooltipTriggerState = Tooltip.Trigger.State;
  *
  * @template TPayload トリガーから渡すデータの型です。
  */
-export type TooltipTriggerProps<TPayload = unknown> = Omit<
-  Tooltip.Trigger.Props<TPayload>,
-  "handle" | "children" | "render"
+export type TooltipTriggerProps<TPayload = any> = Omit<
+  React.ComponentProps<typeof Tooltip.Trigger<TPayload>>,
+  "handle" | "children" | "render" | "closeOnClick"
 > & {
   /**
    * トリガーとしてレンダリングする要素です。
@@ -183,18 +260,25 @@ export type TooltipTriggerProps<TPayload = unknown> = Omit<
   children: NonNullable<Tooltip.Trigger.Props<TPayload>["render"]>;
 
   /**
-   * ツールチップ ({@link Root}) を関連付けるハンドルです。
+   * ツールチップを関連付けるハンドルです。
    *
    * {@link createHandle} で作成し、{@link Root} と共有します。Root 内に配置する場合は省略できます。
    */
   handle?: TooltipHandle<TPayload> | undefined;
+
+  /**
+   * このトリガーがクリックされたときにツールチップを開いたままにするかかどうかを指定します。
+   *
+   * @default false
+   */
+  keepOpenOnClick?: boolean | undefined;
 };
 
 /**
  * {@link TooltipTrigger} のコンポーネント型です。
  */
-export interface TooltipTriggerComponent extends IComponent<TooltipTriggerProps> {
-  <TPayload = unknown>(props: TooltipTriggerProps<TPayload>): React.ReactElement | null;
+export interface ITooltipTrigger extends IComponent<TooltipTriggerProps> {
+  <TPayload = any>(props: TooltipTriggerProps<TPayload>): React.ReactElement | null;
 }
 
 /**
@@ -202,10 +286,10 @@ export interface TooltipTriggerComponent extends IComponent<TooltipTriggerProps>
  *
  * 子要素は何にもラップされず、そのまま {@link Tooltip.Trigger} の `render` プロパティーに渡されます。
  */
-export const TooltipTrigger: TooltipTriggerComponent = function SuiTooltipTrigger<TPayload>(
+export const TooltipTrigger: ITooltipTrigger = function SuiTooltipTrigger<TPayload>(
   props: TooltipTriggerProps<TPayload>,
 ) {
-  const { handle, children, className, ...otherProps } = props;
+  const { handle, children, className, keepOpenOnClick = false, ...otherProps } = props;
 
   return (
     <Tooltip.Trigger
@@ -213,6 +297,7 @@ export const TooltipTrigger: TooltipTriggerComponent = function SuiTooltipTrigge
       handle={handle}
       render={children}
       className={cn(className, "sui_tooltip_trigger")}
+      closeOnClick={!keepOpenOnClick}
     />
   );
 };
@@ -228,7 +313,7 @@ export namespace Trigger {
   /**
    * {@link TooltipTriggerProps}
    */
-  export type Props<TPayload = unknown> = TooltipTriggerProps<TPayload>;
+  export type Props<TPayload = any> = TooltipTriggerProps<TPayload>;
 }
 
 // Portal
@@ -256,11 +341,21 @@ export const TooltipPortal: IComponent<TooltipPortalProps> = function SuiTooltip
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
+  const ctx = useTooltipContext(true);
+  const size = ctx?.size ?? "md";
+  const radius = ctx?.radius ?? "md";
+  const outlined = ctx?.outlined ?? false;
 
   return (
     <Tooltip.Portal
       {...otherProps}
-      className={cn(className, "sui_tooltip_portal")}
+      className={cn(
+        className,
+        "sui_tooltip_portal",
+        `sui_tooltip-size_${size}`,
+        `sui_tooltip-radius_${radius}`,
+        outlined && "sui_tooltip-outlined",
+      )}
       data-scope={dataScope}
     />
   );
@@ -324,23 +419,23 @@ export namespace Positioner {
   export type Props = TooltipPositionerProps;
 }
 
-// Popup
-// -----
+// Content
+// -------
 
 /**
- * {@link TooltipPopup} が持つ状態です。
+ * {@link TooltipContent} が持つ状態です。
  */
-export type TooltipPopupState = Tooltip.Popup.State;
+export type TooltipContentState = Tooltip.Popup.State;
 
 /**
- * {@link TooltipPopup} に渡す props です。
+ * {@link TooltipContent} に渡す props です。
  */
-export type TooltipPopupProps = React.ComponentProps<typeof Tooltip.Popup>;
+export type TooltipContentProps = React.ComponentProps<typeof Tooltip.Popup>;
 
 /**
  * ツールチップの内容を表示するポップアップ要素です。
  */
-export const TooltipPopup: IComponent<TooltipPopupProps> = function SuiTooltipPopup(props) {
+export const TooltipContent: IComponent<TooltipContentProps> = function SuiTooltipContent(props) {
   const { className, ...otherProps } = props;
 
   return (
@@ -349,27 +444,27 @@ export const TooltipPopup: IComponent<TooltipPopupProps> = function SuiTooltipPo
       {...otherProps}
       className={cn(
         className,
-        "sui_tooltip_popup",
+        "sui_tooltip_content",
         (state) =>
           state.transitionStatus !== undefined &&
-          `sui_tooltip_popup-transition_status_${state.transitionStatus}`,
+          `sui_tooltip_content-transition_status_${state.transitionStatus}`,
       )}
     />
   );
 };
 
-export { TooltipPopup as Popup };
+export { TooltipContent as Content };
 
-export namespace Popup {
+export namespace Content {
   /**
-   * {@link TooltipPopupState}
+   * {@link TooltipContentState}
    */
-  export type State = TooltipPopupState;
+  export type State = TooltipContentState;
 
   /**
-   * {@link TooltipPopupProps}
+   * {@link TooltipContentProps}
    */
-  export type Props = TooltipPopupProps;
+  export type Props = TooltipContentProps;
 }
 
 // Arrow
