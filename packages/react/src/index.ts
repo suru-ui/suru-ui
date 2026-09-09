@@ -721,8 +721,10 @@ export {
 } from "./toggle-button/index.js";
 export {
   type TooltipAPI,
+  type TooltipSize,
   type TooltipProps,
   type TooltipState,
+  type TooltipRadius,
   type TooltipActions,
   type TooltipSlotProps,
   type TooltipChangeEventReason,
@@ -730,6 +732,13 @@ export {
   Tooltip,
   useTooltipAPI,
 } from "./tooltip/index.js";
+export {
+  type TooltipGroupAPI,
+  type TooltipGroupProps,
+  type TooltipGroupState,
+  TooltipGroup,
+  useTooltipGroupAPI,
+} from "./tooltip-group/index.js";
 export {
   type TreeAPI,
   type TreeSize,
