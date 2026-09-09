@@ -6,22 +6,27 @@ import type { IComponent } from "../types.js";
 import {
   type TreeRootSize,
   type TreeItemProps,
+  type TreeRootColor,
   type TreeRootProps,
   type TreeRootState,
   type TreeRootRadius,
-  type TreeItemLabelProps,
+  type TreeRootVariant,
   type TreeRootItemObject,
   type ITreeRootItemRenderer,
   type TreeRootSelectionMode,
   type TreeItemIndicatorProps,
   TreeItem,
   TreeRoot,
-  TreeItemLabel,
   TreeItemIndicator,
 } from "./tree.parts.jsx";
 
 // Types
 // -----
+
+/**
+ * {@link TreeRootColor}
+ */
+export type TreeColor = TreeRootColor;
 
 /**
  * {@link TreeRootItemObject}
@@ -49,6 +54,11 @@ export type TreeSelectionMode = TreeRootSelectionMode;
 export type TreeSize = TreeRootSize;
 
 /**
+ * {@link TreeRootVariant}
+ */
+export type TreeVariant = TreeRootVariant;
+
+/**
  * {@link Tree} が持つ状態です。
  */
 export type TreeState = TreeRootState;
@@ -72,13 +82,6 @@ export type TreeSlotProps = {
   readonly item?:
     | Omit<TreeItemProps, "hasChildren" | "id" | "label" | "level" | "posInSet" | "setSize">
     | undefined;
-
-  /**
-   * {@link TreeItemLabel} に渡す props です。
-   *
-   * `children` は上書きされません。
-   */
-  readonly label?: Omit<TreeItemLabelProps, "children"> | undefined;
 };
 
 /**
@@ -114,6 +117,13 @@ export interface TreeAPI {
   getIndicatorProps(node: Readonly<TreeItemObject>): TreeItemIndicatorProps;
 
   /**
+   * ノードのラベルを取得します。
+   *
+   * @param node 描画対象のノードです。
+   */
+  getItemLabel(node: Readonly<TreeItemObject>): React.ReactNode;
+
+  /**
    * {@link TreeItem} に渡す props を取得します。
    *
    * @param node 描画対象のノードです。
@@ -127,13 +137,6 @@ export interface TreeAPI {
     posInSet: number,
     setSize: number,
   ): Omit<TreeItemProps, "children">;
-
-  /**
-   * {@link TreeItemLabel} に渡す props を取得します。
-   *
-   * @param node 描画対象のノードです。
-   */
-  getLabelProps(node: Readonly<TreeItemObject>): TreeItemLabelProps;
 
   /**
    * {@link TreeRoot} に渡す props を取得します。
@@ -162,15 +165,14 @@ export const useTreeAPI: IUseTreeAPI = function useSuiTreeAPI(props) {
   const {
     items,
     children,
-    slotProps: {
-      item: itemProps = {},
-      label: labelProps = {},
-      indicator: indicatorProps = {},
-    } = {},
+    slotProps: { item: itemProps = {}, indicator: indicatorProps = {} } = {},
     ...otherRootProps
   } = props;
 
   return {
+    getItemLabel(node) {
+      return node.label;
+    },
     getItemProps(node, level, posInSet, setSize) {
       const hasChildren = node.children != null && node.children.length > 0;
 
@@ -190,12 +192,6 @@ export const useTreeAPI: IUseTreeAPI = function useSuiTreeAPI(props) {
         ...otherRootProps,
         items,
         children: typeof children === "function" ? children : toReactNode(children),
-      };
-    },
-    getLabelProps(node) {
-      return {
-        ...labelProps,
-        children: toReactNode(node.label),
       };
     },
     getIndicatorProps(node) {
@@ -229,7 +225,7 @@ export const Tree: IComponent<TreeProps> = function SuiTree(props) {
         ((node, level, posInSet, setSize) => (
           <TreeItem key={node.id} {...api.getItemProps(node, level, posInSet, setSize)}>
             <TreeItemIndicator {...api.getIndicatorProps(node)} />
-            <TreeItemLabel {...api.getLabelProps(node)} />
+            {api.getItemLabel(node)}
           </TreeItem>
         ))}
     </TreeRoot>
@@ -251,6 +247,11 @@ export namespace Tree {
    * {@link TreeSlotProps}
    */
   export type SlotProps = TreeSlotProps;
+
+  /**
+   * {@link TreeColor}
+   */
+  export type Color = TreeColor;
 
   /**
    * {@link TreeItemObject}
@@ -276,4 +277,9 @@ export namespace Tree {
    * {@link TreeSize}
    */
   export type Size = TreeSize;
+
+  /**
+   * {@link TreeVariant}
+   */
+  export type Variant = TreeVariant;
 }

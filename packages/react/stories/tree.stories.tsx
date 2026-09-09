@@ -23,25 +23,47 @@ const FILE_TREE: readonly FileNode[] = [
         id: "components",
         label: "components",
         children: [
-          { id: "button", label: "Button" },
-          { id: "input", label: "Input" },
+          {
+            id: "button",
+            label: "Button.tsx",
+          },
+          {
+            id: "input",
+            label: "Input.tsx",
+          },
         ],
       },
       {
         id: "hooks",
         label: "hooks",
-        children: [{ id: "use-theme", label: "useTheme" }],
+        children: [
+          {
+            id: "use-theme",
+            label: "useTheme.ts",
+          },
+        ],
       },
-      { id: "index", label: "index.ts" },
+      {
+        id: "index",
+        label: "index.ts",
+      },
     ],
   },
   {
     id: "public",
     label: "public",
     disabled: true,
-    children: [{ id: "favicon", label: "favicon.ico" }],
+    children: [
+      {
+        id: "favicon",
+        label: "favicon.ico",
+      },
+    ],
   },
-  { id: "package", label: "package.json" },
+  {
+    id: "package",
+    label: "package.json",
+  },
 ];
 
 const MEDIA_TREE: readonly FileNode[] = [
@@ -49,19 +71,25 @@ const MEDIA_TREE: readonly FileNode[] = [
     id: "documents",
     label: "Documents",
     children: [
-      { id: "report", label: "report.pdf" },
-      { id: "photo", label: "photo.png" },
+      {
+        id: "report",
+        label: "report.pdf",
+      },
+      {
+        id: "photo",
+        label: "photo.png",
+      },
     ],
   },
-  { id: "music", label: "Music" },
+  {
+    id: "music",
+    label: "Music",
+  },
 ];
 
 const ctrl = controls(Tree, {
   items: {
     control: false,
-  },
-  expandOnClick: {
-    control: "boolean",
   },
   radius: {
     control: "select",
@@ -82,7 +110,6 @@ export const Usage = meta.story({
   ...ctrl({
     items: FILE_TREE,
     defaultExpandedValue: ["src"],
-    expandOnClick: true,
     radius: "md",
     selectionMode: "single",
     size: "md",
@@ -94,7 +121,6 @@ export const SelectionModes = meta.story({
   ...ctrl({
     items: FILE_TREE,
     defaultExpandedValue: ["src"],
-    expandOnClick: true,
     radius: "md",
     size: "md",
   }),
@@ -117,7 +143,6 @@ export const Sizes = meta.story({
   ...ctrl({
     items: FILE_TREE,
     defaultExpandedValue: ["src"],
-    expandOnClick: true,
     radius: "md",
     selectionMode: "single",
   }),
@@ -128,29 +153,6 @@ export const Sizes = meta.story({
           <div key={size} className="w-80">
             <p>{`サイズ "${size}"`}</p>
             <Tree {...props} size={size} />
-          </div>
-        ))}
-      </div>
-    );
-  },
-});
-
-export const ExpandOnClick = meta.story({
-  name: "クリックでの展開",
-  ...ctrl({
-    items: FILE_TREE,
-    defaultExpandedValue: [],
-    radius: "md",
-    selectionMode: "single",
-    size: "md",
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-col gap-4">
-        {([true, false] as const).map((expandOnClick) => (
-          <div key={String(expandOnClick)} className="w-80">
-            <p>{`expandOnClick "${String(expandOnClick)}"`}</p>
-            <Tree {...props} expandOnClick={expandOnClick} />
           </div>
         ))}
       </div>
@@ -183,7 +185,6 @@ export const Controlled = meta.story({
   name: "制御",
   ...ctrl({
     items: FILE_TREE,
-    expandOnClick: true,
     radius: "md",
     selectionMode: "multiple",
     size: "md",
@@ -212,7 +213,6 @@ export const CustomParts = meta.story({
   ...ctrl({
     items: MEDIA_TREE,
     defaultExpandedValue: ["documents"],
-    expandOnClick: true,
     radius: "md",
     selectionMode: "single",
     size: "md",
@@ -220,7 +220,14 @@ export const CustomParts = meta.story({
   render(props) {
     return (
       <div className="h-64 w-80 overflow-auto">
-        <Tree {...props} slotProps={{ indicator: { children: <FolderIcon /> } }} />
+        <Tree
+          {...props}
+          slotProps={{
+            indicator: {
+              children: <FolderIcon />,
+            },
+          }}
+        />
       </div>
     );
   },

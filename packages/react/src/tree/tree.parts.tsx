@@ -5,6 +5,13 @@ import * as React from "react";
 import { ChevronRightIcon } from "../_icons.jsx";
 import toReactNode from "../_to-react-node.js";
 import useRender, { type RenderProps } from "../_use-render.js";
+import {
+  type ButtonRootSize,
+  type ButtonRootColor,
+  type ButtonRootRadius,
+  type ButtonRootVariant,
+  ButtonRoot,
+} from "../button/button.parts.jsx";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
 import type { IComponent, IUseContext } from "../types.js";
@@ -41,9 +48,9 @@ export type TreeContext = {
   readonly activeId: string | null;
 
   /**
-   * 項目のクリックで展開を切り替えるかどうかです。
+   * 項目の配色です。
    */
-  readonly expandOnClick: boolean;
+  readonly color: TreeRootColor;
 
   /**
    * 展開されているノードの識別子の集合です。
@@ -61,6 +68,21 @@ export type TreeContext = {
    * @param itemId ノードの識別子です。
    */
   readonly getItemId: (itemId: string) => string;
+
+  /**
+   * 項目の背景色を控えめにするかどうかです。
+   */
+  readonly muted: boolean;
+
+  /**
+   * 項目に枠線を表示するかどうかです。
+   */
+  readonly outlined: boolean;
+
+  /**
+   * 項目の角丸です。
+   */
+  readonly radius: TreeRootRadius;
 
   /**
    * ノードの識別子から選択状態を変更する関数です。
@@ -89,12 +111,22 @@ export type TreeContext = {
   readonly setActive: (itemId: string) => void;
 
   /**
+   * 項目の大きさです。
+   */
+  readonly size: TreeRootSize;
+
+  /**
    * ノードの展開状態を切り替える関数です。
    *
    * @param itemId 展開状態を切り替えるノードの識別子です。
    * @param event 展開のきっかけになったイベントです。
    */
   readonly toggleExpansion: (itemId: string, event: React.SyntheticEvent) => void;
+
+  /**
+   * 項目の主な外観です。
+   */
+  readonly variant: TreeRootVariant;
 };
 
 /**
@@ -192,6 +224,11 @@ export interface ITreeRootItemRenderer {
 }
 
 /**
+ * ツリーの項目の配色です。
+ */
+export type TreeRootColor = ButtonRootColor;
+
+/**
  * ツリーの角丸です。
  *
  * - `"none"`: 角を直角にする
@@ -209,6 +246,15 @@ export type TreeRootRadius = "none" | Size;
  * - `"lg"`: 大きいサイズ
  */
 export type TreeRootSize = Size;
+
+/**
+ * ツリーの項目の主な外観です。
+ *
+ * - `"solid"`: 塗りつぶし
+ * - `"naked"`: 背景なし
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type TreeRootVariant = ButtonRootVariant;
 
 /**
  * {@link TreeRoot} の状態です。
@@ -243,6 +289,13 @@ export type TreeRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps 
     children?: React.ReactNode | ITreeRootItemRenderer | undefined;
 
     /**
+     * 選択されている項目の配色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: TreeRootColor | undefined;
+
+    /**
      * 初期状態で展開するノードの識別子の一覧を指定します。
      *
      * 非制御で利用する場合の初期値です。
@@ -257,15 +310,6 @@ export type TreeRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps 
     defaultValue?: readonly string[] | undefined;
 
     /**
-     * 子を持つ項目のクリックで展開を切り替えるかどうかを指定します。
-     *
-     * インジケーターのクリックは常に展開を切り替えます。
-     *
-     * @default true
-     */
-    expandOnClick?: boolean | undefined;
-
-    /**
      * 展開されているノードの識別子の一覧を指定します。
      *
      * 指定すると展開状態がこの値に固定され、{@link TreeRootProps.onExpandedValueChange|onExpandedValueChange} でのみ変化します。
@@ -278,6 +322,13 @@ export type TreeRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps 
      * `children` に関数を指定した場合、展開状態に応じて表示中のノードだけが順に関数へ渡されます。
      */
     items?: readonly TreeRootItemObject[] | undefined;
+
+    /**
+     * 項目の背景色を控えめにするかどうかを指定します。
+     *
+     * @default false
+     */
+    muted?: boolean | undefined;
 
     /**
      * 展開状態が変化したときに呼び出されます。
@@ -296,6 +347,13 @@ export type TreeRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps 
      * @param event 変化のきっかけになったイベントです。
      */
     onValueChange?: ((value: readonly string[], event: React.SyntheticEvent) => void) | undefined;
+
+    /**
+     * 選択されている項目に枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
 
     /**
      * 項目のハイライトの角丸を指定します。
@@ -324,6 +382,17 @@ export type TreeRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps 
      * 指定すると選択状態がこの値に固定され、{@link TreeRootProps.onValueChange|onValueChange} でのみ変化します。
      */
     value?: readonly string[] | undefined;
+
+    /**
+     * 選択されている項目の主な外観を指定します。
+     *
+     * - `"solid"`: 塗りつぶし
+     * - `"naked"`: 背景なし
+     * - `"liquid"`: 薄い塗りつぶし
+     *
+     * @default "liquid"
+     */
+    variant?: TreeRootVariant | undefined;
   };
 
 const EMPTY: readonly string[] = [];
@@ -342,14 +411,17 @@ function isBranchElement(element: Element): boolean {
 export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
   const {
     size = "md",
+    color = "grey",
     items = EMPTY_NODES,
+    muted = false,
     value: valueProp,
     radius = size,
     onFocus: onFocusProp,
+    variant = "liquid",
     children = defaultRootItemRenderer,
+    outlined = false,
     onKeyDown: onKeyDownProp,
     defaultValue = EMPTY,
-    expandOnClick = true,
     expandedValue: expandedValueProp,
     onValueChange,
     selectionMode = "none",
@@ -444,27 +516,37 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
 
   const ctx = React.useMemo<TreeContext>(
     () => ({
+      size,
+      color,
       focus,
+      muted,
+      radius,
       select,
+      variant,
       activeId,
       expanded,
+      outlined,
       selected,
       getItemId,
       setActive: setActiveId,
-      expandOnClick,
       selectionMode,
       toggleExpansion,
     }),
     [
       activeId,
-      expandOnClick,
+      color,
       expanded,
       focus,
       getItemId,
+      muted,
+      outlined,
+      radius,
       select,
       selected,
       selectionMode,
+      size,
       toggleExpansion,
+      variant,
     ],
   );
 
@@ -646,7 +728,6 @@ const defaultRootItemRenderer: ITreeRootItemRenderer = (node, level, posInSet, s
     <TreeItem
       id={node.id}
       key={node.id}
-      label={node.label}
       level={level}
       setSize={setSize}
       disabled={node.disabled}
@@ -654,7 +735,7 @@ const defaultRootItemRenderer: ITreeRootItemRenderer = (node, level, posInSet, s
       hasChildren={hasChildren}
     >
       <TreeItemIndicator visible={hasChildren} />
-      <TreeItemLabel>{toReactNode(node.label)}</TreeItemLabel>
+      {toReactNode(node.label)}
     </TreeItem>
   );
 };
@@ -676,6 +757,11 @@ export namespace Root {
    * {@link TreeRootProps}
    */
   export type Props = TreeRootProps;
+
+  /**
+   * {@link TreeRootColor}
+   */
+  export type Color = TreeRootColor;
 
   /**
    * {@link TreeRootItemObject}
@@ -701,12 +787,41 @@ export namespace Root {
    * {@link TreeRootSize}
    */
   export type Size = TreeRootSize;
+
+  /**
+   * {@link TreeRootVariant}
+   */
+  export type Variant = TreeRootVariant;
 }
 
 export { TreeRoot as Root };
 
 // Item
 // ----
+
+/**
+ * ツリーの項目の配色です。
+ */
+export type TreeItemColor = ButtonRootColor;
+
+/**
+ * ツリーの項目の角丸です。
+ */
+export type TreeItemRadius = ButtonRootRadius;
+
+/**
+ * ツリーの項目の大きさです。
+ */
+export type TreeItemSize = ButtonRootSize;
+
+/**
+ * ツリーの項目の主な外観です。
+ *
+ * - `"solid"`: 塗りつぶし
+ * - `"naked"`: 背景なし
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type TreeItemVariant = ButtonRootVariant;
 
 /**
  * {@link TreeItem} の状態です。
@@ -716,91 +831,122 @@ export type TreeItemState = {};
 /**
  * {@link TreeItem} に渡すプロパティーです。
  */
-export type TreeItemProps = Omit<React.ComponentProps<"div">, keyof RenderProps | "children"> &
-  RenderProps<TreeItemState> & {
-    /**
-     * 項目の内容です。
-     */
-    children?: React.ReactNode | undefined;
+export type TreeItemProps = React.ComponentProps<typeof ButtonRoot> & {
+  /**
+   * 項目の配色を指定します。
+   *
+   * 選択されていないときは常に `"grey"` になります。
+   *
+   * 既定値は {@link TreeRootProps.color|color} です。
+   */
+  color?: TreeItemColor | undefined;
 
-    /**
-     * 項目を無効にするかどうかを指定します。
-     *
-     * `true` の場合、選択と展開の操作ができなくなります。
-     *
-     * @default false
-     */
-    disabled?: boolean | undefined;
+  /**
+   * 子ノードを持つかどうかを指定します。
+   *
+   * `true` の場合、展開可能な分岐として描画します。
+   *
+   * @default false
+   */
+  hasChildren?: boolean | undefined;
 
-    /**
-     * 子ノードを持つかどうかを指定します。
-     *
-     * `true` の場合、展開可能な分岐として描画します。
-     *
-     * @default false
-     */
-    hasChildren?: boolean | undefined;
+  /**
+   * 対応するノードの識別子です。
+   *
+   * `items` プロパティーから描画した項目には自動的に渡されます。
+   */
+  id: string;
 
-    /**
-     * 対応するノードの識別子です。
-     *
-     * `items` プロパティーから描画した項目には自動的に渡されます。
-     */
-    id: string;
+  /**
+   * ノードの深さです。ルートの直接の子が `1` です。
+   *
+   * `items` プロパティーから描画した項目には自動的に渡されます。
+   */
+  level: number;
 
-    /**
-     * 項目のラベルです。
-     *
-     * `children` を指定しないとき、{@link TreeItemLabel} として描画されます。
-     */
-    label?: React.ReactNode | undefined;
+  /**
+   * 項目の背景色を控えめにするかどうかを指定します。
+   *
+   * 既定値は {@link TreeRootProps.muted|muted} です。
+   */
+  muted?: boolean | undefined;
 
-    /**
-     * ノードの深さです。ルートの直接の子が `1` です。
-     *
-     * `items` プロパティーから描画した項目には自動的に渡されます。
-     */
-    level: number;
+  /**
+   * 項目に枠線を表示するかどうかを指定します。
+   *
+   * 選択されていないときは常に枠線なしになります。
+   *
+   * 既定値は {@link TreeRootProps.outlined|outlined} です。
+   */
+  outlined?: boolean | undefined;
 
-    /**
-     * 同じ深さの中での位置です。1 起点です。
-     *
-     * `items` プロパティーから描画した項目には自動的に渡されます。
-     */
-    posInSet?: number | undefined;
+  /**
+   * 同じ深さの中での位置です。1 起点です。
+   *
+   * `items` プロパティーから描画した項目には自動的に渡されます。
+   */
+  posInSet?: number | undefined;
 
-    /**
-     * 同じ深さの項目数です。
-     *
-     * `items` プロパティーから描画した項目には自動的に渡されます。
-     */
-    setSize?: number | undefined;
-  };
+  /**
+   * 項目の角丸を指定します。
+   *
+   * 既定値は {@link TreeRootProps.radius|radius} です。
+   */
+  radius?: TreeItemRadius | undefined;
+
+  /**
+   * 同じ深さの項目数です。
+   *
+   * `items` プロパティーから描画した項目には自動的に渡されます。
+   */
+  setSize?: number | undefined;
+
+  /**
+   * 項目の大きさを指定します。
+   *
+   * 既定値は {@link TreeRootProps.size|size} です。
+   */
+  size?: TreeItemSize | undefined;
+
+  /**
+   * 項目の主な外観を指定します。
+   *
+   * 選択されていないときは常に `"naked"` になります。
+   *
+   * 既定値は {@link TreeRootProps.variant|variant} です。
+   */
+  variant?: TreeItemVariant | undefined;
+};
 
 /**
  * ツリーの項目要素です。
  */
 export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
-  const ctx = useSuiTreeContext(true);
+  const ctx = useSuiTreeContext();
   const {
     id: itemId,
-    label,
+    size = ctx.size ?? "md",
+    color = ctx.color ?? "grey",
     level,
-    setSize,
-    children = label != null ? <TreeItemLabel>{label}</TreeItemLabel> : null,
-    disabled = false,
-    posInSet,
-    hasChildren = false,
+    muted = ctx.muted ?? false,
+    radius = ctx.radius ?? size,
+    render = <div />,
     onClick: onClickProp,
-    ...otherDivProps
+    setSize,
+    variant = ctx.variant ?? "liquid",
+    disabled = false,
+    outlined = ctx.outlined ?? false,
+    posInSet,
+    className,
+    hasChildren = false,
+    ...otherButtonProps
   } = props;
 
-  const domId = ctx?.getItemId(itemId) ?? itemId;
-  const expanded = ctx?.expanded.has(itemId) ?? false;
-  const selected = ctx?.selectionMode !== "none" && (ctx?.selected.has(itemId) ?? false);
-  const active = ctx?.activeId === itemId;
+  const domId = ctx.getItemId(itemId) ?? itemId;
+  const expanded = ctx.expanded.has(itemId) ?? false;
+  const selected = ctx.selectionMode !== "none" && (ctx.selected.has(itemId) ?? false);
 
-  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleClick: NonNullable<TreeItemProps["onClick"]> = (event) => {
     onClickProp?.(event);
     if (ctx == null || disabled || event.defaultPrevented) {
       return;
@@ -809,9 +955,7 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
     ctx.setActive(itemId);
     ctx.focus();
 
-    const target = event.target instanceof Element ? event.target : null;
-    const indicatorClicked = target?.closest("[data-sui_tree_item_indicator]") != null;
-    if (hasChildren && (indicatorClicked || ctx.expandOnClick)) {
+    if (hasChildren) {
       ctx.toggleExpansion(itemId, event);
     }
     if (ctx.selectionMode !== "none") {
@@ -820,33 +964,31 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
     }
   };
 
-  return useRender({
-    props: [
-      otherDivProps,
-      {
-        id: domId,
-        role: "treeitem",
-        style: { "--sui_tree_item-level": level - 1 },
-        onClick: handleClick,
-        children,
-        className: cn<TreeItemState>(
-          "sui_tree_item",
-          expanded && "sui_tree_item-expanded",
-          selected && "sui_tree_item-selected",
-          active && "sui_tree_item-active",
-          disabled && "sui_tree_item-disabled",
-        ),
-        "aria-level": level,
-        "aria-setsize": setSize,
-        "aria-disabled": disabled || undefined,
-        "aria-expanded": hasChildren ? expanded : undefined,
-        "aria-posinset": posInSet,
-        "aria-selected": ctx?.selectionMode !== "none" ? selected : undefined,
-        "data-id": itemId,
-      },
-    ],
-    defaultTagName: "div",
-  });
+  return (
+    <ButtonRoot
+      {...otherButtonProps}
+      id={domId}
+      item
+      role="treeitem"
+      size={size}
+      color={selected ? color : "grey"}
+      muted={muted}
+      radius={radius}
+      render={render}
+      onClick={handleClick}
+      variant={selected ? variant : "naked"}
+      disabled={disabled}
+      outlined={selected && outlined}
+      className={cn(className, "sui_tree_item", expanded && "sui_tree_item-expanded")}
+      nativeButton={false}
+      aria-level={level}
+      aria-setsize={setSize}
+      aria-expanded={hasChildren ? expanded : undefined}
+      aria-posinset={posInSet}
+      aria-selected={ctx.selectionMode !== "none" ? selected : undefined}
+      data-id={itemId}
+    />
+  );
 };
 
 export { TreeItem as Item };
@@ -861,6 +1003,26 @@ export namespace Item {
    * {@link TreeItemProps}
    */
   export type Props = TreeItemProps;
+
+  /**
+   * {@link TreeItemColor}
+   */
+  export type Color = TreeItemColor;
+
+  /**
+   * {@link TreeItemRadius}
+   */
+  export type Radius = TreeItemRadius;
+
+  /**
+   * {@link TreeItemSize}
+   */
+  export type Size = TreeItemSize;
+
+  /**
+   * {@link TreeItemVariant}
+   */
+  export type Variant = TreeItemVariant;
 }
 
 // Indicator
@@ -905,7 +1067,6 @@ export const TreeItemIndicator: IComponent<TreeItemIndicatorProps> = function Su
           "sui_tree_item_indicator",
           !visible && "sui_tree_item_indicator-hidden",
         ),
-        "data-sui_tree_item_indicator": "",
       },
     ],
     defaultTagName: "span",
@@ -924,47 +1085,4 @@ export namespace Indicator {
    * {@link TreeItemIndicatorProps}
    */
   export type Props = TreeItemIndicatorProps;
-}
-
-// Label
-// -----
-
-/**
- * {@link TreeItemLabel} の状態です。
- */
-export type TreeItemLabelState = {};
-
-/**
- * {@link TreeItemLabel} に渡すプロパティーです。
- */
-export type TreeItemLabelProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
-  RenderProps<TreeItemLabelState>;
-
-/**
- * ツリーの項目のラベルを表示する要素です。
- */
-export const TreeItemLabel: IComponent<TreeItemLabelProps> = function SuiTreeItemLabel(props) {
-  return useRender({
-    props: [
-      props,
-      {
-        className: "sui_tree_item_label",
-      },
-    ],
-    defaultTagName: "span",
-  });
-};
-
-export { TreeItemLabel as Label };
-
-export namespace Label {
-  /**
-   * {@link TreeItemLabelState}
-   */
-  export type State = TreeItemLabelState;
-
-  /**
-   * {@link TreeItemLabelProps}
-   */
-  export type Props = TreeItemLabelProps;
 }

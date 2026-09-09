@@ -733,9 +733,11 @@ export {
 export {
   type TreeAPI,
   type TreeSize,
+  type TreeColor,
   type TreeProps,
   type TreeState,
   type TreeRadius,
+  type TreeVariant,
   type TreeSlotProps,
   type TreeItemObject,
   type ITreeItemRenderer,
