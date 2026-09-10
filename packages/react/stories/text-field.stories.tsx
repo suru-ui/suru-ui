@@ -1,4 +1,4 @@
-import { SIZES, COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import { LinkIcon, PenToolIcon } from "lucide-react";
 import * as React from "react";
 
@@ -6,7 +6,9 @@ import { preview, controls } from "../.config/storybook/preview.js";
 import { Field } from "../src/field/index.js";
 import { TextField } from "../src/text-field/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
+const COLORS: readonly TextField.Color[] = theme.COLORS;
+const SIZES: readonly TextField.Size[] = theme.SIZES;
+const RADII: readonly TextField.Radius[] = ["none", ...SIZES, "full"];
 const TYPES = [
   "date",
   "datetime-local",
@@ -23,7 +25,7 @@ const TYPES = [
   "url",
   "week",
 ] as const;
-const VARIANTS = ["naked", "liquid"] as const;
+const VARIANTS: readonly TextField.Variant[] = ["naked", "liquid"];
 
 const meta = preview.meta({
   title: "TextField",
@@ -34,8 +36,8 @@ export default meta;
 
 const ctrl = controls(TextField, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   disabled: {
     control: "boolean",
@@ -47,20 +49,20 @@ const ctrl = controls(TextField, {
     control: "text",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   type: {
-    options: TYPES,
     control: "select",
+    options: TYPES,
   },
   variant: {
-    options: VARIANTS,
     control: "select",
+    options: VARIANTS,
   },
 });
 
