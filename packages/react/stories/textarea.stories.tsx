@@ -1,12 +1,14 @@
-import { SIZES, COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Field } from "../src/field/index.js";
 import { Textarea } from "../src/textarea/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
-const VARIANTS = ["naked", "liquid"] as const;
+const COLORS: readonly Textarea.Color[] = theme.COLORS;
+const SIZES: readonly Textarea.Size[] = theme.SIZES;
+const RADII: readonly Textarea.Radius[] = ["none", ...SIZES];
+const VARIANTS: readonly Textarea.Variant[] = ["naked", "liquid"];
 
 const meta = preview.meta({
   title: "Textarea",
@@ -17,8 +19,8 @@ export default meta;
 
 const ctrl = controls(Textarea, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   disabled: {
     control: "boolean",
@@ -30,19 +32,19 @@ const ctrl = controls(Textarea, {
     control: "text",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   rows: {
     control: "number",
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   variant: {
-    options: VARIANTS,
     control: "select",
+    options: VARIANTS,
   },
 });
 

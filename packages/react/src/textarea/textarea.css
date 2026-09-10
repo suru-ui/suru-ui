@@ -5,7 +5,11 @@
 /* 固定 */
 :scope {
   display: block;
+  align-self: center;
   width: 100%;
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: anywhere;
   touch-action: manipulation;
   resize: vertical;
   outline-style: solid;
@@ -111,7 +115,7 @@
                                       );
 
   &.sui_textarea-size_sm {
-    --sui_textarea-min_height: calc(var(--sui-size-sm) + var(--sui_textarea-virtual_text_height));
+    --sui_textarea-min_height: var(--sui-size-sm);
     --sui_textarea-padding_inline: --sui-space(3);
     --sui_textarea-font_size: var(--sui-text-std-sm-n-font_size);
     --sui_textarea-font_weight: var(--sui-text-std-sm-n-font_weight);
@@ -120,7 +124,7 @@
   }
 
   &.sui_textarea-size_md {
-    --sui_textarea-min_height: calc(var(--sui-size-md) + var(--sui_textarea-virtual_text_height));
+    --sui_textarea-min_height: var(--sui-size-md);
     --sui_textarea-padding_inline: --sui-space(4);
     --sui_textarea-font_size: var(--sui-text-std-md-n-font_size);
     --sui_textarea-font_weight: var(--sui-text-std-md-n-font_weight);
@@ -129,7 +133,7 @@
   }
 
   &.sui_textarea-size_lg {
-    --sui_textarea-min_height: calc(var(--sui-size-lg) + var(--sui_textarea-virtual_text_height));
+    --sui_textarea-min_height: var(--sui-size-lg);
     --sui_textarea-padding_inline: --sui-space(5);
     --sui_textarea-font_size: var(--sui-text-std-lg-n-font_size);
     --sui_textarea-font_weight: var(--sui-text-std-lg-n-font_weight);
@@ -151,10 +155,6 @@
 
   &.sui_textarea-radius_lg {
     --sui_textarea-border_radius: var(--sui-radius-lg);
-  }
-
-  &.sui_textarea-radius_full {
-    --sui_textarea-border_radius: calc(var(--sui_textarea-min_height) / 2);
   }
 
   &.sui_textarea-variant_naked {

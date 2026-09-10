@@ -32,9 +32,8 @@ export type TextareaRootColor = Color;
  * - `"sm"`: 小さい角丸
  * - `"md"`: 標準的な角丸
  * - `"lg"`: 大きい角丸
- * - `"full"`: 完全な丸形
  */
-export type TextareaRootRadius = "none" | Size | "full";
+export type TextareaRootRadius = "none" | Size;
 
 /**
  * テキストエリアの大きさです。
