@@ -696,13 +696,19 @@ export {
 } from "./textarea/index.js";
 export {
   type ToastAPI,
+  type ToastSize,
+  type ToastColor,
   type ToastProps,
   type ToastState,
+  type ToastRadius,
+  type ToastListAPI,
+  type ToastVariant,
   type ToastSlotProps,
   type ToastToastObject,
   Toast,
   useToastAPI,
-  useToastManager,
+  useToastClient,
+  useToastListAPI,
   createToastManager,
 } from "./toast/index.js";
 export {

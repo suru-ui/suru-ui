@@ -6,7 +6,7 @@ import {
 } from "@base-ui/react/internals/useRenderElement";
 import type * as React from "react";
 
-type State = { readonly [key: string]: unknown };
+type State = Record<string, any>;
 
 type StateArgs<TState extends State> = [keyof TState] extends [never]
   ? {

@@ -30,3 +30,5 @@ export interface IUseContext<TContext = unknown> {
   (optional?: false): TContext;
   (optional?: boolean): TContext | null;
 }
+
+export type Override<T, U> = Omit<T, keyof U> & U;

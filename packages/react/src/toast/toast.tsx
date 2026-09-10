@@ -1,16 +1,28 @@
+import { mergePropsN } from "@base-ui/react";
 import * as React from "react";
 
-import type { IComponent } from "../types.js";
+import isLikelyVisibleNode, { type LikelyVisibleNode } from "../_is-likely-visible-node.js";
+import toReactNode from "../_to-react-node.js";
+import { type AlertRootColor } from "../alert/alert.parts.jsx";
+import type { Override, IComponent } from "../types.js";
 import {
+  type IToastClient,
+  type IToastManager,
   type ToastRootProps,
+  type ToastRootState,
   type ToastCloseProps,
   type ToastTitleProps,
   type ToastActionProps,
+  type ToastContentSize,
   type ToastPortalProps,
+  type ToastPortalState,
+  type ToastActionsProps,
+  type ToastContentColor,
   type ToastContentProps,
+  type ToastContentRadius,
   type ToastProviderProps,
-  type ToastProviderState,
   type ToastViewportProps,
+  type ToastContentVariant,
   type ToastRootToastObject,
   type ToastDescriptionProps,
   ToastRoot,
@@ -18,20 +30,42 @@ import {
   ToastTitle,
   ToastAction,
   ToastPortal,
+  ToastActions,
   ToastContent,
   ToastProvider,
   ToastViewport,
-  useToastManager,
+  useToastClient,
   ToastDescription,
+  createToastManager,
 } from "./toast.parts.jsx";
 
 // Types
 // -----
 
 /**
+ * {@link ToastContentColor}
+ */
+export type ToastColor = ToastContentColor;
+
+/**
+ * {@link ToastContentRadius}
+ */
+export type ToastRadius = ToastContentRadius;
+
+/**
+ * {@link ToastContentSize}
+ */
+export type ToastSize = ToastContentSize;
+
+/**
+ * {@link ToastContentVariant}
+ */
+export type ToastVariant = ToastContentVariant;
+
+/**
  * {@link ToastRootToastObject}
  */
-export type ToastToastObject<TData extends object = object> = ToastRootToastObject<TData>;
+export type ToastToastObject<TData extends object = any> = ToastRootToastObject<TData>;
 
 /**
  * {@link Toast} の各パーツに渡す props です。
@@ -43,35 +77,83 @@ export type ToastSlotProps = {
   readonly action?: ToastActionProps | undefined;
 
   /**
+   * {@link ToastActions} に渡す props です。
+   */
+  readonly actions?: Omit<ToastActionsProps, "children"> | undefined;
+
+  /**
    * {@link ToastClose} に渡す props です。
    */
-  readonly close?: ToastCloseProps | undefined;
+  readonly close?: Omit<ToastCloseProps, "children"> | undefined;
 
   /**
    * {@link ToastContent} に渡す props です。
    */
-  readonly content?: Omit<ToastContentProps, "children"> | undefined;
+  readonly content?: Omit<ToastContentProps, "children" | keyof ToastPropsContent> | undefined;
 
   /**
    * {@link ToastDescription} に渡す props です。
    */
-  readonly description?: ToastDescriptionProps | undefined;
-
-  /**
-   * {@link ToastPortal} に渡す props です。
-   */
-  readonly portal?: Omit<ToastPortalProps, "children"> | undefined;
-
-  /**
-   * {@link ToastRoot} に渡す props です。
-   */
-  readonly root?: Omit<ToastRootProps, "toast" | "children"> | undefined;
+  readonly description?: Omit<ToastDescriptionProps, "children"> | undefined;
 
   /**
    * {@link ToastTitle} に渡す props です。
    */
-  readonly title?: ToastTitleProps | undefined;
+  readonly title?: Omit<ToastTitleProps, "children"> | undefined;
+};
 
+/**
+ * {@link Toast} が持つ状態です。
+ */
+export type ToastState = ToastRootState;
+
+type ToastPropsContent = Pick<
+  ToastContentProps,
+  "size" | "color" | "radius" | "variant" | "outlined"
+>;
+
+/**
+ * {@link Toast} に渡す props です。
+ */
+export type ToastProps<TData extends object = any> = Override<
+  Omit<ToastRootProps<TData>, "children">,
+  ToastPropsContent & {
+    /**
+     * 通知のアクションです。
+     */
+    action?: ToastActionProps["children"] | undefined;
+
+    /**
+     * 通知を閉じるボタンです。
+     */
+    close?: ToastCloseProps["children"] | undefined;
+
+    /**
+     * 通知の説明文です。
+     */
+    description?: ToastDescriptionProps["children"] | undefined;
+
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     */
+    slotProps?: ToastSlotProps | undefined;
+
+    /**
+     * 通知の見出しです。
+     */
+    title?: ToastTitleProps["children"] | undefined;
+
+    /**
+     * 表示する通知オブジェクトです。
+     */
+    toast: ToastToastObject<TData>;
+  }
+>;
+
+/**
+ * {@link ToastList} の各パーツに渡す props です。
+ */
+export type ToastListSlotProps = {
   /**
    * {@link ToastViewport} に渡す props です。
    */
@@ -79,18 +161,36 @@ export type ToastSlotProps = {
 };
 
 /**
- * {@link Toast} の状態です。
+ * {@link ToastList} が持つ状態です。
  */
-export type ToastState = ToastProviderState;
+export type ToastListState = ToastPortalState;
 
 /**
- * {@link Toast} コンポーネントの props です。
+ * {@link ToastList} の子要素を描画する関数です。
  */
-export type ToastProps = ToastProviderProps & {
+export interface IToastListRenderer<TData extends object = any> {
+  /**
+   * @param toast 表示する通知オブジェクトです。
+   * @param index 通知の位置です。
+   */
+  (toast: ToastToastObject<TData>, index: number): React.ReactNode;
+}
+
+/**
+ * {@link ToastList} に渡す props です。
+ */
+export type ToastListProps<TData extends object = any> = Omit<ToastPortalProps, "children"> & {
+  /**
+   * 内容、または各通知をレンダリングする関数です。
+   *
+   * 関数を指定した場合は通知一覧の各通知が引数として渡されます。
+   */
+  children?: React.ReactNode | IToastListRenderer<TData> | undefined;
+
   /**
    * 各パーツに個別の props を渡すためのオブジェクトです。
    */
-  slotProps?: ToastSlotProps | undefined;
+  slotProps?: ToastListSlotProps | undefined;
 };
 
 // API
@@ -103,12 +203,17 @@ export interface ToastAPI {
   /**
    * {@link ToastAction} に渡す props を取得します。
    */
-  getActionProps(): ToastActionProps;
+  getActionProps(): ToastActionProps | null;
+
+  /**
+   * {@link ToastActions} に渡す props を取得します。
+   */
+  getActionsProps(): Omit<ToastActionsProps, "children"> | null;
 
   /**
    * {@link ToastClose} に渡す props を取得します。
    */
-  getCloseProps(): ToastCloseProps;
+  getCloseProps(): ToastCloseProps | null;
 
   /**
    * {@link ToastContent} に渡す props を取得します。
@@ -118,36 +223,17 @@ export interface ToastAPI {
   /**
    * {@link ToastDescription} に渡す props を取得します。
    */
-  getDescriptionProps(): ToastDescriptionProps;
-
-  /**
-   * {@link ToastPortal} に渡す props を取得します。
-   */
-  getPortalProps(): Omit<ToastPortalProps, "children">;
-
-  /**
-   * {@link ToastProvider} に渡す props を取得します。
-   */
-  getProviderProps(): Omit<ToastProviderProps, "children"> & {
-    children: React.ReactNode;
-  };
+  getDescriptionProps(): ToastDescriptionProps | null;
 
   /**
    * {@link ToastRoot} に渡す props を取得します。
-   *
-   * @param toast 表示する通知オブジェクトです。
    */
-  getRootProps(toast: ToastToastObject): Omit<ToastRootProps, "children">;
+  getRootProps(): Omit<ToastRootProps, "children">;
 
   /**
    * {@link ToastTitle} に渡す props を取得します。
    */
-  getTitleProps(): ToastTitleProps;
-
-  /**
-   * {@link ToastViewport} に渡す props を取得します。
-   */
-  getViewportProps(): Omit<ToastViewportProps, "children">;
+  getTitleProps(): ToastTitleProps | null;
 }
 
 interface IUseToastAPI {
@@ -157,7 +243,7 @@ interface IUseToastAPI {
    * @param props {@link Toast} の props です。
    * @returns トーストの API です
    */
-  (props: ToastProps): ToastAPI;
+  <TData extends object = any>(props: ToastProps<TData>): ToastAPI;
 }
 
 /**
@@ -165,77 +251,260 @@ interface IUseToastAPI {
  */
 export const useToastAPI: IUseToastAPI = function useSuiToastAPI(props) {
   const {
-    children,
+    size,
+    close = "閉じる",
+    color,
+    title,
+    toast,
+    action,
+    radius,
+    variant,
+    outlined,
     slotProps: {
-      root: rootProps = {},
       close: closeProps = {},
       title: titleProps = {},
       action: actionProps = {},
-      portal: portalProps = {},
+      actions: actionsProps = {},
       content: contentProps = {},
-      viewport: viewportProps = {},
       description: descriptionProps = {},
     } = {},
-    ...otherProviderProps
+    description,
+    ...otherRootProps
   } = props;
 
   return {
-    getRootProps(toast) {
-      return { ...rootProps, toast };
+    getRootProps() {
+      return {
+        ...otherRootProps,
+        toast,
+      };
     },
     getCloseProps() {
-      return { children: "閉じる", ...closeProps };
+      if (isLikelyVisibleNode(close)) {
+        return {
+          ...closeProps,
+          size: closeProps.size ?? size,
+          children: close,
+        };
+      }
+
+      return null;
     },
     getTitleProps() {
-      return titleProps;
+      if (isLikelyVisibleNode(toast.title)) {
+        return {
+          ...titleProps,
+          children: toast.title,
+        };
+      }
+      if (isLikelyVisibleNode(title)) {
+        return {
+          ...titleProps,
+          children: title,
+        };
+      }
+
+      return null;
     },
     getActionProps() {
-      return actionProps;
+      if (isLikelyVisibleNode(toast.actionProps?.children)) {
+        return mergePropsN([
+          actionProps,
+          toast.actionProps,
+          {
+            size: actionProps.size ?? size,
+          },
+        ]);
+      }
+      if (isLikelyVisibleNode(action)) {
+        return {
+          ...actionProps,
+          size: actionProps.size ?? size,
+          children: action,
+        };
+      }
+
+      return null;
     },
-    getPortalProps() {
-      return portalProps;
+    getActionsProps() {
+      if (this.getActionProps() || this.getCloseProps()) {
+        return actionsProps;
+      }
+
+      return null;
     },
     getContentProps() {
-      return contentProps;
-    },
-    getProviderProps() {
-      return { ...otherProviderProps, children };
-    },
-    getViewportProps() {
-      return viewportProps;
+      const toastContentProps: Required<ToastPropsContent> = {
+        size,
+        color: color ?? toAlertColor(toast.type),
+        radius,
+        variant,
+        outlined,
+      };
+
+      return {
+        ...contentProps,
+        ...toastContentProps,
+      };
     },
     getDescriptionProps() {
-      return descriptionProps;
+      if (isLikelyVisibleNode(toast.description)) {
+        return {
+          ...descriptionProps,
+          children: toast.description,
+        };
+      }
+      if (isLikelyVisibleNode(description)) {
+        return {
+          ...descriptionProps,
+          children: description,
+        };
+      }
+
+      return null;
     },
   };
 };
 
 export { type ToastAPI as API, useToastAPI as useAPI };
 
+/**
+ * {@link ToastList} を構成する各パーツの props を作成するための API です。
+ */
+export interface ToastListAPI {
+  /**
+   * {@link ToastPortal} に渡す props を取得します。
+   */
+  getPortalProps(): Omit<ToastPortalProps, "children">;
+
+  /**
+   * {@link ToastViewport} に渡す props を取得します。
+   */
+  getViewportProps(): Omit<ToastViewportProps, "children"> & {
+    children: LikelyVisibleNode;
+  };
+}
+
+interface IUseToastListAPI {
+  /**
+   * {@link ToastListAPI} を作成します。
+   *
+   * @param props {@link ToastList} の props です。
+   * @returns トースト一覧の API です
+   */
+  <TData extends object = any>(props: ToastListProps<TData>): ToastListAPI;
+}
+
+/**
+ * {@link ToastListAPI} を作成するフックです。
+ */
+export const useToastListAPI: IUseToastListAPI = function useSuiToastListAPI(props) {
+  const { children, slotProps: { viewport: viewportProps = {} } = {}, ...otherPortalProps } = props;
+  const { toasts } = useToastClient();
+
+  return {
+    getPortalProps() {
+      return otherPortalProps;
+    },
+    getViewportProps() {
+      return {
+        ...viewportProps,
+        children:
+          typeof children === "function"
+            ? toasts.map(children)
+            : (toReactNode(children) ?? toasts.map((t) => <Toast key={t.id} toast={t} />)),
+      };
+    },
+  };
+};
+
+export { type ToastListAPI as ListAPI, useToastListAPI as useListAPI };
+
 // Component
 // ---------
 
+interface IToastList extends IComponent<ToastListProps> {
+  /**
+   * @template TData 通知に含める追加データの型です。
+   */
+  <TData extends object = any>(props: ToastListProps<TData>): IComponent.Return;
+}
+
 /**
- * 通知を管理する Provider と、通知一覧を組み立てるコンポーネントです。
- *
- * 子コンポーネントから {@link useToastManager} を呼び出して通知を追加します。
- * 複雑なレイアウトやアンカー付き通知を使う場合は、{@link ToastProvider|Provider} と各パーツを直接組み立てます。
+ * 通知一覧を描画するコンポーネントです。
  */
-export const Toast: IComponent<ToastProps> = function SuiToast(props) {
-  const api = useToastAPI(props);
-  const { children, ...otherProviderProps } = api.getProviderProps();
+const ToastList: IToastList = function SuiToastList(props: ToastListProps) {
+  const api = useToastListAPI(props);
 
   return (
-    <ToastProvider {...otherProviderProps}>
-      {children}
-      <ToastList api={api} />
-    </ToastProvider>
+    <ToastPortal {...api.getPortalProps()}>
+      <ToastViewport {...api.getViewportProps()} />
+    </ToastPortal>
   );
 };
 
+interface IToast extends IComponent<ToastProps> {
+  /**
+   * @template TData 通知に含める追加データの型です。
+   */
+  <TData extends object = any>(props: ToastProps<TData>): IComponent.Return;
+
+  /**
+   * {@link ToastList}
+   */
+  readonly List: typeof ToastList;
+
+  /**
+   * {@link ToastProvider}
+   */
+  readonly Provider: typeof ToastProvider;
+
+  /**
+   * {@link createToastManager}
+   */
+  readonly createManager: <TData extends object = any>() => IToastManager<TData>;
+
+  /**
+   * {@link useToastClient}
+   */
+  readonly useClient: <TData extends object = any>() => IToastClient<TData>;
+}
+
 /**
- * {@link Toast} の状態やプロパティーをまとめた型名前空間です。
+ * 個別の通知を表示するコンポーネントです。
  */
+export const Toast: IToast = /*#__PURE__*/ Object.assign(
+  function SuiToast(props: ToastProps) {
+    const api = useToastAPI(props);
+    const titleProps = api.getTitleProps();
+    const descriptionProps = api.getDescriptionProps();
+    const actionsProps = api.getActionsProps();
+    const actionProps = api.getActionProps();
+    const closeProps = api.getCloseProps();
+
+    return (
+      <ToastRoot {...api.getRootProps()}>
+        <ToastContent {...api.getContentProps()}>
+          {titleProps && <ToastTitle {...titleProps} />}
+          {descriptionProps && <ToastDescription {...descriptionProps} />}
+          {actionsProps && (
+            <ToastActions {...actionsProps}>
+              {actionProps && <ToastAction {...actionProps} />}
+              {closeProps && <ToastClose {...closeProps} />}
+            </ToastActions>
+          )}
+        </ToastContent>
+      </ToastRoot>
+    );
+  },
+  {
+    List: ToastList,
+    Provider: ToastProvider,
+    useClient: useToastClient,
+    createManager: createToastManager,
+  },
+);
+
 export namespace Toast {
   /**
    * {@link ToastState}
@@ -245,7 +514,7 @@ export namespace Toast {
   /**
    * {@link ToastProps}
    */
-  export type Props = ToastProps;
+  export type Props<TData extends object = any> = ToastProps<TData>;
 
   /**
    * {@link ToastSlotProps}
@@ -253,35 +522,118 @@ export namespace Toast {
   export type SlotProps = ToastSlotProps;
 
   /**
+   * {@link ToastAPI}
+   */
+  export type API = ToastAPI;
+
+  /**
+   * {@link ToastColor}
+   */
+  export type Color = ToastColor;
+
+  /**
+   * {@link ToastRadius}
+   */
+  export type Radius = ToastRadius;
+
+  /**
+   * {@link ToastSize}
+   */
+  export type Size = ToastSize;
+
+  /**
    * {@link ToastToastObject}
    */
-  export type ToastObject<TData extends object = object> = ToastToastObject<TData>;
+  export type ToastObject<TData extends object = any> = ToastToastObject<TData>;
+
+  /**
+   * {@link ToastVariant}
+   */
+  export type Variant = ToastVariant;
+
+  export namespace List {
+    /**
+     * {@link ToastListState}
+     */
+    export type State = ToastListState;
+
+    /**
+     * {@link ToastListProps}
+     */
+    export type Props<TData extends object = any> = ToastListProps<TData>;
+
+    /**
+     * {@link ToastListSlotProps}
+     */
+    export type SlotProps = ToastListSlotProps;
+
+    /**
+     * {@link IToastListRenderer}
+     */
+    export interface IRenderer<TData extends object = any> extends IToastListRenderer<TData> {}
+  }
+
+  export namespace Provider {
+    /**
+     * {@link ToastProviderProps}
+     */
+    export type Props = ToastProviderProps;
+  }
 }
 
-type ToastListProps = {
-  readonly api: ToastAPI;
-};
+/**
+ * 通知の種類をアラートの配色に変換します。
+ *
+ * @param type 通知の種類です。
+ * @returns アラートの配色です
+ */
+function toAlertColor(type: string | undefined): AlertRootColor {
+  switch (type?.toLowerCase()) {
+    // 成功
+    case "ok":
+    case "done":
+    case "okay":
+    case "pass":
+    case "passed":
+    case "success":
+    case "complete":
+    case "completed":
+    case "successful":
+      return "green";
 
-function ToastList(props: ToastListProps): React.ReactElement {
-  const { api } = props;
-  const { toasts } = useToastManager();
+    // 警告
+    case "warn":
+    case "caution":
+    case "warning":
+    case "attention":
+      return "yellow";
 
-  return (
-    <ToastPortal {...api.getPortalProps()}>
-      <ToastViewport {...api.getViewportProps()}>
-        {toasts.map((toast) => (
-          <ToastRoot key={toast.id} {...api.getRootProps(toast)}>
-            <ToastContent {...api.getContentProps()}>
-              <div className="sui_toast_text">
-                <ToastTitle {...api.getTitleProps()} />
-                <ToastDescription {...api.getDescriptionProps()} />
-              </div>
-              <ToastAction {...api.getActionProps()} />
-              <ToastClose {...api.getCloseProps()} />
-            </ToastContent>
-          </ToastRoot>
-        ))}
-      </ToastViewport>
-    </ToastPortal>
-  );
+    // エラー・重大な問題
+    case "err":
+    case "crit":
+    case "fail":
+    case "ftal":
+    case "alert":
+    case "error":
+    case "fatal":
+    case "danger":
+    case "failed":
+    case "severe":
+    case "failure":
+    case "critical":
+    case "dangerous":
+    case "emergency":
+      return "red";
+
+    // 情報
+    case "info":
+    case "notice":
+    case "message":
+    case "information":
+    case "informational":
+      return "blue";
+
+    default:
+      return "grey";
+  }
 }

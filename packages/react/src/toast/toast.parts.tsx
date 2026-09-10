@@ -1,18 +1,18 @@
-import { Toast } from "@base-ui/react/toast";
+import { type ToastManager, type UseToastManagerReturnValue, Toast } from "@base-ui/react/toast";
 import * as React from "react";
 
+import mergeProps from "../_merge-props.js";
+import proxyRenderProps from "../_proxy-render-props.js";
+import type { RenderProps } from "../_use-render.js";
+import * as Alert from "../alert/alert.parts.jsx";
+import * as Button from "../button/button.parts.jsx";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 
 import "./toast.css";
 
 // Provider
 // --------
-
-/**
- * {@link ToastProvider} が持つ状態です。
- */
-export type ToastProviderState = Toast.Provider.State;
 
 /**
  * {@link ToastProvider} に渡す props です。
@@ -29,11 +29,6 @@ export const ToastProvider: IComponent<ToastProviderProps> = function SuiToastPr
 export { ToastProvider as Provider };
 
 export namespace Provider {
-  /**
-   * {@link ToastProviderState}
-   */
-  export type State = ToastProviderState;
-
   /**
    * {@link ToastProviderProps}
    */
@@ -108,7 +103,16 @@ export type ToastViewportProps = React.ComponentProps<typeof Toast.Viewport>;
 export const ToastViewport: IComponent<ToastViewportProps> = function SuiToastViewport(props) {
   const { className, ...otherProps } = props;
 
-  return <Toast.Viewport {...otherProps} className={cn(className, "sui_toast_viewport")} />;
+  return (
+    <Toast.Viewport
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_toast_viewport",
+        (state) => state.expanded && "sui_toast_viewport-expanded",
+      )}
+    />
+  );
 };
 
 export { ToastViewport as Viewport };
@@ -133,7 +137,7 @@ export namespace Viewport {
  *
  * @template TData 通知に含める追加データの型です。
  */
-export type ToastRootToastObject<TData extends object = object> = Toast.Root.ToastObject<TData>;
+export type ToastRootToastObject<TData extends object = any> = Toast.Root.ToastObject<TData>;
 
 /**
  * {@link ToastRoot} が持つ状態です。
@@ -145,32 +149,32 @@ export type ToastRootState = Toast.Root.State;
  *
  * @template TData 通知に含める追加データの型です。
  */
-export type ToastRootProps<TData extends object = object> = Omit<
+export type ToastRootProps<TData extends object = any> = Override<
   React.ComponentProps<typeof Toast.Root>,
-  "toast"
-> & {
-  /**
-   * 表示する通知オブジェクトです。
-   */
-  toast: ToastRootToastObject<TData>;
-};
+  {
+    /**
+     * 表示する通知オブジェクトです。
+     */
+    toast: ToastRootToastObject<TData>;
+  }
+>;
 
 /**
  * {@link ToastRoot} のコンポーネント型です。
  */
-export interface ToastRootComponent extends IComponent<ToastRootProps> {
+export interface IToastRoot extends IComponent<ToastRootProps> {
   /**
    * @template TData 通知に含める追加データの型です。
    */
-  <TData extends object = object>(props: ToastRootProps<TData>): React.ReactElement | null;
+  <TData extends object = any>(props: ToastRootProps<TData>): IComponent.Return;
 }
 
 /**
  * 個別の通知をグループ化するルート要素です。
  *
- * `toast` は {@link useToastManager} から取得した通知オブジェクトを渡します。
+ * `toast` は {@link useToastClient} から取得した通知オブジェクトを渡します。
  */
-export const ToastRoot: ToastRootComponent = function SuiToastRoot<TData extends object = object>(
+export const ToastRoot: IToastRoot = function SuiToastRoot<TData extends object = any>(
   props: ToastRootProps<TData>,
 ) {
   const { className, ...otherProps } = props;
@@ -184,7 +188,12 @@ export const ToastRoot: ToastRootComponent = function SuiToastRoot<TData extends
         (state) =>
           state.transitionStatus !== undefined &&
           `sui_toast-transition_status_${state.transitionStatus}`,
-        (state) => state.type !== undefined && `sui_toast-type_${state.type}`,
+        (state) => state.limited && "sui_toast-limited",
+        (state) => state.expanded && "sui_toast-expanded",
+        (state) => state.type !== undefined && `sui_toast-type_${CSS.escape(state.type)}`,
+        (state) => state.swiping && "sui_toast-swiping",
+        (state) =>
+          state.swipeDirection !== undefined && `sui_toast-swipe_direction_${state.swipeDirection}`,
       )}
     />
   );
@@ -201,34 +210,80 @@ export namespace Root {
   /**
    * {@link ToastRootProps}
    */
-  export type Props<TData extends object = object> = ToastRootProps<TData>;
+  export type Props<TData extends object = any> = ToastRootProps<TData>;
 
   /**
    * {@link ToastRootToastObject}
    */
-  export type ToastObject<TData extends object = object> = ToastRootToastObject<TData>;
+  export type ToastObject<TData extends object = any> = ToastRootToastObject<TData>;
 }
 
 // Content
 // -------
 
 /**
+ * {@link Alert.Root.Color}
+ */
+export type ToastContentColor = Alert.Root.Color;
+
+/**
+ * {@link Alert.Root.Radius}
+ */
+export type ToastContentRadius = Alert.Root.Radius;
+
+/**
+ * {@link Alert.Root.Size}
+ */
+export type ToastContentSize = Alert.Root.Size;
+
+/**
+ * {@link Alert.Root.Variant}
+ */
+export type ToastContentVariant = Alert.Root.Variant;
+
+/**
  * {@link ToastContent} が持つ状態です。
  */
-export type ToastContentState = Toast.Content.State;
+export type ToastContentState = Override<Alert.Root.State, Toast.Content.State>;
 
 /**
  * {@link ToastContent} に渡す props です。
  */
-export type ToastContentProps = React.ComponentProps<typeof Toast.Content>;
+export type ToastContentProps = Override<
+  React.ComponentProps<typeof Toast.Content>,
+  Override<Alert.Root.Props, RenderProps<ToastContentState>>
+>;
 
 /**
  * 通知の内容をまとめるコンテナー要素です。
  */
 export const ToastContent: IComponent<ToastContentProps> = function SuiToastContent(props) {
-  const { className, ...otherProps } = props;
+  const { style, render, className, ...otherProps } = props;
+  const toastProps: Required<Omit<ToastContentProps, keyof Alert.Root.Props>> = {};
 
-  return <Toast.Content {...otherProps} className={cn(className, "sui_toast_content")} />;
+  return (
+    <Toast.Content
+      {...toastProps}
+      render={(htmlProps: {}, toastState) => (
+        <Alert.Root
+          {...mergeProps<typeof Alert.Root>([
+            htmlProps,
+            otherProps,
+            proxyRenderProps(toastState, {
+              style,
+              render,
+              className: cn(
+                className,
+                "sui_toast_content",
+                (state) => state.behind && "sui_toast_content-behind",
+                (state) => state.expanded && "sui_toast_content-expanded",
+              ),
+            }),
+          ])}
+        />
+      )}
+    />
+  );
 };
 
 export { ToastContent as Content };
@@ -243,6 +298,26 @@ export namespace Content {
    * {@link ToastContentProps}
    */
   export type Props = ToastContentProps;
+
+  /**
+   * {@link ToastContentColor}
+   */
+  export type Color = ToastContentColor;
+
+  /**
+   * {@link ToastContentRadius}
+   */
+  export type Radius = ToastContentRadius;
+
+  /**
+   * {@link ToastContentSize}
+   */
+  export type Size = ToastContentSize;
+
+  /**
+   * {@link ToastContentVariant}
+   */
+  export type Variant = ToastContentVariant;
 }
 
 // Title
@@ -251,22 +326,41 @@ export namespace Content {
 /**
  * {@link ToastTitle} が持つ状態です。
  */
-export type ToastTitleState = Toast.Title.State;
+export type ToastTitleState = Override<Alert.Title.State, Toast.Title.State>;
 
 /**
  * {@link ToastTitle} に渡す props です。
  */
-export type ToastTitleProps = React.ComponentProps<typeof Toast.Title>;
+export type ToastTitleProps = Override<
+  React.ComponentProps<typeof Toast.Title>,
+  Override<Alert.Title.Props, RenderProps<ToastTitleState>>
+>;
 
 /**
  * 通知のタイトルを表示する見出し要素です。
- *
- * `children` を省略すると通知オブジェクトの `title` が表示されます。
  */
 export const ToastTitle: IComponent<ToastTitleProps> = function SuiToastTitle(props) {
-  const { className, ...otherProps } = props;
+  const { style, render, className, ...otherProps } = props;
+  const toastProps: Required<Omit<ToastTitleProps, keyof Alert.Title.Props>> = {};
 
-  return <Toast.Title {...otherProps} className={cn(className, "sui_toast_title")} />;
+  return (
+    <Toast.Title
+      {...toastProps}
+      render={(htmlProps: {}, toastState) => (
+        <Alert.Title
+          {...mergeProps<typeof Alert.Title>([
+            htmlProps,
+            otherProps,
+            proxyRenderProps(toastState, {
+              style,
+              render,
+              className,
+            }),
+          ])}
+        />
+      )}
+    />
+  );
 };
 
 export { ToastTitle as Title };
@@ -289,24 +383,43 @@ export namespace Title {
 /**
  * {@link ToastDescription} が持つ状態です。
  */
-export type ToastDescriptionState = Toast.Description.State;
+export type ToastDescriptionState = Override<Alert.Content.State, Toast.Description.State>;
 
 /**
  * {@link ToastDescription} に渡す props です。
  */
-export type ToastDescriptionProps = React.ComponentProps<typeof Toast.Description>;
+export type ToastDescriptionProps = Override<
+  React.ComponentProps<typeof Toast.Description>,
+  Override<Alert.Content.Props, RenderProps<ToastDescriptionState>>
+>;
 
 /**
  * 通知の説明文を表示する段落要素です。
- *
- * `children` を省略すると通知オブジェクトの `description` が表示されます。
  */
 export const ToastDescription: IComponent<ToastDescriptionProps> = function SuiToastDescription(
   props,
 ) {
-  const { className, ...otherProps } = props;
+  const { style, render, className, ...otherProps } = props;
+  const toastProps: Required<Omit<ToastDescriptionProps, keyof Alert.Content.Props>> = {};
 
-  return <Toast.Description {...otherProps} className={cn(className, "sui_toast_description")} />;
+  return (
+    <Toast.Description
+      {...toastProps}
+      render={(htmlProps: {}, toastState) => (
+        <Alert.Content
+          {...mergeProps<typeof Alert.Content>([
+            htmlProps,
+            otherProps,
+            proxyRenderProps(toastState, {
+              style,
+              render,
+              className,
+            }),
+          ])}
+        />
+      )}
+    />
+  );
 };
 
 export { ToastDescription as Description };
@@ -323,28 +436,115 @@ export namespace Description {
   export type Props = ToastDescriptionProps;
 }
 
+// Actions
+// -------
+
+/**
+ * {@link ToastActions} が持つ状態です。
+ */
+export type ToastActionsState = Alert.Actions.State;
+
+/**
+ * {@link ToastActions} に渡す props です。
+ */
+export type ToastActionsProps = Alert.Actions.Props;
+
+/**
+ * 通知の操作ボタンを右寄せでまとめるコンポーネントです。
+ */
+export const ToastActions: IComponent<ToastActionsProps> = function SuiToastActions(props) {
+  return <Alert.Actions {...props} />;
+};
+
+export { ToastActions as Actions };
+
+export namespace Actions {
+  /**
+   * {@link ToastActionsState}
+   */
+  export type State = ToastActionsState;
+
+  /**
+   * {@link ToastActionsProps}
+   */
+  export type Props = ToastActionsProps;
+}
+
 // Action
 // ------
 
 /**
+ * {@link Button.Root.Color}
+ */
+export type ToastActionColor = Button.Root.Color;
+
+/**
+ * {@link Button.Root.Radius}
+ */
+export type ToastActionRadius = Button.Root.Radius;
+
+/**
+ * {@link Button.Root.Size}
+ */
+export type ToastActionSize = Button.Root.Size;
+
+/**
+ * {@link Button.Root.Variant}
+ */
+export type ToastActionVariant = Button.Root.Variant;
+
+/**
  * {@link ToastAction} が持つ状態です。
  */
-export type ToastActionState = Toast.Action.State;
+export type ToastActionState = Override<Button.Root.State, Toast.Action.State>;
 
 /**
  * {@link ToastAction} に渡す props です。
  */
-export type ToastActionProps = React.ComponentProps<typeof Toast.Action>;
+export type ToastActionProps = Override<
+  React.ComponentProps<typeof Toast.Action>,
+  Override<Button.Root.Props, RenderProps<ToastActionState>>
+>;
 
 /**
  * 通知に設定されたアクションを実行するボタン要素です。
- *
- * 通知の `actionProps.children` がない場合はレンダリングされません。
  */
 export const ToastAction: IComponent<ToastActionProps> = function SuiToastAction(props) {
-  const { className, ...otherProps } = props;
+  const {
+    color = "grey",
+    style,
+    render,
+    variant = "naked",
+    className,
+    nativeButton,
+    ...otherProps
+  } = props;
+  const toastProps: Required<Omit<ToastActionProps, keyof Button.Root.Props>> = {};
 
-  return <Toast.Action {...otherProps} className={cn(className, "sui_toast_action")} />;
+  return (
+    <Toast.Action
+      {...toastProps}
+      render={(htmlProps: {}, toastState) => (
+        <Button.Root
+          {...mergeProps<typeof Button.Root>([
+            htmlProps,
+            otherProps,
+            {
+              color,
+              variant,
+            },
+            proxyRenderProps(toastState, {
+              style,
+              render,
+              className,
+            }),
+          ])}
+          nativeButton={nativeButton}
+        />
+      )}
+      nativeButton={nativeButton}
+    />
+  );
 };
 
 export { ToastAction as Action };
@@ -359,28 +559,103 @@ export namespace Action {
    * {@link ToastActionProps}
    */
   export type Props = ToastActionProps;
+
+  /**
+   * {@link ToastActionColor}
+   */
+  export type Color = ToastActionColor;
+
+  /**
+   * {@link ToastActionRadius}
+   */
+  export type Radius = ToastActionRadius;
+
+  /**
+   * {@link ToastActionSize}
+   */
+  export type Size = ToastActionSize;
+
+  /**
+   * {@link ToastActionVariant}
+   */
+  export type Variant = ToastActionVariant;
 }
 
 // Close
 // -----
 
 /**
+ * {@link Button.Root.Color}
+ */
+export type ToastCloseColor = Button.Root.Color;
+
+/**
+ * {@link Button.Root.Radius}
+ */
+export type ToastCloseRadius = Button.Root.Radius;
+
+/**
+ * {@link Button.Root.Size}
+ */
+export type ToastCloseSize = Button.Root.Size;
+
+/**
+ * {@link Button.Root.Variant}
+ */
+export type ToastCloseVariant = Button.Root.Variant;
+
+/**
  * {@link ToastClose} が持つ状態です。
  */
-export type ToastCloseState = Toast.Close.State;
+export type ToastCloseState = Override<Button.Root.State, Toast.Close.State>;
 
 /**
  * {@link ToastClose} に渡す props です。
  */
-export type ToastCloseProps = React.ComponentProps<typeof Toast.Close>;
+export type ToastCloseProps = Override<
+  React.ComponentProps<typeof Toast.Close>,
+  Override<Button.Root.Props, RenderProps<ToastCloseState>>
+>;
 
 /**
  * 通知を閉じるボタン要素です。
  */
 export const ToastClose: IComponent<ToastCloseProps> = function SuiToastClose(props) {
-  const { className, ...otherProps } = props;
+  const {
+    color = "grey",
+    style,
+    render,
+    variant = "naked",
+    className,
+    nativeButton,
+    ...otherProps
+  } = props;
+  const toastProps: Required<Omit<ToastCloseProps, keyof Button.Root.Props>> = {};
 
-  return <Toast.Close {...otherProps} className={cn(className, "sui_toast_close")} />;
+  return (
+    <Toast.Close
+      {...toastProps}
+      render={(htmlProps: {}, toastState) => (
+        <Button.Root
+          {...mergeProps<typeof Button.Root>([
+            htmlProps,
+            otherProps,
+            {
+              color,
+              variant,
+            },
+            proxyRenderProps(toastState, {
+              style,
+              render,
+              className,
+            }),
+          ])}
+          nativeButton={nativeButton}
+        />
+      )}
+      nativeButton={nativeButton}
+    />
+  );
 };
 
 export { ToastClose as Close };
@@ -395,95 +670,54 @@ export namespace Close {
    * {@link ToastCloseProps}
    */
   export type Props = ToastCloseProps;
+
+  /**
+   * {@link ToastCloseColor}
+   */
+  export type Color = ToastCloseColor;
+
+  /**
+   * {@link ToastCloseRadius}
+   */
+  export type Radius = ToastCloseRadius;
+
+  /**
+   * {@link ToastCloseSize}
+   */
+  export type Size = ToastCloseSize;
+
+  /**
+   * {@link ToastCloseVariant}
+   */
+  export type Variant = ToastCloseVariant;
 }
 
-// Positioner
-// ----------
+// Client
+// ------
 
-/**
- * {@link ToastPositioner} が持つ状態です。
- */
-export type ToastPositionerState = Toast.Positioner.State;
-
-/**
- * {@link ToastPositioner} に渡す props です。
- */
-export type ToastPositionerProps = React.ComponentProps<typeof Toast.Positioner>;
-
-/**
- * 通知を特定の要素に対して配置する要素です。
- */
-export const ToastPositioner: IComponent<ToastPositionerProps> = function SuiToastPositioner(
-  props,
-) {
-  const { className, ...otherProps } = props;
-
-  return <Toast.Positioner {...otherProps} className={cn(className, "sui_toast_positioner")} />;
-};
-
-export { ToastPositioner as Positioner };
-
-export namespace Positioner {
-  /**
-   * {@link ToastPositionerState}
-   */
-  export type State = ToastPositionerState;
-
-  /**
-   * {@link ToastPositionerProps}
-   */
-  export type Props = ToastPositionerProps;
-}
-
-// Arrow
-// -----
-
-/**
- * {@link ToastArrow} が持つ状態です。
- */
-export type ToastArrowState = Toast.Arrow.State;
-
-/**
- * {@link ToastArrow} に渡す props です。
- */
-export type ToastArrowProps = React.ComponentProps<typeof Toast.Arrow>;
-
-/**
- * アンカーと通知をつなぐ矢印要素です。
- */
-export const ToastArrow: IComponent<ToastArrowProps> = function SuiToastArrow(props) {
-  const { className, ...otherProps } = props;
-
-  return <Toast.Arrow {...otherProps} className={cn(className, "sui_toast_arrow")} />;
-};
-
-export { ToastArrow as Arrow };
-
-export namespace Arrow {
-  /**
-   * {@link ToastArrowState}
-   */
-  export type State = ToastArrowState;
-
-  /**
-   * {@link ToastArrowProps}
-   */
-  export type Props = ToastArrowProps;
-}
-
-// Manager
-// -------
+export interface IToastClient<
+  TData extends object = any,
+> extends UseToastManagerReturnValue<TData> {}
 
 /**
  * 通知を管理するフックです。
  *
  * {@link Provider} の配下で、通知一覧と追加、更新、削除の操作を取得します。
  */
-export const useToastManager: typeof Toast.useToastManager = Toast.useToastManager;
+export function useToastClient<TData extends object = any>(): IToastClient<TData> {
+  return Toast.useToastManager();
+}
+
+// Manager
+// -------
+
+export interface IToastManager<TData extends object = any> extends ToastManager<TData> {}
 
 /**
  * Provider の外から通知を管理するマネージャーを作成します。
  *
  * 作成したマネージャーは {@link Provider} の `toastManager` に渡します。
  */
-export const createToastManager: typeof Toast.createToastManager = Toast.createToastManager;
+export function createToastManager<TData extends object = any>(): IToastManager<TData> {
+  return Toast.createToastManager();
+}
