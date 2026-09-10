@@ -1,5 +1,3 @@
-import type * as React from "react";
-
 import type { IComponent } from "../types.js";
 import {
   type StatusRootSize,

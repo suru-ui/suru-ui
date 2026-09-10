@@ -2,7 +2,6 @@ import * as React from "react";
 
 import type { IComponent } from "../types.js";
 import {
-  type HoverCardHandle,
   type HoverCardRootProps,
   type HoverCardRootState,
   type HoverCardArrowProps,
