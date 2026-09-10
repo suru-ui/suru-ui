@@ -11,8 +11,10 @@ import {
   type TabsRootState,
   type TabsPanelProps,
   type TabsRootRadius,
+  type TabsRootVariant,
   type TabsIndicatorProps,
   type TabsRootOrientation,
+  type TabsRootActiveVariant,
   type TabsRootChangeEventReason,
   type TabsRootChangeEventDetails,
   TabsTab,
@@ -34,6 +36,16 @@ export type TabsRadius = TabsRootRadius;
  * {@link TabsRootSize}
  */
 export type TabsSize = TabsRootSize;
+
+/**
+ * {@link TabsRootVariant}
+ */
+export type TabsVariant = TabsRootVariant;
+
+/**
+ * {@link TabsRootActiveVariant}
+ */
+export type TabsActiveVariant = TabsRootActiveVariant;
 
 /**
  * {@link TabsRootOrientation}
@@ -291,6 +303,11 @@ export namespace Tabs {
   export type SlotProps = TabsSlotProps;
 
   /**
+   * {@link TabsActiveVariant}
+   */
+  export type ActiveVariant = TabsActiveVariant;
+
+  /**
    * {@link TabsChangeEventDetails}
    */
   export type ChangeEventDetails = TabsChangeEventDetails;
@@ -329,4 +346,9 @@ export namespace Tabs {
    * {@link TabsValue}
    */
   export type Value = TabsValue;
+
+  /**
+   * {@link TabsVariant}
+   */
+  export type Variant = TabsVariant;
 }

@@ -29,6 +29,15 @@ export type TabsRootChangeEventReason = BaseTabs.Root.ChangeEventReason;
 export type TabsRootOrientation = BaseTabs.Root.Orientation;
 
 /**
+ * 選択中のタブの主な外観です。
+ *
+ * - `"naked"`: 背景なし
+ * - `"liquid"`: 薄い塗りつぶし
+ * - `"solid"`: 塗りつぶし
+ */
+export type TabsRootActiveVariant = "naked" | "liquid" | "solid";
+
+/**
  * Tabs の角丸です。
  *
  * - `"none"`: 直角
@@ -48,6 +57,14 @@ export type TabsRootRadius = "none" | Size;
 export type TabsRootSize = Size;
 
 /**
+ * Tabs の主な外観です。
+ *
+ * - `"segments"`: 区分表示
+ * - `"line"`: 下線表示
+ */
+export type TabsRootVariant = "segments" | "line";
+
+/**
  * {@link TabsRoot} が持つ状態です。
  */
 export type TabsRootState = BaseTabs.Root.State;
@@ -56,6 +73,15 @@ export type TabsRootState = BaseTabs.Root.State;
  * {@link TabsRoot} に渡す props です。
  */
 export type TabsRootProps = React.ComponentProps<typeof BaseTabs.Root> & {
+  /**
+   * 選択中のタブの主な外観を指定します。
+   *
+   * `variant` が `"segments"` の場合のみ有効です。
+   *
+   * @default "solid"
+   */
+  activeVariant?: TabsRootActiveVariant | undefined;
+
   /**
    * Tabs の枠線を表示するかどうかを指定します。
    *
@@ -76,6 +102,13 @@ export type TabsRootProps = React.ComponentProps<typeof BaseTabs.Root> & {
    * @default "md"
    */
   size?: TabsRootSize | undefined;
+
+  /**
+   * Tabs の主な外観を指定します。
+   *
+   * @default "line"
+   */
+  variant?: TabsRootVariant | undefined;
 };
 
 /**
@@ -88,8 +121,10 @@ export const TabsRoot: IComponent<TabsRootProps> = function SuiTabsRoot(props) {
   const {
     size = "md",
     radius = size,
+    variant = "line",
     outlined = false,
     className,
+    activeVariant = "liquid",
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherProps
@@ -103,6 +138,8 @@ export const TabsRoot: IComponent<TabsRootProps> = function SuiTabsRoot(props) {
         "sui_tabs",
         `sui_tabs-size_${size}`,
         `sui_tabs-radius_${radius}`,
+        `sui_tabs-variant_${variant}`,
+        `sui_tabs-active_variant_${activeVariant}`,
         outlined && "sui_tabs-outlined",
         (state) => `sui_tabs-orientation_${state.orientation}`,
       )}
@@ -128,6 +165,11 @@ export namespace Root {
   export type Props = TabsRootProps;
 
   /**
+   * {@link TabsRootActiveVariant}
+   */
+  export type ActiveVariant = TabsRootActiveVariant;
+
+  /**
    * {@link TabsRootChangeEventDetails}
    */
   export type ChangeEventDetails = TabsRootChangeEventDetails;
@@ -151,6 +193,11 @@ export namespace Root {
    * {@link TabsRootSize}
    */
   export type Size = TabsRootSize;
+
+  /**
+   * {@link TabsRootVariant}
+   */
+  export type Variant = TabsRootVariant;
 }
 
 // List
