@@ -490,7 +490,7 @@
 
 /* 変異 */
 :scope {
-  .sui_combobox_trigger:not(.sui_combobox_trigger-disabled) {
+  &:not(.sui_combobox_input_group-disabled) .sui_combobox_trigger {
     @media (any-hover: hover) {
       &:hover {
         --_sui_combobox_trigger-color: var(--sui_combobox_trigger-color-hover);
@@ -682,7 +682,7 @@
 
 /* 変異 */
 :scope {
-  .sui_combobox_clear:not(.sui_combobox_clear-disabled) {
+  &:not(.sui_combobox_input_group-disabled) .sui_combobox_clear {
     @media (any-hover: hover) {
       &:hover {
         --_sui_combobox_clear-color: var(--sui_combobox_clear-color-hover);
@@ -933,7 +933,7 @@
 
 /* 変異 */
 :scope {
-  .sui_combobox_chip_remove:not(.sui_combobox_chip_remove-disabled) {
+  &:not(.sui_combobox_input_group-disabled) .sui_combobox_chip_remove {
     @media (any-hover: hover) {
       &:hover {
         --_sui_combobox_chip_remove-color: var(--sui_combobox_chip_remove-color-hover);

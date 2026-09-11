@@ -532,16 +532,7 @@ export type SliderThumbProps = SliderThumbProps.Render &
 export const SliderThumb: IComponent<SliderThumbProps> = function SuiSliderThumb(props) {
   const { className, ...otherProps } = props;
 
-  return (
-    <Slider.Thumb
-      {...otherProps}
-      className={cn(
-        className,
-        "sui_slider_thumb",
-        (state) => state.dragging && "sui_slider_thumb-dragging",
-      )}
-    />
-  );
+  return <Slider.Thumb {...otherProps} className={cn(className, "sui_slider_thumb")} />;
 };
 
 export { SliderThumb as Thumb };

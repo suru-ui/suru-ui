@@ -642,16 +642,7 @@ export const ComboboxTrigger: IComponent<ComboboxTriggerProps> = function SuiCom
 ) {
   const { className, ...otherProps } = props;
 
-  return (
-    <Combobox.Trigger
-      {...otherProps}
-      className={cn(
-        className,
-        "sui_combobox_trigger",
-        (state) => state.disabled && "sui_combobox_trigger-disabled",
-      )}
-    />
-  );
+  return <Combobox.Trigger {...otherProps} className={cn(className, "sui_combobox_trigger")} />;
 };
 
 export { ComboboxTrigger as Trigger };
@@ -769,16 +760,7 @@ export type ComboboxClearProps = ComboboxClearProps.Render &
 export const ComboboxClear: IComponent<ComboboxClearProps> = function SuiComboboxClear(props) {
   const { className, ...otherProps } = props;
 
-  return (
-    <Combobox.Clear
-      {...otherProps}
-      className={cn(
-        className,
-        "sui_combobox_clear",
-        (state) => state.disabled && "sui_combobox_clear-disabled",
-      )}
-    />
-  );
+  return <Combobox.Clear {...otherProps} className={cn(className, "sui_combobox_clear")} />;
 };
 
 export { ComboboxClear as Clear };
@@ -957,14 +939,7 @@ export const ComboboxChipRemove: IComponent<ComboboxChipRemoveProps> =
     const { className, ...otherProps } = props;
 
     return (
-      <Combobox.ChipRemove
-        {...otherProps}
-        className={cn(
-          className,
-          "sui_combobox_chip_remove",
-          (state) => state.disabled && "sui_combobox_chip_remove-disabled",
-        )}
-      />
+      <Combobox.ChipRemove {...otherProps} className={cn(className, "sui_combobox_chip_remove")} />
     );
   };
 

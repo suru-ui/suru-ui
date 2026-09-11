@@ -158,11 +158,12 @@
     --_sui_toast-opacity: 0;
   }
 
-  .sui_toast:has(.sui_toast_content-behind):not(.sui_toast-expanded) {
+  .sui_toast_viewport:not(.sui_toast_viewport-expanded)
+    .sui_toast:has(.sui_toast_content-behind) {
     --_sui_toast-overflow: hidden;
   }
 
-  .sui_toast-expanded {
+  .sui_toast_viewport-expanded .sui_toast {
     --_sui_toast-height: var(--toast-height);
     --_sui_toast-scale: 1;
     --_sui_toast-translate_y: calc(
@@ -263,7 +264,7 @@
     --_sui_toast_content-opacity: 0;
   }
 
-  .sui_toast_content-expanded {
+  .sui_toast_viewport-expanded .sui_toast_content {
     --_sui_toast_content-opacity: 1;
   }
 }

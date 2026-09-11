@@ -376,7 +376,7 @@
     }
   }
 
-  .sui_slider_thumb-dragging {
+  .sui_slider-dragging .sui_slider_thumb {
     --_sui_slider_thumb-cursor: grabbing;
   }
 

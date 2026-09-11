@@ -345,6 +345,8 @@ cn(
 
 状態クラス (`-open` / `-closed`、`-transition_status_*`、`-disabled` など) は基本的に DOM ツリー上のルート (起点要素) に付けます。Portal を持ち Root が DOM ツリー上のルートでない場合や、子が独立した状態を持つ場合 (例: List の Item ごとの `-disabled`) は、その状態を持つ要素に付けます。
 
+同じ状態や属性は複数のパーツに分散させず、その状態を持つ最上位のコンポーネントの 1 箇所にのみクラス化します (例: Toast の `expanded` は Viewport / Root / Content のすべてに存在しますが、`sui_toast_viewport-expanded` のみにし、`sui_toast-expanded` や `sui_toast_content-expanded` は作りません)。下位の装飾は祖先セレクターで行います (例: `.sui_toast_viewport-expanded .sui_toast`)。子にしか存在しない独立した状態 (例: Toast の `behind` は Content のみ) は例外とし、その状態を持つ要素に付けます。
+
 Base UI が付与する `data-*` 属性 (`data-open`、`data-checked`、`data-disabled` など) を CSS セレクターに使わない (`[data-scope]` は自前の目印のため例外)。状態の装飾は `cn` の状態関数で付ける自前の状態クラスで行う。真偽状態は `sui_<基底>-<状態>`、値付き状態は `sui_<基底>-<属性>_<値>` にする。
 
 ```tsx
@@ -599,6 +601,7 @@ mise run test:typecheck
 - 型引数名の先頭に `T` を付け忘れない (例: `TValue`、`TMultiple`)。
 - 合成の再命名型にパーツ名を重ねない (例: `BreadcrumbItemObject`。`BreadcrumbItemsItem` は禁止)。
 - 状態クラスを Content などの子に分散させない。DOM ツリー上のルートに集約します (Portal や独立状態の子は例外)。
+- 同じ状態や属性を複数のパーツで異なる接頭辞のクラスにしない。最上位の 1 箇所のみに付け、下位は祖先セレクターで装飾します。
 - CSS セレクターに Base UI の `data-*` 属性を使わない (`[data-scope]` を除く)。状態の装飾は `cn` の状態関数によるクラスで行う。
 - `State` 型にない状態のクラスや CSS 指定を書かない。Base UI が発行しない属性への指定は死になる。
 - `items` を所有と描画の両パーツに二重定義しない。描画側は `Context` で受けます。

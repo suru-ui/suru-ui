@@ -553,7 +553,7 @@
 
 /* 変異 */
 :scope {
-  .sui_autocomplete_clear:not(.sui_autocomplete_clear-disabled) {
+  &:not(.sui_autocomplete-disabled) .sui_autocomplete_clear {
     @media (any-hover: hover) {
       &:hover {
         --_sui_autocomplete_clear-color: var(--sui_autocomplete_clear-color-hover);
@@ -920,25 +920,25 @@
 
 /* InputGroup */
 :scope {
-  &:has(.sui_autocomplete_input-disabled) {
+  &.sui_autocomplete-disabled {
     cursor: not-allowed;
   }
 
-  &.sui_autocomplete-variant_naked:has(.sui_autocomplete_input-disabled) {
+  &.sui_autocomplete-variant_naked.sui_autocomplete-disabled {
     background-color: var(--sui-disabled-naked-canvas);
   }
 
-  &.sui_autocomplete-variant_liquid:has(.sui_autocomplete_input-disabled) {
+  &.sui_autocomplete-variant_liquid.sui_autocomplete-disabled {
     background-color: var(--sui-disabled-liquid-canvas);
   }
 
-  &.sui_autocomplete-variant_naked.sui_autocomplete-outlined:has(.sui_autocomplete_input-disabled)::after {
+  &.sui_autocomplete-variant_naked.sui_autocomplete-outlined.sui_autocomplete-disabled::after {
     border-color: var(--sui-disabled-naked-border);
     border-style: solid;
     border-width: var(--sui-disabled-border_width);
   }
 
-  &.sui_autocomplete-variant_liquid.sui_autocomplete-outlined:has(.sui_autocomplete_input-disabled)::after {
+  &.sui_autocomplete-variant_liquid.sui_autocomplete-outlined.sui_autocomplete-disabled::after {
     border-color: var(--sui-disabled-liquid-border);
     border-style: solid;
     border-width: var(--sui-disabled-border_width);
@@ -947,7 +947,7 @@
 
 /* Input */
 :scope {
-  &.sui_autocomplete-variant_naked .sui_autocomplete_input-disabled {
+  &.sui_autocomplete-variant_naked.sui_autocomplete-disabled .sui_autocomplete_input {
     color: var(--sui-disabled-naked-canvas_text);
     cursor: not-allowed;
 
@@ -956,7 +956,7 @@
     }
   }
 
-  &.sui_autocomplete-variant_liquid .sui_autocomplete_input-disabled {
+  &.sui_autocomplete-variant_liquid.sui_autocomplete-disabled .sui_autocomplete_input {
     color: var(--sui-disabled-liquid-canvas_text);
     cursor: not-allowed;
 
@@ -968,16 +968,11 @@
 
 /* Addon */
 :scope {
-  &.sui_autocomplete-variant_naked .sui_autocomplete_input-disabled ~ .sui_autocomplete_addon,
-  &.sui_autocomplete-variant_naked:has(.sui_autocomplete_input-disabled) .sui_autocomplete_addon {
+  &.sui_autocomplete-variant_naked.sui_autocomplete-disabled .sui_autocomplete_addon {
     color: var(--sui-disabled-naked-canvas_text);
   }
 
-  &.sui_autocomplete-variant_naked
-    .sui_autocomplete_input-disabled
-      ~ .sui_autocomplete_addon
-        svg:not(.sui-ignore),
-  &.sui_autocomplete-variant_naked:has(.sui_autocomplete_input-disabled)
+  &.sui_autocomplete-variant_naked.sui_autocomplete-disabled
     .sui_autocomplete_addon
       svg:not(.sui-ignore) {
     color: --sui-icon_color(
@@ -986,16 +981,11 @@
            );
   }
 
-  &.sui_autocomplete-variant_liquid .sui_autocomplete_input-disabled ~ .sui_autocomplete_addon,
-  &.sui_autocomplete-variant_liquid:has(.sui_autocomplete_input-disabled) .sui_autocomplete_addon {
+  &.sui_autocomplete-variant_liquid.sui_autocomplete-disabled .sui_autocomplete_addon {
     color: var(--sui-disabled-liquid-canvas_text);
   }
 
-  &.sui_autocomplete-variant_liquid
-    .sui_autocomplete_input-disabled
-      ~ .sui_autocomplete_addon
-        svg:not(.sui-ignore),
-  &.sui_autocomplete-variant_liquid:has(.sui_autocomplete_input-disabled)
+  &.sui_autocomplete-variant_liquid.sui_autocomplete-disabled
     .sui_autocomplete_addon
       svg:not(.sui-ignore) {
     color: --sui-icon_color(
@@ -1007,16 +997,16 @@
 
 /* Clear */
 :scope {
-  &:has(.sui_autocomplete_input-disabled) .sui_autocomplete_clear {
+  &.sui_autocomplete-disabled .sui_autocomplete_clear {
     cursor: not-allowed;
     background-color: transparent;
   }
 
-  &.sui_autocomplete-variant_naked:has(.sui_autocomplete_input-disabled) .sui_autocomplete_clear {
+  &.sui_autocomplete-variant_naked.sui_autocomplete-disabled .sui_autocomplete_clear {
     color: var(--sui-disabled-naked-canvas_text);
   }
 
-  &.sui_autocomplete-variant_naked:has(.sui_autocomplete_input-disabled)
+  &.sui_autocomplete-variant_naked.sui_autocomplete-disabled
     .sui_autocomplete_clear
       svg:not(.sui-ignore) {
     color: --sui-icon_color(
@@ -1025,11 +1015,11 @@
            );
   }
 
-  &.sui_autocomplete-variant_liquid:has(.sui_autocomplete_input-disabled) .sui_autocomplete_clear {
+  &.sui_autocomplete-variant_liquid.sui_autocomplete-disabled .sui_autocomplete_clear {
     color: var(--sui-disabled-liquid-canvas_text);
   }
 
-  &.sui_autocomplete-variant_liquid:has(.sui_autocomplete_input-disabled)
+  &.sui_autocomplete-variant_liquid.sui_autocomplete-disabled
     .sui_autocomplete_clear
       svg:not(.sui-ignore) {
     color: --sui-icon_color(

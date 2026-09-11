@@ -259,7 +259,6 @@ export const ToastRoot: IToastRoot = function SuiToastRoot<TData extends object 
           state.transitionStatus !== undefined &&
           `sui_toast-transition_status_${state.transitionStatus}`,
         (state) => state.limited && "sui_toast-limited",
-        (state) => state.expanded && "sui_toast-expanded",
         (state) => state.type !== undefined && `sui_toast-type_${CSS.escape(state.type)}`,
         (state) => state.swiping && "sui_toast-swiping",
         (state) =>
@@ -357,7 +356,6 @@ export const ToastContent: IComponent<ToastContentProps> = function SuiToastCont
                 className,
                 "sui_toast_content",
                 (state) => state.behind && "sui_toast_content-behind",
-                (state) => state.expanded && "sui_toast_content-expanded",
               ),
             }),
           ])}

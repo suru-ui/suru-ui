@@ -438,7 +438,6 @@ export const AutocompleteInput: IComponent<AutocompleteInputProps> = function Su
         (state) => state.valid === true && "sui_autocomplete_input-valid",
         (state) => state.valid === false && "sui_autocomplete_input-invalid",
         (state) => state.valid === null && "sui_autocomplete_input-unverified",
-        (state) => state.disabled && "sui_autocomplete_input-disabled",
       )}
     />
   );
@@ -561,16 +560,7 @@ export const AutocompleteClear: IComponent<AutocompleteClearProps> = function Su
 ) {
   const { className, ...otherProps } = props;
 
-  return (
-    <Autocomplete.Clear
-      {...otherProps}
-      className={cn(
-        className,
-        "sui_autocomplete_clear",
-        (state) => state.disabled && "sui_autocomplete_clear-disabled",
-      )}
-    />
-  );
+  return <Autocomplete.Clear {...otherProps} className={cn(className, "sui_autocomplete_clear")} />;
 };
 
 export { AutocompleteClear as Clear };
