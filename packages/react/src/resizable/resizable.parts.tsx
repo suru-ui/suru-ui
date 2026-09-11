@@ -109,15 +109,22 @@ export type ResizableRootState = {
   readonly direction: ResizableRootDirection;
 };
 
-/**
- * {@link ResizableRoot} に渡す props です。
- */
-export type ResizableRootProps = Omit<
-  GroupProps,
-  "children" | "className" | "orientation" | "style"
-> &
-  Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<ResizableRootState> & {
+export namespace ResizableRootProps {
+  export type BaseUI = Omit<
+    GroupProps,
+    keyof Render | keyof SuruUI | "children" | "className" | "style"
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Omit<GroupProps, "children" | "className" | "orientation" | "style">
+  >;
+
+  export type Render = RenderProps<ResizableRootState>;
+
+  export type SuruUI = {
     /**
      * パネルを並べる向きです。
      *
@@ -135,6 +142,15 @@ export type ResizableRootProps = Omit<
      */
     orientation?: ResizableRootOrientation | undefined;
   };
+}
+
+/**
+ * {@link ResizableRoot} に渡す props です。
+ */
+export type ResizableRootProps = ResizableRootProps.Render &
+  ResizableRootProps.SuruUI &
+  ResizableRootProps.BaseUI &
+  ResizableRootProps.HTML;
 
 /**
  * リサイズ可能なパネル群のルート要素です。
@@ -202,7 +218,14 @@ export namespace Root {
   /**
    * {@link ResizableRootProps}
    */
-  export type Props = ResizableRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ResizableRootProps.BaseUI;
+    export type HTML = ResizableRootProps.HTML;
+    export type Render = ResizableRootProps.Render;
+    export type SuruUI = ResizableRootProps.SuruUI;
+  }
 
   /**
    * {@link ResizableRootDirection}
@@ -235,15 +258,25 @@ export type ResizablePanelState = {
   readonly direction: ResizableRootDirection;
 };
 
-/**
- * {@link ResizablePanel} に渡す props です。
- */
-export type ResizablePanelProps = Omit<
-  PanelProps,
-  "children" | "className" | "defaultSize" | "maxSize" | "minSize" | "onResize" | "style"
-> &
-  Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<ResizablePanelState> & {
+export namespace ResizablePanelProps {
+  export type BaseUI = Omit<
+    PanelProps,
+    keyof Render | keyof SuruUI | "children" | "className" | "style"
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Omit<
+        PanelProps,
+        "children" | "className" | "defaultSize" | "maxSize" | "minSize" | "onResize" | "style"
+      >
+  >;
+
+  export type Render = RenderProps<ResizablePanelState>;
+
+  export type SuruUI = {
     /**
      * パネルの初期サイズを指定します。
      *
@@ -287,6 +320,15 @@ export type ResizablePanelProps = Omit<
      */
     size?: ResizablePanelSize | undefined;
   };
+}
+
+/**
+ * {@link ResizablePanel} に渡す props です。
+ */
+export type ResizablePanelProps = ResizablePanelProps.Render &
+  ResizablePanelProps.SuruUI &
+  ResizablePanelProps.BaseUI &
+  ResizablePanelProps.HTML;
 
 /**
  * サイズを変更できるパネル要素です。
@@ -361,7 +403,14 @@ export namespace Panel {
   /**
    * {@link ResizablePanelProps}
    */
-  export type Props = ResizablePanelProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ResizablePanelProps.BaseUI;
+    export type HTML = ResizablePanelProps.HTML;
+    export type Render = ResizablePanelProps.Render;
+    export type SuruUI = ResizablePanelProps.SuruUI;
+  }
 
   /**
    * {@link ResizablePanelSize}
@@ -387,12 +436,20 @@ export type ResizableHandleState = {
   readonly disabled: boolean;
 };
 
-/**
- * {@link ResizableHandle} に渡す props です。
- */
-export type ResizableHandleProps = Omit<SeparatorProps, "children" | "className" | "style"> &
-  Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<ResizableHandleState> & {
+export namespace ResizableHandleProps {
+  export type BaseUI = Omit<
+    SeparatorProps,
+    keyof Render | keyof SuruUI | "children" | "className" | "style"
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof Omit<SeparatorProps, "children" | "className" | "style">
+  >;
+
+  export type Render = RenderProps<ResizableHandleState>;
+
+  export type SuruUI = {
     /**
      * 中央にグリップを表示するかどうかを指定します。
      *
@@ -400,6 +457,15 @@ export type ResizableHandleProps = Omit<SeparatorProps, "children" | "className"
      */
     withHandle?: boolean | undefined;
   };
+}
+
+/**
+ * {@link ResizableHandle} に渡す props です。
+ */
+export type ResizableHandleProps = ResizableHandleProps.Render &
+  ResizableHandleProps.SuruUI &
+  ResizableHandleProps.BaseUI &
+  ResizableHandleProps.HTML;
 
 /**
  * 隣接するパネルのサイズを変更するハンドルです。
@@ -455,5 +521,12 @@ export namespace Handle {
   /**
    * {@link ResizableHandleProps}
    */
-  export type Props = ResizableHandleProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ResizableHandleProps.BaseUI;
+    export type HTML = ResizableHandleProps.HTML;
+    export type Render = ResizableHandleProps.Render;
+    export type SuruUI = ResizableHandleProps.SuruUI;
+  }
 }

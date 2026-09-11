@@ -152,11 +152,12 @@ export type TextFieldRootVariant = "naked" | "liquid";
  */
 export type TextFieldRootState = {};
 
-/**
- * {@link TextFieldRoot} に渡す props です。
- */
-export type TextFieldRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps<{}>> &
-  RenderProps<TextFieldRootState> & {
+export namespace TextFieldRootProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<TextFieldRootState>;
+
+  export type SuruUI = {
     /**
      * フォーカス時に枠線へ適用する色を指定します。
      *
@@ -192,6 +193,14 @@ export type TextFieldRootProps = Omit<React.ComponentProps<"div">, keyof RenderP
      */
     variant?: TextFieldRootVariant | undefined;
   };
+}
+
+/**
+ * {@link TextFieldRoot} に渡す props です。
+ */
+export type TextFieldRootProps = TextFieldRootProps.Render &
+  TextFieldRootProps.SuruUI &
+  TextFieldRootProps.HTML;
 
 const DISABLE_FOCUS_ON_CLICK_DATA = "data-suitextfielddisablefocusonclick";
 
@@ -269,7 +278,24 @@ export namespace Root {
   /**
    * {@link TextFieldRootProps}
    */
-  export type Props = TextFieldRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link TextFieldRootProps.HTML}
+     */
+    export type HTML = TextFieldRootProps.HTML;
+
+    /**
+     * {@link TextFieldRootProps.Render}
+     */
+    export type Render = TextFieldRootProps.Render;
+
+    /**
+     * {@link TextFieldRootProps.SuruUI}
+     */
+    export type SuruUI = TextFieldRootProps.SuruUI;
+  }
 
   /**
    * {@link TextFieldRootColor}
@@ -318,17 +344,33 @@ export type TextFieldInputType = Exclude<
  */
 export type TextFieldInputState = BaseInput.State;
 
+export namespace TextFieldInputProps {
+  export type BaseUI = Omit<
+    Omit<React.ComponentProps<typeof BaseInput>, "type">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"input">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"input">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<TextFieldInputState>;
+
+  export type SuruUI = {
+    /**
+     * 入力項目です。
+     *
+     * @default "text"
+     */
+    type?: TextFieldInputType | undefined;
+  };
+}
+
 /**
  * {@link TextFieldInput} に渡す props です。
  */
-export type TextFieldInputProps = Omit<React.ComponentProps<typeof BaseInput>, "type"> & {
-  /**
-   * 入力項目です。
-   *
-   * @default "text"
-   */
-  type?: TextFieldInputType | undefined;
-};
+export type TextFieldInputProps = TextFieldInputProps.Render &
+  TextFieldInputProps.SuruUI &
+  TextFieldInputProps.BaseUI &
+  TextFieldInputProps.HTML;
 
 /**
  * Base UI の Input を使った文字入力欄の入力欄です。
@@ -363,7 +405,29 @@ export namespace Input {
   /**
    * {@link TextFieldInputProps}
    */
-  export type Props = TextFieldInputProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link TextFieldInputProps.BaseUI}
+     */
+    export type BaseUI = TextFieldInputProps.BaseUI;
+
+    /**
+     * {@link TextFieldInputProps.HTML}
+     */
+    export type HTML = TextFieldInputProps.HTML;
+
+    /**
+     * {@link TextFieldInputProps.Render}
+     */
+    export type Render = TextFieldInputProps.Render;
+
+    /**
+     * {@link TextFieldInputProps.SuruUI}
+     */
+    export type SuruUI = TextFieldInputProps.SuruUI;
+  }
 
   /**
    * {@link TextFieldInputChangeEventDetails}
@@ -389,14 +453,12 @@ export namespace Input {
  */
 export type TextFieldAddonState = {};
 
-/**
- * {@link TextFieldAddon} に渡す props です。
- */
-export type TextFieldAddonProps = Omit<
-  React.ComponentProps<"span">,
-  keyof RenderProps<TextFieldAddonState>
-> &
-  RenderProps<TextFieldAddonState> & {
+export namespace TextFieldAddonProps {
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<TextFieldAddonState>;
+
+  export type SuruUI = {
     /**
      * クリック時の入力欄への自動フォーカスを無効にするかどうかを指定します。
      *
@@ -404,6 +466,14 @@ export type TextFieldAddonProps = Omit<
      */
     disableFocusOnClick?: boolean | undefined;
   };
+}
+
+/**
+ * {@link TextFieldAddon} に渡す props です。
+ */
+export type TextFieldAddonProps = TextFieldAddonProps.Render &
+  TextFieldAddonProps.SuruUI &
+  TextFieldAddonProps.HTML;
 
 /**
  * 入力欄の左右に表示する補助コンポーネントです。
@@ -436,5 +506,22 @@ export namespace Addon {
   /**
    * {@link TextFieldAddonProps}
    */
-  export type Props = TextFieldAddonProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link TextFieldAddonProps.HTML}
+     */
+    export type HTML = TextFieldAddonProps.HTML;
+
+    /**
+     * {@link TextFieldAddonProps.Render}
+     */
+    export type Render = TextFieldAddonProps.Render;
+
+    /**
+     * {@link TextFieldAddonProps.SuruUI}
+     */
+    export type SuruUI = TextFieldAddonProps.SuruUI;
+  }
 }

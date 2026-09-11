@@ -462,7 +462,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
         children: toReactNode(label),
       };
     },
-    getRootProps(): Required<Omit<ContextMenuRootProps, "children">> {
+    getRootProps(): Omit<ContextMenuRootProps, "children"> {
       return {
         open,
         size,

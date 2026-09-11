@@ -1,6 +1,7 @@
 import { Form } from "@base-ui/react/form";
 import * as React from "react";
 
+import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
@@ -46,14 +47,31 @@ export type FormRootValues<TValues extends Record<string, any> = Record<string, 
  */
 export type FormRootState = Form.State;
 
+export namespace FormRootProps {
+  export type BaseUI<TValues extends FormRootValues = FormRootValues> = Omit<
+    React.ComponentProps<typeof Form<TValues>>,
+    keyof Render
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"form">,
+    keyof Render | keyof React.ComponentProps<typeof Form<any>>
+  >;
+
+  export type Render = RenderProps<FormRootState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link FormRoot} に渡す props です。
  *
  * @template TValues フォームの入力値を表す型です。
  */
-export type FormRootProps<TValues extends FormRootValues = FormRootValues> = React.ComponentProps<
-  typeof Form<TValues>
->;
+export type FormRootProps<TValues extends FormRootValues = FormRootValues> = FormRootProps.Render &
+  FormRootProps.SuruUI &
+  FormRootProps.BaseUI<TValues> &
+  FormRootProps.HTML;
 
 interface IFormRoot extends IComponent<FormRootProps> {
   /**
@@ -89,7 +107,18 @@ export namespace Root {
   /**
    * {@link FormRootProps}
    */
-  export type Props<TValues extends FormRootValues = FormRootValues> = FormRootProps<TValues>;
+  export type Props<TValues extends FormRootValues = FormRootValues> = Props.Render &
+    Props.SuruUI &
+    Props.BaseUI<TValues> &
+    Props.HTML;
+
+  export namespace Props {
+    export type BaseUI<TValues extends FormRootValues = FormRootValues> =
+      FormRootProps.BaseUI<TValues>;
+    export type HTML = FormRootProps.HTML;
+    export type Render = FormRootProps.Render;
+    export type SuruUI = FormRootProps.SuruUI;
+  }
 
   /**
    * {@link FormRootActions}

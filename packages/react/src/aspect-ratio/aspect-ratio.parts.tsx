@@ -42,11 +42,12 @@ type AspectRatioRootStyle = React.CSSProperties & {
   "--sui_aspect_ratio-ratio"?: AspectRatioRootRatio;
 };
 
-/**
- * {@link AspectRatioRoot} に渡す props です。
- */
-export type AspectRatioRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<AspectRatioRootState> & {
+export namespace AspectRatioRootProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<AspectRatioRootState>;
+
+  export type SuruUI = {
     /**
      * コンテナーの角丸を指定します。
      *
@@ -64,6 +65,14 @@ export type AspectRatioRootProps = Omit<React.ComponentProps<"div">, keyof Rende
      */
     ratio?: AspectRatioRootRatio | undefined;
   };
+}
+
+/**
+ * {@link AspectRatioRoot} に渡す props です。
+ */
+export type AspectRatioRootProps = AspectRatioRootProps.Render &
+  AspectRatioRootProps.SuruUI &
+  AspectRatioRootProps.HTML;
 
 /**
  * 指定した比率で幅と高さを保つコンテナーのルート要素です。
@@ -109,7 +118,13 @@ export namespace Root {
   /**
    * {@link AspectRatioRootProps}
    */
-  export type Props = AspectRatioRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = AspectRatioRootProps.HTML;
+    export type Render = AspectRatioRootProps.Render;
+    export type SuruUI = AspectRatioRootProps.SuruUI;
+  }
 
   /**
    * {@link AspectRatioRootRadius}

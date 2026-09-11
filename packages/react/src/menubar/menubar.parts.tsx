@@ -2,6 +2,7 @@ import { Menubar as BaseMenubar } from "@base-ui/react/menubar";
 import * as React from "react";
 
 import toReactNode from "../_to-react-node.js";
+import type { RenderProps } from "../_use-render.js";
 import { Button } from "../button/button.jsx";
 import cn from "../cn.js";
 import { type MenuProps, Menu } from "../menu/menu.jsx";
@@ -68,29 +69,47 @@ export type MenubarRootOrientation = "horizontal" | "vertical";
  */
 export type MenubarRootState = BaseMenubar.State;
 
+export namespace MenubarRootProps {
+  export type BaseUI<TItem = any> = Omit<
+    React.ComponentProps<typeof BaseMenubar>,
+    keyof Render | keyof SuruUI<TItem>
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof SuruUI<any>
+    | keyof Omit<React.ComponentProps<typeof BaseMenubar>, "children">
+  >;
+
+  export type Render = RenderProps<MenubarRootState>;
+
+  export type SuruUI<TItem = any> = {
+    /**
+     * メニューバーの内容、または各項目をレンダリングする関数です。
+     *
+     * 関数を指定した場合は {@link MenubarRootProps.items|items} の各項目が引数として渡されます。
+     */
+    children?: React.ReactNode | IMenubarRootItemRenderer<TItem>;
+
+    /**
+     * メニューバーの項目です。
+     *
+     * `children` に関数を指定した場合、この配列の各項目が引数として渡されます。
+     */
+    items?: readonly TItem[] | undefined;
+  };
+}
+
 /**
  * {@link MenubarRoot} に渡す props です。
  *
  * @template TItem 項目の型です。
  */
-export type MenubarRootProps<TItem = any> = Omit<
-  React.ComponentProps<typeof BaseMenubar>,
-  "children"
-> & {
-  /**
-   * メニューバーの内容、または各項目をレンダリングする関数です。
-   *
-   * 関数を指定した場合は {@link MenubarRootProps.items|items} の各項目が引数として渡されます。
-   */
-  children?: React.ReactNode | IMenubarRootItemRenderer<TItem>;
-
-  /**
-   * メニューバーの項目です。
-   *
-   * `children` に関数を指定した場合、この配列の各項目が引数として渡されます。
-   */
-  items?: readonly TItem[] | undefined;
-};
+export type MenubarRootProps<TItem = any> = MenubarRootProps.Render &
+  MenubarRootProps.SuruUI<TItem> &
+  MenubarRootProps.BaseUI<TItem> &
+  MenubarRootProps.HTML;
 
 interface IMenubarRoot extends IComponent<MenubarRootProps> {
   /**
@@ -163,7 +182,17 @@ export namespace Root {
   /**
    * {@link MenubarRootProps}
    */
-  export type Props<TItem = any> = MenubarRootProps<TItem>;
+  export type Props<TItem = any> = Props.Render &
+    Props.SuruUI<TItem> &
+    Props.BaseUI<TItem> &
+    Props.HTML;
+
+  export namespace Props {
+    export type BaseUI<TItem = any> = MenubarRootProps.BaseUI<TItem>;
+    export type HTML = MenubarRootProps.HTML;
+    export type Render = MenubarRootProps.Render;
+    export type SuruUI<TItem = any> = MenubarRootProps.SuruUI<TItem>;
+  }
 
   /**
    * {@link MenubarRootItemObject}

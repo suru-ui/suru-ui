@@ -26,11 +26,12 @@ export type SkeletonRootRadius = "none" | Size | "full";
  */
 export type SkeletonRootState = {};
 
-/**
- * {@link SkeletonRoot} に渡す props です。
- */
-export type SkeletonRootProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
-  RenderProps<SkeletonRootState> & {
+export namespace SkeletonRootProps {
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<SkeletonRootState>;
+
+  export type SuruUI = {
     /**
      * 波打つようなアニメーションを表示するかどうかを指定します。
      *
@@ -45,6 +46,14 @@ export type SkeletonRootProps = Omit<React.ComponentProps<"span">, keyof RenderP
      */
     radius?: SkeletonRootRadius | undefined;
   };
+}
+
+/**
+ * {@link SkeletonRoot} に渡す props です。
+ */
+export type SkeletonRootProps = SkeletonRootProps.Render &
+  SkeletonRootProps.SuruUI &
+  SkeletonRootProps.HTML;
 
 /**
  * スケルトンのルートコンポーネントです。
@@ -87,7 +96,24 @@ export namespace Root {
   /**
    * {@link SkeletonRootProps}
    */
-  export type Props = SkeletonRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link SkeletonRootProps.HTML}
+     */
+    export type HTML = SkeletonRootProps.HTML;
+
+    /**
+     * {@link SkeletonRootProps.Render}
+     */
+    export type Render = SkeletonRootProps.Render;
+
+    /**
+     * {@link SkeletonRootProps.SuruUI}
+     */
+    export type SuruUI = SkeletonRootProps.SuruUI;
+  }
 
   /**
    * {@link SkeletonRootRadius}

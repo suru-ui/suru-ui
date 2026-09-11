@@ -3,6 +3,7 @@ import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import { CheckboxIcon } from "../_icons.jsx";
+import type { RenderProps } from "../_use-render.js";
 import { useCheckboxGroupContext } from "../checkbox-group/checkbox-group.parts.jsx";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
@@ -60,55 +61,74 @@ export type CheckboxRootVariant = "naked" | "liquid";
  */
 export type CheckboxRootState = Checkbox.Root.State;
 
+export namespace CheckboxRootProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Checkbox.Root>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Checkbox.Root>
+  >;
+
+  export type Render = RenderProps<CheckboxRootState>;
+
+  export type SuruUI = {
+    /**
+     * チェックボックスの配色を指定します。
+     *
+     * CheckboxGroup 内では、グループの値が優先されます。
+     *
+     * @default "grey"
+     */
+    color?: CheckboxRootColor | undefined;
+
+    /**
+     * チェックボックスに枠線を表示するかどうかを指定します。
+     *
+     * CheckboxGroup 内では、グループの値が優先されます。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * チェックボックスの角丸の大きさを指定します。
+     *
+     * CheckboxGroup 内では、グループの値が優先されます。
+     *
+     * 既定値は {@link CheckboxRootProps.size|size}
+     */
+    radius?: CheckboxRootRadius | undefined;
+
+    /**
+     * チェックボックスの大きさを指定します。
+     *
+     * CheckboxGroup 内では、グループの値が優先されます。
+     *
+     * @default "md"
+     */
+    size?: CheckboxRootSize | undefined;
+
+    /**
+     * チェックボックスの主な外観を指定します。
+     *
+     * CheckboxGroup 内では、グループの値が優先されます。
+     *
+     * @default "liquid"
+     */
+    variant?: CheckboxRootVariant | undefined;
+  };
+}
+
 /**
  * {@link CheckboxRoot} に渡す props です。
  */
-export type CheckboxRootProps = React.ComponentProps<typeof Checkbox.Root> & {
-  /**
-   * チェックボックスの配色を指定します。
-   *
-   * CheckboxGroup 内では、グループの値が優先されます。
-   *
-   * @default "grey"
-   */
-  color?: CheckboxRootColor | undefined;
-
-  /**
-   * チェックボックスに枠線を表示するかどうかを指定します。
-   *
-   * CheckboxGroup 内では、グループの値が優先されます。
-   *
-   * @default false
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * チェックボックスの角丸の大きさを指定します。
-   *
-   * CheckboxGroup 内では、グループの値が優先されます。
-   *
-   * 既定値は {@link CheckboxRootProps.size|size}
-   */
-  radius?: CheckboxRootRadius | undefined;
-
-  /**
-   * チェックボックスの大きさを指定します。
-   *
-   * CheckboxGroup 内では、グループの値が優先されます。
-   *
-   * @default "md"
-   */
-  size?: CheckboxRootSize | undefined;
-
-  /**
-   * チェックボックスの主な外観を指定します。
-   *
-   * CheckboxGroup 内では、グループの値が優先されます。
-   *
-   * @default "liquid"
-   */
-  variant?: CheckboxRootVariant | undefined;
-};
+export type CheckboxRootProps = CheckboxRootProps.Render &
+  CheckboxRootProps.SuruUI &
+  CheckboxRootProps.BaseUI &
+  CheckboxRootProps.HTML;
 
 /**
  * チェックボックスのルートコンポーネントです。
@@ -158,15 +178,19 @@ export const CheckboxRoot: IComponent<CheckboxRootProps> = function SuiCheckboxR
 export { CheckboxRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link CheckboxRootState}
-   */
   export type State = CheckboxRootState;
 
   /**
    * {@link CheckboxRootProps}
    */
-  export type Props = CheckboxRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = CheckboxRootProps.BaseUI;
+    export type HTML = CheckboxRootProps.HTML;
+    export type Render = CheckboxRootProps.Render;
+    export type SuruUI = CheckboxRootProps.SuruUI;
+  }
 
   /**
    * {@link CheckboxRootChangeEventDetails}
@@ -207,10 +231,26 @@ export namespace Root {
  */
 export type CheckboxIndicatorState = Checkbox.Indicator.State;
 
+export namespace CheckboxIndicatorProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Checkbox.Indicator>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof React.ComponentProps<typeof Checkbox.Indicator>
+  >;
+
+  export type Render = RenderProps<CheckboxIndicatorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link CheckboxIndicator} に渡す props です。
  */
-export type CheckboxIndicatorProps = React.ComponentProps<typeof Checkbox.Indicator>;
+export type CheckboxIndicatorProps = CheckboxIndicatorProps.Render &
+  CheckboxIndicatorProps.SuruUI &
+  CheckboxIndicatorProps.BaseUI &
+  CheckboxIndicatorProps.HTML;
 
 /**
  * チェックボックスのインジケーターコンポーネントです。
@@ -230,13 +270,17 @@ export const CheckboxIndicator: IComponent<CheckboxIndicatorProps> = function Su
 export { CheckboxIndicator as Indicator };
 
 export namespace Indicator {
-  /**
-   * {@link CheckboxIndicatorState}
-   */
   export type State = CheckboxIndicatorState;
 
   /**
    * {@link CheckboxIndicatorProps}
    */
-  export type Props = CheckboxIndicatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = CheckboxIndicatorProps.BaseUI;
+    export type HTML = CheckboxIndicatorProps.HTML;
+    export type Render = CheckboxIndicatorProps.Render;
+    export type SuruUI = CheckboxIndicatorProps.SuruUI;
+  }
 }

@@ -1,6 +1,7 @@
 import { Field } from "@base-ui/react/field";
 import * as React from "react";
 
+import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
@@ -24,10 +25,26 @@ export type FieldRootValidityData = Field.ValidityData;
  */
 export type FieldRootState = Field.Root.State;
 
+export namespace FieldRootProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Field.Root>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Field.Root>
+  >;
+
+  export type Render = RenderProps<FieldRootState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link FieldRoot} に渡す props です。
  */
-export type FieldRootProps = React.ComponentProps<typeof Field.Root>;
+export type FieldRootProps = FieldRootProps.Render &
+  FieldRootProps.SuruUI &
+  FieldRootProps.BaseUI &
+  FieldRootProps.HTML;
 
 /**
  * フィールドのルートコンポーネントです。
@@ -65,7 +82,14 @@ export namespace Root {
   /**
    * {@link FieldRootProps}
    */
-  export type Props = FieldRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = FieldRootProps.BaseUI;
+    export type HTML = FieldRootProps.HTML;
+    export type Render = FieldRootProps.Render;
+    export type SuruUI = FieldRootProps.SuruUI;
+  }
 
   /**
    * {@link FieldRootActions}
@@ -86,10 +110,26 @@ export namespace Root {
  */
 export type FieldLabelState = Field.Label.State;
 
+export namespace FieldLabelProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Field.Label>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"label">,
+    keyof Render | keyof React.ComponentProps<typeof Field.Label>
+  >;
+
+  export type Render = RenderProps<FieldLabelState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link FieldLabel} に渡す props です。
  */
-export type FieldLabelProps = React.ComponentProps<typeof Field.Label>;
+export type FieldLabelProps = FieldLabelProps.Render &
+  FieldLabelProps.SuruUI &
+  FieldLabelProps.BaseUI &
+  FieldLabelProps.HTML;
 
 /**
  * フィールドのラベルコンポーネントです。
@@ -116,7 +156,14 @@ export namespace Label {
   /**
    * {@link FieldLabelProps}
    */
-  export type Props = FieldLabelProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = FieldLabelProps.BaseUI;
+    export type HTML = FieldLabelProps.HTML;
+    export type Render = FieldLabelProps.Render;
+    export type SuruUI = FieldLabelProps.SuruUI;
+  }
 }
 
 // Control
@@ -137,10 +184,26 @@ export type FieldControlChangeEventReason = Field.Control.ChangeEventReason;
  */
 export type FieldControlState = Field.Control.State;
 
+export namespace FieldControlProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Field.Control>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"input">,
+    keyof Render | keyof React.ComponentProps<typeof Field.Control>
+  >;
+
+  export type Render = RenderProps<FieldControlState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link FieldControl} に渡す props です。
  */
-export type FieldControlProps = React.ComponentProps<typeof Field.Control>;
+export type FieldControlProps = FieldControlProps.Render &
+  FieldControlProps.SuruUI &
+  FieldControlProps.BaseUI &
+  FieldControlProps.HTML;
 
 /**
  * フィールドの入力欄コンポーネントです。
@@ -165,7 +228,14 @@ export namespace Control {
   /**
    * {@link FieldControlProps}
    */
-  export type Props = FieldControlProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = FieldControlProps.BaseUI;
+    export type HTML = FieldControlProps.HTML;
+    export type Render = FieldControlProps.Render;
+    export type SuruUI = FieldControlProps.SuruUI;
+  }
 
   /**
    * {@link FieldControlChangeEventDetails}
@@ -186,10 +256,26 @@ export namespace Control {
  */
 export type FieldDescriptionState = Field.Description.State;
 
+export namespace FieldDescriptionProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Field.Description>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"p">,
+    keyof Render | keyof React.ComponentProps<typeof Field.Description>
+  >;
+
+  export type Render = RenderProps<FieldDescriptionState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link FieldDescription} に渡す props です。
  */
-export type FieldDescriptionProps = React.ComponentProps<typeof Field.Description>;
+export type FieldDescriptionProps = FieldDescriptionProps.Render &
+  FieldDescriptionProps.SuruUI &
+  FieldDescriptionProps.BaseUI &
+  FieldDescriptionProps.HTML;
 
 /**
  * フィールドの補足説明コンポーネントです。
@@ -218,7 +304,14 @@ export namespace Description {
   /**
    * {@link FieldDescriptionProps}
    */
-  export type Props = FieldDescriptionProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = FieldDescriptionProps.BaseUI;
+    export type HTML = FieldDescriptionProps.HTML;
+    export type Render = FieldDescriptionProps.Render;
+    export type SuruUI = FieldDescriptionProps.SuruUI;
+  }
 }
 
 // Error
@@ -229,10 +322,26 @@ export namespace Description {
  */
 export type FieldErrorState = Field.Error.State;
 
+export namespace FieldErrorProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Field.Error>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Field.Error>
+  >;
+
+  export type Render = RenderProps<FieldErrorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link FieldError} に渡す props です。
  */
-export type FieldErrorProps = React.ComponentProps<typeof Field.Error>;
+export type FieldErrorProps = FieldErrorProps.Render &
+  FieldErrorProps.SuruUI &
+  FieldErrorProps.BaseUI &
+  FieldErrorProps.HTML;
 
 /**
  * フィールドのエラーメッセージコンポーネントです。
@@ -259,7 +368,14 @@ export namespace Error {
   /**
    * {@link FieldErrorProps}
    */
-  export type Props = FieldErrorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = FieldErrorProps.BaseUI;
+    export type HTML = FieldErrorProps.HTML;
+    export type Render = FieldErrorProps.Render;
+    export type SuruUI = FieldErrorProps.SuruUI;
+  }
 }
 
 // Item
@@ -270,10 +386,26 @@ export namespace Error {
  */
 export type FieldItemState = Field.Item.State;
 
+export namespace FieldItemProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Field.Item>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Field.Item>
+  >;
+
+  export type Render = RenderProps<FieldItemState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link FieldItem} に渡す props です。
  */
-export type FieldItemProps = React.ComponentProps<typeof Field.Item>;
+export type FieldItemProps = FieldItemProps.Render &
+  FieldItemProps.SuruUI &
+  FieldItemProps.BaseUI &
+  FieldItemProps.HTML;
 
 /**
  * チェックボックスグループやラジオグループの個別項目をグループ化するコンポーネントです。
@@ -300,7 +432,14 @@ export namespace Item {
   /**
    * {@link FieldItemProps}
    */
-  export type Props = FieldItemProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = FieldItemProps.BaseUI;
+    export type HTML = FieldItemProps.HTML;
+    export type Render = FieldItemProps.Render;
+    export type SuruUI = FieldItemProps.SuruUI;
+  }
 }
 
 // Validity
@@ -311,10 +450,23 @@ export namespace Item {
  */
 export type FieldValidityState = Field.Validity.State;
 
+export namespace FieldValidityProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Field.Validity>, keyof Render>;
+
+  export type HTML = {};
+
+  export type Render = RenderProps<FieldValidityState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link FieldValidity} に渡す props です。
  */
-export type FieldValidityProps = React.ComponentProps<typeof Field.Validity>;
+export type FieldValidityProps = FieldValidityProps.Render &
+  FieldValidityProps.SuruUI &
+  FieldValidityProps.BaseUI &
+  FieldValidityProps.HTML;
 
 /**
  * フィールドの検証状態に応じてカスタムメッセージを表示するコンポーネントです。
@@ -339,5 +491,12 @@ export namespace Validity {
   /**
    * {@link FieldValidityProps}
    */
-  export type Props = FieldValidityProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = FieldValidityProps.BaseUI;
+    export type HTML = FieldValidityProps.HTML;
+    export type Render = FieldValidityProps.Render;
+    export type SuruUI = FieldValidityProps.SuruUI;
+  }
 }

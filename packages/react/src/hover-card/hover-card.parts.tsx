@@ -1,6 +1,7 @@
 import { PreviewCard } from "@base-ui/react/preview-card";
 import * as React from "react";
 
+import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
@@ -56,22 +57,35 @@ export type HoverCardRootChangeEventReason = PreviewCard.Root.ChangeEventReason;
  */
 export type HoverCardRootState = PreviewCard.Root.State;
 
+export namespace HoverCardRootProps {
+  export type BaseUI<TPayload = unknown> = Omit<
+    PreviewCard.Root.Props<TPayload>,
+    keyof Render | keyof SuruUI<TPayload>
+  >;
+
+  export type HTML = {};
+
+  export type Render = RenderProps<HoverCardRootState>;
+
+  export type SuruUI<TPayload = unknown> = {
+    /**
+     * ホバーカードとトリガー ({@link Trigger}) を関連付けるハンドルです。
+     *
+     * {@link createHandle} で作成します。Root 内に {@link Trigger} を配置する場合は省略できます。
+     */
+    handle?: HoverCardHandle<TPayload> | undefined;
+  };
+}
+
 /**
  * {@link HoverCardRoot} に渡す props です。
  *
  * @template TPayload トリガーから受け取るデータの型です。
  */
-export type HoverCardRootProps<TPayload = unknown> = Omit<
-  PreviewCard.Root.Props<TPayload>,
-  "handle"
-> & {
-  /**
-   * ホバーカードとトリガー ({@link Trigger}) を関連付けるハンドルです。
-   *
-   * {@link createHandle} で作成します。Root 内に {@link Trigger} を配置する場合は省略できます。
-   */
-  handle?: HoverCardHandle<TPayload> | undefined;
-};
+export type HoverCardRootProps<TPayload = unknown> = HoverCardRootProps.Render &
+  HoverCardRootProps.SuruUI<TPayload> &
+  HoverCardRootProps.BaseUI<TPayload> &
+  HoverCardRootProps.HTML;
 
 /**
  * {@link HoverCardRoot} のコンポーネント型です。
@@ -103,7 +117,17 @@ export namespace Root {
   /**
    * {@link HoverCardRootProps}
    */
-  export type Props<TPayload = unknown> = HoverCardRootProps<TPayload>;
+  export type Props<TPayload = unknown> = Props.Render &
+    Props.SuruUI<TPayload> &
+    Props.BaseUI<TPayload> &
+    Props.HTML;
+
+  export namespace Props {
+    export type BaseUI<TPayload = unknown> = HoverCardRootProps.BaseUI<TPayload>;
+    export type HTML = HoverCardRootProps.HTML;
+    export type Render = HoverCardRootProps.Render;
+    export type SuruUI<TPayload = unknown> = HoverCardRootProps.SuruUI<TPayload>;
+  }
 
   /**
    * {@link HoverCardRootActions}
@@ -131,29 +155,47 @@ export namespace Root {
  */
 export type HoverCardTriggerState = PreviewCard.Trigger.State;
 
+export namespace HoverCardTriggerProps {
+  export type BaseUI<TPayload = unknown> = Omit<
+    PreviewCard.Trigger.Props<TPayload>,
+    keyof Render | keyof SuruUI<TPayload> | "render"
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"a">,
+    | keyof Render
+    | keyof SuruUI<any>
+    | keyof Omit<PreviewCard.Trigger.Props<any>, "handle" | "children" | "render">
+  >;
+
+  export type Render = RenderProps<HoverCardTriggerState>;
+
+  export type SuruUI<TPayload = unknown> = {
+    /**
+     * ホバーの反応対象としてレンダリングする要素です。
+     *
+     * {@link PreviewCard.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
+     */
+    children: NonNullable<PreviewCard.Trigger.Props<TPayload>["render"]>;
+
+    /**
+     * ホバーカード ({@link Root}) を関連付けるハンドルです。
+     *
+     * {@link createHandle} で作成し、{@link Root} と共有します。Root 内に配置する場合は省略できます。
+     */
+    handle?: HoverCardHandle<TPayload> | undefined;
+  };
+}
+
 /**
  * {@link HoverCardTrigger} に渡す props です。
  *
  * @template TPayload トリガーから渡すデータの型です。
  */
-export type HoverCardTriggerProps<TPayload = unknown> = Omit<
-  PreviewCard.Trigger.Props<TPayload>,
-  "handle" | "children" | "render"
-> & {
-  /**
-   * ホバーの反応対象としてレンダリングする要素です。
-   *
-   * {@link PreviewCard.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
-   */
-  children: NonNullable<PreviewCard.Trigger.Props<TPayload>["render"]>;
-
-  /**
-   * ホバーカード ({@link Root}) を関連付けるハンドルです。
-   *
-   * {@link createHandle} で作成し、{@link Root} と共有します。Root 内に配置する場合は省略できます。
-   */
-  handle?: HoverCardHandle<TPayload> | undefined;
-};
+export type HoverCardTriggerProps<TPayload = unknown> = HoverCardTriggerProps.Render &
+  HoverCardTriggerProps.SuruUI<TPayload> &
+  HoverCardTriggerProps.BaseUI<TPayload> &
+  HoverCardTriggerProps.HTML;
 
 /**
  * {@link HoverCardTrigger} のコンポーネント型です。
@@ -194,7 +236,17 @@ export namespace Trigger {
   /**
    * {@link HoverCardTriggerProps}
    */
-  export type Props<TPayload = unknown> = HoverCardTriggerProps<TPayload>;
+  export type Props<TPayload = unknown> = Props.Render &
+    Props.SuruUI<TPayload> &
+    Props.BaseUI<TPayload> &
+    Props.HTML;
+
+  export namespace Props {
+    export type BaseUI<TPayload = unknown> = HoverCardTriggerProps.BaseUI<TPayload>;
+    export type HTML = HoverCardTriggerProps.HTML;
+    export type Render = HoverCardTriggerProps.Render;
+    export type SuruUI<TPayload = unknown> = HoverCardTriggerProps.SuruUI<TPayload>;
+  }
 }
 
 // Portal
@@ -205,10 +257,26 @@ export namespace Trigger {
  */
 export type HoverCardPortalState = PreviewCard.Portal.State;
 
+export namespace HoverCardPortalProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof PreviewCard.Portal>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof PreviewCard.Portal>
+  >;
+
+  export type Render = RenderProps<HoverCardPortalState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link HoverCardPortal} に渡す props です。
  */
-export type HoverCardPortalProps = React.ComponentProps<typeof PreviewCard.Portal>;
+export type HoverCardPortalProps = HoverCardPortalProps.Render &
+  HoverCardPortalProps.SuruUI &
+  HoverCardPortalProps.BaseUI &
+  HoverCardPortalProps.HTML;
 
 /**
  * ホバーカードを DOM の別の場所へ移動する要素です。
@@ -245,7 +313,14 @@ export namespace Portal {
   /**
    * {@link HoverCardPortalProps}
    */
-  export type Props = HoverCardPortalProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = HoverCardPortalProps.BaseUI;
+    export type HTML = HoverCardPortalProps.HTML;
+    export type Render = HoverCardPortalProps.Render;
+    export type SuruUI = HoverCardPortalProps.SuruUI;
+  }
 }
 
 // Backdrop
@@ -256,10 +331,26 @@ export namespace Portal {
  */
 export type HoverCardBackdropState = PreviewCard.Backdrop.State;
 
+export namespace HoverCardBackdropProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof PreviewCard.Backdrop>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof PreviewCard.Backdrop>
+  >;
+
+  export type Render = RenderProps<HoverCardBackdropState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link HoverCardBackdrop} に渡す props です。
  */
-export type HoverCardBackdropProps = React.ComponentProps<typeof PreviewCard.Backdrop>;
+export type HoverCardBackdropProps = HoverCardBackdropProps.Render &
+  HoverCardBackdropProps.SuruUI &
+  HoverCardBackdropProps.BaseUI &
+  HoverCardBackdropProps.HTML;
 
 /**
  * ポップアップの背後に表示されるオーバーレイ要素です。
@@ -294,7 +385,14 @@ export namespace Backdrop {
   /**
    * {@link HoverCardBackdropProps}
    */
-  export type Props = HoverCardBackdropProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = HoverCardBackdropProps.BaseUI;
+    export type HTML = HoverCardBackdropProps.HTML;
+    export type Render = HoverCardBackdropProps.Render;
+    export type SuruUI = HoverCardBackdropProps.SuruUI;
+  }
 }
 
 // Positioner
@@ -305,10 +403,26 @@ export namespace Backdrop {
  */
 export type HoverCardPositionerState = PreviewCard.Positioner.State;
 
+export namespace HoverCardPositionerProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof PreviewCard.Positioner>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof PreviewCard.Positioner>
+  >;
+
+  export type Render = RenderProps<HoverCardPositionerState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link HoverCardPositioner} に渡す props です。
  */
-export type HoverCardPositionerProps = React.ComponentProps<typeof PreviewCard.Positioner>;
+export type HoverCardPositionerProps = HoverCardPositionerProps.Render &
+  HoverCardPositionerProps.SuruUI &
+  HoverCardPositionerProps.BaseUI &
+  HoverCardPositionerProps.HTML;
 
 /**
  * トリガーを基準にポップアップを配置する要素です。
@@ -336,7 +450,14 @@ export namespace Positioner {
   /**
    * {@link HoverCardPositionerProps}
    */
-  export type Props = HoverCardPositionerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = HoverCardPositionerProps.BaseUI;
+    export type HTML = HoverCardPositionerProps.HTML;
+    export type Render = HoverCardPositionerProps.Render;
+    export type SuruUI = HoverCardPositionerProps.SuruUI;
+  }
 }
 
 // Content
@@ -347,10 +468,26 @@ export namespace Positioner {
  */
 export type HoverCardContentState = PreviewCard.Popup.State;
 
+export namespace HoverCardContentProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof PreviewCard.Popup>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof PreviewCard.Popup>
+  >;
+
+  export type Render = RenderProps<HoverCardContentState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link HoverCardContent} に渡す props です。
  */
-export type HoverCardContentProps = React.ComponentProps<typeof PreviewCard.Popup>;
+export type HoverCardContentProps = HoverCardContentProps.Render &
+  HoverCardContentProps.SuruUI &
+  HoverCardContentProps.BaseUI &
+  HoverCardContentProps.HTML;
 
 /**
  * ホバーカードの内容を表示するポップアップ要素です。
@@ -385,7 +522,14 @@ export namespace Content {
   /**
    * {@link HoverCardContentProps}
    */
-  export type Props = HoverCardContentProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = HoverCardContentProps.BaseUI;
+    export type HTML = HoverCardContentProps.HTML;
+    export type Render = HoverCardContentProps.Render;
+    export type SuruUI = HoverCardContentProps.SuruUI;
+  }
 }
 
 // Arrow
@@ -396,10 +540,26 @@ export namespace Content {
  */
 export type HoverCardArrowState = PreviewCard.Arrow.State;
 
+export namespace HoverCardArrowProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof PreviewCard.Arrow>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof PreviewCard.Arrow>
+  >;
+
+  export type Render = RenderProps<HoverCardArrowState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link HoverCardArrow} に渡す props です。
  */
-export type HoverCardArrowProps = React.ComponentProps<typeof PreviewCard.Arrow>;
+export type HoverCardArrowProps = HoverCardArrowProps.Render &
+  HoverCardArrowProps.SuruUI &
+  HoverCardArrowProps.BaseUI &
+  HoverCardArrowProps.HTML;
 
 /**
  * ポップアップとトリガーをつなぐ矢印要素です。
@@ -421,7 +581,14 @@ export namespace Arrow {
   /**
    * {@link HoverCardArrowProps}
    */
-  export type Props = HoverCardArrowProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = HoverCardArrowProps.BaseUI;
+    export type HTML = HoverCardArrowProps.HTML;
+    export type Render = HoverCardArrowProps.Render;
+    export type SuruUI = HoverCardArrowProps.SuruUI;
+  }
 }
 
 // Viewport
@@ -432,10 +599,26 @@ export namespace Arrow {
  */
 export type HoverCardViewportState = PreviewCard.Viewport.State;
 
+export namespace HoverCardViewportProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof PreviewCard.Viewport>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof PreviewCard.Viewport>
+  >;
+
+  export type Render = RenderProps<HoverCardViewportState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link HoverCardViewport} に渡す props です。
  */
-export type HoverCardViewportProps = React.ComponentProps<typeof PreviewCard.Viewport>;
+export type HoverCardViewportProps = HoverCardViewportProps.Render &
+  HoverCardViewportProps.SuruUI &
+  HoverCardViewportProps.BaseUI &
+  HoverCardViewportProps.HTML;
 
 /**
  * 複数のトリガー間で内容を切り替えるときのアニメーション領域です。
@@ -463,5 +646,12 @@ export namespace Viewport {
   /**
    * {@link HoverCardViewportProps}
    */
-  export type Props = HoverCardViewportProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = HoverCardViewportProps.BaseUI;
+    export type HTML = HoverCardViewportProps.HTML;
+    export type Render = HoverCardViewportProps.Render;
+    export type SuruUI = HoverCardViewportProps.SuruUI;
+  }
 }

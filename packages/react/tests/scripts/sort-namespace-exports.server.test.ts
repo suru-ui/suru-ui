@@ -131,6 +131,58 @@ describe("sortNamespaceExports", () => {
     expect(sortNamespaceExports(source)).toBe(expected);
   });
 
+  it("固定名で同名の型と名前空間がある場合は名前空間を型の直後に置く", () => {
+    const source = [
+      "export namespace Root {",
+      "  export namespace Props {",
+      "    export type Render = RootProps.Render;",
+      "    export type HTML = RootProps.HTML;",
+      "  }",
+      "  export type Color = RootColor;",
+      "  export type Props = RootProps;",
+      "  export type State = RootState;",
+      "}",
+      "",
+    ].join("\n");
+    const expected = [
+      "export namespace Root {",
+      "  export type State = RootState;",
+      "  export type Props = RootProps;",
+      "  export namespace Props {",
+      "    export type HTML = RootProps.HTML;",
+      "    export type Render = RootProps.Render;",
+      "  }",
+      "  export type Color = RootColor;",
+      "}",
+      "",
+    ].join("\n");
+    expect(sortNamespaceExports(source)).toBe(expected);
+  });
+
+  it("固定名以外の同名ペアは名前空間を末尾に置く", () => {
+    const source = [
+      "export namespace Root {",
+      "  export namespace Panel {",
+      "    export type Props = PanelProps;",
+      "  }",
+      "  export type Panel = PanelProps;",
+      "  export type State = RootState;",
+      "}",
+      "",
+    ].join("\n");
+    const expected = [
+      "export namespace Root {",
+      "  export type State = RootState;",
+      "  export type Panel = PanelProps;",
+      "  export namespace Panel {",
+      "    export type Props = PanelProps;",
+      "  }",
+      "}",
+      "",
+    ].join("\n");
+    expect(sortNamespaceExports(source)).toBe(expected);
+  });
+
   it("コメントはメンバーと一緒に移動する", () => {
     const source = [
       "export namespace Root {",

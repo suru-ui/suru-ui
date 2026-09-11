@@ -251,11 +251,12 @@ export type TreeRootState = {
   readonly value: readonly string[];
 };
 
-/**
- * {@link TreeRoot} に渡すプロパティーです。
- */
-export type TreeRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps | "children"> &
-  RenderProps<TreeRootState> & {
+export namespace TreeRootProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<TreeRootState>;
+
+  export type SuruUI = {
     /**
      * ツリーの内容、または各ノードをレンダリングする関数です。
      *
@@ -358,6 +359,12 @@ export type TreeRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps 
      */
     variant?: TreeRootVariant | undefined;
   };
+}
+
+/**
+ * {@link TreeRoot} に渡すプロパティーです。
+ */
+export type TreeRootProps = TreeRootProps.Render & TreeRootProps.SuruUI & TreeRootProps.HTML;
 
 const EMPTY: readonly string[] = [];
 
@@ -752,7 +759,24 @@ export namespace Root {
   /**
    * {@link TreeRootProps}
    */
-  export type Props = TreeRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link TreeRootProps.HTML}
+     */
+    export type HTML = TreeRootProps.HTML;
+
+    /**
+     * {@link TreeRootProps.Render}
+     */
+    export type Render = TreeRootProps.Render;
+
+    /**
+     * {@link TreeRootProps.SuruUI}
+     */
+    export type SuruUI = TreeRootProps.SuruUI;
+  }
 
   /**
    * {@link TreeRootColor}
@@ -818,95 +842,111 @@ export type TreeItemVariant = "liquid" | "solid";
  */
 export type TreeItemState = {};
 
+export namespace TreeItemProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Button.Root>,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"button">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<TreeItemState>;
+
+  export type SuruUI = {
+    /**
+     * 項目の配色を指定します。
+     *
+     * 選択されていないときは常に `"grey"` になります。
+     *
+     * 既定値は {@link TreeRootProps.color|color} です。
+     */
+    color?: TreeItemColor | undefined;
+
+    /**
+     * 子ノードを持つかどうかを指定します。
+     *
+     * `true` の場合、展開可能な分岐として描画します。
+     *
+     * @default false
+     */
+    hasItems?: boolean | undefined;
+
+    /**
+     * 対応するノードの識別子です。
+     *
+     * `items` プロパティーから描画した項目には自動的に渡されます。
+     */
+    id: string;
+
+    /**
+     * ノードの深さです。ルートの直接の子が `1` です。
+     *
+     * `items` プロパティーから描画した項目には自動的に渡されます。
+     */
+    level: number;
+
+    /**
+     * 項目の背景色を控えめにするかどうかを指定します。
+     *
+     * 既定値は {@link TreeRootProps.muted|muted} です。
+     */
+    muted?: boolean | undefined;
+
+    /**
+     * 項目に枠線を表示するかどうかを指定します。
+     *
+     * 選択されていないときは常に枠線なしになります。
+     *
+     * 既定値は {@link TreeRootProps.outlined|outlined} です。
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * 同じ深さの中での位置です。1 起点です。
+     *
+     * `items` プロパティーから描画した項目には自動的に渡されます。
+     */
+    posInSet?: number | undefined;
+
+    /**
+     * 項目の角丸を指定します。
+     *
+     * 既定値は {@link TreeRootProps.radius|radius} です。
+     */
+    radius?: TreeItemRadius | undefined;
+
+    /**
+     * 同じ深さの項目数です。
+     *
+     * `items` プロパティーから描画した項目には自動的に渡されます。
+     */
+    setSize?: number | undefined;
+
+    /**
+     * 項目の大きさを指定します。
+     *
+     * 既定値は {@link TreeRootProps.size|size} です。
+     */
+    size?: TreeItemSize | undefined;
+
+    /**
+     * 項目の主な外観を指定します。
+     *
+     * 選択されていないときは常に `"naked"` になります。
+     *
+     * 既定値は {@link TreeRootProps.variant|variant} です。
+     */
+    variant?: TreeItemVariant | undefined;
+  };
+}
+
 /**
  * {@link TreeItem} に渡すプロパティーです。
  */
-export type TreeItemProps = React.ComponentProps<typeof Button.Root> & {
-  /**
-   * 項目の配色を指定します。
-   *
-   * 選択されていないときは常に `"grey"` になります。
-   *
-   * 既定値は {@link TreeRootProps.color|color} です。
-   */
-  color?: TreeItemColor | undefined;
-
-  /**
-   * 子ノードを持つかどうかを指定します。
-   *
-   * `true` の場合、展開可能な分岐として描画します。
-   *
-   * @default false
-   */
-  hasItems?: boolean | undefined;
-
-  /**
-   * 対応するノードの識別子です。
-   *
-   * `items` プロパティーから描画した項目には自動的に渡されます。
-   */
-  id: string;
-
-  /**
-   * ノードの深さです。ルートの直接の子が `1` です。
-   *
-   * `items` プロパティーから描画した項目には自動的に渡されます。
-   */
-  level: number;
-
-  /**
-   * 項目の背景色を控えめにするかどうかを指定します。
-   *
-   * 既定値は {@link TreeRootProps.muted|muted} です。
-   */
-  muted?: boolean | undefined;
-
-  /**
-   * 項目に枠線を表示するかどうかを指定します。
-   *
-   * 選択されていないときは常に枠線なしになります。
-   *
-   * 既定値は {@link TreeRootProps.outlined|outlined} です。
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * 同じ深さの中での位置です。1 起点です。
-   *
-   * `items` プロパティーから描画した項目には自動的に渡されます。
-   */
-  posInSet?: number | undefined;
-
-  /**
-   * 項目の角丸を指定します。
-   *
-   * 既定値は {@link TreeRootProps.radius|radius} です。
-   */
-  radius?: TreeItemRadius | undefined;
-
-  /**
-   * 同じ深さの項目数です。
-   *
-   * `items` プロパティーから描画した項目には自動的に渡されます。
-   */
-  setSize?: number | undefined;
-
-  /**
-   * 項目の大きさを指定します。
-   *
-   * 既定値は {@link TreeRootProps.size|size} です。
-   */
-  size?: TreeItemSize | undefined;
-
-  /**
-   * 項目の主な外観を指定します。
-   *
-   * 選択されていないときは常に `"naked"` になります。
-   *
-   * 既定値は {@link TreeRootProps.variant|variant} です。
-   */
-  variant?: TreeItemVariant | undefined;
-};
+export type TreeItemProps = TreeItemProps.Render &
+  TreeItemProps.SuruUI &
+  TreeItemProps.BaseUI &
+  TreeItemProps.HTML;
 
 /**
  * ツリーの項目要素です。
@@ -991,7 +1031,29 @@ export namespace Item {
   /**
    * {@link TreeItemProps}
    */
-  export type Props = TreeItemProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link TreeItemProps.BaseUI}
+     */
+    export type BaseUI = TreeItemProps.BaseUI;
+
+    /**
+     * {@link TreeItemProps.HTML}
+     */
+    export type HTML = TreeItemProps.HTML;
+
+    /**
+     * {@link TreeItemProps.Render}
+     */
+    export type Render = TreeItemProps.Render;
+
+    /**
+     * {@link TreeItemProps.SuruUI}
+     */
+    export type SuruUI = TreeItemProps.SuruUI;
+  }
 
   /**
    * {@link TreeItemColor}
@@ -1022,11 +1084,12 @@ export namespace Item {
  */
 export type TreeItemIndicatorState = {};
 
-/**
- * {@link TreeItemIndicator} に渡すプロパティーです。
- */
-export type TreeItemIndicatorProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
-  RenderProps<TreeItemIndicatorState> & {
+export namespace TreeItemIndicatorProps {
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<TreeItemIndicatorState>;
+
+  export type SuruUI = {
     /**
      * 展開インジケーターを表示するかどうかを指定します。
      *
@@ -1036,6 +1099,14 @@ export type TreeItemIndicatorProps = Omit<React.ComponentProps<"span">, keyof Re
      */
     visible?: boolean | undefined;
   };
+}
+
+/**
+ * {@link TreeItemIndicator} に渡すプロパティーです。
+ */
+export type TreeItemIndicatorProps = TreeItemIndicatorProps.Render &
+  TreeItemIndicatorProps.SuruUI &
+  TreeItemIndicatorProps.HTML;
 
 /**
  * ツリーの項目の展開状態を示すアイコン要素です。
@@ -1073,5 +1144,22 @@ export namespace Indicator {
   /**
    * {@link TreeItemIndicatorProps}
    */
-  export type Props = TreeItemIndicatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link TreeItemIndicatorProps.HTML}
+     */
+    export type HTML = TreeItemIndicatorProps.HTML;
+
+    /**
+     * {@link TreeItemIndicatorProps.Render}
+     */
+    export type Render = TreeItemIndicatorProps.Render;
+
+    /**
+     * {@link TreeItemIndicatorProps.SuruUI}
+     */
+    export type SuruUI = TreeItemIndicatorProps.SuruUI;
+  }
 }

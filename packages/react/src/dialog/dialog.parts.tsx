@@ -117,20 +117,36 @@ export type DialogRootChangeEventReason = Dialog.Root.ChangeEventReason;
  */
 export type DialogRootState = Dialog.Root.State;
 
+export namespace DialogRootProps {
+  export type BaseUI<TPayload = any> = Omit<
+    React.ComponentProps<typeof Dialog.Root>,
+    keyof Render | keyof SuruUI<TPayload>
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI<any> | keyof React.ComponentProps<typeof Dialog.Root>
+  >;
+
+  export type Render = RenderProps<DialogRootState>;
+
+  export type SuruUI<TPayload = any> = {
+    /**
+     * トリガーとダイアログに関連付けるためのハンドルです。
+     */
+    handle: DialogHandle<TPayload>;
+  };
+}
+
 /**
  * {@link DialogRoot} に渡す props です。
  *
  * @template TPayload トリガーが送信するデータの型です。
  */
-export type DialogRootProps<TPayload = any> = Omit<
-  React.ComponentProps<typeof Dialog.Root>,
-  "handle"
-> & {
-  /**
-   * トリガーとダイアログに関連付けるためのハンドルです。
-   */
-  handle: DialogHandle<TPayload>;
-};
+export type DialogRootProps<TPayload = any> = DialogRootProps.Render &
+  DialogRootProps.SuruUI<TPayload> &
+  DialogRootProps.BaseUI<TPayload> &
+  DialogRootProps.HTML;
 
 interface IDialogRoot extends IComponent<DialogRootProps> {
   /**
@@ -151,15 +167,22 @@ export const DialogRoot: IDialogRoot = function SuiDialogRoot(props: DialogRootP
 export { DialogRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link DialogRootState}
-   */
   export type State = DialogRootState;
 
   /**
    * {@link DialogRootProps}
    */
-  export type Props<TPayload = any> = DialogRootProps<TPayload>;
+  export type Props<TPayload = any> = Props.Render &
+    Props.SuruUI<TPayload> &
+    Props.BaseUI<TPayload> &
+    Props.HTML;
+
+  export namespace Props {
+    export type BaseUI<TPayload = any> = DialogRootProps.BaseUI<TPayload>;
+    export type HTML = DialogRootProps.HTML;
+    export type Render = DialogRootProps.Render;
+    export type SuruUI<TPayload = any> = DialogRootProps.SuruUI<TPayload>;
+  }
 
   /**
    * {@link DialogRootActions}
@@ -185,25 +208,41 @@ export namespace Root {
  */
 export type DialogToggleTriggerState = Dialog.Trigger.State;
 
+export namespace DialogToggleTriggerProps {
+  export type BaseUI<TPayload = any> = Omit<
+    React.ComponentProps<typeof Dialog.Trigger>,
+    keyof Render | keyof SuruUI<TPayload>
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI<any> | keyof React.ComponentProps<typeof Dialog.Trigger>
+  >;
+
+  export type Render = RenderProps<DialogToggleTriggerState>;
+
+  export type SuruUI<TPayload = any> = {
+    /**
+     * ボタンとしてレンダリングする要素です。
+     */
+    children: NonNullable<React.ComponentProps<typeof Dialog.Trigger>["render"]>;
+
+    /**
+     * トリガーとダイアログに関連付けるためのハンドルです。
+     */
+    handle: DialogHandle<TPayload>;
+  };
+}
+
 /**
  * {@link DialogToggleTrigger} に渡す props です。
  *
  * @template TPayload トリガーが送信するデータの型です。
  */
-export type DialogToggleTriggerProps<TPayload = any> = Omit<
-  React.ComponentProps<typeof Dialog.Trigger>,
-  "handle" | "children" | "render"
-> & {
-  /**
-   * ボタンとしてレンダリングする要素です。
-   */
-  children: NonNullable<React.ComponentProps<typeof Dialog.Trigger>["render"]>;
-
-  /**
-   * トリガーとダイアログに関連付けるためのハンドルです。
-   */
-  handle: DialogHandle<TPayload>;
-};
+export type DialogToggleTriggerProps<TPayload = any> = DialogToggleTriggerProps.Render &
+  DialogToggleTriggerProps.SuruUI<TPayload> &
+  DialogToggleTriggerProps.BaseUI<TPayload> &
+  DialogToggleTriggerProps.HTML;
 
 /**
  * ダイアログを開くボタンコンポーネントです。
@@ -225,15 +264,22 @@ export const DialogToggleTrigger: IComponent<DialogToggleTriggerProps> =
 export { DialogToggleTrigger as ToggleTrigger };
 
 export namespace ToggleTrigger {
-  /**
-   * {@link DialogToggleTriggerState}
-   */
   export type State = DialogToggleTriggerState;
 
   /**
    * {@link DialogToggleTriggerProps}
    */
-  export type Props = DialogToggleTriggerProps;
+  export type Props<TPayload = any> = Props.Render &
+    Props.SuruUI<TPayload> &
+    Props.BaseUI<TPayload> &
+    Props.HTML;
+
+  export namespace Props {
+    export type BaseUI<TPayload = any> = DialogToggleTriggerProps.BaseUI<TPayload>;
+    export type HTML = DialogToggleTriggerProps.HTML;
+    export type Render = DialogToggleTriggerProps.Render;
+    export type SuruUI<TPayload = any> = DialogToggleTriggerProps.SuruUI<TPayload>;
+  }
 }
 
 // Portal
@@ -244,10 +290,26 @@ export namespace ToggleTrigger {
  */
 export type DialogPortalState = Dialog.Portal.State;
 
+export namespace DialogPortalProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Portal>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Dialog.Portal>
+  >;
+
+  export type Render = RenderProps<DialogPortalState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DialogPortal} に渡す props です。
  */
-export type DialogPortalProps = React.ComponentProps<typeof Dialog.Portal>;
+export type DialogPortalProps = DialogPortalProps.Render &
+  DialogPortalProps.SuruUI &
+  DialogPortalProps.BaseUI &
+  DialogPortalProps.HTML;
 
 /**
  * ダイアログを DOM の別の場所に配置するコンポーネントです。
@@ -274,15 +336,19 @@ export const DialogPortal: IComponent<DialogPortalProps> = function SuiDialogPor
 export { DialogPortal as Portal };
 
 export namespace Portal {
-  /**
-   * {@link DialogPortalState}
-   */
   export type State = DialogPortalState;
 
   /**
    * {@link DialogPortalProps}
    */
-  export type Props = DialogPortalProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = DialogPortalProps.BaseUI;
+    export type HTML = DialogPortalProps.HTML;
+    export type Render = DialogPortalProps.Render;
+    export type SuruUI = DialogPortalProps.SuruUI;
+  }
 }
 
 // Backdrop
@@ -293,10 +359,26 @@ export namespace Portal {
  */
 export type DialogBackdropState = Dialog.Backdrop.State;
 
+export namespace DialogBackdropProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Backdrop>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Dialog.Backdrop>
+  >;
+
+  export type Render = RenderProps<DialogBackdropState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DialogBackdrop} に渡す props です。
  */
-export type DialogBackdropProps = React.ComponentProps<typeof Dialog.Backdrop>;
+export type DialogBackdropProps = DialogBackdropProps.Render &
+  DialogBackdropProps.SuruUI &
+  DialogBackdropProps.BaseUI &
+  DialogBackdropProps.HTML;
 
 /**
  * ポップアップの背後に表示されるオーバーレイコンポーネントです。
@@ -310,15 +392,19 @@ export const DialogBackdrop: IComponent<DialogBackdropProps> = function SuiDialo
 export { DialogBackdrop as Backdrop };
 
 export namespace Backdrop {
-  /**
-   * {@link DialogBackdropState}
-   */
   export type State = DialogBackdropState;
 
   /**
    * {@link DialogBackdropProps}
    */
-  export type Props = DialogBackdropProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = DialogBackdropProps.BaseUI;
+    export type HTML = DialogBackdropProps.HTML;
+    export type Render = DialogBackdropProps.Render;
+    export type SuruUI = DialogBackdropProps.SuruUI;
+  }
 }
 
 // Viewport
@@ -329,10 +415,26 @@ export namespace Backdrop {
  */
 export type DialogViewportState = Dialog.Viewport.State;
 
+export namespace DialogViewportProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Viewport>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Dialog.Viewport>
+  >;
+
+  export type Render = RenderProps<DialogViewportState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DialogViewport} に渡す props です。
  */
-export type DialogViewportProps = React.ComponentProps<typeof Dialog.Viewport>;
+export type DialogViewportProps = DialogViewportProps.Render &
+  DialogViewportProps.SuruUI &
+  DialogViewportProps.BaseUI &
+  DialogViewportProps.HTML;
 
 /**
  * ポップアップの配置コンテナーコンポーネントです。
@@ -348,15 +450,19 @@ export const DialogViewport: IComponent<DialogViewportProps> = function SuiDialo
 export { DialogViewport as Viewport };
 
 export namespace Viewport {
-  /**
-   * {@link DialogViewportState}
-   */
   export type State = DialogViewportState;
 
   /**
    * {@link DialogViewportProps}
    */
-  export type Props = DialogViewportProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = DialogViewportProps.BaseUI;
+    export type HTML = DialogViewportProps.HTML;
+    export type Render = DialogViewportProps.Render;
+    export type SuruUI = DialogViewportProps.SuruUI;
+  }
 }
 
 // Content
@@ -385,31 +491,47 @@ export type DialogContentVariant = "default" | "stacked";
  */
 export type DialogContentState = Dialog.Popup.State;
 
+export namespace DialogContentProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Popup>, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Dialog.Popup>
+  >;
+
+  export type Render = RenderProps<DialogContentState>;
+
+  export type SuruUI = {
+    /**
+     * ダイアログに枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * ダイアログの角丸の大きさを指定します。
+     *
+     * @default "md"
+     */
+    radius?: DialogContentRadius | undefined;
+
+    /**
+     * ダイアログの主な外観を指定します。
+     *
+     * @default "default"
+     */
+    variant?: DialogContentVariant | undefined;
+  };
+}
+
 /**
  * {@link DialogContent} に渡す props です。
  */
-export type DialogContentProps = React.ComponentProps<typeof Dialog.Popup> & {
-  /**
-   * ダイアログに枠線を表示するかどうかを指定します。
-   *
-   * @default false
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * ダイアログの角丸の大きさを指定します。
-   *
-   * @default "md"
-   */
-  radius?: DialogContentRadius | undefined;
-
-  /**
-   * ダイアログの主な外観を指定します。
-   *
-   * @default "default"
-   */
-  variant?: DialogContentVariant | undefined;
-};
+export type DialogContentProps = DialogContentProps.Render &
+  DialogContentProps.SuruUI &
+  DialogContentProps.BaseUI &
+  DialogContentProps.HTML;
 
 /**
  * ダイアログを表示するコンポーネントです。
@@ -437,15 +559,19 @@ export const DialogContent: IComponent<DialogContentProps> = function SuiDialogC
 export { DialogContent as Content };
 
 export namespace Content {
-  /**
-   * {@link DialogContentState}
-   */
   export type State = DialogContentState;
 
   /**
    * {@link DialogContentProps}
    */
-  export type Props = DialogContentProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = DialogContentProps.BaseUI;
+    export type HTML = DialogContentProps.HTML;
+    export type Render = DialogContentProps.Render;
+    export type SuruUI = DialogContentProps.SuruUI;
+  }
 
   /**
    * {@link DialogContentRadius}
@@ -466,11 +592,12 @@ export namespace Content {
  */
 export type DialogControlsState = {};
 
-/**
- * {@link DialogControls} に渡す props です。
- */
-export type DialogControlsProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<DialogControlsState> & {
+export namespace DialogControlsProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<DialogControlsState>;
+
+  export type SuruUI = {
     /**
      * 絶対位置として配置するかを指定します。
      *
@@ -478,6 +605,14 @@ export type DialogControlsProps = Omit<React.ComponentProps<"div">, keyof Render
      */
     absolute?: boolean | undefined;
   };
+}
+
+/**
+ * {@link DialogControls} に渡す props です。
+ */
+export type DialogControlsProps = DialogControlsProps.Render &
+  DialogControlsProps.SuruUI &
+  DialogControlsProps.HTML;
 
 /**
  * ダイアログのコントロールコンポーネントです。
@@ -503,15 +638,18 @@ export const DialogControls: IComponent<DialogControlsProps> = function SuiDialo
 export { DialogControls as Controls };
 
 export namespace Controls {
-  /**
-   * {@link DialogControlsState}
-   */
   export type State = DialogControlsState;
 
   /**
    * {@link DialogControlsProps}
    */
-  export type Props = DialogControlsProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = DialogControlsProps.HTML;
+    export type Render = DialogControlsProps.Render;
+    export type SuruUI = DialogControlsProps.SuruUI;
+  }
 }
 
 // Header
@@ -522,11 +660,20 @@ export namespace Controls {
  */
 export type DialogHeaderState = {};
 
+export namespace DialogHeaderProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<DialogHeaderState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DialogHeader} に渡す props です。
  */
-export type DialogHeaderProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<DialogHeaderState>;
+export type DialogHeaderProps = DialogHeaderProps.Render &
+  DialogHeaderProps.SuruUI &
+  DialogHeaderProps.HTML;
 
 /**
  * ダイアログのヘッダーコンポーネントです。
@@ -546,15 +693,18 @@ export const DialogHeader: IComponent<DialogHeaderProps> = function SuiDialogHea
 export { DialogHeader as Header };
 
 export namespace Header {
-  /**
-   * {@link DialogHeaderState}
-   */
   export type State = DialogHeaderState;
 
   /**
    * {@link DialogHeaderProps}
    */
-  export type Props = DialogHeaderProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = DialogHeaderProps.HTML;
+    export type Render = DialogHeaderProps.Render;
+    export type SuruUI = DialogHeaderProps.SuruUI;
+  }
 }
 
 // Title
@@ -565,10 +715,26 @@ export namespace Header {
  */
 export type DialogTitleState = Dialog.Title.State;
 
+export namespace DialogTitleProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Title>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"h2">,
+    keyof Render | keyof React.ComponentProps<typeof Dialog.Title>
+  >;
+
+  export type Render = RenderProps<DialogTitleState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DialogTitle} に渡す props です。
  */
-export type DialogTitleProps = React.ComponentProps<typeof Dialog.Title>;
+export type DialogTitleProps = DialogTitleProps.Render &
+  DialogTitleProps.SuruUI &
+  DialogTitleProps.BaseUI &
+  DialogTitleProps.HTML;
 
 /**
  * ダイアログの見出しを表示するコンポーネントです。
@@ -582,15 +748,19 @@ export const DialogTitle: IComponent<DialogTitleProps> = function SuiDialogTitle
 export { DialogTitle as Title };
 
 export namespace Title {
-  /**
-   * {@link DialogTitleState}
-   */
   export type State = DialogTitleState;
 
   /**
    * {@link DialogTitleProps}
    */
-  export type Props = DialogTitleProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = DialogTitleProps.BaseUI;
+    export type HTML = DialogTitleProps.HTML;
+    export type Render = DialogTitleProps.Render;
+    export type SuruUI = DialogTitleProps.SuruUI;
+  }
 }
 
 // Description
@@ -601,10 +771,26 @@ export namespace Title {
  */
 export type DialogDescriptionState = Dialog.Description.State;
 
+export namespace DialogDescriptionProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Description>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"p">,
+    keyof Render | keyof React.ComponentProps<typeof Dialog.Description>
+  >;
+
+  export type Render = RenderProps<DialogDescriptionState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DialogDescription} に渡す props です。
  */
-export type DialogDescriptionProps = React.ComponentProps<typeof Dialog.Description>;
+export type DialogDescriptionProps = DialogDescriptionProps.Render &
+  DialogDescriptionProps.SuruUI &
+  DialogDescriptionProps.BaseUI &
+  DialogDescriptionProps.HTML;
 
 /**
  * ダイアログの内容を表示するコンポーネントです。
@@ -620,15 +806,19 @@ export const DialogDescription: IComponent<DialogDescriptionProps> = function Su
 export { DialogDescription as Description };
 
 export namespace Description {
-  /**
-   * {@link DialogDescriptionState}
-   */
   export type State = DialogDescriptionState;
 
   /**
    * {@link DialogDescriptionProps}
    */
-  export type Props = DialogDescriptionProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = DialogDescriptionProps.BaseUI;
+    export type HTML = DialogDescriptionProps.HTML;
+    export type Render = DialogDescriptionProps.Render;
+    export type SuruUI = DialogDescriptionProps.SuruUI;
+  }
 }
 
 // Body
@@ -639,11 +829,20 @@ export namespace Description {
  */
 export type DialogBodyState = {};
 
+export namespace DialogBodyProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<DialogBodyState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DialogBody} に渡す props です。
  */
-export type DialogBodyProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<DialogBodyState>;
+export type DialogBodyProps = DialogBodyProps.Render &
+  DialogBodyProps.SuruUI &
+  DialogBodyProps.HTML;
 
 /**
  * ダイアログのボディーコンポーネントです。
@@ -663,15 +862,18 @@ export const DialogBody: IComponent<DialogBodyProps> = function SuiDialogBody(pr
 export { DialogBody as Body };
 
 export namespace Body {
-  /**
-   * {@link DialogBodyState}
-   */
   export type State = DialogBodyState;
 
   /**
    * {@link DialogBodyProps}
    */
-  export type Props = DialogBodyProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = DialogBodyProps.HTML;
+    export type Render = DialogBodyProps.Render;
+    export type SuruUI = DialogBodyProps.SuruUI;
+  }
 }
 
 // Footer
@@ -682,11 +884,20 @@ export namespace Body {
  */
 export type DialogFooterState = {};
 
+export namespace DialogFooterProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<DialogFooterState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DialogFooter} に渡す props です。
  */
-export type DialogFooterProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<DialogFooterState>;
+export type DialogFooterProps = DialogFooterProps.Render &
+  DialogFooterProps.SuruUI &
+  DialogFooterProps.HTML;
 
 /**
  * ダイアログのフッターコンポーネントです。
@@ -706,15 +917,18 @@ export const DialogFooter: IComponent<DialogFooterProps> = function SuiDialogFoo
 export { DialogFooter as Footer };
 
 export namespace Footer {
-  /**
-   * {@link DialogFooterState}
-   */
   export type State = DialogFooterState;
 
   /**
    * {@link DialogFooterProps}
    */
-  export type Props = DialogFooterProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = DialogFooterProps.HTML;
+    export type Render = DialogFooterProps.Render;
+    export type SuruUI = DialogFooterProps.SuruUI;
+  }
 }
 
 // CloseTrigger
@@ -725,18 +939,31 @@ export namespace Footer {
  */
 export type DialogCloseTriggerState = Dialog.Close.State;
 
+export namespace DialogCloseTriggerProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Close>, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Dialog.Close>
+  >;
+
+  export type Render = RenderProps<DialogCloseTriggerState>;
+
+  export type SuruUI = {
+    /**
+     * ボタンとしてレンダリングする要素です。
+     */
+    children: NonNullable<React.ComponentProps<typeof Dialog.Close>["render"]>;
+  };
+}
+
 /**
  * {@link DialogCloseTrigger} に渡す props です。
  */
-export type DialogCloseTriggerProps = Omit<
-  React.ComponentProps<typeof Dialog.Close>,
-  "children" | "render"
-> & {
-  /**
-   * ボタンとしてレンダリングする要素です。
-   */
-  children: NonNullable<React.ComponentProps<typeof Dialog.Close>["render"]>;
-};
+export type DialogCloseTriggerProps = DialogCloseTriggerProps.Render &
+  DialogCloseTriggerProps.SuruUI &
+  DialogCloseTriggerProps.BaseUI &
+  DialogCloseTriggerProps.HTML;
 
 /**
  * ダイアログを閉じるボタンコンポーネントです。
@@ -757,13 +984,17 @@ export const DialogCloseTrigger: IComponent<DialogCloseTriggerProps> =
 export { DialogCloseTrigger as CloseTrigger };
 
 export namespace CloseTrigger {
-  /**
-   * {@link DialogCloseTriggerState}
-   */
   export type State = DialogCloseTriggerState;
 
   /**
    * {@link DialogCloseTriggerProps}
    */
-  export type Props = DialogCloseTriggerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = DialogCloseTriggerProps.BaseUI;
+    export type HTML = DialogCloseTriggerProps.HTML;
+    export type Render = DialogCloseTriggerProps.Render;
+    export type SuruUI = DialogCloseTriggerProps.SuruUI;
+  }
 }

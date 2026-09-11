@@ -2,6 +2,7 @@ import { Switch } from "@base-ui/react/switch";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
@@ -58,45 +59,61 @@ export type SwitchRootVariant = "naked" | "liquid";
  */
 export type SwitchRootState = Switch.Root.State;
 
+export namespace SwitchRootProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Switch.Root>,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"span">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<SwitchRootState>;
+
+  export type SuruUI = {
+    /**
+     * スイッチの配色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: SwitchRootColor | undefined;
+
+    /**
+     * スイッチに枠線を表示するかどうかを指定します。
+     *
+     * 既定値は {@link SwitchRootProps.variant|variant} が `"naked"` かどうか
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * スイッチの角丸の大きさを指定します。
+     *
+     * @default "full"
+     */
+    radius?: SwitchRootRadius | undefined;
+
+    /**
+     * スイッチの大きさを指定します。
+     *
+     * @default "md"
+     */
+    size?: SwitchRootSize | undefined;
+
+    /**
+     * スイッチの主な外観を指定します。
+     *
+     * @default "naked"
+     */
+    variant?: SwitchRootVariant | undefined;
+  };
+}
+
 /**
  * {@link SwitchRoot} に渡す props です。
  */
-export type SwitchRootProps = React.ComponentProps<typeof Switch.Root> & {
-  /**
-   * スイッチの配色を指定します。
-   *
-   * @default "grey"
-   */
-  color?: SwitchRootColor | undefined;
-
-  /**
-   * スイッチに枠線を表示するかどうかを指定します。
-   *
-   * 既定値は {@link SwitchRootProps.variant|variant} が `"naked"` かどうか
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * スイッチの角丸の大きさを指定します。
-   *
-   * @default "full"
-   */
-  radius?: SwitchRootRadius | undefined;
-
-  /**
-   * スイッチの大きさを指定します。
-   *
-   * @default "md"
-   */
-  size?: SwitchRootSize | undefined;
-
-  /**
-   * スイッチの主な外観を指定します。
-   *
-   * @default "naked"
-   */
-  variant?: SwitchRootVariant | undefined;
-};
+export type SwitchRootProps = SwitchRootProps.Render &
+  SwitchRootProps.SuruUI &
+  SwitchRootProps.BaseUI &
+  SwitchRootProps.HTML;
 
 /**
  * スイッチのルートコンポーネントです。
@@ -144,7 +161,29 @@ export namespace Root {
   /**
    * {@link SwitchRootProps}
    */
-  export type Props = SwitchRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link SwitchRootProps.BaseUI}
+     */
+    export type BaseUI = SwitchRootProps.BaseUI;
+
+    /**
+     * {@link SwitchRootProps.HTML}
+     */
+    export type HTML = SwitchRootProps.HTML;
+
+    /**
+     * {@link SwitchRootProps.Render}
+     */
+    export type Render = SwitchRootProps.Render;
+
+    /**
+     * {@link SwitchRootProps.SuruUI}
+     */
+    export type SuruUI = SwitchRootProps.SuruUI;
+  }
 
   /**
    * {@link SwitchRootChangeEventDetails}
@@ -185,10 +224,26 @@ export namespace Root {
  */
 export type SwitchThumbState = Switch.Thumb.State;
 
+export namespace SwitchThumbProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Switch.Thumb>,
+    keyof Render | keyof React.ComponentProps<"span">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
+
+  export type Render = RenderProps<SwitchThumbState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link SwitchThumb} に渡す props です。
  */
-export type SwitchThumbProps = React.ComponentProps<typeof Switch.Thumb>;
+export type SwitchThumbProps = SwitchThumbProps.Render &
+  SwitchThumbProps.SuruUI &
+  SwitchThumbProps.BaseUI &
+  SwitchThumbProps.HTML;
 
 /**
  * スイッチのつまみコンポーネントです。
@@ -210,5 +265,27 @@ export namespace Thumb {
   /**
    * {@link SwitchThumbProps}
    */
-  export type Props = SwitchThumbProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link SwitchThumbProps.BaseUI}
+     */
+    export type BaseUI = SwitchThumbProps.BaseUI;
+
+    /**
+     * {@link SwitchThumbProps.HTML}
+     */
+    export type HTML = SwitchThumbProps.HTML;
+
+    /**
+     * {@link SwitchThumbProps.Render}
+     */
+    export type Render = SwitchThumbProps.Render;
+
+    /**
+     * {@link SwitchThumbProps.SuruUI}
+     */
+    export type SuruUI = SwitchThumbProps.SuruUI;
+  }
 }

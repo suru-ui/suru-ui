@@ -81,11 +81,12 @@ export type StatRootSize = Size;
  */
 export type StatRootState = {};
 
-/**
- * {@link StatRoot} に渡す props です。
- */
-export type StatRootProps = Omit<React.ComponentProps<"dl">, keyof RenderProps> &
-  RenderProps<StatRootState> & {
+export namespace StatRootProps {
+  export type HTML = Omit<React.ComponentProps<"dl">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<StatRootState>;
+
+  export type SuruUI = {
     /**
      * 統計の大きさを指定します。
      *
@@ -93,6 +94,12 @@ export type StatRootProps = Omit<React.ComponentProps<"dl">, keyof RenderProps> 
      */
     size?: StatRootSize | undefined;
   };
+}
+
+/**
+ * {@link StatRoot} に渡す props です。
+ */
+export type StatRootProps = StatRootProps.Render & StatRootProps.SuruUI & StatRootProps.HTML;
 
 /**
  * ラベルと値の組で統計を表示するルートコンポーネントです。
@@ -133,7 +140,24 @@ export namespace Root {
   /**
    * {@link StatRootProps}
    */
-  export type Props = StatRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link StatRootProps.HTML}
+     */
+    export type HTML = StatRootProps.HTML;
+
+    /**
+     * {@link StatRootProps.Render}
+     */
+    export type Render = StatRootProps.Render;
+
+    /**
+     * {@link StatRootProps.SuruUI}
+     */
+    export type SuruUI = StatRootProps.SuruUI;
+  }
 
   /**
    * {@link StatRootSize}
@@ -158,11 +182,12 @@ export type StatLabelSize = Size;
  */
 export type StatLabelState = {};
 
-/**
- * {@link StatLabel} に渡す props です。
- */
-export type StatLabelProps = Omit<React.ComponentProps<"dt">, keyof RenderProps> &
-  RenderProps<StatLabelState> & {
+export namespace StatLabelProps {
+  export type HTML = Omit<React.ComponentProps<"dt">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<StatLabelState>;
+
+  export type SuruUI = {
     /**
      * 統計ラベルの大きさを指定します。
      *
@@ -170,6 +195,12 @@ export type StatLabelProps = Omit<React.ComponentProps<"dt">, keyof RenderProps>
      */
     size?: StatLabelSize | undefined;
   };
+}
+
+/**
+ * {@link StatLabel} に渡す props です。
+ */
+export type StatLabelProps = StatLabelProps.Render & StatLabelProps.SuruUI & StatLabelProps.HTML;
 
 /**
  * 統計のラベルを表すコンポーネントです。
@@ -203,7 +234,24 @@ export namespace Label {
   /**
    * {@link StatLabelProps}
    */
-  export type Props = StatLabelProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link StatLabelProps.HTML}
+     */
+    export type HTML = StatLabelProps.HTML;
+
+    /**
+     * {@link StatLabelProps.Render}
+     */
+    export type Render = StatLabelProps.Render;
+
+    /**
+     * {@link StatLabelProps.SuruUI}
+     */
+    export type SuruUI = StatLabelProps.SuruUI;
+  }
 
   /**
    * {@link StatLabelSize}
@@ -228,11 +276,12 @@ export type StatValueSize = Size;
  */
 export type StatValueState = {};
 
-/**
- * {@link StatValue} に渡す props です。
- */
-export type StatValueProps = Omit<React.ComponentProps<"dd">, keyof RenderProps> &
-  RenderProps<StatValueState> & {
+export namespace StatValueProps {
+  export type HTML = Omit<React.ComponentProps<"dd">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<StatValueState>;
+
+  export type SuruUI = {
     /**
      * 統計値の大きさを指定します。
      *
@@ -240,6 +289,12 @@ export type StatValueProps = Omit<React.ComponentProps<"dd">, keyof RenderProps>
      */
     size?: StatValueSize | undefined;
   };
+}
+
+/**
+ * {@link StatValue} に渡す props です。
+ */
+export type StatValueProps = StatValueProps.Render & StatValueProps.SuruUI & StatValueProps.HTML;
 
 /**
  * 統計の値を表すコンポーネントです。
@@ -273,7 +328,24 @@ export namespace Value {
   /**
    * {@link StatValueProps}
    */
-  export type Props = StatValueProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link StatValueProps.HTML}
+     */
+    export type HTML = StatValueProps.HTML;
+
+    /**
+     * {@link StatValueProps.Render}
+     */
+    export type Render = StatValueProps.Render;
+
+    /**
+     * {@link StatValueProps.SuruUI}
+     */
+    export type SuruUI = StatValueProps.SuruUI;
+  }
 
   /**
    * {@link StatValueSize}
@@ -298,11 +370,12 @@ export type StatChangeDirection = "up" | "down" | "flat";
  */
 export type StatChangeState = {};
 
-/**
- * {@link StatChange} に渡す props です。
- */
-export type StatChangeProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
-  RenderProps<StatChangeState> & {
+export namespace StatChangeProps {
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<StatChangeState>;
+
+  export type SuruUI = {
     /**
      * 変化の方向を指定します。
      *
@@ -312,6 +385,14 @@ export type StatChangeProps = Omit<React.ComponentProps<"span">, keyof RenderPro
      */
     direction?: StatChangeDirection | undefined;
   };
+}
+
+/**
+ * {@link StatChange} に渡す props です。
+ */
+export type StatChangeProps = StatChangeProps.Render &
+  StatChangeProps.SuruUI &
+  StatChangeProps.HTML;
 
 /**
  * 統計値の変化を示すインジケーターコンポーネントです。
@@ -343,7 +424,24 @@ export namespace Change {
   /**
    * {@link StatChangeProps}
    */
-  export type Props = StatChangeProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link StatChangeProps.HTML}
+     */
+    export type HTML = StatChangeProps.HTML;
+
+    /**
+     * {@link StatChangeProps.Render}
+     */
+    export type Render = StatChangeProps.Render;
+
+    /**
+     * {@link StatChangeProps.SuruUI}
+     */
+    export type SuruUI = StatChangeProps.SuruUI;
+  }
 
   /**
    * {@link StatChangeDirection}
@@ -368,11 +466,12 @@ export type StatDescriptionSize = Size;
  */
 export type StatDescriptionState = {};
 
-/**
- * {@link StatDescription} に渡す props です。
- */
-export type StatDescriptionProps = Omit<React.ComponentProps<"dd">, keyof RenderProps> &
-  RenderProps<StatDescriptionState> & {
+export namespace StatDescriptionProps {
+  export type HTML = Omit<React.ComponentProps<"dd">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<StatDescriptionState>;
+
+  export type SuruUI = {
     /**
      * 統計の説明文の大きさを指定します。
      *
@@ -380,6 +479,14 @@ export type StatDescriptionProps = Omit<React.ComponentProps<"dd">, keyof Render
      */
     size?: StatDescriptionSize | undefined;
   };
+}
+
+/**
+ * {@link StatDescription} に渡す props です。
+ */
+export type StatDescriptionProps = StatDescriptionProps.Render &
+  StatDescriptionProps.SuruUI &
+  StatDescriptionProps.HTML;
 
 /**
  * 統計の補足説明を表すコンポーネントです。
@@ -415,7 +522,24 @@ export namespace Description {
   /**
    * {@link StatDescriptionProps}
    */
-  export type Props = StatDescriptionProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link StatDescriptionProps.HTML}
+     */
+    export type HTML = StatDescriptionProps.HTML;
+
+    /**
+     * {@link StatDescriptionProps.Render}
+     */
+    export type Render = StatDescriptionProps.Render;
+
+    /**
+     * {@link StatDescriptionProps.SuruUI}
+     */
+    export type SuruUI = StatDescriptionProps.SuruUI;
+  }
 
   /**
    * {@link StatDescriptionSize}

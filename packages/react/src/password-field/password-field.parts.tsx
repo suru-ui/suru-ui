@@ -112,31 +112,47 @@ export type PasswordFieldRootVariant = TextFieldRootVariant;
  */
 export type PasswordFieldRootState = TextFieldRootState;
 
+export namespace PasswordFieldRootProps {
+  export type BaseUI = Omit<TextFieldRootProps, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof TextFieldRootProps
+  >;
+
+  export type Render = RenderProps<PasswordFieldRootState>;
+
+  export type SuruUI = {
+    /**
+     * パスワードの初期表示状態を指定します。
+     *
+     * {@link PasswordFieldRootProps.visible|visible} を指定しないときに使われます。
+     *
+     * @default false
+     */
+    defaultVisible?: boolean | undefined;
+
+    /**
+     * パスワードの表示状態が変わったときに呼ばれます。
+     */
+    onVisibleChange?: ((visible: boolean) => void) | undefined;
+
+    /**
+     * パスワードを表示状態にします。
+     *
+     * 子パーツにはコンテキスト経由で伝播します。指定した場合は表示状態がこの値で固定され、内部の状態を使わなくなります。
+     */
+    visible?: boolean | undefined;
+  };
+}
+
 /**
  * {@link PasswordFieldRoot} に渡すプロパティーです。
  */
-export type PasswordFieldRootProps = TextFieldRootProps & {
-  /**
-   * パスワードの初期表示状態を指定します。
-   *
-   * {@link PasswordFieldRootProps.visible|visible} を指定しないときに使われます。
-   *
-   * @default false
-   */
-  defaultVisible?: boolean | undefined;
-
-  /**
-   * パスワードの表示状態が変わったときに呼ばれます。
-   */
-  onVisibleChange?: ((visible: boolean) => void) | undefined;
-
-  /**
-   * パスワードを表示状態にします。
-   *
-   * 子パーツにはコンテキスト経由で伝播します。指定した場合は表示状態がこの値で固定され、内部の状態を使わなくなります。
-   */
-  visible?: boolean | undefined;
-};
+export type PasswordFieldRootProps = PasswordFieldRootProps.Render &
+  PasswordFieldRootProps.SuruUI &
+  PasswordFieldRootProps.BaseUI &
+  PasswordFieldRootProps.HTML;
 
 /**
  * 文字入力欄のパスワード入力版である、パスワード入力欄のルート要素です。
@@ -210,7 +226,14 @@ export namespace Root {
   /**
    * {@link PasswordFieldRootProps}
    */
-  export type Props = PasswordFieldRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = PasswordFieldRootProps.BaseUI;
+    export type HTML = PasswordFieldRootProps.HTML;
+    export type Render = PasswordFieldRootProps.Render;
+    export type SuruUI = PasswordFieldRootProps.SuruUI;
+  }
 
   /**
    * {@link PasswordFieldRootColor}
@@ -241,12 +264,28 @@ export namespace Root {
  */
 export type PasswordFieldInputState = TextFieldInputState;
 
+export namespace PasswordFieldInputProps {
+  export type BaseUI = Omit<TextFieldInputProps, keyof Render | "type">;
+
+  export type HTML = Omit<
+    React.ComponentProps<"input">,
+    keyof Render | keyof Omit<TextFieldInputProps, "type">
+  >;
+
+  export type Render = RenderProps<PasswordFieldInputState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link PasswordFieldInput} に渡すプロパティーです。
  *
  * 入力項目の種類はルートの表示状態で自動的に切り替わるため、指定できません。
  */
-export type PasswordFieldInputProps = Omit<TextFieldInputProps, "type">;
+export type PasswordFieldInputProps = PasswordFieldInputProps.Render &
+  PasswordFieldInputProps.SuruUI &
+  PasswordFieldInputProps.BaseUI &
+  PasswordFieldInputProps.HTML;
 
 /**
  * Base UI の Input を使ったパスワード入力欄の入力欄です。
@@ -272,7 +311,14 @@ export namespace Input {
   /**
    * {@link PasswordFieldInputProps}
    */
-  export type Props = PasswordFieldInputProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = PasswordFieldInputProps.BaseUI;
+    export type HTML = PasswordFieldInputProps.HTML;
+    export type Render = PasswordFieldInputProps.Render;
+    export type SuruUI = PasswordFieldInputProps.SuruUI;
+  }
 }
 
 // Addon
@@ -283,10 +329,23 @@ export namespace Input {
  */
 export type PasswordFieldAddonState = {};
 
+export namespace PasswordFieldAddonProps {
+  export type BaseUI = Omit<TextFieldAddonProps, keyof Render>;
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof TextFieldAddonProps>;
+
+  export type Render = RenderProps<PasswordFieldAddonState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link PasswordFieldAddon} に渡すプロパティーです。
  */
-export type PasswordFieldAddonProps = TextFieldAddonProps;
+export type PasswordFieldAddonProps = PasswordFieldAddonProps.Render &
+  PasswordFieldAddonProps.SuruUI &
+  PasswordFieldAddonProps.BaseUI &
+  PasswordFieldAddonProps.HTML;
 
 /**
  * パスワード入力欄の入力欄の左右に表示する補助コンポーネントです。
@@ -311,7 +370,14 @@ export namespace Addon {
   /**
    * {@link PasswordFieldAddonProps}
    */
-  export type Props = PasswordFieldAddonProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = PasswordFieldAddonProps.BaseUI;
+    export type HTML = PasswordFieldAddonProps.HTML;
+    export type Render = PasswordFieldAddonProps.Render;
+    export type SuruUI = PasswordFieldAddonProps.SuruUI;
+  }
 }
 
 // ToggleButton
@@ -322,14 +388,20 @@ export namespace Addon {
  */
 export type PasswordFieldToggleButtonState = {};
 
+export namespace PasswordFieldToggleButtonProps {
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | "onClick" | "type">;
+
+  export type Render = RenderProps<PasswordFieldToggleButtonState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link PasswordFieldToggleButton} に渡すプロパティーです。
  */
-export type PasswordFieldToggleButtonProps = Omit<
-  React.ComponentProps<"button">,
-  keyof RenderProps<PasswordFieldToggleButtonState> | "onClick" | "type"
-> &
-  RenderProps<PasswordFieldToggleButtonState>;
+export type PasswordFieldToggleButtonProps = PasswordFieldToggleButtonProps.Render &
+  PasswordFieldToggleButtonProps.SuruUI &
+  PasswordFieldToggleButtonProps.HTML;
 
 /**
  * パスワードの表示と非表示を切り替えるボタンです。
@@ -381,5 +453,11 @@ export namespace ToggleButton {
   /**
    * {@link PasswordFieldToggleButtonProps}
    */
-  export type Props = PasswordFieldToggleButtonProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = PasswordFieldToggleButtonProps.HTML;
+    export type Render = PasswordFieldToggleButtonProps.Render;
+    export type SuruUI = PasswordFieldToggleButtonProps.SuruUI;
+  }
 }

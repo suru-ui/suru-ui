@@ -2,6 +2,7 @@ import { Tooltip } from "@base-ui/react/tooltip";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
+import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
 import type { IComponent, IUseContext } from "../types.js";
@@ -127,43 +128,56 @@ export type TooltipRootSize = Size;
  */
 export type TooltipRootState = Tooltip.Root.State;
 
+export namespace TooltipRootProps {
+  export type BaseUI<TPayload = any> = Omit<
+    React.ComponentProps<typeof Tooltip.Root<TPayload>>,
+    keyof Render | keyof SuruUI<TPayload> | "handle"
+  >;
+
+  export type HTML = {};
+
+  export type Render = RenderProps<TooltipRootState>;
+
+  export type SuruUI<TPayload = any> = {
+    /**
+     * ツールチップとトリガーを関連付けるハンドルです。
+     *
+     * {@link createHandle} で作成します。Root 内に {@link Trigger} を配置する場合は省略できます。
+     */
+    handle?: TooltipHandle<TPayload> | undefined;
+
+    /**
+     * ツールチップに枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * ツールチップの角丸を指定します。
+     *
+     * 既定値は {@link TooltipRootProps.size|size} です。
+     */
+    radius?: TooltipRootRadius | undefined;
+
+    /**
+     * ツールチップのサイズを指定します。
+     *
+     * @default "md"
+     */
+    size?: TooltipRootSize | undefined;
+  };
+}
+
 /**
  * {@link TooltipRoot} に渡す props です。
  *
  * @template TPayload トリガーから受け取るデータの型です。
  */
-export type TooltipRootProps<TPayload = any> = Omit<
-  React.ComponentProps<typeof Tooltip.Root<TPayload>>,
-  "handle"
-> & {
-  /**
-   * ツールチップとトリガーを関連付けるハンドルです。
-   *
-   * {@link createHandle} で作成します。Root 内に {@link Trigger} を配置する場合は省略できます。
-   */
-  handle?: TooltipHandle<TPayload> | undefined;
-
-  /**
-   * ツールチップに枠線を表示するかどうかを指定します。
-   *
-   * @default false
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * ツールチップの角丸を指定します。
-   *
-   * 既定値は {@link TooltipRootProps.size|size} です。
-   */
-  radius?: TooltipRootRadius | undefined;
-
-  /**
-   * ツールチップのサイズを指定します。
-   *
-   * @default "md"
-   */
-  size?: TooltipRootSize | undefined;
-};
+export type TooltipRootProps<TPayload = any> = TooltipRootProps.Render &
+  TooltipRootProps.SuruUI<TPayload> &
+  TooltipRootProps.BaseUI<TPayload> &
+  TooltipRootProps.HTML;
 
 /**
  * {@link TooltipRoot} のコンポーネント型です。
@@ -205,7 +219,32 @@ export namespace Root {
   /**
    * {@link TooltipRootProps}
    */
-  export type Props<TPayload = any> = TooltipRootProps<TPayload>;
+  export type Props<TPayload = any> = Props.Render &
+    Props.SuruUI<TPayload> &
+    Props.BaseUI<TPayload> &
+    Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link TooltipRootProps.BaseUI}
+     */
+    export type BaseUI<TPayload = any> = TooltipRootProps.BaseUI<TPayload>;
+
+    /**
+     * {@link TooltipRootProps.HTML}
+     */
+    export type HTML = TooltipRootProps.HTML;
+
+    /**
+     * {@link TooltipRootProps.Render}
+     */
+    export type Render = TooltipRootProps.Render;
+
+    /**
+     * {@link TooltipRootProps.SuruUI}
+     */
+    export type SuruUI<TPayload = any> = TooltipRootProps.SuruUI<TPayload>;
+  }
 
   /**
    * {@link TooltipRootActions}
@@ -243,36 +282,52 @@ export namespace Root {
  */
 export type TooltipTriggerState = Tooltip.Trigger.State;
 
+export namespace TooltipTriggerProps {
+  export type BaseUI<TPayload = any> = Omit<
+    Omit<
+      React.ComponentProps<typeof Tooltip.Trigger<TPayload>>,
+      "handle" | "children" | "render" | "closeOnClick"
+    >,
+    keyof Render | keyof SuruUI<TPayload> | keyof React.ComponentProps<"button">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI<any>>;
+
+  export type Render = RenderProps<TooltipTriggerState>;
+
+  export type SuruUI<TPayload = any> = {
+    /**
+     * トリガーとしてレンダリングする要素です。
+     *
+     * {@link Tooltip.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
+     */
+    children: NonNullable<Tooltip.Trigger.Props<TPayload>["render"]>;
+
+    /**
+     * ツールチップを関連付けるハンドルです。
+     *
+     * {@link createHandle} で作成し、{@link Root} と共有します。Root 内に配置する場合は省略できます。
+     */
+    handle?: TooltipHandle<TPayload> | undefined;
+
+    /**
+     * このトリガーがクリックされたときにツールチップを開いたままにするかかどうかを指定します。
+     *
+     * @default false
+     */
+    keepOpenOnClick?: boolean | undefined;
+  };
+}
+
 /**
  * {@link TooltipTrigger} に渡す props です。
  *
  * @template TPayload トリガーから渡すデータの型です。
  */
-export type TooltipTriggerProps<TPayload = any> = Omit<
-  React.ComponentProps<typeof Tooltip.Trigger<TPayload>>,
-  "handle" | "children" | "render" | "closeOnClick"
-> & {
-  /**
-   * トリガーとしてレンダリングする要素です。
-   *
-   * {@link Tooltip.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
-   */
-  children: NonNullable<Tooltip.Trigger.Props<TPayload>["render"]>;
-
-  /**
-   * ツールチップを関連付けるハンドルです。
-   *
-   * {@link createHandle} で作成し、{@link Root} と共有します。Root 内に配置する場合は省略できます。
-   */
-  handle?: TooltipHandle<TPayload> | undefined;
-
-  /**
-   * このトリガーがクリックされたときにツールチップを開いたままにするかかどうかを指定します。
-   *
-   * @default false
-   */
-  keepOpenOnClick?: boolean | undefined;
-};
+export type TooltipTriggerProps<TPayload = any> = TooltipTriggerProps.Render &
+  TooltipTriggerProps.SuruUI<TPayload> &
+  TooltipTriggerProps.BaseUI<TPayload> &
+  TooltipTriggerProps.HTML;
 
 /**
  * {@link TooltipTrigger} のコンポーネント型です。
@@ -313,7 +368,32 @@ export namespace Trigger {
   /**
    * {@link TooltipTriggerProps}
    */
-  export type Props<TPayload = any> = TooltipTriggerProps<TPayload>;
+  export type Props<TPayload = any> = Props.Render &
+    Props.SuruUI<TPayload> &
+    Props.BaseUI<TPayload> &
+    Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link TooltipTriggerProps.BaseUI}
+     */
+    export type BaseUI<TPayload = any> = TooltipTriggerProps.BaseUI<TPayload>;
+
+    /**
+     * {@link TooltipTriggerProps.HTML}
+     */
+    export type HTML = TooltipTriggerProps.HTML;
+
+    /**
+     * {@link TooltipTriggerProps.Render}
+     */
+    export type Render = TooltipTriggerProps.Render;
+
+    /**
+     * {@link TooltipTriggerProps.SuruUI}
+     */
+    export type SuruUI<TPayload = any> = TooltipTriggerProps.SuruUI<TPayload>;
+  }
 }
 
 // Portal
@@ -324,10 +404,26 @@ export namespace Trigger {
  */
 export type TooltipPortalState = Tooltip.Portal.State;
 
+export namespace TooltipPortalProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Tooltip.Portal>,
+    keyof Render | keyof React.ComponentProps<"div">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<TooltipPortalState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link TooltipPortal} に渡す props です。
  */
-export type TooltipPortalProps = React.ComponentProps<typeof Tooltip.Portal>;
+export type TooltipPortalProps = TooltipPortalProps.Render &
+  TooltipPortalProps.SuruUI &
+  TooltipPortalProps.BaseUI &
+  TooltipPortalProps.HTML;
 
 /**
  * ツールチップを DOM の別の場所へ移動する要素です。
@@ -372,7 +468,29 @@ export namespace Portal {
   /**
    * {@link TooltipPortalProps}
    */
-  export type Props = TooltipPortalProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link TooltipPortalProps.BaseUI}
+     */
+    export type BaseUI = TooltipPortalProps.BaseUI;
+
+    /**
+     * {@link TooltipPortalProps.HTML}
+     */
+    export type HTML = TooltipPortalProps.HTML;
+
+    /**
+     * {@link TooltipPortalProps.Render}
+     */
+    export type Render = TooltipPortalProps.Render;
+
+    /**
+     * {@link TooltipPortalProps.SuruUI}
+     */
+    export type SuruUI = TooltipPortalProps.SuruUI;
+  }
 }
 
 // Positioner
@@ -383,10 +501,26 @@ export namespace Portal {
  */
 export type TooltipPositionerState = Tooltip.Positioner.State;
 
+export namespace TooltipPositionerProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Tooltip.Positioner>,
+    keyof Render | keyof React.ComponentProps<"div">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<TooltipPositionerState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link TooltipPositioner} に渡す props です。
  */
-export type TooltipPositionerProps = React.ComponentProps<typeof Tooltip.Positioner>;
+export type TooltipPositionerProps = TooltipPositionerProps.Render &
+  TooltipPositionerProps.SuruUI &
+  TooltipPositionerProps.BaseUI &
+  TooltipPositionerProps.HTML;
 
 /**
  * トリガーを基準にポップアップを配置する要素です。
@@ -416,7 +550,29 @@ export namespace Positioner {
   /**
    * {@link TooltipPositionerProps}
    */
-  export type Props = TooltipPositionerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link TooltipPositionerProps.BaseUI}
+     */
+    export type BaseUI = TooltipPositionerProps.BaseUI;
+
+    /**
+     * {@link TooltipPositionerProps.HTML}
+     */
+    export type HTML = TooltipPositionerProps.HTML;
+
+    /**
+     * {@link TooltipPositionerProps.Render}
+     */
+    export type Render = TooltipPositionerProps.Render;
+
+    /**
+     * {@link TooltipPositionerProps.SuruUI}
+     */
+    export type SuruUI = TooltipPositionerProps.SuruUI;
+  }
 }
 
 // Content
@@ -427,10 +583,26 @@ export namespace Positioner {
  */
 export type TooltipContentState = Tooltip.Popup.State;
 
+export namespace TooltipContentProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Tooltip.Popup>,
+    keyof Render | keyof React.ComponentProps<"div">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<TooltipContentState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link TooltipContent} に渡す props です。
  */
-export type TooltipContentProps = React.ComponentProps<typeof Tooltip.Popup>;
+export type TooltipContentProps = TooltipContentProps.Render &
+  TooltipContentProps.SuruUI &
+  TooltipContentProps.BaseUI &
+  TooltipContentProps.HTML;
 
 /**
  * ツールチップの内容を表示するポップアップ要素です。
@@ -464,7 +636,29 @@ export namespace Content {
   /**
    * {@link TooltipContentProps}
    */
-  export type Props = TooltipContentProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link TooltipContentProps.BaseUI}
+     */
+    export type BaseUI = TooltipContentProps.BaseUI;
+
+    /**
+     * {@link TooltipContentProps.HTML}
+     */
+    export type HTML = TooltipContentProps.HTML;
+
+    /**
+     * {@link TooltipContentProps.Render}
+     */
+    export type Render = TooltipContentProps.Render;
+
+    /**
+     * {@link TooltipContentProps.SuruUI}
+     */
+    export type SuruUI = TooltipContentProps.SuruUI;
+  }
 }
 
 // Arrow
@@ -475,10 +669,26 @@ export namespace Content {
  */
 export type TooltipArrowState = Tooltip.Arrow.State;
 
+export namespace TooltipArrowProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Tooltip.Arrow>,
+    keyof Render | keyof React.ComponentProps<"div">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<TooltipArrowState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link TooltipArrow} に渡す props です。
  */
-export type TooltipArrowProps = React.ComponentProps<typeof Tooltip.Arrow>;
+export type TooltipArrowProps = TooltipArrowProps.Render &
+  TooltipArrowProps.SuruUI &
+  TooltipArrowProps.BaseUI &
+  TooltipArrowProps.HTML;
 
 /**
  * ポップアップとトリガーをつなぐ矢印要素です。
@@ -509,7 +719,29 @@ export namespace Arrow {
   /**
    * {@link TooltipArrowProps}
    */
-  export type Props = TooltipArrowProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link TooltipArrowProps.BaseUI}
+     */
+    export type BaseUI = TooltipArrowProps.BaseUI;
+
+    /**
+     * {@link TooltipArrowProps.HTML}
+     */
+    export type HTML = TooltipArrowProps.HTML;
+
+    /**
+     * {@link TooltipArrowProps.Render}
+     */
+    export type Render = TooltipArrowProps.Render;
+
+    /**
+     * {@link TooltipArrowProps.SuruUI}
+     */
+    export type SuruUI = TooltipArrowProps.SuruUI;
+  }
 }
 
 // Viewport
@@ -520,10 +752,26 @@ export namespace Arrow {
  */
 export type TooltipViewportState = Tooltip.Viewport.State;
 
+export namespace TooltipViewportProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Tooltip.Viewport>,
+    keyof Render | keyof React.ComponentProps<"div">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<TooltipViewportState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link TooltipViewport} に渡す props です。
  */
-export type TooltipViewportProps = React.ComponentProps<typeof Tooltip.Viewport>;
+export type TooltipViewportProps = TooltipViewportProps.Render &
+  TooltipViewportProps.SuruUI &
+  TooltipViewportProps.BaseUI &
+  TooltipViewportProps.HTML;
 
 /**
  * 複数のトリガー間で内容を切り替えるときのアニメーション領域です。
@@ -549,5 +797,27 @@ export namespace Viewport {
   /**
    * {@link TooltipViewportProps}
    */
-  export type Props = TooltipViewportProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link TooltipViewportProps.BaseUI}
+     */
+    export type BaseUI = TooltipViewportProps.BaseUI;
+
+    /**
+     * {@link TooltipViewportProps.HTML}
+     */
+    export type HTML = TooltipViewportProps.HTML;
+
+    /**
+     * {@link TooltipViewportProps.Render}
+     */
+    export type Render = TooltipViewportProps.Render;
+
+    /**
+     * {@link TooltipViewportProps.SuruUI}
+     */
+    export type SuruUI = TooltipViewportProps.SuruUI;
+  }
 }

@@ -2,6 +2,7 @@ import { Input } from "@base-ui/react/input";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
@@ -57,53 +58,66 @@ export type TextareaRootVariant = "naked" | "liquid";
  */
 export type TextareaRootState = Input.State;
 
+export namespace TextareaRootProps {
+  export type BaseUI = Omit<
+    Omit<React.ComponentProps<typeof Input>, "children" | "render" | "size" | "type">,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"textarea">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<TextareaRootState>;
+
+  export type SuruUI = {
+    /**
+     * フォーカス時に枠線へ適用する色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: TextareaRootColor | undefined;
+
+    /**
+     * 枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * テキストエリアの角丸を指定します。
+     *
+     * 既定値は {@link TextareaRootProps.size|size}
+     */
+    radius?: TextareaRootRadius | undefined;
+
+    /**
+     * テキストエリアの表示行数を指定します。
+     */
+    rows?: number | undefined;
+
+    /**
+     * テキストエリアのサイズを指定します。
+     *
+     * @default "md"
+     */
+    size?: TextareaRootSize | undefined;
+
+    /**
+     * テキストエリアの主な外観を指定します。
+     *
+     * @default "liquid"
+     */
+    variant?: TextareaRootVariant | undefined;
+  };
+}
+
 /**
  * {@link TextareaRoot} に渡す props です。
  */
-export type TextareaRootProps = Omit<
-  React.ComponentProps<typeof Input>,
-  "children" | "render" | "size" | "type"
-> & {
-  /**
-   * フォーカス時に枠線へ適用する色を指定します。
-   *
-   * @default "grey"
-   */
-  color?: TextareaRootColor | undefined;
-
-  /**
-   * 枠線を表示するかどうかを指定します。
-   *
-   * @default false
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * テキストエリアの角丸を指定します。
-   *
-   * 既定値は {@link TextareaRootProps.size|size}
-   */
-  radius?: TextareaRootRadius | undefined;
-
-  /**
-   * テキストエリアの表示行数を指定します。
-   */
-  rows?: number | undefined;
-
-  /**
-   * テキストエリアのサイズを指定します。
-   *
-   * @default "md"
-   */
-  size?: TextareaRootSize | undefined;
-
-  /**
-   * テキストエリアの主な外観を指定します。
-   *
-   * @default "liquid"
-   */
-  variant?: TextareaRootVariant | undefined;
-};
+export type TextareaRootProps = TextareaRootProps.Render &
+  TextareaRootProps.SuruUI &
+  TextareaRootProps.BaseUI &
+  TextareaRootProps.HTML;
 
 /**
  * テキストエリアのルートコンポーネントです。
@@ -154,7 +168,29 @@ export namespace Root {
   /**
    * {@link TextareaRootProps}
    */
-  export type Props = TextareaRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link TextareaRootProps.BaseUI}
+     */
+    export type BaseUI = TextareaRootProps.BaseUI;
+
+    /**
+     * {@link TextareaRootProps.HTML}
+     */
+    export type HTML = TextareaRootProps.HTML;
+
+    /**
+     * {@link TextareaRootProps.Render}
+     */
+    export type Render = TextareaRootProps.Render;
+
+    /**
+     * {@link TextareaRootProps.SuruUI}
+     */
+    export type SuruUI = TextareaRootProps.SuruUI;
+  }
 
   /**
    * {@link TextareaRootChangeEventDetails}

@@ -196,6 +196,64 @@ export type ComboboxRootVariant = "naked" | "liquid";
  */
 export type ComboboxRootState = Combobox.Root.State;
 
+export namespace ComboboxRootProps {
+  export type BaseUI<TValue = unknown, TMultiple extends boolean | undefined = false> = Omit<
+    Combobox.Root.Props<TValue, TMultiple>,
+    keyof Render | keyof SuruUI<TValue>
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI<any> | keyof Combobox.Root.Props<any, any>
+  >;
+
+  export type Render = RenderProps<ComboboxRootState>;
+
+  export type SuruUI<TValue = unknown> = {
+    /**
+     * フォーカス時に枠線へ適用する色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: ComboboxRootColor | undefined;
+
+    /**
+     * リストに表示する項目の一覧です。
+     *
+     * グループの配列を指定するとグループごとに区切って表示します。
+     */
+    items?: ComboboxRootItems<TValue> | undefined;
+
+    /**
+     * 枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * 入力を含むグループ要素の角丸を指定します。
+     *
+     * 既定値は {@link ComboboxRootProps.size|size} です。
+     */
+    radius?: ComboboxRootRadius | undefined;
+
+    /**
+     * 入力欄とリスト項目のサイズを指定します。
+     *
+     * @default "md"
+     */
+    size?: ComboboxRootSize | undefined;
+
+    /**
+     * 入力欄の主な外観を指定します。
+     *
+     * @default "liquid"
+     */
+    variant?: ComboboxRootVariant | undefined;
+  };
+}
+
 /**
  * {@link ComboboxRoot} に渡す props です。
  *
@@ -205,49 +263,10 @@ export type ComboboxRootState = Combobox.Root.State;
 export type ComboboxRootProps<
   TValue = unknown,
   TMultiple extends boolean | undefined = false,
-> = Omit<Combobox.Root.Props<TValue, TMultiple>, "items"> & {
-  /**
-   * フォーカス時に枠線へ適用する色を指定します。
-   *
-   * @default "grey"
-   */
-  color?: ComboboxRootColor | undefined;
-
-  /**
-   * リストに表示する項目の一覧です。
-   *
-   * グループの配列を指定するとグループごとに区切って表示します。
-   */
-  items?: ComboboxRootItems<TValue> | undefined;
-
-  /**
-   * 枠線を表示するかどうかを指定します。
-   *
-   * @default false
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * 入力を含むグループ要素の角丸を指定します。
-   *
-   * 既定値は {@link ComboboxRootProps.size|size} です。
-   */
-  radius?: ComboboxRootRadius | undefined;
-
-  /**
-   * 入力欄とリスト項目のサイズを指定します。
-   *
-   * @default "md"
-   */
-  size?: ComboboxRootSize | undefined;
-
-  /**
-   * 入力欄の主な外観を指定します。
-   *
-   * @default "liquid"
-   */
-  variant?: ComboboxRootVariant | undefined;
-};
+> = ComboboxRootProps.Render &
+  ComboboxRootProps.SuruUI<TValue> &
+  ComboboxRootProps.BaseUI<TValue, TMultiple> &
+  ComboboxRootProps.HTML;
 
 interface IComboboxRoot extends IComponent<ComboboxRootProps<unknown, boolean | undefined>> {
   /**
@@ -312,7 +331,17 @@ export namespace Root {
   export type Props<
     TValue = unknown,
     TMultiple extends boolean | undefined = false,
-  > = ComboboxRootProps<TValue, TMultiple>;
+  > = Props.Render & Props.SuruUI<TValue> & Props.BaseUI<TValue, TMultiple> & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI<
+      TValue = unknown,
+      TMultiple extends boolean | undefined = false,
+    > = ComboboxRootProps.BaseUI<TValue, TMultiple>;
+    export type HTML = ComboboxRootProps.HTML;
+    export type Render = ComboboxRootProps.Render;
+    export type SuruUI<TValue = unknown> = ComboboxRootProps.SuruUI<TValue>;
+  }
 
   /**
    * {@link ComboboxRootActions}
@@ -373,10 +402,26 @@ export namespace Root {
  */
 export type ComboboxLabelState = Combobox.Label.State;
 
+export namespace ComboboxLabelProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Label>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.Label>
+  >;
+
+  export type Render = RenderProps<ComboboxLabelState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxLabel} に渡す props です。
  */
-export type ComboboxLabelProps = React.ComponentProps<typeof Combobox.Label>;
+export type ComboboxLabelProps = ComboboxLabelProps.Render &
+  ComboboxLabelProps.SuruUI &
+  ComboboxLabelProps.BaseUI &
+  ComboboxLabelProps.HTML;
 
 /**
  * トリガーに対応する表示ラベルです。
@@ -393,15 +438,19 @@ export { ComboboxLabel as Label };
  * {@link ComboboxLabel} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Label {
-  /**
-   * {@link ComboboxLabelState}
-   */
   export type State = ComboboxLabelState;
 
   /**
    * {@link ComboboxLabelProps}
    */
-  export type Props = ComboboxLabelProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxLabelProps.BaseUI;
+    export type HTML = ComboboxLabelProps.HTML;
+    export type Render = ComboboxLabelProps.Render;
+    export type SuruUI = ComboboxLabelProps.SuruUI;
+  }
 }
 
 // InputGroup
@@ -412,10 +461,26 @@ export namespace Label {
  */
 export type ComboboxInputGroupState = Combobox.InputGroup.State;
 
+export namespace ComboboxInputGroupProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.InputGroup>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.InputGroup>
+  >;
+
+  export type Render = RenderProps<ComboboxInputGroupState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxInputGroup} に渡す props です。
  */
-export type ComboboxInputGroupProps = React.ComponentProps<typeof Combobox.InputGroup>;
+export type ComboboxInputGroupProps = ComboboxInputGroupProps.Render &
+  ComboboxInputGroupProps.SuruUI &
+  ComboboxInputGroupProps.BaseUI &
+  ComboboxInputGroupProps.HTML;
 
 /**
  * 入力欄と付属コントロールをまとめるグループ要素です。
@@ -457,15 +522,19 @@ export { ComboboxInputGroup as InputGroup };
  * {@link ComboboxInputGroup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace InputGroup {
-  /**
-   * {@link ComboboxInputGroupState}
-   */
   export type State = ComboboxInputGroupState;
 
   /**
    * {@link ComboboxInputGroupProps}
    */
-  export type Props = ComboboxInputGroupProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxInputGroupProps.BaseUI;
+    export type HTML = ComboboxInputGroupProps.HTML;
+    export type Render = ComboboxInputGroupProps.Render;
+    export type SuruUI = ComboboxInputGroupProps.SuruUI;
+  }
 }
 
 // Value
@@ -476,10 +545,26 @@ export namespace InputGroup {
  */
 export type ComboboxValueState = Combobox.Value.State;
 
+export namespace ComboboxValueProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Value>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.Value>
+  >;
+
+  export type Render = RenderProps<ComboboxValueState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxValue} に渡す props です。
  */
-export type ComboboxValueProps = React.ComponentProps<typeof Combobox.Value>;
+export type ComboboxValueProps = ComboboxValueProps.Render &
+  ComboboxValueProps.SuruUI &
+  ComboboxValueProps.BaseUI &
+  ComboboxValueProps.HTML;
 
 /**
  * 現在の選択値を子要素へ反映する要素です。
@@ -494,15 +579,19 @@ export { ComboboxValue as Value };
  * {@link ComboboxValue} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Value {
-  /**
-   * {@link ComboboxValueState}
-   */
   export type State = ComboboxValueState;
 
   /**
    * {@link ComboboxValueProps}
    */
-  export type Props = ComboboxValueProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxValueProps.BaseUI;
+    export type HTML = ComboboxValueProps.HTML;
+    export type Render = ComboboxValueProps.Render;
+    export type SuruUI = ComboboxValueProps.SuruUI;
+  }
 }
 
 // Input
@@ -513,10 +602,26 @@ export namespace Value {
  */
 export type ComboboxInputState = Combobox.Input.State;
 
+export namespace ComboboxInputProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Input>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"input">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.Input>
+  >;
+
+  export type Render = RenderProps<ComboboxInputState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxInput} に渡す props です。
  */
-export type ComboboxInputProps = React.ComponentProps<typeof Combobox.Input>;
+export type ComboboxInputProps = ComboboxInputProps.Render &
+  ComboboxInputProps.SuruUI &
+  ComboboxInputProps.BaseUI &
+  ComboboxInputProps.HTML;
 
 /**
  * 候補を検索するテキスト入力欄です。
@@ -533,15 +638,19 @@ export { ComboboxInput as Input };
  * {@link ComboboxInput} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Input {
-  /**
-   * {@link ComboboxInputState}
-   */
   export type State = ComboboxInputState;
 
   /**
    * {@link ComboboxInputProps}
    */
-  export type Props = ComboboxInputProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxInputProps.BaseUI;
+    export type HTML = ComboboxInputProps.HTML;
+    export type Render = ComboboxInputProps.Render;
+    export type SuruUI = ComboboxInputProps.SuruUI;
+  }
 }
 
 // Trigger
@@ -552,10 +661,26 @@ export namespace Input {
  */
 export type ComboboxTriggerState = Combobox.Trigger.State;
 
+export namespace ComboboxTriggerProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Trigger>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.Trigger>
+  >;
+
+  export type Render = RenderProps<ComboboxTriggerState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxTrigger} に渡す props です。
  */
-export type ComboboxTriggerProps = React.ComponentProps<typeof Combobox.Trigger>;
+export type ComboboxTriggerProps = ComboboxTriggerProps.Render &
+  ComboboxTriggerProps.SuruUI &
+  ComboboxTriggerProps.BaseUI &
+  ComboboxTriggerProps.HTML;
 
 /**
  * 候補リストを開閉するボタン要素です。
@@ -583,15 +708,19 @@ export { ComboboxTrigger as Trigger };
  * {@link ComboboxTrigger} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Trigger {
-  /**
-   * {@link ComboboxTriggerState}
-   */
   export type State = ComboboxTriggerState;
 
   /**
    * {@link ComboboxTriggerProps}
    */
-  export type Props = ComboboxTriggerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxTriggerProps.BaseUI;
+    export type HTML = ComboboxTriggerProps.HTML;
+    export type Render = ComboboxTriggerProps.Render;
+    export type SuruUI = ComboboxTriggerProps.SuruUI;
+  }
 }
 
 // Icon
@@ -602,10 +731,26 @@ export namespace Trigger {
  */
 export type ComboboxIconState = Combobox.Icon.State;
 
+export namespace ComboboxIconProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Icon>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.Icon>
+  >;
+
+  export type Render = RenderProps<ComboboxIconState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxIcon} に渡す props です。
  */
-export type ComboboxIconProps = React.ComponentProps<typeof Combobox.Icon>;
+export type ComboboxIconProps = ComboboxIconProps.Render &
+  ComboboxIconProps.SuruUI &
+  ComboboxIconProps.BaseUI &
+  ComboboxIconProps.HTML;
 
 /**
  * トリガーの操作を示すアイコンのラッパー要素です。
@@ -622,15 +767,19 @@ export { ComboboxIcon as Icon };
  * {@link ComboboxIcon} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Icon {
-  /**
-   * {@link ComboboxIconState}
-   */
   export type State = ComboboxIconState;
 
   /**
    * {@link ComboboxIconProps}
    */
-  export type Props = ComboboxIconProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxIconProps.BaseUI;
+    export type HTML = ComboboxIconProps.HTML;
+    export type Render = ComboboxIconProps.Render;
+    export type SuruUI = ComboboxIconProps.SuruUI;
+  }
 }
 
 // Clear
@@ -641,10 +790,26 @@ export namespace Icon {
  */
 export type ComboboxClearState = Combobox.Clear.State;
 
+export namespace ComboboxClearProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Clear>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.Clear>
+  >;
+
+  export type Render = RenderProps<ComboboxClearState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxClear} に渡す props です。
  */
-export type ComboboxClearProps = React.ComponentProps<typeof Combobox.Clear>;
+export type ComboboxClearProps = ComboboxClearProps.Render &
+  ComboboxClearProps.SuruUI &
+  ComboboxClearProps.BaseUI &
+  ComboboxClearProps.HTML;
 
 /**
  * 選択値を消去するボタン要素です。
@@ -670,15 +835,19 @@ export { ComboboxClear as Clear };
  * {@link ComboboxClear} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Clear {
-  /**
-   * {@link ComboboxClearState}
-   */
   export type State = ComboboxClearState;
 
   /**
    * {@link ComboboxClearProps}
    */
-  export type Props = ComboboxClearProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxClearProps.BaseUI;
+    export type HTML = ComboboxClearProps.HTML;
+    export type Render = ComboboxClearProps.Render;
+    export type SuruUI = ComboboxClearProps.SuruUI;
+  }
 }
 
 // Chips
@@ -689,10 +858,26 @@ export namespace Clear {
  */
 export type ComboboxChipsState = Combobox.Chips.State;
 
+export namespace ComboboxChipsProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Chips>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.Chips>
+  >;
+
+  export type Render = RenderProps<ComboboxChipsState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxChips} に渡す props です。
  */
-export type ComboboxChipsProps = React.ComponentProps<typeof Combobox.Chips>;
+export type ComboboxChipsProps = ComboboxChipsProps.Render &
+  ComboboxChipsProps.SuruUI &
+  ComboboxChipsProps.BaseUI &
+  ComboboxChipsProps.HTML;
 
 /**
  * 複数選択した値を表示するチップのコンテナーです。
@@ -709,15 +894,19 @@ export { ComboboxChips as Chips };
  * {@link ComboboxChips} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Chips {
-  /**
-   * {@link ComboboxChipsState}
-   */
   export type State = ComboboxChipsState;
 
   /**
    * {@link ComboboxChipsProps}
    */
-  export type Props = ComboboxChipsProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxChipsProps.BaseUI;
+    export type HTML = ComboboxChipsProps.HTML;
+    export type Render = ComboboxChipsProps.Render;
+    export type SuruUI = ComboboxChipsProps.SuruUI;
+  }
 }
 
 // Chip
@@ -728,10 +917,26 @@ export namespace Chips {
  */
 export type ComboboxChipState = Combobox.Chip.State;
 
+export namespace ComboboxChipProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Chip>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.Chip>
+  >;
+
+  export type Render = RenderProps<ComboboxChipState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxChip} に渡す props です。
  */
-export type ComboboxChipProps = React.ComponentProps<typeof Combobox.Chip>;
+export type ComboboxChipProps = ComboboxChipProps.Render &
+  ComboboxChipProps.SuruUI &
+  ComboboxChipProps.BaseUI &
+  ComboboxChipProps.HTML;
 
 /**
  * 複数選択した値を表すチップ要素です。
@@ -748,15 +953,19 @@ export { ComboboxChip as Chip };
  * {@link ComboboxChip} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Chip {
-  /**
-   * {@link ComboboxChipState}
-   */
   export type State = ComboboxChipState;
 
   /**
    * {@link ComboboxChipProps}
    */
-  export type Props = ComboboxChipProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxChipProps.BaseUI;
+    export type HTML = ComboboxChipProps.HTML;
+    export type Render = ComboboxChipProps.Render;
+    export type SuruUI = ComboboxChipProps.SuruUI;
+  }
 }
 
 // ChipRemove
@@ -767,10 +976,26 @@ export namespace Chip {
  */
 export type ComboboxChipRemoveState = Combobox.ChipRemove.State;
 
+export namespace ComboboxChipRemoveProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.ChipRemove>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.ChipRemove>
+  >;
+
+  export type Render = RenderProps<ComboboxChipRemoveState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxChipRemove} に渡す props です。
  */
-export type ComboboxChipRemoveProps = React.ComponentProps<typeof Combobox.ChipRemove>;
+export type ComboboxChipRemoveProps = ComboboxChipRemoveProps.Render &
+  ComboboxChipRemoveProps.SuruUI &
+  ComboboxChipRemoveProps.BaseUI &
+  ComboboxChipRemoveProps.HTML;
 
 /**
  * チップを選択値から削除するボタン要素です。
@@ -797,15 +1022,19 @@ export { ComboboxChipRemove as ChipRemove };
  * {@link ComboboxChipRemove} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace ChipRemove {
-  /**
-   * {@link ComboboxChipRemoveState}
-   */
   export type State = ComboboxChipRemoveState;
 
   /**
    * {@link ComboboxChipRemoveProps}
    */
-  export type Props = ComboboxChipRemoveProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxChipRemoveProps.BaseUI;
+    export type HTML = ComboboxChipRemoveProps.HTML;
+    export type Render = ComboboxChipRemoveProps.Render;
+    export type SuruUI = ComboboxChipRemoveProps.SuruUI;
+  }
 }
 
 // List
@@ -816,10 +1045,26 @@ export namespace ChipRemove {
  */
 export type ComboboxListState = Combobox.List.State;
 
+export namespace ComboboxListProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.List>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.List>
+  >;
+
+  export type Render = RenderProps<ComboboxListState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxList} に渡す props です。
  */
-export type ComboboxListProps = React.ComponentProps<typeof Combobox.List>;
+export type ComboboxListProps = ComboboxListProps.Render &
+  ComboboxListProps.SuruUI &
+  ComboboxListProps.BaseUI &
+  ComboboxListProps.HTML;
 
 /**
  * 候補項目のリストを表示するコンテナー要素です。
@@ -836,15 +1081,19 @@ export { ComboboxList as List };
  * {@link ComboboxList} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace List {
-  /**
-   * {@link ComboboxListState}
-   */
   export type State = ComboboxListState;
 
   /**
    * {@link ComboboxListProps}
    */
-  export type Props = ComboboxListProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxListProps.BaseUI;
+    export type HTML = ComboboxListProps.HTML;
+    export type Render = ComboboxListProps.Render;
+    export type SuruUI = ComboboxListProps.SuruUI;
+  }
 }
 
 // Status
@@ -855,10 +1104,26 @@ export namespace List {
  */
 export type ComboboxStatusState = Combobox.Status.State;
 
+export namespace ComboboxStatusProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Status>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.Status>
+  >;
+
+  export type Render = RenderProps<ComboboxStatusState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxStatus} に渡す props です。
  */
-export type ComboboxStatusProps = React.ComponentProps<typeof Combobox.Status>;
+export type ComboboxStatusProps = ComboboxStatusProps.Render &
+  ComboboxStatusProps.SuruUI &
+  ComboboxStatusProps.BaseUI &
+  ComboboxStatusProps.HTML;
 
 /**
  * 非同期検索などの状態を読み上げる要素です。
@@ -875,15 +1140,19 @@ export { ComboboxStatus as Status };
  * {@link ComboboxStatus} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Status {
-  /**
-   * {@link ComboboxStatusState}
-   */
   export type State = ComboboxStatusState;
 
   /**
    * {@link ComboboxStatusProps}
    */
-  export type Props = ComboboxStatusProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxStatusProps.BaseUI;
+    export type HTML = ComboboxStatusProps.HTML;
+    export type Render = ComboboxStatusProps.Render;
+    export type SuruUI = ComboboxStatusProps.SuruUI;
+  }
 }
 
 // Portal
@@ -894,10 +1163,26 @@ export namespace Status {
  */
 export type ComboboxPortalState = Combobox.Portal.State;
 
+export namespace ComboboxPortalProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Portal>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.Portal>
+  >;
+
+  export type Render = RenderProps<ComboboxPortalState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxPortal} に渡す props です。
  */
-export type ComboboxPortalProps = React.ComponentProps<typeof Combobox.Portal>;
+export type ComboboxPortalProps = ComboboxPortalProps.Render &
+  ComboboxPortalProps.SuruUI &
+  ComboboxPortalProps.BaseUI &
+  ComboboxPortalProps.HTML;
 
 /**
  * ポップアップを DOM の別の場所へ移動する要素です。
@@ -933,15 +1218,19 @@ export { ComboboxPortal as Portal };
  * {@link ComboboxPortal} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Portal {
-  /**
-   * {@link ComboboxPortalState}
-   */
   export type State = ComboboxPortalState;
 
   /**
    * {@link ComboboxPortalProps}
    */
-  export type Props = ComboboxPortalProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxPortalProps.BaseUI;
+    export type HTML = ComboboxPortalProps.HTML;
+    export type Render = ComboboxPortalProps.Render;
+    export type SuruUI = ComboboxPortalProps.SuruUI;
+  }
 }
 
 // Backdrop
@@ -952,10 +1241,26 @@ export namespace Portal {
  */
 export type ComboboxBackdropState = Combobox.Backdrop.State;
 
+export namespace ComboboxBackdropProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Backdrop>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.Backdrop>
+  >;
+
+  export type Render = RenderProps<ComboboxBackdropState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxBackdrop} に渡す props です。
  */
-export type ComboboxBackdropProps = React.ComponentProps<typeof Combobox.Backdrop>;
+export type ComboboxBackdropProps = ComboboxBackdropProps.Render &
+  ComboboxBackdropProps.SuruUI &
+  ComboboxBackdropProps.BaseUI &
+  ComboboxBackdropProps.HTML;
 
 /**
  * ポップアップの背後に表示される要素です。
@@ -974,15 +1279,19 @@ export { ComboboxBackdrop as Backdrop };
  * {@link ComboboxBackdrop} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Backdrop {
-  /**
-   * {@link ComboboxBackdropState}
-   */
   export type State = ComboboxBackdropState;
 
   /**
    * {@link ComboboxBackdropProps}
    */
-  export type Props = ComboboxBackdropProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxBackdropProps.BaseUI;
+    export type HTML = ComboboxBackdropProps.HTML;
+    export type Render = ComboboxBackdropProps.Render;
+    export type SuruUI = ComboboxBackdropProps.SuruUI;
+  }
 }
 
 // Positioner
@@ -993,10 +1302,26 @@ export namespace Backdrop {
  */
 export type ComboboxPositionerState = Combobox.Positioner.State;
 
+export namespace ComboboxPositionerProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Positioner>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.Positioner>
+  >;
+
+  export type Render = RenderProps<ComboboxPositionerState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxPositioner} に渡す props です。
  */
-export type ComboboxPositionerProps = React.ComponentProps<typeof Combobox.Positioner>;
+export type ComboboxPositionerProps = ComboboxPositionerProps.Render &
+  ComboboxPositionerProps.SuruUI &
+  ComboboxPositionerProps.BaseUI &
+  ComboboxPositionerProps.HTML;
 
 /**
  * ポップアップを入力欄へ位置合わせする要素です。
@@ -1016,15 +1341,19 @@ export { ComboboxPositioner as Positioner };
  * {@link ComboboxPositioner} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Positioner {
-  /**
-   * {@link ComboboxPositionerState}
-   */
   export type State = ComboboxPositionerState;
 
   /**
    * {@link ComboboxPositionerProps}
    */
-  export type Props = ComboboxPositionerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxPositionerProps.BaseUI;
+    export type HTML = ComboboxPositionerProps.HTML;
+    export type Render = ComboboxPositionerProps.Render;
+    export type SuruUI = ComboboxPositionerProps.SuruUI;
+  }
 }
 
 // Popup
@@ -1035,10 +1364,26 @@ export namespace Positioner {
  */
 export type ComboboxPopupState = Combobox.Popup.State;
 
+export namespace ComboboxPopupProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Popup>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.Popup>
+  >;
+
+  export type Render = RenderProps<ComboboxPopupState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxPopup} に渡す props です。
  */
-export type ComboboxPopupProps = React.ComponentProps<typeof Combobox.Popup>;
+export type ComboboxPopupProps = ComboboxPopupProps.Render &
+  ComboboxPopupProps.SuruUI &
+  ComboboxPopupProps.BaseUI &
+  ComboboxPopupProps.HTML;
 
 /**
  * 候補項目を表示するポップアップ要素です。
@@ -1055,15 +1400,19 @@ export { ComboboxPopup as Popup };
  * {@link ComboboxPopup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Popup {
-  /**
-   * {@link ComboboxPopupState}
-   */
   export type State = ComboboxPopupState;
 
   /**
    * {@link ComboboxPopupProps}
    */
-  export type Props = ComboboxPopupProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxPopupProps.BaseUI;
+    export type HTML = ComboboxPopupProps.HTML;
+    export type Render = ComboboxPopupProps.Render;
+    export type SuruUI = ComboboxPopupProps.SuruUI;
+  }
 }
 
 // Arrow
@@ -1074,10 +1423,26 @@ export namespace Popup {
  */
 export type ComboboxArrowState = Combobox.Arrow.State;
 
+export namespace ComboboxArrowProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Arrow>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.Arrow>
+  >;
+
+  export type Render = RenderProps<ComboboxArrowState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxArrow} に渡す props です。
  */
-export type ComboboxArrowProps = React.ComponentProps<typeof Combobox.Arrow>;
+export type ComboboxArrowProps = ComboboxArrowProps.Render &
+  ComboboxArrowProps.SuruUI &
+  ComboboxArrowProps.BaseUI &
+  ComboboxArrowProps.HTML;
 
 /**
  * ポップアップと入力欄をつなぐ矢印要素です。
@@ -1094,15 +1459,19 @@ export { ComboboxArrow as Arrow };
  * {@link ComboboxArrow} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Arrow {
-  /**
-   * {@link ComboboxArrowState}
-   */
   export type State = ComboboxArrowState;
 
   /**
    * {@link ComboboxArrowProps}
    */
-  export type Props = ComboboxArrowProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxArrowProps.BaseUI;
+    export type HTML = ComboboxArrowProps.HTML;
+    export type Render = ComboboxArrowProps.Render;
+    export type SuruUI = ComboboxArrowProps.SuruUI;
+  }
 }
 
 // Group
@@ -1113,10 +1482,26 @@ export namespace Arrow {
  */
 export type ComboboxGroupState = Combobox.Group.State;
 
+export namespace ComboboxGroupProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Group>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.Group>
+  >;
+
+  export type Render = RenderProps<ComboboxGroupState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxGroup} に渡す props です。
  */
-export type ComboboxGroupProps = React.ComponentProps<typeof Combobox.Group>;
+export type ComboboxGroupProps = ComboboxGroupProps.Render &
+  ComboboxGroupProps.SuruUI &
+  ComboboxGroupProps.BaseUI &
+  ComboboxGroupProps.HTML;
 
 /**
  * 関連する候補項目をまとめるグループ要素です。
@@ -1133,15 +1518,19 @@ export { ComboboxGroup as Group };
  * {@link ComboboxGroup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Group {
-  /**
-   * {@link ComboboxGroupState}
-   */
   export type State = ComboboxGroupState;
 
   /**
    * {@link ComboboxGroupProps}
    */
-  export type Props = ComboboxGroupProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxGroupProps.BaseUI;
+    export type HTML = ComboboxGroupProps.HTML;
+    export type Render = ComboboxGroupProps.Render;
+    export type SuruUI = ComboboxGroupProps.SuruUI;
+  }
 }
 
 // GroupLabel
@@ -1152,10 +1541,26 @@ export namespace Group {
  */
 export type ComboboxGroupLabelState = Combobox.GroupLabel.State;
 
+export namespace ComboboxGroupLabelProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.GroupLabel>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.GroupLabel>
+  >;
+
+  export type Render = RenderProps<ComboboxGroupLabelState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxGroupLabel} に渡す props です。
  */
-export type ComboboxGroupLabelProps = React.ComponentProps<typeof Combobox.GroupLabel>;
+export type ComboboxGroupLabelProps = ComboboxGroupLabelProps.Render &
+  ComboboxGroupLabelProps.SuruUI &
+  ComboboxGroupLabelProps.BaseUI &
+  ComboboxGroupLabelProps.HTML;
 
 /**
  * 候補グループの見出し要素です。
@@ -1175,15 +1580,19 @@ export { ComboboxGroupLabel as GroupLabel };
  * {@link ComboboxGroupLabel} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace GroupLabel {
-  /**
-   * {@link ComboboxGroupLabelState}
-   */
   export type State = ComboboxGroupLabelState;
 
   /**
    * {@link ComboboxGroupLabelProps}
    */
-  export type Props = ComboboxGroupLabelProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxGroupLabelProps.BaseUI;
+    export type HTML = ComboboxGroupLabelProps.HTML;
+    export type Render = ComboboxGroupLabelProps.Render;
+    export type SuruUI = ComboboxGroupLabelProps.SuruUI;
+  }
 }
 
 // Item
@@ -1194,13 +1603,36 @@ export namespace GroupLabel {
  */
 export type ComboboxItemState = Override<Button.Root.State, Combobox.Item.State>;
 
+export namespace ComboboxItemProps {
+  export type BaseUI = Omit<
+    Override<
+      Button.ButtonRootProps,
+      Override<React.ComponentProps<typeof Combobox.Item>, RenderProps<ComboboxItemState>>
+    >,
+    keyof Render
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof Override<
+        Button.ButtonRootProps,
+        Override<React.ComponentProps<typeof Combobox.Item>, RenderProps<ComboboxItemState>>
+      >
+  >;
+
+  export type Render = RenderProps<ComboboxItemState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxItem} に渡す props です。
  */
-export type ComboboxItemProps = Override<
-  Button.Root.Props,
-  Override<React.ComponentProps<typeof Combobox.Item>, RenderProps<ComboboxItemState>>
->;
+export type ComboboxItemProps = ComboboxItemProps.Render &
+  ComboboxItemProps.SuruUI &
+  ComboboxItemProps.BaseUI &
+  ComboboxItemProps.HTML;
 
 /**
  * 候補リストの個々の項目要素です。
@@ -1248,15 +1680,19 @@ export { ComboboxItem as Item };
  * {@link ComboboxItem} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Item {
-  /**
-   * {@link ComboboxItemState}
-   */
   export type State = ComboboxItemState;
 
   /**
    * {@link ComboboxItemProps}
    */
-  export type Props = ComboboxItemProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxItemProps.BaseUI;
+    export type HTML = ComboboxItemProps.HTML;
+    export type Render = ComboboxItemProps.Render;
+    export type SuruUI = ComboboxItemProps.SuruUI;
+  }
 }
 
 // ItemIndicator
@@ -1267,10 +1703,26 @@ export namespace Item {
  */
 export type ComboboxItemIndicatorState = Combobox.ItemIndicator.State;
 
+export namespace ComboboxItemIndicatorProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.ItemIndicator>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.ItemIndicator>
+  >;
+
+  export type Render = RenderProps<ComboboxItemIndicatorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxItemIndicator} に渡す props です。
  */
-export type ComboboxItemIndicatorProps = React.ComponentProps<typeof Combobox.ItemIndicator>;
+export type ComboboxItemIndicatorProps = ComboboxItemIndicatorProps.Render &
+  ComboboxItemIndicatorProps.SuruUI &
+  ComboboxItemIndicatorProps.BaseUI &
+  ComboboxItemIndicatorProps.HTML;
 
 /**
  * 項目が選択されていることを示す要素です。
@@ -1293,15 +1745,19 @@ export { ComboboxItemIndicator as ItemIndicator };
  * {@link ComboboxItemIndicator} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace ItemIndicator {
-  /**
-   * {@link ComboboxItemIndicatorState}
-   */
   export type State = ComboboxItemIndicatorState;
 
   /**
    * {@link ComboboxItemIndicatorProps}
    */
-  export type Props = ComboboxItemIndicatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxItemIndicatorProps.BaseUI;
+    export type HTML = ComboboxItemIndicatorProps.HTML;
+    export type Render = ComboboxItemIndicatorProps.Render;
+    export type SuruUI = ComboboxItemIndicatorProps.SuruUI;
+  }
 }
 
 // Row
@@ -1312,10 +1768,26 @@ export namespace ItemIndicator {
  */
 export type ComboboxRowState = Combobox.Row.State;
 
+export namespace ComboboxRowProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Row>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.Row>
+  >;
+
+  export type Render = RenderProps<ComboboxRowState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxRow} に渡す props です。
  */
-export type ComboboxRowProps = React.ComponentProps<typeof Combobox.Row>;
+export type ComboboxRowProps = ComboboxRowProps.Render &
+  ComboboxRowProps.SuruUI &
+  ComboboxRowProps.BaseUI &
+  ComboboxRowProps.HTML;
 
 /**
  * グリッドリストの 1 行を表示する要素です。
@@ -1332,15 +1804,19 @@ export { ComboboxRow as Row };
  * {@link ComboboxRow} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Row {
-  /**
-   * {@link ComboboxRowState}
-   */
   export type State = ComboboxRowState;
 
   /**
    * {@link ComboboxRowProps}
    */
-  export type Props = ComboboxRowProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxRowProps.BaseUI;
+    export type HTML = ComboboxRowProps.HTML;
+    export type Render = ComboboxRowProps.Render;
+    export type SuruUI = ComboboxRowProps.SuruUI;
+  }
 }
 
 // Collection
@@ -1351,10 +1827,26 @@ export namespace Row {
  */
 export type ComboboxCollectionState = Combobox.Collection.State;
 
+export namespace ComboboxCollectionProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Collection>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.Collection>
+  >;
+
+  export type Render = RenderProps<ComboboxCollectionState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxCollection} に渡す props です。
  */
-export type ComboboxCollectionProps = React.ComponentProps<typeof Combobox.Collection>;
+export type ComboboxCollectionProps = ComboboxCollectionProps.Render &
+  ComboboxCollectionProps.SuruUI &
+  ComboboxCollectionProps.BaseUI &
+  ComboboxCollectionProps.HTML;
 
 /**
  * フィルタリングされた項目を列挙する要素です。
@@ -1372,15 +1864,19 @@ export { ComboboxCollection as Collection };
  * {@link ComboboxCollection} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Collection {
-  /**
-   * {@link ComboboxCollectionState}
-   */
   export type State = ComboboxCollectionState;
 
   /**
    * {@link ComboboxCollectionProps}
    */
-  export type Props = ComboboxCollectionProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxCollectionProps.BaseUI;
+    export type HTML = ComboboxCollectionProps.HTML;
+    export type Render = ComboboxCollectionProps.Render;
+    export type SuruUI = ComboboxCollectionProps.SuruUI;
+  }
 }
 
 // Empty
@@ -1391,10 +1887,26 @@ export namespace Collection {
  */
 export type ComboboxEmptyState = Combobox.Empty.State;
 
+export namespace ComboboxEmptyProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Empty>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.Empty>
+  >;
+
+  export type Render = RenderProps<ComboboxEmptyState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxEmpty} に渡す props です。
  */
-export type ComboboxEmptyProps = React.ComponentProps<typeof Combobox.Empty>;
+export type ComboboxEmptyProps = ComboboxEmptyProps.Render &
+  ComboboxEmptyProps.SuruUI &
+  ComboboxEmptyProps.BaseUI &
+  ComboboxEmptyProps.HTML;
 
 /**
  * 候補リストが空のときに内容を表示する要素です。
@@ -1411,15 +1923,19 @@ export { ComboboxEmpty as Empty };
  * {@link ComboboxEmpty} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Empty {
-  /**
-   * {@link ComboboxEmptyState}
-   */
   export type State = ComboboxEmptyState;
 
   /**
    * {@link ComboboxEmptyProps}
    */
-  export type Props = ComboboxEmptyProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxEmptyProps.BaseUI;
+    export type HTML = ComboboxEmptyProps.HTML;
+    export type Render = ComboboxEmptyProps.Render;
+    export type SuruUI = ComboboxEmptyProps.SuruUI;
+  }
 }
 
 // Separator
@@ -1430,10 +1946,26 @@ export namespace Empty {
  */
 export type ComboboxSeparatorState = Combobox.Separator.State;
 
+export namespace ComboboxSeparatorProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Separator>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Combobox.Separator>
+  >;
+
+  export type Render = RenderProps<ComboboxSeparatorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ComboboxSeparator} に渡す props です。
  */
-export type ComboboxSeparatorProps = React.ComponentProps<typeof Combobox.Separator>;
+export type ComboboxSeparatorProps = ComboboxSeparatorProps.Render &
+  ComboboxSeparatorProps.SuruUI &
+  ComboboxSeparatorProps.BaseUI &
+  ComboboxSeparatorProps.HTML;
 
 /**
  * 項目やグループを区切る要素です。
@@ -1452,15 +1984,19 @@ export { ComboboxSeparator as Separator };
  * {@link ComboboxSeparator} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Separator {
-  /**
-   * {@link ComboboxSeparatorState}
-   */
   export type State = ComboboxSeparatorState;
 
   /**
    * {@link ComboboxSeparatorProps}
    */
-  export type Props = ComboboxSeparatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ComboboxSeparatorProps.BaseUI;
+    export type HTML = ComboboxSeparatorProps.HTML;
+    export type Render = ComboboxSeparatorProps.Render;
+    export type SuruUI = ComboboxSeparatorProps.SuruUI;
+  }
 }
 
 // useFilter

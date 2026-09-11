@@ -1,6 +1,7 @@
 import { Popover } from "@base-ui/react/popover";
 import * as React from "react";
 
+import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
@@ -56,19 +57,35 @@ export type PopoverRootChangeEventReason = Popover.Root.ChangeEventReason;
  */
 export type PopoverRootState = Popover.Root.State;
 
+export namespace PopoverRootProps {
+  export type BaseUI<TPayload = any> = Omit<
+    Popover.Root.Props<TPayload>,
+    keyof Render | keyof SuruUI<TPayload>
+  >;
+
+  export type HTML = {};
+
+  export type Render = RenderProps<PopoverRootState>;
+
+  export type SuruUI<TPayload = any> = {
+    /**
+     * ポップオーバーとトリガー ({@link Trigger}) を関連付けるハンドルです。
+     *
+     * {@link createHandle} で作成します。Root 内に {@link Trigger} を配置する場合は省略できます。
+     */
+    handle?: PopoverHandle<TPayload> | undefined;
+  };
+}
+
 /**
  * {@link PopoverRoot} に渡す props です。
  *
  * @template TPayload トリガーから受け取るデータの型です。
  */
-export type PopoverRootProps<TPayload = any> = Omit<Popover.Root.Props<TPayload>, "handle"> & {
-  /**
-   * ポップオーバーとトリガー ({@link Trigger}) を関連付けるハンドルです。
-   *
-   * {@link createHandle} で作成します。Root 内に {@link Trigger} を配置する場合は省略できます。
-   */
-  handle?: PopoverHandle<TPayload> | undefined;
-};
+export type PopoverRootProps<TPayload = any> = PopoverRootProps.Render &
+  PopoverRootProps.SuruUI<TPayload> &
+  PopoverRootProps.BaseUI<TPayload> &
+  PopoverRootProps.HTML;
 
 /**
  * {@link PopoverRoot} のコンポーネント型です。
@@ -100,7 +117,17 @@ export namespace Root {
   /**
    * {@link PopoverRootProps}
    */
-  export type Props<TPayload = any> = PopoverRootProps<TPayload>;
+  export type Props<TPayload = any> = Props.Render &
+    Props.SuruUI<TPayload> &
+    Props.BaseUI<TPayload> &
+    Props.HTML;
+
+  export namespace Props {
+    export type BaseUI<TPayload = any> = PopoverRootProps.BaseUI<TPayload>;
+    export type HTML = PopoverRootProps.HTML;
+    export type Render = PopoverRootProps.Render;
+    export type SuruUI<TPayload = any> = PopoverRootProps.SuruUI<TPayload>;
+  }
 
   /**
    * {@link PopoverRootActions}
@@ -128,29 +155,47 @@ export namespace Root {
  */
 export type PopoverTriggerState = Popover.Trigger.State;
 
+export namespace PopoverTriggerProps {
+  export type BaseUI<TPayload = any> = Omit<
+    Popover.Trigger.Props<TPayload>,
+    keyof Render | keyof SuruUI<TPayload> | "render"
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    | keyof Render
+    | keyof SuruUI<any>
+    | keyof Omit<Popover.Trigger.Props<any>, "handle" | "children" | "render">
+  >;
+
+  export type Render = RenderProps<PopoverTriggerState>;
+
+  export type SuruUI<TPayload = any> = {
+    /**
+     * ボタンとしてレンダリングする要素です。
+     *
+     * {@link Popover.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
+     */
+    children: NonNullable<Popover.Trigger.Props<TPayload>["render"]>;
+
+    /**
+     * ポップオーバー ({@link Root}) を関連付けるハンドルです。
+     *
+     * {@link createHandle} で作成し、{@link Root} と共有します。Root 内に配置する場合は省略できます。
+     */
+    handle?: PopoverHandle<TPayload> | undefined;
+  };
+}
+
 /**
  * {@link PopoverTrigger} に渡す props です。
  *
  * @template TPayload トリガーから渡すデータの型です。
  */
-export type PopoverTriggerProps<TPayload = any> = Omit<
-  Popover.Trigger.Props<TPayload>,
-  "handle" | "children" | "render"
-> & {
-  /**
-   * ボタンとしてレンダリングする要素です。
-   *
-   * {@link Popover.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
-   */
-  children: NonNullable<Popover.Trigger.Props<TPayload>["render"]>;
-
-  /**
-   * ポップオーバー ({@link Root}) を関連付けるハンドルです。
-   *
-   * {@link createHandle} で作成し、{@link Root} と共有します。Root 内に配置する場合は省略できます。
-   */
-  handle?: PopoverHandle<TPayload> | undefined;
-};
+export type PopoverTriggerProps<TPayload = any> = PopoverTriggerProps.Render &
+  PopoverTriggerProps.SuruUI<TPayload> &
+  PopoverTriggerProps.BaseUI<TPayload> &
+  PopoverTriggerProps.HTML;
 
 /**
  * {@link PopoverTrigger} のコンポーネント型です。
@@ -190,7 +235,17 @@ export namespace Trigger {
   /**
    * {@link PopoverTriggerProps}
    */
-  export type Props<TPayload = unknown> = PopoverTriggerProps<TPayload>;
+  export type Props<TPayload = unknown> = Props.Render &
+    Props.SuruUI<TPayload> &
+    Props.BaseUI<TPayload> &
+    Props.HTML;
+
+  export namespace Props {
+    export type BaseUI<TPayload = any> = PopoverTriggerProps.BaseUI<TPayload>;
+    export type HTML = PopoverTriggerProps.HTML;
+    export type Render = PopoverTriggerProps.Render;
+    export type SuruUI<TPayload = any> = PopoverTriggerProps.SuruUI<TPayload>;
+  }
 }
 
 // Portal
@@ -201,10 +256,26 @@ export namespace Trigger {
  */
 export type PopoverPortalState = Popover.Portal.State;
 
+export namespace PopoverPortalProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Popover.Portal>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Popover.Portal>
+  >;
+
+  export type Render = RenderProps<PopoverPortalState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link PopoverPortal} に渡す props です。
  */
-export type PopoverPortalProps = React.ComponentProps<typeof Popover.Portal>;
+export type PopoverPortalProps = PopoverPortalProps.Render &
+  PopoverPortalProps.SuruUI &
+  PopoverPortalProps.BaseUI &
+  PopoverPortalProps.HTML;
 
 /**
  * ポップオーバーを DOM の別の場所へ移動する要素です。
@@ -239,7 +310,14 @@ export namespace Portal {
   /**
    * {@link PopoverPortalProps}
    */
-  export type Props = PopoverPortalProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = PopoverPortalProps.BaseUI;
+    export type HTML = PopoverPortalProps.HTML;
+    export type Render = PopoverPortalProps.Render;
+    export type SuruUI = PopoverPortalProps.SuruUI;
+  }
 }
 
 // Backdrop
@@ -250,10 +328,26 @@ export namespace Portal {
  */
 export type PopoverBackdropState = Popover.Backdrop.State;
 
+export namespace PopoverBackdropProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Popover.Backdrop>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Popover.Backdrop>
+  >;
+
+  export type Render = RenderProps<PopoverBackdropState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link PopoverBackdrop} に渡す props です。
  */
-export type PopoverBackdropProps = React.ComponentProps<typeof Popover.Backdrop>;
+export type PopoverBackdropProps = PopoverBackdropProps.Render &
+  PopoverBackdropProps.SuruUI &
+  PopoverBackdropProps.BaseUI &
+  PopoverBackdropProps.HTML;
 
 /**
  * ポップアップの背後に表示されるオーバーレイ要素です。
@@ -288,7 +382,14 @@ export namespace Backdrop {
   /**
    * {@link PopoverBackdropProps}
    */
-  export type Props = PopoverBackdropProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = PopoverBackdropProps.BaseUI;
+    export type HTML = PopoverBackdropProps.HTML;
+    export type Render = PopoverBackdropProps.Render;
+    export type SuruUI = PopoverBackdropProps.SuruUI;
+  }
 }
 
 // Positioner
@@ -299,10 +400,26 @@ export namespace Backdrop {
  */
 export type PopoverPositionerState = Popover.Positioner.State;
 
+export namespace PopoverPositionerProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Popover.Positioner>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Popover.Positioner>
+  >;
+
+  export type Render = RenderProps<PopoverPositionerState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link PopoverPositioner} に渡す props です。
  */
-export type PopoverPositionerProps = React.ComponentProps<typeof Popover.Positioner>;
+export type PopoverPositionerProps = PopoverPositionerProps.Render &
+  PopoverPositionerProps.SuruUI &
+  PopoverPositionerProps.BaseUI &
+  PopoverPositionerProps.HTML;
 
 /**
  * トリガーを基準にポップアップを配置する要素です。
@@ -326,7 +443,14 @@ export namespace Positioner {
   /**
    * {@link PopoverPositionerProps}
    */
-  export type Props = PopoverPositionerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = PopoverPositionerProps.BaseUI;
+    export type HTML = PopoverPositionerProps.HTML;
+    export type Render = PopoverPositionerProps.Render;
+    export type SuruUI = PopoverPositionerProps.SuruUI;
+  }
 }
 
 // Popup
@@ -337,10 +461,26 @@ export namespace Positioner {
  */
 export type PopoverPopupState = Popover.Popup.State;
 
+export namespace PopoverPopupProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Popover.Popup>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Popover.Popup>
+  >;
+
+  export type Render = RenderProps<PopoverPopupState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link PopoverPopup} に渡す props です。
  */
-export type PopoverPopupProps = React.ComponentProps<typeof Popover.Popup>;
+export type PopoverPopupProps = PopoverPopupProps.Render &
+  PopoverPopupProps.SuruUI &
+  PopoverPopupProps.BaseUI &
+  PopoverPopupProps.HTML;
 
 /**
  * ポップオーバーの内容を表示するポップアップ要素です。
@@ -373,7 +513,14 @@ export namespace Popup {
   /**
    * {@link PopoverPopupProps}
    */
-  export type Props = PopoverPopupProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = PopoverPopupProps.BaseUI;
+    export type HTML = PopoverPopupProps.HTML;
+    export type Render = PopoverPopupProps.Render;
+    export type SuruUI = PopoverPopupProps.SuruUI;
+  }
 }
 
 // Arrow
@@ -384,10 +531,26 @@ export namespace Popup {
  */
 export type PopoverArrowState = Popover.Arrow.State;
 
+export namespace PopoverArrowProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Popover.Arrow>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Popover.Arrow>
+  >;
+
+  export type Render = RenderProps<PopoverArrowState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link PopoverArrow} に渡す props です。
  */
-export type PopoverArrowProps = React.ComponentProps<typeof Popover.Arrow>;
+export type PopoverArrowProps = PopoverArrowProps.Render &
+  PopoverArrowProps.SuruUI &
+  PopoverArrowProps.BaseUI &
+  PopoverArrowProps.HTML;
 
 /**
  * ポップアップとトリガーをつなぐ矢印要素です。
@@ -409,7 +572,14 @@ export namespace Arrow {
   /**
    * {@link PopoverArrowProps}
    */
-  export type Props = PopoverArrowProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = PopoverArrowProps.BaseUI;
+    export type HTML = PopoverArrowProps.HTML;
+    export type Render = PopoverArrowProps.Render;
+    export type SuruUI = PopoverArrowProps.SuruUI;
+  }
 }
 
 // Title
@@ -420,10 +590,26 @@ export namespace Arrow {
  */
 export type PopoverTitleState = Popover.Title.State;
 
+export namespace PopoverTitleProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Popover.Title>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"h1">,
+    keyof Render | keyof React.ComponentProps<typeof Popover.Title>
+  >;
+
+  export type Render = RenderProps<PopoverTitleState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link PopoverTitle} に渡す props です。
  */
-export type PopoverTitleProps = React.ComponentProps<typeof Popover.Title>;
+export type PopoverTitleProps = PopoverTitleProps.Render &
+  PopoverTitleProps.SuruUI &
+  PopoverTitleProps.BaseUI &
+  PopoverTitleProps.HTML;
 
 /**
  * ポップオーバーのタイトルを表示する見出し要素です。
@@ -445,7 +631,14 @@ export namespace Title {
   /**
    * {@link PopoverTitleProps}
    */
-  export type Props = PopoverTitleProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = PopoverTitleProps.BaseUI;
+    export type HTML = PopoverTitleProps.HTML;
+    export type Render = PopoverTitleProps.Render;
+    export type SuruUI = PopoverTitleProps.SuruUI;
+  }
 }
 
 // Description
@@ -456,10 +649,26 @@ export namespace Title {
  */
 export type PopoverDescriptionState = Popover.Description.State;
 
+export namespace PopoverDescriptionProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Popover.Description>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"p">,
+    keyof Render | keyof React.ComponentProps<typeof Popover.Description>
+  >;
+
+  export type Render = RenderProps<PopoverDescriptionState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link PopoverDescription} に渡す props です。
  */
-export type PopoverDescriptionProps = React.ComponentProps<typeof Popover.Description>;
+export type PopoverDescriptionProps = PopoverDescriptionProps.Render &
+  PopoverDescriptionProps.SuruUI &
+  PopoverDescriptionProps.BaseUI &
+  PopoverDescriptionProps.HTML;
 
 /**
  * ポップオーバーの説明文を表示する段落要素です。
@@ -484,7 +693,14 @@ export namespace Description {
   /**
    * {@link PopoverDescriptionProps}
    */
-  export type Props = PopoverDescriptionProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = PopoverDescriptionProps.BaseUI;
+    export type HTML = PopoverDescriptionProps.HTML;
+    export type Render = PopoverDescriptionProps.Render;
+    export type SuruUI = PopoverDescriptionProps.SuruUI;
+  }
 }
 
 // Close
@@ -495,20 +711,38 @@ export namespace Description {
  */
 export type PopoverCloseState = Popover.Close.State;
 
+export namespace PopoverCloseProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Popover.Close>,
+    keyof Render | keyof SuruUI | "render"
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Omit<React.ComponentProps<typeof Popover.Close>, "children" | "render">
+  >;
+
+  export type Render = RenderProps<PopoverCloseState>;
+
+  export type SuruUI = {
+    /**
+     * ボタンとしてレンダリングする要素です。
+     *
+     * {@link Popover.Close} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
+     */
+    children: NonNullable<React.ComponentProps<typeof Popover.Close>["render"]>;
+  };
+}
+
 /**
  * {@link PopoverClose} に渡す props です。
  */
-export type PopoverCloseProps = Omit<
-  React.ComponentProps<typeof Popover.Close>,
-  "children" | "render"
-> & {
-  /**
-   * ボタンとしてレンダリングする要素です。
-   *
-   * {@link Popover.Close} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
-   */
-  children: NonNullable<React.ComponentProps<typeof Popover.Close>["render"]>;
-};
+export type PopoverCloseProps = PopoverCloseProps.Render &
+  PopoverCloseProps.SuruUI &
+  PopoverCloseProps.BaseUI &
+  PopoverCloseProps.HTML;
 
 /**
  * ポップオーバーを閉じるボタン要素です。
@@ -538,7 +772,14 @@ export namespace Close {
   /**
    * {@link PopoverCloseProps}
    */
-  export type Props = PopoverCloseProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = PopoverCloseProps.BaseUI;
+    export type HTML = PopoverCloseProps.HTML;
+    export type Render = PopoverCloseProps.Render;
+    export type SuruUI = PopoverCloseProps.SuruUI;
+  }
 }
 
 // Viewport
@@ -549,10 +790,26 @@ export namespace Close {
  */
 export type PopoverViewportState = Popover.Viewport.State;
 
+export namespace PopoverViewportProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Popover.Viewport>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Popover.Viewport>
+  >;
+
+  export type Render = RenderProps<PopoverViewportState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link PopoverViewport} に渡す props です。
  */
-export type PopoverViewportProps = React.ComponentProps<typeof Popover.Viewport>;
+export type PopoverViewportProps = PopoverViewportProps.Render &
+  PopoverViewportProps.SuruUI &
+  PopoverViewportProps.BaseUI &
+  PopoverViewportProps.HTML;
 
 /**
  * 複数のトリガー間で内容を切り替えるときのアニメーション領域です。
@@ -578,5 +835,12 @@ export namespace Viewport {
   /**
    * {@link PopoverViewportProps}
    */
-  export type Props = PopoverViewportProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = PopoverViewportProps.BaseUI;
+    export type HTML = PopoverViewportProps.HTML;
+    export type Render = PopoverViewportProps.Render;
+    export type SuruUI = PopoverViewportProps.SuruUI;
+  }
 }

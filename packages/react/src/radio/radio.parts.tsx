@@ -2,6 +2,7 @@ import { Radio } from "@base-ui/react/radio";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import { useRadioGroupContext } from "../radio-group/radio-group.parts.jsx";
 import type { IComponent } from "../types.js";
@@ -49,55 +50,71 @@ export type RadioRootVariant = "naked" | "liquid";
  */
 export type RadioRootState = Radio.Root.State;
 
+export namespace RadioRootProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Radio.Root>, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Radio.Root>
+  >;
+
+  export type Render = RenderProps<RadioRootState>;
+
+  export type SuruUI = {
+    /**
+     * ラジオボタンの配色を指定します。
+     *
+     * RadioGroup 内では、グループの値が優先されます。
+     *
+     * @default "grey"
+     */
+    color?: RadioRootColor | undefined;
+
+    /**
+     * ラジオボタンに枠線を表示するかどうかを指定します。
+     *
+     * RadioGroup 内では、グループの値が優先されます。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * ラジオボタンの角丸の大きさを指定します。
+     *
+     * RadioGroup 内では、グループの値が優先されます。
+     *
+     * @default "full"
+     */
+    radius?: RadioRootRadius | undefined;
+
+    /**
+     * ラジオボタンの大きさを指定します。
+     *
+     * RadioGroup 内では、グループの値が優先されます。
+     *
+     * @default "md"
+     */
+    size?: RadioRootSize | undefined;
+
+    /**
+     * ラジオボタンの主な外観を指定します。
+     *
+     * RadioGroup 内では、グループの値が優先されます。
+     *
+     * @default "naked"
+     */
+    variant?: RadioRootVariant | undefined;
+  };
+}
+
 /**
  * {@link RadioRoot} に渡す props です。
  */
-export type RadioRootProps = React.ComponentProps<typeof Radio.Root> & {
-  /**
-   * ラジオボタンの配色を指定します。
-   *
-   * RadioGroup 内では、グループの値が優先されます。
-   *
-   * @default "grey"
-   */
-  color?: RadioRootColor | undefined;
-
-  /**
-   * ラジオボタンに枠線を表示するかどうかを指定します。
-   *
-   * RadioGroup 内では、グループの値が優先されます。
-   *
-   * @default false
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * ラジオボタンの角丸の大きさを指定します。
-   *
-   * RadioGroup 内では、グループの値が優先されます。
-   *
-   * @default "full"
-   */
-  radius?: RadioRootRadius | undefined;
-
-  /**
-   * ラジオボタンの大きさを指定します。
-   *
-   * RadioGroup 内では、グループの値が優先されます。
-   *
-   * @default "md"
-   */
-  size?: RadioRootSize | undefined;
-
-  /**
-   * ラジオボタンの主な外観を指定します。
-   *
-   * RadioGroup 内では、グループの値が優先されます。
-   *
-   * @default "naked"
-   */
-  variant?: RadioRootVariant | undefined;
-};
+export type RadioRootProps = RadioRootProps.Render &
+  RadioRootProps.SuruUI &
+  RadioRootProps.BaseUI &
+  RadioRootProps.HTML;
 
 /**
  * ラジオボタンのルートコンポーネントです。
@@ -154,7 +171,14 @@ export namespace Root {
   /**
    * {@link RadioRootProps}
    */
-  export type Props = RadioRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = RadioRootProps.BaseUI;
+    export type HTML = RadioRootProps.HTML;
+    export type Render = RadioRootProps.Render;
+    export type SuruUI = RadioRootProps.SuruUI;
+  }
 
   /**
    * {@link RadioRootColor}
@@ -185,10 +209,26 @@ export namespace Root {
  */
 export type RadioIndicatorState = Radio.Indicator.State;
 
+export namespace RadioIndicatorProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Radio.Indicator>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof React.ComponentProps<typeof Radio.Indicator>
+  >;
+
+  export type Render = RenderProps<RadioIndicatorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link RadioIndicator} に渡す props です。
  */
-export type RadioIndicatorProps = React.ComponentProps<typeof Radio.Indicator>;
+export type RadioIndicatorProps = RadioIndicatorProps.Render &
+  RadioIndicatorProps.SuruUI &
+  RadioIndicatorProps.BaseUI &
+  RadioIndicatorProps.HTML;
 
 /**
  * ラジオボタンのインジケーターコンポーネントです。
@@ -210,5 +250,12 @@ export namespace Indicator {
   /**
    * {@link RadioIndicatorProps}
    */
-  export type Props = RadioIndicatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = RadioIndicatorProps.BaseUI;
+    export type HTML = RadioIndicatorProps.HTML;
+    export type Render = RadioIndicatorProps.Render;
+    export type SuruUI = RadioIndicatorProps.SuruUI;
+  }
 }

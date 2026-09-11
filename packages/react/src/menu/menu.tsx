@@ -473,7 +473,7 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
         children: toReactNode(label),
       };
     },
-    getRootProps(): Required<Omit<MenuRootProps, "children">> {
+    getRootProps(): Omit<MenuRootProps, "children"> {
       return {
         open,
         size,

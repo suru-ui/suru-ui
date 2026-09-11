@@ -372,7 +372,7 @@ export const useDialogAPI: IUseDialogAPI = function useSuiDialogAPI(props) {
 
       return null;
     },
-    getRootProps(): Required<Omit<DialogRootProps, "children">> {
+    getRootProps(): Omit<DialogRootProps, "children"> {
       return {
         open,
         modal,

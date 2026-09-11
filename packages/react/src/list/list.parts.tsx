@@ -114,16 +114,12 @@ export type ListRootSize = Size;
  */
 export type ListRootState = {};
 
-/**
- * {@link ListRoot} に渡す props です。
- *
- * @template TItem 項目の型です。
- */
-export type ListRootProps<TItem = any> = Omit<
-  React.ComponentProps<"ul">,
-  keyof RenderProps | "children"
-> &
-  RenderProps<ListRootState> & {
+export namespace ListRootProps {
+  export type HTML = Omit<React.ComponentProps<"ul">, keyof Render | keyof SuruUI<any>>;
+
+  export type Render = RenderProps<ListRootState>;
+
+  export type SuruUI<TItem = any> = {
     /**
      * リストの内容、または各項目をレンダリングする関数です。
      *
@@ -154,6 +150,16 @@ export type ListRootProps<TItem = any> = Omit<
      */
     size?: ListRootSize | undefined;
   };
+}
+
+/**
+ * {@link ListRoot} に渡す props です。
+ *
+ * @template TItem 項目の型です。
+ */
+export type ListRootProps<TItem = any> = ListRootProps.Render &
+  ListRootProps.SuruUI<TItem> &
+  ListRootProps.HTML;
 
 interface IListRoot extends IComponent<ListRootProps> {
   /**
@@ -224,7 +230,13 @@ export namespace Root {
   /**
    * {@link ListRootProps}
    */
-  export type Props<TItem = any> = ListRootProps<TItem>;
+  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.HTML;
+
+  export namespace Props {
+    export type HTML = ListRootProps.HTML;
+    export type Render = ListRootProps.Render;
+    export type SuruUI<TItem = any> = ListRootProps.SuruUI<TItem>;
+  }
 
   /**
    * {@link ListRootItemObject}
@@ -259,11 +271,12 @@ export type ListItemSize = Size;
  */
 export type ListItemState = {};
 
-/**
- * {@link ListItem} に渡す props です。
- */
-export type ListItemProps = Omit<React.ComponentProps<"li">, keyof RenderProps> &
-  RenderProps<ListItemState> & {
+export namespace ListItemProps {
+  export type HTML = Omit<React.ComponentProps<"li">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<ListItemState>;
+
+  export type SuruUI = {
     /**
      * 項目を無効な見た目にするかどうかを指定します。
      *
@@ -278,6 +291,12 @@ export type ListItemProps = Omit<React.ComponentProps<"li">, keyof RenderProps> 
      */
     size?: ListItemSize | undefined;
   };
+}
+
+/**
+ * {@link ListItem} に渡す props です。
+ */
+export type ListItemProps = ListItemProps.Render & ListItemProps.SuruUI & ListItemProps.HTML;
 
 /**
  * リストの項目コンポーネントです。
@@ -313,7 +332,13 @@ export namespace Item {
   /**
    * {@link ListItemProps}
    */
-  export type Props = ListItemProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = ListItemProps.HTML;
+    export type Render = ListItemProps.Render;
+    export type SuruUI = ListItemProps.SuruUI;
+  }
 
   /**
    * {@link ListItemSize}
@@ -329,11 +354,20 @@ export namespace Item {
  */
 export type ListItemIndicatorState = {};
 
+export namespace ListItemIndicatorProps {
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
+
+  export type Render = RenderProps<ListItemIndicatorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ListItemIndicator} に渡す props です。
  */
-export type ListItemIndicatorProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
-  RenderProps<ListItemIndicatorState>;
+export type ListItemIndicatorProps = ListItemIndicatorProps.Render &
+  ListItemIndicatorProps.SuruUI &
+  ListItemIndicatorProps.HTML;
 
 /**
  * リストの項目の先頭に表示するマーカーやアイコンのコンテナーです。
@@ -363,5 +397,11 @@ export namespace Indicator {
   /**
    * {@link ListItemIndicatorProps}
    */
-  export type Props = ListItemIndicatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = ListItemIndicatorProps.HTML;
+    export type Render = ListItemIndicatorProps.Render;
+    export type SuruUI = ListItemIndicatorProps.SuruUI;
+  }
 }

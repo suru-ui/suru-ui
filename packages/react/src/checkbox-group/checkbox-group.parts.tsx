@@ -2,6 +2,7 @@ import { CheckboxGroup } from "@base-ui/react/checkbox-group";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
 import type { IComponent, IUseContext } from "../types.js";
@@ -188,60 +189,79 @@ export type CheckboxGroupRootVariant = "naked" | "liquid";
  */
 export type CheckboxGroupRootState = CheckboxGroup.State;
 
+export namespace CheckboxGroupRootProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof CheckboxGroup>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof CheckboxGroup>
+  >;
+
+  export type Render = RenderProps<CheckboxGroupRootState>;
+
+  export type SuruUI = {
+    /**
+     * チェックボックスの配色を指定します。
+     *
+     * グループ内のチェックボックスより優先されます。
+     *
+     * @default "grey"
+     */
+    color?: CheckboxGroupRootColor | undefined;
+
+    /**
+     * チェックボックス群の向きを指定します。
+     *
+     * @default "vertical"
+     */
+    orientation?: CheckboxGroupRootOrientation | undefined;
+
+    /**
+     * チェックボックスに枠線を表示するかどうかを指定します。
+     *
+     * グループ内のチェックボックスより優先されます。
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * チェックボックスの角丸を指定します。
+     *
+     * グループ内のチェックボックスより優先されます。
+     *
+     * 既定値は {@link CheckboxGroupRootProps.size|size}
+     */
+    radius?: CheckboxGroupRootRadius | undefined;
+
+    /**
+     * チェックボックスの大きさを指定します。
+     *
+     * グループ内のチェックボックスより優先されます。
+     *
+     * @default "md"
+     */
+    size?: CheckboxGroupRootSize | undefined;
+
+    /**
+     * チェックボックスの主な外観を指定します。
+     *
+     * グループ内のチェックボックスより優先されます。
+     *
+     * @default "liquid"
+     */
+    variant?: CheckboxGroupRootVariant | undefined;
+  };
+}
+
 /**
  * {@link CheckboxGroupRoot} に渡す props です。
  */
-export type CheckboxGroupRootProps = React.ComponentProps<typeof CheckboxGroup> & {
-  /**
-   * チェックボックスの配色を指定します。
-   *
-   * グループ内のチェックボックスより優先されます。
-   *
-   * @default "grey"
-   */
-  color?: CheckboxGroupRootColor | undefined;
-
-  /**
-   * チェックボックス群の向きを指定します。
-   *
-   * @default "vertical"
-   */
-  orientation?: CheckboxGroupRootOrientation | undefined;
-
-  /**
-   * チェックボックスに枠線を表示するかどうかを指定します。
-   *
-   * グループ内のチェックボックスより優先されます。
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * チェックボックスの角丸を指定します。
-   *
-   * グループ内のチェックボックスより優先されます。
-   *
-   * 既定値は {@link CheckboxGroupRootProps.size|size}
-   */
-  radius?: CheckboxGroupRootRadius | undefined;
-
-  /**
-   * チェックボックスの大きさを指定します。
-   *
-   * グループ内のチェックボックスより優先されます。
-   *
-   * @default "md"
-   */
-  size?: CheckboxGroupRootSize | undefined;
-
-  /**
-   * チェックボックスの主な外観を指定します。
-   *
-   * グループ内のチェックボックスより優先されます。
-   *
-   * @default "liquid"
-   */
-  variant?: CheckboxGroupRootVariant | undefined;
-};
+export type CheckboxGroupRootProps = CheckboxGroupRootProps.Render &
+  CheckboxGroupRootProps.SuruUI &
+  CheckboxGroupRootProps.BaseUI &
+  CheckboxGroupRootProps.HTML;
 
 /**
  * チェックボックスグループのルートコンポーネントです。
@@ -294,15 +314,19 @@ export const CheckboxGroupRoot: IComponent<CheckboxGroupRootProps> = function Su
 export { CheckboxGroupRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link CheckboxGroupRootState}
-   */
   export type State = CheckboxGroupRootState;
 
   /**
    * {@link CheckboxGroupRootProps}
    */
-  export type Props = CheckboxGroupRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = CheckboxGroupRootProps.BaseUI;
+    export type HTML = CheckboxGroupRootProps.HTML;
+    export type Render = CheckboxGroupRootProps.Render;
+    export type SuruUI = CheckboxGroupRootProps.SuruUI;
+  }
 
   /**
    * {@link CheckboxGroupRootChangeEventDetails}

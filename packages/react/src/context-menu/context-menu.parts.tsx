@@ -350,45 +350,64 @@ export type ContextMenuRootVariant = Button.Root.Variant;
  */
 export type ContextMenuRootState = ContextMenu.Root.State;
 
+export namespace ContextMenuRootProps {
+  export type BaseUI<TItem = any> = Omit<
+    React.ComponentProps<typeof ContextMenu.Root>,
+    keyof Render | keyof SuruUI<TItem>
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI<any> | keyof React.ComponentProps<typeof ContextMenu.Root>
+  >;
+
+  export type Render = RenderProps<ContextMenuRootState>;
+
+  export type SuruUI<TItem = any> = {
+    /**
+     * コンテキストメニューの項目です。
+     */
+    items?: readonly TItem[] | undefined;
+
+    /**
+     * ポップアップに枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * ポップアップと項目の角丸を指定します。
+     *
+     * 既定値は {@link ContextMenuRootProps.size|size} です。
+     */
+    radius?: ContextMenuRootRadius | undefined;
+
+    /**
+     * ポップアップと項目の大きさを指定します。
+     *
+     * @default "md"
+     */
+    size?: ContextMenuRootSize | undefined;
+
+    /**
+     * 項目の主な外観を指定します。
+     *
+     * @default "naked"
+     */
+    variant?: ContextMenuRootVariant | undefined;
+  };
+}
+
 /**
  * {@link ContextMenuRoot} に渡す props です。
  *
  * @template TItem 項目の型です。
  */
-export type ContextMenuRootProps<TItem = any> = React.ComponentProps<typeof ContextMenu.Root> & {
-  /**
-   * コンテキストメニューの項目です。
-   */
-  items?: readonly TItem[] | undefined;
-
-  /**
-   * ポップアップに枠線を表示するかどうかを指定します。
-   *
-   * @default false
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * ポップアップと項目の角丸を指定します。
-   *
-   * 既定値は {@link ContextMenuRootProps.size|size} です。
-   */
-  radius?: ContextMenuRootRadius | undefined;
-
-  /**
-   * ポップアップと項目の大きさを指定します。
-   *
-   * @default "md"
-   */
-  size?: ContextMenuRootSize | undefined;
-
-  /**
-   * 項目の主な外観を指定します。
-   *
-   * @default "naked"
-   */
-  variant?: ContextMenuRootVariant | undefined;
-};
+export type ContextMenuRootProps<TItem = any> = ContextMenuRootProps.Render &
+  ContextMenuRootProps.SuruUI<TItem> &
+  ContextMenuRootProps.BaseUI<TItem> &
+  ContextMenuRootProps.HTML;
 
 interface IContextMenuRoot extends IComponent<ContextMenuRootProps> {
   /**
@@ -429,15 +448,22 @@ export const ContextMenuRoot: IContextMenuRoot = function SuiContextMenuRoot(
 export { ContextMenuRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link ContextMenuRootState}
-   */
   export type State = ContextMenuRootState;
 
   /**
    * {@link ContextMenuRootProps}
    */
-  export type Props<TItem = any> = ContextMenuRootProps<TItem>;
+  export type Props<TItem = any> = Props.Render &
+    Props.SuruUI<TItem> &
+    Props.BaseUI<TItem> &
+    Props.HTML;
+
+  export namespace Props {
+    export type BaseUI<TItem = any> = ContextMenuRootProps.BaseUI<TItem>;
+    export type HTML = ContextMenuRootProps.HTML;
+    export type Render = ContextMenuRootProps.Render;
+    export type SuruUI<TItem = any> = ContextMenuRootProps.SuruUI<TItem>;
+  }
 
   /**
    * {@link ContextMenuRootActionItemObject}
@@ -518,20 +544,36 @@ export namespace Root {
  */
 export type ContextMenuTriggerState = ContextMenu.Trigger.State;
 
+export namespace ContextMenuTriggerProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof ContextMenu.Trigger>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.Trigger>
+  >;
+
+  export type Render = RenderProps<ContextMenuTriggerState>;
+
+  export type SuruUI = {
+    /**
+     * トリガーとしてレンダリングする要素です。
+     *
+     * {@link ContextMenu.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
+     */
+    children: NonNullable<React.ComponentProps<typeof ContextMenu.Trigger>["render"]>;
+  };
+}
+
 /**
  * {@link ContextMenuTrigger} に渡す props です。
  */
-export type ContextMenuTriggerProps = Omit<
-  React.ComponentProps<typeof ContextMenu.Trigger>,
-  "children" | "render"
-> & {
-  /**
-   * トリガーとしてレンダリングする要素です。
-   *
-   * {@link ContextMenu.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
-   */
-  children: NonNullable<React.ComponentProps<typeof ContextMenu.Trigger>["render"]>;
-};
+export type ContextMenuTriggerProps = ContextMenuTriggerProps.Render &
+  ContextMenuTriggerProps.SuruUI &
+  ContextMenuTriggerProps.BaseUI &
+  ContextMenuTriggerProps.HTML;
 
 /**
  * 右クリックまたは長押しでコンテキストメニューを開く対象です。
@@ -558,15 +600,19 @@ export const ContextMenuTrigger: IComponent<ContextMenuTriggerProps> =
 export { ContextMenuTrigger as Trigger };
 
 export namespace Trigger {
-  /**
-   * {@link ContextMenuTriggerState}
-   */
   export type State = ContextMenuTriggerState;
 
   /**
    * {@link ContextMenuTriggerProps}
    */
-  export type Props = ContextMenuTriggerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ContextMenuTriggerProps.BaseUI;
+    export type HTML = ContextMenuTriggerProps.HTML;
+    export type Render = ContextMenuTriggerProps.Render;
+    export type SuruUI = ContextMenuTriggerProps.SuruUI;
+  }
 }
 
 // Portal
@@ -577,10 +623,26 @@ export namespace Trigger {
  */
 export type ContextMenuPortalState = ContextMenu.Portal.State;
 
+export namespace ContextMenuPortalProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.Portal>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof ContextMenu.Portal>
+  >;
+
+  export type Render = RenderProps<ContextMenuPortalState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ContextMenuPortal} に渡す props です。
  */
-export type ContextMenuPortalProps = React.ComponentProps<typeof ContextMenu.Portal>;
+export type ContextMenuPortalProps = ContextMenuPortalProps.Render &
+  ContextMenuPortalProps.SuruUI &
+  ContextMenuPortalProps.BaseUI &
+  ContextMenuPortalProps.HTML;
 
 /**
  * コンテキストメニューを DOM の別の場所へ移動する要素です。
@@ -616,15 +678,19 @@ export const ContextMenuPortal: IComponent<ContextMenuPortalProps> = function Su
 export { ContextMenuPortal as Portal };
 
 export namespace Portal {
-  /**
-   * {@link ContextMenuPortalState}
-   */
   export type State = ContextMenuPortalState;
 
   /**
    * {@link ContextMenuPortalProps}
    */
-  export type Props = ContextMenuPortalProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ContextMenuPortalProps.BaseUI;
+    export type HTML = ContextMenuPortalProps.HTML;
+    export type Render = ContextMenuPortalProps.Render;
+    export type SuruUI = ContextMenuPortalProps.SuruUI;
+  }
 }
 
 // Backdrop
@@ -635,10 +701,26 @@ export namespace Portal {
  */
 export type ContextMenuBackdropState = ContextMenu.Backdrop.State;
 
+export namespace ContextMenuBackdropProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.Backdrop>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof ContextMenu.Backdrop>
+  >;
+
+  export type Render = RenderProps<ContextMenuBackdropState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ContextMenuBackdrop} に渡す props です。
  */
-export type ContextMenuBackdropProps = React.ComponentProps<typeof ContextMenu.Backdrop>;
+export type ContextMenuBackdropProps = ContextMenuBackdropProps.Render &
+  ContextMenuBackdropProps.SuruUI &
+  ContextMenuBackdropProps.BaseUI &
+  ContextMenuBackdropProps.HTML;
 
 /**
  * コンテキストメニューの背後に表示されるオーバーレイ要素です。
@@ -658,15 +740,19 @@ export const ContextMenuBackdrop: IComponent<ContextMenuBackdropProps> =
 export { ContextMenuBackdrop as Backdrop };
 
 export namespace Backdrop {
-  /**
-   * {@link ContextMenuBackdropState}
-   */
   export type State = ContextMenuBackdropState;
 
   /**
    * {@link ContextMenuBackdropProps}
    */
-  export type Props = ContextMenuBackdropProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ContextMenuBackdropProps.BaseUI;
+    export type HTML = ContextMenuBackdropProps.HTML;
+    export type Render = ContextMenuBackdropProps.Render;
+    export type SuruUI = ContextMenuBackdropProps.SuruUI;
+  }
 }
 
 // Positioner
@@ -677,10 +763,26 @@ export namespace Backdrop {
  */
 export type ContextMenuPositionerState = ContextMenu.Positioner.State;
 
+export namespace ContextMenuPositionerProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.Positioner>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof ContextMenu.Positioner>
+  >;
+
+  export type Render = RenderProps<ContextMenuPositionerState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ContextMenuPositioner} に渡す props です。
  */
-export type ContextMenuPositionerProps = React.ComponentProps<typeof ContextMenu.Positioner>;
+export type ContextMenuPositionerProps = ContextMenuPositionerProps.Render &
+  ContextMenuPositionerProps.SuruUI &
+  ContextMenuPositionerProps.BaseUI &
+  ContextMenuPositionerProps.HTML;
 
 /**
  * ポップアップを右クリックまたは長押しした位置に合わせる要素です。
@@ -700,15 +802,19 @@ export const ContextMenuPositioner: IComponent<ContextMenuPositionerProps> =
 export { ContextMenuPositioner as Positioner };
 
 export namespace Positioner {
-  /**
-   * {@link ContextMenuPositionerState}
-   */
   export type State = ContextMenuPositionerState;
 
   /**
    * {@link ContextMenuPositionerProps}
    */
-  export type Props = ContextMenuPositionerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ContextMenuPositionerProps.BaseUI;
+    export type HTML = ContextMenuPositionerProps.HTML;
+    export type Render = ContextMenuPositionerProps.Render;
+    export type SuruUI = ContextMenuPositionerProps.SuruUI;
+  }
 }
 
 // Content
@@ -736,20 +842,36 @@ export interface IContextMenuContentItemRenderer<TItem = any> {
  */
 export type ContextMenuContentState = ContextMenu.Popup.State;
 
+export namespace ContextMenuContentProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof ContextMenu.Popup>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.Popup>
+  >;
+
+  export type Render = RenderProps<ContextMenuContentState>;
+
+  export type SuruUI = {
+    /**
+     * ポップアップの内容、または各項目をレンダリングする関数です。
+     *
+     * 関数を指定した場合は {@link ContextMenuRootProps.items|items} の各項目が引数として渡されます。
+     */
+    children?: React.ReactNode | IContextMenuContentItemRenderer;
+  };
+}
+
 /**
  * {@link ContextMenuContent} に渡す props です。
  */
-export type ContextMenuContentProps = Omit<
-  React.ComponentProps<typeof ContextMenu.Popup>,
-  "children"
-> & {
-  /**
-   * ポップアップの内容、または各項目をレンダリングする関数です。
-   *
-   * 関数を指定した場合は {@link ContextMenuRootProps.items|items} の各項目が引数として渡されます。
-   */
-  children?: React.ReactNode | IContextMenuContentItemRenderer;
-};
+export type ContextMenuContentProps = ContextMenuContentProps.Render &
+  ContextMenuContentProps.SuruUI &
+  ContextMenuContentProps.BaseUI &
+  ContextMenuContentProps.HTML;
 
 /**
  * コンテキストメニュー項目を表示するコンテンツ要素です。
@@ -879,15 +1001,19 @@ const defaultContentItemRenderer: IContextMenuContentItemRenderer = (item, index
 export { ContextMenuContent as Content };
 
 export namespace Content {
-  /**
-   * {@link ContextMenuContentState}
-   */
   export type State = ContextMenuContentState;
 
   /**
    * {@link ContextMenuContentProps}
    */
-  export type Props = ContextMenuContentProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ContextMenuContentProps.BaseUI;
+    export type HTML = ContextMenuContentProps.HTML;
+    export type Render = ContextMenuContentProps.Render;
+    export type SuruUI = ContextMenuContentProps.SuruUI;
+  }
 
   /**
    * {@link ContextMenuRootItemObject}
@@ -944,36 +1070,60 @@ export type ContextMenuItemVariant = Button.Root.Variant;
  */
 export type ContextMenuItemState = Override<Button.Root.State, ContextMenu.Item.State>;
 
+export namespace ContextMenuItemProps {
+  export type BaseUI = Omit<
+    Override<
+      Omit<Button.ButtonRootProps, "type">,
+      Override<React.ComponentProps<typeof ContextMenu.Item>, RenderProps<ContextMenuItemState>>
+    >,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Override<
+        Omit<Button.ButtonRootProps, "type">,
+        Override<React.ComponentProps<typeof ContextMenu.Item>, RenderProps<ContextMenuItemState>>
+      >
+  >;
+
+  export type Render = RenderProps<ContextMenuItemState>;
+
+  export type SuruUI = {
+    /**
+     * 項目の配色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: ContextMenuItemColor | undefined;
+
+    /**
+     * 項目の角丸を指定します。
+     *
+     * 既定値は {@link ContextMenuRootProps.radius|radius} です。
+     */
+    radius?: ContextMenuItemRadius | undefined;
+
+    /**
+     * チェック状態のときの外観を指定します。
+     *
+     * チェックされていないときは常に `"naked"` になります。
+     *
+     * 既定値は {@link ContextMenuRootProps.variant|variant} です。
+     */
+    variant?: ContextMenuItemVariant | undefined;
+  };
+}
+
 /**
  * {@link ContextMenuItem} に渡す props です。
  */
-export type ContextMenuItemProps = Override<
-  Omit<Button.Root.Props, "type">,
-  Override<React.ComponentProps<typeof ContextMenu.Item>, RenderProps<ContextMenuItemState>>
-> & {
-  /**
-   * 項目の配色を指定します。
-   *
-   * @default "grey"
-   */
-  color?: ContextMenuItemColor | undefined;
-
-  /**
-   * 項目の角丸を指定します。
-   *
-   * 既定値は {@link ContextMenuRootProps.radius|radius} です。
-   */
-  radius?: ContextMenuItemRadius | undefined;
-
-  /**
-   * チェック状態のときの外観を指定します。
-   *
-   * チェックされていないときは常に `"naked"` になります。
-   *
-   * 既定値は {@link ContextMenuRootProps.variant|variant} です。
-   */
-  variant?: ContextMenuItemVariant | undefined;
-};
+export type ContextMenuItemProps = ContextMenuItemProps.Render &
+  ContextMenuItemProps.SuruUI &
+  ContextMenuItemProps.BaseUI &
+  ContextMenuItemProps.HTML;
 
 /**
  * コンテキストメニューの操作項目です。
@@ -1029,15 +1179,19 @@ export const ContextMenuItem: IComponent<ContextMenuItemProps> = function SuiCon
 export { ContextMenuItem as Item };
 
 export namespace Item {
-  /**
-   * {@link ContextMenuItemState}
-   */
   export type State = ContextMenuItemState;
 
   /**
    * {@link ContextMenuItemProps}
    */
-  export type Props = ContextMenuItemProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ContextMenuItemProps.BaseUI;
+    export type HTML = ContextMenuItemProps.HTML;
+    export type Render = ContextMenuItemProps.Render;
+    export type SuruUI = ContextMenuItemProps.SuruUI;
+  }
 
   /**
    * {@link ContextMenuItemColor}
@@ -1082,36 +1236,66 @@ export type ContextMenuLinkItemVariant = Button.Root.Variant;
  */
 export type ContextMenuLinkItemState = Override<Button.Root.State, ContextMenu.LinkItem.State>;
 
+export namespace ContextMenuLinkItemProps {
+  export type BaseUI = Omit<
+    Override<
+      Omit<Button.ButtonRootProps, "type">,
+      Override<
+        React.ComponentProps<typeof ContextMenu.LinkItem>,
+        RenderProps<ContextMenuLinkItemState>
+      >
+    >,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"a">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Override<
+        Omit<Button.ButtonRootProps, "type">,
+        Override<
+          React.ComponentProps<typeof ContextMenu.LinkItem>,
+          RenderProps<ContextMenuLinkItemState>
+        >
+      >
+  >;
+
+  export type Render = RenderProps<ContextMenuLinkItemState>;
+
+  export type SuruUI = {
+    /**
+     * 項目の配色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: ContextMenuLinkItemColor | undefined;
+
+    /**
+     * 項目の角丸を指定します。
+     *
+     * 既定値は {@link ContextMenuRootProps.radius|radius} です。
+     */
+    radius?: ContextMenuLinkItemRadius | undefined;
+
+    /**
+     * チェック状態のときの外観を指定します。
+     *
+     * チェックされていないときは常に `"naked"` になります。
+     *
+     * 既定値は {@link ContextMenuRootProps.variant|variant} です。
+     */
+    variant?: ContextMenuLinkItemVariant | undefined;
+  };
+}
+
 /**
  * {@link ContextMenuLinkItem} に渡す props です。
  */
-export type ContextMenuLinkItemProps = Override<
-  Omit<Button.Root.Props, "type">,
-  Override<React.ComponentProps<typeof ContextMenu.LinkItem>, RenderProps<ContextMenuLinkItemState>>
-> & {
-  /**
-   * 項目の配色を指定します。
-   *
-   * @default "grey"
-   */
-  color?: ContextMenuLinkItemColor | undefined;
-
-  /**
-   * 項目の角丸を指定します。
-   *
-   * 既定値は {@link ContextMenuRootProps.radius|radius} です。
-   */
-  radius?: ContextMenuLinkItemRadius | undefined;
-
-  /**
-   * チェック状態のときの外観を指定します。
-   *
-   * チェックされていないときは常に `"naked"` になります。
-   *
-   * 既定値は {@link ContextMenuRootProps.variant|variant} です。
-   */
-  variant?: ContextMenuLinkItemVariant | undefined;
-};
+export type ContextMenuLinkItemProps = ContextMenuLinkItemProps.Render &
+  ContextMenuLinkItemProps.SuruUI &
+  ContextMenuLinkItemProps.BaseUI &
+  ContextMenuLinkItemProps.HTML;
 
 /**
  * 別のページやセクションへ移動するコンテキストメニュー項目です。
@@ -1166,15 +1350,19 @@ export const ContextMenuLinkItem: IComponent<ContextMenuLinkItemProps> =
 export { ContextMenuLinkItem as LinkItem };
 
 export namespace LinkItem {
-  /**
-   * {@link ContextMenuLinkItemState}
-   */
   export type State = ContextMenuLinkItemState;
 
   /**
    * {@link ContextMenuLinkItemProps}
    */
-  export type Props = ContextMenuLinkItemProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ContextMenuLinkItemProps.BaseUI;
+    export type HTML = ContextMenuLinkItemProps.HTML;
+    export type Render = ContextMenuLinkItemProps.Render;
+    export type SuruUI = ContextMenuLinkItemProps.SuruUI;
+  }
 
   /**
    * {@link ContextMenuLinkItemColor}
@@ -1210,10 +1398,26 @@ export type ContextMenuSubmenuRootChangeEventReason = ContextMenu.SubmenuRoot.Ch
  */
 export type ContextMenuSubmenuRootState = ContextMenu.SubmenuRoot.State;
 
+export namespace ContextMenuSubmenuRootProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.SubmenuRoot>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof ContextMenu.SubmenuRoot>
+  >;
+
+  export type Render = RenderProps<ContextMenuSubmenuRootState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ContextMenuSubmenuRoot} に渡す props です。
  */
-export type ContextMenuSubmenuRootProps = React.ComponentProps<typeof ContextMenu.SubmenuRoot>;
+export type ContextMenuSubmenuRootProps = ContextMenuSubmenuRootProps.Render &
+  ContextMenuSubmenuRootProps.SuruUI &
+  ContextMenuSubmenuRootProps.BaseUI &
+  ContextMenuSubmenuRootProps.HTML;
 
 /**
  * サブメニューのルートです。
@@ -1228,15 +1432,19 @@ export const ContextMenuSubmenuRoot: IComponent<ContextMenuSubmenuRootProps> =
 export { ContextMenuSubmenuRoot as SubmenuRoot };
 
 export namespace SubmenuRoot {
-  /**
-   * {@link ContextMenuSubmenuRootState}
-   */
   export type State = ContextMenuSubmenuRootState;
 
   /**
    * {@link ContextMenuSubmenuRootProps}
    */
-  export type Props = ContextMenuSubmenuRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ContextMenuSubmenuRootProps.BaseUI;
+    export type HTML = ContextMenuSubmenuRootProps.HTML;
+    export type Render = ContextMenuSubmenuRootProps.Render;
+    export type SuruUI = ContextMenuSubmenuRootProps.SuruUI;
+  }
 
   /**
    * {@link ContextMenuSubmenuRootChangeEventDetails}
@@ -1279,39 +1487,66 @@ export type ContextMenuSubmenuTriggerState = Override<
   ContextMenu.SubmenuTrigger.State
 >;
 
+export namespace ContextMenuSubmenuTriggerProps {
+  export type BaseUI = Omit<
+    Override<
+      Omit<Button.ButtonRootProps, "type">,
+      Override<
+        React.ComponentProps<typeof ContextMenu.SubmenuTrigger>,
+        RenderProps<ContextMenuSubmenuTriggerState>
+      >
+    >,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Override<
+        Omit<Button.ButtonRootProps, "type">,
+        Override<
+          React.ComponentProps<typeof ContextMenu.SubmenuTrigger>,
+          RenderProps<ContextMenuSubmenuTriggerState>
+        >
+      >
+  >;
+
+  export type Render = RenderProps<ContextMenuSubmenuTriggerState>;
+
+  export type SuruUI = {
+    /**
+     * 項目の配色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: ContextMenuSubmenuTriggerColor | undefined;
+
+    /**
+     * 項目の角丸を指定します。
+     *
+     * 既定値は {@link ContextMenuRootProps.radius|radius} です。
+     */
+    radius?: ContextMenuSubmenuTriggerRadius | undefined;
+
+    /**
+     * チェック状態のときの外観を指定します。
+     *
+     * チェックされていないときは常に `"naked"` になります。
+     *
+     * 既定値は {@link ContextMenuRootProps.variant|variant} です。
+     */
+    variant?: ContextMenuSubmenuTriggerVariant | undefined;
+  };
+}
+
 /**
  * {@link ContextMenuSubmenuTrigger} に渡す props です。
  */
-export type ContextMenuSubmenuTriggerProps = Override<
-  Omit<Button.Root.Props, "type">,
-  Override<
-    React.ComponentProps<typeof ContextMenu.SubmenuTrigger>,
-    RenderProps<ContextMenuSubmenuTriggerState>
-  >
-> & {
-  /**
-   * 項目の配色を指定します。
-   *
-   * @default "grey"
-   */
-  color?: ContextMenuSubmenuTriggerColor | undefined;
-
-  /**
-   * 項目の角丸を指定します。
-   *
-   * 既定値は {@link ContextMenuRootProps.radius|radius} です。
-   */
-  radius?: ContextMenuSubmenuTriggerRadius | undefined;
-
-  /**
-   * チェック状態のときの外観を指定します。
-   *
-   * チェックされていないときは常に `"naked"` になります。
-   *
-   * 既定値は {@link ContextMenuRootProps.variant|variant} です。
-   */
-  variant?: ContextMenuSubmenuTriggerVariant | undefined;
-};
+export type ContextMenuSubmenuTriggerProps = ContextMenuSubmenuTriggerProps.Render &
+  ContextMenuSubmenuTriggerProps.SuruUI &
+  ContextMenuSubmenuTriggerProps.BaseUI &
+  ContextMenuSubmenuTriggerProps.HTML;
 
 /**
  * サブメニューを開くコンテキストメニュー項目です。
@@ -1368,15 +1603,19 @@ export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProp
 export { ContextMenuSubmenuTrigger as SubmenuTrigger };
 
 export namespace SubmenuTrigger {
-  /**
-   * {@link ContextMenuSubmenuTriggerState}
-   */
   export type State = ContextMenuSubmenuTriggerState;
 
   /**
    * {@link ContextMenuSubmenuTriggerProps}
    */
-  export type Props = ContextMenuSubmenuTriggerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ContextMenuSubmenuTriggerProps.BaseUI;
+    export type HTML = ContextMenuSubmenuTriggerProps.HTML;
+    export type Render = ContextMenuSubmenuTriggerProps.Render;
+    export type SuruUI = ContextMenuSubmenuTriggerProps.SuruUI;
+  }
 
   /**
    * {@link ContextMenuSubmenuTriggerColor}
@@ -1402,10 +1641,26 @@ export namespace SubmenuTrigger {
  */
 export type ContextMenuGroupState = ContextMenu.Group.State;
 
+export namespace ContextMenuGroupProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.Group>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof ContextMenu.Group>
+  >;
+
+  export type Render = RenderProps<ContextMenuGroupState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ContextMenuGroup} に渡す props です。
  */
-export type ContextMenuGroupProps = React.ComponentProps<typeof ContextMenu.Group>;
+export type ContextMenuGroupProps = ContextMenuGroupProps.Render &
+  ContextMenuGroupProps.SuruUI &
+  ContextMenuGroupProps.BaseUI &
+  ContextMenuGroupProps.HTML;
 
 /**
  * 関連するコンテキストメニュー項目をまとめるグループ要素です。
@@ -1421,15 +1676,19 @@ export const ContextMenuGroup: IComponent<ContextMenuGroupProps> = function SuiC
 export { ContextMenuGroup as Group };
 
 export namespace Group {
-  /**
-   * {@link ContextMenuGroupState}
-   */
   export type State = ContextMenuGroupState;
 
   /**
    * {@link ContextMenuGroupProps}
    */
-  export type Props = ContextMenuGroupProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ContextMenuGroupProps.BaseUI;
+    export type HTML = ContextMenuGroupProps.HTML;
+    export type Render = ContextMenuGroupProps.Render;
+    export type SuruUI = ContextMenuGroupProps.SuruUI;
+  }
 }
 
 // GroupLabel
@@ -1440,10 +1699,26 @@ export namespace Group {
  */
 export type ContextMenuGroupLabelState = ContextMenu.GroupLabel.State;
 
+export namespace ContextMenuGroupLabelProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.GroupLabel>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof ContextMenu.GroupLabel>
+  >;
+
+  export type Render = RenderProps<ContextMenuGroupLabelState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ContextMenuGroupLabel} に渡す props です。
  */
-export type ContextMenuGroupLabelProps = React.ComponentProps<typeof ContextMenu.GroupLabel>;
+export type ContextMenuGroupLabelProps = ContextMenuGroupLabelProps.Render &
+  ContextMenuGroupLabelProps.SuruUI &
+  ContextMenuGroupLabelProps.BaseUI &
+  ContextMenuGroupLabelProps.HTML;
 
 /**
  * グループに自動的に対応付けられるラベル要素です。
@@ -1463,15 +1738,19 @@ export const ContextMenuGroupLabel: IComponent<ContextMenuGroupLabelProps> =
 export { ContextMenuGroupLabel as GroupLabel };
 
 export namespace GroupLabel {
-  /**
-   * {@link ContextMenuGroupLabelState}
-   */
   export type State = ContextMenuGroupLabelState;
 
   /**
    * {@link ContextMenuGroupLabelProps}
    */
-  export type Props = ContextMenuGroupLabelProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ContextMenuGroupLabelProps.BaseUI;
+    export type HTML = ContextMenuGroupLabelProps.HTML;
+    export type Render = ContextMenuGroupLabelProps.Render;
+    export type SuruUI = ContextMenuGroupLabelProps.SuruUI;
+  }
 }
 
 // RadioGroup
@@ -1492,10 +1771,26 @@ export type ContextMenuRadioGroupChangeEventReason = ContextMenu.RadioGroup.Chan
  */
 export type ContextMenuRadioGroupState = ContextMenu.RadioGroup.State;
 
+export namespace ContextMenuRadioGroupProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.RadioGroup>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof ContextMenu.RadioGroup>
+  >;
+
+  export type Render = RenderProps<ContextMenuRadioGroupState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ContextMenuRadioGroup} に渡す props です。
  */
-export type ContextMenuRadioGroupProps = React.ComponentProps<typeof ContextMenu.RadioGroup>;
+export type ContextMenuRadioGroupProps = ContextMenuRadioGroupProps.Render &
+  ContextMenuRadioGroupProps.SuruUI &
+  ContextMenuRadioGroupProps.BaseUI &
+  ContextMenuRadioGroupProps.HTML;
 
 /**
  * ラジオ項目をまとめるグループ要素です。
@@ -1519,15 +1814,19 @@ export const ContextMenuRadioGroup: IComponent<ContextMenuRadioGroupProps> =
 export { ContextMenuRadioGroup as RadioGroup };
 
 export namespace RadioGroup {
-  /**
-   * {@link ContextMenuRadioGroupState}
-   */
   export type State = ContextMenuRadioGroupState;
 
   /**
    * {@link ContextMenuRadioGroupProps}
    */
-  export type Props = ContextMenuRadioGroupProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ContextMenuRadioGroupProps.BaseUI;
+    export type HTML = ContextMenuRadioGroupProps.HTML;
+    export type Render = ContextMenuRadioGroupProps.Render;
+    export type SuruUI = ContextMenuRadioGroupProps.SuruUI;
+  }
 
   /**
    * {@link ContextMenuRadioGroupChangeEventDetails}
@@ -1567,39 +1866,66 @@ export type ContextMenuRadioItemVariant = Button.Root.Variant;
  */
 export type ContextMenuRadioItemState = Override<Button.Root.State, ContextMenu.RadioItem.State>;
 
+export namespace ContextMenuRadioItemProps {
+  export type BaseUI = Omit<
+    Override<
+      Omit<Button.ButtonRootProps, "type">,
+      Override<
+        React.ComponentProps<typeof ContextMenu.RadioItem>,
+        RenderProps<ContextMenuRadioItemState>
+      >
+    >,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Override<
+        Omit<Button.ButtonRootProps, "type">,
+        Override<
+          React.ComponentProps<typeof ContextMenu.RadioItem>,
+          RenderProps<ContextMenuRadioItemState>
+        >
+      >
+  >;
+
+  export type Render = RenderProps<ContextMenuRadioItemState>;
+
+  export type SuruUI = {
+    /**
+     * 項目の配色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: ContextMenuRadioItemColor | undefined;
+
+    /**
+     * 項目の角丸を指定します。
+     *
+     * 既定値は {@link ContextMenuRootProps.radius|radius} です。
+     */
+    radius?: ContextMenuRadioItemRadius | undefined;
+
+    /**
+     * チェック状態のときの外観を指定します。
+     *
+     * チェックされていないときは常に `"naked"` になります。
+     *
+     * 既定値は {@link ContextMenuRootProps.variant|variant} です。
+     */
+    variant?: ContextMenuRadioItemVariant | undefined;
+  };
+}
+
 /**
  * {@link ContextMenuRadioItem} に渡す props です。
  */
-export type ContextMenuRadioItemProps = Override<
-  Omit<Button.Root.Props, "type">,
-  Override<
-    React.ComponentProps<typeof ContextMenu.RadioItem>,
-    RenderProps<ContextMenuRadioItemState>
-  >
-> & {
-  /**
-   * 項目の配色を指定します。
-   *
-   * @default "grey"
-   */
-  color?: ContextMenuRadioItemColor | undefined;
-
-  /**
-   * 項目の角丸を指定します。
-   *
-   * 既定値は {@link ContextMenuRootProps.radius|radius} です。
-   */
-  radius?: ContextMenuRadioItemRadius | undefined;
-
-  /**
-   * チェック状態のときの外観を指定します。
-   *
-   * チェックされていないときは常に `"naked"` になります。
-   *
-   * 既定値は {@link ContextMenuRootProps.variant|variant} です。
-   */
-  variant?: ContextMenuRadioItemVariant | undefined;
-};
+export type ContextMenuRadioItemProps = ContextMenuRadioItemProps.Render &
+  ContextMenuRadioItemProps.SuruUI &
+  ContextMenuRadioItemProps.BaseUI &
+  ContextMenuRadioItemProps.HTML;
 
 /**
  * ラジオグループ内のコンテキストメニュー項目です。
@@ -1656,15 +1982,19 @@ export const ContextMenuRadioItem: IComponent<ContextMenuRadioItemProps> =
 export { ContextMenuRadioItem as RadioItem };
 
 export namespace RadioItem {
-  /**
-   * {@link ContextMenuRadioItemState}
-   */
   export type State = ContextMenuRadioItemState;
 
   /**
    * {@link ContextMenuRadioItemProps}
    */
-  export type Props = ContextMenuRadioItemProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ContextMenuRadioItemProps.BaseUI;
+    export type HTML = ContextMenuRadioItemProps.HTML;
+    export type Render = ContextMenuRadioItemProps.Render;
+    export type SuruUI = ContextMenuRadioItemProps.SuruUI;
+  }
 
   /**
    * {@link ContextMenuRadioItemColor}
@@ -1690,12 +2020,29 @@ export namespace RadioItem {
  */
 export type ContextMenuRadioItemIndicatorState = ContextMenu.RadioItemIndicator.State;
 
+export namespace ContextMenuRadioItemIndicatorProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof ContextMenu.RadioItemIndicator>,
+    keyof Render
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof React.ComponentProps<typeof ContextMenu.RadioItemIndicator>
+  >;
+
+  export type Render = RenderProps<ContextMenuRadioItemIndicatorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ContextMenuRadioItemIndicator} に渡す props です。
  */
-export type ContextMenuRadioItemIndicatorProps = React.ComponentProps<
-  typeof ContextMenu.RadioItemIndicator
->;
+export type ContextMenuRadioItemIndicatorProps = ContextMenuRadioItemIndicatorProps.Render &
+  ContextMenuRadioItemIndicatorProps.SuruUI &
+  ContextMenuRadioItemIndicatorProps.BaseUI &
+  ContextMenuRadioItemIndicatorProps.HTML;
 
 /**
  * 選択されたラジオ項目を示す要素です。
@@ -1721,15 +2068,19 @@ export const ContextMenuRadioItemIndicator: IComponent<ContextMenuRadioItemIndic
 export { ContextMenuRadioItemIndicator as RadioItemIndicator };
 
 export namespace RadioItemIndicator {
-  /**
-   * {@link ContextMenuRadioItemIndicatorState}
-   */
   export type State = ContextMenuRadioItemIndicatorState;
 
   /**
    * {@link ContextMenuRadioItemIndicatorProps}
    */
-  export type Props = ContextMenuRadioItemIndicatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ContextMenuRadioItemIndicatorProps.BaseUI;
+    export type HTML = ContextMenuRadioItemIndicatorProps.HTML;
+    export type Render = ContextMenuRadioItemIndicatorProps.Render;
+    export type SuruUI = ContextMenuRadioItemIndicatorProps.SuruUI;
+  }
 }
 
 // CheckboxItem
@@ -1772,39 +2123,66 @@ export type ContextMenuCheckboxItemState = Override<
   ContextMenu.CheckboxItem.State
 >;
 
+export namespace ContextMenuCheckboxItemProps {
+  export type BaseUI = Omit<
+    Override<
+      Omit<Button.ButtonRootProps, "type">,
+      Override<
+        React.ComponentProps<typeof ContextMenu.CheckboxItem>,
+        RenderProps<ContextMenuCheckboxItemState>
+      >
+    >,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Override<
+        Omit<Button.ButtonRootProps, "type">,
+        Override<
+          React.ComponentProps<typeof ContextMenu.CheckboxItem>,
+          RenderProps<ContextMenuCheckboxItemState>
+        >
+      >
+  >;
+
+  export type Render = RenderProps<ContextMenuCheckboxItemState>;
+
+  export type SuruUI = {
+    /**
+     * 項目の配色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: ContextMenuCheckboxItemColor | undefined;
+
+    /**
+     * 項目の角丸を指定します。
+     *
+     * 既定値は {@link ContextMenuRootProps.radius|radius} です。
+     */
+    radius?: ContextMenuCheckboxItemRadius | undefined;
+
+    /**
+     * チェック状態のときの外観を指定します。
+     *
+     * チェックされていないときは常に `"naked"` になります。
+     *
+     * 既定値は {@link ContextMenuRootProps.variant|variant} です。
+     */
+    variant?: ContextMenuCheckboxItemVariant | undefined;
+  };
+}
+
 /**
  * {@link ContextMenuCheckboxItem} に渡す props です。
  */
-export type ContextMenuCheckboxItemProps = Override<
-  Omit<Button.Root.Props, "type">,
-  Override<
-    React.ComponentProps<typeof ContextMenu.CheckboxItem>,
-    RenderProps<ContextMenuCheckboxItemState>
-  >
-> & {
-  /**
-   * 項目の配色を指定します。
-   *
-   * @default "grey"
-   */
-  color?: ContextMenuCheckboxItemColor | undefined;
-
-  /**
-   * 項目の角丸を指定します。
-   *
-   * 既定値は {@link ContextMenuRootProps.radius|radius} です。
-   */
-  radius?: ContextMenuCheckboxItemRadius | undefined;
-
-  /**
-   * チェック状態のときの外観を指定します。
-   *
-   * チェックされていないときは常に `"naked"` になります。
-   *
-   * 既定値は {@link ContextMenuRootProps.variant|variant} です。
-   */
-  variant?: ContextMenuCheckboxItemVariant | undefined;
-};
+export type ContextMenuCheckboxItemProps = ContextMenuCheckboxItemProps.Render &
+  ContextMenuCheckboxItemProps.SuruUI &
+  ContextMenuCheckboxItemProps.BaseUI &
+  ContextMenuCheckboxItemProps.HTML;
 
 /**
  * 設定をオンまたはオフにできるコンテキストメニュー項目です。
@@ -1861,15 +2239,19 @@ export const ContextMenuCheckboxItem: IComponent<ContextMenuCheckboxItemProps> =
 export { ContextMenuCheckboxItem as CheckboxItem };
 
 export namespace CheckboxItem {
-  /**
-   * {@link ContextMenuCheckboxItemState}
-   */
   export type State = ContextMenuCheckboxItemState;
 
   /**
    * {@link ContextMenuCheckboxItemProps}
    */
-  export type Props = ContextMenuCheckboxItemProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ContextMenuCheckboxItemProps.BaseUI;
+    export type HTML = ContextMenuCheckboxItemProps.HTML;
+    export type Render = ContextMenuCheckboxItemProps.Render;
+    export type SuruUI = ContextMenuCheckboxItemProps.SuruUI;
+  }
 
   /**
    * {@link ContextMenuCheckboxItemChangeEventDetails}
@@ -1905,12 +2287,29 @@ export namespace CheckboxItem {
  */
 export type ContextMenuCheckboxItemIndicatorState = ContextMenu.CheckboxItemIndicator.State;
 
+export namespace ContextMenuCheckboxItemIndicatorProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof ContextMenu.CheckboxItemIndicator>,
+    keyof Render
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof React.ComponentProps<typeof ContextMenu.CheckboxItemIndicator>
+  >;
+
+  export type Render = RenderProps<ContextMenuCheckboxItemIndicatorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ContextMenuCheckboxItemIndicator} に渡す props です。
  */
-export type ContextMenuCheckboxItemIndicatorProps = React.ComponentProps<
-  typeof ContextMenu.CheckboxItemIndicator
->;
+export type ContextMenuCheckboxItemIndicatorProps = ContextMenuCheckboxItemIndicatorProps.Render &
+  ContextMenuCheckboxItemIndicatorProps.SuruUI &
+  ContextMenuCheckboxItemIndicatorProps.BaseUI &
+  ContextMenuCheckboxItemIndicatorProps.HTML;
 
 /**
  * チェックされた項目を示す要素です。
@@ -1935,15 +2334,19 @@ export const ContextMenuCheckboxItemIndicator: IComponent<ContextMenuCheckboxIte
 export { ContextMenuCheckboxItemIndicator as CheckboxItemIndicator };
 
 export namespace CheckboxItemIndicator {
-  /**
-   * {@link ContextMenuCheckboxItemIndicatorState}
-   */
   export type State = ContextMenuCheckboxItemIndicatorState;
 
   /**
    * {@link ContextMenuCheckboxItemIndicatorProps}
    */
-  export type Props = ContextMenuCheckboxItemIndicatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ContextMenuCheckboxItemIndicatorProps.BaseUI;
+    export type HTML = ContextMenuCheckboxItemIndicatorProps.HTML;
+    export type Render = ContextMenuCheckboxItemIndicatorProps.Render;
+    export type SuruUI = ContextMenuCheckboxItemIndicatorProps.SuruUI;
+  }
 }
 
 // Separator
@@ -1954,10 +2357,26 @@ export namespace CheckboxItemIndicator {
  */
 export type ContextMenuSeparatorState = ContextMenu.Separator.State;
 
+export namespace ContextMenuSeparatorProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.Separator>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof ContextMenu.Separator>
+  >;
+
+  export type Render = RenderProps<ContextMenuSeparatorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ContextMenuSeparator} に渡す props です。
  */
-export type ContextMenuSeparatorProps = React.ComponentProps<typeof ContextMenu.Separator>;
+export type ContextMenuSeparatorProps = ContextMenuSeparatorProps.Render &
+  ContextMenuSeparatorProps.SuruUI &
+  ContextMenuSeparatorProps.BaseUI &
+  ContextMenuSeparatorProps.HTML;
 
 /**
  * コンテキストメニュー項目を区切る要素です。
@@ -1977,13 +2396,17 @@ export const ContextMenuSeparator: IComponent<ContextMenuSeparatorProps> =
 export { ContextMenuSeparator as Separator };
 
 export namespace Separator {
-  /**
-   * {@link ContextMenuSeparatorState}
-   */
   export type State = ContextMenuSeparatorState;
 
   /**
    * {@link ContextMenuSeparatorProps}
    */
-  export type Props = ContextMenuSeparatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ContextMenuSeparatorProps.BaseUI;
+    export type HTML = ContextMenuSeparatorProps.HTML;
+    export type Render = ContextMenuSeparatorProps.Render;
+    export type SuruUI = ContextMenuSeparatorProps.SuruUI;
+  }
 }

@@ -2,6 +2,7 @@ import { RadioGroup } from "@base-ui/react/radio-group";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
 import type { RadioRootRadius, RadioRootVariant } from "../radio/radio.parts.jsx";
@@ -188,62 +189,78 @@ export type RadioGroupRootVariant = RadioRootVariant;
  */
 export type RadioGroupRootState = RadioGroup.State;
 
+export namespace RadioGroupRootProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof RadioGroup>, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof RadioGroup>
+  >;
+
+  export type Render = RenderProps<RadioGroupRootState>;
+
+  export type SuruUI = {
+    /**
+     * ラジオボタンの配色を指定します。
+     *
+     * グループ内のラジオボタンより優先されます。
+     *
+     * @default "grey"
+     */
+    color?: RadioGroupRootColor | undefined;
+
+    /**
+     * ラジオボタン群の向きを指定します。
+     *
+     * @default "vertical"
+     */
+    orientation?: RadioGroupRootOrientation | undefined;
+
+    /**
+     * ラジオボタンに枠線を表示するかどうかを指定します。
+     *
+     * グループ内のラジオボタンより優先されます。
+     *
+     * 既定値は {@link RadioGroupRootProps.variant|variant} が `"naked"` かどうかです。
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * ラジオボタンの角丸を指定します。
+     *
+     * グループ内のラジオボタンより優先されます。
+     *
+     * @default "full"
+     */
+    radius?: RadioGroupRootRadius | undefined;
+
+    /**
+     * ラジオボタンの大きさを指定します。
+     *
+     * グループ内のラジオボタンより優先されます。
+     *
+     * @default "md"
+     */
+    size?: RadioGroupRootSize | undefined;
+
+    /**
+     * ラジオボタンの主な外観を指定します。
+     *
+     * グループ内のラジオボタンより優先されます。
+     *
+     * @default "naked"
+     */
+    variant?: RadioGroupRootVariant | undefined;
+  };
+}
+
 /**
  * {@link RadioGroupRoot} に渡す props です。
  */
-export type RadioGroupRootProps = React.ComponentProps<typeof RadioGroup> & {
-  /**
-   * ラジオボタンの配色を指定します。
-   *
-   * グループ内のラジオボタンより優先されます。
-   *
-   * @default "grey"
-   */
-  color?: RadioGroupRootColor | undefined;
-
-  /**
-   * ラジオボタン群の向きを指定します。
-   *
-   * @default "vertical"
-   */
-  orientation?: RadioGroupRootOrientation | undefined;
-
-  /**
-   * ラジオボタンに枠線を表示するかどうかを指定します。
-   *
-   * グループ内のラジオボタンより優先されます。
-   *
-   * 既定値は {@link RadioGroupRootProps.variant|variant} が `"naked"` かどうかです。
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * ラジオボタンの角丸を指定します。
-   *
-   * グループ内のラジオボタンより優先されます。
-   *
-   * @default "full"
-   */
-  radius?: RadioGroupRootRadius | undefined;
-
-  /**
-   * ラジオボタンの大きさを指定します。
-   *
-   * グループ内のラジオボタンより優先されます。
-   *
-   * @default "md"
-   */
-  size?: RadioGroupRootSize | undefined;
-
-  /**
-   * ラジオボタンの主な外観を指定します。
-   *
-   * グループ内のラジオボタンより優先されます。
-   *
-   * @default "naked"
-   */
-  variant?: RadioGroupRootVariant | undefined;
-};
+export type RadioGroupRootProps = RadioGroupRootProps.Render &
+  RadioGroupRootProps.SuruUI &
+  RadioGroupRootProps.BaseUI &
+  RadioGroupRootProps.HTML;
 
 /**
  * ラジオボタングループのルートコンポーネントです。
@@ -302,7 +319,14 @@ export namespace Root {
   /**
    * {@link RadioGroupRootProps}
    */
-  export type Props = RadioGroupRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = RadioGroupRootProps.BaseUI;
+    export type HTML = RadioGroupRootProps.HTML;
+    export type Render = RadioGroupRootProps.Render;
+    export type SuruUI = RadioGroupRootProps.SuruUI;
+  }
 
   /**
    * {@link RadioGroupRootChangeEventDetails}

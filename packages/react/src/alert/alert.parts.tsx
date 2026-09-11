@@ -48,11 +48,12 @@ export type AlertRootVariant = "muted" | "naked" | "liquid";
  */
 export type AlertRootState = {};
 
-/**
- * {@link AlertRoot} に渡す props です。
- */
-export type AlertRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<AlertRootState> & {
+export namespace AlertRootProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<AlertRootState>;
+
+  export type SuruUI = {
     /**
      * アラートの色を指定します。
      *
@@ -88,6 +89,12 @@ export type AlertRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps
      */
     variant?: AlertRootVariant | undefined;
   };
+}
+
+/**
+ * {@link AlertRoot} に渡す props です。
+ */
+export type AlertRootProps = AlertRootProps.Render & AlertRootProps.SuruUI & AlertRootProps.HTML;
 
 /**
  * アラートのルートコンポーネントです。
@@ -138,7 +145,13 @@ export namespace Root {
   /**
    * {@link AlertRootProps}
    */
-  export type Props = AlertRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = AlertRootProps.HTML;
+    export type Render = AlertRootProps.Render;
+    export type SuruUI = AlertRootProps.SuruUI;
+  }
 
   /**
    * {@link AlertRootColor}
@@ -169,11 +182,18 @@ export namespace Root {
  */
 export type AlertIconState = {};
 
+export namespace AlertIconProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<AlertIconState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AlertIcon} に渡す props です。
  */
-export type AlertIconProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<AlertIconState>;
+export type AlertIconProps = AlertIconProps.Render & AlertIconProps.SuruUI & AlertIconProps.HTML;
 
 /**
  * アラートの状態を視覚的に示すインジケーターコンポーネントです。
@@ -206,7 +226,13 @@ export namespace Icon {
   /**
    * {@link AlertIconProps}
    */
-  export type Props = AlertIconProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = AlertIconProps.HTML;
+    export type Render = AlertIconProps.Render;
+    export type SuruUI = AlertIconProps.SuruUI;
+  }
 }
 
 // Title
@@ -217,11 +243,20 @@ export namespace Icon {
  */
 export type AlertTitleState = {};
 
+export namespace AlertTitleProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<AlertTitleState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AlertTitle} に渡す props です。
  */
-export type AlertTitleProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<AlertTitleState>;
+export type AlertTitleProps = AlertTitleProps.Render &
+  AlertTitleProps.SuruUI &
+  AlertTitleProps.HTML;
 
 /**
  * アラートのタイトルを表示するコンポーネントです。
@@ -249,7 +284,13 @@ export namespace Title {
   /**
    * {@link AlertTitleProps}
    */
-  export type Props = AlertTitleProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = AlertTitleProps.HTML;
+    export type Render = AlertTitleProps.Render;
+    export type SuruUI = AlertTitleProps.SuruUI;
+  }
 }
 
 // Content
@@ -260,11 +301,20 @@ export namespace Title {
  */
 export type AlertContentState = {};
 
+export namespace AlertContentProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<AlertContentState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AlertContent} に渡す props です。
  */
-export type AlertContentProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<AlertContentState>;
+export type AlertContentProps = AlertContentProps.Render &
+  AlertContentProps.SuruUI &
+  AlertContentProps.HTML;
 
 /**
  * アラートのメッセージをまとめるコンテンツコンポーネントです。
@@ -292,7 +342,13 @@ export namespace Content {
   /**
    * {@link AlertContentProps}
    */
-  export type Props = AlertContentProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = AlertContentProps.HTML;
+    export type Render = AlertContentProps.Render;
+    export type SuruUI = AlertContentProps.SuruUI;
+  }
 }
 
 // Actions
@@ -303,11 +359,20 @@ export namespace Content {
  */
 export type AlertActionsState = {};
 
+export namespace AlertActionsProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<AlertActionsState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AlertActions} に渡す props です。
  */
-export type AlertActionsProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<AlertActionsState>;
+export type AlertActionsProps = AlertActionsProps.Render &
+  AlertActionsProps.SuruUI &
+  AlertActionsProps.HTML;
 
 /**
  * アラートの操作ボタンを右寄せでまとめるコンポーネントです。
@@ -335,5 +400,11 @@ export namespace Actions {
   /**
    * {@link AlertActionsProps}
    */
-  export type Props = AlertActionsProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = AlertActionsProps.HTML;
+    export type Render = AlertActionsProps.Render;
+    export type SuruUI = AlertActionsProps.SuruUI;
+  }
 }

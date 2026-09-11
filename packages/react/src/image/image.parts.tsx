@@ -37,11 +37,12 @@ export type ImageRootRadius = "none" | Size | "full";
  */
 export type ImageRootState = {};
 
-/**
- * {@link ImageRoot} に渡す props です。
- */
-export type ImageRootProps = Omit<React.ComponentProps<"img">, keyof RenderProps> &
-  RenderProps<ImageRootState> & {
+export namespace ImageRootProps {
+  export type HTML = Omit<React.ComponentProps<"img">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<ImageRootState>;
+
+  export type SuruUI = {
     /**
      * 画像の表示方法 (`object-fit`) を指定します。
      *
@@ -56,6 +57,12 @@ export type ImageRootProps = Omit<React.ComponentProps<"img">, keyof RenderProps
      */
     radius?: ImageRootRadius | undefined;
   };
+}
+
+/**
+ * {@link ImageRoot} に渡す props です。
+ */
+export type ImageRootProps = ImageRootProps.Render & ImageRootProps.SuruUI & ImageRootProps.HTML;
 
 /**
  * 画像のルートコンポーネントです。
@@ -99,7 +106,13 @@ export namespace Root {
   /**
    * {@link ImageRootProps}
    */
-  export type Props = ImageRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = ImageRootProps.HTML;
+    export type Render = ImageRootProps.Render;
+    export type SuruUI = ImageRootProps.SuruUI;
+  }
 
   /**
    * {@link ImageRootFit}

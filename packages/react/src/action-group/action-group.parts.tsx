@@ -175,13 +175,12 @@ export type ActionGroupRootVariant = ColorTemplate;
  */
 export type ActionGroupRootState = {};
 
-/**
- * {@link ActionGroupRoot} に渡す props です。
- *
- * グループに指定したスタイルプロパティーは、グループアイテムの指定より優先されます。
- */
-export type ActionGroupRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<ActionGroupRootState> & {
+export namespace ActionGroupRootProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<ActionGroupRootState>;
+
+  export type SuruUI = {
     /**
      * グループアイテムの色を指定します。
      *
@@ -222,6 +221,16 @@ export type ActionGroupRootProps = Omit<React.ComponentProps<"div">, keyof Rende
      */
     variant?: ActionGroupRootVariant | undefined;
   };
+}
+
+/**
+ * {@link ActionGroupRoot} に渡す props です。
+ *
+ * グループに指定したスタイルプロパティーは、グループアイテムの指定より優先されます。
+ */
+export type ActionGroupRootProps = ActionGroupRootProps.Render &
+  ActionGroupRootProps.SuruUI &
+  ActionGroupRootProps.HTML;
 
 /**
  * アクションをグループ化するルート要素です。
@@ -286,7 +295,13 @@ export namespace Root {
   /**
    * {@link ActionGroupRootProps}
    */
-  export type Props = ActionGroupRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = ActionGroupRootProps.HTML;
+    export type Render = ActionGroupRootProps.Render;
+    export type SuruUI = ActionGroupRootProps.SuruUI;
+  }
 
   /**
    * {@link ActionGroupRootColor}
@@ -322,19 +337,25 @@ export namespace Root {
  */
 export type ActionGroupSeparatorState = {};
 
-/**
- * {@link ActionGroupSeparator} に渡す props です。
- */
-export type ActionGroupSeparatorProps = Omit<
-  React.ComponentProps<"div">,
-  keyof RenderProps | "role"
-> &
-  RenderProps<ActionGroupSeparatorState> & {
+export namespace ActionGroupSeparatorProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI | "role">;
+
+  export type Render = RenderProps<ActionGroupSeparatorState>;
+
+  export type SuruUI = {
     /**
      * 区切り線の向きを指定します。省略時は親 ActionGroup の向きを使用します。
      */
     orientation?: ActionGroupRootOrientation | undefined;
   };
+}
+
+/**
+ * {@link ActionGroupSeparator} に渡す props です。
+ */
+export type ActionGroupSeparatorProps = ActionGroupSeparatorProps.Render &
+  ActionGroupSeparatorProps.SuruUI &
+  ActionGroupSeparatorProps.HTML;
 
 /**
  * ActionGroup 内のアイテムを区切る要素です。
@@ -378,5 +399,11 @@ export namespace Separator {
   /**
    * {@link ActionGroupSeparatorProps}
    */
-  export type Props = ActionGroupSeparatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = ActionGroupSeparatorProps.HTML;
+    export type Render = ActionGroupSeparatorProps.Render;
+    export type SuruUI = ActionGroupSeparatorProps.SuruUI;
+  }
 }

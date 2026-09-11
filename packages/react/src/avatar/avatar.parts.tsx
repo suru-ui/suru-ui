@@ -2,6 +2,7 @@ import { Avatar } from "@base-ui/react/avatar";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import type { RenderProps } from "../_use-render.js";
 import { useAvatarGroupContext } from "../avatar-group/avatar-group.parts.jsx";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
@@ -41,31 +42,47 @@ export type AvatarRootSize = Size;
  */
 export type AvatarRootState = Avatar.Root.State;
 
+export namespace AvatarRootProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Avatar.Root>, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Avatar.Root>
+  >;
+
+  export type Render = RenderProps<AvatarRootState>;
+
+  export type SuruUI = {
+    /**
+     * アバターの色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: AvatarRootColor | undefined;
+
+    /**
+     * アバターの角丸を指定します。
+     *
+     * @default "full"
+     */
+    radius?: AvatarRootRadius | undefined;
+
+    /**
+     * アバターの大きさを指定します。
+     *
+     * @default "md"
+     */
+    size?: AvatarRootSize | undefined;
+  };
+}
+
 /**
  * {@link AvatarRoot} に渡す props です。
  */
-export type AvatarRootProps = React.ComponentProps<typeof Avatar.Root> & {
-  /**
-   * アバターの色を指定します。
-   *
-   * @default "grey"
-   */
-  color?: AvatarRootColor | undefined;
-
-  /**
-   * アバターの角丸を指定します。
-   *
-   * @default "full"
-   */
-  radius?: AvatarRootRadius | undefined;
-
-  /**
-   * アバターの大きさを指定します。
-   *
-   * @default "md"
-   */
-  size?: AvatarRootSize | undefined;
-};
+export type AvatarRootProps = AvatarRootProps.Render &
+  AvatarRootProps.SuruUI &
+  AvatarRootProps.BaseUI &
+  AvatarRootProps.HTML;
 
 /**
  * アバターのルートコンポーネントです。
@@ -111,7 +128,14 @@ export namespace Root {
   /**
    * {@link AvatarRootProps}
    */
-  export type Props = AvatarRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AvatarRootProps.BaseUI;
+    export type HTML = AvatarRootProps.HTML;
+    export type Render = AvatarRootProps.Render;
+    export type SuruUI = AvatarRootProps.SuruUI;
+  }
 
   /**
    * {@link AvatarRootColor}
@@ -137,10 +161,26 @@ export namespace Root {
  */
 export type AvatarImageState = Avatar.Image.State;
 
+export namespace AvatarImageProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Avatar.Image>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"img">,
+    keyof Render | keyof React.ComponentProps<typeof Avatar.Image>
+  >;
+
+  export type Render = RenderProps<AvatarImageState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AvatarImage} に渡す props です。
  */
-export type AvatarImageProps = React.ComponentProps<typeof Avatar.Image>;
+export type AvatarImageProps = AvatarImageProps.Render &
+  AvatarImageProps.SuruUI &
+  AvatarImageProps.BaseUI &
+  AvatarImageProps.HTML;
 
 /**
  * アバターの画像コンポーネントです。
@@ -164,7 +204,14 @@ export namespace Image {
   /**
    * {@link AvatarImageProps}
    */
-  export type Props = AvatarImageProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AvatarImageProps.BaseUI;
+    export type HTML = AvatarImageProps.HTML;
+    export type Render = AvatarImageProps.Render;
+    export type SuruUI = AvatarImageProps.SuruUI;
+  }
 }
 
 // Fallback
@@ -175,10 +222,26 @@ export namespace Image {
  */
 export type AvatarFallbackState = Avatar.Fallback.State;
 
+export namespace AvatarFallbackProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Avatar.Fallback>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof React.ComponentProps<typeof Avatar.Fallback>
+  >;
+
+  export type Render = RenderProps<AvatarFallbackState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AvatarFallback} に渡す props です。
  */
-export type AvatarFallbackProps = React.ComponentProps<typeof Avatar.Fallback>;
+export type AvatarFallbackProps = AvatarFallbackProps.Render &
+  AvatarFallbackProps.SuruUI &
+  AvatarFallbackProps.BaseUI &
+  AvatarFallbackProps.HTML;
 
 /**
  * アバターのフォールバックを表示するコンポーネントです。
@@ -200,5 +263,12 @@ export namespace Fallback {
   /**
    * {@link AvatarFallbackProps}
    */
-  export type Props = AvatarFallbackProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AvatarFallbackProps.BaseUI;
+    export type HTML = AvatarFallbackProps.HTML;
+    export type Render = AvatarFallbackProps.Render;
+    export type SuruUI = AvatarFallbackProps.SuruUI;
+  }
 }

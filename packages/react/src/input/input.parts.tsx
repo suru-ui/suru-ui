@@ -2,6 +2,7 @@ import { Input } from "@base-ui/react/input";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import type { RenderProps } from "../_use-render.js";
 import { useActionGroupContext } from "../action-group/action-group.parts.jsx";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
@@ -69,55 +70,73 @@ export type InputRootVariant = "naked" | "liquid";
  */
 export type InputRootState = Input.State;
 
+export namespace InputRootProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Input>,
+    keyof Render | keyof SuruUI | "children"
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"input">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Omit<React.ComponentProps<typeof Input>, "children" | "size" | "type">
+  >;
+
+  export type Render = RenderProps<InputRootState>;
+
+  export type SuruUI = {
+    /**
+     * フォーカス時に枠線へ適用する色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: InputRootColor | undefined;
+
+    /**
+     * 枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * テキスト入力欄の角丸を指定します。
+     *
+     * 既定値は {@link InputRootProps.size|size}
+     */
+    radius?: InputRootRadius | undefined;
+
+    /**
+     * テキスト入力欄のサイズを指定します。
+     *
+     * @default "md"
+     */
+    size?: InputRootSize | undefined;
+
+    /**
+     * 入力項目です。
+     *
+     * @default "text"
+     */
+    type?: InputRootType | undefined;
+
+    /**
+     * テキスト入力欄の主な外観を指定します。
+     *
+     * @default "liquid"
+     */
+    variant?: InputRootVariant | undefined;
+  };
+}
+
 /**
  * {@link InputRoot} に渡すプロパティーです。
  */
-export type InputRootProps = Omit<
-  React.ComponentProps<typeof Input>,
-  "children" | "size" | "type"
-> & {
-  /**
-   * フォーカス時に枠線へ適用する色を指定します。
-   *
-   * @default "grey"
-   */
-  color?: InputRootColor | undefined;
-
-  /**
-   * 枠線を表示するかどうかを指定します。
-   *
-   * @default false
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * テキスト入力欄の角丸を指定します。
-   *
-   * 既定値は {@link InputRootProps.size|size}
-   */
-  radius?: InputRootRadius | undefined;
-
-  /**
-   * テキスト入力欄のサイズを指定します。
-   *
-   * @default "md"
-   */
-  size?: InputRootSize | undefined;
-
-  /**
-   * 入力項目です。
-   *
-   * @default "text"
-   */
-  type?: InputRootType | undefined;
-
-  /**
-   * テキスト入力欄の主な外観を指定します。
-   *
-   * @default "liquid"
-   */
-  variant?: InputRootVariant | undefined;
-};
+export type InputRootProps = InputRootProps.Render &
+  InputRootProps.SuruUI &
+  InputRootProps.BaseUI &
+  InputRootProps.HTML;
 
 /**
  * テキスト入力欄のルートコンポーネントです。
@@ -177,7 +196,14 @@ export namespace Root {
   /**
    * {@link InputRootProps}
    */
-  export type Props = InputRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = InputRootProps.BaseUI;
+    export type HTML = InputRootProps.HTML;
+    export type Render = InputRootProps.Render;
+    export type SuruUI = InputRootProps.SuruUI;
+  }
 
   /**
    * {@link InputRootChangeEventDetails}

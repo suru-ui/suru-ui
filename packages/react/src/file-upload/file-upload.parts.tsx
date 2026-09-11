@@ -194,14 +194,12 @@ export type FileUploadRejectEventDetails = {
  */
 export type FileUploadRootState = {};
 
-/**
- * {@link FileUploadRoot} に渡す props です。
- */
-export type FileUploadRootProps = Omit<
-  React.ComponentProps<"div">,
-  keyof RenderProps | "defaultValue"
-> &
-  RenderProps<FileUploadRootState> & {
+export namespace FileUploadRootProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<FileUploadRootState>;
+
+  export type SuruUI = {
     /**
      * 選択できるファイルの種類を指定します。
      *
@@ -324,6 +322,14 @@ export type FileUploadRootProps = Omit<
      */
     variant?: FileUploadRootVariant | undefined;
   };
+}
+
+/**
+ * {@link FileUploadRoot} に渡す props です。
+ */
+export type FileUploadRootProps = FileUploadRootProps.Render &
+  FileUploadRootProps.SuruUI &
+  FileUploadRootProps.HTML;
 
 /**
  * ファイルアップロードのルートコンポーネントです。
@@ -477,7 +483,13 @@ export namespace Root {
   /**
    * {@link FileUploadRootProps}
    */
-  export type Props = FileUploadRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = FileUploadRootProps.HTML;
+    export type Render = FileUploadRootProps.Render;
+    export type SuruUI = FileUploadRootProps.SuruUI;
+  }
 
   /**
    * {@link FileUploadAcceptEventDetails}
@@ -528,16 +540,25 @@ export namespace Root {
  */
 export type FileUploadHiddenInputState = {};
 
+export namespace FileUploadHiddenInputProps {
+  export type HTML = Omit<
+    React.ComponentProps<"input">,
+    keyof Render | "accept" | "children" | "multiple" | "name" | "onChange" | "required" | "type"
+  >;
+
+  export type Render = RenderProps<FileUploadHiddenInputState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link FileUploadHiddenInput} に渡す props です。
  *
  * `type`、`accept`、`multiple`、`required`、`name`、`onChange` はルートの設定から自動的に与えられます。
  */
-export type FileUploadHiddenInputProps = Omit<
-  React.ComponentProps<"input">,
-  keyof RenderProps | "accept" | "children" | "multiple" | "name" | "onChange" | "required" | "type"
-> &
-  RenderProps<FileUploadHiddenInputState>;
+export type FileUploadHiddenInputProps = FileUploadHiddenInputProps.Render &
+  FileUploadHiddenInputProps.SuruUI &
+  FileUploadHiddenInputProps.HTML;
 
 /**
  * ファイル選択ダイアログの実体になる隠し input 要素です。
@@ -586,7 +607,13 @@ export namespace HiddenInput {
   /**
    * {@link FileUploadHiddenInputProps}
    */
-  export type Props = FileUploadHiddenInputProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = FileUploadHiddenInputProps.HTML;
+    export type Render = FileUploadHiddenInputProps.Render;
+    export type SuruUI = FileUploadHiddenInputProps.SuruUI;
+  }
 }
 
 // Trigger
@@ -597,16 +624,22 @@ export namespace HiddenInput {
  */
 export type FileUploadTriggerState = {};
 
+export namespace FileUploadTriggerProps {
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | "onClick" | "type">;
+
+  export type Render = RenderProps<FileUploadTriggerState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link FileUploadTrigger} に渡す props です。
  *
  * `disabled` を指定しない場合、{@link FileUploadRootProps.disabled|Root の disabled} に従います。
  */
-export type FileUploadTriggerProps = Omit<
-  React.ComponentProps<"button">,
-  keyof RenderProps | "onClick" | "type"
-> &
-  RenderProps<FileUploadTriggerState>;
+export type FileUploadTriggerProps = FileUploadTriggerProps.Render &
+  FileUploadTriggerProps.SuruUI &
+  FileUploadTriggerProps.HTML;
 
 /**
  * ファイル選択ダイアログを開くボタンです。
@@ -648,7 +681,13 @@ export namespace Trigger {
   /**
    * {@link FileUploadTriggerProps}
    */
-  export type Props = FileUploadTriggerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = FileUploadTriggerProps.HTML;
+    export type Render = FileUploadTriggerProps.Render;
+    export type SuruUI = FileUploadTriggerProps.SuruUI;
+  }
 }
 
 // Dropzone
@@ -664,17 +703,23 @@ export type FileUploadDropzoneState = {
   readonly dragging?: boolean;
 };
 
+export namespace FileUploadDropzoneProps {
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | "onClick" | "type">;
+
+  export type Render = RenderProps<FileUploadDropzoneState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link FileUploadDropzone} に渡す props です。
  *
  * クリックと Enter・Space キーでファイル選択ダイアログを開きます。
  * `disabled` を指定しない場合、{@link FileUploadRootProps.disabled|Root の disabled} に従います。
  */
-export type FileUploadDropzoneProps = Omit<
-  React.ComponentProps<"button">,
-  keyof RenderProps | "onClick" | "type"
-> &
-  RenderProps<FileUploadDropzoneState>;
+export type FileUploadDropzoneProps = FileUploadDropzoneProps.Render &
+  FileUploadDropzoneProps.SuruUI &
+  FileUploadDropzoneProps.HTML;
 
 /**
  * ドラッグ&ドロップを受け付ける領域です。
@@ -740,7 +785,13 @@ export namespace Dropzone {
   /**
    * {@link FileUploadDropzoneProps}
    */
-  export type Props = FileUploadDropzoneProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = FileUploadDropzoneProps.HTML;
+    export type Render = FileUploadDropzoneProps.Render;
+    export type SuruUI = FileUploadDropzoneProps.SuruUI;
+  }
 }
 
 // ClearTrigger
@@ -751,16 +802,22 @@ export namespace Dropzone {
  */
 export type FileUploadClearTriggerState = {};
 
+export namespace FileUploadClearTriggerProps {
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | "onClick" | "type">;
+
+  export type Render = RenderProps<FileUploadClearTriggerState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link FileUploadClearTrigger} に渡す props です。
  *
  * `disabled` を指定しない場合、ファイルが選択されていないときと {@link FileUploadRootProps.disabled|Root の disabled} のときに無効化されます。
  */
-export type FileUploadClearTriggerProps = Omit<
-  React.ComponentProps<"button">,
-  keyof RenderProps | "onClick" | "type"
-> &
-  RenderProps<FileUploadClearTriggerState>;
+export type FileUploadClearTriggerProps = FileUploadClearTriggerProps.Render &
+  FileUploadClearTriggerProps.SuruUI &
+  FileUploadClearTriggerProps.HTML;
 
 /**
  * 選択済みのファイルをすべて削除するボタンです。
@@ -804,7 +861,13 @@ export namespace ClearTrigger {
   /**
    * {@link FileUploadClearTriggerProps}
    */
-  export type Props = FileUploadClearTriggerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = FileUploadClearTriggerProps.HTML;
+    export type Render = FileUploadClearTriggerProps.Render;
+    export type SuruUI = FileUploadClearTriggerProps.SuruUI;
+  }
 }
 
 // ItemGroup
@@ -815,11 +878,20 @@ export namespace ClearTrigger {
  */
 export type FileUploadItemGroupState = {};
 
+export namespace FileUploadItemGroupProps {
+  export type HTML = Omit<React.ComponentProps<"ul">, keyof Render>;
+
+  export type Render = RenderProps<FileUploadItemGroupState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link FileUploadItemGroup} に渡す props です。
  */
-export type FileUploadItemGroupProps = Omit<React.ComponentProps<"ul">, keyof RenderProps> &
-  RenderProps<FileUploadItemGroupState>;
+export type FileUploadItemGroupProps = FileUploadItemGroupProps.Render &
+  FileUploadItemGroupProps.SuruUI &
+  FileUploadItemGroupProps.HTML;
 
 /**
  * 選択済みファイルの一覧を包むコンテナーです。
@@ -851,7 +923,13 @@ export namespace ItemGroup {
   /**
    * {@link FileUploadItemGroupProps}
    */
-  export type Props = FileUploadItemGroupProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = FileUploadItemGroupProps.HTML;
+    export type Render = FileUploadItemGroupProps.Render;
+    export type SuruUI = FileUploadItemGroupProps.SuruUI;
+  }
 }
 
 // ItemContext
@@ -903,16 +981,25 @@ export { FileUploadItemContext as ItemContext, useFileUploadItemContext as useIt
  */
 export type FileUploadItemState = {};
 
-/**
- * {@link FileUploadItem} に渡す props です。
- */
-export type FileUploadItemProps = Omit<React.ComponentProps<"li">, keyof RenderProps> &
-  RenderProps<FileUploadItemState> & {
+export namespace FileUploadItemProps {
+  export type HTML = Omit<React.ComponentProps<"li">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<FileUploadItemState>;
+
+  export type SuruUI = {
     /**
      * 表示するファイルを指定します。
      */
     readonly file: File;
   };
+}
+
+/**
+ * {@link FileUploadItem} に渡す props です。
+ */
+export type FileUploadItemProps = FileUploadItemProps.Render &
+  FileUploadItemProps.SuruUI &
+  FileUploadItemProps.HTML;
 
 /**
  * 選択済みファイル 1 件を表示する項目です。
@@ -949,7 +1036,13 @@ export namespace Item {
   /**
    * {@link FileUploadItemProps}
    */
-  export type Props = FileUploadItemProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = FileUploadItemProps.HTML;
+    export type Render = FileUploadItemProps.Render;
+    export type SuruUI = FileUploadItemProps.SuruUI;
+  }
 }
 
 // ItemName
@@ -960,11 +1053,20 @@ export namespace Item {
  */
 export type FileUploadItemNameState = {};
 
+export namespace FileUploadItemNameProps {
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
+
+  export type Render = RenderProps<FileUploadItemNameState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link FileUploadItemName} に渡す props です。
  */
-export type FileUploadItemNameProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
-  RenderProps<FileUploadItemNameState>;
+export type FileUploadItemNameProps = FileUploadItemNameProps.Render &
+  FileUploadItemNameProps.SuruUI &
+  FileUploadItemNameProps.HTML;
 
 /**
  * ファイル名を表示するコンポーネントです。
@@ -999,7 +1101,13 @@ export namespace ItemName {
   /**
    * {@link FileUploadItemNameProps}
    */
-  export type Props = FileUploadItemNameProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = FileUploadItemNameProps.HTML;
+    export type Render = FileUploadItemNameProps.Render;
+    export type SuruUI = FileUploadItemNameProps.SuruUI;
+  }
 }
 
 // ItemSizeText
@@ -1010,11 +1118,20 @@ export namespace ItemName {
  */
 export type FileUploadItemSizeTextState = {};
 
+export namespace FileUploadItemSizeTextProps {
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
+
+  export type Render = RenderProps<FileUploadItemSizeTextState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link FileUploadItemSizeText} に渡す props です。
  */
-export type FileUploadItemSizeTextProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
-  RenderProps<FileUploadItemSizeTextState>;
+export type FileUploadItemSizeTextProps = FileUploadItemSizeTextProps.Render &
+  FileUploadItemSizeTextProps.SuruUI &
+  FileUploadItemSizeTextProps.HTML;
 
 /**
  * ファイルサイズを人間が読める形式で表示するコンポーネントです。
@@ -1049,7 +1166,13 @@ export namespace ItemSizeText {
   /**
    * {@link FileUploadItemSizeTextProps}
    */
-  export type Props = FileUploadItemSizeTextProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = FileUploadItemSizeTextProps.HTML;
+    export type Render = FileUploadItemSizeTextProps.Render;
+    export type SuruUI = FileUploadItemSizeTextProps.SuruUI;
+  }
 }
 
 // ItemDeleteTrigger
@@ -1060,16 +1183,22 @@ export namespace ItemSizeText {
  */
 export type FileUploadItemDeleteTriggerState = {};
 
+export namespace FileUploadItemDeleteTriggerProps {
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | "onClick" | "type">;
+
+  export type Render = RenderProps<FileUploadItemDeleteTriggerState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link FileUploadItemDeleteTrigger} に渡す props です。
  *
  * `disabled` を指定しない場合、{@link FileUploadRootProps.disabled|Root の disabled} に従います。
  */
-export type FileUploadItemDeleteTriggerProps = Omit<
-  React.ComponentProps<"button">,
-  keyof RenderProps | "onClick" | "type"
-> &
-  RenderProps<FileUploadItemDeleteTriggerState>;
+export type FileUploadItemDeleteTriggerProps = FileUploadItemDeleteTriggerProps.Render &
+  FileUploadItemDeleteTriggerProps.SuruUI &
+  FileUploadItemDeleteTriggerProps.HTML;
 
 /**
  * 対象のファイルを選択済みリストから削除するボタンです。
@@ -1112,7 +1241,13 @@ export namespace ItemDeleteTrigger {
   /**
    * {@link FileUploadItemDeleteTriggerProps}
    */
-  export type Props = FileUploadItemDeleteTriggerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = FileUploadItemDeleteTriggerProps.HTML;
+    export type Render = FileUploadItemDeleteTriggerProps.Render;
+    export type SuruUI = FileUploadItemDeleteTriggerProps.SuruUI;
+  }
 }
 
 // Helpers

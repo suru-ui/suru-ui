@@ -1,6 +1,7 @@
 import { ScrollArea as BaseScrollArea } from "@base-ui/react/scroll-area";
 import * as React from "react";
 
+import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
@@ -14,10 +15,26 @@ import "./scroll-area.css";
  */
 export type ScrollAreaRootState = BaseScrollArea.Root.State;
 
+export namespace ScrollAreaRootProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseScrollArea.Root>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof BaseScrollArea.Root>
+  >;
+
+  export type Render = RenderProps<ScrollAreaRootState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ScrollAreaRoot} に渡す props です。
  */
-export type ScrollAreaRootProps = React.ComponentProps<typeof BaseScrollArea.Root>;
+export type ScrollAreaRootProps = ScrollAreaRootProps.Render &
+  ScrollAreaRootProps.SuruUI &
+  ScrollAreaRootProps.BaseUI &
+  ScrollAreaRootProps.HTML;
 
 /**
  * スクロール領域の各パーツをまとめるルート要素です。
@@ -55,7 +72,14 @@ export namespace Root {
   /**
    * {@link ScrollAreaRootProps}
    */
-  export type Props = ScrollAreaRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ScrollAreaRootProps.BaseUI;
+    export type HTML = ScrollAreaRootProps.HTML;
+    export type Render = ScrollAreaRootProps.Render;
+    export type SuruUI = ScrollAreaRootProps.SuruUI;
+  }
 }
 
 // Viewport
@@ -66,10 +90,26 @@ export namespace Root {
  */
 export type ScrollAreaViewportState = BaseScrollArea.Viewport.State;
 
+export namespace ScrollAreaViewportProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseScrollArea.Viewport>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof BaseScrollArea.Viewport>
+  >;
+
+  export type Render = RenderProps<ScrollAreaViewportState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ScrollAreaViewport} に渡す props です。
  */
-export type ScrollAreaViewportProps = React.ComponentProps<typeof BaseScrollArea.Viewport>;
+export type ScrollAreaViewportProps = ScrollAreaViewportProps.Render &
+  ScrollAreaViewportProps.SuruUI &
+  ScrollAreaViewportProps.BaseUI &
+  ScrollAreaViewportProps.HTML;
 
 /**
  * コンテンツをクリップし、スクロール操作を受け付けるビューポート要素です。
@@ -96,7 +136,14 @@ export namespace Viewport {
   /**
    * {@link ScrollAreaViewportProps}
    */
-  export type Props = ScrollAreaViewportProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ScrollAreaViewportProps.BaseUI;
+    export type HTML = ScrollAreaViewportProps.HTML;
+    export type Render = ScrollAreaViewportProps.Render;
+    export type SuruUI = ScrollAreaViewportProps.SuruUI;
+  }
 }
 
 // Content
@@ -107,10 +154,26 @@ export namespace Viewport {
  */
 export type ScrollAreaContentState = BaseScrollArea.Content.State;
 
+export namespace ScrollAreaContentProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseScrollArea.Content>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof BaseScrollArea.Content>
+  >;
+
+  export type Render = RenderProps<ScrollAreaContentState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ScrollAreaContent} に渡す props です。
  */
-export type ScrollAreaContentProps = React.ComponentProps<typeof BaseScrollArea.Content>;
+export type ScrollAreaContentProps = ScrollAreaContentProps.Render &
+  ScrollAreaContentProps.SuruUI &
+  ScrollAreaContentProps.BaseUI &
+  ScrollAreaContentProps.HTML;
 
 /**
  * ビューポート内でスクロールされるコンテンツを保持する要素です。
@@ -135,7 +198,14 @@ export namespace Content {
   /**
    * {@link ScrollAreaContentProps}
    */
-  export type Props = ScrollAreaContentProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ScrollAreaContentProps.BaseUI;
+    export type HTML = ScrollAreaContentProps.HTML;
+    export type Render = ScrollAreaContentProps.Render;
+    export type SuruUI = ScrollAreaContentProps.SuruUI;
+  }
 }
 
 // Scrollbar
@@ -146,10 +216,26 @@ export namespace Content {
  */
 export type ScrollAreaScrollbarState = BaseScrollArea.Scrollbar.State;
 
+export namespace ScrollAreaScrollbarProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseScrollArea.Scrollbar>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof BaseScrollArea.Scrollbar>
+  >;
+
+  export type Render = RenderProps<ScrollAreaScrollbarState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ScrollAreaScrollbar} に渡す props です。
  */
-export type ScrollAreaScrollbarProps = React.ComponentProps<typeof BaseScrollArea.Scrollbar>;
+export type ScrollAreaScrollbarProps = ScrollAreaScrollbarProps.Render &
+  ScrollAreaScrollbarProps.SuruUI &
+  ScrollAreaScrollbarProps.BaseUI &
+  ScrollAreaScrollbarProps.HTML;
 
 /**
  * スクロール可能な方向とスクロール位置を示すバー要素です。
@@ -183,7 +269,14 @@ export namespace Scrollbar {
   /**
    * {@link ScrollAreaScrollbarProps}
    */
-  export type Props = ScrollAreaScrollbarProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ScrollAreaScrollbarProps.BaseUI;
+    export type HTML = ScrollAreaScrollbarProps.HTML;
+    export type Render = ScrollAreaScrollbarProps.Render;
+    export type SuruUI = ScrollAreaScrollbarProps.SuruUI;
+  }
 }
 
 // Thumb
@@ -194,10 +287,26 @@ export namespace Scrollbar {
  */
 export type ScrollAreaThumbState = BaseScrollArea.Thumb.State;
 
+export namespace ScrollAreaThumbProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseScrollArea.Thumb>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof BaseScrollArea.Thumb>
+  >;
+
+  export type Render = RenderProps<ScrollAreaThumbState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ScrollAreaThumb} に渡す props です。
  */
-export type ScrollAreaThumbProps = React.ComponentProps<typeof BaseScrollArea.Thumb>;
+export type ScrollAreaThumbProps = ScrollAreaThumbProps.Render &
+  ScrollAreaThumbProps.SuruUI &
+  ScrollAreaThumbProps.BaseUI &
+  ScrollAreaThumbProps.HTML;
 
 /**
  * スクロール位置とスクロール可能な範囲を示す、スクロールバー内のつまみ要素です。
@@ -229,7 +338,14 @@ export namespace Thumb {
   /**
    * {@link ScrollAreaThumbProps}
    */
-  export type Props = ScrollAreaThumbProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ScrollAreaThumbProps.BaseUI;
+    export type HTML = ScrollAreaThumbProps.HTML;
+    export type Render = ScrollAreaThumbProps.Render;
+    export type SuruUI = ScrollAreaThumbProps.SuruUI;
+  }
 }
 
 // Corner
@@ -240,10 +356,26 @@ export namespace Thumb {
  */
 export type ScrollAreaCornerState = BaseScrollArea.Corner.State;
 
+export namespace ScrollAreaCornerProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseScrollArea.Corner>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof BaseScrollArea.Corner>
+  >;
+
+  export type Render = RenderProps<ScrollAreaCornerState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ScrollAreaCorner} に渡す props です。
  */
-export type ScrollAreaCornerProps = React.ComponentProps<typeof BaseScrollArea.Corner>;
+export type ScrollAreaCornerProps = ScrollAreaCornerProps.Render &
+  ScrollAreaCornerProps.SuruUI &
+  ScrollAreaCornerProps.BaseUI &
+  ScrollAreaCornerProps.HTML;
 
 /**
  * 水平スクロールバーと垂直スクロールバーの交差部分を埋める要素です。
@@ -268,5 +400,12 @@ export namespace Corner {
   /**
    * {@link ScrollAreaCornerProps}
    */
-  export type Props = ScrollAreaCornerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = ScrollAreaCornerProps.BaseUI;
+    export type HTML = ScrollAreaCornerProps.HTML;
+    export type Render = ScrollAreaCornerProps.Render;
+    export type SuruUI = ScrollAreaCornerProps.SuruUI;
+  }
 }

@@ -145,79 +145,95 @@ export type ButtonRootVariant = ColorTemplate;
  */
 export type ButtonRootState = Button.State;
 
+export namespace ButtonRootProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Button>,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"button">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<ButtonRootState>;
+
+  export type SuruUI = {
+    /**
+     * ボタンの配色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: ButtonRootColor | undefined;
+
+    /**
+     * ボタンをメニューなどのリストアイテムとして使うかどうかを指定します。
+     *
+     * `true` の場合、左右の余白が狭くなり、内容が両端揃え (`space-between`) になります。
+     *
+     * @default false
+     */
+    item?: boolean | undefined;
+
+    /**
+     * ボタンの背景色を控えめにします。
+     *
+     * @default false
+     */
+    muted?: boolean | undefined;
+
+    /**
+     * ボタンに枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * ボタンを保留状態にするかどうかを指定します。
+     *
+     * `true` の場合、ボタンの押下が無効化され、{@link ButtonPending} スロットが表示されます。`disabled` を `true` にしない限り、デフォルトでフォーカスが維持されます。
+     *
+     * @default false
+     */
+    pending?: boolean | undefined;
+
+    /**
+     * ボタンの角丸の大きさを指定します。
+     *
+     * 既定値は {@link ButtonRootProps.size|size}
+     */
+    radius?: ButtonRootRadius | undefined;
+
+    /**
+     * ボタンの大きさを指定します。
+     *
+     * @default "md"
+     */
+    size?: ButtonRootSize | undefined;
+
+    /**
+     * ボタンを正方形にするかどうかを指定します。
+     *
+     * `true` の場合、幅と高さが等しくなり、アイコンボタンなどに適した形状になります。
+     *
+     * @default false
+     */
+    squared?: boolean | undefined;
+
+    /**
+     * ボタンの主な外観を指定します。
+     *
+     * @default "solid"
+     */
+    variant?: ButtonRootVariant | undefined;
+  };
+}
+
 /**
  * {@link ButtonRoot} に渡す props です。
  */
-export type ButtonRootProps = React.ComponentProps<typeof Button> & {
-  /**
-   * ボタンの配色を指定します。
-   *
-   * @default "grey"
-   */
-  color?: ButtonRootColor | undefined;
-
-  /**
-   * ボタンをメニューなどのリストアイテムとして使うかどうかを指定します。
-   *
-   * `true` の場合、左右の余白が狭くなり、内容が両端揃え (`space-between`) になります。
-   *
-   * @default false
-   */
-  item?: boolean | undefined;
-
-  /**
-   * ボタンの背景色を控えめにします。
-   *
-   * @default false
-   */
-  muted?: boolean | undefined;
-
-  /**
-   * ボタンに枠線を表示するかどうかを指定します。
-   *
-   * @default false
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * ボタンを保留状態にするかどうかを指定します。
-   *
-   * `true` の場合、ボタンの押下が無効化され、{@link ButtonPending} スロットが表示されます。`disabled` を `true` にしない限り、デフォルトでフォーカスが維持されます。
-   *
-   * @default false
-   */
-  pending?: boolean | undefined;
-
-  /**
-   * ボタンの角丸の大きさを指定します。
-   *
-   * 既定値は {@link ButtonRootProps.size|size}
-   */
-  radius?: ButtonRootRadius | undefined;
-
-  /**
-   * ボタンの大きさを指定します。
-   *
-   * @default "md"
-   */
-  size?: ButtonRootSize | undefined;
-
-  /**
-   * ボタンを正方形にするかどうかを指定します。
-   *
-   * `true` の場合、幅と高さが等しくなり、アイコンボタンなどに適した形状になります。
-   *
-   * @default false
-   */
-  squared?: boolean | undefined;
-
-  /**
-   * ボタンの主な外観を指定します。
-   *
-   * @default "solid"
-   */
-  variant?: ButtonRootVariant | undefined;
-};
+export type ButtonRootProps = ButtonRootProps.Render &
+  ButtonRootProps.SuruUI &
+  ButtonRootProps.BaseUI &
+  ButtonRootProps.HTML;
 
 /**
  * ボタンのルートコンポーネントです。
@@ -288,7 +304,29 @@ export namespace Root {
   /**
    * {@link ButtonRootProps}
    */
-  export type Props = ButtonRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link ButtonRootProps.BaseUI}
+     */
+    export type BaseUI = ButtonRootProps.BaseUI;
+
+    /**
+     * {@link ButtonRootProps.HTML}
+     */
+    export type HTML = ButtonRootProps.HTML;
+
+    /**
+     * {@link ButtonRootProps.Render}
+     */
+    export type Render = ButtonRootProps.Render;
+
+    /**
+     * {@link ButtonRootProps.SuruUI}
+     */
+    export type SuruUI = ButtonRootProps.SuruUI;
+  }
 
   /**
    * {@link ButtonRootColor}
@@ -319,11 +357,20 @@ export namespace Root {
  */
 export type ButtonContentState = ButtonContext;
 
+export namespace ButtonContentProps {
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
+
+  export type Render = RenderProps<ButtonContentState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ButtonContent} に渡す props です。
  */
-export type ButtonContentProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
-  RenderProps<ButtonContentState>;
+export type ButtonContentProps = ButtonContentProps.Render &
+  ButtonContentProps.SuruUI &
+  ButtonContentProps.HTML;
 
 /**
  * ボタンのコンテンツを表示するコンポーネントです。
@@ -346,15 +393,18 @@ export const ButtonContent: IComponent<ButtonContentProps> = function SuiButtonC
 export { ButtonContent as Content };
 
 export namespace Content {
-  /**
-   * {@link ButtonContentState}
-   */
   export type State = ButtonContentState;
 
   /**
    * {@link ButtonContentProps}
    */
-  export type Props = ButtonContentProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = ButtonContentProps.HTML;
+    export type Render = ButtonContentProps.Render;
+    export type SuruUI = ButtonContentProps.SuruUI;
+  }
 }
 
 // Pending
@@ -365,11 +415,12 @@ export namespace Content {
  */
 export type ButtonPendingState = ButtonContext;
 
-/**
- * {@link ButtonPending} に渡す props です。
- */
-export type ButtonPendingProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
-  RenderProps<ButtonPendingState> & {
+export namespace ButtonPendingProps {
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<ButtonPendingState>;
+
+  export type SuruUI = {
     /**
      * ボタンが保留状態でないときも DOM に保持するかどうかを指定します。
      *
@@ -384,6 +435,14 @@ export type ButtonPendingProps = Omit<React.ComponentProps<"span">, keyof Render
      */
     overlay?: boolean | undefined;
   };
+}
+
+/**
+ * {@link ButtonPending} に渡す props です。
+ */
+export type ButtonPendingProps = ButtonPendingProps.Render &
+  ButtonPendingProps.SuruUI &
+  ButtonPendingProps.HTML;
 
 /**
  * ボタンの保留状態を表示するコンポーネントです。
@@ -416,15 +475,18 @@ export const ButtonPending: IComponent<ButtonPendingProps> = function SuiButtonP
 export { ButtonPending as Pending };
 
 export namespace Pending {
-  /**
-   * {@link ButtonPendingState}
-   */
   export type State = ButtonPendingState;
 
   /**
    * {@link ButtonPendingProps}
    */
-  export type Props = ButtonPendingProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = ButtonPendingProps.HTML;
+    export type Render = ButtonPendingProps.Render;
+    export type SuruUI = ButtonPendingProps.SuruUI;
+  }
 }
 
 // CircularProgress
@@ -435,11 +497,12 @@ export namespace Pending {
  */
 export type ButtonCircularProgressState = ButtonCircularProgressContext;
 
-/**
- * {@link ButtonCircularProgress} に渡す props です。
- */
-export type ButtonCircularProgressProps = Omit<React.ComponentProps<"svg">, keyof RenderProps> &
-  RenderProps<ButtonCircularProgressState> & {
+export namespace ButtonCircularProgressProps {
+  export type HTML = Omit<React.ComponentProps<"svg">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<ButtonCircularProgressState>;
+
+  export type SuruUI = {
     /**
      * 不定モードで表示するかどうかを指定します。
      *
@@ -454,6 +517,14 @@ export type ButtonCircularProgressProps = Omit<React.ComponentProps<"svg">, keyo
      */
     percentage?: number | undefined;
   };
+}
+
+/**
+ * {@link ButtonCircularProgress} に渡す props です。
+ */
+export type ButtonCircularProgressProps = ButtonCircularProgressProps.Render &
+  ButtonCircularProgressProps.SuruUI &
+  ButtonCircularProgressProps.HTML;
 
 /**
  * 円形プログレスバーの SVG ルートコンポーネントです。
@@ -496,15 +567,18 @@ export const ButtonCircularProgress: IComponent<ButtonCircularProgressProps> =
 export { ButtonCircularProgress as CircularProgress };
 
 export namespace CircularProgress {
-  /**
-   * {@link ButtonCircularProgressState}
-   */
   export type State = ButtonCircularProgressState;
 
   /**
    * {@link ButtonCircularProgressProps}
    */
-  export type Props = ButtonCircularProgressProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = ButtonCircularProgressProps.HTML;
+    export type Render = ButtonCircularProgressProps.Render;
+    export type SuruUI = ButtonCircularProgressProps.SuruUI;
+  }
 }
 
 // CircularProgressTrack
@@ -515,14 +589,20 @@ export namespace CircularProgress {
  */
 export type ButtonCircularProgressTrackState = ButtonCircularProgressContext;
 
+export namespace ButtonCircularProgressTrackProps {
+  export type HTML = Omit<React.ComponentProps<"circle">, keyof Render>;
+
+  export type Render = RenderProps<ButtonCircularProgressTrackState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ButtonCircularProgressTrack} に渡す props です。
  */
-export type ButtonCircularProgressTrackProps = Omit<
-  React.ComponentProps<"circle">,
-  keyof RenderProps
-> &
-  RenderProps<ButtonCircularProgressTrackState>;
+export type ButtonCircularProgressTrackProps = ButtonCircularProgressTrackProps.Render &
+  ButtonCircularProgressTrackProps.SuruUI &
+  ButtonCircularProgressTrackProps.HTML;
 
 /**
  * 円形プログレスバーのトラック（背景の円弧）を描画するコンポーネントです。
@@ -560,15 +640,18 @@ export const ButtonCircularProgressTrack: IComponent<ButtonCircularProgressTrack
 export { ButtonCircularProgressTrack as CircularProgressTrack };
 
 export namespace CircularProgressTrack {
-  /**
-   * {@link ButtonCircularProgressTrackState}
-   */
   export type State = ButtonCircularProgressTrackState;
 
   /**
    * {@link ButtonCircularProgressTrackProps}
    */
-  export type Props = ButtonCircularProgressTrackProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = ButtonCircularProgressTrackProps.HTML;
+    export type Render = ButtonCircularProgressTrackProps.Render;
+    export type SuruUI = ButtonCircularProgressTrackProps.SuruUI;
+  }
 }
 
 // CircularProgressFill
@@ -579,14 +662,12 @@ export namespace CircularProgressTrack {
  */
 export type ButtonCircularProgressFillState = ButtonCircularProgressContext;
 
-/**
- * {@link ButtonCircularProgressFill} に渡す props です。
- */
-export type ButtonCircularProgressFillProps = Omit<
-  React.ComponentProps<"circle">,
-  keyof RenderProps | "strokeDashoffset"
-> &
-  RenderProps<ButtonCircularProgressFillState> & {
+export namespace ButtonCircularProgressFillProps {
+  export type HTML = Omit<React.ComponentProps<"circle">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<ButtonCircularProgressFillState>;
+
+  export type SuruUI = {
     /**
      * 円弧の開始位置のずれです。
      *
@@ -600,6 +681,14 @@ export type ButtonCircularProgressFillProps = Omit<
       | ((state: ButtonCircularProgressFillState) => string | number | undefined)
       | undefined;
   };
+}
+
+/**
+ * {@link ButtonCircularProgressFill} に渡す props です。
+ */
+export type ButtonCircularProgressFillProps = ButtonCircularProgressFillProps.Render &
+  ButtonCircularProgressFillProps.SuruUI &
+  ButtonCircularProgressFillProps.HTML;
 
 /**
  * 円形プログレスバーのフィル（進捗を表す円弧）を描画するコンポーネントです。
@@ -647,15 +736,18 @@ export const ButtonCircularProgressFill: IComponent<ButtonCircularProgressFillPr
 export { ButtonCircularProgressFill as CircularProgressFill };
 
 export namespace CircularProgressFill {
-  /**
-   * {@link ButtonCircularProgressFillState}
-   */
   export type State = ButtonCircularProgressFillState;
 
   /**
    * {@link ButtonCircularProgressFillProps}
    */
-  export type Props = ButtonCircularProgressFillProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = ButtonCircularProgressFillProps.HTML;
+    export type Render = ButtonCircularProgressFillProps.Render;
+    export type SuruUI = ButtonCircularProgressFillProps.SuruUI;
+  }
 }
 
 // CircularProgressFillRotation
@@ -666,14 +758,21 @@ export namespace CircularProgressFill {
  */
 export type ButtonCircularProgressFillRotationState = {};
 
+export namespace ButtonCircularProgressFillRotationProps {
+  export type HTML = Omit<React.ComponentProps<"animateTransform">, keyof Render>;
+
+  export type Render = RenderProps<ButtonCircularProgressFillRotationState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link ButtonCircularProgressFillRotation} に渡す props です。
  */
-export type ButtonCircularProgressFillRotationProps = Omit<
-  React.ComponentProps<"animateTransform">,
-  keyof RenderProps
-> &
-  RenderProps<ButtonCircularProgressFillRotationState>;
+export type ButtonCircularProgressFillRotationProps =
+  ButtonCircularProgressFillRotationProps.Render &
+    ButtonCircularProgressFillRotationProps.SuruUI &
+    ButtonCircularProgressFillRotationProps.HTML;
 
 /**
  * 不定モード時に円形プログレスバーを回転させるアニメーションコンポーネントです。
@@ -712,13 +811,16 @@ export const ButtonCircularProgressFillRotation: IComponent<ButtonCircularProgre
 export { ButtonCircularProgressFillRotation as CircularProgressFillRotation };
 
 export namespace CircularProgressFillRotation {
-  /**
-   * {@link ButtonCircularProgressFillRotationState}
-   */
   export type State = ButtonCircularProgressFillRotationState;
 
   /**
    * {@link ButtonCircularProgressFillRotationProps}
    */
-  export type Props = ButtonCircularProgressFillRotationProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = ButtonCircularProgressFillRotationProps.HTML;
+    export type Render = ButtonCircularProgressFillRotationProps.Render;
+    export type SuruUI = ButtonCircularProgressFillRotationProps.SuruUI;
+  }
 }

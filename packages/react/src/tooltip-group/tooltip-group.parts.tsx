@@ -1,5 +1,7 @@
 import { Tooltip } from "@base-ui/react/tooltip";
+import type * as React from "react";
 
+import type { RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
 
 // Root
@@ -10,10 +12,26 @@ import type { IComponent } from "../types.js";
  */
 export type TooltipGroupRootState = Tooltip.Provider.State;
 
+export namespace TooltipGroupRootProps {
+  export type BaseUI = Omit<
+    Tooltip.Provider.Props,
+    keyof Render | keyof React.ComponentProps<"div">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<TooltipGroupRootState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link TooltipGroupRoot} に渡す props です。
  */
-export type TooltipGroupRootProps = Tooltip.Provider.Props;
+export type TooltipGroupRootProps = TooltipGroupRootProps.Render &
+  TooltipGroupRootProps.SuruUI &
+  TooltipGroupRootProps.BaseUI &
+  TooltipGroupRootProps.HTML;
 
 /**
  * 複数のツールチップで開閉の遅延を共有するルートです。
@@ -37,5 +55,27 @@ export namespace Root {
   /**
    * {@link TooltipGroupRootProps}
    */
-  export type Props = TooltipGroupRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link TooltipGroupRootProps.BaseUI}
+     */
+    export type BaseUI = TooltipGroupRootProps.BaseUI;
+
+    /**
+     * {@link TooltipGroupRootProps.HTML}
+     */
+    export type HTML = TooltipGroupRootProps.HTML;
+
+    /**
+     * {@link TooltipGroupRootProps.Render}
+     */
+    export type Render = TooltipGroupRootProps.Render;
+
+    /**
+     * {@link TooltipGroupRootProps.SuruUI}
+     */
+    export type SuruUI = TooltipGroupRootProps.SuruUI;
+  }
 }

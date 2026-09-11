@@ -193,47 +193,66 @@ export type AutocompleteRootVariant = "naked" | "liquid";
  */
 export type AutocompleteRootState = Autocomplete.Root.State;
 
+export namespace AutocompleteRootProps {
+  export type BaseUI<TItem = any> = Omit<
+    Autocomplete.Root.Props<TItem>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof Autocomplete.Root.Props<any>
+  >;
+
+  export type Render = RenderProps<AutocompleteRootState>;
+
+  export type SuruUI = {
+    /**
+     * フォーカス時に枠線へ適用する色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: AutocompleteRootColor | undefined;
+
+    /**
+     * 枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * 入力を含むグループ要素の角丸を指定します。
+     *
+     * 既定値は {@link AutocompleteRootProps.size|size} です。
+     */
+    radius?: AutocompleteRootRadius | undefined;
+
+    /**
+     * 入力欄とリスト項目のサイズを指定します。
+     *
+     * @default "md"
+     */
+    size?: AutocompleteRootSize | undefined;
+
+    /**
+     * 入力欄の主な外観を指定します。
+     *
+     * @default "liquid"
+     */
+    variant?: AutocompleteRootVariant | undefined;
+  };
+}
+
 /**
  * {@link AutocompleteRoot} に渡すプロパティーです。
  *
  * @template TItem 項目の値の型です。
  */
-export type AutocompleteRootProps<TItem = any> = Autocomplete.Root.Props<TItem> & {
-  /**
-   * フォーカス時に枠線へ適用する色を指定します。
-   *
-   * @default "grey"
-   */
-  color?: AutocompleteRootColor | undefined;
-
-  /**
-   * 枠線を表示するかどうかを指定します。
-   *
-   * @default false
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * 入力を含むグループ要素の角丸を指定します。
-   *
-   * 既定値は {@link AutocompleteRootProps.size|size} です。
-   */
-  radius?: AutocompleteRootRadius | undefined;
-
-  /**
-   * 入力欄とリスト項目のサイズを指定します。
-   *
-   * @default "md"
-   */
-  size?: AutocompleteRootSize | undefined;
-
-  /**
-   * 入力欄の主な外観を指定します。
-   *
-   * @default "liquid"
-   */
-  variant?: AutocompleteRootVariant | undefined;
-};
+export type AutocompleteRootProps<TItem = any> = AutocompleteRootProps.Render &
+  AutocompleteRootProps.SuruUI &
+  AutocompleteRootProps.BaseUI<TItem> &
+  AutocompleteRootProps.HTML;
 
 interface IAutocompleteRoot extends IComponent<AutocompleteRootProps> {
   /**
@@ -281,7 +300,14 @@ export namespace Root {
   /**
    * {@link AutocompleteRootProps}
    */
-  export type Props<TItem = any> = AutocompleteRootProps<TItem>;
+  export type Props<TItem = any> = Props.Render & Props.SuruUI & Props.BaseUI<TItem> & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI<TItem = any> = AutocompleteRootProps.BaseUI<TItem>;
+    export type HTML = AutocompleteRootProps.HTML;
+    export type Render = AutocompleteRootProps.Render;
+    export type SuruUI = AutocompleteRootProps.SuruUI;
+  }
 
   /**
    * {@link AutocompleteRootActions}
@@ -337,10 +363,26 @@ export namespace Root {
  */
 export type AutocompleteInputGroupState = Autocomplete.InputGroup.State;
 
+export namespace AutocompleteInputGroupProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.InputGroup>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Autocomplete.InputGroup>
+  >;
+
+  export type Render = RenderProps<AutocompleteInputGroupState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AutocompleteInputGroup} に渡すプロパティーです。
  */
-export type AutocompleteInputGroupProps = React.ComponentProps<typeof Autocomplete.InputGroup>;
+export type AutocompleteInputGroupProps = AutocompleteInputGroupProps.Render &
+  AutocompleteInputGroupProps.SuruUI &
+  AutocompleteInputGroupProps.BaseUI &
+  AutocompleteInputGroupProps.HTML;
 
 /**
  * 入力欄とその付属コントロールをまとめるグループ要素です。
@@ -384,7 +426,14 @@ export namespace InputGroup {
   /**
    * {@link AutocompleteInputGroupProps}
    */
-  export type Props = AutocompleteInputGroupProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AutocompleteInputGroupProps.BaseUI;
+    export type HTML = AutocompleteInputGroupProps.HTML;
+    export type Render = AutocompleteInputGroupProps.Render;
+    export type SuruUI = AutocompleteInputGroupProps.SuruUI;
+  }
 }
 
 // Input
@@ -395,10 +444,26 @@ export namespace InputGroup {
  */
 export type AutocompleteInputState = Autocomplete.Input.State;
 
+export namespace AutocompleteInputProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Input>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"input">,
+    keyof Render | keyof React.ComponentProps<typeof Autocomplete.Input>
+  >;
+
+  export type Render = RenderProps<AutocompleteInputState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AutocompleteInput} に渡すプロパティーです。
  */
-export type AutocompleteInputProps = React.ComponentProps<typeof Autocomplete.Input>;
+export type AutocompleteInputProps = AutocompleteInputProps.Render &
+  AutocompleteInputProps.SuruUI &
+  AutocompleteInputProps.BaseUI &
+  AutocompleteInputProps.HTML;
 
 /**
  * 検索文字列を入力するテキスト入力欄です。
@@ -435,7 +500,14 @@ export namespace Input {
   /**
    * {@link AutocompleteInputProps}
    */
-  export type Props = AutocompleteInputProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AutocompleteInputProps.BaseUI;
+    export type HTML = AutocompleteInputProps.HTML;
+    export type Render = AutocompleteInputProps.Render;
+    export type SuruUI = AutocompleteInputProps.SuruUI;
+  }
 }
 
 // Addon
@@ -446,14 +518,20 @@ export namespace Input {
  */
 export type AutocompleteAddonState = {};
 
+export namespace AutocompleteAddonProps {
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
+
+  export type Render = RenderProps<AutocompleteAddonState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AutocompleteAddon} に渡すプロパティーです。
  */
-export type AutocompleteAddonProps = Omit<
-  React.ComponentProps<"span">,
-  keyof RenderProps<AutocompleteAddonState>
-> &
-  RenderProps<AutocompleteAddonState>;
+export type AutocompleteAddonProps = AutocompleteAddonProps.Render &
+  AutocompleteAddonProps.SuruUI &
+  AutocompleteAddonProps.HTML;
 
 /**
  * 入力欄の左右に表示する補助コンポーネントです。
@@ -487,7 +565,13 @@ export namespace Addon {
   /**
    * {@link AutocompleteAddonProps}
    */
-  export type Props = AutocompleteAddonProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = AutocompleteAddonProps.HTML;
+    export type Render = AutocompleteAddonProps.Render;
+    export type SuruUI = AutocompleteAddonProps.SuruUI;
+  }
 }
 
 // Clear
@@ -498,10 +582,26 @@ export namespace Addon {
  */
 export type AutocompleteClearState = Autocomplete.Clear.State;
 
+export namespace AutocompleteClearProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Clear>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof React.ComponentProps<typeof Autocomplete.Clear>
+  >;
+
+  export type Render = RenderProps<AutocompleteClearState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AutocompleteClear} に渡すプロパティーです。
  */
-export type AutocompleteClearProps = React.ComponentProps<typeof Autocomplete.Clear>;
+export type AutocompleteClearProps = AutocompleteClearProps.Render &
+  AutocompleteClearProps.SuruUI &
+  AutocompleteClearProps.BaseUI &
+  AutocompleteClearProps.HTML;
 
 /**
  * 入力値を消去するボタン要素です。
@@ -536,7 +636,14 @@ export namespace Clear {
   /**
    * {@link AutocompleteClearProps}
    */
-  export type Props = AutocompleteClearProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AutocompleteClearProps.BaseUI;
+    export type HTML = AutocompleteClearProps.HTML;
+    export type Render = AutocompleteClearProps.Render;
+    export type SuruUI = AutocompleteClearProps.SuruUI;
+  }
 }
 
 // List
@@ -547,10 +654,26 @@ export namespace Clear {
  */
 export type AutocompleteListState = Autocomplete.List.State;
 
+export namespace AutocompleteListProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.List>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Autocomplete.List>
+  >;
+
+  export type Render = RenderProps<AutocompleteListState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AutocompleteList} に渡すプロパティーです。
  */
-export type AutocompleteListProps = React.ComponentProps<typeof Autocomplete.List>;
+export type AutocompleteListProps = AutocompleteListProps.Render &
+  AutocompleteListProps.SuruUI &
+  AutocompleteListProps.BaseUI &
+  AutocompleteListProps.HTML;
 
 /**
  * 検索結果のリストを表示するコンテナー要素です。
@@ -574,7 +697,14 @@ export namespace List {
   /**
    * {@link AutocompleteListProps}
    */
-  export type Props = AutocompleteListProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AutocompleteListProps.BaseUI;
+    export type HTML = AutocompleteListProps.HTML;
+    export type Render = AutocompleteListProps.Render;
+    export type SuruUI = AutocompleteListProps.SuruUI;
+  }
 }
 
 // Status
@@ -585,10 +715,26 @@ export namespace List {
  */
 export type AutocompleteStatusState = Autocomplete.Status.State;
 
+export namespace AutocompleteStatusProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Status>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Autocomplete.Status>
+  >;
+
+  export type Render = RenderProps<AutocompleteStatusState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AutocompleteStatus} に渡すプロパティーです。
  */
-export type AutocompleteStatusProps = React.ComponentProps<typeof Autocomplete.Status>;
+export type AutocompleteStatusProps = AutocompleteStatusProps.Render &
+  AutocompleteStatusProps.SuruUI &
+  AutocompleteStatusProps.BaseUI &
+  AutocompleteStatusProps.HTML;
 
 /**
  * リストの状態を読み上げるための非表示の要素です。
@@ -615,7 +761,14 @@ export namespace Status {
   /**
    * {@link AutocompleteStatusProps}
    */
-  export type Props = AutocompleteStatusProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AutocompleteStatusProps.BaseUI;
+    export type HTML = AutocompleteStatusProps.HTML;
+    export type Render = AutocompleteStatusProps.Render;
+    export type SuruUI = AutocompleteStatusProps.SuruUI;
+  }
 }
 
 // Portal
@@ -626,10 +779,26 @@ export namespace Status {
  */
 export type AutocompletePortalState = Autocomplete.Portal.State;
 
+export namespace AutocompletePortalProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Portal>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Autocomplete.Portal>
+  >;
+
+  export type Render = RenderProps<AutocompletePortalState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AutocompletePortal} に渡すプロパティーです。
  */
-export type AutocompletePortalProps = React.ComponentProps<typeof Autocomplete.Portal>;
+export type AutocompletePortalProps = AutocompletePortalProps.Render &
+  AutocompletePortalProps.SuruUI &
+  AutocompletePortalProps.BaseUI &
+  AutocompletePortalProps.HTML;
 
 /**
  * ポップアップを DOM の別の場所へ移動する要素です。
@@ -671,7 +840,14 @@ export namespace Portal {
   /**
    * {@link AutocompletePortalProps}
    */
-  export type Props = AutocompletePortalProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AutocompletePortalProps.BaseUI;
+    export type HTML = AutocompletePortalProps.HTML;
+    export type Render = AutocompletePortalProps.Render;
+    export type SuruUI = AutocompletePortalProps.SuruUI;
+  }
 }
 
 // Positioner
@@ -682,10 +858,26 @@ export namespace Portal {
  */
 export type AutocompletePositionerState = Autocomplete.Positioner.State;
 
+export namespace AutocompletePositionerProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Positioner>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Autocomplete.Positioner>
+  >;
+
+  export type Render = RenderProps<AutocompletePositionerState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AutocompletePositioner} に渡すプロパティーです。
  */
-export type AutocompletePositionerProps = React.ComponentProps<typeof Autocomplete.Positioner>;
+export type AutocompletePositionerProps = AutocompletePositionerProps.Render &
+  AutocompletePositionerProps.SuruUI &
+  AutocompletePositionerProps.BaseUI &
+  AutocompletePositionerProps.HTML;
 
 /**
  * ポップアップを入力欄に位置合わせする要素です。
@@ -713,7 +905,14 @@ export namespace Positioner {
   /**
    * {@link AutocompletePositionerProps}
    */
-  export type Props = AutocompletePositionerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AutocompletePositionerProps.BaseUI;
+    export type HTML = AutocompletePositionerProps.HTML;
+    export type Render = AutocompletePositionerProps.Render;
+    export type SuruUI = AutocompletePositionerProps.SuruUI;
+  }
 }
 
 // Popup
@@ -724,10 +923,26 @@ export namespace Positioner {
  */
 export type AutocompletePopupState = Autocomplete.Popup.State;
 
+export namespace AutocompletePopupProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Popup>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Autocomplete.Popup>
+  >;
+
+  export type Render = RenderProps<AutocompletePopupState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AutocompletePopup} に渡すプロパティーです。
  */
-export type AutocompletePopupProps = React.ComponentProps<typeof Autocomplete.Popup>;
+export type AutocompletePopupProps = AutocompletePopupProps.Render &
+  AutocompletePopupProps.SuruUI &
+  AutocompletePopupProps.BaseUI &
+  AutocompletePopupProps.HTML;
 
 /**
  * 検索結果リストを表示するポップアップ要素です。
@@ -751,7 +966,14 @@ export namespace Popup {
   /**
    * {@link AutocompletePopupProps}
    */
-  export type Props = AutocompletePopupProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AutocompletePopupProps.BaseUI;
+    export type HTML = AutocompletePopupProps.HTML;
+    export type Render = AutocompletePopupProps.Render;
+    export type SuruUI = AutocompletePopupProps.SuruUI;
+  }
 }
 
 // Group
@@ -762,10 +984,26 @@ export namespace Popup {
  */
 export type AutocompleteGroupState = Autocomplete.Group.State;
 
+export namespace AutocompleteGroupProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Group>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Autocomplete.Group>
+  >;
+
+  export type Render = RenderProps<AutocompleteGroupState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AutocompleteGroup} に渡すプロパティーです。
  */
-export type AutocompleteGroupProps = React.ComponentProps<typeof Autocomplete.Group>;
+export type AutocompleteGroupProps = AutocompleteGroupProps.Render &
+  AutocompleteGroupProps.SuruUI &
+  AutocompleteGroupProps.BaseUI &
+  AutocompleteGroupProps.HTML;
 
 /**
  * 関連する項目をまとめるグループ要素です。
@@ -791,7 +1029,14 @@ export namespace Group {
   /**
    * {@link AutocompleteGroupProps}
    */
-  export type Props = AutocompleteGroupProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AutocompleteGroupProps.BaseUI;
+    export type HTML = AutocompleteGroupProps.HTML;
+    export type Render = AutocompleteGroupProps.Render;
+    export type SuruUI = AutocompleteGroupProps.SuruUI;
+  }
 }
 
 // GroupLabel
@@ -802,10 +1047,26 @@ export namespace Group {
  */
 export type AutocompleteGroupLabelState = Autocomplete.GroupLabel.State;
 
+export namespace AutocompleteGroupLabelProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.GroupLabel>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Autocomplete.GroupLabel>
+  >;
+
+  export type Render = RenderProps<AutocompleteGroupLabelState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link GroupLabel} に渡すプロパティーです。
  */
-export type AutocompleteGroupLabelProps = React.ComponentProps<typeof Autocomplete.GroupLabel>;
+export type AutocompleteGroupLabelProps = AutocompleteGroupLabelProps.Render &
+  AutocompleteGroupLabelProps.SuruUI &
+  AutocompleteGroupLabelProps.BaseUI &
+  AutocompleteGroupLabelProps.HTML;
 
 /**
  * グループに自動的に対応付けられるラベル要素です。
@@ -833,7 +1094,14 @@ export namespace GroupLabel {
   /**
    * {@link AutocompleteGroupLabelProps}
    */
-  export type Props = AutocompleteGroupLabelProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AutocompleteGroupLabelProps.BaseUI;
+    export type HTML = AutocompleteGroupLabelProps.HTML;
+    export type Render = AutocompleteGroupLabelProps.Render;
+    export type SuruUI = AutocompleteGroupLabelProps.SuruUI;
+  }
 }
 
 // Item
@@ -844,13 +1112,36 @@ export namespace GroupLabel {
  */
 export type AutocompleteItemState = Override<Button.Root.State, Autocomplete.Item.State>;
 
+export namespace AutocompleteItemProps {
+  export type BaseUI = Omit<
+    Override<
+      Button.ButtonRootProps,
+      Override<React.ComponentProps<typeof Autocomplete.Item>, RenderProps<AutocompleteItemState>>
+    >,
+    keyof Render
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof Override<
+        Button.ButtonRootProps,
+        Override<React.ComponentProps<typeof Autocomplete.Item>, RenderProps<AutocompleteItemState>>
+      >
+  >;
+
+  export type Render = RenderProps<AutocompleteItemState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AutocompleteItem} に渡すプロパティーです。
  */
-export type AutocompleteItemProps = Override<
-  Button.Root.Props,
-  Override<React.ComponentProps<typeof Autocomplete.Item>, RenderProps<AutocompleteItemState>>
->;
+export type AutocompleteItemProps = AutocompleteItemProps.Render &
+  AutocompleteItemProps.SuruUI &
+  AutocompleteItemProps.BaseUI &
+  AutocompleteItemProps.HTML;
 
 /**
  * リストの個々の項目要素です。
@@ -896,7 +1187,14 @@ export namespace Item {
   /**
    * {@link AutocompleteItemProps}
    */
-  export type Props = AutocompleteItemProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AutocompleteItemProps.BaseUI;
+    export type HTML = AutocompleteItemProps.HTML;
+    export type Render = AutocompleteItemProps.Render;
+    export type SuruUI = AutocompleteItemProps.SuruUI;
+  }
 }
 
 // Row
@@ -907,10 +1205,26 @@ export namespace Item {
  */
 export type AutocompleteRowState = Autocomplete.Row.State;
 
+export namespace AutocompleteRowProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Row>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Autocomplete.Row>
+  >;
+
+  export type Render = RenderProps<AutocompleteRowState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AutocompleteRow} に渡すプロパティーです。
  */
-export type AutocompleteRowProps = React.ComponentProps<typeof Autocomplete.Row>;
+export type AutocompleteRowProps = AutocompleteRowProps.Render &
+  AutocompleteRowProps.SuruUI &
+  AutocompleteRowProps.BaseUI &
+  AutocompleteRowProps.HTML;
 
 /**
  * グリッドリストの 1 行を表示する要素です。
@@ -936,7 +1250,14 @@ export namespace Row {
   /**
    * {@link AutocompleteRowProps}
    */
-  export type Props = AutocompleteRowProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AutocompleteRowProps.BaseUI;
+    export type HTML = AutocompleteRowProps.HTML;
+    export type Render = AutocompleteRowProps.Render;
+    export type SuruUI = AutocompleteRowProps.SuruUI;
+  }
 }
 
 // Collection
@@ -947,10 +1268,23 @@ export namespace Row {
  */
 export type AutocompleteCollectionState = Autocomplete.Collection.State;
 
+export namespace AutocompleteCollectionProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Collection>, keyof Render>;
+
+  export type HTML = {};
+
+  export type Render = RenderProps<AutocompleteCollectionState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AutocompleteCollection} に渡すプロパティーです。
  */
-export type AutocompleteCollectionProps = React.ComponentProps<typeof Autocomplete.Collection>;
+export type AutocompleteCollectionProps = AutocompleteCollectionProps.Render &
+  AutocompleteCollectionProps.SuruUI &
+  AutocompleteCollectionProps.BaseUI &
+  AutocompleteCollectionProps.HTML;
 
 /**
  * フィルタリングされた項目を列挙する要素です。
@@ -973,7 +1307,14 @@ export namespace Collection {
   /**
    * {@link AutocompleteCollectionProps}
    */
-  export type Props = AutocompleteCollectionProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AutocompleteCollectionProps.BaseUI;
+    export type HTML = AutocompleteCollectionProps.HTML;
+    export type Render = AutocompleteCollectionProps.Render;
+    export type SuruUI = AutocompleteCollectionProps.SuruUI;
+  }
 }
 
 // Empty
@@ -984,10 +1325,26 @@ export namespace Collection {
  */
 export type AutocompleteEmptyState = Autocomplete.Empty.State;
 
+export namespace AutocompleteEmptyProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Empty>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Autocomplete.Empty>
+  >;
+
+  export type Render = RenderProps<AutocompleteEmptyState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AutocompleteEmpty} に渡すプロパティーです。
  */
-export type AutocompleteEmptyProps = React.ComponentProps<typeof Autocomplete.Empty>;
+export type AutocompleteEmptyProps = AutocompleteEmptyProps.Render &
+  AutocompleteEmptyProps.SuruUI &
+  AutocompleteEmptyProps.BaseUI &
+  AutocompleteEmptyProps.HTML;
 
 /**
  * リストが空のときだけ、その children を表示する要素です。
@@ -1013,7 +1370,14 @@ export namespace Empty {
   /**
    * {@link AutocompleteEmptyProps}
    */
-  export type Props = AutocompleteEmptyProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AutocompleteEmptyProps.BaseUI;
+    export type HTML = AutocompleteEmptyProps.HTML;
+    export type Render = AutocompleteEmptyProps.Render;
+    export type SuruUI = AutocompleteEmptyProps.SuruUI;
+  }
 }
 
 // useFilter

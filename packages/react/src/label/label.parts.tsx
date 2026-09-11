@@ -24,11 +24,12 @@ export type LabelRootSize = Size;
  */
 export type LabelRootState = {};
 
-/**
- * {@link LabelRoot} に渡す props です。
- */
-export type LabelRootProps = Omit<React.ComponentProps<"label">, keyof RenderProps> &
-  RenderProps<LabelRootState> & {
+export namespace LabelRootProps {
+  export type HTML = Omit<React.ComponentProps<"label">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<LabelRootState>;
+
+  export type SuruUI = {
     /**
      * ラベルのサイズを指定します。
      *
@@ -36,6 +37,12 @@ export type LabelRootProps = Omit<React.ComponentProps<"label">, keyof RenderPro
      */
     size?: LabelRootSize | undefined;
   };
+}
+
+/**
+ * {@link LabelRoot} に渡す props です。
+ */
+export type LabelRootProps = LabelRootProps.Render & LabelRootProps.SuruUI & LabelRootProps.HTML;
 
 /**
  * ラベルのルートコンポーネントです。
@@ -71,7 +78,13 @@ export namespace Root {
   /**
    * {@link LabelRootProps}
    */
-  export type Props = LabelRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = LabelRootProps.HTML;
+    export type Render = LabelRootProps.Render;
+    export type SuruUI = LabelRootProps.SuruUI;
+  }
 
   /**
    * {@link LabelRootSize}

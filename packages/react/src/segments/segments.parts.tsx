@@ -3,6 +3,7 @@ import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import toReactNode from "../_to-react-node.js";
+import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { isItemObject } from "./_segments.jsx";
@@ -321,10 +322,23 @@ export type SegmentsItemValue = BaseTabs.Tab.Value;
  */
 export type SegmentsItemState = BaseTabs.Tab.State;
 
+export namespace SegmentsItemProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseTabs.Tab>, keyof Render>;
+
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render>;
+
+  export type Render = RenderProps<SegmentsItemState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link SegmentsItem} に渡す props です。
  */
-export type SegmentsItemProps = React.ComponentProps<typeof BaseTabs.Tab>;
+export type SegmentsItemProps = SegmentsItemProps.Render &
+  SegmentsItemProps.SuruUI &
+  SegmentsItemProps.BaseUI &
+  SegmentsItemProps.HTML;
 
 /**
  * 選択できる個々のセグメントです。
@@ -356,7 +370,29 @@ export namespace Item {
   /**
    * {@link SegmentsItemProps}
    */
-  export type Props = SegmentsItemProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link SegmentsItemProps.BaseUI}
+     */
+    export type BaseUI = SegmentsItemProps.BaseUI;
+
+    /**
+     * {@link SegmentsItemProps.HTML}
+     */
+    export type HTML = SegmentsItemProps.HTML;
+
+    /**
+     * {@link SegmentsItemProps.Render}
+     */
+    export type Render = SegmentsItemProps.Render;
+
+    /**
+     * {@link SegmentsItemProps.SuruUI}
+     */
+    export type SuruUI = SegmentsItemProps.SuruUI;
+  }
 
   /**
    * {@link SegmentsItemActivationDirection}
@@ -392,10 +428,26 @@ export namespace Item {
  */
 export type SegmentsIndicatorState = BaseTabs.Indicator.State;
 
+export namespace SegmentsIndicatorProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseTabs.Indicator>,
+    keyof Render | keyof React.ComponentProps<"span">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
+
+  export type Render = RenderProps<SegmentsIndicatorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link SegmentsIndicator} に渡す props です。
  */
-export type SegmentsIndicatorProps = React.ComponentProps<typeof BaseTabs.Indicator>;
+export type SegmentsIndicatorProps = SegmentsIndicatorProps.Render &
+  SegmentsIndicatorProps.SuruUI &
+  SegmentsIndicatorProps.BaseUI &
+  SegmentsIndicatorProps.HTML;
 
 /**
  * 選択されているセグメントの位置に追従するインジケーターです。
@@ -421,5 +473,27 @@ export namespace Indicator {
   /**
    * {@link SegmentsIndicatorProps}
    */
-  export type Props = SegmentsIndicatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link SegmentsIndicatorProps.BaseUI}
+     */
+    export type BaseUI = SegmentsIndicatorProps.BaseUI;
+
+    /**
+     * {@link SegmentsIndicatorProps.HTML}
+     */
+    export type HTML = SegmentsIndicatorProps.HTML;
+
+    /**
+     * {@link SegmentsIndicatorProps.Render}
+     */
+    export type Render = SegmentsIndicatorProps.Render;
+
+    /**
+     * {@link SegmentsIndicatorProps.SuruUI}
+     */
+    export type SuruUI = SegmentsIndicatorProps.SuruUI;
+  }
 }

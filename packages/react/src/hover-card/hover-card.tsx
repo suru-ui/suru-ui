@@ -209,7 +209,7 @@ export const useHoverCardAPI: IUseHoverCardAPI = function useSuiHoverCardAPI(
   } = positionerProps;
 
   return {
-    getRootProps(): Required<HoverCardPropsRoot> {
+    getRootProps(): HoverCardPropsRoot {
       return {
         open,
         handle,

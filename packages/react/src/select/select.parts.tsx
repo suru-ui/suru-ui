@@ -5,6 +5,7 @@ import * as React from "react";
 import { getItemLabel, isLabeledItem } from "../_get-item-label.js";
 import { CheckIcon } from "../_icons.jsx";
 import toReactNode from "../_to-react-node.js";
+import type { RenderProps } from "../_use-render.js";
 import { useActionGroupContext } from "../action-group/action-group.parts.jsx";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
@@ -207,52 +208,71 @@ export type SelectRootItems<TValue = unknown> =
  */
 export type SelectRootState = BaseSelect.Root.State;
 
+export namespace SelectRootProps {
+  export type BaseUI<TValue = unknown, TMultiple extends boolean | undefined = false> = Omit<
+    BaseSelect.Root.Props<TValue, TMultiple>,
+    keyof Render | keyof SuruUI<TValue>
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI<any> | keyof Omit<BaseSelect.Root.Props<any, any>, "items">
+  >;
+
+  export type Render = RenderProps<SelectRootState>;
+
+  export type SuruUI<TValue = unknown> = {
+    /**
+     * リストに表示する項目の一覧です。
+     *
+     * グループの配列を指定するとグループごとに区切って表示します。
+     * 平坦な値の配列を指定した場合は {@link List} が既定の描画で表示します。
+     */
+    items?: SelectRootItems<TValue> | undefined;
+
+    /**
+     * 枠線を表示するかどうかを指定します。
+     *
+     * 既定値は {@link SelectRootProps.variant|variant} です。
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * 選択欄とリスト項目の角丸を指定します。
+     *
+     * 既定値は {@link SelectRootProps.size|size} です。
+     */
+    radius?: SelectRootRadius | undefined;
+
+    /**
+     * 選択欄とリスト項目のサイズを指定します。
+     *
+     * @default "md"
+     */
+    size?: SelectRootSize | undefined;
+
+    /**
+     * 選択欄の主な外観を指定します。
+     *
+     * @default "naked"
+     */
+    variant?: SelectRootVariant | undefined;
+  };
+}
+
 /**
  * {@link SelectRoot} に渡す props です。
  *
  * @template TValue 項目の値の型です。
  * @template TMultiple 複数選択を有効にするかどうかです。
  */
-export type SelectRootProps<TValue = unknown, TMultiple extends boolean | undefined = false> = Omit<
-  BaseSelect.Root.Props<TValue, TMultiple>,
-  "items"
-> & {
-  /**
-   * リストに表示する項目の一覧です。
-   *
-   * グループの配列を指定するとグループごとに区切って表示します。
-   * 平坦な値の配列を指定した場合は {@link List} が既定の描画で表示します。
-   */
-  items?: SelectRootItems<TValue> | undefined;
-
-  /**
-   * 枠線を表示するかどうかを指定します。
-   *
-   * 既定値は {@link SelectRootProps.variant|variant} です。
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * 選択欄とリスト項目の角丸を指定します。
-   *
-   * 既定値は {@link SelectRootProps.size|size} です。
-   */
-  radius?: SelectRootRadius | undefined;
-
-  /**
-   * 選択欄とリスト項目のサイズを指定します。
-   *
-   * @default "md"
-   */
-  size?: SelectRootSize | undefined;
-
-  /**
-   * 選択欄の主な外観を指定します。
-   *
-   * @default "naked"
-   */
-  variant?: SelectRootVariant | undefined;
-};
+export type SelectRootProps<
+  TValue = unknown,
+  TMultiple extends boolean | undefined = false,
+> = SelectRootProps.Render &
+  SelectRootProps.SuruUI<TValue> &
+  SelectRootProps.BaseUI<TValue, TMultiple> &
+  SelectRootProps.HTML;
 
 interface ISelectRoot extends IComponent<SelectRootProps<unknown, boolean | undefined>> {
   /**
@@ -345,7 +365,17 @@ export namespace Root {
   export type Props<
     TValue = unknown,
     TMultiple extends boolean | undefined = false,
-  > = SelectRootProps<TValue, TMultiple>;
+  > = Props.Render & Props.SuruUI<TValue> & Props.BaseUI<TValue, TMultiple> & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI<
+      TValue = unknown,
+      TMultiple extends boolean | undefined = false,
+    > = SelectRootProps.BaseUI<TValue, TMultiple>;
+    export type HTML = SelectRootProps.HTML;
+    export type Render = SelectRootProps.Render;
+    export type SuruUI<TValue = unknown> = SelectRootProps.SuruUI<TValue>;
+  }
 
   /**
    * {@link SelectRootActions}
@@ -396,10 +426,26 @@ export namespace Root {
  */
 export type SelectLabelState = BaseSelect.Label.State;
 
+export namespace SelectLabelProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Label>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Label>
+  >;
+
+  export type Render = RenderProps<SelectLabelState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link SelectLabel} に渡す props です。
  */
-export type SelectLabelProps = React.ComponentProps<typeof BaseSelect.Label>;
+export type SelectLabelProps = SelectLabelProps.Render &
+  SelectLabelProps.SuruUI &
+  SelectLabelProps.BaseUI &
+  SelectLabelProps.HTML;
 
 /**
  * 選択欄に対応する表示ラベルです。
@@ -424,7 +470,14 @@ export namespace Label {
   /**
    * {@link SelectLabelProps}
    */
-  export type Props = SelectLabelProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = SelectLabelProps.BaseUI;
+    export type HTML = SelectLabelProps.HTML;
+    export type Render = SelectLabelProps.Render;
+    export type SuruUI = SelectLabelProps.SuruUI;
+  }
 }
 
 // Trigger
@@ -435,10 +488,26 @@ export namespace Label {
  */
 export type SelectTriggerState = BaseSelect.Trigger.State;
 
+export namespace SelectTriggerProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Trigger>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Trigger>
+  >;
+
+  export type Render = RenderProps<SelectTriggerState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link SelectTrigger} に渡す props です。
  */
-export type SelectTriggerProps = React.ComponentProps<typeof BaseSelect.Trigger>;
+export type SelectTriggerProps = SelectTriggerProps.Render &
+  SelectTriggerProps.SuruUI &
+  SelectTriggerProps.BaseUI &
+  SelectTriggerProps.HTML;
 
 /**
  * Select ポップアップを開閉するボタン要素です。
@@ -494,7 +563,14 @@ export namespace Trigger {
   /**
    * {@link SelectTriggerProps}
    */
-  export type Props = SelectTriggerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = SelectTriggerProps.BaseUI;
+    export type HTML = SelectTriggerProps.HTML;
+    export type Render = SelectTriggerProps.Render;
+    export type SuruUI = SelectTriggerProps.SuruUI;
+  }
 }
 
 // Value
@@ -505,10 +581,26 @@ export namespace Trigger {
  */
 export type SelectValueState = BaseSelect.Value.State;
 
+export namespace SelectValueProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Value>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Value>
+  >;
+
+  export type Render = RenderProps<SelectValueState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link SelectValue} に渡す props です。
  */
-export type SelectValueProps = React.ComponentProps<typeof BaseSelect.Value>;
+export type SelectValueProps = SelectValueProps.Render &
+  SelectValueProps.SuruUI &
+  SelectValueProps.BaseUI &
+  SelectValueProps.HTML;
 
 /**
  * 現在の選択値またはプレースホルダーを表示する要素です。
@@ -542,7 +634,14 @@ export namespace Value {
   /**
    * {@link SelectValueProps}
    */
-  export type Props = SelectValueProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = SelectValueProps.BaseUI;
+    export type HTML = SelectValueProps.HTML;
+    export type Render = SelectValueProps.Render;
+    export type SuruUI = SelectValueProps.SuruUI;
+  }
 }
 
 // Icon
@@ -553,10 +652,26 @@ export namespace Value {
  */
 export type SelectIconState = BaseSelect.Icon.State;
 
+export namespace SelectIconProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Icon>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Icon>
+  >;
+
+  export type Render = RenderProps<SelectIconState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link SelectIcon} に渡す props です。
  */
-export type SelectIconProps = React.ComponentProps<typeof BaseSelect.Icon>;
+export type SelectIconProps = SelectIconProps.Render &
+  SelectIconProps.SuruUI &
+  SelectIconProps.BaseUI &
+  SelectIconProps.HTML;
 
 /**
  * ポップアップの開閉を示すアイコンのラッパー要素です。
@@ -581,7 +696,14 @@ export namespace Icon {
   /**
    * {@link SelectIconProps}
    */
-  export type Props = SelectIconProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = SelectIconProps.BaseUI;
+    export type HTML = SelectIconProps.HTML;
+    export type Render = SelectIconProps.Render;
+    export type SuruUI = SelectIconProps.SuruUI;
+  }
 }
 
 // Portal
@@ -592,10 +714,26 @@ export namespace Icon {
  */
 export type SelectPortalState = BaseSelect.Portal.State;
 
+export namespace SelectPortalProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Portal>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Portal>
+  >;
+
+  export type Render = RenderProps<SelectPortalState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link SelectPortal} に渡す props です。
  */
-export type SelectPortalProps = React.ComponentProps<typeof BaseSelect.Portal>;
+export type SelectPortalProps = SelectPortalProps.Render &
+  SelectPortalProps.SuruUI &
+  SelectPortalProps.BaseUI &
+  SelectPortalProps.HTML;
 
 /**
  * ポップアップを DOM の別の場所へ移動する要素です。
@@ -640,7 +778,14 @@ export namespace Portal {
   /**
    * {@link SelectPortalProps}
    */
-  export type Props = SelectPortalProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = SelectPortalProps.BaseUI;
+    export type HTML = SelectPortalProps.HTML;
+    export type Render = SelectPortalProps.Render;
+    export type SuruUI = SelectPortalProps.SuruUI;
+  }
 }
 
 // Backdrop
@@ -651,10 +796,26 @@ export namespace Portal {
  */
 export type SelectBackdropState = BaseSelect.Backdrop.State;
 
+export namespace SelectBackdropProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Backdrop>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Backdrop>
+  >;
+
+  export type Render = RenderProps<SelectBackdropState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link SelectBackdrop} に渡す props です。
  */
-export type SelectBackdropProps = React.ComponentProps<typeof BaseSelect.Backdrop>;
+export type SelectBackdropProps = SelectBackdropProps.Render &
+  SelectBackdropProps.SuruUI &
+  SelectBackdropProps.BaseUI &
+  SelectBackdropProps.HTML;
 
 /**
  * ポップアップの背後に表示される要素です。
@@ -690,7 +851,14 @@ export namespace Backdrop {
   /**
    * {@link SelectBackdropProps}
    */
-  export type Props = SelectBackdropProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = SelectBackdropProps.BaseUI;
+    export type HTML = SelectBackdropProps.HTML;
+    export type Render = SelectBackdropProps.Render;
+    export type SuruUI = SelectBackdropProps.SuruUI;
+  }
 }
 
 // Positioner
@@ -701,10 +869,26 @@ export namespace Backdrop {
  */
 export type SelectPositionerState = BaseSelect.Positioner.State;
 
+export namespace SelectPositionerProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Positioner>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Positioner>
+  >;
+
+  export type Render = RenderProps<SelectPositionerState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link SelectPositioner} に渡す props です。
  */
-export type SelectPositionerProps = React.ComponentProps<typeof BaseSelect.Positioner>;
+export type SelectPositionerProps = SelectPositionerProps.Render &
+  SelectPositionerProps.SuruUI &
+  SelectPositionerProps.BaseUI &
+  SelectPositionerProps.HTML;
 
 /**
  * ポップアップをトリガーへ位置合わせする要素です。
@@ -733,7 +917,14 @@ export namespace Positioner {
   /**
    * {@link SelectPositionerProps}
    */
-  export type Props = SelectPositionerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = SelectPositionerProps.BaseUI;
+    export type HTML = SelectPositionerProps.HTML;
+    export type Render = SelectPositionerProps.Render;
+    export type SuruUI = SelectPositionerProps.SuruUI;
+  }
 }
 
 // Popup
@@ -744,10 +935,26 @@ export namespace Positioner {
  */
 export type SelectPopupState = BaseSelect.Popup.State;
 
+export namespace SelectPopupProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Popup>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Popup>
+  >;
+
+  export type Render = RenderProps<SelectPopupState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link SelectPopup} に渡す props です。
  */
-export type SelectPopupProps = React.ComponentProps<typeof BaseSelect.Popup>;
+export type SelectPopupProps = SelectPopupProps.Render &
+  SelectPopupProps.SuruUI &
+  SelectPopupProps.BaseUI &
+  SelectPopupProps.HTML;
 
 /**
  * 選択項目を表示するポップアップ要素です。
@@ -783,7 +990,14 @@ export namespace Popup {
   /**
    * {@link SelectPopupProps}
    */
-  export type Props = SelectPopupProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = SelectPopupProps.BaseUI;
+    export type HTML = SelectPopupProps.HTML;
+    export type Render = SelectPopupProps.Render;
+    export type SuruUI = SelectPopupProps.SuruUI;
+  }
 }
 
 // List
@@ -811,22 +1025,40 @@ export interface ISelectListItemRenderer<TValue = any> {
  */
 export type SelectListState = BaseSelect.List.State;
 
+export namespace SelectListProps {
+  export type BaseUI<TValue = any> = Omit<
+    React.ComponentProps<typeof BaseSelect.List>,
+    keyof Render | keyof SuruUI<TValue>
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof SuruUI<any>
+    | keyof Omit<React.ComponentProps<typeof BaseSelect.List>, "children">
+  >;
+
+  export type Render = RenderProps<SelectListState>;
+
+  export type SuruUI<TValue = any> = {
+    /**
+     * リストの内容、または各項目をレンダリングする関数です。
+     *
+     * 関数を指定した場合は {@link SelectRootProps.items|items} の各項目が引数として渡されます。
+     */
+    children?: React.ReactNode | ISelectListItemRenderer<TValue>;
+  };
+}
+
 /**
  * {@link SelectList} に渡す props です。
  *
  * @template TValue 項目の値の型です。
  */
-export type SelectListProps<TValue = any> = Omit<
-  React.ComponentProps<typeof BaseSelect.List>,
-  "children"
-> & {
-  /**
-   * リストの内容、または各項目をレンダリングする関数です。
-   *
-   * 関数を指定した場合は {@link SelectRootProps.items|items} の各項目が引数として渡されます。
-   */
-  children?: React.ReactNode | ISelectListItemRenderer<TValue>;
-};
+export type SelectListProps<TValue = any> = SelectListProps.Render &
+  SelectListProps.SuruUI<TValue> &
+  SelectListProps.BaseUI<TValue> &
+  SelectListProps.HTML;
 
 /**
  * 選択項目を列挙するリスト要素です。
@@ -950,7 +1182,17 @@ export namespace List {
   /**
    * {@link SelectListProps}
    */
-  export type Props<TValue = any> = SelectListProps<TValue>;
+  export type Props<TValue = any> = Props.Render &
+    Props.SuruUI<TValue> &
+    Props.BaseUI<TValue> &
+    Props.HTML;
+
+  export namespace Props {
+    export type BaseUI<TValue = any> = SelectListProps.BaseUI<TValue>;
+    export type HTML = SelectListProps.HTML;
+    export type Render = SelectListProps.Render;
+    export type SuruUI<TValue = any> = SelectListProps.SuruUI<TValue>;
+  }
 
   /**
    * {@link SelectRootItemGroup}
@@ -971,10 +1213,26 @@ export namespace List {
  */
 export type SelectArrowState = BaseSelect.Arrow.State;
 
+export namespace SelectArrowProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Arrow>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Arrow>
+  >;
+
+  export type Render = RenderProps<SelectArrowState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link SelectArrow} に渡す props です。
  */
-export type SelectArrowProps = React.ComponentProps<typeof BaseSelect.Arrow>;
+export type SelectArrowProps = SelectArrowProps.Render &
+  SelectArrowProps.SuruUI &
+  SelectArrowProps.BaseUI &
+  SelectArrowProps.HTML;
 
 /**
  * ポップアップとトリガーをつなぐ矢印要素です。
@@ -999,7 +1257,14 @@ export namespace Arrow {
   /**
    * {@link SelectArrowProps}
    */
-  export type Props = SelectArrowProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = SelectArrowProps.BaseUI;
+    export type HTML = SelectArrowProps.HTML;
+    export type Render = SelectArrowProps.Render;
+    export type SuruUI = SelectArrowProps.SuruUI;
+  }
 }
 
 // Item
@@ -1010,10 +1275,26 @@ export namespace Arrow {
  */
 export type SelectItemState = BaseSelect.Item.State;
 
+export namespace SelectItemProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Item>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Item>
+  >;
+
+  export type Render = RenderProps<SelectItemState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link SelectItem} に渡す props です。
  */
-export type SelectItemProps = React.ComponentProps<typeof BaseSelect.Item>;
+export type SelectItemProps = SelectItemProps.Render &
+  SelectItemProps.SuruUI &
+  SelectItemProps.BaseUI &
+  SelectItemProps.HTML;
 
 /**
  * 選択肢の個々の項目です。
@@ -1054,7 +1335,14 @@ export namespace Item {
   /**
    * {@link SelectItemProps}
    */
-  export type Props = SelectItemProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = SelectItemProps.BaseUI;
+    export type HTML = SelectItemProps.HTML;
+    export type Render = SelectItemProps.Render;
+    export type SuruUI = SelectItemProps.SuruUI;
+  }
 }
 
 // ItemText
@@ -1065,10 +1353,26 @@ export namespace Item {
  */
 export type SelectItemTextState = BaseSelect.ItemText.State;
 
+export namespace SelectItemTextProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.ItemText>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof BaseSelect.ItemText>
+  >;
+
+  export type Render = RenderProps<SelectItemTextState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link SelectItemText} に渡す props です。
  */
-export type SelectItemTextProps = React.ComponentProps<typeof BaseSelect.ItemText>;
+export type SelectItemTextProps = SelectItemTextProps.Render &
+  SelectItemTextProps.SuruUI &
+  SelectItemTextProps.BaseUI &
+  SelectItemTextProps.HTML;
 
 /**
  * 選択肢の表示テキストを包む要素です。
@@ -1093,7 +1397,14 @@ export namespace ItemText {
   /**
    * {@link SelectItemTextProps}
    */
-  export type Props = SelectItemTextProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = SelectItemTextProps.BaseUI;
+    export type HTML = SelectItemTextProps.HTML;
+    export type Render = SelectItemTextProps.Render;
+    export type SuruUI = SelectItemTextProps.SuruUI;
+  }
 }
 
 // ItemIndicator
@@ -1104,10 +1415,26 @@ export namespace ItemText {
  */
 export type SelectItemIndicatorState = BaseSelect.ItemIndicator.State;
 
+export namespace SelectItemIndicatorProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.ItemIndicator>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof React.ComponentProps<typeof BaseSelect.ItemIndicator>
+  >;
+
+  export type Render = RenderProps<SelectItemIndicatorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link SelectItemIndicator} に渡す props です。
  */
-export type SelectItemIndicatorProps = React.ComponentProps<typeof BaseSelect.ItemIndicator>;
+export type SelectItemIndicatorProps = SelectItemIndicatorProps.Render &
+  SelectItemIndicatorProps.SuruUI &
+  SelectItemIndicatorProps.BaseUI &
+  SelectItemIndicatorProps.HTML;
 
 /**
  * 選択された項目を示す要素です。
@@ -1139,7 +1466,14 @@ export namespace ItemIndicator {
   /**
    * {@link SelectItemIndicatorProps}
    */
-  export type Props = SelectItemIndicatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = SelectItemIndicatorProps.BaseUI;
+    export type HTML = SelectItemIndicatorProps.HTML;
+    export type Render = SelectItemIndicatorProps.Render;
+    export type SuruUI = SelectItemIndicatorProps.SuruUI;
+  }
 }
 
 // ScrollUpArrow
@@ -1150,10 +1484,26 @@ export namespace ItemIndicator {
  */
 export type SelectScrollUpArrowState = BaseSelect.ScrollUpArrow.State;
 
+export namespace SelectScrollUpArrowProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.ScrollUpArrow>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof BaseSelect.ScrollUpArrow>
+  >;
+
+  export type Render = RenderProps<SelectScrollUpArrowState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link SelectScrollUpArrow} に渡す props です。
  */
-export type SelectScrollUpArrowProps = React.ComponentProps<typeof BaseSelect.ScrollUpArrow>;
+export type SelectScrollUpArrowProps = SelectScrollUpArrowProps.Render &
+  SelectScrollUpArrowProps.SuruUI &
+  SelectScrollUpArrowProps.BaseUI &
+  SelectScrollUpArrowProps.HTML;
 
 /**
  * 上方向へスクロールできることを示す要素です。
@@ -1184,7 +1534,14 @@ export namespace ScrollUpArrow {
   /**
    * {@link SelectScrollUpArrowProps}
    */
-  export type Props = SelectScrollUpArrowProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = SelectScrollUpArrowProps.BaseUI;
+    export type HTML = SelectScrollUpArrowProps.HTML;
+    export type Render = SelectScrollUpArrowProps.Render;
+    export type SuruUI = SelectScrollUpArrowProps.SuruUI;
+  }
 }
 
 // ScrollDownArrow
@@ -1195,10 +1552,26 @@ export namespace ScrollUpArrow {
  */
 export type SelectScrollDownArrowState = BaseSelect.ScrollDownArrow.State;
 
+export namespace SelectScrollDownArrowProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.ScrollDownArrow>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof BaseSelect.ScrollDownArrow>
+  >;
+
+  export type Render = RenderProps<SelectScrollDownArrowState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link SelectScrollDownArrow} に渡す props です。
  */
-export type SelectScrollDownArrowProps = React.ComponentProps<typeof BaseSelect.ScrollDownArrow>;
+export type SelectScrollDownArrowProps = SelectScrollDownArrowProps.Render &
+  SelectScrollDownArrowProps.SuruUI &
+  SelectScrollDownArrowProps.BaseUI &
+  SelectScrollDownArrowProps.HTML;
 
 /**
  * 下方向へスクロールできることを示す要素です。
@@ -1229,7 +1602,14 @@ export namespace ScrollDownArrow {
   /**
    * {@link SelectScrollDownArrowProps}
    */
-  export type Props = SelectScrollDownArrowProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = SelectScrollDownArrowProps.BaseUI;
+    export type HTML = SelectScrollDownArrowProps.HTML;
+    export type Render = SelectScrollDownArrowProps.Render;
+    export type SuruUI = SelectScrollDownArrowProps.SuruUI;
+  }
 }
 
 // Group
@@ -1240,10 +1620,26 @@ export namespace ScrollDownArrow {
  */
 export type SelectGroupState = BaseSelect.Group.State;
 
+export namespace SelectGroupProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Group>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Group>
+  >;
+
+  export type Render = RenderProps<SelectGroupState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link SelectGroup} に渡す props です。
  */
-export type SelectGroupProps = React.ComponentProps<typeof BaseSelect.Group>;
+export type SelectGroupProps = SelectGroupProps.Render &
+  SelectGroupProps.SuruUI &
+  SelectGroupProps.BaseUI &
+  SelectGroupProps.HTML;
 
 /**
  * 関連する選択肢をまとめるグループ要素です。
@@ -1268,7 +1664,14 @@ export namespace Group {
   /**
    * {@link SelectGroupProps}
    */
-  export type Props = SelectGroupProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = SelectGroupProps.BaseUI;
+    export type HTML = SelectGroupProps.HTML;
+    export type Render = SelectGroupProps.Render;
+    export type SuruUI = SelectGroupProps.SuruUI;
+  }
 }
 
 // GroupLabel
@@ -1279,10 +1682,26 @@ export namespace Group {
  */
 export type SelectGroupLabelState = BaseSelect.GroupLabel.State;
 
+export namespace SelectGroupLabelProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.GroupLabel>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof BaseSelect.GroupLabel>
+  >;
+
+  export type Render = RenderProps<SelectGroupLabelState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link SelectGroupLabel} に渡す props です。
  */
-export type SelectGroupLabelProps = React.ComponentProps<typeof BaseSelect.GroupLabel>;
+export type SelectGroupLabelProps = SelectGroupLabelProps.Render &
+  SelectGroupLabelProps.SuruUI &
+  SelectGroupLabelProps.BaseUI &
+  SelectGroupLabelProps.HTML;
 
 /**
  * 選択肢グループの見出し要素です。
@@ -1311,7 +1730,14 @@ export namespace GroupLabel {
   /**
    * {@link SelectGroupLabelProps}
    */
-  export type Props = SelectGroupLabelProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = SelectGroupLabelProps.BaseUI;
+    export type HTML = SelectGroupLabelProps.HTML;
+    export type Render = SelectGroupLabelProps.Render;
+    export type SuruUI = SelectGroupLabelProps.SuruUI;
+  }
 }
 
 // Separator
@@ -1322,10 +1748,26 @@ export namespace GroupLabel {
  */
 export type SelectSeparatorState = BaseSelect.Separator.State;
 
+export namespace SelectSeparatorProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Separator>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Separator>
+  >;
+
+  export type Render = RenderProps<SelectSeparatorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link SelectSeparator} に渡す props です。
  */
-export type SelectSeparatorProps = React.ComponentProps<typeof BaseSelect.Separator>;
+export type SelectSeparatorProps = SelectSeparatorProps.Render &
+  SelectSeparatorProps.SuruUI &
+  SelectSeparatorProps.BaseUI &
+  SelectSeparatorProps.HTML;
 
 /**
  * 項目やグループを区切る要素です。
@@ -1352,5 +1794,12 @@ export namespace Separator {
   /**
    * {@link SelectSeparatorProps}
    */
-  export type Props = SelectSeparatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = SelectSeparatorProps.BaseUI;
+    export type HTML = SelectSeparatorProps.HTML;
+    export type Render = SelectSeparatorProps.Render;
+    export type SuruUI = SelectSeparatorProps.SuruUI;
+  }
 }

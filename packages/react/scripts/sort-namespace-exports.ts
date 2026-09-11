@@ -96,15 +96,19 @@ function collectBlocks(root: Node, result: Block[] = []): Block[] {
  * (`export namespace X { ... }`) も名前を持つ。それ以外の文は名前を持たない
  * ため `null` を返す。
  */
-function getMemberInfo(member: Statement): { name: string | null; group: number } {
+function getMemberInfo(member: Statement): {
+  name: string | null;
+  group: number;
+  isNamespace: boolean;
+} {
   if (member.type !== "ExportNamedDeclaration") {
-    return { name: null, group: -1 };
+    return { name: null, group: -1, isNamespace: false };
   }
 
   const declaration = member.declaration;
 
   if (declaration?.type === "TSModuleDeclaration" && declaration.id.type === "Identifier") {
-    return { name: declaration.id.name, group: NAMESPACE_GROUP };
+    return { name: declaration.id.name, group: NAMESPACE_GROUP, isNamespace: true };
   }
 
   if (
@@ -118,27 +122,29 @@ function getMemberInfo(member: Statement): { name: string | null; group: number 
     // 対象から除く (`IFoo` → `Foo` として扱う)。
     const name = (declaration as { id: { name: string } }).id.name;
     if (declaration.type === "TSInterfaceDeclaration" && /^I[A-Z]/u.test(name)) {
-      return { name: name.slice(1), group: getGroup(name) };
+      return { name: name.slice(1), group: getGroup(name), isNamespace: false };
     }
 
-    return { name, group: getGroup(name) };
+    return { name, group: getGroup(name), isNamespace: false };
   }
 
-  return { name: null, group: -1 };
+  return { name: null, group: -1, isNamespace: false };
 }
 
 /**
  * 2 つのメンバーの比較関数。
  *
- * グループ順で並べ、グループ内は名前の辞書順にする。名前空間同士もグループが
- * 等しいため名前順になる。
+ * グループ順で並べ、グループ内は名前の辞書順にする。同名の型と名前空間は
+ * 型を先にする。名前空間同士もグループが等しいため名前順になる。
  */
 function compareItems(
-  a: { name: string; group: number },
-  b: { name: string; group: number },
+  a: { name: string; group: number; isNamespace: boolean },
+  b: { name: string; group: number; isNamespace: boolean },
 ): number {
   if (a.group !== b.group) return a.group - b.group;
-  return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+  if (a.name !== b.name) return a.name < b.name ? -1 : 1;
+  if (a.isNamespace !== b.isNamespace) return a.isNamespace ? 1 : -1;
+  return 0;
 }
 
 /**
@@ -167,7 +173,8 @@ function extendedStart(member: Statement): number {
  *
  * 名前を持たない文は位置を維持し、型エクスポートとネストした名前空間を
  * 「{@linkcode FIXED_ORDER_NAMES} の順 → 名前順」の順に並べ替える。
- * ネストした名前空間はその後に続き、やはり名前順になる。
+ * 固定名で同名の型と名前空間がある場合は、名前空間を型の直後に置く。
+ * それ以外のネストした名前空間は末尾に続き、やはり名前順になる。
  *
  * @returns 変更が必要な場合は計画、不要な場合は `null`。
  */
@@ -182,14 +189,30 @@ function planReplacement(block: Block): {
   const items = members.map((member) => ({ member, ...getMemberInfo(member) }));
 
   const sortable = items.filter(
-    (item): item is { member: Statement; name: string; group: number } => item.name !== null,
+    (item): item is { member: Statement; name: string; group: number; isNamespace: boolean } =>
+      item.name !== null,
   );
   if (sortable.length < 2) return null;
 
-  const sorted = sortable.toSorted(compareItems);
+  // 固定名で同名の型と名前空間がある名前を集める。
+  const names = new Set(sortable.map((item) => item.name));
+  const pairedFixedNames = new Set(
+    [...names].filter((name) => {
+      if (getGroup(name) === NAMED_GROUP) return false;
+      const kinds = sortable.filter((item) => item.name === name);
+      return kinds.some((item) => item.isNamespace) && kinds.some((item) => !item.isNamespace);
+    }),
+  );
+
+  const effective = sortable.map((item) => ({
+    ...item,
+    group: item.isNamespace && pairedFixedNames.has(item.name) ? getGroup(item.name) : item.group,
+  }));
+
+  const sorted = effective.toSorted(compareItems);
 
   // 名前を持たない文が元の位置に残るように、並べ替えの要否を判定する。
-  const isSameOrder = sorted.every((item, i) => item === sortable[i]);
+  const isSameOrder = sorted.every((item, i) => item.member === sortable[i]!.member);
   if (isSameOrder) return null;
 
   const newOrder: number[] = members.map(() => 0);

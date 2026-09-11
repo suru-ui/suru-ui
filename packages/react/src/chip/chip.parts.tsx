@@ -49,11 +49,12 @@ export type ChipRootVariant = ColorTemplate;
  */
 export type ChipRootState = {};
 
-/**
- * {@link ChipRoot} に渡す props です。
- */
-export type ChipRootProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
-  RenderProps<ChipRootState> & {
+export namespace ChipRootProps {
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<ChipRootState>;
+
+  export type SuruUI = {
     /**
      * チップの色を指定します。
      *
@@ -89,6 +90,12 @@ export type ChipRootProps = Omit<React.ComponentProps<"span">, keyof RenderProps
      */
     variant?: ChipRootVariant | undefined;
   };
+}
+
+/**
+ * {@link ChipRoot} に渡す props です。
+ */
+export type ChipRootProps = ChipRootProps.Render & ChipRootProps.SuruUI & ChipRootProps.HTML;
 
 /**
  * チップのルートコンポーネントです。
@@ -129,15 +136,18 @@ export const ChipRoot: IComponent<ChipRootProps> = function SuiChipRoot(props) {
 export { ChipRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link ChipRootState}
-   */
   export type State = ChipRootState;
 
   /**
    * {@link ChipRootProps}
    */
-  export type Props = ChipRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = ChipRootProps.HTML;
+    export type Render = ChipRootProps.Render;
+    export type SuruUI = ChipRootProps.SuruUI;
+  }
 
   /**
    * {@link ChipRootColor}

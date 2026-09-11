@@ -42,10 +42,26 @@ export { type DrawerHandle as Handle, createDrawerHandle as createHandle };
  */
 export type DrawerProviderState = Drawer.Provider.State;
 
+export namespace DrawerProviderProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Provider>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Drawer.Provider>
+  >;
+
+  export type Render = RenderProps<DrawerProviderState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DrawerProvider} に渡す props です。
  */
-export type DrawerProviderProps = React.ComponentProps<typeof Drawer.Provider>;
+export type DrawerProviderProps = DrawerProviderProps.Render &
+  DrawerProviderProps.SuruUI &
+  DrawerProviderProps.BaseUI &
+  DrawerProviderProps.HTML;
 
 /**
  * 複数のドロワーでインデント効果などの状態を共有するプロバイダーです。
@@ -59,15 +75,19 @@ export const DrawerProvider: IComponent<DrawerProviderProps> = function SuiDrawe
 export { DrawerProvider as Provider };
 
 export namespace Provider {
-  /**
-   * {@link DrawerProviderState}
-   */
   export type State = DrawerProviderState;
 
   /**
    * {@link DrawerProviderProps}
    */
-  export type Props = DrawerProviderProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = DrawerProviderProps.BaseUI;
+    export type HTML = DrawerProviderProps.HTML;
+    export type Render = DrawerProviderProps.Render;
+    export type SuruUI = DrawerProviderProps.SuruUI;
+  }
 }
 
 // IndentBackground
@@ -78,10 +98,26 @@ export namespace Provider {
  */
 export type DrawerIndentBackgroundState = Drawer.IndentBackground.State;
 
+export namespace DrawerIndentBackgroundProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.IndentBackground>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Drawer.IndentBackground>
+  >;
+
+  export type Render = RenderProps<DrawerIndentBackgroundState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DrawerIndentBackground} に渡す props です。
  */
-export type DrawerIndentBackgroundProps = React.ComponentProps<typeof Drawer.IndentBackground>;
+export type DrawerIndentBackgroundProps = DrawerIndentBackgroundProps.Render &
+  DrawerIndentBackgroundProps.SuruUI &
+  DrawerIndentBackgroundProps.BaseUI &
+  DrawerIndentBackgroundProps.HTML;
 
 /**
  * ドロワーが開いているときの背景レイヤーです。
@@ -103,15 +139,19 @@ export const DrawerIndentBackground: IComponent<DrawerIndentBackgroundProps> =
 export { DrawerIndentBackground as IndentBackground };
 
 export namespace IndentBackground {
-  /**
-   * {@link DrawerIndentBackgroundState}
-   */
   export type State = DrawerIndentBackgroundState;
 
   /**
    * {@link DrawerIndentBackgroundProps}
    */
-  export type Props = DrawerIndentBackgroundProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = DrawerIndentBackgroundProps.BaseUI;
+    export type HTML = DrawerIndentBackgroundProps.HTML;
+    export type Render = DrawerIndentBackgroundProps.Render;
+    export type SuruUI = DrawerIndentBackgroundProps.SuruUI;
+  }
 }
 
 // Indent
@@ -122,10 +162,26 @@ export namespace IndentBackground {
  */
 export type DrawerIndentState = Drawer.Indent.State;
 
+export namespace DrawerIndentProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Indent>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Drawer.Indent>
+  >;
+
+  export type Render = RenderProps<DrawerIndentState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DrawerIndent} に渡す props です。
  */
-export type DrawerIndentProps = React.ComponentProps<typeof Drawer.Indent>;
+export type DrawerIndentProps = DrawerIndentProps.Render &
+  DrawerIndentProps.SuruUI &
+  DrawerIndentProps.BaseUI &
+  DrawerIndentProps.HTML;
 
 /**
  * アプリケーションのメイン UI を囲み、ドロワーのインデント状態を受け取る要素です。
@@ -148,15 +204,19 @@ export const DrawerIndent: IComponent<DrawerIndentProps> = function SuiDrawerInd
 export { DrawerIndent as Indent };
 
 export namespace Indent {
-  /**
-   * {@link DrawerIndentState}
-   */
   export type State = DrawerIndentState;
 
   /**
    * {@link DrawerIndentProps}
    */
-  export type Props = DrawerIndentProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = DrawerIndentProps.BaseUI;
+    export type HTML = DrawerIndentProps.HTML;
+    export type Render = DrawerIndentProps.Render;
+    export type SuruUI = DrawerIndentProps.SuruUI;
+  }
 }
 
 // Root
@@ -197,20 +257,36 @@ export type DrawerRootSnapPointChangeEventReason = Drawer.Root.SnapPointChangeEv
  */
 export type DrawerRootState = Drawer.Root.State;
 
+export namespace DrawerRootProps {
+  export type BaseUI<TPayload = any> = Omit<
+    React.ComponentProps<typeof Drawer.Root>,
+    keyof Render | keyof SuruUI<TPayload>
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI<any> | keyof React.ComponentProps<typeof Drawer.Root>
+  >;
+
+  export type Render = RenderProps<DrawerRootState>;
+
+  export type SuruUI<TPayload = any> = {
+    /**
+     * トリガーとドロワーに関連付けるためのハンドルです。
+     */
+    handle: DrawerHandle<TPayload>;
+  };
+}
+
 /**
  * {@link DrawerRoot} に渡す props です。
  *
  * @template TPayload トリガーが送信するデータの型です。
  */
-export type DrawerRootProps<TPayload = any> = Omit<
-  React.ComponentProps<typeof Drawer.Root>,
-  "handle"
-> & {
-  /**
-   * トリガーとドロワーに関連付けるためのハンドルです。
-   */
-  handle: DrawerHandle<TPayload>;
-};
+export type DrawerRootProps<TPayload = any> = DrawerRootProps.Render &
+  DrawerRootProps.SuruUI<TPayload> &
+  DrawerRootProps.BaseUI<TPayload> &
+  DrawerRootProps.HTML;
 
 interface IDrawerRoot extends IComponent<DrawerRootProps> {
   /**
@@ -231,15 +307,22 @@ export const DrawerRoot: IDrawerRoot = function SuiDrawerRoot(props: DrawerRootP
 export { DrawerRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link DrawerRootState}
-   */
   export type State = DrawerRootState;
 
   /**
    * {@link DrawerRootProps}
    */
-  export type Props<TPayload = any> = DrawerRootProps<TPayload>;
+  export type Props<TPayload = any> = Props.Render &
+    Props.SuruUI<TPayload> &
+    Props.BaseUI<TPayload> &
+    Props.HTML;
+
+  export namespace Props {
+    export type BaseUI<TPayload = any> = DrawerRootProps.BaseUI<TPayload>;
+    export type HTML = DrawerRootProps.HTML;
+    export type Render = DrawerRootProps.Render;
+    export type SuruUI<TPayload = any> = DrawerRootProps.SuruUI<TPayload>;
+  }
 
   /**
    * {@link DrawerRootActions}
@@ -280,25 +363,41 @@ export namespace Root {
  */
 export type DrawerTriggerState = Drawer.Trigger.State;
 
+export namespace DrawerTriggerProps {
+  export type BaseUI<TPayload = any> = Omit<
+    React.ComponentProps<typeof Drawer.Trigger>,
+    keyof Render | keyof SuruUI<TPayload>
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI<any> | keyof React.ComponentProps<typeof Drawer.Trigger>
+  >;
+
+  export type Render = RenderProps<DrawerTriggerState>;
+
+  export type SuruUI<TPayload = any> = {
+    /**
+     * ボタンとしてレンダリングする要素です。
+     */
+    children: NonNullable<React.ComponentProps<typeof Drawer.Trigger>["render"]>;
+
+    /**
+     * トリガーとドロワーに関連付けるためのハンドルです。
+     */
+    handle: DrawerHandle<TPayload>;
+  };
+}
+
 /**
  * {@link DrawerTrigger} に渡す props です。
  *
  * @template TPayload トリガーが送信するデータの型です。
  */
-export type DrawerTriggerProps<TPayload = any> = Omit<
-  React.ComponentProps<typeof Drawer.Trigger>,
-  "handle" | "children" | "render"
-> & {
-  /**
-   * ボタンとしてレンダリングする要素です。
-   */
-  children: NonNullable<React.ComponentProps<typeof Drawer.Trigger>["render"]>;
-
-  /**
-   * トリガーとドロワーに関連付けるためのハンドルです。
-   */
-  handle: DrawerHandle<TPayload>;
-};
+export type DrawerTriggerProps<TPayload = any> = DrawerTriggerProps.Render &
+  DrawerTriggerProps.SuruUI<TPayload> &
+  DrawerTriggerProps.BaseUI<TPayload> &
+  DrawerTriggerProps.HTML;
 
 interface IDrawerTrigger extends IComponent<DrawerTriggerProps> {
   /**
@@ -326,15 +425,22 @@ export const DrawerTrigger: IDrawerTrigger = function SuiDrawerTrigger(props: Dr
 export { DrawerTrigger as Trigger };
 
 export namespace Trigger {
-  /**
-   * {@link DrawerTriggerState}
-   */
   export type State = DrawerTriggerState;
 
   /**
    * {@link DrawerTriggerProps}
    */
-  export type Props<TPayload = any> = DrawerTriggerProps<TPayload>;
+  export type Props<TPayload = any> = Props.Render &
+    Props.SuruUI<TPayload> &
+    Props.BaseUI<TPayload> &
+    Props.HTML;
+
+  export namespace Props {
+    export type BaseUI<TPayload = any> = DrawerTriggerProps.BaseUI<TPayload>;
+    export type HTML = DrawerTriggerProps.HTML;
+    export type Render = DrawerTriggerProps.Render;
+    export type SuruUI<TPayload = any> = DrawerTriggerProps.SuruUI<TPayload>;
+  }
 }
 
 // SwipeArea
@@ -345,10 +451,26 @@ export namespace Trigger {
  */
 export type DrawerSwipeAreaState = Drawer.SwipeArea.State;
 
+export namespace DrawerSwipeAreaProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.SwipeArea>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Drawer.SwipeArea>
+  >;
+
+  export type Render = RenderProps<DrawerSwipeAreaState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DrawerSwipeArea} に渡す props です。
  */
-export type DrawerSwipeAreaProps = React.ComponentProps<typeof Drawer.SwipeArea>;
+export type DrawerSwipeAreaProps = DrawerSwipeAreaProps.Render &
+  DrawerSwipeAreaProps.SuruUI &
+  DrawerSwipeAreaProps.BaseUI &
+  DrawerSwipeAreaProps.HTML;
 
 /**
  * 画面端からのスワイプでドロワーを開く領域です。
@@ -373,15 +495,19 @@ export const DrawerSwipeArea: IComponent<DrawerSwipeAreaProps> = function SuiDra
 export { DrawerSwipeArea as SwipeArea };
 
 export namespace SwipeArea {
-  /**
-   * {@link DrawerSwipeAreaState}
-   */
   export type State = DrawerSwipeAreaState;
 
   /**
    * {@link DrawerSwipeAreaProps}
    */
-  export type Props = DrawerSwipeAreaProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = DrawerSwipeAreaProps.BaseUI;
+    export type HTML = DrawerSwipeAreaProps.HTML;
+    export type Render = DrawerSwipeAreaProps.Render;
+    export type SuruUI = DrawerSwipeAreaProps.SuruUI;
+  }
 }
 
 // VirtualKeyboardProvider
@@ -392,12 +518,29 @@ export namespace SwipeArea {
  */
 export type DrawerVirtualKeyboardProviderState = Drawer.VirtualKeyboardProvider.State;
 
+export namespace DrawerVirtualKeyboardProviderProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Drawer.VirtualKeyboardProvider>,
+    keyof Render
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Drawer.VirtualKeyboardProvider>
+  >;
+
+  export type Render = RenderProps<DrawerVirtualKeyboardProviderState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DrawerVirtualKeyboardProvider} に渡す props です。
  */
-export type DrawerVirtualKeyboardProviderProps = React.ComponentProps<
-  typeof Drawer.VirtualKeyboardProvider
->;
+export type DrawerVirtualKeyboardProviderProps = DrawerVirtualKeyboardProviderProps.Render &
+  DrawerVirtualKeyboardProviderProps.SuruUI &
+  DrawerVirtualKeyboardProviderProps.BaseUI &
+  DrawerVirtualKeyboardProviderProps.HTML;
 
 /**
  * ソフトウェアキーボードに合わせたフォーカスとスクロールを管理するプロバイダーです。
@@ -412,15 +555,19 @@ export const DrawerVirtualKeyboardProvider: IComponent<DrawerVirtualKeyboardProv
 export { DrawerVirtualKeyboardProvider as VirtualKeyboardProvider };
 
 export namespace VirtualKeyboardProvider {
-  /**
-   * {@link DrawerVirtualKeyboardProviderState}
-   */
   export type State = DrawerVirtualKeyboardProviderState;
 
   /**
    * {@link DrawerVirtualKeyboardProviderProps}
    */
-  export type Props = DrawerVirtualKeyboardProviderProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = DrawerVirtualKeyboardProviderProps.BaseUI;
+    export type HTML = DrawerVirtualKeyboardProviderProps.HTML;
+    export type Render = DrawerVirtualKeyboardProviderProps.Render;
+    export type SuruUI = DrawerVirtualKeyboardProviderProps.SuruUI;
+  }
 }
 
 // Portal
@@ -431,10 +578,26 @@ export namespace VirtualKeyboardProvider {
  */
 export type DrawerPortalState = Drawer.Portal.State;
 
+export namespace DrawerPortalProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Portal>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Drawer.Portal>
+  >;
+
+  export type Render = RenderProps<DrawerPortalState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DrawerPortal} に渡す props です。
  */
-export type DrawerPortalProps = React.ComponentProps<typeof Drawer.Portal>;
+export type DrawerPortalProps = DrawerPortalProps.Render &
+  DrawerPortalProps.SuruUI &
+  DrawerPortalProps.BaseUI &
+  DrawerPortalProps.HTML;
 
 /**
  * ドロワーを DOM の別の場所に配置するコンポーネントです。
@@ -461,15 +624,19 @@ export const DrawerPortal: IComponent<DrawerPortalProps> = function SuiDrawerPor
 export { DrawerPortal as Portal };
 
 export namespace Portal {
-  /**
-   * {@link DrawerPortalState}
-   */
   export type State = DrawerPortalState;
 
   /**
    * {@link DrawerPortalProps}
    */
-  export type Props = DrawerPortalProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = DrawerPortalProps.BaseUI;
+    export type HTML = DrawerPortalProps.HTML;
+    export type Render = DrawerPortalProps.Render;
+    export type SuruUI = DrawerPortalProps.SuruUI;
+  }
 }
 
 // Backdrop
@@ -480,10 +647,26 @@ export namespace Portal {
  */
 export type DrawerBackdropState = Drawer.Backdrop.State;
 
+export namespace DrawerBackdropProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Backdrop>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Drawer.Backdrop>
+  >;
+
+  export type Render = RenderProps<DrawerBackdropState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DrawerBackdrop} に渡す props です。
  */
-export type DrawerBackdropProps = React.ComponentProps<typeof Drawer.Backdrop>;
+export type DrawerBackdropProps = DrawerBackdropProps.Render &
+  DrawerBackdropProps.SuruUI &
+  DrawerBackdropProps.BaseUI &
+  DrawerBackdropProps.HTML;
 
 /**
  * ポップアップの背後に表示されるオーバーレイコンポーネントです。
@@ -508,15 +691,19 @@ export const DrawerBackdrop: IComponent<DrawerBackdropProps> = function SuiDrawe
 export { DrawerBackdrop as Backdrop };
 
 export namespace Backdrop {
-  /**
-   * {@link DrawerBackdropState}
-   */
   export type State = DrawerBackdropState;
 
   /**
    * {@link DrawerBackdropProps}
    */
-  export type Props = DrawerBackdropProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = DrawerBackdropProps.BaseUI;
+    export type HTML = DrawerBackdropProps.HTML;
+    export type Render = DrawerBackdropProps.Render;
+    export type SuruUI = DrawerBackdropProps.SuruUI;
+  }
 }
 
 // Viewport
@@ -527,10 +714,26 @@ export namespace Backdrop {
  */
 export type DrawerViewportState = Drawer.Viewport.State;
 
+export namespace DrawerViewportProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Viewport>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Drawer.Viewport>
+  >;
+
+  export type Render = RenderProps<DrawerViewportState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DrawerViewport} に渡す props です。
  */
-export type DrawerViewportProps = React.ComponentProps<typeof Drawer.Viewport>;
+export type DrawerViewportProps = DrawerViewportProps.Render &
+  DrawerViewportProps.SuruUI &
+  DrawerViewportProps.BaseUI &
+  DrawerViewportProps.HTML;
 
 /**
  * ポップアップの配置コンテナーコンポーネントです。
@@ -546,15 +749,19 @@ export const DrawerViewport: IComponent<DrawerViewportProps> = function SuiDrawe
 export { DrawerViewport as Viewport };
 
 export namespace Viewport {
-  /**
-   * {@link DrawerViewportState}
-   */
   export type State = DrawerViewportState;
 
   /**
    * {@link DrawerViewportProps}
    */
-  export type Props = DrawerViewportProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = DrawerViewportProps.BaseUI;
+    export type HTML = DrawerViewportProps.HTML;
+    export type Render = DrawerViewportProps.Render;
+    export type SuruUI = DrawerViewportProps.SuruUI;
+  }
 }
 
 // Popup
@@ -565,10 +772,26 @@ export namespace Viewport {
  */
 export type DrawerPopupState = Drawer.Popup.State;
 
+export namespace DrawerPopupProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Popup>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Drawer.Popup>
+  >;
+
+  export type Render = RenderProps<DrawerPopupState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DrawerPopup} に渡す props です。
  */
-export type DrawerPopupProps = React.ComponentProps<typeof Drawer.Popup>;
+export type DrawerPopupProps = DrawerPopupProps.Render &
+  DrawerPopupProps.SuruUI &
+  DrawerPopupProps.BaseUI &
+  DrawerPopupProps.HTML;
 
 /**
  * ドロワーの本文を表示するコンポーネントです。
@@ -599,15 +822,19 @@ export const DrawerPopup: IComponent<DrawerPopupProps> = function SuiDrawerPopup
 export { DrawerPopup as Popup };
 
 export namespace Popup {
-  /**
-   * {@link DrawerPopupState}
-   */
   export type State = DrawerPopupState;
 
   /**
    * {@link DrawerPopupProps}
    */
-  export type Props = DrawerPopupProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = DrawerPopupProps.BaseUI;
+    export type HTML = DrawerPopupProps.HTML;
+    export type Render = DrawerPopupProps.Render;
+    export type SuruUI = DrawerPopupProps.SuruUI;
+  }
 }
 
 // Controls
@@ -618,11 +845,12 @@ export namespace Popup {
  */
 export type DrawerControlsState = {};
 
-/**
- * {@link DrawerControls} に渡す props です。
- */
-export type DrawerControlsProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<DrawerControlsState> & {
+export namespace DrawerControlsProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<DrawerControlsState>;
+
+  export type SuruUI = {
     /**
      * 絶対位置として配置するかを指定します。
      *
@@ -630,6 +858,14 @@ export type DrawerControlsProps = Omit<React.ComponentProps<"div">, keyof Render
      */
     absolute?: boolean | undefined;
   };
+}
+
+/**
+ * {@link DrawerControls} に渡す props です。
+ */
+export type DrawerControlsProps = DrawerControlsProps.Render &
+  DrawerControlsProps.SuruUI &
+  DrawerControlsProps.HTML;
 
 /**
  * ドロワーのコントロールコンポーネントです。
@@ -655,15 +891,18 @@ export const DrawerControls: IComponent<DrawerControlsProps> = function SuiDrawe
 export { DrawerControls as Controls };
 
 export namespace Controls {
-  /**
-   * {@link DrawerControlsState}
-   */
   export type State = DrawerControlsState;
 
   /**
    * {@link DrawerControlsProps}
    */
-  export type Props = DrawerControlsProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = DrawerControlsProps.HTML;
+    export type Render = DrawerControlsProps.Render;
+    export type SuruUI = DrawerControlsProps.SuruUI;
+  }
 }
 
 // Content
@@ -674,10 +913,26 @@ export namespace Controls {
  */
 export type DrawerContentState = Drawer.Content.State;
 
+export namespace DrawerContentProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Content>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Drawer.Content>
+  >;
+
+  export type Render = RenderProps<DrawerContentState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DrawerContent} に渡す props です。
  */
-export type DrawerContentProps = React.ComponentProps<typeof Drawer.Content>;
+export type DrawerContentProps = DrawerContentProps.Render &
+  DrawerContentProps.SuruUI &
+  DrawerContentProps.BaseUI &
+  DrawerContentProps.HTML;
 
 /**
  * ドロワー内のテキスト選択とスワイプ操作を分けるコンテンツコンポーネントです。
@@ -710,11 +965,20 @@ export namespace Content {
  */
 export type DrawerHeaderState = {};
 
+export namespace DrawerHeaderProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<DrawerHeaderState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DrawerHeader} に渡す props です。
  */
-export type DrawerHeaderProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<DrawerHeaderState>;
+export type DrawerHeaderProps = DrawerHeaderProps.Render &
+  DrawerHeaderProps.SuruUI &
+  DrawerHeaderProps.HTML;
 
 /**
  * ドロワーのヘッダーコンポーネントです。
@@ -734,15 +998,18 @@ export const DrawerHeader: IComponent<DrawerHeaderProps> = function SuiDrawerHea
 export { DrawerHeader as Header };
 
 export namespace Header {
-  /**
-   * {@link DrawerHeaderState}
-   */
   export type State = DrawerHeaderState;
 
   /**
    * {@link DrawerHeaderProps}
    */
-  export type Props = DrawerHeaderProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = DrawerHeaderProps.HTML;
+    export type Render = DrawerHeaderProps.Render;
+    export type SuruUI = DrawerHeaderProps.SuruUI;
+  }
 }
 
 // Title
@@ -753,10 +1020,26 @@ export namespace Header {
  */
 export type DrawerTitleState = Drawer.Title.State;
 
+export namespace DrawerTitleProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Title>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"h2">,
+    keyof Render | keyof React.ComponentProps<typeof Drawer.Title>
+  >;
+
+  export type Render = RenderProps<DrawerTitleState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DrawerTitle} に渡す props です。
  */
-export type DrawerTitleProps = React.ComponentProps<typeof Drawer.Title>;
+export type DrawerTitleProps = DrawerTitleProps.Render &
+  DrawerTitleProps.SuruUI &
+  DrawerTitleProps.BaseUI &
+  DrawerTitleProps.HTML;
 
 /**
  * ドロワーの見出しを表示するコンポーネントです。
@@ -770,15 +1053,19 @@ export const DrawerTitle: IComponent<DrawerTitleProps> = function SuiDrawerTitle
 export { DrawerTitle as Title };
 
 export namespace Title {
-  /**
-   * {@link DrawerTitleState}
-   */
   export type State = DrawerTitleState;
 
   /**
    * {@link DrawerTitleProps}
    */
-  export type Props = DrawerTitleProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = DrawerTitleProps.BaseUI;
+    export type HTML = DrawerTitleProps.HTML;
+    export type Render = DrawerTitleProps.Render;
+    export type SuruUI = DrawerTitleProps.SuruUI;
+  }
 }
 
 // Description
@@ -789,10 +1076,26 @@ export namespace Title {
  */
 export type DrawerDescriptionState = Drawer.Description.State;
 
+export namespace DrawerDescriptionProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Description>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"p">,
+    keyof Render | keyof React.ComponentProps<typeof Drawer.Description>
+  >;
+
+  export type Render = RenderProps<DrawerDescriptionState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DrawerDescription} に渡す props です。
  */
-export type DrawerDescriptionProps = React.ComponentProps<typeof Drawer.Description>;
+export type DrawerDescriptionProps = DrawerDescriptionProps.Render &
+  DrawerDescriptionProps.SuruUI &
+  DrawerDescriptionProps.BaseUI &
+  DrawerDescriptionProps.HTML;
 
 /**
  * ドロワーの内容を表示するコンポーネントです。
@@ -808,15 +1111,19 @@ export const DrawerDescription: IComponent<DrawerDescriptionProps> = function Su
 export { DrawerDescription as Description };
 
 export namespace Description {
-  /**
-   * {@link DrawerDescriptionState}
-   */
   export type State = DrawerDescriptionState;
 
   /**
    * {@link DrawerDescriptionProps}
    */
-  export type Props = DrawerDescriptionProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = DrawerDescriptionProps.BaseUI;
+    export type HTML = DrawerDescriptionProps.HTML;
+    export type Render = DrawerDescriptionProps.Render;
+    export type SuruUI = DrawerDescriptionProps.SuruUI;
+  }
 }
 
 // Body
@@ -827,11 +1134,20 @@ export namespace Description {
  */
 export type DrawerBodyState = {};
 
+export namespace DrawerBodyProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<DrawerBodyState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DrawerBody} に渡す props です。
  */
-export type DrawerBodyProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<DrawerBodyState>;
+export type DrawerBodyProps = DrawerBodyProps.Render &
+  DrawerBodyProps.SuruUI &
+  DrawerBodyProps.HTML;
 
 /**
  * ドロワーのボディーコンポーネントです。
@@ -851,15 +1167,18 @@ export const DrawerBody: IComponent<DrawerBodyProps> = function SuiDrawerBody(pr
 export { DrawerBody as Body };
 
 export namespace Body {
-  /**
-   * {@link DrawerBodyState}
-   */
   export type State = DrawerBodyState;
 
   /**
    * {@link DrawerBodyProps}
    */
-  export type Props = DrawerBodyProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = DrawerBodyProps.HTML;
+    export type Render = DrawerBodyProps.Render;
+    export type SuruUI = DrawerBodyProps.SuruUI;
+  }
 }
 
 // Footer
@@ -870,11 +1189,20 @@ export namespace Body {
  */
 export type DrawerFooterState = {};
 
+export namespace DrawerFooterProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<DrawerFooterState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link DrawerFooter} に渡す props です。
  */
-export type DrawerFooterProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<DrawerFooterState>;
+export type DrawerFooterProps = DrawerFooterProps.Render &
+  DrawerFooterProps.SuruUI &
+  DrawerFooterProps.HTML;
 
 /**
  * ドロワーのフッターコンポーネントです。
@@ -894,15 +1222,18 @@ export const DrawerFooter: IComponent<DrawerFooterProps> = function SuiDrawerFoo
 export { DrawerFooter as Footer };
 
 export namespace Footer {
-  /**
-   * {@link DrawerFooterState}
-   */
   export type State = DrawerFooterState;
 
   /**
    * {@link DrawerFooterProps}
    */
-  export type Props = DrawerFooterProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = DrawerFooterProps.HTML;
+    export type Render = DrawerFooterProps.Render;
+    export type SuruUI = DrawerFooterProps.SuruUI;
+  }
 }
 
 // Close
@@ -913,18 +1244,31 @@ export namespace Footer {
  */
 export type DrawerCloseState = Drawer.Close.State;
 
+export namespace DrawerCloseProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Close>, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Close>
+  >;
+
+  export type Render = RenderProps<DrawerCloseState>;
+
+  export type SuruUI = {
+    /**
+     * ボタンとしてレンダリングする要素です。
+     */
+    children: NonNullable<React.ComponentProps<typeof Drawer.Close>["render"]>;
+  };
+}
+
 /**
  * {@link DrawerClose} に渡す props です。
  */
-export type DrawerCloseProps = Omit<
-  React.ComponentProps<typeof Drawer.Close>,
-  "children" | "render"
-> & {
-  /**
-   * ボタンとしてレンダリングする要素です。
-   */
-  children: NonNullable<React.ComponentProps<typeof Drawer.Close>["render"]>;
-};
+export type DrawerCloseProps = DrawerCloseProps.Render &
+  DrawerCloseProps.SuruUI &
+  DrawerCloseProps.BaseUI &
+  DrawerCloseProps.HTML;
 
 /**
  * ドロワーを閉じるボタンコンポーネントです。
@@ -940,13 +1284,17 @@ export const DrawerClose: IComponent<DrawerCloseProps> = function SuiDrawerClose
 export { DrawerClose as Close };
 
 export namespace Close {
-  /**
-   * {@link DrawerCloseState}
-   */
   export type State = DrawerCloseState;
 
   /**
    * {@link DrawerCloseProps}
    */
-  export type Props = DrawerCloseProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = DrawerCloseProps.BaseUI;
+    export type HTML = DrawerCloseProps.HTML;
+    export type Render = DrawerCloseProps.Render;
+    export type SuruUI = DrawerCloseProps.SuruUI;
+  }
 }

@@ -2,6 +2,7 @@ import { Tabs as BaseTabs } from "@base-ui/react/tabs";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
+import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
@@ -69,47 +70,63 @@ export type TabsRootVariant = "segments" | "line";
  */
 export type TabsRootState = BaseTabs.Root.State;
 
+export namespace TabsRootProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseTabs.Root>,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<TabsRootState>;
+
+  export type SuruUI = {
+    /**
+     * 選択中のタブの主な外観を指定します。
+     *
+     * `variant` が `"segments"` の場合のみ有効です。
+     *
+     * @default "solid"
+     */
+    activeVariant?: TabsRootActiveVariant | undefined;
+
+    /**
+     * Tabs の枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * Tabs の角丸の大きさを指定します。
+     *
+     * 既定値は {@link TabsRootProps.size|size}
+     */
+    radius?: TabsRootRadius | undefined;
+
+    /**
+     * Tabs の大きさを指定します。
+     *
+     * @default "md"
+     */
+    size?: TabsRootSize | undefined;
+
+    /**
+     * Tabs の主な外観を指定します。
+     *
+     * @default "line"
+     */
+    variant?: TabsRootVariant | undefined;
+  };
+}
+
 /**
  * {@link TabsRoot} に渡す props です。
  */
-export type TabsRootProps = React.ComponentProps<typeof BaseTabs.Root> & {
-  /**
-   * 選択中のタブの主な外観を指定します。
-   *
-   * `variant` が `"segments"` の場合のみ有効です。
-   *
-   * @default "solid"
-   */
-  activeVariant?: TabsRootActiveVariant | undefined;
-
-  /**
-   * Tabs の枠線を表示するかどうかを指定します。
-   *
-   * @default false
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * Tabs の角丸の大きさを指定します。
-   *
-   * 既定値は {@link TabsRootProps.size|size}
-   */
-  radius?: TabsRootRadius | undefined;
-
-  /**
-   * Tabs の大きさを指定します。
-   *
-   * @default "md"
-   */
-  size?: TabsRootSize | undefined;
-
-  /**
-   * Tabs の主な外観を指定します。
-   *
-   * @default "line"
-   */
-  variant?: TabsRootVariant | undefined;
-};
+export type TabsRootProps = TabsRootProps.Render &
+  TabsRootProps.SuruUI &
+  TabsRootProps.BaseUI &
+  TabsRootProps.HTML;
 
 /**
  * Tabs のルート要素です。
@@ -162,7 +179,29 @@ export namespace Root {
   /**
    * {@link TabsRootProps}
    */
-  export type Props = TabsRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link TabsRootProps.BaseUI}
+     */
+    export type BaseUI = TabsRootProps.BaseUI;
+
+    /**
+     * {@link TabsRootProps.HTML}
+     */
+    export type HTML = TabsRootProps.HTML;
+
+    /**
+     * {@link TabsRootProps.Render}
+     */
+    export type Render = TabsRootProps.Render;
+
+    /**
+     * {@link TabsRootProps.SuruUI}
+     */
+    export type SuruUI = TabsRootProps.SuruUI;
+  }
 
   /**
    * {@link TabsRootActiveVariant}
@@ -208,10 +247,26 @@ export namespace Root {
  */
 export type TabsListState = BaseTabs.List.State;
 
+export namespace TabsListProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseTabs.List>,
+    keyof Render | keyof React.ComponentProps<"div">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<TabsListState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link TabsList} に渡す props です。
  */
-export type TabsListProps = React.ComponentProps<typeof BaseTabs.List>;
+export type TabsListProps = TabsListProps.Render &
+  TabsListProps.SuruUI &
+  TabsListProps.BaseUI &
+  TabsListProps.HTML;
 
 /**
  * 個々の Tab ボタンをまとめるリスト要素です。
@@ -244,7 +299,29 @@ export namespace List {
   /**
    * {@link TabsListProps}
    */
-  export type Props = TabsListProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link TabsListProps.BaseUI}
+     */
+    export type BaseUI = TabsListProps.BaseUI;
+
+    /**
+     * {@link TabsListProps.HTML}
+     */
+    export type HTML = TabsListProps.HTML;
+
+    /**
+     * {@link TabsListProps.Render}
+     */
+    export type Render = TabsListProps.Render;
+
+    /**
+     * {@link TabsListProps.SuruUI}
+     */
+    export type SuruUI = TabsListProps.SuruUI;
+  }
 }
 
 // Tab
@@ -286,10 +363,23 @@ export type TabsTabValue = BaseTabs.Tab.Value;
  */
 export type TabsTabState = BaseTabs.Tab.State;
 
+export namespace TabsTabProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseTabs.Tab>, keyof Render>;
+
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render>;
+
+  export type Render = RenderProps<TabsTabState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link TabsTab} に渡す props です。
  */
-export type TabsTabProps = React.ComponentProps<typeof BaseTabs.Tab>;
+export type TabsTabProps = TabsTabProps.Render &
+  TabsTabProps.SuruUI &
+  TabsTabProps.BaseUI &
+  TabsTabProps.HTML;
 
 /**
  * 対応するパネルを切り替える Tab ボタンです。
@@ -324,7 +414,29 @@ export namespace Tab {
   /**
    * {@link TabsTabProps}
    */
-  export type Props = TabsTabProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link TabsTabProps.BaseUI}
+     */
+    export type BaseUI = TabsTabProps.BaseUI;
+
+    /**
+     * {@link TabsTabProps.HTML}
+     */
+    export type HTML = TabsTabProps.HTML;
+
+    /**
+     * {@link TabsTabProps.Render}
+     */
+    export type Render = TabsTabProps.Render;
+
+    /**
+     * {@link TabsTabProps.SuruUI}
+     */
+    export type SuruUI = TabsTabProps.SuruUI;
+  }
 
   /**
    * {@link TabsTabActivationDirection}
@@ -360,10 +472,26 @@ export namespace Tab {
  */
 export type TabsIndicatorState = BaseTabs.Indicator.State;
 
+export namespace TabsIndicatorProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseTabs.Indicator>,
+    keyof Render | keyof React.ComponentProps<"span">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
+
+  export type Render = RenderProps<TabsIndicatorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link TabsIndicator} に渡す props です。
  */
-export type TabsIndicatorProps = React.ComponentProps<typeof BaseTabs.Indicator>;
+export type TabsIndicatorProps = TabsIndicatorProps.Render &
+  TabsIndicatorProps.SuruUI &
+  TabsIndicatorProps.BaseUI &
+  TabsIndicatorProps.HTML;
 
 /**
  * アクティブな Tab の位置に追従するインジケーター要素です。
@@ -390,7 +518,29 @@ export namespace Indicator {
   /**
    * {@link TabsIndicatorProps}
    */
-  export type Props = TabsIndicatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link TabsIndicatorProps.BaseUI}
+     */
+    export type BaseUI = TabsIndicatorProps.BaseUI;
+
+    /**
+     * {@link TabsIndicatorProps.HTML}
+     */
+    export type HTML = TabsIndicatorProps.HTML;
+
+    /**
+     * {@link TabsIndicatorProps.Render}
+     */
+    export type Render = TabsIndicatorProps.Render;
+
+    /**
+     * {@link TabsIndicatorProps.SuruUI}
+     */
+    export type SuruUI = TabsIndicatorProps.SuruUI;
+  }
 }
 
 // Panel
@@ -406,10 +556,26 @@ export type TabsPanelMetadata = BaseTabs.Panel.Metadata;
  */
 export type TabsPanelState = BaseTabs.Panel.State;
 
+export namespace TabsPanelProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseTabs.Panel>,
+    keyof Render | keyof React.ComponentProps<"div">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<TabsPanelState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link TabsPanel} に渡す props です。
  */
-export type TabsPanelProps = React.ComponentProps<typeof BaseTabs.Panel>;
+export type TabsPanelProps = TabsPanelProps.Render &
+  TabsPanelProps.SuruUI &
+  TabsPanelProps.BaseUI &
+  TabsPanelProps.HTML;
 
 /**
  * アクティブな Tab に対応するコンテンツを表示するパネル要素です。
@@ -434,7 +600,29 @@ export namespace Panel {
   /**
    * {@link TabsPanelProps}
    */
-  export type Props = TabsPanelProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link TabsPanelProps.BaseUI}
+     */
+    export type BaseUI = TabsPanelProps.BaseUI;
+
+    /**
+     * {@link TabsPanelProps.HTML}
+     */
+    export type HTML = TabsPanelProps.HTML;
+
+    /**
+     * {@link TabsPanelProps.Render}
+     */
+    export type Render = TabsPanelProps.Render;
+
+    /**
+     * {@link TabsPanelProps.SuruUI}
+     */
+    export type SuruUI = TabsPanelProps.SuruUI;
+  }
 
   /**
    * {@link TabsPanelMetadata}

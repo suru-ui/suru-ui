@@ -66,11 +66,12 @@ export type BadgeRootVariant = "standard" | "dot";
  */
 export type BadgeRootState = {};
 
-/**
- * {@link BadgeRoot} に渡す props です。
- */
-export type BadgeRootProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
-  RenderProps<BadgeRootState> & {
+export namespace BadgeRootProps {
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<BadgeRootState>;
+
+  export type SuruUI = {
     /**
      * バッジの色を指定します。
      *
@@ -129,6 +130,12 @@ export type BadgeRootProps = Omit<React.ComponentProps<"span">, keyof RenderProp
      */
     variant?: BadgeRootVariant | undefined;
   };
+}
+
+/**
+ * {@link BadgeRoot} に渡す props です。
+ */
+export type BadgeRootProps = BadgeRootProps.Render & BadgeRootProps.SuruUI & BadgeRootProps.HTML;
 
 /**
  * バッジのルートコンポーネントです。
@@ -185,7 +192,13 @@ export namespace Root {
   /**
    * {@link BadgeRootProps}
    */
-  export type Props = BadgeRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = BadgeRootProps.HTML;
+    export type Render = BadgeRootProps.Render;
+    export type SuruUI = BadgeRootProps.SuruUI;
+  }
 
   /**
    * {@link BadgeRootColor}

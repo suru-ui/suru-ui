@@ -136,11 +136,12 @@ export type AvatarGroupRootSize = Size;
  */
 export type AvatarGroupRootState = {};
 
-/**
- * {@link AvatarGroupRoot} に渡す props です。
- */
-export type AvatarGroupRootProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<AvatarGroupRootState> & {
+export namespace AvatarGroupRootProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<AvatarGroupRootState>;
+
+  export type SuruUI = {
     /**
      * 各アバターの背景色を指定します。
      *
@@ -175,6 +176,14 @@ export type AvatarGroupRootProps = Omit<React.ComponentProps<"div">, keyof Rende
      */
     size?: AvatarGroupRootSize | undefined;
   };
+}
+
+/**
+ * {@link AvatarGroupRoot} に渡す props です。
+ */
+export type AvatarGroupRootProps = AvatarGroupRootProps.Render &
+  AvatarGroupRootProps.SuruUI &
+  AvatarGroupRootProps.HTML;
 
 const colors = /*#__PURE__*/ COLORS.filter((color) => color !== "grey");
 
@@ -242,7 +251,13 @@ export namespace Root {
   /**
    * {@link AvatarGroupRootProps}
    */
-  export type Props = AvatarGroupRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = AvatarGroupRootProps.HTML;
+    export type Render = AvatarGroupRootProps.Render;
+    export type SuruUI = AvatarGroupRootProps.SuruUI;
+  }
 
   /**
    * {@link AvatarGroupRootColor}
@@ -268,10 +283,23 @@ export namespace Root {
  */
 export type AvatarGroupSurplusState = AvatarRootState;
 
+export namespace AvatarGroupSurplusProps {
+  export type BaseUI = Omit<AvatarRootProps, keyof Render>;
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof AvatarRootProps>;
+
+  export type Render = RenderProps<AvatarGroupSurplusState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AvatarGroupSurplus} に渡す props です。
  */
-export type AvatarGroupSurplusProps = AvatarRootProps;
+export type AvatarGroupSurplusProps = AvatarGroupSurplusProps.Render &
+  AvatarGroupSurplusProps.SuruUI &
+  AvatarGroupSurplusProps.BaseUI &
+  AvatarGroupSurplusProps.HTML;
 
 /**
  * 余剰分のアバターの数などを表示するコンポーネントです。
@@ -294,5 +322,12 @@ export namespace Surplus {
   /**
    * {@link AvatarGroupSurplusProps}
    */
-  export type Props = AvatarGroupSurplusProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AvatarGroupSurplusProps.BaseUI;
+    export type HTML = AvatarGroupSurplusProps.HTML;
+    export type Render = AvatarGroupSurplusProps.Render;
+    export type SuruUI = AvatarGroupSurplusProps.SuruUI;
+  }
 }

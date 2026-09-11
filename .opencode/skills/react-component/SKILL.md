@@ -5,11 +5,12 @@ description: Suru UI の React コンポーネント (`packages/react/src/<名�
 
 # React コンポーネント
 
-基準となる実装は次の 3 件です。
+基準となる実装は次の 4 件です。
 
 - `packages/react/src/accordion/`
 - `packages/react/src/alert-dialog/`
 - `packages/react/src/breadcrumb/` (項目の所有と描画を分ける場合の見本です)
+- `packages/react/src/button/` (Props の分解と結合の見本です)
 
 CSS は `../css/SKILL.md`、JSDoc と日本語は `../jsdoc/SKILL.md` と `../japanese/SKILL.md` に従います。
 
@@ -93,14 +94,118 @@ export type AccordionRootVariant = "naked" | "liquid";
 
 Root の独自 props はキー昇順にします。別の prop に連動する既定値は `@default` を付けず、参照先を示します (例: `既定値は {@link AccordionRootProps.size|size}`)。
 
-Props は描画先で使い分けます。
+### Props の分解
 
-| 描画先 | 形 |
-| --- | --- |
-| Base UI そのまま | `React.ComponentProps<typeof BaseUI.X>` |
-| Base UI + 独自フラグ | 上記 `& { unstyled?: boolean \| undefined; }` |
-| 素の要素 | `Omit<React.ComponentProps<"div">, keyof RenderProps> & RenderProps<State> & { ... }` |
-| Base UI の `render` を `children` で受ける | `Omit<..., "children" \| "render"> & { children: NonNullable<...["render"]>; }` |
+各パーツの `Props` は `Render` / `SuruUI` / `BaseUI` / `HTML` の区分に namespace で分解し、`&` で結合します。
+
+- `Render`: 状態を持つ props です。`RenderProps<State>` にします。
+- `SuruUI`: Suru UI のために定義された props です。独自 props の JSDoc はここに書きます。
+- `BaseUI`: Base UI のために定義された props です。Base UI ラッパーの場合のみ作ります。素の要素では作りません。
+- `HTML`: その他 HTML 要素に渡される props です。
+- `Render` / `SuruUI` / `BaseUI` / `HTML` 自体に JSDoc は付けません。
+- 結合した `Props` 本体の JSDoc (`{@link Xxx} に渡す props です。`) は残します。
+
+素の要素の場合です。
+
+```tsx
+export namespace AlertRootProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<AlertRootState>;
+
+  export type SuruUI = {
+    /**
+     * アラートの色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: AlertRootColor | undefined;
+  };
+}
+
+/**
+ * {@link AlertRoot} に渡す props です。
+ */
+export type AlertRootProps = AlertRootProps.Render & AlertRootProps.SuruUI & AlertRootProps.HTML;
+```
+
+タグは既存の `React.ComponentProps<"xxx">` をそのまま使います。
+
+Base UI ラッパーの場合です。`BaseUI` が加わります。
+
+```tsx
+export namespace SwitchRootProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Switch.Root>,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"span">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<SwitchRootState>;
+
+  export type SuruUI = {
+    // ...独自 props (キー昇順)
+  };
+}
+
+/**
+ * {@link SwitchRoot} に渡す props です。
+ */
+export type SwitchRootProps = SwitchRootProps.Render &
+  SwitchRootProps.SuruUI &
+  SwitchRootProps.BaseUI &
+  SwitchRootProps.HTML;
+```
+
+タグは描画先の要素から決めます (例: Popup / Content → `"div"`、Trigger → `"button"`、不明なら `"div"`)。`BaseUI` 側のタグ除外で型競合が出る場合は、タグ除外を外して `BaseUI = Omit<..., keyof Render | keyof SuruUI>` にします。
+
+独自 props がない場合は `SuruUI` を空にします。このとき `keyof SuruUI` は `never` になるため、Omit から除きます。
+
+```tsx
+export namespace TabsListProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseTabs.List>,
+    keyof Render | keyof React.ComponentProps<"div">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<TabsListState>;
+
+  export type SuruUI = {};
+}
+```
+
+汎型がある場合は各区分に引き継ぎます。`keyof` は `any` で受けます。
+
+```tsx
+export namespace AccordionRootProps {
+  export type BaseUI<TItem = any, TValue = any> = Omit<
+    React.ComponentProps<typeof Accordion.Root<TValue>>,
+    keyof Render<TValue> | keyof SuruUI<TItem>
+  >;
+
+  export type Render<TValue = any> = RenderProps<AccordionRootState<TValue>>;
+
+  export type SuruUI<TItem = any> = {
+    // ...独自 props (キー昇順)
+  };
+};
+
+/**
+ * {@link AccordionRoot} に渡す props です。
+ *
+ * @template TItem 項目の型です。
+ * @template TValue 項目の値の型です。
+ */
+export type AccordionRootProps<TItem = any, TValue = any> = AccordionRootProps.Render<TValue> &
+  AccordionRootProps.SuruUI<TItem> &
+  AccordionRootProps.BaseUI<TItem, TValue> &
+  AccordionRootProps.HTML;
+```
+
+他コンポーネントの Props を土台にする場合 (例: ToggleButton が Button を包む) は、短名 (`Button.Root.Props`) ではなく完全な交差型 (`Button.ButtonRootProps`) を参照します。
 
 HTML 属性と衝突する名前は避け、別名にします (例: `title` と区別するための `htmlTitle`)。
 
@@ -185,11 +290,15 @@ export interface IXxxItemRenderer<TItem = any> {
 }
 ```
 
-`Props` には次の 2 つを足します。素の要素の `children` は `ReactNode` のため、そのまま交差させると関数が代入できなくなります。要素側から `"children"` を除きます。
+`Props` には次の 2 つを足します。どちらも `SuruUI` に入れます。素の要素の `children` は `ReactNode` のため、そのまま交差させると関数が代入できなくなります。`keyof SuruUI` で要素側から除かれます。
 
 ```tsx
-export type XxxProps<TItem = any> = Omit<React.ComponentProps<"ol">, keyof RenderProps | "children"> &
-  RenderProps<XxxState> & {
+export namespace XxxProps {
+  export type HTML = Omit<React.ComponentProps<"ol">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<XxxState>;
+
+  export type SuruUI<TItem = any> = {
     /**
      * 内容、または各項目をレンダリングする関数です。
      *
@@ -204,6 +313,14 @@ export type XxxProps<TItem = any> = Omit<React.ComponentProps<"ol">, keyof Rende
      */
     items?: readonly TItem[] | undefined;
   };
+}
+
+/**
+ * {@link Xxx} に渡す props です。
+ *
+ * @template TItem 項目の型です。
+ */
+export type XxxProps<TItem = any> = XxxProps.Render & XxxProps.SuruUI<TItem> & XxxProps.HTML;
 ```
 
 描画では関数か否かで分けます。既定子に既定レンダラーを与えます。
@@ -218,7 +335,7 @@ namespace には `ItemObject` と `IItemRenderer` を足します。汎型は既
 
 ### 短名と namespace
 
-各パーツの直後に短名再輸出と namespace を置きます。namespace には `State` と `Props` を必ず入れ、値型があれば追加します。汎型は既定値付きで引き継ぎます。再輸出の JSDoc は `{@link X}` のみとし、「 です。」は付けません。短名再輸出 (`export { X as Y }`) はローカル束縛を作らないため、ファイル内部の参照 (JSX を含む) は正式名 `X` のままにします。
+各パーツの直後に短名再輸出と namespace を置きます。namespace には `State` と `Props` を必ず入れ、値型があれば追加します。`Props` は区分の `namespace Props` と `&` 結合の `type Props` の 2 段にします。汎型は既定値付きで引き継ぎます。再輸出の JSDoc は `{@link X}` のみとし、「 です。」は付けません。短名再輸出 (`export { X as Y }`) はローカル束縛を作らないため、ファイル内部の参照 (JSX を含む) は正式名 `X` のままにします。
 
 ```tsx
 export { AccordionItem as Item };
@@ -230,7 +347,22 @@ export namespace Item {
   /**
    * {@link AccordionItemProps}
    */
-  export type Props = AccordionItemProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link AccordionItemProps.HTML}
+     */
+    export type HTML = AccordionItemProps.HTML;
+    /**
+     * {@link AccordionItemProps.Render}
+     */
+    export type Render = AccordionItemProps.Render;
+    /**
+     * {@link AccordionItemProps.SuruUI}
+     */
+    export type SuruUI = AccordionItemProps.SuruUI;
+  }
 }
 ```
 
@@ -382,6 +514,11 @@ mise run test:typecheck
 - パーツ別指定より直 prop を優先しない。コールバック合成で中止判定を省略しない。
 - `data-scope=""` を起点以外の要素に付けない。付け忘れない。
 - namespace の `State` / `Props` を省略しない。短名再輸出を省略しない。
+- `Props` を `Render` / `SuruUI` / `BaseUI` / `HTML` に分解せずに書かない。
+- 短名 namespace の `Props` を `|` で結合しない。`&` で結合します。
+- 空の `SuruUI` (`= {}`) がある Omit に `| keyof SuruUI` を残さない。
+- `Render` / `SuruUI` / `BaseUI` / `HTML` に JSDoc を付けない。結合した `Props` 本体の JSDoc は残します。
+- 他コンポーネントの Props を参照するとき短名 (`Button.Root.Props`) を使わない。完全な交差型 (`Button.ButtonRootProps`) を使います。
 - Base UI が公開する型 (`Actions`、`ChangeEventDetails`、`ChangeEventReason` など) を輸出し忘れない。`State` と `Props` だけを輸出して終わりにしない。
 - `Context` や `useContext` の短名を別名の `type` / `const` 宣言で作らない。`export { X as Y }` の 1 行にまとめる。
 - Context のローカル変数に `context` などの長い名前を使わない。`ctx` にする。
@@ -389,7 +526,7 @@ mise run test:typecheck
 - 短名をファイル内部で参照しない。内部参照 (JSX を含む) は正式名にする。
 - `index.ts` に実装を書かない。再輸出以外を足さない。
 - アイコンを `_<kebab>.tsx` や `.parts.tsx` に実装しない。共有ファイルに置きます。
-- レンダラー付き `children` を素要素由来の `children` と交差させない。要素側から `"children"` を除きます。
+- レンダラー付き `children` を `SuruUI` の外に置かない。`SuruUI` に入れ、`keyof SuruUI` で要素側から除きます。
 - 反復描画する要素に `key` を付け忘れない。
 - 型引数名の先頭に `T` を付け忘れない (例: `TValue`、`TMultiple`)。
 - 合成の再命名型にパーツ名を重ねない (例: `BreadcrumbItemObject`。`BreadcrumbItemsItem` は禁止)。

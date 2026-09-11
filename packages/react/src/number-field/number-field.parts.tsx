@@ -174,45 +174,64 @@ export type NumberFieldRootVariant = "naked" | "liquid";
  */
 export type NumberFieldRootState = NumberField.Root.State;
 
+export namespace NumberFieldRootProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof NumberField.Root>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof NumberField.Root>
+  >;
+
+  export type Render = RenderProps<NumberFieldRootState>;
+
+  export type SuruUI = {
+    /**
+     * フォーカス時に枠線へ適用する色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: NumberFieldRootColor | undefined;
+
+    /**
+     * 枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * 数値入力欄の角丸を指定します。
+     *
+     * 既定値は {@link NumberFieldRootProps.size|size}
+     */
+    radius?: NumberFieldRootRadius | undefined;
+
+    /**
+     * 数値入力欄のサイズを指定します。
+     *
+     * @default "md"
+     */
+    size?: NumberFieldRootSize | undefined;
+
+    /**
+     * 数値入力欄の主な外観を指定します。
+     *
+     * @default "liquid"
+     */
+    variant?: NumberFieldRootVariant | undefined;
+  };
+}
+
 /**
  * {@link NumberFieldRoot} に渡すプロパティーです。
  */
-export type NumberFieldRootProps = React.ComponentProps<typeof NumberField.Root> & {
-  /**
-   * フォーカス時に枠線へ適用する色を指定します。
-   *
-   * @default "grey"
-   */
-  color?: NumberFieldRootColor | undefined;
-
-  /**
-   * 枠線を表示するかどうかを指定します。
-   *
-   * @default false
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * 数値入力欄の角丸を指定します。
-   *
-   * 既定値は {@link NumberFieldRootProps.size|size}
-   */
-  radius?: NumberFieldRootRadius | undefined;
-
-  /**
-   * 数値入力欄のサイズを指定します。
-   *
-   * @default "md"
-   */
-  size?: NumberFieldRootSize | undefined;
-
-  /**
-   * 数値入力欄の主な外観を指定します。
-   *
-   * @default "liquid"
-   */
-  variant?: NumberFieldRootVariant | undefined;
-};
+export type NumberFieldRootProps = NumberFieldRootProps.Render &
+  NumberFieldRootProps.SuruUI &
+  NumberFieldRootProps.BaseUI &
+  NumberFieldRootProps.HTML;
 
 /**
  * 数値入力欄のルートコンポーネントです。
@@ -275,7 +294,14 @@ export namespace Root {
   /**
    * {@link NumberFieldRootProps}
    */
-  export type Props = NumberFieldRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = NumberFieldRootProps.BaseUI;
+    export type HTML = NumberFieldRootProps.HTML;
+    export type Render = NumberFieldRootProps.Render;
+    export type SuruUI = NumberFieldRootProps.SuruUI;
+  }
 
   /**
    * {@link NumberFieldRootChangeEventDetails}
@@ -326,10 +352,26 @@ export namespace Root {
  */
 export type NumberFieldScrubAreaState = NumberField.ScrubArea.State;
 
+export namespace NumberFieldScrubAreaProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof NumberField.ScrubArea>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof React.ComponentProps<typeof NumberField.ScrubArea>
+  >;
+
+  export type Render = RenderProps<NumberFieldScrubAreaState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link NumberFieldScrubArea} に渡すプロパティーです。
  */
-export type NumberFieldScrubAreaProps = React.ComponentProps<typeof NumberField.ScrubArea>;
+export type NumberFieldScrubAreaProps = NumberFieldScrubAreaProps.Render &
+  NumberFieldScrubAreaProps.SuruUI &
+  NumberFieldScrubAreaProps.BaseUI &
+  NumberFieldScrubAreaProps.HTML;
 
 /**
  * ドラッグで値を変更できる領域を提供するコンポーネントです。
@@ -357,7 +399,14 @@ export namespace ScrubArea {
   /**
    * {@link NumberFieldScrubAreaProps}
    */
-  export type Props = NumberFieldScrubAreaProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = NumberFieldScrubAreaProps.BaseUI;
+    export type HTML = NumberFieldScrubAreaProps.HTML;
+    export type Render = NumberFieldScrubAreaProps.Render;
+    export type SuruUI = NumberFieldScrubAreaProps.SuruUI;
+  }
 }
 
 // ScrubAreaCursor
@@ -368,12 +417,26 @@ export namespace ScrubArea {
  */
 export type NumberFieldScrubAreaCursorState = NumberField.ScrubAreaCursor.State;
 
+export namespace NumberFieldScrubAreaCursorProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof NumberField.ScrubAreaCursor>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof React.ComponentProps<typeof NumberField.ScrubAreaCursor>
+  >;
+
+  export type Render = RenderProps<NumberFieldScrubAreaCursorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link NumberFieldScrubAreaCursor} に渡すプロパティーです。
  */
-export type NumberFieldScrubAreaCursorProps = React.ComponentProps<
-  typeof NumberField.ScrubAreaCursor
->;
+export type NumberFieldScrubAreaCursorProps = NumberFieldScrubAreaCursorProps.Render &
+  NumberFieldScrubAreaCursorProps.SuruUI &
+  NumberFieldScrubAreaCursorProps.BaseUI &
+  NumberFieldScrubAreaCursorProps.HTML;
 
 /**
  * スクラブ中にネイティブカーソルの代わりに表示する要素です。
@@ -401,7 +464,14 @@ export namespace ScrubAreaCursor {
   /**
    * {@link NumberFieldScrubAreaCursorProps}
    */
-  export type Props = NumberFieldScrubAreaCursorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = NumberFieldScrubAreaCursorProps.BaseUI;
+    export type HTML = NumberFieldScrubAreaCursorProps.HTML;
+    export type Render = NumberFieldScrubAreaCursorProps.Render;
+    export type SuruUI = NumberFieldScrubAreaCursorProps.SuruUI;
+  }
 }
 
 // Group
@@ -412,10 +482,26 @@ export namespace ScrubAreaCursor {
  */
 export type NumberFieldGroupState = NumberField.Group.State;
 
+export namespace NumberFieldGroupProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof NumberField.Group>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof NumberField.Group>
+  >;
+
+  export type Render = RenderProps<NumberFieldGroupState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link NumberFieldGroup} に渡すプロパティーです。
  */
-export type NumberFieldGroupProps = React.ComponentProps<typeof NumberField.Group>;
+export type NumberFieldGroupProps = NumberFieldGroupProps.Render &
+  NumberFieldGroupProps.SuruUI &
+  NumberFieldGroupProps.BaseUI &
+  NumberFieldGroupProps.HTML;
 
 const DISABLE_FOCUS_ON_CLICK_DATA = "data-suinumberfielddisablefocusonclick";
 
@@ -465,7 +551,14 @@ export namespace Group {
   /**
    * {@link NumberFieldGroupProps}
    */
-  export type Props = NumberFieldGroupProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = NumberFieldGroupProps.BaseUI;
+    export type HTML = NumberFieldGroupProps.HTML;
+    export type Render = NumberFieldGroupProps.Render;
+    export type SuruUI = NumberFieldGroupProps.SuruUI;
+  }
 }
 
 // Input
@@ -476,10 +569,26 @@ export namespace Group {
  */
 export type NumberFieldInputState = NumberField.Input.State;
 
+export namespace NumberFieldInputProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof NumberField.Input>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"input">,
+    keyof Render | keyof React.ComponentProps<typeof NumberField.Input>
+  >;
+
+  export type Render = RenderProps<NumberFieldInputState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link NumberFieldInput} に渡すプロパティーです。
  */
-export type NumberFieldInputProps = React.ComponentProps<typeof NumberField.Input>;
+export type NumberFieldInputProps = NumberFieldInputProps.Render &
+  NumberFieldInputProps.SuruUI &
+  NumberFieldInputProps.BaseUI &
+  NumberFieldInputProps.HTML;
 
 /**
  * 数値の入力欄です。
@@ -514,7 +623,14 @@ export namespace Input {
   /**
    * {@link NumberFieldInputProps}
    */
-  export type Props = NumberFieldInputProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = NumberFieldInputProps.BaseUI;
+    export type HTML = NumberFieldInputProps.HTML;
+    export type Render = NumberFieldInputProps.Render;
+    export type SuruUI = NumberFieldInputProps.SuruUI;
+  }
 }
 
 // Addon
@@ -525,14 +641,12 @@ export namespace Input {
  */
 export type NumberFieldAddonState = {};
 
-/**
- * {@link NumberFieldAddon} に渡すプロパティーです。
- */
-export type NumberFieldAddonProps = Omit<
-  React.ComponentProps<"span">,
-  keyof RenderProps<NumberFieldAddonState>
-> &
-  RenderProps<NumberFieldAddonState> & {
+export namespace NumberFieldAddonProps {
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<NumberFieldAddonState>;
+
+  export type SuruUI = {
     /**
      * クリック時の入力欄への自動フォーカスを無効にするかどうかを指定します。
      *
@@ -540,6 +654,14 @@ export type NumberFieldAddonProps = Omit<
      */
     disableFocusOnClick?: boolean | undefined;
   };
+}
+
+/**
+ * {@link NumberFieldAddon} に渡すプロパティーです。
+ */
+export type NumberFieldAddonProps = NumberFieldAddonProps.Render &
+  NumberFieldAddonProps.SuruUI &
+  NumberFieldAddonProps.HTML;
 
 /**
  * 入力欄の左右に表示する補助コンポーネントです。
@@ -574,7 +696,13 @@ export namespace Addon {
   /**
    * {@link NumberFieldAddonProps}
    */
-  export type Props = NumberFieldAddonProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = NumberFieldAddonProps.HTML;
+    export type Render = NumberFieldAddonProps.Render;
+    export type SuruUI = NumberFieldAddonProps.SuruUI;
+  }
 }
 
 // Decrement
@@ -585,10 +713,26 @@ export namespace Addon {
  */
 export type NumberFieldDecrementState = NumberField.Decrement.State;
 
+export namespace NumberFieldDecrementProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof NumberField.Decrement>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof React.ComponentProps<typeof NumberField.Decrement>
+  >;
+
+  export type Render = RenderProps<NumberFieldDecrementState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link NumberFieldDecrement} に渡すプロパティーです。
  */
-export type NumberFieldDecrementProps = React.ComponentProps<typeof NumberField.Decrement>;
+export type NumberFieldDecrementProps = NumberFieldDecrementProps.Render &
+  NumberFieldDecrementProps.SuruUI &
+  NumberFieldDecrementProps.BaseUI &
+  NumberFieldDecrementProps.HTML;
 
 /**
  * 値を減らすボタンです。
@@ -618,7 +762,14 @@ export namespace Decrement {
   /**
    * {@link NumberFieldDecrementProps}
    */
-  export type Props = NumberFieldDecrementProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = NumberFieldDecrementProps.BaseUI;
+    export type HTML = NumberFieldDecrementProps.HTML;
+    export type Render = NumberFieldDecrementProps.Render;
+    export type SuruUI = NumberFieldDecrementProps.SuruUI;
+  }
 }
 
 // Increment
@@ -629,10 +780,26 @@ export namespace Decrement {
  */
 export type NumberFieldIncrementState = NumberField.Increment.State;
 
+export namespace NumberFieldIncrementProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof NumberField.Increment>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof React.ComponentProps<typeof NumberField.Increment>
+  >;
+
+  export type Render = RenderProps<NumberFieldIncrementState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link NumberFieldIncrement} に渡すプロパティーです。
  */
-export type NumberFieldIncrementProps = React.ComponentProps<typeof NumberField.Increment>;
+export type NumberFieldIncrementProps = NumberFieldIncrementProps.Render &
+  NumberFieldIncrementProps.SuruUI &
+  NumberFieldIncrementProps.BaseUI &
+  NumberFieldIncrementProps.HTML;
 
 /**
  * 値を増やすボタンです。
@@ -662,5 +829,12 @@ export namespace Increment {
   /**
    * {@link NumberFieldIncrementProps}
    */
-  export type Props = NumberFieldIncrementProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = NumberFieldIncrementProps.BaseUI;
+    export type HTML = NumberFieldIncrementProps.HTML;
+    export type Render = NumberFieldIncrementProps.Render;
+    export type SuruUI = NumberFieldIncrementProps.SuruUI;
+  }
 }

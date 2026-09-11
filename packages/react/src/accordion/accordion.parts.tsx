@@ -104,65 +104,81 @@ export type AccordionRootValue<TValue = any> = Accordion.Root.Value<TValue>;
  */
 export type AccordionRootState<TValue = any> = Accordion.Root.State<TValue>;
 
+export namespace AccordionRootProps {
+  export type BaseUI<TItem = any, TValue = any> = Omit<
+    React.ComponentProps<typeof Accordion.Root<TValue>>,
+    keyof Render<TValue> | keyof SuruUI<TItem>
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Accordion.Root>
+  >;
+
+  export type Render<TValue = any> = RenderProps<AccordionRootState<TValue>>;
+
+  export type SuruUI<TItem = any> = {
+    /**
+     * アコーディオンの内容、または各項目をレンダリングする関数です。
+     *
+     * 関数を指定した場合は {@link AccordionRootProps.items|items} の各項目が引数として渡されます。
+     */
+    children?: React.ReactNode | IAccordionRootItemRenderer<TItem>;
+
+    /**
+     * アコーディオンの項目です。
+     *
+     * `children` に関数を指定した場合、この配列の各項目が引数として渡されます。
+     */
+    items?: readonly TItem[] | undefined;
+
+    /**
+     * アコーディオンの枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * アコーディオンの角丸の大きさを指定します。
+     *
+     * 既定値は {@link AccordionRootProps.size|size}
+     */
+    radius?: AccordionRootRadius | undefined;
+
+    /**
+     * アコーディオンの項目が隣接する項目の区切り線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    separator?: boolean | undefined;
+
+    /**
+     * アコーディオンの大きさを指定します。
+     *
+     * @default "md"
+     */
+    size?: AccordionRootSize | undefined;
+
+    /**
+     * アコーディオンの主な外観を指定します。
+     *
+     * @default "liquid"
+     */
+    variant?: AccordionRootVariant | undefined;
+  };
+}
+
 /**
  * {@link AccordionRoot} に渡す props です。
  *
  * @template TItem 項目の型です。
  * @template TValue 項目の値の型です。
  */
-export type AccordionRootProps<TItem = any, TValue = any> = Omit<
-  React.ComponentProps<typeof Accordion.Root<TValue>>,
-  "children"
-> & {
-  /**
-   * アコーディオンの内容、または各項目をレンダリングする関数です。
-   *
-   * 関数を指定した場合は {@link AccordionRootProps.items|items} の各項目が引数として渡されます。
-   */
-  children?: React.ReactNode | IAccordionRootItemRenderer<TItem>;
-
-  /**
-   * アコーディオンの項目です。
-   *
-   * `children` に関数を指定した場合、この配列の各項目が引数として渡されます。
-   */
-  items?: readonly TItem[] | undefined;
-
-  /**
-   * アコーディオンの枠線を表示するかどうかを指定します。
-   *
-   * @default false
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * アコーディオンの角丸の大きさを指定します。
-   *
-   * 既定値は {@link AccordionRootProps.size|size}
-   */
-  radius?: AccordionRootRadius | undefined;
-
-  /**
-   * アコーディオンの項目が隣接する項目の区切り線を表示するかどうかを指定します。
-   *
-   * @default false
-   */
-  separator?: boolean | undefined;
-
-  /**
-   * アコーディオンの大きさを指定します。
-   *
-   * @default "md"
-   */
-  size?: AccordionRootSize | undefined;
-
-  /**
-   * アコーディオンの主な外観を指定します。
-   *
-   * @default "liquid"
-   */
-  variant?: AccordionRootVariant | undefined;
-};
+export type AccordionRootProps<TItem = any, TValue = any> = AccordionRootProps.Render<TValue> &
+  AccordionRootProps.SuruUI<TItem> &
+  AccordionRootProps.BaseUI<TItem, TValue> &
+  AccordionRootProps.HTML;
 
 interface IAccordionRoot extends IComponent<AccordionRootProps> {
   /**
@@ -243,7 +259,17 @@ export namespace Root {
   /**
    * {@link AccordionRootProps}
    */
-  export type Props<TItem = any, TValue = any> = AccordionRootProps<TItem, TValue>;
+  export type Props<TItem = any, TValue = any> = Props.Render<TValue> &
+    Props.SuruUI<TItem> &
+    Props.BaseUI<TItem, TValue> &
+    Props.HTML;
+
+  export namespace Props {
+    export type BaseUI<TItem = any, TValue = any> = AccordionRootProps.BaseUI<TItem, TValue>;
+    export type HTML = AccordionRootProps.HTML;
+    export type Render<TValue = any> = AccordionRootProps.Render<TValue>;
+    export type SuruUI<TItem = any> = AccordionRootProps.SuruUI<TItem>;
+  }
 
   /**
    * {@link AccordionRootChangeEventDetails}
@@ -304,10 +330,26 @@ export type AccordionItemChangeEventReason = Accordion.Item.ChangeEventReason;
  */
 export type AccordionItemState = Accordion.Item.State;
 
+export namespace AccordionItemProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Accordion.Item>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Accordion.Item>
+  >;
+
+  export type Render = RenderProps<AccordionItemState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AccordionItem} に渡す props です。
  */
-export type AccordionItemProps = React.ComponentProps<typeof Accordion.Item>;
+export type AccordionItemProps = AccordionItemProps.Render &
+  AccordionItemProps.SuruUI &
+  AccordionItemProps.BaseUI &
+  AccordionItemProps.HTML;
 
 /**
  * アコーディオンの項目コンポーネントです。
@@ -339,7 +381,14 @@ export namespace Item {
   /**
    * {@link AccordionItemProps}
    */
-  export type Props = AccordionItemProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AccordionItemProps.BaseUI;
+    export type HTML = AccordionItemProps.HTML;
+    export type Render = AccordionItemProps.Render;
+    export type SuruUI = AccordionItemProps.SuruUI;
+  }
 
   /**
    * {@link AccordionItemChangeEventDetails}
@@ -360,10 +409,26 @@ export namespace Item {
  */
 export type AccordionHeadingState = Accordion.Header.State;
 
+export namespace AccordionHeadingProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Accordion.Header>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Accordion.Header>
+  >;
+
+  export type Render = RenderProps<AccordionHeadingState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AccordionHeading} に渡す props です。
  */
-export type AccordionHeadingProps = React.ComponentProps<typeof Accordion.Header>;
+export type AccordionHeadingProps = AccordionHeadingProps.Render &
+  AccordionHeadingProps.SuruUI &
+  AccordionHeadingProps.BaseUI &
+  AccordionHeadingProps.HTML;
 
 /**
  * アコーディオンの見出しコンポーネントです。
@@ -387,7 +452,14 @@ export namespace Heading {
   /**
    * {@link AccordionHeadingProps}
    */
-  export type Props = AccordionHeadingProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AccordionHeadingProps.BaseUI;
+    export type HTML = AccordionHeadingProps.HTML;
+    export type Render = AccordionHeadingProps.Render;
+    export type SuruUI = AccordionHeadingProps.SuruUI;
+  }
 }
 
 // Trigger
@@ -398,19 +470,38 @@ export namespace Heading {
  */
 export type AccordionTriggerState = Accordion.Trigger.State;
 
+export namespace AccordionTriggerProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Accordion.Trigger>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Accordion.Trigger>
+  >;
+
+  export type Render = RenderProps<AccordionTriggerState>;
+
+  export type SuruUI = {
+    /**
+     * `true` にすると Suru UI のスタイルがつかなくなります。
+     *
+     * これは主に、`render`  props でボタンコンポーネントを描画する際に使用されます。
+     *
+     * @default false
+     */
+    unstyled?: boolean | undefined;
+  };
+}
+
 /**
  * {@link AccordionTrigger} に渡す props です。
  */
-export type AccordionTriggerProps = React.ComponentProps<typeof Accordion.Trigger> & {
-  /**
-   * `true` にすると Suru UI のスタイルがつかなくなります。
-   *
-   * これは主に、`render`  props でボタンコンポーネントを描画する際に使用されます。
-   *
-   * @default false
-   */
-  unstyled?: boolean | undefined;
-};
+export type AccordionTriggerProps = AccordionTriggerProps.Render &
+  AccordionTriggerProps.SuruUI &
+  AccordionTriggerProps.BaseUI &
+  AccordionTriggerProps.HTML;
 
 /**
  * アコーディオンの開閉ボタンコンポーネントです。
@@ -443,7 +534,14 @@ export namespace Trigger {
   /**
    * {@link AccordionTriggerProps}
    */
-  export type Props = AccordionTriggerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AccordionTriggerProps.BaseUI;
+    export type HTML = AccordionTriggerProps.HTML;
+    export type Render = AccordionTriggerProps.Render;
+    export type SuruUI = AccordionTriggerProps.SuruUI;
+  }
 }
 
 // Indicator
@@ -454,11 +552,20 @@ export namespace Trigger {
  */
 export type AccordionIndicatorState = {};
 
+export namespace AccordionIndicatorProps {
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
+
+  export type Render = RenderProps<AccordionIndicatorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AccordionIndicator} に渡す props です。
  */
-export type AccordionIndicatorProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
-  RenderProps<AccordionIndicatorState>;
+export type AccordionIndicatorProps = AccordionIndicatorProps.Render &
+  AccordionIndicatorProps.SuruUI &
+  AccordionIndicatorProps.HTML;
 
 /**
  * アコーディオンの展開状態を示すアイコンを表示するコンポーネントです。
@@ -490,7 +597,13 @@ export namespace Indicator {
   /**
    * {@link AccordionIndicatorProps}
    */
-  export type Props = AccordionIndicatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = AccordionIndicatorProps.HTML;
+    export type Render = AccordionIndicatorProps.Render;
+    export type SuruUI = AccordionIndicatorProps.SuruUI;
+  }
 }
 
 // Content
@@ -501,10 +614,26 @@ export namespace Indicator {
  */
 export type AccordionContentState = Accordion.Panel.State;
 
+export namespace AccordionContentProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Accordion.Panel>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Accordion.Panel>
+  >;
+
+  export type Render = RenderProps<AccordionContentState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AccordionContent} に渡す props です。
  */
-export type AccordionContentProps = React.ComponentProps<typeof Accordion.Panel>;
+export type AccordionContentProps = AccordionContentProps.Render &
+  AccordionContentProps.SuruUI &
+  AccordionContentProps.BaseUI &
+  AccordionContentProps.HTML;
 
 /**
  * アコーディオンのパネルコンポーネントです。
@@ -539,5 +668,12 @@ export namespace Content {
   /**
    * {@link AccordionContentProps}
    */
-  export type Props = AccordionContentProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AccordionContentProps.BaseUI;
+    export type HTML = AccordionContentProps.HTML;
+    export type Render = AccordionContentProps.Render;
+    export type SuruUI = AccordionContentProps.SuruUI;
+  }
 }

@@ -1,6 +1,7 @@
 import { Fieldset } from "@base-ui/react/fieldset";
 import * as React from "react";
 
+import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
@@ -14,10 +15,26 @@ import "./fieldset.css";
  */
 export type FieldsetRootState = Fieldset.Root.State;
 
+export namespace FieldsetRootProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Fieldset.Root>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"fieldset">,
+    keyof Render | keyof React.ComponentProps<typeof Fieldset.Root>
+  >;
+
+  export type Render = RenderProps<FieldsetRootState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link FieldsetRoot} に渡す props です。
  */
-export type FieldsetRootProps = React.ComponentProps<typeof Fieldset.Root>;
+export type FieldsetRootProps = FieldsetRootProps.Render &
+  FieldsetRootProps.SuruUI &
+  FieldsetRootProps.BaseUI &
+  FieldsetRootProps.HTML;
 
 /**
  * フィールドセットのルートコンポーネントです。
@@ -56,7 +73,14 @@ export namespace Root {
   /**
    * {@link FieldsetRootProps}
    */
-  export type Props = FieldsetRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = FieldsetRootProps.BaseUI;
+    export type HTML = FieldsetRootProps.HTML;
+    export type Render = FieldsetRootProps.Render;
+    export type SuruUI = FieldsetRootProps.SuruUI;
+  }
 }
 
 // Legend
@@ -67,10 +91,26 @@ export namespace Root {
  */
 export type FieldsetLegendState = Fieldset.Legend.State;
 
+export namespace FieldsetLegendProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Fieldset.Legend>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"legend">,
+    keyof Render | keyof React.ComponentProps<typeof Fieldset.Legend>
+  >;
+
+  export type Render = RenderProps<FieldsetLegendState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link FieldsetLegend} に渡す props です。
  */
-export type FieldsetLegendProps = React.ComponentProps<typeof Fieldset.Legend>;
+export type FieldsetLegendProps = FieldsetLegendProps.Render &
+  FieldsetLegendProps.SuruUI &
+  FieldsetLegendProps.BaseUI &
+  FieldsetLegendProps.HTML;
 
 /**
  * フィールドセットの凡例コンポーネントです。
@@ -94,5 +134,12 @@ export namespace Legend {
   /**
    * {@link FieldsetLegendProps}
    */
-  export type Props = FieldsetLegendProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = FieldsetLegendProps.BaseUI;
+    export type HTML = FieldsetLegendProps.HTML;
+    export type Render = FieldsetLegendProps.Render;
+    export type SuruUI = FieldsetLegendProps.SuruUI;
+  }
 }

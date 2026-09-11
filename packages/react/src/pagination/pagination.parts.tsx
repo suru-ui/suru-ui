@@ -188,11 +188,12 @@ export type PaginationRootSize = Size;
  */
 export type PaginationRootState = {};
 
-/**
- * {@link PaginationRoot} に渡す props です。
- */
-export type PaginationRootProps = Omit<React.ComponentProps<"nav">, keyof RenderProps> &
-  RenderProps<PaginationRootState> & {
+export namespace PaginationRootProps {
+  export type HTML = Omit<React.ComponentProps<"nav">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<PaginationRootState>;
+
+  export type SuruUI = {
     /**
      * ページネーションの配色を指定します。
      *
@@ -252,6 +253,14 @@ export type PaginationRootProps = Omit<React.ComponentProps<"nav">, keyof Render
      */
     totalPages: number;
   };
+}
+
+/**
+ * {@link PaginationRoot} に渡す props です。
+ */
+export type PaginationRootProps = PaginationRootProps.Render &
+  PaginationRootProps.SuruUI &
+  PaginationRootProps.HTML;
 
 /**
  * ページネーションのルートコンポーネントです。
@@ -333,7 +342,13 @@ export namespace Root {
   /**
    * {@link PaginationRootProps}
    */
-  export type Props = PaginationRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = PaginationRootProps.HTML;
+    export type Render = PaginationRootProps.Render;
+    export type SuruUI = PaginationRootProps.SuruUI;
+  }
 
   /**
    * {@link PaginationRootChangeEventDetails}
@@ -369,10 +384,26 @@ export namespace Root {
  */
 export type PaginationPreviousButtonState = {};
 
+export namespace PaginationPreviousButtonProps {
+  export type BaseUI = Omit<Button.ButtonRootProps, keyof Render | "children">;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof Omit<Button.ButtonRootProps, "children">
+  >;
+
+  export type Render = RenderProps<PaginationPreviousButtonState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link PaginationPreviousButton} に渡す props です。
  */
-export type PaginationPreviousButtonProps = Omit<Button.Root.Props, "children">;
+export type PaginationPreviousButtonProps = PaginationPreviousButtonProps.Render &
+  PaginationPreviousButtonProps.SuruUI &
+  PaginationPreviousButtonProps.BaseUI &
+  PaginationPreviousButtonProps.HTML;
 
 /**
  * 前のページへ移動するボタンコンポーネントです。
@@ -390,7 +421,7 @@ export const PaginationPreviousButton: IComponent<PaginationPreviousButtonProps>
       ...otherProps
     } = props;
     const isDisabled = ctx?.disabled || disabled || (ctx?.page ?? 1) <= 1;
-    const handleClick: NonNullable<Button.Root.Props["onClick"]> = (event) => {
+    const handleClick: NonNullable<Button.ButtonRootProps["onClick"]> = (event) => {
       onClick?.(event);
       if (!event.defaultPrevented && !isDisabled && ctx !== null) {
         ctx.goToPage(ctx.page - 1, { event, reason: "previous" });
@@ -426,7 +457,14 @@ export namespace PreviousButton {
   /**
    * {@link PaginationPreviousButtonProps}
    */
-  export type Props = PaginationPreviousButtonProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = PaginationPreviousButtonProps.BaseUI;
+    export type HTML = PaginationPreviousButtonProps.HTML;
+    export type Render = PaginationPreviousButtonProps.Render;
+    export type SuruUI = PaginationPreviousButtonProps.SuruUI;
+  }
 }
 
 // NextButton
@@ -437,10 +475,26 @@ export namespace PreviousButton {
  */
 export type PaginationNextButtonState = {};
 
+export namespace PaginationNextButtonProps {
+  export type BaseUI = Omit<Button.ButtonRootProps, keyof Render | "children">;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof Omit<Button.ButtonRootProps, "children">
+  >;
+
+  export type Render = RenderProps<PaginationNextButtonState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link PaginationNextButton} に渡す props です。
  */
-export type PaginationNextButtonProps = Omit<Button.Root.Props, "children">;
+export type PaginationNextButtonProps = PaginationNextButtonProps.Render &
+  PaginationNextButtonProps.SuruUI &
+  PaginationNextButtonProps.BaseUI &
+  PaginationNextButtonProps.HTML;
 
 /**
  * 次のページへ移動するボタンコンポーネントです。
@@ -461,7 +515,7 @@ export const PaginationNextButton: IComponent<PaginationNextButtonProps> =
       ctx?.disabled ||
       disabled ||
       (ctx?.page ?? 1) >= (ctx?.totalPages ?? Number.POSITIVE_INFINITY);
-    const handleClick: NonNullable<Button.Root.Props["onClick"]> = (event) => {
+    const handleClick: NonNullable<Button.ButtonRootProps["onClick"]> = (event) => {
       onClick?.(event);
       if (!event.defaultPrevented && !isDisabled && ctx !== null) {
         ctx.goToPage(ctx.page + 1, { event, reason: "next" });
@@ -497,7 +551,14 @@ export namespace NextButton {
   /**
    * {@link PaginationNextButtonProps}
    */
-  export type Props = PaginationNextButtonProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = PaginationNextButtonProps.BaseUI;
+    export type HTML = PaginationNextButtonProps.HTML;
+    export type Render = PaginationNextButtonProps.Render;
+    export type SuruUI = PaginationNextButtonProps.SuruUI;
+  }
 }
 
 // Item
@@ -508,24 +569,43 @@ export namespace NextButton {
  */
 export type PaginationItemState = {};
 
+export namespace PaginationItemProps {
+  export type BaseUI = Omit<
+    Button.ButtonRootProps,
+    keyof Render | keyof SuruUI | "color" | "variant"
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI | keyof Omit<Button.ButtonRootProps, "color" | "variant">
+  >;
+
+  export type Render = RenderProps<PaginationItemState>;
+
+  export type SuruUI = {
+    /**
+     * 表示するページ番号を指定します。
+     */
+    page: number;
+
+    /**
+     * 現在のページかどうかを指定します。
+     *
+     * `true` の場合、現在のページとして強調表示されます。
+     *
+     * @default false
+     */
+    selected?: boolean | undefined;
+  };
+}
+
 /**
  * {@link PaginationItem} に渡す props です。
  */
-export type PaginationItemProps = Omit<Button.Root.Props, "color" | "variant"> & {
-  /**
-   * 表示するページ番号を指定します。
-   */
-  page: number;
-
-  /**
-   * 現在のページかどうかを指定します。
-   *
-   * `true` の場合、現在のページとして強調表示されます。
-   *
-   * @default false
-   */
-  selected?: boolean | undefined;
-};
+export type PaginationItemProps = PaginationItemProps.Render &
+  PaginationItemProps.SuruUI &
+  PaginationItemProps.BaseUI &
+  PaginationItemProps.HTML;
 
 /**
  * ページ番号のボタンコンポーネントです。
@@ -544,7 +624,7 @@ export const PaginationItem: IComponent<PaginationItemProps> = function SuiPagin
     ...otherProps
   } = props;
   const isDisabled = ctx?.disabled || disabled;
-  const handleClick: NonNullable<Button.Root.Props["onClick"]> = (event) => {
+  const handleClick: NonNullable<Button.ButtonRootProps["onClick"]> = (event) => {
     onClick?.(event);
     if (!event.defaultPrevented && !isDisabled && ctx !== null) {
       ctx.goToPage(page, { event, reason: "item" });
@@ -580,7 +660,14 @@ export namespace Item {
   /**
    * {@link PaginationItemProps}
    */
-  export type Props = PaginationItemProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = PaginationItemProps.BaseUI;
+    export type HTML = PaginationItemProps.HTML;
+    export type Render = PaginationItemProps.Render;
+    export type SuruUI = PaginationItemProps.SuruUI;
+  }
 }
 
 // Ellipsis
@@ -591,20 +678,36 @@ export namespace Item {
  */
 export type PaginationEllipsisState = {};
 
+export namespace PaginationEllipsisProps {
+  export type BaseUI = Omit<Button.ButtonRootProps, keyof Render | keyof SuruUI | "children">;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI | keyof Omit<Button.ButtonRootProps, "children">
+  >;
+
+  export type Render = RenderProps<PaginationEllipsisState>;
+
+  export type SuruUI = {
+    /**
+     * 飛び先のページ範囲の終了ページを指定します。
+     */
+    end?: number | undefined;
+
+    /**
+     * 飛び先のページ範囲の開始ページを指定します。
+     */
+    start?: number | undefined;
+  };
+}
+
 /**
  * {@link PaginationEllipsis} に渡す props です。
  */
-export type PaginationEllipsisProps = Omit<Button.Root.Props, "children"> & {
-  /**
-   * 飛び先のページ範囲の終了ページを指定します。
-   */
-  end?: number | undefined;
-
-  /**
-   * 飛び先のページ範囲の開始ページを指定します。
-   */
-  start?: number | undefined;
-};
+export type PaginationEllipsisProps = PaginationEllipsisProps.Render &
+  PaginationEllipsisProps.SuruUI &
+  PaginationEllipsisProps.BaseUI &
+  PaginationEllipsisProps.HTML;
 
 /**
  * 飛ばされたページ範囲を表す省略記号コンポーネントです。
@@ -670,7 +773,7 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
     }
 
     const isDisabled = ctx?.disabled || disabled;
-    const handleClick: NonNullable<Button.Root.Props["onClick"]> = (event) => {
+    const handleClick: NonNullable<Button.ButtonRootProps["onClick"]> = (event) => {
       onClick?.(event);
       if (!event.defaultPrevented && !isDisabled) {
         setEditing(true);
@@ -706,5 +809,12 @@ export namespace Ellipsis {
   /**
    * {@link PaginationEllipsisProps}
    */
-  export type Props = PaginationEllipsisProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = PaginationEllipsisProps.BaseUI;
+    export type HTML = PaginationEllipsisProps.HTML;
+    export type Render = PaginationEllipsisProps.Render;
+    export type SuruUI = PaginationEllipsisProps.SuruUI;
+  }
 }

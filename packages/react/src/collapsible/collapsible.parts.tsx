@@ -36,17 +36,36 @@ export type CollapsibleRootSize = Size;
  */
 export type CollapsibleRootState = Collapsible.Root.State;
 
+export namespace CollapsibleRootProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Collapsible.Root>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Collapsible.Root>
+  >;
+
+  export type Render = RenderProps<CollapsibleRootState>;
+
+  export type SuruUI = {
+    /**
+     * コラプシブルの大きさを指定します。
+     *
+     * @default "md"
+     */
+    size?: CollapsibleRootSize | undefined;
+  };
+}
+
 /**
  * {@link CollapsibleRoot} に渡す props です。
  */
-export type CollapsibleRootProps = React.ComponentProps<typeof Collapsible.Root> & {
-  /**
-   * コラプシブルの大きさを指定します。
-   *
-   * @default "md"
-   */
-  size?: CollapsibleRootSize | undefined;
-};
+export type CollapsibleRootProps = CollapsibleRootProps.Render &
+  CollapsibleRootProps.SuruUI &
+  CollapsibleRootProps.BaseUI &
+  CollapsibleRootProps.HTML;
 
 /**
  * コラプシブルのルートコンポーネントです。
@@ -83,15 +102,19 @@ export const CollapsibleRoot: IComponent<CollapsibleRootProps> = function SuiCol
 export { CollapsibleRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link CollapsibleRootState}
-   */
   export type State = CollapsibleRootState;
 
   /**
    * {@link CollapsibleRootProps}
    */
-  export type Props = CollapsibleRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = CollapsibleRootProps.BaseUI;
+    export type HTML = CollapsibleRootProps.HTML;
+    export type Render = CollapsibleRootProps.Render;
+    export type SuruUI = CollapsibleRootProps.SuruUI;
+  }
 
   /**
    * {@link CollapsibleRootChangeEventDetails}
@@ -117,20 +140,36 @@ export namespace Root {
  */
 export type CollapsibleTriggerState = Collapsible.Trigger.State;
 
+export namespace CollapsibleTriggerProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Collapsible.Trigger>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Collapsible.Trigger>
+  >;
+
+  export type Render = RenderProps<CollapsibleTriggerState>;
+
+  export type SuruUI = {
+    /**
+     * ボタンとして描画する内容です。
+     *
+     * {@link Collapsible.Trigger} の `render` と同じ型で、そのまま渡されます。
+     */
+    children: NonNullable<React.ComponentProps<typeof Collapsible.Trigger>["render"]>;
+  };
+}
+
 /**
  * {@link CollapsibleTrigger} に渡す props です。
  */
-export type CollapsibleTriggerProps = Omit<
-  React.ComponentProps<typeof Collapsible.Trigger>,
-  "children" | "render"
-> & {
-  /**
-   * ボタンとして描画する内容です。
-   *
-   * {@link Collapsible.Trigger} の `render` と同じ型で、そのまま渡されます。
-   */
-  children: NonNullable<React.ComponentProps<typeof Collapsible.Trigger>["render"]>;
-};
+export type CollapsibleTriggerProps = CollapsibleTriggerProps.Render &
+  CollapsibleTriggerProps.SuruUI &
+  CollapsibleTriggerProps.BaseUI &
+  CollapsibleTriggerProps.HTML;
 
 /**
  * コラプシブルの開閉ボタンコンポーネントです。
@@ -153,15 +192,19 @@ export const CollapsibleTrigger: IComponent<CollapsibleTriggerProps> =
 export { CollapsibleTrigger as Trigger };
 
 export namespace Trigger {
-  /**
-   * {@link CollapsibleTriggerState}
-   */
   export type State = CollapsibleTriggerState;
 
   /**
    * {@link CollapsibleTriggerProps}
    */
-  export type Props = CollapsibleTriggerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = CollapsibleTriggerProps.BaseUI;
+    export type HTML = CollapsibleTriggerProps.HTML;
+    export type Render = CollapsibleTriggerProps.Render;
+    export type SuruUI = CollapsibleTriggerProps.SuruUI;
+  }
 }
 
 // Indicator
@@ -172,11 +215,20 @@ export namespace Trigger {
  */
 export type CollapsibleIndicatorState = {};
 
+export namespace CollapsibleIndicatorProps {
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
+
+  export type Render = RenderProps<CollapsibleIndicatorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link CollapsibleIndicator} に渡す props です。
  */
-export type CollapsibleIndicatorProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
-  RenderProps<CollapsibleIndicatorState>;
+export type CollapsibleIndicatorProps = CollapsibleIndicatorProps.Render &
+  CollapsibleIndicatorProps.SuruUI &
+  CollapsibleIndicatorProps.HTML;
 
 /**
  * コラプシブルの展開状態を示すアイコンを表示するコンポーネントです。
@@ -200,15 +252,18 @@ export const CollapsibleIndicator: IComponent<CollapsibleIndicatorProps> =
 export { CollapsibleIndicator as Indicator };
 
 export namespace Indicator {
-  /**
-   * {@link CollapsibleIndicatorState}
-   */
   export type State = CollapsibleIndicatorState;
 
   /**
    * {@link CollapsibleIndicatorProps}
    */
-  export type Props = CollapsibleIndicatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = CollapsibleIndicatorProps.HTML;
+    export type Render = CollapsibleIndicatorProps.Render;
+    export type SuruUI = CollapsibleIndicatorProps.SuruUI;
+  }
 }
 
 // Content
@@ -219,10 +274,26 @@ export namespace Indicator {
  */
 export type CollapsibleContentState = Collapsible.Panel.State;
 
+export namespace CollapsibleContentProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Collapsible.Panel>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Collapsible.Panel>
+  >;
+
+  export type Render = RenderProps<CollapsibleContentState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link CollapsibleContent} に渡す props です。
  */
-export type CollapsibleContentProps = React.ComponentProps<typeof Collapsible.Panel>;
+export type CollapsibleContentProps = CollapsibleContentProps.Render &
+  CollapsibleContentProps.SuruUI &
+  CollapsibleContentProps.BaseUI &
+  CollapsibleContentProps.HTML;
 
 /**
  * コラプシブルのコンテンツコンポーネントです。
@@ -239,13 +310,17 @@ export const CollapsibleContent: IComponent<CollapsibleContentProps> =
 export { CollapsibleContent as Content };
 
 export namespace Content {
-  /**
-   * {@link CollapsibleContentState}
-   */
   export type State = CollapsibleContentState;
 
   /**
    * {@link CollapsibleContentProps}
    */
-  export type Props = CollapsibleContentProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = CollapsibleContentProps.BaseUI;
+    export type HTML = CollapsibleContentProps.HTML;
+    export type Render = CollapsibleContentProps.Render;
+    export type SuruUI = CollapsibleContentProps.SuruUI;
+  }
 }

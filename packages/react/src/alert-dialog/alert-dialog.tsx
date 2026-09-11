@@ -425,7 +425,7 @@ export const useAlertDialogAPI: IUseAlertDialogAPI = function useSuiAlertDialogA
 
       return null;
     },
-    getRootProps(): Required<Omit<AlertDialogRootProps, "children">> {
+    getRootProps(): Omit<AlertDialogRootProps, "children"> {
       return {
         open,
         handle,

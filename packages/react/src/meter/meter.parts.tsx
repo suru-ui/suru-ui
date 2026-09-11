@@ -2,6 +2,7 @@ import { Meter } from "@base-ui/react/meter";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
@@ -48,45 +49,61 @@ export type MeterRootVariant = "naked" | "liquid";
  */
 export type MeterRootState = Meter.Root.State;
 
+export namespace MeterRootProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Meter.Root>, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Meter.Root>
+  >;
+
+  export type Render = RenderProps<MeterRootState>;
+
+  export type SuruUI = {
+    /**
+     * メーターの色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: MeterRootColor | undefined;
+
+    /**
+     * 枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * メーターの角丸を指定します。
+     *
+     * @default "full"
+     */
+    radius?: MeterRootRadius | undefined;
+
+    /**
+     * メーターのサイズを指定します。
+     *
+     * @default "md"
+     */
+    size?: MeterRootSize | undefined;
+
+    /**
+     * メーターの主な外観を指定します。
+     *
+     * @default "liquid"
+     */
+    variant?: MeterRootVariant | undefined;
+  };
+}
+
 /**
  * {@link MeterRoot} に渡す props です。
  */
-export type MeterRootProps = React.ComponentProps<typeof Meter.Root> & {
-  /**
-   * メーターの色を指定します。
-   *
-   * @default "grey"
-   */
-  color?: MeterRootColor | undefined;
-
-  /**
-   * 枠線を表示するかどうかを指定します。
-   *
-   * @default false
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * メーターの角丸を指定します。
-   *
-   * @default "full"
-   */
-  radius?: MeterRootRadius | undefined;
-
-  /**
-   * メーターのサイズを指定します。
-   *
-   * @default "md"
-   */
-  size?: MeterRootSize | undefined;
-
-  /**
-   * メーターの主な外観を指定します。
-   *
-   * @default "liquid"
-   */
-  variant?: MeterRootVariant | undefined;
-};
+export type MeterRootProps = MeterRootProps.Render &
+  MeterRootProps.SuruUI &
+  MeterRootProps.BaseUI &
+  MeterRootProps.HTML;
 
 /**
  * メーターのルートコンポーネントです。
@@ -132,7 +149,14 @@ export namespace Root {
   /**
    * {@link MeterRootProps}
    */
-  export type Props = MeterRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MeterRootProps.BaseUI;
+    export type HTML = MeterRootProps.HTML;
+    export type Render = MeterRootProps.Render;
+    export type SuruUI = MeterRootProps.SuruUI;
+  }
 
   /**
    * {@link MeterRootColor}
@@ -163,10 +187,26 @@ export namespace Root {
  */
 export type MeterLabelState = Meter.Label.State;
 
+export namespace MeterLabelProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Meter.Label>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof React.ComponentProps<typeof Meter.Label>
+  >;
+
+  export type Render = RenderProps<MeterLabelState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link MeterLabel} に渡す props です。
  */
-export type MeterLabelProps = React.ComponentProps<typeof Meter.Label>;
+export type MeterLabelProps = MeterLabelProps.Render &
+  MeterLabelProps.SuruUI &
+  MeterLabelProps.BaseUI &
+  MeterLabelProps.HTML;
 
 /**
  * メーターのラベルコンポーネントです。
@@ -188,7 +228,14 @@ export namespace Label {
   /**
    * {@link MeterLabelProps}
    */
-  export type Props = MeterLabelProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MeterLabelProps.BaseUI;
+    export type HTML = MeterLabelProps.HTML;
+    export type Render = MeterLabelProps.Render;
+    export type SuruUI = MeterLabelProps.SuruUI;
+  }
 }
 
 // Value
@@ -199,10 +246,26 @@ export namespace Label {
  */
 export type MeterValueState = Meter.Value.State;
 
+export namespace MeterValueProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Meter.Value>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof React.ComponentProps<typeof Meter.Value>
+  >;
+
+  export type Render = RenderProps<MeterValueState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link MeterValue} に渡す props です。
  */
-export type MeterValueProps = React.ComponentProps<typeof Meter.Value>;
+export type MeterValueProps = MeterValueProps.Render &
+  MeterValueProps.SuruUI &
+  MeterValueProps.BaseUI &
+  MeterValueProps.HTML;
 
 /**
  * メーターの現在値を表示するコンポーネントです。
@@ -224,7 +287,14 @@ export namespace Value {
   /**
    * {@link MeterValueProps}
    */
-  export type Props = MeterValueProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MeterValueProps.BaseUI;
+    export type HTML = MeterValueProps.HTML;
+    export type Render = MeterValueProps.Render;
+    export type SuruUI = MeterValueProps.SuruUI;
+  }
 }
 
 // Track
@@ -235,10 +305,26 @@ export namespace Value {
  */
 export type MeterTrackState = Meter.Track.State;
 
+export namespace MeterTrackProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Meter.Track>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Meter.Track>
+  >;
+
+  export type Render = RenderProps<MeterTrackState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link MeterTrack} に渡す props です。
  */
-export type MeterTrackProps = React.ComponentProps<typeof Meter.Track>;
+export type MeterTrackProps = MeterTrackProps.Render &
+  MeterTrackProps.SuruUI &
+  MeterTrackProps.BaseUI &
+  MeterTrackProps.HTML;
 
 /**
  * メーターの全範囲を表すトラックコンポーネントです。
@@ -260,7 +346,14 @@ export namespace Track {
   /**
    * {@link MeterTrackProps}
    */
-  export type Props = MeterTrackProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MeterTrackProps.BaseUI;
+    export type HTML = MeterTrackProps.HTML;
+    export type Render = MeterTrackProps.Render;
+    export type SuruUI = MeterTrackProps.SuruUI;
+  }
 }
 
 // Indicator
@@ -271,10 +364,26 @@ export namespace Track {
  */
 export type MeterIndicatorState = Meter.Indicator.State;
 
+export namespace MeterIndicatorProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Meter.Indicator>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Meter.Indicator>
+  >;
+
+  export type Render = RenderProps<MeterIndicatorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link MeterIndicator} に渡す props です。
  */
-export type MeterIndicatorProps = React.ComponentProps<typeof Meter.Indicator>;
+export type MeterIndicatorProps = MeterIndicatorProps.Render &
+  MeterIndicatorProps.SuruUI &
+  MeterIndicatorProps.BaseUI &
+  MeterIndicatorProps.HTML;
 
 /**
  * メーターの現在値を示すインジケーターコンポーネントです。
@@ -296,5 +405,12 @@ export namespace Indicator {
   /**
    * {@link MeterIndicatorProps}
    */
-  export type Props = MeterIndicatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MeterIndicatorProps.BaseUI;
+    export type HTML = MeterIndicatorProps.HTML;
+    export type Render = MeterIndicatorProps.Render;
+    export type SuruUI = MeterIndicatorProps.SuruUI;
+  }
 }

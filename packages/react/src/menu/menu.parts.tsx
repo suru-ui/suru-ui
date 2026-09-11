@@ -364,56 +364,69 @@ export type MenuRootVariant = Button.Root.Variant;
  */
 export type MenuRootState = Menu.Root.State;
 
+export namespace MenuRootProps {
+  export type BaseUI<TPayload = unknown, TItem = any> = Omit<
+    Menu.Root.Props<TPayload>,
+    keyof Render | keyof SuruUI<TPayload, TItem>
+  >;
+
+  export type HTML = {};
+
+  export type Render = RenderProps<MenuRootState>;
+
+  export type SuruUI<TPayload = unknown, TItem = any> = {
+    /**
+     * メニューとトリガー ({@link Trigger}) を関連付けるハンドルです。
+     *
+     * {@link createHandle} で作成します。Root 内に {@link Trigger} を配置する場合は省略できます。
+     */
+    handle?: MenuHandle<TPayload> | undefined;
+
+    /**
+     * メニューの項目です。
+     */
+    items?: readonly TItem[] | undefined;
+
+    /**
+     * ポップアップに枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * ポップアップと項目の角丸を指定します。
+     *
+     * 既定値は {@link MenuRootProps.size|size} です。
+     */
+    radius?: MenuRootRadius | undefined;
+
+    /**
+     * ポップアップと項目の大きさを指定します。
+     *
+     * @default "md"
+     */
+    size?: MenuRootSize | undefined;
+
+    /**
+     * 項目の主な外観を指定します。
+     *
+     * @default "naked"
+     */
+    variant?: MenuRootVariant | undefined;
+  };
+}
+
 /**
  * {@link MenuRoot} に渡す props です。
  *
  * @template TPayload 開いたときに渡される値の型です。
  * @template TItem 項目の型です。
  */
-export type MenuRootProps<TPayload = unknown, TItem = any> = Omit<
-  Menu.Root.Props<TPayload>,
-  "handle"
-> & {
-  /**
-   * メニューとトリガー ({@link Trigger}) を関連付けるハンドルです。
-   *
-   * {@link createHandle} で作成します。Root 内に {@link Trigger} を配置する場合は省略できます。
-   */
-  handle?: MenuHandle<TPayload> | undefined;
-
-  /**
-   * メニューの項目です。
-   */
-  items?: readonly TItem[] | undefined;
-
-  /**
-   * ポップアップに枠線を表示するかどうかを指定します。
-   *
-   * @default false
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * ポップアップと項目の角丸を指定します。
-   *
-   * 既定値は {@link MenuRootProps.size|size} です。
-   */
-  radius?: MenuRootRadius | undefined;
-
-  /**
-   * ポップアップと項目の大きさを指定します。
-   *
-   * @default "md"
-   */
-  size?: MenuRootSize | undefined;
-
-  /**
-   * 項目の主な外観を指定します。
-   *
-   * @default "naked"
-   */
-  variant?: MenuRootVariant | undefined;
-};
+export type MenuRootProps<TPayload = unknown, TItem = any> = MenuRootProps.Render &
+  MenuRootProps.SuruUI<TPayload, TItem> &
+  MenuRootProps.BaseUI<TPayload, TItem> &
+  MenuRootProps.HTML;
 
 interface IMenuRoot extends IComponent<MenuRootProps> {
   /**
@@ -461,7 +474,17 @@ export namespace Root {
   /**
    * {@link MenuRootProps}
    */
-  export type Props<TPayload = unknown, TItem = any> = MenuRootProps<TPayload, TItem>;
+  export type Props<TPayload = unknown, TItem = any> = Props.Render &
+    Props.SuruUI<TPayload, TItem> &
+    Props.BaseUI<TPayload, TItem> &
+    Props.HTML;
+
+  export namespace Props {
+    export type BaseUI<TPayload = unknown, TItem = any> = MenuRootProps.BaseUI<TPayload, TItem>;
+    export type HTML = MenuRootProps.HTML;
+    export type Render = MenuRootProps.Render;
+    export type SuruUI<TPayload = unknown, TItem = any> = MenuRootProps.SuruUI<TPayload, TItem>;
+  }
 
   /**
    * {@link MenuRootActionItemObject}
@@ -547,29 +570,47 @@ export namespace Root {
  */
 export type MenuTriggerState = Menu.Trigger.State;
 
+export namespace MenuTriggerProps {
+  export type BaseUI<TPayload = unknown> = Omit<
+    Menu.Trigger.Props<TPayload>,
+    keyof Render | keyof SuruUI<TPayload> | "render"
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    | keyof Render
+    | keyof SuruUI<any>
+    | keyof Omit<Menu.Trigger.Props<any>, "handle" | "children" | "render">
+  >;
+
+  export type Render = RenderProps<MenuTriggerState>;
+
+  export type SuruUI<TPayload = unknown> = {
+    /**
+     * トリガーとしてレンダリングする要素です。
+     *
+     * {@link Menu.Trigger} の `render` props と同じ型で、そのまま `render` に渡されます。
+     */
+    children: NonNullable<Menu.Trigger.Props<TPayload>["render"]>;
+
+    /**
+     * メニュー ({@link Root}) を関連付けるハンドルです。
+     *
+     * {@link createHandle} で作成し、{@link Root} と共有します。Root 内に配置する場合は省略できます。
+     */
+    handle?: MenuHandle<TPayload> | undefined;
+  };
+}
+
 /**
  * {@link MenuTrigger} に渡す props です。
  *
  * @template TPayload 開いたときに渡される値の型です。
  */
-export type MenuTriggerProps<TPayload = unknown> = Omit<
-  Menu.Trigger.Props<TPayload>,
-  "handle" | "children" | "render"
-> & {
-  /**
-   * トリガーとしてレンダリングする要素です。
-   *
-   * {@link Menu.Trigger} の `render` props と同じ型で、そのまま `render` に渡されます。
-   */
-  children: NonNullable<Menu.Trigger.Props<TPayload>["render"]>;
-
-  /**
-   * メニュー ({@link Root}) を関連付けるハンドルです。
-   *
-   * {@link createHandle} で作成し、{@link Root} と共有します。Root 内に配置する場合は省略できます。
-   */
-  handle?: MenuHandle<TPayload> | undefined;
-};
+export type MenuTriggerProps<TPayload = unknown> = MenuTriggerProps.Render &
+  MenuTriggerProps.SuruUI<TPayload> &
+  MenuTriggerProps.BaseUI<TPayload> &
+  MenuTriggerProps.HTML;
 
 interface IMenuTrigger extends IComponent<MenuTriggerProps> {
   /**
@@ -612,7 +653,17 @@ export namespace Trigger {
   /**
    * {@link MenuTriggerProps}
    */
-  export type Props<TPayload = unknown> = MenuTriggerProps<TPayload>;
+  export type Props<TPayload = unknown> = Props.Render &
+    Props.SuruUI<TPayload> &
+    Props.BaseUI<TPayload> &
+    Props.HTML;
+
+  export namespace Props {
+    export type BaseUI<TPayload = unknown> = MenuTriggerProps.BaseUI<TPayload>;
+    export type HTML = MenuTriggerProps.HTML;
+    export type Render = MenuTriggerProps.Render;
+    export type SuruUI<TPayload = unknown> = MenuTriggerProps.SuruUI<TPayload>;
+  }
 }
 
 // Portal
@@ -623,10 +674,26 @@ export namespace Trigger {
  */
 export type MenuPortalState = Menu.Portal.State;
 
+export namespace MenuPortalProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Portal>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Menu.Portal>
+  >;
+
+  export type Render = RenderProps<MenuPortalState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link MenuPortal} に渡す props です。
  */
-export type MenuPortalProps = React.ComponentProps<typeof Menu.Portal>;
+export type MenuPortalProps = MenuPortalProps.Render &
+  MenuPortalProps.SuruUI &
+  MenuPortalProps.BaseUI &
+  MenuPortalProps.HTML;
 
 /**
  * メニューを DOM の別の場所へ移動する要素です。
@@ -668,7 +735,14 @@ export namespace Portal {
   /**
    * {@link MenuPortalProps}
    */
-  export type Props = MenuPortalProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MenuPortalProps.BaseUI;
+    export type HTML = MenuPortalProps.HTML;
+    export type Render = MenuPortalProps.Render;
+    export type SuruUI = MenuPortalProps.SuruUI;
+  }
 }
 
 // Backdrop
@@ -679,10 +753,26 @@ export namespace Portal {
  */
 export type MenuBackdropState = Menu.Backdrop.State;
 
+export namespace MenuBackdropProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Backdrop>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Menu.Backdrop>
+  >;
+
+  export type Render = RenderProps<MenuBackdropState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link MenuBackdrop} に渡す props です。
  */
-export type MenuBackdropProps = React.ComponentProps<typeof Menu.Backdrop>;
+export type MenuBackdropProps = MenuBackdropProps.Render &
+  MenuBackdropProps.SuruUI &
+  MenuBackdropProps.BaseUI &
+  MenuBackdropProps.HTML;
 
 /**
  * メニューの背後に表示されるオーバーレイ要素です。
@@ -704,7 +794,14 @@ export namespace Backdrop {
   /**
    * {@link MenuBackdropProps}
    */
-  export type Props = MenuBackdropProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MenuBackdropProps.BaseUI;
+    export type HTML = MenuBackdropProps.HTML;
+    export type Render = MenuBackdropProps.Render;
+    export type SuruUI = MenuBackdropProps.SuruUI;
+  }
 }
 
 // Positioner
@@ -715,10 +812,26 @@ export namespace Backdrop {
  */
 export type MenuPositionerState = Menu.Positioner.State;
 
+export namespace MenuPositionerProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Positioner>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Menu.Positioner>
+  >;
+
+  export type Render = RenderProps<MenuPositionerState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link MenuPositioner} に渡す props です。
  */
-export type MenuPositionerProps = React.ComponentProps<typeof Menu.Positioner>;
+export type MenuPositionerProps = MenuPositionerProps.Render &
+  MenuPositionerProps.SuruUI &
+  MenuPositionerProps.BaseUI &
+  MenuPositionerProps.HTML;
 
 /**
  * ポップアップをトリガーに位置合わせする要素です。
@@ -740,7 +853,14 @@ export namespace Positioner {
   /**
    * {@link MenuPositionerProps}
    */
-  export type Props = MenuPositionerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MenuPositionerProps.BaseUI;
+    export type HTML = MenuPositionerProps.HTML;
+    export type Render = MenuPositionerProps.Render;
+    export type SuruUI = MenuPositionerProps.SuruUI;
+  }
 }
 
 // Popup
@@ -768,17 +888,33 @@ export interface IMenuPopupItemRenderer<TItem = any> {
  */
 export type MenuPopupState = Menu.Popup.State;
 
+export namespace MenuPopupProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Popup>, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof Omit<React.ComponentProps<typeof Menu.Popup>, "children">
+  >;
+
+  export type Render = RenderProps<MenuPopupState>;
+
+  export type SuruUI = {
+    /**
+     * ポップアップの内容、または各項目をレンダリングする関数です。
+     *
+     * 関数を指定した場合は {@link MenuRootProps.items|items} の各項目が引数として渡されます。
+     */
+    children?: React.ReactNode | IMenuPopupItemRenderer;
+  };
+}
+
 /**
  * {@link MenuPopup} に渡す props です。
  */
-export type MenuPopupProps = Omit<React.ComponentProps<typeof Menu.Popup>, "children"> & {
-  /**
-   * ポップアップの内容、または各項目をレンダリングする関数です。
-   *
-   * 関数を指定した場合は {@link MenuRootProps.items|items} の各項目が引数として渡されます。
-   */
-  children?: React.ReactNode | IMenuPopupItemRenderer;
-};
+export type MenuPopupProps = MenuPopupProps.Render &
+  MenuPopupProps.SuruUI &
+  MenuPopupProps.BaseUI &
+  MenuPopupProps.HTML;
 
 /**
  * メニュー項目を表示するポップアップ要素です。
@@ -915,7 +1051,14 @@ export namespace Popup {
   /**
    * {@link MenuPopupProps}
    */
-  export type Props = MenuPopupProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MenuPopupProps.BaseUI;
+    export type HTML = MenuPopupProps.HTML;
+    export type Render = MenuPopupProps.Render;
+    export type SuruUI = MenuPopupProps.SuruUI;
+  }
 
   /**
    * {@link MenuRootItemObject}
@@ -936,10 +1079,26 @@ export namespace Popup {
  */
 export type MenuArrowState = Menu.Arrow.State;
 
+export namespace MenuArrowProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Arrow>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Menu.Arrow>
+  >;
+
+  export type Render = RenderProps<MenuArrowState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link MenuArrow} に渡す props です。
  */
-export type MenuArrowProps = React.ComponentProps<typeof Menu.Arrow>;
+export type MenuArrowProps = MenuArrowProps.Render &
+  MenuArrowProps.SuruUI &
+  MenuArrowProps.BaseUI &
+  MenuArrowProps.HTML;
 
 /**
  * ポップアップとトリガーをつなぐ矢印要素です。
@@ -961,7 +1120,14 @@ export namespace Arrow {
   /**
    * {@link MenuArrowProps}
    */
-  export type Props = MenuArrowProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MenuArrowProps.BaseUI;
+    export type HTML = MenuArrowProps.HTML;
+    export type Render = MenuArrowProps.Render;
+    export type SuruUI = MenuArrowProps.SuruUI;
+  }
 }
 
 // Viewport
@@ -972,10 +1138,26 @@ export namespace Arrow {
  */
 export type MenuViewportState = Menu.Viewport.State;
 
+export namespace MenuViewportProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Viewport>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Menu.Viewport>
+  >;
+
+  export type Render = RenderProps<MenuViewportState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link MenuViewport} に渡す props です。
  */
-export type MenuViewportProps = React.ComponentProps<typeof Menu.Viewport>;
+export type MenuViewportProps = MenuViewportProps.Render &
+  MenuViewportProps.SuruUI &
+  MenuViewportProps.BaseUI &
+  MenuViewportProps.HTML;
 
 /**
  * トリガーの切り替えに伴うメニュー内容のアニメーション用ビューポートです。
@@ -997,7 +1179,14 @@ export namespace Viewport {
   /**
    * {@link MenuViewportProps}
    */
-  export type Props = MenuViewportProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MenuViewportProps.BaseUI;
+    export type HTML = MenuViewportProps.HTML;
+    export type Render = MenuViewportProps.Render;
+    export type SuruUI = MenuViewportProps.SuruUI;
+  }
 }
 
 // Item
@@ -1044,36 +1233,60 @@ export type MenuItemVariant = Button.Root.Variant;
  */
 export type MenuItemState = Override<Button.Root.State, Menu.Item.State>;
 
+export namespace MenuItemProps {
+  export type BaseUI = Omit<
+    Override<
+      Omit<Button.ButtonRootProps, "type">,
+      Override<React.ComponentProps<typeof Menu.Item>, RenderProps<MenuItemState>>
+    >,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Override<
+        Omit<Button.ButtonRootProps, "type">,
+        Override<React.ComponentProps<typeof Menu.Item>, RenderProps<MenuItemState>>
+      >
+  >;
+
+  export type Render = RenderProps<MenuItemState>;
+
+  export type SuruUI = {
+    /**
+     * 項目の配色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: MenuItemColor | undefined;
+
+    /**
+     * 項目の角丸を指定します。
+     *
+     * 既定値は {@link MenuRootProps.radius|radius} です。
+     */
+    radius?: MenuItemRadius | undefined;
+
+    /**
+     * チェック状態のときの外観を指定します。
+     *
+     * チェックされていないときは常に `"naked"` になります。
+     *
+     * 既定値は {@link MenuRootProps.variant|variant} です。
+     */
+    variant?: MenuItemVariant | undefined;
+  };
+}
+
 /**
  * {@link MenuItem} に渡す props です。
  */
-export type MenuItemProps = Override<
-  Omit<Button.Root.Props, "type">,
-  Override<React.ComponentProps<typeof Menu.Item>, RenderProps<MenuItemState>>
-> & {
-  /**
-   * 項目の配色を指定します。
-   *
-   * @default "grey"
-   */
-  color?: MenuItemColor | undefined;
-
-  /**
-   * 項目の角丸を指定します。
-   *
-   * 既定値は {@link MenuRootProps.radius|radius} です。
-   */
-  radius?: MenuItemRadius | undefined;
-
-  /**
-   * チェック状態のときの外観を指定します。
-   *
-   * チェックされていないときは常に `"naked"` になります。
-   *
-   * 既定値は {@link MenuRootProps.variant|variant} です。
-   */
-  variant?: MenuItemVariant | undefined;
-};
+export type MenuItemProps = MenuItemProps.Render &
+  MenuItemProps.SuruUI &
+  MenuItemProps.BaseUI &
+  MenuItemProps.HTML;
 
 /**
  * メニューの操作項目です。
@@ -1135,7 +1348,14 @@ export namespace Item {
   /**
    * {@link MenuItemProps}
    */
-  export type Props = MenuItemProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MenuItemProps.BaseUI;
+    export type HTML = MenuItemProps.HTML;
+    export type Render = MenuItemProps.Render;
+    export type SuruUI = MenuItemProps.SuruUI;
+  }
 
   /**
    * {@link MenuItemColor}
@@ -1180,36 +1400,60 @@ export type MenuLinkItemVariant = Button.Root.Variant;
  */
 export type MenuLinkItemState = Override<Button.Root.State, Menu.LinkItem.State>;
 
+export namespace MenuLinkItemProps {
+  export type BaseUI = Omit<
+    Override<
+      Omit<Button.ButtonRootProps, "type">,
+      Override<React.ComponentProps<typeof Menu.LinkItem>, RenderProps<MenuLinkItemState>>
+    >,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"a">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Override<
+        Omit<Button.ButtonRootProps, "type">,
+        Override<React.ComponentProps<typeof Menu.LinkItem>, RenderProps<MenuLinkItemState>>
+      >
+  >;
+
+  export type Render = RenderProps<MenuLinkItemState>;
+
+  export type SuruUI = {
+    /**
+     * 項目の配色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: MenuLinkItemColor | undefined;
+
+    /**
+     * 項目の角丸を指定します。
+     *
+     * 既定値は {@link MenuRootProps.radius|radius} です。
+     */
+    radius?: MenuLinkItemRadius | undefined;
+
+    /**
+     * チェック状態のときの外観を指定します。
+     *
+     * チェックされていないときは常に `"naked"` になります。
+     *
+     * 既定値は {@link MenuRootProps.variant|variant} です。
+     */
+    variant?: MenuLinkItemVariant | undefined;
+  };
+}
+
 /**
  * {@link MenuLinkItem} に渡す props です。
  */
-export type MenuLinkItemProps = Override<
-  Omit<Button.Root.Props, "type">,
-  Override<React.ComponentProps<typeof Menu.LinkItem>, RenderProps<MenuLinkItemState>>
-> & {
-  /**
-   * 項目の配色を指定します。
-   *
-   * @default "grey"
-   */
-  color?: MenuLinkItemColor | undefined;
-
-  /**
-   * 項目の角丸を指定します。
-   *
-   * 既定値は {@link MenuRootProps.radius|radius} です。
-   */
-  radius?: MenuLinkItemRadius | undefined;
-
-  /**
-   * チェック状態のときの外観を指定します。
-   *
-   * チェックされていないときは常に `"naked"` になります。
-   *
-   * 既定値は {@link MenuRootProps.variant|variant} です。
-   */
-  variant?: MenuLinkItemVariant | undefined;
-};
+export type MenuLinkItemProps = MenuLinkItemProps.Render &
+  MenuLinkItemProps.SuruUI &
+  MenuLinkItemProps.BaseUI &
+  MenuLinkItemProps.HTML;
 
 /**
  * 別のページやセクションへ移動するメニュー項目です。
@@ -1271,7 +1515,14 @@ export namespace LinkItem {
   /**
    * {@link MenuLinkItemProps}
    */
-  export type Props = MenuLinkItemProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MenuLinkItemProps.BaseUI;
+    export type HTML = MenuLinkItemProps.HTML;
+    export type Render = MenuLinkItemProps.Render;
+    export type SuruUI = MenuLinkItemProps.SuruUI;
+  }
 
   /**
    * {@link MenuLinkItemColor}
@@ -1307,10 +1558,23 @@ export type MenuSubmenuRootChangeEventReason = Menu.SubmenuRoot.ChangeEventReaso
  */
 export type MenuSubmenuRootState = Menu.SubmenuRoot.State;
 
+export namespace MenuSubmenuRootProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Menu.SubmenuRoot>, keyof Render>;
+
+  export type HTML = {};
+
+  export type Render = RenderProps<MenuSubmenuRootState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link MenuSubmenuRoot} に渡す props です。
  */
-export type MenuSubmenuRootProps = React.ComponentProps<typeof Menu.SubmenuRoot>;
+export type MenuSubmenuRootProps = MenuSubmenuRootProps.Render &
+  MenuSubmenuRootProps.SuruUI &
+  MenuSubmenuRootProps.BaseUI &
+  MenuSubmenuRootProps.HTML;
 
 /**
  * サブメニューのルートです。
@@ -1334,7 +1598,14 @@ export namespace SubmenuRoot {
   /**
    * {@link MenuSubmenuRootProps}
    */
-  export type Props = MenuSubmenuRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MenuSubmenuRootProps.BaseUI;
+    export type HTML = MenuSubmenuRootProps.HTML;
+    export type Render = MenuSubmenuRootProps.Render;
+    export type SuruUI = MenuSubmenuRootProps.SuruUI;
+  }
 
   /**
    * {@link MenuSubmenuRootChangeEventDetails}
@@ -1374,36 +1645,66 @@ export type MenuSubmenuTriggerVariant = Button.Root.Variant;
  */
 export type MenuSubmenuTriggerState = Override<Button.Root.State, Menu.SubmenuTrigger.State>;
 
+export namespace MenuSubmenuTriggerProps {
+  export type BaseUI = Omit<
+    Override<
+      Omit<Button.ButtonRootProps, "type">,
+      Override<
+        React.ComponentProps<typeof Menu.SubmenuTrigger>,
+        RenderProps<MenuSubmenuTriggerState>
+      >
+    >,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Override<
+        Omit<Button.ButtonRootProps, "type">,
+        Override<
+          React.ComponentProps<typeof Menu.SubmenuTrigger>,
+          RenderProps<MenuSubmenuTriggerState>
+        >
+      >
+  >;
+
+  export type Render = RenderProps<MenuSubmenuTriggerState>;
+
+  export type SuruUI = {
+    /**
+     * 項目の配色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: MenuSubmenuTriggerColor | undefined;
+
+    /**
+     * 項目の角丸を指定します。
+     *
+     * 既定値は {@link MenuRootProps.radius|radius} です。
+     */
+    radius?: MenuSubmenuTriggerRadius | undefined;
+
+    /**
+     * チェック状態のときの外観を指定します。
+     *
+     * チェックされていないときは常に `"naked"` になります。
+     *
+     * 既定値は {@link MenuRootProps.variant|variant} です。
+     */
+    variant?: MenuSubmenuTriggerVariant | undefined;
+  };
+}
+
 /**
  * {@link MenuSubmenuTrigger} に渡す props です。
  */
-export type MenuSubmenuTriggerProps = Override<
-  Omit<Button.Root.Props, "type">,
-  Override<React.ComponentProps<typeof Menu.SubmenuTrigger>, RenderProps<MenuSubmenuTriggerState>>
-> & {
-  /**
-   * 項目の配色を指定します。
-   *
-   * @default "grey"
-   */
-  color?: MenuSubmenuTriggerColor | undefined;
-
-  /**
-   * 項目の角丸を指定します。
-   *
-   * 既定値は {@link MenuRootProps.radius|radius} です。
-   */
-  radius?: MenuSubmenuTriggerRadius | undefined;
-
-  /**
-   * チェック状態のときの外観を指定します。
-   *
-   * チェックされていないときは常に `"naked"` になります。
-   *
-   * 既定値は {@link MenuRootProps.variant|variant} です。
-   */
-  variant?: MenuSubmenuTriggerVariant | undefined;
-};
+export type MenuSubmenuTriggerProps = MenuSubmenuTriggerProps.Render &
+  MenuSubmenuTriggerProps.SuruUI &
+  MenuSubmenuTriggerProps.BaseUI &
+  MenuSubmenuTriggerProps.HTML;
 
 /**
  * サブメニューを開くメニュー項目です。
@@ -1468,7 +1769,14 @@ export namespace SubmenuTrigger {
   /**
    * {@link MenuSubmenuTriggerProps}
    */
-  export type Props = MenuSubmenuTriggerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MenuSubmenuTriggerProps.BaseUI;
+    export type HTML = MenuSubmenuTriggerProps.HTML;
+    export type Render = MenuSubmenuTriggerProps.Render;
+    export type SuruUI = MenuSubmenuTriggerProps.SuruUI;
+  }
 
   /**
    * {@link MenuSubmenuTriggerColor}
@@ -1494,10 +1802,26 @@ export namespace SubmenuTrigger {
  */
 export type MenuGroupState = Menu.Group.State;
 
+export namespace MenuGroupProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Group>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Menu.Group>
+  >;
+
+  export type Render = RenderProps<MenuGroupState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link MenuGroup} に渡す props です。
  */
-export type MenuGroupProps = React.ComponentProps<typeof Menu.Group>;
+export type MenuGroupProps = MenuGroupProps.Render &
+  MenuGroupProps.SuruUI &
+  MenuGroupProps.BaseUI &
+  MenuGroupProps.HTML;
 
 /**
  * 関連するメニュー項目をまとめるグループ要素です。
@@ -1519,7 +1843,14 @@ export namespace Group {
   /**
    * {@link MenuGroupProps}
    */
-  export type Props = MenuGroupProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MenuGroupProps.BaseUI;
+    export type HTML = MenuGroupProps.HTML;
+    export type Render = MenuGroupProps.Render;
+    export type SuruUI = MenuGroupProps.SuruUI;
+  }
 }
 
 // GroupLabel
@@ -1530,10 +1861,26 @@ export namespace Group {
  */
 export type MenuGroupLabelState = Menu.GroupLabel.State;
 
+export namespace MenuGroupLabelProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Menu.GroupLabel>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Menu.GroupLabel>
+  >;
+
+  export type Render = RenderProps<MenuGroupLabelState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link MenuGroupLabel} に渡す props です。
  */
-export type MenuGroupLabelProps = React.ComponentProps<typeof Menu.GroupLabel>;
+export type MenuGroupLabelProps = MenuGroupLabelProps.Render &
+  MenuGroupLabelProps.SuruUI &
+  MenuGroupLabelProps.BaseUI &
+  MenuGroupLabelProps.HTML;
 
 /**
  * グループに自動的に対応付けられるラベル要素です。
@@ -1555,7 +1902,14 @@ export namespace GroupLabel {
   /**
    * {@link MenuGroupLabelProps}
    */
-  export type Props = MenuGroupLabelProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MenuGroupLabelProps.BaseUI;
+    export type HTML = MenuGroupLabelProps.HTML;
+    export type Render = MenuGroupLabelProps.Render;
+    export type SuruUI = MenuGroupLabelProps.SuruUI;
+  }
 }
 
 // RadioGroup
@@ -1576,10 +1930,26 @@ export type MenuRadioGroupChangeEventReason = Menu.RadioGroup.ChangeEventReason;
  */
 export type MenuRadioGroupState = Menu.RadioGroup.State;
 
+export namespace MenuRadioGroupProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Menu.RadioGroup>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Menu.RadioGroup>
+  >;
+
+  export type Render = RenderProps<MenuRadioGroupState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link MenuRadioGroup} に渡す props です。
  */
-export type MenuRadioGroupProps = React.ComponentProps<typeof Menu.RadioGroup>;
+export type MenuRadioGroupProps = MenuRadioGroupProps.Render &
+  MenuRadioGroupProps.SuruUI &
+  MenuRadioGroupProps.BaseUI &
+  MenuRadioGroupProps.HTML;
 
 /**
  * ラジオ項目をまとめるグループ要素です。
@@ -1610,7 +1980,14 @@ export namespace RadioGroup {
   /**
    * {@link MenuRadioGroupProps}
    */
-  export type Props = MenuRadioGroupProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MenuRadioGroupProps.BaseUI;
+    export type HTML = MenuRadioGroupProps.HTML;
+    export type Render = MenuRadioGroupProps.Render;
+    export type SuruUI = MenuRadioGroupProps.SuruUI;
+  }
 
   /**
    * {@link MenuRadioGroupChangeEventDetails}
@@ -1650,36 +2027,60 @@ export type MenuRadioItemVariant = Button.Root.Variant;
  */
 export type MenuRadioItemState = Override<Button.Root.State, Menu.RadioItem.State>;
 
+export namespace MenuRadioItemProps {
+  export type BaseUI = Omit<
+    Override<
+      Omit<Button.ButtonRootProps, "type">,
+      Override<React.ComponentProps<typeof Menu.RadioItem>, RenderProps<MenuRadioItemState>>
+    >,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Override<
+        Omit<Button.ButtonRootProps, "type">,
+        Override<React.ComponentProps<typeof Menu.RadioItem>, RenderProps<MenuRadioItemState>>
+      >
+  >;
+
+  export type Render = RenderProps<MenuRadioItemState>;
+
+  export type SuruUI = {
+    /**
+     * 項目の配色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: MenuRadioItemColor | undefined;
+
+    /**
+     * 項目の角丸を指定します。
+     *
+     * 既定値は {@link MenuRootProps.radius|radius} です。
+     */
+    radius?: MenuRadioItemRadius | undefined;
+
+    /**
+     * チェック状態のときの外観を指定します。
+     *
+     * チェックされていないときは常に `"naked"` になります。
+     *
+     * 既定値は {@link MenuRootProps.variant|variant} です。
+     */
+    variant?: MenuRadioItemVariant | undefined;
+  };
+}
+
 /**
  * {@link MenuRadioItem} に渡す props です。
  */
-export type MenuRadioItemProps = Override<
-  Omit<Button.Root.Props, "type">,
-  Override<React.ComponentProps<typeof Menu.RadioItem>, RenderProps<MenuRadioItemState>>
-> & {
-  /**
-   * 項目の配色を指定します。
-   *
-   * @default "grey"
-   */
-  color?: MenuRadioItemColor | undefined;
-
-  /**
-   * 項目の角丸を指定します。
-   *
-   * 既定値は {@link MenuRootProps.radius|radius} です。
-   */
-  radius?: MenuRadioItemRadius | undefined;
-
-  /**
-   * チェック状態のときの外観を指定します。
-   *
-   * チェックされていないときは常に `"naked"` になります。
-   *
-   * 既定値は {@link MenuRootProps.variant|variant} です。
-   */
-  variant?: MenuRadioItemVariant | undefined;
-};
+export type MenuRadioItemProps = MenuRadioItemProps.Render &
+  MenuRadioItemProps.SuruUI &
+  MenuRadioItemProps.BaseUI &
+  MenuRadioItemProps.HTML;
 
 /**
  * ラジオグループ内のメニュー項目です。
@@ -1743,7 +2144,14 @@ export namespace RadioItem {
   /**
    * {@link MenuRadioItemProps}
    */
-  export type Props = MenuRadioItemProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MenuRadioItemProps.BaseUI;
+    export type HTML = MenuRadioItemProps.HTML;
+    export type Render = MenuRadioItemProps.Render;
+    export type SuruUI = MenuRadioItemProps.SuruUI;
+  }
 
   /**
    * {@link MenuRadioItemColor}
@@ -1769,10 +2177,26 @@ export namespace RadioItem {
  */
 export type MenuRadioItemIndicatorState = Menu.RadioItemIndicator.State;
 
+export namespace MenuRadioItemIndicatorProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Menu.RadioItemIndicator>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof React.ComponentProps<typeof Menu.RadioItemIndicator>
+  >;
+
+  export type Render = RenderProps<MenuRadioItemIndicatorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link MenuRadioItemIndicator} に渡す props です。
  */
-export type MenuRadioItemIndicatorProps = React.ComponentProps<typeof Menu.RadioItemIndicator>;
+export type MenuRadioItemIndicatorProps = MenuRadioItemIndicatorProps.Render &
+  MenuRadioItemIndicatorProps.SuruUI &
+  MenuRadioItemIndicatorProps.BaseUI &
+  MenuRadioItemIndicatorProps.HTML;
 
 /**
  * 選択されたラジオ項目を示す要素です。
@@ -1806,7 +2230,14 @@ export namespace RadioItemIndicator {
   /**
    * {@link MenuRadioItemIndicatorProps}
    */
-  export type Props = MenuRadioItemIndicatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MenuRadioItemIndicatorProps.BaseUI;
+    export type HTML = MenuRadioItemIndicatorProps.HTML;
+    export type Render = MenuRadioItemIndicatorProps.Render;
+    export type SuruUI = MenuRadioItemIndicatorProps.SuruUI;
+  }
 }
 
 // CheckboxItem
@@ -1846,36 +2277,60 @@ export type MenuCheckboxItemVariant = Button.Root.Variant;
  */
 export type MenuCheckboxItemState = Override<Button.Root.State, Menu.CheckboxItem.State>;
 
+export namespace MenuCheckboxItemProps {
+  export type BaseUI = Omit<
+    Override<
+      Omit<Button.ButtonRootProps, "type">,
+      Override<React.ComponentProps<typeof Menu.CheckboxItem>, RenderProps<MenuCheckboxItemState>>
+    >,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Override<
+        Omit<Button.ButtonRootProps, "type">,
+        Override<React.ComponentProps<typeof Menu.CheckboxItem>, RenderProps<MenuCheckboxItemState>>
+      >
+  >;
+
+  export type Render = RenderProps<MenuCheckboxItemState>;
+
+  export type SuruUI = {
+    /**
+     * 項目の配色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: MenuCheckboxItemColor | undefined;
+
+    /**
+     * 項目の角丸を指定します。
+     *
+     * 既定値は {@link MenuRootProps.radius|radius} です。
+     */
+    radius?: MenuCheckboxItemRadius | undefined;
+
+    /**
+     * チェック状態のときの外観を指定します。
+     *
+     * チェックされていないときは常に `"naked"` になります。
+     *
+     * 既定値は {@link MenuRootProps.variant|variant} です。
+     */
+    variant?: MenuCheckboxItemVariant | undefined;
+  };
+}
+
 /**
  * {@link MenuCheckboxItem} に渡す props です。
  */
-export type MenuCheckboxItemProps = Override<
-  Omit<Button.Root.Props, "type">,
-  Override<React.ComponentProps<typeof Menu.CheckboxItem>, RenderProps<MenuCheckboxItemState>>
-> & {
-  /**
-   * 項目の配色を指定します。
-   *
-   * @default "grey"
-   */
-  color?: MenuCheckboxItemColor | undefined;
-
-  /**
-   * 項目の角丸を指定します。
-   *
-   * 既定値は {@link MenuRootProps.radius|radius} です。
-   */
-  radius?: MenuCheckboxItemRadius | undefined;
-
-  /**
-   * チェック状態のときの外観を指定します。
-   *
-   * チェックされていないときは常に `"naked"` になります。
-   *
-   * 既定値は {@link MenuRootProps.variant|variant} です。
-   */
-  variant?: MenuCheckboxItemVariant | undefined;
-};
+export type MenuCheckboxItemProps = MenuCheckboxItemProps.Render &
+  MenuCheckboxItemProps.SuruUI &
+  MenuCheckboxItemProps.BaseUI &
+  MenuCheckboxItemProps.HTML;
 
 /**
  * 設定をオンまたはオフにできるメニュー項目です。
@@ -1941,7 +2396,14 @@ export namespace CheckboxItem {
   /**
    * {@link MenuCheckboxItemProps}
    */
-  export type Props = MenuCheckboxItemProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MenuCheckboxItemProps.BaseUI;
+    export type HTML = MenuCheckboxItemProps.HTML;
+    export type Render = MenuCheckboxItemProps.Render;
+    export type SuruUI = MenuCheckboxItemProps.SuruUI;
+  }
 
   /**
    * {@link MenuCheckboxItemChangeEventDetails}
@@ -1977,12 +2439,26 @@ export namespace CheckboxItem {
  */
 export type MenuCheckboxItemIndicatorState = Menu.CheckboxItemIndicator.State;
 
+export namespace MenuCheckboxItemIndicatorProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Menu.CheckboxItemIndicator>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof React.ComponentProps<typeof Menu.CheckboxItemIndicator>
+  >;
+
+  export type Render = RenderProps<MenuCheckboxItemIndicatorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link MenuCheckboxItemIndicator} に渡す props です。
  */
-export type MenuCheckboxItemIndicatorProps = React.ComponentProps<
-  typeof Menu.CheckboxItemIndicator
->;
+export type MenuCheckboxItemIndicatorProps = MenuCheckboxItemIndicatorProps.Render &
+  MenuCheckboxItemIndicatorProps.SuruUI &
+  MenuCheckboxItemIndicatorProps.BaseUI &
+  MenuCheckboxItemIndicatorProps.HTML;
 
 /**
  * チェックされた項目を示す要素です。
@@ -2015,7 +2491,14 @@ export namespace CheckboxItemIndicator {
   /**
    * {@link MenuCheckboxItemIndicatorProps}
    */
-  export type Props = MenuCheckboxItemIndicatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MenuCheckboxItemIndicatorProps.BaseUI;
+    export type HTML = MenuCheckboxItemIndicatorProps.HTML;
+    export type Render = MenuCheckboxItemIndicatorProps.Render;
+    export type SuruUI = MenuCheckboxItemIndicatorProps.SuruUI;
+  }
 }
 
 // Separator
@@ -2026,10 +2509,26 @@ export namespace CheckboxItemIndicator {
  */
 export type MenuSeparatorState = Menu.Separator.State;
 
+export namespace MenuSeparatorProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Separator>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof Menu.Separator>
+  >;
+
+  export type Render = RenderProps<MenuSeparatorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link MenuSeparator} に渡す props です。
  */
-export type MenuSeparatorProps = React.ComponentProps<typeof Menu.Separator>;
+export type MenuSeparatorProps = MenuSeparatorProps.Render &
+  MenuSeparatorProps.SuruUI &
+  MenuSeparatorProps.BaseUI &
+  MenuSeparatorProps.HTML;
 
 /**
  * メニュー項目を区切る要素です。
@@ -2051,5 +2550,12 @@ export namespace Separator {
   /**
    * {@link MenuSeparatorProps}
    */
-  export type Props = MenuSeparatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = MenuSeparatorProps.BaseUI;
+    export type HTML = MenuSeparatorProps.HTML;
+    export type Render = MenuSeparatorProps.Render;
+    export type SuruUI = MenuSeparatorProps.SuruUI;
+  }
 }

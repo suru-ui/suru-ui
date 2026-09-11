@@ -120,20 +120,33 @@ export type AlertDialogRootChangeEventReason = AlertDialog.Root.ChangeEventReaso
  */
 export type AlertDialogRootState = AlertDialog.Root.State;
 
+export namespace AlertDialogRootProps {
+  export type BaseUI<TPayload = any> = Omit<
+    React.ComponentProps<typeof AlertDialog.Root>,
+    keyof Render | keyof SuruUI<TPayload>
+  >;
+
+  export type HTML = {};
+
+  export type Render = RenderProps<AlertDialogRootState>;
+
+  export type SuruUI<TPayload = any> = {
+    /**
+     * トリガーとアラートダイアログに関連付けるためのハンドルです。
+     */
+    handle: AlertDialogHandle<TPayload>;
+  };
+}
+
 /**
  * {@link AlertDialogRoot} に渡す props です。
  *
  * @template TPayload トリガーが送信するデータの型です。
  */
-export type AlertDialogRootProps<TPayload = any> = Omit<
-  React.ComponentProps<typeof AlertDialog.Root>,
-  "handle"
-> & {
-  /**
-   * トリガーとアラートダイアログに関連付けるためのハンドルです。
-   */
-  handle: AlertDialogHandle<TPayload>;
-};
+export type AlertDialogRootProps<TPayload = any> = AlertDialogRootProps.Render &
+  AlertDialogRootProps.SuruUI<TPayload> &
+  AlertDialogRootProps.BaseUI<TPayload> &
+  AlertDialogRootProps.HTML;
 
 interface IAlertDialogRoot extends IComponent<AlertDialogRootProps> {
   /**
@@ -164,7 +177,17 @@ export namespace Root {
   /**
    * {@link AlertDialogRootProps}
    */
-  export type Props<TPayload = any> = AlertDialogRootProps<TPayload>;
+  export type Props<TPayload = any> = Props.Render &
+    Props.SuruUI<TPayload> &
+    Props.BaseUI<TPayload> &
+    Props.HTML;
+
+  export namespace Props {
+    export type BaseUI<TPayload = any> = AlertDialogRootProps.BaseUI<TPayload>;
+    export type HTML = AlertDialogRootProps.HTML;
+    export type Render = AlertDialogRootProps.Render;
+    export type SuruUI<TPayload = any> = AlertDialogRootProps.SuruUI<TPayload>;
+  }
 
   /**
    * {@link AlertDialogRootActions}
@@ -190,25 +213,43 @@ export namespace Root {
  */
 export type AlertDialogToggleTriggerState = AlertDialog.Trigger.State;
 
+export namespace AlertDialogToggleTriggerProps {
+  export type BaseUI<TPayload = any> = Omit<
+    React.ComponentProps<typeof AlertDialog.Trigger>,
+    keyof Render | keyof SuruUI<TPayload> | "render"
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    | keyof Render
+    | keyof SuruUI<any>
+    | keyof Omit<React.ComponentProps<typeof AlertDialog.Trigger>, "handle" | "children" | "render">
+  >;
+
+  export type Render = RenderProps<AlertDialogToggleTriggerState>;
+
+  export type SuruUI<TPayload = any> = {
+    /**
+     * ボタンとしてレンダリングする要素です。
+     */
+    children: NonNullable<React.ComponentProps<typeof AlertDialog.Trigger>["render"]>;
+
+    /**
+     * トリガーとアラートダイアログに関連付けるためのハンドルです。
+     */
+    handle: AlertDialogHandle<TPayload>;
+  };
+}
+
 /**
  * {@link AlertDialogToggleTrigger} に渡す props です。
  *
  * @template TPayload トリガーが送信するデータの型です。
  */
-export type AlertDialogToggleTriggerProps<TPayload = any> = Omit<
-  React.ComponentProps<typeof AlertDialog.Trigger>,
-  "handle" | "children" | "render"
-> & {
-  /**
-   * ボタンとしてレンダリングする要素です。
-   */
-  children: NonNullable<React.ComponentProps<typeof AlertDialog.Trigger>["render"]>;
-
-  /**
-   * トリガーとアラートダイアログに関連付けるためのハンドルです。
-   */
-  handle: AlertDialogHandle<TPayload>;
-};
+export type AlertDialogToggleTriggerProps<TPayload = any> = AlertDialogToggleTriggerProps.Render &
+  AlertDialogToggleTriggerProps.SuruUI<TPayload> &
+  AlertDialogToggleTriggerProps.BaseUI<TPayload> &
+  AlertDialogToggleTriggerProps.HTML;
 
 /**
  * アラートダイアログを開くボタンコンポーネントです。
@@ -238,7 +279,14 @@ export namespace ToggleTrigger {
   /**
    * {@link AlertDialogToggleTriggerProps}
    */
-  export type Props = AlertDialogToggleTriggerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI<TPayload = any> = AlertDialogToggleTriggerProps.BaseUI<TPayload>;
+    export type HTML = AlertDialogToggleTriggerProps.HTML;
+    export type Render = AlertDialogToggleTriggerProps.Render;
+    export type SuruUI<TPayload = any> = AlertDialogToggleTriggerProps.SuruUI<TPayload>;
+  }
 }
 
 // Portal
@@ -249,10 +297,26 @@ export namespace ToggleTrigger {
  */
 export type AlertDialogPortalState = AlertDialog.Portal.State;
 
+export namespace AlertDialogPortalProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof AlertDialog.Portal>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof AlertDialog.Portal>
+  >;
+
+  export type Render = RenderProps<AlertDialogPortalState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AlertDialogPortal} に渡す props です。
  */
-export type AlertDialogPortalProps = React.ComponentProps<typeof AlertDialog.Portal>;
+export type AlertDialogPortalProps = AlertDialogPortalProps.Render &
+  AlertDialogPortalProps.SuruUI &
+  AlertDialogPortalProps.BaseUI &
+  AlertDialogPortalProps.HTML;
 
 /**
  * アラートダイアログを DOM の別の場所に配置するコンポーネントです。
@@ -289,7 +353,14 @@ export namespace Portal {
   /**
    * {@link AlertDialogPortalProps}
    */
-  export type Props = AlertDialogPortalProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AlertDialogPortalProps.BaseUI;
+    export type HTML = AlertDialogPortalProps.HTML;
+    export type Render = AlertDialogPortalProps.Render;
+    export type SuruUI = AlertDialogPortalProps.SuruUI;
+  }
 }
 
 // Backdrop
@@ -300,10 +371,26 @@ export namespace Portal {
  */
 export type AlertDialogBackdropState = AlertDialog.Backdrop.State;
 
+export namespace AlertDialogBackdropProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof AlertDialog.Backdrop>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof AlertDialog.Backdrop>
+  >;
+
+  export type Render = RenderProps<AlertDialogBackdropState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AlertDialogBackdrop} に渡す props です。
  */
-export type AlertDialogBackdropProps = React.ComponentProps<typeof AlertDialog.Backdrop>;
+export type AlertDialogBackdropProps = AlertDialogBackdropProps.Render &
+  AlertDialogBackdropProps.SuruUI &
+  AlertDialogBackdropProps.BaseUI &
+  AlertDialogBackdropProps.HTML;
 
 /**
  * ポップアップの背後に表示されるオーバーレイコンポーネントです。
@@ -331,7 +418,14 @@ export namespace Backdrop {
   /**
    * {@link AlertDialogBackdropProps}
    */
-  export type Props = AlertDialogBackdropProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AlertDialogBackdropProps.BaseUI;
+    export type HTML = AlertDialogBackdropProps.HTML;
+    export type Render = AlertDialogBackdropProps.Render;
+    export type SuruUI = AlertDialogBackdropProps.SuruUI;
+  }
 }
 
 // Viewport
@@ -342,10 +436,26 @@ export namespace Backdrop {
  */
 export type AlertDialogViewportState = AlertDialog.Viewport.State;
 
+export namespace AlertDialogViewportProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof AlertDialog.Viewport>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof React.ComponentProps<typeof AlertDialog.Viewport>
+  >;
+
+  export type Render = RenderProps<AlertDialogViewportState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AlertDialogViewport} に渡す props です。
  */
-export type AlertDialogViewportProps = React.ComponentProps<typeof AlertDialog.Viewport>;
+export type AlertDialogViewportProps = AlertDialogViewportProps.Render &
+  AlertDialogViewportProps.SuruUI &
+  AlertDialogViewportProps.BaseUI &
+  AlertDialogViewportProps.HTML;
 
 /**
  * ポップアップの配置コンテナーコンポーネントです。
@@ -375,7 +485,14 @@ export namespace Viewport {
   /**
    * {@link AlertDialogViewportProps}
    */
-  export type Props = AlertDialogViewportProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AlertDialogViewportProps.BaseUI;
+    export type HTML = AlertDialogViewportProps.HTML;
+    export type Render = AlertDialogViewportProps.Render;
+    export type SuruUI = AlertDialogViewportProps.SuruUI;
+  }
 }
 
 // Content
@@ -404,31 +521,50 @@ export type AlertDialogContentVariant = "default" | "stacked";
  */
 export type AlertDialogContentState = AlertDialog.Popup.State;
 
+export namespace AlertDialogContentProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof AlertDialog.Popup>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof AlertDialog.Popup>
+  >;
+
+  export type Render = RenderProps<AlertDialogContentState>;
+
+  export type SuruUI = {
+    /**
+     * アラートダイアログに枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * アラートダイアログの角丸の大きさを指定します。
+     *
+     * @default "md"
+     */
+    radius?: AlertDialogContentRadius | undefined;
+
+    /**
+     * アラートダイアログの主な外観を指定します。
+     *
+     * @default "default"
+     */
+    variant?: AlertDialogContentVariant | undefined;
+  };
+}
+
 /**
  * {@link AlertDialogContent} に渡す props です。
  */
-export type AlertDialogContentProps = React.ComponentProps<typeof AlertDialog.Popup> & {
-  /**
-   * アラートダイアログに枠線を表示するかどうかを指定します。
-   *
-   * @default false
-   */
-  outlined?: boolean | undefined;
-
-  /**
-   * アラートダイアログの角丸の大きさを指定します。
-   *
-   * @default "md"
-   */
-  radius?: AlertDialogContentRadius | undefined;
-
-  /**
-   * アラートダイアログの主な外観を指定します。
-   *
-   * @default "default"
-   */
-  variant?: AlertDialogContentVariant | undefined;
-};
+export type AlertDialogContentProps = AlertDialogContentProps.Render &
+  AlertDialogContentProps.SuruUI &
+  AlertDialogContentProps.BaseUI &
+  AlertDialogContentProps.HTML;
 
 /**
  * アラートダイアログを表示するコンポーネントです。
@@ -471,7 +607,14 @@ export namespace Content {
   /**
    * {@link AlertDialogContentProps}
    */
-  export type Props = AlertDialogContentProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AlertDialogContentProps.BaseUI;
+    export type HTML = AlertDialogContentProps.HTML;
+    export type Render = AlertDialogContentProps.Render;
+    export type SuruUI = AlertDialogContentProps.SuruUI;
+  }
 
   /**
    * {@link AlertDialogContentRadius}
@@ -492,11 +635,12 @@ export namespace Content {
  */
 export type AlertDialogControlsState = {};
 
-/**
- * {@link AlertDialogControls} に渡す props です。
- */
-export type AlertDialogControlsProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<AlertDialogControlsState> & {
+export namespace AlertDialogControlsProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<AlertDialogControlsState>;
+
+  export type SuruUI = {
     /**
      * 絶対位置として配置するかを指定します。
      *
@@ -504,6 +648,14 @@ export type AlertDialogControlsProps = Omit<React.ComponentProps<"div">, keyof R
      */
     absolute?: boolean | undefined;
   };
+}
+
+/**
+ * {@link AlertDialogControls} に渡す props です。
+ */
+export type AlertDialogControlsProps = AlertDialogControlsProps.Render &
+  AlertDialogControlsProps.SuruUI &
+  AlertDialogControlsProps.HTML;
 
 /**
  * アラートダイアログのコントロールコンポーネントです。
@@ -538,7 +690,13 @@ export namespace Controls {
   /**
    * {@link AlertDialogControlsProps}
    */
-  export type Props = AlertDialogControlsProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = AlertDialogControlsProps.HTML;
+    export type Render = AlertDialogControlsProps.Render;
+    export type SuruUI = AlertDialogControlsProps.SuruUI;
+  }
 }
 
 // Header
@@ -549,11 +707,20 @@ export namespace Controls {
  */
 export type AlertDialogHeaderState = {};
 
+export namespace AlertDialogHeaderProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<AlertDialogHeaderState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AlertDialogHeader} に渡す props です。
  */
-export type AlertDialogHeaderProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<AlertDialogHeaderState>;
+export type AlertDialogHeaderProps = AlertDialogHeaderProps.Render &
+  AlertDialogHeaderProps.SuruUI &
+  AlertDialogHeaderProps.HTML;
 
 /**
  * アラートダイアログのヘッダーコンポーネントです。
@@ -583,7 +750,13 @@ export namespace Header {
   /**
    * {@link AlertDialogHeaderProps}
    */
-  export type Props = AlertDialogHeaderProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = AlertDialogHeaderProps.HTML;
+    export type Render = AlertDialogHeaderProps.Render;
+    export type SuruUI = AlertDialogHeaderProps.SuruUI;
+  }
 }
 
 // Icon
@@ -628,11 +801,12 @@ export type AlertDialogIconVariant = ColorTemplate;
  */
 export type AlertDialogIconState = {};
 
-/**
- * {@link AlertDialogIcon} に渡す props です。
- */
-export type AlertDialogIconProps = Omit<React.ComponentProps<"div">, keyof RenderProps | "color"> &
-  RenderProps<AlertDialogIconState> & {
+export namespace AlertDialogIconProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<AlertDialogIconState>;
+
+  export type SuruUI = {
     /**
      * アラートダイアログのアイコンの配色を指定します。
      *
@@ -675,6 +849,14 @@ export type AlertDialogIconProps = Omit<React.ComponentProps<"div">, keyof Rende
      */
     variant?: AlertDialogIconVariant | undefined;
   };
+}
+
+/**
+ * {@link AlertDialogIcon} に渡す props です。
+ */
+export type AlertDialogIconProps = AlertDialogIconProps.Render &
+  AlertDialogIconProps.SuruUI &
+  AlertDialogIconProps.HTML;
 
 /**
  * アラートダイアログのアイコンコンポーネントです。
@@ -722,7 +904,13 @@ export namespace Icon {
   /**
    * {@link AlertDialogIconProps}
    */
-  export type Props = AlertDialogIconProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = AlertDialogIconProps.HTML;
+    export type Render = AlertDialogIconProps.Render;
+    export type SuruUI = AlertDialogIconProps.SuruUI;
+  }
 
   /**
    * {@link AlertDialogIconColor}
@@ -753,10 +941,26 @@ export namespace Icon {
  */
 export type AlertDialogTitleState = AlertDialog.Title.State;
 
+export namespace AlertDialogTitleProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof AlertDialog.Title>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"h2">,
+    keyof Render | keyof React.ComponentProps<typeof AlertDialog.Title>
+  >;
+
+  export type Render = RenderProps<AlertDialogTitleState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AlertDialogTitle} に渡す props です。
  */
-export type AlertDialogTitleProps = React.ComponentProps<typeof AlertDialog.Title>;
+export type AlertDialogTitleProps = AlertDialogTitleProps.Render &
+  AlertDialogTitleProps.SuruUI &
+  AlertDialogTitleProps.BaseUI &
+  AlertDialogTitleProps.HTML;
 
 /**
  * アラートダイアログの見出しを表示するコンポーネントです。
@@ -780,7 +984,14 @@ export namespace Title {
   /**
    * {@link AlertDialogTitleProps}
    */
-  export type Props = AlertDialogTitleProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AlertDialogTitleProps.BaseUI;
+    export type HTML = AlertDialogTitleProps.HTML;
+    export type Render = AlertDialogTitleProps.Render;
+    export type SuruUI = AlertDialogTitleProps.SuruUI;
+  }
 }
 
 // Description
@@ -791,10 +1002,26 @@ export namespace Title {
  */
 export type AlertDialogDescriptionState = AlertDialog.Description.State;
 
+export namespace AlertDialogDescriptionProps {
+  export type BaseUI = Omit<React.ComponentProps<typeof AlertDialog.Description>, keyof Render>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"p">,
+    keyof Render | keyof React.ComponentProps<typeof AlertDialog.Description>
+  >;
+
+  export type Render = RenderProps<AlertDialogDescriptionState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AlertDialogDescription} に渡す props です。
  */
-export type AlertDialogDescriptionProps = React.ComponentProps<typeof AlertDialog.Description>;
+export type AlertDialogDescriptionProps = AlertDialogDescriptionProps.Render &
+  AlertDialogDescriptionProps.SuruUI &
+  AlertDialogDescriptionProps.BaseUI &
+  AlertDialogDescriptionProps.HTML;
 
 /**
  * アラートダイアログの内容を表示するコンポーネントです。
@@ -822,7 +1049,14 @@ export namespace Description {
   /**
    * {@link AlertDialogDescriptionProps}
    */
-  export type Props = AlertDialogDescriptionProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AlertDialogDescriptionProps.BaseUI;
+    export type HTML = AlertDialogDescriptionProps.HTML;
+    export type Render = AlertDialogDescriptionProps.Render;
+    export type SuruUI = AlertDialogDescriptionProps.SuruUI;
+  }
 }
 
 // Body
@@ -833,11 +1067,20 @@ export namespace Description {
  */
 export type AlertDialogBodyState = {};
 
+export namespace AlertDialogBodyProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<AlertDialogBodyState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AlertDialogBody} に渡す props です。
  */
-export type AlertDialogBodyProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<AlertDialogBodyState>;
+export type AlertDialogBodyProps = AlertDialogBodyProps.Render &
+  AlertDialogBodyProps.SuruUI &
+  AlertDialogBodyProps.HTML;
 
 /**
  * アラートダイアログのボディーコンポーネントです。
@@ -867,7 +1110,13 @@ export namespace Body {
   /**
    * {@link AlertDialogBodyProps}
    */
-  export type Props = AlertDialogBodyProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = AlertDialogBodyProps.HTML;
+    export type Render = AlertDialogBodyProps.Render;
+    export type SuruUI = AlertDialogBodyProps.SuruUI;
+  }
 }
 
 // Footer
@@ -878,11 +1127,20 @@ export namespace Body {
  */
 export type AlertDialogFooterState = {};
 
+export namespace AlertDialogFooterProps {
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+
+  export type Render = RenderProps<AlertDialogFooterState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link AlertDialogFooter} に渡す props です。
  */
-export type AlertDialogFooterProps = Omit<React.ComponentProps<"div">, keyof RenderProps> &
-  RenderProps<AlertDialogFooterState>;
+export type AlertDialogFooterProps = AlertDialogFooterProps.Render &
+  AlertDialogFooterProps.SuruUI &
+  AlertDialogFooterProps.HTML;
 
 /**
  * アラートダイアログのフッターコンポーネントです。
@@ -912,7 +1170,13 @@ export namespace Footer {
   /**
    * {@link AlertDialogFooterProps}
    */
-  export type Props = AlertDialogFooterProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = AlertDialogFooterProps.HTML;
+    export type Render = AlertDialogFooterProps.Render;
+    export type SuruUI = AlertDialogFooterProps.SuruUI;
+  }
 }
 
 // CloseTrigger
@@ -923,18 +1187,36 @@ export namespace Footer {
  */
 export type AlertDialogCloseTriggerState = AlertDialog.Close.State;
 
+export namespace AlertDialogCloseTriggerProps {
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof AlertDialog.Close>,
+    keyof Render | keyof SuruUI | "render"
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Omit<React.ComponentProps<typeof AlertDialog.Close>, "children" | "render">
+  >;
+
+  export type Render = RenderProps<AlertDialogCloseTriggerState>;
+
+  export type SuruUI = {
+    /**
+     * ボタンとしてレンダリングする要素です。
+     */
+    children: NonNullable<React.ComponentProps<typeof AlertDialog.Close>["render"]>;
+  };
+}
+
 /**
  * {@link AlertDialogCloseTrigger} に渡す props です。
  */
-export type AlertDialogCloseTriggerProps = Omit<
-  React.ComponentProps<typeof AlertDialog.Close>,
-  "children" | "render"
-> & {
-  /**
-   * ボタンとしてレンダリングする要素です。
-   */
-  children: NonNullable<React.ComponentProps<typeof AlertDialog.Close>["render"]>;
-};
+export type AlertDialogCloseTriggerProps = AlertDialogCloseTriggerProps.Render &
+  AlertDialogCloseTriggerProps.SuruUI &
+  AlertDialogCloseTriggerProps.BaseUI &
+  AlertDialogCloseTriggerProps.HTML;
 
 /**
  * アラートダイアログを閉じるボタンコンポーネントです。
@@ -963,5 +1245,12 @@ export namespace CloseTrigger {
   /**
    * {@link AlertDialogCloseTriggerProps}
    */
-  export type Props = AlertDialogCloseTriggerProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type BaseUI = AlertDialogCloseTriggerProps.BaseUI;
+    export type HTML = AlertDialogCloseTriggerProps.HTML;
+    export type Render = AlertDialogCloseTriggerProps.Render;
+    export type SuruUI = AlertDialogCloseTriggerProps.SuruUI;
+  }
 }

@@ -112,11 +112,12 @@ export type StatusRootSize = Size;
  */
 export type StatusRootState = {};
 
-/**
- * {@link StatusRoot} に渡す props です。
- */
-export type StatusRootProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
-  RenderProps<StatusRootState> & {
+export namespace StatusRootProps {
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<StatusRootState>;
+
+  export type SuruUI = {
     /**
      * ステータスの色を指定します。
      *
@@ -140,6 +141,14 @@ export type StatusRootProps = Omit<React.ComponentProps<"span">, keyof RenderPro
      */
     size?: StatusRootSize | undefined;
   };
+}
+
+/**
+ * {@link StatusRoot} に渡す props です。
+ */
+export type StatusRootProps = StatusRootProps.Render &
+  StatusRootProps.SuruUI &
+  StatusRootProps.HTML;
 
 /**
  * 状態を示すドットとラベルを並べて表示するルートコンポーネントです。
@@ -187,7 +196,24 @@ export namespace Root {
   /**
    * {@link StatusRootProps}
    */
-  export type Props = StatusRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link StatusRootProps.HTML}
+     */
+    export type HTML = StatusRootProps.HTML;
+
+    /**
+     * {@link StatusRootProps.Render}
+     */
+    export type Render = StatusRootProps.Render;
+
+    /**
+     * {@link StatusRootProps.SuruUI}
+     */
+    export type SuruUI = StatusRootProps.SuruUI;
+  }
 
   /**
    * {@link StatusRootColor}
@@ -222,11 +248,12 @@ export type StatusIndicatorSize = Size;
  */
 export type StatusIndicatorState = {};
 
-/**
- * {@link StatusIndicator} に渡す props です。
- */
-export type StatusIndicatorProps = Omit<React.ComponentProps<"span">, keyof RenderProps> &
-  RenderProps<StatusIndicatorState> & {
+export namespace StatusIndicatorProps {
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<StatusIndicatorState>;
+
+  export type SuruUI = {
     /**
      * インジケーターの色を指定します。
      *
@@ -248,6 +275,14 @@ export type StatusIndicatorProps = Omit<React.ComponentProps<"span">, keyof Rend
      */
     size?: StatusIndicatorSize | undefined;
   };
+}
+
+/**
+ * {@link StatusIndicator} に渡す props です。
+ */
+export type StatusIndicatorProps = StatusIndicatorProps.Render &
+  StatusIndicatorProps.SuruUI &
+  StatusIndicatorProps.HTML;
 
 /**
  * 状態を示すドットを表示するインジケーターコンポーネントです。
@@ -289,7 +324,24 @@ export namespace Indicator {
   /**
    * {@link StatusIndicatorProps}
    */
-  export type Props = StatusIndicatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    /**
+     * {@link StatusIndicatorProps.HTML}
+     */
+    export type HTML = StatusIndicatorProps.HTML;
+
+    /**
+     * {@link StatusIndicatorProps.Render}
+     */
+    export type Render = StatusIndicatorProps.Render;
+
+    /**
+     * {@link StatusIndicatorProps.SuruUI}
+     */
+    export type SuruUI = StatusIndicatorProps.SuruUI;
+  }
 
   /**
    * {@link StatusIndicatorColor}

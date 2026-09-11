@@ -143,11 +143,12 @@ export type BreadcrumbRootSize = Size;
  */
 export type BreadcrumbRootState = {};
 
-/**
- * {@link BreadcrumbRoot} に渡す props です。
- */
-export type BreadcrumbRootProps = Omit<React.ComponentProps<"nav">, keyof RenderProps> &
-  RenderProps<BreadcrumbRootState> & {
+export namespace BreadcrumbRootProps {
+  export type HTML = Omit<React.ComponentProps<"nav">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<BreadcrumbRootState>;
+
+  export type SuruUI = {
     /**
      * パンくずリストの配色を指定します。
      *
@@ -169,6 +170,14 @@ export type BreadcrumbRootProps = Omit<React.ComponentProps<"nav">, keyof Render
      */
     size?: BreadcrumbRootSize | undefined;
   };
+}
+
+/**
+ * {@link BreadcrumbRoot} に渡す props です。
+ */
+export type BreadcrumbRootProps = BreadcrumbRootProps.Render &
+  BreadcrumbRootProps.SuruUI &
+  BreadcrumbRootProps.HTML;
 
 /**
  * パンくずリストのルートコンポーネントです。
@@ -219,7 +228,13 @@ export namespace Root {
   /**
    * {@link BreadcrumbRootProps}
    */
-  export type Props = BreadcrumbRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = BreadcrumbRootProps.HTML;
+    export type Render = BreadcrumbRootProps.Render;
+    export type SuruUI = BreadcrumbRootProps.SuruUI;
+  }
 
   /**
    * {@link BreadcrumbRootColor}
@@ -264,11 +279,12 @@ export interface IBreadcrumbListItemRenderer {
  */
 export type BreadcrumbListState = {};
 
-/**
- * {@link BreadcrumbList} に渡す props です。
- */
-export type BreadcrumbListProps = Omit<React.ComponentProps<"ol">, keyof RenderProps | "children"> &
-  RenderProps<BreadcrumbListState> & {
+export namespace BreadcrumbListProps {
+  export type HTML = Omit<React.ComponentProps<"ol">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<BreadcrumbListState>;
+
+  export type SuruUI = {
     /**
      * パンくずリストの内容、または各項目をレンダリングする関数です。
      *
@@ -276,6 +292,14 @@ export type BreadcrumbListProps = Omit<React.ComponentProps<"ol">, keyof RenderP
      */
     children?: React.ReactNode | IBreadcrumbListItemRenderer;
   };
+}
+
+/**
+ * {@link BreadcrumbList} に渡す props です。
+ */
+export type BreadcrumbListProps = BreadcrumbListProps.Render &
+  BreadcrumbListProps.SuruUI &
+  BreadcrumbListProps.HTML;
 
 /**
  * パンくずの項目を並べるリストコンポーネントです。
@@ -332,7 +356,13 @@ export namespace List {
   /**
    * {@link BreadcrumbListProps}
    */
-  export type Props = BreadcrumbListProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = BreadcrumbListProps.HTML;
+    export type Render = BreadcrumbListProps.Render;
+    export type SuruUI = BreadcrumbListProps.SuruUI;
+  }
 
   /**
    * {@link BreadcrumbRootItemObject}
@@ -353,11 +383,20 @@ export namespace List {
  */
 export type BreadcrumbItemState = {};
 
+export namespace BreadcrumbItemProps {
+  export type HTML = Omit<React.ComponentProps<"li">, keyof Render>;
+
+  export type Render = RenderProps<BreadcrumbItemState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link BreadcrumbItem} に渡す props です。
  */
-export type BreadcrumbItemProps = Omit<React.ComponentProps<"li">, keyof RenderProps> &
-  RenderProps<BreadcrumbItemState>;
+export type BreadcrumbItemProps = BreadcrumbItemProps.Render &
+  BreadcrumbItemProps.SuruUI &
+  BreadcrumbItemProps.HTML;
 
 /**
  * パンくずの項目コンポーネントです。
@@ -385,7 +424,13 @@ export namespace Item {
   /**
    * {@link BreadcrumbItemProps}
    */
-  export type Props = BreadcrumbItemProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = BreadcrumbItemProps.HTML;
+    export type Render = BreadcrumbItemProps.Render;
+    export type SuruUI = BreadcrumbItemProps.SuruUI;
+  }
 }
 
 // Link
@@ -396,11 +441,12 @@ export namespace Item {
  */
 export type BreadcrumbLinkState = {};
 
-/**
- * {@link BreadcrumbLink} に渡す props です。
- */
-export type BreadcrumbLinkProps = Omit<React.ComponentProps<"a">, keyof RenderProps> &
-  RenderProps<BreadcrumbLinkState> & {
+export namespace BreadcrumbLinkProps {
+  export type HTML = Omit<React.ComponentProps<"a">, keyof Render | keyof SuruUI>;
+
+  export type Render = RenderProps<BreadcrumbLinkState>;
+
+  export type SuruUI = {
     /**
      * 現在のページかどうかを指定します。
      *
@@ -419,6 +465,14 @@ export type BreadcrumbLinkProps = Omit<React.ComponentProps<"a">, keyof RenderPr
      */
     disabled?: boolean | undefined;
   };
+}
+
+/**
+ * {@link BreadcrumbLink} に渡す props です。
+ */
+export type BreadcrumbLinkProps = BreadcrumbLinkProps.Render &
+  BreadcrumbLinkProps.SuruUI &
+  BreadcrumbLinkProps.HTML;
 
 /**
  * パンくずのリンクコンポーネントです。
@@ -466,7 +520,13 @@ export namespace Link {
   /**
    * {@link BreadcrumbLinkProps}
    */
-  export type Props = BreadcrumbLinkProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = BreadcrumbLinkProps.HTML;
+    export type Render = BreadcrumbLinkProps.Render;
+    export type SuruUI = BreadcrumbLinkProps.SuruUI;
+  }
 }
 
 // Separator
@@ -477,11 +537,20 @@ export namespace Link {
  */
 export type BreadcrumbSeparatorState = {};
 
+export namespace BreadcrumbSeparatorProps {
+  export type HTML = Omit<React.ComponentProps<"li">, keyof Render>;
+
+  export type Render = RenderProps<BreadcrumbSeparatorState>;
+
+  export type SuruUI = {};
+}
+
 /**
  * {@link BreadcrumbSeparator} に渡す props です。
  */
-export type BreadcrumbSeparatorProps = Omit<React.ComponentProps<"li">, keyof RenderProps> &
-  RenderProps<BreadcrumbSeparatorState>;
+export type BreadcrumbSeparatorProps = BreadcrumbSeparatorProps.Render &
+  BreadcrumbSeparatorProps.SuruUI &
+  BreadcrumbSeparatorProps.HTML;
 
 /**
  * パンくずの項目を区切るセパレーターコンポーネントです。
@@ -514,5 +583,11 @@ export namespace Separator {
   /**
    * {@link BreadcrumbSeparatorProps}
    */
-  export type Props = BreadcrumbSeparatorProps;
+  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+
+  export namespace Props {
+    export type HTML = BreadcrumbSeparatorProps.HTML;
+    export type Render = BreadcrumbSeparatorProps.Render;
+    export type SuruUI = BreadcrumbSeparatorProps.SuruUI;
+  }
 }
