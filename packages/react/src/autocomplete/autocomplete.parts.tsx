@@ -1042,21 +1042,11 @@ export namespace AutocompleteItemProps {
   export type SuruUI = {};
 
   export type BaseUI = Omit<
-    Override<
-      Button.ButtonRootProps,
-      Override<React.ComponentProps<typeof Autocomplete.Item>, RenderProps<AutocompleteItemState>>
-    >,
-    keyof Render
+    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof Autocomplete.Item>>,
+    keyof Render | keyof React.ComponentProps<"div">
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    | keyof Render
-    | keyof Override<
-        Button.ButtonRootProps,
-        Override<React.ComponentProps<typeof Autocomplete.Item>, RenderProps<AutocompleteItemState>>
-      >
-  >;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
 }
 
 /**
@@ -1073,29 +1063,60 @@ export type AutocompleteItemProps = AutocompleteItemProps.Render &
 export const AutocompleteItem: IComponent<AutocompleteItemProps> = function SuiAutocompleteItem(
   props,
 ) {
-  const { style, render, className, ...otherProps } = props;
+  const {
+    index,
+    style,
+    value,
+    render,
+    disabled,
+    className,
+    nativeButton,
+    focusableWhenDisabled,
+    ...otherProps
+  } = props;
+  const baseuiProps: Required<AutocompleteItemProps.BaseUI> = {
+    index,
+    value,
+    disabled,
+    nativeButton,
+    focusableWhenDisabled,
+  };
 
   return (
     <Autocomplete.Item
       {...otherProps}
-      render={(htmlProps: {}, state) => (
-        <Button.Root
-          {...mergeProps<typeof Button.Root>([
-            htmlProps,
-            {
-              item: true,
-              variant: "naked",
-              disabled: state.disabled,
-              nativeButton: false,
-            },
-            proxyRenderProps(state, {
-              style,
-              render: render ?? <div />,
-              className: cn(className, "sui_autocomplete_item"),
-            }),
-          ])}
-        />
-      )}
+      {...baseuiProps}
+      render={(htmlProps: {}, state) => {
+        const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
+          Pick<Button.Root.Props.HTML, "disabled"> = {
+          item: true,
+          size: undefined,
+          color: "grey",
+          muted: undefined,
+          radius: undefined,
+          pending: undefined,
+          squared: undefined,
+          variant: "naked",
+          disabled: state.disabled,
+          outlined: undefined,
+          nativeButton: false,
+          focusableWhenDisabled: undefined,
+        };
+
+        return (
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              buttonRootProps,
+              proxyRenderProps(state, {
+                style,
+                render: render ?? <div />,
+                className: cn(className, "sui_autocomplete_item"),
+              }),
+            ])}
+          />
+        );
+      }}
     />
   );
 };

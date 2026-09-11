@@ -1561,21 +1561,11 @@ export namespace ComboboxItemProps {
   export type SuruUI = {};
 
   export type BaseUI = Omit<
-    Override<
-      Button.ButtonRootProps,
-      Override<React.ComponentProps<typeof Combobox.Item>, RenderProps<ComboboxItemState>>
-    >,
-    keyof Render
+    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof Combobox.Item>>,
+    keyof Render | keyof React.ComponentProps<"div">
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    | keyof Render
-    | keyof Override<
-        Button.ButtonRootProps,
-        Override<React.ComponentProps<typeof Combobox.Item>, RenderProps<ComboboxItemState>>
-      >
-  >;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
 }
 
 /**
@@ -1591,37 +1581,66 @@ export type ComboboxItemProps = ComboboxItemProps.Render &
  */
 export const ComboboxItem: IComponent<ComboboxItemProps> = function SuiComboboxItem(props) {
   const ctx = useComboboxContext();
-  const { size = ctx.size, style, render, className, ...otherProps } = props;
+  const {
+    index,
+    style,
+    value,
+    render,
+    disabled,
+    className,
+    nativeButton,
+    focusableWhenDisabled,
+    ...otherProps
+  } = props;
+  const baseuiProps: Required<ComboboxItemProps.BaseUI> = {
+    index,
+    value,
+    disabled,
+    nativeButton,
+    focusableWhenDisabled,
+  };
 
   return (
     <Combobox.Item
       {...otherProps}
-      render={(htmlProps: {}, state) => (
-        <Button.Root
-          {...mergeProps<typeof Button.Root>([
-            htmlProps,
-            {
-              item: true,
-              size,
-              color: "grey",
-              variant: "naked",
-              disabled: state.disabled,
-              nativeButton: false,
-            },
-            proxyRenderProps(state, {
-              style,
-              render: render ?? <div />,
-              className: cn(
-                className,
-                "sui_combobox_item",
-                (state) => state.disabled && "sui_combobox_item-disabled",
-                (state) => state.highlighted && "sui_combobox_item-highlighted",
-                (state) => state.selected && "sui_combobox_item-selected",
-              ),
-            }),
-          ])}
-        />
-      )}
+      {...baseuiProps}
+      render={(htmlProps: {}, state) => {
+        const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
+          Pick<Button.Root.Props.HTML, "disabled"> = {
+          item: true,
+          size: ctx.size,
+          color: "grey",
+          muted: undefined,
+          radius: undefined,
+          pending: undefined,
+          squared: undefined,
+          variant: "naked",
+          disabled: state.disabled,
+          outlined: undefined,
+          nativeButton: false,
+          focusableWhenDisabled: undefined,
+        };
+
+        return (
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              buttonRootProps,
+              proxyRenderProps(state, {
+                style,
+                render: render ?? <div />,
+                className: cn(
+                  className,
+                  "sui_combobox_item",
+                  (state) => state.disabled && "sui_combobox_item-disabled",
+                  (state) => state.highlighted && "sui_combobox_item-highlighted",
+                  (state) => state.selected && "sui_combobox_item-selected",
+                ),
+              }),
+            ])}
+          />
+        );
+      }}
     />
   );
 };

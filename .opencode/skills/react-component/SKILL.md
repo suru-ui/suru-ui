@@ -216,7 +216,7 @@ HTML 属性と衝突する名前は避け、別名にします (例: `title` と
 型は次の通りにします。
 
 - `SuruUI`: `Inner` の `SuruUI` から必要なプロパティーを継承します。全部要る場合はそのまま代入し、不要なキーだけ `Omit` で除きます (例: `Omit<Button.ButtonRootProps["SuruUI"], "item" | "pending">`)。一部だけ要る場合は必要なキーだけを定義します (例: `ToastAction`)。
-- `BaseUI`: `Inner` の `BaseUI` を土台に `Outer` の props で上書きします。`Outer` を勝たせるため `Override` を使います。
+- `BaseUI`: `Inner` の `BaseUI` と `Outer` の props を `Override` で合成し (`Outer` が勝つ)、外側の `Omit` で `Render`・`SuruUI`・タグ属性を除きます。
 - `HTML`: 通常通り `Omit<React.ComponentProps<"xxx">, keyof Render | keyof SuruUI>` にします。
 - `State`: `Override<Inner.State, Outer.State>` にします。
 
@@ -226,12 +226,9 @@ export namespace ToastCloseProps {
 
   export type SuruUI = Omit<Button.Root.Props.SuruUI, "item" | "pending">;
 
-  export type BaseUI = Override<
-    Button.Root.Props.BaseUI,
-    Omit<
-      React.ComponentProps<typeof Toast.Close>,
-      keyof Render | keyof SuruUI | keyof React.ComponentProps<"button">
-    >
+  export type BaseUI = Omit<
+    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof Toast.Close>>,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"button">
   >;
 
   export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
@@ -605,6 +602,6 @@ mise run test:typecheck
 - CSS セレクターに Base UI の `data-*` 属性を使わない (`[data-scope]` を除く)。状態の装飾は `cn` の状態関数によるクラスで行う。
 - `State` 型にない状態のクラスや CSS 指定を書かない。Base UI が発行しない属性への指定は死になる。
 - `items` を所有と描画の両パーツに二重定義しない。描画側は `Context` で受けます。
-- 継承の `BaseUI` を `Omit` の交差で書かない。`Inner` を土台に `Outer` で上書きする `Override` にします。
+- 継承の `BaseUI` を `Override<Inner.BaseUI, Omit<Outer, ...>>` の形で書かない。`Omit<Override<Inner.BaseUI, Outer>, ...>` にします。
 - 継承の `baseuiProps` と内包先 props オブジェクトから `Required` を省略しない。除外交差したキーは `undefined` 明示を忘れない。
 - 継承の `proxyRenderProps` に渡す `Render` (`style`、`render`、`className`) を省略しない。`mergeProps` の順序を変えない。

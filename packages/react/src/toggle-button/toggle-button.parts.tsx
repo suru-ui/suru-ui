@@ -148,12 +148,10 @@ export namespace ToggleButtonRootProps {
   };
 
   export type BaseUI = Omit<
-    Override<
-      Button.ButtonRootProps,
-      Override<React.ComponentProps<typeof Toggle>, RenderProps<ToggleButtonRootState>>
-    >,
-    keyof Render | keyof SuruUI
-  >;
+    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof Toggle>>,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"button">
+  > &
+    Pick<React.ComponentProps<typeof Toggle>, "value">;
 
   export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
 }
@@ -176,48 +174,66 @@ export const ToggleButtonRoot: IComponent<ToggleButtonRootProps> = function SuiT
     size = "md",
     color = "grey",
     style,
+    value,
     radius = size,
     render,
     pending = false,
+    pressed,
     squared = false,
     variant = "liquid",
     disabled = false,
     outlined = false,
     className,
     nativeButton,
+    defaultPressed,
+    onPressedChange,
     focusableWhenDisabled = !disabled && pending,
     ...otherProps
   } = props;
+  const baseuiProps: Required<ToggleButtonRootProps.BaseUI> = {
+    value,
+    pressed,
+    nativeButton,
+    defaultPressed,
+    onPressedChange,
+    focusableWhenDisabled,
+  };
 
   return (
     <Toggle
       {...otherProps}
-      render={(htmlProps: {}, toggleState) => (
-        <Button.Root
-          {...mergeProps<typeof Button.Root>([
-            htmlProps,
-            {
-              size,
-              color: toggleState.pressed ? color : "grey",
-              radius,
-              pending,
-              squared,
-              variant: toggleState.pressed ? "solid" : variant,
-              disabled,
-              outlined,
-              focusableWhenDisabled,
-            },
-            proxyRenderProps(toggleState, {
-              style,
-              render,
-              className,
-            }),
-          ])}
-          nativeButton={nativeButton}
-        />
-      )}
-      disabled={disabled}
-      nativeButton={nativeButton}
+      {...baseuiProps}
+      render={(htmlProps: {}, toggleState) => {
+        const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
+          Pick<Button.Root.Props.HTML, "disabled"> = {
+          item: false,
+          size,
+          color: toggleState.pressed ? color : "grey",
+          muted: undefined,
+          radius,
+          pending,
+          squared,
+          variant: toggleState.pressed ? "solid" : variant,
+          disabled,
+          outlined,
+          nativeButton,
+          focusableWhenDisabled,
+        };
+
+        return (
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              buttonRootProps,
+              proxyRenderProps(toggleState, {
+                style,
+                render,
+                className,
+              }),
+            ])}
+          />
+        );
+      }}
     />
   );
 };

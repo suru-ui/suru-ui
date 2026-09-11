@@ -719,12 +719,9 @@ export namespace ToastCloseProps {
 
   export type SuruUI = Omit<Button.Root.Props.SuruUI, "item" | "pending">;
 
-  export type BaseUI = Override<
-    Button.Root.Props.BaseUI,
-    Omit<
-      React.ComponentProps<typeof Toast.Close>,
-      keyof Render | keyof SuruUI | keyof React.ComponentProps<"button">
-    >
+  export type BaseUI = Omit<
+    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof Toast.Close>>,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"button">
   >;
 
   export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;

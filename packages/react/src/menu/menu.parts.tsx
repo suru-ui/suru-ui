@@ -1176,22 +1176,11 @@ export namespace MenuItemProps {
   };
 
   export type BaseUI = Omit<
-    Override<
-      Omit<Button.ButtonRootProps, "type">,
-      Override<React.ComponentProps<typeof Menu.Item>, RenderProps<MenuItemState>>
-    >,
-    keyof Render | keyof SuruUI
+    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof Menu.Item>>,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Override<
-        Omit<Button.ButtonRootProps, "type">,
-        Override<React.ComponentProps<typeof Menu.Item>, RenderProps<MenuItemState>>
-      >
-  >;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -1208,45 +1197,67 @@ export type MenuItemProps = MenuItemProps.Render &
 export const MenuItem: IComponent<MenuItemProps> = function SuiMenuItem(props) {
   const ctx = useMenuContext();
   const {
-    size = ctx.size,
     color = "grey",
+    label,
     style,
     radius = ctx.radius,
     render,
     variant = ctx.variant,
+    disabled,
     className,
+    closeOnClick,
+    nativeButton,
+    focusableWhenDisabled,
     ...otherProps
   } = props;
+  const baseuiProps: Required<MenuItemProps.BaseUI> = {
+    label,
+    disabled,
+    closeOnClick,
+    nativeButton,
+    focusableWhenDisabled,
+  };
 
   return (
     <Menu.Item
       {...otherProps}
-      render={(htmlProps: {}, state) => (
-        <Button.Root
-          {...mergeProps<typeof Button.Root>([
-            htmlProps,
-            {
-              item: true,
-              size,
-              color,
-              radius,
-              variant: getItemVariant(state, variant),
-              disabled: state.disabled,
-              nativeButton: false,
-            },
-            proxyRenderProps(state, {
-              style,
-              render: render ?? <div />,
-              className: cn(
-                className,
-                "sui_menu_item",
-                (state) => state.disabled && "sui_menu_item-disabled",
-                (state) => state.highlighted && "sui_menu_item-highlighted",
-              ),
-            }),
-          ])}
-        />
-      )}
+      {...baseuiProps}
+      render={(htmlProps: {}, state) => {
+        const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
+          Pick<Button.Root.Props.HTML, "disabled"> = {
+          item: true,
+          size: ctx.size,
+          color,
+          muted: undefined,
+          radius,
+          pending: undefined,
+          squared: undefined,
+          variant: getItemVariant(state, variant),
+          disabled: state.disabled,
+          outlined: undefined,
+          nativeButton: false,
+          focusableWhenDisabled: undefined,
+        };
+
+        return (
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              buttonRootProps,
+              proxyRenderProps(state, {
+                style,
+                render: render ?? <div />,
+                className: cn(
+                  className,
+                  "sui_menu_item",
+                  (state) => state.disabled && "sui_menu_item-disabled",
+                  (state) => state.highlighted && "sui_menu_item-highlighted",
+                ),
+              }),
+            ])}
+          />
+        );
+      }}
     />
   );
 };
@@ -1331,22 +1342,11 @@ export namespace MenuLinkItemProps {
   };
 
   export type BaseUI = Omit<
-    Override<
-      Omit<Button.ButtonRootProps, "type">,
-      Override<React.ComponentProps<typeof Menu.LinkItem>, RenderProps<MenuLinkItemState>>
-    >,
-    keyof Render | keyof SuruUI
+    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof Menu.LinkItem>>,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"a">
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<"a">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Override<
-        Omit<Button.ButtonRootProps, "type">,
-        Override<React.ComponentProps<typeof Menu.LinkItem>, RenderProps<MenuLinkItemState>>
-      >
-  >;
+  export type HTML = Omit<React.ComponentProps<"a">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -1363,45 +1363,64 @@ export type MenuLinkItemProps = MenuLinkItemProps.Render &
 export const MenuLinkItem: IComponent<MenuLinkItemProps> = function SuiMenuLinkItem(props) {
   const ctx = useMenuContext();
   const {
-    size = ctx.size,
     color = "grey",
+    label,
     style,
     radius = ctx.radius,
     render,
     variant = ctx.variant,
     className,
+    closeOnClick,
+    nativeButton,
+    focusableWhenDisabled,
     ...otherProps
   } = props;
+  const baseuiProps: Required<MenuLinkItemProps.BaseUI> = {
+    label,
+    closeOnClick,
+    nativeButton,
+    focusableWhenDisabled,
+  };
 
   return (
     <Menu.LinkItem
       {...otherProps}
-      render={(htmlProps: {}, state) => (
-        <Button.Root
-          {...mergeProps<typeof Button.Root>([
-            htmlProps,
-            {
-              item: true,
-              size,
-              color,
-              radius,
-              variant: getItemVariant(state, variant),
-              nativeButton: false,
-            },
-            proxyRenderProps(state, {
-              style,
-              // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
-              render: render ?? <a />,
-              className: cn(
-                className,
-                "sui_menu_item",
-                "sui_menu_link_item",
-                (state) => state.highlighted && "sui_menu_item-highlighted",
-              ),
-            }),
-          ])}
-        />
-      )}
+      {...baseuiProps}
+      render={(htmlProps: {}, state) => {
+        const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> = {
+          item: true,
+          size: ctx.size,
+          color,
+          muted: undefined,
+          radius,
+          pending: undefined,
+          squared: undefined,
+          variant: getItemVariant(state, variant),
+          outlined: undefined,
+          nativeButton: false,
+          focusableWhenDisabled: undefined,
+        };
+
+        return (
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              buttonRootProps,
+              proxyRenderProps(state, {
+                style,
+                // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
+                render: render ?? <a />,
+                className: cn(
+                  className,
+                  "sui_menu_item",
+                  "sui_menu_link_item",
+                  (state) => state.highlighted && "sui_menu_item-highlighted",
+                ),
+              }),
+            ])}
+          />
+        );
+      }}
     />
   );
 };
@@ -1555,28 +1574,11 @@ export namespace MenuSubmenuTriggerProps {
   };
 
   export type BaseUI = Omit<
-    Override<
-      Omit<Button.ButtonRootProps, "type">,
-      Override<
-        React.ComponentProps<typeof Menu.SubmenuTrigger>,
-        RenderProps<MenuSubmenuTriggerState>
-      >
-    >,
-    keyof Render | keyof SuruUI
+    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof Menu.SubmenuTrigger>>,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Override<
-        Omit<Button.ButtonRootProps, "type">,
-        Override<
-          React.ComponentProps<typeof Menu.SubmenuTrigger>,
-          RenderProps<MenuSubmenuTriggerState>
-        >
-      >
-  >;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -1594,47 +1596,73 @@ export const MenuSubmenuTrigger: IComponent<MenuSubmenuTriggerProps> =
   function SuiMenuSubmenuTrigger(props) {
     const ctx = useMenuContext();
     const {
-      size = ctx.size,
       color = "grey",
+      delay,
+      label,
       style,
       radius = ctx.radius,
       render,
       variant = ctx.variant,
+      disabled,
       className,
+      closeDelay,
+      openOnHover,
+      nativeButton,
+      focusableWhenDisabled,
       ...otherProps
     } = props;
+    const baseuiProps: Required<MenuSubmenuTriggerProps.BaseUI> = {
+      delay,
+      label,
+      disabled,
+      closeDelay,
+      openOnHover,
+      nativeButton,
+      focusableWhenDisabled,
+    };
 
     return (
       <Menu.SubmenuTrigger
         {...otherProps}
-        render={(htmlProps: {}, state) => (
-          <Button.Root
-            {...mergeProps<typeof Button.Root>([
-              htmlProps,
-              {
-                item: true,
-                size,
-                color,
-                radius,
-                variant: getItemVariant(state, variant),
-                disabled: state.disabled,
-                nativeButton: false,
-              },
-              proxyRenderProps(state, {
-                style,
-                render: render ?? <div />,
-                className: cn(
-                  className,
-                  "sui_menu_item",
-                  "sui_menu_submenu_trigger",
-                  (state) => state.disabled && "sui_menu_item-disabled",
-                  (state) => state.highlighted && "sui_menu_item-highlighted",
-                  (state) => state.open && "sui_menu_item-open",
-                ),
-              }),
-            ])}
-          />
-        )}
+        {...baseuiProps}
+        render={(htmlProps: {}, state) => {
+          const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
+            Pick<Button.Root.Props.HTML, "disabled"> = {
+            item: true,
+            size: ctx.size,
+            color,
+            muted: undefined,
+            radius,
+            pending: undefined,
+            squared: undefined,
+            variant: getItemVariant(state, variant),
+            disabled: state.disabled,
+            outlined: undefined,
+            nativeButton: false,
+            focusableWhenDisabled: undefined,
+          };
+
+          return (
+            <Button.Root
+              {...mergeProps<typeof Button.Root>([
+                htmlProps,
+                buttonRootProps,
+                proxyRenderProps(state, {
+                  style,
+                  render: render ?? <div />,
+                  className: cn(
+                    className,
+                    "sui_menu_item",
+                    "sui_menu_submenu_trigger",
+                    (state) => state.disabled && "sui_menu_item-disabled",
+                    (state) => state.highlighted && "sui_menu_item-highlighted",
+                    (state) => state.open && "sui_menu_item-open",
+                  ),
+                }),
+              ])}
+            />
+          );
+        }}
       />
     );
   };
@@ -1910,22 +1938,11 @@ export namespace MenuRadioItemProps {
   };
 
   export type BaseUI = Omit<
-    Override<
-      Omit<Button.ButtonRootProps, "type">,
-      Override<React.ComponentProps<typeof Menu.RadioItem>, RenderProps<MenuRadioItemState>>
-    >,
-    keyof Render | keyof SuruUI
+    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof Menu.RadioItem>>,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Override<
-        Omit<Button.ButtonRootProps, "type">,
-        Override<React.ComponentProps<typeof Menu.RadioItem>, RenderProps<MenuRadioItemState>>
-      >
-  >;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -1942,47 +1959,71 @@ export type MenuRadioItemProps = MenuRadioItemProps.Render &
 export const MenuRadioItem: IComponent<MenuRadioItemProps> = function SuiMenuRadioItem(props) {
   const ctx = useMenuContext();
   const {
-    size = ctx.size,
     color = "grey",
+    label,
     style,
+    value,
     radius = ctx.radius,
     render,
     variant = ctx.variant,
+    disabled,
     className,
+    closeOnClick,
+    nativeButton,
+    focusableWhenDisabled,
     ...otherProps
   } = props;
+  const baseuiProps: Required<MenuRadioItemProps.BaseUI> = {
+    label,
+    value,
+    disabled,
+    closeOnClick,
+    nativeButton,
+    focusableWhenDisabled,
+  };
 
   return (
     <Menu.RadioItem
       {...otherProps}
-      render={(htmlProps: {}, state) => (
-        <Button.Root
-          {...mergeProps<typeof Button.Root>([
-            htmlProps,
-            {
-              item: true,
-              size,
-              color,
-              radius,
-              variant: getItemVariant(state, variant),
-              disabled: state.disabled,
-              nativeButton: false,
-            },
-            proxyRenderProps(state, {
-              style,
-              render: render ?? <div />,
-              className: cn(
-                className,
-                "sui_menu_item",
-                "sui_menu_radio_item",
-                (state) => state.checked && "sui_menu_item-checked",
-                (state) => state.highlighted && "sui_menu_item-highlighted",
-                (state) => state.disabled && "sui_menu_item-disabled",
-              ),
-            }),
-          ])}
-        />
-      )}
+      {...baseuiProps}
+      render={(htmlProps: {}, state) => {
+        const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
+          Pick<Button.Root.Props.HTML, "disabled"> = {
+          item: true,
+          size: ctx.size,
+          color,
+          muted: undefined,
+          radius,
+          pending: undefined,
+          squared: undefined,
+          variant: getItemVariant(state, variant),
+          disabled: state.disabled,
+          outlined: undefined,
+          nativeButton: false,
+          focusableWhenDisabled: undefined,
+        };
+
+        return (
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              buttonRootProps,
+              proxyRenderProps(state, {
+                style,
+                render: render ?? <div />,
+                className: cn(
+                  className,
+                  "sui_menu_item",
+                  "sui_menu_radio_item",
+                  (state) => state.checked && "sui_menu_item-checked",
+                  (state) => state.highlighted && "sui_menu_item-highlighted",
+                  (state) => state.disabled && "sui_menu_item-disabled",
+                ),
+              }),
+            ])}
+          />
+        );
+      }}
     />
   );
 };
@@ -2145,22 +2186,11 @@ export namespace MenuCheckboxItemProps {
   };
 
   export type BaseUI = Omit<
-    Override<
-      Omit<Button.ButtonRootProps, "type">,
-      Override<React.ComponentProps<typeof Menu.CheckboxItem>, RenderProps<MenuCheckboxItemState>>
-    >,
-    keyof Render | keyof SuruUI
+    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof Menu.CheckboxItem>>,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Override<
-        Omit<Button.ButtonRootProps, "type">,
-        Override<React.ComponentProps<typeof Menu.CheckboxItem>, RenderProps<MenuCheckboxItemState>>
-      >
-  >;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -2179,47 +2209,73 @@ export const MenuCheckboxItem: IComponent<MenuCheckboxItemProps> = function SuiM
 ) {
   const ctx = useMenuContext();
   const {
-    size = ctx.size,
     color = "grey",
+    label,
     style,
     radius = ctx.radius,
     render,
+    checked,
     variant = ctx.variant,
+    disabled,
     className,
+    closeOnClick,
+    nativeButton,
+    onCheckedChange,
+    focusableWhenDisabled,
     ...otherProps
   } = props;
+  const baseuiProps: Required<MenuCheckboxItemProps.BaseUI> = {
+    label,
+    checked,
+    disabled,
+    closeOnClick,
+    nativeButton,
+    onCheckedChange,
+    focusableWhenDisabled,
+  };
 
   return (
     <Menu.CheckboxItem
       {...otherProps}
-      render={(htmlProps: {}, state) => (
-        <Button.Root
-          {...mergeProps<typeof Button.Root>([
-            htmlProps,
-            {
-              item: true,
-              size,
-              color,
-              radius,
-              variant: getItemVariant(state, variant),
-              disabled: state.disabled,
-              nativeButton: false,
-            },
-            proxyRenderProps(state, {
-              style,
-              render: render ?? <div />,
-              className: cn(
-                className,
-                "sui_menu_item",
-                "sui_menu_checkbox_item",
-                (state) => state.checked && "sui_menu_item-checked",
-                (state) => state.highlighted && "sui_menu_item-highlighted",
-                (state) => state.disabled && "sui_menu_item-disabled",
-              ),
-            }),
-          ])}
-        />
-      )}
+      {...baseuiProps}
+      render={(htmlProps: {}, state) => {
+        const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
+          Pick<Button.Root.Props.HTML, "disabled"> = {
+          item: true,
+          size: ctx.size,
+          color,
+          muted: undefined,
+          radius,
+          pending: undefined,
+          squared: undefined,
+          variant: getItemVariant(state, variant),
+          disabled: state.disabled,
+          outlined: undefined,
+          nativeButton: false,
+          focusableWhenDisabled: undefined,
+        };
+
+        return (
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              buttonRootProps,
+              proxyRenderProps(state, {
+                style,
+                render: render ?? <div />,
+                className: cn(
+                  className,
+                  "sui_menu_item",
+                  "sui_menu_checkbox_item",
+                  (state) => state.checked && "sui_menu_item-checked",
+                  (state) => state.highlighted && "sui_menu_item-highlighted",
+                  (state) => state.disabled && "sui_menu_item-disabled",
+                ),
+              }),
+            ])}
+          />
+        );
+      }}
     />
   );
 };
