@@ -195,8 +195,6 @@ export type FileUploadRejectEventDetails = {
 export type FileUploadRootState = {};
 
 export namespace FileUploadRootProps {
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<FileUploadRootState>;
 
   export type SuruUI = {
@@ -322,6 +320,8 @@ export namespace FileUploadRootProps {
      */
     variant?: FileUploadRootVariant | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -480,11 +480,11 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = FileUploadRootProps.HTML;
-
     export type Render = FileUploadRootProps.Render;
 
     export type SuruUI = FileUploadRootProps.SuruUI;
+
+    export type HTML = FileUploadRootProps.HTML;
   }
 
   export type AcceptEventDetails = FileUploadAcceptEventDetails;
@@ -513,14 +513,14 @@ export namespace Root {
 export type FileUploadHiddenInputState = {};
 
 export namespace FileUploadHiddenInputProps {
+  export type Render = RenderProps<FileUploadHiddenInputState>;
+
+  export type SuruUI = {};
+
   export type HTML = Omit<
     React.ComponentProps<"input">,
     keyof Render | "accept" | "children" | "multiple" | "name" | "onChange" | "required" | "type"
   >;
-
-  export type Render = RenderProps<FileUploadHiddenInputState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -576,11 +576,11 @@ export namespace HiddenInput {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = FileUploadHiddenInputProps.HTML;
-
     export type Render = FileUploadHiddenInputProps.Render;
 
     export type SuruUI = FileUploadHiddenInputProps.SuruUI;
+
+    export type HTML = FileUploadHiddenInputProps.HTML;
   }
 }
 
@@ -593,11 +593,11 @@ export namespace HiddenInput {
 export type FileUploadTriggerState = {};
 
 export namespace FileUploadTriggerProps {
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | "onClick" | "type">;
-
   export type Render = RenderProps<FileUploadTriggerState>;
 
   export type SuruUI = {};
+
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | "onClick" | "type">;
 }
 
 /**
@@ -646,11 +646,11 @@ export namespace Trigger {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = FileUploadTriggerProps.HTML;
-
     export type Render = FileUploadTriggerProps.Render;
 
     export type SuruUI = FileUploadTriggerProps.SuruUI;
+
+    export type HTML = FileUploadTriggerProps.HTML;
   }
 }
 
@@ -668,11 +668,11 @@ export type FileUploadDropzoneState = {
 };
 
 export namespace FileUploadDropzoneProps {
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | "onClick" | "type">;
-
   export type Render = RenderProps<FileUploadDropzoneState>;
 
   export type SuruUI = {};
+
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | "onClick" | "type">;
 }
 
 /**
@@ -746,11 +746,11 @@ export namespace Dropzone {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = FileUploadDropzoneProps.HTML;
-
     export type Render = FileUploadDropzoneProps.Render;
 
     export type SuruUI = FileUploadDropzoneProps.SuruUI;
+
+    export type HTML = FileUploadDropzoneProps.HTML;
   }
 }
 
@@ -763,11 +763,11 @@ export namespace Dropzone {
 export type FileUploadClearTriggerState = {};
 
 export namespace FileUploadClearTriggerProps {
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | "onClick" | "type">;
-
   export type Render = RenderProps<FileUploadClearTriggerState>;
 
   export type SuruUI = {};
+
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | "onClick" | "type">;
 }
 
 /**
@@ -818,11 +818,11 @@ export namespace ClearTrigger {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = FileUploadClearTriggerProps.HTML;
-
     export type Render = FileUploadClearTriggerProps.Render;
 
     export type SuruUI = FileUploadClearTriggerProps.SuruUI;
+
+    export type HTML = FileUploadClearTriggerProps.HTML;
   }
 }
 
@@ -835,11 +835,11 @@ export namespace ClearTrigger {
 export type FileUploadItemGroupState = {};
 
 export namespace FileUploadItemGroupProps {
-  export type HTML = Omit<React.ComponentProps<"ul">, keyof Render>;
-
   export type Render = RenderProps<FileUploadItemGroupState>;
 
   export type SuruUI = {};
+
+  export type HTML = Omit<React.ComponentProps<"ul">, keyof Render>;
 }
 
 /**
@@ -876,11 +876,11 @@ export namespace ItemGroup {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = FileUploadItemGroupProps.HTML;
-
     export type Render = FileUploadItemGroupProps.Render;
 
     export type SuruUI = FileUploadItemGroupProps.SuruUI;
+
+    export type HTML = FileUploadItemGroupProps.HTML;
   }
 }
 
@@ -934,8 +934,6 @@ export { FileUploadItemContext as ItemContext, useFileUploadItemContext as useIt
 export type FileUploadItemState = {};
 
 export namespace FileUploadItemProps {
-  export type HTML = Omit<React.ComponentProps<"li">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<FileUploadItemState>;
 
   export type SuruUI = {
@@ -944,6 +942,8 @@ export namespace FileUploadItemProps {
      */
     readonly file: File;
   };
+
+  export type HTML = Omit<React.ComponentProps<"li">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -985,11 +985,11 @@ export namespace Item {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = FileUploadItemProps.HTML;
-
     export type Render = FileUploadItemProps.Render;
 
     export type SuruUI = FileUploadItemProps.SuruUI;
+
+    export type HTML = FileUploadItemProps.HTML;
   }
 }
 
@@ -1002,11 +1002,11 @@ export namespace Item {
 export type FileUploadItemNameState = {};
 
 export namespace FileUploadItemNameProps {
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
-
   export type Render = RenderProps<FileUploadItemNameState>;
 
   export type SuruUI = {};
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
 }
 
 /**
@@ -1046,11 +1046,11 @@ export namespace ItemName {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = FileUploadItemNameProps.HTML;
-
     export type Render = FileUploadItemNameProps.Render;
 
     export type SuruUI = FileUploadItemNameProps.SuruUI;
+
+    export type HTML = FileUploadItemNameProps.HTML;
   }
 }
 
@@ -1063,11 +1063,11 @@ export namespace ItemName {
 export type FileUploadItemSizeTextState = {};
 
 export namespace FileUploadItemSizeTextProps {
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
-
   export type Render = RenderProps<FileUploadItemSizeTextState>;
 
   export type SuruUI = {};
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
 }
 
 /**
@@ -1107,11 +1107,11 @@ export namespace ItemSizeText {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = FileUploadItemSizeTextProps.HTML;
-
     export type Render = FileUploadItemSizeTextProps.Render;
 
     export type SuruUI = FileUploadItemSizeTextProps.SuruUI;
+
+    export type HTML = FileUploadItemSizeTextProps.HTML;
   }
 }
 
@@ -1124,11 +1124,11 @@ export namespace ItemSizeText {
 export type FileUploadItemDeleteTriggerState = {};
 
 export namespace FileUploadItemDeleteTriggerProps {
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | "onClick" | "type">;
-
   export type Render = RenderProps<FileUploadItemDeleteTriggerState>;
 
   export type SuruUI = {};
+
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | "onClick" | "type">;
 }
 
 /**
@@ -1178,11 +1178,11 @@ export namespace ItemDeleteTrigger {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = FileUploadItemDeleteTriggerProps.HTML;
-
     export type Render = FileUploadItemDeleteTriggerProps.Render;
 
     export type SuruUI = FileUploadItemDeleteTriggerProps.SuruUI;
+
+    export type HTML = FileUploadItemDeleteTriggerProps.HTML;
   }
 }
 

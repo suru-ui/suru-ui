@@ -113,13 +113,6 @@ export type PasswordFieldRootVariant = TextFieldRootVariant;
 export type PasswordFieldRootState = TextFieldRootState;
 
 export namespace PasswordFieldRootProps {
-  export type BaseUI = Omit<TextFieldRootProps, keyof Render | keyof SuruUI>;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof TextFieldRootProps
-  >;
-
   export type Render = RenderProps<PasswordFieldRootState>;
 
   export type SuruUI = {
@@ -144,6 +137,13 @@ export namespace PasswordFieldRootProps {
      */
     visible?: boolean | undefined;
   };
+
+  export type BaseUI = Omit<TextFieldRootProps, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof TextFieldRootProps
+  >;
 }
 
 /**
@@ -223,13 +223,13 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = PasswordFieldRootProps.BaseUI;
-
-    export type HTML = PasswordFieldRootProps.HTML;
-
     export type Render = PasswordFieldRootProps.Render;
 
     export type SuruUI = PasswordFieldRootProps.SuruUI;
+
+    export type BaseUI = PasswordFieldRootProps.BaseUI;
+
+    export type HTML = PasswordFieldRootProps.HTML;
   }
 
   export type Color = PasswordFieldRootColor;
@@ -250,16 +250,16 @@ export namespace Root {
 export type PasswordFieldInputState = TextFieldInputState;
 
 export namespace PasswordFieldInputProps {
+  export type Render = RenderProps<PasswordFieldInputState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<TextFieldInputProps, keyof Render | "type">;
 
   export type HTML = Omit<
     React.ComponentProps<"input">,
     keyof Render | keyof Omit<TextFieldInputProps, "type">
   >;
-
-  export type Render = RenderProps<PasswordFieldInputState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -293,13 +293,13 @@ export namespace Input {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = PasswordFieldInputProps.BaseUI;
-
-    export type HTML = PasswordFieldInputProps.HTML;
-
     export type Render = PasswordFieldInputProps.Render;
 
     export type SuruUI = PasswordFieldInputProps.SuruUI;
+
+    export type BaseUI = PasswordFieldInputProps.BaseUI;
+
+    export type HTML = PasswordFieldInputProps.HTML;
   }
 }
 
@@ -312,13 +312,13 @@ export namespace Input {
 export type PasswordFieldAddonState = {};
 
 export namespace PasswordFieldAddonProps {
-  export type BaseUI = Omit<TextFieldAddonProps, keyof Render>;
-
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof TextFieldAddonProps>;
-
   export type Render = RenderProps<PasswordFieldAddonState>;
 
   export type SuruUI = {};
+
+  export type BaseUI = Omit<TextFieldAddonProps, keyof Render>;
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof TextFieldAddonProps>;
 }
 
 /**
@@ -349,13 +349,13 @@ export namespace Addon {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = PasswordFieldAddonProps.BaseUI;
-
-    export type HTML = PasswordFieldAddonProps.HTML;
-
     export type Render = PasswordFieldAddonProps.Render;
 
     export type SuruUI = PasswordFieldAddonProps.SuruUI;
+
+    export type BaseUI = PasswordFieldAddonProps.BaseUI;
+
+    export type HTML = PasswordFieldAddonProps.HTML;
   }
 }
 
@@ -368,11 +368,11 @@ export namespace Addon {
 export type PasswordFieldToggleButtonState = {};
 
 export namespace PasswordFieldToggleButtonProps {
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | "onClick" | "type">;
-
   export type Render = RenderProps<PasswordFieldToggleButtonState>;
 
   export type SuruUI = {};
+
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | "onClick" | "type">;
 }
 
 /**
@@ -429,10 +429,10 @@ export namespace ToggleButton {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = PasswordFieldToggleButtonProps.HTML;
-
     export type Render = PasswordFieldToggleButtonProps.Render;
 
     export type SuruUI = PasswordFieldToggleButtonProps.SuruUI;
+
+    export type HTML = PasswordFieldToggleButtonProps.HTML;
   }
 }

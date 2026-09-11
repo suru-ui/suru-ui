@@ -180,8 +180,6 @@ export type PaginationRootSize = Size;
 export type PaginationRootState = {};
 
 export namespace PaginationRootProps {
-  export type HTML = Omit<React.ComponentProps<"nav">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<PaginationRootState>;
 
   export type SuruUI = {
@@ -244,6 +242,8 @@ export namespace PaginationRootProps {
      */
     totalPages: number;
   };
+
+  export type HTML = Omit<React.ComponentProps<"nav">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -330,11 +330,11 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = PaginationRootProps.HTML;
-
     export type Render = PaginationRootProps.Render;
 
     export type SuruUI = PaginationRootProps.SuruUI;
+
+    export type HTML = PaginationRootProps.HTML;
   }
 
   export type ChangeEventDetails = PaginationRootChangeEventDetails;
@@ -357,16 +357,16 @@ export namespace Root {
 export type PaginationPreviousButtonState = {};
 
 export namespace PaginationPreviousButtonProps {
+  export type Render = RenderProps<PaginationPreviousButtonState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<Button.ButtonRootProps, keyof Render | "children">;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
     keyof Render | keyof Omit<Button.ButtonRootProps, "children">
   >;
-
-  export type Render = RenderProps<PaginationPreviousButtonState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -426,13 +426,13 @@ export namespace PreviousButton {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = PaginationPreviousButtonProps.BaseUI;
-
-    export type HTML = PaginationPreviousButtonProps.HTML;
-
     export type Render = PaginationPreviousButtonProps.Render;
 
     export type SuruUI = PaginationPreviousButtonProps.SuruUI;
+
+    export type BaseUI = PaginationPreviousButtonProps.BaseUI;
+
+    export type HTML = PaginationPreviousButtonProps.HTML;
   }
 }
 
@@ -445,16 +445,16 @@ export namespace PreviousButton {
 export type PaginationNextButtonState = {};
 
 export namespace PaginationNextButtonProps {
+  export type Render = RenderProps<PaginationNextButtonState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<Button.ButtonRootProps, keyof Render | "children">;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
     keyof Render | keyof Omit<Button.ButtonRootProps, "children">
   >;
-
-  export type Render = RenderProps<PaginationNextButtonState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -517,13 +517,13 @@ export namespace NextButton {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = PaginationNextButtonProps.BaseUI;
-
-    export type HTML = PaginationNextButtonProps.HTML;
-
     export type Render = PaginationNextButtonProps.Render;
 
     export type SuruUI = PaginationNextButtonProps.SuruUI;
+
+    export type BaseUI = PaginationNextButtonProps.BaseUI;
+
+    export type HTML = PaginationNextButtonProps.HTML;
   }
 }
 
@@ -536,16 +536,6 @@ export namespace NextButton {
 export type PaginationItemState = {};
 
 export namespace PaginationItemProps {
-  export type BaseUI = Omit<
-    Button.ButtonRootProps,
-    keyof Render | keyof SuruUI | "color" | "variant"
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof Omit<Button.ButtonRootProps, "color" | "variant">
-  >;
-
   export type Render = RenderProps<PaginationItemState>;
 
   export type SuruUI = {
@@ -563,6 +553,16 @@ export namespace PaginationItemProps {
      */
     selected?: boolean | undefined;
   };
+
+  export type BaseUI = Omit<
+    Button.ButtonRootProps,
+    keyof Render | keyof SuruUI | "color" | "variant"
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI | keyof Omit<Button.ButtonRootProps, "color" | "variant">
+  >;
 }
 
 /**
@@ -623,13 +623,13 @@ export namespace Item {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = PaginationItemProps.BaseUI;
-
-    export type HTML = PaginationItemProps.HTML;
-
     export type Render = PaginationItemProps.Render;
 
     export type SuruUI = PaginationItemProps.SuruUI;
+
+    export type BaseUI = PaginationItemProps.BaseUI;
+
+    export type HTML = PaginationItemProps.HTML;
   }
 }
 
@@ -642,13 +642,6 @@ export namespace Item {
 export type PaginationEllipsisState = {};
 
 export namespace PaginationEllipsisProps {
-  export type BaseUI = Omit<Button.ButtonRootProps, keyof Render | keyof SuruUI | "children">;
-
-  export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof Omit<Button.ButtonRootProps, "children">
-  >;
-
   export type Render = RenderProps<PaginationEllipsisState>;
 
   export type SuruUI = {
@@ -662,6 +655,13 @@ export namespace PaginationEllipsisProps {
      */
     start?: number | undefined;
   };
+
+  export type BaseUI = Omit<Button.ButtonRootProps, keyof Render | keyof SuruUI | "children">;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI | keyof Omit<Button.ButtonRootProps, "children">
+  >;
 }
 
 /**
@@ -770,12 +770,12 @@ export namespace Ellipsis {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = PaginationEllipsisProps.BaseUI;
-
-    export type HTML = PaginationEllipsisProps.HTML;
-
     export type Render = PaginationEllipsisProps.Render;
 
     export type SuruUI = PaginationEllipsisProps.SuruUI;
+
+    export type BaseUI = PaginationEllipsisProps.BaseUI;
+
+    export type HTML = PaginationEllipsisProps.HTML;
   }
 }

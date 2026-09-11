@@ -129,13 +129,6 @@ export type TooltipRootSize = Size;
 export type TooltipRootState = Tooltip.Root.State;
 
 export namespace TooltipRootProps {
-  export type BaseUI<TPayload = any> = Omit<
-    React.ComponentProps<typeof Tooltip.Root<TPayload>>,
-    keyof Render | keyof SuruUI | "handle"
-  >;
-
-  export type HTML = {};
-
   export type Render = RenderProps<TooltipRootState>;
 
   export type SuruUI<TPayload = any> = {
@@ -167,6 +160,13 @@ export namespace TooltipRootProps {
      */
     size?: TooltipRootSize | undefined;
   };
+
+  export type BaseUI<TPayload = any> = Omit<
+    React.ComponentProps<typeof Tooltip.Root<TPayload>>,
+    keyof Render | keyof SuruUI | "handle"
+  >;
+
+  export type HTML = {};
 }
 
 /**
@@ -219,13 +219,13 @@ export namespace Root {
     Props.HTML;
 
   export namespace Props {
-    export type BaseUI<TPayload = any> = TooltipRootProps.BaseUI<TPayload>;
-
-    export type HTML = TooltipRootProps.HTML;
-
     export type Render = TooltipRootProps.Render;
 
     export type SuruUI<TPayload = any> = TooltipRootProps.SuruUI<TPayload>;
+
+    export type BaseUI<TPayload = any> = TooltipRootProps.BaseUI<TPayload>;
+
+    export type HTML = TooltipRootProps.HTML;
   }
 
   export type Actions = TooltipRootActions;
@@ -250,13 +250,6 @@ export namespace Root {
 export type TooltipTriggerState = Tooltip.Trigger.State;
 
 export namespace TooltipTriggerProps {
-  export type BaseUI<TPayload = any> = Omit<
-    Omit<React.ComponentProps<typeof Tooltip.Trigger<TPayload>>, "closeOnClick">,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<TooltipTriggerState>;
 
   export type SuruUI<TPayload = any> = {
@@ -281,6 +274,13 @@ export namespace TooltipTriggerProps {
      */
     keepOpenOnClick?: boolean | undefined;
   };
+
+  export type BaseUI<TPayload = any> = Omit<
+    Omit<React.ComponentProps<typeof Tooltip.Trigger<TPayload>>, "closeOnClick">,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -332,13 +332,13 @@ export namespace Trigger {
     Props.HTML;
 
   export namespace Props {
-    export type BaseUI<TPayload = any> = TooltipTriggerProps.BaseUI<TPayload>;
-
-    export type HTML = TooltipTriggerProps.HTML;
-
     export type Render = TooltipTriggerProps.Render;
 
     export type SuruUI<TPayload = any> = TooltipTriggerProps.SuruUI<TPayload>;
+
+    export type BaseUI<TPayload = any> = TooltipTriggerProps.BaseUI<TPayload>;
+
+    export type HTML = TooltipTriggerProps.HTML;
   }
 }
 
@@ -351,16 +351,16 @@ export namespace Trigger {
 export type TooltipPortalState = Tooltip.Portal.State;
 
 export namespace TooltipPortalProps {
+  export type Render = RenderProps<TooltipPortalState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     React.ComponentProps<typeof Tooltip.Portal>,
     keyof Render | keyof React.ComponentProps<"div">
   >;
 
   export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
-
-  export type Render = RenderProps<TooltipPortalState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -411,13 +411,13 @@ export namespace Portal {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = TooltipPortalProps.BaseUI;
-
-    export type HTML = TooltipPortalProps.HTML;
-
     export type Render = TooltipPortalProps.Render;
 
     export type SuruUI = TooltipPortalProps.SuruUI;
+
+    export type BaseUI = TooltipPortalProps.BaseUI;
+
+    export type HTML = TooltipPortalProps.HTML;
   }
 }
 
@@ -430,16 +430,16 @@ export namespace Portal {
 export type TooltipPositionerState = Tooltip.Positioner.State;
 
 export namespace TooltipPositionerProps {
+  export type Render = RenderProps<TooltipPositionerState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     React.ComponentProps<typeof Tooltip.Positioner>,
     keyof Render | keyof React.ComponentProps<"div">
   >;
 
   export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
-
-  export type Render = RenderProps<TooltipPositionerState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -475,13 +475,13 @@ export namespace Positioner {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = TooltipPositionerProps.BaseUI;
-
-    export type HTML = TooltipPositionerProps.HTML;
-
     export type Render = TooltipPositionerProps.Render;
 
     export type SuruUI = TooltipPositionerProps.SuruUI;
+
+    export type BaseUI = TooltipPositionerProps.BaseUI;
+
+    export type HTML = TooltipPositionerProps.HTML;
   }
 }
 
@@ -494,16 +494,16 @@ export namespace Positioner {
 export type TooltipContentState = Tooltip.Popup.State;
 
 export namespace TooltipContentProps {
+  export type Render = RenderProps<TooltipContentState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     React.ComponentProps<typeof Tooltip.Popup>,
     keyof Render | keyof React.ComponentProps<"div">
   >;
 
   export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
-
-  export type Render = RenderProps<TooltipContentState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -543,13 +543,13 @@ export namespace Content {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = TooltipContentProps.BaseUI;
-
-    export type HTML = TooltipContentProps.HTML;
-
     export type Render = TooltipContentProps.Render;
 
     export type SuruUI = TooltipContentProps.SuruUI;
+
+    export type BaseUI = TooltipContentProps.BaseUI;
+
+    export type HTML = TooltipContentProps.HTML;
   }
 }
 
@@ -562,16 +562,16 @@ export namespace Content {
 export type TooltipArrowState = Tooltip.Arrow.State;
 
 export namespace TooltipArrowProps {
+  export type Render = RenderProps<TooltipArrowState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     React.ComponentProps<typeof Tooltip.Arrow>,
     keyof Render | keyof React.ComponentProps<"div">
   >;
 
   export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
-
-  export type Render = RenderProps<TooltipArrowState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -608,13 +608,13 @@ export namespace Arrow {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = TooltipArrowProps.BaseUI;
-
-    export type HTML = TooltipArrowProps.HTML;
-
     export type Render = TooltipArrowProps.Render;
 
     export type SuruUI = TooltipArrowProps.SuruUI;
+
+    export type BaseUI = TooltipArrowProps.BaseUI;
+
+    export type HTML = TooltipArrowProps.HTML;
   }
 }
 
@@ -627,16 +627,16 @@ export namespace Arrow {
 export type TooltipViewportState = Tooltip.Viewport.State;
 
 export namespace TooltipViewportProps {
+  export type Render = RenderProps<TooltipViewportState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     React.ComponentProps<typeof Tooltip.Viewport>,
     keyof Render | keyof React.ComponentProps<"div">
   >;
 
   export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
-
-  export type Render = RenderProps<TooltipViewportState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -668,12 +668,12 @@ export namespace Viewport {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = TooltipViewportProps.BaseUI;
-
-    export type HTML = TooltipViewportProps.HTML;
-
     export type Render = TooltipViewportProps.Render;
 
     export type SuruUI = TooltipViewportProps.SuruUI;
+
+    export type BaseUI = TooltipViewportProps.BaseUI;
+
+    export type HTML = TooltipViewportProps.HTML;
   }
 }

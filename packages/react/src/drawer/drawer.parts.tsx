@@ -43,16 +43,16 @@ export { type DrawerHandle as Handle, createDrawerHandle as createHandle };
 export type DrawerProviderState = Drawer.Provider.State;
 
 export namespace DrawerProviderProps {
+  export type Render = RenderProps<DrawerProviderState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Provider>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Drawer.Provider>
   >;
-
-  export type Render = RenderProps<DrawerProviderState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -80,13 +80,13 @@ export namespace Provider {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DrawerProviderProps.BaseUI;
-
-    export type HTML = DrawerProviderProps.HTML;
-
     export type Render = DrawerProviderProps.Render;
 
     export type SuruUI = DrawerProviderProps.SuruUI;
+
+    export type BaseUI = DrawerProviderProps.BaseUI;
+
+    export type HTML = DrawerProviderProps.HTML;
   }
 }
 
@@ -99,16 +99,16 @@ export namespace Provider {
 export type DrawerIndentBackgroundState = Drawer.IndentBackground.State;
 
 export namespace DrawerIndentBackgroundProps {
+  export type Render = RenderProps<DrawerIndentBackgroundState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Drawer.IndentBackground>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Drawer.IndentBackground>
   >;
-
-  export type Render = RenderProps<DrawerIndentBackgroundState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -144,13 +144,13 @@ export namespace IndentBackground {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DrawerIndentBackgroundProps.BaseUI;
-
-    export type HTML = DrawerIndentBackgroundProps.HTML;
-
     export type Render = DrawerIndentBackgroundProps.Render;
 
     export type SuruUI = DrawerIndentBackgroundProps.SuruUI;
+
+    export type BaseUI = DrawerIndentBackgroundProps.BaseUI;
+
+    export type HTML = DrawerIndentBackgroundProps.HTML;
   }
 }
 
@@ -163,16 +163,16 @@ export namespace IndentBackground {
 export type DrawerIndentState = Drawer.Indent.State;
 
 export namespace DrawerIndentProps {
+  export type Render = RenderProps<DrawerIndentState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Indent>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Drawer.Indent>
   >;
-
-  export type Render = RenderProps<DrawerIndentState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -209,13 +209,13 @@ export namespace Indent {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DrawerIndentProps.BaseUI;
-
-    export type HTML = DrawerIndentProps.HTML;
-
     export type Render = DrawerIndentProps.Render;
 
     export type SuruUI = DrawerIndentProps.SuruUI;
+
+    export type BaseUI = DrawerIndentProps.BaseUI;
+
+    export type HTML = DrawerIndentProps.HTML;
   }
 }
 
@@ -258,10 +258,6 @@ export type DrawerRootSnapPointChangeEventReason = Drawer.Root.SnapPointChangeEv
 export type DrawerRootState = Drawer.Root.State;
 
 export namespace DrawerRootProps {
-  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Root>, keyof Render | keyof SuruUI>;
-
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<DrawerRootState>;
 
   export type SuruUI<TPayload = any> = {
@@ -270,6 +266,10 @@ export namespace DrawerRootProps {
      */
     handle: DrawerHandle<TPayload>;
   };
+
+  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Root>, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -309,13 +309,13 @@ export namespace Root {
     Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DrawerRootProps.BaseUI;
-
-    export type HTML = DrawerRootProps.HTML;
-
     export type Render = DrawerRootProps.Render;
 
     export type SuruUI<TPayload = any> = DrawerRootProps.SuruUI<TPayload>;
+
+    export type BaseUI = DrawerRootProps.BaseUI;
+
+    export type HTML = DrawerRootProps.HTML;
   }
 
   export type Actions = DrawerRootActions;
@@ -340,13 +340,6 @@ export namespace Root {
 export type DrawerTriggerState = Drawer.Trigger.State;
 
 export namespace DrawerTriggerProps {
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof Drawer.Trigger>,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<DrawerTriggerState>;
 
   export type SuruUI<TPayload = any> = {
@@ -360,6 +353,13 @@ export namespace DrawerTriggerProps {
      */
     handle: DrawerHandle<TPayload>;
   };
+
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Drawer.Trigger>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -406,13 +406,13 @@ export namespace Trigger {
     Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DrawerTriggerProps.BaseUI;
-
-    export type HTML = DrawerTriggerProps.HTML;
-
     export type Render = DrawerTriggerProps.Render;
 
     export type SuruUI<TPayload = any> = DrawerTriggerProps.SuruUI<TPayload>;
+
+    export type BaseUI = DrawerTriggerProps.BaseUI;
+
+    export type HTML = DrawerTriggerProps.HTML;
   }
 }
 
@@ -425,16 +425,16 @@ export namespace Trigger {
 export type DrawerSwipeAreaState = Drawer.SwipeArea.State;
 
 export namespace DrawerSwipeAreaProps {
+  export type Render = RenderProps<DrawerSwipeAreaState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Drawer.SwipeArea>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Drawer.SwipeArea>
   >;
-
-  export type Render = RenderProps<DrawerSwipeAreaState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -473,13 +473,13 @@ export namespace SwipeArea {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DrawerSwipeAreaProps.BaseUI;
-
-    export type HTML = DrawerSwipeAreaProps.HTML;
-
     export type Render = DrawerSwipeAreaProps.Render;
 
     export type SuruUI = DrawerSwipeAreaProps.SuruUI;
+
+    export type BaseUI = DrawerSwipeAreaProps.BaseUI;
+
+    export type HTML = DrawerSwipeAreaProps.HTML;
   }
 }
 
@@ -492,6 +492,10 @@ export namespace SwipeArea {
 export type DrawerVirtualKeyboardProviderState = Drawer.VirtualKeyboardProvider.State;
 
 export namespace DrawerVirtualKeyboardProviderProps {
+  export type Render = RenderProps<DrawerVirtualKeyboardProviderState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     React.ComponentProps<typeof Drawer.VirtualKeyboardProvider>,
     keyof Render
@@ -501,10 +505,6 @@ export namespace DrawerVirtualKeyboardProviderProps {
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Drawer.VirtualKeyboardProvider>
   >;
-
-  export type Render = RenderProps<DrawerVirtualKeyboardProviderState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -533,13 +533,13 @@ export namespace VirtualKeyboardProvider {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DrawerVirtualKeyboardProviderProps.BaseUI;
-
-    export type HTML = DrawerVirtualKeyboardProviderProps.HTML;
-
     export type Render = DrawerVirtualKeyboardProviderProps.Render;
 
     export type SuruUI = DrawerVirtualKeyboardProviderProps.SuruUI;
+
+    export type BaseUI = DrawerVirtualKeyboardProviderProps.BaseUI;
+
+    export type HTML = DrawerVirtualKeyboardProviderProps.HTML;
   }
 }
 
@@ -552,16 +552,16 @@ export namespace VirtualKeyboardProvider {
 export type DrawerPortalState = Drawer.Portal.State;
 
 export namespace DrawerPortalProps {
+  export type Render = RenderProps<DrawerPortalState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Portal>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Drawer.Portal>
   >;
-
-  export type Render = RenderProps<DrawerPortalState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -602,13 +602,13 @@ export namespace Portal {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DrawerPortalProps.BaseUI;
-
-    export type HTML = DrawerPortalProps.HTML;
-
     export type Render = DrawerPortalProps.Render;
 
     export type SuruUI = DrawerPortalProps.SuruUI;
+
+    export type BaseUI = DrawerPortalProps.BaseUI;
+
+    export type HTML = DrawerPortalProps.HTML;
   }
 }
 
@@ -621,16 +621,16 @@ export namespace Portal {
 export type DrawerBackdropState = Drawer.Backdrop.State;
 
 export namespace DrawerBackdropProps {
+  export type Render = RenderProps<DrawerBackdropState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Backdrop>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Drawer.Backdrop>
   >;
-
-  export type Render = RenderProps<DrawerBackdropState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -669,13 +669,13 @@ export namespace Backdrop {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DrawerBackdropProps.BaseUI;
-
-    export type HTML = DrawerBackdropProps.HTML;
-
     export type Render = DrawerBackdropProps.Render;
 
     export type SuruUI = DrawerBackdropProps.SuruUI;
+
+    export type BaseUI = DrawerBackdropProps.BaseUI;
+
+    export type HTML = DrawerBackdropProps.HTML;
   }
 }
 
@@ -688,16 +688,16 @@ export namespace Backdrop {
 export type DrawerViewportState = Drawer.Viewport.State;
 
 export namespace DrawerViewportProps {
+  export type Render = RenderProps<DrawerViewportState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Viewport>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Drawer.Viewport>
   >;
-
-  export type Render = RenderProps<DrawerViewportState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -727,13 +727,13 @@ export namespace Viewport {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DrawerViewportProps.BaseUI;
-
-    export type HTML = DrawerViewportProps.HTML;
-
     export type Render = DrawerViewportProps.Render;
 
     export type SuruUI = DrawerViewportProps.SuruUI;
+
+    export type BaseUI = DrawerViewportProps.BaseUI;
+
+    export type HTML = DrawerViewportProps.HTML;
   }
 }
 
@@ -746,16 +746,16 @@ export namespace Viewport {
 export type DrawerPopupState = Drawer.Popup.State;
 
 export namespace DrawerPopupProps {
+  export type Render = RenderProps<DrawerPopupState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Popup>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Drawer.Popup>
   >;
-
-  export type Render = RenderProps<DrawerPopupState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -800,13 +800,13 @@ export namespace Popup {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DrawerPopupProps.BaseUI;
-
-    export type HTML = DrawerPopupProps.HTML;
-
     export type Render = DrawerPopupProps.Render;
 
     export type SuruUI = DrawerPopupProps.SuruUI;
+
+    export type BaseUI = DrawerPopupProps.BaseUI;
+
+    export type HTML = DrawerPopupProps.HTML;
   }
 }
 
@@ -819,8 +819,6 @@ export namespace Popup {
 export type DrawerControlsState = {};
 
 export namespace DrawerControlsProps {
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<DrawerControlsState>;
 
   export type SuruUI = {
@@ -831,6 +829,8 @@ export namespace DrawerControlsProps {
      */
     absolute?: boolean | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -869,11 +869,11 @@ export namespace Controls {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = DrawerControlsProps.HTML;
-
     export type Render = DrawerControlsProps.Render;
 
     export type SuruUI = DrawerControlsProps.SuruUI;
+
+    export type HTML = DrawerControlsProps.HTML;
   }
 }
 
@@ -886,16 +886,16 @@ export namespace Controls {
 export type DrawerContentState = Drawer.Content.State;
 
 export namespace DrawerContentProps {
+  export type Render = RenderProps<DrawerContentState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Content>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Drawer.Content>
   >;
-
-  export type Render = RenderProps<DrawerContentState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -932,11 +932,11 @@ export namespace Content {
 export type DrawerHeaderState = {};
 
 export namespace DrawerHeaderProps {
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
-
   export type Render = RenderProps<DrawerHeaderState>;
 
   export type SuruUI = {};
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
 }
 
 /**
@@ -969,11 +969,11 @@ export namespace Header {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = DrawerHeaderProps.HTML;
-
     export type Render = DrawerHeaderProps.Render;
 
     export type SuruUI = DrawerHeaderProps.SuruUI;
+
+    export type HTML = DrawerHeaderProps.HTML;
   }
 }
 
@@ -986,16 +986,16 @@ export namespace Header {
 export type DrawerTitleState = Drawer.Title.State;
 
 export namespace DrawerTitleProps {
+  export type Render = RenderProps<DrawerTitleState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Title>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"h2">,
     keyof Render | keyof React.ComponentProps<typeof Drawer.Title>
   >;
-
-  export type Render = RenderProps<DrawerTitleState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1023,13 +1023,13 @@ export namespace Title {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DrawerTitleProps.BaseUI;
-
-    export type HTML = DrawerTitleProps.HTML;
-
     export type Render = DrawerTitleProps.Render;
 
     export type SuruUI = DrawerTitleProps.SuruUI;
+
+    export type BaseUI = DrawerTitleProps.BaseUI;
+
+    export type HTML = DrawerTitleProps.HTML;
   }
 }
 
@@ -1042,16 +1042,16 @@ export namespace Title {
 export type DrawerDescriptionState = Drawer.Description.State;
 
 export namespace DrawerDescriptionProps {
+  export type Render = RenderProps<DrawerDescriptionState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Description>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"p">,
     keyof Render | keyof React.ComponentProps<typeof Drawer.Description>
   >;
-
-  export type Render = RenderProps<DrawerDescriptionState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1081,13 +1081,13 @@ export namespace Description {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DrawerDescriptionProps.BaseUI;
-
-    export type HTML = DrawerDescriptionProps.HTML;
-
     export type Render = DrawerDescriptionProps.Render;
 
     export type SuruUI = DrawerDescriptionProps.SuruUI;
+
+    export type BaseUI = DrawerDescriptionProps.BaseUI;
+
+    export type HTML = DrawerDescriptionProps.HTML;
   }
 }
 
@@ -1100,11 +1100,11 @@ export namespace Description {
 export type DrawerBodyState = {};
 
 export namespace DrawerBodyProps {
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
-
   export type Render = RenderProps<DrawerBodyState>;
 
   export type SuruUI = {};
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
 }
 
 /**
@@ -1137,11 +1137,11 @@ export namespace Body {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = DrawerBodyProps.HTML;
-
     export type Render = DrawerBodyProps.Render;
 
     export type SuruUI = DrawerBodyProps.SuruUI;
+
+    export type HTML = DrawerBodyProps.HTML;
   }
 }
 
@@ -1154,11 +1154,11 @@ export namespace Body {
 export type DrawerFooterState = {};
 
 export namespace DrawerFooterProps {
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
-
   export type Render = RenderProps<DrawerFooterState>;
 
   export type SuruUI = {};
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
 }
 
 /**
@@ -1191,11 +1191,11 @@ export namespace Footer {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = DrawerFooterProps.HTML;
-
     export type Render = DrawerFooterProps.Render;
 
     export type SuruUI = DrawerFooterProps.SuruUI;
+
+    export type HTML = DrawerFooterProps.HTML;
   }
 }
 
@@ -1208,13 +1208,6 @@ export namespace Footer {
 export type DrawerCloseState = Drawer.Close.State;
 
 export namespace DrawerCloseProps {
-  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Close>, keyof Render | keyof SuruUI>;
-
-  export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Close>
-  >;
-
   export type Render = RenderProps<DrawerCloseState>;
 
   export type SuruUI = {
@@ -1223,6 +1216,13 @@ export namespace DrawerCloseProps {
      */
     children: NonNullable<React.ComponentProps<typeof Drawer.Close>["render"]>;
   };
+
+  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Close>, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Close>
+  >;
 }
 
 /**
@@ -1252,12 +1252,12 @@ export namespace Close {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DrawerCloseProps.BaseUI;
-
-    export type HTML = DrawerCloseProps.HTML;
-
     export type Render = DrawerCloseProps.Render;
 
     export type SuruUI = DrawerCloseProps.SuruUI;
+
+    export type BaseUI = DrawerCloseProps.BaseUI;
+
+    export type HTML = DrawerCloseProps.HTML;
   }
 }

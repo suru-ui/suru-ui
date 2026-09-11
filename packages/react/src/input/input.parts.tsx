@@ -71,16 +71,6 @@ export type InputRootVariant = "naked" | "liquid";
 export type InputRootState = Input.State;
 
 export namespace InputRootProps {
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof Input>,
-    keyof Render | keyof SuruUI | "children"
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"input">,
-    keyof Render | keyof SuruUI | keyof Omit<React.ComponentProps<typeof Input>, "children">
-  >;
-
   export type Render = RenderProps<InputRootState>;
 
   export type SuruUI = {
@@ -126,6 +116,16 @@ export namespace InputRootProps {
      */
     variant?: InputRootVariant | undefined;
   };
+
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Input>,
+    keyof Render | keyof SuruUI | "children"
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"input">,
+    keyof Render | keyof SuruUI | keyof Omit<React.ComponentProps<typeof Input>, "children">
+  >;
 }
 
 /**
@@ -191,13 +191,13 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = InputRootProps.BaseUI;
-
-    export type HTML = InputRootProps.HTML;
-
     export type Render = InputRootProps.Render;
 
     export type SuruUI = InputRootProps.SuruUI;
+
+    export type BaseUI = InputRootProps.BaseUI;
+
+    export type HTML = InputRootProps.HTML;
   }
 
   export type ChangeEventDetails = InputRootChangeEventDetails;

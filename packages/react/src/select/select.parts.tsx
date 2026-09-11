@@ -200,13 +200,6 @@ export type SelectRootItems<TValue = unknown> =
 export type SelectRootState = BaseSelect.Root.State;
 
 export namespace SelectRootProps {
-  export type BaseUI<TValue = unknown, TMultiple extends boolean | undefined = false> = Omit<
-    BaseSelect.Root.Props<TValue, TMultiple>,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<SelectRootState>;
 
   export type SuruUI<TValue = unknown> = {
@@ -246,6 +239,13 @@ export namespace SelectRootProps {
      */
     variant?: SelectRootVariant | undefined;
   };
+
+  export type BaseUI<TValue = unknown, TMultiple extends boolean | undefined = false> = Omit<
+    BaseSelect.Root.Props<TValue, TMultiple>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -350,16 +350,16 @@ export namespace Root {
   > = Props.Render & Props.SuruUI<TValue> & Props.BaseUI<TValue, TMultiple> & Props.HTML;
 
   export namespace Props {
+    export type Render = SelectRootProps.Render;
+
+    export type SuruUI<TValue = unknown> = SelectRootProps.SuruUI<TValue>;
+
     export type BaseUI<
       TValue = unknown,
       TMultiple extends boolean | undefined = false,
     > = SelectRootProps.BaseUI<TValue, TMultiple>;
 
     export type HTML = SelectRootProps.HTML;
-
-    export type Render = SelectRootProps.Render;
-
-    export type SuruUI<TValue = unknown> = SelectRootProps.SuruUI<TValue>;
   }
 
   export type Actions = SelectRootActions;
@@ -388,16 +388,16 @@ export namespace Root {
 export type SelectLabelState = BaseSelect.Label.State;
 
 export namespace SelectLabelProps {
+  export type Render = RenderProps<SelectLabelState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Label>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof BaseSelect.Label>
   >;
-
-  export type Render = RenderProps<SelectLabelState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -428,13 +428,13 @@ export namespace Label {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SelectLabelProps.BaseUI;
-
-    export type HTML = SelectLabelProps.HTML;
-
     export type Render = SelectLabelProps.Render;
 
     export type SuruUI = SelectLabelProps.SuruUI;
+
+    export type BaseUI = SelectLabelProps.BaseUI;
+
+    export type HTML = SelectLabelProps.HTML;
   }
 }
 
@@ -447,16 +447,16 @@ export namespace Label {
 export type SelectTriggerState = BaseSelect.Trigger.State;
 
 export namespace SelectTriggerProps {
+  export type Render = RenderProps<SelectTriggerState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Trigger>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
     keyof Render | keyof React.ComponentProps<typeof BaseSelect.Trigger>
   >;
-
-  export type Render = RenderProps<SelectTriggerState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -518,13 +518,13 @@ export namespace Trigger {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SelectTriggerProps.BaseUI;
-
-    export type HTML = SelectTriggerProps.HTML;
-
     export type Render = SelectTriggerProps.Render;
 
     export type SuruUI = SelectTriggerProps.SuruUI;
+
+    export type BaseUI = SelectTriggerProps.BaseUI;
+
+    export type HTML = SelectTriggerProps.HTML;
   }
 }
 
@@ -537,16 +537,16 @@ export namespace Trigger {
 export type SelectValueState = BaseSelect.Value.State;
 
 export namespace SelectValueProps {
+  export type Render = RenderProps<SelectValueState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Value>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
     keyof Render | keyof React.ComponentProps<typeof BaseSelect.Value>
   >;
-
-  export type Render = RenderProps<SelectValueState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -586,13 +586,13 @@ export namespace Value {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SelectValueProps.BaseUI;
-
-    export type HTML = SelectValueProps.HTML;
-
     export type Render = SelectValueProps.Render;
 
     export type SuruUI = SelectValueProps.SuruUI;
+
+    export type BaseUI = SelectValueProps.BaseUI;
+
+    export type HTML = SelectValueProps.HTML;
   }
 }
 
@@ -605,16 +605,16 @@ export namespace Value {
 export type SelectIconState = BaseSelect.Icon.State;
 
 export namespace SelectIconProps {
+  export type Render = RenderProps<SelectIconState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Icon>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
     keyof Render | keyof React.ComponentProps<typeof BaseSelect.Icon>
   >;
-
-  export type Render = RenderProps<SelectIconState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -645,13 +645,13 @@ export namespace Icon {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SelectIconProps.BaseUI;
-
-    export type HTML = SelectIconProps.HTML;
-
     export type Render = SelectIconProps.Render;
 
     export type SuruUI = SelectIconProps.SuruUI;
+
+    export type BaseUI = SelectIconProps.BaseUI;
+
+    export type HTML = SelectIconProps.HTML;
   }
 }
 
@@ -664,16 +664,16 @@ export namespace Icon {
 export type SelectPortalState = BaseSelect.Portal.State;
 
 export namespace SelectPortalProps {
+  export type Render = RenderProps<SelectPortalState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Portal>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof BaseSelect.Portal>
   >;
-
-  export type Render = RenderProps<SelectPortalState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -724,13 +724,13 @@ export namespace Portal {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SelectPortalProps.BaseUI;
-
-    export type HTML = SelectPortalProps.HTML;
-
     export type Render = SelectPortalProps.Render;
 
     export type SuruUI = SelectPortalProps.SuruUI;
+
+    export type BaseUI = SelectPortalProps.BaseUI;
+
+    export type HTML = SelectPortalProps.HTML;
   }
 }
 
@@ -743,16 +743,16 @@ export namespace Portal {
 export type SelectBackdropState = BaseSelect.Backdrop.State;
 
 export namespace SelectBackdropProps {
+  export type Render = RenderProps<SelectBackdropState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Backdrop>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof BaseSelect.Backdrop>
   >;
-
-  export type Render = RenderProps<SelectBackdropState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -794,13 +794,13 @@ export namespace Backdrop {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SelectBackdropProps.BaseUI;
-
-    export type HTML = SelectBackdropProps.HTML;
-
     export type Render = SelectBackdropProps.Render;
 
     export type SuruUI = SelectBackdropProps.SuruUI;
+
+    export type BaseUI = SelectBackdropProps.BaseUI;
+
+    export type HTML = SelectBackdropProps.HTML;
   }
 }
 
@@ -813,16 +813,16 @@ export namespace Backdrop {
 export type SelectPositionerState = BaseSelect.Positioner.State;
 
 export namespace SelectPositionerProps {
+  export type Render = RenderProps<SelectPositionerState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Positioner>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof BaseSelect.Positioner>
   >;
-
-  export type Render = RenderProps<SelectPositionerState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -857,13 +857,13 @@ export namespace Positioner {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SelectPositionerProps.BaseUI;
-
-    export type HTML = SelectPositionerProps.HTML;
-
     export type Render = SelectPositionerProps.Render;
 
     export type SuruUI = SelectPositionerProps.SuruUI;
+
+    export type BaseUI = SelectPositionerProps.BaseUI;
+
+    export type HTML = SelectPositionerProps.HTML;
   }
 }
 
@@ -876,16 +876,16 @@ export namespace Positioner {
 export type SelectPopupState = BaseSelect.Popup.State;
 
 export namespace SelectPopupProps {
+  export type Render = RenderProps<SelectPopupState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Popup>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof BaseSelect.Popup>
   >;
-
-  export type Render = RenderProps<SelectPopupState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -927,13 +927,13 @@ export namespace Popup {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SelectPopupProps.BaseUI;
-
-    export type HTML = SelectPopupProps.HTML;
-
     export type Render = SelectPopupProps.Render;
 
     export type SuruUI = SelectPopupProps.SuruUI;
+
+    export type BaseUI = SelectPopupProps.BaseUI;
+
+    export type HTML = SelectPopupProps.HTML;
   }
 }
 
@@ -963,16 +963,6 @@ export interface ISelectListItemRenderer<TValue = any> {
 export type SelectListState = BaseSelect.List.State;
 
 export namespace SelectListProps {
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof BaseSelect.List>,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.List>
-  >;
-
   export type Render = RenderProps<SelectListState>;
 
   export type SuruUI<TValue = any> = {
@@ -983,6 +973,16 @@ export namespace SelectListProps {
      */
     children?: React.ReactNode | ISelectListItemRenderer<TValue>;
   };
+
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseSelect.List>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.List>
+  >;
 }
 
 /**
@@ -1114,13 +1114,13 @@ export namespace List {
   export type Props<TValue = any> = Props.Render & Props.SuruUI<TValue> & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SelectListProps.BaseUI;
-
-    export type HTML = SelectListProps.HTML;
-
     export type Render = SelectListProps.Render;
 
     export type SuruUI<TValue = any> = SelectListProps.SuruUI<TValue>;
+
+    export type BaseUI = SelectListProps.BaseUI;
+
+    export type HTML = SelectListProps.HTML;
   }
 
   export type ItemGroup<TValue = unknown> = SelectRootItemGroup<TValue>;
@@ -1137,16 +1137,16 @@ export namespace List {
 export type SelectArrowState = BaseSelect.Arrow.State;
 
 export namespace SelectArrowProps {
+  export type Render = RenderProps<SelectArrowState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Arrow>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof BaseSelect.Arrow>
   >;
-
-  export type Render = RenderProps<SelectArrowState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1177,13 +1177,13 @@ export namespace Arrow {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SelectArrowProps.BaseUI;
-
-    export type HTML = SelectArrowProps.HTML;
-
     export type Render = SelectArrowProps.Render;
 
     export type SuruUI = SelectArrowProps.SuruUI;
+
+    export type BaseUI = SelectArrowProps.BaseUI;
+
+    export type HTML = SelectArrowProps.HTML;
   }
 }
 
@@ -1196,16 +1196,16 @@ export namespace Arrow {
 export type SelectItemState = BaseSelect.Item.State;
 
 export namespace SelectItemProps {
+  export type Render = RenderProps<SelectItemState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Item>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof BaseSelect.Item>
   >;
-
-  export type Render = RenderProps<SelectItemState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1252,13 +1252,13 @@ export namespace Item {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SelectItemProps.BaseUI;
-
-    export type HTML = SelectItemProps.HTML;
-
     export type Render = SelectItemProps.Render;
 
     export type SuruUI = SelectItemProps.SuruUI;
+
+    export type BaseUI = SelectItemProps.BaseUI;
+
+    export type HTML = SelectItemProps.HTML;
   }
 }
 
@@ -1271,16 +1271,16 @@ export namespace Item {
 export type SelectItemTextState = BaseSelect.ItemText.State;
 
 export namespace SelectItemTextProps {
+  export type Render = RenderProps<SelectItemTextState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.ItemText>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof BaseSelect.ItemText>
   >;
-
-  export type Render = RenderProps<SelectItemTextState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1311,13 +1311,13 @@ export namespace ItemText {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SelectItemTextProps.BaseUI;
-
-    export type HTML = SelectItemTextProps.HTML;
-
     export type Render = SelectItemTextProps.Render;
 
     export type SuruUI = SelectItemTextProps.SuruUI;
+
+    export type BaseUI = SelectItemTextProps.BaseUI;
+
+    export type HTML = SelectItemTextProps.HTML;
   }
 }
 
@@ -1330,16 +1330,16 @@ export namespace ItemText {
 export type SelectItemIndicatorState = BaseSelect.ItemIndicator.State;
 
 export namespace SelectItemIndicatorProps {
+  export type Render = RenderProps<SelectItemIndicatorState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.ItemIndicator>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
     keyof Render | keyof React.ComponentProps<typeof BaseSelect.ItemIndicator>
   >;
-
-  export type Render = RenderProps<SelectItemIndicatorState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1377,13 +1377,13 @@ export namespace ItemIndicator {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SelectItemIndicatorProps.BaseUI;
-
-    export type HTML = SelectItemIndicatorProps.HTML;
-
     export type Render = SelectItemIndicatorProps.Render;
 
     export type SuruUI = SelectItemIndicatorProps.SuruUI;
+
+    export type BaseUI = SelectItemIndicatorProps.BaseUI;
+
+    export type HTML = SelectItemIndicatorProps.HTML;
   }
 }
 
@@ -1396,16 +1396,16 @@ export namespace ItemIndicator {
 export type SelectScrollUpArrowState = BaseSelect.ScrollUpArrow.State;
 
 export namespace SelectScrollUpArrowProps {
+  export type Render = RenderProps<SelectScrollUpArrowState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.ScrollUpArrow>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof BaseSelect.ScrollUpArrow>
   >;
-
-  export type Render = RenderProps<SelectScrollUpArrowState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1442,13 +1442,13 @@ export namespace ScrollUpArrow {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SelectScrollUpArrowProps.BaseUI;
-
-    export type HTML = SelectScrollUpArrowProps.HTML;
-
     export type Render = SelectScrollUpArrowProps.Render;
 
     export type SuruUI = SelectScrollUpArrowProps.SuruUI;
+
+    export type BaseUI = SelectScrollUpArrowProps.BaseUI;
+
+    export type HTML = SelectScrollUpArrowProps.HTML;
   }
 }
 
@@ -1461,16 +1461,16 @@ export namespace ScrollUpArrow {
 export type SelectScrollDownArrowState = BaseSelect.ScrollDownArrow.State;
 
 export namespace SelectScrollDownArrowProps {
+  export type Render = RenderProps<SelectScrollDownArrowState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.ScrollDownArrow>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof BaseSelect.ScrollDownArrow>
   >;
-
-  export type Render = RenderProps<SelectScrollDownArrowState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1507,13 +1507,13 @@ export namespace ScrollDownArrow {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SelectScrollDownArrowProps.BaseUI;
-
-    export type HTML = SelectScrollDownArrowProps.HTML;
-
     export type Render = SelectScrollDownArrowProps.Render;
 
     export type SuruUI = SelectScrollDownArrowProps.SuruUI;
+
+    export type BaseUI = SelectScrollDownArrowProps.BaseUI;
+
+    export type HTML = SelectScrollDownArrowProps.HTML;
   }
 }
 
@@ -1526,16 +1526,16 @@ export namespace ScrollDownArrow {
 export type SelectGroupState = BaseSelect.Group.State;
 
 export namespace SelectGroupProps {
+  export type Render = RenderProps<SelectGroupState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Group>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof BaseSelect.Group>
   >;
-
-  export type Render = RenderProps<SelectGroupState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1566,13 +1566,13 @@ export namespace Group {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SelectGroupProps.BaseUI;
-
-    export type HTML = SelectGroupProps.HTML;
-
     export type Render = SelectGroupProps.Render;
 
     export type SuruUI = SelectGroupProps.SuruUI;
+
+    export type BaseUI = SelectGroupProps.BaseUI;
+
+    export type HTML = SelectGroupProps.HTML;
   }
 }
 
@@ -1585,16 +1585,16 @@ export namespace Group {
 export type SelectGroupLabelState = BaseSelect.GroupLabel.State;
 
 export namespace SelectGroupLabelProps {
+  export type Render = RenderProps<SelectGroupLabelState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.GroupLabel>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof BaseSelect.GroupLabel>
   >;
-
-  export type Render = RenderProps<SelectGroupLabelState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1629,13 +1629,13 @@ export namespace GroupLabel {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SelectGroupLabelProps.BaseUI;
-
-    export type HTML = SelectGroupLabelProps.HTML;
-
     export type Render = SelectGroupLabelProps.Render;
 
     export type SuruUI = SelectGroupLabelProps.SuruUI;
+
+    export type BaseUI = SelectGroupLabelProps.BaseUI;
+
+    export type HTML = SelectGroupLabelProps.HTML;
   }
 }
 
@@ -1648,16 +1648,16 @@ export namespace GroupLabel {
 export type SelectSeparatorState = BaseSelect.Separator.State;
 
 export namespace SelectSeparatorProps {
+  export type Render = RenderProps<SelectSeparatorState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Separator>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof BaseSelect.Separator>
   >;
-
-  export type Render = RenderProps<SelectSeparatorState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1690,12 +1690,12 @@ export namespace Separator {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SelectSeparatorProps.BaseUI;
-
-    export type HTML = SelectSeparatorProps.HTML;
-
     export type Render = SelectSeparatorProps.Render;
 
     export type SuruUI = SelectSeparatorProps.SuruUI;
+
+    export type BaseUI = SelectSeparatorProps.BaseUI;
+
+    export type HTML = SelectSeparatorProps.HTML;
   }
 }

@@ -51,13 +51,6 @@ export type RadioRootVariant = "naked" | "liquid";
 export type RadioRootState = Radio.Root.State;
 
 export namespace RadioRootProps {
-  export type BaseUI = Omit<React.ComponentProps<typeof Radio.Root>, keyof Render | keyof SuruUI>;
-
-  export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Radio.Root>
-  >;
-
   export type Render = RenderProps<RadioRootState>;
 
   export type SuruUI = {
@@ -106,6 +99,13 @@ export namespace RadioRootProps {
      */
     variant?: RadioRootVariant | undefined;
   };
+
+  export type BaseUI = Omit<React.ComponentProps<typeof Radio.Root>, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Radio.Root>
+  >;
 }
 
 /**
@@ -168,13 +168,13 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = RadioRootProps.BaseUI;
-
-    export type HTML = RadioRootProps.HTML;
-
     export type Render = RadioRootProps.Render;
 
     export type SuruUI = RadioRootProps.SuruUI;
+
+    export type BaseUI = RadioRootProps.BaseUI;
+
+    export type HTML = RadioRootProps.HTML;
   }
 
   export type Color = RadioRootColor;
@@ -195,16 +195,16 @@ export namespace Root {
 export type RadioIndicatorState = Radio.Indicator.State;
 
 export namespace RadioIndicatorProps {
+  export type Render = RenderProps<RadioIndicatorState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Radio.Indicator>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
     keyof Render | keyof React.ComponentProps<typeof Radio.Indicator>
   >;
-
-  export type Render = RenderProps<RadioIndicatorState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -232,12 +232,12 @@ export namespace Indicator {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = RadioIndicatorProps.BaseUI;
-
-    export type HTML = RadioIndicatorProps.HTML;
-
     export type Render = RadioIndicatorProps.Render;
 
     export type SuruUI = RadioIndicatorProps.SuruUI;
+
+    export type BaseUI = RadioIndicatorProps.BaseUI;
+
+    export type HTML = RadioIndicatorProps.HTML;
   }
 }

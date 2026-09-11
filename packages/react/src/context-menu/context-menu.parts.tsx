@@ -342,13 +342,6 @@ export type ContextMenuRootVariant = Button.Root.Variant;
 export type ContextMenuRootState = ContextMenu.Root.State;
 
 export namespace ContextMenuRootProps {
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof ContextMenu.Root>,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<ContextMenuRootState>;
 
   export type SuruUI<TItem = any> = {
@@ -385,6 +378,13 @@ export namespace ContextMenuRootProps {
      */
     variant?: ContextMenuRootVariant | undefined;
   };
+
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof ContextMenu.Root>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -441,13 +441,13 @@ export namespace Root {
   export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ContextMenuRootProps.BaseUI;
-
-    export type HTML = ContextMenuRootProps.HTML;
-
     export type Render = ContextMenuRootProps.Render;
 
     export type SuruUI<TItem = any> = ContextMenuRootProps.SuruUI<TItem>;
+
+    export type BaseUI = ContextMenuRootProps.BaseUI;
+
+    export type HTML = ContextMenuRootProps.HTML;
   }
 
   export type ActionItemObject = ContextMenuRootActionItemObject;
@@ -488,16 +488,6 @@ export namespace Root {
 export type ContextMenuTriggerState = ContextMenu.Trigger.State;
 
 export namespace ContextMenuTriggerProps {
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof ContextMenu.Trigger>,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.Trigger>
-  >;
-
   export type Render = RenderProps<ContextMenuTriggerState>;
 
   export type SuruUI = {
@@ -508,6 +498,16 @@ export namespace ContextMenuTriggerProps {
      */
     children: NonNullable<React.ComponentProps<typeof ContextMenu.Trigger>["render"]>;
   };
+
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof ContextMenu.Trigger>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.Trigger>
+  >;
 }
 
 /**
@@ -548,13 +548,13 @@ export namespace Trigger {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ContextMenuTriggerProps.BaseUI;
-
-    export type HTML = ContextMenuTriggerProps.HTML;
-
     export type Render = ContextMenuTriggerProps.Render;
 
     export type SuruUI = ContextMenuTriggerProps.SuruUI;
+
+    export type BaseUI = ContextMenuTriggerProps.BaseUI;
+
+    export type HTML = ContextMenuTriggerProps.HTML;
   }
 }
 
@@ -567,16 +567,16 @@ export namespace Trigger {
 export type ContextMenuPortalState = ContextMenu.Portal.State;
 
 export namespace ContextMenuPortalProps {
+  export type Render = RenderProps<ContextMenuPortalState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.Portal>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof ContextMenu.Portal>
   >;
-
-  export type Render = RenderProps<ContextMenuPortalState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -626,13 +626,13 @@ export namespace Portal {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ContextMenuPortalProps.BaseUI;
-
-    export type HTML = ContextMenuPortalProps.HTML;
-
     export type Render = ContextMenuPortalProps.Render;
 
     export type SuruUI = ContextMenuPortalProps.SuruUI;
+
+    export type BaseUI = ContextMenuPortalProps.BaseUI;
+
+    export type HTML = ContextMenuPortalProps.HTML;
   }
 }
 
@@ -645,16 +645,16 @@ export namespace Portal {
 export type ContextMenuBackdropState = ContextMenu.Backdrop.State;
 
 export namespace ContextMenuBackdropProps {
+  export type Render = RenderProps<ContextMenuBackdropState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.Backdrop>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof ContextMenu.Backdrop>
   >;
-
-  export type Render = RenderProps<ContextMenuBackdropState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -688,13 +688,13 @@ export namespace Backdrop {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ContextMenuBackdropProps.BaseUI;
-
-    export type HTML = ContextMenuBackdropProps.HTML;
-
     export type Render = ContextMenuBackdropProps.Render;
 
     export type SuruUI = ContextMenuBackdropProps.SuruUI;
+
+    export type BaseUI = ContextMenuBackdropProps.BaseUI;
+
+    export type HTML = ContextMenuBackdropProps.HTML;
   }
 }
 
@@ -707,16 +707,16 @@ export namespace Backdrop {
 export type ContextMenuPositionerState = ContextMenu.Positioner.State;
 
 export namespace ContextMenuPositionerProps {
+  export type Render = RenderProps<ContextMenuPositionerState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.Positioner>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof ContextMenu.Positioner>
   >;
-
-  export type Render = RenderProps<ContextMenuPositionerState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -750,13 +750,13 @@ export namespace Positioner {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ContextMenuPositionerProps.BaseUI;
-
-    export type HTML = ContextMenuPositionerProps.HTML;
-
     export type Render = ContextMenuPositionerProps.Render;
 
     export type SuruUI = ContextMenuPositionerProps.SuruUI;
+
+    export type BaseUI = ContextMenuPositionerProps.BaseUI;
+
+    export type HTML = ContextMenuPositionerProps.HTML;
   }
 }
 
@@ -786,16 +786,6 @@ export interface IContextMenuContentItemRenderer<TItem = any> {
 export type ContextMenuContentState = ContextMenu.Popup.State;
 
 export namespace ContextMenuContentProps {
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof ContextMenu.Popup>,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.Popup>
-  >;
-
   export type Render = RenderProps<ContextMenuContentState>;
 
   export type SuruUI = {
@@ -806,6 +796,16 @@ export namespace ContextMenuContentProps {
      */
     children?: React.ReactNode | IContextMenuContentItemRenderer;
   };
+
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof ContextMenu.Popup>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.Popup>
+  >;
 }
 
 /**
@@ -949,13 +949,13 @@ export namespace Content {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ContextMenuContentProps.BaseUI;
-
-    export type HTML = ContextMenuContentProps.HTML;
-
     export type Render = ContextMenuContentProps.Render;
 
     export type SuruUI = ContextMenuContentProps.SuruUI;
+
+    export type BaseUI = ContextMenuContentProps.BaseUI;
+
+    export type HTML = ContextMenuContentProps.HTML;
   }
 
   export type ItemObject = ContextMenuRootItemObject;
@@ -1008,24 +1008,6 @@ export type ContextMenuItemVariant = Button.Root.Variant;
 export type ContextMenuItemState = Override<Button.Root.State, ContextMenu.Item.State>;
 
 export namespace ContextMenuItemProps {
-  export type BaseUI = Omit<
-    Override<
-      Omit<Button.ButtonRootProps, "type">,
-      Override<React.ComponentProps<typeof ContextMenu.Item>, RenderProps<ContextMenuItemState>>
-    >,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Override<
-        Omit<Button.ButtonRootProps, "type">,
-        Override<React.ComponentProps<typeof ContextMenu.Item>, RenderProps<ContextMenuItemState>>
-      >
-  >;
-
   export type Render = RenderProps<ContextMenuItemState>;
 
   export type SuruUI = {
@@ -1052,6 +1034,24 @@ export namespace ContextMenuItemProps {
      */
     variant?: ContextMenuItemVariant | undefined;
   };
+
+  export type BaseUI = Omit<
+    Override<
+      Omit<Button.ButtonRootProps, "type">,
+      Override<React.ComponentProps<typeof ContextMenu.Item>, RenderProps<ContextMenuItemState>>
+    >,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Override<
+        Omit<Button.ButtonRootProps, "type">,
+        Override<React.ComponentProps<typeof ContextMenu.Item>, RenderProps<ContextMenuItemState>>
+      >
+  >;
 }
 
 /**
@@ -1121,13 +1121,13 @@ export namespace Item {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ContextMenuItemProps.BaseUI;
-
-    export type HTML = ContextMenuItemProps.HTML;
-
     export type Render = ContextMenuItemProps.Render;
 
     export type SuruUI = ContextMenuItemProps.SuruUI;
+
+    export type BaseUI = ContextMenuItemProps.BaseUI;
+
+    export type HTML = ContextMenuItemProps.HTML;
   }
 
   export type Color = ContextMenuItemColor;
@@ -1165,30 +1165,6 @@ export type ContextMenuLinkItemVariant = Button.Root.Variant;
 export type ContextMenuLinkItemState = Override<Button.Root.State, ContextMenu.LinkItem.State>;
 
 export namespace ContextMenuLinkItemProps {
-  export type BaseUI = Omit<
-    Override<
-      Omit<Button.ButtonRootProps, "type">,
-      Override<
-        React.ComponentProps<typeof ContextMenu.LinkItem>,
-        RenderProps<ContextMenuLinkItemState>
-      >
-    >,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"a">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Override<
-        Omit<Button.ButtonRootProps, "type">,
-        Override<
-          React.ComponentProps<typeof ContextMenu.LinkItem>,
-          RenderProps<ContextMenuLinkItemState>
-        >
-      >
-  >;
-
   export type Render = RenderProps<ContextMenuLinkItemState>;
 
   export type SuruUI = {
@@ -1215,6 +1191,30 @@ export namespace ContextMenuLinkItemProps {
      */
     variant?: ContextMenuLinkItemVariant | undefined;
   };
+
+  export type BaseUI = Omit<
+    Override<
+      Omit<Button.ButtonRootProps, "type">,
+      Override<
+        React.ComponentProps<typeof ContextMenu.LinkItem>,
+        RenderProps<ContextMenuLinkItemState>
+      >
+    >,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"a">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Override<
+        Omit<Button.ButtonRootProps, "type">,
+        Override<
+          React.ComponentProps<typeof ContextMenu.LinkItem>,
+          RenderProps<ContextMenuLinkItemState>
+        >
+      >
+  >;
 }
 
 /**
@@ -1283,13 +1283,13 @@ export namespace LinkItem {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ContextMenuLinkItemProps.BaseUI;
-
-    export type HTML = ContextMenuLinkItemProps.HTML;
-
     export type Render = ContextMenuLinkItemProps.Render;
 
     export type SuruUI = ContextMenuLinkItemProps.SuruUI;
+
+    export type BaseUI = ContextMenuLinkItemProps.BaseUI;
+
+    export type HTML = ContextMenuLinkItemProps.HTML;
   }
 
   export type Color = ContextMenuLinkItemColor;
@@ -1318,16 +1318,16 @@ export type ContextMenuSubmenuRootChangeEventReason = ContextMenu.SubmenuRoot.Ch
 export type ContextMenuSubmenuRootState = ContextMenu.SubmenuRoot.State;
 
 export namespace ContextMenuSubmenuRootProps {
+  export type Render = RenderProps<ContextMenuSubmenuRootState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.SubmenuRoot>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof ContextMenu.SubmenuRoot>
   >;
-
-  export type Render = RenderProps<ContextMenuSubmenuRootState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1356,13 +1356,13 @@ export namespace SubmenuRoot {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ContextMenuSubmenuRootProps.BaseUI;
-
-    export type HTML = ContextMenuSubmenuRootProps.HTML;
-
     export type Render = ContextMenuSubmenuRootProps.Render;
 
     export type SuruUI = ContextMenuSubmenuRootProps.SuruUI;
+
+    export type BaseUI = ContextMenuSubmenuRootProps.BaseUI;
+
+    export type HTML = ContextMenuSubmenuRootProps.HTML;
   }
 
   export type ChangeEventDetails = ContextMenuSubmenuRootChangeEventDetails;
@@ -1401,30 +1401,6 @@ export type ContextMenuSubmenuTriggerState = Override<
 >;
 
 export namespace ContextMenuSubmenuTriggerProps {
-  export type BaseUI = Omit<
-    Override<
-      Omit<Button.ButtonRootProps, "type">,
-      Override<
-        React.ComponentProps<typeof ContextMenu.SubmenuTrigger>,
-        RenderProps<ContextMenuSubmenuTriggerState>
-      >
-    >,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Override<
-        Omit<Button.ButtonRootProps, "type">,
-        Override<
-          React.ComponentProps<typeof ContextMenu.SubmenuTrigger>,
-          RenderProps<ContextMenuSubmenuTriggerState>
-        >
-      >
-  >;
-
   export type Render = RenderProps<ContextMenuSubmenuTriggerState>;
 
   export type SuruUI = {
@@ -1451,6 +1427,30 @@ export namespace ContextMenuSubmenuTriggerProps {
      */
     variant?: ContextMenuSubmenuTriggerVariant | undefined;
   };
+
+  export type BaseUI = Omit<
+    Override<
+      Omit<Button.ButtonRootProps, "type">,
+      Override<
+        React.ComponentProps<typeof ContextMenu.SubmenuTrigger>,
+        RenderProps<ContextMenuSubmenuTriggerState>
+      >
+    >,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Override<
+        Omit<Button.ButtonRootProps, "type">,
+        Override<
+          React.ComponentProps<typeof ContextMenu.SubmenuTrigger>,
+          RenderProps<ContextMenuSubmenuTriggerState>
+        >
+      >
+  >;
 }
 
 /**
@@ -1521,13 +1521,13 @@ export namespace SubmenuTrigger {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ContextMenuSubmenuTriggerProps.BaseUI;
-
-    export type HTML = ContextMenuSubmenuTriggerProps.HTML;
-
     export type Render = ContextMenuSubmenuTriggerProps.Render;
 
     export type SuruUI = ContextMenuSubmenuTriggerProps.SuruUI;
+
+    export type BaseUI = ContextMenuSubmenuTriggerProps.BaseUI;
+
+    export type HTML = ContextMenuSubmenuTriggerProps.HTML;
   }
 
   export type Color = ContextMenuSubmenuTriggerColor;
@@ -1546,16 +1546,16 @@ export namespace SubmenuTrigger {
 export type ContextMenuGroupState = ContextMenu.Group.State;
 
 export namespace ContextMenuGroupProps {
+  export type Render = RenderProps<ContextMenuGroupState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.Group>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof ContextMenu.Group>
   >;
-
-  export type Render = RenderProps<ContextMenuGroupState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1585,13 +1585,13 @@ export namespace Group {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ContextMenuGroupProps.BaseUI;
-
-    export type HTML = ContextMenuGroupProps.HTML;
-
     export type Render = ContextMenuGroupProps.Render;
 
     export type SuruUI = ContextMenuGroupProps.SuruUI;
+
+    export type BaseUI = ContextMenuGroupProps.BaseUI;
+
+    export type HTML = ContextMenuGroupProps.HTML;
   }
 }
 
@@ -1604,16 +1604,16 @@ export namespace Group {
 export type ContextMenuGroupLabelState = ContextMenu.GroupLabel.State;
 
 export namespace ContextMenuGroupLabelProps {
+  export type Render = RenderProps<ContextMenuGroupLabelState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.GroupLabel>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof ContextMenu.GroupLabel>
   >;
-
-  export type Render = RenderProps<ContextMenuGroupLabelState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1647,13 +1647,13 @@ export namespace GroupLabel {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ContextMenuGroupLabelProps.BaseUI;
-
-    export type HTML = ContextMenuGroupLabelProps.HTML;
-
     export type Render = ContextMenuGroupLabelProps.Render;
 
     export type SuruUI = ContextMenuGroupLabelProps.SuruUI;
+
+    export type BaseUI = ContextMenuGroupLabelProps.BaseUI;
+
+    export type HTML = ContextMenuGroupLabelProps.HTML;
   }
 }
 
@@ -1676,16 +1676,16 @@ export type ContextMenuRadioGroupChangeEventReason = ContextMenu.RadioGroup.Chan
 export type ContextMenuRadioGroupState = ContextMenu.RadioGroup.State;
 
 export namespace ContextMenuRadioGroupProps {
+  export type Render = RenderProps<ContextMenuRadioGroupState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.RadioGroup>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof ContextMenu.RadioGroup>
   >;
-
-  export type Render = RenderProps<ContextMenuRadioGroupState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1723,13 +1723,13 @@ export namespace RadioGroup {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ContextMenuRadioGroupProps.BaseUI;
-
-    export type HTML = ContextMenuRadioGroupProps.HTML;
-
     export type Render = ContextMenuRadioGroupProps.Render;
 
     export type SuruUI = ContextMenuRadioGroupProps.SuruUI;
+
+    export type BaseUI = ContextMenuRadioGroupProps.BaseUI;
+
+    export type HTML = ContextMenuRadioGroupProps.HTML;
   }
 
   export type ChangeEventDetails = ContextMenuRadioGroupChangeEventDetails;
@@ -1765,30 +1765,6 @@ export type ContextMenuRadioItemVariant = Button.Root.Variant;
 export type ContextMenuRadioItemState = Override<Button.Root.State, ContextMenu.RadioItem.State>;
 
 export namespace ContextMenuRadioItemProps {
-  export type BaseUI = Omit<
-    Override<
-      Omit<Button.ButtonRootProps, "type">,
-      Override<
-        React.ComponentProps<typeof ContextMenu.RadioItem>,
-        RenderProps<ContextMenuRadioItemState>
-      >
-    >,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Override<
-        Omit<Button.ButtonRootProps, "type">,
-        Override<
-          React.ComponentProps<typeof ContextMenu.RadioItem>,
-          RenderProps<ContextMenuRadioItemState>
-        >
-      >
-  >;
-
   export type Render = RenderProps<ContextMenuRadioItemState>;
 
   export type SuruUI = {
@@ -1815,6 +1791,30 @@ export namespace ContextMenuRadioItemProps {
      */
     variant?: ContextMenuRadioItemVariant | undefined;
   };
+
+  export type BaseUI = Omit<
+    Override<
+      Omit<Button.ButtonRootProps, "type">,
+      Override<
+        React.ComponentProps<typeof ContextMenu.RadioItem>,
+        RenderProps<ContextMenuRadioItemState>
+      >
+    >,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Override<
+        Omit<Button.ButtonRootProps, "type">,
+        Override<
+          React.ComponentProps<typeof ContextMenu.RadioItem>,
+          RenderProps<ContextMenuRadioItemState>
+        >
+      >
+  >;
 }
 
 /**
@@ -1885,13 +1885,13 @@ export namespace RadioItem {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ContextMenuRadioItemProps.BaseUI;
-
-    export type HTML = ContextMenuRadioItemProps.HTML;
-
     export type Render = ContextMenuRadioItemProps.Render;
 
     export type SuruUI = ContextMenuRadioItemProps.SuruUI;
+
+    export type BaseUI = ContextMenuRadioItemProps.BaseUI;
+
+    export type HTML = ContextMenuRadioItemProps.HTML;
   }
 
   export type Color = ContextMenuRadioItemColor;
@@ -1910,6 +1910,10 @@ export namespace RadioItem {
 export type ContextMenuRadioItemIndicatorState = ContextMenu.RadioItemIndicator.State;
 
 export namespace ContextMenuRadioItemIndicatorProps {
+  export type Render = RenderProps<ContextMenuRadioItemIndicatorState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     React.ComponentProps<typeof ContextMenu.RadioItemIndicator>,
     keyof Render
@@ -1919,10 +1923,6 @@ export namespace ContextMenuRadioItemIndicatorProps {
     React.ComponentProps<"span">,
     keyof Render | keyof React.ComponentProps<typeof ContextMenu.RadioItemIndicator>
   >;
-
-  export type Render = RenderProps<ContextMenuRadioItemIndicatorState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1962,13 +1962,13 @@ export namespace RadioItemIndicator {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ContextMenuRadioItemIndicatorProps.BaseUI;
-
-    export type HTML = ContextMenuRadioItemIndicatorProps.HTML;
-
     export type Render = ContextMenuRadioItemIndicatorProps.Render;
 
     export type SuruUI = ContextMenuRadioItemIndicatorProps.SuruUI;
+
+    export type BaseUI = ContextMenuRadioItemIndicatorProps.BaseUI;
+
+    export type HTML = ContextMenuRadioItemIndicatorProps.HTML;
   }
 }
 
@@ -2013,30 +2013,6 @@ export type ContextMenuCheckboxItemState = Override<
 >;
 
 export namespace ContextMenuCheckboxItemProps {
-  export type BaseUI = Omit<
-    Override<
-      Omit<Button.ButtonRootProps, "type">,
-      Override<
-        React.ComponentProps<typeof ContextMenu.CheckboxItem>,
-        RenderProps<ContextMenuCheckboxItemState>
-      >
-    >,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Override<
-        Omit<Button.ButtonRootProps, "type">,
-        Override<
-          React.ComponentProps<typeof ContextMenu.CheckboxItem>,
-          RenderProps<ContextMenuCheckboxItemState>
-        >
-      >
-  >;
-
   export type Render = RenderProps<ContextMenuCheckboxItemState>;
 
   export type SuruUI = {
@@ -2063,6 +2039,30 @@ export namespace ContextMenuCheckboxItemProps {
      */
     variant?: ContextMenuCheckboxItemVariant | undefined;
   };
+
+  export type BaseUI = Omit<
+    Override<
+      Omit<Button.ButtonRootProps, "type">,
+      Override<
+        React.ComponentProps<typeof ContextMenu.CheckboxItem>,
+        RenderProps<ContextMenuCheckboxItemState>
+      >
+    >,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Override<
+        Omit<Button.ButtonRootProps, "type">,
+        Override<
+          React.ComponentProps<typeof ContextMenu.CheckboxItem>,
+          RenderProps<ContextMenuCheckboxItemState>
+        >
+      >
+  >;
 }
 
 /**
@@ -2133,13 +2133,13 @@ export namespace CheckboxItem {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ContextMenuCheckboxItemProps.BaseUI;
-
-    export type HTML = ContextMenuCheckboxItemProps.HTML;
-
     export type Render = ContextMenuCheckboxItemProps.Render;
 
     export type SuruUI = ContextMenuCheckboxItemProps.SuruUI;
+
+    export type BaseUI = ContextMenuCheckboxItemProps.BaseUI;
+
+    export type HTML = ContextMenuCheckboxItemProps.HTML;
   }
 
   export type ChangeEventDetails = ContextMenuCheckboxItemChangeEventDetails;
@@ -2162,6 +2162,10 @@ export namespace CheckboxItem {
 export type ContextMenuCheckboxItemIndicatorState = ContextMenu.CheckboxItemIndicator.State;
 
 export namespace ContextMenuCheckboxItemIndicatorProps {
+  export type Render = RenderProps<ContextMenuCheckboxItemIndicatorState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     React.ComponentProps<typeof ContextMenu.CheckboxItemIndicator>,
     keyof Render
@@ -2171,10 +2175,6 @@ export namespace ContextMenuCheckboxItemIndicatorProps {
     React.ComponentProps<"span">,
     keyof Render | keyof React.ComponentProps<typeof ContextMenu.CheckboxItemIndicator>
   >;
-
-  export type Render = RenderProps<ContextMenuCheckboxItemIndicatorState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -2213,13 +2213,13 @@ export namespace CheckboxItemIndicator {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ContextMenuCheckboxItemIndicatorProps.BaseUI;
-
-    export type HTML = ContextMenuCheckboxItemIndicatorProps.HTML;
-
     export type Render = ContextMenuCheckboxItemIndicatorProps.Render;
 
     export type SuruUI = ContextMenuCheckboxItemIndicatorProps.SuruUI;
+
+    export type BaseUI = ContextMenuCheckboxItemIndicatorProps.BaseUI;
+
+    export type HTML = ContextMenuCheckboxItemIndicatorProps.HTML;
   }
 }
 
@@ -2232,16 +2232,16 @@ export namespace CheckboxItemIndicator {
 export type ContextMenuSeparatorState = ContextMenu.Separator.State;
 
 export namespace ContextMenuSeparatorProps {
+  export type Render = RenderProps<ContextMenuSeparatorState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.Separator>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof ContextMenu.Separator>
   >;
-
-  export type Render = RenderProps<ContextMenuSeparatorState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -2275,12 +2275,12 @@ export namespace Separator {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ContextMenuSeparatorProps.BaseUI;
-
-    export type HTML = ContextMenuSeparatorProps.HTML;
-
     export type Render = ContextMenuSeparatorProps.Render;
 
     export type SuruUI = ContextMenuSeparatorProps.SuruUI;
+
+    export type BaseUI = ContextMenuSeparatorProps.BaseUI;
+
+    export type HTML = ContextMenuSeparatorProps.HTML;
   }
 }

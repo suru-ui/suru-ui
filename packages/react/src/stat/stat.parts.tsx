@@ -79,8 +79,6 @@ export type StatRootSize = Size;
 export type StatRootState = {};
 
 export namespace StatRootProps {
-  export type HTML = Omit<React.ComponentProps<"dl">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<StatRootState>;
 
   export type SuruUI = {
@@ -91,6 +89,8 @@ export namespace StatRootProps {
      */
     size?: StatRootSize | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"dl">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -134,11 +134,11 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = StatRootProps.HTML;
-
     export type Render = StatRootProps.Render;
 
     export type SuruUI = StatRootProps.SuruUI;
+
+    export type HTML = StatRootProps.HTML;
   }
 
   export type Size = StatRootSize;
@@ -162,8 +162,6 @@ export type StatLabelSize = Size;
 export type StatLabelState = {};
 
 export namespace StatLabelProps {
-  export type HTML = Omit<React.ComponentProps<"dt">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<StatLabelState>;
 
   export type SuruUI = {
@@ -174,6 +172,8 @@ export namespace StatLabelProps {
      */
     size?: StatLabelSize | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"dt">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -210,11 +210,11 @@ export namespace Label {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = StatLabelProps.HTML;
-
     export type Render = StatLabelProps.Render;
 
     export type SuruUI = StatLabelProps.SuruUI;
+
+    export type HTML = StatLabelProps.HTML;
   }
 
   export type Size = StatLabelSize;
@@ -238,8 +238,6 @@ export type StatValueSize = Size;
 export type StatValueState = {};
 
 export namespace StatValueProps {
-  export type HTML = Omit<React.ComponentProps<"dd">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<StatValueState>;
 
   export type SuruUI = {
@@ -250,6 +248,8 @@ export namespace StatValueProps {
      */
     size?: StatValueSize | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"dd">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -286,11 +286,11 @@ export namespace Value {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = StatValueProps.HTML;
-
     export type Render = StatValueProps.Render;
 
     export type SuruUI = StatValueProps.SuruUI;
+
+    export type HTML = StatValueProps.HTML;
   }
 
   export type Size = StatValueSize;
@@ -314,8 +314,6 @@ export type StatChangeDirection = "up" | "down" | "flat";
 export type StatChangeState = {};
 
 export namespace StatChangeProps {
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<StatChangeState>;
 
   export type SuruUI = {
@@ -328,6 +326,8 @@ export namespace StatChangeProps {
      */
     direction?: StatChangeDirection | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -364,11 +364,11 @@ export namespace Change {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = StatChangeProps.HTML;
-
     export type Render = StatChangeProps.Render;
 
     export type SuruUI = StatChangeProps.SuruUI;
+
+    export type HTML = StatChangeProps.HTML;
   }
 
   export type Direction = StatChangeDirection;
@@ -392,8 +392,6 @@ export type StatDescriptionSize = Size;
 export type StatDescriptionState = {};
 
 export namespace StatDescriptionProps {
-  export type HTML = Omit<React.ComponentProps<"dd">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<StatDescriptionState>;
 
   export type SuruUI = {
@@ -404,6 +402,8 @@ export namespace StatDescriptionProps {
      */
     size?: StatDescriptionSize | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"dd">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -444,11 +444,11 @@ export namespace Description {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = StatDescriptionProps.HTML;
-
     export type Render = StatDescriptionProps.Render;
 
     export type SuruUI = StatDescriptionProps.SuruUI;
+
+    export type HTML = StatDescriptionProps.HTML;
   }
 
   export type Size = StatDescriptionSize;

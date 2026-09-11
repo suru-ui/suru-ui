@@ -115,10 +115,6 @@ export type DialogRootChangeEventReason = Dialog.Root.ChangeEventReason;
 export type DialogRootState = Dialog.Root.State;
 
 export namespace DialogRootProps {
-  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Root>, keyof Render | keyof SuruUI>;
-
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<DialogRootState>;
 
   export type SuruUI<TPayload = any> = {
@@ -127,6 +123,10 @@ export namespace DialogRootProps {
      */
     handle: DialogHandle<TPayload>;
   };
+
+  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Root>, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -166,13 +166,13 @@ export namespace Root {
     Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DialogRootProps.BaseUI;
-
-    export type HTML = DialogRootProps.HTML;
-
     export type Render = DialogRootProps.Render;
 
     export type SuruUI<TPayload = any> = DialogRootProps.SuruUI<TPayload>;
+
+    export type BaseUI = DialogRootProps.BaseUI;
+
+    export type HTML = DialogRootProps.HTML;
   }
 
   export type Actions = DialogRootActions;
@@ -191,13 +191,6 @@ export namespace Root {
 export type DialogToggleTriggerState = Dialog.Trigger.State;
 
 export namespace DialogToggleTriggerProps {
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof Dialog.Trigger>,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<DialogToggleTriggerState>;
 
   export type SuruUI<TPayload = any> = {
@@ -211,6 +204,13 @@ export namespace DialogToggleTriggerProps {
      */
     handle: DialogHandle<TPayload>;
   };
+
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Dialog.Trigger>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -251,13 +251,13 @@ export namespace ToggleTrigger {
     Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DialogToggleTriggerProps.BaseUI;
-
-    export type HTML = DialogToggleTriggerProps.HTML;
-
     export type Render = DialogToggleTriggerProps.Render;
 
     export type SuruUI<TPayload = any> = DialogToggleTriggerProps.SuruUI<TPayload>;
+
+    export type BaseUI = DialogToggleTriggerProps.BaseUI;
+
+    export type HTML = DialogToggleTriggerProps.HTML;
   }
 }
 
@@ -270,16 +270,16 @@ export namespace ToggleTrigger {
 export type DialogPortalState = Dialog.Portal.State;
 
 export namespace DialogPortalProps {
+  export type Render = RenderProps<DialogPortalState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Portal>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Dialog.Portal>
   >;
-
-  export type Render = RenderProps<DialogPortalState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -320,13 +320,13 @@ export namespace Portal {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DialogPortalProps.BaseUI;
-
-    export type HTML = DialogPortalProps.HTML;
-
     export type Render = DialogPortalProps.Render;
 
     export type SuruUI = DialogPortalProps.SuruUI;
+
+    export type BaseUI = DialogPortalProps.BaseUI;
+
+    export type HTML = DialogPortalProps.HTML;
   }
 }
 
@@ -339,16 +339,16 @@ export namespace Portal {
 export type DialogBackdropState = Dialog.Backdrop.State;
 
 export namespace DialogBackdropProps {
+  export type Render = RenderProps<DialogBackdropState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Backdrop>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Dialog.Backdrop>
   >;
-
-  export type Render = RenderProps<DialogBackdropState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -376,13 +376,13 @@ export namespace Backdrop {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DialogBackdropProps.BaseUI;
-
-    export type HTML = DialogBackdropProps.HTML;
-
     export type Render = DialogBackdropProps.Render;
 
     export type SuruUI = DialogBackdropProps.SuruUI;
+
+    export type BaseUI = DialogBackdropProps.BaseUI;
+
+    export type HTML = DialogBackdropProps.HTML;
   }
 }
 
@@ -395,16 +395,16 @@ export namespace Backdrop {
 export type DialogViewportState = Dialog.Viewport.State;
 
 export namespace DialogViewportProps {
+  export type Render = RenderProps<DialogViewportState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Viewport>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Dialog.Viewport>
   >;
-
-  export type Render = RenderProps<DialogViewportState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -434,13 +434,13 @@ export namespace Viewport {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DialogViewportProps.BaseUI;
-
-    export type HTML = DialogViewportProps.HTML;
-
     export type Render = DialogViewportProps.Render;
 
     export type SuruUI = DialogViewportProps.SuruUI;
+
+    export type BaseUI = DialogViewportProps.BaseUI;
+
+    export type HTML = DialogViewportProps.HTML;
   }
 }
 
@@ -471,13 +471,6 @@ export type DialogContentVariant = "default" | "stacked";
 export type DialogContentState = Dialog.Popup.State;
 
 export namespace DialogContentProps {
-  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Popup>, keyof Render | keyof SuruUI>;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Dialog.Popup>
-  >;
-
   export type Render = RenderProps<DialogContentState>;
 
   export type SuruUI = {
@@ -502,6 +495,13 @@ export namespace DialogContentProps {
      */
     variant?: DialogContentVariant | undefined;
   };
+
+  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Popup>, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Dialog.Popup>
+  >;
 }
 
 /**
@@ -543,13 +543,13 @@ export namespace Content {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DialogContentProps.BaseUI;
-
-    export type HTML = DialogContentProps.HTML;
-
     export type Render = DialogContentProps.Render;
 
     export type SuruUI = DialogContentProps.SuruUI;
+
+    export type BaseUI = DialogContentProps.BaseUI;
+
+    export type HTML = DialogContentProps.HTML;
   }
 
   export type Radius = DialogContentRadius;
@@ -566,8 +566,6 @@ export namespace Content {
 export type DialogControlsState = {};
 
 export namespace DialogControlsProps {
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<DialogControlsState>;
 
   export type SuruUI = {
@@ -578,6 +576,8 @@ export namespace DialogControlsProps {
      */
     absolute?: boolean | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -616,11 +616,11 @@ export namespace Controls {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = DialogControlsProps.HTML;
-
     export type Render = DialogControlsProps.Render;
 
     export type SuruUI = DialogControlsProps.SuruUI;
+
+    export type HTML = DialogControlsProps.HTML;
   }
 }
 
@@ -633,11 +633,11 @@ export namespace Controls {
 export type DialogHeaderState = {};
 
 export namespace DialogHeaderProps {
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
-
   export type Render = RenderProps<DialogHeaderState>;
 
   export type SuruUI = {};
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
 }
 
 /**
@@ -670,11 +670,11 @@ export namespace Header {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = DialogHeaderProps.HTML;
-
     export type Render = DialogHeaderProps.Render;
 
     export type SuruUI = DialogHeaderProps.SuruUI;
+
+    export type HTML = DialogHeaderProps.HTML;
   }
 }
 
@@ -687,16 +687,16 @@ export namespace Header {
 export type DialogTitleState = Dialog.Title.State;
 
 export namespace DialogTitleProps {
+  export type Render = RenderProps<DialogTitleState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Title>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"h2">,
     keyof Render | keyof React.ComponentProps<typeof Dialog.Title>
   >;
-
-  export type Render = RenderProps<DialogTitleState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -724,13 +724,13 @@ export namespace Title {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DialogTitleProps.BaseUI;
-
-    export type HTML = DialogTitleProps.HTML;
-
     export type Render = DialogTitleProps.Render;
 
     export type SuruUI = DialogTitleProps.SuruUI;
+
+    export type BaseUI = DialogTitleProps.BaseUI;
+
+    export type HTML = DialogTitleProps.HTML;
   }
 }
 
@@ -743,16 +743,16 @@ export namespace Title {
 export type DialogDescriptionState = Dialog.Description.State;
 
 export namespace DialogDescriptionProps {
+  export type Render = RenderProps<DialogDescriptionState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Description>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"p">,
     keyof Render | keyof React.ComponentProps<typeof Dialog.Description>
   >;
-
-  export type Render = RenderProps<DialogDescriptionState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -782,13 +782,13 @@ export namespace Description {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DialogDescriptionProps.BaseUI;
-
-    export type HTML = DialogDescriptionProps.HTML;
-
     export type Render = DialogDescriptionProps.Render;
 
     export type SuruUI = DialogDescriptionProps.SuruUI;
+
+    export type BaseUI = DialogDescriptionProps.BaseUI;
+
+    export type HTML = DialogDescriptionProps.HTML;
   }
 }
 
@@ -801,11 +801,11 @@ export namespace Description {
 export type DialogBodyState = {};
 
 export namespace DialogBodyProps {
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
-
   export type Render = RenderProps<DialogBodyState>;
 
   export type SuruUI = {};
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
 }
 
 /**
@@ -838,11 +838,11 @@ export namespace Body {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = DialogBodyProps.HTML;
-
     export type Render = DialogBodyProps.Render;
 
     export type SuruUI = DialogBodyProps.SuruUI;
+
+    export type HTML = DialogBodyProps.HTML;
   }
 }
 
@@ -855,11 +855,11 @@ export namespace Body {
 export type DialogFooterState = {};
 
 export namespace DialogFooterProps {
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
-
   export type Render = RenderProps<DialogFooterState>;
 
   export type SuruUI = {};
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
 }
 
 /**
@@ -892,11 +892,11 @@ export namespace Footer {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = DialogFooterProps.HTML;
-
     export type Render = DialogFooterProps.Render;
 
     export type SuruUI = DialogFooterProps.SuruUI;
+
+    export type HTML = DialogFooterProps.HTML;
   }
 }
 
@@ -909,13 +909,6 @@ export namespace Footer {
 export type DialogCloseTriggerState = Dialog.Close.State;
 
 export namespace DialogCloseTriggerProps {
-  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Close>, keyof Render | keyof SuruUI>;
-
-  export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Dialog.Close>
-  >;
-
   export type Render = RenderProps<DialogCloseTriggerState>;
 
   export type SuruUI = {
@@ -924,6 +917,13 @@ export namespace DialogCloseTriggerProps {
      */
     children: NonNullable<React.ComponentProps<typeof Dialog.Close>["render"]>;
   };
+
+  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Close>, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Dialog.Close>
+  >;
 }
 
 /**
@@ -958,12 +958,12 @@ export namespace CloseTrigger {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = DialogCloseTriggerProps.BaseUI;
-
-    export type HTML = DialogCloseTriggerProps.HTML;
-
     export type Render = DialogCloseTriggerProps.Render;
 
     export type SuruUI = DialogCloseTriggerProps.SuruUI;
+
+    export type BaseUI = DialogCloseTriggerProps.BaseUI;
+
+    export type HTML = DialogCloseTriggerProps.HTML;
   }
 }

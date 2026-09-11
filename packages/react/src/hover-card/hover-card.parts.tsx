@@ -58,13 +58,6 @@ export type HoverCardRootChangeEventReason = PreviewCard.Root.ChangeEventReason;
 export type HoverCardRootState = PreviewCard.Root.State;
 
 export namespace HoverCardRootProps {
-  export type BaseUI<TPayload = unknown> = Omit<
-    PreviewCard.Root.Props<TPayload>,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = {};
-
   export type Render = RenderProps<HoverCardRootState>;
 
   export type SuruUI<TPayload = unknown> = {
@@ -75,6 +68,13 @@ export namespace HoverCardRootProps {
      */
     handle?: HoverCardHandle<TPayload> | undefined;
   };
+
+  export type BaseUI<TPayload = unknown> = Omit<
+    PreviewCard.Root.Props<TPayload>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = {};
 }
 
 /**
@@ -117,13 +117,13 @@ export namespace Root {
     Props.HTML;
 
   export namespace Props {
-    export type BaseUI<TPayload = unknown> = HoverCardRootProps.BaseUI<TPayload>;
-
-    export type HTML = HoverCardRootProps.HTML;
-
     export type Render = HoverCardRootProps.Render;
 
     export type SuruUI<TPayload = unknown> = HoverCardRootProps.SuruUI<TPayload>;
+
+    export type BaseUI<TPayload = unknown> = HoverCardRootProps.BaseUI<TPayload>;
+
+    export type HTML = HoverCardRootProps.HTML;
   }
 
   export type Actions = HoverCardRootActions;
@@ -144,16 +144,6 @@ export namespace Root {
 export type HoverCardTriggerState = PreviewCard.Trigger.State;
 
 export namespace HoverCardTriggerProps {
-  export type BaseUI<TPayload = unknown> = Omit<
-    PreviewCard.Trigger.Props<TPayload>,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"a">,
-    keyof Render | keyof SuruUI | keyof PreviewCard.Trigger.Props<any>
-  >;
-
   export type Render = RenderProps<HoverCardTriggerState>;
 
   export type SuruUI<TPayload = unknown> = {
@@ -171,6 +161,16 @@ export namespace HoverCardTriggerProps {
      */
     handle?: HoverCardHandle<TPayload> | undefined;
   };
+
+  export type BaseUI<TPayload = unknown> = Omit<
+    PreviewCard.Trigger.Props<TPayload>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"a">,
+    keyof Render | keyof SuruUI | keyof PreviewCard.Trigger.Props<any>
+  >;
 }
 
 /**
@@ -222,13 +222,13 @@ export namespace Trigger {
     Props.HTML;
 
   export namespace Props {
-    export type BaseUI<TPayload = unknown> = HoverCardTriggerProps.BaseUI<TPayload>;
-
-    export type HTML = HoverCardTriggerProps.HTML;
-
     export type Render = HoverCardTriggerProps.Render;
 
     export type SuruUI<TPayload = unknown> = HoverCardTriggerProps.SuruUI<TPayload>;
+
+    export type BaseUI<TPayload = unknown> = HoverCardTriggerProps.BaseUI<TPayload>;
+
+    export type HTML = HoverCardTriggerProps.HTML;
   }
 }
 
@@ -241,16 +241,16 @@ export namespace Trigger {
 export type HoverCardPortalState = PreviewCard.Portal.State;
 
 export namespace HoverCardPortalProps {
+  export type Render = RenderProps<HoverCardPortalState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof PreviewCard.Portal>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof PreviewCard.Portal>
   >;
-
-  export type Render = RenderProps<HoverCardPortalState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -293,13 +293,13 @@ export namespace Portal {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = HoverCardPortalProps.BaseUI;
-
-    export type HTML = HoverCardPortalProps.HTML;
-
     export type Render = HoverCardPortalProps.Render;
 
     export type SuruUI = HoverCardPortalProps.SuruUI;
+
+    export type BaseUI = HoverCardPortalProps.BaseUI;
+
+    export type HTML = HoverCardPortalProps.HTML;
   }
 }
 
@@ -312,16 +312,16 @@ export namespace Portal {
 export type HoverCardBackdropState = PreviewCard.Backdrop.State;
 
 export namespace HoverCardBackdropProps {
+  export type Render = RenderProps<HoverCardBackdropState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof PreviewCard.Backdrop>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof PreviewCard.Backdrop>
   >;
-
-  export type Render = RenderProps<HoverCardBackdropState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -362,13 +362,13 @@ export namespace Backdrop {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = HoverCardBackdropProps.BaseUI;
-
-    export type HTML = HoverCardBackdropProps.HTML;
-
     export type Render = HoverCardBackdropProps.Render;
 
     export type SuruUI = HoverCardBackdropProps.SuruUI;
+
+    export type BaseUI = HoverCardBackdropProps.BaseUI;
+
+    export type HTML = HoverCardBackdropProps.HTML;
   }
 }
 
@@ -381,16 +381,16 @@ export namespace Backdrop {
 export type HoverCardPositionerState = PreviewCard.Positioner.State;
 
 export namespace HoverCardPositionerProps {
+  export type Render = RenderProps<HoverCardPositionerState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof PreviewCard.Positioner>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof PreviewCard.Positioner>
   >;
-
-  export type Render = RenderProps<HoverCardPositionerState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -424,13 +424,13 @@ export namespace Positioner {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = HoverCardPositionerProps.BaseUI;
-
-    export type HTML = HoverCardPositionerProps.HTML;
-
     export type Render = HoverCardPositionerProps.Render;
 
     export type SuruUI = HoverCardPositionerProps.SuruUI;
+
+    export type BaseUI = HoverCardPositionerProps.BaseUI;
+
+    export type HTML = HoverCardPositionerProps.HTML;
   }
 }
 
@@ -443,16 +443,16 @@ export namespace Positioner {
 export type HoverCardContentState = PreviewCard.Popup.State;
 
 export namespace HoverCardContentProps {
+  export type Render = RenderProps<HoverCardContentState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof PreviewCard.Popup>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof PreviewCard.Popup>
   >;
-
-  export type Render = RenderProps<HoverCardContentState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -493,13 +493,13 @@ export namespace Content {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = HoverCardContentProps.BaseUI;
-
-    export type HTML = HoverCardContentProps.HTML;
-
     export type Render = HoverCardContentProps.Render;
 
     export type SuruUI = HoverCardContentProps.SuruUI;
+
+    export type BaseUI = HoverCardContentProps.BaseUI;
+
+    export type HTML = HoverCardContentProps.HTML;
   }
 }
 
@@ -512,16 +512,16 @@ export namespace Content {
 export type HoverCardArrowState = PreviewCard.Arrow.State;
 
 export namespace HoverCardArrowProps {
+  export type Render = RenderProps<HoverCardArrowState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof PreviewCard.Arrow>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof PreviewCard.Arrow>
   >;
-
-  export type Render = RenderProps<HoverCardArrowState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -549,13 +549,13 @@ export namespace Arrow {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = HoverCardArrowProps.BaseUI;
-
-    export type HTML = HoverCardArrowProps.HTML;
-
     export type Render = HoverCardArrowProps.Render;
 
     export type SuruUI = HoverCardArrowProps.SuruUI;
+
+    export type BaseUI = HoverCardArrowProps.BaseUI;
+
+    export type HTML = HoverCardArrowProps.HTML;
   }
 }
 
@@ -568,16 +568,16 @@ export namespace Arrow {
 export type HoverCardViewportState = PreviewCard.Viewport.State;
 
 export namespace HoverCardViewportProps {
+  export type Render = RenderProps<HoverCardViewportState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof PreviewCard.Viewport>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof PreviewCard.Viewport>
   >;
-
-  export type Render = RenderProps<HoverCardViewportState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -611,12 +611,12 @@ export namespace Viewport {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = HoverCardViewportProps.BaseUI;
-
-    export type HTML = HoverCardViewportProps.HTML;
-
     export type Render = HoverCardViewportProps.Render;
 
     export type SuruUI = HoverCardViewportProps.SuruUI;
+
+    export type BaseUI = HoverCardViewportProps.BaseUI;
+
+    export type HTML = HoverCardViewportProps.HTML;
   }
 }

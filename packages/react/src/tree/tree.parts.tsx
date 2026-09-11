@@ -249,8 +249,6 @@ export type TreeRootState = {
 };
 
 export namespace TreeRootProps {
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<TreeRootState>;
 
   export type SuruUI = {
@@ -356,6 +354,8 @@ export namespace TreeRootProps {
      */
     variant?: TreeRootVariant | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -753,11 +753,11 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = TreeRootProps.HTML;
-
     export type Render = TreeRootProps.Render;
 
     export type SuruUI = TreeRootProps.SuruUI;
+
+    export type HTML = TreeRootProps.HTML;
   }
 
   export type Color = TreeRootColor;
@@ -807,13 +807,6 @@ export type TreeItemVariant = "liquid" | "solid";
 export type TreeItemState = {};
 
 export namespace TreeItemProps {
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof Button.Root>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"button">
-  >;
-
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<TreeItemState>;
 
   export type SuruUI = {
@@ -902,6 +895,13 @@ export namespace TreeItemProps {
      */
     variant?: TreeItemVariant | undefined;
   };
+
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Button.Root>,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"button">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -992,13 +992,13 @@ export namespace Item {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = TreeItemProps.BaseUI;
-
-    export type HTML = TreeItemProps.HTML;
-
     export type Render = TreeItemProps.Render;
 
     export type SuruUI = TreeItemProps.SuruUI;
+
+    export type BaseUI = TreeItemProps.BaseUI;
+
+    export type HTML = TreeItemProps.HTML;
   }
 
   export type Color = TreeItemColor;
@@ -1019,8 +1019,6 @@ export namespace Item {
 export type TreeItemIndicatorState = {};
 
 export namespace TreeItemIndicatorProps {
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<TreeItemIndicatorState>;
 
   export type SuruUI = {
@@ -1033,6 +1031,8 @@ export namespace TreeItemIndicatorProps {
      */
     visible?: boolean | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -1075,10 +1075,10 @@ export namespace Indicator {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = TreeItemIndicatorProps.HTML;
-
     export type Render = TreeItemIndicatorProps.Render;
 
     export type SuruUI = TreeItemIndicatorProps.SuruUI;
+
+    export type HTML = TreeItemIndicatorProps.HTML;
   }
 }

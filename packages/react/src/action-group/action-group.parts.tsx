@@ -161,8 +161,6 @@ export type ActionGroupRootVariant = ColorTemplate;
 export type ActionGroupRootState = {};
 
 export namespace ActionGroupRootProps {
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<ActionGroupRootState>;
 
   export type SuruUI = {
@@ -206,6 +204,8 @@ export namespace ActionGroupRootProps {
      */
     variant?: ActionGroupRootVariant | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -277,11 +277,11 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = ActionGroupRootProps.HTML;
-
     export type Render = ActionGroupRootProps.Render;
 
     export type SuruUI = ActionGroupRootProps.SuruUI;
+
+    export type HTML = ActionGroupRootProps.HTML;
   }
 
   export type Color = ActionGroupRootColor;
@@ -304,8 +304,6 @@ export namespace Root {
 export type ActionGroupSeparatorState = {};
 
 export namespace ActionGroupSeparatorProps {
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI | "role">;
-
   export type Render = RenderProps<ActionGroupSeparatorState>;
 
   export type SuruUI = {
@@ -314,6 +312,8 @@ export namespace ActionGroupSeparatorProps {
      */
     orientation?: ActionGroupRootOrientation | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI | "role">;
 }
 
 /**
@@ -362,10 +362,10 @@ export namespace Separator {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = ActionGroupSeparatorProps.HTML;
-
     export type Render = ActionGroupSeparatorProps.Render;
 
     export type SuruUI = ActionGroupSeparatorProps.SuruUI;
+
+    export type HTML = ActionGroupSeparatorProps.HTML;
   }
 }

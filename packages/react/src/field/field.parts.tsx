@@ -26,16 +26,16 @@ export type FieldRootValidityData = Field.ValidityData;
 export type FieldRootState = Field.Root.State;
 
 export namespace FieldRootProps {
+  export type Render = RenderProps<FieldRootState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Field.Root>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Field.Root>
   >;
-
-  export type Render = RenderProps<FieldRootState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -79,13 +79,13 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = FieldRootProps.BaseUI;
-
-    export type HTML = FieldRootProps.HTML;
-
     export type Render = FieldRootProps.Render;
 
     export type SuruUI = FieldRootProps.SuruUI;
+
+    export type BaseUI = FieldRootProps.BaseUI;
+
+    export type HTML = FieldRootProps.HTML;
   }
 
   export type Actions = FieldRootActions;
@@ -102,16 +102,16 @@ export namespace Root {
 export type FieldLabelState = Field.Label.State;
 
 export namespace FieldLabelProps {
+  export type Render = RenderProps<FieldLabelState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Field.Label>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"label">,
     keyof Render | keyof React.ComponentProps<typeof Field.Label>
   >;
-
-  export type Render = RenderProps<FieldLabelState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -144,13 +144,13 @@ export namespace Label {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = FieldLabelProps.BaseUI;
-
-    export type HTML = FieldLabelProps.HTML;
-
     export type Render = FieldLabelProps.Render;
 
     export type SuruUI = FieldLabelProps.SuruUI;
+
+    export type BaseUI = FieldLabelProps.BaseUI;
+
+    export type HTML = FieldLabelProps.HTML;
   }
 }
 
@@ -173,16 +173,16 @@ export type FieldControlChangeEventReason = Field.Control.ChangeEventReason;
 export type FieldControlState = Field.Control.State;
 
 export namespace FieldControlProps {
+  export type Render = RenderProps<FieldControlState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Field.Control>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"input">,
     keyof Render | keyof React.ComponentProps<typeof Field.Control>
   >;
-
-  export type Render = RenderProps<FieldControlState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -213,13 +213,13 @@ export namespace Control {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = FieldControlProps.BaseUI;
-
-    export type HTML = FieldControlProps.HTML;
-
     export type Render = FieldControlProps.Render;
 
     export type SuruUI = FieldControlProps.SuruUI;
+
+    export type BaseUI = FieldControlProps.BaseUI;
+
+    export type HTML = FieldControlProps.HTML;
   }
 
   export type ChangeEventDetails = FieldControlChangeEventDetails;
@@ -236,16 +236,16 @@ export namespace Control {
 export type FieldDescriptionState = Field.Description.State;
 
 export namespace FieldDescriptionProps {
+  export type Render = RenderProps<FieldDescriptionState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Field.Description>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"p">,
     keyof Render | keyof React.ComponentProps<typeof Field.Description>
   >;
-
-  export type Render = RenderProps<FieldDescriptionState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -280,13 +280,13 @@ export namespace Description {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = FieldDescriptionProps.BaseUI;
-
-    export type HTML = FieldDescriptionProps.HTML;
-
     export type Render = FieldDescriptionProps.Render;
 
     export type SuruUI = FieldDescriptionProps.SuruUI;
+
+    export type BaseUI = FieldDescriptionProps.BaseUI;
+
+    export type HTML = FieldDescriptionProps.HTML;
   }
 }
 
@@ -299,16 +299,16 @@ export namespace Description {
 export type FieldErrorState = Field.Error.State;
 
 export namespace FieldErrorProps {
+  export type Render = RenderProps<FieldErrorState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Field.Error>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Field.Error>
   >;
-
-  export type Render = RenderProps<FieldErrorState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -341,13 +341,13 @@ export namespace Error {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = FieldErrorProps.BaseUI;
-
-    export type HTML = FieldErrorProps.HTML;
-
     export type Render = FieldErrorProps.Render;
 
     export type SuruUI = FieldErrorProps.SuruUI;
+
+    export type BaseUI = FieldErrorProps.BaseUI;
+
+    export type HTML = FieldErrorProps.HTML;
   }
 }
 
@@ -360,16 +360,16 @@ export namespace Error {
 export type FieldItemState = Field.Item.State;
 
 export namespace FieldItemProps {
+  export type Render = RenderProps<FieldItemState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Field.Item>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Field.Item>
   >;
-
-  export type Render = RenderProps<FieldItemState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -402,13 +402,13 @@ export namespace Item {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = FieldItemProps.BaseUI;
-
-    export type HTML = FieldItemProps.HTML;
-
     export type Render = FieldItemProps.Render;
 
     export type SuruUI = FieldItemProps.SuruUI;
+
+    export type BaseUI = FieldItemProps.BaseUI;
+
+    export type HTML = FieldItemProps.HTML;
   }
 }
 
@@ -421,13 +421,13 @@ export namespace Item {
 export type FieldValidityState = Field.Validity.State;
 
 export namespace FieldValidityProps {
-  export type BaseUI = Omit<React.ComponentProps<typeof Field.Validity>, keyof Render>;
-
-  export type HTML = {};
-
   export type Render = RenderProps<FieldValidityState>;
 
   export type SuruUI = {};
+
+  export type BaseUI = Omit<React.ComponentProps<typeof Field.Validity>, keyof Render>;
+
+  export type HTML = {};
 }
 
 /**
@@ -458,12 +458,12 @@ export namespace Validity {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = FieldValidityProps.BaseUI;
-
-    export type HTML = FieldValidityProps.HTML;
-
     export type Render = FieldValidityProps.Render;
 
     export type SuruUI = FieldValidityProps.SuruUI;
+
+    export type BaseUI = FieldValidityProps.BaseUI;
+
+    export type HTML = FieldValidityProps.HTML;
   }
 }

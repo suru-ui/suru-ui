@@ -25,8 +25,6 @@ export type LabelRootSize = Size;
 export type LabelRootState = {};
 
 export namespace LabelRootProps {
-  export type HTML = Omit<React.ComponentProps<"label">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<LabelRootState>;
 
   export type SuruUI = {
@@ -37,6 +35,8 @@ export namespace LabelRootProps {
      */
     size?: LabelRootSize | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"label">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -75,11 +75,11 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = LabelRootProps.HTML;
-
     export type Render = LabelRootProps.Render;
 
     export type SuruUI = LabelRootProps.SuruUI;
+
+    export type HTML = LabelRootProps.HTML;
   }
 
   export type Size = LabelRootSize;

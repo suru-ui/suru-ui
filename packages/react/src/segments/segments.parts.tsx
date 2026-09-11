@@ -287,13 +287,13 @@ export type SegmentsItemValue = BaseTabs.Tab.Value;
 export type SegmentsItemState = BaseTabs.Tab.State;
 
 export namespace SegmentsItemProps {
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseTabs.Tab>, keyof Render>;
-
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render>;
-
   export type Render = RenderProps<SegmentsItemState>;
 
   export type SuruUI = {};
+
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseTabs.Tab>, keyof Render>;
+
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render>;
 }
 
 /**
@@ -331,13 +331,13 @@ export namespace Item {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SegmentsItemProps.BaseUI;
-
-    export type HTML = SegmentsItemProps.HTML;
-
     export type Render = SegmentsItemProps.Render;
 
     export type SuruUI = SegmentsItemProps.SuruUI;
+
+    export type BaseUI = SegmentsItemProps.BaseUI;
+
+    export type HTML = SegmentsItemProps.HTML;
   }
 
   export type ActivationDirection = SegmentsItemActivationDirection;
@@ -360,16 +360,16 @@ export namespace Item {
 export type SegmentsIndicatorState = BaseTabs.Indicator.State;
 
 export namespace SegmentsIndicatorProps {
+  export type Render = RenderProps<SegmentsIndicatorState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     React.ComponentProps<typeof BaseTabs.Indicator>,
     keyof Render | keyof React.ComponentProps<"span">
   >;
 
   export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
-
-  export type Render = RenderProps<SegmentsIndicatorState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -401,12 +401,12 @@ export namespace Indicator {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SegmentsIndicatorProps.BaseUI;
-
-    export type HTML = SegmentsIndicatorProps.HTML;
-
     export type Render = SegmentsIndicatorProps.Render;
 
     export type SuruUI = SegmentsIndicatorProps.SuruUI;
+
+    export type BaseUI = SegmentsIndicatorProps.BaseUI;
+
+    export type HTML = SegmentsIndicatorProps.HTML;
   }
 }

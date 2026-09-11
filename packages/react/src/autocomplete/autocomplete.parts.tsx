@@ -182,16 +182,6 @@ export type AutocompleteRootVariant = "naked" | "liquid";
 export type AutocompleteRootState = Autocomplete.Root.State;
 
 export namespace AutocompleteRootProps {
-  export type BaseUI<TItem = any> = Omit<
-    Autocomplete.Root.Props<TItem>,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof Autocomplete.Root.Props<any>
-  >;
-
   export type Render = RenderProps<AutocompleteRootState>;
 
   export type SuruUI = {
@@ -230,6 +220,16 @@ export namespace AutocompleteRootProps {
      */
     variant?: AutocompleteRootVariant | undefined;
   };
+
+  export type BaseUI<TItem = any> = Omit<
+    Autocomplete.Root.Props<TItem>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof Autocomplete.Root.Props<any>
+  >;
 }
 
 /**
@@ -285,13 +285,13 @@ export namespace Root {
   export type Props<TItem = any> = Props.Render & Props.SuruUI & Props.BaseUI<TItem> & Props.HTML;
 
   export namespace Props {
-    export type BaseUI<TItem = any> = AutocompleteRootProps.BaseUI<TItem>;
-
-    export type HTML = AutocompleteRootProps.HTML;
-
     export type Render = AutocompleteRootProps.Render;
 
     export type SuruUI = AutocompleteRootProps.SuruUI;
+
+    export type BaseUI<TItem = any> = AutocompleteRootProps.BaseUI<TItem>;
+
+    export type HTML = AutocompleteRootProps.HTML;
   }
 
   export type Actions = AutocompleteRootActions;
@@ -322,16 +322,16 @@ export namespace Root {
 export type AutocompleteInputGroupState = Autocomplete.InputGroup.State;
 
 export namespace AutocompleteInputGroupProps {
+  export type Render = RenderProps<AutocompleteInputGroupState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.InputGroup>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Autocomplete.InputGroup>
   >;
-
-  export type Render = RenderProps<AutocompleteInputGroupState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -381,13 +381,13 @@ export namespace InputGroup {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AutocompleteInputGroupProps.BaseUI;
-
-    export type HTML = AutocompleteInputGroupProps.HTML;
-
     export type Render = AutocompleteInputGroupProps.Render;
 
     export type SuruUI = AutocompleteInputGroupProps.SuruUI;
+
+    export type BaseUI = AutocompleteInputGroupProps.BaseUI;
+
+    export type HTML = AutocompleteInputGroupProps.HTML;
   }
 }
 
@@ -400,16 +400,16 @@ export namespace InputGroup {
 export type AutocompleteInputState = Autocomplete.Input.State;
 
 export namespace AutocompleteInputProps {
+  export type Render = RenderProps<AutocompleteInputState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Input>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"input">,
     keyof Render | keyof React.ComponentProps<typeof Autocomplete.Input>
   >;
-
-  export type Render = RenderProps<AutocompleteInputState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -452,13 +452,13 @@ export namespace Input {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AutocompleteInputProps.BaseUI;
-
-    export type HTML = AutocompleteInputProps.HTML;
-
     export type Render = AutocompleteInputProps.Render;
 
     export type SuruUI = AutocompleteInputProps.SuruUI;
+
+    export type BaseUI = AutocompleteInputProps.BaseUI;
+
+    export type HTML = AutocompleteInputProps.HTML;
   }
 }
 
@@ -471,11 +471,11 @@ export namespace Input {
 export type AutocompleteAddonState = {};
 
 export namespace AutocompleteAddonProps {
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
-
   export type Render = RenderProps<AutocompleteAddonState>;
 
   export type SuruUI = {};
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
 }
 
 /**
@@ -514,11 +514,11 @@ export namespace Addon {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = AutocompleteAddonProps.HTML;
-
     export type Render = AutocompleteAddonProps.Render;
 
     export type SuruUI = AutocompleteAddonProps.SuruUI;
+
+    export type HTML = AutocompleteAddonProps.HTML;
   }
 }
 
@@ -531,16 +531,16 @@ export namespace Addon {
 export type AutocompleteClearState = Autocomplete.Clear.State;
 
 export namespace AutocompleteClearProps {
+  export type Render = RenderProps<AutocompleteClearState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Clear>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
     keyof Render | keyof React.ComponentProps<typeof Autocomplete.Clear>
   >;
-
-  export type Render = RenderProps<AutocompleteClearState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -581,13 +581,13 @@ export namespace Clear {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AutocompleteClearProps.BaseUI;
-
-    export type HTML = AutocompleteClearProps.HTML;
-
     export type Render = AutocompleteClearProps.Render;
 
     export type SuruUI = AutocompleteClearProps.SuruUI;
+
+    export type BaseUI = AutocompleteClearProps.BaseUI;
+
+    export type HTML = AutocompleteClearProps.HTML;
   }
 }
 
@@ -600,16 +600,16 @@ export namespace Clear {
 export type AutocompleteListState = Autocomplete.List.State;
 
 export namespace AutocompleteListProps {
+  export type Render = RenderProps<AutocompleteListState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.List>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Autocomplete.List>
   >;
-
-  export type Render = RenderProps<AutocompleteListState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -639,13 +639,13 @@ export namespace List {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AutocompleteListProps.BaseUI;
-
-    export type HTML = AutocompleteListProps.HTML;
-
     export type Render = AutocompleteListProps.Render;
 
     export type SuruUI = AutocompleteListProps.SuruUI;
+
+    export type BaseUI = AutocompleteListProps.BaseUI;
+
+    export type HTML = AutocompleteListProps.HTML;
   }
 }
 
@@ -658,16 +658,16 @@ export namespace List {
 export type AutocompleteStatusState = Autocomplete.Status.State;
 
 export namespace AutocompleteStatusProps {
+  export type Render = RenderProps<AutocompleteStatusState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Status>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Autocomplete.Status>
   >;
-
-  export type Render = RenderProps<AutocompleteStatusState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -700,13 +700,13 @@ export namespace Status {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AutocompleteStatusProps.BaseUI;
-
-    export type HTML = AutocompleteStatusProps.HTML;
-
     export type Render = AutocompleteStatusProps.Render;
 
     export type SuruUI = AutocompleteStatusProps.SuruUI;
+
+    export type BaseUI = AutocompleteStatusProps.BaseUI;
+
+    export type HTML = AutocompleteStatusProps.HTML;
   }
 }
 
@@ -719,16 +719,16 @@ export namespace Status {
 export type AutocompletePortalState = Autocomplete.Portal.State;
 
 export namespace AutocompletePortalProps {
+  export type Render = RenderProps<AutocompletePortalState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Portal>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Autocomplete.Portal>
   >;
-
-  export type Render = RenderProps<AutocompletePortalState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -776,13 +776,13 @@ export namespace Portal {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AutocompletePortalProps.BaseUI;
-
-    export type HTML = AutocompletePortalProps.HTML;
-
     export type Render = AutocompletePortalProps.Render;
 
     export type SuruUI = AutocompletePortalProps.SuruUI;
+
+    export type BaseUI = AutocompletePortalProps.BaseUI;
+
+    export type HTML = AutocompletePortalProps.HTML;
   }
 }
 
@@ -795,16 +795,16 @@ export namespace Portal {
 export type AutocompletePositionerState = Autocomplete.Positioner.State;
 
 export namespace AutocompletePositionerProps {
+  export type Render = RenderProps<AutocompletePositionerState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Positioner>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Autocomplete.Positioner>
   >;
-
-  export type Render = RenderProps<AutocompletePositionerState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -838,13 +838,13 @@ export namespace Positioner {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AutocompletePositionerProps.BaseUI;
-
-    export type HTML = AutocompletePositionerProps.HTML;
-
     export type Render = AutocompletePositionerProps.Render;
 
     export type SuruUI = AutocompletePositionerProps.SuruUI;
+
+    export type BaseUI = AutocompletePositionerProps.BaseUI;
+
+    export type HTML = AutocompletePositionerProps.HTML;
   }
 }
 
@@ -857,16 +857,16 @@ export namespace Positioner {
 export type AutocompletePopupState = Autocomplete.Popup.State;
 
 export namespace AutocompletePopupProps {
+  export type Render = RenderProps<AutocompletePopupState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Popup>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Autocomplete.Popup>
   >;
-
-  export type Render = RenderProps<AutocompletePopupState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -896,13 +896,13 @@ export namespace Popup {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AutocompletePopupProps.BaseUI;
-
-    export type HTML = AutocompletePopupProps.HTML;
-
     export type Render = AutocompletePopupProps.Render;
 
     export type SuruUI = AutocompletePopupProps.SuruUI;
+
+    export type BaseUI = AutocompletePopupProps.BaseUI;
+
+    export type HTML = AutocompletePopupProps.HTML;
   }
 }
 
@@ -915,16 +915,16 @@ export namespace Popup {
 export type AutocompleteGroupState = Autocomplete.Group.State;
 
 export namespace AutocompleteGroupProps {
+  export type Render = RenderProps<AutocompleteGroupState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Group>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Autocomplete.Group>
   >;
-
-  export type Render = RenderProps<AutocompleteGroupState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -956,13 +956,13 @@ export namespace Group {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AutocompleteGroupProps.BaseUI;
-
-    export type HTML = AutocompleteGroupProps.HTML;
-
     export type Render = AutocompleteGroupProps.Render;
 
     export type SuruUI = AutocompleteGroupProps.SuruUI;
+
+    export type BaseUI = AutocompleteGroupProps.BaseUI;
+
+    export type HTML = AutocompleteGroupProps.HTML;
   }
 }
 
@@ -975,16 +975,16 @@ export namespace Group {
 export type AutocompleteGroupLabelState = Autocomplete.GroupLabel.State;
 
 export namespace AutocompleteGroupLabelProps {
+  export type Render = RenderProps<AutocompleteGroupLabelState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.GroupLabel>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Autocomplete.GroupLabel>
   >;
-
-  export type Render = RenderProps<AutocompleteGroupLabelState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1018,13 +1018,13 @@ export namespace GroupLabel {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AutocompleteGroupLabelProps.BaseUI;
-
-    export type HTML = AutocompleteGroupLabelProps.HTML;
-
     export type Render = AutocompleteGroupLabelProps.Render;
 
     export type SuruUI = AutocompleteGroupLabelProps.SuruUI;
+
+    export type BaseUI = AutocompleteGroupLabelProps.BaseUI;
+
+    export type HTML = AutocompleteGroupLabelProps.HTML;
   }
 }
 
@@ -1037,6 +1037,10 @@ export namespace GroupLabel {
 export type AutocompleteItemState = Override<Button.Root.State, Autocomplete.Item.State>;
 
 export namespace AutocompleteItemProps {
+  export type Render = RenderProps<AutocompleteItemState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     Override<
       Button.ButtonRootProps,
@@ -1053,10 +1057,6 @@ export namespace AutocompleteItemProps {
         Override<React.ComponentProps<typeof Autocomplete.Item>, RenderProps<AutocompleteItemState>>
       >
   >;
-
-  export type Render = RenderProps<AutocompleteItemState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1108,13 +1108,13 @@ export namespace Item {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AutocompleteItemProps.BaseUI;
-
-    export type HTML = AutocompleteItemProps.HTML;
-
     export type Render = AutocompleteItemProps.Render;
 
     export type SuruUI = AutocompleteItemProps.SuruUI;
+
+    export type BaseUI = AutocompleteItemProps.BaseUI;
+
+    export type HTML = AutocompleteItemProps.HTML;
   }
 }
 
@@ -1127,16 +1127,16 @@ export namespace Item {
 export type AutocompleteRowState = Autocomplete.Row.State;
 
 export namespace AutocompleteRowProps {
+  export type Render = RenderProps<AutocompleteRowState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Row>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Autocomplete.Row>
   >;
-
-  export type Render = RenderProps<AutocompleteRowState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1168,13 +1168,13 @@ export namespace Row {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AutocompleteRowProps.BaseUI;
-
-    export type HTML = AutocompleteRowProps.HTML;
-
     export type Render = AutocompleteRowProps.Render;
 
     export type SuruUI = AutocompleteRowProps.SuruUI;
+
+    export type BaseUI = AutocompleteRowProps.BaseUI;
+
+    export type HTML = AutocompleteRowProps.HTML;
   }
 }
 
@@ -1187,13 +1187,13 @@ export namespace Row {
 export type AutocompleteCollectionState = Autocomplete.Collection.State;
 
 export namespace AutocompleteCollectionProps {
-  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Collection>, keyof Render>;
-
-  export type HTML = {};
-
   export type Render = RenderProps<AutocompleteCollectionState>;
 
   export type SuruUI = {};
+
+  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Collection>, keyof Render>;
+
+  export type HTML = {};
 }
 
 /**
@@ -1222,13 +1222,13 @@ export namespace Collection {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AutocompleteCollectionProps.BaseUI;
-
-    export type HTML = AutocompleteCollectionProps.HTML;
-
     export type Render = AutocompleteCollectionProps.Render;
 
     export type SuruUI = AutocompleteCollectionProps.SuruUI;
+
+    export type BaseUI = AutocompleteCollectionProps.BaseUI;
+
+    export type HTML = AutocompleteCollectionProps.HTML;
   }
 }
 
@@ -1241,16 +1241,16 @@ export namespace Collection {
 export type AutocompleteEmptyState = Autocomplete.Empty.State;
 
 export namespace AutocompleteEmptyProps {
+  export type Render = RenderProps<AutocompleteEmptyState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Empty>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Autocomplete.Empty>
   >;
-
-  export type Render = RenderProps<AutocompleteEmptyState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1282,13 +1282,13 @@ export namespace Empty {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AutocompleteEmptyProps.BaseUI;
-
-    export type HTML = AutocompleteEmptyProps.HTML;
-
     export type Render = AutocompleteEmptyProps.Render;
 
     export type SuruUI = AutocompleteEmptyProps.SuruUI;
+
+    export type BaseUI = AutocompleteEmptyProps.BaseUI;
+
+    export type HTML = AutocompleteEmptyProps.HTML;
   }
 }
 

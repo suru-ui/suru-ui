@@ -67,8 +67,6 @@ export type BadgeRootVariant = "standard" | "dot";
 export type BadgeRootState = {};
 
 export namespace BadgeRootProps {
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<BadgeRootState>;
 
   export type SuruUI = {
@@ -130,6 +128,8 @@ export namespace BadgeRootProps {
      */
     variant?: BadgeRootVariant | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -189,11 +189,11 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = BadgeRootProps.HTML;
-
     export type Render = BadgeRootProps.Render;
 
     export type SuruUI = BadgeRootProps.SuruUI;
+
+    export type HTML = BadgeRootProps.HTML;
   }
 
   export type Color = BadgeRootColor;

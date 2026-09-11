@@ -104,8 +104,6 @@ export type StatusRootSize = Size;
 export type StatusRootState = {};
 
 export namespace StatusRootProps {
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<StatusRootState>;
 
   export type SuruUI = {
@@ -132,6 +130,8 @@ export namespace StatusRootProps {
      */
     size?: StatusRootSize | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -184,11 +184,11 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = StatusRootProps.HTML;
-
     export type Render = StatusRootProps.Render;
 
     export type SuruUI = StatusRootProps.SuruUI;
+
+    export type HTML = StatusRootProps.HTML;
   }
 
   export type Color = StatusRootColor;
@@ -219,8 +219,6 @@ export type StatusIndicatorSize = Size;
 export type StatusIndicatorState = {};
 
 export namespace StatusIndicatorProps {
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<StatusIndicatorState>;
 
   export type SuruUI = {
@@ -245,6 +243,8 @@ export namespace StatusIndicatorProps {
      */
     size?: StatusIndicatorSize | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -291,11 +291,11 @@ export namespace Indicator {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = StatusIndicatorProps.HTML;
-
     export type Render = StatusIndicatorProps.Render;
 
     export type SuruUI = StatusIndicatorProps.SuruUI;
+
+    export type HTML = StatusIndicatorProps.HTML;
   }
 
   export type Color = StatusIndicatorColor;

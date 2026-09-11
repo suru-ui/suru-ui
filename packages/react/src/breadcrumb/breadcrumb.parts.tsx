@@ -138,8 +138,6 @@ export type BreadcrumbRootSize = Size;
 export type BreadcrumbRootState = {};
 
 export namespace BreadcrumbRootProps {
-  export type HTML = Omit<React.ComponentProps<"nav">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<BreadcrumbRootState>;
 
   export type SuruUI = {
@@ -164,6 +162,8 @@ export namespace BreadcrumbRootProps {
      */
     size?: BreadcrumbRootSize | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"nav">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -219,11 +219,11 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = BreadcrumbRootProps.HTML;
-
     export type Render = BreadcrumbRootProps.Render;
 
     export type SuruUI = BreadcrumbRootProps.SuruUI;
+
+    export type HTML = BreadcrumbRootProps.HTML;
   }
 
   export type Color = BreadcrumbRootColor;
@@ -261,8 +261,6 @@ export interface IBreadcrumbListItemRenderer {
 export type BreadcrumbListState = {};
 
 export namespace BreadcrumbListProps {
-  export type HTML = Omit<React.ComponentProps<"ol">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<BreadcrumbListState>;
 
   export type SuruUI = {
@@ -273,6 +271,8 @@ export namespace BreadcrumbListProps {
      */
     children?: React.ReactNode | IBreadcrumbListItemRenderer;
   };
+
+  export type HTML = Omit<React.ComponentProps<"ol">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -334,11 +334,11 @@ export namespace List {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = BreadcrumbListProps.HTML;
-
     export type Render = BreadcrumbListProps.Render;
 
     export type SuruUI = BreadcrumbListProps.SuruUI;
+
+    export type HTML = BreadcrumbListProps.HTML;
   }
 
   export type ItemObject = BreadcrumbRootItemObject;
@@ -355,11 +355,11 @@ export namespace List {
 export type BreadcrumbItemState = {};
 
 export namespace BreadcrumbItemProps {
-  export type HTML = Omit<React.ComponentProps<"li">, keyof Render>;
-
   export type Render = RenderProps<BreadcrumbItemState>;
 
   export type SuruUI = {};
+
+  export type HTML = Omit<React.ComponentProps<"li">, keyof Render>;
 }
 
 /**
@@ -392,11 +392,11 @@ export namespace Item {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = BreadcrumbItemProps.HTML;
-
     export type Render = BreadcrumbItemProps.Render;
 
     export type SuruUI = BreadcrumbItemProps.SuruUI;
+
+    export type HTML = BreadcrumbItemProps.HTML;
   }
 }
 
@@ -409,8 +409,6 @@ export namespace Item {
 export type BreadcrumbLinkState = {};
 
 export namespace BreadcrumbLinkProps {
-  export type HTML = Omit<React.ComponentProps<"a">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<BreadcrumbLinkState>;
 
   export type SuruUI = {
@@ -432,6 +430,8 @@ export namespace BreadcrumbLinkProps {
      */
     disabled?: boolean | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"a">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -484,11 +484,11 @@ export namespace Link {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = BreadcrumbLinkProps.HTML;
-
     export type Render = BreadcrumbLinkProps.Render;
 
     export type SuruUI = BreadcrumbLinkProps.SuruUI;
+
+    export type HTML = BreadcrumbLinkProps.HTML;
   }
 }
 
@@ -501,11 +501,11 @@ export namespace Link {
 export type BreadcrumbSeparatorState = {};
 
 export namespace BreadcrumbSeparatorProps {
-  export type HTML = Omit<React.ComponentProps<"li">, keyof Render>;
-
   export type Render = RenderProps<BreadcrumbSeparatorState>;
 
   export type SuruUI = {};
+
+  export type HTML = Omit<React.ComponentProps<"li">, keyof Render>;
 }
 
 /**
@@ -543,10 +543,10 @@ export namespace Separator {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = BreadcrumbSeparatorProps.HTML;
-
     export type Render = BreadcrumbSeparatorProps.Render;
 
     export type SuruUI = BreadcrumbSeparatorProps.SuruUI;
+
+    export type HTML = BreadcrumbSeparatorProps.HTML;
   }
 }

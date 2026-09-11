@@ -60,13 +60,6 @@ export type SwitchRootVariant = "naked" | "liquid";
 export type SwitchRootState = Switch.Root.State;
 
 export namespace SwitchRootProps {
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof Switch.Root>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"span">
-  >;
-
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<SwitchRootState>;
 
   export type SuruUI = {
@@ -105,6 +98,13 @@ export namespace SwitchRootProps {
      */
     variant?: SwitchRootVariant | undefined;
   };
+
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Switch.Root>,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"span">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -158,13 +158,13 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SwitchRootProps.BaseUI;
-
-    export type HTML = SwitchRootProps.HTML;
-
     export type Render = SwitchRootProps.Render;
 
     export type SuruUI = SwitchRootProps.SuruUI;
+
+    export type BaseUI = SwitchRootProps.BaseUI;
+
+    export type HTML = SwitchRootProps.HTML;
   }
 
   export type ChangeEventDetails = SwitchRootChangeEventDetails;
@@ -189,16 +189,16 @@ export namespace Root {
 export type SwitchThumbState = Switch.Thumb.State;
 
 export namespace SwitchThumbProps {
+  export type Render = RenderProps<SwitchThumbState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     React.ComponentProps<typeof Switch.Thumb>,
     keyof Render | keyof React.ComponentProps<"span">
   >;
 
   export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
-
-  export type Render = RenderProps<SwitchThumbState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -226,12 +226,12 @@ export namespace Thumb {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = SwitchThumbProps.BaseUI;
-
-    export type HTML = SwitchThumbProps.HTML;
-
     export type Render = SwitchThumbProps.Render;
 
     export type SuruUI = SwitchThumbProps.SuruUI;
+
+    export type BaseUI = SwitchThumbProps.BaseUI;
+
+    export type HTML = SwitchThumbProps.HTML;
   }
 }

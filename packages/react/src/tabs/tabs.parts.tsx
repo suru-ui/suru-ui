@@ -71,13 +71,6 @@ export type TabsRootVariant = "segments" | "line";
 export type TabsRootState = BaseTabs.Root.State;
 
 export namespace TabsRootProps {
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof BaseTabs.Root>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
-  >;
-
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<TabsRootState>;
 
   export type SuruUI = {
@@ -118,6 +111,13 @@ export namespace TabsRootProps {
      */
     variant?: TabsRootVariant | undefined;
   };
+
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseTabs.Root>,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -173,13 +173,13 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = TabsRootProps.BaseUI;
-
-    export type HTML = TabsRootProps.HTML;
-
     export type Render = TabsRootProps.Render;
 
     export type SuruUI = TabsRootProps.SuruUI;
+
+    export type BaseUI = TabsRootProps.BaseUI;
+
+    export type HTML = TabsRootProps.HTML;
   }
 
   export type ActiveVariant = TabsRootActiveVariant;
@@ -206,16 +206,16 @@ export namespace Root {
 export type TabsListState = BaseTabs.List.State;
 
 export namespace TabsListProps {
+  export type Render = RenderProps<TabsListState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     React.ComponentProps<typeof BaseTabs.List>,
     keyof Render | keyof React.ComponentProps<"div">
   >;
 
   export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
-
-  export type Render = RenderProps<TabsListState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -251,13 +251,13 @@ export namespace List {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = TabsListProps.BaseUI;
-
-    export type HTML = TabsListProps.HTML;
-
     export type Render = TabsListProps.Render;
 
     export type SuruUI = TabsListProps.SuruUI;
+
+    export type BaseUI = TabsListProps.BaseUI;
+
+    export type HTML = TabsListProps.HTML;
   }
 }
 
@@ -301,13 +301,13 @@ export type TabsTabValue = BaseTabs.Tab.Value;
 export type TabsTabState = BaseTabs.Tab.State;
 
 export namespace TabsTabProps {
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseTabs.Tab>, keyof Render>;
-
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render>;
-
   export type Render = RenderProps<TabsTabState>;
 
   export type SuruUI = {};
+
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseTabs.Tab>, keyof Render>;
+
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render>;
 }
 
 /**
@@ -345,13 +345,13 @@ export namespace Tab {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = TabsTabProps.BaseUI;
-
-    export type HTML = TabsTabProps.HTML;
-
     export type Render = TabsTabProps.Render;
 
     export type SuruUI = TabsTabProps.SuruUI;
+
+    export type BaseUI = TabsTabProps.BaseUI;
+
+    export type HTML = TabsTabProps.HTML;
   }
 
   export type ActivationDirection = TabsTabActivationDirection;
@@ -374,16 +374,16 @@ export namespace Tab {
 export type TabsIndicatorState = BaseTabs.Indicator.State;
 
 export namespace TabsIndicatorProps {
+  export type Render = RenderProps<TabsIndicatorState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     React.ComponentProps<typeof BaseTabs.Indicator>,
     keyof Render | keyof React.ComponentProps<"span">
   >;
 
   export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
-
-  export type Render = RenderProps<TabsIndicatorState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -413,13 +413,13 @@ export namespace Indicator {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = TabsIndicatorProps.BaseUI;
-
-    export type HTML = TabsIndicatorProps.HTML;
-
     export type Render = TabsIndicatorProps.Render;
 
     export type SuruUI = TabsIndicatorProps.SuruUI;
+
+    export type BaseUI = TabsIndicatorProps.BaseUI;
+
+    export type HTML = TabsIndicatorProps.HTML;
   }
 }
 
@@ -437,16 +437,16 @@ export type TabsPanelMetadata = BaseTabs.Panel.Metadata;
 export type TabsPanelState = BaseTabs.Panel.State;
 
 export namespace TabsPanelProps {
+  export type Render = RenderProps<TabsPanelState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     React.ComponentProps<typeof BaseTabs.Panel>,
     keyof Render | keyof React.ComponentProps<"div">
   >;
 
   export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
-
-  export type Render = RenderProps<TabsPanelState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -474,13 +474,13 @@ export namespace Panel {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = TabsPanelProps.BaseUI;
-
-    export type HTML = TabsPanelProps.HTML;
-
     export type Render = TabsPanelProps.Render;
 
     export type SuruUI = TabsPanelProps.SuruUI;
+
+    export type BaseUI = TabsPanelProps.BaseUI;
+
+    export type HTML = TabsPanelProps.HTML;
   }
 
   export type Metadata = TabsPanelMetadata;

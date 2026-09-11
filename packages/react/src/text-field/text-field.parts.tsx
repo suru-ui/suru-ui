@@ -141,8 +141,6 @@ export type TextFieldRootVariant = "naked" | "liquid";
 export type TextFieldRootState = {};
 
 export namespace TextFieldRootProps {
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<TextFieldRootState>;
 
   export type SuruUI = {
@@ -181,6 +179,8 @@ export namespace TextFieldRootProps {
      */
     variant?: TextFieldRootVariant | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -263,11 +263,11 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = TextFieldRootProps.HTML;
-
     export type Render = TextFieldRootProps.Render;
 
     export type SuruUI = TextFieldRootProps.SuruUI;
+
+    export type HTML = TextFieldRootProps.HTML;
   }
 
   export type Color = TextFieldRootColor;
@@ -306,13 +306,6 @@ export type TextFieldInputType = Exclude<
 export type TextFieldInputState = BaseInput.State;
 
 export namespace TextFieldInputProps {
-  export type BaseUI = Omit<
-    Omit<React.ComponentProps<typeof BaseInput>, "type">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"input">
-  >;
-
-  export type HTML = Omit<React.ComponentProps<"input">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<TextFieldInputState>;
 
   export type SuruUI = {
@@ -323,6 +316,13 @@ export namespace TextFieldInputProps {
      */
     type?: TextFieldInputType | undefined;
   };
+
+  export type BaseUI = Omit<
+    Omit<React.ComponentProps<typeof BaseInput>, "type">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"input">
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"input">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -363,13 +363,13 @@ export namespace Input {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = TextFieldInputProps.BaseUI;
-
-    export type HTML = TextFieldInputProps.HTML;
-
     export type Render = TextFieldInputProps.Render;
 
     export type SuruUI = TextFieldInputProps.SuruUI;
+
+    export type BaseUI = TextFieldInputProps.BaseUI;
+
+    export type HTML = TextFieldInputProps.HTML;
   }
 
   export type ChangeEventDetails = TextFieldInputChangeEventDetails;
@@ -388,8 +388,6 @@ export namespace Input {
 export type TextFieldAddonState = {};
 
 export namespace TextFieldAddonProps {
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<TextFieldAddonState>;
 
   export type SuruUI = {
@@ -400,6 +398,8 @@ export namespace TextFieldAddonProps {
      */
     disableFocusOnClick?: boolean | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -437,10 +437,10 @@ export namespace Addon {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = TextFieldAddonProps.HTML;
-
     export type Render = TextFieldAddonProps.Render;
 
     export type SuruUI = TextFieldAddonProps.SuruUI;
+
+    export type HTML = TextFieldAddonProps.HTML;
   }
 }

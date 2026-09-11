@@ -128,8 +128,6 @@ export type AvatarGroupRootSize = Size;
 export type AvatarGroupRootState = {};
 
 export namespace AvatarGroupRootProps {
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<AvatarGroupRootState>;
 
   export type SuruUI = {
@@ -167,6 +165,8 @@ export namespace AvatarGroupRootProps {
      */
     size?: AvatarGroupRootSize | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -239,11 +239,11 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = AvatarGroupRootProps.HTML;
-
     export type Render = AvatarGroupRootProps.Render;
 
     export type SuruUI = AvatarGroupRootProps.SuruUI;
+
+    export type HTML = AvatarGroupRootProps.HTML;
   }
 
   export type Color = AvatarGroupRootColor;
@@ -262,13 +262,13 @@ export namespace Root {
 export type AvatarGroupSurplusState = AvatarRootState;
 
 export namespace AvatarGroupSurplusProps {
-  export type BaseUI = Omit<AvatarRootProps, keyof Render>;
-
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof AvatarRootProps>;
-
   export type Render = RenderProps<AvatarGroupSurplusState>;
 
   export type SuruUI = {};
+
+  export type BaseUI = Omit<AvatarRootProps, keyof Render>;
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof AvatarRootProps>;
 }
 
 /**
@@ -297,12 +297,12 @@ export namespace Surplus {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AvatarGroupSurplusProps.BaseUI;
-
-    export type HTML = AvatarGroupSurplusProps.HTML;
-
     export type Render = AvatarGroupSurplusProps.Render;
 
     export type SuruUI = AvatarGroupSurplusProps.SuruUI;
+
+    export type BaseUI = AvatarGroupSurplusProps.BaseUI;
+
+    export type HTML = AvatarGroupSurplusProps.HTML;
   }
 }

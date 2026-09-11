@@ -178,13 +178,6 @@ export type RadioGroupRootVariant = RadioRootVariant;
 export type RadioGroupRootState = RadioGroup.State;
 
 export namespace RadioGroupRootProps {
-  export type BaseUI = Omit<React.ComponentProps<typeof RadioGroup>, keyof Render | keyof SuruUI>;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof RadioGroup>
-  >;
-
   export type Render = RenderProps<RadioGroupRootState>;
 
   export type SuruUI = {
@@ -240,6 +233,13 @@ export namespace RadioGroupRootProps {
      */
     variant?: RadioGroupRootVariant | undefined;
   };
+
+  export type BaseUI = Omit<React.ComponentProps<typeof RadioGroup>, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof RadioGroup>
+  >;
 }
 
 /**
@@ -304,13 +304,13 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = RadioGroupRootProps.BaseUI;
-
-    export type HTML = RadioGroupRootProps.HTML;
-
     export type Render = RadioGroupRootProps.Render;
 
     export type SuruUI = RadioGroupRootProps.SuruUI;
+
+    export type BaseUI = RadioGroupRootProps.BaseUI;
+
+    export type HTML = RadioGroupRootProps.HTML;
   }
 
   export type ChangeEventDetails = RadioGroupRootChangeEventDetails;

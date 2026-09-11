@@ -163,16 +163,6 @@ export type NumberFieldRootVariant = "naked" | "liquid";
 export type NumberFieldRootState = NumberField.Root.State;
 
 export namespace NumberFieldRootProps {
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof NumberField.Root>,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof NumberField.Root>
-  >;
-
   export type Render = RenderProps<NumberFieldRootState>;
 
   export type SuruUI = {
@@ -211,6 +201,16 @@ export namespace NumberFieldRootProps {
      */
     variant?: NumberFieldRootVariant | undefined;
   };
+
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof NumberField.Root>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof NumberField.Root>
+  >;
 }
 
 /**
@@ -279,13 +279,13 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = NumberFieldRootProps.BaseUI;
-
-    export type HTML = NumberFieldRootProps.HTML;
-
     export type Render = NumberFieldRootProps.Render;
 
     export type SuruUI = NumberFieldRootProps.SuruUI;
+
+    export type BaseUI = NumberFieldRootProps.BaseUI;
+
+    export type HTML = NumberFieldRootProps.HTML;
   }
 
   export type ChangeEventDetails = NumberFieldRootChangeEventDetails;
@@ -314,16 +314,16 @@ export namespace Root {
 export type NumberFieldScrubAreaState = NumberField.ScrubArea.State;
 
 export namespace NumberFieldScrubAreaProps {
+  export type Render = RenderProps<NumberFieldScrubAreaState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof NumberField.ScrubArea>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
     keyof Render | keyof React.ComponentProps<typeof NumberField.ScrubArea>
   >;
-
-  export type Render = RenderProps<NumberFieldScrubAreaState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -357,13 +357,13 @@ export namespace ScrubArea {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = NumberFieldScrubAreaProps.BaseUI;
-
-    export type HTML = NumberFieldScrubAreaProps.HTML;
-
     export type Render = NumberFieldScrubAreaProps.Render;
 
     export type SuruUI = NumberFieldScrubAreaProps.SuruUI;
+
+    export type BaseUI = NumberFieldScrubAreaProps.BaseUI;
+
+    export type HTML = NumberFieldScrubAreaProps.HTML;
   }
 }
 
@@ -376,16 +376,16 @@ export namespace ScrubArea {
 export type NumberFieldScrubAreaCursorState = NumberField.ScrubAreaCursor.State;
 
 export namespace NumberFieldScrubAreaCursorProps {
+  export type Render = RenderProps<NumberFieldScrubAreaCursorState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof NumberField.ScrubAreaCursor>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
     keyof Render | keyof React.ComponentProps<typeof NumberField.ScrubAreaCursor>
   >;
-
-  export type Render = RenderProps<NumberFieldScrubAreaCursorState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -419,13 +419,13 @@ export namespace ScrubAreaCursor {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = NumberFieldScrubAreaCursorProps.BaseUI;
-
-    export type HTML = NumberFieldScrubAreaCursorProps.HTML;
-
     export type Render = NumberFieldScrubAreaCursorProps.Render;
 
     export type SuruUI = NumberFieldScrubAreaCursorProps.SuruUI;
+
+    export type BaseUI = NumberFieldScrubAreaCursorProps.BaseUI;
+
+    export type HTML = NumberFieldScrubAreaCursorProps.HTML;
   }
 }
 
@@ -438,16 +438,16 @@ export namespace ScrubAreaCursor {
 export type NumberFieldGroupState = NumberField.Group.State;
 
 export namespace NumberFieldGroupProps {
+  export type Render = RenderProps<NumberFieldGroupState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof NumberField.Group>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof NumberField.Group>
   >;
-
-  export type Render = RenderProps<NumberFieldGroupState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -503,13 +503,13 @@ export namespace Group {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = NumberFieldGroupProps.BaseUI;
-
-    export type HTML = NumberFieldGroupProps.HTML;
-
     export type Render = NumberFieldGroupProps.Render;
 
     export type SuruUI = NumberFieldGroupProps.SuruUI;
+
+    export type BaseUI = NumberFieldGroupProps.BaseUI;
+
+    export type HTML = NumberFieldGroupProps.HTML;
   }
 }
 
@@ -522,16 +522,16 @@ export namespace Group {
 export type NumberFieldInputState = NumberField.Input.State;
 
 export namespace NumberFieldInputProps {
+  export type Render = RenderProps<NumberFieldInputState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof NumberField.Input>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"input">,
     keyof Render | keyof React.ComponentProps<typeof NumberField.Input>
   >;
-
-  export type Render = RenderProps<NumberFieldInputState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -572,13 +572,13 @@ export namespace Input {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = NumberFieldInputProps.BaseUI;
-
-    export type HTML = NumberFieldInputProps.HTML;
-
     export type Render = NumberFieldInputProps.Render;
 
     export type SuruUI = NumberFieldInputProps.SuruUI;
+
+    export type BaseUI = NumberFieldInputProps.BaseUI;
+
+    export type HTML = NumberFieldInputProps.HTML;
   }
 }
 
@@ -591,8 +591,6 @@ export namespace Input {
 export type NumberFieldAddonState = {};
 
 export namespace NumberFieldAddonProps {
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<NumberFieldAddonState>;
 
   export type SuruUI = {
@@ -603,6 +601,8 @@ export namespace NumberFieldAddonProps {
      */
     disableFocusOnClick?: boolean | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -642,11 +642,11 @@ export namespace Addon {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = NumberFieldAddonProps.HTML;
-
     export type Render = NumberFieldAddonProps.Render;
 
     export type SuruUI = NumberFieldAddonProps.SuruUI;
+
+    export type HTML = NumberFieldAddonProps.HTML;
   }
 }
 
@@ -659,16 +659,16 @@ export namespace Addon {
 export type NumberFieldDecrementState = NumberField.Decrement.State;
 
 export namespace NumberFieldDecrementProps {
+  export type Render = RenderProps<NumberFieldDecrementState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof NumberField.Decrement>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
     keyof Render | keyof React.ComponentProps<typeof NumberField.Decrement>
   >;
-
-  export type Render = RenderProps<NumberFieldDecrementState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -704,13 +704,13 @@ export namespace Decrement {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = NumberFieldDecrementProps.BaseUI;
-
-    export type HTML = NumberFieldDecrementProps.HTML;
-
     export type Render = NumberFieldDecrementProps.Render;
 
     export type SuruUI = NumberFieldDecrementProps.SuruUI;
+
+    export type BaseUI = NumberFieldDecrementProps.BaseUI;
+
+    export type HTML = NumberFieldDecrementProps.HTML;
   }
 }
 
@@ -723,16 +723,16 @@ export namespace Decrement {
 export type NumberFieldIncrementState = NumberField.Increment.State;
 
 export namespace NumberFieldIncrementProps {
+  export type Render = RenderProps<NumberFieldIncrementState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof NumberField.Increment>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
     keyof Render | keyof React.ComponentProps<typeof NumberField.Increment>
   >;
-
-  export type Render = RenderProps<NumberFieldIncrementState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -768,12 +768,12 @@ export namespace Increment {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = NumberFieldIncrementProps.BaseUI;
-
-    export type HTML = NumberFieldIncrementProps.HTML;
-
     export type Render = NumberFieldIncrementProps.Render;
 
     export type SuruUI = NumberFieldIncrementProps.SuruUI;
+
+    export type BaseUI = NumberFieldIncrementProps.BaseUI;
+
+    export type HTML = NumberFieldIncrementProps.HTML;
   }
 }

@@ -35,8 +35,8 @@ describe("sortNamespaceExports", () => {
       "export namespace Root {",
       "  export type State = RootState;",
       "  export type Props = RootProps;",
-      "  export type Context = RootContext;",
       "  export type SlotProps = RootSlotProps;",
+      "  export type Context = RootContext;",
       "}",
       "",
     ].join("\n");
@@ -149,8 +149,8 @@ describe("sortNamespaceExports", () => {
       "  export type State = RootState;",
       "  export type Props = RootProps;",
       "  export namespace Props {",
-      "    export type HTML = RootProps.HTML;",
       "    export type Render = RootProps.Render;",
+      "    export type HTML = RootProps.HTML;",
       "  }",
       "  export type Color = RootColor;",
       "}",
@@ -234,5 +234,103 @@ describe("sortNamespaceExports", () => {
   it("名前空間以外の型は対象外", () => {
     const source = ["type Props = RootProps;", "type State = RootState;", ""].join("\n");
     expect(sortNamespaceExports(source)).toBe(source);
+  });
+
+  it("指定した名前空間では固有の固定名を名前順より先に並べる", () => {
+    const source = [
+      "export namespace Props {",
+      "  export type SuruUI = RootProps.SuruUI;",
+      "  export type HTML = RootProps.HTML;",
+      "  export type Render = RootProps.Render;",
+      "  export type BaseUI = RootProps.BaseUI;",
+      "}",
+      "",
+    ].join("\n");
+    const expected = [
+      "export namespace Props {",
+      "  export type Render = RootProps.Render;",
+      "  export type SuruUI = RootProps.SuruUI;",
+      "  export type BaseUI = RootProps.BaseUI;",
+      "  export type HTML = RootProps.HTML;",
+      "}",
+      "",
+    ].join("\n");
+    expect(
+      sortNamespaceExports(source, {
+        namespaceFixedOrders: [{ namespace: "Props", names: ["Render", "SuruUI"] }],
+      }),
+    ).toBe(expected);
+  });
+
+  it("指定に一致しない名前空間には固有の固定名を適用しない", () => {
+    const source = [
+      "export namespace Root {",
+      "  export type SuruUI = RootSuruUI;",
+      "  export type Render = RootRender;",
+      "  export type Props = RootProps;",
+      "  export type State = RootState;",
+      "}",
+      "",
+    ].join("\n");
+    const expected = [
+      "export namespace Root {",
+      "  export type State = RootState;",
+      "  export type Props = RootProps;",
+      "  export type Render = RootRender;",
+      "  export type SuruUI = RootSuruUI;",
+      "}",
+      "",
+    ].join("\n");
+    expect(
+      sortNamespaceExports(source, {
+        namespaceFixedOrders: [{ namespace: "Props", names: ["Render", "SuruUI"] }],
+      }),
+    ).toBe(expected);
+  });
+
+  it("名前空間の指定に正規表現を使える", () => {
+    const source = [
+      "export namespace ListProps {",
+      "  export type Size = ListSize;",
+      "  export type Render = ListRender;",
+      "}",
+      "",
+    ].join("\n");
+    const expected = [
+      "export namespace ListProps {",
+      "  export type Render = ListRender;",
+      "  export type Size = ListSize;",
+      "}",
+      "",
+    ].join("\n");
+    expect(
+      sortNamespaceExports(source, {
+        namespaceFixedOrders: [{ namespace: /Props$/, names: ["Render"] }],
+      }),
+    ).toBe(expected);
+  });
+
+  it("固有の固定名の後に全体の固定名を並べる", () => {
+    const source = [
+      "export namespace Props {",
+      "  export type BaseUI = RootProps.BaseUI;",
+      "  export type State = RootState;",
+      "  export type SuruUI = RootProps.SuruUI;",
+      "}",
+      "",
+    ].join("\n");
+    const expected = [
+      "export namespace Props {",
+      "  export type SuruUI = RootProps.SuruUI;",
+      "  export type State = RootState;",
+      "  export type BaseUI = RootProps.BaseUI;",
+      "}",
+      "",
+    ].join("\n");
+    expect(
+      sortNamespaceExports(source, {
+        namespaceFixedOrders: [{ namespace: "Props", names: ["SuruUI"] }],
+      }),
+    ).toBe(expected);
   });
 });

@@ -48,6 +48,10 @@ export type FormRootValues<TValues extends Record<string, any> = Record<string, 
 export type FormRootState = Form.State;
 
 export namespace FormRootProps {
+  export type Render = RenderProps<FormRootState>;
+
+  export type SuruUI = {};
+
   export type BaseUI<TValues extends FormRootValues = FormRootValues> = Omit<
     React.ComponentProps<typeof Form<TValues>>,
     keyof Render
@@ -57,10 +61,6 @@ export namespace FormRootProps {
     React.ComponentProps<"form">,
     keyof Render | keyof React.ComponentProps<typeof Form<any>>
   >;
-
-  export type Render = RenderProps<FormRootState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -107,14 +107,14 @@ export namespace Root {
     Props.HTML;
 
   export namespace Props {
+    export type Render = FormRootProps.Render;
+
+    export type SuruUI = FormRootProps.SuruUI;
+
     export type BaseUI<TValues extends FormRootValues = FormRootValues> =
       FormRootProps.BaseUI<TValues>;
 
     export type HTML = FormRootProps.HTML;
-
-    export type Render = FormRootProps.Render;
-
-    export type SuruUI = FormRootProps.SuruUI;
   }
 
   export type Actions = FormRootActions;

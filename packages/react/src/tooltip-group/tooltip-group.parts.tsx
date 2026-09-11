@@ -13,16 +13,16 @@ import type { IComponent } from "../types.js";
 export type TooltipGroupRootState = Tooltip.Provider.State;
 
 export namespace TooltipGroupRootProps {
+  export type Render = RenderProps<TooltipGroupRootState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     Tooltip.Provider.Props,
     keyof Render | keyof React.ComponentProps<"div">
   >;
 
   export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
-
-  export type Render = RenderProps<TooltipGroupRootState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -52,12 +52,12 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = TooltipGroupRootProps.BaseUI;
-
-    export type HTML = TooltipGroupRootProps.HTML;
-
     export type Render = TooltipGroupRootProps.Render;
 
     export type SuruUI = TooltipGroupRootProps.SuruUI;
+
+    export type BaseUI = TooltipGroupRootProps.BaseUI;
+
+    export type HTML = TooltipGroupRootProps.HTML;
   }
 }

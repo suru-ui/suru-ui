@@ -178,16 +178,6 @@ export type CheckboxGroupRootVariant = "naked" | "liquid";
 export type CheckboxGroupRootState = CheckboxGroup.State;
 
 export namespace CheckboxGroupRootProps {
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof CheckboxGroup>,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof CheckboxGroup>
-  >;
-
   export type Render = RenderProps<CheckboxGroupRootState>;
 
   export type SuruUI = {
@@ -241,6 +231,16 @@ export namespace CheckboxGroupRootProps {
      */
     variant?: CheckboxGroupRootVariant | undefined;
   };
+
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof CheckboxGroup>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof CheckboxGroup>
+  >;
 }
 
 /**
@@ -307,13 +307,13 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = CheckboxGroupRootProps.BaseUI;
-
-    export type HTML = CheckboxGroupRootProps.HTML;
-
     export type Render = CheckboxGroupRootProps.Render;
 
     export type SuruUI = CheckboxGroupRootProps.SuruUI;
+
+    export type BaseUI = CheckboxGroupRootProps.BaseUI;
+
+    export type HTML = CheckboxGroupRootProps.HTML;
   }
 
   export type ChangeEventDetails = CheckboxGroupRootChangeEventDetails;

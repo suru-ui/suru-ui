@@ -59,13 +59,6 @@ export type TextareaRootVariant = "naked" | "liquid";
 export type TextareaRootState = Input.State;
 
 export namespace TextareaRootProps {
-  export type BaseUI = Omit<
-    Omit<React.ComponentProps<typeof Input>, "children" | "type">,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<React.ComponentProps<"textarea">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<TextareaRootState>;
 
   export type SuruUI = {
@@ -109,6 +102,13 @@ export namespace TextareaRootProps {
      */
     variant?: TextareaRootVariant | undefined;
   };
+
+  export type BaseUI = Omit<
+    Omit<React.ComponentProps<typeof Input>, "children" | "type">,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"textarea">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -165,13 +165,13 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = TextareaRootProps.BaseUI;
-
-    export type HTML = TextareaRootProps.HTML;
-
     export type Render = TextareaRootProps.Render;
 
     export type SuruUI = TextareaRootProps.SuruUI;
+
+    export type BaseUI = TextareaRootProps.BaseUI;
+
+    export type HTML = TextareaRootProps.HTML;
   }
 
   export type ChangeEventDetails = TextareaRootChangeEventDetails;

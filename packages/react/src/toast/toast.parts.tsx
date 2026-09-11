@@ -15,13 +15,13 @@ import "./toast.css";
 // --------
 
 export namespace ToastProviderProps {
-  export type BaseUI = Omit<React.ComponentProps<typeof Toast.Provider>, keyof Render>;
-
-  export type HTML = {};
-
   export type Render = RenderProps<{}>;
 
   export type SuruUI = {};
+
+  export type BaseUI = Omit<React.ComponentProps<typeof Toast.Provider>, keyof Render>;
+
+  export type HTML = {};
 }
 
 /**
@@ -45,13 +45,13 @@ export namespace Provider {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ToastProviderProps.BaseUI;
-
-    export type HTML = ToastProviderProps.HTML;
-
     export type Render = ToastProviderProps.Render;
 
     export type SuruUI = ToastProviderProps.SuruUI;
+
+    export type BaseUI = ToastProviderProps.BaseUI;
+
+    export type HTML = ToastProviderProps.HTML;
   }
 }
 
@@ -64,16 +64,16 @@ export namespace Provider {
 export type ToastPortalState = Toast.Portal.State;
 
 export namespace ToastPortalProps {
+  export type Render = RenderProps<ToastPortalState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     React.ComponentProps<typeof Toast.Portal>,
     keyof Render | keyof React.ComponentProps<"div">
   >;
 
   export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
-
-  export type Render = RenderProps<ToastPortalState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -114,13 +114,13 @@ export namespace Portal {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ToastPortalProps.BaseUI;
-
-    export type HTML = ToastPortalProps.HTML;
-
     export type Render = ToastPortalProps.Render;
 
     export type SuruUI = ToastPortalProps.SuruUI;
+
+    export type BaseUI = ToastPortalProps.BaseUI;
+
+    export type HTML = ToastPortalProps.HTML;
   }
 }
 
@@ -133,16 +133,16 @@ export namespace Portal {
 export type ToastViewportState = Toast.Viewport.State;
 
 export namespace ToastViewportProps {
+  export type Render = RenderProps<ToastViewportState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     React.ComponentProps<typeof Toast.Viewport>,
     keyof Render | keyof React.ComponentProps<"div">
   >;
 
   export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
-
-  export type Render = RenderProps<ToastViewportState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -179,13 +179,13 @@ export namespace Viewport {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ToastViewportProps.BaseUI;
-
-    export type HTML = ToastViewportProps.HTML;
-
     export type Render = ToastViewportProps.Render;
 
     export type SuruUI = ToastViewportProps.SuruUI;
+
+    export type BaseUI = ToastViewportProps.BaseUI;
+
+    export type HTML = ToastViewportProps.HTML;
   }
 }
 
@@ -205,10 +205,6 @@ export type ToastRootToastObject<TData extends object = any> = Toast.Root.ToastO
 export type ToastRootState = Toast.Root.State;
 
 export namespace ToastRootProps {
-  export type BaseUI = Omit<React.ComponentProps<typeof Toast.Root>, keyof Render | keyof SuruUI>;
-
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<ToastRootState>;
 
   export type SuruUI<TData extends object = any> = {
@@ -217,6 +213,10 @@ export namespace ToastRootProps {
      */
     toast: ToastRootToastObject<TData>;
   };
+
+  export type BaseUI = Omit<React.ComponentProps<typeof Toast.Root>, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -280,13 +280,13 @@ export namespace Root {
     Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ToastRootProps.BaseUI;
-
-    export type HTML = ToastRootProps.HTML;
-
     export type Render = ToastRootProps.Render;
 
     export type SuruUI<TData extends object = any> = ToastRootProps.SuruUI<TData>;
+
+    export type BaseUI = ToastRootProps.BaseUI;
+
+    export type HTML = ToastRootProps.HTML;
   }
 
   export type ToastObject<TData extends object = any> = ToastRootToastObject<TData>;
@@ -309,6 +309,10 @@ export type ToastContentVariant = Alert.Root.Variant;
 export type ToastContentState = Override<Alert.Root.State, Toast.Content.State>;
 
 export namespace ToastContentProps {
+  export type Render = RenderProps<ToastContentState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     Override<
       Alert.Root.Props,
@@ -318,10 +322,6 @@ export namespace ToastContentProps {
   >;
 
   export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
-
-  export type Render = RenderProps<ToastContentState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -370,13 +370,13 @@ export namespace Content {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ToastContentProps.BaseUI;
-
-    export type HTML = ToastContentProps.HTML;
-
     export type Render = ToastContentProps.Render;
 
     export type SuruUI = ToastContentProps.SuruUI;
+
+    export type BaseUI = ToastContentProps.BaseUI;
+
+    export type HTML = ToastContentProps.HTML;
   }
 
   export type Color = ToastContentColor;
@@ -397,6 +397,10 @@ export namespace Content {
 export type ToastTitleState = Override<Alert.Title.State, Toast.Title.State>;
 
 export namespace ToastTitleProps {
+  export type Render = RenderProps<ToastTitleState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     Override<
       Alert.Title.Props,
@@ -406,10 +410,6 @@ export namespace ToastTitleProps {
   >;
 
   export type HTML = Omit<React.ComponentProps<"h2">, keyof Render>;
-
-  export type Render = RenderProps<ToastTitleState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -453,13 +453,13 @@ export namespace Title {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ToastTitleProps.BaseUI;
-
-    export type HTML = ToastTitleProps.HTML;
-
     export type Render = ToastTitleProps.Render;
 
     export type SuruUI = ToastTitleProps.SuruUI;
+
+    export type BaseUI = ToastTitleProps.BaseUI;
+
+    export type HTML = ToastTitleProps.HTML;
   }
 }
 
@@ -472,6 +472,10 @@ export namespace Title {
 export type ToastDescriptionState = Override<Alert.Content.State, Toast.Description.State>;
 
 export namespace ToastDescriptionProps {
+  export type Render = RenderProps<ToastDescriptionState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     Override<
       Alert.Content.Props,
@@ -481,10 +485,6 @@ export namespace ToastDescriptionProps {
   >;
 
   export type HTML = Omit<React.ComponentProps<"p">, keyof Render>;
-
-  export type Render = RenderProps<ToastDescriptionState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -530,13 +530,13 @@ export namespace Description {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ToastDescriptionProps.BaseUI;
-
-    export type HTML = ToastDescriptionProps.HTML;
-
     export type Render = ToastDescriptionProps.Render;
 
     export type SuruUI = ToastDescriptionProps.SuruUI;
+
+    export type BaseUI = ToastDescriptionProps.BaseUI;
+
+    export type HTML = ToastDescriptionProps.HTML;
   }
 }
 
@@ -549,13 +549,13 @@ export namespace Description {
 export type ToastActionsState = Alert.Actions.State;
 
 export namespace ToastActionsProps {
-  export type BaseUI = Omit<Alert.Actions.Props, keyof Render | keyof React.ComponentProps<"div">>;
-
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
-
   export type Render = RenderProps<ToastActionsState>;
 
   export type SuruUI = {};
+
+  export type BaseUI = Omit<Alert.Actions.Props, keyof Render | keyof React.ComponentProps<"div">>;
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
 }
 
 /**
@@ -581,13 +581,13 @@ export namespace Actions {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ToastActionsProps.BaseUI;
-
-    export type HTML = ToastActionsProps.HTML;
-
     export type Render = ToastActionsProps.Render;
 
     export type SuruUI = ToastActionsProps.SuruUI;
+
+    export type BaseUI = ToastActionsProps.BaseUI;
+
+    export type HTML = ToastActionsProps.HTML;
   }
 }
 
@@ -608,6 +608,13 @@ export type ToastActionVariant = Button.Root.Variant;
 export type ToastActionState = Override<Button.Root.State, Toast.Action.State>;
 
 export namespace ToastActionProps {
+  export type Render = RenderProps<ToastActionState>;
+
+  export type SuruUI = {
+    color?: ToastActionColor | undefined;
+    variant?: ToastActionVariant | undefined;
+  };
+
   export type BaseUI = Omit<
     Override<
       Button.ButtonRootProps,
@@ -617,13 +624,6 @@ export namespace ToastActionProps {
   >;
 
   export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
-
-  export type Render = RenderProps<ToastActionState>;
-
-  export type SuruUI = {
-    color?: ToastActionColor | undefined;
-    variant?: ToastActionVariant | undefined;
-  };
 }
 
 /**
@@ -681,13 +681,13 @@ export namespace Action {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ToastActionProps.BaseUI;
-
-    export type HTML = ToastActionProps.HTML;
-
     export type Render = ToastActionProps.Render;
 
     export type SuruUI = ToastActionProps.SuruUI;
+
+    export type BaseUI = ToastActionProps.BaseUI;
+
+    export type HTML = ToastActionProps.HTML;
   }
 
   export type Color = ToastActionColor;
@@ -716,6 +716,13 @@ export type ToastCloseVariant = Button.Root.Variant;
 export type ToastCloseState = Override<Button.Root.State, Toast.Close.State>;
 
 export namespace ToastCloseProps {
+  export type Render = RenderProps<ToastCloseState>;
+
+  export type SuruUI = {
+    color?: ToastCloseColor | undefined;
+    variant?: ToastCloseVariant | undefined;
+  };
+
   export type BaseUI = Omit<
     Override<
       Button.ButtonRootProps,
@@ -725,13 +732,6 @@ export namespace ToastCloseProps {
   >;
 
   export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
-
-  export type Render = RenderProps<ToastCloseState>;
-
-  export type SuruUI = {
-    color?: ToastCloseColor | undefined;
-    variant?: ToastCloseVariant | undefined;
-  };
 }
 
 /**
@@ -789,13 +789,13 @@ export namespace Close {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ToastCloseProps.BaseUI;
-
-    export type HTML = ToastCloseProps.HTML;
-
     export type Render = ToastCloseProps.Render;
 
     export type SuruUI = ToastCloseProps.SuruUI;
+
+    export type BaseUI = ToastCloseProps.BaseUI;
+
+    export type HTML = ToastCloseProps.HTML;
   }
 
   export type Color = ToastCloseColor;

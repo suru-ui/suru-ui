@@ -27,8 +27,6 @@ export type SkeletonRootRadius = "none" | Size | "full";
 export type SkeletonRootState = {};
 
 export namespace SkeletonRootProps {
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<SkeletonRootState>;
 
   export type SuruUI = {
@@ -46,6 +44,8 @@ export namespace SkeletonRootProps {
      */
     radius?: SkeletonRootRadius | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -93,11 +93,11 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = SkeletonRootProps.HTML;
-
     export type Render = SkeletonRootProps.Render;
 
     export type SuruUI = SkeletonRootProps.SuruUI;
+
+    export type HTML = SkeletonRootProps.HTML;
   }
 
   export type Radius = SkeletonRootRadius;

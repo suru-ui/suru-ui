@@ -50,8 +50,6 @@ export type ChipRootVariant = ColorTemplate;
 export type ChipRootState = {};
 
 export namespace ChipRootProps {
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<ChipRootState>;
 
   export type SuruUI = {
@@ -90,6 +88,8 @@ export namespace ChipRootProps {
      */
     variant?: ChipRootVariant | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -141,11 +141,11 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = ChipRootProps.HTML;
-
     export type Render = ChipRootProps.Render;
 
     export type SuruUI = ChipRootProps.SuruUI;
+
+    export type HTML = ChipRootProps.HTML;
   }
 
   export type Color = ChipRootColor;

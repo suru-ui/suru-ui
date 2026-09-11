@@ -112,8 +112,6 @@ export type ListRootSize = Size;
 export type ListRootState = {};
 
 export namespace ListRootProps {
-  export type HTML = Omit<React.ComponentProps<"ul">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<ListRootState>;
 
   export type SuruUI<TItem = any> = {
@@ -147,6 +145,8 @@ export namespace ListRootProps {
      */
     size?: ListRootSize | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"ul">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -224,11 +224,11 @@ export namespace Root {
   export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.HTML;
 
   export namespace Props {
-    export type HTML = ListRootProps.HTML;
-
     export type Render = ListRootProps.Render;
 
     export type SuruUI<TItem = any> = ListRootProps.SuruUI<TItem>;
+
+    export type HTML = ListRootProps.HTML;
   }
 
   export type ItemObject = ListRootItemObject;
@@ -256,8 +256,6 @@ export type ListItemSize = Size;
 export type ListItemState = {};
 
 export namespace ListItemProps {
-  export type HTML = Omit<React.ComponentProps<"li">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<ListItemState>;
 
   export type SuruUI = {
@@ -275,6 +273,8 @@ export namespace ListItemProps {
      */
     size?: ListItemSize | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"li">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -313,11 +313,11 @@ export namespace Item {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = ListItemProps.HTML;
-
     export type Render = ListItemProps.Render;
 
     export type SuruUI = ListItemProps.SuruUI;
+
+    export type HTML = ListItemProps.HTML;
   }
 
   export type Size = ListItemSize;
@@ -332,11 +332,11 @@ export namespace Item {
 export type ListItemIndicatorState = {};
 
 export namespace ListItemIndicatorProps {
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
-
   export type Render = RenderProps<ListItemIndicatorState>;
 
   export type SuruUI = {};
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
 }
 
 /**
@@ -371,10 +371,10 @@ export namespace Indicator {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = ListItemIndicatorProps.HTML;
-
     export type Render = ListItemIndicatorProps.Render;
 
     export type SuruUI = ListItemIndicatorProps.SuruUI;
+
+    export type HTML = ListItemIndicatorProps.HTML;
   }
 }

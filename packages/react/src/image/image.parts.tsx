@@ -38,8 +38,6 @@ export type ImageRootRadius = "none" | Size | "full";
 export type ImageRootState = {};
 
 export namespace ImageRootProps {
-  export type HTML = Omit<React.ComponentProps<"img">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<ImageRootState>;
 
   export type SuruUI = {
@@ -57,6 +55,8 @@ export namespace ImageRootProps {
      */
     radius?: ImageRootRadius | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"img">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -100,11 +100,11 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = ImageRootProps.HTML;
-
     export type Render = ImageRootProps.Render;
 
     export type SuruUI = ImageRootProps.SuruUI;
+
+    export type HTML = ImageRootProps.HTML;
   }
 
   export type Fit = ImageRootFit;

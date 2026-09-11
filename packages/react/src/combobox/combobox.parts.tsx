@@ -185,13 +185,6 @@ export type ComboboxRootVariant = "naked" | "liquid";
 export type ComboboxRootState = Combobox.Root.State;
 
 export namespace ComboboxRootProps {
-  export type BaseUI<TValue = unknown, TMultiple extends boolean | undefined = false> = Omit<
-    Combobox.Root.Props<TValue, TMultiple>,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<ComboboxRootState>;
 
   export type SuruUI<TValue = unknown> = {
@@ -237,6 +230,13 @@ export namespace ComboboxRootProps {
      */
     variant?: ComboboxRootVariant | undefined;
   };
+
+  export type BaseUI<TValue = unknown, TMultiple extends boolean | undefined = false> = Omit<
+    Combobox.Root.Props<TValue, TMultiple>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -313,16 +313,16 @@ export namespace Root {
   > = Props.Render & Props.SuruUI<TValue> & Props.BaseUI<TValue, TMultiple> & Props.HTML;
 
   export namespace Props {
+    export type Render = ComboboxRootProps.Render;
+
+    export type SuruUI<TValue = unknown> = ComboboxRootProps.SuruUI<TValue>;
+
     export type BaseUI<
       TValue = unknown,
       TMultiple extends boolean | undefined = false,
     > = ComboboxRootProps.BaseUI<TValue, TMultiple>;
 
     export type HTML = ComboboxRootProps.HTML;
-
-    export type Render = ComboboxRootProps.Render;
-
-    export type SuruUI<TValue = unknown> = ComboboxRootProps.SuruUI<TValue>;
   }
 
   export type Actions = ComboboxRootActions;
@@ -355,16 +355,16 @@ export namespace Root {
 export type ComboboxLabelState = Combobox.Label.State;
 
 export namespace ComboboxLabelProps {
+  export type Render = RenderProps<ComboboxLabelState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Label>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.Label>
   >;
-
-  export type Render = RenderProps<ComboboxLabelState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -395,13 +395,13 @@ export namespace Label {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxLabelProps.BaseUI;
-
-    export type HTML = ComboboxLabelProps.HTML;
-
     export type Render = ComboboxLabelProps.Render;
 
     export type SuruUI = ComboboxLabelProps.SuruUI;
+
+    export type BaseUI = ComboboxLabelProps.BaseUI;
+
+    export type HTML = ComboboxLabelProps.HTML;
   }
 }
 
@@ -414,16 +414,16 @@ export namespace Label {
 export type ComboboxInputGroupState = Combobox.InputGroup.State;
 
 export namespace ComboboxInputGroupProps {
+  export type Render = RenderProps<ComboboxInputGroupState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.InputGroup>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.InputGroup>
   >;
-
-  export type Render = RenderProps<ComboboxInputGroupState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -479,13 +479,13 @@ export namespace InputGroup {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxInputGroupProps.BaseUI;
-
-    export type HTML = ComboboxInputGroupProps.HTML;
-
     export type Render = ComboboxInputGroupProps.Render;
 
     export type SuruUI = ComboboxInputGroupProps.SuruUI;
+
+    export type BaseUI = ComboboxInputGroupProps.BaseUI;
+
+    export type HTML = ComboboxInputGroupProps.HTML;
   }
 }
 
@@ -498,16 +498,16 @@ export namespace InputGroup {
 export type ComboboxValueState = Combobox.Value.State;
 
 export namespace ComboboxValueProps {
+  export type Render = RenderProps<ComboboxValueState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Value>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.Value>
   >;
-
-  export type Render = RenderProps<ComboboxValueState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -536,13 +536,13 @@ export namespace Value {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxValueProps.BaseUI;
-
-    export type HTML = ComboboxValueProps.HTML;
-
     export type Render = ComboboxValueProps.Render;
 
     export type SuruUI = ComboboxValueProps.SuruUI;
+
+    export type BaseUI = ComboboxValueProps.BaseUI;
+
+    export type HTML = ComboboxValueProps.HTML;
   }
 }
 
@@ -555,16 +555,16 @@ export namespace Value {
 export type ComboboxInputState = Combobox.Input.State;
 
 export namespace ComboboxInputProps {
+  export type Render = RenderProps<ComboboxInputState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Input>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"input">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.Input>
   >;
-
-  export type Render = RenderProps<ComboboxInputState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -595,13 +595,13 @@ export namespace Input {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxInputProps.BaseUI;
-
-    export type HTML = ComboboxInputProps.HTML;
-
     export type Render = ComboboxInputProps.Render;
 
     export type SuruUI = ComboboxInputProps.SuruUI;
+
+    export type BaseUI = ComboboxInputProps.BaseUI;
+
+    export type HTML = ComboboxInputProps.HTML;
   }
 }
 
@@ -614,16 +614,16 @@ export namespace Input {
 export type ComboboxTriggerState = Combobox.Trigger.State;
 
 export namespace ComboboxTriggerProps {
+  export type Render = RenderProps<ComboboxTriggerState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Trigger>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.Trigger>
   >;
-
-  export type Render = RenderProps<ComboboxTriggerState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -665,13 +665,13 @@ export namespace Trigger {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxTriggerProps.BaseUI;
-
-    export type HTML = ComboboxTriggerProps.HTML;
-
     export type Render = ComboboxTriggerProps.Render;
 
     export type SuruUI = ComboboxTriggerProps.SuruUI;
+
+    export type BaseUI = ComboboxTriggerProps.BaseUI;
+
+    export type HTML = ComboboxTriggerProps.HTML;
   }
 }
 
@@ -684,16 +684,16 @@ export namespace Trigger {
 export type ComboboxIconState = Combobox.Icon.State;
 
 export namespace ComboboxIconProps {
+  export type Render = RenderProps<ComboboxIconState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Icon>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.Icon>
   >;
-
-  export type Render = RenderProps<ComboboxIconState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -724,13 +724,13 @@ export namespace Icon {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxIconProps.BaseUI;
-
-    export type HTML = ComboboxIconProps.HTML;
-
     export type Render = ComboboxIconProps.Render;
 
     export type SuruUI = ComboboxIconProps.SuruUI;
+
+    export type BaseUI = ComboboxIconProps.BaseUI;
+
+    export type HTML = ComboboxIconProps.HTML;
   }
 }
 
@@ -743,16 +743,16 @@ export namespace Icon {
 export type ComboboxClearState = Combobox.Clear.State;
 
 export namespace ComboboxClearProps {
+  export type Render = RenderProps<ComboboxClearState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Clear>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.Clear>
   >;
-
-  export type Render = RenderProps<ComboboxClearState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -792,13 +792,13 @@ export namespace Clear {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxClearProps.BaseUI;
-
-    export type HTML = ComboboxClearProps.HTML;
-
     export type Render = ComboboxClearProps.Render;
 
     export type SuruUI = ComboboxClearProps.SuruUI;
+
+    export type BaseUI = ComboboxClearProps.BaseUI;
+
+    export type HTML = ComboboxClearProps.HTML;
   }
 }
 
@@ -811,16 +811,16 @@ export namespace Clear {
 export type ComboboxChipsState = Combobox.Chips.State;
 
 export namespace ComboboxChipsProps {
+  export type Render = RenderProps<ComboboxChipsState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Chips>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.Chips>
   >;
-
-  export type Render = RenderProps<ComboboxChipsState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -851,13 +851,13 @@ export namespace Chips {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxChipsProps.BaseUI;
-
-    export type HTML = ComboboxChipsProps.HTML;
-
     export type Render = ComboboxChipsProps.Render;
 
     export type SuruUI = ComboboxChipsProps.SuruUI;
+
+    export type BaseUI = ComboboxChipsProps.BaseUI;
+
+    export type HTML = ComboboxChipsProps.HTML;
   }
 }
 
@@ -870,16 +870,16 @@ export namespace Chips {
 export type ComboboxChipState = Combobox.Chip.State;
 
 export namespace ComboboxChipProps {
+  export type Render = RenderProps<ComboboxChipState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Chip>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.Chip>
   >;
-
-  export type Render = RenderProps<ComboboxChipState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -910,13 +910,13 @@ export namespace Chip {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxChipProps.BaseUI;
-
-    export type HTML = ComboboxChipProps.HTML;
-
     export type Render = ComboboxChipProps.Render;
 
     export type SuruUI = ComboboxChipProps.SuruUI;
+
+    export type BaseUI = ComboboxChipProps.BaseUI;
+
+    export type HTML = ComboboxChipProps.HTML;
   }
 }
 
@@ -929,16 +929,16 @@ export namespace Chip {
 export type ComboboxChipRemoveState = Combobox.ChipRemove.State;
 
 export namespace ComboboxChipRemoveProps {
+  export type Render = RenderProps<ComboboxChipRemoveState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.ChipRemove>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.ChipRemove>
   >;
-
-  export type Render = RenderProps<ComboboxChipRemoveState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -979,13 +979,13 @@ export namespace ChipRemove {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxChipRemoveProps.BaseUI;
-
-    export type HTML = ComboboxChipRemoveProps.HTML;
-
     export type Render = ComboboxChipRemoveProps.Render;
 
     export type SuruUI = ComboboxChipRemoveProps.SuruUI;
+
+    export type BaseUI = ComboboxChipRemoveProps.BaseUI;
+
+    export type HTML = ComboboxChipRemoveProps.HTML;
   }
 }
 
@@ -998,16 +998,16 @@ export namespace ChipRemove {
 export type ComboboxListState = Combobox.List.State;
 
 export namespace ComboboxListProps {
+  export type Render = RenderProps<ComboboxListState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.List>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.List>
   >;
-
-  export type Render = RenderProps<ComboboxListState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1038,13 +1038,13 @@ export namespace List {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxListProps.BaseUI;
-
-    export type HTML = ComboboxListProps.HTML;
-
     export type Render = ComboboxListProps.Render;
 
     export type SuruUI = ComboboxListProps.SuruUI;
+
+    export type BaseUI = ComboboxListProps.BaseUI;
+
+    export type HTML = ComboboxListProps.HTML;
   }
 }
 
@@ -1057,16 +1057,16 @@ export namespace List {
 export type ComboboxStatusState = Combobox.Status.State;
 
 export namespace ComboboxStatusProps {
+  export type Render = RenderProps<ComboboxStatusState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Status>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.Status>
   >;
-
-  export type Render = RenderProps<ComboboxStatusState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1097,13 +1097,13 @@ export namespace Status {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxStatusProps.BaseUI;
-
-    export type HTML = ComboboxStatusProps.HTML;
-
     export type Render = ComboboxStatusProps.Render;
 
     export type SuruUI = ComboboxStatusProps.SuruUI;
+
+    export type BaseUI = ComboboxStatusProps.BaseUI;
+
+    export type HTML = ComboboxStatusProps.HTML;
   }
 }
 
@@ -1116,16 +1116,16 @@ export namespace Status {
 export type ComboboxPortalState = Combobox.Portal.State;
 
 export namespace ComboboxPortalProps {
+  export type Render = RenderProps<ComboboxPortalState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Portal>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.Portal>
   >;
-
-  export type Render = RenderProps<ComboboxPortalState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1175,13 +1175,13 @@ export namespace Portal {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxPortalProps.BaseUI;
-
-    export type HTML = ComboboxPortalProps.HTML;
-
     export type Render = ComboboxPortalProps.Render;
 
     export type SuruUI = ComboboxPortalProps.SuruUI;
+
+    export type BaseUI = ComboboxPortalProps.BaseUI;
+
+    export type HTML = ComboboxPortalProps.HTML;
   }
 }
 
@@ -1194,16 +1194,16 @@ export namespace Portal {
 export type ComboboxBackdropState = Combobox.Backdrop.State;
 
 export namespace ComboboxBackdropProps {
+  export type Render = RenderProps<ComboboxBackdropState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Backdrop>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.Backdrop>
   >;
-
-  export type Render = RenderProps<ComboboxBackdropState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1236,13 +1236,13 @@ export namespace Backdrop {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxBackdropProps.BaseUI;
-
-    export type HTML = ComboboxBackdropProps.HTML;
-
     export type Render = ComboboxBackdropProps.Render;
 
     export type SuruUI = ComboboxBackdropProps.SuruUI;
+
+    export type BaseUI = ComboboxBackdropProps.BaseUI;
+
+    export type HTML = ComboboxBackdropProps.HTML;
   }
 }
 
@@ -1255,16 +1255,16 @@ export namespace Backdrop {
 export type ComboboxPositionerState = Combobox.Positioner.State;
 
 export namespace ComboboxPositionerProps {
+  export type Render = RenderProps<ComboboxPositionerState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Positioner>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.Positioner>
   >;
-
-  export type Render = RenderProps<ComboboxPositionerState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1298,13 +1298,13 @@ export namespace Positioner {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxPositionerProps.BaseUI;
-
-    export type HTML = ComboboxPositionerProps.HTML;
-
     export type Render = ComboboxPositionerProps.Render;
 
     export type SuruUI = ComboboxPositionerProps.SuruUI;
+
+    export type BaseUI = ComboboxPositionerProps.BaseUI;
+
+    export type HTML = ComboboxPositionerProps.HTML;
   }
 }
 
@@ -1317,16 +1317,16 @@ export namespace Positioner {
 export type ComboboxPopupState = Combobox.Popup.State;
 
 export namespace ComboboxPopupProps {
+  export type Render = RenderProps<ComboboxPopupState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Popup>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.Popup>
   >;
-
-  export type Render = RenderProps<ComboboxPopupState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1357,13 +1357,13 @@ export namespace Popup {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxPopupProps.BaseUI;
-
-    export type HTML = ComboboxPopupProps.HTML;
-
     export type Render = ComboboxPopupProps.Render;
 
     export type SuruUI = ComboboxPopupProps.SuruUI;
+
+    export type BaseUI = ComboboxPopupProps.BaseUI;
+
+    export type HTML = ComboboxPopupProps.HTML;
   }
 }
 
@@ -1376,16 +1376,16 @@ export namespace Popup {
 export type ComboboxArrowState = Combobox.Arrow.State;
 
 export namespace ComboboxArrowProps {
+  export type Render = RenderProps<ComboboxArrowState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Arrow>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.Arrow>
   >;
-
-  export type Render = RenderProps<ComboboxArrowState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1416,13 +1416,13 @@ export namespace Arrow {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxArrowProps.BaseUI;
-
-    export type HTML = ComboboxArrowProps.HTML;
-
     export type Render = ComboboxArrowProps.Render;
 
     export type SuruUI = ComboboxArrowProps.SuruUI;
+
+    export type BaseUI = ComboboxArrowProps.BaseUI;
+
+    export type HTML = ComboboxArrowProps.HTML;
   }
 }
 
@@ -1435,16 +1435,16 @@ export namespace Arrow {
 export type ComboboxGroupState = Combobox.Group.State;
 
 export namespace ComboboxGroupProps {
+  export type Render = RenderProps<ComboboxGroupState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Group>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.Group>
   >;
-
-  export type Render = RenderProps<ComboboxGroupState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1475,13 +1475,13 @@ export namespace Group {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxGroupProps.BaseUI;
-
-    export type HTML = ComboboxGroupProps.HTML;
-
     export type Render = ComboboxGroupProps.Render;
 
     export type SuruUI = ComboboxGroupProps.SuruUI;
+
+    export type BaseUI = ComboboxGroupProps.BaseUI;
+
+    export type HTML = ComboboxGroupProps.HTML;
   }
 }
 
@@ -1494,16 +1494,16 @@ export namespace Group {
 export type ComboboxGroupLabelState = Combobox.GroupLabel.State;
 
 export namespace ComboboxGroupLabelProps {
+  export type Render = RenderProps<ComboboxGroupLabelState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.GroupLabel>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.GroupLabel>
   >;
-
-  export type Render = RenderProps<ComboboxGroupLabelState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1537,13 +1537,13 @@ export namespace GroupLabel {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxGroupLabelProps.BaseUI;
-
-    export type HTML = ComboboxGroupLabelProps.HTML;
-
     export type Render = ComboboxGroupLabelProps.Render;
 
     export type SuruUI = ComboboxGroupLabelProps.SuruUI;
+
+    export type BaseUI = ComboboxGroupLabelProps.BaseUI;
+
+    export type HTML = ComboboxGroupLabelProps.HTML;
   }
 }
 
@@ -1556,6 +1556,10 @@ export namespace GroupLabel {
 export type ComboboxItemState = Override<Button.Root.State, Combobox.Item.State>;
 
 export namespace ComboboxItemProps {
+  export type Render = RenderProps<ComboboxItemState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<
     Override<
       Button.ButtonRootProps,
@@ -1572,10 +1576,6 @@ export namespace ComboboxItemProps {
         Override<React.ComponentProps<typeof Combobox.Item>, RenderProps<ComboboxItemState>>
       >
   >;
-
-  export type Render = RenderProps<ComboboxItemState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1637,13 +1637,13 @@ export namespace Item {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxItemProps.BaseUI;
-
-    export type HTML = ComboboxItemProps.HTML;
-
     export type Render = ComboboxItemProps.Render;
 
     export type SuruUI = ComboboxItemProps.SuruUI;
+
+    export type BaseUI = ComboboxItemProps.BaseUI;
+
+    export type HTML = ComboboxItemProps.HTML;
   }
 }
 
@@ -1656,16 +1656,16 @@ export namespace Item {
 export type ComboboxItemIndicatorState = Combobox.ItemIndicator.State;
 
 export namespace ComboboxItemIndicatorProps {
+  export type Render = RenderProps<ComboboxItemIndicatorState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.ItemIndicator>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.ItemIndicator>
   >;
-
-  export type Render = RenderProps<ComboboxItemIndicatorState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1702,13 +1702,13 @@ export namespace ItemIndicator {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxItemIndicatorProps.BaseUI;
-
-    export type HTML = ComboboxItemIndicatorProps.HTML;
-
     export type Render = ComboboxItemIndicatorProps.Render;
 
     export type SuruUI = ComboboxItemIndicatorProps.SuruUI;
+
+    export type BaseUI = ComboboxItemIndicatorProps.BaseUI;
+
+    export type HTML = ComboboxItemIndicatorProps.HTML;
   }
 }
 
@@ -1721,16 +1721,16 @@ export namespace ItemIndicator {
 export type ComboboxRowState = Combobox.Row.State;
 
 export namespace ComboboxRowProps {
+  export type Render = RenderProps<ComboboxRowState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Row>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.Row>
   >;
-
-  export type Render = RenderProps<ComboboxRowState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1761,13 +1761,13 @@ export namespace Row {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxRowProps.BaseUI;
-
-    export type HTML = ComboboxRowProps.HTML;
-
     export type Render = ComboboxRowProps.Render;
 
     export type SuruUI = ComboboxRowProps.SuruUI;
+
+    export type BaseUI = ComboboxRowProps.BaseUI;
+
+    export type HTML = ComboboxRowProps.HTML;
   }
 }
 
@@ -1780,16 +1780,16 @@ export namespace Row {
 export type ComboboxCollectionState = Combobox.Collection.State;
 
 export namespace ComboboxCollectionProps {
+  export type Render = RenderProps<ComboboxCollectionState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Collection>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.Collection>
   >;
-
-  export type Render = RenderProps<ComboboxCollectionState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1821,13 +1821,13 @@ export namespace Collection {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxCollectionProps.BaseUI;
-
-    export type HTML = ComboboxCollectionProps.HTML;
-
     export type Render = ComboboxCollectionProps.Render;
 
     export type SuruUI = ComboboxCollectionProps.SuruUI;
+
+    export type BaseUI = ComboboxCollectionProps.BaseUI;
+
+    export type HTML = ComboboxCollectionProps.HTML;
   }
 }
 
@@ -1840,16 +1840,16 @@ export namespace Collection {
 export type ComboboxEmptyState = Combobox.Empty.State;
 
 export namespace ComboboxEmptyProps {
+  export type Render = RenderProps<ComboboxEmptyState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Empty>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.Empty>
   >;
-
-  export type Render = RenderProps<ComboboxEmptyState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1880,13 +1880,13 @@ export namespace Empty {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxEmptyProps.BaseUI;
-
-    export type HTML = ComboboxEmptyProps.HTML;
-
     export type Render = ComboboxEmptyProps.Render;
 
     export type SuruUI = ComboboxEmptyProps.SuruUI;
+
+    export type BaseUI = ComboboxEmptyProps.BaseUI;
+
+    export type HTML = ComboboxEmptyProps.HTML;
   }
 }
 
@@ -1899,16 +1899,16 @@ export namespace Empty {
 export type ComboboxSeparatorState = Combobox.Separator.State;
 
 export namespace ComboboxSeparatorProps {
+  export type Render = RenderProps<ComboboxSeparatorState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Separator>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Combobox.Separator>
   >;
-
-  export type Render = RenderProps<ComboboxSeparatorState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1941,13 +1941,13 @@ export namespace Separator {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ComboboxSeparatorProps.BaseUI;
-
-    export type HTML = ComboboxSeparatorProps.HTML;
-
     export type Render = ComboboxSeparatorProps.Render;
 
     export type SuruUI = ComboboxSeparatorProps.SuruUI;
+
+    export type BaseUI = ComboboxSeparatorProps.BaseUI;
+
+    export type HTML = ComboboxSeparatorProps.HTML;
   }
 }
 

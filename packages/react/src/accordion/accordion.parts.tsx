@@ -105,16 +105,6 @@ export type AccordionRootValue<TValue = any> = Accordion.Root.Value<TValue>;
 export type AccordionRootState<TValue = any> = Accordion.Root.State<TValue>;
 
 export namespace AccordionRootProps {
-  export type BaseUI<TValue = any> = Omit<
-    React.ComponentProps<typeof Accordion.Root<TValue>>,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Accordion.Root>
-  >;
-
   export type Render<TValue = any> = RenderProps<AccordionRootState<TValue>>;
 
   export type SuruUI<TItem = any> = {
@@ -167,6 +157,16 @@ export namespace AccordionRootProps {
      */
     variant?: AccordionRootVariant | undefined;
   };
+
+  export type BaseUI<TValue = any> = Omit<
+    React.ComponentProps<typeof Accordion.Root<TValue>>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Accordion.Root>
+  >;
 }
 
 /**
@@ -259,13 +259,13 @@ export namespace Root {
     Props.HTML;
 
   export namespace Props {
-    export type BaseUI<TValue = any> = AccordionRootProps.BaseUI<TValue>;
-
-    export type HTML = AccordionRootProps.HTML;
-
     export type Render<TValue = any> = AccordionRootProps.Render<TValue>;
 
     export type SuruUI<TItem = any> = AccordionRootProps.SuruUI<TItem>;
+
+    export type BaseUI<TValue = any> = AccordionRootProps.BaseUI<TValue>;
+
+    export type HTML = AccordionRootProps.HTML;
   }
 
   export type ChangeEventDetails = AccordionRootChangeEventDetails;
@@ -304,16 +304,16 @@ export type AccordionItemChangeEventReason = Accordion.Item.ChangeEventReason;
 export type AccordionItemState = Accordion.Item.State;
 
 export namespace AccordionItemProps {
+  export type Render = RenderProps<AccordionItemState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Accordion.Item>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Accordion.Item>
   >;
-
-  export type Render = RenderProps<AccordionItemState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -351,13 +351,13 @@ export namespace Item {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AccordionItemProps.BaseUI;
-
-    export type HTML = AccordionItemProps.HTML;
-
     export type Render = AccordionItemProps.Render;
 
     export type SuruUI = AccordionItemProps.SuruUI;
+
+    export type BaseUI = AccordionItemProps.BaseUI;
+
+    export type HTML = AccordionItemProps.HTML;
   }
 
   export type ChangeEventDetails = AccordionItemChangeEventDetails;
@@ -374,16 +374,16 @@ export namespace Item {
 export type AccordionHeadingState = Accordion.Header.State;
 
 export namespace AccordionHeadingProps {
+  export type Render = RenderProps<AccordionHeadingState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Accordion.Header>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Accordion.Header>
   >;
-
-  export type Render = RenderProps<AccordionHeadingState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -413,13 +413,13 @@ export namespace Heading {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AccordionHeadingProps.BaseUI;
-
-    export type HTML = AccordionHeadingProps.HTML;
-
     export type Render = AccordionHeadingProps.Render;
 
     export type SuruUI = AccordionHeadingProps.SuruUI;
+
+    export type BaseUI = AccordionHeadingProps.BaseUI;
+
+    export type HTML = AccordionHeadingProps.HTML;
   }
 }
 
@@ -432,16 +432,6 @@ export namespace Heading {
 export type AccordionTriggerState = Accordion.Trigger.State;
 
 export namespace AccordionTriggerProps {
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof Accordion.Trigger>,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Accordion.Trigger>
-  >;
-
   export type Render = RenderProps<AccordionTriggerState>;
 
   export type SuruUI = {
@@ -454,6 +444,16 @@ export namespace AccordionTriggerProps {
      */
     unstyled?: boolean | undefined;
   };
+
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Accordion.Trigger>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Accordion.Trigger>
+  >;
 }
 
 /**
@@ -492,13 +492,13 @@ export namespace Trigger {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AccordionTriggerProps.BaseUI;
-
-    export type HTML = AccordionTriggerProps.HTML;
-
     export type Render = AccordionTriggerProps.Render;
 
     export type SuruUI = AccordionTriggerProps.SuruUI;
+
+    export type BaseUI = AccordionTriggerProps.BaseUI;
+
+    export type HTML = AccordionTriggerProps.HTML;
   }
 }
 
@@ -511,11 +511,11 @@ export namespace Trigger {
 export type AccordionIndicatorState = {};
 
 export namespace AccordionIndicatorProps {
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
-
   export type Render = RenderProps<AccordionIndicatorState>;
 
   export type SuruUI = {};
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
 }
 
 /**
@@ -552,11 +552,11 @@ export namespace Indicator {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = AccordionIndicatorProps.HTML;
-
     export type Render = AccordionIndicatorProps.Render;
 
     export type SuruUI = AccordionIndicatorProps.SuruUI;
+
+    export type HTML = AccordionIndicatorProps.HTML;
   }
 }
 
@@ -569,16 +569,16 @@ export namespace Indicator {
 export type AccordionContentState = Accordion.Panel.State;
 
 export namespace AccordionContentProps {
+  export type Render = RenderProps<AccordionContentState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Accordion.Panel>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Accordion.Panel>
   >;
-
-  export type Render = RenderProps<AccordionContentState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -619,12 +619,12 @@ export namespace Content {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AccordionContentProps.BaseUI;
-
-    export type HTML = AccordionContentProps.HTML;
-
     export type Render = AccordionContentProps.Render;
 
     export type SuruUI = AccordionContentProps.SuruUI;
+
+    export type BaseUI = AccordionContentProps.BaseUI;
+
+    export type HTML = AccordionContentProps.HTML;
   }
 }

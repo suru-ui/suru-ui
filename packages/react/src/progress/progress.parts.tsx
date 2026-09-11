@@ -59,16 +59,6 @@ export type ProgressRootVariant = "naked" | "liquid";
 export type ProgressRootState = Progress.Root.State;
 
 export namespace ProgressRootProps {
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof Progress.Root>,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Progress.Root>
-  >;
-
   export type Render = RenderProps<ProgressRootState>;
 
   export type SuruUI = {
@@ -107,6 +97,16 @@ export namespace ProgressRootProps {
      */
     variant?: ProgressRootVariant | undefined;
   };
+
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Progress.Root>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Progress.Root>
+  >;
 }
 
 /**
@@ -161,13 +161,13 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ProgressRootProps.BaseUI;
-
-    export type HTML = ProgressRootProps.HTML;
-
     export type Render = ProgressRootProps.Render;
 
     export type SuruUI = ProgressRootProps.SuruUI;
+
+    export type BaseUI = ProgressRootProps.BaseUI;
+
+    export type HTML = ProgressRootProps.HTML;
   }
 
   export type Color = ProgressRootColor;
@@ -190,16 +190,16 @@ export namespace Root {
 export type ProgressLabelState = Progress.Label.State;
 
 export namespace ProgressLabelProps {
+  export type Render = RenderProps<ProgressLabelState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Progress.Label>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
     keyof Render | keyof React.ComponentProps<typeof Progress.Label>
   >;
-
-  export type Render = RenderProps<ProgressLabelState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -227,13 +227,13 @@ export namespace Label {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ProgressLabelProps.BaseUI;
-
-    export type HTML = ProgressLabelProps.HTML;
-
     export type Render = ProgressLabelProps.Render;
 
     export type SuruUI = ProgressLabelProps.SuruUI;
+
+    export type BaseUI = ProgressLabelProps.BaseUI;
+
+    export type HTML = ProgressLabelProps.HTML;
   }
 }
 
@@ -246,16 +246,16 @@ export namespace Label {
 export type ProgressValueState = Progress.Value.State;
 
 export namespace ProgressValueProps {
+  export type Render = RenderProps<ProgressValueState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Progress.Value>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
     keyof Render | keyof React.ComponentProps<typeof Progress.Value>
   >;
-
-  export type Render = RenderProps<ProgressValueState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -285,13 +285,13 @@ export namespace Value {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ProgressValueProps.BaseUI;
-
-    export type HTML = ProgressValueProps.HTML;
-
     export type Render = ProgressValueProps.Render;
 
     export type SuruUI = ProgressValueProps.SuruUI;
+
+    export type BaseUI = ProgressValueProps.BaseUI;
+
+    export type HTML = ProgressValueProps.HTML;
   }
 }
 
@@ -304,16 +304,16 @@ export namespace Value {
 export type ProgressTrackState = Progress.Track.State;
 
 export namespace ProgressTrackProps {
+  export type Render = RenderProps<ProgressTrackState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Progress.Track>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Progress.Track>
   >;
-
-  export type Render = RenderProps<ProgressTrackState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -341,13 +341,13 @@ export namespace Track {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ProgressTrackProps.BaseUI;
-
-    export type HTML = ProgressTrackProps.HTML;
-
     export type Render = ProgressTrackProps.Render;
 
     export type SuruUI = ProgressTrackProps.SuruUI;
+
+    export type BaseUI = ProgressTrackProps.BaseUI;
+
+    export type HTML = ProgressTrackProps.HTML;
   }
 }
 
@@ -360,16 +360,16 @@ export namespace Track {
 export type ProgressIndicatorState = Progress.Indicator.State;
 
 export namespace ProgressIndicatorProps {
+  export type Render = RenderProps<ProgressIndicatorState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Progress.Indicator>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Progress.Indicator>
   >;
-
-  export type Render = RenderProps<ProgressIndicatorState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -399,12 +399,12 @@ export namespace Indicator {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = ProgressIndicatorProps.BaseUI;
-
-    export type HTML = ProgressIndicatorProps.HTML;
-
     export type Render = ProgressIndicatorProps.Render;
 
     export type SuruUI = ProgressIndicatorProps.SuruUI;
+
+    export type BaseUI = ProgressIndicatorProps.BaseUI;
+
+    export type HTML = ProgressIndicatorProps.HTML;
   }
 }

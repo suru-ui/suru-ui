@@ -356,13 +356,6 @@ export type MenuRootVariant = Button.Root.Variant;
 export type MenuRootState = Menu.Root.State;
 
 export namespace MenuRootProps {
-  export type BaseUI<TPayload = unknown> = Omit<
-    Menu.Root.Props<TPayload>,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = {};
-
   export type Render = RenderProps<MenuRootState>;
 
   export type SuruUI<TPayload = unknown, TItem = any> = {
@@ -406,6 +399,13 @@ export namespace MenuRootProps {
      */
     variant?: MenuRootVariant | undefined;
   };
+
+  export type BaseUI<TPayload = unknown> = Omit<
+    Menu.Root.Props<TPayload>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = {};
 }
 
 /**
@@ -465,13 +465,13 @@ export namespace Root {
     Props.HTML;
 
   export namespace Props {
-    export type BaseUI<TPayload = unknown> = MenuRootProps.BaseUI<TPayload>;
-
-    export type HTML = MenuRootProps.HTML;
-
     export type Render = MenuRootProps.Render;
 
     export type SuruUI<TPayload = unknown, TItem = any> = MenuRootProps.SuruUI<TPayload, TItem>;
+
+    export type BaseUI<TPayload = unknown> = MenuRootProps.BaseUI<TPayload>;
+
+    export type HTML = MenuRootProps.HTML;
   }
 
   export type ActionItemObject = MenuRootActionItemObject;
@@ -514,16 +514,6 @@ export namespace Root {
 export type MenuTriggerState = Menu.Trigger.State;
 
 export namespace MenuTriggerProps {
-  export type BaseUI<TPayload = unknown> = Omit<
-    Menu.Trigger.Props<TPayload>,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof Menu.Trigger.Props<any>
-  >;
-
   export type Render = RenderProps<MenuTriggerState>;
 
   export type SuruUI<TPayload = unknown> = {
@@ -541,6 +531,16 @@ export namespace MenuTriggerProps {
      */
     handle?: MenuHandle<TPayload> | undefined;
   };
+
+  export type BaseUI<TPayload = unknown> = Omit<
+    Menu.Trigger.Props<TPayload>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI | keyof Menu.Trigger.Props<any>
+  >;
 }
 
 /**
@@ -594,13 +594,13 @@ export namespace Trigger {
     Props.HTML;
 
   export namespace Props {
-    export type BaseUI<TPayload = unknown> = MenuTriggerProps.BaseUI<TPayload>;
-
-    export type HTML = MenuTriggerProps.HTML;
-
     export type Render = MenuTriggerProps.Render;
 
     export type SuruUI<TPayload = unknown> = MenuTriggerProps.SuruUI<TPayload>;
+
+    export type BaseUI<TPayload = unknown> = MenuTriggerProps.BaseUI<TPayload>;
+
+    export type HTML = MenuTriggerProps.HTML;
   }
 }
 
@@ -613,16 +613,16 @@ export namespace Trigger {
 export type MenuPortalState = Menu.Portal.State;
 
 export namespace MenuPortalProps {
+  export type Render = RenderProps<MenuPortalState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Menu.Portal>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Menu.Portal>
   >;
-
-  export type Render = RenderProps<MenuPortalState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -670,13 +670,13 @@ export namespace Portal {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MenuPortalProps.BaseUI;
-
-    export type HTML = MenuPortalProps.HTML;
-
     export type Render = MenuPortalProps.Render;
 
     export type SuruUI = MenuPortalProps.SuruUI;
+
+    export type BaseUI = MenuPortalProps.BaseUI;
+
+    export type HTML = MenuPortalProps.HTML;
   }
 }
 
@@ -689,16 +689,16 @@ export namespace Portal {
 export type MenuBackdropState = Menu.Backdrop.State;
 
 export namespace MenuBackdropProps {
+  export type Render = RenderProps<MenuBackdropState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Menu.Backdrop>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Menu.Backdrop>
   >;
-
-  export type Render = RenderProps<MenuBackdropState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -726,13 +726,13 @@ export namespace Backdrop {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MenuBackdropProps.BaseUI;
-
-    export type HTML = MenuBackdropProps.HTML;
-
     export type Render = MenuBackdropProps.Render;
 
     export type SuruUI = MenuBackdropProps.SuruUI;
+
+    export type BaseUI = MenuBackdropProps.BaseUI;
+
+    export type HTML = MenuBackdropProps.HTML;
   }
 }
 
@@ -745,16 +745,16 @@ export namespace Backdrop {
 export type MenuPositionerState = Menu.Positioner.State;
 
 export namespace MenuPositionerProps {
+  export type Render = RenderProps<MenuPositionerState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Menu.Positioner>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Menu.Positioner>
   >;
-
-  export type Render = RenderProps<MenuPositionerState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -782,13 +782,13 @@ export namespace Positioner {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MenuPositionerProps.BaseUI;
-
-    export type HTML = MenuPositionerProps.HTML;
-
     export type Render = MenuPositionerProps.Render;
 
     export type SuruUI = MenuPositionerProps.SuruUI;
+
+    export type BaseUI = MenuPositionerProps.BaseUI;
+
+    export type HTML = MenuPositionerProps.HTML;
   }
 }
 
@@ -818,13 +818,6 @@ export interface IMenuPopupItemRenderer<TItem = any> {
 export type MenuPopupState = Menu.Popup.State;
 
 export namespace MenuPopupProps {
-  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Popup>, keyof Render | keyof SuruUI>;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.Popup>
-  >;
-
   export type Render = RenderProps<MenuPopupState>;
 
   export type SuruUI = {
@@ -835,6 +828,13 @@ export namespace MenuPopupProps {
      */
     children?: React.ReactNode | IMenuPopupItemRenderer;
   };
+
+  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Popup>, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.Popup>
+  >;
 }
 
 /**
@@ -977,13 +977,13 @@ export namespace Popup {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MenuPopupProps.BaseUI;
-
-    export type HTML = MenuPopupProps.HTML;
-
     export type Render = MenuPopupProps.Render;
 
     export type SuruUI = MenuPopupProps.SuruUI;
+
+    export type BaseUI = MenuPopupProps.BaseUI;
+
+    export type HTML = MenuPopupProps.HTML;
   }
 
   export type ItemObject = MenuRootItemObject;
@@ -1000,16 +1000,16 @@ export namespace Popup {
 export type MenuArrowState = Menu.Arrow.State;
 
 export namespace MenuArrowProps {
+  export type Render = RenderProps<MenuArrowState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Menu.Arrow>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Menu.Arrow>
   >;
-
-  export type Render = RenderProps<MenuArrowState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1037,13 +1037,13 @@ export namespace Arrow {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MenuArrowProps.BaseUI;
-
-    export type HTML = MenuArrowProps.HTML;
-
     export type Render = MenuArrowProps.Render;
 
     export type SuruUI = MenuArrowProps.SuruUI;
+
+    export type BaseUI = MenuArrowProps.BaseUI;
+
+    export type HTML = MenuArrowProps.HTML;
   }
 }
 
@@ -1056,16 +1056,16 @@ export namespace Arrow {
 export type MenuViewportState = Menu.Viewport.State;
 
 export namespace MenuViewportProps {
+  export type Render = RenderProps<MenuViewportState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Menu.Viewport>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Menu.Viewport>
   >;
-
-  export type Render = RenderProps<MenuViewportState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1093,13 +1093,13 @@ export namespace Viewport {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MenuViewportProps.BaseUI;
-
-    export type HTML = MenuViewportProps.HTML;
-
     export type Render = MenuViewportProps.Render;
 
     export type SuruUI = MenuViewportProps.SuruUI;
+
+    export type BaseUI = MenuViewportProps.BaseUI;
+
+    export type HTML = MenuViewportProps.HTML;
   }
 }
 
@@ -1148,24 +1148,6 @@ export type MenuItemVariant = Button.Root.Variant;
 export type MenuItemState = Override<Button.Root.State, Menu.Item.State>;
 
 export namespace MenuItemProps {
-  export type BaseUI = Omit<
-    Override<
-      Omit<Button.ButtonRootProps, "type">,
-      Override<React.ComponentProps<typeof Menu.Item>, RenderProps<MenuItemState>>
-    >,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Override<
-        Omit<Button.ButtonRootProps, "type">,
-        Override<React.ComponentProps<typeof Menu.Item>, RenderProps<MenuItemState>>
-      >
-  >;
-
   export type Render = RenderProps<MenuItemState>;
 
   export type SuruUI = {
@@ -1192,6 +1174,24 @@ export namespace MenuItemProps {
      */
     variant?: MenuItemVariant | undefined;
   };
+
+  export type BaseUI = Omit<
+    Override<
+      Omit<Button.ButtonRootProps, "type">,
+      Override<React.ComponentProps<typeof Menu.Item>, RenderProps<MenuItemState>>
+    >,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Override<
+        Omit<Button.ButtonRootProps, "type">,
+        Override<React.ComponentProps<typeof Menu.Item>, RenderProps<MenuItemState>>
+      >
+  >;
 }
 
 /**
@@ -1259,13 +1259,13 @@ export namespace Item {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MenuItemProps.BaseUI;
-
-    export type HTML = MenuItemProps.HTML;
-
     export type Render = MenuItemProps.Render;
 
     export type SuruUI = MenuItemProps.SuruUI;
+
+    export type BaseUI = MenuItemProps.BaseUI;
+
+    export type HTML = MenuItemProps.HTML;
   }
 
   export type Color = MenuItemColor;
@@ -1303,24 +1303,6 @@ export type MenuLinkItemVariant = Button.Root.Variant;
 export type MenuLinkItemState = Override<Button.Root.State, Menu.LinkItem.State>;
 
 export namespace MenuLinkItemProps {
-  export type BaseUI = Omit<
-    Override<
-      Omit<Button.ButtonRootProps, "type">,
-      Override<React.ComponentProps<typeof Menu.LinkItem>, RenderProps<MenuLinkItemState>>
-    >,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"a">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Override<
-        Omit<Button.ButtonRootProps, "type">,
-        Override<React.ComponentProps<typeof Menu.LinkItem>, RenderProps<MenuLinkItemState>>
-      >
-  >;
-
   export type Render = RenderProps<MenuLinkItemState>;
 
   export type SuruUI = {
@@ -1347,6 +1329,24 @@ export namespace MenuLinkItemProps {
      */
     variant?: MenuLinkItemVariant | undefined;
   };
+
+  export type BaseUI = Omit<
+    Override<
+      Omit<Button.ButtonRootProps, "type">,
+      Override<React.ComponentProps<typeof Menu.LinkItem>, RenderProps<MenuLinkItemState>>
+    >,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"a">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Override<
+        Omit<Button.ButtonRootProps, "type">,
+        Override<React.ComponentProps<typeof Menu.LinkItem>, RenderProps<MenuLinkItemState>>
+      >
+  >;
 }
 
 /**
@@ -1414,13 +1414,13 @@ export namespace LinkItem {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MenuLinkItemProps.BaseUI;
-
-    export type HTML = MenuLinkItemProps.HTML;
-
     export type Render = MenuLinkItemProps.Render;
 
     export type SuruUI = MenuLinkItemProps.SuruUI;
+
+    export type BaseUI = MenuLinkItemProps.BaseUI;
+
+    export type HTML = MenuLinkItemProps.HTML;
   }
 
   export type Color = MenuLinkItemColor;
@@ -1449,13 +1449,13 @@ export type MenuSubmenuRootChangeEventReason = Menu.SubmenuRoot.ChangeEventReaso
 export type MenuSubmenuRootState = Menu.SubmenuRoot.State;
 
 export namespace MenuSubmenuRootProps {
-  export type BaseUI = Omit<React.ComponentProps<typeof Menu.SubmenuRoot>, keyof Render>;
-
-  export type HTML = {};
-
   export type Render = RenderProps<MenuSubmenuRootState>;
 
   export type SuruUI = {};
+
+  export type BaseUI = Omit<React.ComponentProps<typeof Menu.SubmenuRoot>, keyof Render>;
+
+  export type HTML = {};
 }
 
 /**
@@ -1485,13 +1485,13 @@ export namespace SubmenuRoot {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MenuSubmenuRootProps.BaseUI;
-
-    export type HTML = MenuSubmenuRootProps.HTML;
-
     export type Render = MenuSubmenuRootProps.Render;
 
     export type SuruUI = MenuSubmenuRootProps.SuruUI;
+
+    export type BaseUI = MenuSubmenuRootProps.BaseUI;
+
+    export type HTML = MenuSubmenuRootProps.HTML;
   }
 
   export type ChangeEventDetails = MenuSubmenuRootChangeEventDetails;
@@ -1527,30 +1527,6 @@ export type MenuSubmenuTriggerVariant = Button.Root.Variant;
 export type MenuSubmenuTriggerState = Override<Button.Root.State, Menu.SubmenuTrigger.State>;
 
 export namespace MenuSubmenuTriggerProps {
-  export type BaseUI = Omit<
-    Override<
-      Omit<Button.ButtonRootProps, "type">,
-      Override<
-        React.ComponentProps<typeof Menu.SubmenuTrigger>,
-        RenderProps<MenuSubmenuTriggerState>
-      >
-    >,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Override<
-        Omit<Button.ButtonRootProps, "type">,
-        Override<
-          React.ComponentProps<typeof Menu.SubmenuTrigger>,
-          RenderProps<MenuSubmenuTriggerState>
-        >
-      >
-  >;
-
   export type Render = RenderProps<MenuSubmenuTriggerState>;
 
   export type SuruUI = {
@@ -1577,6 +1553,30 @@ export namespace MenuSubmenuTriggerProps {
      */
     variant?: MenuSubmenuTriggerVariant | undefined;
   };
+
+  export type BaseUI = Omit<
+    Override<
+      Omit<Button.ButtonRootProps, "type">,
+      Override<
+        React.ComponentProps<typeof Menu.SubmenuTrigger>,
+        RenderProps<MenuSubmenuTriggerState>
+      >
+    >,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Override<
+        Omit<Button.ButtonRootProps, "type">,
+        Override<
+          React.ComponentProps<typeof Menu.SubmenuTrigger>,
+          RenderProps<MenuSubmenuTriggerState>
+        >
+      >
+  >;
 }
 
 /**
@@ -1647,13 +1647,13 @@ export namespace SubmenuTrigger {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MenuSubmenuTriggerProps.BaseUI;
-
-    export type HTML = MenuSubmenuTriggerProps.HTML;
-
     export type Render = MenuSubmenuTriggerProps.Render;
 
     export type SuruUI = MenuSubmenuTriggerProps.SuruUI;
+
+    export type BaseUI = MenuSubmenuTriggerProps.BaseUI;
+
+    export type HTML = MenuSubmenuTriggerProps.HTML;
   }
 
   export type Color = MenuSubmenuTriggerColor;
@@ -1672,16 +1672,16 @@ export namespace SubmenuTrigger {
 export type MenuGroupState = Menu.Group.State;
 
 export namespace MenuGroupProps {
+  export type Render = RenderProps<MenuGroupState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Menu.Group>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Menu.Group>
   >;
-
-  export type Render = RenderProps<MenuGroupState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1709,13 +1709,13 @@ export namespace Group {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MenuGroupProps.BaseUI;
-
-    export type HTML = MenuGroupProps.HTML;
-
     export type Render = MenuGroupProps.Render;
 
     export type SuruUI = MenuGroupProps.SuruUI;
+
+    export type BaseUI = MenuGroupProps.BaseUI;
+
+    export type HTML = MenuGroupProps.HTML;
   }
 }
 
@@ -1728,16 +1728,16 @@ export namespace Group {
 export type MenuGroupLabelState = Menu.GroupLabel.State;
 
 export namespace MenuGroupLabelProps {
+  export type Render = RenderProps<MenuGroupLabelState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Menu.GroupLabel>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Menu.GroupLabel>
   >;
-
-  export type Render = RenderProps<MenuGroupLabelState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1765,13 +1765,13 @@ export namespace GroupLabel {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MenuGroupLabelProps.BaseUI;
-
-    export type HTML = MenuGroupLabelProps.HTML;
-
     export type Render = MenuGroupLabelProps.Render;
 
     export type SuruUI = MenuGroupLabelProps.SuruUI;
+
+    export type BaseUI = MenuGroupLabelProps.BaseUI;
+
+    export type HTML = MenuGroupLabelProps.HTML;
   }
 }
 
@@ -1794,16 +1794,16 @@ export type MenuRadioGroupChangeEventReason = Menu.RadioGroup.ChangeEventReason;
 export type MenuRadioGroupState = Menu.RadioGroup.State;
 
 export namespace MenuRadioGroupProps {
+  export type Render = RenderProps<MenuRadioGroupState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Menu.RadioGroup>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Menu.RadioGroup>
   >;
-
-  export type Render = RenderProps<MenuRadioGroupState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -1840,13 +1840,13 @@ export namespace RadioGroup {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MenuRadioGroupProps.BaseUI;
-
-    export type HTML = MenuRadioGroupProps.HTML;
-
     export type Render = MenuRadioGroupProps.Render;
 
     export type SuruUI = MenuRadioGroupProps.SuruUI;
+
+    export type BaseUI = MenuRadioGroupProps.BaseUI;
+
+    export type HTML = MenuRadioGroupProps.HTML;
   }
 
   export type ChangeEventDetails = MenuRadioGroupChangeEventDetails;
@@ -1882,24 +1882,6 @@ export type MenuRadioItemVariant = Button.Root.Variant;
 export type MenuRadioItemState = Override<Button.Root.State, Menu.RadioItem.State>;
 
 export namespace MenuRadioItemProps {
-  export type BaseUI = Omit<
-    Override<
-      Omit<Button.ButtonRootProps, "type">,
-      Override<React.ComponentProps<typeof Menu.RadioItem>, RenderProps<MenuRadioItemState>>
-    >,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Override<
-        Omit<Button.ButtonRootProps, "type">,
-        Override<React.ComponentProps<typeof Menu.RadioItem>, RenderProps<MenuRadioItemState>>
-      >
-  >;
-
   export type Render = RenderProps<MenuRadioItemState>;
 
   export type SuruUI = {
@@ -1926,6 +1908,24 @@ export namespace MenuRadioItemProps {
      */
     variant?: MenuRadioItemVariant | undefined;
   };
+
+  export type BaseUI = Omit<
+    Override<
+      Omit<Button.ButtonRootProps, "type">,
+      Override<React.ComponentProps<typeof Menu.RadioItem>, RenderProps<MenuRadioItemState>>
+    >,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Override<
+        Omit<Button.ButtonRootProps, "type">,
+        Override<React.ComponentProps<typeof Menu.RadioItem>, RenderProps<MenuRadioItemState>>
+      >
+  >;
 }
 
 /**
@@ -1995,13 +1995,13 @@ export namespace RadioItem {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MenuRadioItemProps.BaseUI;
-
-    export type HTML = MenuRadioItemProps.HTML;
-
     export type Render = MenuRadioItemProps.Render;
 
     export type SuruUI = MenuRadioItemProps.SuruUI;
+
+    export type BaseUI = MenuRadioItemProps.BaseUI;
+
+    export type HTML = MenuRadioItemProps.HTML;
   }
 
   export type Color = MenuRadioItemColor;
@@ -2020,16 +2020,16 @@ export namespace RadioItem {
 export type MenuRadioItemIndicatorState = Menu.RadioItemIndicator.State;
 
 export namespace MenuRadioItemIndicatorProps {
+  export type Render = RenderProps<MenuRadioItemIndicatorState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Menu.RadioItemIndicator>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
     keyof Render | keyof React.ComponentProps<typeof Menu.RadioItemIndicator>
   >;
-
-  export type Render = RenderProps<MenuRadioItemIndicatorState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -2069,13 +2069,13 @@ export namespace RadioItemIndicator {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MenuRadioItemIndicatorProps.BaseUI;
-
-    export type HTML = MenuRadioItemIndicatorProps.HTML;
-
     export type Render = MenuRadioItemIndicatorProps.Render;
 
     export type SuruUI = MenuRadioItemIndicatorProps.SuruUI;
+
+    export type BaseUI = MenuRadioItemIndicatorProps.BaseUI;
+
+    export type HTML = MenuRadioItemIndicatorProps.HTML;
   }
 }
 
@@ -2117,24 +2117,6 @@ export type MenuCheckboxItemVariant = Button.Root.Variant;
 export type MenuCheckboxItemState = Override<Button.Root.State, Menu.CheckboxItem.State>;
 
 export namespace MenuCheckboxItemProps {
-  export type BaseUI = Omit<
-    Override<
-      Omit<Button.ButtonRootProps, "type">,
-      Override<React.ComponentProps<typeof Menu.CheckboxItem>, RenderProps<MenuCheckboxItemState>>
-    >,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Override<
-        Omit<Button.ButtonRootProps, "type">,
-        Override<React.ComponentProps<typeof Menu.CheckboxItem>, RenderProps<MenuCheckboxItemState>>
-      >
-  >;
-
   export type Render = RenderProps<MenuCheckboxItemState>;
 
   export type SuruUI = {
@@ -2161,6 +2143,24 @@ export namespace MenuCheckboxItemProps {
      */
     variant?: MenuCheckboxItemVariant | undefined;
   };
+
+  export type BaseUI = Omit<
+    Override<
+      Omit<Button.ButtonRootProps, "type">,
+      Override<React.ComponentProps<typeof Menu.CheckboxItem>, RenderProps<MenuCheckboxItemState>>
+    >,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    | keyof Render
+    | keyof SuruUI
+    | keyof Override<
+        Omit<Button.ButtonRootProps, "type">,
+        Override<React.ComponentProps<typeof Menu.CheckboxItem>, RenderProps<MenuCheckboxItemState>>
+      >
+  >;
 }
 
 /**
@@ -2232,13 +2232,13 @@ export namespace CheckboxItem {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MenuCheckboxItemProps.BaseUI;
-
-    export type HTML = MenuCheckboxItemProps.HTML;
-
     export type Render = MenuCheckboxItemProps.Render;
 
     export type SuruUI = MenuCheckboxItemProps.SuruUI;
+
+    export type BaseUI = MenuCheckboxItemProps.BaseUI;
+
+    export type HTML = MenuCheckboxItemProps.HTML;
   }
 
   export type ChangeEventDetails = MenuCheckboxItemChangeEventDetails;
@@ -2261,16 +2261,16 @@ export namespace CheckboxItem {
 export type MenuCheckboxItemIndicatorState = Menu.CheckboxItemIndicator.State;
 
 export namespace MenuCheckboxItemIndicatorProps {
+  export type Render = RenderProps<MenuCheckboxItemIndicatorState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Menu.CheckboxItemIndicator>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
     keyof Render | keyof React.ComponentProps<typeof Menu.CheckboxItemIndicator>
   >;
-
-  export type Render = RenderProps<MenuCheckboxItemIndicatorState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -2309,13 +2309,13 @@ export namespace CheckboxItemIndicator {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MenuCheckboxItemIndicatorProps.BaseUI;
-
-    export type HTML = MenuCheckboxItemIndicatorProps.HTML;
-
     export type Render = MenuCheckboxItemIndicatorProps.Render;
 
     export type SuruUI = MenuCheckboxItemIndicatorProps.SuruUI;
+
+    export type BaseUI = MenuCheckboxItemIndicatorProps.BaseUI;
+
+    export type HTML = MenuCheckboxItemIndicatorProps.HTML;
   }
 }
 
@@ -2328,16 +2328,16 @@ export namespace CheckboxItemIndicator {
 export type MenuSeparatorState = Menu.Separator.State;
 
 export namespace MenuSeparatorProps {
+  export type Render = RenderProps<MenuSeparatorState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Menu.Separator>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Menu.Separator>
   >;
-
-  export type Render = RenderProps<MenuSeparatorState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -2365,12 +2365,12 @@ export namespace Separator {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MenuSeparatorProps.BaseUI;
-
-    export type HTML = MenuSeparatorProps.HTML;
-
     export type Render = MenuSeparatorProps.Render;
 
     export type SuruUI = MenuSeparatorProps.SuruUI;
+
+    export type BaseUI = MenuSeparatorProps.BaseUI;
+
+    export type HTML = MenuSeparatorProps.HTML;
   }
 }

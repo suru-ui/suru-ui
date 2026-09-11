@@ -50,13 +50,6 @@ export type MeterRootVariant = "naked" | "liquid";
 export type MeterRootState = Meter.Root.State;
 
 export namespace MeterRootProps {
-  export type BaseUI = Omit<React.ComponentProps<typeof Meter.Root>, keyof Render | keyof SuruUI>;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Meter.Root>
-  >;
-
   export type Render = RenderProps<MeterRootState>;
 
   export type SuruUI = {
@@ -95,6 +88,13 @@ export namespace MeterRootProps {
      */
     variant?: MeterRootVariant | undefined;
   };
+
+  export type BaseUI = Omit<React.ComponentProps<typeof Meter.Root>, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Meter.Root>
+  >;
 }
 
 /**
@@ -146,13 +146,13 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MeterRootProps.BaseUI;
-
-    export type HTML = MeterRootProps.HTML;
-
     export type Render = MeterRootProps.Render;
 
     export type SuruUI = MeterRootProps.SuruUI;
+
+    export type BaseUI = MeterRootProps.BaseUI;
+
+    export type HTML = MeterRootProps.HTML;
   }
 
   export type Color = MeterRootColor;
@@ -173,16 +173,16 @@ export namespace Root {
 export type MeterLabelState = Meter.Label.State;
 
 export namespace MeterLabelProps {
+  export type Render = RenderProps<MeterLabelState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Meter.Label>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
     keyof Render | keyof React.ComponentProps<typeof Meter.Label>
   >;
-
-  export type Render = RenderProps<MeterLabelState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -210,13 +210,13 @@ export namespace Label {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MeterLabelProps.BaseUI;
-
-    export type HTML = MeterLabelProps.HTML;
-
     export type Render = MeterLabelProps.Render;
 
     export type SuruUI = MeterLabelProps.SuruUI;
+
+    export type BaseUI = MeterLabelProps.BaseUI;
+
+    export type HTML = MeterLabelProps.HTML;
   }
 }
 
@@ -229,16 +229,16 @@ export namespace Label {
 export type MeterValueState = Meter.Value.State;
 
 export namespace MeterValueProps {
+  export type Render = RenderProps<MeterValueState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Meter.Value>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
     keyof Render | keyof React.ComponentProps<typeof Meter.Value>
   >;
-
-  export type Render = RenderProps<MeterValueState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -266,13 +266,13 @@ export namespace Value {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MeterValueProps.BaseUI;
-
-    export type HTML = MeterValueProps.HTML;
-
     export type Render = MeterValueProps.Render;
 
     export type SuruUI = MeterValueProps.SuruUI;
+
+    export type BaseUI = MeterValueProps.BaseUI;
+
+    export type HTML = MeterValueProps.HTML;
   }
 }
 
@@ -285,16 +285,16 @@ export namespace Value {
 export type MeterTrackState = Meter.Track.State;
 
 export namespace MeterTrackProps {
+  export type Render = RenderProps<MeterTrackState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Meter.Track>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Meter.Track>
   >;
-
-  export type Render = RenderProps<MeterTrackState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -322,13 +322,13 @@ export namespace Track {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MeterTrackProps.BaseUI;
-
-    export type HTML = MeterTrackProps.HTML;
-
     export type Render = MeterTrackProps.Render;
 
     export type SuruUI = MeterTrackProps.SuruUI;
+
+    export type BaseUI = MeterTrackProps.BaseUI;
+
+    export type HTML = MeterTrackProps.HTML;
   }
 }
 
@@ -341,16 +341,16 @@ export namespace Track {
 export type MeterIndicatorState = Meter.Indicator.State;
 
 export namespace MeterIndicatorProps {
+  export type Render = RenderProps<MeterIndicatorState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Meter.Indicator>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     keyof Render | keyof React.ComponentProps<typeof Meter.Indicator>
   >;
-
-  export type Render = RenderProps<MeterIndicatorState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -378,12 +378,12 @@ export namespace Indicator {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = MeterIndicatorProps.BaseUI;
-
-    export type HTML = MeterIndicatorProps.HTML;
-
     export type Render = MeterIndicatorProps.Render;
 
     export type SuruUI = MeterIndicatorProps.SuruUI;
+
+    export type BaseUI = MeterIndicatorProps.BaseUI;
+
+    export type HTML = MeterIndicatorProps.HTML;
   }
 }

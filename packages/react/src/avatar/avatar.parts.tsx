@@ -43,13 +43,6 @@ export type AvatarRootSize = Size;
 export type AvatarRootState = Avatar.Root.State;
 
 export namespace AvatarRootProps {
-  export type BaseUI = Omit<React.ComponentProps<typeof Avatar.Root>, keyof Render | keyof SuruUI>;
-
-  export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Avatar.Root>
-  >;
-
   export type Render = RenderProps<AvatarRootState>;
 
   export type SuruUI = {
@@ -74,6 +67,13 @@ export namespace AvatarRootProps {
      */
     size?: AvatarRootSize | undefined;
   };
+
+  export type BaseUI = Omit<React.ComponentProps<typeof Avatar.Root>, keyof Render | keyof SuruUI>;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Avatar.Root>
+  >;
 }
 
 /**
@@ -125,13 +125,13 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AvatarRootProps.BaseUI;
-
-    export type HTML = AvatarRootProps.HTML;
-
     export type Render = AvatarRootProps.Render;
 
     export type SuruUI = AvatarRootProps.SuruUI;
+
+    export type BaseUI = AvatarRootProps.BaseUI;
+
+    export type HTML = AvatarRootProps.HTML;
   }
 
   export type Color = AvatarRootColor;
@@ -150,16 +150,16 @@ export namespace Root {
 export type AvatarImageState = Avatar.Image.State;
 
 export namespace AvatarImageProps {
+  export type Render = RenderProps<AvatarImageState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Avatar.Image>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"img">,
     keyof Render | keyof React.ComponentProps<typeof Avatar.Image>
   >;
-
-  export type Render = RenderProps<AvatarImageState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -189,13 +189,13 @@ export namespace Image {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AvatarImageProps.BaseUI;
-
-    export type HTML = AvatarImageProps.HTML;
-
     export type Render = AvatarImageProps.Render;
 
     export type SuruUI = AvatarImageProps.SuruUI;
+
+    export type BaseUI = AvatarImageProps.BaseUI;
+
+    export type HTML = AvatarImageProps.HTML;
   }
 }
 
@@ -208,16 +208,16 @@ export namespace Image {
 export type AvatarFallbackState = Avatar.Fallback.State;
 
 export namespace AvatarFallbackProps {
+  export type Render = RenderProps<AvatarFallbackState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Avatar.Fallback>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
     keyof Render | keyof React.ComponentProps<typeof Avatar.Fallback>
   >;
-
-  export type Render = RenderProps<AvatarFallbackState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -245,12 +245,12 @@ export namespace Fallback {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = AvatarFallbackProps.BaseUI;
-
-    export type HTML = AvatarFallbackProps.HTML;
-
     export type Render = AvatarFallbackProps.Render;
 
     export type SuruUI = AvatarFallbackProps.SuruUI;
+
+    export type BaseUI = AvatarFallbackProps.BaseUI;
+
+    export type HTML = AvatarFallbackProps.HTML;
   }
 }

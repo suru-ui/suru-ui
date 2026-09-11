@@ -43,8 +43,6 @@ type AspectRatioRootStyle = React.CSSProperties & {
 };
 
 export namespace AspectRatioRootProps {
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
-
   export type Render = RenderProps<AspectRatioRootState>;
 
   export type SuruUI = {
@@ -65,6 +63,8 @@ export namespace AspectRatioRootProps {
      */
     ratio?: AspectRatioRootRatio | undefined;
   };
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -115,11 +115,11 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = AspectRatioRootProps.HTML;
-
     export type Render = AspectRatioRootProps.Render;
 
     export type SuruUI = AspectRatioRootProps.SuruUI;
+
+    export type HTML = AspectRatioRootProps.HTML;
   }
 
   export type Radius = AspectRatioRootRadius;

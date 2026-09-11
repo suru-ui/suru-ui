@@ -62,16 +62,6 @@ export type CheckboxRootVariant = "naked" | "liquid";
 export type CheckboxRootState = Checkbox.Root.State;
 
 export namespace CheckboxRootProps {
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof Checkbox.Root>,
-    keyof Render | keyof SuruUI
-  >;
-
-  export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Checkbox.Root>
-  >;
-
   export type Render = RenderProps<CheckboxRootState>;
 
   export type SuruUI = {
@@ -120,6 +110,16 @@ export namespace CheckboxRootProps {
      */
     variant?: CheckboxRootVariant | undefined;
   };
+
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Checkbox.Root>,
+    keyof Render | keyof SuruUI
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Checkbox.Root>
+  >;
 }
 
 /**
@@ -183,13 +183,13 @@ export namespace Root {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = CheckboxRootProps.BaseUI;
-
-    export type HTML = CheckboxRootProps.HTML;
-
     export type Render = CheckboxRootProps.Render;
 
     export type SuruUI = CheckboxRootProps.SuruUI;
+
+    export type BaseUI = CheckboxRootProps.BaseUI;
+
+    export type HTML = CheckboxRootProps.HTML;
   }
 
   export type ChangeEventDetails = CheckboxRootChangeEventDetails;
@@ -214,16 +214,16 @@ export namespace Root {
 export type CheckboxIndicatorState = Checkbox.Indicator.State;
 
 export namespace CheckboxIndicatorProps {
+  export type Render = RenderProps<CheckboxIndicatorState>;
+
+  export type SuruUI = {};
+
   export type BaseUI = Omit<React.ComponentProps<typeof Checkbox.Indicator>, keyof Render>;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
     keyof Render | keyof React.ComponentProps<typeof Checkbox.Indicator>
   >;
-
-  export type Render = RenderProps<CheckboxIndicatorState>;
-
-  export type SuruUI = {};
 }
 
 /**
@@ -257,12 +257,12 @@ export namespace Indicator {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI = CheckboxIndicatorProps.BaseUI;
-
-    export type HTML = CheckboxIndicatorProps.HTML;
-
     export type Render = CheckboxIndicatorProps.Render;
 
     export type SuruUI = CheckboxIndicatorProps.SuruUI;
+
+    export type BaseUI = CheckboxIndicatorProps.BaseUI;
+
+    export type HTML = CheckboxIndicatorProps.HTML;
   }
 }
