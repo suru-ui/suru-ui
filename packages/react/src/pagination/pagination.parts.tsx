@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { MoreIcon, ChevronLeftIcon, ChevronRightIcon } from "../_icons.jsx";
 import useRender, { type RenderProps } from "../_use-render.js";
-import { type ButtonRootProps, ButtonRoot } from "../button/button.parts.jsx";
+import * as Button from "../button/button.parts.jsx";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
 import type { IComponent, IUseContext } from "../types.js";
@@ -372,7 +372,7 @@ export type PaginationPreviousButtonState = {};
 /**
  * {@link PaginationPreviousButton} に渡す props です。
  */
-export type PaginationPreviousButtonProps = Omit<ButtonRootProps, "children">;
+export type PaginationPreviousButtonProps = Omit<Button.Root.Props, "children">;
 
 /**
  * 前のページへ移動するボタンコンポーネントです。
@@ -390,7 +390,7 @@ export const PaginationPreviousButton: IComponent<PaginationPreviousButtonProps>
       ...otherProps
     } = props;
     const isDisabled = ctx?.disabled || disabled || (ctx?.page ?? 1) <= 1;
-    const handleClick: NonNullable<ButtonRootProps["onClick"]> = (event) => {
+    const handleClick: NonNullable<Button.Root.Props["onClick"]> = (event) => {
       onClick?.(event);
       if (!event.defaultPrevented && !isDisabled && ctx !== null) {
         ctx.goToPage(ctx.page - 1, { event, reason: "previous" });
@@ -398,7 +398,7 @@ export const PaginationPreviousButton: IComponent<PaginationPreviousButtonProps>
     };
 
     return (
-      <ButtonRoot
+      <Button.Root
         {...otherProps}
         size={ctx?.size ?? "md"}
         color={ctx?.color ?? "grey"}
@@ -411,7 +411,7 @@ export const PaginationPreviousButton: IComponent<PaginationPreviousButtonProps>
         aria-label={ariaLabel}
       >
         <ChevronLeftIcon />
-      </ButtonRoot>
+      </Button.Root>
     );
   };
 
@@ -440,7 +440,7 @@ export type PaginationNextButtonState = {};
 /**
  * {@link PaginationNextButton} に渡す props です。
  */
-export type PaginationNextButtonProps = Omit<ButtonRootProps, "children">;
+export type PaginationNextButtonProps = Omit<Button.Root.Props, "children">;
 
 /**
  * 次のページへ移動するボタンコンポーネントです。
@@ -461,7 +461,7 @@ export const PaginationNextButton: IComponent<PaginationNextButtonProps> =
       ctx?.disabled ||
       disabled ||
       (ctx?.page ?? 1) >= (ctx?.totalPages ?? Number.POSITIVE_INFINITY);
-    const handleClick: NonNullable<ButtonRootProps["onClick"]> = (event) => {
+    const handleClick: NonNullable<Button.Root.Props["onClick"]> = (event) => {
       onClick?.(event);
       if (!event.defaultPrevented && !isDisabled && ctx !== null) {
         ctx.goToPage(ctx.page + 1, { event, reason: "next" });
@@ -469,7 +469,7 @@ export const PaginationNextButton: IComponent<PaginationNextButtonProps> =
     };
 
     return (
-      <ButtonRoot
+      <Button.Root
         {...otherProps}
         size={ctx?.size ?? "md"}
         color={ctx?.color ?? "grey"}
@@ -482,7 +482,7 @@ export const PaginationNextButton: IComponent<PaginationNextButtonProps> =
         aria-label={ariaLabel}
       >
         <ChevronRightIcon />
-      </ButtonRoot>
+      </Button.Root>
     );
   };
 
@@ -511,7 +511,7 @@ export type PaginationItemState = {};
 /**
  * {@link PaginationItem} に渡す props です。
  */
-export type PaginationItemProps = Omit<ButtonRootProps, "color" | "variant"> & {
+export type PaginationItemProps = Omit<Button.Root.Props, "color" | "variant"> & {
   /**
    * 表示するページ番号を指定します。
    */
@@ -544,7 +544,7 @@ export const PaginationItem: IComponent<PaginationItemProps> = function SuiPagin
     ...otherProps
   } = props;
   const isDisabled = ctx?.disabled || disabled;
-  const handleClick: NonNullable<ButtonRootProps["onClick"]> = (event) => {
+  const handleClick: NonNullable<Button.Root.Props["onClick"]> = (event) => {
     onClick?.(event);
     if (!event.defaultPrevented && !isDisabled && ctx !== null) {
       ctx.goToPage(page, { event, reason: "item" });
@@ -552,7 +552,7 @@ export const PaginationItem: IComponent<PaginationItemProps> = function SuiPagin
   };
 
   return (
-    <ButtonRoot
+    <Button.Root
       {...otherProps}
       size={ctx?.size ?? "md"}
       color={selected ? (ctx?.color ?? "grey") : "grey"}
@@ -565,7 +565,7 @@ export const PaginationItem: IComponent<PaginationItemProps> = function SuiPagin
       aria-current={selected ? "page" : undefined}
     >
       {children}
-    </ButtonRoot>
+    </Button.Root>
   );
 };
 
@@ -594,7 +594,7 @@ export type PaginationEllipsisState = {};
 /**
  * {@link PaginationEllipsis} に渡す props です。
  */
-export type PaginationEllipsisProps = Omit<ButtonRootProps, "children"> & {
+export type PaginationEllipsisProps = Omit<Button.Root.Props, "children"> & {
   /**
    * 飛び先のページ範囲の終了ページを指定します。
    */
@@ -670,7 +670,7 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
     }
 
     const isDisabled = ctx?.disabled || disabled;
-    const handleClick: NonNullable<ButtonRootProps["onClick"]> = (event) => {
+    const handleClick: NonNullable<Button.Root.Props["onClick"]> = (event) => {
       onClick?.(event);
       if (!event.defaultPrevented && !isDisabled) {
         setEditing(true);
@@ -678,7 +678,7 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
     };
 
     return (
-      <ButtonRoot
+      <Button.Root
         {...otherButtonProps}
         size={ctx?.size ?? "md"}
         color="grey"
@@ -691,7 +691,7 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
         aria-label={label}
       >
         <MoreIcon />
-      </ButtonRoot>
+      </Button.Root>
     );
   };
 

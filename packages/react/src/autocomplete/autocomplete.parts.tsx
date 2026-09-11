@@ -2,12 +2,13 @@ import { Autocomplete } from "@base-ui/react/autocomplete";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
-import renderer from "../_renderer.js";
+import mergeProps from "../_merge-props.js";
+import proxyRenderProps from "../_proxy-render-props.js";
 import useRender, { type RenderProps } from "../_use-render.js";
-import { ButtonRoot } from "../button/button.parts.jsx";
+import * as Button from "../button/button.parts.jsx";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
-import type { IComponent, IUseContext } from "../types.js";
+import type { Override, IComponent, IUseContext } from "../types.js";
 
 import "./autocomplete.css";
 
@@ -841,12 +842,15 @@ export namespace GroupLabel {
 /**
  * {@link AutocompleteItem} の状態です。
  */
-export type AutocompleteItemState = Autocomplete.Item.State;
+export type AutocompleteItemState = Override<Button.Root.State, Autocomplete.Item.State>;
 
 /**
  * {@link AutocompleteItem} に渡すプロパティーです。
  */
-export type AutocompleteItemProps = React.ComponentProps<typeof Autocomplete.Item>;
+export type AutocompleteItemProps = Override<
+  Button.Root.Props,
+  Override<React.ComponentProps<typeof Autocomplete.Item>, RenderProps<AutocompleteItemState>>
+>;
 
 /**
  * リストの個々の項目要素です。
@@ -854,22 +858,29 @@ export type AutocompleteItemProps = React.ComponentProps<typeof Autocomplete.Ite
 export const AutocompleteItem: IComponent<AutocompleteItemProps> = function SuiAutocompleteItem(
   props,
 ) {
-  const { render = <div />, className, ...otherProps } = props;
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <Autocomplete.Item
       {...otherProps}
       render={(htmlProps: {}, state) => (
-        <ButtonRoot
-          {...htmlProps}
-          item
-          render={renderer(render, state)}
-          variant="naked"
-          disabled={state.disabled}
-          nativeButton={false}
+        <Button.Root
+          {...mergeProps<typeof Button.Root>([
+            htmlProps,
+            {
+              item: true,
+              variant: "naked",
+              disabled: state.disabled,
+              nativeButton: false,
+            },
+            proxyRenderProps(state, {
+              style,
+              render: render ?? <div />,
+              className: cn(className, "sui_autocomplete_item"),
+            }),
+          ])}
         />
       )}
-      className={cn(className, "sui_autocomplete_item")}
     />
   );
 };

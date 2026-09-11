@@ -5,12 +5,7 @@ import * as React from "react";
 import { ChevronRightIcon } from "../_icons.jsx";
 import toReactNode from "../_to-react-node.js";
 import useRender, { type RenderProps } from "../_use-render.js";
-import {
-  type ButtonRootSize,
-  type ButtonRootColor,
-  type ButtonRootRadius,
-  ButtonRoot,
-} from "../button/button.parts.jsx";
+import * as Button from "../button/button.parts.jsx";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
 import type { IComponent, IUseContext } from "../types.js";
@@ -206,7 +201,7 @@ export interface ITreeRootItemRenderer {
 /**
  * ツリーの項目の配色です。
  */
-export type TreeRootColor = ButtonRootColor;
+export type TreeRootColor = Button.Root.Color;
 
 /**
  * ツリーの角丸です。
@@ -798,17 +793,17 @@ export { TreeRoot as Root };
 /**
  * ツリーの項目の配色です。
  */
-export type TreeItemColor = ButtonRootColor;
+export type TreeItemColor = Button.Root.Color;
 
 /**
  * ツリーの項目の角丸です。
  */
-export type TreeItemRadius = ButtonRootRadius;
+export type TreeItemRadius = Button.Root.Radius;
 
 /**
  * ツリーの項目の大きさです。
  */
-export type TreeItemSize = ButtonRootSize;
+export type TreeItemSize = Button.Root.Size;
 
 /**
  * ツリーの項目の主な外観です。
@@ -826,7 +821,7 @@ export type TreeItemState = {};
 /**
  * {@link TreeItem} に渡すプロパティーです。
  */
-export type TreeItemProps = React.ComponentProps<typeof ButtonRoot> & {
+export type TreeItemProps = React.ComponentProps<typeof Button.Root> & {
   /**
    * 項目の配色を指定します。
    *
@@ -959,7 +954,7 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
   };
 
   return (
-    <ButtonRoot
+    <Button.Root
       {...otherButtonProps}
       id={domId}
       item

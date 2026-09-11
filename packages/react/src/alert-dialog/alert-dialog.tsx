@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { XIcon } from "../_icons.jsx";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
-import { ButtonRoot } from "../button/button.parts.jsx";
+import * as Button from "../button/button.parts.jsx";
 import type { IComponent, IUseContext } from "../types.js";
 import {
   type AlertDialogHandle,
@@ -256,9 +256,9 @@ function CancelIconButton() {
 
   return (
     <AlertDialogCloseTrigger>
-      <ButtonRoot radius={ctx?.radius} squared variant="naked">
+      <Button.Root radius={ctx?.radius} squared variant="naked">
         <XIcon />
-      </ButtonRoot>
+      </Button.Root>
     </AlertDialogCloseTrigger>
   );
 }

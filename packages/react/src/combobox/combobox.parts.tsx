@@ -2,10 +2,13 @@ import { Combobox } from "@base-ui/react/combobox";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
-import { ButtonRoot } from "../button/button.parts.jsx";
+import mergeProps from "../_merge-props.js";
+import proxyRenderProps from "../_proxy-render-props.js";
+import type { RenderProps } from "../_use-render.js";
+import * as Button from "../button/button.parts.jsx";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
-import type { IComponent, IUseContext } from "../types.js";
+import type { Override, IComponent, IUseContext } from "../types.js";
 
 import "./combobox.css";
 
@@ -1189,47 +1192,51 @@ export namespace GroupLabel {
 /**
  * {@link ComboboxItem} が持つ状態です。
  */
-export type ComboboxItemState = Combobox.Item.State;
+export type ComboboxItemState = Override<Button.Root.State, Combobox.Item.State>;
 
 /**
  * {@link ComboboxItem} に渡す props です。
  */
-export type ComboboxItemProps = React.ComponentProps<typeof Combobox.Item>;
+export type ComboboxItemProps = Override<
+  Button.Root.Props,
+  Override<React.ComponentProps<typeof Combobox.Item>, RenderProps<ComboboxItemState>>
+>;
 
 /**
  * 候補リストの個々の項目要素です。
  */
 export const ComboboxItem: IComponent<ComboboxItemProps> = function SuiComboboxItem(props) {
   const ctx = useComboboxContext();
-  const { render = <div />, className, ...otherProps } = props;
+  const { size = ctx.size, style, render, className, ...otherProps } = props;
 
   return (
     <Combobox.Item
       {...otherProps}
       render={(htmlProps: {}, state) => (
-        <ButtonRoot
-          {...htmlProps}
-          item
-          size={ctx.size}
-          color="grey"
-          render={
-            typeof render !== "function"
-              ? render
-              : (htmlProps: {}) => {
-                  return render(htmlProps, state);
-                }
-          }
-          variant="naked"
-          disabled={state.disabled}
-          nativeButton={false}
+        <Button.Root
+          {...mergeProps<typeof Button.Root>([
+            htmlProps,
+            {
+              item: true,
+              size,
+              color: "grey",
+              variant: "naked",
+              disabled: state.disabled,
+              nativeButton: false,
+            },
+            proxyRenderProps(state, {
+              style,
+              render: render ?? <div />,
+              className: cn(
+                className,
+                "sui_combobox_item",
+                (state) => state.disabled && "sui_combobox_item-disabled",
+                (state) => state.highlighted && "sui_combobox_item-highlighted",
+                (state) => state.selected && "sui_combobox_item-selected",
+              ),
+            }),
+          ])}
         />
-      )}
-      className={cn(
-        className,
-        "sui_combobox_item",
-        (state) => state.disabled && "sui_combobox_item-disabled",
-        (state) => state.highlighted && "sui_combobox_item-highlighted",
-        (state) => state.selected && "sui_combobox_item-selected",
       )}
     />
   );

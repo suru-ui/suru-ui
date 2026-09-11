@@ -3,17 +3,14 @@ import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import { CheckIcon, ChevronRightIcon } from "../_icons.jsx";
-import renderer from "../_renderer.js";
+import mergeProps from "../_merge-props.js";
+import proxyRenderProps from "../_proxy-render-props.js";
 import toReactNode from "../_to-react-node.js";
-import {
-  type ButtonRootColor,
-  type ButtonRootRadius,
-  type ButtonRootVariant,
-  ButtonRoot,
-} from "../button/button.parts.jsx";
+import type { RenderProps } from "../_use-render.js";
+import * as Button from "../button/button.parts.jsx";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
-import type { IComponent, IUseContext } from "../types.js";
+import type { Override, IComponent, IUseContext } from "../types.js";
 import {
   isItemObject,
   isGroupObject,
@@ -55,7 +52,7 @@ type MenuContextSize = Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-type MenuContextVariant = ButtonRootVariant;
+type MenuContextVariant = Button.Root.Variant;
 
 /**
  * {@link MenuRoot} が子パーツへ提供する状態です。
@@ -360,7 +357,7 @@ export type MenuRootSize = Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type MenuRootVariant = ButtonRootVariant;
+export type MenuRootVariant = Button.Root.Variant;
 
 /**
  * {@link MenuRoot} が持つ状態です。
@@ -1015,7 +1012,7 @@ export namespace Viewport {
  * @param variant チェック状態のときの外観です。
  * @returns 適用する外観です。
  */
-function getItemVariant(state: object, variant: ButtonRootVariant): ButtonRootVariant {
+function getItemVariant(state: object, variant: Button.Root.Variant): Button.Root.Variant {
   if ("checked" in state && state.checked === true) {
     return variant;
   }
@@ -1026,12 +1023,12 @@ function getItemVariant(state: object, variant: ButtonRootVariant): ButtonRootVa
 /**
  * メニューの操作項目の配色です。
  */
-export type MenuItemColor = ButtonRootColor;
+export type MenuItemColor = Button.Root.Color;
 
 /**
  * メニューの操作項目の角丸です。
  */
-export type MenuItemRadius = ButtonRootRadius;
+export type MenuItemRadius = Button.Root.Radius;
 
 /**
  * メニューの操作項目の主な外観です。
@@ -1040,17 +1037,20 @@ export type MenuItemRadius = ButtonRootRadius;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type MenuItemVariant = ButtonRootVariant;
+export type MenuItemVariant = Button.Root.Variant;
 
 /**
  * {@link MenuItem} が持つ状態です。
  */
-export type MenuItemState = Menu.Item.State;
+export type MenuItemState = Override<Button.Root.State, Menu.Item.State>;
 
 /**
  * {@link MenuItem} に渡す props です。
  */
-export type MenuItemProps = React.ComponentProps<typeof Menu.Item> & {
+export type MenuItemProps = Override<
+  Omit<Button.Root.Props, "type">,
+  Override<React.ComponentProps<typeof Menu.Item>, RenderProps<MenuItemState>>
+> & {
   /**
    * 項目の配色を指定します。
    *
@@ -1081,9 +1081,11 @@ export type MenuItemProps = React.ComponentProps<typeof Menu.Item> & {
 export const MenuItem: IComponent<MenuItemProps> = function SuiMenuItem(props) {
   const ctx = useMenuContext();
   const {
+    size = ctx.size,
     color = "grey",
+    style,
     radius = ctx.radius,
-    render = <div />,
+    render,
     variant = ctx.variant,
     className,
     ...otherProps
@@ -1093,23 +1095,30 @@ export const MenuItem: IComponent<MenuItemProps> = function SuiMenuItem(props) {
     <Menu.Item
       {...otherProps}
       render={(htmlProps: {}, state) => (
-        <ButtonRoot
-          {...htmlProps}
-          item
-          size={ctx.size}
-          color={color}
-          radius={radius}
-          render={renderer(render, state)}
-          variant={getItemVariant(state, variant)}
-          disabled={state.disabled}
-          nativeButton={false}
+        <Button.Root
+          {...mergeProps<typeof Button.Root>([
+            htmlProps,
+            {
+              item: true,
+              size,
+              color,
+              radius,
+              variant: getItemVariant(state, variant),
+              disabled: state.disabled,
+              nativeButton: false,
+            },
+            proxyRenderProps(state, {
+              style,
+              render: render ?? <div />,
+              className: cn(
+                className,
+                "sui_menu_item",
+                (state) => state.disabled && "sui_menu_item-disabled",
+                (state) => state.highlighted && "sui_menu_item-highlighted",
+              ),
+            }),
+          ])}
         />
-      )}
-      className={cn(
-        className,
-        "sui_menu_item",
-        (state) => state.disabled && "sui_menu_item-disabled",
-        (state) => state.highlighted && "sui_menu_item-highlighted",
       )}
     />
   );
@@ -1150,12 +1159,12 @@ export namespace Item {
 /**
  * メニューのリンク項目の配色です。
  */
-export type MenuLinkItemColor = ButtonRootColor;
+export type MenuLinkItemColor = Button.Root.Color;
 
 /**
  * メニューのリンク項目の角丸です。
  */
-export type MenuLinkItemRadius = ButtonRootRadius;
+export type MenuLinkItemRadius = Button.Root.Radius;
 
 /**
  * メニューのリンク項目の主な外観です。
@@ -1164,17 +1173,20 @@ export type MenuLinkItemRadius = ButtonRootRadius;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type MenuLinkItemVariant = ButtonRootVariant;
+export type MenuLinkItemVariant = Button.Root.Variant;
 
 /**
  * {@link MenuLinkItem} が持つ状態です。
  */
-export type MenuLinkItemState = Menu.LinkItem.State;
+export type MenuLinkItemState = Override<Button.Root.State, Menu.LinkItem.State>;
 
 /**
  * {@link MenuLinkItem} に渡す props です。
  */
-export type MenuLinkItemProps = React.ComponentProps<typeof Menu.LinkItem> & {
+export type MenuLinkItemProps = Override<
+  Omit<Button.Root.Props, "type">,
+  Override<React.ComponentProps<typeof Menu.LinkItem>, RenderProps<MenuLinkItemState>>
+> & {
   /**
    * 項目の配色を指定します。
    *
@@ -1205,10 +1217,11 @@ export type MenuLinkItemProps = React.ComponentProps<typeof Menu.LinkItem> & {
 export const MenuLinkItem: IComponent<MenuLinkItemProps> = function SuiMenuLinkItem(props) {
   const ctx = useMenuContext();
   const {
+    size = ctx.size,
     color = "grey",
+    style,
     radius = ctx.radius,
-    // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
-    render = <a />,
+    render,
     variant = ctx.variant,
     className,
     ...otherProps
@@ -1218,22 +1231,30 @@ export const MenuLinkItem: IComponent<MenuLinkItemProps> = function SuiMenuLinkI
     <Menu.LinkItem
       {...otherProps}
       render={(htmlProps: {}, state) => (
-        <ButtonRoot
-          {...htmlProps}
-          item
-          size={ctx.size}
-          color={color}
-          radius={radius}
-          render={renderer(render, state)}
-          variant={getItemVariant(state, variant)}
-          nativeButton={false}
+        <Button.Root
+          {...mergeProps<typeof Button.Root>([
+            htmlProps,
+            {
+              item: true,
+              size,
+              color,
+              radius,
+              variant: getItemVariant(state, variant),
+              nativeButton: false,
+            },
+            proxyRenderProps(state, {
+              style,
+              // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
+              render: render ?? <a />,
+              className: cn(
+                className,
+                "sui_menu_item",
+                "sui_menu_link_item",
+                (state) => state.highlighted && "sui_menu_item-highlighted",
+              ),
+            }),
+          ])}
         />
-      )}
-      className={cn(
-        className,
-        "sui_menu_item",
-        "sui_menu_link_item",
-        (state) => state.highlighted && "sui_menu_item-highlighted",
       )}
     />
   );
@@ -1332,12 +1353,12 @@ export namespace SubmenuRoot {
 /**
  * サブメニュー項目の配色です。
  */
-export type MenuSubmenuTriggerColor = ButtonRootColor;
+export type MenuSubmenuTriggerColor = Button.Root.Color;
 
 /**
  * サブメニュー項目の角丸です。
  */
-export type MenuSubmenuTriggerRadius = ButtonRootRadius;
+export type MenuSubmenuTriggerRadius = Button.Root.Radius;
 
 /**
  * サブメニュー項目の主な外観です。
@@ -1346,17 +1367,20 @@ export type MenuSubmenuTriggerRadius = ButtonRootRadius;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type MenuSubmenuTriggerVariant = ButtonRootVariant;
+export type MenuSubmenuTriggerVariant = Button.Root.Variant;
 
 /**
  * {@link MenuSubmenuTrigger} が持つ状態です。
  */
-export type MenuSubmenuTriggerState = Menu.SubmenuTrigger.State;
+export type MenuSubmenuTriggerState = Override<Button.Root.State, Menu.SubmenuTrigger.State>;
 
 /**
  * {@link MenuSubmenuTrigger} に渡す props です。
  */
-export type MenuSubmenuTriggerProps = React.ComponentProps<typeof Menu.SubmenuTrigger> & {
+export type MenuSubmenuTriggerProps = Override<
+  Omit<Button.Root.Props, "type">,
+  Override<React.ComponentProps<typeof Menu.SubmenuTrigger>, RenderProps<MenuSubmenuTriggerState>>
+> & {
   /**
    * 項目の配色を指定します。
    *
@@ -1388,9 +1412,11 @@ export const MenuSubmenuTrigger: IComponent<MenuSubmenuTriggerProps> =
   function SuiMenuSubmenuTrigger(props) {
     const ctx = useMenuContext();
     const {
+      size = ctx.size,
       color = "grey",
+      style,
       radius = ctx.radius,
-      render = <div />,
+      render,
       variant = ctx.variant,
       className,
       ...otherProps
@@ -1400,25 +1426,32 @@ export const MenuSubmenuTrigger: IComponent<MenuSubmenuTriggerProps> =
       <Menu.SubmenuTrigger
         {...otherProps}
         render={(htmlProps: {}, state) => (
-          <ButtonRoot
-            {...htmlProps}
-            item
-            size={ctx.size}
-            color={color}
-            radius={radius}
-            render={renderer(render, state)}
-            variant={getItemVariant(state, variant)}
-            disabled={state.disabled}
-            nativeButton={false}
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              {
+                item: true,
+                size,
+                color,
+                radius,
+                variant: getItemVariant(state, variant),
+                disabled: state.disabled,
+                nativeButton: false,
+              },
+              proxyRenderProps(state, {
+                style,
+                render: render ?? <div />,
+                className: cn(
+                  className,
+                  "sui_menu_item",
+                  "sui_menu_submenu_trigger",
+                  (state) => state.disabled && "sui_menu_item-disabled",
+                  (state) => state.highlighted && "sui_menu_item-highlighted",
+                  (state) => state.open && "sui_menu_item-open",
+                ),
+              }),
+            ])}
           />
-        )}
-        className={cn(
-          className,
-          "sui_menu_item",
-          "sui_menu_submenu_trigger",
-          (state) => state.disabled && "sui_menu_item-disabled",
-          (state) => state.highlighted && "sui_menu_item-highlighted",
-          (state) => state.open && "sui_menu_item-open",
         )}
       />
     );
@@ -1596,12 +1629,12 @@ export namespace RadioGroup {
 /**
  * ラジオ項目の配色です。
  */
-export type MenuRadioItemColor = ButtonRootColor;
+export type MenuRadioItemColor = Button.Root.Color;
 
 /**
  * ラジオ項目の角丸です。
  */
-export type MenuRadioItemRadius = ButtonRootRadius;
+export type MenuRadioItemRadius = Button.Root.Radius;
 
 /**
  * ラジオ項目の主な外観です。
@@ -1610,17 +1643,20 @@ export type MenuRadioItemRadius = ButtonRootRadius;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type MenuRadioItemVariant = ButtonRootVariant;
+export type MenuRadioItemVariant = Button.Root.Variant;
 
 /**
  * {@link MenuRadioItem} が持つ状態です。
  */
-export type MenuRadioItemState = Menu.RadioItem.State;
+export type MenuRadioItemState = Override<Button.Root.State, Menu.RadioItem.State>;
 
 /**
  * {@link MenuRadioItem} に渡す props です。
  */
-export type MenuRadioItemProps = React.ComponentProps<typeof Menu.RadioItem> & {
+export type MenuRadioItemProps = Override<
+  Omit<Button.Root.Props, "type">,
+  Override<React.ComponentProps<typeof Menu.RadioItem>, RenderProps<MenuRadioItemState>>
+> & {
   /**
    * 項目の配色を指定します。
    *
@@ -1651,9 +1687,11 @@ export type MenuRadioItemProps = React.ComponentProps<typeof Menu.RadioItem> & {
 export const MenuRadioItem: IComponent<MenuRadioItemProps> = function SuiMenuRadioItem(props) {
   const ctx = useMenuContext();
   const {
+    size = ctx.size,
     color = "grey",
+    style,
     radius = ctx.radius,
-    render = <div />,
+    render,
     variant = ctx.variant,
     className,
     ...otherProps
@@ -1663,25 +1701,32 @@ export const MenuRadioItem: IComponent<MenuRadioItemProps> = function SuiMenuRad
     <Menu.RadioItem
       {...otherProps}
       render={(htmlProps: {}, state) => (
-        <ButtonRoot
-          {...htmlProps}
-          item
-          size={ctx.size}
-          color={color}
-          radius={radius}
-          render={renderer(render, state)}
-          variant={getItemVariant(state, variant)}
-          disabled={state.disabled}
-          nativeButton={false}
+        <Button.Root
+          {...mergeProps<typeof Button.Root>([
+            htmlProps,
+            {
+              item: true,
+              size,
+              color,
+              radius,
+              variant: getItemVariant(state, variant),
+              disabled: state.disabled,
+              nativeButton: false,
+            },
+            proxyRenderProps(state, {
+              style,
+              render: render ?? <div />,
+              className: cn(
+                className,
+                "sui_menu_item",
+                "sui_menu_radio_item",
+                (state) => state.checked && "sui_menu_item-checked",
+                (state) => state.highlighted && "sui_menu_item-highlighted",
+                (state) => state.disabled && "sui_menu_item-disabled",
+              ),
+            }),
+          ])}
         />
-      )}
-      className={cn(
-        className,
-        "sui_menu_item",
-        "sui_menu_radio_item",
-        (state) => state.checked && "sui_menu_item-checked",
-        (state) => state.highlighted && "sui_menu_item-highlighted",
-        (state) => state.disabled && "sui_menu_item-disabled",
       )}
     />
   );
@@ -1780,12 +1825,12 @@ export type MenuCheckboxItemChangeEventReason = Menu.CheckboxItem.ChangeEventRea
 /**
  * チェックボックス項目の配色です。
  */
-export type MenuCheckboxItemColor = ButtonRootColor;
+export type MenuCheckboxItemColor = Button.Root.Color;
 
 /**
  * チェックボックス項目の角丸です。
  */
-export type MenuCheckboxItemRadius = ButtonRootRadius;
+export type MenuCheckboxItemRadius = Button.Root.Radius;
 
 /**
  * チェックボックス項目の主な外観です。
@@ -1794,17 +1839,20 @@ export type MenuCheckboxItemRadius = ButtonRootRadius;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type MenuCheckboxItemVariant = ButtonRootVariant;
+export type MenuCheckboxItemVariant = Button.Root.Variant;
 
 /**
  * {@link MenuCheckboxItem} が持つ状態です。
  */
-export type MenuCheckboxItemState = Menu.CheckboxItem.State;
+export type MenuCheckboxItemState = Override<Button.Root.State, Menu.CheckboxItem.State>;
 
 /**
  * {@link MenuCheckboxItem} に渡す props です。
  */
-export type MenuCheckboxItemProps = React.ComponentProps<typeof Menu.CheckboxItem> & {
+export type MenuCheckboxItemProps = Override<
+  Omit<Button.Root.Props, "type">,
+  Override<React.ComponentProps<typeof Menu.CheckboxItem>, RenderProps<MenuCheckboxItemState>>
+> & {
   /**
    * 項目の配色を指定します。
    *
@@ -1837,9 +1885,11 @@ export const MenuCheckboxItem: IComponent<MenuCheckboxItemProps> = function SuiM
 ) {
   const ctx = useMenuContext();
   const {
+    size = ctx.size,
     color = "grey",
+    style,
     radius = ctx.radius,
-    render = <div />,
+    render,
     variant = ctx.variant,
     className,
     ...otherProps
@@ -1849,25 +1899,32 @@ export const MenuCheckboxItem: IComponent<MenuCheckboxItemProps> = function SuiM
     <Menu.CheckboxItem
       {...otherProps}
       render={(htmlProps: {}, state) => (
-        <ButtonRoot
-          {...htmlProps}
-          item
-          size={ctx.size}
-          color={color}
-          radius={radius}
-          render={renderer(render, state)}
-          variant={getItemVariant(state, variant)}
-          disabled={state.disabled}
-          nativeButton={false}
+        <Button.Root
+          {...mergeProps<typeof Button.Root>([
+            htmlProps,
+            {
+              item: true,
+              size,
+              color,
+              radius,
+              variant: getItemVariant(state, variant),
+              disabled: state.disabled,
+              nativeButton: false,
+            },
+            proxyRenderProps(state, {
+              style,
+              render: render ?? <div />,
+              className: cn(
+                className,
+                "sui_menu_item",
+                "sui_menu_checkbox_item",
+                (state) => state.checked && "sui_menu_item-checked",
+                (state) => state.highlighted && "sui_menu_item-highlighted",
+                (state) => state.disabled && "sui_menu_item-disabled",
+              ),
+            }),
+          ])}
         />
-      )}
-      className={cn(
-        className,
-        "sui_menu_item",
-        "sui_menu_checkbox_item",
-        (state) => state.checked && "sui_menu_item-checked",
-        (state) => state.highlighted && "sui_menu_item-highlighted",
-        (state) => state.disabled && "sui_menu_item-disabled",
       )}
     />
   );

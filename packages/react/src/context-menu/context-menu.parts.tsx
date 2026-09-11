@@ -3,17 +3,14 @@ import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import { CheckIcon, ChevronRightIcon } from "../_icons.jsx";
-import renderer from "../_renderer.js";
+import mergeProps from "../_merge-props.js";
+import proxyRenderProps from "../_proxy-render-props.js";
 import toReactNode from "../_to-react-node.js";
-import {
-  type ButtonRootColor,
-  type ButtonRootRadius,
-  type ButtonRootVariant,
-  ButtonRoot,
-} from "../button/button.parts.jsx";
+import type { RenderProps } from "../_use-render.js";
+import * as Button from "../button/button.parts.jsx";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
-import type { IComponent, IUseContext } from "../types.js";
+import type { Override, IComponent, IUseContext } from "../types.js";
 import {
   isItemObject,
   isGroupObject,
@@ -55,7 +52,7 @@ type ContextMenuContextSize = Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-type ContextMenuContextVariant = ButtonRootVariant;
+type ContextMenuContextVariant = Button.Root.Variant;
 
 /**
  * {@link ContextMenuRoot} が子パーツへ提供する状態です。
@@ -346,7 +343,7 @@ export type ContextMenuRootSize = Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type ContextMenuRootVariant = ButtonRootVariant;
+export type ContextMenuRootVariant = Button.Root.Variant;
 
 /**
  * {@link ContextMenuRoot} が持つ状態です。
@@ -915,7 +912,7 @@ export namespace Content {
  * @param variant チェック状態のときの外観です。
  * @returns 適用する外観です。
  */
-function getItemVariant(state: object, variant: ButtonRootVariant): ButtonRootVariant {
+function getItemVariant(state: object, variant: Button.Root.Variant): Button.Root.Variant {
   if ("checked" in state && state.checked === true) {
     return variant;
   }
@@ -926,12 +923,12 @@ function getItemVariant(state: object, variant: ButtonRootVariant): ButtonRootVa
 /**
  * コンテキストメニューの操作項目の配色です。
  */
-export type ContextMenuItemColor = ButtonRootColor;
+export type ContextMenuItemColor = Button.Root.Color;
 
 /**
  * コンテキストメニューの操作項目の角丸です。
  */
-export type ContextMenuItemRadius = ButtonRootRadius;
+export type ContextMenuItemRadius = Button.Root.Radius;
 
 /**
  * コンテキストメニューの操作項目の主な外観です。
@@ -940,17 +937,20 @@ export type ContextMenuItemRadius = ButtonRootRadius;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type ContextMenuItemVariant = ButtonRootVariant;
+export type ContextMenuItemVariant = Button.Root.Variant;
 
 /**
  * {@link ContextMenuItem} が持つ状態です。
  */
-export type ContextMenuItemState = ContextMenu.Item.State;
+export type ContextMenuItemState = Override<Button.Root.State, ContextMenu.Item.State>;
 
 /**
  * {@link ContextMenuItem} に渡す props です。
  */
-export type ContextMenuItemProps = React.ComponentProps<typeof ContextMenu.Item> & {
+export type ContextMenuItemProps = Override<
+  Omit<Button.Root.Props, "type">,
+  Override<React.ComponentProps<typeof ContextMenu.Item>, RenderProps<ContextMenuItemState>>
+> & {
   /**
    * 項目の配色を指定します。
    *
@@ -983,9 +983,11 @@ export const ContextMenuItem: IComponent<ContextMenuItemProps> = function SuiCon
 ) {
   const ctx = useContextMenuContext();
   const {
+    size = ctx.size,
     color = "grey",
+    style,
     radius = ctx.radius,
-    render = <div />,
+    render,
     variant = ctx.variant,
     className,
     ...otherProps
@@ -995,23 +997,30 @@ export const ContextMenuItem: IComponent<ContextMenuItemProps> = function SuiCon
     <ContextMenu.Item
       {...otherProps}
       render={(htmlProps: {}, state) => (
-        <ButtonRoot
-          {...htmlProps}
-          item
-          size={ctx.size}
-          color={color}
-          radius={radius}
-          render={renderer(render, state)}
-          variant={getItemVariant(state, variant)}
-          disabled={state.disabled}
-          nativeButton={false}
+        <Button.Root
+          {...mergeProps<typeof Button.Root>([
+            htmlProps,
+            {
+              item: true,
+              size,
+              color,
+              radius,
+              variant: getItemVariant(state, variant),
+              disabled: state.disabled,
+              nativeButton: false,
+            },
+            proxyRenderProps(state, {
+              style,
+              render: render ?? <div />,
+              className: cn(
+                className,
+                "sui_context_menu_item",
+                (state) => state.disabled && "sui_context_menu_item-disabled",
+                (state) => state.highlighted && "sui_context_menu_item-highlighted",
+              ),
+            }),
+          ])}
         />
-      )}
-      className={cn(
-        className,
-        "sui_context_menu_item",
-        (state) => state.disabled && "sui_context_menu_item-disabled",
-        (state) => state.highlighted && "sui_context_menu_item-highlighted",
       )}
     />
   );
@@ -1052,12 +1061,12 @@ export namespace Item {
 /**
  * コンテキストメニューのリンク項目の配色です。
  */
-export type ContextMenuLinkItemColor = ButtonRootColor;
+export type ContextMenuLinkItemColor = Button.Root.Color;
 
 /**
  * コンテキストメニューのリンク項目の角丸です。
  */
-export type ContextMenuLinkItemRadius = ButtonRootRadius;
+export type ContextMenuLinkItemRadius = Button.Root.Radius;
 
 /**
  * コンテキストメニューのリンク項目の主な外観です。
@@ -1066,17 +1075,20 @@ export type ContextMenuLinkItemRadius = ButtonRootRadius;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type ContextMenuLinkItemVariant = ButtonRootVariant;
+export type ContextMenuLinkItemVariant = Button.Root.Variant;
 
 /**
  * {@link ContextMenuLinkItem} が持つ状態です。
  */
-export type ContextMenuLinkItemState = ContextMenu.LinkItem.State;
+export type ContextMenuLinkItemState = Override<Button.Root.State, ContextMenu.LinkItem.State>;
 
 /**
  * {@link ContextMenuLinkItem} に渡す props です。
  */
-export type ContextMenuLinkItemProps = React.ComponentProps<typeof ContextMenu.LinkItem> & {
+export type ContextMenuLinkItemProps = Override<
+  Omit<Button.Root.Props, "type">,
+  Override<React.ComponentProps<typeof ContextMenu.LinkItem>, RenderProps<ContextMenuLinkItemState>>
+> & {
   /**
    * 項目の配色を指定します。
    *
@@ -1108,10 +1120,11 @@ export const ContextMenuLinkItem: IComponent<ContextMenuLinkItemProps> =
   function SuiContextMenuLinkItem(props) {
     const ctx = useContextMenuContext();
     const {
+      size = ctx.size,
       color = "grey",
+      style,
       radius = ctx.radius,
-      // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
-      render = <a />,
+      render,
       variant = ctx.variant,
       className,
       ...otherProps
@@ -1121,22 +1134,30 @@ export const ContextMenuLinkItem: IComponent<ContextMenuLinkItemProps> =
       <ContextMenu.LinkItem
         {...otherProps}
         render={(htmlProps: {}, state) => (
-          <ButtonRoot
-            {...htmlProps}
-            item
-            size={ctx.size}
-            color={color}
-            radius={radius}
-            render={renderer(render, state)}
-            variant={getItemVariant(state, variant)}
-            nativeButton={false}
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              {
+                item: true,
+                size,
+                color,
+                radius,
+                variant: getItemVariant(state, variant),
+                nativeButton: false,
+              },
+              proxyRenderProps(state, {
+                style,
+                // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
+                render: render ?? <a />,
+                className: cn(
+                  className,
+                  "sui_context_menu_item",
+                  "sui_context_menu_link_item",
+                  (state) => state.highlighted && "sui_context_menu_item-highlighted",
+                ),
+              }),
+            ])}
           />
-        )}
-        className={cn(
-          className,
-          "sui_context_menu_item",
-          "sui_context_menu_link_item",
-          (state) => state.highlighted && "sui_context_menu_item-highlighted",
         )}
       />
     );
@@ -1234,12 +1255,12 @@ export namespace SubmenuRoot {
 /**
  * サブメニュー項目の配色です。
  */
-export type ContextMenuSubmenuTriggerColor = ButtonRootColor;
+export type ContextMenuSubmenuTriggerColor = Button.Root.Color;
 
 /**
  * サブメニュー項目の角丸です。
  */
-export type ContextMenuSubmenuTriggerRadius = ButtonRootRadius;
+export type ContextMenuSubmenuTriggerRadius = Button.Root.Radius;
 
 /**
  * サブメニュー項目の主な外観です。
@@ -1248,18 +1269,25 @@ export type ContextMenuSubmenuTriggerRadius = ButtonRootRadius;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type ContextMenuSubmenuTriggerVariant = ButtonRootVariant;
+export type ContextMenuSubmenuTriggerVariant = Button.Root.Variant;
 
 /**
  * {@link ContextMenuSubmenuTrigger} が持つ状態です。
  */
-export type ContextMenuSubmenuTriggerState = ContextMenu.SubmenuTrigger.State;
+export type ContextMenuSubmenuTriggerState = Override<
+  Button.Root.State,
+  ContextMenu.SubmenuTrigger.State
+>;
 
 /**
  * {@link ContextMenuSubmenuTrigger} に渡す props です。
  */
-export type ContextMenuSubmenuTriggerProps = React.ComponentProps<
-  typeof ContextMenu.SubmenuTrigger
+export type ContextMenuSubmenuTriggerProps = Override<
+  Omit<Button.Root.Props, "type">,
+  Override<
+    React.ComponentProps<typeof ContextMenu.SubmenuTrigger>,
+    RenderProps<ContextMenuSubmenuTriggerState>
+  >
 > & {
   /**
    * 項目の配色を指定します。
@@ -1292,9 +1320,11 @@ export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProp
   function SuiContextMenuSubmenuTrigger(props) {
     const ctx = useContextMenuContext();
     const {
+      size = ctx.size,
       color = "grey",
+      style,
       radius = ctx.radius,
-      render = <div />,
+      render,
       variant = ctx.variant,
       className,
       ...otherProps
@@ -1304,25 +1334,32 @@ export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProp
       <ContextMenu.SubmenuTrigger
         {...otherProps}
         render={(htmlProps: {}, state) => (
-          <ButtonRoot
-            {...htmlProps}
-            item
-            size={ctx.size}
-            color={color}
-            radius={radius}
-            render={renderer(render, state)}
-            variant={getItemVariant(state, variant)}
-            disabled={state.disabled}
-            nativeButton={false}
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              {
+                item: true,
+                size,
+                color,
+                radius,
+                variant: getItemVariant(state, variant),
+                disabled: state.disabled,
+                nativeButton: false,
+              },
+              proxyRenderProps(state, {
+                style,
+                render: render ?? <div />,
+                className: cn(
+                  className,
+                  "sui_context_menu_item",
+                  "sui_context_menu_submenu_trigger",
+                  (state) => state.disabled && "sui_context_menu_item-disabled",
+                  (state) => state.highlighted && "sui_context_menu_item-highlighted",
+                  (state) => state.open && "sui_context_menu_item-open",
+                ),
+              }),
+            ])}
           />
-        )}
-        className={cn(
-          className,
-          "sui_context_menu_item",
-          "sui_context_menu_submenu_trigger",
-          (state) => state.disabled && "sui_context_menu_item-disabled",
-          (state) => state.highlighted && "sui_context_menu_item-highlighted",
-          (state) => state.open && "sui_context_menu_item-open",
         )}
       />
     );
@@ -1509,12 +1546,12 @@ export namespace RadioGroup {
 /**
  * ラジオ項目の配色です。
  */
-export type ContextMenuRadioItemColor = ButtonRootColor;
+export type ContextMenuRadioItemColor = Button.Root.Color;
 
 /**
  * ラジオ項目の角丸です。
  */
-export type ContextMenuRadioItemRadius = ButtonRootRadius;
+export type ContextMenuRadioItemRadius = Button.Root.Radius;
 
 /**
  * ラジオ項目の主な外観です。
@@ -1523,17 +1560,23 @@ export type ContextMenuRadioItemRadius = ButtonRootRadius;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type ContextMenuRadioItemVariant = ButtonRootVariant;
+export type ContextMenuRadioItemVariant = Button.Root.Variant;
 
 /**
  * {@link ContextMenuRadioItem} が持つ状態です。
  */
-export type ContextMenuRadioItemState = ContextMenu.RadioItem.State;
+export type ContextMenuRadioItemState = Override<Button.Root.State, ContextMenu.RadioItem.State>;
 
 /**
  * {@link ContextMenuRadioItem} に渡す props です。
  */
-export type ContextMenuRadioItemProps = React.ComponentProps<typeof ContextMenu.RadioItem> & {
+export type ContextMenuRadioItemProps = Override<
+  Omit<Button.Root.Props, "type">,
+  Override<
+    React.ComponentProps<typeof ContextMenu.RadioItem>,
+    RenderProps<ContextMenuRadioItemState>
+  >
+> & {
   /**
    * 項目の配色を指定します。
    *
@@ -1565,9 +1608,11 @@ export const ContextMenuRadioItem: IComponent<ContextMenuRadioItemProps> =
   function SuiContextMenuRadioItem(props) {
     const ctx = useContextMenuContext();
     const {
+      size = ctx.size,
       color = "grey",
+      style,
       radius = ctx.radius,
-      render = <div />,
+      render,
       variant = ctx.variant,
       className,
       ...otherProps
@@ -1577,25 +1622,32 @@ export const ContextMenuRadioItem: IComponent<ContextMenuRadioItemProps> =
       <ContextMenu.RadioItem
         {...otherProps}
         render={(htmlProps: {}, state) => (
-          <ButtonRoot
-            {...htmlProps}
-            item
-            size={ctx.size}
-            color={color}
-            radius={radius}
-            render={renderer(render, state)}
-            variant={getItemVariant(state, variant)}
-            disabled={state.disabled}
-            nativeButton={false}
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              {
+                item: true,
+                size,
+                color,
+                radius,
+                variant: getItemVariant(state, variant),
+                disabled: state.disabled,
+                nativeButton: false,
+              },
+              proxyRenderProps(state, {
+                style,
+                render: render ?? <div />,
+                className: cn(
+                  className,
+                  "sui_context_menu_item",
+                  "sui_context_menu_radio_item",
+                  (state) => state.checked && "sui_context_menu_item-checked",
+                  (state) => state.highlighted && "sui_context_menu_item-highlighted",
+                  (state) => state.disabled && "sui_context_menu_item-disabled",
+                ),
+              }),
+            ])}
           />
-        )}
-        className={cn(
-          className,
-          "sui_context_menu_item",
-          "sui_context_menu_radio_item",
-          (state) => state.checked && "sui_context_menu_item-checked",
-          (state) => state.highlighted && "sui_context_menu_item-highlighted",
-          (state) => state.disabled && "sui_context_menu_item-disabled",
         )}
       />
     );
@@ -1696,12 +1748,12 @@ export type ContextMenuCheckboxItemChangeEventReason = ContextMenu.CheckboxItem.
 /**
  * チェックボックス項目の配色です。
  */
-export type ContextMenuCheckboxItemColor = ButtonRootColor;
+export type ContextMenuCheckboxItemColor = Button.Root.Color;
 
 /**
  * チェックボックス項目の角丸です。
  */
-export type ContextMenuCheckboxItemRadius = ButtonRootRadius;
+export type ContextMenuCheckboxItemRadius = Button.Root.Radius;
 
 /**
  * チェックボックス項目の主な外観です。
@@ -1710,17 +1762,26 @@ export type ContextMenuCheckboxItemRadius = ButtonRootRadius;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type ContextMenuCheckboxItemVariant = ButtonRootVariant;
+export type ContextMenuCheckboxItemVariant = Button.Root.Variant;
 
 /**
  * {@link ContextMenuCheckboxItem} が持つ状態です。
  */
-export type ContextMenuCheckboxItemState = ContextMenu.CheckboxItem.State;
+export type ContextMenuCheckboxItemState = Override<
+  Button.Root.State,
+  ContextMenu.CheckboxItem.State
+>;
 
 /**
  * {@link ContextMenuCheckboxItem} に渡す props です。
  */
-export type ContextMenuCheckboxItemProps = React.ComponentProps<typeof ContextMenu.CheckboxItem> & {
+export type ContextMenuCheckboxItemProps = Override<
+  Omit<Button.Root.Props, "type">,
+  Override<
+    React.ComponentProps<typeof ContextMenu.CheckboxItem>,
+    RenderProps<ContextMenuCheckboxItemState>
+  >
+> & {
   /**
    * 項目の配色を指定します。
    *
@@ -1752,9 +1813,11 @@ export const ContextMenuCheckboxItem: IComponent<ContextMenuCheckboxItemProps> =
   function SuiContextMenuCheckboxItem(props) {
     const ctx = useContextMenuContext();
     const {
+      size = ctx.size,
       color = "grey",
+      style,
       radius = ctx.radius,
-      render = <div />,
+      render,
       variant = ctx.variant,
       className,
       ...otherProps
@@ -1764,25 +1827,32 @@ export const ContextMenuCheckboxItem: IComponent<ContextMenuCheckboxItemProps> =
       <ContextMenu.CheckboxItem
         {...otherProps}
         render={(htmlProps: {}, state) => (
-          <ButtonRoot
-            {...htmlProps}
-            item
-            size={ctx.size}
-            color={color}
-            radius={radius}
-            render={renderer(render, state)}
-            variant={getItemVariant(state, variant)}
-            disabled={state.disabled}
-            nativeButton={false}
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              {
+                item: true,
+                size,
+                color,
+                radius,
+                variant: getItemVariant(state, variant),
+                disabled: state.disabled,
+                nativeButton: false,
+              },
+              proxyRenderProps(state, {
+                style,
+                render: render ?? <div />,
+                className: cn(
+                  className,
+                  "sui_context_menu_item",
+                  "sui_context_menu_checkbox_item",
+                  (state) => state.checked && "sui_context_menu_item-checked",
+                  (state) => state.highlighted && "sui_context_menu_item-highlighted",
+                  (state) => state.disabled && "sui_context_menu_item-disabled",
+                ),
+              }),
+            ])}
           />
-        )}
-        className={cn(
-          className,
-          "sui_context_menu_item",
-          "sui_context_menu_checkbox_item",
-          (state) => state.checked && "sui_context_menu_item-checked",
-          (state) => state.highlighted && "sui_context_menu_item-highlighted",
-          (state) => state.disabled && "sui_context_menu_item-disabled",
         )}
       />
     );

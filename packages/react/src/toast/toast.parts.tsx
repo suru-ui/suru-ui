@@ -250,8 +250,8 @@ export type ToastContentState = Override<Alert.Root.State, Toast.Content.State>;
  * {@link ToastContent} に渡す props です。
  */
 export type ToastContentProps = Override<
-  React.ComponentProps<typeof Toast.Content>,
-  Override<Alert.Root.Props, RenderProps<ToastContentState>>
+  Alert.Root.Props,
+  Override<React.ComponentProps<typeof Toast.Content>, RenderProps<ToastContentState>>
 >;
 
 /**
@@ -259,16 +259,14 @@ export type ToastContentProps = Override<
  */
 export const ToastContent: IComponent<ToastContentProps> = function SuiToastContent(props) {
   const { style, render, className, ...otherProps } = props;
-  const toastProps: Required<Omit<ToastContentProps, keyof Alert.Root.Props>> = {};
 
   return (
     <Toast.Content
-      {...toastProps}
+      {...otherProps}
       render={(htmlProps: {}, toastState) => (
         <Alert.Root
           {...mergeProps<typeof Alert.Root>([
             htmlProps,
-            otherProps,
             proxyRenderProps(toastState, {
               style,
               render,
@@ -332,8 +330,8 @@ export type ToastTitleState = Override<Alert.Title.State, Toast.Title.State>;
  * {@link ToastTitle} に渡す props です。
  */
 export type ToastTitleProps = Override<
-  React.ComponentProps<typeof Toast.Title>,
-  Override<Alert.Title.Props, RenderProps<ToastTitleState>>
+  Alert.Title.Props,
+  Override<React.ComponentProps<typeof Toast.Title>, RenderProps<ToastTitleState>>
 >;
 
 /**
@@ -341,16 +339,14 @@ export type ToastTitleProps = Override<
  */
 export const ToastTitle: IComponent<ToastTitleProps> = function SuiToastTitle(props) {
   const { style, render, className, ...otherProps } = props;
-  const toastProps: Required<Omit<ToastTitleProps, keyof Alert.Title.Props>> = {};
 
   return (
     <Toast.Title
-      {...toastProps}
+      {...otherProps}
       render={(htmlProps: {}, toastState) => (
         <Alert.Title
           {...mergeProps<typeof Alert.Title>([
             htmlProps,
-            otherProps,
             proxyRenderProps(toastState, {
               style,
               render,
@@ -389,8 +385,8 @@ export type ToastDescriptionState = Override<Alert.Content.State, Toast.Descript
  * {@link ToastDescription} に渡す props です。
  */
 export type ToastDescriptionProps = Override<
-  React.ComponentProps<typeof Toast.Description>,
-  Override<Alert.Content.Props, RenderProps<ToastDescriptionState>>
+  Alert.Content.Props,
+  Override<React.ComponentProps<typeof Toast.Description>, RenderProps<ToastDescriptionState>>
 >;
 
 /**
@@ -400,16 +396,14 @@ export const ToastDescription: IComponent<ToastDescriptionProps> = function SuiT
   props,
 ) {
   const { style, render, className, ...otherProps } = props;
-  const toastProps: Required<Omit<ToastDescriptionProps, keyof Alert.Content.Props>> = {};
 
   return (
     <Toast.Description
-      {...toastProps}
+      {...otherProps}
       render={(htmlProps: {}, toastState) => (
         <Alert.Content
           {...mergeProps<typeof Alert.Content>([
             htmlProps,
-            otherProps,
             proxyRenderProps(toastState, {
               style,
               render,
@@ -502,8 +496,8 @@ export type ToastActionState = Override<Button.Root.State, Toast.Action.State>;
  * {@link ToastAction} に渡す props です。
  */
 export type ToastActionProps = Override<
-  React.ComponentProps<typeof Toast.Action>,
-  Override<Button.Root.Props, RenderProps<ToastActionState>>
+  Button.Root.Props,
+  Override<React.ComponentProps<typeof Toast.Action>, RenderProps<ToastActionState>>
 >;
 
 /**
@@ -519,16 +513,14 @@ export const ToastAction: IComponent<ToastActionProps> = function SuiToastAction
     nativeButton,
     ...otherProps
   } = props;
-  const toastProps: Required<Omit<ToastActionProps, keyof Button.Root.Props>> = {};
 
   return (
     <Toast.Action
-      {...toastProps}
+      {...otherProps}
       render={(htmlProps: {}, toastState) => (
         <Button.Root
           {...mergeProps<typeof Button.Root>([
             htmlProps,
-            otherProps,
             {
               color,
               variant,
@@ -613,8 +605,8 @@ export type ToastCloseState = Override<Button.Root.State, Toast.Close.State>;
  * {@link ToastClose} に渡す props です。
  */
 export type ToastCloseProps = Override<
-  React.ComponentProps<typeof Toast.Close>,
-  Override<Button.Root.Props, RenderProps<ToastCloseState>>
+  Button.Root.Props,
+  Override<React.ComponentProps<typeof Toast.Close>, RenderProps<ToastCloseState>>
 >;
 
 /**
@@ -630,16 +622,14 @@ export const ToastClose: IComponent<ToastCloseProps> = function SuiToastClose(pr
     nativeButton,
     ...otherProps
   } = props;
-  const toastProps: Required<Omit<ToastCloseProps, keyof Button.Root.Props>> = {};
 
   return (
     <Toast.Close
-      {...toastProps}
+      {...otherProps}
       render={(htmlProps: {}, toastState) => (
         <Button.Root
           {...mergeProps<typeof Button.Root>([
             htmlProps,
-            otherProps,
             {
               color,
               variant,
