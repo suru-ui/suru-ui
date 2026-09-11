@@ -311,17 +311,14 @@ export type ToastContentState = Override<Alert.Root.State, Toast.Content.State>;
 export namespace ToastContentProps {
   export type Render = RenderProps<ToastContentState>;
 
-  export type SuruUI = {};
+  export type SuruUI = Alert.Root.Props.SuruUI;
 
   export type BaseUI = Omit<
-    Override<
-      Alert.Root.Props,
-      Override<React.ComponentProps<typeof Toast.Content>, RenderProps<ToastContentState>>
-    >,
-    keyof Render | keyof React.ComponentProps<"div">
+    React.ComponentProps<typeof Toast.Content>,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -336,7 +333,14 @@ export type ToastContentProps = ToastContentProps.Render &
  * 通知の内容をまとめるコンテナー要素です。
  */
 export const ToastContent: IComponent<ToastContentProps> = function SuiToastContent(props) {
-  const { style, render, className, ...otherProps } = props;
+  const { size, color, style, radius, render, variant, outlined, className, ...otherProps } = props;
+  const alertRootProps: Required<Alert.Root.Props.SuruUI> = {
+    size,
+    color,
+    radius,
+    variant,
+    outlined,
+  };
 
   return (
     <Toast.Content
@@ -345,6 +349,7 @@ export const ToastContent: IComponent<ToastContentProps> = function SuiToastCont
         <Alert.Root
           {...mergeProps<typeof Alert.Root>([
             htmlProps,
+            alertRootProps,
             proxyRenderProps(toastState, {
               style,
               render,
@@ -399,17 +404,14 @@ export type ToastTitleState = Override<Alert.Title.State, Toast.Title.State>;
 export namespace ToastTitleProps {
   export type Render = RenderProps<ToastTitleState>;
 
-  export type SuruUI = {};
+  export type SuruUI = Alert.Title.Props.SuruUI;
 
   export type BaseUI = Omit<
-    Override<
-      Alert.Title.Props,
-      Override<React.ComponentProps<typeof Toast.Title>, RenderProps<ToastTitleState>>
-    >,
-    keyof Render | keyof React.ComponentProps<"h2">
+    React.ComponentProps<typeof Toast.Title>,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"h2">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"h2">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"h2">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -474,17 +476,14 @@ export type ToastDescriptionState = Override<Alert.Content.State, Toast.Descript
 export namespace ToastDescriptionProps {
   export type Render = RenderProps<ToastDescriptionState>;
 
-  export type SuruUI = {};
+  export type SuruUI = Alert.Content.Props.SuruUI;
 
   export type BaseUI = Omit<
-    Override<
-      Alert.Content.Props,
-      Override<React.ComponentProps<typeof Toast.Description>, RenderProps<ToastDescriptionState>>
-    >,
-    keyof Render | keyof React.ComponentProps<"p">
+    React.ComponentProps<typeof Toast.Description>,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"p">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"p">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"p">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -612,14 +611,12 @@ export namespace ToastActionProps {
 
   export type SuruUI = {
     color?: ToastActionColor | undefined;
+    size?: ToastActionSize | undefined;
     variant?: ToastActionVariant | undefined;
   };
 
   export type BaseUI = Omit<
-    Override<
-      Button.ButtonRootProps,
-      Override<React.ComponentProps<typeof Toast.Action>, RenderProps<ToastActionState>>
-    >,
+    React.ComponentProps<typeof Toast.Action>,
     keyof Render | keyof SuruUI | keyof React.ComponentProps<"button">
   >;
 
@@ -639,6 +636,7 @@ export type ToastActionProps = ToastActionProps.Render &
  */
 export const ToastAction: IComponent<ToastActionProps> = function SuiToastAction(props) {
   const {
+    size,
     color = "grey",
     style,
     render,
@@ -656,6 +654,7 @@ export const ToastAction: IComponent<ToastActionProps> = function SuiToastAction
           {...mergeProps<typeof Button.Root>([
             htmlProps,
             {
+              size,
               color,
               variant,
             },
@@ -718,17 +717,14 @@ export type ToastCloseState = Override<Button.Root.State, Toast.Close.State>;
 export namespace ToastCloseProps {
   export type Render = RenderProps<ToastCloseState>;
 
-  export type SuruUI = {
-    color?: ToastCloseColor | undefined;
-    variant?: ToastCloseVariant | undefined;
-  };
+  export type SuruUI = Omit<Button.Root.Props.SuruUI, "item" | "pending">;
 
-  export type BaseUI = Omit<
-    Override<
-      Button.ButtonRootProps,
-      Override<React.ComponentProps<typeof Toast.Close>, RenderProps<ToastCloseState>>
-    >,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"button">
+  export type BaseUI = Override<
+    Button.Root.Props.BaseUI,
+    Omit<
+      React.ComponentProps<typeof Toast.Close>,
+      keyof Render | keyof SuruUI | keyof React.ComponentProps<"button">
+    >
   >;
 
   export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
@@ -747,36 +743,55 @@ export type ToastCloseProps = ToastCloseProps.Render &
  */
 export const ToastClose: IComponent<ToastCloseProps> = function SuiToastClose(props) {
   const {
+    size,
     color = "grey",
+    muted,
     style,
+    radius,
     render,
+    squared,
     variant = "naked",
+    outlined,
     className,
     nativeButton,
+    focusableWhenDisabled,
     ...otherProps
   } = props;
+  const baseuiProps: Required<ToastCloseProps.BaseUI> = {
+    nativeButton,
+    focusableWhenDisabled,
+  };
+  const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> = {
+    item: undefined,
+    size,
+    color,
+    muted,
+    radius,
+    pending: undefined,
+    squared,
+    variant,
+    outlined,
+    nativeButton,
+    focusableWhenDisabled,
+  };
 
   return (
     <Toast.Close
       {...otherProps}
+      {...baseuiProps}
       render={(htmlProps: {}, toastState) => (
         <Button.Root
           {...mergeProps<typeof Button.Root>([
             htmlProps,
-            {
-              color,
-              variant,
-            },
+            buttonRootProps,
             proxyRenderProps(toastState, {
               style,
               render,
               className,
             }),
           ])}
-          nativeButton={nativeButton}
         />
       )}
-      nativeButton={nativeButton}
     />
   );
 };

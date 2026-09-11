@@ -22,6 +22,7 @@
     "no-unused-expressions": "off", // logtape で使用します。
     "no-unused-vars": "warn", // TypeScript に委譲します。
     "vitest/no-focused-tests": "off", // デバッグ作業を容易にします。
+    "typescript/no-redundant-type-constituents": "off", // 形式的に必要な処理を残します。
     "react/no-children-prop": "off", // 一時的に無効化
     "jsx_a11y/label-has-associated-control": "off" // 一時的に無効化
   },

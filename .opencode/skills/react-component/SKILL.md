@@ -209,6 +209,84 @@ export type AccordionRootProps<TItem = any, TValue = any> = AccordionRootProps.R
 
 HTML 属性と衝突する名前は避け、別名にします (例: `title` と区別するための `htmlTitle`)。
 
+### 継承 (SuruUI コンポーネントを内包する場合)
+
+継承先の Base UI (`Outer`。例: `Toast.Close`) の `render` 内で継承元の Suru UI (`Inner`。例: `Button.Root`) を描画する場合は `ToastClose` を模範にします。
+
+型は次の通りにします。
+
+- `SuruUI`: `Inner` の `SuruUI` から必要なプロパティーを継承します。全部要る場合はそのまま代入し、不要なキーだけ `Omit` で除きます (例: `Omit<Button.ButtonRootProps["SuruUI"], "item" | "pending">`)。一部だけ要る場合は必要なキーだけを定義します (例: `ToastAction`)。
+- `BaseUI`: `Inner` の `BaseUI` を土台に `Outer` の props で上書きします。`Outer` を勝たせるため `Override` を使います。
+- `HTML`: 通常通り `Omit<React.ComponentProps<"xxx">, keyof Render | keyof SuruUI>` にします。
+- `State`: `Override<Inner.State, Outer.State>` にします。
+
+```tsx
+export namespace ToastCloseProps {
+  export type Render = RenderProps<ToastCloseState>;
+
+  export type SuruUI = Omit<Button.Root.Props.SuruUI, "item" | "pending">;
+
+  export type BaseUI = Override<
+    Button.Root.Props.BaseUI,
+    Omit<
+      React.ComponentProps<typeof Toast.Close>,
+      keyof Render | keyof SuruUI | keyof React.ComponentProps<"button">
+    >
+  >;
+
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
+}
+```
+
+実装は次の通りにします。
+
+1. `props` から `Inner` の `SuruUI` キー、`Render` のすべて (`style`、`render`、`className`)、共有の `BaseUI` キー (例: `nativeButton`、`focusableWhenDisabled`) を分解し、残りを `...otherProps` にします。
+2. `Outer` 独自の `BaseUI` (`baseuiProps: Required<Own.BaseUI>`) を用意し、`Outer` に `{...otherProps} {...baseuiProps}` で渡します。`Required` で漏れを防ぎます。共有キーがなければ作りません。
+3. `Inner` 独自の `SuruUI + BaseUI` (`innerProps: Required<Inner.SuruUI & Inner.BaseUI>`) を用意し、`mergeProps` の第 2 要素にします。`SuruUI` で除外したキーは `undefined` を明示します。`Required` で漏れを防ぎます。
+4. `Outer` の `render={(htmlProps, outerState) => (<Inner {...mergeProps([htmlProps, innerProps, proxyRenderProps(outerState, { style, render, className })])} />)}` とし、`proxyRenderProps` には `Render` をすべて渡します。`mergeProps` の順序 (`htmlProps` → `innerProps` → `proxyRenderProps` 結果) は変えません。
+
+公開しない `Inner` の `SuruUI` キーは内包先オブジェクト側で埋めます (固定値・`ctx` 値・`undefined` のいずれか。例: `item: true`、`pending: undefined`)。`Outer` の状態から求める `Inner` の `HTML` prop が要る場合 (例: `state.disabled` → `disabled`) は、型に `Pick<Inner.HTML, "disabled">` を交差させて同じオブジェクトに入れます。
+
+```tsx
+const baseuiProps: Required<ToastCloseProps.BaseUI> = {
+  nativeButton,
+  focusableWhenDisabled,
+};
+const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> = {
+  item: undefined,
+  size,
+  color,
+  muted,
+  radius,
+  pending: undefined,
+  squared,
+  variant,
+  outlined,
+  nativeButton,
+  focusableWhenDisabled,
+};
+
+return (
+  <Toast.Close
+    {...otherProps}
+    {...baseuiProps}
+    render={(htmlProps: {}, toastState) => (
+      <Button.Root
+        {...mergeProps<typeof Button.Root>([
+          htmlProps,
+          buttonRootProps,
+          proxyRenderProps(toastState, {
+            style,
+            render,
+            className,
+          }),
+        ])}
+      />
+    )}
+  />
+);
+```
+
 ### パーツ実装
 
 型は `IComponent<Props>`、実装名は `Sui` 付き PascalCase にします。
@@ -527,3 +605,6 @@ mise run test:typecheck
 - CSS セレクターに Base UI の `data-*` 属性を使わない (`[data-scope]` を除く)。状態の装飾は `cn` の状態関数によるクラスで行う。
 - `State` 型にない状態のクラスや CSS 指定を書かない。Base UI が発行しない属性への指定は死になる。
 - `items` を所有と描画の両パーツに二重定義しない。描画側は `Context` で受けます。
+- 継承の `BaseUI` を `Omit` の交差で書かない。`Inner` を土台に `Outer` で上書きする `Override` にします。
+- 継承の `baseuiProps` と内包先 props オブジェクトから `Required` を省略しない。除外交差したキーは `undefined` 明示を忘れない。
+- 継承の `proxyRenderProps` に渡す `Render` (`style`、`render`、`className`) を省略しない。`mergeProps` の順序を変えない。
