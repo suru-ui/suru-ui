@@ -342,7 +342,7 @@ export type ContextMenuRootVariant = Button.Root.Variant;
 export type ContextMenuRootState = ContextMenu.Root.State;
 
 export namespace ContextMenuRootProps {
-  export type BaseUI<TItem = any> = Omit<
+  export type BaseUI = Omit<
     React.ComponentProps<typeof ContextMenu.Root>,
     keyof Render | keyof SuruUI
   >;
@@ -394,7 +394,7 @@ export namespace ContextMenuRootProps {
  */
 export type ContextMenuRootProps<TItem = any> = ContextMenuRootProps.Render &
   ContextMenuRootProps.SuruUI<TItem> &
-  ContextMenuRootProps.BaseUI<TItem> &
+  ContextMenuRootProps.BaseUI &
   ContextMenuRootProps.HTML;
 
 interface IContextMenuRoot extends IComponent<ContextMenuRootProps> {
@@ -438,13 +438,10 @@ export { ContextMenuRoot as Root };
 export namespace Root {
   export type State = ContextMenuRootState;
 
-  export type Props<TItem = any> = Props.Render &
-    Props.SuruUI<TItem> &
-    Props.BaseUI<TItem> &
-    Props.HTML;
+  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI<TItem = any> = ContextMenuRootProps.BaseUI<TItem>;
+    export type BaseUI = ContextMenuRootProps.BaseUI;
 
     export type HTML = ContextMenuRootProps.HTML;
 

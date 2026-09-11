@@ -356,7 +356,7 @@ export type MenuRootVariant = Button.Root.Variant;
 export type MenuRootState = Menu.Root.State;
 
 export namespace MenuRootProps {
-  export type BaseUI<TPayload = unknown, TItem = any> = Omit<
+  export type BaseUI<TPayload = unknown> = Omit<
     Menu.Root.Props<TPayload>,
     keyof Render | keyof SuruUI
   >;
@@ -416,7 +416,7 @@ export namespace MenuRootProps {
  */
 export type MenuRootProps<TPayload = unknown, TItem = any> = MenuRootProps.Render &
   MenuRootProps.SuruUI<TPayload, TItem> &
-  MenuRootProps.BaseUI<TPayload, TItem> &
+  MenuRootProps.BaseUI<TPayload> &
   MenuRootProps.HTML;
 
 interface IMenuRoot extends IComponent<MenuRootProps> {
@@ -461,11 +461,11 @@ export namespace Root {
 
   export type Props<TPayload = unknown, TItem = any> = Props.Render &
     Props.SuruUI<TPayload, TItem> &
-    Props.BaseUI<TPayload, TItem> &
+    Props.BaseUI<TPayload> &
     Props.HTML;
 
   export namespace Props {
-    export type BaseUI<TPayload = unknown, TItem = any> = MenuRootProps.BaseUI<TPayload, TItem>;
+    export type BaseUI<TPayload = unknown> = MenuRootProps.BaseUI<TPayload>;
 
     export type HTML = MenuRootProps.HTML;
 

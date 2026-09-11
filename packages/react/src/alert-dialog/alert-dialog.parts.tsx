@@ -118,7 +118,7 @@ export type AlertDialogRootChangeEventReason = AlertDialog.Root.ChangeEventReaso
 export type AlertDialogRootState = AlertDialog.Root.State;
 
 export namespace AlertDialogRootProps {
-  export type BaseUI<TPayload = any> = Omit<
+  export type BaseUI = Omit<
     React.ComponentProps<typeof AlertDialog.Root>,
     keyof Render | keyof SuruUI
   >;
@@ -142,7 +142,7 @@ export namespace AlertDialogRootProps {
  */
 export type AlertDialogRootProps<TPayload = any> = AlertDialogRootProps.Render &
   AlertDialogRootProps.SuruUI<TPayload> &
-  AlertDialogRootProps.BaseUI<TPayload> &
+  AlertDialogRootProps.BaseUI &
   AlertDialogRootProps.HTML;
 
 interface IAlertDialogRoot extends IComponent<AlertDialogRootProps> {
@@ -170,11 +170,11 @@ export namespace Root {
 
   export type Props<TPayload = any> = Props.Render &
     Props.SuruUI<TPayload> &
-    Props.BaseUI<TPayload> &
+    Props.BaseUI &
     Props.HTML;
 
   export namespace Props {
-    export type BaseUI<TPayload = any> = AlertDialogRootProps.BaseUI<TPayload>;
+    export type BaseUI = AlertDialogRootProps.BaseUI;
 
     export type HTML = AlertDialogRootProps.HTML;
 
@@ -199,7 +199,7 @@ export namespace Root {
 export type AlertDialogToggleTriggerState = AlertDialog.Trigger.State;
 
 export namespace AlertDialogToggleTriggerProps {
-  export type BaseUI<TPayload = any> = Omit<
+  export type BaseUI = Omit<
     React.ComponentProps<typeof AlertDialog.Trigger>,
     keyof Render | keyof SuruUI | "render"
   >;
@@ -233,7 +233,7 @@ export namespace AlertDialogToggleTriggerProps {
  */
 export type AlertDialogToggleTriggerProps<TPayload = any> = AlertDialogToggleTriggerProps.Render &
   AlertDialogToggleTriggerProps.SuruUI<TPayload> &
-  AlertDialogToggleTriggerProps.BaseUI<TPayload> &
+  AlertDialogToggleTriggerProps.BaseUI &
   AlertDialogToggleTriggerProps.HTML;
 
 /**
@@ -261,7 +261,7 @@ export namespace ToggleTrigger {
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI<TPayload = any> = AlertDialogToggleTriggerProps.BaseUI<TPayload>;
+    export type BaseUI = AlertDialogToggleTriggerProps.BaseUI;
 
     export type HTML = AlertDialogToggleTriggerProps.HTML;
 

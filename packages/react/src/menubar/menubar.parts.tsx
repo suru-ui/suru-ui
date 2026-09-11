@@ -70,10 +70,7 @@ export type MenubarRootOrientation = "horizontal" | "vertical";
 export type MenubarRootState = BaseMenubar.State;
 
 export namespace MenubarRootProps {
-  export type BaseUI<TItem = any> = Omit<
-    React.ComponentProps<typeof BaseMenubar>,
-    keyof Render | keyof SuruUI
-  >;
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseMenubar>, keyof Render | keyof SuruUI>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
@@ -106,7 +103,7 @@ export namespace MenubarRootProps {
  */
 export type MenubarRootProps<TItem = any> = MenubarRootProps.Render &
   MenubarRootProps.SuruUI<TItem> &
-  MenubarRootProps.BaseUI<TItem> &
+  MenubarRootProps.BaseUI &
   MenubarRootProps.HTML;
 
 interface IMenubarRoot extends IComponent<MenubarRootProps> {
@@ -174,13 +171,10 @@ export { MenubarRoot as Root };
 export namespace Root {
   export type State = MenubarRootState;
 
-  export type Props<TItem = any> = Props.Render &
-    Props.SuruUI<TItem> &
-    Props.BaseUI<TItem> &
-    Props.HTML;
+  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI<TItem = any> = MenubarRootProps.BaseUI<TItem>;
+    export type BaseUI = MenubarRootProps.BaseUI;
 
     export type HTML = MenubarRootProps.HTML;
 

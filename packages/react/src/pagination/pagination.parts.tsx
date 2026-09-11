@@ -681,7 +681,7 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
   function SuiPaginationEllipsis(props) {
     const ctx = usePaginationContext(true);
     const {
-      end = start,
+      end,
       start = 2,
       onClick,
       disabled = false,
@@ -689,7 +689,8 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
       "aria-label": ariaLabel,
       ...otherButtonProps
     } = props;
-    const label = ariaLabel ?? `${start}〜${end}ページへ移動`;
+    const resolvedEnd = end ?? start;
+    const label = ariaLabel ?? `${start}〜${resolvedEnd}ページへ移動`;
     const [editing, setEditing] = React.useState(false);
     const inputElement = useRender<HTMLInputElement, {}, boolean>({
       props: {
@@ -718,7 +719,7 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
             return;
           }
 
-          ctx?.goToPage(Math.min(Math.max(value, start), end), {
+          ctx?.goToPage(Math.min(Math.max(value, start), resolvedEnd), {
             event,
             reason: "ellipsis",
           });

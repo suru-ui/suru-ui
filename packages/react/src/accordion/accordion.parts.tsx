@@ -105,7 +105,7 @@ export type AccordionRootValue<TValue = any> = Accordion.Root.Value<TValue>;
 export type AccordionRootState<TValue = any> = Accordion.Root.State<TValue>;
 
 export namespace AccordionRootProps {
-  export type BaseUI<TItem = any, TValue = any> = Omit<
+  export type BaseUI<TValue = any> = Omit<
     React.ComponentProps<typeof Accordion.Root<TValue>>,
     keyof Render | keyof SuruUI
   >;
@@ -177,7 +177,7 @@ export namespace AccordionRootProps {
  */
 export type AccordionRootProps<TItem = any, TValue = any> = AccordionRootProps.Render<TValue> &
   AccordionRootProps.SuruUI<TItem> &
-  AccordionRootProps.BaseUI<TItem, TValue> &
+  AccordionRootProps.BaseUI<TValue> &
   AccordionRootProps.HTML;
 
 interface IAccordionRoot extends IComponent<AccordionRootProps> {
@@ -255,11 +255,11 @@ export namespace Root {
 
   export type Props<TItem = any, TValue = any> = Props.Render<TValue> &
     Props.SuruUI<TItem> &
-    Props.BaseUI<TItem, TValue> &
+    Props.BaseUI<TValue> &
     Props.HTML;
 
   export namespace Props {
-    export type BaseUI<TItem = any, TValue = any> = AccordionRootProps.BaseUI<TItem, TValue>;
+    export type BaseUI<TValue = any> = AccordionRootProps.BaseUI<TValue>;
 
     export type HTML = AccordionRootProps.HTML;
 

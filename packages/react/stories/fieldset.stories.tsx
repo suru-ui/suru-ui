@@ -185,10 +185,9 @@ export const SlotProps = meta.story({
       <Form onSubmit={(event) => event.preventDefault()}>
         <Fieldset
           {...props}
-          className="w-80"
+          className="w-80 gap-6"
           slotProps={{
             legend: { className: "text-red-500" },
-            root: { className: "gap-6" },
           }}
         >
           <RadioGroup defaultValue="standard">

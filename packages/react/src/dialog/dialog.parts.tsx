@@ -115,10 +115,7 @@ export type DialogRootChangeEventReason = Dialog.Root.ChangeEventReason;
 export type DialogRootState = Dialog.Root.State;
 
 export namespace DialogRootProps {
-  export type BaseUI<TPayload = any> = Omit<
-    React.ComponentProps<typeof Dialog.Root>,
-    keyof Render | keyof SuruUI
-  >;
+  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Root>, keyof Render | keyof SuruUI>;
 
   export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 
@@ -139,7 +136,7 @@ export namespace DialogRootProps {
  */
 export type DialogRootProps<TPayload = any> = DialogRootProps.Render &
   DialogRootProps.SuruUI<TPayload> &
-  DialogRootProps.BaseUI<TPayload> &
+  DialogRootProps.BaseUI &
   DialogRootProps.HTML;
 
 interface IDialogRoot extends IComponent<DialogRootProps> {
@@ -165,11 +162,11 @@ export namespace Root {
 
   export type Props<TPayload = any> = Props.Render &
     Props.SuruUI<TPayload> &
-    Props.BaseUI<TPayload> &
+    Props.BaseUI &
     Props.HTML;
 
   export namespace Props {
-    export type BaseUI<TPayload = any> = DialogRootProps.BaseUI<TPayload>;
+    export type BaseUI = DialogRootProps.BaseUI;
 
     export type HTML = DialogRootProps.HTML;
 
@@ -194,7 +191,7 @@ export namespace Root {
 export type DialogToggleTriggerState = Dialog.Trigger.State;
 
 export namespace DialogToggleTriggerProps {
-  export type BaseUI<TPayload = any> = Omit<
+  export type BaseUI = Omit<
     React.ComponentProps<typeof Dialog.Trigger>,
     keyof Render | keyof SuruUI
   >;
@@ -223,7 +220,7 @@ export namespace DialogToggleTriggerProps {
  */
 export type DialogToggleTriggerProps<TPayload = any> = DialogToggleTriggerProps.Render &
   DialogToggleTriggerProps.SuruUI<TPayload> &
-  DialogToggleTriggerProps.BaseUI<TPayload> &
+  DialogToggleTriggerProps.BaseUI &
   DialogToggleTriggerProps.HTML;
 
 /**
@@ -250,11 +247,11 @@ export namespace ToggleTrigger {
 
   export type Props<TPayload = any> = Props.Render &
     Props.SuruUI<TPayload> &
-    Props.BaseUI<TPayload> &
+    Props.BaseUI &
     Props.HTML;
 
   export namespace Props {
-    export type BaseUI<TPayload = any> = DialogToggleTriggerProps.BaseUI<TPayload>;
+    export type BaseUI = DialogToggleTriggerProps.BaseUI;
 
     export type HTML = DialogToggleTriggerProps.HTML;
 

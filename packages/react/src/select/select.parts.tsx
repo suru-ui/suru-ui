@@ -963,7 +963,7 @@ export interface ISelectListItemRenderer<TValue = any> {
 export type SelectListState = BaseSelect.List.State;
 
 export namespace SelectListProps {
-  export type BaseUI<TValue = any> = Omit<
+  export type BaseUI = Omit<
     React.ComponentProps<typeof BaseSelect.List>,
     keyof Render | keyof SuruUI
   >;
@@ -994,7 +994,7 @@ export namespace SelectListProps {
  */
 export type SelectListProps<TValue = any> = SelectListProps.Render &
   SelectListProps.SuruUI<TValue> &
-  SelectListProps.BaseUI<TValue> &
+  SelectListProps.BaseUI &
   SelectListProps.HTML;
 
 /**
@@ -1113,13 +1113,10 @@ export { SelectList as List };
 export namespace List {
   export type State = SelectListState;
 
-  export type Props<TValue = any> = Props.Render &
-    Props.SuruUI<TValue> &
-    Props.BaseUI<TValue> &
-    Props.HTML;
+  export type Props<TValue = any> = Props.Render & Props.SuruUI<TValue> & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type BaseUI<TValue = any> = SelectListProps.BaseUI<TValue>;
+    export type BaseUI = SelectListProps.BaseUI;
 
     export type HTML = SelectListProps.HTML;
 

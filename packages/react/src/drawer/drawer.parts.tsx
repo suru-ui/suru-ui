@@ -258,10 +258,7 @@ export type DrawerRootSnapPointChangeEventReason = Drawer.Root.SnapPointChangeEv
 export type DrawerRootState = Drawer.Root.State;
 
 export namespace DrawerRootProps {
-  export type BaseUI<TPayload = any> = Omit<
-    React.ComponentProps<typeof Drawer.Root>,
-    keyof Render | keyof SuruUI
-  >;
+  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Root>, keyof Render | keyof SuruUI>;
 
   export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 
@@ -282,7 +279,7 @@ export namespace DrawerRootProps {
  */
 export type DrawerRootProps<TPayload = any> = DrawerRootProps.Render &
   DrawerRootProps.SuruUI<TPayload> &
-  DrawerRootProps.BaseUI<TPayload> &
+  DrawerRootProps.BaseUI &
   DrawerRootProps.HTML;
 
 interface IDrawerRoot extends IComponent<DrawerRootProps> {
@@ -308,11 +305,11 @@ export namespace Root {
 
   export type Props<TPayload = any> = Props.Render &
     Props.SuruUI<TPayload> &
-    Props.BaseUI<TPayload> &
+    Props.BaseUI &
     Props.HTML;
 
   export namespace Props {
-    export type BaseUI<TPayload = any> = DrawerRootProps.BaseUI<TPayload>;
+    export type BaseUI = DrawerRootProps.BaseUI;
 
     export type HTML = DrawerRootProps.HTML;
 
@@ -343,7 +340,7 @@ export namespace Root {
 export type DrawerTriggerState = Drawer.Trigger.State;
 
 export namespace DrawerTriggerProps {
-  export type BaseUI<TPayload = any> = Omit<
+  export type BaseUI = Omit<
     React.ComponentProps<typeof Drawer.Trigger>,
     keyof Render | keyof SuruUI
   >;
@@ -372,7 +369,7 @@ export namespace DrawerTriggerProps {
  */
 export type DrawerTriggerProps<TPayload = any> = DrawerTriggerProps.Render &
   DrawerTriggerProps.SuruUI<TPayload> &
-  DrawerTriggerProps.BaseUI<TPayload> &
+  DrawerTriggerProps.BaseUI &
   DrawerTriggerProps.HTML;
 
 interface IDrawerTrigger extends IComponent<DrawerTriggerProps> {
@@ -405,11 +402,11 @@ export namespace Trigger {
 
   export type Props<TPayload = any> = Props.Render &
     Props.SuruUI<TPayload> &
-    Props.BaseUI<TPayload> &
+    Props.BaseUI &
     Props.HTML;
 
   export namespace Props {
-    export type BaseUI<TPayload = any> = DrawerTriggerProps.BaseUI<TPayload>;
+    export type BaseUI = DrawerTriggerProps.BaseUI;
 
     export type HTML = DrawerTriggerProps.HTML;
 
