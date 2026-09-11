@@ -308,11 +308,14 @@ export namespace AccordionItemProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Accordion.Item>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Accordion.Item>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Accordion.Item>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Accordion.Item>
   >;
 }
 
@@ -378,11 +381,14 @@ export namespace AccordionHeadingProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Accordion.Header>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Accordion.Header>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Accordion.Header>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Accordion.Header>
   >;
 }
 
@@ -515,7 +521,7 @@ export namespace AccordionIndicatorProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -573,11 +579,14 @@ export namespace AccordionContentProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Accordion.Panel>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Accordion.Panel>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Accordion.Panel>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Accordion.Panel>
   >;
 }
 

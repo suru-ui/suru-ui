@@ -30,11 +30,11 @@ export namespace FieldRootProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Field.Root>, keyof Render>;
+  export type BaseUI = Omit<React.ComponentProps<typeof Field.Root>, keyof Render | keyof SuruUI>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Field.Root>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Field.Root>
   >;
 }
 
@@ -106,11 +106,11 @@ export namespace FieldLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Field.Label>, keyof Render>;
+  export type BaseUI = Omit<React.ComponentProps<typeof Field.Label>, keyof Render | keyof SuruUI>;
 
   export type HTML = Omit<
     React.ComponentProps<"label">,
-    keyof Render | keyof React.ComponentProps<typeof Field.Label>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Field.Label>
   >;
 }
 
@@ -177,11 +177,14 @@ export namespace FieldControlProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Field.Control>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Field.Control>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"input">,
-    keyof Render | keyof React.ComponentProps<typeof Field.Control>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Field.Control>
   >;
 }
 
@@ -240,11 +243,14 @@ export namespace FieldDescriptionProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Field.Description>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Field.Description>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"p">,
-    keyof Render | keyof React.ComponentProps<typeof Field.Description>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Field.Description>
   >;
 }
 
@@ -303,11 +309,11 @@ export namespace FieldErrorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Field.Error>, keyof Render>;
+  export type BaseUI = Omit<React.ComponentProps<typeof Field.Error>, keyof Render | keyof SuruUI>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Field.Error>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Field.Error>
   >;
 }
 
@@ -364,11 +370,11 @@ export namespace FieldItemProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Field.Item>, keyof Render>;
+  export type BaseUI = Omit<React.ComponentProps<typeof Field.Item>, keyof Render | keyof SuruUI>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Field.Item>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Field.Item>
   >;
 }
 
@@ -425,7 +431,10 @@ export namespace FieldValidityProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Field.Validity>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Field.Validity>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = {};
 }

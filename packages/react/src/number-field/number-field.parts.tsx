@@ -318,11 +318,14 @@ export namespace NumberFieldScrubAreaProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof NumberField.ScrubArea>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof NumberField.ScrubArea>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
-    keyof Render | keyof React.ComponentProps<typeof NumberField.ScrubArea>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof NumberField.ScrubArea>
   >;
 }
 
@@ -380,11 +383,14 @@ export namespace NumberFieldScrubAreaCursorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof NumberField.ScrubAreaCursor>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof NumberField.ScrubAreaCursor>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
-    keyof Render | keyof React.ComponentProps<typeof NumberField.ScrubAreaCursor>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof NumberField.ScrubAreaCursor>
   >;
 }
 
@@ -442,11 +448,14 @@ export namespace NumberFieldGroupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof NumberField.Group>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof NumberField.Group>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof NumberField.Group>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof NumberField.Group>
   >;
 }
 
@@ -526,11 +535,14 @@ export namespace NumberFieldInputProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof NumberField.Input>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof NumberField.Input>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"input">,
-    keyof Render | keyof React.ComponentProps<typeof NumberField.Input>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof NumberField.Input>
   >;
 }
 
@@ -663,11 +675,14 @@ export namespace NumberFieldDecrementProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof NumberField.Decrement>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof NumberField.Decrement>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
-    keyof Render | keyof React.ComponentProps<typeof NumberField.Decrement>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof NumberField.Decrement>
   >;
 }
 
@@ -727,11 +742,14 @@ export namespace NumberFieldIncrementProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof NumberField.Increment>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof NumberField.Increment>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
-    keyof Render | keyof React.ComponentProps<typeof NumberField.Increment>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof NumberField.Increment>
   >;
 }
 

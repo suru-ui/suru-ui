@@ -291,9 +291,9 @@ export namespace SegmentsItemProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseTabs.Tab>, keyof Render>;
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseTabs.Tab>, keyof Render | keyof SuruUI>;
 
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -366,10 +366,10 @@ export namespace SegmentsIndicatorProps {
 
   export type BaseUI = Omit<
     React.ComponentProps<typeof BaseTabs.Indicator>,
-    keyof Render | keyof React.ComponentProps<"span">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"span">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
 }
 
 /**

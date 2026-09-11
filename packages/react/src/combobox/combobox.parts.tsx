@@ -359,11 +359,14 @@ export namespace ComboboxLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Label>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.Label>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.Label>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Label>
   >;
 }
 
@@ -418,11 +421,14 @@ export namespace ComboboxInputGroupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.InputGroup>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.InputGroup>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.InputGroup>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.InputGroup>
   >;
 }
 
@@ -502,11 +508,14 @@ export namespace ComboboxValueProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Value>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.Value>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.Value>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Value>
   >;
 }
 
@@ -559,11 +568,14 @@ export namespace ComboboxInputProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Input>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.Input>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"input">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.Input>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Input>
   >;
 }
 
@@ -618,11 +630,14 @@ export namespace ComboboxTriggerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Trigger>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.Trigger>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.Trigger>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Trigger>
   >;
 }
 
@@ -679,11 +694,14 @@ export namespace ComboboxIconProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Icon>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.Icon>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.Icon>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Icon>
   >;
 }
 
@@ -738,11 +756,14 @@ export namespace ComboboxClearProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Clear>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.Clear>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.Clear>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Clear>
   >;
 }
 
@@ -797,11 +818,14 @@ export namespace ComboboxChipsProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Chips>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.Chips>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.Chips>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Chips>
   >;
 }
 
@@ -856,11 +880,14 @@ export namespace ComboboxChipProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Chip>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.Chip>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.Chip>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Chip>
   >;
 }
 
@@ -915,11 +942,14 @@ export namespace ComboboxChipRemoveProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.ChipRemove>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.ChipRemove>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.ChipRemove>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.ChipRemove>
   >;
 }
 
@@ -977,11 +1007,14 @@ export namespace ComboboxListProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.List>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.List>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.List>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.List>
   >;
 }
 
@@ -1036,11 +1069,14 @@ export namespace ComboboxStatusProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Status>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.Status>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.Status>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Status>
   >;
 }
 
@@ -1095,11 +1131,14 @@ export namespace ComboboxPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Portal>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.Portal>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.Portal>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Portal>
   >;
 }
 
@@ -1173,11 +1212,14 @@ export namespace ComboboxBackdropProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Backdrop>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.Backdrop>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.Backdrop>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Backdrop>
   >;
 }
 
@@ -1234,11 +1276,14 @@ export namespace ComboboxPositionerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Positioner>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.Positioner>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.Positioner>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Positioner>
   >;
 }
 
@@ -1296,11 +1341,14 @@ export namespace ComboboxPopupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Popup>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.Popup>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.Popup>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Popup>
   >;
 }
 
@@ -1355,11 +1403,14 @@ export namespace ComboboxArrowProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Arrow>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.Arrow>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.Arrow>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Arrow>
   >;
 }
 
@@ -1414,11 +1465,14 @@ export namespace ComboboxGroupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Group>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.Group>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.Group>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Group>
   >;
 }
 
@@ -1473,11 +1527,14 @@ export namespace ComboboxGroupLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.GroupLabel>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.GroupLabel>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.GroupLabel>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.GroupLabel>
   >;
 }
 
@@ -1537,10 +1594,10 @@ export namespace ComboboxItemProps {
 
   export type BaseUI = Omit<
     Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof Combobox.Item>>,
-    keyof Render | keyof React.ComponentProps<"div">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -1654,11 +1711,14 @@ export namespace ComboboxItemIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.ItemIndicator>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.ItemIndicator>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.ItemIndicator>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.ItemIndicator>
   >;
 }
 
@@ -1719,11 +1779,11 @@ export namespace ComboboxRowProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Row>, keyof Render>;
+  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Row>, keyof Render | keyof SuruUI>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.Row>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Row>
   >;
 }
 
@@ -1778,11 +1838,14 @@ export namespace ComboboxCollectionProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Collection>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.Collection>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.Collection>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Collection>
   >;
 }
 
@@ -1838,11 +1901,14 @@ export namespace ComboboxEmptyProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Empty>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.Empty>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.Empty>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Empty>
   >;
 }
 
@@ -1897,11 +1963,14 @@ export namespace ComboboxSeparatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Separator>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Combobox.Separator>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Combobox.Separator>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Separator>
   >;
 }
 

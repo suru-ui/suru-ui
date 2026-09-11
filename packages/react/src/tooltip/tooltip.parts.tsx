@@ -357,10 +357,10 @@ export namespace TooltipPortalProps {
 
   export type BaseUI = Omit<
     React.ComponentProps<typeof Tooltip.Portal>,
-    keyof Render | keyof React.ComponentProps<"div">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -436,10 +436,10 @@ export namespace TooltipPositionerProps {
 
   export type BaseUI = Omit<
     React.ComponentProps<typeof Tooltip.Positioner>,
-    keyof Render | keyof React.ComponentProps<"div">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -500,10 +500,10 @@ export namespace TooltipContentProps {
 
   export type BaseUI = Omit<
     React.ComponentProps<typeof Tooltip.Popup>,
-    keyof Render | keyof React.ComponentProps<"div">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -568,10 +568,10 @@ export namespace TooltipArrowProps {
 
   export type BaseUI = Omit<
     React.ComponentProps<typeof Tooltip.Arrow>,
-    keyof Render | keyof React.ComponentProps<"div">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -633,10 +633,10 @@ export namespace TooltipViewportProps {
 
   export type BaseUI = Omit<
     React.ComponentProps<typeof Tooltip.Viewport>,
-    keyof Render | keyof React.ComponentProps<"div">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**

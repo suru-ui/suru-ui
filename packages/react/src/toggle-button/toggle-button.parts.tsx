@@ -283,10 +283,10 @@ export namespace ToggleButtonContentProps {
 
   export type BaseUI = Omit<
     Button.Content.Props,
-    keyof Render | keyof React.ComponentProps<"span">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"span">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -338,10 +338,10 @@ export namespace ToggleButtonPendingProps {
 
   export type BaseUI = Omit<
     Button.Pending.Props,
-    keyof Render | keyof React.ComponentProps<"span">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"span">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -395,10 +395,10 @@ export namespace ToggleButtonCircularProgressProps {
 
   export type BaseUI = Omit<
     Button.CircularProgress.Props,
-    keyof Render | keyof React.ComponentProps<"svg">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"svg">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"svg">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"svg">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -450,10 +450,10 @@ export namespace ToggleButtonCircularProgressTrackProps {
 
   export type BaseUI = Omit<
     Button.CircularProgressTrack.Props,
-    keyof Render | keyof React.ComponentProps<"circle">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"circle">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"circle">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"circle">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -505,10 +505,10 @@ export namespace ToggleButtonCircularProgressFillProps {
 
   export type BaseUI = Omit<
     Button.CircularProgressFill.Props,
-    keyof Render | keyof React.ComponentProps<"circle">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"circle">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"circle">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"circle">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -561,10 +561,10 @@ export namespace ToggleButtonCircularProgressFillRotationProps {
 
   export type BaseUI = Omit<
     Button.CircularProgressFillRotation.Props,
-    keyof Render | keyof React.ComponentProps<"animateTransform">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"animateTransform">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"animateTransform">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"animateTransform">, keyof Render | keyof SuruUI>;
 }
 
 /**

@@ -326,11 +326,14 @@ export namespace AutocompleteInputGroupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.InputGroup>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Autocomplete.InputGroup>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Autocomplete.InputGroup>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.InputGroup>
   >;
 }
 
@@ -404,11 +407,14 @@ export namespace AutocompleteInputProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Input>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Autocomplete.Input>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"input">,
-    keyof Render | keyof React.ComponentProps<typeof Autocomplete.Input>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.Input>
   >;
 }
 
@@ -474,7 +480,7 @@ export namespace AutocompleteAddonProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -534,11 +540,14 @@ export namespace AutocompleteClearProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Clear>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Autocomplete.Clear>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
-    keyof Render | keyof React.ComponentProps<typeof Autocomplete.Clear>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.Clear>
   >;
 }
 
@@ -594,11 +603,14 @@ export namespace AutocompleteListProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.List>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Autocomplete.List>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Autocomplete.List>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.List>
   >;
 }
 
@@ -652,11 +664,14 @@ export namespace AutocompleteStatusProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Status>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Autocomplete.Status>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Autocomplete.Status>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.Status>
   >;
 }
 
@@ -713,11 +728,14 @@ export namespace AutocompletePortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Portal>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Autocomplete.Portal>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Autocomplete.Portal>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.Portal>
   >;
 }
 
@@ -789,11 +807,14 @@ export namespace AutocompletePositionerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Positioner>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Autocomplete.Positioner>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Autocomplete.Positioner>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.Positioner>
   >;
 }
 
@@ -851,11 +872,14 @@ export namespace AutocompletePopupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Popup>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Autocomplete.Popup>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Autocomplete.Popup>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.Popup>
   >;
 }
 
@@ -909,11 +933,14 @@ export namespace AutocompleteGroupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Group>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Autocomplete.Group>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Autocomplete.Group>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.Group>
   >;
 }
 
@@ -969,11 +996,14 @@ export namespace AutocompleteGroupLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.GroupLabel>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Autocomplete.GroupLabel>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Autocomplete.GroupLabel>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.GroupLabel>
   >;
 }
 
@@ -1033,10 +1063,10 @@ export namespace AutocompleteItemProps {
 
   export type BaseUI = Omit<
     Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof Autocomplete.Item>>,
-    keyof Render | keyof React.ComponentProps<"div">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -1142,11 +1172,14 @@ export namespace AutocompleteRowProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Row>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Autocomplete.Row>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Autocomplete.Row>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.Row>
   >;
 }
 
@@ -1202,7 +1235,10 @@ export namespace AutocompleteCollectionProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Collection>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Autocomplete.Collection>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = {};
 }
@@ -1256,11 +1292,14 @@ export namespace AutocompleteEmptyProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Autocomplete.Empty>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Autocomplete.Empty>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Autocomplete.Empty>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.Empty>
   >;
 }
 

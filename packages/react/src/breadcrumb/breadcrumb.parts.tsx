@@ -359,7 +359,7 @@ export namespace BreadcrumbItemProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"li">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"li">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -505,7 +505,7 @@ export namespace BreadcrumbSeparatorProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"li">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"li">, keyof Render | keyof SuruUI>;
 }
 
 /**

@@ -379,7 +379,7 @@ export namespace SidebarHeaderProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -435,7 +435,7 @@ export namespace SidebarContentProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -491,7 +491,7 @@ export namespace SidebarFooterProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -547,7 +547,7 @@ export namespace SidebarGroupProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -603,7 +603,7 @@ export namespace SidebarGroupLabelProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -659,7 +659,7 @@ export namespace SidebarGroupContentProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -716,7 +716,7 @@ export namespace SidebarInsetProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"main">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"main">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -777,7 +777,7 @@ export namespace SidebarRailProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -861,7 +861,7 @@ export namespace SidebarTriggerProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
 }
 
 /**

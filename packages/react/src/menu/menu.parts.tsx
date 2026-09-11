@@ -617,11 +617,11 @@ export namespace MenuPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Portal>, keyof Render>;
+  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Portal>, keyof Render | keyof SuruUI>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Menu.Portal>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.Portal>
   >;
 }
 
@@ -693,11 +693,14 @@ export namespace MenuBackdropProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Backdrop>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Menu.Backdrop>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Menu.Backdrop>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.Backdrop>
   >;
 }
 
@@ -749,11 +752,14 @@ export namespace MenuPositionerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Positioner>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Menu.Positioner>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Menu.Positioner>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.Positioner>
   >;
 }
 
@@ -1004,11 +1010,11 @@ export namespace MenuArrowProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Arrow>, keyof Render>;
+  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Arrow>, keyof Render | keyof SuruUI>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Menu.Arrow>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.Arrow>
   >;
 }
 
@@ -1060,11 +1066,14 @@ export namespace MenuViewportProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Viewport>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Menu.Viewport>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Menu.Viewport>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.Viewport>
   >;
 }
 
@@ -1472,7 +1481,10 @@ export namespace MenuSubmenuRootProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Menu.SubmenuRoot>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Menu.SubmenuRoot>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = {};
 }
@@ -1704,11 +1716,11 @@ export namespace MenuGroupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Group>, keyof Render>;
+  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Group>, keyof Render | keyof SuruUI>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Menu.Group>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.Group>
   >;
 }
 
@@ -1760,11 +1772,14 @@ export namespace MenuGroupLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Menu.GroupLabel>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Menu.GroupLabel>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Menu.GroupLabel>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.GroupLabel>
   >;
 }
 
@@ -1826,11 +1841,14 @@ export namespace MenuRadioGroupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Menu.RadioGroup>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Menu.RadioGroup>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Menu.RadioGroup>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.RadioGroup>
   >;
 }
 
@@ -2065,11 +2083,14 @@ export namespace MenuRadioItemIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Menu.RadioItemIndicator>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Menu.RadioItemIndicator>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
-    keyof Render | keyof React.ComponentProps<typeof Menu.RadioItemIndicator>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.RadioItemIndicator>
   >;
 }
 
@@ -2321,11 +2342,14 @@ export namespace MenuCheckboxItemIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Menu.CheckboxItemIndicator>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Menu.CheckboxItemIndicator>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
-    keyof Render | keyof React.ComponentProps<typeof Menu.CheckboxItemIndicator>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.CheckboxItemIndicator>
   >;
 }
 
@@ -2388,11 +2412,14 @@ export namespace MenuSeparatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Separator>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Menu.Separator>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Menu.Separator>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.Separator>
   >;
 }
 

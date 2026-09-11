@@ -245,11 +245,14 @@ export namespace HoverCardPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof PreviewCard.Portal>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof PreviewCard.Portal>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof PreviewCard.Portal>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof PreviewCard.Portal>
   >;
 }
 
@@ -316,11 +319,14 @@ export namespace HoverCardBackdropProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof PreviewCard.Backdrop>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof PreviewCard.Backdrop>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof PreviewCard.Backdrop>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof PreviewCard.Backdrop>
   >;
 }
 
@@ -385,11 +391,14 @@ export namespace HoverCardPositionerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof PreviewCard.Positioner>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof PreviewCard.Positioner>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof PreviewCard.Positioner>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof PreviewCard.Positioner>
   >;
 }
 
@@ -447,11 +456,14 @@ export namespace HoverCardContentProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof PreviewCard.Popup>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof PreviewCard.Popup>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof PreviewCard.Popup>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof PreviewCard.Popup>
   >;
 }
 
@@ -516,11 +528,14 @@ export namespace HoverCardArrowProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof PreviewCard.Arrow>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof PreviewCard.Arrow>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof PreviewCard.Arrow>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof PreviewCard.Arrow>
   >;
 }
 
@@ -572,11 +587,14 @@ export namespace HoverCardViewportProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof PreviewCard.Viewport>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof PreviewCard.Viewport>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof PreviewCard.Viewport>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof PreviewCard.Viewport>
   >;
 }
 

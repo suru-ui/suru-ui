@@ -519,7 +519,15 @@ export namespace FileUploadHiddenInputProps {
 
   export type HTML = Omit<
     React.ComponentProps<"input">,
-    keyof Render | "accept" | "children" | "multiple" | "name" | "onChange" | "required" | "type"
+    | keyof Render
+    | keyof SuruUI
+    | "accept"
+    | "children"
+    | "multiple"
+    | "name"
+    | "onChange"
+    | "required"
+    | "type"
   >;
 }
 
@@ -597,7 +605,10 @@ export namespace FileUploadTriggerProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | "onClick" | "type">;
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI | "onClick" | "type"
+  >;
 }
 
 /**
@@ -672,7 +683,10 @@ export namespace FileUploadDropzoneProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | "onClick" | "type">;
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI | "onClick" | "type"
+  >;
 }
 
 /**
@@ -767,7 +781,10 @@ export namespace FileUploadClearTriggerProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | "onClick" | "type">;
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI | "onClick" | "type"
+  >;
 }
 
 /**
@@ -839,7 +856,7 @@ export namespace FileUploadItemGroupProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"ul">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"ul">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -1006,7 +1023,7 @@ export namespace FileUploadItemNameProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -1067,7 +1084,7 @@ export namespace FileUploadItemSizeTextProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -1128,7 +1145,10 @@ export namespace FileUploadItemDeleteTriggerProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | "onClick" | "type">;
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI | "onClick" | "type"
+  >;
 }
 
 /**

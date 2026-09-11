@@ -266,9 +266,12 @@ export namespace AvatarGroupSurplusProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<AvatarRootProps, keyof Render>;
+  export type BaseUI = Omit<AvatarRootProps, keyof Render | keyof SuruUI>;
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof AvatarRootProps>;
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof SuruUI | keyof AvatarRootProps
+  >;
 }
 
 /**

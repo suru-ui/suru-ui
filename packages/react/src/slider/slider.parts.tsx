@@ -229,9 +229,9 @@ export namespace SliderLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Slider.Label>, keyof Render>;
+  export type BaseUI = Omit<React.ComponentProps<typeof Slider.Label>, keyof Render | keyof SuruUI>;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -285,9 +285,9 @@ export namespace SliderValueProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Slider.Value>, keyof Render>;
+  export type BaseUI = Omit<React.ComponentProps<typeof Slider.Value>, keyof Render | keyof SuruUI>;
 
-  export type HTML = Omit<React.ComponentProps<"output">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"output">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -341,9 +341,12 @@ export namespace SliderControlProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Slider.Control>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Slider.Control>,
+    keyof Render | keyof SuruUI
+  >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -397,9 +400,9 @@ export namespace SliderTrackProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Slider.Track>, keyof Render>;
+  export type BaseUI = Omit<React.ComponentProps<typeof Slider.Track>, keyof Render | keyof SuruUI>;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -453,9 +456,12 @@ export namespace SliderIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Slider.Indicator>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Slider.Indicator>,
+    keyof Render | keyof SuruUI
+  >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -511,9 +517,9 @@ export namespace SliderThumbProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Slider.Thumb>, keyof Render>;
+  export type BaseUI = Omit<React.ComponentProps<typeof Slider.Thumb>, keyof Render | keyof SuruUI>;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**

@@ -47,11 +47,14 @@ export namespace DrawerProviderProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Provider>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Drawer.Provider>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Drawer.Provider>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Provider>
   >;
 }
 
@@ -103,11 +106,14 @@ export namespace DrawerIndentBackgroundProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.IndentBackground>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Drawer.IndentBackground>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Drawer.IndentBackground>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.IndentBackground>
   >;
 }
 
@@ -167,11 +173,14 @@ export namespace DrawerIndentProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Indent>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Drawer.Indent>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Drawer.Indent>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Indent>
   >;
 }
 
@@ -429,11 +438,14 @@ export namespace DrawerSwipeAreaProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.SwipeArea>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Drawer.SwipeArea>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Drawer.SwipeArea>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.SwipeArea>
   >;
 }
 
@@ -498,12 +510,12 @@ export namespace DrawerVirtualKeyboardProviderProps {
 
   export type BaseUI = Omit<
     React.ComponentProps<typeof Drawer.VirtualKeyboardProvider>,
-    keyof Render
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Drawer.VirtualKeyboardProvider>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.VirtualKeyboardProvider>
   >;
 }
 
@@ -556,11 +568,14 @@ export namespace DrawerPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Portal>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Drawer.Portal>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Drawer.Portal>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Portal>
   >;
 }
 
@@ -625,11 +640,14 @@ export namespace DrawerBackdropProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Backdrop>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Drawer.Backdrop>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Drawer.Backdrop>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Backdrop>
   >;
 }
 
@@ -692,11 +710,14 @@ export namespace DrawerViewportProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Viewport>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Drawer.Viewport>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Drawer.Viewport>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Viewport>
   >;
 }
 
@@ -750,11 +771,11 @@ export namespace DrawerPopupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Popup>, keyof Render>;
+  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Popup>, keyof Render | keyof SuruUI>;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Drawer.Popup>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Popup>
   >;
 }
 
@@ -890,11 +911,14 @@ export namespace DrawerContentProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Content>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Drawer.Content>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Drawer.Content>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Content>
   >;
 }
 
@@ -936,7 +960,7 @@ export namespace DrawerHeaderProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -990,11 +1014,11 @@ export namespace DrawerTitleProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Title>, keyof Render>;
+  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Title>, keyof Render | keyof SuruUI>;
 
   export type HTML = Omit<
     React.ComponentProps<"h2">,
-    keyof Render | keyof React.ComponentProps<typeof Drawer.Title>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Title>
   >;
 }
 
@@ -1046,11 +1070,14 @@ export namespace DrawerDescriptionProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Description>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Drawer.Description>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"p">,
-    keyof Render | keyof React.ComponentProps<typeof Drawer.Description>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Description>
   >;
 }
 
@@ -1104,7 +1131,7 @@ export namespace DrawerBodyProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -1158,7 +1185,7 @@ export namespace DrawerFooterProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**

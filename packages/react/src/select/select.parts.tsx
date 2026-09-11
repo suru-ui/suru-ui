@@ -392,11 +392,14 @@ export namespace SelectLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Label>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseSelect.Label>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Label>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Label>
   >;
 }
 
@@ -451,11 +454,14 @@ export namespace SelectTriggerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Trigger>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseSelect.Trigger>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
-    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Trigger>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Trigger>
   >;
 }
 
@@ -541,11 +547,14 @@ export namespace SelectValueProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Value>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseSelect.Value>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
-    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Value>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Value>
   >;
 }
 
@@ -609,11 +618,14 @@ export namespace SelectIconProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Icon>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseSelect.Icon>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
-    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Icon>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Icon>
   >;
 }
 
@@ -668,11 +680,14 @@ export namespace SelectPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Portal>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseSelect.Portal>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Portal>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Portal>
   >;
 }
 
@@ -747,11 +762,14 @@ export namespace SelectBackdropProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Backdrop>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseSelect.Backdrop>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Backdrop>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Backdrop>
   >;
 }
 
@@ -817,11 +835,14 @@ export namespace SelectPositionerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Positioner>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseSelect.Positioner>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Positioner>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Positioner>
   >;
 }
 
@@ -880,11 +901,14 @@ export namespace SelectPopupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Popup>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseSelect.Popup>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Popup>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Popup>
   >;
 }
 
@@ -1141,11 +1165,14 @@ export namespace SelectArrowProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Arrow>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseSelect.Arrow>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Arrow>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Arrow>
   >;
 }
 
@@ -1200,11 +1227,14 @@ export namespace SelectItemProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Item>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseSelect.Item>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Item>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Item>
   >;
 }
 
@@ -1275,11 +1305,14 @@ export namespace SelectItemTextProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.ItemText>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseSelect.ItemText>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof BaseSelect.ItemText>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.ItemText>
   >;
 }
 
@@ -1334,11 +1367,14 @@ export namespace SelectItemIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.ItemIndicator>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseSelect.ItemIndicator>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
-    keyof Render | keyof React.ComponentProps<typeof BaseSelect.ItemIndicator>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.ItemIndicator>
   >;
 }
 
@@ -1400,11 +1436,14 @@ export namespace SelectScrollUpArrowProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.ScrollUpArrow>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseSelect.ScrollUpArrow>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof BaseSelect.ScrollUpArrow>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.ScrollUpArrow>
   >;
 }
 
@@ -1465,11 +1504,14 @@ export namespace SelectScrollDownArrowProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.ScrollDownArrow>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseSelect.ScrollDownArrow>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof BaseSelect.ScrollDownArrow>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.ScrollDownArrow>
   >;
 }
 
@@ -1530,11 +1572,14 @@ export namespace SelectGroupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Group>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseSelect.Group>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Group>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Group>
   >;
 }
 
@@ -1589,11 +1634,14 @@ export namespace SelectGroupLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.GroupLabel>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseSelect.GroupLabel>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof BaseSelect.GroupLabel>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.GroupLabel>
   >;
 }
 
@@ -1652,11 +1700,14 @@ export namespace SelectSeparatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseSelect.Separator>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseSelect.Separator>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof BaseSelect.Separator>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Separator>
   >;
 }
 

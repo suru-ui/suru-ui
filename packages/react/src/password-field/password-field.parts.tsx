@@ -254,11 +254,11 @@ export namespace PasswordFieldInputProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<TextFieldInputProps, keyof Render | "type">;
+  export type BaseUI = Omit<TextFieldInputProps, keyof Render | keyof SuruUI | "type">;
 
   export type HTML = Omit<
     React.ComponentProps<"input">,
-    keyof Render | keyof Omit<TextFieldInputProps, "type">
+    keyof Render | keyof SuruUI | keyof Omit<TextFieldInputProps, "type">
   >;
 }
 
@@ -316,9 +316,12 @@ export namespace PasswordFieldAddonProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<TextFieldAddonProps, keyof Render>;
+  export type BaseUI = Omit<TextFieldAddonProps, keyof Render | keyof SuruUI>;
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof TextFieldAddonProps>;
+  export type HTML = Omit<
+    React.ComponentProps<"span">,
+    keyof Render | keyof SuruUI | keyof TextFieldAddonProps
+  >;
 }
 
 /**
@@ -372,7 +375,10 @@ export namespace PasswordFieldToggleButtonProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | "onClick" | "type">;
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI | "onClick" | "type"
+  >;
 }
 
 /**

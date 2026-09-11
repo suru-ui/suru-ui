@@ -274,11 +274,14 @@ export namespace DialogPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Portal>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Dialog.Portal>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Dialog.Portal>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Dialog.Portal>
   >;
 }
 
@@ -343,11 +346,14 @@ export namespace DialogBackdropProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Backdrop>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Dialog.Backdrop>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Dialog.Backdrop>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Dialog.Backdrop>
   >;
 }
 
@@ -399,11 +405,14 @@ export namespace DialogViewportProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Viewport>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Dialog.Viewport>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Dialog.Viewport>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Dialog.Viewport>
   >;
 }
 
@@ -637,7 +646,7 @@ export namespace DialogHeaderProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -691,11 +700,11 @@ export namespace DialogTitleProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Title>, keyof Render>;
+  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Title>, keyof Render | keyof SuruUI>;
 
   export type HTML = Omit<
     React.ComponentProps<"h2">,
-    keyof Render | keyof React.ComponentProps<typeof Dialog.Title>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Dialog.Title>
   >;
 }
 
@@ -747,11 +756,14 @@ export namespace DialogDescriptionProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Description>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Dialog.Description>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"p">,
-    keyof Render | keyof React.ComponentProps<typeof Dialog.Description>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Dialog.Description>
   >;
 }
 
@@ -805,7 +817,7 @@ export namespace DialogBodyProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -859,7 +871,7 @@ export namespace DialogFooterProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**

@@ -199,11 +199,14 @@ export namespace RadioIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Radio.Indicator>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Radio.Indicator>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
-    keyof Render | keyof React.ComponentProps<typeof Radio.Indicator>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Radio.Indicator>
   >;
 }
 

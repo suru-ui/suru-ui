@@ -19,10 +19,10 @@ export namespace TooltipGroupRootProps {
 
   export type BaseUI = Omit<
     Tooltip.Provider.Props,
-    keyof Render | keyof React.ComponentProps<"div">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**

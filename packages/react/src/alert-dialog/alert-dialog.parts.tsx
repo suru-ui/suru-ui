@@ -282,11 +282,14 @@ export namespace AlertDialogPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof AlertDialog.Portal>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof AlertDialog.Portal>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof AlertDialog.Portal>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof AlertDialog.Portal>
   >;
 }
 
@@ -353,11 +356,14 @@ export namespace AlertDialogBackdropProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof AlertDialog.Backdrop>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof AlertDialog.Backdrop>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof AlertDialog.Backdrop>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof AlertDialog.Backdrop>
   >;
 }
 
@@ -415,11 +421,14 @@ export namespace AlertDialogViewportProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof AlertDialog.Viewport>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof AlertDialog.Viewport>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof AlertDialog.Viewport>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof AlertDialog.Viewport>
   >;
 }
 
@@ -670,7 +679,7 @@ export namespace AlertDialogHeaderProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -884,11 +893,14 @@ export namespace AlertDialogTitleProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof AlertDialog.Title>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof AlertDialog.Title>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"h2">,
-    keyof Render | keyof React.ComponentProps<typeof AlertDialog.Title>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof AlertDialog.Title>
   >;
 }
 
@@ -942,11 +954,14 @@ export namespace AlertDialogDescriptionProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof AlertDialog.Description>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof AlertDialog.Description>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"p">,
-    keyof Render | keyof React.ComponentProps<typeof AlertDialog.Description>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof AlertDialog.Description>
   >;
 }
 
@@ -1004,7 +1019,7 @@ export namespace AlertDialogBodyProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -1060,7 +1075,7 @@ export namespace AlertDialogFooterProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**

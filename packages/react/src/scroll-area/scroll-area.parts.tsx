@@ -20,11 +20,14 @@ export namespace ScrollAreaRootProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseScrollArea.Root>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseScrollArea.Root>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof BaseScrollArea.Root>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseScrollArea.Root>
   >;
 }
 
@@ -92,11 +95,14 @@ export namespace ScrollAreaViewportProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseScrollArea.Viewport>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseScrollArea.Viewport>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof BaseScrollArea.Viewport>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseScrollArea.Viewport>
   >;
 }
 
@@ -153,11 +159,14 @@ export namespace ScrollAreaContentProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseScrollArea.Content>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseScrollArea.Content>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof BaseScrollArea.Content>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseScrollArea.Content>
   >;
 }
 
@@ -212,11 +221,14 @@ export namespace ScrollAreaScrollbarProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseScrollArea.Scrollbar>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseScrollArea.Scrollbar>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof BaseScrollArea.Scrollbar>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseScrollArea.Scrollbar>
   >;
 }
 
@@ -280,11 +292,14 @@ export namespace ScrollAreaThumbProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseScrollArea.Thumb>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseScrollArea.Thumb>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof BaseScrollArea.Thumb>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseScrollArea.Thumb>
   >;
 }
 
@@ -346,11 +361,14 @@ export namespace ScrollAreaCornerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseScrollArea.Corner>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof BaseScrollArea.Corner>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof BaseScrollArea.Corner>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseScrollArea.Corner>
   >;
 }
 

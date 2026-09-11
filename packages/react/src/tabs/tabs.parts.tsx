@@ -212,10 +212,10 @@ export namespace TabsListProps {
 
   export type BaseUI = Omit<
     React.ComponentProps<typeof BaseTabs.List>,
-    keyof Render | keyof React.ComponentProps<"div">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -305,9 +305,9 @@ export namespace TabsTabProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseTabs.Tab>, keyof Render>;
+  export type BaseUI = Omit<React.ComponentProps<typeof BaseTabs.Tab>, keyof Render | keyof SuruUI>;
 
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -380,10 +380,10 @@ export namespace TabsIndicatorProps {
 
   export type BaseUI = Omit<
     React.ComponentProps<typeof BaseTabs.Indicator>,
-    keyof Render | keyof React.ComponentProps<"span">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"span">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -443,10 +443,10 @@ export namespace TabsPanelProps {
 
   export type BaseUI = Omit<
     React.ComponentProps<typeof BaseTabs.Panel>,
-    keyof Render | keyof React.ComponentProps<"div">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**

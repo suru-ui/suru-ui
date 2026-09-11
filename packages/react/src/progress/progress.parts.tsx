@@ -194,11 +194,14 @@ export namespace ProgressLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Progress.Label>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Progress.Label>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
-    keyof Render | keyof React.ComponentProps<typeof Progress.Label>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Progress.Label>
   >;
 }
 
@@ -250,11 +253,14 @@ export namespace ProgressValueProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Progress.Value>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Progress.Value>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
-    keyof Render | keyof React.ComponentProps<typeof Progress.Value>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Progress.Value>
   >;
 }
 
@@ -308,11 +314,14 @@ export namespace ProgressTrackProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Progress.Track>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Progress.Track>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Progress.Track>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Progress.Track>
   >;
 }
 
@@ -364,11 +373,14 @@ export namespace ProgressIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Progress.Indicator>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Progress.Indicator>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Progress.Indicator>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Progress.Indicator>
   >;
 }
 

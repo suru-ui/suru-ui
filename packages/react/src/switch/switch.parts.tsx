@@ -195,10 +195,10 @@ export namespace SwitchThumbProps {
 
   export type BaseUI = Omit<
     React.ComponentProps<typeof Switch.Thumb>,
-    keyof Render | keyof React.ComponentProps<"span">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"span">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
 }
 
 /**

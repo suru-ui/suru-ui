@@ -244,11 +244,14 @@ export namespace PopoverPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Popover.Portal>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Popover.Portal>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Popover.Portal>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Popover.Portal>
   >;
 }
 
@@ -313,11 +316,14 @@ export namespace PopoverBackdropProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Popover.Backdrop>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Popover.Backdrop>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Popover.Backdrop>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Popover.Backdrop>
   >;
 }
 
@@ -382,11 +388,14 @@ export namespace PopoverPositionerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Popover.Positioner>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Popover.Positioner>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Popover.Positioner>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Popover.Positioner>
   >;
 }
 
@@ -440,11 +449,14 @@ export namespace PopoverPopupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Popover.Popup>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Popover.Popup>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Popover.Popup>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Popover.Popup>
   >;
 }
 
@@ -507,11 +519,14 @@ export namespace PopoverArrowProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Popover.Arrow>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Popover.Arrow>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Popover.Arrow>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Popover.Arrow>
   >;
 }
 
@@ -563,11 +578,14 @@ export namespace PopoverTitleProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Popover.Title>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Popover.Title>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"h1">,
-    keyof Render | keyof React.ComponentProps<typeof Popover.Title>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Popover.Title>
   >;
 }
 
@@ -619,11 +637,14 @@ export namespace PopoverDescriptionProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Popover.Description>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Popover.Description>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"p">,
-    keyof Render | keyof React.ComponentProps<typeof Popover.Description>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Popover.Description>
   >;
 }
 
@@ -752,11 +773,14 @@ export namespace PopoverViewportProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Popover.Viewport>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Popover.Viewport>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Popover.Viewport>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Popover.Viewport>
   >;
 }
 

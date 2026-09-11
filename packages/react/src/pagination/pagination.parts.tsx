@@ -361,11 +361,11 @@ export namespace PaginationPreviousButtonProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<Button.ButtonRootProps, keyof Render | "children">;
+  export type BaseUI = Omit<Button.ButtonRootProps, keyof Render | keyof SuruUI | "children">;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
-    keyof Render | keyof Omit<Button.ButtonRootProps, "children">
+    keyof Render | keyof SuruUI | keyof Omit<Button.ButtonRootProps, "children">
   >;
 }
 
@@ -449,11 +449,11 @@ export namespace PaginationNextButtonProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<Button.ButtonRootProps, keyof Render | "children">;
+  export type BaseUI = Omit<Button.ButtonRootProps, keyof Render | keyof SuruUI | "children">;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
-    keyof Render | keyof Omit<Button.ButtonRootProps, "children">
+    keyof Render | keyof SuruUI | keyof Omit<Button.ButtonRootProps, "children">
   >;
 }
 

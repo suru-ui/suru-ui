@@ -54,12 +54,12 @@ export namespace FormRootProps {
 
   export type BaseUI<TValues extends FormRootValues = FormRootValues> = Omit<
     React.ComponentProps<typeof Form<TValues>>,
-    keyof Render
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<
     React.ComponentProps<"form">,
-    keyof Render | keyof React.ComponentProps<typeof Form<any>>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Form<any>>
   >;
 }
 

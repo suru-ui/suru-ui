@@ -19,7 +19,10 @@ export namespace ToastProviderProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Toast.Provider>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Toast.Provider>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = {};
 }
@@ -70,10 +73,10 @@ export namespace ToastPortalProps {
 
   export type BaseUI = Omit<
     React.ComponentProps<typeof Toast.Portal>,
-    keyof Render | keyof React.ComponentProps<"div">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -139,10 +142,10 @@ export namespace ToastViewportProps {
 
   export type BaseUI = Omit<
     React.ComponentProps<typeof Toast.Viewport>,
-    keyof Render | keyof React.ComponentProps<"div">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -550,9 +553,12 @@ export namespace ToastActionsProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<Alert.Actions.Props, keyof Render | keyof React.ComponentProps<"div">>;
+  export type BaseUI = Omit<
+    Alert.Actions.Props,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+  >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 }
 
 /**

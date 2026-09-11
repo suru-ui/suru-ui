@@ -211,7 +211,7 @@ export namespace CollapsibleIndicatorProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render>;
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -269,11 +269,14 @@ export namespace CollapsibleContentProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Collapsible.Panel>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof Collapsible.Panel>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof Collapsible.Panel>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Collapsible.Panel>
   >;
 }
 

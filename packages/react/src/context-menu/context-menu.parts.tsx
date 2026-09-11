@@ -571,11 +571,14 @@ export namespace ContextMenuPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.Portal>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof ContextMenu.Portal>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof ContextMenu.Portal>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.Portal>
   >;
 }
 
@@ -649,11 +652,14 @@ export namespace ContextMenuBackdropProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.Backdrop>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof ContextMenu.Backdrop>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof ContextMenu.Backdrop>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.Backdrop>
   >;
 }
 
@@ -711,11 +717,14 @@ export namespace ContextMenuPositionerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.Positioner>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof ContextMenu.Positioner>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof ContextMenu.Positioner>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.Positioner>
   >;
 }
 
@@ -1335,11 +1344,14 @@ export namespace ContextMenuSubmenuRootProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.SubmenuRoot>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof ContextMenu.SubmenuRoot>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof ContextMenu.SubmenuRoot>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.SubmenuRoot>
   >;
 }
 
@@ -1572,11 +1584,14 @@ export namespace ContextMenuGroupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.Group>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof ContextMenu.Group>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof ContextMenu.Group>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.Group>
   >;
 }
 
@@ -1630,11 +1645,14 @@ export namespace ContextMenuGroupLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.GroupLabel>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof ContextMenu.GroupLabel>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof ContextMenu.GroupLabel>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.GroupLabel>
   >;
 }
 
@@ -1702,11 +1720,14 @@ export namespace ContextMenuRadioGroupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.RadioGroup>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof ContextMenu.RadioGroup>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof ContextMenu.RadioGroup>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.RadioGroup>
   >;
 }
 
@@ -1945,12 +1966,12 @@ export namespace ContextMenuRadioItemIndicatorProps {
 
   export type BaseUI = Omit<
     React.ComponentProps<typeof ContextMenu.RadioItemIndicator>,
-    keyof Render
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
-    keyof Render | keyof React.ComponentProps<typeof ContextMenu.RadioItemIndicator>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.RadioItemIndicator>
   >;
 }
 
@@ -2206,12 +2227,14 @@ export namespace ContextMenuCheckboxItemIndicatorProps {
 
   export type BaseUI = Omit<
     React.ComponentProps<typeof ContextMenu.CheckboxItemIndicator>,
-    keyof Render
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<
     React.ComponentProps<"span">,
-    keyof Render | keyof React.ComponentProps<typeof ContextMenu.CheckboxItemIndicator>
+    | keyof Render
+    | keyof SuruUI
+    | keyof React.ComponentProps<typeof ContextMenu.CheckboxItemIndicator>
   >;
 }
 
@@ -2274,11 +2297,14 @@ export namespace ContextMenuSeparatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof ContextMenu.Separator>, keyof Render>;
+  export type BaseUI = Omit<
+    React.ComponentProps<typeof ContextMenu.Separator>,
+    keyof Render | keyof SuruUI
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof React.ComponentProps<typeof ContextMenu.Separator>
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.Separator>
   >;
 }
 
