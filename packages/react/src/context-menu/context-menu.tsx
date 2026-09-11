@@ -70,81 +70,36 @@ import {
 // Types
 // -----
 
-/**
- * {@link ContextMenuRootActions}
- */
 export type ContextMenuActions = ContextMenuRootActions;
 
-/**
- * {@link ContextMenuRootChangeEventDetails}
- */
 export type ContextMenuChangeEventDetails = ContextMenuRootChangeEventDetails;
 
-/**
- * {@link ContextMenuRootChangeEventReason}
- */
 export type ContextMenuChangeEventReason = ContextMenuRootChangeEventReason;
 
-/**
- * {@link ContextMenuRootItemObject}
- */
 export type ContextMenuItemObject = ContextMenuRootItemObject;
 
-/**
- * {@link ContextMenuRootActionItemObject}
- */
 export type ContextMenuActionItemObject = ContextMenuRootActionItemObject;
 
-/**
- * {@link ContextMenuRootCheckboxItemObject}
- */
 export type ContextMenuCheckboxItemObject = ContextMenuRootCheckboxItemObject;
 
-/**
- * {@link ContextMenuRootGroupObject}
- */
 export type ContextMenuGroupObject = ContextMenuRootGroupObject;
 
-/**
- * {@link ContextMenuRootLinkItemObject}
- */
 export type ContextMenuLinkItemObject = ContextMenuRootLinkItemObject;
 
-/**
- * {@link ContextMenuRootRadioGroupObject}
- */
 export type ContextMenuRadioGroupObject = ContextMenuRootRadioGroupObject;
 
-/**
- * {@link ContextMenuRootRadioItemObject}
- */
 export type ContextMenuRadioItemObject = ContextMenuRootRadioItemObject;
 
-/**
- * {@link ContextMenuRootSeparatorObject}
- */
 export type ContextMenuSeparatorObject = ContextMenuRootSeparatorObject;
 
-/**
- * {@link IContextMenuContentItemRenderer}
- */
 export interface IContextMenuItemRenderer<
   TItem = any,
 > extends IContextMenuContentItemRenderer<TItem> {}
 
-/**
- * {@link ContextMenuRootRadius}
- */
 export type ContextMenuRadius = ContextMenuRootRadius;
 
-/**
- * {@link ContextMenuRootSize}
- */
 export type ContextMenuSize = ContextMenuRootSize;
 
-/**
- * {@link ContextMenuRootVariant}
- */
 export type ContextMenuVariant = ContextMenuRootVariant;
 
 /**
@@ -727,93 +682,39 @@ export const ContextMenu: IContextMenu = function SuiContextMenu(props: ContextM
 };
 
 export namespace ContextMenu {
-  /**
-   * {@link ContextMenuState}
-   */
   export type State = ContextMenuState;
 
-  /**
-   * {@link ContextMenuProps}
-   */
   export type Props<TItem = any> = ContextMenuProps<TItem>;
 
-  /**
-   * {@link ContextMenuSlotProps}
-   */
   export type SlotProps = ContextMenuSlotProps;
 
-  /**
-   * {@link ContextMenuActionItemObject}
-   */
   export type ActionItemObject = ContextMenuActionItemObject;
 
-  /**
-   * {@link ContextMenuActions}
-   */
   export type Actions = ContextMenuActions;
 
-  /**
-   * {@link ContextMenuChangeEventDetails}
-   */
   export type ChangeEventDetails = ContextMenuChangeEventDetails;
 
-  /**
-   * {@link ContextMenuChangeEventReason}
-   */
   export type ChangeEventReason = ContextMenuChangeEventReason;
 
-  /**
-   * {@link ContextMenuCheckboxItemObject}
-   */
   export type CheckboxItemObject = ContextMenuCheckboxItemObject;
 
-  /**
-   * {@link ContextMenuGroupObject}
-   */
   export type GroupObject = ContextMenuGroupObject;
 
-  /**
-   * {@link ContextMenuItemObject}
-   */
   export type ItemObject = ContextMenuItemObject;
 
-  /**
-   * {@link IContextMenuItemRenderer}
-   */
   export interface IItemRenderer<TItem = any> extends IContextMenuItemRenderer<TItem> {}
 
-  /**
-   * {@link ContextMenuLinkItemObject}
-   */
   export type LinkItemObject = ContextMenuLinkItemObject;
 
-  /**
-   * {@link ContextMenuRadioGroupObject}
-   */
   export type RadioGroupObject = ContextMenuRadioGroupObject;
 
-  /**
-   * {@link ContextMenuRadioItemObject}
-   */
   export type RadioItemObject = ContextMenuRadioItemObject;
 
-  /**
-   * {@link ContextMenuRadius}
-   */
   export type Radius = ContextMenuRadius;
 
-  /**
-   * {@link ContextMenuSeparatorObject}
-   */
   export type SeparatorObject = ContextMenuSeparatorObject;
 
-  /**
-   * {@link ContextMenuSize}
-   */
   export type Size = ContextMenuSize;
 
-  /**
-   * {@link ContextMenuVariant}
-   */
   export type Variant = ContextMenuVariant;
 }

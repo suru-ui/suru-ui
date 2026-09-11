@@ -23,39 +23,18 @@ import {
 // Types
 // -----
 
-/**
- * {@link TextFieldInputChangeEventDetails}
- */
 export type TextFieldChangeEventDetails = TextFieldInputChangeEventDetails;
 
-/**
- * {@link TextFieldInputChangeEventReason}
- */
 export type TextFieldChangeEventReason = TextFieldInputChangeEventReason;
 
-/**
- * {@link TextFieldRootColor}
- */
 export type TextFieldColor = TextFieldRootColor;
 
-/**
- * {@link TextFieldRootRadius}
- */
 export type TextFieldRadius = TextFieldRootRadius;
 
-/**
- * {@link TextFieldRootSize}
- */
 export type TextFieldSize = TextFieldRootSize;
 
-/**
- * {@link TextFieldInputType}
- */
 export type TextFieldType = TextFieldInputType;
 
-/**
- * {@link TextFieldRootVariant}
- */
 export type TextFieldVariant = TextFieldRootVariant;
 
 /**
@@ -224,9 +203,6 @@ export { type TextFieldAPI as API, useTextFieldAPI as useAPI };
 // ---------
 
 interface ITextField extends IComponent<TextFieldProps> {
-  /**
-   * {@link useTextFieldContext}
-   */
   readonly useContext: IUseContext<TextFieldContext>;
 }
 
@@ -257,58 +233,25 @@ export const TextField: ITextField = /*#__PURE__*/ Object.assign(
 );
 
 export namespace TextField {
-  /**
-   * {@link TextFieldState}
-   */
   export type State = TextFieldState;
 
-  /**
-   * {@link TextFieldProps}
-   */
   export type Props = TextFieldProps;
 
-  /**
-   * {@link TextFieldSlotProps}
-   */
   export type SlotProps = TextFieldSlotProps;
 
-  /**
-   * {@link TextFieldContext}
-   */
   export type Context = TextFieldContext;
 
-  /**
-   * {@link TextFieldChangeEventDetails}
-   */
   export type ChangeEventDetails = TextFieldChangeEventDetails;
 
-  /**
-   * {@link TextFieldChangeEventReason}
-   */
   export type ChangeEventReason = TextFieldChangeEventReason;
 
-  /**
-   * {@link TextFieldColor}
-   */
   export type Color = TextFieldColor;
 
-  /**
-   * {@link TextFieldRadius}
-   */
   export type Radius = TextFieldRadius;
 
-  /**
-   * {@link TextFieldSize}
-   */
   export type Size = TextFieldSize;
 
-  /**
-   * {@link TextFieldType}
-   */
   export type Type = TextFieldType;
 
-  /**
-   * {@link TextFieldVariant}
-   */
   export type Variant = TextFieldVariant;
 }

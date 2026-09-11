@@ -10,19 +10,10 @@ import type { Override, IComponent, IUseContext } from "../types.js";
 // Context
 // -------
 
-/**
- * {@link Button.Context}
- */
 export type ToggleButtonContext = Button.Context;
 
-/**
- * {@link Button.Context}
- */
 export const ToggleButtonContext: React.Context<ToggleButtonContext | null> = Button.Context;
 
-/**
- * {@link Button.useContext}
- */
 export const useToggleButtonContext: IUseContext<ToggleButtonContext> = Button.useContext;
 
 export { ToggleButtonContext as Context, useToggleButtonContext as useContext };
@@ -30,20 +21,11 @@ export { ToggleButtonContext as Context, useToggleButtonContext as useContext };
 // CircularProgressContext
 // -----------------------
 
-/**
- * {@link Button.CircularProgressContext}
- */
 export type ToggleButtonCircularProgressContext = Button.CircularProgressContext;
 
-/**
- * {@link Button.CircularProgressContext}
- */
 export const ToggleButtonCircularProgressContext: React.Context<ToggleButtonCircularProgressContext | null> =
   Button.CircularProgressContext;
 
-/**
- * {@link Button.useCircularProgressContext}
- */
 export const useToggleButtonCircularProgressContext: IUseContext<ToggleButtonCircularProgressContext> =
   Button.useCircularProgressContext;
 
@@ -243,66 +225,30 @@ export const ToggleButtonRoot: IComponent<ToggleButtonRootProps> = function SuiT
 export { ToggleButtonRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link ToggleButtonRootState}
-   */
   export type State = ToggleButtonRootState;
 
-  /**
-   * {@link ToggleButtonRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link ToggleButtonRootProps.BaseUI}
-     */
     export type BaseUI = ToggleButtonRootProps.BaseUI;
 
-    /**
-     * {@link ToggleButtonRootProps.HTML}
-     */
     export type HTML = ToggleButtonRootProps.HTML;
 
-    /**
-     * {@link ToggleButtonRootProps.Render}
-     */
     export type Render = ToggleButtonRootProps.Render;
 
-    /**
-     * {@link ToggleButtonRootProps.SuruUI}
-     */
     export type SuruUI = ToggleButtonRootProps.SuruUI;
   }
 
-  /**
-   * {@link ToggleButtonRootChangeEventDetails}
-   */
   export type ChangeEventDetails = ToggleButtonRootChangeEventDetails;
 
-  /**
-   * {@link ToggleButtonRootChangeEventReason}
-   */
   export type ChangeEventReason = ToggleButtonRootChangeEventReason;
 
-  /**
-   * {@link ToggleButtonRootColor}
-   */
   export type Color = ToggleButtonRootColor;
 
-  /**
-   * {@link ToggleButtonRootRadius}
-   */
   export type Radius = ToggleButtonRootRadius;
 
-  /**
-   * {@link ToggleButtonRootSize}
-   */
   export type Size = ToggleButtonRootSize;
 
-  /**
-   * {@link ToggleButtonRootVariant}
-   */
   export type Variant = ToggleButtonRootVariant;
 }
 
@@ -346,35 +292,17 @@ export const ToggleButtonContent: IComponent<ToggleButtonContentProps> =
 export { ToggleButtonContent as Content };
 
 export namespace Content {
-  /**
-   * {@link ToggleButtonContentState}
-   */
   export type State = ToggleButtonContentState;
 
-  /**
-   * {@link ToggleButtonContentProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link ToggleButtonContentProps.BaseUI}
-     */
     export type BaseUI = ToggleButtonContentProps.BaseUI;
 
-    /**
-     * {@link ToggleButtonContentProps.HTML}
-     */
     export type HTML = ToggleButtonContentProps.HTML;
 
-    /**
-     * {@link ToggleButtonContentProps.Render}
-     */
     export type Render = ToggleButtonContentProps.Render;
 
-    /**
-     * {@link ToggleButtonContentProps.SuruUI}
-     */
     export type SuruUI = ToggleButtonContentProps.SuruUI;
   }
 }
@@ -421,35 +349,17 @@ export const ToggleButtonPending: IComponent<ToggleButtonPendingProps> =
 export { ToggleButtonPending as Pending };
 
 export namespace Pending {
-  /**
-   * {@link ToggleButtonPendingState}
-   */
   export type State = ToggleButtonPendingState;
 
-  /**
-   * {@link ToggleButtonPendingProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link ToggleButtonPendingProps.BaseUI}
-     */
     export type BaseUI = ToggleButtonPendingProps.BaseUI;
 
-    /**
-     * {@link ToggleButtonPendingProps.HTML}
-     */
     export type HTML = ToggleButtonPendingProps.HTML;
 
-    /**
-     * {@link ToggleButtonPendingProps.Render}
-     */
     export type Render = ToggleButtonPendingProps.Render;
 
-    /**
-     * {@link ToggleButtonPendingProps.SuruUI}
-     */
     export type SuruUI = ToggleButtonPendingProps.SuruUI;
   }
 }
@@ -494,35 +404,17 @@ export const ToggleButtonCircularProgress: IComponent<ToggleButtonCircularProgre
 export { ToggleButtonCircularProgress as CircularProgress };
 
 export namespace CircularProgress {
-  /**
-   * {@link ToggleButtonCircularProgressState}
-   */
   export type State = ToggleButtonCircularProgressState;
 
-  /**
-   * {@link ToggleButtonCircularProgressProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link ToggleButtonCircularProgressProps.BaseUI}
-     */
     export type BaseUI = ToggleButtonCircularProgressProps.BaseUI;
 
-    /**
-     * {@link ToggleButtonCircularProgressProps.HTML}
-     */
     export type HTML = ToggleButtonCircularProgressProps.HTML;
 
-    /**
-     * {@link ToggleButtonCircularProgressProps.Render}
-     */
     export type Render = ToggleButtonCircularProgressProps.Render;
 
-    /**
-     * {@link ToggleButtonCircularProgressProps.SuruUI}
-     */
     export type SuruUI = ToggleButtonCircularProgressProps.SuruUI;
   }
 }
@@ -567,35 +459,17 @@ export const ToggleButtonCircularProgressTrack: IComponent<ToggleButtonCircularP
 export { ToggleButtonCircularProgressTrack as CircularProgressTrack };
 
 export namespace CircularProgressTrack {
-  /**
-   * {@link ToggleButtonCircularProgressTrackState}
-   */
   export type State = ToggleButtonCircularProgressTrackState;
 
-  /**
-   * {@link ToggleButtonCircularProgressTrackProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link ToggleButtonCircularProgressTrackProps.BaseUI}
-     */
     export type BaseUI = ToggleButtonCircularProgressTrackProps.BaseUI;
 
-    /**
-     * {@link ToggleButtonCircularProgressTrackProps.HTML}
-     */
     export type HTML = ToggleButtonCircularProgressTrackProps.HTML;
 
-    /**
-     * {@link ToggleButtonCircularProgressTrackProps.Render}
-     */
     export type Render = ToggleButtonCircularProgressTrackProps.Render;
 
-    /**
-     * {@link ToggleButtonCircularProgressTrackProps.SuruUI}
-     */
     export type SuruUI = ToggleButtonCircularProgressTrackProps.SuruUI;
   }
 }
@@ -640,35 +514,17 @@ export const ToggleButtonCircularProgressFill: IComponent<ToggleButtonCircularPr
 export { ToggleButtonCircularProgressFill as CircularProgressFill };
 
 export namespace CircularProgressFill {
-  /**
-   * {@link ToggleButtonCircularProgressFillState}
-   */
   export type State = ToggleButtonCircularProgressFillState;
 
-  /**
-   * {@link ToggleButtonCircularProgressFillProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link ToggleButtonCircularProgressFillProps.BaseUI}
-     */
     export type BaseUI = ToggleButtonCircularProgressFillProps.BaseUI;
 
-    /**
-     * {@link ToggleButtonCircularProgressFillProps.HTML}
-     */
     export type HTML = ToggleButtonCircularProgressFillProps.HTML;
 
-    /**
-     * {@link ToggleButtonCircularProgressFillProps.Render}
-     */
     export type Render = ToggleButtonCircularProgressFillProps.Render;
 
-    /**
-     * {@link ToggleButtonCircularProgressFillProps.SuruUI}
-     */
     export type SuruUI = ToggleButtonCircularProgressFillProps.SuruUI;
   }
 }
@@ -717,35 +573,17 @@ export const ToggleButtonCircularProgressFillRotation: IComponent<ToggleButtonCi
 export { ToggleButtonCircularProgressFillRotation as CircularProgressFillRotation };
 
 export namespace CircularProgressFillRotation {
-  /**
-   * {@link ToggleButtonCircularProgressFillRotationState}
-   */
   export type State = ToggleButtonCircularProgressFillRotationState;
 
-  /**
-   * {@link ToggleButtonCircularProgressFillRotationProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link ToggleButtonCircularProgressFillRotationProps.BaseUI}
-     */
     export type BaseUI = ToggleButtonCircularProgressFillRotationProps.BaseUI;
 
-    /**
-     * {@link ToggleButtonCircularProgressFillRotationProps.HTML}
-     */
     export type HTML = ToggleButtonCircularProgressFillRotationProps.HTML;
 
-    /**
-     * {@link ToggleButtonCircularProgressFillRotationProps.Render}
-     */
     export type Render = ToggleButtonCircularProgressFillRotationProps.Render;
 
-    /**
-     * {@link ToggleButtonCircularProgressFillRotationProps.SuruUI}
-     */
     export type SuruUI = ToggleButtonCircularProgressFillRotationProps.SuruUI;
   }
 }

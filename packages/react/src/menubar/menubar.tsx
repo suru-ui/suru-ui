@@ -18,19 +18,10 @@ import {
 // Types
 // -----
 
-/**
- * {@link MenubarRootItemObject}
- */
 export type MenubarItemObject = MenubarRootItemObject;
 
-/**
- * {@link IMenubarRootItemRenderer}
- */
 export interface IMenubarItemRenderer<TItem = any> extends IMenubarRootItemRenderer<TItem> {}
 
-/**
- * {@link MenubarRootOrientation}
- */
 export type MenubarOrientation = MenubarRootOrientation;
 
 /**
@@ -177,33 +168,15 @@ export const Menubar: IMenubar = function SuiMenubar(props: MenubarProps) {
 };
 
 export namespace Menubar {
-  /**
-   * {@link MenubarState}
-   */
   export type State = MenubarState;
 
-  /**
-   * {@link MenubarProps}
-   */
   export type Props<TItem = any> = MenubarProps<TItem>;
 
-  /**
-   * {@link MenubarSlotProps}
-   */
   export type SlotProps = MenubarSlotProps;
 
-  /**
-   * {@link MenubarItemObject}
-   */
   export type ItemObject = MenubarItemObject;
 
-  /**
-   * {@link IMenubarItemRenderer}
-   */
   export interface IItemRenderer<TItem = any> extends IMenubarItemRenderer<TItem> {}
 
-  /**
-   * {@link MenubarOrientation}
-   */
   export type Orientation = MenubarOrientation;
 }

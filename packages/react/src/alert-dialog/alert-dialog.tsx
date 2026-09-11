@@ -48,29 +48,14 @@ import {
 // Types
 // -----
 
-/**
- * {@link AlertDialogRootActions}
- */
 export type AlertDialogActions = AlertDialogRootActions;
 
-/**
- * {@link AlertDialogRootChangeEventDetails}
- */
 export type AlertDialogChangeEventDetails = AlertDialogRootChangeEventDetails;
 
-/**
- * {@link AlertDialogRootChangeEventReason}
- */
 export type AlertDialogChangeEventReason = AlertDialogRootChangeEventReason;
 
-/**
- * {@link AlertDialogContentRadius}
- */
 export type AlertDialogRadius = AlertDialogContentRadius;
 
-/**
- * {@link AlertDialogContentVariant}
- */
 export type AlertDialogVariant = AlertDialogContentVariant;
 
 /**
@@ -573,9 +558,6 @@ interface IAlertDialog extends IComponent<AlertDialogProps> {
    */
   readonly createHandle: typeof createAlertDialogHandle;
 
-  /**
-   * {@link useAlertDialogContentContext}
-   */
   readonly useContentContext: IUseContext<AlertDialogContentContext>;
 }
 
@@ -652,33 +634,15 @@ export namespace AlertDialog {
    */
   export type SlotProps = AlertDialogSlotProps;
 
-  /**
-   * {@link AlertDialogContentContext}
-   */
   export type ContentContext = AlertDialogContentContext;
 
-  /**
-   * {@link AlertDialogActions}
-   */
   export type Actions = AlertDialogActions;
 
-  /**
-   * {@link AlertDialogChangeEventDetails}
-   */
   export type ChangeEventDetails = AlertDialogChangeEventDetails;
 
-  /**
-   * {@link AlertDialogChangeEventReason}
-   */
   export type ChangeEventReason = AlertDialogChangeEventReason;
 
-  /**
-   * {@link AlertDialogRadius}
-   */
   export type Radius = AlertDialogRadius;
 
-  /**
-   * {@link AlertDialogVariant}
-   */
   export type Variant = AlertDialogVariant;
 }

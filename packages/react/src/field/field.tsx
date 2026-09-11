@@ -25,9 +25,6 @@ import {
 // Types
 // -----
 
-/**
- * {@link FieldRootActions}
- */
 export type FieldActions = FieldRootActions;
 
 /**
@@ -49,9 +46,6 @@ export type FieldErrorMatches =
   | readonly FieldErrorMatch[]
   | { readonly [_ in FieldErrorMatch]?: React.ReactNode };
 
-/**
- * {@link FieldRootValidityData}
- */
 export type FieldValidityData = FieldRootValidityData;
 
 /**
@@ -292,38 +286,17 @@ export const Field: IField = /*#__PURE__*/ Object.assign(
 );
 
 export namespace Field {
-  /**
-   * {@link FieldState}
-   */
   export type State = FieldState;
 
-  /**
-   * {@link FieldProps}
-   */
   export type Props = FieldProps;
 
-  /**
-   * {@link FieldSlotProps}
-   */
   export type SlotProps = FieldSlotProps;
 
-  /**
-   * {@link FieldActions}
-   */
   export type Actions = FieldActions;
 
-  /**
-   * {@link FieldErrorMatch}
-   */
   export type ErrorMatch = FieldErrorMatch;
 
-  /**
-   * {@link FieldErrorMatches}
-   */
   export type ErrorMatches = FieldErrorMatches;
 
-  /**
-   * {@link FieldValidityData}
-   */
   export type ValidityData = FieldValidityData;
 }

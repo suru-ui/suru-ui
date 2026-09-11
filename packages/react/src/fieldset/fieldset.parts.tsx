@@ -65,20 +65,17 @@ export const FieldsetRoot: IComponent<FieldsetRootProps> = function SuiFieldsetR
 export { FieldsetRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link FieldsetRootState}
-   */
   export type State = FieldsetRootState;
 
-  /**
-   * {@link FieldsetRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = FieldsetRootProps.BaseUI;
+
     export type HTML = FieldsetRootProps.HTML;
+
     export type Render = FieldsetRootProps.Render;
+
     export type SuruUI = FieldsetRootProps.SuruUI;
   }
 }
@@ -126,20 +123,17 @@ export const FieldsetLegend: IComponent<FieldsetLegendProps> = function SuiField
 export { FieldsetLegend as Legend };
 
 export namespace Legend {
-  /**
-   * {@link FieldsetLegendState}
-   */
   export type State = FieldsetLegendState;
 
-  /**
-   * {@link FieldsetLegendProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = FieldsetLegendProps.BaseUI;
+
     export type HTML = FieldsetLegendProps.HTML;
+
     export type Render = FieldsetLegendProps.Render;
+
     export type SuruUI = FieldsetLegendProps.SuruUI;
   }
 }

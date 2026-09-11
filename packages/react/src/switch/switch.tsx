@@ -16,34 +16,16 @@ import {
 // Types
 // -----
 
-/**
- * {@link SwitchRootChangeEventDetails}
- */
 export type SwitchChangeEventDetails = SwitchRootChangeEventDetails;
 
-/**
- * {@link SwitchRootChangeEventReason}
- */
 export type SwitchChangeEventReason = SwitchRootChangeEventReason;
 
-/**
- * {@link SwitchRootColor}
- */
 export type SwitchColor = SwitchRootColor;
 
-/**
- * {@link SwitchRootRadius}
- */
 export type SwitchRadius = SwitchRootRadius;
 
-/**
- * {@link SwitchRootSize}
- */
 export type SwitchSize = SwitchRootSize;
 
-/**
- * {@link SwitchRootVariant}
- */
 export type SwitchVariant = SwitchRootVariant;
 
 /**
@@ -134,48 +116,21 @@ export const Switch: IComponent<SwitchProps> = function SuiSwitch(props) {
 };
 
 export namespace Switch {
-  /**
-   * {@link SwitchState}
-   */
   export type State = SwitchState;
 
-  /**
-   * {@link SwitchProps}
-   */
   export type Props = SwitchProps;
 
-  /**
-   * {@link SwitchSlotProps}
-   */
   export type SlotProps = SwitchSlotProps;
 
-  /**
-   * {@link SwitchChangeEventDetails}
-   */
   export type ChangeEventDetails = SwitchChangeEventDetails;
 
-  /**
-   * {@link SwitchChangeEventReason}
-   */
   export type ChangeEventReason = SwitchChangeEventReason;
 
-  /**
-   * {@link SwitchColor}
-   */
   export type Color = SwitchColor;
 
-  /**
-   * {@link SwitchRadius}
-   */
   export type Radius = SwitchRadius;
 
-  /**
-   * {@link SwitchSize}
-   */
   export type Size = SwitchSize;
 
-  /**
-   * {@link SwitchVariant}
-   */
   export type Variant = SwitchVariant;
 }

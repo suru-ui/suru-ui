@@ -26,29 +26,14 @@ import {
 // Types
 // -----
 
-/**
- * {@link PaginationRootColor}
- */
 export type PaginationColor = PaginationRootColor;
 
-/**
- * {@link PaginationRootRadius}
- */
 export type PaginationRadius = PaginationRootRadius;
 
-/**
- * {@link PaginationRootSize}
- */
 export type PaginationSize = PaginationRootSize;
 
-/**
- * {@link PaginationRootChangeEventReason}
- */
 export type PaginationChangeEventReason = PaginationRootChangeEventReason;
 
-/**
- * {@link PaginationRootChangeEventDetails}
- */
 export type PaginationChangeEventDetails = PaginationRootChangeEventDetails;
 
 /**
@@ -309,49 +294,22 @@ export const Pagination: IComponent<PaginationProps> = function SuiPagination(pr
 };
 
 export namespace Pagination {
-  /**
-   * {@link PaginationState}
-   */
   export type State = PaginationState;
 
-  /**
-   * {@link PaginationProps}
-   */
   export type Props = PaginationProps;
 
-  /**
-   * {@link PaginationSlotProps}
-   */
   export type SlotProps = PaginationSlotProps;
 
-  /**
-   * {@link PaginationChangeEventDetails}
-   */
   export type ChangeEventDetails = PaginationChangeEventDetails;
 
-  /**
-   * {@link PaginationChangeEventReason}
-   */
   export type ChangeEventReason = PaginationChangeEventReason;
 
-  /**
-   * {@link PaginationColor}
-   */
   export type Color = PaginationColor;
 
-  /**
-   * {@link PaginationItemObject}
-   */
   export type ItemObject = PaginationItemObject;
 
-  /**
-   * {@link PaginationRadius}
-   */
   export type Radius = PaginationRadius;
 
-  /**
-   * {@link PaginationSize}
-   */
   export type Size = PaginationSize;
 }
 

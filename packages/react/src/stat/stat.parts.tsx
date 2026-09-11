@@ -58,9 +58,6 @@ export const useStatContext: IUseContext<StatContext> = useSuiStatContext;
 export { StatContext as Context, useStatContext as useContext };
 
 export namespace Context {
-  /**
-   * {@link StatContextSize}
-   */
   export type Size = StatContextSize;
 }
 
@@ -132,36 +129,18 @@ export const StatRoot: IComponent<StatRootProps> = function SuiStatRoot(props) {
 export { StatRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link StatRootState}
-   */
   export type State = StatRootState;
 
-  /**
-   * {@link StatRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link StatRootProps.HTML}
-     */
     export type HTML = StatRootProps.HTML;
 
-    /**
-     * {@link StatRootProps.Render}
-     */
     export type Render = StatRootProps.Render;
 
-    /**
-     * {@link StatRootProps.SuruUI}
-     */
     export type SuruUI = StatRootProps.SuruUI;
   }
 
-  /**
-   * {@link StatRootSize}
-   */
   export type Size = StatRootSize;
 }
 
@@ -226,36 +205,18 @@ export const StatLabel: IComponent<StatLabelProps> = function SuiStatLabel(props
 export { StatLabel as Label };
 
 export namespace Label {
-  /**
-   * {@link StatLabelState}
-   */
   export type State = StatLabelState;
 
-  /**
-   * {@link StatLabelProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link StatLabelProps.HTML}
-     */
     export type HTML = StatLabelProps.HTML;
 
-    /**
-     * {@link StatLabelProps.Render}
-     */
     export type Render = StatLabelProps.Render;
 
-    /**
-     * {@link StatLabelProps.SuruUI}
-     */
     export type SuruUI = StatLabelProps.SuruUI;
   }
 
-  /**
-   * {@link StatLabelSize}
-   */
   export type Size = StatLabelSize;
 }
 
@@ -320,36 +281,18 @@ export const StatValue: IComponent<StatValueProps> = function SuiStatValue(props
 export { StatValue as Value };
 
 export namespace Value {
-  /**
-   * {@link StatValueState}
-   */
   export type State = StatValueState;
 
-  /**
-   * {@link StatValueProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link StatValueProps.HTML}
-     */
     export type HTML = StatValueProps.HTML;
 
-    /**
-     * {@link StatValueProps.Render}
-     */
     export type Render = StatValueProps.Render;
 
-    /**
-     * {@link StatValueProps.SuruUI}
-     */
     export type SuruUI = StatValueProps.SuruUI;
   }
 
-  /**
-   * {@link StatValueSize}
-   */
   export type Size = StatValueSize;
 }
 
@@ -416,36 +359,18 @@ export const StatChange: IComponent<StatChangeProps> = function SuiStatChange(pr
 export { StatChange as Change };
 
 export namespace Change {
-  /**
-   * {@link StatChangeState}
-   */
   export type State = StatChangeState;
 
-  /**
-   * {@link StatChangeProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link StatChangeProps.HTML}
-     */
     export type HTML = StatChangeProps.HTML;
 
-    /**
-     * {@link StatChangeProps.Render}
-     */
     export type Render = StatChangeProps.Render;
 
-    /**
-     * {@link StatChangeProps.SuruUI}
-     */
     export type SuruUI = StatChangeProps.SuruUI;
   }
 
-  /**
-   * {@link StatChangeDirection}
-   */
   export type Direction = StatChangeDirection;
 }
 
@@ -514,35 +439,17 @@ export const StatDescription: IComponent<StatDescriptionProps> = function SuiSta
 export { StatDescription as Description };
 
 export namespace Description {
-  /**
-   * {@link StatDescriptionState}
-   */
   export type State = StatDescriptionState;
 
-  /**
-   * {@link StatDescriptionProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link StatDescriptionProps.HTML}
-     */
     export type HTML = StatDescriptionProps.HTML;
 
-    /**
-     * {@link StatDescriptionProps.Render}
-     */
     export type Render = StatDescriptionProps.Render;
 
-    /**
-     * {@link StatDescriptionProps.SuruUI}
-     */
     export type SuruUI = StatDescriptionProps.SuruUI;
   }
 
-  /**
-   * {@link StatDescriptionSize}
-   */
   export type Size = StatDescriptionSize;
 }

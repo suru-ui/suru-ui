@@ -26,24 +26,12 @@ import {
 // Types
 // -----
 
-/**
- * {@link ButtonRootColor}
- */
 export type ButtonColor = ButtonRootColor;
 
-/**
- * {@link ButtonRootRadius}
- */
 export type ButtonRadius = ButtonRootRadius;
 
-/**
- * {@link ButtonRootSize}
- */
 export type ButtonSize = ButtonRootSize;
 
-/**
- * {@link ButtonRootVariant}
- */
 export type ButtonVariant = ButtonRootVariant;
 
 /**
@@ -213,9 +201,6 @@ export { type ButtonAPI as API, useButtonAPI as useAPI };
 // ---------
 
 interface IButton extends IComponent<ButtonProps> {
-  /**
-   * {@link useButtonContext}
-   */
   readonly useContext: IUseContext<ButtonContext>;
 }
 
@@ -246,43 +231,19 @@ export const Button: IButton = /*#__PURE__*/ Object.assign(
 );
 
 export namespace Button {
-  /**
-   * {@link ButtonState}
-   */
   export type State = ButtonState;
 
-  /**
-   * {@link ButtonProps}
-   */
   export type Props = ButtonProps;
 
-  /**
-   * {@link ButtonSlotProps}
-   */
   export type SlotProps = ButtonSlotProps;
 
-  /**
-   * {@link ButtonContext}
-   */
   export type Context = ButtonContext;
 
-  /**
-   * {@link ButtonColor}
-   */
   export type Color = ButtonColor;
 
-  /**
-   * {@link ButtonRadius}
-   */
   export type Radius = ButtonRadius;
 
-  /**
-   * {@link ButtonSize}
-   */
   export type Size = ButtonSize;
 
-  /**
-   * {@link ButtonVariant}
-   */
   export type Variant = ButtonVariant;
 }

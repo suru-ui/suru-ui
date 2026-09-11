@@ -160,65 +160,29 @@ export const TextareaRoot: IComponent<TextareaRootProps> = function SuiTextareaR
 export { TextareaRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link TextareaRootState}
-   */
   export type State = TextareaRootState;
 
-  /**
-   * {@link TextareaRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link TextareaRootProps.BaseUI}
-     */
     export type BaseUI = TextareaRootProps.BaseUI;
 
-    /**
-     * {@link TextareaRootProps.HTML}
-     */
     export type HTML = TextareaRootProps.HTML;
 
-    /**
-     * {@link TextareaRootProps.Render}
-     */
     export type Render = TextareaRootProps.Render;
 
-    /**
-     * {@link TextareaRootProps.SuruUI}
-     */
     export type SuruUI = TextareaRootProps.SuruUI;
   }
 
-  /**
-   * {@link TextareaRootChangeEventDetails}
-   */
   export type ChangeEventDetails = TextareaRootChangeEventDetails;
 
-  /**
-   * {@link TextareaRootChangeEventReason}
-   */
   export type ChangeEventReason = TextareaRootChangeEventReason;
 
-  /**
-   * {@link TextareaRootColor}
-   */
   export type Color = TextareaRootColor;
 
-  /**
-   * {@link TextareaRootRadius}
-   */
   export type Radius = TextareaRootRadius;
 
-  /**
-   * {@link TextareaRootSize}
-   */
   export type Size = TextareaRootSize;
 
-  /**
-   * {@link TextareaRootVariant}
-   */
   export type Variant = TextareaRootVariant;
 }

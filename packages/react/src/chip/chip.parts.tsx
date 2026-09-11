@@ -138,34 +138,21 @@ export { ChipRoot as Root };
 export namespace Root {
   export type State = ChipRootState;
 
-  /**
-   * {@link ChipRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = ChipRootProps.HTML;
+
     export type Render = ChipRootProps.Render;
+
     export type SuruUI = ChipRootProps.SuruUI;
   }
 
-  /**
-   * {@link ChipRootColor}
-   */
   export type Color = ChipRootColor;
 
-  /**
-   * {@link ChipRootRadius}
-   */
   export type Radius = ChipRootRadius;
 
-  /**
-   * {@link ChipRootSize}
-   */
   export type Size = ChipRootSize;
 
-  /**
-   * {@link ChipRootVariant}
-   */
   export type Variant = ChipRootVariant;
 }

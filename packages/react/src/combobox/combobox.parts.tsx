@@ -96,24 +96,12 @@ export { ComboboxContext as Context, useComboboxContext as useContext };
  * {@link Context} の型名前空間です。
  */
 export namespace Context {
-  /**
-   * {@link ComboboxContextColor}
-   */
   export type Color = ComboboxContextColor;
 
-  /**
-   * {@link ComboboxContextRadius}
-   */
   export type Radius = ComboboxContextRadius;
 
-  /**
-   * {@link ComboboxContextSize}
-   */
   export type Size = ComboboxContextSize;
 
-  /**
-   * {@link ComboboxContextVariant}
-   */
   export type Variant = ComboboxContextVariant;
 }
 
@@ -199,13 +187,10 @@ export type ComboboxRootState = Combobox.Root.State;
 export namespace ComboboxRootProps {
   export type BaseUI<TValue = unknown, TMultiple extends boolean | undefined = false> = Omit<
     Combobox.Root.Props<TValue, TMultiple>,
-    keyof Render | keyof SuruUI<TValue>
+    keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI<any> | keyof Combobox.Root.Props<any, any>
-  >;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 
   export type Render = RenderProps<ComboboxRootState>;
 
@@ -320,14 +305,8 @@ export { ComboboxRoot as Root };
  * {@link ComboboxRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
-  /**
-   * {@link ComboboxRootState}
-   */
   export type State = ComboboxRootState;
 
-  /**
-   * {@link ComboboxRootProps}
-   */
   export type Props<
     TValue = unknown,
     TMultiple extends boolean | undefined = false,
@@ -338,59 +317,32 @@ export namespace Root {
       TValue = unknown,
       TMultiple extends boolean | undefined = false,
     > = ComboboxRootProps.BaseUI<TValue, TMultiple>;
+
     export type HTML = ComboboxRootProps.HTML;
+
     export type Render = ComboboxRootProps.Render;
+
     export type SuruUI<TValue = unknown> = ComboboxRootProps.SuruUI<TValue>;
   }
 
-  /**
-   * {@link ComboboxRootActions}
-   */
   export type Actions = ComboboxRootActions;
 
-  /**
-   * {@link ComboboxRootChangeEventDetails}
-   */
   export type ChangeEventDetails = ComboboxRootChangeEventDetails;
 
-  /**
-   * {@link ComboboxRootChangeEventReason}
-   */
   export type ChangeEventReason = ComboboxRootChangeEventReason;
 
-  /**
-   * {@link ComboboxRootColor}
-   */
   export type Color = ComboboxRootColor;
 
-  /**
-   * {@link ComboboxRootHighlightEventDetails}
-   */
   export type HighlightEventDetails = ComboboxRootHighlightEventDetails;
 
-  /**
-   * {@link ComboboxRootHighlightEventReason}
-   */
   export type HighlightEventReason = ComboboxRootHighlightEventReason;
 
-  /**
-   * {@link ComboboxRootItems}
-   */
   export type Items<TValue = unknown> = ComboboxRootItems<TValue>;
 
-  /**
-   * {@link ComboboxRootRadius}
-   */
   export type Radius = ComboboxRootRadius;
 
-  /**
-   * {@link ComboboxRootSize}
-   */
   export type Size = ComboboxRootSize;
 
-  /**
-   * {@link ComboboxRootVariant}
-   */
   export type Variant = ComboboxRootVariant;
 }
 
@@ -440,15 +392,15 @@ export { ComboboxLabel as Label };
 export namespace Label {
   export type State = ComboboxLabelState;
 
-  /**
-   * {@link ComboboxLabelProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxLabelProps.BaseUI;
+
     export type HTML = ComboboxLabelProps.HTML;
+
     export type Render = ComboboxLabelProps.Render;
+
     export type SuruUI = ComboboxLabelProps.SuruUI;
   }
 }
@@ -524,15 +476,15 @@ export { ComboboxInputGroup as InputGroup };
 export namespace InputGroup {
   export type State = ComboboxInputGroupState;
 
-  /**
-   * {@link ComboboxInputGroupProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxInputGroupProps.BaseUI;
+
     export type HTML = ComboboxInputGroupProps.HTML;
+
     export type Render = ComboboxInputGroupProps.Render;
+
     export type SuruUI = ComboboxInputGroupProps.SuruUI;
   }
 }
@@ -581,15 +533,15 @@ export { ComboboxValue as Value };
 export namespace Value {
   export type State = ComboboxValueState;
 
-  /**
-   * {@link ComboboxValueProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxValueProps.BaseUI;
+
     export type HTML = ComboboxValueProps.HTML;
+
     export type Render = ComboboxValueProps.Render;
+
     export type SuruUI = ComboboxValueProps.SuruUI;
   }
 }
@@ -640,15 +592,15 @@ export { ComboboxInput as Input };
 export namespace Input {
   export type State = ComboboxInputState;
 
-  /**
-   * {@link ComboboxInputProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxInputProps.BaseUI;
+
     export type HTML = ComboboxInputProps.HTML;
+
     export type Render = ComboboxInputProps.Render;
+
     export type SuruUI = ComboboxInputProps.SuruUI;
   }
 }
@@ -710,15 +662,15 @@ export { ComboboxTrigger as Trigger };
 export namespace Trigger {
   export type State = ComboboxTriggerState;
 
-  /**
-   * {@link ComboboxTriggerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxTriggerProps.BaseUI;
+
     export type HTML = ComboboxTriggerProps.HTML;
+
     export type Render = ComboboxTriggerProps.Render;
+
     export type SuruUI = ComboboxTriggerProps.SuruUI;
   }
 }
@@ -769,15 +721,15 @@ export { ComboboxIcon as Icon };
 export namespace Icon {
   export type State = ComboboxIconState;
 
-  /**
-   * {@link ComboboxIconProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxIconProps.BaseUI;
+
     export type HTML = ComboboxIconProps.HTML;
+
     export type Render = ComboboxIconProps.Render;
+
     export type SuruUI = ComboboxIconProps.SuruUI;
   }
 }
@@ -837,15 +789,15 @@ export { ComboboxClear as Clear };
 export namespace Clear {
   export type State = ComboboxClearState;
 
-  /**
-   * {@link ComboboxClearProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxClearProps.BaseUI;
+
     export type HTML = ComboboxClearProps.HTML;
+
     export type Render = ComboboxClearProps.Render;
+
     export type SuruUI = ComboboxClearProps.SuruUI;
   }
 }
@@ -896,15 +848,15 @@ export { ComboboxChips as Chips };
 export namespace Chips {
   export type State = ComboboxChipsState;
 
-  /**
-   * {@link ComboboxChipsProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxChipsProps.BaseUI;
+
     export type HTML = ComboboxChipsProps.HTML;
+
     export type Render = ComboboxChipsProps.Render;
+
     export type SuruUI = ComboboxChipsProps.SuruUI;
   }
 }
@@ -955,15 +907,15 @@ export { ComboboxChip as Chip };
 export namespace Chip {
   export type State = ComboboxChipState;
 
-  /**
-   * {@link ComboboxChipProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxChipProps.BaseUI;
+
     export type HTML = ComboboxChipProps.HTML;
+
     export type Render = ComboboxChipProps.Render;
+
     export type SuruUI = ComboboxChipProps.SuruUI;
   }
 }
@@ -1024,15 +976,15 @@ export { ComboboxChipRemove as ChipRemove };
 export namespace ChipRemove {
   export type State = ComboboxChipRemoveState;
 
-  /**
-   * {@link ComboboxChipRemoveProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxChipRemoveProps.BaseUI;
+
     export type HTML = ComboboxChipRemoveProps.HTML;
+
     export type Render = ComboboxChipRemoveProps.Render;
+
     export type SuruUI = ComboboxChipRemoveProps.SuruUI;
   }
 }
@@ -1083,15 +1035,15 @@ export { ComboboxList as List };
 export namespace List {
   export type State = ComboboxListState;
 
-  /**
-   * {@link ComboboxListProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxListProps.BaseUI;
+
     export type HTML = ComboboxListProps.HTML;
+
     export type Render = ComboboxListProps.Render;
+
     export type SuruUI = ComboboxListProps.SuruUI;
   }
 }
@@ -1142,15 +1094,15 @@ export { ComboboxStatus as Status };
 export namespace Status {
   export type State = ComboboxStatusState;
 
-  /**
-   * {@link ComboboxStatusProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxStatusProps.BaseUI;
+
     export type HTML = ComboboxStatusProps.HTML;
+
     export type Render = ComboboxStatusProps.Render;
+
     export type SuruUI = ComboboxStatusProps.SuruUI;
   }
 }
@@ -1220,15 +1172,15 @@ export { ComboboxPortal as Portal };
 export namespace Portal {
   export type State = ComboboxPortalState;
 
-  /**
-   * {@link ComboboxPortalProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxPortalProps.BaseUI;
+
     export type HTML = ComboboxPortalProps.HTML;
+
     export type Render = ComboboxPortalProps.Render;
+
     export type SuruUI = ComboboxPortalProps.SuruUI;
   }
 }
@@ -1281,15 +1233,15 @@ export { ComboboxBackdrop as Backdrop };
 export namespace Backdrop {
   export type State = ComboboxBackdropState;
 
-  /**
-   * {@link ComboboxBackdropProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxBackdropProps.BaseUI;
+
     export type HTML = ComboboxBackdropProps.HTML;
+
     export type Render = ComboboxBackdropProps.Render;
+
     export type SuruUI = ComboboxBackdropProps.SuruUI;
   }
 }
@@ -1343,15 +1295,15 @@ export { ComboboxPositioner as Positioner };
 export namespace Positioner {
   export type State = ComboboxPositionerState;
 
-  /**
-   * {@link ComboboxPositionerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxPositionerProps.BaseUI;
+
     export type HTML = ComboboxPositionerProps.HTML;
+
     export type Render = ComboboxPositionerProps.Render;
+
     export type SuruUI = ComboboxPositionerProps.SuruUI;
   }
 }
@@ -1402,15 +1354,15 @@ export { ComboboxPopup as Popup };
 export namespace Popup {
   export type State = ComboboxPopupState;
 
-  /**
-   * {@link ComboboxPopupProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxPopupProps.BaseUI;
+
     export type HTML = ComboboxPopupProps.HTML;
+
     export type Render = ComboboxPopupProps.Render;
+
     export type SuruUI = ComboboxPopupProps.SuruUI;
   }
 }
@@ -1461,15 +1413,15 @@ export { ComboboxArrow as Arrow };
 export namespace Arrow {
   export type State = ComboboxArrowState;
 
-  /**
-   * {@link ComboboxArrowProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxArrowProps.BaseUI;
+
     export type HTML = ComboboxArrowProps.HTML;
+
     export type Render = ComboboxArrowProps.Render;
+
     export type SuruUI = ComboboxArrowProps.SuruUI;
   }
 }
@@ -1520,15 +1472,15 @@ export { ComboboxGroup as Group };
 export namespace Group {
   export type State = ComboboxGroupState;
 
-  /**
-   * {@link ComboboxGroupProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxGroupProps.BaseUI;
+
     export type HTML = ComboboxGroupProps.HTML;
+
     export type Render = ComboboxGroupProps.Render;
+
     export type SuruUI = ComboboxGroupProps.SuruUI;
   }
 }
@@ -1582,15 +1534,15 @@ export { ComboboxGroupLabel as GroupLabel };
 export namespace GroupLabel {
   export type State = ComboboxGroupLabelState;
 
-  /**
-   * {@link ComboboxGroupLabelProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxGroupLabelProps.BaseUI;
+
     export type HTML = ComboboxGroupLabelProps.HTML;
+
     export type Render = ComboboxGroupLabelProps.Render;
+
     export type SuruUI = ComboboxGroupLabelProps.SuruUI;
   }
 }
@@ -1682,15 +1634,15 @@ export { ComboboxItem as Item };
 export namespace Item {
   export type State = ComboboxItemState;
 
-  /**
-   * {@link ComboboxItemProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxItemProps.BaseUI;
+
     export type HTML = ComboboxItemProps.HTML;
+
     export type Render = ComboboxItemProps.Render;
+
     export type SuruUI = ComboboxItemProps.SuruUI;
   }
 }
@@ -1747,15 +1699,15 @@ export { ComboboxItemIndicator as ItemIndicator };
 export namespace ItemIndicator {
   export type State = ComboboxItemIndicatorState;
 
-  /**
-   * {@link ComboboxItemIndicatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxItemIndicatorProps.BaseUI;
+
     export type HTML = ComboboxItemIndicatorProps.HTML;
+
     export type Render = ComboboxItemIndicatorProps.Render;
+
     export type SuruUI = ComboboxItemIndicatorProps.SuruUI;
   }
 }
@@ -1806,15 +1758,15 @@ export { ComboboxRow as Row };
 export namespace Row {
   export type State = ComboboxRowState;
 
-  /**
-   * {@link ComboboxRowProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxRowProps.BaseUI;
+
     export type HTML = ComboboxRowProps.HTML;
+
     export type Render = ComboboxRowProps.Render;
+
     export type SuruUI = ComboboxRowProps.SuruUI;
   }
 }
@@ -1866,15 +1818,15 @@ export { ComboboxCollection as Collection };
 export namespace Collection {
   export type State = ComboboxCollectionState;
 
-  /**
-   * {@link ComboboxCollectionProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxCollectionProps.BaseUI;
+
     export type HTML = ComboboxCollectionProps.HTML;
+
     export type Render = ComboboxCollectionProps.Render;
+
     export type SuruUI = ComboboxCollectionProps.SuruUI;
   }
 }
@@ -1925,15 +1877,15 @@ export { ComboboxEmpty as Empty };
 export namespace Empty {
   export type State = ComboboxEmptyState;
 
-  /**
-   * {@link ComboboxEmptyProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxEmptyProps.BaseUI;
+
     export type HTML = ComboboxEmptyProps.HTML;
+
     export type Render = ComboboxEmptyProps.Render;
+
     export type SuruUI = ComboboxEmptyProps.SuruUI;
   }
 }
@@ -1986,15 +1938,15 @@ export { ComboboxSeparator as Separator };
 export namespace Separator {
   export type State = ComboboxSeparatorState;
 
-  /**
-   * {@link ComboboxSeparatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ComboboxSeparatorProps.BaseUI;
+
     export type HTML = ComboboxSeparatorProps.HTML;
+
     export type Render = ComboboxSeparatorProps.Render;
+
     export type SuruUI = ComboboxSeparatorProps.SuruUI;
   }
 }
@@ -2031,14 +1983,8 @@ export interface IUseComboboxFilter {
  * {@link IUseComboboxFilter} に対応する型名前空間です。
  */
 export namespace IUseComboboxFilter {
-  /**
-   * {@link IUseComboboxFilterOptions}
-   */
   export type Options = IUseComboboxFilterOptions;
 
-  /**
-   * {@link IUseComboboxFilterReturn}
-   */
   export interface Return extends IUseComboboxFilterReturn {}
 }
 
@@ -2051,9 +1997,6 @@ function useSuiComboboxFilter(options?: IUseComboboxFilterOptions): ComboboxFilt
  */
 export const useComboboxFilter: IUseComboboxFilter = useSuiComboboxFilter;
 
-/**
- * {@link useComboboxFilter}
- */
 export const useFilter: IUseComboboxFilter = useComboboxFilter;
 
 // useFilteredItems
@@ -2080,9 +2023,6 @@ export interface IUseComboboxFilteredItems {
  * {@link IUseComboboxFilteredItems} に対応する型名前空間です。
  */
 export namespace IUseComboboxFilteredItems {
-  /**
-   * {@link IUseComboboxFilteredItemsReturn}
-   */
   export type Return<TValue = unknown> = IUseComboboxFilteredItemsReturn<TValue>;
 }
 
@@ -2095,7 +2035,4 @@ function useSuiComboboxFilteredItems(): ComboboxFilteredItems<any> {
  */
 export const useComboboxFilteredItems: IUseComboboxFilteredItems = useSuiComboboxFilteredItems;
 
-/**
- * {@link useComboboxFilteredItems}
- */
 export const useFilteredItems: IUseComboboxFilteredItems = useComboboxFilteredItems;

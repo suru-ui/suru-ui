@@ -16,19 +16,10 @@ import {
 // Types
 // -----
 
-/**
- * {@link AvatarRootColor}
- */
 export type AvatarColor = AvatarRootColor;
 
-/**
- * {@link AvatarRootRadius}
- */
 export type AvatarRadius = AvatarRootRadius;
 
-/**
- * {@link AvatarRootSize}
- */
 export type AvatarSize = AvatarRootSize;
 
 /**
@@ -156,33 +147,15 @@ export const Avatar: IComponent<AvatarProps> = function SuiAvatar(props) {
 };
 
 export namespace Avatar {
-  /**
-   * {@link AvatarState}
-   */
   export type State = AvatarState;
 
-  /**
-   * {@link AvatarProps}
-   */
   export type Props = AvatarProps;
 
-  /**
-   * {@link AvatarSlotProps}
-   */
   export type SlotProps = AvatarSlotProps;
 
-  /**
-   * {@link AvatarColor}
-   */
   export type Color = AvatarColor;
 
-  /**
-   * {@link AvatarRadius}
-   */
   export type Radius = AvatarRadius;
 
-  /**
-   * {@link AvatarSize}
-   */
   export type Size = AvatarSize;
 }

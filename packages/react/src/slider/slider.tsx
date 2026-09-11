@@ -28,44 +28,20 @@ import {
 // Types
 // -----
 
-/**
- * {@link SliderRootChangeEventDetails}
- */
 export type SliderChangeEventDetails = SliderRootChangeEventDetails;
 
-/**
- * {@link SliderRootChangeEventReason}
- */
 export type SliderChangeEventReason = SliderRootChangeEventReason;
 
-/**
- * {@link SliderRootCommitEventDetails}
- */
 export type SliderCommitEventDetails = SliderRootCommitEventDetails;
 
-/**
- * {@link SliderRootCommitEventReason}
- */
 export type SliderCommitEventReason = SliderRootCommitEventReason;
 
-/**
- * {@link SliderRootColor}
- */
 export type SliderColor = SliderRootColor;
 
-/**
- * {@link SliderRootRadius}
- */
 export type SliderRadius = SliderRootRadius;
 
-/**
- * {@link SliderRootSize}
- */
 export type SliderSize = SliderRootSize;
 
-/**
- * {@link SliderRootVariant}
- */
 export type SliderVariant = SliderRootVariant;
 
 /**
@@ -288,59 +264,26 @@ export const Slider: ISlider = function SuiSlider(props: SliderProps) {
 };
 
 export namespace Slider {
-  /**
-   * {@link SliderState}
-   */
   export type State = SliderState;
 
-  /**
-   * {@link SliderProps}
-   */
   export type Props<TValue extends number | readonly number[] = number | readonly number[]> =
     SliderProps<TValue>;
 
-  /**
-   * {@link SliderSlotProps}
-   */
   export type SlotProps = SliderSlotProps;
 
-  /**
-   * {@link SliderChangeEventDetails}
-   */
   export type ChangeEventDetails = SliderChangeEventDetails;
 
-  /**
-   * {@link SliderChangeEventReason}
-   */
   export type ChangeEventReason = SliderChangeEventReason;
 
-  /**
-   * {@link SliderColor}
-   */
   export type Color = SliderColor;
 
-  /**
-   * {@link SliderCommitEventDetails}
-   */
   export type CommitEventDetails = SliderCommitEventDetails;
 
-  /**
-   * {@link SliderCommitEventReason}
-   */
   export type CommitEventReason = SliderCommitEventReason;
 
-  /**
-   * {@link SliderRadius}
-   */
   export type Radius = SliderRadius;
 
-  /**
-   * {@link SliderSize}
-   */
   export type Size = SliderSize;
 
-  /**
-   * {@link SliderVariant}
-   */
   export type Variant = SliderVariant;
 }

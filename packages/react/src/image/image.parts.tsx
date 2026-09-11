@@ -92,35 +92,22 @@ export const ImageRoot: IComponent<ImageRootProps> = function SuiImageRoot(props
   });
 };
 
-/**
- * {@link ImageRoot}
- */
 export { ImageRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link ImageRootState}
-   */
   export type State = ImageRootState;
 
-  /**
-   * {@link ImageRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = ImageRootProps.HTML;
+
     export type Render = ImageRootProps.Render;
+
     export type SuruUI = ImageRootProps.SuruUI;
   }
 
-  /**
-   * {@link ImageRootFit}
-   */
   export type Fit = ImageRootFit;
 
-  /**
-   * {@link ImageRootRadius}
-   */
   export type Radius = ImageRootRadius;
 }

@@ -180,46 +180,28 @@ export { CheckboxRoot as Root };
 export namespace Root {
   export type State = CheckboxRootState;
 
-  /**
-   * {@link CheckboxRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = CheckboxRootProps.BaseUI;
+
     export type HTML = CheckboxRootProps.HTML;
+
     export type Render = CheckboxRootProps.Render;
+
     export type SuruUI = CheckboxRootProps.SuruUI;
   }
 
-  /**
-   * {@link CheckboxRootChangeEventDetails}
-   */
   export type ChangeEventDetails = CheckboxRootChangeEventDetails;
 
-  /**
-   * {@link CheckboxRootChangeEventReason}
-   */
   export type ChangeEventReason = CheckboxRootChangeEventReason;
 
-  /**
-   * {@link CheckboxRootColor}
-   */
   export type Color = CheckboxRootColor;
 
-  /**
-   * {@link CheckboxRootRadius}
-   */
   export type Radius = CheckboxRootRadius;
 
-  /**
-   * {@link CheckboxRootSize}
-   */
   export type Size = CheckboxRootSize;
 
-  /**
-   * {@link CheckboxRootVariant}
-   */
   export type Variant = CheckboxRootVariant;
 }
 
@@ -272,15 +254,15 @@ export { CheckboxIndicator as Indicator };
 export namespace Indicator {
   export type State = CheckboxIndicatorState;
 
-  /**
-   * {@link CheckboxIndicatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = CheckboxIndicatorProps.BaseUI;
+
     export type HTML = CheckboxIndicatorProps.HTML;
+
     export type Render = CheckboxIndicatorProps.Render;
+
     export type SuruUI = CheckboxIndicatorProps.SuruUI;
   }
 }

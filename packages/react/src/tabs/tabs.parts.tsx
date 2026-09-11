@@ -167,75 +167,33 @@ export const TabsRoot: IComponent<TabsRootProps> = function SuiTabsRoot(props) {
 
 export { TabsRoot as Root };
 
-/**
- * {@link TabsRoot}
- */
 export namespace Root {
-  /**
-   * {@link TabsRootState}
-   */
   export type State = TabsRootState;
 
-  /**
-   * {@link TabsRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link TabsRootProps.BaseUI}
-     */
     export type BaseUI = TabsRootProps.BaseUI;
 
-    /**
-     * {@link TabsRootProps.HTML}
-     */
     export type HTML = TabsRootProps.HTML;
 
-    /**
-     * {@link TabsRootProps.Render}
-     */
     export type Render = TabsRootProps.Render;
 
-    /**
-     * {@link TabsRootProps.SuruUI}
-     */
     export type SuruUI = TabsRootProps.SuruUI;
   }
 
-  /**
-   * {@link TabsRootActiveVariant}
-   */
   export type ActiveVariant = TabsRootActiveVariant;
 
-  /**
-   * {@link TabsRootChangeEventDetails}
-   */
   export type ChangeEventDetails = TabsRootChangeEventDetails;
 
-  /**
-   * {@link TabsRootChangeEventReason}
-   */
   export type ChangeEventReason = TabsRootChangeEventReason;
 
-  /**
-   * {@link TabsRootOrientation}
-   */
   export type Orientation = TabsRootOrientation;
 
-  /**
-   * {@link TabsRootRadius}
-   */
   export type Radius = TabsRootRadius;
 
-  /**
-   * {@link TabsRootSize}
-   */
   export type Size = TabsRootSize;
 
-  /**
-   * {@link TabsRootVariant}
-   */
   export type Variant = TabsRootVariant;
 }
 
@@ -287,39 +245,18 @@ export const TabsList: IComponent<TabsListProps> = function SuiTabsList(props) {
 
 export { TabsList as List };
 
-/**
- * {@link TabsList}
- */
 export namespace List {
-  /**
-   * {@link TabsListState}
-   */
   export type State = TabsListState;
 
-  /**
-   * {@link TabsListProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link TabsListProps.BaseUI}
-     */
     export type BaseUI = TabsListProps.BaseUI;
 
-    /**
-     * {@link TabsListProps.HTML}
-     */
     export type HTML = TabsListProps.HTML;
 
-    /**
-     * {@link TabsListProps.Render}
-     */
     export type Render = TabsListProps.Render;
 
-    /**
-     * {@link TabsListProps.SuruUI}
-     */
     export type SuruUI = TabsListProps.SuruUI;
   }
 }
@@ -402,65 +339,29 @@ export const TabsTab: IComponent<TabsTabProps> = function SuiTabsTab(props) {
 
 export { TabsTab as Tab };
 
-/**
- * {@link TabsTab}
- */
 export namespace Tab {
-  /**
-   * {@link TabsTabState}
-   */
   export type State = TabsTabState;
 
-  /**
-   * {@link TabsTabProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link TabsTabProps.BaseUI}
-     */
     export type BaseUI = TabsTabProps.BaseUI;
 
-    /**
-     * {@link TabsTabProps.HTML}
-     */
     export type HTML = TabsTabProps.HTML;
 
-    /**
-     * {@link TabsTabProps.Render}
-     */
     export type Render = TabsTabProps.Render;
 
-    /**
-     * {@link TabsTabProps.SuruUI}
-     */
     export type SuruUI = TabsTabProps.SuruUI;
   }
 
-  /**
-   * {@link TabsTabActivationDirection}
-   */
   export type ActivationDirection = TabsTabActivationDirection;
 
-  /**
-   * {@link TabsTabMetadata}
-   */
   export type Metadata = TabsTabMetadata;
 
-  /**
-   * {@link TabsTabPosition}
-   */
   export type Position = TabsTabPosition;
 
-  /**
-   * {@link TabsTabSize}
-   */
   export type Size = TabsTabSize;
 
-  /**
-   * {@link TabsTabValue}
-   */
   export type Value = TabsTabValue;
 }
 
@@ -506,39 +407,18 @@ export const TabsIndicator: IComponent<TabsIndicatorProps> = function SuiTabsInd
 
 export { TabsIndicator as Indicator };
 
-/**
- * {@link TabsIndicator}
- */
 export namespace Indicator {
-  /**
-   * {@link TabsIndicatorState}
-   */
   export type State = TabsIndicatorState;
 
-  /**
-   * {@link TabsIndicatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link TabsIndicatorProps.BaseUI}
-     */
     export type BaseUI = TabsIndicatorProps.BaseUI;
 
-    /**
-     * {@link TabsIndicatorProps.HTML}
-     */
     export type HTML = TabsIndicatorProps.HTML;
 
-    /**
-     * {@link TabsIndicatorProps.Render}
-     */
     export type Render = TabsIndicatorProps.Render;
 
-    /**
-     * {@link TabsIndicatorProps.SuruUI}
-     */
     export type SuruUI = TabsIndicatorProps.SuruUI;
   }
 }
@@ -588,44 +468,20 @@ export const TabsPanel: IComponent<TabsPanelProps> = function SuiTabsPanel(props
 
 export { TabsPanel as Panel };
 
-/**
- * {@link TabsPanel}
- */
 export namespace Panel {
-  /**
-   * {@link TabsPanelState}
-   */
   export type State = TabsPanelState;
 
-  /**
-   * {@link TabsPanelProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link TabsPanelProps.BaseUI}
-     */
     export type BaseUI = TabsPanelProps.BaseUI;
 
-    /**
-     * {@link TabsPanelProps.HTML}
-     */
     export type HTML = TabsPanelProps.HTML;
 
-    /**
-     * {@link TabsPanelProps.Render}
-     */
     export type Render = TabsPanelProps.Render;
 
-    /**
-     * {@link TabsPanelProps.SuruUI}
-     */
     export type SuruUI = TabsPanelProps.SuruUI;
   }
 
-  /**
-   * {@link TabsPanelMetadata}
-   */
   export type Metadata = TabsPanelMetadata;
 }

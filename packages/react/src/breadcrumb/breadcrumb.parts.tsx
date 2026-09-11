@@ -77,14 +77,8 @@ export const useBreadcrumbContext: IUseContext<BreadcrumbContext> = useSuiBreadc
 export { BreadcrumbContext as Context, useBreadcrumbContext as useContext };
 
 export namespace Context {
-  /**
-   * {@link BreadcrumbContextColor}
-   */
   export type Color = BreadcrumbContextColor;
 
-  /**
-   * {@link BreadcrumbContextSize}
-   */
   export type Size = BreadcrumbContextSize;
 }
 
@@ -220,35 +214,22 @@ export const BreadcrumbRoot: IComponent<BreadcrumbRootProps> = function SuiBread
 export { BreadcrumbRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link BreadcrumbRootState}
-   */
   export type State = BreadcrumbRootState;
 
-  /**
-   * {@link BreadcrumbRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = BreadcrumbRootProps.HTML;
+
     export type Render = BreadcrumbRootProps.Render;
+
     export type SuruUI = BreadcrumbRootProps.SuruUI;
   }
 
-  /**
-   * {@link BreadcrumbRootColor}
-   */
   export type Color = BreadcrumbRootColor;
 
-  /**
-   * {@link BreadcrumbRootItemObject}
-   */
   export type ItemObject = BreadcrumbRootItemObject;
 
-  /**
-   * {@link BreadcrumbRootSize}
-   */
   export type Size = BreadcrumbRootSize;
 }
 
@@ -348,30 +329,20 @@ function isListItemObject(item: unknown): item is BreadcrumbRootItemObject {
 export { BreadcrumbList as List };
 
 export namespace List {
-  /**
-   * {@link BreadcrumbListState}
-   */
   export type State = BreadcrumbListState;
 
-  /**
-   * {@link BreadcrumbListProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = BreadcrumbListProps.HTML;
+
     export type Render = BreadcrumbListProps.Render;
+
     export type SuruUI = BreadcrumbListProps.SuruUI;
   }
 
-  /**
-   * {@link BreadcrumbRootItemObject}
-   */
   export type ItemObject = BreadcrumbRootItemObject;
 
-  /**
-   * {@link IBreadcrumbListItemRenderer}
-   */
   export interface IItemRenderer extends IBreadcrumbListItemRenderer {}
 }
 
@@ -416,19 +387,15 @@ export const BreadcrumbItem: IComponent<BreadcrumbItemProps> = function SuiBread
 export { BreadcrumbItem as Item };
 
 export namespace Item {
-  /**
-   * {@link BreadcrumbItemState}
-   */
   export type State = BreadcrumbItemState;
 
-  /**
-   * {@link BreadcrumbItemProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = BreadcrumbItemProps.HTML;
+
     export type Render = BreadcrumbItemProps.Render;
+
     export type SuruUI = BreadcrumbItemProps.SuruUI;
   }
 }
@@ -512,19 +479,15 @@ export const BreadcrumbLink: IComponent<BreadcrumbLinkProps> = function SuiBread
 export { BreadcrumbLink as Link };
 
 export namespace Link {
-  /**
-   * {@link BreadcrumbLinkState}
-   */
   export type State = BreadcrumbLinkState;
 
-  /**
-   * {@link BreadcrumbLinkProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = BreadcrumbLinkProps.HTML;
+
     export type Render = BreadcrumbLinkProps.Render;
+
     export type SuruUI = BreadcrumbLinkProps.SuruUI;
   }
 }
@@ -575,19 +538,15 @@ export const BreadcrumbSeparator: IComponent<BreadcrumbSeparatorProps> =
 export { BreadcrumbSeparator as Separator };
 
 export namespace Separator {
-  /**
-   * {@link BreadcrumbSeparatorState}
-   */
   export type State = BreadcrumbSeparatorState;
 
-  /**
-   * {@link BreadcrumbSeparatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = BreadcrumbSeparatorProps.HTML;
+
     export type Render = BreadcrumbSeparatorProps.Render;
+
     export type SuruUI = BreadcrumbSeparatorProps.SuruUI;
   }
 }

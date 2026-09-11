@@ -66,9 +66,6 @@ export const useResizableContext: IUseContext<ResizableContext> = useSuiResizabl
 export { ResizableContext as Context, useResizableContext as useContext };
 
 export namespace Context {
-  /**
-   * {@link ResizableContextDirection}
-   */
   export type Direction = ResizableContextDirection;
 }
 
@@ -94,9 +91,6 @@ const DEFAULT_RESIZE_TARGET_MINIMUM_SIZE = {
  */
 export type ResizableRootDirection = "horizontal" | "vertical";
 
-/**
- * {@link ResizableRootDirection}
- */
 export type ResizableRootOrientation = ResizableRootDirection;
 
 /**
@@ -210,31 +204,22 @@ export const ResizableRoot: IComponent<ResizableRootProps> = function SuiResizab
 export { ResizableRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link ResizableRootState}
-   */
   export type State = ResizableRootState;
 
-  /**
-   * {@link ResizableRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ResizableRootProps.BaseUI;
+
     export type HTML = ResizableRootProps.HTML;
+
     export type Render = ResizableRootProps.Render;
+
     export type SuruUI = ResizableRootProps.SuruUI;
   }
 
-  /**
-   * {@link ResizableRootDirection}
-   */
   export type Direction = ResizableRootDirection;
 
-  /**
-   * {@link ResizableRootOrientation}
-   */
   export type Orientation = ResizableRootOrientation;
 }
 
@@ -395,26 +380,20 @@ export const ResizablePanel: IComponent<ResizablePanelProps> = function SuiResiz
 export { ResizablePanel as Panel };
 
 export namespace Panel {
-  /**
-   * {@link ResizablePanelState}
-   */
   export type State = ResizablePanelState;
 
-  /**
-   * {@link ResizablePanelProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ResizablePanelProps.BaseUI;
+
     export type HTML = ResizablePanelProps.HTML;
+
     export type Render = ResizablePanelProps.Render;
+
     export type SuruUI = ResizablePanelProps.SuruUI;
   }
 
-  /**
-   * {@link ResizablePanelSize}
-   */
   export type Size = ResizablePanelSize;
 }
 
@@ -513,20 +492,17 @@ export const ResizableHandle: IComponent<ResizableHandleProps> = function SuiRes
 export { ResizableHandle as Handle };
 
 export namespace Handle {
-  /**
-   * {@link ResizableHandleState}
-   */
   export type State = ResizableHandleState;
 
-  /**
-   * {@link ResizableHandleProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ResizableHandleProps.BaseUI;
+
     export type HTML = ResizableHandleProps.HTML;
+
     export type Render = ResizableHandleProps.Render;
+
     export type SuruUI = ResizableHandleProps.SuruUI;
   }
 }

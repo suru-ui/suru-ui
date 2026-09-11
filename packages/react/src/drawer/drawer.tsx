@@ -51,34 +51,16 @@ import {
 // Types
 // -----
 
-/**
- * {@link DrawerRootActions}
- */
 export type DrawerActions = DrawerRootActions;
 
-/**
- * {@link DrawerRootChangeEventDetails}
- */
 export type DrawerChangeEventDetails = DrawerRootChangeEventDetails;
 
-/**
- * {@link DrawerRootChangeEventReason}
- */
 export type DrawerChangeEventReason = DrawerRootChangeEventReason;
 
-/**
- * {@link DrawerRootSnapPoint}
- */
 export type DrawerSnapPoint = DrawerRootSnapPoint;
 
-/**
- * {@link DrawerRootSnapPointChangeEventDetails}
- */
 export type DrawerSnapPointChangeEventDetails = DrawerRootSnapPointChangeEventDetails;
 
-/**
- * {@link DrawerRootSnapPointChangeEventReason}
- */
 export type DrawerSnapPointChangeEventReason = DrawerRootSnapPointChangeEventReason;
 
 /**
@@ -590,48 +572,21 @@ export const Drawer: IDrawer = /*#__PURE__*/ Object.assign(
 );
 
 export namespace Drawer {
-  /**
-   * {@link DrawerState}
-   */
   export type State = DrawerState;
 
-  /**
-   * {@link DrawerProps}
-   */
   export type Props<TPayload = any> = DrawerProps<TPayload>;
 
-  /**
-   * {@link DrawerSlotProps}
-   */
   export type SlotProps<TPayload = any> = DrawerSlotProps<TPayload>;
 
-  /**
-   * {@link DrawerActions}
-   */
   export type Actions = DrawerActions;
 
-  /**
-   * {@link DrawerChangeEventDetails}
-   */
   export type ChangeEventDetails = DrawerChangeEventDetails;
 
-  /**
-   * {@link DrawerChangeEventReason}
-   */
   export type ChangeEventReason = DrawerChangeEventReason;
 
-  /**
-   * {@link DrawerSnapPoint}
-   */
   export type SnapPoint = DrawerSnapPoint;
 
-  /**
-   * {@link DrawerSnapPointChangeEventDetails}
-   */
   export type SnapPointChangeEventDetails = DrawerSnapPointChangeEventDetails;
 
-  /**
-   * {@link DrawerSnapPointChangeEventReason}
-   */
   export type SnapPointChangeEventReason = DrawerSnapPointChangeEventReason;
 }

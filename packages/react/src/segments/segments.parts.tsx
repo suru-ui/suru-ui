@@ -123,44 +123,20 @@ export const SegmentsRoot: IComponent<SegmentsRootProps> = function SuiSegmentsR
 export { SegmentsRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link SegmentsRootState}
-   */
   export type State = SegmentsRootState;
 
-  /**
-   * {@link SegmentsRootProps}
-   */
   export type Props = SegmentsRootProps;
 
-  /**
-   * {@link SegmentsRootChangeEventDetails}
-   */
   export type ChangeEventDetails = SegmentsRootChangeEventDetails;
 
-  /**
-   * {@link SegmentsRootChangeEventReason}
-   */
   export type ChangeEventReason = SegmentsRootChangeEventReason;
 
-  /**
-   * {@link SegmentsRootColor}
-   */
   export type Color = SegmentsRootColor;
 
-  /**
-   * {@link SegmentsRootOrientation}
-   */
   export type Orientation = SegmentsRootOrientation;
 
-  /**
-   * {@link SegmentsRootRadius}
-   */
   export type Radius = SegmentsRootRadius;
 
-  /**
-   * {@link SegmentsRootSize}
-   */
   export type Size = SegmentsRootSize;
 }
 
@@ -262,24 +238,12 @@ const defaultListItemRenderer: ISegmentsListItemRenderer = (item, index) => {
 export { SegmentsList as List };
 
 export namespace List {
-  /**
-   * {@link SegmentsListState}
-   */
   export type State = SegmentsListState;
 
-  /**
-   * {@link SegmentsListProps}
-   */
   export type Props<TItem = any> = SegmentsListProps<TItem>;
 
-  /**
-   * {@link SegmentsListItemObject}
-   */
   export type ItemObject = SegmentsListItemObject;
 
-  /**
-   * {@link ISegmentsListItemRenderer}
-   */
   export interface IItemRenderer<TItem = any> extends ISegmentsListItemRenderer<TItem> {}
 }
 
@@ -362,61 +326,28 @@ export const SegmentsItem: IComponent<SegmentsItemProps> = function SuiSegmentsI
 export { SegmentsItem as Item };
 
 export namespace Item {
-  /**
-   * {@link SegmentsItemState}
-   */
   export type State = SegmentsItemState;
 
-  /**
-   * {@link SegmentsItemProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SegmentsItemProps.BaseUI}
-     */
     export type BaseUI = SegmentsItemProps.BaseUI;
 
-    /**
-     * {@link SegmentsItemProps.HTML}
-     */
     export type HTML = SegmentsItemProps.HTML;
 
-    /**
-     * {@link SegmentsItemProps.Render}
-     */
     export type Render = SegmentsItemProps.Render;
 
-    /**
-     * {@link SegmentsItemProps.SuruUI}
-     */
     export type SuruUI = SegmentsItemProps.SuruUI;
   }
 
-  /**
-   * {@link SegmentsItemActivationDirection}
-   */
   export type ActivationDirection = SegmentsItemActivationDirection;
 
-  /**
-   * {@link SegmentsItemMetadata}
-   */
   export type Metadata = SegmentsItemMetadata;
 
-  /**
-   * {@link SegmentsItemPosition}
-   */
   export type Position = SegmentsItemPosition;
 
-  /**
-   * {@link SegmentsItemSize}
-   */
   export type Size = SegmentsItemSize;
 
-  /**
-   * {@link SegmentsItemValue}
-   */
   export type Value = SegmentsItemValue;
 }
 
@@ -465,35 +396,17 @@ export const SegmentsIndicator: IComponent<SegmentsIndicatorProps> = function Su
 export { SegmentsIndicator as Indicator };
 
 export namespace Indicator {
-  /**
-   * {@link SegmentsIndicatorState}
-   */
   export type State = SegmentsIndicatorState;
 
-  /**
-   * {@link SegmentsIndicatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SegmentsIndicatorProps.BaseUI}
-     */
     export type BaseUI = SegmentsIndicatorProps.BaseUI;
 
-    /**
-     * {@link SegmentsIndicatorProps.HTML}
-     */
     export type HTML = SegmentsIndicatorProps.HTML;
 
-    /**
-     * {@link SegmentsIndicatorProps.Render}
-     */
     export type Render = SegmentsIndicatorProps.Render;
 
-    /**
-     * {@link SegmentsIndicatorProps.SuruUI}
-     */
     export type SuruUI = SegmentsIndicatorProps.SuruUI;
   }
 }

@@ -183,7 +183,7 @@ export namespace TabsListProps {
 export namespace AccordionRootProps {
   export type BaseUI<TItem = any, TValue = any> = Omit<
     React.ComponentProps<typeof Accordion.Root<TValue>>,
-    keyof Render<TValue> | keyof SuruUI<TItem>
+    keyof Render | keyof SuruUI
   >;
 
   export type Render<TValue = any> = RenderProps<AccordionRootState<TValue>>;
@@ -191,7 +191,7 @@ export namespace AccordionRootProps {
   export type SuruUI<TItem = any> = {
     // ...独自 props (キー昇順)
   };
-};
+}
 
 /**
  * {@link AccordionRoot} に渡す props です。
@@ -223,7 +223,14 @@ export const AccordionItem: IComponent<AccordionItemProps> = function SuiAccordi
 展開するプロパティーは文字数が短い順にし、同長のもの同士だけ辞書順にします。残余 (`...otherProps` など) は末尾に置きます。既定値が他の prop を参照するものは参照先の後に置きます。
 
 ```tsx
-const { size = "md", radius = size, variant = "liquid", outlined = false, className, ...otherProps } = props;
+const {
+  size = "md",
+  radius = size,
+  variant = "liquid",
+  outlined = false,
+  className,
+  ...otherProps
+} = props;
 ```
 
 Base UI は JSX で包み、素の要素は `useRender` にします。`render` 受領型は `render={children}` に渡します。独自なしの素要素は引数ごと渡し、独自ありは独自を分解して残りを渡します。既定子ありは `children` に既定値を与えます。
@@ -256,7 +263,7 @@ cn(
   `sui_accordion-size_${size}`,
   outlined && "sui_accordion-outlined",
   (state) => state.disabled && "sui_accordion-disabled",
-)
+);
 ```
 
 `data-scope=""` は CSS の `@scope` 始点になる要素だけに付けます。
@@ -272,7 +279,7 @@ cn(
   (state) => state.highlighted && "sui_context_menu_item-highlighted",
   (state) => state.checked && "sui_context_menu_item-checked",
   (state) => state.disabled && "sui_context_menu_item-disabled",
-)
+);
 ```
 
 対象は各パーツの Base UI `State` 型にあるフィールドに限る。`State` にないフィールドは `cn` の状態関数で参照できない (型エラーになる)。対応する `data-*` 属性も Base UI が発行しないため、CSS 側に書いても死んだ指定になる (例: `State` が `{ open }` のみの Trigger に対する `[data-disabled]`)。装飾に偽側が必要な場合は否定でクラス化する (例: `(state) => !state.checked && "sui_context_menu_item_indicator-unchecked"`)。
@@ -335,32 +342,17 @@ namespace には `ItemObject` と `IItemRenderer` を足します。汎型は既
 
 ### 短名と namespace
 
-各パーツの直後に短名再輸出と namespace を置きます。namespace には `State` と `Props` を必ず入れ、値型があれば追加します。`Props` は区分の `namespace Props` と `&` 結合の `type Props` の 2 段にします。汎型は既定値付きで引き継ぎます。再輸出の JSDoc は `{@link X}` のみとし、「 です。」は付けません。短名再輸出 (`export { X as Y }`) はローカル束縛を作らないため、ファイル内部の参照 (JSX を含む) は正式名 `X` のままにします。
+各パーツの直後に短名再輸出と namespace を置きます。namespace には `State` と `Props` を必ず入れ、値型があれば追加します。`Props` は区分の `namespace Props` と `&` 結合の `type Props` の 2 段にします。汎型は既定値付きで引き継ぎます。再輸出と namespace 内の型別名には JSDoc を付けません。`{@link X}` のみの JSDoc も付けません。短名再輸出 (`export { X as Y }`) はローカル束縛を作らないため、ファイル内部の参照 (JSX を含む) は正式名 `X` のままにします。
 
 ```tsx
 export { AccordionItem as Item };
 export namespace Item {
-  /**
-   * {@link AccordionItemState}
-   */
   export type State = AccordionItemState;
-  /**
-   * {@link AccordionItemProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link AccordionItemProps.HTML}
-     */
     export type HTML = AccordionItemProps.HTML;
-    /**
-     * {@link AccordionItemProps.Render}
-     */
     export type Render = AccordionItemProps.Render;
-    /**
-     * {@link AccordionItemProps.SuruUI}
-     */
     export type SuruUI = AccordionItemProps.SuruUI;
   }
 }
@@ -383,7 +375,7 @@ export namespace Item {
 
 ### Types
 
-Root 由来の再命名は `{@link 元型}` のみの JSDoc にします。「 です。」は付けません。再命名型の名は `<Comp><型名>` にし、パーツ名を重ねません (例: `BreadcrumbRootItemObject` → `BreadcrumbItemObject`。`BreadcrumbItemsItem` のような `<Comp><パーツ名><型名>` は使いません)。
+Root 由来の再命名には JSDoc を付けません。`{@link 元型}` のみの JSDoc も付けません。再命名型の名は `<Comp><型名>` にし、パーツ名を重ねません (例: `BreadcrumbRootItemObject` → `BreadcrumbItemObject`。`BreadcrumbItemsItem` のような `<Comp><パーツ名><型名>` は使いません)。
 
 `SlotProps` はキー昇順、`readonly` + `| undefined` にします。子要素は原則 `Omit` で除き、合成 `Props` に持ち上げたキーも除きます。ただし API / Component が `children` を生成・上書きしないパーツ (既定子を持つだけの Indicator など) は `children` を残し、利用者の上書きを許します。
 
@@ -435,6 +427,7 @@ export const useAccordionAPI: IUseAccordionAPI = function useSuiAccordionAPI(pro
 ```ts
 children: typeof children === "function" ? items.map(children) : toReactNode(children),
 ```
+
 パーツ別 props は利用者指定 (`slotProps.<part>`) を後に spread します。
 コールバック合成は `slotProps` 側を先に呼び、中止なら利用者側を呼びません。
 末尾に短名を付けます (例: `export { type AlertDialogAPI as API, useAlertDialogAPI as useAPI };`)。
@@ -445,7 +438,7 @@ children: typeof children === "function" ? items.map(children) : toReactNode(chi
 変数化の順序は長さ順ではなく React 要素の構築順 (JSX の描画順) にします。
 項目の一覧は `{children ?? ((item, index) => (...))}` の形にし、フォールバック関数を所有パーツに渡して写像させます。引数の型が推論できない場合は明示型を付けます。
 
-末尾に namespace を置き、`State`、`Props`、`SlotProps` と再命名型を列挙します。JSDoc は `{@link X}` 形式にします。「 です。」は付けません。
+末尾に namespace を置き、`State`、`Props`、`SlotProps` と再命名型を列挙します。JSDoc は付けません。`{@link X}` のみの JSDoc も付けません。
 
 ## _<kebab>.tsx
 
@@ -522,7 +515,7 @@ mise run test:typecheck
 - Base UI が公開する型 (`Actions`、`ChangeEventDetails`、`ChangeEventReason` など) を輸出し忘れない。`State` と `Props` だけを輸出して終わりにしない。
 - `Context` や `useContext` の短名を別名の `type` / `const` 宣言で作らない。`export { X as Y }` の 1 行にまとめる。
 - Context のローカル変数に `context` などの長い名前を使わない。`ctx` にする。
-- 再輸出の JSDoc に「 です。」を付けない。`{@link X}` のみにする。
+- 再輸出・再命名の型別名に JSDoc を付けない。`{@link X}` のみの JSDoc も付けない。
 - 短名をファイル内部で参照しない。内部参照 (JSX を含む) は正式名にする。
 - `index.ts` に実装を書かない。再輸出以外を足さない。
 - アイコンを `_<kebab>.tsx` や `.parts.tsx` に実装しない。共有ファイルに置きます。

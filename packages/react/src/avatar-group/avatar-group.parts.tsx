@@ -85,19 +85,10 @@ export const useAvatarGroupContext: IUseContext<AvatarGroupContext> = useSuiAvat
 export { AvatarGroupContext as Context, useAvatarGroupContext as useContext };
 
 export namespace Context {
-  /**
-   * {@link AvatarGroupContextColor}
-   */
   export type Color = AvatarGroupContextColor;
 
-  /**
-   * {@link AvatarGroupContextRadius}
-   */
   export type Radius = AvatarGroupContextRadius;
 
-  /**
-   * {@link AvatarGroupContextSize}
-   */
   export type Size = AvatarGroupContextSize;
 }
 
@@ -243,35 +234,22 @@ export const AvatarGroupRoot: IComponent<AvatarGroupRootProps> = function SuiAva
 export { AvatarGroupRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link AvatarGroupRootState}
-   */
   export type State = AvatarGroupRootState;
 
-  /**
-   * {@link AvatarGroupRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = AvatarGroupRootProps.HTML;
+
     export type Render = AvatarGroupRootProps.Render;
+
     export type SuruUI = AvatarGroupRootProps.SuruUI;
   }
 
-  /**
-   * {@link AvatarGroupRootColor}
-   */
   export type Color = AvatarGroupRootColor;
 
-  /**
-   * {@link AvatarGroupRootRadius}
-   */
   export type Radius = AvatarGroupRootRadius;
 
-  /**
-   * {@link AvatarGroupRootSize}
-   */
   export type Size = AvatarGroupRootSize;
 }
 
@@ -314,20 +292,17 @@ export const AvatarGroupSurplus: IComponent<AvatarGroupSurplusProps> =
 export { AvatarGroupSurplus as Surplus };
 
 export namespace Surplus {
-  /**
-   * {@link AvatarGroupSurplusState}
-   */
   export type State = AvatarGroupSurplusState;
 
-  /**
-   * {@link AvatarGroupSurplusProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AvatarGroupSurplusProps.BaseUI;
+
     export type HTML = AvatarGroupSurplusProps.HTML;
+
     export type Render = AvatarGroupSurplusProps.Render;
+
     export type SuruUI = AvatarGroupSurplusProps.SuruUI;
   }
 }

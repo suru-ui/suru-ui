@@ -109,24 +109,12 @@ export const useRadioGroupContext: IUseContext<RadioGroupContext> = useSuiRadioG
 export { RadioGroupContext as Context, useRadioGroupContext as useContext };
 
 export namespace Context {
-  /**
-   * {@link RadioGroupContextColor}
-   */
   export type Color = RadioGroupContextColor;
 
-  /**
-   * {@link RadioGroupContextRadius}
-   */
   export type Radius = RadioGroupContextRadius;
 
-  /**
-   * {@link RadioGroupContextSize}
-   */
   export type Size = RadioGroupContextSize;
 
-  /**
-   * {@link RadioGroupContextVariant}
-   */
   export type Variant = RadioGroupContextVariant;
 }
 
@@ -311,55 +299,31 @@ export const RadioGroupRoot: IComponent<RadioGroupRootProps> = function SuiRadio
 export { RadioGroupRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link RadioGroupRootState}
-   */
   export type State = RadioGroupRootState;
 
-  /**
-   * {@link RadioGroupRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = RadioGroupRootProps.BaseUI;
+
     export type HTML = RadioGroupRootProps.HTML;
+
     export type Render = RadioGroupRootProps.Render;
+
     export type SuruUI = RadioGroupRootProps.SuruUI;
   }
 
-  /**
-   * {@link RadioGroupRootChangeEventDetails}
-   */
   export type ChangeEventDetails = RadioGroupRootChangeEventDetails;
 
-  /**
-   * {@link RadioGroupRootChangeEventReason}
-   */
   export type ChangeEventReason = RadioGroupRootChangeEventReason;
 
-  /**
-   * {@link RadioGroupRootColor}
-   */
   export type Color = RadioGroupRootColor;
 
-  /**
-   * {@link RadioGroupRootOrientation}
-   */
   export type Orientation = RadioGroupRootOrientation;
 
-  /**
-   * {@link RadioGroupRootRadius}
-   */
   export type Radius = RadioGroupRootRadius;
 
-  /**
-   * {@link RadioGroupRootSize}
-   */
   export type Size = RadioGroupRootSize;
 
-  /**
-   * {@link RadioGroupRootVariant}
-   */
   export type Variant = RadioGroupRootVariant;
 }

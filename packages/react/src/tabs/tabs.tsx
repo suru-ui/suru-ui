@@ -27,44 +27,20 @@ import {
 // Types
 // -----
 
-/**
- * {@link TabsRootRadius}
- */
 export type TabsRadius = TabsRootRadius;
 
-/**
- * {@link TabsRootSize}
- */
 export type TabsSize = TabsRootSize;
 
-/**
- * {@link TabsRootVariant}
- */
 export type TabsVariant = TabsRootVariant;
 
-/**
- * {@link TabsRootActiveVariant}
- */
 export type TabsActiveVariant = TabsRootActiveVariant;
 
-/**
- * {@link TabsRootOrientation}
- */
 export type TabsOrientation = TabsRootOrientation;
 
-/**
- * {@link TabsTabValue}
- */
 export type TabsValue = TabsTabValue;
 
-/**
- * {@link TabsRootChangeEventDetails}
- */
 export type TabsChangeEventDetails = TabsRootChangeEventDetails;
 
-/**
- * {@link TabsRootChangeEventReason}
- */
 export type TabsChangeEventReason = TabsRootChangeEventReason;
 
 /**
@@ -99,9 +75,6 @@ export type TabsItemObject = {
   readonly value: TabsTabProps["value"];
 };
 
-/**
- * {@link TabsItemObject}
- */
 export type TabsItem = TabsItemObject;
 
 /**
@@ -248,9 +221,6 @@ export const useTabsAPI: IUseTabsAPI = function useSuiTabsAPI(props) {
 
 export { type TabsAPI as API, useTabsAPI as useAPI };
 
-/**
- * {@link useTabsAPI}
- */
 export const useTabs = useTabsAPI;
 
 // Component
@@ -287,68 +257,29 @@ export const Tabs: IComponent<TabsProps> = function SuiTabs(props) {
 };
 
 export namespace Tabs {
-  /**
-   * {@link TabsState}
-   */
   export type State = TabsState;
 
-  /**
-   * {@link TabsProps}
-   */
   export type Props = TabsProps;
 
-  /**
-   * {@link TabsSlotProps}
-   */
   export type SlotProps = TabsSlotProps;
 
-  /**
-   * {@link TabsActiveVariant}
-   */
   export type ActiveVariant = TabsActiveVariant;
 
-  /**
-   * {@link TabsChangeEventDetails}
-   */
   export type ChangeEventDetails = TabsChangeEventDetails;
 
-  /**
-   * {@link TabsChangeEventReason}
-   */
   export type ChangeEventReason = TabsChangeEventReason;
 
-  /**
-   * {@link TabsItem}
-   */
   export type Item = TabsItem;
 
-  /**
-   * {@link TabsItemObject}
-   */
   export type ItemObject = TabsItemObject;
 
-  /**
-   * {@link TabsOrientation}
-   */
   export type Orientation = TabsOrientation;
 
-  /**
-   * {@link TabsRadius}
-   */
   export type Radius = TabsRadius;
 
-  /**
-   * {@link TabsSize}
-   */
   export type Size = TabsSize;
 
-  /**
-   * {@link TabsValue}
-   */
   export type Value = TabsValue;
 
-  /**
-   * {@link TabsVariant}
-   */
   export type Variant = TabsVariant;
 }

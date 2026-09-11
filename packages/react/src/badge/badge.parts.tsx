@@ -184,49 +184,27 @@ export const BadgeRoot: IComponent<BadgeRootProps> = function SuiBadgeRoot(props
 export { BadgeRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link BadgeRootState}
-   */
   export type State = BadgeRootState;
 
-  /**
-   * {@link BadgeRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = BadgeRootProps.HTML;
+
     export type Render = BadgeRootProps.Render;
+
     export type SuruUI = BadgeRootProps.SuruUI;
   }
 
-  /**
-   * {@link BadgeRootColor}
-   */
   export type Color = BadgeRootColor;
 
-  /**
-   * {@link BadgeRootOverlap}
-   */
   export type Overlap = BadgeRootOverlap;
 
-  /**
-   * {@link BadgeRootPosition}
-   */
   export type Position = BadgeRootPosition;
 
-  /**
-   * {@link BadgeRootRadius}
-   */
   export type Radius = BadgeRootRadius;
 
-  /**
-   * {@link BadgeRootSize}
-   */
   export type Size = BadgeRootSize;
 
-  /**
-   * {@link BadgeRootVariant}
-   */
   export type Variant = BadgeRootVariant;
 }

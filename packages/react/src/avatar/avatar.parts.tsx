@@ -120,36 +120,24 @@ export const AvatarRoot: IComponent<AvatarRootProps> = function SuiAvatarRoot(pr
 export { AvatarRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link AvatarRootState}
-   */
   export type State = AvatarRootState;
 
-  /**
-   * {@link AvatarRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AvatarRootProps.BaseUI;
+
     export type HTML = AvatarRootProps.HTML;
+
     export type Render = AvatarRootProps.Render;
+
     export type SuruUI = AvatarRootProps.SuruUI;
   }
 
-  /**
-   * {@link AvatarRootColor}
-   */
   export type Color = AvatarRootColor;
 
-  /**
-   * {@link AvatarRootRadius}
-   */
   export type Radius = AvatarRootRadius;
 
-  /**
-   * {@link AvatarRootSize}
-   */
   export type Size = AvatarRootSize;
 }
 
@@ -196,20 +184,17 @@ export const AvatarImage: IComponent<AvatarImageProps> = function SuiAvatarImage
 export { AvatarImage as Image };
 
 export namespace Image {
-  /**
-   * {@link AvatarImageState}
-   */
   export type State = AvatarImageState;
 
-  /**
-   * {@link AvatarImageProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AvatarImageProps.BaseUI;
+
     export type HTML = AvatarImageProps.HTML;
+
     export type Render = AvatarImageProps.Render;
+
     export type SuruUI = AvatarImageProps.SuruUI;
   }
 }
@@ -255,20 +240,17 @@ export const AvatarFallback: IComponent<AvatarFallbackProps> = function SuiAvata
 export { AvatarFallback as Fallback };
 
 export namespace Fallback {
-  /**
-   * {@link AvatarFallbackState}
-   */
   export type State = AvatarFallbackState;
 
-  /**
-   * {@link AvatarFallbackProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AvatarFallbackProps.BaseUI;
+
     export type HTML = AvatarFallbackProps.HTML;
+
     export type Render = AvatarFallbackProps.Render;
+
     export type SuruUI = AvatarFallbackProps.SuruUI;
   }
 }

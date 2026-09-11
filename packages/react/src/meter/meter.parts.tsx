@@ -141,41 +141,26 @@ export const MeterRoot: IComponent<MeterRootProps> = function SuiMeterRoot(props
 export { MeterRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link MeterRootState}
-   */
   export type State = MeterRootState;
 
-  /**
-   * {@link MeterRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MeterRootProps.BaseUI;
+
     export type HTML = MeterRootProps.HTML;
+
     export type Render = MeterRootProps.Render;
+
     export type SuruUI = MeterRootProps.SuruUI;
   }
 
-  /**
-   * {@link MeterRootColor}
-   */
   export type Color = MeterRootColor;
 
-  /**
-   * {@link MeterRootRadius}
-   */
   export type Radius = MeterRootRadius;
 
-  /**
-   * {@link MeterRootSize}
-   */
   export type Size = MeterRootSize;
 
-  /**
-   * {@link MeterRootVariant}
-   */
   export type Variant = MeterRootVariant;
 }
 
@@ -220,20 +205,17 @@ export const MeterLabel: IComponent<MeterLabelProps> = function SuiMeterLabel(pr
 export { MeterLabel as Label };
 
 export namespace Label {
-  /**
-   * {@link MeterLabelState}
-   */
   export type State = MeterLabelState;
 
-  /**
-   * {@link MeterLabelProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MeterLabelProps.BaseUI;
+
     export type HTML = MeterLabelProps.HTML;
+
     export type Render = MeterLabelProps.Render;
+
     export type SuruUI = MeterLabelProps.SuruUI;
   }
 }
@@ -279,20 +261,17 @@ export const MeterValue: IComponent<MeterValueProps> = function SuiMeterValue(pr
 export { MeterValue as Value };
 
 export namespace Value {
-  /**
-   * {@link MeterValueState}
-   */
   export type State = MeterValueState;
 
-  /**
-   * {@link MeterValueProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MeterValueProps.BaseUI;
+
     export type HTML = MeterValueProps.HTML;
+
     export type Render = MeterValueProps.Render;
+
     export type SuruUI = MeterValueProps.SuruUI;
   }
 }
@@ -338,20 +317,17 @@ export const MeterTrack: IComponent<MeterTrackProps> = function SuiMeterTrack(pr
 export { MeterTrack as Track };
 
 export namespace Track {
-  /**
-   * {@link MeterTrackState}
-   */
   export type State = MeterTrackState;
 
-  /**
-   * {@link MeterTrackProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MeterTrackProps.BaseUI;
+
     export type HTML = MeterTrackProps.HTML;
+
     export type Render = MeterTrackProps.Render;
+
     export type SuruUI = MeterTrackProps.SuruUI;
   }
 }
@@ -397,20 +373,17 @@ export const MeterIndicator: IComponent<MeterIndicatorProps> = function SuiMeter
 export { MeterIndicator as Indicator };
 
 export namespace Indicator {
-  /**
-   * {@link MeterIndicatorState}
-   */
   export type State = MeterIndicatorState;
 
-  /**
-   * {@link MeterIndicatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MeterIndicatorProps.BaseUI;
+
     export type HTML = MeterIndicatorProps.HTML;
+
     export type Render = MeterIndicatorProps.Render;
+
     export type SuruUI = MeterIndicatorProps.SuruUI;
   }
 }

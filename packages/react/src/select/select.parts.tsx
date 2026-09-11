@@ -108,19 +108,10 @@ export { SelectContext as Context, useSelectContext as useContext };
  * {@link Context} の型名前空間です。
  */
 export namespace Context {
-  /**
-   * {@link SelectContextRadius}
-   */
   export type Radius = SelectContextRadius;
 
-  /**
-   * {@link SelectContextSize}
-   */
   export type Size = SelectContextSize;
 
-  /**
-   * {@link SelectContextVariant}
-   */
   export type Variant = SelectContextVariant;
 }
 
@@ -211,13 +202,10 @@ export type SelectRootState = BaseSelect.Root.State;
 export namespace SelectRootProps {
   export type BaseUI<TValue = unknown, TMultiple extends boolean | undefined = false> = Omit<
     BaseSelect.Root.Props<TValue, TMultiple>,
-    keyof Render | keyof SuruUI<TValue>
+    keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI<any> | keyof Omit<BaseSelect.Root.Props<any, any>, "items">
-  >;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 
   export type Render = RenderProps<SelectRootState>;
 
@@ -354,14 +342,8 @@ export { SelectRoot as Root };
  * {@link SelectRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
-  /**
-   * {@link SelectRootState}
-   */
   export type State = SelectRootState;
 
-  /**
-   * {@link SelectRootProps}
-   */
   export type Props<
     TValue = unknown,
     TMultiple extends boolean | undefined = false,
@@ -372,49 +354,28 @@ export namespace Root {
       TValue = unknown,
       TMultiple extends boolean | undefined = false,
     > = SelectRootProps.BaseUI<TValue, TMultiple>;
+
     export type HTML = SelectRootProps.HTML;
+
     export type Render = SelectRootProps.Render;
+
     export type SuruUI<TValue = unknown> = SelectRootProps.SuruUI<TValue>;
   }
 
-  /**
-   * {@link SelectRootActions}
-   */
   export type Actions = SelectRootActions;
 
-  /**
-   * {@link SelectRootChangeEventDetails}
-   */
   export type ChangeEventDetails = SelectRootChangeEventDetails;
 
-  /**
-   * {@link SelectRootChangeEventReason}
-   */
   export type ChangeEventReason = SelectRootChangeEventReason;
 
-  /**
-   * {@link SelectRootItemGroup}
-   */
   export type ItemGroup<TValue = unknown> = SelectRootItemGroup<TValue>;
 
-  /**
-   * {@link SelectRootItems}
-   */
   export type Items<TValue = unknown> = SelectRootItems<TValue>;
 
-  /**
-   * {@link SelectRootRadius}
-   */
   export type Radius = SelectRootRadius;
 
-  /**
-   * {@link SelectRootSize}
-   */
   export type Size = SelectRootSize;
 
-  /**
-   * {@link SelectRootVariant}
-   */
   export type Variant = SelectRootVariant;
 }
 
@@ -462,20 +423,17 @@ export { SelectLabel as Label };
  * {@link SelectLabel} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Label {
-  /**
-   * {@link SelectLabelState}
-   */
   export type State = SelectLabelState;
 
-  /**
-   * {@link SelectLabelProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = SelectLabelProps.BaseUI;
+
     export type HTML = SelectLabelProps.HTML;
+
     export type Render = SelectLabelProps.Render;
+
     export type SuruUI = SelectLabelProps.SuruUI;
   }
 }
@@ -555,20 +513,17 @@ export { SelectTrigger as Trigger };
  * {@link SelectTrigger} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Trigger {
-  /**
-   * {@link SelectTriggerState}
-   */
   export type State = SelectTriggerState;
 
-  /**
-   * {@link SelectTriggerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = SelectTriggerProps.BaseUI;
+
     export type HTML = SelectTriggerProps.HTML;
+
     export type Render = SelectTriggerProps.Render;
+
     export type SuruUI = SelectTriggerProps.SuruUI;
   }
 }
@@ -626,20 +581,17 @@ export { SelectValue as Value };
  * {@link SelectValue} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Value {
-  /**
-   * {@link SelectValueState}
-   */
   export type State = SelectValueState;
 
-  /**
-   * {@link SelectValueProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = SelectValueProps.BaseUI;
+
     export type HTML = SelectValueProps.HTML;
+
     export type Render = SelectValueProps.Render;
+
     export type SuruUI = SelectValueProps.SuruUI;
   }
 }
@@ -688,20 +640,17 @@ export { SelectIcon as Icon };
  * {@link SelectIcon} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Icon {
-  /**
-   * {@link SelectIconState}
-   */
   export type State = SelectIconState;
 
-  /**
-   * {@link SelectIconProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = SelectIconProps.BaseUI;
+
     export type HTML = SelectIconProps.HTML;
+
     export type Render = SelectIconProps.Render;
+
     export type SuruUI = SelectIconProps.SuruUI;
   }
 }
@@ -770,20 +719,17 @@ export { SelectPortal as Portal };
  * {@link SelectPortal} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Portal {
-  /**
-   * {@link SelectPortalState}
-   */
   export type State = SelectPortalState;
 
-  /**
-   * {@link SelectPortalProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = SelectPortalProps.BaseUI;
+
     export type HTML = SelectPortalProps.HTML;
+
     export type Render = SelectPortalProps.Render;
+
     export type SuruUI = SelectPortalProps.SuruUI;
   }
 }
@@ -843,20 +789,17 @@ export { SelectBackdrop as Backdrop };
  * {@link SelectBackdrop} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Backdrop {
-  /**
-   * {@link SelectBackdropState}
-   */
   export type State = SelectBackdropState;
 
-  /**
-   * {@link SelectBackdropProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = SelectBackdropProps.BaseUI;
+
     export type HTML = SelectBackdropProps.HTML;
+
     export type Render = SelectBackdropProps.Render;
+
     export type SuruUI = SelectBackdropProps.SuruUI;
   }
 }
@@ -909,20 +852,17 @@ export { SelectPositioner as Positioner };
  * {@link SelectPositioner} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Positioner {
-  /**
-   * {@link SelectPositionerState}
-   */
   export type State = SelectPositionerState;
 
-  /**
-   * {@link SelectPositionerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = SelectPositionerProps.BaseUI;
+
     export type HTML = SelectPositionerProps.HTML;
+
     export type Render = SelectPositionerProps.Render;
+
     export type SuruUI = SelectPositionerProps.SuruUI;
   }
 }
@@ -982,20 +922,17 @@ export { SelectPopup as Popup };
  * {@link SelectPopup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Popup {
-  /**
-   * {@link SelectPopupState}
-   */
   export type State = SelectPopupState;
 
-  /**
-   * {@link SelectPopupProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = SelectPopupProps.BaseUI;
+
     export type HTML = SelectPopupProps.HTML;
+
     export type Render = SelectPopupProps.Render;
+
     export type SuruUI = SelectPopupProps.SuruUI;
   }
 }
@@ -1028,13 +965,13 @@ export type SelectListState = BaseSelect.List.State;
 export namespace SelectListProps {
   export type BaseUI<TValue = any> = Omit<
     React.ComponentProps<typeof BaseSelect.List>,
-    keyof Render | keyof SuruUI<TValue>
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
     | keyof Render
-    | keyof SuruUI<any>
+    | keyof SuruUI
     | keyof Omit<React.ComponentProps<typeof BaseSelect.List>, "children">
   >;
 
@@ -1174,14 +1111,8 @@ export { SelectList as List };
  * {@link SelectList} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace List {
-  /**
-   * {@link SelectListState}
-   */
   export type State = SelectListState;
 
-  /**
-   * {@link SelectListProps}
-   */
   export type Props<TValue = any> = Props.Render &
     Props.SuruUI<TValue> &
     Props.BaseUI<TValue> &
@@ -1189,19 +1120,16 @@ export namespace List {
 
   export namespace Props {
     export type BaseUI<TValue = any> = SelectListProps.BaseUI<TValue>;
+
     export type HTML = SelectListProps.HTML;
+
     export type Render = SelectListProps.Render;
+
     export type SuruUI<TValue = any> = SelectListProps.SuruUI<TValue>;
   }
 
-  /**
-   * {@link SelectRootItemGroup}
-   */
   export type ItemGroup<TValue = unknown> = SelectRootItemGroup<TValue>;
 
-  /**
-   * {@link ISelectListItemRenderer}
-   */
   export interface IItemRenderer<TValue = any> extends ISelectListItemRenderer<TValue> {}
 }
 
@@ -1249,20 +1177,17 @@ export { SelectArrow as Arrow };
  * {@link SelectArrow} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Arrow {
-  /**
-   * {@link SelectArrowState}
-   */
   export type State = SelectArrowState;
 
-  /**
-   * {@link SelectArrowProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = SelectArrowProps.BaseUI;
+
     export type HTML = SelectArrowProps.HTML;
+
     export type Render = SelectArrowProps.Render;
+
     export type SuruUI = SelectArrowProps.SuruUI;
   }
 }
@@ -1327,20 +1252,17 @@ export { SelectItem as Item };
  * {@link SelectItem} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Item {
-  /**
-   * {@link SelectItemState}
-   */
   export type State = SelectItemState;
 
-  /**
-   * {@link SelectItemProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = SelectItemProps.BaseUI;
+
     export type HTML = SelectItemProps.HTML;
+
     export type Render = SelectItemProps.Render;
+
     export type SuruUI = SelectItemProps.SuruUI;
   }
 }
@@ -1389,20 +1311,17 @@ export { SelectItemText as ItemText };
  * {@link SelectItemText} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace ItemText {
-  /**
-   * {@link SelectItemTextState}
-   */
   export type State = SelectItemTextState;
 
-  /**
-   * {@link SelectItemTextProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = SelectItemTextProps.BaseUI;
+
     export type HTML = SelectItemTextProps.HTML;
+
     export type Render = SelectItemTextProps.Render;
+
     export type SuruUI = SelectItemTextProps.SuruUI;
   }
 }
@@ -1458,20 +1377,17 @@ export { SelectItemIndicator as ItemIndicator };
  * {@link SelectItemIndicator} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace ItemIndicator {
-  /**
-   * {@link SelectItemIndicatorState}
-   */
   export type State = SelectItemIndicatorState;
 
-  /**
-   * {@link SelectItemIndicatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = SelectItemIndicatorProps.BaseUI;
+
     export type HTML = SelectItemIndicatorProps.HTML;
+
     export type Render = SelectItemIndicatorProps.Render;
+
     export type SuruUI = SelectItemIndicatorProps.SuruUI;
   }
 }
@@ -1526,20 +1442,17 @@ export { SelectScrollUpArrow as ScrollUpArrow };
  * {@link SelectScrollUpArrow} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace ScrollUpArrow {
-  /**
-   * {@link SelectScrollUpArrowState}
-   */
   export type State = SelectScrollUpArrowState;
 
-  /**
-   * {@link SelectScrollUpArrowProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = SelectScrollUpArrowProps.BaseUI;
+
     export type HTML = SelectScrollUpArrowProps.HTML;
+
     export type Render = SelectScrollUpArrowProps.Render;
+
     export type SuruUI = SelectScrollUpArrowProps.SuruUI;
   }
 }
@@ -1594,20 +1507,17 @@ export { SelectScrollDownArrow as ScrollDownArrow };
  * {@link SelectScrollDownArrow} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace ScrollDownArrow {
-  /**
-   * {@link SelectScrollDownArrowState}
-   */
   export type State = SelectScrollDownArrowState;
 
-  /**
-   * {@link SelectScrollDownArrowProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = SelectScrollDownArrowProps.BaseUI;
+
     export type HTML = SelectScrollDownArrowProps.HTML;
+
     export type Render = SelectScrollDownArrowProps.Render;
+
     export type SuruUI = SelectScrollDownArrowProps.SuruUI;
   }
 }
@@ -1656,20 +1566,17 @@ export { SelectGroup as Group };
  * {@link SelectGroup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Group {
-  /**
-   * {@link SelectGroupState}
-   */
   export type State = SelectGroupState;
 
-  /**
-   * {@link SelectGroupProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = SelectGroupProps.BaseUI;
+
     export type HTML = SelectGroupProps.HTML;
+
     export type Render = SelectGroupProps.Render;
+
     export type SuruUI = SelectGroupProps.SuruUI;
   }
 }
@@ -1722,20 +1629,17 @@ export { SelectGroupLabel as GroupLabel };
  * {@link SelectGroupLabel} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace GroupLabel {
-  /**
-   * {@link SelectGroupLabelState}
-   */
   export type State = SelectGroupLabelState;
 
-  /**
-   * {@link SelectGroupLabelProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = SelectGroupLabelProps.BaseUI;
+
     export type HTML = SelectGroupLabelProps.HTML;
+
     export type Render = SelectGroupLabelProps.Render;
+
     export type SuruUI = SelectGroupLabelProps.SuruUI;
   }
 }
@@ -1786,20 +1690,17 @@ export { SelectSeparator as Separator };
  * {@link SelectSeparator} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Separator {
-  /**
-   * {@link SelectSeparatorState}
-   */
   export type State = SelectSeparatorState;
 
-  /**
-   * {@link SelectSeparatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = SelectSeparatorProps.BaseUI;
+
     export type HTML = SelectSeparatorProps.HTML;
+
     export type Render = SelectSeparatorProps.Render;
+
     export type SuruUI = SelectSeparatorProps.SuruUI;
   }
 }

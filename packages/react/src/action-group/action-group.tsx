@@ -15,29 +15,14 @@ import {
 // Types
 // -----
 
-/**
- * {@link ActionGroupRootColor}
- */
 export type ActionGroupColor = ActionGroupRootColor;
 
-/**
- * {@link ActionGroupRootOrientation}
- */
 export type ActionGroupOrientation = ActionGroupRootOrientation;
 
-/**
- * {@link ActionGroupRootRadius}
- */
 export type ActionGroupRadius = ActionGroupRootRadius;
 
-/**
- * {@link ActionGroupRootSize}
- */
 export type ActionGroupSize = ActionGroupRootSize;
 
-/**
- * {@link ActionGroupRootVariant}
- */
 export type ActionGroupVariant = ActionGroupRootVariant;
 
 /**
@@ -54,9 +39,6 @@ export type ActionGroupProps = ActionGroupRootProps;
 // ---------
 
 interface IActionGroup extends IComponent<ActionGroupProps> {
-  /**
-   * {@link useActionGroupContext}
-   */
   readonly useContext: IUseContext<ActionGroupContext>;
 }
 
@@ -76,43 +58,19 @@ export const ActionGroup: IActionGroup = /*#__PURE__*/ Object.assign(
  * {@link ActionGroup} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace ActionGroup {
-  /**
-   * {@link ActionGroupState}
-   */
   export type State = ActionGroupState;
 
-  /**
-   * {@link ActionGroupProps}
-   */
   export type Props = ActionGroupProps;
 
-  /**
-   * {@link ActionGroupContext}
-   */
   export type Context = ActionGroupContext;
 
-  /**
-   * {@link ActionGroupColor}
-   */
   export type Color = ActionGroupColor;
 
-  /**
-   * {@link ActionGroupOrientation}
-   */
   export type Orientation = ActionGroupOrientation;
 
-  /**
-   * {@link ActionGroupRadius}
-   */
   export type Radius = ActionGroupRadius;
 
-  /**
-   * {@link ActionGroupSize}
-   */
   export type Size = ActionGroupSize;
 
-  /**
-   * {@link ActionGroupVariant}
-   */
   export type Variant = ActionGroupVariant;
 }

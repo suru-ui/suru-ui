@@ -22,24 +22,12 @@ import {
 // Types
 // -----
 
-/**
- * {@link PasswordFieldRootColor}
- */
 export type PasswordFieldColor = PasswordFieldRootColor;
 
-/**
- * {@link PasswordFieldRootRadius}
- */
 export type PasswordFieldRadius = PasswordFieldRootRadius;
 
-/**
- * {@link PasswordFieldRootSize}
- */
 export type PasswordFieldSize = PasswordFieldRootSize;
 
-/**
- * {@link PasswordFieldRootVariant}
- */
 export type PasswordFieldVariant = PasswordFieldRootVariant;
 
 /**
@@ -230,9 +218,6 @@ export { type PasswordFieldAPI as API, usePasswordFieldAPI as useAPI };
 // ---------
 
 interface IPasswordField extends IComponent<PasswordFieldProps> {
-  /**
-   * {@link usePasswordFieldContext}
-   */
   readonly useContext: IUseContext<PasswordFieldContext>;
 }
 
@@ -269,43 +254,19 @@ export const PasswordField: IPasswordField = /*#__PURE__*/ Object.assign(
 );
 
 export namespace PasswordField {
-  /**
-   * {@link PasswordFieldState}
-   */
   export type State = PasswordFieldState;
 
-  /**
-   * {@link PasswordFieldProps}
-   */
   export type Props = PasswordFieldProps;
 
-  /**
-   * {@link PasswordFieldSlotProps}
-   */
   export type SlotProps = PasswordFieldSlotProps;
 
-  /**
-   * {@link PasswordFieldContext}
-   */
   export type Context = PasswordFieldContext;
 
-  /**
-   * {@link PasswordFieldColor}
-   */
   export type Color = PasswordFieldColor;
 
-  /**
-   * {@link PasswordFieldRadius}
-   */
   export type Radius = PasswordFieldRadius;
 
-  /**
-   * {@link PasswordFieldSize}
-   */
   export type Size = PasswordFieldSize;
 
-  /**
-   * {@link PasswordFieldVariant}
-   */
   export type Variant = PasswordFieldVariant;
 }

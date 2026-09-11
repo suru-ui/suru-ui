@@ -139,9 +139,6 @@ export const useTreeContext: IUseContext<TreeContext> = useSuiTreeContext;
 export { TreeContext as Context, useTreeContext as useContext };
 
 export namespace Context {
-  /**
-   * {@link TreeSelectAction}
-   */
   export type SelectAction = TreeSelectAction;
 }
 
@@ -751,61 +748,28 @@ function isItemObject(item: unknown): item is TreeRootItemObject {
  * {@link TreeRoot} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Root {
-  /**
-   * {@link TreeRootState}
-   */
   export type State = TreeRootState;
 
-  /**
-   * {@link TreeRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link TreeRootProps.HTML}
-     */
     export type HTML = TreeRootProps.HTML;
 
-    /**
-     * {@link TreeRootProps.Render}
-     */
     export type Render = TreeRootProps.Render;
 
-    /**
-     * {@link TreeRootProps.SuruUI}
-     */
     export type SuruUI = TreeRootProps.SuruUI;
   }
 
-  /**
-   * {@link TreeRootColor}
-   */
   export type Color = TreeRootColor;
 
-  /**
-   * {@link TreeRootItemObject}
-   */
   export type ItemObject = TreeRootItemObject;
 
-  /**
-   * {@link ITreeRootItemRenderer}
-   */
   export interface IItemRenderer extends ITreeRootItemRenderer {}
 
-  /**
-   * {@link TreeRootRadius}
-   */
   export type Radius = TreeRootRadius;
 
-  /**
-   * {@link TreeRootSize}
-   */
   export type Size = TreeRootSize;
 
-  /**
-   * {@link TreeRootVariant}
-   */
   export type Variant = TreeRootVariant;
 }
 
@@ -1023,56 +987,26 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
 export { TreeItem as Item };
 
 export namespace Item {
-  /**
-   * {@link TreeItemState}
-   */
   export type State = TreeItemState;
 
-  /**
-   * {@link TreeItemProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link TreeItemProps.BaseUI}
-     */
     export type BaseUI = TreeItemProps.BaseUI;
 
-    /**
-     * {@link TreeItemProps.HTML}
-     */
     export type HTML = TreeItemProps.HTML;
 
-    /**
-     * {@link TreeItemProps.Render}
-     */
     export type Render = TreeItemProps.Render;
 
-    /**
-     * {@link TreeItemProps.SuruUI}
-     */
     export type SuruUI = TreeItemProps.SuruUI;
   }
 
-  /**
-   * {@link TreeItemColor}
-   */
   export type Color = TreeItemColor;
 
-  /**
-   * {@link TreeItemRadius}
-   */
   export type Radius = TreeItemRadius;
 
-  /**
-   * {@link TreeItemSize}
-   */
   export type Size = TreeItemSize;
 
-  /**
-   * {@link TreeItemVariant}
-   */
   export type Variant = TreeItemVariant;
 }
 
@@ -1136,30 +1070,15 @@ export const TreeItemIndicator: IComponent<TreeItemIndicatorProps> = function Su
 export { TreeItemIndicator as Indicator };
 
 export namespace Indicator {
-  /**
-   * {@link TreeItemIndicatorState}
-   */
   export type State = TreeItemIndicatorState;
 
-  /**
-   * {@link TreeItemIndicatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link TreeItemIndicatorProps.HTML}
-     */
     export type HTML = TreeItemIndicatorProps.HTML;
 
-    /**
-     * {@link TreeItemIndicatorProps.Render}
-     */
     export type Render = TreeItemIndicatorProps.Render;
 
-    /**
-     * {@link TreeItemIndicatorProps.SuruUI}
-     */
     export type SuruUI = TreeItemIndicatorProps.SuruUI;
   }
 }

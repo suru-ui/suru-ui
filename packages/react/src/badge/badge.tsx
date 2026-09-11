@@ -14,34 +14,16 @@ import {
 // Types
 // -----
 
-/**
- * {@link BadgeRootColor}
- */
 export type BadgeColor = BadgeRootColor;
 
-/**
- * {@link BadgeRootOverlap}
- */
 export type BadgeOverlap = BadgeRootOverlap;
 
-/**
- * {@link BadgeRootPosition}
- */
 export type BadgePosition = BadgeRootPosition;
 
-/**
- * {@link BadgeRootRadius}
- */
 export type BadgeRadius = BadgeRootRadius;
 
-/**
- * {@link BadgeRootSize}
- */
 export type BadgeSize = BadgeRootSize;
 
-/**
- * {@link BadgeRootVariant}
- */
 export type BadgeVariant = BadgeRootVariant;
 
 /**
@@ -103,43 +85,19 @@ export const Badge: IComponent<BadgeProps> = function SuiBadge(props) {
 };
 
 export namespace Badge {
-  /**
-   * {@link BadgeState}
-   */
   export type State = BadgeState;
 
-  /**
-   * {@link BadgeProps}
-   */
   export type Props = BadgeProps;
 
-  /**
-   * {@link BadgeColor}
-   */
   export type Color = BadgeColor;
 
-  /**
-   * {@link BadgeOverlap}
-   */
   export type Overlap = BadgeOverlap;
 
-  /**
-   * {@link BadgePosition}
-   */
   export type Position = BadgePosition;
 
-  /**
-   * {@link BadgeRadius}
-   */
   export type Radius = BadgeRadius;
 
-  /**
-   * {@link BadgeSize}
-   */
   export type Size = BadgeSize;
 
-  /**
-   * {@link BadgeVariant}
-   */
   export type Variant = BadgeVariant;
 }

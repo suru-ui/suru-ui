@@ -24,24 +24,12 @@ import {
 // Types
 // -----
 
-/**
- * {@link BreadcrumbRootColor}
- */
 export type BreadcrumbColor = BreadcrumbRootColor;
 
-/**
- * {@link BreadcrumbRootSize}
- */
 export type BreadcrumbSize = BreadcrumbRootSize;
 
-/**
- * {@link BreadcrumbRootItemObject}
- */
 export type BreadcrumbItemObject = BreadcrumbRootItemObject;
 
-/**
- * {@link IBreadcrumbListItemRenderer}
- */
 export interface IBreadcrumbItemRenderer extends IBreadcrumbListItemRenderer {}
 
 /**
@@ -235,38 +223,17 @@ export const Breadcrumb: IComponent<BreadcrumbProps> = function SuiBreadcrumb(pr
 };
 
 export namespace Breadcrumb {
-  /**
-   * {@link BreadcrumbState}
-   */
   export type State = BreadcrumbState;
 
-  /**
-   * {@link BreadcrumbProps}
-   */
   export type Props = BreadcrumbProps;
 
-  /**
-   * {@link BreadcrumbSlotProps}
-   */
   export type SlotProps = BreadcrumbSlotProps;
 
-  /**
-   * {@link BreadcrumbColor}
-   */
   export type Color = BreadcrumbColor;
 
-  /**
-   * {@link BreadcrumbItemObject}
-   */
   export type ItemObject = BreadcrumbItemObject;
 
-  /**
-   * {@link IBreadcrumbItemRenderer}
-   */
   export interface IItemRenderer extends IBreadcrumbItemRenderer {}
 
-  /**
-   * {@link BreadcrumbSize}
-   */
   export type Size = BreadcrumbSize;
 }

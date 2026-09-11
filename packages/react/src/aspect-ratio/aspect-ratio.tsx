@@ -10,14 +10,8 @@ import {
 // Types
 // -----
 
-/**
- * {@link AspectRatioRootRadius}
- */
 export type AspectRatioRadius = AspectRatioRootRadius;
 
-/**
- * {@link AspectRatioRootRatio}
- */
 export type AspectRatioRatio = AspectRatioRootRatio;
 
 /**
@@ -82,23 +76,11 @@ export const AspectRatio: IComponent<AspectRatioProps> = function SuiAspectRatio
 };
 
 export namespace AspectRatio {
-  /**
-   * {@link AspectRatioState}
-   */
   export type State = AspectRatioState;
 
-  /**
-   * {@link AspectRatioProps}
-   */
   export type Props = AspectRatioProps;
 
-  /**
-   * {@link AspectRatioRadius}
-   */
   export type Radius = AspectRatioRadius;
 
-  /**
-   * {@link AspectRatioRatio}
-   */
   export type Ratio = AspectRatioRatio;
 }

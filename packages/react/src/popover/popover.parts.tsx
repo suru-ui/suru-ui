@@ -60,7 +60,7 @@ export type PopoverRootState = Popover.Root.State;
 export namespace PopoverRootProps {
   export type BaseUI<TPayload = any> = Omit<
     Popover.Root.Props<TPayload>,
-    keyof Render | keyof SuruUI<TPayload>
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = {};
@@ -109,14 +109,8 @@ export const PopoverRoot: PopoverRootComponent = function SuiPopoverRoot<TPayloa
 export { PopoverRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link PopoverRootState}
-   */
   export type State = PopoverRootState;
 
-  /**
-   * {@link PopoverRootProps}
-   */
   export type Props<TPayload = any> = Props.Render &
     Props.SuruUI<TPayload> &
     Props.BaseUI<TPayload> &
@@ -124,24 +118,18 @@ export namespace Root {
 
   export namespace Props {
     export type BaseUI<TPayload = any> = PopoverRootProps.BaseUI<TPayload>;
+
     export type HTML = PopoverRootProps.HTML;
+
     export type Render = PopoverRootProps.Render;
+
     export type SuruUI<TPayload = any> = PopoverRootProps.SuruUI<TPayload>;
   }
 
-  /**
-   * {@link PopoverRootActions}
-   */
   export type Actions = PopoverRootActions;
 
-  /**
-   * {@link PopoverRootChangeEventDetails}
-   */
   export type ChangeEventDetails = PopoverRootChangeEventDetails;
 
-  /**
-   * {@link PopoverRootChangeEventReason}
-   */
   export type ChangeEventReason = PopoverRootChangeEventReason;
 }
 
@@ -158,13 +146,13 @@ export type PopoverTriggerState = Popover.Trigger.State;
 export namespace PopoverTriggerProps {
   export type BaseUI<TPayload = any> = Omit<
     Popover.Trigger.Props<TPayload>,
-    keyof Render | keyof SuruUI<TPayload> | "render"
+    keyof Render | keyof SuruUI | "render"
   >;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
     | keyof Render
-    | keyof SuruUI<any>
+    | keyof SuruUI
     | keyof Omit<Popover.Trigger.Props<any>, "handle" | "children" | "render">
   >;
 
@@ -227,14 +215,8 @@ export const PopoverTrigger: PopoverTriggerComponent = function SuiPopoverTrigge
 export { PopoverTrigger as Trigger };
 
 export namespace Trigger {
-  /**
-   * {@link PopoverTriggerState}
-   */
   export type State = PopoverTriggerState;
 
-  /**
-   * {@link PopoverTriggerProps}
-   */
   export type Props<TPayload = unknown> = Props.Render &
     Props.SuruUI<TPayload> &
     Props.BaseUI<TPayload> &
@@ -242,8 +224,11 @@ export namespace Trigger {
 
   export namespace Props {
     export type BaseUI<TPayload = any> = PopoverTriggerProps.BaseUI<TPayload>;
+
     export type HTML = PopoverTriggerProps.HTML;
+
     export type Render = PopoverTriggerProps.Render;
+
     export type SuruUI<TPayload = any> = PopoverTriggerProps.SuruUI<TPayload>;
   }
 }
@@ -302,20 +287,17 @@ export const PopoverPortal: IComponent<PopoverPortalProps> = function SuiPopover
 export { PopoverPortal as Portal };
 
 export namespace Portal {
-  /**
-   * {@link PopoverPortalState}
-   */
   export type State = PopoverPortalState;
 
-  /**
-   * {@link PopoverPortalProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = PopoverPortalProps.BaseUI;
+
     export type HTML = PopoverPortalProps.HTML;
+
     export type Render = PopoverPortalProps.Render;
+
     export type SuruUI = PopoverPortalProps.SuruUI;
   }
 }
@@ -374,20 +356,17 @@ export const PopoverBackdrop: IComponent<PopoverBackdropProps> = function SuiPop
 export { PopoverBackdrop as Backdrop };
 
 export namespace Backdrop {
-  /**
-   * {@link PopoverBackdropState}
-   */
   export type State = PopoverBackdropState;
 
-  /**
-   * {@link PopoverBackdropProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = PopoverBackdropProps.BaseUI;
+
     export type HTML = PopoverBackdropProps.HTML;
+
     export type Render = PopoverBackdropProps.Render;
+
     export type SuruUI = PopoverBackdropProps.SuruUI;
   }
 }
@@ -435,20 +414,17 @@ export const PopoverPositioner: IComponent<PopoverPositionerProps> = function Su
 export { PopoverPositioner as Positioner };
 
 export namespace Positioner {
-  /**
-   * {@link PopoverPositionerState}
-   */
   export type State = PopoverPositionerState;
 
-  /**
-   * {@link PopoverPositionerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = PopoverPositionerProps.BaseUI;
+
     export type HTML = PopoverPositionerProps.HTML;
+
     export type Render = PopoverPositionerProps.Render;
+
     export type SuruUI = PopoverPositionerProps.SuruUI;
   }
 }
@@ -505,20 +481,17 @@ export const PopoverPopup: IComponent<PopoverPopupProps> = function SuiPopoverPo
 export { PopoverPopup as Popup };
 
 export namespace Popup {
-  /**
-   * {@link PopoverPopupState}
-   */
   export type State = PopoverPopupState;
 
-  /**
-   * {@link PopoverPopupProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = PopoverPopupProps.BaseUI;
+
     export type HTML = PopoverPopupProps.HTML;
+
     export type Render = PopoverPopupProps.Render;
+
     export type SuruUI = PopoverPopupProps.SuruUI;
   }
 }
@@ -564,20 +537,17 @@ export const PopoverArrow: IComponent<PopoverArrowProps> = function SuiPopoverAr
 export { PopoverArrow as Arrow };
 
 export namespace Arrow {
-  /**
-   * {@link PopoverArrowState}
-   */
   export type State = PopoverArrowState;
 
-  /**
-   * {@link PopoverArrowProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = PopoverArrowProps.BaseUI;
+
     export type HTML = PopoverArrowProps.HTML;
+
     export type Render = PopoverArrowProps.Render;
+
     export type SuruUI = PopoverArrowProps.SuruUI;
   }
 }
@@ -623,20 +593,17 @@ export const PopoverTitle: IComponent<PopoverTitleProps> = function SuiPopoverTi
 export { PopoverTitle as Title };
 
 export namespace Title {
-  /**
-   * {@link PopoverTitleState}
-   */
   export type State = PopoverTitleState;
 
-  /**
-   * {@link PopoverTitleProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = PopoverTitleProps.BaseUI;
+
     export type HTML = PopoverTitleProps.HTML;
+
     export type Render = PopoverTitleProps.Render;
+
     export type SuruUI = PopoverTitleProps.SuruUI;
   }
 }
@@ -685,20 +652,17 @@ export const PopoverDescription: IComponent<PopoverDescriptionProps> =
 export { PopoverDescription as Description };
 
 export namespace Description {
-  /**
-   * {@link PopoverDescriptionState}
-   */
   export type State = PopoverDescriptionState;
 
-  /**
-   * {@link PopoverDescriptionProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = PopoverDescriptionProps.BaseUI;
+
     export type HTML = PopoverDescriptionProps.HTML;
+
     export type Render = PopoverDescriptionProps.Render;
+
     export type SuruUI = PopoverDescriptionProps.SuruUI;
   }
 }
@@ -764,20 +728,17 @@ export const PopoverClose: IComponent<PopoverCloseProps> = function SuiPopoverCl
 export { PopoverClose as Close };
 
 export namespace Close {
-  /**
-   * {@link PopoverCloseState}
-   */
   export type State = PopoverCloseState;
 
-  /**
-   * {@link PopoverCloseProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = PopoverCloseProps.BaseUI;
+
     export type HTML = PopoverCloseProps.HTML;
+
     export type Render = PopoverCloseProps.Render;
+
     export type SuruUI = PopoverCloseProps.SuruUI;
   }
 }
@@ -827,20 +788,17 @@ export const PopoverViewport: IComponent<PopoverViewportProps> = function SuiPop
 export { PopoverViewport as Viewport };
 
 export namespace Viewport {
-  /**
-   * {@link PopoverViewportState}
-   */
   export type State = PopoverViewportState;
 
-  /**
-   * {@link PopoverViewportProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = PopoverViewportProps.BaseUI;
+
     export type HTML = PopoverViewportProps.HTML;
+
     export type Render = PopoverViewportProps.Render;
+
     export type SuruUI = PopoverViewportProps.SuruUI;
   }
 }

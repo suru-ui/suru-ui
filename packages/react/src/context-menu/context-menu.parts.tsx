@@ -114,19 +114,10 @@ export const useContextMenuContext: IUseContext<ContextMenuContext> = useSuiCont
 export { ContextMenuContext as Context, useContextMenuContext as useContext };
 
 export namespace Context {
-  /**
-   * {@link ContextMenuContextRadius}
-   */
   export type Radius = ContextMenuContextRadius;
 
-  /**
-   * {@link ContextMenuContextSize}
-   */
   export type Size = ContextMenuContextSize;
 
-  /**
-   * {@link ContextMenuContextVariant}
-   */
   export type Variant = ContextMenuContextVariant;
 }
 
@@ -353,13 +344,10 @@ export type ContextMenuRootState = ContextMenu.Root.State;
 export namespace ContextMenuRootProps {
   export type BaseUI<TItem = any> = Omit<
     React.ComponentProps<typeof ContextMenu.Root>,
-    keyof Render | keyof SuruUI<TItem>
+    keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI<any> | keyof React.ComponentProps<typeof ContextMenu.Root>
-  >;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 
   export type Render = RenderProps<ContextMenuRootState>;
 
@@ -450,9 +438,6 @@ export { ContextMenuRoot as Root };
 export namespace Root {
   export type State = ContextMenuRootState;
 
-  /**
-   * {@link ContextMenuRootProps}
-   */
   export type Props<TItem = any> = Props.Render &
     Props.SuruUI<TItem> &
     Props.BaseUI<TItem> &
@@ -460,79 +445,40 @@ export namespace Root {
 
   export namespace Props {
     export type BaseUI<TItem = any> = ContextMenuRootProps.BaseUI<TItem>;
+
     export type HTML = ContextMenuRootProps.HTML;
+
     export type Render = ContextMenuRootProps.Render;
+
     export type SuruUI<TItem = any> = ContextMenuRootProps.SuruUI<TItem>;
   }
 
-  /**
-   * {@link ContextMenuRootActionItemObject}
-   */
   export type ActionItemObject = ContextMenuRootActionItemObject;
 
-  /**
-   * {@link ContextMenuRootActions}
-   */
   export type Actions = ContextMenuRootActions;
 
-  /**
-   * {@link ContextMenuRootChangeEventDetails}
-   */
   export type ChangeEventDetails = ContextMenuRootChangeEventDetails;
 
-  /**
-   * {@link ContextMenuRootChangeEventReason}
-   */
   export type ChangeEventReason = ContextMenuRootChangeEventReason;
 
-  /**
-   * {@link ContextMenuRootCheckboxItemObject}
-   */
   export type CheckboxItemObject = ContextMenuRootCheckboxItemObject;
 
-  /**
-   * {@link ContextMenuRootGroupObject}
-   */
   export type GroupObject = ContextMenuRootGroupObject;
 
-  /**
-   * {@link ContextMenuRootItemObject}
-   */
   export type ItemObject = ContextMenuRootItemObject;
 
-  /**
-   * {@link ContextMenuRootLinkItemObject}
-   */
   export type LinkItemObject = ContextMenuRootLinkItemObject;
 
-  /**
-   * {@link ContextMenuRootRadioGroupObject}
-   */
   export type RadioGroupObject = ContextMenuRootRadioGroupObject;
 
-  /**
-   * {@link ContextMenuRootRadioItemObject}
-   */
   export type RadioItemObject = ContextMenuRootRadioItemObject;
 
-  /**
-   * {@link ContextMenuRootRadius}
-   */
   export type Radius = ContextMenuRootRadius;
 
-  /**
-   * {@link ContextMenuRootSeparatorObject}
-   */
   export type SeparatorObject = ContextMenuRootSeparatorObject;
 
-  /**
-   * {@link ContextMenuRootSize}
-   */
   export type Size = ContextMenuRootSize;
 
-  /**
-   * {@link ContextMenuRootVariant}
-   */
   export type Variant = ContextMenuRootVariant;
 }
 
@@ -602,15 +548,15 @@ export { ContextMenuTrigger as Trigger };
 export namespace Trigger {
   export type State = ContextMenuTriggerState;
 
-  /**
-   * {@link ContextMenuTriggerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ContextMenuTriggerProps.BaseUI;
+
     export type HTML = ContextMenuTriggerProps.HTML;
+
     export type Render = ContextMenuTriggerProps.Render;
+
     export type SuruUI = ContextMenuTriggerProps.SuruUI;
   }
 }
@@ -680,15 +626,15 @@ export { ContextMenuPortal as Portal };
 export namespace Portal {
   export type State = ContextMenuPortalState;
 
-  /**
-   * {@link ContextMenuPortalProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ContextMenuPortalProps.BaseUI;
+
     export type HTML = ContextMenuPortalProps.HTML;
+
     export type Render = ContextMenuPortalProps.Render;
+
     export type SuruUI = ContextMenuPortalProps.SuruUI;
   }
 }
@@ -742,15 +688,15 @@ export { ContextMenuBackdrop as Backdrop };
 export namespace Backdrop {
   export type State = ContextMenuBackdropState;
 
-  /**
-   * {@link ContextMenuBackdropProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ContextMenuBackdropProps.BaseUI;
+
     export type HTML = ContextMenuBackdropProps.HTML;
+
     export type Render = ContextMenuBackdropProps.Render;
+
     export type SuruUI = ContextMenuBackdropProps.SuruUI;
   }
 }
@@ -804,15 +750,15 @@ export { ContextMenuPositioner as Positioner };
 export namespace Positioner {
   export type State = ContextMenuPositionerState;
 
-  /**
-   * {@link ContextMenuPositionerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ContextMenuPositionerProps.BaseUI;
+
     export type HTML = ContextMenuPositionerProps.HTML;
+
     export type Render = ContextMenuPositionerProps.Render;
+
     export type SuruUI = ContextMenuPositionerProps.SuruUI;
   }
 }
@@ -1003,26 +949,20 @@ export { ContextMenuContent as Content };
 export namespace Content {
   export type State = ContextMenuContentState;
 
-  /**
-   * {@link ContextMenuContentProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ContextMenuContentProps.BaseUI;
+
     export type HTML = ContextMenuContentProps.HTML;
+
     export type Render = ContextMenuContentProps.Render;
+
     export type SuruUI = ContextMenuContentProps.SuruUI;
   }
 
-  /**
-   * {@link ContextMenuRootItemObject}
-   */
   export type ItemObject = ContextMenuRootItemObject;
 
-  /**
-   * {@link IContextMenuContentItemRenderer}
-   */
   export interface IItemRenderer<TItem = any> extends IContextMenuContentItemRenderer<TItem> {}
 }
 
@@ -1181,31 +1121,22 @@ export { ContextMenuItem as Item };
 export namespace Item {
   export type State = ContextMenuItemState;
 
-  /**
-   * {@link ContextMenuItemProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ContextMenuItemProps.BaseUI;
+
     export type HTML = ContextMenuItemProps.HTML;
+
     export type Render = ContextMenuItemProps.Render;
+
     export type SuruUI = ContextMenuItemProps.SuruUI;
   }
 
-  /**
-   * {@link ContextMenuItemColor}
-   */
   export type Color = ContextMenuItemColor;
 
-  /**
-   * {@link ContextMenuItemRadius}
-   */
   export type Radius = ContextMenuItemRadius;
 
-  /**
-   * {@link ContextMenuItemVariant}
-   */
   export type Variant = ContextMenuItemVariant;
 }
 
@@ -1352,31 +1283,22 @@ export { ContextMenuLinkItem as LinkItem };
 export namespace LinkItem {
   export type State = ContextMenuLinkItemState;
 
-  /**
-   * {@link ContextMenuLinkItemProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ContextMenuLinkItemProps.BaseUI;
+
     export type HTML = ContextMenuLinkItemProps.HTML;
+
     export type Render = ContextMenuLinkItemProps.Render;
+
     export type SuruUI = ContextMenuLinkItemProps.SuruUI;
   }
 
-  /**
-   * {@link ContextMenuLinkItemColor}
-   */
   export type Color = ContextMenuLinkItemColor;
 
-  /**
-   * {@link ContextMenuLinkItemRadius}
-   */
   export type Radius = ContextMenuLinkItemRadius;
 
-  /**
-   * {@link ContextMenuLinkItemVariant}
-   */
   export type Variant = ContextMenuLinkItemVariant;
 }
 
@@ -1434,26 +1356,20 @@ export { ContextMenuSubmenuRoot as SubmenuRoot };
 export namespace SubmenuRoot {
   export type State = ContextMenuSubmenuRootState;
 
-  /**
-   * {@link ContextMenuSubmenuRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ContextMenuSubmenuRootProps.BaseUI;
+
     export type HTML = ContextMenuSubmenuRootProps.HTML;
+
     export type Render = ContextMenuSubmenuRootProps.Render;
+
     export type SuruUI = ContextMenuSubmenuRootProps.SuruUI;
   }
 
-  /**
-   * {@link ContextMenuSubmenuRootChangeEventDetails}
-   */
   export type ChangeEventDetails = ContextMenuSubmenuRootChangeEventDetails;
 
-  /**
-   * {@link ContextMenuSubmenuRootChangeEventReason}
-   */
   export type ChangeEventReason = ContextMenuSubmenuRootChangeEventReason;
 }
 
@@ -1605,31 +1521,22 @@ export { ContextMenuSubmenuTrigger as SubmenuTrigger };
 export namespace SubmenuTrigger {
   export type State = ContextMenuSubmenuTriggerState;
 
-  /**
-   * {@link ContextMenuSubmenuTriggerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ContextMenuSubmenuTriggerProps.BaseUI;
+
     export type HTML = ContextMenuSubmenuTriggerProps.HTML;
+
     export type Render = ContextMenuSubmenuTriggerProps.Render;
+
     export type SuruUI = ContextMenuSubmenuTriggerProps.SuruUI;
   }
 
-  /**
-   * {@link ContextMenuSubmenuTriggerColor}
-   */
   export type Color = ContextMenuSubmenuTriggerColor;
 
-  /**
-   * {@link ContextMenuSubmenuTriggerRadius}
-   */
   export type Radius = ContextMenuSubmenuTriggerRadius;
 
-  /**
-   * {@link ContextMenuSubmenuTriggerVariant}
-   */
   export type Variant = ContextMenuSubmenuTriggerVariant;
 }
 
@@ -1678,15 +1585,15 @@ export { ContextMenuGroup as Group };
 export namespace Group {
   export type State = ContextMenuGroupState;
 
-  /**
-   * {@link ContextMenuGroupProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ContextMenuGroupProps.BaseUI;
+
     export type HTML = ContextMenuGroupProps.HTML;
+
     export type Render = ContextMenuGroupProps.Render;
+
     export type SuruUI = ContextMenuGroupProps.SuruUI;
   }
 }
@@ -1740,15 +1647,15 @@ export { ContextMenuGroupLabel as GroupLabel };
 export namespace GroupLabel {
   export type State = ContextMenuGroupLabelState;
 
-  /**
-   * {@link ContextMenuGroupLabelProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ContextMenuGroupLabelProps.BaseUI;
+
     export type HTML = ContextMenuGroupLabelProps.HTML;
+
     export type Render = ContextMenuGroupLabelProps.Render;
+
     export type SuruUI = ContextMenuGroupLabelProps.SuruUI;
   }
 }
@@ -1816,26 +1723,20 @@ export { ContextMenuRadioGroup as RadioGroup };
 export namespace RadioGroup {
   export type State = ContextMenuRadioGroupState;
 
-  /**
-   * {@link ContextMenuRadioGroupProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ContextMenuRadioGroupProps.BaseUI;
+
     export type HTML = ContextMenuRadioGroupProps.HTML;
+
     export type Render = ContextMenuRadioGroupProps.Render;
+
     export type SuruUI = ContextMenuRadioGroupProps.SuruUI;
   }
 
-  /**
-   * {@link ContextMenuRadioGroupChangeEventDetails}
-   */
   export type ChangeEventDetails = ContextMenuRadioGroupChangeEventDetails;
 
-  /**
-   * {@link ContextMenuRadioGroupChangeEventReason}
-   */
   export type ChangeEventReason = ContextMenuRadioGroupChangeEventReason;
 }
 
@@ -1984,31 +1885,22 @@ export { ContextMenuRadioItem as RadioItem };
 export namespace RadioItem {
   export type State = ContextMenuRadioItemState;
 
-  /**
-   * {@link ContextMenuRadioItemProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ContextMenuRadioItemProps.BaseUI;
+
     export type HTML = ContextMenuRadioItemProps.HTML;
+
     export type Render = ContextMenuRadioItemProps.Render;
+
     export type SuruUI = ContextMenuRadioItemProps.SuruUI;
   }
 
-  /**
-   * {@link ContextMenuRadioItemColor}
-   */
   export type Color = ContextMenuRadioItemColor;
 
-  /**
-   * {@link ContextMenuRadioItemRadius}
-   */
   export type Radius = ContextMenuRadioItemRadius;
 
-  /**
-   * {@link ContextMenuRadioItemVariant}
-   */
   export type Variant = ContextMenuRadioItemVariant;
 }
 
@@ -2070,15 +1962,15 @@ export { ContextMenuRadioItemIndicator as RadioItemIndicator };
 export namespace RadioItemIndicator {
   export type State = ContextMenuRadioItemIndicatorState;
 
-  /**
-   * {@link ContextMenuRadioItemIndicatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ContextMenuRadioItemIndicatorProps.BaseUI;
+
     export type HTML = ContextMenuRadioItemIndicatorProps.HTML;
+
     export type Render = ContextMenuRadioItemIndicatorProps.Render;
+
     export type SuruUI = ContextMenuRadioItemIndicatorProps.SuruUI;
   }
 }
@@ -2241,41 +2133,26 @@ export { ContextMenuCheckboxItem as CheckboxItem };
 export namespace CheckboxItem {
   export type State = ContextMenuCheckboxItemState;
 
-  /**
-   * {@link ContextMenuCheckboxItemProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ContextMenuCheckboxItemProps.BaseUI;
+
     export type HTML = ContextMenuCheckboxItemProps.HTML;
+
     export type Render = ContextMenuCheckboxItemProps.Render;
+
     export type SuruUI = ContextMenuCheckboxItemProps.SuruUI;
   }
 
-  /**
-   * {@link ContextMenuCheckboxItemChangeEventDetails}
-   */
   export type ChangeEventDetails = ContextMenuCheckboxItemChangeEventDetails;
 
-  /**
-   * {@link ContextMenuCheckboxItemChangeEventReason}
-   */
   export type ChangeEventReason = ContextMenuCheckboxItemChangeEventReason;
 
-  /**
-   * {@link ContextMenuCheckboxItemColor}
-   */
   export type Color = ContextMenuCheckboxItemColor;
 
-  /**
-   * {@link ContextMenuCheckboxItemRadius}
-   */
   export type Radius = ContextMenuCheckboxItemRadius;
 
-  /**
-   * {@link ContextMenuCheckboxItemVariant}
-   */
   export type Variant = ContextMenuCheckboxItemVariant;
 }
 
@@ -2336,15 +2213,15 @@ export { ContextMenuCheckboxItemIndicator as CheckboxItemIndicator };
 export namespace CheckboxItemIndicator {
   export type State = ContextMenuCheckboxItemIndicatorState;
 
-  /**
-   * {@link ContextMenuCheckboxItemIndicatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ContextMenuCheckboxItemIndicatorProps.BaseUI;
+
     export type HTML = ContextMenuCheckboxItemIndicatorProps.HTML;
+
     export type Render = ContextMenuCheckboxItemIndicatorProps.Render;
+
     export type SuruUI = ContextMenuCheckboxItemIndicatorProps.SuruUI;
   }
 }
@@ -2398,15 +2275,15 @@ export { ContextMenuSeparator as Separator };
 export namespace Separator {
   export type State = ContextMenuSeparatorState;
 
-  /**
-   * {@link ContextMenuSeparatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ContextMenuSeparatorProps.BaseUI;
+
     export type HTML = ContextMenuSeparatorProps.HTML;
+
     export type Render = ContextMenuSeparatorProps.Render;
+
     export type SuruUI = ContextMenuSeparatorProps.SuruUI;
   }
 }

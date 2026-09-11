@@ -17,39 +17,18 @@ import {
 // Types
 // -----
 
-/**
- * {@link RadioGroupRootChangeEventDetails}
- */
 export type RadioGroupChangeEventDetails = RadioGroupRootChangeEventDetails;
 
-/**
- * {@link RadioGroupRootChangeEventReason}
- */
 export type RadioGroupChangeEventReason = RadioGroupRootChangeEventReason;
 
-/**
- * {@link RadioGroupRootColor}
- */
 export type RadioGroupColor = RadioGroupRootColor;
 
-/**
- * {@link RadioGroupRootOrientation}
- */
 export type RadioGroupOrientation = RadioGroupRootOrientation;
 
-/**
- * {@link RadioGroupRootRadius}
- */
 export type RadioGroupRadius = RadioGroupRootRadius;
 
-/**
- * {@link RadioGroupRootSize}
- */
 export type RadioGroupSize = RadioGroupRootSize;
 
-/**
- * {@link RadioGroupRootVariant}
- */
 export type RadioGroupVariant = RadioGroupRootVariant;
 
 /**
@@ -102,9 +81,6 @@ export { type RadioGroupAPI as API, useRadioGroupAPI as useAPI };
 // ---------
 
 interface IRadioGroup extends IComponent<RadioGroupProps> {
-  /**
-   * {@link useRadioGroupContext}
-   */
   readonly useContext: IUseContext<RadioGroupContext>;
 }
 
@@ -123,53 +99,23 @@ export const RadioGroup: IRadioGroup = /*#__PURE__*/ Object.assign(
 );
 
 export namespace RadioGroup {
-  /**
-   * {@link RadioGroupState}
-   */
   export type State = RadioGroupState;
 
-  /**
-   * {@link RadioGroupProps}
-   */
   export type Props = RadioGroupProps;
 
-  /**
-   * {@link RadioGroupContext}
-   */
   export type Context = RadioGroupContext;
 
-  /**
-   * {@link RadioGroupChangeEventDetails}
-   */
   export type ChangeEventDetails = RadioGroupChangeEventDetails;
 
-  /**
-   * {@link RadioGroupChangeEventReason}
-   */
   export type ChangeEventReason = RadioGroupChangeEventReason;
 
-  /**
-   * {@link RadioGroupColor}
-   */
   export type Color = RadioGroupColor;
 
-  /**
-   * {@link RadioGroupOrientation}
-   */
   export type Orientation = RadioGroupOrientation;
 
-  /**
-   * {@link RadioGroupRadius}
-   */
   export type Radius = RadioGroupRadius;
 
-  /**
-   * {@link RadioGroupSize}
-   */
   export type Size = RadioGroupSize;
 
-  /**
-   * {@link RadioGroupVariant}
-   */
   export type Variant = RadioGroupVariant;
 }

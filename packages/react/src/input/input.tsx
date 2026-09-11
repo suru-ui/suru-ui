@@ -15,39 +15,18 @@ import {
 // Types
 // -----
 
-/**
- * {@link InputRootChangeEventDetails}
- */
 export type InputChangeEventDetails = InputRootChangeEventDetails;
 
-/**
- * {@link InputRootChangeEventReason}
- */
 export type InputChangeEventReason = InputRootChangeEventReason;
 
-/**
- * {@link InputRootColor}
- */
 export type InputColor = InputRootColor;
 
-/**
- * {@link InputRootRadius}
- */
 export type InputRadius = InputRootRadius;
 
-/**
- * {@link InputRootSize}
- */
 export type InputSize = InputRootSize;
 
-/**
- * {@link InputRootType}
- */
 export type InputType = InputRootType;
 
-/**
- * {@link InputRootVariant}
- */
 export type InputVariant = InputRootVariant;
 
 /**
@@ -109,48 +88,21 @@ export const Input: IComponent<InputProps> = function SuiInput(props) {
 };
 
 export namespace Input {
-  /**
-   * {@link InputState}
-   */
   export type State = InputState;
 
-  /**
-   * {@link InputProps}
-   */
   export type Props = InputProps;
 
-  /**
-   * {@link InputChangeEventDetails}
-   */
   export type ChangeEventDetails = InputChangeEventDetails;
 
-  /**
-   * {@link InputChangeEventReason}
-   */
   export type ChangeEventReason = InputChangeEventReason;
 
-  /**
-   * {@link InputColor}
-   */
   export type Color = InputColor;
 
-  /**
-   * {@link InputRadius}
-   */
   export type Radius = InputRadius;
 
-  /**
-   * {@link InputSize}
-   */
   export type Size = InputSize;
 
-  /**
-   * {@link InputType}
-   */
   export type Type = InputType;
 
-  /**
-   * {@link InputVariant}
-   */
   export type Variant = InputVariant;
 }

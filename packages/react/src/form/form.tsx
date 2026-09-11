@@ -13,29 +13,14 @@ import {
 // Types
 // -----
 
-/**
- * {@link FormRootActions}
- */
 export type FormActions = FormRootActions;
 
-/**
- * {@link FormRootSubmitEventDetails}
- */
 export type FormSubmitEventDetails = FormRootSubmitEventDetails;
 
-/**
- * {@link FormRootSubmitEventReason}
- */
 export type FormSubmitEventReason = FormRootSubmitEventReason;
 
-/**
- * {@link FormRootValidationMode}
- */
 export type FormValidationMode = FormRootValidationMode;
 
-/**
- * {@link FormRootValues}
- */
 export type FormValues<TValues extends FormRootValues = FormRootValues> = FormRootValues<TValues>;
 
 /**
@@ -111,38 +96,17 @@ export const Form: IForm = function SuiForm(props: FormProps) {
 };
 
 export namespace Form {
-  /**
-   * {@link FormState}
-   */
   export type State = FormState;
 
-  /**
-   * {@link FormProps}
-   */
   export type Props<TValues extends Values = Values> = FormProps<TValues>;
 
-  /**
-   * {@link FormActions}
-   */
   export type Actions = FormActions;
 
-  /**
-   * {@link FormSubmitEventDetails}
-   */
   export type SubmitEventDetails = FormSubmitEventDetails;
 
-  /**
-   * {@link FormSubmitEventReason}
-   */
   export type SubmitEventReason = FormSubmitEventReason;
 
-  /**
-   * {@link FormValidationMode}
-   */
   export type ValidationMode = FormValidationMode;
 
-  /**
-   * {@link FormValues}
-   */
   export type Values<TValues extends FormValues = FormValues> = FormValues<TValues>;
 }

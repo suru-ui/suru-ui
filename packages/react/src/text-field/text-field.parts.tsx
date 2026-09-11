@@ -90,24 +90,12 @@ export const useTextFieldContext: IUseContext<TextFieldContext> = useSuiTextFiel
 export { TextFieldContext as Context, useTextFieldContext as useContext };
 
 export namespace Context {
-  /**
-   * {@link TextFieldContextColor}
-   */
   export type Color = TextFieldContextColor;
 
-  /**
-   * {@link TextFieldContextRadius}
-   */
   export type Radius = TextFieldContextRadius;
 
-  /**
-   * {@link TextFieldContextSize}
-   */
   export type Size = TextFieldContextSize;
 
-  /**
-   * {@link TextFieldContextVariant}
-   */
   export type Variant = TextFieldContextVariant;
 }
 
@@ -270,51 +258,24 @@ export const TextFieldRoot: IComponent<TextFieldRootProps> = function SuiTextFie
 export { TextFieldRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link TextFieldRootState}
-   */
   export type State = TextFieldRootState;
 
-  /**
-   * {@link TextFieldRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link TextFieldRootProps.HTML}
-     */
     export type HTML = TextFieldRootProps.HTML;
 
-    /**
-     * {@link TextFieldRootProps.Render}
-     */
     export type Render = TextFieldRootProps.Render;
 
-    /**
-     * {@link TextFieldRootProps.SuruUI}
-     */
     export type SuruUI = TextFieldRootProps.SuruUI;
   }
 
-  /**
-   * {@link TextFieldRootColor}
-   */
   export type Color = TextFieldRootColor;
 
-  /**
-   * {@link TextFieldRootRadius}
-   */
   export type Radius = TextFieldRootRadius;
 
-  /**
-   * {@link TextFieldRootSize}
-   */
   export type Size = TextFieldRootSize;
 
-  /**
-   * {@link TextFieldRootVariant}
-   */
   export type Variant = TextFieldRootVariant;
 }
 
@@ -397,51 +358,24 @@ export const TextFieldInput: IComponent<TextFieldInputProps> = function SuiTextF
 export { TextFieldInput as Input };
 
 export namespace Input {
-  /**
-   * {@link TextFieldInputState}
-   */
   export type State = TextFieldInputState;
 
-  /**
-   * {@link TextFieldInputProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link TextFieldInputProps.BaseUI}
-     */
     export type BaseUI = TextFieldInputProps.BaseUI;
 
-    /**
-     * {@link TextFieldInputProps.HTML}
-     */
     export type HTML = TextFieldInputProps.HTML;
 
-    /**
-     * {@link TextFieldInputProps.Render}
-     */
     export type Render = TextFieldInputProps.Render;
 
-    /**
-     * {@link TextFieldInputProps.SuruUI}
-     */
     export type SuruUI = TextFieldInputProps.SuruUI;
   }
 
-  /**
-   * {@link TextFieldInputChangeEventDetails}
-   */
   export type ChangeEventDetails = TextFieldInputChangeEventDetails;
 
-  /**
-   * {@link TextFieldInputChangeEventReason}
-   */
   export type ChangeEventReason = TextFieldInputChangeEventReason;
 
-  /**
-   * {@link TextFieldInputType}
-   */
   export type Type = TextFieldInputType;
 }
 
@@ -498,30 +432,15 @@ export const TextFieldAddon: IComponent<TextFieldAddonProps> = function SuiTextF
 export { TextFieldAddon as Addon };
 
 export namespace Addon {
-  /**
-   * {@link TextFieldAddonState}
-   */
   export type State = TextFieldAddonState;
 
-  /**
-   * {@link TextFieldAddonProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link TextFieldAddonProps.HTML}
-     */
     export type HTML = TextFieldAddonProps.HTML;
 
-    /**
-     * {@link TextFieldAddonProps.Render}
-     */
     export type Render = TextFieldAddonProps.Render;
 
-    /**
-     * {@link TextFieldAddonProps.SuruUI}
-     */
     export type SuruUI = TextFieldAddonProps.SuruUI;
   }
 }

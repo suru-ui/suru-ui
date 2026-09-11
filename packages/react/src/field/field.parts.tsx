@@ -74,31 +74,22 @@ export { FieldRoot as Root };
  * {@link FieldRoot} の状態や props をまとめた型名前空間です。
  */
 export namespace Root {
-  /**
-   * {@link FieldRootState}
-   */
   export type State = FieldRootState;
 
-  /**
-   * {@link FieldRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = FieldRootProps.BaseUI;
+
     export type HTML = FieldRootProps.HTML;
+
     export type Render = FieldRootProps.Render;
+
     export type SuruUI = FieldRootProps.SuruUI;
   }
 
-  /**
-   * {@link FieldRootActions}
-   */
   export type Actions = FieldRootActions;
 
-  /**
-   * {@link FieldRootValidityData}
-   */
   export type ValidityData = FieldRootValidityData;
 }
 
@@ -148,20 +139,17 @@ export { FieldLabel as Label };
  * {@link FieldLabel} の状態や props をまとめた型名前空間です。
  */
 export namespace Label {
-  /**
-   * {@link FieldLabelState}
-   */
   export type State = FieldLabelState;
 
-  /**
-   * {@link FieldLabelProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = FieldLabelProps.BaseUI;
+
     export type HTML = FieldLabelProps.HTML;
+
     export type Render = FieldLabelProps.Render;
+
     export type SuruUI = FieldLabelProps.SuruUI;
   }
 }
@@ -220,31 +208,22 @@ export { FieldControl as Control };
  * {@link FieldControl} の状態や props をまとめた型名前空間です。
  */
 export namespace Control {
-  /**
-   * {@link FieldControlState}
-   */
   export type State = FieldControlState;
 
-  /**
-   * {@link FieldControlProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = FieldControlProps.BaseUI;
+
     export type HTML = FieldControlProps.HTML;
+
     export type Render = FieldControlProps.Render;
+
     export type SuruUI = FieldControlProps.SuruUI;
   }
 
-  /**
-   * {@link FieldControlChangeEventDetails}
-   */
   export type ChangeEventDetails = FieldControlChangeEventDetails;
 
-  /**
-   * {@link FieldControlChangeEventReason}
-   */
   export type ChangeEventReason = FieldControlChangeEventReason;
 }
 
@@ -296,20 +275,17 @@ export { FieldDescription as Description };
  * {@link FieldDescription} の状態や props をまとめた型名前空間です。
  */
 export namespace Description {
-  /**
-   * {@link FieldDescriptionState}
-   */
   export type State = FieldDescriptionState;
 
-  /**
-   * {@link FieldDescriptionProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = FieldDescriptionProps.BaseUI;
+
     export type HTML = FieldDescriptionProps.HTML;
+
     export type Render = FieldDescriptionProps.Render;
+
     export type SuruUI = FieldDescriptionProps.SuruUI;
   }
 }
@@ -360,20 +336,17 @@ export { FieldError as Error };
  * {@link FieldError} の状態や props をまとめた型名前空間です。
  */
 export namespace Error {
-  /**
-   * {@link FieldErrorState}
-   */
   export type State = FieldErrorState;
 
-  /**
-   * {@link FieldErrorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = FieldErrorProps.BaseUI;
+
     export type HTML = FieldErrorProps.HTML;
+
     export type Render = FieldErrorProps.Render;
+
     export type SuruUI = FieldErrorProps.SuruUI;
   }
 }
@@ -424,20 +397,17 @@ export { FieldItem as Item };
  * {@link FieldItem} の状態や props をまとめた型名前空間です。
  */
 export namespace Item {
-  /**
-   * {@link FieldItemState}
-   */
   export type State = FieldItemState;
 
-  /**
-   * {@link FieldItemProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = FieldItemProps.BaseUI;
+
     export type HTML = FieldItemProps.HTML;
+
     export type Render = FieldItemProps.Render;
+
     export type SuruUI = FieldItemProps.SuruUI;
   }
 }
@@ -483,20 +453,17 @@ export { FieldValidity as Validity };
  * {@link FieldValidity} の状態や props をまとめた型名前空間です。
  */
 export namespace Validity {
-  /**
-   * {@link FieldValidityState}
-   */
   export type State = FieldValidityState;
 
-  /**
-   * {@link FieldValidityProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = FieldValidityProps.BaseUI;
+
     export type HTML = FieldValidityProps.HTML;
+
     export type Render = FieldValidityProps.Render;
+
     export type SuruUI = FieldValidityProps.SuruUI;
   }
 }

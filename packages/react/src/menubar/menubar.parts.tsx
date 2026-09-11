@@ -72,14 +72,12 @@ export type MenubarRootState = BaseMenubar.State;
 export namespace MenubarRootProps {
   export type BaseUI<TItem = any> = Omit<
     React.ComponentProps<typeof BaseMenubar>,
-    keyof Render | keyof SuruUI<TItem>
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    | keyof Render
-    | keyof SuruUI<any>
-    | keyof Omit<React.ComponentProps<typeof BaseMenubar>, "children">
+    keyof Render | keyof SuruUI | keyof Omit<React.ComponentProps<typeof BaseMenubar>, "children">
   >;
 
   export type Render = RenderProps<MenubarRootState>;
@@ -174,14 +172,8 @@ const defaultRootItemRenderer: IMenubarRootItemRenderer = (item, index) => {
 export { MenubarRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link MenubarRootState}
-   */
   export type State = MenubarRootState;
 
-  /**
-   * {@link MenubarRootProps}
-   */
   export type Props<TItem = any> = Props.Render &
     Props.SuruUI<TItem> &
     Props.BaseUI<TItem> &
@@ -189,23 +181,17 @@ export namespace Root {
 
   export namespace Props {
     export type BaseUI<TItem = any> = MenubarRootProps.BaseUI<TItem>;
+
     export type HTML = MenubarRootProps.HTML;
+
     export type Render = MenubarRootProps.Render;
+
     export type SuruUI<TItem = any> = MenubarRootProps.SuruUI<TItem>;
   }
 
-  /**
-   * {@link MenubarRootItemObject}
-   */
   export type ItemObject = MenubarRootItemObject;
 
-  /**
-   * {@link IMenubarRootItemRenderer}
-   */
   export interface IItemRenderer<TItem = any> extends IMenubarRootItemRenderer<TItem> {}
 
-  /**
-   * {@link MenubarRootOrientation}
-   */
   export type Orientation = MenubarRootOrientation;
 }

@@ -64,20 +64,17 @@ export const ScrollAreaRoot: IComponent<ScrollAreaRootProps> = function SuiScrol
 export { ScrollAreaRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link ScrollAreaRootState}
-   */
   export type State = ScrollAreaRootState;
 
-  /**
-   * {@link ScrollAreaRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ScrollAreaRootProps.BaseUI;
+
     export type HTML = ScrollAreaRootProps.HTML;
+
     export type Render = ScrollAreaRootProps.Render;
+
     export type SuruUI = ScrollAreaRootProps.SuruUI;
   }
 }
@@ -128,20 +125,17 @@ export const ScrollAreaViewport: IComponent<ScrollAreaViewportProps> =
 export { ScrollAreaViewport as Viewport };
 
 export namespace Viewport {
-  /**
-   * {@link ScrollAreaViewportState}
-   */
   export type State = ScrollAreaViewportState;
 
-  /**
-   * {@link ScrollAreaViewportProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ScrollAreaViewportProps.BaseUI;
+
     export type HTML = ScrollAreaViewportProps.HTML;
+
     export type Render = ScrollAreaViewportProps.Render;
+
     export type SuruUI = ScrollAreaViewportProps.SuruUI;
   }
 }
@@ -190,20 +184,17 @@ export const ScrollAreaContent: IComponent<ScrollAreaContentProps> = function Su
 export { ScrollAreaContent as Content };
 
 export namespace Content {
-  /**
-   * {@link ScrollAreaContentState}
-   */
   export type State = ScrollAreaContentState;
 
-  /**
-   * {@link ScrollAreaContentProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ScrollAreaContentProps.BaseUI;
+
     export type HTML = ScrollAreaContentProps.HTML;
+
     export type Render = ScrollAreaContentProps.Render;
+
     export type SuruUI = ScrollAreaContentProps.SuruUI;
   }
 }
@@ -261,20 +252,17 @@ export const ScrollAreaScrollbar: IComponent<ScrollAreaScrollbarProps> =
 export { ScrollAreaScrollbar as Scrollbar };
 
 export namespace Scrollbar {
-  /**
-   * {@link ScrollAreaScrollbarState}
-   */
   export type State = ScrollAreaScrollbarState;
 
-  /**
-   * {@link ScrollAreaScrollbarProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ScrollAreaScrollbarProps.BaseUI;
+
     export type HTML = ScrollAreaScrollbarProps.HTML;
+
     export type Render = ScrollAreaScrollbarProps.Render;
+
     export type SuruUI = ScrollAreaScrollbarProps.SuruUI;
   }
 }
@@ -330,20 +318,17 @@ export const ScrollAreaThumb: IComponent<ScrollAreaThumbProps> = function SuiScr
 export { ScrollAreaThumb as Thumb };
 
 export namespace Thumb {
-  /**
-   * {@link ScrollAreaThumbState}
-   */
   export type State = ScrollAreaThumbState;
 
-  /**
-   * {@link ScrollAreaThumbProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ScrollAreaThumbProps.BaseUI;
+
     export type HTML = ScrollAreaThumbProps.HTML;
+
     export type Render = ScrollAreaThumbProps.Render;
+
     export type SuruUI = ScrollAreaThumbProps.SuruUI;
   }
 }
@@ -392,20 +377,17 @@ export const ScrollAreaCorner: IComponent<ScrollAreaCornerProps> = function SuiS
 export { ScrollAreaCorner as Corner };
 
 export namespace Corner {
-  /**
-   * {@link ScrollAreaCornerState}
-   */
   export type State = ScrollAreaCornerState;
 
-  /**
-   * {@link ScrollAreaCornerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ScrollAreaCornerProps.BaseUI;
+
     export type HTML = ScrollAreaCornerProps.HTML;
+
     export type Render = ScrollAreaCornerProps.Render;
+
     export type SuruUI = ScrollAreaCornerProps.SuruUI;
   }
 }

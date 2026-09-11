@@ -13,9 +13,6 @@ import {
  */
 export type TooltipGroupState = TooltipGroupRootState;
 
-/**
- * {@link TooltipGroupRootProps}
- */
 export type TooltipGroupProps = TooltipGroupRootProps;
 
 // API
@@ -69,13 +66,7 @@ export const TooltipGroup: IComponent<TooltipGroupProps> = function SuiTooltipGr
 };
 
 export namespace TooltipGroup {
-  /**
-   * {@link TooltipGroupState}
-   */
   export type State = TooltipGroupState;
 
-  /**
-   * {@link TooltipGroupProps}
-   */
   export type Props = TooltipGroupProps;
 }

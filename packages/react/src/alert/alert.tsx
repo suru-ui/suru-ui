@@ -21,24 +21,12 @@ import {
 // Types
 // -----
 
-/**
- * {@link AlertRootColor}
- */
 export type AlertColor = AlertRootColor;
 
-/**
- * {@link AlertRootRadius}
- */
 export type AlertRadius = AlertRootRadius;
 
-/**
- * {@link AlertRootSize}
- */
 export type AlertSize = AlertRootSize;
 
-/**
- * {@link AlertRootVariant}
- */
 export type AlertVariant = AlertRootVariant;
 
 /**
@@ -211,38 +199,17 @@ export const Alert: IComponent<AlertProps> = function SuiAlert(props: AlertProps
 };
 
 export namespace Alert {
-  /**
-   * {@link AlertState}
-   */
   export type State = AlertState;
 
-  /**
-   * {@link AlertProps}
-   */
   export type Props = AlertProps;
 
-  /**
-   * {@link AlertSlotProps}
-   */
   export type SlotProps = AlertSlotProps;
 
-  /**
-   * {@link AlertColor}
-   */
   export type Color = AlertColor;
 
-  /**
-   * {@link AlertRadius}
-   */
   export type Radius = AlertRadius;
 
-  /**
-   * {@link AlertSize}
-   */
   export type Size = AlertSize;
 
-  /**
-   * {@link AlertVariant}
-   */
   export type Variant = AlertVariant;
 }

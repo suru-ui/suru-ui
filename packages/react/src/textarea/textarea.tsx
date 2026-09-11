@@ -14,34 +14,16 @@ import {
 // Types
 // -----
 
-/**
- * {@link TextareaRootChangeEventDetails}
- */
 export type TextareaChangeEventDetails = TextareaRootChangeEventDetails;
 
-/**
- * {@link TextareaRootChangeEventReason}
- */
 export type TextareaChangeEventReason = TextareaRootChangeEventReason;
 
-/**
- * {@link TextareaRootColor}
- */
 export type TextareaColor = TextareaRootColor;
 
-/**
- * {@link TextareaRootRadius}
- */
 export type TextareaRadius = TextareaRootRadius;
 
-/**
- * {@link TextareaRootSize}
- */
 export type TextareaSize = TextareaRootSize;
 
-/**
- * {@link TextareaRootVariant}
- */
 export type TextareaVariant = TextareaRootVariant;
 
 /**
@@ -103,43 +85,19 @@ export const Textarea: IComponent<TextareaProps> = function SuiTextarea(props) {
 };
 
 export namespace Textarea {
-  /**
-   * {@link TextareaState}
-   */
   export type State = TextareaState;
 
-  /**
-   * {@link TextareaProps}
-   */
   export type Props = TextareaProps;
 
-  /**
-   * {@link TextareaChangeEventDetails}
-   */
   export type ChangeEventDetails = TextareaChangeEventDetails;
 
-  /**
-   * {@link TextareaChangeEventReason}
-   */
   export type ChangeEventReason = TextareaChangeEventReason;
 
-  /**
-   * {@link TextareaColor}
-   */
   export type Color = TextareaColor;
 
-  /**
-   * {@link TextareaRadius}
-   */
   export type Radius = TextareaRadius;
 
-  /**
-   * {@link TextareaSize}
-   */
   export type Size = TextareaSize;
 
-  /**
-   * {@link TextareaVariant}
-   */
   export type Variant = TextareaVariant;
 }

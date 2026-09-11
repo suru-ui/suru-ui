@@ -9,9 +9,6 @@ import {
 // Types
 // -----
 
-/**
- * {@link LabelRootSize}
- */
 export type LabelSize = LabelRootSize;
 
 /**
@@ -75,18 +72,9 @@ export const Label: IComponent<LabelProps> = function SuiLabel(props) {
 };
 
 export namespace Label {
-  /**
-   * {@link LabelState}
-   */
   export type State = LabelState;
 
-  /**
-   * {@link LabelProps}
-   */
   export type Props = LabelProps;
 
-  /**
-   * {@link LabelSize}
-   */
   export type Size = LabelSize;
 }

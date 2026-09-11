@@ -92,24 +92,12 @@ export const useNumberFieldContext: IUseContext<NumberFieldContext> = useSuiNumb
 export { NumberFieldContext as Context, useNumberFieldContext as useContext };
 
 export namespace Context {
-  /**
-   * {@link NumberFieldContextColor}
-   */
   export type Color = NumberFieldContextColor;
 
-  /**
-   * {@link NumberFieldContextRadius}
-   */
   export type Radius = NumberFieldContextRadius;
 
-  /**
-   * {@link NumberFieldContextSize}
-   */
   export type Size = NumberFieldContextSize;
 
-  /**
-   * {@link NumberFieldContextVariant}
-   */
   export type Variant = NumberFieldContextVariant;
 }
 
@@ -286,61 +274,34 @@ export const NumberFieldRoot: IComponent<NumberFieldRootProps> = function SuiNum
 export { NumberFieldRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link NumberFieldRootState}
-   */
   export type State = NumberFieldRootState;
 
-  /**
-   * {@link NumberFieldRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = NumberFieldRootProps.BaseUI;
+
     export type HTML = NumberFieldRootProps.HTML;
+
     export type Render = NumberFieldRootProps.Render;
+
     export type SuruUI = NumberFieldRootProps.SuruUI;
   }
 
-  /**
-   * {@link NumberFieldRootChangeEventDetails}
-   */
   export type ChangeEventDetails = NumberFieldRootChangeEventDetails;
 
-  /**
-   * {@link NumberFieldRootChangeEventReason}
-   */
   export type ChangeEventReason = NumberFieldRootChangeEventReason;
 
-  /**
-   * {@link NumberFieldRootColor}
-   */
   export type Color = NumberFieldRootColor;
 
-  /**
-   * {@link NumberFieldRootCommitEventDetails}
-   */
   export type CommitEventDetails = NumberFieldRootCommitEventDetails;
 
-  /**
-   * {@link NumberFieldRootCommitEventReason}
-   */
   export type CommitEventReason = NumberFieldRootCommitEventReason;
 
-  /**
-   * {@link NumberFieldRootRadius}
-   */
   export type Radius = NumberFieldRootRadius;
 
-  /**
-   * {@link NumberFieldRootSize}
-   */
   export type Size = NumberFieldRootSize;
 
-  /**
-   * {@link NumberFieldRootVariant}
-   */
   export type Variant = NumberFieldRootVariant;
 }
 
@@ -391,20 +352,17 @@ export const NumberFieldScrubArea: IComponent<NumberFieldScrubAreaProps> =
 export { NumberFieldScrubArea as ScrubArea };
 
 export namespace ScrubArea {
-  /**
-   * {@link NumberFieldScrubAreaState}
-   */
   export type State = NumberFieldScrubAreaState;
 
-  /**
-   * {@link NumberFieldScrubAreaProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = NumberFieldScrubAreaProps.BaseUI;
+
     export type HTML = NumberFieldScrubAreaProps.HTML;
+
     export type Render = NumberFieldScrubAreaProps.Render;
+
     export type SuruUI = NumberFieldScrubAreaProps.SuruUI;
   }
 }
@@ -456,20 +414,17 @@ export const NumberFieldScrubAreaCursor: IComponent<NumberFieldScrubAreaCursorPr
 export { NumberFieldScrubAreaCursor as ScrubAreaCursor };
 
 export namespace ScrubAreaCursor {
-  /**
-   * {@link NumberFieldScrubAreaCursorState}
-   */
   export type State = NumberFieldScrubAreaCursorState;
 
-  /**
-   * {@link NumberFieldScrubAreaCursorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = NumberFieldScrubAreaCursorProps.BaseUI;
+
     export type HTML = NumberFieldScrubAreaCursorProps.HTML;
+
     export type Render = NumberFieldScrubAreaCursorProps.Render;
+
     export type SuruUI = NumberFieldScrubAreaCursorProps.SuruUI;
   }
 }
@@ -543,20 +498,17 @@ export const NumberFieldGroup: IComponent<NumberFieldGroupProps> = function SuiN
 export { NumberFieldGroup as Group };
 
 export namespace Group {
-  /**
-   * {@link NumberFieldGroupState}
-   */
   export type State = NumberFieldGroupState;
 
-  /**
-   * {@link NumberFieldGroupProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = NumberFieldGroupProps.BaseUI;
+
     export type HTML = NumberFieldGroupProps.HTML;
+
     export type Render = NumberFieldGroupProps.Render;
+
     export type SuruUI = NumberFieldGroupProps.SuruUI;
   }
 }
@@ -615,20 +567,17 @@ export const NumberFieldInput: IComponent<NumberFieldInputProps> = function SuiN
 export { NumberFieldInput as Input };
 
 export namespace Input {
-  /**
-   * {@link NumberFieldInputState}
-   */
   export type State = NumberFieldInputState;
 
-  /**
-   * {@link NumberFieldInputProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = NumberFieldInputProps.BaseUI;
+
     export type HTML = NumberFieldInputProps.HTML;
+
     export type Render = NumberFieldInputProps.Render;
+
     export type SuruUI = NumberFieldInputProps.SuruUI;
   }
 }
@@ -688,19 +637,15 @@ export const NumberFieldAddon: IComponent<NumberFieldAddonProps> = function SuiN
 export { NumberFieldAddon as Addon };
 
 export namespace Addon {
-  /**
-   * {@link NumberFieldAddonState}
-   */
   export type State = NumberFieldAddonState;
 
-  /**
-   * {@link NumberFieldAddonProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = NumberFieldAddonProps.HTML;
+
     export type Render = NumberFieldAddonProps.Render;
+
     export type SuruUI = NumberFieldAddonProps.SuruUI;
   }
 }
@@ -754,20 +699,17 @@ export const NumberFieldDecrement: IComponent<NumberFieldDecrementProps> =
 export { NumberFieldDecrement as Decrement };
 
 export namespace Decrement {
-  /**
-   * {@link NumberFieldDecrementState}
-   */
   export type State = NumberFieldDecrementState;
 
-  /**
-   * {@link NumberFieldDecrementProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = NumberFieldDecrementProps.BaseUI;
+
     export type HTML = NumberFieldDecrementProps.HTML;
+
     export type Render = NumberFieldDecrementProps.Render;
+
     export type SuruUI = NumberFieldDecrementProps.SuruUI;
   }
 }
@@ -821,20 +763,17 @@ export const NumberFieldIncrement: IComponent<NumberFieldIncrementProps> =
 export { NumberFieldIncrement as Increment };
 
 export namespace Increment {
-  /**
-   * {@link NumberFieldIncrementState}
-   */
   export type State = NumberFieldIncrementState;
 
-  /**
-   * {@link NumberFieldIncrementProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = NumberFieldIncrementProps.BaseUI;
+
     export type HTML = NumberFieldIncrementProps.HTML;
+
     export type Render = NumberFieldIncrementProps.Render;
+
     export type SuruUI = NumberFieldIncrementProps.SuruUI;
   }
 }

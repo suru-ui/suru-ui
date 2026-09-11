@@ -16,34 +16,16 @@ import {
 // Types
 // -----
 
-/**
- * {@link CheckboxRootChangeEventDetails}
- */
 export type CheckboxChangeEventDetails = CheckboxRootChangeEventDetails;
 
-/**
- * {@link CheckboxRootChangeEventReason}
- */
 export type CheckboxChangeEventReason = CheckboxRootChangeEventReason;
 
-/**
- * {@link CheckboxRootColor}
- */
 export type CheckboxColor = CheckboxRootColor;
 
-/**
- * {@link CheckboxRootRadius}
- */
 export type CheckboxRadius = CheckboxRootRadius;
 
-/**
- * {@link CheckboxRootSize}
- */
 export type CheckboxSize = CheckboxRootSize;
 
-/**
- * {@link CheckboxRootVariant}
- */
 export type CheckboxVariant = CheckboxRootVariant;
 
 /**
@@ -138,48 +120,21 @@ export const Checkbox: IComponent<CheckboxProps> = function SuiCheckbox(props) {
 };
 
 export namespace Checkbox {
-  /**
-   * {@link CheckboxState}
-   */
   export type State = CheckboxState;
 
-  /**
-   * {@link CheckboxProps}
-   */
   export type Props = CheckboxProps;
 
-  /**
-   * {@link CheckboxSlotProps}
-   */
   export type SlotProps = CheckboxSlotProps;
 
-  /**
-   * {@link CheckboxChangeEventDetails}
-   */
   export type ChangeEventDetails = CheckboxChangeEventDetails;
 
-  /**
-   * {@link CheckboxChangeEventReason}
-   */
   export type ChangeEventReason = CheckboxChangeEventReason;
 
-  /**
-   * {@link CheckboxColor}
-   */
   export type Color = CheckboxColor;
 
-  /**
-   * {@link CheckboxRadius}
-   */
   export type Radius = CheckboxRadius;
 
-  /**
-   * {@link CheckboxSize}
-   */
   export type Size = CheckboxSize;
 
-  /**
-   * {@link CheckboxVariant}
-   */
   export type Variant = CheckboxVariant;
 }

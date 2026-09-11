@@ -12,24 +12,12 @@ import {
 // Types
 // -----
 
-/**
- * {@link ChipRootColor}
- */
 export type ChipColor = ChipRootColor;
 
-/**
- * {@link ChipRootRadius}
- */
 export type ChipRadius = ChipRootRadius;
 
-/**
- * {@link ChipRootSize}
- */
 export type ChipSize = ChipRootSize;
 
-/**
- * {@link ChipRootVariant}
- */
 export type ChipVariant = ChipRootVariant;
 
 /**
@@ -91,33 +79,15 @@ export const Chip: IComponent<ChipProps> = function SuiChip(props) {
 };
 
 export namespace Chip {
-  /**
-   * {@link ChipState}
-   */
   export type State = ChipState;
 
-  /**
-   * {@link ChipProps}
-   */
   export type Props = ChipProps;
 
-  /**
-   * {@link ChipColor}
-   */
   export type Color = ChipColor;
 
-  /**
-   * {@link ChipRadius}
-   */
   export type Radius = ChipRadius;
 
-  /**
-   * {@link ChipSize}
-   */
   export type Size = ChipSize;
 
-  /**
-   * {@link ChipVariant}
-   */
   export type Variant = ChipVariant;
 }

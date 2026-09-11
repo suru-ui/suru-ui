@@ -28,49 +28,22 @@ import {
 // Types
 // -----
 
-/**
- * {@link SegmentsRootChangeEventDetails}
- */
 export type SegmentsChangeEventDetails = SegmentsRootChangeEventDetails;
 
-/**
- * {@link SegmentsRootChangeEventReason}
- */
 export type SegmentsChangeEventReason = SegmentsRootChangeEventReason;
 
-/**
- * {@link SegmentsRootColor}
- */
 export type SegmentsColor = SegmentsRootColor;
 
-/**
- * {@link SegmentsListItemObject}
- */
 export type SegmentsItemObject = SegmentsListItemObject;
 
-/**
- * {@link ISegmentsListItemRenderer}
- */
 export interface ISegmentsItemRenderer<TItem = any> extends ISegmentsListItemRenderer<TItem> {}
 
-/**
- * {@link SegmentsRootRadius}
- */
 export type SegmentsRadius = SegmentsRootRadius;
 
-/**
- * {@link SegmentsRootSize}
- */
 export type SegmentsSize = SegmentsRootSize;
 
-/**
- * {@link SegmentsRootOrientation}
- */
 export type SegmentsOrientation = SegmentsRootOrientation;
 
-/**
- * {@link SegmentsItemValue}
- */
 export type SegmentsValue = SegmentsItemValue;
 
 /**
@@ -261,63 +234,27 @@ export const Segments: ISegments = function SuiSegments(props: SegmentsProps) {
 };
 
 export namespace Segments {
-  /**
-   * {@link SegmentsState}
-   */
   export type State = SegmentsState;
 
-  /**
-   * {@link SegmentsProps}
-   */
   export type Props = SegmentsProps;
 
-  /**
-   * {@link SegmentsSlotProps}
-   */
   export type SlotProps = SegmentsSlotProps;
 
-  /**
-   * {@link SegmentsChangeEventDetails}
-   */
   export type ChangeEventDetails = SegmentsChangeEventDetails;
 
-  /**
-   * {@link SegmentsChangeEventReason}
-   */
   export type ChangeEventReason = SegmentsChangeEventReason;
 
-  /**
-   * {@link SegmentsColor}
-   */
   export type Color = SegmentsColor;
 
-  /**
-   * {@link SegmentsItemObject}
-   */
   export type ItemObject = SegmentsItemObject;
 
-  /**
-   * {@link ISegmentsItemRenderer}
-   */
   export interface IItemRenderer<TItem = any> extends ISegmentsItemRenderer<TItem> {}
 
-  /**
-   * {@link SegmentsOrientation}
-   */
   export type Orientation = SegmentsOrientation;
 
-  /**
-   * {@link SegmentsRadius}
-   */
   export type Radius = SegmentsRadius;
 
-  /**
-   * {@link SegmentsSize}
-   */
   export type Size = SegmentsSize;
 
-  /**
-   * {@link SegmentsValue}
-   */
   export type Value = SegmentsValue;
 }

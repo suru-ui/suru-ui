@@ -46,29 +46,14 @@ import {
 // Types
 // -----
 
-/**
- * {@link DialogRootActions}
- */
 export type DialogActions = DialogRootActions;
 
-/**
- * {@link DialogRootChangeEventDetails}
- */
 export type DialogChangeEventDetails = DialogRootChangeEventDetails;
 
-/**
- * {@link DialogRootChangeEventReason}
- */
 export type DialogChangeEventReason = DialogRootChangeEventReason;
 
-/**
- * {@link DialogContentRadius}
- */
 export type DialogRadius = DialogContentRadius;
 
-/**
- * {@link DialogContentVariant}
- */
 export type DialogVariant = DialogContentVariant;
 
 /**
@@ -502,9 +487,6 @@ interface IDialog extends IComponent<DialogProps> {
    */
   readonly createHandle: typeof createDialogHandle;
 
-  /**
-   * {@link useDialogContentContext}
-   */
   readonly useContentContext: IUseContext<DialogContentContext>;
 }
 
@@ -574,33 +556,15 @@ export namespace Dialog {
    */
   export type SlotProps = DialogSlotProps;
 
-  /**
-   * {@link DialogContentContext}
-   */
   export type ContentContext = DialogContentContext;
 
-  /**
-   * {@link DialogActions}
-   */
   export type Actions = DialogActions;
 
-  /**
-   * {@link DialogChangeEventDetails}
-   */
   export type ChangeEventDetails = DialogChangeEventDetails;
 
-  /**
-   * {@link DialogChangeEventReason}
-   */
   export type ChangeEventReason = DialogChangeEventReason;
 
-  /**
-   * {@link DialogRadius}
-   */
   export type Radius = DialogRadius;
 
-  /**
-   * {@link DialogVariant}
-   */
   export type Variant = DialogVariant;
 }

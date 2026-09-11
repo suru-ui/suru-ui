@@ -99,29 +99,14 @@ export const useActionGroupContext: IUseContext<ActionGroupContext> = useSuiActi
 export { ActionGroupContext as Context, useActionGroupContext as useContext };
 
 export namespace Context {
-  /**
-   * {@link ActionGroupContextColor}
-   */
   export type Color = ActionGroupContextColor;
 
-  /**
-   * {@link ActionGroupContextOrientation}
-   */
   export type Orientation = ActionGroupContextOrientation;
 
-  /**
-   * {@link ActionGroupContextRadius}
-   */
   export type Radius = ActionGroupContextRadius;
 
-  /**
-   * {@link ActionGroupContextSize}
-   */
   export type Size = ActionGroupContextSize;
 
-  /**
-   * {@link ActionGroupContextVariant}
-   */
   export type Variant = ActionGroupContextVariant;
 }
 
@@ -287,45 +272,26 @@ export const ActionGroupRoot: IComponent<ActionGroupRootProps> = function SuiAct
 export { ActionGroupRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link ActionGroupRootState}
-   */
   export type State = ActionGroupRootState;
 
-  /**
-   * {@link ActionGroupRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = ActionGroupRootProps.HTML;
+
     export type Render = ActionGroupRootProps.Render;
+
     export type SuruUI = ActionGroupRootProps.SuruUI;
   }
 
-  /**
-   * {@link ActionGroupRootColor}
-   */
   export type Color = ActionGroupRootColor;
 
-  /**
-   * {@link ActionGroupRootOrientation}
-   */
   export type Orientation = ActionGroupRootOrientation;
 
-  /**
-   * {@link ActionGroupRootRadius}
-   */
   export type Radius = ActionGroupRootRadius;
 
-  /**
-   * {@link ActionGroupRootSize}
-   */
   export type Size = ActionGroupRootSize;
 
-  /**
-   * {@link ActionGroupRootVariant}
-   */
   export type Variant = ActionGroupRootVariant;
 }
 
@@ -391,19 +357,15 @@ export const ActionGroupSeparator: IComponent<ActionGroupSeparatorProps> =
 export { ActionGroupSeparator as Separator };
 
 export namespace Separator {
-  /**
-   * {@link ActionGroupSeparatorState}
-   */
   export type State = ActionGroupSeparatorState;
 
-  /**
-   * {@link ActionGroupSeparatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = ActionGroupSeparatorProps.HTML;
+
     export type Render = ActionGroupSeparatorProps.Render;
+
     export type SuruUI = ActionGroupSeparatorProps.SuruUI;
   }
 }

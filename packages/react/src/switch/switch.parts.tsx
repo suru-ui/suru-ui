@@ -153,66 +153,30 @@ export const SwitchRoot: IComponent<SwitchRootProps> = function SuiSwitchRoot(pr
 export { SwitchRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link SwitchRootState}
-   */
   export type State = SwitchRootState;
 
-  /**
-   * {@link SwitchRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SwitchRootProps.BaseUI}
-     */
     export type BaseUI = SwitchRootProps.BaseUI;
 
-    /**
-     * {@link SwitchRootProps.HTML}
-     */
     export type HTML = SwitchRootProps.HTML;
 
-    /**
-     * {@link SwitchRootProps.Render}
-     */
     export type Render = SwitchRootProps.Render;
 
-    /**
-     * {@link SwitchRootProps.SuruUI}
-     */
     export type SuruUI = SwitchRootProps.SuruUI;
   }
 
-  /**
-   * {@link SwitchRootChangeEventDetails}
-   */
   export type ChangeEventDetails = SwitchRootChangeEventDetails;
 
-  /**
-   * {@link SwitchRootChangeEventReason}
-   */
   export type ChangeEventReason = SwitchRootChangeEventReason;
 
-  /**
-   * {@link SwitchRootColor}
-   */
   export type Color = SwitchRootColor;
 
-  /**
-   * {@link SwitchRootRadius}
-   */
   export type Radius = SwitchRootRadius;
 
-  /**
-   * {@link SwitchRootSize}
-   */
   export type Size = SwitchRootSize;
 
-  /**
-   * {@link SwitchRootVariant}
-   */
   export type Variant = SwitchRootVariant;
 }
 
@@ -257,35 +221,17 @@ export const SwitchThumb: IComponent<SwitchThumbProps> = function SuiSwitchThumb
 export { SwitchThumb as Thumb };
 
 export namespace Thumb {
-  /**
-   * {@link SwitchThumbState}
-   */
   export type State = SwitchThumbState;
 
-  /**
-   * {@link SwitchThumbProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SwitchThumbProps.BaseUI}
-     */
     export type BaseUI = SwitchThumbProps.BaseUI;
 
-    /**
-     * {@link SwitchThumbProps.HTML}
-     */
     export type HTML = SwitchThumbProps.HTML;
 
-    /**
-     * {@link SwitchThumbProps.Render}
-     */
     export type Render = SwitchThumbProps.Render;
 
-    /**
-     * {@link SwitchThumbProps.SuruUI}
-     */
     export type SuruUI = SwitchThumbProps.SuruUI;
   }
 }

@@ -475,60 +475,32 @@ export { FileUploadRoot as Root };
  * {@link FileUploadRoot} の状態や props をまとめた型名前空間です。
  */
 export namespace Root {
-  /**
-   * {@link FileUploadRootState}
-   */
   export type State = FileUploadRootState;
 
-  /**
-   * {@link FileUploadRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = FileUploadRootProps.HTML;
+
     export type Render = FileUploadRootProps.Render;
+
     export type SuruUI = FileUploadRootProps.SuruUI;
   }
 
-  /**
-   * {@link FileUploadAcceptEventDetails}
-   */
   export type AcceptEventDetails = FileUploadAcceptEventDetails;
 
-  /**
-   * {@link FileUploadRootColor}
-   */
   export type Color = FileUploadRootColor;
 
-  /**
-   * {@link FileUploadFileError}
-   */
   export type FileError = FileUploadFileError;
 
-  /**
-   * {@link FileUploadFileErrorReason}
-   */
   export type FileErrorReason = FileUploadFileErrorReason;
 
-  /**
-   * {@link FileUploadRootRadius}
-   */
   export type Radius = FileUploadRootRadius;
 
-  /**
-   * {@link FileUploadRejectEventDetails}
-   */
   export type RejectEventDetails = FileUploadRejectEventDetails;
 
-  /**
-   * {@link FileUploadRootSize}
-   */
   export type Size = FileUploadRootSize;
 
-  /**
-   * {@link FileUploadRootVariant}
-   */
   export type Variant = FileUploadRootVariant;
 }
 
@@ -599,19 +571,15 @@ export { FileUploadHiddenInput as HiddenInput };
  * {@link FileUploadHiddenInput} の状態や props をまとめた型名前空間です。
  */
 export namespace HiddenInput {
-  /**
-   * {@link FileUploadHiddenInputState}
-   */
   export type State = FileUploadHiddenInputState;
 
-  /**
-   * {@link FileUploadHiddenInputProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = FileUploadHiddenInputProps.HTML;
+
     export type Render = FileUploadHiddenInputProps.Render;
+
     export type SuruUI = FileUploadHiddenInputProps.SuruUI;
   }
 }
@@ -673,19 +641,15 @@ export { FileUploadTrigger as Trigger };
  * {@link FileUploadTrigger} の状態や props をまとめた型名前空間です。
  */
 export namespace Trigger {
-  /**
-   * {@link FileUploadTriggerState}
-   */
   export type State = FileUploadTriggerState;
 
-  /**
-   * {@link FileUploadTriggerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = FileUploadTriggerProps.HTML;
+
     export type Render = FileUploadTriggerProps.Render;
+
     export type SuruUI = FileUploadTriggerProps.SuruUI;
   }
 }
@@ -777,19 +741,15 @@ export { FileUploadDropzone as Dropzone };
  * {@link FileUploadDropzone} の状態や props をまとめた型名前空間です。
  */
 export namespace Dropzone {
-  /**
-   * {@link FileUploadDropzoneState}
-   */
   export type State = FileUploadDropzoneState;
 
-  /**
-   * {@link FileUploadDropzoneProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = FileUploadDropzoneProps.HTML;
+
     export type Render = FileUploadDropzoneProps.Render;
+
     export type SuruUI = FileUploadDropzoneProps.SuruUI;
   }
 }
@@ -853,19 +813,15 @@ export { FileUploadClearTrigger as ClearTrigger };
  * {@link FileUploadClearTrigger} の状態や props をまとめた型名前空間です。
  */
 export namespace ClearTrigger {
-  /**
-   * {@link FileUploadClearTriggerState}
-   */
   export type State = FileUploadClearTriggerState;
 
-  /**
-   * {@link FileUploadClearTriggerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = FileUploadClearTriggerProps.HTML;
+
     export type Render = FileUploadClearTriggerProps.Render;
+
     export type SuruUI = FileUploadClearTriggerProps.SuruUI;
   }
 }
@@ -915,19 +871,15 @@ export { FileUploadItemGroup as ItemGroup };
  * {@link FileUploadItemGroup} の状態や props をまとめた型名前空間です。
  */
 export namespace ItemGroup {
-  /**
-   * {@link FileUploadItemGroupState}
-   */
   export type State = FileUploadItemGroupState;
 
-  /**
-   * {@link FileUploadItemGroupProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = FileUploadItemGroupProps.HTML;
+
     export type Render = FileUploadItemGroupProps.Render;
+
     export type SuruUI = FileUploadItemGroupProps.SuruUI;
   }
 }
@@ -1028,19 +980,15 @@ export { FileUploadItem as Item };
  * {@link FileUploadItem} の状態や props をまとめた型名前空間です。
  */
 export namespace Item {
-  /**
-   * {@link FileUploadItemState}
-   */
   export type State = FileUploadItemState;
 
-  /**
-   * {@link FileUploadItemProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = FileUploadItemProps.HTML;
+
     export type Render = FileUploadItemProps.Render;
+
     export type SuruUI = FileUploadItemProps.SuruUI;
   }
 }
@@ -1093,19 +1041,15 @@ export { FileUploadItemName as ItemName };
  * {@link FileUploadItemName} の状態や props をまとめた型名前空間です。
  */
 export namespace ItemName {
-  /**
-   * {@link FileUploadItemNameState}
-   */
   export type State = FileUploadItemNameState;
 
-  /**
-   * {@link FileUploadItemNameProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = FileUploadItemNameProps.HTML;
+
     export type Render = FileUploadItemNameProps.Render;
+
     export type SuruUI = FileUploadItemNameProps.SuruUI;
   }
 }
@@ -1158,19 +1102,15 @@ export { FileUploadItemSizeText as ItemSizeText };
  * {@link FileUploadItemSizeText} の状態や props をまとめた型名前空間です。
  */
 export namespace ItemSizeText {
-  /**
-   * {@link FileUploadItemSizeTextState}
-   */
   export type State = FileUploadItemSizeTextState;
 
-  /**
-   * {@link FileUploadItemSizeTextProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = FileUploadItemSizeTextProps.HTML;
+
     export type Render = FileUploadItemSizeTextProps.Render;
+
     export type SuruUI = FileUploadItemSizeTextProps.SuruUI;
   }
 }
@@ -1233,19 +1173,15 @@ export { FileUploadItemDeleteTrigger as ItemDeleteTrigger };
  * {@link FileUploadItemDeleteTrigger} の状態や props をまとめた型名前空間です。
  */
 export namespace ItemDeleteTrigger {
-  /**
-   * {@link FileUploadItemDeleteTriggerState}
-   */
   export type State = FileUploadItemDeleteTriggerState;
 
-  /**
-   * {@link FileUploadItemDeleteTriggerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = FileUploadItemDeleteTriggerProps.HTML;
+
     export type Render = FileUploadItemDeleteTriggerProps.Render;
+
     export type SuruUI = FileUploadItemDeleteTriggerProps.SuruUI;
   }
 }

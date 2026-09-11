@@ -17,19 +17,10 @@ import {
 // Types
 // -----
 
-/**
- * {@link AvatarGroupRootColor}
- */
 export type AvatarGroupColor = AvatarGroupRootColor;
 
-/**
- * {@link AvatarGroupRootRadius}
- */
 export type AvatarGroupRadius = AvatarGroupRootRadius;
 
-/**
- * {@link AvatarGroupRootSize}
- */
 export type AvatarGroupSize = AvatarGroupRootSize;
 
 /**
@@ -173,38 +164,17 @@ export const AvatarGroup: IAvatarGroup = /*#__PURE__*/ Object.assign(
 );
 
 export namespace AvatarGroup {
-  /**
-   * {@link AvatarGroupState}
-   */
   export type State = AvatarGroupState;
 
-  /**
-   * {@link AvatarGroupProps}
-   */
   export type Props = AvatarGroupProps;
 
-  /**
-   * {@link AvatarGroupSlotProps}
-   */
   export type SlotProps = AvatarGroupSlotProps;
 
-  /**
-   * {@link AvatarGroupContext}
-   */
   export type Context = AvatarGroupContext;
 
-  /**
-   * {@link AvatarGroupColor}
-   */
   export type Color = AvatarGroupColor;
 
-  /**
-   * {@link AvatarGroupRadius}
-   */
   export type Radius = AvatarGroupRadius;
 
-  /**
-   * {@link AvatarGroupSize}
-   */
   export type Size = AvatarGroupSize;
 }

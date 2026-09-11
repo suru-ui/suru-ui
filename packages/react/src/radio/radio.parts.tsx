@@ -163,41 +163,26 @@ export const RadioRoot: IComponent<RadioRootProps> = function SuiRadioRoot(props
 export { RadioRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link RadioRootState}
-   */
   export type State = RadioRootState;
 
-  /**
-   * {@link RadioRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = RadioRootProps.BaseUI;
+
     export type HTML = RadioRootProps.HTML;
+
     export type Render = RadioRootProps.Render;
+
     export type SuruUI = RadioRootProps.SuruUI;
   }
 
-  /**
-   * {@link RadioRootColor}
-   */
   export type Color = RadioRootColor;
 
-  /**
-   * {@link RadioRootRadius}
-   */
   export type Radius = RadioRootRadius;
 
-  /**
-   * {@link RadioRootSize}
-   */
   export type Size = RadioRootSize;
 
-  /**
-   * {@link RadioRootVariant}
-   */
   export type Variant = RadioRootVariant;
 }
 
@@ -242,20 +227,17 @@ export const RadioIndicator: IComponent<RadioIndicatorProps> = function SuiRadio
 export { RadioIndicator as Indicator };
 
 export namespace Indicator {
-  /**
-   * {@link RadioIndicatorState}
-   */
   export type State = RadioIndicatorState;
 
-  /**
-   * {@link RadioIndicatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = RadioIndicatorProps.BaseUI;
+
     export type HTML = RadioIndicatorProps.HTML;
+
     export type Render = RadioIndicatorProps.Render;
+
     export type SuruUI = RadioIndicatorProps.SuruUI;
   }
 }

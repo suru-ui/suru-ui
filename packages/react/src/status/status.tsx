@@ -12,14 +12,8 @@ import {
 // Types
 // -----
 
-/**
- * {@link StatusRootColor}
- */
 export type StatusColor = StatusRootColor;
 
-/**
- * {@link StatusRootSize}
- */
 export type StatusSize = StatusRootSize;
 
 /**
@@ -112,28 +106,13 @@ export const Status: IComponent<StatusProps> = function SuiStatus(props) {
 };
 
 export namespace Status {
-  /**
-   * {@link StatusState}
-   */
   export type State = StatusState;
 
-  /**
-   * {@link StatusProps}
-   */
   export type Props = StatusProps;
 
-  /**
-   * {@link StatusSlotProps}
-   */
   export type SlotProps = StatusSlotProps;
 
-  /**
-   * {@link StatusColor}
-   */
   export type Color = StatusColor;
 
-  /**
-   * {@link StatusSize}
-   */
   export type Size = StatusSize;
 }

@@ -73,84 +73,36 @@ import {
 // Types
 // -----
 
-/**
- * {@link MenuRootActions}
- */
 export type MenuActions = MenuRootActions;
 
-/**
- * {@link MenuRootChangeEventDetails}
- */
 export type MenuChangeEventDetails = MenuRootChangeEventDetails;
 
-/**
- * {@link MenuRootChangeEventReason}
- */
 export type MenuChangeEventReason = MenuRootChangeEventReason;
 
-/**
- * {@link MenuRootItemObject}
- */
 export type MenuItemObject = MenuRootItemObject;
 
-/**
- * {@link MenuRootActionItemObject}
- */
 export type MenuActionItemObject = MenuRootActionItemObject;
 
-/**
- * {@link MenuRootCheckboxItemObject}
- */
 export type MenuCheckboxItemObject = MenuRootCheckboxItemObject;
 
-/**
- * {@link MenuRootGroupObject}
- */
 export type MenuGroupObject = MenuRootGroupObject;
 
-/**
- * {@link MenuRootLinkItemObject}
- */
 export type MenuLinkItemObject = MenuRootLinkItemObject;
 
-/**
- * {@link MenuRootRadioGroupObject}
- */
 export type MenuRadioGroupObject = MenuRootRadioGroupObject;
 
-/**
- * {@link MenuRootRadioItemObject}
- */
 export type MenuRadioItemObject = MenuRootRadioItemObject;
 
-/**
- * {@link MenuRootSeparatorObject}
- */
 export type MenuSeparatorObject = MenuRootSeparatorObject;
 
-/**
- * {@link MenuRootOrientation}
- */
 export type MenuOrientation = MenuRootOrientation;
 
-/**
- * {@link IMenuPopupItemRenderer}
- */
 export interface IMenuItemRenderer<TItem = any> extends IMenuPopupItemRenderer<TItem> {}
 
-/**
- * {@link MenuRootRadius}
- */
 export type MenuRadius = MenuRootRadius;
 
-/**
- * {@link MenuRootSize}
- */
 export type MenuSize = MenuRootSize;
 
-/**
- * {@link MenuRootVariant}
- */
 export type MenuVariant = MenuRootVariant;
 
 /**
@@ -743,98 +695,41 @@ export const Menu: IMenu = function SuiMenu(props: MenuProps) {
 };
 
 export namespace Menu {
-  /**
-   * {@link MenuState}
-   */
   export type State = MenuState;
 
-  /**
-   * {@link MenuProps}
-   */
   export type Props<TItem = any> = MenuProps<TItem>;
 
-  /**
-   * {@link MenuSlotProps}
-   */
   export type SlotProps = MenuSlotProps;
 
-  /**
-   * {@link MenuActionItemObject}
-   */
   export type ActionItemObject = MenuActionItemObject;
 
-  /**
-   * {@link MenuActions}
-   */
   export type Actions = MenuActions;
 
-  /**
-   * {@link MenuChangeEventDetails}
-   */
   export type ChangeEventDetails = MenuChangeEventDetails;
 
-  /**
-   * {@link MenuChangeEventReason}
-   */
   export type ChangeEventReason = MenuChangeEventReason;
 
-  /**
-   * {@link MenuCheckboxItemObject}
-   */
   export type CheckboxItemObject = MenuCheckboxItemObject;
 
-  /**
-   * {@link MenuGroupObject}
-   */
   export type GroupObject = MenuGroupObject;
 
-  /**
-   * {@link MenuItemObject}
-   */
   export type ItemObject = MenuItemObject;
 
-  /**
-   * {@link IMenuItemRenderer}
-   */
   export interface IItemRenderer<TItem = any> extends IMenuItemRenderer<TItem> {}
 
-  /**
-   * {@link MenuLinkItemObject}
-   */
   export type LinkItemObject = MenuLinkItemObject;
 
-  /**
-   * {@link MenuOrientation}
-   */
   export type Orientation = MenuOrientation;
 
-  /**
-   * {@link MenuRadioGroupObject}
-   */
   export type RadioGroupObject = MenuRadioGroupObject;
 
-  /**
-   * {@link MenuRadioItemObject}
-   */
   export type RadioItemObject = MenuRadioItemObject;
 
-  /**
-   * {@link MenuRadius}
-   */
   export type Radius = MenuRadius;
 
-  /**
-   * {@link MenuSeparatorObject}
-   */
   export type SeparatorObject = MenuSeparatorObject;
 
-  /**
-   * {@link MenuSize}
-   */
   export type Size = MenuSize;
 
-  /**
-   * {@link MenuVariant}
-   */
   export type Variant = MenuVariant;
 }

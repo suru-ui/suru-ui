@@ -81,54 +81,24 @@ import {
 // Types
 // -----
 
-/**
- * {@link ComboboxRootActions}
- */
 export type ComboboxActions = ComboboxRootActions;
 
-/**
- * {@link ComboboxRootChangeEventDetails}
- */
 export type ComboboxChangeEventDetails = ComboboxRootChangeEventDetails;
 
-/**
- * {@link ComboboxRootChangeEventReason}
- */
 export type ComboboxChangeEventReason = ComboboxRootChangeEventReason;
 
-/**
- * {@link ComboboxRootColor}
- */
 export type ComboboxColor = ComboboxRootColor;
 
-/**
- * {@link ComboboxRootHighlightEventDetails}
- */
 export type ComboboxHighlightEventDetails = ComboboxRootHighlightEventDetails;
 
-/**
- * {@link ComboboxRootHighlightEventReason}
- */
 export type ComboboxHighlightEventReason = ComboboxRootHighlightEventReason;
 
-/**
- * {@link ComboboxRootRadius}
- */
 export type ComboboxRadius = ComboboxRootRadius;
 
-/**
- * {@link ComboboxRootSize}
- */
 export type ComboboxSize = ComboboxRootSize;
 
-/**
- * {@link ComboboxRootVariant}
- */
 export type ComboboxVariant = ComboboxRootVariant;
 
-/**
- * {@link ComboboxRootItems}
- */
 export type ComboboxItems<TValue = unknown> = ComboboxRootItems<TValue>;
 
 /**
@@ -732,9 +702,6 @@ interface ICombobox extends IComponent<ComboboxProps<unknown, boolean | undefine
     props: ComboboxProps<TValue, TMultiple>,
   ): IComponent.Return;
 
-  /**
-   * {@link useComboboxContext}
-   */
   readonly useContext: IUseContext<ComboboxContext>;
 }
 
@@ -847,76 +814,34 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
 );
 
 export namespace Combobox {
-  /**
-   * {@link ComboboxState}
-   */
   export type State = ComboboxState;
 
-  /**
-   * {@link ComboboxProps}
-   */
   export type Props<
     TValue = unknown,
     TMultiple extends boolean | undefined = false,
   > = ComboboxProps<TValue, TMultiple>;
 
-  /**
-   * {@link ComboboxSlotProps}
-   */
   export type SlotProps = ComboboxSlotProps;
 
-  /**
-   * {@link ComboboxActions}
-   */
   export type Actions = ComboboxActions;
 
-  /**
-   * {@link ComboboxChangeEventDetails}
-   */
   export type ChangeEventDetails = ComboboxChangeEventDetails;
 
-  /**
-   * {@link ComboboxChangeEventReason}
-   */
   export type ChangeEventReason = ComboboxChangeEventReason;
 
-  /**
-   * {@link ComboboxColor}
-   */
   export type Color = ComboboxColor;
 
-  /**
-   * {@link ComboboxGroupItem}
-   */
   export type GroupItem<TValue = unknown> = ComboboxGroupItem<TValue>;
 
-  /**
-   * {@link ComboboxHighlightEventDetails}
-   */
   export type HighlightEventDetails = ComboboxHighlightEventDetails;
 
-  /**
-   * {@link ComboboxHighlightEventReason}
-   */
   export type HighlightEventReason = ComboboxHighlightEventReason;
 
-  /**
-   * {@link ComboboxItems}
-   */
   export type Items<TValue = unknown> = ComboboxItems<TValue>;
 
-  /**
-   * {@link ComboboxRadius}
-   */
   export type Radius = ComboboxRadius;
 
-  /**
-   * {@link ComboboxSize}
-   */
   export type Size = ComboboxSize;
 
-  /**
-   * {@link ComboboxVariant}
-   */
   export type Variant = ComboboxVariant;
 }

@@ -106,24 +106,12 @@ export const useAutocompleteContext: IUseContext<AutocompleteContext> = useSuiAu
 export { AutocompleteContext as Context, useAutocompleteContext as useContext };
 
 export namespace Context {
-  /**
-   * {@link AutocompleteContextColor}
-   */
   export type Color = AutocompleteContextColor;
 
-  /**
-   * {@link AutocompleteContextRadius}
-   */
   export type Radius = AutocompleteContextRadius;
 
-  /**
-   * {@link AutocompleteContextSize}
-   */
   export type Size = AutocompleteContextSize;
 
-  /**
-   * {@link AutocompleteContextVariant}
-   */
   export type Variant = AutocompleteContextVariant;
 }
 
@@ -292,66 +280,36 @@ export const AutocompleteRoot: IAutocompleteRoot = function SuiAutocompleteRoot(
 export { AutocompleteRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link AutocompleteRootState}
-   */
   export type State = AutocompleteRootState;
 
-  /**
-   * {@link AutocompleteRootProps}
-   */
   export type Props<TItem = any> = Props.Render & Props.SuruUI & Props.BaseUI<TItem> & Props.HTML;
 
   export namespace Props {
     export type BaseUI<TItem = any> = AutocompleteRootProps.BaseUI<TItem>;
+
     export type HTML = AutocompleteRootProps.HTML;
+
     export type Render = AutocompleteRootProps.Render;
+
     export type SuruUI = AutocompleteRootProps.SuruUI;
   }
 
-  /**
-   * {@link AutocompleteRootActions}
-   */
   export type Actions = AutocompleteRootActions;
 
-  /**
-   * {@link AutocompleteRootChangeEventDetails}
-   */
   export type ChangeEventDetails = AutocompleteRootChangeEventDetails;
 
-  /**
-   * {@link AutocompleteRootChangeEventReason}
-   */
   export type ChangeEventReason = AutocompleteRootChangeEventReason;
 
-  /**
-   * {@link AutocompleteRootColor}
-   */
   export type Color = AutocompleteRootColor;
 
-  /**
-   * {@link AutocompleteRootHighlightEventDetails}
-   */
   export type HighlightEventDetails = AutocompleteRootHighlightEventDetails;
 
-  /**
-   * {@link AutocompleteRootHighlightEventReason}
-   */
   export type HighlightEventReason = AutocompleteRootHighlightEventReason;
 
-  /**
-   * {@link AutocompleteRootRadius}
-   */
   export type Radius = AutocompleteRootRadius;
 
-  /**
-   * {@link AutocompleteRootSize}
-   */
   export type Size = AutocompleteRootSize;
 
-  /**
-   * {@link AutocompleteRootVariant}
-   */
   export type Variant = AutocompleteRootVariant;
 }
 
@@ -418,20 +376,17 @@ export const AutocompleteInputGroup: IComponent<AutocompleteInputGroupProps> =
 export { AutocompleteInputGroup as InputGroup };
 
 export namespace InputGroup {
-  /**
-   * {@link AutocompleteInputGroupState}
-   */
   export type State = AutocompleteInputGroupState;
 
-  /**
-   * {@link AutocompleteInputGroupProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AutocompleteInputGroupProps.BaseUI;
+
     export type HTML = AutocompleteInputGroupProps.HTML;
+
     export type Render = AutocompleteInputGroupProps.Render;
+
     export type SuruUI = AutocompleteInputGroupProps.SuruUI;
   }
 }
@@ -492,20 +447,17 @@ export const AutocompleteInput: IComponent<AutocompleteInputProps> = function Su
 export { AutocompleteInput as Input };
 
 export namespace Input {
-  /**
-   * {@link AutocompleteInputState}
-   */
   export type State = AutocompleteInputState;
 
-  /**
-   * {@link AutocompleteInputProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AutocompleteInputProps.BaseUI;
+
     export type HTML = AutocompleteInputProps.HTML;
+
     export type Render = AutocompleteInputProps.Render;
+
     export type SuruUI = AutocompleteInputProps.SuruUI;
   }
 }
@@ -557,19 +509,15 @@ export const AutocompleteAddon: IComponent<AutocompleteAddonProps> = function Su
 export { AutocompleteAddon as Addon };
 
 export namespace Addon {
-  /**
-   * {@link AutocompleteAddonState}
-   */
   export type State = AutocompleteAddonState;
 
-  /**
-   * {@link AutocompleteAddonProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = AutocompleteAddonProps.HTML;
+
     export type Render = AutocompleteAddonProps.Render;
+
     export type SuruUI = AutocompleteAddonProps.SuruUI;
   }
 }
@@ -628,20 +576,17 @@ export const AutocompleteClear: IComponent<AutocompleteClearProps> = function Su
 export { AutocompleteClear as Clear };
 
 export namespace Clear {
-  /**
-   * {@link AutocompleteClearState}
-   */
   export type State = AutocompleteClearState;
 
-  /**
-   * {@link AutocompleteClearProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AutocompleteClearProps.BaseUI;
+
     export type HTML = AutocompleteClearProps.HTML;
+
     export type Render = AutocompleteClearProps.Render;
+
     export type SuruUI = AutocompleteClearProps.SuruUI;
   }
 }
@@ -689,20 +634,17 @@ export const AutocompleteList: IComponent<AutocompleteListProps> = function SuiA
 export { AutocompleteList as List };
 
 export namespace List {
-  /**
-   * {@link AutocompleteListState}
-   */
   export type State = AutocompleteListState;
 
-  /**
-   * {@link AutocompleteListProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AutocompleteListProps.BaseUI;
+
     export type HTML = AutocompleteListProps.HTML;
+
     export type Render = AutocompleteListProps.Render;
+
     export type SuruUI = AutocompleteListProps.SuruUI;
   }
 }
@@ -753,20 +695,17 @@ export const AutocompleteStatus: IComponent<AutocompleteStatusProps> =
 export { AutocompleteStatus as Status };
 
 export namespace Status {
-  /**
-   * {@link AutocompleteStatusState}
-   */
   export type State = AutocompleteStatusState;
 
-  /**
-   * {@link AutocompleteStatusProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AutocompleteStatusProps.BaseUI;
+
     export type HTML = AutocompleteStatusProps.HTML;
+
     export type Render = AutocompleteStatusProps.Render;
+
     export type SuruUI = AutocompleteStatusProps.SuruUI;
   }
 }
@@ -832,20 +771,17 @@ export const AutocompletePortal: IComponent<AutocompletePortalProps> =
 export { AutocompletePortal as Portal };
 
 export namespace Portal {
-  /**
-   * {@link AutocompletePortalState}
-   */
   export type State = AutocompletePortalState;
 
-  /**
-   * {@link AutocompletePortalProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AutocompletePortalProps.BaseUI;
+
     export type HTML = AutocompletePortalProps.HTML;
+
     export type Render = AutocompletePortalProps.Render;
+
     export type SuruUI = AutocompletePortalProps.SuruUI;
   }
 }
@@ -897,20 +833,17 @@ export const AutocompletePositioner: IComponent<AutocompletePositionerProps> =
 export { AutocompletePositioner as Positioner };
 
 export namespace Positioner {
-  /**
-   * {@link AutocompletePositionerState}
-   */
   export type State = AutocompletePositionerState;
 
-  /**
-   * {@link AutocompletePositionerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AutocompletePositionerProps.BaseUI;
+
     export type HTML = AutocompletePositionerProps.HTML;
+
     export type Render = AutocompletePositionerProps.Render;
+
     export type SuruUI = AutocompletePositionerProps.SuruUI;
   }
 }
@@ -958,20 +891,17 @@ export const AutocompletePopup: IComponent<AutocompletePopupProps> = function Su
 export { AutocompletePopup as Popup };
 
 export namespace Popup {
-  /**
-   * {@link AutocompletePopupState}
-   */
   export type State = AutocompletePopupState;
 
-  /**
-   * {@link AutocompletePopupProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AutocompletePopupProps.BaseUI;
+
     export type HTML = AutocompletePopupProps.HTML;
+
     export type Render = AutocompletePopupProps.Render;
+
     export type SuruUI = AutocompletePopupProps.SuruUI;
   }
 }
@@ -1021,20 +951,17 @@ export const AutocompleteGroup: IComponent<AutocompleteGroupProps> = function Su
 export { AutocompleteGroup as Group };
 
 export namespace Group {
-  /**
-   * {@link AutocompleteGroupState}
-   */
   export type State = AutocompleteGroupState;
 
-  /**
-   * {@link AutocompleteGroupProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AutocompleteGroupProps.BaseUI;
+
     export type HTML = AutocompleteGroupProps.HTML;
+
     export type Render = AutocompleteGroupProps.Render;
+
     export type SuruUI = AutocompleteGroupProps.SuruUI;
   }
 }
@@ -1086,20 +1013,17 @@ export const AutocompleteGroupLabel: IComponent<AutocompleteGroupLabelProps> =
 export { AutocompleteGroupLabel as GroupLabel };
 
 export namespace GroupLabel {
-  /**
-   * {@link AutocompleteGroupLabelState}
-   */
   export type State = AutocompleteGroupLabelState;
 
-  /**
-   * {@link AutocompleteGroupLabelProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AutocompleteGroupLabelProps.BaseUI;
+
     export type HTML = AutocompleteGroupLabelProps.HTML;
+
     export type Render = AutocompleteGroupLabelProps.Render;
+
     export type SuruUI = AutocompleteGroupLabelProps.SuruUI;
   }
 }
@@ -1179,20 +1103,17 @@ export const AutocompleteItem: IComponent<AutocompleteItemProps> = function SuiA
 export { AutocompleteItem as Item };
 
 export namespace Item {
-  /**
-   * {@link AutocompleteItemState}
-   */
   export type State = AutocompleteItemState;
 
-  /**
-   * {@link AutocompleteItemProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AutocompleteItemProps.BaseUI;
+
     export type HTML = AutocompleteItemProps.HTML;
+
     export type Render = AutocompleteItemProps.Render;
+
     export type SuruUI = AutocompleteItemProps.SuruUI;
   }
 }
@@ -1242,20 +1163,17 @@ export const AutocompleteRow: IComponent<AutocompleteRowProps> = function SuiAut
 export { AutocompleteRow as Row };
 
 export namespace Row {
-  /**
-   * {@link AutocompleteRowState}
-   */
   export type State = AutocompleteRowState;
 
-  /**
-   * {@link AutocompleteRowProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AutocompleteRowProps.BaseUI;
+
     export type HTML = AutocompleteRowProps.HTML;
+
     export type Render = AutocompleteRowProps.Render;
+
     export type SuruUI = AutocompleteRowProps.SuruUI;
   }
 }
@@ -1299,20 +1217,17 @@ export const AutocompleteCollection: IComponent<AutocompleteCollectionProps> =
 export { AutocompleteCollection as Collection };
 
 export namespace Collection {
-  /**
-   * {@link AutocompleteCollectionState}
-   */
   export type State = AutocompleteCollectionState;
 
-  /**
-   * {@link AutocompleteCollectionProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AutocompleteCollectionProps.BaseUI;
+
     export type HTML = AutocompleteCollectionProps.HTML;
+
     export type Render = AutocompleteCollectionProps.Render;
+
     export type SuruUI = AutocompleteCollectionProps.SuruUI;
   }
 }
@@ -1362,20 +1277,17 @@ export const AutocompleteEmpty: IComponent<AutocompleteEmptyProps> = function Su
 export { AutocompleteEmpty as Empty };
 
 export namespace Empty {
-  /**
-   * {@link AutocompleteEmptyState}
-   */
   export type State = AutocompleteEmptyState;
 
-  /**
-   * {@link AutocompleteEmptyProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AutocompleteEmptyProps.BaseUI;
+
     export type HTML = AutocompleteEmptyProps.HTML;
+
     export type Render = AutocompleteEmptyProps.Render;
+
     export type SuruUI = AutocompleteEmptyProps.SuruUI;
   }
 }
@@ -1409,14 +1321,8 @@ export interface IUseAutocompleteFilter {
 }
 
 export namespace IUseAutocompleteFilter {
-  /**
-   * {@link IUseAutocompleteFilterOptions}
-   */
   export type Options = IUseAutocompleteFilterOptions;
 
-  /**
-   * {@link IUseAutocompleteFilterReturn}
-   */
   export interface Return extends IUseAutocompleteFilterReturn {}
 }
 
@@ -1452,9 +1358,6 @@ export interface IUseAutocompleteFilteredItems {
 }
 
 export namespace IUseAutocompleteFilteredItems {
-  /**
-   * {@link IUseAutocompleteFilteredItemsReturn}
-   */
   export type Return<TItem = any> = IUseAutocompleteFilteredItemsReturn<TItem>;
 }
 

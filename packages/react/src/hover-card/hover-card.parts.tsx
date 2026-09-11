@@ -60,7 +60,7 @@ export type HoverCardRootState = PreviewCard.Root.State;
 export namespace HoverCardRootProps {
   export type BaseUI<TPayload = unknown> = Omit<
     PreviewCard.Root.Props<TPayload>,
-    keyof Render | keyof SuruUI<TPayload>
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = {};
@@ -109,14 +109,8 @@ export const HoverCardRoot: HoverCardRootComponent = function SuiHoverCardRoot<T
 export { HoverCardRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link HoverCardRootState}
-   */
   export type State = HoverCardRootState;
 
-  /**
-   * {@link HoverCardRootProps}
-   */
   export type Props<TPayload = unknown> = Props.Render &
     Props.SuruUI<TPayload> &
     Props.BaseUI<TPayload> &
@@ -124,24 +118,18 @@ export namespace Root {
 
   export namespace Props {
     export type BaseUI<TPayload = unknown> = HoverCardRootProps.BaseUI<TPayload>;
+
     export type HTML = HoverCardRootProps.HTML;
+
     export type Render = HoverCardRootProps.Render;
+
     export type SuruUI<TPayload = unknown> = HoverCardRootProps.SuruUI<TPayload>;
   }
 
-  /**
-   * {@link HoverCardRootActions}
-   */
   export type Actions = HoverCardRootActions;
 
-  /**
-   * {@link HoverCardRootChangeEventDetails}
-   */
   export type ChangeEventDetails = HoverCardRootChangeEventDetails;
 
-  /**
-   * {@link HoverCardRootChangeEventReason}
-   */
   export type ChangeEventReason = HoverCardRootChangeEventReason;
 }
 
@@ -158,13 +146,13 @@ export type HoverCardTriggerState = PreviewCard.Trigger.State;
 export namespace HoverCardTriggerProps {
   export type BaseUI<TPayload = unknown> = Omit<
     PreviewCard.Trigger.Props<TPayload>,
-    keyof Render | keyof SuruUI<TPayload> | "render"
+    keyof Render | keyof SuruUI | "render"
   >;
 
   export type HTML = Omit<
     React.ComponentProps<"a">,
     | keyof Render
-    | keyof SuruUI<any>
+    | keyof SuruUI
     | keyof Omit<PreviewCard.Trigger.Props<any>, "handle" | "children" | "render">
   >;
 
@@ -228,14 +216,8 @@ export const HoverCardTrigger: HoverCardTriggerComponent = function SuiHoverCard
 export { HoverCardTrigger as Trigger };
 
 export namespace Trigger {
-  /**
-   * {@link HoverCardTriggerState}
-   */
   export type State = HoverCardTriggerState;
 
-  /**
-   * {@link HoverCardTriggerProps}
-   */
   export type Props<TPayload = unknown> = Props.Render &
     Props.SuruUI<TPayload> &
     Props.BaseUI<TPayload> &
@@ -243,8 +225,11 @@ export namespace Trigger {
 
   export namespace Props {
     export type BaseUI<TPayload = unknown> = HoverCardTriggerProps.BaseUI<TPayload>;
+
     export type HTML = HoverCardTriggerProps.HTML;
+
     export type Render = HoverCardTriggerProps.Render;
+
     export type SuruUI<TPayload = unknown> = HoverCardTriggerProps.SuruUI<TPayload>;
   }
 }
@@ -305,20 +290,17 @@ export const HoverCardPortal: IComponent<HoverCardPortalProps> = function SuiHov
 export { HoverCardPortal as Portal };
 
 export namespace Portal {
-  /**
-   * {@link HoverCardPortalState}
-   */
   export type State = HoverCardPortalState;
 
-  /**
-   * {@link HoverCardPortalProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = HoverCardPortalProps.BaseUI;
+
     export type HTML = HoverCardPortalProps.HTML;
+
     export type Render = HoverCardPortalProps.Render;
+
     export type SuruUI = HoverCardPortalProps.SuruUI;
   }
 }
@@ -377,20 +359,17 @@ export const HoverCardBackdrop: IComponent<HoverCardBackdropProps> = function Su
 export { HoverCardBackdrop as Backdrop };
 
 export namespace Backdrop {
-  /**
-   * {@link HoverCardBackdropState}
-   */
   export type State = HoverCardBackdropState;
 
-  /**
-   * {@link HoverCardBackdropProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = HoverCardBackdropProps.BaseUI;
+
     export type HTML = HoverCardBackdropProps.HTML;
+
     export type Render = HoverCardBackdropProps.Render;
+
     export type SuruUI = HoverCardBackdropProps.SuruUI;
   }
 }
@@ -442,20 +421,17 @@ export const HoverCardPositioner: IComponent<HoverCardPositionerProps> =
 export { HoverCardPositioner as Positioner };
 
 export namespace Positioner {
-  /**
-   * {@link HoverCardPositionerState}
-   */
   export type State = HoverCardPositionerState;
 
-  /**
-   * {@link HoverCardPositionerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = HoverCardPositionerProps.BaseUI;
+
     export type HTML = HoverCardPositionerProps.HTML;
+
     export type Render = HoverCardPositionerProps.Render;
+
     export type SuruUI = HoverCardPositionerProps.SuruUI;
   }
 }
@@ -514,20 +490,17 @@ export const HoverCardContent: IComponent<HoverCardContentProps> = function SuiH
 export { HoverCardContent as Content };
 
 export namespace Content {
-  /**
-   * {@link HoverCardContentState}
-   */
   export type State = HoverCardContentState;
 
-  /**
-   * {@link HoverCardContentProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = HoverCardContentProps.BaseUI;
+
     export type HTML = HoverCardContentProps.HTML;
+
     export type Render = HoverCardContentProps.Render;
+
     export type SuruUI = HoverCardContentProps.SuruUI;
   }
 }
@@ -573,20 +546,17 @@ export const HoverCardArrow: IComponent<HoverCardArrowProps> = function SuiHover
 export { HoverCardArrow as Arrow };
 
 export namespace Arrow {
-  /**
-   * {@link HoverCardArrowState}
-   */
   export type State = HoverCardArrowState;
 
-  /**
-   * {@link HoverCardArrowProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = HoverCardArrowProps.BaseUI;
+
     export type HTML = HoverCardArrowProps.HTML;
+
     export type Render = HoverCardArrowProps.Render;
+
     export type SuruUI = HoverCardArrowProps.SuruUI;
   }
 }
@@ -638,20 +608,17 @@ export const HoverCardViewport: IComponent<HoverCardViewportProps> = function Su
 export { HoverCardViewport as Viewport };
 
 export namespace Viewport {
-  /**
-   * {@link HoverCardViewportState}
-   */
   export type State = HoverCardViewportState;
 
-  /**
-   * {@link HoverCardViewportProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = HoverCardViewportProps.BaseUI;
+
     export type HTML = HoverCardViewportProps.HTML;
+
     export type Render = HoverCardViewportProps.Render;
+
     export type SuruUI = HoverCardViewportProps.SuruUI;
   }
 }

@@ -88,35 +88,17 @@ export const SkeletonRoot: IComponent<SkeletonRootProps> = function SuiSkeletonR
 export { SkeletonRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link SkeletonRootState}
-   */
   export type State = SkeletonRootState;
 
-  /**
-   * {@link SkeletonRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SkeletonRootProps.HTML}
-     */
     export type HTML = SkeletonRootProps.HTML;
 
-    /**
-     * {@link SkeletonRootProps.Render}
-     */
     export type Render = SkeletonRootProps.Render;
 
-    /**
-     * {@link SkeletonRootProps.SuruUI}
-     */
     export type SuruUI = SkeletonRootProps.SuruUI;
   }
 
-  /**
-   * {@link SkeletonRootRadius}
-   */
   export type Radius = SkeletonRootRadius;
 }

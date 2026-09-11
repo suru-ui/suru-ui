@@ -17,9 +17,6 @@ import {
 // Types
 // -----
 
-/**
- * {@link StatRootSize}
- */
 export type StatSize = StatRootSize;
 
 /**
@@ -72,29 +69,14 @@ export { type StatAPI as API, useStatAPI as useAPI };
 // ---------
 
 interface IStat extends IComponent<StatProps> {
-  /**
-   * {@link StatChange}
-   */
   readonly Change: IComponent<StatChangeProps>;
 
-  /**
-   * {@link StatDescription}
-   */
   readonly Description: IComponent<StatDescriptionProps>;
 
-  /**
-   * {@link StatLabel}
-   */
   readonly Label: IComponent<StatLabelProps>;
 
-  /**
-   * {@link StatRoot}
-   */
   readonly Root: IComponent<StatRootProps>;
 
-  /**
-   * {@link StatValue}
-   */
   readonly Value: IComponent<StatValueProps>;
 }
 
@@ -119,18 +101,9 @@ export const Stat: IStat = /*#__PURE__*/ Object.assign(
 );
 
 export namespace Stat {
-  /**
-   * {@link StatState}
-   */
   export type State = StatState;
 
-  /**
-   * {@link StatProps}
-   */
   export type Props = StatProps;
 
-  /**
-   * {@link StatSize}
-   */
   export type Size = StatSize;
 }

@@ -296,56 +296,26 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
 export { ButtonRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link ButtonRootState}
-   */
   export type State = ButtonRootState;
 
-  /**
-   * {@link ButtonRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link ButtonRootProps.BaseUI}
-     */
     export type BaseUI = ButtonRootProps.BaseUI;
 
-    /**
-     * {@link ButtonRootProps.HTML}
-     */
     export type HTML = ButtonRootProps.HTML;
 
-    /**
-     * {@link ButtonRootProps.Render}
-     */
     export type Render = ButtonRootProps.Render;
 
-    /**
-     * {@link ButtonRootProps.SuruUI}
-     */
     export type SuruUI = ButtonRootProps.SuruUI;
   }
 
-  /**
-   * {@link ButtonRootColor}
-   */
   export type Color = ButtonRootColor;
 
-  /**
-   * {@link ButtonRootRadius}
-   */
   export type Radius = ButtonRootRadius;
 
-  /**
-   * {@link ButtonRootSize}
-   */
   export type Size = ButtonRootSize;
 
-  /**
-   * {@link ButtonRootVariant}
-   */
   export type Variant = ButtonRootVariant;
 }
 
@@ -395,14 +365,13 @@ export { ButtonContent as Content };
 export namespace Content {
   export type State = ButtonContentState;
 
-  /**
-   * {@link ButtonContentProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = ButtonContentProps.HTML;
+
     export type Render = ButtonContentProps.Render;
+
     export type SuruUI = ButtonContentProps.SuruUI;
   }
 }
@@ -477,14 +446,13 @@ export { ButtonPending as Pending };
 export namespace Pending {
   export type State = ButtonPendingState;
 
-  /**
-   * {@link ButtonPendingProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = ButtonPendingProps.HTML;
+
     export type Render = ButtonPendingProps.Render;
+
     export type SuruUI = ButtonPendingProps.SuruUI;
   }
 }
@@ -569,14 +537,13 @@ export { ButtonCircularProgress as CircularProgress };
 export namespace CircularProgress {
   export type State = ButtonCircularProgressState;
 
-  /**
-   * {@link ButtonCircularProgressProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = ButtonCircularProgressProps.HTML;
+
     export type Render = ButtonCircularProgressProps.Render;
+
     export type SuruUI = ButtonCircularProgressProps.SuruUI;
   }
 }
@@ -642,14 +609,13 @@ export { ButtonCircularProgressTrack as CircularProgressTrack };
 export namespace CircularProgressTrack {
   export type State = ButtonCircularProgressTrackState;
 
-  /**
-   * {@link ButtonCircularProgressTrackProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = ButtonCircularProgressTrackProps.HTML;
+
     export type Render = ButtonCircularProgressTrackProps.Render;
+
     export type SuruUI = ButtonCircularProgressTrackProps.SuruUI;
   }
 }
@@ -738,14 +704,13 @@ export { ButtonCircularProgressFill as CircularProgressFill };
 export namespace CircularProgressFill {
   export type State = ButtonCircularProgressFillState;
 
-  /**
-   * {@link ButtonCircularProgressFillProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = ButtonCircularProgressFillProps.HTML;
+
     export type Render = ButtonCircularProgressFillProps.Render;
+
     export type SuruUI = ButtonCircularProgressFillProps.SuruUI;
   }
 }
@@ -813,14 +778,13 @@ export { ButtonCircularProgressFillRotation as CircularProgressFillRotation };
 export namespace CircularProgressFillRotation {
   export type State = ButtonCircularProgressFillRotationState;
 
-  /**
-   * {@link ButtonCircularProgressFillRotationProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = ButtonCircularProgressFillRotationProps.HTML;
+
     export type Render = ButtonCircularProgressFillRotationProps.Render;
+
     export type SuruUI = ButtonCircularProgressFillRotationProps.SuruUI;
   }
 }

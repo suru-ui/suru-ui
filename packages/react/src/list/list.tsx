@@ -19,19 +19,10 @@ import {
 // Types
 // -----
 
-/**
- * {@link ListRootItemObject}
- */
 export type ListItemObject = ListRootItemObject;
 
-/**
- * {@link IListRootItemRenderer}
- */
 export interface IListItemRenderer<TItem = any> extends IListRootItemRenderer<TItem> {}
 
-/**
- * {@link ListRootSize}
- */
 export type ListSize = ListRootSize;
 
 /**
@@ -179,14 +170,8 @@ interface IList extends IComponent<ListProps> {
    */
   <TItem = any>(props: ListProps<TItem>): IComponent.Return;
 
-  /**
-   * {@link ListItemIndicator}
-   */
   readonly Indicator: typeof ListItemIndicator;
 
-  /**
-   * {@link ListItem}
-   */
   readonly Item: typeof ListItem;
 }
 
@@ -225,33 +210,15 @@ export const List: IList = /*#__PURE__*/ Object.assign(
 );
 
 export namespace List {
-  /**
-   * {@link ListState}
-   */
   export type State = ListState;
 
-  /**
-   * {@link ListProps}
-   */
   export type Props<TItem = any> = ListProps<TItem>;
 
-  /**
-   * {@link ListSlotProps}
-   */
   export type SlotProps = ListSlotProps;
 
-  /**
-   * {@link ListItemObject}
-   */
   export type ItemObject = ListItemObject;
 
-  /**
-   * {@link IListItemRenderer}
-   */
   export interface IItemRenderer<TItem = any> extends IListItemRenderer<TItem> {}
 
-  /**
-   * {@link ListSize}
-   */
   export type Size = ListSize;
 }

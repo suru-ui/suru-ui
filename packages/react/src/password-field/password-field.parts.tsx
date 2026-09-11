@@ -218,41 +218,26 @@ export const PasswordFieldRoot: IComponent<PasswordFieldRootProps> = function Su
 export { PasswordFieldRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link PasswordFieldRootState}
-   */
   export type State = PasswordFieldRootState;
 
-  /**
-   * {@link PasswordFieldRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = PasswordFieldRootProps.BaseUI;
+
     export type HTML = PasswordFieldRootProps.HTML;
+
     export type Render = PasswordFieldRootProps.Render;
+
     export type SuruUI = PasswordFieldRootProps.SuruUI;
   }
 
-  /**
-   * {@link PasswordFieldRootColor}
-   */
   export type Color = PasswordFieldRootColor;
 
-  /**
-   * {@link PasswordFieldRootRadius}
-   */
   export type Radius = PasswordFieldRootRadius;
 
-  /**
-   * {@link PasswordFieldRootSize}
-   */
   export type Size = PasswordFieldRootSize;
 
-  /**
-   * {@link PasswordFieldRootVariant}
-   */
   export type Variant = PasswordFieldRootVariant;
 }
 
@@ -303,20 +288,17 @@ export const PasswordFieldInput: IComponent<PasswordFieldInputProps> =
 export { PasswordFieldInput as Input };
 
 export namespace Input {
-  /**
-   * {@link PasswordFieldInputState}
-   */
   export type State = PasswordFieldInputState;
 
-  /**
-   * {@link PasswordFieldInputProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = PasswordFieldInputProps.BaseUI;
+
     export type HTML = PasswordFieldInputProps.HTML;
+
     export type Render = PasswordFieldInputProps.Render;
+
     export type SuruUI = PasswordFieldInputProps.SuruUI;
   }
 }
@@ -362,20 +344,17 @@ export const PasswordFieldAddon: IComponent<PasswordFieldAddonProps> =
 export { PasswordFieldAddon as Addon };
 
 export namespace Addon {
-  /**
-   * {@link PasswordFieldAddonState}
-   */
   export type State = PasswordFieldAddonState;
 
-  /**
-   * {@link PasswordFieldAddonProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = PasswordFieldAddonProps.BaseUI;
+
     export type HTML = PasswordFieldAddonProps.HTML;
+
     export type Render = PasswordFieldAddonProps.Render;
+
     export type SuruUI = PasswordFieldAddonProps.SuruUI;
   }
 }
@@ -445,19 +424,15 @@ export const PasswordFieldToggleButton: IComponent<PasswordFieldToggleButtonProp
 export { PasswordFieldToggleButton as ToggleButton };
 
 export namespace ToggleButton {
-  /**
-   * {@link PasswordFieldToggleButtonState}
-   */
   export type State = PasswordFieldToggleButtonState;
 
-  /**
-   * {@link PasswordFieldToggleButtonProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = PasswordFieldToggleButtonProps.HTML;
+
     export type Render = PasswordFieldToggleButtonProps.Render;
+
     export type SuruUI = PasswordFieldToggleButtonProps.SuruUI;
   }
 }

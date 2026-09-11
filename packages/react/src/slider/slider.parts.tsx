@@ -174,87 +174,42 @@ export const SliderRoot: ISliderRoot = function SuiSliderRoot(props: SliderRootP
   );
 };
 
-/**
- * {@link SliderRoot}
- */
 export { SliderRoot as Root };
 
 /**
  * {@link SliderRoot} の状態や props をまとめた型名前空間です。
  */
 export namespace Root {
-  /**
-   * {@link SliderRootState}
-   */
   export type State = SliderRootState;
 
-  /**
-   * {@link SliderRootProps}
-   */
   export type Props<TValue extends number | readonly number[] = number | readonly number[]> =
     Props.Render & Props.SuruUI & Props.BaseUI<TValue> & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SliderRootProps.BaseUI}
-     */
     export type BaseUI<TValue extends number | readonly number[] = number | readonly number[]> =
       SliderRootProps.BaseUI<TValue>;
 
-    /**
-     * {@link SliderRootProps.HTML}
-     */
     export type HTML = SliderRootProps.HTML;
 
-    /**
-     * {@link SliderRootProps.Render}
-     */
     export type Render = SliderRootProps.Render;
 
-    /**
-     * {@link SliderRootProps.SuruUI}
-     */
     export type SuruUI = SliderRootProps.SuruUI;
   }
 
-  /**
-   * {@link SliderRootChangeEventDetails}
-   */
   export type ChangeEventDetails = SliderRootChangeEventDetails;
 
-  /**
-   * {@link SliderRootChangeEventReason}
-   */
   export type ChangeEventReason = SliderRootChangeEventReason;
 
-  /**
-   * {@link SliderRootColor}
-   */
   export type Color = SliderRootColor;
 
-  /**
-   * {@link SliderRootCommitEventDetails}
-   */
   export type CommitEventDetails = SliderRootCommitEventDetails;
 
-  /**
-   * {@link SliderRootCommitEventReason}
-   */
   export type CommitEventReason = SliderRootCommitEventReason;
 
-  /**
-   * {@link SliderRootRadius}
-   */
   export type Radius = SliderRootRadius;
 
-  /**
-   * {@link SliderRootSize}
-   */
   export type Size = SliderRootSize;
 
-  /**
-   * {@link SliderRootVariant}
-   */
   export type Variant = SliderRootVariant;
 }
 
@@ -293,44 +248,23 @@ export const SliderLabel: IComponent<SliderLabelProps> = function SuiSliderLabel
   return <Slider.Label {...otherProps} className={cn(className, "sui_slider_label")} />;
 };
 
-/**
- * {@link SliderLabel}
- */
 export { SliderLabel as Label };
 
 /**
  * {@link SliderLabel} の状態や props をまとめた型名前空間です。
  */
 export namespace Label {
-  /**
-   * {@link SliderLabelState}
-   */
   export type State = SliderLabelState;
 
-  /**
-   * {@link SliderLabelProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SliderLabelProps.BaseUI}
-     */
     export type BaseUI = SliderLabelProps.BaseUI;
 
-    /**
-     * {@link SliderLabelProps.HTML}
-     */
     export type HTML = SliderLabelProps.HTML;
 
-    /**
-     * {@link SliderLabelProps.Render}
-     */
     export type Render = SliderLabelProps.Render;
 
-    /**
-     * {@link SliderLabelProps.SuruUI}
-     */
     export type SuruUI = SliderLabelProps.SuruUI;
   }
 }
@@ -370,44 +304,23 @@ export const SliderValue: IComponent<SliderValueProps> = function SuiSliderValue
   return <Slider.Value {...otherProps} className={cn(className, "sui_slider_value")} />;
 };
 
-/**
- * {@link SliderValue}
- */
 export { SliderValue as Value };
 
 /**
  * {@link SliderValue} の状態や props をまとめた型名前空間です。
  */
 export namespace Value {
-  /**
-   * {@link SliderValueState}
-   */
   export type State = SliderValueState;
 
-  /**
-   * {@link SliderValueProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SliderValueProps.BaseUI}
-     */
     export type BaseUI = SliderValueProps.BaseUI;
 
-    /**
-     * {@link SliderValueProps.HTML}
-     */
     export type HTML = SliderValueProps.HTML;
 
-    /**
-     * {@link SliderValueProps.Render}
-     */
     export type Render = SliderValueProps.Render;
 
-    /**
-     * {@link SliderValueProps.SuruUI}
-     */
     export type SuruUI = SliderValueProps.SuruUI;
   }
 }
@@ -447,44 +360,23 @@ export const SliderControl: IComponent<SliderControlProps> = function SuiSliderC
   return <Slider.Control {...otherProps} className={cn(className, "sui_slider_control")} />;
 };
 
-/**
- * {@link SliderControl}
- */
 export { SliderControl as Control };
 
 /**
  * {@link SliderControl} の状態や props をまとめた型名前空間です。
  */
 export namespace Control {
-  /**
-   * {@link SliderControlState}
-   */
   export type State = SliderControlState;
 
-  /**
-   * {@link SliderControlProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SliderControlProps.BaseUI}
-     */
     export type BaseUI = SliderControlProps.BaseUI;
 
-    /**
-     * {@link SliderControlProps.HTML}
-     */
     export type HTML = SliderControlProps.HTML;
 
-    /**
-     * {@link SliderControlProps.Render}
-     */
     export type Render = SliderControlProps.Render;
 
-    /**
-     * {@link SliderControlProps.SuruUI}
-     */
     export type SuruUI = SliderControlProps.SuruUI;
   }
 }
@@ -524,44 +416,23 @@ export const SliderTrack: IComponent<SliderTrackProps> = function SuiSliderTrack
   return <Slider.Track {...otherProps} className={cn(className, "sui_slider_track")} />;
 };
 
-/**
- * {@link SliderTrack}
- */
 export { SliderTrack as Track };
 
 /**
  * {@link SliderTrack} の状態や props をまとめた型名前空間です。
  */
 export namespace Track {
-  /**
-   * {@link SliderTrackState}
-   */
   export type State = SliderTrackState;
 
-  /**
-   * {@link SliderTrackProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SliderTrackProps.BaseUI}
-     */
     export type BaseUI = SliderTrackProps.BaseUI;
 
-    /**
-     * {@link SliderTrackProps.HTML}
-     */
     export type HTML = SliderTrackProps.HTML;
 
-    /**
-     * {@link SliderTrackProps.Render}
-     */
     export type Render = SliderTrackProps.Render;
 
-    /**
-     * {@link SliderTrackProps.SuruUI}
-     */
     export type SuruUI = SliderTrackProps.SuruUI;
   }
 }
@@ -603,44 +474,23 @@ export const SliderIndicator: IComponent<SliderIndicatorProps> = function SuiSli
   return <Slider.Indicator {...otherProps} className={cn(className, "sui_slider_indicator")} />;
 };
 
-/**
- * {@link SliderIndicator}
- */
 export { SliderIndicator as Indicator };
 
 /**
  * {@link SliderIndicator} の状態や props をまとめた型名前空間です。
  */
 export namespace Indicator {
-  /**
-   * {@link SliderIndicatorState}
-   */
   export type State = SliderIndicatorState;
 
-  /**
-   * {@link SliderIndicatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SliderIndicatorProps.BaseUI}
-     */
     export type BaseUI = SliderIndicatorProps.BaseUI;
 
-    /**
-     * {@link SliderIndicatorProps.HTML}
-     */
     export type HTML = SliderIndicatorProps.HTML;
 
-    /**
-     * {@link SliderIndicatorProps.Render}
-     */
     export type Render = SliderIndicatorProps.Render;
 
-    /**
-     * {@link SliderIndicatorProps.SuruUI}
-     */
     export type SuruUI = SliderIndicatorProps.SuruUI;
   }
 }
@@ -691,44 +541,23 @@ export const SliderThumb: IComponent<SliderThumbProps> = function SuiSliderThumb
   );
 };
 
-/**
- * {@link SliderThumb}
- */
 export { SliderThumb as Thumb };
 
 /**
  * {@link SliderThumb} の状態や props をまとめた型名前空間です。
  */
 export namespace Thumb {
-  /**
-   * {@link SliderThumbState}
-   */
   export type State = SliderThumbState;
 
-  /**
-   * {@link SliderThumbProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SliderThumbProps.BaseUI}
-     */
     export type BaseUI = SliderThumbProps.BaseUI;
 
-    /**
-     * {@link SliderThumbProps.HTML}
-     */
     export type HTML = SliderThumbProps.HTML;
 
-    /**
-     * {@link SliderThumbProps.Render}
-     */
     export type Render = SliderThumbProps.Render;
 
-    /**
-     * {@link SliderThumbProps.SuruUI}
-     */
     export type SuruUI = SliderThumbProps.SuruUI;
   }
 }

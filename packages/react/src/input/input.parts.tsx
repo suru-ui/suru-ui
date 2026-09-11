@@ -188,55 +188,31 @@ export const InputRoot: IComponent<InputRootProps> = function SuiInputRoot(props
 export { InputRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link InputRootState}
-   */
   export type State = InputRootState;
 
-  /**
-   * {@link InputRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = InputRootProps.BaseUI;
+
     export type HTML = InputRootProps.HTML;
+
     export type Render = InputRootProps.Render;
+
     export type SuruUI = InputRootProps.SuruUI;
   }
 
-  /**
-   * {@link InputRootChangeEventDetails}
-   */
   export type ChangeEventDetails = InputRootChangeEventDetails;
 
-  /**
-   * {@link InputRootChangeEventReason}
-   */
   export type ChangeEventReason = InputRootChangeEventReason;
 
-  /**
-   * {@link InputRootColor}
-   */
   export type Color = InputRootColor;
 
-  /**
-   * {@link InputRootRadius}
-   */
   export type Radius = InputRootRadius;
 
-  /**
-   * {@link InputRootSize}
-   */
   export type Size = InputRootSize;
 
-  /**
-   * {@link InputRootType}
-   */
   export type Type = InputRootType;
 
-  /**
-   * {@link InputRootVariant}
-   */
   export type Variant = InputRootVariant;
 }

@@ -139,19 +139,10 @@ export const usePaginationContext: IUseContext<PaginationContext> = useSuiPagina
 export { PaginationContext as Context, usePaginationContext as useContext };
 
 export namespace Context {
-  /**
-   * {@link PaginationContextColor}
-   */
   export type Color = PaginationContextColor;
 
-  /**
-   * {@link PaginationContextRadius}
-   */
   export type Radius = PaginationContextRadius;
 
-  /**
-   * {@link PaginationContextSize}
-   */
   export type Size = PaginationContextSize;
 }
 
@@ -334,45 +325,26 @@ export const PaginationRoot: IComponent<PaginationRootProps> = function SuiPagin
 export { PaginationRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link PaginationRootState}
-   */
   export type State = PaginationRootState;
 
-  /**
-   * {@link PaginationRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = PaginationRootProps.HTML;
+
     export type Render = PaginationRootProps.Render;
+
     export type SuruUI = PaginationRootProps.SuruUI;
   }
 
-  /**
-   * {@link PaginationRootChangeEventDetails}
-   */
   export type ChangeEventDetails = PaginationRootChangeEventDetails;
 
-  /**
-   * {@link PaginationRootChangeEventReason}
-   */
   export type ChangeEventReason = PaginationRootChangeEventReason;
 
-  /**
-   * {@link PaginationRootColor}
-   */
   export type Color = PaginationRootColor;
 
-  /**
-   * {@link PaginationRootRadius}
-   */
   export type Radius = PaginationRootRadius;
 
-  /**
-   * {@link PaginationRootSize}
-   */
   export type Size = PaginationRootSize;
 }
 
@@ -449,20 +421,17 @@ export const PaginationPreviousButton: IComponent<PaginationPreviousButtonProps>
 export { PaginationPreviousButton as PreviousButton };
 
 export namespace PreviousButton {
-  /**
-   * {@link PaginationPreviousButtonState}
-   */
   export type State = PaginationPreviousButtonState;
 
-  /**
-   * {@link PaginationPreviousButtonProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = PaginationPreviousButtonProps.BaseUI;
+
     export type HTML = PaginationPreviousButtonProps.HTML;
+
     export type Render = PaginationPreviousButtonProps.Render;
+
     export type SuruUI = PaginationPreviousButtonProps.SuruUI;
   }
 }
@@ -543,20 +512,17 @@ export const PaginationNextButton: IComponent<PaginationNextButtonProps> =
 export { PaginationNextButton as NextButton };
 
 export namespace NextButton {
-  /**
-   * {@link PaginationNextButtonState}
-   */
   export type State = PaginationNextButtonState;
 
-  /**
-   * {@link PaginationNextButtonProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = PaginationNextButtonProps.BaseUI;
+
     export type HTML = PaginationNextButtonProps.HTML;
+
     export type Render = PaginationNextButtonProps.Render;
+
     export type SuruUI = PaginationNextButtonProps.SuruUI;
   }
 }
@@ -652,20 +618,17 @@ export const PaginationItem: IComponent<PaginationItemProps> = function SuiPagin
 export { PaginationItem as Item };
 
 export namespace Item {
-  /**
-   * {@link PaginationItemState}
-   */
   export type State = PaginationItemState;
 
-  /**
-   * {@link PaginationItemProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = PaginationItemProps.BaseUI;
+
     export type HTML = PaginationItemProps.HTML;
+
     export type Render = PaginationItemProps.Render;
+
     export type SuruUI = PaginationItemProps.SuruUI;
   }
 }
@@ -801,20 +764,17 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
 export { PaginationEllipsis as Ellipsis };
 
 export namespace Ellipsis {
-  /**
-   * {@link PaginationEllipsisState}
-   */
   export type State = PaginationEllipsisState;
 
-  /**
-   * {@link PaginationEllipsisProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = PaginationEllipsisProps.BaseUI;
+
     export type HTML = PaginationEllipsisProps.HTML;
+
     export type Render = PaginationEllipsisProps.Render;
+
     export type SuruUI = PaginationEllipsisProps.SuruUI;
   }
 }

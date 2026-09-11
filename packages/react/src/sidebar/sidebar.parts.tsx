@@ -188,30 +188,15 @@ export const SidebarProvider: IComponent<SidebarProviderProps> = function SuiSid
 export { SidebarProvider as Provider };
 
 export namespace Provider {
-  /**
-   * {@link SidebarProviderState}
-   */
   export type State = SidebarProviderState;
 
-  /**
-   * {@link SidebarProviderProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SidebarProviderProps.HTML}
-     */
     export type HTML = SidebarProviderProps.HTML;
 
-    /**
-     * {@link SidebarProviderProps.Render}
-     */
     export type Render = SidebarProviderProps.Render;
 
-    /**
-     * {@link SidebarProviderProps.SuruUI}
-     */
     export type SuruUI = SidebarProviderProps.SuruUI;
   }
 }
@@ -362,46 +347,22 @@ export const SidebarRoot: IComponent<SidebarRootProps> = function SuiSidebarRoot
 export { SidebarRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link SidebarRootState}
-   */
   export type State = SidebarRootState;
 
-  /**
-   * {@link SidebarRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SidebarRootProps.HTML}
-     */
     export type HTML = SidebarRootProps.HTML;
 
-    /**
-     * {@link SidebarRootProps.Render}
-     */
     export type Render = SidebarRootProps.Render;
 
-    /**
-     * {@link SidebarRootProps.SuruUI}
-     */
     export type SuruUI = SidebarRootProps.SuruUI;
   }
 
-  /**
-   * {@link SidebarRootCollapsible}
-   */
   export type Collapsible = SidebarRootCollapsible;
 
-  /**
-   * {@link SidebarRootSide}
-   */
   export type Side = SidebarRootSide;
 
-  /**
-   * {@link SidebarRootVariant}
-   */
   export type Variant = SidebarRootVariant;
 }
 
@@ -448,30 +409,15 @@ export const SidebarHeader: IComponent<SidebarHeaderProps> = function SuiSidebar
 export { SidebarHeader as Header };
 
 export namespace Header {
-  /**
-   * {@link SidebarHeaderState}
-   */
   export type State = SidebarHeaderState;
 
-  /**
-   * {@link SidebarHeaderProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SidebarHeaderProps.HTML}
-     */
     export type HTML = SidebarHeaderProps.HTML;
 
-    /**
-     * {@link SidebarHeaderProps.Render}
-     */
     export type Render = SidebarHeaderProps.Render;
 
-    /**
-     * {@link SidebarHeaderProps.SuruUI}
-     */
     export type SuruUI = SidebarHeaderProps.SuruUI;
   }
 }
@@ -519,30 +465,15 @@ export const SidebarContent: IComponent<SidebarContentProps> = function SuiSideb
 export { SidebarContent as Content };
 
 export namespace Content {
-  /**
-   * {@link SidebarContentState}
-   */
   export type State = SidebarContentState;
 
-  /**
-   * {@link SidebarContentProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SidebarContentProps.HTML}
-     */
     export type HTML = SidebarContentProps.HTML;
 
-    /**
-     * {@link SidebarContentProps.Render}
-     */
     export type Render = SidebarContentProps.Render;
 
-    /**
-     * {@link SidebarContentProps.SuruUI}
-     */
     export type SuruUI = SidebarContentProps.SuruUI;
   }
 }
@@ -590,30 +521,15 @@ export const SidebarFooter: IComponent<SidebarFooterProps> = function SuiSidebar
 export { SidebarFooter as Footer };
 
 export namespace Footer {
-  /**
-   * {@link SidebarFooterState}
-   */
   export type State = SidebarFooterState;
 
-  /**
-   * {@link SidebarFooterProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SidebarFooterProps.HTML}
-     */
     export type HTML = SidebarFooterProps.HTML;
 
-    /**
-     * {@link SidebarFooterProps.Render}
-     */
     export type Render = SidebarFooterProps.Render;
 
-    /**
-     * {@link SidebarFooterProps.SuruUI}
-     */
     export type SuruUI = SidebarFooterProps.SuruUI;
   }
 }
@@ -661,30 +577,15 @@ export const SidebarGroup: IComponent<SidebarGroupProps> = function SuiSidebarGr
 export { SidebarGroup as Group };
 
 export namespace Group {
-  /**
-   * {@link SidebarGroupState}
-   */
   export type State = SidebarGroupState;
 
-  /**
-   * {@link SidebarGroupProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SidebarGroupProps.HTML}
-     */
     export type HTML = SidebarGroupProps.HTML;
 
-    /**
-     * {@link SidebarGroupProps.Render}
-     */
     export type Render = SidebarGroupProps.Render;
 
-    /**
-     * {@link SidebarGroupProps.SuruUI}
-     */
     export type SuruUI = SidebarGroupProps.SuruUI;
   }
 }
@@ -732,30 +633,15 @@ export const SidebarGroupLabel: IComponent<SidebarGroupLabelProps> = function Su
 export { SidebarGroupLabel as GroupLabel };
 
 export namespace GroupLabel {
-  /**
-   * {@link SidebarGroupLabelState}
-   */
   export type State = SidebarGroupLabelState;
 
-  /**
-   * {@link SidebarGroupLabelProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SidebarGroupLabelProps.HTML}
-     */
     export type HTML = SidebarGroupLabelProps.HTML;
 
-    /**
-     * {@link SidebarGroupLabelProps.Render}
-     */
     export type Render = SidebarGroupLabelProps.Render;
 
-    /**
-     * {@link SidebarGroupLabelProps.SuruUI}
-     */
     export type SuruUI = SidebarGroupLabelProps.SuruUI;
   }
 }
@@ -804,30 +690,15 @@ export const SidebarGroupContent: IComponent<SidebarGroupContentProps> =
 export { SidebarGroupContent as GroupContent };
 
 export namespace GroupContent {
-  /**
-   * {@link SidebarGroupContentState}
-   */
   export type State = SidebarGroupContentState;
 
-  /**
-   * {@link SidebarGroupContentProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SidebarGroupContentProps.HTML}
-     */
     export type HTML = SidebarGroupContentProps.HTML;
 
-    /**
-     * {@link SidebarGroupContentProps.Render}
-     */
     export type Render = SidebarGroupContentProps.Render;
 
-    /**
-     * {@link SidebarGroupContentProps.SuruUI}
-     */
     export type SuruUI = SidebarGroupContentProps.SuruUI;
   }
 }
@@ -875,30 +746,15 @@ export const SidebarInset: IComponent<SidebarInsetProps> = function SuiSidebarIn
 export { SidebarInset as Inset };
 
 export namespace Inset {
-  /**
-   * {@link SidebarInsetState}
-   */
   export type State = SidebarInsetState;
 
-  /**
-   * {@link SidebarInsetProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SidebarInsetProps.HTML}
-     */
     export type HTML = SidebarInsetProps.HTML;
 
-    /**
-     * {@link SidebarInsetProps.Render}
-     */
     export type Render = SidebarInsetProps.Render;
 
-    /**
-     * {@link SidebarInsetProps.SuruUI}
-     */
     export type SuruUI = SidebarInsetProps.SuruUI;
   }
 }
@@ -974,30 +830,15 @@ export const SidebarRail: IComponent<SidebarRailProps> = function SuiSidebarRail
 export { SidebarRail as Rail };
 
 export namespace Rail {
-  /**
-   * {@link SidebarRailState}
-   */
   export type State = SidebarRailState;
 
-  /**
-   * {@link SidebarRailProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SidebarRailProps.HTML}
-     */
     export type HTML = SidebarRailProps.HTML;
 
-    /**
-     * {@link SidebarRailProps.Render}
-     */
     export type Render = SidebarRailProps.Render;
 
-    /**
-     * {@link SidebarRailProps.SuruUI}
-     */
     export type SuruUI = SidebarRailProps.SuruUI;
   }
 }
@@ -1079,30 +920,15 @@ export const SidebarTrigger: IComponent<SidebarTriggerProps> = function SuiSideb
 export { SidebarTrigger as Trigger };
 
 export namespace Trigger {
-  /**
-   * {@link SidebarTriggerState}
-   */
   export type State = SidebarTriggerState;
 
-  /**
-   * {@link SidebarTriggerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link SidebarTriggerProps.HTML}
-     */
     export type HTML = SidebarTriggerProps.HTML;
 
-    /**
-     * {@link SidebarTriggerProps.Render}
-     */
     export type Render = SidebarTriggerProps.Render;
 
-    /**
-     * {@link SidebarTriggerProps.SuruUI}
-     */
     export type SuruUI = SidebarTriggerProps.SuruUI;
   }
 }

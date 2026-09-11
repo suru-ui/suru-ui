@@ -74,19 +74,10 @@ export const useStatusContext: IUseContext<StatusContext> = useSuiStatusContext;
 export { StatusContext as Context, useStatusContext as useContext };
 
 export namespace Context {
-  /**
-   * {@link StatusContextColor}
-   */
   export type Color = StatusContextColor;
 
-  /**
-   * {@link StatusContextProcessing}
-   */
   export type Processing = StatusContextProcessing;
 
-  /**
-   * {@link StatusContextSize}
-   */
   export type Size = StatusContextSize;
 }
 
@@ -188,41 +179,20 @@ export const StatusRoot: IComponent<StatusRootProps> = function SuiStatusRoot(pr
 export { StatusRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link StatusRootState}
-   */
   export type State = StatusRootState;
 
-  /**
-   * {@link StatusRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link StatusRootProps.HTML}
-     */
     export type HTML = StatusRootProps.HTML;
 
-    /**
-     * {@link StatusRootProps.Render}
-     */
     export type Render = StatusRootProps.Render;
 
-    /**
-     * {@link StatusRootProps.SuruUI}
-     */
     export type SuruUI = StatusRootProps.SuruUI;
   }
 
-  /**
-   * {@link StatusRootColor}
-   */
   export type Color = StatusRootColor;
 
-  /**
-   * {@link StatusRootSize}
-   */
   export type Size = StatusRootSize;
 }
 
@@ -316,40 +286,19 @@ export const StatusIndicator: IComponent<StatusIndicatorProps> = function SuiSta
 export { StatusIndicator as Indicator };
 
 export namespace Indicator {
-  /**
-   * {@link StatusIndicatorState}
-   */
   export type State = StatusIndicatorState;
 
-  /**
-   * {@link StatusIndicatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link StatusIndicatorProps.HTML}
-     */
     export type HTML = StatusIndicatorProps.HTML;
 
-    /**
-     * {@link StatusIndicatorProps.Render}
-     */
     export type Render = StatusIndicatorProps.Render;
 
-    /**
-     * {@link StatusIndicatorProps.SuruUI}
-     */
     export type SuruUI = StatusIndicatorProps.SuruUI;
   }
 
-  /**
-   * {@link StatusIndicatorColor}
-   */
   export type Color = StatusIndicatorColor;
 
-  /**
-   * {@link StatusIndicatorSize}
-   */
   export type Size = StatusIndicatorSize;
 }

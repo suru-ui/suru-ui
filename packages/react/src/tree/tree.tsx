@@ -22,34 +22,16 @@ import {
 // Types
 // -----
 
-/**
- * {@link TreeRootColor}
- */
 export type TreeColor = TreeRootColor;
 
-/**
- * {@link TreeRootItemObject}
- */
 export type TreeItemObject = TreeRootItemObject;
 
-/**
- * {@link ITreeRootItemRenderer}
- */
 export interface ITreeItemRenderer extends ITreeRootItemRenderer {}
 
-/**
- * {@link TreeRootRadius}
- */
 export type TreeRadius = TreeRootRadius;
 
-/**
- * {@link TreeRootSize}
- */
 export type TreeSize = TreeRootSize;
 
-/**
- * {@link TreeRootVariant}
- */
 export type TreeVariant = TreeRootVariant;
 
 /**
@@ -229,48 +211,21 @@ export const Tree: IComponent<TreeProps> = function SuiTree(props) {
 };
 
 export namespace Tree {
-  /**
-   * {@link TreeState}
-   */
   export type State = TreeState;
 
-  /**
-   * {@link TreeProps}
-   */
   export type Props = TreeProps;
 
-  /**
-   * {@link TreeSlotProps}
-   */
   export type SlotProps = TreeSlotProps;
 
-  /**
-   * {@link TreeColor}
-   */
   export type Color = TreeColor;
 
-  /**
-   * {@link TreeItemObject}
-   */
   export type ItemObject = TreeItemObject;
 
-  /**
-   * {@link ITreeItemRenderer}
-   */
   export interface IItemRenderer extends ITreeItemRenderer {}
 
-  /**
-   * {@link TreeRadius}
-   */
   export type Radius = TreeRadius;
 
-  /**
-   * {@link TreeSize}
-   */
   export type Size = TreeSize;
 
-  /**
-   * {@link TreeVariant}
-   */
   export type Variant = TreeVariant;
 }

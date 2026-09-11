@@ -107,7 +107,7 @@ export type AccordionRootState<TValue = any> = Accordion.Root.State<TValue>;
 export namespace AccordionRootProps {
   export type BaseUI<TItem = any, TValue = any> = Omit<
     React.ComponentProps<typeof Accordion.Root<TValue>>,
-    keyof Render<TValue> | keyof SuruUI<TItem>
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<
@@ -251,14 +251,8 @@ const defaultRootItemRenderer: IAccordionRootItemRenderer = (item, index) => {
 export { AccordionRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link AccordionRootState}
-   */
   export type State<TValue = any> = AccordionRootState<TValue>;
 
-  /**
-   * {@link AccordionRootProps}
-   */
   export type Props<TItem = any, TValue = any> = Props.Render<TValue> &
     Props.SuruUI<TItem> &
     Props.BaseUI<TItem, TValue> &
@@ -266,49 +260,28 @@ export namespace Root {
 
   export namespace Props {
     export type BaseUI<TItem = any, TValue = any> = AccordionRootProps.BaseUI<TItem, TValue>;
+
     export type HTML = AccordionRootProps.HTML;
+
     export type Render<TValue = any> = AccordionRootProps.Render<TValue>;
+
     export type SuruUI<TItem = any> = AccordionRootProps.SuruUI<TItem>;
   }
 
-  /**
-   * {@link AccordionRootChangeEventDetails}
-   */
   export type ChangeEventDetails = AccordionRootChangeEventDetails;
 
-  /**
-   * {@link AccordionRootChangeEventReason}
-   */
   export type ChangeEventReason = AccordionRootChangeEventReason;
 
-  /**
-   * {@link AccordionRootItemObject}
-   */
   export type ItemObject = AccordionRootItemObject;
 
-  /**
-   * {@link IAccordionRootItemRenderer}
-   */
   export interface IItemRenderer<TItem = any> extends IAccordionRootItemRenderer<TItem> {}
 
-  /**
-   * {@link AccordionRootRadius}
-   */
   export type Radius = AccordionRootRadius;
 
-  /**
-   * {@link AccordionRootSize}
-   */
   export type Size = AccordionRootSize;
 
-  /**
-   * {@link AccordionRootValue}
-   */
   export type Value<TValue = any> = AccordionRootValue<TValue>;
 
-  /**
-   * {@link AccordionRootVariant}
-   */
   export type Variant = AccordionRootVariant;
 }
 
@@ -373,31 +346,22 @@ export const AccordionItem: IComponent<AccordionItemProps> = function SuiAccordi
 export { AccordionItem as Item };
 
 export namespace Item {
-  /**
-   * {@link AccordionItemState}
-   */
   export type State = AccordionItemState;
 
-  /**
-   * {@link AccordionItemProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AccordionItemProps.BaseUI;
+
     export type HTML = AccordionItemProps.HTML;
+
     export type Render = AccordionItemProps.Render;
+
     export type SuruUI = AccordionItemProps.SuruUI;
   }
 
-  /**
-   * {@link AccordionItemChangeEventDetails}
-   */
   export type ChangeEventDetails = AccordionItemChangeEventDetails;
 
-  /**
-   * {@link AccordionItemChangeEventReason}
-   */
   export type ChangeEventReason = AccordionItemChangeEventReason;
 }
 
@@ -444,20 +408,17 @@ export const AccordionHeading: IComponent<AccordionHeadingProps> = function SuiA
 export { AccordionHeading as Heading };
 
 export namespace Heading {
-  /**
-   * {@link AccordionHeadingState}
-   */
   export type State = AccordionHeadingState;
 
-  /**
-   * {@link AccordionHeadingProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AccordionHeadingProps.BaseUI;
+
     export type HTML = AccordionHeadingProps.HTML;
+
     export type Render = AccordionHeadingProps.Render;
+
     export type SuruUI = AccordionHeadingProps.SuruUI;
   }
 }
@@ -526,20 +487,17 @@ export const AccordionTrigger: IComponent<AccordionTriggerProps> = function SuiA
 export { AccordionTrigger as Trigger };
 
 export namespace Trigger {
-  /**
-   * {@link AccordionTriggerState}
-   */
   export type State = AccordionTriggerState;
 
-  /**
-   * {@link AccordionTriggerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AccordionTriggerProps.BaseUI;
+
     export type HTML = AccordionTriggerProps.HTML;
+
     export type Render = AccordionTriggerProps.Render;
+
     export type SuruUI = AccordionTriggerProps.SuruUI;
   }
 }
@@ -589,19 +547,15 @@ export const AccordionIndicator: IComponent<AccordionIndicatorProps> =
 export { AccordionIndicator as Indicator };
 
 export namespace Indicator {
-  /**
-   * {@link AccordionIndicatorState}
-   */
   export type State = AccordionIndicatorState;
 
-  /**
-   * {@link AccordionIndicatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = AccordionIndicatorProps.HTML;
+
     export type Render = AccordionIndicatorProps.Render;
+
     export type SuruUI = AccordionIndicatorProps.SuruUI;
   }
 }
@@ -660,20 +614,17 @@ export const AccordionContent: IComponent<AccordionContentProps> = function SuiA
 export { AccordionContent as Content };
 
 export namespace Content {
-  /**
-   * {@link AccordionContentState}
-   */
   export type State = AccordionContentState;
 
-  /**
-   * {@link AccordionContentProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AccordionContentProps.BaseUI;
+
     export type HTML = AccordionContentProps.HTML;
+
     export type Render = AccordionContentProps.Render;
+
     export type SuruUI = AccordionContentProps.SuruUI;
   }
 }

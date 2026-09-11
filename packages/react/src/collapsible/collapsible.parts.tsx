@@ -104,31 +104,22 @@ export { CollapsibleRoot as Root };
 export namespace Root {
   export type State = CollapsibleRootState;
 
-  /**
-   * {@link CollapsibleRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = CollapsibleRootProps.BaseUI;
+
     export type HTML = CollapsibleRootProps.HTML;
+
     export type Render = CollapsibleRootProps.Render;
+
     export type SuruUI = CollapsibleRootProps.SuruUI;
   }
 
-  /**
-   * {@link CollapsibleRootChangeEventDetails}
-   */
   export type ChangeEventDetails = CollapsibleRootChangeEventDetails;
 
-  /**
-   * {@link CollapsibleRootChangeEventReason}
-   */
   export type ChangeEventReason = CollapsibleRootChangeEventReason;
 
-  /**
-   * {@link CollapsibleRootSize}
-   */
   export type Size = CollapsibleRootSize;
 }
 
@@ -194,15 +185,15 @@ export { CollapsibleTrigger as Trigger };
 export namespace Trigger {
   export type State = CollapsibleTriggerState;
 
-  /**
-   * {@link CollapsibleTriggerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = CollapsibleTriggerProps.BaseUI;
+
     export type HTML = CollapsibleTriggerProps.HTML;
+
     export type Render = CollapsibleTriggerProps.Render;
+
     export type SuruUI = CollapsibleTriggerProps.SuruUI;
   }
 }
@@ -254,14 +245,13 @@ export { CollapsibleIndicator as Indicator };
 export namespace Indicator {
   export type State = CollapsibleIndicatorState;
 
-  /**
-   * {@link CollapsibleIndicatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = CollapsibleIndicatorProps.HTML;
+
     export type Render = CollapsibleIndicatorProps.Render;
+
     export type SuruUI = CollapsibleIndicatorProps.SuruUI;
   }
 }
@@ -312,15 +302,15 @@ export { CollapsibleContent as Content };
 export namespace Content {
   export type State = CollapsibleContentState;
 
-  /**
-   * {@link CollapsibleContentProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = CollapsibleContentProps.BaseUI;
+
     export type HTML = CollapsibleContentProps.HTML;
+
     export type Render = CollapsibleContentProps.Render;
+
     export type SuruUI = CollapsibleContentProps.SuruUI;
   }
 }

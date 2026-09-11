@@ -59,34 +59,16 @@ import {
 // Types
 // -----
 
-/**
- * {@link SelectRootActions}
- */
 export type SelectActions = SelectRootActions;
 
-/**
- * {@link SelectRootChangeEventDetails}
- */
 export type SelectChangeEventDetails = SelectRootChangeEventDetails;
 
-/**
- * {@link SelectRootChangeEventReason}
- */
 export type SelectChangeEventReason = SelectRootChangeEventReason;
 
-/**
- * {@link SelectRootRadius}
- */
 export type SelectRadius = SelectRootRadius;
 
-/**
- * {@link SelectRootSize}
- */
 export type SelectSize = SelectRootSize;
 
-/**
- * {@link SelectRootVariant}
- */
 export type SelectVariant = SelectRootVariant;
 
 /**
@@ -530,9 +512,6 @@ interface ISelect extends IComponent<SelectProps<unknown, boolean | undefined>> 
     props: SelectProps<TValue, TMultiple>,
   ): IComponent.Return;
 
-  /**
-   * {@link useSelectContext}
-   */
   readonly useContext: IUseContext<SelectContext>;
 }
 
@@ -632,9 +611,6 @@ export const Select: ISelect = /*#__PURE__*/ Object.assign(
  * {@link Select} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Select {
-  /**
-   * {@link SelectState}
-   */
   export type State = SelectState;
 
   /**
@@ -648,53 +624,23 @@ export namespace Select {
     TMultiple
   >;
 
-  /**
-   * {@link SelectSlotProps}
-   */
   export type SlotProps = SelectSlotProps;
 
-  /**
-   * {@link SelectContext}
-   */
   export type Context<TValue = any> = SelectContext<TValue>;
 
-  /**
-   * {@link SelectActions}
-   */
   export type Actions = SelectActions;
 
-  /**
-   * {@link SelectChangeEventDetails}
-   */
   export type ChangeEventDetails = SelectChangeEventDetails;
 
-  /**
-   * {@link SelectChangeEventReason}
-   */
   export type ChangeEventReason = SelectChangeEventReason;
 
-  /**
-   * {@link SelectItemGroup}
-   */
   export type ItemGroup<TValue = unknown> = SelectItemGroup<TValue>;
 
-  /**
-   * {@link SelectItems}
-   */
   export type Items<TValue = unknown> = SelectItems<TValue>;
 
-  /**
-   * {@link SelectRadius}
-   */
   export type Radius = SelectRadius;
 
-  /**
-   * {@link SelectSize}
-   */
   export type Size = SelectSize;
 
-  /**
-   * {@link SelectVariant}
-   */
   export type Variant = SelectVariant;
 }

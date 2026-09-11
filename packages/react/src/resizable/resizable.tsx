@@ -21,14 +21,8 @@ import {
 // Types
 // -----
 
-/**
- * {@link ResizableRootDirection}
- */
 export type ResizableDirection = ResizableRootDirection;
 
-/**
- * {@link ResizableRootOrientation}
- */
 export type ResizableOrientation = ResizableRootOrientation;
 
 /**
@@ -172,48 +166,24 @@ export const Resizable: ResizableType = /*#__PURE__*/ Object.assign(
 );
 
 export namespace Resizable {
-  /**
-   * {@link ResizableState}
-   */
   export type State = ResizableState;
 
-  /**
-   * {@link ResizableProps}
-   */
   export type Props = ResizableProps;
 
-  /**
-   * {@link ResizableSlotProps}
-   */
   export type SlotProps = ResizableSlotProps;
 
-  /**
-   * {@link ResizableContext}
-   */
   export type Context = ResizableContext;
 
-  /**
-   * {@link ResizableDirection}
-   */
   export type Direction = ResizableDirection;
 
-  /**
-   * {@link ResizableOrientation}
-   */
   export type Orientation = ResizableOrientation;
 
   /**
    * ハンドルの状態やプロパティーをまとめた型名前空間です。
    */
   export namespace Handle {
-    /**
-     * {@link ResizableHandleState}
-     */
     export type State = ResizableHandleState;
 
-    /**
-     * {@link ResizableHandleProps}
-     */
     export type Props = ResizableHandleProps;
   }
 
@@ -221,19 +191,10 @@ export namespace Resizable {
    * パネルの状態やプロパティーをまとめた型名前空間です。
    */
   export namespace Panel {
-    /**
-     * {@link ResizablePanelState}
-     */
     export type State = ResizablePanelState;
 
-    /**
-     * {@link ResizablePanelProps}
-     */
     export type Props = ResizablePanelProps;
 
-    /**
-     * {@link ResizablePanelSize}
-     */
     export type Size = ResizablePanelSize;
   }
 
@@ -241,14 +202,8 @@ export namespace Resizable {
    * パネル群のルート要素の状態やプロパティーをまとめた型名前空間です。
    */
   export namespace PanelGroup {
-    /**
-     * {@link ResizableRootState}
-     */
     export type State = ResizableRootState;
 
-    /**
-     * {@link ResizableRootProps}
-     */
     export type Props = ResizableRootProps;
   }
 
@@ -256,14 +211,8 @@ export namespace Resizable {
    * パネル群のルート要素の状態やプロパティーをまとめた型名前空間です。
    */
   export namespace Root {
-    /**
-     * {@link ResizableRootState}
-     */
     export type State = ResizableRootState;
 
-    /**
-     * {@link ResizableRootProps}
-     */
     export type Props = ResizableRootProps;
   }
 }

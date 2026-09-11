@@ -118,18 +118,9 @@ export const Fieldset: IComponent<FieldsetProps> = function SuiFieldset(props) {
 };
 
 export namespace Fieldset {
-  /**
-   * {@link FieldsetState}
-   */
   export type State = FieldsetState;
 
-  /**
-   * {@link FieldsetProps}
-   */
   export type Props = FieldsetProps;
 
-  /**
-   * {@link FieldsetSlotProps}
-   */
   export type SlotProps = FieldsetSlotProps;
 }

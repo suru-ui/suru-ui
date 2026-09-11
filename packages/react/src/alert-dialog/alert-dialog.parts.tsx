@@ -64,9 +64,6 @@ export {
 };
 
 export namespace ContentContext {
-  /**
-   * {@link AlertDialogContentContextRadius}
-   */
   export type Radius = AlertDialogContentContextRadius;
 }
 
@@ -123,7 +120,7 @@ export type AlertDialogRootState = AlertDialog.Root.State;
 export namespace AlertDialogRootProps {
   export type BaseUI<TPayload = any> = Omit<
     React.ComponentProps<typeof AlertDialog.Root>,
-    keyof Render | keyof SuruUI<TPayload>
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = {};
@@ -169,14 +166,8 @@ export const AlertDialogRoot: IAlertDialogRoot = function SuiAlertDialogRoot(
 export { AlertDialogRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link AlertDialogRootState}
-   */
   export type State = AlertDialogRootState;
 
-  /**
-   * {@link AlertDialogRootProps}
-   */
   export type Props<TPayload = any> = Props.Render &
     Props.SuruUI<TPayload> &
     Props.BaseUI<TPayload> &
@@ -184,24 +175,18 @@ export namespace Root {
 
   export namespace Props {
     export type BaseUI<TPayload = any> = AlertDialogRootProps.BaseUI<TPayload>;
+
     export type HTML = AlertDialogRootProps.HTML;
+
     export type Render = AlertDialogRootProps.Render;
+
     export type SuruUI<TPayload = any> = AlertDialogRootProps.SuruUI<TPayload>;
   }
 
-  /**
-   * {@link AlertDialogRootActions}
-   */
   export type Actions = AlertDialogRootActions;
 
-  /**
-   * {@link AlertDialogRootChangeEventDetails}
-   */
   export type ChangeEventDetails = AlertDialogRootChangeEventDetails;
 
-  /**
-   * {@link AlertDialogRootChangeEventReason}
-   */
   export type ChangeEventReason = AlertDialogRootChangeEventReason;
 }
 
@@ -216,13 +201,13 @@ export type AlertDialogToggleTriggerState = AlertDialog.Trigger.State;
 export namespace AlertDialogToggleTriggerProps {
   export type BaseUI<TPayload = any> = Omit<
     React.ComponentProps<typeof AlertDialog.Trigger>,
-    keyof Render | keyof SuruUI<TPayload> | "render"
+    keyof Render | keyof SuruUI | "render"
   >;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
     | keyof Render
-    | keyof SuruUI<any>
+    | keyof SuruUI
     | keyof Omit<React.ComponentProps<typeof AlertDialog.Trigger>, "handle" | "children" | "render">
   >;
 
@@ -271,20 +256,17 @@ export const AlertDialogToggleTrigger: IComponent<AlertDialogToggleTriggerProps>
 export { AlertDialogToggleTrigger as ToggleTrigger };
 
 export namespace ToggleTrigger {
-  /**
-   * {@link AlertDialogToggleTriggerState}
-   */
   export type State = AlertDialogToggleTriggerState;
 
-  /**
-   * {@link AlertDialogToggleTriggerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI<TPayload = any> = AlertDialogToggleTriggerProps.BaseUI<TPayload>;
+
     export type HTML = AlertDialogToggleTriggerProps.HTML;
+
     export type Render = AlertDialogToggleTriggerProps.Render;
+
     export type SuruUI<TPayload = any> = AlertDialogToggleTriggerProps.SuruUI<TPayload>;
   }
 }
@@ -345,20 +327,17 @@ export const AlertDialogPortal: IComponent<AlertDialogPortalProps> = function Su
 export { AlertDialogPortal as Portal };
 
 export namespace Portal {
-  /**
-   * {@link AlertDialogPortalState}
-   */
   export type State = AlertDialogPortalState;
 
-  /**
-   * {@link AlertDialogPortalProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AlertDialogPortalProps.BaseUI;
+
     export type HTML = AlertDialogPortalProps.HTML;
+
     export type Render = AlertDialogPortalProps.Render;
+
     export type SuruUI = AlertDialogPortalProps.SuruUI;
   }
 }
@@ -410,20 +389,17 @@ export const AlertDialogBackdrop: IComponent<AlertDialogBackdropProps> =
 export { AlertDialogBackdrop as Backdrop };
 
 export namespace Backdrop {
-  /**
-   * {@link AlertDialogBackdropState}
-   */
   export type State = AlertDialogBackdropState;
 
-  /**
-   * {@link AlertDialogBackdropProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AlertDialogBackdropProps.BaseUI;
+
     export type HTML = AlertDialogBackdropProps.HTML;
+
     export type Render = AlertDialogBackdropProps.Render;
+
     export type SuruUI = AlertDialogBackdropProps.SuruUI;
   }
 }
@@ -477,20 +453,17 @@ export const AlertDialogViewport: IComponent<AlertDialogViewportProps> =
 export { AlertDialogViewport as Viewport };
 
 export namespace Viewport {
-  /**
-   * {@link AlertDialogViewportState}
-   */
   export type State = AlertDialogViewportState;
 
-  /**
-   * {@link AlertDialogViewportProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AlertDialogViewportProps.BaseUI;
+
     export type HTML = AlertDialogViewportProps.HTML;
+
     export type Render = AlertDialogViewportProps.Render;
+
     export type SuruUI = AlertDialogViewportProps.SuruUI;
   }
 }
@@ -599,31 +572,22 @@ export const AlertDialogContent: IComponent<AlertDialogContentProps> =
 export { AlertDialogContent as Content };
 
 export namespace Content {
-  /**
-   * {@link AlertDialogContentState}
-   */
   export type State = AlertDialogContentState;
 
-  /**
-   * {@link AlertDialogContentProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AlertDialogContentProps.BaseUI;
+
     export type HTML = AlertDialogContentProps.HTML;
+
     export type Render = AlertDialogContentProps.Render;
+
     export type SuruUI = AlertDialogContentProps.SuruUI;
   }
 
-  /**
-   * {@link AlertDialogContentRadius}
-   */
   export type Radius = AlertDialogContentRadius;
 
-  /**
-   * {@link AlertDialogContentVariant}
-   */
   export type Variant = AlertDialogContentVariant;
 }
 
@@ -682,19 +646,15 @@ export const AlertDialogControls: IComponent<AlertDialogControlsProps> =
 export { AlertDialogControls as Controls };
 
 export namespace Controls {
-  /**
-   * {@link AlertDialogControlsState}
-   */
   export type State = AlertDialogControlsState;
 
-  /**
-   * {@link AlertDialogControlsProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = AlertDialogControlsProps.HTML;
+
     export type Render = AlertDialogControlsProps.Render;
+
     export type SuruUI = AlertDialogControlsProps.SuruUI;
   }
 }
@@ -742,19 +702,15 @@ export const AlertDialogHeader: IComponent<AlertDialogHeaderProps> = function Su
 export { AlertDialogHeader as Header };
 
 export namespace Header {
-  /**
-   * {@link AlertDialogHeaderState}
-   */
   export type State = AlertDialogHeaderState;
 
-  /**
-   * {@link AlertDialogHeaderProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = AlertDialogHeaderProps.HTML;
+
     export type Render = AlertDialogHeaderProps.Render;
+
     export type SuruUI = AlertDialogHeaderProps.SuruUI;
   }
 }
@@ -896,40 +852,24 @@ export const AlertDialogIcon: IComponent<AlertDialogIconProps> = function SuiAle
 export { AlertDialogIcon as Icon };
 
 export namespace Icon {
-  /**
-   * {@link AlertDialogIconState}
-   */
   export type State = AlertDialogIconState;
 
-  /**
-   * {@link AlertDialogIconProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = AlertDialogIconProps.HTML;
+
     export type Render = AlertDialogIconProps.Render;
+
     export type SuruUI = AlertDialogIconProps.SuruUI;
   }
 
-  /**
-   * {@link AlertDialogIconColor}
-   */
   export type Color = AlertDialogIconColor;
 
-  /**
-   * {@link AlertDialogIconRadius}
-   */
   export type Radius = AlertDialogIconRadius;
 
-  /**
-   * {@link AlertDialogIconSize}
-   */
   export type Size = AlertDialogIconSize;
 
-  /**
-   * {@link AlertDialogIconVariant}
-   */
   export type Variant = AlertDialogIconVariant;
 }
 
@@ -976,20 +916,17 @@ export const AlertDialogTitle: IComponent<AlertDialogTitleProps> = function SuiA
 export { AlertDialogTitle as Title };
 
 export namespace Title {
-  /**
-   * {@link AlertDialogTitleState}
-   */
   export type State = AlertDialogTitleState;
 
-  /**
-   * {@link AlertDialogTitleProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AlertDialogTitleProps.BaseUI;
+
     export type HTML = AlertDialogTitleProps.HTML;
+
     export type Render = AlertDialogTitleProps.Render;
+
     export type SuruUI = AlertDialogTitleProps.SuruUI;
   }
 }
@@ -1041,20 +978,17 @@ export const AlertDialogDescription: IComponent<AlertDialogDescriptionProps> =
 export { AlertDialogDescription as Description };
 
 export namespace Description {
-  /**
-   * {@link AlertDialogDescriptionState}
-   */
   export type State = AlertDialogDescriptionState;
 
-  /**
-   * {@link AlertDialogDescriptionProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AlertDialogDescriptionProps.BaseUI;
+
     export type HTML = AlertDialogDescriptionProps.HTML;
+
     export type Render = AlertDialogDescriptionProps.Render;
+
     export type SuruUI = AlertDialogDescriptionProps.SuruUI;
   }
 }
@@ -1102,19 +1036,15 @@ export const AlertDialogBody: IComponent<AlertDialogBodyProps> = function SuiAle
 export { AlertDialogBody as Body };
 
 export namespace Body {
-  /**
-   * {@link AlertDialogBodyState}
-   */
   export type State = AlertDialogBodyState;
 
-  /**
-   * {@link AlertDialogBodyProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = AlertDialogBodyProps.HTML;
+
     export type Render = AlertDialogBodyProps.Render;
+
     export type SuruUI = AlertDialogBodyProps.SuruUI;
   }
 }
@@ -1162,19 +1092,15 @@ export const AlertDialogFooter: IComponent<AlertDialogFooterProps> = function Su
 export { AlertDialogFooter as Footer };
 
 export namespace Footer {
-  /**
-   * {@link AlertDialogFooterState}
-   */
   export type State = AlertDialogFooterState;
 
-  /**
-   * {@link AlertDialogFooterProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = AlertDialogFooterProps.HTML;
+
     export type Render = AlertDialogFooterProps.Render;
+
     export type SuruUI = AlertDialogFooterProps.SuruUI;
   }
 }
@@ -1237,20 +1163,17 @@ export const AlertDialogCloseTrigger: IComponent<AlertDialogCloseTriggerProps> =
 export { AlertDialogCloseTrigger as CloseTrigger };
 
 export namespace CloseTrigger {
-  /**
-   * {@link AlertDialogCloseTriggerState}
-   */
   export type State = AlertDialogCloseTriggerState;
 
-  /**
-   * {@link AlertDialogCloseTriggerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = AlertDialogCloseTriggerProps.BaseUI;
+
     export type HTML = AlertDialogCloseTriggerProps.HTML;
+
     export type Render = AlertDialogCloseTriggerProps.Render;
+
     export type SuruUI = AlertDialogCloseTriggerProps.SuruUI;
   }
 }

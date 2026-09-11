@@ -55,9 +55,6 @@ export const useListContext: IUseContext<ListContext> = useSuiListContext;
 export { ListContext as Context, useListContext as useContext };
 
 export namespace Context {
-  /**
-   * {@link ListContextSize}
-   */
   export type Size = ListContextSize;
 }
 
@@ -115,7 +112,7 @@ export type ListRootSize = Size;
 export type ListRootState = {};
 
 export namespace ListRootProps {
-  export type HTML = Omit<React.ComponentProps<"ul">, keyof Render | keyof SuruUI<any>>;
+  export type HTML = Omit<React.ComponentProps<"ul">, keyof Render | keyof SuruUI>;
 
   export type Render = RenderProps<ListRootState>;
 
@@ -222,35 +219,22 @@ function isItemObject(item: unknown): item is ListRootItemObject {
 export { ListRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link ListRootState}
-   */
   export type State = ListRootState;
 
-  /**
-   * {@link ListRootProps}
-   */
   export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.HTML;
 
   export namespace Props {
     export type HTML = ListRootProps.HTML;
+
     export type Render = ListRootProps.Render;
+
     export type SuruUI<TItem = any> = ListRootProps.SuruUI<TItem>;
   }
 
-  /**
-   * {@link ListRootItemObject}
-   */
   export type ItemObject = ListRootItemObject;
 
-  /**
-   * {@link IListRootItemRenderer}
-   */
   export interface IItemRenderer<TItem = any> extends IListRootItemRenderer<TItem> {}
 
-  /**
-   * {@link ListRootSize}
-   */
   export type Size = ListRootSize;
 }
 
@@ -324,25 +308,18 @@ export const ListItem: IComponent<ListItemProps> = function SuiListItem(props) {
 export { ListItem as Item };
 
 export namespace Item {
-  /**
-   * {@link ListItemState}
-   */
   export type State = ListItemState;
 
-  /**
-   * {@link ListItemProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = ListItemProps.HTML;
+
     export type Render = ListItemProps.Render;
+
     export type SuruUI = ListItemProps.SuruUI;
   }
 
-  /**
-   * {@link ListItemSize}
-   */
   export type Size = ListItemSize;
 }
 
@@ -389,19 +366,15 @@ export const ListItemIndicator: IComponent<ListItemIndicatorProps> = function Su
 export { ListItemIndicator as Indicator };
 
 export namespace Indicator {
-  /**
-   * {@link ListItemIndicatorState}
-   */
   export type State = ListItemIndicatorState;
 
-  /**
-   * {@link ListItemIndicatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = ListItemIndicatorProps.HTML;
+
     export type Render = ListItemIndicatorProps.Render;
+
     export type SuruUI = ListItemIndicatorProps.SuruUI;
   }
 }

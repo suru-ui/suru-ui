@@ -46,19 +46,10 @@ import {
 // Types
 // -----
 
-/**
- * {@link SidebarRootCollapsible}
- */
 export type SidebarCollapsible = SidebarRootCollapsible;
 
-/**
- * {@link SidebarRootSide}
- */
 export type SidebarSide = SidebarRootSide;
 
-/**
- * {@link SidebarRootVariant}
- */
 export type SidebarVariant = SidebarRootVariant;
 
 /**
@@ -197,9 +188,6 @@ interface ISidebar extends IComponent<SidebarProps> {
    */
   readonly Trigger: IComponent<SidebarTriggerProps>;
 
-  /**
-   * {@link useSidebarContext}
-   */
   readonly useContext: IUseContext<SidebarContext>;
 }
 
@@ -229,58 +217,28 @@ export const Sidebar: ISidebar = /*#__PURE__*/ Object.assign(
  * {@link Sidebar} の状態やプロパティーをまとめた型名前空間です。
  */
 export namespace Sidebar {
-  /**
-   * {@link SidebarState}
-   */
   export type State = SidebarState;
 
-  /**
-   * {@link SidebarProps}
-   */
   export type Props = SidebarProps;
 
-  /**
-   * {@link SidebarSlotProps}
-   */
   export type SlotProps = SidebarSlotProps;
 
-  /**
-   * {@link SidebarContext}
-   */
   export type Context = SidebarContext;
 
-  /**
-   * {@link SidebarCollapsible}
-   */
   export type Collapsible = SidebarCollapsible;
 
-  /**
-   * {@link SidebarOpenState}
-   */
   export type OpenState = SidebarOpenState;
 
-  /**
-   * {@link SidebarSide}
-   */
   export type Side = SidebarSide;
 
-  /**
-   * {@link SidebarVariant}
-   */
   export type Variant = SidebarVariant;
 
   /**
    * スクロール領域の状態やプロパティーをまとめた型名前空間です。
    */
   export namespace Content {
-    /**
-     * {@link SidebarContentState}
-     */
     export type State = SidebarContentState;
 
-    /**
-     * {@link SidebarContentProps}
-     */
     export type Props = SidebarContentProps;
   }
 
@@ -288,14 +246,8 @@ export namespace Sidebar {
    * 下部固定領域の状態やプロパティーをまとめた型名前空間です。
    */
   export namespace Footer {
-    /**
-     * {@link SidebarFooterState}
-     */
     export type State = SidebarFooterState;
 
-    /**
-     * {@link SidebarFooterProps}
-     */
     export type Props = SidebarFooterProps;
   }
 
@@ -303,14 +255,8 @@ export namespace Sidebar {
    * グループの状態やプロパティーをまとめた型名前空間です。
    */
   export namespace Group {
-    /**
-     * {@link SidebarGroupState}
-     */
     export type State = SidebarGroupState;
 
-    /**
-     * {@link SidebarGroupProps}
-     */
     export type Props = SidebarGroupProps;
   }
 
@@ -318,14 +264,8 @@ export namespace Sidebar {
    * グループ内容の状態やプロパティーをまとめた型名前空間です。
    */
   export namespace GroupContent {
-    /**
-     * {@link SidebarGroupContentState}
-     */
     export type State = SidebarGroupContentState;
 
-    /**
-     * {@link SidebarGroupContentProps}
-     */
     export type Props = SidebarGroupContentProps;
   }
 
@@ -333,14 +273,8 @@ export namespace Sidebar {
    * グループラベルの状態やプロパティーをまとめた型名前空間です。
    */
   export namespace GroupLabel {
-    /**
-     * {@link SidebarGroupLabelState}
-     */
     export type State = SidebarGroupLabelState;
 
-    /**
-     * {@link SidebarGroupLabelProps}
-     */
     export type Props = SidebarGroupLabelProps;
   }
 
@@ -348,14 +282,8 @@ export namespace Sidebar {
    * 上部固定領域の状態やプロパティーをまとめた型名前空間です。
    */
   export namespace Header {
-    /**
-     * {@link SidebarHeaderState}
-     */
     export type State = SidebarHeaderState;
 
-    /**
-     * {@link SidebarHeaderProps}
-     */
     export type Props = SidebarHeaderProps;
   }
 
@@ -363,14 +291,8 @@ export namespace Sidebar {
    * メインコンテンツ領域の状態やプロパティーをまとめた型名前空間です。
    */
   export namespace Inset {
-    /**
-     * {@link SidebarInsetState}
-     */
     export type State = SidebarInsetState;
 
-    /**
-     * {@link SidebarInsetProps}
-     */
     export type Props = SidebarInsetProps;
   }
 
@@ -378,14 +300,8 @@ export namespace Sidebar {
    * プロバイダーの状態やプロパティーをまとめた型名前空間です。
    */
   export namespace Provider {
-    /**
-     * {@link SidebarProviderState}
-     */
     export type State = SidebarProviderState;
 
-    /**
-     * {@link SidebarProviderProps}
-     */
     export type Props = SidebarProviderProps;
   }
 
@@ -393,14 +309,8 @@ export namespace Sidebar {
    * レールの状態やプロパティーをまとめた型名前空間です。
    */
   export namespace Rail {
-    /**
-     * {@link SidebarRailState}
-     */
     export type State = SidebarRailState;
 
-    /**
-     * {@link SidebarRailProps}
-     */
     export type Props = SidebarRailProps;
   }
 
@@ -408,29 +318,14 @@ export namespace Sidebar {
    * 本体要素の状態やプロパティーをまとめた型名前空間です。
    */
   export namespace Root {
-    /**
-     * {@link SidebarRootState}
-     */
     export type State = SidebarRootState;
 
-    /**
-     * {@link SidebarRootProps}
-     */
     export type Props = SidebarRootProps;
 
-    /**
-     * {@link SidebarRootCollapsible}
-     */
     export type Collapsible = SidebarRootCollapsible;
 
-    /**
-     * {@link SidebarRootSide}
-     */
     export type Side = SidebarRootSide;
 
-    /**
-     * {@link SidebarRootVariant}
-     */
     export type Variant = SidebarRootVariant;
   }
 
@@ -438,14 +333,8 @@ export namespace Sidebar {
    * トリガーの状態やプロパティーをまとめた型名前空間です。
    */
   export namespace Trigger {
-    /**
-     * {@link SidebarTriggerState}
-     */
     export type State = SidebarTriggerState;
 
-    /**
-     * {@link SidebarTriggerProps}
-     */
     export type Props = SidebarTriggerProps;
   }
 }

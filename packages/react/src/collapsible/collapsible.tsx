@@ -18,19 +18,10 @@ import {
 // Types
 // -----
 
-/**
- * {@link CollapsibleRootChangeEventDetails}
- */
 export type CollapsibleChangeEventDetails = CollapsibleRootChangeEventDetails;
 
-/**
- * {@link CollapsibleRootChangeEventReason}
- */
 export type CollapsibleChangeEventReason = CollapsibleRootChangeEventReason;
 
-/**
- * {@link CollapsibleRootSize}
- */
 export type CollapsibleSize = CollapsibleRootSize;
 
 /**
@@ -169,9 +160,6 @@ export { type CollapsibleAPI as API, useCollapsibleAPI as useAPI };
 // ---------
 
 interface ICollapsible extends IComponent<CollapsibleProps> {
-  /**
-   * {@link CollapsibleIndicator}
-   */
   readonly Indicator: typeof CollapsibleIndicator;
 }
 
@@ -197,33 +185,15 @@ export const Collapsible: ICollapsible = /*#__PURE__*/ Object.assign(
 );
 
 export namespace Collapsible {
-  /**
-   * {@link CollapsibleState}
-   */
   export type State = CollapsibleState;
 
-  /**
-   * {@link CollapsibleProps}
-   */
   export type Props = CollapsibleProps;
 
-  /**
-   * {@link CollapsibleSlotProps}
-   */
   export type SlotProps = CollapsibleSlotProps;
 
-  /**
-   * {@link CollapsibleChangeEventDetails}
-   */
   export type ChangeEventDetails = CollapsibleChangeEventDetails;
 
-  /**
-   * {@link CollapsibleChangeEventReason}
-   */
   export type ChangeEventReason = CollapsibleChangeEventReason;
 
-  /**
-   * {@link CollapsibleSize}
-   */
   export type Size = CollapsibleSize;
 }

@@ -14,24 +14,12 @@ import {
 // Types
 // -----
 
-/**
- * {@link RadioRootColor}
- */
 export type RadioColor = RadioRootColor;
 
-/**
- * {@link RadioRootRadius}
- */
 export type RadioRadius = RadioRootRadius;
 
-/**
- * {@link RadioRootSize}
- */
 export type RadioSize = RadioRootSize;
 
-/**
- * {@link RadioRootVariant}
- */
 export type RadioVariant = RadioRootVariant;
 
 /**
@@ -126,38 +114,17 @@ export const Radio: IComponent<RadioProps> = function SuiRadio(props) {
 };
 
 export namespace Radio {
-  /**
-   * {@link RadioState}
-   */
   export type State = RadioState;
 
-  /**
-   * {@link RadioProps}
-   */
   export type Props = RadioProps;
 
-  /**
-   * {@link RadioSlotProps}
-   */
   export type SlotProps = RadioSlotProps;
 
-  /**
-   * {@link RadioColor}
-   */
   export type Color = RadioColor;
 
-  /**
-   * {@link RadioRadius}
-   */
   export type Radius = RadioRadius;
 
-  /**
-   * {@link RadioSize}
-   */
   export type Size = RadioSize;
 
-  /**
-   * {@link RadioVariant}
-   */
   export type Variant = RadioVariant;
 }

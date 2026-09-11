@@ -230,18 +230,9 @@ export const ScrollArea: IComponent<ScrollAreaProps> = function SuiScrollArea(
 };
 
 export namespace ScrollArea {
-  /**
-   * {@link ScrollAreaState}
-   */
   export type State = ScrollAreaState;
 
-  /**
-   * {@link ScrollAreaProps}
-   */
   export type Props = ScrollAreaProps;
 
-  /**
-   * {@link ScrollAreaSlotProps}
-   */
   export type SlotProps = ScrollAreaSlotProps;
 }

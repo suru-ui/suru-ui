@@ -21,24 +21,12 @@ import {
 // Types
 // -----
 
-/**
- * {@link MeterRootColor}
- */
 export type MeterColor = MeterRootColor;
 
-/**
- * {@link MeterRootRadius}
- */
 export type MeterRadius = MeterRootRadius;
 
-/**
- * {@link MeterRootSize}
- */
 export type MeterSize = MeterRootSize;
 
-/**
- * {@link MeterRootVariant}
- */
 export type MeterVariant = MeterRootVariant;
 
 /**
@@ -215,38 +203,17 @@ export const Meter: IComponent<MeterProps> = function SuiMeter(props) {
 };
 
 export namespace Meter {
-  /**
-   * {@link MeterState}
-   */
   export type State = MeterState;
 
-  /**
-   * {@link MeterProps}
-   */
   export type Props = MeterProps;
 
-  /**
-   * {@link MeterSlotProps}
-   */
   export type SlotProps = MeterSlotProps;
 
-  /**
-   * {@link MeterColor}
-   */
   export type Color = MeterColor;
 
-  /**
-   * {@link MeterRadius}
-   */
   export type Radius = MeterRadius;
 
-  /**
-   * {@link MeterSize}
-   */
   export type Size = MeterSize;
 
-  /**
-   * {@link MeterVariant}
-   */
   export type Variant = MeterVariant;
 }

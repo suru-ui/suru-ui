@@ -31,44 +31,20 @@ import {
 // Types
 // -----
 
-/**
- * {@link AccordionRootChangeEventDetails}
- */
 export type AccordionChangeEventDetails = AccordionRootChangeEventDetails;
 
-/**
- * {@link AccordionRootChangeEventReason}
- */
 export type AccordionChangeEventReason = AccordionRootChangeEventReason;
 
-/**
- * {@link AccordionRootItemObject}
- */
 export type AccordionItemObject = AccordionRootItemObject;
 
-/**
- * {@link IAccordionRootItemRenderer}
- */
 export interface IAccordionItemRenderer<TItem = any> extends IAccordionRootItemRenderer<TItem> {}
 
-/**
- * {@link AccordionRootRadius}
- */
 export type AccordionRadius = AccordionRootRadius;
 
-/**
- * {@link AccordionRootSize}
- */
 export type AccordionSize = AccordionRootSize;
 
-/**
- * {@link AccordionRootValue}
- */
 export type AccordionValue<TValue = any> = AccordionRootValue<TValue>;
 
-/**
- * {@link AccordionRootVariant}
- */
 export type AccordionVariant = AccordionRootVariant;
 
 /**
@@ -292,58 +268,25 @@ export const Accordion: IAccordion = function SuiAccordion(props: AccordionProps
 };
 
 export namespace Accordion {
-  /**
-   * {@link AccordionState}
-   */
   export type State = AccordionState;
 
-  /**
-   * {@link AccordionProps}
-   */
   export type Props = AccordionProps;
 
-  /**
-   * {@link AccordionSlotProps}
-   */
   export type SlotProps = AccordionSlotProps;
 
-  /**
-   * {@link AccordionChangeEventDetails}
-   */
   export type ChangeEventDetails = AccordionChangeEventDetails;
 
-  /**
-   * {@link AccordionChangeEventReason}
-   */
   export type ChangeEventReason = AccordionChangeEventReason;
 
-  /**
-   * {@link AccordionItemObject}
-   */
   export type ItemObject = AccordionItemObject;
 
-  /**
-   * {@link IAccordionItemRenderer}
-   */
   export interface IItemRenderer<TItem = any> extends IAccordionItemRenderer<TItem> {}
 
-  /**
-   * {@link AccordionRadius}
-   */
   export type Radius = AccordionRadius;
 
-  /**
-   * {@link AccordionSize}
-   */
   export type Size = AccordionSize;
 
-  /**
-   * {@link AccordionValue}
-   */
   export type Value<TValue = any> = AccordionValue<TValue>;
 
-  /**
-   * {@link AccordionVariant}
-   */
   export type Variant = AccordionVariant;
 }

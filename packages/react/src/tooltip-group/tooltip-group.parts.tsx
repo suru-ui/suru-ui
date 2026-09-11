@@ -47,35 +47,17 @@ export const TooltipGroupRoot: IComponent<TooltipGroupRootProps> = function SuiT
 export { TooltipGroupRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link TooltipGroupRootState}
-   */
   export type State = TooltipGroupRootState;
 
-  /**
-   * {@link TooltipGroupRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link TooltipGroupRootProps.BaseUI}
-     */
     export type BaseUI = TooltipGroupRootProps.BaseUI;
 
-    /**
-     * {@link TooltipGroupRootProps.HTML}
-     */
     export type HTML = TooltipGroupRootProps.HTML;
 
-    /**
-     * {@link TooltipGroupRootProps.Render}
-     */
     export type Render = TooltipGroupRootProps.Render;
 
-    /**
-     * {@link TooltipGroupRootProps.SuruUI}
-     */
     export type SuruUI = TooltipGroupRootProps.SuruUI;
   }
 }

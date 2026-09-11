@@ -36,44 +36,20 @@ import {
 // Types
 // -----
 
-/**
- * {@link NumberFieldRootColor}
- */
 export type NumberFieldColor = NumberFieldRootColor;
 
-/**
- * {@link NumberFieldRootRadius}
- */
 export type NumberFieldRadius = NumberFieldRootRadius;
 
-/**
- * {@link NumberFieldRootSize}
- */
 export type NumberFieldSize = NumberFieldRootSize;
 
-/**
- * {@link NumberFieldRootVariant}
- */
 export type NumberFieldVariant = NumberFieldRootVariant;
 
-/**
- * {@link NumberFieldRootChangeEventReason}
- */
 export type NumberFieldChangeEventReason = NumberFieldRootChangeEventReason;
 
-/**
- * {@link NumberFieldRootChangeEventDetails}
- */
 export type NumberFieldChangeEventDetails = NumberFieldRootChangeEventDetails;
 
-/**
- * {@link NumberFieldRootCommitEventReason}
- */
 export type NumberFieldCommitEventReason = NumberFieldRootCommitEventReason;
 
-/**
- * {@link NumberFieldRootCommitEventDetails}
- */
 export type NumberFieldCommitEventDetails = NumberFieldRootCommitEventDetails;
 
 /**
@@ -337,9 +313,6 @@ export { type NumberFieldAPI as API, useNumberFieldAPI as useAPI };
 // ---------
 
 interface INumberField extends IComponent<NumberFieldProps> {
-  /**
-   * {@link useNumberFieldContext}
-   */
   readonly useContext: IUseContext<NumberFieldContext>;
 }
 
@@ -386,63 +359,27 @@ export const NumberField: INumberField = /*#__PURE__*/ Object.assign(
 );
 
 export namespace NumberField {
-  /**
-   * {@link NumberFieldState}
-   */
   export type State = NumberFieldState;
 
-  /**
-   * {@link NumberFieldProps}
-   */
   export type Props = NumberFieldProps;
 
-  /**
-   * {@link NumberFieldSlotProps}
-   */
   export type SlotProps = NumberFieldSlotProps;
 
-  /**
-   * {@link NumberFieldContext}
-   */
   export type Context = NumberFieldContext;
 
-  /**
-   * {@link NumberFieldChangeEventDetails}
-   */
   export type ChangeEventDetails = NumberFieldChangeEventDetails;
 
-  /**
-   * {@link NumberFieldChangeEventReason}
-   */
   export type ChangeEventReason = NumberFieldChangeEventReason;
 
-  /**
-   * {@link NumberFieldColor}
-   */
   export type Color = NumberFieldColor;
 
-  /**
-   * {@link NumberFieldCommitEventDetails}
-   */
   export type CommitEventDetails = NumberFieldCommitEventDetails;
 
-  /**
-   * {@link NumberFieldCommitEventReason}
-   */
   export type CommitEventReason = NumberFieldCommitEventReason;
 
-  /**
-   * {@link NumberFieldRadius}
-   */
   export type Radius = NumberFieldRadius;
 
-  /**
-   * {@link NumberFieldSize}
-   */
   export type Size = NumberFieldSize;
 
-  /**
-   * {@link NumberFieldVariant}
-   */
   export type Variant = NumberFieldVariant;
 }

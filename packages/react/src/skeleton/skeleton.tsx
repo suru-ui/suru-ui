@@ -9,9 +9,6 @@ import {
 // Types
 // -----
 
-/**
- * {@link SkeletonRootRadius}
- */
 export type SkeletonRadius = SkeletonRootRadius;
 
 /**
@@ -75,18 +72,9 @@ export const Skeleton: IComponent<SkeletonProps> = function SuiSkeleton(props) {
 };
 
 export namespace Skeleton {
-  /**
-   * {@link SkeletonState}
-   */
   export type State = SkeletonState;
 
-  /**
-   * {@link SkeletonProps}
-   */
   export type Props = SkeletonProps;
 
-  /**
-   * {@link SkeletonRadius}
-   */
   export type Radius = SkeletonRadius;
 }

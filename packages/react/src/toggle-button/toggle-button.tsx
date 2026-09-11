@@ -28,34 +28,16 @@ import {
 // Types
 // -----
 
-/**
- * {@link ToggleButtonRootChangeEventDetails}
- */
 export type ToggleButtonChangeEventDetails = ToggleButtonRootChangeEventDetails;
 
-/**
- * {@link ToggleButtonRootChangeEventReason}
- */
 export type ToggleButtonChangeEventReason = ToggleButtonRootChangeEventReason;
 
-/**
- * {@link ToggleButtonRootColor}
- */
 export type ToggleButtonColor = ToggleButtonRootColor;
 
-/**
- * {@link ToggleButtonRootRadius}
- */
 export type ToggleButtonRadius = ToggleButtonRootRadius;
 
-/**
- * {@link ToggleButtonRootSize}
- */
 export type ToggleButtonSize = ToggleButtonRootSize;
 
-/**
- * {@link ToggleButtonRootVariant}
- */
 export type ToggleButtonVariant = ToggleButtonRootVariant;
 
 /**
@@ -229,9 +211,6 @@ export { type ToggleButtonAPI as API, useToggleButtonAPI as useAPI };
 // ---------
 
 interface IToggleButton extends IComponent<ToggleButtonProps> {
-  /**
-   * {@link useToggleButtonContext}
-   */
   readonly useContext: IUseContext<ToggleButtonContext>;
 }
 
@@ -264,53 +243,23 @@ export const ToggleButton: IToggleButton = /*#__PURE__*/ Object.assign(
 );
 
 export namespace ToggleButton {
-  /**
-   * {@link ToggleButtonState}
-   */
   export type State = ToggleButtonState;
 
-  /**
-   * {@link ToggleButtonProps}
-   */
   export type Props = ToggleButtonProps;
 
-  /**
-   * {@link ToggleButtonSlotProps}
-   */
   export type SlotProps = ToggleButtonSlotProps;
 
-  /**
-   * {@link ToggleButtonContext}
-   */
   export type Context = ToggleButtonContext;
 
-  /**
-   * {@link ToggleButtonChangeEventDetails}
-   */
   export type ChangeEventDetails = ToggleButtonChangeEventDetails;
 
-  /**
-   * {@link ToggleButtonChangeEventReason}
-   */
   export type ChangeEventReason = ToggleButtonChangeEventReason;
 
-  /**
-   * {@link ToggleButtonColor}
-   */
   export type Color = ToggleButtonColor;
 
-  /**
-   * {@link ToggleButtonRadius}
-   */
   export type Radius = ToggleButtonRadius;
 
-  /**
-   * {@link ToggleButtonSize}
-   */
   export type Size = ToggleButtonSize;
 
-  /**
-   * {@link ToggleButtonVariant}
-   */
   export type Variant = ToggleButtonVariant;
 }

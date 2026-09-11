@@ -10,14 +10,8 @@ import {
 // Types
 // -----
 
-/**
- * {@link ImageRootFit}
- */
 export type ImageFit = ImageRootFit;
 
-/**
- * {@link ImageRootRadius}
- */
 export type ImageRadius = ImageRootRadius;
 
 /**
@@ -81,23 +75,11 @@ export const Image: IComponent<ImageProps> = function SuiImage(props) {
 };
 
 export namespace Image {
-  /**
-   * {@link ImageState}
-   */
   export type State = ImageState;
 
-  /**
-   * {@link ImageProps}
-   */
   export type Props = ImageProps;
 
-  /**
-   * {@link ImageFit}
-   */
   export type Fit = ImageFit;
 
-  /**
-   * {@link ImageRadius}
-   */
   export type Radius = ImageRadius;
 }

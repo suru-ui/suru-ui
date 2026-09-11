@@ -27,19 +27,10 @@ import {
 // Types
 // -----
 
-/**
- * {@link PopoverRootActions}
- */
 export type PopoverActions = PopoverRootActions;
 
-/**
- * {@link PopoverRootChangeEventDetails}
- */
 export type PopoverChangeEventDetails = PopoverRootChangeEventDetails;
 
-/**
- * {@link PopoverRootChangeEventReason}
- */
 export type PopoverChangeEventReason = PopoverRootChangeEventReason;
 
 /**
@@ -311,33 +302,15 @@ export const Popover: IPopover = /*#__PURE__*/ Object.assign(
 );
 
 export namespace Popover {
-  /**
-   * {@link PopoverState}
-   */
   export type State = PopoverState;
 
-  /**
-   * {@link PopoverProps}
-   */
   export type Props<TPayload = any> = PopoverProps<TPayload>;
 
-  /**
-   * {@link PopoverSlotProps}
-   */
   export type SlotProps = PopoverSlotProps;
 
-  /**
-   * {@link PopoverActions}
-   */
   export type Actions = PopoverActions;
 
-  /**
-   * {@link PopoverChangeEventDetails}
-   */
   export type ChangeEventDetails = PopoverChangeEventDetails;
 
-  /**
-   * {@link PopoverChangeEventReason}
-   */
   export type ChangeEventReason = PopoverChangeEventReason;
 }

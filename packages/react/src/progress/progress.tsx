@@ -22,29 +22,14 @@ import {
 // Types
 // -----
 
-/**
- * {@link ProgressRootStatus}
- */
 export type ProgressStatus = ProgressRootStatus;
 
-/**
- * {@link ProgressRootColor}
- */
 export type ProgressColor = ProgressRootColor;
 
-/**
- * {@link ProgressRootRadius}
- */
 export type ProgressRadius = ProgressRootRadius;
 
-/**
- * {@link ProgressRootSize}
- */
 export type ProgressSize = ProgressRootSize;
 
-/**
- * {@link ProgressRootVariant}
- */
 export type ProgressVariant = ProgressRootVariant;
 
 /**
@@ -205,43 +190,19 @@ export const Progress: IComponent<ProgressProps> = function SuiProgress(props) {
 };
 
 export namespace Progress {
-  /**
-   * {@link ProgressState}
-   */
   export type State = ProgressState;
 
-  /**
-   * {@link ProgressProps}
-   */
   export type Props = ProgressProps;
 
-  /**
-   * {@link ProgressSlotProps}
-   */
   export type SlotProps = ProgressSlotProps;
 
-  /**
-   * {@link ProgressColor}
-   */
   export type Color = ProgressColor;
 
-  /**
-   * {@link ProgressRadius}
-   */
   export type Radius = ProgressRadius;
 
-  /**
-   * {@link ProgressSize}
-   */
   export type Size = ProgressSize;
 
-  /**
-   * {@link ProgressStatus}
-   */
   export type Status = ProgressStatus;
 
-  /**
-   * {@link ProgressVariant}
-   */
   export type Variant = ProgressVariant;
 }

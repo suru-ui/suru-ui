@@ -109,24 +109,12 @@ export const useCheckboxGroupContext: IUseContext<CheckboxGroupContext> =
 export { CheckboxGroupContext as Context, useCheckboxGroupContext as useContext };
 
 export namespace Context {
-  /**
-   * {@link CheckboxGroupContextColor}
-   */
   export type Color = CheckboxGroupContextColor;
 
-  /**
-   * {@link CheckboxGroupContextRadius}
-   */
   export type Radius = CheckboxGroupContextRadius;
 
-  /**
-   * {@link CheckboxGroupContextSize}
-   */
   export type Size = CheckboxGroupContextSize;
 
-  /**
-   * {@link CheckboxGroupContextVariant}
-   */
   export type Variant = CheckboxGroupContextVariant;
 }
 
@@ -316,50 +304,29 @@ export { CheckboxGroupRoot as Root };
 export namespace Root {
   export type State = CheckboxGroupRootState;
 
-  /**
-   * {@link CheckboxGroupRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = CheckboxGroupRootProps.BaseUI;
+
     export type HTML = CheckboxGroupRootProps.HTML;
+
     export type Render = CheckboxGroupRootProps.Render;
+
     export type SuruUI = CheckboxGroupRootProps.SuruUI;
   }
 
-  /**
-   * {@link CheckboxGroupRootChangeEventDetails}
-   */
   export type ChangeEventDetails = CheckboxGroupRootChangeEventDetails;
 
-  /**
-   * {@link CheckboxGroupRootChangeEventReason}
-   */
   export type ChangeEventReason = CheckboxGroupRootChangeEventReason;
 
-  /**
-   * {@link CheckboxGroupRootColor}
-   */
   export type Color = CheckboxGroupRootColor;
 
-  /**
-   * {@link CheckboxGroupRootOrientation}
-   */
   export type Orientation = CheckboxGroupRootOrientation;
 
-  /**
-   * {@link CheckboxGroupRootRadius}
-   */
   export type Radius = CheckboxGroupRootRadius;
 
-  /**
-   * {@link CheckboxGroupRootSize}
-   */
   export type Size = CheckboxGroupRootSize;
 
-  /**
-   * {@link CheckboxGroupRootVariant}
-   */
   export type Variant = CheckboxGroupRootVariant;
 }

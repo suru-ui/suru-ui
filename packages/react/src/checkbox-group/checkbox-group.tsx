@@ -17,39 +17,18 @@ import {
 // Types
 // -----
 
-/**
- * {@link CheckboxGroupRootChangeEventDetails}
- */
 export type CheckboxGroupChangeEventDetails = CheckboxGroupRootChangeEventDetails;
 
-/**
- * {@link CheckboxGroupRootChangeEventReason}
- */
 export type CheckboxGroupChangeEventReason = CheckboxGroupRootChangeEventReason;
 
-/**
- * {@link CheckboxGroupRootColor}
- */
 export type CheckboxGroupColor = CheckboxGroupRootColor;
 
-/**
- * {@link CheckboxGroupRootOrientation}
- */
 export type CheckboxGroupOrientation = CheckboxGroupRootOrientation;
 
-/**
- * {@link CheckboxGroupRootRadius}
- */
 export type CheckboxGroupRadius = CheckboxGroupRootRadius;
 
-/**
- * {@link CheckboxGroupRootSize}
- */
 export type CheckboxGroupSize = CheckboxGroupRootSize;
 
-/**
- * {@link CheckboxGroupRootVariant}
- */
 export type CheckboxGroupVariant = CheckboxGroupRootVariant;
 
 /**
@@ -102,9 +81,6 @@ export { type CheckboxGroupAPI as API, useCheckboxGroupAPI as useAPI };
 // ---------
 
 interface ICheckboxGroup extends IComponent<CheckboxGroupProps> {
-  /**
-   * {@link useCheckboxGroupContext}
-   */
   readonly useContext: IUseContext<CheckboxGroupContext>;
 }
 
@@ -123,53 +99,23 @@ export const CheckboxGroup: ICheckboxGroup = /*#__PURE__*/ Object.assign(
 );
 
 export namespace CheckboxGroup {
-  /**
-   * {@link CheckboxGroupState}
-   */
   export type State = CheckboxGroupState;
 
-  /**
-   * {@link CheckboxGroupProps}
-   */
   export type Props = CheckboxGroupProps;
 
-  /**
-   * {@link CheckboxGroupContext}
-   */
   export type Context = CheckboxGroupContext;
 
-  /**
-   * {@link CheckboxGroupChangeEventDetails}
-   */
   export type ChangeEventDetails = CheckboxGroupChangeEventDetails;
 
-  /**
-   * {@link CheckboxGroupChangeEventReason}
-   */
   export type ChangeEventReason = CheckboxGroupChangeEventReason;
 
-  /**
-   * {@link CheckboxGroupColor}
-   */
   export type Color = CheckboxGroupColor;
 
-  /**
-   * {@link CheckboxGroupOrientation}
-   */
   export type Orientation = CheckboxGroupOrientation;
 
-  /**
-   * {@link CheckboxGroupRadius}
-   */
   export type Radius = CheckboxGroupRadius;
 
-  /**
-   * {@link CheckboxGroupSize}
-   */
   export type Size = CheckboxGroupSize;
 
-  /**
-   * {@link CheckboxGroupVariant}
-   */
   export type Variant = CheckboxGroupVariant;
 }

@@ -42,29 +42,14 @@ import {
 // Types
 // -----
 
-/**
- * {@link ToastContentColor}
- */
 export type ToastColor = ToastContentColor;
 
-/**
- * {@link ToastContentRadius}
- */
 export type ToastRadius = ToastContentRadius;
 
-/**
- * {@link ToastContentSize}
- */
 export type ToastSize = ToastContentSize;
 
-/**
- * {@link ToastContentVariant}
- */
 export type ToastVariant = ToastContentVariant;
 
-/**
- * {@link ToastRootToastObject}
- */
 export type ToastToastObject<TData extends object = any> = ToastRootToastObject<TData>;
 
 /**
@@ -449,24 +434,12 @@ interface IToast extends IComponent<ToastProps> {
    */
   <TData extends object = any>(props: ToastProps<TData>): IComponent.Return;
 
-  /**
-   * {@link ToastList}
-   */
   readonly List: typeof ToastList;
 
-  /**
-   * {@link ToastProvider}
-   */
   readonly Provider: typeof ToastProvider;
 
-  /**
-   * {@link createToastManager}
-   */
   readonly createManager: <TData extends object = any>() => IToastManager<TData>;
 
-  /**
-   * {@link useToastClient}
-   */
   readonly useClient: <TData extends object = any>() => IToastClient<TData>;
 }
 
@@ -506,77 +479,35 @@ export const Toast: IToast = /*#__PURE__*/ Object.assign(
 );
 
 export namespace Toast {
-  /**
-   * {@link ToastState}
-   */
   export type State = ToastState;
 
-  /**
-   * {@link ToastProps}
-   */
   export type Props<TData extends object = any> = ToastProps<TData>;
 
-  /**
-   * {@link ToastSlotProps}
-   */
   export type SlotProps = ToastSlotProps;
 
-  /**
-   * {@link ToastAPI}
-   */
   export type API = ToastAPI;
 
-  /**
-   * {@link ToastColor}
-   */
   export type Color = ToastColor;
 
-  /**
-   * {@link ToastRadius}
-   */
   export type Radius = ToastRadius;
 
-  /**
-   * {@link ToastSize}
-   */
   export type Size = ToastSize;
 
-  /**
-   * {@link ToastToastObject}
-   */
   export type ToastObject<TData extends object = any> = ToastToastObject<TData>;
 
-  /**
-   * {@link ToastVariant}
-   */
   export type Variant = ToastVariant;
 
   export namespace List {
-    /**
-     * {@link ToastListState}
-     */
     export type State = ToastListState;
 
-    /**
-     * {@link ToastListProps}
-     */
     export type Props<TData extends object = any> = ToastListProps<TData>;
 
-    /**
-     * {@link ToastListSlotProps}
-     */
     export type SlotProps = ToastListSlotProps;
 
-    /**
-     * {@link IToastListRenderer}
-     */
     export interface IRenderer<TData extends object = any> extends IToastListRenderer<TData> {}
   }
 
   export namespace Provider {
-    /**
-     * {@link ToastProviderProps}
-     */
     export type Props = ToastProviderProps;
   }
 }

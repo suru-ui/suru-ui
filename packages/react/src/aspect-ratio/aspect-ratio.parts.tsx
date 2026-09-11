@@ -110,29 +110,19 @@ export const AspectRatioRoot: IComponent<AspectRatioRootProps> = function SuiAsp
 export { AspectRatioRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link AspectRatioRootState}
-   */
   export type State = AspectRatioRootState;
 
-  /**
-   * {@link AspectRatioRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = AspectRatioRootProps.HTML;
+
     export type Render = AspectRatioRootProps.Render;
+
     export type SuruUI = AspectRatioRootProps.SuruUI;
   }
 
-  /**
-   * {@link AspectRatioRootRadius}
-   */
   export type Radius = AspectRatioRootRadius;
 
-  /**
-   * {@link AspectRatioRootRatio}
-   */
   export type Ratio = AspectRatioRootRatio;
 }

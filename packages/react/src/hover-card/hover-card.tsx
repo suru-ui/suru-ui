@@ -26,19 +26,10 @@ import {
 // Types
 // -----
 
-/**
- * {@link HoverCardRootActions}
- */
 export type HoverCardActions = HoverCardRootActions;
 
-/**
- * {@link HoverCardRootChangeEventDetails}
- */
 export type HoverCardChangeEventDetails = HoverCardRootChangeEventDetails;
 
-/**
- * {@link HoverCardRootChangeEventReason}
- */
 export type HoverCardChangeEventReason = HoverCardRootChangeEventReason;
 
 /**
@@ -311,33 +302,15 @@ export const HoverCard: IHoverCard = /*#__PURE__*/ Object.assign(
 );
 
 export namespace HoverCard {
-  /**
-   * {@link HoverCardState}
-   */
   export type State = HoverCardState;
 
-  /**
-   * {@link HoverCardProps}
-   */
   export type Props<TPayload = any> = HoverCardProps<TPayload>;
 
-  /**
-   * {@link HoverCardSlotProps}
-   */
   export type SlotProps = HoverCardSlotProps;
 
-  /**
-   * {@link HoverCardActions}
-   */
   export type Actions = HoverCardActions;
 
-  /**
-   * {@link HoverCardChangeEventDetails}
-   */
   export type ChangeEventDetails = HoverCardChangeEventDetails;
 
-  /**
-   * {@link HoverCardChangeEventReason}
-   */
   export type ChangeEventReason = HoverCardChangeEventReason;
 }

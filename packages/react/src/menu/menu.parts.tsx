@@ -114,19 +114,10 @@ export const useMenuContext: IUseContext<MenuContext> = useSuiMenuContext;
 export { MenuContext as Context, useMenuContext as useContext };
 
 export namespace Context {
-  /**
-   * {@link MenuContextRadius}
-   */
   export type Radius = MenuContextRadius;
 
-  /**
-   * {@link MenuContextSize}
-   */
   export type Size = MenuContextSize;
 
-  /**
-   * {@link MenuContextVariant}
-   */
   export type Variant = MenuContextVariant;
 }
 
@@ -367,7 +358,7 @@ export type MenuRootState = Menu.Root.State;
 export namespace MenuRootProps {
   export type BaseUI<TPayload = unknown, TItem = any> = Omit<
     Menu.Root.Props<TPayload>,
-    keyof Render | keyof SuruUI<TPayload, TItem>
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = {};
@@ -466,14 +457,8 @@ export const MenuRoot: IMenuRoot = function SuiMenuRoot(props: MenuRootProps) {
 export { MenuRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link MenuRootState}
-   */
   export type State = MenuRootState;
 
-  /**
-   * {@link MenuRootProps}
-   */
   export type Props<TPayload = unknown, TItem = any> = Props.Render &
     Props.SuruUI<TPayload, TItem> &
     Props.BaseUI<TPayload, TItem> &
@@ -481,84 +466,42 @@ export namespace Root {
 
   export namespace Props {
     export type BaseUI<TPayload = unknown, TItem = any> = MenuRootProps.BaseUI<TPayload, TItem>;
+
     export type HTML = MenuRootProps.HTML;
+
     export type Render = MenuRootProps.Render;
+
     export type SuruUI<TPayload = unknown, TItem = any> = MenuRootProps.SuruUI<TPayload, TItem>;
   }
 
-  /**
-   * {@link MenuRootActionItemObject}
-   */
   export type ActionItemObject = MenuRootActionItemObject;
 
-  /**
-   * {@link MenuRootActions}
-   */
   export type Actions = MenuRootActions;
 
-  /**
-   * {@link MenuRootChangeEventDetails}
-   */
   export type ChangeEventDetails = MenuRootChangeEventDetails;
 
-  /**
-   * {@link MenuRootChangeEventReason}
-   */
   export type ChangeEventReason = MenuRootChangeEventReason;
 
-  /**
-   * {@link MenuRootCheckboxItemObject}
-   */
   export type CheckboxItemObject = MenuRootCheckboxItemObject;
 
-  /**
-   * {@link MenuRootGroupObject}
-   */
   export type GroupObject = MenuRootGroupObject;
 
-  /**
-   * {@link MenuRootItemObject}
-   */
   export type ItemObject = MenuRootItemObject;
 
-  /**
-   * {@link MenuRootLinkItemObject}
-   */
   export type LinkItemObject = MenuRootLinkItemObject;
 
-  /**
-   * {@link MenuRootOrientation}
-   */
   export type Orientation = MenuRootOrientation;
 
-  /**
-   * {@link MenuRootRadioGroupObject}
-   */
   export type RadioGroupObject = MenuRootRadioGroupObject;
 
-  /**
-   * {@link MenuRootRadioItemObject}
-   */
   export type RadioItemObject = MenuRootRadioItemObject;
 
-  /**
-   * {@link MenuRootRadius}
-   */
   export type Radius = MenuRootRadius;
 
-  /**
-   * {@link MenuRootSeparatorObject}
-   */
   export type SeparatorObject = MenuRootSeparatorObject;
 
-  /**
-   * {@link MenuRootSize}
-   */
   export type Size = MenuRootSize;
 
-  /**
-   * {@link MenuRootVariant}
-   */
   export type Variant = MenuRootVariant;
 }
 
@@ -573,13 +516,13 @@ export type MenuTriggerState = Menu.Trigger.State;
 export namespace MenuTriggerProps {
   export type BaseUI<TPayload = unknown> = Omit<
     Menu.Trigger.Props<TPayload>,
-    keyof Render | keyof SuruUI<TPayload> | "render"
+    keyof Render | keyof SuruUI | "render"
   >;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
     | keyof Render
-    | keyof SuruUI<any>
+    | keyof SuruUI
     | keyof Omit<Menu.Trigger.Props<any>, "handle" | "children" | "render">
   >;
 
@@ -645,14 +588,8 @@ export const MenuTrigger: IMenuTrigger = function SuiMenuTrigger(props: MenuTrig
 export { MenuTrigger as Trigger };
 
 export namespace Trigger {
-  /**
-   * {@link MenuTriggerState}
-   */
   export type State = MenuTriggerState;
 
-  /**
-   * {@link MenuTriggerProps}
-   */
   export type Props<TPayload = unknown> = Props.Render &
     Props.SuruUI<TPayload> &
     Props.BaseUI<TPayload> &
@@ -660,8 +597,11 @@ export namespace Trigger {
 
   export namespace Props {
     export type BaseUI<TPayload = unknown> = MenuTriggerProps.BaseUI<TPayload>;
+
     export type HTML = MenuTriggerProps.HTML;
+
     export type Render = MenuTriggerProps.Render;
+
     export type SuruUI<TPayload = unknown> = MenuTriggerProps.SuruUI<TPayload>;
   }
 }
@@ -727,20 +667,17 @@ export const MenuPortal: IComponent<MenuPortalProps> = function SuiMenuPortal(pr
 export { MenuPortal as Portal };
 
 export namespace Portal {
-  /**
-   * {@link MenuPortalState}
-   */
   export type State = MenuPortalState;
 
-  /**
-   * {@link MenuPortalProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MenuPortalProps.BaseUI;
+
     export type HTML = MenuPortalProps.HTML;
+
     export type Render = MenuPortalProps.Render;
+
     export type SuruUI = MenuPortalProps.SuruUI;
   }
 }
@@ -786,20 +723,17 @@ export const MenuBackdrop: IComponent<MenuBackdropProps> = function SuiMenuBackd
 export { MenuBackdrop as Backdrop };
 
 export namespace Backdrop {
-  /**
-   * {@link MenuBackdropState}
-   */
   export type State = MenuBackdropState;
 
-  /**
-   * {@link MenuBackdropProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MenuBackdropProps.BaseUI;
+
     export type HTML = MenuBackdropProps.HTML;
+
     export type Render = MenuBackdropProps.Render;
+
     export type SuruUI = MenuBackdropProps.SuruUI;
   }
 }
@@ -845,20 +779,17 @@ export const MenuPositioner: IComponent<MenuPositionerProps> = function SuiMenuP
 export { MenuPositioner as Positioner };
 
 export namespace Positioner {
-  /**
-   * {@link MenuPositionerState}
-   */
   export type State = MenuPositionerState;
 
-  /**
-   * {@link MenuPositionerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MenuPositionerProps.BaseUI;
+
     export type HTML = MenuPositionerProps.HTML;
+
     export type Render = MenuPositionerProps.Render;
+
     export type SuruUI = MenuPositionerProps.SuruUI;
   }
 }
@@ -1043,31 +974,22 @@ const defaultPopupItemRenderer: IMenuPopupItemRenderer = (item, index, items) =>
 export { MenuPopup as Popup };
 
 export namespace Popup {
-  /**
-   * {@link MenuPopupState}
-   */
   export type State = MenuPopupState;
 
-  /**
-   * {@link MenuPopupProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MenuPopupProps.BaseUI;
+
     export type HTML = MenuPopupProps.HTML;
+
     export type Render = MenuPopupProps.Render;
+
     export type SuruUI = MenuPopupProps.SuruUI;
   }
 
-  /**
-   * {@link MenuRootItemObject}
-   */
   export type ItemObject = MenuRootItemObject;
 
-  /**
-   * {@link IMenuPopupItemRenderer}
-   */
   export interface IItemRenderer<TItem = any> extends IMenuPopupItemRenderer<TItem> {}
 }
 
@@ -1112,20 +1034,17 @@ export const MenuArrow: IComponent<MenuArrowProps> = function SuiMenuArrow(props
 export { MenuArrow as Arrow };
 
 export namespace Arrow {
-  /**
-   * {@link MenuArrowState}
-   */
   export type State = MenuArrowState;
 
-  /**
-   * {@link MenuArrowProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MenuArrowProps.BaseUI;
+
     export type HTML = MenuArrowProps.HTML;
+
     export type Render = MenuArrowProps.Render;
+
     export type SuruUI = MenuArrowProps.SuruUI;
   }
 }
@@ -1171,20 +1090,17 @@ export const MenuViewport: IComponent<MenuViewportProps> = function SuiMenuViewp
 export { MenuViewport as Viewport };
 
 export namespace Viewport {
-  /**
-   * {@link MenuViewportState}
-   */
   export type State = MenuViewportState;
 
-  /**
-   * {@link MenuViewportProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MenuViewportProps.BaseUI;
+
     export type HTML = MenuViewportProps.HTML;
+
     export type Render = MenuViewportProps.Render;
+
     export type SuruUI = MenuViewportProps.SuruUI;
   }
 }
@@ -1340,36 +1256,24 @@ export const MenuItem: IComponent<MenuItemProps> = function SuiMenuItem(props) {
 export { MenuItem as Item };
 
 export namespace Item {
-  /**
-   * {@link MenuItemState}
-   */
   export type State = MenuItemState;
 
-  /**
-   * {@link MenuItemProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MenuItemProps.BaseUI;
+
     export type HTML = MenuItemProps.HTML;
+
     export type Render = MenuItemProps.Render;
+
     export type SuruUI = MenuItemProps.SuruUI;
   }
 
-  /**
-   * {@link MenuItemColor}
-   */
   export type Color = MenuItemColor;
 
-  /**
-   * {@link MenuItemRadius}
-   */
   export type Radius = MenuItemRadius;
 
-  /**
-   * {@link MenuItemVariant}
-   */
   export type Variant = MenuItemVariant;
 }
 
@@ -1507,36 +1411,24 @@ export const MenuLinkItem: IComponent<MenuLinkItemProps> = function SuiMenuLinkI
 export { MenuLinkItem as LinkItem };
 
 export namespace LinkItem {
-  /**
-   * {@link MenuLinkItemState}
-   */
   export type State = MenuLinkItemState;
 
-  /**
-   * {@link MenuLinkItemProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MenuLinkItemProps.BaseUI;
+
     export type HTML = MenuLinkItemProps.HTML;
+
     export type Render = MenuLinkItemProps.Render;
+
     export type SuruUI = MenuLinkItemProps.SuruUI;
   }
 
-  /**
-   * {@link MenuLinkItemColor}
-   */
   export type Color = MenuLinkItemColor;
 
-  /**
-   * {@link MenuLinkItemRadius}
-   */
   export type Radius = MenuLinkItemRadius;
 
-  /**
-   * {@link MenuLinkItemVariant}
-   */
   export type Variant = MenuLinkItemVariant;
 }
 
@@ -1590,31 +1482,22 @@ export const MenuSubmenuRoot: IComponent<MenuSubmenuRootProps> = function SuiMen
 export { MenuSubmenuRoot as SubmenuRoot };
 
 export namespace SubmenuRoot {
-  /**
-   * {@link MenuSubmenuRootState}
-   */
   export type State = MenuSubmenuRootState;
 
-  /**
-   * {@link MenuSubmenuRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MenuSubmenuRootProps.BaseUI;
+
     export type HTML = MenuSubmenuRootProps.HTML;
+
     export type Render = MenuSubmenuRootProps.Render;
+
     export type SuruUI = MenuSubmenuRootProps.SuruUI;
   }
 
-  /**
-   * {@link MenuSubmenuRootChangeEventDetails}
-   */
   export type ChangeEventDetails = MenuSubmenuRootChangeEventDetails;
 
-  /**
-   * {@link MenuSubmenuRootChangeEventReason}
-   */
   export type ChangeEventReason = MenuSubmenuRootChangeEventReason;
 }
 
@@ -1761,36 +1644,24 @@ export const MenuSubmenuTrigger: IComponent<MenuSubmenuTriggerProps> =
 export { MenuSubmenuTrigger as SubmenuTrigger };
 
 export namespace SubmenuTrigger {
-  /**
-   * {@link MenuSubmenuTriggerState}
-   */
   export type State = MenuSubmenuTriggerState;
 
-  /**
-   * {@link MenuSubmenuTriggerProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MenuSubmenuTriggerProps.BaseUI;
+
     export type HTML = MenuSubmenuTriggerProps.HTML;
+
     export type Render = MenuSubmenuTriggerProps.Render;
+
     export type SuruUI = MenuSubmenuTriggerProps.SuruUI;
   }
 
-  /**
-   * {@link MenuSubmenuTriggerColor}
-   */
   export type Color = MenuSubmenuTriggerColor;
 
-  /**
-   * {@link MenuSubmenuTriggerRadius}
-   */
   export type Radius = MenuSubmenuTriggerRadius;
 
-  /**
-   * {@link MenuSubmenuTriggerVariant}
-   */
   export type Variant = MenuSubmenuTriggerVariant;
 }
 
@@ -1835,20 +1706,17 @@ export const MenuGroup: IComponent<MenuGroupProps> = function SuiMenuGroup(props
 export { MenuGroup as Group };
 
 export namespace Group {
-  /**
-   * {@link MenuGroupState}
-   */
   export type State = MenuGroupState;
 
-  /**
-   * {@link MenuGroupProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MenuGroupProps.BaseUI;
+
     export type HTML = MenuGroupProps.HTML;
+
     export type Render = MenuGroupProps.Render;
+
     export type SuruUI = MenuGroupProps.SuruUI;
   }
 }
@@ -1894,20 +1762,17 @@ export const MenuGroupLabel: IComponent<MenuGroupLabelProps> = function SuiMenuG
 export { MenuGroupLabel as GroupLabel };
 
 export namespace GroupLabel {
-  /**
-   * {@link MenuGroupLabelState}
-   */
   export type State = MenuGroupLabelState;
 
-  /**
-   * {@link MenuGroupLabelProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MenuGroupLabelProps.BaseUI;
+
     export type HTML = MenuGroupLabelProps.HTML;
+
     export type Render = MenuGroupLabelProps.Render;
+
     export type SuruUI = MenuGroupLabelProps.SuruUI;
   }
 }
@@ -1972,31 +1837,22 @@ export const MenuRadioGroup: IComponent<MenuRadioGroupProps> = function SuiMenuR
 export { MenuRadioGroup as RadioGroup };
 
 export namespace RadioGroup {
-  /**
-   * {@link MenuRadioGroupState}
-   */
   export type State = MenuRadioGroupState;
 
-  /**
-   * {@link MenuRadioGroupProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MenuRadioGroupProps.BaseUI;
+
     export type HTML = MenuRadioGroupProps.HTML;
+
     export type Render = MenuRadioGroupProps.Render;
+
     export type SuruUI = MenuRadioGroupProps.SuruUI;
   }
 
-  /**
-   * {@link MenuRadioGroupChangeEventDetails}
-   */
   export type ChangeEventDetails = MenuRadioGroupChangeEventDetails;
 
-  /**
-   * {@link MenuRadioGroupChangeEventReason}
-   */
   export type ChangeEventReason = MenuRadioGroupChangeEventReason;
 }
 
@@ -2136,36 +1992,24 @@ export const MenuRadioItem: IComponent<MenuRadioItemProps> = function SuiMenuRad
 export { MenuRadioItem as RadioItem };
 
 export namespace RadioItem {
-  /**
-   * {@link MenuRadioItemState}
-   */
   export type State = MenuRadioItemState;
 
-  /**
-   * {@link MenuRadioItemProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MenuRadioItemProps.BaseUI;
+
     export type HTML = MenuRadioItemProps.HTML;
+
     export type Render = MenuRadioItemProps.Render;
+
     export type SuruUI = MenuRadioItemProps.SuruUI;
   }
 
-  /**
-   * {@link MenuRadioItemColor}
-   */
   export type Color = MenuRadioItemColor;
 
-  /**
-   * {@link MenuRadioItemRadius}
-   */
   export type Radius = MenuRadioItemRadius;
 
-  /**
-   * {@link MenuRadioItemVariant}
-   */
   export type Variant = MenuRadioItemVariant;
 }
 
@@ -2222,20 +2066,17 @@ export const MenuRadioItemIndicator: IComponent<MenuRadioItemIndicatorProps> =
 export { MenuRadioItemIndicator as RadioItemIndicator };
 
 export namespace RadioItemIndicator {
-  /**
-   * {@link MenuRadioItemIndicatorState}
-   */
   export type State = MenuRadioItemIndicatorState;
 
-  /**
-   * {@link MenuRadioItemIndicatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MenuRadioItemIndicatorProps.BaseUI;
+
     export type HTML = MenuRadioItemIndicatorProps.HTML;
+
     export type Render = MenuRadioItemIndicatorProps.Render;
+
     export type SuruUI = MenuRadioItemIndicatorProps.SuruUI;
   }
 }
@@ -2388,46 +2229,28 @@ export const MenuCheckboxItem: IComponent<MenuCheckboxItemProps> = function SuiM
 export { MenuCheckboxItem as CheckboxItem };
 
 export namespace CheckboxItem {
-  /**
-   * {@link MenuCheckboxItemState}
-   */
   export type State = MenuCheckboxItemState;
 
-  /**
-   * {@link MenuCheckboxItemProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MenuCheckboxItemProps.BaseUI;
+
     export type HTML = MenuCheckboxItemProps.HTML;
+
     export type Render = MenuCheckboxItemProps.Render;
+
     export type SuruUI = MenuCheckboxItemProps.SuruUI;
   }
 
-  /**
-   * {@link MenuCheckboxItemChangeEventDetails}
-   */
   export type ChangeEventDetails = MenuCheckboxItemChangeEventDetails;
 
-  /**
-   * {@link MenuCheckboxItemChangeEventReason}
-   */
   export type ChangeEventReason = MenuCheckboxItemChangeEventReason;
 
-  /**
-   * {@link MenuCheckboxItemColor}
-   */
   export type Color = MenuCheckboxItemColor;
 
-  /**
-   * {@link MenuCheckboxItemRadius}
-   */
   export type Radius = MenuCheckboxItemRadius;
 
-  /**
-   * {@link MenuCheckboxItemVariant}
-   */
   export type Variant = MenuCheckboxItemVariant;
 }
 
@@ -2483,20 +2306,17 @@ export const MenuCheckboxItemIndicator: IComponent<MenuCheckboxItemIndicatorProp
 export { MenuCheckboxItemIndicator as CheckboxItemIndicator };
 
 export namespace CheckboxItemIndicator {
-  /**
-   * {@link MenuCheckboxItemIndicatorState}
-   */
   export type State = MenuCheckboxItemIndicatorState;
 
-  /**
-   * {@link MenuCheckboxItemIndicatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MenuCheckboxItemIndicatorProps.BaseUI;
+
     export type HTML = MenuCheckboxItemIndicatorProps.HTML;
+
     export type Render = MenuCheckboxItemIndicatorProps.Render;
+
     export type SuruUI = MenuCheckboxItemIndicatorProps.SuruUI;
   }
 }
@@ -2542,20 +2362,17 @@ export const MenuSeparator: IComponent<MenuSeparatorProps> = function SuiMenuSep
 export { MenuSeparator as Separator };
 
 export namespace Separator {
-  /**
-   * {@link MenuSeparatorState}
-   */
   export type State = MenuSeparatorState;
 
-  /**
-   * {@link MenuSeparatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = MenuSeparatorProps.BaseUI;
+
     export type HTML = MenuSeparatorProps.HTML;
+
     export type Render = MenuSeparatorProps.Render;
+
     export type SuruUI = MenuSeparatorProps.SuruUI;
   }
 }

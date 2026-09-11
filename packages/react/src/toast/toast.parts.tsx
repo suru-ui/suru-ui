@@ -42,30 +42,15 @@ export const ToastProvider: IComponent<ToastProviderProps> = function SuiToastPr
 export { ToastProvider as Provider };
 
 export namespace Provider {
-  /**
-   * {@link ToastProviderProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link ToastProviderProps.BaseUI}
-     */
     export type BaseUI = ToastProviderProps.BaseUI;
 
-    /**
-     * {@link ToastProviderProps.HTML}
-     */
     export type HTML = ToastProviderProps.HTML;
 
-    /**
-     * {@link ToastProviderProps.Render}
-     */
     export type Render = ToastProviderProps.Render;
 
-    /**
-     * {@link ToastProviderProps.SuruUI}
-     */
     export type SuruUI = ToastProviderProps.SuruUI;
   }
 }
@@ -124,35 +109,17 @@ export const ToastPortal: IComponent<ToastPortalProps> = function SuiToastPortal
 export { ToastPortal as Portal };
 
 export namespace Portal {
-  /**
-   * {@link ToastPortalState}
-   */
   export type State = ToastPortalState;
 
-  /**
-   * {@link ToastPortalProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link ToastPortalProps.BaseUI}
-     */
     export type BaseUI = ToastPortalProps.BaseUI;
 
-    /**
-     * {@link ToastPortalProps.HTML}
-     */
     export type HTML = ToastPortalProps.HTML;
 
-    /**
-     * {@link ToastPortalProps.Render}
-     */
     export type Render = ToastPortalProps.Render;
 
-    /**
-     * {@link ToastPortalProps.SuruUI}
-     */
     export type SuruUI = ToastPortalProps.SuruUI;
   }
 }
@@ -207,35 +174,17 @@ export const ToastViewport: IComponent<ToastViewportProps> = function SuiToastVi
 export { ToastViewport as Viewport };
 
 export namespace Viewport {
-  /**
-   * {@link ToastViewportState}
-   */
   export type State = ToastViewportState;
 
-  /**
-   * {@link ToastViewportProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link ToastViewportProps.BaseUI}
-     */
     export type BaseUI = ToastViewportProps.BaseUI;
 
-    /**
-     * {@link ToastViewportProps.HTML}
-     */
     export type HTML = ToastViewportProps.HTML;
 
-    /**
-     * {@link ToastViewportProps.Render}
-     */
     export type Render = ToastViewportProps.Render;
 
-    /**
-     * {@link ToastViewportProps.SuruUI}
-     */
     export type SuruUI = ToastViewportProps.SuruUI;
   }
 }
@@ -256,12 +205,9 @@ export type ToastRootToastObject<TData extends object = any> = Toast.Root.ToastO
 export type ToastRootState = Toast.Root.State;
 
 export namespace ToastRootProps {
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof Toast.Root>,
-    keyof Render | keyof SuruUI<any> | keyof React.ComponentProps<"div">
-  >;
+  export type BaseUI = Omit<React.ComponentProps<typeof Toast.Root>, keyof Render | keyof SuruUI>;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI<any>>;
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
 
   export type Render = RenderProps<ToastRootState>;
 
@@ -326,68 +272,35 @@ export const ToastRoot: IToastRoot = function SuiToastRoot<TData extends object 
 export { ToastRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link ToastRootState}
-   */
   export type State = ToastRootState;
 
-  /**
-   * {@link ToastRootProps}
-   */
   export type Props<TData extends object = any> = Props.Render &
     Props.SuruUI<TData> &
     Props.BaseUI &
     Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link ToastRootProps.BaseUI}
-     */
     export type BaseUI = ToastRootProps.BaseUI;
 
-    /**
-     * {@link ToastRootProps.HTML}
-     */
     export type HTML = ToastRootProps.HTML;
 
-    /**
-     * {@link ToastRootProps.Render}
-     */
     export type Render = ToastRootProps.Render;
 
-    /**
-     * {@link ToastRootProps.SuruUI}
-     */
     export type SuruUI<TData extends object = any> = ToastRootProps.SuruUI<TData>;
   }
 
-  /**
-   * {@link ToastRootToastObject}
-   */
   export type ToastObject<TData extends object = any> = ToastRootToastObject<TData>;
 }
 
 // Content
 // -------
 
-/**
- * {@link Alert.Root.Color}
- */
 export type ToastContentColor = Alert.Root.Color;
 
-/**
- * {@link Alert.Root.Radius}
- */
 export type ToastContentRadius = Alert.Root.Radius;
 
-/**
- * {@link Alert.Root.Size}
- */
 export type ToastContentSize = Alert.Root.Size;
 
-/**
- * {@link Alert.Root.Variant}
- */
 export type ToastContentVariant = Alert.Root.Variant;
 
 /**
@@ -452,56 +365,26 @@ export const ToastContent: IComponent<ToastContentProps> = function SuiToastCont
 export { ToastContent as Content };
 
 export namespace Content {
-  /**
-   * {@link ToastContentState}
-   */
   export type State = ToastContentState;
 
-  /**
-   * {@link ToastContentProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link ToastContentProps.BaseUI}
-     */
     export type BaseUI = ToastContentProps.BaseUI;
 
-    /**
-     * {@link ToastContentProps.HTML}
-     */
     export type HTML = ToastContentProps.HTML;
 
-    /**
-     * {@link ToastContentProps.Render}
-     */
     export type Render = ToastContentProps.Render;
 
-    /**
-     * {@link ToastContentProps.SuruUI}
-     */
     export type SuruUI = ToastContentProps.SuruUI;
   }
 
-  /**
-   * {@link ToastContentColor}
-   */
   export type Color = ToastContentColor;
 
-  /**
-   * {@link ToastContentRadius}
-   */
   export type Radius = ToastContentRadius;
 
-  /**
-   * {@link ToastContentSize}
-   */
   export type Size = ToastContentSize;
 
-  /**
-   * {@link ToastContentVariant}
-   */
   export type Variant = ToastContentVariant;
 }
 
@@ -565,35 +448,17 @@ export const ToastTitle: IComponent<ToastTitleProps> = function SuiToastTitle(pr
 export { ToastTitle as Title };
 
 export namespace Title {
-  /**
-   * {@link ToastTitleState}
-   */
   export type State = ToastTitleState;
 
-  /**
-   * {@link ToastTitleProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link ToastTitleProps.BaseUI}
-     */
     export type BaseUI = ToastTitleProps.BaseUI;
 
-    /**
-     * {@link ToastTitleProps.HTML}
-     */
     export type HTML = ToastTitleProps.HTML;
 
-    /**
-     * {@link ToastTitleProps.Render}
-     */
     export type Render = ToastTitleProps.Render;
 
-    /**
-     * {@link ToastTitleProps.SuruUI}
-     */
     export type SuruUI = ToastTitleProps.SuruUI;
   }
 }
@@ -660,35 +525,17 @@ export const ToastDescription: IComponent<ToastDescriptionProps> = function SuiT
 export { ToastDescription as Description };
 
 export namespace Description {
-  /**
-   * {@link ToastDescriptionState}
-   */
   export type State = ToastDescriptionState;
 
-  /**
-   * {@link ToastDescriptionProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link ToastDescriptionProps.BaseUI}
-     */
     export type BaseUI = ToastDescriptionProps.BaseUI;
 
-    /**
-     * {@link ToastDescriptionProps.HTML}
-     */
     export type HTML = ToastDescriptionProps.HTML;
 
-    /**
-     * {@link ToastDescriptionProps.Render}
-     */
     export type Render = ToastDescriptionProps.Render;
 
-    /**
-     * {@link ToastDescriptionProps.SuruUI}
-     */
     export type SuruUI = ToastDescriptionProps.SuruUI;
   }
 }
@@ -729,35 +576,17 @@ export const ToastActions: IComponent<ToastActionsProps> = function SuiToastActi
 export { ToastActions as Actions };
 
 export namespace Actions {
-  /**
-   * {@link ToastActionsState}
-   */
   export type State = ToastActionsState;
 
-  /**
-   * {@link ToastActionsProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link ToastActionsProps.BaseUI}
-     */
     export type BaseUI = ToastActionsProps.BaseUI;
 
-    /**
-     * {@link ToastActionsProps.HTML}
-     */
     export type HTML = ToastActionsProps.HTML;
 
-    /**
-     * {@link ToastActionsProps.Render}
-     */
     export type Render = ToastActionsProps.Render;
 
-    /**
-     * {@link ToastActionsProps.SuruUI}
-     */
     export type SuruUI = ToastActionsProps.SuruUI;
   }
 }
@@ -765,24 +594,12 @@ export namespace Actions {
 // Action
 // ------
 
-/**
- * {@link Button.Root.Color}
- */
 export type ToastActionColor = Button.Root.Color;
 
-/**
- * {@link Button.Root.Radius}
- */
 export type ToastActionRadius = Button.Root.Radius;
 
-/**
- * {@link Button.Root.Size}
- */
 export type ToastActionSize = Button.Root.Size;
 
-/**
- * {@link Button.Root.Variant}
- */
 export type ToastActionVariant = Button.Root.Variant;
 
 /**
@@ -859,80 +676,38 @@ export const ToastAction: IComponent<ToastActionProps> = function SuiToastAction
 export { ToastAction as Action };
 
 export namespace Action {
-  /**
-   * {@link ToastActionState}
-   */
   export type State = ToastActionState;
 
-  /**
-   * {@link ToastActionProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link ToastActionProps.BaseUI}
-     */
     export type BaseUI = ToastActionProps.BaseUI;
 
-    /**
-     * {@link ToastActionProps.HTML}
-     */
     export type HTML = ToastActionProps.HTML;
 
-    /**
-     * {@link ToastActionProps.Render}
-     */
     export type Render = ToastActionProps.Render;
 
-    /**
-     * {@link ToastActionProps.SuruUI}
-     */
     export type SuruUI = ToastActionProps.SuruUI;
   }
 
-  /**
-   * {@link ToastActionColor}
-   */
   export type Color = ToastActionColor;
 
-  /**
-   * {@link ToastActionRadius}
-   */
   export type Radius = ToastActionRadius;
 
-  /**
-   * {@link ToastActionSize}
-   */
   export type Size = ToastActionSize;
 
-  /**
-   * {@link ToastActionVariant}
-   */
   export type Variant = ToastActionVariant;
 }
 
 // Close
 // -----
 
-/**
- * {@link Button.Root.Color}
- */
 export type ToastCloseColor = Button.Root.Color;
 
-/**
- * {@link Button.Root.Radius}
- */
 export type ToastCloseRadius = Button.Root.Radius;
 
-/**
- * {@link Button.Root.Size}
- */
 export type ToastCloseSize = Button.Root.Size;
 
-/**
- * {@link Button.Root.Variant}
- */
 export type ToastCloseVariant = Button.Root.Variant;
 
 /**
@@ -1009,56 +784,26 @@ export const ToastClose: IComponent<ToastCloseProps> = function SuiToastClose(pr
 export { ToastClose as Close };
 
 export namespace Close {
-  /**
-   * {@link ToastCloseState}
-   */
   export type State = ToastCloseState;
 
-  /**
-   * {@link ToastCloseProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    /**
-     * {@link ToastCloseProps.BaseUI}
-     */
     export type BaseUI = ToastCloseProps.BaseUI;
 
-    /**
-     * {@link ToastCloseProps.HTML}
-     */
     export type HTML = ToastCloseProps.HTML;
 
-    /**
-     * {@link ToastCloseProps.Render}
-     */
     export type Render = ToastCloseProps.Render;
 
-    /**
-     * {@link ToastCloseProps.SuruUI}
-     */
     export type SuruUI = ToastCloseProps.SuruUI;
   }
 
-  /**
-   * {@link ToastCloseColor}
-   */
   export type Color = ToastCloseColor;
 
-  /**
-   * {@link ToastCloseRadius}
-   */
   export type Radius = ToastCloseRadius;
 
-  /**
-   * {@link ToastCloseSize}
-   */
   export type Size = ToastCloseSize;
 
-  /**
-   * {@link ToastCloseVariant}
-   */
   export type Variant = ToastCloseVariant;
 }
 

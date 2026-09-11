@@ -99,14 +99,8 @@ export const FormRoot: IFormRoot = function SuiFormRoot(props: FormRootProps) {
 export { FormRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link FormRootState}
-   */
   export type State = FormRootState;
 
-  /**
-   * {@link FormRootProps}
-   */
   export type Props<TValues extends FormRootValues = FormRootValues> = Props.Render &
     Props.SuruUI &
     Props.BaseUI<TValues> &
@@ -115,33 +109,21 @@ export namespace Root {
   export namespace Props {
     export type BaseUI<TValues extends FormRootValues = FormRootValues> =
       FormRootProps.BaseUI<TValues>;
+
     export type HTML = FormRootProps.HTML;
+
     export type Render = FormRootProps.Render;
+
     export type SuruUI = FormRootProps.SuruUI;
   }
 
-  /**
-   * {@link FormRootActions}
-   */
   export type Actions = FormRootActions;
 
-  /**
-   * {@link FormRootSubmitEventDetails}
-   */
   export type SubmitEventDetails = FormRootSubmitEventDetails;
 
-  /**
-   * {@link FormRootSubmitEventReason}
-   */
   export type SubmitEventReason = FormRootSubmitEventReason;
 
-  /**
-   * {@link FormRootValidationMode}
-   */
   export type ValidationMode = FormRootValidationMode;
 
-  /**
-   * {@link FormRootValues}
-   */
   export type Values<TValues extends FormRootValues = FormRootValues> = FormRootValues<TValues>;
 }

@@ -29,29 +29,14 @@ import {
 // Types
 // -----
 
-/**
- * {@link TooltipRootActions}
- */
 export type TooltipActions = TooltipRootActions;
 
-/**
- * {@link TooltipRootChangeEventDetails}
- */
 export type TooltipChangeEventDetails = TooltipRootChangeEventDetails;
 
-/**
- * {@link TooltipRootChangeEventReason}
- */
 export type TooltipChangeEventReason = TooltipRootChangeEventReason;
 
-/**
- * {@link TooltipRootRadius}
- */
 export type TooltipRadius = TooltipRootRadius;
 
-/**
- * {@link TooltipRootSize}
- */
 export type TooltipSize = TooltipRootSize;
 
 /**
@@ -368,43 +353,19 @@ export const Tooltip: ITooltip = /*#__PURE__*/ Object.assign(
 );
 
 export namespace Tooltip {
-  /**
-   * {@link TooltipState}
-   */
   export type State = TooltipState;
 
-  /**
-   * {@link TooltipProps}
-   */
   export type Props<TPayload = any> = TooltipProps<TPayload>;
 
-  /**
-   * {@link TooltipSlotProps}
-   */
   export type SlotProps = TooltipSlotProps;
 
-  /**
-   * {@link TooltipActions}
-   */
   export type Actions = TooltipActions;
 
-  /**
-   * {@link TooltipChangeEventDetails}
-   */
   export type ChangeEventDetails = TooltipChangeEventDetails;
 
-  /**
-   * {@link TooltipChangeEventReason}
-   */
   export type ChangeEventReason = TooltipChangeEventReason;
 
-  /**
-   * {@link TooltipRadius}
-   */
   export type Radius = TooltipRadius;
 
-  /**
-   * {@link TooltipSize}
-   */
   export type Size = TooltipSize;
 }

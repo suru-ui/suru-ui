@@ -36,24 +36,12 @@ import {
 // Types
 // -----
 
-/**
- * {@link FileUploadRootColor}
- */
 export type FileUploadColor = FileUploadRootColor;
 
-/**
- * {@link FileUploadRootRadius}
- */
 export type FileUploadRadius = FileUploadRootRadius;
 
-/**
- * {@link FileUploadRootSize}
- */
 export type FileUploadSize = FileUploadRootSize;
 
-/**
- * {@link FileUploadRootVariant}
- */
 export type FileUploadVariant = FileUploadRootVariant;
 
 /**
@@ -261,59 +249,26 @@ export const FileUpload: IComponent<FileUploadProps> = function SuiFileUpload(pr
 };
 
 export namespace FileUpload {
-  /**
-   * {@link FileUploadState}
-   */
   export type State = FileUploadState;
 
-  /**
-   * {@link FileUploadProps}
-   */
   export type Props = FileUploadProps;
 
-  /**
-   * {@link FileUploadSlotProps}
-   */
   export type SlotProps = FileUploadSlotProps;
 
-  /**
-   * {@link FileUploadAcceptEventDetails}
-   */
   export type AcceptEventDetails = FileUploadAcceptEventDetails;
 
-  /**
-   * {@link FileUploadColor}
-   */
   export type Color = FileUploadColor;
 
-  /**
-   * {@link FileUploadFileError}
-   */
   export type FileError = FileUploadFileError;
 
-  /**
-   * {@link FileUploadFileErrorReason}
-   */
   export type FileErrorReason = FileUploadFileErrorReason;
 
-  /**
-   * {@link FileUploadRadius}
-   */
   export type Radius = FileUploadRadius;
 
-  /**
-   * {@link FileUploadRejectEventDetails}
-   */
   export type RejectEventDetails = FileUploadRejectEventDetails;
 
-  /**
-   * {@link FileUploadSize}
-   */
   export type Size = FileUploadSize;
 
-  /**
-   * {@link FileUploadVariant}
-   */
   export type Variant = FileUploadVariant;
 }
 

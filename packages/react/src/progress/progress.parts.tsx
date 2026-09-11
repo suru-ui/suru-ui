@@ -156,46 +156,28 @@ export const ProgressRoot: IComponent<ProgressRootProps> = function SuiProgressR
 export { ProgressRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link ProgressRootState}
-   */
   export type State = ProgressRootState;
 
-  /**
-   * {@link ProgressRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ProgressRootProps.BaseUI;
+
     export type HTML = ProgressRootProps.HTML;
+
     export type Render = ProgressRootProps.Render;
+
     export type SuruUI = ProgressRootProps.SuruUI;
   }
 
-  /**
-   * {@link ProgressRootColor}
-   */
   export type Color = ProgressRootColor;
 
-  /**
-   * {@link ProgressRootRadius}
-   */
   export type Radius = ProgressRootRadius;
 
-  /**
-   * {@link ProgressRootSize}
-   */
   export type Size = ProgressRootSize;
 
-  /**
-   * {@link ProgressRootStatus}
-   */
   export type Status = ProgressRootStatus;
 
-  /**
-   * {@link ProgressRootVariant}
-   */
   export type Variant = ProgressRootVariant;
 }
 
@@ -240,20 +222,17 @@ export const ProgressLabel: IComponent<ProgressLabelProps> = function SuiProgres
 export { ProgressLabel as Label };
 
 export namespace Label {
-  /**
-   * {@link ProgressLabelState}
-   */
   export type State = ProgressLabelState;
 
-  /**
-   * {@link ProgressLabelProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ProgressLabelProps.BaseUI;
+
     export type HTML = ProgressLabelProps.HTML;
+
     export type Render = ProgressLabelProps.Render;
+
     export type SuruUI = ProgressLabelProps.SuruUI;
   }
 }
@@ -301,20 +280,17 @@ export const ProgressValue: IComponent<ProgressValueProps> = function SuiProgres
 export { ProgressValue as Value };
 
 export namespace Value {
-  /**
-   * {@link ProgressValueState}
-   */
   export type State = ProgressValueState;
 
-  /**
-   * {@link ProgressValueProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ProgressValueProps.BaseUI;
+
     export type HTML = ProgressValueProps.HTML;
+
     export type Render = ProgressValueProps.Render;
+
     export type SuruUI = ProgressValueProps.SuruUI;
   }
 }
@@ -360,20 +336,17 @@ export const ProgressTrack: IComponent<ProgressTrackProps> = function SuiProgres
 export { ProgressTrack as Track };
 
 export namespace Track {
-  /**
-   * {@link ProgressTrackState}
-   */
   export type State = ProgressTrackState;
 
-  /**
-   * {@link ProgressTrackProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ProgressTrackProps.BaseUI;
+
     export type HTML = ProgressTrackProps.HTML;
+
     export type Render = ProgressTrackProps.Render;
+
     export type SuruUI = ProgressTrackProps.SuruUI;
   }
 }
@@ -421,20 +394,17 @@ export const ProgressIndicator: IComponent<ProgressIndicatorProps> = function Su
 export { ProgressIndicator as Indicator };
 
 export namespace Indicator {
-  /**
-   * {@link ProgressIndicatorState}
-   */
   export type State = ProgressIndicatorState;
 
-  /**
-   * {@link ProgressIndicatorProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type BaseUI = ProgressIndicatorProps.BaseUI;
+
     export type HTML = ProgressIndicatorProps.HTML;
+
     export type Render = ProgressIndicatorProps.Render;
+
     export type SuruUI = ProgressIndicatorProps.SuruUI;
   }
 }

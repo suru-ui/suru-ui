@@ -70,24 +70,17 @@ export const LabelRoot: IComponent<LabelRootProps> = function SuiLabelRoot(props
 export { LabelRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link LabelRootState}
-   */
   export type State = LabelRootState;
 
-  /**
-   * {@link LabelRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = LabelRootProps.HTML;
+
     export type Render = LabelRootProps.Render;
+
     export type SuruUI = LabelRootProps.SuruUI;
   }
 
-  /**
-   * {@link LabelRootSize}
-   */
   export type Size = LabelRootSize;
 }

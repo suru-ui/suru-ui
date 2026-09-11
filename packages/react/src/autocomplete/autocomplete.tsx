@@ -64,49 +64,22 @@ import {
 // Types
 // -----
 
-/**
- * {@link AutocompleteRootActions}
- */
 export type AutocompleteActions = AutocompleteRootActions;
 
-/**
- * {@link AutocompleteRootChangeEventDetails}
- */
 export type AutocompleteChangeEventDetails = AutocompleteRootChangeEventDetails;
 
-/**
- * {@link AutocompleteRootChangeEventReason}
- */
 export type AutocompleteChangeEventReason = AutocompleteRootChangeEventReason;
 
-/**
- * {@link AutocompleteRootColor}
- */
 export type AutocompleteColor = AutocompleteRootColor;
 
-/**
- * {@link AutocompleteRootHighlightEventDetails}
- */
 export type AutocompleteHighlightEventDetails = AutocompleteRootHighlightEventDetails;
 
-/**
- * {@link AutocompleteRootHighlightEventReason}
- */
 export type AutocompleteHighlightEventReason = AutocompleteRootHighlightEventReason;
 
-/**
- * {@link AutocompleteRootRadius}
- */
 export type AutocompleteRadius = AutocompleteRootRadius;
 
-/**
- * {@link AutocompleteRootSize}
- */
 export type AutocompleteSize = AutocompleteRootSize;
 
-/**
- * {@link AutocompleteRootVariant}
- */
 export type AutocompleteVariant = AutocompleteRootVariant;
 
 /**
@@ -581,9 +554,6 @@ interface IAutocomplete extends IComponent<AutocompleteProps> {
    */
   <TItem = any>(props: AutocompleteProps<TItem>): IComponent.Return;
 
-  /**
-   * {@link useAutocompleteContext}
-   */
   readonly useContext: IUseContext<AutocompleteContext>;
 }
 
@@ -658,68 +628,29 @@ export const Autocomplete: IAutocomplete = /*#__PURE__*/ Object.assign(
 );
 
 export namespace Autocomplete {
-  /**
-   * {@link AutocompleteState}
-   */
   export type State = AutocompleteState;
 
-  /**
-   * {@link AutocompleteProps}
-   */
   export type Props = AutocompleteProps;
 
-  /**
-   * {@link AutocompleteSlotProps}
-   */
   export type SlotProps = AutocompleteSlotProps;
 
-  /**
-   * {@link AutocompleteActions}
-   */
   export type Actions = AutocompleteActions;
 
-  /**
-   * {@link AutocompleteChangeEventDetails}
-   */
   export type ChangeEventDetails = AutocompleteChangeEventDetails;
 
-  /**
-   * {@link AutocompleteChangeEventReason}
-   */
   export type ChangeEventReason = AutocompleteChangeEventReason;
 
-  /**
-   * {@link AutocompleteColor}
-   */
   export type Color = AutocompleteColor;
 
-  /**
-   * {@link AutocompleteGroupItem}
-   */
   export type GroupItem<TItem = any> = AutocompleteGroupItem<TItem>;
 
-  /**
-   * {@link AutocompleteHighlightEventDetails}
-   */
   export type HighlightEventDetails = AutocompleteHighlightEventDetails;
 
-  /**
-   * {@link AutocompleteHighlightEventReason}
-   */
   export type HighlightEventReason = AutocompleteHighlightEventReason;
 
-  /**
-   * {@link AutocompleteRadius}
-   */
   export type Radius = AutocompleteRadius;
 
-  /**
-   * {@link AutocompleteSize}
-   */
   export type Size = AutocompleteSize;
 
-  /**
-   * {@link AutocompleteVariant}
-   */
   export type Variant = AutocompleteVariant;
 }

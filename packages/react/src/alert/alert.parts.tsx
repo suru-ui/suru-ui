@@ -137,40 +137,24 @@ export const AlertRoot: IComponent<AlertRootProps> = function SuiAlertRoot(props
 export { AlertRoot as Root };
 
 export namespace Root {
-  /**
-   * {@link AlertRootState}
-   */
   export type State = AlertRootState;
 
-  /**
-   * {@link AlertRootProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = AlertRootProps.HTML;
+
     export type Render = AlertRootProps.Render;
+
     export type SuruUI = AlertRootProps.SuruUI;
   }
 
-  /**
-   * {@link AlertRootColor}
-   */
   export type Color = AlertRootColor;
 
-  /**
-   * {@link AlertRootRadius}
-   */
   export type Radius = AlertRootRadius;
 
-  /**
-   * {@link AlertRootSize}
-   */
   export type Size = AlertRootSize;
 
-  /**
-   * {@link AlertRootVariant}
-   */
   export type Variant = AlertRootVariant;
 }
 
@@ -218,19 +202,15 @@ export const AlertIcon: IComponent<AlertIconProps> = function SuiAlertIcon(props
 export { AlertIcon as Icon };
 
 export namespace Icon {
-  /**
-   * {@link AlertIconState}
-   */
   export type State = AlertIconState;
 
-  /**
-   * {@link AlertIconProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = AlertIconProps.HTML;
+
     export type Render = AlertIconProps.Render;
+
     export type SuruUI = AlertIconProps.SuruUI;
   }
 }
@@ -276,19 +256,15 @@ export const AlertTitle: IComponent<AlertTitleProps> = function SuiAlertTitle(pr
 export { AlertTitle as Title };
 
 export namespace Title {
-  /**
-   * {@link AlertTitleState}
-   */
   export type State = AlertTitleState;
 
-  /**
-   * {@link AlertTitleProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = AlertTitleProps.HTML;
+
     export type Render = AlertTitleProps.Render;
+
     export type SuruUI = AlertTitleProps.SuruUI;
   }
 }
@@ -334,19 +310,15 @@ export const AlertContent: IComponent<AlertContentProps> = function SuiAlertCont
 export { AlertContent as Content };
 
 export namespace Content {
-  /**
-   * {@link AlertContentState}
-   */
   export type State = AlertContentState;
 
-  /**
-   * {@link AlertContentProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = AlertContentProps.HTML;
+
     export type Render = AlertContentProps.Render;
+
     export type SuruUI = AlertContentProps.SuruUI;
   }
 }
@@ -392,19 +364,15 @@ export const AlertActions: IComponent<AlertActionsProps> = function SuiAlertActi
 export { AlertActions as Actions };
 
 export namespace Actions {
-  /**
-   * {@link AlertActionsState}
-   */
   export type State = AlertActionsState;
 
-  /**
-   * {@link AlertActionsProps}
-   */
   export type Props = Props.Render & Props.SuruUI & Props.HTML;
 
   export namespace Props {
     export type HTML = AlertActionsProps.HTML;
+
     export type Render = AlertActionsProps.Render;
+
     export type SuruUI = AlertActionsProps.SuruUI;
   }
 }
