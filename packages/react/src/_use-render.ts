@@ -1,10 +1,11 @@
-import mergeProps from "./_merge-props.js";
 import type { StateAttributesMapping } from "@base-ui/react/internals/getStateAttributesProps";
 import {
   type UseRenderElementComponentProps,
   useRenderElement,
 } from "@base-ui/react/internals/useRenderElement";
 import type * as React from "react";
+
+import mergeProps from "./_merge-props.js";
 
 type State = Record<string, any>;
 
