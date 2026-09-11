@@ -17,8 +17,8 @@ const ctrl = controls(Skeleton, {
     control: "boolean",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
 });
 

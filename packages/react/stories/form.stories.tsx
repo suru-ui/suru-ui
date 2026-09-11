@@ -20,8 +20,8 @@ export default meta;
 
 const ctrl = controls(Form, {
   validationMode: {
-    options: [...VALIDATION_MODES],
     control: "select",
+    options: [...VALIDATION_MODES],
   },
 });
 

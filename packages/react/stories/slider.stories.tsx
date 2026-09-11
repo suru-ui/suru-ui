@@ -1,10 +1,13 @@
-import { SIZES, COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Slider } from "../src/slider/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
+const COLORS: readonly Slider.Color[] = theme.COLORS;
+const RADII: readonly Slider.Radius[] = ["none", ...theme.SIZES, "full"];
+const SIZES: readonly Slider.Size[] = theme.SIZES;
+const VARIANTS: readonly Slider.Variant[] = ["naked", "liquid"];
 
 const meta = preview.meta({
   title: "Slider",
@@ -15,8 +18,8 @@ export default meta;
 
 const ctrl = controls(Slider, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   disabled: {
     control: "boolean",
@@ -25,16 +28,16 @@ const ctrl = controls(Slider, {
     control: "boolean",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   variant: {
-    options: ["naked", "liquid"],
     control: "select",
+    options: VARIANTS,
   },
 });
 

@@ -1,10 +1,12 @@
-import { SIZES } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Select } from "../src/select/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
+const RADII: readonly Select.Radius[] = ["none", ...theme.SIZES, "full"];
+const SIZES: readonly Select.Size[] = theme.SIZES;
+const VARIANTS: readonly Select.Variant[] = ["naked", "liquid"];
 
 const meta = preview.meta({
   title: "Select",
@@ -24,16 +26,16 @@ const ctrl = controls(Select, {
     control: "text",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   variant: {
-    options: ["naked", "liquid"],
     control: "select",
+    options: VARIANTS,
   },
 });
 

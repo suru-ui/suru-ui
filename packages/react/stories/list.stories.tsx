@@ -1,8 +1,10 @@
-import { SIZES } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import { BellIcon, FileIcon, CheckIcon, CircleIcon, FolderIcon } from "lucide-react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { List } from "../src/list/index.js";
+
+const SIZES: readonly List.Size[] = theme.SIZES;
 
 const meta = preview.meta({
   title: "List",
@@ -16,8 +18,8 @@ const ctrl = controls(List, {
     control: "boolean",
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
 });
 

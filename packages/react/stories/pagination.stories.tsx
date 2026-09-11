@@ -1,10 +1,12 @@
-import { SIZES, COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Pagination } from "../src/pagination/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
+const COLORS: readonly Pagination.Color[] = theme.COLORS;
+const RADII: readonly Pagination.Radius[] = ["none", ...theme.SIZES, "full"];
+const SIZES: readonly Pagination.Size[] = theme.SIZES;
 
 const meta = preview.meta({
   title: "Pagination",
@@ -18,8 +20,8 @@ const ctrl = controls(Pagination, {
     control: "number",
   },
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   defaultPage: {
     control: "number",
@@ -28,15 +30,15 @@ const ctrl = controls(Pagination, {
     control: "boolean",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   siblingCount: {
     control: "number",
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   totalPages: {
     control: "number",

@@ -1,7 +1,9 @@
-import { SIZES } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Stat } from "../src/stat/index.js";
+
+const SIZES: readonly Stat.Size[] = theme.SIZES;
 
 const meta = preview.meta({
   title: "Stat",
@@ -12,8 +14,8 @@ export default meta;
 
 const ctrl = controls(Stat, {
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
 });
 

@@ -1,12 +1,14 @@
-import { SIZES, COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Field } from "../src/field/index.js";
 import { Input } from "../src/input/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
-const TYPES = [
+const COLORS: readonly Input.Color[] = theme.COLORS;
+const SIZES: readonly Input.Size[] = theme.SIZES;
+const RADII: readonly Input.Radius[] = ["none", ...theme.SIZES, "full"];
+const TYPES: readonly Input.Type[] = [
   "date",
   "datetime-local",
   "email",
@@ -21,8 +23,8 @@ const TYPES = [
   "time",
   "url",
   "week",
-] as const;
-const VARIANTS = ["naked", "liquid"] as const;
+];
+const VARIANTS: readonly Input.Variant[] = ["naked", "liquid"];
 
 const meta = preview.meta({
   title: "Input",
@@ -33,8 +35,8 @@ export default meta;
 
 const ctrl = controls(Input, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   disabled: {
     control: "boolean",
@@ -46,20 +48,20 @@ const ctrl = controls(Input, {
     control: "text",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   type: {
-    options: TYPES,
     control: "select",
+    options: TYPES,
   },
   variant: {
-    options: VARIANTS,
     control: "select",
+    options: VARIANTS,
   },
 });
 

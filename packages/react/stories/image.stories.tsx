@@ -24,12 +24,12 @@ const ctrl = controls(Image, {
     control: "text",
   },
   fit: {
-    options: FITS,
     control: "select",
+    options: FITS,
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
 });
 

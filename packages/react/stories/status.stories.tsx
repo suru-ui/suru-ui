@@ -1,7 +1,10 @@
-import { SIZES, COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Status } from "../src/status/index.js";
+
+const COLORS: readonly Status.Color[] = theme.COLORS;
+const SIZES: readonly Status.Size[] = theme.SIZES;
 
 const meta = preview.meta({
   title: "Status",
@@ -12,15 +15,15 @@ export default meta;
 
 const ctrl = controls(Status, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   processing: {
     control: "boolean",
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
 });
 

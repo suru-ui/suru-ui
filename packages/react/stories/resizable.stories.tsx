@@ -10,8 +10,8 @@ export default meta;
 
 const ctrl = controls(Resizable, {
   direction: {
-    options: ["horizontal", "vertical"],
     control: "select",
+    options: ["horizontal", "vertical"],
   },
 });
 

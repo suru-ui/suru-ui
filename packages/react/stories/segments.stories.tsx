@@ -1,8 +1,11 @@
-import { SIZES, COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Segments, SegmentsItem } from "../src/segments/index.js";
+
+const COLORS: readonly Segments.Color[] = theme.COLORS;
+const SIZES: readonly Segments.Size[] = theme.SIZES;
 
 const meta = preview.meta({
   title: "Segments",
@@ -13,12 +16,12 @@ export default meta;
 
 const ctrl = controls(Segments, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   radius: {
     control: "select",

@@ -1,4 +1,4 @@
-import { SIZES, COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
@@ -18,8 +18,10 @@ import {
   useFileUploadContext,
 } from "../src/file-upload/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
-const VARIANTS = ["naked", "liquid"] as const;
+const COLORS: readonly FileUpload.Color[] = theme.COLORS;
+const SIZES: readonly FileUpload.Size[] = theme.SIZES;
+const RADII: readonly FileUpload.Radius[] = ["none", ...theme.SIZES, "full"];
+const VARIANTS: readonly FileUpload.Variant[] = ["naked", "liquid"];
 
 const meta = preview.meta({
   title: "FileUpload",
@@ -33,8 +35,8 @@ const ctrl = controls(FileUpload, {
     control: "text",
   },
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   disabled: {
     control: "boolean",
@@ -55,19 +57,19 @@ const ctrl = controls(FileUpload, {
     control: "text",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   required: {
     control: "boolean",
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   variant: {
-    options: VARIANTS,
     control: "select",
+    options: VARIANTS,
   },
 });
 

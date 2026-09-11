@@ -44,8 +44,8 @@ const ctrl = controls(Tooltip, {
     control: "boolean",
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   trackCursorAxis: {
     control: "select",

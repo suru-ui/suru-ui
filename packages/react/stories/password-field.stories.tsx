@@ -1,12 +1,14 @@
-import { SIZES, COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Field } from "../src/field/index.js";
 import { PasswordField } from "../src/password-field/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
-const VARIANTS = ["naked", "liquid"] as const;
+const COLORS: readonly PasswordField.Color[] = theme.COLORS;
+const RADII: readonly PasswordField.Radius[] = ["none", ...theme.SIZES, "full"];
+const SIZES: readonly PasswordField.Size[] = theme.SIZES;
+const VARIANTS: readonly PasswordField.Variant[] = ["naked", "liquid"];
 
 const meta = preview.meta({
   title: "PasswordField",
@@ -17,8 +19,8 @@ export default meta;
 
 const ctrl = controls(PasswordField, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   disabled: {
     control: "boolean",
@@ -30,16 +32,16 @@ const ctrl = controls(PasswordField, {
     control: "text",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   variant: {
-    options: VARIANTS,
     control: "select",
+    options: VARIANTS,
   },
   visibilityToggle: {
     control: "boolean",

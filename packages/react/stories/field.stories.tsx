@@ -31,8 +31,8 @@ const ctrl = controls(Field, {
     control: "text",
   },
   validationMode: {
-    options: VALIDATION_MODES,
     control: "select",
+    options: VALIDATION_MODES,
   },
 });
 

@@ -1,11 +1,14 @@
-import { SIZES, COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { RadioGroup } from "../src/radio-group/index.js";
 import { Radio } from "../src/radio/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
+const COLORS: readonly Radio.Color[] = theme.COLORS;
+const RADII: readonly Radio.Radius[] = ["none", ...theme.SIZES, "full"];
+const SIZES: readonly Radio.Size[] = theme.SIZES;
+const VARIANTS: readonly Radio.Variant[] = ["naked", "liquid"];
 
 const meta = preview.meta({
   title: "Radio",
@@ -16,8 +19,8 @@ export default meta;
 
 const ctrl = controls(Radio, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   disabled: {
     control: "boolean",
@@ -26,16 +29,16 @@ const ctrl = controls(Radio, {
     control: "boolean",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   variant: {
-    options: ["naked", "liquid"],
     control: "select",
+    options: VARIANTS,
   },
 });
 

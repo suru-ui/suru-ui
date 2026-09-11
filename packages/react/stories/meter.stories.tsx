@@ -1,10 +1,12 @@
-import { SIZES, COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Meter } from "../src/meter/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
-const VARIANTS = ["naked", "liquid"] as const;
+const COLORS: readonly Meter.Color[] = theme.COLORS;
+const RADII: readonly Meter.Radius[] = ["none", ...theme.SIZES, "full"];
+const SIZES: readonly Meter.Size[] = theme.SIZES;
+const VARIANTS: readonly Meter.Variant[] = ["naked", "liquid"];
 
 const meta = preview.meta({
   title: "Meter",
@@ -15,8 +17,8 @@ export default meta;
 
 const ctrl = controls(Meter, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   label: {
     control: "text",
@@ -31,19 +33,19 @@ const ctrl = controls(Meter, {
     control: "boolean",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   value: {
     control: "number",
   },
   variant: {
-    options: VARIANTS,
     control: "select",
+    options: VARIANTS,
   },
 });
 

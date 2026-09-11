@@ -23,8 +23,8 @@ const ctrl = controls(Button, {
     control: "text",
   },
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   disabled: {
     control: "boolean",

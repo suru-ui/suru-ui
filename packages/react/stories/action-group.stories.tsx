@@ -1,12 +1,16 @@
-import { SIZES, COLORS, COLOR_TEMPLATES } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import { Trash2Icon, SettingsIcon } from "lucide-react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
-import { ActionGroupRoot, ActionGroupSeparator } from "../src/action-group/index.js";
+import { ActionGroup, ActionGroupRoot, ActionGroupSeparator } from "../src/action-group/index.js";
 import { Button } from "../src/button/index.js";
 import { Input } from "../src/input/index.js";
 
-const RADII = ["none", "sm", "md", "lg", "full"] as const;
+const COLORS: readonly ActionGroup.Color[] = theme.COLORS;
+const ORIENTATIONS: readonly ActionGroup.Orientation[] = ["horizontal", "vertical"];
+const RADII: readonly ActionGroup.Radius[] = ["none", ...theme.SIZES, "full"];
+const SIZES: readonly ActionGroup.Size[] = theme.SIZES;
+const VARIANTS: readonly ActionGroup.Variant[] = theme.COLOR_TEMPLATES;
 
 const meta = preview.meta({
   title: "ActionGroup",
@@ -17,27 +21,27 @@ export default meta;
 
 const ctrl = controls(ActionGroupRoot, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   orientation: {
-    options: ["horizontal", "vertical"],
     control: "select",
+    options: ORIENTATIONS,
   },
   outlined: {
     control: "boolean",
   },
   radius: {
-    options: ["none", "sm", "md", "lg", "full"],
     control: "select",
+    options: RADII,
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   variant: {
-    options: COLOR_TEMPLATES,
     control: "select",
+    options: VARIANTS,
   },
 });
 

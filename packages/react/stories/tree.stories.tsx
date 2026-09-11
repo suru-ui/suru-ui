@@ -72,8 +72,8 @@ const FILE_TREE: readonly FileNode[] = [
 
 const ctrl = controls(Tree, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   muted: {
     control: "boolean",

@@ -1,4 +1,4 @@
-import { SIZES, COLORS } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import { JapaneseYenIcon } from "lucide-react";
 import * as React from "react";
 
@@ -6,8 +6,10 @@ import { preview, controls } from "../.config/storybook/preview.js";
 import { Field } from "../src/field/index.js";
 import { NumberField } from "../src/number-field/index.js";
 
-const RADII = ["none", ...SIZES, "full"] as const;
-const VARIANTS = ["naked", "liquid"] as const;
+const COLORS: readonly NumberField.Color[] = theme.COLORS;
+const RADII: readonly NumberField.Radius[] = ["none", ...theme.SIZES, "full"];
+const SIZES: readonly NumberField.Size[] = theme.SIZES;
+const VARIANTS: readonly NumberField.Variant[] = ["naked", "liquid"];
 
 const meta = preview.meta({
   title: "NumberField",
@@ -18,8 +20,8 @@ export default meta;
 
 const ctrl = controls(NumberField, {
   color: {
-    options: COLORS,
     control: "select",
+    options: COLORS,
   },
   decrement: {
     control: "boolean",
@@ -40,22 +42,22 @@ const ctrl = controls(NumberField, {
     control: "boolean",
   },
   radius: {
-    options: RADII,
     control: "select",
+    options: RADII,
   },
   scrubArea: {
     control: "text",
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
   step: {
     control: "number",
   },
   variant: {
-    options: VARIANTS,
     control: "select",
+    options: VARIANTS,
   },
 });
 

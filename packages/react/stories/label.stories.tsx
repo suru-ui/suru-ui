@@ -1,10 +1,12 @@
-import { SIZES } from "@suru-ui/theme";
+import * as theme from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Checkbox } from "../src/checkbox/index.js";
 import { Input } from "../src/input/index.js";
 import { Label } from "../src/label/index.js";
+
+const SIZES: readonly Label.Size[] = theme.SIZES;
 
 const meta = preview.meta({
   title: "Label",
@@ -21,8 +23,8 @@ const ctrl = controls(Label, {
     control: "text",
   },
   size: {
-    options: SIZES,
     control: "select",
+    options: SIZES,
   },
 });
 
