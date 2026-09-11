@@ -44,11 +44,11 @@ const ctrl = controls(Switch, {
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: "full",
-    outlined: undefined,
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -67,7 +67,7 @@ export const Variants = meta.story({
     color: "grey",
     size: "md",
     radius: "full",
-    outlined: undefined,
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -111,10 +111,10 @@ export const Outlined = meta.story({
 export const Colors = meta.story({
   name: "色",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     size: "md",
     radius: "full",
-    outlined: undefined,
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -134,10 +134,10 @@ export const Colors = meta.story({
 export const Sizes = meta.story({
   name: "大きさ",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     radius: "full",
-    outlined: undefined,
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -163,10 +163,10 @@ export const Sizes = meta.story({
 export const Radius = meta.story({
   name: "角丸",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
-    outlined: undefined,
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -186,11 +186,11 @@ export const Radius = meta.story({
 export const Checked = meta.story({
   name: "チェック状態",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: "full",
-    outlined: undefined,
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -212,11 +212,11 @@ export const Checked = meta.story({
 export const Uncontrolled = meta.story({
   name: "非制御",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: "full",
-    outlined: undefined,
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -238,11 +238,11 @@ export const Uncontrolled = meta.story({
 export const Controlled = meta.story({
   name: "制御",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: "full",
-    outlined: undefined,
+    outlined: false,
     disabled: false,
   }),
   render(props) {
@@ -251,7 +251,7 @@ export const Controlled = meta.story({
     return (
       <div className="flex flex-col gap-3">
         <label className="flex items-center gap-2">
-          <Switch {...props} checked={checked} onCheckedChange={(next) => setChecked(next)} />
+          <Switch {...props} checked={checked} onCheckedChange={setChecked} />
           クリックで切り替え: {checked ? "ON" : "OFF"}
         </label>
       </div>
@@ -262,11 +262,11 @@ export const Controlled = meta.story({
 export const Disabled = meta.story({
   name: "無効",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: "full",
-    outlined: undefined,
+    outlined: false,
   }),
   render(props) {
     return (

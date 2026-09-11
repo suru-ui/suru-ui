@@ -73,7 +73,7 @@ export namespace SwitchRootProps {
     /**
      * スイッチに枠線を表示するかどうかを指定します。
      *
-     * 既定値は {@link SwitchRootProps.variant|variant} が `"naked"` かどうか
+     * @default false
      */
     outlined?: boolean | undefined;
 
@@ -123,8 +123,8 @@ export const SwitchRoot: IComponent<SwitchRootProps> = function SuiSwitchRoot(pr
     size = "md",
     color = "grey",
     radius = "full",
-    variant = "naked",
-    outlined = variant === "naked",
+    variant = "liquid",
+    outlined = false,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",
