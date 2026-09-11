@@ -14,12 +14,22 @@ const meta = preview.meta({
 export default meta;
 
 const ctrl = controls(Status, {
+  children: {
+    control: "text",
+  },
   color: {
     control: "select",
     options: COLORS,
   },
-  processing: {
+  containRipple: {
     control: "boolean",
+  },
+  ping: {
+    control: "boolean",
+  },
+  rippleSize: {
+    control: "select",
+    options: SIZES,
   },
   size: {
     control: "select",
@@ -30,27 +40,29 @@ const ctrl = controls(Status, {
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
-    children: "オンライン",
     color: "green",
-    processing: false,
     size: "md",
+    rippleSize: "md",
+    ping: false,
+    containRipple: false,
+    children: "オンライン",
   }),
 });
 
-export const Variants = meta.story({
-  name: "主な外観",
+export const Ping = meta.story({
+  name: "処理中",
   ...ctrl({
-    children: "オンライン",
     color: "green",
     size: "md",
+    rippleSize: "md",
+    containRipple: false,
+    children: "オンライン",
   }),
   render(props) {
     return (
       <div className="flex flex-wrap gap-6">
-        <Status {...props}>オンライン</Status>
-        <Status {...props} processing>
-          処理中
-        </Status>
+        <Status {...props} />
+        <Status {...props} ping />
       </div>
     );
   },
@@ -59,9 +71,11 @@ export const Variants = meta.story({
 export const Colors = meta.story({
   name: "色",
   ...ctrl({
-    children: "オンライン",
     size: "md",
-    processing: false,
+    rippleSize: "md",
+    ping: false,
+    containRipple: false,
+    children: "オンライン",
   }),
   render(props) {
     return (
@@ -80,9 +94,11 @@ export const Colors = meta.story({
 export const Sizes = meta.story({
   name: "大きさ",
   ...ctrl({
-    children: "オンライン",
     color: "green",
-    processing: false,
+    rippleSize: "md",
+    ping: false,
+    containRipple: false,
+    children: "オンライン",
   }),
   render(props) {
     return (
@@ -98,35 +114,19 @@ export const Sizes = meta.story({
   },
 });
 
-export const Processing = meta.story({
-  name: "処理中",
-  ...ctrl({
-    children: "配信中",
-    color: "red",
-    size: "md",
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-wrap gap-6">
-        <Status {...props} />
-        <Status {...props} processing />
-      </div>
-    );
-  },
-});
-
 export const WithoutLabel = meta.story({
   name: "ラベルなし",
   ...ctrl({
     color: "green",
     size: "md",
-    processing: false,
+    rippleSize: "md",
+    containRipple: false,
   }),
   render(props) {
     return (
       <div className="flex flex-wrap items-center gap-3">
         <Status {...props} />
-        <Status {...props} processing />
+        <Status {...props} ping />
       </div>
     );
   },

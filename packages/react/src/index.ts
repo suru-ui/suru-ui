@@ -634,8 +634,6 @@ export {
   type StatusSlotProps,
   Status,
   useStatusAPI,
-  StatusContext,
-  useStatusContext,
 } from "./status/index.js";
 export {
   type SwitchAPI,

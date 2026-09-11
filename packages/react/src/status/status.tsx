@@ -5,6 +5,7 @@ import {
   type StatusRootProps,
   type StatusRootState,
   type StatusIndicatorProps,
+  type StatusRootRippleSize,
   StatusRoot,
   StatusIndicator,
 } from "./status.parts.jsx";
@@ -13,6 +14,8 @@ import {
 // -----
 
 export type StatusColor = StatusRootColor;
+
+export type StatusRippleSize = StatusRootRippleSize;
 
 export type StatusSize = StatusRootSize;
 
@@ -113,6 +116,8 @@ export namespace Status {
   export type SlotProps = StatusSlotProps;
 
   export type Color = StatusColor;
+
+  export type RippleSize = StatusRippleSize;
 
   export type Size = StatusSize;
 }

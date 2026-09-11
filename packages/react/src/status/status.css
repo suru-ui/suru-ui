@@ -36,7 +36,7 @@
   --sui_status-color: var(--sui-canvas_text-1);
 
   &.sui_status-size_sm {
-    --sui_status-gap: --sui-space(1);
+    --sui_status-gap: --sui-space(2);
     --sui_status-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_status-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_status-line_height: var(--sui-text-oln-sm-n-line_height);
@@ -44,7 +44,7 @@
   }
 
   &.sui_status-size_md {
-    --sui_status-gap: --sui-space(2);
+    --sui_status-gap: --sui-space(3);
     --sui_status-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_status-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_status-line_height: var(--sui-text-oln-md-n-line_height);
@@ -52,7 +52,7 @@
   }
 
   &.sui_status-size_lg {
-    --sui_status-gap: --sui-space(2);
+    --sui_status-gap: --sui-space(4);
     --sui_status-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_status-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_status-line_height: var(--sui-text-oln-lg-n-line_height);
@@ -75,7 +75,7 @@
     flex-shrink: 0;
   }
 
-  .sui_status_indicator-processing::after {
+  &.sui_status-ping .sui_status_indicator::after {
     position: absolute;
     inset: 0px;
     content: "";
@@ -91,6 +91,8 @@
   --sui_status_indicator-background_color: ;
   --sui_status_indicator-border_radius: ;
   --sui_status_indicator-animation_duration: ;
+  --sui_status_indicator-ripple_margin: ;
+  --sui_status_indicator-ripple_scale: ;
 }
 
 /* 可変 */
@@ -98,11 +100,12 @@
   .sui_status_indicator {
     width: var(--sui_status_indicator-size);
     height: var(--sui_status_indicator-size);
+    margin: var(--_sui_status_indicator-ripple_margin, 0px);
     background-color: var(--sui_status_indicator-background_color);
     border-radius: var(--sui_status_indicator-border_radius);
   }
 
-  .sui_status_indicator-processing::after {
+  .sui_status_indicator::after {
     background-color: var(--sui_status_indicator-background_color);
     animation-name: var(--_sui_status_indicator-animation_name, none);
     animation-duration: var(--sui_status_indicator-animation_duration);
@@ -113,56 +116,100 @@
 :scope {
   --sui_status_indicator-border_radius: calc(var(--sui_status_indicator-size) / 2);
   --sui_status_indicator-animation_duration: 1.5s;
+  --sui_status_indicator-ripple_margin: calc(
+                                          var(--sui_status_indicator-size)
+                                          * (var(--sui_status_indicator-ripple_scale) - 1) / 2
+                                        );
 
-  &:has(.sui_status_indicator-size_sm) {
-    --sui_status_indicator-size: 6px;
+  &.sui_status-size_sm {
+    --sui_status_indicator-size: calc(var(--sui-size-sm) * 0.3);
   }
 
-  &:has(.sui_status_indicator-size_md) {
-    --sui_status_indicator-size: 8px;
+  &.sui_status-size_md {
+    --sui_status_indicator-size: calc(var(--sui-size-md) * 0.3);
   }
 
-  &:has(.sui_status_indicator-size_lg) {
-    --sui_status_indicator-size: 10px;
+  &.sui_status-size_lg {
+    --sui_status_indicator-size: calc(var(--sui-size-lg) * 0.3);
   }
 
-  &:has(.sui_status_indicator-color_grey) {
+  &.sui_status-size_sm.sui_status-ripple_size_sm {
+    --sui_status_indicator-ripple_scale: 2;
+  }
+
+  &.sui_status-size_sm.sui_status-ripple_size_md {
+    --sui_status_indicator-ripple_scale: 2.67;
+  }
+
+  &.sui_status-size_sm.sui_status-ripple_size_lg {
+    --sui_status_indicator-ripple_scale: 3.33;
+  }
+
+  &.sui_status-size_md.sui_status-ripple_size_sm {
+    --sui_status_indicator-ripple_scale: 1.75;
+  }
+
+  &.sui_status-size_md.sui_status-ripple_size_md {
+    --sui_status_indicator-ripple_scale: 2.25;
+  }
+
+  &.sui_status-size_md.sui_status-ripple_size_lg {
+    --sui_status_indicator-ripple_scale: 2.75;
+  }
+
+  &.sui_status-size_lg.sui_status-ripple_size_sm {
+    --sui_status_indicator-ripple_scale: 1.6;
+  }
+
+  &.sui_status-size_lg.sui_status-ripple_size_md {
+    --sui_status_indicator-ripple_scale: 2;
+  }
+
+  &.sui_status-size_lg.sui_status-ripple_size_lg {
+    --sui_status_indicator-ripple_scale: 2.4;
+  }
+
+  &.sui_status-color_grey {
     --sui_status_indicator-background_color: var(--sui-grey-solid-canvas-normal);
   }
 
-  &:has(.sui_status_indicator-color_blue) {
+  &.sui_status-color_blue {
     --sui_status_indicator-background_color: var(--sui-blue-solid-canvas-normal);
   }
 
-  &:has(.sui_status_indicator-color_purple) {
+  &.sui_status-color_purple {
     --sui_status_indicator-background_color: var(--sui-purple-solid-canvas-normal);
   }
 
-  &:has(.sui_status_indicator-color_magenta) {
+  &.sui_status-color_magenta {
     --sui_status_indicator-background_color: var(--sui-magenta-solid-canvas-normal);
   }
 
-  &:has(.sui_status_indicator-color_red) {
+  &.sui_status-color_red {
     --sui_status_indicator-background_color: var(--sui-red-solid-canvas-normal);
   }
 
-  &:has(.sui_status_indicator-color_orange) {
+  &.sui_status-color_orange {
     --sui_status_indicator-background_color: var(--sui-orange-solid-canvas-normal);
   }
 
-  &:has(.sui_status_indicator-color_yellow) {
+  &.sui_status-color_yellow {
     --sui_status_indicator-background_color: var(--sui-yellow-solid-canvas-normal);
   }
 
-  &:has(.sui_status_indicator-color_green) {
+  &.sui_status-color_green {
     --sui_status_indicator-background_color: var(--sui-green-solid-canvas-normal);
   }
 }
 
 /* 変異 */
 :scope {
-  .sui_status_indicator-processing::after {
+  &.sui_status-ping .sui_status_indicator::after {
     --_sui_status_indicator-animation_name: sui_status-ping;
+  }
+
+  &.sui_status-contain_ripple .sui_status_indicator {
+    --_sui_status_indicator-ripple_margin: var(--sui_status_indicator-ripple_margin);
   }
 }
 
@@ -178,7 +225,7 @@
 
   to {
     opacity: 0;
-    transform: scale(2.25);
+    transform: scale(var(--sui_status_indicator-ripple_scale));
   }
 }
 }
