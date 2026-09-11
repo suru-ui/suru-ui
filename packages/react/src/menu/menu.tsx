@@ -1,4 +1,4 @@
-import { mergePropsN } from "@base-ui/react";
+import mergeProps from "../_merge-props.js";
 import * as React from "react";
 
 import { CheckIcon, ChevronRightIcon } from "../_icons.jsx";
@@ -421,7 +421,7 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
       const { type: __, items: _, label, ...otherProps } = item as MenuActionItemObject;
 
       return {
-        ...mergePropsN([otherProps, itemProps]),
+        ...mergeProps([otherProps, itemProps]),
         children: toReactNode(label),
       };
     },
@@ -451,7 +451,7 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
     getGroupProps(item) {
       const { type: ___, items: _, label: __, ...otherProps } = item;
 
-      return mergePropsN([otherProps, groupProps]);
+      return mergeProps([otherProps, groupProps]);
     },
     getPopupProps(item) {
       const { items = [] } = this.getRootProps();
@@ -486,7 +486,7 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
       const { type: _, label, ...otherProps } = item;
 
       return {
-        ...mergePropsN([otherProps, linkItemProps]),
+        ...mergeProps([otherProps, linkItemProps]),
         children: toReactNode(label),
       };
     },
@@ -494,7 +494,7 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
       const { type: _, label, value, ...otherProps } = item;
 
       return {
-        ...mergePropsN([otherProps, radioItemProps]),
+        ...mergeProps([otherProps, radioItemProps]),
         value,
         children: toReactNode(label),
       };
@@ -502,7 +502,7 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
     getSeparatorProps(item) {
       const { type: _, ...otherProps } = item;
 
-      return mergePropsN([otherProps, separatorProps]);
+      return mergeProps([otherProps, separatorProps]);
     },
     getGroupLabelProps(item) {
       if (!isLikelyVisibleNode(item.label)) {
@@ -532,7 +532,7 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
     getRadioGroupProps(item) {
       const { type: __, items: _, ...otherProps } = item;
 
-      return mergePropsN([otherProps, radioGroupProps]);
+      return mergeProps([otherProps, radioGroupProps]);
     },
     getSubmenuRootProps() {
       return submenuRootProps;
@@ -541,7 +541,7 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
       const { type: _, label, ...otherProps } = item;
 
       return {
-        ...mergePropsN([otherProps, checkboxItemProps]),
+        ...mergeProps([otherProps, checkboxItemProps]),
         children: toReactNode(label),
       };
     },
@@ -549,7 +549,7 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
       const { type: __, items: _, label, ...otherProps } = item as MenuActionItemObject;
 
       return {
-        ...mergePropsN([otherProps, submenuTriggerProps]),
+        ...mergeProps([otherProps, submenuTriggerProps]),
         children: (
           <>
             {toReactNode(label)}

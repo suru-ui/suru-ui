@@ -1,4 +1,4 @@
-import { mergePropsN } from "@base-ui/react";
+import mergeProps from "../_merge-props.js";
 import * as React from "react";
 
 import { CheckIcon, ChevronRightIcon } from "../_icons.jsx";
@@ -413,7 +413,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
       const { type: __, items: _, label, ...otherItemProps } = item as ContextMenuActionItemObject;
 
       return {
-        ...mergePropsN([itemProps, otherItemProps]),
+        ...mergeProps([itemProps, otherItemProps]),
         children: toReactNode(label),
       };
     },
@@ -439,7 +439,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
     getGroupProps(item) {
       const { type: ___, items: _, label: __, ...otherGroupProps } = item;
 
-      return mergePropsN([groupProps, otherGroupProps]);
+      return mergeProps([groupProps, otherGroupProps]);
     },
     getPortalProps() {
       return portalProps;
@@ -471,7 +471,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
       const { type: _, label, ...otherItemProps } = item;
 
       return {
-        ...mergePropsN([linkItemProps, otherItemProps]),
+        ...mergeProps([linkItemProps, otherItemProps]),
         children: toReactNode(label),
       };
     },
@@ -479,7 +479,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
       const { type: _, label, value, ...otherItemProps } = item;
 
       return {
-        ...mergePropsN([radioItemProps, otherItemProps]),
+        ...mergeProps([radioItemProps, otherItemProps]),
         value,
         children: toReactNode(label),
       };
@@ -487,7 +487,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
     getSeparatorProps(item) {
       const { type: _, ...otherProps } = item;
 
-      return mergePropsN([separatorProps, otherProps]);
+      return mergeProps([separatorProps, otherProps]);
     },
     getGroupLabelProps(item) {
       if (!isLikelyVisibleNode(item.label)) {
@@ -505,7 +505,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
     getRadioGroupProps(item) {
       const { type: __, items: _, ...otherGroupProps } = item;
 
-      return mergePropsN([radioGroupProps, otherGroupProps]);
+      return mergeProps([radioGroupProps, otherGroupProps]);
     },
     getSubmenuRootProps() {
       return submenuRootProps;
@@ -514,7 +514,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
       const { type: _, label, ...otherItemProps } = item;
 
       return {
-        ...mergePropsN([checkboxItemProps, otherItemProps]),
+        ...mergeProps([checkboxItemProps, otherItemProps]),
         children: toReactNode(label),
       };
     },
@@ -522,7 +522,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
       const { type: __, items: _, label, ...otherItemProps } = item as ContextMenuActionItemObject;
 
       return {
-        ...mergePropsN([submenuTriggerProps, otherItemProps]),
+        ...mergeProps([submenuTriggerProps, otherItemProps]),
         children: (
           <>
             {toReactNode(label)}

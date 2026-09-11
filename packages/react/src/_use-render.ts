@@ -1,4 +1,4 @@
-import { mergePropsN } from "@base-ui/react";
+import mergeProps from "./_merge-props.js";
 import type { StateAttributesMapping } from "@base-ui/react/internals/getStateAttributesProps";
 import {
   type UseRenderElementComponentProps,
@@ -74,7 +74,7 @@ export default function useRender<
       elementPropsList.push(elementProps);
     }
 
-    renderProps = mergePropsN(renderPropsList);
+    renderProps = mergeProps(renderPropsList);
   } else {
     const { ref: itemRef, style, render, className, ...elementProps } = props;
 

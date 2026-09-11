@@ -1,4 +1,4 @@
-import { mergePropsN } from "@base-ui/react";
+import mergeProps from "../_merge-props.js";
 import * as React from "react";
 
 import isLikelyVisibleNode, { type LikelyVisibleNode } from "../_is-likely-visible-node.js";
@@ -293,7 +293,7 @@ export const useToastAPI: IUseToastAPI = function useSuiToastAPI(props) {
     },
     getActionProps() {
       if (isLikelyVisibleNode(toast.actionProps?.children)) {
-        return mergePropsN([
+        return mergeProps([
           actionProps,
           toast.actionProps,
           {
