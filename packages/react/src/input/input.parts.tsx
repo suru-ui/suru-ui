@@ -78,9 +78,7 @@ export namespace InputRootProps {
 
   export type HTML = Omit<
     React.ComponentProps<"input">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Omit<React.ComponentProps<typeof Input>, "children" | "size" | "type">
+    keyof Render | keyof SuruUI | keyof Omit<React.ComponentProps<typeof Input>, "children">
   >;
 
   export type Render = RenderProps<InputRootState>;

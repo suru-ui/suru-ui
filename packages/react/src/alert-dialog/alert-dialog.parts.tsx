@@ -201,14 +201,12 @@ export type AlertDialogToggleTriggerState = AlertDialog.Trigger.State;
 export namespace AlertDialogToggleTriggerProps {
   export type BaseUI = Omit<
     React.ComponentProps<typeof AlertDialog.Trigger>,
-    keyof Render | keyof SuruUI | "render"
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Omit<React.ComponentProps<typeof AlertDialog.Trigger>, "handle" | "children" | "render">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof AlertDialog.Trigger>
   >;
 
   export type Render = RenderProps<AlertDialogToggleTriggerState>;
@@ -1116,14 +1114,12 @@ export type AlertDialogCloseTriggerState = AlertDialog.Close.State;
 export namespace AlertDialogCloseTriggerProps {
   export type BaseUI = Omit<
     React.ComponentProps<typeof AlertDialog.Close>,
-    keyof Render | keyof SuruUI | "render"
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Omit<React.ComponentProps<typeof AlertDialog.Close>, "children" | "render">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof AlertDialog.Close>
   >;
 
   export type Render = RenderProps<AlertDialogCloseTriggerState>;

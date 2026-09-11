@@ -74,7 +74,7 @@ export namespace MenubarRootProps {
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof Omit<React.ComponentProps<typeof BaseMenubar>, "children">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseMenubar>
   >;
 
   export type Render = RenderProps<MenubarRootState>;

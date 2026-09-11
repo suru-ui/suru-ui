@@ -146,14 +146,12 @@ export type HoverCardTriggerState = PreviewCard.Trigger.State;
 export namespace HoverCardTriggerProps {
   export type BaseUI<TPayload = unknown> = Omit<
     PreviewCard.Trigger.Props<TPayload>,
-    keyof Render | keyof SuruUI | "render"
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<
     React.ComponentProps<"a">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Omit<PreviewCard.Trigger.Props<any>, "handle" | "children" | "render">
+    keyof Render | keyof SuruUI | keyof PreviewCard.Trigger.Props<any>
   >;
 
   export type Render = RenderProps<HoverCardTriggerState>;

@@ -75,7 +75,10 @@ export namespace SliderRootProps {
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<"div">,
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Slider.Root>
+  >;
 
   export type Render = RenderProps<SliderRootState>;
 

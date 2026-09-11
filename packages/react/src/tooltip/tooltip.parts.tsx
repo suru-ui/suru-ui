@@ -251,10 +251,7 @@ export type TooltipTriggerState = Tooltip.Trigger.State;
 
 export namespace TooltipTriggerProps {
   export type BaseUI<TPayload = any> = Omit<
-    Omit<
-      React.ComponentProps<typeof Tooltip.Trigger<TPayload>>,
-      "handle" | "children" | "render" | "closeOnClick"
-    >,
+    Omit<React.ComponentProps<typeof Tooltip.Trigger<TPayload>>, "closeOnClick">,
     keyof Render | keyof SuruUI
   >;
 

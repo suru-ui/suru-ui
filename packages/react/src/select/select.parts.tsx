@@ -970,9 +970,7 @@ export namespace SelectListProps {
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Omit<React.ComponentProps<typeof BaseSelect.List>, "children">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.List>
   >;
 
   export type Render = RenderProps<SelectListState>;

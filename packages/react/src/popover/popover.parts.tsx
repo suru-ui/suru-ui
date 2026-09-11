@@ -146,14 +146,12 @@ export type PopoverTriggerState = Popover.Trigger.State;
 export namespace PopoverTriggerProps {
   export type BaseUI<TPayload = any> = Omit<
     Popover.Trigger.Props<TPayload>,
-    keyof Render | keyof SuruUI | "render"
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Omit<Popover.Trigger.Props<any>, "handle" | "children" | "render">
+    keyof Render | keyof SuruUI | keyof Popover.Trigger.Props<any>
   >;
 
   export type Render = RenderProps<PopoverTriggerState>;
@@ -678,14 +676,12 @@ export type PopoverCloseState = Popover.Close.State;
 export namespace PopoverCloseProps {
   export type BaseUI = Omit<
     React.ComponentProps<typeof Popover.Close>,
-    keyof Render | keyof SuruUI | "render"
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Omit<React.ComponentProps<typeof Popover.Close>, "children" | "render">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Popover.Close>
   >;
 
   export type Render = RenderProps<PopoverCloseState>;

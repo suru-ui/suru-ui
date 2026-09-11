@@ -104,16 +104,11 @@ export type ResizableRootState = {
 };
 
 export namespace ResizableRootProps {
-  export type BaseUI = Omit<
-    GroupProps,
-    keyof Render | keyof SuruUI | "children" | "className" | "style"
-  >;
+  export type BaseUI = Omit<GroupProps, keyof Render | keyof SuruUI | "children">;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Omit<GroupProps, "children" | "className" | "orientation" | "style">
+    keyof Render | keyof SuruUI | keyof Omit<GroupProps, "children">
   >;
 
   export type Render = RenderProps<ResizableRootState>;
@@ -244,19 +239,11 @@ export type ResizablePanelState = {
 };
 
 export namespace ResizablePanelProps {
-  export type BaseUI = Omit<
-    PanelProps,
-    keyof Render | keyof SuruUI | "children" | "className" | "style"
-  >;
+  export type BaseUI = Omit<PanelProps, keyof Render | keyof SuruUI | "children">;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Omit<
-        PanelProps,
-        "children" | "className" | "defaultSize" | "maxSize" | "minSize" | "onResize" | "style"
-      >
+    keyof Render | keyof SuruUI | keyof Omit<PanelProps, "children">
   >;
 
   export type Render = RenderProps<ResizablePanelState>;
@@ -416,14 +403,11 @@ export type ResizableHandleState = {
 };
 
 export namespace ResizableHandleProps {
-  export type BaseUI = Omit<
-    SeparatorProps,
-    keyof Render | keyof SuruUI | "children" | "className" | "style"
-  >;
+  export type BaseUI = Omit<SeparatorProps, keyof Render | keyof SuruUI | "children">;
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof Omit<SeparatorProps, "children" | "className" | "style">
+    keyof Render | keyof SuruUI | keyof Omit<SeparatorProps, "children">
   >;
 
   export type Render = RenderProps<ResizableHandleState>;

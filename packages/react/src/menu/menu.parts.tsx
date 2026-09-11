@@ -516,14 +516,12 @@ export type MenuTriggerState = Menu.Trigger.State;
 export namespace MenuTriggerProps {
   export type BaseUI<TPayload = unknown> = Omit<
     Menu.Trigger.Props<TPayload>,
-    keyof Render | keyof SuruUI | "render"
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof Omit<Menu.Trigger.Props<any>, "handle" | "children" | "render">
+    keyof Render | keyof SuruUI | keyof Menu.Trigger.Props<any>
   >;
 
   export type Render = RenderProps<MenuTriggerState>;
@@ -824,7 +822,7 @@ export namespace MenuPopupProps {
 
   export type HTML = Omit<
     React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof Omit<React.ComponentProps<typeof Menu.Popup>, "children">
+    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.Popup>
   >;
 
   export type Render = RenderProps<MenuPopupState>;

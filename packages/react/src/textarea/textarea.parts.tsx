@@ -60,7 +60,7 @@ export type TextareaRootState = Input.State;
 
 export namespace TextareaRootProps {
   export type BaseUI = Omit<
-    Omit<React.ComponentProps<typeof Input>, "children" | "render" | "size" | "type">,
+    Omit<React.ComponentProps<typeof Input>, "children" | "type">,
     keyof Render | keyof SuruUI
   >;
 
