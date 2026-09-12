@@ -1,4 +1,5 @@
 import { Combobox } from "@base-ui/react/combobox";
+import type { NativeButtonProps, NonNativeButtonProps } from "@base-ui/react/internals/types";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
@@ -144,7 +145,7 @@ export type ComboboxRootColor = Color;
  * - 平坦な項目の配列
  * - `items` を持つグループの配列。グループには任意で `label` を付けられます。
  */
-export type ComboboxRootItems<TValue = unknown> =
+export type ComboboxRootItems<TValue = any> =
   | readonly TValue[]
   | readonly {
       readonly items: readonly TValue[];
@@ -187,7 +188,7 @@ export type ComboboxRootState = Combobox.Root.State;
 export namespace ComboboxRootProps {
   export type Render = RenderProps<ComboboxRootState>;
 
-  export type SuruUI<TValue = unknown> = {
+  export type SuruUI<TValue = any> = {
     /**
      * フォーカス時に枠線へ適用する色を指定します。
      *
@@ -231,12 +232,56 @@ export namespace ComboboxRootProps {
     variant?: ComboboxRootVariant | undefined;
   };
 
-  export type BaseUI<TValue = unknown, TMultiple extends boolean | undefined = false> = Omit<
+  export type BaseUI<TValue = any, TMultiple extends boolean | undefined = false> = Pick<
     Combobox.Root.Props<TValue, TMultiple>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxRootProps:
+      | "children"
+      | "name"
+      | "form"
+      | "id"
+      | "required"
+      | "readOnly"
+      | "disabled"
+      | "defaultOpen"
+      | "open"
+      | "onOpenChangeComplete"
+      | "openOnInputClick"
+      | "loopFocus"
+      | "inputValue"
+      | "defaultInputValue"
+      | "inputRef"
+      | "grid"
+      | "filteredItems"
+      | "filter"
+      | "virtualized"
+      | "inline"
+      | "modal"
+      | "limit"
+      | "locale"
+      | "multiple"
+      | "autoComplete"
+      | "autoHighlight"
+      | "highlightItemOnHover"
+      | "itemToStringLabel"
+      | "itemToStringValue"
+      | "isItemEqualToValue"
+      | "defaultValue"
+      | "actionsRef"
+      | "onOpenChange"
+      | "onInputValueChange"
+      | "onItemHighlighted"
+      | "value"
+      | "onValueChange",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML<TValue = any, TMultiple extends boolean | undefined = false> = Omit<
+    Combobox.Root.Props<TValue, TMultiple>,
+    keyof Render | keyof SuruUI | keyof BaseUI<TValue, TMultiple>
+  >;
 }
 
 /**
@@ -246,12 +291,12 @@ export namespace ComboboxRootProps {
  * @template TMultiple 複数選択を有効にするかどうかです。
  */
 export type ComboboxRootProps<
-  TValue = unknown,
+  TValue = any,
   TMultiple extends boolean | undefined = false,
 > = ComboboxRootProps.Render &
   ComboboxRootProps.SuruUI<TValue> &
   ComboboxRootProps.BaseUI<TValue, TMultiple> &
-  ComboboxRootProps.HTML;
+  ComboboxRootProps.HTML<TValue, TMultiple>;
 
 interface IComboboxRoot extends IComponent<ComboboxRootProps<unknown, boolean | undefined>> {
   /**
@@ -307,22 +352,25 @@ export { ComboboxRoot as Root };
 export namespace Root {
   export type State = ComboboxRootState;
 
-  export type Props<
-    TValue = unknown,
-    TMultiple extends boolean | undefined = false,
-  > = Props.Render & Props.SuruUI<TValue> & Props.BaseUI<TValue, TMultiple> & Props.HTML;
+  export type Props<TValue = any, TMultiple extends boolean | undefined = false> = Props.Render &
+    Props.SuruUI<TValue> &
+    Props.BaseUI<TValue, TMultiple> &
+    Props.HTML<TValue, TMultiple>;
 
   export namespace Props {
     export type Render = ComboboxRootProps.Render;
 
-    export type SuruUI<TValue = unknown> = ComboboxRootProps.SuruUI<TValue>;
+    export type SuruUI<TValue = any> = ComboboxRootProps.SuruUI<TValue>;
 
     export type BaseUI<
-      TValue = unknown,
+      TValue = any,
       TMultiple extends boolean | undefined = false,
     > = ComboboxRootProps.BaseUI<TValue, TMultiple>;
 
-    export type HTML = ComboboxRootProps.HTML;
+    export type HTML<
+      TValue = any,
+      TMultiple extends boolean | undefined = false,
+    > = ComboboxRootProps.HTML<TValue, TMultiple>;
   }
 
   export type Actions = ComboboxRootActions;
@@ -337,7 +385,7 @@ export namespace Root {
 
   export type HighlightEventReason = ComboboxRootHighlightEventReason;
 
-  export type Items<TValue = unknown> = ComboboxRootItems<TValue>;
+  export type Items<TValue = any> = ComboboxRootItems<TValue>;
 
   export type Radius = ComboboxRootRadius;
 
@@ -359,14 +407,19 @@ export namespace ComboboxLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Label>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxLabelProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Label>
+    React.ComponentProps<typeof Combobox.Label>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -421,14 +474,19 @@ export namespace ComboboxInputGroupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.InputGroup>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxInputGroupProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.InputGroup>
+    React.ComponentProps<typeof Combobox.InputGroup>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -508,14 +566,19 @@ export namespace ComboboxValueProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Value>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxValueProps:
+      "children" | "placeholder",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Value>
+    React.ComponentProps<typeof Combobox.Value>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -568,14 +631,19 @@ export namespace ComboboxInputProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Input>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxInputProps:
+      "disabled",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"input">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Input>
+    React.ComponentProps<typeof Combobox.Input>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -630,14 +698,21 @@ export namespace ComboboxTriggerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Trigger>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NativeButtonProps:
+      | keyof NativeButtonProps
+      // ComboboxTriggerProps:
+      | "disabled",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Trigger>
+    React.ComponentProps<typeof Combobox.Trigger>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -694,14 +769,19 @@ export namespace ComboboxIconProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Icon>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxIconProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Icon>
+    React.ComponentProps<typeof Combobox.Icon>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -756,14 +836,22 @@ export namespace ComboboxClearProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Clear>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NativeButtonProps:
+      | keyof NativeButtonProps
+      // ComboboxClearProps:
+      | "disabled"
+      | "keepMounted",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Clear>
+    React.ComponentProps<typeof Combobox.Clear>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -818,14 +906,19 @@ export namespace ComboboxChipsProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Chips>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxChipsProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Chips>
+    React.ComponentProps<typeof Combobox.Chips>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -880,14 +973,19 @@ export namespace ComboboxChipProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Chip>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxChipProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Chip>
+    React.ComponentProps<typeof Combobox.Chip>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -942,14 +1040,21 @@ export namespace ComboboxChipRemoveProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.ChipRemove>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NativeButtonProps:
+      | keyof NativeButtonProps
+      // ComboboxChipRemoveProps:
+      | never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.ChipRemove>
+    React.ComponentProps<typeof Combobox.ChipRemove>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1007,14 +1112,19 @@ export namespace ComboboxListProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.List>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxListProps:
+      "children",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.List>
+    React.ComponentProps<typeof Combobox.List>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1069,14 +1179,19 @@ export namespace ComboboxStatusProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Status>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxStatusProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Status>
+    React.ComponentProps<typeof Combobox.Status>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1131,14 +1246,19 @@ export namespace ComboboxPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Portal>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxPortalProps:
+      "keepMounted" | "container",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Portal>
+    React.ComponentProps<typeof Combobox.Portal>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1212,14 +1332,19 @@ export namespace ComboboxBackdropProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Backdrop>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxBackdropProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Backdrop>
+    React.ComponentProps<typeof Combobox.Backdrop>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1276,14 +1401,30 @@ export namespace ComboboxPositionerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Positioner>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // UseAnchorPositioningSharedParameters:
+      | "anchor"
+      | "positionMethod"
+      | "side"
+      | "sideOffset"
+      | "align"
+      | "alignOffset"
+      | "collisionBoundary"
+      | "collisionPadding"
+      | "sticky"
+      | "arrowPadding"
+      | "disableAnchorTracking"
+      | "collisionAvoidance",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Positioner>
+    React.ComponentProps<typeof Combobox.Positioner>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1341,14 +1482,19 @@ export namespace ComboboxPopupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Popup>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxPopupProps:
+      "initialFocus" | "finalFocus",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Popup>
+    React.ComponentProps<typeof Combobox.Popup>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1403,14 +1549,19 @@ export namespace ComboboxArrowProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Arrow>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxArrowProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Arrow>
+    React.ComponentProps<typeof Combobox.Arrow>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1465,14 +1616,19 @@ export namespace ComboboxGroupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Group>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxGroupProps:
+      "items",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Group>
+    React.ComponentProps<typeof Combobox.Group>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1527,14 +1683,19 @@ export namespace ComboboxGroupLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.GroupLabel>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxGroupLabelProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.GroupLabel>
+    React.ComponentProps<typeof Combobox.GroupLabel>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1592,12 +1753,29 @@ export namespace ComboboxItemProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
-    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof Combobox.Item>>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+  export type BaseUI = Override<
+    Button.Root.Props.BaseUI,
+    Pick<
+      React.ComponentProps<typeof Combobox.Item>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // NonNativeButtonProps:
+        | keyof NonNativeButtonProps
+        // ComboboxItemProps:
+        | "children"
+        | "onClick"
+        | "index"
+        | "value"
+        | "disabled",
+        keyof Render | keyof SuruUI
+      >
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Combobox.Item>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -1617,16 +1795,20 @@ export const ComboboxItem: IComponent<ComboboxItemProps> = function SuiComboboxI
     index,
     style,
     value,
-    render,
+    render = <div />,
+    onClick,
+    children,
     disabled,
     className,
-    nativeButton,
+    nativeButton = false,
     focusableWhenDisabled,
     ...otherProps
   } = props;
   const baseuiProps: Required<ComboboxItemProps.BaseUI> = {
     index,
     value,
+    onClick,
+    children,
     disabled,
     nativeButton,
     focusableWhenDisabled,
@@ -1637,8 +1819,11 @@ export const ComboboxItem: IComponent<ComboboxItemProps> = function SuiComboboxI
       {...otherProps}
       {...baseuiProps}
       render={(htmlProps: {}, state) => {
-        const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
-          Pick<Button.Root.Props.HTML, "disabled"> = {
+        const buttonRootProps: Required<
+          Button.Root.Props.SuruUI &
+            Button.Root.Props.BaseUI &
+            Pick<Button.Root.Props.HTML, "disabled">
+        > = {
           item: true,
           size: ctx.size,
           color: "grey",
@@ -1649,8 +1834,8 @@ export const ComboboxItem: IComponent<ComboboxItemProps> = function SuiComboboxI
           variant: "naked",
           disabled: state.disabled,
           outlined: undefined,
-          nativeButton: false,
-          focusableWhenDisabled: undefined,
+          nativeButton,
+          focusableWhenDisabled,
         };
 
         return (
@@ -1660,13 +1845,13 @@ export const ComboboxItem: IComponent<ComboboxItemProps> = function SuiComboboxI
               buttonRootProps,
               proxyRenderProps(state, {
                 style,
-                render: render ?? <div />,
+                render,
                 className: cn(
                   className,
                   "sui_combobox_item",
                   (state) => state.disabled && "sui_combobox_item-disabled",
-                  (state) => state.highlighted && "sui_combobox_item-highlighted",
                   (state) => state.selected && "sui_combobox_item-selected",
+                  (state) => state.highlighted && "sui_combobox_item-highlighted",
                 ),
               }),
             ])}
@@ -1711,14 +1896,19 @@ export namespace ComboboxItemIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.ItemIndicator>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxItemIndicatorProps:
+      "keepMounted",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.ItemIndicator>
+    React.ComponentProps<typeof Combobox.ItemIndicator>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1779,11 +1969,19 @@ export namespace ComboboxRowProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Combobox.Row>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Combobox.Row>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxRowProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Row>
+    React.ComponentProps<typeof Combobox.Row>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1838,14 +2036,19 @@ export namespace ComboboxCollectionProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Collection>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxCollectionProps:
+      "children",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Collection>
+    React.ComponentProps<typeof Combobox.Collection>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1901,14 +2104,19 @@ export namespace ComboboxEmptyProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Empty>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxEmptyProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Empty>
+    React.ComponentProps<typeof Combobox.Empty>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1963,14 +2171,19 @@ export namespace ComboboxSeparatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Separator>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxSeparatorProps:
+      "orientation",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Combobox.Separator>
+    React.ComponentProps<typeof Combobox.Separator>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -2068,25 +2281,25 @@ export const useFilter: IUseComboboxFilter = useComboboxFilter;
 /**
  * フィルタリングされた項目の一覧です。
  */
-export type ComboboxFilteredItems<TValue = unknown> = readonly TValue[];
+export type ComboboxFilteredItems<TValue = any> = readonly TValue[];
 
 /**
  * {@link useComboboxFilteredItems} の戻り値です。
  */
-export type IUseComboboxFilteredItemsReturn<TValue = unknown> = ComboboxFilteredItems<TValue>;
+export type IUseComboboxFilteredItemsReturn<TValue = any> = ComboboxFilteredItems<TValue>;
 
 /**
  * {@link useComboboxFilteredItems} の型です。
  */
 export interface IUseComboboxFilteredItems {
-  <TValue = unknown>(): IUseComboboxFilteredItemsReturn<TValue>;
+  <TValue = any>(): IUseComboboxFilteredItemsReturn<TValue>;
 }
 
 /**
  * {@link IUseComboboxFilteredItems} に対応する型名前空間です。
  */
 export namespace IUseComboboxFilteredItems {
-  export type Return<TValue = unknown> = IUseComboboxFilteredItemsReturn<TValue>;
+  export type Return<TValue = any> = IUseComboboxFilteredItemsReturn<TValue>;
 }
 
 function useSuiComboboxFilteredItems(): ComboboxFilteredItems<any> {

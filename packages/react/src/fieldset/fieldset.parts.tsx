@@ -20,14 +20,19 @@ export namespace FieldsetRootProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Fieldset.Root>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // FieldsetRootProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"fieldset">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Fieldset.Root>
+    React.ComponentProps<typeof Fieldset.Root>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -96,14 +101,19 @@ export namespace FieldsetLegendProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Fieldset.Legend>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // FieldsetLegendProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"legend">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Fieldset.Legend>
+    React.ComponentProps<typeof Fieldset.Legend>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 

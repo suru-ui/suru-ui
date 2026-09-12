@@ -17,12 +17,20 @@ export namespace TooltipGroupRootProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
-    Tooltip.Provider.Props,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Tooltip.Provider>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // TooltipProviderProps:
+      "children" | "delay" | "closeDelay" | "timeout",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Tooltip.Provider>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**

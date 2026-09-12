@@ -1,3 +1,4 @@
+import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import type { Size } from "@suru-ui/theme";
 import type * as React from "react";
 
@@ -33,15 +34,6 @@ export type AspectRatioRootRatio = number | string;
  */
 export type AspectRatioRootState = {};
 
-/**
- * {@link AspectRatioRoot} のインラインスタイルです。
- *
- * 比率の計算に使う CSS 変数を含みます。
- */
-type AspectRatioRootStyle = React.CSSProperties & {
-  "--sui_aspect_ratio-ratio"?: AspectRatioRootRatio;
-};
-
 export namespace AspectRatioRootProps {
   export type Render = RenderProps<AspectRatioRootState>;
 
@@ -64,7 +56,12 @@ export namespace AspectRatioRootProps {
     ratio?: AspectRatioRootRatio | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -72,6 +69,7 @@ export namespace AspectRatioRootProps {
  */
 export type AspectRatioRootProps = AspectRatioRootProps.Render &
   AspectRatioRootProps.SuruUI &
+  AspectRatioRootProps.BaseUI &
   AspectRatioRootProps.HTML;
 
 /**
@@ -86,7 +84,6 @@ export const AspectRatioRoot: IComponent<AspectRatioRootProps> = function SuiAsp
   const {
     ratio = 1,
     radius = "none",
-    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherDivProps
@@ -98,8 +95,8 @@ export const AspectRatioRoot: IComponent<AspectRatioRootProps> = function SuiAsp
       {
         style: {
           "--sui_aspect_ratio-ratio": ratio,
-        } as AspectRatioRootStyle,
-        className: cn(className, "sui_aspect_ratio", `sui_aspect_ratio-radius_${radius}`),
+        },
+        className: cn("sui_aspect_ratio", `sui_aspect_ratio-radius_${radius}`),
         "data-scope": dataScope,
       },
     ],
@@ -112,12 +109,14 @@ export { AspectRatioRoot as Root };
 export namespace Root {
   export type State = AspectRatioRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = AspectRatioRootProps.Render;
 
     export type SuruUI = AspectRatioRootProps.SuruUI;
+
+    export type BaseUI = AspectRatioRootProps.BaseUI;
 
     export type HTML = AspectRatioRootProps.HTML;
   }

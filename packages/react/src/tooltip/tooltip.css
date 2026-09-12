@@ -41,6 +41,8 @@
     overflow-wrap: anywhere;
     pointer-events: auto;
     border-style: solid;
+    transition: opacity 150ms ease-out,
+                scale 150ms ease-out;
   }
 }
 

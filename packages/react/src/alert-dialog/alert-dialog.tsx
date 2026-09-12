@@ -240,7 +240,7 @@ function CancelIconButton() {
   const ctx = useAlertDialogContentContext(true);
 
   return (
-    <AlertDialogCloseTrigger>
+    <AlertDialogCloseTrigger className="sui_alert_dialog_cancel_icon_button">
       <Button.Root radius={ctx?.radius} squared variant="naked">
         <XIcon />
       </Button.Root>
@@ -354,7 +354,7 @@ export const useAlertDialogAPI: IUseAlertDialogAPI = function useSuiAlertDialogA
     radius,
     confirm,
     trigger,
-    variant,
+    variant = "default",
     children,
     controls,
     onCancel,
@@ -619,19 +619,10 @@ export const AlertDialog: IAlertDialog = /*#__PURE__*/ Object.assign(
 );
 
 export namespace AlertDialog {
-  /**
-   * {@link AlertDialogState} です。
-   */
   export type State = AlertDialogState;
 
-  /**
-   * {@link AlertDialogProps} です。
-   */
   export type Props = AlertDialogProps;
 
-  /**
-   * {@link AlertDialogSlotProps} です。
-   */
   export type SlotProps = AlertDialogSlotProps;
 
   export type ContentContext = AlertDialogContentContext;

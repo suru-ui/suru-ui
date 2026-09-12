@@ -1,4 +1,5 @@
 import { ContextMenu } from "@base-ui/react/context-menu";
+import type { NonNativeButtonProps } from "@base-ui/react/internals/types";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
@@ -379,12 +380,29 @@ export namespace ContextMenuRootProps {
     variant?: ContextMenuRootVariant | undefined;
   };
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof ContextMenu.Root>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ContextMenuRootProps:
+      | "open"
+      | "defaultOpen"
+      | "disabled"
+      | "loopFocus"
+      | "highlightItemOnHover"
+      | "orientation"
+      | "closeParentOnEsc"
+      | "actionsRef"
+      | "onOpenChange"
+      | "onOpenChangeComplete",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof ContextMenu.Root>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -499,14 +517,19 @@ export namespace ContextMenuTriggerProps {
     children: NonNullable<React.ComponentProps<typeof ContextMenu.Trigger>["render"]>;
   };
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof ContextMenu.Trigger>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ContextMenuTriggerProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.Trigger>
+    React.ComponentProps<typeof ContextMenu.Trigger>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -571,14 +594,19 @@ export namespace ContextMenuPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof ContextMenu.Portal>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuPortalProps:
+      "keepMounted" | "container",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.Portal>
+    React.ComponentProps<typeof ContextMenu.Portal>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -652,14 +680,19 @@ export namespace ContextMenuBackdropProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof ContextMenu.Backdrop>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuBackdropProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.Backdrop>
+    React.ComponentProps<typeof ContextMenu.Backdrop>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -717,14 +750,30 @@ export namespace ContextMenuPositionerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof ContextMenu.Positioner>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // UseAnchorPositioningSharedParameters:
+      | "anchor"
+      | "positionMethod"
+      | "side"
+      | "sideOffset"
+      | "align"
+      | "alignOffset"
+      | "collisionBoundary"
+      | "collisionPadding"
+      | "sticky"
+      | "arrowPadding"
+      | "disableAnchorTracking"
+      | "collisionAvoidance",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.Positioner>
+    React.ComponentProps<typeof ContextMenu.Positioner>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -806,14 +855,19 @@ export namespace ContextMenuContentProps {
     children?: React.ReactNode | IContextMenuContentItemRenderer;
   };
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof ContextMenu.Popup>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuPopupProps:
+      "finalFocus",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.Popup>
+    React.ComponentProps<typeof ContextMenu.Popup>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -972,6 +1026,72 @@ export namespace Content {
   export interface IItemRenderer<TItem = any> extends IContextMenuContentItemRenderer<TItem> {}
 }
 
+// Arrow
+// -----
+
+/**
+ * {@link ContextMenuArrow} が持つ状態です。
+ */
+export type ContextMenuArrowState = ContextMenu.Arrow.State;
+
+export namespace ContextMenuArrowProps {
+  export type Render = RenderProps<ContextMenuArrowState>;
+
+  export type SuruUI = {};
+
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof ContextMenu.Arrow>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuArrowProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<typeof ContextMenu.Arrow>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
+}
+
+/**
+ * {@link ContextMenuArrow} に渡す props です。
+ */
+export type ContextMenuArrowProps = ContextMenuArrowProps.Render &
+  ContextMenuArrowProps.SuruUI &
+  ContextMenuArrowProps.BaseUI &
+  ContextMenuArrowProps.HTML;
+
+/**
+ * ポップアップとトリガーをつなぐ矢印要素です。
+ */
+export const ContextMenuArrow: IComponent<ContextMenuArrowProps> = function SuiContextMenuArrow(
+  props,
+) {
+  const { className, ...otherProps } = props;
+
+  return <ContextMenu.Arrow {...otherProps} className={cn(className, "sui_context_menu_arrow")} />;
+};
+
+export { ContextMenuArrow as Arrow };
+
+export namespace Arrow {
+  export type State = ContextMenuArrowState;
+
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type Render = ContextMenuArrowProps.Render;
+
+    export type SuruUI = ContextMenuArrowProps.SuruUI;
+
+    export type BaseUI = ContextMenuArrowProps.BaseUI;
+
+    export type HTML = ContextMenuArrowProps.HTML;
+  }
+}
+
 // Item
 // ----
 
@@ -1044,12 +1164,29 @@ export namespace ContextMenuItemProps {
     variant?: ContextMenuItemVariant | undefined;
   };
 
-  export type BaseUI = Omit<
-    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof ContextMenu.Item>>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+  export type BaseUI = Override<
+    Button.Root.Props.BaseUI,
+    Pick<
+      React.ComponentProps<typeof ContextMenu.Item>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // NonNativeButtonProps:
+        | keyof NonNativeButtonProps
+        // ContextMenuItemProps:
+        | "onClick"
+        | "disabled"
+        | "label"
+        | "id"
+        | "closeOnClick",
+        keyof Render | keyof SuruUI
+      >
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof ContextMenu.Item>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -1068,21 +1205,25 @@ export const ContextMenuItem: IComponent<ContextMenuItemProps> = function SuiCon
 ) {
   const ctx = useContextMenuContext();
   const {
+    id,
     color = "grey",
     label,
     style,
     radius = ctx.radius,
     render,
+    onClick,
     variant = ctx.variant,
     disabled,
     className,
     closeOnClick,
-    nativeButton,
+    nativeButton = false,
     focusableWhenDisabled,
     ...otherProps
   } = props;
   const baseuiProps: Required<ContextMenuItemProps.BaseUI> = {
+    id,
     label,
+    onClick,
     disabled,
     closeOnClick,
     nativeButton,
@@ -1094,8 +1235,11 @@ export const ContextMenuItem: IComponent<ContextMenuItemProps> = function SuiCon
       {...otherProps}
       {...baseuiProps}
       render={(htmlProps: {}, state) => {
-        const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
-          Pick<Button.Root.Props.HTML, "disabled"> = {
+        const buttonRootProps: Required<
+          Button.Root.Props.SuruUI &
+            Button.Root.Props.BaseUI &
+            Pick<Button.Root.Props.HTML, "disabled">
+        > = {
           item: true,
           size: ctx.size,
           color,
@@ -1106,8 +1250,8 @@ export const ContextMenuItem: IComponent<ContextMenuItemProps> = function SuiCon
           variant: getItemVariant(state, variant),
           disabled: state.disabled,
           outlined: undefined,
-          nativeButton: false,
-          focusableWhenDisabled: undefined,
+          nativeButton,
+          focusableWhenDisabled,
         };
 
         return (
@@ -1196,6 +1340,15 @@ export namespace ContextMenuLinkItemProps {
     color?: ContextMenuLinkItemColor | undefined;
 
     /**
+     * リンクを無効にするかどうかを指定します。
+     *
+     * `true` の場合、リンク先へ遷移できなくなります。
+     *
+     * @default false
+     */
+    disabled?: boolean | undefined;
+
+    /**
      * 項目の角丸を指定します。
      *
      * 既定値は {@link ContextMenuRootProps.radius|radius} です。
@@ -1212,12 +1365,23 @@ export namespace ContextMenuLinkItemProps {
     variant?: ContextMenuLinkItemVariant | undefined;
   };
 
-  export type BaseUI = Omit<
-    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof ContextMenu.LinkItem>>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"a">
+  export type BaseUI = Override<
+    Button.Root.Props.BaseUI,
+    Pick<
+      React.ComponentProps<typeof ContextMenu.LinkItem>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // ContextMenuLinkItemProps:
+        "label" | "id" | "closeOnClick",
+        keyof Render | keyof SuruUI
+      >
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"a">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof ContextMenu.LinkItem>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -1235,19 +1399,23 @@ export const ContextMenuLinkItem: IComponent<ContextMenuLinkItemProps> =
   function SuiContextMenuLinkItem(props) {
     const ctx = useContextMenuContext();
     const {
+      id,
       color = "grey",
       label,
       style,
       radius = ctx.radius,
-      render,
+      // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
+      render = <a />,
       variant = ctx.variant,
+      disabled,
       className,
       closeOnClick,
-      nativeButton,
+      nativeButton = false,
       focusableWhenDisabled,
       ...otherProps
     } = props;
     const baseuiProps: Required<ContextMenuLinkItemProps.BaseUI> = {
+      id,
       label,
       closeOnClick,
       nativeButton,
@@ -1259,7 +1427,11 @@ export const ContextMenuLinkItem: IComponent<ContextMenuLinkItemProps> =
         {...otherProps}
         {...baseuiProps}
         render={(htmlProps: {}, state) => {
-          const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> = {
+          const buttonRootProps: Required<
+            Button.Root.Props.SuruUI &
+              Button.Root.Props.BaseUI &
+              Pick<Button.Root.Props.HTML, "disabled">
+          > = {
             item: true,
             size: ctx.size,
             color,
@@ -1268,9 +1440,10 @@ export const ContextMenuLinkItem: IComponent<ContextMenuLinkItemProps> =
             pending: undefined,
             squared: undefined,
             variant: getItemVariant(state, variant),
+            disabled,
             outlined: undefined,
-            nativeButton: false,
-            focusableWhenDisabled: undefined,
+            nativeButton,
+            focusableWhenDisabled,
           };
 
           return (
@@ -1280,8 +1453,7 @@ export const ContextMenuLinkItem: IComponent<ContextMenuLinkItemProps> =
                 buttonRootProps,
                 proxyRenderProps(state, {
                   style,
-                  // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
-                  render: render ?? <a />,
+                  render,
                   className: cn(
                     className,
                     "sui_context_menu_item",
@@ -1344,14 +1516,28 @@ export namespace ContextMenuSubmenuRootProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof ContextMenu.SubmenuRoot>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuSubmenuRootProps:
+      | "open"
+      | "defaultOpen"
+      | "disabled"
+      | "loopFocus"
+      | "highlightItemOnHover"
+      | "orientation"
+      | "closeParentOnEsc"
+      | "actionsRef"
+      | "onOpenChange"
+      | "onOpenChangeComplete",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.SubmenuRoot>
+    React.ComponentProps<typeof ContextMenu.SubmenuRoot>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1401,12 +1587,12 @@ export namespace SubmenuRoot {
 /**
  * サブメニュー項目の配色です。
  */
-export type ContextMenuSubmenuTriggerColor = Button.Root.Color;
+export type ContextMenuSubmenuTriggerColor = Button.ButtonRootColor;
 
 /**
  * サブメニュー項目の角丸です。
  */
-export type ContextMenuSubmenuTriggerRadius = Button.Root.Radius;
+export type ContextMenuSubmenuTriggerRadius = Button.ButtonRootRadius;
 
 /**
  * サブメニュー項目の主な外観です。
@@ -1421,7 +1607,7 @@ export type ContextMenuSubmenuTriggerVariant = Button.Root.Variant;
  * {@link ContextMenuSubmenuTrigger} が持つ状態です。
  */
 export type ContextMenuSubmenuTriggerState = Override<
-  Button.Root.State,
+  Button.ButtonRootState,
   ContextMenu.SubmenuTrigger.State
 >;
 
@@ -1453,12 +1639,31 @@ export namespace ContextMenuSubmenuTriggerProps {
     variant?: ContextMenuSubmenuTriggerVariant | undefined;
   };
 
-  export type BaseUI = Omit<
-    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof ContextMenu.SubmenuTrigger>>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+  export type BaseUI = Override<
+    Button.Root.Props.BaseUI,
+    Pick<
+      React.ComponentProps<typeof ContextMenu.SubmenuTrigger>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // NonNativeButtonProps:
+        | keyof NonNativeButtonProps
+        // ComboboxItemProps:
+        | "onClick"
+        | "label"
+        | "id"
+        | "disabled"
+        | "delay"
+        | "closeDelay"
+        | "openOnHover",
+        keyof Render | keyof SuruUI
+      >
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof ContextMenu.SubmenuTrigger>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -1476,24 +1681,28 @@ export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProp
   function SuiContextMenuSubmenuTrigger(props) {
     const ctx = useContextMenuContext();
     const {
+      id,
       color = "grey",
       delay,
       label,
       style,
       radius = ctx.radius,
       render,
+      onClick,
       variant = ctx.variant,
       disabled,
       className,
       closeDelay,
       openOnHover,
-      nativeButton,
+      nativeButton = false,
       focusableWhenDisabled,
       ...otherProps
     } = props;
     const baseuiProps: Required<ContextMenuSubmenuTriggerProps.BaseUI> = {
+      id,
       delay,
       label,
+      onClick,
       disabled,
       closeDelay,
       openOnHover,
@@ -1506,8 +1715,11 @@ export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProp
         {...otherProps}
         {...baseuiProps}
         render={(htmlProps: {}, state) => {
-          const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
-            Pick<Button.Root.Props.HTML, "disabled"> = {
+          const buttonRootProps: Required<
+            Button.Root.Props.SuruUI &
+              Button.Root.Props.BaseUI &
+              Pick<Button.Root.Props.HTML, "disabled">
+          > = {
             item: true,
             size: ctx.size,
             color,
@@ -1518,8 +1730,8 @@ export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProp
             variant: getItemVariant(state, variant),
             disabled: state.disabled,
             outlined: undefined,
-            nativeButton: false,
-            focusableWhenDisabled: undefined,
+            nativeButton,
+            focusableWhenDisabled,
           };
 
           return (
@@ -1534,9 +1746,9 @@ export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProp
                     className,
                     "sui_context_menu_item",
                     "sui_context_menu_submenu_trigger",
+                    (state) => state.open && "sui_context_menu_item-open",
                     (state) => state.disabled && "sui_context_menu_item-disabled",
                     (state) => state.highlighted && "sui_context_menu_item-highlighted",
-                    (state) => state.open && "sui_context_menu_item-open",
                   ),
                 }),
               ])}
@@ -1584,14 +1796,19 @@ export namespace ContextMenuGroupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof ContextMenu.Group>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuGroupProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.Group>
+    React.ComponentProps<typeof ContextMenu.Group>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1645,14 +1862,19 @@ export namespace ContextMenuGroupLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof ContextMenu.GroupLabel>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuGroupLabelProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.GroupLabel>
+    React.ComponentProps<typeof ContextMenu.GroupLabel>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1720,14 +1942,19 @@ export namespace ContextMenuRadioGroupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof ContextMenu.RadioGroup>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuRadioGroupProps:
+      "value" | "defaultValue" | "onValueChange" | "disabled",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.RadioGroup>
+    React.ComponentProps<typeof ContextMenu.RadioGroup>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1786,12 +2013,12 @@ export namespace RadioGroup {
 /**
  * ラジオ項目の配色です。
  */
-export type ContextMenuRadioItemColor = Button.Root.Color;
+export type ContextMenuRadioItemColor = Button.ButtonRootColor;
 
 /**
  * ラジオ項目の角丸です。
  */
-export type ContextMenuRadioItemRadius = Button.Root.Radius;
+export type ContextMenuRadioItemRadius = Button.ButtonRootRadius;
 
 /**
  * ラジオ項目の主な外観です。
@@ -1805,7 +2032,10 @@ export type ContextMenuRadioItemVariant = Button.Root.Variant;
 /**
  * {@link ContextMenuRadioItem} が持つ状態です。
  */
-export type ContextMenuRadioItemState = Override<Button.Root.State, ContextMenu.RadioItem.State>;
+export type ContextMenuRadioItemState = Override<
+  Button.ButtonRootState,
+  ContextMenu.RadioItem.State
+>;
 
 export namespace ContextMenuRadioItemProps {
   export type Render = RenderProps<ContextMenuRadioItemState>;
@@ -1835,12 +2065,30 @@ export namespace ContextMenuRadioItemProps {
     variant?: ContextMenuRadioItemVariant | undefined;
   };
 
-  export type BaseUI = Omit<
-    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof ContextMenu.RadioItem>>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+  export type BaseUI = Override<
+    Button.Root.Props.BaseUI,
+    Pick<
+      React.ComponentProps<typeof ContextMenu.RadioItem>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // NonNativeButtonProps:
+        | keyof NonNativeButtonProps
+        // ComboboxItemProps:
+        | "value"
+        | "onClick"
+        | "disabled"
+        | "label"
+        | "id"
+        | "closeOnClick",
+        keyof Render | keyof SuruUI
+      >
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof ContextMenu.RadioItem>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -1858,23 +2106,27 @@ export const ContextMenuRadioItem: IComponent<ContextMenuRadioItemProps> =
   function SuiContextMenuRadioItem(props) {
     const ctx = useContextMenuContext();
     const {
+      id,
       color = "grey",
       label,
       style,
       value,
       radius = ctx.radius,
       render,
+      onClick,
       variant = ctx.variant,
       disabled,
       className,
       closeOnClick,
-      nativeButton,
+      nativeButton = false,
       focusableWhenDisabled,
       ...otherProps
     } = props;
     const baseuiProps: Required<ContextMenuRadioItemProps.BaseUI> = {
+      id,
       label,
       value,
+      onClick,
       disabled,
       closeOnClick,
       nativeButton,
@@ -1898,8 +2150,8 @@ export const ContextMenuRadioItem: IComponent<ContextMenuRadioItemProps> =
             variant: getItemVariant(state, variant),
             disabled: state.disabled,
             outlined: undefined,
-            nativeButton: false,
-            focusableWhenDisabled: undefined,
+            nativeButton,
+            focusableWhenDisabled,
           };
 
           return (
@@ -1964,14 +2216,19 @@ export namespace ContextMenuRadioItemIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof ContextMenu.RadioItemIndicator>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuRadioItemIndicatorProps:
+      "keepMounted",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.RadioItemIndicator>
+    React.ComponentProps<typeof ContextMenu.RadioItemIndicator>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -2038,12 +2295,12 @@ export type ContextMenuCheckboxItemChangeEventReason = ContextMenu.CheckboxItem.
 /**
  * チェックボックス項目の配色です。
  */
-export type ContextMenuCheckboxItemColor = Button.Root.Color;
+export type ContextMenuCheckboxItemColor = Button.ButtonRootColor;
 
 /**
  * チェックボックス項目の角丸です。
  */
-export type ContextMenuCheckboxItemRadius = Button.Root.Radius;
+export type ContextMenuCheckboxItemRadius = Button.ButtonRootRadius;
 
 /**
  * チェックボックス項目の主な外観です。
@@ -2058,7 +2315,7 @@ export type ContextMenuCheckboxItemVariant = Button.Root.Variant;
  * {@link ContextMenuCheckboxItem} が持つ状態です。
  */
 export type ContextMenuCheckboxItemState = Override<
-  Button.Root.State,
+  Button.ButtonRootState,
   ContextMenu.CheckboxItem.State
 >;
 
@@ -2090,12 +2347,32 @@ export namespace ContextMenuCheckboxItemProps {
     variant?: ContextMenuCheckboxItemVariant | undefined;
   };
 
-  export type BaseUI = Omit<
-    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof ContextMenu.CheckboxItem>>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+  export type BaseUI = Override<
+    Button.Root.Props.BaseUI,
+    Pick<
+      React.ComponentProps<typeof ContextMenu.CheckboxItem>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // NonNativeButtonProps:
+        | keyof NonNativeButtonProps
+        // ComboboxItemProps:
+        | "checked"
+        | "defaultChecked"
+        | "onCheckedChange"
+        | "onClick"
+        | "disabled"
+        | "label"
+        | "id"
+        | "closeOnClick",
+        keyof Render | keyof SuruUI
+      >
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof ContextMenu.CheckboxItem>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -2113,27 +2390,33 @@ export const ContextMenuCheckboxItem: IComponent<ContextMenuCheckboxItemProps> =
   function SuiContextMenuCheckboxItem(props) {
     const ctx = useContextMenuContext();
     const {
+      id,
       color = "grey",
       label,
       style,
       radius = ctx.radius,
       render,
       checked,
+      onClick,
       variant = ctx.variant,
       disabled,
       className,
       closeOnClick,
-      nativeButton,
+      nativeButton = false,
+      defaultChecked,
       onCheckedChange,
       focusableWhenDisabled,
       ...otherProps
     } = props;
     const baseuiProps: Required<ContextMenuCheckboxItemProps.BaseUI> = {
+      id,
       label,
       checked,
+      onClick,
       disabled,
       closeOnClick,
       nativeButton,
+      defaultChecked,
       onCheckedChange,
       focusableWhenDisabled,
     };
@@ -2155,8 +2438,8 @@ export const ContextMenuCheckboxItem: IComponent<ContextMenuCheckboxItemProps> =
             variant: getItemVariant(state, variant),
             disabled: state.disabled,
             outlined: undefined,
-            nativeButton: false,
-            focusableWhenDisabled: undefined,
+            nativeButton,
+            focusableWhenDisabled,
           };
 
           return (
@@ -2225,16 +2508,19 @@ export namespace ContextMenuCheckboxItemIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof ContextMenu.CheckboxItemIndicator>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuCheckboxItemIndicatorProps:
+      "keepMounted",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    | keyof Render
-    | keyof SuruUI
-    | keyof React.ComponentProps<typeof ContextMenu.CheckboxItemIndicator>
+    React.ComponentProps<typeof ContextMenu.CheckboxItemIndicator>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -2297,14 +2583,19 @@ export namespace ContextMenuSeparatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof ContextMenu.Separator>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SeparatorProps:
+      "orientation",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof ContextMenu.Separator>
+    React.ComponentProps<typeof ContextMenu.Separator>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 

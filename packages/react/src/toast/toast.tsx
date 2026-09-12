@@ -21,6 +21,7 @@ import {
   type ToastContentProps,
   type ToastContentRadius,
   type ToastProviderProps,
+  type ToastProviderState,
   type ToastViewportProps,
   type ToastContentVariant,
   type ToastRootToastObject,
@@ -508,7 +509,19 @@ export namespace Toast {
   }
 
   export namespace Provider {
-    export type Props = ToastProviderProps;
+    export type State = ToastProviderState;
+
+    export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+    export namespace Props {
+      export type Render = ToastProviderProps.Render;
+
+      export type SuruUI = ToastProviderProps.SuruUI;
+
+      export type BaseUI = ToastProviderProps.BaseUI;
+
+      export type HTML = ToastProviderProps.HTML;
+    }
   }
 }
 
@@ -543,7 +556,6 @@ function toAlertColor(type: string | undefined): AlertRootColor {
     case "err":
     case "crit":
     case "fail":
-    case "ftal":
     case "alert":
     case "error":
     case "fatal":

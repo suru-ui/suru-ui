@@ -178,41 +178,69 @@ export namespace Resizable {
 
   export type Orientation = ResizableOrientation;
 
-  /**
-   * ハンドルの状態やプロパティーをまとめた型名前空間です。
-   */
   export namespace Handle {
     export type State = ResizableHandleState;
 
-    export type Props = ResizableHandleProps;
+    export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+    export namespace Props {
+      export type Render = ResizableHandleProps.Render;
+
+      export type SuruUI = ResizableHandleProps.SuruUI;
+
+      export type BaseUI = ResizableHandleProps.BaseUI;
+
+      export type HTML = ResizableHandleProps.HTML;
+    }
   }
 
-  /**
-   * パネルの状態やプロパティーをまとめた型名前空間です。
-   */
   export namespace Panel {
     export type State = ResizablePanelState;
 
-    export type Props = ResizablePanelProps;
+    export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+    export namespace Props {
+      export type Render = ResizablePanelProps.Render;
+
+      export type SuruUI = ResizablePanelProps.SuruUI;
+
+      export type BaseUI = ResizablePanelProps.BaseUI;
+
+      export type HTML = ResizablePanelProps.HTML;
+    }
 
     export type Size = ResizablePanelSize;
   }
 
-  /**
-   * パネル群のルート要素の状態やプロパティーをまとめた型名前空間です。
-   */
   export namespace PanelGroup {
     export type State = ResizableRootState;
 
-    export type Props = ResizableRootProps;
+    export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+    export namespace Props {
+      export type Render = ResizableRootProps.Render;
+
+      export type SuruUI = ResizableRootProps.SuruUI;
+
+      export type BaseUI = ResizableRootProps.BaseUI;
+
+      export type HTML = ResizableRootProps.HTML;
+    }
   }
 
-  /**
-   * パネル群のルート要素の状態やプロパティーをまとめた型名前空間です。
-   */
   export namespace Root {
     export type State = ResizableRootState;
 
-    export type Props = ResizableRootProps;
+    export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+    export namespace Props {
+      export type Render = ResizableRootProps.Render;
+
+      export type SuruUI = ResizableRootProps.SuruUI;
+
+      export type BaseUI = ResizableRootProps.BaseUI;
+
+      export type HTML = ResizableRootProps.HTML;
+    }
   }
 }

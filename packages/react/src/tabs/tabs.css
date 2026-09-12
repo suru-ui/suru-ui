@@ -364,6 +364,7 @@
 /* 変数 */
 :scope {
   --sui_tabs_indicator-inset: ;
+  --sui_tabs_indicator-z_index: ;
   --sui_tabs_indicator-display: ;
   --sui_tabs_indicator-size: ;
   --sui_tabs_indicator-min_height: ;

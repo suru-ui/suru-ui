@@ -68,6 +68,8 @@ export type ProgressState = ProgressRootState;
 export type ProgressProps = Omit<ProgressRootProps, "children" | "value"> & {
   /**
    * 進捗の説明ラベルです。
+   *
+   * 指定すると {@link ProgressValue} も表示されます。
    */
   label?: ProgressLabelProps["children"] | undefined;
 
@@ -115,8 +117,10 @@ export interface ProgressAPI {
 
   /**
    * {@link ProgressValue} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
-  getValueProps(): ProgressValueProps;
+  getValueProps(): ProgressValueProps | null;
 }
 
 interface IUseProgressAPI {
@@ -150,13 +154,24 @@ export const useProgressAPI: IUseProgressAPI = function useSuiProgressAPI(props)
       return { value, ...otherRootProps };
     },
     getLabelProps() {
-      return isLikelyVisibleNode(label) ? { ...labelProps, children: label } : null;
+      if (isLikelyVisibleNode(label)) {
+        return {
+          ...labelProps,
+          children: label,
+        };
+      }
+
+      return null;
     },
     getTrackProps() {
       return trackProps;
     },
     getValueProps() {
-      return valueProps;
+      if (isLikelyVisibleNode(label)) {
+        return valueProps;
+      }
+
+      return null;
     },
     getIndicatorProps() {
       return indicatorProps;
@@ -177,11 +192,12 @@ export { type ProgressAPI as API, useProgressAPI as useAPI };
 export const Progress: IComponent<ProgressProps> = function SuiProgress(props) {
   const api = useProgressAPI(props);
   const labelProps = api.getLabelProps();
+  const valueProps = api.getValueProps();
 
   return (
     <ProgressRoot {...api.getRootProps()}>
       {labelProps && <ProgressLabel {...labelProps} />}
-      <ProgressValue {...api.getValueProps()} />
+      {valueProps && <ProgressValue {...valueProps} />}
       <ProgressTrack {...api.getTrackProps()}>
         <ProgressIndicator {...api.getIndicatorProps()} />
       </ProgressTrack>

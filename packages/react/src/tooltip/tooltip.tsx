@@ -108,7 +108,15 @@ type TooltipPropsRoot<TPayload = any> = Omit<
 
 type TooltipPropsTrigger<TPayload = any> = Pick<
   TooltipTriggerProps<TPayload>,
-  "closeDelay" | "delay" | "keepOpenOnClick"
+  Exclude<
+    // Base UI の型を確認して取り出すプロパティーを決めます。
+    // TooltipTriggerProps:
+    | "delay"
+    | "closeDelay"
+    // TooltipTriggerProps.SuruUI:
+    | "keepOpenOnClick",
+    keyof TooltipPropsMain | keyof TooltipPropsRoot
+  >
 >;
 
 type TooltipPropsContent = Omit<
@@ -357,7 +365,7 @@ export namespace Tooltip {
 
   export type Props<TPayload = any> = TooltipProps<TPayload>;
 
-  export type SlotProps = TooltipSlotProps;
+  export type SlotProps<TPayload = any> = TooltipSlotProps<TPayload>;
 
   export type Actions = TooltipActions;
 

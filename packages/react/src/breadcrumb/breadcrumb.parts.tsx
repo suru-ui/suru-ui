@@ -1,3 +1,4 @@
+import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
@@ -163,7 +164,12 @@ export namespace BreadcrumbRootProps {
     size?: BreadcrumbRootSize | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"nav">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"nav", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -171,6 +177,7 @@ export namespace BreadcrumbRootProps {
  */
 export type BreadcrumbRootProps = BreadcrumbRootProps.Render &
   BreadcrumbRootProps.SuruUI &
+  BreadcrumbRootProps.BaseUI &
   BreadcrumbRootProps.HTML;
 
 /**
@@ -181,7 +188,6 @@ export const BreadcrumbRoot: IComponent<BreadcrumbRootProps> = function SuiBread
     size = "md",
     color = "grey",
     items = [],
-    className,
     "aria-label": ariaLabel = "パンくずリスト",
     // @ts-expect-error
     "data-scope": dataScope = "",
@@ -196,7 +202,6 @@ export const BreadcrumbRoot: IComponent<BreadcrumbRootProps> = function SuiBread
       otherNavProps,
       {
         className: cn(
-          className,
           "sui_breadcrumb",
           `sui_breadcrumb-size_${size}`,
           `sui_breadcrumb-color_${color}`,
@@ -216,12 +221,14 @@ export { BreadcrumbRoot as Root };
 export namespace Root {
   export type State = BreadcrumbRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = BreadcrumbRootProps.Render;
 
     export type SuruUI = BreadcrumbRootProps.SuruUI;
+
+    export type BaseUI = BreadcrumbRootProps.BaseUI;
 
     export type HTML = BreadcrumbRootProps.HTML;
   }
@@ -272,7 +279,12 @@ export namespace BreadcrumbListProps {
     children?: React.ReactNode | IBreadcrumbListItemRenderer;
   };
 
-  export type HTML = Omit<React.ComponentProps<"ol">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"ol", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -280,6 +292,7 @@ export namespace BreadcrumbListProps {
  */
 export type BreadcrumbListProps = BreadcrumbListProps.Render &
   BreadcrumbListProps.SuruUI &
+  BreadcrumbListProps.BaseUI &
   BreadcrumbListProps.HTML;
 
 /**
@@ -331,12 +344,14 @@ export { BreadcrumbList as List };
 export namespace List {
   export type State = BreadcrumbListState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = BreadcrumbListProps.Render;
 
     export type SuruUI = BreadcrumbListProps.SuruUI;
+
+    export type BaseUI = BreadcrumbListProps.BaseUI;
 
     export type HTML = BreadcrumbListProps.HTML;
   }
@@ -359,7 +374,12 @@ export namespace BreadcrumbItemProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"li">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"li", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -367,6 +387,7 @@ export namespace BreadcrumbItemProps {
  */
 export type BreadcrumbItemProps = BreadcrumbItemProps.Render &
   BreadcrumbItemProps.SuruUI &
+  BreadcrumbItemProps.BaseUI &
   BreadcrumbItemProps.HTML;
 
 /**
@@ -389,12 +410,14 @@ export { BreadcrumbItem as Item };
 export namespace Item {
   export type State = BreadcrumbItemState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = BreadcrumbItemProps.Render;
 
     export type SuruUI = BreadcrumbItemProps.SuruUI;
+
+    export type BaseUI = BreadcrumbItemProps.BaseUI;
 
     export type HTML = BreadcrumbItemProps.HTML;
   }
@@ -431,7 +454,12 @@ export namespace BreadcrumbLinkProps {
     disabled?: boolean | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"a">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"a", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -439,6 +467,7 @@ export namespace BreadcrumbLinkProps {
  */
 export type BreadcrumbLinkProps = BreadcrumbLinkProps.Render &
   BreadcrumbLinkProps.SuruUI &
+  BreadcrumbLinkProps.BaseUI &
   BreadcrumbLinkProps.HTML;
 
 /**
@@ -447,8 +476,8 @@ export type BreadcrumbLinkProps = BreadcrumbLinkProps.Render &
  * `current` を `true` にすると、現在位置を示す要素として描画します。
  */
 export const BreadcrumbLink: IComponent<BreadcrumbLinkProps> = function SuiBreadcrumbLink(props) {
-  const { current = false, onClick, disabled = false, className, ...otherAnchorProps } = props;
-  const handleOnClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+  const { current = false, onClick, disabled = false, ...otherAnchorProps } = props;
+  const handleOnClick: NonNullable<BreadcrumbLinkProps["onClick"]> = (event) => {
     onClick?.(event);
     if (disabled && !event.defaultPrevented) {
       event.preventDefault();
@@ -463,7 +492,6 @@ export const BreadcrumbLink: IComponent<BreadcrumbLinkProps> = function SuiBread
         onClick: handleOnClick,
         tabIndex: disabled && !current ? -1 : otherAnchorProps.tabIndex,
         className: cn(
-          className,
           "sui_breadcrumb_link",
           current && "sui_breadcrumb_link-current",
           disabled && "sui_breadcrumb_link-disabled",
@@ -481,12 +509,14 @@ export { BreadcrumbLink as Link };
 export namespace Link {
   export type State = BreadcrumbLinkState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = BreadcrumbLinkProps.Render;
 
     export type SuruUI = BreadcrumbLinkProps.SuruUI;
+
+    export type BaseUI = BreadcrumbLinkProps.BaseUI;
 
     export type HTML = BreadcrumbLinkProps.HTML;
   }
@@ -505,7 +535,12 @@ export namespace BreadcrumbSeparatorProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"li">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"li", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -513,6 +548,7 @@ export namespace BreadcrumbSeparatorProps {
  */
 export type BreadcrumbSeparatorProps = BreadcrumbSeparatorProps.Render &
   BreadcrumbSeparatorProps.SuruUI &
+  BreadcrumbSeparatorProps.BaseUI &
   BreadcrumbSeparatorProps.HTML;
 
 /**
@@ -520,7 +556,11 @@ export type BreadcrumbSeparatorProps = BreadcrumbSeparatorProps.Render &
  */
 export const BreadcrumbSeparator: IComponent<BreadcrumbSeparatorProps> =
   function SuiBreadcrumbSeparator(props) {
-    const { children = <ChevronRightIcon />, ...otherLiProps } = props;
+    const {
+      children = <ChevronRightIcon />,
+      "aria-hidden": ariaHidden = true,
+      ...otherLiProps
+    } = props;
 
     return useRender({
       props: [
@@ -528,7 +568,7 @@ export const BreadcrumbSeparator: IComponent<BreadcrumbSeparatorProps> =
         {
           children,
           className: "sui_breadcrumb_separator",
-          "aria-hidden": true,
+          "aria-hidden": ariaHidden,
         },
       ],
       defaultTagName: "li",
@@ -540,12 +580,14 @@ export { BreadcrumbSeparator as Separator };
 export namespace Separator {
   export type State = BreadcrumbSeparatorState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = BreadcrumbSeparatorProps.Render;
 
     export type SuruUI = BreadcrumbSeparatorProps.SuruUI;
+
+    export type BaseUI = BreadcrumbSeparatorProps.BaseUI;
 
     export type HTML = BreadcrumbSeparatorProps.HTML;
   }

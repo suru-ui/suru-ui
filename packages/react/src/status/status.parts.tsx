@@ -1,5 +1,5 @@
+import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import type { Size, Color } from "@suru-ui/theme";
-import type * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
@@ -87,7 +87,12 @@ export namespace StatusRootProps {
     size?: StatusRootSize | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"span", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -95,6 +100,7 @@ export namespace StatusRootProps {
  */
 export type StatusRootProps = StatusRootProps.Render &
   StatusRootProps.SuruUI &
+  StatusRootProps.BaseUI &
   StatusRootProps.HTML;
 
 /**
@@ -136,12 +142,14 @@ export { StatusRoot as Root };
 export namespace Root {
   export type State = StatusRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = StatusRootProps.Render;
 
     export type SuruUI = StatusRootProps.SuruUI;
+
+    export type BaseUI = StatusRootProps.BaseUI;
 
     export type HTML = StatusRootProps.HTML;
   }
@@ -166,7 +174,12 @@ export namespace StatusIndicatorProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"span", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -174,6 +187,7 @@ export namespace StatusIndicatorProps {
  */
 export type StatusIndicatorProps = StatusIndicatorProps.Render &
   StatusIndicatorProps.SuruUI &
+  StatusIndicatorProps.BaseUI &
   StatusIndicatorProps.HTML;
 
 /**
@@ -201,12 +215,14 @@ export { StatusIndicator as Indicator };
 export namespace Indicator {
   export type State = StatusIndicatorState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = StatusIndicatorProps.Render;
 
     export type SuruUI = StatusIndicatorProps.SuruUI;
+
+    export type BaseUI = StatusIndicatorProps.BaseUI;
 
     export type HTML = StatusIndicatorProps.HTML;
   }

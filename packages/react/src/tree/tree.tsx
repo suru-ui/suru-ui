@@ -56,7 +56,10 @@ export type TreeSlotProps = {
    * すべての項目に同じ props が渡されます。ツリーの構造に関わる props は上書きされません。
    */
   readonly item?:
-    | Omit<TreeItemProps, "hasItems" | "id" | "label" | "level" | "posInSet" | "setSize">
+    | Omit<
+        TreeItemProps,
+        "children" | "hasItems" | "id" | "label" | "level" | "posInSet" | "setSize"
+      >
     | undefined;
 };
 

@@ -1,5 +1,5 @@
+import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import type { Size } from "@suru-ui/theme";
-import type * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
@@ -36,13 +36,21 @@ export namespace LabelRootProps {
     size?: LabelRootSize | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"label">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"label", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
  * {@link LabelRoot} に渡す props です。
  */
-export type LabelRootProps = LabelRootProps.Render & LabelRootProps.SuruUI & LabelRootProps.HTML;
+export type LabelRootProps = LabelRootProps.Render &
+  LabelRootProps.SuruUI &
+  LabelRootProps.BaseUI &
+  LabelRootProps.HTML;
 
 /**
  * ラベルのルートコンポーネントです。
@@ -72,12 +80,14 @@ export { LabelRoot as Root };
 export namespace Root {
   export type State = LabelRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = LabelRootProps.Render;
 
     export type SuruUI = LabelRootProps.SuruUI;
+
+    export type BaseUI = LabelRootProps.BaseUI;
 
     export type HTML = LabelRootProps.HTML;
   }

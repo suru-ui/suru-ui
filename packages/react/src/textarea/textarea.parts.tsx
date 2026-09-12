@@ -103,12 +103,20 @@ export namespace TextareaRootProps {
     variant?: TextareaRootVariant | undefined;
   };
 
-  export type BaseUI = Omit<
-    Omit<React.ComponentProps<typeof Input>, "children" | "type">,
-    keyof Render | keyof SuruUI
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Input>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // InputProps:
+      "value" | "defaultValue" | "onValueChange",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"textarea">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Input>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**

@@ -1,3 +1,4 @@
+import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import { useControlled } from "@base-ui/utils/useControlled";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
@@ -321,7 +322,12 @@ export namespace FileUploadRootProps {
     variant?: FileUploadRootVariant | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -329,6 +335,7 @@ export namespace FileUploadRootProps {
  */
 export type FileUploadRootProps = FileUploadRootProps.Render &
   FileUploadRootProps.SuruUI &
+  FileUploadRootProps.BaseUI &
   FileUploadRootProps.HTML;
 
 /**
@@ -471,18 +478,17 @@ export const FileUploadRoot: IComponent<FileUploadRootProps> = function SuiFileU
 
 export { FileUploadRoot as Root };
 
-/**
- * {@link FileUploadRoot} の状態や props をまとめた型名前空間です。
- */
 export namespace Root {
   export type State = FileUploadRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = FileUploadRootProps.Render;
 
     export type SuruUI = FileUploadRootProps.SuruUI;
+
+    export type BaseUI = FileUploadRootProps.BaseUI;
 
     export type HTML = FileUploadRootProps.HTML;
   }
@@ -517,17 +523,11 @@ export namespace FileUploadHiddenInputProps {
 
   export type SuruUI = {};
 
+  export type BaseUI = {};
+
   export type HTML = Omit<
-    React.ComponentProps<"input">,
-    | keyof Render
-    | keyof SuruUI
-    | "accept"
-    | "children"
-    | "multiple"
-    | "name"
-    | "onChange"
-    | "required"
-    | "type"
+    BaseUIComponentProps<"input", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -538,6 +538,7 @@ export namespace FileUploadHiddenInputProps {
  */
 export type FileUploadHiddenInputProps = FileUploadHiddenInputProps.Render &
   FileUploadHiddenInputProps.SuruUI &
+  FileUploadHiddenInputProps.BaseUI &
   FileUploadHiddenInputProps.HTML;
 
 /**
@@ -575,18 +576,17 @@ export const FileUploadHiddenInput: IComponent<FileUploadHiddenInputProps> =
 
 export { FileUploadHiddenInput as HiddenInput };
 
-/**
- * {@link FileUploadHiddenInput} の状態や props をまとめた型名前空間です。
- */
 export namespace HiddenInput {
   export type State = FileUploadHiddenInputState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = FileUploadHiddenInputProps.Render;
 
     export type SuruUI = FileUploadHiddenInputProps.SuruUI;
+
+    export type BaseUI = FileUploadHiddenInputProps.BaseUI;
 
     export type HTML = FileUploadHiddenInputProps.HTML;
   }
@@ -605,9 +605,11 @@ export namespace FileUploadTriggerProps {
 
   export type SuruUI = {};
 
+  export type BaseUI = {};
+
   export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | "onClick" | "type"
+    BaseUIComponentProps<"button", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -618,6 +620,7 @@ export namespace FileUploadTriggerProps {
  */
 export type FileUploadTriggerProps = FileUploadTriggerProps.Render &
   FileUploadTriggerProps.SuruUI &
+  FileUploadTriggerProps.BaseUI &
   FileUploadTriggerProps.HTML;
 
 /**
@@ -648,18 +651,17 @@ export const FileUploadTrigger: IComponent<FileUploadTriggerProps> = function Su
 
 export { FileUploadTrigger as Trigger };
 
-/**
- * {@link FileUploadTrigger} の状態や props をまとめた型名前空間です。
- */
 export namespace Trigger {
   export type State = FileUploadTriggerState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = FileUploadTriggerProps.Render;
 
     export type SuruUI = FileUploadTriggerProps.SuruUI;
+
+    export type BaseUI = FileUploadTriggerProps.BaseUI;
 
     export type HTML = FileUploadTriggerProps.HTML;
   }
@@ -683,9 +685,11 @@ export namespace FileUploadDropzoneProps {
 
   export type SuruUI = {};
 
+  export type BaseUI = {};
+
   export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | "onClick" | "type"
+    BaseUIComponentProps<"button", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -697,6 +701,7 @@ export namespace FileUploadDropzoneProps {
  */
 export type FileUploadDropzoneProps = FileUploadDropzoneProps.Render &
   FileUploadDropzoneProps.SuruUI &
+  FileUploadDropzoneProps.BaseUI &
   FileUploadDropzoneProps.HTML;
 
 /**
@@ -751,18 +756,17 @@ export const FileUploadDropzone: IComponent<FileUploadDropzoneProps> =
 
 export { FileUploadDropzone as Dropzone };
 
-/**
- * {@link FileUploadDropzone} の状態や props をまとめた型名前空間です。
- */
 export namespace Dropzone {
   export type State = FileUploadDropzoneState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = FileUploadDropzoneProps.Render;
 
     export type SuruUI = FileUploadDropzoneProps.SuruUI;
+
+    export type BaseUI = FileUploadDropzoneProps.BaseUI;
 
     export type HTML = FileUploadDropzoneProps.HTML;
   }
@@ -781,9 +785,11 @@ export namespace FileUploadClearTriggerProps {
 
   export type SuruUI = {};
 
+  export type BaseUI = {};
+
   export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | "onClick" | "type"
+    BaseUIComponentProps<"button", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -794,6 +800,7 @@ export namespace FileUploadClearTriggerProps {
  */
 export type FileUploadClearTriggerProps = FileUploadClearTriggerProps.Render &
   FileUploadClearTriggerProps.SuruUI &
+  FileUploadClearTriggerProps.BaseUI &
   FileUploadClearTriggerProps.HTML;
 
 /**
@@ -826,18 +833,17 @@ export const FileUploadClearTrigger: IComponent<FileUploadClearTriggerProps> =
 
 export { FileUploadClearTrigger as ClearTrigger };
 
-/**
- * {@link FileUploadClearTrigger} の状態や props をまとめた型名前空間です。
- */
 export namespace ClearTrigger {
   export type State = FileUploadClearTriggerState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = FileUploadClearTriggerProps.Render;
 
     export type SuruUI = FileUploadClearTriggerProps.SuruUI;
+
+    export type BaseUI = FileUploadClearTriggerProps.BaseUI;
 
     export type HTML = FileUploadClearTriggerProps.HTML;
   }
@@ -856,7 +862,12 @@ export namespace FileUploadItemGroupProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"ul">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"ul", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -864,6 +875,7 @@ export namespace FileUploadItemGroupProps {
  */
 export type FileUploadItemGroupProps = FileUploadItemGroupProps.Render &
   FileUploadItemGroupProps.SuruUI &
+  FileUploadItemGroupProps.BaseUI &
   FileUploadItemGroupProps.HTML;
 
 /**
@@ -884,18 +896,17 @@ export const FileUploadItemGroup: IComponent<FileUploadItemGroupProps> =
 
 export { FileUploadItemGroup as ItemGroup };
 
-/**
- * {@link FileUploadItemGroup} の状態や props をまとめた型名前空間です。
- */
 export namespace ItemGroup {
   export type State = FileUploadItemGroupState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = FileUploadItemGroupProps.Render;
 
     export type SuruUI = FileUploadItemGroupProps.SuruUI;
+
+    export type BaseUI = FileUploadItemGroupProps.BaseUI;
 
     export type HTML = FileUploadItemGroupProps.HTML;
   }
@@ -960,7 +971,12 @@ export namespace FileUploadItemProps {
     readonly file: File;
   };
 
-  export type HTML = Omit<React.ComponentProps<"li">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"li", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -968,6 +984,7 @@ export namespace FileUploadItemProps {
  */
 export type FileUploadItemProps = FileUploadItemProps.Render &
   FileUploadItemProps.SuruUI &
+  FileUploadItemProps.BaseUI &
   FileUploadItemProps.HTML;
 
 /**
@@ -993,18 +1010,17 @@ export const FileUploadItem: IComponent<FileUploadItemProps> = function SuiFileU
 
 export { FileUploadItem as Item };
 
-/**
- * {@link FileUploadItem} の状態や props をまとめた型名前空間です。
- */
 export namespace Item {
   export type State = FileUploadItemState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = FileUploadItemProps.Render;
 
     export type SuruUI = FileUploadItemProps.SuruUI;
+
+    export type BaseUI = FileUploadItemProps.BaseUI;
 
     export type HTML = FileUploadItemProps.HTML;
   }
@@ -1023,7 +1039,12 @@ export namespace FileUploadItemNameProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"span", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -1031,6 +1052,7 @@ export namespace FileUploadItemNameProps {
  */
 export type FileUploadItemNameProps = FileUploadItemNameProps.Render &
   FileUploadItemNameProps.SuruUI &
+  FileUploadItemNameProps.BaseUI &
   FileUploadItemNameProps.HTML;
 
 /**
@@ -1054,18 +1076,17 @@ export const FileUploadItemName: IComponent<FileUploadItemNameProps> =
 
 export { FileUploadItemName as ItemName };
 
-/**
- * {@link FileUploadItemName} の状態や props をまとめた型名前空間です。
- */
 export namespace ItemName {
   export type State = FileUploadItemNameState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = FileUploadItemNameProps.Render;
 
     export type SuruUI = FileUploadItemNameProps.SuruUI;
+
+    export type BaseUI = FileUploadItemNameProps.BaseUI;
 
     export type HTML = FileUploadItemNameProps.HTML;
   }
@@ -1084,7 +1105,12 @@ export namespace FileUploadItemSizeTextProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"span", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -1092,6 +1118,7 @@ export namespace FileUploadItemSizeTextProps {
  */
 export type FileUploadItemSizeTextProps = FileUploadItemSizeTextProps.Render &
   FileUploadItemSizeTextProps.SuruUI &
+  FileUploadItemSizeTextProps.BaseUI &
   FileUploadItemSizeTextProps.HTML;
 
 /**
@@ -1115,18 +1142,17 @@ export const FileUploadItemSizeText: IComponent<FileUploadItemSizeTextProps> =
 
 export { FileUploadItemSizeText as ItemSizeText };
 
-/**
- * {@link FileUploadItemSizeText} の状態や props をまとめた型名前空間です。
- */
 export namespace ItemSizeText {
   export type State = FileUploadItemSizeTextState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = FileUploadItemSizeTextProps.Render;
 
     export type SuruUI = FileUploadItemSizeTextProps.SuruUI;
+
+    export type BaseUI = FileUploadItemSizeTextProps.BaseUI;
 
     export type HTML = FileUploadItemSizeTextProps.HTML;
   }
@@ -1145,9 +1171,11 @@ export namespace FileUploadItemDeleteTriggerProps {
 
   export type SuruUI = {};
 
+  export type BaseUI = {};
+
   export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | "onClick" | "type"
+    BaseUIComponentProps<"button", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1158,6 +1186,7 @@ export namespace FileUploadItemDeleteTriggerProps {
  */
 export type FileUploadItemDeleteTriggerProps = FileUploadItemDeleteTriggerProps.Render &
   FileUploadItemDeleteTriggerProps.SuruUI &
+  FileUploadItemDeleteTriggerProps.BaseUI &
   FileUploadItemDeleteTriggerProps.HTML;
 
 /**
@@ -1189,18 +1218,17 @@ export const FileUploadItemDeleteTrigger: IComponent<FileUploadItemDeleteTrigger
 
 export { FileUploadItemDeleteTrigger as ItemDeleteTrigger };
 
-/**
- * {@link FileUploadItemDeleteTrigger} の状態や props をまとめた型名前空間です。
- */
 export namespace ItemDeleteTrigger {
   export type State = FileUploadItemDeleteTriggerState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = FileUploadItemDeleteTriggerProps.Render;
 
     export type SuruUI = FileUploadItemDeleteTriggerProps.SuruUI;
+
+    export type BaseUI = FileUploadItemDeleteTriggerProps.BaseUI;
 
     export type HTML = FileUploadItemDeleteTriggerProps.HTML;
   }

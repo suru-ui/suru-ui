@@ -1,3 +1,4 @@
+import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import { Popover } from "@base-ui/react/popover";
 import * as React from "react";
 
@@ -69,12 +70,28 @@ export namespace PopoverRootProps {
     handle?: PopoverHandle<TPayload> | undefined;
   };
 
-  export type BaseUI<TPayload = any> = Omit<
-    Popover.Root.Props<TPayload>,
-    keyof Render | keyof SuruUI
+  export type BaseUI<TPayload = any> = Pick<
+    React.ComponentProps<typeof Popover.Root<TPayload>>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PopoverRootProps:
+      | "defaultOpen"
+      | "open"
+      | "onOpenChange"
+      | "onOpenChangeComplete"
+      | "actionsRef"
+      | "modal"
+      | "triggerId"
+      | "defaultTriggerId"
+      | "children",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = {};
+  export type HTML<TPayload = any> = Omit<
+    React.ComponentProps<typeof Popover.Root<TPayload>>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -85,13 +102,16 @@ export namespace PopoverRootProps {
 export type PopoverRootProps<TPayload = any> = PopoverRootProps.Render &
   PopoverRootProps.SuruUI<TPayload> &
   PopoverRootProps.BaseUI<TPayload> &
-  PopoverRootProps.HTML;
+  PopoverRootProps.HTML<TPayload>;
 
 /**
  * {@link PopoverRoot} のコンポーネント型です。
  */
-export interface PopoverRootComponent extends IComponent<PopoverRootProps> {
-  <TPayload = any>(props: PopoverRootProps<TPayload>): React.ReactElement | null;
+interface IPopoverRoot extends IComponent<PopoverRootProps> {
+  /**
+   * @template TPayload トリガーから受け取るデータの型です。
+   */
+  <TPayload = any>(props: PopoverRootProps<TPayload>): IComponent.Return;
 }
 
 /**
@@ -100,7 +120,7 @@ export interface PopoverRootComponent extends IComponent<PopoverRootProps> {
  * ポップオーバーの開閉状態を管理し、各パーツをグループ化します。
  * それ自身は HTML 要素をレンダリングしません。
  */
-export const PopoverRoot: PopoverRootComponent = function SuiPopoverRoot<TPayload>(
+export const PopoverRoot: IPopoverRoot = function SuiPopoverRoot<TPayload>(
   props: PopoverRootProps<TPayload>,
 ) {
   return <Popover.Root {...props} />;
@@ -114,7 +134,7 @@ export namespace Root {
   export type Props<TPayload = any> = Props.Render &
     Props.SuruUI<TPayload> &
     Props.BaseUI<TPayload> &
-    Props.HTML;
+    Props.HTML<TPayload>;
 
   export namespace Props {
     export type Render = PopoverRootProps.Render;
@@ -123,7 +143,7 @@ export namespace Root {
 
     export type BaseUI<TPayload = any> = PopoverRootProps.BaseUI<TPayload>;
 
-    export type HTML = PopoverRootProps.HTML;
+    export type HTML<TPayload = any> = PopoverRootProps.HTML<TPayload>;
   }
 
   export type Actions = PopoverRootActions;
@@ -152,7 +172,7 @@ export namespace PopoverTriggerProps {
      *
      * {@link Popover.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
      */
-    children: NonNullable<Popover.Trigger.Props<TPayload>["render"]>;
+    children: NonNullable<React.ComponentProps<typeof Popover.Trigger>["render"]>;
 
     /**
      * ポップオーバー ({@link Root}) を関連付けるハンドルです。
@@ -162,14 +182,25 @@ export namespace PopoverTriggerProps {
     handle?: PopoverHandle<TPayload> | undefined;
   };
 
-  export type BaseUI<TPayload = any> = Omit<
-    Popover.Trigger.Props<TPayload>,
-    keyof Render | keyof SuruUI
+  export type BaseUI<TPayload = any> = Pick<
+    React.ComponentProps<typeof Popover.Trigger<TPayload>>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NativeButtonProps:
+      | keyof NativeButtonProps
+      // PopoverTriggerProps:
+      | "payload"
+      | "id"
+      | "openOnHover"
+      | "delay"
+      | "closeDelay",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof Popover.Trigger.Props<any>
+  export type HTML<TPayload = any> = Omit<
+    React.ComponentProps<typeof Popover.Trigger<TPayload>>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -181,13 +212,16 @@ export namespace PopoverTriggerProps {
 export type PopoverTriggerProps<TPayload = any> = PopoverTriggerProps.Render &
   PopoverTriggerProps.SuruUI<TPayload> &
   PopoverTriggerProps.BaseUI<TPayload> &
-  PopoverTriggerProps.HTML;
+  PopoverTriggerProps.HTML<TPayload>;
 
 /**
  * {@link PopoverTrigger} のコンポーネント型です。
  */
-export interface PopoverTriggerComponent extends IComponent<PopoverTriggerProps> {
-  <TPayload = unknown>(props: PopoverTriggerProps<TPayload>): React.ReactElement | null;
+interface IPopoverTrigger extends IComponent<PopoverTriggerProps> {
+  /**
+   * @template TPayload トリガーから渡すデータの型です。
+   */
+  <TPayload = any>(props: PopoverTriggerProps<TPayload>): IComponent.Return;
 }
 
 /**
@@ -195,7 +229,7 @@ export interface PopoverTriggerComponent extends IComponent<PopoverTriggerProps>
  *
  * 子要素は何にもラップされず、そのまま {@link Popover.Trigger} の `render` プロパティーに渡されます。
  */
-export const PopoverTrigger: PopoverTriggerComponent = function SuiPopoverTrigger<TPayload>(
+export const PopoverTrigger: IPopoverTrigger = function SuiPopoverTrigger<TPayload>(
   props: PopoverTriggerProps<TPayload>,
 ) {
   const { handle, children, className, ...otherProps } = props;
@@ -215,10 +249,10 @@ export { PopoverTrigger as Trigger };
 export namespace Trigger {
   export type State = PopoverTriggerState;
 
-  export type Props<TPayload = unknown> = Props.Render &
+  export type Props<TPayload = any> = Props.Render &
     Props.SuruUI<TPayload> &
     Props.BaseUI<TPayload> &
-    Props.HTML;
+    Props.HTML<TPayload>;
 
   export namespace Props {
     export type Render = PopoverTriggerProps.Render;
@@ -227,7 +261,7 @@ export namespace Trigger {
 
     export type BaseUI<TPayload = any> = PopoverTriggerProps.BaseUI<TPayload>;
 
-    export type HTML = PopoverTriggerProps.HTML;
+    export type HTML<TPayload = any> = PopoverTriggerProps.HTML<TPayload>;
   }
 }
 
@@ -244,14 +278,19 @@ export namespace PopoverPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Popover.Portal>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PopoverPortalProps:
+      "keepMounted" | "container",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Popover.Portal>
+    React.ComponentProps<typeof Popover.Portal>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -316,14 +355,19 @@ export namespace PopoverBackdropProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Popover.Backdrop>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PopoverBackdropProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Popover.Backdrop>
+    React.ComponentProps<typeof Popover.Backdrop>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -388,14 +432,30 @@ export namespace PopoverPositionerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Popover.Positioner>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // UseAnchorPositioningSharedParameters:
+      | "anchor"
+      | "positionMethod"
+      | "side"
+      | "sideOffset"
+      | "align"
+      | "alignOffset"
+      | "collisionBoundary"
+      | "collisionPadding"
+      | "sticky"
+      | "arrowPadding"
+      | "disableAnchorTracking"
+      | "collisionAvoidance",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Popover.Positioner>
+    React.ComponentProps<typeof Popover.Positioner>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -449,14 +509,19 @@ export namespace PopoverPopupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Popover.Popup>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PopoverPopupProps:
+      "initialFocus" | "finalFocus",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Popover.Popup>
+    React.ComponentProps<typeof Popover.Popup>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -519,14 +584,19 @@ export namespace PopoverArrowProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Popover.Arrow>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PopoverArrowProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Popover.Arrow>
+    React.ComponentProps<typeof Popover.Arrow>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -578,14 +648,19 @@ export namespace PopoverTitleProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Popover.Title>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PopoverTitleProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"h1">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Popover.Title>
+    React.ComponentProps<typeof Popover.Title>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -637,14 +712,19 @@ export namespace PopoverDescriptionProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Popover.Description>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PopoverDescriptionProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"p">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Popover.Description>
+    React.ComponentProps<typeof Popover.Description>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -706,14 +786,21 @@ export namespace PopoverCloseProps {
     children: NonNullable<React.ComponentProps<typeof Popover.Close>["render"]>;
   };
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Popover.Close>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NativeButtonProps:
+      | keyof NativeButtonProps
+      // PopoverCloseProps:
+      | never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Popover.Close>
+    React.ComponentProps<typeof Popover.Close>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -773,14 +860,19 @@ export namespace PopoverViewportProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Popover.Viewport>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PopoverViewportProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Popover.Viewport>
+    React.ComponentProps<typeof Popover.Viewport>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 

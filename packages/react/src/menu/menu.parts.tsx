@@ -1,3 +1,4 @@
+import type { NativeButtonProps, NonNativeButtonProps } from "@base-ui/react/internals/types";
 import { Menu } from "@base-ui/react/menu";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
@@ -127,7 +128,7 @@ export namespace Context {
 /**
  * メニューを制御するハンドルです。
  */
-export type MenuHandle<TPayload = unknown> = Menu.Handle<TPayload>;
+export type MenuHandle<TPayload = any> = Menu.Handle<TPayload>;
 
 /**
  * メニューを制御するハンドルを新しく作成します。
@@ -358,7 +359,7 @@ export type MenuRootState = Menu.Root.State;
 export namespace MenuRootProps {
   export type Render = RenderProps<MenuRootState>;
 
-  export type SuruUI<TPayload = unknown, TItem = any> = {
+  export type SuruUI<TPayload = any, TItem = any> = {
     /**
      * メニューとトリガー ({@link Trigger}) を関連付けるハンドルです。
      *
@@ -400,12 +401,34 @@ export namespace MenuRootProps {
     variant?: MenuRootVariant | undefined;
   };
 
-  export type BaseUI<TPayload = unknown> = Omit<
+  export type BaseUI<TPayload = any> = Pick<
     Menu.Root.Props<TPayload>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuRootProps:
+      | "defaultOpen"
+      | "loopFocus"
+      | "highlightItemOnHover"
+      | "modal"
+      | "onOpenChange"
+      | "onOpenChangeComplete"
+      | "open"
+      | "orientation"
+      | "disabled"
+      | "closeParentOnEsc"
+      | "actionsRef"
+      | "triggerId"
+      | "defaultTriggerId"
+      | "handle"
+      | "children",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = {};
+  export type HTML<TPayload = any> = Omit<
+    Menu.Root.Props<TPayload>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -414,17 +437,17 @@ export namespace MenuRootProps {
  * @template TPayload 開いたときに渡される値の型です。
  * @template TItem 項目の型です。
  */
-export type MenuRootProps<TPayload = unknown, TItem = any> = MenuRootProps.Render &
+export type MenuRootProps<TPayload = any, TItem = any> = MenuRootProps.Render &
   MenuRootProps.SuruUI<TPayload, TItem> &
   MenuRootProps.BaseUI<TPayload> &
-  MenuRootProps.HTML;
+  MenuRootProps.HTML<TPayload>;
 
 interface IMenuRoot extends IComponent<MenuRootProps> {
   /**
    * @template TPayload 開いたときに渡される値の型です。
    * @template TItem 項目の型です。
    */
-  <TPayload = unknown, TItem = any>(props: MenuRootProps<TPayload, TItem>): IComponent.Return;
+  <TPayload = any, TItem = any>(props: MenuRootProps<TPayload, TItem>): IComponent.Return;
 }
 
 /**
@@ -459,19 +482,19 @@ export { MenuRoot as Root };
 export namespace Root {
   export type State = MenuRootState;
 
-  export type Props<TPayload = unknown, TItem = any> = Props.Render &
+  export type Props<TPayload = any, TItem = any> = Props.Render &
     Props.SuruUI<TPayload, TItem> &
     Props.BaseUI<TPayload> &
-    Props.HTML;
+    Props.HTML<TPayload>;
 
   export namespace Props {
     export type Render = MenuRootProps.Render;
 
-    export type SuruUI<TPayload = unknown, TItem = any> = MenuRootProps.SuruUI<TPayload, TItem>;
+    export type SuruUI<TPayload = any, TItem = any> = MenuRootProps.SuruUI<TPayload, TItem>;
 
-    export type BaseUI<TPayload = unknown> = MenuRootProps.BaseUI<TPayload>;
+    export type BaseUI<TPayload = any> = MenuRootProps.BaseUI<TPayload>;
 
-    export type HTML = MenuRootProps.HTML;
+    export type HTML<TPayload = any> = MenuRootProps.HTML<TPayload>;
   }
 
   export type ActionItemObject = MenuRootActionItemObject;
@@ -516,7 +539,7 @@ export type MenuTriggerState = Menu.Trigger.State;
 export namespace MenuTriggerProps {
   export type Render = RenderProps<MenuTriggerState>;
 
-  export type SuruUI<TPayload = unknown> = {
+  export type SuruUI<TPayload = any> = {
     /**
      * トリガーとしてレンダリングする要素です。
      *
@@ -532,14 +555,25 @@ export namespace MenuTriggerProps {
     handle?: MenuHandle<TPayload> | undefined;
   };
 
-  export type BaseUI<TPayload = unknown> = Omit<
+  export type BaseUI<TPayload = any> = Pick<
     Menu.Trigger.Props<TPayload>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NativeButtonProps:
+      | keyof NativeButtonProps
+      // MenuTriggerProps:
+      | "disabled"
+      | "payload"
+      | "delay"
+      | "closeDelay"
+      | "openOnHover",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof Menu.Trigger.Props<any>
+  export type HTML<TPayload = any> = Omit<
+    Menu.Trigger.Props<TPayload>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -548,16 +582,16 @@ export namespace MenuTriggerProps {
  *
  * @template TPayload 開いたときに渡される値の型です。
  */
-export type MenuTriggerProps<TPayload = unknown> = MenuTriggerProps.Render &
+export type MenuTriggerProps<TPayload = any> = MenuTriggerProps.Render &
   MenuTriggerProps.SuruUI<TPayload> &
   MenuTriggerProps.BaseUI<TPayload> &
-  MenuTriggerProps.HTML;
+  MenuTriggerProps.HTML<TPayload>;
 
 interface IMenuTrigger extends IComponent<MenuTriggerProps> {
   /**
    * @template TPayload 開いたときに渡される値の型です。
    */
-  <TPayload = unknown>(props: MenuTriggerProps<TPayload>): IComponent.Return;
+  <TPayload = any>(props: MenuTriggerProps<TPayload>): IComponent.Return;
 }
 
 /**
@@ -588,19 +622,19 @@ export { MenuTrigger as Trigger };
 export namespace Trigger {
   export type State = MenuTriggerState;
 
-  export type Props<TPayload = unknown> = Props.Render &
+  export type Props<TPayload = any> = Props.Render &
     Props.SuruUI<TPayload> &
     Props.BaseUI<TPayload> &
-    Props.HTML;
+    Props.HTML<TPayload>;
 
   export namespace Props {
     export type Render = MenuTriggerProps.Render;
 
-    export type SuruUI<TPayload = unknown> = MenuTriggerProps.SuruUI<TPayload>;
+    export type SuruUI<TPayload = any> = MenuTriggerProps.SuruUI<TPayload>;
 
-    export type BaseUI<TPayload = unknown> = MenuTriggerProps.BaseUI<TPayload>;
+    export type BaseUI<TPayload = any> = MenuTriggerProps.BaseUI<TPayload>;
 
-    export type HTML = MenuTriggerProps.HTML;
+    export type HTML<TPayload = any> = MenuTriggerProps.HTML<TPayload>;
   }
 }
 
@@ -617,11 +651,19 @@ export namespace MenuPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Portal>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Menu.Portal>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuPortalProps:
+      "keepMounted" | "container",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.Portal>
+    React.ComponentProps<typeof Menu.Portal>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -639,7 +681,7 @@ export type MenuPortalProps = MenuPortalProps.Render &
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
 export const MenuPortal: IComponent<MenuPortalProps> = function SuiMenuPortal(props) {
-  const { size, radius, outlined } = useMenuContext();
+  const ctx = useMenuContext();
   const {
     className,
     // @ts-expect-error
@@ -653,9 +695,9 @@ export const MenuPortal: IComponent<MenuPortalProps> = function SuiMenuPortal(pr
       className={cn(
         className,
         "sui_menu_portal",
-        `sui_menu_portal-size_${size}`,
-        `sui_menu_portal-radius_${radius}`,
-        outlined && "sui_menu_portal-outlined",
+        `sui_menu_portal-size_${ctx.size}`,
+        `sui_menu_portal-radius_${ctx.radius}`,
+        ctx.outlined && "sui_menu_portal-outlined",
       )}
       data-scope={dataScope}
     />
@@ -693,14 +735,19 @@ export namespace MenuBackdropProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Menu.Backdrop>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuBackdropProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.Backdrop>
+    React.ComponentProps<typeof Menu.Backdrop>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -752,14 +799,30 @@ export namespace MenuPositionerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Menu.Positioner>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // UseAnchorPositioningSharedParameters:
+      | "anchor"
+      | "positionMethod"
+      | "side"
+      | "sideOffset"
+      | "align"
+      | "alignOffset"
+      | "collisionBoundary"
+      | "collisionPadding"
+      | "sticky"
+      | "arrowPadding"
+      | "disableAnchorTracking"
+      | "collisionAvoidance",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.Positioner>
+    React.ComponentProps<typeof Menu.Positioner>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -835,11 +898,19 @@ export namespace MenuPopupProps {
     children?: React.ReactNode | IMenuPopupItemRenderer;
   };
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Popup>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Menu.Popup>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuPopupProps:
+      "id" | "finalFocus",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.Popup>
+    React.ComponentProps<typeof Menu.Popup>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1010,11 +1081,19 @@ export namespace MenuArrowProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Arrow>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Menu.Arrow>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuArrowProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.Arrow>
+    React.ComponentProps<typeof Menu.Arrow>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1066,14 +1145,19 @@ export namespace MenuViewportProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Menu.Viewport>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuViewportProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.Viewport>
+    React.ComponentProps<typeof Menu.Viewport>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1184,12 +1268,29 @@ export namespace MenuItemProps {
     variant?: MenuItemVariant | undefined;
   };
 
-  export type BaseUI = Omit<
-    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof Menu.Item>>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+  export type BaseUI = Override<
+    Button.Root.Props.BaseUI,
+    Pick<
+      React.ComponentProps<typeof Menu.Item>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // NonNativeButtonProps:
+        | keyof NonNativeButtonProps
+        // MenuItemProps:
+        | "onClick"
+        | "disabled"
+        | "label"
+        | "id"
+        | "closeOnClick",
+        keyof Render | keyof SuruUI
+      >
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Menu.Item>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -1206,21 +1307,25 @@ export type MenuItemProps = MenuItemProps.Render &
 export const MenuItem: IComponent<MenuItemProps> = function SuiMenuItem(props) {
   const ctx = useMenuContext();
   const {
+    id,
     color = "grey",
     label,
     style,
     radius = ctx.radius,
     render,
+    onClick,
     variant = ctx.variant,
     disabled,
     className,
     closeOnClick,
-    nativeButton,
+    nativeButton = false,
     focusableWhenDisabled,
     ...otherProps
   } = props;
   const baseuiProps: Required<MenuItemProps.BaseUI> = {
+    id,
     label,
+    onClick,
     disabled,
     closeOnClick,
     nativeButton,
@@ -1232,8 +1337,11 @@ export const MenuItem: IComponent<MenuItemProps> = function SuiMenuItem(props) {
       {...otherProps}
       {...baseuiProps}
       render={(htmlProps: {}, state) => {
-        const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
-          Pick<Button.Root.Props.HTML, "disabled"> = {
+        const buttonRootProps: Required<
+          Button.Root.Props.SuruUI &
+            Button.Root.Props.BaseUI &
+            Pick<Button.Root.Props.HTML, "disabled">
+        > = {
           item: true,
           size: ctx.size,
           color,
@@ -1244,8 +1352,8 @@ export const MenuItem: IComponent<MenuItemProps> = function SuiMenuItem(props) {
           variant: getItemVariant(state, variant),
           disabled: state.disabled,
           outlined: undefined,
-          nativeButton: false,
-          focusableWhenDisabled: undefined,
+          nativeButton,
+          focusableWhenDisabled,
         };
 
         return (
@@ -1334,6 +1442,15 @@ export namespace MenuLinkItemProps {
     color?: MenuLinkItemColor | undefined;
 
     /**
+     * リンクを無効にするかどうかを指定します。
+     *
+     * `true` の場合、リンク先へ遷移できなくなります。
+     *
+     * @default false
+     */
+    disabled?: boolean | undefined;
+
+    /**
      * 項目の角丸を指定します。
      *
      * 既定値は {@link MenuRootProps.radius|radius} です。
@@ -1350,12 +1467,23 @@ export namespace MenuLinkItemProps {
     variant?: MenuLinkItemVariant | undefined;
   };
 
-  export type BaseUI = Omit<
-    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof Menu.LinkItem>>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"a">
+  export type BaseUI = Override<
+    Button.Root.Props.BaseUI,
+    Pick<
+      React.ComponentProps<typeof Menu.LinkItem>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // MenuLinkItemProps:
+        "label" | "id" | "closeOnClick",
+        keyof Render | keyof SuruUI
+      >
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"a">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Menu.LinkItem>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -1372,19 +1500,23 @@ export type MenuLinkItemProps = MenuLinkItemProps.Render &
 export const MenuLinkItem: IComponent<MenuLinkItemProps> = function SuiMenuLinkItem(props) {
   const ctx = useMenuContext();
   const {
+    id,
     color = "grey",
     label,
     style,
     radius = ctx.radius,
-    render,
+    // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
+    render = <a />,
     variant = ctx.variant,
+    disabled,
     className,
     closeOnClick,
-    nativeButton,
+    nativeButton = false,
     focusableWhenDisabled,
     ...otherProps
   } = props;
   const baseuiProps: Required<MenuLinkItemProps.BaseUI> = {
+    id,
     label,
     closeOnClick,
     nativeButton,
@@ -1396,7 +1528,11 @@ export const MenuLinkItem: IComponent<MenuLinkItemProps> = function SuiMenuLinkI
       {...otherProps}
       {...baseuiProps}
       render={(htmlProps: {}, state) => {
-        const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> = {
+        const buttonRootProps: Required<
+          Button.Root.Props.SuruUI &
+            Button.Root.Props.BaseUI &
+            Pick<Button.Root.Props.HTML, "disabled">
+        > = {
           item: true,
           size: ctx.size,
           color,
@@ -1406,8 +1542,9 @@ export const MenuLinkItem: IComponent<MenuLinkItemProps> = function SuiMenuLinkI
           squared: undefined,
           variant: getItemVariant(state, variant),
           outlined: undefined,
-          nativeButton: false,
-          focusableWhenDisabled: undefined,
+          disabled,
+          nativeButton,
+          focusableWhenDisabled,
         };
 
         return (
@@ -1418,7 +1555,7 @@ export const MenuLinkItem: IComponent<MenuLinkItemProps> = function SuiMenuLinkI
               proxyRenderProps(state, {
                 style,
                 // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
-                render: render ?? <a />,
+                render,
                 className: cn(
                   className,
                   "sui_menu_item",
@@ -1481,12 +1618,29 @@ export namespace MenuSubmenuRootProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Menu.SubmenuRoot>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuSubmenuRootProps:
+      | "defaultOpen"
+      | "loopFocus"
+      | "highlightItemOnHover"
+      | "onOpenChangeComplete"
+      | "open"
+      | "orientation"
+      | "disabled"
+      | "closeParentOnEsc"
+      | "actionsRef"
+      | "onOpenChange",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = {};
+  export type HTML = Omit<
+    React.ComponentProps<typeof Menu.SubmenuRoot>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -1585,12 +1739,31 @@ export namespace MenuSubmenuTriggerProps {
     variant?: MenuSubmenuTriggerVariant | undefined;
   };
 
-  export type BaseUI = Omit<
-    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof Menu.SubmenuTrigger>>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+  export type BaseUI = Override<
+    Button.Root.Props.BaseUI,
+    Pick<
+      React.ComponentProps<typeof Menu.SubmenuTrigger>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // NonNativeButtonProps:
+        | keyof NonNativeButtonProps
+        // MenuSubmenuTriggerProps:
+        | "onClick"
+        | "label"
+        | "id"
+        | "disabled"
+        | "delay"
+        | "closeDelay"
+        | "openOnHover",
+        keyof Render | keyof SuruUI
+      >
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Menu.SubmenuTrigger>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -1608,12 +1781,14 @@ export const MenuSubmenuTrigger: IComponent<MenuSubmenuTriggerProps> =
   function SuiMenuSubmenuTrigger(props) {
     const ctx = useMenuContext();
     const {
+      id,
       color = "grey",
       delay,
       label,
       style,
       radius = ctx.radius,
-      render,
+      render = <div />,
+      onClick,
       variant = ctx.variant,
       disabled,
       className,
@@ -1624,8 +1799,10 @@ export const MenuSubmenuTrigger: IComponent<MenuSubmenuTriggerProps> =
       ...otherProps
     } = props;
     const baseuiProps: Required<MenuSubmenuTriggerProps.BaseUI> = {
+      id,
       delay,
       label,
+      onClick,
       disabled,
       closeDelay,
       openOnHover,
@@ -1638,8 +1815,11 @@ export const MenuSubmenuTrigger: IComponent<MenuSubmenuTriggerProps> =
         {...otherProps}
         {...baseuiProps}
         render={(htmlProps: {}, state) => {
-          const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
-            Pick<Button.Root.Props.HTML, "disabled"> = {
+          const buttonRootProps: Required<
+            Button.Root.Props.SuruUI &
+              Button.Root.Props.BaseUI &
+              Pick<Button.Root.Props.HTML, "disabled">
+          > = {
             item: true,
             size: ctx.size,
             color,
@@ -1650,8 +1830,8 @@ export const MenuSubmenuTrigger: IComponent<MenuSubmenuTriggerProps> =
             variant: getItemVariant(state, variant),
             disabled: state.disabled,
             outlined: undefined,
-            nativeButton: false,
-            focusableWhenDisabled: undefined,
+            nativeButton,
+            focusableWhenDisabled,
           };
 
           return (
@@ -1661,7 +1841,7 @@ export const MenuSubmenuTrigger: IComponent<MenuSubmenuTriggerProps> =
                 buttonRootProps,
                 proxyRenderProps(state, {
                   style,
-                  render: render ?? <div />,
+                  render,
                   className: cn(
                     className,
                     "sui_menu_item",
@@ -1716,11 +1896,19 @@ export namespace MenuGroupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Menu.Group>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Menu.Group>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuGroupProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.Group>
+    React.ComponentProps<typeof Menu.Group>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1772,14 +1960,19 @@ export namespace MenuGroupLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Menu.GroupLabel>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuGroupLabelProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.GroupLabel>
+    React.ComponentProps<typeof Menu.GroupLabel>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1841,14 +2034,19 @@ export namespace MenuRadioGroupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Menu.RadioGroup>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuRadioGroupProps:
+      "value" | "defaultValue" | "onValueChange" | "disabled",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.RadioGroup>
+    React.ComponentProps<typeof Menu.RadioGroup>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1955,12 +2153,30 @@ export namespace MenuRadioItemProps {
     variant?: MenuRadioItemVariant | undefined;
   };
 
-  export type BaseUI = Omit<
-    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof Menu.RadioItem>>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+  export type BaseUI = Override<
+    Button.Root.Props.BaseUI,
+    Pick<
+      React.ComponentProps<typeof Menu.RadioItem>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // NonNativeButtonProps:
+        | keyof NonNativeButtonProps
+        // MenuRadioItemProps:
+        | "value"
+        | "onClick"
+        | "disabled"
+        | "label"
+        | "id"
+        | "closeOnClick",
+        keyof Render | keyof SuruUI
+      >
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Menu.RadioItem>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -1977,23 +2193,27 @@ export type MenuRadioItemProps = MenuRadioItemProps.Render &
 export const MenuRadioItem: IComponent<MenuRadioItemProps> = function SuiMenuRadioItem(props) {
   const ctx = useMenuContext();
   const {
+    id,
     color = "grey",
     label,
     style,
     value,
     radius = ctx.radius,
     render,
+    onClick,
     variant = ctx.variant,
     disabled,
     className,
     closeOnClick,
-    nativeButton,
+    nativeButton = false,
     focusableWhenDisabled,
     ...otherProps
   } = props;
   const baseuiProps: Required<MenuRadioItemProps.BaseUI> = {
+    id,
     label,
     value,
+    onClick,
     disabled,
     closeOnClick,
     nativeButton,
@@ -2005,8 +2225,11 @@ export const MenuRadioItem: IComponent<MenuRadioItemProps> = function SuiMenuRad
       {...otherProps}
       {...baseuiProps}
       render={(htmlProps: {}, state) => {
-        const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
-          Pick<Button.Root.Props.HTML, "disabled"> = {
+        const buttonRootProps: Required<
+          Button.Root.Props.SuruUI &
+            Button.Root.Props.BaseUI &
+            Pick<Button.Root.Props.HTML, "disabled">
+        > = {
           item: true,
           size: ctx.size,
           color,
@@ -2017,8 +2240,8 @@ export const MenuRadioItem: IComponent<MenuRadioItemProps> = function SuiMenuRad
           variant: getItemVariant(state, variant),
           disabled: state.disabled,
           outlined: undefined,
-          nativeButton: false,
-          focusableWhenDisabled: undefined,
+          nativeButton,
+          focusableWhenDisabled,
         };
 
         return (
@@ -2034,8 +2257,8 @@ export const MenuRadioItem: IComponent<MenuRadioItemProps> = function SuiMenuRad
                   "sui_menu_item",
                   "sui_menu_radio_item",
                   (state) => state.checked && "sui_menu_item-checked",
-                  (state) => state.highlighted && "sui_menu_item-highlighted",
                   (state) => state.disabled && "sui_menu_item-disabled",
+                  (state) => state.highlighted && "sui_menu_item-highlighted",
                 ),
               }),
             ])}
@@ -2083,14 +2306,19 @@ export namespace MenuRadioItemIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Menu.RadioItemIndicator>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuRadioItemIndicatorProps:
+      "keepMounted",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.RadioItemIndicator>
+    React.ComponentProps<typeof Menu.RadioItemIndicator>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -2206,12 +2434,32 @@ export namespace MenuCheckboxItemProps {
     variant?: MenuCheckboxItemVariant | undefined;
   };
 
-  export type BaseUI = Omit<
-    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof Menu.CheckboxItem>>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+  export type BaseUI = Override<
+    Button.Root.Props.BaseUI,
+    Pick<
+      React.ComponentProps<typeof Menu.CheckboxItem>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // NonNativeButtonProps:
+        | keyof NonNativeButtonProps
+        // MenuCheckboxItemProps:
+        | "checked"
+        | "defaultChecked"
+        | "onCheckedChange"
+        | "onClick"
+        | "disabled"
+        | "label"
+        | "id"
+        | "closeOnClick",
+        keyof Render | keyof SuruUI
+      >
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Menu.CheckboxItem>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -2230,6 +2478,9 @@ export const MenuCheckboxItem: IComponent<MenuCheckboxItemProps> = function SuiM
 ) {
   const ctx = useMenuContext();
   const {
+    defaultChecked,
+    id,
+    onClick,
     color = "grey",
     label,
     style,
@@ -2240,7 +2491,7 @@ export const MenuCheckboxItem: IComponent<MenuCheckboxItemProps> = function SuiM
     disabled,
     className,
     closeOnClick,
-    nativeButton,
+    nativeButton = false,
     onCheckedChange,
     focusableWhenDisabled,
     ...otherProps
@@ -2253,6 +2504,9 @@ export const MenuCheckboxItem: IComponent<MenuCheckboxItemProps> = function SuiM
     nativeButton,
     onCheckedChange,
     focusableWhenDisabled,
+    defaultChecked,
+    id,
+    onClick,
   };
 
   return (
@@ -2260,8 +2514,11 @@ export const MenuCheckboxItem: IComponent<MenuCheckboxItemProps> = function SuiM
       {...otherProps}
       {...baseuiProps}
       render={(htmlProps: {}, state) => {
-        const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
-          Pick<Button.Root.Props.HTML, "disabled"> = {
+        const buttonRootProps: Required<
+          Button.Root.Props.SuruUI &
+            Button.Root.Props.BaseUI &
+            Pick<Button.Root.Props.HTML, "disabled">
+        > = {
           item: true,
           size: ctx.size,
           color,
@@ -2272,8 +2529,8 @@ export const MenuCheckboxItem: IComponent<MenuCheckboxItemProps> = function SuiM
           variant: getItemVariant(state, variant),
           disabled: state.disabled,
           outlined: undefined,
-          nativeButton: false,
-          focusableWhenDisabled: undefined,
+          nativeButton,
+          focusableWhenDisabled,
         };
 
         return (
@@ -2289,8 +2546,8 @@ export const MenuCheckboxItem: IComponent<MenuCheckboxItemProps> = function SuiM
                   "sui_menu_item",
                   "sui_menu_checkbox_item",
                   (state) => state.checked && "sui_menu_item-checked",
-                  (state) => state.highlighted && "sui_menu_item-highlighted",
                   (state) => state.disabled && "sui_menu_item-disabled",
+                  (state) => state.highlighted && "sui_menu_item-highlighted",
                 ),
               }),
             ])}
@@ -2342,14 +2599,19 @@ export namespace MenuCheckboxItemIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Menu.CheckboxItemIndicator>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuCheckboxItemIndicatorProps:
+      "keepMounted",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.CheckboxItemIndicator>
+    React.ComponentProps<typeof Menu.CheckboxItemIndicator>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -2412,14 +2674,19 @@ export namespace MenuSeparatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Menu.Separator>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SeparatorProps:
+      "orientation",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Menu.Separator>
+    React.ComponentProps<typeof Menu.Separator>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 

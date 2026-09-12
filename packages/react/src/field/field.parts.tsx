@@ -30,11 +30,27 @@ export namespace FieldRootProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Field.Root>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Field.Root>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // FieldRootProps:
+      | "disabled"
+      | "name"
+      | "validate"
+      | "validationMode"
+      | "validationDebounceTime"
+      | "invalid"
+      | "dirty"
+      | "touched"
+      | "actionsRef",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Field.Root>
+    React.ComponentProps<typeof Field.Root>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -70,9 +86,6 @@ export const FieldRoot: IComponent<FieldRootProps> = function SuiFieldRoot(props
 
 export { FieldRoot as Root };
 
-/**
- * {@link FieldRoot} の状態や props をまとめた型名前空間です。
- */
 export namespace Root {
   export type State = FieldRootState;
 
@@ -106,11 +119,19 @@ export namespace FieldLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Field.Label>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Field.Label>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // FieldLabelProps:
+      "nativeLabel",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"label">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Field.Label>
+    React.ComponentProps<typeof Field.Label>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -135,9 +156,6 @@ export const FieldLabel: IComponent<FieldLabelProps> = function SuiFieldLabel(pr
 
 export { FieldLabel as Label };
 
-/**
- * {@link FieldLabel} の状態や props をまとめた型名前空間です。
- */
 export namespace Label {
   export type State = FieldLabelState;
 
@@ -177,14 +195,19 @@ export namespace FieldControlProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Field.Control>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // FieldControlProps:
+      "onValueChange" | "defaultValue",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"input">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Field.Control>
+    React.ComponentProps<typeof Field.Control>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -207,9 +230,6 @@ export const FieldControl: IComponent<FieldControlProps> = function SuiFieldCont
 
 export { FieldControl as Control };
 
-/**
- * {@link FieldControl} の状態や props をまとめた型名前空間です。
- */
 export namespace Control {
   export type State = FieldControlState;
 
@@ -243,14 +263,19 @@ export namespace FieldDescriptionProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Field.Description>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // FieldDescriptionProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"p">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Field.Description>
+    React.ComponentProps<typeof Field.Description>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -277,9 +302,6 @@ export const FieldDescription: IComponent<FieldDescriptionProps> = function SuiF
 
 export { FieldDescription as Description };
 
-/**
- * {@link FieldDescription} の状態や props をまとめた型名前空間です。
- */
 export namespace Description {
   export type State = FieldDescriptionState;
 
@@ -309,11 +331,19 @@ export namespace FieldErrorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Field.Error>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Field.Error>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // FieldErrorProps:
+      "match",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Field.Error>
+    React.ComponentProps<typeof Field.Error>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -338,9 +368,6 @@ export const FieldError: IComponent<FieldErrorProps> = function SuiFieldError(pr
 
 export { FieldError as Error };
 
-/**
- * {@link FieldError} の状態や props をまとめた型名前空間です。
- */
 export namespace Error {
   export type State = FieldErrorState;
 
@@ -370,11 +397,19 @@ export namespace FieldItemProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Field.Item>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Field.Item>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // FieldItemProps:
+      "disabled",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Field.Item>
+    React.ComponentProps<typeof Field.Item>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -399,9 +434,6 @@ export const FieldItem: IComponent<FieldItemProps> = function SuiFieldItem(props
 
 export { FieldItem as Item };
 
-/**
- * {@link FieldItem} の状態や props をまとめた型名前空間です。
- */
 export namespace Item {
   export type State = FieldItemState;
 
@@ -431,12 +463,20 @@ export namespace FieldValidityProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Field.Validity>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // FieldValidityProps:
+      "children",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = {};
+  export type HTML = Omit<
+    React.ComponentProps<typeof Field.Validity>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -458,9 +498,6 @@ export const FieldValidity: IComponent<FieldValidityProps> = function SuiFieldVa
 
 export { FieldValidity as Validity };
 
-/**
- * {@link FieldValidity} の状態や props をまとめた型名前空間です。
- */
 export namespace Validity {
   export type State = FieldValidityState;
 

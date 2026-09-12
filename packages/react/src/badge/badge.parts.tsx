@@ -1,5 +1,5 @@
+import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import type { Size, Color } from "@suru-ui/theme";
-import type * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
@@ -129,13 +129,21 @@ export namespace BadgeRootProps {
     variant?: BadgeRootVariant | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"span", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
  * {@link BadgeRoot} に渡す props です。
  */
-export type BadgeRootProps = BadgeRootProps.Render & BadgeRootProps.SuruUI & BadgeRootProps.HTML;
+export type BadgeRootProps = BadgeRootProps.Render &
+  BadgeRootProps.SuruUI &
+  BadgeRootProps.BaseUI &
+  BadgeRootProps.HTML;
 
 /**
  * バッジのルートコンポーネントです。
@@ -186,12 +194,14 @@ export { BadgeRoot as Root };
 export namespace Root {
   export type State = BadgeRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = BadgeRootProps.Render;
 
     export type SuruUI = BadgeRootProps.SuruUI;
+
+    export type BaseUI = BadgeRootProps.BaseUI;
 
     export type HTML = BadgeRootProps.HTML;
   }

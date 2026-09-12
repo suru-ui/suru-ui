@@ -1,4 +1,5 @@
 import { Input as BaseInput } from "@base-ui/react/input";
+import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
@@ -180,7 +181,12 @@ export namespace TextFieldRootProps {
     variant?: TextFieldRootVariant | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -188,6 +194,7 @@ export namespace TextFieldRootProps {
  */
 export type TextFieldRootProps = TextFieldRootProps.Render &
   TextFieldRootProps.SuruUI &
+  TextFieldRootProps.BaseUI &
   TextFieldRootProps.HTML;
 
 const DISABLE_FOCUS_ON_CLICK_DATA = "data-suitextfielddisablefocusonclick";
@@ -205,7 +212,6 @@ export const TextFieldRoot: IComponent<TextFieldRootProps> = function SuiTextFie
     onClick,
     variant = "liquid",
     outlined = false,
-    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherDivProps
@@ -238,7 +244,6 @@ export const TextFieldRoot: IComponent<TextFieldRootProps> = function SuiTextFie
       {
         onClick: handleClick,
         className: cn(
-          className,
           "sui_text_field",
           `sui_text_field-size_${size}`,
           `sui_text_field-color_${color}`,
@@ -260,12 +265,14 @@ export { TextFieldRoot as Root };
 export namespace Root {
   export type State = TextFieldRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = TextFieldRootProps.Render;
 
     export type SuruUI = TextFieldRootProps.SuruUI;
+
+    export type BaseUI = TextFieldRootProps.BaseUI;
 
     export type HTML = TextFieldRootProps.HTML;
   }
@@ -317,12 +324,20 @@ export namespace TextFieldInputProps {
     type?: TextFieldInputType | undefined;
   };
 
-  export type BaseUI = Omit<
-    Omit<React.ComponentProps<typeof BaseInput>, "type">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"input">
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof BaseInput>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // InputProps:
+      "value" | "defaultValue" | "onValueChange",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"input">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof BaseInput>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -399,7 +414,12 @@ export namespace TextFieldAddonProps {
     disableFocusOnClick?: boolean | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"span", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -407,6 +427,7 @@ export namespace TextFieldAddonProps {
  */
 export type TextFieldAddonProps = TextFieldAddonProps.Render &
   TextFieldAddonProps.SuruUI &
+  TextFieldAddonProps.BaseUI &
   TextFieldAddonProps.HTML;
 
 /**
@@ -434,12 +455,14 @@ export { TextFieldAddon as Addon };
 export namespace Addon {
   export type State = TextFieldAddonState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = TextFieldAddonProps.Render;
 
     export type SuruUI = TextFieldAddonProps.SuruUI;
+
+    export type BaseUI = TextFieldAddonProps.BaseUI;
 
     export type HTML = TextFieldAddonProps.HTML;
   }

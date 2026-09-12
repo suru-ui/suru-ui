@@ -74,7 +74,7 @@
 :scope {
   --sui_dialog_content-row_gap: ;
   --sui_dialog_content-width-desktop: ;
-  --sui_dialog_content-width-modile: ;
+  --sui_dialog_content-width-mobile: ;
   --sui_dialog_content-width: ;
   --sui_dialog_content-max_height: ;
   --sui_dialog_content-padding: ;
@@ -104,14 +104,14 @@
 :scope {
   --sui_dialog_content-row_gap: --sui-gap(7);
   --sui_dialog_content-width-desktop: 448px;
-  --sui_dialog_content-width-modile: calc(
+  --sui_dialog_content-width-mobile: calc(
                                        100vw
                                        - var(--sui_dialog_content-virtual_margin_inline)
                                        * 2
                                      );
   --sui_dialog_content-width: min(
                                 var(--sui_dialog_content-width-desktop),
-                                var(--sui_dialog_content-width-modile)
+                                var(--sui_dialog_content-width-mobile)
                               );
   --sui_dialog_content-max_height: calc(
                                      100%

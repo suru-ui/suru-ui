@@ -275,11 +275,11 @@
 /* Root */
 :scope {
   &.sui_input-disabled {
-    color: var(--sui-canvas_text-2);
     cursor: not-allowed;
   }
 
   &.sui_input-disabled.sui_input-variant_naked {
+    color: var(--sui-disabled-naked-canvas_text);
     background-color: var(--sui-disabled-naked-canvas);
   }
 
@@ -294,6 +294,7 @@
   }
 
   &.sui_input-disabled.sui_input-variant_liquid {
+    color: var(--sui-disabled-liquid-canvas_text);
     background-color: var(--sui-disabled-liquid-canvas);
   }
 

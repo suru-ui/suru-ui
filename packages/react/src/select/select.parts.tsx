@@ -1,3 +1,4 @@
+import type { NativeButtonProps, NonNativeButtonProps } from "@base-ui/react/internals/types";
 import { Select as BaseSelect } from "@base-ui/react/select";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
@@ -240,12 +241,42 @@ export namespace SelectRootProps {
     variant?: SelectRootVariant | undefined;
   };
 
-  export type BaseUI<TValue = unknown, TMultiple extends boolean | undefined = false> = Omit<
-    BaseSelect.Root.Props<TValue, TMultiple>,
-    keyof Render | keyof SuruUI
+  export type BaseUI<TValue = unknown, TMultiple extends boolean | undefined = false> = Pick<
+    React.ComponentProps<typeof BaseSelect.Root<TValue, TMultiple>>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SelectRootProps:
+      | "inputRef"
+      | "name"
+      | "form"
+      | "autoComplete"
+      | "id"
+      | "required"
+      | "readOnly"
+      | "disabled"
+      | "multiple"
+      | "highlightItemOnHover"
+      | "defaultOpen"
+      | "onOpenChange"
+      | "onOpenChangeComplete"
+      | "open"
+      | "modal"
+      | "actionsRef"
+      | "items"
+      | "itemToStringLabel"
+      | "itemToStringValue"
+      | "isItemEqualToValue"
+      | "defaultValue"
+      | "value"
+      | "onValueChange",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML<TValue = unknown, TMultiple extends boolean | undefined = false> = Omit<
+    React.ComponentProps<typeof BaseSelect.Root<TValue, TMultiple>>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -260,7 +291,7 @@ export type SelectRootProps<
 > = SelectRootProps.Render &
   SelectRootProps.SuruUI<TValue> &
   SelectRootProps.BaseUI<TValue, TMultiple> &
-  SelectRootProps.HTML;
+  SelectRootProps.HTML<TValue, TMultiple>;
 
 interface ISelectRoot extends IComponent<SelectRootProps<unknown, boolean | undefined>> {
   /**
@@ -347,7 +378,10 @@ export namespace Root {
   export type Props<
     TValue = unknown,
     TMultiple extends boolean | undefined = false,
-  > = Props.Render & Props.SuruUI<TValue> & Props.BaseUI<TValue, TMultiple> & Props.HTML;
+  > = Props.Render &
+    Props.SuruUI<TValue> &
+    Props.BaseUI<TValue, TMultiple> &
+    Props.HTML<TValue, TMultiple>;
 
   export namespace Props {
     export type Render = SelectRootProps.Render;
@@ -359,7 +393,10 @@ export namespace Root {
       TMultiple extends boolean | undefined = false,
     > = SelectRootProps.BaseUI<TValue, TMultiple>;
 
-    export type HTML = SelectRootProps.HTML;
+    export type HTML<
+      TValue = unknown,
+      TMultiple extends boolean | undefined = false,
+    > = SelectRootProps.HTML<TValue, TMultiple>;
   }
 
   export type Actions = SelectRootActions;
@@ -392,14 +429,19 @@ export namespace SelectLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseSelect.Label>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SelectLabelProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Label>
+    React.ComponentProps<typeof BaseSelect.Label>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -454,14 +496,21 @@ export namespace SelectTriggerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseSelect.Trigger>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NativeButtonProps:
+      | keyof NativeButtonProps
+      // SelectTriggerProps:
+      | "disabled",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Trigger>
+    React.ComponentProps<typeof BaseSelect.Trigger>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -547,14 +596,19 @@ export namespace SelectValueProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseSelect.Value>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SelectValueProps:
+      "children" | "placeholder",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Value>
+    React.ComponentProps<typeof BaseSelect.Value>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -618,14 +672,19 @@ export namespace SelectIconProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseSelect.Icon>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SelectIconProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Icon>
+    React.ComponentProps<typeof BaseSelect.Icon>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -680,14 +739,19 @@ export namespace SelectPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseSelect.Portal>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SelectPortalProps:
+      "container",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Portal>
+    React.ComponentProps<typeof BaseSelect.Portal>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -721,7 +785,6 @@ export const SelectPortal: IComponent<SelectPortalProps> = function SuiSelectPor
         "sui_select_portal",
         `sui_select_portal-size_${ctx.size}`,
         `sui_select_portal-radius_${ctx.radius}`,
-        ctx.outlined && "sui_select_portal-outlined",
       )}
       data-scope={dataScope}
     />
@@ -762,14 +825,19 @@ export namespace SelectBackdropProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseSelect.Backdrop>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SelectBackdropProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Backdrop>
+    React.ComponentProps<typeof BaseSelect.Backdrop>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -835,14 +903,32 @@ export namespace SelectPositionerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseSelect.Positioner>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // UseAnchorPositioningSharedParameters:
+      | "anchor"
+      | "positionMethod"
+      | "side"
+      | "sideOffset"
+      | "align"
+      | "alignOffset"
+      | "collisionBoundary"
+      | "collisionPadding"
+      | "sticky"
+      | "arrowPadding"
+      | "disableAnchorTracking"
+      | "collisionAvoidance"
+      // SelectPositionerProps:
+      | "alignItemWithTrigger",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Positioner>
+    React.ComponentProps<typeof BaseSelect.Positioner>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -901,14 +987,19 @@ export namespace SelectPopupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseSelect.Popup>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SelectPopupProps:
+      "finalFocus",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Popup>
+    React.ComponentProps<typeof BaseSelect.Popup>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -998,14 +1089,19 @@ export namespace SelectListProps {
     children?: React.ReactNode | ISelectListItemRenderer<TValue>;
   };
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseSelect.List>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SelectListProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.List>
+    React.ComponentProps<typeof BaseSelect.List>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1165,14 +1261,19 @@ export namespace SelectArrowProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseSelect.Arrow>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SelectArrowProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Arrow>
+    React.ComponentProps<typeof BaseSelect.Arrow>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1227,14 +1328,23 @@ export namespace SelectItemProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseSelect.Item>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NonNativeButtonProps:
+      | keyof NonNativeButtonProps
+      // SelectItemProps:
+      | "value"
+      | "disabled"
+      | "label",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Item>
+    React.ComponentProps<typeof BaseSelect.Item>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1305,14 +1415,19 @@ export namespace SelectItemTextProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseSelect.ItemText>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SelectItemTextProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.ItemText>
+    React.ComponentProps<typeof BaseSelect.ItemText>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1367,14 +1482,19 @@ export namespace SelectItemIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseSelect.ItemIndicator>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SelectItemIndicatorProps:
+      "children" | "keepMounted",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.ItemIndicator>
+    React.ComponentProps<typeof BaseSelect.ItemIndicator>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1436,14 +1556,19 @@ export namespace SelectScrollUpArrowProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseSelect.ScrollUpArrow>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SelectScrollUpArrowProps:
+      "keepMounted",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.ScrollUpArrow>
+    React.ComponentProps<typeof BaseSelect.ScrollUpArrow>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1504,14 +1629,19 @@ export namespace SelectScrollDownArrowProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseSelect.ScrollDownArrow>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SelectScrollDownArrowProps:
+      "keepMounted",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.ScrollDownArrow>
+    React.ComponentProps<typeof BaseSelect.ScrollDownArrow>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1572,14 +1702,19 @@ export namespace SelectGroupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseSelect.Group>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SelectGroupProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Group>
+    React.ComponentProps<typeof BaseSelect.Group>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1634,14 +1769,19 @@ export namespace SelectGroupLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseSelect.GroupLabel>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SelectGroupLabelProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.GroupLabel>
+    React.ComponentProps<typeof BaseSelect.GroupLabel>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1700,14 +1840,19 @@ export namespace SelectSeparatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseSelect.Separator>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SelectSeparatorProps:
+      "orientation",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseSelect.Separator>
+    React.ComponentProps<typeof BaseSelect.Separator>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 

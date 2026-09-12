@@ -20,14 +20,19 @@ export namespace ScrollAreaRootProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseScrollArea.Root>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ScrollAreaRootProps:
+      "overflowEdgeThreshold",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseScrollArea.Root>
+    React.ComponentProps<typeof BaseScrollArea.Root>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -95,14 +100,19 @@ export namespace ScrollAreaViewportProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseScrollArea.Viewport>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ScrollAreaViewportProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseScrollArea.Viewport>
+    React.ComponentProps<typeof BaseScrollArea.Viewport>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -159,14 +169,19 @@ export namespace ScrollAreaContentProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseScrollArea.Content>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ScrollAreaContentProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseScrollArea.Content>
+    React.ComponentProps<typeof BaseScrollArea.Content>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -221,14 +236,19 @@ export namespace ScrollAreaScrollbarProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseScrollArea.Scrollbar>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ScrollAreaScrollbarProps:
+      "orientation" | "keepMounted",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseScrollArea.Scrollbar>
+    React.ComponentProps<typeof BaseScrollArea.Scrollbar>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -247,16 +267,15 @@ export type ScrollAreaScrollbarProps = ScrollAreaScrollbarProps.Render &
  */
 export const ScrollAreaScrollbar: IComponent<ScrollAreaScrollbarProps> =
   function SuiScrollAreaScrollbar(props) {
-    const { className, orientation = "vertical", ...otherProps } = props;
+    const { className, ...otherProps } = props;
     return (
       <BaseScrollArea.Scrollbar
         {...otherProps}
         className={cn(
           className,
           "sui_scroll_area_scrollbar",
-          `sui_scroll_area_scrollbar-orientation_${orientation}`,
+          (state) => `sui_scroll_area_scrollbar-orientation_${state.orientation}`,
         )}
-        orientation={orientation}
       />
     );
   };
@@ -292,14 +311,19 @@ export namespace ScrollAreaThumbProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseScrollArea.Thumb>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ScrollAreaThumbProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseScrollArea.Thumb>
+    React.ComponentProps<typeof BaseScrollArea.Thumb>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -361,14 +385,19 @@ export namespace ScrollAreaCornerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseScrollArea.Corner>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ScrollAreaCornerProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseScrollArea.Corner>
+    React.ComponentProps<typeof BaseScrollArea.Corner>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 

@@ -1,3 +1,4 @@
+import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
@@ -146,7 +147,12 @@ export namespace ListRootProps {
     size?: ListRootSize | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"ul">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"ul", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -156,6 +162,7 @@ export namespace ListRootProps {
  */
 export type ListRootProps<TItem = any> = ListRootProps.Render &
   ListRootProps.SuruUI<TItem> &
+  ListRootProps.BaseUI &
   ListRootProps.HTML;
 
 interface IListRoot extends IComponent<ListRootProps> {
@@ -167,8 +174,6 @@ interface IListRoot extends IComponent<ListRootProps> {
 
 /**
  * 項目を一覧表示するリストのルートコンポーネントです。
- *
- * 大きさをコンテキストで {@link ListItem} へ伝播します。
  */
 export const ListRoot: IListRoot = function SuiListRoot(props: ListRootProps) {
   const {
@@ -221,12 +226,14 @@ export { ListRoot as Root };
 export namespace Root {
   export type State = ListRootState;
 
-  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.HTML;
+  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = ListRootProps.Render;
 
     export type SuruUI<TItem = any> = ListRootProps.SuruUI<TItem>;
+
+    export type BaseUI = ListRootProps.BaseUI;
 
     export type HTML = ListRootProps.HTML;
   }
@@ -240,15 +247,6 @@ export namespace Root {
 
 // Item
 // ----
-
-/**
- * リストの項目の大きさです。
- *
- * - `"sm"`: 小さめ
- * - `"md"`: 標準的
- * - `"lg"`: 大きめ
- */
-export type ListItemSize = Size;
 
 /**
  * {@link ListItem} が持つ状態です。
@@ -265,40 +263,35 @@ export namespace ListItemProps {
      * @default false
      */
     disabled?: boolean | undefined;
-
-    /**
-     * リストの項目の大きさを指定します。
-     *
-     * {@link ListRoot} の内側ではルートの値が優先されます。
-     */
-    size?: ListItemSize | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"li">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"li", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
  * {@link ListItem} に渡す props です。
  */
-export type ListItemProps = ListItemProps.Render & ListItemProps.SuruUI & ListItemProps.HTML;
+export type ListItemProps = ListItemProps.Render &
+  ListItemProps.SuruUI &
+  ListItemProps.BaseUI &
+  ListItemProps.HTML;
 
 /**
  * リストの項目コンポーネントです。
  */
 export const ListItem: IComponent<ListItemProps> = function SuiListItem(props) {
-  const ctx = useSuiListContext(true);
-  const { size: sizeProp, disabled = false, ...otherLiProps } = props;
-  const size = ctx?.size ?? sizeProp ?? "md";
+  const { disabled = false, ...otherLiProps } = props;
 
   return useRender({
     props: [
       otherLiProps,
       {
-        className: cn(
-          "sui_list_item",
-          `sui_list_item-size_${size}`,
-          disabled && "sui_list_item-disabled",
-        ),
+        className: cn("sui_list_item", disabled && "sui_list_item-disabled"),
       },
     ],
     defaultTagName: "li",
@@ -310,17 +303,17 @@ export { ListItem as Item };
 export namespace Item {
   export type State = ListItemState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = ListItemProps.Render;
 
     export type SuruUI = ListItemProps.SuruUI;
 
+    export type BaseUI = ListItemProps.BaseUI;
+
     export type HTML = ListItemProps.HTML;
   }
-
-  export type Size = ListItemSize;
 }
 
 // Indicator
@@ -336,7 +329,12 @@ export namespace ListItemIndicatorProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"span", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -344,6 +342,7 @@ export namespace ListItemIndicatorProps {
  */
 export type ListItemIndicatorProps = ListItemIndicatorProps.Render &
   ListItemIndicatorProps.SuruUI &
+  ListItemIndicatorProps.BaseUI &
   ListItemIndicatorProps.HTML;
 
 /**
@@ -368,12 +367,14 @@ export { ListItemIndicator as Indicator };
 export namespace Indicator {
   export type State = ListItemIndicatorState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = ListItemIndicatorProps.Render;
 
     export type SuruUI = ListItemIndicatorProps.SuruUI;
+
+    export type BaseUI = ListItemIndicatorProps.BaseUI;
 
     export type HTML = ListItemIndicatorProps.HTML;
   }

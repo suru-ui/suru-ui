@@ -13,6 +13,9 @@ import {
  */
 export type TooltipGroupState = TooltipGroupRootState;
 
+/**
+ * {@link TooltipGroup} に渡す props です。
+ */
 export type TooltipGroupProps = TooltipGroupRootProps;
 
 // API

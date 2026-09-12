@@ -1,8 +1,9 @@
+import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import { type Size, type Color, COLORS } from "@suru-ui/theme";
 import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
-import { type AvatarRootProps, type AvatarRootState, AvatarRoot } from "../avatar/avatar.parts.jsx";
+import * as Avatar from "../avatar/avatar.parts.jsx";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
 import type { IComponent, IUseContext } from "../types.js";
@@ -166,7 +167,12 @@ export namespace AvatarGroupRootProps {
     size?: AvatarGroupRootSize | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -174,6 +180,7 @@ export namespace AvatarGroupRootProps {
  */
 export type AvatarGroupRootProps = AvatarGroupRootProps.Render &
   AvatarGroupRootProps.SuruUI &
+  AvatarGroupRootProps.BaseUI &
   AvatarGroupRootProps.HTML;
 
 const colors = /*#__PURE__*/ COLORS.filter((color) => color !== "grey");
@@ -236,12 +243,14 @@ export { AvatarGroupRoot as Root };
 export namespace Root {
   export type State = AvatarGroupRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = AvatarGroupRootProps.Render;
 
     export type SuruUI = AvatarGroupRootProps.SuruUI;
+
+    export type BaseUI = AvatarGroupRootProps.BaseUI;
 
     export type HTML = AvatarGroupRootProps.HTML;
   }
@@ -259,19 +268,16 @@ export namespace Root {
 /**
  * {@link AvatarGroupSurplus} が持つ状態です。
  */
-export type AvatarGroupSurplusState = AvatarRootState;
+export type AvatarGroupSurplusState = Avatar.Root.State;
 
 export namespace AvatarGroupSurplusProps {
   export type Render = RenderProps<AvatarGroupSurplusState>;
 
-  export type SuruUI = {};
+  export type SuruUI = Avatar.Root.Props.SuruUI;
 
-  export type BaseUI = Omit<AvatarRootProps, keyof Render | keyof SuruUI>;
+  export type BaseUI = Omit<Avatar.Root.Props.BaseUI, keyof Render | keyof SuruUI>;
 
-  export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof AvatarRootProps
-  >;
+  export type HTML = Omit<Avatar.Root.Props, keyof Render | keyof SuruUI | keyof BaseUI>;
 }
 
 /**
@@ -289,7 +295,7 @@ export const AvatarGroupSurplus: IComponent<AvatarGroupSurplusProps> =
   function SuiAvatarGroupSurplus(props) {
     const { color = "grey", className, ...otherProps } = props;
 
-    return <AvatarRoot {...otherProps} color={color} className={className} />;
+    return <Avatar.Root {...otherProps} color={color} className={className} />;
   };
 
 export { AvatarGroupSurplus as Surplus };

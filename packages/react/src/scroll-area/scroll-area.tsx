@@ -43,12 +43,12 @@ export type ScrollAreaSlotProps = {
   readonly horizontalThumb?: ScrollAreaThumbProps | undefined;
 
   /**
-   * {@link ScrollAreaScrollbar} に渡す props です。
+   * 垂直方向の {@link ScrollAreaScrollbar} に渡す props です。
    */
   readonly scrollbar?: Omit<ScrollAreaScrollbarProps, "orientation"> | undefined;
 
   /**
-   * {@link ScrollAreaThumb} に渡す props です。
+   * 垂直方向の {@link ScrollAreaThumb} に渡す props です。
    */
   readonly thumb?: ScrollAreaThumbProps | undefined;
 
@@ -118,12 +118,12 @@ export interface ScrollAreaAPI {
   getRootProps(): Omit<ScrollAreaRootProps, "children">;
 
   /**
-   * {@link ScrollAreaScrollbar} に渡す props を取得します。
+   * 垂直方向の {@link ScrollAreaScrollbar} に渡す props を取得します。
    */
   getScrollbarProps(): ScrollAreaScrollbarProps;
 
   /**
-   * {@link ScrollAreaThumb} に渡す props を取得します。
+   * 垂直方向の {@link ScrollAreaThumb} に渡す props を取得します。
    */
   getThumbProps(): ScrollAreaThumbProps;
 

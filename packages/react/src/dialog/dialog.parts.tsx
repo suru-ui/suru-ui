@@ -1,4 +1,5 @@
 import { Dialog } from "@base-ui/react/dialog";
+import type { NativeButtonProps, BaseUIComponentProps } from "@base-ui/react/internals/types";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
@@ -124,9 +125,29 @@ export namespace DialogRootProps {
     handle: DialogHandle<TPayload>;
   };
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Root>, keyof Render | keyof SuruUI>;
+  export type BaseUI<TPayload = any> = Pick<
+    React.ComponentProps<typeof Dialog.Root<TPayload>>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // DialogRootProps:
+      | "open"
+      | "defaultOpen"
+      | "modal"
+      | "onOpenChange"
+      | "onOpenChangeComplete"
+      | "disablePointerDismissal"
+      | "actionsRef"
+      | "children"
+      | "triggerId"
+      | "defaultTriggerId",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML<TPayload = any> = Omit<
+    React.ComponentProps<typeof Dialog.Root<TPayload>>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -136,8 +157,8 @@ export namespace DialogRootProps {
  */
 export type DialogRootProps<TPayload = any> = DialogRootProps.Render &
   DialogRootProps.SuruUI<TPayload> &
-  DialogRootProps.BaseUI &
-  DialogRootProps.HTML;
+  DialogRootProps.BaseUI<TPayload> &
+  DialogRootProps.HTML<TPayload>;
 
 interface IDialogRoot extends IComponent<DialogRootProps> {
   /**
@@ -162,17 +183,17 @@ export namespace Root {
 
   export type Props<TPayload = any> = Props.Render &
     Props.SuruUI<TPayload> &
-    Props.BaseUI &
-    Props.HTML;
+    Props.BaseUI<TPayload> &
+    Props.HTML<TPayload>;
 
   export namespace Props {
     export type Render = DialogRootProps.Render;
 
     export type SuruUI<TPayload = any> = DialogRootProps.SuruUI<TPayload>;
 
-    export type BaseUI = DialogRootProps.BaseUI;
+    export type BaseUI<TPayload = any> = DialogRootProps.BaseUI<TPayload>;
 
-    export type HTML = DialogRootProps.HTML;
+    export type HTML<TPayload = any> = DialogRootProps.HTML<TPayload>;
   }
 
   export type Actions = DialogRootActions;
@@ -205,12 +226,23 @@ export namespace DialogToggleTriggerProps {
     handle: DialogHandle<TPayload>;
   };
 
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof Dialog.Trigger>,
-    keyof Render | keyof SuruUI
+  export type BaseUI<TPayload = any> = Pick<
+    React.ComponentProps<typeof Dialog.Trigger<TPayload>>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NativeButtonProps:
+      | keyof NativeButtonProps
+      // DialogTriggerProps:
+      | "payload"
+      | "id",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
+  export type HTML<TPayload = any> = Omit<
+    React.ComponentProps<typeof Dialog.Trigger<TPayload>>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -220,8 +252,8 @@ export namespace DialogToggleTriggerProps {
  */
 export type DialogToggleTriggerProps<TPayload = any> = DialogToggleTriggerProps.Render &
   DialogToggleTriggerProps.SuruUI<TPayload> &
-  DialogToggleTriggerProps.BaseUI &
-  DialogToggleTriggerProps.HTML;
+  DialogToggleTriggerProps.BaseUI<TPayload> &
+  DialogToggleTriggerProps.HTML<TPayload>;
 
 /**
  * ダイアログを開くボタンコンポーネントです。
@@ -247,17 +279,17 @@ export namespace ToggleTrigger {
 
   export type Props<TPayload = any> = Props.Render &
     Props.SuruUI<TPayload> &
-    Props.BaseUI &
-    Props.HTML;
+    Props.BaseUI<TPayload> &
+    Props.HTML<TPayload>;
 
   export namespace Props {
     export type Render = DialogToggleTriggerProps.Render;
 
     export type SuruUI<TPayload = any> = DialogToggleTriggerProps.SuruUI<TPayload>;
 
-    export type BaseUI = DialogToggleTriggerProps.BaseUI;
+    export type BaseUI<TPayload = any> = DialogToggleTriggerProps.BaseUI<TPayload>;
 
-    export type HTML = DialogToggleTriggerProps.HTML;
+    export type HTML<TPayload = any> = DialogToggleTriggerProps.HTML<TPayload>;
   }
 }
 
@@ -274,14 +306,19 @@ export namespace DialogPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Dialog.Portal>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // DialogPortalProps:
+      "keepMounted" | "container",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Dialog.Portal>
+    React.ComponentProps<typeof Dialog.Portal>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -346,14 +383,19 @@ export namespace DialogBackdropProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Dialog.Backdrop>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // DialogBackdropProps:
+      "forceRender",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Dialog.Backdrop>
+    React.ComponentProps<typeof Dialog.Backdrop>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -405,14 +447,19 @@ export namespace DialogViewportProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Dialog.Viewport>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // DialogViewportProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Dialog.Viewport>
+    React.ComponentProps<typeof Dialog.Viewport>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -505,11 +552,19 @@ export namespace DialogContentProps {
     variant?: DialogContentVariant | undefined;
   };
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Popup>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Dialog.Popup>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // DialogPopupProps:
+      "initialFocus" | "finalFocus",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Dialog.Popup>
+    React.ComponentProps<typeof Dialog.Popup>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -586,7 +641,12 @@ export namespace DialogControlsProps {
     absolute?: boolean | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -594,6 +654,7 @@ export namespace DialogControlsProps {
  */
 export type DialogControlsProps = DialogControlsProps.Render &
   DialogControlsProps.SuruUI &
+  DialogControlsProps.BaseUI &
   DialogControlsProps.HTML;
 
 /**
@@ -622,12 +683,14 @@ export { DialogControls as Controls };
 export namespace Controls {
   export type State = DialogControlsState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = DialogControlsProps.Render;
 
     export type SuruUI = DialogControlsProps.SuruUI;
+
+    export type BaseUI = DialogControlsProps.BaseUI;
 
     export type HTML = DialogControlsProps.HTML;
   }
@@ -646,7 +709,12 @@ export namespace DialogHeaderProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -654,6 +722,7 @@ export namespace DialogHeaderProps {
  */
 export type DialogHeaderProps = DialogHeaderProps.Render &
   DialogHeaderProps.SuruUI &
+  DialogHeaderProps.BaseUI &
   DialogHeaderProps.HTML;
 
 /**
@@ -676,12 +745,14 @@ export { DialogHeader as Header };
 export namespace Header {
   export type State = DialogHeaderState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = DialogHeaderProps.Render;
 
     export type SuruUI = DialogHeaderProps.SuruUI;
+
+    export type BaseUI = DialogHeaderProps.BaseUI;
 
     export type HTML = DialogHeaderProps.HTML;
   }
@@ -700,11 +771,19 @@ export namespace DialogTitleProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Title>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Dialog.Title>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // DialogTitleProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"h2">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Dialog.Title>
+    React.ComponentProps<typeof Dialog.Title>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -756,14 +835,19 @@ export namespace DialogDescriptionProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Dialog.Description>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // DialogDescriptionProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"p">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Dialog.Description>
+    React.ComponentProps<typeof Dialog.Description>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -817,7 +901,12 @@ export namespace DialogBodyProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -825,6 +914,7 @@ export namespace DialogBodyProps {
  */
 export type DialogBodyProps = DialogBodyProps.Render &
   DialogBodyProps.SuruUI &
+  DialogBodyProps.BaseUI &
   DialogBodyProps.HTML;
 
 /**
@@ -847,12 +937,14 @@ export { DialogBody as Body };
 export namespace Body {
   export type State = DialogBodyState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = DialogBodyProps.Render;
 
     export type SuruUI = DialogBodyProps.SuruUI;
+
+    export type BaseUI = DialogBodyProps.BaseUI;
 
     export type HTML = DialogBodyProps.HTML;
   }
@@ -871,7 +963,12 @@ export namespace DialogFooterProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -879,6 +976,7 @@ export namespace DialogFooterProps {
  */
 export type DialogFooterProps = DialogFooterProps.Render &
   DialogFooterProps.SuruUI &
+  DialogFooterProps.BaseUI &
   DialogFooterProps.HTML;
 
 /**
@@ -901,12 +999,14 @@ export { DialogFooter as Footer };
 export namespace Footer {
   export type State = DialogFooterState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = DialogFooterProps.Render;
 
     export type SuruUI = DialogFooterProps.SuruUI;
+
+    export type BaseUI = DialogFooterProps.BaseUI;
 
     export type HTML = DialogFooterProps.HTML;
   }
@@ -930,11 +1030,21 @@ export namespace DialogCloseTriggerProps {
     children: NonNullable<React.ComponentProps<typeof Dialog.Close>["render"]>;
   };
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Dialog.Close>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Dialog.Close>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NativeButtonProps:
+      | keyof NativeButtonProps
+      // DialogCloseProps:
+      | never,
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Dialog.Close>
+    React.ComponentProps<typeof Dialog.Close>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 

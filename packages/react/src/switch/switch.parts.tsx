@@ -1,3 +1,4 @@
+import type { NonNativeButtonProps } from "@base-ui/react/internals/types";
 import { Switch } from "@base-ui/react/switch";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
@@ -94,17 +95,38 @@ export namespace SwitchRootProps {
     /**
      * スイッチの主な外観を指定します。
      *
-     * @default "naked"
+     * @default "liquid"
      */
     variant?: SwitchRootVariant | undefined;
   };
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Switch.Root>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"span">
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NonNativeButtonProps:
+      | keyof NonNativeButtonProps
+      // SwitchRootProps:
+      | "checked"
+      | "defaultChecked"
+      | "disabled"
+      | "form"
+      | "id"
+      | "inputRef"
+      | "name"
+      | "onCheckedChange"
+      | "readOnly"
+      | "required"
+      | "uncheckedValue"
+      | "value",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Switch.Root>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -193,12 +215,20 @@ export namespace SwitchThumbProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Switch.Thumb>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"span">
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SwitchThumbProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Switch.Thumb>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**

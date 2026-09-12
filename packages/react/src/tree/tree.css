@@ -111,17 +111,29 @@
   }
 }
 
+/* 変数 */
+:scope {
+  --sui_tree_item_indicator-rotate-closed: ;
+  --sui_tree_item_indicator-rotate-open: ;
+}
+
 /* 可変 */
 :scope {
   .sui_tree_item_indicator {
-    rotate: var(--_sui_tree_item_indicator-rotate, 0deg);
+    rotate: var(--_sui_tree_item_indicator-rotate, var(--sui_tree_item_indicator-rotate-closed));
   }
+}
+
+/* 代入 */
+:scope {
+  --sui_tree_item_indicator-rotate-closed: 0deg;
+  --sui_tree_item_indicator-rotate-open: 90deg;
 }
 
 /* 変異 */
 :scope {
   .sui_tree_item-expanded .sui_tree_item_indicator {
-    --_sui_tree_item_indicator-rotate: 90deg;
+    --_sui_tree_item_indicator-rotate: var(--sui_tree_item_indicator-rotate-open);
   }
 }
 

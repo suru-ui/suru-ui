@@ -52,14 +52,19 @@ export namespace FormRootProps {
 
   export type SuruUI = {};
 
-  export type BaseUI<TValues extends FormRootValues = FormRootValues> = Omit<
+  export type BaseUI<TValues extends FormRootValues = FormRootValues> = Pick<
     React.ComponentProps<typeof Form<TValues>>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // FormRootProps:
+      "validationMode" | "errors" | "onFormSubmit" | "actionsRef",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<"form">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Form<any>>
+  export type HTML<TValues extends FormRootValues = FormRootValues> = Omit<
+    React.ComponentProps<typeof Form<TValues>>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -71,7 +76,7 @@ export namespace FormRootProps {
 export type FormRootProps<TValues extends FormRootValues = FormRootValues> = FormRootProps.Render &
   FormRootProps.SuruUI &
   FormRootProps.BaseUI<TValues> &
-  FormRootProps.HTML;
+  FormRootProps.HTML<TValues>;
 
 interface IFormRoot extends IComponent<FormRootProps> {
   /**
@@ -104,7 +109,7 @@ export namespace Root {
   export type Props<TValues extends FormRootValues = FormRootValues> = Props.Render &
     Props.SuruUI &
     Props.BaseUI<TValues> &
-    Props.HTML;
+    Props.HTML<TValues>;
 
   export namespace Props {
     export type Render = FormRootProps.Render;
@@ -114,7 +119,7 @@ export namespace Root {
     export type BaseUI<TValues extends FormRootValues = FormRootValues> =
       FormRootProps.BaseUI<TValues>;
 
-    export type HTML = FormRootProps.HTML;
+    export type HTML<TValues extends FormRootValues = FormRootValues> = FormRootProps.HTML<TValues>;
   }
 
   export type Actions = FormRootActions;

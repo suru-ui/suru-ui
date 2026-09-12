@@ -232,14 +232,19 @@ export namespace CheckboxGroupRootProps {
     variant?: CheckboxGroupRootVariant | undefined;
   };
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof CheckboxGroup>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // CheckboxGroupProps:
+      "value" | "defaultValue" | "onValueChange" | "allValues" | "disabled",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof CheckboxGroup>
+    React.ComponentProps<typeof CheckboxGroup>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -291,6 +296,11 @@ export const CheckboxGroupRoot: IComponent<CheckboxGroupRootProps> = function Su
           className,
           "sui_checkbox_group",
           `sui_checkbox_group-orientation_${orientation}`,
+          (state) => state.dirty && "sui_checkbox_group-dirty",
+          (state) => state.valid && "sui_checkbox_group-valid",
+          (state) => state.filled && "sui_checkbox_group-filled",
+          (state) => state.focused && "sui_checkbox_group-focused",
+          (state) => state.touched && "sui_checkbox_group-touched",
           (state) => state.disabled && "sui_checkbox_group-disabled",
         )}
         data-scope={dataScope}

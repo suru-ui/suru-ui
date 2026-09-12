@@ -1,3 +1,4 @@
+import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import { useControlled } from "@base-ui/utils/useControlled";
 import * as React from "react";
 
@@ -15,6 +16,8 @@ import {
   type TextFieldInputState,
   type TextFieldRootRadius,
   type TextFieldRootVariant,
+  type TextFieldInputChangeEventReason,
+  type TextFieldInputChangeEventDetails,
   TextFieldRoot,
   TextFieldAddon,
   TextFieldInput,
@@ -138,12 +141,17 @@ export namespace PasswordFieldRootProps {
     visible?: boolean | undefined;
   };
 
-  export type BaseUI = Omit<TextFieldRootProps, keyof Render | keyof SuruUI>;
-
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof TextFieldRootProps
+  export type BaseUI = Pick<
+    TextFieldRootProps,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PasswordFieldRootProps: TextField の props をすべて継承します。
+      keyof TextFieldRootProps,
+      keyof Render | keyof SuruUI
+    >
   >;
+
+  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI | keyof BaseUI>;
 }
 
 /**
@@ -245,6 +253,16 @@ export namespace Root {
 // -----
 
 /**
+ * {@link PasswordFieldInput} の値が変更されたイベントの詳細です。
+ */
+export type PasswordFieldInputChangeEventDetails = TextFieldInputChangeEventDetails;
+
+/**
+ * {@link PasswordFieldInput} の値が変更された理由です。
+ */
+export type PasswordFieldInputChangeEventReason = TextFieldInputChangeEventReason;
+
+/**
  * {@link PasswordFieldInput} の状態です。
  */
 export type PasswordFieldInputState = TextFieldInputState;
@@ -254,11 +272,19 @@ export namespace PasswordFieldInputProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<TextFieldInputProps, keyof Render | keyof SuruUI | "type">;
+  export type BaseUI = Pick<
+    TextFieldInputProps,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PasswordFieldInputProps: type は visible から決まるため除きます。
+      keyof TextFieldInputProps,
+      keyof Render | keyof SuruUI | "type"
+    >
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"input">,
-    keyof Render | keyof SuruUI | keyof Omit<TextFieldInputProps, "type">
+    keyof Render | keyof SuruUI | keyof BaseUI | "type"
   >;
 }
 
@@ -301,6 +327,10 @@ export namespace Input {
 
     export type HTML = PasswordFieldInputProps.HTML;
   }
+
+  export type ChangeEventDetails = PasswordFieldInputChangeEventDetails;
+
+  export type ChangeEventReason = PasswordFieldInputChangeEventReason;
 }
 
 // Addon
@@ -316,12 +346,17 @@ export namespace PasswordFieldAddonProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<TextFieldAddonProps, keyof Render | keyof SuruUI>;
-
-  export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof TextFieldAddonProps
+  export type BaseUI = Pick<
+    TextFieldAddonProps,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PasswordFieldAddonProps: TextField の props をすべて継承します。
+      keyof TextFieldAddonProps,
+      keyof Render | keyof SuruUI
+    >
   >;
+
+  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI | keyof BaseUI>;
 }
 
 /**
@@ -375,9 +410,11 @@ export namespace PasswordFieldToggleButtonProps {
 
   export type SuruUI = {};
 
+  export type BaseUI = {};
+
   export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | "onClick" | "type"
+    BaseUIComponentProps<"button", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -386,6 +423,7 @@ export namespace PasswordFieldToggleButtonProps {
  */
 export type PasswordFieldToggleButtonProps = PasswordFieldToggleButtonProps.Render &
   PasswordFieldToggleButtonProps.SuruUI &
+  PasswordFieldToggleButtonProps.BaseUI &
   PasswordFieldToggleButtonProps.HTML;
 
 /**
@@ -432,12 +470,14 @@ export { PasswordFieldToggleButton as ToggleButton };
 export namespace ToggleButton {
   export type State = PasswordFieldToggleButtonState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = PasswordFieldToggleButtonProps.Render;
 
     export type SuruUI = PasswordFieldToggleButtonProps.SuruUI;
+
+    export type BaseUI = PasswordFieldToggleButtonProps.BaseUI;
 
     export type HTML = PasswordFieldToggleButtonProps.HTML;
   }

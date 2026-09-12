@@ -214,10 +214,7 @@ type MenuPropsMain = {
   trigger?: MenuTriggerProps["children"] | undefined;
 };
 
-type MenuPropsRoot<TItem = any> = Omit<
-  MenuRootProps<unknown, TItem>,
-  "children" | keyof MenuPropsMain
->;
+type MenuPropsRoot<TItem = any> = Omit<MenuRootProps<any, TItem>, "children" | keyof MenuPropsMain>;
 
 type MenuPropsPopup = Omit<MenuPopupProps, keyof MenuPropsMain | keyof MenuPropsRoot>;
 

@@ -14,17 +14,30 @@ import "./toast.css";
 // Provider
 // --------
 
+/**
+ * {@link ToastProvider} が持つ状態です。
+ */
+export type ToastProviderState = Toast.Provider.State;
+
 export namespace ToastProviderProps {
-  export type Render = RenderProps<{}>;
+  export type Render = RenderProps<ToastProviderState>;
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Toast.Provider>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ToastProviderProps:
+      "timeout" | "limit" | "toastManager",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = {};
+  export type HTML = Omit<
+    React.ComponentProps<typeof Toast.Provider>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -45,6 +58,8 @@ export const ToastProvider: IComponent<ToastProviderProps> = function SuiToastPr
 export { ToastProvider as Provider };
 
 export namespace Provider {
+  export type State = ToastProviderState;
+
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
@@ -71,12 +86,20 @@ export namespace ToastPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Toast.Portal>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ToastPortalProps:
+      "container",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Toast.Portal>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -140,12 +163,20 @@ export namespace ToastViewportProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Toast.Viewport>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ToastViewportProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Toast.Viewport>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -217,9 +248,20 @@ export namespace ToastRootProps {
     toast: ToastRootToastObject<TData>;
   };
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Toast.Root>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Toast.Root>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ToastRootProps:
+      "swipeDirection",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Toast.Root>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -315,12 +357,23 @@ export namespace ToastContentProps {
 
   export type SuruUI = Alert.Root.Props.SuruUI;
 
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof Toast.Content>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+  export type BaseUI = Override<
+    Alert.Root.Props.BaseUI,
+    Pick<
+      React.ComponentProps<typeof Toast.Content>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // ToastContentProps:
+        never,
+        keyof Render | keyof SuruUI
+      >
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Toast.Content>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -336,34 +389,37 @@ export type ToastContentProps = ToastContentProps.Render &
  */
 export const ToastContent: IComponent<ToastContentProps> = function SuiToastContent(props) {
   const { size, color, style, radius, render, variant, outlined, className, ...otherProps } = props;
-  const alertRootProps: Required<Alert.Root.Props.SuruUI> = {
-    size,
-    color,
-    radius,
-    variant,
-    outlined,
-  };
 
   return (
     <Toast.Content
       {...otherProps}
-      render={(htmlProps: {}, toastState) => (
-        <Alert.Root
-          {...mergeProps<typeof Alert.Root>([
-            htmlProps,
-            alertRootProps,
-            proxyRenderProps(toastState, {
-              style,
-              render,
-              className: cn(
-                className,
-                "sui_toast_content",
-                (state) => state.behind && "sui_toast_content-behind",
-              ),
-            }),
-          ])}
-        />
-      )}
+      render={(htmlProps: {}, toastState) => {
+        const alertRootProps: Required<Alert.Root.Props.SuruUI> = {
+          size,
+          color,
+          radius,
+          variant,
+          outlined,
+        };
+
+        return (
+          <Alert.Root
+            {...mergeProps<typeof Alert.Root>([
+              htmlProps,
+              alertRootProps,
+              proxyRenderProps(toastState, {
+                style,
+                render,
+                className: cn(
+                  className,
+                  "sui_toast_content",
+                  (state) => state.behind && "sui_toast_content-behind",
+                ),
+              }),
+            ])}
+          />
+        );
+      }}
     />
   );
 };
@@ -407,12 +463,23 @@ export namespace ToastTitleProps {
 
   export type SuruUI = Alert.Title.Props.SuruUI;
 
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof Toast.Title>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"h2">
+  export type BaseUI = Override<
+    Alert.Title.Props.BaseUI,
+    Pick<
+      React.ComponentProps<typeof Toast.Title>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // ToastTitleProps:
+        never,
+        keyof Render | keyof SuruUI
+      >
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"h2">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Toast.Title>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -479,12 +546,23 @@ export namespace ToastDescriptionProps {
 
   export type SuruUI = Alert.Content.Props.SuruUI;
 
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof Toast.Description>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"p">
+  export type BaseUI = Override<
+    Alert.Content.Props.BaseUI,
+    Pick<
+      React.ComponentProps<typeof Toast.Description>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // ToastDescriptionProps:
+        never,
+        keyof Render | keyof SuruUI
+      >
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"p">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Toast.Description>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -551,14 +629,11 @@ export type ToastActionsState = Alert.Actions.State;
 export namespace ToastActionsProps {
   export type Render = RenderProps<ToastActionsState>;
 
-  export type SuruUI = {};
+  export type SuruUI = Alert.Actions.Props.SuruUI;
 
-  export type BaseUI = Omit<
-    Alert.Actions.Props,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
-  >;
+  export type BaseUI = Alert.Actions.Props.BaseUI;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Alert.Actions.Props.HTML;
 }
 
 /**
@@ -613,18 +688,25 @@ export type ToastActionState = Override<Button.Root.State, Toast.Action.State>;
 export namespace ToastActionProps {
   export type Render = RenderProps<ToastActionState>;
 
-  export type SuruUI = {
-    color?: ToastActionColor | undefined;
-    size?: ToastActionSize | undefined;
-    variant?: ToastActionVariant | undefined;
-  };
+  export type SuruUI = Omit<Button.Root.Props.SuruUI, "item" | "pending">;
 
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof Toast.Action>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"button">
+  export type BaseUI = Override<
+    Button.Root.Props.BaseUI,
+    Pick<
+      React.ComponentProps<typeof Toast.Action>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // ToastActionProps:
+        never,
+        keyof Render | keyof SuruUI
+      >
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Toast.Action>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -642,36 +724,56 @@ export const ToastAction: IComponent<ToastActionProps> = function SuiToastAction
   const {
     size,
     color = "grey",
+    muted,
     style,
+    radius,
     render,
+    squared,
     variant = "naked",
+    outlined,
     className,
     nativeButton,
+    focusableWhenDisabled,
     ...otherProps
   } = props;
+  const baseuiProps: Required<ToastActionProps.BaseUI> = {
+    nativeButton,
+    focusableWhenDisabled,
+  };
 
   return (
     <Toast.Action
       {...otherProps}
-      render={(htmlProps: {}, toastState) => (
-        <Button.Root
-          {...mergeProps<typeof Button.Root>([
-            htmlProps,
-            {
-              size,
-              color,
-              variant,
-            },
-            proxyRenderProps(toastState, {
-              style,
-              render,
-              className,
-            }),
-          ])}
-          nativeButton={nativeButton}
-        />
-      )}
-      nativeButton={nativeButton}
+      {...baseuiProps}
+      render={(htmlProps: {}, toastState) => {
+        const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> = {
+          item: false,
+          size,
+          color,
+          muted,
+          radius,
+          pending: false,
+          squared,
+          variant,
+          outlined,
+          nativeButton,
+          focusableWhenDisabled,
+        };
+
+        return (
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              buttonRootProps,
+              proxyRenderProps(toastState, {
+                style,
+                render,
+                className,
+              }),
+            ])}
+          />
+        );
+      }}
     />
   );
 };
@@ -723,12 +825,23 @@ export namespace ToastCloseProps {
 
   export type SuruUI = Omit<Button.Root.Props.SuruUI, "item" | "pending">;
 
-  export type BaseUI = Omit<
-    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof Toast.Close>>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"button">
+  export type BaseUI = Override<
+    Button.Root.Props.BaseUI,
+    Pick<
+      React.ComponentProps<typeof Toast.Close>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // ToastCloseProps:
+        never,
+        keyof Render | keyof SuruUI
+      >
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Toast.Close>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -762,37 +875,40 @@ export const ToastClose: IComponent<ToastCloseProps> = function SuiToastClose(pr
     nativeButton,
     focusableWhenDisabled,
   };
-  const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> = {
-    item: undefined,
-    size,
-    color,
-    muted,
-    radius,
-    pending: undefined,
-    squared,
-    variant,
-    outlined,
-    nativeButton,
-    focusableWhenDisabled,
-  };
 
   return (
     <Toast.Close
       {...otherProps}
       {...baseuiProps}
-      render={(htmlProps: {}, toastState) => (
-        <Button.Root
-          {...mergeProps<typeof Button.Root>([
-            htmlProps,
-            buttonRootProps,
-            proxyRenderProps(toastState, {
-              style,
-              render,
-              className,
-            }),
-          ])}
-        />
-      )}
+      render={(htmlProps: {}, toastState) => {
+        const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> = {
+          item: undefined,
+          size,
+          color,
+          muted,
+          radius,
+          pending: undefined,
+          squared,
+          variant,
+          outlined,
+          nativeButton,
+          focusableWhenDisabled,
+        };
+
+        return (
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              buttonRootProps,
+              proxyRenderProps(toastState, {
+                style,
+                render,
+                className,
+              }),
+            ])}
+          />
+        );
+      }}
     />
   );
 };

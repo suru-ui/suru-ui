@@ -1,3 +1,4 @@
+import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import { Tabs as BaseTabs } from "@base-ui/react/tabs";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
@@ -79,7 +80,7 @@ export namespace TabsRootProps {
      *
      * `variant` が `"segments"` の場合のみ有効です。
      *
-     * @default "solid"
+     * @default "liquid"
      */
     activeVariant?: TabsRootActiveVariant | undefined;
 
@@ -112,12 +113,20 @@ export namespace TabsRootProps {
     variant?: TabsRootVariant | undefined;
   };
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseTabs.Root>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // TabsRootProps:
+      "value" | "defaultValue" | "orientation" | "onValueChange",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof BaseTabs.Root>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -210,12 +219,20 @@ export namespace TabsListProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseTabs.List>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // TabsListProps:
+      "activateOnFocus" | "loopFocus",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof BaseTabs.List>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -305,9 +322,23 @@ export namespace TabsTabProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseTabs.Tab>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof BaseTabs.Tab>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NativeButtonProps:
+      | keyof NativeButtonProps
+      // TabsTabProps:
+      | "value"
+      | "disabled",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof BaseTabs.Tab>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -378,12 +409,20 @@ export namespace TabsIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseTabs.Indicator>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"span">
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // TabsIndicatorProps:
+      "renderBeforeHydration",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof BaseTabs.Indicator>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -441,12 +480,20 @@ export namespace TabsPanelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseTabs.Panel>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // TabsPanelProps:
+      "value" | "keepMounted",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof BaseTabs.Panel>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**

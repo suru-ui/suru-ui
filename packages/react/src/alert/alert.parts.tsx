@@ -1,5 +1,5 @@
+import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import type { Size, Color } from "@suru-ui/theme";
-import type * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
@@ -88,13 +88,21 @@ export namespace AlertRootProps {
     variant?: AlertRootVariant | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
  * {@link AlertRoot} に渡す props です。
  */
-export type AlertRootProps = AlertRootProps.Render & AlertRootProps.SuruUI & AlertRootProps.HTML;
+export type AlertRootProps = AlertRootProps.Render &
+  AlertRootProps.SuruUI &
+  AlertRootProps.BaseUI &
+  AlertRootProps.HTML;
 
 /**
  * アラートのルートコンポーネントです。
@@ -107,7 +115,6 @@ export const AlertRoot: IComponent<AlertRootProps> = function SuiAlertRoot(props
     radius = size,
     variant = "muted",
     outlined = false,
-    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherDivProps
@@ -119,7 +126,6 @@ export const AlertRoot: IComponent<AlertRootProps> = function SuiAlertRoot(props
       {
         role,
         className: cn(
-          className,
           "sui_alert",
           `sui_alert-size_${size}`,
           `sui_alert-color_${color}`,
@@ -139,12 +145,14 @@ export { AlertRoot as Root };
 export namespace Root {
   export type State = AlertRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = AlertRootProps.Render;
 
     export type SuruUI = AlertRootProps.SuruUI;
+
+    export type BaseUI = AlertRootProps.BaseUI;
 
     export type HTML = AlertRootProps.HTML;
   }
@@ -171,13 +179,21 @@ export namespace AlertIconProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
  * {@link AlertIcon} に渡す props です。
  */
-export type AlertIconProps = AlertIconProps.Render & AlertIconProps.SuruUI & AlertIconProps.HTML;
+export type AlertIconProps = AlertIconProps.Render &
+  AlertIconProps.SuruUI &
+  AlertIconProps.BaseUI &
+  AlertIconProps.HTML;
 
 /**
  * アラートの状態を視覚的に示すインジケーターコンポーネントです。
@@ -204,12 +220,14 @@ export { AlertIcon as Icon };
 export namespace Icon {
   export type State = AlertIconState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = AlertIconProps.Render;
 
     export type SuruUI = AlertIconProps.SuruUI;
+
+    export type BaseUI = AlertIconProps.BaseUI;
 
     export type HTML = AlertIconProps.HTML;
   }
@@ -228,7 +246,12 @@ export namespace AlertTitleProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -236,6 +259,7 @@ export namespace AlertTitleProps {
  */
 export type AlertTitleProps = AlertTitleProps.Render &
   AlertTitleProps.SuruUI &
+  AlertTitleProps.BaseUI &
   AlertTitleProps.HTML;
 
 /**
@@ -258,12 +282,14 @@ export { AlertTitle as Title };
 export namespace Title {
   export type State = AlertTitleState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = AlertTitleProps.Render;
 
     export type SuruUI = AlertTitleProps.SuruUI;
+
+    export type BaseUI = AlertTitleProps.BaseUI;
 
     export type HTML = AlertTitleProps.HTML;
   }
@@ -282,7 +308,12 @@ export namespace AlertContentProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -290,6 +321,7 @@ export namespace AlertContentProps {
  */
 export type AlertContentProps = AlertContentProps.Render &
   AlertContentProps.SuruUI &
+  AlertContentProps.BaseUI &
   AlertContentProps.HTML;
 
 /**
@@ -312,12 +344,14 @@ export { AlertContent as Content };
 export namespace Content {
   export type State = AlertContentState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = AlertContentProps.Render;
 
     export type SuruUI = AlertContentProps.SuruUI;
+
+    export type BaseUI = AlertContentProps.BaseUI;
 
     export type HTML = AlertContentProps.HTML;
   }
@@ -336,7 +370,12 @@ export namespace AlertActionsProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -344,6 +383,7 @@ export namespace AlertActionsProps {
  */
 export type AlertActionsProps = AlertActionsProps.Render &
   AlertActionsProps.SuruUI &
+  AlertActionsProps.BaseUI &
   AlertActionsProps.HTML;
 
 /**
@@ -366,12 +406,14 @@ export { AlertActions as Actions };
 export namespace Actions {
   export type State = AlertActionsState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = AlertActionsProps.Render;
 
     export type SuruUI = AlertActionsProps.SuruUI;
+
+    export type BaseUI = AlertActionsProps.BaseUI;
 
     export type HTML = AlertActionsProps.HTML;
   }

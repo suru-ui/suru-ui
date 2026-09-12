@@ -74,7 +74,7 @@
 :scope {
   --sui_alert_dialog_content-row_gap: ;
   --sui_alert_dialog_content-width-desktop: ;
-  --sui_alert_dialog_content-width-modile: ;
+  --sui_alert_dialog_content-width-mobile: ;
   --sui_alert_dialog_content-width: ;
   --sui_alert_dialog_content-max_height: ;
   --sui_alert_dialog_content-padding: ;
@@ -104,14 +104,14 @@
 :scope {
   --sui_alert_dialog_content-row_gap: --sui-gap(7);
   --sui_alert_dialog_content-width-desktop: calc(var(--sui-text-std-md-n-font_size) * 24);
-  --sui_alert_dialog_content-width-modile: calc(
+  --sui_alert_dialog_content-width-mobile: calc(
                                              100vw
                                              - var(--sui_alert_dialog_content-virtual_margin_inline)
                                              * 2
                                            );
   --sui_alert_dialog_content-width: min(
                                       var(--sui_alert_dialog_content-width-desktop),
-                                      var(--sui_alert_dialog_content-width-modile)
+                                      var(--sui_alert_dialog_content-width-mobile)
                                     );
   --sui_alert_dialog_content-max_height: calc(
                                            100%
@@ -440,7 +440,7 @@
 
   &:has(.sui_alert_dialog_icon) {
     --sui_alert_dialog_icon-font_size: 1em;
-    --sui_alert_dialog_icon-line_height: 1lh;
+    --sui_alert_dialog_icon-line_height: 1;
   }
 
   &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_title) {
@@ -455,7 +455,7 @@
 
   &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_cancel_icon_button) {
     --sui_alert_dialog_icon-font_size: 1em;
-    --sui_alert_dialog_icon-line_height: 1lh;
+    --sui_alert_dialog_icon-line_height: 1;
   }
 
   &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_title):has(.sui_alert_dialog_description) {

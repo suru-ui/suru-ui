@@ -1,3 +1,4 @@
+import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
@@ -90,13 +91,21 @@ export namespace StatRootProps {
     size?: StatRootSize | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"dl">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"dl", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
  * {@link StatRoot} に渡す props です。
  */
-export type StatRootProps = StatRootProps.Render & StatRootProps.SuruUI & StatRootProps.HTML;
+export type StatRootProps = StatRootProps.Render &
+  StatRootProps.SuruUI &
+  StatRootProps.BaseUI &
+  StatRootProps.HTML;
 
 /**
  * ラベルと値の組で統計を表示するルートコンポーネントです。
@@ -106,7 +115,6 @@ export type StatRootProps = StatRootProps.Render & StatRootProps.SuruUI & StatRo
 export const StatRoot: IComponent<StatRootProps> = function SuiStatRoot(props) {
   const {
     size = "md",
-    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherDlProps
@@ -116,7 +124,7 @@ export const StatRoot: IComponent<StatRootProps> = function SuiStatRoot(props) {
     props: [
       otherDlProps,
       {
-        className: cn(className, "sui_stat", `sui_stat-size_${size}`),
+        className: cn("sui_stat", `sui_stat-size_${size}`),
         "data-scope": dataScope,
       },
     ],
@@ -131,12 +139,14 @@ export { StatRoot as Root };
 export namespace Root {
   export type State = StatRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = StatRootProps.Render;
 
     export type SuruUI = StatRootProps.SuruUI;
+
+    export type BaseUI = StatRootProps.BaseUI;
 
     export type HTML = StatRootProps.HTML;
   }
@@ -148,15 +158,6 @@ export namespace Root {
 // -----
 
 /**
- * 統計ラベルの大きさです。
- *
- * - `"sm"`: 小さめ
- * - `"md"`: 標準的
- * - `"lg"`: 大きめ
- */
-export type StatLabelSize = Size;
-
-/**
  * {@link StatLabel} が持つ状態です。
  */
 export type StatLabelState = {};
@@ -164,22 +165,23 @@ export type StatLabelState = {};
 export namespace StatLabelProps {
   export type Render = RenderProps<StatLabelState>;
 
-  export type SuruUI = {
-    /**
-     * 統計ラベルの大きさを指定します。
-     *
-     * 親 {@link StatRoot} 内では {@link StatRootProps.size|size} が優先されます。
-     */
-    size?: StatLabelSize | undefined;
-  };
+  export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"dt">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"dt", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
  * {@link StatLabel} に渡す props です。
  */
-export type StatLabelProps = StatLabelProps.Render & StatLabelProps.SuruUI & StatLabelProps.HTML;
+export type StatLabelProps = StatLabelProps.Render &
+  StatLabelProps.SuruUI &
+  StatLabelProps.BaseUI &
+  StatLabelProps.HTML;
 
 /**
  * 統計のラベルを表すコンポーネントです。
@@ -187,15 +189,11 @@ export type StatLabelProps = StatLabelProps.Render & StatLabelProps.SuruUI & Sta
  * `dt` 要素を描画します。
  */
 export const StatLabel: IComponent<StatLabelProps> = function SuiStatLabel(props) {
-  const ctx = useSuiStatContext(true);
-  const { size: sizeProp, className, ...otherDtProps } = props;
-  const size = ctx?.size ?? sizeProp ?? "md";
-
   return useRender({
     props: [
-      otherDtProps,
+      props,
       {
-        className: cn(className, "sui_stat_label", `sui_stat_label-size_${size}`),
+        className: "sui_stat_label",
       },
     ],
     defaultTagName: "dt",
@@ -207,30 +205,21 @@ export { StatLabel as Label };
 export namespace Label {
   export type State = StatLabelState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = StatLabelProps.Render;
 
     export type SuruUI = StatLabelProps.SuruUI;
 
+    export type BaseUI = StatLabelProps.BaseUI;
+
     export type HTML = StatLabelProps.HTML;
   }
-
-  export type Size = StatLabelSize;
 }
 
 // Value
 // -----
-
-/**
- * 統計値の大きさです。
- *
- * - `"sm"`: 小さめ
- * - `"md"`: 標準的
- * - `"lg"`: 大きめ
- */
-export type StatValueSize = Size;
 
 /**
  * {@link StatValue} が持つ状態です。
@@ -240,22 +229,23 @@ export type StatValueState = {};
 export namespace StatValueProps {
   export type Render = RenderProps<StatValueState>;
 
-  export type SuruUI = {
-    /**
-     * 統計値の大きさを指定します。
-     *
-     * 親 {@link StatRoot} 内では {@link StatRootProps.size|size} が優先されます。
-     */
-    size?: StatValueSize | undefined;
-  };
+  export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"dd">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"dd", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
  * {@link StatValue} に渡す props です。
  */
-export type StatValueProps = StatValueProps.Render & StatValueProps.SuruUI & StatValueProps.HTML;
+export type StatValueProps = StatValueProps.Render &
+  StatValueProps.SuruUI &
+  StatValueProps.BaseUI &
+  StatValueProps.HTML;
 
 /**
  * 統計の値を表すコンポーネントです。
@@ -263,15 +253,11 @@ export type StatValueProps = StatValueProps.Render & StatValueProps.SuruUI & Sta
  * `dd` 要素を描画します。変化の方向を示すときは、内側に {@link StatChange} を配置します。
  */
 export const StatValue: IComponent<StatValueProps> = function SuiStatValue(props) {
-  const ctx = useSuiStatContext(true);
-  const { size: sizeProp, className, ...otherDdProps } = props;
-  const size = ctx?.size ?? sizeProp ?? "md";
-
   return useRender({
     props: [
-      otherDdProps,
+      props,
       {
-        className: cn(className, "sui_stat_value", `sui_stat_value-size_${size}`),
+        className: "sui_stat_value",
       },
     ],
     defaultTagName: "dd",
@@ -283,17 +269,17 @@ export { StatValue as Value };
 export namespace Value {
   export type State = StatValueState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = StatValueProps.Render;
 
     export type SuruUI = StatValueProps.SuruUI;
 
+    export type BaseUI = StatValueProps.BaseUI;
+
     export type HTML = StatValueProps.HTML;
   }
-
-  export type Size = StatValueSize;
 }
 
 // Change
@@ -327,7 +313,12 @@ export namespace StatChangeProps {
     direction?: StatChangeDirection | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"span", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -335,6 +326,7 @@ export namespace StatChangeProps {
  */
 export type StatChangeProps = StatChangeProps.Render &
   StatChangeProps.SuruUI &
+  StatChangeProps.BaseUI &
   StatChangeProps.HTML;
 
 /**
@@ -343,13 +335,13 @@ export type StatChangeProps = StatChangeProps.Render &
  * {@link StatValue} の内側に配置して、前回からの増減を矢印と色で示します。
  */
 export const StatChange: IComponent<StatChangeProps> = function SuiStatChange(props) {
-  const { className, direction = "up", ...otherSpanProps } = props;
+  const { direction = "up", ...otherSpanProps } = props;
 
   return useRender({
     props: [
       otherSpanProps,
       {
-        className: cn(className, "sui_stat_change", `sui_stat_change-direction_${direction}`),
+        className: cn("sui_stat_change", `sui_stat_change-direction_${direction}`),
       },
     ],
     defaultTagName: "span",
@@ -361,12 +353,14 @@ export { StatChange as Change };
 export namespace Change {
   export type State = StatChangeState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = StatChangeProps.Render;
 
     export type SuruUI = StatChangeProps.SuruUI;
+
+    export type BaseUI = StatChangeProps.BaseUI;
 
     export type HTML = StatChangeProps.HTML;
   }
@@ -378,15 +372,6 @@ export namespace Change {
 // -----------
 
 /**
- * 統計の説明文の大きさです。
- *
- * - `"sm"`: 小さめ
- * - `"md"`: 標準的
- * - `"lg"`: 大きめ
- */
-export type StatDescriptionSize = Size;
-
-/**
  * {@link StatDescription} が持つ状態です。
  */
 export type StatDescriptionState = {};
@@ -394,16 +379,14 @@ export type StatDescriptionState = {};
 export namespace StatDescriptionProps {
   export type Render = RenderProps<StatDescriptionState>;
 
-  export type SuruUI = {
-    /**
-     * 統計の説明文の大きさを指定します。
-     *
-     * 親 {@link StatRoot} 内では {@link StatRootProps.size|size} が優先されます。
-     */
-    size?: StatDescriptionSize | undefined;
-  };
+  export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"dd">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"dd", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -411,6 +394,7 @@ export namespace StatDescriptionProps {
  */
 export type StatDescriptionProps = StatDescriptionProps.Render &
   StatDescriptionProps.SuruUI &
+  StatDescriptionProps.BaseUI &
   StatDescriptionProps.HTML;
 
 /**
@@ -421,15 +405,11 @@ export type StatDescriptionProps = StatDescriptionProps.Render &
 export const StatDescription: IComponent<StatDescriptionProps> = function SuiStatDescription(
   props,
 ) {
-  const ctx = useSuiStatContext(true);
-  const { size: sizeProp, className, ...otherDdProps } = props;
-  const size = ctx?.size ?? sizeProp ?? "md";
-
   return useRender({
     props: [
-      otherDdProps,
+      props,
       {
-        className: cn(className, "sui_stat_description", `sui_stat_description-size_${size}`),
+        className: "sui_stat_description",
       },
     ],
     defaultTagName: "dd",
@@ -441,15 +421,15 @@ export { StatDescription as Description };
 export namespace Description {
   export type State = StatDescriptionState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = StatDescriptionProps.Render;
 
     export type SuruUI = StatDescriptionProps.SuruUI;
 
+    export type BaseUI = StatDescriptionProps.BaseUI;
+
     export type HTML = StatDescriptionProps.HTML;
   }
-
-  export type Size = StatDescriptionSize;
 }

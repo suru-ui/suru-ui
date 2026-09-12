@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { type TextFieldInputProps } from "../text-field/text-field.parts.jsx";
 import type { IComponent, IUseContext } from "../types.js";
 import {
   type PasswordFieldContext,
@@ -12,6 +11,8 @@ import {
   type PasswordFieldRootRadius,
   type PasswordFieldRootVariant,
   type PasswordFieldToggleButtonProps,
+  type PasswordFieldInputChangeEventReason,
+  type PasswordFieldInputChangeEventDetails,
   PasswordFieldRoot,
   PasswordFieldAddon,
   PasswordFieldInput,
@@ -21,6 +22,10 @@ import {
 
 // Types
 // -----
+
+export type PasswordFieldChangeEventDetails = PasswordFieldInputChangeEventDetails;
+
+export type PasswordFieldChangeEventReason = PasswordFieldInputChangeEventReason;
 
 export type PasswordFieldColor = PasswordFieldRootColor;
 
@@ -42,7 +47,19 @@ export type PasswordFieldSlotProps = {
   /**
    * {@link PasswordFieldInput} に渡す props です。
    */
-  readonly input?: PasswordFieldInputProps | undefined;
+  readonly input?:
+    | Omit<
+        PasswordFieldInputProps,
+        | "defaultValue"
+        | "disabled"
+        | "name"
+        | "onValueChange"
+        | "placeholder"
+        | "readOnly"
+        | "required"
+        | "value"
+      >
+    | undefined;
 
   /**
    * {@link PasswordFieldToggleButton} に渡す props です。
@@ -65,7 +82,7 @@ export type PasswordFieldState = {
  */
 export type PasswordFieldProps = Omit<PasswordFieldRootProps, "children"> &
   Pick<
-    TextFieldInputProps,
+    PasswordFieldInputProps,
     | "defaultValue"
     | "disabled"
     | "name"
@@ -261,6 +278,10 @@ export namespace PasswordField {
   export type SlotProps = PasswordFieldSlotProps;
 
   export type Context = PasswordFieldContext;
+
+  export type ChangeEventDetails = PasswordFieldChangeEventDetails;
+
+  export type ChangeEventReason = PasswordFieldChangeEventReason;
 
   export type Color = PasswordFieldColor;
 

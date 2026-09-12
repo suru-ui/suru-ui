@@ -66,7 +66,7 @@ export type InputRootType = Exclude<
 export type InputRootVariant = "naked" | "liquid";
 
 /**
- * {@link InputRoot} の状態です。
+ * {@link InputRoot} が持つ状態です。
  */
 export type InputRootState = Input.State;
 
@@ -117,19 +117,24 @@ export namespace InputRootProps {
     variant?: InputRootVariant | undefined;
   };
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Input>,
-    keyof Render | keyof SuruUI | "children"
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // InputProps:
+      "value" | "defaultValue" | "onValueChange",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"input">,
-    keyof Render | keyof SuruUI | keyof Omit<React.ComponentProps<typeof Input>, "children">
+    React.ComponentProps<typeof Input>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
 /**
- * {@link InputRoot} に渡すプロパティーです。
+ * {@link InputRoot} に渡す props です。
  */
 export type InputRootProps = InputRootProps.Render &
   InputRootProps.SuruUI &

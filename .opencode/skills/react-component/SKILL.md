@@ -131,8 +131,8 @@ export type AccordionRootVariant = "naked" | "liquid";
 | -------- | ---- | ------ |
 | `Render` | 状態を持つ props | `RenderProps<State>` |
 | `SuruUI` | Suru UI 独自 props。JSDoc はここだけに書く | オブジェクト |
-| `BaseUI` | Base UI 由来 props。Base UI ラッパーのみ作る。素の要素では作らない | `Omit<...>` |
-| `HTML`   | 残りの HTML props | `Omit<...>` |
+| `BaseUI` | Base UI 由来 props。Base UI ラッパーは明示列挙の `Pick`、素の要素は `{}` | `Pick<..., Exclude<...>>` / `{}` |
+| `HTML`   | 同じ型からの残余 | `Omit<..., keyof Render \| keyof SuruUI \| keyof BaseUI>` |
 
 - `Render` / `SuruUI` / `BaseUI` / `HTML` 自体に JSDoc を付けません。区分の並び順は自動整形に任せます。
 - 結合した `Props` 本体には `/** {@link Xxx} に渡す props です。 */` を残します。
@@ -141,74 +141,102 @@ export type AccordionRootVariant = "naked" | "liquid";
 
 ### テンプレート A: 素の要素
 
+`AccordionIndicator` を模範にします。
+
 ```tsx
-export namespace AlertRootProps {
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+export namespace AccordionIndicatorProps {
+  export type Render = RenderProps<AccordionIndicatorState>;
 
-  export type Render = RenderProps<AlertRootState>;
+  export type SuruUI = {};
 
-  export type SuruUI = {
-    /**
-     * アラートの色を指定します。
-     *
-     * @default "grey"
-     */
-    color?: AlertRootColor | undefined;
-  };
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"span", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
- * {@link AlertRoot} に渡す props です。
+ * {@link AccordionIndicator} に渡す props です。
  */
-export type AlertRootProps = AlertRootProps.Render & AlertRootProps.SuruUI & AlertRootProps.HTML;
+export type AccordionIndicatorProps = AccordionIndicatorProps.Render &
+  AccordionIndicatorProps.SuruUI &
+  AccordionIndicatorProps.BaseUI &
+  AccordionIndicatorProps.HTML;
 ```
 
-タグは既存の `React.ComponentProps<"xxx">` をそのまま使います。
+- `BaseUI` がなくても `= {}` を残します。`HTML` の `| keyof BaseUI` を省略しません。
+- `HTML` は `React.ComponentProps<"xxx">` ではなく `BaseUIComponentProps<"xxx", never, never>` から取ります。要 `import type { BaseUIComponentProps } from "@base-ui/react/internals/types"` です。
 
 ### テンプレート B: Base UI ラッパー
 
+`AccordionItem` を模範にします。
+
 ```tsx
-export namespace SwitchRootProps {
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof Switch.Root>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"span">
+export namespace AccordionItemProps {
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Accordion.Item>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // AccordionItemProps:
+      | "value"
+      | "onOpenChange",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Accordion.Item>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 
-  export type Render = RenderProps<SwitchRootState>;
+  export type Render = RenderProps<AccordionItemState>;
 
-  export type SuruUI = {
-    // ...独自 props (キー昇順)
-  };
+  export type SuruUI = {};
 }
 
 /**
- * {@link SwitchRoot} に渡す props です。
+ * {@link AccordionItem} に渡す props です。
  */
-export type SwitchRootProps = SwitchRootProps.Render &
-  SwitchRootProps.SuruUI &
-  SwitchRootProps.BaseUI &
-  SwitchRootProps.HTML;
+export type AccordionItemProps = AccordionItemProps.Render &
+  AccordionItemProps.SuruUI &
+  AccordionItemProps.BaseUI &
+  AccordionItemProps.HTML;
 ```
 
-- タグは描画先で決めます。Popup / Content → `"div"`、Trigger → `"button"`、不明なら `"div"` です。
-- タグ除外で型競合が出たら、タグ除外を外して `Omit<..., keyof Render | keyof SuruUI>` にします。
-- 独自 props がなくても `SuruUI = {}` を残します。`keyof SuruUI` が `never` でも `Omit` から除きません。将来の追加漏れを防ぐためです。
+- `BaseUI` は `Omit` で残余を取るのではなく、`Pick` + `Exclude` で取り出すキーを明示列挙します。列挙前に Base UI の `.d.ts` を確認し、どのキーを取り出すか決めます。根拠コメントを残します。
+- `HTML` はタグ (`React.ComponentProps<"xxx">`) ではなく、同じ Base UI コンポーネントの残余です。`keyof Render | keyof SuruUI | keyof BaseUI` で除きます。
+- 取り出すキーがない場合も `Exclude<never, keyof Render | keyof SuruUI>` の `Pick` にします。`{}` や `Omit` にしません (`AccordionHeading` を参照)。
+- 独自 props がなくても `SuruUI = {}` を残します。`keyof SuruUI` が `never` でも `Exclude` / `Omit` から除きません。将来の追加漏れを防ぐためです。
 
 ### テンプレート C: 汎型
 
+`AccordionRoot` を模範にします。テンプレート B に汎型を足した形です。
+
 ```tsx
 export namespace AccordionRootProps {
-  export type BaseUI<TItem = any, TValue = any> = Omit<
+  export type BaseUI<TValue = any> = Pick<
     React.ComponentProps<typeof Accordion.Root<TValue>>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // AccordionRootProps:
+      | "value"
+      | "defaultValue"
+      | "disabled",
+      keyof Render | keyof SuruUI
+    >
+  >;
+
+  export type HTML<TValue = any> = Omit<
+    React.ComponentProps<typeof Accordion.Root<TValue>>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 
   export type Render<TValue = any> = RenderProps<AccordionRootState<TValue>>;
 
   export type SuruUI<TItem = any> = {
-    // ...独自 props (キー昇順)
+    // ...独自 props
   };
 }
 
@@ -220,11 +248,9 @@ export namespace AccordionRootProps {
  */
 export type AccordionRootProps<TItem = any, TValue = any> = AccordionRootProps.Render<TValue> &
   AccordionRootProps.SuruUI<TItem> &
-  AccordionRootProps.BaseUI<TItem, TValue> &
-  AccordionRootProps.HTML;
+  AccordionRootProps.BaseUI<TValue> &
+  AccordionRootProps.HTML<TValue>;
 ```
-
-`keyof` は `any` で受けます。
 
 ## 継承パターン
 
@@ -491,12 +517,13 @@ export type XxxProps<TItem = any> = XxxProps.Render & XxxProps.SuruUI<TItem> & X
 export { AccordionItem as Item };
 export namespace Item {
   export type State = AccordionItemState;
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type HTML = AccordionItemProps.HTML;
     export type Render = AccordionItemProps.Render;
     export type SuruUI = AccordionItemProps.SuruUI;
+    export type BaseUI = AccordionItemProps.BaseUI;
+    export type HTML = AccordionItemProps.HTML;
   }
 }
 ```
@@ -561,8 +588,7 @@ export const useAccordionAPI: IUseAccordionAPI = function useSuiAccordionAPI(pro
 children: typeof children === "function" ? items.map(children) : toReactNode(children),
 ```
 
-- パーツ別 props は利用者指定 (`slotProps.<part>`) を後に spread します。直 prop を優先しません。
-- コールバック合成は `slotProps` 側を先に呼び、中止なら利用者側を呼びません。
+- パーツ別 props は利用者指定 (`slotProps.<part>`) を前に展開します。
 - 末尾に短名を付けます (例: `export { type AlertDialogAPI as API, useAlertDialogAPI as useAPI };`)。
 
 ### Component
@@ -621,8 +647,8 @@ mise run test:typecheck
 - `useRender` の残余に汎名を使っていない。`other<Tag>Props` / `<tag>Props` / `props` を使い分けている。
 - JSX 直書きの `cn` で `className` を先頭に置いている。
 - `Props` を 4 区分に分け、`&` で結合している。区分自体に JSDoc を付けていない。結合本体の JSDoc を残している。
-- 短名 namespace の `Props` を `&` で結合している。
-- 空の `SuruUI` でも `Omit` の `| keyof SuruUI` を省略していない。
+- 短名 namespace の `Props` を `&` で結合している。`BaseUI` を落としていない。
+- 空の `SuruUI` / `BaseUI` でも `Exclude` / `Omit` の `| keyof SuruUI` / `| keyof BaseUI` を省略していない。
 - 型引数名が `T` 始まりである。
 - 他コンポーネント参照に短名を使っていない。完全な交差型を使っている。
 - Base UI の公開型に漏れがない。`Handle` の有無を確認している。
@@ -632,7 +658,7 @@ mise run test:typecheck
 - 反復要素に `key` を付けている。判定関数を公開していない。
 - 再命名型にパーツ名を重ねていない。
 - `SlotProps` が `readonly`・`| undefined` である。持上げキーを残していない。既定子だけのパーツの `children` を消していない。
-- API の getter 名・単体/リスト・`| null` が正しい。常に描画するパーツを変数化していない。可視判定なしに描画していない。`slotProps` 側を後に spread し、コールバック中止判定を省略していない。
+- API の getter 名・単体/リスト・`| null` が正しい。常に描画するパーツを変数化していない。可視判定なしに描画していない。`slotProps` 側を前に展開し、コールバック中止判定を省略していない。
 - `data-scope` が起点のみである。状態・見た目が最上位に集約されている。子に同名 props や修飾クラスがない。`&:has(.子修飾)` がない。見た目だけの `Context` がない。Base UI の `data-*` を CSS に使っていない。`State` 外のクラスや CSS がない。
 - `items` を二重定義していない。
 - 継承の `BaseUI` が `Omit<Override<...>>>` の順である。`Required` を省略していない。除外交差キーの `undefined` 明示がある。`proxyRenderProps` に `Render` をすべて渡し、`mergeProps` の順序が正しい。

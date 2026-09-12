@@ -1,4 +1,5 @@
 import { Drawer } from "@base-ui/react/drawer";
+import type { NativeButtonProps, BaseUIComponentProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
@@ -47,14 +48,19 @@ export namespace DrawerProviderProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Drawer.Provider>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // DrawerProviderProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Provider>
+    React.ComponentProps<typeof Drawer.Provider>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -106,14 +112,19 @@ export namespace DrawerIndentBackgroundProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Drawer.IndentBackground>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // DrawerIndentBackgroundProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.IndentBackground>
+    React.ComponentProps<typeof Drawer.IndentBackground>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -173,14 +184,19 @@ export namespace DrawerIndentProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Drawer.Indent>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // DrawerIndentProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Indent>
+    React.ComponentProps<typeof Drawer.Indent>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -276,9 +292,34 @@ export namespace DrawerRootProps {
     handle: DrawerHandle<TPayload>;
   };
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Root>, keyof Render | keyof SuruUI>;
+  export type BaseUI<TPayload = any> = Pick<
+    React.ComponentProps<typeof Drawer.Root<TPayload>>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // DrawerRootProps:
+      | "open"
+      | "defaultOpen"
+      | "modal"
+      | "onOpenChange"
+      | "onOpenChangeComplete"
+      | "disablePointerDismissal"
+      | "actionsRef"
+      | "triggerId"
+      | "defaultTriggerId"
+      | "swipeDirection"
+      | "snapPoints"
+      | "snapToSequentialPoints"
+      | "snapPoint"
+      | "defaultSnapPoint"
+      | "onSnapPointChange",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML<TPayload = any> = Omit<
+    React.ComponentProps<typeof Drawer.Root<TPayload>>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -288,8 +329,8 @@ export namespace DrawerRootProps {
  */
 export type DrawerRootProps<TPayload = any> = DrawerRootProps.Render &
   DrawerRootProps.SuruUI<TPayload> &
-  DrawerRootProps.BaseUI &
-  DrawerRootProps.HTML;
+  DrawerRootProps.BaseUI<TPayload> &
+  DrawerRootProps.HTML<TPayload>;
 
 interface IDrawerRoot extends IComponent<DrawerRootProps> {
   /**
@@ -314,17 +355,17 @@ export namespace Root {
 
   export type Props<TPayload = any> = Props.Render &
     Props.SuruUI<TPayload> &
-    Props.BaseUI &
-    Props.HTML;
+    Props.BaseUI<TPayload> &
+    Props.HTML<TPayload>;
 
   export namespace Props {
     export type Render = DrawerRootProps.Render;
 
     export type SuruUI<TPayload = any> = DrawerRootProps.SuruUI<TPayload>;
 
-    export type BaseUI = DrawerRootProps.BaseUI;
+    export type BaseUI<TPayload = any> = DrawerRootProps.BaseUI<TPayload>;
 
-    export type HTML = DrawerRootProps.HTML;
+    export type HTML<TPayload = any> = DrawerRootProps.HTML<TPayload>;
   }
 
   export type Actions = DrawerRootActions;
@@ -363,12 +404,23 @@ export namespace DrawerTriggerProps {
     handle: DrawerHandle<TPayload>;
   };
 
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof Drawer.Trigger>,
-    keyof Render | keyof SuruUI
+  export type BaseUI<TPayload = any> = Pick<
+    React.ComponentProps<typeof Drawer.Trigger<TPayload>>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NativeButtonProps:
+      | keyof NativeButtonProps
+      // DrawerTriggerProps:
+      | "payload"
+      | "id",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
+  export type HTML<TPayload = any> = Omit<
+    React.ComponentProps<typeof Drawer.Trigger<TPayload>>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -378,8 +430,8 @@ export namespace DrawerTriggerProps {
  */
 export type DrawerTriggerProps<TPayload = any> = DrawerTriggerProps.Render &
   DrawerTriggerProps.SuruUI<TPayload> &
-  DrawerTriggerProps.BaseUI &
-  DrawerTriggerProps.HTML;
+  DrawerTriggerProps.BaseUI<TPayload> &
+  DrawerTriggerProps.HTML<TPayload>;
 
 interface IDrawerTrigger extends IComponent<DrawerTriggerProps> {
   /**
@@ -411,17 +463,17 @@ export namespace Trigger {
 
   export type Props<TPayload = any> = Props.Render &
     Props.SuruUI<TPayload> &
-    Props.BaseUI &
-    Props.HTML;
+    Props.BaseUI<TPayload> &
+    Props.HTML<TPayload>;
 
   export namespace Props {
     export type Render = DrawerTriggerProps.Render;
 
     export type SuruUI<TPayload = any> = DrawerTriggerProps.SuruUI<TPayload>;
 
-    export type BaseUI = DrawerTriggerProps.BaseUI;
+    export type BaseUI<TPayload = any> = DrawerTriggerProps.BaseUI<TPayload>;
 
-    export type HTML = DrawerTriggerProps.HTML;
+    export type HTML<TPayload = any> = DrawerTriggerProps.HTML<TPayload>;
   }
 }
 
@@ -438,14 +490,19 @@ export namespace DrawerSwipeAreaProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Drawer.SwipeArea>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // DrawerSwipeAreaProps:
+      "disabled" | "swipeDirection",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.SwipeArea>
+    React.ComponentProps<typeof Drawer.SwipeArea>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -508,14 +565,19 @@ export namespace DrawerVirtualKeyboardProviderProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Drawer.VirtualKeyboardProvider>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // DrawerVirtualKeyboardProviderProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.VirtualKeyboardProvider>
+    React.ComponentProps<typeof Drawer.VirtualKeyboardProvider>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -568,14 +630,19 @@ export namespace DrawerPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Drawer.Portal>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // DrawerPortalProps:
+      "keepMounted" | "container",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Portal>
+    React.ComponentProps<typeof Drawer.Portal>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -640,14 +707,19 @@ export namespace DrawerBackdropProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Drawer.Backdrop>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // DrawerBackdropProps:
+      "forceRender",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Backdrop>
+    React.ComponentProps<typeof Drawer.Backdrop>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -710,14 +782,19 @@ export namespace DrawerViewportProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Drawer.Viewport>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // DrawerViewportProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Viewport>
+    React.ComponentProps<typeof Drawer.Viewport>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -771,11 +848,19 @@ export namespace DrawerPopupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Popup>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Drawer.Popup>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // DrawerPopupProps:
+      "initialFocus" | "finalFocus",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Popup>
+    React.ComponentProps<typeof Drawer.Popup>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -851,7 +936,12 @@ export namespace DrawerControlsProps {
     absolute?: boolean | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -859,6 +949,7 @@ export namespace DrawerControlsProps {
  */
 export type DrawerControlsProps = DrawerControlsProps.Render &
   DrawerControlsProps.SuruUI &
+  DrawerControlsProps.BaseUI &
   DrawerControlsProps.HTML;
 
 /**
@@ -887,12 +978,14 @@ export { DrawerControls as Controls };
 export namespace Controls {
   export type State = DrawerControlsState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = DrawerControlsProps.Render;
 
     export type SuruUI = DrawerControlsProps.SuruUI;
+
+    export type BaseUI = DrawerControlsProps.BaseUI;
 
     export type HTML = DrawerControlsProps.HTML;
   }
@@ -911,14 +1004,19 @@ export namespace DrawerContentProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Drawer.Content>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // DrawerContentProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Content>
+    React.ComponentProps<typeof Drawer.Content>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -944,7 +1042,17 @@ export { DrawerContent as Content };
 export namespace Content {
   export type State = DrawerContentState;
 
-  export type Props = DrawerContentProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type Render = DrawerContentProps.Render;
+
+    export type SuruUI = DrawerContentProps.SuruUI;
+
+    export type BaseUI = DrawerContentProps.BaseUI;
+
+    export type HTML = DrawerContentProps.HTML;
+  }
 }
 
 // Header
@@ -960,7 +1068,12 @@ export namespace DrawerHeaderProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -968,6 +1081,7 @@ export namespace DrawerHeaderProps {
  */
 export type DrawerHeaderProps = DrawerHeaderProps.Render &
   DrawerHeaderProps.SuruUI &
+  DrawerHeaderProps.BaseUI &
   DrawerHeaderProps.HTML;
 
 /**
@@ -990,12 +1104,14 @@ export { DrawerHeader as Header };
 export namespace Header {
   export type State = DrawerHeaderState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = DrawerHeaderProps.Render;
 
     export type SuruUI = DrawerHeaderProps.SuruUI;
+
+    export type BaseUI = DrawerHeaderProps.BaseUI;
 
     export type HTML = DrawerHeaderProps.HTML;
   }
@@ -1014,11 +1130,19 @@ export namespace DrawerTitleProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Title>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Drawer.Title>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // DrawerTitleProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"h2">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Title>
+    React.ComponentProps<typeof Drawer.Title>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1070,14 +1194,19 @@ export namespace DrawerDescriptionProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Drawer.Description>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // DrawerDescriptionProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"p">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Description>
+    React.ComponentProps<typeof Drawer.Description>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1131,7 +1260,12 @@ export namespace DrawerBodyProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -1139,6 +1273,7 @@ export namespace DrawerBodyProps {
  */
 export type DrawerBodyProps = DrawerBodyProps.Render &
   DrawerBodyProps.SuruUI &
+  DrawerBodyProps.BaseUI &
   DrawerBodyProps.HTML;
 
 /**
@@ -1161,12 +1296,14 @@ export { DrawerBody as Body };
 export namespace Body {
   export type State = DrawerBodyState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = DrawerBodyProps.Render;
 
     export type SuruUI = DrawerBodyProps.SuruUI;
+
+    export type BaseUI = DrawerBodyProps.BaseUI;
 
     export type HTML = DrawerBodyProps.HTML;
   }
@@ -1185,7 +1322,12 @@ export namespace DrawerFooterProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -1193,6 +1335,7 @@ export namespace DrawerFooterProps {
  */
 export type DrawerFooterProps = DrawerFooterProps.Render &
   DrawerFooterProps.SuruUI &
+  DrawerFooterProps.BaseUI &
   DrawerFooterProps.HTML;
 
 /**
@@ -1215,12 +1358,14 @@ export { DrawerFooter as Footer };
 export namespace Footer {
   export type State = DrawerFooterState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = DrawerFooterProps.Render;
 
     export type SuruUI = DrawerFooterProps.SuruUI;
+
+    export type BaseUI = DrawerFooterProps.BaseUI;
 
     export type HTML = DrawerFooterProps.HTML;
   }
@@ -1244,11 +1389,21 @@ export namespace DrawerCloseProps {
     children: NonNullable<React.ComponentProps<typeof Drawer.Close>["render"]>;
   };
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Drawer.Close>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Drawer.Close>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NativeButtonProps:
+      | keyof NativeButtonProps
+      // DrawerCloseProps:
+      | never,
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Drawer.Close>
+    React.ComponentProps<typeof Drawer.Close>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 

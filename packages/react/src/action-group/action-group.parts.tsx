@@ -1,3 +1,4 @@
+import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import type { Size, Color, ColorTemplate } from "@suru-ui/theme";
 import * as React from "react";
 
@@ -205,7 +206,12 @@ export namespace ActionGroupRootProps {
     variant?: ActionGroupRootVariant | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -215,6 +221,7 @@ export namespace ActionGroupRootProps {
  */
 export type ActionGroupRootProps = ActionGroupRootProps.Render &
   ActionGroupRootProps.SuruUI &
+  ActionGroupRootProps.BaseUI &
   ActionGroupRootProps.HTML;
 
 /**
@@ -274,12 +281,14 @@ export { ActionGroupRoot as Root };
 export namespace Root {
   export type State = ActionGroupRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = ActionGroupRootProps.Render;
 
     export type SuruUI = ActionGroupRootProps.SuruUI;
+
+    export type BaseUI = ActionGroupRootProps.BaseUI;
 
     export type HTML = ActionGroupRootProps.HTML;
   }
@@ -313,7 +322,12 @@ export namespace ActionGroupSeparatorProps {
     orientation?: ActionGroupRootOrientation | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI | "role">;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -321,6 +335,7 @@ export namespace ActionGroupSeparatorProps {
  */
 export type ActionGroupSeparatorProps = ActionGroupSeparatorProps.Render &
   ActionGroupSeparatorProps.SuruUI &
+  ActionGroupSeparatorProps.BaseUI &
   ActionGroupSeparatorProps.HTML;
 
 /**
@@ -359,12 +374,14 @@ export { ActionGroupSeparator as Separator };
 export namespace Separator {
   export type State = ActionGroupSeparatorState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = ActionGroupSeparatorProps.Render;
 
     export type SuruUI = ActionGroupSeparatorProps.SuruUI;
+
+    export type BaseUI = ActionGroupSeparatorProps.BaseUI;
 
     export type HTML = ActionGroupSeparatorProps.HTML;
   }

@@ -1,3 +1,4 @@
+import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import { Tabs as BaseTabs } from "@base-ui/react/tabs";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
@@ -61,33 +62,57 @@ export type SegmentsRootSize = Size;
  */
 export type SegmentsRootState = BaseTabs.Root.State;
 
+export namespace SegmentsRootProps {
+  export type Render = RenderProps<SegmentsRootState>;
+
+  export type SuruUI = {
+    /**
+     * Segments の配色を指定します。
+     *
+     * 選択されている項目の背景と文字色に使われます。
+     *
+     * @default "grey"
+     */
+    color?: SegmentsRootColor | undefined;
+
+    /**
+     * Segments の角丸の大きさを指定します。
+     *
+     * 既定値は {@link SegmentsRootProps.size|size}
+     */
+    radius?: SegmentsRootRadius | undefined;
+
+    /**
+     * Segments の大きさを指定します。
+     *
+     * @default "md"
+     */
+    size?: SegmentsRootSize | undefined;
+  };
+
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof BaseTabs.Root>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // TabsRootProps:
+      "value" | "defaultValue" | "orientation" | "onValueChange",
+      keyof Render | keyof SuruUI
+    >
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<typeof BaseTabs.Root>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
+}
+
 /**
  * {@link SegmentsRoot} に渡す props です。
  */
-export type SegmentsRootProps = React.ComponentProps<typeof BaseTabs.Root> & {
-  /**
-   * Segments の配色を指定します。
-   *
-   * 選択されている項目の背景と文字色に使われます。
-   *
-   * @default "grey"
-   */
-  color?: SegmentsRootColor | undefined;
-
-  /**
-   * Segments の角丸の大きさを指定します。
-   *
-   * 既定値は {@link SegmentsRootProps.size|size}
-   */
-  radius?: SegmentsRootRadius | undefined;
-
-  /**
-   * Segments の大きさを指定します。
-   *
-   * @default "md"
-   */
-  size?: SegmentsRootSize | undefined;
-};
+export type SegmentsRootProps = SegmentsRootProps.Render &
+  SegmentsRootProps.SuruUI &
+  SegmentsRootProps.BaseUI &
+  SegmentsRootProps.HTML;
 
 /**
  * Segments のルート要素です。
@@ -125,7 +150,17 @@ export { SegmentsRoot as Root };
 export namespace Root {
   export type State = SegmentsRootState;
 
-  export type Props = SegmentsRootProps;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type Render = SegmentsRootProps.Render;
+
+    export type SuruUI = SegmentsRootProps.SuruUI;
+
+    export type BaseUI = SegmentsRootProps.BaseUI;
+
+    export type HTML = SegmentsRootProps.HTML;
+  }
 
   export type ChangeEventDetails = SegmentsRootChangeEventDetails;
 
@@ -177,29 +212,50 @@ export interface ISegmentsListItemRenderer<TItem = any> {
  */
 export type SegmentsListState = BaseTabs.List.State;
 
+export namespace SegmentsListProps {
+  export type Render = RenderProps<SegmentsListState>;
+
+  export type SuruUI<TItem = any> = {
+    /**
+     * リストの内容、または各項目をレンダリングする関数です。
+     *
+     * 関数を指定した場合は {@link SegmentsListProps.items|items} の各項目が引数として渡されます。
+     */
+    children?: React.ReactNode | ISegmentsListItemRenderer<TItem>;
+
+    /**
+     * リストの項目です。
+     *
+     * `children` に関数を指定した場合、この配列の各項目が引数として渡されます。
+     */
+    items?: readonly TItem[] | undefined;
+  };
+
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof BaseTabs.List>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // TabsListProps:
+      "activateOnFocus" | "loopFocus",
+      keyof Render | keyof SuruUI
+    >
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<typeof BaseTabs.List>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
+}
+
 /**
  * {@link SegmentsList} に渡す props です。
  *
  * @template TItem 項目の型です。
  */
-export type SegmentsListProps<TItem = any> = Omit<
-  React.ComponentProps<typeof BaseTabs.List>,
-  "children"
-> & {
-  /**
-   * リストの内容、または各項目をレンダリングする関数です。
-   *
-   * 関数を指定した場合は {@link SegmentsListProps.items|items} の各項目が引数として渡されます。
-   */
-  children?: React.ReactNode | ISegmentsListItemRenderer<TItem>;
-
-  /**
-   * リストの項目です。
-   *
-   * `children` に関数を指定した場合、この配列の各項目が引数として渡されます。
-   */
-  items?: readonly TItem[] | undefined;
-};
+export type SegmentsListProps<TItem = any> = SegmentsListProps.Render &
+  SegmentsListProps.SuruUI<TItem> &
+  SegmentsListProps.BaseUI &
+  SegmentsListProps.HTML;
 
 interface ISegmentsList extends IComponent<SegmentsListProps> {
   /**
@@ -240,7 +296,17 @@ export { SegmentsList as List };
 export namespace List {
   export type State = SegmentsListState;
 
-  export type Props<TItem = any> = SegmentsListProps<TItem>;
+  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type Render = SegmentsListProps.Render;
+
+    export type SuruUI<TItem = any> = SegmentsListProps.SuruUI<TItem>;
+
+    export type BaseUI = SegmentsListProps.BaseUI;
+
+    export type HTML = SegmentsListProps.HTML;
+  }
 
   export type ItemObject = SegmentsListItemObject;
 
@@ -291,9 +357,23 @@ export namespace SegmentsItemProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseTabs.Tab>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof BaseTabs.Tab>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NativeButtonProps:
+      | keyof NativeButtonProps
+      // TabsTabProps:
+      | "value"
+      | "disabled",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof BaseTabs.Tab>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -364,12 +444,20 @@ export namespace SegmentsIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof BaseTabs.Indicator>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"span">
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // TabsIndicatorProps:
+      "renderBeforeHydration",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof BaseTabs.Indicator>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**

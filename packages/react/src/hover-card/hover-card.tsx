@@ -306,7 +306,7 @@ export namespace HoverCard {
 
   export type Props<TPayload = any> = HoverCardProps<TPayload>;
 
-  export type SlotProps = HoverCardSlotProps;
+  export type SlotProps<TPayload = any> = HoverCardSlotProps<TPayload>;
 
   export type Actions = HoverCardActions;
 

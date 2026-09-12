@@ -1,3 +1,4 @@
+import type { NativeButtonProps, BaseUIComponentProps } from "@base-ui/react/internals/types";
 import { NumberField } from "@base-ui/react/number-field";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
@@ -158,7 +159,7 @@ export type NumberFieldRootSize = Size;
 export type NumberFieldRootVariant = "naked" | "liquid";
 
 /**
- * {@link NumberFieldRoot} の状態です。
+ * {@link NumberFieldRoot} が持つ状態です。
  */
 export type NumberFieldRootState = NumberField.Root.State;
 
@@ -202,19 +203,44 @@ export namespace NumberFieldRootProps {
     variant?: NumberFieldRootVariant | undefined;
   };
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof NumberField.Root>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NumberFieldRootProps:
+      | "id"
+      | "min"
+      | "max"
+      | "allowOutOfRange"
+      | "smallStep"
+      | "step"
+      | "largeStep"
+      | "required"
+      | "disabled"
+      | "readOnly"
+      | "name"
+      | "form"
+      | "value"
+      | "defaultValue"
+      | "allowWheelScrub"
+      | "snapOnStep"
+      | "format"
+      | "onValueChange"
+      | "onValueCommitted"
+      | "locale"
+      | "inputRef",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof NumberField.Root>
+    React.ComponentProps<typeof NumberField.Root>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
 /**
- * {@link NumberFieldRoot} に渡すプロパティーです。
+ * {@link NumberFieldRoot} に渡す props です。
  */
 export type NumberFieldRootProps = NumberFieldRootProps.Render &
   NumberFieldRootProps.SuruUI &
@@ -309,7 +335,7 @@ export namespace Root {
 // ---------
 
 /**
- * {@link NumberFieldScrubArea} の状態です。
+ * {@link NumberFieldScrubArea} が持つ状態です。
  */
 export type NumberFieldScrubAreaState = NumberField.ScrubArea.State;
 
@@ -318,19 +344,24 @@ export namespace NumberFieldScrubAreaProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof NumberField.ScrubArea>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NumberFieldScrubAreaProps:
+      "direction" | "pixelSensitivity" | "teleportDistance",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof NumberField.ScrubArea>
+    React.ComponentProps<typeof NumberField.ScrubArea>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
 /**
- * {@link NumberFieldScrubArea} に渡すプロパティーです。
+ * {@link NumberFieldScrubArea} に渡す props です。
  */
 export type NumberFieldScrubAreaProps = NumberFieldScrubAreaProps.Render &
   NumberFieldScrubAreaProps.SuruUI &
@@ -374,7 +405,7 @@ export namespace ScrubArea {
 // ---------------
 
 /**
- * {@link NumberFieldScrubAreaCursor} の状態です。
+ * {@link NumberFieldScrubAreaCursor} が持つ状態です。
  */
 export type NumberFieldScrubAreaCursorState = NumberField.ScrubAreaCursor.State;
 
@@ -383,19 +414,24 @@ export namespace NumberFieldScrubAreaCursorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof NumberField.ScrubAreaCursor>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NumberFieldScrubAreaCursorProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof NumberField.ScrubAreaCursor>
+    React.ComponentProps<typeof NumberField.ScrubAreaCursor>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
 /**
- * {@link NumberFieldScrubAreaCursor} に渡すプロパティーです。
+ * {@link NumberFieldScrubAreaCursor} に渡す props です。
  */
 export type NumberFieldScrubAreaCursorProps = NumberFieldScrubAreaCursorProps.Render &
   NumberFieldScrubAreaCursorProps.SuruUI &
@@ -439,7 +475,7 @@ export namespace ScrubAreaCursor {
 // -----
 
 /**
- * {@link NumberFieldGroup} の状態です。
+ * {@link NumberFieldGroup} が持つ状態です。
  */
 export type NumberFieldGroupState = NumberField.Group.State;
 
@@ -448,19 +484,24 @@ export namespace NumberFieldGroupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof NumberField.Group>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NumberFieldGroupProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof NumberField.Group>
+    React.ComponentProps<typeof NumberField.Group>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
 /**
- * {@link NumberFieldGroup} に渡すプロパティーです。
+ * {@link NumberFieldGroup} に渡す props です。
  */
 export type NumberFieldGroupProps = NumberFieldGroupProps.Render &
   NumberFieldGroupProps.SuruUI &
@@ -526,7 +567,7 @@ export namespace Group {
 // -----
 
 /**
- * {@link NumberFieldInput} の状態です。
+ * {@link NumberFieldInput} が持つ状態です。
  */
 export type NumberFieldInputState = NumberField.Input.State;
 
@@ -535,19 +576,24 @@ export namespace NumberFieldInputProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof NumberField.Input>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NumberFieldInputProps:
+      "aria-roledescription",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"input">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof NumberField.Input>
+    React.ComponentProps<typeof NumberField.Input>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
 /**
- * {@link NumberFieldInput} に渡すプロパティーです。
+ * {@link NumberFieldInput} に渡す props です。
  */
 export type NumberFieldInputProps = NumberFieldInputProps.Render &
   NumberFieldInputProps.SuruUI &
@@ -598,7 +644,7 @@ export namespace Input {
 // -----
 
 /**
- * {@link NumberFieldAddon} の状態です。
+ * {@link NumberFieldAddon} が持つ状態です。
  */
 export type NumberFieldAddonState = {};
 
@@ -614,14 +660,20 @@ export namespace NumberFieldAddonProps {
     disableFocusOnClick?: boolean | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"span", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
- * {@link NumberFieldAddon} に渡すプロパティーです。
+ * {@link NumberFieldAddon} に渡す props です。
  */
 export type NumberFieldAddonProps = NumberFieldAddonProps.Render &
   NumberFieldAddonProps.SuruUI &
+  NumberFieldAddonProps.BaseUI &
   NumberFieldAddonProps.HTML;
 
 /**
@@ -651,12 +703,14 @@ export { NumberFieldAddon as Addon };
 export namespace Addon {
   export type State = NumberFieldAddonState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = NumberFieldAddonProps.Render;
 
     export type SuruUI = NumberFieldAddonProps.SuruUI;
+
+    export type BaseUI = NumberFieldAddonProps.BaseUI;
 
     export type HTML = NumberFieldAddonProps.HTML;
   }
@@ -666,7 +720,7 @@ export namespace Addon {
 // ---------
 
 /**
- * {@link NumberFieldDecrement} の状態です。
+ * {@link NumberFieldDecrement} が持つ状態です。
  */
 export type NumberFieldDecrementState = NumberField.Decrement.State;
 
@@ -675,19 +729,26 @@ export namespace NumberFieldDecrementProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof NumberField.Decrement>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NativeButtonProps:
+      | keyof NativeButtonProps
+      // NumberFieldDecrementProps:
+      | never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof NumberField.Decrement>
+    React.ComponentProps<typeof NumberField.Decrement>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
 /**
- * {@link NumberFieldDecrement} に渡すプロパティーです。
+ * {@link NumberFieldDecrement} に渡す props です。
  */
 export type NumberFieldDecrementProps = NumberFieldDecrementProps.Render &
   NumberFieldDecrementProps.SuruUI &
@@ -733,7 +794,7 @@ export namespace Decrement {
 // ---------
 
 /**
- * {@link NumberFieldIncrement} の状態です。
+ * {@link NumberFieldIncrement} が持つ状態です。
  */
 export type NumberFieldIncrementState = NumberField.Increment.State;
 
@@ -742,19 +803,26 @@ export namespace NumberFieldIncrementProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof NumberField.Increment>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NativeButtonProps:
+      | keyof NativeButtonProps
+      // NumberFieldIncrementProps:
+      | never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof NumberField.Increment>
+    React.ComponentProps<typeof NumberField.Increment>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
 /**
- * {@link NumberFieldIncrement} に渡すプロパティーです。
+ * {@link NumberFieldIncrement} に渡す props です。
  */
 export type NumberFieldIncrementProps = NumberFieldIncrementProps.Render &
   NumberFieldIncrementProps.SuruUI &

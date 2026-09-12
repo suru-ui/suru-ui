@@ -26,6 +26,7 @@ import {
   type ContextMenuRootVariant,
   type ContextMenuContentProps,
   type ContextMenuTriggerProps,
+  type ContextMenuBackdropProps,
   type ContextMenuLinkItemProps,
   type ContextMenuRadioItemProps,
   type ContextMenuRootItemObject,
@@ -54,6 +55,7 @@ import {
   ContextMenuPortal,
   ContextMenuContent,
   ContextMenuTrigger,
+  ContextMenuBackdrop,
   ContextMenuLinkItem,
   ContextMenuRadioItem,
   ContextMenuSeparator,
@@ -106,6 +108,11 @@ export type ContextMenuVariant = ContextMenuRootVariant;
  * {@link ContextMenu} の各パーツに渡す props です。
  */
 export type ContextMenuSlotProps = {
+  /**
+   * {@link ContextMenuBackdrop} に渡す props です。
+   */
+  readonly backdrop?: Omit<ContextMenuBackdropProps, "children"> | undefined;
+
   /**
    * {@link ContextMenuCheckboxItem} に渡す props です。
    */
@@ -227,6 +234,11 @@ export type ContextMenuProps<TItem = any> = ContextMenuPropsMain &
  * {@link ContextMenu} を構成する各パーツの props を作成するための API です。
  */
 export interface ContextMenuAPI {
+  /**
+   * {@link ContextMenuBackdrop} に渡す props を取得します。
+   */
+  getBackdropProps(): Omit<ContextMenuBackdropProps, "children">;
+
   /**
    * {@link ContextMenuCheckboxItemIndicator} に渡す props を取得します。
    */
@@ -386,6 +398,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
       group: groupProps = {},
       portal: portalProps = {},
       trigger: triggerProps = {},
+      backdrop: backdropProps = {},
       linkItem: linkItemProps = {},
       radioItem: radioItemProps = {},
       separator: separatorProps = {},
@@ -467,6 +480,9 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
 
       return null;
     },
+    getBackdropProps() {
+      return backdropProps;
+    },
     getLinkItemProps(item) {
       const { type: _, label, ...otherItemProps } = item;
 
@@ -485,9 +501,9 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
       };
     },
     getSeparatorProps(item) {
-      const { type: _, ...otherProps } = item;
+      const { type: _, ...otherSeparatorProps } = item;
 
-      return mergeProps([separatorProps, otherProps]);
+      return mergeProps([separatorProps, otherSeparatorProps]);
     },
     getGroupLabelProps(item) {
       if (!isLikelyVisibleNode(item.label)) {
@@ -671,6 +687,7 @@ export const ContextMenu: IContextMenu = function SuiContextMenu(props: ContextM
     <ContextMenuRoot {...api.getRootProps()}>
       {triggerProps && <ContextMenuTrigger {...triggerProps} />}
       <ContextMenuPortal {...api.getPortalProps()}>
+        <ContextMenuBackdrop {...api.getBackdropProps()} />
         <ContextMenuPositioner {...api.getPositionerProps()}>
           <ContextMenuContent {...otherContentProps}>
             {children ?? defaultContentItemRenderer}

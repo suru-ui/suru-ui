@@ -899,10 +899,24 @@
 
   &.sui_number_field-disabled.sui_number_field-variant_naked .sui_number_field_decrement {
     color: var(--sui-disabled-naked-canvas_text);
+
+    svg:not(.sui-ignore) {
+      color: --sui-icon_color(
+               var(--sui-disabled-naked-canvas_text),
+               var(--sui-disabled-naked-canvas)
+             );
+    }
   }
 
   &.sui_number_field-disabled.sui_number_field-variant_liquid .sui_number_field_decrement {
     color: var(--sui-disabled-liquid-canvas_text);
+
+    svg:not(.sui-ignore) {
+      color: --sui-icon_color(
+               var(--sui-disabled-liquid-canvas_text),
+               var(--sui-disabled-liquid-canvas)
+             );
+    }
   }
 }
 
@@ -915,10 +929,24 @@
 
   &.sui_number_field-disabled.sui_number_field-variant_naked .sui_number_field_increment {
     color: var(--sui-disabled-naked-canvas_text);
+
+    svg:not(.sui-ignore) {
+      color: --sui-icon_color(
+               var(--sui-disabled-naked-canvas_text),
+               var(--sui-disabled-naked-canvas)
+             );
+    }
   }
 
   &.sui_number_field-disabled.sui_number_field-variant_liquid .sui_number_field_increment {
     color: var(--sui-disabled-liquid-canvas_text);
+
+    svg:not(.sui-ignore) {
+      color: --sui-icon_color(
+               var(--sui-disabled-liquid-canvas_text),
+               var(--sui-disabled-liquid-canvas)
+             );
+    }
   }
 }
 

@@ -88,11 +88,19 @@ export namespace MenubarRootProps {
     items?: readonly TItem[] | undefined;
   };
 
-  export type BaseUI = Omit<React.ComponentProps<typeof BaseMenubar>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof BaseMenubar>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenubarProps:
+      "modal" | "disabled" | "orientation" | "loopFocus",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof BaseMenubar>
+    React.ComponentProps<typeof BaseMenubar>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 

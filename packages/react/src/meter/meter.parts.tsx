@@ -19,28 +19,28 @@ export type MeterRootColor = Color;
 /**
  * メーターの角丸です。
  *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
- * - `"full"`: 完全な丸形
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ * - `"full"`: 丸形
  */
 export type MeterRootRadius = "none" | Size | "full";
 
 /**
  * メーターの大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type MeterRootSize = Size;
 
 /**
  * メーターの主な外観の種類です。
  *
- * - `"naked"`: 背景のないトラック
- * - `"liquid"`: 薄い塗りつぶしのトラック
+ * - `"naked"`: 背景なし
+ * - `"liquid"`: 薄い塗りつぶし
  */
 export type MeterRootVariant = "naked" | "liquid";
 
@@ -89,11 +89,19 @@ export namespace MeterRootProps {
     variant?: MeterRootVariant | undefined;
   };
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Meter.Root>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Meter.Root>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MeterRootProps:
+      "aria-valuetext" | "format" | "getAriaValueText" | "locale" | "max" | "min" | "value",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Meter.Root>
+    React.ComponentProps<typeof Meter.Root>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -177,11 +185,19 @@ export namespace MeterLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Meter.Label>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Meter.Label>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MeterLabelProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Meter.Label>
+    React.ComponentProps<typeof Meter.Label>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -233,11 +249,19 @@ export namespace MeterValueProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Meter.Value>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Meter.Value>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MeterValueProps:
+      "children",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Meter.Value>
+    React.ComponentProps<typeof Meter.Value>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -289,11 +313,19 @@ export namespace MeterTrackProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Meter.Track>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Meter.Track>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MeterTrackProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Meter.Track>
+    React.ComponentProps<typeof Meter.Track>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -345,14 +377,19 @@ export namespace MeterIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Meter.Indicator>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MeterIndicatorProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Meter.Indicator>
+    React.ComponentProps<typeof Meter.Indicator>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 

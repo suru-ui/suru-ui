@@ -152,12 +152,18 @@
 
 /* 代入 */
 :scope {
-  --sui_scroll_area_thumb-width: var(--scroll-area-thumb-width);
-  --sui_scroll_area_thumb-height: var(--scroll-area-thumb-height);
   --sui_scroll_area_thumb-background_color-idle:
     color-mix(in srgb, var(--sui-canvas_text-1) 38%, transparent);
   --sui_scroll_area_thumb-background_color-hover:
     color-mix(in srgb, var(--sui-canvas_text-1) 58%, transparent);
+
+  &:has(.sui_scroll_area_thumb-orientation_vertical) {
+    --sui_scroll_area_thumb-height: var(--scroll-area-thumb-height);
+  }
+
+  &:has(.sui_scroll_area_thumb-orientation_horizontal) {
+    --sui_scroll_area_thumb-width: var(--scroll-area-thumb-width);
+  }
 }
 
 /* 変異 */

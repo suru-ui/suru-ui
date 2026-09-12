@@ -1,5 +1,5 @@
+import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import type { Size } from "@suru-ui/theme";
-import type * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
@@ -45,7 +45,12 @@ export namespace SkeletonRootProps {
     radius?: SkeletonRootRadius | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"span", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -53,6 +58,7 @@ export namespace SkeletonRootProps {
  */
 export type SkeletonRootProps = SkeletonRootProps.Render &
   SkeletonRootProps.SuruUI &
+  SkeletonRootProps.BaseUI &
   SkeletonRootProps.HTML;
 
 /**
@@ -62,7 +68,6 @@ export const SkeletonRoot: IComponent<SkeletonRootProps> = function SuiSkeletonR
   const {
     radius = "md",
     animated = true,
-    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherSpanProps
@@ -73,7 +78,6 @@ export const SkeletonRoot: IComponent<SkeletonRootProps> = function SuiSkeletonR
       otherSpanProps,
       {
         className: cn(
-          className,
           "sui_skeleton",
           `sui_skeleton-radius_${radius}`,
           animated && "sui_skeleton-animated",
@@ -90,12 +94,14 @@ export { SkeletonRoot as Root };
 export namespace Root {
   export type State = SkeletonRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = SkeletonRootProps.Render;
 
     export type SuruUI = SkeletonRootProps.SuruUI;
+
+    export type BaseUI = SkeletonRootProps.BaseUI;
 
     export type HTML = SkeletonRootProps.HTML;
   }

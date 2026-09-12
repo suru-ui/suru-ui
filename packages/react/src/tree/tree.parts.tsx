@@ -1,3 +1,4 @@
+import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import { useControlled } from "@base-ui/utils/useControlled";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
@@ -355,13 +356,21 @@ export namespace TreeRootProps {
     variant?: TreeRootVariant | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
  * {@link TreeRoot} に渡すプロパティーです。
  */
-export type TreeRootProps = TreeRootProps.Render & TreeRootProps.SuruUI & TreeRootProps.HTML;
+export type TreeRootProps = TreeRootProps.Render &
+  TreeRootProps.SuruUI &
+  TreeRootProps.BaseUI &
+  TreeRootProps.HTML;
 
 const EMPTY: readonly string[] = [];
 
@@ -555,7 +564,7 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
     element.scrollIntoView({ block: "nearest" });
   }, []);
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyDown: NonNullable<TreeRootProps["onKeyDown"]> = (event) => {
     onKeyDownProp?.(event);
     if (event.defaultPrevented || !event.currentTarget.contains(event.target as Node)) {
       return;
@@ -673,7 +682,7 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
     }
   };
 
-  const handleFocus = (event: React.FocusEvent<HTMLDivElement>) => {
+  const handleFocus: NonNullable<TreeRootProps["onFocus"]> = (event) => {
     onFocusProp?.(event);
     if (activeId == null) {
       const first = event.currentTarget.querySelector<HTMLElement>(
@@ -750,12 +759,14 @@ function isItemObject(item: unknown): item is TreeRootItemObject {
 export namespace Root {
   export type State = TreeRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = TreeRootProps.Render;
 
     export type SuruUI = TreeRootProps.SuruUI;
+
+    export type BaseUI = TreeRootProps.BaseUI;
 
     export type HTML = TreeRootProps.HTML;
   }
@@ -896,12 +907,12 @@ export namespace TreeItemProps {
     variant?: TreeItemVariant | undefined;
   };
 
-  export type BaseUI = Omit<
-    React.ComponentProps<typeof Button.Root>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"button">
-  >;
+  export type BaseUI = Omit<Button.Root.Props.BaseUI, keyof Render | keyof SuruUI>;
 
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -919,6 +930,7 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
   const ctx = useSuiTreeContext();
   const {
     id: itemId,
+    role = "treeitem",
     size = ctx.size ?? "md",
     color = ctx.color ?? "grey",
     level,
@@ -933,7 +945,8 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
     outlined = ctx.outlined ?? false,
     posInSet,
     className,
-    ...otherButtonProps
+    nativeButton = false,
+    ...otherProps
   } = props;
 
   const domId = ctx.getItemId(itemId);
@@ -942,7 +955,7 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
 
   const handleClick: NonNullable<TreeItemProps["onClick"]> = (event) => {
     onClickProp?.(event);
-    if (ctx == null || disabled || event.defaultPrevented) {
+    if (disabled || event.defaultPrevented) {
       return;
     }
 
@@ -959,10 +972,10 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
 
   return (
     <Button.Root
-      {...otherButtonProps}
+      {...otherProps}
       id={domId}
       item
-      role="treeitem"
+      role={role}
       size={size}
       color={selected ? color : "grey"}
       muted={muted}
@@ -973,7 +986,7 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
       disabled={disabled}
       outlined={selected && outlined}
       className={cn(className, "sui_tree_item", expanded && "sui_tree_item-expanded")}
-      nativeButton={false}
+      nativeButton={nativeButton}
       aria-level={level}
       aria-setsize={setSize}
       aria-expanded={hasItems ? expanded : undefined}
@@ -1032,7 +1045,12 @@ export namespace TreeItemIndicatorProps {
     visible?: boolean | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"span", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -1040,6 +1058,7 @@ export namespace TreeItemIndicatorProps {
  */
 export type TreeItemIndicatorProps = TreeItemIndicatorProps.Render &
   TreeItemIndicatorProps.SuruUI &
+  TreeItemIndicatorProps.BaseUI &
   TreeItemIndicatorProps.HTML;
 
 /**
@@ -1072,12 +1091,14 @@ export { TreeItemIndicator as Indicator };
 export namespace Indicator {
   export type State = TreeItemIndicatorState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = TreeItemIndicatorProps.Render;
 
     export type SuruUI = TreeItemIndicatorProps.SuruUI;
+
+    export type BaseUI = TreeItemIndicatorProps.BaseUI;
 
     export type HTML = TreeItemIndicatorProps.HTML;
   }

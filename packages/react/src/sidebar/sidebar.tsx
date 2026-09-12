@@ -213,9 +213,6 @@ export const Sidebar: ISidebar = /*#__PURE__*/ Object.assign(
   },
 );
 
-/**
- * {@link Sidebar} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Sidebar {
   export type State = SidebarState;
 
@@ -233,94 +230,164 @@ export namespace Sidebar {
 
   export type Variant = SidebarVariant;
 
-  /**
-   * スクロール領域の状態やプロパティーをまとめた型名前空間です。
-   */
   export namespace Content {
     export type State = SidebarContentState;
 
-    export type Props = SidebarContentProps;
+    export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+    export namespace Props {
+      export type Render = SidebarContentProps.Render;
+
+      export type SuruUI = SidebarContentProps.SuruUI;
+
+      export type BaseUI = SidebarContentProps.BaseUI;
+
+      export type HTML = SidebarContentProps.HTML;
+    }
   }
 
-  /**
-   * 下部固定領域の状態やプロパティーをまとめた型名前空間です。
-   */
   export namespace Footer {
     export type State = SidebarFooterState;
 
-    export type Props = SidebarFooterProps;
+    export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+    export namespace Props {
+      export type Render = SidebarFooterProps.Render;
+
+      export type SuruUI = SidebarFooterProps.SuruUI;
+
+      export type BaseUI = SidebarFooterProps.BaseUI;
+
+      export type HTML = SidebarFooterProps.HTML;
+    }
   }
 
-  /**
-   * グループの状態やプロパティーをまとめた型名前空間です。
-   */
   export namespace Group {
     export type State = SidebarGroupState;
 
-    export type Props = SidebarGroupProps;
+    export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+    export namespace Props {
+      export type Render = SidebarGroupProps.Render;
+
+      export type SuruUI = SidebarGroupProps.SuruUI;
+
+      export type BaseUI = SidebarGroupProps.BaseUI;
+
+      export type HTML = SidebarGroupProps.HTML;
+    }
   }
 
-  /**
-   * グループ内容の状態やプロパティーをまとめた型名前空間です。
-   */
   export namespace GroupContent {
     export type State = SidebarGroupContentState;
 
-    export type Props = SidebarGroupContentProps;
+    export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+    export namespace Props {
+      export type Render = SidebarGroupContentProps.Render;
+
+      export type SuruUI = SidebarGroupContentProps.SuruUI;
+
+      export type BaseUI = SidebarGroupContentProps.BaseUI;
+
+      export type HTML = SidebarGroupContentProps.HTML;
+    }
   }
 
-  /**
-   * グループラベルの状態やプロパティーをまとめた型名前空間です。
-   */
   export namespace GroupLabel {
     export type State = SidebarGroupLabelState;
 
-    export type Props = SidebarGroupLabelProps;
+    export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+    export namespace Props {
+      export type Render = SidebarGroupLabelProps.Render;
+
+      export type SuruUI = SidebarGroupLabelProps.SuruUI;
+
+      export type BaseUI = SidebarGroupLabelProps.BaseUI;
+
+      export type HTML = SidebarGroupLabelProps.HTML;
+    }
   }
 
-  /**
-   * 上部固定領域の状態やプロパティーをまとめた型名前空間です。
-   */
   export namespace Header {
     export type State = SidebarHeaderState;
 
-    export type Props = SidebarHeaderProps;
+    export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+    export namespace Props {
+      export type Render = SidebarHeaderProps.Render;
+
+      export type SuruUI = SidebarHeaderProps.SuruUI;
+
+      export type BaseUI = SidebarHeaderProps.BaseUI;
+
+      export type HTML = SidebarHeaderProps.HTML;
+    }
   }
 
-  /**
-   * メインコンテンツ領域の状態やプロパティーをまとめた型名前空間です。
-   */
   export namespace Inset {
     export type State = SidebarInsetState;
 
-    export type Props = SidebarInsetProps;
+    export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+    export namespace Props {
+      export type Render = SidebarInsetProps.Render;
+
+      export type SuruUI = SidebarInsetProps.SuruUI;
+
+      export type BaseUI = SidebarInsetProps.BaseUI;
+
+      export type HTML = SidebarInsetProps.HTML;
+    }
   }
 
-  /**
-   * プロバイダーの状態やプロパティーをまとめた型名前空間です。
-   */
   export namespace Provider {
     export type State = SidebarProviderState;
 
-    export type Props = SidebarProviderProps;
+    export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+    export namespace Props {
+      export type Render = SidebarProviderProps.Render;
+
+      export type SuruUI = SidebarProviderProps.SuruUI;
+
+      export type BaseUI = SidebarProviderProps.BaseUI;
+
+      export type HTML = SidebarProviderProps.HTML;
+    }
   }
 
-  /**
-   * レールの状態やプロパティーをまとめた型名前空間です。
-   */
   export namespace Rail {
     export type State = SidebarRailState;
 
-    export type Props = SidebarRailProps;
+    export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+    export namespace Props {
+      export type Render = SidebarRailProps.Render;
+
+      export type SuruUI = SidebarRailProps.SuruUI;
+
+      export type BaseUI = SidebarRailProps.BaseUI;
+
+      export type HTML = SidebarRailProps.HTML;
+    }
   }
 
-  /**
-   * 本体要素の状態やプロパティーをまとめた型名前空間です。
-   */
   export namespace Root {
     export type State = SidebarRootState;
 
-    export type Props = SidebarRootProps;
+    export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+    export namespace Props {
+      export type Render = SidebarRootProps.Render;
+
+      export type SuruUI = SidebarRootProps.SuruUI;
+
+      export type BaseUI = SidebarRootProps.BaseUI;
+
+      export type HTML = SidebarRootProps.HTML;
+    }
 
     export type Collapsible = SidebarRootCollapsible;
 
@@ -329,12 +396,19 @@ export namespace Sidebar {
     export type Variant = SidebarRootVariant;
   }
 
-  /**
-   * トリガーの状態やプロパティーをまとめた型名前空間です。
-   */
   export namespace Trigger {
     export type State = SidebarTriggerState;
 
-    export type Props = SidebarTriggerProps;
+    export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+    export namespace Props {
+      export type Render = SidebarTriggerProps.Render;
+
+      export type SuruUI = SidebarTriggerProps.SuruUI;
+
+      export type BaseUI = SidebarTriggerProps.BaseUI;
+
+      export type HTML = SidebarTriggerProps.HTML;
+    }
   }
 }

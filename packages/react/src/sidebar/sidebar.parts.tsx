@@ -1,3 +1,4 @@
+import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
@@ -112,14 +113,20 @@ export namespace SidebarProviderProps {
     open?: boolean | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
- * {@link SidebarProvider} に渡すプロパティーです。
+ * {@link SidebarProvider} に渡す props です。
  */
 export type SidebarProviderProps = SidebarProviderProps.Render &
   SidebarProviderProps.SuruUI &
+  SidebarProviderProps.BaseUI &
   SidebarProviderProps.HTML;
 
 /**
@@ -190,12 +197,14 @@ export { SidebarProvider as Provider };
 export namespace Provider {
   export type State = SidebarProviderState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = SidebarProviderProps.Render;
 
     export type SuruUI = SidebarProviderProps.SuruUI;
+
+    export type BaseUI = SidebarProviderProps.BaseUI;
 
     export type HTML = SidebarProviderProps.HTML;
   }
@@ -286,14 +295,20 @@ export namespace SidebarRootProps {
     variant?: SidebarRootVariant | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"aside">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"aside", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
- * {@link SidebarRoot} に渡すプロパティーです。
+ * {@link SidebarRoot} に渡す props です。
  */
 export type SidebarRootProps = SidebarRootProps.Render &
   SidebarRootProps.SuruUI &
+  SidebarRootProps.BaseUI &
   SidebarRootProps.HTML;
 
 /**
@@ -349,12 +364,14 @@ export { SidebarRoot as Root };
 export namespace Root {
   export type State = SidebarRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = SidebarRootProps.Render;
 
     export type SuruUI = SidebarRootProps.SuruUI;
+
+    export type BaseUI = SidebarRootProps.BaseUI;
 
     export type HTML = SidebarRootProps.HTML;
   }
@@ -379,14 +396,20 @@ export namespace SidebarHeaderProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
- * {@link SidebarHeader} に渡すプロパティーです。
+ * {@link SidebarHeader} に渡す props です。
  */
 export type SidebarHeaderProps = SidebarHeaderProps.Render &
   SidebarHeaderProps.SuruUI &
+  SidebarHeaderProps.BaseUI &
   SidebarHeaderProps.HTML;
 
 /**
@@ -411,12 +434,14 @@ export { SidebarHeader as Header };
 export namespace Header {
   export type State = SidebarHeaderState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = SidebarHeaderProps.Render;
 
     export type SuruUI = SidebarHeaderProps.SuruUI;
+
+    export type BaseUI = SidebarHeaderProps.BaseUI;
 
     export type HTML = SidebarHeaderProps.HTML;
   }
@@ -435,14 +460,20 @@ export namespace SidebarContentProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
- * {@link SidebarContent} に渡すプロパティーです。
+ * {@link SidebarContent} に渡す props です。
  */
 export type SidebarContentProps = SidebarContentProps.Render &
   SidebarContentProps.SuruUI &
+  SidebarContentProps.BaseUI &
   SidebarContentProps.HTML;
 
 /**
@@ -467,12 +498,14 @@ export { SidebarContent as Content };
 export namespace Content {
   export type State = SidebarContentState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = SidebarContentProps.Render;
 
     export type SuruUI = SidebarContentProps.SuruUI;
+
+    export type BaseUI = SidebarContentProps.BaseUI;
 
     export type HTML = SidebarContentProps.HTML;
   }
@@ -491,14 +524,20 @@ export namespace SidebarFooterProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
- * {@link SidebarFooter} に渡すプロパティーです。
+ * {@link SidebarFooter} に渡す props です。
  */
 export type SidebarFooterProps = SidebarFooterProps.Render &
   SidebarFooterProps.SuruUI &
+  SidebarFooterProps.BaseUI &
   SidebarFooterProps.HTML;
 
 /**
@@ -523,12 +562,14 @@ export { SidebarFooter as Footer };
 export namespace Footer {
   export type State = SidebarFooterState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = SidebarFooterProps.Render;
 
     export type SuruUI = SidebarFooterProps.SuruUI;
+
+    export type BaseUI = SidebarFooterProps.BaseUI;
 
     export type HTML = SidebarFooterProps.HTML;
   }
@@ -547,14 +588,20 @@ export namespace SidebarGroupProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
- * {@link SidebarGroup} に渡すプロパティーです。
+ * {@link SidebarGroup} に渡す props です。
  */
 export type SidebarGroupProps = SidebarGroupProps.Render &
   SidebarGroupProps.SuruUI &
+  SidebarGroupProps.BaseUI &
   SidebarGroupProps.HTML;
 
 /**
@@ -579,12 +626,14 @@ export { SidebarGroup as Group };
 export namespace Group {
   export type State = SidebarGroupState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = SidebarGroupProps.Render;
 
     export type SuruUI = SidebarGroupProps.SuruUI;
+
+    export type BaseUI = SidebarGroupProps.BaseUI;
 
     export type HTML = SidebarGroupProps.HTML;
   }
@@ -603,14 +652,20 @@ export namespace SidebarGroupLabelProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
- * {@link SidebarGroupLabel} に渡すプロパティーです。
+ * {@link SidebarGroupLabel} に渡す props です。
  */
 export type SidebarGroupLabelProps = SidebarGroupLabelProps.Render &
   SidebarGroupLabelProps.SuruUI &
+  SidebarGroupLabelProps.BaseUI &
   SidebarGroupLabelProps.HTML;
 
 /**
@@ -635,12 +690,14 @@ export { SidebarGroupLabel as GroupLabel };
 export namespace GroupLabel {
   export type State = SidebarGroupLabelState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = SidebarGroupLabelProps.Render;
 
     export type SuruUI = SidebarGroupLabelProps.SuruUI;
+
+    export type BaseUI = SidebarGroupLabelProps.BaseUI;
 
     export type HTML = SidebarGroupLabelProps.HTML;
   }
@@ -659,14 +716,20 @@ export namespace SidebarGroupContentProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"div", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
- * {@link SidebarGroupContent} に渡すプロパティーです。
+ * {@link SidebarGroupContent} に渡す props です。
  */
 export type SidebarGroupContentProps = SidebarGroupContentProps.Render &
   SidebarGroupContentProps.SuruUI &
+  SidebarGroupContentProps.BaseUI &
   SidebarGroupContentProps.HTML;
 
 /**
@@ -692,12 +755,14 @@ export { SidebarGroupContent as GroupContent };
 export namespace GroupContent {
   export type State = SidebarGroupContentState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = SidebarGroupContentProps.Render;
 
     export type SuruUI = SidebarGroupContentProps.SuruUI;
+
+    export type BaseUI = SidebarGroupContentProps.BaseUI;
 
     export type HTML = SidebarGroupContentProps.HTML;
   }
@@ -716,14 +781,20 @@ export namespace SidebarInsetProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"main">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"main", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
- * {@link SidebarInset} に渡すプロパティーです。
+ * {@link SidebarInset} に渡す props です。
  */
 export type SidebarInsetProps = SidebarInsetProps.Render &
   SidebarInsetProps.SuruUI &
+  SidebarInsetProps.BaseUI &
   SidebarInsetProps.HTML;
 
 /**
@@ -748,12 +819,14 @@ export { SidebarInset as Inset };
 export namespace Inset {
   export type State = SidebarInsetState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = SidebarInsetProps.Render;
 
     export type SuruUI = SidebarInsetProps.SuruUI;
+
+    export type BaseUI = SidebarInsetProps.BaseUI;
 
     export type HTML = SidebarInsetProps.HTML;
   }
@@ -777,14 +850,20 @@ export namespace SidebarRailProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"button", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
- * {@link SidebarRail} に渡すプロパティーです。
+ * {@link SidebarRail} に渡す props です。
  */
 export type SidebarRailProps = SidebarRailProps.Render &
   SidebarRailProps.SuruUI &
+  SidebarRailProps.BaseUI &
   SidebarRailProps.HTML;
 
 /**
@@ -794,8 +873,14 @@ export type SidebarRailProps = SidebarRailProps.Render &
  */
 export const SidebarRail: IComponent<SidebarRailProps> = function SuiSidebarRail(props) {
   const ctx = useSuiSidebarContext();
-  const { onClick, children, ...otherButtonProps } = props;
-  const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const {
+    type = "button",
+    onClick,
+    children,
+    "aria-label": ariaLabel = "サイドバーを切り替える",
+    ...otherButtonProps
+  } = props;
+  const handleOnClick: NonNullable<SidebarRailProps["onClick"]> = (event) => {
     onClick?.(event);
     if (!event.defaultPrevented && ctx.collapsible !== "none") {
       ctx.toggle();
@@ -811,7 +896,7 @@ export const SidebarRail: IComponent<SidebarRailProps> = function SuiSidebarRail
     props: [
       otherButtonProps,
       {
-        type: "button",
+        type,
         onClick: handleOnClick,
         children,
         className: cn<SidebarRailState>(
@@ -819,7 +904,7 @@ export const SidebarRail: IComponent<SidebarRailProps> = function SuiSidebarRail
           (state) => state.state === "expanded" && "sui_sidebar_rail-expanded",
           (state) => state.state === "collapsed" && "sui_sidebar_rail-collapsed",
         ),
-        "aria-label": "サイドバーを切り替える",
+        "aria-label": ariaLabel,
       },
     ],
     state: renderState,
@@ -832,12 +917,14 @@ export { SidebarRail as Rail };
 export namespace Rail {
   export type State = SidebarRailState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = SidebarRailProps.Render;
 
     export type SuruUI = SidebarRailProps.SuruUI;
+
+    export type BaseUI = SidebarRailProps.BaseUI;
 
     export type HTML = SidebarRailProps.HTML;
   }
@@ -861,14 +948,20 @@ export namespace SidebarTriggerProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"button", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
- * {@link SidebarTrigger} に渡すプロパティーです。
+ * {@link SidebarTrigger} に渡す props です。
  */
 export type SidebarTriggerProps = SidebarTriggerProps.Render &
   SidebarTriggerProps.SuruUI &
+  SidebarTriggerProps.BaseUI &
   SidebarTriggerProps.HTML;
 
 /**
@@ -879,15 +972,19 @@ export type SidebarTriggerProps = SidebarTriggerProps.Render &
 export const SidebarTrigger: IComponent<SidebarTriggerProps> = function SuiSidebarTrigger(props) {
   const ctx = useSuiSidebarContext();
   const {
+    type = "button",
     onClick,
     children,
     disabled,
+    "aria-label": ariaLabelProp,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherButtonProps
   } = props;
   const triggerDisabled = disabled ?? ctx.collapsible === "none";
-  const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const ariaLabel =
+    ariaLabelProp ?? (children === undefined ? "サイドバーを切り替える" : undefined);
+  const handleOnClick: NonNullable<SidebarTriggerProps["onClick"]> = (event) => {
     onClick?.(event);
     if (!event.defaultPrevented && !triggerDisabled) {
       ctx.toggle();
@@ -899,7 +996,7 @@ export const SidebarTrigger: IComponent<SidebarTriggerProps> = function SuiSideb
     props: [
       otherButtonProps,
       {
-        type: "button",
+        type,
         onClick: handleOnClick,
         children: children ?? <DefaultTriggerIcon />,
         disabled: triggerDisabled || undefined,
@@ -907,7 +1004,7 @@ export const SidebarTrigger: IComponent<SidebarTriggerProps> = function SuiSideb
           "sui_sidebar_trigger",
           (state) => `sui_sidebar_trigger-${state.state}`,
         ),
-        ...(children === undefined ? { "aria-label": "サイドバーを切り替える" } : {}),
+        "aria-label": ariaLabel,
         "aria-expanded": ctx.open,
         "data-scope": dataScope,
       },
@@ -922,12 +1019,14 @@ export { SidebarTrigger as Trigger };
 export namespace Trigger {
   export type State = SidebarTriggerState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = SidebarTriggerProps.Render;
 
     export type SuruUI = SidebarTriggerProps.SuruUI;
+
+    export type BaseUI = SidebarTriggerProps.BaseUI;
 
     export type HTML = SidebarTriggerProps.HTML;
   }

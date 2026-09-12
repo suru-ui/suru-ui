@@ -60,7 +60,7 @@ export type HoverCardRootState = PreviewCard.Root.State;
 export namespace HoverCardRootProps {
   export type Render = RenderProps<HoverCardRootState>;
 
-  export type SuruUI<TPayload = unknown> = {
+  export type SuruUI<TPayload = any> = {
     /**
      * ホバーカードとトリガー ({@link Trigger}) を関連付けるハンドルです。
      *
@@ -69,12 +69,27 @@ export namespace HoverCardRootProps {
     handle?: HoverCardHandle<TPayload> | undefined;
   };
 
-  export type BaseUI<TPayload = unknown> = Omit<
-    PreviewCard.Root.Props<TPayload>,
-    keyof Render | keyof SuruUI
+  export type BaseUI<TPayload = any> = Pick<
+    React.ComponentProps<typeof PreviewCard.Root<TPayload>>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PreviewCardRootProps:
+      | "defaultOpen"
+      | "open"
+      | "onOpenChange"
+      | "onOpenChangeComplete"
+      | "actionsRef"
+      | "children"
+      | "triggerId"
+      | "defaultTriggerId",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = {};
+  export type HTML<TPayload = any> = Omit<
+    React.ComponentProps<typeof PreviewCard.Root<TPayload>>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -82,16 +97,16 @@ export namespace HoverCardRootProps {
  *
  * @template TPayload トリガーから受け取るデータの型です。
  */
-export type HoverCardRootProps<TPayload = unknown> = HoverCardRootProps.Render &
+export type HoverCardRootProps<TPayload = any> = HoverCardRootProps.Render &
   HoverCardRootProps.SuruUI<TPayload> &
   HoverCardRootProps.BaseUI<TPayload> &
-  HoverCardRootProps.HTML;
+  HoverCardRootProps.HTML<TPayload>;
 
 /**
  * {@link HoverCardRoot} のコンポーネント型です。
  */
 export interface HoverCardRootComponent extends IComponent<HoverCardRootProps> {
-  <TPayload = unknown>(props: HoverCardRootProps<TPayload>): React.ReactElement | null;
+  <TPayload = any>(props: HoverCardRootProps<TPayload>): React.ReactElement | null;
 }
 
 /**
@@ -111,19 +126,19 @@ export { HoverCardRoot as Root };
 export namespace Root {
   export type State = HoverCardRootState;
 
-  export type Props<TPayload = unknown> = Props.Render &
+  export type Props<TPayload = any> = Props.Render &
     Props.SuruUI<TPayload> &
     Props.BaseUI<TPayload> &
-    Props.HTML;
+    Props.HTML<TPayload>;
 
   export namespace Props {
     export type Render = HoverCardRootProps.Render;
 
-    export type SuruUI<TPayload = unknown> = HoverCardRootProps.SuruUI<TPayload>;
+    export type SuruUI<TPayload = any> = HoverCardRootProps.SuruUI<TPayload>;
 
-    export type BaseUI<TPayload = unknown> = HoverCardRootProps.BaseUI<TPayload>;
+    export type BaseUI<TPayload = any> = HoverCardRootProps.BaseUI<TPayload>;
 
-    export type HTML = HoverCardRootProps.HTML;
+    export type HTML<TPayload = any> = HoverCardRootProps.HTML<TPayload>;
   }
 
   export type Actions = HoverCardRootActions;
@@ -146,7 +161,7 @@ export type HoverCardTriggerState = PreviewCard.Trigger.State;
 export namespace HoverCardTriggerProps {
   export type Render = RenderProps<HoverCardTriggerState>;
 
-  export type SuruUI<TPayload = unknown> = {
+  export type SuruUI<TPayload = any> = {
     /**
      * ホバーの反応対象としてレンダリングする要素です。
      *
@@ -162,14 +177,19 @@ export namespace HoverCardTriggerProps {
     handle?: HoverCardHandle<TPayload> | undefined;
   };
 
-  export type BaseUI<TPayload = unknown> = Omit<
-    PreviewCard.Trigger.Props<TPayload>,
-    keyof Render | keyof SuruUI
+  export type BaseUI<TPayload = any> = Pick<
+    React.ComponentProps<typeof PreviewCard.Trigger<TPayload>>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PreviewCardTriggerProps:
+      "payload" | "delay" | "closeDelay",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<"a">,
-    keyof Render | keyof SuruUI | keyof PreviewCard.Trigger.Props<any>
+  export type HTML<TPayload = any> = Omit<
+    React.ComponentProps<typeof PreviewCard.Trigger<TPayload>>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -178,16 +198,16 @@ export namespace HoverCardTriggerProps {
  *
  * @template TPayload トリガーから渡すデータの型です。
  */
-export type HoverCardTriggerProps<TPayload = unknown> = HoverCardTriggerProps.Render &
+export type HoverCardTriggerProps<TPayload = any> = HoverCardTriggerProps.Render &
   HoverCardTriggerProps.SuruUI<TPayload> &
   HoverCardTriggerProps.BaseUI<TPayload> &
-  HoverCardTriggerProps.HTML;
+  HoverCardTriggerProps.HTML<TPayload>;
 
 /**
  * {@link HoverCardTrigger} のコンポーネント型です。
  */
 export interface HoverCardTriggerComponent extends IComponent<HoverCardTriggerProps> {
-  <TPayload = unknown>(props: HoverCardTriggerProps<TPayload>): React.ReactElement | null;
+  <TPayload = any>(props: HoverCardTriggerProps<TPayload>): React.ReactElement | null;
 }
 
 /**
@@ -216,19 +236,19 @@ export { HoverCardTrigger as Trigger };
 export namespace Trigger {
   export type State = HoverCardTriggerState;
 
-  export type Props<TPayload = unknown> = Props.Render &
+  export type Props<TPayload = any> = Props.Render &
     Props.SuruUI<TPayload> &
     Props.BaseUI<TPayload> &
-    Props.HTML;
+    Props.HTML<TPayload>;
 
   export namespace Props {
     export type Render = HoverCardTriggerProps.Render;
 
-    export type SuruUI<TPayload = unknown> = HoverCardTriggerProps.SuruUI<TPayload>;
+    export type SuruUI<TPayload = any> = HoverCardTriggerProps.SuruUI<TPayload>;
 
-    export type BaseUI<TPayload = unknown> = HoverCardTriggerProps.BaseUI<TPayload>;
+    export type BaseUI<TPayload = any> = HoverCardTriggerProps.BaseUI<TPayload>;
 
-    export type HTML = HoverCardTriggerProps.HTML;
+    export type HTML<TPayload = any> = HoverCardTriggerProps.HTML<TPayload>;
   }
 }
 
@@ -245,14 +265,19 @@ export namespace HoverCardPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof PreviewCard.Portal>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PreviewCardPortalProps:
+      "keepMounted" | "container",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof PreviewCard.Portal>
+    React.ComponentProps<typeof PreviewCard.Portal>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -319,14 +344,19 @@ export namespace HoverCardBackdropProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof PreviewCard.Backdrop>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PreviewCardBackdropProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof PreviewCard.Backdrop>
+    React.ComponentProps<typeof PreviewCard.Backdrop>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -391,14 +421,30 @@ export namespace HoverCardPositionerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof PreviewCard.Positioner>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // UseAnchorPositioningSharedParameters:
+      | "anchor"
+      | "positionMethod"
+      | "side"
+      | "sideOffset"
+      | "align"
+      | "alignOffset"
+      | "collisionBoundary"
+      | "collisionPadding"
+      | "sticky"
+      | "arrowPadding"
+      | "disableAnchorTracking"
+      | "collisionAvoidance",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof PreviewCard.Positioner>
+    React.ComponentProps<typeof PreviewCard.Positioner>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -456,14 +502,19 @@ export namespace HoverCardContentProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof PreviewCard.Popup>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PreviewCardPopupProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof PreviewCard.Popup>
+    React.ComponentProps<typeof PreviewCard.Popup>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -528,14 +579,19 @@ export namespace HoverCardArrowProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof PreviewCard.Arrow>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PreviewCardArrowProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof PreviewCard.Arrow>
+    React.ComponentProps<typeof PreviewCard.Arrow>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -587,14 +643,19 @@ export namespace HoverCardViewportProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof PreviewCard.Viewport>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PreviewCardViewportProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof PreviewCard.Viewport>
+    React.ComponentProps<typeof PreviewCard.Viewport>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 

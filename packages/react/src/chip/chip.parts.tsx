@@ -1,5 +1,5 @@
+import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import type { Size, Color, ColorTemplate } from "@suru-ui/theme";
-import type * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
@@ -89,13 +89,21 @@ export namespace ChipRootProps {
     variant?: ChipRootVariant | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"span", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
  * {@link ChipRoot} に渡す props です。
  */
-export type ChipRootProps = ChipRootProps.Render & ChipRootProps.SuruUI & ChipRootProps.HTML;
+export type ChipRootProps = ChipRootProps.Render &
+  ChipRootProps.SuruUI &
+  ChipRootProps.BaseUI &
+  ChipRootProps.HTML;
 
 /**
  * チップのルートコンポーネントです。
@@ -107,7 +115,6 @@ export const ChipRoot: IComponent<ChipRootProps> = function SuiChipRoot(props) {
     radius = "full",
     variant = "liquid",
     outlined = false,
-    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherSpanProps
@@ -118,7 +125,6 @@ export const ChipRoot: IComponent<ChipRootProps> = function SuiChipRoot(props) {
       otherSpanProps,
       {
         className: cn(
-          className,
           "sui_chip",
           `sui_chip-size_${size}`,
           `sui_chip-color_${color}`,
@@ -138,12 +144,14 @@ export { ChipRoot as Root };
 export namespace Root {
   export type State = ChipRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = ChipRootProps.Render;
 
     export type SuruUI = ChipRootProps.SuruUI;
+
+    export type BaseUI = ChipRootProps.BaseUI;
 
     export type HTML = ChipRootProps.HTML;
   }

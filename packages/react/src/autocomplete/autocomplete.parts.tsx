@@ -1,4 +1,9 @@
 import { Autocomplete } from "@base-ui/react/autocomplete";
+import type {
+  NativeButtonProps,
+  BaseUIComponentProps,
+  NonNativeButtonProps,
+} from "@base-ui/react/internals/types";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
@@ -221,32 +226,69 @@ export namespace AutocompleteRootProps {
     variant?: AutocompleteRootVariant | undefined;
   };
 
-  export type BaseUI<TItem = any> = Omit<
-    Autocomplete.Root.Props<TItem>,
-    keyof Render | keyof SuruUI
+  export type BaseUI<TItemValue = any> = Pick<
+    Autocomplete.Root.Props<TItemValue>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // AutocompleteRootProps + AriaCombobox.Props:
+      | "actionsRef"
+      | "autoHighlight"
+      | "defaultOpen"
+      | "defaultValue"
+      | "disabled"
+      | "filter"
+      | "filteredItems"
+      | "form"
+      | "grid"
+      | "highlightItemOnHover"
+      | "id"
+      | "inline"
+      | "inputRef"
+      | "itemToStringValue"
+      | "items"
+      | "keepHighlight"
+      | "limit"
+      | "locale"
+      | "loopFocus"
+      | "modal"
+      | "mode"
+      | "name"
+      | "onItemHighlighted"
+      | "onOpenChange"
+      | "onOpenChangeComplete"
+      | "onValueChange"
+      | "open"
+      | "openOnInputClick"
+      | "readOnly"
+      | "required"
+      | "submitOnItemClick"
+      | "value"
+      | "virtualized",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof Autocomplete.Root.Props<any>
+  export type HTML<TItemValue = any> = Omit<
+    Autocomplete.Root.Props<TItemValue>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
 /**
  * {@link AutocompleteRoot} に渡すプロパティーです。
  *
- * @template TItem 項目の値の型です。
+ * @template TItemValue 項目の値の型です。
  */
-export type AutocompleteRootProps<TItem = any> = AutocompleteRootProps.Render &
+export type AutocompleteRootProps<TItemValue = any> = AutocompleteRootProps.Render &
   AutocompleteRootProps.SuruUI &
-  AutocompleteRootProps.BaseUI<TItem> &
-  AutocompleteRootProps.HTML;
+  AutocompleteRootProps.BaseUI<TItemValue> &
+  AutocompleteRootProps.HTML<TItemValue>;
 
 interface IAutocompleteRoot extends IComponent<AutocompleteRootProps> {
   /**
-   * @template TItem 項目の値の型です。
+   * @template TItemValue 項目の値の型です。
    */
-  <TItem = any>(props: AutocompleteRootProps<TItem>): IComponent.Return;
+  <TItemValue = any>(props: AutocompleteRootProps<TItemValue>): IComponent.Return;
 }
 
 /**
@@ -282,16 +324,19 @@ export { AutocompleteRoot as Root };
 export namespace Root {
   export type State = AutocompleteRootState;
 
-  export type Props<TItem = any> = Props.Render & Props.SuruUI & Props.BaseUI<TItem> & Props.HTML;
+  export type Props<TItemValue = any> = Props.Render &
+    Props.SuruUI &
+    Props.BaseUI<TItemValue> &
+    Props.HTML<TItemValue>;
 
   export namespace Props {
     export type Render = AutocompleteRootProps.Render;
 
     export type SuruUI = AutocompleteRootProps.SuruUI;
 
-    export type BaseUI<TItem = any> = AutocompleteRootProps.BaseUI<TItem>;
+    export type BaseUI<TItemValue = any> = AutocompleteRootProps.BaseUI<TItemValue>;
 
-    export type HTML = AutocompleteRootProps.HTML;
+    export type HTML<TItemValue = any> = AutocompleteRootProps.HTML<TItemValue>;
   }
 
   export type Actions = AutocompleteRootActions;
@@ -326,14 +371,19 @@ export namespace AutocompleteInputGroupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Autocomplete.InputGroup>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // AutocompleteInputGroupProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.InputGroup>
+    React.ComponentProps<typeof Autocomplete.InputGroup>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -350,7 +400,7 @@ export type AutocompleteInputGroupProps = AutocompleteInputGroupProps.Render &
  */
 export const AutocompleteInputGroup: IComponent<AutocompleteInputGroupProps> =
   function SuiAutocompleteInputGroup(props) {
-    const { size, color, radius, variant, outlined } = useAutocompleteContext();
+    const ctx = useAutocompleteContext();
     const {
       className,
       // @ts-expect-error
@@ -364,11 +414,11 @@ export const AutocompleteInputGroup: IComponent<AutocompleteInputGroupProps> =
         className={cn(
           className,
           "sui_autocomplete",
-          `sui_autocomplete-size_${size}`,
-          `sui_autocomplete-color_${color}`,
-          `sui_autocomplete-radius_${radius}`,
-          `sui_autocomplete-variant_${variant}`,
-          outlined && "sui_autocomplete-outlined",
+          `sui_autocomplete-size_${ctx.size}`,
+          `sui_autocomplete-color_${ctx.color}`,
+          `sui_autocomplete-radius_${ctx.radius}`,
+          `sui_autocomplete-variant_${ctx.variant}`,
+          ctx.outlined && "sui_autocomplete-outlined",
           (state) => state.disabled && "sui_autocomplete-disabled",
         )}
         data-scope={dataScope}
@@ -407,14 +457,19 @@ export namespace AutocompleteInputProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Autocomplete.Input>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxInputProps:
+      "disabled",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"input">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.Input>
+    React.ComponentProps<typeof Autocomplete.Input>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -480,7 +535,12 @@ export namespace AutocompleteAddonProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"span", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -488,6 +548,7 @@ export namespace AutocompleteAddonProps {
  */
 export type AutocompleteAddonProps = AutocompleteAddonProps.Render &
   AutocompleteAddonProps.SuruUI &
+  AutocompleteAddonProps.BaseUI &
   AutocompleteAddonProps.HTML;
 
 /**
@@ -498,13 +559,11 @@ export type AutocompleteAddonProps = AutocompleteAddonProps.Render &
 export const AutocompleteAddon: IComponent<AutocompleteAddonProps> = function SuiAutocompleteAddon(
   props,
 ) {
-  const { className, ...otherSpanProps } = props;
-
   return useRender({
     props: [
-      otherSpanProps,
+      props,
       {
-        className: cn(className, "sui_autocomplete_addon"),
+        className: "sui_autocomplete_addon",
       },
     ],
     defaultTagName: "span",
@@ -516,12 +575,14 @@ export { AutocompleteAddon as Addon };
 export namespace Addon {
   export type State = AutocompleteAddonState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = AutocompleteAddonProps.Render;
 
     export type SuruUI = AutocompleteAddonProps.SuruUI;
+
+    export type BaseUI = AutocompleteAddonProps.BaseUI;
 
     export type HTML = AutocompleteAddonProps.HTML;
   }
@@ -540,14 +601,22 @@ export namespace AutocompleteClearProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Autocomplete.Clear>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NativeButtonProps:
+      | keyof NativeButtonProps
+      // ComboboxClearProps:
+      | "disabled"
+      | "keepMounted",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.Clear>
+    React.ComponentProps<typeof Autocomplete.Clear>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -603,14 +672,19 @@ export namespace AutocompleteListProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Autocomplete.List>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxListProps:
+      "children",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.List>
+    React.ComponentProps<typeof Autocomplete.List>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -664,14 +738,19 @@ export namespace AutocompleteStatusProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Autocomplete.Status>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxStatusProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.Status>
+    React.ComponentProps<typeof Autocomplete.Status>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -728,14 +807,19 @@ export namespace AutocompletePortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Autocomplete.Portal>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxPortalProps:
+      "container" | "keepMounted",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.Portal>
+    React.ComponentProps<typeof Autocomplete.Portal>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -807,14 +891,30 @@ export namespace AutocompletePositionerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Autocomplete.Positioner>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // UseAnchorPositioningSharedParameters:
+      | "align"
+      | "alignOffset"
+      | "anchor"
+      | "arrowPadding"
+      | "collisionAvoidance"
+      | "collisionBoundary"
+      | "collisionPadding"
+      | "disableAnchorTracking"
+      | "positionMethod"
+      | "side"
+      | "sideOffset"
+      | "sticky",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.Positioner>
+    React.ComponentProps<typeof Autocomplete.Positioner>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -872,14 +972,19 @@ export namespace AutocompletePopupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Autocomplete.Popup>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxPopupProps:
+      "finalFocus" | "initialFocus",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.Popup>
+    React.ComponentProps<typeof Autocomplete.Popup>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -933,14 +1038,19 @@ export namespace AutocompleteGroupProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Autocomplete.Group>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxGroupProps:
+      "items",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.Group>
+    React.ComponentProps<typeof Autocomplete.Group>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -996,14 +1106,19 @@ export namespace AutocompleteGroupLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Autocomplete.GroupLabel>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxGroupLabelProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.GroupLabel>
+    React.ComponentProps<typeof Autocomplete.GroupLabel>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1061,12 +1176,29 @@ export namespace AutocompleteItemProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
-    Override<Button.Root.Props.BaseUI, React.ComponentProps<typeof Autocomplete.Item>>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+  export type BaseUI = Override<
+    Button.Root.Props.BaseUI,
+    Pick<
+      React.ComponentProps<typeof Autocomplete.Item>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // NonNativeButtonProps:
+        | keyof NonNativeButtonProps
+        // ContextMenuItemProps:
+        | "children"
+        | "onClick"
+        | "index"
+        | "value"
+        | "disabled",
+        keyof Render | keyof SuruUI
+      >
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Autocomplete.Item>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -1088,15 +1220,19 @@ export const AutocompleteItem: IComponent<AutocompleteItemProps> = function SuiA
     style,
     value,
     render,
+    onClick,
+    children,
     disabled,
     className,
-    nativeButton,
+    nativeButton = false,
     focusableWhenDisabled,
     ...otherProps
   } = props;
   const baseuiProps: Required<AutocompleteItemProps.BaseUI> = {
     index,
     value,
+    onClick,
+    children,
     disabled,
     nativeButton,
     focusableWhenDisabled,
@@ -1119,8 +1255,8 @@ export const AutocompleteItem: IComponent<AutocompleteItemProps> = function SuiA
           variant: "naked",
           disabled: state.disabled,
           outlined: undefined,
-          nativeButton: false,
-          focusableWhenDisabled: undefined,
+          nativeButton,
+          focusableWhenDisabled,
         };
 
         return (
@@ -1172,14 +1308,19 @@ export namespace AutocompleteRowProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Autocomplete.Row>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxRowProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.Row>
+    React.ComponentProps<typeof Autocomplete.Row>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -1235,12 +1376,20 @@ export namespace AutocompleteCollectionProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Autocomplete.Collection>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxCollectionProps:
+      "children",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = {};
+  export type HTML = Omit<
+    React.ComponentProps<typeof Autocomplete.Collection>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -1292,14 +1441,19 @@ export namespace AutocompleteEmptyProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Autocomplete.Empty>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ComboboxEmptyProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Autocomplete.Empty>
+    React.ComponentProps<typeof Autocomplete.Empty>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 

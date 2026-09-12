@@ -109,14 +109,35 @@ export namespace SliderRootProps {
     variant?: SliderRootVariant | undefined;
   };
 
-  export type BaseUI<TValue extends number | readonly number[] = number | readonly number[]> = Omit<
+  export type BaseUI<TValue extends number | readonly number[] = number | readonly number[]> = Pick<
     React.ComponentProps<typeof Slider.Root<TValue>>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SliderRootProps:
+      | "defaultValue"
+      | "disabled"
+      | "format"
+      | "locale"
+      | "max"
+      | "min"
+      | "minStepsBetweenValues"
+      | "name"
+      | "form"
+      | "orientation"
+      | "step"
+      | "largeStep"
+      | "thumbAlignment"
+      | "thumbCollisionBehavior"
+      | "value"
+      | "onValueChange"
+      | "onValueCommitted",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Slider.Root>
+  export type HTML<TValue extends number | readonly number[] = number | readonly number[]> = Omit<
+    React.ComponentProps<typeof Slider.Root<TValue>>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -186,7 +207,7 @@ export namespace Root {
   export type State = SliderRootState;
 
   export type Props<TValue extends number | readonly number[] = number | readonly number[]> =
-    Props.Render & Props.SuruUI & Props.BaseUI<TValue> & Props.HTML;
+    Props.Render & Props.SuruUI & Props.BaseUI<TValue> & Props.HTML<TValue>;
 
   export namespace Props {
     export type Render = SliderRootProps.Render;
@@ -196,7 +217,8 @@ export namespace Root {
     export type BaseUI<TValue extends number | readonly number[] = number | readonly number[]> =
       SliderRootProps.BaseUI<TValue>;
 
-    export type HTML = SliderRootProps.HTML;
+    export type HTML<TValue extends number | readonly number[] = number | readonly number[]> =
+      SliderRootProps.HTML<TValue>;
   }
 
   export type ChangeEventDetails = SliderRootChangeEventDetails;
@@ -229,9 +251,20 @@ export namespace SliderLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Slider.Label>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Slider.Label>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SliderLabelProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
+  >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Slider.Label>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -285,9 +318,20 @@ export namespace SliderValueProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Slider.Value>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Slider.Value>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SliderValueProps:
+      "children",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
-  export type HTML = Omit<React.ComponentProps<"output">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Slider.Value>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -341,12 +385,20 @@ export namespace SliderControlProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Slider.Control>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SliderControlProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Slider.Control>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -400,9 +452,20 @@ export namespace SliderTrackProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Slider.Track>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Slider.Track>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SliderTrackProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
+  >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Slider.Track>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -456,12 +519,20 @@ export namespace SliderIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Slider.Indicator>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SliderIndicatorProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Slider.Indicator>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -517,9 +588,29 @@ export namespace SliderThumbProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Slider.Thumb>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Slider.Thumb>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // SliderThumbProps:
+      | "disabled"
+      | "aria-valuetext"
+      | "getAriaLabel"
+      | "getAriaValueText"
+      | "index"
+      | "inputRef"
+      | "onBlur"
+      | "onFocus"
+      | "onKeyDown"
+      | "tabIndex",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Slider.Thumb>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**

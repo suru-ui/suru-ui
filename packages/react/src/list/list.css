@@ -105,15 +105,15 @@
 :scope {
   --sui_list_item-color: var(--sui_list-color);
 
-  .sui_list_item-size_sm {
+  &.sui_list-size_sm {
     --sui_list_item-gap: --sui-gap(1);
   }
 
-  .sui_list_item-size_md {
+  &.sui_list-size_md {
     --sui_list_item-gap: --sui-gap(2);
   }
 
-  .sui_list_item-size_lg {
+  &.sui_list-size_lg {
     --sui_list_item-gap: --sui-gap(3);
   }
 }

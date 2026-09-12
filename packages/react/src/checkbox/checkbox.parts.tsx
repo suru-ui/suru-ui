@@ -1,4 +1,5 @@
 import { Checkbox } from "@base-ui/react/checkbox";
+import type { NonNativeButtonProps } from "@base-ui/react/internals/types";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
@@ -111,14 +112,34 @@ export namespace CheckboxRootProps {
     variant?: CheckboxRootVariant | undefined;
   };
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Checkbox.Root>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NonNativeButtonProps:
+      | keyof NonNativeButtonProps
+      // CheckboxRootProps:
+      | "id"
+      | "name"
+      | "form"
+      | "checked"
+      | "defaultChecked"
+      | "disabled"
+      | "onCheckedChange"
+      | "readOnly"
+      | "required"
+      | "indeterminate"
+      | "inputRef"
+      | "parent"
+      | "uncheckedValue"
+      | "value",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Checkbox.Root>
+    React.ComponentProps<typeof Checkbox.Root>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -218,14 +239,19 @@ export namespace CheckboxIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Checkbox.Indicator>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // CheckboxIndicatorProps:
+      "keepMounted",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Checkbox.Indicator>
+    React.ComponentProps<typeof Checkbox.Indicator>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 

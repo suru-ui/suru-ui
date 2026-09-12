@@ -3,7 +3,6 @@ import * as React from "react";
 import {
   type GroupProps,
   type PanelProps,
-  type SeparatorProps,
   type PanelImperativeHandle,
   Group as ExternalGroup,
   Panel as ExternalPanel,
@@ -120,16 +119,34 @@ export namespace ResizableRootProps {
     onLayout?: ((sizes: readonly number[]) => void) | undefined;
 
     /**
-     * {@link ResizableRootDirection} です。
+     * パネルを並べる向きの別名です。
+     *
+     * `direction` と同じ値を指定します。
      */
     orientation?: ResizableRootOrientation | undefined;
   };
 
-  export type BaseUI = Omit<GroupProps, keyof Render | keyof SuruUI | "children">;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof ExternalGroup>,
+    Exclude<
+      // react-resizable-panels の型を確認して取り出すプロパティーを決めます。
+      // GroupProps:
+      | "defaultLayout"
+      | "disableCursor"
+      | "disabled"
+      | "elementRef"
+      | "groupRef"
+      | "id"
+      | "onLayoutChange"
+      | "onLayoutChanged"
+      | "resizeTargetMinimumSize",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof Omit<GroupProps, "children">
+    React.ComponentProps<typeof ExternalGroup>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -274,11 +291,6 @@ export namespace ResizablePanelProps {
     onSizeChange?: ((size: number) => void) | undefined;
 
     /**
-     * パネルの並び順を明示します。
-     */
-    order?: number | undefined;
-
-    /**
      * パネルのサイズを制御します。
      *
      * 数値はパーセントとして扱われます。
@@ -286,11 +298,25 @@ export namespace ResizablePanelProps {
     size?: ResizablePanelSize | undefined;
   };
 
-  export type BaseUI = Omit<PanelProps, keyof Render | keyof SuruUI | "children">;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof ExternalPanel>,
+    Exclude<
+      // react-resizable-panels の型を確認して取り出すプロパティーを決めます。
+      // PanelProps:
+      | "collapsedSize"
+      | "collapsible"
+      | "disabled"
+      | "elementRef"
+      | "groupResizeBehavior"
+      | "id"
+      | "panelRef",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof Omit<PanelProps, "children">
+    React.ComponentProps<typeof ExternalPanel>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -313,7 +339,6 @@ export const ResizablePanel: IComponent<ResizablePanelProps> = function SuiResiz
   const direction = ctx?.direction ?? "horizontal";
   const {
     size,
-    order,
     render = <ExternalPanel />,
     maxSize,
     minSize,
@@ -354,7 +379,6 @@ export const ResizablePanel: IComponent<ResizablePanelProps> = function SuiResiz
         panelRef,
         className: "sui_resizable_panel",
         defaultSize: panelSize,
-        "data-order": order === undefined ? undefined : String(order),
       },
     ],
     state,
@@ -414,11 +438,19 @@ export namespace ResizableHandleProps {
     withHandle?: boolean | undefined;
   };
 
-  export type BaseUI = Omit<SeparatorProps, keyof Render | keyof SuruUI | "children">;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Separator>,
+    Exclude<
+      // react-resizable-panels の型を確認して取り出すプロパティーを決めます。
+      // SeparatorProps:
+      "disabled" | "disableDoubleClick" | "elementRef" | "id",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof Omit<SeparatorProps, "children">
+    React.ComponentProps<typeof Separator>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 

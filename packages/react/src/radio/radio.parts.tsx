@@ -1,3 +1,4 @@
+import type { NonNativeButtonProps } from "@base-ui/react/internals/types";
 import { Radio } from "@base-ui/react/radio";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
@@ -100,11 +101,25 @@ export namespace RadioRootProps {
     variant?: RadioRootVariant | undefined;
   };
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Radio.Root>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Radio.Root>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NonNativeButtonProps:
+      | keyof NonNativeButtonProps
+      // RadioRootProps:
+      | "value"
+      | "disabled"
+      | "required"
+      | "readOnly"
+      | "inputRef",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Radio.Root>
+    React.ComponentProps<typeof Radio.Root>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -199,14 +214,19 @@ export namespace RadioIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Radio.Indicator>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // RadioIndicatorProps:
+      "keepMounted",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Radio.Indicator>
+    React.ComponentProps<typeof Radio.Indicator>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 

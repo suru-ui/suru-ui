@@ -1,3 +1,4 @@
+import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
@@ -243,7 +244,12 @@ export namespace PaginationRootProps {
     totalPages: number;
   };
 
-  export type HTML = Omit<React.ComponentProps<"nav">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"nav", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -251,6 +257,7 @@ export namespace PaginationRootProps {
  */
 export type PaginationRootProps = PaginationRootProps.Render &
   PaginationRootProps.SuruUI &
+  PaginationRootProps.BaseUI &
   PaginationRootProps.HTML;
 
 /**
@@ -327,12 +334,14 @@ export { PaginationRoot as Root };
 export namespace Root {
   export type State = PaginationRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = PaginationRootProps.Render;
 
     export type SuruUI = PaginationRootProps.SuruUI;
+
+    export type BaseUI = PaginationRootProps.BaseUI;
 
     export type HTML = PaginationRootProps.HTML;
   }
@@ -361,11 +370,19 @@ export namespace PaginationPreviousButtonProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<Button.ButtonRootProps, keyof Render | keyof SuruUI | "children">;
+  export type BaseUI = Pick<
+    Button.ButtonRootProps,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PaginationPreviousButtonProps: context が制御するため除きます。
+      keyof Button.ButtonRootProps,
+      keyof Render | keyof SuruUI | "children" | "color" | "radius" | "size" | "squared" | "variant"
+    >
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof Omit<Button.ButtonRootProps, "children">
+    keyof Render | keyof SuruUI | keyof Omit<Button.ButtonRootProps, "children"> | "children"
   >;
 }
 
@@ -449,11 +466,19 @@ export namespace PaginationNextButtonProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<Button.ButtonRootProps, keyof Render | keyof SuruUI | "children">;
+  export type BaseUI = Pick<
+    Button.ButtonRootProps,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PaginationNextButtonProps: context が制御するため除きます。
+      keyof Button.ButtonRootProps,
+      keyof Render | keyof SuruUI | "children" | "color" | "radius" | "size" | "squared" | "variant"
+    >
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof Omit<Button.ButtonRootProps, "children">
+    keyof Render | keyof SuruUI | keyof Omit<Button.ButtonRootProps, "children"> | "children"
   >;
 }
 
@@ -554,9 +579,14 @@ export namespace PaginationItemProps {
     selected?: boolean | undefined;
   };
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     Button.ButtonRootProps,
-    keyof Render | keyof SuruUI | "color" | "variant"
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PaginationItemProps: context が制御するため除きます。
+      keyof Button.ButtonRootProps,
+      keyof Render | keyof SuruUI | "color" | "radius" | "size" | "squared" | "variant"
+    >
   >;
 
   export type HTML = Omit<
@@ -656,11 +686,19 @@ export namespace PaginationEllipsisProps {
     start?: number | undefined;
   };
 
-  export type BaseUI = Omit<Button.ButtonRootProps, keyof Render | keyof SuruUI | "children">;
+  export type BaseUI = Pick<
+    Button.ButtonRootProps,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PaginationEllipsisProps: context が制御するため除きます。
+      keyof Button.ButtonRootProps,
+      keyof Render | keyof SuruUI | "children" | "color" | "radius" | "size" | "squared" | "variant"
+    >
+  >;
 
   export type HTML = Omit<
     React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof Omit<Button.ButtonRootProps, "children">
+    keyof Render | keyof SuruUI | keyof Omit<Button.ButtonRootProps, "children"> | "children"
   >;
 }
 
@@ -692,6 +730,7 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
     const resolvedEnd = end ?? start;
     const label = ariaLabel ?? `${start}〜${resolvedEnd}ページへ移動`;
     const [editing, setEditing] = React.useState(false);
+    const isDisabled = ctx?.disabled || disabled;
     const inputElement = useRender<HTMLInputElement, {}, boolean>({
       props: {
         type: "text",
@@ -699,6 +738,7 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
           setEditing(false);
         },
         pattern: "[0-9]*",
+        disabled: isDisabled,
         autoFocus: true,
         className: "sui_pagination_ellipsis_input",
         inputMode: "numeric",
@@ -736,7 +776,6 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
       return inputElement;
     }
 
-    const isDisabled = ctx?.disabled || disabled;
     const handleClick: NonNullable<Button.ButtonRootProps["onClick"]> = (event) => {
       onClick?.(event);
       if (!event.defaultPrevented && !isDisabled) {

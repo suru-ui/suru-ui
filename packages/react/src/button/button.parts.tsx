@@ -1,4 +1,5 @@
 import { Button } from "@base-ui/react/button";
+import type { NativeButtonProps, BaseUIComponentProps } from "@base-ui/react/internals/types";
 import type { Size, Color, ColorTemplate } from "@suru-ui/theme";
 import * as React from "react";
 
@@ -219,12 +220,22 @@ export namespace ButtonRootProps {
     variant?: ButtonRootVariant | undefined;
   };
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Button>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"button">
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NativeButtonProps:
+      | keyof NativeButtonProps
+      // ButtonProps:
+      | "focusableWhenDisabled",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Button>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -283,7 +294,7 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
           muted && "sui_button-muted",
           pending && "sui_button-pending",
           squared && "sui_button-squared",
-          disabled && "sui_button-disabled",
+          (state) => state.disabled && !pending && "sui_button-disabled",
           outlined && "sui_button-outlined",
         )}
         focusableWhenDisabled={focusableWhenDisabled}
@@ -332,7 +343,12 @@ export namespace ButtonContentProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"span", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -340,6 +356,7 @@ export namespace ButtonContentProps {
  */
 export type ButtonContentProps = ButtonContentProps.Render &
   ButtonContentProps.SuruUI &
+  ButtonContentProps.BaseUI &
   ButtonContentProps.HTML;
 
 /**
@@ -365,12 +382,14 @@ export { ButtonContent as Content };
 export namespace Content {
   export type State = ButtonContentState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = ButtonContentProps.Render;
 
     export type SuruUI = ButtonContentProps.SuruUI;
+
+    export type BaseUI = ButtonContentProps.BaseUI;
 
     export type HTML = ButtonContentProps.HTML;
   }
@@ -403,7 +422,12 @@ export namespace ButtonPendingProps {
     overlay?: boolean | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"span", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -411,6 +435,7 @@ export namespace ButtonPendingProps {
  */
 export type ButtonPendingProps = ButtonPendingProps.Render &
   ButtonPendingProps.SuruUI &
+  ButtonPendingProps.BaseUI &
   ButtonPendingProps.HTML;
 
 /**
@@ -446,12 +471,14 @@ export { ButtonPending as Pending };
 export namespace Pending {
   export type State = ButtonPendingState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = ButtonPendingProps.Render;
 
     export type SuruUI = ButtonPendingProps.SuruUI;
+
+    export type BaseUI = ButtonPendingProps.BaseUI;
 
     export type HTML = ButtonPendingProps.HTML;
   }
@@ -484,7 +511,12 @@ export namespace ButtonCircularProgressProps {
     percentage?: number | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"svg">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"svg", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -492,6 +524,7 @@ export namespace ButtonCircularProgressProps {
  */
 export type ButtonCircularProgressProps = ButtonCircularProgressProps.Render &
   ButtonCircularProgressProps.SuruUI &
+  ButtonCircularProgressProps.BaseUI &
   ButtonCircularProgressProps.HTML;
 
 /**
@@ -537,12 +570,14 @@ export { ButtonCircularProgress as CircularProgress };
 export namespace CircularProgress {
   export type State = ButtonCircularProgressState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = ButtonCircularProgressProps.Render;
 
     export type SuruUI = ButtonCircularProgressProps.SuruUI;
+
+    export type BaseUI = ButtonCircularProgressProps.BaseUI;
 
     export type HTML = ButtonCircularProgressProps.HTML;
   }
@@ -561,7 +596,12 @@ export namespace ButtonCircularProgressTrackProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"circle">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"circle", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -569,6 +609,7 @@ export namespace ButtonCircularProgressTrackProps {
  */
 export type ButtonCircularProgressTrackProps = ButtonCircularProgressTrackProps.Render &
   ButtonCircularProgressTrackProps.SuruUI &
+  ButtonCircularProgressTrackProps.BaseUI &
   ButtonCircularProgressTrackProps.HTML;
 
 /**
@@ -609,12 +650,14 @@ export { ButtonCircularProgressTrack as CircularProgressTrack };
 export namespace CircularProgressTrack {
   export type State = ButtonCircularProgressTrackState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = ButtonCircularProgressTrackProps.Render;
 
     export type SuruUI = ButtonCircularProgressTrackProps.SuruUI;
+
+    export type BaseUI = ButtonCircularProgressTrackProps.BaseUI;
 
     export type HTML = ButtonCircularProgressTrackProps.HTML;
   }
@@ -646,7 +689,12 @@ export namespace ButtonCircularProgressFillProps {
       | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"circle">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"circle", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -654,6 +702,7 @@ export namespace ButtonCircularProgressFillProps {
  */
 export type ButtonCircularProgressFillProps = ButtonCircularProgressFillProps.Render &
   ButtonCircularProgressFillProps.SuruUI &
+  ButtonCircularProgressFillProps.BaseUI &
   ButtonCircularProgressFillProps.HTML;
 
 /**
@@ -704,12 +753,14 @@ export { ButtonCircularProgressFill as CircularProgressFill };
 export namespace CircularProgressFill {
   export type State = ButtonCircularProgressFillState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = ButtonCircularProgressFillProps.Render;
 
     export type SuruUI = ButtonCircularProgressFillProps.SuruUI;
+
+    export type BaseUI = ButtonCircularProgressFillProps.BaseUI;
 
     export type HTML = ButtonCircularProgressFillProps.HTML;
   }
@@ -728,7 +779,12 @@ export namespace ButtonCircularProgressFillRotationProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"animateTransform">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"animateTransform", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -737,6 +793,7 @@ export namespace ButtonCircularProgressFillRotationProps {
 export type ButtonCircularProgressFillRotationProps =
   ButtonCircularProgressFillRotationProps.Render &
     ButtonCircularProgressFillRotationProps.SuruUI &
+    ButtonCircularProgressFillRotationProps.BaseUI &
     ButtonCircularProgressFillRotationProps.HTML;
 
 /**
@@ -778,12 +835,14 @@ export { ButtonCircularProgressFillRotation as CircularProgressFillRotation };
 export namespace CircularProgressFillRotation {
   export type State = ButtonCircularProgressFillRotationState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = ButtonCircularProgressFillRotationProps.Render;
 
     export type SuruUI = ButtonCircularProgressFillRotationProps.SuruUI;
+
+    export type BaseUI = ButtonCircularProgressFillRotationProps.BaseUI;
 
     export type HTML = ButtonCircularProgressFillRotationProps.HTML;
   }

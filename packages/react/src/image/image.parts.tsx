@@ -1,5 +1,5 @@
+import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import type { Size } from "@suru-ui/theme";
-import type * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
@@ -44,7 +44,7 @@ export namespace ImageRootProps {
     /**
      * 画像の表示方法 (`object-fit`) を指定します。
      *
-     * 指定しない場合、画像は元の比率のまま表示されます。
+     * 指定しない場合、`object-fit` は指定されません。
      */
     fit?: ImageRootFit | undefined;
 
@@ -56,13 +56,21 @@ export namespace ImageRootProps {
     radius?: ImageRootRadius | undefined;
   };
 
-  export type HTML = Omit<React.ComponentProps<"img">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"img", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
  * {@link ImageRoot} に渡す props です。
  */
-export type ImageRootProps = ImageRootProps.Render & ImageRootProps.SuruUI & ImageRootProps.HTML;
+export type ImageRootProps = ImageRootProps.Render &
+  ImageRootProps.SuruUI &
+  ImageRootProps.BaseUI &
+  ImageRootProps.HTML;
 
 /**
  * 画像のルートコンポーネントです。
@@ -80,11 +88,7 @@ export const ImageRoot: IComponent<ImageRootProps> = function SuiImageRoot(props
     props: [
       otherImgProps,
       {
-        className: cn<ImageRootState>(
-          "sui_image",
-          `sui_image-radius_${radius}`,
-          fit && `sui_image-fit_${fit}`,
-        ),
+        className: cn("sui_image", `sui_image-radius_${radius}`, fit && `sui_image-fit_${fit}`),
         "data-scope": dataScope,
       },
     ],
@@ -97,12 +101,14 @@ export { ImageRoot as Root };
 export namespace Root {
   export type State = ImageRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = ImageRootProps.Render;
 
     export type SuruUI = ImageRootProps.SuruUI;
+
+    export type BaseUI = ImageRootProps.BaseUI;
 
     export type HTML = ImageRootProps.HTML;
   }

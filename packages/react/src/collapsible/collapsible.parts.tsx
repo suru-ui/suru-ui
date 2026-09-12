@@ -1,4 +1,5 @@
 import { Collapsible } from "@base-ui/react/collapsible";
+import type { NativeButtonProps, BaseUIComponentProps } from "@base-ui/react/internals/types";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
@@ -48,14 +49,19 @@ export namespace CollapsibleRootProps {
     size?: CollapsibleRootSize | undefined;
   };
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Collapsible.Root>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // CollapsibleRootProps:
+      "open" | "defaultOpen" | "onOpenChange" | "disabled",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Collapsible.Root>
+    React.ComponentProps<typeof Collapsible.Root>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -143,14 +149,21 @@ export namespace CollapsibleTriggerProps {
     children: NonNullable<React.ComponentProps<typeof Collapsible.Trigger>["render"]>;
   };
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Collapsible.Trigger>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NativeButtonProps:
+      | keyof NativeButtonProps
+      // CollapsibleTriggerProps:
+      | never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Collapsible.Trigger>
+    React.ComponentProps<typeof Collapsible.Trigger>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -211,7 +224,12 @@ export namespace CollapsibleIndicatorProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"span", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -219,6 +237,7 @@ export namespace CollapsibleIndicatorProps {
  */
 export type CollapsibleIndicatorProps = CollapsibleIndicatorProps.Render &
   CollapsibleIndicatorProps.SuruUI &
+  CollapsibleIndicatorProps.BaseUI &
   CollapsibleIndicatorProps.HTML;
 
 /**
@@ -245,12 +264,14 @@ export { CollapsibleIndicator as Indicator };
 export namespace Indicator {
   export type State = CollapsibleIndicatorState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = CollapsibleIndicatorProps.Render;
 
     export type SuruUI = CollapsibleIndicatorProps.SuruUI;
+
+    export type BaseUI = CollapsibleIndicatorProps.BaseUI;
 
     export type HTML = CollapsibleIndicatorProps.HTML;
   }
@@ -269,14 +290,19 @@ export namespace CollapsibleContentProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Collapsible.Panel>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // CollapsiblePanelProps:
+      "hiddenUntilFound" | "keepMounted",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Collapsible.Panel>
+    React.ComponentProps<typeof Collapsible.Panel>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 

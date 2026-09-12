@@ -1,4 +1,5 @@
 import { Accordion } from "@base-ui/react/accordion";
+import type { NativeButtonProps, BaseUIComponentProps } from "@base-ui/react/internals/types";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
@@ -158,14 +159,27 @@ export namespace AccordionRootProps {
     variant?: AccordionRootVariant | undefined;
   };
 
-  export type BaseUI<TValue = any> = Omit<
+  export type BaseUI<TValue = any> = Pick<
     React.ComponentProps<typeof Accordion.Root<TValue>>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // AccordionRootProps:
+      | "value"
+      | "defaultValue"
+      | "disabled"
+      | "hiddenUntilFound"
+      | "keepMounted"
+      | "loopFocus"
+      | "onValueChange"
+      | "multiple"
+      | "orientation",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Accordion.Root>
+  export type HTML<TValue = any> = Omit<
+    React.ComponentProps<typeof Accordion.Root<TValue>>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -178,7 +192,7 @@ export namespace AccordionRootProps {
 export type AccordionRootProps<TItem = any, TValue = any> = AccordionRootProps.Render<TValue> &
   AccordionRootProps.SuruUI<TItem> &
   AccordionRootProps.BaseUI<TValue> &
-  AccordionRootProps.HTML;
+  AccordionRootProps.HTML<TValue>;
 
 interface IAccordionRoot extends IComponent<AccordionRootProps> {
   /**
@@ -256,7 +270,7 @@ export namespace Root {
   export type Props<TItem = any, TValue = any> = Props.Render<TValue> &
     Props.SuruUI<TItem> &
     Props.BaseUI<TValue> &
-    Props.HTML;
+    Props.HTML<TValue>;
 
   export namespace Props {
     export type Render<TValue = any> = AccordionRootProps.Render<TValue>;
@@ -265,7 +279,7 @@ export namespace Root {
 
     export type BaseUI<TValue = any> = AccordionRootProps.BaseUI<TValue>;
 
-    export type HTML = AccordionRootProps.HTML;
+    export type HTML<TValue = any> = AccordionRootProps.HTML<TValue>;
   }
 
   export type ChangeEventDetails = AccordionRootChangeEventDetails;
@@ -308,14 +322,22 @@ export namespace AccordionItemProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Accordion.Item>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // Pick<UseCollapsibleRootParameters, 'disabled'>:
+      | "disabled"
+      // AccordionItemProps:
+      | "value"
+      | "onOpenChange",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Accordion.Item>
+    React.ComponentProps<typeof Accordion.Item>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -381,14 +403,19 @@ export namespace AccordionHeadingProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Accordion.Header>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // AccordionHeaderProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Accordion.Header>
+    React.ComponentProps<typeof Accordion.Header>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -444,21 +471,28 @@ export namespace AccordionTriggerProps {
     /**
      * `true` にすると Suru UI のスタイルがつかなくなります。
      *
-     * これは主に、`render`  props でボタンコンポーネントを描画する際に使用されます。
+     * これは主に、`render` prop でボタンコンポーネントを描画する際に使用されます。
      *
      * @default false
      */
     unstyled?: boolean | undefined;
   };
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Accordion.Trigger>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NativeButtonProps:
+      | keyof NativeButtonProps
+      // AccordionTriggerProps:
+      | never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Accordion.Trigger>
+    React.ComponentProps<typeof Accordion.Trigger>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -521,7 +555,12 @@ export namespace AccordionIndicatorProps {
 
   export type SuruUI = {};
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI>;
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"span", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -529,6 +568,7 @@ export namespace AccordionIndicatorProps {
  */
 export type AccordionIndicatorProps = AccordionIndicatorProps.Render &
   AccordionIndicatorProps.SuruUI &
+  AccordionIndicatorProps.BaseUI &
   AccordionIndicatorProps.HTML;
 
 /**
@@ -555,12 +595,14 @@ export { AccordionIndicator as Indicator };
 export namespace Indicator {
   export type State = AccordionIndicatorState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.HTML;
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = AccordionIndicatorProps.Render;
 
     export type SuruUI = AccordionIndicatorProps.SuruUI;
+
+    export type BaseUI = AccordionIndicatorProps.BaseUI;
 
     export type HTML = AccordionIndicatorProps.HTML;
   }
@@ -579,14 +621,22 @@ export namespace AccordionContentProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Accordion.Panel>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // Pick<AccordionRoot.Props, 'hiddenUntilFound' | 'keepMounted'>:
+      | "hiddenUntilFound"
+      | "keepMounted"
+      // AccordionPanelProps:
+      | never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Accordion.Panel>
+    React.ComponentProps<typeof Accordion.Panel>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 

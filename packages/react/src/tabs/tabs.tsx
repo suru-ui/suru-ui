@@ -96,14 +96,14 @@ export type TabsSlotProps = {
   /**
    * {@link TabsPanel} に渡す props です。
    *
-   * すべてのパネルに同じ props が渡されます。`children` と `value` は上書きされません。
+   * すべてのパネルに同じ props が渡されます。`children` と `value` は上書きされます。
    */
   readonly panel?: Omit<TabsPanelProps, "children" | "value"> | undefined;
 
   /**
    * {@link TabsTab} に渡す props です。
    *
-   * すべてのタブに同じ props が渡されます。`children` と `disabled` と `value` は上書きされません。
+   * すべてのタブに同じ props が渡されます。`children` と `disabled` と `value` は上書きされます。
    */
   readonly tab?: Omit<TabsTabProps, "children" | "disabled" | "value"> | undefined;
 };

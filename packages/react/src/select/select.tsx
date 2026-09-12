@@ -1,8 +1,9 @@
 import * as React from "react";
 
-import { getItemLabel } from "../_get-item-label.js";
+import { getItemLabel, isLabeledItem } from "../_get-item-label.js";
 import { CheckIcon, ChevronIcon } from "../_icons.jsx";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
+import toReactNode from "../_to-react-node.js";
 import type { IComponent, IUseContext } from "../types.js";
 import {
   type SelectContext,
@@ -543,7 +544,12 @@ export const Select: ISelect = /*#__PURE__*/ Object.assign(
               <SelectList {...listProps}>
                 {listProps.children ??
                   ((item, index, items) => {
-                    if (typeof item === "object" && item !== null && "items" in item) {
+                    if (
+                      typeof item === "object" &&
+                      item !== null &&
+                      "items" in item &&
+                      Array.isArray((item as SelectItemGroup<unknown>).items)
+                    ) {
                       const group = item as SelectItemGroup<unknown>;
                       const groupLabelProps =
                         group.label === undefined ? null : api.getGroupLabelProps(group.label);
@@ -565,7 +571,10 @@ export const Select: ISelect = /*#__PURE__*/ Object.assign(
                                     {indicatorChildren}
                                   </SelectItemIndicator>
                                   <SelectItemText {...otherTextProps}>
-                                    {textChildren ?? getItemLabel(groupItem)}
+                                    {textChildren ??
+                                      (isLabeledItem(groupItem)
+                                        ? toReactNode(groupItem.label, getItemLabel(groupItem))
+                                        : getItemLabel(groupItem))}
                                   </SelectItemText>
                                 </SelectItem>
                               );
@@ -589,7 +598,10 @@ export const Select: ISelect = /*#__PURE__*/ Object.assign(
                           {indicatorChildren}
                         </SelectItemIndicator>
                         <SelectItemText {...otherTextProps}>
-                          {textChildren ?? getItemLabel(item)}
+                          {textChildren ??
+                            (isLabeledItem(item)
+                              ? toReactNode(item.label, getItemLabel(item))
+                              : getItemLabel(item))}
                         </SelectItemText>
                       </SelectItem>
                     );

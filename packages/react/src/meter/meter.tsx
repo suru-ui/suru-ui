@@ -64,7 +64,7 @@ export type MeterState = MeterRootState;
  */
 export type MeterProps = Omit<MeterRootProps, "children" | "value"> & {
   /**
-   * ラベルです。
+   * メーターの説明ラベルです。
    *
    * 指定すると {@link MeterValue} も表示されます。
    */

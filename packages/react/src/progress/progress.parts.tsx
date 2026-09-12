@@ -98,14 +98,19 @@ export namespace ProgressRootProps {
     variant?: ProgressRootVariant | undefined;
   };
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Progress.Root>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ProgressRootProps:
+      "aria-valuetext" | "format" | "getAriaValueText" | "locale" | "max" | "min" | "value",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Progress.Root>
+    React.ComponentProps<typeof Progress.Root>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -194,14 +199,19 @@ export namespace ProgressLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Progress.Label>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ProgressLabelProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Progress.Label>
+    React.ComponentProps<typeof Progress.Label>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -253,14 +263,19 @@ export namespace ProgressValueProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Progress.Value>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ProgressValueProps:
+      "children",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Progress.Value>
+    React.ComponentProps<typeof Progress.Value>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -314,14 +329,19 @@ export namespace ProgressTrackProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Progress.Track>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ProgressTrackProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Progress.Track>
+    React.ComponentProps<typeof Progress.Track>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -373,14 +393,19 @@ export namespace ProgressIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Progress.Indicator>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ProgressIndicatorProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Progress.Indicator>
+    React.ComponentProps<typeof Progress.Indicator>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 

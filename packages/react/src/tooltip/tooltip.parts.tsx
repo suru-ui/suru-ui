@@ -161,9 +161,24 @@ export namespace TooltipRootProps {
     size?: TooltipRootSize | undefined;
   };
 
-  export type BaseUI<TPayload = any> = Omit<
+  export type BaseUI<TPayload = any> = Pick<
     React.ComponentProps<typeof Tooltip.Root<TPayload>>,
-    keyof Render | keyof SuruUI | "handle"
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // TooltipRootProps:
+      | "defaultOpen"
+      | "open"
+      | "onOpenChange"
+      | "onOpenChangeComplete"
+      | "disableHoverablePopup"
+      | "trackCursorAxis"
+      | "actionsRef"
+      | "disabled"
+      | "children"
+      | "triggerId"
+      | "defaultTriggerId",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = {};
@@ -268,19 +283,29 @@ export namespace TooltipTriggerProps {
     handle?: TooltipHandle<TPayload> | undefined;
 
     /**
-     * このトリガーがクリックされたときにツールチップを開いたままにするかかどうかを指定します。
+     * このトリガーがクリックされたときにツールチップを開いたままにするかどうかを指定します。
      *
      * @default false
      */
     keepOpenOnClick?: boolean | undefined;
   };
 
-  export type BaseUI<TPayload = any> = Omit<
-    Omit<React.ComponentProps<typeof Tooltip.Trigger<TPayload>>, "closeOnClick">,
-    keyof Render | keyof SuruUI
+  export type BaseUI<TPayload = any> = Pick<
+    React.ComponentProps<typeof Tooltip.Trigger<TPayload>>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // `handle` は SuruUI、`closeOnClick` は `keepOpenOnClick` で制御するため除きます。
+      // TooltipTriggerProps:
+      "payload" | "delay" | "closeDelay" | "disabled",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"button">, keyof Render | keyof SuruUI>;
+  export type HTML<TPayload = any> = Omit<
+    React.ComponentProps<typeof Tooltip.Trigger<TPayload>>,
+    // `closeOnClick` は `keepOpenOnClick` から求めるため公開しません。
+    keyof Render | keyof SuruUI | keyof BaseUI | "closeOnClick"
+  >;
 }
 
 /**
@@ -291,7 +316,7 @@ export namespace TooltipTriggerProps {
 export type TooltipTriggerProps<TPayload = any> = TooltipTriggerProps.Render &
   TooltipTriggerProps.SuruUI<TPayload> &
   TooltipTriggerProps.BaseUI<TPayload> &
-  TooltipTriggerProps.HTML;
+  TooltipTriggerProps.HTML<TPayload>;
 
 /**
  * {@link TooltipTrigger} のコンポーネント型です。
@@ -329,7 +354,7 @@ export namespace Trigger {
   export type Props<TPayload = any> = Props.Render &
     Props.SuruUI<TPayload> &
     Props.BaseUI<TPayload> &
-    Props.HTML;
+    Props.HTML<TPayload>;
 
   export namespace Props {
     export type Render = TooltipTriggerProps.Render;
@@ -338,7 +363,7 @@ export namespace Trigger {
 
     export type BaseUI<TPayload = any> = TooltipTriggerProps.BaseUI<TPayload>;
 
-    export type HTML = TooltipTriggerProps.HTML;
+    export type HTML<TPayload = any> = TooltipTriggerProps.HTML<TPayload>;
   }
 }
 
@@ -355,12 +380,20 @@ export namespace TooltipPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Tooltip.Portal>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // TooltipPortalProps:
+      "keepMounted" | "container",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Tooltip.Portal>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -434,12 +467,32 @@ export namespace TooltipPositionerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Tooltip.Positioner>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // TooltipPositionerProps:
+      | "side"
+      // UseAnchorPositioningSharedParameters:
+      | "align"
+      | "anchor"
+      | "sticky"
+      | "sideOffset"
+      | "alignOffset"
+      | "arrowPadding"
+      | "positionMethod"
+      | "collisionPadding"
+      | "collisionBoundary"
+      | "collisionAvoidance"
+      | "disableAnchorTracking",
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Tooltip.Positioner>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -498,12 +551,20 @@ export namespace TooltipContentProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Tooltip.Popup>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // TooltipPopupProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Tooltip.Popup>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -566,12 +627,20 @@ export namespace TooltipArrowProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Tooltip.Arrow>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // TooltipArrowProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Tooltip.Arrow>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -631,12 +700,20 @@ export namespace TooltipViewportProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Tooltip.Viewport>,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<"div">
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // TooltipViewportProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof Tooltip.Viewport>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**

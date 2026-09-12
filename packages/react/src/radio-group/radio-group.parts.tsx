@@ -234,26 +234,53 @@ export namespace RadioGroupRootProps {
     variant?: RadioGroupRootVariant | undefined;
   };
 
-  export type BaseUI = Omit<React.ComponentProps<typeof RadioGroup>, keyof Render | keyof SuruUI>;
+  export type BaseUI<TValue = any> = Pick<
+    React.ComponentProps<typeof RadioGroup<TValue>>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // RadioGroupRootProps:
+      | "value"
+      | "defaultValue"
+      | "disabled"
+      | "readOnly"
+      | "required"
+      | "name"
+      | "form"
+      | "onValueChange"
+      | "inputRef",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
-  export type HTML = Omit<
-    React.ComponentProps<"div">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof RadioGroup>
+  export type HTML<TValue = any> = Omit<
+    React.ComponentProps<typeof RadioGroup<TValue>>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
 /**
  * {@link RadioGroupRoot} に渡す props です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type RadioGroupRootProps = RadioGroupRootProps.Render &
+export type RadioGroupRootProps<TValue = any> = RadioGroupRootProps.Render &
   RadioGroupRootProps.SuruUI &
-  RadioGroupRootProps.BaseUI &
-  RadioGroupRootProps.HTML;
+  RadioGroupRootProps.BaseUI<TValue> &
+  RadioGroupRootProps.HTML<TValue>;
 
 /**
  * ラジオボタングループのルートコンポーネントです。
  */
-export const RadioGroupRoot: IComponent<RadioGroupRootProps> = function SuiRadioGroupRoot(props) {
+interface IRadioGroupRoot extends IComponent<RadioGroupRootProps> {
+  /**
+   * @template TValue 項目の値の型です。
+   */
+  <TValue = any>(props: RadioGroupRootProps<TValue>): IComponent.Return;
+}
+
+export const RadioGroupRoot: IRadioGroupRoot = function SuiRadioGroupRoot(
+  props: RadioGroupRootProps,
+) {
   const {
     size = "md",
     color = "grey",
@@ -301,16 +328,19 @@ export { RadioGroupRoot as Root };
 export namespace Root {
   export type State = RadioGroupRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render &
+    Props.SuruUI &
+    Props.BaseUI<TValue> &
+    Props.HTML<TValue>;
 
   export namespace Props {
     export type Render = RadioGroupRootProps.Render;
 
     export type SuruUI = RadioGroupRootProps.SuruUI;
 
-    export type BaseUI = RadioGroupRootProps.BaseUI;
+    export type BaseUI<TValue = any> = RadioGroupRootProps.BaseUI<TValue>;
 
-    export type HTML = RadioGroupRootProps.HTML;
+    export type HTML<TValue = any> = RadioGroupRootProps.HTML<TValue>;
   }
 
   export type ChangeEventDetails = RadioGroupRootChangeEventDetails;

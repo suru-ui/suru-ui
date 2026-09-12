@@ -68,11 +68,19 @@ export namespace AvatarRootProps {
     size?: AvatarRootSize | undefined;
   };
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Avatar.Root>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Avatar.Root>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // AvatarRootProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Avatar.Root>
+    React.ComponentProps<typeof Avatar.Root>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -154,11 +162,19 @@ export namespace AvatarImageProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<React.ComponentProps<typeof Avatar.Image>, keyof Render | keyof SuruUI>;
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Avatar.Image>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // AvatarImageProps:
+      "onLoadingStatusChange",
+      keyof Render | keyof SuruUI
+    >
+  >;
 
   export type HTML = Omit<
-    React.ComponentProps<"img">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Avatar.Image>
+    React.ComponentProps<typeof Avatar.Image>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
@@ -212,14 +228,19 @@ export namespace AvatarFallbackProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Omit<
+  export type BaseUI = Pick<
     React.ComponentProps<typeof Avatar.Fallback>,
-    keyof Render | keyof SuruUI
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // AvatarFallbackProps:
+      "delay",
+      keyof Render | keyof SuruUI
+    >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"span">,
-    keyof Render | keyof SuruUI | keyof React.ComponentProps<typeof Avatar.Fallback>
+    React.ComponentProps<typeof Avatar.Fallback>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 

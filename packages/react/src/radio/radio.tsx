@@ -88,8 +88,8 @@ export const useRadioAPI: IUseRadioAPI = function useSuiRadioAPI(props) {
     },
     getIndicatorProps() {
       return {
-        ...indicatorProps,
         children,
+        ...indicatorProps,
       };
     },
   };
