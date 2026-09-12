@@ -25,12 +25,7 @@ export const Usage = meta.story({
     size: "md",
   }),
   render(props) {
-    return (
-      <Stat {...props}>
-        <Stat.Label>総ページビュー</Stat.Label>
-        <Stat.Value>89,400</Stat.Value>
-      </Stat>
-    );
+    return <Stat {...props} label="総ページビュー" value="89,400" />;
   },
 });
 
@@ -41,11 +36,7 @@ export const WithDescription = meta.story({
   }),
   render(props) {
     return (
-      <Stat {...props}>
-        <Stat.Label>総ページビュー</Stat.Label>
-        <Stat.Value>89,400</Stat.Value>
-        <Stat.Description>先月と比較した累計です</Stat.Description>
-      </Stat>
+      <Stat {...props} label="総ページビュー" value="89,400" description="先月と比較した累計です" />
     );
   },
 });
@@ -58,30 +49,30 @@ export const WithChange = meta.story({
   render(props) {
     return (
       <div className="flex flex-wrap gap-6">
-        <Stat {...props}>
-          <Stat.Label>新規ユーザー</Stat.Label>
-          <Stat.Value>
-            4,200
-            <Stat.Change direction="up">400 (22%)</Stat.Change>
-          </Stat.Value>
-          <Stat.Description>先月から増加しました</Stat.Description>
-        </Stat>
-        <Stat {...props}>
-          <Stat.Label>新規登録</Stat.Label>
-          <Stat.Value>
-            1,200
-            <Stat.Change direction="down">90 (14%)</Stat.Change>
-          </Stat.Value>
-          <Stat.Description>先月から減少しました</Stat.Description>
-        </Stat>
-        <Stat {...props}>
-          <Stat.Label>継続率</Stat.Label>
-          <Stat.Value>
-            98.2%
-            <Stat.Change direction="flat">0 (0%)</Stat.Change>
-          </Stat.Value>
-          <Stat.Description>先月から変化ありません</Stat.Description>
-        </Stat>
+        <Stat
+          {...props}
+          label="新規ユーザー"
+          value="4,200"
+          change="400 (22%)"
+          slotProps={{ change: { direction: "up" } }}
+          description="先月から増加しました"
+        />
+        <Stat
+          {...props}
+          label="新規登録"
+          value="1,200"
+          change="90 (14%)"
+          slotProps={{ change: { direction: "down" } }}
+          description="先月から減少しました"
+        />
+        <Stat
+          {...props}
+          label="継続率"
+          value="98.2%"
+          change="0 (0%)"
+          slotProps={{ change: { direction: "flat" } }}
+          description="先月から変化ありません"
+        />
       </div>
     );
   },
@@ -96,11 +87,13 @@ export const Sizes = meta.story({
         {SIZES.map((size) => (
           <div key={size} className="flex flex-col gap-2">
             <span>{size}</span>
-            <Stat {...props} size={size}>
-              <Stat.Label>総ページビュー</Stat.Label>
-              <Stat.Value>89,400</Stat.Value>
-              <Stat.Description>先月より21%増加しました</Stat.Description>
-            </Stat>
+            <Stat
+              {...props}
+              size={size}
+              label="総ページビュー"
+              value="89,400"
+              description="先月より21%増加しました"
+            />
           </div>
         ))}
       </div>
@@ -116,35 +109,31 @@ export const Dashboard = meta.story({
   render(props) {
     return (
       <div className="grid grid-cols-2 gap-6">
-        <Stat {...props}>
-          <Stat.Label>総ページビュー</Stat.Label>
-          <Stat.Value>
-            89,400
-            <Stat.Change direction="up">12 (8%)</Stat.Change>
-          </Stat.Value>
-          <Stat.Description>先月から増加しました</Stat.Description>
-        </Stat>
-        <Stat {...props}>
-          <Stat.Label>直帰率</Stat.Label>
-          <Stat.Value>
-            32.1%
-            <Stat.Change direction="down">1.4 (4%)</Stat.Change>
-          </Stat.Value>
-          <Stat.Description>先月から改善しました</Stat.Description>
-        </Stat>
-        <Stat {...props}>
-          <Stat.Label>平均滞在時間</Stat.Label>
-          <Stat.Value>2:48</Stat.Value>
-          <Stat.Description>先月と変わりありません</Stat.Description>
-        </Stat>
-        <Stat {...props}>
-          <Stat.Label>新規ユーザー</Stat.Label>
-          <Stat.Value>
-            4,200
-            <Stat.Change direction="flat">0 (0%)</Stat.Change>
-          </Stat.Value>
-          <Stat.Description>先月から変化ありません</Stat.Description>
-        </Stat>
+        <Stat
+          {...props}
+          label="総ページビュー"
+          value="89,400"
+          change="12 (8%)"
+          slotProps={{ change: { direction: "up" } }}
+          description="先月から増加しました"
+        />
+        <Stat
+          {...props}
+          label="直帰率"
+          value="32.1%"
+          change="1.4 (4%)"
+          slotProps={{ change: { direction: "down" } }}
+          description="先月から改善しました"
+        />
+        <Stat {...props} label="平均滞在時間" value="2:48" description="先月と変わりありません" />
+        <Stat
+          {...props}
+          label="新規ユーザー"
+          value="4,200"
+          change="0 (0%)"
+          slotProps={{ change: { direction: "flat" } }}
+          description="先月から変化ありません"
+        />
       </div>
     );
   },

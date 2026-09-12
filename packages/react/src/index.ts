@@ -626,6 +626,8 @@ export {
   type StatSize,
   type StatProps,
   type StatState,
+  type StatDirection,
+  type StatSlotProps,
   Stat,
   useStatAPI,
   StatContext,

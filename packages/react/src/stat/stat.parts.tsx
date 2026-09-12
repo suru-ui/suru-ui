@@ -250,7 +250,7 @@ export type StatValueProps = StatValueProps.Render &
 /**
  * 統計の値を表すコンポーネントです。
  *
- * `dd` 要素を描画します。変化の方向を示すときは、内側に {@link StatChange} を配置します。
+ * `dd` 要素を描画します。
  */
 export const StatValue: IComponent<StatValueProps> = function SuiStatValue(props) {
   return useRender({
@@ -316,7 +316,7 @@ export namespace StatChangeProps {
   export type BaseUI = {};
 
   export type HTML = Omit<
-    BaseUIComponentProps<"span", never, never>,
+    BaseUIComponentProps<"dd", never, never>,
     keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
@@ -332,19 +332,19 @@ export type StatChangeProps = StatChangeProps.Render &
 /**
  * 統計値の変化を示すインジケーターコンポーネントです。
  *
- * {@link StatValue} の内側に配置して、前回からの増減を矢印と色で示します。
+ * `dd` 要素を描画し、前回からの増減を矢印と色で示します。
  */
 export const StatChange: IComponent<StatChangeProps> = function SuiStatChange(props) {
-  const { direction = "up", ...otherSpanProps } = props;
+  const { direction = "up", ...otherDdProps } = props;
 
   return useRender({
     props: [
-      otherSpanProps,
+      otherDdProps,
       {
         className: cn("sui_stat_change", `sui_stat_change-direction_${direction}`),
       },
     ],
-    defaultTagName: "span",
+    defaultTagName: "dd",
   });
 };
 

@@ -163,6 +163,7 @@
   .sui_stat_change {
     display: inline-flex;
     align-items: center;
+    margin: 0px;
   }
 }
 
