@@ -1541,8 +1541,8 @@ export const MenuLinkItem: IComponent<MenuLinkItemProps> = function SuiMenuLinkI
           pending: undefined,
           squared: undefined,
           variant: getItemVariant(state, variant),
-          outlined: undefined,
           disabled,
+          outlined: undefined,
           nativeButton,
           focusableWhenDisabled,
         };
@@ -2478,35 +2478,35 @@ export const MenuCheckboxItem: IComponent<MenuCheckboxItemProps> = function SuiM
 ) {
   const ctx = useMenuContext();
   const {
-    defaultChecked,
     id,
-    onClick,
     color = "grey",
     label,
     style,
     radius = ctx.radius,
     render,
     checked,
+    onClick,
     variant = ctx.variant,
     disabled,
     className,
     closeOnClick,
     nativeButton = false,
+    defaultChecked,
     onCheckedChange,
     focusableWhenDisabled,
     ...otherProps
   } = props;
   const baseuiProps: Required<MenuCheckboxItemProps.BaseUI> = {
+    id,
     label,
     checked,
+    onClick,
     disabled,
     closeOnClick,
     nativeButton,
+    defaultChecked,
     onCheckedChange,
     focusableWhenDisabled,
-    defaultChecked,
-    id,
-    onClick,
   };
 
   return (
