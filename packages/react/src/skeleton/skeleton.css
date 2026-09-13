@@ -7,9 +7,7 @@
   display: block;
   pointer-events: none;
   user-select: none;
-  animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
-  animation-direction: alternate;
 }
 
 /* 変数 */
@@ -18,29 +16,35 @@
   --sui_skeleton-height: ;
   --sui_skeleton-background_color: ;
   --sui_skeleton-border_radius: ;
-  --sui_skeleton-opacity-max: ;
   --sui_skeleton-opacity-min: ;
-  --sui_skeleton-animation_duration: ;
+  --sui_skeleton-end_color: ;
+  --sui_skeleton-start_color: ;
 }
 
 /* 可変 */
 :scope {
+  position: var(--_sui_skeleton-position, unset);
+  inset: var(--_sui_skeleton-inset, unset);
+  z-index: var(--_sui_skeleton-z_index, auto);
   width: var(--sui_skeleton-width);
   height: var(--sui_skeleton-height);
-  background-color: var(--sui_skeleton-background_color);
+  background-color: var(--_sui_skeleton-background_color, var(--sui_skeleton-background_color));
+  background-image: var(--_sui_skeleton-background_image, none);
+  background-size: var(--_sui_skeleton-background_size, auto);
   border-radius: var(--sui_skeleton-border_radius);
   animation-name: var(--_sui_skeleton-animation_name, none);
-  animation-duration: var(--sui_skeleton-animation_duration);
+  animation-duration: var(--_sui_skeleton-animation_duration, 0s);
+  animation-timing-function: var(--_sui_skeleton-animation_timing_function, linear);
 }
 
 /* 代入 */
 :scope {
   --sui_skeleton-width: 100%;
-  --sui_skeleton-height: --sui-space(4);
+  --sui_skeleton-height: 100%;
   --sui_skeleton-background_color: var(--sui-grey-liquid-canvas-subtle);
-  --sui_skeleton-opacity-max: 1;
   --sui_skeleton-opacity-min: 0.5;
-  --sui_skeleton-animation_duration: 1.5s;
+  --sui_skeleton-end_color: var(--sui-grey-liquid-canvas-strong);
+  --sui_skeleton-start_color: var(--sui-grey-liquid-canvas-normal);
 
   &.sui_skeleton-radius_none {
     --sui_skeleton-border_radius: 0px;
@@ -57,16 +61,35 @@
   &.sui_skeleton-radius_lg {
     --sui_skeleton-border_radius: var(--sui-radius-lg);
   }
-
-  &.sui_skeleton-radius_full {
-    --sui_skeleton-border_radius: calc(var(--sui_skeleton-height) / 2);
-  }
 }
 
 /* 変異 */
 :scope {
-  &.sui_skeleton-animated {
+  &.sui_skeleton-animation_pulse {
     --_sui_skeleton-animation_name: sui_skeleton-pulse;
+    --_sui_skeleton-animation_duration: 1.2s;
+    --_sui_skeleton-animation_timing_function: cubic-bezier(0.4, 0, 0.6, 1);
+  }
+
+  &.sui_skeleton-animation_shine {
+    --_sui_skeleton-background_color: transparent;
+    --_sui_skeleton-background_image: linear-gradient(
+                                        270deg,
+                                        var(--sui_skeleton-start_color),
+                                        var(--sui_skeleton-end_color),
+                                        var(--sui_skeleton-end_color),
+                                        var(--sui_skeleton-start_color)
+                                      );
+    --_sui_skeleton-background_size: 400% 100%;
+    --_sui_skeleton-animation_name: sui_skeleton-shine;
+    --_sui_skeleton-animation_duration: 5s;
+    --_sui_skeleton-animation_timing_function: ease-in-out;
+  }
+
+  &.sui_skeleton-overlay {
+    --_sui_skeleton-position: absolute;
+    --_sui_skeleton-inset: 0px;
+    --_sui_skeleton-z_index: calc(infinity);
   }
 }
 
@@ -75,12 +98,18 @@
 
 @layer sui.component {
 @keyframes sui_skeleton-pulse {
+  50% {
+    opacity: var(--sui_skeleton-opacity-min);
+  }
+}
+
+@keyframes sui_skeleton-shine {
   from {
-    opacity: var(--sui_skeleton-opacity-max);
+    background-position: 200% 0;
   }
 
   to {
-    opacity: var(--sui_skeleton-opacity-min);
+    background-position: -200% 0;
   }
 }
 }

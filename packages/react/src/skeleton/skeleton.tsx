@@ -3,6 +3,7 @@ import {
   type SkeletonRootProps,
   type SkeletonRootState,
   type SkeletonRootRadius,
+  type SkeletonRootAnimation,
   SkeletonRoot,
 } from "./skeleton.parts.jsx";
 
@@ -10,6 +11,8 @@ import {
 // -----
 
 export type SkeletonRadius = SkeletonRootRadius;
+
+export type SkeletonAnimation = SkeletonRootAnimation;
 
 /**
  * {@link Skeleton} が持つ状態です。
@@ -63,7 +66,7 @@ export { type SkeletonAPI as API, useSkeletonAPI as useAPI };
 /**
  * コンテンツの読み込み中を表すプレースホルダーコンポーネントです。
  *
- * 大きさは `width` と `height` プロパティーや CSS で指定します。テキストの行を模す場合は既定の高さが使われます。
+ * 大きさは `className` や `style` などで指定します。
  */
 export const Skeleton: IComponent<SkeletonProps> = function SuiSkeleton(props) {
   const api = useSkeletonAPI(props);
@@ -75,6 +78,8 @@ export namespace Skeleton {
   export type State = SkeletonState;
 
   export type Props = SkeletonProps;
+
+  export type Animation = SkeletonAnimation;
 
   export type Radius = SkeletonRadius;
 }

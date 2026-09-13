@@ -617,6 +617,7 @@ export {
   type SkeletonProps,
   type SkeletonState,
   type SkeletonRadius,
+  type SkeletonAnimation,
   Skeleton,
   useSkeletonAPI,
 } from "./skeleton/index.js";

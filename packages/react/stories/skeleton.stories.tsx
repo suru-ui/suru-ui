@@ -3,7 +3,9 @@ import * as React from "react";
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Skeleton } from "../src/skeleton/index.js";
 
-const RADII: readonly Skeleton.Radius[] = ["none", "sm", "md", "lg", "full"];
+const RADII: readonly Skeleton.Radius[] = ["none", "sm", "md", "lg"];
+
+const ANIMATIONS: readonly Skeleton.Animation[] = ["pulse", "shine", "none"];
 
 const meta = preview.meta({
   title: "Skeleton",
@@ -13,7 +15,11 @@ const meta = preview.meta({
 export default meta;
 
 const ctrl = controls(Skeleton, {
-  animated: {
+  animation: {
+    control: "select",
+    options: ANIMATIONS,
+  },
+  overlay: {
     control: "boolean",
   },
   radius: {
@@ -25,22 +31,22 @@ const ctrl = controls(Skeleton, {
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
-    animated: true,
+    animation: "pulse",
     radius: "md",
   }),
   render(props) {
     return (
       <div className="flex w-[300px] flex-col gap-4">
-        <Skeleton {...props} style={{ height: 48 }} />
-        <Skeleton {...props} />
-        <Skeleton {...props} />
-        <Skeleton {...props} style={{ width: "60%" }} />
+        <Skeleton {...props} className="h-12" />
+        <Skeleton {...props} className="h-4" />
+        <Skeleton {...props} className="h-4" />
+        <Skeleton {...props} className="h-4 w-[60%]" />
       </div>
     );
   },
 });
 
-export const Animated = meta.story({
+export const Animation = meta.story({
   name: "アニメーション",
   ...ctrl({
     radius: "md",
@@ -48,14 +54,12 @@ export const Animated = meta.story({
   render(props) {
     return (
       <div className="flex w-[300px] flex-col gap-4">
-        <div className="flex flex-col gap-2">
-          <span>animated</span>
-          <Skeleton {...props} animated />
-        </div>
-        <div className="flex flex-col gap-2">
-          <span>static</span>
-          <Skeleton {...props} animated={false} />
-        </div>
+        {ANIMATIONS.map((animation) => (
+          <div key={animation} className="flex items-center gap-4">
+            <span className="w-16">{animation}</span>
+            <Skeleton {...props} animation={animation} className="h-4" />
+          </div>
+        ))}
       </div>
     );
   },
@@ -64,7 +68,7 @@ export const Animated = meta.story({
 export const Radius = meta.story({
   name: "角丸",
   ...ctrl({
-    animated: true,
+    animation: "pulse",
   }),
   render(props) {
     return (
@@ -72,7 +76,7 @@ export const Radius = meta.story({
         {RADII.map((radius) => (
           <div key={radius} className="flex items-center gap-4">
             <span className="w-12">{radius}</span>
-            <Skeleton {...props} style={{ height: 24 }} radius={radius} />
+            <Skeleton {...props} radius={radius} className="h-6" />
           </div>
         ))}
       </div>
@@ -83,17 +87,17 @@ export const Radius = meta.story({
 export const Article = meta.story({
   name: "記事",
   ...ctrl({
-    animated: true,
+    animation: "pulse",
     radius: "md",
   }),
   render(props) {
     return (
       <div className="flex w-[300px] flex-col gap-4">
-        <Skeleton {...props} style={{ height: 24, width: "40%" }} />
+        <Skeleton {...props} className="h-6 w-[40%]" />
         <div className="flex flex-col gap-2">
-          <Skeleton {...props} />
-          <Skeleton {...props} />
-          <Skeleton {...props} style={{ width: "80%" }} />
+          <Skeleton {...props} className="h-4" />
+          <Skeleton {...props} className="h-4" />
+          <Skeleton {...props} className="h-4 w-[80%]" />
         </div>
       </div>
     );
@@ -103,17 +107,33 @@ export const Article = meta.story({
 export const ProfileCard = meta.story({
   name: "プロフィールカード",
   ...ctrl({
-    animated: true,
+    animation: "pulse",
     radius: "md",
   }),
   render(props) {
     return (
       <div className="flex w-[320px] items-center gap-4">
-        <Skeleton {...props} style={{ width: 48, height: 48 }} radius="full" />
+        <Skeleton {...props} radius="lg" className="h-12 w-12 shrink-0" />
         <div className="flex min-w-0 flex-1 flex-col gap-2">
-          <Skeleton {...props} style={{ height: 16 }} />
-          <Skeleton {...props} style={{ height: 12, width: "70%" }} />
+          <Skeleton {...props} className="h-4 w-full" />
+          <Skeleton {...props} className="h-3 w-[70%]" />
         </div>
+      </div>
+    );
+  },
+});
+
+export const Overlay = meta.story({
+  name: "オーバーレイ",
+  ...ctrl({
+    animation: "pulse",
+    radius: "md",
+  }),
+  render(props) {
+    return (
+      <div className="relative h-32 w-[300px] p-4">
+        読み込み済みのコンテンツ
+        <Skeleton {...props} overlay />
       </div>
     );
   },

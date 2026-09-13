@@ -17,9 +17,17 @@ import "./skeleton.css";
  * - `"sm"`: 小さめ
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
- * - `"full"`: 丸形
  */
-export type SkeletonRootRadius = "none" | Size | "full";
+export type SkeletonRootRadius = "none" | Size;
+
+/**
+ * スケルトンのアニメーションです。
+ *
+ * - `"pulse"`: 明滅するアニメーション
+ * - `"shine"`: 光が流れるアニメーション
+ * - `"none"`: アニメーションなし
+ */
+export type SkeletonRootAnimation = "pulse" | "shine" | "none";
 
 /**
  * {@link SkeletonRoot} が持つ状態です。
@@ -31,11 +39,20 @@ export namespace SkeletonRootProps {
 
   export type SuruUI = {
     /**
-     * 波打つようなアニメーションを表示するかどうかを指定します。
+     * スケルトンのアニメーションを指定します。
      *
-     * @default true
+     * @default "pulse"
      */
-    animated?: boolean | undefined;
+    animation?: SkeletonRootAnimation | undefined;
+
+    /**
+     * コンテンツに重ねて表示するかどうかを指定します。
+     *
+     * `true` の場合は `position: absolute`、`inset: 0`、最も大きい `z-index` で表示されます。
+     *
+     * @default false
+     */
+    overlay?: boolean | undefined;
 
     /**
      * スケルトンの角丸を指定します。
@@ -67,7 +84,8 @@ export type SkeletonRootProps = SkeletonRootProps.Render &
 export const SkeletonRoot: IComponent<SkeletonRootProps> = function SuiSkeletonRoot(props) {
   const {
     radius = "md",
-    animated = true,
+    overlay = false,
+    animation = "pulse",
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherSpanProps
@@ -80,7 +98,8 @@ export const SkeletonRoot: IComponent<SkeletonRootProps> = function SuiSkeletonR
         className: cn(
           "sui_skeleton",
           `sui_skeleton-radius_${radius}`,
-          animated && "sui_skeleton-animated",
+          `sui_skeleton-animation_${animation}`,
+          overlay && "sui_skeleton-overlay",
         ),
         "data-scope": dataScope,
       },
@@ -105,6 +124,8 @@ export namespace Root {
 
     export type HTML = SkeletonRootProps.HTML;
   }
+
+  export type Animation = SkeletonRootAnimation;
 
   export type Radius = SkeletonRootRadius;
 }
