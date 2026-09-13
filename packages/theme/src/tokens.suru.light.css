@@ -577,6 +577,66 @@
   --sui-text-oln-lg-b-letter_spacing: 0.02em;
   --sui-text-oln-lg-b-line_height: 1.1;
 
+  --sui-text-oln-xl-n-font_size: 22px;
+  --sui-text-oln-xl-n-font_weight: 400;
+  --sui-text-oln-xl-n-letter_spacing: 0.02em;
+  --sui-text-oln-xl-n-line_height: 1.1;
+
+  --sui-text-oln-xl-m-font_size: 22px;
+  --sui-text-oln-xl-m-font_weight: 500;
+  --sui-text-oln-xl-m-letter_spacing: 0.02em;
+  --sui-text-oln-xl-m-line_height: 1.1;
+
+  --sui-text-oln-xl-b-font_size: 22px;
+  --sui-text-oln-xl-b-font_weight: 700;
+  --sui-text-oln-xl-b-letter_spacing: 0.02em;
+  --sui-text-oln-xl-b-line_height: 1.1;
+
+  --sui-text-oln-2xl-n-font_size: 28px;
+  --sui-text-oln-2xl-n-font_weight: 400;
+  --sui-text-oln-2xl-n-letter_spacing: 0.02em;
+  --sui-text-oln-2xl-n-line_height: 1.1;
+
+  --sui-text-oln-2xl-m-font_size: 28px;
+  --sui-text-oln-2xl-m-font_weight: 500;
+  --sui-text-oln-2xl-m-letter_spacing: 0.02em;
+  --sui-text-oln-2xl-m-line_height: 1.1;
+
+  --sui-text-oln-2xl-b-font_size: 28px;
+  --sui-text-oln-2xl-b-font_weight: 700;
+  --sui-text-oln-2xl-b-letter_spacing: 0.02em;
+  --sui-text-oln-2xl-b-line_height: 1.1;
+
+  --sui-text-oln-3xl-n-font_size: 34px;
+  --sui-text-oln-3xl-n-font_weight: 400;
+  --sui-text-oln-3xl-n-letter_spacing: 0.02em;
+  --sui-text-oln-3xl-n-line_height: 1.1;
+
+  --sui-text-oln-3xl-m-font_size: 34px;
+  --sui-text-oln-3xl-m-font_weight: 500;
+  --sui-text-oln-3xl-m-letter_spacing: 0.02em;
+  --sui-text-oln-3xl-m-line_height: 1.1;
+
+  --sui-text-oln-3xl-b-font_size: 34px;
+  --sui-text-oln-3xl-b-font_weight: 700;
+  --sui-text-oln-3xl-b-letter_spacing: 0.02em;
+  --sui-text-oln-3xl-b-line_height: 1.1;
+
+  --sui-text-oln-4xl-n-font_size: 42px;
+  --sui-text-oln-4xl-n-font_weight: 400;
+  --sui-text-oln-4xl-n-letter_spacing: 0.02em;
+  --sui-text-oln-4xl-n-line_height: 1.1;
+
+  --sui-text-oln-4xl-m-font_size: 42px;
+  --sui-text-oln-4xl-m-font_weight: 500;
+  --sui-text-oln-4xl-m-letter_spacing: 0.02em;
+  --sui-text-oln-4xl-m-line_height: 1.1;
+
+  --sui-text-oln-4xl-b-font_size: 42px;
+  --sui-text-oln-4xl-b-font_weight: 700;
+  --sui-text-oln-4xl-b-letter_spacing: 0.02em;
+  --sui-text-oln-4xl-b-line_height: 1.1;
+
   --sui-text-dns-sm-n-font_size: 12px;
   --sui-text-dns-sm-n-font_weight: 400;
   --sui-text-dns-sm-n-letter_spacing: 0em;
@@ -606,6 +666,46 @@
   --sui-text-dns-lg-b-font_weight: 700;
   --sui-text-dns-lg-b-letter_spacing: 0em;
   --sui-text-dns-lg-b-line_height: 1.7;
+
+  --sui-text-dns-xl-n-font_size: 22px;
+  --sui-text-dns-xl-n-font_weight: 400;
+  --sui-text-dns-xl-n-letter_spacing: 0em;
+  --sui-text-dns-xl-n-line_height: 1.2;
+
+  --sui-text-dns-xl-b-font_size: 22px;
+  --sui-text-dns-xl-b-font_weight: 700;
+  --sui-text-dns-xl-b-letter_spacing: 0em;
+  --sui-text-dns-xl-b-line_height: 1.2;
+
+  --sui-text-dns-2xl-n-font_size: 28px;
+  --sui-text-dns-2xl-n-font_weight: 400;
+  --sui-text-dns-2xl-n-letter_spacing: 0em;
+  --sui-text-dns-2xl-n-line_height: 1.2;
+
+  --sui-text-dns-2xl-b-font_size: 28px;
+  --sui-text-dns-2xl-b-font_weight: 700;
+  --sui-text-dns-2xl-b-letter_spacing: 0em;
+  --sui-text-dns-2xl-b-line_height: 1.2;
+
+  --sui-text-dns-3xl-n-font_size: 34px;
+  --sui-text-dns-3xl-n-font_weight: 400;
+  --sui-text-dns-3xl-n-letter_spacing: 0em;
+  --sui-text-dns-3xl-n-line_height: 1.2;
+
+  --sui-text-dns-3xl-b-font_size: 34px;
+  --sui-text-dns-3xl-b-font_weight: 700;
+  --sui-text-dns-3xl-b-letter_spacing: 0em;
+  --sui-text-dns-3xl-b-line_height: 1.2;
+
+  --sui-text-dns-4xl-n-font_size: 42px;
+  --sui-text-dns-4xl-n-font_weight: 400;
+  --sui-text-dns-4xl-n-letter_spacing: 0em;
+  --sui-text-dns-4xl-n-line_height: 1.2;
+
+  --sui-text-dns-4xl-b-font_size: 42px;
+  --sui-text-dns-4xl-b-font_weight: 700;
+  --sui-text-dns-4xl-b-letter_spacing: 0em;
+  --sui-text-dns-4xl-b-line_height: 1.2;
 
   --sui-text-std-sm-n-font_size: 12px;
   --sui-text-std-sm-n-font_weight: 400;
@@ -651,4 +751,64 @@
   --sui-text-std-lg-b-font_weight: 700;
   --sui-text-std-lg-b-letter_spacing: 0.02em;
   --sui-text-std-lg-b-line_height: 1.7;
+
+  --sui-text-std-xl-n-font_size: 22px;
+  --sui-text-std-xl-n-font_weight: 400;
+  --sui-text-std-xl-n-letter_spacing: 0.02em;
+  --sui-text-std-xl-n-line_height: 1.7;
+
+  --sui-text-std-xl-m-font_size: 22px;
+  --sui-text-std-xl-m-font_weight: 500;
+  --sui-text-std-xl-m-letter_spacing: 0.02em;
+  --sui-text-std-xl-m-line_height: 1.7;
+
+  --sui-text-std-xl-b-font_size: 22px;
+  --sui-text-std-xl-b-font_weight: 700;
+  --sui-text-std-xl-b-letter_spacing: 0.02em;
+  --sui-text-std-xl-b-line_height: 1.7;
+
+  --sui-text-std-2xl-n-font_size: 28px;
+  --sui-text-std-2xl-n-font_weight: 400;
+  --sui-text-std-2xl-n-letter_spacing: 0.02em;
+  --sui-text-std-2xl-n-line_height: 1.7;
+
+  --sui-text-std-2xl-m-font_size: 28px;
+  --sui-text-std-2xl-m-font_weight: 500;
+  --sui-text-std-2xl-m-letter_spacing: 0.02em;
+  --sui-text-std-2xl-m-line_height: 1.7;
+
+  --sui-text-std-2xl-b-font_size: 28px;
+  --sui-text-std-2xl-b-font_weight: 700;
+  --sui-text-std-2xl-b-letter_spacing: 0.02em;
+  --sui-text-std-2xl-b-line_height: 1.7;
+
+  --sui-text-std-3xl-n-font_size: 34px;
+  --sui-text-std-3xl-n-font_weight: 400;
+  --sui-text-std-3xl-n-letter_spacing: 0.02em;
+  --sui-text-std-3xl-n-line_height: 1.7;
+
+  --sui-text-std-3xl-m-font_size: 34px;
+  --sui-text-std-3xl-m-font_weight: 500;
+  --sui-text-std-3xl-m-letter_spacing: 0.02em;
+  --sui-text-std-3xl-m-line_height: 1.7;
+
+  --sui-text-std-3xl-b-font_size: 34px;
+  --sui-text-std-3xl-b-font_weight: 700;
+  --sui-text-std-3xl-b-letter_spacing: 0.02em;
+  --sui-text-std-3xl-b-line_height: 1.7;
+
+  --sui-text-std-4xl-n-font_size: 42px;
+  --sui-text-std-4xl-n-font_weight: 400;
+  --sui-text-std-4xl-n-letter_spacing: 0.02em;
+  --sui-text-std-4xl-n-line_height: 1.7;
+
+  --sui-text-std-4xl-m-font_size: 42px;
+  --sui-text-std-4xl-m-font_weight: 500;
+  --sui-text-std-4xl-m-letter_spacing: 0.02em;
+  --sui-text-std-4xl-m-line_height: 1.7;
+
+  --sui-text-std-4xl-b-font_size: 42px;
+  --sui-text-std-4xl-b-font_weight: 700;
+  --sui-text-std-4xl-b-letter_spacing: 0.02em;
+  --sui-text-std-4xl-b-line_height: 1.7;
 }

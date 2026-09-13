@@ -282,8 +282,72 @@ export namespace Value {
   }
 }
 
-// Change
-// ------
+// ValueUnit
+// ---------
+
+/**
+ * {@link StatValueUnit} が持つ状態です。
+ */
+export type StatValueUnitState = {};
+
+export namespace StatValueUnitProps {
+  export type Render = RenderProps<StatValueUnitState>;
+
+  export type SuruUI = {};
+
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"span", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
+}
+
+/**
+ * {@link StatValueUnit} に渡す props です。
+ */
+export type StatValueUnitProps = StatValueUnitProps.Render &
+  StatValueUnitProps.SuruUI &
+  StatValueUnitProps.BaseUI &
+  StatValueUnitProps.HTML;
+
+/**
+ * 統計の値の単位を表すコンポーネントです。
+ *
+ * `span` 要素を描画し、{@link StatValue} の子として使用します。
+ */
+export const StatValueUnit: IComponent<StatValueUnitProps> = function SuiStatValueUnit(props) {
+  return useRender({
+    props: [
+      props,
+      {
+        className: "sui_stat_value_unit",
+      },
+    ],
+    defaultTagName: "span",
+  });
+};
+
+export { StatValueUnit as ValueUnit };
+
+export namespace ValueUnit {
+  export type State = StatValueUnitState;
+
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type Render = StatValueUnitProps.Render;
+
+    export type SuruUI = StatValueUnitProps.SuruUI;
+
+    export type BaseUI = StatValueUnitProps.BaseUI;
+
+    export type HTML = StatValueUnitProps.HTML;
+  }
+}
+
+// Trend
+// -----
 
 /**
  * 統計の変化の方向です。
@@ -292,15 +356,15 @@ export namespace Value {
  * - `"down"`: 減少を示します
  * - `"flat"`: 変化なしを示します
  */
-export type StatChangeDirection = "up" | "down" | "flat";
+export type StatTrendDirection = "up" | "down" | "flat";
 
 /**
- * {@link StatChange} が持つ状態です。
+ * {@link StatTrend} が持つ状態です。
  */
-export type StatChangeState = {};
+export type StatTrendState = {};
 
-export namespace StatChangeProps {
-  export type Render = RenderProps<StatChangeState>;
+export namespace StatTrendProps {
+  export type Render = RenderProps<StatTrendState>;
 
   export type SuruUI = {
     /**
@@ -310,7 +374,7 @@ export namespace StatChangeProps {
      *
      * @default "up"
      */
-    direction?: StatChangeDirection | undefined;
+    direction?: StatTrendDirection | undefined;
   };
 
   export type BaseUI = {};
@@ -322,50 +386,91 @@ export namespace StatChangeProps {
 }
 
 /**
- * {@link StatChange} に渡す props です。
+ * {@link StatTrend} に渡す props です。
  */
-export type StatChangeProps = StatChangeProps.Render &
-  StatChangeProps.SuruUI &
-  StatChangeProps.BaseUI &
-  StatChangeProps.HTML;
+export type StatTrendProps = StatTrendProps.Render &
+  StatTrendProps.SuruUI &
+  StatTrendProps.BaseUI &
+  StatTrendProps.HTML;
+
+function getTrendDirectionFromNumber(value: number): StatTrendDirection {
+  if (value === 0) {
+    return "flat";
+  }
+
+  return value < 0 ? "down" : "up";
+}
+
+const TREND_DIRECTION_NUMBER = /([+\-−]?)[^\d\n+\-−]*?([\d,]+(?:\.\d+)?)/;
+
+function getTrendDirectionFromString(value: string): StatTrendDirection | null {
+  const match = TREND_DIRECTION_NUMBER.exec(value.normalize("NFKC"));
+  if (match === null) {
+    return null;
+  }
+
+  const [, sign = "", digits = ""] = match;
+  const magnitude = Number(digits.replaceAll(",", ""));
+  if (!Number.isFinite(magnitude)) {
+    return null;
+  }
+
+  if (magnitude === 0) {
+    return "flat";
+  }
+
+  return sign === "-" || sign === "−" ? "down" : "up";
+}
+
+function getDefaultTrendDirection(value: React.ReactNode): StatTrendDirection {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return getTrendDirectionFromNumber(value);
+  }
+  if (typeof value === "string") {
+    return getTrendDirectionFromString(value) ?? "flat";
+  }
+
+  return "flat";
+}
 
 /**
  * 統計値の変化を示すインジケーターコンポーネントです。
  *
  * `dd` 要素を描画し、前回からの増減を矢印と色で示します。
  */
-export const StatChange: IComponent<StatChangeProps> = function SuiStatChange(props) {
-  const { direction = "up", ...otherDdProps } = props;
+export const StatTrend: IComponent<StatTrendProps> = function SuiStatTrend(props) {
+  const { children, direction = getDefaultTrendDirection(children), ...otherDdProps } = props;
 
   return useRender({
     props: [
       otherDdProps,
       {
-        className: cn("sui_stat_change", `sui_stat_change-direction_${direction}`),
+        children,
+        className: cn("sui_stat_trend", `sui_stat_trend-direction_${direction}`),
       },
     ],
     defaultTagName: "dd",
   });
 };
 
-export { StatChange as Change };
+export { StatTrend as Trend };
 
-export namespace Change {
-  export type State = StatChangeState;
+export namespace Trend {
+  export type State = StatTrendState;
 
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = StatChangeProps.Render;
+    export type Render = StatTrendProps.Render;
 
-    export type SuruUI = StatChangeProps.SuruUI;
+    export type SuruUI = StatTrendProps.SuruUI;
 
-    export type BaseUI = StatChangeProps.BaseUI;
+    export type BaseUI = StatTrendProps.BaseUI;
 
-    export type HTML = StatChangeProps.HTML;
+    export type HTML = StatTrendProps.HTML;
   }
 
-  export type Direction = StatChangeDirection;
+  export type Direction = StatTrendDirection;
 }
 
 // Description

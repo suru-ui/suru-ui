@@ -5,6 +5,9 @@ export { default as cn } from "./cn.js";
 
 export * from "./errors.js";
 
+export type * from "./get-number-formatter.js";
+export { default as getNumberFormatter } from "./get-number-formatter.js";
+
 export type * from "./types.js";
 
 /** components */
@@ -309,6 +312,14 @@ export {
   FileUploadItemContext,
   useFileUploadItemContext,
 } from "./file-upload/index.js";
+export {
+  type FormatNumberAPI,
+  type FormatNumberProps,
+  type FormatNumberState,
+  type FormatNumberValue,
+  FormatNumber,
+  useFormatNumberAPI,
+} from "./format-number/index.js";
 export {
   type FormAPI,
   type FormProps,
@@ -626,7 +637,6 @@ export {
   type StatSize,
   type StatProps,
   type StatState,
-  type StatDirection,
   type StatSlotProps,
   Stat,
   useStatAPI,

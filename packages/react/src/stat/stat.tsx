@@ -5,14 +5,14 @@ import {
   type StatRootProps,
   type StatRootState,
   type StatLabelProps,
+  type StatTrendProps,
   type StatValueProps,
-  type StatChangeProps,
-  type StatChangeDirection,
+  type StatTrendDirection,
   type StatDescriptionProps,
   StatRoot,
   StatLabel,
+  StatTrend,
   StatValue,
-  StatChange,
   StatDescription,
 } from "./stat.parts.jsx";
 
@@ -21,17 +21,10 @@ import {
 
 export type StatSize = StatRootSize;
 
-export type StatDirection = StatChangeDirection;
-
 /**
  * {@link Stat} の各パーツに渡す props です。
  */
 export type StatSlotProps = {
-  /**
-   * {@link StatChange} に渡す props です。
-   */
-  readonly change?: Omit<StatChangeProps, "children"> | undefined;
-
   /**
    * {@link StatDescription} に渡す props です。
    */
@@ -41,6 +34,11 @@ export type StatSlotProps = {
    * {@link StatLabel} に渡す props です。
    */
   readonly label?: Omit<StatLabelProps, "children"> | undefined;
+
+  /**
+   * {@link StatTrend} に渡す props です。
+   */
+  readonly trend?: Omit<StatTrendProps, "children"> | undefined;
 
   /**
    * {@link StatValue} に渡す props です。
@@ -58,11 +56,6 @@ export type StatState = StatRootState;
  */
 export type StatProps = Omit<StatRootProps, "children"> & {
   /**
-   * 値の増減を示す内容です。
-   */
-  change?: StatChangeProps["children"] | undefined;
-
-  /**
    * 統計の補足説明です。
    */
   description?: StatDescriptionProps["children"] | undefined;
@@ -78,6 +71,11 @@ export type StatProps = Omit<StatRootProps, "children"> & {
   slotProps?: StatSlotProps | undefined;
 
   /**
+   * 値の増減を示す内容です。
+   */
+  trend?: StatTrendProps["children"] | undefined;
+
+  /**
    * 統計の値です。
    */
   value?: StatValueProps["children"] | undefined;
@@ -90,13 +88,6 @@ export type StatProps = Omit<StatRootProps, "children"> & {
  * {@link Stat} を構成する各パーツの props を作成するための API です。
  */
 export interface StatAPI {
-  /**
-   * {@link StatChange} に渡す props を取得します。
-   *
-   * それを表示しないときは `null` を返します。
-   */
-  getChangeProps(): StatChangeProps | null;
-
   /**
    * {@link StatDescription} に渡す props を取得します。
    *
@@ -115,6 +106,13 @@ export interface StatAPI {
    * {@link StatRoot} に渡す props を取得します。
    */
   getRootProps(): Omit<StatRootProps, "children">;
+
+  /**
+   * {@link StatTrend} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
+   */
+  getTrendProps(): StatTrendProps | null;
 
   /**
    * {@link StatValue} に渡す props を取得します。
@@ -140,12 +138,12 @@ interface IUseStatAPI {
 export const useStatAPI: IUseStatAPI = function useSuiStatAPI(props) {
   const {
     label,
+    trend,
     value,
-    change,
     slotProps: {
       label: labelProps = {},
+      trend: trendProps = {},
       value: valueProps = {},
-      change: changeProps = {},
       description: descriptionProps = {},
     } = {},
     description,
@@ -157,18 +155,44 @@ export const useStatAPI: IUseStatAPI = function useSuiStatAPI(props) {
       return otherRootProps;
     },
     getLabelProps() {
-      return isLikelyVisibleNode(label) ? { ...labelProps, children: label } : null;
+      if (isLikelyVisibleNode(label)) {
+        return {
+          ...labelProps,
+          children: label,
+        };
+      }
+
+      return null;
+    },
+    getTrendProps() {
+      if (isLikelyVisibleNode(trend)) {
+        return {
+          ...trendProps,
+          children: trend,
+        };
+      }
+
+      return null;
     },
     getValueProps() {
-      return isLikelyVisibleNode(value) ? { ...valueProps, children: value } : null;
-    },
-    getChangeProps() {
-      return isLikelyVisibleNode(change) ? { ...changeProps, children: change } : null;
+      if (isLikelyVisibleNode(value)) {
+        return {
+          ...valueProps,
+          children: value,
+        };
+      }
+
+      return null;
     },
     getDescriptionProps() {
-      return isLikelyVisibleNode(description)
-        ? { ...descriptionProps, children: description }
-        : null;
+      if (isLikelyVisibleNode(description)) {
+        return {
+          ...descriptionProps,
+          children: description,
+        };
+      }
+
+      return null;
     },
   };
 };
@@ -185,14 +209,14 @@ export const Stat: IComponent<StatProps> = function SuiStat(props: StatProps) {
   const api = useStatAPI(props);
   const labelProps = api.getLabelProps();
   const valueProps = api.getValueProps();
-  const changeProps = api.getChangeProps();
+  const trendProps = api.getTrendProps();
   const descriptionProps = api.getDescriptionProps();
 
   return (
     <StatRoot {...api.getRootProps()}>
       {labelProps && <StatLabel {...labelProps} />}
       {valueProps && <StatValue {...valueProps} />}
-      {changeProps && <StatChange {...changeProps} />}
+      {trendProps && <StatTrend {...trendProps} />}
       {descriptionProps && <StatDescription {...descriptionProps} />}
     </StatRoot>
   );
@@ -205,7 +229,7 @@ export namespace Stat {
 
   export type SlotProps = StatSlotProps;
 
-  export type Direction = StatDirection;
+  export type Direction = StatTrendDirection;
 
   export type Size = StatSize;
 }
