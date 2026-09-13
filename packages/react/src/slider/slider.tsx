@@ -1,4 +1,5 @@
-import type { IComponent } from "../types.js";
+import isLikelyVisibleNode from "../_is-likely-visible-node.js";
+import type { Override, IComponent } from "../types.js";
 import {
   type SliderRootSize,
   type SliderRootColor,
@@ -93,12 +94,30 @@ export type SliderState = SliderRootState;
  * @template TValue 値の型です。
  */
 export type SliderProps<TValue extends number | readonly number[] = number | readonly number[]> =
-  Omit<SliderRootProps<TValue>, "children"> & {
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
-    slotProps?: SliderSlotProps | undefined;
-  };
+  Override<
+    Omit<SliderRootProps<TValue>, "children">,
+    {
+      /**
+       * スライダーの説明ラベルです。
+       *
+       * 指定すると {@link SliderLabel} を表示します。
+       */
+      label?: SliderLabelProps["children"] | undefined;
+
+      /**
+       * 現在値の表示内容です。
+       *
+       * `true` を指定すると {@link SliderValue} が数値を既定の形式で表示します。
+       * 関数を指定すると、書式化された値と生の値を引数として受け取り、表示内容を返します。
+       */
+      renderValue?: SliderValueProps["children"] | true | undefined;
+
+      /**
+       * 各パーツに個別の props を渡すためのオブジェクトです。
+       */
+      slotProps?: SliderSlotProps | undefined;
+    }
+  >;
 
 // API
 // ---
@@ -169,6 +188,7 @@ interface IUseSliderAPI {
  */
 export const useSliderAPI: IUseSliderAPI = function useSuiSliderAPI(props) {
   const {
+    label,
     slotProps: {
       label: labelProps,
       thumb: thumbProps = {},
@@ -177,6 +197,7 @@ export const useSliderAPI: IUseSliderAPI = function useSuiSliderAPI(props) {
       control: controlProps = {},
       indicator: indicatorProps = {},
     } = {},
+    renderValue,
     ...otherRootProps
   } = props;
   const current = otherRootProps.value ?? otherRootProps.defaultValue;
@@ -187,6 +208,13 @@ export const useSliderAPI: IUseSliderAPI = function useSuiSliderAPI(props) {
       return otherRootProps;
     },
     getLabelProps() {
+      if (isLikelyVisibleNode(label)) {
+        return {
+          ...labelProps,
+          children: label,
+        };
+      }
+
       if (!labelProps) {
         return null;
       }
@@ -199,6 +227,13 @@ export const useSliderAPI: IUseSliderAPI = function useSuiSliderAPI(props) {
       return trackProps;
     },
     getValueProps() {
+      if (renderValue !== undefined) {
+        return {
+          ...valueProps,
+          children: renderValue === true ? undefined : renderValue,
+        };
+      }
+
       if (!valueProps) {
         return null;
       }
@@ -231,7 +266,7 @@ export { type SliderAPI as API, useSliderAPI as useAPI };
  * スライダーを表示するコンポーネントです。
  *
  * 単一値のときはつまみを 1 つ、配列のときは値の数だけつまみを表示します。
- * つまみは矢印キーで操作でき、ラベルと現在値は `slotProps` を渡したときだけ表示します。
+ * つまみは矢印キーで操作でき、ラベルと現在値は `label` と `renderValue` を渡したときだけ表示します。
  */
 interface ISlider extends IComponent<SliderProps> {
   /**

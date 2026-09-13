@@ -27,6 +27,15 @@
 } /* @scope */
 } /* @layer */
 
+/* Root */
+/* Thumb をドラッグ中はポインターが Thumb の外側へ出てもカーソルを維持する必要があります。
+   `:root` は `@scope` の範囲に含まれないため、ページ全体に適用するこの宣言だけを @scope の外に分けています。 */
+@layer sui.component {
+:root:has(.sui_slider-dragging) {
+  cursor: grabbing;
+}
+} /* @layer */
+
 /* Value */
 @layer sui.component {
 @scope (.sui_slider) to ([data-scope]) {

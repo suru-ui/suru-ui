@@ -24,6 +24,9 @@ const ctrl = controls(Slider, {
   disabled: {
     control: "boolean",
   },
+  label: {
+    control: "text",
+  },
   outlined: {
     control: "boolean",
   },
@@ -72,8 +75,12 @@ export const Variants = meta.story({
   render(props) {
     return (
       <div className="flex w-80 flex-col gap-6">
-        <Slider {...props} variant="naked" defaultValue={25} />
-        <Slider {...props} variant="liquid" defaultValue={50} />
+        {VARIANTS.map((variant) => (
+          <div key={variant}>
+            <div>{variant}</div>
+            <Slider {...props} variant={variant} defaultValue={25} />
+          </div>
+        ))}
       </div>
     );
   },
@@ -90,8 +97,12 @@ export const Outlined = meta.story({
   render(props) {
     return (
       <div className="flex w-80 flex-col gap-6">
-        <Slider {...props} variant="naked" outlined defaultValue={25} />
-        <Slider {...props} variant="liquid" outlined defaultValue={50} />
+        {VARIANTS.map((variant) => (
+          <div key={variant}>
+            <div>{variant}</div>
+            <Slider {...props} variant={variant} outlined defaultValue={25} />
+          </div>
+        ))}
       </div>
     );
   },
@@ -110,7 +121,10 @@ export const Colors = meta.story({
     return (
       <div className="flex w-80 flex-col gap-6">
         {COLORS.map((color) => (
-          <Slider key={color} {...props} color={color} defaultValue={25} />
+          <div key={color}>
+            <div>{color}</div>
+            <Slider {...props} color={color} defaultValue={25} />
+          </div>
         ))}
       </div>
     );
@@ -131,8 +145,8 @@ export const Sizes = meta.story({
       <div className="flex w-80 flex-col gap-6">
         {SIZES.map((size) => (
           <div key={size}>
-            <Slider {...props} size={size} defaultValue={25} />
             <div>{size}</div>
+            <Slider {...props} size={size} defaultValue={25} />
           </div>
         ))}
       </div>
@@ -154,8 +168,8 @@ export const Radius = meta.story({
       <div className="flex w-80 flex-col gap-6">
         {RADII.map((radius, index) => (
           <div key={radius}>
-            <Slider {...props} radius={radius} defaultValue={(index + 1) * 25} />
             <div>{radius}</div>
+            <Slider {...props} radius={radius} defaultValue={(index + 1) * 25} />
           </div>
         ))}
       </div>
@@ -176,21 +190,13 @@ export const LabelAndValue = meta.story({
   render(props) {
     return (
       <div className="flex w-80 flex-col gap-6">
+        <Slider {...props} label="音量" renderValue defaultValue={25} />
+        <Slider {...props} label="範囲" renderValue defaultValue={[25, 75]} />
         <Slider
           {...props}
-          slotProps={{
-            label: { children: "音量" },
-            value: {},
-          }}
+          label="カスタム表示"
+          renderValue={(formatted) => `${formatted[0]} dB`}
           defaultValue={25}
-        />
-        <Slider
-          {...props}
-          slotProps={{
-            label: { children: "レンジ" },
-            value: {},
-          }}
-          defaultValue={[25, 75]}
         />
       </div>
     );
@@ -198,7 +204,7 @@ export const LabelAndValue = meta.story({
 });
 
 export const Range = meta.story({
-  name: "レンジ",
+  name: "範囲",
   ...ctrl({
     variant: "liquid",
     color: "blue",
@@ -208,7 +214,11 @@ export const Range = meta.story({
     disabled: false,
   }),
   render(props) {
-    return <Slider {...props} defaultValue={[25, 75]} />;
+    return (
+      <div className="w-80">
+        <Slider {...props} defaultValue={[25, 75]} />
+      </div>
+    );
   },
 });
 
@@ -226,47 +236,7 @@ export const Step = meta.story({
     return (
       <div className="flex w-80 flex-col gap-6">
         <Slider {...props} max={100} min={0} step={10} defaultValue={25} />
-        <Slider
-          {...props}
-          max={100}
-          min={0}
-          step={5}
-          slotProps={{
-            label: { children: "音量" },
-            value: {},
-          }}
-          defaultValue={50}
-        />
-      </div>
-    );
-  },
-});
-
-export const RangeControlled = meta.story({
-  name: "レンジの制御",
-  ...ctrl({
-    variant: "liquid",
-    color: "blue",
-    size: "md",
-    radius: "full",
-    outlined: false,
-    disabled: false,
-  }),
-  render(props) {
-    const [value, setValue] = React.useState<number[]>([25, 75]);
-
-    return (
-      <div className="w-80">
-        <Slider
-          {...props}
-          max={100}
-          min={0}
-          value={value}
-          onValueChange={(next) => setValue(next as number[])}
-        />
-        <p className="mt-2">
-          現在値: {value[0]}から{value[1]}
-        </p>
+        <Slider {...props} max={100} min={0} step={5} label="音量" renderValue defaultValue={50} />
       </div>
     );
   },
@@ -287,13 +257,25 @@ export const Vertical = meta.story({
       <div className="flex items-center justify-center gap-10">
         <Slider
           {...props}
-          slotProps={{ control: { style: { height: 160 } } }}
+          slotProps={{
+            control: {
+              style: {
+                height: 160,
+              },
+            },
+          }}
           orientation="vertical"
           defaultValue={25}
         />
         <Slider
           {...props}
-          slotProps={{ control: { style: { height: 160 } } }}
+          slotProps={{
+            control: {
+              style: {
+                height: 160,
+              },
+            },
+          }}
           orientation="vertical"
           defaultValue={[25, 75]}
         />
@@ -312,13 +294,37 @@ export const Controlled = meta.story({
     outlined: false,
     disabled: false,
   }),
-  render(props) {
+  render(props: {}) {
     const [value, setValue] = React.useState(25);
 
     return (
       <div className="w-80">
-        <Slider {...props} value={value} onValueChange={(next) => setValue(next as number)} />
+        <Slider {...props} value={value} onValueChange={setValue} />
         <p className="mt-2">現在値: {value}</p>
+      </div>
+    );
+  },
+});
+
+export const RangeControlled = meta.story({
+  name: "範囲の制御",
+  ...ctrl({
+    variant: "liquid",
+    color: "blue",
+    size: "md",
+    radius: "full",
+    outlined: false,
+    disabled: false,
+  }),
+  render(props: {}) {
+    const [value, setValue] = React.useState<readonly number[]>([25, 75]);
+
+    return (
+      <div className="w-80">
+        <Slider {...props} max={100} min={0} value={value} onValueChange={setValue} />
+        <p className="mt-2">
+          現在値: {value[0]}から{value[1]}
+        </p>
       </div>
     );
   },
