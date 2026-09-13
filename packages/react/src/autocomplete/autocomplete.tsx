@@ -510,7 +510,16 @@ export const useAutocompleteAPI: IUseAutocompleteAPI = function useSuiAutocomple
       };
     },
     getScrollAreaProps() {
-      return scrollAreaProps;
+      const {
+        // @ts-expect-error
+        "data-scope": dataScope = null,
+        ...otherScrollAreaProps
+      } = scrollAreaProps;
+
+      return {
+        ...otherScrollAreaProps,
+        "data-scope": dataScope,
+      };
     },
     getGroupedItemProps(item, index) {
       return {
