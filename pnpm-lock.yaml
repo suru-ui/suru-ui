@@ -84,6 +84,9 @@ importers:
       '@suru-ui/theme':
         specifier: workspace:*
         version: link:../theme
+      call-fn-once:
+        specifier: ^0.0.6
+        version: 0.0.6
       react-resizable-panels:
         specifier: ^4.12.3
         version: 4.12.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -3009,6 +3012,9 @@ packages:
     resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
     engines: {node: '>=6.5'}
 
+  abort-signal-utils@0.0.2:
+    resolution: {integrity: sha512-dkti+X9MEn6rSbQ9mDoO9Eco9JO2eqlrvTaiJ6T/yXT8PyfT62xnX3dtmjdyEfIxonmJtav+MqmSFd71HX4S0Q==}
+
   accepts@2.0.0:
     resolution: {integrity: sha512-5cvg6CtKwfgdmVqY1WIiXKc3Q1bkRqGLi+2W/6ao+6Y7gu/RCwRuAhGEzh5B4KlszSuTLgZYuqFqo5bImjNKng==}
     engines: {node: '>= 0.6'}
@@ -3268,6 +3274,9 @@ packages:
   call-bound@1.0.4:
     resolution: {integrity: sha512-+ys997U96po4Kx/ABpBCqhA9EuxJaQWDQg7295H4hBphv3IZg0boBKuwYpt4YXp6MZ5AmZQnU/tyMTlRpaSejg==}
     engines: {node: '>= 0.4'}
+
+  call-fn-once@0.0.6:
+    resolution: {integrity: sha512-UEHgUCzg07DyCcf/qJafSQiOktoUiO97iJ22H7zaHpT8qrTNSoU9GHJ9MhDm+5f3LdJMBUR8LJdASa3ILMG2+Q==}
 
   callsites@3.1.0:
     resolution: {integrity: sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==}
@@ -4760,6 +4769,9 @@ packages:
   mathml-tag-names@4.0.0:
     resolution: {integrity: sha512-aa6AU2Pcx0VP/XWnh8IGL0SYSgQHDT6Ucror2j2mXeFAlN3ahaNs8EZtG1YiticMkSLj3Gt6VPFfZogt7G5iFQ==}
 
+  maypromise@0.0.4:
+    resolution: {integrity: sha512-NhTqjMZsOZtLR+MHHMWxQxMapwRGYhqW82xBOXVL5529DnTHx4DFMBSezfquLkXaCHwm4sAxBYEglJ5vrdttfg==}
+
   mdast-util-definitions@6.0.0:
     resolution: {integrity: sha512-scTllyX6pnYNZH/AIp/0ePz6s4cZtARxImwoPJ7kS42n+MnVsI4XbnG6d4ibehRIldYMWM2LD7ImQblVhUejVQ==}
 
@@ -5976,6 +5988,9 @@ packages:
 
   trough@2.2.0:
     resolution: {integrity: sha512-tmMpK00BjZiUyVyvrBK7knerNgmgvcV/KLVyuma/SC+TQN167GrMRciANTz09+k3zW8L8t60jWO1GpfkZdjTaw==}
+
+  try-capture-stack-trace@0.0.3:
+    resolution: {integrity: sha512-T9bJ6zaV8g4HWz4twbWBqSWnNlb6MG6yih4A/YnuEH4FDQ/AWXeBwMe+/fBdI29OGP85YzLkG+bc6WzSrsfl4g==}
 
   ts-api-utils@2.5.0:
     resolution: {integrity: sha512-OJ/ibxhPlqrMM0UiNHJ/0CKQkoKF243/AEmplt3qpRgkW8VG7IfOS41h7V8TjITqdByHzrjcS/2si+y4lIh8NA==}
@@ -9063,6 +9078,10 @@ snapshots:
     dependencies:
       event-target-shim: 5.0.1
 
+  abort-signal-utils@0.0.2:
+    dependencies:
+      try-capture-stack-trace: 0.0.3
+
   accepts@2.0.0:
     dependencies:
       mime-types: 3.0.2
@@ -9450,6 +9469,11 @@ snapshots:
     dependencies:
       call-bind-apply-helpers: 1.0.2
       get-intrinsic: 1.3.0
+
+  call-fn-once@0.0.6:
+    dependencies:
+      abort-signal-utils: 0.0.2
+      maypromise: 0.0.4
 
   callsites@3.1.0: {}
 
@@ -10967,6 +10991,8 @@ snapshots:
   math-intrinsics@1.1.0: {}
 
   mathml-tag-names@4.0.0: {}
+
+  maypromise@0.0.4: {}
 
   mdast-util-definitions@6.0.0:
     dependencies:
@@ -12696,6 +12722,8 @@ snapshots:
   trim-lines@3.0.1: {}
 
   trough@2.2.0: {}
+
+  try-capture-stack-trace@0.0.3: {}
 
   ts-api-utils@2.5.0(typescript@6.0.3):
     dependencies:

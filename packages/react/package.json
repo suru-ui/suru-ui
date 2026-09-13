@@ -159,6 +159,10 @@
       "types": "./dist/src/fieldset/index.d.ts",
       "default": "./dist/src/fieldset/index.js"
     },
+    "./format-number": {
+      "types": "./dist/src/format-number/index.d.ts",
+      "default": "./dist/src/format-number/index.js"
+    },
     "./form": {
       "types": "./dist/src/form/index.d.ts",
       "default": "./dist/src/form/index.js"
@@ -256,6 +260,7 @@
     "@base-ui/utils": "^0.3.2",
     "@suru-ui/core": "workspace:*",
     "@suru-ui/theme": "workspace:*",
+    "call-fn-once": "^0.0.6",
     "react-resizable-panels": "^4.12.3"
   },
   "devDependencies": {

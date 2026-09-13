@@ -1,7 +1,7 @@
 import type * as React from "react";
 
 export namespace IComponent {
-  export type Return = React.ReactElement | null;
+  export type Return = React.ReactNode;
 
   export interface Attributes {
     displayName?: string | undefined;
