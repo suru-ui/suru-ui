@@ -65,21 +65,21 @@ import * as Select from "@suru-ui/react/select";
   <Select.Portal>
     <Select.Backdrop />
     <Select.Positioner>
-      <Select.Popup>
+      <Select.Content>
         <Select.ScrollUpArrow />
         <Select.Arrow />
         <Select.List>
           <Select.Group>
             <Select.GroupLabel />
             <Select.Item>
-              <Select.ItemIndicator />
               <Select.ItemText />
+              <Select.ItemIndicator />
             </Select.Item>
           </Select.Group>
           <Select.Separator />
         </Select.List>
         <Select.ScrollDownArrow />
-      </Select.Popup>
+      </Select.Content>
     </Select.Positioner>
   </Select.Portal>
 </Select.Root>
@@ -140,7 +140,7 @@ import * as Select from "@suru-ui/react/select";
       type: '"none" | "sm" | "md" | "lg" | "full"',
       default: "size",
       description:
-        '選択欄とリスト項目の角丸を指定します。"none" は角を直角にし、"full" は完全な丸形になります。',
+        '選択欄とポップアップの角丸を指定します。"none" は角を直角にし、"full" は完全な丸形になります。',
     },
     size: {
       type: '"sm" | "md" | "lg"',
@@ -184,7 +184,7 @@ Select ポップアップを開閉するボタン要素です。[Base UI が受�
 
 ポップアップをトリガーへ位置合わせする要素です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/select#api-reference) を受け入れます。
 
-### Popup
+### Content
 
 選択項目を表示するポップアップ要素です。[Base UI が受け入れるプロパティー](https://base-ui.com/react/components/select#api-reference) を受け入れます。
 

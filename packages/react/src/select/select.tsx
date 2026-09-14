@@ -1,12 +1,13 @@
 import * as React from "react";
 
-import { getItemLabel, isLabeledItem } from "../_get-item-label.js";
 import { CheckIcon, ChevronIcon } from "../_icons.jsx";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
+import mergeProps from "../_merge-props.js";
 import toReactNode from "../_to-react-node.js";
-import type { IComponent, IUseContext } from "../types.js";
+import type { Override, IComponent, IUseContext } from "../types.js";
 import {
   type SelectContext,
+  type SelectRootItem,
   type SelectRootSize,
   type SelectIconProps,
   type SelectItemProps,
@@ -17,12 +18,12 @@ import {
   type SelectArrowProps,
   type SelectGroupProps,
   type SelectLabelProps,
-  type SelectPopupProps,
   type SelectRootRadius,
   type SelectValueProps,
   type SelectPortalProps,
   type SelectRootActions,
   type SelectRootVariant,
+  type SelectContentProps,
   type SelectTriggerProps,
   type SelectBackdropProps,
   type SelectItemTextProps,
@@ -30,6 +31,7 @@ import {
   type SelectSeparatorProps,
   type SelectGroupLabelProps,
   type SelectPositionerProps,
+  type SelectRootLabeledItem,
   type SelectItemIndicatorProps,
   type SelectScrollUpArrowProps,
   type SelectScrollDownArrowProps,
@@ -42,9 +44,9 @@ import {
   SelectArrow,
   SelectGroup,
   SelectLabel,
-  SelectPopup,
   SelectValue,
   SelectPortal,
+  SelectContent,
   SelectTrigger,
   SelectBackdrop,
   SelectItemText,
@@ -55,6 +57,8 @@ import {
   SelectItemIndicator,
   SelectScrollUpArrow,
   SelectScrollDownArrow,
+  SelectListItemGroup,
+  SelectListLabeledItem,
 } from "./select.parts.jsx";
 
 // Types
@@ -72,19 +76,13 @@ export type SelectSize = SelectRootSize;
 
 export type SelectVariant = SelectRootVariant;
 
-/**
- * {@link SelectRootItemGroup}
- *
- * @template TValue 項目の値の型です。
- */
-export type SelectItemGroup<TValue = unknown> = SelectRootItemGroup<TValue>;
+export type SelectLabeledItem<TValue = any> = SelectRootLabeledItem<TValue>;
 
-/**
- * {@link SelectRootItems}
- *
- * @template TValue 項目の値の型です。
- */
-export type SelectItems<TValue = unknown> = SelectRootItems<TValue>;
+export type SelectItemGroup<TValue = any> = SelectRootItemGroup<TValue>;
+
+export type SelectItem<TValue = any> = SelectRootItem<TValue>;
+
+export type SelectItems<TValue = any> = SelectRootItems<TValue>;
 
 /**
  * {@link Select} の各パーツに渡す props です。
@@ -99,6 +97,11 @@ export type SelectSlotProps = {
    * {@link SelectBackdrop} に渡す props です。
    */
   readonly backdrop?: Omit<SelectBackdropProps, "children"> | undefined;
+
+  /**
+   * {@link SelectContent} に渡す props です。
+   */
+  readonly content?: Omit<SelectContentProps, "children"> | undefined;
 
   /**
    * {@link SelectGroup} に渡す props です。
@@ -133,17 +136,12 @@ export type SelectSlotProps = {
   /**
    * {@link SelectLabel} に渡す props です。
    */
-  readonly label?: SelectLabelProps | undefined;
+  readonly label?: Omit<SelectLabelProps, "children"> | undefined;
 
   /**
    * {@link SelectList} に渡す props です。
    */
   readonly list?: Omit<SelectListProps, "children"> | undefined;
-
-  /**
-   * {@link SelectPopup} に渡す props です。
-   */
-  readonly popup?: Omit<SelectPopupProps, "children"> | undefined;
 
   /**
    * {@link SelectPortal} に渡す props です。
@@ -168,17 +166,12 @@ export type SelectSlotProps = {
   /**
    * {@link SelectSeparator} に渡す props です。
    */
-  readonly separator?: Omit<SelectSeparatorProps, "children"> | undefined;
-
-  /**
-   * {@link SelectTrigger} に渡す props です。
-   */
-  readonly trigger?: Omit<SelectTriggerProps, "children"> | undefined;
+  readonly separator?: SelectSeparatorProps | undefined;
 
   /**
    * {@link SelectValue} に渡す props です。
    */
-  readonly value?: Omit<SelectValueProps, "children"> | undefined;
+  readonly value?: SelectValueProps | undefined;
 };
 
 /**
@@ -192,16 +185,15 @@ export type SelectState = SelectRootState;
  * @template TValue 項目の値の型です。
  * @template TMultiple 複数選択を有効にするかどうかです。
  */
-export type SelectProps<TValue = unknown, TMultiple extends boolean | undefined = false> = Omit<
-  SelectRootProps<TValue, TMultiple>,
-  "children"
-> &
-  Pick<SelectListProps<TValue>, "children"> & {
-    /**
-     * トリガーに適用するクラス名です。
-     */
-    className?: SelectTriggerProps["className"] | undefined;
-
+export type SelectProps<
+  TValue = any,
+  TMultiple extends boolean | undefined = boolean | undefined,
+> = Override<
+  Override<
+    SelectTriggerProps,
+    Override<SelectRootProps<TValue, TMultiple>, Pick<SelectListProps<TValue>, "children">>
+  >,
+  {
     /**
      * トリガーの上に表示するラベルです。
      */
@@ -218,7 +210,8 @@ export type SelectProps<TValue = unknown, TMultiple extends boolean | undefined 
      * 各パーツに個別の props を渡すためのオブジェクトです。
      */
     slotProps?: SelectSlotProps | undefined;
-  };
+  }
+>;
 
 // API
 // ---
@@ -230,7 +223,7 @@ export type SelectProps<TValue = unknown, TMultiple extends boolean | undefined 
  * @template TMultiple 複数選択を有効にするかどうかです。
  */
 export interface SelectAPI<
-  TValue = unknown,
+  TValue = any,
   TMultiple extends boolean | undefined = boolean | undefined,
 > {
   /**
@@ -244,16 +237,24 @@ export interface SelectAPI<
   getBackdropProps(): Omit<SelectBackdropProps, "children">;
 
   /**
-   * {@link SelectGroupLabel} に渡す props を取得します。
-   *
-   * @param label グループの見出しです。
+   * {@link SelectContent} に渡す props を取得します。
    */
-  getGroupLabelProps(label: React.ReactNode): SelectGroupLabelProps;
+  getContentProps(): Omit<SelectContentProps, "children">;
+
+  /**
+   * {@link SelectGroupLabel} に渡す props を取得します。
+   */
+  getGroupLabelProps(item: SelectListItemGroup): SelectGroupLabelProps | null;
 
   /**
    * {@link SelectGroup} に渡す props を取得します。
    */
-  getGroupProps(): Omit<SelectGroupProps, "children">;
+  getGroupProps(item: SelectListItemGroup): Override<
+    SelectGroupProps,
+    {
+      children: SelectListItemGroup["items"];
+    }
+  >;
 
   /**
    * {@link SelectIcon} に渡す props を取得します。
@@ -267,16 +268,13 @@ export interface SelectAPI<
 
   /**
    * {@link SelectItem} に渡す props を取得します。
-   *
-   * @param item 項目の値です。
-   * @param index 項目のインデックスです。
    */
-  getItemProps(item: TValue, index: number): Omit<SelectItemProps, "children">;
+  getItemProps(item: SelectListLabeledItem, index: number): Omit<SelectItemProps, "children">;
 
   /**
    * {@link SelectItemText} に渡す props を取得します。
    */
-  getItemTextProps(): SelectItemTextProps;
+  getItemTextProps(item: SelectListLabeledItem): SelectItemTextProps;
 
   /**
    * {@link SelectLabel} に渡す props を取得します。
@@ -287,11 +285,6 @@ export interface SelectAPI<
    * {@link SelectList} に渡す props を取得します。
    */
   getListProps(): SelectListProps<TValue>;
-
-  /**
-   * {@link SelectPopup} に渡す props を取得します。
-   */
-  getPopupProps(): Omit<SelectPopupProps, "children">;
 
   /**
    * {@link SelectPortal} に渡す props を取得します。
@@ -321,7 +314,7 @@ export interface SelectAPI<
   /**
    * {@link SelectSeparator} に渡す props を取得します。
    */
-  getSeparatorProps(): Omit<SelectSeparatorProps, "children">;
+  getSeparatorProps(index: number, items: readonly any[]): SelectSeparatorProps | null;
 
   /**
    * {@link SelectTrigger} に渡す props を取得します。
@@ -331,7 +324,7 @@ export interface SelectAPI<
   /**
    * {@link SelectValue} に渡す props を取得します。
    */
-  getValueProps(): Omit<SelectValueProps, "children">;
+  getValueProps(): SelectValueProps;
 }
 
 interface IUseSelectAPI {
@@ -343,7 +336,7 @@ interface IUseSelectAPI {
    * @param props {@link Select} の props です。
    * @returns セレクトの API です。
    */
-  <TValue = unknown, TMultiple extends boolean | undefined = false>(
+  <TValue = any, TMultiple extends boolean | undefined = boolean | undefined>(
     props: SelectProps<TValue, TMultiple>,
   ): SelectAPI<TValue, TMultiple>;
 }
@@ -351,11 +344,26 @@ interface IUseSelectAPI {
 /**
  * {@link SelectAPI} を作成するフックです。
  */
-export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI(props) {
+export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI(props: SelectProps) {
   const {
+    id,
+    form,
+    name,
+    open,
+    size,
+    items,
     label,
+    modal,
+    value,
+    radius,
+    variant,
     children,
-    className,
+    disabled,
+    inputRef,
+    multiple,
+    outlined,
+    readOnly,
+    required,
     slotProps: {
       icon: iconProps = {},
       item: itemProps = {},
@@ -363,10 +371,9 @@ export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI(props) {
       arrow: arrowProps = {},
       group: groupProps = {},
       label: labelProps = {},
-      popup: popupProps = {},
       value: valueProps = {},
       portal: portalProps = {},
-      trigger: triggerProps = {},
+      content: contentProps = {},
       backdrop: backdropProps = {},
       itemText: itemTextProps = {},
       separator: separatorProps = {},
@@ -376,17 +383,20 @@ export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI(props) {
       scrollUpArrow: scrollUpArrowProps = {},
       scrollDownArrow: scrollDownArrowProps = {},
     } = {},
+    actionsRef,
+    defaultOpen,
     placeholder = "選択してください",
-    ...otherRootProps
+    autoComplete,
+    defaultValue,
+    onOpenChange,
+    onValueChange,
+    itemToStringLabel,
+    itemToStringValue,
+    isItemEqualToValue,
+    highlightItemOnHover,
+    onOpenChangeComplete,
+    ...triggerProps
   } = props;
-  const { "aria-label": triggerAriaLabel, ...otherTriggerProps } = triggerProps;
-  const {
-    side = "bottom",
-    align = "start",
-    sideOffset = 8,
-    alignItemWithTrigger = true,
-    ...otherPositionerProps
-  } = positionerProps;
 
   return {
     getIconProps() {
@@ -397,12 +407,10 @@ export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI(props) {
         children,
       };
     },
-    getItemProps(item, index) {
-      return {
-        ...itemProps,
-        key: index,
-        value: item,
-      };
+    getItemProps(item) {
+      const { label: _, ...otherItemProps } = item;
+
+      return mergeProps([itemProps, otherItemProps]);
     },
     getListProps() {
       return {
@@ -410,27 +418,59 @@ export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI(props) {
         children,
       };
     },
-    getRootProps() {
-      return otherRootProps;
+    getRootProps(): any {
+      const rootProps: Required<Omit<SelectRootProps<any, any>, "children">> = {
+        id,
+        form,
+        name,
+        open,
+        size,
+        items,
+        modal,
+        value,
+        radius,
+        variant,
+        disabled,
+        inputRef,
+        multiple,
+        outlined,
+        readOnly,
+        required,
+        actionsRef,
+        defaultOpen,
+        autoComplete,
+        defaultValue,
+        onOpenChange,
+        onValueChange,
+        itemToStringLabel,
+        itemToStringValue,
+        isItemEqualToValue,
+        highlightItemOnHover,
+        onOpenChangeComplete,
+      };
+
+      return rootProps;
     },
     getArrowProps() {
       return arrowProps;
     },
-    getGroupProps() {
-      return groupProps;
-    },
-    getLabelProps() {
-      if (!isLikelyVisibleNode(label) && !isLikelyVisibleNode(labelProps.children)) {
-        return null;
-      }
+    getGroupProps(item) {
+      const { items, label: _, ...otherGroupProps } = item;
 
       return {
-        ...labelProps,
-        children: label ?? labelProps.children,
+        ...mergeProps([groupProps, otherGroupProps]),
+        children: items,
       };
     },
-    getPopupProps() {
-      return popupProps;
+    getLabelProps() {
+      if (isLikelyVisibleNode(label)) {
+        return {
+          ...labelProps,
+          children: label,
+        };
+      }
+
+      return null;
     },
     getValueProps() {
       return {
@@ -441,29 +481,50 @@ export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI(props) {
     getPortalProps() {
       return portalProps;
     },
+    getContentProps() {
+      return contentProps;
+    },
     getTriggerProps() {
-      return {
-        ...otherTriggerProps,
-        className,
-        "aria-label": triggerAriaLabel ?? (label === undefined ? "選択肢を選択" : undefined),
-      };
+      return triggerProps;
     },
     getBackdropProps() {
       return backdropProps;
     },
-    getItemTextProps() {
-      return itemTextProps;
-    },
-    getSeparatorProps() {
-      return separatorProps;
-    },
-    getGroupLabelProps(labelContent) {
+    getItemTextProps(item) {
+      const { label, value } = item;
+
       return {
-        ...groupLabelProps,
-        children: labelContent,
+        ...itemTextProps,
+        children: toReactNode(label, String(value)),
       };
     },
+    getSeparatorProps(index, items) {
+      if (index < items.length - 1) {
+        return null;
+      }
+
+      return separatorProps;
+    },
+    getGroupLabelProps(item) {
+      const { label } = item;
+      if (isLikelyVisibleNode(label)) {
+        return {
+          ...groupLabelProps,
+          children: label,
+        };
+      }
+
+      return null;
+    },
     getPositionerProps() {
+      const {
+        side = "bottom",
+        align = "start",
+        sideOffset = 8,
+        alignItemWithTrigger = true,
+        ...otherPositionerProps
+      } = positionerProps;
+
       return {
         ...otherPositionerProps,
         side,
@@ -481,7 +542,10 @@ export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI(props) {
       };
     },
     getScrollUpArrowProps() {
-      const { children = <ChevronIcon />, ...otherScrollUpArrowProps } = scrollUpArrowProps;
+      const {
+        children = <ChevronIcon style={{ rotate: "180deg" }} />,
+        ...otherScrollUpArrowProps
+      } = scrollUpArrowProps;
 
       return {
         ...otherScrollUpArrowProps,
@@ -509,7 +573,7 @@ interface ISelect extends IComponent<SelectProps<unknown, boolean | undefined>> 
    * @template TValue 項目の値の型です。
    * @template TMultiple 複数選択を有効にするかどうかです。
    */
-  <TValue = unknown, TMultiple extends boolean | undefined = false>(
+  <TValue = any, TMultiple extends boolean | undefined = false>(
     props: SelectProps<TValue, TMultiple>,
   ): IComponent.Return;
 
@@ -519,11 +583,10 @@ interface ISelect extends IComponent<SelectProps<unknown, boolean | undefined>> 
 /**
  * 定義済みの項目から値を選択するコンポーネントです。
  *
- * `value` と `onValueChange` を指定すると制御された選択欄になり、`defaultValue` を指定すると制御されていない選択欄になります。
  * `multiple` を指定すると複数の値を選択できます。項目が多く、入力による絞り込みが必要な場合は {@link Combobox} を使用してください。
  */
 export const Select: ISelect = /*#__PURE__*/ Object.assign(
-  function SuiSelect(props: SelectProps<unknown, boolean | undefined>) {
+  function SuiSelect(props: SelectProps) {
     const api = useSelectAPI(props);
     const labelProps = api.getLabelProps();
     const listProps = api.getListProps();
@@ -538,77 +601,40 @@ export const Select: ISelect = /*#__PURE__*/ Object.assign(
         <SelectPortal {...api.getPortalProps()}>
           <SelectBackdrop {...api.getBackdropProps()} />
           <SelectPositioner {...api.getPositionerProps()}>
-            <SelectPopup {...api.getPopupProps()}>
+            <SelectContent {...api.getContentProps()}>
               <SelectScrollUpArrow {...api.getScrollUpArrowProps()} />
               <SelectArrow {...api.getArrowProps()} />
               <SelectList {...listProps}>
                 {listProps.children ??
-                  ((item, index, items) => {
-                    if (
-                      typeof item === "object" &&
-                      item !== null &&
-                      "items" in item &&
-                      Array.isArray((item as SelectItemGroup<unknown>).items)
-                    ) {
-                      const group = item as SelectItemGroup<unknown>;
-                      const groupLabelProps =
-                        group.label === undefined ? null : api.getGroupLabelProps(group.label);
+                  function defaultListItemRenderer(item, index, items) {
+                    if ("items" in item) {
+                      const groupProps = api.getGroupProps(item);
+                      const groupLabelProps = api.getGroupLabelProps(item);
+                      const separatorProps = api.getSeparatorProps(index, items);
 
                       return (
                         <React.Fragment key={index}>
-                          <SelectGroup {...api.getGroupProps()}>
+                          <SelectGroup {...groupProps}>
                             {groupLabelProps && <SelectGroupLabel {...groupLabelProps} />}
-                            {group.items.map((groupItem, groupIndex) => {
-                              const otherItemProps = api.getItemProps(groupItem, groupIndex);
-                              const { children: textChildren, ...otherTextProps } =
-                                api.getItemTextProps();
-                              const { children: indicatorChildren, ...otherIndicatorProps } =
-                                api.getItemIndicatorProps();
-
-                              return (
-                                <SelectItem key={groupIndex} {...otherItemProps}>
-                                  <SelectItemIndicator {...otherIndicatorProps}>
-                                    {indicatorChildren}
-                                  </SelectItemIndicator>
-                                  <SelectItemText {...otherTextProps}>
-                                    {textChildren ??
-                                      (isLabeledItem(groupItem)
-                                        ? toReactNode(groupItem.label, getItemLabel(groupItem))
-                                        : getItemLabel(groupItem))}
-                                  </SelectItemText>
-                                </SelectItem>
-                              );
-                            })}
+                            {groupProps.children.map(defaultListItemRenderer)}
                           </SelectGroup>
-                          {index < items.length - 1 && (
-                            <SelectSeparator {...api.getSeparatorProps()} />
-                          )}
+                          {separatorProps && <SelectSeparator {...separatorProps} />}
                         </React.Fragment>
                       );
                     }
 
-                    const otherItemProps = api.getItemProps(item, index);
-                    const { children: textChildren, ...otherTextProps } = api.getItemTextProps();
-                    const { children: indicatorChildren, ...otherIndicatorProps } =
-                      api.getItemIndicatorProps();
-
                     return (
-                      <SelectItem key={index} {...otherItemProps}>
-                        <SelectItemIndicator {...otherIndicatorProps}>
-                          {indicatorChildren}
+                      <SelectItem {...api.getItemProps(item, index)} key={index}>
+                        <SelectItemText {...api.getItemTextProps(item)} />
+                        <SelectItemIndicator {...api.getItemIndicatorProps()}>
+                          <CheckIcon />
                         </SelectItemIndicator>
-                        <SelectItemText {...otherTextProps}>
-                          {textChildren ??
-                            (isLabeledItem(item)
-                              ? toReactNode(item.label, getItemLabel(item))
-                              : getItemLabel(item))}
-                        </SelectItemText>
                       </SelectItem>
                     );
-                  })}
+                  }}
               </SelectList>
               <SelectScrollDownArrow {...api.getScrollDownArrowProps()} />
-            </SelectPopup>
+            </SelectContent>
           </SelectPositioner>
         </SelectPortal>
       </SelectRoot>
@@ -631,10 +657,10 @@ export namespace Select {
    * @template TValue 項目の値の型です。
    * @template TMultiple 複数選択を有効にするかどうかです。
    */
-  export type Props<TValue = unknown, TMultiple extends boolean | undefined = false> = SelectProps<
-    TValue,
-    TMultiple
-  >;
+  export type Props<
+    TValue = any,
+    TMultiple extends boolean | undefined = boolean | undefined,
+  > = SelectProps<TValue, TMultiple>;
 
   export type SlotProps = SelectSlotProps;
 
@@ -646,9 +672,13 @@ export namespace Select {
 
   export type ChangeEventReason = SelectChangeEventReason;
 
-  export type ItemGroup<TValue = unknown> = SelectItemGroup<TValue>;
+  export type Item<TValue = any> = SelectItem<TValue>;
 
-  export type Items<TValue = unknown> = SelectItems<TValue>;
+  export type ItemGroup<TValue = any> = SelectItemGroup<TValue>;
+
+  export type Items<TValue = any> = SelectItems<TValue>;
+
+  export type LabeledItem<TValue = any> = SelectLabeledItem<TValue>;
 
   export type Radius = SelectRadius;
 

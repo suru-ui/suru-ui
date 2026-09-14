@@ -1,8 +1,11 @@
+import type * as React from "react";
+
 import type { IComponent } from "./types.js";
 
-export const XIcon: IComponent = function SuiXIcon() {
+export const XIcon: IComponent<React.SVGProps<SVGSVGElement>> = function SuiXIcon(props) {
   return (
     <svg
+      {...props}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       stroke="currentColor"
@@ -19,9 +22,10 @@ export const XIcon: IComponent = function SuiXIcon() {
   );
 };
 
-export const ClearIcon: IComponent = function SuiClearIcon() {
+export const ClearIcon: IComponent<React.SVGProps<SVGSVGElement>> = function SuiClearIcon(props) {
   return (
     <svg
+      {...props}
       fill="none"
       stroke="currentColor"
       viewBox="0 0 16 16"
@@ -34,9 +38,12 @@ export const ClearIcon: IComponent = function SuiClearIcon() {
   );
 };
 
-export const ChevronIcon: IComponent = function SuiChevronIcon() {
+export const ChevronIcon: IComponent<React.SVGProps<SVGSVGElement>> = function SuiChevronIcon(
+  props,
+) {
   return (
     <svg
+      {...props}
       fill="none"
       stroke="currentColor"
       viewBox="0 0 16 16"
@@ -49,39 +56,44 @@ export const ChevronIcon: IComponent = function SuiChevronIcon() {
   );
 };
 
-export const ChevronLeftIcon: IComponent = function SuiChevronLeftIcon() {
-  return (
-    <svg
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 16 16"
-      focusable="false"
-      strokeLinecap="round"
-      aria-hidden="true"
-    >
-      <path d="M10 4l-4 4 4 4" />
-    </svg>
-  );
-};
+export const ChevronLeftIcon: IComponent<React.SVGProps<SVGSVGElement>> =
+  function SuiChevronLeftIcon(props) {
+    return (
+      <svg
+        {...props}
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 16 16"
+        focusable="false"
+        strokeLinecap="round"
+        aria-hidden="true"
+      >
+        <path d="M10 4l-4 4 4 4" />
+      </svg>
+    );
+  };
 
-export const ChevronRightIcon: IComponent = function SuiChevronRightIcon() {
-  return (
-    <svg
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 16 16"
-      focusable="false"
-      strokeLinecap="round"
-      aria-hidden="true"
-    >
-      <path d="M6 4l4 4-4 4" />
-    </svg>
-  );
-};
+export const ChevronRightIcon: IComponent<React.SVGProps<SVGSVGElement>> =
+  function SuiChevronRightIcon(props) {
+    return (
+      <svg
+        {...props}
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 16 16"
+        focusable="false"
+        strokeLinecap="round"
+        aria-hidden="true"
+      >
+        <path d="M6 4l4 4-4 4" />
+      </svg>
+    );
+  };
 
-export const CheckIcon: IComponent = function SuiCheckIcon() {
+export const CheckIcon: IComponent<React.SVGProps<SVGSVGElement>> = function SuiCheckIcon(props) {
   return (
     <svg
+      {...props}
       fill="none"
       stroke="currentColor"
       viewBox="0 0 16 16"
@@ -94,9 +106,10 @@ export const CheckIcon: IComponent = function SuiCheckIcon() {
   );
 };
 
-export const PlusIcon: IComponent = function SuiPlusIcon() {
+export const PlusIcon: IComponent<React.SVGProps<SVGSVGElement>> = function SuiPlusIcon(props) {
   return (
     <svg
+      {...props}
       fill="none"
       stroke="currentColor"
       viewBox="0 0 16 16"
@@ -109,9 +122,10 @@ export const PlusIcon: IComponent = function SuiPlusIcon() {
   );
 };
 
-export const MoreIcon: IComponent = function SuiMoreIcon() {
+export const MoreIcon: IComponent<React.SVGProps<SVGSVGElement>> = function SuiMoreIcon(props) {
   return (
     <svg
+      {...props}
       fill="none"
       stroke="currentColor"
       viewBox="0 0 16 16"
@@ -125,9 +139,10 @@ export const MoreIcon: IComponent = function SuiMoreIcon() {
   );
 };
 
-export const MinusIcon: IComponent = function SuiMinusIcon() {
+export const MinusIcon: IComponent<React.SVGProps<SVGSVGElement>> = function SuiMinusIcon(props) {
   return (
     <svg
+      {...props}
       fill="none"
       stroke="currentColor"
       viewBox="0 0 16 16"
@@ -140,9 +155,12 @@ export const MinusIcon: IComponent = function SuiMinusIcon() {
   );
 };
 
-export const CursorGrowIcon: IComponent = function SuiCursorGrowIcon() {
+export const CursorGrowIcon: IComponent<React.SVGProps<SVGSVGElement>> = function SuiCursorGrowIcon(
+  props,
+) {
   return (
     <svg
+      {...props}
       fill="none"
       width={24}
       xmlns="http://www.w3.org/2000/svg"
@@ -165,9 +183,12 @@ export const CursorGrowIcon: IComponent = function SuiCursorGrowIcon() {
 /**
  * チェックボックスの既定のアイコンです。
  */
-export const CheckboxIcon: IComponent = function SuiCheckboxIcon() {
+export const CheckboxIcon: IComponent<React.SVGProps<SVGSVGElement>> = function SuiCheckboxIcon(
+  props,
+) {
   return (
     <svg
+      {...props}
       fill="none"
       stroke="currentColor"
       viewBox="0 0 16 16"
@@ -181,9 +202,10 @@ export const CheckboxIcon: IComponent = function SuiCheckboxIcon() {
   );
 };
 
-export const EyeIcon: IComponent = function SuiEyeIcon() {
+export const EyeIcon: IComponent<React.SVGProps<SVGSVGElement>> = function SuiEyeIcon(props) {
   return (
     <svg
+      {...props}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       stroke="currentColor"
@@ -200,9 +222,10 @@ export const EyeIcon: IComponent = function SuiEyeIcon() {
   );
 };
 
-export const EyeOffIcon: IComponent = function SuiEyeOffIcon() {
+export const EyeOffIcon: IComponent<React.SVGProps<SVGSVGElement>> = function SuiEyeOffIcon(props) {
   return (
     <svg
+      {...props}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       stroke="currentColor"

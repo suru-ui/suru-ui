@@ -3,15 +3,16 @@ import { Select as BaseSelect } from "@base-ui/react/select";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
-import { getItemLabel, isLabeledItem } from "../_get-item-label.js";
 import { CheckIcon } from "../_icons.jsx";
+import mergeProps from "../_merge-props.js";
+import proxyRenderProps from "../_proxy-render-props.js";
 import toReactNode from "../_to-react-node.js";
 import type { RenderProps } from "../_use-render.js";
 import { useActionGroupContext } from "../action-group/action-group.parts.jsx";
+import * as Button from "../button/button.parts.jsx";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
-import { ScrollArea } from "../scroll-area/index.js";
-import type { IComponent, IUseContext } from "../types.js";
+import type { Override, IComponent, IUseContext } from "../types.js";
 
 import "./select.css";
 
@@ -19,29 +20,29 @@ import "./select.css";
 // -------
 
 /**
- * 選択欄とリスト項目の角丸です。
+ * 選択欄とポップアップの角丸です。
  *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
- * - `"full"`: 完全な丸形
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ * - `"full"`: 丸形
  */
 type SelectContextRadius = "none" | Size | "full";
 
 /**
  * 選択欄とリスト項目のサイズです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 type SelectContextSize = Size;
 
 /**
  * 選択欄の主な外観です。
  *
- * - `"naked"`: 背景のない選択欄
+ * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
 type SelectContextVariant = "naked" | "liquid";
@@ -63,7 +64,7 @@ export type SelectContext<TValue = any> = {
   readonly outlined: boolean;
 
   /**
-   * 選択欄とリスト項目の角丸です。
+   * 選択欄とポップアップの角丸です。
    */
   readonly radius: SelectContextRadius;
 
@@ -162,37 +163,39 @@ export type SelectRootChangeEventDetails = BaseSelect.Root.ChangeEventDetails;
  */
 export type SelectRootChangeEventReason = BaseSelect.Root.ChangeEventReason;
 
-/**
- * Select のグループ項目です。
- *
- * @template TValue 項目の値の型です。
- */
-export type SelectRootItemGroup<TValue = unknown> = {
-  /**
-   * グループに含まれる項目です。
-   */
-  readonly items: readonly TValue[];
+export type SelectRootItemMapping<TValue = any> = TValue extends string
+  ? { readonly [_ in TValue]: React.ReactNode }
+  : never;
 
-  /**
-   * グループの見出しです。
-   */
-  readonly label?: React.ReactNode | undefined;
+export type SelectRootLabeledItem<TValue = any> = Override<
+  Omit<SelectItemProps, "children">,
+  {
+    readonly label: React.ReactNode;
 
-  readonly [key: string]: unknown;
-};
+    readonly value: TValue;
+  }
+>;
 
-/**
- * Select の項目一覧です。
- *
- * - `Record<string, React.ReactNode>`: 値と表示内容を対応付けたオブジェクト
- * - `readonly (TValue | { label: React.ReactNode; value: TValue })[]`: 平坦な項目の配列
- * - `readonly SelectRootItemGroup<TValue>[]`: グループ化した項目の配列
- *
- * @template TValue 項目の値の型です。
- */
-export type SelectRootItems<TValue = unknown> =
-  | Record<string, React.ReactNode>
-  | readonly (TValue | { readonly label: React.ReactNode; readonly value: TValue })[]
+export type SelectRootItem<TValue = any> = TValue | SelectRootLabeledItem<TValue>;
+
+export type SelectRootItemGroup<TValue = any> = Override<
+  Omit<SelectGroupProps, "children">,
+  {
+    /**
+     * グループに含まれる項目です。
+     */
+    readonly items: SelectRootItemMapping<TValue> | readonly SelectRootItem<TValue>[];
+
+    /**
+     * グループの見出しです。
+     */
+    readonly label?: React.ReactNode | undefined;
+  }
+>;
+
+export type SelectRootItems<TValue = any> =
+  | SelectRootItemMapping<TValue>
+  | readonly SelectRootItem<TValue>[]
   | readonly SelectRootItemGroup<TValue>[];
 
 /**
@@ -201,26 +204,23 @@ export type SelectRootItems<TValue = unknown> =
 export type SelectRootState = BaseSelect.Root.State;
 
 export namespace SelectRootProps {
-  export type Render = RenderProps<SelectRootState>;
+  export type Render = {};
 
-  export type SuruUI<TValue = unknown> = {
+  export type SuruUI<TValue = any> = {
     /**
      * リストに表示する項目の一覧です。
-     *
-     * グループの配列を指定するとグループごとに区切って表示します。
-     * 平坦な値の配列を指定した場合は {@link List} が既定の描画で表示します。
      */
     items?: SelectRootItems<TValue> | undefined;
 
     /**
      * 枠線を表示するかどうかを指定します。
      *
-     * 既定値は {@link SelectRootProps.variant|variant} です。
+     * @default false
      */
     outlined?: boolean | undefined;
 
     /**
-     * 選択欄とリスト項目の角丸を指定します。
+     * 選択欄とポップアップの角丸を指定します。
      *
      * 既定値は {@link SelectRootProps.size|size} です。
      */
@@ -236,12 +236,15 @@ export namespace SelectRootProps {
     /**
      * 選択欄の主な外観を指定します。
      *
-     * @default "naked"
+     * @default "liquid"
      */
     variant?: SelectRootVariant | undefined;
   };
 
-  export type BaseUI<TValue = unknown, TMultiple extends boolean | undefined = false> = Pick<
+  export type BaseUI<
+    TValue = any,
+    TMultiple extends boolean | undefined = boolean | undefined,
+  > = Pick<
     React.ComponentProps<typeof BaseSelect.Root<TValue, TMultiple>>,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
@@ -273,7 +276,10 @@ export namespace SelectRootProps {
     >
   >;
 
-  export type HTML<TValue = unknown, TMultiple extends boolean | undefined = false> = Omit<
+  export type HTML<
+    TValue = any,
+    TMultiple extends boolean | undefined = boolean | undefined,
+  > = Omit<
     React.ComponentProps<typeof BaseSelect.Root<TValue, TMultiple>>,
     keyof Render | keyof SuruUI | keyof BaseUI
   >;
@@ -286,8 +292,8 @@ export namespace SelectRootProps {
  * @template TMultiple 複数選択を有効にするかどうかです。
  */
 export type SelectRootProps<
-  TValue = unknown,
-  TMultiple extends boolean | undefined = false,
+  TValue = any,
+  TMultiple extends boolean | undefined = boolean | undefined,
 > = SelectRootProps.Render &
   SelectRootProps.SuruUI<TValue> &
   SelectRootProps.BaseUI<TValue, TMultiple> &
@@ -308,16 +314,15 @@ interface ISelectRoot extends IComponent<SelectRootProps<unknown, boolean | unde
  *
  * それ自身は HTML 要素をレンダリングせず、スタイルと項目を子パーツへ伝播します。
  */
-export const SelectRoot: ISelectRoot = function SuiSelectRoot<
-  TValue,
-  TMultiple extends boolean | undefined = false,
->(props: SelectRootProps<TValue, TMultiple>) {
+export const SelectRoot: ISelectRoot = function SuiSelectRoot(props: SelectRootProps) {
   const {
     size = "md",
     items,
     radius = size,
-    variant = "naked",
-    outlined = variant === "naked",
+    variant = "liquid",
+    outlined = false,
+    onValueChange,
+    isItemEqualToValue: isItemEqualToValueProp,
     ...otherProps
   } = props;
   const ctx = React.useMemo<SelectContext>(
@@ -330,42 +335,70 @@ export const SelectRoot: ISelectRoot = function SuiSelectRoot<
     }),
     [items, outlined, radius, size, variant],
   );
+  const baseuiItems = React.useMemo(() => {
+    if (!items) {
+      return undefined;
+    }
+    if (!Array.isArray(items)) {
+      return items;
+    }
+
+    return items.map((item) => {
+      if (isLabeledItem(item)) {
+        return {
+          label: item.label,
+          value: item.value,
+        };
+      }
+
+      if (isItemGroup(item)) {
+        return {
+          label: item.label,
+          items: item.items,
+        };
+      }
+
+      return item;
+    });
+  }, [items]);
+  // Base UI の型情報によると `onValueChange` の第一引数に `value` が来るはずですが、実際には `items` の要素が来ます。
+  // 型情報と実際の挙動を合わせるために、ハンドラーを修正します。
+  const handleValueChange = React.useCallback<NonNullable<SelectRootProps["onValueChange"]>>(
+    (item, ...args) => {
+      if (!onValueChange) {
+        return;
+      }
+
+      const value = isLabeledItem(item) ? item.value : item;
+      onValueChange(value, ...args);
+    },
+    [onValueChange],
+  );
+  // Base UI の型情報によると `isItemEqualToValue` の第一引数に `value` が来るはずですが、実際には `items` の要素が来ます。
+  // 型情報と実際の挙動を合わせるために、ハンドラーを修正します。
+  const isItemEqualToValue = React.useCallback<NonNullable<SelectRootProps["isItemEqualToValue"]>>(
+    (item, ...args) => {
+      const value = isLabeledItem(item) ? item.value : item;
+      const equal = !isItemEqualToValueProp
+        ? Object.is(value, args[0])
+        : isItemEqualToValueProp(value, ...args);
+
+      return equal;
+    },
+    [isItemEqualToValueProp],
+  );
 
   return (
     <SelectContext value={ctx}>
-      <BaseSelect.Root {...otherProps} items={getBaseItems(items)} />
+      <BaseSelect.Root
+        {...otherProps}
+        items={baseuiItems}
+        onValueChange={handleValueChange}
+        isItemEqualToValue={isItemEqualToValue}
+      />
     </SelectContext>
   );
 };
-
-type BaseSelectItems = NonNullable<BaseSelect.Root.Props<unknown>["items"]>;
-type BaseSelectItem = Extract<BaseSelectItems, readonly unknown[]>[number];
-
-function getBaseItems<TValue>(
-  items: SelectRootItems<TValue> | undefined,
-): BaseSelectItems | undefined {
-  if (!Array.isArray(items)) {
-    return items;
-  }
-
-  if (items.length === 0) {
-    return [];
-  }
-
-  return items.map((item) => {
-    if (typeof item === "object" && item !== null) {
-      if ("items" in item && Array.isArray((item as { items: unknown }).items)) {
-        return item as BaseSelectItem;
-      }
-
-      if ("label" in item && "value" in item) {
-        return item as BaseSelectItem;
-      }
-    }
-
-    return { label: item as React.ReactNode, value: item } as BaseSelectItem;
-  }) as BaseSelectItems;
-}
 
 export { SelectRoot as Root };
 
@@ -376,8 +409,8 @@ export namespace Root {
   export type State = SelectRootState;
 
   export type Props<
-    TValue = unknown,
-    TMultiple extends boolean | undefined = false,
+    TValue = any,
+    TMultiple extends boolean | undefined = boolean | undefined,
   > = Props.Render &
     Props.SuruUI<TValue> &
     Props.BaseUI<TValue, TMultiple> &
@@ -386,16 +419,16 @@ export namespace Root {
   export namespace Props {
     export type Render = SelectRootProps.Render;
 
-    export type SuruUI<TValue = unknown> = SelectRootProps.SuruUI<TValue>;
+    export type SuruUI<TValue = any> = SelectRootProps.SuruUI<TValue>;
 
     export type BaseUI<
-      TValue = unknown,
-      TMultiple extends boolean | undefined = false,
+      TValue = any,
+      TMultiple extends boolean | undefined = boolean | undefined,
     > = SelectRootProps.BaseUI<TValue, TMultiple>;
 
     export type HTML<
-      TValue = unknown,
-      TMultiple extends boolean | undefined = false,
+      TValue = any,
+      TMultiple extends boolean | undefined = boolean | undefined,
     > = SelectRootProps.HTML<TValue, TMultiple>;
   }
 
@@ -405,9 +438,9 @@ export namespace Root {
 
   export type ChangeEventReason = SelectRootChangeEventReason;
 
-  export type ItemGroup<TValue = unknown> = SelectRootItemGroup<TValue>;
+  export type ItemGroup<TValue = any> = SelectRootItemGroup<TValue>;
 
-  export type Items<TValue = unknown> = SelectRootItems<TValue>;
+  export type Items<TValue = any> = SelectRootItems<TValue>;
 
   export type Radius = SelectRootRadius;
 
@@ -974,16 +1007,16 @@ export namespace Positioner {
   }
 }
 
-// Popup
-// -----
+// Content
+// -------
 
 /**
- * {@link SelectPopup} が持つ状態です。
+ * {@link SelectContent} が持つ状態です。
  */
-export type SelectPopupState = BaseSelect.Popup.State;
+export type SelectContentState = BaseSelect.Popup.State;
 
-export namespace SelectPopupProps {
-  export type Render = RenderProps<SelectPopupState>;
+export namespace SelectContentProps {
+  export type Render = RenderProps<SelectContentState>;
 
   export type SuruUI = {};
 
@@ -991,7 +1024,7 @@ export namespace SelectPopupProps {
     React.ComponentProps<typeof BaseSelect.Popup>,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // SelectPopupProps:
+      // SelectContentProps:
       "finalFocus",
       keyof Render | keyof SuruUI
     >
@@ -1004,17 +1037,17 @@ export namespace SelectPopupProps {
 }
 
 /**
- * {@link SelectPopup} に渡す props です。
+ * {@link SelectContent} に渡す props です。
  */
-export type SelectPopupProps = SelectPopupProps.Render &
-  SelectPopupProps.SuruUI &
-  SelectPopupProps.BaseUI &
-  SelectPopupProps.HTML;
+export type SelectContentProps = SelectContentProps.Render &
+  SelectContentProps.SuruUI &
+  SelectContentProps.BaseUI &
+  SelectContentProps.HTML;
 
 /**
  * 選択項目を表示するポップアップ要素です。
  */
-export const SelectPopup: IComponent<SelectPopupProps> = function SuiSelectPopup(props) {
+export const SelectContent: IComponent<SelectContentProps> = function SuiSelectContent(props) {
   const { className, ...otherProps } = props;
 
   return (
@@ -1022,38 +1055,51 @@ export const SelectPopup: IComponent<SelectPopupProps> = function SuiSelectPopup
       {...otherProps}
       className={cn(
         className,
-        "sui_select_popup",
+        "sui_select_content",
         (state) =>
           state.transitionStatus !== undefined &&
-          `sui_select_popup-transition_status_${state.transitionStatus}`,
+          `sui_select_content-transition_status_${state.transitionStatus}`,
       )}
     />
   );
 };
 
-export { SelectPopup as Popup };
+export { SelectContent as Content };
 
 /**
- * {@link SelectPopup} の状態やプロパティーをまとめた型名前空間です。
+ * {@link SelectContent} の状態やプロパティーをまとめた型名前空間です。
  */
-export namespace Popup {
-  export type State = SelectPopupState;
+export namespace Content {
+  export type State = SelectContentState;
 
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = SelectPopupProps.Render;
+    export type Render = SelectContentProps.Render;
 
-    export type SuruUI = SelectPopupProps.SuruUI;
+    export type SuruUI = SelectContentProps.SuruUI;
 
-    export type BaseUI = SelectPopupProps.BaseUI;
+    export type BaseUI = SelectContentProps.BaseUI;
 
-    export type HTML = SelectPopupProps.HTML;
+    export type HTML = SelectContentProps.HTML;
   }
 }
 
 // List
 // ----
+
+export type SelectListLabeledItem<TValue = any> = SelectRootLabeledItem<TValue>;
+
+export type SelectListItemGroup<TValue = any> = Override<
+  SelectRootItemGroup<TValue>,
+  {
+    readonly items: readonly SelectListLabeledItem<TValue>[];
+  }
+>;
+
+export type SelectListItem<TValue = any> =
+  | SelectListLabeledItem<TValue>
+  | SelectListItemGroup<TValue>;
 
 /**
  * リストの各項目をレンダリングする関数のインターフェイスです。
@@ -1069,7 +1115,20 @@ export interface ISelectListItemRenderer<TValue = any> {
    * @param items すべての項目です。
    * @returns レンダリングする内容です。
    */
-  (item: TValue, index: number, items: readonly TValue[]): React.ReactNode;
+  (
+    item: SelectListLabeledItem<TValue>,
+    index: number,
+    items: readonly SelectListLabeledItem<TValue>[],
+  ): React.ReactNode;
+  (
+    item: SelectListItemGroup<TValue>,
+    index: number,
+    items: readonly SelectListItemGroup<TValue>[],
+  ): React.ReactNode;
+}
+
+interface IAnySelectListItemRenderer {
+  (item: SelectListItem, index: number, items: readonly SelectListItem[]): React.ReactNode;
 }
 
 /**
@@ -1121,106 +1180,105 @@ export type SelectListProps<TValue = any> = SelectListProps.Render &
  * {@link SelectRoot} の `items` を読み取り、関数子を受け取った場合は各項目に適用します。
  */
 export const SelectList: IComponent<SelectListProps> = function SuiSelectList(props) {
-  const ctx = useSelectContext(true);
+  const { items = [] } = useSelectContext();
   const { children = defaultListItemRenderer, className, ...otherProps } = props;
-  const items = ctx?.items;
 
   return (
-    <ScrollArea className="sui_select_scroll_area">
-      <BaseSelect.List {...otherProps} className={cn(className, "sui_select_list")}>
-        {typeof children === "function"
-          ? items !== undefined
-            ? renderListItems(items, children)
-            : null
-          : children}
-      </BaseSelect.List>
-    </ScrollArea>
+    <BaseSelect.List {...otherProps} className={cn(className, "sui_select_list")}>
+      {typeof children === "function" ? renderListItems(items, children) : children}
+    </BaseSelect.List>
   );
 };
 
-function renderListItems<TValue>(
-  items: SelectRootItems<TValue>,
-  renderItem: ISelectListItemRenderer<TValue>,
+function renderListItems(
+  items: SelectRootItems,
+  renderer: ISelectListItemRenderer,
 ): React.ReactNode {
-  if (!Array.isArray(items)) {
-    const entries = Object.entries(items);
+  if (Array.isArray(items)) {
+    return items
+      .map((item): SelectListItem => {
+        if (isLabeledItem(item)) {
+          return item;
+        }
 
-    if (renderItem === (defaultListItemRenderer as ISelectListItemRenderer<TValue>)) {
-      return entries.map(([value, label], index) => (
-        <SelectItem key={index} value={value as TValue}>
-          <SelectItemIndicator>
-            <CheckIcon />
-          </SelectItemIndicator>
-          <SelectItemText>{toReactNode(label, value)}</SelectItemText>
-        </SelectItem>
-      ));
-    }
+        if (isItemGroup(item)) {
+          if (Array.isArray(item.items)) {
+            return {
+              ...item,
+              items: item.items.map((item) => {
+                if (isLabeledItem(item)) {
+                  return item;
+                }
 
-    const values = entries.map(([value]) => value as TValue);
+                return {
+                  label: undefined,
+                  value: item,
+                };
+              }),
+            };
+          } else {
+            return {
+              ...item,
+              items: Object.entries(item.items).map(([value, label]) => ({
+                label,
+                value,
+              })),
+            };
+          }
+        }
 
-    return values.map((value, index) => renderItem(value, index, values));
+        return {
+          label: undefined,
+          value: item,
+        };
+      })
+      .map(renderer as IAnySelectListItemRenderer);
   }
 
-  return items.map((entry, index, all) => renderItem(entry as TValue, index, all as TValue[]));
+  return Object.entries(items)
+    .map(([value, label]): SelectListLabeledItem => ({ label, value }))
+    .map(renderer);
 }
 
 const defaultListItemRenderer: ISelectListItemRenderer = (item, index, items) => {
-  if (isListGroup(item)) {
-    const { items: groupItems, label } = item;
+  if ("items" in item) {
+    const { items: groupItems, label, ...otherGroupProps } = item;
     const labelNode = toReactNode(label);
 
     return (
       <React.Fragment key={index}>
-        <SelectGroup>
-          {labelNode === null ? null : <SelectGroupLabel>{labelNode}</SelectGroupLabel>}
-          {groupItems.map((groupItem: unknown, groupIndex: number) =>
-            defaultListItemRenderer(groupItem, groupIndex, groupItems as unknown[]),
-          )}
+        <SelectGroup {...otherGroupProps}>
+          {labelNode && <SelectGroupLabel>{labelNode}</SelectGroupLabel>}
+          {groupItems.map(defaultListItemRenderer)}
         </SelectGroup>
         {index < items.length - 1 && <SelectSeparator />}
       </React.Fragment>
     );
   }
 
-  if (!isListItemValue(item)) {
-    return toReactNode(item);
-  }
-
-  if (isLabeledItem(item)) {
-    return (
-      <SelectItem key={index} value={item.value}>
-        <SelectItemIndicator>
-          <CheckIcon />
-        </SelectItemIndicator>
-        <SelectItemText>{toReactNode(item.label, getItemLabel(item))}</SelectItemText>
-      </SelectItem>
-    );
-  }
+  const { label, value, ...otherItemProps } = item;
 
   return (
-    <SelectItem key={index} value={item}>
+    <SelectItem {...otherItemProps} key={index} value={value}>
+      <SelectItemText>{toReactNode(label, String(value))}</SelectItemText>
       <SelectItemIndicator>
         <CheckIcon />
       </SelectItemIndicator>
-      <SelectItemText>{toReactNode(getItemLabel(item))}</SelectItemText>
     </SelectItem>
   );
 };
 
-function isListGroup(item: unknown): item is SelectRootItemGroup<unknown> {
-  return typeof item === "object" && item !== null && "items" in item && Array.isArray(item.items);
+function isLabeledItem(item: unknown): item is SelectRootLabeledItem {
+  return typeof item === "object" && item !== null && "value" in item && "label" in item;
 }
 
-function isListItemValue(item: unknown): boolean {
-  if (item === null || item === undefined) {
-    return false;
-  }
-
-  if (typeof item === "object" && "items" in item) {
-    return false;
-  }
-
-  return true;
+function isItemGroup(item: unknown): item is SelectRootItemGroup {
+  return (
+    typeof item === "object" &&
+    item !== null &&
+    "items" in item &&
+    (Array.isArray(item.items) || (typeof item.items === "object" && item.items !== null))
+  );
 }
 
 export { SelectList as List };
@@ -1243,7 +1301,7 @@ export namespace List {
     export type HTML = SelectListProps.HTML;
   }
 
-  export type ItemGroup<TValue = unknown> = SelectRootItemGroup<TValue>;
+  export type ItemGroup<TValue = any> = SelectRootItemGroup<TValue>;
 
   export interface IItemRenderer<TValue = any> extends ISelectListItemRenderer<TValue> {}
 }
@@ -1321,24 +1379,29 @@ export namespace Arrow {
 /**
  * {@link SelectItem} が持つ状態です。
  */
-export type SelectItemState = BaseSelect.Item.State;
+export type SelectItemState = Override<Button.Root.State, BaseSelect.Item.State>;
 
 export namespace SelectItemProps {
   export type Render = RenderProps<SelectItemState>;
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof BaseSelect.Item>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // NonNativeButtonProps:
-      | keyof NonNativeButtonProps
-      // SelectItemProps:
-      | "value"
-      | "disabled"
-      | "label",
-      keyof Render | keyof SuruUI
+  export type BaseUI = Override<
+    Button.Root.Props.BaseUI,
+    Pick<
+      React.ComponentProps<typeof BaseSelect.Item>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // NonNativeButtonProps:
+        | keyof NonNativeButtonProps
+        // SelectItemProps:
+        | "children"
+        | "label"
+        | "onClick"
+        | "value"
+        | "disabled",
+        keyof Render | keyof SuruUI
+      >
     >
   >;
 
@@ -1358,25 +1421,76 @@ export type SelectItemProps = SelectItemProps.Render &
 
 /**
  * 選択肢の個々の項目です。
- *
- * `highlighted` はキーボードやポインターによる注目を表し、`selected` は選択状態を表します。
  */
 export const SelectItem: IComponent<SelectItemProps> = function SuiSelectItem(props) {
   const ctx = useSelectContext(true);
-  const { className, ...otherProps } = props;
-  const size = ctx?.size ?? "md";
+  const {
+    label,
+    style,
+    value,
+    render = <div />,
+    onClick,
+    children,
+    disabled,
+    className,
+    nativeButton = false,
+    focusableWhenDisabled,
+    ...otherProps
+  } = props;
+  const baseuiProps: Required<SelectItemProps.BaseUI> = {
+    label,
+    value,
+    onClick,
+    children,
+    disabled,
+    nativeButton,
+    focusableWhenDisabled,
+  };
 
   return (
     <BaseSelect.Item
       {...otherProps}
-      className={cn(
-        className,
-        "sui_select_item",
-        `sui_select_item-size_${size}`,
-        (state) => state.disabled && "sui_select_item-disabled",
-        (state) => state.highlighted && "sui_select_item-highlighted",
-        (state) => state.selected && "sui_select_item-selected",
-      )}
+      {...baseuiProps}
+      render={(htmlProps: {}, state) => {
+        const buttonRootProps: Required<
+          Button.Root.Props.SuruUI &
+            Button.Root.Props.BaseUI &
+            Pick<Button.Root.Props.HTML, "disabled">
+        > = {
+          item: true,
+          size: ctx?.size,
+          color: "grey",
+          muted: undefined,
+          radius: undefined,
+          pending: undefined,
+          squared: undefined,
+          variant: "naked",
+          disabled: state.disabled,
+          outlined: undefined,
+          nativeButton,
+          focusableWhenDisabled,
+        };
+
+        return (
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              buttonRootProps,
+              proxyRenderProps(state, {
+                style,
+                render,
+                className: cn(
+                  className,
+                  "sui_select_item",
+                  (state) => state.disabled && "sui_select_item-disabled",
+                  (state) => state.highlighted && "sui_select_item-highlighted",
+                  (state) => state.selected && "sui_select_item-selected",
+                ),
+              }),
+            ])}
+          />
+        );
+      }}
     />
   );
 };

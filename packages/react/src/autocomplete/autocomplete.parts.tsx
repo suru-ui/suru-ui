@@ -1219,7 +1219,7 @@ export const AutocompleteItem: IComponent<AutocompleteItemProps> = function SuiA
     index,
     style,
     value,
-    render,
+    render = <div />,
     onClick,
     children,
     disabled,
@@ -1266,7 +1266,7 @@ export const AutocompleteItem: IComponent<AutocompleteItemProps> = function SuiA
               buttonRootProps,
               proxyRenderProps(state, {
                 style,
-                render: render ?? <div />,
+                render,
                 className: cn(className, "sui_autocomplete_item"),
               }),
             ])}
