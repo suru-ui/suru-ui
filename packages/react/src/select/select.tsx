@@ -247,16 +247,16 @@ export interface SelectAPI<
   getGroupLabelProps(item: SelectListItemGroup): SelectGroupLabelProps | null;
 
   /**
-   * @param item グループです。
-   */
-  getGroupedItems(item: SelectListItemGroup): SelectListItemGroup["items"];
-
-  /**
    * {@link SelectGroup} に渡す props を取得します。
    *
    * @param item グループです。
    */
   getGroupProps(item: SelectListItemGroup): Omit<SelectGroupProps, "children">;
+
+  /**
+   * @param item グループです。
+   */
+  getGroupedItems(item: SelectListItemGroup): SelectListItemGroup["items"];
 
   /**
    * {@link SelectIcon} に渡す props を取得します。

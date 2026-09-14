@@ -86,17 +86,21 @@
 
 /* 変異 */
 :scope {
-  &.sui_scroll_area-has_overflow_y .sui_scroll_area_scrollbar-orientation_vertical,
-  &.sui_scroll_area-has_overflow_x .sui_scroll_area_scrollbar-orientation_horizontal,
   &.sui_scroll_area-scrolling .sui_scroll_area_scrollbar {
     --_sui_scroll_area_scrollbar-opacity: 1;
   }
 
-  .sui_scroll_area_scrollbar {
-    @media (any-hover: hover) {
-      &:hover {
-        --_sui_scroll_area_scrollbar-opacity: 1;
-      }
+  @media (any-hover: hover) {
+    &.sui_scroll_area-has_overflow_y:hover .sui_scroll_area_scrollbar-orientation_vertical,
+    &.sui_scroll_area-has_overflow_x:hover .sui_scroll_area_scrollbar-orientation_horizontal {
+      --_sui_scroll_area_scrollbar-opacity: 1;
+    }
+  }
+
+  &.sui_scroll_area-always_show_scrollbar {
+    &.sui_scroll_area-has_overflow_y .sui_scroll_area_scrollbar-orientation_vertical,
+    &.sui_scroll_area-has_overflow_x .sui_scroll_area_scrollbar-orientation_horizontal {
+      --_sui_scroll_area_scrollbar-opacity: 1;
     }
   }
 }

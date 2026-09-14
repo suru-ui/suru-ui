@@ -1,6 +1,5 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import type { Size } from "@suru-ui/theme";
-import type * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";

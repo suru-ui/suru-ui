@@ -18,7 +18,16 @@ export type ScrollAreaRootState = BaseScrollArea.Root.State;
 export namespace ScrollAreaRootProps {
   export type Render = RenderProps<ScrollAreaRootState>;
 
-  export type SuruUI = {};
+  export type SuruUI = {
+    /**
+     * スクロールバーを常に表示するかどうかを指定します。
+     *
+     * `false` のときは、スクロール領域をホバーするかスクロールするまでスクロールバーを非表示にします。
+     *
+     * @default false
+     */
+    alwaysShowScrollbar?: boolean | undefined;
+  };
 
   export type BaseUI = Pick<
     React.ComponentProps<typeof BaseScrollArea.Root>,
@@ -50,6 +59,7 @@ export type ScrollAreaRootProps = ScrollAreaRootProps.Render &
 export const ScrollAreaRoot: IComponent<ScrollAreaRootProps> = function SuiScrollAreaRoot(props) {
   const {
     className,
+    alwaysShowScrollbar = false,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherProps
@@ -60,6 +70,7 @@ export const ScrollAreaRoot: IComponent<ScrollAreaRootProps> = function SuiScrol
       className={cn(
         className,
         "sui_scroll_area",
+        alwaysShowScrollbar && "sui_scroll_area-always_show_scrollbar",
         (state) => state.scrolling && "sui_scroll_area-scrolling",
         (state) => state.hasOverflowX && "sui_scroll_area-has_overflow_x",
         (state) => state.hasOverflowY && "sui_scroll_area-has_overflow_y",

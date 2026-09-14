@@ -9,6 +9,9 @@ const meta = preview.meta({
 export default meta;
 
 const ctrl = controls(ScrollArea, {
+  alwaysShowScrollbar: {
+    control: "boolean",
+  },
   horizontal: {
     control: "boolean",
   },
@@ -55,8 +58,29 @@ export const BothScrollbars = meta.story({
   },
 });
 
+export const AlwaysShowScrollbar = meta.story({
+  name: "スクロールバーを常に表示",
+  ...ctrl({
+    alwaysShowScrollbar: true,
+    horizontal: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-4">
+        <ScrollArea {...props} className="h-64 w-80 rounded-lg bg-(--sui-canvas-1) p-4">
+          {paragraphs}
+        </ScrollArea>
+        <p className="w-80">
+          `alwaysShowScrollbar`
+          を指定すると、スクロール領域をホバーしていなくてもスクロールバーを表示します。
+        </p>
+      </div>
+    );
+  },
+});
+
 export const KeepMounted = meta.story({
-  name: "常時表示",
+  name: "非スクロール時の保持",
   ...ctrl({
     horizontal: false,
   }),
@@ -75,24 +99,6 @@ export const KeepMounted = meta.story({
           に保持します。
         </p>
       </div>
-    );
-  },
-});
-
-export const CustomThumb = meta.story({
-  name: "つまみの差し替え",
-  ...ctrl({
-    horizontal: false,
-  }),
-  render(props) {
-    return (
-      <ScrollArea
-        {...props}
-        className="h-64 w-80 rounded-lg bg-(--sui-canvas-1) p-4"
-        slotProps={{ thumb: { className: "bg-(--sui-accent-9)" } }}
-      >
-        {paragraphs}
-      </ScrollArea>
     );
   },
 });
