@@ -191,6 +191,60 @@ describe("sortCssVariables", () => {
     expect(sortCssVariables(source)).toBe(expected);
   });
 
+  test("判定できない変数の状態を固定順 (idle → hover → active → checked) で並べ替える", ({
+    expect,
+  }) => {
+    const source = `.sui_checkbox {
+  --sui_checkbox-canvas-active: ;
+  --sui_checkbox-canvas-active-checked: ;
+  --sui_checkbox-canvas-hover: ;
+  --sui_checkbox-canvas-hover-checked: ;
+  --sui_checkbox-canvas-idle: ;
+  --sui_checkbox-canvas-idle-checked: ;
+}
+`;
+    const expected = `.sui_checkbox {
+  --sui_checkbox-canvas-idle: ;
+  --sui_checkbox-canvas-idle-checked: ;
+  --sui_checkbox-canvas-hover: ;
+  --sui_checkbox-canvas-hover-checked: ;
+  --sui_checkbox-canvas-active: ;
+  --sui_checkbox-canvas-active-checked: ;
+}
+`;
+    expect(sortCssVariables(source)).toBe(expected);
+  });
+
+  test("固定順のセグメントを持つ変数を名前順より先に並べ替える", ({ expect }) => {
+    const source = `.sui_badge {
+  --sui_badge-aaa: ;
+  --sui_badge-zzz-idle: ;
+}
+`;
+    const expected = `.sui_badge {
+  --sui_badge-zzz-idle: ;
+  --sui_badge-aaa: ;
+}
+`;
+    expect(sortCssVariables(source)).toBe(expected);
+  });
+
+  test("固定順のセグメントを持つ変数でも CSS プロパティーを判定できた変数を先に置く", ({
+    expect,
+  }) => {
+    const source = `.sui_chip {
+  --sui_chip-canvas-idle: ;
+  --sui_chip-color: ;
+}
+`;
+    const expected = `.sui_chip {
+  --sui_chip-color: ;
+  --sui_chip-canvas-idle: ;
+}
+`;
+    expect(sortCssVariables(source)).toBe(expected);
+  });
+
   test("同一 CSS プロパティーのバリアントは元の順序を維持する", ({ expect }) => {
     const source = `.sui_button {
   --sui_button-color-hover: ;
