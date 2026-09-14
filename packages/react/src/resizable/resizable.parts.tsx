@@ -1,7 +1,7 @@
+import { useControlled } from "@base-ui/utils/useControlled";
 import { useMergedRefs } from "@base-ui/utils/useMergedRefs";
 import * as React from "react";
 import {
-  type GroupProps,
   type PanelProps,
   type PanelImperativeHandle,
   Group as ExternalGroup,
@@ -25,7 +25,7 @@ import "./resizable.css";
  * - `"horizontal"`: 水平方向にパネルを並べます。
  * - `"vertical"`: 垂直方向にパネルを並べます。
  */
-export type ResizableContextDirection = "horizontal" | "vertical";
+export type ResizableContextOrientation = "horizontal" | "vertical";
 
 /**
  * {@link ResizableRoot} が子パーツへ提供するコンテキストの型です。
@@ -34,7 +34,7 @@ export type ResizableContext = {
   /**
    * パネル群の向きです。
    */
-  readonly direction: ResizableContextDirection;
+  readonly orientation: ResizableContextOrientation;
 };
 
 /**
@@ -65,19 +65,8 @@ export const useResizableContext: IUseContext<ResizableContext> = useSuiResizabl
 export { ResizableContext as Context, useResizableContext as useContext };
 
 export namespace Context {
-  export type Direction = ResizableContextDirection;
+  export type Orientation = ResizableContextOrientation;
 }
-
-function normalizePanelSize(value: ResizablePanelSize | undefined): ResizablePanelSize | undefined {
-  return typeof value === "number" ? `${value}%` : value;
-}
-
-const RESIZABLE_HANDLE_HIT_SIZE = 16;
-
-const DEFAULT_RESIZE_TARGET_MINIMUM_SIZE = {
-  fine: RESIZABLE_HANDLE_HIT_SIZE,
-  coarse: 20,
-};
 
 // Root
 // ----
@@ -88,9 +77,7 @@ const DEFAULT_RESIZE_TARGET_MINIMUM_SIZE = {
  * - `"horizontal"`: 水平方向にパネルを並べます。
  * - `"vertical"`: 垂直方向にパネルを並べます。
  */
-export type ResizableRootDirection = "horizontal" | "vertical";
-
-export type ResizableRootOrientation = ResizableRootDirection;
+export type ResizableRootOrientation = "horizontal" | "vertical";
 
 /**
  * {@link ResizableRoot} が持つ状態です。
@@ -99,29 +86,17 @@ export type ResizableRootState = {
   /**
    * パネル群の向きです。
    */
-  readonly direction: ResizableRootDirection;
+  readonly orientation: ResizableRootOrientation;
 };
 
 export namespace ResizableRootProps {
-  export type Render = RenderProps<ResizableRootState>;
+  export type Render = Omit<RenderProps<ResizableRootState>, "render">;
 
   export type SuruUI = {
     /**
      * パネルを並べる向きです。
      *
      * @default "horizontal"
-     */
-    direction?: ResizableRootDirection | undefined;
-
-    /**
-     * パネルサイズの配列が変化したときに呼び出されます。
-     */
-    onLayout?: ((sizes: readonly number[]) => void) | undefined;
-
-    /**
-     * パネルを並べる向きの別名です。
-     *
-     * `direction` と同じ値を指定します。
      */
     orientation?: ResizableRootOrientation | undefined;
   };
@@ -158,6 +133,18 @@ export type ResizableRootProps = ResizableRootProps.Render &
   ResizableRootProps.BaseUI &
   ResizableRootProps.HTML;
 
+// resizeTargetMinimumSize は、ポインターでリサイズを始められる当たり判定の最小サイズ (px) です。
+// 対象はパネル群内の各ハンドルとパネルの端で、要素の見た目やレイアウトには影響しません。
+// 判定領域が最小サイズより小さい場合は、中心から上下左右へ対称に広げて補われます。
+// fine はマウスやペン、coarse はタッチに使われ、`(pointer: coarse)` に一致するかで自動的に切り替わります。
+// 大きくすると掴みやすくなる代わりに、隣り合う判定領域が重なって狙ったハンドルを掴みにくくなることがあります。
+const DEFAULT_RESIZE_TARGET_MINIMUM_SIZE = {
+  // fine はマウスやペンなど精度の高いポインターに使われます。
+  fine: 8,
+  // coarse はタッチなど精度の低いポインターに使われます。
+  coarse: 20,
+};
+
 /**
  * リサイズ可能なパネル群のルート要素です。
  *
@@ -165,51 +152,33 @@ export type ResizableRootProps = ResizableRootProps.Render &
  */
 export const ResizableRoot: IComponent<ResizableRootProps> = function SuiResizableRoot(props) {
   const {
-    render = <ExternalGroup />,
-    children,
-    onLayout,
-    direction: directionProp,
-    orientation: orientationProp,
-    onLayoutChange,
-    resizeTargetMinimumSize: resizeTargetMinimumSizeProp,
+    orientation = "horizontal",
+    resizeTargetMinimumSize = DEFAULT_RESIZE_TARGET_MINIMUM_SIZE,
     // @ts-expect-error
     "data-scope": dataScope = "",
-    ...otherDivProps
+    ...otherProps
   } = props;
-  const direction = directionProp ?? orientationProp ?? "horizontal";
-  const resizeTargetMinimumSize = {
-    fine:
-      resizeTargetMinimumSizeProp?.fine ??
-      Math.max(DEFAULT_RESIZE_TARGET_MINIMUM_SIZE.fine, RESIZABLE_HANDLE_HIT_SIZE),
-    coarse:
-      resizeTargetMinimumSizeProp?.coarse ??
-      Math.max(DEFAULT_RESIZE_TARGET_MINIMUM_SIZE.coarse, RESIZABLE_HANDLE_HIT_SIZE),
-  };
-  const state: ResizableRootState = { direction };
-
-  const handleLayoutChange = (layout: Parameters<NonNullable<GroupProps["onLayoutChange"]>>[0]) => {
-    onLayoutChange?.(layout);
-    onLayout?.(Object.values(layout));
-  };
+  const ctx = React.useMemo<ResizableContext>(() => ({ orientation }), [orientation]);
   const element = useRender({
     props: [
-      otherDivProps,
+      otherProps,
       {
-        render,
-        children,
-        className: "sui_resizable",
-        orientation: direction,
-        onLayoutChange: handleLayoutChange,
+        render: <ExternalGroup />,
+        className: cn<ResizableRootState>(
+          "sui_resizable",
+          (state) => `sui_resizable-orientation_${state.orientation}`,
+        ),
+        orientation,
         resizeTargetMinimumSize,
         "data-scope": dataScope,
-        "data-direction": direction,
       },
     ],
-    state,
+    state: {
+      orientation,
+    },
     defaultTagName: "div",
   });
 
-  const ctx = React.useMemo<ResizableContext>(() => ({ direction }), [direction]);
   return <ResizableContext value={ctx}>{element}</ResizableContext>;
 };
 
@@ -229,8 +198,6 @@ export namespace Root {
 
     export type HTML = ResizableRootProps.HTML;
   }
-
-  export type Direction = ResizableRootDirection;
 
   export type Orientation = ResizableRootOrientation;
 }
@@ -252,11 +219,11 @@ export type ResizablePanelState = {
   /**
    * パネル群の向きです。
    */
-  readonly direction: ResizableRootDirection;
+  readonly orientation: ResizableRootOrientation;
 };
 
 export namespace ResizablePanelProps {
-  export type Render = RenderProps<ResizablePanelState>;
+  export type Render = Omit<RenderProps<ResizablePanelState>, "render">;
 
   export type SuruUI = {
     /**
@@ -328,6 +295,10 @@ export type ResizablePanelProps = ResizablePanelProps.Render &
   ResizablePanelProps.BaseUI &
   ResizablePanelProps.HTML;
 
+function normalizePanelSize(value: ResizablePanelSize | undefined): ResizablePanelSize | undefined {
+  return typeof value === "number" ? value + "%" : value;
+}
+
 /**
  * サイズを変更できるパネル要素です。
  *
@@ -335,11 +306,9 @@ export type ResizablePanelProps = ResizablePanelProps.Render &
  * 数値のサイズはパーセントとして扱います。
  */
 export const ResizablePanel: IComponent<ResizablePanelProps> = function SuiResizablePanel(props) {
-  const ctx = useResizableContext(true);
-  const direction = ctx?.direction ?? "horizontal";
+  const ctx = useResizableContext();
   const {
-    size,
-    render = <ExternalPanel />,
+    size: sizeProp,
     maxSize,
     minSize,
     children,
@@ -347,12 +316,21 @@ export const ResizablePanel: IComponent<ResizablePanelProps> = function SuiResiz
     panelRef: panelRefProp,
     defaultSize,
     onSizeChange,
-    ...otherDivProps
+    ...otherProps
   } = props;
-  const state: ResizablePanelState = { direction };
   const internalPanelRef = React.useRef<PanelImperativeHandle>(null);
   const panelRef = useMergedRefs(internalPanelRef, panelRefProp);
-  const panelSize = normalizePanelSize(size ?? defaultSize);
+  const [size, setSize] = useControlled({
+    name: "ResizablePanel",
+    state: "size",
+    default: defaultSize,
+    controlled: sizeProp,
+  });
+  const handleResize: PanelProps["onResize"] = (nextSize, id, previousSize) => {
+    setSize(nextSize.asPercentage);
+    onResize?.(nextSize, id, previousSize);
+    onSizeChange?.(nextSize.asPercentage);
+  };
 
   React.useEffect(() => {
     if (size !== undefined) {
@@ -363,29 +341,24 @@ export const ResizablePanel: IComponent<ResizablePanelProps> = function SuiResiz
     }
   }, [size]);
 
-  const handleResize: PanelProps["onResize"] = (nextSize, id, previousSize) => {
-    onResize?.(nextSize, id, previousSize);
-    onSizeChange?.(nextSize.asPercentage);
-  };
-  const element = useRender({
+  return useRender({
     props: [
-      otherDivProps,
+      otherProps,
       {
-        render,
+        render: <ExternalPanel />,
         maxSize: normalizePanelSize(maxSize),
         minSize: normalizePanelSize(minSize),
         children,
         onResize: handleResize,
         panelRef,
-        className: "sui_resizable_panel",
-        defaultSize: panelSize,
+        className: cn<ResizablePanelState>("sui_resizable_panel"),
       },
     ],
-    state,
+    state: {
+      orientation: ctx.orientation,
+    },
     defaultTagName: "div",
   });
-
-  return element;
 };
 
 export { ResizablePanel as Panel };
@@ -412,30 +385,45 @@ export namespace Panel {
 // ------
 
 /**
+ * ハンドルの向きです。
+ *
+ * - `"horizontal"`: 水平方向のハンドルです。
+ * - `"vertical"`: 垂直方向のハンドルです。
+ */
+export type ResizableHandleDirection = "horizontal" | "vertical";
+
+/**
  * {@link ResizableHandle} が持つ状態です。
  */
 export type ResizableHandleState = {
   /**
-   * パネル群の向きです。
+   * ハンドルの向きです。
    */
-  readonly direction: ResizableRootDirection;
+  readonly direction: ResizableHandleDirection;
 
   /**
    * ハンドルが無効かどうかです。
    */
   readonly disabled: boolean;
+
+  /**
+   * ハンドルを非表示にするかどうかです。
+   */
+  readonly invisible: boolean;
 };
 
 export namespace ResizableHandleProps {
-  export type Render = RenderProps<ResizableHandleState>;
+  export type Render = Omit<RenderProps<ResizableHandleState>, "render">;
 
   export type SuruUI = {
     /**
-     * 中央にグリップを表示するかどうかを指定します。
+     * ハンドルを非表示にするかどうかです。
+     *
+     * 非表示にすると太さが 0 になりますが、判定領域は残るためリサイズは引き続き可能です。
      *
      * @default false
      */
-    withHandle?: boolean | undefined;
+    invisible?: boolean | undefined;
   };
 
   export type BaseUI = Pick<
@@ -470,37 +458,31 @@ export type ResizableHandleProps = ResizableHandleProps.Render &
 export const ResizableHandle: IComponent<ResizableHandleProps> = function SuiResizableHandle(
   props,
 ) {
-  const ctx = useResizableContext(true);
-  const direction = ctx?.direction ?? "horizontal";
-  const {
-    render = <Separator />,
-    children,
-    disabled = false,
-    withHandle = false,
-    ...otherDivProps
-  } = props;
-  const state: ResizableHandleState = { disabled, direction };
+  const ctx = useResizableContext();
+  const { disabled = false, invisible = false, ...otherProps } = props;
+  // ハンドルはパネル群と直交するため、ルートの orientation とは逆の向きになります。
+  const direction = ctx.orientation === "horizontal" ? "vertical" : "horizontal";
 
   return useRender({
     props: [
-      otherDivProps,
+      otherProps,
       {
-        render,
-        children: withHandle ? (
-          <span className="sui_resizable_handle_grip">{children}</span>
-        ) : (
-          children
-        ),
+        render: <Separator />,
         disabled,
-        className: cn(
+        className: cn<ResizableHandleState>(
           "sui_resizable_handle",
-          (state: ResizableHandleState) => state.disabled && "sui_resizable_handle-disabled",
+          `sui_resizable_handle-direction_${direction}`,
+          (state) => state.invisible && "sui_resizable_handle-invisible",
+          (state) => state.disabled && "sui_resizable_handle-disabled",
         ),
-        "aria-orientation": direction === "horizontal" ? "vertical" : "horizontal",
-        "data-direction": direction,
+        "aria-orientation": direction,
       },
     ],
-    state,
+    state: {
+      disabled,
+      direction,
+      invisible,
+    },
     defaultTagName: "div",
   });
 };
@@ -521,4 +503,6 @@ export namespace Handle {
 
     export type HTML = ResizableHandleProps.HTML;
   }
+
+  export type Direction = ResizableHandleDirection;
 }

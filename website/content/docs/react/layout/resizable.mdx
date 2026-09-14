@@ -67,19 +67,15 @@ import * as Resizable from "@suru-ui/react/resizable";
       description:
         "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
     },
-    direction: {
-      type: '"horizontal" | "vertical"',
-      default: '"horizontal"',
-      description:
-        'パネルを並べる向きです。"horizontal" は水平方向に、"vertical" は垂直方向にパネルを並べます。',
-    },
     onLayout: {
       type: "function",
       description: "パネルサイズの配列が変化したときに呼び出されます。",
     },
     orientation: {
       type: '"horizontal" | "vertical"',
-      description: "パネルを並べる向きです。direction の別名です。",
+      default: '"horizontal"',
+      description:
+        'パネルを並べる向きです。"horizontal" は水平方向に、"vertical" は垂直方向にパネルを並べます。',
     },
     render: {
       type: "React.ReactElement | function",
@@ -161,10 +157,10 @@ import * as Resizable from "@suru-ui/react/resizable";
       description:
         "要素に適用される CSS クラス、またはコンポーネントの状態に基づいてそれを返す関数です。",
     },
-    withHandle: {
+    invisible: {
       type: "boolean",
       default: "false",
-      description: "中央にグリップを表示します。",
+      description: "ハンドルを非表示にします。判定領域は残るため、リサイズは引き続き可能です。",
     },
     render: {
       type: "React.ReactElement | function",

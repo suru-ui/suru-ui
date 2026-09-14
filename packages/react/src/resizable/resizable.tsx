@@ -10,7 +10,7 @@ import {
   type ResizablePanelState,
   type ResizableHandleProps,
   type ResizableHandleState,
-  type ResizableRootDirection,
+  type ResizableHandleDirection,
   type ResizableRootOrientation,
   ResizableRoot,
   ResizablePanel,
@@ -21,8 +21,6 @@ import {
 // Types
 // -----
 
-export type ResizableDirection = ResizableRootDirection;
-
 export type ResizableOrientation = ResizableRootOrientation;
 
 /**
@@ -31,31 +29,9 @@ export type ResizableOrientation = ResizableRootOrientation;
 export type ResizableState = ResizableRootState;
 
 /**
- * {@link Resizable} の各パーツに渡す props です。
- */
-export type ResizableSlotProps = {
-  /**
-   * {@link ResizableRoot} に渡す props です。
-   */
-  readonly root?: Omit<ResizableRootProps, "children"> | undefined;
-};
-
-/**
  * {@link Resizable} に渡す props です。
  */
-export type ResizableProps = Omit<ResizableRootProps, "children"> & {
-  /**
-   * リサイズ可能なパネルとハンドルです。
-   *
-   * {@link ResizablePanel} と {@link ResizableHandle} を交互に配置します。
-   */
-  readonly children?: React.ReactNode | undefined;
-
-  /**
-   * 各パーツに個別の props を渡すためのオブジェクトです。
-   */
-  readonly slotProps?: ResizableSlotProps | undefined;
-};
+export type ResizableProps = ResizableRootProps;
 
 // API
 // ---
@@ -84,30 +60,9 @@ interface IUseResizableAPI {
  * {@link ResizableAPI} を作成するフックです。
  */
 export const useResizableAPI: IUseResizableAPI = function useSuiResizableAPI(props) {
-  const { children, slotProps: { root: rootProps = {} } = {}, ...otherRootProps } = props;
-
   return {
     getRootProps() {
-      const {
-        onLayout: onSlotLayout,
-        onLayoutChange: onSlotLayoutChange,
-        ...otherSlotRootProps
-      } = rootProps;
-      const { onLayout: onRootLayout, onLayoutChange: onRootLayoutChange } = otherRootProps;
-
-      return {
-        ...otherRootProps,
-        ...otherSlotRootProps,
-        children,
-        onLayout: (...args) => {
-          onSlotLayout?.(...args);
-          onRootLayout?.(...args);
-        },
-        onLayoutChange: (...args) => {
-          onSlotLayoutChange?.(...args);
-          onRootLayoutChange?.(...args);
-        },
-      };
+      return props;
     },
   };
 };
@@ -134,11 +89,6 @@ interface ResizableType extends IComponent<ResizableProps> {
   readonly PanelGroup: IComponent<ResizableRootProps>;
 
   /**
-   * パネル群のルート要素です。
-   */
-  readonly Root: IComponent<ResizableRootProps>;
-
-  /**
    * {@link useResizableContext} です。
    */
   readonly useContext: IUseContext<ResizableContext>;
@@ -157,7 +107,6 @@ export const Resizable: ResizableType = /*#__PURE__*/ Object.assign(
     return <ResizableRoot {...api.getRootProps()} />;
   },
   {
-    Root: ResizableRoot,
     Panel: ResizablePanel,
     Handle: ResizableHandle,
     PanelGroup: ResizableRoot,
@@ -170,11 +119,7 @@ export namespace Resizable {
 
   export type Props = ResizableProps;
 
-  export type SlotProps = ResizableSlotProps;
-
   export type Context = ResizableContext;
-
-  export type Direction = ResizableDirection;
 
   export type Orientation = ResizableOrientation;
 
@@ -192,6 +137,8 @@ export namespace Resizable {
 
       export type HTML = ResizableHandleProps.HTML;
     }
+
+    export type Direction = ResizableHandleDirection;
   }
 
   export namespace Panel {

@@ -11,7 +11,7 @@ export default function Basic() {
         <h2 className="mb-2 text-lg font-semibold">サイドバー</h2>
         <p>パネルの境界をドラッグして幅を変更できます。</p>
       </Resizable.Panel>
-      <Resizable.Handle withHandle />
+      <Resizable.Handle />
       <Resizable.Panel className="bg-(--sui-canvas-1) p-6" defaultSize={65}>
         <h2 className="mb-2 text-lg font-semibold">コンテンツ</h2>
         <p>キーボードの矢印キーでもサイズを変更できます。</p>

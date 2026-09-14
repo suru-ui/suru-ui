@@ -555,8 +555,6 @@ export {
   type ResizableAPI,
   type ResizableProps,
   type ResizableState,
-  type ResizableDirection,
-  type ResizableSlotProps,
   type ResizableOrientation,
   Resizable,
   useResizableAPI,

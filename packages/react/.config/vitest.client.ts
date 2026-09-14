@@ -9,6 +9,9 @@ export default defineConfig({
   oxc: {
     target: "es2020",
   },
+  resolve: {
+    dedupe: ["react", "react-dom"],
+  },
   define: {
     __DEBUG__: `${isDebugMode}`,
     __CLIENT__: "true",
