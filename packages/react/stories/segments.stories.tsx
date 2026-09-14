@@ -4,6 +4,7 @@ import * as React from "react";
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Segments, SegmentsItem } from "../src/segments/index.js";
 
+const ACTIVE_VARIANTS: readonly Segments.ActiveVariant[] = theme.COLOR_TEMPLATES;
 const COLORS: readonly Segments.Color[] = theme.COLORS;
 const RADII: readonly Segments.Radius[] = ["none", ...theme.SIZES, "full"];
 const SIZES: readonly Segments.Size[] = theme.SIZES;
@@ -16,6 +17,10 @@ const meta = preview.meta({
 export default meta;
 
 const ctrl = controls(Segments, {
+  activeVariant: {
+    control: "select",
+    options: ACTIVE_VARIANTS,
+  },
   color: {
     control: "select",
     options: COLORS,
@@ -48,6 +53,7 @@ const usageItems = [
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
+    activeVariant: "solid",
     color: "grey",
     radius: undefined,
     size: "md",
@@ -60,8 +66,9 @@ export const Usage = meta.story({
 export const Colors = meta.story({
   name: "色",
   ...ctrl({
-    size: "md",
+    activeVariant: "solid",
     radius: undefined,
+    size: "md",
   }),
   render(props) {
     return (
@@ -77,9 +84,36 @@ export const Colors = meta.story({
   },
 });
 
+export const ActiveVariants = meta.story({
+  name: "選択中の外観",
+  ...ctrl({
+    color: "grey",
+    radius: undefined,
+    size: "md",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        {ACTIVE_VARIANTS.map((activeVariant) => (
+          <div key={activeVariant} className="flex flex-col gap-2">
+            <span>{activeVariant}</span>
+            <Segments
+              {...props}
+              items={usageItems}
+              defaultValue="week"
+              activeVariant={activeVariant}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
 export const Radii = meta.story({
   name: "角丸",
   ...ctrl({
+    activeVariant: "solid",
     color: "grey",
     size: "md",
   }),
@@ -100,6 +134,7 @@ export const Radii = meta.story({
 export const Sizes = meta.story({
   name: "大きさ",
   ...ctrl({
+    activeVariant: "solid",
     color: "grey",
     radius: undefined,
   }),
@@ -120,9 +155,10 @@ export const Sizes = meta.story({
 export const Controlled = meta.story({
   name: "制御",
   ...ctrl({
+    activeVariant: "solid",
     color: "grey",
-    size: "md",
     radius: undefined,
+    size: "md",
   }),
   render(props) {
     const [value, setValue] = React.useState("week");
@@ -144,9 +180,10 @@ export const Controlled = meta.story({
 export const Renderer = meta.story({
   name: "描画の上書き",
   ...ctrl({
+    activeVariant: "solid",
     color: "grey",
-    size: "md",
     radius: undefined,
+    size: "md",
   }),
   render(props) {
     return (
@@ -164,9 +201,10 @@ export const Renderer = meta.story({
 export const DisabledItem = meta.story({
   name: "無効な項目",
   ...ctrl({
+    activeVariant: "solid",
     color: "grey",
-    size: "md",
     radius: undefined,
+    size: "md",
   }),
   render(props) {
     return (

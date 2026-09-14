@@ -450,7 +450,7 @@
       --sui_tabs_indicator-display: block;
       --sui_tabs_indicator-background_color: color-mix(
                                                in oklab,
-                                               var(--sui-canvas-1) 100%,
+                                               var(--sui_tabs_list-background_color) 100%,
                                                var(--sui-grey-naked-canvas-normal) 100%
                                              );
       --sui_tabs_indicator-border_color: var(--sui-grey-naked-border-normal);

@@ -581,6 +581,7 @@ export {
   type SegmentsSlotProps,
   type SegmentsItemObject,
   type ISegmentsItemRenderer,
+  type SegmentsActiveVariant,
   Segments,
   useSegmentsAPI,
 } from "./segments/index.js";

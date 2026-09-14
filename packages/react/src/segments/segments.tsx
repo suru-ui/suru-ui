@@ -18,6 +18,7 @@ import {
   type SegmentsListItemObject,
   type SegmentsRootOrientation,
   type ISegmentsListItemRenderer,
+  type SegmentsRootActiveVariant,
   type SegmentsRootChangeEventReason,
   type SegmentsRootChangeEventDetails,
   SegmentsItem,
@@ -32,6 +33,8 @@ import {
 export type SegmentsChangeEventDetails = SegmentsRootChangeEventDetails;
 
 export type SegmentsChangeEventReason = SegmentsRootChangeEventReason;
+
+export type SegmentsActiveVariant = SegmentsRootActiveVariant;
 
 export type SegmentsColor = SegmentsRootColor;
 
@@ -235,6 +238,8 @@ export namespace Segments {
   export type Props = SegmentsProps;
 
   export type SlotProps = SegmentsSlotProps;
+
+  export type ActiveVariant = SegmentsActiveVariant;
 
   export type ChangeEventDetails = SegmentsChangeEventDetails;
 

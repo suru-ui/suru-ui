@@ -1,6 +1,6 @@
 import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import { Tabs as BaseTabs } from "@base-ui/react/tabs";
-import type { Size, Color } from "@suru-ui/theme";
+import type { Size, Color, ColorTemplate } from "@suru-ui/theme";
 import * as React from "react";
 
 import toReactNode from "../_to-react-node.js";
@@ -31,6 +31,15 @@ export type SegmentsRootChangeEventReason = BaseTabs.Root.ChangeEventReason;
  * - `"vertical"`: 垂直方向
  */
 export type SegmentsRootOrientation = BaseTabs.Root.Orientation;
+
+/**
+ * 選択中のセグメントの主な外観です。
+ *
+ * - `"solid"`: 塗りつぶし
+ * - `"naked"`: 背景なし
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type SegmentsRootActiveVariant = ColorTemplate;
 
 /**
  * Segments の配色です。
@@ -66,6 +75,13 @@ export namespace SegmentsRootProps {
   export type Render = RenderProps<SegmentsRootState>;
 
   export type SuruUI = {
+    /**
+     * 選択中のセグメントの主な外観を指定します。
+     *
+     * @default "solid"
+     */
+    activeVariant?: SegmentsRootActiveVariant | undefined;
+
     /**
      * Segments の配色を指定します。
      *
@@ -125,6 +141,7 @@ export const SegmentsRoot: IComponent<SegmentsRootProps> = function SuiSegmentsR
     color = "grey",
     radius = size,
     className,
+    activeVariant = "solid",
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherProps
@@ -139,6 +156,7 @@ export const SegmentsRoot: IComponent<SegmentsRootProps> = function SuiSegmentsR
         `sui_segments-size_${size}`,
         `sui_segments-color_${color}`,
         `sui_segments-radius_${radius}`,
+        `sui_segments-active_variant_${activeVariant}`,
       )}
       data-scope={dataScope}
     />
@@ -161,6 +179,8 @@ export namespace Root {
 
     export type HTML = SegmentsRootProps.HTML;
   }
+
+  export type ActiveVariant = SegmentsRootActiveVariant;
 
   export type ChangeEventDetails = SegmentsRootChangeEventDetails;
 
