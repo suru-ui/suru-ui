@@ -55,10 +55,10 @@ import {
   SelectPositioner,
   useSelectContext,
   SelectItemIndicator,
-  SelectScrollUpArrow,
-  SelectScrollDownArrow,
   SelectListItemGroup,
+  SelectScrollUpArrow,
   SelectListLabeledItem,
+  SelectScrollDownArrow,
 } from "./select.parts.jsx";
 
 // Types
@@ -79,8 +79,6 @@ export type SelectVariant = SelectRootVariant;
 export type SelectLabeledItem<TValue = any> = SelectRootLabeledItem<TValue>;
 
 export type SelectItemGroup<TValue = any> = SelectRootItemGroup<TValue>;
-
-export type SelectItem<TValue = any> = SelectRootItem<TValue>;
 
 export type SelectItems<TValue = any> = SelectRootItems<TValue>;
 
@@ -243,11 +241,15 @@ export interface SelectAPI<
 
   /**
    * {@link SelectGroupLabel} に渡す props を取得します。
+   *
+   * @param item グループです。
    */
   getGroupLabelProps(item: SelectListItemGroup): SelectGroupLabelProps | null;
 
   /**
    * {@link SelectGroup} に渡す props を取得します。
+   *
+   * @param item グループです。
    */
   getGroupProps(item: SelectListItemGroup): Override<
     SelectGroupProps,
@@ -268,11 +270,16 @@ export interface SelectAPI<
 
   /**
    * {@link SelectItem} に渡す props を取得します。
+   *
+   * @param item 項目です。
+   * @param index 項目のインデックスです。
    */
   getItemProps(item: SelectListLabeledItem, index: number): Omit<SelectItemProps, "children">;
 
   /**
    * {@link SelectItemText} に渡す props を取得します。
+   *
+   * @param item 項目です。
    */
   getItemTextProps(item: SelectListLabeledItem): SelectItemTextProps;
 
@@ -313,6 +320,9 @@ export interface SelectAPI<
 
   /**
    * {@link SelectSeparator} に渡す props を取得します。
+   *
+   * @param index 項目のインデックスです。
+   * @param items すべての項目です。
    */
   getSeparatorProps(index: number, items: readonly any[]): SelectSeparatorProps | null;
 
@@ -344,7 +354,10 @@ interface IUseSelectAPI {
 /**
  * {@link SelectAPI} を作成するフックです。
  */
-export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI(props: SelectProps) {
+export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI<
+  TValue,
+  TMultiple extends boolean | undefined = boolean | undefined,
+>(props: SelectProps<TValue, TMultiple>) {
   const {
     id,
     form,
@@ -418,8 +431,8 @@ export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI(props: Selec
         children,
       };
     },
-    getRootProps(): any {
-      const rootProps: Required<Omit<SelectRootProps<any, any>, "children">> = {
+    getRootProps() {
+      const rootProps: Omit<SelectRootProps<TValue, TMultiple>, "children"> = {
         id,
         form,
         name,
@@ -651,12 +664,6 @@ export const Select: ISelect = /*#__PURE__*/ Object.assign(
 export namespace Select {
   export type State = SelectState;
 
-  /**
-   * {@link SelectProps}
-   *
-   * @template TValue 項目の値の型です。
-   * @template TMultiple 複数選択を有効にするかどうかです。
-   */
   export type Props<
     TValue = any,
     TMultiple extends boolean | undefined = boolean | undefined,
@@ -672,7 +679,7 @@ export namespace Select {
 
   export type ChangeEventReason = SelectChangeEventReason;
 
-  export type Item<TValue = any> = SelectItem<TValue>;
+  export type Item<TValue = any> = SelectRootItem<TValue>;
 
   export type ItemGroup<TValue = any> = SelectItemGroup<TValue>;
 

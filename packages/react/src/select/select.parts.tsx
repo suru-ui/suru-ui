@@ -121,6 +121,89 @@ export namespace Context {
 // ----
 
 /**
+ * {@link SelectRoot} のアクションです。
+ */
+export type SelectRootActions = BaseSelect.Root.Actions;
+
+/**
+ * {@link SelectRoot} の値が変更するイベントの詳細です。
+ */
+export type SelectRootChangeEventDetails = BaseSelect.Root.ChangeEventDetails;
+
+/**
+ * {@link SelectRoot} の値が変更する理由です。
+ */
+export type SelectRootChangeEventReason = BaseSelect.Root.ChangeEventReason;
+
+/**
+ * 項目の値と表示内容を対応付けたオブジェクトです。
+ *
+ * @template TValue 項目の値の型です。
+ */
+export type SelectRootItemMapping<TValue = any> = TValue extends string
+  ? { readonly [_ in TValue]: React.ReactNode }
+  : never;
+
+/**
+ * 値と表示内容を組にした、リストの項目です。
+ *
+ * `label` を表示し、`value` を選択値として扱います。
+ *
+ * @template TValue 項目の値の型です。
+ */
+export type SelectRootLabeledItem<TValue = any> = Override<
+  Omit<SelectItemProps, "children">,
+  {
+    readonly label: React.ReactNode;
+
+    readonly value: TValue;
+  }
+>;
+
+/**
+ * リストに表示する項目です。
+ *
+ * 値そのものか、ラベルと値を持つオブジェクトを指定できます。
+ *
+ * @template TValue 項目の値の型です。
+ */
+export type SelectRootItem<TValue = any> = TValue | SelectRootLabeledItem<TValue>;
+
+/**
+ * 関連する項目をまとめるグループです。
+ *
+ * @template TValue 項目の値の型です。
+ */
+export type SelectRootItemGroup<TValue = any> = Override<
+  Omit<SelectGroupProps, "children">,
+  {
+    /**
+     * グループに含まれる項目です。
+     */
+    readonly items: SelectRootItemMapping<TValue> | readonly SelectRootItem<TValue>[];
+
+    /**
+     * グループの見出しです。
+     */
+    readonly label?: React.ReactNode | undefined;
+  }
+>;
+
+/**
+ * リストに表示する項目の一覧です。
+ *
+ * - 値と表示内容を対応付けたオブジェクト
+ * - 平坦な項目の配列
+ * - グループ化した項目の配列
+ *
+ * @template TValue 項目の値の型です。
+ */
+export type SelectRootItems<TValue = any> =
+  | SelectRootItemMapping<TValue>
+  | readonly SelectRootItem<TValue>[]
+  | readonly SelectRootItemGroup<TValue>[];
+
+/**
  * 選択欄の角丸です。
  *
  * - `"none"`: 角を直角にする
@@ -147,56 +230,6 @@ export type SelectRootSize = Size;
  * - `"liquid"`: 薄い塗りつぶし
  */
 export type SelectRootVariant = "naked" | "liquid";
-
-/**
- * {@link SelectRoot} のアクションです。
- */
-export type SelectRootActions = BaseSelect.Root.Actions;
-
-/**
- * {@link SelectRoot} の値が変更するイベントの詳細です。
- */
-export type SelectRootChangeEventDetails = BaseSelect.Root.ChangeEventDetails;
-
-/**
- * {@link SelectRoot} の値が変更する理由です。
- */
-export type SelectRootChangeEventReason = BaseSelect.Root.ChangeEventReason;
-
-export type SelectRootItemMapping<TValue = any> = TValue extends string
-  ? { readonly [_ in TValue]: React.ReactNode }
-  : never;
-
-export type SelectRootLabeledItem<TValue = any> = Override<
-  Omit<SelectItemProps, "children">,
-  {
-    readonly label: React.ReactNode;
-
-    readonly value: TValue;
-  }
->;
-
-export type SelectRootItem<TValue = any> = TValue | SelectRootLabeledItem<TValue>;
-
-export type SelectRootItemGroup<TValue = any> = Override<
-  Omit<SelectGroupProps, "children">,
-  {
-    /**
-     * グループに含まれる項目です。
-     */
-    readonly items: SelectRootItemMapping<TValue> | readonly SelectRootItem<TValue>[];
-
-    /**
-     * グループの見出しです。
-     */
-    readonly label?: React.ReactNode | undefined;
-  }
->;
-
-export type SelectRootItems<TValue = any> =
-  | SelectRootItemMapping<TValue>
-  | readonly SelectRootItem<TValue>[]
-  | readonly SelectRootItemGroup<TValue>[];
 
 /**
  * {@link SelectRoot} が持つ状態です。
@@ -353,8 +386,8 @@ export const SelectRoot: ISelectRoot = function SuiSelectRoot(props: SelectRootP
 
       if (isItemGroup(item)) {
         return {
-          label: item.label,
           items: item.items,
+          label: item.label,
         };
       }
 
@@ -1088,8 +1121,18 @@ export namespace Content {
 // List
 // ----
 
+/**
+ * ラベルと値を持つ、リストの項目です。
+ *
+ * @template TValue 項目の値の型です。
+ */
 export type SelectListLabeledItem<TValue = any> = SelectRootLabeledItem<TValue>;
 
+/**
+ * ラベルと値を持つ項目をまとめる、リストのグループです。
+ *
+ * @template TValue 項目の値の型です。
+ */
 export type SelectListItemGroup<TValue = any> = Override<
   SelectRootItemGroup<TValue>,
   {
@@ -1097,6 +1140,11 @@ export type SelectListItemGroup<TValue = any> = Override<
   }
 >;
 
+/**
+ * リストに表示する項目です。
+ *
+ * @template TValue 項目の値の型です。
+ */
 export type SelectListItem<TValue = any> =
   | SelectListLabeledItem<TValue>
   | SelectListItemGroup<TValue>;
@@ -1180,12 +1228,12 @@ export type SelectListProps<TValue = any> = SelectListProps.Render &
  * {@link SelectRoot} の `items` を読み取り、関数子を受け取った場合は各項目に適用します。
  */
 export const SelectList: IComponent<SelectListProps> = function SuiSelectList(props) {
-  const { items = [] } = useSelectContext();
+  const ctx = useSelectContext();
   const { children = defaultListItemRenderer, className, ...otherProps } = props;
 
   return (
     <BaseSelect.List {...otherProps} className={cn(className, "sui_select_list")}>
-      {typeof children === "function" ? renderListItems(items, children) : children}
+      {typeof children === "function" ? renderListItems(ctx.items ?? [], children) : children}
     </BaseSelect.List>
   );
 };
@@ -1301,7 +1349,7 @@ export namespace List {
     export type HTML = SelectListProps.HTML;
   }
 
-  export type ItemGroup<TValue = any> = SelectRootItemGroup<TValue>;
+  export type ItemGroup<TValue = any> = SelectListItemGroup<TValue>;
 
   export interface IItemRenderer<TValue = any> extends ISelectListItemRenderer<TValue> {}
 }
@@ -1379,7 +1427,7 @@ export namespace Arrow {
 /**
  * {@link SelectItem} が持つ状態です。
  */
-export type SelectItemState = Override<Button.Root.State, BaseSelect.Item.State>;
+export type SelectItemState = Override<Button.ButtonRootState, BaseSelect.Item.State>;
 
 export namespace SelectItemProps {
   export type Render = RenderProps<SelectItemState>;
@@ -1387,7 +1435,7 @@ export namespace SelectItemProps {
   export type SuruUI = {};
 
   export type BaseUI = Override<
-    Button.Root.Props.BaseUI,
+    Button.ButtonRootProps.BaseUI,
     Pick<
       React.ComponentProps<typeof BaseSelect.Item>,
       Exclude<
@@ -1453,9 +1501,9 @@ export const SelectItem: IComponent<SelectItemProps> = function SuiSelectItem(pr
       {...baseuiProps}
       render={(htmlProps: {}, state) => {
         const buttonRootProps: Required<
-          Button.Root.Props.SuruUI &
-            Button.Root.Props.BaseUI &
-            Pick<Button.Root.Props.HTML, "disabled">
+          Button.ButtonRootProps.SuruUI &
+            Button.ButtonRootProps.BaseUI &
+            Pick<Button.ButtonRootProps.HTML, "disabled">
         > = {
           item: true,
           size: ctx?.size,

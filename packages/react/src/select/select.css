@@ -555,8 +555,9 @@
 /* 変数 */
 :scope {
   --sui_select_scroll_up_arrow-size: ;
+  --sui_select_scroll_up_arrow-background_color: ;
+  --sui_select_scroll_up_arrow-background_image: ;
   --sui_select_scroll_up_arrow-border_radius: ;
-  --sui_select_scroll_up_arrow-background-color: ;
   --sui_select_scroll_up_arrow__svg-size: ;
   --sui_select_scroll_up_arrow__svg-color: ;
 }
@@ -565,11 +566,7 @@
 :scope {
   .sui_select_scroll_up_arrow {
     height: var(--sui_select_scroll_up_arrow-size);
-    background: linear-gradient(
-                  to bottom,
-                  var(--sui_select_scroll_up_arrow-background-color) 60%,
-                  transparent
-                );
+    background-image: var(--sui_select_scroll_up_arrow-background_image);
     border-top-left-radius: var(--sui_select_scroll_up_arrow-border_radius);
     border-top-right-radius: var(--sui_select_scroll_up_arrow-border_radius);
 
@@ -583,12 +580,17 @@
 
 /* 代入 */
 :scope {
-  --sui_select_scroll_up_arrow-background-color: var(--sui_select_content-background_color);
-  --sui_select_scroll_up_arrow-border_radius: var(--sui_select_content-border_radius);
   --sui_select_scroll_up_arrow-size: calc(
                                        var(--sui_select_content-font_size)
                                        * var(--sui_select_content-line_height)
                                      );
+  --sui_select_scroll_up_arrow-background_color: var(--sui_select_content-background_color);
+  --sui_select_scroll_up_arrow-background_image: linear-gradient(
+                                                    to bottom,
+                                                    var(--sui_select_scroll_up_arrow-background_color) 60%,
+                                                    transparent
+                                                  );
+  --sui_select_scroll_up_arrow-border_radius: var(--sui_select_content-border_radius);
   --sui_select_scroll_up_arrow__svg-size: var(--sui_select_scroll_up_arrow-size);
   --sui_select_scroll_up_arrow__svg-color: --sui-icon_color(
                                              var(--sui_select_content-color),
@@ -619,8 +621,9 @@
 /* 変数 */
 :scope {
   --sui_select_scroll_down_arrow-size: ;
+  --sui_select_scroll_down_arrow-background_color: ;
+  --sui_select_scroll_down_arrow-background_image: ;
   --sui_select_scroll_down_arrow-border_radius: ;
-  --sui_select_scroll_down_arrow-background-color: ;
   --sui_select_scroll_down_arrow__svg-size: ;
   --sui_select_scroll_down_arrow__svg-color: ;
 }
@@ -629,11 +632,7 @@
 :scope {
   .sui_select_scroll_down_arrow {
     height: var(--sui_select_scroll_down_arrow-size);
-    background: linear-gradient(
-                  to top,
-                  var(--sui_select_scroll_down_arrow-background-color) 60%,
-                  transparent
-                );
+    background-image: var(--sui_select_scroll_down_arrow-background_image);
     border-bottom-right-radius: var(--sui_select_scroll_down_arrow-border_radius);
     border-bottom-left-radius: var(--sui_select_scroll_down_arrow-border_radius);
 
@@ -647,79 +646,22 @@
 
 /* 代入 */
 :scope {
-  --sui_select_scroll_down_arrow-background-color: var(--sui_select_content-background_color);
-  --sui_select_scroll_down_arrow-border_radius: var(--sui_select_content-border_radius);
   --sui_select_scroll_down_arrow-size: calc(
                                          var(--sui_select_content-font_size)
                                          * var(--sui_select_content-line_height)
                                        );
+  --sui_select_scroll_down_arrow-background_color: var(--sui_select_content-background_color);
+  --sui_select_scroll_down_arrow-background_image: linear-gradient(
+                                                      to top,
+                                                      var(--sui_select_scroll_down_arrow-background_color) 60%,
+                                                      transparent
+                                                    );
+  --sui_select_scroll_down_arrow-border_radius: var(--sui_select_content-border_radius);
   --sui_select_scroll_down_arrow__svg-size: var(--sui_select_scroll_down_arrow-size);
   --sui_select_scroll_down_arrow__svg-color: --sui-icon_color(
                                                var(--sui_select_content-color),
                                                var(--sui_select_content-background_color)
                                              );
-}
-
-} /* @scope */
-} /* @layer */
-
-/* ScrollArea */
-@layer sui.component {
-@scope (.sui_select_portal) to ([data-scope]) {
-
-/* 固定 */
-:scope {
-  .sui_select_scroll_area {
-    height: fit-content;
-  }
-}
-
-/* 変数 */
-:scope {
-  --sui_select_scroll_area-max_height: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_select_scroll_area {
-    max-height: min(var(--sui_select_scroll_area-max_height), var(--available-height));
-  }
-}
-
-/* 代入 */
-:scope {
-  --sui_select_scroll_area-max_height: 16em;
-}
-
-} /* @scope */
-} /* @layer */
-
-/* Viewport */
-@layer sui.component {
-@scope (.sui_select_portal) to ([data-scope]) {
-
-/* 固定 */
-:scope {
-  .sui_select_scroll_area > .sui_scroll_area_viewport {
-    height: fit-content;
-  }
-}
-
-/* 変数 */
-:scope {
-  --sui_select_viewport-max_height: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_select_scroll_area > .sui_scroll_area_viewport {
-    max-height: min(var(--sui_select_viewport-max_height), var(--available-height));
-  }
-}
-
-/* 代入 */
-:scope {
-  --sui_select_viewport-max_height: var(--sui_select_scroll_area-max_height);
 }
 
 } /* @scope */
@@ -966,7 +908,7 @@
 
 /* disabled */
 @layer sui.important {
-@scope (.sui_select, .sui_select_portal) to ([data-scope]) {
+@scope (.sui_select) to ([data-scope]) {
 
 /* Trigger */
 :scope {
