@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import type { LikelyVisibleNode } from "../_is-likely-visible-node.js";
+import mergeProps from "../_merge-props.js";
 import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
 import { isItemObject } from "./_segments.jsx";
@@ -160,7 +161,7 @@ export const useSegmentsAPI: IUseSegmentsAPI = function useSuiSegmentsAPI(props)
     getLabel(item) {
       return isItemObject(item) ? toReactNode(item.label) : toReactNode(item);
     },
-    getItemProps(item) {
+    getItemProps(item): any {
       if (!isItemObject(item)) {
         return {
           ...itemProps,
@@ -171,15 +172,10 @@ export const useSegmentsAPI: IUseSegmentsAPI = function useSuiSegmentsAPI(props)
       const {
         // label を取り除いた props を SegmentsItem の props とします。
         label: _label,
-        value,
         ...otherItemProps
       } = item;
 
-      return {
-        ...otherItemProps,
-        value,
-        ...itemProps, // JSDoc 通り、`slotProps.item` を優先します。
-      };
+      return mergeProps([itemProps, otherItemProps]);
     },
     getListProps() {
       return {

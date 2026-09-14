@@ -247,16 +247,16 @@ export interface SelectAPI<
   getGroupLabelProps(item: SelectListItemGroup): SelectGroupLabelProps | null;
 
   /**
+   * @param item グループです。
+   */
+  getGroupedItems(item: SelectListItemGroup): SelectListItemGroup["items"];
+
+  /**
    * {@link SelectGroup} に渡す props を取得します。
    *
    * @param item グループです。
    */
-  getGroupProps(item: SelectListItemGroup): Override<
-    SelectGroupProps,
-    {
-      children: SelectListItemGroup["items"];
-    }
-  >;
+  getGroupProps(item: SelectListItemGroup): Omit<SelectGroupProps, "children">;
 
   /**
    * {@link SelectIcon} に渡す props を取得します。
@@ -468,12 +468,9 @@ export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI<
       return arrowProps;
     },
     getGroupProps(item) {
-      const { items, label: _, ...otherGroupProps } = item;
+      const { items: _, label: __, ...otherGroupProps } = item;
 
-      return {
-        ...mergeProps([groupProps, otherGroupProps]),
-        children: items,
-      };
+      return mergeProps([groupProps, otherGroupProps]);
     },
     getLabelProps() {
       if (isLikelyVisibleNode(label)) {
@@ -496,6 +493,9 @@ export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI<
     },
     getContentProps() {
       return contentProps;
+    },
+    getGroupedItems(item) {
+      return item.items;
     },
     getTriggerProps() {
       return triggerProps;
@@ -629,7 +629,7 @@ export const Select: ISelect = /*#__PURE__*/ Object.assign(
                         <React.Fragment key={index}>
                           <SelectGroup {...groupProps}>
                             {groupLabelProps && <SelectGroupLabel {...groupLabelProps} />}
-                            {groupProps.children.map(defaultListItemRenderer)}
+                            {api.getGroupedItems(item).map(defaultListItemRenderer)}
                           </SelectGroup>
                           {separatorProps && <SelectSeparator {...separatorProps} />}
                         </React.Fragment>
