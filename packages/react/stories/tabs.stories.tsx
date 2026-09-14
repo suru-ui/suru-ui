@@ -114,7 +114,7 @@ export const Variant = meta.story({
   },
 });
 
-export const ActiveVariant = meta.story({
+export const ActiveVariants = meta.story({
   name: "選択中の外観",
   ...ctrl({
     orientation: "horizontal",
@@ -144,7 +144,7 @@ export const ActiveVariant = meta.story({
   },
 });
 
-export const Radius = meta.story({
+export const Radii = meta.story({
   name: "角丸",
   ...ctrl({
     activeVariant: "liquid",

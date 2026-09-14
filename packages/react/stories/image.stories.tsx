@@ -49,7 +49,7 @@ export const Usage = meta.story({
   },
 });
 
-export const Radius = meta.story({
+export const Radii = meta.story({
   name: "角丸",
   ...ctrl({
     alt: "風景写真",

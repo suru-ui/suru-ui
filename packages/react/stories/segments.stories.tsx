@@ -5,8 +5,8 @@ import { preview, controls } from "../.config/storybook/preview.js";
 import { Segments, SegmentsItem } from "../src/segments/index.js";
 
 const COLORS: readonly Segments.Color[] = theme.COLORS;
+const RADII: readonly Segments.Radius[] = ["none", ...theme.SIZES, "full"];
 const SIZES: readonly Segments.Size[] = theme.SIZES;
-const RADII: readonly Segments.Radius[] = ["none", ...SIZES, "full"];
 
 const meta = preview.meta({
   title: "Segments",
@@ -20,13 +20,13 @@ const ctrl = controls(Segments, {
     control: "select",
     options: COLORS,
   },
-  size: {
-    control: "select",
-    options: SIZES,
-  },
   radius: {
     control: "select",
     options: RADII,
+  },
+  size: {
+    control: "select",
+    options: SIZES,
   },
 });
 
@@ -49,11 +49,71 @@ export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
     color: "grey",
+    radius: undefined,
+    size: "md",
+  }),
+  render(props) {
+    return <Segments {...props} items={usageItems} defaultValue="week" />;
+  },
+});
+
+export const Colors = meta.story({
+  name: "色",
+  ...ctrl({
     size: "md",
     radius: undefined,
   }),
   render(props) {
-    return <Segments {...props} items={usageItems} defaultValue="week" />;
+    return (
+      <div className="flex flex-col gap-3">
+        {COLORS.map((color) => (
+          <div key={color} className="flex flex-col gap-2">
+            <span>{color}</span>
+            <Segments {...props} color={color} items={usageItems} defaultValue="week" />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Radii = meta.story({
+  name: "角丸",
+  ...ctrl({
+    color: "grey",
+    size: "md",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        {RADII.map((radius) => (
+          <div key={radius} className="flex flex-col gap-2">
+            <span>{radius}</span>
+            <Segments {...props} items={usageItems} radius={radius} defaultValue="week" />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Sizes = meta.story({
+  name: "大きさ",
+  ...ctrl({
+    color: "grey",
+    radius: undefined,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        {SIZES.map((size) => (
+          <div key={size} className="flex flex-col gap-2">
+            <span>{size}</span>
+            <Segments {...props} size={size} items={usageItems} defaultValue="week" />
+          </div>
+        ))}
+      </div>
+    );
   },
 });
 
@@ -97,66 +157,6 @@ export const Renderer = meta.story({
           </SegmentsItem>
         )}
       </Segments>
-    );
-  },
-});
-
-export const Colors = meta.story({
-  name: "色",
-  ...ctrl({
-    size: "md",
-    radius: undefined,
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-col gap-3">
-        {COLORS.map((color) => (
-          <div key={color}>
-            <Segments {...props} color={color} items={usageItems} defaultValue="week" />
-            <div>{color}</div>
-          </div>
-        ))}
-      </div>
-    );
-  },
-});
-
-export const Sizes = meta.story({
-  name: "大きさ",
-  ...ctrl({
-    color: "grey",
-    radius: undefined,
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-col gap-3">
-        {SIZES.map((size) => (
-          <div key={size}>
-            <Segments {...props} size={size} items={usageItems} defaultValue="week" />
-            <div>{size}</div>
-          </div>
-        ))}
-      </div>
-    );
-  },
-});
-
-export const Radius = meta.story({
-  name: "角丸",
-  ...ctrl({
-    color: "grey",
-    size: "md",
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-col gap-3">
-        {(["none", "sm", "md", "lg", "full"] as const).map((radius) => (
-          <div key={radius}>
-            <Segments {...props} items={usageItems} radius={radius} defaultValue="week" />
-            <div>{radius}</div>
-          </div>
-        ))}
-      </div>
     );
   },
 });

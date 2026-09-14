@@ -113,7 +113,7 @@ export const Sizes = meta.story({
   },
 });
 
-export const Radius = meta.story({
+export const Radii = meta.story({
   name: "角丸",
   ...ctrl({
     variant: "liquid",
