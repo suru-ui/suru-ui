@@ -29,25 +29,17 @@ import {
   type MenuBackdropProps,
   type MenuLinkItemProps,
   type MenuRadioItemProps,
-  type MenuRootItemObject,
   type MenuSeparatorProps,
   type MenuGroupLabelProps,
   type MenuPositionerProps,
   type MenuRadioGroupProps,
-  type MenuRootGroupObject,
   type MenuRootOrientation,
   type MenuSubmenuRootProps,
   type MenuCheckboxItemProps,
   type IMenuPopupItemRenderer,
-  type MenuRootLinkItemObject,
-  type MenuRootRadioItemObject,
-  type MenuRootSeparatorObject,
   type MenuSubmenuTriggerProps,
-  type MenuRootActionItemObject,
-  type MenuRootRadioGroupObject,
   type MenuRootChangeEventReason,
   type MenuRootChangeEventDetails,
-  type MenuRootCheckboxItemObject,
   type MenuRadioItemIndicatorProps,
   type MenuCheckboxItemIndicatorProps,
   MenuItem,
@@ -79,21 +71,21 @@ export type MenuChangeEventDetails = MenuRootChangeEventDetails;
 
 export type MenuChangeEventReason = MenuRootChangeEventReason;
 
-export type MenuItemObject = MenuRootItemObject;
+export type MenuItemObject = any;
 
-export type MenuActionItemObject = MenuRootActionItemObject;
+export type MenuActionItemObject = any;
 
-export type MenuCheckboxItemObject = MenuRootCheckboxItemObject;
+export type MenuCheckboxItemObject = any;
 
-export type MenuGroupObject = MenuRootGroupObject;
+export type MenuGroupObject = any;
 
-export type MenuLinkItemObject = MenuRootLinkItemObject;
+export type MenuLinkItemObject = any;
 
-export type MenuRadioGroupObject = MenuRootRadioGroupObject;
+export type MenuRadioGroupObject = any;
 
-export type MenuRadioItemObject = MenuRootRadioItemObject;
+export type MenuRadioItemObject = any;
 
-export type MenuSeparatorObject = MenuRootSeparatorObject;
+export type MenuSeparatorObject = any;
 
 export type MenuOrientation = MenuRootOrientation;
 

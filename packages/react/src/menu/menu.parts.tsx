@@ -4,6 +4,7 @@ import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import { CheckIcon, ChevronRightIcon } from "../_icons.jsx";
+import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import mergeProps from "../_merge-props.js";
 import proxyRenderProps from "../_proxy-render-props.js";
 import toReactNode from "../_to-react-node.js";
@@ -11,18 +12,9 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.jsx";
 import cn from "../cn.js";
 import { ContextMissingError } from "../errors.js";
-import type { Override, IComponent, IUseContext } from "../types.js";
-import {
-  isItemObject,
-  isGroupObject,
-  isLinkItemObject,
-  isRadioItemObject,
-  isSeparatorObject,
-  isRadioGroupObject,
-  isCheckboxItemObject,
-} from "./_menu.jsx";
 
 import "./menu.css";
+import type { Override, IComponent, IUseContext } from "../types.js";
 
 // Context
 // -------
@@ -126,16 +118,28 @@ export namespace Context {
 // ------
 
 /**
- * メニューを制御するハンドルです。
+ * メニューを命令的に制御するハンドルです。
+ *
+ * @template TPayload トリガーが送信するデータの型です。
  */
 export type MenuHandle<TPayload = any> = Menu.Handle<TPayload>;
 
+interface ICreateHandle {
+  /**
+   * @template TPayload トリガーが送信するデータの型です。
+   * @returns メニューを命令的に制御するハンドルです。
+   */
+  <TPayload = any>(): MenuHandle<TPayload>;
+}
+
 /**
  * メニューを制御するハンドルを新しく作成します。
- *
- * 作成したハンドルを {@link Root} と {@link Trigger} の `handle` props に渡すことで、トリガーとメニューの内容を関連付けます。
  */
-export const createHandle: typeof Menu.createHandle = Menu.createHandle;
+export const createMenuHandle: ICreateHandle = function createSuiMenuHandle() {
+  return Menu.createHandle();
+};
+
+export { type MenuHandle as Handle, createMenuHandle as createHandle };
 
 // Root
 // ----
@@ -160,168 +164,160 @@ export type MenuRootChangeEventReason = Menu.Root.ChangeEventReason;
  */
 export type MenuRootOrientation = Menu.Root.Orientation;
 
-/**
- * {@link MenuRoot} の通常項目です。
- *
- * `label` を含み、その他の props は {@link MenuItem} に渡されます。
- * `items` を指定した場合はサブメニューとして描画されます。
- */
-export type MenuRootActionItemObject = Omit<MenuItemProps, "children" | "label"> & {
-  /**
-   * 子項目です。
-   *
-   * 指定した場合はサブメニューとして描画されます。
-   */
-  readonly items?: readonly MenuRootItemObject[] | undefined;
+namespace MenuRootLabeledItem {
+  export type BaseUI = Omit<MenuItemProps, "children" | keyof SuruUI>;
 
-  /**
-   * 項目のラベルです。
-   */
-  readonly label: React.ReactNode;
+  export type SuruUI = {
+    /**
+     * 項目のラベルです。
+     */
+    readonly label: MenuItemProps["children"];
 
-  /**
-   * 項目の種類です。
-   *
-   * - `"item"`: 通常項目
-   * - `"submenu"`: サブメニュー
-   */
-  readonly type?: "item" | "submenu" | undefined;
-};
+    /**
+     * 項目の種類です。
+     */
+    readonly type?: "item" | undefined;
+  };
+}
 
-/**
- * {@link MenuRoot} のチェックボックス項目です。
- *
- * `label` を含み、その他の props は {@link MenuCheckboxItem} に渡されます。
- */
-export type MenuRootCheckboxItemObject = Omit<MenuCheckboxItemProps, "children" | "label"> & {
-  /**
-   * 項目のラベルです。
-   */
-  readonly label: React.ReactNode;
+export type MenuRootLabeledItem = MenuRootLabeledItem.SuruUI & MenuRootLabeledItem.BaseUI;
 
-  /**
-   * 項目の種類です。
-   *
-   * - `"checkbox"`: チェックボックス項目
-   */
-  readonly type: "checkbox";
-};
+namespace MenuRootLinkItem {
+  export type BaseUI = Omit<MenuLinkItemProps, "children" | keyof SuruUI>;
 
-/**
- * {@link MenuRoot} のグループです。
- *
- * `label` と `items` を含み、その他の props は {@link MenuGroup} に渡されます。
- * `label` を指定した場合は {@link MenuGroupLabel} として描画されます。
- * 子項目には {@link MenuRootItemObject} を指定します。
- */
-export type MenuRootGroupObject = Omit<MenuGroupProps, "children"> & {
-  /**
-   * 子項目です。
-   */
-  readonly items: readonly MenuRootItemObject[];
+  export type SuruUI = {
+    /**
+     * 項目のラベルです。
+     */
+    readonly label: MenuLinkItemProps["children"];
 
-  /**
-   * グループのラベルです。
-   *
-   * 指定した場合は {@link MenuGroupLabel} として描画されます。
-   */
-  readonly label?: React.ReactNode | undefined;
+    /**
+     * 項目の種類です。
+     */
+    readonly type: "link";
+  };
+}
 
-  /**
-   * 項目の種類です。
-   *
-   * - `"group"`: グループ
-   */
-  readonly type: "group";
-};
+export type MenuRootLinkItem = MenuRootLinkItem.SuruUI & MenuRootLinkItem.BaseUI;
 
-/**
- * {@link MenuRoot} のリンク項目です。
- *
- * `label` を含み、その他の props は {@link MenuLinkItem} に渡されます。
- */
-export type MenuRootLinkItemObject = Omit<MenuLinkItemProps, "children" | "label"> & {
-  /**
-   * 項目のラベルです。
-   */
-  readonly label: React.ReactNode;
+namespace MenuRootCheckboxItem {
+  export type BaseUI = Omit<MenuCheckboxItemProps, "children" | keyof SuruUI>;
 
-  /**
-   * 項目の種類です。
-   *
-   * - `"link"`: リンク項目
-   */
-  readonly type: "link";
-};
+  export type SuruUI = {
+    /**
+     * 項目のラベルです。
+     */
+    readonly label: MenuCheckboxItemProps["children"];
 
-/**
- * {@link MenuRoot} のラジオグループです。
- *
- * `items` を含み、その他の props は {@link MenuRadioGroup} に渡されます。
- * 子項目には {@link MenuRootRadioItemObject} を指定します。
- */
-export type MenuRootRadioGroupObject = Omit<MenuRadioGroupProps, "children"> & {
-  /**
-   * ラジオ項目です。
-   */
-  readonly items: readonly MenuRootRadioItemObject[];
+    /**
+     * 項目の種類です。
+     */
+    readonly type: "checkbox";
+  };
+}
 
-  /**
-   * 項目の種類です。
-   *
-   * - `"radio-group"`: ラジオグループ
-   */
-  readonly type: "radio-group";
-};
+export type MenuRootCheckboxItem = MenuRootCheckboxItem.SuruUI & MenuRootCheckboxItem.BaseUI;
 
-/**
- * {@link MenuRoot} のラジオ項目です。
- *
- * `label` と `value` を含み、その他の props は {@link MenuRadioItem} に渡されます。
- * 単体では選択状態を保持できないため、`items` ではなく {@link MenuRootRadioGroupObject} の子項目として指定します。
- */
-export type MenuRootRadioItemObject = Omit<MenuRadioItemProps, "children" | "label"> & {
-  /**
-   * 項目のラベルです。
-   */
-  readonly label: React.ReactNode;
+namespace MenuRootRadioItem {
+  export type BaseUI = Omit<MenuRadioItemProps, "children" | keyof SuruUI>;
 
-  /**
-   * 項目の種類です。
-   *
-   * - `"radio"`: ラジオ項目
-   */
-  readonly type: "radio";
-};
+  export type SuruUI = {
+    /**
+     * 項目のラベルです。
+     */
+    readonly label: MenuRadioItemProps["children"];
 
-/**
- * {@link MenuRoot} の区切り線です。
- *
- * その他の props は {@link MenuSeparator} に渡されます。
- */
-export type MenuRootSeparatorObject = Omit<MenuSeparatorProps, "children"> & {
-  /**
-   * 項目の種類です。
-   *
-   * - `"separator"`: 区切り線
-   */
-  readonly type: "separator";
-};
+    /**
+     * 項目の種類です。
+     */
+    readonly type: "radio";
+  };
+}
+
+export type MenuRootRadioItem = MenuRootRadioItem.SuruUI & MenuRootRadioItem.BaseUI;
+
+namespace MenuRootRadioItemGroup {
+  export type BaseUI = Omit<MenuRadioGroupProps, "children" | keyof SuruUI>;
+
+  export type SuruUI = {
+    /**
+     * ラジオ項目です。
+     */
+    readonly items: readonly MenuRootRadioItem[];
+
+    /**
+     * 項目の種類です。
+     */
+    readonly type: "radio-group";
+  };
+}
+
+export type MenuRootRadioItemGroup = MenuRootRadioItemGroup.SuruUI & MenuRootRadioItemGroup.BaseUI;
+
+namespace MenuRootSubmenuItem {
+  export type BaseUI = Omit<MenuSubmenuRootProps, "children" | keyof SuruUI>;
+
+  export type SuruUI = {
+    /**
+     * 子項目です。
+     */
+    readonly items: readonly MenuRootItem[];
+
+    /**
+     * 項目のラベルです。
+     */
+    readonly label: MenuSubmenuTriggerProps["children"];
+
+    /**
+     * 項目の種類です。
+     */
+    readonly type: "submenu";
+  };
+}
+
+export type MenuRootSubmenuItem = MenuRootSubmenuItem.SuruUI & MenuRootSubmenuItem.BaseUI;
+
+namespace MenuRootItemGroup {
+  export type BaseUI = Omit<MenuGroupProps, "children" | keyof SuruUI>;
+
+  export type SuruUI = {
+    /**
+     * 子項目です。
+     */
+    readonly items: readonly (
+      | MenuRootLabeledItem
+      | MenuRootLinkItem
+      | MenuRootCheckboxItem
+      | MenuRootRadioItemGroup
+      | MenuRootRadioItem
+      | MenuRootSubmenuItem
+    )[];
+
+    /**
+     * グループのラベルです。
+     */
+    readonly label?: MenuGroupLabelProps["children"];
+
+    /**
+     * 項目の種類です。
+     */
+    readonly type?: "group" | undefined;
+  };
+}
+
+export type MenuRootItemGroup = MenuRootItemGroup.SuruUI & MenuRootItemGroup.BaseUI;
 
 /**
  * {@link MenuRoot} の各項目です。
- *
- * `type` によって通常項目、チェックボックス項目、グループ、リンク項目、ラジオ項目、ラジオグループ、区切り線を使い分けます。
- * `type` を省略した場合は通常項目として描画されます。
  */
-export type MenuRootItemObject =
-  | MenuRootActionItemObject
-  | MenuRootCheckboxItemObject
-  | MenuRootGroupObject
-  | MenuRootLinkItemObject
-  | MenuRootRadioGroupObject
-  | MenuRootRadioItemObject
-  | MenuRootSeparatorObject;
+export type MenuRootItem =
+  | MenuRootLabeledItem
+  | MenuRootLinkItem
+  | MenuRootCheckboxItem
+  | MenuRootRadioItemGroup
+  | MenuRootRadioItem
+  | MenuRootSubmenuItem
+  | MenuRootItemGroup;
 
 /**
  * メニューの角丸です。
@@ -497,31 +493,17 @@ export namespace Root {
     export type HTML<TPayload = any> = MenuRootProps.HTML<TPayload>;
   }
 
-  export type ActionItemObject = MenuRootActionItemObject;
-
   export type Actions = MenuRootActions;
 
   export type ChangeEventDetails = MenuRootChangeEventDetails;
 
   export type ChangeEventReason = MenuRootChangeEventReason;
 
-  export type CheckboxItemObject = MenuRootCheckboxItemObject;
-
-  export type GroupObject = MenuRootGroupObject;
-
-  export type ItemObject = MenuRootItemObject;
-
-  export type LinkItemObject = MenuRootLinkItemObject;
+  export type CheckboxItem = MenuRootCheckboxItem;
 
   export type Orientation = MenuRootOrientation;
 
-  export type RadioGroupObject = MenuRootRadioGroupObject;
-
-  export type RadioItemObject = MenuRootRadioItemObject;
-
   export type Radius = MenuRootRadius;
-
-  export type SeparatorObject = MenuRootSeparatorObject;
 
   export type Size = MenuRootSize;
 
@@ -945,106 +927,126 @@ export const MenuPopup: IComponent<MenuPopupProps> = function SuiMenuPopup(props
   );
 };
 
-const defaultRadioItemRenderer: IMenuPopupItemRenderer = (item, index) => {
-  if (!isRadioItemObject(item)) {
-    return toReactNode(item);
-  }
-
-  const { type: _, label, ...otherItemProps } = item;
-
-  return (
-    <MenuRadioItem key={index} {...otherItemProps}>
-      {toReactNode(label)}
-      <MenuRadioItemIndicator>
-        <CheckIcon />
-      </MenuRadioItemIndicator>
-    </MenuRadioItem>
-  );
-};
-
 const defaultPopupItemRenderer: IMenuPopupItemRenderer = (item, index, items) => {
-  if (isSeparatorObject(item)) {
-    const { type: _, ...otherProps } = item;
-
-    return <MenuSeparator key={index} {...otherProps} />;
+  switch (true) {
+    case isLabeledItem(item): {
+      const { type: _, label, ...props } = item;
+      return (
+        <MenuItem {...props} key={index}>
+          {label}
+        </MenuItem>
+      );
+    }
+    case isLinkItem(item): {
+      const { type: _, label, ...props } = item;
+      return (
+        <MenuLinkItem {...props} key={index}>
+          {label}
+        </MenuLinkItem>
+      );
+    }
+    case isCheckboxItem(item): {
+      const { type: _, label, ...props } = item;
+      return (
+        <MenuCheckboxItem {...props} key={index}>
+          {label}
+          <MenuCheckboxItemIndicator>
+            <CheckIcon />
+          </MenuCheckboxItemIndicator>
+        </MenuCheckboxItem>
+      );
+    }
+    case isRadioItem(item): {
+      const { type: _, label, ...props } = item;
+      return (
+        <MenuRadioItem {...props} key={index}>
+          {label}
+          <MenuRadioItemIndicator>
+            <CheckIcon />
+          </MenuRadioItemIndicator>
+        </MenuRadioItem>
+      );
+    }
+    case isRadioItemGroup(item): {
+      const { type: _, items: groupItems, ...props } = item;
+      return (
+        <React.Fragment key={index}>
+          <MenuRadioGroup {...props} key={index}>
+            {groupItems.map(defaultPopupItemRenderer)}
+          </MenuRadioGroup>
+          {index < items.length - 1 && <MenuSeparator />}
+        </React.Fragment>
+      );
+    }
+    case isSubmenuItem(item): {
+      const { type: _, items, label, ...props } = item;
+      return (
+        <MenuSubmenuRoot {...props} key={index}>
+          <MenuSubmenuTrigger>
+            {label}
+            <ChevronRightIcon />
+          </MenuSubmenuTrigger>
+          <MenuPortal>
+            <MenuPositioner>
+              <MenuPopup>{items.map(defaultPopupItemRenderer)}</MenuPopup>
+            </MenuPositioner>
+          </MenuPortal>
+        </MenuSubmenuRoot>
+      );
+    }
+    case isItemGroup(item): {
+      const { type: _, items, label, ...props } = item;
+      return (
+        <MenuGroup {...props} key={index}>
+          {isLikelyVisibleNode(label) && <MenuGroupLabel>{label}</MenuGroupLabel>}
+          {items.map(defaultPopupItemRenderer)}
+        </MenuGroup>
+      );
+    }
+    default:
+      return toReactNode(item);
   }
-
-  if (isRadioGroupObject(item)) {
-    const { type: _, items: radioItems, ...otherGroupProps } = item;
-
-    return (
-      <MenuRadioGroup key={index} {...otherGroupProps}>
-        {radioItems.map(defaultRadioItemRenderer)}
-      </MenuRadioGroup>
-    );
-  }
-
-  if (isGroupObject(item)) {
-    const { type: _, items: groupItems, label, ...otherGroupProps } = item;
-    const labelNode = toReactNode(label);
-
-    return (
-      <MenuGroup key={index} {...otherGroupProps}>
-        {labelNode === null ? null : <MenuGroupLabel>{labelNode}</MenuGroupLabel>}
-        {groupItems.map(defaultPopupItemRenderer)}
-      </MenuGroup>
-    );
-  }
-
-  if (!isItemObject(item)) {
-    return toReactNode(item);
-  }
-
-  if (isCheckboxItemObject(item)) {
-    const { type: _, label, ...otherItemProps } = item;
-
-    return (
-      <MenuCheckboxItem key={index} {...otherItemProps}>
-        {toReactNode(label)}
-        <MenuCheckboxItemIndicator>
-          <CheckIcon />
-        </MenuCheckboxItemIndicator>
-      </MenuCheckboxItem>
-    );
-  }
-
-  if (isRadioItemObject(item)) {
-    return defaultRadioItemRenderer(item, index, items);
-  }
-
-  if (isLinkItemObject(item)) {
-    const { type: _, label, ...otherItemProps } = item;
-
-    return (
-      <MenuLinkItem key={index} {...otherItemProps}>
-        {toReactNode(label)}
-      </MenuLinkItem>
-    );
-  }
-
-  const { type: _, items: subItems, label, ...otherItemProps } = item;
-  if (!subItems) {
-    return (
-      <MenuItem key={index} {...otherItemProps}>
-        {toReactNode(label)}
-      </MenuItem>
-    );
-  }
-
-  return (
-    <MenuSubmenuRoot key={index}>
-      <MenuSubmenuTrigger {...otherItemProps}>
-        {toReactNode(label)}
-        <ChevronRightIcon />
-      </MenuSubmenuTrigger>
-      <MenuPortal>
-        <MenuPositioner>
-          <MenuPopup>{subItems.map(defaultPopupItemRenderer)}</MenuPopup>
-        </MenuPositioner>
-      </MenuPortal>
-    </MenuSubmenuRoot>
-  );
 };
+
+export function isLabeledItem(item: unknown): item is MenuRootLabeledItem {
+  return (
+    typeof item === "object" &&
+    item !== null &&
+    "label" in item &&
+    !("type" in item) &&
+    !("items" in item)
+  );
+}
+
+export function isLinkItem(item: unknown): item is MenuRootLinkItem {
+  return typeof item === "object" && item !== null && "type" in item && item.type === "link";
+}
+
+export function isCheckboxItem(item: unknown): item is MenuRootCheckboxItem {
+  return typeof item === "object" && item !== null && "type" in item && item.type === "checkbox";
+}
+
+export function isRadioItem(item: unknown): item is MenuRootRadioItem {
+  return typeof item === "object" && item !== null && "type" in item && item.type === "radio";
+}
+
+export function isRadioItemGroup(item: unknown): item is MenuRootRadioItemGroup {
+  return typeof item === "object" && item !== null && "type" in item && item.type === "radio-group";
+}
+
+export function isSubmenuItem(item: unknown): item is MenuRootSubmenuItem {
+  return (
+    typeof item === "object" &&
+    item !== null &&
+    "label" in item &&
+    !("type" in item) &&
+    "items" in item
+  );
+}
+
+export function isItemGroup(item: unknown): item is MenuRootItemGroup {
+  return typeof item === "object" && item !== null && "type" in item && item.type === "group";
+}
 
 export { MenuPopup as Popup };
 
@@ -1063,7 +1065,7 @@ export namespace Popup {
     export type HTML = MenuPopupProps.HTML;
   }
 
-  export type ItemObject = MenuRootItemObject;
+  export type Item = MenuRootItem;
 
   export interface IItemRenderer<TItem = any> extends IMenuPopupItemRenderer<TItem> {}
 }
