@@ -3,12 +3,14 @@ import * as React from "react";
 import type { IComponent } from "../types.js";
 import {
   type PopoverHandle,
+  type PopoverRootSize,
   type PopoverRootProps,
   type PopoverRootState,
   type PopoverArrowProps,
-  type PopoverPopupProps,
+  type PopoverRootRadius,
   type PopoverPortalProps,
   type PopoverRootActions,
+  type PopoverContentProps,
   type PopoverTriggerProps,
   type PopoverBackdropProps,
   type PopoverPositionerProps,
@@ -16,8 +18,8 @@ import {
   type PopoverRootChangeEventDetails,
   PopoverRoot,
   PopoverArrow,
-  PopoverPopup,
   PopoverPortal,
+  PopoverContent,
   PopoverTrigger,
   PopoverBackdrop,
   PopoverPositioner,
@@ -32,6 +34,10 @@ export type PopoverActions = PopoverRootActions;
 export type PopoverChangeEventDetails = PopoverRootChangeEventDetails;
 
 export type PopoverChangeEventReason = PopoverRootChangeEventReason;
+
+export type PopoverRadius = PopoverRootRadius;
+
+export type PopoverSize = PopoverRootSize;
 
 /**
  * {@link Popover} の各パーツに渡す props です。
@@ -50,9 +56,9 @@ export type PopoverSlotProps<TPayload = any> = {
   readonly backdrop?: PopoverBackdropProps | undefined;
 
   /**
-   * {@link PopoverPopup} に渡す props です。
+   * {@link PopoverContent} に渡す props です。
    */
-  readonly popup?: Omit<PopoverPopupProps, "children"> | undefined;
+  readonly content?: Omit<PopoverContentProps, "children"> | undefined;
 
   /**
    * {@link PopoverPortal} に渡す props です。
@@ -75,11 +81,13 @@ export type PopoverSlotProps<TPayload = any> = {
  */
 export type PopoverState = PopoverRootState;
 
-type PopoverPropsMain<TPayload = any> = {
+type PopoverPropsMain<TPayload = any> = Pick<PopoverContentProps, "children"> & {
   /**
-   * ポップアップに表示する内容です。
+   * 矢印を表示するかどうかを指定します。
+   *
+   * 矢印の内容や props を変更するときは {@link PopoverProps.slotProps|slotProps.arrow} を使います。
    */
-  children?: PopoverPopupProps["children"] | undefined;
+  arrow?: boolean | undefined;
 
   /**
    * トリガーとポップオーバーに関連付けるためのハンドルです。
@@ -93,17 +101,11 @@ type PopoverPropsMain<TPayload = any> = {
 
   /**
    * ポップオーバーを開く対象です。
-   *
-   * {@link PopoverTrigger|Trigger} の子要素として直接渡され、`render` に設定されます。
-   * `trigger` 未指定で `slotProps.trigger` のみ指定した場合は、トリガーは描画されません。
    */
   trigger?: PopoverTriggerProps["children"] | undefined;
 };
 
-type PopoverPropsRoot<TPayload = any> = Omit<
-  PopoverRootProps<TPayload>,
-  "children" | keyof PopoverPropsMain
->;
+type PopoverPropsRoot<TPayload = any> = Omit<PopoverRootProps<TPayload>, keyof PopoverPropsMain>;
 
 /**
  * {@link Popover} に渡す props です。
@@ -132,9 +134,14 @@ export interface PopoverAPI<TPayload = any> {
   getBackdropProps(): PopoverBackdropProps;
 
   /**
-   * {@link PopoverPopup} に渡す props を取得します。
+   * {@link PopoverContent} に表示する子要素を取得します。
    */
-  getPopupProps(): Omit<PopoverPopupProps, "children">;
+  getContentChildren(): PopoverContentProps["children"];
+
+  /**
+   * {@link PopoverContent} に渡す props を取得します。
+   */
+  getContentProps(): Omit<PopoverContentProps, "children">;
 
   /**
    * {@link PopoverPortal} に渡す props を取得します。
@@ -174,13 +181,14 @@ interface IUsePopoverAPI {
 export const usePopoverAPI: IUsePopoverAPI = function useSuiPopoverAPI(props: PopoverProps<any>) {
   const {
     open,
+    arrow = false,
     handle: handleProp,
     trigger,
-    children: _children,
+    children,
     slotProps: {
       arrow: arrowProps,
-      popup: popupProps = {},
       portal: portalProps = {},
+      content: contentProps = {},
       trigger: triggerProps = {},
       backdrop: backdropProps = {},
       positioner: positionerProps = {},
@@ -194,12 +202,6 @@ export const usePopoverAPI: IUsePopoverAPI = function useSuiPopoverAPI(props: Po
     ...otherRootProps
   } = props;
   const handle = React.useMemo(() => handleProp, [handleProp]);
-  const {
-    side = "bottom",
-    align = "start",
-    sideOffset = 8,
-    ...otherPositionerProps
-  } = positionerProps;
 
   return {
     getRootProps(): Omit<PopoverRootProps<any>, "children"> {
@@ -216,17 +218,17 @@ export const usePopoverAPI: IUsePopoverAPI = function useSuiPopoverAPI(props: Po
       };
     },
     getArrowProps() {
-      if (arrowProps) {
-        return arrowProps;
+      if (arrow || arrowProps) {
+        return arrowProps || {};
       }
 
       return null;
     },
-    getPopupProps() {
-      return popupProps;
-    },
     getPortalProps() {
       return portalProps;
+    },
+    getContentProps() {
+      return contentProps;
     },
     getTriggerProps() {
       if (trigger) {
@@ -241,7 +243,17 @@ export const usePopoverAPI: IUsePopoverAPI = function useSuiPopoverAPI(props: Po
     getBackdropProps() {
       return backdropProps;
     },
+    getContentChildren() {
+      return children;
+    },
     getPositionerProps() {
+      const {
+        side = "bottom",
+        align = "center",
+        sideOffset = 8,
+        ...otherPositionerProps
+      } = positionerProps;
+
       return {
         ...otherPositionerProps,
         side,
@@ -287,10 +299,10 @@ export const Popover: IPopover = /*#__PURE__*/ Object.assign(
         <PopoverPortal {...api.getPortalProps()}>
           <PopoverBackdrop {...api.getBackdropProps()} />
           <PopoverPositioner {...api.getPositionerProps()}>
-            <PopoverPopup {...api.getPopupProps()}>
+            <PopoverContent {...api.getContentProps()}>
               {arrowProps && <PopoverArrow {...arrowProps} />}
-              {props.children}
-            </PopoverPopup>
+              {api.getContentChildren()}
+            </PopoverContent>
           </PopoverPositioner>
         </PopoverPortal>
       </PopoverRoot>
@@ -313,4 +325,8 @@ export namespace Popover {
   export type ChangeEventDetails = PopoverChangeEventDetails;
 
   export type ChangeEventReason = PopoverChangeEventReason;
+
+  export type Radius = PopoverRadius;
+
+  export type Size = PopoverSize;
 }

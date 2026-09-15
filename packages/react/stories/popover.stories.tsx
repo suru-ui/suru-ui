@@ -1,9 +1,13 @@
+import * as theme from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Button } from "../src/button/index.js";
 import { Popover } from "../src/popover/index.js";
 import * as PopoverParts from "../src/popover/index.js";
+
+const SIZES: readonly Popover.Size[] = theme.SIZES;
+const RADII: readonly Popover.Radius[] = ["none", ...theme.SIZES];
 
 const meta = preview.meta({
   title: "Popover",
@@ -16,11 +20,25 @@ const ctrl = controls(Popover, {
   modal: {
     control: "boolean",
   },
+  outlined: {
+    control: "boolean",
+  },
+  radius: {
+    control: "select",
+    options: RADII,
+  },
+  size: {
+    control: "select",
+    options: SIZES,
+  },
 });
 
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
+    size: "md",
+    radius: undefined,
+    outlined: false,
     modal: false,
   }),
   render(props) {
@@ -41,6 +59,9 @@ export const Usage = meta.story({
 export const Arrow = meta.story({
   name: "矢印",
   ...ctrl({
+    size: "md",
+    radius: undefined,
+    outlined: false,
     modal: false,
   }),
   render(props) {
@@ -58,9 +79,76 @@ export const Arrow = meta.story({
   },
 });
 
+export const Sizes = meta.story({
+  name: "大きさ",
+  ...ctrl({
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    modal: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-wrap items-start gap-4">
+        {SIZES.map((size) => (
+          <Popover
+            key={size}
+            {...props}
+            size={size}
+            trigger={<Button variant="liquid">{size}</Button>}
+          >
+            <PopoverParts.Title>大きさ {size}</PopoverParts.Title>
+            <PopoverParts.Description>サイズごとの幅と余白を確認します。</PopoverParts.Description>
+          </Popover>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Outlined = meta.story({
+  name: "枠線と角丸",
+  ...ctrl({
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    modal: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-wrap items-start gap-4">
+        <Popover {...props} trigger={<Button variant="liquid">標準</Button>}>
+          <PopoverParts.Title>枠線なし</PopoverParts.Title>
+          <PopoverParts.Description>背景色だけで内容を区切ります。</PopoverParts.Description>
+        </Popover>
+        <Popover {...props} trigger={<Button variant="liquid">枠線あり</Button>} outlined>
+          <PopoverParts.Title>枠線あり</PopoverParts.Title>
+          <PopoverParts.Description>背景との境界を明確にします。</PopoverParts.Description>
+        </Popover>
+        {RADII.map((radius) => (
+          <Popover
+            key={radius}
+            {...props}
+            radius={radius}
+            trigger={<Button variant="liquid">{radius}</Button>}
+            outlined
+          >
+            <PopoverParts.Description>
+              角丸 {radius} のポップオーバーです。
+            </PopoverParts.Description>
+          </Popover>
+        ))}
+      </div>
+    );
+  },
+});
+
 export const Positions = meta.story({
   name: "配置",
   ...ctrl({
+    size: "md",
+    radius: undefined,
+    outlined: false,
     modal: false,
   }),
   render(props) {
@@ -74,6 +162,7 @@ export const Positions = meta.story({
             {...props}
             trigger={<Button variant="liquid">{side}</Button>}
             slotProps={{
+              arrow: {},
               positioner: { side, sideOffset: 8 },
             }}
           >
@@ -107,6 +196,9 @@ export const Controlled = meta.story({
 export const DisabledTrigger = meta.story({
   name: "無効なトリガー",
   ...ctrl({
+    size: "md",
+    radius: undefined,
+    outlined: false,
     modal: false,
   }),
   render(props) {
@@ -126,6 +218,9 @@ export const DisabledTrigger = meta.story({
 export const Empty = meta.story({
   name: "空の内容",
   ...ctrl({
+    size: "md",
+    radius: undefined,
+    outlined: false,
     modal: false,
   }),
   render(props) {
@@ -140,6 +235,9 @@ export const Empty = meta.story({
 export const LongContent = meta.story({
   name: "長い内容",
   ...ctrl({
+    size: "md",
+    radius: undefined,
+    outlined: false,
     modal: false,
   }),
   render(props) {
@@ -147,8 +245,8 @@ export const LongContent = meta.story({
       <Popover {...props} trigger={<Button>長い説明を開く</Button>}>
         <PopoverParts.Title>利用履歴の詳細</PopoverParts.Title>
         <PopoverParts.Description>
-          このポップオーバーは長い説明文でも読みやすい幅に収まります。文章が長くなった場合はポップアップの最大幅や最大高さの範囲で折り返しとスクロールが発生し、トリガーとの位置関係を保ったまま表示されます。
-          このポップオーバーは長い説明文でも読みやすい幅に収まります。文章が長くなった場合はポップアップの最大幅や最大高さの範囲で折り返しとスクロールが発生し、トリガーとの位置関係を保ったまま表示されます。
+          このポップオーバーは長い説明文でも読みやすい幅に収まります。文章が長くなった場合も最大幅の範囲で折り返し、トリガーとの位置関係を保ったまま表示されます。
+          このポップオーバーは長い説明文でも読みやすい幅に収まります。文章が長くなった場合も最大幅の範囲で折り返し、トリガーとの位置関係を保ったまま表示されます。
         </PopoverParts.Description>
         <PopoverParts.Close>
           <Button variant="liquid">閉じる</Button>
@@ -161,6 +259,9 @@ export const LongContent = meta.story({
 export const Edge = meta.story({
   name: "画面端",
   ...ctrl({
+    size: "md",
+    radius: undefined,
+    outlined: false,
     modal: false,
   }),
   render(props) {
@@ -196,6 +297,9 @@ export const Edge = meta.story({
 export const UserMenu = meta.story({
   name: "組み合わせと実利用例",
   ...ctrl({
+    size: "md",
+    radius: undefined,
+    outlined: false,
     modal: false,
   }),
   render(props) {
@@ -230,6 +334,9 @@ export const UserMenu = meta.story({
 export const Accessible = meta.story({
   name: "アクセシビリティー",
   ...ctrl({
+    size: "md",
+    radius: undefined,
+    outlined: false,
     modal: false,
   }),
   render(props) {
@@ -250,6 +357,9 @@ export const Accessible = meta.story({
 export const Keyboard = meta.story({
   name: "キーボード操作",
   ...ctrl({
+    size: "md",
+    radius: undefined,
+    outlined: false,
     modal: false,
   }),
   render(props) {

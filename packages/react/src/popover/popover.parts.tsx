@@ -1,12 +1,70 @@
 import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import { Popover } from "@base-ui/react/popover";
+import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import { ContextMissingError } from "../errors.js";
+import type { IComponent, IUseContext } from "../types.js";
 
 import "./popover.css";
+
+// Context
+// -------
+
+/**
+ * {@link PopoverRoot} が子パーツへ提供するコンテキストです。
+ */
+export type PopoverContext = {
+  /**
+   * ポップオーバーに枠線を表示するかどうかです。
+   */
+  readonly outlined: boolean;
+
+  /**
+   * ポップオーバーの角丸の大きさです。
+   */
+  readonly radius: PopoverRootRadius;
+
+  /**
+   * ポップオーバーの大きさです。
+   */
+  readonly size: PopoverRootSize;
+};
+
+/**
+ * {@link PopoverRoot} が子パーツへ提供するコンテキストです。
+ */
+export const PopoverContext: React.Context<PopoverContext | null> =
+  React.createContext<PopoverContext | null>(null);
+
+function useSuiPopoverContext(optional?: false): PopoverContext;
+function useSuiPopoverContext(optional?: boolean): PopoverContext | null;
+function useSuiPopoverContext(optional?: boolean): PopoverContext | null {
+  const ctx = React.use(PopoverContext);
+  if (ctx === null && !optional) {
+    throw new ContextMissingError({
+      contextName: "PopoverContext",
+      providerName: "PopoverRoot",
+    });
+  }
+
+  return ctx;
+}
+
+/**
+ * {@link PopoverContext} を読み取るフックです。
+ */
+export const usePopoverContext: IUseContext<PopoverContext> = useSuiPopoverContext;
+
+export { PopoverContext as Context, usePopoverContext as useContext };
+
+export namespace Context {
+  export type Radius = PopoverRootRadius;
+
+  export type Size = PopoverRootSize;
+}
 
 // Handle
 // ------
@@ -54,6 +112,25 @@ export type PopoverRootChangeEventDetails = Popover.Root.ChangeEventDetails;
 export type PopoverRootChangeEventReason = Popover.Root.ChangeEventReason;
 
 /**
+ * ポップオーバーの角丸の大きさです。
+ *
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ */
+export type PopoverRootRadius = "none" | Size;
+
+/**
+ * ポップオーバーの大きさです。
+ *
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ */
+export type PopoverRootSize = Size;
+
+/**
  * {@link PopoverRoot} が持つ状態です。
  */
 export type PopoverRootState = Popover.Root.State;
@@ -68,6 +145,27 @@ export namespace PopoverRootProps {
      * {@link createHandle} で作成します。Root 内に {@link Trigger} を配置する場合は省略できます。
      */
     handle?: PopoverHandle<TPayload> | undefined;
+
+    /**
+     * ポップオーバーの周囲に枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * ポップオーバーの角丸を指定します。
+     *
+     * 既定値は {@link PopoverRootProps.size|size} です。
+     */
+    radius?: PopoverRootRadius | undefined;
+
+    /**
+     * ポップオーバーの大きさを指定します。
+     *
+     * @default "md"
+     */
+    size?: PopoverRootSize | undefined;
   };
 
   export type BaseUI<TPayload = any> = Pick<
@@ -123,7 +221,17 @@ interface IPopoverRoot extends IComponent<PopoverRootProps> {
 export const PopoverRoot: IPopoverRoot = function SuiPopoverRoot<TPayload>(
   props: PopoverRootProps<TPayload>,
 ) {
-  return <Popover.Root {...props} />;
+  const { size = "md", radius = size, outlined = false, ...otherProps } = props;
+  const ctx = React.useMemo<PopoverContext>(
+    () => ({ size, radius, outlined }),
+    [size, radius, outlined],
+  );
+
+  return (
+    <PopoverContext.Provider value={ctx}>
+      <Popover.Root {...otherProps} />
+    </PopoverContext.Provider>
+  );
 };
 
 export { PopoverRoot as Root };
@@ -151,6 +259,10 @@ export namespace Root {
   export type ChangeEventDetails = PopoverRootChangeEventDetails;
 
   export type ChangeEventReason = PopoverRootChangeEventReason;
+
+  export type Radius = PopoverRootRadius;
+
+  export type Size = PopoverRootSize;
 }
 
 // Trigger
@@ -314,11 +426,21 @@ export const PopoverPortal: IComponent<PopoverPortalProps> = function SuiPopover
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
+  const ctx = usePopoverContext(true);
+  const size = ctx?.size ?? "md";
+  const radius = ctx?.radius ?? "md";
+  const outlined = ctx?.outlined ?? false;
 
   return (
     <Popover.Portal
       {...otherProps}
-      className={cn(className, "sui_popover_portal")}
+      className={cn(
+        className,
+        "sui_popover_portal",
+        `sui_popover_portal-size_${size}`,
+        `sui_popover_portal-radius_${radius}`,
+        outlined && "sui_popover_portal-outlined",
+      )}
       data-scope={dataScope}
     />
   );
@@ -496,16 +618,16 @@ export namespace Positioner {
   }
 }
 
-// Popup
-// -----
+// Content
+// -------
 
 /**
- * {@link PopoverPopup} が持つ状態です。
+ * {@link PopoverContent} が持つ状態です。
  */
-export type PopoverPopupState = Popover.Popup.State;
+export type PopoverContentState = Popover.Popup.State;
 
-export namespace PopoverPopupProps {
-  export type Render = RenderProps<PopoverPopupState>;
+export namespace PopoverContentProps {
+  export type Render = RenderProps<PopoverContentState>;
 
   export type SuruUI = {};
 
@@ -513,7 +635,7 @@ export namespace PopoverPopupProps {
     React.ComponentProps<typeof Popover.Popup>,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // PopoverPopupProps:
+      // PopoverContentProps:
       "initialFocus" | "finalFocus",
       keyof Render | keyof SuruUI
     >
@@ -526,17 +648,17 @@ export namespace PopoverPopupProps {
 }
 
 /**
- * {@link PopoverPopup} に渡す props です。
+ * {@link PopoverContent} に渡す props です。
  */
-export type PopoverPopupProps = PopoverPopupProps.Render &
-  PopoverPopupProps.SuruUI &
-  PopoverPopupProps.BaseUI &
-  PopoverPopupProps.HTML;
+export type PopoverContentProps = PopoverContentProps.Render &
+  PopoverContentProps.SuruUI &
+  PopoverContentProps.BaseUI &
+  PopoverContentProps.HTML;
 
 /**
  * ポップオーバーの内容を表示するポップアップ要素です。
  */
-export const PopoverPopup: IComponent<PopoverPopupProps> = function SuiPopoverPopup(props) {
+export const PopoverContent: IComponent<PopoverContentProps> = function SuiPopoverContent(props) {
   const { className, ...otherProps } = props;
 
   return (
@@ -544,30 +666,30 @@ export const PopoverPopup: IComponent<PopoverPopupProps> = function SuiPopoverPo
       {...otherProps}
       className={cn(
         className,
-        "sui_popover_popup",
+        "sui_popover_content",
         (state) =>
           state.transitionStatus !== undefined &&
-          `sui_popover_popup-transition_status_${state.transitionStatus}`,
+          `sui_popover_content-transition_status_${state.transitionStatus}`,
       )}
     />
   );
 };
 
-export { PopoverPopup as Popup };
+export { PopoverContent as Content };
 
-export namespace Popup {
-  export type State = PopoverPopupState;
+export namespace Content {
+  export type State = PopoverContentState;
 
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = PopoverPopupProps.Render;
+    export type Render = PopoverContentProps.Render;
 
-    export type SuruUI = PopoverPopupProps.SuruUI;
+    export type SuruUI = PopoverContentProps.SuruUI;
 
-    export type BaseUI = PopoverPopupProps.BaseUI;
+    export type BaseUI = PopoverContentProps.BaseUI;
 
-    export type HTML = PopoverPopupProps.HTML;
+    export type HTML = PopoverContentProps.HTML;
   }
 }
 
@@ -614,7 +736,16 @@ export type PopoverArrowProps = PopoverArrowProps.Render &
 export const PopoverArrow: IComponent<PopoverArrowProps> = function SuiPopoverArrow(props) {
   const { className, ...otherProps } = props;
 
-  return <Popover.Arrow {...otherProps} className={cn(className, "sui_popover_arrow")} />;
+  return (
+    <Popover.Arrow
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_popover_arrow",
+        (state) => `sui_popover_arrow-side_${state.side}`,
+      )}
+    />
+  );
 };
 
 export { PopoverArrow as Arrow };

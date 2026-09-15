@@ -501,14 +501,18 @@ export {
 } from "./password-field/index.js";
 export {
   type PopoverAPI,
+  type PopoverSize,
   type PopoverProps,
   type PopoverState,
+  type PopoverRadius,
   type PopoverActions,
   type PopoverSlotProps,
   type PopoverChangeEventReason,
   type PopoverChangeEventDetails,
   Popover,
   usePopoverAPI,
+  PopoverContext,
+  usePopoverContext,
 } from "./popover/index.js";
 export {
   type ProgressAPI,
