@@ -16,7 +16,7 @@ import {
   ResizablePanel,
   ResizableHandle,
   useResizableContext,
-} from "./resizable.parts.jsx";
+} from "./resizable.parts.js";
 
 // Types
 // -----

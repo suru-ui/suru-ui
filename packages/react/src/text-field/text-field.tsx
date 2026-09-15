@@ -18,7 +18,7 @@ import {
   TextFieldAddon,
   TextFieldInput,
   useTextFieldContext,
-} from "./text-field.parts.jsx";
+} from "./text-field.parts.js";
 
 // Types
 // -----

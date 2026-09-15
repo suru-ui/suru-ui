@@ -11,7 +11,7 @@ import {
   AvatarRoot,
   AvatarImage,
   AvatarFallback,
-} from "./avatar.parts.jsx";
+} from "./avatar.parts.js";
 
 // Types
 // -----

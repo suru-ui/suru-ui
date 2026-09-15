@@ -12,7 +12,7 @@ import {
   AvatarGroupRoot,
   AvatarGroupSurplus,
   useAvatarGroupContext,
-} from "./avatar-group.parts.jsx";
+} from "./avatar-group.parts.js";
 
 // Types
 // -----

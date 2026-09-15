@@ -1,2 +1,2 @@
-export * from "./meter.parts.jsx";
+export * from "./meter.parts.js";
 export * from "./meter.jsx";

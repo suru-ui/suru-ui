@@ -1,2 +1,2 @@
-export * from "./field.parts.jsx";
+export * from "./field.parts.js";
 export * from "./field.jsx";

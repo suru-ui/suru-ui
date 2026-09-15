@@ -1,2 +1,2 @@
-export * from "./slider.parts.jsx";
+export * from "./slider.parts.js";
 export * from "./slider.jsx";

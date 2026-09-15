@@ -9,7 +9,7 @@ import {
   type RadioIndicatorProps,
   RadioRoot,
   RadioIndicator,
-} from "./radio.parts.jsx";
+} from "./radio.parts.js";
 
 // Types
 // -----

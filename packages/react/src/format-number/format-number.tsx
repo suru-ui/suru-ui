@@ -18,7 +18,7 @@ import {
   type FormatNumberRootRoundingIncrement,
   type FormatNumberRootTrailingZeroDisplay,
   FormatNumberRoot,
-} from "./format-number.parts.jsx";
+} from "./format-number.parts.js";
 
 // Types
 // -----

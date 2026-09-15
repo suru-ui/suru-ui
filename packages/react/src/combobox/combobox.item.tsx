@@ -1,0 +1,151 @@
+import { Combobox } from "@base-ui/react/combobox";
+import type { NonNativeButtonProps } from "@base-ui/react/internals/types";
+import * as React from "react";
+
+import mergeProps from "../_merge-props.js";
+import proxyRenderProps from "../_proxy-render-props.js";
+import type { RenderProps } from "../_use-render.js";
+import * as Button from "../button/button.parts.js";
+import cn from "../cn.js";
+import type { Override, IComponent } from "../types.js";
+import { useComboboxContext } from "./combobox.context.js";
+
+/**
+ * {@link ComboboxItem} が持つ状態です。
+ */
+export type ComboboxItemState = Override<Button.Root.State, Combobox.Item.State>;
+
+export namespace ComboboxItemProps {
+  export type Render = RenderProps<ComboboxItemState>;
+
+  export type SuruUI = {};
+
+  export type BaseUI = Override<
+    Button.Root.Props.BaseUI,
+    Pick<
+      React.ComponentProps<typeof Combobox.Item>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // NonNativeButtonProps:
+        | keyof NonNativeButtonProps
+        // ComboboxItemProps:
+        | "children"
+        | "onClick"
+        | "index"
+        | "value"
+        | "disabled",
+        keyof Render | keyof SuruUI
+      >
+    >
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<typeof Combobox.Item>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
+}
+
+/**
+ * {@link ComboboxItem} に渡す props です。
+ */
+export type ComboboxItemProps = ComboboxItemProps.Render &
+  ComboboxItemProps.SuruUI &
+  ComboboxItemProps.BaseUI &
+  ComboboxItemProps.HTML;
+
+/**
+ * 候補リストの個々の項目要素です。
+ */
+export const ComboboxItem: IComponent<ComboboxItemProps> = function SuiComboboxItem(props) {
+  const ctx = useComboboxContext();
+  const {
+    index,
+    style,
+    value,
+    render = <div />,
+    onClick,
+    children,
+    disabled,
+    className,
+    nativeButton = false,
+    focusableWhenDisabled,
+    ...otherProps
+  } = props;
+  const baseuiProps: Required<ComboboxItemProps.BaseUI> = {
+    index,
+    value,
+    onClick,
+    children,
+    disabled,
+    nativeButton,
+    focusableWhenDisabled,
+  };
+
+  return (
+    <Combobox.Item
+      {...otherProps}
+      {...baseuiProps}
+      render={(htmlProps: {}, state) => {
+        const buttonRootProps: Required<
+          Button.Root.Props.SuruUI &
+            Button.Root.Props.BaseUI &
+            Pick<Button.Root.Props.HTML, "disabled">
+        > = {
+          item: true,
+          size: ctx.size,
+          color: "grey",
+          muted: undefined,
+          radius: undefined,
+          pending: undefined,
+          squared: undefined,
+          variant: "naked",
+          disabled: state.disabled,
+          outlined: undefined,
+          nativeButton,
+          focusableWhenDisabled,
+        };
+
+        return (
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              buttonRootProps,
+              proxyRenderProps(state, {
+                style,
+                render,
+                className: cn(
+                  className,
+                  "sui_combobox_item",
+                  (state) => state.disabled && "sui_combobox_item-disabled",
+                  (state) => state.selected && "sui_combobox_item-selected",
+                  (state) => state.highlighted && "sui_combobox_item-highlighted",
+                ),
+              }),
+            ])}
+          />
+        );
+      }}
+    />
+  );
+};
+
+export { ComboboxItem as Item };
+
+/**
+ * {@link ComboboxItem} の状態やプロパティーをまとめた型名前空間です。
+ */
+export namespace Item {
+  export type State = ComboboxItemState;
+
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type Render = ComboboxItemProps.Render;
+
+    export type SuruUI = ComboboxItemProps.SuruUI;
+
+    export type BaseUI = ComboboxItemProps.BaseUI;
+
+    export type HTML = ComboboxItemProps.HTML;
+  }
+}

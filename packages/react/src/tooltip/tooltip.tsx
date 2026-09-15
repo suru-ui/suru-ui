@@ -24,7 +24,7 @@ import {
   TooltipTrigger,
   TooltipPositioner,
   createTooltipHandle,
-} from "./tooltip.parts.jsx";
+} from "./tooltip.parts.js";
 
 // Types
 // -----

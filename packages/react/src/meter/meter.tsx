@@ -16,7 +16,7 @@ import {
   MeterTrack,
   MeterValue,
   MeterIndicator,
-} from "./meter.parts.jsx";
+} from "./meter.parts.js";
 
 // Types
 // -----

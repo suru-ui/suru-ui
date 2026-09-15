@@ -1,2 +1,2 @@
-export * from "./menubar.parts.jsx";
+export * from "./menubar.parts.js";
 export * from "./menubar.jsx";

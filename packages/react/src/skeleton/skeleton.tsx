@@ -5,7 +5,7 @@ import {
   type SkeletonRootRadius,
   type SkeletonRootAnimation,
   SkeletonRoot,
-} from "./skeleton.parts.jsx";
+} from "./skeleton.parts.js";
 
 // Types
 // -----

@@ -1,3 +1,5 @@
+import type * as Button from "../button/button.parts.js";
+
 /**
  * 項目がラベルを持つオブジェクトかどうかを判定します。
  *
@@ -115,4 +117,21 @@ export function isLinkItemObject(item: unknown): item is {
   readonly [key: string]: any;
 } {
   return isItemObject(item) && item.type === "link";
+}
+
+/**
+ * 項目の状態に応じた外観を返します。
+ *
+ * チェックされている場合は指定された外観を返し、それ以外の場合は `"naked"` を返します。
+ *
+ * @param state 項目の状態です。
+ * @param variant チェック状態のときの外観です。
+ * @returns 適用する外観です。
+ */
+export function getItemVariant(state: object, variant: Button.Root.Variant): Button.Root.Variant {
+  if ("checked" in state && state.checked === true) {
+    return variant;
+  }
+
+  return "naked";
 }

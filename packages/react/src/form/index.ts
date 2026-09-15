@@ -1,2 +1,2 @@
-export * from "./form.parts.jsx";
+export * from "./form.parts.js";
 export * from "./form.jsx";

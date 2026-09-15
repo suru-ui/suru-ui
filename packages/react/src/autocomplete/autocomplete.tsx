@@ -16,7 +16,7 @@ import {
   ScrollAreaContent,
   ScrollAreaViewport,
   ScrollAreaScrollbar,
-} from "../scroll-area/scroll-area.parts.jsx";
+} from "../scroll-area/scroll-area.parts.js";
 import type { IComponent, IUseContext } from "../types.js";
 import { type ItemGroup, isItemGroup } from "./_autocomplete.jsx";
 import {
@@ -59,7 +59,7 @@ import {
   AutocompleteInputGroup,
   AutocompletePositioner,
   useAutocompleteContext,
-} from "./autocomplete.parts.jsx";
+} from "./autocomplete.parts.js";
 
 // Types
 // -----

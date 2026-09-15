@@ -23,7 +23,7 @@ import {
   ToggleButtonCircularProgressFill,
   ToggleButtonCircularProgressTrack,
   ToggleButtonCircularProgressFillRotation,
-} from "./toggle-button.parts.jsx";
+} from "./toggle-button.parts.js";
 
 // Types
 // -----

@@ -1,0 +1,67 @@
+import { Menu } from "@base-ui/react/menu";
+import * as React from "react";
+
+import type { RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
+import type { IComponent } from "../types.js";
+
+/**
+ * {@link MenuBackdrop} が持つ状態です。
+ */
+export type MenuBackdropState = Menu.Backdrop.State;
+
+export namespace MenuBackdropProps {
+  export type Render = RenderProps<MenuBackdropState>;
+
+  export type SuruUI = {};
+
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Menu.Backdrop>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuBackdropProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<typeof Menu.Backdrop>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
+}
+
+/**
+ * {@link MenuBackdrop} に渡す props です。
+ */
+export type MenuBackdropProps = MenuBackdropProps.Render &
+  MenuBackdropProps.SuruUI &
+  MenuBackdropProps.BaseUI &
+  MenuBackdropProps.HTML;
+
+/**
+ * メニューの背後に表示されるオーバーレイ要素です。
+ */
+export const MenuBackdrop: IComponent<MenuBackdropProps> = function SuiMenuBackdrop(props) {
+  const { className, ...otherProps } = props;
+
+  return <Menu.Backdrop {...otherProps} className={cn(className, "sui_menu_backdrop")} />;
+};
+
+export { MenuBackdrop as Backdrop };
+
+export namespace Backdrop {
+  export type State = MenuBackdropState;
+
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type Render = MenuBackdropProps.Render;
+
+    export type SuruUI = MenuBackdropProps.SuruUI;
+
+    export type BaseUI = MenuBackdropProps.BaseUI;
+
+    export type HTML = MenuBackdropProps.HTML;
+  }
+}

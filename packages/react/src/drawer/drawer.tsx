@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { XIcon } from "../_icons.jsx";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
-import * as Button from "../button/button.parts.jsx";
+import * as Button from "../button/button.parts.js";
 import type { IComponent } from "../types.js";
 import {
   type DrawerHandle,
@@ -46,7 +46,7 @@ import {
   DrawerDescription,
   createDrawerHandle,
   DrawerVirtualKeyboardProvider,
-} from "./drawer.parts.jsx";
+} from "./drawer.parts.js";
 
 // Types
 // -----

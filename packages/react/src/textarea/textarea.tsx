@@ -9,7 +9,7 @@ import {
   type TextareaRootChangeEventReason,
   type TextareaRootChangeEventDetails,
   TextareaRoot,
-} from "./textarea.parts.jsx";
+} from "./textarea.parts.js";
 
 // Types
 // -----

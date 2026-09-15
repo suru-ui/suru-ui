@@ -14,7 +14,7 @@ import {
   StatTrend,
   StatValue,
   StatDescription,
-} from "./stat.parts.jsx";
+} from "./stat.parts.js";
 
 // Types
 // -----

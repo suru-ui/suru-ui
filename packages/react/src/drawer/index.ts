@@ -1,2 +1,2 @@
-export * from "./drawer.parts.jsx";
+export * from "./drawer.parts.js";
 export * from "./drawer.jsx";

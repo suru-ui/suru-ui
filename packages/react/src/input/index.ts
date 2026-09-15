@@ -1,2 +1,2 @@
-export * from "./input.parts.jsx";
+export * from "./input.parts.js";
 export * from "./input.jsx";

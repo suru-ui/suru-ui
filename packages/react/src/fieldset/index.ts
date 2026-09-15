@@ -1,2 +1,2 @@
-export * from "./fieldset.parts.jsx";
+export * from "./fieldset.parts.js";
 export * from "./fieldset.jsx";

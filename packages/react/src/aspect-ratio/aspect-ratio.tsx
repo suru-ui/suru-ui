@@ -5,7 +5,7 @@ import {
   type AspectRatioRootState,
   type AspectRatioRootRadius,
   AspectRatioRoot,
-} from "./aspect-ratio.parts.jsx";
+} from "./aspect-ratio.parts.js";
 
 // Types
 // -----

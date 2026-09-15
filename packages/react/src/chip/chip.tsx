@@ -7,7 +7,7 @@ import {
   type ChipRootRadius,
   type ChipRootVariant,
   ChipRoot,
-} from "./chip.parts.jsx";
+} from "./chip.parts.js";
 
 // Types
 // -----

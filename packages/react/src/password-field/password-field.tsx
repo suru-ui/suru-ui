@@ -18,7 +18,7 @@ import {
   PasswordFieldInput,
   usePasswordFieldContext,
   PasswordFieldToggleButton,
-} from "./password-field.parts.jsx";
+} from "./password-field.parts.js";
 
 // Types
 // -----

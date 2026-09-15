@@ -1,2 +1,2 @@
-export * from "./progress.parts.jsx";
+export * from "./progress.parts.js";
 export * from "./progress.jsx";

@@ -21,7 +21,7 @@ import {
   HoverCardBackdrop,
   HoverCardPositioner,
   createHoverCardHandle,
-} from "./hover-card.parts.jsx";
+} from "./hover-card.parts.js";
 
 // Types
 // -----

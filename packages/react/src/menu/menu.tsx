@@ -60,7 +60,7 @@ import {
   MenuSubmenuTrigger,
   MenuRadioItemIndicator,
   MenuCheckboxItemIndicator,
-} from "./menu.parts.jsx";
+} from "./menu.parts.js";
 
 // Types
 // -----

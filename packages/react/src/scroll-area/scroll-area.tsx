@@ -13,7 +13,7 @@ import {
   ScrollAreaContent,
   ScrollAreaViewport,
   ScrollAreaScrollbar,
-} from "./scroll-area.parts.jsx";
+} from "./scroll-area.parts.js";
 
 // Types
 // -----

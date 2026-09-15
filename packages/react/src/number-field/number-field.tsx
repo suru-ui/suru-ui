@@ -31,7 +31,7 @@ import {
   NumberFieldScrubArea,
   useNumberFieldContext,
   NumberFieldScrubAreaCursor,
-} from "./number-field.parts.jsx";
+} from "./number-field.parts.js";
 
 // Types
 // -----

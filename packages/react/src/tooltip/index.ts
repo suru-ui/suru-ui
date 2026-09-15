@@ -1,2 +1,2 @@
-export * from "./tooltip.parts.jsx";
+export * from "./tooltip.parts.js";
 export * from "./tooltip.jsx";

@@ -1,2 +1,2 @@
-export * from "./alert.parts.jsx";
+export * from "./alert.parts.js";
 export * from "./alert.jsx";

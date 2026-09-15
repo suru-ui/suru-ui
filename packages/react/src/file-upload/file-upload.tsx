@@ -31,7 +31,7 @@ import {
   FileUploadHiddenInput,
   FileUploadItemSizeText,
   FileUploadItemDeleteTrigger,
-} from "./file-upload.parts.jsx";
+} from "./file-upload.parts.js";
 
 // Types
 // -----

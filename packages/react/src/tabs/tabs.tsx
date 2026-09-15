@@ -22,7 +22,7 @@ import {
   TabsRoot,
   TabsPanel,
   TabsIndicator,
-} from "./tabs.parts.jsx";
+} from "./tabs.parts.js";
 
 // Types
 // -----

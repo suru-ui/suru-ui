@@ -1,2 +1,2 @@
-export * from "./collapsible.parts.jsx";
+export * from "./collapsible.parts.js";
 export * from "./collapsible.jsx";

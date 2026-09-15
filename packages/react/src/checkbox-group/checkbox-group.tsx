@@ -12,7 +12,7 @@ import {
   type CheckboxGroupRootChangeEventDetails,
   CheckboxGroupRoot,
   useCheckboxGroupContext,
-} from "./checkbox-group.parts.jsx";
+} from "./checkbox-group.parts.js";
 
 // Types
 // -----

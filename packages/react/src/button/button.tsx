@@ -21,7 +21,7 @@ import {
   ButtonCircularProgressFill,
   ButtonCircularProgressTrack,
   ButtonCircularProgressFillRotation,
-} from "./button.parts.jsx";
+} from "./button.parts.js";
 
 // Types
 // -----

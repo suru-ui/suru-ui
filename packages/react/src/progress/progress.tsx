@@ -17,7 +17,7 @@ import {
   ProgressTrack,
   ProgressValue,
   ProgressIndicator,
-} from "./progress.parts.jsx";
+} from "./progress.parts.js";
 
 // Types
 // -----

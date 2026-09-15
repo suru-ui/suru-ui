@@ -8,7 +8,7 @@ import {
   type StatusRootRippleSize,
   StatusRoot,
   StatusIndicator,
-} from "./status.parts.jsx";
+} from "./status.parts.js";
 
 // Types
 // -----

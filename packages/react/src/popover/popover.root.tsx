@@ -1,0 +1,177 @@
+import { Popover } from "@base-ui/react/popover";
+import type { Size } from "@suru-ui/theme";
+import * as React from "react";
+
+import type { RenderProps } from "../_use-render.js";
+import type { IComponent } from "../types.js";
+import { PopoverContext } from "./popover.context.js";
+import { type PopoverHandle } from "./popover.handle.js";
+
+/**
+ * {@link PopoverRoot} を命令的に操作するためのオブジェクトです。
+ */
+export type PopoverRootActions = Popover.Root.Actions;
+
+/**
+ * {@link PopoverRoot} の開閉状態を変更するイベントの詳細です。
+ */
+export type PopoverRootChangeEventDetails = Popover.Root.ChangeEventDetails;
+
+/**
+ * {@link PopoverRoot} の開閉状態を変更する理由です。
+ */
+export type PopoverRootChangeEventReason = Popover.Root.ChangeEventReason;
+
+/**
+ * ポップオーバーの角丸の大きさです。
+ *
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ */
+export type PopoverRootRadius = "none" | Size;
+
+/**
+ * ポップオーバーの大きさです。
+ *
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ */
+export type PopoverRootSize = Size;
+
+/**
+ * {@link PopoverRoot} が持つ状態です。
+ */
+export type PopoverRootState = Popover.Root.State;
+
+export namespace PopoverRootProps {
+  export type Render = RenderProps<PopoverRootState>;
+
+  export type SuruUI<TPayload = any> = {
+    /**
+     * ポップオーバーとトリガー ({@link Trigger}) を関連付けるハンドルです。
+     *
+     * {@link createHandle} で作成します。Root 内に {@link Trigger} を配置する場合は省略できます。
+     */
+    handle?: PopoverHandle<TPayload> | undefined;
+
+    /**
+     * ポップオーバーの周囲に枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * ポップオーバーの角丸を指定します。
+     *
+     * 既定値は {@link PopoverRootProps.size|size} です。
+     */
+    radius?: PopoverRootRadius | undefined;
+
+    /**
+     * ポップオーバーの大きさを指定します。
+     *
+     * @default "md"
+     */
+    size?: PopoverRootSize | undefined;
+  };
+
+  export type BaseUI<TPayload = any> = Pick<
+    React.ComponentProps<typeof Popover.Root<TPayload>>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PopoverRootProps:
+      | "defaultOpen"
+      | "open"
+      | "onOpenChange"
+      | "onOpenChangeComplete"
+      | "actionsRef"
+      | "modal"
+      | "triggerId"
+      | "defaultTriggerId"
+      | "children",
+      keyof Render | keyof SuruUI
+    >
+  >;
+
+  export type HTML<TPayload = any> = Omit<
+    React.ComponentProps<typeof Popover.Root<TPayload>>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
+}
+
+/**
+ * {@link PopoverRoot} に渡す props です。
+ *
+ * @template TPayload トリガーから受け取るデータの型です。
+ */
+export type PopoverRootProps<TPayload = any> = PopoverRootProps.Render &
+  PopoverRootProps.SuruUI<TPayload> &
+  PopoverRootProps.BaseUI<TPayload> &
+  PopoverRootProps.HTML<TPayload>;
+
+/**
+ * {@link PopoverRoot} のコンポーネント型です。
+ */
+interface IPopoverRoot extends IComponent<PopoverRootProps> {
+  /**
+   * @template TPayload トリガーから受け取るデータの型です。
+   */
+  <TPayload = any>(props: PopoverRootProps<TPayload>): IComponent.Return;
+}
+
+/**
+ * ポップオーバーのルートです。
+ *
+ * ポップオーバーの開閉状態を管理し、各パーツをグループ化します。
+ * それ自身は HTML 要素をレンダリングしません。
+ */
+export const PopoverRoot: IPopoverRoot = function SuiPopoverRoot<TPayload>(
+  props: PopoverRootProps<TPayload>,
+) {
+  const { size = "md", radius = size, outlined = false, ...otherProps } = props;
+  const ctx = React.useMemo<PopoverContext>(
+    () => ({ size, radius, outlined }),
+    [size, radius, outlined],
+  );
+
+  return (
+    <PopoverContext.Provider value={ctx}>
+      <Popover.Root {...otherProps} />
+    </PopoverContext.Provider>
+  );
+};
+
+export { PopoverRoot as Root };
+
+export namespace Root {
+  export type State = PopoverRootState;
+
+  export type Props<TPayload = any> = Props.Render &
+    Props.SuruUI<TPayload> &
+    Props.BaseUI<TPayload> &
+    Props.HTML<TPayload>;
+
+  export namespace Props {
+    export type Render = PopoverRootProps.Render;
+
+    export type SuruUI<TPayload = any> = PopoverRootProps.SuruUI<TPayload>;
+
+    export type BaseUI<TPayload = any> = PopoverRootProps.BaseUI<TPayload>;
+
+    export type HTML<TPayload = any> = PopoverRootProps.HTML<TPayload>;
+  }
+
+  export type Actions = PopoverRootActions;
+
+  export type ChangeEventDetails = PopoverRootChangeEventDetails;
+
+  export type ChangeEventReason = PopoverRootChangeEventReason;
+
+  export type Radius = PopoverRootRadius;
+
+  export type Size = PopoverRootSize;
+}

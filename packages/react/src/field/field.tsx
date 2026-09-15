@@ -20,7 +20,7 @@ import {
   FieldControl,
   FieldValidity,
   FieldDescription,
-} from "./field.parts.jsx";
+} from "./field.parts.js";
 
 // Types
 // -----

@@ -1,2 +1,2 @@
-export * from "./toast.parts.jsx";
+export * from "./toast.parts.js";
 export * from "./toast.jsx";

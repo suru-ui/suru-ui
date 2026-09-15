@@ -1,0 +1,111 @@
+import type { Size, Color } from "@suru-ui/theme";
+import * as React from "react";
+
+import { ContextMissingError } from "../errors.js";
+import type { IUseContext } from "../types.js";
+
+/**
+ * チェックボックスの配色です。
+ */
+export type CheckboxGroupContextColor = Color;
+
+/**
+ * チェックボックスの角丸です。
+ *
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ * - `"full"`: 丸形
+ */
+export type CheckboxGroupContextRadius = "none" | Size | "full";
+
+/**
+ * チェックボックスの大きさです。
+ *
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ */
+export type CheckboxGroupContextSize = Size;
+
+/**
+ * チェックボックスの主な外観です。
+ *
+ * - `"naked"`: 背景なし
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type CheckboxGroupContextVariant = "naked" | "liquid";
+
+/**
+ * {@link CheckboxGroupRoot} が子パーツへ提供するコンテキストです。
+ */
+export type CheckboxGroupContext = {
+  /**
+   * チェックボックスの配色です。
+   */
+  readonly color: CheckboxGroupContextColor;
+
+  /**
+   * グループ全体を無効にするかどうかです。
+   */
+  readonly disabled: boolean | undefined;
+
+  /**
+   * 枠線を表示するかどうかです。
+   */
+  readonly outlined: boolean;
+
+  /**
+   * チェックボックスの角丸です。
+   */
+  readonly radius: CheckboxGroupContextRadius;
+
+  /**
+   * チェックボックスの大きさです。
+   */
+  readonly size: CheckboxGroupContextSize;
+
+  /**
+   * チェックボックスの主な外観です。
+   */
+  readonly variant: CheckboxGroupContextVariant;
+};
+
+/**
+ * チェックボックスグループのスタイルを子要素へ伝播するコンテキストです。
+ */
+export const CheckboxGroupContext: React.Context<CheckboxGroupContext | null> =
+  React.createContext<CheckboxGroupContext | null>(null);
+
+function useSuiCheckboxGroupContext(optional?: false): CheckboxGroupContext;
+function useSuiCheckboxGroupContext(optional?: boolean): CheckboxGroupContext | null;
+function useSuiCheckboxGroupContext(optional?: boolean): CheckboxGroupContext | null {
+  const ctx = React.use(CheckboxGroupContext);
+  if (ctx === null && !optional) {
+    throw new ContextMissingError({
+      contextName: "CheckboxGroupContext",
+      providerName: "CheckboxGroupRoot",
+    });
+  }
+
+  return ctx;
+}
+
+/**
+ * {@link CheckboxGroupContext} を読み取るフックです。
+ */
+export const useCheckboxGroupContext: IUseContext<CheckboxGroupContext> =
+  useSuiCheckboxGroupContext;
+
+export { CheckboxGroupContext as Context, useCheckboxGroupContext as useContext };
+
+export namespace Context {
+  export type Color = CheckboxGroupContextColor;
+
+  export type Radius = CheckboxGroupContextRadius;
+
+  export type Size = CheckboxGroupContextSize;
+
+  export type Variant = CheckboxGroupContextVariant;
+}

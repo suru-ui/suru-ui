@@ -1,2 +1,2 @@
-export * from "./select.parts.jsx";
+export * from "./select.parts.js";
 export * from "./select.jsx";

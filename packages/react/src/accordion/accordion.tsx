@@ -26,7 +26,7 @@ import {
   AccordionHeading,
   AccordionTrigger,
   AccordionIndicator,
-} from "./accordion.parts.jsx";
+} from "./accordion.parts.js";
 
 // Types
 // -----

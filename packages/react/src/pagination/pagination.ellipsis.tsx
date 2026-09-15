@@ -1,0 +1,161 @@
+import * as React from "react";
+
+import { MoreIcon } from "../_icons.jsx";
+import useRender, { type RenderProps } from "../_use-render.js";
+import * as Button from "../button/button.parts.js";
+import cn from "../cn.js";
+import type { IComponent } from "../types.js";
+import { usePaginationContext } from "./pagination.context.js";
+
+/**
+ * {@link PaginationEllipsis} が持つ状態です。
+ */
+export type PaginationEllipsisState = {};
+
+export namespace PaginationEllipsisProps {
+  export type Render = RenderProps<PaginationEllipsisState>;
+
+  export type SuruUI = {
+    /**
+     * 飛び先のページ範囲の終了ページを指定します。
+     */
+    end?: number | undefined;
+
+    /**
+     * 飛び先のページ範囲の開始ページを指定します。
+     */
+    start?: number | undefined;
+  };
+
+  export type BaseUI = Pick<
+    Button.ButtonRootProps,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // PaginationEllipsisProps: context が制御するため除きます。
+      keyof Button.ButtonRootProps,
+      keyof Render | keyof SuruUI | "children" | "color" | "radius" | "size" | "squared" | "variant"
+    >
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<"button">,
+    keyof Render | keyof SuruUI | keyof Omit<Button.ButtonRootProps, "children"> | "children"
+  >;
+}
+
+/**
+ * {@link PaginationEllipsis} に渡す props です。
+ */
+export type PaginationEllipsisProps = PaginationEllipsisProps.Render &
+  PaginationEllipsisProps.SuruUI &
+  PaginationEllipsisProps.BaseUI &
+  PaginationEllipsisProps.HTML;
+
+/**
+ * 飛ばされたページ範囲を表す省略記号コンポーネントです。
+ *
+ * 押下すると入力欄が表示され、範囲内のページ番号を入力してそのページへ移動できます。`Enter` で決定、`Escape` で取り消します。
+ */
+export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
+  function SuiPaginationEllipsis(props) {
+    const ctx = usePaginationContext(true);
+    const {
+      end,
+      start = 2,
+      onClick,
+      disabled = false,
+      className,
+      "aria-label": ariaLabel,
+      ...otherButtonProps
+    } = props;
+    const resolvedEnd = end ?? start;
+    const label = ariaLabel ?? `${start}〜${resolvedEnd}ページへ移動`;
+    const [editing, setEditing] = React.useState(false);
+    const isDisabled = ctx?.disabled || disabled;
+    const inputElement = useRender<HTMLInputElement, {}, boolean>({
+      props: {
+        type: "text",
+        onBlur() {
+          setEditing(false);
+        },
+        pattern: "[0-9]*",
+        disabled: isDisabled,
+        autoFocus: true,
+        className: "sui_pagination_ellipsis_input",
+        inputMode: "numeric",
+        onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+          if (event.key === "Escape") {
+            setEditing(false);
+
+            return;
+          }
+
+          if (event.key !== "Enter") {
+            return;
+          }
+
+          const value = Number.parseInt(event.currentTarget.value, 10);
+          setEditing(false);
+          if (Number.isNaN(value)) {
+            return;
+          }
+
+          ctx?.goToPage(Math.min(Math.max(value, start), resolvedEnd), {
+            event,
+            reason: "ellipsis",
+          });
+        },
+        placeholder: String(start),
+        defaultValue: "",
+        "aria-label": label,
+      },
+      enabled: editing,
+      defaultTagName: "input",
+    });
+
+    if (editing) {
+      return inputElement;
+    }
+
+    const handleClick: NonNullable<Button.ButtonRootProps["onClick"]> = (event) => {
+      onClick?.(event);
+      if (!event.defaultPrevented && !isDisabled) {
+        setEditing(true);
+      }
+    };
+
+    return (
+      <Button.Root
+        {...otherButtonProps}
+        size={ctx?.size ?? "md"}
+        color="grey"
+        radius={ctx?.radius}
+        onClick={handleClick}
+        squared
+        variant="naked"
+        disabled={isDisabled}
+        className={cn(className, "sui_pagination_ellipsis")}
+        aria-label={label}
+      >
+        <MoreIcon />
+      </Button.Root>
+    );
+  };
+
+export { PaginationEllipsis as Ellipsis };
+
+export namespace Ellipsis {
+  export type State = PaginationEllipsisState;
+
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type Render = PaginationEllipsisProps.Render;
+
+    export type SuruUI = PaginationEllipsisProps.SuruUI;
+
+    export type BaseUI = PaginationEllipsisProps.BaseUI;
+
+    export type HTML = PaginationEllipsisProps.HTML;
+  }
+}

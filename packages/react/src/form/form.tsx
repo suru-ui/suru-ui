@@ -8,7 +8,7 @@ import {
   type FormRootSubmitEventReason,
   type FormRootSubmitEventDetails,
   FormRoot,
-} from "./form.parts.jsx";
+} from "./form.parts.js";
 
 // Types
 // -----

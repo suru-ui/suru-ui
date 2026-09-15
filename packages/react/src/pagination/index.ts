@@ -1,2 +1,2 @@
-export * from "./pagination.parts.jsx";
+export * from "./pagination.parts.js";
 export * from "./pagination.jsx";

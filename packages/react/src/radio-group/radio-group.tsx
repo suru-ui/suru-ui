@@ -12,7 +12,7 @@ import {
   type RadioGroupRootChangeEventDetails,
   RadioGroupRoot,
   useRadioGroupContext,
-} from "./radio-group.parts.jsx";
+} from "./radio-group.parts.js";
 
 // Types
 // -----

@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { XIcon } from "../_icons.jsx";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
-import * as Button from "../button/button.parts.jsx";
+import * as Button from "../button/button.parts.js";
 import type { IComponent, IUseContext } from "../types.js";
 import {
   type DialogHandle,
@@ -41,7 +41,7 @@ import {
   createDialogHandle,
   DialogToggleTrigger,
   useDialogContentContext,
-} from "./dialog.parts.jsx";
+} from "./dialog.parts.js";
 
 // Types
 // -----

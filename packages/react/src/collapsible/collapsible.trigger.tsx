@@ -1,0 +1,86 @@
+import { Collapsible } from "@base-ui/react/collapsible";
+import type { NativeButtonProps } from "@base-ui/react/internals/types";
+import * as React from "react";
+
+import { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
+import type { IComponent } from "../types.js";
+
+/**
+ * {@link CollapsibleTrigger} が持つ状態です。
+ */
+export type CollapsibleTriggerState = Collapsible.Trigger.State;
+
+export namespace CollapsibleTriggerProps {
+  export type Render = RenderProps<CollapsibleTriggerState>;
+
+  export type SuruUI = {
+    /**
+     * ボタンとして描画する内容です。
+     *
+     * {@link Collapsible.Trigger} の `render` と同じ型で、そのまま渡されます。
+     */
+    children: NonNullable<React.ComponentProps<typeof Collapsible.Trigger>["render"]>;
+  };
+
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Collapsible.Trigger>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // NativeButtonProps:
+      | keyof NativeButtonProps
+      // CollapsibleTriggerProps:
+      | never,
+      keyof Render | keyof SuruUI
+    >
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<typeof Collapsible.Trigger>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
+}
+
+/**
+ * {@link CollapsibleTrigger} に渡す props です。
+ */
+export type CollapsibleTriggerProps = CollapsibleTriggerProps.Render &
+  CollapsibleTriggerProps.SuruUI &
+  CollapsibleTriggerProps.BaseUI &
+  CollapsibleTriggerProps.HTML;
+
+/**
+ * コラプシブルの開閉ボタンコンポーネントです。
+ *
+ * 子要素は何にもラップされず、そのまま {@link Collapsible.Trigger} の `render` に渡されます。
+ */
+export const CollapsibleTrigger: IComponent<CollapsibleTriggerProps> =
+  function SuiCollapsibleTrigger(props) {
+    const { children, className, ...otherProps } = props;
+
+    return (
+      <Collapsible.Trigger
+        {...otherProps}
+        render={children}
+        className={cn(className, "sui_collapsible_trigger")}
+      />
+    );
+  };
+
+export { CollapsibleTrigger as Trigger };
+
+export namespace Trigger {
+  export type State = CollapsibleTriggerState;
+
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type Render = CollapsibleTriggerProps.Render;
+
+    export type SuruUI = CollapsibleTriggerProps.SuruUI;
+
+    export type BaseUI = CollapsibleTriggerProps.BaseUI;
+
+    export type HTML = CollapsibleTriggerProps.HTML;
+  }
+}

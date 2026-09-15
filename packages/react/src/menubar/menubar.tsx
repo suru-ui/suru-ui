@@ -13,7 +13,7 @@ import {
   type MenubarRootOrientation,
   type IMenubarRootItemRenderer,
   MenubarRoot,
-} from "./menubar.parts.jsx";
+} from "./menubar.parts.js";
 
 // Types
 // -----

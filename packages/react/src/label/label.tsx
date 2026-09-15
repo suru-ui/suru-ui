@@ -4,7 +4,7 @@ import {
   type LabelRootProps,
   type LabelRootState,
   LabelRoot,
-} from "./label.parts.jsx";
+} from "./label.parts.js";
 
 // Types
 // -----

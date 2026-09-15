@@ -1,2 +1,2 @@
-export * from "./popover.parts.jsx";
+export * from "./popover.parts.js";
 export * from "./popover.jsx";

@@ -1,2 +1,2 @@
-export * from "./skeleton.parts.jsx";
+export * from "./skeleton.parts.js";
 export * from "./skeleton.jsx";

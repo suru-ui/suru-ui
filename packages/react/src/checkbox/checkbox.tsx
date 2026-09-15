@@ -11,7 +11,7 @@ import {
   type CheckboxRootChangeEventDetails,
   CheckboxRoot,
   CheckboxIndicator,
-} from "./checkbox.parts.jsx";
+} from "./checkbox.parts.js";
 
 // Types
 // -----

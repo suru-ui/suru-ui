@@ -10,7 +10,7 @@ import {
   type InputRootChangeEventReason,
   type InputRootChangeEventDetails,
   InputRoot,
-} from "./input.parts.jsx";
+} from "./input.parts.js";
 
 // Types
 // -----

@@ -13,7 +13,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
   CollapsibleIndicator,
-} from "./collapsible.parts.jsx";
+} from "./collapsible.parts.js";
 
 // Types
 // -----

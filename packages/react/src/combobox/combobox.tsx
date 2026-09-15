@@ -17,7 +17,7 @@ import {
   ScrollAreaContent,
   ScrollAreaViewport,
   ScrollAreaScrollbar,
-} from "../scroll-area/scroll-area.parts.jsx";
+} from "../scroll-area/scroll-area.parts.js";
 import type { IComponent, IUseContext } from "../types.js";
 import { type ItemGroup, isItemGroup } from "./_combobox.jsx";
 import {
@@ -76,7 +76,7 @@ import {
   ComboboxPositioner,
   useComboboxContext,
   ComboboxItemIndicator,
-} from "./combobox.parts.jsx";
+} from "./combobox.parts.js";
 
 // Types
 // -----

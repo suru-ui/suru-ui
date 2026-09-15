@@ -3,7 +3,7 @@ import {
   type TooltipGroupRootProps,
   type TooltipGroupRootState,
   TooltipGroupRoot,
-} from "./tooltip-group.parts.jsx";
+} from "./tooltip-group.parts.js";
 
 // Types
 // -----

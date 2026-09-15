@@ -1,2 +1,2 @@
-export * from "./textarea.parts.jsx";
+export * from "./textarea.parts.js";
 export * from "./textarea.jsx";

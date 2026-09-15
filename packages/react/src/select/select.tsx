@@ -59,7 +59,7 @@ import {
   SelectScrollUpArrow,
   SelectListLabeledItem,
   SelectScrollDownArrow,
-} from "./select.parts.jsx";
+} from "./select.parts.js";
 
 // Types
 // -----

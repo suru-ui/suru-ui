@@ -1,2 +1,2 @@
-export * from "./stat.parts.jsx";
+export * from "./stat.parts.js";
 export * from "./stat.jsx";

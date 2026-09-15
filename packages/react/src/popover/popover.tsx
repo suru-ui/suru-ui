@@ -24,7 +24,7 @@ import {
   PopoverBackdrop,
   PopoverPositioner,
   createPopoverHandle,
-} from "./popover.parts.jsx";
+} from "./popover.parts.js";
 
 // Types
 // -----

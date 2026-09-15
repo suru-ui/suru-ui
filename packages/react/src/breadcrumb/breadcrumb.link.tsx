@@ -1,0 +1,101 @@
+import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
+
+import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
+import type { IComponent } from "../types.js";
+
+/**
+ * {@link BreadcrumbLink} が持つ状態です。
+ */
+export type BreadcrumbLinkState = {};
+
+export namespace BreadcrumbLinkProps {
+  export type Render = RenderProps<BreadcrumbLinkState>;
+
+  export type SuruUI = {
+    /**
+     * 現在のページかどうかを指定します。
+     *
+     * `true` の場合、リンクではなく現在位置として描画します。
+     *
+     * @default false
+     */
+    current?: boolean | undefined;
+
+    /**
+     * リンクを無効にするかどうかを指定します。
+     *
+     * `true` の場合、リンク先へ遷移できなくなります。
+     *
+     * @default false
+     */
+    disabled?: boolean | undefined;
+  };
+
+  export type BaseUI = {};
+
+  export type HTML = Omit<
+    BaseUIComponentProps<"a", never, never>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
+}
+
+/**
+ * {@link BreadcrumbLink} に渡す props です。
+ */
+export type BreadcrumbLinkProps = BreadcrumbLinkProps.Render &
+  BreadcrumbLinkProps.SuruUI &
+  BreadcrumbLinkProps.BaseUI &
+  BreadcrumbLinkProps.HTML;
+
+/**
+ * パンくずのリンクコンポーネントです。
+ *
+ * `current` を `true` にすると、現在位置を示す要素として描画します。
+ */
+export const BreadcrumbLink: IComponent<BreadcrumbLinkProps> = function SuiBreadcrumbLink(props) {
+  const { current = false, onClick, disabled = false, ...otherAnchorProps } = props;
+  const handleOnClick: NonNullable<BreadcrumbLinkProps["onClick"]> = (event) => {
+    onClick?.(event);
+    if (disabled && !event.defaultPrevented) {
+      event.preventDefault();
+    }
+  };
+
+  return useRender({
+    props: [
+      otherAnchorProps,
+      {
+        href: disabled ? undefined : otherAnchorProps.href,
+        onClick: handleOnClick,
+        tabIndex: disabled && !current ? -1 : otherAnchorProps.tabIndex,
+        className: cn(
+          "sui_breadcrumb_link",
+          current && "sui_breadcrumb_link-current",
+          disabled && "sui_breadcrumb_link-disabled",
+        ),
+        "aria-current": current ? "page" : undefined,
+        "aria-disabled": disabled || undefined,
+      },
+    ],
+    defaultTagName: current ? "span" : "a",
+  });
+};
+
+export { BreadcrumbLink as Link };
+
+export namespace Link {
+  export type State = BreadcrumbLinkState;
+
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type Render = BreadcrumbLinkProps.Render;
+
+    export type SuruUI = BreadcrumbLinkProps.SuruUI;
+
+    export type BaseUI = BreadcrumbLinkProps.BaseUI;
+
+    export type HTML = BreadcrumbLinkProps.HTML;
+  }
+}

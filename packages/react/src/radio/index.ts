@@ -1,2 +1,2 @@
-export * from "./radio.parts.jsx";
+export * from "./radio.parts.js";
 export * from "./radio.jsx";

@@ -1,6 +1,6 @@
 ---
 name: react-component
-description: Suru UI の React コンポーネント (`packages/react/src/<名前>/` の .parts.tsx と .tsx) を書くときに使用します。ファイル配置・型・API・namespace を定めます。
+description: Suru UI の React コンポーネント (`packages/react/src/<名前>/` のパーツファイルとバレル) を書くときに使用します。ファイル配置・型・API・namespace を定めます。
 ---
 
 # React コンポーネント
@@ -20,12 +20,13 @@ CSS は `../css/SKILL.md`、JSDoc と日本語は `../jsdoc/SKILL.md` と `../ja
 
 次の順で進めます。
 
-1. Base UI の型確認 (§2)
-2. `.parts.tsx` を書く (§3〜§7)
-3. `.tsx` を書く (§8)
-4. 周辺ファイル (§9)
-5. 自己見直し (§10)
-6. 検証 (§10)
+1. Base UI の型確認
+2. パーツファイル (`<kebab>.<パーツ>.tsx` または `<kebab>.<パーツ>.context.ts`) を書く
+3. バレル (`<kebab>.parts.ts`) を書く
+4. `.tsx` (合成) を書く
+5. 周辺ファイル
+6. 自己見直し
+7. 検証
 
 ## 自動整形に任せるもの
 
@@ -43,34 +44,53 @@ CSS は `../css/SKILL.md`、JSDoc と日本語は `../jsdoc/SKILL.md` と `../ja
 
 ```text
 packages/react/src/<kebab>/
-  _<kebab>.tsx      # 内部ヘルパー (必要な場合のみ)
-  <kebab>.parts.tsx # 各パーツ
-  <kebab>.tsx       # 合成 + API フック
-  <kebab>.css       # css スキルに従う
-  index.ts          # 再輸出のみ
+  _<kebab>.tsx                  # パーツ横断の内部ヘルパー (必要な場合のみ)
+  <kebab>.context.ts            # Context パーツ
+  <kebab>.root.tsx              # パーツごとのファイル
+  <kebab>.<パーツ>.tsx          # 例: <kebab>.content.tsx
+  <kebab>.parts.ts              # パーツのバレル
+  <kebab>.tsx                   # 合成 + API フック
+  <kebab>.css                   # css スキルに従う
+  index.ts                      # 再輸出のみ
 ```
 
-- `_` 始まりは非公開です。パーツ横断の補助だけを置きます。公開 `index.ts` から再輸出しません。
+- 1 パーツ 1 ファイルです。ファイル名は `<kebab>.<パーツ名の kebab>.tsx` にします (例: `AccordionRoot` → `accordion.root.tsx`)。
+- コンポーネント (JSX を書くか `IComponent` を使うもの) は `.tsx`、Context・型・フックのみのパーツは `.ts` にします。
+- Context は `<kebab>.<対象の kebab>.context.ts` にします (例: `ButtonContext` → `button.context.ts`、`ButtonCircularProgressContext` → `button.circular-progress.context.ts`)。対象がない場合は `<kebab>.context.ts` です。
+- `_` 始まりは非公開です。2 つ以上のパーツが共有する補助だけを置きます。バレルと公開 `index.ts` から再輸出しません。
+- バレル `<kebab>.parts.ts` は再輸出だけを行い、先頭で `./<kebab>.css` を import します。実装を書きません。
 - `index.ts` は実装を書かず、parts → 合成の順に再輸出します。
-- 自ファイルの import には `.js` / `.jsx` を付けます。他コンポーネントは相対で import します。
+- パーツファイルとバレルの再輸出はパーツツリー順に並べます。
+- 自ファイルの import には `.js` / `.jsx` を付けます。他コンポーネントもパーツ同士も相対で import します。
 
 ```ts
-export * from "./<kebab>.parts.jsx";
-export * from "./<kebab>.jsx";
+// <kebab>.parts.ts
+import "./<kebab>.css";
+
+export * from "./<kebab>.context.js";
+export * from "./<kebab>.root.jsx";
+export * from "./<kebab>.content.jsx";
+```
+
+```ts
+// index.ts
+export * from "./<kebab>.parts.js";
+export * from "./<kebab>.js";
 ```
 
 ```tsx
 import { XIcon } from "../_icons.jsx";
 ```
 
-## .parts.tsx の土台
+## パーツファイルの土台
 
-### import とセクション
+### import と構成
 
 - import / export の文と指定子、`src/index.ts` の順は規定しません。フォーマッターに任せます。
-- `./<kebab>.css` を必ず import します。
-- セクションはパーツツリー順に置きます。見出しは `// <名>` の次行に同文字数の `-` を置きます。
-- `.tsx` の見出しも同様です (`// Types` / `// API` / `// Component` と同文字数の `-`)。
+- CSS の import はバレルだけが行います。パーツファイルでは import しません。
+- パーツをまたぐ参照は、参照する側のパーツファイルから相対で import します (例: `import { ButtonContext } from "./button.context.js";`)。ファイル内部では正式名を使い、短名を使いません。
+- 旧 `.parts.tsx` にあった `// <名>` のセクション見出しは不要です。ファイルそのものが 1 パーツを表します。
+- `.tsx` (合成) の見出しは同様です (`// Types` / `// API` / `// Component` と同文字数の `-`)。
 
 ### Base UI の型確認
 
@@ -78,13 +98,13 @@ import { XIcon } from "../_icons.jsx";
 
 1. `<パート>/*.d.ts` の namespace が公開する型を列挙します。`State`・`Props` のほか、`Actions`・`ChangeEventDetails`・`ChangeEventReason` があれば含めます。
 2. 公開メンバーは漏らさず再輸出します。`State` と `Props` だけでは終えません。
-3. `Handle` / `createHandle` の有無を確認します。ないものは作りません。あるものは `Handle` セクションに置きます。
+3. `Handle` / `createHandle` の有無を確認します。ないものは作りません。あるものは `<kebab>.handle.ts` に置きます。
 4. 他から再輸出のパーツ (例: `Separator`) は `index.parts.d.ts` と `index.d.ts` で実体と型の両方を確認します。
 5. 各パーツの `State` フィールドを列挙し、状態クラス化の対象を決めます。`State` にない状態は扱いません。
 
 ### Context 定型
 
-子に値を渡す場合のみ、先頭セクションに置きます。
+子に値を渡す場合のみ、独立した `<kebab>.context.ts` に置きます。短名の再輸出も同じファイルに置きます。
 
 ```tsx
 export { AutocompleteContext as Context, useAutocompleteContext as useContext };
@@ -100,6 +120,7 @@ const ctx = React.useMemo<XxxContext>(() => ({ ... }), [...]);
 
 - namespace には値型があれば追加します。
 - 短名再輸出は束縛を作りません。ファイル内部 (JSX 含む) は正式名のままにします。
+- 他パーツが内部フック (`useSuiXxxContext`) を使いたい場合は、公開済みの `useXxxContext` を相対 import します。内部フックは export しません。
 
 ### 型の置き方
 
@@ -511,7 +532,7 @@ export type XxxProps<TItem = any> = XxxProps.Render & XxxProps.SuruUI<TItem> & X
 
 ## 短名定型
 
-各パーツの直後に置きます。
+同じパーツファイル内のパーツの直後に置きます。
 
 ```tsx
 export { AccordionItem as Item };
@@ -602,7 +623,8 @@ children: typeof children === "function" ? items.map(children) : toReactNode(chi
 
 ## 周辺ファイル
 
-- `_<kebab>.tsx` は `.parts.tsx` と `.tsx` からのみ import します。
+- `_<kebab>.tsx` はパーツファイルと合成 (`.tsx`) からのみ import します。パーツ横断の補助を置き、バレルと公開 `index.ts` からは再輸出しません。
+- バレル `<kebab>.parts.ts` は全パーツを `export *` で再輸出し、`./<kebab>.css` を import します。短名 (`Context` や `Root` など) は各パーツファイルの再輸出から伝わります。
 - `src/index.ts` には合成 (`.tsx`) の公開型と値を列挙します。パーツ単体の型は列挙せず、合成の再命名型を使います。値には `type` を付けず、型のみには `type` を付けます。
 
 ```ts
@@ -639,6 +661,10 @@ mise run test:typecheck
 
 提出前にすべて満たすことを確認します。
 
+- 1 パーツ 1 ファイルで、ファイル名が `<kebab>.<パーツの kebab>.tsx` である。Context は `<kebab>.<対象の kebab>.context.ts`、Context・型・フックのみのパーツは `.ts` である。
+- CSS の import がバレルだけにある。バレルが `export *` だけを行っている。
+- パーツをまたぐ参照が相対 import で、ファイル内部では正式名を使っている。
+- パーツ横断の補助が `_<kebab>.tsx` にあり、バレルと公開 `index.ts` から再輸出されていない。
 - `erasableSyntaxOnly` に反する構文 (`enum`・パラメータープロパティーなど) がない。
 - `IComponent` 以外で宣言していない。`Sui` 接頭辞を省略していない。
 - `useRender` 対象に JSX 直書きしていない。Base UI 対象に `useRender` を使っていない。

@@ -11,7 +11,7 @@ import {
   type SwitchRootChangeEventDetails,
   SwitchRoot,
   SwitchThumb,
-} from "./switch.parts.jsx";
+} from "./switch.parts.js";
 
 // Types
 // -----

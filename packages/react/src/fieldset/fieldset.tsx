@@ -6,7 +6,7 @@ import {
   type FieldsetLegendProps,
   FieldsetRoot,
   FieldsetLegend,
-} from "./fieldset.parts.jsx";
+} from "./fieldset.parts.js";
 
 // Types
 // -----

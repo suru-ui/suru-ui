@@ -1,0 +1,139 @@
+import { Autocomplete } from "@base-ui/react/autocomplete";
+import type { NonNativeButtonProps } from "@base-ui/react/internals/types";
+import * as React from "react";
+
+import mergeProps from "../_merge-props.js";
+import proxyRenderProps from "../_proxy-render-props.js";
+import { type RenderProps } from "../_use-render.js";
+import * as Button from "../button/button.parts.js";
+import cn from "../cn.js";
+import type { Override, IComponent } from "../types.js";
+
+/**
+ * {@link AutocompleteItem} の状態です。
+ */
+export type AutocompleteItemState = Override<Button.Root.State, Autocomplete.Item.State>;
+
+export namespace AutocompleteItemProps {
+  export type Render = RenderProps<AutocompleteItemState>;
+
+  export type SuruUI = {};
+
+  export type BaseUI = Override<
+    Button.Root.Props.BaseUI,
+    Pick<
+      React.ComponentProps<typeof Autocomplete.Item>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // NonNativeButtonProps:
+        | keyof NonNativeButtonProps
+        // ContextMenuItemProps:
+        | "children"
+        | "onClick"
+        | "index"
+        | "value"
+        | "disabled",
+        keyof Render | keyof SuruUI
+      >
+    >
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<typeof Autocomplete.Item>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
+}
+
+/**
+ * {@link AutocompleteItem} に渡すプロパティーです。
+ */
+export type AutocompleteItemProps = AutocompleteItemProps.Render &
+  AutocompleteItemProps.SuruUI &
+  AutocompleteItemProps.BaseUI &
+  AutocompleteItemProps.HTML;
+
+/**
+ * リストの個々の項目要素です。
+ */
+export const AutocompleteItem: IComponent<AutocompleteItemProps> = function SuiAutocompleteItem(
+  props,
+) {
+  const {
+    index,
+    style,
+    value,
+    render = <div />,
+    onClick,
+    children,
+    disabled,
+    className,
+    nativeButton = false,
+    focusableWhenDisabled,
+    ...otherProps
+  } = props;
+  const baseuiProps: Required<AutocompleteItemProps.BaseUI> = {
+    index,
+    value,
+    onClick,
+    children,
+    disabled,
+    nativeButton,
+    focusableWhenDisabled,
+  };
+
+  return (
+    <Autocomplete.Item
+      {...otherProps}
+      {...baseuiProps}
+      render={(htmlProps: {}, state) => {
+        const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
+          Pick<Button.Root.Props.HTML, "disabled"> = {
+          item: true,
+          size: undefined,
+          color: "grey",
+          muted: undefined,
+          radius: undefined,
+          pending: undefined,
+          squared: undefined,
+          variant: "naked",
+          disabled: state.disabled,
+          outlined: undefined,
+          nativeButton,
+          focusableWhenDisabled,
+        };
+
+        return (
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              buttonRootProps,
+              proxyRenderProps(state, {
+                style,
+                render,
+                className: cn(className, "sui_autocomplete_item"),
+              }),
+            ])}
+          />
+        );
+      }}
+    />
+  );
+};
+
+export { AutocompleteItem as Item };
+
+export namespace Item {
+  export type State = AutocompleteItemState;
+
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type Render = AutocompleteItemProps.Render;
+
+    export type SuruUI = AutocompleteItemProps.SuruUI;
+
+    export type BaseUI = AutocompleteItemProps.BaseUI;
+
+    export type HTML = AutocompleteItemProps.HTML;
+  }
+}

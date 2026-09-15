@@ -67,7 +67,7 @@ import {
   ContextMenuSubmenuTrigger,
   ContextMenuRadioItemIndicator,
   ContextMenuCheckboxItemIndicator,
-} from "./context-menu.parts.jsx";
+} from "./context-menu.parts.js";
 
 // Types
 // -----

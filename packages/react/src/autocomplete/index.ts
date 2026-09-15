@@ -1,2 +1,2 @@
-export * from "./autocomplete.parts.jsx";
+export * from "./autocomplete.parts.js";
 export * from "./autocomplete.jsx";

@@ -10,7 +10,7 @@ import {
   type ActionGroupRootOrientation,
   ActionGroupRoot,
   useActionGroupContext,
-} from "./action-group.parts.jsx";
+} from "./action-group.parts.js";
 
 // Types
 // -----

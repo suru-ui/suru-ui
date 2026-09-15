@@ -1,2 +1,2 @@
-export * from "./accordion.parts.jsx";
+export * from "./accordion.parts.js";
 export * from "./accordion.jsx";

@@ -9,7 +9,7 @@ import {
   type BadgeRootVariant,
   type BadgeRootPosition,
   BadgeRoot,
-} from "./badge.parts.jsx";
+} from "./badge.parts.js";
 
 // Types
 // -----

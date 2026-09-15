@@ -24,7 +24,7 @@ import {
   SliderValue,
   SliderControl,
   SliderIndicator,
-} from "./slider.parts.jsx";
+} from "./slider.parts.js";
 
 // Types
 // -----

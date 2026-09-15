@@ -17,7 +17,7 @@ import {
   TreeItem,
   TreeRoot,
   TreeItemIndicator,
-} from "./tree.parts.jsx";
+} from "./tree.parts.js";
 
 // Types
 // -----

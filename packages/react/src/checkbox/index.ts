@@ -1,2 +1,2 @@
-export * from "./checkbox.parts.jsx";
+export * from "./checkbox.parts.js";
 export * from "./checkbox.jsx";

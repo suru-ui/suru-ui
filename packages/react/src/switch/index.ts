@@ -1,2 +1,2 @@
-export * from "./switch.parts.jsx";
+export * from "./switch.parts.js";
 export * from "./switch.jsx";

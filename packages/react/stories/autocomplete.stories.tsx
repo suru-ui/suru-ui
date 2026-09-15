@@ -4,7 +4,7 @@ import { SearchIcon } from "lucide-react";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
-import * as Autocomplete_ from "../src/autocomplete/autocomplete.parts.jsx";
+import * as Autocomplete_ from "../src/autocomplete/autocomplete.parts.js";
 import { Autocomplete } from "../src/autocomplete/index.js";
 
 const COLORS: readonly Autocomplete.Color[] = theme.COLORS;

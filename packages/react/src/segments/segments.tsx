@@ -25,7 +25,7 @@ import {
   SegmentsList,
   SegmentsRoot,
   SegmentsIndicator,
-} from "./segments.parts.jsx";
+} from "./segments.parts.js";
 
 // Types
 // -----

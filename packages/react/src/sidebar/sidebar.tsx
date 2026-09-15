@@ -41,7 +41,7 @@ import {
   SidebarGroupLabel,
   useSidebarContext,
   SidebarGroupContent,
-} from "./sidebar.parts.jsx";
+} from "./sidebar.parts.js";
 
 // Types
 // -----

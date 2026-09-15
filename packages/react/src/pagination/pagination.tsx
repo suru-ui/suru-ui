@@ -21,7 +21,7 @@ import {
   PaginationEllipsis,
   PaginationNextButton,
   PaginationPreviousButton,
-} from "./pagination.parts.jsx";
+} from "./pagination.parts.js";
 
 // Types
 // -----

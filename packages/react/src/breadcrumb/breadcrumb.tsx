@@ -19,7 +19,7 @@ import {
   BreadcrumbList,
   BreadcrumbRoot,
   BreadcrumbSeparator,
-} from "./breadcrumb.parts.jsx";
+} from "./breadcrumb.parts.js";
 
 // Types
 // -----

@@ -14,7 +14,7 @@ import {
   ListItem,
   ListRoot,
   ListItemIndicator,
-} from "./list.parts.jsx";
+} from "./list.parts.js";
 
 // Types
 // -----

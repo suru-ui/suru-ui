@@ -16,7 +16,7 @@ import {
   AlertTitle,
   AlertActions,
   AlertContent,
-} from "./alert.parts.jsx";
+} from "./alert.parts.js";
 
 // Types
 // -----

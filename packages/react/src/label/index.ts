@@ -1,2 +1,2 @@
-export * from "./label.parts.jsx";
+export * from "./label.parts.js";
 export * from "./label.jsx";

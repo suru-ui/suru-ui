@@ -1,2 +1,2 @@
-export * from "./badge.parts.jsx";
+export * from "./badge.parts.js";
 export * from "./badge.jsx";

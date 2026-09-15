@@ -1,0 +1,49 @@
+import * as React from "react";
+
+import { ContextMissingError } from "../errors.js";
+import type { IUseContext } from "../types.js";
+
+/**
+ * {@link PasswordFieldRoot} が子パーツへ提供する表示状態です。
+ */
+export type PasswordFieldContext = {
+  /**
+   * パスワードの表示状態を更新します。
+   *
+   * 関数を渡すと、現在の表示状態から次の表示状態を計算できます。
+   */
+  readonly setVisible: (value: boolean | ((prevValue: boolean) => boolean)) => void;
+
+  /**
+   * パスワードを表示しているかどうかです。
+   */
+  readonly visible: boolean;
+};
+
+/**
+ * PasswordField の表示状態を子パーツへ伝播するコンテキストです。
+ */
+export const PasswordFieldContext: React.Context<PasswordFieldContext | null> =
+  React.createContext<PasswordFieldContext | null>(null);
+
+function useSuiPasswordFieldContext(optional?: false): PasswordFieldContext;
+function useSuiPasswordFieldContext(optional?: boolean): PasswordFieldContext | null;
+function useSuiPasswordFieldContext(optional?: boolean): PasswordFieldContext | null {
+  const ctx = React.use(PasswordFieldContext);
+  if (ctx === null && !optional) {
+    throw new ContextMissingError({
+      contextName: "PasswordFieldContext",
+      providerName: "PasswordFieldRoot",
+    });
+  }
+
+  return ctx;
+}
+
+/**
+ * {@link PasswordFieldContext} を読み取るフックです。
+ */
+export const usePasswordFieldContext: IUseContext<PasswordFieldContext> =
+  useSuiPasswordFieldContext;
+
+export { PasswordFieldContext as Context, usePasswordFieldContext as useContext };

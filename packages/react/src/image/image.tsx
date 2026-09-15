@@ -5,7 +5,7 @@ import {
   type ImageRootState,
   type ImageRootRadius,
   ImageRoot,
-} from "./image.parts.jsx";
+} from "./image.parts.js";
 
 // Types
 // -----
