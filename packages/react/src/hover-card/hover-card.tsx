@@ -128,9 +128,14 @@ export interface HoverCardAPI<TPayload = any> {
   getBackdropProps(): HoverCardBackdropProps;
 
   /**
+   * {@link HoverCardContent} に表示する子要素を取得します。
+   */
+  getContentChildren(): HoverCardContentProps["children"];
+
+  /**
    * {@link HoverCardContent} に渡す props を取得します。
    */
-  getContentProps(): HoverCardContentProps;
+  getContentProps(): Omit<HoverCardContentProps, "children">;
 
   /**
    * {@link HoverCardPortal} に渡す props を取得します。
@@ -175,6 +180,7 @@ export const useHoverCardAPI: IUseHoverCardAPI = function useSuiHoverCardAPI(
     delay,
     handle: handleProp,
     trigger,
+    children,
     slotProps: {
       arrow: arrowProps,
       portal: portalProps = {},
@@ -240,6 +246,9 @@ export const useHoverCardAPI: IUseHoverCardAPI = function useSuiHoverCardAPI(
     getBackdropProps() {
       return backdropProps;
     },
+    getContentChildren() {
+      return children;
+    },
     getPositionerProps() {
       return {
         ...otherPositionerProps,
@@ -289,7 +298,7 @@ export const HoverCard: IHoverCard = /*#__PURE__*/ Object.assign(
           <HoverCardPositioner {...api.getPositionerProps()}>
             <HoverCardContent {...contentProps}>
               {arrowProps && <HoverCardArrow {...arrowProps} />}
-              {contentProps.children}
+              {api.getContentChildren()}
             </HoverCardContent>
           </HoverCardPositioner>
         </HoverCardPortal>

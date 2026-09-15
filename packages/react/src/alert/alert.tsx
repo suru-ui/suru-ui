@@ -100,11 +100,16 @@ export interface AlertAPI {
   getActionsProps(): AlertActionsProps | null;
 
   /**
+   * {@link AlertContent} に表示する子要素を取得します。
+   */
+  getContentChildren(): AlertContentProps["children"];
+
+  /**
    * {@link AlertContent} に渡す props を取得します。
    *
    * それを表示しないときは `null` を返します。
    */
-  getContentProps(): AlertContentProps | null;
+  getContentProps(): Omit<AlertContentProps, "children"> | null;
 
   /**
    * {@link AlertIcon} に渡す props を取得します。
@@ -168,7 +173,10 @@ export const useAlertAPI: IUseAlertAPI = function useSuiAlertAPI(props) {
       return isLikelyVisibleNode(actions) ? { ...actionsProps, children: actions } : null;
     },
     getContentProps() {
-      return isLikelyVisibleNode(children) ? { ...contentProps, children } : null;
+      return isLikelyVisibleNode(children) ? contentProps : null;
+    },
+    getContentChildren() {
+      return children;
     },
   };
 };
@@ -192,7 +200,7 @@ export const Alert: IComponent<AlertProps> = function SuiAlert(props: AlertProps
     <AlertRoot {...api.getRootProps()}>
       {iconProps && <AlertIcon {...iconProps} />}
       {titleProps && <AlertTitle {...titleProps} />}
-      {contentProps && <AlertContent {...contentProps} />}
+      {contentProps && <AlertContent {...contentProps}>{api.getContentChildren()}</AlertContent>}
       {actionsProps && <AlertActions {...actionsProps} />}
     </AlertRoot>
   );

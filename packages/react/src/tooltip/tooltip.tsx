@@ -150,9 +150,14 @@ export interface TooltipAPI<TPayload = any> {
   getArrowProps(): TooltipArrowProps | null;
 
   /**
+   * {@link TooltipContent} に表示する子要素を取得します。
+   */
+  getContentChildren(): TooltipContentProps["children"];
+
+  /**
    * {@link TooltipContent} に渡す props を取得します。
    */
-  getContentProps(): TooltipContentProps;
+  getContentProps(): Omit<TooltipContentProps, "children">;
 
   /**
    * {@link TooltipPortal} に渡す props を取得します。
@@ -201,6 +206,7 @@ export const useTooltipAPI: IUseTooltipAPI = function useSuiTooltipAPI(props: To
     radius,
     sticky,
     trigger,
+    children,
     disabled,
     outlined,
     showArrow = false,
@@ -282,6 +288,9 @@ export const useTooltipAPI: IUseTooltipAPI = function useSuiTooltipAPI(props: To
 
       return null;
     },
+    getContentChildren() {
+      return children;
+    },
     getPositionerProps() {
       const requiredProps: Required<UseAnchorPositioningSharedParameters> = {
         side,
@@ -347,7 +356,7 @@ export const Tooltip: ITooltip = /*#__PURE__*/ Object.assign(
           <TooltipPositioner {...api.getPositionerProps()}>
             <TooltipContent {...contentProps}>
               {arrowProps && <TooltipArrow {...arrowProps} />}
-              {contentProps.children}
+              {api.getContentChildren()}
             </TooltipContent>
           </TooltipPositioner>
         </TooltipPortal>
