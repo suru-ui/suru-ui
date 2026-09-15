@@ -1,5 +1,4 @@
 import { preview, controls } from "../.config/storybook/preview.js";
-import demoImage from "../assets/demo-image.svg";
 import { AspectRatio } from "../src/aspect-ratio/index.js";
 import { Image } from "../src/image/index.js";
 
@@ -37,7 +36,7 @@ export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
     alt: "風景写真",
-    src: demoImage,
+    src: LANDSCAPE_IMAGE,
     radius: "md",
   }),
   render(props) {
@@ -53,12 +52,12 @@ export const Radii = meta.story({
   name: "角丸",
   ...ctrl({
     alt: "風景写真",
-    src: demoImage,
+    src: LANDSCAPE_IMAGE,
     fit: "cover",
   }),
   render(props) {
     return (
-      <div className="flex w-[640px] flex-wrap gap-4">
+      <div className="flex w-[640px] justify-center flex-wrap gap-4">
         {RADII.map((radius) => (
           <div key={radius} className="flex flex-col items-center gap-1">
             <span>{radius}</span>
@@ -74,12 +73,12 @@ export const Fit = meta.story({
   name: "表示方法",
   ...ctrl({
     alt: "風景写真",
-    src: demoImage,
+    src: LANDSCAPE_IMAGE,
     radius: "md",
   }),
   render(props) {
     return (
-      <div className="flex w-[640px] flex-wrap gap-4">
+      <div className="flex w-[640px] justify-center flex-wrap gap-4">
         {FITS.map((fit) => (
           <div key={fit} className="flex flex-col items-center gap-1">
             <span>{fit}</span>
@@ -101,7 +100,7 @@ export const Orientation = meta.story({
   }),
   render(props) {
     return (
-      <div className="flex w-[640px] flex-wrap gap-4">
+      <div className="flex w-[640px] justify-center flex-wrap gap-4">
         <div className="flex flex-col items-center gap-1">
           <span>横長枠に縦長画像</span>
           <Image {...props} style={{ width: 200, height: 120 }} />
@@ -124,7 +123,7 @@ export const Circle = meta.story({
   name: "円形",
   ...ctrl({
     alt: "利用者の写真",
-    src: demoImage,
+    src: LANDSCAPE_IMAGE,
     fit: "cover",
     radius: "full",
   }),
@@ -163,13 +162,13 @@ export const Loading = meta.story({
 export const AlternativeText = meta.story({
   name: "代替テキスト",
   ...ctrl({
-    src: demoImage,
+    src: LANDSCAPE_IMAGE,
     fit: "cover",
     radius: "md",
   }),
   render(props) {
     return (
-      <div className="flex w-[640px] flex-wrap gap-4">
+      <div className="flex w-[640px] justify-center flex-wrap gap-4">
         <div className="flex flex-col items-center gap-1">
           <span>内容を伝える alt</span>
           <Image {...props} alt="夕焼けに染まる山並み" style={{ width: 200, height: 120 }} />
@@ -214,7 +213,8 @@ export const Gallery = meta.story({
       { alt: "ギャラリー画像2", src: "https://picsum.photos/seed/suru-gallery-2/400/300" },
       { alt: "ギャラリー画像3", src: "https://picsum.photos/seed/suru-gallery-3/400/300" },
       { alt: "ギャラリー画像4", src: "https://picsum.photos/seed/suru-gallery-4/400/300" },
-    ] as const;
+    ];
+
     return (
       <div className="grid w-[640px] grid-cols-2 gap-4">
         {items.map((item) => (
