@@ -1,14 +1,14 @@
+import { RadioGroup } from "@base-ui/react";
 import * as theme from "@suru-ui/theme";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
-import { RadioGroup } from "../src/radio-group/index.js";
 import { Radio } from "../src/radio/index.js";
 
 const COLORS: readonly Radio.Color[] = theme.COLORS;
 const RADII: readonly Radio.Radius[] = ["none", ...theme.SIZES, "full"];
 const SIZES: readonly Radio.Size[] = theme.SIZES;
-const VARIANTS: readonly Radio.Variant[] = ["naked", "liquid"];
+const VARIANTS: readonly Radio.Variant[] = ["liquid", "naked"];
 
 const meta = preview.meta({
   title: "Radio",
@@ -45,7 +45,7 @@ const ctrl = controls(Radio, {
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: "full",
@@ -123,7 +123,7 @@ export const Outlined = meta.story({
 export const Colors = meta.story({
   name: "色",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     size: "md",
     radius: "full",
     outlined: undefined,
@@ -147,7 +147,7 @@ export const Colors = meta.story({
 export const Sizes = meta.story({
   name: "大きさ",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     radius: "full",
     outlined: undefined,
@@ -177,7 +177,7 @@ export const Sizes = meta.story({
 export const Radii = meta.story({
   name: "角丸",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     outlined: undefined,
@@ -201,7 +201,7 @@ export const Radii = meta.story({
 export const Controlled = meta.story({
   name: "制御",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: "full",
@@ -234,7 +234,7 @@ export const Controlled = meta.story({
 export const Disabled = meta.story({
   name: "無効",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: "full",
@@ -260,7 +260,7 @@ export const Disabled = meta.story({
 export const GroupDisabled = meta.story({
   name: "グループ無効",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: "full",

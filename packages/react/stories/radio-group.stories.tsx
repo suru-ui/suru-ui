@@ -57,7 +57,7 @@ const Item = ({ value, children }: { children: React.ReactNode; value: string })
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: "full",
@@ -79,7 +79,7 @@ export const Usage = meta.story({
 export const Controlled = meta.story({
   name: "制御",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: "full",
@@ -111,7 +111,7 @@ export const Controlled = meta.story({
 export const Sizes = meta.story({
   name: "大きさ",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     radius: "full",
     outlined: undefined,
@@ -142,7 +142,7 @@ export const Sizes = meta.story({
 export const Colors = meta.story({
   name: "色",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     size: "md",
     radius: "full",
     outlined: undefined,
@@ -165,7 +165,7 @@ export const Colors = meta.story({
 export const Disabled = meta.story({
   name: "無効",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: "full",
@@ -185,7 +185,7 @@ export const Disabled = meta.story({
 export const Horizontal = meta.story({
   name: "横並び",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     radius: "full",
@@ -205,7 +205,7 @@ export const Horizontal = meta.story({
 export const Radii = meta.story({
   name: "角丸",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     color: "grey",
     size: "md",
     outlined: undefined,

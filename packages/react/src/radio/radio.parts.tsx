@@ -96,7 +96,7 @@ export namespace RadioRootProps {
      *
      * RadioGroup 内では、グループの値が優先されます。
      *
-     * @default "naked"
+     * @default "liquid"
      */
     variant?: RadioRootVariant | undefined;
   };
@@ -140,7 +140,7 @@ export const RadioRoot: IComponent<RadioRootProps> = function SuiRadioRoot(props
     size: sizeProp = "md",
     color: colorProp = "grey",
     radius: radiusProp = "full",
-    variant: variantProp = "naked",
+    variant: variantProp = "liquid",
     disabled: disabledProp,
     outlined: outlinedProp = false,
     className,
@@ -167,8 +167,17 @@ export const RadioRoot: IComponent<RadioRootProps> = function SuiRadioRoot(props
         `sui_radio-radius_${radius}`,
         `sui_radio-variant_${variant}`,
         outlined && "sui_radio-outlined",
+        (state) => state.dirty && "sui_radio-dirty",
+        (state) => state.valid === null && "sui_radio-unverified",
+        (state) => state.valid === true && "sui_radio-valid",
+        (state) => state.valid === false && "sui_radio-invalid",
+        (state) => state.filled && "sui_radio-filled",
         (state) => state.checked && "sui_radio-checked",
+        (state) => state.focused && "sui_radio-focused",
+        (state) => state.touched && "sui_radio-touched",
         (state) => state.disabled && "sui_radio-disabled",
+        (state) => state.readOnly && "sui_radio-readonly",
+        (state) => state.required && "sui_radio-required",
       )}
       data-scope={dataScope}
     />

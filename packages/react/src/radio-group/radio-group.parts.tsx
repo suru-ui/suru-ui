@@ -19,22 +19,22 @@ import "./radio-group.css";
 export type RadioGroupContextColor = Color;
 
 /**
- * ラジオボタンの角丸です。
+ * ラジオボタンの角丸の大きさです。
  *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
- * - `"full"`: 完全な丸形
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ * - `"full"`: 丸形
  */
 export type RadioGroupContextRadius = "none" | Size | "full";
 
 /**
  * ラジオボタンの大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type RadioGroupContextSize = Size;
 
@@ -202,7 +202,7 @@ export namespace RadioGroupRootProps {
      *
      * グループ内のラジオボタンより優先されます。
      *
-     * 既定値は {@link RadioGroupRootProps.variant|variant} が `"naked"` かどうかです。
+     * @default false
      */
     outlined?: boolean | undefined;
 
@@ -229,7 +229,7 @@ export namespace RadioGroupRootProps {
      *
      * グループ内のラジオボタンより優先されます。
      *
-     * @default "naked"
+     * @default "liquid"
      */
     variant?: RadioGroupRootVariant | undefined;
   };
@@ -285,9 +285,9 @@ export const RadioGroupRoot: IRadioGroupRoot = function SuiRadioGroupRoot(
     size = "md",
     color = "grey",
     radius = "full",
-    variant = "naked",
+    variant = "liquid",
     disabled,
-    outlined = variant === "naked",
+    outlined = false,
     className,
     orientation = "vertical",
     // @ts-expect-error

@@ -302,15 +302,24 @@
   }
 
   &.sui_radio-size_sm {
-    --sui_radio_indicator-size: calc(var(--sui_radio-size) * 0.5);
+    --sui_radio_indicator-size: calc(
+                                  var(--sui_radio-size)
+                                  * if(style(--sui-theme: dark): 0.53; else: 0.42;)
+                                );
   }
 
   &.sui_radio-size_md {
-    --sui_radio_indicator-size: calc(var(--sui_radio-size) * 0.5);
+    --sui_radio_indicator-size: calc(
+                                  var(--sui_radio-size)
+                                  * if(style(--sui-theme: dark): 0.53; else: 0.42;)
+                                );
   }
 
   &.sui_radio-size_lg {
-    --sui_radio_indicator-size: calc(var(--sui_radio-size) * 0.5);
+    --sui_radio_indicator-size: calc(
+                                  var(--sui_radio-size)
+                                  * if(style(--sui-theme: dark): 0.53; else: 0.42;)
+                                );
   }
 }
 

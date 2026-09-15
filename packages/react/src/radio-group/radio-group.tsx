@@ -90,6 +90,7 @@ interface IRadioGroup extends IComponent<RadioGroupProps> {
    * @template TValue 項目の値の型です。
    */
   <TValue = any>(props: RadioGroupProps<TValue>): IComponent.Return;
+
   readonly useContext: IUseContext<RadioGroupContext>;
 }
 
