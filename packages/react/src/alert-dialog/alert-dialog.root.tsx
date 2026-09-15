@@ -1,9 +1,9 @@
 import { AlertDialog } from "@base-ui/react/alert-dialog";
 import * as React from "react";
 
-import { type RenderProps } from "../_use-render.js";
+import type { RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
-import { type AlertDialogHandle } from "./alert-dialog.handle.js";
+import type { AlertDialogHandle } from "./alert-dialog.handle.js";
 
 /**
  * アラートダイアログを命令的に操作するためのオブジェクトです。

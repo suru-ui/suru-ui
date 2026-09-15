@@ -1,4 +1,4 @@
-import { type FileUploadFileError } from "./file-upload.root.jsx";
+import type { FileUploadFileError } from "./file-upload.root.jsx";
 
 export const SIZE_UNITS = ["B", "KB", "MB", "GB", "TB"] as const;
 

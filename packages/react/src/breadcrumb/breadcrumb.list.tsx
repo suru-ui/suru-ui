@@ -7,7 +7,7 @@ import type { IComponent } from "../types.js";
 import { useBreadcrumbContext } from "./breadcrumb.context.js";
 import { BreadcrumbItem } from "./breadcrumb.item.jsx";
 import { BreadcrumbLink } from "./breadcrumb.link.jsx";
-import { type BreadcrumbRootItemObject } from "./breadcrumb.root.jsx";
+import type { BreadcrumbRootItemObject } from "./breadcrumb.root.jsx";
 import { BreadcrumbSeparator } from "./breadcrumb.separator.jsx";
 
 /**

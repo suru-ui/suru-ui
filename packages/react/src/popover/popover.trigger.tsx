@@ -5,7 +5,7 @@ import * as React from "react";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { type PopoverHandle } from "./popover.handle.js";
+import type { PopoverHandle } from "./popover.handle.js";
 
 /**
  * {@link PopoverTrigger} が持つ状態です。

@@ -1,4 +1,4 @@
-import { type Size, type Color } from "@suru-ui/theme";
+import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";

@@ -5,7 +5,7 @@ import * as React from "react";
 import type { RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
 import { PopoverContext } from "./popover.context.js";
-import { type PopoverHandle } from "./popover.handle.js";
+import type { PopoverHandle } from "./popover.handle.js";
 
 /**
  * {@link PopoverRoot} を命令的に操作するためのオブジェクトです。

@@ -5,17 +5,17 @@ import * as React from "react";
 import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import type { IComponent } from "../types.js";
-import { type MenuCheckboxItemProps } from "./menu.checkbox-item.jsx";
+import type { MenuCheckboxItemProps } from "./menu.checkbox-item.jsx";
 import { MenuContext } from "./menu.context.js";
-import { type MenuGroupLabelProps } from "./menu.group-label.jsx";
-import { type MenuGroupProps } from "./menu.group.jsx";
-import { type MenuHandle } from "./menu.handle.js";
-import { type MenuItemProps } from "./menu.item.jsx";
-import { type MenuLinkItemProps } from "./menu.link-item.jsx";
-import { type MenuRadioGroupProps } from "./menu.radio-group.jsx";
-import { type MenuRadioItemProps } from "./menu.radio-item.jsx";
-import { type MenuSubmenuRootProps } from "./menu.submenu-root.jsx";
-import { type MenuSubmenuTriggerProps } from "./menu.submenu-trigger.jsx";
+import type { MenuGroupLabelProps } from "./menu.group-label.jsx";
+import type { MenuGroupProps } from "./menu.group.jsx";
+import type { MenuHandle } from "./menu.handle.js";
+import type { MenuItemProps } from "./menu.item.jsx";
+import type { MenuLinkItemProps } from "./menu.link-item.jsx";
+import type { MenuRadioGroupProps } from "./menu.radio-group.jsx";
+import type { MenuRadioItemProps } from "./menu.radio-item.jsx";
+import type { MenuSubmenuRootProps } from "./menu.submenu-root.jsx";
+import type { MenuSubmenuTriggerProps } from "./menu.submenu-trigger.jsx";
 
 /**
  * {@link MenuRoot} を命令的に操作するためのオブジェクトです。

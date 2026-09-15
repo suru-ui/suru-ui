@@ -2,7 +2,7 @@ import { Autocomplete } from "@base-ui/react/autocomplete";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
-import { type RenderProps } from "../_use-render.js";
+import type { RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
 import { AutocompleteContext } from "./autocomplete.context.js";
 

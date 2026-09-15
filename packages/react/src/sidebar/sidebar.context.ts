@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
 import type { IUseContext } from "../types.js";
-import { type SidebarRootCollapsible } from "./sidebar.root.jsx";
+import type { SidebarRootCollapsible } from "./sidebar.root.jsx";
 
 /**
  * サイドバーの開閉状態です。

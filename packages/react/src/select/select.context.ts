@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
 import type { IUseContext } from "../types.js";
-import { type SelectRootItems } from "./select.root.jsx";
+import type { SelectRootItems } from "./select.root.jsx";
 
 /**
  * 選択欄とポップアップの角丸です。

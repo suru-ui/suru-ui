@@ -3,7 +3,7 @@ import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import toReactNode from "../_to-react-node.js";
-import { type RenderProps } from "../_use-render.js";
+import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { type $InferItemValue, isItemObject } from "./_accordion.jsx";

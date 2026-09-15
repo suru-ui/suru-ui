@@ -4,7 +4,7 @@ import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { useActionGroupContext } from "./action-group.context.js";
-import { type ActionGroupRootOrientation } from "./action-group.root.jsx";
+import type { ActionGroupRootOrientation } from "./action-group.root.jsx";
 
 /**
  * {@link ActionGroupSeparator} が持つ状態です。

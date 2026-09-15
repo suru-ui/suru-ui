@@ -13,10 +13,10 @@ import { SelectGroup } from "./select.group.jsx";
 import { SelectItemIndicator } from "./select.item-indicator.jsx";
 import { SelectItemText } from "./select.item-text.jsx";
 import { SelectItem } from "./select.item.jsx";
-import {
-  type SelectRootItems,
-  type SelectRootItemGroup,
-  type SelectRootLabeledItem,
+import type {
+  SelectRootItems,
+  SelectRootItemGroup,
+  SelectRootLabeledItem,
 } from "./select.root.jsx";
 import { SelectSeparator } from "./select.separator.jsx";
 

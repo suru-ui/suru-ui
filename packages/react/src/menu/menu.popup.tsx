@@ -19,15 +19,15 @@ import { MenuPositioner } from "./menu.positioner.jsx";
 import { MenuRadioGroup } from "./menu.radio-group.jsx";
 import { MenuRadioItemIndicator } from "./menu.radio-item-indicator.jsx";
 import { MenuRadioItem } from "./menu.radio-item.jsx";
-import {
-  type MenuRootItem,
-  type MenuRootLinkItem,
-  type MenuRootItemGroup,
-  type MenuRootRadioItem,
-  type MenuRootLabeledItem,
-  type MenuRootSubmenuItem,
-  type MenuRootCheckboxItem,
-  type MenuRootRadioItemGroup,
+import type {
+  MenuRootItem,
+  MenuRootLinkItem,
+  MenuRootItemGroup,
+  MenuRootRadioItem,
+  MenuRootLabeledItem,
+  MenuRootSubmenuItem,
+  MenuRootCheckboxItem,
+  MenuRootRadioItemGroup,
 } from "./menu.root.jsx";
 import { MenuSeparator } from "./menu.separator.jsx";
 import { MenuSubmenuRoot } from "./menu.submenu-root.jsx";

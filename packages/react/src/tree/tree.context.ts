@@ -2,12 +2,7 @@ import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
 import type { IUseContext } from "../types.js";
-import {
-  type TreeRootSize,
-  type TreeRootColor,
-  type TreeRootRadius,
-  type TreeRootVariant,
-} from "./tree.root.jsx";
+import type { TreeRootSize, TreeRootColor, TreeRootRadius, TreeRootVariant } from "./tree.root.jsx";
 
 /**
  * 項目の選択を変更するアクションです。

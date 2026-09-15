@@ -1,9 +1,9 @@
 import { Dialog } from "@base-ui/react/dialog";
 import * as React from "react";
 
-import { type RenderProps } from "../_use-render.js";
+import type { RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
-import { type DialogHandle } from "./dialog.handle.js";
+import type { DialogHandle } from "./dialog.handle.js";
 
 /**
  * ダイアログを命令的に操作するためのオブジェクトです。

@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
 import type { IUseContext } from "../types.js";
-import { type BreadcrumbRootItemObject } from "./breadcrumb.root.jsx";
+import type { BreadcrumbRootItemObject } from "./breadcrumb.root.jsx";
 
 /**
  * パンくずリストの配色です。

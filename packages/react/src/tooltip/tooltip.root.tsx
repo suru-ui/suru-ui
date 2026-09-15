@@ -5,7 +5,7 @@ import * as React from "react";
 import type { RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
 import { TooltipContext } from "./tooltip.context.js";
-import { type TooltipHandle } from "./tooltip.handle.js";
+import type { TooltipHandle } from "./tooltip.handle.js";
 
 /**
  * {@link TooltipRoot} を命令的に操作するためのオブジェクトです。

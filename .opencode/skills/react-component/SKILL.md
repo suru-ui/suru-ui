@@ -89,6 +89,7 @@ import { XIcon } from "../_icons.jsx";
 - import / export の文と指定子、`src/index.ts` の順は規定しません。フォーマッターに任せます。
 - CSS の import はバレルだけが行います。パーツファイルでは import しません。
 - パーツをまたぐ参照は、参照する側のパーツファイルから相対で import します (例: `import { ButtonContext } from "./button.context.js";`)。ファイル内部では正式名を使い、短名を使いません。
+- 型だけを import する場合は `import type { X } from "..."` にします。値と型が混ざる場合だけ `import { type X, value }` にします。
 - 旧 `.parts.tsx` にあった `// <名>` のセクション見出しは不要です。ファイルそのものが 1 パーツを表します。
 - `.tsx` (合成) の見出しは同様です (`// Types` / `// API` / `// Component` と同文字数の `-`)。
 
@@ -664,6 +665,7 @@ mise run test:typecheck
 - 1 パーツ 1 ファイルで、ファイル名が `<kebab>.<パーツの kebab>.tsx` である。Context は `<kebab>.<対象の kebab>.context.ts`、Context・型・フックのみのパーツは `.ts` である。
 - CSS の import がバレルだけにある。バレルが `export *` だけを行っている。
 - パーツをまたぐ参照が相対 import で、ファイル内部では正式名を使っている。
+- 型だけの import が `import type { X } from "..."` になっている。値と型が混ざる場合だけ `import { type X, value }` にしている。
 - パーツ横断の補助が `_<kebab>.tsx` にあり、バレルと公開 `index.ts` から再輸出されていない。
 - `erasableSyntaxOnly` に反する構文 (`enum`・パラメータープロパティーなど) がない。
 - `IComponent` 以外で宣言していない。`Sui` 接頭辞を省略していない。

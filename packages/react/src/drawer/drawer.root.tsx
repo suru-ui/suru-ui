@@ -1,9 +1,9 @@
 import { Drawer } from "@base-ui/react/drawer";
 import * as React from "react";
 
-import { type RenderProps } from "../_use-render.js";
+import type { RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
-import { type DrawerHandle } from "./drawer.handle.js";
+import type { DrawerHandle } from "./drawer.handle.js";
 
 /**
  * ドロワーを命令的に操作するためのオブジェクトです。

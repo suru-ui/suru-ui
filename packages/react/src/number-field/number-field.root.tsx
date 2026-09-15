@@ -2,7 +2,7 @@ import { NumberField } from "@base-ui/react/number-field";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
-import { type RenderProps } from "../_use-render.js";
+import type { RenderProps } from "../_use-render.js";
 import { useActionGroupContext } from "../action-group/action-group.parts.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";

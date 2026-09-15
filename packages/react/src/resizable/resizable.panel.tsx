@@ -11,7 +11,7 @@ import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { useResizableContext } from "./resizable.context.js";
-import { type ResizableRootOrientation } from "./resizable.root.jsx";
+import type { ResizableRootOrientation } from "./resizable.root.jsx";
 
 /**
  * リサイズ可能なパネルのサイズです。

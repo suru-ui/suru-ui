@@ -27,7 +27,7 @@ import { ContextMenuPositioner } from "./context-menu.positioner.jsx";
 import { ContextMenuRadioGroup } from "./context-menu.radio-group.jsx";
 import { ContextMenuRadioItemIndicator } from "./context-menu.radio-item-indicator.jsx";
 import { ContextMenuRadioItem } from "./context-menu.radio-item.jsx";
-import { type ContextMenuRootItemObject } from "./context-menu.root.jsx";
+import type { ContextMenuRootItemObject } from "./context-menu.root.jsx";
 import { ContextMenuSeparator } from "./context-menu.separator.jsx";
 import { ContextMenuSubmenuRoot } from "./context-menu.submenu-root.jsx";
 import { ContextMenuSubmenuTrigger } from "./context-menu.submenu-trigger.jsx";

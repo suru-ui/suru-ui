@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
 import type { IUseContext } from "../types.js";
-import { type PopoverRootSize, type PopoverRootRadius } from "./popover.root.jsx";
+import type { PopoverRootSize, PopoverRootRadius } from "./popover.root.jsx";
 
 /**
  * {@link PopoverRoot} が子パーツへ提供するコンテキストです。

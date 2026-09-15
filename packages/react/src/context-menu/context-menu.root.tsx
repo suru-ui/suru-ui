@@ -5,14 +5,14 @@ import * as React from "react";
 import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import type { IComponent } from "../types.js";
-import { type ContextMenuCheckboxItemProps } from "./context-menu.checkbox-item.jsx";
+import type { ContextMenuCheckboxItemProps } from "./context-menu.checkbox-item.jsx";
 import { ContextMenuContext } from "./context-menu.context.js";
-import { type ContextMenuGroupProps } from "./context-menu.group.jsx";
-import { type ContextMenuItemProps } from "./context-menu.item.jsx";
-import { type ContextMenuLinkItemProps } from "./context-menu.link-item.jsx";
-import { type ContextMenuRadioGroupProps } from "./context-menu.radio-group.jsx";
-import { type ContextMenuRadioItemProps } from "./context-menu.radio-item.jsx";
-import { type ContextMenuSeparatorProps } from "./context-menu.separator.jsx";
+import type { ContextMenuGroupProps } from "./context-menu.group.jsx";
+import type { ContextMenuItemProps } from "./context-menu.item.jsx";
+import type { ContextMenuLinkItemProps } from "./context-menu.link-item.jsx";
+import type { ContextMenuRadioGroupProps } from "./context-menu.radio-group.jsx";
+import type { ContextMenuRadioItemProps } from "./context-menu.radio-item.jsx";
+import type { ContextMenuSeparatorProps } from "./context-menu.separator.jsx";
 
 /**
  * {@link ContextMenuRoot} を命令的に操作するためのオブジェクトです。

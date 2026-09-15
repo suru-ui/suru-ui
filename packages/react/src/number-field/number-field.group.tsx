@@ -1,7 +1,7 @@
 import { NumberField } from "@base-ui/react/number-field";
 import * as React from "react";
 
-import { type RenderProps } from "../_use-render.js";
+import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { DISABLE_FOCUS_ON_CLICK_DATA } from "./_number-field.jsx";

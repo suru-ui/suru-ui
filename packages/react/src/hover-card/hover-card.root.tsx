@@ -3,7 +3,7 @@ import * as React from "react";
 
 import type { RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
-import { type HoverCardHandle } from "./hover-card.handle.js";
+import type { HoverCardHandle } from "./hover-card.handle.js";
 
 /**
  * {@link HoverCardRoot} を命令的に操作するためのオブジェクトです。

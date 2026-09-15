@@ -5,8 +5,8 @@ import * as React from "react";
 import type { Override, IComponent } from "../types.js";
 import { isItemGroup, isLabeledItem } from "./_select.jsx";
 import { SelectContext } from "./select.context.js";
-import { type SelectGroupProps } from "./select.group.jsx";
-import { type SelectItemProps } from "./select.item.jsx";
+import type { SelectGroupProps } from "./select.group.jsx";
+import type { SelectItemProps } from "./select.item.jsx";
 
 /**
  * {@link SelectRoot} のアクションです。

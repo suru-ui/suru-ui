@@ -3,7 +3,7 @@ import * as React from "react";
 import isLikelyVisibleNode, { type LikelyVisibleNode } from "../_is-likely-visible-node.js";
 import mergeProps from "../_merge-props.js";
 import toReactNode from "../_to-react-node.js";
-import { type AlertRootColor } from "../alert/alert.parts.js";
+import type { AlertRootColor } from "../alert/alert.parts.js";
 import type { Override, IComponent } from "../types.js";
 import {
   type IToastClient,

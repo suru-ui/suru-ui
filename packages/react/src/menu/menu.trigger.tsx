@@ -4,7 +4,7 @@ import { Menu } from "@base-ui/react/menu";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { type MenuHandle } from "./menu.handle.js";
+import type { MenuHandle } from "./menu.handle.js";
 
 /**
  * {@link MenuTrigger} が持つ状態です。

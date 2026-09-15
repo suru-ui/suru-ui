@@ -1,4 +1,4 @@
-import { type RenderProps } from "../_use-render.js";
+import type { RenderProps } from "../_use-render.js";
 import * as Avatar from "../avatar/avatar.parts.js";
 import type { IComponent } from "../types.js";
 

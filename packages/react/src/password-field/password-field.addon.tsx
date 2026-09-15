@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { type RenderProps } from "../_use-render.js";
+import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import { type TextFieldAddonProps, TextFieldAddon } from "../text-field/text-field.parts.js";
 import type { IComponent } from "../types.js";

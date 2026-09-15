@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
 import type { IUseContext } from "../types.js";
-import { type TooltipRootSize, type TooltipRootRadius } from "./tooltip.root.jsx";
+import type { TooltipRootSize, TooltipRootRadius } from "./tooltip.root.jsx";
 
 /**
  * {@link TooltipRoot} が子パーツへ提供するコンテキストです。

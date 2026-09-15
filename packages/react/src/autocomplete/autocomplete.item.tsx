@@ -4,7 +4,7 @@ import * as React from "react";
 
 import mergeProps from "../_merge-props.js";
 import proxyRenderProps from "../_proxy-render-props.js";
-import { type RenderProps } from "../_use-render.js";
+import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";

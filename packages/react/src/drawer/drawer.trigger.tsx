@@ -2,10 +2,10 @@ import { Drawer } from "@base-ui/react/drawer";
 import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
-import { type RenderProps } from "../_use-render.js";
+import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { type DrawerHandle } from "./drawer.handle.js";
+import type { DrawerHandle } from "./drawer.handle.js";
 
 /**
  * {@link DrawerTrigger} が持つ状態です。

@@ -4,7 +4,7 @@ import * as React from "react";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { type HoverCardHandle } from "./hover-card.handle.js";
+import type { HoverCardHandle } from "./hover-card.handle.js";
 
 /**
  * {@link HoverCardTrigger} が持つ状態です。

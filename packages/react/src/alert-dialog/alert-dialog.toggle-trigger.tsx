@@ -2,10 +2,10 @@ import { AlertDialog } from "@base-ui/react/alert-dialog";
 import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
-import { type RenderProps } from "../_use-render.js";
+import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { type AlertDialogHandle } from "./alert-dialog.handle.js";
+import type { AlertDialogHandle } from "./alert-dialog.handle.js";
 
 /**
  * {@link AlertDialogToggleTrigger} が持つ状態です。
