@@ -558,9 +558,7 @@
   --sui_number_field_stepper-background_color-active: ;
   --sui_number_field_stepper-border_radius: ;
   --sui_number_field_stepper__svg-size: ;
-  --sui_number_field_stepper__svg-color-idle: ;
-  --sui_number_field_stepper__svg-color-hover: ;
-  --sui_number_field_stepper__svg-color-active: ;
+  --sui_number_field_stepper__svg-color: ;
 }
 
 /* 可変 */
@@ -582,9 +580,7 @@
     svg:not(.sui-ignore) {
       width: var(--sui_number_field_stepper__svg-size);
       height: var(--sui_number_field_stepper__svg-size);
-      color: var(--_sui_number_field_stepper__svg-color,
-               var(--sui_number_field_stepper__svg-color-idle)
-             );
+      color: var(--sui_number_field_stepper__svg-color);
     }
   }
 }
@@ -592,6 +588,16 @@
 /* 代入 */
 :scope {
   --sui_number_field_stepper-font_family: var(--sui-font-sans);
+  --sui_number_field_stepper__svg-color: --sui-icon_color(
+                                           var(
+                                             --_sui_number_field_stepper-color,
+                                             var(--sui_number_field_stepper-color-idle)
+                                           ),
+                                           var(
+                                             --_sui_number_field_stepper-background_color,
+                                             var(--sui_number_field_stepper-background_color-idle)
+                                           )
+                                         );
 
   &.sui_number_field-size_sm {
     --sui_number_field_stepper-size: calc(var(--sui-size-sm) - --sui-space(2));
@@ -656,18 +662,6 @@
     --sui_number_field_stepper-background_color-idle: transparent;
     --sui_number_field_stepper-background_color-hover: var(--sui-grey-naked-canvas-subtle);
     --sui_number_field_stepper-background_color-active: var(--sui-grey-naked-canvas-strong);
-    --sui_number_field_stepper__svg-color-idle: --sui-icon_color(
-                                                  var(--sui_number_field_stepper-color-idle),
-                                                  var(--sui_number_field_stepper-background_color-idle)
-                                                );
-    --sui_number_field_stepper__svg-color-hover: --sui-icon_color(
-                                                   var(--sui_number_field_stepper-color-hover),
-                                                   var(--sui_number_field_stepper-background_color-hover)
-                                                 );
-    --sui_number_field_stepper__svg-color-active: --sui-icon_color(
-                                                    var(--sui_number_field_stepper-color-active),
-                                                    var(--sui_number_field_stepper-background_color-active)
-                                                  );
   }
 
   &.sui_number_field-variant_liquid {
@@ -677,40 +671,24 @@
     --sui_number_field_stepper-background_color-idle: transparent;
     --sui_number_field_stepper-background_color-hover: var(--sui-grey-liquid-canvas-subtle);
     --sui_number_field_stepper-background_color-active: var(--sui-grey-liquid-canvas-strong);
-    --sui_number_field_stepper__svg-color-idle: --sui-icon_color(
-                                                  var(--sui_number_field_stepper-color-idle),
-                                                  var(--sui_number_field_stepper-background_color-idle)
-                                                );
-    --sui_number_field_stepper__svg-color-hover: --sui-icon_color(
-                                                   var(--sui_number_field_stepper-color-hover),
-                                                   var(--sui_number_field_stepper-background_color-hover)
-                                                 );
-    --sui_number_field_stepper__svg-color-active: --sui-icon_color(
-                                                    var(--sui_number_field_stepper-color-active),
-                                                    var(--sui_number_field_stepper-background_color-active)
-                                                  );
   }
 }
 
 /* 変異 */
 :scope {
   .sui_number_field_decrement {
-    &:enabled {
-      @media (any-hover: hover) {
-        &:hover {
-          --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-hover);
-          --_sui_number_field_stepper-background_color:
-            var(--sui_number_field_stepper-background_color-hover);
-          --_sui_number_field_stepper__svg-color: var(--sui_number_field_stepper__svg-color-hover);
-        }
-      }
-
-      &:active {
-        --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-active);
+    @media (any-hover: hover) {
+      &:hover {
+        --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-hover);
         --_sui_number_field_stepper-background_color:
-          var(--sui_number_field_stepper-background_color-active);
-        --_sui_number_field_stepper__svg-color: var(--sui_number_field_stepper__svg-color-active);
+          var(--sui_number_field_stepper-background_color-hover);
       }
+    }
+
+    &:active {
+      --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-active);
+      --_sui_number_field_stepper-background_color:
+        var(--sui_number_field_stepper-background_color-active);
     }
   }
 }
@@ -768,9 +746,7 @@
     svg:not(.sui-ignore) {
       width: var(--sui_number_field_stepper__svg-size);
       height: var(--sui_number_field_stepper__svg-size);
-      color: var(--_sui_number_field_stepper__svg-color,
-               var(--sui_number_field_stepper__svg-color-idle)
-             );
+      color: var(--sui_number_field_stepper__svg-color);
     }
   }
 }
@@ -783,7 +759,6 @@
         --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-hover);
         --_sui_number_field_stepper-background_color:
           var(--sui_number_field_stepper-background_color-hover);
-        --_sui_number_field_stepper__svg-color: var(--sui_number_field_stepper__svg-color-hover);
       }
     }
 
@@ -791,7 +766,6 @@
       --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-active);
       --_sui_number_field_stepper-background_color:
         var(--sui_number_field_stepper-background_color-active);
-      --_sui_number_field_stepper__svg-color: var(--sui_number_field_stepper__svg-color-active);
     }
   }
 }
