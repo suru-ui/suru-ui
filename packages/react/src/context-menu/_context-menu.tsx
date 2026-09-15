@@ -5,8 +5,8 @@
  * @returns ラベルを持つオブジェクトの場合に `true` を返します。
  */
 export function isItemObject(item: unknown): item is {
-  readonly items?: readonly unknown[] | undefined;
   readonly label: unknown;
+  readonly items?: readonly unknown[] | undefined;
   readonly type?: string | undefined;
   readonly [key: string]: any;
 } {
@@ -89,8 +89,8 @@ export function isSeparatorObject(item: unknown): item is {
  */
 export function isGroupObject(item: unknown): item is {
   readonly items: readonly unknown[];
-  readonly label?: unknown;
   readonly type: "group";
+  readonly label?: unknown;
   readonly [key: string]: any;
 } {
   return (

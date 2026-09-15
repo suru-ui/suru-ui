@@ -65,9 +65,26 @@ function getMemberName(member: TSTypeElement): string | null {
 }
 
 /**
- * 2 つのメンバーの比較関数。プロパティー名の辞書順で並べる。
+ * メンバーが省略可能 (`?`) かを返す。
+ *
+ * 呼び出し・構築・インデックス署名は名前を持たず並べ替えの対象外なので、
+ * `false` (必須扱い) を返す。
  */
-function compareItems(a: { name: string }, b: { name: string }): number {
+function isOptional(member: TSTypeElement): boolean {
+  if (member.type === "TSPropertySignature" || member.type === "TSMethodSignature") {
+    return member.optional === true;
+  }
+  return false;
+}
+
+/**
+ * 2 つのメンバーの比較関数。必須プロパティーを先に、同じならば名前の辞書順で並べる。
+ */
+function compareItems(
+  a: { name: string; optional: boolean },
+  b: { name: string; optional: boolean },
+): number {
+  if (a.optional !== b.optional) return a.optional ? 1 : -1;
   return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
 }
 
@@ -96,7 +113,7 @@ function extendedStart(member: TSTypeElement): number {
  * 型の本体のメンバーを並べ替えた結果を返す。
  *
  * 名前を持たないメンバー (呼び出し・構築・インデックス署名) は位置を維持し、
- * それ以外のプロパティーとメソッドを名前順に並べ替える。
+ * それ以外のプロパティーとメソッドを必須を先に、名前順に並べ替える。
  *
  * @returns 変更が必要な場合は計画、不要な場合は `null`。
  */
@@ -108,10 +125,15 @@ function planReplacement(body: TypeBody): {
   newOrder: number[];
 } | null {
   const members = getMembers(body);
-  const items = members.map((member) => ({ member, name: getMemberName(member) }));
+  const items = members.map((member) => ({
+    member,
+    name: getMemberName(member),
+    optional: isOptional(member),
+  }));
 
   const sortable = items.filter(
-    (item): item is { member: TSTypeElement; name: string } => item.name !== null,
+    (item): item is { member: TSTypeElement; name: string; optional: boolean } =>
+      item.name !== null,
   );
   if (sortable.length < 2) return null;
 
@@ -255,10 +277,11 @@ function renderBody(
 }
 
 /**
- * ソース内の型定義のプロパティーを名前順に並べ替える。
+ * ソース内の型定義のプロパティーを並べ替える。
  *
  * 型リテラル (`type X = { ... }`) とインターフェースの本体 (`interface X { ... }`)
- * のプロパティーとメソッドを対象に、プロパティー名の辞書順で並べ替える。
+ * のプロパティーとメソッドを対象に、必須プロパティーを先に、同じならば
+ * プロパティー名の辞書順で並べ替える。
  * パースできない場合は変更しない。
  */
 export function sortTypeProps(source: string): string {

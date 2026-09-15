@@ -51,6 +51,18 @@ describe("sortTypeProps", () => {
     expect(sortTypeProps(source)).toBe(expected);
   });
 
+  it("必須プロパティーを省略可能プロパティーより先に並べ替える", () => {
+    const source = `type T = { b?: 1; z?: 2; a: 3; m: 4 };`;
+    const expected = `type T = { a: 3; m: 4; b?: 1; z?: 2 };`;
+    expect(sortTypeProps(source)).toBe(expected);
+  });
+
+  it("必須メソッドを省略可能メソッドより先に並べ替える", () => {
+    const source = `type T = { zeta?(): void; alpha(): number };`;
+    const expected = `type T = { alpha(): number; zeta?(): void };`;
+    expect(sortTypeProps(source)).toBe(expected);
+  });
+
   it("readonly と optional を維持して並べ替える", () => {
     const source = `type T = { readonly z?: string | undefined; readonly a?: string | undefined };`;
     const expected = `type T = { readonly a?: string | undefined; readonly z?: string | undefined };`;

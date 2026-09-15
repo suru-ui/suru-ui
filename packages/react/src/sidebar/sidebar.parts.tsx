@@ -24,13 +24,6 @@ export type SidebarOpenState = "expanded" | "collapsed";
  */
 export type SidebarContext = {
   /**
-   * 折りたたみの方法です。
-   *
-   * {@link SidebarRoot} の内側ではその値が入ります。外側では `undefined` です。
-   */
-  readonly collapsible?: SidebarRootCollapsible | undefined;
-
-  /**
    * サイドバーが開いているかどうかです。
    */
   readonly open: boolean;
@@ -49,6 +42,13 @@ export type SidebarContext = {
    * サイドバーの開閉状態を切り替えます。
    */
   readonly toggle: () => void;
+
+  /**
+   * 折りたたみの方法です。
+   *
+   * {@link SidebarRoot} の内側ではその値が入ります。外側では `undefined` です。
+   */
+  readonly collapsible?: SidebarRootCollapsible | undefined;
 };
 
 /**

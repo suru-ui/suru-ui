@@ -163,16 +163,16 @@ export type TreeRootItemObject = Omit<
   readonly id: string;
 
   /**
+   * ノードのラベルです。
+   */
+  readonly label: React.ReactNode;
+
+  /**
    * 子ノードの一覧です。
    *
    * 空でない場合に展開可能な分岐として扱います。
    */
   readonly items?: readonly TreeRootItemObject[] | undefined;
-
-  /**
-   * ノードのラベルです。
-   */
-  readonly label: React.ReactNode;
 };
 
 /**
@@ -822,6 +822,20 @@ export namespace TreeItemProps {
 
   export type SuruUI = {
     /**
+     * 対応するノードの識別子です。
+     *
+     * `items` プロパティーから描画した項目には自動的に渡されます。
+     */
+    id: string;
+
+    /**
+     * ノードの深さです。ルートの直接の子が `1` です。
+     *
+     * `items` プロパティーから描画した項目には自動的に渡されます。
+     */
+    level: number;
+
+    /**
      * 項目の配色を指定します。
      *
      * 選択されていないときは常に `"grey"` になります。
@@ -838,20 +852,6 @@ export namespace TreeItemProps {
      * @default false
      */
     hasItems?: boolean | undefined;
-
-    /**
-     * 対応するノードの識別子です。
-     *
-     * `items` プロパティーから描画した項目には自動的に渡されます。
-     */
-    id: string;
-
-    /**
-     * ノードの深さです。ルートの直接の子が `1` です。
-     *
-     * `items` プロパティーから描画した項目には自動的に渡されます。
-     */
-    level: number;
 
     /**
      * 項目の背景色を控えめにするかどうかを指定します。

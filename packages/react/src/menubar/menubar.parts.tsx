@@ -22,14 +22,14 @@ import "./menubar.css";
  */
 export type MenubarRootItemObject = Omit<MenuProps, "children" | "trigger"> & {
   /**
-   * ポップアップに表示する内容です。
-   */
-  readonly children?: MenuProps["children"] | undefined;
-
-  /**
    * トリガーに表示するラベルです。
    */
   readonly label: React.ReactNode;
+
+  /**
+   * ポップアップに表示する内容です。
+   */
+  readonly children?: MenuProps["children"] | undefined;
 
   /**
    * メニューを開くトリガーに表示する要素です。

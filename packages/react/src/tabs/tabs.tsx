@@ -53,6 +53,16 @@ export type TabsState = TabsRootState;
  */
 export type TabsItemObject = {
   /**
+   * タブに表示するラベルです。
+   */
+  readonly label: React.ReactNode;
+
+  /**
+   * タブの値です。
+   */
+  readonly value: TabsTabProps["value"];
+
+  /**
    * タブに対応するパネルに表示する内容です。
    */
   readonly content?: React.ReactNode | undefined;
@@ -63,16 +73,6 @@ export type TabsItemObject = {
    * @default false
    */
   readonly disabled?: boolean | undefined;
-
-  /**
-   * タブに表示するラベルです。
-   */
-  readonly label: React.ReactNode;
-
-  /**
-   * タブの値です。
-   */
-  readonly value: TabsTabProps["value"];
 };
 
 export type TabsItem = TabsItemObject;

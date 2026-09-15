@@ -148,16 +148,16 @@ export type ContextMenuRootChangeEventReason = ContextMenu.Root.ChangeEventReaso
  */
 export type ContextMenuRootActionItemObject = Omit<ContextMenuItemProps, "children" | "label"> & {
   /**
+   * 項目のラベルです。
+   */
+  readonly label: React.ReactNode;
+
+  /**
    * 子項目です。
    *
    * 指定した場合はサブメニューとして描画されます。
    */
   readonly items?: readonly ContextMenuRootItemObject[] | undefined;
-
-  /**
-   * 項目のラベルです。
-   */
-  readonly label: React.ReactNode;
 
   /**
    * 項目の種類です。
@@ -204,18 +204,18 @@ export type ContextMenuRootGroupObject = Omit<ContextMenuGroupProps, "children">
   readonly items: readonly ContextMenuRootItemObject[];
 
   /**
-   * グループのラベルです。
-   *
-   * 指定した場合は {@link ContextMenuGroupLabel} として描画されます。
-   */
-  readonly label?: React.ReactNode | undefined;
-
-  /**
    * 項目の種類です。
    *
    * - `"group"`: グループ
    */
   readonly type: "group";
+
+  /**
+   * グループのラベルです。
+   *
+   * 指定した場合は {@link ContextMenuGroupLabel} として描画されます。
+   */
+  readonly label?: React.ReactNode | undefined;
 };
 
 /**

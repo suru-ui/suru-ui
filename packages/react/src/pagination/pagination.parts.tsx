@@ -185,6 +185,11 @@ export namespace PaginationRootProps {
 
   export type SuruUI = {
     /**
+     * 総ページ数を指定します。
+     */
+    totalPages: number;
+
+    /**
      * ページネーションの配色を指定します。
      *
      * 配色は現在のページのボタンに適用されます。
@@ -237,11 +242,6 @@ export namespace PaginationRootProps {
      * @default "md"
      */
     size?: PaginationRootSize | undefined;
-
-    /**
-     * 総ページ数を指定します。
-     */
-    totalPages: number;
   };
 
   export type BaseUI = {};

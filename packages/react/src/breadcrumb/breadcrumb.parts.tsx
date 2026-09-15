@@ -96,6 +96,11 @@ export type BreadcrumbRootColor = Color;
  */
 export type BreadcrumbRootItemObject = {
   /**
+   * 項目のラベルです。
+   */
+  readonly label: React.ReactNode;
+
+  /**
    * 現在のページかどうかを指定します。
    *
    * 最後の項目は、指定しない場合に現在位置として描画します。
@@ -117,11 +122,6 @@ export type BreadcrumbRootItemObject = {
    * 未指定の場合、リンクにならない要素として描画します。
    */
   readonly href?: string | undefined;
-
-  /**
-   * 項目のラベルです。
-   */
-  readonly label: React.ReactNode;
 };
 
 /**

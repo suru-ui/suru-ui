@@ -37,14 +37,14 @@ export type AccordionRootItemObject = Omit<AccordionItemProps, "title"> & {
   content: React.ReactNode;
 
   /**
-   * {@link https://developer.mozilla.org/docs/Web/HTML/Reference/Global_attributes/title|title}
-   */
-  htmlTitle?: React.HTMLAttributes<HTMLDivElement>["title"];
-
-  /**
    * 項目の見出しに表示するタイトルです。
    */
   title: React.ReactNode;
+
+  /**
+   * {@link https://developer.mozilla.org/docs/Web/HTML/Reference/Global_attributes/title|title}
+   */
+  htmlTitle?: React.HTMLAttributes<HTMLDivElement>["title"];
 };
 
 /**

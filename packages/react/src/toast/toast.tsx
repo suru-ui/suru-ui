@@ -105,6 +105,11 @@ export type ToastProps<TData extends object = any> = Override<
   Omit<ToastRootProps<TData>, "children">,
   ToastPropsContent & {
     /**
+     * 表示する通知オブジェクトです。
+     */
+    toast: ToastToastObject<TData>;
+
+    /**
      * 通知のアクションです。
      */
     action?: ToastActionProps["children"] | undefined;
@@ -128,11 +133,6 @@ export type ToastProps<TData extends object = any> = Override<
      * 通知の見出しです。
      */
     title?: ToastTitleProps["children"] | undefined;
-
-    /**
-     * 表示する通知オブジェクトです。
-     */
-    toast: ToastToastObject<TData>;
   }
 >;
 
