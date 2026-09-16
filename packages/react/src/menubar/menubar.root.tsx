@@ -1,38 +1,31 @@
 import { Menubar as BaseMenubar } from "@base-ui/react/menubar";
 import * as React from "react";
 
-import toReactNode from "../_to-react-node.js";
 import type { RenderProps } from "../_use-render.js";
-import { Button } from "../button/button.jsx";
 import cn from "../cn.js";
-import { type MenuProps, Menu } from "../menu/menu.jsx";
-import type { IComponent } from "../types.js";
-import { isItemObject } from "./_menubar.jsx";
+import { Menu } from "../menu/menu.jsx";
+import type { Override, IComponent } from "../types.js";
+import { isItem } from "./_menubar.jsx";
 
 /**
  * メニューバーの項目を表すオブジェクトです。
- *
- * `label` を含み、その他のプロパティーは {@link Menu} に渡されます。
- * `trigger` を省略した場合は `label` を表示するボタンがトリガーになります。
  */
-export type MenubarRootItemObject = Omit<MenuProps, "children" | "trigger"> & {
-  /**
-   * トリガーに表示するラベルです。
-   */
-  readonly label: React.ReactNode;
+export type MenubarRootItem = Override<
+  Omit<Menu.Props<Menu.Item>, "children">,
+  {
+    /**
+     * ポップアップに表示する内容です。
+     */
+    readonly items: NonNullable<Menu.Props<Menu.Item>["items"]>;
 
-  /**
-   * ポップアップに表示する内容です。
-   */
-  readonly children?: MenuProps["children"] | undefined;
-
-  /**
-   * メニューを開くトリガーに表示する要素です。
-   *
-   * 省略した場合は `label` を表示するボタンになります。
-   */
-  readonly trigger?: MenuProps["trigger"] | undefined;
-};
+    /**
+     * メニューを開くトリガーに表示する要素です。
+     *
+     * 省略した場合は `label` を表示するボタンになります。
+     */
+    readonly trigger: NonNullable<Menu.Props<Menu.Item>["trigger"]>;
+  }
+>;
 
 /**
  * メニューバーの各項目をレンダリングする関数のインターフェイスです。
@@ -118,13 +111,11 @@ interface IMenubarRoot extends IComponent<MenubarRootProps> {
 
 /**
  * メニューを横または縦に並べるルート要素です。
- *
- * 子要素には {@link Menu} を配置します。
  */
 export const MenubarRoot: IMenubarRoot = function SuiMenubarRoot(props: MenubarRootProps) {
   const {
     items = [],
-    children = defaultRootItemRenderer,
+    children = defaultItemRenderer,
     disabled = false,
     className,
     orientation = "horizontal",
@@ -140,7 +131,9 @@ export const MenubarRoot: IMenubarRoot = function SuiMenubarRoot(props: MenubarR
       className={cn(
         className,
         "sui_menubar",
-        `sui_menubar-orientation_${orientation}`,
+        (state) => `sui_menubar-orientation_${state.orientation}`,
+        (state) => state.modal && "sui_menubar-modal",
+        (state) => state.hasSubmenuOpen && "sui_menubar-has_submenu_open",
         disabled && "sui_menubar-disabled",
       )}
       orientation={orientation}
@@ -151,22 +144,14 @@ export const MenubarRoot: IMenubarRoot = function SuiMenubarRoot(props: MenubarR
   );
 };
 
-const defaultRootItemRenderer: IMenubarRootItemRenderer = (item, index) => {
-  if (!isItemObject(item)) {
-    return toReactNode(item);
+const defaultItemRenderer: IMenubarRootItemRenderer = (item, index) => {
+  switch (true) {
+    case isItem(item):
+      return <Menu {...item} key={index} />;
+
+    default:
+      return item;
   }
-
-  const { label, trigger, children: popupChildren, ...otherMenuProps } = item;
-
-  return (
-    <Menu
-      key={index}
-      {...otherMenuProps}
-      trigger={trigger ?? <Button variant="naked">{toReactNode(label)}</Button>}
-    >
-      {toReactNode(popupChildren)}
-    </Menu>
-  );
 };
 
 export { MenubarRoot as Root };
@@ -186,7 +171,7 @@ export namespace Root {
     export type HTML = MenubarRootProps.HTML;
   }
 
-  export type ItemObject = MenubarRootItemObject;
+  export type Item = MenubarRootItem;
 
   export interface IItemRenderer<TItem = any> extends IMenubarRootItemRenderer<TItem> {}
 
