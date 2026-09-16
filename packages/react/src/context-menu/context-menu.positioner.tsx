@@ -4,6 +4,7 @@ import * as React from "react";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import { useContextMenuContext } from "./context-menu.context.js";
 
 /**
  * {@link ContextMenuPositioner} が持つ状態です。
@@ -55,11 +56,20 @@ export type ContextMenuPositionerProps = ContextMenuPositionerProps.Render &
  */
 export const ContextMenuPositioner: IComponent<ContextMenuPositionerProps> =
   function SuiContextMenuPositioner(props) {
-    const { className, ...otherProps } = props;
+    const ctx = useContextMenuContext();
+    const {
+      // ルートメニューは上下優先、サブメニューは左右優先にします。
+      side = ctx.depth === 1 ? "bottom" : "right",
+      align = "start",
+      className,
+      ...otherProps
+    } = props;
 
     return (
       <ContextMenu.Positioner
         {...otherProps}
+        side={side}
+        align={align}
         className={cn(className, "sui_context_menu_positioner")}
       />
     );

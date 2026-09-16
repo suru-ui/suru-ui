@@ -7,7 +7,7 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { getItemVariant } from "./_context-menu.jsx";
+import { getItemVariant } from "./_context-menu.utils.jsx";
 import { useContextMenuContext } from "./context-menu.context.js";
 
 /**
@@ -77,7 +77,7 @@ export namespace ContextMenuLinkItemProps {
       React.ComponentProps<typeof ContextMenu.LinkItem>,
       Exclude<
         // Base UI の型を確認して取り出すプロパティーを決めます。
-        // ContextMenuLinkItemProps:
+        // MenuLinkItemProps:
         "label" | "id" | "closeOnClick",
         keyof Render | keyof SuruUI
       >

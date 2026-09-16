@@ -2,19 +2,18 @@ import { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
 import { CheckIcon, ChevronRightIcon } from "../_icons.jsx";
-import toReactNode from "../_to-react-node.js";
+import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import {
-  isItemObject,
-  isGroupObject,
-  isLinkItemObject,
-  isRadioItemObject,
-  isSeparatorObject,
-  isRadioGroupObject,
-  isCheckboxItemObject,
-} from "./_context-menu.jsx";
+  isLinkItem,
+  isItemGroup,
+  isLabeledItem,
+  isSubmenuItem,
+  isCheckboxItem,
+  isRadioItemGroup,
+} from "./_context-menu.utils.jsx";
 import { ContextMenuCheckboxItemIndicator } from "./context-menu.checkbox-item-indicator.jsx";
 import { ContextMenuCheckboxItem } from "./context-menu.checkbox-item.jsx";
 import { useContextMenuContext } from "./context-menu.context.js";
@@ -25,9 +24,11 @@ import { ContextMenuLinkItem } from "./context-menu.link-item.jsx";
 import { ContextMenuPortal } from "./context-menu.portal.jsx";
 import { ContextMenuPositioner } from "./context-menu.positioner.jsx";
 import { ContextMenuRadioGroup } from "./context-menu.radio-group.jsx";
-import { ContextMenuRadioItemIndicator } from "./context-menu.radio-item-indicator.jsx";
-import { ContextMenuRadioItem } from "./context-menu.radio-item.jsx";
-import type { ContextMenuRootItemObject } from "./context-menu.root.jsx";
+import type {
+  ContextMenuRootItem,
+  // oxlint-disable-next-line no-unused-vars JSDoc で使用
+  ContextMenuRootProps,
+} from "./context-menu.root.jsx";
 import { ContextMenuSeparator } from "./context-menu.separator.jsx";
 import { ContextMenuSubmenuRoot } from "./context-menu.submenu-root.jsx";
 import { ContextMenuSubmenuTrigger } from "./context-menu.submenu-trigger.jsx";
@@ -57,13 +58,13 @@ export type ContextMenuContentState = ContextMenu.Popup.State;
 export namespace ContextMenuContentProps {
   export type Render = RenderProps<ContextMenuContentState>;
 
-  export type SuruUI = {
+  export type SuruUI<TItem = any> = {
     /**
      * ポップアップの内容、または各項目をレンダリングする関数です。
      *
      * 関数を指定した場合は {@link ContextMenuRootProps.items|items} の各項目が引数として渡されます。
      */
-    children?: React.ReactNode | IContextMenuContentItemRenderer;
+    children?: React.ReactNode | IContextMenuContentItemRenderer<TItem>;
   };
 
   export type BaseUI = Pick<
@@ -71,7 +72,7 @@ export namespace ContextMenuContentProps {
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
       // MenuPopupProps:
-      "finalFocus",
+      "id" | "finalFocus",
       keyof Render | keyof SuruUI
     >
   >;
@@ -85,133 +86,40 @@ export namespace ContextMenuContentProps {
 /**
  * {@link ContextMenuContent} に渡す props です。
  */
-export type ContextMenuContentProps = ContextMenuContentProps.Render &
-  ContextMenuContentProps.SuruUI &
+export type ContextMenuContentProps<TItem = any> = ContextMenuContentProps.Render &
+  ContextMenuContentProps.SuruUI<TItem> &
   ContextMenuContentProps.BaseUI &
   ContextMenuContentProps.HTML;
+
+interface IContextMenuContent extends IComponent<ContextMenuContentProps> {
+  /**
+   * @template TItem 項目の型です。
+   */
+  <TItem = any>(props: ContextMenuContentProps<TItem>): IComponent.Return;
+}
 
 /**
  * コンテキストメニュー項目を表示するコンテンツ要素です。
  */
-export const ContextMenuContent: IComponent<ContextMenuContentProps> =
-  function SuiContextMenuContent(props) {
-    const ctx = useContextMenuContext();
-    const { children = defaultContentItemRenderer, className, ...otherProps } = props;
-
-    return (
-      <ContextMenu.Popup
-        {...otherProps}
-        className={cn(
-          className,
-          "sui_context_menu_content",
-          (state) =>
-            state.transitionStatus !== undefined &&
-            `sui_context_menu_content-transition_status_${state.transitionStatus}`,
-        )}
-      >
-        {typeof children === "function" ? ctx.items.map(children) : children}
-      </ContextMenu.Popup>
-    );
-  };
-
-const defaultRadioItemRenderer: IContextMenuContentItemRenderer = (item, index) => {
-  if (!isRadioItemObject(item)) {
-    return toReactNode(item);
-  }
-
-  const { type: _, label, ...otherItemProps } = item;
+export const ContextMenuContent: IContextMenuContent = function SuiContextMenuContent(
+  props: ContextMenuContentProps,
+) {
+  const ctx = useContextMenuContext();
+  const { children = defaultItemRenderer, className, ...otherProps } = props;
 
   return (
-    <ContextMenuRadioItem key={index} {...otherItemProps}>
-      {toReactNode(label)}
-      <ContextMenuRadioItemIndicator>
-        <CheckIcon />
-      </ContextMenuRadioItemIndicator>
-    </ContextMenuRadioItem>
-  );
-};
-
-const defaultContentItemRenderer: IContextMenuContentItemRenderer = (item, index, items) => {
-  if (isSeparatorObject(item)) {
-    const { type: _, ...otherProps } = item;
-
-    return <ContextMenuSeparator key={index} {...otherProps} />;
-  }
-
-  if (isRadioGroupObject(item)) {
-    const { type: _, items: radioItems, ...otherGroupProps } = item;
-
-    return (
-      <ContextMenuRadioGroup key={index} {...otherGroupProps}>
-        {radioItems.map(defaultRadioItemRenderer)}
-      </ContextMenuRadioGroup>
-    );
-  }
-
-  if (isGroupObject(item)) {
-    const { type: _, items: groupItems, label, ...otherGroupProps } = item;
-    const labelNode = toReactNode(label);
-
-    return (
-      <ContextMenuGroup key={index} {...otherGroupProps}>
-        {labelNode === null ? null : <ContextMenuGroupLabel>{labelNode}</ContextMenuGroupLabel>}
-        {groupItems.map(defaultContentItemRenderer)}
-      </ContextMenuGroup>
-    );
-  }
-
-  if (!isItemObject(item)) {
-    return toReactNode(item);
-  }
-
-  if (isCheckboxItemObject(item)) {
-    const { type: _, label, ...otherItemProps } = item;
-
-    return (
-      <ContextMenuCheckboxItem key={index} {...otherItemProps}>
-        {toReactNode(label)}
-        <ContextMenuCheckboxItemIndicator>
-          <CheckIcon />
-        </ContextMenuCheckboxItemIndicator>
-      </ContextMenuCheckboxItem>
-    );
-  }
-
-  if (isRadioItemObject(item)) {
-    return defaultRadioItemRenderer(item, index, items);
-  }
-
-  if (isLinkItemObject(item)) {
-    const { type: _, label, ...otherItemProps } = item;
-
-    return (
-      <ContextMenuLinkItem key={index} {...otherItemProps}>
-        {toReactNode(label)}
-      </ContextMenuLinkItem>
-    );
-  }
-
-  const { type: _, items: subItems, label, ...otherItemProps } = item;
-  if (!subItems) {
-    return (
-      <ContextMenuItem key={index} {...otherItemProps}>
-        {toReactNode(label)}
-      </ContextMenuItem>
-    );
-  }
-
-  return (
-    <ContextMenuSubmenuRoot key={index}>
-      <ContextMenuSubmenuTrigger {...otherItemProps}>
-        {toReactNode(label)}
-        <ChevronRightIcon />
-      </ContextMenuSubmenuTrigger>
-      <ContextMenuPortal>
-        <ContextMenuPositioner>
-          <ContextMenuContent>{subItems.map(defaultContentItemRenderer)}</ContextMenuContent>
-        </ContextMenuPositioner>
-      </ContextMenuPortal>
-    </ContextMenuSubmenuRoot>
+    <ContextMenu.Popup
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_context_menu_content",
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_context_menu_content-transition_status_${state.transitionStatus}`,
+      )}
+    >
+      {typeof children === "function" ? ctx.items.map(children) : children}
+    </ContextMenu.Popup>
   );
 };
 
@@ -225,14 +133,92 @@ export namespace Content {
   export namespace Props {
     export type Render = ContextMenuContentProps.Render;
 
-    export type SuruUI = ContextMenuContentProps.SuruUI;
+    export type SuruUI<TItem = any> = ContextMenuContentProps.SuruUI<TItem>;
 
     export type BaseUI = ContextMenuContentProps.BaseUI;
 
     export type HTML = ContextMenuContentProps.HTML;
   }
 
-  export type ItemObject = ContextMenuRootItemObject;
+  export type Item = ContextMenuRootItem;
 
   export interface IItemRenderer<TItem = any> extends IContextMenuContentItemRenderer<TItem> {}
 }
+
+const defaultItemRenderer: IContextMenuContentItemRenderer = (item, index, items) => {
+  switch (true) {
+    case isLabeledItem(item): {
+      const { type: _, label, ...props } = item;
+
+      return (
+        <ContextMenuItem {...props} key={index}>
+          {label}
+        </ContextMenuItem>
+      );
+    }
+
+    case isLinkItem(item): {
+      const { type: _, label, ...props } = item;
+
+      return (
+        <ContextMenuLinkItem {...props} key={index}>
+          {label}
+        </ContextMenuLinkItem>
+      );
+    }
+
+    case isCheckboxItem(item): {
+      const { type: _, label, ...props } = item;
+
+      return (
+        <ContextMenuCheckboxItem {...props} key={index}>
+          {label}
+          <ContextMenuCheckboxItemIndicator>
+            <CheckIcon />
+          </ContextMenuCheckboxItemIndicator>
+        </ContextMenuCheckboxItem>
+      );
+    }
+
+    case isRadioItemGroup(item): {
+      const { type: _, items: groupItems, ...props } = item;
+
+      return <ContextMenuRadioGroup {...props} key={index} items={groupItems} />;
+    }
+
+    case isSubmenuItem(item): {
+      const { type: _, items, label, ...props } = item;
+
+      return (
+        <ContextMenuSubmenuRoot {...props} key={index} items={items}>
+          <ContextMenuSubmenuTrigger>
+            {label}
+            <ChevronRightIcon />
+          </ContextMenuSubmenuTrigger>
+          <ContextMenuPortal>
+            <ContextMenuPositioner>
+              <ContextMenuContent>{defaultItemRenderer}</ContextMenuContent>
+            </ContextMenuPositioner>
+          </ContextMenuPortal>
+        </ContextMenuSubmenuRoot>
+      );
+    }
+
+    case isItemGroup(item): {
+      const { type: _, items: groupItems, label, ...props } = item;
+
+      return (
+        <React.Fragment key={index}>
+          <ContextMenuGroup {...props} key={index}>
+            {isLikelyVisibleNode(label) && <ContextMenuGroupLabel>{label}</ContextMenuGroupLabel>}
+            {groupItems.map(defaultItemRenderer)}
+          </ContextMenuGroup>
+          {index < items.length - 1 && <ContextMenuSeparator />}
+        </React.Fragment>
+      );
+    }
+
+    default:
+      return item;
+  }
+};

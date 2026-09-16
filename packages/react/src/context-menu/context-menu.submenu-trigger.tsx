@@ -8,18 +8,18 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { getItemVariant } from "./_context-menu.jsx";
+import { getItemVariant } from "./_context-menu.utils.jsx";
 import { useContextMenuContext } from "./context-menu.context.js";
 
 /**
  * サブメニュー項目の配色です。
  */
-export type ContextMenuSubmenuTriggerColor = Button.ButtonRootColor;
+export type ContextMenuSubmenuTriggerColor = Button.Root.Color;
 
 /**
  * サブメニュー項目の角丸です。
  */
-export type ContextMenuSubmenuTriggerRadius = Button.ButtonRootRadius;
+export type ContextMenuSubmenuTriggerRadius = Button.Root.Radius;
 
 /**
  * サブメニュー項目の主な外観です。
@@ -34,7 +34,7 @@ export type ContextMenuSubmenuTriggerVariant = Button.Root.Variant;
  * {@link ContextMenuSubmenuTrigger} が持つ状態です。
  */
 export type ContextMenuSubmenuTriggerState = Override<
-  Button.ButtonRootState,
+  Button.Root.State,
   ContextMenu.SubmenuTrigger.State
 >;
 
@@ -74,7 +74,7 @@ export namespace ContextMenuSubmenuTriggerProps {
         // Base UI の型を確認して取り出すプロパティーを決めます。
         // NonNativeButtonProps:
         | keyof NonNativeButtonProps
-        // ComboboxItemProps:
+        // MenuSubmenuTriggerProps:
         | "onClick"
         | "label"
         | "id"
@@ -114,14 +114,14 @@ export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProp
       label,
       style,
       radius = ctx.radius,
-      render,
+      render = <div />,
       onClick,
       variant = ctx.variant,
       disabled,
       className,
       closeDelay,
       openOnHover,
-      nativeButton = false,
+      nativeButton,
       focusableWhenDisabled,
       ...otherProps
     } = props;
@@ -168,14 +168,14 @@ export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProp
                 buttonRootProps,
                 proxyRenderProps(state, {
                   style,
-                  render: render ?? <div />,
+                  render,
                   className: cn(
                     className,
                     "sui_context_menu_item",
                     "sui_context_menu_submenu_trigger",
-                    (state) => state.open && "sui_context_menu_item-open",
                     (state) => state.disabled && "sui_context_menu_item-disabled",
                     (state) => state.highlighted && "sui_context_menu_item-highlighted",
+                    (state) => state.open && "sui_context_menu_item-open",
                   ),
                 }),
               ])}

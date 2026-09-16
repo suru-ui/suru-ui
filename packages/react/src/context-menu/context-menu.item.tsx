@@ -8,7 +8,7 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { getItemVariant } from "./_context-menu.jsx";
+import { getItemVariant } from "./_context-menu.utils.jsx";
 import { useContextMenuContext } from "./context-menu.context.js";
 
 /**
@@ -71,7 +71,7 @@ export namespace ContextMenuItemProps {
         // Base UI の型を確認して取り出すプロパティーを決めます。
         // NonNativeButtonProps:
         | keyof NonNativeButtonProps
-        // ContextMenuItemProps:
+        // MenuItemProps:
         | "onClick"
         | "disabled"
         | "label"

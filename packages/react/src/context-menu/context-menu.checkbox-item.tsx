@@ -8,7 +8,7 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { getItemVariant } from "./_context-menu.jsx";
+import { getItemVariant } from "./_context-menu.utils.jsx";
 import { useContextMenuContext } from "./context-menu.context.js";
 
 /**
@@ -24,12 +24,12 @@ export type ContextMenuCheckboxItemChangeEventReason = ContextMenu.CheckboxItem.
 /**
  * チェックボックス項目の配色です。
  */
-export type ContextMenuCheckboxItemColor = Button.ButtonRootColor;
+export type ContextMenuCheckboxItemColor = Button.Root.Color;
 
 /**
  * チェックボックス項目の角丸です。
  */
-export type ContextMenuCheckboxItemRadius = Button.ButtonRootRadius;
+export type ContextMenuCheckboxItemRadius = Button.Root.Radius;
 
 /**
  * チェックボックス項目の主な外観です。
@@ -44,7 +44,7 @@ export type ContextMenuCheckboxItemVariant = Button.Root.Variant;
  * {@link ContextMenuCheckboxItem} が持つ状態です。
  */
 export type ContextMenuCheckboxItemState = Override<
-  Button.ButtonRootState,
+  Button.Root.State,
   ContextMenu.CheckboxItem.State
 >;
 
@@ -84,7 +84,7 @@ export namespace ContextMenuCheckboxItemProps {
         // Base UI の型を確認して取り出すプロパティーを決めます。
         // NonNativeButtonProps:
         | keyof NonNativeButtonProps
-        // ComboboxItemProps:
+        // MenuCheckboxItemProps:
         | "checked"
         | "defaultChecked"
         | "onCheckedChange"

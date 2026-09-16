@@ -23,14 +23,17 @@ const VARIANTS: readonly ContextMenu.Variant[] = theme.COLOR_TEMPLATES;
 
 const meta = preview.meta({
   title: "ContextMenu",
-  component: ContextMenu,
+  component: ContextMenu<ContextMenu.Item>,
 });
 
 export default meta;
 
-const ctrl = controls(ContextMenu, {
+const ctrl = controls(ContextMenu<ContextMenu.Item>, {
   disabled: {
     control: "boolean",
+  },
+  items: {
+    control: "object",
   },
   outlined: {
     control: "boolean",
@@ -52,6 +55,11 @@ const ctrl = controls(ContextMenu, {
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
+    variant: "naked",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
     items: [
       {
         label: "編集",
@@ -60,18 +68,10 @@ export const Usage = meta.story({
         label: "複製",
       },
       {
-        type: "separator",
-      },
-      {
         label: "削除",
         color: "red",
       },
     ],
-    variant: "naked",
-    size: "md",
-    radius: undefined,
-    outlined: false,
-    disabled: false,
   }),
   render(props) {
     return <ContextMenu {...props} trigger={<TriggerArea />} />;
@@ -86,6 +86,7 @@ export const Nested = meta.story({
         label: "編集",
       },
       {
+        type: "submenu",
         label: "共有",
         items: [
           {
@@ -189,7 +190,6 @@ export const Groups = meta.story({
   ...ctrl({
     items: [
       {
-        type: "group",
         label: "アカウント",
         items: [
           {
@@ -201,10 +201,6 @@ export const Groups = meta.story({
         ],
       },
       {
-        type: "separator",
-      },
-      {
-        type: "group",
         label: "チーム",
         items: [
           {
@@ -216,10 +212,6 @@ export const Groups = meta.story({
         ],
       },
       {
-        type: "separator",
-      },
-      {
-        type: "group",
         items: [
           {
             label: "ログアウト",
@@ -257,9 +249,6 @@ export const Shortcuts = meta.story({
             <Shortcut>⌘V</Shortcut>
           </>
         ),
-      },
-      {
-        type: "separator",
       },
       {
         label: (
@@ -308,9 +297,6 @@ export const Icons = meta.story({
         ),
       },
       {
-        type: "separator",
-      },
-      {
         label: (
           <>
             <span className="flex items-center gap-2">
@@ -342,9 +328,6 @@ export const Destructive = meta.story({
       },
       {
         label: "複製",
-      },
-      {
-        type: "separator",
       },
       {
         label: "アーカイブ",
@@ -380,9 +363,6 @@ export const LinkItems = meta.story({
         href: "https://example.com/support",
       },
       {
-        type: "separator",
-      },
-      {
         type: "link",
         label: "外部サイト",
         href: "https://example.com",
@@ -408,9 +388,6 @@ export const Sizes = meta.story({
       },
       {
         label: "複製",
-      },
-      {
-        type: "separator",
       },
       {
         label: "削除",
@@ -479,9 +456,6 @@ export const DisabledItems = meta.story({
         disabled: true,
       },
       {
-        type: "separator",
-      },
-      {
         type: "checkbox",
         label: "サイドバー",
         checked: true,
@@ -512,6 +486,7 @@ export const Sides = meta.story({
         label: "編集",
       },
       {
+        type: "submenu",
         label: "共有",
         items: [
           {
@@ -559,78 +534,85 @@ export const FileActions = meta.story({
   ...ctrl({
     items: [
       {
-        label: (
-          <>
-            <span className="flex items-center gap-2">
-              <PlusIcon />
-              新規ファイル
-            </span>
-            <Shortcut>⌘N</Shortcut>
-          </>
-        ),
-      },
-      {
-        label: (
-          <>
-            <span className="flex items-center gap-2">
-              <PencilIcon />
-              名前を変更
-            </span>
-            <Shortcut>F2</Shortcut>
-          </>
-        ),
-      },
-      {
-        label: (
-          <>
-            <span className="flex items-center gap-2">
-              <FilesIcon />
-              複製
-            </span>
-            <Shortcut>⌘D</Shortcut>
-          </>
-        ),
-      },
-      {
-        type: "separator",
-      },
-      {
-        label: (
-          <span className="flex items-center gap-2">
-            <Share2Icon />
-            共有
-          </span>
-        ),
         items: [
           {
             label: (
-              <span className="flex items-center gap-2">
-                <LinkIcon />
-                リンクをコピー
-              </span>
+              <>
+                <span className="flex items-center gap-2">
+                  <PlusIcon />
+                  新規ファイル
+                </span>
+                <Shortcut>⌘N</Shortcut>
+              </>
             ),
           },
           {
             label: (
-              <span className="flex items-center gap-2">
-                <MailIcon />
-                メールで送る
-              </span>
+              <>
+                <span className="flex items-center gap-2">
+                  <PencilIcon />
+                  名前を変更
+                </span>
+                <Shortcut>F2</Shortcut>
+              </>
+            ),
+          },
+          {
+            label: (
+              <>
+                <span className="flex items-center gap-2">
+                  <FilesIcon />
+                  複製
+                </span>
+                <Shortcut>⌘D</Shortcut>
+              </>
             ),
           },
         ],
       },
       {
-        type: "separator",
+        items: [
+          {
+            type: "submenu",
+            label: (
+              <span className="flex items-center gap-2">
+                <Share2Icon />
+                共有
+              </span>
+            ),
+            items: [
+              {
+                label: (
+                  <span className="flex items-center gap-2">
+                    <LinkIcon />
+                    リンクをコピー
+                  </span>
+                ),
+              },
+              {
+                label: (
+                  <span className="flex items-center gap-2">
+                    <MailIcon />
+                    メールで送る
+                  </span>
+                ),
+              },
+            ],
+          },
+        ],
       },
       {
-        label: (
-          <span className="flex items-center gap-2">
-            <Trash2Icon />
-            削除
-          </span>
-        ),
-        color: "red",
+        items: [
+          {
+            label: (
+              <span className="flex items-center gap-2">
+                <Trash2Icon />
+                削除
+              </span>
+            ),
+            color: "red",
+          },
+        ],
       },
     ],
     variant: "naked",
@@ -681,9 +663,6 @@ export const TextEdit = meta.story({
           </>
         ),
         disabled: true,
-      },
-      {
-        type: "separator",
       },
       {
         label: (

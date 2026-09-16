@@ -1,5 +1,4 @@
 import { ContextMenu } from "@base-ui/react/context-menu";
-import * as React from "react";
 
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
@@ -17,25 +16,22 @@ export namespace ContextMenuTriggerProps {
     /**
      * トリガーとしてレンダリングする要素です。
      *
-     * {@link ContextMenu.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
+     * {@link ContextMenu.Trigger} の `render` props と同じ型で、そのまま `render` に渡されます。
      */
-    children: NonNullable<React.ComponentProps<typeof ContextMenu.Trigger>["render"]>;
+    children: NonNullable<ContextMenu.Trigger.Props["render"]>;
   };
 
   export type BaseUI = Pick<
-    React.ComponentProps<typeof ContextMenu.Trigger>,
+    ContextMenu.Trigger.Props,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // ContextMenuTriggerProps:
+      // MenuTriggerProps:
       never,
       keyof Render | keyof SuruUI
     >
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof ContextMenu.Trigger>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<ContextMenu.Trigger.Props, keyof Render | keyof SuruUI | keyof BaseUI>;
 }
 
 /**

@@ -1,18 +1,20 @@
 import { ContextMenu } from "@base-ui/react/context-menu";
+import { Menu } from "@base-ui/react/menu";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
-import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import type { IComponent } from "../types.js";
 import type { ContextMenuCheckboxItemProps } from "./context-menu.checkbox-item.jsx";
 import { ContextMenuContext } from "./context-menu.context.js";
+import type { ContextMenuGroupLabelProps } from "./context-menu.group-label.jsx";
 import type { ContextMenuGroupProps } from "./context-menu.group.jsx";
 import type { ContextMenuItemProps } from "./context-menu.item.jsx";
 import type { ContextMenuLinkItemProps } from "./context-menu.link-item.jsx";
 import type { ContextMenuRadioGroupProps } from "./context-menu.radio-group.jsx";
 import type { ContextMenuRadioItemProps } from "./context-menu.radio-item.jsx";
-import type { ContextMenuSeparatorProps } from "./context-menu.separator.jsx";
+import type { ContextMenuSubmenuRootProps } from "./context-menu.submenu-root.jsx";
+import type { ContextMenuSubmenuTriggerProps } from "./context-menu.submenu-trigger.jsx";
 
 /**
  * {@link ContextMenuRoot} を命令的に操作するためのオブジェクトです。
@@ -30,173 +32,167 @@ export type ContextMenuRootChangeEventDetails = ContextMenu.Root.ChangeEventDeta
 export type ContextMenuRootChangeEventReason = ContextMenu.Root.ChangeEventReason;
 
 /**
- * {@link ContextMenuRoot} の通常項目です。
- *
- * `label` を含み、その他のプロパティーは {@link ContextMenuItem} に渡されます。
- * `items` を指定した場合はサブメニューとして描画されます。
+ * {@link ContextMenuRoot} の向きです。
  */
-export type ContextMenuRootActionItemObject = Omit<ContextMenuItemProps, "children" | "label"> & {
-  /**
-   * 項目のラベルです。
-   */
-  readonly label: React.ReactNode;
+export type ContextMenuRootOrientation = Menu.Root.Orientation;
 
-  /**
-   * 子項目です。
-   *
-   * 指定した場合はサブメニューとして描画されます。
-   */
-  readonly items?: readonly ContextMenuRootItemObject[] | undefined;
+namespace ContextMenuRootLabeledItem {
+  export type BaseUI = Omit<ContextMenuItemProps, "children" | keyof SuruUI>;
 
-  /**
-   * 項目の種類です。
-   *
-   * - `"item"`: 通常項目
-   * - `"submenu"`: サブメニュー
-   */
-  readonly type?: "item" | "submenu" | undefined;
-};
+  export type SuruUI = {
+    /**
+     * 項目のラベルです。
+     */
+    readonly label: ContextMenuItemProps["children"];
 
-/**
- * {@link ContextMenuRoot} のチェックボックス項目です。
- *
- * `label` を含み、その他のプロパティーは {@link ContextMenuCheckboxItem} に渡されます。
- */
-export type ContextMenuRootCheckboxItemObject = Omit<
-  ContextMenuCheckboxItemProps,
-  "children" | "label"
-> & {
-  /**
-   * 項目のラベルです。
-   */
-  readonly label: React.ReactNode;
+    /**
+     * 項目の種類です。
+     */
+    readonly type?: "item" | undefined;
+  };
+}
 
-  /**
-   * 項目の種類です。
-   *
-   * - `"checkbox"`: チェックボックス項目
-   */
-  readonly type: "checkbox";
-};
+export type ContextMenuRootLabeledItem = ContextMenuRootLabeledItem.SuruUI &
+  ContextMenuRootLabeledItem.BaseUI;
 
-/**
- * {@link ContextMenuRoot} のグループです。
- *
- * `label` と `items` を含み、その他のプロパティーは {@link ContextMenuGroup} に渡されます。
- * `label` を指定した場合は {@link ContextMenuGroupLabel} として描画されます。
- * 子項目には {@link ContextMenuRootItemObject} を指定します。
- */
-export type ContextMenuRootGroupObject = Omit<ContextMenuGroupProps, "children"> & {
-  /**
-   * 子項目です。
-   */
-  readonly items: readonly ContextMenuRootItemObject[];
+namespace ContextMenuRootLinkItem {
+  export type BaseUI = Omit<ContextMenuLinkItemProps, "children" | keyof SuruUI>;
 
-  /**
-   * 項目の種類です。
-   *
-   * - `"group"`: グループ
-   */
-  readonly type: "group";
+  export type SuruUI = {
+    /**
+     * 項目のラベルです。
+     */
+    readonly label: ContextMenuLinkItemProps["children"];
 
-  /**
-   * グループのラベルです。
-   *
-   * 指定した場合は {@link ContextMenuGroupLabel} として描画されます。
-   */
-  readonly label?: React.ReactNode | undefined;
-};
+    /**
+     * 項目の種類です。
+     */
+    readonly type: "link";
+  };
+}
 
-/**
- * {@link ContextMenuRoot} のリンク項目です。
- *
- * `label` を含み、その他のプロパティーは {@link ContextMenuLinkItem} に渡されます。
- */
-export type ContextMenuRootLinkItemObject = Omit<ContextMenuLinkItemProps, "children" | "label"> & {
-  /**
-   * 項目のラベルです。
-   */
-  readonly label: React.ReactNode;
+export type ContextMenuRootLinkItem = ContextMenuRootLinkItem.SuruUI &
+  ContextMenuRootLinkItem.BaseUI;
 
-  /**
-   * 項目の種類です。
-   *
-   * - `"link"`: リンク項目
-   */
-  readonly type: "link";
-};
+namespace ContextMenuRootCheckboxItem {
+  export type BaseUI = Omit<ContextMenuCheckboxItemProps, "children" | keyof SuruUI>;
 
-/**
- * {@link ContextMenuRoot} のラジオグループです。
- *
- * `items` を含み、その他のプロパティーは {@link ContextMenuRadioGroup} に渡されます。
- * 子項目には {@link ContextMenuRootRadioItemObject} を指定します。
- */
-export type ContextMenuRootRadioGroupObject = Omit<ContextMenuRadioGroupProps, "children"> & {
-  /**
-   * ラジオ項目です。
-   */
-  readonly items: readonly ContextMenuRootRadioItemObject[];
+  export type SuruUI = {
+    /**
+     * 項目のラベルです。
+     */
+    readonly label: ContextMenuCheckboxItemProps["children"];
 
-  /**
-   * 項目の種類です。
-   *
-   * - `"radio-group"`: ラジオグループ
-   */
-  readonly type: "radio-group";
-};
+    /**
+     * 項目の種類です。
+     */
+    readonly type: "checkbox";
+  };
+}
 
-/**
- * {@link ContextMenuRoot} のラジオ項目です。
- *
- * `label` と `value` を含み、その他のプロパティーは {@link ContextMenuRadioItem} に渡されます。
- * 単体では選択状態を保持できないため、`items` ではなく {@link ContextMenuRootRadioGroupObject} の子項目として指定します。
- */
-export type ContextMenuRootRadioItemObject = Omit<
-  ContextMenuRadioItemProps,
-  "children" | "label"
-> & {
-  /**
-   * 項目のラベルです。
-   */
-  readonly label: React.ReactNode;
+export type ContextMenuRootCheckboxItem = ContextMenuRootCheckboxItem.SuruUI &
+  ContextMenuRootCheckboxItem.BaseUI;
 
-  /**
-   * 項目の種類です。
-   *
-   * - `"radio"`: ラジオ項目
-   */
-  readonly type: "radio";
-};
+namespace ContextMenuRootRadioItem {
+  export type BaseUI = Omit<ContextMenuRadioItemProps, "children" | keyof SuruUI>;
 
-/**
- * {@link ContextMenuRoot} の区切り線です。
- *
- * その他のプロパティーは {@link ContextMenuSeparator} に渡されます。
- */
-export type ContextMenuRootSeparatorObject = Omit<ContextMenuSeparatorProps, "children"> & {
-  /**
-   * 項目の種類です。
-   *
-   * - `"separator"`: 区切り線
-   */
-  readonly type: "separator";
-};
+  export type SuruUI = {
+    /**
+     * 項目のラベルです。
+     */
+    readonly label: ContextMenuRadioItemProps["children"];
+  };
+}
+
+export type ContextMenuRootRadioItem = ContextMenuRootRadioItem.SuruUI &
+  ContextMenuRootRadioItem.BaseUI;
+
+namespace ContextMenuRootRadioItemGroup {
+  // 型引数 TItem は SuruUI.items によって上書きされ、children は削除されるため、指定不要です。
+  export type BaseUI = Omit<ContextMenuRadioGroupProps, "children" | keyof SuruUI>;
+
+  export type SuruUI = {
+    /**
+     * ラジオ項目です。
+     */
+    readonly items: readonly ContextMenuRootRadioItem[];
+
+    /**
+     * 項目の種類です。
+     */
+    readonly type: "radio-group";
+  };
+}
+
+export type ContextMenuRootRadioItemGroup = ContextMenuRootRadioItemGroup.SuruUI &
+  ContextMenuRootRadioItemGroup.BaseUI;
+
+namespace ContextMenuRootSubmenuItem {
+  // 型引数 TItem は SuruUI.items によって上書きされ、children は削除されるため、指定不要です。
+  export type BaseUI = Omit<ContextMenuSubmenuRootProps, "children" | keyof SuruUI>;
+
+  export type SuruUI = {
+    /**
+     * 子項目です。
+     */
+    readonly items: readonly ContextMenuRootItem[];
+
+    /**
+     * 項目のラベルです。
+     */
+    readonly label: ContextMenuSubmenuTriggerProps["children"];
+
+    /**
+     * 項目の種類です。
+     */
+    readonly type: "submenu";
+  };
+}
+
+export type ContextMenuRootSubmenuItem = ContextMenuRootSubmenuItem.SuruUI &
+  ContextMenuRootSubmenuItem.BaseUI;
+
+export type ContextMenuRootGroupedItem =
+  | ContextMenuRootLabeledItem
+  | ContextMenuRootLinkItem
+  | ContextMenuRootCheckboxItem
+  | ContextMenuRootRadioItemGroup
+  | ContextMenuRootSubmenuItem;
+
+namespace ContextMenuRootItemGroup {
+  export type BaseUI = Omit<ContextMenuGroupProps, "children" | keyof SuruUI>;
+
+  export type SuruUI = {
+    /**
+     * 子項目です。
+     */
+    readonly items: readonly ContextMenuRootGroupedItem[];
+
+    /**
+     * グループのラベルです。
+     */
+    readonly label?: ContextMenuGroupLabelProps["children"];
+
+    /**
+     * 項目の種類です。
+     */
+    readonly type?: "group" | undefined;
+  };
+}
+
+export type ContextMenuRootItemGroup = ContextMenuRootItemGroup.SuruUI &
+  ContextMenuRootItemGroup.BaseUI;
 
 /**
  * {@link ContextMenuRoot} の各項目です。
- *
- * `type` によって通常項目、チェックボックス項目、グループ、リンク項目、ラジオ項目、ラジオグループ、区切り線を使い分けます。
- * `type` を省略した場合は通常項目として描画されます。
  */
-export type ContextMenuRootItemObject =
-  | ContextMenuRootActionItemObject
-  | ContextMenuRootCheckboxItemObject
-  | ContextMenuRootGroupObject
-  | ContextMenuRootLinkItemObject
-  | ContextMenuRootRadioGroupObject
-  | ContextMenuRootRadioItemObject
-  | ContextMenuRootSeparatorObject;
+export type ContextMenuRootItem =
+  | ContextMenuRootLabeledItem
+  | ContextMenuRootLinkItem
+  | ContextMenuRootCheckboxItem
+  | ContextMenuRootRadioItemGroup
+  | ContextMenuRootSubmenuItem
+  | ContextMenuRootItemGroup;
 
 /**
  * コンテキストメニューの角丸です。
@@ -232,7 +228,7 @@ export type ContextMenuRootVariant = Button.Root.Variant;
 export type ContextMenuRootState = ContextMenu.Root.State;
 
 export namespace ContextMenuRootProps {
-  export type Render = RenderProps<ContextMenuRootState>;
+  export type Render = {};
 
   export type SuruUI<TItem = any> = {
     /**
@@ -273,17 +269,18 @@ export namespace ContextMenuRootProps {
     React.ComponentProps<typeof ContextMenu.Root>,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // ContextMenuRootProps:
-      | "open"
+      // MenuRootProps:
       | "defaultOpen"
-      | "disabled"
       | "loopFocus"
       | "highlightItemOnHover"
+      | "onOpenChangeComplete"
+      | "open"
       | "orientation"
+      | "disabled"
       | "closeParentOnEsc"
       | "actionsRef"
       | "onOpenChange"
-      | "onOpenChangeComplete",
+      | "children",
       keyof Render | keyof SuruUI
     >
   >;
@@ -329,7 +326,7 @@ export const ContextMenuRoot: IContextMenuRoot = function SuiContextMenuRoot(
     ...otherProps
   } = props;
   const ctx = React.useMemo<ContextMenuContext>(
-    () => ({ size, items, radius, variant, outlined }),
+    () => ({ size, depth: 1, items, radius, variant, outlined }),
     [size, items, radius, variant, outlined],
   );
 
@@ -357,29 +354,15 @@ export namespace Root {
     export type HTML = ContextMenuRootProps.HTML;
   }
 
-  export type ActionItemObject = ContextMenuRootActionItemObject;
-
   export type Actions = ContextMenuRootActions;
 
   export type ChangeEventDetails = ContextMenuRootChangeEventDetails;
 
   export type ChangeEventReason = ContextMenuRootChangeEventReason;
 
-  export type CheckboxItemObject = ContextMenuRootCheckboxItemObject;
-
-  export type GroupObject = ContextMenuRootGroupObject;
-
-  export type ItemObject = ContextMenuRootItemObject;
-
-  export type LinkItemObject = ContextMenuRootLinkItemObject;
-
-  export type RadioGroupObject = ContextMenuRootRadioGroupObject;
-
-  export type RadioItemObject = ContextMenuRootRadioItemObject;
+  export type Orientation = ContextMenuRootOrientation;
 
   export type Radius = ContextMenuRootRadius;
-
-  export type SeparatorObject = ContextMenuRootSeparatorObject;
 
   export type Size = ContextMenuRootSize;
 

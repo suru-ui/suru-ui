@@ -48,7 +48,7 @@ export type ContextMenuPortalProps = ContextMenuPortalProps.Render &
 export const ContextMenuPortal: IComponent<ContextMenuPortalProps> = function SuiContextMenuPortal(
   props,
 ) {
-  const { size, radius, outlined } = useContextMenuContext();
+  const ctx = useContextMenuContext();
   const {
     className,
     // @ts-expect-error
@@ -62,9 +62,9 @@ export const ContextMenuPortal: IComponent<ContextMenuPortalProps> = function Su
       className={cn(
         className,
         "sui_context_menu_portal",
-        `sui_context_menu_portal-size_${size}`,
-        `sui_context_menu_portal-radius_${radius}`,
-        outlined && "sui_context_menu_portal-outlined",
+        `sui_context_menu_portal-size_${ctx.size}`,
+        `sui_context_menu_portal-radius_${ctx.radius}`,
+        ctx.outlined && "sui_context_menu_portal-outlined",
       )}
       data-scope={dataScope}
     />

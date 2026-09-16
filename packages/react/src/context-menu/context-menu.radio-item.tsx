@@ -8,18 +8,18 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { getItemVariant } from "./_context-menu.jsx";
+import { getItemVariant } from "./_context-menu.utils.jsx";
 import { useContextMenuContext } from "./context-menu.context.js";
 
 /**
  * ラジオ項目の配色です。
  */
-export type ContextMenuRadioItemColor = Button.ButtonRootColor;
+export type ContextMenuRadioItemColor = Button.Root.Color;
 
 /**
  * ラジオ項目の角丸です。
  */
-export type ContextMenuRadioItemRadius = Button.ButtonRootRadius;
+export type ContextMenuRadioItemRadius = Button.Root.Radius;
 
 /**
  * ラジオ項目の主な外観です。
@@ -33,10 +33,7 @@ export type ContextMenuRadioItemVariant = Button.Root.Variant;
 /**
  * {@link ContextMenuRadioItem} が持つ状態です。
  */
-export type ContextMenuRadioItemState = Override<
-  Button.ButtonRootState,
-  ContextMenu.RadioItem.State
->;
+export type ContextMenuRadioItemState = Override<Button.Root.State, ContextMenu.RadioItem.State>;
 
 export namespace ContextMenuRadioItemProps {
   export type Render = RenderProps<ContextMenuRadioItemState>;
@@ -74,7 +71,7 @@ export namespace ContextMenuRadioItemProps {
         // Base UI の型を確認して取り出すプロパティーを決めます。
         // NonNativeButtonProps:
         | keyof NonNativeButtonProps
-        // ComboboxItemProps:
+        // MenuRadioItemProps:
         | "value"
         | "onClick"
         | "disabled"
