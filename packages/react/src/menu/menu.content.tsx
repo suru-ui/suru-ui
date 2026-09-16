@@ -9,7 +9,6 @@ import type { IComponent } from "../types.js";
 import {
   isLinkItem,
   isItemGroup,
-  isRadioItem,
   isLabeledItem,
   isSubmenuItem,
   isCheckboxItem,
@@ -25,8 +24,6 @@ import { MenuLinkItem } from "./menu.link-item.jsx";
 import { MenuPortal } from "./menu.portal.jsx";
 import { MenuPositioner } from "./menu.positioner.jsx";
 import { MenuRadioGroup } from "./menu.radio-group.jsx";
-import { MenuRadioItemIndicator } from "./menu.radio-item-indicator.jsx";
-import { MenuRadioItem } from "./menu.radio-item.jsx";
 import type {
   MenuRootItem,
   // oxlint-disable-next-line no-unused-vars JSDoc で使用
@@ -106,7 +103,7 @@ interface IMenuContent extends IComponent<MenuContentProps> {
  */
 export const MenuContent: IMenuContent = function SuiMenuContent(props: MenuContentProps) {
   const ctx = useMenuContext();
-  const { children = defaultContentItemRenderer, className, ...otherProps } = props;
+  const { children = defaultItemRenderer, className, ...otherProps } = props;
 
   return (
     <Menu.Popup
@@ -146,7 +143,7 @@ export namespace Content {
   export interface IItemRenderer<TItem = any> extends IMenuContentItemRenderer<TItem> {}
 }
 
-const defaultContentItemRenderer: IMenuContentItemRenderer = (item, index, items) => {
+const defaultItemRenderer: IMenuContentItemRenderer = (item, index, items) => {
   switch (true) {
     case isLabeledItem(item): {
       const { type: _, label, ...props } = item;
@@ -198,7 +195,7 @@ const defaultContentItemRenderer: IMenuContentItemRenderer = (item, index, items
           </MenuSubmenuTrigger>
           <MenuPortal>
             <MenuPositioner>
-              <MenuContent>{defaultContentItemRenderer}</MenuContent>
+              <MenuContent>{defaultItemRenderer}</MenuContent>
             </MenuPositioner>
           </MenuPortal>
         </MenuSubmenuRoot>
@@ -212,7 +209,7 @@ const defaultContentItemRenderer: IMenuContentItemRenderer = (item, index, items
         <React.Fragment key={index}>
           <MenuGroup {...props} key={index}>
             {isLikelyVisibleNode(label) && <MenuGroupLabel>{label}</MenuGroupLabel>}
-            {groupItems.map(defaultContentItemRenderer)}
+            {groupItems.map(defaultItemRenderer)}
           </MenuGroup>
           {index < items.length - 1 && <MenuSeparator />}
         </React.Fragment>

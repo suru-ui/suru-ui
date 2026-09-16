@@ -95,7 +95,7 @@ interface IMenuRadioGroup extends IComponent<MenuRadioGroupProps> {
 export const MenuRadioGroup: IMenuRadioGroup = function SuiMenuRadioGroup(
   props: MenuRadioGroupProps,
 ) {
-  const { items, children = defaultRadioItemRenderer, className, ...otherProps } = props;
+  const { items, children = defaultItemRenderer, className, ...otherProps } = props;
 
   return (
     <Menu.RadioGroup
@@ -135,7 +135,7 @@ export namespace RadioGroup {
   export interface IItemRenderer<TItem = any> extends IMenuRadioGroupItemRenderer<TItem> {}
 }
 
-const defaultRadioItemRenderer: IMenuRadioGroupItemRenderer = (item, index) => {
+const defaultItemRenderer: IMenuRadioGroupItemRenderer = (item, index) => {
   switch (true) {
     case isRadioItem(item): {
       const { label, ...props } = item;

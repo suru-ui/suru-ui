@@ -104,6 +104,7 @@ namespace MenuRootRadioItem {
 export type MenuRootRadioItem = MenuRootRadioItem.SuruUI & MenuRootRadioItem.BaseUI;
 
 namespace MenuRootRadioItemGroup {
+  // 型引数 TItem は SuruUI.items によって上書きされ、children は削除されるため、指定不要です。
   export type BaseUI = Omit<MenuRadioGroupProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
@@ -122,6 +123,7 @@ namespace MenuRootRadioItemGroup {
 export type MenuRootRadioItemGroup = MenuRootRadioItemGroup.SuruUI & MenuRootRadioItemGroup.BaseUI;
 
 namespace MenuRootSubmenuItem {
+  // 型引数 TItem は SuruUI.items によって上書きされ、children は削除されるため、指定不要です。
   export type BaseUI = Omit<MenuSubmenuRootProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
@@ -144,6 +146,13 @@ namespace MenuRootSubmenuItem {
 
 export type MenuRootSubmenuItem = MenuRootSubmenuItem.SuruUI & MenuRootSubmenuItem.BaseUI;
 
+export type MenuRootGroupedItem =
+  | MenuRootLabeledItem
+  | MenuRootLinkItem
+  | MenuRootCheckboxItem
+  | MenuRootRadioItemGroup
+  | MenuRootSubmenuItem;
+
 namespace MenuRootItemGroup {
   export type BaseUI = Omit<MenuGroupProps, "children" | keyof SuruUI>;
 
@@ -151,13 +160,7 @@ namespace MenuRootItemGroup {
     /**
      * 子項目です。
      */
-    readonly items: readonly (
-      | MenuRootLabeledItem
-      | MenuRootLinkItem
-      | MenuRootCheckboxItem
-      | MenuRootRadioItemGroup
-      | MenuRootSubmenuItem
-    )[];
+    readonly items: readonly MenuRootGroupedItem[];
 
     /**
      * グループのラベルです。
