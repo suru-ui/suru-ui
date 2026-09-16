@@ -389,19 +389,6 @@ export {
   useLabelAPI,
 } from "./label/index.js";
 export {
-  type ListAPI,
-  type ListSize,
-  type ListProps,
-  type ListState,
-  type ListSlotProps,
-  type ListItemObject,
-  type IListItemRenderer,
-  List,
-  useListAPI,
-  ListContext,
-  useListContext,
-} from "./list/index.js";
-export {
   type MenuAPI,
   type MenuSize,
   type MenuProps,

@@ -127,10 +127,6 @@
       "types": "./dist/src/chip/index.d.ts",
       "default": "./dist/src/chip/index.js"
     },
-    "./list": {
-      "types": "./dist/src/list/index.d.ts",
-      "default": "./dist/src/list/index.js"
-    },
     "./image": {
       "types": "./dist/src/image/index.d.ts",
       "default": "./dist/src/image/index.js"
