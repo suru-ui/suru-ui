@@ -4,6 +4,7 @@ import * as React from "react";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import { useHoverCardContext } from "./hover-card.context.js";
 
 /**
  * {@link HoverCardPortal} が持つ状態です。
@@ -53,11 +54,21 @@ export const HoverCardPortal: IComponent<HoverCardPortalProps> = function SuiHov
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
+  const ctx = useHoverCardContext(true);
+  const size = ctx?.size ?? "md";
+  const radius = ctx?.radius ?? "md";
+  const outlined = ctx?.outlined ?? false;
 
   return (
     <PreviewCard.Portal
       {...otherProps}
-      className={cn(className, "sui_hover_card_portal")}
+      className={cn(
+        className,
+        "sui_hover_card_portal",
+        `sui_hover_card_portal-size_${size}`,
+        `sui_hover_card_portal-radius_${radius}`,
+        outlined && "sui_hover_card_portal-outlined",
+      )}
       data-scope={dataScope}
     />
   );

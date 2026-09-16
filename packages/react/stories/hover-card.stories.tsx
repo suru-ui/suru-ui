@@ -4,7 +4,6 @@ import { preview, controls } from "../.config/storybook/preview.js";
 import { Avatar } from "../src/avatar/index.js";
 import { Button } from "../src/button/index.js";
 import { HoverCard } from "../src/hover-card/index.js";
-import * as HoverCardParts from "../src/hover-card/index.js";
 
 const meta = preview.meta({
   title: "HoverCard",
@@ -100,17 +99,19 @@ export const ProfileCard = meta.story({
     return (
       <div className="flex items-center gap-2 text-sm">
         <span>作成者:</span>
-        <HoverCard {...props} trigger={<a href="#tanaka">田中 太郎</a>}>
-          <div className="flex items-start gap-3">
-            <Avatar size="lg" color="blue" radius="full">
-              田
-            </Avatar>
-            <div className="flex flex-col gap-1">
-              <span className="font-bold">田中 太郎</span>
-              <span className="text-neutral-500">フロントエンドエンジニア</span>
-              <span className="text-neutral-500">フォロワー 1,234 人</span>
-              <Button variant="liquid">フォローする</Button>
-            </div>
+        <HoverCard
+          {...props}
+          trigger={<a href="#tanaka">田中 太郎</a>}
+          className="flex items-start gap-3"
+        >
+          <Avatar size="lg" color="blue" radius="full">
+            田
+          </Avatar>
+          <div className="flex flex-col gap-1">
+            <span className="font-bold">田中 太郎</span>
+            <span className="text-neutral-500">フロントエンドエンジニア</span>
+            <span className="text-neutral-500">フォロワー 1,234 人</span>
+            <Button variant="liquid">フォローする</Button>
           </div>
         </HoverCard>
       </div>
@@ -134,34 +135,26 @@ export const SharedPayload = meta.story({
   name: "共有とペイロード",
   ...ctrl({}),
   render() {
-    const handle = HoverCardParts.createHandle<Member>();
+    const handle = HoverCard.createHandle<Member>();
 
     return (
       <div className="flex items-center gap-2 text-sm">
         <span>担当:</span>
         {MEMBERS.map((member) => (
-          <HoverCardParts.Trigger key={member.id} delay={200} handle={handle} payload={member}>
+          <HoverCard.Trigger key={member.id} delay={200} handle={handle} payload={member}>
             <a href={`#${member.id}`}>{member.name}</a>
-          </HoverCardParts.Trigger>
+          </HoverCard.Trigger>
         ))}
-        <HoverCardParts.Root handle={handle}>
-          {({ payload }) => (
-            <HoverCardParts.Portal>
-              <HoverCardParts.Positioner side="bottom" align="start" sideOffset={8}>
-                <HoverCardParts.Content>
-                  <HoverCardParts.Viewport>
-                    {payload ? (
-                      <div className="flex flex-col gap-1">
-                        <span className="font-bold">{payload.name}</span>
-                        <span className="text-neutral-500">{payload.role}</span>
-                      </div>
-                    ) : null}
-                  </HoverCardParts.Viewport>
-                </HoverCardParts.Content>
-              </HoverCardParts.Positioner>
-            </HoverCardParts.Portal>
-          )}
-        </HoverCardParts.Root>
+        <HoverCard handle={handle}>
+          {({ payload }) =>
+            payload ? (
+              <div className="flex flex-col gap-1">
+                <span className="font-bold">{payload.name}</span>
+                <span className="text-neutral-500">{payload.role}</span>
+              </div>
+            ) : null
+          }
+        </HoverCard>
       </div>
     );
   },
@@ -205,31 +198,6 @@ export const Delays = meta.story({
           1.2 秒の遅延の後に開きます。誤って触れただけでは開きません。
         </HoverCard>
       </div>
-    );
-  },
-});
-
-export const Parts = meta.story({
-  name: "パーツ",
-  ...ctrl({}),
-  render() {
-    const handle = HoverCardParts.createHandle();
-
-    return (
-      <HoverCardParts.Root handle={handle}>
-        <HoverCardParts.Trigger delay={0} handle={handle}>
-          <Button>詳細</Button>
-        </HoverCardParts.Trigger>
-        <HoverCardParts.Portal>
-          <HoverCardParts.Backdrop />
-          <HoverCardParts.Positioner side="bottom" align="start" sideOffset={8}>
-            <HoverCardParts.Content>
-              <HoverCardParts.Arrow />
-              ここに内容を表示します。
-            </HoverCardParts.Content>
-          </HoverCardParts.Positioner>
-        </HoverCardParts.Portal>
-      </HoverCardParts.Root>
     );
   },
 });

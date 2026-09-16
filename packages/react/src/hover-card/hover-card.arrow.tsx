@@ -45,7 +45,16 @@ export type HoverCardArrowProps = HoverCardArrowProps.Render &
 export const HoverCardArrow: IComponent<HoverCardArrowProps> = function SuiHoverCardArrow(props) {
   const { className, ...otherProps } = props;
 
-  return <PreviewCard.Arrow {...otherProps} className={cn(className, "sui_hover_card_arrow")} />;
+  return (
+    <PreviewCard.Arrow
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_hover_card_arrow",
+        (state) => `sui_hover_card_arrow-side_${state.side}`,
+      )}
+    />
+  );
 };
 
 export { HoverCardArrow as Arrow };

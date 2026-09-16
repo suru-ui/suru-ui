@@ -61,8 +61,11 @@ export type HoverCardTriggerProps<TPayload = any> = HoverCardTriggerProps.Render
 /**
  * {@link HoverCardTrigger} のコンポーネント型です。
  */
-export interface HoverCardTriggerComponent extends IComponent<HoverCardTriggerProps> {
-  <TPayload = any>(props: HoverCardTriggerProps<TPayload>): React.ReactElement | null;
+export interface IHoverCardTrigger extends IComponent<HoverCardTriggerProps> {
+  /**
+   * @template TPayload トリガーから渡すデータの型です。
+   */
+  <TPayload = any>(props: HoverCardTriggerProps<TPayload>): IComponent.Return;
 }
 
 /**
@@ -71,7 +74,7 @@ export interface HoverCardTriggerComponent extends IComponent<HoverCardTriggerPr
  * 要素にマウスカーソルを重ねると、遅延の後にホバーカードが開きます。
  * 子要素は何にもラップされず、そのまま {@link PreviewCard.Trigger} の `render` プロパティーに渡されます。
  */
-export const HoverCardTrigger: HoverCardTriggerComponent = function SuiHoverCardTrigger<TPayload>(
+export const HoverCardTrigger: IHoverCardTrigger = function SuiHoverCardTrigger<TPayload>(
   props: HoverCardTriggerProps<TPayload>,
 ) {
   const { handle, children, className, ...otherProps } = props;

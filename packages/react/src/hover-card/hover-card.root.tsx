@@ -1,8 +1,9 @@
 import { PreviewCard } from "@base-ui/react/preview-card";
+import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
-import type { RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
+import { HoverCardContext } from "./hover-card.context.js";
 import type { HoverCardHandle } from "./hover-card.handle.js";
 
 /**
@@ -21,12 +22,31 @@ export type HoverCardRootChangeEventDetails = PreviewCard.Root.ChangeEventDetail
 export type HoverCardRootChangeEventReason = PreviewCard.Root.ChangeEventReason;
 
 /**
+ * ホバーカードの角丸の大きさです。
+ *
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ */
+export type HoverCardRootRadius = "none" | Size;
+
+/**
+ * ホバーカードの大きさです。
+ *
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ */
+export type HoverCardRootSize = Size;
+
+/**
  * {@link HoverCardRoot} が持つ状態です。
  */
 export type HoverCardRootState = PreviewCard.Root.State;
 
 export namespace HoverCardRootProps {
-  export type Render = RenderProps<HoverCardRootState>;
+  export type Render = {};
 
   export type SuruUI<TPayload = any> = {
     /**
@@ -35,6 +55,27 @@ export namespace HoverCardRootProps {
      * {@link createHandle} で作成します。Root 内に {@link Trigger} を配置する場合は省略できます。
      */
     handle?: HoverCardHandle<TPayload> | undefined;
+
+    /**
+     * ホバーカードに枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * ホバーカードの角丸を指定します。
+     *
+     * 既定値は {@link HoverCardRootProps.size|size} です。
+     */
+    radius?: HoverCardRootRadius | undefined;
+
+    /**
+     * ホバーカードの大きさを指定します。
+     *
+     * @default "md"
+     */
+    size?: HoverCardRootSize | undefined;
   };
 
   export type BaseUI<TPayload = any> = Pick<
@@ -73,20 +114,30 @@ export type HoverCardRootProps<TPayload = any> = HoverCardRootProps.Render &
 /**
  * {@link HoverCardRoot} のコンポーネント型です。
  */
-export interface HoverCardRootComponent extends IComponent<HoverCardRootProps> {
-  <TPayload = any>(props: HoverCardRootProps<TPayload>): React.ReactElement | null;
+interface IHoverCardRoot extends IComponent<HoverCardRootProps> {
+  /**
+   * @template TPayload トリガーから受け取るデータの型です。
+   */
+  <TPayload = any>(props: HoverCardRootProps<TPayload>): IComponent.Return;
 }
 
 /**
  * ホバーカードのルートです。
- *
- * ホバーカードの開閉状態を管理し、各パーツをグループ化します。
- * それ自身は HTML 要素をレンダリングしません。
  */
-export const HoverCardRoot: HoverCardRootComponent = function SuiHoverCardRoot<TPayload>(
+export const HoverCardRoot: IHoverCardRoot = function SuiHoverCardRoot<TPayload>(
   props: HoverCardRootProps<TPayload>,
 ) {
-  return <PreviewCard.Root {...props} />;
+  const { size = "md", radius = size, outlined = false, ...otherProps } = props;
+  const ctx = React.useMemo<HoverCardContext>(
+    () => ({ size, radius, outlined }),
+    [size, radius, outlined],
+  );
+
+  return (
+    <HoverCardContext.Provider value={ctx}>
+      <PreviewCard.Root {...otherProps} />
+    </HoverCardContext.Provider>
+  );
 };
 
 export { HoverCardRoot as Root };
@@ -114,4 +165,8 @@ export namespace Root {
   export type ChangeEventDetails = HoverCardRootChangeEventDetails;
 
   export type ChangeEventReason = HoverCardRootChangeEventReason;
+
+  export type Radius = HoverCardRootRadius;
+
+  export type Size = HoverCardRootSize;
 }

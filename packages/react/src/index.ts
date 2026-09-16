@@ -348,14 +348,19 @@ export {
 } from "./drawer/index.js";
 export {
   type HoverCardAPI,
+  type HoverCardSize,
   type HoverCardProps,
   type HoverCardState,
+  type HoverCardRadius,
   type HoverCardActions,
   type HoverCardSlotProps,
+  type IHoverCardContentRenderer,
   type HoverCardChangeEventReason,
   type HoverCardChangeEventDetails,
   HoverCard,
   useHoverCardAPI,
+  HoverCardContext,
+  useHoverCardContext,
 } from "./hover-card/index.js";
 export {
   type ImageAPI,

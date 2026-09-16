@@ -1,5 +1,6 @@
 import "./hover-card.css";
 
+export * from "./hover-card.context.js";
 export * from "./hover-card.handle.js";
 export * from "./hover-card.root.jsx";
 export * from "./hover-card.trigger.jsx";
