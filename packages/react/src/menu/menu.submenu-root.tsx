@@ -1,8 +1,8 @@
 import { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
-import type { RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
+import { MenuContext, useMenuContext } from "./menu.context.js";
 
 /**
  * {@link MenuSubmenuRoot} の開閉状態を変更されるイベントの詳細です。
@@ -20,9 +20,14 @@ export type MenuSubmenuRootChangeEventReason = Menu.SubmenuRoot.ChangeEventReaso
 export type MenuSubmenuRootState = Menu.SubmenuRoot.State;
 
 export namespace MenuSubmenuRootProps {
-  export type Render = RenderProps<MenuSubmenuRootState>;
+  export type Render = {};
 
-  export type SuruUI = {};
+  export type SuruUI<TItem = any> = {
+    /**
+     * メニューの項目です。
+     */
+    items?: readonly TItem[] | undefined;
+  };
 
   export type BaseUI = Pick<
     React.ComponentProps<typeof Menu.SubmenuRoot>,
@@ -52,20 +57,45 @@ export namespace MenuSubmenuRootProps {
 /**
  * {@link MenuSubmenuRoot} に渡す props です。
  */
-export type MenuSubmenuRootProps = MenuSubmenuRootProps.Render &
-  MenuSubmenuRootProps.SuruUI &
+export type MenuSubmenuRootProps<TItem = any> = MenuSubmenuRootProps.Render &
+  MenuSubmenuRootProps.SuruUI<TItem> &
   MenuSubmenuRootProps.BaseUI &
   MenuSubmenuRootProps.HTML;
+
+interface IMenuSubmenuRoot extends IComponent<MenuSubmenuRootProps> {
+  /**
+   * @template TItem 項目の型です。
+   */
+  <TItem = any>(props: MenuSubmenuRootProps<TItem>): IComponent.Return;
+}
 
 /**
  * サブメニューのルートです。
  *
  * それ自身は HTML 要素をレンダリングしません。
  */
-export const MenuSubmenuRoot: IComponent<MenuSubmenuRootProps> = function SuiMenuSubmenuRoot(
-  props,
+export const MenuSubmenuRoot: IMenuSubmenuRoot = function SuiMenuSubmenuRoot(
+  props: MenuSubmenuRootProps,
 ) {
-  return <Menu.SubmenuRoot {...props} />;
+  const parentCtx = useMenuContext();
+  const { items = parentCtx.items, ...otherProps } = props;
+  const ctx = React.useMemo<MenuContext>(() => {
+    if (Object.is(items, parentCtx.items)) {
+      return parentCtx;
+    }
+
+    return {
+      ...parentCtx,
+      depth: parentCtx.depth + 1,
+      items,
+    };
+  }, [items, parentCtx]);
+
+  return (
+    <MenuContext value={ctx}>
+      <Menu.SubmenuRoot {...otherProps} />
+    </MenuContext>
+  );
 };
 
 export { MenuSubmenuRoot as SubmenuRoot };
@@ -73,12 +103,12 @@ export { MenuSubmenuRoot as SubmenuRoot };
 export namespace SubmenuRoot {
   export type State = MenuSubmenuRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = MenuSubmenuRootProps.Render;
 
-    export type SuruUI = MenuSubmenuRootProps.SuruUI;
+    export type SuruUI<TItem = any> = MenuSubmenuRootProps.SuruUI<TItem>;
 
     export type BaseUI = MenuSubmenuRootProps.BaseUI;
 

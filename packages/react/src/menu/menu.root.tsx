@@ -2,7 +2,6 @@ import { Menu } from "@base-ui/react/menu";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
-import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import type { IComponent } from "../types.js";
 import type { MenuCheckboxItemProps } from "./menu.checkbox-item.jsx";
@@ -99,11 +98,6 @@ namespace MenuRootRadioItem {
      * 項目のラベルです。
      */
     readonly label: MenuRadioItemProps["children"];
-
-    /**
-     * 項目の種類です。
-     */
-    readonly type: "radio";
   };
 }
 
@@ -162,7 +156,6 @@ namespace MenuRootItemGroup {
       | MenuRootLinkItem
       | MenuRootCheckboxItem
       | MenuRootRadioItemGroup
-      | MenuRootRadioItem
       | MenuRootSubmenuItem
     )[];
 
@@ -188,7 +181,6 @@ export type MenuRootItem =
   | MenuRootLinkItem
   | MenuRootCheckboxItem
   | MenuRootRadioItemGroup
-  | MenuRootRadioItem
   | MenuRootSubmenuItem
   | MenuRootItemGroup;
 
@@ -226,7 +218,7 @@ export type MenuRootVariant = Button.Root.Variant;
 export type MenuRootState = Menu.Root.State;
 
 export namespace MenuRootProps {
-  export type Render = RenderProps<MenuRootState>;
+  export type Render = {};
 
   export type SuruUI<TPayload = any, TItem = any> = {
     /**
@@ -335,7 +327,7 @@ export const MenuRoot: IMenuRoot = function SuiMenuRoot(props: MenuRootProps) {
     ...otherProps
   } = props;
   const ctx = React.useMemo<MenuContext>(
-    () => ({ size, items, radius, variant, outlined }),
+    () => ({ size, depth: 1, items, radius, variant, outlined }),
     [size, items, radius, variant, outlined],
   );
 

@@ -4,6 +4,7 @@ import * as React from "react";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import { useMenuContext } from "./menu.context.js";
 
 /**
  * {@link MenuPositioner} が持つ状態です。
@@ -54,9 +55,23 @@ export type MenuPositionerProps = MenuPositionerProps.Render &
  * ポップアップをトリガーに位置合わせする要素です。
  */
 export const MenuPositioner: IComponent<MenuPositionerProps> = function SuiMenuPositioner(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useMenuContext();
+  const {
+    // ルートメニューは上下優先、サブメニューは左右優先にします。
+    side = ctx.depth === 1 ? "bottom" : "right",
+    align = "start",
+    className,
+    ...otherProps
+  } = props;
 
-  return <Menu.Positioner {...otherProps} className={cn(className, "sui_menu_positioner")} />;
+  return (
+    <Menu.Positioner
+      {...otherProps}
+      side={side}
+      align={align}
+      className={cn(className, "sui_menu_positioner")}
+    />
+  );
 };
 
 export { MenuPositioner as Positioner };

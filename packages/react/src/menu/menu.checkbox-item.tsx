@@ -8,7 +8,7 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { getItemVariant } from "./_menu.jsx";
+import { getItemVariant } from "./_menu.utils.jsx";
 import { useMenuContext } from "./menu.context.js";
 
 /**

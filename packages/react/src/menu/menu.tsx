@@ -4,40 +4,48 @@ import { CheckIcon, ChevronRightIcon } from "../_icons.jsx";
 import isLikelyVisibleNode, { type LikelyVisibleNode } from "../_is-likely-visible-node.js";
 import mergeProps from "../_merge-props.js";
 import toReactNode from "../_to-react-node.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import {
-  isItemObject,
-  isGroupObject,
-  isLinkItemObject,
-  isRadioItemObject,
-  isSeparatorObject,
-  isRadioGroupObject,
-  isCheckboxItemObject,
-} from "./_menu.jsx";
+  isLinkItem,
+  isItemGroup,
+  isRadioItem,
+  isLabeledItem,
+  isSubmenuItem,
+  isCheckboxItem,
+  isRadioItemGroup,
+} from "./_menu.utils.jsx";
 import {
+  type MenuRootItem,
   type MenuRootSize,
   type MenuItemProps,
   type MenuRootProps,
   type MenuRootState,
   type MenuGroupProps,
-  type MenuPopupProps,
   type MenuRootRadius,
   type MenuPortalProps,
   type MenuRootActions,
   type MenuRootVariant,
+  type MenuContentProps,
+  type MenuRootLinkItem,
   type MenuTriggerProps,
   type MenuBackdropProps,
   type MenuLinkItemProps,
+  type MenuRootItemGroup,
+  type MenuRootRadioItem,
   type MenuRadioItemProps,
   type MenuSeparatorProps,
   type MenuGroupLabelProps,
   type MenuPositionerProps,
   type MenuRadioGroupProps,
+  type MenuRootLabeledItem,
   type MenuRootOrientation,
+  type MenuRootSubmenuItem,
+  type MenuRootCheckboxItem,
   type MenuSubmenuRootProps,
   type MenuCheckboxItemProps,
-  type IMenuPopupItemRenderer,
+  type MenuRootRadioItemGroup,
   type MenuSubmenuTriggerProps,
+  type IMenuContentItemRenderer,
   type MenuRootChangeEventReason,
   type MenuRootChangeEventDetails,
   type MenuRadioItemIndicatorProps,
@@ -45,8 +53,8 @@ import {
   MenuItem,
   MenuRoot,
   MenuGroup,
-  MenuPopup,
   MenuPortal,
+  MenuContent,
   MenuTrigger,
   MenuBackdrop,
   MenuLinkItem,
@@ -67,29 +75,29 @@ import {
 
 export type MenuActions = MenuRootActions;
 
+export type MenuActionItem = MenuRootLabeledItem & {
+  readonly items?: readonly MenuRootItem[] | undefined;
+};
+
 export type MenuChangeEventDetails = MenuRootChangeEventDetails;
 
 export type MenuChangeEventReason = MenuRootChangeEventReason;
 
-export type MenuItemObject = any;
+export type MenuCheckboxItem = MenuRootCheckboxItem;
 
-export type MenuActionItemObject = any;
+export type MenuItemGroup = MenuRootItemGroup;
 
-export type MenuCheckboxItemObject = any;
+export type MenuItem = MenuRootItem;
 
-export type MenuGroupObject = any;
-
-export type MenuLinkItemObject = any;
-
-export type MenuRadioGroupObject = any;
-
-export type MenuRadioItemObject = any;
-
-export type MenuSeparatorObject = any;
+export type MenuLinkItem = MenuRootLinkItem;
 
 export type MenuOrientation = MenuRootOrientation;
 
-export interface IMenuItemRenderer<TItem = any> extends IMenuPopupItemRenderer<TItem> {}
+export type MenuRadioItemGroup = MenuRootRadioItemGroup;
+
+export type MenuRadioItem = MenuRootRadioItem;
+
+export interface IMenuItemRenderer<TItem = any> extends IMenuContentItemRenderer<TItem> {}
 
 export type MenuRadius = MenuRootRadius;
 
@@ -114,7 +122,7 @@ export type MenuSlotProps = {
   /**
    * {@link MenuCheckboxItemIndicator} に渡す props です。
    */
-  readonly checkboxItemIndicator?: MenuCheckboxItemIndicatorProps | undefined;
+  readonly checkboxItemIndicator?: Omit<MenuCheckboxItemIndicatorProps, "children"> | undefined;
 
   /**
    * {@link MenuGroup} に渡す props です。
@@ -137,11 +145,6 @@ export type MenuSlotProps = {
   readonly linkItem?: Omit<MenuLinkItemProps, "children"> | undefined;
 
   /**
-   * {@link MenuPopup} に渡す props です。
-   */
-  readonly popup?: Omit<MenuPopupProps, "children"> | undefined;
-
-  /**
    * {@link MenuPortal} に渡す props です。
    */
   readonly portal?: Omit<MenuPortalProps, "children"> | undefined;
@@ -154,7 +157,7 @@ export type MenuSlotProps = {
   /**
    * {@link MenuRadioGroup} に渡す props です。
    */
-  readonly radioGroup?: Omit<MenuRadioGroupProps, "children"> | undefined;
+  readonly radioGroup?: Omit<MenuRadioGroupProps, "children" | "items"> | undefined;
 
   /**
    * {@link MenuRadioItem} に渡す props です。
@@ -164,12 +167,12 @@ export type MenuSlotProps = {
   /**
    * {@link MenuRadioItemIndicator} に渡す props です。
    */
-  readonly radioItemIndicator?: MenuRadioItemIndicatorProps | undefined;
+  readonly radioItemIndicator?: Omit<MenuRadioItemIndicatorProps, "children"> | undefined;
 
   /**
    * {@link MenuSeparator} に渡す props です。
    */
-  readonly separator?: Omit<MenuSeparatorProps, "children"> | undefined;
+  readonly separator?: MenuSeparatorProps | undefined;
 
   /**
    * {@link MenuSubmenuRoot} に渡す props です。
@@ -193,6 +196,10 @@ export type MenuSlotProps = {
 export type MenuState = MenuRootState;
 
 type MenuPropsMain = {
+  checkboxIndicator?: React.ReactNode;
+
+  radioIndicator?: React.ReactNode;
+
   /**
    * 各パーツに個別の props を渡すためのオブジェクトです。
    */
@@ -208,14 +215,14 @@ type MenuPropsMain = {
 
 type MenuPropsRoot<TItem = any> = Omit<MenuRootProps<any, TItem>, "children" | keyof MenuPropsMain>;
 
-type MenuPropsPopup = Omit<MenuPopupProps, keyof MenuPropsMain | keyof MenuPropsRoot>;
+type MenuPropsContent = Omit<MenuContentProps, keyof MenuPropsMain | keyof MenuPropsRoot>;
 
 /**
  * {@link Menu} に渡す props です。
  *
  * @template TItem 項目の型です。
  */
-export type MenuProps<TItem = any> = MenuPropsMain & MenuPropsRoot<TItem> & MenuPropsPopup;
+export type MenuProps<TItem = any> = MenuPropsMain & MenuPropsRoot<TItem> & MenuPropsContent;
 
 // API
 // ---
@@ -239,50 +246,60 @@ export interface MenuAPI {
    *
    * @param item 項目です。
    */
-  getCheckboxItemProps(item: MenuCheckboxItemObject): Omit<MenuCheckboxItemProps, "children"> & {
-    children: LikelyVisibleNode | null;
-  };
+  getCheckboxItemProps(item: MenuCheckboxItem): Override<
+    MenuCheckboxItemProps,
+    {
+      children: LikelyVisibleNode | undefined;
+    }
+  >;
+
+  /**
+   * {@link MenuContent} に渡す props を取得します。
+   */
+  getContentProps(): Override<
+    MenuContentProps,
+    {
+      children: LikelyVisibleNode | IMenuContentItemRenderer | undefined;
+    }
+  >;
 
   /**
    * {@link MenuGroupLabel} に渡す props を取得します。
    *
    * @param item 項目です。
    */
-  getGroupLabelProps(item: MenuGroupObject): MenuGroupLabelProps | null;
+  getGroupLabelProps(item: MenuItemGroup): MenuGroupLabelProps | null;
 
   /**
    * {@link MenuGroup} に渡す props を取得します。
    *
    * @param item 項目です。
    */
-  getGroupProps(item: MenuGroupObject): Omit<MenuGroupProps, "children">;
+  getGroupProps(item: MenuItemGroup): Omit<MenuGroupProps, "children">;
 
   /**
    * {@link MenuItem} に渡す props を取得します。
    *
    * @param item 項目です。
    */
-  getItemProps(item: MenuItemObject): Omit<MenuItemProps, "children"> & {
-    children: LikelyVisibleNode | null;
-  };
+  getItemProps(item: MenuItem): Override<
+    MenuItemProps,
+    {
+      children: LikelyVisibleNode | undefined;
+    }
+  >;
 
   /**
    * {@link MenuLinkItem} に渡す props を取得します。
    *
    * @param item 項目です。
    */
-  getLinkItemProps(item: MenuLinkItemObject): Omit<MenuLinkItemProps, "children"> & {
-    children: LikelyVisibleNode | null;
-  };
-
-  /**
-   * {@link MenuPopup} に渡す props を取得します。
-   *
-   * @param item 項目です。
-   */
-  getPopupProps(item?: MenuItemObject): Omit<MenuPopupProps, "children"> & {
-    children: LikelyVisibleNode | null;
-  };
+  getLinkItemProps(item: MenuLinkItem): Override<
+    MenuLinkItemProps,
+    {
+      children: LikelyVisibleNode | undefined;
+    }
+  >;
 
   /**
    * {@link MenuPortal} に渡す props を取得します。
@@ -299,7 +316,7 @@ export interface MenuAPI {
    *
    * @param item 項目です。
    */
-  getRadioGroupProps(item: MenuRadioGroupObject): Omit<MenuRadioGroupProps, "children">;
+  getRadioGroupProps(item: MenuRadioItemGroup): Omit<MenuRadioGroupProps, "children">;
 
   /**
    * {@link MenuRadioItemIndicator} に渡す props を取得します。
@@ -311,9 +328,7 @@ export interface MenuAPI {
    *
    * @param item 項目です。
    */
-  getRadioItemProps(item: MenuRadioItemObject): Omit<MenuRadioItemProps, "children"> & {
-    children: LikelyVisibleNode | null;
-  };
+  getRadioItemProps(item: MenuRadioItem): MenuRadioItemProps;
 
   /**
    * {@link MenuRoot} に渡す props を取得します。
@@ -322,24 +337,20 @@ export interface MenuAPI {
 
   /**
    * {@link MenuSeparator} に渡す props を取得します。
-   *
-   * @param item 項目です。
    */
-  getSeparatorProps(item: MenuSeparatorObject): Omit<MenuSeparatorProps, "children">;
+  getSeparatorProps(): MenuSeparatorProps;
 
   /**
    * {@link MenuSubmenuRoot} に渡す props を取得します。
    */
-  getSubmenuRootProps(): Omit<MenuSubmenuRootProps, "children">;
+  getSubmenuRootProps(item: MenuRootSubmenuItem): Omit<MenuSubmenuRootProps, "children">;
 
   /**
    * {@link MenuSubmenuTrigger} に渡す props を取得します。
    *
    * @param item 項目です。
    */
-  getSubmenuTriggerProps(item: MenuItemObject): Omit<MenuSubmenuTriggerProps, "children"> & {
-    children: LikelyVisibleNode | null;
-  };
+  getSubmenuTriggerProps(item: MenuRootSubmenuItem): MenuSubmenuTriggerProps;
 
   /**
    * {@link MenuTrigger} に渡す props を取得します。
@@ -377,7 +388,6 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
     slotProps: {
       item: itemProps = {},
       group: groupProps = {},
-      popup: popupProps = {},
       portal: portalProps = {},
       trigger: triggerProps = {},
       backdrop: backdropProps = {},
@@ -398,8 +408,10 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
     defaultOpen,
     orientation,
     onOpenChange,
+    radioIndicator = <CheckIcon />,
     closeParentOnEsc,
     defaultTriggerId,
+    checkboxIndicator = <CheckIcon />,
     highlightItemOnHover,
     onOpenChangeComplete,
     ...contentProps
@@ -407,10 +419,10 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
 
   return {
     getItemProps(item) {
-      const { type: __, items: _, label, ...otherProps } = item as MenuActionItemObject;
+      const { type: __, items: _, label, ...otherProps } = item as MenuActionItem;
 
       return {
-        ...mergeProps([otherProps, itemProps]),
+        ...mergeProps([itemProps, otherProps]),
         children: toReactNode(label),
       };
     },
@@ -440,23 +452,18 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
     getGroupProps(item) {
       const { type: ___, items: _, label: __, ...otherProps } = item;
 
-      return mergeProps([otherProps, groupProps]);
-    },
-    getPopupProps(item) {
-      const { items = [] } = this.getRootProps();
-      const { children, ...otherProps } = { ...contentProps, ...popupProps };
-
-      return {
-        ...otherProps,
-        children: item
-          ? null
-          : typeof children === "function"
-            ? items.map(children)
-            : toReactNode(children),
-      };
+      return mergeProps([groupProps, otherProps]);
     },
     getPortalProps() {
       return portalProps;
+    },
+    getContentProps() {
+      const { children, ...otherProps } = contentProps;
+
+      return {
+        ...otherProps,
+        children: typeof children === "function" ? children : toReactNode(children),
+      };
     },
     getTriggerProps() {
       if (trigger) {
@@ -475,23 +482,21 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
       const { type: _, label, ...otherProps } = item;
 
       return {
-        ...mergeProps([otherProps, linkItemProps]),
+        ...mergeProps([linkItemProps, otherProps]),
         children: toReactNode(label),
       };
     },
     getRadioItemProps(item) {
-      const { type: _, label, value, ...otherProps } = item;
+      const { label, value, ...otherProps } = item;
 
       return {
-        ...mergeProps([otherProps, radioItemProps]),
+        ...mergeProps([radioItemProps, otherProps]),
         value,
-        children: toReactNode(label),
+        children: label,
       };
     },
-    getSeparatorProps(item) {
-      const { type: _, ...otherProps } = item;
-
-      return mergeProps([otherProps, separatorProps]);
+    getSeparatorProps() {
+      return separatorProps;
     },
     getGroupLabelProps(item) {
       if (!isLikelyVisibleNode(item.label)) {
@@ -504,54 +509,45 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
       };
     },
     getPositionerProps() {
-      const {
-        side = "bottom",
-        align = "start",
-        sideOffset = 8,
-        ...otherPositionerProps
-      } = positionerProps;
-
-      return {
-        ...otherPositionerProps,
-        side,
-        align,
-        sideOffset,
-      };
+      return positionerProps;
     },
     getRadioGroupProps(item) {
-      const { type: __, items: _, ...otherProps } = item;
+      const { type: __, ...otherProps } = item;
 
-      return mergeProps([otherProps, radioGroupProps]);
+      return mergeProps([radioGroupProps, otherProps]);
     },
-    getSubmenuRootProps() {
-      return submenuRootProps;
+    getSubmenuRootProps(item) {
+      const { type: _, label: __, ...otherProps } = item;
+
+      return mergeProps([submenuRootProps, otherProps]);
     },
     getCheckboxItemProps(item) {
       const { type: _, label, ...otherProps } = item;
 
       return {
-        ...mergeProps([otherProps, checkboxItemProps]),
+        ...mergeProps([checkboxItemProps, otherProps]),
         children: toReactNode(label),
       };
     },
     getSubmenuTriggerProps(item) {
-      const { type: __, items: _, label, ...otherProps } = item as MenuActionItemObject;
+      const { label } = item;
 
       return {
-        ...mergeProps([otherProps, submenuTriggerProps]),
-        children: (
-          <>
-            {toReactNode(label)}
-            <ChevronRightIcon />
-          </>
-        ),
+        ...submenuTriggerProps,
+        children: label,
       };
     },
     getRadioItemIndicatorProps() {
-      return radioItemIndicatorProps;
+      return {
+        ...radioItemIndicatorProps,
+        children: radioIndicator,
+      };
     },
     getCheckboxItemIndicatorProps() {
-      return checkboxItemIndicatorProps;
+      return {
+        ...checkboxItemIndicatorProps,
+        children: checkboxIndicator,
+      };
     },
   };
 };
@@ -575,100 +571,92 @@ interface IMenu extends IComponent<MenuProps> {
  */
 export const Menu: IMenu = function SuiMenu(props: MenuProps) {
   const api = useMenuAPI(props);
+
+  const defaultRadioItemRenderer: IMenuContentItemRenderer = (item, index) => {
+    switch (true) {
+      case isRadioItem(item): {
+        const { children: label, ...otherProps } = api.getRadioItemProps(item);
+
+        return (
+          <MenuRadioItem {...otherProps} key={index}>
+            {label}
+            <MenuRadioItemIndicator {...api.getRadioItemIndicatorProps()} />
+          </MenuRadioItem>
+        );
+      }
+
+      default:
+        return item;
+    }
+  };
+  const defaultContentItemRenderer: IMenuContentItemRenderer = (item, index, items) => {
+    switch (true) {
+      case isLabeledItem(item):
+        return <MenuItem {...api.getItemProps(item)} key={index} />;
+
+      case isLinkItem(item):
+        return <MenuLinkItem {...api.getLinkItemProps(item)} key={index} />;
+
+      case isCheckboxItem(item): {
+        const { children: label, ...otherProps } = api.getCheckboxItemProps(item);
+
+        return (
+          <MenuCheckboxItem {...otherProps} key={index}>
+            {label}
+            <MenuCheckboxItemIndicator {...api.getCheckboxItemIndicatorProps()} />
+          </MenuCheckboxItem>
+        );
+      }
+
+      case isRadioItemGroup(item):
+        return (
+          <MenuRadioGroup {...api.getRadioGroupProps(item)} key={index}>
+            {defaultRadioItemRenderer}
+          </MenuRadioGroup>
+        );
+
+      case isSubmenuItem(item): {
+        const { children: content = defaultContentItemRenderer, ...otherContentProps } =
+          api.getContentProps();
+        const { children: submenuTrigger, ...otherSubmenuTriggerProps } =
+          api.getSubmenuTriggerProps(item);
+
+        return (
+          <MenuSubmenuRoot {...api.getSubmenuRootProps(item)} key={index}>
+            <MenuSubmenuTrigger {...otherSubmenuTriggerProps}>
+              {submenuTrigger}
+              <ChevronRightIcon />
+            </MenuSubmenuTrigger>
+            <MenuPortal {...api.getPortalProps()}>
+              <MenuPositioner {...api.getPositionerProps()}>
+                <MenuContent {...otherContentProps}>{content}</MenuContent>
+              </MenuPositioner>
+            </MenuPortal>
+          </MenuSubmenuRoot>
+        );
+      }
+
+      case isItemGroup(item): {
+        const labelProps = api.getGroupLabelProps(item);
+
+        return (
+          <React.Fragment key={index}>
+            <MenuGroup {...api.getGroupProps(item)}>
+              {labelProps && <MenuGroupLabel {...labelProps} />}
+              {item.items.map(defaultContentItemRenderer)}
+            </MenuGroup>
+            {index < items.length - 1 && <MenuSeparator {...api.getSeparatorProps()} />}
+          </React.Fragment>
+        );
+      }
+
+      default:
+        return item;
+    }
+  };
+
   const triggerProps = api.getTriggerProps();
-  const { children, ...otherPopupProps } = api.getPopupProps();
-  const defaultRadioItemRenderer: IMenuPopupItemRenderer = (item, index) => {
-    if (!isRadioItemObject(item)) {
-      return toReactNode(item);
-    }
-
-    const { children: label, ...otherItemProps } = api.getRadioItemProps(
-      item as MenuRadioItemObject,
-    );
-    const { children: indicatorChildren, ...otherIndicatorProps } =
-      api.getRadioItemIndicatorProps();
-
-    return (
-      <MenuRadioItem key={index} {...otherItemProps}>
-        {label}
-        <MenuRadioItemIndicator {...otherIndicatorProps}>
-          {indicatorChildren ?? <CheckIcon />}
-        </MenuRadioItemIndicator>
-      </MenuRadioItem>
-    );
-  };
-  const defaultPopupItemRenderer: IMenuPopupItemRenderer = (item, index, items) => {
-    if (isSeparatorObject(item)) {
-      return <MenuSeparator key={index} {...api.getSeparatorProps(item as MenuSeparatorObject)} />;
-    }
-
-    if (isRadioGroupObject(item)) {
-      return (
-        <MenuRadioGroup key={index} {...api.getRadioGroupProps(item as MenuRadioGroupObject)}>
-          {item.items.map(defaultRadioItemRenderer)}
-        </MenuRadioGroup>
-      );
-    }
-
-    if (isGroupObject(item)) {
-      const groupItem = item as MenuGroupObject;
-      const labelProps = api.getGroupLabelProps(groupItem);
-
-      return (
-        <MenuGroup key={index} {...api.getGroupProps(groupItem)}>
-          {labelProps && <MenuGroupLabel {...labelProps} />}
-          {groupItem.items.map(defaultPopupItemRenderer)}
-        </MenuGroup>
-      );
-    }
-
-    if (!isItemObject(item)) {
-      return toReactNode(item);
-    }
-
-    if (isCheckboxItemObject(item)) {
-      const { children: label, ...otherItemProps } = api.getCheckboxItemProps(
-        item as MenuCheckboxItemObject,
-      );
-      const { children: indicatorChildren, ...otherIndicatorProps } =
-        api.getCheckboxItemIndicatorProps();
-
-      return (
-        <MenuCheckboxItem key={index} {...otherItemProps}>
-          {label}
-          <MenuCheckboxItemIndicator {...otherIndicatorProps}>
-            {indicatorChildren ?? <CheckIcon />}
-          </MenuCheckboxItemIndicator>
-        </MenuCheckboxItem>
-      );
-    }
-
-    if (isRadioItemObject(item)) {
-      return defaultRadioItemRenderer(item, index, items);
-    }
-
-    if (isLinkItemObject(item)) {
-      return <MenuLinkItem key={index} {...api.getLinkItemProps(item as MenuLinkItemObject)} />;
-    }
-
-    const { items: subItems } = item as MenuActionItemObject;
-    if (!subItems) {
-      return <MenuItem key={index} {...api.getItemProps(item as MenuItemObject)} />;
-    }
-
-    return (
-      <MenuSubmenuRoot key={index} {...api.getSubmenuRootProps()}>
-        <MenuSubmenuTrigger {...api.getSubmenuTriggerProps(item as MenuItemObject)} />
-        <MenuPortal {...api.getPortalProps()}>
-          <MenuPositioner {...api.getPositionerProps()}>
-            <MenuPopup {...api.getPopupProps(item as MenuItemObject)}>
-              {subItems.map(defaultPopupItemRenderer)}
-            </MenuPopup>
-          </MenuPositioner>
-        </MenuPortal>
-      </MenuSubmenuRoot>
-    );
-  };
+  const { children = defaultContentItemRenderer, ...otherContentProps } = api.getContentProps();
 
   return (
     <MenuRoot {...api.getRootProps()}>
@@ -676,7 +664,7 @@ export const Menu: IMenu = function SuiMenu(props: MenuProps) {
       <MenuPortal {...api.getPortalProps()}>
         <MenuBackdrop {...api.getBackdropProps()} />
         <MenuPositioner {...api.getPositionerProps()}>
-          <MenuPopup {...otherPopupProps}>{children ?? defaultPopupItemRenderer}</MenuPopup>
+          <MenuContent {...otherContentProps}>{children}</MenuContent>
         </MenuPositioner>
       </MenuPortal>
     </MenuRoot>
@@ -690,7 +678,7 @@ export namespace Menu {
 
   export type SlotProps = MenuSlotProps;
 
-  export type ActionItemObject = MenuActionItemObject;
+  export type ActionItem = MenuActionItem;
 
   export type Actions = MenuActions;
 
@@ -698,25 +686,23 @@ export namespace Menu {
 
   export type ChangeEventReason = MenuChangeEventReason;
 
-  export type CheckboxItemObject = MenuCheckboxItemObject;
+  export type CheckboxItem = MenuCheckboxItem;
 
-  export type GroupObject = MenuGroupObject;
+  export type Item = MenuItem;
 
-  export type ItemObject = MenuItemObject;
+  export type ItemGroup = MenuItemGroup;
 
   export interface IItemRenderer<TItem = any> extends IMenuItemRenderer<TItem> {}
 
-  export type LinkItemObject = MenuLinkItemObject;
+  export type LinkItem = MenuLinkItem;
 
   export type Orientation = MenuOrientation;
 
-  export type RadioGroupObject = MenuRadioGroupObject;
+  export type RadioItem = MenuRadioItem;
 
-  export type RadioItemObject = MenuRadioItemObject;
+  export type RadioItemGroup = MenuRadioItemGroup;
 
   export type Radius = MenuRadius;
-
-  export type SeparatorObject = MenuSeparatorObject;
 
   export type Size = MenuSize;
 

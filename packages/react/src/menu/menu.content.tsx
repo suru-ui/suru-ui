@@ -3,10 +3,18 @@ import * as React from "react";
 
 import { CheckIcon, ChevronRightIcon } from "../_icons.jsx";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
-import toReactNode from "../_to-react-node.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import {
+  isLinkItem,
+  isItemGroup,
+  isRadioItem,
+  isLabeledItem,
+  isSubmenuItem,
+  isCheckboxItem,
+  isRadioItemGroup,
+} from "./_menu.utils.jsx";
 import { MenuCheckboxItemIndicator } from "./menu.checkbox-item-indicator.jsx";
 import { MenuCheckboxItem } from "./menu.checkbox-item.jsx";
 import { useMenuContext } from "./menu.context.js";
@@ -21,13 +29,8 @@ import { MenuRadioItemIndicator } from "./menu.radio-item-indicator.jsx";
 import { MenuRadioItem } from "./menu.radio-item.jsx";
 import type {
   MenuRootItem,
-  MenuRootLinkItem,
-  MenuRootItemGroup,
-  MenuRootRadioItem,
-  MenuRootLabeledItem,
-  MenuRootSubmenuItem,
-  MenuRootCheckboxItem,
-  MenuRootRadioItemGroup,
+  // oxlint-disable-next-line no-unused-vars JSDoc で使用
+  MenuRootProps,
 } from "./menu.root.jsx";
 import { MenuSeparator } from "./menu.separator.jsx";
 import { MenuSubmenuRoot } from "./menu.submenu-root.jsx";
@@ -38,7 +41,7 @@ import { MenuSubmenuTrigger } from "./menu.submenu-trigger.jsx";
  *
  * @template TItem 項目の型です。
  */
-export interface IMenuPopupItemRenderer<TItem = any> {
+export interface IMenuContentItemRenderer<TItem = any> {
   /**
    * 項目をレンダリングします。
    *
@@ -51,27 +54,27 @@ export interface IMenuPopupItemRenderer<TItem = any> {
 }
 
 /**
- * {@link MenuPopup} が持つ状態です。
+ * {@link MenuContent} が持つ状態です。
  */
-export type MenuPopupState = Menu.Popup.State;
+export type MenuContentState = Menu.Popup.State;
 
-export namespace MenuPopupProps {
-  export type Render = RenderProps<MenuPopupState>;
+export namespace MenuContentProps {
+  export type Render = RenderProps<MenuContentState>;
 
-  export type SuruUI = {
+  export type SuruUI<TItem = any> = {
     /**
      * ポップアップの内容、または各項目をレンダリングする関数です。
      *
      * 関数を指定した場合は {@link MenuRootProps.items|items} の各項目が引数として渡されます。
      */
-    children?: React.ReactNode | IMenuPopupItemRenderer;
+    children?: React.ReactNode | IMenuContentItemRenderer<TItem>;
   };
 
   export type BaseUI = Pick<
     React.ComponentProps<typeof Menu.Popup>,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // MenuPopupProps:
+      // MenuContentProps:
       "id" | "finalFocus",
       keyof Render | keyof SuruUI
     >
@@ -84,29 +87,36 @@ export namespace MenuPopupProps {
 }
 
 /**
- * {@link MenuPopup} に渡す props です。
+ * {@link MenuContent} に渡す props です。
  */
-export type MenuPopupProps = MenuPopupProps.Render &
-  MenuPopupProps.SuruUI &
-  MenuPopupProps.BaseUI &
-  MenuPopupProps.HTML;
+export type MenuContentProps<TItem = any> = MenuContentProps.Render &
+  MenuContentProps.SuruUI<TItem> &
+  MenuContentProps.BaseUI &
+  MenuContentProps.HTML;
+
+interface IMenuContent extends IComponent<MenuContentProps> {
+  /**
+   * @template TItem 項目の型です。
+   */
+  <TItem = any>(props: MenuContentProps<TItem>): IComponent.Return;
+}
 
 /**
- * メニュー項目を表示するポップアップ要素です。
+ * メニュー項目を表示するコンテンツ要素です。
  */
-export const MenuPopup: IComponent<MenuPopupProps> = function SuiMenuPopup(props) {
+export const MenuContent: IMenuContent = function SuiMenuContent(props: MenuContentProps) {
   const ctx = useMenuContext();
-  const { children = defaultPopupItemRenderer, className, ...otherProps } = props;
+  const { children = defaultContentItemRenderer, className, ...otherProps } = props;
 
   return (
     <Menu.Popup
       {...otherProps}
       className={cn(
         className,
-        "sui_menu_popup",
+        "sui_menu_content",
         (state) =>
           state.transitionStatus !== undefined &&
-          `sui_menu_popup-transition_status_${state.transitionStatus}`,
+          `sui_menu_content-transition_status_${state.transitionStatus}`,
       )}
     >
       {typeof children === "function" ? ctx.items.map(children) : children}
@@ -114,26 +124,53 @@ export const MenuPopup: IComponent<MenuPopupProps> = function SuiMenuPopup(props
   );
 };
 
-const defaultPopupItemRenderer: IMenuPopupItemRenderer = (item, index, items) => {
+export { MenuContent as Content };
+
+export namespace Content {
+  export type State = MenuContentState;
+
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type Render = MenuContentProps.Render;
+
+    export type SuruUI<TItem = any> = MenuContentProps.SuruUI<TItem>;
+
+    export type BaseUI = MenuContentProps.BaseUI;
+
+    export type HTML = MenuContentProps.HTML;
+  }
+
+  export type Item = MenuRootItem;
+
+  export interface IItemRenderer<TItem = any> extends IMenuContentItemRenderer<TItem> {}
+}
+
+const defaultContentItemRenderer: IMenuContentItemRenderer = (item, index, items) => {
   switch (true) {
     case isLabeledItem(item): {
       const { type: _, label, ...props } = item;
+
       return (
         <MenuItem {...props} key={index}>
           {label}
         </MenuItem>
       );
     }
+
     case isLinkItem(item): {
       const { type: _, label, ...props } = item;
+
       return (
         <MenuLinkItem {...props} key={index}>
           {label}
         </MenuLinkItem>
       );
     }
+
     case isCheckboxItem(item): {
       const { type: _, label, ...props } = item;
+
       return (
         <MenuCheckboxItem {...props} key={index}>
           {label}
@@ -143,116 +180,46 @@ const defaultPopupItemRenderer: IMenuPopupItemRenderer = (item, index, items) =>
         </MenuCheckboxItem>
       );
     }
-    case isRadioItem(item): {
-      const { type: _, label, ...props } = item;
-      return (
-        <MenuRadioItem {...props} key={index}>
-          {label}
-          <MenuRadioItemIndicator>
-            <CheckIcon />
-          </MenuRadioItemIndicator>
-        </MenuRadioItem>
-      );
-    }
+
     case isRadioItemGroup(item): {
       const { type: _, items: groupItems, ...props } = item;
-      return (
-        <React.Fragment key={index}>
-          <MenuRadioGroup {...props} key={index}>
-            {groupItems.map(defaultPopupItemRenderer)}
-          </MenuRadioGroup>
-          {index < items.length - 1 && <MenuSeparator />}
-        </React.Fragment>
-      );
+
+      return <MenuRadioGroup {...props} key={index} items={groupItems} />;
     }
+
     case isSubmenuItem(item): {
       const { type: _, items, label, ...props } = item;
+
       return (
-        <MenuSubmenuRoot {...props} key={index}>
+        <MenuSubmenuRoot {...props} key={index} items={items}>
           <MenuSubmenuTrigger>
             {label}
             <ChevronRightIcon />
           </MenuSubmenuTrigger>
           <MenuPortal>
             <MenuPositioner>
-              <MenuPopup>{items.map(defaultPopupItemRenderer)}</MenuPopup>
+              <MenuContent>{defaultContentItemRenderer}</MenuContent>
             </MenuPositioner>
           </MenuPortal>
         </MenuSubmenuRoot>
       );
     }
+
     case isItemGroup(item): {
-      const { type: _, items, label, ...props } = item;
+      const { type: _, items: groupItems, label, ...props } = item;
+
       return (
-        <MenuGroup {...props} key={index}>
-          {isLikelyVisibleNode(label) && <MenuGroupLabel>{label}</MenuGroupLabel>}
-          {items.map(defaultPopupItemRenderer)}
-        </MenuGroup>
+        <React.Fragment key={index}>
+          <MenuGroup {...props} key={index}>
+            {isLikelyVisibleNode(label) && <MenuGroupLabel>{label}</MenuGroupLabel>}
+            {groupItems.map(defaultContentItemRenderer)}
+          </MenuGroup>
+          {index < items.length - 1 && <MenuSeparator />}
+        </React.Fragment>
       );
     }
+
     default:
-      return toReactNode(item);
+      return item;
   }
 };
-
-export function isLabeledItem(item: unknown): item is MenuRootLabeledItem {
-  return (
-    typeof item === "object" &&
-    item !== null &&
-    "label" in item &&
-    !("type" in item) &&
-    !("items" in item)
-  );
-}
-
-export function isLinkItem(item: unknown): item is MenuRootLinkItem {
-  return typeof item === "object" && item !== null && "type" in item && item.type === "link";
-}
-
-export function isCheckboxItem(item: unknown): item is MenuRootCheckboxItem {
-  return typeof item === "object" && item !== null && "type" in item && item.type === "checkbox";
-}
-
-export function isRadioItem(item: unknown): item is MenuRootRadioItem {
-  return typeof item === "object" && item !== null && "type" in item && item.type === "radio";
-}
-
-export function isRadioItemGroup(item: unknown): item is MenuRootRadioItemGroup {
-  return typeof item === "object" && item !== null && "type" in item && item.type === "radio-group";
-}
-
-export function isSubmenuItem(item: unknown): item is MenuRootSubmenuItem {
-  return (
-    typeof item === "object" &&
-    item !== null &&
-    "label" in item &&
-    !("type" in item) &&
-    "items" in item
-  );
-}
-
-export function isItemGroup(item: unknown): item is MenuRootItemGroup {
-  return typeof item === "object" && item !== null && "type" in item && item.type === "group";
-}
-
-export { MenuPopup as Popup };
-
-export namespace Popup {
-  export type State = MenuPopupState;
-
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
-
-  export namespace Props {
-    export type Render = MenuPopupProps.Render;
-
-    export type SuruUI = MenuPopupProps.SuruUI;
-
-    export type BaseUI = MenuPopupProps.BaseUI;
-
-    export type HTML = MenuPopupProps.HTML;
-  }
-
-  export type Item = MenuRootItem;
-
-  export interface IItemRenderer<TItem = any> extends IMenuPopupItemRenderer<TItem> {}
-}

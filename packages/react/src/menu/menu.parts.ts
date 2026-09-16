@@ -7,7 +7,7 @@ export * from "./menu.trigger.jsx";
 export * from "./menu.portal.jsx";
 export * from "./menu.backdrop.jsx";
 export * from "./menu.positioner.jsx";
-export * from "./menu.popup.jsx";
+export * from "./menu.content.jsx";
 export * from "./menu.arrow.jsx";
 export * from "./menu.viewport.jsx";
 export * from "./menu.item.jsx";

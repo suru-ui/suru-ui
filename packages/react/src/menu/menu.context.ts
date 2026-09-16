@@ -40,6 +40,11 @@ type MenuContextVariant = Button.Root.Variant;
  */
 export type MenuContext<TItem = any> = {
   /**
+   * メニューの現在の深さです。
+   */
+  readonly depth: number;
+
+  /**
    * メニューの項目です。
    */
   readonly items: readonly TItem[];
