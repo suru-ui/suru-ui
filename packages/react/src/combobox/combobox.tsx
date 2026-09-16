@@ -397,7 +397,7 @@ export interface ComboboxAPI<
    * {@link ComboboxList} に渡すプロパティーを取得します。
    */
   getListProps(): Omit<ComboboxListProps, "children"> & {
-    children: LikelyVisibleNode | Extract<ComboboxListProps["children"], Function> | null;
+    children: LikelyVisibleNode | Extract<ComboboxListProps["children"], Function> | undefined;
   };
 
   /**

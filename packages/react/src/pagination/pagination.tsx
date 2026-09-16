@@ -147,7 +147,7 @@ export interface PaginationAPI {
    * @param page 項目のページ番号です。
    */
   getItemProps(page: number): Omit<PaginationItemProps, "children"> & {
-    children: LikelyVisibleNode | null;
+    children: LikelyVisibleNode | undefined;
   };
 
   /**

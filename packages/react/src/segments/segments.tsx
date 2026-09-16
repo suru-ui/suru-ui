@@ -129,7 +129,7 @@ export interface SegmentsAPI<TItem = any> {
    * {@link SegmentsList} に渡す props を取得します。
    */
   getListProps(): Omit<SegmentsListProps, "children"> & {
-    children: LikelyVisibleNode | null;
+    children: LikelyVisibleNode | undefined;
   };
 
   /**

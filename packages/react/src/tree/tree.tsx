@@ -123,7 +123,7 @@ export interface TreeAPI {
    * 関数を指定した場合はそのまま渡し、{@link TreeRoot} が表示中のノードへ適用します。
    */
   getRootProps(): Omit<TreeRootProps, "children"> & {
-    children: LikelyVisibleNode | ITreeRootItemRenderer | null;
+    children: LikelyVisibleNode | ITreeRootItemRenderer | undefined;
   };
 }
 

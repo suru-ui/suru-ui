@@ -115,7 +115,7 @@ export interface BreadcrumbAPI {
    * {@link BreadcrumbList} に渡す props を取得します。
    */
   getListProps(): Omit<BreadcrumbListProps, "children"> & {
-    children: LikelyVisibleNode | null;
+    children: LikelyVisibleNode | undefined;
   };
 
   /**

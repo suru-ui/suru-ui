@@ -253,7 +253,7 @@ export interface ContextMenuAPI {
     ContextMenuCheckboxItemProps,
     "children"
   > & {
-    children: LikelyVisibleNode | null;
+    children: LikelyVisibleNode | undefined;
   };
 
   /**
@@ -262,7 +262,7 @@ export interface ContextMenuAPI {
    * @param item 項目です。
    */
   getContentProps(item?: ContextMenuItemObject): Omit<ContextMenuContentProps, "children"> & {
-    children: LikelyVisibleNode | null;
+    children: LikelyVisibleNode | undefined;
   };
 
   /**
@@ -285,7 +285,7 @@ export interface ContextMenuAPI {
    * @param item 項目です。
    */
   getItemProps(item: ContextMenuItemObject): Omit<ContextMenuItemProps, "children"> & {
-    children: LikelyVisibleNode | null;
+    children: LikelyVisibleNode | undefined;
   };
 
   /**
@@ -294,7 +294,7 @@ export interface ContextMenuAPI {
    * @param item 項目です。
    */
   getLinkItemProps(item: ContextMenuLinkItemObject): Omit<ContextMenuLinkItemProps, "children"> & {
-    children: LikelyVisibleNode | null;
+    children: LikelyVisibleNode | undefined;
   };
 
   /**
@@ -330,7 +330,7 @@ export interface ContextMenuAPI {
     ContextMenuRadioItemProps,
     "children"
   > & {
-    children: LikelyVisibleNode | null;
+    children: LikelyVisibleNode | undefined;
   };
 
   /**
@@ -359,7 +359,7 @@ export interface ContextMenuAPI {
     ContextMenuSubmenuTriggerProps,
     "children"
   > & {
-    children: LikelyVisibleNode | null;
+    children: LikelyVisibleNode | undefined;
   };
 
   /**
@@ -464,7 +464,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
       return {
         ...otherContentProps,
         children: item
-          ? null
+          ? undefined
           : typeof children === "function"
             ? items.map(children)
             : toReactNode(children),

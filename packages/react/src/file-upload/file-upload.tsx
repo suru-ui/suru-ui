@@ -117,7 +117,7 @@ export interface FileUploadAPI {
    * {@link FileUploadDropzone} に渡す props を取得します。
    */
   getDropzoneProps(): Omit<FileUploadDropzoneProps, "children"> & {
-    children: LikelyVisibleNode | null;
+    children: LikelyVisibleNode | undefined;
   };
 
   /**

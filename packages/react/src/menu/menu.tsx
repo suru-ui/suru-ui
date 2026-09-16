@@ -80,25 +80,7 @@ export type MenuChangeEventDetails = MenuRootChangeEventDetails;
 
 export type MenuChangeEventReason = MenuRootChangeEventReason;
 
-export type MenuCheckboxItem = MenuRootCheckboxItem;
-
-export type MenuGroupedItem = MenuRootGroupedItem;
-
-export type MenuItem = MenuRootItem;
-
-export type MenuItemGroup = MenuRootItemGroup;
-
-export type MenuLabeledItem = MenuRootLabeledItem;
-
-export type MenuLinkItem = MenuRootLinkItem;
-
 export type MenuOrientation = MenuRootOrientation;
-
-export type MenuRadioItem = MenuRootRadioItem;
-
-export type MenuRadioItemGroup = MenuRootRadioItemGroup;
-
-export type MenuSubmenuItem = MenuRootSubmenuItem;
 
 export interface IMenuItemRenderer<TItem = any> extends IMenuContentItemRenderer<TItem> {}
 
@@ -251,7 +233,7 @@ export interface MenuAPI<TItem = any> {
    *
    * @param item 項目です。
    */
-  getCheckboxItemProps(item?: MenuCheckboxItem): MenuCheckboxItemProps;
+  getCheckboxItemProps(item?: MenuRootCheckboxItem): MenuCheckboxItemProps;
 
   /**
    * {@link MenuContent} に渡す props を取得します。
@@ -268,28 +250,28 @@ export interface MenuAPI<TItem = any> {
    *
    * @param item 項目です。
    */
-  getGroupLabelProps(item?: MenuItemGroup): MenuGroupLabelProps | null;
+  getGroupLabelProps(item?: MenuRootItemGroup): MenuGroupLabelProps | null;
 
   /**
    * {@link MenuGroup} に渡す props を取得します。
    *
    * @param item 項目です。
    */
-  getGroupProps(item?: MenuItemGroup): Omit<MenuGroupProps, "children">;
+  getGroupProps(item?: MenuRootItemGroup): Omit<MenuGroupProps, "children">;
 
   /**
    * {@link MenuItem} に渡す props を取得します。
    *
    * @param item 項目です。
    */
-  getItemProps(item?: MenuLabeledItem): MenuItemProps;
+  getItemProps(item?: MenuRootLabeledItem): MenuItemProps;
 
   /**
    * {@link MenuLinkItem} に渡す props を取得します。
    *
    * @param item 項目です。
    */
-  getLinkItemProps(item?: MenuLinkItem): MenuLinkItemProps;
+  getLinkItemProps(item?: MenuRootLinkItem): MenuLinkItemProps;
 
   /**
    * {@link MenuPortal} に渡す props を取得します。
@@ -309,8 +291,8 @@ export interface MenuAPI<TItem = any> {
    */
   getRadioGroupProps<TItem = any>(): Omit<MenuRadioGroupProps<TItem>, "children" | "value">;
   getRadioGroupProps(
-    item: MenuRadioItemGroup,
-  ): Omit<MenuRadioGroupProps<MenuRadioItem>, "children">;
+    item: MenuRootRadioItemGroup,
+  ): Omit<MenuRadioGroupProps<MenuRootRadioItem>, "children">;
 
   /**
    * {@link MenuRadioItemIndicator} に渡す props を取得します。
@@ -323,9 +305,9 @@ export interface MenuAPI<TItem = any> {
    * @param item 項目です。
    */
   getRadioItemProps(): Omit<MenuRadioItemProps, "children" | "value">;
-  getRadioItemProps(item: MenuRadioItem): MenuRadioItemProps;
+  getRadioItemProps(item: MenuRootRadioItem): MenuRadioItemProps;
   getRadioItemProps(
-    item?: MenuRadioItem,
+    item?: MenuRootRadioItem,
   ): Omit<MenuRadioItemProps, "children" | "value"> | MenuRadioItemProps;
 
   /**
@@ -502,7 +484,7 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
         children: label,
       };
     },
-    getRadioItemProps(item?: MenuRadioItem): any {
+    getRadioItemProps(item?: MenuRootRadioItem): any {
       return ((): ReturnType<MenuAPI["getRadioItemProps"]> => {
         if (!item) {
           return radioItemProps;
@@ -538,7 +520,7 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
     getPositionerProps() {
       return positionerProps;
     },
-    getRadioGroupProps(item?: MenuRadioItemGroup) {
+    getRadioGroupProps(item?: MenuRootRadioItemGroup) {
       if (!item) {
         return radioGroupProps;
       }
@@ -725,31 +707,31 @@ export namespace Menu {
 
   export type ChangeEventReason = MenuChangeEventReason;
 
-  export type CheckboxItem = MenuCheckboxItem;
+  export type CheckboxItem = MenuRootCheckboxItem;
 
-  export type GroupedItem = MenuGroupedItem;
+  export type GroupedItem = MenuRootGroupedItem;
 
-  export type Item = MenuItem;
+  export type Item = MenuRootItem;
 
-  export type ItemGroup = MenuItemGroup;
+  export type ItemGroup = MenuRootItemGroup;
 
   export interface IItemRenderer<TItem = any> extends IMenuItemRenderer<TItem> {}
 
-  export type LabeledItem = MenuLabeledItem;
+  export type LabeledItem = MenuRootLabeledItem;
 
-  export type LinkItem = MenuLinkItem;
+  export type LinkItem = MenuRootLinkItem;
 
   export type Orientation = MenuOrientation;
 
-  export type RadioItem = MenuRadioItem;
+  export type RadioItem = MenuRootRadioItem;
 
-  export type RadioItemGroup = MenuRadioItemGroup;
+  export type RadioItemGroup = MenuRootRadioItemGroup;
 
   export type Radius = MenuRadius;
 
   export type Size = MenuSize;
 
-  export type SubmenuItem = MenuSubmenuItem;
+  export type SubmenuItem = MenuRootSubmenuItem;
 
   export type Variant = MenuVariant;
 }

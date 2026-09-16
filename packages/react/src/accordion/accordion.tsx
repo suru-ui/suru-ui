@@ -132,7 +132,7 @@ export interface AccordionAPI<TItem = any> {
    * {@link AccordionRoot} に渡す props を取得します。
    */
   getRootProps(): Omit<AccordionRootProps, "children"> & {
-    children: LikelyVisibleNode | null;
+    children: LikelyVisibleNode | undefined;
   };
 
   /**
