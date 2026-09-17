@@ -151,7 +151,7 @@ export const useProgressAPI: IUseProgressAPI = function useSuiProgressAPI(props)
 
   return {
     getRootProps() {
-      return { value, ...otherRootProps };
+      return { ...otherRootProps, value };
     },
     getLabelProps() {
       if (isLikelyVisibleNode(label)) {

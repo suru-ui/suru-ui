@@ -104,6 +104,8 @@ export { type FormatNumberAPI as API, useFormatNumberAPI as useAPI };
 
 /**
  * 数値をロケールに従って書式化して表示するコンポーネントです。
+ *
+ * テキストノードとして描画されるため、見た目の調整は親要素で行います。
  */
 export const FormatNumber: IComponent<FormatNumberProps> = function SuiFormatNumber(props) {
   const api = useFormatNumberAPI(props);

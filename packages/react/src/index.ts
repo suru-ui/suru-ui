@@ -208,6 +208,8 @@ export {
   type CollapsibleProps,
   type CollapsibleState,
   type CollapsibleSlotProps,
+  type CollapsibleChangeEventReason,
+  type CollapsibleChangeEventDetails,
   Collapsible,
   useCollapsibleAPI,
 } from "./collapsible/index.js";
@@ -308,7 +310,21 @@ export {
   type FormatNumberAPI,
   type FormatNumberProps,
   type FormatNumberState,
+  type FormatNumberStyle,
   type FormatNumberValue,
+  type FormatNumberLocale,
+  type FormatNumberNotation,
+  type FormatNumberSignDisplay,
+  type FormatNumberUnitDisplay,
+  type FormatNumberUseGrouping,
+  type FormatNumberCurrencySign,
+  type FormatNumberRoundingMode,
+  type FormatNumberLocaleMatcher,
+  type FormatNumberCompactDisplay,
+  type FormatNumberCurrencyDisplay,
+  type FormatNumberRoundingPriority,
+  type FormatNumberRoundingIncrement,
+  type FormatNumberTrailingZeroDisplay,
   FormatNumber,
   useFormatNumberAPI,
 } from "./format-number/index.js";
@@ -582,12 +598,16 @@ export {
   useSelectContext,
 } from "./select/index.js";
 export {
+  type SidebarAPI,
   type SidebarSide,
   type SidebarProps,
   type SidebarState,
   type SidebarVariant,
+  type SidebarOpenState,
+  type SidebarSlotProps,
   type SidebarCollapsible,
   Sidebar,
+  useSidebarAPI,
   SidebarContext,
   useSidebarContext,
 } from "./sidebar/index.js";
@@ -609,6 +629,10 @@ export {
   type SliderRadius,
   type SliderVariant,
   type SliderSlotProps,
+  type SliderChangeEventReason,
+  type SliderCommitEventReason,
+  type SliderChangeEventDetails,
+  type SliderCommitEventDetails,
   Slider,
   useSliderAPI,
 } from "./slider/index.js";
@@ -617,6 +641,7 @@ export {
   type StatSize,
   type StatProps,
   type StatState,
+  type StatDirection,
   type StatSlotProps,
   Stat,
   useStatAPI,
@@ -630,6 +655,7 @@ export {
   type StatusProps,
   type StatusState,
   type StatusSlotProps,
+  type StatusRippleSize,
   Status,
   useStatusAPI,
 } from "./status/index.js";
@@ -659,7 +685,6 @@ export {
   type TabsItemObject,
   type TabsActiveVariant,
   Tabs,
-  useTabs,
   useTabsAPI,
 } from "./tabs/index.js";
 export {

@@ -90,96 +90,96 @@ export type AutocompleteVariant = AutocompleteRootVariant;
 export type AutocompleteGroupItem<TItem = any> = ItemGroup<TItem>;
 
 /**
- * {@link Autocomplete} の各パーツに渡すプロパティーです。
+ * {@link Autocomplete} の各パーツに渡す props です。
  */
 export type AutocompleteSlotProps = {
   /**
-   * {@link AutocompleteAddon} に渡すプロパティーです。
+   * {@link AutocompleteAddon} に渡す props です。
    */
   readonly addon?: AutocompleteAddonProps | undefined;
 
   /**
-   * {@link AutocompleteClear} に渡すプロパティーです。
+   * {@link AutocompleteClear} に渡す props です。
    */
   readonly clear?: AutocompleteClearProps | undefined;
 
   /**
-   * {@link AutocompleteCollection} に渡すプロパティーです。
+   * {@link AutocompleteCollection} に渡す props です。
    */
   readonly collection?: Omit<AutocompleteCollectionProps, "children"> | undefined;
 
   /**
-   * {@link ScrollAreaContent} に渡すプロパティーです。
+   * {@link ScrollAreaContent} に渡す props です。
    */
   readonly content?: Omit<ScrollAreaContentProps, "children"> | undefined;
 
   /**
-   * {@link ScrollAreaCorner} に渡すプロパティーです。
+   * {@link ScrollAreaCorner} に渡す props です。
    */
   readonly corner?: ScrollAreaCornerProps | undefined;
 
   /**
-   * {@link AutocompleteEmpty} に渡すプロパティーです。
+   * {@link AutocompleteEmpty} に渡す props です。
    */
   readonly empty?: Omit<AutocompleteEmptyProps, "children"> | undefined;
 
   /**
-   * {@link AutocompleteGroup} に渡すプロパティーです。
+   * {@link AutocompleteGroup} に渡す props です。
    */
   readonly group?: Omit<AutocompleteGroupProps, "children" | "items"> | undefined;
 
   /**
-   * {@link AutocompleteInput} に渡すプロパティーです。
+   * {@link AutocompleteInput} に渡す props です。
    */
   readonly input?: Omit<AutocompleteInputProps, "placeholder"> | undefined;
 
   /**
-   * {@link AutocompleteInputGroup} に渡すプロパティーです。
+   * {@link AutocompleteInputGroup} に渡す props です。
    */
   readonly inputGroup?: Omit<AutocompleteInputGroupProps, "children"> | undefined;
 
   /**
-   * {@link AutocompleteItem} に渡すプロパティーです。
+   * {@link AutocompleteItem} に渡す props です。
    */
   readonly item?: Omit<AutocompleteItemProps, "children" | "value"> | undefined;
 
   /**
-   * {@link AutocompleteList} に渡すプロパティーです。
+   * {@link AutocompleteList} に渡す props です。
    */
   readonly list?: Omit<AutocompleteListProps, "children"> | undefined;
 
   /**
-   * {@link AutocompletePopup} に渡すプロパティーです。
+   * {@link AutocompletePopup} に渡す props です。
    */
   readonly popup?: Omit<AutocompletePopupProps, "children"> | undefined;
 
   /**
-   * {@link AutocompletePortal} に渡すプロパティーです。
+   * {@link AutocompletePortal} に渡す props です。
    */
   readonly portal?: Omit<AutocompletePortalProps, "children"> | undefined;
 
   /**
-   * {@link AutocompletePositioner} に渡すプロパティーです。
+   * {@link AutocompletePositioner} に渡す props です。
    */
   readonly positioner?: Omit<AutocompletePositionerProps, "children"> | undefined;
 
   /**
-   * {@link ScrollAreaRoot} に渡すプロパティーです。
+   * {@link ScrollAreaRoot} に渡す props です。
    */
   readonly scrollArea?: Omit<ScrollAreaRootProps, "children"> | undefined;
 
   /**
-   * {@link ScrollAreaScrollbar} に渡すプロパティーです。
+   * {@link ScrollAreaScrollbar} に渡す props です。
    */
   readonly scrollbar?: Omit<ScrollAreaScrollbarProps, "children"> | undefined;
 
   /**
-   * {@link ScrollAreaThumb} に渡すプロパティーです。
+   * {@link ScrollAreaThumb} に渡す props です。
    */
   readonly thumb?: ScrollAreaThumbProps | undefined;
 
   /**
-   * {@link ScrollAreaViewport} に渡すプロパティーです。
+   * {@link ScrollAreaViewport} に渡す props です。
    */
   readonly viewport?: Omit<ScrollAreaViewportProps, "children"> | undefined;
 };
@@ -190,7 +190,7 @@ export type AutocompleteSlotProps = {
 export type AutocompleteState = AutocompleteRootState;
 
 /**
- * {@link Autocomplete} に渡すプロパティーです。
+ * {@link Autocomplete} に渡す props です。
  *
  * @template TItem 項目の値の型です。
  */
@@ -217,9 +217,9 @@ export type AutocompleteProps<TItem = any> = Omit<AutocompleteRootProps<TItem>, 
     placeholder?: string | undefined;
 
     /**
-     * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+     * 各パーツに個別の props を渡すためのオブジェクトです。
      *
-     * 各パーツのプロパティーが優先されます。
+     * 各パーツの props が優先されます。
      */
     slotProps?: AutocompleteSlotProps | undefined;
 
@@ -233,43 +233,43 @@ export type AutocompleteProps<TItem = any> = Omit<AutocompleteRootProps<TItem>, 
 // ---
 
 /**
- * {@link Autocomplete} を構成する各パーツのプロパティーを作成するための API です。
+ * {@link Autocomplete} を構成する各パーツの props を作成するための API です。
  *
  * @template TItem 項目の値の型です。
  */
 export interface AutocompleteAPI<TItem = any> {
   /**
-   * 入力欄の末尾に表示する {@link AutocompleteAddon} に渡すプロパティーを取得します。
+   * 入力欄の末尾に表示する {@link AutocompleteAddon} に渡す props を取得します。
    */
   getChevronAddonProps(): AutocompleteAddonProps;
 
   /**
-   * {@link AutocompleteClear} を包む {@link AutocompleteAddon} に渡すプロパティーを取得します。
+   * {@link AutocompleteClear} を包む {@link AutocompleteAddon} に渡す props を取得します。
    */
   getClearAddonProps(): AutocompleteAddonProps;
 
   /**
-   * {@link AutocompleteClear} に渡すプロパティーを取得します。
+   * {@link AutocompleteClear} に渡す props を取得します。
    */
   getClearProps(): AutocompleteClearProps;
 
   /**
-   * {@link AutocompleteCollection} に渡すプロパティーを取得します。
+   * {@link AutocompleteCollection} に渡す props を取得します。
    */
   getCollectionProps(): Omit<AutocompleteCollectionProps, "children">;
 
   /**
-   * {@link ScrollAreaContent} に渡すプロパティーを取得します。
+   * {@link ScrollAreaContent} に渡す props を取得します。
    */
   getContentProps(): Omit<ScrollAreaContentProps, "children">;
 
   /**
-   * {@link ScrollAreaCorner} に渡すプロパティーを取得します。
+   * {@link ScrollAreaCorner} に渡す props を取得します。
    */
   getCornerProps(): ScrollAreaCornerProps;
 
   /**
-   * {@link AutocompleteEmpty} に渡すプロパティーを取得します。
+   * {@link AutocompleteEmpty} に渡す props を取得します。
    */
   getEmptyProps(): AutocompleteEmptyProps | null;
 
@@ -279,7 +279,7 @@ export interface AutocompleteAPI<TItem = any> {
   getEndAddonsPropsList(): readonly AutocompleteAddonProps[];
 
   /**
-   * {@link AutocompleteGroup} に渡すプロパティーを取得します。
+   * {@link AutocompleteGroup} に渡す props を取得します。
    *
    * @param item グループの項目です。
    * @param index 項目のインデックスです。
@@ -287,7 +287,7 @@ export interface AutocompleteAPI<TItem = any> {
   getGroupProps(item: AutocompleteGroupItem<TItem>, index: number): AutocompleteGroupProps;
 
   /**
-   * グループ内の {@link AutocompleteItem} に渡すプロパティーを取得します。
+   * グループ内の {@link AutocompleteItem} に渡す props を取得します。
    *
    * @param item 項目の値です。
    * @param index 項目のインデックスです。
@@ -295,17 +295,17 @@ export interface AutocompleteAPI<TItem = any> {
   getGroupedItemProps(item: TItem, index: number): AutocompleteItemProps;
 
   /**
-   * {@link AutocompleteInputGroup} に渡すプロパティーを取得します。
+   * {@link AutocompleteInputGroup} に渡す props を取得します。
    */
   getInputGroupProps(): Omit<AutocompleteInputGroupProps, "children">;
 
   /**
-   * {@link AutocompleteInput} に渡すプロパティーを取得します。
+   * {@link AutocompleteInput} に渡す props を取得します。
    */
   getInputProps(): AutocompleteInputProps;
 
   /**
-   * {@link AutocompleteItem} に渡すプロパティーを取得します。
+   * {@link AutocompleteItem} に渡す props を取得します。
    *
    * @param item 項目の値です。
    * @param index 項目のインデックスです。
@@ -313,37 +313,37 @@ export interface AutocompleteAPI<TItem = any> {
   getItemProps(item: TItem, index: number): AutocompleteItemProps;
 
   /**
-   * {@link AutocompleteList} に渡すプロパティーを取得します。
+   * {@link AutocompleteList} に渡す props を取得します。
    */
   getListProps(): AutocompleteListProps;
 
   /**
-   * {@link AutocompletePopup} に渡すプロパティーを取得します。
+   * {@link AutocompletePopup} に渡す props を取得します。
    */
   getPopupProps(): Omit<AutocompletePopupProps, "children">;
 
   /**
-   * {@link AutocompletePortal} に渡すプロパティーを取得します。
+   * {@link AutocompletePortal} に渡す props を取得します。
    */
   getPortalProps(): Omit<AutocompletePortalProps, "children">;
 
   /**
-   * {@link AutocompletePositioner} に渡すプロパティーを取得します。
+   * {@link AutocompletePositioner} に渡す props を取得します。
    */
   getPositionerProps(): Omit<AutocompletePositionerProps, "children">;
 
   /**
-   * {@link AutocompleteRoot} に渡すプロパティーを取得します。
+   * {@link AutocompleteRoot} に渡す props を取得します。
    */
   getRootProps(): Omit<AutocompleteRootProps<TItem>, "children">;
 
   /**
-   * {@link ScrollAreaRoot} に渡すプロパティーを取得します。
+   * {@link ScrollAreaRoot} に渡す props を取得します。
    */
   getScrollAreaProps(): Omit<ScrollAreaRootProps, "children">;
 
   /**
-   * {@link ScrollAreaScrollbar} に渡すプロパティーを取得します。
+   * {@link ScrollAreaScrollbar} に渡す props を取得します。
    */
   getScrollbarProps(): Omit<ScrollAreaScrollbarProps, "children">;
 
@@ -353,12 +353,12 @@ export interface AutocompleteAPI<TItem = any> {
   getStartAddonsPropsList(): readonly AutocompleteAddonProps[];
 
   /**
-   * {@link ScrollAreaThumb} に渡すプロパティーを取得します。
+   * {@link ScrollAreaThumb} に渡す props を取得します。
    */
   getThumbProps(): ScrollAreaThumbProps;
 
   /**
-   * {@link ScrollAreaViewport} に渡すプロパティーを取得します。
+   * {@link ScrollAreaViewport} に渡す props を取得します。
    */
   getViewportProps(): Omit<ScrollAreaViewportProps, "children">;
 }
@@ -368,7 +368,7 @@ interface IUseAutocompleteAPI {
    * {@link AutocompleteAPI} を作成します。
    *
    * @template TItem 項目の値の型です。
-   * @param props {@link Autocomplete} のプロパティーです。
+   * @param props {@link Autocomplete} の props です。
    * @returns オートコンプリートの API です
    */
   <TItem = any>(props: AutocompleteProps<TItem>): AutocompleteAPI<TItem>;
@@ -610,8 +610,10 @@ export const Autocomplete: IAutocomplete = /*#__PURE__*/ Object.assign(
                                 <AutocompleteGroupLabel>{item.label}</AutocompleteGroupLabel>
                               )}
                               <AutocompleteCollection {...api.getCollectionProps()}>
-                                {(item, index) => (
-                                  <AutocompleteItem {...api.getGroupedItemProps(item, index)} />
+                                {(groupItem, groupIndex) => (
+                                  <AutocompleteItem
+                                    {...api.getGroupedItemProps(groupItem, groupIndex)}
+                                  />
                                 )}
                               </AutocompleteCollection>
                             </AutocompleteGroup>

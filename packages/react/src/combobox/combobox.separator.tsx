@@ -52,9 +52,6 @@ export const ComboboxSeparator: IComponent<ComboboxSeparatorProps> = function Su
 
 export { ComboboxSeparator as Separator };
 
-/**
- * {@link ComboboxSeparator} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Separator {
   export type State = ComboboxSeparatorState;
 

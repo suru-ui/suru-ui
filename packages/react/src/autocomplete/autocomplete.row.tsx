@@ -32,7 +32,7 @@ export namespace AutocompleteRowProps {
 }
 
 /**
- * {@link AutocompleteRow} に渡すプロパティーです。
+ * {@link AutocompleteRow} に渡す props です。
  */
 export type AutocompleteRowProps = AutocompleteRowProps.Render &
   AutocompleteRowProps.SuruUI &

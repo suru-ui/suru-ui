@@ -60,9 +60,9 @@
   line-height: var(--sui_chip-line_height);
   color: var(--_sui_chip-color, var(--sui_chip-color-idle));
   letter-spacing: var(--sui_chip-letter_spacing);
-  outline-width: var(--_sui_chip-focusring_width, 0px);
-  outline-color: var(--_sui_chip-focusring_color, transparent);
-  outline-offset: var(--_sui_chip-focusring_offset, 0px);
+  outline-width: var(--_sui_chip-outline_width, 0px);
+  outline-color: var(--_sui_chip-outline_color, transparent);
+  outline-offset: var(--_sui_chip-outline_offset, 0px);
   background-color: var(--_sui_chip-background_color, var(--sui_chip-background_color-idle));
   border-color: var(--_sui_chip-border_color, transparent);
   border-width: var(--_sui_chip-border_width, 0px);
@@ -460,6 +460,10 @@
 }
 
 /* 変異 */
+/**
+ * Chip がボタンとしてレンダリングされた場合、ホバーなどで色が変わるようにします。
+ * ただし、Chip 内に削除ボタンなどのインタラクティブな要素がある場合は、Chip の色を変更しません。
+ */
 :scope {
   &:enabled {
     @media (any-hover: hover) {
@@ -475,9 +479,9 @@
     }
 
     &:focus-visible {
-      --_sui_chip-focusring_width: var(--sui_chip-focusring_width);
-      --_sui_chip-focusring_color: var(--sui_chip-focusring_color);
-      --_sui_chip-focusring_offset: var(--sui_chip-focusring_offset);
+      --_sui_chip-outline_width: var(--sui_chip-focusring_width);
+      --_sui_chip-outline_color: var(--sui_chip-focusring_color);
+      --_sui_chip-outline_offset: var(--sui_chip-focusring_offset);
     }
   }
 

@@ -50,9 +50,6 @@ export const ComboboxPopup: IComponent<ComboboxPopupProps> = function SuiCombobo
 
 export { ComboboxPopup as Popup };
 
-/**
- * {@link ComboboxPopup} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Popup {
   export type State = ComboboxPopupState;
 

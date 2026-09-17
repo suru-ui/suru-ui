@@ -56,9 +56,6 @@ export const ComboboxItemIndicator: IComponent<ComboboxItemIndicatorProps> =
 
 export { ComboboxItemIndicator as ItemIndicator };
 
-/**
- * {@link ComboboxItemIndicator} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace ItemIndicator {
   export type State = ComboboxItemIndicatorState;
 

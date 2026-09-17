@@ -54,9 +54,6 @@ export const ComboboxClear: IComponent<ComboboxClearProps> = function SuiCombobo
 
 export { ComboboxClear as Clear };
 
-/**
- * {@link ComboboxClear} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Clear {
   export type State = ComboboxClearState;
 

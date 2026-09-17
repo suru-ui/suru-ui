@@ -32,7 +32,7 @@ export namespace AutocompletePopupProps {
 }
 
 /**
- * {@link AutocompletePopup} に渡すプロパティーです。
+ * {@link AutocompletePopup} に渡す props です。
  */
 export type AutocompletePopupProps = AutocompletePopupProps.Render &
   AutocompletePopupProps.SuruUI &

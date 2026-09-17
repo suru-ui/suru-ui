@@ -32,7 +32,7 @@ export namespace AutocompleteGroupProps {
 }
 
 /**
- * {@link AutocompleteGroup} に渡すプロパティーです。
+ * {@link AutocompleteGroup} に渡す props です。
  */
 export type AutocompleteGroupProps = AutocompleteGroupProps.Render &
   AutocompleteGroupProps.SuruUI &

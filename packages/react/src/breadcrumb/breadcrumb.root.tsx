@@ -66,7 +66,7 @@ export namespace BreadcrumbRootProps {
     /**
      * パンくずリストの配色を指定します。
      *
-     * 配色はリンクに適用されます。
+     * 配色は現在のページのリンクに適用されます。
      *
      * @default "grey"
      */

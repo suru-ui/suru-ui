@@ -4,7 +4,6 @@ import * as React from "react";
 
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { RadioRootRadius, RadioRootVariant } from "../radio/radio.parts.js";
 import type { IComponent } from "../types.js";
 import { RadioGroupContext } from "./radio-group.context.js";
 
@@ -34,30 +33,30 @@ export type RadioGroupRootOrientation = "horizontal" | "vertical";
 /**
  * ラジオボタンの角丸です。
  *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
- * - `"full"`: 完全な丸形
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ * - `"full"`: 丸形
  */
-export type RadioGroupRootRadius = RadioRootRadius;
+export type RadioGroupRootRadius = "none" | Size | "full";
 
 /**
  * ラジオボタンの大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type RadioGroupRootSize = Size;
 
 /**
  * ラジオボタンの主な外観です。
  *
- * - `"naked"`: 背景のないインジケーターのみ、枠線なし
+ * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type RadioGroupRootVariant = RadioRootVariant;
+export type RadioGroupRootVariant = "naked" | "liquid";
 
 /**
  * {@link RadioGroupRoot} が持つ状態です。
@@ -202,6 +201,11 @@ export const RadioGroupRoot: IRadioGroupRoot = function SuiRadioGroupRoot(
           className,
           "sui_radio_group",
           `sui_radio_group-orientation_${orientation}`,
+          (state) => state.dirty && "sui_radio_group-dirty",
+          (state) => state.valid && "sui_radio_group-valid",
+          (state) => state.filled && "sui_radio_group-filled",
+          (state) => state.focused && "sui_radio_group-focused",
+          (state) => state.touched && "sui_radio_group-touched",
           (state) => state.disabled && "sui_radio_group-disabled",
         )}
         data-scope={dataScope}

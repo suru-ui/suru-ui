@@ -1,7 +1,6 @@
 import { Tooltip } from "@base-ui/react/tooltip";
 import type * as React from "react";
 
-import type { RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
 
 /**
@@ -10,7 +9,7 @@ import type { IComponent } from "../types.js";
 export type TooltipGroupRootState = Tooltip.Provider.State;
 
 export namespace TooltipGroupRootProps {
-  export type Render = RenderProps<TooltipGroupRootState>;
+  export type Render = {};
 
   export type SuruUI = {};
 
@@ -42,6 +41,7 @@ export type TooltipGroupRootProps = TooltipGroupRootProps.Render &
  * 複数のツールチップで開閉の遅延を共有するルートです。
  *
  * 近接したツールチップを続けて表示するとき、先に表示したツールチップが閉じてから一定時間内であれば、次のツールチップをすぐに表示します。
+ * それ自身は HTML 要素をレンダリングしません。
  */
 export const TooltipGroupRoot: IComponent<TooltipGroupRootProps> = function SuiTooltipGroupRoot(
   props,

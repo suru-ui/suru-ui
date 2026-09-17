@@ -130,6 +130,8 @@ export namespace SelectRootProps {
   export type SuruUI<TValue = any> = {
     /**
      * リストに表示する項目の一覧です。
+     *
+     * グループの配列を指定するとグループごとに区切って表示します。
      */
     items?: SelectRootItems<TValue> | undefined;
 
@@ -290,8 +292,16 @@ export const SelectRoot: ISelectRoot = function SuiSelectRoot(props: SelectRootP
         return;
       }
 
-      const value = isLabeledItem(item) ? item.value : item;
-      onValueChange(value, ...args);
+      if (Array.isArray(item)) {
+        onValueChange(
+          item.map((entry) => (isLabeledItem(entry) ? entry.value : entry)),
+          ...args,
+        );
+
+        return;
+      }
+
+      onValueChange(isLabeledItem(item) ? item.value : item, ...args);
     },
     [onValueChange],
   );

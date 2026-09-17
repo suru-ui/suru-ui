@@ -216,6 +216,8 @@ type AlertDialogPropsBody = Omit<
   keyof AlertDialogPropsMain | keyof AlertDialogPropsRoot
 > & {
   /**
+   * アラートダイアログの HTML `title` 属性です。
+   *
    * {@link https://developer.mozilla.org/docs/Web/HTML/Reference/Global_attributes/title|title}
    */
   htmlTitle?: React.HTMLAttributes<HTMLDivElement>["title"];
@@ -261,16 +263,22 @@ export interface AlertDialogAPI<TPayload = any> {
 
   /**
    * {@link AlertDialogBody} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getBodyProps(): AlertDialogBodyProps | null;
 
   /**
    * {@link AlertDialogCloseTrigger} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getCancelTriggerProps(): AlertDialogCloseTriggerProps | null;
 
   /**
    * {@link AlertDialogCloseTrigger} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getConfirmTriggerProps(): AlertDialogCloseTriggerProps | null;
 
@@ -281,16 +289,22 @@ export interface AlertDialogAPI<TPayload = any> {
 
   /**
    * {@link AlertDialogControls} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getControlsProps(): AlertDialogControlsProps | null;
 
   /**
    * {@link AlertDialogDescription} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getDescriptionProps(): AlertDialogDescriptionProps | null;
 
   /**
    * {@link AlertDialogFooter} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getFooterProps(): Omit<AlertDialogFooterProps, "children"> | null;
 
@@ -301,6 +315,8 @@ export interface AlertDialogAPI<TPayload = any> {
 
   /**
    * {@link AlertDialogIcon} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getIconProps(): AlertDialogIconProps | null;
 
@@ -316,11 +332,15 @@ export interface AlertDialogAPI<TPayload = any> {
 
   /**
    * {@link AlertDialogTitle} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getTitleProps(): AlertDialogTitleProps | null;
 
   /**
    * {@link AlertDialogToggleTrigger} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getToggleTriggerProps(): AlertDialogToggleTriggerProps<TPayload> | null;
 
@@ -410,7 +430,7 @@ export const useAlertDialogAPI: IUseAlertDialogAPI = function useSuiAlertDialogA
 
       return null;
     },
-    getRootProps(): Omit<AlertDialogRootProps, "children"> {
+    getRootProps(): Required<Omit<AlertDialogRootProps, "children">> {
       return {
         open,
         handle,
@@ -453,8 +473,8 @@ export const useAlertDialogAPI: IUseAlertDialogAPI = function useSuiAlertDialogA
       };
 
       return {
-        ...requiredProps,
         ...contentProps,
+        ...requiredProps,
       };
     },
     getBackdropProps() {
@@ -563,16 +583,18 @@ interface IAlertDialog extends IComponent<AlertDialogProps> {
 
 /**
  * アラートダイアログを表示するコンポーネントです。
+ *
+ * 構成を細かく制御する場合は、{@link AlertDialogRoot|Root} を直接組み立てます。
  */
 export const AlertDialog: IAlertDialog = /*#__PURE__*/ Object.assign(
   function SuiAlertDialog(props: AlertDialogProps) {
     const api = useAlertDialogAPI(props);
     const toggleTriggerProps = api.getToggleTriggerProps();
     const contentProps = api.getContentProps();
-    const controlsProps = api.getControlsProps();
     const iconProps = api.getIconProps();
     const titleProps = api.getTitleProps();
     const descriptionProps = api.getDescriptionProps();
+    const controlsProps = api.getControlsProps();
     const bodyProps = api.getBodyProps();
     const footerProps = api.getFooterProps();
     const cancelTriggerProps = api.getCancelTriggerProps();
@@ -601,10 +623,7 @@ export const AlertDialog: IAlertDialog = /*#__PURE__*/ Object.assign(
                 </AlertDialogFooter>
               )}
               {contentProps.variant === "stacked" && controlsProps && (
-                <AlertDialogControls
-                  {...controlsProps}
-                  absolute={controlsProps?.absolute ?? true}
-                />
+                <AlertDialogControls {...controlsProps} absolute={controlsProps.absolute ?? true} />
               )}
             </AlertDialogContent>
           </AlertDialogViewport>

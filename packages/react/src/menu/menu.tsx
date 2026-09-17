@@ -181,8 +181,18 @@ export type MenuSlotProps = {
 export type MenuState = MenuRootState;
 
 type MenuPropsMain = {
+  /**
+   * チェックボックス項目の選択状態を示す内容です。
+   *
+   * {@link MenuCheckboxItemIndicator} の子要素として描画されます。
+   */
   checkboxIndicator?: React.ReactNode;
 
+  /**
+   * ラジオ項目の選択状態を示す内容です。
+   *
+   * {@link MenuRadioItemIndicator} の子要素として描画されます。
+   */
   radioIndicator?: React.ReactNode;
 
   /**
@@ -237,9 +247,11 @@ export interface MenuAPI<TItem = any> {
 
   /**
    * {@link MenuContent} に渡す props を取得します。
+   *
+   * @template TContentItem 項目の型です。
    */
-  getContentProps<TItem = any>(): Override<
-    MenuContentProps<TItem>,
+  getContentProps<TContentItem = TItem>(): Override<
+    MenuContentProps<TContentItem>,
     {
       children: LikelyVisibleNode | IMenuContentItemRenderer | undefined;
     }
@@ -286,10 +298,13 @@ export interface MenuAPI<TItem = any> {
   /**
    * {@link MenuRadioGroup} に渡す props を取得します。
    *
-   * @template TItem 項目の型です。
+   * @template TRadioItem 項目の型です。
    * @param item 項目です。
    */
-  getRadioGroupProps<TItem = any>(): Omit<MenuRadioGroupProps<TItem>, "children" | "value">;
+  getRadioGroupProps<TRadioItem = TItem>(): Omit<
+    MenuRadioGroupProps<TRadioItem>,
+    "children" | "value"
+  >;
   getRadioGroupProps(
     item: MenuRootRadioItemGroup,
   ): Omit<MenuRadioGroupProps<MenuRootRadioItem>, "children">;
@@ -323,10 +338,10 @@ export interface MenuAPI<TItem = any> {
   /**
    * {@link MenuSubmenuRoot} に渡す props を取得します。
    *
-   * @template TItem 項目の型です。
+   * @template TSubmenuItem 項目の型です。
    * @param item 項目です。
    */
-  getSubmenuRootProps<TItem = any>(): Omit<MenuSubmenuRootProps<TItem>, "children">;
+  getSubmenuRootProps<TSubmenuItem = TItem>(): Omit<MenuSubmenuRootProps<TSubmenuItem>, "children">;
   getSubmenuRootProps(
     item: MenuRootSubmenuItem,
   ): Omit<MenuSubmenuRootProps<MenuRootItem>, "children">;

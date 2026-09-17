@@ -47,7 +47,7 @@ export type RadioGroupProps<TValue = any> = RadioGroupRootProps<TValue>;
 // ---
 
 /**
- * {@link RadioGroup} を構成する各パーツの props を作成するための API です。
+ * {@link RadioGroup} を構成する各パーツの props などを作成するための API です。
  *
  * @template TValue 項目の値の型です。
  */

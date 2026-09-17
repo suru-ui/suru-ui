@@ -98,12 +98,12 @@ export { type StatusAPI as API, useStatusAPI as useAPI };
  */
 export const Status: IComponent<StatusProps> = function SuiStatus(props) {
   const api = useStatusAPI(props);
-  const rootProps = api.getRootProps();
+  const { children, ...otherRootProps } = api.getRootProps();
 
   return (
-    <StatusRoot {...rootProps}>
+    <StatusRoot {...otherRootProps}>
       <StatusIndicator {...api.getIndicatorProps()} />
-      {rootProps.children}
+      {children}
     </StatusRoot>
   );
 };

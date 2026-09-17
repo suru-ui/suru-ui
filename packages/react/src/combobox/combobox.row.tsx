@@ -50,9 +50,6 @@ export const ComboboxRow: IComponent<ComboboxRowProps> = function SuiComboboxRow
 
 export { ComboboxRow as Row };
 
-/**
- * {@link ComboboxRow} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Row {
   export type State = ComboboxRowState;
 

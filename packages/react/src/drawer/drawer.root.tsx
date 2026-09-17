@@ -1,7 +1,6 @@
 import { Drawer } from "@base-ui/react/drawer";
 import * as React from "react";
 
-import type { RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
 import type { DrawerHandle } from "./drawer.handle.js";
 
@@ -41,7 +40,7 @@ export type DrawerRootSnapPointChangeEventReason = Drawer.Root.SnapPointChangeEv
 export type DrawerRootState = Drawer.Root.State;
 
 export namespace DrawerRootProps {
-  export type Render = RenderProps<DrawerRootState>;
+  export type Render = {};
 
   export type SuruUI<TPayload = any> = {
     /**

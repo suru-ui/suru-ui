@@ -56,9 +56,6 @@ export const ComboboxChipRemove: IComponent<ComboboxChipRemoveProps> =
 
 export { ComboboxChipRemove as ChipRemove };
 
-/**
- * {@link ComboboxChipRemove} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace ChipRemove {
   export type State = ComboboxChipRemoveState;
 

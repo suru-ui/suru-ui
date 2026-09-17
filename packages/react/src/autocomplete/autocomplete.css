@@ -10,6 +10,7 @@
   overflow: hidden;
   vertical-align: middle;
   touch-action: manipulation;
+  outline-style: solid;
 
   &::after {
     position: absolute;
@@ -46,7 +47,6 @@
   min-height: var(--sui_autocomplete-min_height);
   padding-inline: var(--sui_autocomplete-padding_inline);
   outline-width: var(--_sui_autocomplete-outline_width, 0px);
-  outline-style: solid;
   outline-color: var(--sui_autocomplete-outline_color);
   outline-offset: var(--sui_autocomplete-outline_offset);
   background-color: var(--sui_autocomplete-background_color);

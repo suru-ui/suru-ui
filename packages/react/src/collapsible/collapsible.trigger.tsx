@@ -52,7 +52,7 @@ export type CollapsibleTriggerProps = CollapsibleTriggerProps.Render &
 /**
  * コラプシブルの開閉ボタンコンポーネントです。
  *
- * 子要素は何にもラップされず、そのまま {@link Collapsible.Trigger} の `render` に渡されます。
+ * ボタンなどの操作要素を子に渡して使います。
  */
 export const CollapsibleTrigger: IComponent<CollapsibleTriggerProps> =
   function SuiCollapsibleTrigger(props) {

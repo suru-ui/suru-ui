@@ -48,7 +48,9 @@ export const FileUploadTrigger: IComponent<FileUploadTriggerProps> = function Su
       {
         type: "button",
         onClick() {
-          ctx?.open();
+          if (!disabled) {
+            ctx?.open();
+          }
         },
         disabled,
         className: "sui_file_upload_trigger",

@@ -7,55 +7,6 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: stretch;
-
-  > .sui_action_group_item {
-    position: relative;
-    z-index: 0;
-  }
-
-  &.sui_action_group-orientation_horizontal {
-    > .sui_action_group_item:not(:last-child) {
-      border-top-right-radius: 0px;
-      border-bottom-right-radius: 0px;
-    }
-
-    > .sui_action_group_item:not(:first-child) {
-      border-top-left-radius: 0px;
-      border-bottom-left-radius: 0px;
-    }
-
-    > .sui_action_group_item:not(:last-child) > .sui_number_field_group {
-      border-top-right-radius: 0px;
-      border-bottom-right-radius: 0px;
-    }
-
-    > .sui_action_group_item:not(:first-child) > .sui_number_field_group {
-      border-top-left-radius: 0px;
-      border-bottom-left-radius: 0px;
-    }
-  }
-
-  &.sui_action_group-orientation_vertical {
-    > .sui_action_group_item:not(:last-child) {
-      border-bottom-right-radius: 0px;
-      border-bottom-left-radius: 0px;
-    }
-
-    > .sui_action_group_item:not(:first-child) {
-      border-top-left-radius: 0px;
-      border-top-right-radius: 0px;
-    }
-
-    > .sui_action_group_item:not(:last-child) > .sui_number_field_group {
-      border-bottom-right-radius: 0px;
-      border-bottom-left-radius: 0px;
-    }
-
-    > .sui_action_group_item:not(:first-child) > .sui_number_field_group {
-      border-top-left-radius: 0px;
-      border-top-right-radius: 0px;
-    }
-  }
 }
 
 /* 変数 */
@@ -70,53 +21,11 @@
 /* 可変 */
 :scope {
   flex-direction: var(--sui_action_group-flex_direction);
-
-  &.sui_action_group-outlined.sui_action_group-orientation_horizontal {
-    > .sui_action_group_item:not(:first-child) {
-      margin-inline-start: var(--_sui_action_group-item-margin_inline_start, 0px);
-    }
-  }
-
-  &.sui_action_group-outlined.sui_action_group-orientation_vertical {
-    > .sui_action_group_item:not(:first-child) {
-      margin-block-start: var(--_sui_action_group-item-margin_block_start, 0px);
-    }
-  }
 }
 
 /* 代入 */
 :scope {
   --sui_action_group-border_width: --sui-border_width(1);
-
-  > .sui_action_group_item.sui_input {
-    --sui_input-color: var(--sui_action_group-item-color);
-    --sui_input-background_color: var(--sui_action_group-item-background_color);
-    --sui_input-border_color-normal: var(--sui_action_group-item-border_color);
-  }
-
-  > .sui_action_group_item.sui_number_field {
-    --sui_number_field_input-color: var(--sui_action_group-item-color);
-    --sui_number_field_group-background_color: var(--sui_action_group-item-background_color);
-    --sui_number_field_group-border_color-normal: var(--sui_action_group-item-border_color);
-  }
-
-  > .sui_action_group_item.sui_select {
-    --sui_select-color: var(--sui_action_group-item-color);
-    --sui_select-border_color-normal: var(--sui_action_group-item-border_color);
-    --sui_select-canvas-normal: var(--sui_action_group-item-background_color);
-  }
-
-  &.sui_action_group-size_sm {
-    --sui_action_group-border_width: --sui-border_width(1);
-  }
-
-  &.sui_action_group-size_md {
-    --sui_action_group-border_width: --sui-border_width(1);
-  }
-
-  &.sui_action_group-size_lg {
-    --sui_action_group-border_width: --sui-border_width(1);
-  }
 
   &.sui_action_group-orientation_horizontal {
     --sui_action_group-flex_direction: row;
@@ -268,6 +177,102 @@
     --sui_action_group-item-color: var(--sui-green-liquid-canvas_text-normal);
     --sui_action_group-item-background_color: var(--sui-green-liquid-canvas-normal);
     --sui_action_group-item-border_color: var(--sui-green-liquid-border-normal);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Root */
+/* 項目は ButtonRoot などが data-scope を持つため、項目へ直接作用する宣言だけ下限なしの別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_action_group) {
+
+/* 固定 */
+:scope {
+  > .sui_action_group_item {
+    position: relative;
+    z-index: 0;
+  }
+
+  &.sui_action_group-orientation_horizontal {
+    > .sui_action_group_item:not(:last-child) {
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+
+    > .sui_action_group_item:not(:first-child) {
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
+    }
+
+    > .sui_action_group_item:not(:last-child) > .sui_number_field_group {
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+
+    > .sui_action_group_item:not(:first-child) > .sui_number_field_group {
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
+    }
+  }
+
+  &.sui_action_group-orientation_vertical {
+    > .sui_action_group_item:not(:last-child) {
+      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+    }
+
+    > .sui_action_group_item:not(:first-child) {
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+    }
+
+    > .sui_action_group_item:not(:last-child) > .sui_number_field_group {
+      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+    }
+
+    > .sui_action_group_item:not(:first-child) > .sui_number_field_group {
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+    }
+  }
+}
+
+/* 可変 */
+:scope {
+  &.sui_action_group-outlined.sui_action_group-orientation_horizontal {
+    > .sui_action_group_item:not(:first-child) {
+      margin-inline-start: var(--_sui_action_group-item-margin_inline_start, 0px);
+    }
+  }
+
+  &.sui_action_group-outlined.sui_action_group-orientation_vertical {
+    > .sui_action_group_item:not(:first-child) {
+      margin-block-start: var(--_sui_action_group-item-margin_block_start, 0px);
+    }
+  }
+}
+
+/* 代入 */
+:scope {
+  > .sui_action_group_item.sui_input {
+    --sui_input-color: var(--sui_action_group-item-color);
+    --sui_input-background_color: var(--sui_action_group-item-background_color);
+    --sui_input-border_color-normal: var(--sui_action_group-item-border_color);
+  }
+
+  > .sui_action_group_item.sui_number_field {
+    --sui_number_field_input-color: var(--sui_action_group-item-color);
+    --sui_number_field_group-background_color: var(--sui_action_group-item-background_color);
+    --sui_number_field_group-border_color-normal: var(--sui_action_group-item-border_color);
+  }
+
+  > .sui_action_group_item.sui_select {
+    --sui_select-color: var(--sui_action_group-item-color);
+    --sui_select-border_color-normal: var(--sui_action_group-item-border_color);
+    --sui_select-canvas-normal: var(--sui_action_group-item-background_color);
   }
 }
 

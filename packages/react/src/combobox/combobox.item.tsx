@@ -131,9 +131,6 @@ export const ComboboxItem: IComponent<ComboboxItemProps> = function SuiComboboxI
 
 export { ComboboxItem as Item };
 
-/**
- * {@link ComboboxItem} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Item {
   export type State = ComboboxItemState;
 

@@ -185,8 +185,18 @@ export type ContextMenuSlotProps = {
 export type ContextMenuState = ContextMenuRootState;
 
 type ContextMenuPropsMain = {
+  /**
+   * チェックボックス項目の選択状態を示す内容です。
+   *
+   * {@link ContextMenuCheckboxItemIndicator} の子要素として描画されます。
+   */
   checkboxIndicator?: React.ReactNode;
 
+  /**
+   * ラジオ項目の選択状態を示す内容です。
+   *
+   * {@link ContextMenuRadioItemIndicator} の子要素として描画されます。
+   */
   radioIndicator?: React.ReactNode;
 
   /**
@@ -249,9 +259,11 @@ export interface ContextMenuAPI<TItem = any> {
 
   /**
    * {@link ContextMenuContent} に渡す props を取得します。
+   *
+   * @template TContentItem 項目の型です。
    */
-  getContentProps<TItem = any>(): Override<
-    ContextMenuContentProps<TItem>,
+  getContentProps<TContentItem = TItem>(): Override<
+    ContextMenuContentProps<TContentItem>,
     {
       children: LikelyVisibleNode | IContextMenuContentItemRenderer | undefined;
     }
@@ -298,10 +310,13 @@ export interface ContextMenuAPI<TItem = any> {
   /**
    * {@link ContextMenuRadioGroup} に渡す props を取得します。
    *
-   * @template TItem 項目の型です。
+   * @template TRadioItem 項目の型です。
    * @param item 項目です。
    */
-  getRadioGroupProps<TItem = any>(): Omit<ContextMenuRadioGroupProps<TItem>, "children" | "value">;
+  getRadioGroupProps<TRadioItem = TItem>(): Omit<
+    ContextMenuRadioGroupProps<TRadioItem>,
+    "children" | "value"
+  >;
   getRadioGroupProps(
     item: ContextMenuRootRadioItemGroup,
   ): Omit<ContextMenuRadioGroupProps<ContextMenuRootRadioItem>, "children">;
@@ -335,10 +350,13 @@ export interface ContextMenuAPI<TItem = any> {
   /**
    * {@link ContextMenuSubmenuRoot} に渡す props を取得します。
    *
-   * @template TItem 項目の型です。
+   * @template TSubmenuItem 項目の型です。
    * @param item 項目です。
    */
-  getSubmenuRootProps<TItem = any>(): Omit<ContextMenuSubmenuRootProps<TItem>, "children">;
+  getSubmenuRootProps<TSubmenuItem = TItem>(): Omit<
+    ContextMenuSubmenuRootProps<TSubmenuItem>,
+    "children"
+  >;
   getSubmenuRootProps(
     item: ContextMenuRootSubmenuItem,
   ): Omit<ContextMenuSubmenuRootProps<ContextMenuRootItem>, "children">;

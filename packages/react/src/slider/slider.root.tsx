@@ -69,7 +69,7 @@ export namespace SliderRootProps {
 
   export type SuruUI = {
     /**
-     * スライダーの色を指定します。
+     * 現在値を示す部分に適用する色を指定します。
      *
      * @default "grey"
      */
@@ -146,8 +146,11 @@ export type SliderRootProps<
 > = SliderRootProps.Render &
   SliderRootProps.SuruUI &
   SliderRootProps.BaseUI<TValue> &
-  SliderRootProps.HTML;
+  SliderRootProps.HTML<TValue>;
 
+/**
+ * {@link SliderRoot} のコンポーネント型です。
+ */
 interface ISliderRoot extends IComponent<SliderRootProps> {
   /**
    * @template TValue 値の型です。
@@ -158,7 +161,7 @@ interface ISliderRoot extends IComponent<SliderRootProps> {
 }
 
 /**
- * スライダーのルートコンポーネントです。
+ * スライダーのルートです。
  */
 export const SliderRoot: ISliderRoot = function SuiSliderRoot(props: SliderRootProps) {
   const {
@@ -195,9 +198,6 @@ export const SliderRoot: ISliderRoot = function SuiSliderRoot(props: SliderRootP
 
 export { SliderRoot as Root };
 
-/**
- * {@link SliderRoot} の状態や props をまとめた型名前空間です。
- */
 export namespace Root {
   export type State = SliderRootState;
 

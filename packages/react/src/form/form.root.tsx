@@ -84,6 +84,8 @@ interface IFormRoot extends IComponent<FormRootProps> {
 
 /**
  * フォームのルートコンポーネントです。
+ *
+ * フィールドの検証状態をまとめ、送信時に値を集めます。
  */
 export const FormRoot: IFormRoot = function SuiFormRoot(props: FormRootProps) {
   const {

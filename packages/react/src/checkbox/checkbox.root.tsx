@@ -83,7 +83,7 @@ export namespace CheckboxRootProps {
      *
      * CheckboxGroup 内では、グループの値が優先されます。
      *
-     * 既定値は {@link CheckboxRootProps.size|size}
+     * 既定値は {@link CheckboxRootProps.size|size} です。
      */
     radius?: CheckboxRootRadius | undefined;
 
@@ -167,7 +167,7 @@ export const CheckboxRoot: IComponent<CheckboxRootProps> = function SuiCheckboxR
   const radius = group?.radius ?? radiusProp;
   const variant = group?.variant ?? variantProp;
   const outlined = group?.outlined ?? outlinedProp;
-  const disabled = (group?.disabled || disabledProp) ?? undefined;
+  const disabled = group?.disabled || disabledProp;
 
   return (
     <Checkbox.Root

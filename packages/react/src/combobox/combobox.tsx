@@ -109,136 +109,136 @@ export type ComboboxItems<TValue = unknown> = ComboboxRootItems<TValue>;
 export type ComboboxGroupItem<TValue = unknown> = ItemGroup<TValue>;
 
 /**
- * {@link Combobox} の各パーツに渡すプロパティーです。
+ * {@link Combobox} の各パーツに渡す props です。
  */
 export type ComboboxSlotProps = {
   /**
-   * {@link ComboboxChip} に渡すプロパティーです。
+   * {@link ComboboxChip} に渡す props です。
    */
   readonly chip?: Omit<ComboboxChipProps, "children"> | undefined;
 
   /**
-   * {@link ComboboxChipRemove} に渡すプロパティーです。
+   * {@link ComboboxChipRemove} に渡す props です。
    */
   readonly chipRemove?: ComboboxChipRemoveProps | undefined;
 
   /**
-   * {@link ComboboxChips} に渡すプロパティーです。
+   * {@link ComboboxChips} に渡す props です。
    */
   readonly chips?: Omit<ComboboxChipsProps, "children"> | undefined;
 
   /**
-   * {@link ComboboxClear} に渡すプロパティーです。
+   * {@link ComboboxClear} に渡す props です。
    */
   readonly clear?: ComboboxClearProps | undefined;
 
   /**
-   * {@link ComboboxCollection} に渡すプロパティーです。
+   * {@link ComboboxCollection} に渡す props です。
    */
   readonly collection?: Omit<ComboboxCollectionProps, "children"> | undefined;
 
   /**
-   * {@link ScrollAreaContent} に渡すプロパティーです。
+   * {@link ScrollAreaContent} に渡す props です。
    */
   readonly content?: Omit<ScrollAreaContentProps, "children"> | undefined;
 
   /**
-   * {@link ScrollAreaCorner} に渡すプロパティーです。
+   * {@link ScrollAreaCorner} に渡す props です。
    */
   readonly corner?: ScrollAreaCornerProps | undefined;
 
   /**
-   * {@link ComboboxEmpty} に渡すプロパティーです。
+   * {@link ComboboxEmpty} に渡す props です。
    */
   readonly empty?: Omit<ComboboxEmptyProps, "children"> | undefined;
 
   /**
-   * {@link ComboboxGroup} に渡すプロパティーです。
+   * {@link ComboboxGroup} に渡す props です。
    */
   readonly group?: Omit<ComboboxGroupProps, "children" | "items"> | undefined;
 
   /**
-   * {@link ComboboxGroupLabel} に渡すプロパティーです。
+   * {@link ComboboxGroupLabel} に渡す props です。
    */
   readonly groupLabel?: Omit<ComboboxGroupLabelProps, "children"> | undefined;
 
   /**
-   * {@link ComboboxIcon} に渡すプロパティーです。
+   * {@link ComboboxIcon} に渡す props です。
    */
   readonly icon?: ComboboxIconProps | undefined;
 
   /**
-   * {@link ComboboxInput} に渡すプロパティーです。
+   * {@link ComboboxInput} に渡す props です。
    */
   readonly input?: Omit<ComboboxInputProps, "placeholder"> | undefined;
 
   /**
-   * {@link ComboboxInputGroup} に渡すプロパティーです。
+   * {@link ComboboxInputGroup} に渡す props です。
    */
   readonly inputGroup?: Omit<ComboboxInputGroupProps, "children"> | undefined;
 
   /**
-   * {@link ComboboxItem} に渡すプロパティーです。
+   * {@link ComboboxItem} に渡す props です。
    */
   readonly item?: Omit<ComboboxItemProps, "children" | "value"> | undefined;
 
   /**
-   * {@link ComboboxItemIndicator} に渡すプロパティーです。
+   * {@link ComboboxItemIndicator} に渡す props です。
    */
   readonly itemIndicator?: ComboboxItemIndicatorProps | undefined;
 
   /**
-   * {@link ComboboxLabel} に渡すプロパティーです。
+   * {@link ComboboxLabel} に渡す props です。
    */
   readonly label?: Omit<ComboboxLabelProps, "children"> | undefined;
 
   /**
-   * {@link ComboboxList} に渡すプロパティーです。
+   * {@link ComboboxList} に渡す props です。
    */
   readonly list?: Omit<ComboboxListProps, "children"> | undefined;
 
   /**
-   * {@link ComboboxPopup} に渡すプロパティーです。
+   * {@link ComboboxPopup} に渡す props です。
    */
   readonly popup?: Omit<ComboboxPopupProps, "children"> | undefined;
 
   /**
-   * {@link ComboboxPortal} に渡すプロパティーです。
+   * {@link ComboboxPortal} に渡す props です。
    */
   readonly portal?: Omit<ComboboxPortalProps, "children"> | undefined;
 
   /**
-   * {@link ComboboxPositioner} に渡すプロパティーです。
+   * {@link ComboboxPositioner} に渡す props です。
    */
   readonly positioner?: Omit<ComboboxPositionerProps, "children"> | undefined;
 
   /**
-   * {@link ScrollAreaRoot} に渡すプロパティーです。
+   * {@link ScrollAreaRoot} に渡す props です。
    */
   readonly scrollArea?: Omit<ScrollAreaRootProps, "children"> | undefined;
 
   /**
-   * {@link ScrollAreaScrollbar} に渡すプロパティーです。
+   * {@link ScrollAreaScrollbar} に渡す props です。
    */
   readonly scrollbar?: Omit<ScrollAreaScrollbarProps, "children"> | undefined;
 
   /**
-   * {@link ScrollAreaThumb} に渡すプロパティーです。
+   * {@link ScrollAreaThumb} に渡す props です。
    */
   readonly thumb?: ScrollAreaThumbProps | undefined;
 
   /**
-   * {@link ComboboxTrigger} に渡すプロパティーです。
+   * {@link ComboboxTrigger} に渡す props です。
    */
   readonly trigger?: Omit<ComboboxTriggerProps, "children"> | undefined;
 
   /**
-   * {@link ComboboxValue} に渡すプロパティーです。
+   * {@link ComboboxValue} に渡す props です。
    */
   readonly value?: Omit<ComboboxValueProps, "children"> | undefined;
 
   /**
-   * {@link ScrollAreaViewport} に渡すプロパティーです。
+   * {@link ScrollAreaViewport} に渡す props です。
    */
   readonly viewport?: Omit<ScrollAreaViewportProps, "children"> | undefined;
 };
@@ -249,7 +249,7 @@ export type ComboboxSlotProps = {
 export type ComboboxState = ComboboxRootState;
 
 /**
- * {@link Combobox} に渡すプロパティーです。
+ * {@link Combobox} に渡す props です。
  *
  * @template TValue 項目の値の型です。
  * @template TMultiple 複数選択を有効にするかどうかです。
@@ -280,9 +280,9 @@ export type ComboboxProps<TValue = unknown, TMultiple extends boolean | undefine
     placeholder?: string | undefined;
 
     /**
-     * 各パーツに個別のプロパティーを渡すためのオブジェクトです。
+     * 各パーツに個別のpropsを渡すためのオブジェクトです。
      *
-     * 各パーツのプロパティーが優先されます。
+     * 各パーツのpropsが優先されます。
      */
     slotProps?: ComboboxSlotProps | undefined;
   };
@@ -291,7 +291,7 @@ export type ComboboxProps<TValue = unknown, TMultiple extends boolean | undefine
 // ---
 
 /**
- * {@link Combobox} を構成する各パーツのプロパティーを作成するための API です。
+ * {@link Combobox} を構成する各パーツのpropsを作成するための API です。
  *
  * @template TValue 項目の値の型です。
  * @template TMultiple 複数選択を有効にするかどうかです。
@@ -301,7 +301,7 @@ export interface ComboboxAPI<
   TMultiple extends boolean | undefined = boolean | undefined,
 > {
   /**
-   * {@link ComboboxChip} に渡すプロパティーを取得します。
+   * {@link ComboboxChip} に渡す props を取得します。
    *
    * @param item 項目の値です。
    * @param index 項目のインデックスです。
@@ -309,51 +309,51 @@ export interface ComboboxAPI<
   getChipProps(item: TValue, index: number): ComboboxChipProps;
 
   /**
-   * {@link ComboboxChipRemove} に渡すプロパティーを取得します。
+   * {@link ComboboxChipRemove} に渡す props を取得します。
    *
    * @param item 項目の値です。
    */
   getChipRemoveProps(item: TValue): ComboboxChipRemoveProps;
 
   /**
-   * {@link ComboboxChips} に渡すプロパティーを取得します。
+   * {@link ComboboxChips} に渡す props を取得します。
    */
   getChipsProps(): Omit<ComboboxChipsProps, "children"> | null;
 
   /**
-   * {@link ComboboxClear} に渡すプロパティーを取得します。
+   * {@link ComboboxClear} に渡す props を取得します。
    */
   getClearProps(): ComboboxClearProps;
 
   /**
-   * {@link ComboboxCollection} に渡すプロパティーを取得します。
+   * {@link ComboboxCollection} に渡す props を取得します。
    */
   getCollectionProps(): Omit<ComboboxCollectionProps, "children">;
 
   /**
-   * {@link ScrollAreaContent} に渡すプロパティーを取得します。
+   * {@link ScrollAreaContent} に渡す props を取得します。
    */
   getContentProps(): Omit<ScrollAreaContentProps, "children">;
 
   /**
-   * {@link ScrollAreaCorner} に渡すプロパティーを取得します。
+   * {@link ScrollAreaCorner} に渡す props を取得します。
    */
   getCornerProps(): ScrollAreaCornerProps;
 
   /**
-   * {@link ComboboxEmpty} に渡すプロパティーを取得します。
+   * {@link ComboboxEmpty} に渡す props を取得します。
    */
   getEmptyProps(): ComboboxEmptyProps | null;
 
   /**
-   * {@link ComboboxGroupLabel} に渡すプロパティーを取得します。
+   * {@link ComboboxGroupLabel} に渡す props を取得します。
    *
    * @param item グループの項目です。
    */
   getGroupLabelProps(item: ComboboxGroupItem<TValue>): ComboboxGroupLabelProps;
 
   /**
-   * {@link ComboboxGroup} に渡すプロパティーを取得します。
+   * {@link ComboboxGroup} に渡す props を取得します。
    *
    * @param item グループの項目です。
    * @param index 項目のインデックスです。
@@ -361,27 +361,27 @@ export interface ComboboxAPI<
   getGroupProps(item: ComboboxGroupItem<TValue>, index: number): ComboboxGroupProps;
 
   /**
-   * {@link ComboboxIcon} に渡すプロパティーを取得します。
+   * {@link ComboboxIcon} に渡す props を取得します。
    */
   getIconProps(): ComboboxIconProps;
 
   /**
-   * {@link ComboboxInputGroup} に渡すプロパティーを取得します。
+   * {@link ComboboxInputGroup} に渡す props を取得します。
    */
   getInputGroupProps(): Omit<ComboboxInputGroupProps, "children">;
 
   /**
-   * {@link ComboboxInput} に渡すプロパティーを取得します。
+   * {@link ComboboxInput} に渡す props を取得します。
    */
   getInputProps(): ComboboxInputProps;
 
   /**
-   * {@link ComboboxItemIndicator} に渡すプロパティーを取得します。
+   * {@link ComboboxItemIndicator} に渡す props を取得します。
    */
   getItemIndicatorProps(): ComboboxItemIndicatorProps;
 
   /**
-   * {@link ComboboxItem} に渡すプロパティーを取得します。
+   * {@link ComboboxItem} に渡す props を取得します。
    *
    * @param item 項目の値です。
    * @param index 項目のインデックスです。
@@ -389,64 +389,64 @@ export interface ComboboxAPI<
   getItemProps(item: TValue, index: number): ComboboxItemProps;
 
   /**
-   * {@link ComboboxLabel} に渡すプロパティーを取得します。
+   * {@link ComboboxLabel} に渡す props を取得します。
    */
   getLabelProps(): ComboboxLabelProps | null;
 
   /**
-   * {@link ComboboxList} に渡すプロパティーを取得します。
+   * {@link ComboboxList} に渡す props を取得します。
    */
   getListProps(): Omit<ComboboxListProps, "children"> & {
     children: LikelyVisibleNode | Extract<ComboboxListProps["children"], Function> | undefined;
   };
 
   /**
-   * {@link ComboboxPopup} に渡すプロパティーを取得します。
+   * {@link ComboboxPopup} に渡す props を取得します。
    */
   getPopupProps(): Omit<ComboboxPopupProps, "children">;
 
   /**
-   * {@link ComboboxPortal} に渡すプロパティーを取得します。
+   * {@link ComboboxPortal} に渡す props を取得します。
    */
   getPortalProps(): Omit<ComboboxPortalProps, "children">;
 
   /**
-   * {@link ComboboxPositioner} に渡すプロパティーを取得します。
+   * {@link ComboboxPositioner} に渡す props を取得します。
    */
   getPositionerProps(): Omit<ComboboxPositionerProps, "children">;
 
   /**
-   * {@link ComboboxRoot} に渡すプロパティーを取得します。
+   * {@link ComboboxRoot} に渡す props を取得します。
    */
   getRootProps(): Omit<ComboboxRootProps<TValue, TMultiple>, "children">;
 
   /**
-   * {@link ScrollAreaRoot} に渡すプロパティーを取得します。
+   * {@link ScrollAreaRoot} に渡す props を取得します。
    */
   getScrollAreaProps(): Omit<ScrollAreaRootProps, "children">;
 
   /**
-   * {@link ScrollAreaScrollbar} に渡すプロパティーを取得します。
+   * {@link ScrollAreaScrollbar} に渡す props を取得します。
    */
   getScrollbarProps(): Omit<ScrollAreaScrollbarProps, "children">;
 
   /**
-   * {@link ScrollAreaThumb} に渡すプロパティーを取得します。
+   * {@link ScrollAreaThumb} に渡す props を取得します。
    */
   getThumbProps(): ScrollAreaThumbProps;
 
   /**
-   * {@link ComboboxTrigger} に渡すプロパティーを取得します。
+   * {@link ComboboxTrigger} に渡す props を取得します。
    */
   getTriggerProps(): ComboboxTriggerProps;
 
   /**
-   * {@link ComboboxValue} に渡すプロパティーを取得します。
+   * {@link ComboboxValue} に渡す props を取得します。
    */
   getValueProps(): Omit<ComboboxValueProps, "children"> | null;
 
   /**
-   * {@link ScrollAreaViewport} に渡すプロパティーを取得します。
+   * {@link ScrollAreaViewport} に渡す props を取得します。
    */
   getViewportProps(): Omit<ScrollAreaViewportProps, "children">;
 }
@@ -457,7 +457,7 @@ interface IUseComboboxAPI {
    *
    * @template TValue 項目の値の型です。
    * @template TMultiple 複数選択を有効にするかどうかです。
-   * @param props {@link Combobox} のプロパティーです。
+   * @param props {@link Combobox} のpropsです。
    * @returns コンボボックスの API です
    */
   <TValue = unknown, TMultiple extends boolean | undefined = false>(
@@ -675,7 +675,16 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI(props)
       };
     },
     getScrollAreaProps() {
-      return scrollAreaProps;
+      const {
+        // @ts-expect-error
+        "data-scope": dataScope = null,
+        ...otherScrollAreaProps
+      } = scrollAreaProps;
+
+      return {
+        ...otherScrollAreaProps,
+        "data-scope": dataScope,
+      };
     },
     getItemIndicatorProps() {
       const { children = <CheckIcon />, ...otherItemIndicatorProps } = itemIndicatorProps;

@@ -137,6 +137,9 @@ export const SelectList: IComponent<SelectListProps> = function SuiSelectList(pr
   );
 };
 
+/**
+ * {@link SelectRoot} の `items` を正規化し、各項目へレンダラーを適用します。
+ */
 function renderListItems(
   items: SelectRootItems,
   renderer: ISelectListItemRenderer,
@@ -187,6 +190,9 @@ function renderListItems(
     .map(renderer);
 }
 
+/**
+ * 項目とグループを既定の見た目で描画するレンダラーです。
+ */
 const defaultListItemRenderer: ISelectListItemRenderer = (item, index, items) => {
   if ("items" in item) {
     const { items: groupItems, label, ...otherGroupProps } = item;

@@ -33,7 +33,7 @@ export namespace AutocompleteInputGroupProps {
 }
 
 /**
- * {@link AutocompleteInputGroup} に渡すプロパティーです。
+ * {@link AutocompleteInputGroup} に渡す props です。
  */
 export type AutocompleteInputGroupProps = AutocompleteInputGroupProps.Render &
   AutocompleteInputGroupProps.SuruUI &

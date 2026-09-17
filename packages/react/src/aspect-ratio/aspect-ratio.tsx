@@ -65,9 +65,6 @@ export { type AspectRatioAPI as API, useAspectRatioAPI as useAPI };
 
 /**
  * 指定した比率で幅と高さを保つコンテナーコンポーネントです。
- *
- * レスポンシブに決まる幅に対して、画像や動画、地図の埋め込みなどを一定の比率で表示します。
- * 直接の子要素はコンテナーいっぱいに配置されます。
  */
 export const AspectRatio: IComponent<AspectRatioProps> = function SuiAspectRatio(props) {
   const api = useAspectRatioAPI(props);

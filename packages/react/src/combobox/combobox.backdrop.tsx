@@ -52,9 +52,6 @@ export const ComboboxBackdrop: IComponent<ComboboxBackdropProps> = function SuiC
 
 export { ComboboxBackdrop as Backdrop };
 
-/**
- * {@link ComboboxBackdrop} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Backdrop {
   export type State = ComboboxBackdropState;
 

@@ -6,7 +6,7 @@ import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
 /**
- * {@link GroupLabel} の状態です。
+ * {@link AutocompleteGroupLabel} の状態です。
  */
 export type AutocompleteGroupLabelState = Autocomplete.GroupLabel.State;
 
@@ -32,7 +32,7 @@ export namespace AutocompleteGroupLabelProps {
 }
 
 /**
- * {@link GroupLabel} に渡すプロパティーです。
+ * {@link AutocompleteGroupLabel} に渡す props です。
  */
 export type AutocompleteGroupLabelProps = AutocompleteGroupLabelProps.Render &
   AutocompleteGroupLabelProps.SuruUI &

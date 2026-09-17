@@ -55,6 +55,8 @@ export type ToastContentProps = ToastContentProps.Render &
 
 /**
  * 通知の内容をまとめるコンテナー要素です。
+ *
+ * 見た目はアラートとして描画され、大きさや配色は最上位の見た目として集約します。
  */
 export const ToastContent: IComponent<ToastContentProps> = function SuiToastContent(props) {
   const { size, color, style, radius, render, variant, outlined, className, ...otherProps } = props;

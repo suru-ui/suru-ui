@@ -146,7 +146,7 @@ interface IUseToggleButtonAPI {
    * {@link ToggleButtonAPI} を作成します。
    *
    * @param props {@link ToggleButton} の props です。
-   * @returns トグルボタンの API です
+   * @returns トグルボタンの API です。
    */
   (props: ToggleButtonProps): ToggleButtonAPI;
 }
@@ -188,9 +188,9 @@ export const useToggleButtonAPI: IUseToggleButtonAPI = function useSuiToggleButt
     },
     getCircularProgressProps() {
       return {
+        ...circularProgressProps,
         percentage,
         indeterminate,
-        ...circularProgressProps,
       };
     },
     getCircularProgressFillProps() {

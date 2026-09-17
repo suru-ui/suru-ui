@@ -41,6 +41,8 @@ export type SwitchThumbProps = SwitchThumbProps.Render &
 
 /**
  * スイッチのつまみコンポーネントです。
+ *
+ * オンとオフの状態を示し、選択状態に応じて移動します。
  */
 export const SwitchThumb: IComponent<SwitchThumbProps> = function SuiSwitchThumb(props) {
   const { className, ...otherProps } = props;

@@ -32,7 +32,7 @@ export namespace AutocompleteStatusProps {
 }
 
 /**
- * {@link AutocompleteStatus} に渡すプロパティーです。
+ * {@link AutocompleteStatus} に渡す props です。
  */
 export type AutocompleteStatusProps = AutocompleteStatusProps.Render &
   AutocompleteStatusProps.SuruUI &

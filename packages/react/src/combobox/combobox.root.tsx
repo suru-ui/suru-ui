@@ -133,7 +133,7 @@ export namespace ComboboxRootProps {
     Combobox.Root.Props<TValue, TMultiple>,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // ComboboxRootProps:
+      // ComboboxRootProps + AriaCombobox.Props:
       | "children"
       | "name"
       | "form"
@@ -243,9 +243,6 @@ export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot<
 
 export { ComboboxRoot as Root };
 
-/**
- * {@link ComboboxRoot} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Root {
   export type State = ComboboxRootState;
 

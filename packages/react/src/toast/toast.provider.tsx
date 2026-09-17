@@ -1,7 +1,6 @@
 import { Toast } from "@base-ui/react/toast";
 import * as React from "react";
 
-import type { RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
 
 /**
@@ -10,7 +9,7 @@ import type { IComponent } from "../types.js";
 export type ToastProviderState = Toast.Provider.State;
 
 export namespace ToastProviderProps {
-  export type Render = RenderProps<ToastProviderState>;
+  export type Render = {};
 
   export type SuruUI = {};
 
@@ -40,6 +39,8 @@ export type ToastProviderProps = ToastProviderProps.Render &
 
 /**
  * 通知の作成と管理を行うコンテキストを提供します。
+ *
+ * それ自身は HTML 要素をレンダリングしません。
  */
 export const ToastProvider: IComponent<ToastProviderProps> = function SuiToastProvider(props) {
   return <Toast.Provider {...props} />;

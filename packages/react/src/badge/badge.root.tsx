@@ -154,7 +154,6 @@ export const BadgeRoot: IComponent<BadgeRootProps> = function SuiBadgeRoot(props
     children,
     outlined = false,
     position,
-    className,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherSpanProps
@@ -166,7 +165,6 @@ export const BadgeRoot: IComponent<BadgeRootProps> = function SuiBadgeRoot(props
       {
         children: variant === "dot" ? null : children,
         className: cn(
-          className,
           "sui_badge",
           `sui_badge-size_${size}`,
           `sui_badge-color_${color}`,

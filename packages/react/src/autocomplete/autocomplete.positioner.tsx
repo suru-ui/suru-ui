@@ -43,7 +43,7 @@ export namespace AutocompletePositionerProps {
 }
 
 /**
- * {@link AutocompletePositioner} に渡すプロパティーです。
+ * {@link AutocompletePositioner} に渡す props です。
  */
 export type AutocompletePositionerProps = AutocompletePositionerProps.Render &
   AutocompletePositionerProps.SuruUI &

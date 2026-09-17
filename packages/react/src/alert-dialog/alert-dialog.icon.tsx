@@ -72,7 +72,7 @@ export namespace AlertDialogIconProps {
     /**
      * アラートダイアログのアイコンの角丸の大きさを指定します。
      *
-     * 既定値は {@link AlertDialogIconProps.size|size}
+     * 既定値は {@link AlertDialogIconProps.size|size} です。
      */
     radius?: AlertDialogIconRadius | undefined;
 

@@ -105,7 +105,7 @@ export type NumberFieldProps = Omit<NumberFieldRootProps, "children"> &
     /**
      * 値を減らすボタンを表示します。
      *
-     * `true` を指定すると、既定のマイナスアイコンで表示します。
+     * `true` を指定すると既定のマイナスアイコンで表示し、表示内容を指定するとその内容で表示します。
      */
     decrement?: NumberFieldDecrementProps["children"] | undefined;
 
@@ -117,12 +117,14 @@ export type NumberFieldProps = Omit<NumberFieldRootProps, "children"> &
     /**
      * 値を増やすボタンを表示します。
      *
-     * `true` を指定すると、既定のプラスアイコンで表示します。
+     * `true` を指定すると既定のプラスアイコンで表示し、表示内容を指定するとその内容で表示します。
      */
     increment?: NumberFieldIncrementProps["children"] | undefined;
 
     /**
      * ドラッグで値を変更できる領域に表示する内容です。
+     *
+     * スクラブ中は既定のカーソルと組み合わせて表示します。
      */
     scrubArea?: NumberFieldScrubAreaProps["children"] | undefined;
 

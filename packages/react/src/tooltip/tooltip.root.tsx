@@ -2,7 +2,6 @@ import { Tooltip } from "@base-ui/react/tooltip";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
-import type { RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
 import { TooltipContext } from "./tooltip.context.js";
 import type { TooltipHandle } from "./tooltip.handle.js";
@@ -47,7 +46,7 @@ export type TooltipRootSize = Size;
 export type TooltipRootState = Tooltip.Root.State;
 
 export namespace TooltipRootProps {
-  export type Render = RenderProps<TooltipRootState>;
+  export type Render = {};
 
   export type SuruUI<TPayload = any> = {
     /**
@@ -99,7 +98,10 @@ export namespace TooltipRootProps {
     >
   >;
 
-  export type HTML = {};
+  export type HTML<TPayload = any> = Omit<
+    React.ComponentProps<typeof Tooltip.Root<TPayload>>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -110,13 +112,16 @@ export namespace TooltipRootProps {
 export type TooltipRootProps<TPayload = any> = TooltipRootProps.Render &
   TooltipRootProps.SuruUI<TPayload> &
   TooltipRootProps.BaseUI<TPayload> &
-  TooltipRootProps.HTML;
+  TooltipRootProps.HTML<TPayload>;
 
 /**
  * {@link TooltipRoot} のコンポーネント型です。
  */
-export interface ITooltipRoot extends IComponent<TooltipRootProps> {
-  <TPayload = any>(props: TooltipRootProps<TPayload>): React.ReactElement | null;
+interface ITooltipRoot extends IComponent<TooltipRootProps> {
+  /**
+   * @template TPayload トリガーから受け取るデータの型です。
+   */
+  <TPayload = any>(props: TooltipRootProps<TPayload>): IComponent.Return;
 }
 
 /**
@@ -149,7 +154,7 @@ export namespace Root {
   export type Props<TPayload = any> = Props.Render &
     Props.SuruUI<TPayload> &
     Props.BaseUI<TPayload> &
-    Props.HTML;
+    Props.HTML<TPayload>;
 
   export namespace Props {
     export type Render = TooltipRootProps.Render;
@@ -158,7 +163,7 @@ export namespace Root {
 
     export type BaseUI<TPayload = any> = TooltipRootProps.BaseUI<TPayload>;
 
-    export type HTML = TooltipRootProps.HTML;
+    export type HTML<TPayload = any> = TooltipRootProps.HTML<TPayload>;
   }
 
   export type Actions = TooltipRootActions;

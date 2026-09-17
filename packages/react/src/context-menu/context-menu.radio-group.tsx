@@ -55,7 +55,7 @@ export namespace ContextMenuRadioGroupProps {
     /**
      * ラジオ項目です。
      */
-    items?: readonly TItem[];
+    items?: readonly TItem[] | undefined;
   };
 
   export type BaseUI = Pick<

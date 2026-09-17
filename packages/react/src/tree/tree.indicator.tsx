@@ -6,7 +6,7 @@ import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
 /**
- * {@link TreeItemIndicator} の状態です。
+ * {@link TreeItemIndicator} が持つ状態です。
  */
 export type TreeItemIndicatorState = {};
 

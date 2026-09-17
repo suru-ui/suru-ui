@@ -68,7 +68,7 @@ export type AutocompleteContext = {
 };
 
 /**
- * オートコンプリートのスタイルを子要素へ伝播するコンテキストです。
+ * オートコンプリートの情報を子要素へ伝播するコンテキストです。
  */
 export const AutocompleteContext: React.Context<AutocompleteContext | null> =
   React.createContext<AutocompleteContext | null>(null);

@@ -50,9 +50,6 @@ export const ComboboxList: IComponent<ComboboxListProps> = function SuiComboboxL
 
 export { ComboboxList as List };
 
-/**
- * {@link ComboboxList} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace List {
   export type State = ComboboxListState;
 

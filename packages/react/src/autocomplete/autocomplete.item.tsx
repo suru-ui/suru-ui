@@ -27,7 +27,7 @@ export namespace AutocompleteItemProps {
         // Base UI の型を確認して取り出すプロパティーを決めます。
         // NonNativeButtonProps:
         | keyof NonNativeButtonProps
-        // ContextMenuItemProps:
+        // AutocompleteItemProps:
         | "children"
         | "onClick"
         | "index"
@@ -45,7 +45,7 @@ export namespace AutocompleteItemProps {
 }
 
 /**
- * {@link AutocompleteItem} に渡すプロパティーです。
+ * {@link AutocompleteItem} に渡す props です。
  */
 export type AutocompleteItemProps = AutocompleteItemProps.Render &
   AutocompleteItemProps.SuruUI &
@@ -86,8 +86,11 @@ export const AutocompleteItem: IComponent<AutocompleteItemProps> = function SuiA
       {...otherProps}
       {...baseuiProps}
       render={(htmlProps: {}, state) => {
-        const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
-          Pick<Button.Root.Props.HTML, "disabled"> = {
+        const buttonRootProps: Required<
+          Button.Root.Props.SuruUI &
+            Button.Root.Props.BaseUI &
+            Pick<Button.Root.Props.HTML, "disabled">
+        > = {
           item: true,
           size: undefined,
           color: "grey",

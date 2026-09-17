@@ -65,8 +65,6 @@ export { type ImageAPI as API, useImageAPI as useAPI };
 
 /**
  * 画像を表示するコンポーネントです。
- *
- * 大きさは `width` と `height` プロパティーや CSS で指定します。`fit` プロパティーでコンテナーへのはめ込み方法を、`radius` プロパティーで角丸を指定できます。
  */
 export const Image: IComponent<ImageProps> = function SuiImage(props) {
   const api = useImageAPI(props);

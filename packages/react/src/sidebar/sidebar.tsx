@@ -72,9 +72,9 @@ export type SidebarSlotProps = {
  */
 export type SidebarProps = Omit<SidebarProviderProps, "children"> & {
   /**
-   * サイドバーとメインコンテンツです。
+   * サイドバーの内容です。
    */
-  readonly children?: React.ReactNode | undefined;
+  children?: React.ReactNode | undefined;
 
   /**
    * 各パーツに個別の props を渡すためのオブジェクトです。
@@ -188,6 +188,9 @@ interface ISidebar extends IComponent<SidebarProps> {
    */
   readonly Trigger: IComponent<SidebarTriggerProps>;
 
+  /**
+   * {@link SidebarContext} を読み取るフックです。
+   */
   readonly useContext: IUseContext<SidebarContext>;
 }
 
@@ -214,10 +217,19 @@ export const Sidebar: ISidebar = /*#__PURE__*/ Object.assign(
 );
 
 export namespace Sidebar {
+  /**
+   * {@link SidebarState} です。
+   */
   export type State = SidebarState;
 
+  /**
+   * {@link SidebarProps} です。
+   */
   export type Props = SidebarProps;
 
+  /**
+   * {@link SidebarSlotProps} です。
+   */
   export type SlotProps = SidebarSlotProps;
 
   export type Context = SidebarContext;

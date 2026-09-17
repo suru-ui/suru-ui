@@ -50,9 +50,6 @@ export const ComboboxStatus: IComponent<ComboboxStatusProps> = function SuiCombo
 
 export { ComboboxStatus as Status };
 
-/**
- * {@link ComboboxStatus} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Status {
   export type State = ComboboxStatusState;
 

@@ -50,6 +50,7 @@ export type StatTrendProps = StatTrendProps.Render &
   StatTrendProps.HTML;
 
 function getTrendDirectionFromNumber(value: number): StatTrendDirection {
+  // 数値の符号から方向を求めます。
   if (value === 0) {
     return "flat";
   }
@@ -60,6 +61,7 @@ function getTrendDirectionFromNumber(value: number): StatTrendDirection {
 const TREND_DIRECTION_NUMBER = /([+\-−]?)[^\d\n+\-−]*?([\d,]+(?:\.\d+)?)/;
 
 function getTrendDirectionFromString(value: string): StatTrendDirection | null {
+  // 文字列の先頭にある数値の符号から方向を求めます。
   const match = TREND_DIRECTION_NUMBER.exec(value.normalize("NFKC"));
   if (match === null) {
     return null;
@@ -79,6 +81,7 @@ function getTrendDirectionFromString(value: string): StatTrendDirection | null {
 }
 
 function getDefaultTrendDirection(value: React.ReactNode): StatTrendDirection {
+  // 内容から方向を推測します。数値以外は変化なしとして扱います。
   if (typeof value === "number" && Number.isFinite(value)) {
     return getTrendDirectionFromNumber(value);
   }

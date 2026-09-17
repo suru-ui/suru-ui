@@ -111,11 +111,15 @@ export type ToastProps<TData extends object = any> = Override<
 
     /**
      * 通知のアクションです。
+     *
+     * 通知オブジェクトの `actionProps` に内容がある場合はそちらを優先します。
      */
     action?: ToastActionProps["children"] | undefined;
 
     /**
      * 通知を閉じるボタンです。
+     *
+     * 既定値は `"閉じる"` です。
      */
     close?: ToastCloseProps["children"] | undefined;
 
@@ -188,16 +192,22 @@ export type ToastListProps<TData extends object = any> = Omit<ToastPortalProps, 
 export interface ToastAPI {
   /**
    * {@link ToastAction} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getActionProps(): ToastActionProps | null;
 
   /**
    * {@link ToastActions} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getActionsProps(): Omit<ToastActionsProps, "children"> | null;
 
   /**
    * {@link ToastClose} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getCloseProps(): ToastCloseProps | null;
 
@@ -208,6 +218,8 @@ export interface ToastAPI {
 
   /**
    * {@link ToastDescription} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getDescriptionProps(): ToastDescriptionProps | null;
 
@@ -218,6 +230,8 @@ export interface ToastAPI {
 
   /**
    * {@link ToastTitle} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getTitleProps(): ToastTitleProps | null;
 }
@@ -384,9 +398,11 @@ interface IUseToastListAPI {
 /**
  * {@link ToastListAPI} を作成するフックです。
  */
-export const useToastListAPI: IUseToastListAPI = function useSuiToastListAPI(props) {
+export const useToastListAPI: IUseToastListAPI = function useSuiToastListAPI<
+  TData extends object = any,
+>(props: ToastListProps<TData>) {
   const { children, slotProps: { viewport: viewportProps = {} } = {}, ...otherPortalProps } = props;
-  const { toasts } = useToastClient();
+  const { toasts } = useToastClient<TData>();
 
   return {
     getPortalProps() {

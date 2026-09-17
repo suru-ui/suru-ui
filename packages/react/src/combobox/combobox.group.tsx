@@ -50,9 +50,6 @@ export const ComboboxGroup: IComponent<ComboboxGroupProps> = function SuiCombobo
 
 export { ComboboxGroup as Group };
 
-/**
- * {@link ComboboxGroup} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Group {
   export type State = ComboboxGroupState;
 

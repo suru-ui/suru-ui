@@ -60,7 +60,7 @@ export { type TooltipGroupAPI as API, useTooltipGroupAPI as useAPI };
 /**
  * 複数のツールチップで開閉の遅延を共有するグループです。
  *
- * 近接したツールチップを続けて表示するとき、先に表示したツールチップが閉じてから一定時間内であれば、次のツールチップをすぐに表示します。
+ * 近接したツールチップを続けて表示するとき、先に表示したツールチップが閉じてから一定時間内であれば、次のツールチップをすぐに表示します。それ自身は HTML 要素をレンダリングしません。
  */
 export const TooltipGroup: IComponent<TooltipGroupProps> = function SuiTooltipGroup(props) {
   const api = useTooltipGroupAPI(props);

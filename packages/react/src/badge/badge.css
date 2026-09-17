@@ -102,13 +102,13 @@
   --sui_badge-font_size: ;
   --sui_badge-font_weight: ;
   --sui_badge-line_height: ;
-  --sui_badge-color-normal: ;
+  --sui_badge-color: ;
   --sui_badge-letter_spacing: ;
   --sui_badge-focusring_width: ;
   --sui_badge-focusring_color: ;
   --sui_badge-focusring_offset: ;
-  --sui_badge-background_color-normal: ;
-  --sui_badge-border_color-normal: ;
+  --sui_badge-background_color: ;
+  --sui_badge-border_color: ;
   --sui_badge-border_width: ;
   --sui_badge-border_radius: ;
   --sui_badge-virtual_ring_color: ;
@@ -128,12 +128,12 @@
   font-size: var(--sui_badge-font_size);
   font-weight: var(--sui_badge-font_weight);
   line-height: var(--sui_badge-line_height);
-  color: var(--sui_badge-color-normal);
+  color: var(--sui_badge-color);
   letter-spacing: var(--sui_badge-letter_spacing);
   outline-width: var(--_sui_badge-outline_width, 0px);
   outline-color: var(--_sui_badge-outline_color, transparent);
   outline-offset: var(--_sui_badge-outline_offset, 0px);
-  background-color: var(--sui_badge-background_color-normal);
+  background-color: var(--sui_badge-background_color);
   border-radius: var(--sui_badge-border_radius);
   box-shadow: 0px
               0px
@@ -164,7 +164,7 @@
   --sui_badge-virtual_ring_width: --sui-border_width(3);
   --sui_badge-virtual_text_height: calc(var(--sui_badge-font_size) * var(--sui_badge-line_height));
   --sui_badge__svg-size: var(--sui_badge-virtual_text_height);
-  --sui_badge__svg-color: var(--sui_badge-color-normal);
+  --sui_badge__svg-color: var(--sui_badge-color);
 
   &.sui_badge-size_sm {
     --sui_badge-gap: --sui-space(1);
@@ -247,51 +247,51 @@
   }
 
   &.sui_badge-color_grey {
-    --sui_badge-color-normal: var(--sui-grey-solid-canvas_text-normal);
-    --sui_badge-background_color-normal: var(--sui-grey-solid-canvas-normal);
-    --sui_badge-border_color-normal: var(--sui-grey-solid-border-normal);
+    --sui_badge-color: var(--sui-grey-solid-canvas_text-normal);
+    --sui_badge-background_color: var(--sui-grey-solid-canvas-normal);
+    --sui_badge-border_color: var(--sui-grey-solid-border-normal);
   }
 
   &.sui_badge-color_blue {
-    --sui_badge-color-normal: var(--sui-blue-solid-canvas_text-normal);
-    --sui_badge-background_color-normal: var(--sui-blue-solid-canvas-normal);
-    --sui_badge-border_color-normal: var(--sui-blue-solid-border-normal);
+    --sui_badge-color: var(--sui-blue-solid-canvas_text-normal);
+    --sui_badge-background_color: var(--sui-blue-solid-canvas-normal);
+    --sui_badge-border_color: var(--sui-blue-solid-border-normal);
   }
 
   &.sui_badge-color_purple {
-    --sui_badge-color-normal: var(--sui-purple-solid-canvas_text-normal);
-    --sui_badge-background_color-normal: var(--sui-purple-solid-canvas-normal);
-    --sui_badge-border_color-normal: var(--sui-purple-solid-border-normal);
+    --sui_badge-color: var(--sui-purple-solid-canvas_text-normal);
+    --sui_badge-background_color: var(--sui-purple-solid-canvas-normal);
+    --sui_badge-border_color: var(--sui-purple-solid-border-normal);
   }
 
   &.sui_badge-color_magenta {
-    --sui_badge-color-normal: var(--sui-magenta-solid-canvas_text-normal);
-    --sui_badge-background_color-normal: var(--sui-magenta-solid-canvas-normal);
-    --sui_badge-border_color-normal: var(--sui-magenta-solid-border-normal);
+    --sui_badge-color: var(--sui-magenta-solid-canvas_text-normal);
+    --sui_badge-background_color: var(--sui-magenta-solid-canvas-normal);
+    --sui_badge-border_color: var(--sui-magenta-solid-border-normal);
   }
 
   &.sui_badge-color_red {
-    --sui_badge-color-normal: var(--sui-red-solid-canvas_text-normal);
-    --sui_badge-background_color-normal: var(--sui-red-solid-canvas-normal);
-    --sui_badge-border_color-normal: var(--sui-red-solid-border-normal);
+    --sui_badge-color: var(--sui-red-solid-canvas_text-normal);
+    --sui_badge-background_color: var(--sui-red-solid-canvas-normal);
+    --sui_badge-border_color: var(--sui-red-solid-border-normal);
   }
 
   &.sui_badge-color_orange {
-    --sui_badge-color-normal: var(--sui-orange-solid-canvas_text-normal);
-    --sui_badge-background_color-normal: var(--sui-orange-solid-canvas-normal);
-    --sui_badge-border_color-normal: var(--sui-orange-solid-border-normal);
+    --sui_badge-color: var(--sui-orange-solid-canvas_text-normal);
+    --sui_badge-background_color: var(--sui-orange-solid-canvas-normal);
+    --sui_badge-border_color: var(--sui-orange-solid-border-normal);
   }
 
   &.sui_badge-color_yellow {
-    --sui_badge-color-normal: var(--sui-yellow-solid-canvas_text-normal);
-    --sui_badge-background_color-normal: var(--sui-yellow-solid-canvas-normal);
-    --sui_badge-border_color-normal: var(--sui-yellow-solid-border-normal);
+    --sui_badge-color: var(--sui-yellow-solid-canvas_text-normal);
+    --sui_badge-background_color: var(--sui-yellow-solid-canvas-normal);
+    --sui_badge-border_color: var(--sui-yellow-solid-border-normal);
   }
 
   &.sui_badge-color_green {
-    --sui_badge-color-normal: var(--sui-green-solid-canvas_text-normal);
-    --sui_badge-background_color-normal: var(--sui-green-solid-canvas-normal);
-    --sui_badge-border_color-normal: var(--sui-green-solid-border-normal);
+    --sui_badge-color: var(--sui-green-solid-canvas_text-normal);
+    --sui_badge-background_color: var(--sui-green-solid-canvas-normal);
+    --sui_badge-border_color: var(--sui-green-solid-border-normal);
   }
 }
 
@@ -304,7 +304,7 @@
   }
 
   &.sui_badge-outlined {
-    --_sui_badge-border_color: var(--sui_badge-border_color-normal);
+    --_sui_badge-border_color: var(--sui_badge-border_color);
     --_sui_badge-border_width: var(--sui_badge-border_width);
   }
 

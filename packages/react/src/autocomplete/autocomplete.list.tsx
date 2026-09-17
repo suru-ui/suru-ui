@@ -32,7 +32,7 @@ export namespace AutocompleteListProps {
 }
 
 /**
- * {@link AutocompleteList} に渡すプロパティーです。
+ * {@link AutocompleteList} に渡す props です。
  */
 export type AutocompleteListProps = AutocompleteListProps.Render &
   AutocompleteListProps.SuruUI &

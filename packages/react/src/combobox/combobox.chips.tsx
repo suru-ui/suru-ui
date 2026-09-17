@@ -50,9 +50,6 @@ export const ComboboxChips: IComponent<ComboboxChipsProps> = function SuiCombobo
 
 export { ComboboxChips as Chips };
 
-/**
- * {@link ComboboxChips} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Chips {
   export type State = ComboboxChipsState;
 

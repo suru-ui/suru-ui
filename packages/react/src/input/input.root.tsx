@@ -3,7 +3,7 @@ import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import type { RenderProps } from "../_use-render.js";
-import { useActionGroupContext } from "../action-group/action-group.parts.js";
+import { useActionGroupContext } from "../action-group/action-group.context.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 

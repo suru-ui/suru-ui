@@ -55,9 +55,6 @@ export const ComboboxTrigger: IComponent<ComboboxTriggerProps> = function SuiCom
 
 export { ComboboxTrigger as Trigger };
 
-/**
- * {@link ComboboxTrigger} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Trigger {
   export type State = ComboboxTriggerState;
 

@@ -64,7 +64,7 @@ export namespace AlertRootProps {
     /**
      * アラートの角丸を指定します。
      *
-     * 既定値は {@link AlertRootProps.size|size}
+     * 既定値は {@link AlertRootProps.size|size} です。
      */
     radius?: AlertRootRadius | undefined;
 

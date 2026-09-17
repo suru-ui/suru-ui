@@ -80,6 +80,8 @@ export namespace TextareaRootProps {
 
     /**
      * テキストエリアの表示行数を指定します。
+     *
+     * 指定しないときはブラウザーの既定行数になります。
      */
     rows?: number | undefined;
 
@@ -110,7 +112,8 @@ export namespace TextareaRootProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Input>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    // `<textarea>` に存在しない `type` を除きます。
+    keyof Render | keyof SuruUI | keyof BaseUI | "type"
   >;
 }
 
@@ -130,6 +133,7 @@ export const TextareaRoot: IComponent<TextareaRootProps> = function SuiTextareaR
     size = "md",
     color = "grey",
     radius = size,
+    render = <textarea />,
     variant = "liquid",
     outlined = false,
     className,
@@ -141,7 +145,7 @@ export const TextareaRoot: IComponent<TextareaRootProps> = function SuiTextareaR
   return (
     <Input
       {...otherProps}
-      render={<textarea />}
+      render={render}
       className={cn(
         className,
         "sui_textarea",

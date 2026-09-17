@@ -74,8 +74,6 @@ export type ResizableHandleProps = ResizableHandleProps.Render &
 
 /**
  * 隣接するパネルのサイズを変更するハンドルです。
- *
- * マウス、タッチ、ペンのポインター操作と、矢印キーによる操作に対応します。
  */
 export const ResizableHandle: IComponent<ResizableHandleProps> = function SuiResizableHandle(
   props,

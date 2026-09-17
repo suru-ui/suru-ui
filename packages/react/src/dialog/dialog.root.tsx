@@ -1,7 +1,6 @@
 import { Dialog } from "@base-ui/react/dialog";
 import * as React from "react";
 
-import type { RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
 import type { DialogHandle } from "./dialog.handle.js";
 
@@ -11,12 +10,12 @@ import type { DialogHandle } from "./dialog.handle.js";
 export type DialogRootActions = Dialog.Root.Actions;
 
 /**
- * ダイアログの開閉状態を変更されるイベントの詳細です。
+ * ダイアログの開閉状態を変更するイベントの詳細です。
  */
 export type DialogRootChangeEventDetails = Dialog.Root.ChangeEventDetails;
 
 /**
- * ダイアログの開閉状態が変更される理由です。
+ * ダイアログの開閉状態を変更する理由です。
  */
 export type DialogRootChangeEventReason = Dialog.Root.ChangeEventReason;
 
@@ -26,11 +25,13 @@ export type DialogRootChangeEventReason = Dialog.Root.ChangeEventReason;
 export type DialogRootState = Dialog.Root.State;
 
 export namespace DialogRootProps {
-  export type Render = RenderProps<DialogRootState>;
+  export type Render = {};
 
   export type SuruUI<TPayload = any> = {
     /**
      * トリガーとダイアログに関連付けるためのハンドルです。
+     *
+     * {@link createDialogHandle} で作成します。
      */
     handle: DialogHandle<TPayload>;
   };

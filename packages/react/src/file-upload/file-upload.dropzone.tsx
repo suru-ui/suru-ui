@@ -64,7 +64,9 @@ export const FileUploadDropzone: IComponent<FileUploadDropzoneProps> =
             }
           },
           onClick() {
-            ctx?.open();
+            if (!disabled) {
+              ctx?.open();
+            }
           },
           disabled,
           className: cn<FileUploadDropzoneState>(

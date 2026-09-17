@@ -18,11 +18,15 @@ export namespace PaginationEllipsisProps {
   export type SuruUI = {
     /**
      * 飛び先のページ範囲の終了ページを指定します。
+     *
+     * 省略した場合は開始ページと同じ値が使われます。開始ページより小さい値を指定した場合は入れ替えて扱います。
      */
     end?: number | undefined;
 
     /**
      * 飛び先のページ範囲の開始ページを指定します。
+     *
+     * 終了ページより大きい値を指定した場合は入れ替えて扱います。
      */
     start?: number | undefined;
   };
@@ -68,8 +72,15 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
       "aria-label": ariaLabel,
       ...otherButtonProps
     } = props;
-    const resolvedEnd = end ?? start;
-    const label = ariaLabel ?? `${start}〜${resolvedEnd}ページへ移動`;
+    const resolvedStart = Math.min(
+      Math.max(1, Math.trunc(start)),
+      Math.max(1, Math.trunc(end ?? start)),
+    );
+    const resolvedEnd = Math.max(
+      Math.max(1, Math.trunc(start)),
+      Math.max(1, Math.trunc(end ?? start)),
+    );
+    const label = ariaLabel ?? `${resolvedStart}〜${resolvedEnd}ページへ移動`;
     const [editing, setEditing] = React.useState(false);
     const isDisabled = ctx?.disabled || disabled;
     const inputElement = useRender<HTMLInputElement, {}, boolean>({
@@ -100,12 +111,12 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
             return;
           }
 
-          ctx?.goToPage(Math.min(Math.max(value, start), resolvedEnd), {
+          ctx?.goToPage(Math.min(Math.max(value, resolvedStart), resolvedEnd), {
             event,
             reason: "ellipsis",
           });
         },
-        placeholder: String(start),
+        placeholder: String(resolvedStart),
         defaultValue: "",
         "aria-label": label,
       },

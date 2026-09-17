@@ -50,7 +50,9 @@ export const FileUploadItemDeleteTrigger: IComponent<FileUploadItemDeleteTrigger
         {
           type: "button",
           onClick() {
-            ctx?.remove(file);
+            if (!disabled) {
+              ctx?.remove(file);
+            }
           },
           disabled,
           className: "sui_file_upload_item_delete_trigger",

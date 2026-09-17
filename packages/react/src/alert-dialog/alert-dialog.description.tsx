@@ -40,7 +40,7 @@ export type AlertDialogDescriptionProps = AlertDialogDescriptionProps.Render &
   AlertDialogDescriptionProps.HTML;
 
 /**
- * アラートダイアログの内容を表示するコンポーネントです。
+ * アラートダイアログの説明文を表示するコンポーネントです。
  */
 export const AlertDialogDescription: IComponent<AlertDialogDescriptionProps> =
   function SuiAlertDialogDescription(props) {

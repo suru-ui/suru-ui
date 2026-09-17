@@ -29,6 +29,8 @@ export type ScrollAreaSlotProps = {
 
   /**
    * {@link ScrollAreaCorner} に渡す props です。
+   *
+   * 水平方向のスクロールバーを表示するときだけ描画されます。
    */
   readonly corner?: ScrollAreaCornerProps | undefined;
 
@@ -63,23 +65,33 @@ export type ScrollAreaSlotProps = {
  */
 export type ScrollAreaState = ScrollAreaRootState;
 
+type ScrollAreaPropsMain = Pick<ScrollAreaContentProps, "children"> & {
+  /**
+   * 水平方向のスクロールバーを表示するかどうかを指定します。
+   *
+   * 垂直方向のスクロールバーは常に描画されます。
+   *
+   * @default false
+   */
+  horizontal?: boolean | undefined;
+
+  /**
+   * 各パーツに個別の props を渡すためのオブジェクトです。
+   */
+  slotProps?: ScrollAreaSlotProps | undefined;
+};
+
+type ScrollAreaPropsRoot = Omit<ScrollAreaRootProps, keyof ScrollAreaPropsMain>;
+
+type ScrollAreaPropsContent = Omit<
+  ScrollAreaContentProps,
+  keyof ScrollAreaPropsMain | keyof ScrollAreaPropsRoot
+>;
+
 /**
  * {@link ScrollArea} に渡す props です。
  */
-export type ScrollAreaProps = Omit<ScrollAreaRootProps, "children"> &
-  Pick<ScrollAreaContentProps, "children"> & {
-    /**
-     * 水平方向のスクロールバーを表示するかどうかを指定します。
-     *
-     * @default false
-     */
-    horizontal?: boolean | undefined;
-
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
-    slotProps?: ScrollAreaSlotProps | undefined;
-  };
+export type ScrollAreaProps = ScrollAreaPropsMain & ScrollAreaPropsRoot & ScrollAreaPropsContent;
 
 // API
 // ---

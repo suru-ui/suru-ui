@@ -52,32 +52,32 @@ export type SliderSlotProps = {
   /**
    * {@link SliderControl} に渡す props です。
    */
-  readonly control?: SliderControlProps | undefined;
+  readonly control?: Omit<SliderControlProps, "children"> | undefined;
 
   /**
    * {@link SliderIndicator} に渡す props です。
    */
-  readonly indicator?: SliderIndicatorProps | undefined;
+  readonly indicator?: Omit<SliderIndicatorProps, "children"> | undefined;
 
   /**
    * {@link SliderLabel} に渡す props です。
    */
-  readonly label?: SliderLabelProps | undefined;
+  readonly label?: Omit<SliderLabelProps, "children"> | undefined;
 
   /**
    * {@link SliderThumb} に渡す props です。
    */
-  readonly thumb?: SliderThumbProps | undefined;
+  readonly thumb?: Omit<SliderThumbProps, "children"> | undefined;
 
   /**
    * {@link SliderTrack} に渡す props です。
    */
-  readonly track?: SliderTrackProps | undefined;
+  readonly track?: Omit<SliderTrackProps, "children"> | undefined;
 
   /**
    * {@link SliderValue} に渡す props です。
    */
-  readonly value?: SliderValueProps | undefined;
+  readonly value?: Omit<SliderValueProps, "children"> | undefined;
 };
 
 /**
@@ -215,13 +215,11 @@ export const useSliderAPI: IUseSliderAPI = function useSuiSliderAPI(props) {
         };
       }
 
-      if (!labelProps) {
-        return null;
+      if (labelProps) {
+        return labelProps;
       }
 
-      return {
-        ...labelProps,
-      };
+      return null;
     },
     getTrackProps() {
       return trackProps;
@@ -234,13 +232,11 @@ export const useSliderAPI: IUseSliderAPI = function useSuiSliderAPI(props) {
         };
       }
 
-      if (!valueProps) {
-        return null;
+      if (valueProps) {
+        return valueProps;
       }
 
-      return {
-        ...valueProps,
-      };
+      return null;
     },
     getControlProps() {
       return controlProps;

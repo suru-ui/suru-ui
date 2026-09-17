@@ -63,9 +63,9 @@ export const TooltipPortal: IComponent<TooltipPortalProps> = function SuiTooltip
       className={cn(
         className,
         "sui_tooltip_portal",
-        `sui_tooltip-size_${size}`,
-        `sui_tooltip-radius_${radius}`,
-        outlined && "sui_tooltip-outlined",
+        `sui_tooltip_portal-size_${size}`,
+        `sui_tooltip_portal-radius_${radius}`,
+        outlined && "sui_tooltip_portal-outlined",
       )}
       data-scope={dataScope}
     />

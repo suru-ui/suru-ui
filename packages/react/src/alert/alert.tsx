@@ -1,5 +1,5 @@
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import {
   type AlertRootSize,
   type AlertIconProps,
@@ -62,12 +62,18 @@ export type AlertState = AlertRootState;
 /**
  * {@link Alert} に渡す props です。
  */
-export type AlertProps = Omit<AlertRootProps, "children"> &
-  Pick<AlertContentProps, "children"> & {
+export type AlertProps = Override<
+  AlertRootProps,
+  {
     /**
      * アラートの操作ボタンです。
      */
     actions?: AlertActionsProps["children"] | undefined;
+
+    /**
+     * アラートの本文です。
+     */
+    children?: AlertContentProps["children"] | undefined;
 
     /**
      * アラートに表示するアイコンです。
@@ -83,7 +89,8 @@ export type AlertProps = Omit<AlertRootProps, "children"> &
      * アラートのタイトルです。
      */
     title?: AlertTitleProps["children"] | undefined;
-  };
+  }
+>;
 
 // API
 // ---

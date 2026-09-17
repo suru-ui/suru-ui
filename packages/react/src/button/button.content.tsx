@@ -2,7 +2,7 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
-import { ButtonContext, useButtonContext } from "./button.context.js";
+import { type ButtonContext, useButtonContext } from "./button.context.js";
 
 /**
  * {@link ButtonContent} が持つ状態です。

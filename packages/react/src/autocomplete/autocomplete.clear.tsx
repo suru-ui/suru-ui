@@ -36,7 +36,7 @@ export namespace AutocompleteClearProps {
 }
 
 /**
- * {@link AutocompleteClear} に渡すプロパティーです。
+ * {@link AutocompleteClear} に渡す props です。
  */
 export type AutocompleteClearProps = AutocompleteClearProps.Render &
   AutocompleteClearProps.SuruUI &

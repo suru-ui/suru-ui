@@ -125,6 +125,8 @@ export type FormatNumberRootProps = FormatNumberRootProps.Render &
 
 /**
  * 数値をロケールに従って書式化して表示するルートコンポーネントです。
+ *
+ * テキストノードとして描画されるため、見た目の調整は親要素で行います。
  */
 export const FormatNumberRoot: IComponent<FormatNumberRootProps> = function SuiFormatNumberRoot(
   props,

@@ -1,7 +1,6 @@
 import { Field } from "@base-ui/react/field";
 import * as React from "react";
 
-import type { RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
 
 /**
@@ -10,7 +9,7 @@ import type { IComponent } from "../types.js";
 export type FieldValidityState = Field.Validity.State;
 
 export namespace FieldValidityProps {
-  export type Render = RenderProps<FieldValidityState>;
+  export type Render = {};
 
   export type SuruUI = {};
 
@@ -41,7 +40,7 @@ export type FieldValidityProps = FieldValidityProps.Render &
 /**
  * フィールドの検証状態に応じてカスタムメッセージを表示するコンポーネントです。
  *
- * `children` には検証状態を受け取る関数を指定します。
+ * `children` には検証状態を受け取る関数を指定します。それ自身は HTML 要素をレンダリングしません。
  */
 export const FieldValidity: IComponent<FieldValidityProps> = function SuiFieldValidity(props) {
   return <Field.Validity {...props} />;

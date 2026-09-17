@@ -51,7 +51,14 @@
     position: relative;
     display: flex;
     flex-shrink: 0;
+  }
+
+  &.sui_segments-orientation_horizontal .sui_segments_list {
     flex-direction: row;
+  }
+
+  &.sui_segments-orientation_vertical .sui_segments_list {
+    flex-direction: column;
   }
 }
 
@@ -120,6 +127,7 @@
     touch-action: manipulation;
     cursor: default;
     user-select: none;
+    -webkit-tap-highlight-color: transparent;
     outline-style: solid;
     background-color: transparent;
   }

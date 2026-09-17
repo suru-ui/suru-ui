@@ -136,7 +136,7 @@ interface IUseButtonAPI {
    * {@link ButtonAPI} を作成します。
    *
    * @param props {@link Button} の props です。
-   * @returns ボタンの API です
+   * @returns ボタンの API です。
    */
   (props: ButtonProps): ButtonAPI;
 }
@@ -178,9 +178,9 @@ export const useButtonAPI: IUseButtonAPI = function useSuiButtonAPI(props) {
     },
     getCircularProgressProps() {
       return {
+        ...circularProgressProps,
         percentage,
         indeterminate,
-        ...circularProgressProps,
       };
     },
     getCircularProgressFillProps() {

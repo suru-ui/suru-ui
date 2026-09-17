@@ -55,26 +55,24 @@
   --sui_radio-focusring_width: var(--sui-focusring_width);
   --sui_radio-focusring_color: var(--sui-focusring_color);
   --sui_radio-focusring_offset: var(--sui-focusring_offset);
+  --sui_radio-border_width: --sui-border_width(2);
 
   &.sui_radio-size_sm {
     --sui_radio-size: calc(
                         var(--sui-text-oln-sm-m-font_size) * var(--sui-text-oln-sm-m-line_height)
                       );
-    --sui_radio-border_width: --sui-border_width(2);
   }
 
   &.sui_radio-size_md {
     --sui_radio-size: calc(
                         var(--sui-text-oln-md-m-font_size) * var(--sui-text-oln-md-m-line_height)
                       );
-    --sui_radio-border_width: --sui-border_width(2);
   }
 
   &.sui_radio-size_lg {
     --sui_radio-size: calc(
                         var(--sui-text-oln-lg-m-font_size) * var(--sui-text-oln-lg-m-line_height)
                       );
-    --sui_radio-border_width: --sui-border_width(2);
   }
 
   &.sui_radio-radius_none {

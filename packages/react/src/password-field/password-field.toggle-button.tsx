@@ -42,21 +42,26 @@ export const PasswordFieldToggleButton: IComponent<PasswordFieldToggleButtonProp
     const ctx = usePasswordFieldContext();
     const { visible, setVisible } = ctx;
     const {
+      onClick,
       children = visible ? <EyeOffIcon /> : <EyeIcon />,
       disabled = false,
       "aria-label": ariaLabel,
       ...otherButtonProps
     } = props;
     const label = ariaLabel ?? (visible ? "パスワードを隠す" : "パスワードを表示");
+    const handleClick: NonNullable<PasswordFieldToggleButtonProps["onClick"]> = (evt) => {
+      onClick?.(evt);
+      if (!evt.defaultPrevented) {
+        setVisible(!visible);
+      }
+    };
 
     return useRender({
       props: [
         otherButtonProps,
         {
           type: "button",
-          onClick() {
-            setVisible(!visible);
-          },
+          onClick: handleClick,
           children,
           disabled,
           className: cn(

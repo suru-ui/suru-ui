@@ -149,6 +149,7 @@ export const SegmentsRoot: IComponent<SegmentsRootProps> = function SuiSegmentsR
         `sui_segments-color_${color}`,
         `sui_segments-radius_${radius}`,
         `sui_segments-active_variant_${activeVariant}`,
+        (state) => `sui_segments-orientation_${state.orientation}`,
       )}
       data-scope={dataScope}
     />

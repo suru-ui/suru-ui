@@ -47,9 +47,6 @@ export const ComboboxValue: IComponent<ComboboxValueProps> = function SuiCombobo
 
 export { ComboboxValue as Value };
 
-/**
- * {@link ComboboxValue} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Value {
   export type State = ComboboxValueState;
 

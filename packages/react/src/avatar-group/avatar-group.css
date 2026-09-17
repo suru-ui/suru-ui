@@ -13,6 +13,7 @@
 } /* @layer */
 
 /* Avatar */
+/* アバターは data-scope を持つため、下限から除外して重ね合わせの装飾が届くようにします。 */
 @layer sui.component {
 @scope (.sui_avatar_group) to ([data-scope]:not(.sui_avatar)) {
 

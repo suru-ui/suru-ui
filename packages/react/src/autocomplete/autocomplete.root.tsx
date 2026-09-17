@@ -158,7 +158,7 @@ export namespace AutocompleteRootProps {
 }
 
 /**
- * {@link AutocompleteRoot} に渡すプロパティーです。
+ * {@link AutocompleteRoot} に渡す props です。
  *
  * @template TItemValue 項目の値の型です。
  */

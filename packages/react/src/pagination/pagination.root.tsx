@@ -48,6 +48,8 @@ export namespace PaginationRootProps {
   export type SuruUI = {
     /**
      * 総ページ数を指定します。
+     *
+     * 小数値を指定した場合は切り捨てます。
      */
     totalPages: number;
 
@@ -142,11 +144,11 @@ export const PaginationRoot: IComponent<PaginationRootProps> = function SuiPagin
     "data-scope": dataScope = "",
     ...otherNavProps
   } = props;
-  const maxPage = Math.max(totalPages, 1);
+  const maxPage = Math.max(1, Math.trunc(totalPages));
   const [innerPage, setInnerPage] = React.useState(() =>
     Math.min(Math.max(Math.trunc(defaultPage), 1), maxPage),
   );
-  const page = Math.min(Math.max(pageProp ?? innerPage, 1), maxPage);
+  const page = Math.min(Math.max(Math.trunc(pageProp ?? innerPage), 1), maxPage);
   const goToPage = React.useCallback<PaginationGoToPage>(
     (nextPage, details) => {
       if (disabled || totalPages < 1) {

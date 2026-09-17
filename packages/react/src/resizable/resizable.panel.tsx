@@ -1,4 +1,3 @@
-import { useControlled } from "@base-ui/utils/useControlled";
 import { useMergedRefs } from "@base-ui/utils/useMergedRefs";
 import * as React from "react";
 import {
@@ -128,26 +127,21 @@ export const ResizablePanel: IComponent<ResizablePanelProps> = function SuiResiz
   } = props;
   const internalPanelRef = React.useRef<PanelImperativeHandle>(null);
   const panelRef = useMergedRefs(internalPanelRef, panelRefProp);
-  const [size, setSize] = useControlled({
-    name: "ResizablePanel",
-    state: "size",
-    default: defaultSize,
-    controlled: sizeProp,
-  });
   const handleResize: PanelProps["onResize"] = (nextSize, id, previousSize) => {
-    setSize(nextSize.asPercentage);
     onResize?.(nextSize, id, previousSize);
     onSizeChange?.(nextSize.asPercentage);
   };
 
+  // 制御値が変わったときだけ命令型 API で反映します。
+  // リサイズ通知のたびに反映すると、通知と反映が循環するためです。
   React.useEffect(() => {
-    if (size !== undefined) {
-      const nextSize = normalizePanelSize(size);
+    if (sizeProp !== undefined) {
+      const nextSize = normalizePanelSize(sizeProp);
       if (nextSize !== undefined) {
         internalPanelRef.current?.resize(nextSize);
       }
     }
-  }, [size]);
+  }, [sizeProp]);
 
   return useRender({
     props: [
@@ -160,6 +154,7 @@ export const ResizablePanel: IComponent<ResizablePanelProps> = function SuiResiz
         onResize: handleResize,
         panelRef,
         className: cn<ResizablePanelState>("sui_resizable_panel"),
+        defaultSize: normalizePanelSize(defaultSize ?? sizeProp),
       },
     ],
     state: {

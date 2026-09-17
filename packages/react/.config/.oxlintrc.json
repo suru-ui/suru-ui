@@ -24,6 +24,7 @@
     "vitest/no-focused-tests": "off", // デバッグ作業を容易にします。
     "typescript/no-duplicate-type-constituents": "off", // 形式的に必要な処理を残します。
     "typescript/no-redundant-type-constituents": "off", // 形式的に必要な処理を残します。
+    "react/refs": "off", // 不要なルールです。
     "react/no-children-prop": "off", // 一時的に無効化
     "jsx_a11y/label-has-associated-control": "off" // 一時的に無効化
   },

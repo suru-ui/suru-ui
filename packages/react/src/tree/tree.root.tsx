@@ -544,35 +544,42 @@ export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
     }
   };
 
-  return (
-    <TreeContext value={ctx}>
-      {useRender<HTMLDivElement, {}>({
-        props: [
-          otherDivProps,
-          {
-            ref: rootRef,
-            role: "tree",
-            onFocus: handleFocus,
-            children:
-              typeof children !== "function"
-                ? children
-                : visibleNodes.map(({ node, level, setSize, posInSet }) => (
-                    <React.Fragment key={node.id}>
-                      {children(node, level, posInSet, setSize)}
-                    </React.Fragment>
-                  )),
-            tabIndex: 0,
-            className: cn("sui_tree", `sui_tree-radius_${radius}`, `sui_tree-size_${size}`),
-            onKeyDown: handleKeyDown,
-            "aria-multiselectable": true,
-            "aria-activedescendant": activeId != null ? getItemId(activeId) : undefined,
-            "data-scope": dataScope,
-          },
-        ],
-        defaultTagName: "div",
-      })}
-    </TreeContext>
-  );
+  const element = useRender({
+    props: [
+      otherDivProps,
+      {
+        ref: rootRef,
+        role: "tree",
+        onFocus: handleFocus,
+        children:
+          typeof children !== "function"
+            ? children
+            : visibleNodes.map(({ node, level, setSize, posInSet }) => (
+                <React.Fragment key={node.id}>
+                  {children(node, level, posInSet, setSize)}
+                </React.Fragment>
+              )),
+        tabIndex: 0,
+        className: cn<TreeRootState>(
+          "sui_tree",
+          `sui_tree-radius_${radius}`,
+          `sui_tree-size_${size}`,
+        ),
+        onKeyDown: handleKeyDown,
+        "aria-multiselectable": true,
+        "aria-activedescendant": activeId != null ? getItemId(activeId) : undefined,
+        "data-scope": dataScope,
+      },
+    ],
+    state: {
+      value,
+      activeId,
+      expanded: expandedValue,
+    },
+    defaultTagName: "div",
+  });
+
+  return <TreeContext value={ctx}>{element}</TreeContext>;
 };
 
 const defaultRootItemRenderer: ITreeRootItemRenderer = (node, level, posInSet, setSize) => {

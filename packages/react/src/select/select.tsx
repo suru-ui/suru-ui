@@ -254,6 +254,8 @@ export interface SelectAPI<
   getGroupProps(item: SelectListItemGroup): Omit<SelectGroupProps, "children">;
 
   /**
+   * グループに含まれる項目を取得します。
+   *
    * @param item グループです。
    */
   getGroupedItems(item: SelectListItemGroup): SelectListItemGroup["items"];
@@ -512,7 +514,7 @@ export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI<
       };
     },
     getSeparatorProps(index, items) {
-      if (index < items.length - 1) {
+      if (index >= items.length - 1) {
         return null;
       }
 
@@ -639,9 +641,7 @@ export const Select: ISelect = /*#__PURE__*/ Object.assign(
                     return (
                       <SelectItem {...api.getItemProps(item, index)} key={index}>
                         <SelectItemText {...api.getItemTextProps(item)} />
-                        <SelectItemIndicator {...api.getItemIndicatorProps()}>
-                          <CheckIcon />
-                        </SelectItemIndicator>
+                        <SelectItemIndicator {...api.getItemIndicatorProps()} />
                       </SelectItem>
                     );
                   }}

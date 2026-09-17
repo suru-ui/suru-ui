@@ -50,9 +50,6 @@ export const ComboboxCollection: IComponent<ComboboxCollectionProps> =
 
 export { ComboboxCollection as Collection };
 
-/**
- * {@link ComboboxCollection} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Collection {
   export type State = ComboboxCollectionState;
 

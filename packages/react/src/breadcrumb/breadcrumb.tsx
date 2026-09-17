@@ -71,18 +71,22 @@ export type BreadcrumbSlotProps = {
 /**
  * {@link Breadcrumb} に渡す props です。
  */
-export type BreadcrumbProps = Omit<BreadcrumbRootProps, "children" | "items"> &
-  Pick<BreadcrumbListProps, "children"> & {
-    /**
-     * パンくずリストの項目です。
-     */
-    items: readonly BreadcrumbItemObject[];
+export type BreadcrumbProps = Omit<BreadcrumbRootProps, "children" | "items"> & {
+  /**
+   * パンくずリストの項目です。
+   */
+  items: readonly BreadcrumbItemObject[];
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
-    slotProps?: BreadcrumbSlotProps | undefined;
-  };
+  /**
+   * パンくずリストの内容、または各項目をレンダリングする関数です。
+   */
+  children?: BreadcrumbListProps["children"] | undefined;
+
+  /**
+   * 各パーツに個別の props を渡すためのオブジェクトです。
+   */
+  slotProps?: BreadcrumbSlotProps | undefined;
+};
 
 // API
 // ---
@@ -198,8 +202,6 @@ export { type BreadcrumbAPI as API, useBreadcrumbAPI as useAPI };
 
 /**
  * パンくずリストを表示するコンポーネントです。
- *
- * {@link BreadcrumbProps.items|items} に指定した順に項目を並べ、項目の間にセパレーターを挿入します。最後の項目は、{@link BreadcrumbItemObject.current|current} を指定しない限り現在位置として描画します。
  */
 export const Breadcrumb: IComponent<BreadcrumbProps> = function SuiBreadcrumb(props) {
   const api = useBreadcrumbAPI(props);

@@ -111,6 +111,8 @@ type HoverCardPropsMain<TPayload = any> = {
 
   /**
    * トリガーとホバーカードに関連付けるためのハンドルです。
+   *
+   * {@link createHandle} で作成します。Root 内に {@link HoverCardTrigger} を配置する場合は省略できます。
    */
   handle?: HoverCardHandle<TPayload> | undefined;
 

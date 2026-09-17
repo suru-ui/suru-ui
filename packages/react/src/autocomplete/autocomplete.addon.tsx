@@ -22,7 +22,7 @@ export namespace AutocompleteAddonProps {
 }
 
 /**
- * {@link AutocompleteAddon} に渡すプロパティーです。
+ * {@link AutocompleteAddon} に渡す props です。
  */
 export type AutocompleteAddonProps = AutocompleteAddonProps.Render &
   AutocompleteAddonProps.SuruUI &

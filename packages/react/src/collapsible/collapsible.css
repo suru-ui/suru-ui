@@ -184,8 +184,8 @@
 
 /* 変異 */
 :scope {
-  .sui_collapsible-transition_status_starting,
-  .sui_collapsible-transition_status_ending {
+  &.sui_collapsible-transition_status_starting,
+  &.sui_collapsible-transition_status_ending {
     --_sui_collapsible_content-height: 0px;
   }
 }

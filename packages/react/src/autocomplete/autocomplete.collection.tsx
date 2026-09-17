@@ -31,7 +31,7 @@ export namespace AutocompleteCollectionProps {
 }
 
 /**
- * {@link AutocompleteCollection} に渡すプロパティーです。
+ * {@link AutocompleteCollection} に渡す props です。
  */
 export type AutocompleteCollectionProps = AutocompleteCollectionProps.Render &
   AutocompleteCollectionProps.SuruUI &

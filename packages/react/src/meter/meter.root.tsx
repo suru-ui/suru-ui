@@ -12,7 +12,7 @@ import type { IComponent } from "../types.js";
 export type MeterRootColor = Color;
 
 /**
- * メーターの角丸です。
+ * メーターの角丸の大きさです。
  *
  * - `"none"`: 直角
  * - `"sm"`: 小さめ

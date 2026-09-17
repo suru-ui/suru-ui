@@ -32,6 +32,8 @@ export type CollapsibleIndicatorProps = CollapsibleIndicatorProps.Render &
 
 /**
  * コラプシブルの展開状態を示すアイコンを表示するコンポーネントです。
+ *
+ * 開閉に合わせて回転し、現在の状態を視覚的に伝えます。
  */
 export const CollapsibleIndicator: IComponent<CollapsibleIndicatorProps> =
   function SuiCollapsibleIndicator(props) {

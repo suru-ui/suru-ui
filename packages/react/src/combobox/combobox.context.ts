@@ -81,9 +81,6 @@ export const useComboboxContext: IUseContext<ComboboxContext> = useSuiComboboxCo
 
 export { ComboboxContext as Context, useComboboxContext as useContext };
 
-/**
- * {@link Context} の型名前空間です。
- */
 export namespace Context {
   export type Color = ComboboxContextColor;
 

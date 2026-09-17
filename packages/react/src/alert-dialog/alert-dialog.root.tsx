@@ -1,7 +1,6 @@
 import { AlertDialog } from "@base-ui/react/alert-dialog";
 import * as React from "react";
 
-import type { RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
 import type { AlertDialogHandle } from "./alert-dialog.handle.js";
 
@@ -26,7 +25,7 @@ export type AlertDialogRootChangeEventReason = AlertDialog.Root.ChangeEventReaso
 export type AlertDialogRootState = AlertDialog.Root.State;
 
 export namespace AlertDialogRootProps {
-  export type Render = RenderProps<AlertDialogRootState>;
+  export type Render = {};
 
   export type SuruUI<TPayload = any> = {
     /**

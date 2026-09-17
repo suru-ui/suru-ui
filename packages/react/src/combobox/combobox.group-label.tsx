@@ -53,9 +53,6 @@ export const ComboboxGroupLabel: IComponent<ComboboxGroupLabelProps> =
 
 export { ComboboxGroupLabel as GroupLabel };
 
-/**
- * {@link ComboboxGroupLabel} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace GroupLabel {
   export type State = ComboboxGroupLabelState;
 

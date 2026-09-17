@@ -52,7 +52,7 @@ export type RadioProps = Omit<RadioRootProps, "children"> &
 // ---
 
 /**
- * {@link Radio} を構成する各パーツの props を作成するための API です。
+ * {@link Radio} を構成する各パーツの props などを作成するための API です。
  */
 export interface RadioAPI {
   /**
@@ -88,8 +88,8 @@ export const useRadioAPI: IUseRadioAPI = function useSuiRadioAPI(props) {
     },
     getIndicatorProps() {
       return {
-        children,
         ...indicatorProps,
+        children,
       };
     },
   };

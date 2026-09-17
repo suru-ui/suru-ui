@@ -109,12 +109,16 @@ export type PaginationProps = Omit<PaginationRootProps, "children"> & {
   /**
    * 先頭と末尾に常に表示するページ数を指定します。
    *
+   * 小数値は切り捨て、負の値は 0 として扱います。
+   *
    * @default 1
    */
   boundaryCount?: number | undefined;
 
   /**
    * 現在のページの前後に表示するページ数を指定します。
+   *
+   * 小数値は切り捨て、負の値は 0 として扱います。
    *
    * @default 1
    */
@@ -201,11 +205,11 @@ export const usePaginationAPI: IUsePaginationAPI = function useSuiPaginationAPI(
     boundaryCount = 1,
     ...otherRootProps
   } = props;
-  const maxPage = Math.max(totalPages, 1);
+  const maxPage = Math.max(1, Math.trunc(totalPages));
   const [innerPage, setInnerPage] = React.useState(() =>
     Math.min(Math.max(Math.trunc(defaultPage), 1), maxPage),
   );
-  const page = Math.min(Math.max(pageProp ?? innerPage, 1), maxPage);
+  const page = Math.min(Math.max(Math.trunc(pageProp ?? innerPage), 1), maxPage);
   const handlePageChange: PaginationGoToPage = (nextPage, details) => {
     if (disabled || totalPages < 1) {
       return;
@@ -222,7 +226,12 @@ export const usePaginationAPI: IUsePaginationAPI = function useSuiPaginationAPI(
 
     onPageChange?.(target, details);
   };
-  const items = getPaginationItems(totalPages, page, siblingCount, boundaryCount);
+  const items = getPaginationItems(
+    totalPages,
+    page,
+    Math.max(0, Math.trunc(siblingCount)),
+    Math.max(0, Math.trunc(boundaryCount)),
+  );
 
   return {
     getItems() {
@@ -313,13 +322,24 @@ export namespace Pagination {
   export type Size = PaginationSize;
 }
 
+/**
+ * 表示する項目の一覧を組み立てます。
+ *
+ * 先頭末尾の固定表示と現在ページ前後の表示から重複を取り除き、離れた区間を省略記号でつなぎます。
+ *
+ * @param totalPages 総ページ数です。
+ * @param page 現在のページです。
+ * @param siblingCount 現在のページの前後に表示するページ数です。
+ * @param boundaryCount 先頭と末尾に常に表示するページ数です。
+ * @returns 表示する項目の一覧です。
+ */
 function getPaginationItems(
   totalPages: number,
   page: number,
   siblingCount: number,
   boundaryCount: number,
 ): PaginationItemObject[] {
-  const maxPage = Math.max(totalPages, 1);
+  const maxPage = Math.max(1, Math.trunc(totalPages));
   const pages = new Set<number>();
 
   for (let i = 1; i <= Math.min(boundaryCount, maxPage); i++) {

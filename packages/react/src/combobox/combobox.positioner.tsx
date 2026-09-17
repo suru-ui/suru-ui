@@ -64,9 +64,6 @@ export const ComboboxPositioner: IComponent<ComboboxPositionerProps> =
 
 export { ComboboxPositioner as Positioner };
 
-/**
- * {@link ComboboxPositioner} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Positioner {
   export type State = ComboboxPositionerState;
 

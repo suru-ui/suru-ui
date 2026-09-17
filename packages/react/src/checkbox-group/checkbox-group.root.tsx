@@ -95,7 +95,7 @@ export namespace CheckboxGroupRootProps {
      *
      * グループ内のチェックボックスより優先されます。
      *
-     * 既定値は {@link CheckboxGroupRootProps.size|size}
+     * 既定値は {@link CheckboxGroupRootProps.size|size} です。
      */
     radius?: CheckboxGroupRootRadius | undefined;
 

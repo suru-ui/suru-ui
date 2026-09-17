@@ -16,7 +16,9 @@ export namespace ActionGroupSeparatorProps {
 
   export type SuruUI = {
     /**
-     * 区切り線の向きを指定します。省略時は親 ActionGroup の向きを使用します。
+     * 区切り線の向きを指定します。
+     *
+     * 省略時は親 ActionGroup の向きを使用し、親がない場合は `"horizontal"` になります。
      */
     orientation?: ActionGroupRootOrientation | undefined;
   };
@@ -44,20 +46,20 @@ export const ActionGroupSeparator: IComponent<ActionGroupSeparatorProps> =
   function SuiActionGroupSeparator(props) {
     const ctx = useActionGroupContext(true);
     const {
-      className,
+      role = "separator",
       orientation: orientationProp,
-      "aria-orientation": ariaOrientation = orientationProp ?? ctx?.orientation ?? "horizontal",
+      "aria-orientation": ariaOrientationProp,
       ...otherDivProps
     } = props;
     const orientation = orientationProp ?? ctx?.orientation ?? "horizontal";
+    const ariaOrientation = ariaOrientationProp ?? orientation;
 
     return useRender({
       props: [
         otherDivProps,
         {
-          role: "separator",
+          role,
           className: cn(
-            className,
             "sui_action_group_separator",
             `sui_action_group_separator-orientation_${orientation}`,
           ),

@@ -1587,12 +1587,17 @@
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+@layer sui.important {
+@scope (.sui_combobox_portal) to ([data-scope]) {
+
 /* Item */
 :scope {
   .sui_combobox_item-disabled {
-    color: var(--sui-disabled-naked-canvas_text);
     cursor: not-allowed;
-    background-color: transparent;
   }
 }
 

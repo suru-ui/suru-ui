@@ -50,9 +50,6 @@ export const ComboboxEmpty: IComponent<ComboboxEmptyProps> = function SuiCombobo
 
 export { ComboboxEmpty as Empty };
 
-/**
- * {@link ComboboxEmpty} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Empty {
   export type State = ComboboxEmptyState;
 

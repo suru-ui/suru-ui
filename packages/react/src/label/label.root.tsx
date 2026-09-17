@@ -49,6 +49,8 @@ export type LabelRootProps = LabelRootProps.Render &
 
 /**
  * ラベルのルートコンポーネントです。
+ *
+ * フォームコントロールと関連付けられる見出しを表示します。
  */
 export const LabelRoot: IComponent<LabelRootProps> = function SuiLabelRoot(props) {
   const {

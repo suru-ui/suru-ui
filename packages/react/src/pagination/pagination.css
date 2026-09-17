@@ -155,5 +155,15 @@
   }
 }
 
+/* EllipsisInput */
+:scope {
+  &.sui_pagination-disabled .sui_pagination_ellipsis_input,
+  .sui_pagination_ellipsis_input:disabled {
+    color: var(--sui-disabled-liquid-canvas_text);
+    cursor: not-allowed;
+    background-color: var(--sui-disabled-liquid-canvas);
+  }
+}
+
 } /* @scope */
 } /* @layer */

@@ -68,10 +68,16 @@
   }
 
   .sui_scroll_area_scrollbar-orientation_vertical {
+    top: 0px;
+    right: 0px;
+    bottom: var(--scroll-area-corner-height, 0px);
     width: 10px;
   }
 
   .sui_scroll_area_scrollbar-orientation_horizontal {
+    right: var(--scroll-area-corner-width, 0px);
+    bottom: 0px;
+    left: 0px;
     flex-direction: row;
     height: 10px;
   }
@@ -192,6 +198,11 @@
 /* 固定 */
 :scope {
   .sui_scroll_area_corner {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    width: var(--scroll-area-corner-width);
+    height: var(--scroll-area-corner-height);
     background-color: transparent;
   }
 }

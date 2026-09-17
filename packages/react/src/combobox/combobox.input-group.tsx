@@ -76,9 +76,6 @@ export const ComboboxInputGroup: IComponent<ComboboxInputGroupProps> =
 
 export { ComboboxInputGroup as InputGroup };
 
-/**
- * {@link ComboboxInputGroup} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace InputGroup {
   export type State = ComboboxInputGroupState;
 

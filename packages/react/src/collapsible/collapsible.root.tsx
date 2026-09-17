@@ -68,6 +68,8 @@ export type CollapsibleRootProps = CollapsibleRootProps.Render &
 
 /**
  * コラプシブルのルートコンポーネントです。
+ *
+ * 開閉状態を管理し、トリガーと内容をグループ化します。
  */
 export const CollapsibleRoot: IComponent<CollapsibleRootProps> = function SuiCollapsibleRoot(
   props,

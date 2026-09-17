@@ -50,11 +50,9 @@ export type BreadcrumbLinkProps = BreadcrumbLinkProps.Render &
 
 /**
  * パンくずのリンクコンポーネントです。
- *
- * `current` を `true` にすると、現在位置を示す要素として描画します。
  */
 export const BreadcrumbLink: IComponent<BreadcrumbLinkProps> = function SuiBreadcrumbLink(props) {
-  const { current = false, onClick, disabled = false, ...otherAnchorProps } = props;
+  const { href, current = false, onClick, disabled = false, tabIndex, ...otherAnchorProps } = props;
   const handleOnClick: NonNullable<BreadcrumbLinkProps["onClick"]> = (event) => {
     onClick?.(event);
     if (disabled && !event.defaultPrevented) {
@@ -66,9 +64,9 @@ export const BreadcrumbLink: IComponent<BreadcrumbLinkProps> = function SuiBread
     props: [
       otherAnchorProps,
       {
-        href: disabled ? undefined : otherAnchorProps.href,
+        href: current || disabled ? undefined : href,
         onClick: handleOnClick,
-        tabIndex: disabled && !current ? -1 : otherAnchorProps.tabIndex,
+        tabIndex: disabled && !current ? -1 : tabIndex,
         className: cn(
           "sui_breadcrumb_link",
           current && "sui_breadcrumb_link-current",
@@ -76,6 +74,7 @@ export const BreadcrumbLink: IComponent<BreadcrumbLinkProps> = function SuiBread
         ),
         "aria-current": current ? "page" : undefined,
         "aria-disabled": disabled || undefined,
+        "data-href": current || disabled ? href : undefined,
       },
     ],
     defaultTagName: current ? "span" : "a",

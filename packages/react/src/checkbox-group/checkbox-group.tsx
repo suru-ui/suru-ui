@@ -45,7 +45,7 @@ export type CheckboxGroupProps = CheckboxGroupRootProps;
 // ---
 
 /**
- * {@link CheckboxGroup} を構成する各パーツの props を作成するための API です。
+ * {@link CheckboxGroup} を構成する各パーツの props などを作成するための API です。
  */
 export interface CheckboxGroupAPI {
   /**

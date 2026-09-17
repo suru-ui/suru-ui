@@ -19,6 +19,8 @@ import {
 // Types
 // -----
 
+export type StatDirection = StatTrendDirection;
+
 export type StatSize = StatRootSize;
 
 /**
@@ -229,7 +231,7 @@ export namespace Stat {
 
   export type SlotProps = StatSlotProps;
 
-  export type Direction = StatTrendDirection;
+  export type Direction = StatDirection;
 
   export type Size = StatSize;
 }

@@ -88,7 +88,7 @@ export namespace ToggleButtonRootProps {
     /**
      * トグルボタンの角丸の大きさを指定します。
      *
-     * 既定値は {@link ToggleButtonRootProps.size|size}
+     * 既定値は {@link ToggleButtonRootProps.size|size} です。
      */
     radius?: ToggleButtonRootRadius | undefined;
 
@@ -193,9 +193,10 @@ export const ToggleButtonRoot: IComponent<ToggleButtonRootProps> = function SuiT
       {...baseuiProps}
       render={(htmlProps: {}, toggleState) => {
         const buttonRootProps: Required<
-          Button.ButtonRootProps.SuruUI & Button.ButtonRootProps.BaseUI
-        > &
-          Pick<Button.ButtonRootProps.HTML, "disabled"> = {
+          Button.ButtonRootProps.SuruUI &
+            Button.ButtonRootProps.BaseUI &
+            Pick<Button.ButtonRootProps.HTML, "disabled">
+        > = {
           item: false,
           size,
           color: toggleState.pressed ? color : "grey",

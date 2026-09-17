@@ -32,7 +32,7 @@ export namespace AutocompleteInputProps {
 }
 
 /**
- * {@link AutocompleteInput} に渡すプロパティーです。
+ * {@link AutocompleteInput} に渡す props です。
  */
 export type AutocompleteInputProps = AutocompleteInputProps.Render &
   AutocompleteInputProps.SuruUI &

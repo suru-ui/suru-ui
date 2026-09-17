@@ -85,12 +85,7 @@ export type SegmentsSlotProps = {
  * @template TItem 項目の型です。
  */
 export type SegmentsProps<TItem = any> = Omit<SegmentsRootProps, "children"> &
-  Pick<SegmentsListProps<TItem>, "children"> & {
-    /**
-     * セグメントの項目です。
-     */
-    items?: readonly TItem[] | undefined;
-
+  Pick<SegmentsListProps<TItem>, "children" | "items"> & {
     /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
      */

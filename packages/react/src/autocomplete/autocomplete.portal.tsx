@@ -33,7 +33,7 @@ export namespace AutocompletePortalProps {
 }
 
 /**
- * {@link AutocompletePortal} に渡すプロパティーです。
+ * {@link AutocompletePortal} に渡す props です。
  */
 export type AutocompletePortalProps = AutocompletePortalProps.Render &
   AutocompletePortalProps.SuruUI &

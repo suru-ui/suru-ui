@@ -40,7 +40,7 @@ export type ToastViewportProps = ToastViewportProps.Render &
   ToastViewportProps.HTML;
 
 /**
- * 通知を表示するビューポートです。
+ * 通知を表示するビューポートコンポーネントです。
  */
 export const ToastViewport: IComponent<ToastViewportProps> = function SuiToastViewport(props) {
   const { className, ...otherProps } = props;

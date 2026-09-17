@@ -241,6 +241,7 @@
   --sui_stat_trend-line_height: ;
   --sui_stat_trend-color: ;
   --sui_stat_trend-letter_spacing: ;
+  --sui_stat_trend-virtual_text_height: ;
   --sui_stat_trend__svg-size: ;
   --sui_stat_trend__svg-color: ;
 }
@@ -257,7 +258,7 @@
     letter-spacing: var(--sui_stat_trend-letter_spacing);
 
     &::before {
-      content: var(--_sui_stat_trend__arrow-content);
+      content: var(--_sui_stat_trend__arrow-content, "");
     }
 
     svg:not(.sui-ignore) {
@@ -273,6 +274,11 @@
   --sui_stat_trend-gap: --sui-space(2);
   --sui_stat_trend-font_family: var(--sui-font-sans);
   --sui_stat_trend-color: var(--sui-grey-naked-canvas_text-subtle);
+  --sui_stat_trend-virtual_text_height: calc(
+                                          var(--sui_stat_trend-font_size)
+                                          * var(--sui_stat_trend-line_height)
+                                        );
+  --sui_stat_trend__svg-size: var(--sui_stat_trend-virtual_text_height);
   --sui_stat_trend__svg-color: var(--sui_stat_trend-color);
 
   &:has(.sui_stat_trend-direction_up) {
@@ -311,18 +317,16 @@
 
 /* 変異 */
 :scope {
-  &:not(:has(svg)) {
-    &:has(.sui_stat_trend-direction_up) {
-      --_sui_stat_trend__arrow-content: "▲";
-    }
+  .sui_stat_trend-direction_up:not(:has(svg)) {
+    --_sui_stat_trend__arrow-content: "▲";
+  }
 
-    &:has(.sui_stat_trend-direction_flat) {
-      --_sui_stat_trend__arrow-content: "—";
-    }
+  .sui_stat_trend-direction_flat:not(:has(svg)) {
+    --_sui_stat_trend__arrow-content: "—";
+  }
 
-    &:has(.sui_stat_trend-direction_down) {
-      --_sui_stat_trend__arrow-content: "▼";
-    }
+  .sui_stat_trend-direction_down:not(:has(svg)) {
+    --_sui_stat_trend__arrow-content: "▼";
   }
 }
 

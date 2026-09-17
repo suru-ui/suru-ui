@@ -68,7 +68,7 @@ export type FileUploadSlotProps = {
   /**
    * 選択済みファイルごとの {@link FileUploadItemDeleteTrigger} に渡す props です。
    */
-  readonly itemDeleteTrigger?: Omit<FileUploadItemDeleteTriggerProps, "children"> | undefined;
+  readonly itemDeleteTrigger?: FileUploadItemDeleteTriggerProps | undefined;
 
   /**
    * {@link FileUploadItemGroup} に渡す props です。
@@ -219,7 +219,7 @@ export const useFileUploadAPI: IUseFileUploadAPI = function useSuiFileUploadAPI(
     getItemDeleteTriggerProps() {
       return {
         ...itemDeleteTriggerProps,
-        children: toReactNode("×"),
+        children: itemDeleteTriggerProps.children ?? toReactNode("×"),
       };
     },
   };
@@ -285,19 +285,23 @@ function FileUploadItems(props: {
 
   return (
     <FileUploadItemGroup {...itemGroupProps}>
-      {ctx.files.map((file) => (
-        <FileUploadItem
-          key={`${file.name}:${file.lastModified}:${file.size}`}
-          {...api.getItemProps(file)}
-        >
-          <FileUploadItemName {...api.getItemNameProps()} />
-          <FileUploadItemSizeText {...api.getItemSizeTextProps()} />
-          <FileUploadItemDeleteTrigger
-            {...api.getItemDeleteTriggerProps()}
-            aria-label={`${file.name} を削除`}
-          />
-        </FileUploadItem>
-      ))}
+      {ctx.files.map((file) => {
+        const itemDeleteTriggerProps = api.getItemDeleteTriggerProps();
+
+        return (
+          <FileUploadItem
+            key={`${file.name}:${file.lastModified}:${file.size}`}
+            {...api.getItemProps(file)}
+          >
+            <FileUploadItemName {...api.getItemNameProps()} />
+            <FileUploadItemSizeText {...api.getItemSizeTextProps()} />
+            <FileUploadItemDeleteTrigger
+              {...itemDeleteTriggerProps}
+              aria-label={itemDeleteTriggerProps["aria-label"] ?? `${file.name} を削除`}
+            />
+          </FileUploadItem>
+        );
+      })}
     </FileUploadItemGroup>
   );
 }

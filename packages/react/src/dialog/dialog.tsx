@@ -184,6 +184,8 @@ type DialogPropsRoot<TPayload = any> = Omit<
 
 type DialogPropsBody = Omit<DialogBodyProps, keyof DialogPropsMain | keyof DialogPropsRoot> & {
   /**
+   * ダイアログの HTML `title` 属性です。
+   *
    * {@link https://developer.mozilla.org/docs/Web/HTML/Reference/Global_attributes/title|title}
    */
   htmlTitle?: React.HTMLAttributes<HTMLDivElement>["title"];
@@ -231,11 +233,15 @@ export interface DialogAPI<TPayload = any> {
 
   /**
    * {@link DialogBody} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getBodyProps(): DialogBodyProps | null;
 
   /**
    * {@link DialogCloseTrigger} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getCloseTriggerProps(): DialogCloseTriggerProps | null;
 
@@ -246,16 +252,22 @@ export interface DialogAPI<TPayload = any> {
 
   /**
    * {@link DialogControls} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getControlsProps(): DialogControlsProps | null;
 
   /**
    * {@link DialogDescription} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getDescriptionProps(): DialogDescriptionProps | null;
 
   /**
    * {@link DialogFooter} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getFooterProps(): Omit<DialogFooterProps, "children"> | null;
 
@@ -276,11 +288,15 @@ export interface DialogAPI<TPayload = any> {
 
   /**
    * {@link DialogTitle} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getTitleProps(): DialogTitleProps | null;
 
   /**
    * {@link DialogToggleTrigger} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getToggleTriggerProps(): DialogToggleTriggerProps<TPayload> | null;
 
@@ -314,7 +330,7 @@ export const useDialogAPI: IUseDialogAPI = function useSuiDialogAPI(props) {
     radius,
     onClose,
     trigger,
-    variant,
+    variant = "default",
     children,
     controls,
     outlined,
@@ -357,7 +373,7 @@ export const useDialogAPI: IUseDialogAPI = function useSuiDialogAPI(props) {
 
       return null;
     },
-    getRootProps(): Omit<DialogRootProps, "children"> {
+    getRootProps(): Required<Omit<DialogRootProps, "children">> {
       return {
         open,
         modal,
@@ -402,8 +418,8 @@ export const useDialogAPI: IUseDialogAPI = function useSuiDialogAPI(props) {
       };
 
       return {
-        ...requiredProps,
         ...contentProps,
+        ...requiredProps,
       };
     },
     getBackdropProps() {
@@ -498,9 +514,9 @@ export const Dialog: IDialog = /*#__PURE__*/ Object.assign(
     const api = useDialogAPI(props);
     const toggleTriggerProps = api.getToggleTriggerProps();
     const contentProps = api.getContentProps();
-    const controlsProps = api.getControlsProps();
     const titleProps = api.getTitleProps();
     const descriptionProps = api.getDescriptionProps();
+    const controlsProps = api.getControlsProps();
     const bodyProps = api.getBodyProps();
     const footerProps = api.getFooterProps();
     const closeTriggerProps = api.getCloseTriggerProps();
@@ -526,7 +542,7 @@ export const Dialog: IDialog = /*#__PURE__*/ Object.assign(
                 </DialogFooter>
               )}
               {contentProps.variant === "stacked" && controlsProps && (
-                <DialogControls {...controlsProps} absolute={controlsProps?.absolute ?? true} />
+                <DialogControls {...controlsProps} absolute={controlsProps.absolute ?? true} />
               )}
             </DialogContent>
           </DialogViewport>

@@ -40,6 +40,8 @@ export type AccordionRootItemObject = Omit<AccordionItemProps, "title"> & {
   title: React.ReactNode;
 
   /**
+   * 項目の HTML `title` 属性です。
+   *
    * {@link https://developer.mozilla.org/docs/Web/HTML/Reference/Global_attributes/title|title}
    */
   htmlTitle?: React.HTMLAttributes<HTMLDivElement>["title"];
@@ -131,7 +133,7 @@ export namespace AccordionRootProps {
     /**
      * アコーディオンの角丸の大きさを指定します。
      *
-     * 既定値は {@link AccordionRootProps.size|size}
+     * 既定値は {@link AccordionRootProps.size|size} です。
      */
     radius?: AccordionRootRadius | undefined;
 

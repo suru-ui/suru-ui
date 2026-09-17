@@ -123,6 +123,8 @@ interface IHoverCardRoot extends IComponent<HoverCardRootProps> {
 
 /**
  * ホバーカードのルートです。
+ *
+ * ホバーカードの開閉状態を管理し、各パーツをグループ化します。それ自身は HTML 要素をレンダリングしません。
  */
 export const HoverCardRoot: IHoverCardRoot = function SuiHoverCardRoot<TPayload>(
   props: HoverCardRootProps<TPayload>,

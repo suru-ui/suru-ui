@@ -228,7 +228,7 @@
     height: var(--sui_context_menu_arrow-size);
     background-color: var(--sui_context_menu_arrow-background_color);
     border-color: var(--sui_context_menu_arrow-border_color);
-    border-width: var(--sui_context_menu_arrow-border_width);
+    border-width: var(--_sui_context_menu_arrow-border_width, 0px);
   }
 }
 
@@ -240,37 +240,11 @@
   --sui_context_menu_arrow-border_width: var(--sui_context_menu_content-border_width);
 }
 
-} /* @scope */
-} /* @layer */
-
-/* Viewport */
-@layer sui.component {
-@scope (.sui_context_menu_portal) to ([data-scope]) {
-
-/* 固定 */
+/* 変異 */
 :scope {
-  .sui_context_menu_viewport {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+  &.sui_context_menu_portal-outlined {
+    --_sui_context_menu_arrow-border_width: var(--sui_context_menu_arrow-border_width);
   }
-}
-
-/* 変数 */
-:scope {
-  --sui_context_menu_viewport-gap: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_context_menu_viewport {
-    gap: var(--sui_context_menu_viewport-gap);
-  }
-}
-
-/* 代入 */
-:scope {
-  --sui_context_menu_viewport-gap: --sui-gap(1);
 }
 
 } /* @scope */

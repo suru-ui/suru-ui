@@ -50,7 +50,9 @@ export const FileUploadClearTrigger: IComponent<FileUploadClearTriggerProps> =
         {
           type: "button",
           onClick() {
-            ctx?.clear();
+            if (!disabled) {
+              ctx?.clear();
+            }
           },
           disabled,
           className: "sui_file_upload_clear_trigger",

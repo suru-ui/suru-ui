@@ -91,6 +91,8 @@ type PopoverPropsMain<TPayload = any> = Pick<PopoverContentProps, "children"> & 
 
   /**
    * トリガーとポップオーバーに関連付けるためのハンドルです。
+   *
+   * {@link createHandle} で作成します。Root 内に {@link PopoverTrigger} を配置する場合は省略できます。
    */
   handle?: PopoverHandle<TPayload> | undefined;
 
@@ -101,6 +103,8 @@ type PopoverPropsMain<TPayload = any> = Pick<PopoverContentProps, "children"> & 
 
   /**
    * ポップオーバーを開く対象です。
+   *
+   * `trigger` 未指定で `slotProps.trigger` のみ指定した場合は、トリガーは描画されません。
    */
   trigger?: PopoverTriggerProps["children"] | undefined;
 };
@@ -125,6 +129,8 @@ export type PopoverProps<TPayload = any> = PopoverPropsMain<TPayload> & PopoverP
 export interface PopoverAPI<TPayload = any> {
   /**
    * {@link PopoverArrow} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getArrowProps(): PopoverArrowProps | null;
 
@@ -160,6 +166,8 @@ export interface PopoverAPI<TPayload = any> {
 
   /**
    * {@link PopoverTrigger} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getTriggerProps(): Omit<PopoverTriggerProps<TPayload>, "handle"> | null;
 }
@@ -181,10 +189,14 @@ interface IUsePopoverAPI {
 export const usePopoverAPI: IUsePopoverAPI = function useSuiPopoverAPI(props: PopoverProps<any>) {
   const {
     open,
+    size,
     arrow = false,
+    modal,
     handle: handleProp,
+    radius,
     trigger,
     children,
+    outlined,
     slotProps: {
       arrow: arrowProps,
       portal: portalProps = {},
@@ -199,16 +211,18 @@ export const usePopoverAPI: IUsePopoverAPI = function useSuiPopoverAPI(props: Po
     onOpenChange,
     defaultTriggerId,
     onOpenChangeComplete,
-    ...otherRootProps
   } = props;
   const handle = React.useMemo(() => handleProp, [handleProp]);
 
   return {
-    getRootProps(): Omit<PopoverRootProps<any>, "children"> {
+    getRootProps(): Required<Omit<PopoverRootProps<any>, "children">> {
       return {
-        ...otherRootProps,
         open,
+        size,
+        modal,
         handle,
+        radius,
+        outlined,
         triggerId,
         actionsRef,
         defaultOpen,
@@ -318,7 +332,7 @@ export namespace Popover {
 
   export type Props<TPayload = any> = PopoverProps<TPayload>;
 
-  export type SlotProps = PopoverSlotProps;
+  export type SlotProps<TPayload = any> = PopoverSlotProps<TPayload>;
 
   export type Actions = PopoverActions;
 

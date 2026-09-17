@@ -58,12 +58,25 @@ export type MenubarProps<TItem = any> = Override<
 
 /**
  * {@link Menubar} を構成する各パーツの props などを作成するための API です。
+ *
+ * @template TItem 項目の型です。
  */
 export interface MenubarAPI<TItem = any> {
+  /**
+   * {@link Menu} に渡す props を取得します。
+   */
   getMenuProps(): Omit<Menu.Props, "items" | "trigger">;
+  /**
+   * {@link Menu} に渡す props を取得します。
+   *
+   * @param item 項目です。
+   */
   getMenuProps(item: MenubarItem): Menu.Props<Menu.Item>;
   getMenuProps(item?: MenubarItem): Omit<Menu.Props, "items" | "trigger"> | Menu.Props<Menu.Item>;
 
+  /**
+   * {@link MenubarRoot} に渡す props を取得します。
+   */
   getRootProps(): MenubarRootProps<TItem>;
 }
 
@@ -73,7 +86,7 @@ interface IUseMenubarAPI {
    *
    * @template TItem 項目の型です。
    * @param props {@link Menubar} の props です。
-   * @returns メニューバーの API です
+   * @returns メニューバーの API です。
    */
   <TItem = any>(props: MenubarProps<TItem>): MenubarAPI<TItem>;
 }

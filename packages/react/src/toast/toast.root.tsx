@@ -23,6 +23,8 @@ export namespace ToastRootProps {
   export type SuruUI<TData extends object = any> = {
     /**
      * 表示する通知オブジェクトです。
+     *
+     * {@link useToastClient} から取得した通知、または通知一覧の各通知を渡します。
      */
     toast: ToastRootToastObject<TData>;
   };
@@ -66,7 +68,7 @@ export interface IToastRoot extends IComponent<ToastRootProps> {
 /**
  * 個別の通知をグループ化するルート要素です。
  *
- * `toast` は {@link useToastClient} から取得した通知オブジェクトを渡します。
+ * `toast` には {@link useToastClient} から取得した通知オブジェクトを渡します。
  */
 export const ToastRoot: IToastRoot = function SuiToastRoot<TData extends object = any>(
   props: ToastRootProps<TData>,

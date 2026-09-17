@@ -50,9 +50,6 @@ export const ComboboxLabel: IComponent<ComboboxLabelProps> = function SuiCombobo
 
 export { ComboboxLabel as Label };
 
-/**
- * {@link ComboboxLabel} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Label {
   export type State = ComboboxLabelState;
 

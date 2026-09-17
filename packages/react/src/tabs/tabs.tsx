@@ -64,6 +64,8 @@ export type TabsItemObject = {
 
   /**
    * タブに対応するパネルに表示する内容です。
+   *
+   * 省略するとその項目のパネルは作られません。
    */
   readonly content?: React.ReactNode | undefined;
 
@@ -144,6 +146,8 @@ export interface TabsAPI {
 
   /**
    * 各 {@link TabsPanel} に渡す props の一覧を取得します。
+   *
+   * 内容のない項目に対応するパネルは含まれません。
    */
   getPanelPropsList(): TabsPanelProps[];
 
@@ -208,20 +212,23 @@ export const useTabsAPI: IUseTabsAPI = function useSuiTabsAPI(props) {
       return indicatorProps;
     },
     getPanelPropsList() {
-      return (
-        items?.map((item) => ({
-          ...panelProps,
-          value: item.value,
-          children: toReactNode(item.content),
-        })) ?? []
-      );
+      const panelPropsList: TabsPanelProps[] = [];
+
+      for (const item of items ?? []) {
+        const children = toReactNode(item.content);
+        if (children === undefined) {
+          continue;
+        }
+
+        panelPropsList.push({ ...panelProps, value: item.value, children });
+      }
+
+      return panelPropsList;
     },
   };
 };
 
 export { type TabsAPI as API, useTabsAPI as useAPI };
-
-export const useTabs = useTabsAPI;
 
 // Component
 // ---------
@@ -243,18 +250,31 @@ export const Tabs: IComponent<TabsProps> = function SuiTabs(props) {
         <>
           <TabsList {...listProps}>
             {api.getTabPropsList().map((tabProps, index) => (
-              <TabsTab key={index} {...tabProps} />
+              <TabsTab key={getTabsItemKey(tabProps.value, index)} {...tabProps} />
             ))}
             <TabsIndicator {...api.getIndicatorProps()} />
           </TabsList>
           {api.getPanelPropsList().map((panelProps, index) => (
-            <TabsPanel key={index} {...panelProps} />
+            <TabsPanel key={getTabsItemKey(panelProps.value, index)} {...panelProps} />
           ))}
         </>
       )}
     </TabsRoot>
   );
 };
+
+/**
+ * 反復描画の要素に付けるキーを求めます。
+ *
+ * 値が文字列または数値の場合はそのまま使い、それ以外の場合はインデックスを使います。
+ *
+ * @param value 項目の値です。
+ * @param index 項目のインデックスです。
+ * @returns キーに使う値です。
+ */
+function getTabsItemKey(value: unknown, index: number): React.Key {
+  return typeof value === "string" || typeof value === "number" ? value : index;
+}
 
 export namespace Tabs {
   export type State = TabsState;

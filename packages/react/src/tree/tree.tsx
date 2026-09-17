@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import type { LikelyVisibleNode } from "../_is-likely-visible-node.js";
+import mergeProps from "../_merge-props.js";
 import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
 import {
@@ -153,18 +154,22 @@ export const useTreeAPI: IUseTreeAPI = function useSuiTreeAPI(props) {
       return node.label;
     },
     getItemProps(node, level, posInSet, setSize) {
-      const { id, items, label, ...otherNodeProps } = node;
+      // label と items を取り除いた props を TreeItem の props とします。
+      const { id, items, label: _2, disabled, ...otherNodeProps } = node;
       const hasItems = items != null && items.length > 0;
 
       return {
-        ...itemProps,
-        ...otherNodeProps,
+        ...mergeProps([
+          itemProps,
+          otherNodeProps,
+          {
+            disabled: disabled || itemProps.disabled,
+            hasItems,
+          },
+        ]),
         id,
-        label,
         level,
         setSize,
-        disabled: node.disabled || itemProps.disabled,
-        hasItems,
         posInSet,
       };
     },
@@ -198,11 +203,11 @@ export { type TreeAPI as API, useTreeAPI as useAPI };
  */
 export const Tree: IComponent<TreeProps> = function SuiTree(props) {
   const api = useTreeAPI(props);
-  const rootProps = api.getRootProps();
+  const { children, ...otherRootProps } = api.getRootProps();
 
   return (
-    <TreeRoot {...rootProps}>
-      {rootProps.children ??
+    <TreeRoot {...otherRootProps}>
+      {children ??
         ((node, level, posInSet, setSize) => (
           <TreeItem key={node.id} {...api.getItemProps(node, level, posInSet, setSize)}>
             <TreeItemIndicator {...api.getIndicatorProps(node)} />

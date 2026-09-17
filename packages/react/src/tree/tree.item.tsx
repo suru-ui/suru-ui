@@ -25,13 +25,13 @@ export type TreeItemSize = Button.Root.Size;
 /**
  * ツリーの項目の主な外観です。
  *
+ * - `"liquid"`: 薄い塗りつぶし
  * - `"solid"`: 塗りつぶし
- * - `"naked"`: 背景なし
  */
 export type TreeItemVariant = "liquid" | "solid";
 
 /**
- * {@link TreeItem} の状態です。
+ * {@link TreeItem} が持つ状態です。
  */
 export type TreeItemState = {};
 
@@ -162,6 +162,8 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
     hasItems = false,
     outlined = ctx.outlined ?? false,
     posInSet,
+    // フォーカスは aria-activedescendant でルートに集約するため、項目自体はタブ移動の対象にしません。
+    tabIndex = -1,
     className,
     nativeButton = false,
     ...otherProps
@@ -203,6 +205,7 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
       variant={selected ? variant : "naked"}
       disabled={disabled}
       outlined={selected && outlined}
+      tabIndex={tabIndex}
       className={cn(className, "sui_tree_item", expanded && "sui_tree_item-expanded")}
       nativeButton={nativeButton}
       aria-level={level}

@@ -228,7 +228,7 @@
     height: var(--sui_menu_arrow-size);
     background-color: var(--sui_menu_arrow-background_color);
     border-color: var(--sui_menu_arrow-border_color);
-    border-width: var(--sui_menu_arrow-border_width);
+    border-width: var(--_sui_menu_arrow-border_width, 0px);
   }
 }
 
@@ -238,6 +238,13 @@
   --sui_menu_arrow-background_color: var(--sui_menu_content-background_color);
   --sui_menu_arrow-border_color: var(--sui_menu_content-border_color);
   --sui_menu_arrow-border_width: var(--sui_menu_content-border_width);
+}
+
+/* 変異 */
+:scope {
+  &.sui_menu_portal-outlined {
+    --_sui_menu_arrow-border_width: var(--sui_menu_arrow-border_width);
+  }
 }
 
 } /* @scope */

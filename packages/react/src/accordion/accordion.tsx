@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import type { LikelyVisibleNode } from "../_is-likely-visible-node.js";
+import mergeProps from "../_merge-props.js";
 import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
 import { type $InferItemValue, isItemObject } from "./_accordion.jsx";
@@ -190,17 +191,13 @@ export const useAccordionAPI: IUseAccordionAPI = function useSuiAccordionAPI(pro
 
       const {
         // title と content を取り除いた props を AccordionItem の props とします。
-        title: _title,
-        content: _content,
+        title: _1,
+        content: _2,
         htmlTitle: title,
         ...otherItemProps
       } = item as AccordionItemObject;
 
-      return {
-        ...otherItemProps,
-        title,
-        ...itemProps, // JSDoc 通り、`slotProps.item` を優先します。
-      };
+      return mergeProps([itemProps, otherItemProps, { title }]);
     },
     getRootProps() {
       return {

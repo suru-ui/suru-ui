@@ -7,22 +7,22 @@ import type { IUseContext } from "../types.js";
 /**
  * 数値入力欄の配色です。
  */
-type NumberFieldContextColor = Color;
+export type NumberFieldContextColor = Color;
 
 /**
  * 数値入力欄の角丸です。
  */
-type NumberFieldContextRadius = "none" | Size | "full";
+export type NumberFieldContextRadius = "none" | Size | "full";
 
 /**
  * 数値入力欄のサイズです。
  */
-type NumberFieldContextSize = Size;
+export type NumberFieldContextSize = Size;
 
 /**
  * 数値入力欄の主な外観です。
  */
-type NumberFieldContextVariant = "naked" | "liquid";
+export type NumberFieldContextVariant = "naked" | "liquid";
 
 /**
  * {@link NumberFieldRoot} が子パーツへ提供するスタイルです。

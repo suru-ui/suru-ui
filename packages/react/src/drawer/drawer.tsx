@@ -237,11 +237,15 @@ export interface DrawerAPI<TPayload = any> {
 
   /**
    * {@link DrawerBody} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getBodyProps(): DrawerBodyProps | null;
 
   /**
    * {@link DrawerClose} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getCloseProps(): DrawerCloseProps | null;
 
@@ -252,21 +256,29 @@ export interface DrawerAPI<TPayload = any> {
 
   /**
    * {@link DrawerControls} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getControlsProps(): DrawerControlsProps | null;
 
   /**
    * {@link DrawerDescription} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getDescriptionProps(): DrawerDescriptionProps | null;
 
   /**
    * {@link DrawerFooter} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getFooterProps(): DrawerFooterProps | null;
 
   /**
    * {@link DrawerHeader} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getHeaderProps(): Omit<DrawerHeaderProps, "children"> | null;
 
@@ -287,16 +299,22 @@ export interface DrawerAPI<TPayload = any> {
 
   /**
    * {@link DrawerSwipeArea} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getSwipeAreaProps(): DrawerSwipeAreaProps | null;
 
   /**
    * {@link DrawerTitle} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getTitleProps(): DrawerTitleProps | null;
 
   /**
    * {@link DrawerTrigger} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getTriggerProps(): DrawerTriggerProps<TPayload> | null;
 
@@ -307,6 +325,8 @@ export interface DrawerAPI<TPayload = any> {
 
   /**
    * {@link DrawerVirtualKeyboardProvider} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getVirtualKeyboardProviderProps(): Omit<DrawerVirtualKeyboardProviderProps, "children"> | null;
 }
@@ -327,6 +347,8 @@ interface IUseDrawerAPI {
  */
 export const useDrawerAPI: IUseDrawerAPI = function useSuiDrawerAPI(props) {
   const {
+    open,
+    modal,
     title,
     footer,
     handle: handleProp,
@@ -351,11 +373,23 @@ export const useDrawerAPI: IUseDrawerAPI = function useSuiDrawerAPI(props) {
       description: descriptionProps = {},
       virtualKeyboardProvider: virtualKeyboardProviderProp,
     } = {},
+    snapPoint,
+    triggerId,
+    actionsRef,
+    snapPoints,
+    defaultOpen,
     description,
+    onOpenChange,
+    swipeDirection,
+    defaultSnapPoint,
+    defaultTriggerId,
+    onSnapPointChange,
     showCloseIconButton = true,
-    ...otherRootProps
+    onOpenChangeComplete,
+    snapToSequentialPoints,
+    disablePointerDismissal,
   } = props;
-  const handle = React.useMemo(() => handleProp ?? createDrawerHandle(), [handleProp]);
+  const handle = React.useMemo(() => handleProp || createDrawerHandle(), [handleProp]);
 
   function buildCloseProps(): DrawerCloseProps | null {
     if (!showCloseIconButton) {
@@ -395,10 +429,24 @@ export const useDrawerAPI: IUseDrawerAPI = function useSuiDrawerAPI(props) {
 
       return null;
     },
-    getRootProps() {
+    getRootProps(): Required<Omit<DrawerRootProps, "children">> {
       return {
-        ...otherRootProps,
+        open,
+        modal,
         handle,
+        snapPoint,
+        triggerId,
+        actionsRef,
+        snapPoints,
+        defaultOpen,
+        onOpenChange,
+        swipeDirection,
+        defaultSnapPoint,
+        defaultTriggerId,
+        onSnapPointChange,
+        onOpenChangeComplete,
+        snapToSequentialPoints,
+        disablePointerDismissal,
       };
     },
     getCloseProps() {

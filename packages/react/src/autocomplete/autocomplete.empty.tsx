@@ -32,7 +32,7 @@ export namespace AutocompleteEmptyProps {
 }
 
 /**
- * {@link AutocompleteEmpty} に渡すプロパティーです。
+ * {@link AutocompleteEmpty} に渡す props です。
  */
 export type AutocompleteEmptyProps = AutocompleteEmptyProps.Render &
   AutocompleteEmptyProps.SuruUI &

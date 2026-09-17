@@ -78,6 +78,8 @@ export type TooltipState = TooltipRootState;
 type TooltipPropsMain<TPayload = any> = {
   /**
    * トリガーとツールチップに関連付けるためのハンドルです。
+   *
+   * {@link createHandle} で作成します。Root 内に {@link TooltipTrigger} を配置する場合は省略できます。
    */
   handle?: TooltipHandle<TPayload> | undefined;
 
@@ -146,6 +148,8 @@ export type TooltipProps<TPayload = any> = TooltipPropsMain<TPayload> &
 export interface TooltipAPI<TPayload = any> {
   /**
    * {@link TooltipArrow} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getArrowProps(): TooltipArrowProps | null;
 
@@ -172,10 +176,12 @@ export interface TooltipAPI<TPayload = any> {
   /**
    * {@link TooltipRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<TooltipRootProps<TPayload>, "children">;
+  getRootProps(): Required<Omit<TooltipRootProps<TPayload>, "children">>;
 
   /**
    * {@link TooltipTrigger} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
   getTriggerProps(): Omit<TooltipTriggerProps<TPayload>, "handle"> | null;
 }
@@ -237,10 +243,9 @@ export const useTooltipAPI: IUseTooltipAPI = function useSuiTooltipAPI(props: To
     ...contentProps
   } = props;
   const handle = React.useMemo(() => handleProp, [handleProp]);
-  const renderArrow = showArrow || arrowProps !== undefined;
 
   return {
-    getRootProps(): Omit<TooltipRootProps<any>, "children"> {
+    getRootProps(): Required<Omit<TooltipRootProps<any>, "children">> {
       return {
         open,
         size,
@@ -259,7 +264,7 @@ export const useTooltipAPI: IUseTooltipAPI = function useSuiTooltipAPI(props: To
       };
     },
     getArrowProps() {
-      if (renderArrow) {
+      if (showArrow || arrowProps) {
         return arrowProps || {};
       }
 

@@ -5,7 +5,6 @@
 /* 固定 */
 :scope {
   display: block;
-  align-self: center;
   width: 100%;
   line-break: strict;
   word-break: normal;
@@ -278,12 +277,12 @@
 /* Root */
 :scope {
   &.sui_textarea-disabled {
-    color: var(--sui-canvas_text-2);
     cursor: not-allowed;
     resize: none;
   }
 
   &.sui_textarea-disabled.sui_textarea-variant_naked {
+    color: var(--sui-disabled-naked-canvas_text);
     background-color: var(--sui-disabled-naked-canvas);
   }
 
@@ -298,6 +297,7 @@
   }
 
   &.sui_textarea-disabled.sui_textarea-variant_liquid {
+    color: var(--sui-disabled-liquid-canvas_text);
     background-color: var(--sui-disabled-liquid-canvas);
   }
 

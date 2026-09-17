@@ -2,7 +2,6 @@ import { Popover } from "@base-ui/react/popover";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
-import type { RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
 import { PopoverContext } from "./popover.context.js";
 import type { PopoverHandle } from "./popover.handle.js";
@@ -47,7 +46,7 @@ export type PopoverRootSize = Size;
 export type PopoverRootState = Popover.Root.State;
 
 export namespace PopoverRootProps {
-  export type Render = RenderProps<PopoverRootState>;
+  export type Render = {};
 
   export type SuruUI<TPayload = any> = {
     /**
@@ -126,8 +125,7 @@ interface IPopoverRoot extends IComponent<PopoverRootProps> {
 /**
  * ポップオーバーのルートです。
  *
- * ポップオーバーの開閉状態を管理し、各パーツをグループ化します。
- * それ自身は HTML 要素をレンダリングしません。
+ * ポップオーバーの開閉状態を管理し、各パーツをグループ化します。それ自身は HTML 要素をレンダリングしません。
  */
 export const PopoverRoot: IPopoverRoot = function SuiPopoverRoot<TPayload>(
   props: PopoverRootProps<TPayload>,

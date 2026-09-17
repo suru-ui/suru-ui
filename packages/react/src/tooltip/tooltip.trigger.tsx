@@ -71,7 +71,10 @@ export type TooltipTriggerProps<TPayload = any> = TooltipTriggerProps.Render &
  * {@link TooltipTrigger} のコンポーネント型です。
  */
 export interface ITooltipTrigger extends IComponent<TooltipTriggerProps> {
-  <TPayload = any>(props: TooltipTriggerProps<TPayload>): React.ReactElement | null;
+  /**
+   * @template TPayload トリガーから渡すデータの型です。
+   */
+  <TPayload = any>(props: TooltipTriggerProps<TPayload>): IComponent.Return;
 }
 
 /**

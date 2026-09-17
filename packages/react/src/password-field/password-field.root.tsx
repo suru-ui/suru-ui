@@ -110,9 +110,11 @@ export const PasswordFieldRoot: IComponent<PasswordFieldRootProps> = function Su
 ) {
   const {
     size = "md",
+    color = "grey",
     radius = size,
     variant = "liquid",
     visible: visibleProp,
+    outlined = false,
     className,
     defaultVisible = false,
     onVisibleChange,
@@ -126,19 +128,26 @@ export const PasswordFieldRoot: IComponent<PasswordFieldRootProps> = function Su
     default: defaultVisible,
     controlled: visibleProp,
   });
+  const visibleRef = React.useRef(visible);
+  visibleRef.current = visible;
+  const onVisibleChangeRef = React.useRef(onVisibleChange);
+  onVisibleChangeRef.current = onVisibleChange;
   const ctx = React.useMemo<PasswordFieldContext>(
     () => ({
       visible,
       setVisible(value) {
-        const nextValue = typeof value === "function" ? value(visible) : value;
+        const nextValue =
+          typeof value === "function"
+            ? (value as (prevValue: boolean) => boolean)(visibleRef.current)
+            : value;
 
-        if (nextValue !== visible) {
+        if (nextValue !== visibleRef.current) {
           setVisible(nextValue);
-          onVisibleChange?.(nextValue);
+          onVisibleChangeRef.current?.(nextValue);
         }
       },
     }),
-    [visible, setVisible, onVisibleChange],
+    [visible, setVisible],
   );
 
   return (
@@ -146,14 +155,18 @@ export const PasswordFieldRoot: IComponent<PasswordFieldRootProps> = function Su
       <TextFieldRoot
         {...otherProps}
         size={size}
+        color={color}
         radius={radius}
         variant={variant}
-        className={cn<PasswordFieldRootState>(
+        outlined={outlined}
+        className={cn(
           className,
           "sui_password_field",
           `sui_password_field-size_${size}`,
+          `sui_password_field-color_${color}`,
           `sui_password_field-radius_${radius}`,
           `sui_password_field-variant_${variant}`,
+          outlined && "sui_password_field-outlined",
         )}
         data-scope={dataScope}
       />

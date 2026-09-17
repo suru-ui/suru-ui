@@ -50,9 +50,6 @@ export const ComboboxIcon: IComponent<ComboboxIconProps> = function SuiComboboxI
 
 export { ComboboxIcon as Icon };
 
-/**
- * {@link ComboboxIcon} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Icon {
   export type State = ComboboxIconState;
 

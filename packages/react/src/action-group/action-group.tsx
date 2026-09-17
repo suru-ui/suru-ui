@@ -54,9 +54,6 @@ export const ActionGroup: IActionGroup = /*#__PURE__*/ Object.assign(
   },
 );
 
-/**
- * {@link ActionGroup} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace ActionGroup {
   export type State = ActionGroupState;
 

@@ -50,9 +50,6 @@ export const ComboboxArrow: IComponent<ComboboxArrowProps> = function SuiCombobo
 
 export { ComboboxArrow as Arrow };
 
-/**
- * {@link ComboboxArrow} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Arrow {
   export type State = ComboboxArrowState;
 

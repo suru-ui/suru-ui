@@ -74,13 +74,15 @@ export namespace ActionGroupRootProps {
 
     /**
      * グループアイテムの枠線を表示するかどうかを指定します。
+     *
+     * @default false
      */
     outlined?: boolean | undefined;
 
     /**
      * グループアイテムの角丸を指定します。
      *
-     * 既定値は {@link ActionGroupRootProps.size|size}
+     * 既定値は {@link ActionGroupRootProps.size|size} です。
      */
     radius?: ActionGroupRootRadius | undefined;
 
@@ -133,7 +135,6 @@ export const ActionGroupRoot: IComponent<ActionGroupRootProps> = function SuiAct
     radius = size,
     variant = "solid",
     outlined = false,
-    className,
     orientation = "horizontal",
     "aria-orientation": ariaOrientation = orientation,
     // @ts-expect-error
@@ -150,7 +151,6 @@ export const ActionGroupRoot: IComponent<ActionGroupRootProps> = function SuiAct
       {
         role,
         className: cn(
-          className,
           "sui_action_group",
           `sui_action_group-size_${size}`,
           `sui_action_group-color_${color}`,

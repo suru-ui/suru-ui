@@ -35,7 +35,7 @@ export type CheckboxSlotProps = {
   /**
    * {@link CheckboxIndicator} に渡す props です。
    */
-  readonly indicator?: CheckboxIndicatorProps | undefined;
+  readonly indicator?: Omit<CheckboxIndicatorProps, "children"> | undefined;
 };
 
 /**
@@ -58,7 +58,7 @@ export type CheckboxProps = Omit<CheckboxRootProps, "children"> &
 // ---
 
 /**
- * {@link Checkbox} を構成する各パーツの props を作成するための API です。
+ * {@link Checkbox} を構成する各パーツの props などを作成するための API です。
  */
 export interface CheckboxAPI {
   /**
@@ -94,8 +94,8 @@ export const useCheckboxAPI: IUseCheckboxAPI = function useSuiCheckboxAPI(props)
     },
     getIndicatorProps() {
       return {
-        children,
         ...indicatorProps,
+        children,
       };
     },
   };

@@ -50,9 +50,6 @@ export const ComboboxInput: IComponent<ComboboxInputProps> = function SuiCombobo
 
 export { ComboboxInput as Input };
 
-/**
- * {@link ComboboxInput} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Input {
   export type State = ComboboxInputState;
 

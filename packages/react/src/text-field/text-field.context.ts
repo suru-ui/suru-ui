@@ -7,22 +7,22 @@ import type { IUseContext } from "../types.js";
 /**
  * 文字入力欄の配色です。
  */
-type TextFieldContextColor = Color;
+export type TextFieldContextColor = Color;
 
 /**
  * 文字入力欄の角丸です。
  */
-type TextFieldContextRadius = "none" | Size | "full";
+export type TextFieldContextRadius = "none" | Size | "full";
 
 /**
  * 文字入力欄のサイズです。
  */
-type TextFieldContextSize = Size;
+export type TextFieldContextSize = Size;
 
 /**
  * 文字入力欄の主な外観です。
  */
-type TextFieldContextVariant = "naked" | "liquid";
+export type TextFieldContextVariant = "naked" | "liquid";
 
 /**
  * {@link TextFieldRoot} が子パーツへ提供するスタイルです。

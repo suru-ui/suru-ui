@@ -70,9 +70,6 @@ export const ComboboxPortal: IComponent<ComboboxPortalProps> = function SuiCombo
 
 export { ComboboxPortal as Portal };
 
-/**
- * {@link ComboboxPortal} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Portal {
   export type State = ComboboxPortalState;
 

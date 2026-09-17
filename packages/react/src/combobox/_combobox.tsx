@@ -6,25 +6,24 @@ import type * as React from "react";
  * @template TValue 項目の値の型です。
  */
 export interface ItemGroup<TValue = unknown> {
-  readonly [key: string]: unknown;
+  [key: string]: unknown;
 
   /**
-   * グループに含まれる項目の一覧です。
+   * グループに含まれる項目です。
    */
-  readonly items: readonly TValue[];
+  items: readonly TValue[];
 
   /**
-   * グループの見出しに表示するラベルです。
+   * グループのラベルです。
    */
-  readonly label?: React.ReactNode | undefined;
+  label?: React.ReactNode | undefined;
 }
 
 /**
- * グループオブジェクトかどうかを判定します。
+ * 値がグループオブジェクトかどうかを判定します。
  *
- * @template TValue 項目の値の型です。
  * @param x 判定する値です。
- * @returns グループオブジェクトの場合は true です。
+ * @returns グループオブジェクトの場合に `true` を返します。
  */
 export function isItemGroup<TValue = unknown>(x: unknown): x is ItemGroup<TValue> {
   return typeof x === "object" && x !== null && "items" in x && Array.isArray(x.items);

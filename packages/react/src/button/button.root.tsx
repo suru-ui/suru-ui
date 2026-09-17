@@ -94,7 +94,7 @@ export namespace ButtonRootProps {
     /**
      * ボタンの角丸の大きさを指定します。
      *
-     * 既定値は {@link ButtonRootProps.size|size}
+     * 既定値は {@link ButtonRootProps.size|size} です。
      */
     radius?: ButtonRootRadius | undefined;
 
