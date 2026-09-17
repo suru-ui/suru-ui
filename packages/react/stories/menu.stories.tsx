@@ -21,12 +21,12 @@ const VARIANTS: readonly Menu.Variant[] = theme.COLOR_TEMPLATES;
 
 const meta = preview.meta({
   title: "Menu",
-  component: Menu<Menu.Item>,
+  component: Menu<Menu.ItemObject>,
 });
 
 export default meta;
 
-const ctrl = controls(Menu<Menu.Item>, {
+const ctrl = controls(Menu<Menu.ItemObject>, {
   disabled: {
     control: "boolean",
   },

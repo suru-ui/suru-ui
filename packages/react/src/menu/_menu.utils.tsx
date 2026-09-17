@@ -1,13 +1,13 @@
 import isReactNode from "../_is-react-node.js";
 import type * as Button from "../button/button.parts.js";
 import type {
-  MenuRootLinkItem,
-  MenuRootItemGroup,
-  MenuRootRadioItem,
-  MenuRootLabeledItem,
-  MenuRootSubmenuItem,
-  MenuRootCheckboxItem,
-  MenuRootRadioItemGroup,
+  MenuRootLinkItemObject,
+  MenuRootItemObjectGroup,
+  MenuRootRadioItemObject,
+  MenuRootLabeledItemObject,
+  MenuRootSubmenuItemObject,
+  MenuRootCheckboxItemObject,
+  MenuRootRadioItemObjectGroup,
 } from "./menu.root.jsx";
 
 function isObject(x: unknown): x is object {
@@ -34,31 +34,31 @@ function hasOptionalTypeof<X extends object, T>(x: X, type: T): x is X & { type:
   return !("type" in x) || x.type === undefined || x.type === type;
 }
 
-export function isLabeledItem(item: unknown): item is MenuRootLabeledItem {
+export function isLabeledItemObject(item: unknown): item is MenuRootLabeledItemObject {
   return isObject(item) && !hasItems(item) && hasLabel(item) && hasOptionalTypeof(item, "item");
 }
 
-export function isLinkItem(item: unknown): item is MenuRootLinkItem {
+export function isLinkItemObject(item: unknown): item is MenuRootLinkItemObject {
   return isObject(item) && !hasItems(item) && hasLabel(item) && hasType(item, "link");
 }
 
-export function isCheckboxItem(item: unknown): item is MenuRootCheckboxItem {
+export function isCheckboxItemObject(item: unknown): item is MenuRootCheckboxItemObject {
   return isObject(item) && !hasItems(item) && hasLabel(item) && hasType(item, "checkbox");
 }
 
-export function isRadioItem(item: unknown): item is MenuRootRadioItem {
+export function isRadioItemObject(item: unknown): item is MenuRootRadioItemObject {
   return isObject(item) && !hasItems(item) && hasLabel(item);
 }
 
-export function isRadioItemGroup(item: unknown): item is MenuRootRadioItemGroup {
+export function isRadioItemObjectGroup(item: unknown): item is MenuRootRadioItemObjectGroup {
   return isObject(item) && hasItems(item) && hasType(item, "radio-group");
 }
 
-export function isSubmenuItem(item: unknown): item is MenuRootSubmenuItem {
+export function isSubmenuItemObject(item: unknown): item is MenuRootSubmenuItemObject {
   return isObject(item) && hasItems(item) && hasLabel(item) && hasType(item, "submenu");
 }
 
-export function isItemGroup(item: unknown): item is MenuRootItemGroup {
+export function isItemObjectGroup(item: unknown): item is MenuRootItemObjectGroup {
   return (
     isObject(item) && hasItems(item) && hasOptionalLabel(item) && hasOptionalTypeof(item, "group")
   );

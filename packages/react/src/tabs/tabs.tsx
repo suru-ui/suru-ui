@@ -77,8 +77,6 @@ export type TabsItemObject = {
   readonly disabled?: boolean | undefined;
 };
 
-export type TabsItem = TabsItemObject;
-
 /**
  * {@link Tabs} の各パーツに渡す props です。
  */
@@ -288,8 +286,6 @@ export namespace Tabs {
   export type ChangeEventDetails = TabsChangeEventDetails;
 
   export type ChangeEventReason = TabsChangeEventReason;
-
-  export type Item = TabsItem;
 
   export type ItemObject = TabsItemObject;
 

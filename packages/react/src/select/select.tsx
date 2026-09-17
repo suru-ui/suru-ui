@@ -27,15 +27,15 @@ import {
   type SelectTriggerProps,
   type SelectBackdropProps,
   type SelectItemTextProps,
-  type SelectRootItemGroup,
   type SelectSeparatorProps,
   type SelectGroupLabelProps,
   type SelectPositionerProps,
-  type SelectRootLabeledItem,
   type SelectItemIndicatorProps,
   type SelectScrollUpArrowProps,
+  type SelectRootItemObjectGroup,
   type SelectScrollDownArrowProps,
   type SelectRootChangeEventReason,
+  type SelectRootLabeledItemObject,
   type SelectRootChangeEventDetails,
   SelectIcon,
   SelectItem,
@@ -55,10 +55,10 @@ import {
   SelectPositioner,
   useSelectContext,
   SelectItemIndicator,
-  SelectListItemGroup,
   SelectScrollUpArrow,
-  SelectListLabeledItem,
   SelectScrollDownArrow,
+  SelectListItemObjectGroup,
+  SelectListLabeledItemObject,
 } from "./select.parts.js";
 
 // Types
@@ -76,9 +76,9 @@ export type SelectSize = SelectRootSize;
 
 export type SelectVariant = SelectRootVariant;
 
-export type SelectLabeledItem<TValue = any> = SelectRootLabeledItem<TValue>;
+export type SelectLabeledItemObject<TValue = any> = SelectRootLabeledItemObject<TValue>;
 
-export type SelectItemGroup<TValue = any> = SelectRootItemGroup<TValue>;
+export type SelectItemObjectGroup<TValue = any> = SelectRootItemObjectGroup<TValue>;
 
 export type SelectItems<TValue = any> = SelectRootItems<TValue>;
 
@@ -244,21 +244,21 @@ export interface SelectAPI<
    *
    * @param item グループです。
    */
-  getGroupLabelProps(item: SelectListItemGroup): SelectGroupLabelProps | null;
+  getGroupLabelProps(item: SelectListItemObjectGroup): SelectGroupLabelProps | null;
 
   /**
    * {@link SelectGroup} に渡す props を取得します。
    *
    * @param item グループです。
    */
-  getGroupProps(item: SelectListItemGroup): Omit<SelectGroupProps, "children">;
+  getGroupProps(item: SelectListItemObjectGroup): Omit<SelectGroupProps, "children">;
 
   /**
    * グループに含まれる項目を取得します。
    *
    * @param item グループです。
    */
-  getGroupedItems(item: SelectListItemGroup): SelectListItemGroup["items"];
+  getGroupedItems(item: SelectListItemObjectGroup): SelectListItemObjectGroup["items"];
 
   /**
    * {@link SelectIcon} に渡す props を取得します。
@@ -276,14 +276,14 @@ export interface SelectAPI<
    * @param item 項目です。
    * @param index 項目のインデックスです。
    */
-  getItemProps(item: SelectListLabeledItem, index: number): Omit<SelectItemProps, "children">;
+  getItemProps(item: SelectListLabeledItemObject, index: number): Omit<SelectItemProps, "children">;
 
   /**
    * {@link SelectItemText} に渡す props を取得します。
    *
    * @param item 項目です。
    */
-  getItemTextProps(item: SelectListLabeledItem): SelectItemTextProps;
+  getItemTextProps(item: SelectListLabeledItemObject): SelectItemTextProps;
 
   /**
    * {@link SelectLabel} に渡す props を取得します。
@@ -681,11 +681,11 @@ export namespace Select {
 
   export type Item<TValue = any> = SelectRootItem<TValue>;
 
-  export type ItemGroup<TValue = any> = SelectItemGroup<TValue>;
+  export type ItemObjectGroup<TValue = any> = SelectItemObjectGroup<TValue>;
 
   export type Items<TValue = any> = SelectItems<TValue>;
 
-  export type LabeledItem<TValue = any> = SelectLabeledItem<TValue>;
+  export type LabeledItemObject<TValue = any> = SelectLabeledItemObject<TValue>;
 
   export type Radius = SelectRadius;
 

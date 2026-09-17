@@ -36,7 +36,7 @@ export type MenuRootChangeEventReason = Menu.Root.ChangeEventReason;
  */
 export type MenuRootOrientation = Menu.Root.Orientation;
 
-namespace MenuRootLabeledItem {
+namespace MenuRootLabeledItemObject {
   export type BaseUI = Omit<MenuItemProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
@@ -52,9 +52,10 @@ namespace MenuRootLabeledItem {
   };
 }
 
-export type MenuRootLabeledItem = MenuRootLabeledItem.SuruUI & MenuRootLabeledItem.BaseUI;
+export type MenuRootLabeledItemObject = MenuRootLabeledItemObject.SuruUI &
+  MenuRootLabeledItemObject.BaseUI;
 
-namespace MenuRootLinkItem {
+namespace MenuRootLinkItemObject {
   export type BaseUI = Omit<MenuLinkItemProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
@@ -70,9 +71,9 @@ namespace MenuRootLinkItem {
   };
 }
 
-export type MenuRootLinkItem = MenuRootLinkItem.SuruUI & MenuRootLinkItem.BaseUI;
+export type MenuRootLinkItemObject = MenuRootLinkItemObject.SuruUI & MenuRootLinkItemObject.BaseUI;
 
-namespace MenuRootCheckboxItem {
+namespace MenuRootCheckboxItemObject {
   export type BaseUI = Omit<MenuCheckboxItemProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
@@ -88,9 +89,10 @@ namespace MenuRootCheckboxItem {
   };
 }
 
-export type MenuRootCheckboxItem = MenuRootCheckboxItem.SuruUI & MenuRootCheckboxItem.BaseUI;
+export type MenuRootCheckboxItemObject = MenuRootCheckboxItemObject.SuruUI &
+  MenuRootCheckboxItemObject.BaseUI;
 
-namespace MenuRootRadioItem {
+namespace MenuRootRadioItemObject {
   export type BaseUI = Omit<MenuRadioItemProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
@@ -101,9 +103,10 @@ namespace MenuRootRadioItem {
   };
 }
 
-export type MenuRootRadioItem = MenuRootRadioItem.SuruUI & MenuRootRadioItem.BaseUI;
+export type MenuRootRadioItemObject = MenuRootRadioItemObject.SuruUI &
+  MenuRootRadioItemObject.BaseUI;
 
-namespace MenuRootRadioItemGroup {
+namespace MenuRootRadioItemObjectGroup {
   // 型引数 TItem は SuruUI.items によって上書きされ、children は削除されるため、指定不要です。
   export type BaseUI = Omit<MenuRadioGroupProps, "children" | keyof SuruUI>;
 
@@ -111,7 +114,7 @@ namespace MenuRootRadioItemGroup {
     /**
      * ラジオ項目です。
      */
-    readonly items: readonly MenuRootRadioItem[];
+    readonly items: readonly MenuRootRadioItemObject[];
 
     /**
      * 項目の種類です。
@@ -120,9 +123,10 @@ namespace MenuRootRadioItemGroup {
   };
 }
 
-export type MenuRootRadioItemGroup = MenuRootRadioItemGroup.SuruUI & MenuRootRadioItemGroup.BaseUI;
+export type MenuRootRadioItemObjectGroup = MenuRootRadioItemObjectGroup.SuruUI &
+  MenuRootRadioItemObjectGroup.BaseUI;
 
-namespace MenuRootSubmenuItem {
+namespace MenuRootSubmenuItemObject {
   // 型引数 TItem は SuruUI.items によって上書きされ、children は削除されるため、指定不要です。
   export type BaseUI = Omit<MenuSubmenuRootProps, "children" | keyof SuruUI>;
 
@@ -130,7 +134,7 @@ namespace MenuRootSubmenuItem {
     /**
      * 子項目です。
      */
-    readonly items: readonly MenuRootItem[];
+    readonly items: readonly MenuRootItemObject[];
 
     /**
      * 項目のラベルです。
@@ -144,23 +148,24 @@ namespace MenuRootSubmenuItem {
   };
 }
 
-export type MenuRootSubmenuItem = MenuRootSubmenuItem.SuruUI & MenuRootSubmenuItem.BaseUI;
+export type MenuRootSubmenuItemObject = MenuRootSubmenuItemObject.SuruUI &
+  MenuRootSubmenuItemObject.BaseUI;
 
-export type MenuRootGroupedItem =
-  | MenuRootLabeledItem
-  | MenuRootLinkItem
-  | MenuRootCheckboxItem
-  | MenuRootRadioItemGroup
-  | MenuRootSubmenuItem;
+export type MenuRootGroupedItemObject =
+  | MenuRootLabeledItemObject
+  | MenuRootLinkItemObject
+  | MenuRootCheckboxItemObject
+  | MenuRootRadioItemObjectGroup
+  | MenuRootSubmenuItemObject;
 
-namespace MenuRootItemGroup {
+namespace MenuRootItemObjectGroup {
   export type BaseUI = Omit<MenuGroupProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
     /**
      * 子項目です。
      */
-    readonly items: readonly MenuRootGroupedItem[];
+    readonly items: readonly MenuRootGroupedItemObject[];
 
     /**
      * グループのラベルです。
@@ -174,18 +179,19 @@ namespace MenuRootItemGroup {
   };
 }
 
-export type MenuRootItemGroup = MenuRootItemGroup.SuruUI & MenuRootItemGroup.BaseUI;
+export type MenuRootItemObjectGroup = MenuRootItemObjectGroup.SuruUI &
+  MenuRootItemObjectGroup.BaseUI;
 
 /**
  * {@link MenuRoot} の各項目です。
  */
-export type MenuRootItem =
-  | MenuRootLabeledItem
-  | MenuRootLinkItem
-  | MenuRootCheckboxItem
-  | MenuRootRadioItemGroup
-  | MenuRootSubmenuItem
-  | MenuRootItemGroup;
+export type MenuRootItemObject =
+  | MenuRootLabeledItemObject
+  | MenuRootLinkItemObject
+  | MenuRootCheckboxItemObject
+  | MenuRootRadioItemObjectGroup
+  | MenuRootSubmenuItemObject
+  | MenuRootItemObjectGroup;
 
 /**
  * メニューの角丸です。
@@ -367,7 +373,7 @@ export namespace Root {
 
   export type ChangeEventReason = MenuRootChangeEventReason;
 
-  export type CheckboxItem = MenuRootCheckboxItem;
+  export type CheckboxItemObject = MenuRootCheckboxItemObject;
 
   export type Orientation = MenuRootOrientation;
 

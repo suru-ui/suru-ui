@@ -1,13 +1,13 @@
 import isReactNode from "../_is-react-node.js";
 import type * as Button from "../button/button.parts.js";
 import type {
-  ContextMenuRootLinkItem,
-  ContextMenuRootItemGroup,
-  ContextMenuRootRadioItem,
-  ContextMenuRootLabeledItem,
-  ContextMenuRootSubmenuItem,
-  ContextMenuRootCheckboxItem,
-  ContextMenuRootRadioItemGroup,
+  ContextMenuRootLinkItemObject,
+  ContextMenuRootItemObjectGroup,
+  ContextMenuRootRadioItemObject,
+  ContextMenuRootLabeledItemObject,
+  ContextMenuRootSubmenuItemObject,
+  ContextMenuRootCheckboxItemObject,
+  ContextMenuRootRadioItemObjectGroup,
 } from "./context-menu.root.jsx";
 
 function isObject(x: unknown): x is object {
@@ -34,31 +34,31 @@ function hasOptionalTypeof<X extends object, T>(x: X, type: T): x is X & { type:
   return !("type" in x) || x.type === undefined || x.type === type;
 }
 
-export function isLabeledItem(item: unknown): item is ContextMenuRootLabeledItem {
+export function isLabeledItemObject(item: unknown): item is ContextMenuRootLabeledItemObject {
   return isObject(item) && !hasItems(item) && hasLabel(item) && hasOptionalTypeof(item, "item");
 }
 
-export function isLinkItem(item: unknown): item is ContextMenuRootLinkItem {
+export function isLinkItemObject(item: unknown): item is ContextMenuRootLinkItemObject {
   return isObject(item) && !hasItems(item) && hasLabel(item) && hasType(item, "link");
 }
 
-export function isCheckboxItem(item: unknown): item is ContextMenuRootCheckboxItem {
+export function isCheckboxItemObject(item: unknown): item is ContextMenuRootCheckboxItemObject {
   return isObject(item) && !hasItems(item) && hasLabel(item) && hasType(item, "checkbox");
 }
 
-export function isRadioItem(item: unknown): item is ContextMenuRootRadioItem {
+export function isRadioItemObject(item: unknown): item is ContextMenuRootRadioItemObject {
   return isObject(item) && !hasItems(item) && hasLabel(item);
 }
 
-export function isRadioItemGroup(item: unknown): item is ContextMenuRootRadioItemGroup {
+export function isRadioItemObjectGroup(item: unknown): item is ContextMenuRootRadioItemObjectGroup {
   return isObject(item) && hasItems(item) && hasType(item, "radio-group");
 }
 
-export function isSubmenuItem(item: unknown): item is ContextMenuRootSubmenuItem {
+export function isSubmenuItemObject(item: unknown): item is ContextMenuRootSubmenuItemObject {
   return isObject(item) && hasItems(item) && hasLabel(item) && hasType(item, "submenu");
 }
 
-export function isItemGroup(item: unknown): item is ContextMenuRootItemGroup {
+export function isItemObjectGroup(item: unknown): item is ContextMenuRootItemObjectGroup {
   return (
     isObject(item) && hasItems(item) && hasOptionalLabel(item) && hasOptionalTypeof(item, "group")
   );

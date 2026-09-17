@@ -18,7 +18,7 @@ import {
   ScrollAreaScrollbar,
 } from "../scroll-area/scroll-area.parts.js";
 import type { IComponent, IUseContext } from "../types.js";
-import { type ItemGroup, isItemGroup } from "./_autocomplete.jsx";
+import { type ItemObjectGroup, isItemObjectGroup } from "./_autocomplete.jsx";
 import {
   type AutocompleteContext,
   type AutocompleteRootSize,
@@ -87,7 +87,7 @@ export type AutocompleteVariant = AutocompleteRootVariant;
  *
  * @template TItem 項目の値の型です。
  */
-export type AutocompleteGroupItem<TItem = any> = ItemGroup<TItem>;
+export type AutocompleteGroupItemObject<TItem = any> = ItemObjectGroup<TItem>;
 
 /**
  * {@link Autocomplete} の各パーツに渡す props です。
@@ -284,7 +284,7 @@ export interface AutocompleteAPI<TItem = any> {
    * @param item グループの項目です。
    * @param index 項目のインデックスです。
    */
-  getGroupProps(item: AutocompleteGroupItem<TItem>, index: number): AutocompleteGroupProps;
+  getGroupProps(item: AutocompleteGroupItemObject<TItem>, index: number): AutocompleteGroupProps;
 
   /**
    * グループ内の {@link AutocompleteItem} に渡す props を取得します。
@@ -600,7 +600,7 @@ export const Autocomplete: IAutocomplete = /*#__PURE__*/ Object.assign(
                     <AutocompleteList {...listProps}>
                       {listProps.children ??
                         ((item, index) => {
-                          if (!isItemGroup(item)) {
+                          if (!isItemObjectGroup(item)) {
                             return <AutocompleteItem {...api.getItemProps(item, index)} />;
                           }
 
@@ -653,7 +653,7 @@ export namespace Autocomplete {
 
   export type Color = AutocompleteColor;
 
-  export type GroupItem<TItem = any> = AutocompleteGroupItem<TItem>;
+  export type GroupItemObject<TItem = any> = AutocompleteGroupItemObject<TItem>;
 
   export type HighlightEventDetails = AutocompleteHighlightEventDetails;
 

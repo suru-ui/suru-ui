@@ -36,7 +36,7 @@ export type ContextMenuRootChangeEventReason = ContextMenu.Root.ChangeEventReaso
  */
 export type ContextMenuRootOrientation = Menu.Root.Orientation;
 
-namespace ContextMenuRootLabeledItem {
+namespace ContextMenuRootLabeledItemObject {
   export type BaseUI = Omit<ContextMenuItemProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
@@ -52,10 +52,10 @@ namespace ContextMenuRootLabeledItem {
   };
 }
 
-export type ContextMenuRootLabeledItem = ContextMenuRootLabeledItem.SuruUI &
-  ContextMenuRootLabeledItem.BaseUI;
+export type ContextMenuRootLabeledItemObject = ContextMenuRootLabeledItemObject.SuruUI &
+  ContextMenuRootLabeledItemObject.BaseUI;
 
-namespace ContextMenuRootLinkItem {
+namespace ContextMenuRootLinkItemObject {
   export type BaseUI = Omit<ContextMenuLinkItemProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
@@ -71,10 +71,10 @@ namespace ContextMenuRootLinkItem {
   };
 }
 
-export type ContextMenuRootLinkItem = ContextMenuRootLinkItem.SuruUI &
-  ContextMenuRootLinkItem.BaseUI;
+export type ContextMenuRootLinkItemObject = ContextMenuRootLinkItemObject.SuruUI &
+  ContextMenuRootLinkItemObject.BaseUI;
 
-namespace ContextMenuRootCheckboxItem {
+namespace ContextMenuRootCheckboxItemObject {
   export type BaseUI = Omit<ContextMenuCheckboxItemProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
@@ -90,10 +90,10 @@ namespace ContextMenuRootCheckboxItem {
   };
 }
 
-export type ContextMenuRootCheckboxItem = ContextMenuRootCheckboxItem.SuruUI &
-  ContextMenuRootCheckboxItem.BaseUI;
+export type ContextMenuRootCheckboxItemObject = ContextMenuRootCheckboxItemObject.SuruUI &
+  ContextMenuRootCheckboxItemObject.BaseUI;
 
-namespace ContextMenuRootRadioItem {
+namespace ContextMenuRootRadioItemObject {
   export type BaseUI = Omit<ContextMenuRadioItemProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
@@ -104,10 +104,10 @@ namespace ContextMenuRootRadioItem {
   };
 }
 
-export type ContextMenuRootRadioItem = ContextMenuRootRadioItem.SuruUI &
-  ContextMenuRootRadioItem.BaseUI;
+export type ContextMenuRootRadioItemObject = ContextMenuRootRadioItemObject.SuruUI &
+  ContextMenuRootRadioItemObject.BaseUI;
 
-namespace ContextMenuRootRadioItemGroup {
+namespace ContextMenuRootRadioItemObjectGroup {
   // 型引数 TItem は SuruUI.items によって上書きされ、children は削除されるため、指定不要です。
   export type BaseUI = Omit<ContextMenuRadioGroupProps, "children" | keyof SuruUI>;
 
@@ -115,7 +115,7 @@ namespace ContextMenuRootRadioItemGroup {
     /**
      * ラジオ項目です。
      */
-    readonly items: readonly ContextMenuRootRadioItem[];
+    readonly items: readonly ContextMenuRootRadioItemObject[];
 
     /**
      * 項目の種類です。
@@ -124,10 +124,10 @@ namespace ContextMenuRootRadioItemGroup {
   };
 }
 
-export type ContextMenuRootRadioItemGroup = ContextMenuRootRadioItemGroup.SuruUI &
-  ContextMenuRootRadioItemGroup.BaseUI;
+export type ContextMenuRootRadioItemObjectGroup = ContextMenuRootRadioItemObjectGroup.SuruUI &
+  ContextMenuRootRadioItemObjectGroup.BaseUI;
 
-namespace ContextMenuRootSubmenuItem {
+namespace ContextMenuRootSubmenuItemObject {
   // 型引数 TItem は SuruUI.items によって上書きされ、children は削除されるため、指定不要です。
   export type BaseUI = Omit<ContextMenuSubmenuRootProps, "children" | keyof SuruUI>;
 
@@ -135,7 +135,7 @@ namespace ContextMenuRootSubmenuItem {
     /**
      * 子項目です。
      */
-    readonly items: readonly ContextMenuRootItem[];
+    readonly items: readonly ContextMenuRootItemObject[];
 
     /**
      * 項目のラベルです。
@@ -149,24 +149,24 @@ namespace ContextMenuRootSubmenuItem {
   };
 }
 
-export type ContextMenuRootSubmenuItem = ContextMenuRootSubmenuItem.SuruUI &
-  ContextMenuRootSubmenuItem.BaseUI;
+export type ContextMenuRootSubmenuItemObject = ContextMenuRootSubmenuItemObject.SuruUI &
+  ContextMenuRootSubmenuItemObject.BaseUI;
 
-export type ContextMenuRootGroupedItem =
-  | ContextMenuRootLabeledItem
-  | ContextMenuRootLinkItem
-  | ContextMenuRootCheckboxItem
-  | ContextMenuRootRadioItemGroup
-  | ContextMenuRootSubmenuItem;
+export type ContextMenuRootGroupedItemObject =
+  | ContextMenuRootLabeledItemObject
+  | ContextMenuRootLinkItemObject
+  | ContextMenuRootCheckboxItemObject
+  | ContextMenuRootRadioItemObjectGroup
+  | ContextMenuRootSubmenuItemObject;
 
-namespace ContextMenuRootItemGroup {
+namespace ContextMenuRootItemObjectGroup {
   export type BaseUI = Omit<ContextMenuGroupProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
     /**
      * 子項目です。
      */
-    readonly items: readonly ContextMenuRootGroupedItem[];
+    readonly items: readonly ContextMenuRootGroupedItemObject[];
 
     /**
      * グループのラベルです。
@@ -180,19 +180,19 @@ namespace ContextMenuRootItemGroup {
   };
 }
 
-export type ContextMenuRootItemGroup = ContextMenuRootItemGroup.SuruUI &
-  ContextMenuRootItemGroup.BaseUI;
+export type ContextMenuRootItemObjectGroup = ContextMenuRootItemObjectGroup.SuruUI &
+  ContextMenuRootItemObjectGroup.BaseUI;
 
 /**
  * {@link ContextMenuRoot} の各項目です。
  */
-export type ContextMenuRootItem =
-  | ContextMenuRootLabeledItem
-  | ContextMenuRootLinkItem
-  | ContextMenuRootCheckboxItem
-  | ContextMenuRootRadioItemGroup
-  | ContextMenuRootSubmenuItem
-  | ContextMenuRootItemGroup;
+export type ContextMenuRootItemObject =
+  | ContextMenuRootLabeledItemObject
+  | ContextMenuRootLinkItemObject
+  | ContextMenuRootCheckboxItemObject
+  | ContextMenuRootRadioItemObjectGroup
+  | ContextMenuRootSubmenuItemObject
+  | ContextMenuRootItemObjectGroup;
 
 /**
  * コンテキストメニューの角丸です。

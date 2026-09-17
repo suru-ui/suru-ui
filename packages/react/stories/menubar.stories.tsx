@@ -8,12 +8,12 @@ const ORIENTATIONS: readonly Menubar.Orientation[] = ["horizontal", "vertical"];
 
 const meta = preview.meta({
   title: "Menubar",
-  component: Menubar<Menubar.Item>,
+  component: Menubar<Menubar.ItemObject>,
 });
 
 export default meta;
 
-const ctrl = controls(Menubar<Menubar.Item>, {
+const ctrl = controls(Menubar<Menubar.ItemObject>, {
   loopFocus: {
     control: "boolean",
   },

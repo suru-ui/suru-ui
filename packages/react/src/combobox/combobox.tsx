@@ -19,7 +19,7 @@ import {
   ScrollAreaScrollbar,
 } from "../scroll-area/scroll-area.parts.js";
 import type { IComponent, IUseContext } from "../types.js";
-import { type ItemGroup, isItemGroup } from "./_combobox.jsx";
+import { type ItemObjectGroup, isItemObjectGroup } from "./_combobox.jsx";
 import {
   type ComboboxContext,
   type ComboboxRootSize,
@@ -106,7 +106,7 @@ export type ComboboxItems<TValue = unknown> = ComboboxRootItems<TValue>;
  *
  * @template TValue 項目の値の型です。
  */
-export type ComboboxGroupItem<TValue = unknown> = ItemGroup<TValue>;
+export type ComboboxGroupItemObject<TValue = unknown> = ItemObjectGroup<TValue>;
 
 /**
  * {@link Combobox} の各パーツに渡す props です。
@@ -350,7 +350,7 @@ export interface ComboboxAPI<
    *
    * @param item グループの項目です。
    */
-  getGroupLabelProps(item: ComboboxGroupItem<TValue>): ComboboxGroupLabelProps;
+  getGroupLabelProps(item: ComboboxGroupItemObject<TValue>): ComboboxGroupLabelProps;
 
   /**
    * {@link ComboboxGroup} に渡す props を取得します。
@@ -358,7 +358,7 @@ export interface ComboboxAPI<
    * @param item グループの項目です。
    * @param index 項目のインデックスです。
    */
-  getGroupProps(item: ComboboxGroupItem<TValue>, index: number): ComboboxGroupProps;
+  getGroupProps(item: ComboboxGroupItemObject<TValue>, index: number): ComboboxGroupProps;
 
   /**
    * {@link ComboboxIcon} に渡す props を取得します。
@@ -769,7 +769,7 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
                     <ComboboxList {...listProps}>
                       {listProps.children ??
                         ((item, index) => {
-                          if (!isItemGroup(item)) {
+                          if (!isItemObjectGroup(item)) {
                             const { children, ...otherItemProps } = api.getItemProps(item, index);
 
                             return (
@@ -840,7 +840,7 @@ export namespace Combobox {
 
   export type Color = ComboboxColor;
 
-  export type GroupItem<TValue = unknown> = ComboboxGroupItem<TValue>;
+  export type GroupItemObject<TValue = unknown> = ComboboxGroupItemObject<TValue>;
 
   export type HighlightEventDetails = ComboboxHighlightEventDetails;
 

@@ -3,7 +3,7 @@ import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import type { Override, IComponent } from "../types.js";
-import { isItemGroup, isLabeledItem } from "./_select.jsx";
+import { isItemObjectGroup, isLabeledItemObject } from "./_select.jsx";
 import { SelectContext } from "./select.context.js";
 import type { SelectGroupProps } from "./select.group.jsx";
 import type { SelectItemProps } from "./select.item.jsx";
@@ -39,7 +39,7 @@ export type SelectRootItemMapping<TValue = any> = TValue extends string
  *
  * @template TValue 項目の値の型です。
  */
-export type SelectRootLabeledItem<TValue = any> = Override<
+export type SelectRootLabeledItemObject<TValue = any> = Override<
   Omit<SelectItemProps, "children">,
   {
     readonly label: React.ReactNode;
@@ -55,14 +55,14 @@ export type SelectRootLabeledItem<TValue = any> = Override<
  *
  * @template TValue 項目の値の型です。
  */
-export type SelectRootItem<TValue = any> = TValue | SelectRootLabeledItem<TValue>;
+export type SelectRootItem<TValue = any> = TValue | SelectRootLabeledItemObject<TValue>;
 
 /**
  * 関連する項目をまとめるグループです。
  *
  * @template TValue 項目の値の型です。
  */
-export type SelectRootItemGroup<TValue = any> = Override<
+export type SelectRootItemObjectGroup<TValue = any> = Override<
   Omit<SelectGroupProps, "children">,
   {
     /**
@@ -89,7 +89,7 @@ export type SelectRootItemGroup<TValue = any> = Override<
 export type SelectRootItems<TValue = any> =
   | SelectRootItemMapping<TValue>
   | readonly SelectRootItem<TValue>[]
-  | readonly SelectRootItemGroup<TValue>[];
+  | readonly SelectRootItemObjectGroup<TValue>[];
 
 /**
  * 選択欄の角丸です。
@@ -267,14 +267,14 @@ export const SelectRoot: ISelectRoot = function SuiSelectRoot(props: SelectRootP
     }
 
     return items.map((item) => {
-      if (isLabeledItem(item)) {
+      if (isLabeledItemObject(item)) {
         return {
           label: item.label,
           value: item.value,
         };
       }
 
-      if (isItemGroup(item)) {
+      if (isItemObjectGroup(item)) {
         return {
           items: item.items,
           label: item.label,
@@ -294,14 +294,14 @@ export const SelectRoot: ISelectRoot = function SuiSelectRoot(props: SelectRootP
 
       if (Array.isArray(item)) {
         onValueChange(
-          item.map((entry) => (isLabeledItem(entry) ? entry.value : entry)),
+          item.map((entry) => (isLabeledItemObject(entry) ? entry.value : entry)),
           ...args,
         );
 
         return;
       }
 
-      onValueChange(isLabeledItem(item) ? item.value : item, ...args);
+      onValueChange(isLabeledItemObject(item) ? item.value : item, ...args);
     },
     [onValueChange],
   );
@@ -309,7 +309,7 @@ export const SelectRoot: ISelectRoot = function SuiSelectRoot(props: SelectRootP
   // 型情報と実際の挙動を合わせるために、ハンドラーを修正します。
   const isItemEqualToValue = React.useCallback<NonNullable<SelectRootProps["isItemEqualToValue"]>>(
     (item, ...args) => {
-      const value = isLabeledItem(item) ? item.value : item;
+      const value = isLabeledItemObject(item) ? item.value : item;
       const equal = !isItemEqualToValueProp
         ? Object.is(value, args[0])
         : isItemEqualToValueProp(value, ...args);
@@ -369,7 +369,7 @@ export namespace Root {
 
   export type ChangeEventReason = SelectRootChangeEventReason;
 
-  export type ItemGroup<TValue = any> = SelectRootItemGroup<TValue>;
+  export type ItemObjectGroup<TValue = any> = SelectRootItemObjectGroup<TValue>;
 
   export type Items<TValue = any> = SelectRootItems<TValue>;
 

@@ -1,5 +1,5 @@
 import isReactNode from "../_is-react-node.js";
-import type { MenubarRootItem } from "./menubar.root.jsx";
+import type { MenubarRootItemObject } from "./menubar.root.jsx";
 
 /**
  * メニューバーの項目であるオブジェクトかどうかを判定します。
@@ -7,7 +7,7 @@ import type { MenubarRootItem } from "./menubar.root.jsx";
  * @param item 判定する値です。
  * @returns メニューバーの項目である場合に `true` を返します。
  */
-export function isItem(item: unknown): item is MenubarRootItem {
+export function isItemObject(item: unknown): item is MenubarRootItemObject {
   return (
     typeof item === "object" &&
     item !== null &&

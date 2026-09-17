@@ -6,7 +6,7 @@ import toReactNode from "../_to-react-node.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { isItemGroup, isLabeledItem } from "./_select.jsx";
+import { isItemObjectGroup, isLabeledItemObject } from "./_select.jsx";
 import { useSelectContext } from "./select.context.js";
 import { SelectGroupLabel } from "./select.group-label.jsx";
 import { SelectGroup } from "./select.group.jsx";
@@ -15,8 +15,8 @@ import { SelectItemText } from "./select.item-text.jsx";
 import { SelectItem } from "./select.item.jsx";
 import type {
   SelectRootItems,
-  SelectRootItemGroup,
-  SelectRootLabeledItem,
+  SelectRootItemObjectGroup,
+  SelectRootLabeledItemObject,
 } from "./select.root.jsx";
 import { SelectSeparator } from "./select.separator.jsx";
 
@@ -25,17 +25,17 @@ import { SelectSeparator } from "./select.separator.jsx";
  *
  * @template TValue 項目の値の型です。
  */
-export type SelectListLabeledItem<TValue = any> = SelectRootLabeledItem<TValue>;
+export type SelectListLabeledItemObject<TValue = any> = SelectRootLabeledItemObject<TValue>;
 
 /**
  * ラベルと値を持つ項目をまとめる、リストのグループです。
  *
  * @template TValue 項目の値の型です。
  */
-export type SelectListItemGroup<TValue = any> = Override<
-  SelectRootItemGroup<TValue>,
+export type SelectListItemObjectGroup<TValue = any> = Override<
+  SelectRootItemObjectGroup<TValue>,
   {
-    readonly items: readonly SelectListLabeledItem<TValue>[];
+    readonly items: readonly SelectListLabeledItemObject<TValue>[];
   }
 >;
 
@@ -44,9 +44,9 @@ export type SelectListItemGroup<TValue = any> = Override<
  *
  * @template TValue 項目の値の型です。
  */
-export type SelectListItem<TValue = any> =
-  | SelectListLabeledItem<TValue>
-  | SelectListItemGroup<TValue>;
+export type SelectListItemObject<TValue = any> =
+  | SelectListLabeledItemObject<TValue>
+  | SelectListItemObjectGroup<TValue>;
 
 /**
  * リストの各項目をレンダリングする関数のインターフェイスです。
@@ -63,19 +63,23 @@ export interface ISelectListItemRenderer<TValue = any> {
    * @returns レンダリングする内容です。
    */
   (
-    item: SelectListLabeledItem<TValue>,
+    item: SelectListLabeledItemObject<TValue>,
     index: number,
-    items: readonly SelectListLabeledItem<TValue>[],
+    items: readonly SelectListLabeledItemObject<TValue>[],
   ): React.ReactNode;
   (
-    item: SelectListItemGroup<TValue>,
+    item: SelectListItemObjectGroup<TValue>,
     index: number,
-    items: readonly SelectListItemGroup<TValue>[],
+    items: readonly SelectListItemObjectGroup<TValue>[],
   ): React.ReactNode;
 }
 
 interface IAnySelectListItemRenderer {
-  (item: SelectListItem, index: number, items: readonly SelectListItem[]): React.ReactNode;
+  (
+    item: SelectListItemObject,
+    index: number,
+    items: readonly SelectListItemObject[],
+  ): React.ReactNode;
 }
 
 /**
@@ -146,17 +150,17 @@ function renderListItems(
 ): React.ReactNode {
   if (Array.isArray(items)) {
     return items
-      .map((item): SelectListItem => {
-        if (isLabeledItem(item)) {
+      .map((item): SelectListItemObject => {
+        if (isLabeledItemObject(item)) {
           return item;
         }
 
-        if (isItemGroup(item)) {
+        if (isItemObjectGroup(item)) {
           if (Array.isArray(item.items)) {
             return {
               ...item,
               items: item.items.map((item) => {
-                if (isLabeledItem(item)) {
+                if (isLabeledItemObject(item)) {
                   return item;
                 }
 
@@ -186,7 +190,7 @@ function renderListItems(
   }
 
   return Object.entries(items)
-    .map(([value, label]): SelectListLabeledItem => ({ label, value }))
+    .map(([value, label]): SelectListLabeledItemObject => ({ label, value }))
     .map(renderer);
 }
 
@@ -241,7 +245,7 @@ export namespace List {
     export type HTML = SelectListProps.HTML;
   }
 
-  export type ItemGroup<TValue = any> = SelectListItemGroup<TValue>;
+  export type ItemObjectGroup<TValue = any> = SelectListItemObjectGroup<TValue>;
 
   export interface IItemRenderer<TValue = any> extends ISelectListItemRenderer<TValue> {}
 }

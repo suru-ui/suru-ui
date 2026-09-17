@@ -5,7 +5,7 @@ import type * as React from "react";
  *
  * @template TValue 項目の値の型です。
  */
-export interface ItemGroup<TValue = unknown> {
+export interface ItemObjectGroup<TValue = unknown> {
   [key: string]: unknown;
 
   /**
@@ -25,6 +25,6 @@ export interface ItemGroup<TValue = unknown> {
  * @param x 判定する値です。
  * @returns グループオブジェクトの場合に `true` を返します。
  */
-export function isItemGroup<TValue = unknown>(x: unknown): x is ItemGroup<TValue> {
+export function isItemObjectGroup<TValue = unknown>(x: unknown): x is ItemObjectGroup<TValue> {
   return typeof x === "object" && x !== null && "items" in x && Array.isArray(x.items);
 }

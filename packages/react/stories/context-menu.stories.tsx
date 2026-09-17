@@ -23,12 +23,12 @@ const VARIANTS: readonly ContextMenu.Variant[] = theme.COLOR_TEMPLATES;
 
 const meta = preview.meta({
   title: "ContextMenu",
-  component: ContextMenu<ContextMenu.Item>,
+  component: ContextMenu<ContextMenu.ItemObject>,
 });
 
 export default meta;
 
-const ctrl = controls(ContextMenu<ContextMenu.Item>, {
+const ctrl = controls(ContextMenu<ContextMenu.ItemObject>, {
   disabled: {
     control: "boolean",
   },

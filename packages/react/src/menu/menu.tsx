@@ -6,16 +6,15 @@ import mergeProps from "../_merge-props.js";
 import toReactNode from "../_to-react-node.js";
 import type { Override, IComponent } from "../types.js";
 import {
-  isLinkItem,
-  isItemGroup,
-  isRadioItem,
-  isLabeledItem,
-  isSubmenuItem,
-  isCheckboxItem,
-  isRadioItemGroup,
+  isLinkItemObject,
+  isItemObjectGroup,
+  isRadioItemObject,
+  isLabeledItemObject,
+  isSubmenuItemObject,
+  isCheckboxItemObject,
+  isRadioItemObjectGroup,
 } from "./_menu.utils.jsx";
 import {
-  type MenuRootItem,
   type MenuRootSize,
   type MenuItemProps,
   type MenuRootProps,
@@ -26,30 +25,31 @@ import {
   type MenuRootActions,
   type MenuRootVariant,
   type MenuContentProps,
-  type MenuRootLinkItem,
   type MenuTriggerProps,
   type MenuBackdropProps,
   type MenuLinkItemProps,
-  type MenuRootItemGroup,
-  type MenuRootRadioItem,
   type MenuRadioItemProps,
+  type MenuRootItemObject,
   type MenuSeparatorProps,
   type MenuGroupLabelProps,
   type MenuPositionerProps,
   type MenuRadioGroupProps,
-  type MenuRootGroupedItem,
-  type MenuRootLabeledItem,
   type MenuRootOrientation,
-  type MenuRootSubmenuItem,
-  type MenuRootCheckboxItem,
   type MenuSubmenuRootProps,
   type MenuCheckboxItemProps,
-  type MenuRootRadioItemGroup,
+  type MenuRootLinkItemObject,
+  type MenuRootItemObjectGroup,
+  type MenuRootRadioItemObject,
   type MenuSubmenuTriggerProps,
   type IMenuContentItemRenderer,
   type MenuRootChangeEventReason,
+  type MenuRootGroupedItemObject,
+  type MenuRootLabeledItemObject,
+  type MenuRootSubmenuItemObject,
   type MenuRootChangeEventDetails,
+  type MenuRootCheckboxItemObject,
   type MenuRadioItemIndicatorProps,
+  type MenuRootRadioItemObjectGroup,
   type MenuCheckboxItemIndicatorProps,
   MenuItem,
   MenuRoot,
@@ -243,7 +243,7 @@ export interface MenuAPI<TItem = any> {
    *
    * @param item 項目です。
    */
-  getCheckboxItemProps(item?: MenuRootCheckboxItem): MenuCheckboxItemProps;
+  getCheckboxItemProps(item?: MenuRootCheckboxItemObject): MenuCheckboxItemProps;
 
   /**
    * {@link MenuContent} に渡す props を取得します。
@@ -262,28 +262,28 @@ export interface MenuAPI<TItem = any> {
    *
    * @param item 項目です。
    */
-  getGroupLabelProps(item?: MenuRootItemGroup): MenuGroupLabelProps | null;
+  getGroupLabelProps(item?: MenuRootItemObjectGroup): MenuGroupLabelProps | null;
 
   /**
    * {@link MenuGroup} に渡す props を取得します。
    *
    * @param item 項目です。
    */
-  getGroupProps(item?: MenuRootItemGroup): Omit<MenuGroupProps, "children">;
+  getGroupProps(item?: MenuRootItemObjectGroup): Omit<MenuGroupProps, "children">;
 
   /**
    * {@link MenuItem} に渡す props を取得します。
    *
    * @param item 項目です。
    */
-  getItemProps(item?: MenuRootLabeledItem): MenuItemProps;
+  getItemProps(item?: MenuRootLabeledItemObject): MenuItemProps;
 
   /**
    * {@link MenuLinkItem} に渡す props を取得します。
    *
    * @param item 項目です。
    */
-  getLinkItemProps(item?: MenuRootLinkItem): MenuLinkItemProps;
+  getLinkItemProps(item?: MenuRootLinkItemObject): MenuLinkItemProps;
 
   /**
    * {@link MenuPortal} に渡す props を取得します。
@@ -306,8 +306,8 @@ export interface MenuAPI<TItem = any> {
     "children" | "value"
   >;
   getRadioGroupProps(
-    item: MenuRootRadioItemGroup,
-  ): Omit<MenuRadioGroupProps<MenuRootRadioItem>, "children">;
+    item: MenuRootRadioItemObjectGroup,
+  ): Omit<MenuRadioGroupProps<MenuRootRadioItemObject>, "children">;
 
   /**
    * {@link MenuRadioItemIndicator} に渡す props を取得します。
@@ -320,9 +320,9 @@ export interface MenuAPI<TItem = any> {
    * @param item 項目です。
    */
   getRadioItemProps(): Omit<MenuRadioItemProps, "children" | "value">;
-  getRadioItemProps(item: MenuRootRadioItem): MenuRadioItemProps;
+  getRadioItemProps(item: MenuRootRadioItemObject): MenuRadioItemProps;
   getRadioItemProps(
-    item?: MenuRootRadioItem,
+    item?: MenuRootRadioItemObject,
   ): Omit<MenuRadioItemProps, "children" | "value"> | MenuRadioItemProps;
 
   /**
@@ -343,15 +343,15 @@ export interface MenuAPI<TItem = any> {
    */
   getSubmenuRootProps<TSubmenuItem = TItem>(): Omit<MenuSubmenuRootProps<TSubmenuItem>, "children">;
   getSubmenuRootProps(
-    item: MenuRootSubmenuItem,
-  ): Omit<MenuSubmenuRootProps<MenuRootItem>, "children">;
+    item: MenuRootSubmenuItemObject,
+  ): Omit<MenuSubmenuRootProps<MenuRootItemObject>, "children">;
 
   /**
    * {@link MenuSubmenuTrigger} に渡す props を取得します。
    *
    * @param item 項目です。
    */
-  getSubmenuTriggerProps(item?: MenuRootSubmenuItem): MenuSubmenuTriggerProps;
+  getSubmenuTriggerProps(item?: MenuRootSubmenuItemObject): MenuSubmenuTriggerProps;
 
   /**
    * {@link MenuTrigger} に渡す props を取得します。
@@ -499,7 +499,7 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
         children: label,
       };
     },
-    getRadioItemProps(item?: MenuRootRadioItem): any {
+    getRadioItemProps(item?: MenuRootRadioItemObject): any {
       return ((): ReturnType<MenuAPI["getRadioItemProps"]> => {
         if (!item) {
           return radioItemProps;
@@ -535,7 +535,7 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
     getPositionerProps() {
       return positionerProps;
     },
-    getRadioGroupProps(item?: MenuRootRadioItemGroup) {
+    getRadioGroupProps(item?: MenuRootRadioItemObjectGroup) {
       if (!item) {
         return radioGroupProps;
       }
@@ -544,7 +544,7 @@ export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
 
       return mergeProps([radioGroupProps, otherProps]);
     },
-    getSubmenuRootProps(item?: MenuRootSubmenuItem) {
+    getSubmenuRootProps(item?: MenuRootSubmenuItemObject) {
       if (!item) {
         return submenuRootProps;
       }
@@ -612,7 +612,7 @@ export const Menu: IMenu = function SuiMenu(props: MenuProps) {
 
   const defaultRadioItemRenderer: IMenuContentItemRenderer = (item, index) => {
     switch (true) {
-      case isRadioItem(item): {
+      case isRadioItemObject(item): {
         const { children: label, ...otherProps } = api.getRadioItemProps(item);
 
         return (
@@ -629,13 +629,13 @@ export const Menu: IMenu = function SuiMenu(props: MenuProps) {
   };
   const defaultContentItemRenderer: IMenuContentItemRenderer = (item, index, items) => {
     switch (true) {
-      case isLabeledItem(item):
+      case isLabeledItemObject(item):
         return <MenuItem {...api.getItemProps(item)} key={index} />;
 
-      case isLinkItem(item):
+      case isLinkItemObject(item):
         return <MenuLinkItem {...api.getLinkItemProps(item)} key={index} />;
 
-      case isCheckboxItem(item): {
+      case isCheckboxItemObject(item): {
         const { children: label, ...otherProps } = api.getCheckboxItemProps(item);
 
         return (
@@ -646,14 +646,14 @@ export const Menu: IMenu = function SuiMenu(props: MenuProps) {
         );
       }
 
-      case isRadioItemGroup(item):
+      case isRadioItemObjectGroup(item):
         return (
           <MenuRadioGroup {...api.getRadioGroupProps(item)} key={index}>
             {defaultRadioItemRenderer}
           </MenuRadioGroup>
         );
 
-      case isSubmenuItem(item): {
+      case isSubmenuItemObject(item): {
         const { children: content = defaultContentItemRenderer, ...otherContentProps } =
           api.getContentProps();
         const { children: submenuTrigger, ...otherSubmenuTriggerProps } =
@@ -674,7 +674,7 @@ export const Menu: IMenu = function SuiMenu(props: MenuProps) {
         );
       }
 
-      case isItemGroup(item): {
+      case isItemObjectGroup(item): {
         const labelProps = api.getGroupLabelProps(item);
 
         return (
@@ -722,31 +722,31 @@ export namespace Menu {
 
   export type ChangeEventReason = MenuChangeEventReason;
 
-  export type CheckboxItem = MenuRootCheckboxItem;
+  export type CheckboxItemObject = MenuRootCheckboxItemObject;
 
-  export type GroupedItem = MenuRootGroupedItem;
+  export type GroupedItemObject = MenuRootGroupedItemObject;
 
-  export type Item = MenuRootItem;
+  export type ItemObject = MenuRootItemObject;
 
-  export type ItemGroup = MenuRootItemGroup;
+  export type ItemObjectGroup = MenuRootItemObjectGroup;
 
   export interface IItemRenderer<TItem = any> extends IMenuItemRenderer<TItem> {}
 
-  export type LabeledItem = MenuRootLabeledItem;
+  export type LabeledItemObject = MenuRootLabeledItemObject;
 
-  export type LinkItem = MenuRootLinkItem;
+  export type LinkItemObject = MenuRootLinkItemObject;
 
   export type Orientation = MenuOrientation;
 
-  export type RadioItem = MenuRootRadioItem;
+  export type RadioItemObject = MenuRootRadioItemObject;
 
-  export type RadioItemGroup = MenuRootRadioItemGroup;
+  export type RadioItemObjectGroup = MenuRootRadioItemObjectGroup;
 
   export type Radius = MenuRadius;
 
   export type Size = MenuSize;
 
-  export type SubmenuItem = MenuRootSubmenuItem;
+  export type SubmenuItemObject = MenuRootSubmenuItemObject;
 
   export type Variant = MenuVariant;
 }

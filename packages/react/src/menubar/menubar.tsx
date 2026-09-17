@@ -3,11 +3,11 @@ import * as React from "react";
 import mergeProps from "../_merge-props.js";
 import { Menu } from "../menu/menu.jsx";
 import type { Override, IComponent } from "../types.js";
-import { isItem } from "./_menubar.jsx";
+import { isItemObject } from "./_menubar.jsx";
 import {
-  type MenubarRootItem,
   type MenubarRootProps,
   type MenubarRootState,
+  type MenubarRootItemObject,
   type MenubarRootOrientation,
   type IMenubarRootItemRenderer,
   MenubarRoot,
@@ -16,7 +16,7 @@ import {
 // Types
 // -----
 
-export type MenubarItem = MenubarRootItem;
+export type MenubarItemObject = MenubarRootItemObject;
 
 export interface IMenubarItemRenderer<TItem = any> extends IMenubarRootItemRenderer<TItem> {}
 
@@ -71,8 +71,10 @@ export interface MenubarAPI<TItem = any> {
    *
    * @param item 項目です。
    */
-  getMenuProps(item: MenubarItem): Menu.Props<Menu.Item>;
-  getMenuProps(item?: MenubarItem): Omit<Menu.Props, "items" | "trigger"> | Menu.Props<Menu.Item>;
+  getMenuProps(item: MenubarItemObject): Menu.Props<Menu.ItemObject>;
+  getMenuProps(
+    item?: MenubarItemObject,
+  ): Omit<Menu.Props, "items" | "trigger"> | Menu.Props<Menu.ItemObject>;
 
   /**
    * {@link MenubarRoot} に渡す props を取得します。
@@ -98,7 +100,7 @@ export const useMenubarAPI: IUseMenubarAPI = function useSuiMenubarAPI(props) {
   const { slotProps: { menu: menuProps = {} } = {}, ...rootProps } = props;
 
   return {
-    getMenuProps(item?: MenubarItem): any {
+    getMenuProps(item?: MenubarItemObject): any {
       return ((): ReturnType<MenubarAPI["getMenuProps"]> => {
         if (!item) {
           return menuProps;
@@ -110,7 +112,7 @@ export const useMenubarAPI: IUseMenubarAPI = function useSuiMenubarAPI(props) {
     getRootProps() {
       const defaultItemRenderer: IMenubarRootItemRenderer = (item, index) => {
         switch (true) {
-          case isItem(item):
+          case isItemObject(item):
             return <Menu {...this.getMenuProps(item)} key={index} />;
 
           default:
@@ -156,7 +158,7 @@ export namespace Menubar {
 
   export type SlotProps = MenubarSlotProps;
 
-  export type Item = MenubarItem;
+  export type ItemObject = MenubarItemObject;
 
   export interface IItemRenderer<TItem = any> extends IMenubarItemRenderer<TItem> {}
 

@@ -5,25 +5,25 @@ import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import { Menu } from "../menu/menu.jsx";
 import type { Override, IComponent } from "../types.js";
-import { isItem } from "./_menubar.jsx";
+import { isItemObject } from "./_menubar.jsx";
 
 /**
  * メニューバーの項目を表すオブジェクトです。
  */
-export type MenubarRootItem = Override<
-  Omit<Menu.Props<Menu.Item>, "children">,
+export type MenubarRootItemObject = Override<
+  Omit<Menu.Props<Menu.ItemObject>, "children">,
   {
     /**
      * ポップアップに表示する内容です。
      */
-    readonly items: NonNullable<Menu.Props<Menu.Item>["items"]>;
+    readonly items: NonNullable<Menu.Props<Menu.ItemObject>["items"]>;
 
     /**
      * メニューを開くトリガーに表示する要素です。
      *
      * 省略した場合は `label` を表示するボタンになります。
      */
-    readonly trigger: NonNullable<Menu.Props<Menu.Item>["trigger"]>;
+    readonly trigger: NonNullable<Menu.Props<Menu.ItemObject>["trigger"]>;
   }
 >;
 
@@ -146,7 +146,7 @@ export const MenubarRoot: IMenubarRoot = function SuiMenubarRoot(props: MenubarR
 
 const defaultItemRenderer: IMenubarRootItemRenderer = (item, index) => {
   switch (true) {
-    case isItem(item):
+    case isItemObject(item):
       return <Menu {...item} key={index} />;
 
     default:
@@ -171,7 +171,7 @@ export namespace Root {
     export type HTML = MenubarRootProps.HTML;
   }
 
-  export type Item = MenubarRootItem;
+  export type ItemObject = MenubarRootItemObject;
 
   export interface IItemRenderer<TItem = any> extends IMenubarRootItemRenderer<TItem> {}
 

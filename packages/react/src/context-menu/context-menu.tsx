@@ -6,16 +6,15 @@ import mergeProps from "../_merge-props.js";
 import toReactNode from "../_to-react-node.js";
 import type { Override, IComponent } from "../types.js";
 import {
-  isLinkItem,
-  isItemGroup,
-  isRadioItem,
-  isLabeledItem,
-  isSubmenuItem,
-  isCheckboxItem,
-  isRadioItemGroup,
+  isLinkItemObject,
+  isItemObjectGroup,
+  isRadioItemObject,
+  isLabeledItemObject,
+  isSubmenuItemObject,
+  isCheckboxItemObject,
+  isRadioItemObjectGroup,
 } from "./_context-menu.utils.jsx";
 import {
-  type ContextMenuRootItem,
   type ContextMenuRootSize,
   type ContextMenuItemProps,
   type ContextMenuRootProps,
@@ -26,30 +25,31 @@ import {
   type ContextMenuRootActions,
   type ContextMenuRootVariant,
   type ContextMenuContentProps,
-  type ContextMenuRootLinkItem,
   type ContextMenuTriggerProps,
   type ContextMenuBackdropProps,
   type ContextMenuLinkItemProps,
-  type ContextMenuRootItemGroup,
-  type ContextMenuRootRadioItem,
   type ContextMenuRadioItemProps,
+  type ContextMenuRootItemObject,
   type ContextMenuSeparatorProps,
   type ContextMenuGroupLabelProps,
   type ContextMenuPositionerProps,
   type ContextMenuRadioGroupProps,
-  type ContextMenuRootGroupedItem,
-  type ContextMenuRootLabeledItem,
   type ContextMenuRootOrientation,
-  type ContextMenuRootSubmenuItem,
-  type ContextMenuRootCheckboxItem,
   type ContextMenuSubmenuRootProps,
   type ContextMenuCheckboxItemProps,
-  type ContextMenuRootRadioItemGroup,
+  type ContextMenuRootLinkItemObject,
+  type ContextMenuRootItemObjectGroup,
+  type ContextMenuRootRadioItemObject,
   type ContextMenuSubmenuTriggerProps,
   type IContextMenuContentItemRenderer,
   type ContextMenuRootChangeEventReason,
+  type ContextMenuRootGroupedItemObject,
+  type ContextMenuRootLabeledItemObject,
+  type ContextMenuRootSubmenuItemObject,
   type ContextMenuRootChangeEventDetails,
+  type ContextMenuRootCheckboxItemObject,
   type ContextMenuRadioItemIndicatorProps,
+  type ContextMenuRootRadioItemObjectGroup,
   type ContextMenuCheckboxItemIndicatorProps,
   ContextMenuItem,
   ContextMenuRoot,
@@ -255,7 +255,7 @@ export interface ContextMenuAPI<TItem = any> {
    *
    * @param item 項目です。
    */
-  getCheckboxItemProps(item?: ContextMenuRootCheckboxItem): ContextMenuCheckboxItemProps;
+  getCheckboxItemProps(item?: ContextMenuRootCheckboxItemObject): ContextMenuCheckboxItemProps;
 
   /**
    * {@link ContextMenuContent} に渡す props を取得します。
@@ -274,28 +274,28 @@ export interface ContextMenuAPI<TItem = any> {
    *
    * @param item 項目です。
    */
-  getGroupLabelProps(item?: ContextMenuRootItemGroup): ContextMenuGroupLabelProps | null;
+  getGroupLabelProps(item?: ContextMenuRootItemObjectGroup): ContextMenuGroupLabelProps | null;
 
   /**
    * {@link ContextMenuGroup} に渡す props を取得します。
    *
    * @param item 項目です。
    */
-  getGroupProps(item?: ContextMenuRootItemGroup): Omit<ContextMenuGroupProps, "children">;
+  getGroupProps(item?: ContextMenuRootItemObjectGroup): Omit<ContextMenuGroupProps, "children">;
 
   /**
    * {@link ContextMenuItem} に渡す props を取得します。
    *
    * @param item 項目です。
    */
-  getItemProps(item?: ContextMenuRootLabeledItem): ContextMenuItemProps;
+  getItemProps(item?: ContextMenuRootLabeledItemObject): ContextMenuItemProps;
 
   /**
    * {@link ContextMenuLinkItem} に渡す props を取得します。
    *
    * @param item 項目です。
    */
-  getLinkItemProps(item?: ContextMenuRootLinkItem): ContextMenuLinkItemProps;
+  getLinkItemProps(item?: ContextMenuRootLinkItemObject): ContextMenuLinkItemProps;
 
   /**
    * {@link ContextMenuPortal} に渡す props を取得します。
@@ -318,8 +318,8 @@ export interface ContextMenuAPI<TItem = any> {
     "children" | "value"
   >;
   getRadioGroupProps(
-    item: ContextMenuRootRadioItemGroup,
-  ): Omit<ContextMenuRadioGroupProps<ContextMenuRootRadioItem>, "children">;
+    item: ContextMenuRootRadioItemObjectGroup,
+  ): Omit<ContextMenuRadioGroupProps<ContextMenuRootRadioItemObject>, "children">;
 
   /**
    * {@link ContextMenuRadioItemIndicator} に渡す props を取得します。
@@ -332,9 +332,9 @@ export interface ContextMenuAPI<TItem = any> {
    * @param item 項目です。
    */
   getRadioItemProps(): Omit<ContextMenuRadioItemProps, "children" | "value">;
-  getRadioItemProps(item: ContextMenuRootRadioItem): ContextMenuRadioItemProps;
+  getRadioItemProps(item: ContextMenuRootRadioItemObject): ContextMenuRadioItemProps;
   getRadioItemProps(
-    item?: ContextMenuRootRadioItem,
+    item?: ContextMenuRootRadioItemObject,
   ): Omit<ContextMenuRadioItemProps, "children" | "value"> | ContextMenuRadioItemProps;
 
   /**
@@ -358,15 +358,15 @@ export interface ContextMenuAPI<TItem = any> {
     "children"
   >;
   getSubmenuRootProps(
-    item: ContextMenuRootSubmenuItem,
-  ): Omit<ContextMenuSubmenuRootProps<ContextMenuRootItem>, "children">;
+    item: ContextMenuRootSubmenuItemObject,
+  ): Omit<ContextMenuSubmenuRootProps<ContextMenuRootItemObject>, "children">;
 
   /**
    * {@link ContextMenuSubmenuTrigger} に渡す props を取得します。
    *
    * @param item 項目です。
    */
-  getSubmenuTriggerProps(item?: ContextMenuRootSubmenuItem): ContextMenuSubmenuTriggerProps;
+  getSubmenuTriggerProps(item?: ContextMenuRootSubmenuItemObject): ContextMenuSubmenuTriggerProps;
 
   /**
    * {@link ContextMenuTrigger} に渡す props を取得します。
@@ -506,7 +506,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
         children: label,
       };
     },
-    getRadioItemProps(item?: ContextMenuRootRadioItem): any {
+    getRadioItemProps(item?: ContextMenuRootRadioItemObject): any {
       return ((): ReturnType<ContextMenuAPI["getRadioItemProps"]> => {
         if (!item) {
           return radioItemProps;
@@ -542,7 +542,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
     getPositionerProps() {
       return positionerProps;
     },
-    getRadioGroupProps(item?: ContextMenuRootRadioItemGroup) {
+    getRadioGroupProps(item?: ContextMenuRootRadioItemObjectGroup) {
       if (!item) {
         return radioGroupProps;
       }
@@ -551,7 +551,7 @@ export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuA
 
       return mergeProps([radioGroupProps, otherProps]);
     },
-    getSubmenuRootProps(item?: ContextMenuRootSubmenuItem) {
+    getSubmenuRootProps(item?: ContextMenuRootSubmenuItemObject) {
       if (!item) {
         return submenuRootProps;
       }
@@ -621,7 +621,7 @@ export const ContextMenu: IContextMenu = function SuiContextMenu(props: ContextM
 
   const defaultRadioItemRenderer: IContextMenuContentItemRenderer = (item, index) => {
     switch (true) {
-      case isRadioItem(item): {
+      case isRadioItemObject(item): {
         const { children: label, ...otherProps } = api.getRadioItemProps(item);
 
         return (
@@ -638,13 +638,13 @@ export const ContextMenu: IContextMenu = function SuiContextMenu(props: ContextM
   };
   const defaultContentItemRenderer: IContextMenuContentItemRenderer = (item, index, items) => {
     switch (true) {
-      case isLabeledItem(item):
+      case isLabeledItemObject(item):
         return <ContextMenuItem {...api.getItemProps(item)} key={index} />;
 
-      case isLinkItem(item):
+      case isLinkItemObject(item):
         return <ContextMenuLinkItem {...api.getLinkItemProps(item)} key={index} />;
 
-      case isCheckboxItem(item): {
+      case isCheckboxItemObject(item): {
         const { children: label, ...otherProps } = api.getCheckboxItemProps(item);
 
         return (
@@ -655,14 +655,14 @@ export const ContextMenu: IContextMenu = function SuiContextMenu(props: ContextM
         );
       }
 
-      case isRadioItemGroup(item):
+      case isRadioItemObjectGroup(item):
         return (
           <ContextMenuRadioGroup {...api.getRadioGroupProps(item)} key={index}>
             {defaultRadioItemRenderer}
           </ContextMenuRadioGroup>
         );
 
-      case isSubmenuItem(item): {
+      case isSubmenuItemObject(item): {
         const { children: content = defaultContentItemRenderer, ...otherContentProps } =
           api.getContentProps();
         const { children: submenuTrigger, ...otherSubmenuTriggerProps } =
@@ -683,7 +683,7 @@ export const ContextMenu: IContextMenu = function SuiContextMenu(props: ContextM
         );
       }
 
-      case isItemGroup(item): {
+      case isItemObjectGroup(item): {
         const labelProps = api.getGroupLabelProps(item);
 
         return (
@@ -731,31 +731,31 @@ export namespace ContextMenu {
 
   export type ChangeEventReason = ContextMenuChangeEventReason;
 
-  export type CheckboxItem = ContextMenuRootCheckboxItem;
+  export type CheckboxItemObject = ContextMenuRootCheckboxItemObject;
 
-  export type GroupedItem = ContextMenuRootGroupedItem;
+  export type GroupedItemObject = ContextMenuRootGroupedItemObject;
 
-  export type Item = ContextMenuRootItem;
+  export type ItemObject = ContextMenuRootItemObject;
 
-  export type ItemGroup = ContextMenuRootItemGroup;
+  export type ItemObjectGroup = ContextMenuRootItemObjectGroup;
 
   export interface IItemRenderer<TItem = any> extends IContextMenuItemRenderer<TItem> {}
 
-  export type LabeledItem = ContextMenuRootLabeledItem;
+  export type LabeledItemObject = ContextMenuRootLabeledItemObject;
 
-  export type LinkItem = ContextMenuRootLinkItem;
+  export type LinkItemObject = ContextMenuRootLinkItemObject;
 
   export type Orientation = ContextMenuOrientation;
 
-  export type RadioItem = ContextMenuRootRadioItem;
+  export type RadioItemObject = ContextMenuRootRadioItemObject;
 
-  export type RadioItemGroup = ContextMenuRootRadioItemGroup;
+  export type RadioItemObjectGroup = ContextMenuRootRadioItemObjectGroup;
 
   export type Radius = ContextMenuRadius;
 
   export type Size = ContextMenuSize;
 
-  export type SubmenuItem = ContextMenuRootSubmenuItem;
+  export type SubmenuItemObject = ContextMenuRootSubmenuItemObject;
 
   export type Variant = ContextMenuVariant;
 }

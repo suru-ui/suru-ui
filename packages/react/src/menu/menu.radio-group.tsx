@@ -5,7 +5,7 @@ import { CheckIcon } from "../_icons.jsx";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { isRadioItem } from "./_menu.utils.jsx";
+import { isRadioItemObject } from "./_menu.utils.jsx";
 import { MenuRadioItemIndicator } from "./menu.radio-item-indicator.jsx";
 import { MenuRadioItem } from "./menu.radio-item.jsx";
 
@@ -137,7 +137,7 @@ export namespace RadioGroup {
 
 const defaultItemRenderer: IMenuRadioGroupItemRenderer = (item, index) => {
   switch (true) {
-    case isRadioItem(item): {
+    case isRadioItemObject(item): {
       const { label, ...props } = item;
 
       return (

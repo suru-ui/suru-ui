@@ -7,12 +7,12 @@ import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import {
-  isLinkItem,
-  isItemGroup,
-  isLabeledItem,
-  isSubmenuItem,
-  isCheckboxItem,
-  isRadioItemGroup,
+  isLinkItemObject,
+  isItemObjectGroup,
+  isLabeledItemObject,
+  isSubmenuItemObject,
+  isCheckboxItemObject,
+  isRadioItemObjectGroup,
 } from "./_context-menu.utils.jsx";
 import { ContextMenuCheckboxItemIndicator } from "./context-menu.checkbox-item-indicator.jsx";
 import { ContextMenuCheckboxItem } from "./context-menu.checkbox-item.jsx";
@@ -25,7 +25,7 @@ import { ContextMenuPortal } from "./context-menu.portal.jsx";
 import { ContextMenuPositioner } from "./context-menu.positioner.jsx";
 import { ContextMenuRadioGroup } from "./context-menu.radio-group.jsx";
 import type {
-  ContextMenuRootItem,
+  ContextMenuRootItemObject,
   // oxlint-disable-next-line no-unused-vars JSDoc で使用
   ContextMenuRootProps,
 } from "./context-menu.root.jsx";
@@ -140,14 +140,14 @@ export namespace Content {
     export type HTML = ContextMenuContentProps.HTML;
   }
 
-  export type Item = ContextMenuRootItem;
+  export type ItemObject = ContextMenuRootItemObject;
 
   export interface IItemRenderer<TItem = any> extends IContextMenuContentItemRenderer<TItem> {}
 }
 
 const defaultItemRenderer: IContextMenuContentItemRenderer = (item, index, items) => {
   switch (true) {
-    case isLabeledItem(item): {
+    case isLabeledItemObject(item): {
       const { type: _, label, ...props } = item;
 
       return (
@@ -157,7 +157,7 @@ const defaultItemRenderer: IContextMenuContentItemRenderer = (item, index, items
       );
     }
 
-    case isLinkItem(item): {
+    case isLinkItemObject(item): {
       const { type: _, label, ...props } = item;
 
       return (
@@ -167,7 +167,7 @@ const defaultItemRenderer: IContextMenuContentItemRenderer = (item, index, items
       );
     }
 
-    case isCheckboxItem(item): {
+    case isCheckboxItemObject(item): {
       const { type: _, label, ...props } = item;
 
       return (
@@ -180,13 +180,13 @@ const defaultItemRenderer: IContextMenuContentItemRenderer = (item, index, items
       );
     }
 
-    case isRadioItemGroup(item): {
+    case isRadioItemObjectGroup(item): {
       const { type: _, items: groupItems, ...props } = item;
 
       return <ContextMenuRadioGroup {...props} key={index} items={groupItems} />;
     }
 
-    case isSubmenuItem(item): {
+    case isSubmenuItemObject(item): {
       const { type: _, items, label, ...props } = item;
 
       return (
@@ -204,7 +204,7 @@ const defaultItemRenderer: IContextMenuContentItemRenderer = (item, index, items
       );
     }
 
-    case isItemGroup(item): {
+    case isItemObjectGroup(item): {
       const { type: _, items: groupItems, label, ...props } = item;
 
       return (

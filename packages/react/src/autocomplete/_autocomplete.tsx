@@ -5,7 +5,7 @@ import type * as React from "react";
  *
  * @template TItem 項目の値の型です。
  */
-export interface ItemGroup<TItem = any> {
+export interface ItemObjectGroup<TItem = any> {
   [key: string]: unknown;
 
   /**
@@ -25,6 +25,6 @@ export interface ItemGroup<TItem = any> {
  * @param x 判定する値です。
  * @returns グループオブジェクトの場合に `true` を返します。
  */
-export function isItemGroup<TItem = any>(x: unknown): x is ItemGroup<TItem> {
+export function isItemObjectGroup<TItem = any>(x: unknown): x is ItemObjectGroup<TItem> {
   return typeof x === "object" && x !== null && "items" in x && Array.isArray(x.items);
 }
