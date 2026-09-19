@@ -1415,12 +1415,14 @@
 :scope {
   .sui_combobox_backdrop {
     background-color: var(--sui_combobox_backdrop-background_color);
+    filter: var(--sui_combobox_backdrop-filter);
   }
 }
 
 /* 代入 */
 :scope {
   --sui_combobox_backdrop-background_color: var(--sui-backdrop-color);
+  --sui_combobox_backdrop-filter: blur(var(--sui-backdrop-blur));
 }
 
 } /* @scope */
@@ -1651,6 +1653,81 @@
 :scope {
   .sui_combobox_popup-outlined .sui_combobox_arrow {
     --_sui_combobox_arrow-border_width: var(--sui_combobox_arrow-border_width);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Status */
+@layer sui.component {
+@scope (.sui_combobox_portal) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  /* 内容の変化をスクリーンリーダーに通知するため、ルート要素は常に描画します。そのため内容が空でも非表示にしません。 */
+  .sui_combobox_status {
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_combobox_status-min_height: ;
+  --sui_combobox_status-padding_inline: ;
+  --sui_combobox_status-font_family: ;
+  --sui_combobox_status-font_size: ;
+  --sui_combobox_status-font_weight: ;
+  --sui_combobox_status-line_height: ;
+  --sui_combobox_status-color: ;
+  --sui_combobox_status-letter_spacing: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_combobox_status {
+    min-height: var(--sui_combobox_status-min_height);
+    padding-inline: var(--sui_combobox_status-padding_inline);
+    font-family: var(--sui_combobox_status-font_family);
+    font-size: var(--sui_combobox_status-font_size);
+    font-weight: var(--sui_combobox_status-font_weight);
+    line-height: var(--sui_combobox_status-line_height);
+    color: var(--sui_combobox_status-color);
+    letter-spacing: var(--sui_combobox_status-letter_spacing);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_combobox_status-font_family: var(--sui-font-sans);
+  --sui_combobox_status-color: var(--sui-canvas_text-2);
+
+  &.sui_combobox_portal-size_sm {
+    --sui_combobox_status-min_height: var(--sui-size-md);
+    --sui_combobox_status-padding_inline: --sui-space(2);
+    --sui_combobox_status-font_size: var(--sui-text-std-sm-n-font_size);
+    --sui_combobox_status-font_weight: var(--sui-text-std-sm-n-font_weight);
+    --sui_combobox_status-line_height: var(--sui-text-std-sm-n-line_height);
+    --sui_combobox_status-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+  }
+
+  &.sui_combobox_portal-size_md {
+    --sui_combobox_status-min_height: var(--sui-size-md);
+    --sui_combobox_status-padding_inline: --sui-space(5);
+    --sui_combobox_status-font_size: var(--sui-text-std-md-n-font_size);
+    --sui_combobox_status-font_weight: var(--sui-text-std-md-n-font_weight);
+    --sui_combobox_status-line_height: var(--sui-text-std-md-n-line_height);
+    --sui_combobox_status-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
+  }
+
+  &.sui_combobox_portal-size_lg {
+    --sui_combobox_status-min_height: var(--sui-size-md);
+    --sui_combobox_status-padding_inline: --sui-space(6);
+    --sui_combobox_status-font_size: var(--sui-text-std-lg-n-font_size);
+    --sui_combobox_status-font_weight: var(--sui-text-std-lg-n-font_weight);
+    --sui_combobox_status-line_height: var(--sui-text-std-lg-n-line_height);
+    --sui_combobox_status-letter_spacing: var(--sui-text-std-lg-n-letter_spacing);
   }
 }
 
@@ -1957,37 +2034,6 @@
   .sui_combobox_item_indicator {
     display: contents;
   }
-}
-
-} /* @scope */
-} /* @layer */
-
-/* Row */
-@layer sui.component {
-@scope (.sui_combobox_portal) to ([data-scope]) {
-
-/* 固定 */
-:scope {
-  .sui_combobox_row {
-    display: flex;
-  }
-}
-
-/* 変数 */
-:scope {
-  --sui_combobox_row-gap: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_combobox_row {
-    gap: var(--sui_combobox_row-gap);
-  }
-}
-
-/* 代入 */
-:scope {
-  --sui_combobox_row-gap: var(--sui_combobox_list-gap);
 }
 
 } /* @scope */

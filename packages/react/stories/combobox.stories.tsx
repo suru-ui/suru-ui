@@ -20,6 +20,9 @@ const ctrl = controls(Combobox<Combobox.ItemValue | Combobox.ItemGroup, boolean>
   arrow: {
     control: "boolean",
   },
+  backdrop: {
+    control: "boolean",
+  },
   color: {
     control: "select",
     options: COLORS,
@@ -66,12 +69,37 @@ export const Usage = meta.story({
     size: "md",
     radius: undefined,
     outlined: false,
-    disabled: false,
     multiple: false,
     arrow: false,
+    backdrop: false,
+    disabled: false,
     label: "果物",
-    placeholder: "果物を選択",
+    placeholder: "選択",
     items: fruits,
+  }),
+  render(props) {
+    return <Combobox {...props} className="w-[200px]" />;
+  },
+});
+
+export const Grouped = meta.story({
+  name: "グループ化",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    multiple: false,
+    arrow: false,
+    backdrop: false,
+    disabled: false,
+    label: "食材",
+    placeholder: "食材を選択",
+    items: [
+      { label: "果物", items: ["りんご", "ばなな", "みかん"] },
+      { label: "野菜", items: ["にんじん", "きゅうり", "トマト"] },
+    ],
   }),
   render(props) {
     return <Combobox {...props} className="w-[200px]" />;
@@ -85,8 +113,10 @@ export const Variants = meta.story({
     size: "md",
     radius: undefined,
     outlined: false,
-    disabled: false,
     multiple: false,
+    arrow: false,
+    backdrop: false,
+    disabled: false,
     placeholder: "選択",
     items: fruits,
   }),
@@ -103,79 +133,6 @@ export const Variants = meta.story({
   },
 });
 
-export const Multiple = meta.story({
-  name: "複数選択",
-  ...ctrl({
-    variant: "liquid",
-    color: "grey",
-    size: "md",
-    radius: undefined,
-    outlined: false,
-    disabled: false,
-    multiple: true,
-    label: "言語",
-    placeholder: "言語を追加",
-    items: ["TypeScript", "Rust", "Go", "Python"],
-  }),
-  render(props) {
-    return <Combobox {...props} multiple className="w-[300px]" defaultValue={["TypeScript"]} />;
-  },
-});
-
-// export const Grouped = meta.story({
-//   name: "グループ化",
-//   ...ctrl({
-//     variant: "liquid",
-//     color: "grey",
-//     size: "md",
-//     radius: undefined,
-//     outlined: false,
-//     disabled: false,
-//     multiple: false,
-//     placeholder: "食材を選択",
-//   }),
-//   render(props) {
-//     return (
-//       <Combobox
-//         {...props}
-//         items={[
-//           { label: "果物", items: ["りんご", "ばなな", "みかん"] },
-//           { label: "野菜", items: ["にんじん", "きゅうり", "トマト"] },
-//         ]}
-//         label="食材"
-//         className="w-[300px]"
-//         placeholder="食材を選択"
-//       />
-//     );
-//   },
-// });
-
-// export const Sizes = meta.story({
-//   name: "大きさ",
-//   ...ctrl({
-//     items: fruits,
-//     variant: "liquid",
-//     color: "grey",
-//     radius: undefined,
-//     outlined: false,
-//     disabled: false,
-//     multiple: false,
-//     placeholder: "選択",
-//   }),
-//   render(props) {
-//     return (
-//       <div className="flex flex-col gap-3">
-//         {SIZES.map((size) => (
-//           <div key={size}>
-//             <Combobox {...props} size={size} items={fruits} className="w-[200px]" />
-//             <div>{size}</div>
-//           </div>
-//         ))}
-//       </div>
-//     );
-//   },
-// });
-
 export const Colors = meta.story({
   name: "配色",
   ...ctrl({
@@ -183,8 +140,10 @@ export const Colors = meta.story({
     size: "md",
     radius: undefined,
     outlined: false,
-    disabled: false,
     multiple: true,
+    arrow: false,
+    backdrop: false,
+    disabled: false,
     placeholder: "選択",
     items: fruits,
   }),
@@ -205,6 +164,146 @@ export const Colors = meta.story({
         ))}
       </div>
     );
+  },
+});
+
+export const Sizes = meta.story({
+  name: "大きさ",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    radius: undefined,
+    outlined: false,
+    multiple: false,
+    arrow: false,
+    backdrop: false,
+    disabled: false,
+    placeholder: "選択",
+    items: fruits,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        {SIZES.map((size) => (
+          <div key={size}>
+            <Combobox {...props} size={size} items={fruits} label={size} className="w-[200px]" />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Radii = meta.story({
+  name: "角丸",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    multiple: false,
+    arrow: false,
+    backdrop: false,
+    disabled: false,
+    placeholder: "選択",
+    items: fruits,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        {RADII.map((radius) => (
+          <div key={radius}>
+            <Combobox {...props} label={radius} radius={radius} outlined className="w-[200px]" />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const WithOutline = meta.story({
+  name: "枠線付き",
+  ...ctrl({
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    multiple: false,
+    arrow: false,
+    backdrop: false,
+    disabled: false,
+    placeholder: "選択",
+    items: fruits,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        {VARIANTS.map((variant) => (
+          <div key={variant}>
+            <Combobox {...props} label={variant} variant={variant} outlined className="w-[200px]" />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Multiple = meta.story({
+  name: "複数選択",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    multiple: true,
+    arrow: false,
+    backdrop: false,
+    disabled: false,
+    label: "言語",
+    placeholder: "言語を追加",
+    items: ["TypeScript", "Rust", "Go", "Python"],
+  }),
+  render(props) {
+    return <Combobox {...props} multiple className="w-[300px]" defaultValue={["TypeScript"]} />;
+  },
+});
+
+export const WithArrow = meta.story({
+  name: "矢印付き",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    multiple: true,
+    backdrop: false,
+    disabled: false,
+    label: "果物",
+    placeholder: "選択",
+    items: fruits,
+  }),
+  render(props) {
+    return <Combobox {...props} arrow className="w-[200px]" />;
+  },
+});
+
+export const WithBackdrop = meta.story({
+  name: "背景付き",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    multiple: true,
+    disabled: false,
+    arrow: false,
+    label: "果物",
+    placeholder: "選択",
+    items: fruits,
+  }),
+  render(props) {
+    return <Combobox {...props} backdrop className="w-[200px]" />;
   },
 });
 
@@ -259,29 +358,3 @@ export const Disabled = meta.story({
     );
   },
 });
-
-// export const Radii = meta.story({
-//   name: "角丸",
-//   ...ctrl({
-//     items: fruits,
-//     variant: "liquid",
-//     color: "grey",
-//     size: "md",
-//     outlined: false,
-//     disabled: false,
-//     multiple: false,
-//     placeholder: "選択",
-//   }),
-//   render(props) {
-//     return (
-//       <div className="flex flex-col gap-3">
-//         {RADII.map((radius) => (
-//           <div key={radius}>
-//             <Combobox {...props} radius={radius} className="w-[200px]" />
-//             <div>{radius}</div>
-//           </div>
-//         ))}
-//       </div>
-//     );
-//   },
-// });

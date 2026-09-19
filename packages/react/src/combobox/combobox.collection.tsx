@@ -84,7 +84,7 @@ export const ComboboxCollection: IComboboxCollection = function SuiComboboxColle
         const { label, ...otherProps } = item;
 
         return (
-          <ComboboxItem {...otherProps} key={index}>
+          <ComboboxItem {...otherProps} key={index} value={item}>
             {label}
             <ComboboxItemIndicator />
           </ComboboxItem>

@@ -48,9 +48,15 @@ export type ComboboxTriggerProps = ComboboxTriggerProps.Render &
 export const ComboboxTrigger: IComponent<ComboboxTriggerProps> = function SuiComboboxTrigger(
   props,
 ) {
-  const { className, ...otherProps } = props;
+  const { className, "aria-label": ariaLabel = "候補リストを開閉", ...otherProps } = props;
 
-  return <Combobox.Trigger {...otherProps} className={cn(className, "sui_combobox_trigger")} />;
+  return (
+    <Combobox.Trigger
+      {...otherProps}
+      className={cn(className, "sui_combobox_trigger")}
+      aria-label={ariaLabel}
+    />
+  );
 };
 
 export { ComboboxTrigger as Trigger };

@@ -48,10 +48,19 @@ export type ComboboxClearProps = ComboboxClearProps.Render &
  * 選択値を消去するボタン要素です。
  */
 export const ComboboxClear: IComponent<ComboboxClearProps> = function SuiComboboxClear(props) {
-  const { children = <ClearIcon />, className, ...otherProps } = props;
+  const {
+    children = <ClearIcon />,
+    className,
+    "aria-label": ariaLabel = "選択値を消去",
+    ...otherProps
+  } = props;
 
   return (
-    <Combobox.Clear {...otherProps} className={cn(className, "sui_combobox_clear")}>
+    <Combobox.Clear
+      {...otherProps}
+      className={cn(className, "sui_combobox_clear")}
+      aria-label={ariaLabel}
+    >
       {children}
     </Combobox.Clear>
   );
