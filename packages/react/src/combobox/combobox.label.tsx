@@ -39,10 +39,12 @@ export type ComboboxLabelProps = ComboboxLabelProps.Render &
   ComboboxLabelProps.BaseUI &
   ComboboxLabelProps.HTML;
 
+export type IComboboxLabel = IComponent<ComboboxLabelProps>;
+
 /**
  * トリガーに対応する表示ラベルです。
  */
-export const ComboboxLabel: IComponent<ComboboxLabelProps> = function SuiComboboxLabel(props) {
+export const ComboboxLabel: IComboboxLabel = function SuiComboboxLabel(props) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Label {...otherProps} className={cn(className, "sui_combobox_label")} />;

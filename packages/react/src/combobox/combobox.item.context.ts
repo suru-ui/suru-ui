@@ -35,9 +35,11 @@ function useSuiComboboxItemContext(optional?: boolean): ComboboxItemContext | nu
   return ctx;
 }
 
+export type IUseComboboxItemContext = IUseContext<ComboboxItemContext>;
+
 /**
  * {@link ComboboxItemContext} を読み取るフックです。
  */
-export const useComboboxItemContext: IUseContext<ComboboxItemContext> = useSuiComboboxItemContext;
+export const useComboboxItemContext: IUseComboboxItemContext = useSuiComboboxItemContext;
 
 export { ComboboxItemContext as ItemContext, useComboboxItemContext as useItemContext };

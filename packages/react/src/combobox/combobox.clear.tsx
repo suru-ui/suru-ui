@@ -44,6 +44,8 @@ export type ComboboxClearProps = ComboboxClearProps.Render &
   ComboboxClearProps.BaseUI &
   ComboboxClearProps.HTML;
 
+export type IComboboxClear = IComponent<ComboboxClearProps>;
+
 /**
  * 選択値を消去するボタン要素です。
  */

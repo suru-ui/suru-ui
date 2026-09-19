@@ -39,10 +39,12 @@ export type ComboboxArrowProps = ComboboxArrowProps.Render &
   ComboboxArrowProps.BaseUI &
   ComboboxArrowProps.HTML;
 
+export type IComboboxArrow = IComponent<ComboboxArrowProps>;
+
 /**
  * ポップアップと入力欄をつなぐ矢印要素です。
  */
-export const ComboboxArrow: IComponent<ComboboxArrowProps> = function SuiComboboxArrow(props) {
+export const ComboboxArrow: IComboboxArrow = function SuiComboboxArrow(props) {
   const { className, ...otherProps } = props;
 
   return (

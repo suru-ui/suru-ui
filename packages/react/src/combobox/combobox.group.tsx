@@ -42,10 +42,12 @@ export type ComboboxGroupProps<TItem = any> = ComboboxGroupProps.Render &
   ComboboxGroupProps.BaseUI &
   ComboboxGroupProps.HTML;
 
+export type IComboboxGroup = IComponent<ComboboxGroupProps>;
+
 /**
  * 関連する候補項目をまとめるグループ要素です。
  */
-export const ComboboxGroup: IComponent<ComboboxGroupProps> = function SuiComboboxGroup(props) {
+export const ComboboxGroup: IComboboxGroup = function SuiComboboxGroup(props) {
   const ctx = useComboboxContext();
   const { items, className, ...otherProps } = props;
   // items が未指定であっても上位の items が透過しないように、必ず新しい items を子要素に伝搬します。

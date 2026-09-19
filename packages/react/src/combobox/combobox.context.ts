@@ -86,9 +86,22 @@ export type ComboboxContext<TItem = any> = {
 export const ComboboxContext: React.Context<ComboboxContext | null> =
   React.createContext<ComboboxContext | null>(null);
 
-function useSuiComboboxContext(optional?: false): ComboboxContext;
-function useSuiComboboxContext(optional?: boolean): ComboboxContext | null;
-function useSuiComboboxContext(optional?: boolean): ComboboxContext | null {
+export interface IUseComboboxContext extends IUseContext<ComboboxContext> {
+  /**
+   * @template TItem 項目の型です。
+   * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
+   * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
+   */
+  <TItem = any>(optional?: false): ComboboxContext<TItem>;
+  <TItem = any>(optional?: boolean): ComboboxContext<TItem> | null;
+}
+
+/**
+ * {@link ComboboxContext} を読み取るフックです。
+ */
+export const useComboboxContext: IUseComboboxContext = function useSuiComboboxContext(
+  optional?: boolean,
+): any {
   const ctx = React.use(ComboboxContext);
   if (ctx === null && !optional) {
     throw new ContextMissingError({
@@ -98,21 +111,14 @@ function useSuiComboboxContext(optional?: boolean): ComboboxContext | null {
   }
 
   return ctx;
-}
-
-/**
- * {@link ComboboxContext} を読み取るフックです。
- */
-export const useComboboxContext: IUseContext<ComboboxContext> = useSuiComboboxContext;
+};
 
 export { ComboboxContext as Context, useComboboxContext as useContext };
 
 export namespace Context {
   export type Color = ComboboxContextColor;
 
-  export interface IItemToStringLabel<
-    TItem = any,
-  > extends IComboboxContextItemToStringLabel<TItem> {}
+  export type IItemToStringLabel<TItem = any> = IComboboxContextItemToStringLabel<TItem>;
 
   export type Radius = ComboboxContextRadius;
 

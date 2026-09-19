@@ -41,12 +41,12 @@ export type ComboboxSeparatorProps = ComboboxSeparatorProps.Render &
   ComboboxSeparatorProps.BaseUI &
   ComboboxSeparatorProps.HTML;
 
+export type IComboboxSeparator = IComponent<ComboboxSeparatorProps>;
+
 /**
  * 項目やグループを区切る要素です。
  */
-export const ComboboxSeparator: IComponent<ComboboxSeparatorProps> = function SuiComboboxSeparator(
-  props,
-) {
+export const ComboboxSeparator: IComboboxSeparator = function SuiComboboxSeparator(props) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Separator {...otherProps} className={cn(className, "sui_combobox_separator")} />;

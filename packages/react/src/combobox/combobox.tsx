@@ -24,7 +24,7 @@ import {
   ScrollAreaViewport,
   ScrollAreaScrollbar,
 } from "../scroll-area/scroll-area.parts.js";
-import type { IComponent, IUseContext } from "../types.js";
+import type { IComponent } from "../types.js";
 import {
   type ComboboxContext,
   type ComboboxRootSize,
@@ -45,10 +45,12 @@ import {
   type ComboboxPopupProps,
   type ComboboxRootRadius,
   type ComboboxValueProps,
+  type IUseComboboxFilter,
   type ComboboxPortalProps,
   type ComboboxRootActions,
   type ComboboxRootVariant,
   type ComboboxStatusProps,
+  type IUseComboboxContext,
   type ComboboxTriggerProps,
   type ComboboxBackdropProps,
   type ComboboxRootItemGroup,
@@ -59,12 +61,15 @@ import {
   type ComboboxGroupLabelProps,
   type ComboboxInputGroupProps,
   type ComboboxPositionerProps,
+  type IUseComboboxFilteredItems,
   type ComboboxItemIndicatorProps,
   type ComboboxRootItemLabeledValue,
   type ComboboxRootChangeEventReason,
   type ComboboxRootChangeEventDetails,
   type ComboboxRootHighlightEventReason,
   type ComboboxRootHighlightEventDetails,
+  type IComboboxFilteredItems,
+  type IComboboxFilter,
   ComboboxChip,
   ComboboxIcon,
   ComboboxItem,
@@ -84,6 +89,7 @@ import {
   ComboboxTrigger,
   ComboboxBackdrop,
   ComboboxItemLabel,
+  useComboboxFilter,
   ComboboxChipRemove,
   ComboboxCollection,
   ComboboxGroupLabel,
@@ -92,6 +98,7 @@ import {
   useComboboxContext,
   ComboboxItemIndicator,
   IComboboxValueRenderer,
+  useComboboxFilteredItems,
   IComboboxListItemRenderer,
   IComboboxCollectionItemRenderer,
 } from "./combobox.parts.js";
@@ -126,7 +133,10 @@ export type ComboboxItemValue<TItem = any> = ComboboxRootItemValue<TItem>;
 /**
  * {@link Combobox} の各パーツに渡す props です。
  */
-export type ComboboxSlotProps<TMultiple extends boolean | undefined = boolean | undefined> = {
+export type ComboboxSlotProps<
+  TItem = any,
+  TMultiple extends boolean | undefined = boolean | undefined,
+> = {
   /**
    * {@link ComboboxArrow} に渡す props です。
    */
@@ -265,7 +275,7 @@ export type ComboboxSlotProps<TMultiple extends boolean | undefined = boolean | 
   /**
    * {@link ComboboxValue} に渡す props です。
    */
-  readonly value?: Omit<ComboboxValueProps<any, TMultiple>, "children"> | undefined;
+  readonly value?: ComboboxValueProps<TItem, TMultiple> | undefined;
 
   /**
    * {@link ScrollAreaViewport} に渡す props です。
@@ -279,7 +289,7 @@ export type ComboboxSlotProps<TMultiple extends boolean | undefined = boolean | 
 export type ComboboxState = ComboboxRootState;
 
 namespace ComboboxProps {
-  export type Combobox<TMultiple extends boolean | undefined = boolean | undefined> = {
+  export type Combobox<TItem = any, TMultiple extends boolean | undefined = boolean | undefined> = {
     /**
      * 矢印を表示するかどうかを指定します。
      *
@@ -313,7 +323,7 @@ namespace ComboboxProps {
     /**
      * 各パーツに個別のpropsを渡すためのオブジェクトです。
      */
-    slotProps?: ComboboxSlotProps<TMultiple> | undefined;
+    slotProps?: ComboboxSlotProps<TItem, TMultiple> | undefined;
 
     /**
      * 非同期検索などの状態を読み上げる内容です。
@@ -321,16 +331,11 @@ namespace ComboboxProps {
     status?: React.ReactNode | undefined;
   };
 
-  export type InputGroup = Omit<ComboboxInputGroupProps, keyof Combobox | keyof Value | keyof Root>;
+  export type InputGroup = Omit<ComboboxInputGroupProps, "children" | keyof Combobox | keyof Root>;
 
   export type Root<TItem = any, TMultiple extends boolean | undefined = boolean | undefined> = Omit<
     ComboboxRootProps<TItem, TMultiple>,
-    keyof Combobox | keyof Value
-  >;
-
-  export type Value<TMultiple extends boolean | undefined = boolean | undefined> = Pick<
-    ComboboxValueProps<any, TMultiple>,
-    "children"
+    "children" | keyof Combobox
   >;
 }
 
@@ -343,8 +348,7 @@ namespace ComboboxProps {
 export type ComboboxProps<
   TItem = any,
   TMultiple extends boolean | undefined = boolean | undefined,
-> = ComboboxProps.Combobox<TMultiple> &
-  ComboboxProps.Value<TMultiple> &
+> = ComboboxProps.Combobox<TItem, TMultiple> &
   ComboboxProps.Root<TItem, TMultiple> &
   ComboboxProps.InputGroup;
 
@@ -624,7 +628,6 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI<
     status,
     variant,
     backdrop = false,
-    children,
     disabled,
     inputRef,
     multiple,
@@ -646,7 +649,7 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI<
       label: labelProps = {},
       popup: popupProps = {},
       thumb: thumbProps = {},
-      value: otherValueProps = {},
+      value: valueProps = {},
       corner: cornerProps = {},
       portal: portalProps = {},
       status: statusProps = {},
@@ -685,10 +688,6 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI<
     onOpenChangeComplete,
     ...inputGroupProps
   } = props;
-  const valueProps: Required<ComboboxValueProps<any, TMultiple>> = {
-    children,
-    placeholder: otherValueProps.placeholder,
-  };
 
   return {
     getChipProps(item) {
@@ -932,16 +931,20 @@ export { type ComboboxAPI as API, useComboboxAPI as useAPI };
 // Component
 // ---------
 
-interface ICombobox extends IComponent<ComboboxProps> {
+export interface ICombobox extends IComponent<ComboboxProps> {
   /**
-   * @template TValue 項目の値の型です。
+   * @template TItem 項目の型です。
    * @template TMultiple 複数選択を有効にするかどうかです。
    */
-  <TValue = any, const TMultiple extends boolean | undefined = false>(
-    props: ComboboxProps<TValue, TMultiple>,
+  <TItem = any, const TMultiple extends boolean | undefined = false>(
+    props: ComboboxProps<TItem, TMultiple>,
   ): IComponent.Return;
 
-  readonly useContext: IUseContext<ComboboxContext>;
+  readonly useContext: IUseComboboxContext;
+
+  readonly useFilter: IUseComboboxFilter;
+
+  readonly useFilteredItems: IUseComboboxFilteredItems;
 }
 
 /**
@@ -1047,7 +1050,9 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
     );
   },
   {
+    useFilter: useComboboxFilter,
     useContext: useComboboxContext,
+    useFilteredItems: useComboboxFilteredItems,
   },
 );
 
@@ -1061,6 +1066,8 @@ export namespace Combobox {
 
   export type SlotProps = ComboboxSlotProps;
 
+  export type Context = ComboboxContext;
+
   export type Actions = ComboboxActions;
 
   export type ChangeEventDetails = ComboboxChangeEventDetails;
@@ -1068,6 +1075,10 @@ export namespace Combobox {
   export type ChangeEventReason = ComboboxChangeEventReason;
 
   export type Color = ComboboxColor;
+
+  export type IFilter = IComboboxFilter;
+
+  export type IFilteredItems<TItem = any> = IComboboxFilteredItems<TItem>;
 
   export type HighlightEventDetails = ComboboxHighlightEventDetails;
 

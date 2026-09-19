@@ -39,10 +39,12 @@ export type ComboboxEmptyProps = ComboboxEmptyProps.Render &
   ComboboxEmptyProps.BaseUI &
   ComboboxEmptyProps.HTML;
 
+export type IComboboxEmpty = IComponent<ComboboxEmptyProps>;
+
 /**
  * 候補リストが空のときに内容を表示する要素です。
  */
-export const ComboboxEmpty: IComponent<ComboboxEmptyProps> = function SuiComboboxEmpty(props) {
+export const ComboboxEmpty: IComboboxEmpty = function SuiComboboxEmpty(props) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Empty {...otherProps} className={cn(className, "sui_combobox_empty")} />;

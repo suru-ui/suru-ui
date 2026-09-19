@@ -240,7 +240,7 @@ export type ComboboxRootProps<
   ComboboxRootProps.BaseUI<TItem, TMultiple> &
   ComboboxRootProps.HTML<TItem, TMultiple>;
 
-interface IComboboxRoot extends IComponent<ComboboxRootProps> {
+export interface IComboboxRoot extends IComponent<ComboboxRootProps> {
   /**
    * @template TItem 項目の型です。
    * @template TMultiple 複数選択を有効にするかどうかです。

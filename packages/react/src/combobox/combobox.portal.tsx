@@ -40,12 +40,14 @@ export type ComboboxPortalProps = ComboboxPortalProps.Render &
   ComboboxPortalProps.BaseUI &
   ComboboxPortalProps.HTML;
 
+export type IComboboxPortal = IComponent<ComboboxPortalProps>;
+
 /**
  * ポップアップを DOM の別の場所へ移動する要素です。
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
-export const ComboboxPortal: IComponent<ComboboxPortalProps> = function SuiComboboxPortal(props) {
+export const ComboboxPortal: IComboboxPortal = function SuiComboboxPortal(props) {
   const { size, radius } = useComboboxContext();
   const {
     className,

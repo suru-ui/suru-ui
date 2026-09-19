@@ -59,7 +59,7 @@ export type ComboboxItemProps<TValue = any> = ComboboxItemProps.Render &
   ComboboxItemProps.BaseUI<TValue> &
   ComboboxItemProps.HTML;
 
-interface IComboboxItem extends IComponent<ComboboxItemProps> {
+export interface IComboboxItem extends IComponent<ComboboxItemProps> {
   <TValue = any>(props: ComboboxItemProps<TValue>): IComponent.Return;
 }
 

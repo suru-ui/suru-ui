@@ -50,23 +50,24 @@ export type ComboboxPositionerProps = ComboboxPositionerProps.Render &
   ComboboxPositionerProps.BaseUI &
   ComboboxPositionerProps.HTML;
 
+export type IComboboxPositioner = IComponent<ComboboxPositionerProps>;
+
 /**
  * ポップアップを入力欄へ位置合わせする要素です。
  */
-export const ComboboxPositioner: IComponent<ComboboxPositionerProps> =
-  function SuiComboboxPositioner(props) {
-    const { side = "bottom", align = "start", className, sideOffset = 8, ...otherProps } = props;
+export const ComboboxPositioner: IComboboxPositioner = function SuiComboboxPositioner(props) {
+  const { side = "bottom", align = "start", className, sideOffset = 8, ...otherProps } = props;
 
-    return (
-      <Combobox.Positioner
-        {...otherProps}
-        side={side}
-        align={align}
-        className={cn(className, "sui_combobox_positioner")}
-        sideOffset={sideOffset}
-      />
-    );
-  };
+  return (
+    <Combobox.Positioner
+      {...otherProps}
+      side={side}
+      align={align}
+      className={cn(className, "sui_combobox_positioner")}
+      sideOffset={sideOffset}
+    />
+  );
+};
 
 export { ComboboxPositioner as Positioner };
 

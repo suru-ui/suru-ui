@@ -6,9 +6,7 @@ import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
 import type { IComboboxCollectionItemRenderer } from "./combobox.collection.jsx";
 
-export interface IComboboxListItemRenderer<
-  TItem = any,
-> extends IComboboxCollectionItemRenderer<TItem> {}
+export type IComboboxListItemRenderer<TItem = any> = IComboboxCollectionItemRenderer<TItem>;
 
 /**
  * {@link ComboboxList} が持つ状態です。
@@ -50,7 +48,7 @@ export type ComboboxListProps<TItem = any> = ComboboxListProps.Render &
   ComboboxListProps.BaseUI<TItem> &
   ComboboxListProps.HTML;
 
-interface IComboboxList extends IComponent<ComboboxListProps> {
+export interface IComboboxList extends IComponent<ComboboxListProps> {
   <TItem = any>(props: ComboboxListProps<TItem>): IComponent.Return;
 }
 
@@ -80,5 +78,5 @@ export namespace List {
     export type HTML = ComboboxListProps.HTML;
   }
 
-  export interface IItemRenderer<TItem = any> extends IComboboxListItemRenderer<TItem> {}
+  export type IItemRenderer<TItem = any> = IComboboxListItemRenderer<TItem>;
 }

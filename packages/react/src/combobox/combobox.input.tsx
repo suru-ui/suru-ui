@@ -39,10 +39,12 @@ export type ComboboxInputProps = ComboboxInputProps.Render &
   ComboboxInputProps.BaseUI &
   ComboboxInputProps.HTML;
 
+export type IComboboxInput = IComponent<ComboboxInputProps>;
+
 /**
  * 候補を検索するテキスト入力欄です。
  */
-export const ComboboxInput: IComponent<ComboboxInputProps> = function SuiComboboxInput(props) {
+export const ComboboxInput: IComboboxInput = function SuiComboboxInput(props) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Input {...otherProps} className={cn(className, "sui_combobox_input")} />;

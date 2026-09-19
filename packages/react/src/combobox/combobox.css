@@ -1687,7 +1687,7 @@
 /* 可変 */
 :scope {
   .sui_combobox_status {
-    min-height: var(--sui_combobox_status-min_height);
+    min-height: var(--_sui_combobox_status-min_height, var(--sui_combobox_status-min_height));
     padding-inline: var(--sui_combobox_status-padding_inline);
     font-family: var(--sui_combobox_status-font_family);
     font-size: var(--sui_combobox_status-font_size);
@@ -1728,6 +1728,10 @@
     --sui_combobox_status-font_weight: var(--sui-text-std-lg-n-font_weight);
     --sui_combobox_status-line_height: var(--sui-text-std-lg-n-line_height);
     --sui_combobox_status-letter_spacing: var(--sui-text-std-lg-n-letter_spacing);
+  }
+
+  .sui_combobox_status:empty {
+    --_sui_combobox_status-min_height: 0px;
   }
 }
 

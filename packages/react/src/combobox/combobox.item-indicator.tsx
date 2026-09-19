@@ -40,22 +40,25 @@ export type ComboboxItemIndicatorProps = ComboboxItemIndicatorProps.Render &
   ComboboxItemIndicatorProps.BaseUI &
   ComboboxItemIndicatorProps.HTML;
 
+export type IComboboxItemIndicator = IComponent<ComboboxItemIndicatorProps>;
+
 /**
  * 項目が選択されていることを示す要素です。
  */
-export const ComboboxItemIndicator: IComponent<ComboboxItemIndicatorProps> =
-  function SuiComboboxItemIndicator(props) {
-    const { children = <CheckIcon />, className, ...otherProps } = props;
+export const ComboboxItemIndicator: IComboboxItemIndicator = function SuiComboboxItemIndicator(
+  props,
+) {
+  const { children = <CheckIcon />, className, ...otherProps } = props;
 
-    return (
-      <Combobox.ItemIndicator
-        {...otherProps}
-        className={cn(className, "sui_combobox_item_indicator")}
-      >
-        {children}
-      </Combobox.ItemIndicator>
-    );
-  };
+  return (
+    <Combobox.ItemIndicator
+      {...otherProps}
+      className={cn(className, "sui_combobox_item_indicator")}
+    >
+      {children}
+    </Combobox.ItemIndicator>
+  );
+};
 
 export { ComboboxItemIndicator as ItemIndicator };
 

@@ -41,10 +41,12 @@ export type ComboboxStatusProps = ComboboxStatusProps.Render &
   ComboboxStatusProps.BaseUI &
   ComboboxStatusProps.HTML;
 
+export type IComboboxStatus = IComponent<ComboboxStatusProps>;
+
 /**
  * 非同期検索などの状態を読み上げる要素です。
  */
-export const ComboboxStatus: IComponent<ComboboxStatusProps> = function SuiComboboxStatus(props) {
+export const ComboboxStatus: IComboboxStatus = function SuiComboboxStatus(props) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Status {...otherProps} className={cn(className, "sui_combobox_status")} />;

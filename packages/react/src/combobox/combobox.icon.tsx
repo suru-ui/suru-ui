@@ -40,10 +40,12 @@ export type ComboboxIconProps = ComboboxIconProps.Render &
   ComboboxIconProps.BaseUI &
   ComboboxIconProps.HTML;
 
+export type IComboboxIcon = IComponent<ComboboxIconProps>;
+
 /**
  * トリガーの操作を示すアイコンのラッパー要素です。
  */
-export const ComboboxIcon: IComponent<ComboboxIconProps> = function SuiComboboxIcon(props) {
+export const ComboboxIcon: IComboboxIcon = function SuiComboboxIcon(props) {
   const { children = <ChevronIcon />, className, ...otherProps } = props;
 
   return (

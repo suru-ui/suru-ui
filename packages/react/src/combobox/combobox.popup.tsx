@@ -47,10 +47,12 @@ export type ComboboxPopupProps = ComboboxPopupProps.Render &
   ComboboxPopupProps.BaseUI &
   ComboboxPopupProps.HTML;
 
+export type IComboboxPopup = IComponent<ComboboxPopupProps>;
+
 /**
  * 候補項目を表示するポップアップ要素です。
  */
-export const ComboboxPopup: IComponent<ComboboxPopupProps> = function SuiComboboxPopup(props) {
+export const ComboboxPopup: IComboboxPopup = function SuiComboboxPopup(props) {
   const ctx = useComboboxContext();
   const { outlined = ctx.outlined, className, ...otherProps } = props;
   const childCtx = React.useMemo<ComboboxContext>(() => ({ ...ctx, outlined }), [ctx, outlined]);

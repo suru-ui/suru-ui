@@ -102,7 +102,7 @@ export type ComboboxChipProps<TValue = any> = ComboboxChipProps.Render &
   ComboboxChipProps.BaseUI &
   ComboboxChipProps.HTML;
 
-interface IComboboxChip extends IComponent<ComboboxChipProps> {
+export interface IComboboxChip extends IComponent<ComboboxChipProps> {
   <TValue = any>(props: ComboboxChipProps<TValue>): IComponent.Return;
 }
 

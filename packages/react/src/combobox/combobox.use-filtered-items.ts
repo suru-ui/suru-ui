@@ -1,10 +1,13 @@
 import { Combobox } from "@base-ui/react/combobox";
 
-function useSuiComboboxFilteredItems<TItem = any>(): readonly TItem[] {
-  return Combobox.useFilteredItems();
+export type IComboboxFilteredItems<TItem = any> = ReadonlyArray<TItem>;
+
+export interface IUseComboboxFilteredItems {
+  <TItem = any>(): IComboboxFilteredItems<TItem>;
 }
 
-export {
-  useSuiComboboxFilteredItems as useFilteredItems,
-  useSuiComboboxFilteredItems as useComboboxFilteredItems,
+export const useFilteredItems: IUseComboboxFilteredItems = function useSuiComboboxFilteredItems() {
+  return Combobox.useFilteredItems();
 };
+
+export { useFilteredItems as useComboboxFilteredItems };

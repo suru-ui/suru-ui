@@ -64,36 +64,37 @@ export type ComboboxChipRemoveProps = ComboboxChipRemoveProps.Render &
   ComboboxChipRemoveProps.BaseUI &
   ComboboxChipRemoveProps.HTML;
 
+export type IComboboxChipRemove = IComponent<ComboboxChipRemoveProps>;
+
 /**
  * チップを選択値から削除するボタン要素です。
  */
-export const ComboboxChipRemove: IComponent<ComboboxChipRemoveProps> =
-  function SuiComboboxChipRemove(props) {
-    const ctx = useComboboxContext();
-    const itemCtx = useComboboxItemContext();
-    const label = ctx.itemToStringLabel(itemCtx.value);
-    const {
-      radius = ctx.radius,
-      children = <ClearIcon />,
-      className,
-      "aria-label": ariaLabel = label ? `${label}を削除` : "選択値を削除",
-      ...otherProps
-    } = props;
+export const ComboboxChipRemove: IComboboxChipRemove = function SuiComboboxChipRemove(props) {
+  const ctx = useComboboxContext();
+  const itemCtx = useComboboxItemContext();
+  const label = ctx.itemToStringLabel(itemCtx.value);
+  const {
+    radius = ctx.radius,
+    children = <ClearIcon />,
+    className,
+    "aria-label": ariaLabel = label ? `${label}を削除` : "選択値を削除",
+    ...otherProps
+  } = props;
 
-    return (
-      <Combobox.ChipRemove
-        {...otherProps}
-        className={cn(
-          className,
-          "sui_combobox_chip_remove",
-          `sui_combobox_chip_remove-radius_${radius}`,
-        )}
-        aria-label={ariaLabel}
-      >
-        {children}
-      </Combobox.ChipRemove>
-    );
-  };
+  return (
+    <Combobox.ChipRemove
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_combobox_chip_remove",
+        `sui_combobox_chip_remove-radius_${radius}`,
+      )}
+      aria-label={ariaLabel}
+    >
+      {children}
+    </Combobox.ChipRemove>
+  );
+};
 
 export { ComboboxChipRemove as ChipRemove };
 

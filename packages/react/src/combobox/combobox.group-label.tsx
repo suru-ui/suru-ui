@@ -39,17 +39,18 @@ export type ComboboxGroupLabelProps = ComboboxGroupLabelProps.Render &
   ComboboxGroupLabelProps.BaseUI &
   ComboboxGroupLabelProps.HTML;
 
+export type IComboboxGroupLabel = IComponent<ComboboxGroupLabelProps>;
+
 /**
  * 候補グループの見出し要素です。
  */
-export const ComboboxGroupLabel: IComponent<ComboboxGroupLabelProps> =
-  function SuiComboboxGroupLabel(props) {
-    const { className, ...otherProps } = props;
+export const ComboboxGroupLabel: IComboboxGroupLabel = function SuiComboboxGroupLabel(props) {
+  const { className, ...otherProps } = props;
 
-    return (
-      <Combobox.GroupLabel {...otherProps} className={cn(className, "sui_combobox_group_label")} />
-    );
-  };
+  return (
+    <Combobox.GroupLabel {...otherProps} className={cn(className, "sui_combobox_group_label")} />
+  );
+};
 
 export { ComboboxGroupLabel as GroupLabel };
 

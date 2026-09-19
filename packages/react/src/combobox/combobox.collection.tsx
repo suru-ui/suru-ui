@@ -53,7 +53,7 @@ export type ComboboxCollectionProps<TItem = any> = ComboboxCollectionProps.Rende
   ComboboxCollectionProps.BaseUI<TItem> &
   ComboboxCollectionProps.HTML;
 
-interface IComboboxCollection extends IComponent<ComboboxCollectionProps> {
+export interface IComboboxCollection extends IComponent<ComboboxCollectionProps> {
   <TItem = any>(props: ComboboxCollectionProps<TItem>): IComponent.Return;
 }
 
@@ -127,5 +127,5 @@ export namespace Collection {
     export type HTML = ComboboxCollectionProps.HTML;
   }
 
-  export interface IItemRenderer<TItem = any> extends IComboboxCollectionItemRenderer<TItem> {}
+  export type IItemRenderer<TItem = any> = IComboboxCollectionItemRenderer<TItem>;
 }

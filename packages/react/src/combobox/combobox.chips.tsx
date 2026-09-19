@@ -39,10 +39,12 @@ export type ComboboxChipsProps = ComboboxChipsProps.Render &
   ComboboxChipsProps.BaseUI &
   ComboboxChipsProps.HTML;
 
+export type IComboboxChips = IComponent<ComboboxChipsProps>;
+
 /**
  * 複数選択した値を表示するチップのコンテナーです。
  */
-export const ComboboxChips: IComponent<ComboboxChipsProps> = function SuiComboboxChips(props) {
+export const ComboboxChips: IComboboxChips = function SuiComboboxChips(props) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Chips {...otherProps} className={cn(className, "sui_combobox_chips")} />;

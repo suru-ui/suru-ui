@@ -64,7 +64,7 @@ export type ComboboxValueProps<
   ComboboxValueProps.BaseUI<TItem, TMultiple> &
   ComboboxValueProps.HTML;
 
-interface IComboboxValue extends IComponent<ComboboxValueProps> {
+export interface IComboboxValue extends IComponent<ComboboxValueProps> {
   <TItem = any, TMultiple extends boolean | undefined = boolean | undefined>(
     props: ComboboxValueProps<TItem, TMultiple>,
   ): IComponent.Return;
@@ -109,8 +109,8 @@ export namespace Value {
     export type HTML = ComboboxValueProps.HTML;
   }
 
-  export interface IRenderer<
+  export type IRenderer<
     TItem = any,
     TMultiple extends boolean | undefined = boolean | undefined,
-  > extends IComboboxValueRenderer<TItem, TMultiple> {}
+  > = IComboboxValueRenderer<TItem, TMultiple>;
 }

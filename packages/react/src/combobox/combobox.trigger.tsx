@@ -42,12 +42,12 @@ export type ComboboxTriggerProps = ComboboxTriggerProps.Render &
   ComboboxTriggerProps.BaseUI &
   ComboboxTriggerProps.HTML;
 
+export type IComboboxTrigger = IComponent<ComboboxTriggerProps>;
+
 /**
  * 候補リストを開閉するボタン要素です。
  */
-export const ComboboxTrigger: IComponent<ComboboxTriggerProps> = function SuiComboboxTrigger(
-  props,
-) {
+export const ComboboxTrigger: IComboboxTrigger = function SuiComboboxTrigger(props) {
   const { className, "aria-label": ariaLabel = "候補リストを開閉", ...otherProps } = props;
 
   return (

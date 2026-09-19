@@ -31,14 +31,14 @@ export type ComboboxItemLabelProps = ComboboxItemLabelProps.Render &
   ComboboxItemLabelProps.BaseUI &
   ComboboxItemLabelProps.HTML;
 
+export type IComboboxItemLabel = IComponent<ComboboxItemLabelProps>;
+
 /**
  * 項目の表示ラベルです。
  *
  * 直近の {@link ComboboxItem} または {@link ComboboxChip} の `value` を表示します。
  */
-export const ComboboxItemLabel: IComponent<ComboboxItemLabelProps> = function SuiComboboxItemLabel(
-  props,
-) {
+export const ComboboxItemLabel: IComboboxItemLabel = function SuiComboboxItemLabel(props) {
   const ctx = useComboboxContext();
   const itemCtx = useComboboxItemContext();
   const { children = ctx.itemToStringLabel } = props;

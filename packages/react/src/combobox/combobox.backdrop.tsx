@@ -41,12 +41,12 @@ export type ComboboxBackdropProps = ComboboxBackdropProps.Render &
   ComboboxBackdropProps.BaseUI &
   ComboboxBackdropProps.HTML;
 
+export type IComboboxBackdrop = IComponent<ComboboxBackdropProps>;
+
 /**
  * ポップアップの背後に表示される要素です。
  */
-export const ComboboxBackdrop: IComponent<ComboboxBackdropProps> = function SuiComboboxBackdrop(
-  props,
-) {
+export const ComboboxBackdrop: IComboboxBackdrop = function SuiComboboxBackdrop(props) {
   const { className, ...otherProps } = props;
 
   return <Combobox.Backdrop {...otherProps} className={cn(className, "sui_combobox_backdrop")} />;
