@@ -1,3 +1,5 @@
+// TODO(tai-kun): いつか複合コンポーネントの方に組み込む
+
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 

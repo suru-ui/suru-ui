@@ -4,6 +4,7 @@ import * as React from "react";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import { ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
 /**
  * {@link ComboboxGroup} が持つ状態です。
@@ -13,7 +14,9 @@ export type ComboboxGroupState = Combobox.Group.State;
 export namespace ComboboxGroupProps {
   export type Render = RenderProps<ComboboxGroupState>;
 
-  export type SuruUI = {};
+  export type SuruUI<TItem = any> = {
+    items?: readonly TItem[] | undefined;
+  };
 
   export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Group>,
@@ -34,8 +37,8 @@ export namespace ComboboxGroupProps {
 /**
  * {@link ComboboxGroup} に渡す props です。
  */
-export type ComboboxGroupProps = ComboboxGroupProps.Render &
-  ComboboxGroupProps.SuruUI &
+export type ComboboxGroupProps<TItem = any> = ComboboxGroupProps.Render &
+  ComboboxGroupProps.SuruUI<TItem> &
   ComboboxGroupProps.BaseUI &
   ComboboxGroupProps.HTML;
 
@@ -43,9 +46,20 @@ export type ComboboxGroupProps = ComboboxGroupProps.Render &
  * 関連する候補項目をまとめるグループ要素です。
  */
 export const ComboboxGroup: IComponent<ComboboxGroupProps> = function SuiComboboxGroup(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useComboboxContext();
+  const { items, className, ...otherProps } = props;
+  // items が未指定であっても上位の items が透過しないように、必ず新しい items を子要素に伝搬します。
+  const groupCtx = React.useMemo<ComboboxContext>(() => ({ ...ctx, items }), [ctx, items]);
 
-  return <Combobox.Group {...otherProps} className={cn(className, "sui_combobox_group")} />;
+  return (
+    <ComboboxContext value={groupCtx}>
+      <Combobox.Group
+        {...otherProps}
+        items={items}
+        className={cn(className, "sui_combobox_group")}
+      />
+    </ComboboxContext>
+  );
 };
 
 export { ComboboxGroup as Group };
@@ -53,12 +67,12 @@ export { ComboboxGroup as Group };
 export namespace Group {
   export type State = ComboboxGroupState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = ComboboxGroupProps.Render;
 
-    export type SuruUI = ComboboxGroupProps.SuruUI;
+    export type SuruUI<TItem = any> = ComboboxGroupProps.SuruUI<TItem>;
 
     export type BaseUI = ComboboxGroupProps.BaseUI;
 

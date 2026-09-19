@@ -55,10 +55,16 @@ export type ComboboxPositionerProps = ComboboxPositionerProps.Render &
  */
 export const ComboboxPositioner: IComponent<ComboboxPositionerProps> =
   function SuiComboboxPositioner(props) {
-    const { className, ...otherProps } = props;
+    const { side = "bottom", align = "start", className, sideOffset = 8, ...otherProps } = props;
 
     return (
-      <Combobox.Positioner {...otherProps} className={cn(className, "sui_combobox_positioner")} />
+      <Combobox.Positioner
+        {...otherProps}
+        side={side}
+        align={align}
+        className={cn(className, "sui_combobox_positioner")}
+        sideOffset={sideOffset}
+      />
     );
   };
 

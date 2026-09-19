@@ -9,6 +9,7 @@ import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
 import { useComboboxContext } from "./combobox.context.js";
+import { ComboboxItemContext } from "./combobox.item.context.js";
 
 /**
  * {@link ComboboxItem} が持つ状態です。
@@ -20,22 +21,27 @@ export namespace ComboboxItemProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Override<
+  export type BaseUI<TValue = any> = Override<
     Button.Root.Props.BaseUI,
-    Pick<
-      React.ComponentProps<typeof Combobox.Item>,
-      Exclude<
-        // Base UI の型を確認して取り出すプロパティーを決めます。
-        // NonNativeButtonProps:
-        | keyof NonNativeButtonProps
-        // ComboboxItemProps:
-        | "children"
-        | "onClick"
-        | "index"
-        | "value"
-        | "disabled",
-        keyof Render | keyof SuruUI
-      >
+    Override<
+      Pick<
+        React.ComponentProps<typeof Combobox.Item>,
+        Exclude<
+          // Base UI の型を確認して取り出すプロパティーを決めます。
+          // NonNativeButtonProps:
+          | keyof NonNativeButtonProps
+          // ComboboxItemProps:
+          | "children"
+          | "onClick"
+          | "index"
+          | "value"
+          | "disabled",
+          keyof Render | keyof SuruUI
+        >
+      >,
+      {
+        value?: TValue;
+      }
     >
   >;
 
@@ -48,15 +54,19 @@ export namespace ComboboxItemProps {
 /**
  * {@link ComboboxItem} に渡す props です。
  */
-export type ComboboxItemProps = ComboboxItemProps.Render &
+export type ComboboxItemProps<TValue = any> = ComboboxItemProps.Render &
   ComboboxItemProps.SuruUI &
-  ComboboxItemProps.BaseUI &
+  ComboboxItemProps.BaseUI<TValue> &
   ComboboxItemProps.HTML;
+
+interface IComboboxItem extends IComponent<ComboboxItemProps> {
+  <TValue = any>(props: ComboboxItemProps<TValue>): IComponent.Return;
+}
 
 /**
  * 候補リストの個々の項目要素です。
  */
-export const ComboboxItem: IComponent<ComboboxItemProps> = function SuiComboboxItem(props) {
+export const ComboboxItem: IComboboxItem = function SuiComboboxItem(props: ComboboxItemProps) {
   const ctx = useComboboxContext();
   const {
     index,
@@ -80,52 +90,55 @@ export const ComboboxItem: IComponent<ComboboxItemProps> = function SuiComboboxI
     nativeButton,
     focusableWhenDisabled,
   };
+  const itemCtx = React.useMemo<ComboboxItemContext>(() => ({ value }), [value]);
 
   return (
-    <Combobox.Item
-      {...otherProps}
-      {...baseuiProps}
-      render={(htmlProps: {}, state) => {
-        const buttonRootProps: Required<
-          Button.Root.Props.SuruUI &
-            Button.Root.Props.BaseUI &
-            Pick<Button.Root.Props.HTML, "disabled">
-        > = {
-          item: true,
-          size: ctx.size,
-          color: "grey",
-          muted: undefined,
-          radius: undefined,
-          pending: undefined,
-          squared: undefined,
-          variant: "naked",
-          disabled: state.disabled,
-          outlined: undefined,
-          nativeButton,
-          focusableWhenDisabled,
-        };
+    <ComboboxItemContext value={itemCtx}>
+      <Combobox.Item
+        {...otherProps}
+        {...baseuiProps}
+        render={(htmlProps: {}, state) => {
+          const buttonRootProps: Required<
+            Button.Root.Props.SuruUI &
+              Button.Root.Props.BaseUI &
+              Pick<Button.Root.Props.HTML, "disabled">
+          > = {
+            item: true,
+            size: ctx.size,
+            color: "grey",
+            muted: undefined,
+            radius: undefined,
+            pending: undefined,
+            squared: undefined,
+            variant: "naked",
+            disabled: state.disabled,
+            outlined: undefined,
+            nativeButton,
+            focusableWhenDisabled,
+          };
 
-        return (
-          <Button.Root
-            {...mergeProps<typeof Button.Root>([
-              htmlProps,
-              buttonRootProps,
-              proxyRenderProps(state, {
-                style,
-                render,
-                className: cn(
-                  className,
-                  "sui_combobox_item",
-                  (state) => state.disabled && "sui_combobox_item-disabled",
-                  (state) => state.selected && "sui_combobox_item-selected",
-                  (state) => state.highlighted && "sui_combobox_item-highlighted",
-                ),
-              }),
-            ])}
-          />
-        );
-      }}
-    />
+          return (
+            <Button.Root
+              {...mergeProps<typeof Button.Root>([
+                htmlProps,
+                buttonRootProps,
+                proxyRenderProps(state, {
+                  style,
+                  render,
+                  className: cn(
+                    className,
+                    "sui_combobox_item",
+                    (state) => state.disabled && "sui_combobox_item-disabled",
+                    (state) => state.selected && "sui_combobox_item-selected",
+                    (state) => state.highlighted && "sui_combobox_item-highlighted",
+                  ),
+                }),
+              ])}
+            />
+          );
+        }}
+      />
+    </ComboboxItemContext>
   );
 };
 
@@ -134,14 +147,14 @@ export { ComboboxItem as Item };
 export namespace Item {
   export type State = ComboboxItemState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render & Props.SuruUI & Props.BaseUI<TValue> & Props.HTML;
 
   export namespace Props {
     export type Render = ComboboxItemProps.Render;
 
     export type SuruUI = ComboboxItemProps.SuruUI;
 
-    export type BaseUI = ComboboxItemProps.BaseUI;
+    export type BaseUI<TValue = any> = ComboboxItemProps.BaseUI<TValue>;
 
     export type HTML = ComboboxItemProps.HTML;
   }

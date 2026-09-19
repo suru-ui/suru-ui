@@ -2,9 +2,11 @@ import { Combobox } from "@base-ui/react/combobox";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
-import type { RenderProps } from "../_use-render.js";
-import type { IComponent } from "../types.js";
+import { defaultItemToStringLabel, defaultItemToStringValue } from "../_item.js";
+import type { Override, IComponent } from "../types.js";
 import { ComboboxContext } from "./combobox.context.js";
+import type { ComboboxGroupProps } from "./combobox.group.jsx";
+import type { ComboboxItemProps } from "./combobox.item.jsx";
 
 /**
  * {@link ComboboxRoot} を命令的に操作するためのオブジェクトです。
@@ -37,42 +39,80 @@ export type ComboboxRootHighlightEventReason = Combobox.Root.HighlightEventReaso
 export type ComboboxRootColor = Color;
 
 /**
- * コンボボックスに表示する項目の一覧です。
+ * 値と表示内容を組にした、リストの項目です。
  *
- * - 平坦な項目の配列
- * - `items` を持つグループの配列。グループには任意で `label` を付けられます。
+ * `label` を表示し、`value` を選択値として扱います。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type ComboboxRootItems<TValue = any> =
-  | readonly TValue[]
-  | readonly {
-      readonly items: readonly TValue[];
-      readonly label?: React.ReactNode;
-    }[];
+export type ComboboxRootItemLabeledValue<TValue = any> = Override<
+  Omit<ComboboxItemProps, "children">,
+  {
+    /**
+     * 表示ラベルです。
+     */
+    readonly label: React.ReactNode;
+
+    /**
+     * 選択値です。
+     */
+    readonly value: TValue;
+  }
+>;
 
 /**
- * コンボボックスの角丸です。
+ * リストに表示する項目です。
  *
- * - `"none"`: 角を直角にする
- * - `"sm"`: 小さい角丸
- * - `"md"`: 標準的な角丸
- * - `"lg"`: 大きい角丸
- * - `"full"`: 完全な丸形
+ * 値そのものか、ラベルと値を持つオブジェクトを指定できます。
+ *
+ * @template TValue 項目の値の型です。
+ */
+export type ComboboxRootItemValue<TValue = any> = TValue | ComboboxRootItemLabeledValue<TValue>;
+
+/**
+ * 関連する項目をまとめるグループオブジェクトです。
+ *
+ * @template TValue 項目の値の型です。
+ */
+export type ComboboxRootItemGroup<TValue = any> = Override<
+  ComboboxGroupProps<TValue>,
+  {
+    /**
+     * グループに含まれる項目です。
+     */
+    items: readonly ComboboxRootItemValue<TValue>[];
+
+    /**
+     * グループのラベルです。
+     */
+    label?: React.ReactNode | undefined;
+  }
+>;
+
+/**
+ * コンボボックスの角丸の大きさです。
+ *
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ * - `"full"`: 丸形
  */
 export type ComboboxRootRadius = "none" | Size | "full";
 
 /**
  * コンボボックスの大きさです。
  *
- * - `"sm"`: 小さいサイズ
- * - `"md"`: 標準的なサイズ
- * - `"lg"`: 大きいサイズ
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type ComboboxRootSize = Size;
 
 /**
  * コンボボックスの主な外観の種類です。
  *
- * - `"naked"`: 背景のない入力欄
+ * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
 export type ComboboxRootVariant = "naked" | "liquid";
@@ -83,9 +123,9 @@ export type ComboboxRootVariant = "naked" | "liquid";
 export type ComboboxRootState = Combobox.Root.State;
 
 export namespace ComboboxRootProps {
-  export type Render = RenderProps<ComboboxRootState>;
+  export type Render = {};
 
-  export type SuruUI<TValue = any> = {
+  export type SuruUI<TItem = any> = {
     /**
      * フォーカス時に枠線へ適用する色を指定します。
      *
@@ -98,7 +138,7 @@ export namespace ComboboxRootProps {
      *
      * グループの配列を指定するとグループごとに区切って表示します。
      */
-    items?: ComboboxRootItems<TValue> | undefined;
+    items?: readonly TItem[] | undefined;
 
     /**
      * 枠線を表示するかどうかを指定します。
@@ -129,11 +169,14 @@ export namespace ComboboxRootProps {
     variant?: ComboboxRootVariant | undefined;
   };
 
-  export type BaseUI<TValue = any, TMultiple extends boolean | undefined = false> = Pick<
-    Combobox.Root.Props<TValue, TMultiple>,
+  export type BaseUI<
+    TItem = any,
+    TMultiple extends boolean | undefined = boolean | undefined,
+  > = Pick<
+    React.ComponentProps<typeof Combobox.Root<TItem, TMultiple>>,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // ComboboxRootProps + AriaCombobox.Props:
+      // AriaCombobox.Props:
       | "children"
       | "name"
       | "form"
@@ -150,6 +193,7 @@ export namespace ComboboxRootProps {
       | "defaultInputValue"
       | "inputRef"
       | "grid"
+      | "items"
       | "filteredItems"
       | "filter"
       | "virtualized"
@@ -157,6 +201,7 @@ export namespace ComboboxRootProps {
       | "modal"
       | "limit"
       | "locale"
+      // ComboboxRootProps:
       | "multiple"
       | "autoComplete"
       | "autoHighlight"
@@ -175,68 +220,77 @@ export namespace ComboboxRootProps {
     >
   >;
 
-  export type HTML<TValue = any, TMultiple extends boolean | undefined = false> = Omit<
-    Combobox.Root.Props<TValue, TMultiple>,
-    keyof Render | keyof SuruUI | keyof BaseUI<TValue, TMultiple>
+  export type HTML<TItem = any, TMultiple extends boolean | undefined = boolean | undefined> = Omit<
+    React.ComponentProps<typeof Combobox.Root<TItem, TMultiple>>,
+    keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
 /**
  * {@link ComboboxRoot} に渡す props です。
  *
- * @template TValue 項目の値の型です。
+ * @template TItem 項目の型です。
  * @template TMultiple 複数選択を有効にするかどうかです。
  */
 export type ComboboxRootProps<
-  TValue = any,
-  TMultiple extends boolean | undefined = false,
+  TItem = any,
+  TMultiple extends boolean | undefined = boolean | undefined,
 > = ComboboxRootProps.Render &
-  ComboboxRootProps.SuruUI<TValue> &
-  ComboboxRootProps.BaseUI<TValue, TMultiple> &
-  ComboboxRootProps.HTML<TValue, TMultiple>;
+  ComboboxRootProps.SuruUI<TItem> &
+  ComboboxRootProps.BaseUI<TItem, TMultiple> &
+  ComboboxRootProps.HTML<TItem, TMultiple>;
 
-interface IComboboxRoot extends IComponent<ComboboxRootProps<unknown, boolean | undefined>> {
+interface IComboboxRoot extends IComponent<ComboboxRootProps> {
   /**
-   * @template TValue 項目の値の型です。
+   * @template TItem 項目の型です。
    * @template TMultiple 複数選択を有効にするかどうかです。
    */
-  <TValue, TMultiple extends boolean | undefined = false>(
-    props: ComboboxRootProps<TValue, TMultiple>,
+  <TItem, const TMultiple extends boolean | undefined = false>(
+    props: ComboboxRootProps<TItem, TMultiple>,
   ): IComponent.Return;
 }
 
 /**
  * コンボボックスのルート要素です。
  *
- * 選択状態とポップアップの開閉状態を管理し、スタイルを子パーツへ伝播します。
- * それ自身は HTML 要素をレンダリングしません。
+ * 選択状態とポップアップの開閉状態を管理し、スタイルを子パーツへ伝播します。それ自身は HTML 要素をレンダリングしません。
  */
-export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot<
-  TValue,
-  TMultiple extends boolean | undefined = false,
->(props: ComboboxRootProps<TValue, TMultiple>) {
+export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: ComboboxRootProps) {
   const {
     size = "md",
     color = "grey",
+    items,
     radius = size,
     variant = "liquid",
+    multiple = false,
     outlined = false,
+    itemToStringLabel = defaultItemToStringLabel,
+    itemToStringValue = defaultItemToStringValue,
     ...otherProps
   } = props;
   const ctx = React.useMemo<ComboboxContext>(
     () => ({
       size,
       color,
+      items,
       radius,
       variant,
+      multiple,
       outlined,
+      itemToStringLabel,
     }),
-    [size, color, radius, variant, outlined],
+    [size, color, items, itemToStringLabel, radius, variant, multiple, outlined],
   );
 
   return (
     <ComboboxContext value={ctx}>
-      <Combobox.Root {...otherProps} />
+      <Combobox.Root
+        {...otherProps}
+        items={items}
+        multiple={multiple}
+        itemToStringLabel={itemToStringLabel}
+        itemToStringValue={itemToStringValue}
+      />
     </ComboboxContext>
   );
 };
@@ -246,25 +300,28 @@ export { ComboboxRoot as Root };
 export namespace Root {
   export type State = ComboboxRootState;
 
-  export type Props<TValue = any, TMultiple extends boolean | undefined = false> = Props.Render &
-    Props.SuruUI<TValue> &
-    Props.BaseUI<TValue, TMultiple> &
-    Props.HTML<TValue, TMultiple>;
+  export type Props<
+    TItem = any,
+    TMultiple extends boolean | undefined = boolean | undefined,
+  > = Props.Render &
+    Props.SuruUI<TItem> &
+    Props.BaseUI<TItem, TMultiple> &
+    Props.HTML<TItem, TMultiple>;
 
   export namespace Props {
     export type Render = ComboboxRootProps.Render;
 
-    export type SuruUI<TValue = any> = ComboboxRootProps.SuruUI<TValue>;
+    export type SuruUI<TItem = any> = ComboboxRootProps.SuruUI<TItem>;
 
     export type BaseUI<
-      TValue = any,
-      TMultiple extends boolean | undefined = false,
-    > = ComboboxRootProps.BaseUI<TValue, TMultiple>;
+      TItem = any,
+      TMultiple extends boolean | undefined = boolean | undefined,
+    > = ComboboxRootProps.BaseUI<TItem, TMultiple>;
 
     export type HTML<
-      TValue = any,
-      TMultiple extends boolean | undefined = false,
-    > = ComboboxRootProps.HTML<TValue, TMultiple>;
+      TItem = any,
+      TMultiple extends boolean | undefined = boolean | undefined,
+    > = ComboboxRootProps.HTML<TItem, TMultiple>;
   }
 
   export type Actions = ComboboxRootActions;
@@ -279,7 +336,11 @@ export namespace Root {
 
   export type HighlightEventReason = ComboboxRootHighlightEventReason;
 
-  export type Items<TValue = any> = ComboboxRootItems<TValue>;
+  export type ItemGroup<TValue = any> = ComboboxRootItemGroup<TValue>;
+
+  export type ItemLabeledValue<TValue = any> = ComboboxRootItemLabeledValue<TValue>;
+
+  export type ItemValue<TValue = any> = ComboboxRootItemValue<TValue>;
 
   export type Radius = ComboboxRootRadius;
 

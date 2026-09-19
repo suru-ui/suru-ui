@@ -7,31 +7,57 @@ import type { IUseContext } from "../types.js";
 /**
  * フォーカス時に枠線へ適用する配色です。
  */
-type ComboboxContextColor = Color;
+export type ComboboxContextColor = Color;
 
 /**
  * 入力を含むグループ要素の角丸です。
  */
-type ComboboxContextRadius = "none" | Size | "full";
+export type ComboboxContextRadius = "none" | Size | "full";
 
 /**
  * 入力欄とリスト項目のサイズです。
  */
-type ComboboxContextSize = Size;
+export type ComboboxContextSize = Size;
+
+/**
+ * 項目を表示ラベルへ変換する関数です。
+ *
+ * @template TItem 項目の型です。
+ */
+export interface IComboboxContextItemToStringLabel<TItem = any> {
+  (item: TItem): string;
+}
 
 /**
  * 入力欄の主な外観です。
  */
-type ComboboxContextVariant = "naked" | "liquid";
+export type ComboboxContextVariant = "naked" | "liquid";
 
 /**
  * {@link ComboboxRoot} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxContext = {
+export type ComboboxContext<TItem = any> = {
   /**
    * フォーカス時に枠線へ適用する配色です。
    */
   readonly color: ComboboxContextColor;
+
+  /**
+   * リストに表示する項目の一覧です。
+   */
+  readonly items: readonly TItem[] | undefined;
+
+  /**
+   * 項目を表示ラベルへ変換する関数です。
+   */
+  readonly itemToStringLabel: IComboboxContextItemToStringLabel<TItem>;
+
+  /**
+   * 複数選択かどうかです。
+   */
+  readonly multiple: boolean;
 
   /**
    * 枠線を表示するかどうかです。
@@ -83,6 +109,10 @@ export { ComboboxContext as Context, useComboboxContext as useContext };
 
 export namespace Context {
   export type Color = ComboboxContextColor;
+
+  export interface IItemToStringLabel<
+    TItem = any,
+  > extends IComboboxContextItemToStringLabel<TItem> {}
 
   export type Radius = ComboboxContextRadius;
 

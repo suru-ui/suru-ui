@@ -45,7 +45,16 @@ export type ComboboxArrowProps = ComboboxArrowProps.Render &
 export const ComboboxArrow: IComponent<ComboboxArrowProps> = function SuiComboboxArrow(props) {
   const { className, ...otherProps } = props;
 
-  return <Combobox.Arrow {...otherProps} className={cn(className, "sui_combobox_arrow")} />;
+  return (
+    <Combobox.Arrow
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_combobox_arrow",
+        (state) => `sui_combobox_arrow-side_${state.side}`,
+      )}
+    />
+  );
 };
 
 export { ComboboxArrow as Arrow };

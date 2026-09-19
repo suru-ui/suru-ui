@@ -1,8 +1,23 @@
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
-import type { RenderProps } from "../_use-render.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
+
+export type ComboboxValueType<
+  TItem = any,
+  TMultiple extends boolean | undefined = boolean | undefined,
+> = Exclude<Combobox.Root.Props<TItem, TMultiple>["value"], null | undefined>;
+
+export interface IComboboxValueRenderer<
+  TItem = any,
+  TMultiple extends boolean | undefined = boolean | undefined,
+> {
+  (
+    selectedValue: ComboboxValueType<TItem, TMultiple>,
+    context: ComboboxContext<TItem>,
+  ): React.ReactNode;
+}
 
 /**
  * {@link ComboboxValue} が持つ状態です。
@@ -10,18 +25,26 @@ import type { IComponent } from "../types.js";
 export type ComboboxValueState = Combobox.Value.State;
 
 export namespace ComboboxValueProps {
-  export type Render = RenderProps<ComboboxValueState>;
+  export type Render = {};
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Combobox.Value>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // ComboboxValueProps:
-      "children" | "placeholder",
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI<
+    TItem = any,
+    TMultiple extends boolean | undefined = boolean | undefined,
+  > = Override<
+    Pick<
+      React.ComponentProps<typeof Combobox.Value>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // ComboboxValueProps:
+        "children" | "placeholder",
+        keyof Render | keyof SuruUI
+      >
+    >,
+    {
+      children?: React.ReactNode | IComboboxValueRenderer<TItem, TMultiple>;
+    }
   >;
 
   export type HTML = Omit<
@@ -33,16 +56,34 @@ export namespace ComboboxValueProps {
 /**
  * {@link ComboboxValue} に渡す props です。
  */
-export type ComboboxValueProps = ComboboxValueProps.Render &
+export type ComboboxValueProps<
+  TItem = any,
+  TMultiple extends boolean | undefined = boolean | undefined,
+> = ComboboxValueProps.Render &
   ComboboxValueProps.SuruUI &
-  ComboboxValueProps.BaseUI &
+  ComboboxValueProps.BaseUI<TItem, TMultiple> &
   ComboboxValueProps.HTML;
+
+interface IComboboxValue extends IComponent<ComboboxValueProps> {
+  <TItem = any, TMultiple extends boolean | undefined = boolean | undefined>(
+    props: ComboboxValueProps<TItem, TMultiple>,
+  ): IComponent.Return;
+}
 
 /**
  * 現在の選択値を子要素へ反映する要素です。
+ *
+ * それ自身は HTML 要素をレンダリングしません。
  */
-export const ComboboxValue: IComponent<ComboboxValueProps> = function SuiComboboxValue(props) {
-  return <Combobox.Value {...props} />;
+export const ComboboxValue: IComboboxValue = function SuiComboboxValue(props: ComboboxValueProps) {
+  const ctx = useComboboxContext();
+  const { children, ...otherProps } = props;
+
+  return (
+    <Combobox.Value {...otherProps}>
+      {typeof children === "function" ? (selectedValue) => children(selectedValue, ctx) : children}
+    </Combobox.Value>
+  );
 };
 
 export { ComboboxValue as Value };
@@ -50,15 +91,26 @@ export { ComboboxValue as Value };
 export namespace Value {
   export type State = ComboboxValueState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<
+    TItem = any,
+    TMultiple extends boolean | undefined = boolean | undefined,
+  > = Props.Render & Props.SuruUI & Props.BaseUI<TItem, TMultiple> & Props.HTML;
 
   export namespace Props {
     export type Render = ComboboxValueProps.Render;
 
     export type SuruUI = ComboboxValueProps.SuruUI;
 
-    export type BaseUI = ComboboxValueProps.BaseUI;
+    export type BaseUI<
+      TItem = any,
+      TMultiple extends boolean | undefined = boolean | undefined,
+    > = ComboboxValueProps.BaseUI<TItem, TMultiple>;
 
     export type HTML = ComboboxValueProps.HTML;
   }
+
+  export interface IRenderer<
+    TItem = any,
+    TMultiple extends boolean | undefined = boolean | undefined,
+  > extends IComboboxValueRenderer<TItem, TMultiple> {}
 }

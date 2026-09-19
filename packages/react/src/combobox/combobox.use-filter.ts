@@ -43,4 +43,4 @@ function useSuiComboboxFilter(options?: IUseComboboxFilterOptions): ComboboxFilt
  */
 export const useComboboxFilter: IUseComboboxFilter = useSuiComboboxFilter;
 
-export const useFilter: IUseComboboxFilter = useComboboxFilter;
+export { useComboboxFilter as useFilter };

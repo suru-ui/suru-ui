@@ -1,9 +1,37 @@
 import { Combobox } from "@base-ui/react/combobox";
+import type { Size, Color, ColorTemplate } from "@suru-ui/theme";
 import * as React from "react";
 
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import { ComboboxContext, useComboboxContext } from "./combobox.context.js";
+import { ComboboxItemContext } from "./combobox.item.context.js";
+
+/**
+ * チップの配色です。
+ */
+export type ComboboxChipColor = Color;
+
+/**
+ * チップの角丸の大きさです。
+ *
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ * - `"full"`: 丸形
+ */
+export type ComboboxChipRadius = "none" | Size | "full";
+
+/**
+ * チップの主な外観です。
+ *
+ * - `"solid"`: 塗りつぶし
+ * - `"naked"`: 背景なし
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type ComboboxChipVariant = ColorTemplate;
 
 /**
  * {@link ComboboxChip} が持つ状態です。
@@ -13,7 +41,42 @@ export type ComboboxChipState = Combobox.Chip.State;
 export namespace ComboboxChipProps {
   export type Render = RenderProps<ComboboxChipState>;
 
-  export type SuruUI = {};
+  export type SuruUI<TValue = any> = {
+    /**
+     * チップの色を指定します。
+     *
+     * 省略時はコンボボックスの色を使います。
+     */
+    color?: ComboboxChipColor | undefined;
+
+    /**
+     * チップに枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * チップの角丸を指定します。
+     *
+     * 省略時はコンボボックスの角丸を使います。
+     */
+    radius?: ComboboxChipRadius | undefined;
+
+    /**
+     * チップが表す項目の値です。
+     *
+     * 子要素へ伝播します。
+     */
+    value?: TValue;
+
+    /**
+     * チップの主な外観を指定します。
+     *
+     * @default "solid"
+     */
+    variant?: ComboboxChipVariant | undefined;
+  };
 
   export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Chip>,
@@ -34,18 +97,49 @@ export namespace ComboboxChipProps {
 /**
  * {@link ComboboxChip} に渡す props です。
  */
-export type ComboboxChipProps = ComboboxChipProps.Render &
-  ComboboxChipProps.SuruUI &
+export type ComboboxChipProps<TValue = any> = ComboboxChipProps.Render &
+  ComboboxChipProps.SuruUI<TValue> &
   ComboboxChipProps.BaseUI &
   ComboboxChipProps.HTML;
+
+interface IComboboxChip extends IComponent<ComboboxChipProps> {
+  <TValue = any>(props: ComboboxChipProps<TValue>): IComponent.Return;
+}
 
 /**
  * 複数選択した値を表すチップ要素です。
  */
-export const ComboboxChip: IComponent<ComboboxChipProps> = function SuiComboboxChip(props) {
-  const { className, ...otherProps } = props;
+export const ComboboxChip: IComboboxChip = function SuiComboboxChip(props: ComboboxChipProps) {
+  const ctx = useComboboxContext();
+  const {
+    color = ctx.color,
+    value,
+    radius = ctx.radius,
+    variant = "solid",
+    outlined = false,
+    className,
+    ...otherProps
+  } = props;
+  const childCtx = React.useMemo<ComboboxContext>(() => ({ ...ctx, radius }), [ctx, radius]);
+  const itemCtx = React.useMemo<ComboboxItemContext>(() => ({ value }), [value]);
 
-  return <Combobox.Chip {...otherProps} className={cn(className, "sui_combobox_chip")} />;
+  return (
+    <ComboboxContext value={childCtx}>
+      <ComboboxItemContext value={itemCtx}>
+        <Combobox.Chip
+          {...otherProps}
+          className={cn(
+            className,
+            "sui_combobox_chip",
+            `sui_combobox_chip-color_${color}`,
+            `sui_combobox_chip-variant_${variant}`,
+            radius && `sui_combobox_chip-radius_${radius}`,
+            outlined && "sui_combobox_chip-outlined",
+          )}
+        />
+      </ComboboxItemContext>
+    </ComboboxContext>
+  );
 };
 
 export { ComboboxChip as Chip };
@@ -53,15 +147,21 @@ export { ComboboxChip as Chip };
 export namespace Chip {
   export type State = ComboboxChipState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render & Props.SuruUI<TValue> & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = ComboboxChipProps.Render;
 
-    export type SuruUI = ComboboxChipProps.SuruUI;
+    export type SuruUI<TValue = any> = ComboboxChipProps.SuruUI<TValue>;
 
     export type BaseUI = ComboboxChipProps.BaseUI;
 
     export type HTML = ComboboxChipProps.HTML;
   }
+
+  export type Color = ComboboxChipColor;
+
+  export type Radius = ComboboxChipRadius;
+
+  export type Variant = ComboboxChipVariant;
 }

@@ -1,6 +1,7 @@
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
+import { ChevronIcon } from "../_icons.jsx";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
@@ -43,9 +44,13 @@ export type ComboboxIconProps = ComboboxIconProps.Render &
  * トリガーの操作を示すアイコンのラッパー要素です。
  */
 export const ComboboxIcon: IComponent<ComboboxIconProps> = function SuiComboboxIcon(props) {
-  const { className, ...otherProps } = props;
+  const { children = <ChevronIcon />, className, ...otherProps } = props;
 
-  return <Combobox.Icon {...otherProps} className={cn(className, "sui_combobox_icon")} />;
+  return (
+    <Combobox.Icon {...otherProps} className={cn(className, "sui_combobox_icon")}>
+      {children}
+    </Combobox.Icon>
+  );
 };
 
 export { ComboboxIcon as Icon };

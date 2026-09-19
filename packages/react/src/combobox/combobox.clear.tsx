@@ -2,6 +2,7 @@ import { Combobox } from "@base-ui/react/combobox";
 import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
+import { ClearIcon } from "../_icons.jsx";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
@@ -47,9 +48,13 @@ export type ComboboxClearProps = ComboboxClearProps.Render &
  * 選択値を消去するボタン要素です。
  */
 export const ComboboxClear: IComponent<ComboboxClearProps> = function SuiComboboxClear(props) {
-  const { className, ...otherProps } = props;
+  const { children = <ClearIcon />, className, ...otherProps } = props;
 
-  return <Combobox.Clear {...otherProps} className={cn(className, "sui_combobox_clear")} />;
+  return (
+    <Combobox.Clear {...otherProps} className={cn(className, "sui_combobox_clear")}>
+      {children}
+    </Combobox.Clear>
+  );
 };
 
 export { ComboboxClear as Clear };

@@ -1,6 +1,7 @@
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
+import { CheckIcon } from "../_icons.jsx";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
@@ -44,13 +45,15 @@ export type ComboboxItemIndicatorProps = ComboboxItemIndicatorProps.Render &
  */
 export const ComboboxItemIndicator: IComponent<ComboboxItemIndicatorProps> =
   function SuiComboboxItemIndicator(props) {
-    const { className, ...otherProps } = props;
+    const { children = <CheckIcon />, className, ...otherProps } = props;
 
     return (
       <Combobox.ItemIndicator
         {...otherProps}
         className={cn(className, "sui_combobox_item_indicator")}
-      />
+      >
+        {children}
+      </Combobox.ItemIndicator>
     );
   };
 
