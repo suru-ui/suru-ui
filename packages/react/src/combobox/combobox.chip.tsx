@@ -135,8 +135,8 @@ export const ComboboxChip: IComboboxChip = function SuiComboboxChip(props: Combo
             className,
             "sui_combobox_chip",
             `sui_combobox_chip-color_${color}`,
+            `sui_combobox_chip-radius_${radius}`,
             `sui_combobox_chip-variant_${variant}`,
-            radius && `sui_combobox_chip-radius_${radius}`,
             outlined && "sui_combobox_chip-outlined",
           )}
         />

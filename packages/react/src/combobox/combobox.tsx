@@ -3,6 +3,7 @@ import * as React from "react";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import isReactNode from "../_is-react-node.js";
 import {
+  getItemKey,
   isItemGroup,
   isLabeledItem,
   isPrimitiveItem,
@@ -1010,7 +1011,7 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
     const defaultValueRenderer: IComboboxValueRenderer = (selectedValue: any[]) => (
       <>
         {selectedValue.map((item, index) => (
-          <ComboboxChip {...api.getChipProps(item)} key={index}>
+          <ComboboxChip {...api.getChipProps(item)} key={getItemKey(item) ?? index}>
             <ComboboxItemLabel {...api.getChipLabelProps()} />
             <ComboboxChipRemove {...api.getChipRemoveProps()} />
           </ComboboxChip>
@@ -1025,7 +1026,7 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
           const separatorProps = api.getSeparatorProps();
 
           return (
-            <ComboboxGroup {...api.getGroupProps(item)} key={index}>
+            <ComboboxGroup {...api.getGroupProps(item)} key={getItemKey(item) ?? index}>
               {groupLabelProps && <ComboboxGroupLabel {...groupLabelProps} />}
               <ComboboxCollection
                 {...api.getCollectionProps({ defaultItemRenderer: defaultListItemRenderer })}
@@ -1039,14 +1040,14 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
         case isLabeledItem(item):
         case !isReactNode(item):
           return (
-            <ComboboxItem {...api.getItemProps(item)} key={index}>
+            <ComboboxItem {...api.getItemProps(item)} key={getItemKey(item) ?? index}>
               <ComboboxItemLabel {...api.getItemLabelProps()} />
               <ComboboxItemIndicator {...api.getItemIndicatorProps()} />
             </ComboboxItem>
           );
 
         default:
-          return <React.Fragment key={index}>{item}</React.Fragment>;
+          return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
       }
     };
 

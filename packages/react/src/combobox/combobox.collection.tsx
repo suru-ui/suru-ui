@@ -3,7 +3,7 @@ import * as React from "react";
 
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import isReactNode from "../_is-react-node.js";
-import { isItemGroup, isLabeledItem, isPrimitiveItem } from "../_item.js";
+import { getItemKey, isItemGroup, isLabeledItem, isPrimitiveItem } from "../_item.js";
 import type { Override, IComponent } from "../types.js";
 import { useComboboxContext } from "./combobox.context.js";
 import { ComboboxGroupLabel } from "./combobox.group-label.jsx";
@@ -96,7 +96,7 @@ export const ComboboxCollection: IComboboxCollection = function SuiComboboxColle
         const { label, ...otherProps } = item;
 
         return (
-          <ComboboxGroup {...otherProps} key={index}>
+          <ComboboxGroup {...otherProps} key={getItemKey(item) ?? index}>
             {isLikelyVisibleNode(label) && <ComboboxGroupLabel>{label}</ComboboxGroupLabel>}
             <ComboboxCollection>{defaultItemRenderer}</ComboboxCollection>
             {separator && <ComboboxSeparator />}
@@ -108,7 +108,7 @@ export const ComboboxCollection: IComboboxCollection = function SuiComboboxColle
         const { label, ...otherProps } = item;
 
         return (
-          <ComboboxItem {...otherProps} key={index} value={item}>
+          <ComboboxItem {...otherProps} key={getItemKey(item) ?? index} value={item}>
             {label}
             <ComboboxItemIndicator />
           </ComboboxItem>
@@ -118,14 +118,14 @@ export const ComboboxCollection: IComboboxCollection = function SuiComboboxColle
       case isPrimitiveItem(item):
       case !isReactNode(item):
         return (
-          <ComboboxItem key={index} value={item}>
+          <ComboboxItem key={getItemKey(item) ?? index} value={item}>
             {ctx.itemToStringLabel(item)}
             <ComboboxItemIndicator />
           </ComboboxItem>
         );
 
       default:
-        return <React.Fragment key={index}>{item}</React.Fragment>;
+        return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
     }
   };
 

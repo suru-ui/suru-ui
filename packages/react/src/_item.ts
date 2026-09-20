@@ -4,6 +4,8 @@
 // https://github.com/mui/base-ui/blob/v1.7.0/packages/react/src/internals/serializeValue.ts
 // https://github.com/sindresorhus/type-fest/blob/v5.10.0/source/primitive.d.ts
 
+import type * as React from "react";
+
 import isReactNode from "./_is-react-node.js";
 import reactNodeToString from "./_react-node-to-string.js";
 
@@ -100,6 +102,52 @@ export function defaultItemToStringValue(item: unknown): string {
   }
 }
 
+export function getItemKey(item: unknown): NonNullable<React.Key> | undefined {
+  if (isReactKey(item)) {
+    return item;
+  }
+
+  switch (typeof item) {
+    case "object":
+      switch (true) {
+        case item === null:
+          return undefined;
+
+        case "key" in item! && isReactKey(item.key):
+          return item.key;
+
+        case "id" in item! && isReactKey(item.id):
+          return item.id;
+
+        default:
+          return undefined;
+      }
+
+    case "symbol":
+      return item.description;
+
+    case "boolean":
+      return item.toString();
+
+    default:
+      return undefined;
+  }
+}
+
+function isReactKey(key: unknown): key is NonNullable<React.Key> {
+  const k = key as NonNullable<React.Key>;
+  switch (typeof k) {
+    case "string":
+    case "number":
+    case "bigint":
+      return true;
+
+    default:
+      k satisfies never;
+      return false;
+  }
+}
+
 function serializeValue(value: unknown): string {
   switch (true) {
     case typeof value === "string":
@@ -115,6 +163,7 @@ function serializeValue(value: unknown): string {
 
     case value == null:
       return "";
+
     default:
       try {
         return JSON.stringify(value);
