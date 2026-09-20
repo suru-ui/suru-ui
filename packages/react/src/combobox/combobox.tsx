@@ -1051,14 +1051,12 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
       }
     };
 
-    const labelProps = api.getLabelProps();
     const chipsProps = api.getChipsProps();
     const arrowProps = api.getArrowProps();
     const backdropProps = api.getBackdropProps();
 
     return (
       <ComboboxRoot {...api.getRootProps()}>
-        {labelProps && <ComboboxLabel {...labelProps} />}
         <ComboboxInputGroup {...api.getInputGroupProps()}>
           {chipsProps ? (
             <ComboboxChips {...chipsProps}>
