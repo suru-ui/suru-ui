@@ -730,7 +730,7 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI<
       switch (true) {
         case isLabeledItem<ComboboxRootItemLabeledValue>(item): {
           const { label: _label, ...otherProps } = item;
-          return mergeProps([itemProps, { ...otherProps, value: item }]);
+          return mergeProps([itemProps, otherProps, { value: item }]);
         }
 
         default:
@@ -920,11 +920,9 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI<
     },
     getGroupLabelProps(item) {
       if (item) {
-        if (isLikelyVisibleNode(item.label)) {
-          return {
-            ...groupLabelProps,
-            children: item.label,
-          };
+        const { label, ...otherProps } = item;
+        if (isLikelyVisibleNode(label)) {
+          return mergeProps([groupLabelProps, otherProps, { children: label }]);
         }
 
         return null;

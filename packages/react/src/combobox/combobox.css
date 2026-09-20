@@ -2030,6 +2030,7 @@
 } /* @layer */
 
 /* ItemIndicator */
+/* Button が data-scope を持つため、スコープに下限値を設けません。 */
 @layer sui.component {
 @scope (.sui_combobox_portal) {
 
