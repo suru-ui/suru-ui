@@ -548,24 +548,20 @@ export const AsyncSearchSingle = meta.story({
         filter={null}
         status={status}
         className="w-[300px]"
-        slotProps={{
-          itemLabel: {
-            children: (user: DirectoryUser) => (
-              <span className="flex min-w-0 flex-col text-left">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs opacity-70">
-                  {user.email} ・ @{user.username} ・ {user.title}
-                </span>
-              </span>
-            ),
-          },
-        }}
         placeholder="例：山田"
         onValueChange={(nextSelectedValue) => {
           setSelectedValue(nextSelectedValue);
           setSearchValue("");
           setError(null);
         }}
+        itemLabelRenderer={(user: DirectoryUser) => (
+          <span className="flex min-w-0 flex-col text-left">
+            <span className="truncate font-medium">{user.name}</span>
+            <span className="truncate text-xs opacity-70">
+              {user.email} ・ @{user.username} ・ {user.title}
+            </span>
+          </span>
+        )}
         itemToStringLabel={(user) => user.name}
         isItemEqualToValue={(item, value) => item.id === value.id}
         onInputValueChange={(nextSearchValue, { reason }) => {
@@ -683,23 +679,6 @@ export const AsyncSearchMultiple = meta.story({
         status={status}
         multiple
         className="w-[300px]"
-        slotProps={{
-          // value: {
-          //   children: (user) => {
-          //     return user
-          //   }
-          // },
-          itemLabel: {
-            children: (user: DirectoryUser) => (
-              <span className="flex min-w-0 flex-col text-left">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs opacity-70">
-                  {user.email} ・ @{user.username} ・ {user.title}
-                </span>
-              </span>
-            ),
-          },
-        }}
         placeholder="例：山田"
         onValueChange={(nextSelectedValues) => {
           selectedValuesRef.current = nextSelectedValues;
@@ -714,6 +693,15 @@ export const AsyncSearchMultiple = meta.story({
             setBlockStartStatus(true);
           }
         }}
+        chipLabelRenderer={(user: DirectoryUser) => user.name}
+        itemLabelRenderer={(user: DirectoryUser) => (
+          <span className="flex min-w-0 flex-col text-left">
+            <span className="truncate font-medium">{user.name}</span>
+            <span className="truncate text-xs opacity-70">
+              {user.email} ・ @{user.username} ・ {user.title}
+            </span>
+          </span>
+        )}
         itemToStringLabel={(user) => user.name}
         isItemEqualToValue={(item, value) => item.id === value.id}
         onInputValueChange={(nextSearchValue, { reason }) => {

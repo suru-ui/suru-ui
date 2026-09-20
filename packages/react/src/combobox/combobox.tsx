@@ -102,6 +102,7 @@ import {
   IComboboxValueRenderer,
   useComboboxFilteredItems,
   IComboboxListItemRenderer,
+  IComboboxItemLabelRenderer,
   IComboboxCollectionItemRenderer,
 } from "./combobox.parts.js";
 
@@ -220,11 +221,6 @@ export type ComboboxSlotProps<
   readonly itemIndicator?: ComboboxItemIndicatorProps | undefined;
 
   /**
-   * {@link ComboboxItemLabel} に渡す props です。
-   */
-  readonly itemLabel?: ComboboxItemLabelProps | undefined;
-
-  /**
    * {@link ComboboxLabel} に渡す props です。
    */
   readonly label?: Omit<ComboboxLabelProps, "children"> | undefined;
@@ -312,9 +308,23 @@ namespace ComboboxProps {
     backdrop?: boolean | undefined;
 
     /**
+     * チップに表示するラベルを生成する関数です。
+     *
+     * 省略時はコンボボックスの変換関数を使います。
+     */
+    chipLabelRenderer?: IComboboxItemLabelRenderer<TItem> | undefined;
+
+    /**
      * リストが空のときだけ表示する内容です。
      */
     empty?: React.ReactNode | undefined;
+
+    /**
+     * 候補リストの項目に表示するラベルを生成する関数です。
+     *
+     * 省略時はコンボボックスの変換関数を使います。
+     */
+    itemLabelRenderer?: IComboboxItemLabelRenderer<TItem> | undefined;
 
     /**
      * トリガーに対応する表示ラベルです。
@@ -431,6 +441,11 @@ export interface ComboboxAPI<
   getBackdropProps(): Omit<ComboboxBackdropProps, "children"> | null;
 
   /**
+   * チップ内の {@link ComboboxItemLabel} に渡す props を取得します。
+   */
+  getChipLabelProps(): ComboboxItemLabelProps<TItem>;
+
+  /**
    * {@link ComboboxChip} に渡す props を取得します。
    *
    * @param item 項目です。
@@ -515,9 +530,9 @@ export interface ComboboxAPI<
   getItemIndicatorProps(): ComboboxItemIndicatorProps;
 
   /**
-   * {@link ComboboxItemLabel} に渡す props を取得します。
+   * 候補リストの項目内の {@link ComboboxItemLabel} に渡す props を取得します。
    */
-  getItemLabelProps(): ComboboxItemLabelProps;
+  getItemLabelProps(): ComboboxItemLabelProps<TItem>;
 
   /**
    * {@link ComboboxItem} に渡す props を取得します。
@@ -679,7 +694,6 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI<
       trigger: triggerProps = {},
       backdrop: backdropProps,
       viewport: viewportProps = {},
-      itemLabel: itemLabelProps = {},
       scrollbar: scrollbarProps = {},
       separator: separatorProps = {},
       chipRemove: chipRemoveProps = {},
@@ -701,7 +715,9 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI<
     filteredItems,
     onValueChange,
     openOnInputClick,
+    chipLabelRenderer,
     defaultInputValue,
+    itemLabelRenderer,
     itemToStringLabel = defaultItemToStringLabel,
     itemToStringValue = defaultItemToStringValue,
     onItemHighlighted,
@@ -893,8 +909,15 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI<
     getViewportProps() {
       return viewportProps;
     },
+    getChipLabelProps() {
+      return {
+        children: chipLabelRenderer,
+      };
+    },
     getItemLabelProps() {
-      return itemLabelProps;
+      return {
+        children: itemLabelRenderer,
+      };
     },
     getScrollbarProps() {
       return scrollbarProps;
@@ -988,7 +1011,7 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
       <>
         {selectedValue.map((item, index) => (
           <ComboboxChip {...api.getChipProps(item)} key={index}>
-            <ComboboxItemLabel {...api.getItemLabelProps()} />
+            <ComboboxItemLabel {...api.getChipLabelProps()} />
             <ComboboxChipRemove {...api.getChipRemoveProps()} />
           </ComboboxChip>
         ))}
