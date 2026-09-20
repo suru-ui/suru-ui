@@ -225,3 +225,4 @@ __screenshots__
 .tmp-*
 .vitest-attachments
 reports
+review*.md

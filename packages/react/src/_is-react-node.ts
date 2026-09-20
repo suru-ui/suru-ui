@@ -13,9 +13,9 @@ export default function isReactNode(node: unknown): node is React.ReactNode {
     case "object":
       switch (true) {
         case n === null:
-        case isIterable(n):
         case React.isValidElement(n):
         case n instanceof Promise:
+        case isIterable(n):
           return true;
       }
   }
@@ -26,6 +26,6 @@ export default function isReactNode(node: unknown): node is React.ReactNode {
   return false;
 }
 
-function isIterable(node: any): node is Iterable<any> {
+function isIterable(node: any): node is Iterable<unknown> {
   return typeof node[Symbol.iterator] === "function";
 }

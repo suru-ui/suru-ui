@@ -4,6 +4,9 @@
 // https://github.com/mui/base-ui/blob/v1.7.0/packages/react/src/internals/serializeValue.ts
 // https://github.com/sindresorhus/type-fest/blob/v5.10.0/source/primitive.d.ts
 
+import isReactNode from "./_is-react-node.js";
+import reactNodeToString from "./_react-node-to-string.js";
+
 interface IItemGroup {
   readonly items: readonly unknown[];
 }
@@ -61,22 +64,23 @@ export function isPrimitiveItem(item: unknown): item is PrimitiveItem {
 
 export function defaultItemToStringLabel(item: unknown): string {
   switch (true) {
-    case typeof item === "string":
-    case typeof item === "boolean":
-      return item.toString();
-
-    case typeof item === "number":
-    case typeof item === "bigint":
-      return item.toString(10);
+    case isReactNode(item):
+      return reactNodeToString(item);
 
     case typeof item === "symbol":
       return item.description ?? item.toString();
 
-    case item == null:
-      return "";
-
     case isObject(item) && hasLabel(item) && item.label !== undefined:
-      return serializeValue(item.label);
+      switch (true) {
+        case isReactNode(item.label):
+          return reactNodeToString(item.label);
+
+        case typeof item.label === "symbol":
+          return item.label.description ?? item.label.toString();
+
+        default:
+          return serializeValue(item.label);
+      }
 
     case isObject(item) && hasValue(item):
       return serializeValue(item.value);
@@ -111,7 +115,6 @@ function serializeValue(value: unknown): string {
 
     case value == null:
       return "";
-
     default:
       try {
         return JSON.stringify(value);
