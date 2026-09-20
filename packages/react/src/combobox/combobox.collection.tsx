@@ -11,6 +11,7 @@ import { ComboboxGroup } from "./combobox.group.jsx";
 import { ComboboxItemIndicator } from "./combobox.item-indicator.jsx";
 import { ComboboxItem } from "./combobox.item.jsx";
 import type { ComboboxRootItemGroup, ComboboxRootItemLabeledValue } from "./combobox.root.jsx";
+import { ComboboxSeparator } from "./combobox.separator.jsx";
 
 /**
  * {@link ComboboxCollection} の各項目をレンダリングする関数のインターフェイスです。
@@ -36,7 +37,14 @@ export type ComboboxCollectionState = {};
 export namespace ComboboxCollectionProps {
   export type Render = {};
 
-  export type SuruUI = {};
+  export type SuruUI = {
+    /**
+     * グループの末尾に区切り線を表示するかどうかを指定します。
+     *
+     * 既定レンダラーを使うときにだけ適用されます。
+     */
+    separator?: boolean | undefined;
+  };
 
   export type BaseUI<TItem = any> = Override<
     Pick<
@@ -91,6 +99,7 @@ export const ComboboxCollection: IComboboxCollection = function SuiComboboxColle
           <ComboboxGroup {...otherProps} key={index}>
             {isLikelyVisibleNode(label) && <ComboboxGroupLabel>{label}</ComboboxGroupLabel>}
             <ComboboxCollection>{defaultItemRenderer}</ComboboxCollection>
+            {separator && <ComboboxSeparator />}
           </ComboboxGroup>
         );
       }
@@ -120,7 +129,7 @@ export const ComboboxCollection: IComboboxCollection = function SuiComboboxColle
     }
   };
 
-  const { children = defaultItemRenderer } = props;
+  const { children = defaultItemRenderer, separator = false } = props;
 
   return <Combobox.Collection>{children}</Combobox.Collection>;
 };

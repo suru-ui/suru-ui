@@ -2052,6 +2052,11 @@
   .sui_combobox_separator {
     display: block;
   }
+
+  /* 末尾グループの区切り線は表示しません。 */
+  .sui_combobox_group:last-child .sui_combobox_separator:last-child {
+    display: none;
+  }
 }
 
 /* 変数 */

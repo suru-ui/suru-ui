@@ -27,6 +27,7 @@ import {
 import type { IComponent } from "../types.js";
 import {
   type ComboboxContext,
+  type IComboboxFilter,
   type ComboboxRootSize,
   type ComboboxChipProps,
   type ComboboxIconProps,
@@ -56,6 +57,8 @@ import {
   type ComboboxRootItemGroup,
   type ComboboxRootItemValue,
   type ComboboxItemLabelProps,
+  type ComboboxSeparatorProps,
+  type IComboboxFilteredItems,
   type ComboboxChipRemoveProps,
   type ComboboxCollectionProps,
   type ComboboxGroupLabelProps,
@@ -68,8 +71,6 @@ import {
   type ComboboxRootChangeEventDetails,
   type ComboboxRootHighlightEventReason,
   type ComboboxRootHighlightEventDetails,
-  type IComboboxFilteredItems,
-  type IComboboxFilter,
   ComboboxChip,
   ComboboxIcon,
   ComboboxItem,
@@ -89,6 +90,7 @@ import {
   ComboboxTrigger,
   ComboboxBackdrop,
   ComboboxItemLabel,
+  ComboboxSeparator,
   useComboboxFilter,
   ComboboxChipRemove,
   ComboboxCollection,
@@ -258,6 +260,11 @@ export type ComboboxSlotProps<
   readonly scrollbar?: Omit<ScrollAreaScrollbarProps, "children"> | undefined;
 
   /**
+   * {@link ComboboxSeparator} に渡す props です。
+   */
+  readonly separator?: ComboboxSeparatorProps | undefined;
+
+  /**
    * {@link ComboboxStatus} に渡す props です。
    */
   readonly status?: Omit<ComboboxStatusProps, "children"> | undefined;
@@ -319,6 +326,13 @@ namespace ComboboxProps {
      */
     // ComboboxValue と ComboboxInput 両方の placeholder で使用する可能性があるので、string 型のみを受け入れます。
     placeholder?: string | undefined;
+
+    /**
+     * グループの末尾に区切り線を表示するかどうかを指定します。
+     *
+     * 既定レンダラーを使うときにだけ適用されます。
+     */
+    separator?: boolean | undefined;
 
     /**
      * 各パーツに個別のpropsを渡すためのオブジェクトです。
@@ -556,6 +570,13 @@ export interface ComboboxAPI<
   getScrollbarProps(): Omit<ScrollAreaScrollbarProps, "children">;
 
   /**
+   * {@link ComboboxSeparator} に渡す props を取得します。
+   *
+   * `separator` が無効なときは `null` を返します。
+   */
+  getSeparatorProps(): ComboboxSeparatorProps | null;
+
+  /**
    * {@link ComboboxStatus} に渡す props を取得します。
    */
   getStatusProps(): ComboboxStatusProps;
@@ -635,6 +656,7 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI<
     readOnly,
     required,
     loopFocus,
+    separator = false,
     slotProps: {
       chip: chipProps = {},
       icon: iconProps = {},
@@ -659,6 +681,7 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI<
       viewport: viewportProps = {},
       itemLabel: itemLabelProps = {},
       scrollbar: scrollbarProps = {},
+      separator: separatorProps = {},
       chipRemove: chipRemoveProps = {},
       collection: collectionProps = {},
       groupLabel: groupLabelProps = {},
@@ -876,6 +899,13 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI<
     getScrollbarProps() {
       return scrollbarProps;
     },
+    getSeparatorProps() {
+      if (separator) {
+        return separatorProps;
+      }
+
+      return null;
+    },
     getChipRemoveProps() {
       return chipRemoveProps;
     },
@@ -971,6 +1001,7 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
       switch (true) {
         case isItemGroup<ComboboxItemGroup>(item): {
           const groupLabelProps = api.getGroupLabelProps(item);
+          const separatorProps = api.getSeparatorProps();
 
           return (
             <ComboboxGroup {...api.getGroupProps(item)} key={index}>
@@ -978,6 +1009,7 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
               <ComboboxCollection
                 {...api.getCollectionProps({ defaultItemRenderer: defaultListItemRenderer })}
               />
+              {separatorProps && <ComboboxSeparator {...separatorProps} />}
             </ComboboxGroup>
           );
         }
@@ -1076,13 +1108,13 @@ export namespace Combobox {
 
   export type Color = ComboboxColor;
 
-  export type IFilter = IComboboxFilter;
-
-  export type IFilteredItems<TItem = any> = IComboboxFilteredItems<TItem>;
-
   export type HighlightEventDetails = ComboboxHighlightEventDetails;
 
   export type HighlightEventReason = ComboboxHighlightEventReason;
+
+  export type IFilter = IComboboxFilter;
+
+  export type IFilteredItems<TItem = any> = IComboboxFilteredItems<TItem>;
 
   export type ItemGroup<TValue = any> = ComboboxItemGroup<TValue>;
 
