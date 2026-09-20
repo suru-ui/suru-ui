@@ -4,15 +4,34 @@ import * as React from "react";
 import type { Override, IComponent } from "../types.js";
 import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
+/**
+ * 選択値の型です。
+ *
+ * @template TItem 項目の型です。
+ * @template TMultiple 複数選択を有効にするかどうかです。
+ */
 export type ComboboxValueType<
   TItem = any,
   TMultiple extends boolean | undefined = boolean | undefined,
 > = Exclude<Combobox.Root.Props<TItem, TMultiple>["value"], null | undefined>;
 
+/**
+ * 選択値をレンダリングする関数のインターフェイスです。
+ *
+ * @template TItem 項目の型です。
+ * @template TMultiple 複数選択を有効にするかどうかです。
+ */
 export interface IComboboxValueRenderer<
   TItem = any,
   TMultiple extends boolean | undefined = boolean | undefined,
 > {
+  /**
+   * 選択値をレンダリングします。
+   *
+   * @param selectedValue 現在の選択値です。
+   * @param context コンボボックスのコンテキストです。
+   * @returns レンダリングする内容です。
+   */
   (
     selectedValue: ComboboxValueType<TItem, TMultiple>,
     context: ComboboxContext<TItem>,
@@ -65,6 +84,10 @@ export type ComboboxValueProps<
   ComboboxValueProps.HTML;
 
 export interface IComboboxValue extends IComponent<ComboboxValueProps> {
+  /**
+   * @template TItem 項目の型です。
+   * @template TMultiple 複数選択を有効にするかどうかです。
+   */
   <TItem = any, TMultiple extends boolean | undefined = boolean | undefined>(
     props: ComboboxValueProps<TItem, TMultiple>,
   ): IComponent.Return;

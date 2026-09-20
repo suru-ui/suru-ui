@@ -60,6 +60,9 @@ export type ComboboxItemProps<TValue = any> = ComboboxItemProps.Render &
   ComboboxItemProps.HTML;
 
 export interface IComboboxItem extends IComponent<ComboboxItemProps> {
+  /**
+   * @template TValue 項目の値の型です。
+   */
   <TValue = any>(props: ComboboxItemProps<TValue>): IComponent.Return;
 }
 

@@ -2,7 +2,16 @@ import type { IComponent } from "../types.js";
 import { useComboboxContext } from "./combobox.context.js";
 import { useComboboxItemContext } from "./combobox.item.context.js";
 
+/**
+ * 項目の表示ラベルをレンダリングする関数のインターフェイスです。
+ */
 export interface IComboboxItemLabelRenderer {
+  /**
+   * 表示ラベルをレンダリングします。
+   *
+   * @param item 表示する項目の値です。
+   * @returns レンダリングする内容です。
+   */
   (item: any): IComponent.Return;
 }
 
@@ -15,6 +24,11 @@ export namespace ComboboxItemLabelProps {
   export type Render = {};
 
   export type SuruUI = {
+    /**
+     * 表示ラベル、または項目の値から表示ラベルを生成する関数です。
+     *
+     * 省略時はコンボボックスの変換関数を使います。
+     */
     children?: IComboboxItemLabelRenderer | undefined;
   };
 

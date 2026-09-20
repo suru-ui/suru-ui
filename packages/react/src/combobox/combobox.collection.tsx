@@ -12,7 +12,19 @@ import { ComboboxItemIndicator } from "./combobox.item-indicator.jsx";
 import { ComboboxItem } from "./combobox.item.jsx";
 import type { ComboboxRootItemGroup, ComboboxRootItemLabeledValue } from "./combobox.root.jsx";
 
+/**
+ * {@link ComboboxCollection} の各項目をレンダリングする関数のインターフェイスです。
+ *
+ * @template TItem 項目の型です。
+ */
 export interface IComboboxCollectionItemRenderer<TItem = any> {
+  /**
+   * 項目をレンダリングします。
+   *
+   * @param item 現在の項目です。
+   * @param index 項目のインデックスです。
+   * @returns レンダリングする内容です。
+   */
   (item: TItem, index: number): React.ReactNode;
 }
 
@@ -54,6 +66,9 @@ export type ComboboxCollectionProps<TItem = any> = ComboboxCollectionProps.Rende
   ComboboxCollectionProps.HTML;
 
 export interface IComboboxCollection extends IComponent<ComboboxCollectionProps> {
+  /**
+   * @template TItem 項目の型です。
+   */
   <TItem = any>(props: ComboboxCollectionProps<TItem>): IComponent.Return;
 }
 

@@ -49,6 +49,9 @@ export type ComboboxListProps<TItem = any> = ComboboxListProps.Render &
   ComboboxListProps.HTML;
 
 export interface IComboboxList extends IComponent<ComboboxListProps> {
+  /**
+   * @template TItem 項目の型です。
+   */
   <TItem = any>(props: ComboboxListProps<TItem>): IComponent.Return;
 }
 

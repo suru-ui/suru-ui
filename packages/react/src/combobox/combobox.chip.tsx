@@ -103,6 +103,9 @@ export type ComboboxChipProps<TValue = any> = ComboboxChipProps.Render &
   ComboboxChipProps.HTML;
 
 export interface IComboboxChip extends IComponent<ComboboxChipProps> {
+  /**
+   * @template TValue 項目の値の型です。
+   */
   <TValue = any>(props: ComboboxChipProps<TValue>): IComponent.Return;
 }
 

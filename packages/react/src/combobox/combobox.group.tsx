@@ -15,6 +15,9 @@ export namespace ComboboxGroupProps {
   export type Render = RenderProps<ComboboxGroupState>;
 
   export type SuruUI<TItem = any> = {
+    /**
+     * グループに含まれる項目です。
+     */
     items?: readonly TItem[] | undefined;
   };
 

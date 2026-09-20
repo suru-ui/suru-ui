@@ -10,6 +10,9 @@ export type IComboboxFilter = ReturnType<typeof Combobox.useFilter>;
  */
 export type IUseComboboxFilterOptions = NonNullable<Parameters<typeof Combobox.useFilter>[0]>;
 
+/**
+ * {@link useComboboxFilter} の型です。
+ */
 export interface IUseComboboxFilter {
   (options?: IUseComboboxFilterOptions): IComboboxFilter;
 }
