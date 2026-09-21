@@ -63,7 +63,15 @@ export const ComboboxPositioner: IComboboxPositioner = function SuiComboboxPosit
       {...otherProps}
       side={side}
       align={align}
-      className={cn(className, "sui_combobox_positioner")}
+      className={cn(
+        className,
+        "sui_combobox_positioner",
+        (state) => state.open && "sui_combobox_positioner-open",
+        (state) => `sui_combobox_positioner-side_${state.side.replaceAll("-", "_")}`,
+        (state) => `sui_combobox_positioner-align_${state.align}`,
+        (state) => state.anchorHidden && "sui_combobox_positioner-anchorhidden",
+        (state) => state.empty && "sui_combobox_positioner-empty",
+      )}
       sideOffset={sideOffset}
     />
   );

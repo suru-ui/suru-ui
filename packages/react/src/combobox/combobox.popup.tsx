@@ -11,10 +11,29 @@ import { ComboboxContext, useComboboxContext } from "./combobox.context.js";
  */
 export type ComboboxPopupState = Combobox.Popup.State;
 
+/**
+ * ポップアップ内の入力欄の配置です。
+ *
+ * - `"top"`: リストの上に固定します。
+ * - `"bottom"`: リストの下に固定します。
+ * - `"start"`: 入力欄に近いほうに置きます。ポップアップが反転したときはリストの下に来ます。
+ * - `"end"`: 入力欄から遠いほうに置きます。ポップアップが反転したときはリストの上に来ます。
+ */
+export type ComboboxPopupInputPosition = "top" | "bottom" | "start" | "end";
+
 export namespace ComboboxPopupProps {
   export type Render = RenderProps<ComboboxPopupState>;
 
   export type SuruUI = {
+    /**
+     * ポップアップ内の入力欄の配置を指定します。
+     *
+     * 入力欄を内包しないポップアップでは無視されます。
+     *
+     * @default "start"
+     */
+    inputPosition?: ComboboxPopupInputPosition | undefined;
+
     /**
      * ポップアップに枠線を表示するかどうかを指定します。
      *
@@ -54,14 +73,19 @@ export type IComboboxPopup = IComponent<ComboboxPopupProps>;
  */
 export const ComboboxPopup: IComboboxPopup = function SuiComboboxPopup(props) {
   const ctx = useComboboxContext();
-  const { outlined = ctx.outlined, className, ...otherProps } = props;
+  const { outlined = ctx.outlined, className, inputPosition = "start", ...otherProps } = props;
   const childCtx = React.useMemo<ComboboxContext>(() => ({ ...ctx, outlined }), [ctx, outlined]);
 
   return (
     <ComboboxContext value={childCtx}>
       <Combobox.Popup
         {...otherProps}
-        className={cn(className, "sui_combobox_popup", outlined && "sui_combobox_popup-outlined")}
+        className={cn(
+          className,
+          "sui_combobox_popup",
+          outlined && "sui_combobox_popup-outlined",
+          `sui_combobox_popup-inputposition_${inputPosition}`,
+        )}
       />
     </ComboboxContext>
   );
@@ -83,4 +107,6 @@ export namespace Popup {
 
     export type HTML = ComboboxPopupProps.HTML;
   }
+
+  export type InputPosition = ComboboxPopupInputPosition;
 }

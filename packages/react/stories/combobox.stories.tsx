@@ -33,6 +33,9 @@ const ctrl = controls(Combobox<Combobox.ItemValue | Combobox.ItemGroup, boolean>
   items: {
     control: "object",
   },
+  inputInPopup: {
+    control: "boolean",
+  },
   keepFilterOnSelect: {
     control: "boolean",
   },

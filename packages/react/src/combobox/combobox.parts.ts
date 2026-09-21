@@ -20,6 +20,7 @@ export * from "./combobox.item.context.js";
 export * from "./combobox.item.jsx";
 export * from "./combobox.label.jsx";
 export * from "./combobox.list.jsx";
+export * from "./combobox.placeholder.jsx";
 export * from "./combobox.popup.jsx";
 export * from "./combobox.portal.jsx";
 export * from "./combobox.positioner.jsx";
