@@ -1,3 +1,5 @@
+// TODO(tai-kun): Combobox では使用せず、別のコンポーネントで使用する。
+
 import { Combobox } from "@base-ui/react/combobox";
 import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import * as React from "react";
@@ -12,9 +14,11 @@ import type { IComponent } from "../types.js";
 export type ComboboxTriggerState = Combobox.Trigger.State;
 
 export namespace ComboboxTriggerProps {
-  export type Render = RenderProps<ComboboxTriggerState>;
+  export type Render = Omit<RenderProps<ComboboxTriggerState>, "render">;
 
-  export type SuruUI = {};
+  export type SuruUI = {
+    children: NonNullable<RenderProps<ComboboxTriggerState>["render"]>;
+  };
 
   export type BaseUI = Pick<
     React.ComponentProps<typeof Combobox.Trigger>,
@@ -48,11 +52,17 @@ export type IComboboxTrigger = IComponent<ComboboxTriggerProps>;
  * 候補リストを開閉するボタン要素です。
  */
 export const ComboboxTrigger: IComboboxTrigger = function SuiComboboxTrigger(props) {
-  const { className, "aria-label": ariaLabel = "候補リストを開閉", ...otherProps } = props;
+  const {
+    children,
+    className,
+    "aria-label": ariaLabel = "候補リストを開閉",
+    ...otherProps
+  } = props;
 
   return (
     <Combobox.Trigger
       {...otherProps}
+      render={children}
       className={cn(className, "sui_combobox_trigger")}
       aria-label={ariaLabel}
     />

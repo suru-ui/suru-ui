@@ -462,7 +462,7 @@ export interface ComboboxAPI<
   /**
    * {@link ComboboxChips} に渡す props を取得します。
    */
-  getChipsProps(): Omit<ComboboxChipsProps, "children"> | null;
+  getChipsProps(): Omit<ComboboxChipsProps, "children">;
 
   /**
    * {@link ComboboxClear} に渡す props を取得します。
@@ -614,7 +614,7 @@ export interface ComboboxAPI<
    */
   getValueProps<TItem = any>(
     options?: ComboboxValuePropsOptions<TItem, TMultiple>,
-  ): ComboboxValueProps<TItem, TMultiple> | null;
+  ): ComboboxValueProps<TItem, TMultiple>;
 
   /**
    * {@link ScrollAreaViewport} に渡す props を取得します。
@@ -820,11 +820,7 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI<
       return null;
     },
     getChipsProps() {
-      if (multiple) {
-        return chipsProps;
-      }
-
-      return null;
+      return chipsProps;
     },
     getClearProps() {
       return clearProps;
@@ -869,18 +865,14 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI<
     },
     getValueProps(
       options: ComboboxValuePropsOptions<any, TMultiple> = {},
-    ): Required<ComboboxValueProps<any, TMultiple>> | null {
-      if (multiple) {
-        const { defaultRenderer } = options;
-        const { children = defaultRenderer, placeholder = defaultPlaceholder } = valueProps;
+    ): Required<ComboboxValueProps<any, TMultiple>> {
+      const { defaultRenderer } = options;
+      const { children = defaultRenderer, placeholder = defaultPlaceholder } = valueProps;
 
-        return {
-          children,
-          placeholder,
-        };
-      }
-
-      return null;
+      return {
+        children,
+        placeholder,
+      };
     },
     getCornerProps() {
       return cornerProps;
@@ -1008,17 +1000,23 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
   function SuiCombobox(props: ComboboxProps) {
     const api = useComboboxAPI(props);
 
-    const defaultValueRenderer: IComboboxValueRenderer = (selectedValue: any[]) => (
-      <>
-        {selectedValue.map((item, index) => (
-          <ComboboxChip {...api.getChipProps(item)} key={getItemKey(item) ?? index}>
-            <ComboboxItemLabel {...api.getChipLabelProps()} />
-            <ComboboxChipRemove {...api.getChipRemoveProps()} />
-          </ComboboxChip>
-        ))}
-        <ComboboxInput {...api.getInputProps()} />
-      </>
-    );
+    const defaultValueRenderer: IComboboxValueRenderer = (selectedValue, ctx) => {
+      if (ctx.multiple) {
+        return (
+          <ComboboxChips {...api.getChipsProps()}>
+            {(selectedValue as any[]).map((item, index) => (
+              <ComboboxChip {...api.getChipProps(item)} key={getItemKey(item) ?? index}>
+                <ComboboxItemLabel {...api.getChipLabelProps()} />
+                <ComboboxChipRemove {...api.getChipRemoveProps()} />
+              </ComboboxChip>
+            ))}
+            <ComboboxInput {...api.getInputProps()} />
+          </ComboboxChips>
+        );
+      } else {
+        return <ComboboxInput {...api.getInputProps()} />;
+      }
+    };
     const defaultListItemRenderer: IComboboxListItemRenderer = (item, index) => {
       switch (true) {
         case isItemGroup<ComboboxItemGroup>(item): {
@@ -1051,25 +1049,13 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
       }
     };
 
-    const chipsProps = api.getChipsProps();
     const arrowProps = api.getArrowProps();
     const backdropProps = api.getBackdropProps();
 
     return (
       <ComboboxRoot {...api.getRootProps()}>
         <ComboboxInputGroup {...api.getInputGroupProps()}>
-          {chipsProps ? (
-            <ComboboxChips {...chipsProps}>
-              <ComboboxValue
-                {
-                  // chipsProps が null でない時点で valueProps も null ではありません。
-                  ...api.getValueProps({ defaultRenderer: defaultValueRenderer })
-                }
-              />
-            </ComboboxChips>
-          ) : (
-            <ComboboxInput {...api.getInputProps()} />
-          )}
+          <ComboboxValue {...api.getValueProps({ defaultRenderer: defaultValueRenderer })} />
           <ComboboxClear {...api.getClearProps()} />
           <ComboboxTrigger {...api.getTriggerProps()}>
             <ComboboxIcon {...api.getIconProps()} />
