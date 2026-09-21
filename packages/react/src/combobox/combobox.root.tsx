@@ -141,6 +141,16 @@ export namespace ComboboxRootProps {
     items?: readonly TItem[] | undefined;
 
     /**
+     * 複数選択時に項目の選択後も入力欄の絞り込みを維持し、ポップアップを開いたままにするかどうかを指定します。
+     *
+     * 有効にすると項目押下による閉じる要求を取り消します。
+     * 入力欄がポップアップの外にある場合の絞り込み維持に相当します。
+     *
+     * @default false
+     */
+    keepFilterOnSelect?: boolean | undefined;
+
+    /**
      * 枠線を表示するかどうかを指定します。
      *
      * @default false
@@ -264,8 +274,10 @@ export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: Combo
     variant = "liquid",
     multiple = false,
     outlined = false,
+    onOpenChange,
     itemToStringLabel = defaultItemToStringLabel,
     itemToStringValue = defaultItemToStringValue,
+    keepFilterOnSelect = false,
     ...otherProps
   } = props;
   const ctx = React.useMemo<ComboboxContext>(
@@ -281,6 +293,16 @@ export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: Combo
     }),
     [size, color, items, itemToStringLabel, radius, variant, multiple, outlined],
   );
+  const handleOpenChange = React.useCallback(
+    (open: boolean, eventDetails: ComboboxRootChangeEventDetails) => {
+      if (keepFilterOnSelect && !open && eventDetails.reason === "item-press") {
+        eventDetails.cancel();
+      }
+
+      onOpenChange?.(open, eventDetails);
+    },
+    [keepFilterOnSelect, onOpenChange],
+  );
 
   return (
     <ComboboxContext value={ctx}>
@@ -288,6 +310,7 @@ export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: Combo
         {...otherProps}
         items={items}
         multiple={multiple}
+        onOpenChange={handleOpenChange}
         itemToStringLabel={itemToStringLabel}
         itemToStringValue={itemToStringValue}
       />
