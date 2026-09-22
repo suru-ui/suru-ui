@@ -219,6 +219,13 @@ export type ComboboxSlotProps<
   readonly input?: ComboboxInputProps | undefined;
 
   /**
+   * ポップアップ内の {@link ComboboxInputGroup} に渡す props です。
+   *
+   * 省略時は {@link ComboboxAPI.getInputGroupProps|getInputGroupProps} の値を引き継ぎます。
+   */
+  readonly inputGroupInPopup?: Omit<ComboboxInputGroupProps, "children"> | undefined;
+
+  /**
    * {@link ComboboxItem} に渡す props です。
    */
   readonly item?: Omit<ComboboxItemProps, "children" | "value"> | undefined;
@@ -827,9 +834,9 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
    * {@link ComboboxIcon} に渡す props を取得します。
    */
   public getIconProps(): ComboboxIconProps {
-    const { icon: iconProps = {} } = this.slotProps;
+    const { icon: props = {} } = this.slotProps;
 
-    return iconProps;
+    return props;
   }
 
   /**
@@ -837,6 +844,15 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
    */
   public getInputGroupProps(): Omit<ComboboxInputGroupProps, "children"> {
     return this.inputGroupProps;
+  }
+
+  /**
+   * ポップアップ内の {@link ComboboxInputGroup} に渡す props を取得します。
+   */
+  public getInputGroupInPopupProps(): Omit<ComboboxInputGroupProps, "children"> {
+    const { inputGroupInPopup: props = {} } = this.slotProps;
+
+    return props;
   }
 
   /**
@@ -1194,7 +1210,7 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
                 </ScrollAreaScrollbar>
                 <ScrollAreaCorner {...api.getCornerProps()} />
               </ScrollAreaRoot>
-              <ComboboxInputGroup {...api.getInputGroupProps()}>
+              <ComboboxInputGroup {...api.getInputGroupInPopupProps()}>
                 <ComboboxInput {...api.getInputProps()} />
                 <ComboboxClear {...api.getClearProps()} />
               </ComboboxInputGroup>

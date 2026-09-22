@@ -1,5 +1,3 @@
-// TODO(tai-kun): Combobox では使用せず、別のコンポーネントで使用する。
-
 import { Combobox } from "@base-ui/react/combobox";
 import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import * as React from "react";
