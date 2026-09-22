@@ -27,7 +27,6 @@ import {
 } from "../scroll-area/scroll-area.parts.js";
 import type { IComponent } from "../types.js";
 import {
-  type IComboboxLabel,
   type ComboboxContext,
   type IComboboxFilter,
   type ComboboxRootSize,
@@ -57,6 +56,7 @@ import {
   type ComboboxBackdropProps,
   type ComboboxRootItemGroup,
   type ComboboxRootItemValue,
+  type IComboboxTriggerLabel,
   type ComboboxItemLabelProps,
   type ComboboxSeparatorProps,
   type IComboboxFilteredItems,
@@ -84,7 +84,6 @@ import {
   ComboboxEmpty,
   ComboboxGroup,
   ComboboxInput,
-  ComboboxLabel,
   ComboboxPopup,
   ComboboxValue,
   ComboboxPortal,
@@ -101,6 +100,7 @@ import {
   ComboboxPositioner,
   useComboboxContext,
   ComboboxInputDisplay,
+  ComboboxTriggerLabel,
   ComboboxItemIndicator,
   IComboboxValueRenderer,
   useComboboxFilteredItems,
@@ -1156,7 +1156,7 @@ export interface ICombobox extends IComponent<ComboboxProps> {
     props: ComboboxProps<TItem, TMultiple>,
   ): IComponent.Return;
 
-  readonly Label: IComboboxLabel;
+  readonly TriggerLabel: IComboboxTriggerLabel;
 
   readonly useContext: IUseComboboxContext;
 
@@ -1242,9 +1242,9 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
     );
   },
   {
-    Label: ComboboxLabel,
     useFilter: useComboboxFilter,
     useContext: useComboboxContext,
+    TriggerLabel: ComboboxTriggerLabel,
     useFilteredItems: useComboboxFilteredItems,
   },
 );

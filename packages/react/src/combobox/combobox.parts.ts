@@ -19,7 +19,7 @@ export * from "./combobox.item-indicator.jsx";
 export * from "./combobox.item-label.jsx";
 export * from "./combobox.item.context.js";
 export * from "./combobox.item.jsx";
-export * from "./combobox.label.jsx";
+export * from "./combobox.trigger-label.jsx";
 export * from "./combobox.list.jsx";
 export * from "./combobox.popup.jsx";
 export * from "./combobox.portal.jsx";

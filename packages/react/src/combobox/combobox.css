@@ -1,6 +1,6 @@
-/* Label */
+/* TriggerLabel */
 @layer sui.component {
-@scope (.sui_combobox_label) to ([data-scope]) {
+@scope (.sui_combobox_trigger_label) to ([data-scope]) {
 
 /* 固定 */
 :scope {
@@ -12,35 +12,35 @@
 
 /* 変数 */
 :scope {
-  --sui_combobox_label-margin_block_end: ;
-  --sui_combobox_label-font_family: ;
-  --sui_combobox_label-font_size: ;
-  --sui_combobox_label-font_weight: ;
-  --sui_combobox_label-line_height: ;
-  --sui_combobox_label-color: ;
-  --sui_combobox_label-letter_spacing: ;
+  --sui_combobox_trigger_label-margin_block_end: ;
+  --sui_combobox_trigger_label-font_family: ;
+  --sui_combobox_trigger_label-font_size: ;
+  --sui_combobox_trigger_label-font_weight: ;
+  --sui_combobox_trigger_label-line_height: ;
+  --sui_combobox_trigger_label-color: ;
+  --sui_combobox_trigger_label-letter_spacing: ;
 }
 
 /* 可変 */
 :scope {
-  margin-block-end: var(--sui_combobox_label-margin_block_end);
-  font-family: var(--sui_combobox_label-font_family);
-  font-size: var(--sui_combobox_label-font_size);
-  font-weight: var(--sui_combobox_label-font_weight);
-  line-height: var(--sui_combobox_label-line_height);
-  color: var(--sui_combobox_label-color);
-  letter-spacing: var(--sui_combobox_label-letter_spacing);
+  margin-block-end: var(--sui_combobox_trigger_label-margin_block_end);
+  font-family: var(--sui_combobox_trigger_label-font_family);
+  font-size: var(--sui_combobox_trigger_label-font_size);
+  font-weight: var(--sui_combobox_trigger_label-font_weight);
+  line-height: var(--sui_combobox_trigger_label-line_height);
+  color: var(--sui_combobox_trigger_label-color);
+  letter-spacing: var(--sui_combobox_trigger_label-letter_spacing);
 }
 
 /* 代入 */
 :scope {
-  --sui_combobox_label-margin_block_end: --sui-space(2);
-  --sui_combobox_label-font_family: var(--sui-font-sans);
-  --sui_combobox_label-font_size: var(--sui-text-std-sm-n-font_size);
-  --sui_combobox_label-font_weight: var(--sui-text-std-sm-n-font_weight);
-  --sui_combobox_label-line_height: var(--sui-text-std-sm-n-line_height);
-  --sui_combobox_label-color: var(--sui-canvas_text-1);
-  --sui_combobox_label-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+  --sui_combobox_trigger_label-margin_block_end: --sui-space(2);
+  --sui_combobox_trigger_label-font_family: var(--sui-font-sans);
+  --sui_combobox_trigger_label-font_size: var(--sui-text-std-sm-n-font_size);
+  --sui_combobox_trigger_label-font_weight: var(--sui-text-std-sm-n-font_weight);
+  --sui_combobox_trigger_label-line_height: var(--sui-text-std-sm-n-line_height);
+  --sui_combobox_trigger_label-color: var(--sui-canvas_text-1);
+  --sui_combobox_trigger_label-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
 }
 
 } /* @scope */
