@@ -214,7 +214,6 @@ export {
   useCollapsibleAPI,
 } from "./collapsible/index.js";
 export {
-  type ComboboxAPI,
   type ComboboxSize,
   type ComboboxColor,
   type ComboboxProps,
@@ -229,6 +228,7 @@ export {
   type ComboboxHighlightEventReason,
   type ComboboxHighlightEventDetails,
   Combobox,
+  ComboboxAPI,
   useComboboxAPI,
   ComboboxContext,
   useComboboxContext,

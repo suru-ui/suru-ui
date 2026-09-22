@@ -394,18 +394,6 @@ export type ComboboxProps<
   ComboboxProps.InputGroup;
 
 /**
- * {@link ComboboxAPI.getCollectionProps} に渡すオプションです。
- *
- * @template TItem 項目の型です。
- */
-export type ComboboxCollectionPropsOptions<TItem = any> = {
-  /**
-   * 項目の既定レンダラーです。
-   */
-  readonly defaultItemRenderer?: IComboboxCollectionItemRenderer<TItem> | undefined;
-};
-
-/**
  * {@link ComboboxAPI.getListProps} に渡すオプションです。
  *
  * @template TItem 項目の型です。
@@ -433,34 +421,272 @@ export type ComboboxValuePropsOptions<
 // API
 // ---
 
+const NONE = {} as never;
+
 /**
  * {@link Combobox} を構成する各パーツの props を作成するための API です。
  *
  * @template TItem 項目の型です。
  * @template TMultiple 複数選択を有効にするかどうかです。
  */
-export interface ComboboxAPI<
-  TItem = any,
-  TMultiple extends boolean | undefined = boolean | undefined,
-> {
+export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = boolean | undefined> {
+  private readonly comboboxProps: Required<
+    Omit<ComboboxProps.Combobox<TItem, TMultiple>, "slotProps">
+  >;
+
+  private readonly slotProps: ComboboxSlotProps<TItem, TMultiple>;
+
+  private readonly rootProps: Required<ComboboxProps.Root<TItem, TMultiple>>;
+
+  private readonly inputGroupProps: ComboboxProps.InputGroup;
+
+  /**
+   * @param props {@link Combobox} の props です。
+   * @internal
+   */
+  public constructor(props: ComboboxProps<TItem, TMultiple>) {
+    const {
+      arrow,
+      empty,
+      label,
+      status,
+      backdrop,
+      separator,
+      slotProps = {},
+      placeholder,
+      inputInPopup,
+      chipLabelRenderer,
+      itemLabelRenderer,
+      ...rootAndInputGroupProps
+    } = props;
+    const {
+      id,
+      form,
+      grid,
+      name,
+      open,
+      size,
+      color,
+      items,
+      limit,
+      modal,
+      value,
+      filter,
+      inline,
+      locale,
+      radius,
+      variant,
+      disabled,
+      inputRef,
+      multiple,
+      outlined,
+      readOnly,
+      required,
+      loopFocus,
+      actionsRef,
+      inputValue,
+      defaultOpen,
+      virtualized,
+      autoComplete,
+      defaultValue,
+      onOpenChange,
+      autoHighlight,
+      filteredItems,
+      onValueChange,
+      openOnInputClick,
+      defaultInputValue,
+      itemToStringLabel,
+      itemToStringValue,
+      onItemHighlighted,
+      isItemEqualToValue,
+      keepFilterOnSelect,
+      onInputValueChange,
+      highlightItemOnHover,
+      onOpenChangeComplete,
+      ...inputGroupProps
+    } = rootAndInputGroupProps;
+    this.comboboxProps = {
+      arrow,
+      empty,
+      label,
+      status,
+      backdrop,
+      separator,
+      placeholder,
+      inputInPopup,
+      chipLabelRenderer,
+      itemLabelRenderer,
+    };
+    this.slotProps = slotProps;
+    this.rootProps = {
+      id,
+      form,
+      grid,
+      name,
+      open,
+      size,
+      color,
+      items,
+      limit,
+      modal,
+      value,
+      filter,
+      inline,
+      locale,
+      radius,
+      variant,
+      disabled,
+      inputRef,
+      multiple,
+      outlined,
+      readOnly,
+      required,
+      loopFocus,
+      actionsRef,
+      inputValue,
+      defaultOpen,
+      virtualized,
+      autoComplete,
+      defaultValue,
+      onOpenChange,
+      autoHighlight,
+      filteredItems,
+      onValueChange,
+      openOnInputClick,
+      defaultInputValue,
+      itemToStringLabel,
+      itemToStringValue,
+      onItemHighlighted,
+      isItemEqualToValue,
+      keepFilterOnSelect,
+      onInputValueChange,
+      highlightItemOnHover,
+      onOpenChangeComplete,
+    };
+    this.inputGroupProps = inputGroupProps;
+  }
+
+  private defaultValueRenderer: IComboboxValueRenderer = (selectedValue, ctx) => {
+    if (this.isInputInPopup()) {
+      if (ctx.multiple) {
+        const items: readonly any[] = selectedValue;
+
+        return (
+          <ComboboxChips {...this.getChipsProps()}>
+            {items.map((item, index) => (
+              <ComboboxChip {...this.getChipProps(item)} key={getItemKey(item) ?? index}>
+                <ComboboxItemLabel {...this.getChipLabelProps()} />
+                <ComboboxChipRemove {...this.getChipRemoveProps()} />
+              </ComboboxChip>
+            ))}
+            <ComboboxPlaceholder {...this.getPlaceholderProps()} />;
+          </ComboboxChips>
+        );
+      } else {
+        const label = ctx.itemToStringLabel(selectedValue);
+        if (label) {
+          return <span className="sui_combobox_value">{label}</span>;
+        } else {
+          return <ComboboxPlaceholder {...this.getPlaceholderProps()} />;
+        }
+      }
+    } else {
+      if (ctx.multiple) {
+        const items: readonly any[] = selectedValue;
+
+        return (
+          <ComboboxChips {...this.getChipsProps()}>
+            {items.map((item, index) => (
+              <ComboboxChip {...this.getChipProps(item)} key={getItemKey(item) ?? index}>
+                <ComboboxItemLabel {...this.getChipLabelProps()} />
+                <ComboboxChipRemove {...this.getChipRemoveProps()} />
+              </ComboboxChip>
+            ))}
+            <ComboboxInput {...this.getInputProps()} />
+          </ComboboxChips>
+        );
+      } else {
+        return <ComboboxInput {...this.getInputProps()} />;
+      }
+    }
+  };
+
+  private defaultCollectionItemRenderer: IComboboxCollectionItemRenderer = (item, index) => {
+    switch (true) {
+      case isItemGroup<ComboboxItemGroup>(item): {
+        const groupLabelProps = this.getGroupLabelProps(item);
+        const separatorProps = this.getSeparatorProps();
+
+        return (
+          <ComboboxGroup {...this.getGroupProps(item)} key={getItemKey(item) ?? index}>
+            {groupLabelProps && <ComboboxGroupLabel {...groupLabelProps} />}
+            <ComboboxCollection {...this.getCollectionProps()} />
+            {separatorProps && <ComboboxSeparator {...separatorProps} />}
+          </ComboboxGroup>
+        );
+      }
+
+      case isPrimitiveItem(item):
+      case isLabeledItem(item):
+      case !isReactNode(item):
+        return (
+          <ComboboxItem {...this.getItemProps(item)} key={getItemKey(item) ?? index}>
+            <ComboboxItemLabel {...this.getItemLabelProps()} />
+            <ComboboxItemIndicator {...this.getItemIndicatorProps()} />
+          </ComboboxItem>
+        );
+
+      default:
+        return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
+    }
+  };
+
+  public isInputInPopup(): boolean {
+    return this.comboboxProps.inputInPopup ?? false;
+  }
+
   /**
    * {@link ComboboxArrow} に渡す props を取得します。
    *
    * それを表示しないときは `null` を返します。
    */
-  getArrowProps(): ComboboxArrowProps | null;
+  public getArrowProps(): ComboboxArrowProps | null {
+    const { arrow = false } = this.comboboxProps;
+    const { arrow: props } = this.slotProps;
+
+    if (arrow || props) {
+      return props || {};
+    }
+
+    return null;
+  }
 
   /**
    * {@link ComboboxBackdrop} に渡す props を取得します。
    *
    * それを表示しないときは `null` を返します。
    */
-  getBackdropProps(): Omit<ComboboxBackdropProps, "children"> | null;
+  public getBackdropProps(): Omit<ComboboxBackdropProps, "children"> | null {
+    const { backdrop = false } = this.comboboxProps;
+    const { backdrop: props } = this.slotProps;
+
+    if (backdrop || props) {
+      return props || {};
+    }
+
+    return null;
+  }
 
   /**
    * チップ内の {@link ComboboxItemLabel} に渡す props を取得します。
    */
-  getChipLabelProps(): ComboboxItemLabelProps<TItem>;
+  public getChipLabelProps(): ComboboxItemLabelProps<TItem> {
+    const { chipLabelRenderer } = this.comboboxProps;
+
+    return {
+      children: chipLabelRenderer,
+    };
+  }
 
   /**
    * {@link ComboboxChip} に渡す props を取得します。
@@ -468,88 +694,179 @@ export interface ComboboxAPI<
    * @param item 項目です。
    */
   // `value` だとこのメソッドの使い方が分かりづらくなるので `item` という変数名にします。
-  getChipProps<TItem = any>(item?: TItem): Omit<ComboboxChipProps<TItem>, "children">;
+  public getChipProps<TItem = any>(item: TItem = NONE): Omit<ComboboxChipProps<TItem>, "children"> {
+    const { chip: props = {} } = this.slotProps;
+
+    if (item === NONE) {
+      return props;
+    }
+
+    return {
+      ...props,
+      value: item,
+    };
+  }
 
   /**
    * {@link ComboboxChipRemove} に渡す props を取得します。
    */
-  getChipRemoveProps(): ComboboxChipRemoveProps;
+  public getChipRemoveProps(): ComboboxChipRemoveProps {
+    const { chipRemove: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link ComboboxChips} に渡す props を取得します。
    */
-  getChipsProps(): Omit<ComboboxChipsProps, "children">;
+  public getChipsProps(): Omit<ComboboxChipsProps, "children"> {
+    const { chips: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link ComboboxClear} に渡す props を取得します。
    */
-  getClearProps(): ComboboxClearProps;
+  public getClearProps(): ComboboxClearProps {
+    const { clear: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link ComboboxCollection} に渡す props を取得します。
-   *
-   * @param options 取得時のオプションです。
    */
-  getCollectionProps<TItem = any>(
-    options?: ComboboxCollectionPropsOptions<TItem>,
-  ): ComboboxCollectionProps;
+  public getCollectionProps<TItem = any>(): ComboboxCollectionProps<TItem> {
+    const { children = this.defaultCollectionItemRenderer, ...otherProps } =
+      this.slotProps.collection ?? {};
+
+    return {
+      ...otherProps,
+      children,
+    };
+  }
 
   /**
    * {@link ScrollAreaContent} に渡す props を取得します。
    */
-  getContentProps(): Omit<ScrollAreaContentProps, "children">;
+  public getContentProps(): Omit<ScrollAreaContentProps, "children"> {
+    const { content: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link ScrollAreaCorner} に渡す props を取得します。
    */
-  getCornerProps(): ScrollAreaCornerProps;
+  public getCornerProps(): ScrollAreaCornerProps {
+    const { corner: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link ComboboxEmpty} に渡す props を取得します。
    */
-  getEmptyProps(): ComboboxEmptyProps;
+  public getEmptyProps(): ComboboxEmptyProps {
+    const { empty = "該当なし" } = this.comboboxProps;
+    const { empty: props = {} } = this.slotProps;
+
+    return {
+      ...props,
+      children: empty,
+    };
+  }
 
   /**
    * {@link ComboboxGroupLabel} に渡す props を取得します。
    *
    * @param item グループの項目です。
    */
-  getGroupLabelProps(item?: ComboboxItemGroup): ComboboxGroupLabelProps | null;
+  public getGroupLabelProps(item?: ComboboxItemGroup): ComboboxGroupLabelProps | null {
+    const { groupLabel: baseProps = {} } = this.slotProps;
+
+    if (item) {
+      const { label, ...otherProps } = item;
+      if (isLikelyVisibleNode(label)) {
+        return mergeProps([baseProps, otherProps, { children: label }]);
+      }
+
+      return null;
+    }
+
+    return baseProps;
+  }
 
   /**
    * {@link ComboboxGroup} に渡す props を取得します。
    *
    * @param item グループの項目です。
    */
-  getGroupProps<TItem = any>(): ComboboxGroupProps<TItem>;
-  getGroupProps<TValue = any>(
+  public getGroupProps<TItem = any>(): ComboboxGroupProps<TItem>;
+  public getGroupProps<TValue = any>(
     item: ComboboxItemGroup<TValue>,
   ): ComboboxGroupProps<ComboboxItemValue<TValue>>;
+  public getGroupProps(item?: ComboboxItemGroup) {
+    const { group: baseProps = {} } = this.slotProps;
+
+    if (item) {
+      const { label: _label, ...otherProps } = item;
+      return mergeProps([baseProps, otherProps]);
+    }
+
+    return baseProps;
+  }
 
   /**
    * {@link ComboboxIcon} に渡す props を取得します。
    */
-  getIconProps(): ComboboxIconProps;
+  public getIconProps(): ComboboxIconProps {
+    const { icon: iconProps = {} } = this.slotProps;
+
+    return iconProps;
+  }
 
   /**
    * {@link ComboboxInputGroup} に渡す props を取得します。
    */
-  getInputGroupProps(): Omit<ComboboxInputGroupProps, "children">;
+  public getInputGroupProps(): Omit<ComboboxInputGroupProps, "children"> {
+    return this.inputGroupProps;
+  }
 
   /**
    * {@link ComboboxInput} に渡す props を取得します。
    */
-  getInputProps(): ComboboxInputProps;
+  public getInputProps(): ComboboxInputProps {
+    const { placeholder: defaultPlaceholder } = this.comboboxProps;
+    const { input: props = {} } = this.slotProps;
+    const { placeholder = defaultPlaceholder, ...otherProps } = props;
+
+    return {
+      ...otherProps,
+      placeholder,
+    };
+  }
 
   /**
    * {@link ComboboxItemIndicator} に渡す props を取得します。
    */
-  getItemIndicatorProps(): ComboboxItemIndicatorProps;
+  public getItemIndicatorProps(): ComboboxItemIndicatorProps {
+    const { itemIndicator: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * 候補リストの項目内の {@link ComboboxItemLabel} に渡す props を取得します。
    */
-  getItemLabelProps(): ComboboxItemLabelProps<TItem>;
+  public getItemLabelProps(): ComboboxItemLabelProps<TItem> {
+    const { itemLabelRenderer } = this.comboboxProps;
+
+    return {
+      children: itemLabelRenderer,
+    };
+  }
 
   /**
    * {@link ComboboxItem} に渡す props を取得します。
@@ -557,93 +874,210 @@ export interface ComboboxAPI<
    * @param item 項目です。
    */
   // `value` だとこのメソッドの使い方が分かりづらくなるので `item` という変数名にします。
-  getItemProps<TItem = any>(item?: TItem): ComboboxItemProps<TItem>;
+  public getItemProps<TItem = any>(item?: TItem): ComboboxItemProps<TItem> {
+    const { item: baseProps = {} } = this.slotProps;
+
+    switch (true) {
+      case isLabeledItem<ComboboxRootItemLabeledValue>(item): {
+        const { label: _label, ...otherProps } = item;
+        return mergeProps([baseProps, otherProps, { value: item }]);
+      }
+
+      default:
+        return {
+          ...baseProps,
+          value: item!,
+        };
+    }
+  }
 
   /**
    * {@link ComboboxLabel} に渡す props を取得します。
    */
-  getLabelProps(): ComboboxLabelProps | null;
+  public getLabelProps(): ComboboxLabelProps | null {
+    const { label } = this.comboboxProps;
+    const { label: props = {} } = this.slotProps;
+
+    if (isLikelyVisibleNode(label)) {
+      return {
+        ...props,
+        children: label,
+      };
+    }
+
+    return null;
+  }
 
   /**
    * {@link ComboboxList} に渡す props を取得します。
-   *
-   * @param options 取得時のオプションです。
    */
-  getListProps<TItem = any>(options?: ComboboxListPropsOptions<TItem>): ComboboxListProps<TItem>;
+  public getListProps<TItem = any>(): ComboboxListProps<TItem> {
+    const { children = this.defaultCollectionItemRenderer, ...otherProps } =
+      this.slotProps.list ?? {};
+
+    return {
+      ...otherProps,
+      children,
+    };
+  }
 
   /**
    * {@link ComboboxPlaceholder} に渡す props を取得します。
    */
-  getPlaceholderProps(): Omit<ComboboxPlaceholderProps, "children">;
+  public getPlaceholderProps(): ComboboxPlaceholderProps {
+    const { placeholder: props = {} } = this.slotProps;
+    const { placeholder } = this.getValueProps();
+
+    return {
+      ...props,
+      children: placeholder,
+    };
+  }
 
   /**
    * {@link ComboboxPopup} に渡す props を取得します。
    */
-  getPopupProps(): Omit<ComboboxPopupProps, "children">;
+  public getPopupProps(): Omit<ComboboxPopupProps, "children"> {
+    const { popup: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link ComboboxPortal} に渡す props を取得します。
    */
-  getPortalProps(): Omit<ComboboxPortalProps, "children">;
+  public getPortalProps(): Omit<ComboboxPortalProps, "children"> {
+    const { portal: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link ComboboxPositioner} に渡す props を取得します。
    */
-  getPositionerProps(): Omit<ComboboxPositionerProps, "children">;
+  public getPositionerProps(): Omit<ComboboxPositionerProps, "children"> {
+    const { positioner: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link ComboboxRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<ComboboxRootProps<TItem, TMultiple>, "children">;
+  public getRootProps(): ComboboxProps.Root<TItem, TMultiple> {
+    const {
+      itemToStringLabel = defaultItemToStringLabel,
+      itemToStringValue = defaultItemToStringValue,
+      ...otherProps
+    } = this.rootProps;
+
+    return {
+      ...otherProps,
+      itemToStringLabel,
+      itemToStringValue,
+    };
+  }
 
   /**
    * {@link ScrollAreaRoot} に渡す props を取得します。
    */
-  getScrollAreaProps(): Omit<ScrollAreaRootProps, "children">;
+  public getScrollAreaProps(): Omit<ScrollAreaRootProps, "children"> {
+    const { scrollArea: props = {} } = this.slotProps;
+    const {
+      // @ts-expect-error
+      "data-scope": dataScope = null,
+      ...otherProps
+    } = props;
+    // リテラルの余剰プロパティーチェックを避けるため変数を経由します。
+    const propsWithScope = {
+      ...otherProps,
+      "data-scope": dataScope,
+    };
+
+    return propsWithScope;
+  }
 
   /**
    * {@link ScrollAreaScrollbar} に渡す props を取得します。
    */
-  getScrollbarProps(): Omit<ScrollAreaScrollbarProps, "children">;
+  public getScrollbarProps(): Omit<ScrollAreaScrollbarProps, "children"> {
+    const { scrollbar: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link ComboboxSeparator} に渡す props を取得します。
    *
    * `separator` が無効なときは `null` を返します。
    */
-  getSeparatorProps(): ComboboxSeparatorProps | null;
+  public getSeparatorProps(): ComboboxSeparatorProps | null {
+    const { separator = false } = this.comboboxProps;
+    const { separator: props = {} } = this.slotProps;
+
+    if (separator) {
+      return props;
+    }
+
+    return null;
+  }
 
   /**
    * {@link ComboboxStatus} に渡す props を取得します。
    */
-  getStatusProps(): ComboboxStatusProps;
+  public getStatusProps(): ComboboxStatusProps {
+    const { status } = this.comboboxProps;
+    const { status: props = {} } = this.slotProps;
+
+    return {
+      ...props,
+      children: status,
+    };
+  }
 
   /**
    * {@link ScrollAreaThumb} に渡す props を取得します。
    */
-  getThumbProps(): ScrollAreaThumbProps;
+  public getThumbProps(): ScrollAreaThumbProps {
+    const { thumb: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link ComboboxTrigger} に渡す props を取得します。
    */
-  getTriggerProps(): Omit<ComboboxTriggerProps, "children">;
+  public getTriggerProps(): Omit<ComboboxTriggerProps, "children"> {
+    const { trigger: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link ComboboxValue} に渡す props を取得します。
-   *
-   * @param options 取得時のオプションです。
    */
-  getValueProps<TItem = any>(
-    options?: ComboboxValuePropsOptions<TItem, TMultiple>,
-  ): ComboboxValueProps<TItem, TMultiple>;
+  public getValueProps(): Required<ComboboxValueProps<any, TMultiple>> {
+    const { placeholder: defaultPlaceholder } = this.comboboxProps;
+    const { value: props = {} } = this.slotProps;
+    const { children = this.defaultValueRenderer, placeholder = defaultPlaceholder } = props;
+
+    return {
+      children,
+      placeholder,
+    };
+  }
 
   /**
    * {@link ScrollAreaViewport} に渡す props を取得します。
    */
-  getViewportProps(): Omit<ScrollAreaViewportProps, "children">;
+  public getViewportProps(): Omit<ScrollAreaViewportProps, "children"> {
+    const { viewport: props = {} } = this.slotProps;
+
+    return props;
+  }
 }
 
-interface IUseComboboxAPI {
+export interface IUseComboboxAPI {
   /**
    * {@link ComboboxAPI} を作成します。
    *
@@ -664,341 +1098,10 @@ export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI<
   TItem,
   TMultiple extends boolean | undefined,
 >(props: ComboboxProps<TItem, TMultiple>) {
-  const {
-    id,
-    form,
-    grid,
-    name,
-    open,
-    size,
-    arrow = false,
-    color,
-    empty = "該当なし",
-    items,
-    label,
-    limit,
-    modal,
-    value,
-    filter,
-    inline,
-    locale,
-    radius,
-    status,
-    variant,
-    backdrop = false,
-    disabled,
-    inputRef,
-    multiple,
-    outlined,
-    readOnly,
-    required,
-    loopFocus,
-    separator = false,
-    slotProps: {
-      chip: chipProps = {},
-      icon: iconProps = {},
-      item: itemProps = {},
-      list: listProps = {},
-      arrow: arrowProps,
-      chips: chipsProps = {},
-      clear: clearProps = {},
-      empty: emptyProps = {},
-      group: groupProps = {},
-      input: inputProps = {},
-      label: labelProps = {},
-      popup: popupProps = {},
-      thumb: thumbProps = {},
-      value: valueProps = {},
-      corner: cornerProps = {},
-      portal: portalProps = {},
-      status: statusProps = {},
-      content: contentProps = {},
-      trigger: triggerProps = {},
-      backdrop: backdropProps,
-      viewport: viewportProps = {},
-      scrollbar: scrollbarProps = {},
-      separator: separatorProps = {},
-      chipRemove: chipRemoveProps = {},
-      collection: collectionProps = {},
-      groupLabel: groupLabelProps = {},
-      positioner: positionerProps = {},
-      scrollArea: scrollAreaProps = {},
-      placeholder: placeholderProps = {},
-      itemIndicator: itemIndicatorProps = {},
-    } = {},
-    actionsRef,
-    inputValue,
-    defaultOpen,
-    placeholder: defaultPlaceholder,
-    virtualized,
-    autoComplete,
-    defaultValue,
-    inputInPopup: _inputInPopup, // 破棄します。
-    onOpenChange,
-    autoHighlight,
-    filteredItems,
-    onValueChange,
-    openOnInputClick,
-    chipLabelRenderer,
-    defaultInputValue,
-    itemLabelRenderer,
-    itemToStringLabel = defaultItemToStringLabel,
-    itemToStringValue = defaultItemToStringValue,
-    onItemHighlighted,
-    isItemEqualToValue,
-    keepFilterOnSelect,
-    onInputValueChange,
-    highlightItemOnHover,
-    onOpenChangeComplete,
-    ...inputGroupProps
-  } = props;
-
-  return {
-    getChipProps(item) {
-      if (arguments.length > 0) {
-        return {
-          ...chipProps,
-          value: item!,
-        };
-      }
-
-      return chipProps;
-    },
-    getIconProps() {
-      return iconProps;
-    },
-    getItemProps(item) {
-      switch (true) {
-        case isLabeledItem<ComboboxRootItemLabeledValue>(item): {
-          const { label: _label, ...otherProps } = item;
-          return mergeProps([itemProps, otherProps, { value: item }]);
-        }
-
-        default:
-          return {
-            ...itemProps,
-            value: item,
-          };
-      }
-    },
-    getListProps(options) {
-      const { defaultItemRenderer } = options ?? {};
-      const { children = defaultItemRenderer, ...otherListProps } = listProps;
-
-      return {
-        ...otherListProps,
-        children,
-      };
-    },
-    getRootProps(): Required<ComboboxProps.Root<TItem, TMultiple>> {
-      return {
-        id,
-        form,
-        grid,
-        name,
-        open,
-        size,
-        color,
-        items,
-        limit,
-        modal,
-        value,
-        filter,
-        inline,
-        locale,
-        radius,
-        variant,
-        disabled,
-        inputRef,
-        multiple,
-        outlined,
-        readOnly,
-        required,
-        loopFocus,
-        actionsRef,
-        inputValue,
-        defaultOpen,
-        virtualized,
-        autoComplete,
-        defaultValue,
-        onOpenChange,
-        autoHighlight,
-        filteredItems,
-        onValueChange,
-        openOnInputClick,
-        defaultInputValue,
-        itemToStringLabel,
-        itemToStringValue,
-        onItemHighlighted,
-        isItemEqualToValue,
-        keepFilterOnSelect,
-        onInputValueChange,
-        highlightItemOnHover,
-        onOpenChangeComplete,
-      };
-    },
-    getArrowProps() {
-      if (arrow || arrowProps) {
-        return arrowProps || {};
-      }
-
-      return null;
-    },
-    getChipsProps() {
-      return chipsProps;
-    },
-    getClearProps() {
-      return clearProps;
-    },
-    getEmptyProps() {
-      return {
-        ...emptyProps,
-        children: empty,
-      };
-    },
-    getGroupProps(item?: ComboboxItemGroup) {
-      if (item) {
-        const { label: _label, ...otherGroupProps } = item;
-        return mergeProps([groupProps, otherGroupProps]);
-      }
-
-      return groupProps;
-    },
-    getInputProps() {
-      const { placeholder = defaultPlaceholder, ...otherProps } = inputProps;
-
-      return {
-        ...otherProps,
-        placeholder,
-      };
-    },
-    getLabelProps() {
-      if (isLikelyVisibleNode(label)) {
-        return {
-          ...labelProps,
-          children: label,
-        };
-      }
-
-      return null;
-    },
-    getPopupProps() {
-      return popupProps;
-    },
-    getThumbProps() {
-      return thumbProps;
-    },
-    getValueProps(
-      options: ComboboxValuePropsOptions<any, TMultiple> = {},
-    ): Required<ComboboxValueProps<any, TMultiple>> {
-      const { defaultRenderer } = options;
-      const { children = defaultRenderer, placeholder = defaultPlaceholder } = valueProps;
-
-      return {
-        children,
-        placeholder,
-      };
-    },
-    getCornerProps() {
-      return cornerProps;
-    },
-    getPortalProps() {
-      return portalProps;
-    },
-    getStatusProps() {
-      return {
-        ...statusProps,
-        children: status,
-      };
-    },
-    getContentProps() {
-      return contentProps;
-    },
-    getTriggerProps() {
-      return triggerProps;
-    },
-    getBackdropProps() {
-      if (backdrop || backdropProps) {
-        return backdropProps || {};
-      }
-
-      return null;
-    },
-    getViewportProps() {
-      return viewportProps;
-    },
-    getChipLabelProps() {
-      return {
-        children: chipLabelRenderer,
-      };
-    },
-    getItemLabelProps() {
-      return {
-        children: itemLabelRenderer,
-      };
-    },
-    getScrollbarProps() {
-      return scrollbarProps;
-    },
-    getSeparatorProps() {
-      if (separator) {
-        return separatorProps;
-      }
-
-      return null;
-    },
-    getChipRemoveProps() {
-      return chipRemoveProps;
-    },
-    getCollectionProps(options = {}) {
-      const { defaultItemRenderer } = options;
-      const { children = defaultItemRenderer, ...otherCollectionProps } = collectionProps;
-
-      return {
-        ...otherCollectionProps,
-        children,
-      };
-    },
-    getGroupLabelProps(item) {
-      if (item) {
-        const { label, ...otherProps } = item;
-        if (isLikelyVisibleNode(label)) {
-          return mergeProps([groupLabelProps, otherProps, { children: label }]);
-        }
-
-        return null;
-      }
-
-      return groupLabelProps;
-    },
-    getInputGroupProps() {
-      return inputGroupProps;
-    },
-    getPositionerProps() {
-      return positionerProps;
-    },
-    getScrollAreaProps() {
-      const {
-        // @ts-expect-error
-        "data-scope": dataScope = null,
-        ...otherProps
-      } = scrollAreaProps;
-
-      return {
-        ...otherProps,
-        "data-scope": dataScope,
-      };
-    },
-    getPlaceholderProps() {
-      return placeholderProps;
-    },
-    getItemIndicatorProps() {
-      return itemIndicatorProps;
-    },
-  };
+  return new ComboboxAPI(props);
 };
 
-export { type ComboboxAPI as API, useComboboxAPI as useAPI };
+export { ComboboxAPI as API, useComboboxAPI as useAPI };
 
 // Component
 // ---------
@@ -1019,215 +1122,78 @@ export interface ICombobox extends IComponent<ComboboxProps> {
   readonly useFilteredItems: IUseComboboxFilteredItems;
 }
 
-function SuiComboboxInputOutsidePopup(props: ComboboxProps) {
-  const api = useComboboxAPI(props);
-
-  const defaultValueRenderer: IComboboxValueRenderer = (selectedValue, ctx) => {
-    if (ctx.multiple) {
-      return (
-        <ComboboxChips {...api.getChipsProps()}>
-          {(selectedValue as any[]).map((item, index) => (
-            <ComboboxChip {...api.getChipProps(item)} key={getItemKey(item) ?? index}>
-              <ComboboxItemLabel {...api.getChipLabelProps()} />
-              <ComboboxChipRemove {...api.getChipRemoveProps()} />
-            </ComboboxChip>
-          ))}
-          <ComboboxInput {...api.getInputProps()} />
-        </ComboboxChips>
-      );
-    } else {
-      return <ComboboxInput {...api.getInputProps()} />;
-    }
-  };
-  const defaultListItemRenderer: IComboboxListItemRenderer = (item, index) => {
-    switch (true) {
-      case isItemGroup<ComboboxItemGroup>(item): {
-        const groupLabelProps = api.getGroupLabelProps(item);
-        const separatorProps = api.getSeparatorProps();
-
-        return (
-          <ComboboxGroup {...api.getGroupProps(item)} key={getItemKey(item) ?? index}>
-            {groupLabelProps && <ComboboxGroupLabel {...groupLabelProps} />}
-            <ComboboxCollection
-              {...api.getCollectionProps({ defaultItemRenderer: defaultListItemRenderer })}
-            />
-            {separatorProps && <ComboboxSeparator {...separatorProps} />}
-          </ComboboxGroup>
-        );
-      }
-
-      case isPrimitiveItem(item):
-      case isLabeledItem(item):
-      case !isReactNode(item):
-        return (
-          <ComboboxItem {...api.getItemProps(item)} key={getItemKey(item) ?? index}>
-            <ComboboxItemLabel {...api.getItemLabelProps()} />
-            <ComboboxItemIndicator {...api.getItemIndicatorProps()} />
-          </ComboboxItem>
-        );
-
-      default:
-        return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
-    }
-  };
-
-  const arrowProps = api.getArrowProps();
-  const backdropProps = api.getBackdropProps();
-
-  return (
-    <ComboboxRoot {...api.getRootProps()}>
-      <ComboboxInputGroup {...api.getInputGroupProps()}>
-        <ComboboxValue {...api.getValueProps({ defaultRenderer: defaultValueRenderer })} />
-        <ComboboxClear {...api.getClearProps()} />
-        <ComboboxIcon {...api.getIconProps()} />
-      </ComboboxInputGroup>
-      <ComboboxPortal {...api.getPortalProps()}>
-        {backdropProps && <ComboboxBackdrop {...backdropProps} />}
-        <ComboboxPositioner {...api.getPositionerProps()}>
-          <ComboboxPopup {...api.getPopupProps()}>
-            {arrowProps && <ComboboxArrow {...arrowProps} />}
-            <ScrollAreaRoot {...api.getScrollAreaProps()}>
-              <ScrollAreaViewport {...api.getViewportProps()}>
-                <ScrollAreaContent {...api.getContentProps()}>
-                  <ComboboxStatus {...api.getStatusProps()} />
-                  <ComboboxEmpty {...api.getEmptyProps()} />
-                  <ComboboxList
-                    {...api.getListProps({ defaultItemRenderer: defaultListItemRenderer })}
-                  />
-                </ScrollAreaContent>
-              </ScrollAreaViewport>
-              <ScrollAreaScrollbar {...api.getScrollbarProps()}>
-                <ScrollAreaThumb {...api.getThumbProps()} />
-              </ScrollAreaScrollbar>
-              <ScrollAreaCorner {...api.getCornerProps()} />
-            </ScrollAreaRoot>
-          </ComboboxPopup>
-        </ComboboxPositioner>
-      </ComboboxPortal>
-    </ComboboxRoot>
-  );
-}
-
-function SuiComboboxInputInsidePopup(props: ComboboxProps) {
-  const api = useComboboxAPI(props);
-
-  const defaultValueRenderer: IComboboxValueRenderer = (selectedValue, ctx) => {
-    if (ctx.multiple) {
-      const values = Array.isArray(selectedValue) ? selectedValue : [];
-      if (values.length === 0) {
-        return (
-          <ComboboxPlaceholder {...api.getPlaceholderProps()}>{placeholder}</ComboboxPlaceholder>
-        );
-      }
-
-      return (
-        <ComboboxChips {...api.getChipsProps()}>
-          {values.map((item, index) => (
-            <ComboboxChip {...api.getChipProps(item)} key={getItemKey(item) ?? index}>
-              <ComboboxItemLabel {...api.getChipLabelProps()} />
-              <ComboboxChipRemove {...api.getChipRemoveProps()} />
-            </ComboboxChip>
-          ))}
-        </ComboboxChips>
-      );
-    }
-
-    const label = ctx.itemToStringLabel(selectedValue);
-    if (label) {
-      return <span className="sui_combobox_value">{label}</span>;
-    }
-
-    return <ComboboxPlaceholder {...api.getPlaceholderProps()}>{placeholder}</ComboboxPlaceholder>;
-  };
-  const defaultListItemRenderer: IComboboxListItemRenderer = (item, index) => {
-    switch (true) {
-      case isItemGroup<ComboboxItemGroup>(item): {
-        const groupLabelProps = api.getGroupLabelProps(item);
-        const separatorProps = api.getSeparatorProps();
-
-        return (
-          <ComboboxGroup {...api.getGroupProps(item)} key={getItemKey(item) ?? index}>
-            {groupLabelProps && <ComboboxGroupLabel {...groupLabelProps} />}
-            <ComboboxCollection
-              {...api.getCollectionProps({ defaultItemRenderer: defaultListItemRenderer })}
-            />
-            {separatorProps && <ComboboxSeparator {...separatorProps} />}
-          </ComboboxGroup>
-        );
-      }
-
-      case isPrimitiveItem(item):
-      case isLabeledItem(item):
-      case !isReactNode(item):
-        return (
-          <ComboboxItem {...api.getItemProps(item)} key={getItemKey(item) ?? index}>
-            <ComboboxItemLabel {...api.getItemLabelProps()} />
-            <ComboboxItemIndicator {...api.getItemIndicatorProps()} />
-          </ComboboxItem>
-        );
-
-      default:
-        return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
-    }
-  };
-
-  const valueProps = api.getValueProps({ defaultRenderer: defaultValueRenderer });
-  const { placeholder } = valueProps;
-  const backdropProps = api.getBackdropProps();
-  const arrowProps = api.getArrowProps();
-
-  return (
-    <ComboboxRoot {...api.getRootProps()}>
-      <ComboboxTrigger {...api.getTriggerProps()}>
-        <ComboboxInputGroup {...api.getInputGroupProps()}>
-          <ComboboxValue {...valueProps} />
-          <ComboboxIcon {...api.getIconProps()} />
-        </ComboboxInputGroup>
-      </ComboboxTrigger>
-      <ComboboxPortal {...api.getPortalProps()}>
-        {backdropProps && <ComboboxBackdrop {...backdropProps} />}
-        <ComboboxPositioner {...api.getPositionerProps()}>
-          <ComboboxPopup {...api.getPopupProps()}>
-            <ScrollAreaRoot {...api.getScrollAreaProps()}>
-              <ScrollAreaViewport {...api.getViewportProps()}>
-                <ScrollAreaContent {...api.getContentProps()}>
-                  <ComboboxStatus {...api.getStatusProps()} />
-                  <ComboboxEmpty {...api.getEmptyProps()} />
-                  <ComboboxList
-                    {...api.getListProps({ defaultItemRenderer: defaultListItemRenderer })}
-                  />
-                </ScrollAreaContent>
-              </ScrollAreaViewport>
-              <ScrollAreaScrollbar {...api.getScrollbarProps()}>
-                <ScrollAreaThumb {...api.getThumbProps()} />
-              </ScrollAreaScrollbar>
-              <ScrollAreaCorner {...api.getCornerProps()} />
-            </ScrollAreaRoot>
-            <ComboboxInputGroup {...api.getInputGroupProps()}>
-              <ComboboxInput {...api.getInputProps()} />
-              <ComboboxClear {...api.getClearProps()} />
-            </ComboboxInputGroup>
-            {arrowProps && <ComboboxArrow {...arrowProps} />}
-          </ComboboxPopup>
-        </ComboboxPositioner>
-      </ComboboxPortal>
-    </ComboboxRoot>
-  );
-}
-
 /**
  * 入力欄で候補を絞り込み、定義済みの項目を選択するコンポーネントです。
- *
- * `multiple` を指定すると、選択値をチップとして入力欄内に表示します。
  */
 export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
   function SuiCombobox(props: ComboboxProps) {
-    const { inputInPopup = false, ...otherProps } = props;
+    const api = useComboboxAPI(props);
+    const arrowProps = api.getArrowProps();
+    const backdropProps = api.getBackdropProps();
 
-    return inputInPopup ? (
-      <SuiComboboxInputInsidePopup {...otherProps} />
+    return api.isInputInPopup() ? (
+      <ComboboxRoot {...api.getRootProps()}>
+        <ComboboxTrigger {...api.getTriggerProps()}>
+          <ComboboxInputGroup {...api.getInputGroupProps()}>
+            <ComboboxValue {...api.getValueProps()} />
+            <ComboboxIcon {...api.getIconProps()} />
+          </ComboboxInputGroup>
+        </ComboboxTrigger>
+        <ComboboxPortal {...api.getPortalProps()}>
+          {backdropProps && <ComboboxBackdrop {...backdropProps} />}
+          <ComboboxPositioner {...api.getPositionerProps()}>
+            <ComboboxPopup {...api.getPopupProps()}>
+              <ScrollAreaRoot {...api.getScrollAreaProps()}>
+                <ScrollAreaViewport {...api.getViewportProps()}>
+                  <ScrollAreaContent {...api.getContentProps()}>
+                    <ComboboxStatus {...api.getStatusProps()} />
+                    <ComboboxEmpty {...api.getEmptyProps()} />
+                    <ComboboxList {...api.getListProps()} />
+                  </ScrollAreaContent>
+                </ScrollAreaViewport>
+                <ScrollAreaScrollbar {...api.getScrollbarProps()}>
+                  <ScrollAreaThumb {...api.getThumbProps()} />
+                </ScrollAreaScrollbar>
+                <ScrollAreaCorner {...api.getCornerProps()} />
+              </ScrollAreaRoot>
+              <ComboboxInputGroup {...api.getInputGroupProps()}>
+                <ComboboxInput {...api.getInputProps()} />
+                <ComboboxClear {...api.getClearProps()} />
+              </ComboboxInputGroup>
+              {arrowProps && <ComboboxArrow {...arrowProps} />}
+            </ComboboxPopup>
+          </ComboboxPositioner>
+        </ComboboxPortal>
+      </ComboboxRoot>
     ) : (
-      <SuiComboboxInputOutsidePopup {...otherProps} />
+      <ComboboxRoot {...api.getRootProps()}>
+        <ComboboxInputGroup {...api.getInputGroupProps()}>
+          <ComboboxValue {...api.getValueProps()} />
+          <ComboboxClear {...api.getClearProps()} />
+          <ComboboxIcon {...api.getIconProps()} />
+        </ComboboxInputGroup>
+        <ComboboxPortal {...api.getPortalProps()}>
+          {backdropProps && <ComboboxBackdrop {...backdropProps} />}
+          <ComboboxPositioner {...api.getPositionerProps()}>
+            <ComboboxPopup {...api.getPopupProps()}>
+              <ScrollAreaRoot {...api.getScrollAreaProps()}>
+                <ScrollAreaViewport {...api.getViewportProps()}>
+                  <ScrollAreaContent {...api.getContentProps()}>
+                    <ComboboxStatus {...api.getStatusProps()} />
+                    <ComboboxEmpty {...api.getEmptyProps()} />
+                    <ComboboxList {...api.getListProps()} />
+                  </ScrollAreaContent>
+                </ScrollAreaViewport>
+                <ScrollAreaScrollbar {...api.getScrollbarProps()}>
+                  <ScrollAreaThumb {...api.getThumbProps()} />
+                </ScrollAreaScrollbar>
+                <ScrollAreaCorner {...api.getCornerProps()} />
+              </ScrollAreaRoot>
+              {arrowProps && <ComboboxArrow {...arrowProps} />}
+            </ComboboxPopup>
+          </ComboboxPositioner>
+        </ComboboxPortal>
+      </ComboboxRoot>
     );
   },
   {
