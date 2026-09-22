@@ -344,6 +344,16 @@ namespace ComboboxProps {
     itemLabelRenderer?: IComboboxItemLabelRenderer<TItem> | undefined;
 
     /**
+     * 複数選択時に項目の選択後も入力欄の絞り込みを維持し、ポップアップを開いたままにするかどうかを指定します。
+     *
+     * 有効にすると項目押下による閉じる要求を取り消します。
+     * 入力欄がポップアップの外にある場合の絞り込み維持に相当します。
+     *
+     * @default false
+     */
+    keepFilterOnSelect?: boolean | undefined;
+
+    /**
      * トリガーに対応する表示ラベルです。
      */
     label?: React.ReactNode | undefined;
@@ -516,6 +526,7 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
       inputInPopup,
       chipLabelRenderer,
       itemLabelRenderer,
+      keepFilterOnSelect,
     };
     this.slotProps = slotProps;
     this.rootProps = {
@@ -558,7 +569,6 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
       itemToStringValue,
       onItemHighlighted,
       isItemEqualToValue,
-      keepFilterOnSelect,
       onInputValueChange,
       highlightItemOnHover,
       onOpenChangeComplete,
@@ -964,16 +974,45 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
    * {@link ComboboxRoot} に渡す props を取得します。
    */
   public getRootProps(): ComboboxProps.Root<TItem, TMultiple> {
+    const { keepFilterOnSelect = false } = this.comboboxProps;
     const {
+      multiple,
+      onOpenChange,
       itemToStringLabel = defaultItemToStringLabel,
       itemToStringValue = defaultItemToStringValue,
+      onInputValueChange,
       ...otherProps
     } = this.rootProps;
+    let handleOpenChange = onOpenChange;
+    let handleInputValueChange = onInputValueChange;
+    if (multiple && keepFilterOnSelect) {
+      if (this.isInputInPopup()) {
+        handleOpenChange = (open, eventDetails) => {
+          if (!open && eventDetails.reason === "item-press") {
+            eventDetails.cancel();
+          }
+
+          onOpenChange?.(open, eventDetails);
+        };
+      } else {
+        handleInputValueChange = (value, eventDetails) => {
+          // @ts-expect-error .isItemPress はおそらく v1.8 以降の機能
+          if (eventDetails.isItemPress) {
+            eventDetails.cancel();
+          }
+
+          onInputValueChange?.(value, eventDetails);
+        };
+      }
+    }
 
     return {
       ...otherProps,
+      multiple,
+      onOpenChange: handleOpenChange,
       itemToStringLabel,
       itemToStringValue,
+      onInputValueChange: handleInputValueChange,
     };
   }
 
