@@ -27,6 +27,7 @@ import {
 } from "../scroll-area/scroll-area.parts.js";
 import type { IComponent } from "../types.js";
 import {
+  type IComboboxLabel,
   type ComboboxContext,
   type IComboboxFilter,
   type ComboboxRootSize,
@@ -43,7 +44,6 @@ import {
   type ComboboxEmptyProps,
   type ComboboxGroupProps,
   type ComboboxInputProps,
-  type ComboboxLabelProps,
   type ComboboxPopupProps,
   type ComboboxRootRadius,
   type ComboboxValueProps,
@@ -236,11 +236,6 @@ export type ComboboxSlotProps<
   readonly itemIndicator?: ComboboxItemIndicatorProps | undefined;
 
   /**
-   * {@link ComboboxLabel} に渡す props です。
-   */
-  readonly label?: Omit<ComboboxLabelProps, "children"> | undefined;
-
-  /**
    * {@link ComboboxList} に渡す props です。
    */
   readonly list?: ComboboxListProps | undefined;
@@ -361,7 +356,7 @@ namespace ComboboxProps {
     keepFilterOnSelect?: boolean | undefined;
 
     /**
-     * トリガーに対応する表示ラベルです。
+     * トリガーまたは入力欄の上に表示するラベルです。
      */
     label?: React.ReactNode | undefined;
 
@@ -913,20 +908,12 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
   }
 
   /**
-   * {@link ComboboxLabel} に渡す props を取得します。
+   * ラベルとして表示する内容を取得します。
    */
-  public getLabelProps(): ComboboxLabelProps | null {
+  public getLabel(): React.ReactNode {
     const { label } = this.comboboxProps;
-    const { label: props = {} } = this.slotProps;
 
-    if (isLikelyVisibleNode(label)) {
-      return {
-        ...props,
-        children: label,
-      };
-    }
-
-    return null;
+    return label;
   }
 
   /**
@@ -1169,6 +1156,8 @@ export interface ICombobox extends IComponent<ComboboxProps> {
     props: ComboboxProps<TItem, TMultiple>,
   ): IComponent.Return;
 
+  readonly Label: IComboboxLabel;
+
   readonly useContext: IUseComboboxContext;
 
   readonly useFilter: IUseComboboxFilter;
@@ -1187,6 +1176,7 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
 
     return api.isInputInPopup() ? (
       <ComboboxRoot {...api.getRootProps()}>
+        {api.getLabel()}
         <ComboboxTrigger {...api.getTriggerProps()}>
           <ComboboxInputGroup {...api.getInputGroupProps()}>
             <ComboboxValue {...api.getValueProps()} />
@@ -1221,6 +1211,7 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
       </ComboboxRoot>
     ) : (
       <ComboboxRoot {...api.getRootProps()}>
+        {api.getLabel()}
         <ComboboxInputGroup {...api.getInputGroupProps()}>
           <ComboboxValue {...api.getValueProps()} />
           <ComboboxClear {...api.getClearProps()} />
@@ -1251,6 +1242,7 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
     );
   },
   {
+    Label: ComboboxLabel,
     useFilter: useComboboxFilter,
     useContext: useComboboxContext,
     useFilteredItems: useComboboxFilteredItems,
