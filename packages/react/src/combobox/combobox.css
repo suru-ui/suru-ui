@@ -48,7 +48,7 @@
 
 /* InputGroup */
 @layer sui.component {
-@scope (.sui_combobox_input_group) to ([data-scope]) {
+@scope (.sui_combobox) to ([data-scope]) {
 
 /* 固定 */
 :scope {
@@ -146,7 +146,7 @@
   --sui_combobox-border_width-focus_visible: --sui-border_width(2);
   --sui_combobox-border_width-invalid: --sui-border_width(2);
 
-  &.sui_combobox_input_group-size_sm {
+  &.sui_combobox-size_sm {
     --sui_combobox-icon-size: calc(var(--sui_combobox-font_size) * var(--sui_combobox-line_height));
     --sui_combobox-min_height: var(--sui-size-sm);
     --sui_combobox-padding_inline: --sui-space(2);
@@ -156,7 +156,7 @@
     --sui_combobox-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
   }
 
-  &.sui_combobox_input_group-size_md {
+  &.sui_combobox-size_md {
     --sui_combobox-icon-size: calc(var(--sui_combobox-font_size) * var(--sui_combobox-line_height));
     --sui_combobox-min_height: var(--sui-size-md);
     --sui_combobox-padding_inline: --sui-space(3);
@@ -166,7 +166,7 @@
     --sui_combobox-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   }
 
-  &.sui_combobox_input_group-size_lg {
+  &.sui_combobox-size_lg {
     --sui_combobox-icon-size: calc(var(--sui_combobox-font_size) * var(--sui_combobox-line_height));
     --sui_combobox-min_height: var(--sui-size-lg);
     --sui_combobox-padding_inline: --sui-space(3);
@@ -176,97 +176,97 @@
     --sui_combobox-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
   }
 
-  &.sui_combobox_input_group-radius_none {
+  &.sui_combobox-radius_none {
     --sui_combobox-border_radius: 0px;
   }
 
-  &.sui_combobox_input_group-radius_sm {
+  &.sui_combobox-radius_sm {
     --sui_combobox-border_radius: var(--sui-radius-sm);
   }
 
-  &.sui_combobox_input_group-radius_md {
+  &.sui_combobox-radius_md {
     --sui_combobox-border_radius: var(--sui-radius-md);
   }
 
-  &.sui_combobox_input_group-radius_lg {
+  &.sui_combobox-radius_lg {
     --sui_combobox-border_radius: var(--sui-radius-lg);
   }
 
-  &.sui_combobox_input_group-radius_full {
+  &.sui_combobox-radius_full {
     --sui_combobox-border_radius: calc(var(--sui_combobox-min_height) / 2);
   }
 
-  &.sui_combobox_input_group-variant_naked {
+  &.sui_combobox-variant_naked {
     --sui_combobox-color: var(--sui-grey-naked-canvas_text-normal);
     --sui_combobox-background_color: var(--sui-grey-naked-canvas-normal);
   }
 
-  &.sui_combobox_input_group-variant_liquid {
+  &.sui_combobox-variant_liquid {
     --sui_combobox-color: var(--sui-grey-liquid-canvas_text-normal);
     --sui_combobox-background_color: var(--sui-grey-liquid-canvas-normal);
   }
 
-  &.sui_combobox_input_group-color_grey.sui_combobox_input_group-variant_naked {
+  &.sui_combobox-color_grey.sui_combobox-variant_naked {
     --sui_combobox-border_color-focus_visible: var(--sui-grey-naked-border-subtle);
   }
 
-  &.sui_combobox_input_group-color_grey.sui_combobox_input_group-variant_liquid {
+  &.sui_combobox-color_grey.sui_combobox-variant_liquid {
     --sui_combobox-border_color-focus_visible: var(--sui-grey-liquid-border-subtle);
   }
 
-  &.sui_combobox_input_group-color_blue.sui_combobox_input_group-variant_naked {
+  &.sui_combobox-color_blue.sui_combobox-variant_naked {
     --sui_combobox-border_color-focus_visible: var(--sui-blue-naked-border-normal);
   }
 
-  &.sui_combobox_input_group-color_blue.sui_combobox_input_group-variant_liquid {
+  &.sui_combobox-color_blue.sui_combobox-variant_liquid {
     --sui_combobox-border_color-focus_visible: var(--sui-blue-liquid-border-normal);
   }
 
-  &.sui_combobox_input_group-color_purple.sui_combobox_input_group-variant_naked {
+  &.sui_combobox-color_purple.sui_combobox-variant_naked {
     --sui_combobox-border_color-focus_visible: var(--sui-purple-naked-border-normal);
   }
 
-  &.sui_combobox_input_group-color_purple.sui_combobox_input_group-variant_liquid {
+  &.sui_combobox-color_purple.sui_combobox-variant_liquid {
     --sui_combobox-border_color-focus_visible: var(--sui-purple-liquid-border-normal);
   }
 
-  &.sui_combobox_input_group-color_magenta.sui_combobox_input_group-variant_naked {
+  &.sui_combobox-color_magenta.sui_combobox-variant_naked {
     --sui_combobox-border_color-focus_visible: var(--sui-magenta-naked-border-normal);
   }
 
-  &.sui_combobox_input_group-color_magenta.sui_combobox_input_group-variant_liquid {
+  &.sui_combobox-color_magenta.sui_combobox-variant_liquid {
     --sui_combobox-border_color-focus_visible: var(--sui-magenta-liquid-border-normal);
   }
 
-  &.sui_combobox_input_group-color_red.sui_combobox_input_group-variant_naked {
+  &.sui_combobox-color_red.sui_combobox-variant_naked {
     --sui_combobox-border_color-focus_visible: var(--sui-red-naked-border-normal);
   }
 
-  &.sui_combobox_input_group-color_red.sui_combobox_input_group-variant_liquid {
+  &.sui_combobox-color_red.sui_combobox-variant_liquid {
     --sui_combobox-border_color-focus_visible: var(--sui-red-liquid-border-normal);
   }
 
-  &.sui_combobox_input_group-color_orange.sui_combobox_input_group-variant_naked {
+  &.sui_combobox-color_orange.sui_combobox-variant_naked {
     --sui_combobox-border_color-focus_visible: var(--sui-orange-naked-border-normal);
   }
 
-  &.sui_combobox_input_group-color_orange.sui_combobox_input_group-variant_liquid {
+  &.sui_combobox-color_orange.sui_combobox-variant_liquid {
     --sui_combobox-border_color-focus_visible: var(--sui-orange-liquid-border-normal);
   }
 
-  &.sui_combobox_input_group-color_yellow.sui_combobox_input_group-variant_naked {
+  &.sui_combobox-color_yellow.sui_combobox-variant_naked {
     --sui_combobox-border_color-focus_visible: var(--sui-yellow-naked-border-normal);
   }
 
-  &.sui_combobox_input_group-color_yellow.sui_combobox_input_group-variant_liquid {
+  &.sui_combobox-color_yellow.sui_combobox-variant_liquid {
     --sui_combobox-border_color-focus_visible: var(--sui-yellow-liquid-border-normal);
   }
 
-  &.sui_combobox_input_group-color_green.sui_combobox_input_group-variant_naked {
+  &.sui_combobox-color_green.sui_combobox-variant_naked {
     --sui_combobox-border_color-focus_visible: var(--sui-green-naked-border-normal);
   }
 
-  &.sui_combobox_input_group-color_green.sui_combobox_input_group-variant_liquid {
+  &.sui_combobox-color_green.sui_combobox-variant_liquid {
     --sui_combobox-border_color-focus_visible: var(--sui-green-liquid-border-normal);
   }
 }
@@ -277,7 +277,7 @@
     --_sui_combobox-outline_width: var(--sui_combobox-focusring_width);
   }
 
-  &.sui_combobox_input_group-outlined {
+  &.sui_combobox-outlined {
     --_sui_combobox-border_color: var(--sui_combobox-border_color-idle);
     --_sui_combobox-border_width: var(--sui_combobox-border_width-idle);
 
@@ -294,7 +294,7 @@
     }
   }
 
-  &.sui_combobox_input_group-invalid {
+  &.sui_combobox-invalid {
     --_sui_combobox-border_color: var(--sui_combobox-border_color-invalid);
     --_sui_combobox-border_width: var(--sui_combobox-border_width-invalid);
   }
@@ -305,7 +305,7 @@
 
 /* Input */
 @layer sui.component {
-@scope (.sui_combobox_input_group) to ([data-scope]) {
+@scope (.sui_combobox) to ([data-scope]) {
 
 /* 固定 */
 :scope {
@@ -373,15 +373,15 @@
   --sui_combobox_input-placeholder-color: var(--sui_combobox-placeholder-color);
   --sui_combobox_input-letter_spacing: var(--sui_combobox-letter_spacing);
 
-  &.sui_combobox_input_group-size_sm {
+  &.sui_combobox-size_sm {
     --sui_combobox_input-padding_inline: --sui-space(2);
   }
 
-  &.sui_combobox_input_group-size_md {
+  &.sui_combobox-size_md {
     --sui_combobox_input-padding_inline: --sui-space(3);
   }
 
-  &.sui_combobox_input_group-size_lg {
+  &.sui_combobox-size_lg {
     --sui_combobox_input-padding_inline: --sui-space(3);
   }
 }
@@ -391,7 +391,7 @@
 
 /* Icon */
 @layer sui.component {
-@scope (.sui_combobox_input_group) to ([data-scope]) {
+@scope (.sui_combobox) to ([data-scope]) {
 
 /* 固定 */
 :scope {
@@ -434,7 +434,7 @@
 
 /* Clear */
 @layer sui.component {
-@scope (.sui_combobox_input_group) to ([data-scope]) {
+@scope (.sui_combobox) to ([data-scope]) {
 
 /* 固定 */
 :scope {
@@ -517,27 +517,27 @@
                                      var(--sui_combobox-background_color)
                                    );
 
-  &.sui_combobox_input_group-radius_none {
+  &.sui_combobox-radius_none {
     --sui_combobox_clear-border_radius: 0px;
   }
 
-  &.sui_combobox_input_group-radius_sm {
+  &.sui_combobox-radius_sm {
     --sui_combobox_clear-border_radius: var(--sui-radius-sm);
   }
 
-  &.sui_combobox_input_group-radius_md {
+  &.sui_combobox-radius_md {
     --sui_combobox_clear-border_radius: var(--sui-radius-md);
   }
 
-  &.sui_combobox_input_group-radius_lg {
+  &.sui_combobox-radius_lg {
     --sui_combobox_clear-border_radius: var(--sui-radius-lg);
   }
 
-  &.sui_combobox_input_group-radius_full {
+  &.sui_combobox-radius_full {
     --sui_combobox_clear-border_radius: calc(var(--sui_combobox_clear-size) / 2);
   }
 
-  &.sui_combobox_input_group-variant_naked {
+  &.sui_combobox-variant_naked {
     --sui_combobox_clear-color-idle: var(--sui-grey-naked-canvas_text-normal);
     --sui_combobox_clear-color-hover: var(--sui-grey-naked-canvas_text-subtle);
     --sui_combobox_clear-color-active: var(--sui-grey-naked-canvas_text-strong);
@@ -546,7 +546,7 @@
     --sui_combobox_clear-background_color-active: var(--sui-grey-naked-canvas-strong);
   }
 
-  &.sui_combobox_input_group-variant_liquid {
+  &.sui_combobox-variant_liquid {
     --sui_combobox_clear-color-idle: var(--sui-grey-liquid-canvas_text-normal);
     --sui_combobox_clear-color-hover: var(--sui-grey-liquid-canvas_text-subtle);
     --sui_combobox_clear-color-active: var(--sui-grey-liquid-canvas_text-strong);
@@ -558,7 +558,7 @@
 
 /* 変異 */
 :scope {
-  &:not(.sui_combobox_input_group-disabled) .sui_combobox_clear {
+  &:not(.sui_combobox-disabled) .sui_combobox_clear {
     @media (any-hover: hover) {
       &:hover {
         --_sui_combobox_clear-color: var(--sui_combobox_clear-color-hover);
@@ -583,7 +583,7 @@
 
 /* Chips */
 @layer sui.component {
-@scope (.sui_combobox_input_group) to ([data-scope]) {
+@scope (.sui_combobox) to ([data-scope]) {
 
 /* 固定 */
 :scope {
@@ -622,7 +622,7 @@
 
 /* Chip */
 @layer sui.component {
-@scope (.sui_combobox_input_group) to ([data-scope]) {
+@scope (.sui_combobox) to ([data-scope]) {
 
 /* 固定 */
 :scope {
@@ -699,7 +699,7 @@
                                     var(--sui_combobox_chip-background_color)
                                   );
 
-  &.sui_combobox_input_group-size_sm {
+  &.sui_combobox-size_sm {
     --sui_combobox_chip-padding_inline_start: --sui-space(2);
     --sui_combobox_chip-font_size: var(--sui-text-oln-sm-m-font_size);
     --sui_combobox_chip-font_weight: var(--sui-text-oln-sm-m-font_weight);
@@ -707,7 +707,7 @@
     --sui_combobox_chip-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
   }
 
-  &.sui_combobox_input_group-size_md {
+  &.sui_combobox-size_md {
     --sui_combobox_chip-padding_inline_start: --sui-space(3);
     --sui_combobox_chip-font_size: var(--sui-text-oln-md-m-font_size);
     --sui_combobox_chip-font_weight: var(--sui-text-oln-md-m-font_weight);
@@ -715,7 +715,7 @@
     --sui_combobox_chip-letter_spacing: var(--sui-text-oln-md-m-letter_spacing);
   }
 
-  &.sui_combobox_input_group-size_lg {
+  &.sui_combobox-size_lg {
     --sui_combobox_chip-padding_inline_start: --sui-space(3);
     --sui_combobox_chip-font_size: var(--sui-text-oln-lg-m-font_size);
     --sui_combobox_chip-font_weight: var(--sui-text-oln-lg-m-font_weight);
@@ -917,7 +917,7 @@
 
 /* ChipRemove */
 @layer sui.component {
-@scope (.sui_combobox_input_group) to ([data-scope]) {
+@scope (.sui_combobox) to ([data-scope]) {
 
 /* 固定 */
 :scope {
@@ -980,17 +980,17 @@
                                            )
                                          );
 
-  &.sui_combobox_input_group-size_sm {
+  &.sui_combobox-size_sm {
     --sui_combobox_chip_remove-font_size: var(--sui-text-oln-sm-m-font_size);
     --sui_combobox_chip_remove-line_height: var(--sui-text-oln-sm-m-line_height);
   }
 
-  &.sui_combobox_input_group-size_md {
+  &.sui_combobox-size_md {
     --sui_combobox_chip_remove-font_size: var(--sui-text-oln-md-m-font_size);
     --sui_combobox_chip_remove-line_height: var(--sui-text-oln-md-m-line_height);
   }
 
-  &.sui_combobox_input_group-size_lg {
+  &.sui_combobox-size_lg {
     --sui_combobox_chip_remove-font_size: var(--sui-text-oln-lg-m-font_size);
     --sui_combobox_chip_remove-line_height: var(--sui-text-oln-lg-m-line_height);
   }
@@ -1250,7 +1250,7 @@
 
 /* 変異 */
 :scope {
-  &:not(.sui_combobox_input_group-disabled) .sui_combobox_chip_remove {
+  &:not(.sui_combobox-disabled) .sui_combobox_chip_remove {
     @media (any-hover: hover) {
       &:hover {
         --_sui_combobox_chip_remove-color: var(--sui_combobox_chip_remove-color-hover);
@@ -1272,7 +1272,7 @@
 
 /* InputDisplay */
 @layer sui.component {
-@scope (.sui_combobox_input_group) to ([data-scope]) {
+@scope (.sui_combobox) to ([data-scope]) {
 
 /* 固定 */
 :scope {
@@ -1398,7 +1398,7 @@
 
 /* Popup */
 @layer sui.component {
-@scope (.sui_combobox_portal) to ([data-scope]:not(.sui_combobox_input_group)) {
+@scope (.sui_combobox_portal) to ([data-scope]:not(.sui_combobox)) {
 
 /* 固定 */
 :scope {
@@ -1416,13 +1416,13 @@
   }
 
   /* 入力欄を内包するポップアップは Grid で配置します。 */
-  .sui_combobox_popup:has(> .sui_combobox_input_group) {
+  .sui_combobox_popup:has(> .sui_combobox) {
     display: grid;
     grid-template-columns: minmax(0px, 1fr);
     align-content: start;
   }
 
-  .sui_combobox_popup > .sui_combobox_input_group {
+  .sui_combobox_popup > .sui_combobox {
     grid-area: input;
     min-width: 0px;
   }
@@ -2120,33 +2120,33 @@
 
 /* disabled */
 @layer sui.important {
-@scope (.sui_combobox_input_group) to ([data-scope]) {
+@scope (.sui_combobox) to ([data-scope]) {
 
 /* Root */
 :scope {
-  &.sui_combobox_input_group-disabled {
+  &.sui_combobox-disabled {
     cursor: not-allowed;
   }
 }
 
 /* InputGroup */
 :scope {
-  &.sui_combobox_input_group-disabled {
-    &.sui_combobox_input_group-variant_naked {
+  &.sui_combobox-disabled {
+    &.sui_combobox-variant_naked {
       background-color: var(--sui-disabled-naked-canvas);
     }
 
-    &.sui_combobox_input_group-variant_liquid {
+    &.sui_combobox-variant_liquid {
       background-color: var(--sui-disabled-liquid-canvas);
     }
 
-    &.sui_combobox_input_group-outlined {
-      &.sui_combobox_input_group-variant_naked::after {
+    &.sui_combobox-outlined {
+      &.sui_combobox-variant_naked::after {
         border-color: var(--sui-disabled-naked-border);
         border-width: var(--sui-disabled-border_width);
       }
 
-      &.sui_combobox_input_group-variant_liquid::after {
+      &.sui_combobox-variant_liquid::after {
         border-color: var(--sui-disabled-liquid-border);
         border-width: var(--sui-disabled-border_width);
       }
@@ -2156,8 +2156,8 @@
 
 /* Input */
 :scope {
-  &.sui_combobox_input_group-disabled {
-    &.sui_combobox_input_group-variant_naked .sui_combobox_input {
+  &.sui_combobox-disabled {
+    &.sui_combobox-variant_naked .sui_combobox_input {
       color: var(--sui-disabled-naked-canvas_text);
 
       &::placeholder {
@@ -2165,7 +2165,7 @@
       }
     }
 
-    &.sui_combobox_input_group-variant_liquid .sui_combobox_input {
+    &.sui_combobox-variant_liquid .sui_combobox_input {
       color: var(--sui-disabled-liquid-canvas_text);
 
       &::placeholder {
@@ -2177,17 +2177,17 @@
 
 /* Trigger */
 /* :scope {
-  &.sui_combobox_input_group-disabled {
+  &.sui_combobox-disabled {
     .sui_combobox_trigger {
       cursor: not-allowed;
     }
 
-    &.sui_combobox_input_group-variant_naked .sui_combobox_trigger {
+    &.sui_combobox-variant_naked .sui_combobox_trigger {
       color: var(--sui-disabled-naked-canvas_text);
       background-color: transparent;
     }
 
-    &.sui_combobox_input_group-variant_liquid .sui_combobox_trigger {
+    &.sui_combobox-variant_liquid .sui_combobox_trigger {
       color: var(--sui-disabled-liquid-canvas_text);
       background-color: transparent;
     }
@@ -2196,17 +2196,17 @@
 
 /* Clear */
 :scope {
-  &.sui_combobox_input_group-disabled {
+  &.sui_combobox-disabled {
     .sui_combobox_clear {
       cursor: not-allowed;
     }
 
-    &.sui_combobox_input_group-variant_naked .sui_combobox_clear {
+    &.sui_combobox-variant_naked .sui_combobox_clear {
       color: var(--sui-disabled-naked-canvas_text);
       background-color: transparent;
     }
 
-    &.sui_combobox_input_group-variant_liquid .sui_combobox_clear {
+    &.sui_combobox-variant_liquid .sui_combobox_clear {
       color: var(--sui-disabled-liquid-canvas_text);
       background-color: transparent;
     }
@@ -2215,7 +2215,7 @@
 
 /* Chip */
 :scope {
-  &.sui_combobox_input_group-disabled {
+  &.sui_combobox-disabled {
     .sui_combobox_chip {
       cursor: not-allowed;
     }
@@ -2260,7 +2260,7 @@
 
 /* ChipRemove */
 :scope {
-  &.sui_combobox_input_group-disabled {
+  &.sui_combobox-disabled {
     .sui_combobox_chip_remove {
       cursor: not-allowed;
     }
@@ -2305,12 +2305,12 @@
 
 /* InputDisplay */
 :scope {
-  &.sui_combobox_input_group-disabled {
-    &.sui_combobox_input_group-variant_naked .sui_combobox_input_display {
+  &.sui_combobox-disabled {
+    &.sui_combobox-variant_naked .sui_combobox_input_display {
       color: var(--sui-disabled-naked-canvas_text);
     }
 
-    &.sui_combobox_input_group-variant_liquid .sui_combobox_input_display {
+    &.sui_combobox-variant_liquid .sui_combobox_input_display {
       color: var(--sui-disabled-liquid-canvas_text);
     }
   }
