@@ -1270,13 +1270,13 @@
 } /* @scope */
 } /* @layer */
 
-/* Value */
+/* InputDisplay */
 @layer sui.component {
 @scope (.sui_combobox_input_group) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_combobox_value {
+  .sui_combobox_input_display {
     display: block;
     flex: 1 1 auto;
     width: 0px;
@@ -1291,136 +1291,57 @@
 
 /* 変数 */
 :scope {
-  --sui_combobox_value-padding_block: ;
-  --sui_combobox_value-padding_inline: ;
-  --sui_combobox_value-font_family: ;
-  --sui_combobox_value-font_size: ;
-  --sui_combobox_value-font_weight: ;
-  --sui_combobox_value-line_height: ;
-  --sui_combobox_value-color: ;
-  --sui_combobox_value-letter_spacing: ;
+  --sui_combobox_input_display-min_width: ;
+  --sui_combobox_input_display-padding_block: ;
+  --sui_combobox_input_display-padding_inline: ;
+  --sui_combobox_input_display-font_family: ;
+  --sui_combobox_input_display-font_size: ;
+  --sui_combobox_input_display-font_weight: ;
+  --sui_combobox_input_display-line_height: ;
+  --sui_combobox_input_display-color: ;
+  --sui_combobox_input_display-placeholder-color: ;
+  --sui_combobox_input_display-letter_spacing: ;
 }
 
 /* 可変 */
 :scope {
-  .sui_combobox_value {
-    padding-block: var(--sui_combobox_value-padding_block);
-    padding-inline: var(--sui_combobox_value-padding_inline);
-    font-family: var(--sui_combobox_value-font_family);
-    font-size: var(--sui_combobox_value-font_size);
-    font-weight: var(--sui_combobox_value-font_weight);
-    line-height: var(--sui_combobox_value-line_height);
-    color: var(--sui_combobox_value-color);
-    letter-spacing: var(--sui_combobox_value-letter_spacing);
+  .sui_combobox_input_display {
+    min-width: var(--sui_combobox_input_display-min_width);
+    padding-block: var(--sui_combobox_input_display-padding_block);
+    padding-inline: var(--sui_combobox_input_display-padding_inline);
+    font-family: var(--sui_combobox_input_display-font_family);
+    font-size: var(--sui_combobox_input_display-font_size);
+    font-weight: var(--sui_combobox_input_display-font_weight);
+    line-height: var(--sui_combobox_input_display-line_height);
+    color: var(--_sui_combobox_input_display-color, var(--sui_combobox_input_display-color));
+    letter-spacing: var(--sui_combobox_input_display-letter_spacing);
   }
 }
 
 /* 代入 */
 :scope {
-  --sui_combobox_value-padding_block: calc(
-                                        (
-                                          var(--sui_combobox-button-size)
-                                          - var(--sui_combobox-font_size)
-                                          * var(--sui_combobox-line_height)
-                                        ) / 2
-                                      );
-  --sui_combobox_value-font_family: var(--sui_combobox-font_family);
-  --sui_combobox_value-font_size: var(--sui_combobox-font_size);
-  --sui_combobox_value-font_weight: var(--sui_combobox-font_weight);
-  --sui_combobox_value-line_height: var(--sui_combobox-line_height);
-  --sui_combobox_value-color: var(--sui_combobox-color);
-  --sui_combobox_value-letter_spacing: var(--sui_combobox-letter_spacing);
-
-  &.sui_combobox_input_group-size_sm {
-    --sui_combobox_value-padding_inline: --sui-space(2);
-  }
-
-  &.sui_combobox_input_group-size_md {
-    --sui_combobox_value-padding_inline: --sui-space(3);
-  }
-
-  &.sui_combobox_input_group-size_lg {
-    --sui_combobox_value-padding_inline: --sui-space(3);
-  }
+  --sui_combobox_input_display-min_width: var(--sui_combobox_input-min_width);
+  --sui_combobox_input_display-padding_block: calc(
+                                                (
+                                                  var(--sui_combobox_input-height)
+                                                  - var(--sui_combobox_input_display-font_size)
+                                                  * var(--sui_combobox_input_display-line_height)
+                                                ) / 2
+                                              );
+  --sui_combobox_input_display-padding_inline: var(--sui_combobox_input-padding_inline);
+  --sui_combobox_input_display-font_family: var(--sui_combobox_input-font_family);
+  --sui_combobox_input_display-font_size: var(--sui_combobox_input-font_size);
+  --sui_combobox_input_display-font_weight: var(--sui_combobox_input-font_weight);
+  --sui_combobox_input_display-line_height: var(--sui_combobox_input-line_height);
+  --sui_combobox_input_display-color: var(--sui_combobox_input-color);
+  --sui_combobox_input_display-placeholder-color: var(--sui_combobox_input-placeholder-color);
+  --sui_combobox_input_display-letter_spacing: var(--sui_combobox_input-letter_spacing);
 }
 
-} /* @scope */
-} /* @layer */
-
-/* Placeholder */
-@layer sui.component {
-@scope (.sui_combobox_input_group) to ([data-scope]) {
-
-/* 固定 */
+/* 変異 */
 :scope {
-  .sui_combobox_placeholder {
-    display: block;
-    flex: 1 1 auto;
-    width: 0px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-feature-settings: "palt";
-    text-align: start;
-    white-space: nowrap;
-    touch-action: manipulation;
-  }
-}
-
-/* 変数 */
-:scope {
-  --sui_combobox_placeholder-min_width: ;
-  --sui_combobox_placeholder-padding_block: ;
-  --sui_combobox_placeholder-padding_inline: ;
-  --sui_combobox_placeholder-font_family: ;
-  --sui_combobox_placeholder-font_size: ;
-  --sui_combobox_placeholder-font_weight: ;
-  --sui_combobox_placeholder-line_height: ;
-  --sui_combobox_placeholder-color: ;
-  --sui_combobox_placeholder-letter_spacing: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_combobox_placeholder {
-    min-width: var(--sui_combobox_placeholder-min_width);
-    padding-block: var(--sui_combobox_placeholder-padding_block);
-    padding-inline: var(--sui_combobox_placeholder-padding_inline);
-    font-family: var(--sui_combobox_placeholder-font_family);
-    font-size: var(--sui_combobox_placeholder-font_size);
-    font-weight: var(--sui_combobox_placeholder-font_weight);
-    line-height: var(--sui_combobox_placeholder-line_height);
-    color: var(--sui_combobox_placeholder-color);
-    letter-spacing: var(--sui_combobox_placeholder-letter_spacing);
-  }
-}
-
-/* 代入 */
-:scope {
-  --sui_combobox_placeholder-min_width: 5em;
-  --sui_combobox_placeholder-padding_block: calc(
-                                              (
-                                                var(--sui_combobox-button-size)
-                                                - var(--sui_combobox-font_size)
-                                                * var(--sui_combobox-line_height)
-                                              ) / 2
-                                            );
-  --sui_combobox_placeholder-font_family: var(--sui_combobox-font_family);
-  --sui_combobox_placeholder-font_size: var(--sui_combobox-font_size);
-  --sui_combobox_placeholder-font_weight: var(--sui_combobox-font_weight);
-  --sui_combobox_placeholder-line_height: var(--sui_combobox-line_height);
-  --sui_combobox_placeholder-color: var(--sui_combobox-placeholder-color);
-  --sui_combobox_placeholder-letter_spacing: var(--sui_combobox-letter_spacing);
-
-  &.sui_combobox_input_group-size_sm {
-    --sui_combobox_placeholder-padding_inline: --sui-space(2);
-  }
-
-  &.sui_combobox_input_group-size_md {
-    --sui_combobox_placeholder-padding_inline: --sui-space(3);
-  }
-
-  &.sui_combobox_input_group-size_lg {
-    --sui_combobox_placeholder-padding_inline: --sui-space(3);
+  .sui_combobox_input_display-placeholder {
+    --_sui_combobox_input_display-color: var(--sui_combobox_input_display-placeholder-color);
   }
 }
 
@@ -1810,7 +1731,7 @@
 
   &.sui_combobox_portal-size_md {
     --sui_combobox_status-min_height: var(--sui-size-md);
-    --sui_combobox_status-padding_inline: --sui-space(5);
+    --sui_combobox_status-padding_inline: --sui-space(3);
     --sui_combobox_status-font_size: var(--sui-text-std-md-n-font_size);
     --sui_combobox_status-font_weight: var(--sui-text-std-md-n-font_weight);
     --sui_combobox_status-line_height: var(--sui-text-std-md-n-line_height);
@@ -1819,7 +1740,7 @@
 
   &.sui_combobox_portal-size_lg {
     --sui_combobox_status-min_height: var(--sui-size-md);
-    --sui_combobox_status-padding_inline: --sui-space(6);
+    --sui_combobox_status-padding_inline: --sui-space(3);
     --sui_combobox_status-font_size: var(--sui-text-std-lg-n-font_size);
     --sui_combobox_status-font_weight: var(--sui-text-std-lg-n-font_weight);
     --sui_combobox_status-line_height: var(--sui-text-std-lg-n-line_height);
@@ -1892,7 +1813,7 @@
 
   &.sui_combobox_portal-size_md {
     --sui_combobox_empty-min_height: var(--sui-size-md);
-    --sui_combobox_empty-padding_inline: --sui-space(5);
+    --sui_combobox_empty-padding_inline: --sui-space(3);
     --sui_combobox_empty-font_size: var(--sui-text-std-md-n-font_size);
     --sui_combobox_empty-font_weight: var(--sui-text-std-md-n-font_weight);
     --sui_combobox_empty-line_height: var(--sui-text-std-md-n-line_height);
@@ -1901,7 +1822,7 @@
 
   &.sui_combobox_portal-size_lg {
     --sui_combobox_empty-min_height: var(--sui-size-md);
-    --sui_combobox_empty-padding_inline: --sui-space(6);
+    --sui_combobox_empty-padding_inline: --sui-space(3);
     --sui_combobox_empty-font_size: var(--sui-text-std-lg-n-font_size);
     --sui_combobox_empty-font_weight: var(--sui-text-std-lg-n-font_weight);
     --sui_combobox_empty-line_height: var(--sui-text-std-lg-n-line_height);
@@ -2382,27 +2303,14 @@
   }
 }
 
-/* Value */
+/* InputDisplay */
 :scope {
   &.sui_combobox_input_group-disabled {
-    &.sui_combobox_input_group-variant_naked .sui_combobox_value {
+    &.sui_combobox_input_group-variant_naked .sui_combobox_input_display {
       color: var(--sui-disabled-naked-canvas_text);
     }
 
-    &.sui_combobox_input_group-variant_liquid .sui_combobox_value {
-      color: var(--sui-disabled-liquid-canvas_text);
-    }
-  }
-}
-
-/* Placeholder */
-:scope {
-  &.sui_combobox_input_group-disabled {
-    &.sui_combobox_input_group-variant_naked .sui_combobox_placeholder {
-      color: var(--sui-disabled-naked-canvas_text);
-    }
-
-    &.sui_combobox_input_group-variant_liquid .sui_combobox_placeholder {
+    &.sui_combobox_input_group-variant_liquid .sui_combobox_input_display {
       color: var(--sui-disabled-liquid-canvas_text);
     }
   }

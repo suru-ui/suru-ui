@@ -55,6 +55,7 @@ export const ComboboxTrigger: IComboboxTrigger = function SuiComboboxTrigger(pro
   const {
     children,
     className,
+    nativeButton = false,
     "aria-label": ariaLabel = "候補リストを開閉",
     ...otherProps
   } = props;
@@ -64,6 +65,7 @@ export const ComboboxTrigger: IComboboxTrigger = function SuiComboboxTrigger(pro
       {...otherProps}
       render={children}
       className={cn(className, "sui_combobox_trigger")}
+      nativeButton={nativeButton}
       aria-label={ariaLabel}
     />
   );

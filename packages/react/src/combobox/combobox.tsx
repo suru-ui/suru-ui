@@ -65,7 +65,7 @@ import {
   type ComboboxGroupLabelProps,
   type ComboboxInputGroupProps,
   type ComboboxPositionerProps,
-  type ComboboxPlaceholderProps,
+  type ComboboxInputDisplayProps,
   type IUseComboboxFilteredItems,
   type ComboboxItemIndicatorProps,
   type ComboboxRootItemLabeledValue,
@@ -100,7 +100,7 @@ import {
   ComboboxInputGroup,
   ComboboxPositioner,
   useComboboxContext,
-  ComboboxPlaceholder,
+  ComboboxInputDisplay,
   ComboboxItemIndicator,
   IComboboxValueRenderer,
   useComboboxFilteredItems,
@@ -189,6 +189,11 @@ export type ComboboxSlotProps<
   readonly corner?: ScrollAreaCornerProps | undefined;
 
   /**
+   * {@link ComboboxInputDisplay} に渡す props です。
+   */
+  readonly display?: Omit<ComboboxInputDisplayProps, "children" | "value"> | undefined;
+
+  /**
    * {@link ComboboxEmpty} に渡す props です。
    */
   readonly empty?: Omit<ComboboxEmptyProps, "children"> | undefined;
@@ -232,11 +237,6 @@ export type ComboboxSlotProps<
    * {@link ComboboxList} に渡す props です。
    */
   readonly list?: ComboboxListProps | undefined;
-
-  /**
-   * {@link ComboboxPlaceholder} に渡す props です。
-   */
-  readonly placeholder?: Omit<ComboboxPlaceholderProps, "children"> | undefined;
 
   /**
    * {@link ComboboxPopup} に渡す props です。
@@ -351,7 +351,7 @@ namespace ComboboxProps {
     /**
      * 値未選択時の代替文字列です。
      */
-    // ComboboxValue と ComboboxInput 両方の placeholder で使用する可能性があるので、string 型のみを受け入れます。
+    // ComboboxValue と ComboboxInput と ComboboxInputDisplay の placeholder で使用する可能性があるので、string 型のみを受け入れます。
     placeholder?: string | undefined;
 
     /**
@@ -569,7 +569,7 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
   private defaultValueRenderer: IComboboxValueRenderer = (selectedValue, ctx) => {
     if (this.isInputInPopup()) {
       if (ctx.multiple) {
-        const items: readonly any[] = selectedValue;
+        const items: readonly any[] = selectedValue ?? [];
 
         return (
           <ComboboxChips {...this.getChipsProps()}>
@@ -579,20 +579,15 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
                 <ComboboxChipRemove {...this.getChipRemoveProps()} />
               </ComboboxChip>
             ))}
-            <ComboboxPlaceholder {...this.getPlaceholderProps()} />;
+            <ComboboxInputDisplay {...this.getInputDisplayProps()} />
           </ComboboxChips>
         );
-      } else {
-        const label = ctx.itemToStringLabel(selectedValue);
-        if (label) {
-          return <span className="sui_combobox_value">{label}</span>;
-        } else {
-          return <ComboboxPlaceholder {...this.getPlaceholderProps()} />;
-        }
       }
+
+      return <ComboboxInputDisplay {...this.getInputDisplayProps(selectedValue)} />;
     } else {
       if (ctx.multiple) {
-        const items: readonly any[] = selectedValue;
+        const items: readonly any[] = selectedValue ?? [];
 
         return (
           <ComboboxChips {...this.getChipsProps()}>
@@ -605,9 +600,9 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
             <ComboboxInput {...this.getInputProps()} />
           </ComboboxChips>
         );
-      } else {
-        return <ComboboxInput {...this.getInputProps()} />;
       }
+
+      return <ComboboxInput {...this.getInputProps()} />;
     }
   };
 
@@ -922,15 +917,19 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
   }
 
   /**
-   * {@link ComboboxPlaceholder} に渡す props を取得します。
+   * {@link ComboboxInputDisplay} に渡す props を取得します。
+   *
+   * @param value 表示する内容です。
    */
-  public getPlaceholderProps(): ComboboxPlaceholderProps {
-    const { placeholder: props = {} } = this.slotProps;
-    const { placeholder } = this.getValueProps();
+  public getInputDisplayProps(value?: React.ReactNode): ComboboxInputDisplayProps {
+    const { input: { placeholder: inputPlaceholder } = {}, display: props = {} } = this.slotProps;
+    const { placeholder: valuePlaceholder } = this.getValueProps();
+    const { placeholder = inputPlaceholder ?? valuePlaceholder, ...otherProps } = props;
 
     return {
-      ...props,
-      children: placeholder,
+      ...otherProps,
+      value,
+      placeholder,
     };
   }
 
