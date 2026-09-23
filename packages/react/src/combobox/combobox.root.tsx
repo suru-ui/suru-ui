@@ -267,6 +267,8 @@ export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: Combo
     disabled = false,
     multiple = false,
     outlined = false,
+    readOnly = false,
+    required = false,
     itemToStringLabel = defaultItemToStringLabel,
     itemToStringValue = defaultItemToStringValue,
     ...otherProps
@@ -293,6 +295,8 @@ export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: Combo
       variant={variant}
       disabled={disabled}
       outlined={outlined}
+      readOnly={readOnly}
+      required={required}
     >
       <ComboboxContext value={ctx}>
         <Combobox.Root
@@ -300,6 +304,8 @@ export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: Combo
           items={items}
           disabled={disabled}
           multiple={multiple}
+          readOnly={readOnly}
+          required={required}
           itemToStringLabel={itemToStringLabel}
           itemToStringValue={itemToStringValue}
         />
