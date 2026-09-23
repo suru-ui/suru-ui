@@ -254,7 +254,7 @@ export interface IComboboxRoot extends IComponent<ComboboxRootProps> {
 /**
  * コンボボックスのルート要素です。
  *
- * 選択状態とポップアップの開閉状態を管理し、スタイルを子パーツへ伝播します。それ自身は HTML 要素をレンダリングしません。
+ * 選択状態とポップアップの開閉状態を管理し、スタイルを子パーツへ伝播します。これ自身は HTML 要素をレンダリングしません。
  */
 export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: ComboboxRootProps) {
   const config = React.use(Config);

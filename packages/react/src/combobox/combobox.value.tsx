@@ -96,7 +96,7 @@ export interface IComboboxValue extends IComponent<ComboboxValueProps> {
 /**
  * 現在の選択値を子要素へ反映する要素です。
  *
- * それ自身は HTML 要素をレンダリングしません。
+ * これ自身は HTML 要素をレンダリングしません。
  */
 export const ComboboxValue: IComboboxValue = function SuiComboboxValue(props: ComboboxValueProps) {
   const ctx = useComboboxContext();
