@@ -2156,15 +2156,15 @@
   --sui_combobox_separator-color: var(--sui-border-1);
 
   &.sui_combobox_portal-size_sm {
-  --sui_combobox_separator-margin_block: --sui-space(2);
+    --sui_combobox_separator-margin_block: --sui-space(2);
   }
 
   &.sui_combobox_portal-size_md {
-  --sui_combobox_separator-margin_block: --sui-space(3);
+    --sui_combobox_separator-margin_block: --sui-space(3);
   }
 
   &.sui_combobox_portal-size_lg {
-  --sui_combobox_separator-margin_block: --sui-space(3);
+    --sui_combobox_separator-margin_block: --sui-space(3);
   }
 }
 
