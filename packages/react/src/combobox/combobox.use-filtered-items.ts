@@ -17,8 +17,9 @@ export interface IUseComboboxFilteredItems {
 /**
  * Root 内でフィルタリングされた項目の一覧を返すフックです。
  */
-export const useFilteredItems: IUseComboboxFilteredItems = function useSuiComboboxFilteredItems() {
-  return Combobox.useFilteredItems();
-};
+export const useComboboxFilteredItems: IUseComboboxFilteredItems =
+  function useSuiComboboxFilteredItems() {
+    return Combobox.useFilteredItems();
+  };
 
-export { useFilteredItems as useComboboxFilteredItems };
+export { useComboboxFilteredItems as useFilteredItems };

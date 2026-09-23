@@ -56,6 +56,9 @@ const ctrl = controls(Combobox<Combobox.ItemValue | Combobox.ItemGroup, boolean>
     control: "select",
     options: RADII,
   },
+  separator: {
+    control: "boolean",
+  },
   size: {
     control: "select",
     options: SIZES,
@@ -541,6 +544,7 @@ export const Grouped = meta.story({
     multiple: false,
     arrow: false,
     backdrop: false,
+    separator: false,
     keepFilterOnSelect: false,
     inputInPopup: false,
     disabled: false,
