@@ -47,7 +47,16 @@ export type IComboboxTriggerLabel = IComponent<ComboboxTriggerLabelProps>;
 export const ComboboxTriggerLabel: IComboboxTriggerLabel = function SuiComboboxTriggerLabel(props) {
   const { className, ...otherProps } = props;
 
-  return <Combobox.Label {...otherProps} className={cn(className, "sui_combobox_trigger_label")} />;
+  return (
+    <Combobox.Label
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_combobox_trigger_label",
+        (state) => state.disabled && "sui_combobox_trigger_label-disabled",
+      )}
+    />
+  );
 };
 
 export { ComboboxTriggerLabel as TriggerLabel };

@@ -395,6 +395,7 @@ export {
 export {
   type LabelAPI,
   type LabelSize,
+  type LabelColor,
   type LabelProps,
   type LabelState,
   Label,

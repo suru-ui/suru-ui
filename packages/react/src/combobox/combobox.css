@@ -2175,40 +2175,57 @@
   }
 }
 
-/* Trigger */
-/* :scope {
+/* Icon */
+:scope {
   &.sui_combobox-disabled {
-    .sui_combobox_trigger {
+    .sui_combobox_icon {
       cursor: not-allowed;
     }
 
-    &.sui_combobox-variant_naked .sui_combobox_trigger {
-      color: var(--sui-disabled-naked-canvas_text);
-      background-color: transparent;
+    &.sui_combobox-variant_naked .sui_combobox_icon svg:not(.sui-ignore) {
+      color: --sui-icon_color(
+               var(--sui-disabled-naked-canvas_text),
+               var(--sui-disabled-naked-canvas)
+             );
     }
 
-    &.sui_combobox-variant_liquid .sui_combobox_trigger {
-      color: var(--sui-disabled-liquid-canvas_text);
-      background-color: transparent;
+    &.sui_combobox-variant_liquid .sui_combobox_icon svg:not(.sui-ignore) {
+      color: --sui-icon_color(
+               var(--sui-disabled-liquid-canvas_text),
+               var(--sui-disabled-liquid-canvas)
+             );
     }
   }
-} */
+}
 
 /* Clear */
 :scope {
   &.sui_combobox-disabled {
     .sui_combobox_clear {
       cursor: not-allowed;
+      background-color: transparent;
     }
 
     &.sui_combobox-variant_naked .sui_combobox_clear {
       color: var(--sui-disabled-naked-canvas_text);
-      background-color: transparent;
+
+      svg:not(.sui-ignore) {
+        color: --sui-icon_color(
+                 var(--sui-disabled-naked-canvas_text),
+                 var(--sui-disabled-naked-canvas)
+               );
+      }
     }
 
     &.sui_combobox-variant_liquid .sui_combobox_clear {
       color: var(--sui-disabled-liquid-canvas_text);
-      background-color: transparent;
+
+      svg:not(.sui-ignore) {
+        color: --sui-icon_color(
+                 var(--sui-disabled-liquid-canvas_text),
+                 var(--sui-disabled-liquid-canvas)
+               );
+      }
     }
   }
 }
@@ -2313,6 +2330,22 @@
     &.sui_combobox-variant_liquid .sui_combobox_input_display {
       color: var(--sui-disabled-liquid-canvas_text);
     }
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* TriggerLabel */
+/* トリガーラベルは入力グループの兄弟要素のため、上のスコープでは届きません。自身の無効クラスで判定する別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_combobox_trigger_label) to ([data-scope]) {
+
+/* Root */
+:scope {
+  &.sui_combobox_trigger_label-disabled {
+    color: var(--sui-disabled-naked-canvas_text);
+    cursor: not-allowed;
   }
 }
 

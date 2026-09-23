@@ -3,6 +3,7 @@ import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
 import { Combobox } from "../src/combobox/index.js";
+import { Field } from "../src/index.js";
 
 const COLORS: readonly Combobox.Color[] = theme.COLORS;
 const SIZES: readonly Combobox.Size[] = theme.SIZES;
@@ -208,7 +209,6 @@ export const Usage = meta.story({
     keepFilterOnSelect: false,
     inputInPopup: false,
     disabled: false,
-    label: "果物",
     placeholder: "選択",
     items: fruits,
   }),
@@ -235,10 +235,11 @@ export const Variants = meta.story({
   }),
   render(props) {
     return (
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-6">
         {VARIANTS.map((variant) => (
-          <div key={variant}>
-            <Combobox {...props} label={variant} variant={variant} className="w-[200px]" />
+          <div key={variant} className="flex flex-col gap-3">
+            <span>{variant}</span>
+            <Combobox {...props} variant={variant} className="w-[200px]" />
           </div>
         ))}
       </div>
@@ -264,14 +265,14 @@ export const Colors = meta.story({
   }),
   render(props) {
     return (
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-6">
         {COLORS.map((color) => (
-          <div key={color}>
+          <div key={color} className="flex flex-col gap-3">
+            <span>{color}</span>
             <Combobox
               {...props}
               color={color}
               items={fruits}
-              label={color}
               className="w-[200px]"
               defaultValue={props.multiple ? [fruits[0]] : fruits[0]}
             />
@@ -300,10 +301,11 @@ export const Sizes = meta.story({
   }),
   render(props) {
     return (
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-6">
         {SIZES.map((size) => (
-          <div key={size}>
-            <Combobox {...props} size={size} items={fruits} label={size} className="w-[200px]" />
+          <div key={size} className="flex flex-col gap-3">
+            <span>{size}</span>
+            <Combobox {...props} size={size} items={fruits} className="w-[200px]" />
           </div>
         ))}
       </div>
@@ -328,10 +330,11 @@ export const Radii = meta.story({
   }),
   render(props) {
     return (
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-6">
         {RADII.map((radius) => (
-          <div key={radius}>
-            <Combobox {...props} label={radius} radius={radius} outlined className="w-[200px]" />
+          <div key={radius} className="flex flex-col gap-3">
+            <span>{radius}</span>
+            <Combobox {...props} radius={radius} outlined className="w-[200px]" />
           </div>
         ))}
       </div>
@@ -356,10 +359,11 @@ export const WithOutline = meta.story({
   }),
   render(props) {
     return (
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-6">
         {VARIANTS.map((variant) => (
-          <div key={variant}>
-            <Combobox {...props} label={variant} variant={variant} outlined className="w-[200px]" />
+          <div key={variant} className="flex flex-col gap-3">
+            <span>{variant}</span>
+            <Combobox {...props} variant={variant} outlined className="w-[200px]" />
           </div>
         ))}
       </div>
@@ -381,7 +385,6 @@ export const Multiple = meta.story({
     keepFilterOnSelect: false,
     inputInPopup: false,
     disabled: false,
-    label: "言語",
     placeholder: "言語を追加",
     items: ["TypeScript", "Rust", "Go", "Python"],
   }),
@@ -403,7 +406,6 @@ export const WithArrow = meta.story({
     keepFilterOnSelect: false,
     inputInPopup: false,
     disabled: false,
-    label: "果物",
     placeholder: "選択",
     items: fruits,
   }),
@@ -425,7 +427,6 @@ export const WithBackdrop = meta.story({
     inputInPopup: false,
     disabled: false,
     arrow: false,
-    label: "果物",
     placeholder: "選択",
     items: fruits,
   }),
@@ -449,29 +450,31 @@ export const Disabled = meta.story({
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col gap-3">
             <div>{variant}</div>
-            <div>
+            <div className="flex flex-col gap-3">
+              <span>未選択</span>
               <Combobox
                 {...props}
                 items={fruits}
-                label="未選択"
                 variant={variant}
                 disabled
                 className="w-[300px]"
                 placeholder="選択"
               />
+
+              <span>選択済み</span>
               <Combobox
                 {...props}
                 items={fruits}
-                label="選択済み"
                 variant={variant}
                 disabled
                 className="w-[300px]"
                 defaultValue={props.items?.[0]}
               />
+
+              <span>複数選択</span>
               <Combobox
                 {...props}
                 items={fruits}
-                label="複数選択"
                 variant={variant}
                 disabled
                 multiple
@@ -483,6 +486,47 @@ export const Disabled = meta.story({
         ))}
       </div>
     );
+  },
+});
+
+export const Labeled = meta.story({
+  name: "ラベル付き",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    multiple: true,
+    keepFilterOnSelect: false,
+    inputInPopup: false,
+    disabled: false,
+    arrow: false,
+    backdrop: false,
+    label: "果物",
+    placeholder: "選択",
+    items: fruits,
+  }),
+  render(props) {
+    if (props.inputInPopup) {
+      const { label, ...otherProps } = props;
+
+      return (
+        <Combobox
+          {...otherProps}
+          label={<Combobox.TriggerLabel>{label}</Combobox.TriggerLabel>}
+          className="w-[200px]"
+        />
+      );
+    } else {
+      const { label, disabled, ...otherProps } = props;
+
+      return (
+        <Field label={label} disabled={disabled}>
+          <Combobox {...otherProps} className="w-[200px]" />
+        </Field>
+      );
+    }
   },
 });
 
@@ -500,11 +544,16 @@ export const Grouped = meta.story({
     keepFilterOnSelect: false,
     inputInPopup: false,
     disabled: false,
-    label: "食材",
     placeholder: "食材を選択",
     items: [
-      { label: "果物", items: ["りんご", "ばなな", "みかん"] },
-      { label: "野菜", items: ["にんじん", "きゅうり", "トマト"] },
+      {
+        label: "果物",
+        items: ["りんご", "ばなな", "みかん"],
+      },
+      {
+        label: "野菜",
+        items: ["にんじん", "きゅうり", "トマト"],
+      },
     ],
   }),
   render(props) {
@@ -570,7 +619,6 @@ export const AsyncSearchSingle = meta.story({
       <Combobox<DirectoryUser>
         empty={emptyMessage}
         items={items}
-        label="担当者"
         filter={null}
         status={status}
         className="w-[300px]"
@@ -700,7 +748,6 @@ export const AsyncSearchMultiple = meta.story({
       <Combobox<DirectoryUser, true>
         empty={emptyMessage}
         items={items}
-        label="担当者"
         filter={null}
         status={status}
         multiple
