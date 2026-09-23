@@ -56,6 +56,9 @@ const ctrl = controls(Combobox<Combobox.ItemValue | Combobox.ItemGroup, boolean>
     control: "select",
     options: RADII,
   },
+  readOnly: {
+    control: "boolean",
+  },
   separator: {
     control: "boolean",
   },
@@ -212,6 +215,7 @@ export const Usage = meta.story({
     keepFilterOnSelect: false,
     inputInPopup: false,
     disabled: false,
+    readOnly: false,
     placeholder: "選択",
     items: fruits,
   }),
@@ -233,6 +237,7 @@ export const Variants = meta.story({
     keepFilterOnSelect: false,
     inputInPopup: false,
     disabled: false,
+    readOnly: false,
     placeholder: "選択",
     items: fruits,
   }),
@@ -263,6 +268,7 @@ export const Colors = meta.story({
     keepFilterOnSelect: false,
     inputInPopup: false,
     disabled: false,
+    readOnly: false,
     placeholder: "選択",
     items: fruits,
   }),
@@ -299,6 +305,7 @@ export const Sizes = meta.story({
     keepFilterOnSelect: false,
     inputInPopup: false,
     disabled: false,
+    readOnly: false,
     placeholder: "選択",
     items: fruits,
   }),
@@ -328,6 +335,7 @@ export const Radii = meta.story({
     keepFilterOnSelect: false,
     inputInPopup: false,
     disabled: false,
+    readOnly: false,
     placeholder: "選択",
     items: fruits,
   }),
@@ -357,6 +365,7 @@ export const WithOutline = meta.story({
     keepFilterOnSelect: false,
     inputInPopup: false,
     disabled: false,
+    readOnly: false,
     placeholder: "選択",
     items: fruits,
   }),
@@ -388,6 +397,7 @@ export const Multiple = meta.story({
     keepFilterOnSelect: false,
     inputInPopup: false,
     disabled: false,
+    readOnly: false,
     placeholder: "言語を追加",
     items: ["TypeScript", "Rust", "Go", "Python"],
   }),
@@ -409,6 +419,7 @@ export const WithArrow = meta.story({
     keepFilterOnSelect: false,
     inputInPopup: false,
     disabled: false,
+    readOnly: false,
     placeholder: "選択",
     items: fruits,
   }),
@@ -429,6 +440,7 @@ export const WithBackdrop = meta.story({
     keepFilterOnSelect: false,
     inputInPopup: false,
     disabled: false,
+    readOnly: false,
     arrow: false,
     placeholder: "選択",
     items: fruits,
@@ -446,6 +458,7 @@ export const Disabled = meta.story({
     radius: undefined,
     outlined: false,
     items: fruits,
+    readOnly: false,
   }),
   render(props) {
     return (
@@ -492,6 +505,60 @@ export const Disabled = meta.story({
   },
 });
 
+export const ReadOnly = meta.story({
+  name: "読み取り専用",
+  ...ctrl({
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    items: fruits,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-6">
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col gap-3">
+            <div>{variant}</div>
+            <div className="flex flex-col gap-3">
+              <span>未選択</span>
+              <Combobox
+                {...props}
+                items={fruits}
+                variant={variant}
+                readOnly
+                className="w-[300px]"
+                placeholder="選択"
+              />
+
+              <span>選択済み</span>
+              <Combobox
+                {...props}
+                items={fruits}
+                variant={variant}
+                readOnly
+                className="w-[300px]"
+                defaultValue={props.items?.[0]}
+              />
+
+              <span>複数選択</span>
+              <Combobox
+                {...props}
+                items={fruits}
+                variant={variant}
+                multiple
+                readOnly
+                className="w-[300px]"
+                defaultValue={props.items?.slice(0, 2)}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
 export const Labeled = meta.story({
   name: "ラベル付き",
   ...ctrl({
@@ -504,6 +571,7 @@ export const Labeled = meta.story({
     keepFilterOnSelect: false,
     inputInPopup: false,
     disabled: false,
+    readOnly: false,
     arrow: false,
     backdrop: false,
     label: "果物",
@@ -548,6 +616,7 @@ export const Grouped = meta.story({
     keepFilterOnSelect: false,
     inputInPopup: false,
     disabled: false,
+    readOnly: false,
     placeholder: "食材を選択",
     items: [
       {

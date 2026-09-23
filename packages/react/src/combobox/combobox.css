@@ -1287,6 +1287,10 @@
     white-space: nowrap;
     touch-action: manipulation;
   }
+
+  .sui_combobox_input_display-placeholder {
+    user-select: none;
+  }
 }
 
 /* 変数 */
@@ -2161,6 +2165,31 @@
 
   &.sui_combobox_portal-size_lg {
   --sui_combobox_separator-margin_block: --sui-space(3);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* readonly */
+@layer sui.overrides {
+@scope (.sui_combobox) to ([data-scope]) {
+
+/* Clear */
+:scope {
+  &.sui_combobox-readonly .sui_combobox_clear {
+    color: var(--sui_combobox_clear-color-idle);
+    cursor: not-allowed;
+    background-color: var(--sui_combobox_clear-background_color-idle);
+  }
+}
+
+/* ChipRemove */
+:scope {
+  &.sui_combobox-readonly .sui_combobox_chip_remove {
+    color: var(--sui_combobox_chip_remove-color-idle);
+    cursor: not-allowed;
+    background-color: var(--sui_combobox_chip_remove-background_color-idle);
   }
 }
 
