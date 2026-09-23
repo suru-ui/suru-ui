@@ -1052,10 +1052,10 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
    */
   public getSeparatorProps(): ComboboxSeparatorProps | null {
     const { separator = false } = this.comboboxProps;
-    const { separator: props = {} } = this.slotProps;
+    const { separator: props } = this.slotProps;
 
-    if (separator) {
-      return props;
+    if (separator || props) {
+      return props || {};
     }
 
     return null;

@@ -13,6 +13,27 @@ Vitest を用いたテストを、決定的で保守しやすい形で実装・�
 
 作業前に `../japanese/SKILL.md` を読んでください。JSDoc を書くときは `../jsdoc/SKILL.md` の指針にも従います。
 
+## API リファレンス
+
+特異な API のリファレンスを、必要なときに、必要な量だけ適宜読み込んでください。
+
+全般:
+
+- [Mocks](https://vitest.dev/api/mock.html)
+- [Vi Utility](https://vitest.dev/api/vi.html)
+- [Expect](https://vitest.dev/api/expect.html)
+- [ExpectTypeof](https://vitest.dev/api/expect-typeof.html)
+
+ブラウザーでのテスト:
+
+- [React](https://vitest.dev/api/browser/react.html)
+- [Context](https://vitest.dev/api/browser/context.html)
+- [Interactivity](https://vitest.dev/api/browser/interactivity.html)
+- [Locators](https://vitest.dev/api/browser/locators.html)
+- [Assertions](https://vitest.dev/api/browser/assertions.html)
+- [Commands](https://vitest.dev/api/browser/commands.html)
+
+
 ## 基本方針
 
 - ESM を使用します。
