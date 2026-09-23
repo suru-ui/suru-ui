@@ -220,8 +220,6 @@ export type ComboboxSlotProps<
 
   /**
    * ポップアップ内の {@link ComboboxInputGroup} に渡す props です。
-   *
-   * 省略時は {@link ComboboxAPI.getInputGroupProps|getInputGroupProps} の値を引き継ぎます。
    */
   readonly inputGroupInPopup?: Omit<ComboboxInputGroupProps, "children"> | undefined;
 
