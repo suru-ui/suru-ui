@@ -1,16 +1,18 @@
 import * as React from "react";
 
-type Config = {
+import type { IComponent } from "./types.js";
+
+interface Config {
   /**
    * `children` 以外のプロパティーを設定に結合して子孫に提供するコンポーネントです。
    *
    * 親の設定を引き継ぎ、変更されたキーのみを上書きします。
    * すべての値が `Object.is` で等しい場合は親の設定を使い回すため、余分な再レンダーを起こしません。
    */
-  readonly Context: {
-    (props: { children?: React.ReactNode; [key: string]: unknown }): React.ReactElement;
-    displayName?: string | undefined;
-  };
+  readonly Context: IComponent<{
+    children?: React.ReactNode;
+    [key: string]: unknown;
+  }>;
 
   readonly get: {
     /**
@@ -46,72 +48,61 @@ type Config = {
       defaultValue: TDefaultValue,
     ): TValue | TDefaultValue;
   };
-};
+}
 
 /**
  * 対応表を持つ内部的な設定です。
  */
-type ConfigState = Config & {
+class ConfigState implements Config {
   /**
    * キーと値の対応表です。
    *
    * @internal
    */
-  readonly map: Record<string, unknown>;
-};
+  readonly #map: Record<string, unknown>;
 
-/**
- * 対応表から設定を作成します。
- *
- * `get` を対応表へのクロージャーにすることで、分割代入しても動作します。
- */
-function createConfigState(map: Record<string, unknown>): ConfigState {
-  const state: ConfigState = {
-    get(
-      key: string,
-      typeGuard: (value: any) => boolean = () => true,
-      defaultValue: unknown = null,
-    ): unknown {
-      const value = state.map[key];
-      if (typeGuard(value)) {
-        return value;
+  /**
+   * 対応表から設定を作成します。
+   *
+   * @param map キーと値の対応表です。
+   */
+  public constructor(map: Record<string, unknown>) {
+    this.#map = map;
+  }
+
+  public get(
+    key: string,
+    typeGuard: (value: any) => boolean = () => true,
+    defaultValue: unknown = null,
+  ) {
+    const value = this.#map[key];
+    if (typeGuard(value)) {
+      return value;
+    }
+
+    return defaultValue;
+  }
+
+  public Context(props: { children?: React.ReactNode; [key: string]: unknown }) {
+    const config = React.use(Config) as ConfigState;
+    const { children, ...values } = props;
+
+    const set: Record<string, unknown> = {};
+    let dirty = false;
+    for (const key in values) {
+      if (!Object.is(config.#map[key], values[key])) {
+        set[key] = values[key];
+        dirty = true;
       }
+    }
 
-      return defaultValue;
-    },
-
-    map,
-
-    Context(props: { children?: React.ReactNode; [key: string]: unknown }): React.ReactElement {
-      const config = React.use(Config) as ConfigState;
-      const { children, ...values } = props;
-
-      const set: Record<string, unknown> = {};
-      let dirty = false;
-      for (const key in values) {
-        if (!Object.is(config.map[key], values[key])) {
-          set[key] = values[key];
-          dirty = true;
-        }
-      }
-
-      return (
-        <Config value={dirty ? createConfigState({ ...config.map, ...set }) : config}>
-          {children}
-        </Config>
-      );
-    },
-  };
-
-  return state;
+    return (
+      <Config value={dirty ? new ConfigState({ ...config.#map, ...set }) : config}>
+        {children}
+      </Config>
+    );
+  }
 }
-
-/**
- * 何も持たない初期設定です。
- *
- * コンテキストの既定値として使います。
- */
-const config: ConfigState = createConfigState({});
 
 /**
  * グローバルな値を共有するコンテキストです。
@@ -119,6 +110,6 @@ const config: ConfigState = createConfigState({});
  * `React.use(Config)` で設定を取り出し、`get` で読み取ります。
  * 値は取り出した設定の `Context` から提供します。
  */
-const Config: React.Context<Config> = React.createContext<Config>(config);
+const Config: React.Context<Config> = React.createContext<Config>(new ConfigState({}));
 
 export default Config;

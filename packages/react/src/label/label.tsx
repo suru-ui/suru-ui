@@ -1,6 +1,7 @@
 import type { IComponent } from "../types.js";
 import {
   type LabelRootSize,
+  type LabelRootColor,
   type LabelRootProps,
   type LabelRootState,
   LabelRoot,
@@ -8,6 +9,8 @@ import {
 
 // Types
 // -----
+
+export type LabelColor = LabelRootColor;
 
 export type LabelSize = LabelRootSize;
 
@@ -75,6 +78,8 @@ export namespace Label {
   export type State = LabelState;
 
   export type Props = LabelProps;
+
+  export type Color = LabelColor;
 
   export type Size = LabelSize;
 }

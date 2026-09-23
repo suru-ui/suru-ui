@@ -31,7 +31,6 @@
 /* 代入 */
 :scope {
   --sui_label-font_family: var(--sui-font-sans);
-  --sui_label-color: var(--sui-canvas_text-1);
 
   &.sui_label-size_sm {
     --sui_label-font_size: var(--sui-text-dns-sm-b-font_size);
@@ -52,6 +51,53 @@
     --sui_label-font_weight: var(--sui-text-dns-lg-b-font_weight);
     --sui_label-line_height: var(--sui-text-dns-lg-b-line_height);
     --sui_label-letter_spacing: var(--sui-text-dns-lg-b-letter_spacing);
+  }
+
+  &.sui_label-color_grey {
+    --sui_label-color: var(--sui-canvas_text-1);
+  }
+
+  &.sui_label-color_blue {
+    --sui_label-color: var(--sui-blue-naked-canvas_text-normal);
+  }
+
+  &.sui_label-color_purple {
+    --sui_label-color: var(--sui-purple-naked-canvas_text-normal);
+  }
+
+  &.sui_label-color_magenta {
+    --sui_label-color: var(--sui-magenta-naked-canvas_text-normal);
+  }
+
+  &.sui_label-color_red {
+    --sui_label-color: var(--sui-red-naked-canvas_text-normal);
+  }
+
+  &.sui_label-color_orange {
+    --sui_label-color: var(--sui-orange-naked-canvas_text-normal);
+  }
+
+  &.sui_label-color_yellow {
+    --sui_label-color: var(--sui-yellow-naked-canvas_text-normal);
+  }
+
+  &.sui_label-color_green {
+    --sui_label-color: var(--sui-green-naked-canvas_text-normal);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+@layer sui.important {
+@scope (.sui_label) to ([data-scope]) {
+
+/* Root */
+:scope {
+  &.sui_label-disabled {
+    color: var(--sui-disabled-naked-canvas_text);
+    cursor: not-allowed;
   }
 }
 

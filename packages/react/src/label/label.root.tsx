@@ -1,9 +1,17 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
-import type { Size } from "@suru-ui/theme";
+import { type Size, type Color, isSize, isColor } from "@suru-ui/theme";
+import * as React from "react";
 
+import Config from "../_config.jsx";
+import { isBool } from "../_is-x.js";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+
+/**
+ * ラベルの配色です。
+ */
+export type LabelRootColor = Color;
 
 /**
  * ラベルの大きさです。
@@ -24,9 +32,23 @@ export namespace LabelRootProps {
 
   export type SuruUI = {
     /**
+     * ラベルの配色を指定します。
+     *
+     * 既定値は設定コンテクストですが、それが有効な値でなければ `"grey"` です。
+     */
+    color?: LabelRootColor | undefined;
+
+    /**
+     * ラベルを無効にするかどうかを指定します。
+     *
+     * 既定値は設定コンテクストですが、それが有効な値でなければ `false` です。
+     */
+    disabled?: boolean | undefined;
+
+    /**
      * ラベルのサイズを指定します。
      *
-     * @default "md"
+     * 既定値は設定コンテクストですが、それが有効な値でなければ `"md"` です。
      */
     size?: LabelRootSize | undefined;
   };
@@ -53,8 +75,11 @@ export type LabelRootProps = LabelRootProps.Render &
  * フォームコントロールと関連付けられる見出しを表示します。
  */
 export const LabelRoot: IComponent<LabelRootProps> = function SuiLabelRoot(props) {
+  const config = React.use(Config);
   const {
-    size = "md",
+    size = config.get("size", isSize, "md"),
+    color = config.get("color", isColor, "grey"),
+    disabled = config.get("disabled", isBool, false),
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherLabelProps
@@ -64,7 +89,13 @@ export const LabelRoot: IComponent<LabelRootProps> = function SuiLabelRoot(props
     props: [
       otherLabelProps,
       {
-        className: cn<LabelRootState>("sui_label", `sui_label-size_${size}`),
+        className: cn<LabelRootState>(
+          "sui_label",
+          `sui_label-size_${size}`,
+          `sui_label-color_${color}`,
+          disabled && "sui_label-disabled",
+        ),
+        "aria-disabled": disabled || undefined,
         "data-scope": dataScope,
       },
     ],
@@ -88,6 +119,8 @@ export namespace Root {
 
     export type HTML = LabelRootProps.HTML;
   }
+
+  export type Color = LabelRootColor;
 
   export type Size = LabelRootSize;
 }
