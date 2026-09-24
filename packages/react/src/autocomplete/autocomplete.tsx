@@ -114,7 +114,7 @@ export type AutocompleteSlotProps<TItem = any> = {
   /**
    * {@link AutocompleteAddon} に渡す props です。
    */
-  readonly addon?: AutocompleteAddonProps | undefined;
+  readonly addon?: Omit<AutocompleteAddonProps, "children"> | undefined;
 
   /**
    * {@link AutocompleteBackdrop} に渡す props です。
@@ -469,6 +469,8 @@ export class AutocompleteAPI<TItem = any> {
   /**
    * {@link AutocompleteAddon} に渡す props を取得します。
    */
+  public getAddonProps(addon?: undefined): Omit<AutocompleteAddonProps, "children">;
+  public getAddonProps(addon?: React.ReactNode): AutocompleteAddonProps;
   public getAddonProps(addon: React.ReactNode = NONE): AutocompleteAddonProps {
     const { addon: props = {} } = this.slotProps;
 

@@ -145,7 +145,7 @@ export type ComboboxSlotProps<
   /**
    * {@link ComboboxAddon} に渡す props です。
    */
-  readonly addon?: ComboboxAddonProps | undefined;
+  readonly addon?: Omit<ComboboxAddonProps, "children"> | undefined;
 
   /**
    * {@link ComboboxArrow} に渡す props です。
@@ -671,6 +671,8 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
   /**
    * {@link ComboboxAddon} に渡す props を取得します。
    */
+  public getAddonProps(addon?: undefined): Omit<ComboboxAddonProps, "children">;
+  public getAddonProps(addon?: React.ReactNode): ComboboxAddonProps;
   public getAddonProps(addon: React.ReactNode = NONE): ComboboxAddonProps {
     const { addon: props = {} } = this.slotProps;
 
