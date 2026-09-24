@@ -19,16 +19,22 @@ description: Suru UI の React コンポーネント (`packages/react/src/<名�
 代表例:
 - `packages/react/src/combobox/`
 - `packages/react/src/autocomplete/`
+- `packages/react/src/accordion/`
 
 パターン別の代表例 (同型の実装はどれも同等に参照してよく、以下の列挙にない新設も模範になりえます):
 - `combobox.root.tsx` — Root 定型の例 (DOM を持たない Root + Config + Context 提供)
+- `accordion.root.tsx` — DOM を持つ Root + `items` レンダラーの例 (`data-scope` 起点・`TItem` / `TValue`)
 - `combobox.input-group.tsx` — スタイル起点・状態集約の例
 - `combobox.item.tsx` — 継承パターン (Outer の Base UI + Inner の Suru UI) の例
 - `combobox.collection.tsx` / `combobox.list.tsx` / `combobox.value.tsx` — 一覧描画・レンダラーの例
 - `combobox.context.ts` / `combobox.item.context.ts` — Context・サブコンテキストの例
 - `combobox.trigger.tsx` — render 関数を `children` に付け替える場合の例
 - `combobox.use-filter.ts` / `combobox.use-filtered-items.ts` — フックラッパーの例
+- `accordion.item.tsx` / `accordion.heading.tsx` / `accordion.trigger.tsx` / `accordion.content.tsx` — 薄い Base UI ラッパーの例
+- `accordion.indicator.tsx` — `useRender` 素要素 + 既定子 (`<ChevronIcon />`) の例
+- `_accordion.tsx` — `ItemObject` 判定・値推論ヘルパーの例
 - `combobox.tsx` — 合成 (Types + クラス API + 分岐 Component) の例
+- `accordion.tsx` — 単一 Root 描画の合成 (`slotProps` + `rootProps` の 2 分割) の例
 
 CSS は `../css/SKILL.md`、JSDoc と日本語は `../jsdoc/SKILL.md` と `../japanese/SKILL.md` に従います。
 
@@ -124,7 +130,7 @@ import { XIcon } from "../_icons.jsx";
 
 ### Context 定型
 
-子に値を渡す場合のみ、独立した `<kebab>.context.ts` に置きます。`ComboboxContext` を例とします。
+子に値を渡す場合のみ、独立した `<kebab>.context.ts` に置きます。`ComboboxContext` を例とします。`Accordion` のように Root の修飾が Root 自身に集約し子が読まない場合は Context ファイルを作りません。
 
 - Context の値型は `readonly` フィールドのオブジェクトにし、汎型は既定値付き (`<TItem = any>`) にします。各フィールドに JSDoc を付けます。
 - 修飾値型 (`Color`・`Radius`・`Size`・`Variant`・`IItemToStringLabel` など) は Context ファイルに分離し、JSDoc を付けます。`Color`・`Size` はテーマ型をそのまま使い (`Color`、`Size`)、`Radius` は `"none" | Size | "full"` の定型にします。
@@ -700,6 +706,49 @@ export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: Combo
 
 - `items`・`disabled`・`multiple` など Base UI へ渡す主要 props は明示列挙で渡し直します。残余任せにしません。
 
+### Root 定型 (DOM を持つ場合)
+
+`AccordionRoot` を例とします。Root 自身が HTML 要素を描画する場合は、Root が `data-scope` 起点になり、修飾 (`size`・`radius`・`variant`・`outlined`・`separator` など) と状態クラスを自身に集約します。子が修飾を読まない場合は Context を作りません。
+
+```tsx
+const {
+  size = "md",
+  items = [],
+  radius = size,
+  variant = "liquid",
+  children = defaultItemRenderer,
+  outlined = false,
+  className,
+  separator = false,
+  // @ts-expect-error
+  "data-scope": dataScope = "",
+  ...otherProps
+} = props;
+
+return (
+  <Accordion.Root
+    {...otherProps}
+    className={cn(
+      className,
+      "sui_accordion",
+      `sui_accordion-size_${size}`,
+      `sui_accordion-radius_${radius}`,
+      `sui_accordion-variant_${variant}`,
+      outlined && "sui_accordion-outlined",
+      separator && "sui_accordion-separator",
+      (state) => state.disabled && "sui_accordion-disabled",
+    )}
+    data-scope={dataScope}
+  >
+    {typeof children === "function" ? items.map(children) : children}
+  </Accordion.Root>
+);
+```
+
+- 汎型は `TItem` (表示対象) と `TValue` (項目値) の 2 軸にし、公開面は `<TItem = never, TValue = $InferItemObjectValue<TItem>>` で値型を推論します。`TMultiple` を持つ `ComboboxRoot` と混同しません。
+- `children` が関数のときだけ `items.map(children)` し、それ以外はそのまま描画します。既定値は `defaultItemRenderer` にします。
+- `Radius` はテーマに `full` が要らない形状では `"none" | Size` にします。`"none" | Size | "full"` の定型と混同しません。
+
 ### 描画の選び方
 
 | 対象 | 手段 | 備考 |
@@ -708,11 +757,11 @@ export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: Combo
 | 素の要素 | `useRender` | JSX 直書きしない |
 
 - `render` 受領型は `render={children}` に渡します。
-- 独自なしの素要素は引数ごと渡します。既定子ありは `children` に既定値を与えます。
+- 独自なしの素要素は引数ごと渡します。既定子ありは `children` に既定値を与えます (`accordion.indicator.tsx` の `children = <ChevronIcon />` を参照)。
 
 ### useRender 定型
 
-素の要素を作る場合のみ使います。`combobox/` には該当パーツがありません。該当する場合は次の定型に従います。
+素の要素を作る場合のみ使います。`accordion.indicator.tsx` を例とします。
 
 利用者の `className` は分解せず残余に残し、自動マージに任せます。`cn` に含めません。
 
@@ -918,6 +967,61 @@ return (
 - `GroupLabel` のように可視判定が要る取得系は `isLikelyVisibleNode` で判定し、駄目なら `null` を返します。`mergeProps([baseProps, otherProps, { children: label }])` の順にします。
 - 判定関数 (`isItemGroup`・`isLabeledItem`・`isPrimitiveItem`・`isReactNode`・`isLikelyVisibleNode`) は共有 `../_item.js` などから import し、再定義・公開しません。
 
+### Root 内 `items` レンダラー
+
+`AccordionRoot` を例とします。描画先が独立パーツを持たない単純な一覧では、`Collection`・`List` に分けず Root の `SuruUI` に `items` と関数 `children` を持たせます。
+
+```tsx
+export type AccordionRootItemObject = Omit<AccordionItemProps, "title"> & {
+  readonly content: React.ReactNode;
+  readonly title: React.ReactNode;
+  readonly htmlTitle?: React.HTMLAttributes<HTMLDivElement>["title"];
+};
+
+export interface IAccordionRootItemRenderer<TItem = any> {
+  (item: TItem, index: number, items: readonly TItem[]): React.ReactNode;
+}
+```
+
+- レンダラー型は `(item, index, items) => React.ReactNode` にし、`interface` で定義します。`Value` のように第 2 引数へ `ctx` 渡しはしません。
+- 項目オブジェクト型は `Omit<ItemProps, "title">` を土台に `title`・`content` (`React.ReactNode`) を必須化し、HTML 属性と衝突する名は `htmlTitle` にします。
+- 値型の推論は `_<kebab>.tsx` に `$InferItemObjectValue<TItem>` として置き、公開面は `<TItem = never, TValue = $InferItemObjectValue<TItem>>` にします。
+- 判定は `_<kebab>.tsx` に `isItemObject` として置きます (`isObject` + `"title" in item`・`"content" in item` + `isReactNode` 判定)。バレルと公開 `index.ts` から再輸出しません。
+- 既定レンダラーは `switch (true)` + `isItemObject` → `default` の順にし、キーは `getItemKey(item) ?? index` にします。`title`・`content`・`htmlTitle` を除いた残余を `Item` へ渡します。
+
+```tsx
+const defaultItemRenderer: IAccordionRootItemRenderer = (item, index) => {
+  switch (true) {
+    case isItemObject(item): {
+      const { title, content, htmlTitle, ...otherItemProps } = item;
+
+      return (
+        <AccordionItem {...otherItemProps} key={getItemKey(item) ?? index} title={htmlTitle}>
+          <AccordionHeading>
+            <AccordionTrigger>
+              {title}
+              <AccordionIndicator />
+            </AccordionTrigger>
+          </AccordionHeading>
+          <AccordionContent>{content}</AccordionContent>
+        </AccordionItem>
+      );
+    }
+
+    default:
+      return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
+  }
+};
+
+const { children = defaultItemRenderer } = props;
+
+return (
+  <Accordion.Root {...otherProps}>
+    {typeof children === "function" ? items.map(children) : children}
+  </Accordion.Root>
+);
+```
+
 ## 短名定型
 
 同じパーツファイル内のパーツの直後に置きます。`ComboboxChip` を例とします。
@@ -947,7 +1051,7 @@ export namespace Chip {
 }
 ```
 
-- namespace には `State` と `Props` を必ず入れ、値型 (`Color`・`Radius`・`Size`・`Variant`・`InputPosition`・`IRenderer`・`IItemRenderer` など) があれば追加します。汎型は既定値付きで引き継ぎます (`<TValue = any>`・`<TItem = any, TMultiple extends boolean | undefined = boolean | undefined>`)。
+- namespace には `State` と `Props` を必ず入れ、値型 (`Color`・`Radius`・`Size`・`Variant`・`InputPosition`・`IRenderer`・`IItemRenderer` など) があれば追加します。汎型は既定値付きで引き継ぎます (`<TValue = any>`・`<TItem = any, TMultiple extends boolean | undefined = boolean | undefined>`・`<TItem = any, TValue = any>`)。
 - `Props` は区分の `namespace Props` と `&` 結合の `type Props` の 2 段にします。`|` で結合しません。`BaseUI` を落としません。
 - 再輸出と namespace 内の型別名には JSDoc を付けません。`{@link X}` のみの JSDoc も付けません。
 - フックの短名は同ファイルの末尾に置きます (例: `export { useComboboxFilter as useFilter };`、`export { useComboboxFilteredItems as useFilteredItems };`、`export { ComboboxItemContext as ItemContext, useComboboxItemContext as useItemContext };` など)。
@@ -1164,9 +1268,62 @@ export namespace Combobox {
 - 静的メンバー (`TriggerLabel`・`useContext`・`useFilter`・`useFilteredItems`) は `Object.assign` の第 2 引数に置きます。
 - 末尾に namespace を置き、`State`・`Props`・`SlotProps` と再命名型を列挙します。JSDoc は付けません。
 
+### 単純な合成 (単一 Root 描画)
+
+`accordion.tsx` を例とします。スタイル起点が Root 自身に集約しツリー分岐が要らない場合は、`Combobox` の 3 分割・4 分割・分岐描画を簡略化します。
+
+- 合成 `Props` は `<Comp>` 固有 + `Root` の 2 分割 + 交差にします。`InputGroup` のような第 3 の区分は作りません。
+
+```ts
+namespace AccordionProps {
+  export type Accordion = {
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     */
+    slotProps?: AccordionSlotProps | undefined;
+  };
+
+  export type Root<TItem = any, TValue = any> = Omit<
+    AccordionRootProps<TItem, TValue>,
+    keyof Accordion
+  >;
+}
+
+export type AccordionProps<TItem = any, TValue = any> = AccordionProps.Accordion &
+  AccordionProps.Root<TItem, TValue>;
+```
+
+- `SlotProps` のキーは API が `children` を生成・上書きするパーツ (`content`・`item`) は `Omit<..., "children">` にし、生成しないパーツ (`indicator`) はそのままにします。
+- API は `slotProps` + `rootProps` の 2 分割にします。`comboboxProps`・`inputGroupProps` のような第 3・第 4 の保持は作りません。
+
+```ts
+export class AccordionAPI<TItem = any, TValue = any> {
+  private readonly slotProps: AccordionSlotProps;
+  private readonly rootProps: AccordionRootProps<TItem, TValue>;
+
+  public constructor(props: AccordionProps<TItem, TValue>) {
+    const { slotProps = {}, ...rootProps } = props;
+    this.slotProps = slotProps;
+    this.rootProps = rootProps;
+  }
+}
+```
+
+- 既定レンダラーは API の `private defaultItemRenderer` に持ち、`getRootProps` で `const { children = this.defaultItemRenderer, ...otherProps } = this.rootProps; return { ...otherProps, children };` と解決します。`Root` パーツ側の `defaultItemRenderer` と重複させず、API 所有を優先します。
+- 項目あり getter (`getItemProps(item?)`・`getContentProps(item?)`) は引数なし版と項目あり版を兼ね、`item` があるときだけ項目オブジェクトから `title`・`content` を分離して `mergeProps([props, otherItemProps, { title }])` します。表示ノードは `getTitle(item): React.ReactNode` のように `get<Part>Props` ではない getter にします。
+- Component は汎型 interface + 単一 Root 描画にし、静的メンバー (`Object.assign` 第 2 引数) は付けません。公開面の既定値は `<TItem = never, TValue = $InferItemObjectValue<TItem>>` にします。
+
+```tsx
+export const Accordion: IAccordion = function SuiAccordion(props: AccordionProps) {
+  const api = useAccordionAPI(props);
+
+  return <AccordionRoot {...api.getRootProps()} />;
+};
+```
+
 ## 周辺ファイル
 
-- `_<kebab>.tsx` はパーツファイルと合成 (`.tsx`) からのみ import します。パーツ横断の補助を置き、バレルと公開 `index.ts` からは再輸出しません。
+- `_<kebab>.tsx` はパーツファイルと合成 (`.tsx`) からのみ import します。パーツ横断の補助 (`ItemObject` 判定・値推論など) を置き、バレルと公開 `index.ts` からは再輸出しません。
 - バレル `<kebab>.parts.ts` は全パーツを `export *` で再輸出し、`./<kebab>.css` を import します。短名 (`Context` や `Root`、`ItemContext`、`useFilter` など) は各パーツファイルの再輸出から伝わります。並びはパーツツリー順 (描画順) にします。アルファベット順にしません。
 - `src/index.ts` には合成 (`.tsx`) の公開型と値を網羅列挙します。パーツ単体の型は列挙せず、合成の再命名型を使います。`ItemGroup` だけでなく `ItemValue`・`ItemLabeledValue`・`IFilter`・`IFilteredItems` など合成 namespace が公開する型を落としません。値には `type` を付けず、型のみには `type` を付けます。
 
@@ -1219,19 +1376,19 @@ mise run test:typecheck
 - `Props` を 4 区分に分け、`&` で結合している。区分自体に JSDoc を付けていない。結合本体の JSDoc を残している。`Render = {}`・`HTML = {}` の場合も区分を落としていない。
 - 短名 namespace の `Props` を `&` で結合している。`BaseUI` を落としていない。値型 (`Color`・`Radius`・`IRenderer` など) を追加している。
 - 空の `SuruUI` / `BaseUI` でも `Exclude` / `Omit` の `| keyof SuruUI` / `| keyof BaseUI` を省略していない。
-- 型引数名が `T` 始まりである。テーマ型 (`Color`・`Size`) を union 再定義していない。`Radius` が `"none" | Size | "full"` である。
+- 型引数名が `T` 始まりである。テーマ型 (`Color`・`Size`) を union 再定義していない。`Radius` が `"none" | Size | "full"` または `"none" | Size` (Accordion のように `full` が要らない形状は後者) である。
 - 他コンポーネント参照に短名を使っていない。完全な交差型を使っている。
 - Base UI の公開型に漏れがない。`Handle` の有無を確認している。根拠コメントの型名が実体と一致している。
-- `Context` 値型が `readonly` + 汎型既定値付きである。フック型が `IUseContext` 継承 + オーバーロードである。`ContextMissingError` の `contextName` / `providerName` が正しい。ローカル変数は `ctx` である。派生コンテキストが `useMemo` + スプレッドで、意図注釈がある。
+- Context を持つ場合、`Context` 値型が `readonly` + 汎型既定値付きである。フック型が `IUseContext` 継承 + オーバーロードである。`ContextMissingError` の `contextName` / `providerName` が正しい。ローカル変数は `ctx` である。派生コンテキストが `useMemo` + スプレッドで、意図注釈がある。Context を持たない場合 (Accordion のように修飾が Root 自身に集約する場合) は Context ファイルがない。
 - 再輸出・再命名に JSDoc (`{@link X}` のみを含む) を付けていない。`State` / `Props` を省略していない。該当するフック短名 (例: `useFilter`・`useFilteredItems`・`useItemContext`・`ItemContext` など) を落としていない。
-- 一覧描画を持つ場合、レンダラー型 (例: `ICollectionItemRenderer`・`IListItemRenderer`・`IValueRenderer`・`IItemLabelRenderer` など) が定義され、`children` 強化 (`Override` + `BaseUI の型を強化します。`) になっている。`switch (true)` の順序と `getItemKey ?? index` が正しい。
+- 一覧描画を持つ場合、レンダラー型 (例: `ICollectionItemRenderer`・`IListItemRenderer`・`IValueRenderer`・`IItemLabelRenderer`・`IAccordionRootItemRenderer` など) が定義されている。分離描画 (`Collection`・`List`・`Value`) では `children` 強化 (`Override` + `BaseUI の型を強化します。`) にし、Root 内描画 (Accordion) では `SuruUI` の `children: React.ReactNode | I...ItemRenderer` にする。`switch (true)` の順序と `getItemKey ?? index` が正しい。
 - 反復要素に `key` を付けている。判定関数を公開・再定義していない。
-- 再命名型にパーツ名を重ねていない。合成 namespace に `State`・`Props`・`SlotProps`・`Context` と該当する再命名型 (例: `ItemGroup`・`ItemValue`・`IFilter` 系など) を落としていない。
+- 再命名型にパーツ名を重ねていない。合成 namespace に `State`・`Props`・`SlotProps` と該当する再命名型 (例: `ItemGroup`・`ItemValue`・`IFilter` 系など) を落としていない。`Context` は持つ場合のみ列挙する (Accordion のように持たない合成では列挙しない)。
 - `SlotProps` が `readonly`・`| undefined` である。各キーに JSDoc がある。持上げキーを残していない。`children` の `Omit` 有無が生成有無と一致している。
-- 合成 `Props` が `<Comp>` 固有 + `Root` + スタイル起点 (例: Combobox では `Combobox` + `Root` + `InputGroup`) の 3 分割 + 交差である。`keyof <Comp>` / `keyof Root` の除外が正しい。
-- API がクラス + `IUse...API` + `new` 返却である。`<comp>Props` / `slotProps` / `rootProps` / スタイル起点Props (例: Combobox では `comboboxProps` / `slotProps` / `rootProps` / `inputGroupProps`) の 4 分割が正しい。getter 名・`| null` が正しい。常に描画するパーツを変数化していない。可視判定なしに描画していない。`slotProps` 側を前に展開し、利用者指定の `children` を無条件上書きしていない。存在しない Base UI プロパティーを参照せず、`@ts-expect-error` で隠蔽していない。`data-scope: null` + 変数経由が必要な箇所で守られている。
-- Component が汎型 interface + `Object.assign` + 静的メンバーである。ツリー全体が分岐する場合 (例: `inputInPopup`) は両ツリーで同じ getter 群を使い回している。`getLabel()` を `{api.getLabel()}` で描画している。
-- `data-scope` が起点のみである。Root が DOM を持たない場合の起点 (例: InputGroup / Portal / TriggerLabel など) が正しい。状態・見た目が起点に集約されている。独立装飾の子 (例: `Chip`・`Popup` など) 以外に同名 props や修飾クラスがない。レイアウト以外の `&:has(.子修飾)` がない。見た目だけの新規 `Context` がない。Base UI の `data-*` を CSS に使っていない。`State` 外のクラスや CSS がない。該当する場合、ケバブを含む状態値 (例: `popupSide`) の正規化がある。
-- 一覧描画を持つ場合、`items` を二重定義していない。`Group` の透過遮断に意図注釈がある。
+- 合成 `Props` が `<Comp>` 固有 + `Root` (+ スタイル起点が別にある場合は第 3 区分、例: Combobox では `Combobox` + `Root` + `InputGroup`、Accordion では `Accordion` + `Root`) の 2 分割または 3 分割 + 交差である。`keyof <Comp>` / `keyof Root` の除外が正しい。
+- API がクラス + `IUse...API` + `new` 返却である。保持は `slotProps` + `rootProps` の 2 分割 (Accordion) または `<comp>Props` / `slotProps` / `rootProps` / スタイル起点Props (例: Combobox では `comboboxProps` / `slotProps` / `rootProps` / `inputGroupProps`) の 4 分割のいずれかで正しい。getter 名・`| null` が正しい。常に描画するパーツを変数化していない。可視判定なしに描画していない。`slotProps` 側を前に展開し、利用者指定の `children` を無条件上書きしていない。存在しない Base UI プロパティーを参照せず、`@ts-expect-error` で隠蔽していない。`data-scope: null` + 変数経由が必要な箇所で守られている。
+- Component が汎型 interface + 単一 Root 描画 (Accordion) または `Object.assign` + 静的メンバー (Combobox) である。ツリー全体が分岐する場合 (例: `inputInPopup`) は両ツリーで同じ getter 群を使い回している。`getLabel()` / `getTitle()` のような表示ノード getter を `{api.getX()}` で描画している。
+- `data-scope` が起点のみである。Root が DOM を持つ場合 (Accordion) は Root 自身が起点であり、持たない場合の起点 (例: InputGroup / Portal / TriggerLabel など) が正しい。状態・見た目が起点に集約されている。独立装飾の子 (例: `Chip`・`Popup` など) 以外に同名 props や修飾クラスがない。レイアウト以外の `&:has(.子修飾)` がない。見た目だけの新規 `Context` がない。Base UI の `data-*` を CSS に使っていない。`State` 外のクラスや CSS がない。該当する場合、ケバブを含む状態値 (例: `popupSide`) の正規化がある。
+- 一覧描画を持つ場合、`items` を二重定義していない (分離描画では描画側が `Context` から読み、Root 内描画では Root の `SuruUI` に集約する)。`Group` の透過遮断に意図注釈がある。
 - 継承パターンに該当する場合、継承の `BaseUI` が `Override<Inner, Override<Pick<Outer>, 強化>>` の順である。`Required` を省略していない。除外交差キーの `undefined` 明示がある。`render = <div />` の既定がある。`proxyRenderProps` に `Render` をすべて渡し、`mergeProps` の順序が正しい。該当する場合、サブコンテキスト (例: `ItemContext`) の提供がある。
 - `index.ts` に再輸出以外がない。公開型の列挙漏れがない。アイコンが共有ファイルにある。放置 TODO・コピペコメント (`AriaCombobox` など) がない。
