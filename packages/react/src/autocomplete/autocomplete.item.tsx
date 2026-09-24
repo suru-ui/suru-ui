@@ -8,6 +8,7 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
+import { useAutocompleteContext } from "./autocomplete.context.js";
 
 /**
  * {@link AutocompleteItem} の状態です。
@@ -19,22 +20,27 @@ export namespace AutocompleteItemProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Override<
+  export type BaseUI<TValue = any> = Override<
     Button.Root.Props.BaseUI,
-    Pick<
-      React.ComponentProps<typeof Autocomplete.Item>,
-      Exclude<
-        // Base UI の型を確認して取り出すプロパティーを決めます。
-        // NonNativeButtonProps:
-        | keyof NonNativeButtonProps
-        // AutocompleteItemProps:
-        | "children"
-        | "onClick"
-        | "index"
-        | "value"
-        | "disabled",
-        keyof Render | keyof SuruUI
-      >
+    Override<
+      Pick<
+        React.ComponentProps<typeof Autocomplete.Item>,
+        Exclude<
+          // Base UI の型を確認して取り出すプロパティーを決めます。
+          // NonNativeButtonProps:
+          | keyof NonNativeButtonProps
+          // AutocompleteItemProps:
+          | "children"
+          | "onClick"
+          | "index"
+          | "value"
+          | "disabled",
+          keyof Render | keyof SuruUI
+        >
+      >,
+      {
+        value?: TValue;
+      }
     >
   >;
 
@@ -47,17 +53,25 @@ export namespace AutocompleteItemProps {
 /**
  * {@link AutocompleteItem} に渡す props です。
  */
-export type AutocompleteItemProps = AutocompleteItemProps.Render &
+export type AutocompleteItemProps<TValue = any> = AutocompleteItemProps.Render &
   AutocompleteItemProps.SuruUI &
-  AutocompleteItemProps.BaseUI &
+  AutocompleteItemProps.BaseUI<TValue> &
   AutocompleteItemProps.HTML;
+
+export interface IAutocompleteItem extends IComponent<AutocompleteItemProps> {
+  /**
+   * @template TValue 項目の値の型です。
+   */
+  <TValue = any>(props: AutocompleteItemProps<TValue>): IComponent.Return;
+}
 
 /**
  * リストの個々の項目要素です。
  */
-export const AutocompleteItem: IComponent<AutocompleteItemProps> = function SuiAutocompleteItem(
-  props,
+export const AutocompleteItem: IAutocompleteItem = function SuiAutocompleteItem(
+  props: AutocompleteItemProps,
 ) {
+  const ctx = useAutocompleteContext();
   const {
     index,
     style,
@@ -92,7 +106,7 @@ export const AutocompleteItem: IComponent<AutocompleteItemProps> = function SuiA
             Pick<Button.Root.Props.HTML, "disabled">
         > = {
           item: true,
-          size: undefined,
+          size: ctx.size,
           color: "grey",
           muted: undefined,
           radius: undefined,
@@ -113,7 +127,12 @@ export const AutocompleteItem: IComponent<AutocompleteItemProps> = function SuiA
               proxyRenderProps(state, {
                 style,
                 render,
-                className: cn(className, "sui_autocomplete_item"),
+                className: cn(
+                  className,
+                  "sui_autocomplete_item",
+                  (state) => state.disabled && "sui_autocomplete_item-disabled",
+                  (state) => state.highlighted && "sui_autocomplete_item-highlighted",
+                ),
               }),
             ])}
           />
@@ -128,14 +147,14 @@ export { AutocompleteItem as Item };
 export namespace Item {
   export type State = AutocompleteItemState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render & Props.SuruUI & Props.BaseUI<TValue> & Props.HTML;
 
   export namespace Props {
     export type Render = AutocompleteItemProps.Render;
 
     export type SuruUI = AutocompleteItemProps.SuruUI;
 
-    export type BaseUI = AutocompleteItemProps.BaseUI;
+    export type BaseUI<TValue = any> = AutocompleteItemProps.BaseUI<TValue>;
 
     export type HTML = AutocompleteItemProps.HTML;
   }

@@ -2,7 +2,6 @@ import { Autocomplete } from "@base-ui/react/autocomplete";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
-import type { RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
 import { AutocompleteContext } from "./autocomplete.context.js";
 
@@ -70,7 +69,7 @@ export type AutocompleteRootVariant = "naked" | "liquid";
 export type AutocompleteRootState = Autocomplete.Root.State;
 
 export namespace AutocompleteRootProps {
-  export type Render = RenderProps<AutocompleteRootState>;
+  export type Render = {};
 
   export type SuruUI = {
     /**

@@ -6,6 +6,11 @@ import { Autocomplete } from "@base-ui/react/autocomplete";
 export interface AutocompleteFilter extends ReturnType<typeof Autocomplete.useFilter> {}
 
 /**
+ * {@link AutocompleteFilter} の別名です。
+ */
+export type IAutocompleteFilter = AutocompleteFilter;
+
+/**
  * {@link useAutocompleteFilter} のオプションです。
  */
 export type IUseAutocompleteFilterOptions =

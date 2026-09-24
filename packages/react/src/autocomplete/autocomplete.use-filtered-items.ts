@@ -2,33 +2,24 @@ import { Autocomplete } from "@base-ui/react/autocomplete";
 
 /**
  * フィルタリングされた項目の一覧です。
+ *
+ * @template TItem 項目の値の型です。
  */
-export type AutocompleteFilteredItems<TItem = any> = readonly TItem[];
+export type IAutocompleteFilteredItems<TItem = any> = ReadonlyArray<TItem>;
 
 /**
- * {@link useAutocompleteFilteredItems} の戻り値です。
- */
-export type IUseAutocompleteFilteredItemsReturn<TItem = any> = AutocompleteFilteredItems<TItem>;
-
-/**
- * {@link useAutocompleteFilteredItems} の型です。
+ * {@link useFilteredItems} の型です。
  */
 export interface IUseAutocompleteFilteredItems {
-  <TItem = any>(): IUseAutocompleteFilteredItemsReturn<TItem>;
-}
-
-export namespace IUseAutocompleteFilteredItems {
-  export type Return<TItem = any> = IUseAutocompleteFilteredItemsReturn<TItem>;
-}
-
-function useSuiAutocompleteFilteredItems(): AutocompleteFilteredItems<any> {
-  return Autocomplete.useFilteredItems();
+  <TItem = any>(): IAutocompleteFilteredItems<TItem>;
 }
 
 /**
  * Root 内でフィルタリングされた項目の一覧を返すフックです。
  */
 export const useAutocompleteFilteredItems: IUseAutocompleteFilteredItems =
-  useSuiAutocompleteFilteredItems;
+  function useSuiAutocompleteFilteredItems() {
+    return Autocomplete.useFilteredItems();
+  };
 
 export { useAutocompleteFilteredItems as useFilteredItems };

@@ -7,7 +7,7 @@ import type { IUseContext } from "../types.js";
 /**
  * フォーカス時に枠線へ適用する配色です。
  */
-type AutocompleteContextColor = Color;
+export type AutocompleteContextColor = Color;
 
 /**
  * 入力を含むグループ要素の角丸です。
@@ -18,7 +18,7 @@ type AutocompleteContextColor = Color;
  * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-type AutocompleteContextRadius = "none" | Size | "full";
+export type AutocompleteContextRadius = "none" | Size | "full";
 
 /**
  * 入力欄とリスト項目のサイズです。
@@ -27,7 +27,7 @@ type AutocompleteContextRadius = "none" | Size | "full";
  * - `"md"`: 標準的なサイズ
  * - `"lg"`: 大きいサイズ
  */
-type AutocompleteContextSize = Size;
+export type AutocompleteContextSize = Size;
 
 /**
  * 入力欄の主な外観です。
@@ -35,7 +35,7 @@ type AutocompleteContextSize = Size;
  * - `"naked"`: 背景のない入力欄
  * - `"liquid"`: 薄い塗りつぶし
  */
-type AutocompleteContextVariant = "naked" | "liquid";
+export type AutocompleteContextVariant = "naked" | "liquid";
 
 /**
  * {@link AutocompleteRoot} が子パーツへ提供する状態です。
@@ -73,9 +73,17 @@ export type AutocompleteContext = {
 export const AutocompleteContext: React.Context<AutocompleteContext | null> =
   React.createContext<AutocompleteContext | null>(null);
 
-function useSuiAutocompleteContext(optional?: false): AutocompleteContext;
-function useSuiAutocompleteContext(optional?: boolean): AutocompleteContext | null;
-function useSuiAutocompleteContext(optional?: boolean): AutocompleteContext | null {
+export interface IUseAutocompleteContext extends IUseContext<AutocompleteContext> {
+  (optional?: false): AutocompleteContext;
+  (optional?: boolean): AutocompleteContext | null;
+}
+
+/**
+ * {@link AutocompleteContext} を読み取るフックです。
+ */
+export const useAutocompleteContext: IUseAutocompleteContext = function useSuiAutocompleteContext(
+  optional?: boolean,
+): any {
   const ctx = React.use(AutocompleteContext);
   if (ctx === null && !optional) {
     throw new ContextMissingError({
@@ -85,12 +93,7 @@ function useSuiAutocompleteContext(optional?: boolean): AutocompleteContext | nu
   }
 
   return ctx;
-}
-
-/**
- * {@link AutocompleteContext} を読み取るフックです。
- */
-export const useAutocompleteContext: IUseContext<AutocompleteContext> = useSuiAutocompleteContext;
+};
 
 export { AutocompleteContext as Context, useAutocompleteContext as useContext };
 
