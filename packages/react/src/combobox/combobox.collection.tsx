@@ -10,7 +10,10 @@ import { ComboboxGroupLabel } from "./combobox.group-label.jsx";
 import { ComboboxGroup } from "./combobox.group.jsx";
 import { ComboboxItemIndicator } from "./combobox.item-indicator.jsx";
 import { ComboboxItem } from "./combobox.item.jsx";
-import type { ComboboxRootItemGroup, ComboboxRootItemLabeledValue } from "./combobox.root.jsx";
+import type {
+  ComboboxRootItemGroupObject,
+  ComboboxRootLabeledItemObject,
+} from "./combobox.root.jsx";
 import { ComboboxSeparator } from "./combobox.separator.jsx";
 
 /**
@@ -92,7 +95,7 @@ export const ComboboxCollection: IComboboxCollection = function SuiComboboxColle
 
   const defaultItemRenderer: IComboboxCollectionItemRenderer = (item, index) => {
     switch (true) {
-      case isItemGroup<ComboboxRootItemGroup>(item): {
+      case isItemGroup<ComboboxRootItemGroupObject>(item): {
         const { label, ...otherProps } = item;
 
         return (
@@ -104,7 +107,7 @@ export const ComboboxCollection: IComboboxCollection = function SuiComboboxColle
         );
       }
 
-      case isLabeledItem<ComboboxRootItemLabeledValue>(item): {
+      case isLabeledItem<ComboboxRootLabeledItemObject>(item): {
         const { label, ...otherProps } = item;
 
         return (

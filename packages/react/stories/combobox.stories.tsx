@@ -12,12 +12,12 @@ const VARIANTS: readonly Combobox.Variant[] = ["naked", "liquid"];
 
 const meta = preview.meta({
   title: "Combobox",
-  component: Combobox<Combobox.ItemValue | Combobox.ItemGroup, boolean>,
+  component: Combobox<any, boolean>,
 });
 
 export default meta;
 
-const ctrl = controls(Combobox<Combobox.ItemValue | Combobox.ItemGroup, boolean>, {
+const ctrl = controls(Combobox<any, boolean>, {
   arrow: {
     control: "boolean",
   },

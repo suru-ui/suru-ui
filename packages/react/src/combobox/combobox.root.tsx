@@ -46,7 +46,7 @@ export type ComboboxRootColor = Color;
  *
  * @template TValue 項目の値の型です。
  */
-export type ComboboxRootItemLabeledValue<TValue = any> = Override<
+export type ComboboxRootLabeledItemObject<TValue = any> = Override<
   Omit<ComboboxItemProps, "children">,
   {
     /**
@@ -62,26 +62,17 @@ export type ComboboxRootItemLabeledValue<TValue = any> = Override<
 >;
 
 /**
- * リストに表示する項目です。
- *
- * 値そのものか、ラベルと値を持つオブジェクトを指定できます。
- *
- * @template TValue 項目の値の型です。
- */
-export type ComboboxRootItemValue<TValue = any> = TValue | ComboboxRootItemLabeledValue<TValue>;
-
-/**
  * 関連する項目をまとめるグループオブジェクトです。
  *
  * @template TValue 項目の値の型です。
  */
-export type ComboboxRootItemGroup<TValue = any> = Override<
+export type ComboboxRootItemGroupObject<TValue = any> = Override<
   ComboboxGroupProps<TValue>,
   {
     /**
      * グループに含まれる項目です。
      */
-    items: readonly ComboboxRootItemValue<TValue>[];
+    items: readonly (TValue | ComboboxRootLabeledItemObject<TValue>)[];
 
     /**
      * グループのラベルです。
@@ -355,11 +346,9 @@ export namespace Root {
 
   export type HighlightEventReason = ComboboxRootHighlightEventReason;
 
-  export type ItemGroup<TValue = any> = ComboboxRootItemGroup<TValue>;
+  export type ItemGroupObject<TValue = any> = ComboboxRootItemGroupObject<TValue>;
 
-  export type ItemLabeledValue<TValue = any> = ComboboxRootItemLabeledValue<TValue>;
-
-  export type ItemValue<TValue = any> = ComboboxRootItemValue<TValue>;
+  export type LabeledItemObject<TValue = any> = ComboboxRootLabeledItemObject<TValue>;
 
   export type Radius = ComboboxRootRadius;
 

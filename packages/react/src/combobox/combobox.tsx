@@ -54,8 +54,8 @@ import {
   type IUseComboboxContext,
   type ComboboxTriggerProps,
   type ComboboxBackdropProps,
-  type ComboboxRootItemGroup,
-  type ComboboxRootItemValue,
+  type ComboboxRootItemGroupObject,
+  type ComboboxRootLabeledItemObject,
   type IComboboxTriggerLabel,
   type ComboboxItemLabelProps,
   type ComboboxSeparatorProps,
@@ -68,7 +68,6 @@ import {
   type ComboboxInputDisplayProps,
   type IUseComboboxFilteredItems,
   type ComboboxItemIndicatorProps,
-  type ComboboxRootItemLabeledValue,
   type ComboboxRootChangeEventReason,
   type ComboboxRootChangeEventDetails,
   type ComboboxRootHighlightEventReason,
@@ -130,11 +129,9 @@ export type ComboboxSize = ComboboxRootSize;
 
 export type ComboboxVariant = ComboboxRootVariant;
 
-export type ComboboxItemGroup<TValue = any> = ComboboxRootItemGroup<TValue>;
+export type ComboboxItemGroupObject<TValue = any> = ComboboxRootItemGroupObject<TValue>;
 
-export type ComboboxItemLabeledValue<TItem = any> = ComboboxRootItemLabeledValue<TItem>;
-
-export type ComboboxItemValue<TItem = any> = ComboboxRootItemValue<TItem>;
+export type ComboboxLabeledItemObject<TItem = any> = ComboboxRootLabeledItemObject<TItem>;
 
 /**
  * {@link Combobox} の各パーツに渡す props です。
@@ -618,7 +615,7 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
 
   private defaultCollectionItemRenderer: IComboboxCollectionItemRenderer = (item, index) => {
     switch (true) {
-      case isItemGroup<ComboboxItemGroup>(item): {
+      case isItemGroup<ComboboxItemGroupObject>(item): {
         const groupLabelProps = this.getGroupLabelProps(item);
         const separatorProps = this.getSeparatorProps();
 
@@ -788,7 +785,7 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
    *
    * @param item グループの項目です。
    */
-  public getGroupLabelProps(item?: ComboboxItemGroup): ComboboxGroupLabelProps | null {
+  public getGroupLabelProps(item?: ComboboxItemGroupObject): ComboboxGroupLabelProps | null {
     const { groupLabel: baseProps = {} } = this.slotProps;
 
     if (item) {
@@ -810,9 +807,9 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
    */
   public getGroupProps<TItem = any>(): ComboboxGroupProps<TItem>;
   public getGroupProps<TValue = any>(
-    item: ComboboxItemGroup<TValue>,
-  ): ComboboxGroupProps<ComboboxItemValue<TValue>>;
-  public getGroupProps(item?: ComboboxItemGroup) {
+    item: ComboboxItemGroupObject<TValue>,
+  ): ComboboxGroupProps<TValue | ComboboxLabeledItemObject<TValue>>;
+  public getGroupProps(item?: ComboboxItemGroupObject) {
     const { group: baseProps = {} } = this.slotProps;
 
     if (item) {
@@ -892,7 +889,7 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
     const { item: baseProps = {} } = this.slotProps;
 
     switch (true) {
-      case isLabeledItem<ComboboxRootItemLabeledValue>(item): {
+      case isLabeledItem<ComboboxRootLabeledItemObject>(item): {
         const { label: _label, ...otherProps } = item;
         return mergeProps([baseProps, otherProps, { value: item }]);
       }
@@ -1275,11 +1272,9 @@ export namespace Combobox {
 
   export type IFilteredItems<TItem = any> = IComboboxFilteredItems<TItem>;
 
-  export type ItemGroup<TValue = any> = ComboboxItemGroup<TValue>;
+  export type ItemGroupObject<TValue = any> = ComboboxItemGroupObject<TValue>;
 
-  export type ItemLabeledValue<TItem = any> = ComboboxItemLabeledValue<TItem>;
-
-  export type ItemValue<TItem = any> = ComboboxItemValue<TItem>;
+  export type LabeledItemObject<TItem = any> = ComboboxLabeledItemObject<TItem>;
 
   export type Radius = ComboboxRadius;
 
