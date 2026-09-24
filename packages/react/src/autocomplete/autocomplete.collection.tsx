@@ -13,6 +13,7 @@ import type {
   AutocompleteRootItemGroupObject,
   AutocompleteRootLabeledItemObject,
 } from "./autocomplete.root.jsx";
+import { AutocompleteSeparator } from "./autocomplete.separator.jsx";
 
 /**
  * {@link AutocompleteCollection} の各項目をレンダリングする関数のインターフェイスです。
@@ -38,14 +39,21 @@ export type AutocompleteCollectionState = {};
 export namespace AutocompleteCollectionProps {
   export type Render = {};
 
-  export type SuruUI = {};
+  export type SuruUI = {
+    /**
+     * グループの末尾に区切り線を表示するかどうかを指定します。
+     *
+     * 既定レンダラーを使うときにだけ適用されます。
+     */
+    separator?: boolean | undefined;
+  };
 
   export type BaseUI<TItem = any> = Override<
     Pick<
       React.ComponentProps<typeof Autocomplete.Collection>,
       Exclude<
         // Base UI の型を確認して取り出すプロパティーを決めます。
-        // ComboboxCollectionProps:
+        // AutocompleteCollectionProps:
         "children",
         keyof Render | keyof SuruUI
       >
@@ -91,6 +99,7 @@ export const AutocompleteCollection: IAutocompleteCollection = function SuiAutoc
           <AutocompleteGroup {...otherProps} key={getItemKey(item) ?? index}>
             {isLikelyVisibleNode(label) && <AutocompleteGroupLabel>{label}</AutocompleteGroupLabel>}
             <AutocompleteCollection>{defaultItemRenderer}</AutocompleteCollection>
+            {separator && <AutocompleteSeparator />}
           </AutocompleteGroup>
         );
       }
@@ -118,7 +127,7 @@ export const AutocompleteCollection: IAutocompleteCollection = function SuiAutoc
     }
   };
 
-  const { children = defaultItemRenderer } = props;
+  const { children = defaultItemRenderer, separator = false } = props;
 
   return <Autocomplete.Collection>{children}</Autocomplete.Collection>;
 };

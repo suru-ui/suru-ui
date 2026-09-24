@@ -43,6 +43,8 @@ import {
   type AutocompleteRootVariant,
   type AutocompleteStatusProps,
   type IUseAutocompleteContext,
+  type AutocompleteBackdropProps,
+  type AutocompleteSeparatorProps,
   type IAutocompleteFilteredItems,
   type AutocompleteCollectionProps,
   type AutocompleteGroupLabelProps,
@@ -67,6 +69,8 @@ import {
   AutocompletePopup,
   AutocompletePortal,
   AutocompleteStatus,
+  AutocompleteBackdrop,
+  AutocompleteSeparator,
   useAutocompleteFilter,
   AutocompleteCollection,
   AutocompleteGroupLabel,
@@ -111,6 +115,11 @@ export type AutocompleteSlotProps<TItem = any> = {
    * {@link AutocompleteAddon} に渡す props です。
    */
   readonly addon?: AutocompleteAddonProps | undefined;
+
+  /**
+   * {@link AutocompleteBackdrop} に渡す props です。
+   */
+  readonly backdrop?: Omit<AutocompleteBackdropProps, "children"> | undefined;
 
   /**
    * {@link AutocompleteClear} に渡す props です。
@@ -193,6 +202,11 @@ export type AutocompleteSlotProps<TItem = any> = {
   readonly scrollbar?: Omit<ScrollAreaScrollbarProps, "children"> | undefined;
 
   /**
+   * {@link AutocompleteSeparator} に渡す props です。
+   */
+  readonly separator?: AutocompleteSeparatorProps | undefined;
+
+  /**
    * {@link AutocompleteStatus} に渡す props です。
    */
   readonly status?: Omit<AutocompleteStatusProps, "children"> | undefined;
@@ -216,6 +230,13 @@ export type AutocompleteState = AutocompleteRootState;
 namespace AutocompleteProps {
   export type Autocomplete<TItem = any> = Pick<AutocompleteListProps<TItem>, "children"> & {
     /**
+     * Backdrop を表示するかどうかを指定します。
+     *
+     * Backdrop の内容や props を変更するときは {@link AutocompleteProps.slotProps|slotProps.backdrop} を使います。
+     */
+    backdrop?: boolean | undefined;
+
+    /**
      * リストが空のときだけ表示する内容です。
      */
     empty?: React.ReactNode | undefined;
@@ -223,7 +244,7 @@ namespace AutocompleteProps {
     /**
      * 入力欄の末尾に表示する内容です。
      */
-    endAddons?: readonly React.ReactNode[] | undefined;
+    endAddons?: Iterable<React.ReactNode> | undefined;
 
     /**
      * 検索結果リストの内容です。
@@ -236,6 +257,13 @@ namespace AutocompleteProps {
     placeholder?: string | undefined;
 
     /**
+     * グループの末尾に区切り線を表示するかどうかを指定します。
+     *
+     * 既定レンダラーを使うときにだけ適用されます。
+     */
+    separator?: boolean | undefined;
+
+    /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
      *
      * 各パーツの props が優先されます。
@@ -245,7 +273,7 @@ namespace AutocompleteProps {
     /**
      * 入力欄の先頭に表示する内容です。
      */
-    startAddons?: readonly React.ReactNode[] | undefined;
+    startAddons?: Iterable<React.ReactNode> | undefined;
 
     /**
      * 非同期検索などの状態を読み上げる内容です。
@@ -276,6 +304,8 @@ export type AutocompleteProps<TItem = any> = AutocompleteProps.Autocomplete<TIte
 // API
 // ---
 
+const NONE = {} as never;
+
 /**
  * {@link Autocomplete} を構成する各パーツの props を作成するための API です。
  *
@@ -300,8 +330,10 @@ export class AutocompleteAPI<TItem = any> {
     const {
       empty,
       status,
+      backdrop,
       children,
       endAddons,
+      separator,
       slotProps = {},
       placeholder,
       startAddons,
@@ -352,8 +384,10 @@ export class AutocompleteAPI<TItem = any> {
     this.autocompleteProps = {
       empty,
       status,
+      backdrop,
       children,
       endAddons,
+      separator,
       placeholder,
       startAddons,
       itemToRenderedValue,
@@ -409,11 +443,13 @@ export class AutocompleteAPI<TItem = any> {
     switch (true) {
       case isItemGroup<AutocompleteItemGroupObject<TItem>>(item): {
         const groupLabelProps = this.getGroupLabelProps(item);
+        const separatorProps = this.getSeparatorProps();
 
         return (
           <AutocompleteGroup {...this.getGroupProps(item)} key={getItemKey(item) ?? index}>
             {groupLabelProps && <AutocompleteGroupLabel {...groupLabelProps} />}
             <AutocompleteCollection {...this.getCollectionProps()} />
+            {separatorProps && <AutocompleteSeparator {...separatorProps} />}
           </AutocompleteGroup>
         );
       }
@@ -431,27 +467,35 @@ export class AutocompleteAPI<TItem = any> {
   };
 
   /**
-   * 入力欄の末尾に表示する {@link AutocompleteAddon} に渡す props を取得します。
+   * {@link AutocompleteAddon} に渡す props を取得します。
    */
-  public getChevronAddonProps(): AutocompleteAddonProps {
-    const { addon: addonProps = {} } = this.slotProps;
-    const { children = <ChevronIcon />, ...otherAddonProps } = addonProps;
+  public getAddonProps(addon: React.ReactNode = NONE): AutocompleteAddonProps {
+    const { addon: props = {} } = this.slotProps;
+
+    if (addon === NONE) {
+      return props;
+    }
 
     return {
-      ...otherAddonProps,
-      children,
+      ...props,
+      children: addon,
     };
   }
 
   /**
-   * {@link AutocompleteClear} を包む {@link AutocompleteAddon} に渡す props を取得します。
+   * {@link AutocompleteBackdrop} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
-  public getClearAddonProps(): AutocompleteAddonProps {
-    const { addon: addonProps = {} } = this.slotProps;
+  public getBackdropProps(): Omit<AutocompleteBackdropProps, "children"> | null {
+    const { backdrop = false } = this.autocompleteProps;
+    const { backdrop: props } = this.slotProps;
 
-    return {
-      ...addonProps,
-    };
+    if (backdrop || props) {
+      return props || {};
+    }
+
+    return null;
   }
 
   /**
@@ -514,15 +558,17 @@ export class AutocompleteAPI<TItem = any> {
 
   /**
    * 入力欄の末尾に表示する {@link AutocompleteAddon} の一覧を取得します。
+   *
+   * @template T コールバックの返り値の型です。
+   * @yields コールバックの返り値です。
    */
-  public getEndAddonsPropsList(): readonly AutocompleteAddonProps[] {
-    const { endAddons = [] } = this.autocompleteProps;
-    const { addon: addonProps = {} } = this.slotProps;
+  public *mapEndAddons<T>(callback: (addon: React.ReactNode, index: number) => T): Iterable<T> {
+    const { endAddons: addons = [] } = this.autocompleteProps;
 
-    return endAddons.map((children): AutocompleteAddonProps => ({
-      ...addonProps,
-      children,
-    }));
+    let index = 0;
+    for (const addon of addons) {
+      yield callback(addon, index++);
+    }
   }
 
   /**
@@ -705,16 +751,34 @@ export class AutocompleteAPI<TItem = any> {
   }
 
   /**
-   * 入力欄の先頭に表示する {@link AutocompleteAddon} の一覧を取得します。
+   * {@link AutocompleteSeparator} に渡す props を取得します。
+   *
+   * `separator` が無効なときは `null` を返します。
    */
-  public getStartAddonsPropsList(): readonly AutocompleteAddonProps[] {
-    const { startAddons = [] } = this.autocompleteProps;
-    const { addon: addonProps = {} } = this.slotProps;
+  public getSeparatorProps(): AutocompleteSeparatorProps | null {
+    const { separator = false } = this.autocompleteProps;
+    const { separator: props } = this.slotProps;
 
-    return startAddons.map((children): AutocompleteAddonProps => ({
-      ...addonProps,
-      children,
-    }));
+    if (separator || props) {
+      return props || {};
+    }
+
+    return null;
+  }
+
+  /**
+   * 入力欄の先頭に表示する {@link AutocompleteAddon} の一覧を取得します。
+   *
+   * @template T コールバックの返り値の型です。
+   * @yields コールバックの返り値です。
+   */
+  public *mapStartAddons<T>(callback: (addon: React.ReactNode, index: number) => T): Iterable<T> {
+    const { startAddons: addons = [] } = this.autocompleteProps;
+
+    let index = 0;
+    for (const addon of addons) {
+      yield callback(addon, index++);
+    }
   }
 
   /**
@@ -792,23 +856,27 @@ export const Autocomplete: IAutocomplete = /*#__PURE__*/ Object.assign(
   function SuiAutocomplete(props: AutocompleteProps) {
     const api = useAutocompleteAPI(props);
     const emptyProps = api.getEmptyProps();
+    const backdropProps = api.getBackdropProps();
 
     return (
       <AutocompleteRoot {...api.getRootProps()}>
         <AutocompleteInputGroup {...api.getInputGroupProps()}>
-          {api.getStartAddonsPropsList().map((addonProps, index) => (
-            <AutocompleteAddon key={index} {...addonProps} />
+          {api.mapStartAddons((addon, index) => (
+            <AutocompleteAddon {...api.getAddonProps(addon)} key={getItemKey(addon) ?? index} />
           ))}
           <AutocompleteInput {...api.getInputProps()} />
-          <AutocompleteAddon {...api.getClearAddonProps()}>
+          <AutocompleteAddon {...api.getAddonProps()}>
             <AutocompleteClear {...api.getClearProps()} />
           </AutocompleteAddon>
-          {api.getEndAddonsPropsList().map((addonProps, index) => (
-            <AutocompleteAddon key={index} {...addonProps} />
+          {api.mapEndAddons((addon, index) => (
+            <AutocompleteAddon {...api.getAddonProps(addon)} key={getItemKey(addon) ?? index} />
           ))}
-          <AutocompleteAddon {...api.getChevronAddonProps()} />
+          <AutocompleteAddon {...api.getAddonProps()}>
+            <ChevronIcon />
+          </AutocompleteAddon>
         </AutocompleteInputGroup>
         <AutocompletePortal {...api.getPortalProps()}>
+          {backdropProps && <AutocompleteBackdrop {...backdropProps} />}
           <AutocompletePositioner {...api.getPositionerProps()}>
             <AutocompletePopup {...api.getPopupProps()}>
               {emptyProps && <AutocompleteEmpty {...emptyProps} />}

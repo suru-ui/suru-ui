@@ -68,6 +68,7 @@
 
 /* 変数 */
 :scope {
+  --sui_combobox-gap: ;
   --sui_combobox-icon-size: ;
   --sui_combobox-button-size: ;
   --sui_combobox-min_height: ;
@@ -94,7 +95,6 @@
   --sui_combobox-border_width-focus_visible: ;
   --sui_combobox-border_width-invalid: ;
   --sui_combobox-border_radius: ;
-  --sui_combobox-gap: ;
 }
 
 /* 可変 */
@@ -149,10 +149,10 @@
   --sui_combobox-border_width-invalid: --sui-border_width(2);
 
   &.sui_combobox-size_sm {
+    --sui_combobox-gap: --sui-space(1);
     --sui_combobox-icon-size: calc(var(--sui_combobox-font_size) * var(--sui_combobox-line_height));
     --sui_combobox-min_height: var(--sui-size-sm);
     --sui_combobox-padding_inline: --sui-space(2);
-    --sui_combobox-gap: --sui-space(1);
     --sui_combobox-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_combobox-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_combobox-line_height: var(--sui-text-oln-sm-n-line_height);
@@ -160,10 +160,10 @@
   }
 
   &.sui_combobox-size_md {
+    --sui_combobox-gap: --sui-space(2);
     --sui_combobox-icon-size: calc(var(--sui_combobox-font_size) * var(--sui_combobox-line_height));
     --sui_combobox-min_height: var(--sui-size-md);
     --sui_combobox-padding_inline: --sui-space(3);
-    --sui_combobox-gap: --sui-space(2);
     --sui_combobox-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_combobox-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_combobox-line_height: var(--sui-text-oln-md-n-line_height);
@@ -171,10 +171,10 @@
   }
 
   &.sui_combobox-size_lg {
+    --sui_combobox-gap: --sui-space(2);
     --sui_combobox-icon-size: calc(var(--sui_combobox-font_size) * var(--sui_combobox-line_height));
     --sui_combobox-min_height: var(--sui-size-lg);
     --sui_combobox-padding_inline: --sui-space(3);
-    --sui_combobox-gap: --sui-space(2);
     --sui_combobox-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_combobox-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_combobox-line_height: var(--sui-text-oln-lg-n-line_height);
