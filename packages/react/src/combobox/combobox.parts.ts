@@ -15,6 +15,7 @@ export * from "./combobox.icon.jsx";
 export * from "./combobox.input-group.jsx";
 export * from "./combobox.input.jsx";
 export * from "./combobox.input-display.jsx";
+export * from "./combobox.addon.jsx";
 export * from "./combobox.item-indicator.jsx";
 export * from "./combobox.item-label.jsx";
 export * from "./combobox.item.context.js";

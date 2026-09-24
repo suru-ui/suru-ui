@@ -1,4 +1,5 @@
 import * as theme from "@suru-ui/theme";
+import { SearchIcon } from "lucide-react";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
@@ -9,68 +10,6 @@ const COLORS: readonly Combobox.Color[] = theme.COLORS;
 const SIZES: readonly Combobox.Size[] = theme.SIZES;
 const RADII: readonly Combobox.Radius[] = ["none", ...SIZES, "full"];
 const VARIANTS: readonly Combobox.Variant[] = ["naked", "liquid"];
-
-const meta = preview.meta({
-  title: "Combobox",
-  component: Combobox<any, boolean>,
-});
-
-export default meta;
-
-const ctrl = controls(Combobox<any, boolean>, {
-  arrow: {
-    control: "boolean",
-  },
-  backdrop: {
-    control: "boolean",
-  },
-  color: {
-    control: "select",
-    options: COLORS,
-  },
-  disabled: {
-    control: "boolean",
-  },
-  items: {
-    control: "object",
-  },
-  inputInPopup: {
-    control: "boolean",
-  },
-  keepFilterOnSelect: {
-    control: "boolean",
-  },
-  label: {
-    control: "text",
-  },
-  multiple: {
-    control: "boolean",
-  },
-  outlined: {
-    control: "boolean",
-  },
-  placeholder: {
-    control: "text",
-  },
-  radius: {
-    control: "select",
-    options: RADII,
-  },
-  readOnly: {
-    control: "boolean",
-  },
-  separator: {
-    control: "boolean",
-  },
-  size: {
-    control: "select",
-    options: SIZES,
-  },
-  variant: {
-    control: "select",
-    options: VARIANTS,
-  },
-});
 
 const fruits = ["りんご", "ばなな", "ぶどう", "みかん", "いちご", "もも"];
 
@@ -200,6 +139,68 @@ async function searchDirectoryUsers(
     error: null,
   };
 }
+
+const meta = preview.meta({
+  title: "Combobox",
+  component: Combobox<any, boolean>,
+});
+
+export default meta;
+
+const ctrl = controls(Combobox<any, boolean>, {
+  arrow: {
+    control: "boolean",
+  },
+  backdrop: {
+    control: "boolean",
+  },
+  color: {
+    control: "select",
+    options: COLORS,
+  },
+  disabled: {
+    control: "boolean",
+  },
+  items: {
+    control: "object",
+  },
+  inputInPopup: {
+    control: "boolean",
+  },
+  keepFilterOnSelect: {
+    control: "boolean",
+  },
+  label: {
+    control: "text",
+  },
+  multiple: {
+    control: "boolean",
+  },
+  outlined: {
+    control: "boolean",
+  },
+  placeholder: {
+    control: "text",
+  },
+  radius: {
+    control: "select",
+    options: RADII,
+  },
+  readOnly: {
+    control: "boolean",
+  },
+  separator: {
+    control: "boolean",
+  },
+  size: {
+    control: "select",
+    options: SIZES,
+  },
+  variant: {
+    control: "select",
+    options: VARIANTS,
+  },
+});
 
 export const Usage = meta.story({
   name: "使い方",
@@ -554,6 +555,45 @@ export const ReadOnly = meta.story({
             </div>
           </div>
         ))}
+      </div>
+    );
+  },
+});
+
+export const Addons = meta.story({
+  name: "付属要素",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    multiple: false,
+    arrow: false,
+    backdrop: false,
+    keepFilterOnSelect: false,
+    inputInPopup: false,
+    disabled: false,
+    readOnly: false,
+    placeholder: "選択",
+    items: fruits,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-6">
+        <Combobox
+          {...props}
+          className="w-[240px]"
+          endAddons={["について"]}
+          startAddons={[<SearchIcon key={0} />]}
+        />
+        <Combobox
+          {...props}
+          className="w-[240px]"
+          endAddons={["について"]}
+          startAddons={[<SearchIcon key={0} />]}
+          inputInPopup
+        />
       </div>
     );
   },

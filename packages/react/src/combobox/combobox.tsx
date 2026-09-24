@@ -37,6 +37,7 @@ import {
   type ComboboxRootColor,
   type ComboboxRootProps,
   type ComboboxRootState,
+  type ComboboxAddonProps,
   type ComboboxArrowProps,
   type ComboboxChipsProps,
   type ComboboxClearProps,
@@ -77,6 +78,7 @@ import {
   ComboboxItem,
   ComboboxList,
   ComboboxRoot,
+  ComboboxAddon,
   ComboboxArrow,
   ComboboxChips,
   ComboboxClear,
@@ -140,6 +142,11 @@ export type ComboboxSlotProps<
   TItem = any,
   TMultiple extends boolean | undefined = boolean | undefined,
 > = {
+  /**
+   * {@link ComboboxAddon} に渡す props です。
+   */
+  readonly addon?: ComboboxAddonProps | undefined;
+
   /**
    * {@link ComboboxArrow} に渡す props です。
    */
@@ -325,6 +332,11 @@ namespace ComboboxProps {
     empty?: React.ReactNode | undefined;
 
     /**
+     * 入力欄の末尾に表示する内容です。
+     */
+    endAddons?: Iterable<React.ReactNode> | undefined;
+
+    /**
      * 入力欄をポップアップの中に置くかどうかを指定します。
      *
      * 有効にするとトリガーには選択値とプレースホルダーだけを表示し、検索用の入力欄はポップアップ内に描画します。
@@ -372,6 +384,11 @@ namespace ComboboxProps {
      * 各パーツに個別のpropsを渡すためのオブジェクトです。
      */
     slotProps?: ComboboxSlotProps<TItem, TMultiple> | undefined;
+
+    /**
+     * 入力欄の先頭に表示する内容です。
+     */
+    startAddons?: Iterable<React.ReactNode> | undefined;
 
     /**
      * 非同期検索などの状態を読み上げる内容です。
@@ -458,9 +475,11 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
       label,
       status,
       backdrop,
+      endAddons,
       separator,
       slotProps = {},
       placeholder,
+      startAddons,
       inputInPopup,
       chipLabelRenderer,
       itemLabelRenderer,
@@ -518,8 +537,10 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
       label,
       status,
       backdrop,
+      endAddons,
       separator,
       placeholder,
+      startAddons,
       inputInPopup,
       chipLabelRenderer,
       itemLabelRenderer,
@@ -645,6 +666,22 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
 
   public isInputInPopup(): boolean {
     return this.comboboxProps.inputInPopup ?? false;
+  }
+
+  /**
+   * {@link ComboboxAddon} に渡す props を取得します。
+   */
+  public getAddonProps(addon: React.ReactNode = NONE): ComboboxAddonProps {
+    const { addon: props = {} } = this.slotProps;
+
+    if (addon === NONE) {
+      return props;
+    }
+
+    return {
+      ...props,
+      children: addon,
+    };
   }
 
   /**
@@ -1111,6 +1148,36 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
 
     return props;
   }
+
+  /**
+   * 入力欄の末尾に表示する {@link ComboboxAddon} の一覧を取得します。
+   *
+   * @template T コールバックの返り値の型です。
+   * @yields コールバックの返り値です。
+   */
+  public *mapEndAddons<T>(callback: (addon: React.ReactNode, index: number) => T): Iterable<T> {
+    const { endAddons: addons = [] } = this.comboboxProps;
+
+    let index = 0;
+    for (const addon of addons) {
+      yield callback(addon, index++);
+    }
+  }
+
+  /**
+   * 入力欄の先頭に表示する {@link ComboboxAddon} の一覧を取得します。
+   *
+   * @template T コールバックの返り値の型です。
+   * @yields コールバックの返り値です。
+   */
+  public *mapStartAddons<T>(callback: (addon: React.ReactNode, index: number) => T): Iterable<T> {
+    const { startAddons: addons = [] } = this.comboboxProps;
+
+    let index = 0;
+    for (const addon of addons) {
+      yield callback(addon, index++);
+    }
+  }
 }
 
 export interface IUseComboboxAPI {
@@ -1175,7 +1242,9 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
         <ComboboxTrigger {...api.getTriggerProps()}>
           <ComboboxInputGroup {...api.getInputGroupProps()}>
             <ComboboxValue {...api.getValueProps()} />
-            <ComboboxIcon {...api.getIconProps()} />
+            <ComboboxAddon {...api.getAddonProps()}>
+              <ComboboxIcon {...api.getIconProps()} />
+            </ComboboxAddon>
           </ComboboxInputGroup>
         </ComboboxTrigger>
         <ComboboxPortal {...api.getPortalProps()}>
@@ -1196,8 +1265,16 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
                 <ScrollAreaCorner {...api.getCornerProps()} />
               </ScrollAreaRoot>
               <ComboboxInputGroup {...api.getInputGroupInPopupProps()}>
+                {api.mapStartAddons((addon, index) => (
+                  <ComboboxAddon {...api.getAddonProps(addon)} key={getItemKey(addon) ?? index} />
+                ))}
                 <ComboboxInput {...api.getInputProps()} />
-                <ComboboxClear {...api.getClearProps()} />
+                <ComboboxAddon {...api.getAddonProps()}>
+                  <ComboboxClear {...api.getClearProps()} />
+                </ComboboxAddon>
+                {api.mapEndAddons((addon, index) => (
+                  <ComboboxAddon {...api.getAddonProps(addon)} key={getItemKey(addon) ?? index} />
+                ))}
               </ComboboxInputGroup>
               {arrowProps && <ComboboxArrow {...arrowProps} />}
             </ComboboxPopup>
@@ -1208,9 +1285,19 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
       <ComboboxRoot {...api.getRootProps()}>
         {api.getLabel()}
         <ComboboxInputGroup {...api.getInputGroupProps()}>
+          {api.mapStartAddons((addon, index) => (
+            <ComboboxAddon {...api.getAddonProps(addon)} key={getItemKey(addon) ?? index} />
+          ))}
           <ComboboxValue {...api.getValueProps()} />
-          <ComboboxClear {...api.getClearProps()} />
-          <ComboboxIcon {...api.getIconProps()} />
+          <ComboboxAddon {...api.getAddonProps()}>
+            <ComboboxClear {...api.getClearProps()} />
+          </ComboboxAddon>
+          {api.mapEndAddons((addon, index) => (
+            <ComboboxAddon {...api.getAddonProps(addon)} key={getItemKey(addon) ?? index} />
+          ))}
+          <ComboboxAddon {...api.getAddonProps()}>
+            <ComboboxIcon {...api.getIconProps()} />
+          </ComboboxAddon>
         </ComboboxInputGroup>
         <ComboboxPortal {...api.getPortalProps()}>
           {backdropProps && <ComboboxBackdrop {...backdropProps} />}
