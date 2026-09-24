@@ -65,6 +65,7 @@ export const AccordionItem: IComponent<AccordionItemProps> = function SuiAccordi
         className,
         "sui_accordion_item",
         (state) => state.open && "sui_accordion_item-open",
+        (state) => state.hidden && "sui_accordion_item-hidden",
         (state) => state.disabled && "sui_accordion_item-disabled",
       )}
     />

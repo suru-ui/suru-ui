@@ -227,7 +227,7 @@ export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: Ac
       }
 
       default:
-        return item;
+        return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
     }
   };
 
@@ -291,7 +291,7 @@ export namespace Root {
 
   export type ItemObject = AccordionRootItemObject;
 
-  export interface IItemRenderer<TItem = any> extends IAccordionRootItemRenderer<TItem> {}
+  export type IItemRenderer<TItem = any> = IAccordionRootItemRenderer<TItem>;
 
   export type Radius = AccordionRootRadius;
 

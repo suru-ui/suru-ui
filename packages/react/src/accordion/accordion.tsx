@@ -1,9 +1,7 @@
 import * as React from "react";
 
-import type { LikelyVisibleNode } from "../_is-likely-visible-node.js";
 import { getItemKey } from "../_item.js";
 import mergeProps from "../_merge-props.js";
-import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
 import { type $InferItemObjectValue, isItemObject } from "./_accordion.jsx";
 import {
@@ -86,18 +84,28 @@ export type AccordionSlotProps = {
  */
 export type AccordionState<TValue = any> = AccordionRootState<TValue>;
 
+namespace AccordionProps {
+  export type Accordion = {
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     */
+    slotProps?: AccordionSlotProps | undefined;
+  };
+
+  export type Root<TItem = any, TValue = any> = Omit<
+    AccordionRootProps<TItem, TValue>,
+    keyof Accordion
+  >;
+}
+
 /**
  * {@link Accordion} に渡す props です。
  *
  * @template TItem 項目の型です。
  * @template TValue 項目の値の型です。
  */
-export type AccordionProps<TItem = any, TValue = any> = AccordionRootProps<TItem, TValue> & {
-  /**
-   * 各パーツに個別の props を渡すためのオブジェクトです。
-   */
-  slotProps?: AccordionSlotProps | undefined;
-};
+export type AccordionProps<TItem = any, TValue = any> = AccordionProps.Accordion &
+  AccordionProps.Root<TItem, TValue>;
 
 // API
 // ---
@@ -127,7 +135,7 @@ export class AccordionAPI<TItem = any, TValue = any> {
     switch (true) {
       case isItemObject(item):
         return (
-          <AccordionItem key={getItemKey(item) ?? index} {...this.getItemProps(item)}>
+          <AccordionItem {...this.getItemProps(item)} key={getItemKey(item) ?? index}>
             <AccordionHeading {...this.getHeadingProps()}>
               <AccordionTrigger {...this.getTriggerProps()}>
                 {this.getTitle(item)}
@@ -139,7 +147,7 @@ export class AccordionAPI<TItem = any, TValue = any> {
         );
 
       default:
-        return item;
+        return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
     }
   };
 
@@ -148,7 +156,7 @@ export class AccordionAPI<TItem = any, TValue = any> {
    *
    * @param item 項目です。
    */
-  public getContentProps(item: AccordionItemObject): AccordionContentProps {
+  public getContentProps(item?: AccordionItemObject): AccordionContentProps {
     const { content: props = {} } = this.slotProps;
 
     if (item) {
@@ -190,8 +198,8 @@ export class AccordionAPI<TItem = any, TValue = any> {
     if (item) {
       const {
         // title と content を取り除いた props を AccordionItem の props とします。
-        title: _1,
-        content: _2,
+        title: _title,
+        content: _content,
         htmlTitle: title,
         ...otherItemProps
       } = item as AccordionItemObject;
@@ -227,9 +235,9 @@ export class AccordionAPI<TItem = any, TValue = any> {
    * {@link AccordionTrigger} に渡す props を取得します。
    */
   public getTriggerProps(): Omit<AccordionTriggerProps, "children"> {
-    const { trigger: triggerProps = {} } = this.slotProps;
+    const { trigger: props = {} } = this.slotProps;
 
-    return triggerProps;
+    return props;
   }
 }
 
@@ -291,7 +299,7 @@ export namespace Accordion {
 
   export type ItemObject = AccordionItemObject;
 
-  export interface IItemRenderer<TItem = any> extends IAccordionItemRenderer<TItem> {}
+  export type IItemRenderer<TItem = any> = IAccordionItemRenderer<TItem>;
 
   export type Radius = AccordionRadius;
 
