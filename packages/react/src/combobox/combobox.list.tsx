@@ -4,7 +4,10 @@ import * as React from "react";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import type { IComboboxCollectionItemRenderer } from "./combobox.collection.jsx";
+import {
+  ComboboxCollection,
+  type IComboboxCollectionItemRenderer,
+} from "./combobox.collection.jsx";
 
 export type IComboboxListItemRenderer<TItem = any> = IComboboxCollectionItemRenderer<TItem>;
 
@@ -59,9 +62,18 @@ export interface IComboboxList extends IComponent<ComboboxListProps> {
  * 候補項目のリストを表示するコンテナー要素です。
  */
 export const ComboboxList: IComboboxList = function SuiComboboxList(props: ComboboxListProps) {
-  const { className, ...otherProps } = props;
+  const {
+    // children ComboboxCollection の defaultItemRenderer とします。
+    children = <ComboboxCollection />,
+    className,
+    ...otherProps
+  } = props;
 
-  return <Combobox.List {...otherProps} className={cn(className, "sui_combobox_list")} />;
+  return (
+    <Combobox.List {...otherProps} className={cn(className, "sui_combobox_list")}>
+      {children}
+    </Combobox.List>
+  );
 };
 
 export { ComboboxList as List };

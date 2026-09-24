@@ -1,6 +1,6 @@
 ---
 name: git
-description: Git 操作を行う前に読むべき注意事項です。
+description: Instructions and guidelines for Git commands, version control, commit message formatting, branching strategies, and pull requests.
 ---
 
 # 変更の破棄禁止ルール

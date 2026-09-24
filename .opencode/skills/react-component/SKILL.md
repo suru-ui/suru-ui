@@ -5,18 +5,30 @@ description: Suru UI の React コンポーネント (`packages/react/src/<名�
 
 # React コンポーネント
 
-## 模範と分担
+## 模範の扱い
 
-模範は `packages/react/src/combobox/` だけを見ます。
+本スキルで名指しするコンポーネント・ファイル・型名はすべて例示であり、網羅的な指定ではありません。
+規範は本文の定型・規則にあり、例の追加・置換では変わりません。
+模範コンポーネントが増えた場合も本スキルを書き換える必要はなく、新しい実装が同じ規範に従っているかで判断します。
+参照先に迷ったときは、直近で本スキルに沿って作られた実装を優先します。
 
-- `combobox.root.tsx` — Root 定型 (DOM を持たない Root + Config + Context 提供)
-- `combobox.input-group.tsx` — スタイル起点・状態集約の模範
-- `combobox.item.tsx` — 継承パターン (Outer の Base UI + Inner の Suru UI) の模範
-- `combobox.collection.tsx` / `combobox.list.tsx` / `combobox.value.tsx` — 一覧描画・レンダラーの模範
-- `combobox.context.ts` / `combobox.item.context.ts` — Context・サブコンテキストの模範
-- `combobox.trigger.tsx` — render 関数を `children` に付け替える場合の模範
-- `combobox.use-filter.ts` / `combobox.use-filtered-items.ts` — フックラッパーの模範
-- `combobox.tsx` — 合成 (Types + クラス API + 分岐 Component) の模範
+本文中の `Combobox...` のコードは、定型への当てはめ例です。
+他コンポーネントへ適用するときは `<kebab>`・`<Comp>` へ機械的に読み替えます。
+既定値 (`"md"`・`"grey"` など) や修飾名 (`Color`・`Size` など) も同様に当てはめ例であり、個々のコンポーネントの仕様に従います。
+
+代表例:
+- `packages/react/src/combobox/`
+- `packages/react/src/autocomplete/`
+
+パターン別の代表例 (同型の実装はどれも同等に参照してよく、以下の列挙にない新設も模範になりえます):
+- `combobox.root.tsx` — Root 定型の例 (DOM を持たない Root + Config + Context 提供)
+- `combobox.input-group.tsx` — スタイル起点・状態集約の例
+- `combobox.item.tsx` — 継承パターン (Outer の Base UI + Inner の Suru UI) の例
+- `combobox.collection.tsx` / `combobox.list.tsx` / `combobox.value.tsx` — 一覧描画・レンダラーの例
+- `combobox.context.ts` / `combobox.item.context.ts` — Context・サブコンテキストの例
+- `combobox.trigger.tsx` — render 関数を `children` に付け替える場合の例
+- `combobox.use-filter.ts` / `combobox.use-filtered-items.ts` — フックラッパーの例
+- `combobox.tsx` — 合成 (Types + クラス API + 分岐 Component) の例
 
 CSS は `../css/SKILL.md`、JSDoc と日本語は `../jsdoc/SKILL.md` と `../japanese/SKILL.md` に従います。
 
@@ -112,7 +124,7 @@ import { XIcon } from "../_icons.jsx";
 
 ### Context 定型
 
-子に値を渡す場合のみ、独立した `<kebab>.context.ts` に置きます。`ComboboxContext` を模範にします。
+子に値を渡す場合のみ、独立した `<kebab>.context.ts` に置きます。`ComboboxContext` を例とします。
 
 - Context の値型は `readonly` フィールドのオブジェクトにし、汎型は既定値付き (`<TItem = any>`) にします。各フィールドに JSDoc を付けます。
 - 修飾値型 (`Color`・`Radius`・`Size`・`Variant`・`IItemToStringLabel` など) は Context ファイルに分離し、JSDoc を付けます。`Color`・`Size` はテーマ型をそのまま使い (`Color`、`Size`)、`Radius` は `"none" | Size | "full"` の定型にします。
@@ -168,7 +180,7 @@ const ctx = React.use(XxxContext);
 const ctx = React.useMemo<XxxContext>(() => ({ ... }), [...]);
 ```
 
-- 一部のキーだけ上書きして子へ伝える派生コンテキストは `useMemo` + スプレッドにします。意図が分かる範囲で上書きキーを最小化し、横に意図注釈を残します (`InputGroup` の `size/color/radius/variant`、`Chip` の `radius`、`Popup` の `outlined`、`Group` の `items` を模範にします)。
+- 一部のキーだけ上書きして子へ伝える派生コンテキストは `useMemo` + スプレッドにします。意図が分かる範囲で上書きキーを最小化し、横に意図注釈を残します (例: `InputGroup` の `size/color/radius/variant`、`Chip` の `radius`、`Popup` の `outlined`、`Group` の `items` など)。
 
 ```tsx
 const ctx = useComboboxContext();
@@ -195,11 +207,11 @@ return (
 - namespace には値型があれば追加します。
 - 短名再輸出は束縛を作りません。ファイル内部 (JSX 含む) は正式名のままにします。
 - 他パーツが内部フック (`useSuiXxxContext`) を使いたい場合は、公開済みの `useXxxContext` を相対 import します。内部フックは export しません。
-- 2 つ目の Context (`ComboboxItemContext` を模範にします) は値伝播専用の小さい型 (`{ readonly value: TItem }`) にし、短名は対象名に合わせます (`ItemContext` / `useItemContext`)。オーバーロード関数 + `IUseContext` 別名の形も許容します。
+- 2 つ目の Context (`ComboboxItemContext` を例とします) は値伝播専用の小さい型 (`{ readonly value: TItem }`) にし、短名は対象名に合わせます (`ItemContext` / `useItemContext`)。オーバーロード関数 + `IUseContext` 別名の形も許容します。
 
 ### フックラッパー定型
 
-Base UI フックの薄いラッパーは `useSui...` 名の関数にし、短名を同ファイルで再輸出します。`combobox.use-filter.ts` / `combobox.use-filtered-items.ts` を模範にします。
+Base UI フックの薄いラッパーは `useSui...` 名の関数にし、短名を同ファイルで再輸出します。`combobox.use-filter.ts` / `combobox.use-filtered-items.ts` を例とします。
 
 ```ts
 export type IComboboxFilter = ReturnType<typeof Combobox.useFilter>;
@@ -218,7 +230,7 @@ export { useComboboxFilter as useFilter };
 
 ### 型の置き方
 
-1 パーツ内は Base UI 由来、独自の値型、`Value`・`State`、`Props` の順にします。`Props` を最後にします。`combobox.root.tsx` を模範にします。
+1 パーツ内は Base UI 由来、独自の値型、`Value`・`State`、`Props` の順にします。`Props` を最後にします。`combobox.root.tsx` を例とします。
 
 - `State` は Base UI から取ります。状態を持たない素の要素・非要素は空オブジェクト (`= {}`) にします (`ComboboxCollectionState`・`ComboboxItemLabelState` を参照)。
 - 型引数名は必ず `T` 始まりにします (`TItem`・`TValue`・`TMultiple`)。複数選択の有無は `TMultiple extends boolean | undefined` にし、合成の公開面では `const` 修飾子を付けます (`<TItem = any, const TMultiple extends boolean | undefined = ...>`)。
@@ -257,7 +269,7 @@ export type ComboboxRootVariant = "naked" | "liquid";
 
 ### テンプレート A: 素の要素
 
-`ComboboxInput` を模範にします。
+`ComboboxInput` を例とします。
 
 ```tsx
 export namespace ComboboxInputProps {
@@ -288,7 +300,7 @@ export namespace ComboboxInputProps {
 
 ### テンプレート B: Base UI ラッパー
 
-`ComboboxPopup` を模範にします。
+`ComboboxPopup` を例とします。
 
 ```tsx
 export namespace ComboboxPopupProps {
@@ -338,7 +350,7 @@ export namespace ComboboxPopupProps {
 
 ### テンプレート C: 汎型
 
-`ComboboxRoot` を模範にします。テンプレート B に汎型を足した形です。
+`ComboboxRoot` を例とします。テンプレート B に汎型を足した形です。
 
 ```tsx
 export namespace ComboboxRootProps {
@@ -387,7 +399,7 @@ export namespace ComboboxRootProps {
 
 ### テンプレート D: `children` 型強化 (レンダラー受け)
 
-`ComboboxCollection` / `ComboboxList` / `ComboboxValue` を模範にします。Base UI の `children` をレンダラー型で強化する場合です。
+`ComboboxCollection` / `ComboboxList` / `ComboboxValue` を例とします。Base UI の `children` をレンダラー型で強化する場合です。
 
 ```tsx
 export namespace ComboboxCollectionProps {
@@ -428,7 +440,7 @@ export namespace ComboboxCollectionProps {
 
 ### 例外: render 関数を `children` に付け替える場合
 
-`ComboboxTrigger` を模範にします。Base UI の `render` を利用者の `children` として受けたい場合のみ使います。
+`ComboboxTrigger` を例とします。Base UI の `render` を利用者の `children` として受けたい場合のみ使います。
 
 ```tsx
 export namespace ComboboxTriggerProps {
@@ -446,7 +458,7 @@ export namespace ComboboxTriggerProps {
 
 ## 継承パターン
 
-`Outer` の Base UI (`Combobox.Item` など) の `render` 内で `Inner` の Suru UI (`Button.Root` など) を描画する場合です。`ComboboxItem` を模範にします。
+`Outer` の Base UI (`Combobox.Item` など) の `render` 内で `Inner` の Suru UI (`Button.Root` など) を描画する場合です。`ComboboxItem` を例とします。
 
 ### 型
 
@@ -624,7 +636,7 @@ const {
 
 ### Root 定型 (DOM を持たない場合)
 
-`ComboboxRoot` を模範にします。Root 自身が HTML 要素を描画しない場合は、Config + Context 提供に徹し、スタイルは子 (InputGroup / Portal) に持たせます。
+`ComboboxRoot` を例とします。Root 自身が HTML 要素を描画しない場合は、Config + Context 提供に徹し、スタイルは子 (例: InputGroup / Portal などスタイル起点となる子) に持たせます。
 
 ```tsx
 export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: ComboboxRootProps) {
@@ -756,7 +768,7 @@ return useRender({
 
 ### JSX 直書きの className
 
-`useRender` を使わない場合の `cn` は次の順にします。利用者の `className` を先頭に置き、上書きしません。`ComboboxInputGroup` を模範にします。
+`useRender` を使わない場合の `cn` は次の順にします。利用者の `className` を先頭に置き、上書きしません。`ComboboxInputGroup` を例とします。
 
 ```tsx
 cn(
@@ -792,9 +804,9 @@ cn(
 
 ### 4 原則
 
-1. `data-scope=""` は CSS の `@scope` 始点 (スタイル起点) だけに付けます。付け忘れ・付け過ぎの両方を避けます。Root が DOM を持たない場合は InputGroup / Portal / TriggerLabel が起点になります。
-2. 状態クラスはスタイル起点の要素に集約します。分散させません。Root が DOM を持たない場合の起点は InputGroup (入力系の状態) と Portal (ポップアップ系の修飾) です。
-3. SuruUI 由来の値・フラグ・バリアントは原則として最上位の `SuruUI` に集約し、Context で子へ伝えます。ただし Chip (`color/radius/variant`)・Popup (`outlined/inputPosition`)・ChipRemove (`radius`) のように独立装飾を持つ子は、Context フォールバック付きの独自 `SuruUI` + 自身要素への修飾クラスを許します (`color = ctx.color` + `sui_combobox_chip-color_${color}` を模範にします)。同名 prop の二重管理にならないよう、フォールバック元を JSDoc に明記します。
+1. `data-scope=""` は CSS の `@scope` 始点 (スタイル起点) だけに付けます。付け忘れ・付け過ぎの両方を避けます。Root が DOM を持たない場合はスタイル起点となる子 (例: InputGroup / Portal / TriggerLabel) が起点になります。
+2. 状態クラスはスタイル起点の要素に集約します。分散させません。Root が DOM を持たない場合の起点は対象のコンポーネントが定めます (例: 入力系の状態を持つ InputGroup とポップアップ系の修飾を持つ Portal)。
+3. SuruUI 由来の値・フラグ・バリアントは原則として最上位の `SuruUI` に集約し、Context で子へ伝えます。ただし独立装飾を持つ子 (例: `color/radius/variant` を持つ Chip、`outlined/inputPosition` を持つ Popup、`radius` を持つ ChipRemove など) は、Context フォールバック付きの独自 `SuruUI` + 自身要素への修飾クラスを許します (`color = ctx.color` + `sui_combobox_chip-color_${color}` を例とします)。同名 prop の二重管理にならないよう、フォールバック元を JSDoc に明記します。
 4. Base UI の `data-*` 属性を CSS セレクターに使いません (`[data-scope]` を除く)。状態装飾は `cn` の状態関数による自前クラスで行います。
 
 真偽状態は `sui_<基底>-<状態>`、値付き状態は `sui_<基底>-<属性>_<値>` にします。
@@ -816,7 +828,7 @@ cn(
 
 ## 一覧描画
 
-`items` の所有は Root に集約し、描画側 (`Collection`・`List`・`Value`) はレンダラー (`children`) のみを受けます。`ComboboxCollection` / `ComboboxList` / `ComboboxValue` / `ComboboxItemLabel` を模範にします。
+`items` の所有は Root に集約し、描画側 (`Collection`・`List`・`Value`) はレンダラー (`children`) のみを受けます。`ComboboxCollection` / `ComboboxList` / `ComboboxValue` / `ComboboxItemLabel` を例とします。
 
 - `items` を二重に持たせません。描画側は `items` を持たず、`Context` (`ctx.items`・`ctx.itemToStringLabel`) から読みます。`Group` のように透過を遮断する意図がある場合のみ、未指定でも上書きする旨をコメントで残します。
 - レンダラー型は用途ごとに定義し、別名で再利用します。
@@ -908,7 +920,7 @@ return (
 
 ## 短名定型
 
-同じパーツファイル内のパーツの直後に置きます。`ComboboxChip` を模範にします。
+同じパーツファイル内のパーツの直後に置きます。`ComboboxChip` を例とします。
 
 ```tsx
 export { ComboboxChip as Chip };
@@ -938,11 +950,11 @@ export namespace Chip {
 - namespace には `State` と `Props` を必ず入れ、値型 (`Color`・`Radius`・`Size`・`Variant`・`InputPosition`・`IRenderer`・`IItemRenderer` など) があれば追加します。汎型は既定値付きで引き継ぎます (`<TValue = any>`・`<TItem = any, TMultiple extends boolean | undefined = boolean | undefined>`)。
 - `Props` は区分の `namespace Props` と `&` 結合の `type Props` の 2 段にします。`|` で結合しません。`BaseUI` を落としません。
 - 再輸出と namespace 内の型別名には JSDoc を付けません。`{@link X}` のみの JSDoc も付けません。
-- フックの短名は同ファイルの末尾に置きます (`export { useComboboxFilter as useFilter };`、`export { useComboboxFilteredItems as useFilteredItems };`、`export { ComboboxItemContext as ItemContext, useComboboxItemContext as useItemContext };`)。
+- フックの短名は同ファイルの末尾に置きます (例: `export { useComboboxFilter as useFilter };`、`export { useComboboxFilteredItems as useFilteredItems };`、`export { ComboboxItemContext as ItemContext, useComboboxItemContext as useItemContext };` など)。
 
 ## .tsx (合成)
 
-`combobox.tsx` を模範にします。
+`combobox.tsx` を例とします。
 
 ### Types
 
@@ -971,7 +983,7 @@ export type ComboboxSlotProps<
 ```
 
 - `State` は `RootState` の別名にします。
-- 合成 `Props` は `namespace ComboboxProps` の 3 分割 + 交差にします。重複キーは `Omit` で除きます。
+- 合成 `Props` は `namespace <Comp>Props` (例: `ComboboxProps`) の 3 分割 + 交差にします。重複キーは `Omit` で除きます。
 
 ```ts
 namespace ComboboxProps {
@@ -1077,7 +1089,7 @@ export { ComboboxAPI as API, useComboboxAPI as useAPI };
 
 getter の規則です。
 
-- getter 名は `get<Part>Props` にします。常に描画するパーツは Props を返し、条件付きのもの (`arrow`・`backdrop`・`separator`) は `| null` を付け、`if (flag || props) return props || {}; return null;` にします。
+- getter 名は `get<Part>Props` にします。常に描画するパーツは Props を返し、条件付きのもの (例: `arrow`・`backdrop`・`separator` など) は `| null` を付け、`if (flag || props) return props || {}; return null;` にします。
 - `slotProps` を各パーツ既定 `{}` 付きで分解します。利用者指定 (`slotProps.<part>`) を前に展開し、合成側の既定を後ろに置く場合はフォールバックの順にします。`children` を上書きする getter (`empty`・`status`) は利用者指定を破棄しない順序にし、`...props` の後に無条件上書きしません。
 
 ```ts
@@ -1093,7 +1105,7 @@ public getInputProps(): ComboboxInputProps {
 }
 ```
 
-- `placeholder` のような連鎖フォールバックは `comboboxProps → slotProps.input → slotProps.value` の順に解決します (`getInputDisplayProps` を参照)。
+- `placeholder` のような連鎖フォールバックは例として `comboboxProps → slotProps.input → slotProps.value` の順に解決します (例: `getInputDisplayProps`)。
 - `Collection`・`List` のように既定レンダラーを持つ getter は `const { children = this.defaultXRenderer, ...otherProps } = this.slotProps.x ?? {}; return { ...otherProps, children };` にします。
 - `GroupLabel` のように可視判定が要る getter は `isLikelyVisibleNode` で判定し、駄目なら `null` を返します。返り値は `Omit<PartProps, "children"> & { children: LikelyVisibleNode | null }` の形にせず、素直に `PartProps | null` にします (合成所有の既定レンダラー内では直接条件描画します)。
 - `Group` のようにオーバーロードが要る getter は引数なし版と項目あり版の 2 段にし、項目あり版は `label` 除外 + `mergeProps([baseProps, otherProps])` にします。
@@ -1106,7 +1118,7 @@ public getInputProps(): ComboboxInputProps {
 
 ### Component
 
-汎型 interface + `Object.assign` 実装にします。`Combobox` を模範にします。
+汎型 interface + `Object.assign` 実装にします。`Combobox` を例とします。
 
 ```tsx
 export interface ICombobox extends IComponent<ComboboxProps> {
@@ -1201,9 +1213,9 @@ mise run test:typecheck
 - `IComponent` 以外で宣言していない。`Sui` / `useSui` 接頭辞を省略していない。`const` 型引数 (`TMultiple`) を落としていない。
 - `useRender` 対象に JSX 直書きしていない。Base UI 対象に `useRender` を使っていない。
 - `useRender` 対象の `className` を分解せず、`cn` に含めていない。修飾なしで `cn` を使っていない。
-- HTML 既定値を第 2 要素に直書きしていない。上書き可能にしている。`aria-label`・`nativeButton`・既定子 (`<ClearIcon />`) が定型通りである。
+- HTML 既定値を第 2 要素に直書きしていない。上書き可能にしている。該当する場合、`aria-label`・`nativeButton`・既定子 (例: `<ClearIcon />`) が定型通りである。
 - `useRender` の残余に汎名を使っていない。`other<Tag>Props` / `<tag>Props` / `props` を使い分けている。
-- JSX 直書きの `cn` で `className` を先頭に置いている。状態値の正規化 (`popupSide.replaceAll`) と 3 値比較 (`valid === ...`) が正しい。
+- JSX 直書きの `cn` で `className` を先頭に置いている。該当する場合、状態値の正規化 (例: `popupSide.replaceAll`) と 3 値比較 (例: `valid === ...`) が正しい。
 - `Props` を 4 区分に分け、`&` で結合している。区分自体に JSDoc を付けていない。結合本体の JSDoc を残している。`Render = {}`・`HTML = {}` の場合も区分を落としていない。
 - 短名 namespace の `Props` を `&` で結合している。`BaseUI` を落としていない。値型 (`Color`・`Radius`・`IRenderer` など) を追加している。
 - 空の `SuruUI` / `BaseUI` でも `Exclude` / `Omit` の `| keyof SuruUI` / `| keyof BaseUI` を省略していない。
@@ -1211,15 +1223,15 @@ mise run test:typecheck
 - 他コンポーネント参照に短名を使っていない。完全な交差型を使っている。
 - Base UI の公開型に漏れがない。`Handle` の有無を確認している。根拠コメントの型名が実体と一致している。
 - `Context` 値型が `readonly` + 汎型既定値付きである。フック型が `IUseContext` 継承 + オーバーロードである。`ContextMissingError` の `contextName` / `providerName` が正しい。ローカル変数は `ctx` である。派生コンテキストが `useMemo` + スプレッドで、意図注釈がある。
-- 再輸出・再命名に JSDoc (`{@link X}` のみを含む) を付けていない。`State` / `Props` を省略していない。フック短名 (`useFilter`・`useFilteredItems`・`useItemContext`・`ItemContext`) を落としていない。
-- レンダラー型 (`ICollectionItemRenderer`・`IListItemRenderer`・`IValueRenderer`・`IItemLabelRenderer`) が定義され、`children` 強化 (`Override` + `BaseUI の型を強化します。`) になっている。`switch (true)` の順序と `getItemKey ?? index` が正しい。
+- 再輸出・再命名に JSDoc (`{@link X}` のみを含む) を付けていない。`State` / `Props` を省略していない。該当するフック短名 (例: `useFilter`・`useFilteredItems`・`useItemContext`・`ItemContext` など) を落としていない。
+- 一覧描画を持つ場合、レンダラー型 (例: `ICollectionItemRenderer`・`IListItemRenderer`・`IValueRenderer`・`IItemLabelRenderer` など) が定義され、`children` 強化 (`Override` + `BaseUI の型を強化します。`) になっている。`switch (true)` の順序と `getItemKey ?? index` が正しい。
 - 反復要素に `key` を付けている。判定関数を公開・再定義していない。
-- 再命名型にパーツ名を重ねていない。合成 namespace に `SlotProps`・`Context`・`ItemGroup`・`ItemValue`・`IFilter` 系を落としていない。
+- 再命名型にパーツ名を重ねていない。合成 namespace に `State`・`Props`・`SlotProps`・`Context` と該当する再命名型 (例: `ItemGroup`・`ItemValue`・`IFilter` 系など) を落としていない。
 - `SlotProps` が `readonly`・`| undefined` である。各キーに JSDoc がある。持上げキーを残していない。`children` の `Omit` 有無が生成有無と一致している。
-- 合成 `Props` が `Combobox` + `Root` + `InputGroup` の 3 分割 + 交差である。`keyof Combobox` / `keyof Root` の除外が正しい。
-- API がクラス + `IUse...API` + `new` 返却である。`comboboxProps` / `slotProps` / `rootProps` / `inputGroupProps` の 4 分割が正しい。getter 名・`| null` が正しい。常に描画するパーツを変数化していない。可視判定なしに描画していない。`slotProps` 側を前に展開し、利用者指定の `children` を無条件上書きしていない。存在しない Base UI プロパティーを参照せず、`@ts-expect-error` で隠蔽していない。`data-scope: null` + 変数経由が必要な箇所で守られている。
-- Component が汎型 interface + `Object.assign` + 静的メンバーである。`inputInPopup` 分岐の両ツリーで同じ getter 群を使い回している。`getLabel()` を `{api.getLabel()}` で描画している。
-- `data-scope` が起点のみである。Root が DOM を持たない場合の起点 (InputGroup / Portal / TriggerLabel) が正しい。状態・見た目が起点に集約されている。独立装飾の子 (`Chip`・`Popup` など) 以外に同名 props や修飾クラスがない。レイアウト以外の `&:has(.子修飾)` がない。見た目だけの新規 `Context` がない。Base UI の `data-*` を CSS に使っていない。`State` 外のクラスや CSS がない。`popupSide` の正規化がある。
-- `items` を二重定義していない。`Group` の透過遮断に意図注釈がある。
-- 継承の `BaseUI` が `Override<Inner, Override<Pick<Outer>, 強化>>` の順である。`Required` を省略していない。除外交差キーの `undefined` 明示がある。`render = <div />` の既定がある。`proxyRenderProps` に `Render` をすべて渡し、`mergeProps` の順序が正しい。`ItemContext` 提供がある。
+- 合成 `Props` が `<Comp>` 固有 + `Root` + スタイル起点 (例: Combobox では `Combobox` + `Root` + `InputGroup`) の 3 分割 + 交差である。`keyof <Comp>` / `keyof Root` の除外が正しい。
+- API がクラス + `IUse...API` + `new` 返却である。`<comp>Props` / `slotProps` / `rootProps` / スタイル起点Props (例: Combobox では `comboboxProps` / `slotProps` / `rootProps` / `inputGroupProps`) の 4 分割が正しい。getter 名・`| null` が正しい。常に描画するパーツを変数化していない。可視判定なしに描画していない。`slotProps` 側を前に展開し、利用者指定の `children` を無条件上書きしていない。存在しない Base UI プロパティーを参照せず、`@ts-expect-error` で隠蔽していない。`data-scope: null` + 変数経由が必要な箇所で守られている。
+- Component が汎型 interface + `Object.assign` + 静的メンバーである。ツリー全体が分岐する場合 (例: `inputInPopup`) は両ツリーで同じ getter 群を使い回している。`getLabel()` を `{api.getLabel()}` で描画している。
+- `data-scope` が起点のみである。Root が DOM を持たない場合の起点 (例: InputGroup / Portal / TriggerLabel など) が正しい。状態・見た目が起点に集約されている。独立装飾の子 (例: `Chip`・`Popup` など) 以外に同名 props や修飾クラスがない。レイアウト以外の `&:has(.子修飾)` がない。見た目だけの新規 `Context` がない。Base UI の `data-*` を CSS に使っていない。`State` 外のクラスや CSS がない。該当する場合、ケバブを含む状態値 (例: `popupSide`) の正規化がある。
+- 一覧描画を持つ場合、`items` を二重定義していない。`Group` の透過遮断に意図注釈がある。
+- 継承パターンに該当する場合、継承の `BaseUI` が `Override<Inner, Override<Pick<Outer>, 強化>>` の順である。`Required` を省略していない。除外交差キーの `undefined` 明示がある。`render = <div />` の既定がある。`proxyRenderProps` に `Render` をすべて渡し、`mergeProps` の順序が正しい。該当する場合、サブコンテキスト (例: `ItemContext`) の提供がある。
 - `index.ts` に再輸出以外がない。公開型の列挙漏れがない。アイコンが共有ファイルにある。放置 TODO・コピペコメント (`AriaCombobox` など) がない。
