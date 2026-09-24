@@ -2,8 +2,12 @@ import { Autocomplete } from "@base-ui/react/autocomplete";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
-import type { IComponent } from "../types.js";
+import Config from "../_config.jsx";
+import { defaultItemToStringValue } from "../_item.js";
+import type { Override, IComponent } from "../types.js";
 import { AutocompleteContext } from "./autocomplete.context.js";
+import type { AutocompleteGroupProps } from "./autocomplete.group.jsx";
+import type { AutocompleteItemProps } from "./autocomplete.item.jsx";
 
 /**
  * {@link AutocompleteRoot} を命令的に操作するためのオブジェクトです。
@@ -34,6 +38,48 @@ export type AutocompleteRootHighlightEventReason = Autocomplete.Root.HighlightEv
  * オートコンプリートの配色です。
  */
 export type AutocompleteRootColor = Color;
+
+/**
+ * 値と表示内容を組にした、リストの項目です。
+ *
+ * `label` を表示し、`value` を選択値として扱います。
+ *
+ * @template TValue 項目の値の型です。
+ */
+export type AutocompleteRootLabeledItemObject<TValue = any> = Override<
+  Omit<AutocompleteItemProps, "children">,
+  {
+    /**
+     * 表示ラベルです。
+     */
+    readonly label: React.ReactNode;
+
+    /**
+     * 選択値です。
+     */
+    readonly value: TValue;
+  }
+>;
+
+/**
+ * 関連する項目をまとめるグループオブジェクトです。
+ *
+ * @template TValue 項目の値の型です。
+ */
+export type AutocompleteRootItemGroupObject<TValue = any> = Override<
+  AutocompleteGroupProps<TValue>,
+  {
+    /**
+     * グループに含まれる項目です。
+     */
+    items: readonly (TValue | AutocompleteRootLabeledItemObject<TValue>)[];
+
+    /**
+     * グループのラベルです。
+     */
+    label?: React.ReactNode | undefined;
+  }
+>;
 
 /**
  * オートコンプリートの角丸です。
@@ -71,13 +117,20 @@ export type AutocompleteRootState = Autocomplete.Root.State;
 export namespace AutocompleteRootProps {
   export type Render = {};
 
-  export type SuruUI = {
+  export type SuruUI<TItem = any> = {
     /**
      * フォーカス時に枠線へ適用する色を指定します。
      *
      * @default "grey"
      */
     color?: AutocompleteRootColor | undefined;
+
+    /**
+     * リストに表示する項目の一覧です。
+     *
+     * グループの配列を指定するとグループごとに区切って表示します。
+     */
+    items?: readonly TItem[] | undefined;
 
     /**
      * 枠線を表示するかどうかを指定します。
@@ -112,7 +165,7 @@ export namespace AutocompleteRootProps {
     Autocomplete.Root.Props<TItemValue>,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // AutocompleteRootProps + AriaCombobox.Props:
+      // AutocompleteRootProps:
       | "actionsRef"
       | "autoHighlight"
       | "defaultOpen"
@@ -162,11 +215,11 @@ export namespace AutocompleteRootProps {
  * @template TItemValue 項目の値の型です。
  */
 export type AutocompleteRootProps<TItemValue = any> = AutocompleteRootProps.Render &
-  AutocompleteRootProps.SuruUI &
+  AutocompleteRootProps.SuruUI<TItemValue> &
   AutocompleteRootProps.BaseUI<TItemValue> &
   AutocompleteRootProps.HTML<TItemValue>;
 
-interface IAutocompleteRoot extends IComponent<AutocompleteRootProps> {
+export interface IAutocompleteRoot extends IComponent<AutocompleteRootProps> {
   /**
    * @template TItemValue 項目の値の型です。
    */
@@ -176,28 +229,52 @@ interface IAutocompleteRoot extends IComponent<AutocompleteRootProps> {
 /**
  * オートコンプリートのルート要素です。
  *
- * 入力値とポップアップの開閉状態を管理し、各パーツをグループ化します。
+ * 入力値とポップアップの開閉状態を管理し、各パーツをグループ化します。これ自身は HTML 要素をレンダリングしません。
  */
 export const AutocompleteRoot: IAutocompleteRoot = function SuiAutocompleteRoot(
   props: AutocompleteRootProps,
 ) {
+  const config = React.use(Config);
   const {
     size = "md",
     color = "grey",
+    items,
     radius = size,
     variant = "liquid",
+    disabled = false,
     outlined = false,
+    readOnly = false,
+    required = false,
+    itemToStringValue = defaultItemToStringValue,
     ...otherProps
   } = props;
   const ctx = React.useMemo<AutocompleteContext>(
-    () => ({ size, color, radius, variant, outlined }),
-    [size, color, radius, variant, outlined],
+    () => ({ size, color, items, radius, variant, outlined }),
+    [size, color, items, radius, variant, outlined],
   );
 
   return (
-    <AutocompleteContext value={ctx}>
-      <Autocomplete.Root {...otherProps} />
-    </AutocompleteContext>
+    <config.Context
+      size={size}
+      color={color}
+      radius={radius}
+      variant={variant}
+      disabled={disabled}
+      outlined={outlined}
+      readOnly={readOnly}
+      required={required}
+    >
+      <AutocompleteContext value={ctx}>
+        <Autocomplete.Root
+          {...otherProps}
+          items={items}
+          disabled={disabled}
+          readOnly={readOnly}
+          required={required}
+          itemToStringValue={itemToStringValue}
+        />
+      </AutocompleteContext>
+    </config.Context>
   );
 };
 
@@ -207,14 +284,14 @@ export namespace Root {
   export type State = AutocompleteRootState;
 
   export type Props<TItemValue = any> = Props.Render &
-    Props.SuruUI &
+    Props.SuruUI<TItemValue> &
     Props.BaseUI<TItemValue> &
     Props.HTML<TItemValue>;
 
   export namespace Props {
     export type Render = AutocompleteRootProps.Render;
 
-    export type SuruUI = AutocompleteRootProps.SuruUI;
+    export type SuruUI<TItemValue = any> = AutocompleteRootProps.SuruUI<TItemValue>;
 
     export type BaseUI<TItemValue = any> = AutocompleteRootProps.BaseUI<TItemValue>;
 
@@ -232,6 +309,10 @@ export namespace Root {
   export type HighlightEventDetails = AutocompleteRootHighlightEventDetails;
 
   export type HighlightEventReason = AutocompleteRootHighlightEventReason;
+
+  export type ItemGroupObject<TValue = any> = AutocompleteRootItemGroupObject<TValue>;
+
+  export type LabeledItemObject<TValue = any> = AutocompleteRootLabeledItemObject<TValue>;
 
   export type Radius = AutocompleteRootRadius;
 

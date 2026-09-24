@@ -261,7 +261,7 @@ export const Colors = meta.story({
     variant: "liquid",
     size: "md",
     radius: undefined,
-    outlined: false,
+    outlined: true,
     multiple: true,
     arrow: false,
     backdrop: false,

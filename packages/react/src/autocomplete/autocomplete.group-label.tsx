@@ -19,7 +19,7 @@ export namespace AutocompleteGroupLabelProps {
     React.ComponentProps<typeof Autocomplete.GroupLabel>,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // ComboboxGroupLabelProps:
+      // AutocompleteGroupLabelProps:
       never,
       keyof Render | keyof SuruUI
     >
@@ -39,20 +39,23 @@ export type AutocompleteGroupLabelProps = AutocompleteGroupLabelProps.Render &
   AutocompleteGroupLabelProps.BaseUI &
   AutocompleteGroupLabelProps.HTML;
 
+export type IAutocompleteGroupLabel = IComponent<AutocompleteGroupLabelProps>;
+
 /**
  * グループに自動的に対応付けられるラベル要素です。
  */
-export const AutocompleteGroupLabel: IComponent<AutocompleteGroupLabelProps> =
-  function SuiAutocompleteGroupLabel(props) {
-    const { className, ...otherProps } = props;
+export const AutocompleteGroupLabel: IAutocompleteGroupLabel = function SuiAutocompleteGroupLabel(
+  props,
+) {
+  const { className, ...otherProps } = props;
 
-    return (
-      <Autocomplete.GroupLabel
-        {...otherProps}
-        className={cn(className, "sui_autocomplete_group_label")}
-      />
-    );
-  };
+  return (
+    <Autocomplete.GroupLabel
+      {...otherProps}
+      className={cn(className, "sui_autocomplete_group_label")}
+    />
+  );
+};
 
 export { AutocompleteGroupLabel as GroupLabel };
 

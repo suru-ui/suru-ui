@@ -9,6 +9,7 @@ import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
 import { useAutocompleteContext } from "./autocomplete.context.js";
+import { AutocompleteItemContext } from "./autocomplete.item.context.js";
 
 /**
  * {@link AutocompleteItem} の状態です。
@@ -94,51 +95,54 @@ export const AutocompleteItem: IAutocompleteItem = function SuiAutocompleteItem(
     nativeButton,
     focusableWhenDisabled,
   };
+  const itemCtx = React.useMemo<AutocompleteItemContext>(() => ({ value }), [value]);
 
   return (
-    <Autocomplete.Item
-      {...otherProps}
-      {...baseuiProps}
-      render={(htmlProps: {}, state) => {
-        const buttonRootProps: Required<
-          Button.Root.Props.SuruUI &
-            Button.Root.Props.BaseUI &
-            Pick<Button.Root.Props.HTML, "disabled">
-        > = {
-          item: true,
-          size: ctx.size,
-          color: "grey",
-          muted: undefined,
-          radius: undefined,
-          pending: undefined,
-          squared: undefined,
-          variant: "naked",
-          disabled: state.disabled,
-          outlined: undefined,
-          nativeButton,
-          focusableWhenDisabled,
-        };
+    <AutocompleteItemContext value={itemCtx}>
+      <Autocomplete.Item
+        {...otherProps}
+        {...baseuiProps}
+        render={(htmlProps: {}, state) => {
+          const buttonRootProps: Required<
+            Button.Root.Props.SuruUI &
+              Button.Root.Props.BaseUI &
+              Pick<Button.Root.Props.HTML, "disabled">
+          > = {
+            item: true,
+            size: ctx.size,
+            color: "grey",
+            muted: undefined,
+            radius: undefined,
+            pending: undefined,
+            squared: undefined,
+            variant: "naked",
+            disabled: state.disabled,
+            outlined: undefined,
+            nativeButton,
+            focusableWhenDisabled,
+          };
 
-        return (
-          <Button.Root
-            {...mergeProps<typeof Button.Root>([
-              htmlProps,
-              buttonRootProps,
-              proxyRenderProps(state, {
-                style,
-                render,
-                className: cn(
-                  className,
-                  "sui_autocomplete_item",
-                  (state) => state.disabled && "sui_autocomplete_item-disabled",
-                  (state) => state.highlighted && "sui_autocomplete_item-highlighted",
-                ),
-              }),
-            ])}
-          />
-        );
-      }}
-    />
+          return (
+            <Button.Root
+              {...mergeProps<typeof Button.Root>([
+                htmlProps,
+                buttonRootProps,
+                proxyRenderProps(state, {
+                  style,
+                  render,
+                  className: cn(
+                    className,
+                    "sui_autocomplete_item",
+                    (state) => state.disabled && "sui_autocomplete_item-disabled",
+                    (state) => state.highlighted && "sui_autocomplete_item-highlighted",
+                  ),
+                }),
+              ])}
+            />
+          );
+        }}
+      />
+    </AutocompleteItemContext>
   );
 };
 

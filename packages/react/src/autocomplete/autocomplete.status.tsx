@@ -19,7 +19,7 @@ export namespace AutocompleteStatusProps {
     React.ComponentProps<typeof Autocomplete.Status>,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // ComboboxStatusProps:
+      // AutocompleteStatusProps:
       never,
       keyof Render | keyof SuruUI
     >
@@ -39,19 +39,20 @@ export type AutocompleteStatusProps = AutocompleteStatusProps.Render &
   AutocompleteStatusProps.BaseUI &
   AutocompleteStatusProps.HTML;
 
+export type IAutocompleteStatus = IComponent<AutocompleteStatusProps>;
+
 /**
  * リストの状態を読み上げるための非表示の要素です。
  *
  * この要素は常に DOM にマウントされたままにしてください。内容を変更するときは、要素を出し入れするのではなく children を差し替えます。
  */
-export const AutocompleteStatus: IComponent<AutocompleteStatusProps> =
-  function SuiAutocompleteStatus(props) {
-    const { className, ...otherProps } = props;
+export const AutocompleteStatus: IAutocompleteStatus = function SuiAutocompleteStatus(props) {
+  const { className, ...otherProps } = props;
 
-    return (
-      <Autocomplete.Status {...otherProps} className={cn(className, "sui_autocomplete_status")} />
-    );
-  };
+  return (
+    <Autocomplete.Status {...otherProps} className={cn(className, "sui_autocomplete_status")} />
+  );
+};
 
 export { AutocompleteStatus as Status };
 

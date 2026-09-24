@@ -2,6 +2,7 @@ import { Autocomplete } from "@base-ui/react/autocomplete";
 import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
+import { ClearIcon } from "../_icons.jsx";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
@@ -43,17 +44,30 @@ export type AutocompleteClearProps = AutocompleteClearProps.Render &
   AutocompleteClearProps.BaseUI &
   AutocompleteClearProps.HTML;
 
+export type IAutocompleteClear = IComponent<AutocompleteClearProps>;
+
 /**
  * 入力値を消去するボタン要素です。
  *
  * 入力値があるときだけ表示されます。
  */
-export const AutocompleteClear: IComponent<AutocompleteClearProps> = function SuiAutocompleteClear(
-  props,
-) {
-  const { className, ...otherProps } = props;
+export const AutocompleteClear: IAutocompleteClear = function SuiAutocompleteClear(props) {
+  const {
+    children = <ClearIcon />,
+    className,
+    "aria-label": ariaLabel = "入力値を消去",
+    ...otherProps
+  } = props;
 
-  return <Autocomplete.Clear {...otherProps} className={cn(className, "sui_autocomplete_clear")} />;
+  return (
+    <Autocomplete.Clear
+      {...otherProps}
+      className={cn(className, "sui_autocomplete_clear")}
+      aria-label={ariaLabel}
+    >
+      {children}
+    </Autocomplete.Clear>
+  );
 };
 
 export { AutocompleteClear as Clear };

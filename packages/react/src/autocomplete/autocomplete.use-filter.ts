@@ -3,46 +3,29 @@ import { Autocomplete } from "@base-ui/react/autocomplete";
 /**
  * 項目を検索文字列と照合するフィルターです。
  */
-export interface AutocompleteFilter extends ReturnType<typeof Autocomplete.useFilter> {}
-
-/**
- * {@link AutocompleteFilter} の別名です。
- */
-export type IAutocompleteFilter = AutocompleteFilter;
+export type IAutocompleteFilter = ReturnType<typeof Autocomplete.useFilter>;
 
 /**
  * {@link useAutocompleteFilter} のオプションです。
  */
-export type IUseAutocompleteFilterOptions =
-  Parameters<typeof Autocomplete.useFilter> extends readonly [arg0?: infer TArg0, ...never[]]
-    ? NonNullable<TArg0>
-    : unknown;
-
-/**
- * {@link useAutocompleteFilter} の戻り値です。
- */
-export interface IUseAutocompleteFilterReturn extends AutocompleteFilter {}
+export type IUseAutocompleteFilterOptions = NonNullable<
+  Parameters<typeof Autocomplete.useFilter>[0]
+>;
 
 /**
  * {@link useAutocompleteFilter} の型です。
  */
 export interface IUseAutocompleteFilter {
-  (options?: IUseAutocompleteFilterOptions): IUseAutocompleteFilterReturn;
-}
-
-export namespace IUseAutocompleteFilter {
-  export type Options = IUseAutocompleteFilterOptions;
-
-  export interface Return extends IUseAutocompleteFilterReturn {}
-}
-
-function useSuiAutocompleteFilter(options?: IUseAutocompleteFilterOptions): AutocompleteFilter {
-  return Autocomplete.useFilter(options);
+  (options?: IUseAutocompleteFilterOptions): IAutocompleteFilter;
 }
 
 /**
  * 項目を検索文字列と照合するフィルター関数を作るフックです。
  */
-export const useAutocompleteFilter: IUseAutocompleteFilter = useSuiAutocompleteFilter;
+export const useAutocompleteFilter: IUseAutocompleteFilter = function useSuiAutocompleteFilter(
+  options,
+) {
+  return Autocomplete.useFilter(options);
+};
 
 export { useAutocompleteFilter as useFilter };

@@ -19,7 +19,7 @@ export namespace AutocompleteRowProps {
     React.ComponentProps<typeof Autocomplete.Row>,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // ComboboxRowProps:
+      // AutocompleteRowProps:
       never,
       keyof Render | keyof SuruUI
     >
@@ -39,14 +39,14 @@ export type AutocompleteRowProps = AutocompleteRowProps.Render &
   AutocompleteRowProps.BaseUI &
   AutocompleteRowProps.HTML;
 
+export type IAutocompleteRow = IComponent<AutocompleteRowProps>;
+
 /**
  * グリッドリストの 1 行を表示する要素です。
  *
  * {@link Root} の `grid` プロパティーと一緒に使います。
  */
-export const AutocompleteRow: IComponent<AutocompleteRowProps> = function SuiAutocompleteRow(
-  props,
-) {
+export const AutocompleteRow: IAutocompleteRow = function SuiAutocompleteRow(props) {
   const { className, ...otherProps } = props;
 
   return <Autocomplete.Row {...otherProps} className={cn(className, "sui_autocomplete_row")} />;

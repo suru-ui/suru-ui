@@ -10,12 +10,22 @@ import type { IUseContext } from "../types.js";
 export type ComboboxContextColor = Color;
 
 /**
- * 入力を含むグループ要素の角丸です。
+ * 入力を含むグループ要素の角丸の大きさです。
+ *
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ * - `"full"`: 丸形
  */
 export type ComboboxContextRadius = "none" | Size | "full";
 
 /**
- * 入力欄とリスト項目のサイズです。
+ * 入力欄とリスト項目の大きさです。
+ *
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
  */
 export type ComboboxContextSize = Size;
 
@@ -30,6 +40,9 @@ export interface IComboboxContextItemToStringLabel<TItem = any> {
 
 /**
  * 入力欄の主な外観です。
+ *
+ * - `"naked"`: 背景なし
+ * - `"liquid"`: 薄い塗りつぶし
  */
 export type ComboboxContextVariant = "naked" | "liquid";
 
@@ -65,12 +78,12 @@ export type ComboboxContext<TItem = any> = {
   readonly outlined: boolean;
 
   /**
-   * 入力を含むグループ要素の角丸です。
+   * 入力を含むグループ要素の角丸の大きさです。
    */
   readonly radius: ComboboxContextRadius;
 
   /**
-   * 入力欄とリスト項目のサイズです。
+   * 入力欄とリスト項目の大きさです。
    */
   readonly size: ComboboxContextSize;
 

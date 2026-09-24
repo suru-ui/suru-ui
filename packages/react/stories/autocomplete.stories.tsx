@@ -6,6 +6,7 @@ import * as React from "react";
 import { preview, controls } from "../.config/storybook/preview.js";
 import * as Autocomplete_ from "../src/autocomplete/autocomplete.parts.js";
 import { Autocomplete } from "../src/autocomplete/index.js";
+import { Field } from "../src/index.js";
 
 const COLORS: readonly Autocomplete.Color[] = theme.COLORS;
 const SIZES: readonly Autocomplete.Size[] = theme.SIZES;
@@ -43,6 +44,9 @@ const ctrl = controls(Autocomplete, {
     control: "select",
     options: RADII,
   },
+  readOnly: {
+    control: "boolean",
+  },
   size: {
     control: "select",
     options: SIZES,
@@ -53,66 +57,45 @@ const ctrl = controls(Autocomplete, {
   },
 });
 
+const fruits = ["りんご", "バナナ", "ぶどう", "みかん", "いちご", "もも"];
+
 export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
-    items: ["りんご", "バナナ", "ぶどう", "みかん", "いちご", "もも"],
+    items: fruits,
     variant: "liquid",
     color: "grey",
     size: "md",
     radius: undefined,
     outlined: false,
     disabled: false,
+    readOnly: false,
     placeholder: "フルーツを検索",
   }),
   render(props) {
-    const id = React.useId();
-
-    return (
-      <div className="flex flex-col items-start gap-2">
-        <label htmlFor={id}>フルーツ</label>
-        <Autocomplete
-          {...props}
-          slotProps={{
-            input: {
-              id,
-            },
-            inputGroup: {
-              className: "w-[200px]",
-            },
-          }}
-        />
-      </div>
-    );
+    return <Autocomplete {...props} className="w-[200px]" />;
   },
 });
 
 export const Variants = meta.story({
   name: "主な外観",
   ...ctrl({
-    items: ["りんご", "バナナ", "ぶどう", "みかん", "いちご", "もも"],
+    items: fruits,
     color: "grey",
     size: "md",
     radius: undefined,
     outlined: false,
     disabled: false,
+    readOnly: false,
     placeholder: "検索",
   }),
   render(props) {
     return (
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-6">
         {VARIANTS.map((variant) => (
-          <div key={variant} className="flex flex-col gap-2">
+          <div key={variant} className="flex flex-col gap-3">
             <span>{variant}</span>
-            <Autocomplete
-              {...props}
-              variant={variant}
-              slotProps={{
-                inputGroup: {
-                  className: "w-[200px]",
-                },
-              }}
-            />
+            <Autocomplete {...props} variant={variant} className="w-[200px]" />
           </div>
         ))}
       </div>
@@ -120,33 +103,25 @@ export const Variants = meta.story({
   },
 });
 
-export const Outlined = meta.story({
-  name: "枠線",
+export const WithOutline = meta.story({
+  name: "枠線付き",
   ...ctrl({
-    variant: "liquid",
     color: "grey",
     size: "md",
     radius: undefined,
-    outlined: true,
     disabled: false,
+    readOnly: false,
     placeholder: "検索",
     empty: "該当なし",
+    items: fruits,
   }),
   render(props) {
     return (
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-6">
         {VARIANTS.map((variant) => (
-          <div key={variant} className="flex flex-col gap-2">
+          <div key={variant} className="flex flex-col gap-3">
             <span>{variant}</span>
-            <Autocomplete
-              {...props}
-              variant={variant}
-              slotProps={{
-                inputGroup: {
-                  className: "w-[200px]",
-                },
-              }}
-            />
+            <Autocomplete {...props} variant={variant} outlined className="w-[200px]" />
           </div>
         ))}
       </div>
@@ -155,30 +130,32 @@ export const Outlined = meta.story({
 });
 
 export const Colors = meta.story({
-  name: "色",
+  name: "配色",
   ...ctrl({
-    variant: "naked",
+    variant: "liquid",
     size: "md",
     radius: undefined,
     outlined: true,
     disabled: false,
+    readOnly: false,
     placeholder: "検索",
     empty: "該当なし",
+    items: fruits,
   }),
   render(props) {
     return (
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-6">
         {COLORS.map((color) => (
-          <Autocomplete
-            key={color}
-            {...props}
-            color={color}
-            slotProps={{
-              inputGroup: {
-                className: "w-[200px]",
-              },
-            }}
-          />
+          <div key={color} className="flex flex-col gap-3">
+            <span>{color}</span>
+            <Autocomplete
+              {...props}
+              color={color}
+              items={fruits}
+              className="w-[200px]"
+              defaultValue={fruits[0]}
+            />
+          </div>
         ))}
       </div>
     );
@@ -188,26 +165,23 @@ export const Colors = meta.story({
 export const Addons = meta.story({
   name: "付属要素",
   ...ctrl({
-    items: ["りんご", "バナナ", "ぶどう", "みかん", "いちご", "もも"],
+    items: fruits,
     variant: "liquid",
     color: "grey",
     size: "md",
     radius: undefined,
     outlined: false,
     disabled: false,
+    readOnly: false,
     placeholder: "検索",
   }),
   render(props) {
     return (
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-6">
         <Autocomplete
           {...props}
+          className="w-[240px]"
           endAddons={["について"]}
-          slotProps={{
-            inputGroup: {
-              className: "w-[240px]",
-            },
-          }}
           startAddons={[<SearchIcon key={0} />]}
         />
       </div>
@@ -223,24 +197,18 @@ export const Sizes = meta.story({
     radius: undefined,
     outlined: false,
     disabled: false,
+    readOnly: false,
     placeholder: "検索",
     empty: "該当なし",
+    items: fruits,
   }),
   render(props) {
     return (
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-6">
         {SIZES.map((size) => (
-          <div key={size} className="flex flex-col gap-2">
+          <div key={size} className="flex flex-col gap-3">
             <span>{size}</span>
-            <Autocomplete
-              {...props}
-              size={size}
-              slotProps={{
-                inputGroup: {
-                  className: "w-[200px]",
-                },
-              }}
-            />
+            <Autocomplete {...props} size={size} className="w-[200px]" />
           </div>
         ))}
       </div>
@@ -256,24 +224,18 @@ export const Radii = meta.story({
     size: "md",
     outlined: false,
     disabled: false,
+    readOnly: false,
     placeholder: "検索",
     empty: "該当なし",
+    items: fruits,
   }),
   render(props) {
     return (
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-6">
         {RADII.map((radius) => (
-          <div key={radius} className="flex flex-col gap-2">
+          <div key={radius} className="flex flex-col gap-3">
             <span>{radius}</span>
-            <Autocomplete
-              {...props}
-              radius={radius}
-              slotProps={{
-                inputGroup: {
-                  className: "w-[200px]",
-                },
-              }}
-            />
+            <Autocomplete {...props} radius={radius} outlined className="w-[200px]" />
           </div>
         ))}
       </div>
@@ -284,27 +246,20 @@ export const Radii = meta.story({
 export const Filled = meta.story({
   name: "入力済み",
   ...ctrl({
-    items: ["りんご", "バナナ", "ぶどう", "みかん", "いちご", "もも"],
+    items: fruits,
     variant: "liquid",
     color: "grey",
     size: "md",
     radius: undefined,
     outlined: false,
     disabled: false,
+    readOnly: false,
     placeholder: "検索",
   }),
   render(props) {
     return (
-      <div className="flex flex-col gap-3">
-        <Autocomplete
-          {...props}
-          slotProps={{
-            inputGroup: {
-              className: "w-[200px]",
-            },
-          }}
-          defaultValue="りんご"
-        />
+      <div className="flex flex-col gap-6">
+        <Autocomplete {...props} className="w-[200px]" defaultValue="りんご" />
       </div>
     );
   },
@@ -319,6 +274,7 @@ export const Objects = meta.story({
     radius: undefined,
     outlined: false,
     disabled: false,
+    readOnly: false,
     placeholder: "都道府県を検索",
   }),
   render(props) {
@@ -334,7 +290,7 @@ export const Objects = meta.story({
       { label: "福岡県", value: "40" },
     ];
 
-    return <Autocomplete {...props} items={prefectures} />;
+    return <Autocomplete {...props} items={prefectures} className="w-[200px]" />;
   },
 });
 
@@ -347,28 +303,44 @@ export const Grouped = meta.story({
     radius: undefined,
     outlined: false,
     disabled: false,
-    placeholder: "検索",
+    readOnly: false,
+    placeholder: "食材を選択",
+    items: [
+      {
+        label: "果物",
+        items: ["りんご", "バナナ", "みかん"],
+      },
+      {
+        label: "野菜",
+        items: ["にんじん", "きゅうり", "トマト"],
+      },
+    ],
   }),
   render(props) {
+    return <Autocomplete {...props} className="w-[200px]" onValueChange={console.log} />;
+  },
+});
+
+export const Labeled = meta.story({
+  name: "ラベル付き",
+  ...ctrl({
+    variant: "liquid",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    disabled: false,
+    readOnly: false,
+    placeholder: "フルーツを検索",
+    items: fruits,
+  }),
+  render(props) {
+    const { disabled, ...otherProps } = props;
+
     return (
-      <Autocomplete
-        {...props}
-        items={[
-          {
-            label: "果物",
-            items: ["りんご", "バナナ", "みかん"],
-          },
-          {
-            label: "野菜",
-            items: ["にんじん", "きゅうり", "トマト"],
-          },
-        ]}
-        slotProps={{
-          inputGroup: {
-            className: "w-[200px]",
-          },
-        }}
-      />
+      <Field label="フルーツ" disabled={disabled}>
+        <Autocomplete {...otherProps} className="w-[200px]" />
+      </Field>
     );
   },
 });
@@ -380,35 +352,79 @@ export const Disabled = meta.story({
     size: "md",
     radius: undefined,
     outlined: false,
+    items: fruits,
+    readOnly: false,
   }),
   render(props) {
     return (
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-6">
         {VARIANTS.map((variant) => (
-          <div key={variant} className="flex flex-col gap-2">
-            <span>{variant}</span>
-            <Autocomplete
-              {...props}
-              variant={variant}
-              disabled
-              slotProps={{
-                inputGroup: {
-                  className: "w-[200px]",
-                },
-              }}
-              defaultValue="値"
-            />
-            <Autocomplete
-              {...props}
-              variant={variant}
-              disabled
-              slotProps={{
-                inputGroup: {
-                  className: "w-[200px]",
-                },
-              }}
-              placeholder="プレースホルダー"
-            />
+          <div key={variant} className="flex flex-col gap-3">
+            <div>{variant}</div>
+            <div className="flex flex-col gap-3">
+              <span>未選択</span>
+              <Autocomplete
+                {...props}
+                items={fruits}
+                variant={variant}
+                disabled
+                className="w-[300px]"
+                placeholder="プレースホルダー"
+              />
+
+              <span>選択済み</span>
+              <Autocomplete
+                {...props}
+                items={fruits}
+                variant={variant}
+                disabled
+                className="w-[300px]"
+                defaultValue={props.items?.[0]}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const ReadOnly = meta.story({
+  name: "読み取り専用",
+  ...ctrl({
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: false,
+    items: fruits,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-6">
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col gap-3">
+            <div>{variant}</div>
+            <div className="flex flex-col gap-3">
+              <span>未選択</span>
+              <Autocomplete
+                {...props}
+                items={fruits}
+                variant={variant}
+                readOnly
+                className="w-[300px]"
+                placeholder="プレースホルダー"
+              />
+
+              <span>選択済み</span>
+              <Autocomplete
+                {...props}
+                items={fruits}
+                variant={variant}
+                readOnly
+                className="w-[300px]"
+                defaultValue={props.items?.[0]}
+              />
+            </div>
           </div>
         ))}
       </div>

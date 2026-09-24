@@ -6,10 +6,13 @@ import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import isReactNode from "../_is-react-node.js";
 import { getItemKey, isItemGroup, isLabeledItem, isPrimitiveItem } from "../_item.js";
 import type { Override, IComponent } from "../types.js";
-import type { ItemObjectGroup } from "./_autocomplete.jsx";
 import { AutocompleteGroupLabel } from "./autocomplete.group-label.jsx";
 import { AutocompleteGroup } from "./autocomplete.group.jsx";
 import { AutocompleteItem } from "./autocomplete.item.jsx";
+import type {
+  AutocompleteRootItemGroupObject,
+  AutocompleteRootLabeledItemObject,
+} from "./autocomplete.root.jsx";
 
 /**
  * {@link AutocompleteCollection} の各項目をレンダリングする関数のインターフェイスです。
@@ -30,7 +33,7 @@ export interface IAutocompleteCollectionItemRenderer<TItem = any> {
 /**
  * {@link AutocompleteCollection} の状態です。
  */
-export type AutocompleteCollectionState = Autocomplete.Collection.State;
+export type AutocompleteCollectionState = {};
 
 export namespace AutocompleteCollectionProps {
   export type Render = {};
@@ -81,7 +84,7 @@ export const AutocompleteCollection: IAutocompleteCollection = function SuiAutoc
 ) {
   const defaultItemRenderer: IAutocompleteCollectionItemRenderer = (item, index) => {
     switch (true) {
-      case isItemGroup<ItemObjectGroup>(item): {
+      case isItemGroup<AutocompleteRootItemGroupObject>(item): {
         const { label, ...otherProps } = item;
 
         return (
@@ -92,7 +95,7 @@ export const AutocompleteCollection: IAutocompleteCollection = function SuiAutoc
         );
       }
 
-      case isLabeledItem<{ readonly label: React.ReactNode; readonly value: unknown }>(item): {
+      case isLabeledItem<AutocompleteRootLabeledItemObject>(item): {
         const { label, ...otherProps } = item;
 
         return (

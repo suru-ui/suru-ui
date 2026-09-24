@@ -29,14 +29,14 @@ export type AutocompleteAddonProps = AutocompleteAddonProps.Render &
   AutocompleteAddonProps.BaseUI &
   AutocompleteAddonProps.HTML;
 
+export type IAutocompleteAddon = IComponent<AutocompleteAddonProps>;
+
 /**
  * 入力欄の左右に表示する補助コンポーネントです。
  *
  * 接頭辞、接尾辞、アイコンなどを表示できます。
  */
-export const AutocompleteAddon: IComponent<AutocompleteAddonProps> = function SuiAutocompleteAddon(
-  props,
-) {
+export const AutocompleteAddon: IAutocompleteAddon = function SuiAutocompleteAddon(props) {
   return useRender({
     props: [
       props,

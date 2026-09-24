@@ -19,7 +19,7 @@ export namespace AutocompleteEmptyProps {
     React.ComponentProps<typeof Autocomplete.Empty>,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // ComboboxEmptyProps:
+      // AutocompleteEmptyProps:
       never,
       keyof Render | keyof SuruUI
     >
@@ -39,14 +39,14 @@ export type AutocompleteEmptyProps = AutocompleteEmptyProps.Render &
   AutocompleteEmptyProps.BaseUI &
   AutocompleteEmptyProps.HTML;
 
+export type IAutocompleteEmpty = IComponent<AutocompleteEmptyProps>;
+
 /**
  * リストが空のときだけ、その children を表示する要素です。
  *
  * この要素自体は常に DOM に残します。表示内容の切り替えは children で行います。
  */
-export const AutocompleteEmpty: IComponent<AutocompleteEmptyProps> = function SuiAutocompleteEmpty(
-  props,
-) {
+export const AutocompleteEmpty: IAutocompleteEmpty = function SuiAutocompleteEmpty(props) {
   const { className, ...otherProps } = props;
 
   return <Autocomplete.Empty {...otherProps} className={cn(className, "sui_autocomplete_empty")} />;

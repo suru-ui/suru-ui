@@ -20,7 +20,7 @@ export namespace AutocompletePortalProps {
     React.ComponentProps<typeof Autocomplete.Portal>,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // ComboboxPortalProps:
+      // AutocompletePortalProps:
       "container" | "keepMounted",
       keyof Render | keyof SuruUI
     >
@@ -40,34 +40,35 @@ export type AutocompletePortalProps = AutocompletePortalProps.Render &
   AutocompletePortalProps.BaseUI &
   AutocompletePortalProps.HTML;
 
+export type IAutocompletePortal = IComponent<AutocompletePortalProps>;
+
 /**
  * ポップアップを DOM の別の場所へ移動する要素です。
  *
  * 既定では ポップアップを `<body>` の末尾に配置します。
  */
-export const AutocompletePortal: IComponent<AutocompletePortalProps> =
-  function SuiAutocompletePortal(props) {
-    const { size, radius } = useAutocompleteContext();
-    const {
-      className,
-      // @ts-expect-error
-      "data-scope": dataScope = "",
-      ...otherProps
-    } = props;
+export const AutocompletePortal: IAutocompletePortal = function SuiAutocompletePortal(props) {
+  const { size, radius } = useAutocompleteContext();
+  const {
+    className,
+    // @ts-expect-error
+    "data-scope": dataScope = "",
+    ...otherProps
+  } = props;
 
-    return (
-      <Autocomplete.Portal
-        {...otherProps}
-        className={cn(
-          className,
-          "sui_autocomplete_portal",
-          `sui_autocomplete_portal-size_${size}`,
-          `sui_autocomplete_portal-radius_${radius}`,
-        )}
-        data-scope={dataScope}
-      />
-    );
-  };
+  return (
+    <Autocomplete.Portal
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_autocomplete_portal",
+        `sui_autocomplete_portal-size_${size}`,
+        `sui_autocomplete_portal-radius_${radius}`,
+      )}
+      data-scope={dataScope}
+    />
+  );
+};
 
 export { AutocompletePortal as Portal };
 

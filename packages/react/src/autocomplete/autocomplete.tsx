@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { getItemLabel } from "../_get-item-label.js";
-import { ClearIcon, ChevronIcon } from "../_icons.jsx";
+import { ChevronIcon } from "../_icons.jsx";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import isReactNode from "../_is-react-node.js";
 import { getItemKey, isItemGroup, isLabeledItem, isPrimitiveItem } from "../_item.js";
@@ -21,7 +21,6 @@ import {
   ScrollAreaScrollbar,
 } from "../scroll-area/scroll-area.parts.js";
 import type { IComponent } from "../types.js";
-import { type ItemObjectGroup } from "./_autocomplete.jsx";
 import {
   type AutocompleteContext,
   type IAutocompleteFilter,
@@ -50,7 +49,9 @@ import {
   type AutocompleteInputGroupProps,
   type AutocompletePositionerProps,
   type IUseAutocompleteFilteredItems,
+  type AutocompleteRootItemGroupObject,
   type AutocompleteRootChangeEventReason,
+  type AutocompleteRootLabeledItemObject,
   type AutocompleteRootChangeEventDetails,
   type IAutocompleteCollectionItemRenderer,
   type AutocompleteRootHighlightEventReason,
@@ -96,12 +97,11 @@ export type AutocompleteSize = AutocompleteRootSize;
 
 export type AutocompleteVariant = AutocompleteRootVariant;
 
-/**
- * 関連する項目を {@link AutocompleteGroup} にまとめるためのオブジェクトです。
- *
- * @template TItem 項目の値の型です。
- */
-export type AutocompleteGroupItemObject<TItem = any> = ItemObjectGroup<TItem>;
+export type AutocompleteItemGroupObject<TItem = any> = AutocompleteRootItemGroupObject<TItem>;
+
+export type AutocompleteGroupItemObject<TItem = any> = AutocompleteRootItemGroupObject<TItem>;
+
+export type AutocompleteLabeledItemObject<TItem = any> = AutocompleteRootLabeledItemObject<TItem>;
 
 /**
  * {@link Autocomplete} の各パーツに渡す props です。
@@ -140,7 +140,7 @@ export type AutocompleteSlotProps<TItem = any> = {
   /**
    * {@link AutocompleteGroup} に渡す props です。
    */
-  readonly group?: Omit<AutocompleteGroupProps, "children" | "items"> | undefined;
+  readonly group?: Omit<AutocompleteGroupProps<TItem>, "children" | "items"> | undefined;
 
   /**
    * {@link AutocompleteGroupLabel} に渡す props です。
@@ -150,7 +150,7 @@ export type AutocompleteSlotProps<TItem = any> = {
   /**
    * {@link AutocompleteInput} に渡す props です。
    */
-  readonly input?: Omit<AutocompleteInputProps, "placeholder"> | undefined;
+  readonly input?: AutocompleteInputProps | undefined;
 
   /**
    * {@link AutocompleteInputGroup} に渡す props です。
@@ -407,7 +407,7 @@ export class AutocompleteAPI<TItem = any> {
     index,
   ) => {
     switch (true) {
-      case isItemGroup<AutocompleteGroupItemObject<TItem>>(item): {
+      case isItemGroup<AutocompleteItemGroupObject<TItem>>(item): {
         const groupLabelProps = this.getGroupLabelProps(item);
 
         return (
@@ -458,14 +458,9 @@ export class AutocompleteAPI<TItem = any> {
    * {@link AutocompleteClear} に渡す props を取得します。
    */
   public getClearProps(): AutocompleteClearProps {
-    const { clear: clearProps = {} } = this.slotProps;
-    const { "aria-label": clearAriaLabel = "クリア", ...otherClearProps } = clearProps;
+    const { clear: props = {} } = this.slotProps;
 
-    return {
-      children: <ClearIcon />,
-      "aria-label": clearAriaLabel,
-      ...otherClearProps,
-    };
+    return props;
   }
 
   /**
@@ -535,7 +530,7 @@ export class AutocompleteAPI<TItem = any> {
    *
    * @param item グループの項目です。
    */
-  public getGroupProps(item?: AutocompleteGroupItemObject<TItem>): AutocompleteGroupProps {
+  public getGroupProps(item?: AutocompleteItemGroupObject<TItem>): AutocompleteGroupProps<TItem> {
     const { group: baseProps = {} } = this.slotProps;
 
     if (item) {
@@ -553,7 +548,7 @@ export class AutocompleteAPI<TItem = any> {
    * @param item グループの項目です。
    */
   public getGroupLabelProps(
-    item?: AutocompleteGroupItemObject<TItem>,
+    item?: AutocompleteItemGroupObject<TItem>,
   ): AutocompleteGroupLabelProps | null {
     const { groupLabel: baseProps = {} } = this.slotProps;
 
@@ -590,12 +585,13 @@ export class AutocompleteAPI<TItem = any> {
    * {@link AutocompleteInput} に渡す props を取得します。
    */
   public getInputProps(): AutocompleteInputProps {
-    const { placeholder } = this.autocompleteProps;
+    const { placeholder: defaultPlaceholder } = this.autocompleteProps;
     const { input: props = {} } = this.slotProps;
+    const { placeholder = defaultPlaceholder, ...otherProps } = props;
 
     return {
+      ...otherProps,
       placeholder,
-      ...props,
     };
   }
 
@@ -663,14 +659,8 @@ export class AutocompleteAPI<TItem = any> {
    */
   public getPositionerProps(): Omit<AutocompletePositionerProps, "children"> {
     const { positioner: props = {} } = this.slotProps;
-    const { side = "bottom", align = "start", sideOffset = 8, ...otherProps } = props;
 
-    return {
-      ...otherProps,
-      side,
-      align,
-      sideOffset,
-    };
+    return props;
   }
 
   /**
@@ -864,7 +854,7 @@ export namespace Autocomplete {
 
   export type Color = AutocompleteColor;
 
-  export type GroupItemObject<TItem = any> = AutocompleteGroupItemObject<TItem>;
+  export type GroupItemObject<TItem = any> = AutocompleteItemGroupObject<TItem>;
 
   export type HighlightEventDetails = AutocompleteHighlightEventDetails;
 
@@ -873,6 +863,10 @@ export namespace Autocomplete {
   export type IFilter = IAutocompleteFilter;
 
   export type IFilteredItems<TItem = any> = IAutocompleteFilteredItems<TItem>;
+
+  export type ItemGroupObject<TItem = any> = AutocompleteItemGroupObject<TItem>;
+
+  export type LabeledItemObject<TItem = any> = AutocompleteLabeledItemObject<TItem>;
 
   export type Radius = AutocompleteRadius;
 

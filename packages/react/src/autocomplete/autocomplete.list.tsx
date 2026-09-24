@@ -26,7 +26,7 @@ export namespace AutocompleteListProps {
       React.ComponentProps<typeof Autocomplete.List>,
       Exclude<
         // Base UI の型を確認して取り出すプロパティーを決めます。
-        // ComboboxListProps:
+        // AutocompleteListProps:
         "children",
         keyof Render | keyof SuruUI
       >

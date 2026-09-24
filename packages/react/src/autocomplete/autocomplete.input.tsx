@@ -19,7 +19,7 @@ export namespace AutocompleteInputProps {
     React.ComponentProps<typeof Autocomplete.Input>,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // ComboboxInputProps:
+      // AutocompleteInputProps:
       "disabled",
       keyof Render | keyof SuruUI
     >
@@ -39,27 +39,15 @@ export type AutocompleteInputProps = AutocompleteInputProps.Render &
   AutocompleteInputProps.BaseUI &
   AutocompleteInputProps.HTML;
 
+export type IAutocompleteInput = IComponent<AutocompleteInputProps>;
+
 /**
  * 検索文字列を入力するテキスト入力欄です。
  */
-export const AutocompleteInput: IComponent<AutocompleteInputProps> = function SuiAutocompleteInput(
-  props,
-) {
-  const { type = "text", className, ...otherProps } = props;
+export const AutocompleteInput: IAutocompleteInput = function SuiAutocompleteInput(props) {
+  const { className, ...otherProps } = props;
 
-  return (
-    <Autocomplete.Input
-      {...otherProps}
-      type={type}
-      className={cn(
-        className,
-        "sui_autocomplete_input",
-        (state) => state.valid === true && "sui_autocomplete_input-valid",
-        (state) => state.valid === false && "sui_autocomplete_input-invalid",
-        (state) => state.valid === null && "sui_autocomplete_input-unverified",
-      )}
-    />
-  );
+  return <Autocomplete.Input {...otherProps} className={cn(className, "sui_autocomplete_input")} />;
 };
 
 export { AutocompleteInput as Input };

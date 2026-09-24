@@ -5,8 +5,8 @@ import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
 import {
-  ComboboxCollection,
   type IComboboxCollectionItemRenderer,
+  ComboboxCollection,
 } from "./combobox.collection.jsx";
 
 export type IComboboxListItemRenderer<TItem = any> = IComboboxCollectionItemRenderer<TItem>;

@@ -50,20 +50,34 @@ export type AutocompletePositionerProps = AutocompletePositionerProps.Render &
   AutocompletePositionerProps.BaseUI &
   AutocompletePositionerProps.HTML;
 
+export type IAutocompletePositioner = IComponent<AutocompletePositionerProps>;
+
 /**
  * ポップアップを入力欄に位置合わせする要素です。
  */
-export const AutocompletePositioner: IComponent<AutocompletePositionerProps> =
-  function SuiAutocompletePositioner(props) {
-    const { className, ...otherProps } = props;
+export const AutocompletePositioner: IAutocompletePositioner = function SuiAutocompletePositioner(
+  props,
+) {
+  const { side = "bottom", align = "start", className, sideOffset = 8, ...otherProps } = props;
 
-    return (
-      <Autocomplete.Positioner
-        {...otherProps}
-        className={cn(className, "sui_autocomplete_positioner")}
-      />
-    );
-  };
+  return (
+    <Autocomplete.Positioner
+      {...otherProps}
+      side={side}
+      align={align}
+      className={cn(
+        className,
+        "sui_autocomplete_positioner",
+        (state) => state.open && "sui_autocomplete_positioner-open",
+        (state) => `sui_autocomplete_positioner-side_${state.side.replaceAll("-", "_")}`,
+        (state) => `sui_autocomplete_positioner-align_${state.align}`,
+        (state) => state.anchorHidden && "sui_autocomplete_positioner-anchorhidden",
+        (state) => state.empty && "sui_autocomplete_positioner-empty",
+      )}
+      sideOffset={sideOffset}
+    />
+  );
+};
 
 export { AutocompletePositioner as Positioner };
 
