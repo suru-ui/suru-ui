@@ -1,15 +1,21 @@
+import type * as React from "react";
+
+import isReactNode from "../_is-react-node.js";
+import { isObject } from "../_item.js";
+import type { AccordionRootItemObject } from "./accordion.root.jsx";
+
 /**
  * 項目オブジェクトの値を推論します。
  *
  * @template TItem 項目の型です。
  */
-export type $InferItemValue<TItem> = TItem extends {
-  content: any;
-  title: any;
+export type $InferItemObjectValue<TItem> = TItem extends {
+  content: React.ReactNode;
+  title: React.ReactNode;
   value?: infer TItemValue;
 }
   ? TItemValue
-  : any;
+  : unknown;
 
 /**
  * 項目が `title` と `content` を持つオブジェクトかどうかを判定します。
@@ -17,10 +23,12 @@ export type $InferItemValue<TItem> = TItem extends {
  * @param item 判定する値です。
  * @returns `title` と `content` を持つオブジェクトの場合に `true` を返します。
  */
-export function isItemObject(item: unknown): item is {
-  readonly content: unknown;
-  readonly title: unknown;
-  readonly [key: string]: any;
-} {
-  return typeof item === "object" && item !== null && "title" in item && "content" in item;
+export function isItemObject(item: unknown): item is AccordionRootItemObject {
+  return (
+    isObject(item) &&
+    "title" in item &&
+    "content" in item &&
+    isReactNode(item.title) &&
+    isReactNode(item.content)
+  );
 }

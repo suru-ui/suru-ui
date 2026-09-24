@@ -2,11 +2,11 @@ import { Accordion } from "@base-ui/react/accordion";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
-import toReactNode from "../_to-react-node.js";
+import { getItemKey } from "../_item.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { type $InferItemValue, isItemObject } from "./_accordion.jsx";
+import { type $InferItemObjectValue, isItemObject } from "./_accordion.jsx";
 import { AccordionContent } from "./accordion.content.jsx";
 import { AccordionHeading } from "./accordion.heading.jsx";
 import { AccordionIndicator } from "./accordion.indicator.jsx";
@@ -32,19 +32,19 @@ export type AccordionRootItemObject = Omit<AccordionItemProps, "title"> & {
   /**
    * 項目のパネルに表示する内容です。
    */
-  content: React.ReactNode;
+  readonly content: React.ReactNode;
 
   /**
    * 項目の見出しに表示するタイトルです。
    */
-  title: React.ReactNode;
+  readonly title: React.ReactNode;
 
   /**
    * 項目の HTML `title` 属性です。
    *
    * {@link https://developer.mozilla.org/docs/Web/HTML/Reference/Global_attributes/title|title}
    */
-  htmlTitle?: React.HTMLAttributes<HTMLDivElement>["title"];
+  readonly htmlTitle?: React.HTMLAttributes<HTMLDivElement>["title"];
 };
 
 /**
@@ -114,7 +114,7 @@ export namespace AccordionRootProps {
      *
      * 関数を指定した場合は {@link AccordionRootProps.items|items} の各項目が引数として渡されます。
      */
-    children?: React.ReactNode | IAccordionRootItemRenderer<TItem>;
+    children?: React.ReactNode | IAccordionRootItemRenderer<TItem> | undefined;
 
     /**
      * アコーディオンの項目です。
@@ -194,12 +194,12 @@ export type AccordionRootProps<TItem = any, TValue = any> = AccordionRootProps.R
   AccordionRootProps.BaseUI<TValue> &
   AccordionRootProps.HTML<TValue>;
 
-interface IAccordionRoot extends IComponent<AccordionRootProps> {
+export interface IAccordionRoot extends IComponent<AccordionRootProps> {
   /**
    * @template TItem 項目の型です。
    * @template TValue 項目の値の型です。
    */
-  <TItem = never, TValue = $InferItemValue<TItem>>(
+  <TItem = never, TValue = $InferItemObjectValue<TItem>>(
     props: AccordionRootProps<TItem, TValue>,
   ): IComponent.Return;
 }
@@ -208,12 +208,35 @@ interface IAccordionRoot extends IComponent<AccordionRootProps> {
  * アコーディオンのルートコンポーネントです。
  */
 export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: AccordionRootProps) {
+  const defaultItemRenderer: IAccordionRootItemRenderer = (item, index) => {
+    switch (true) {
+      case isItemObject(item): {
+        const { title, content, htmlTitle, ...otherItemProps } = item;
+
+        return (
+          <AccordionItem {...otherItemProps} key={getItemKey(item) ?? index} title={htmlTitle}>
+            <AccordionHeading>
+              <AccordionTrigger>
+                {title}
+                <AccordionIndicator />
+              </AccordionTrigger>
+            </AccordionHeading>
+            <AccordionContent>{content}</AccordionContent>
+          </AccordionItem>
+        );
+      }
+
+      default:
+        return item;
+    }
+  };
+
   const {
     size = "md",
     items = [],
     radius = size,
     variant = "liquid",
-    children = defaultRootItemRenderer,
+    children = defaultItemRenderer,
     outlined = false,
     className,
     separator = false,
@@ -239,26 +262,6 @@ export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: Ac
     >
       {typeof children === "function" ? items.map(children) : children}
     </Accordion.Root>
-  );
-};
-
-const defaultRootItemRenderer: IAccordionRootItemRenderer = (item, index) => {
-  if (!isItemObject(item)) {
-    return toReactNode(item);
-  }
-
-  const { title, content, htmlTitle, ...otherItemProps } = item;
-
-  return (
-    <AccordionItem {...otherItemProps} key={index} title={htmlTitle}>
-      <AccordionHeading>
-        <AccordionTrigger>
-          {toReactNode(title)}
-          <AccordionIndicator />
-        </AccordionTrigger>
-      </AccordionHeading>
-      <AccordionContent>{toReactNode(content)}</AccordionContent>
-    </AccordionItem>
   );
 };
 

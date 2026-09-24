@@ -571,7 +571,8 @@
     cursor: not-allowed;
 
     &.sui_accordion-outlined {
-      border: var(--sui-disabled-naked-border) solid var(--sui-disabled-border_width);
+      border-color: var(--sui-disabled-naked-border);
+      border-width: var(--sui-disabled-border_width);
     }
   }
 }
@@ -583,7 +584,8 @@
   }
 
   &.sui_accordion-separator .sui_accordion_item-disabled + .sui_accordion_item-disabled {
-    border-top: var(--sui-disabled-naked-border) solid var(--sui-disabled-border_width);
+    border-top-color: var(--sui-disabled-naked-border);
+    border-top-width: var(--sui-disabled-border_width);
   }
 }
 

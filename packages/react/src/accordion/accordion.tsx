@@ -1,10 +1,11 @@
 import * as React from "react";
 
 import type { LikelyVisibleNode } from "../_is-likely-visible-node.js";
+import { getItemKey } from "../_item.js";
 import mergeProps from "../_merge-props.js";
 import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
-import { type $InferItemValue, isItemObject } from "./_accordion.jsx";
+import { type $InferItemObjectValue, isItemObject } from "./_accordion.jsx";
 import {
   type AccordionRootSize,
   type AccordionItemProps,
@@ -80,8 +81,10 @@ export type AccordionSlotProps = {
 
 /**
  * {@link Accordion} が持つ状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type AccordionState = AccordionRootState;
+export type AccordionState<TValue = any> = AccordionRootState<TValue>;
 
 /**
  * {@link Accordion} に渡す props です。
@@ -103,50 +106,131 @@ export type AccordionProps<TItem = any, TValue = any> = AccordionRootProps<TItem
  * {@link Accordion} を構成する各パーツの props などを作成するための API です。
  *
  * @template TItem 項目の型です。
+ * @template TValue 項目の値の型です。
  */
-export interface AccordionAPI<TItem = any> {
+export class AccordionAPI<TItem = any, TValue = any> {
+  private readonly slotProps: AccordionSlotProps;
+
+  private readonly rootProps: AccordionRootProps<TItem, TValue>;
+
+  /**
+   * @param props {@link Accordion} の props です。
+   * @internal
+   */
+  public constructor(props: AccordionProps<TItem, TValue>) {
+    const { slotProps = {}, ...rootProps } = props;
+    this.slotProps = slotProps;
+    this.rootProps = rootProps;
+  }
+
+  private defaultItemRenderer: IAccordionItemRenderer = (item, index) => {
+    switch (true) {
+      case isItemObject(item):
+        return (
+          <AccordionItem key={getItemKey(item) ?? index} {...this.getItemProps(item)}>
+            <AccordionHeading {...this.getHeadingProps()}>
+              <AccordionTrigger {...this.getTriggerProps()}>
+                {this.getTitle(item)}
+                <AccordionIndicator {...this.getIndicatorProps()} />
+              </AccordionTrigger>
+            </AccordionHeading>
+            <AccordionContent {...this.getContentProps(item)} />
+          </AccordionItem>
+        );
+
+      default:
+        return item;
+    }
+  };
+
   /**
    * {@link AccordionContent} に渡す props を取得します。
    *
    * @param item 項目です。
    */
-  getContentProps(item: TItem): AccordionContentProps;
+  public getContentProps(item: AccordionItemObject): AccordionContentProps {
+    const { content: props = {} } = this.slotProps;
+
+    if (item) {
+      return {
+        ...props,
+        children: item.content,
+      };
+    }
+
+    return props;
+  }
 
   /**
    * {@link AccordionHeading} に渡す props を取得します。
    */
-  getHeadingProps(): Omit<AccordionHeadingProps, "children">;
+  public getHeadingProps(): Omit<AccordionHeadingProps, "children"> {
+    const { heading: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link AccordionIndicator} に渡す props を取得します。
    */
-  getIndicatorProps(): AccordionIndicatorProps;
+  public getIndicatorProps(): AccordionIndicatorProps {
+    const { indicator: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link AccordionItem} に渡す props を取得します。
    *
    * @param item 項目です。
    */
-  getItemProps(item: TItem): Omit<AccordionItemProps, "children">;
+  public getItemProps(item?: AccordionItemObject): Omit<AccordionItemProps, "children"> {
+    const { item: props = {} } = this.slotProps;
+
+    if (item) {
+      const {
+        // title と content を取り除いた props を AccordionItem の props とします。
+        title: _1,
+        content: _2,
+        htmlTitle: title,
+        ...otherItemProps
+      } = item as AccordionItemObject;
+
+      return mergeProps([props, otherItemProps, { title }]);
+    }
+
+    return props;
+  }
 
   /**
    * {@link AccordionRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<AccordionRootProps, "children"> & {
-    children: LikelyVisibleNode | undefined;
-  };
+  public getRootProps(): AccordionRootProps<TItem, TValue> {
+    const { children = this.defaultItemRenderer, ...otherProps } = this.rootProps;
+
+    return {
+      ...otherProps,
+      children,
+    };
+  }
 
   /**
    * 項目のタイトルを取得します。
    *
    * @param item 項目です。
    */
-  getTitle(item: TItem): React.ReactNode;
+  public getTitle(item: AccordionItemObject): React.ReactNode {
+    return item.title;
+  }
 
   /**
    * {@link AccordionTrigger} に渡す props を取得します。
    */
-  getTriggerProps(): Omit<AccordionTriggerProps, "children">;
+  public getTriggerProps(): Omit<AccordionTriggerProps, "children"> {
+    const { trigger: triggerProps = {} } = this.slotProps;
+
+    return triggerProps;
+  }
 }
 
 interface IUseAccordionAPI {
@@ -158,83 +242,29 @@ interface IUseAccordionAPI {
    * @param props {@link Accordion} の props です。
    * @returns アコーディオンの API です
    */
-  <TItem = never, TValue = $InferItemValue<TItem>>(
+  <TItem = never, TValue = $InferItemObjectValue<TItem>>(
     props: AccordionProps<TItem, TValue>,
-  ): AccordionAPI<TItem>;
+  ): AccordionAPI<TItem, TValue>;
 }
 
 /**
  * {@link AccordionAPI} を作成するフックです。
  */
 export const useAccordionAPI: IUseAccordionAPI = function useSuiAccordionAPI(props) {
-  const {
-    items = [],
-    children,
-    slotProps: {
-      item: itemProps = {},
-      content: contentProps = {},
-      heading: headingProps = {},
-      trigger: triggerProps = {},
-      indicator: indicatorProps = {},
-    } = {},
-    ...otherRootProps
-  } = props;
-
-  return {
-    getTitle(item) {
-      return isItemObject(item) ? toReactNode(item.title) : null;
-    },
-    getItemProps(item) {
-      if (!isItemObject(item)) {
-        return itemProps;
-      }
-
-      const {
-        // title と content を取り除いた props を AccordionItem の props とします。
-        title: _1,
-        content: _2,
-        htmlTitle: title,
-        ...otherItemProps
-      } = item as AccordionItemObject;
-
-      return mergeProps([itemProps, otherItemProps, { title }]);
-    },
-    getRootProps() {
-      return {
-        ...otherRootProps,
-        items,
-        children: typeof children === "function" ? items.map(children) : toReactNode(children),
-      };
-    },
-    getContentProps(item) {
-      return {
-        ...contentProps,
-        children: isItemObject(item) ? toReactNode(item.content) : null,
-      };
-    },
-    getHeadingProps() {
-      return headingProps;
-    },
-    getTriggerProps() {
-      return triggerProps;
-    },
-    getIndicatorProps() {
-      return indicatorProps;
-    },
-  };
+  return new AccordionAPI(props);
 };
 
-export { type AccordionAPI as API, useAccordionAPI as useAPI };
+export { AccordionAPI as API, useAccordionAPI as useAPI };
 
 // Component
 // ---------
 
-interface IAccordion extends IComponent<AccordionProps> {
+export interface IAccordion extends IComponent<AccordionProps> {
   /**
    * @template TItem 項目の型です。
    * @template TValue 項目の値の型です。
    */
-  <TItem = never, TValue = $InferItemValue<TItem>>(
+  <TItem = never, TValue = $InferItemObjectValue<TItem>>(
     props: AccordionProps<TItem, TValue>,
   ): IComponent.Return;
 }
@@ -244,30 +274,14 @@ interface IAccordion extends IComponent<AccordionProps> {
  */
 export const Accordion: IAccordion = function SuiAccordion(props: AccordionProps) {
   const api = useAccordionAPI(props);
-  const { children, ...otherRootProps } = api.getRootProps();
 
-  return (
-    <AccordionRoot {...otherRootProps}>
-      {children ??
-        ((item, index) => (
-          <AccordionItem key={index} {...api.getItemProps(item)}>
-            <AccordionHeading {...api.getHeadingProps()}>
-              <AccordionTrigger {...api.getTriggerProps()}>
-                {api.getTitle(item)}
-                <AccordionIndicator {...api.getIndicatorProps()} />
-              </AccordionTrigger>
-            </AccordionHeading>
-            <AccordionContent {...api.getContentProps(item)} />
-          </AccordionItem>
-        ))}
-    </AccordionRoot>
-  );
+  return <AccordionRoot {...api.getRootProps()} />;
 };
 
 export namespace Accordion {
-  export type State = AccordionState;
+  export type State<TValue = any> = AccordionState<TValue>;
 
-  export type Props = AccordionProps;
+  export type Props<TItem = any, TValue = any> = AccordionProps<TItem, TValue>;
 
   export type SlotProps = AccordionSlotProps;
 
