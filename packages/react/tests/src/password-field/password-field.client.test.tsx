@@ -120,8 +120,8 @@ describe("PasswordFieldAPI", () => {
     });
 
     // 検証
-    expect(api.getStartAddonsPropsList()).toStrictEqual([{ id: "addon", children: "🔒" }]);
-    expect(api.getEndAddonsPropsList()).toStrictEqual([{ id: "addon", children: "8 文字以上" }]);
+    expect(api.mapStartAddonProps()).toStrictEqual([{ id: "addon", children: "🔒" }]);
+    expect(api.mapEndAddonProps()).toStrictEqual([{ id: "addon", children: "8 文字以上" }]);
   });
 });
 

@@ -78,14 +78,7 @@ export type RadioGroupContext = {
 export const RadioGroupContext: React.Context<RadioGroupContext | null> =
   React.createContext<RadioGroupContext | null>(null);
 
-export interface IUseRadioGroupContext extends IUseContext<RadioGroupContext> {
-  /**
-   * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
-   * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
-   */
-  (optional?: false): RadioGroupContext;
-  (optional?: boolean): RadioGroupContext | null;
-}
+export type IUseRadioGroupContext = IUseContext<RadioGroupContext>;
 
 /**
  * {@link RadioGroupContext} を読み取るフックです。

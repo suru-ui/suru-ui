@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import type { IComponent } from "../types.js";
-import { usePaginationState } from "./_pagination.js";
+import { type IUsePaginationState, usePaginationState } from "./_pagination.js";
 import {
   type PaginationRootSize,
   type PaginationItemProps,
@@ -140,41 +140,116 @@ export type PaginationProps = PaginationProps.Pagination & PaginationProps.Root;
 /**
  * {@link Pagination} を構成する各パーツの props などを作成するための API です。
  */
-export interface PaginationAPI {
+export class PaginationAPI {
+  private readonly disabled: boolean;
+
+  private readonly items: PaginationItemObject[];
+
+  private readonly rootProps: Omit<PaginationRootProps, "children">;
+
+  private readonly slotProps: PaginationSlotProps;
+
+  private readonly state: IUsePaginationState;
+
+  /**
+   * @param props {@link Pagination} の props です。
+   * @param state ページネーションの状態です。
+   * @internal
+   */
+  public constructor(props: PaginationProps, state: IUsePaginationState) {
+    const {
+      page: _page,
+      disabled = false,
+      slotProps = {},
+      defaultPage: _defaultPage,
+      onPageChange: _onPageChange,
+      siblingCount = 1,
+      boundaryCount = 1,
+      ...rootProps
+    } = props;
+    const { page, totalPages } = state;
+    this.disabled = disabled;
+    this.items = getPaginationItems(
+      totalPages,
+      page,
+      Math.max(0, Math.trunc(siblingCount)),
+      Math.max(0, Math.trunc(boundaryCount)),
+    );
+    this.rootProps = rootProps;
+    this.slotProps = slotProps;
+    this.state = state;
+  }
+
   /**
    * {@link PaginationEllipsis} に渡す props を取得します。
    *
    * @param start 省略範囲の開始ページです。
    * @param end 省略範囲の終了ページです。
    */
-  getEllipsisProps(start: number, end: number): PaginationEllipsisProps;
+  public getEllipsisProps(start: number, end: number): PaginationEllipsisProps {
+    const { ellipsis: props = {} } = this.slotProps;
+
+    return {
+      ...props,
+      end,
+      start,
+    };
+  }
 
   /**
    * {@link PaginationItem} に渡す props を取得します。
    *
    * @param page 項目のページ番号です。
    */
-  getItemProps(page: number): PaginationItemProps;
+  public getItemProps(page: number): PaginationItemProps {
+    const { item: props = {} } = this.slotProps;
+
+    return {
+      ...props,
+      page,
+      children: page,
+      selected: page === this.state.page,
+    };
+  }
 
   /**
    * 表示する項目の一覧を取得します。
    */
-  getItems(): PaginationItemObject[];
+  public getItems(): PaginationItemObject[] {
+    return this.items;
+  }
 
   /**
    * {@link PaginationNextButton} に渡す props を取得します。
    */
-  getNextButtonProps(): PaginationNextButtonProps;
+  public getNextButtonProps(): PaginationNextButtonProps {
+    const { nextButton: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link PaginationPreviousButton} に渡す props を取得します。
    */
-  getPreviousButtonProps(): PaginationPreviousButtonProps;
+  public getPreviousButtonProps(): PaginationPreviousButtonProps {
+    const { previousButton: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link PaginationRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<PaginationRootProps, "children">;
+  public getRootProps(): Omit<PaginationRootProps, "children"> {
+    const { page, goToPage } = this.state;
+
+    return {
+      ...this.rootProps,
+      page,
+      disabled: this.disabled,
+      onPageChange: goToPage,
+    };
+  }
 }
 
 interface IUsePaginationAPI {
@@ -189,78 +264,20 @@ interface IUsePaginationAPI {
 
 /**
  * {@link PaginationAPI} を作成するフックです。
- *
- * 非制御の現在ページを内部状態で管理するため、API はクラスではなくフックとして提供します。
  */
 export const usePaginationAPI: IUsePaginationAPI = function useSuiPaginationAPI(props) {
-  const {
-    page: pageProp,
-    disabled = false,
-    slotProps: {
-      item: itemProps = {},
-      ellipsis: ellipsisProps = {},
-      nextButton: nextButtonProps = {},
-      previousButton: previousButtonProps = {},
-    } = {},
-    totalPages: totalPagesProp,
-    defaultPage,
-    onPageChange,
-    siblingCount = 1,
-    boundaryCount = 1,
-    ...otherRootProps
-  } = props;
-  const { page, goToPage, totalPages } = usePaginationState({
-    page: pageProp,
-    disabled,
-    totalPages: totalPagesProp,
-    defaultPage,
-    onPageChange,
+  const state = usePaginationState({
+    page: props.page,
+    disabled: props.disabled,
+    totalPages: props.totalPages,
+    defaultPage: props.defaultPage,
+    onPageChange: props.onPageChange,
   });
-  const items = getPaginationItems(
-    totalPages,
-    page,
-    Math.max(0, Math.trunc(siblingCount)),
-    Math.max(0, Math.trunc(boundaryCount)),
-  );
 
-  return {
-    getItems() {
-      return items;
-    },
-    getItemProps(itemPage) {
-      return {
-        ...itemProps,
-        page: itemPage,
-        children: itemPage,
-        selected: itemPage === page,
-      };
-    },
-    getRootProps() {
-      return {
-        ...otherRootProps,
-        page,
-        disabled,
-        totalPages: totalPagesProp,
-        onPageChange: goToPage,
-      };
-    },
-    getEllipsisProps(start, end) {
-      return {
-        ...ellipsisProps,
-        end,
-        start,
-      };
-    },
-    getNextButtonProps() {
-      return nextButtonProps;
-    },
-    getPreviousButtonProps() {
-      return previousButtonProps;
-    },
-  };
+  return new PaginationAPI(props, state);
 };
 
-export { type PaginationAPI as API, usePaginationAPI as useAPI };
+export { PaginationAPI as API, usePaginationAPI as useAPI };
 
 // Component
 // ---------

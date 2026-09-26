@@ -289,9 +289,9 @@ export namespace Root {
 
   export type ChangeEventReason = AccordionRootChangeEventReason;
 
-  export type ItemObject = AccordionRootItemObject;
-
   export type IItemRenderer<TItem = any> = IAccordionRootItemRenderer<TItem>;
+
+  export type ItemObject = AccordionRootItemObject;
 
   export type Radius = AccordionRootRadius;
 

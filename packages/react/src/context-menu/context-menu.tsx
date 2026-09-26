@@ -188,52 +188,48 @@ export type ContextMenuSlotProps = {
  */
 export type ContextMenuState = ContextMenuRootState;
 
-type ContextMenuPropsMain = {
-  /**
-   * チェックボックス項目の選択状態を示す内容です。
-   *
-   * {@link ContextMenuCheckboxItemIndicator} の子要素として描画されます。
-   */
-  checkboxIndicator?: React.ReactNode;
+namespace ContextMenuProps {
+  export type Content = Omit<ContextMenuContentProps, keyof ContextMenu | keyof Root>;
 
-  /**
-   * ラジオ項目の選択状態を示す内容です。
-   *
-   * {@link ContextMenuRadioItemIndicator} の子要素として描画されます。
-   */
-  radioIndicator?: React.ReactNode;
+  export type ContextMenu = {
+    /**
+     * チェックボックス項目の選択状態を示す内容です。
+     *
+     * {@link ContextMenuCheckboxItemIndicator} の子要素として描画されます。
+     */
+    checkboxIndicator?: React.ReactNode;
 
-  /**
-   * 各パーツに個別の props を渡すためのオブジェクトです。
-   */
-  slotProps?: ContextMenuSlotProps | undefined;
+    /**
+     * ラジオ項目の選択状態を示す内容です。
+     *
+     * {@link ContextMenuRadioItemIndicator} の子要素として描画されます。
+     */
+    radioIndicator?: React.ReactNode;
 
-  /**
-   * コンテキストメニューを開く対象です。
-   *
-   * そのまま {@link ContextMenuTrigger} の `children` に渡されます。
-   */
-  trigger?: ContextMenuTriggerProps["children"] | undefined;
-};
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     */
+    slotProps?: ContextMenuSlotProps | undefined;
 
-type ContextMenuPropsRoot<TItem = any> = Omit<
-  ContextMenuRootProps<TItem>,
-  "children" | keyof ContextMenuPropsMain
->;
+    /**
+     * コンテキストメニューを開く対象です。
+     *
+     * そのまま {@link ContextMenuTrigger} の `children` に渡されます。
+     */
+    trigger?: ContextMenuTriggerProps["children"] | undefined;
+  };
 
-type ContextMenuPropsContent = Omit<
-  ContextMenuContentProps,
-  keyof ContextMenuPropsMain | keyof ContextMenuPropsRoot
->;
+  export type Root<TItem = any> = Omit<ContextMenuRootProps<TItem>, "children" | keyof ContextMenu>;
+}
 
 /**
  * {@link ContextMenu} に渡す props です。
  *
  * @template TItem 項目の型です。
  */
-export type ContextMenuProps<TItem = any> = ContextMenuPropsMain &
-  ContextMenuPropsRoot<TItem> &
-  ContextMenuPropsContent;
+export type ContextMenuProps<TItem = any> = ContextMenuProps.ContextMenu &
+  ContextMenuProps.Root<TItem> &
+  ContextMenuProps.Content;
 
 // API
 // ---
@@ -246,11 +242,11 @@ export type ContextMenuProps<TItem = any> = ContextMenuPropsMain &
 export class ContextMenuAPI<TItem = any> {
   private readonly checkboxIndicator: React.ReactNode;
 
-  private readonly contentProps: ContextMenuPropsContent;
+  private readonly contentProps: ContextMenuProps.Content;
 
   private readonly radioIndicator: React.ReactNode;
 
-  private readonly rootProps: ContextMenuPropsRoot<TItem>;
+  private readonly rootProps: ContextMenuProps.Root<TItem>;
 
   private readonly slotProps: ContextMenuSlotProps;
 

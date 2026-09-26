@@ -113,8 +113,8 @@ describe("NumberFieldAPI", () => {
     });
 
     // 検証
-    expect(api.getStartAddonsPropsList()).toStrictEqual([{ id: "addon", children: "¥" }]);
-    expect(api.getEndAddonsPropsList()).toStrictEqual([{ id: "addon", children: "円" }]);
+    expect(api.mapStartAddonProps()).toStrictEqual([{ id: "addon", children: "¥" }]);
+    expect(api.mapEndAddonProps()).toStrictEqual([{ id: "addon", children: "円" }]);
   });
 
   test("slotProps を各パーツへ渡す", ({ expect }) => {

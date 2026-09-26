@@ -51,9 +51,9 @@ namespace CheckboxProps {
     slotProps?: CheckboxSlotProps | undefined;
   };
 
-  export type Root = Omit<CheckboxRootProps, keyof Checkbox | keyof Indicator>;
-
   export type Indicator = Pick<CheckboxIndicatorProps, "children">;
+
+  export type Root = Omit<CheckboxRootProps, keyof Checkbox | keyof Indicator>;
 }
 
 /**

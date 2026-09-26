@@ -65,48 +65,23 @@ export type PasswordFieldSlotProps = {
 export type PasswordFieldState = PasswordFieldRootState;
 
 namespace PasswordFieldProps {
+  export type Input = Pick<
+    PasswordFieldInputProps,
+    | "defaultValue"
+    | "disabled"
+    | "name"
+    | "onValueChange"
+    | "placeholder"
+    | "readOnly"
+    | "required"
+    | "value"
+  >;
+
   export type PasswordField = {
-    /**
-     * 入力欄の初期値です。
-     *
-     * {@link PasswordFieldProps.PasswordField.value|value} を指定しないときに使われます。
-     */
-    defaultValue?: PasswordFieldInputProps["defaultValue"] | undefined;
-
-    /**
-     * パスワード入力欄を無効にするかどうかを指定します。
-     */
-    disabled?: PasswordFieldInputProps["disabled"] | undefined;
-
     /**
      * 入力欄の末尾に表示する内容です。
      */
     endAddons?: Iterable<React.ReactNode> | undefined;
-
-    /**
-     * フォーム送信時に使う入力欄の名前を指定します。
-     */
-    name?: PasswordFieldInputProps["name"] | undefined;
-
-    /**
-     * 入力値が変わったときに呼ばれます。
-     */
-    onValueChange?: PasswordFieldInputProps["onValueChange"] | undefined;
-
-    /**
-     * 入力欄に表示する案内文です。
-     */
-    placeholder?: PasswordFieldInputProps["placeholder"] | undefined;
-
-    /**
-     * 入力欄を読み取り専用にするかどうかを指定します。
-     */
-    readOnly?: PasswordFieldInputProps["readOnly"] | undefined;
-
-    /**
-     * 入力欄を必須にするかどうかを指定します。
-     */
-    required?: PasswordFieldInputProps["required"] | undefined;
 
     /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
@@ -119,13 +94,6 @@ namespace PasswordFieldProps {
     startAddons?: Iterable<React.ReactNode> | undefined;
 
     /**
-     * 入力値を制御します。
-     *
-     * 入力値を確定するには {@link PasswordFieldProps.PasswordField.onValueChange|onValueChange} で更新してください。
-     */
-    value?: PasswordFieldInputProps["value"] | undefined;
-
-    /**
      * パスワードの表示と非表示を切り替えるボタンを表示するかどうかを指定します。
      *
      * `false` を指定しても {@link PasswordFieldProps.slotProps|slotProps.toggle} を指定したときは表示します。
@@ -136,13 +104,15 @@ namespace PasswordFieldProps {
     visibilityToggle?: boolean | undefined;
   };
 
-  export type Root = Omit<PasswordFieldRootProps, "children" | keyof PasswordField>;
+  export type Root = Omit<PasswordFieldRootProps, keyof PasswordField | keyof Input>;
 }
 
 /**
  * {@link PasswordField} に渡す props です。
  */
-export type PasswordFieldProps = PasswordFieldProps.PasswordField & PasswordFieldProps.Root;
+export type PasswordFieldProps = PasswordFieldProps.PasswordField &
+  PasswordFieldProps.Root &
+  PasswordFieldProps.Input;
 
 // API
 // ---
@@ -151,6 +121,8 @@ export type PasswordFieldProps = PasswordFieldProps.PasswordField & PasswordFiel
  * {@link PasswordField} を構成する各パーツの props などを作成するための API です。
  */
 export class PasswordFieldAPI {
+  private readonly inputProps: Required<PasswordFieldProps.Input>;
+
   private readonly passwordFieldProps: Required<
     Omit<PasswordFieldProps.PasswordField, "slotProps">
   >;
@@ -179,17 +151,19 @@ export class PasswordFieldAPI {
       visibilityToggle,
       ...rootProps
     } = props;
-    this.passwordFieldProps = {
+    this.inputProps = {
       name,
       value,
       disabled,
       readOnly,
       required,
-      endAddons,
       placeholder,
-      startAddons,
       defaultValue,
       onValueChange,
+    };
+    this.passwordFieldProps = {
+      endAddons,
+      startAddons,
       visibilityToggle,
     };
     this.rootProps = rootProps;
@@ -199,7 +173,7 @@ export class PasswordFieldAPI {
   /**
    * 末尾の {@link PasswordFieldAddon} に渡す props の一覧を取得します。
    */
-  public getEndAddonsPropsList(): readonly PasswordFieldAddonProps[] {
+  public mapEndAddonProps(): readonly PasswordFieldAddonProps[] {
     const { endAddons } = this.passwordFieldProps;
     const { addon: props = {} } = this.slotProps;
 
@@ -215,19 +189,10 @@ export class PasswordFieldAPI {
    * {@link PasswordFieldInput} に渡す props を取得します。
    */
   public getInputProps(): PasswordFieldInputProps {
-    const { name, value, disabled, readOnly, required, placeholder, defaultValue, onValueChange } =
-      this.passwordFieldProps;
     const { input: props = {} } = this.slotProps;
 
     return {
-      name,
-      value,
-      disabled,
-      readOnly,
-      required,
-      placeholder,
-      defaultValue,
-      onValueChange,
+      ...this.inputProps,
       ...props,
     };
   }
@@ -242,7 +207,7 @@ export class PasswordFieldAPI {
   /**
    * 先頭の {@link PasswordFieldAddon} に渡す props の一覧を取得します。
    */
-  public getStartAddonsPropsList(): readonly PasswordFieldAddonProps[] {
+  public mapStartAddonProps(): readonly PasswordFieldAddonProps[] {
     const { startAddons } = this.passwordFieldProps;
     const { addon: props = {} } = this.slotProps;
 
@@ -260,7 +225,8 @@ export class PasswordFieldAPI {
    * 表示切替ボタンを表示しないときは `null` を返します。
    */
   public getToggleButtonProps(): PasswordFieldToggleButtonProps | null {
-    const { disabled, visibilityToggle = true } = this.passwordFieldProps;
+    const { disabled } = this.inputProps;
+    const { visibilityToggle = true } = this.passwordFieldProps;
     const { toggle: props } = this.slotProps;
 
     if (visibilityToggle || Object.keys(props ?? {}).length > 0) {
@@ -312,11 +278,11 @@ export const PasswordField: IPasswordField = /*#__PURE__*/ Object.assign(
 
     return (
       <PasswordFieldRoot {...api.getRootProps()}>
-        {api.getStartAddonsPropsList().map((addonProps, index) => (
+        {api.mapStartAddonProps().map((addonProps, index) => (
           <PasswordFieldAddon key={index} {...addonProps} />
         ))}
         <PasswordFieldInput {...api.getInputProps()} />
-        {api.getEndAddonsPropsList().map((addonProps, index) => (
+        {api.mapEndAddonProps().map((addonProps, index) => (
           <PasswordFieldAddon key={index} {...addonProps} />
         ))}
         {toggleButtonProps && (

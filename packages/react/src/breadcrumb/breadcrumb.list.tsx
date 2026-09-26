@@ -14,8 +14,10 @@ import { BreadcrumbSeparator } from "./breadcrumb.separator.jsx";
 
 /**
  * パンくずリストの各項目をレンダリングする関数のインターフェイスです。
+ *
+ * @template TItem 項目の型です。
  */
-export interface IBreadcrumbListItemRenderer {
+export interface IBreadcrumbListItemRenderer<TItem = any> {
   /**
    * 項目をレンダリングします。
    *
@@ -24,11 +26,7 @@ export interface IBreadcrumbListItemRenderer {
    * @param items すべての項目です。
    * @returns レンダリングする内容です。
    */
-  (
-    item: BreadcrumbRootItemObject,
-    index: number,
-    items: readonly BreadcrumbRootItemObject[],
-  ): React.ReactNode;
+  (item: TItem, index: number, items: readonly TItem[]): React.ReactNode;
 }
 
 /**
@@ -39,13 +37,13 @@ export type BreadcrumbListState = {};
 export namespace BreadcrumbListProps {
   export type Render = RenderProps<BreadcrumbListState>;
 
-  export type SuruUI = {
+  export type SuruUI<TItem = any> = {
     /**
      * パンくずリストの内容、または各項目をレンダリングする関数です。
      *
      * 関数を指定した場合は {@link BreadcrumbRootProps.items|items} の各項目が引数として渡されます。
      */
-    children?: React.ReactNode | IBreadcrumbListItemRenderer | undefined;
+    children?: React.ReactNode | IBreadcrumbListItemRenderer<TItem> | undefined;
   };
 
   export type BaseUI = {};
@@ -58,16 +56,27 @@ export namespace BreadcrumbListProps {
 
 /**
  * {@link BreadcrumbList} に渡す props です。
+ *
+ * @template TItem 項目の型です。
  */
-export type BreadcrumbListProps = BreadcrumbListProps.Render &
-  BreadcrumbListProps.SuruUI &
+export type BreadcrumbListProps<TItem = any> = BreadcrumbListProps.Render &
+  BreadcrumbListProps.SuruUI<TItem> &
   BreadcrumbListProps.BaseUI &
   BreadcrumbListProps.HTML;
+
+interface IBreadcrumbList extends IComponent<BreadcrumbListProps> {
+  /**
+   * @template TItem 項目の型です。
+   */
+  <TItem = any>(props: BreadcrumbListProps<TItem>): IComponent.Return;
+}
 
 /**
  * パンくずの項目を並べるリストコンポーネントです。
  */
-export const BreadcrumbList: IComponent<BreadcrumbListProps> = function SuiBreadcrumbList(props) {
+export const BreadcrumbList: IBreadcrumbList = function SuiBreadcrumbList(
+  props: BreadcrumbListProps,
+) {
   const ctx = useBreadcrumbContext(true);
   const { children = defaultListItemRenderer, ...otherOlProps } = props;
   const items = ctx?.items ?? [];
@@ -109,12 +118,12 @@ export { BreadcrumbList as List };
 export namespace List {
   export type State = BreadcrumbListState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = BreadcrumbListProps.Render;
 
-    export type SuruUI = BreadcrumbListProps.SuruUI;
+    export type SuruUI<TItem = any> = BreadcrumbListProps.SuruUI<TItem>;
 
     export type BaseUI = BreadcrumbListProps.BaseUI;
 
@@ -123,5 +132,5 @@ export namespace List {
 
   export type ItemObject = BreadcrumbRootItemObject;
 
-  export interface IItemRenderer extends IBreadcrumbListItemRenderer {}
+  export interface IItemRenderer<TItem = any> extends IBreadcrumbListItemRenderer<TItem> {}
 }

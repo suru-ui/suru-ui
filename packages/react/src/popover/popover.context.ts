@@ -49,14 +49,7 @@ export type PopoverContext = {
 export const PopoverContext: React.Context<PopoverContext | null> =
   React.createContext<PopoverContext | null>(null);
 
-export interface IUsePopoverContext extends IUseContext<PopoverContext> {
-  /**
-   * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
-   * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
-   */
-  (optional?: false): PopoverContext;
-  (optional?: boolean): PopoverContext | null;
-}
+export type IUsePopoverContext = IUseContext<PopoverContext>;
 
 /**
  * {@link PopoverContext} を読み取るフックです。

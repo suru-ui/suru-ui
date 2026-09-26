@@ -101,6 +101,8 @@ export type NumberFieldSlotProps = {
 export type NumberFieldState = NumberFieldRootState;
 
 namespace NumberFieldProps {
+  export type Input = Pick<NumberFieldInputProps, "placeholder">;
+
   export type NumberField = {
     /**
      * 値を減らすボタンを表示します。
@@ -138,8 +140,6 @@ namespace NumberFieldProps {
      */
     startAddons?: Iterable<React.ReactNode> | undefined;
   };
-
-  export type Input = Pick<NumberFieldInputProps, "placeholder">;
 
   export type Root = Omit<NumberFieldRootProps, "children" | keyof NumberField | keyof Input>;
 }
@@ -215,7 +215,7 @@ export class NumberFieldAPI {
   /**
    * 末尾の {@link NumberFieldAddon} に渡す props の一覧を取得します。
    */
-  public getEndAddonsPropsList(): readonly NumberFieldAddonProps[] {
+  public mapEndAddonProps(): readonly NumberFieldAddonProps[] {
     const { endAddons } = this.numberFieldProps;
     const { addon: props = {} } = this.slotProps;
 
@@ -319,7 +319,7 @@ export class NumberFieldAPI {
   /**
    * 先頭の {@link NumberFieldAddon} に渡す props の一覧を取得します。
    */
-  public getStartAddonsPropsList(): readonly NumberFieldAddonProps[] {
+  public mapStartAddonProps(): readonly NumberFieldAddonProps[] {
     const { startAddons } = this.numberFieldProps;
     const { addon: props = {} } = this.slotProps;
 
@@ -374,11 +374,11 @@ export const NumberField: INumberField = /*#__PURE__*/ Object.assign(
       <NumberFieldRoot {...api.getRootProps()}>
         {scrubAreaProps && <NumberFieldScrubArea {...scrubAreaProps} />}
         <NumberFieldGroup {...api.getGroupProps()}>
-          {api.getStartAddonsPropsList().map((addonProps, index) => (
+          {api.mapStartAddonProps().map((addonProps, index) => (
             <NumberFieldAddon key={index} {...addonProps} />
           ))}
           <NumberFieldInput {...api.getInputProps()} />
-          {api.getEndAddonsPropsList().map((addonProps, index) => (
+          {api.mapEndAddonProps().map((addonProps, index) => (
             <NumberFieldAddon key={index} {...addonProps} />
           ))}
           {decrementProps && (

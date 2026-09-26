@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import type { LikelyVisibleNode } from "../_is-likely-visible-node.js";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import type { IComponent } from "../types.js";
 import {
@@ -91,14 +90,14 @@ export type FileUploadSlotProps = {
 export type FileUploadState = FileUploadRootState;
 
 namespace FileUploadProps {
+  export type Dropzone = Pick<FileUploadDropzoneProps, "children">;
+
   export type FileUpload = {
     /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
      */
     slotProps?: FileUploadSlotProps | undefined;
   };
-
-  export type Dropzone = Pick<FileUploadDropzoneProps, "children">;
 
   export type Root = Omit<FileUploadRootProps, keyof FileUpload | keyof Dropzone>;
 }
@@ -138,13 +137,14 @@ export class FileUploadAPI {
    * {@link FileUploadDropzone} に渡す props を取得します。
    */
   public getDropzoneProps(): FileUploadDropzoneProps {
-    const { children = "ここにファイルをドラッグアンドドロップ、またはクリックして選択" } =
-      this.dropzoneProps;
+    const { children } = this.dropzoneProps;
     const { dropzone: props = {} } = this.slotProps;
 
     return {
       ...props,
-      children,
+      children: isLikelyVisibleNode(children)
+        ? children
+        : "ここにファイルをドラッグアンドドロップ、またはクリックして選択",
     };
   }
 

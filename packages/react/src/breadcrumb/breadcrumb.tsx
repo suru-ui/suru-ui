@@ -4,6 +4,7 @@ import { getItemKey } from "../_item.js";
 import mergeProps from "../_merge-props.js";
 import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
+import { isItemObject } from "./_breadcrumb.jsx";
 import type { BreadcrumbContext } from "./breadcrumb.context.js";
 import {
   type BreadcrumbRootSize,
@@ -32,7 +33,7 @@ export type BreadcrumbSize = BreadcrumbRootSize;
 
 export type BreadcrumbItemObject = BreadcrumbRootItemObject;
 
-export interface IBreadcrumbItemRenderer extends IBreadcrumbListItemRenderer {}
+export interface IBreadcrumbItemRenderer<TItem = any> extends IBreadcrumbListItemRenderer<TItem> {}
 
 /**
  * {@link Breadcrumb} が持つ状態です。
@@ -71,18 +72,18 @@ export type BreadcrumbSlotProps = {
 };
 
 namespace BreadcrumbProps {
-  export type Breadcrumb = {
+  export type Breadcrumb<TItem = any> = {
     /**
      * パンくずリストの項目です。
      */
-    items: readonly BreadcrumbItemObject[];
+    items: readonly TItem[];
 
     /**
      * パンくずリストの内容、または各項目をレンダリングする関数です。
      *
      * 省略した場合は {@link BreadcrumbRootProps.items|items} の各項目を既定の並びで表示します。
      */
-    children?: BreadcrumbListProps["children"] | undefined;
+    children?: BreadcrumbListProps<TItem>["children"] | undefined;
 
     /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
@@ -90,39 +91,51 @@ namespace BreadcrumbProps {
     slotProps?: BreadcrumbSlotProps | undefined;
   };
 
-  export type Root = Omit<BreadcrumbRootProps, "children" | "items" | keyof Breadcrumb>;
+  export type Root<TItem = any> = Omit<
+    BreadcrumbRootProps<TItem>,
+    "children" | "items" | keyof Breadcrumb
+  >;
 }
 
 /**
  * {@link Breadcrumb} に渡す props です。
+ *
+ * @template TItem 項目の型です。
  */
-export type BreadcrumbProps = BreadcrumbProps.Breadcrumb & BreadcrumbProps.Root;
+export type BreadcrumbProps<TItem = any> = BreadcrumbProps.Breadcrumb<TItem> &
+  BreadcrumbProps.Root<TItem>;
 
 // API
 // ---
 
 /**
  * {@link Breadcrumb} を構成する各パーツの props などを作成するための API です。
+ *
+ * @template TItem 項目の型です。
  */
-export class BreadcrumbAPI {
-  private readonly breadcrumbProps: Required<Omit<BreadcrumbProps.Breadcrumb, "slotProps">>;
+export class BreadcrumbAPI<TItem = any> {
+  private readonly breadcrumbProps: Required<Omit<BreadcrumbProps.Breadcrumb<TItem>, "slotProps">>;
 
   private readonly slotProps: BreadcrumbSlotProps;
 
-  private readonly rootProps: BreadcrumbProps.Root;
+  private readonly rootProps: BreadcrumbProps.Root<TItem>;
 
   /**
    * @param props {@link Breadcrumb} の props です。
    * @internal
    */
-  public constructor(props: BreadcrumbProps) {
+  public constructor(props: BreadcrumbProps<TItem>) {
     const { items, children, slotProps = {}, ...rootProps } = props;
     this.breadcrumbProps = { items, children };
     this.slotProps = slotProps;
     this.rootProps = rootProps;
   }
 
-  private defaultItemRenderer: IBreadcrumbItemRenderer = (item, index) => {
+  private defaultItemRenderer: IBreadcrumbItemRenderer<TItem> = (item, index) => {
+    if (!isItemObject(item)) {
+      return toReactNode(item);
+    }
+
     return (
       <React.Fragment key={getItemKey(item) ?? index}>
         {index > 0 && <BreadcrumbSeparator {...this.getSeparatorProps()} />}
@@ -168,20 +181,20 @@ export class BreadcrumbAPI {
   /**
    * {@link BreadcrumbList} に渡す props を取得します。
    */
-  public getListProps(): BreadcrumbListProps {
+  public getListProps(): BreadcrumbListProps<TItem> {
     const { list: props = {} } = this.slotProps;
-    const { children = this.defaultItemRenderer } = this.breadcrumbProps;
+    const { children } = this.breadcrumbProps;
 
     return {
       ...props,
-      children,
+      children: typeof children === "function" ? children : (children ?? this.defaultItemRenderer),
     };
   }
 
   /**
    * {@link BreadcrumbRoot} に渡す props を取得します。
    */
-  public getRootProps(): BreadcrumbRootProps {
+  public getRootProps(): BreadcrumbRootProps<TItem> {
     return {
       ...this.rootProps,
       items: this.breadcrumbProps.items,
@@ -202,10 +215,11 @@ interface IUseBreadcrumbAPI {
   /**
    * {@link BreadcrumbAPI} を作成します。
    *
+   * @template TItem 項目の型です。
    * @param props {@link Breadcrumb} の props です。
    * @returns パンくずリストの API です
    */
-  (props: BreadcrumbProps): BreadcrumbAPI;
+  <TItem = any>(props: BreadcrumbProps<TItem>): BreadcrumbAPI<TItem>;
 }
 
 /**
@@ -220,12 +234,19 @@ export { BreadcrumbAPI as API, useBreadcrumbAPI as useAPI };
 // Component
 // ---------
 
+interface IBreadcrumb extends IComponent<BreadcrumbProps> {
+  /**
+   * @template TItem 項目の型です。
+   */
+  <TItem = any>(props: BreadcrumbProps<TItem>): IComponent.Return;
+}
+
 /**
  * パンくずリストを表示するコンポーネントです。
  *
  * {@link BreadcrumbRootProps.items|items} を順に並べ、最後の項目を現在のページとして表示します。
  */
-export const Breadcrumb: IComponent<BreadcrumbProps> = function SuiBreadcrumb(props) {
+export const Breadcrumb: IBreadcrumb = function SuiBreadcrumb(props: BreadcrumbProps) {
   const api = useBreadcrumbAPI(props);
 
   return (
@@ -238,17 +259,17 @@ export const Breadcrumb: IComponent<BreadcrumbProps> = function SuiBreadcrumb(pr
 export namespace Breadcrumb {
   export type State = BreadcrumbState;
 
-  export type Props = BreadcrumbProps;
+  export type Props<TItem = any> = BreadcrumbProps<TItem>;
 
   export type SlotProps = BreadcrumbSlotProps;
 
-  export type Context = BreadcrumbContext;
+  export type Context<TItem = any> = BreadcrumbContext<TItem>;
 
   export type Color = BreadcrumbColor;
 
   export type ItemObject = BreadcrumbItemObject;
 
-  export interface IItemRenderer extends IBreadcrumbItemRenderer {}
+  export interface IItemRenderer<TItem = any> extends IBreadcrumbItemRenderer<TItem> {}
 
   export type Size = BreadcrumbSize;
 }

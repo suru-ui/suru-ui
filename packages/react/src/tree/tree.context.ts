@@ -106,14 +106,7 @@ export type TreeContext = {
 export const TreeContext: React.Context<TreeContext | null> =
   React.createContext<TreeContext | null>(null);
 
-export interface IUseTreeContext extends IUseContext<TreeContext> {
-  /**
-   * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
-   * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
-   */
-  (optional?: false): TreeContext;
-  (optional?: boolean): TreeContext | null;
-}
+export type IUseTreeContext = IUseContext<TreeContext>;
 
 /**
  * {@link TreeContext} を読み取るフックです。

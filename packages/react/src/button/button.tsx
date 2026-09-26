@@ -85,14 +85,14 @@ namespace ButtonProps {
     slotProps?: ButtonSlotProps | undefined;
   };
 
+  export type CircularProgress = Pick<ButtonCircularProgressProps, "indeterminate" | "percentage">;
+
+  export type Content = Pick<ButtonContentProps, "children">;
+
   export type Root = Omit<
     ButtonRootProps,
     "children" | keyof Button | keyof Content | keyof CircularProgress
   >;
-
-  export type Content = Pick<ButtonContentProps, "children">;
-
-  export type CircularProgress = Pick<ButtonCircularProgressProps, "indeterminate" | "percentage">;
 }
 
 /**

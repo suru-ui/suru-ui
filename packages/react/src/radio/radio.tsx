@@ -38,27 +38,22 @@ export type RadioSlotProps = {
 export type RadioState = RadioRootState;
 
 namespace RadioProps {
-  export type Radio = {
-    /**
-     * ラジオボタンのインジケーターに表示する内容です。
-     *
-     * 省略時は既定の丸印を表示します。
-     */
-    children?: RadioIndicatorProps["children"] | undefined;
+  export type Indicator = Pick<RadioIndicatorProps, "children">;
 
+  export type Radio = {
     /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
      */
     slotProps?: RadioSlotProps | undefined;
   };
 
-  export type Root = Omit<RadioRootProps, "children" | keyof Radio>;
+  export type Root = Omit<RadioRootProps, keyof Radio | keyof Indicator>;
 }
 
 /**
  * {@link Radio} に渡す props です。
  */
-export type RadioProps = RadioProps.Radio & RadioProps.Root;
+export type RadioProps = RadioProps.Radio & RadioProps.Root & RadioProps.Indicator;
 
 // API
 // ---
@@ -67,7 +62,7 @@ export type RadioProps = RadioProps.Radio & RadioProps.Root;
  * {@link Radio} を構成する各パーツの props などを作成するための API です。
  */
 export class RadioAPI {
-  private readonly radioProps: Required<Omit<RadioProps.Radio, "slotProps">>;
+  private readonly indicatorProps: Required<RadioProps.Indicator>;
 
   private readonly slotProps: RadioSlotProps;
 
@@ -79,7 +74,7 @@ export class RadioAPI {
    */
   public constructor(props: RadioProps) {
     const { children, slotProps = {}, ...rootProps } = props;
-    this.radioProps = { children };
+    this.indicatorProps = { children };
     this.slotProps = slotProps;
     this.rootProps = rootProps;
   }
@@ -88,12 +83,11 @@ export class RadioAPI {
    * {@link RadioIndicator} に渡す props を取得します。
    */
   public getIndicatorProps(): RadioIndicatorProps {
-    const { children } = this.radioProps;
     const { indicator: props = {} } = this.slotProps;
 
     return {
       ...props,
-      children,
+      ...this.indicatorProps,
     };
   }
 

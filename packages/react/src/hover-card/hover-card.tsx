@@ -309,12 +309,30 @@ export class HoverCardAPI<TPayload = any> {
   /**
    * {@link HoverCardRoot} に渡す props を取得します。
    */
-  public getRootProps(): Omit<HoverCardRootProps<TPayload>, "children"> {
+  public getRootProps(): HoverCardRootProps<TPayload> {
     const { handle } = this.hoverCardProps;
+    const triggerProps = this.getTriggerProps();
+    const arrowProps = this.getArrowProps();
+    const backdropProps = this.getBackdropProps();
+    const children = this.getContentChildren();
 
     return {
       ...this.rootProps,
       handle,
+      children: ({ payload }) => (
+        <>
+          {triggerProps && <HoverCardTrigger {...triggerProps} />}
+          <HoverCardPortal {...this.getPortalProps()}>
+            {backdropProps && <HoverCardBackdrop {...backdropProps} />}
+            <HoverCardPositioner {...this.getPositionerProps()}>
+              <HoverCardContent {...this.getContentProps()}>
+                {arrowProps && <HoverCardArrow {...arrowProps} />}
+                {typeof children === "function" ? children({ payload }) : children}
+              </HoverCardContent>
+            </HoverCardPositioner>
+          </HoverCardPortal>
+        </>
+      ),
     };
   }
 
@@ -390,29 +408,8 @@ interface IHoverCard extends IComponent<HoverCardProps> {
 export const HoverCard: IHoverCard = /*#__PURE__*/ Object.assign(
   function SuiHoverCard(props: HoverCardProps) {
     const api = useHoverCardAPI(props);
-    const triggerProps = api.getTriggerProps();
-    const arrowProps = api.getArrowProps();
-    const backdropProps = api.getBackdropProps();
-    const children = api.getContentChildren();
 
-    return (
-      <HoverCardRoot {...api.getRootProps()}>
-        {({ payload }) => (
-          <>
-            {triggerProps && <HoverCardTrigger {...triggerProps} />}
-            <HoverCardPortal {...api.getPortalProps()}>
-              {backdropProps && <HoverCardBackdrop {...backdropProps} />}
-              <HoverCardPositioner {...api.getPositionerProps()}>
-                <HoverCardContent {...api.getContentProps()}>
-                  {arrowProps && <HoverCardArrow {...arrowProps} />}
-                  {typeof children === "function" ? children({ payload }) : children}
-                </HoverCardContent>
-              </HoverCardPositioner>
-            </HoverCardPortal>
-          </>
-        )}
-      </HoverCardRoot>
-    );
+    return <HoverCardRoot {...api.getRootProps()} />;
   },
   {
     Trigger: HoverCardTrigger,

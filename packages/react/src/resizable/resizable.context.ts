@@ -27,14 +27,7 @@ export type ResizableContext = {
 export const ResizableContext: React.Context<ResizableContext | null> =
   React.createContext<ResizableContext | null>(null);
 
-export interface IUseResizableContext extends IUseContext<ResizableContext> {
-  /**
-   * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
-   * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
-   */
-  (optional?: false): ResizableContext;
-  (optional?: boolean): ResizableContext | null;
-}
+export type IUseResizableContext = IUseContext<ResizableContext>;
 
 /**
  * {@link ResizableContext} を読み取るフックです。

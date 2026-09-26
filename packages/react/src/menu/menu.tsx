@@ -184,44 +184,46 @@ export type MenuSlotProps = {
  */
 export type MenuState = MenuRootState;
 
-type MenuPropsMain = {
-  /**
-   * チェックボックス項目の選択状態を示す内容です。
-   *
-   * {@link MenuCheckboxItemIndicator} の子要素として描画されます。
-   */
-  checkboxIndicator?: React.ReactNode;
+namespace MenuProps {
+  export type Content = Omit<MenuContentProps, keyof Menu | keyof Root>;
 
-  /**
-   * ラジオ項目の選択状態を示す内容です。
-   *
-   * {@link MenuRadioItemIndicator} の子要素として描画されます。
-   */
-  radioIndicator?: React.ReactNode;
+  export type Menu = {
+    /**
+     * チェックボックス項目の選択状態を示す内容です。
+     *
+     * {@link MenuCheckboxItemIndicator} の子要素として描画されます。
+     */
+    checkboxIndicator?: React.ReactNode;
 
-  /**
-   * 各パーツに個別の props を渡すためのオブジェクトです。
-   */
-  slotProps?: MenuSlotProps | undefined;
+    /**
+     * ラジオ項目の選択状態を示す内容です。
+     *
+     * {@link MenuRadioItemIndicator} の子要素として描画されます。
+     */
+    radioIndicator?: React.ReactNode;
 
-  /**
-   * メニューを開くトリガーに表示する要素です。
-   *
-   * {@link MenuTrigger} の子要素として直接渡されます。
-   */
-  trigger?: MenuTriggerProps["children"] | undefined;
-};
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     */
+    slotProps?: MenuSlotProps | undefined;
 
-type MenuPropsRoot<TItem = any> = Omit<MenuRootProps<any, TItem>, "children" | keyof MenuPropsMain>;
+    /**
+     * メニューを開くトリガーに表示する要素です。
+     *
+     * {@link MenuTrigger} の子要素として直接渡されます。
+     */
+    trigger?: MenuTriggerProps["children"] | undefined;
+  };
 
-type MenuPropsContent = Omit<MenuContentProps, keyof MenuPropsMain | keyof MenuPropsRoot>;
+  export type Root<TItem = any> = Omit<MenuRootProps<any, TItem>, "children" | keyof Menu>;
+}
 
 /**
  * {@link Menu} に渡す props です。
  *
  * @template TItem 項目の型です。
  */
-export type MenuProps<TItem = any> = MenuPropsMain & MenuPropsRoot<TItem> & MenuPropsContent;
+export type MenuProps<TItem = any> = MenuProps.Menu & MenuProps.Root<TItem> & MenuProps.Content;
 
 // API
 // ---
@@ -234,11 +236,11 @@ export type MenuProps<TItem = any> = MenuPropsMain & MenuPropsRoot<TItem> & Menu
 export class MenuAPI<TItem = any> {
   private readonly checkboxIndicator: React.ReactNode;
 
-  private readonly contentProps: MenuPropsContent;
+  private readonly contentProps: MenuProps.Content;
 
   private readonly radioIndicator: React.ReactNode;
 
-  private readonly rootProps: MenuPropsRoot<TItem>;
+  private readonly rootProps: MenuProps.Root<TItem>;
 
   private readonly slotProps: MenuSlotProps;
 

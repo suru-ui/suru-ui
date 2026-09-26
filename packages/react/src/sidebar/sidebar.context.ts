@@ -50,14 +50,7 @@ export type SidebarContext = {
 export const SidebarContext: React.Context<SidebarContext | null> =
   React.createContext<SidebarContext | null>(null);
 
-export interface IUseSidebarContext extends IUseContext<SidebarContext> {
-  /**
-   * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
-   * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
-   */
-  (optional?: false): SidebarContext;
-  (optional?: boolean): SidebarContext | null;
-}
+export type IUseSidebarContext = IUseContext<SidebarContext>;
 
 /**
  * {@link SidebarContext} を読み取るフックです。

@@ -297,9 +297,9 @@ export namespace Accordion {
 
   export type ChangeEventReason = AccordionChangeEventReason;
 
-  export type ItemObject = AccordionItemObject;
-
   export type IItemRenderer<TItem = any> = IAccordionItemRenderer<TItem>;
+
+  export type ItemObject = AccordionItemObject;
 
   export type Radius = AccordionRadius;
 

@@ -19,14 +19,7 @@ export type ToggleButtonContext = {
 export const ToggleButtonContext: React.Context<ToggleButtonContext | null> =
   React.createContext<ToggleButtonContext | null>(null);
 
-export interface IUseToggleButtonContext extends IUseContext<ToggleButtonContext> {
-  /**
-   * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
-   * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
-   */
-  (optional?: false): ToggleButtonContext;
-  (optional?: boolean): ToggleButtonContext | null;
-}
+export type IUseToggleButtonContext = IUseContext<ToggleButtonContext>;
 
 /**
  * {@link ToggleButtonContext} を読み取るフックです。

@@ -42,7 +42,7 @@ export type BreadcrumbRootState = {};
 export namespace BreadcrumbRootProps {
   export type Render = RenderProps<BreadcrumbRootState>;
 
-  export type SuruUI = {
+  export type SuruUI<TItem = any> = {
     /**
      * パンくずリストの配色を指定します。
      *
@@ -57,7 +57,7 @@ export namespace BreadcrumbRootProps {
      *
      * `children` を省略した {@link BreadcrumbList} は、この項目を順に並べて表示します。
      */
-    items?: readonly BreadcrumbRootItemObject[] | undefined;
+    items?: readonly TItem[] | undefined;
 
     /**
      * パンくずリストの大きさを指定します。
@@ -77,18 +77,29 @@ export namespace BreadcrumbRootProps {
 
 /**
  * {@link BreadcrumbRoot} に渡す props です。
+ *
+ * @template TItem 項目の型です。
  */
-export type BreadcrumbRootProps = BreadcrumbRootProps.Render &
-  BreadcrumbRootProps.SuruUI &
+export type BreadcrumbRootProps<TItem = any> = BreadcrumbRootProps.Render &
+  BreadcrumbRootProps.SuruUI<TItem> &
   BreadcrumbRootProps.BaseUI &
   BreadcrumbRootProps.HTML;
+
+interface IBreadcrumbRoot extends IComponent<BreadcrumbRootProps> {
+  /**
+   * @template TItem 項目の型です。
+   */
+  <TItem = any>(props: BreadcrumbRootProps<TItem>): IComponent.Return;
+}
 
 /**
  * パンくずリストのルート要素です。
  *
  * 大きさと配色を子パーツへ伝播し、`items` を {@link BreadcrumbList} の既定の並びで表示するためのデータ源になります。
  */
-export const BreadcrumbRoot: IComponent<BreadcrumbRootProps> = function SuiBreadcrumbRoot(props) {
+export const BreadcrumbRoot: IBreadcrumbRoot = function SuiBreadcrumbRoot(
+  props: BreadcrumbRootProps,
+) {
   const {
     size = "md",
     color = "grey",
@@ -126,12 +137,12 @@ export { BreadcrumbRoot as Root };
 export namespace Root {
   export type State = BreadcrumbRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = BreadcrumbRootProps.Render;
 
-    export type SuruUI = BreadcrumbRootProps.SuruUI;
+    export type SuruUI<TItem = any> = BreadcrumbRootProps.SuruUI<TItem>;
 
     export type BaseUI = BreadcrumbRootProps.BaseUI;
 

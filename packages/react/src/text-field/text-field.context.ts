@@ -60,14 +60,7 @@ export type TextFieldContext = {
 export const TextFieldContext: React.Context<TextFieldContext | null> =
   React.createContext<TextFieldContext | null>(null);
 
-export interface IUseTextFieldContext extends IUseContext<TextFieldContext> {
-  /**
-   * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
-   * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
-   */
-  (optional?: false): TextFieldContext;
-  (optional?: boolean): TextFieldContext | null;
-}
+export type IUseTextFieldContext = IUseContext<TextFieldContext>;
 
 /**
  * {@link TextFieldContext} を読み取るフックです。

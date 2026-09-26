@@ -49,14 +49,7 @@ export type TooltipContext = {
 export const TooltipContext: React.Context<TooltipContext | null> =
   React.createContext<TooltipContext | null>(null);
 
-export interface IUseTooltipContext extends IUseContext<TooltipContext> {
-  /**
-   * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
-   * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
-   */
-  (optional?: false): TooltipContext;
-  (optional?: boolean): TooltipContext | null;
-}
+export type IUseTooltipContext = IUseContext<TooltipContext>;
 
 /**
  * {@link TooltipContext} を読み取るフックです。
