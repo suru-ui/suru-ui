@@ -2,7 +2,6 @@ import * as React from "react";
 
 import { getItemKey } from "../_item.js";
 import mergeProps from "../_merge-props.js";
-import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
 import { isItemObject } from "./_breadcrumb.jsx";
 import type { BreadcrumbContext } from "./breadcrumb.context.js";
@@ -33,7 +32,7 @@ export type BreadcrumbSize = BreadcrumbRootSize;
 
 export type BreadcrumbItemObject = BreadcrumbRootItemObject;
 
-export interface IBreadcrumbItemRenderer<TItem = any> extends IBreadcrumbListItemRenderer<TItem> {}
+export type IBreadcrumbItemRenderer<TItem = any> = IBreadcrumbListItemRenderer<TItem>;
 
 /**
  * {@link Breadcrumb} が持つ状態です。
@@ -79,21 +78,16 @@ namespace BreadcrumbProps {
     items: readonly TItem[];
 
     /**
-     * パンくずリストの内容、または各項目をレンダリングする関数です。
-     *
-     * 省略した場合は {@link BreadcrumbRootProps.items|items} の各項目を既定の並びで表示します。
-     */
-    children?: BreadcrumbListProps<TItem>["children"] | undefined;
-
-    /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
      */
     slotProps?: BreadcrumbSlotProps | undefined;
   };
 
+  export type List<TItem = any> = Pick<BreadcrumbListProps<TItem>, "children">;
+
   export type Root<TItem = any> = Omit<
     BreadcrumbRootProps<TItem>,
-    "children" | "items" | keyof Breadcrumb
+    "children" | "items" | keyof Breadcrumb | keyof List
   >;
 }
 
@@ -103,7 +97,8 @@ namespace BreadcrumbProps {
  * @template TItem 項目の型です。
  */
 export type BreadcrumbProps<TItem = any> = BreadcrumbProps.Breadcrumb<TItem> &
-  BreadcrumbProps.Root<TItem>;
+  BreadcrumbProps.Root<TItem> &
+  BreadcrumbProps.List<TItem>;
 
 // API
 // ---
@@ -116,6 +111,8 @@ export type BreadcrumbProps<TItem = any> = BreadcrumbProps.Breadcrumb<TItem> &
 export class BreadcrumbAPI<TItem = any> {
   private readonly breadcrumbProps: Required<Omit<BreadcrumbProps.Breadcrumb<TItem>, "slotProps">>;
 
+  private readonly listProps: BreadcrumbProps.List<TItem>;
+
   private readonly slotProps: BreadcrumbSlotProps;
 
   private readonly rootProps: BreadcrumbProps.Root<TItem>;
@@ -126,24 +123,28 @@ export class BreadcrumbAPI<TItem = any> {
    */
   public constructor(props: BreadcrumbProps<TItem>) {
     const { items, children, slotProps = {}, ...rootProps } = props;
-    this.breadcrumbProps = { items, children };
+    this.breadcrumbProps = { items };
+    this.listProps = { children };
     this.slotProps = slotProps;
     this.rootProps = rootProps;
   }
 
-  private defaultItemRenderer: IBreadcrumbItemRenderer<TItem> = (item, index) => {
-    if (!isItemObject(item)) {
-      return toReactNode(item);
-    }
+  private defaultItemRenderer: IBreadcrumbItemRenderer = (item, index) => {
+    switch (true) {
+      case isItemObject(item): {
+        return (
+          <React.Fragment key={getItemKey(item) ?? index}>
+            {index > 0 && <BreadcrumbSeparator {...this.getSeparatorProps()} />}
+            <BreadcrumbItem {...this.getItemProps()}>
+              <BreadcrumbLink {...this.getLinkProps(item, index)} />
+            </BreadcrumbItem>
+          </React.Fragment>
+        );
+      }
 
-    return (
-      <React.Fragment key={getItemKey(item) ?? index}>
-        {index > 0 && <BreadcrumbSeparator {...this.getSeparatorProps()} />}
-        <BreadcrumbItem {...this.getItemProps()}>
-          <BreadcrumbLink {...this.getLinkProps(item, index)} />
-        </BreadcrumbItem>
-      </React.Fragment>
-    );
+      default:
+        return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
+    }
   };
 
   /**
@@ -161,7 +162,7 @@ export class BreadcrumbAPI<TItem = any> {
    * @param item 項目です。
    */
   public getLabel(item: BreadcrumbItemObject): React.ReactNode {
-    return toReactNode(item.label);
+    return item.label;
   }
 
   /**
@@ -183,7 +184,7 @@ export class BreadcrumbAPI<TItem = any> {
    */
   public getListProps(): BreadcrumbListProps<TItem> {
     const { list: props = {} } = this.slotProps;
-    const { children } = this.breadcrumbProps;
+    const { children } = this.listProps;
 
     return {
       ...props,
@@ -267,9 +268,9 @@ export namespace Breadcrumb {
 
   export type Color = BreadcrumbColor;
 
-  export type ItemObject = BreadcrumbItemObject;
+  export type IItemRenderer<TItem = any> = IBreadcrumbItemRenderer<TItem>;
 
-  export interface IItemRenderer<TItem = any> extends IBreadcrumbItemRenderer<TItem> {}
+  export type ItemObject = BreadcrumbItemObject;
 
   export type Size = BreadcrumbSize;
 }

@@ -5,7 +5,7 @@ import { Tooltip } from "@base-ui/react/tooltip";
  *
  * @template TPayload トリガーが送信するデータの型です。
  */
-export interface TooltipHandle<TPayload = any> extends Tooltip.Handle<TPayload> {}
+export type TooltipHandle<TPayload = any> = Tooltip.Handle<TPayload>;
 
 interface ICreateTooltipHandle {
   /**

@@ -5,9 +5,7 @@ import { type UseToastManagerReturnValue, Toast } from "@base-ui/react/toast";
  *
  * @template TData 通知に含める追加データの型です。
  */
-export interface IToastClient<
-  TData extends object = any,
-> extends UseToastManagerReturnValue<TData> {}
+export type IToastClient<TData extends object = any> = UseToastManagerReturnValue<TData>;
 
 /**
  * 通知を管理するフックです。

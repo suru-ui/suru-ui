@@ -139,9 +139,9 @@ export namespace Content {
     export type HTML = MenuContentProps.HTML;
   }
 
-  export type ItemObject = MenuRootItemObject;
+  export type IItemRenderer<TItem = any> = IMenuContentItemRenderer<TItem>;
 
-  export interface IItemRenderer<TItem = any> extends IMenuContentItemRenderer<TItem> {}
+  export type ItemObject = MenuRootItemObject;
 }
 
 const defaultItemRenderer: IMenuContentItemRenderer = (item, index, items) => {

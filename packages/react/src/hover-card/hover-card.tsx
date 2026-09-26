@@ -14,6 +14,7 @@ import {
   type HoverCardContentProps,
   type HoverCardTriggerProps,
   type HoverCardBackdropProps,
+  type IHoverCardRootRenderer,
   type HoverCardPositionerProps,
   type HoverCardRootChangeEventReason,
   type HoverCardRootChangeEventDetails,
@@ -240,6 +241,28 @@ export class HoverCardAPI<TPayload = any> {
     this.contentProps = contentProps;
   }
 
+  private defaultRootChildren: IHoverCardRootRenderer<TPayload> = ({ payload }) => {
+    const triggerProps = this.getTriggerProps();
+    const arrowProps = this.getArrowProps();
+    const backdropProps = this.getBackdropProps();
+    const children = this.getContentChildren();
+
+    return (
+      <>
+        {triggerProps && <HoverCardTrigger {...triggerProps} />}
+        <HoverCardPortal {...this.getPortalProps()}>
+          {backdropProps && <HoverCardBackdrop {...backdropProps} />}
+          <HoverCardPositioner {...this.getPositionerProps()}>
+            <HoverCardContent {...this.getContentProps()}>
+              {arrowProps && <HoverCardArrow {...arrowProps} />}
+              {typeof children === "function" ? children({ payload }) : children}
+            </HoverCardContent>
+          </HoverCardPositioner>
+        </HoverCardPortal>
+      </>
+    );
+  };
+
   /**
    * {@link HoverCardArrow} に渡す props を取得します。
    *
@@ -311,28 +334,11 @@ export class HoverCardAPI<TPayload = any> {
    */
   public getRootProps(): HoverCardRootProps<TPayload> {
     const { handle } = this.hoverCardProps;
-    const triggerProps = this.getTriggerProps();
-    const arrowProps = this.getArrowProps();
-    const backdropProps = this.getBackdropProps();
-    const children = this.getContentChildren();
 
     return {
       ...this.rootProps,
       handle,
-      children: ({ payload }) => (
-        <>
-          {triggerProps && <HoverCardTrigger {...triggerProps} />}
-          <HoverCardPortal {...this.getPortalProps()}>
-            {backdropProps && <HoverCardBackdrop {...backdropProps} />}
-            <HoverCardPositioner {...this.getPositionerProps()}>
-              <HoverCardContent {...this.getContentProps()}>
-                {arrowProps && <HoverCardArrow {...arrowProps} />}
-                {typeof children === "function" ? children({ payload }) : children}
-              </HoverCardContent>
-            </HoverCardPositioner>
-          </HoverCardPortal>
-        </>
-      ),
+      children: this.defaultRootChildren,
     };
   }
 

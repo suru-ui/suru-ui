@@ -575,7 +575,7 @@ export namespace Toast {
 
     export type API = ToastListAPI;
 
-    export interface IRenderer<TData extends object = any> extends IToastListRenderer<TData> {}
+    export type IRenderer<TData extends object = any> = IToastListRenderer<TData>;
   }
 
   export namespace Provider {

@@ -5,7 +5,7 @@ import { PreviewCard } from "@base-ui/react/preview-card";
  *
  * @template TPayload トリガーが送信するデータの型です。
  */
-export interface HoverCardHandle<TPayload = any> extends PreviewCard.Handle<TPayload> {}
+export type HoverCardHandle<TPayload = any> = PreviewCard.Handle<TPayload>;
 
 interface ICreateHoverCardHandle {
   /**

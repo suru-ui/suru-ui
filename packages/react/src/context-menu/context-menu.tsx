@@ -86,9 +86,7 @@ export type ContextMenuChangeEventReason = ContextMenuRootChangeEventReason;
 
 export type ContextMenuOrientation = ContextMenuRootOrientation;
 
-export interface IContextMenuItemRenderer<
-  TItem = any,
-> extends IContextMenuContentItemRenderer<TItem> {}
+export type IContextMenuItemRenderer<TItem = any> = IContextMenuContentItemRenderer<TItem>;
 
 export type ContextMenuRadius = ContextMenuRootRadius;
 
@@ -787,11 +785,11 @@ export namespace ContextMenu {
 
   export type GroupedItemObject = ContextMenuRootGroupedItemObject;
 
+  export type IItemRenderer<TItem = any> = IContextMenuItemRenderer<TItem>;
+
   export type ItemObject = ContextMenuRootItemObject;
 
   export type ItemObjectGroup = ContextMenuRootItemObjectGroup;
-
-  export interface IItemRenderer<TItem = any> extends IContextMenuItemRenderer<TItem> {}
 
   export type LabeledItemObject = ContextMenuRootLabeledItemObject;
 

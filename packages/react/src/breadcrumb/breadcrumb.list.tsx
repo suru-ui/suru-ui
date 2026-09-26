@@ -2,7 +2,6 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
 import { getItemKey } from "../_item.js";
-import toReactNode from "../_to-react-node.js";
 import useRender, { type RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
 import { isItemObject } from "./_breadcrumb.jsx";
@@ -94,23 +93,26 @@ export const BreadcrumbList: IBreadcrumbList = function SuiBreadcrumbList(
 };
 
 const defaultListItemRenderer: IBreadcrumbListItemRenderer = (item, index, items) => {
-  if (!isItemObject(item)) {
-    return toReactNode(item);
+  switch (true) {
+    case isItemObject(item): {
+      const { label, current: currentProp, ...otherItemProps } = item;
+      const current = currentProp ?? index === items.length - 1;
+
+      return (
+        <React.Fragment key={getItemKey(item) ?? index}>
+          {index > 0 && <BreadcrumbSeparator />}
+          <BreadcrumbItem>
+            <BreadcrumbLink {...otherItemProps} current={current}>
+              {label}
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+        </React.Fragment>
+      );
+    }
+
+    default:
+      return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
   }
-
-  const { label, current: currentProp, ...otherItemProps } = item;
-  const current = currentProp ?? index === items.length - 1;
-
-  return (
-    <React.Fragment key={getItemKey(item) ?? index}>
-      {index > 0 && <BreadcrumbSeparator />}
-      <BreadcrumbItem>
-        <BreadcrumbLink {...otherItemProps} current={current}>
-          {toReactNode(label)}
-        </BreadcrumbLink>
-      </BreadcrumbItem>
-    </React.Fragment>
-  );
 };
 
 export { BreadcrumbList as List };
@@ -130,7 +132,7 @@ export namespace List {
     export type HTML = BreadcrumbListProps.HTML;
   }
 
-  export type ItemObject = BreadcrumbRootItemObject;
+  export type IItemRenderer<TItem = any> = IBreadcrumbListItemRenderer<TItem>;
 
-  export interface IItemRenderer<TItem = any> extends IBreadcrumbListItemRenderer<TItem> {}
+  export type ItemObject = BreadcrumbRootItemObject;
 }

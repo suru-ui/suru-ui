@@ -58,14 +58,14 @@ export class FieldsetAPI {
 
   private readonly slotProps: FieldsetSlotProps;
 
-  private readonly rootProps: Omit<FieldsetRootProps, "children">;
+  private readonly rootProps: FieldsetRootProps;
 
   /**
    * @param props {@link Fieldset} の props です。
    * @internal
    */
   public constructor(props: FieldsetProps) {
-    const { legend, children: _children, slotProps = {}, ...rootProps } = props;
+    const { legend, slotProps = {}, ...rootProps } = props;
     this.legend = legend;
     this.slotProps = slotProps;
     this.rootProps = rootProps;
@@ -93,7 +93,7 @@ export class FieldsetAPI {
   /**
    * {@link FieldsetRoot} に渡す props を取得します。
    */
-  public getRootProps(): Omit<FieldsetRootProps, "children"> {
+  public getRootProps(): FieldsetRootProps {
     return this.rootProps;
   }
 }
@@ -127,11 +127,11 @@ export { FieldsetAPI as API, useFieldsetAPI as useAPI };
  */
 export const Fieldset: IComponent<FieldsetProps> = function SuiFieldset(props) {
   const api = useFieldsetAPI(props);
-  const { children } = props;
+  const { children, ...otherRootProps } = api.getRootProps();
   const legendProps = api.getLegendProps();
 
   return (
-    <FieldsetRoot {...api.getRootProps()}>
+    <FieldsetRoot {...otherRootProps}>
       {legendProps && <FieldsetLegend {...legendProps} />}
       {children}
     </FieldsetRoot>

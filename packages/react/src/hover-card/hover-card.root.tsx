@@ -41,6 +41,21 @@ export type HoverCardRootRadius = HoverCardContextRadius;
 export type HoverCardRootSize = HoverCardContextSize;
 
 /**
+ * ホバーカードのルートに表示する内容をレンダリングする関数のインターフェイスです。
+ *
+ * @template TPayload トリガーから受け取るデータの型です。
+ */
+export interface IHoverCardRootRenderer<TPayload = any> {
+  /**
+   * 内容をレンダリングします。
+   *
+   * @param args レンダリングに必要な値です。
+   * @returns レンダリングする内容です。
+   */
+  (args: { payload: TPayload | undefined }): React.ReactNode;
+}
+
+/**
  * {@link HoverCardRoot} が持つ状態です。
  */
 export type HoverCardRootState = PreviewCard.Root.State;
@@ -49,6 +64,13 @@ export namespace HoverCardRootProps {
   export type Render = {};
 
   export type SuruUI<TPayload = any> = {
+    /**
+     * ホバーカードの内容です。
+     *
+     * 関数を指定した場合は、アクティブなトリガーの payload を受け取って内容を組み立てます。
+     */
+    children?: React.ReactNode | IHoverCardRootRenderer<TPayload> | undefined;
+
     /**
      * ホバーカードとトリガー ({@link Trigger}) を関連付けるハンドルです。
      *
@@ -88,7 +110,6 @@ export namespace HoverCardRootProps {
       | "onOpenChange"
       | "onOpenChangeComplete"
       | "actionsRef"
-      | "children"
       | "triggerId"
       | "defaultTriggerId",
       keyof Render | keyof SuruUI
@@ -167,6 +188,8 @@ export namespace Root {
   export type ChangeEventDetails = HoverCardRootChangeEventDetails;
 
   export type ChangeEventReason = HoverCardRootChangeEventReason;
+
+  export type IRenderer<TPayload = any> = IHoverCardRootRenderer<TPayload>;
 
   export type Radius = HoverCardRootRadius;
 

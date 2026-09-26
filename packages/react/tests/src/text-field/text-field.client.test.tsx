@@ -97,8 +97,12 @@ describe("TextFieldAPI", () => {
     });
 
     // 検証
-    expect(api.mapStartAddonProps()).toStrictEqual([{ id: "addon", children: "🔒" }]);
-    expect(api.mapEndAddonProps()).toStrictEqual([{ id: "addon", children: "8 文字以上" }]);
+    expect([...api.mapStartAddons((addon) => api.getAddonProps(addon))]).toStrictEqual([
+      { id: "addon", children: "🔒" },
+    ]);
+    expect([...api.mapEndAddons((addon) => api.getAddonProps(addon))]).toStrictEqual([
+      { id: "addon", children: "8 文字以上" },
+    ]);
   });
 });
 
@@ -107,8 +111,9 @@ describe("useTextFieldAPI", () => {
     // 準備
     function Probe() {
       const api = useTextFieldAPI({ placeholder: "田中 太郎", startAddons: ["🔒"] });
+      const startAddons = [...api.mapStartAddons((addon) => addon)];
 
-      return <span>{`${api.getInputProps().placeholder}/${api.mapStartAddonProps().length}`}</span>;
+      return <span>{`${api.getInputProps().placeholder}/${startAddons.length}`}</span>;
     }
 
     // 実行

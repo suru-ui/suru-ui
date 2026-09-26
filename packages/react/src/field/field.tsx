@@ -134,7 +134,7 @@ export class FieldAPI {
 
   private readonly slotProps: FieldSlotProps;
 
-  private readonly rootProps: Omit<FieldRootProps, "children">;
+  private readonly rootProps: FieldRootProps;
 
   /**
    * @param props {@link Field} の props です。
@@ -143,7 +143,6 @@ export class FieldAPI {
   public constructor(props: FieldProps) {
     const {
       label,
-      children: _children,
       validity,
       slotProps = {},
       description,
@@ -228,7 +227,7 @@ export class FieldAPI {
   /**
    * {@link FieldRoot} に渡す props を取得します。
    */
-  public getRootProps(): Omit<FieldRootProps, "children"> {
+  public getRootProps(): FieldRootProps {
     return this.rootProps;
   }
 
@@ -294,13 +293,13 @@ interface IField extends IComponent<FieldProps> {
 export const Field: IField = /*#__PURE__*/ Object.assign(
   function SuiField(props: FieldProps) {
     const api = useFieldAPI(props);
-    const { children } = props;
+    const { children, ...otherRootProps } = api.getRootProps();
     const labelProps = api.getLabelProps();
     const descriptionProps = api.getDescriptionProps();
     const validityProps = api.getValidityProps();
 
     return (
-      <FieldRoot {...api.getRootProps()}>
+      <FieldRoot {...otherRootProps}>
         {labelProps && <FieldLabel {...labelProps} />}
         {children}
         {descriptionProps && <FieldDescription {...descriptionProps} />}

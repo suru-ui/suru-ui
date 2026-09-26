@@ -24,7 +24,7 @@ describe("FieldAPI", () => {
 
     // 検証
     expect(rootProps.name).toBe("sui:name");
-    expect(rootProps).not.toHaveProperty("children");
+    expect(rootProps.children).toBe("内容");
     expect(rootProps).not.toHaveProperty("label");
     expect(rootProps).not.toHaveProperty("description");
     expect(rootProps).not.toHaveProperty("validity");

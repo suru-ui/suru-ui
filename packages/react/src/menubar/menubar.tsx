@@ -19,7 +19,7 @@ import {
 
 export type MenubarItemObject = MenubarRootItemObject;
 
-export interface IMenubarItemRenderer<TItem = any> extends IMenubarRootItemRenderer<TItem> {}
+export type IMenubarItemRenderer<TItem = any> = IMenubarRootItemRenderer<TItem>;
 
 export type MenubarOrientation = MenubarRootOrientation;
 

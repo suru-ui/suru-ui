@@ -29,7 +29,7 @@ export type TreeColor = TreeRootColor;
 
 export type TreeItemObject = TreeRootItemObject;
 
-export interface ITreeItemRenderer extends ITreeRootItemRenderer {}
+export type ITreeItemRenderer = ITreeRootItemRenderer;
 
 export type TreeRadius = TreeRootRadius;
 
@@ -228,9 +228,9 @@ export namespace Tree {
 
   export type Color = TreeColor;
 
-  export type ItemObject = TreeItemObject;
+  export type IItemRenderer = ITreeItemRenderer;
 
-  export interface IItemRenderer extends ITreeItemRenderer {}
+  export type ItemObject = TreeItemObject;
 
   export type Radius = TreeRadius;
 

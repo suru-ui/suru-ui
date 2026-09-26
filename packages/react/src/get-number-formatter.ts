@@ -130,7 +130,7 @@ export type NumberFormatterOptions = Readonly<
 /**
  * 数値を書式化するフォーマッターです。
  */
-export interface INumberFormatter extends Intl.NumberFormat {}
+export type INumberFormatter = Intl.NumberFormat;
 
 const cacheMap: callFnOnce.CacheMap = new Map();
 

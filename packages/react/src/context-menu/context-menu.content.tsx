@@ -141,9 +141,9 @@ export namespace Content {
     export type HTML = ContextMenuContentProps.HTML;
   }
 
-  export type ItemObject = ContextMenuRootItemObject;
+  export type IItemRenderer<TItem = any> = IContextMenuContentItemRenderer<TItem>;
 
-  export interface IItemRenderer<TItem = any> extends IContextMenuContentItemRenderer<TItem> {}
+  export type ItemObject = ContextMenuRootItemObject;
 }
 
 const defaultItemRenderer: IContextMenuContentItemRenderer = (item, index, items) => {

@@ -22,7 +22,7 @@ describe("FieldsetAPI", () => {
 
     // 検証
     expect(rootProps.disabled).toBe(true);
-    expect(rootProps).not.toHaveProperty("children");
+    expect(rootProps.children).toBe("内容");
     expect(rootProps).not.toHaveProperty("legend");
     expect(rootProps).not.toHaveProperty("slotProps");
   });

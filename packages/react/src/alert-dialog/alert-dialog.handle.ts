@@ -5,7 +5,7 @@ import { AlertDialog } from "@base-ui/react/alert-dialog";
  *
  * @template TPayload トリガーが送信するデータの型です。
  */
-export interface AlertDialogHandle<TPayload = any> extends AlertDialog.Handle<TPayload> {}
+export type AlertDialogHandle<TPayload = any> = AlertDialog.Handle<TPayload>;
 
 interface ICreateHandle {
   /**

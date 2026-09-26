@@ -133,7 +133,7 @@ export namespace RadioGroup {
 
   export type ChangeEventReason = ContextMenuRadioGroupChangeEventReason;
 
-  export interface IItemRenderer<TItem = any> extends IContextMenuRadioGroupItemRenderer<TItem> {}
+  export type IItemRenderer<TItem = any> = IContextMenuRadioGroupItemRenderer<TItem>;
 }
 
 const defaultItemRenderer: IContextMenuRadioGroupItemRenderer = (item, index) => {

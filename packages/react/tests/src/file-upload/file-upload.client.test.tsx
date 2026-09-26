@@ -48,14 +48,12 @@ describe("FileUploadAPI", () => {
     expect(api.getDropzoneProps()).toStrictEqual({ children: "添付する" });
   });
 
-  test("表示できない中身では既定の文言を使う", ({ expect }) => {
+  test("中身が null のときは既定の文言に置き換えない", ({ expect }) => {
     // 準備と実行
     const api = new FileUploadAPI({ children: null });
 
     // 検証
-    expect(api.getDropzoneProps().children).toBe(
-      "ここにファイルをドラッグアンドドロップ、またはクリックして選択",
-    );
+    expect(api.getDropzoneProps()).toStrictEqual({ children: null });
   });
 
   test("slotProps のドロップゾーンを引き継ぐ", ({ expect }) => {

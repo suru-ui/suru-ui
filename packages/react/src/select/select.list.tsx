@@ -236,7 +236,7 @@ export namespace List {
     export type HTML = SelectListProps.HTML;
   }
 
-  export type ItemObjectGroup<TValue = any> = SelectListItemObjectGroup<TValue>;
+  export type IItemRenderer<TValue = any> = ISelectListItemRenderer<TValue>;
 
-  export interface IItemRenderer<TValue = any> extends ISelectListItemRenderer<TValue> {}
+  export type ItemObjectGroup<TValue = any> = SelectListItemObjectGroup<TValue>;
 }

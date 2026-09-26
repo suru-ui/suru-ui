@@ -37,7 +37,7 @@ export type AccordionChangeEventReason = AccordionRootChangeEventReason;
 
 export type AccordionItemObject = AccordionRootItemObject;
 
-export interface IAccordionItemRenderer<TItem = any> extends IAccordionRootItemRenderer<TItem> {}
+export type IAccordionItemRenderer<TItem = any> = IAccordionRootItemRenderer<TItem>;
 
 export type AccordionRadius = AccordionRootRadius;
 

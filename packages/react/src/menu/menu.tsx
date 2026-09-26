@@ -86,7 +86,7 @@ export type MenuChangeEventReason = MenuRootChangeEventReason;
 
 export type MenuOrientation = MenuRootOrientation;
 
-export interface IMenuItemRenderer<TItem = any> extends IMenuContentItemRenderer<TItem> {}
+export type IMenuItemRenderer<TItem = any> = IMenuContentItemRenderer<TItem>;
 
 export type MenuRadius = MenuRootRadius;
 
@@ -772,11 +772,11 @@ export namespace Menu {
 
   export type GroupedItemObject = MenuRootGroupedItemObject;
 
+  export type IItemRenderer<TItem = any> = IMenuItemRenderer<TItem>;
+
   export type ItemObject = MenuRootItemObject;
 
   export type ItemObjectGroup = MenuRootItemObjectGroup;
-
-  export interface IItemRenderer<TItem = any> extends IMenuItemRenderer<TItem> {}
 
   export type LabeledItemObject = MenuRootLabeledItemObject;
 

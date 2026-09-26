@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import type { IComponent } from "../types.js";
 import {
   type FileUploadRootSize,
@@ -137,14 +136,13 @@ export class FileUploadAPI {
    * {@link FileUploadDropzone} に渡す props を取得します。
    */
   public getDropzoneProps(): FileUploadDropzoneProps {
-    const { children } = this.dropzoneProps;
+    const { children = "ここにファイルをドラッグアンドドロップ、またはクリックして選択" } =
+      this.dropzoneProps;
     const { dropzone: props = {} } = this.slotProps;
 
     return {
       ...props,
-      children: isLikelyVisibleNode(children)
-        ? children
-        : "ここにファイルをドラッグアンドドロップ、またはクリックして選択",
+      children,
     };
   }
 

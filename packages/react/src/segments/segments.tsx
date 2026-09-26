@@ -40,7 +40,7 @@ export type SegmentsColor = SegmentsRootColor;
 
 export type SegmentsItemObject = SegmentsRootItemObject;
 
-export interface ISegmentsItemRenderer<TItem = any> extends ISegmentsRootItemRenderer<TItem> {}
+export type ISegmentsItemRenderer<TItem = any> = ISegmentsRootItemRenderer<TItem>;
 
 export type SegmentsOrientation = SegmentsRootOrientation;
 
@@ -261,9 +261,9 @@ export namespace Segments {
 
   export type Color = SegmentsColor;
 
-  export type ItemObject = SegmentsItemObject;
+  export type IItemRenderer<TItem = any> = ISegmentsItemRenderer<TItem>;
 
-  export interface IItemRenderer<TItem = any> extends ISegmentsItemRenderer<TItem> {}
+  export type ItemObject = SegmentsItemObject;
 
   export type Orientation = SegmentsOrientation;
 

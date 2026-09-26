@@ -5,7 +5,7 @@ import { Drawer } from "@base-ui/react/drawer";
  *
  * @template TPayload トリガーが送信するデータの型です。
  */
-export interface DrawerHandle<TPayload = any> extends Drawer.Handle<TPayload> {}
+export type DrawerHandle<TPayload = any> = Drawer.Handle<TPayload>;
 
 interface ICreateHandle {
   /**

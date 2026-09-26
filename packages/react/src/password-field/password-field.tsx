@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { getItemKey } from "../_item.js";
 import type { IComponent } from "../types.js";
 import {
   type PasswordFieldContext,
@@ -117,6 +118,8 @@ export type PasswordFieldProps = PasswordFieldProps.PasswordField &
 // API
 // ---
 
+const NONE = {} as never;
+
 /**
  * {@link PasswordField} を構成する各パーツの props などを作成するための API です。
  */
@@ -171,18 +174,36 @@ export class PasswordFieldAPI {
   }
 
   /**
-   * 末尾の {@link PasswordFieldAddon} に渡す props の一覧を取得します。
+   * {@link PasswordFieldAddon} に渡す props を取得します。
    */
-  public mapEndAddonProps(): readonly PasswordFieldAddonProps[] {
-    const { endAddons } = this.passwordFieldProps;
+  public getAddonProps(addon?: undefined): Omit<PasswordFieldAddonProps, "children">;
+  public getAddonProps(addon?: React.ReactNode): PasswordFieldAddonProps;
+  public getAddonProps(addon: React.ReactNode = NONE): PasswordFieldAddonProps {
     const { addon: props = {} } = this.slotProps;
 
-    return (
-      React.Children.map(endAddons, (addon) => ({
-        ...props,
-        children: addon,
-      })) ?? []
-    );
+    if (addon === NONE) {
+      return props;
+    }
+
+    return {
+      ...props,
+      children: addon,
+    };
+  }
+
+  /**
+   * 入力欄の末尾に表示する {@link PasswordFieldAddon} の一覧を取得します。
+   *
+   * @template T コールバックの返り値の型です。
+   * @yields コールバックの返り値です。
+   */
+  public *mapEndAddons<T>(callback: (addon: React.ReactNode, index: number) => T): Iterable<T> {
+    const { endAddons: addons = [] } = this.passwordFieldProps;
+
+    let index = 0;
+    for (const addon of addons) {
+      yield callback(addon, index++);
+    }
   }
 
   /**
@@ -205,18 +226,18 @@ export class PasswordFieldAPI {
   }
 
   /**
-   * 先頭の {@link PasswordFieldAddon} に渡す props の一覧を取得します。
+   * 入力欄の先頭に表示する {@link PasswordFieldAddon} の一覧を取得します。
+   *
+   * @template T コールバックの返り値の型です。
+   * @yields コールバックの返り値です。
    */
-  public mapStartAddonProps(): readonly PasswordFieldAddonProps[] {
-    const { startAddons } = this.passwordFieldProps;
-    const { addon: props = {} } = this.slotProps;
+  public *mapStartAddons<T>(callback: (addon: React.ReactNode, index: number) => T): Iterable<T> {
+    const { startAddons: addons = [] } = this.passwordFieldProps;
 
-    return (
-      React.Children.map(startAddons, (addon) => ({
-        ...props,
-        children: addon,
-      })) ?? []
-    );
+    let index = 0;
+    for (const addon of addons) {
+      yield callback(addon, index++);
+    }
   }
 
   /**
@@ -278,12 +299,12 @@ export const PasswordField: IPasswordField = /*#__PURE__*/ Object.assign(
 
     return (
       <PasswordFieldRoot {...api.getRootProps()}>
-        {api.mapStartAddonProps().map((addonProps, index) => (
-          <PasswordFieldAddon key={index} {...addonProps} />
+        {api.mapStartAddons((addon, index) => (
+          <PasswordFieldAddon {...api.getAddonProps(addon)} key={getItemKey(addon) ?? index} />
         ))}
         <PasswordFieldInput {...api.getInputProps()} />
-        {api.mapEndAddonProps().map((addonProps, index) => (
-          <PasswordFieldAddon key={index} {...addonProps} />
+        {api.mapEndAddons((addon, index) => (
+          <PasswordFieldAddon {...api.getAddonProps(addon)} key={getItemKey(addon) ?? index} />
         ))}
         {toggleButtonProps && (
           <PasswordFieldAddon disableFocusOnClick>

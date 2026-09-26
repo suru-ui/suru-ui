@@ -45,7 +45,7 @@ export type TabsChangeEventReason = TabsRootChangeEventReason;
 
 export type TabsItemObject = TabsRootItemObject;
 
-export interface ITabsItemRenderer<TItem = any> extends ITabsRootItemRenderer<TItem> {}
+export type ITabsItemRenderer<TItem = any> = ITabsRootItemRenderer<TItem>;
 
 export type TabsOrientation = TabsRootOrientation;
 
@@ -289,9 +289,9 @@ export namespace Tabs {
 
   export type ChangeEventReason = TabsChangeEventReason;
 
-  export type ItemObject = TabsItemObject;
+  export type IItemRenderer<TItem = any> = ITabsItemRenderer<TItem>;
 
-  export interface IItemRenderer<TItem = any> extends ITabsItemRenderer<TItem> {}
+  export type ItemObject = TabsItemObject;
 
   export type Orientation = TabsOrientation;
 

@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { CursorGrowIcon } from "../_icons.jsx";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
+import { getItemKey } from "../_item.js";
 import type { IComponent } from "../types.js";
 import {
   type NumberFieldContext,
@@ -154,6 +155,8 @@ export type NumberFieldProps = NumberFieldProps.NumberField &
 // API
 // ---
 
+const NONE = {} as never;
+
 /**
  * {@link NumberField} を構成する各パーツの props などを作成するための API です。
  */
@@ -194,6 +197,24 @@ export class NumberFieldAPI {
   }
 
   /**
+   * {@link NumberFieldAddon} に渡す props を取得します。
+   */
+  public getAddonProps(addon?: undefined): Omit<NumberFieldAddonProps, "children">;
+  public getAddonProps(addon?: React.ReactNode): NumberFieldAddonProps;
+  public getAddonProps(addon: React.ReactNode = NONE): NumberFieldAddonProps {
+    const { addon: props = {} } = this.slotProps;
+
+    if (addon === NONE) {
+      return props;
+    }
+
+    return {
+      ...props,
+      children: addon,
+    };
+  }
+
+  /**
    * {@link NumberFieldDecrement} に渡す props を取得します。
    *
    * 値を減らすボタンを表示しないときは `null` を返します。
@@ -213,18 +234,18 @@ export class NumberFieldAPI {
   }
 
   /**
-   * 末尾の {@link NumberFieldAddon} に渡す props の一覧を取得します。
+   * 入力欄の末尾に表示する {@link NumberFieldAddon} の一覧を取得します。
+   *
+   * @template T コールバックの返り値の型です。
+   * @yields コールバックの返り値です。
    */
-  public mapEndAddonProps(): readonly NumberFieldAddonProps[] {
-    const { endAddons } = this.numberFieldProps;
-    const { addon: props = {} } = this.slotProps;
+  public *mapEndAddons<T>(callback: (addon: React.ReactNode, index: number) => T): Iterable<T> {
+    const { endAddons: addons = [] } = this.numberFieldProps;
 
-    return (
-      React.Children.map(endAddons, (addon) => ({
-        ...props,
-        children: addon,
-      })) ?? []
-    );
+    let index = 0;
+    for (const addon of addons) {
+      yield callback(addon, index++);
+    }
   }
 
   /**
@@ -317,18 +338,18 @@ export class NumberFieldAPI {
   }
 
   /**
-   * 先頭の {@link NumberFieldAddon} に渡す props の一覧を取得します。
+   * 入力欄の先頭に表示する {@link NumberFieldAddon} の一覧を取得します。
+   *
+   * @template T コールバックの返り値の型です。
+   * @yields コールバックの返り値です。
    */
-  public mapStartAddonProps(): readonly NumberFieldAddonProps[] {
-    const { startAddons } = this.numberFieldProps;
-    const { addon: props = {} } = this.slotProps;
+  public *mapStartAddons<T>(callback: (addon: React.ReactNode, index: number) => T): Iterable<T> {
+    const { startAddons: addons = [] } = this.numberFieldProps;
 
-    return (
-      React.Children.map(startAddons, (addon) => ({
-        ...props,
-        children: addon,
-      })) ?? []
-    );
+    let index = 0;
+    for (const addon of addons) {
+      yield callback(addon, index++);
+    }
   }
 }
 
@@ -374,12 +395,12 @@ export const NumberField: INumberField = /*#__PURE__*/ Object.assign(
       <NumberFieldRoot {...api.getRootProps()}>
         {scrubAreaProps && <NumberFieldScrubArea {...scrubAreaProps} />}
         <NumberFieldGroup {...api.getGroupProps()}>
-          {api.mapStartAddonProps().map((addonProps, index) => (
-            <NumberFieldAddon key={index} {...addonProps} />
+          {api.mapStartAddons((addon, index) => (
+            <NumberFieldAddon {...api.getAddonProps(addon)} key={getItemKey(addon) ?? index} />
           ))}
           <NumberFieldInput {...api.getInputProps()} />
-          {api.mapEndAddonProps().map((addonProps, index) => (
-            <NumberFieldAddon key={index} {...addonProps} />
+          {api.mapEndAddons((addon, index) => (
+            <NumberFieldAddon {...api.getAddonProps(addon)} key={getItemKey(addon) ?? index} />
           ))}
           {decrementProps && (
             <NumberFieldAddon disableFocusOnClick>

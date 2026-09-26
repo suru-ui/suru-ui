@@ -5,7 +5,7 @@ import { Dialog } from "@base-ui/react/dialog";
  *
  * @template TPayload トリガーが送信するデータの型です。
  */
-export interface DialogHandle<TPayload = any> extends Dialog.Handle<TPayload> {}
+export type DialogHandle<TPayload = any> = Dialog.Handle<TPayload>;
 
 interface ICreateHandle {
   /**

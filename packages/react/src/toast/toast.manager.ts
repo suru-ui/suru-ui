@@ -5,7 +5,7 @@ import { type ToastManager, Toast } from "@base-ui/react/toast";
  *
  * @template TData 通知に含める追加データの型です。
  */
-export interface IToastManager<TData extends object = any> extends ToastManager<TData> {}
+export type IToastManager<TData extends object = any> = ToastManager<TData>;
 
 /**
  * Provider の外から通知を管理するマネージャーを作成します。

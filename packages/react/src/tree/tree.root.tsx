@@ -626,9 +626,9 @@ export namespace Root {
 
   export type Color = TreeRootColor;
 
-  export type ItemObject = TreeRootItemObject;
+  export type IItemRenderer = ITreeRootItemRenderer;
 
-  export interface IItemRenderer extends ITreeRootItemRenderer {}
+  export type ItemObject = TreeRootItemObject;
 
   export type Radius = TreeRootRadius;
 
