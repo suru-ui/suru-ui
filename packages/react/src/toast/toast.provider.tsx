@@ -18,7 +18,7 @@ export namespace ToastProviderProps {
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
       // ToastProviderProps:
-      "timeout" | "limit" | "toastManager",
+      "children" | "timeout" | "limit" | "toastManager",
       keyof Render | keyof SuruUI
     >
   >;

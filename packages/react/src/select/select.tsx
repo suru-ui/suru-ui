@@ -186,7 +186,7 @@ namespace SelectProps {
   export type Root<
     TValue = any,
     TMultiple extends boolean | undefined = boolean | undefined,
-  > = Omit<SelectRootProps<TValue, TMultiple>, "children" | keyof Select>;
+  > = Omit<SelectRootProps<TValue, TMultiple>, keyof Select>;
 
   export type Select<TValue = any> = {
     /**
@@ -214,7 +214,7 @@ namespace SelectProps {
     slotProps?: SelectSlotProps<TValue> | undefined;
   };
 
-  export type Trigger = Omit<SelectTriggerProps, "children" | keyof Select | keyof Root>;
+  export type Trigger = Omit<SelectTriggerProps, keyof Select | keyof Root>;
 }
 
 /**

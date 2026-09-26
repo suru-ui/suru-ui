@@ -58,6 +58,7 @@ export namespace DrawerRootProps {
       | "handle"
       | "triggerId"
       | "defaultTriggerId"
+      | "children"
       | "swipeDirection"
       | "snapPoints"
       | "snapToSequentialPoints"

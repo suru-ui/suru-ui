@@ -87,7 +87,7 @@ namespace AlertProps {
     title?: AlertTitleProps["children"] | undefined;
   };
 
-  export type Root = Omit<AlertRootProps, "children" | keyof Alert>;
+  export type Root = Omit<AlertRootProps, keyof Alert>;
 }
 
 /**

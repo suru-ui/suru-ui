@@ -80,7 +80,7 @@ export type SegmentsSlotProps = {
 };
 
 namespace SegmentsProps {
-  export type Root<TItem = any> = Omit<SegmentsRootProps<TItem>, "children" | keyof Segments>;
+  export type Root<TItem = any> = Omit<SegmentsRootProps<TItem>, keyof Segments>;
 
   export type Segments<TItem = any> = {
     /**

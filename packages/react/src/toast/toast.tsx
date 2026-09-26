@@ -185,7 +185,7 @@ namespace ToastListProps {
     slotProps?: ToastListSlotProps | undefined;
   };
 
-  export type Portal = Omit<ToastPortalProps, "children" | keyof List>;
+  export type Portal = Omit<ToastPortalProps, keyof List>;
 }
 
 /**

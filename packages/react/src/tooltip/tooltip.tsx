@@ -83,10 +83,7 @@ namespace TooltipProps {
     keyof TooltipProps.Tooltip | keyof TooltipProps.Root | keyof TooltipProps.Trigger
   >;
 
-  export type Root<TPayload = any> = Omit<
-    TooltipRootProps<TPayload>,
-    "children" | keyof TooltipProps.Tooltip
-  >;
+  export type Root<TPayload = any> = Omit<TooltipRootProps<TPayload>, keyof TooltipProps.Tooltip>;
 
   export type Tooltip<TPayload = any> = {
     /**

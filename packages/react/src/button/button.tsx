@@ -89,10 +89,7 @@ namespace ButtonProps {
 
   export type Content = Pick<ButtonContentProps, "children">;
 
-  export type Root = Omit<
-    ButtonRootProps,
-    "children" | keyof Button | keyof Content | keyof CircularProgress
-  >;
+  export type Root = Omit<ButtonRootProps, keyof Button | keyof Content | keyof CircularProgress>;
 }
 
 /**

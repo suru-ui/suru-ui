@@ -84,7 +84,7 @@ export type PopoverSlotProps<TPayload = any> = {
 export type PopoverState = PopoverRootState;
 
 namespace PopoverProps {
-  export type Content = Omit<PopoverContentProps, "children" | keyof Popover | keyof Root>;
+  export type Content = Omit<PopoverContentProps, keyof Popover | keyof Root>;
 
   export type Popover<TPayload = any> = {
     /**
@@ -128,7 +128,7 @@ namespace PopoverProps {
     trigger?: PopoverTriggerProps["children"] | undefined;
   };
 
-  export type Root<TPayload = any> = Omit<PopoverRootProps<TPayload>, "children" | keyof Popover>;
+  export type Root<TPayload = any> = Omit<PopoverRootProps<TPayload>, keyof Popover>;
 }
 
 /**

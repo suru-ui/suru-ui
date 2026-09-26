@@ -110,6 +110,8 @@ export namespace HoverCardRootProps {
       | "onOpenChange"
       | "onOpenChangeComplete"
       | "actionsRef"
+      | "handle"
+      | "children"
       | "triggerId"
       | "defaultTriggerId",
       keyof Render | keyof SuruUI

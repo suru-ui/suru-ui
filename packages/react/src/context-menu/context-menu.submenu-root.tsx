@@ -35,17 +35,28 @@ export namespace ContextMenuSubmenuRootProps {
     React.ComponentProps<typeof ContextMenu.SubmenuRoot>,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
+
       // MenuSubmenuRootProps:
       | "defaultOpen"
       | "loopFocus"
       | "highlightItemOnHover"
+      // | "modal"
+      // | "onOpenChange"
       | "onOpenChangeComplete"
       | "open"
       | "orientation"
       | "disabled"
       | "closeParentOnEsc"
       | "actionsRef"
-      | "onOpenChange",
+      // | "triggerId"
+      // | "defaultTriggerId"
+      // | "handle"
+      // | "children"
+
+      // MenuSubmenuRootProps:
+      | "onOpenChange"
+      | "closeParentOnEsc"
+      | "children",
       keyof Render | keyof SuruUI
     >
   >;

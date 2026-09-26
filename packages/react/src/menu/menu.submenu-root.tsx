@@ -39,13 +39,23 @@ export namespace MenuSubmenuRootProps {
       | "defaultOpen"
       | "loopFocus"
       | "highlightItemOnHover"
+      // | "modal"
+      // | "onOpenChange"
       | "onOpenChangeComplete"
       | "open"
       | "orientation"
       | "disabled"
       | "closeParentOnEsc"
       | "actionsRef"
-      | "onOpenChange",
+      // | "triggerId"
+      // | "defaultTriggerId"
+      // | "handle"
+      // | "children"
+
+      // MenuSubmenuRootProps:
+      | "onOpenChange"
+      | "closeParentOnEsc"
+      | "children",
       keyof Render | keyof SuruUI
     >
   >;

@@ -69,7 +69,7 @@ namespace AvatarProps {
     src?: AvatarImageProps["src"] | undefined;
   };
 
-  export type Root = Omit<AvatarRootProps, "children" | keyof Avatar>;
+  export type Root = Omit<AvatarRootProps, keyof Avatar>;
 }
 
 /**

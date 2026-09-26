@@ -214,7 +214,7 @@ namespace DrawerProps {
     trigger?: DrawerTriggerProps<TPayload>["children"] | undefined;
   };
 
-  export type Root<TPayload = any> = Omit<DrawerRootProps<TPayload>, "children" | keyof Drawer>;
+  export type Root<TPayload = any> = Omit<DrawerRootProps<TPayload>, keyof Drawer>;
 }
 
 /**

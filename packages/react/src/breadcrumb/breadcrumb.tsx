@@ -85,10 +85,7 @@ namespace BreadcrumbProps {
 
   export type List<TItem = any> = Pick<BreadcrumbListProps<TItem>, "children">;
 
-  export type Root<TItem = any> = Omit<
-    BreadcrumbRootProps<TItem>,
-    "children" | "items" | keyof Breadcrumb | keyof List
-  >;
+  export type Root<TItem = any> = Omit<BreadcrumbRootProps<TItem>, keyof Breadcrumb | keyof List>;
 }
 
 /**

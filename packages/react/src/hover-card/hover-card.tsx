@@ -98,10 +98,7 @@ export interface IHoverCardContentRenderer<TPayload = any> {
 }
 
 namespace HoverCardProps {
-  export type Content = Omit<
-    HoverCardContentProps,
-    "children" | keyof HoverCard | keyof Root | keyof Trigger
-  >;
+  export type Content = Omit<HoverCardContentProps, keyof HoverCard | keyof Root | keyof Trigger>;
 
   export type HoverCard<TPayload = any> = {
     /**
@@ -147,10 +144,7 @@ namespace HoverCardProps {
     trigger?: HoverCardTriggerProps["children"] | undefined;
   };
 
-  export type Root<TPayload = any> = Omit<
-    HoverCardRootProps<TPayload>,
-    "children" | keyof HoverCard
-  >;
+  export type Root<TPayload = any> = Omit<HoverCardRootProps<TPayload>, keyof HoverCard>;
 
   export type Trigger<TPayload = any> = Pick<
     HoverCardTriggerProps<TPayload>,

@@ -281,15 +281,9 @@ namespace AutocompleteProps {
     status?: React.ReactNode | undefined;
   };
 
-  export type InputGroup = Omit<
-    AutocompleteInputGroupProps,
-    "children" | keyof Autocomplete | keyof Root
-  >;
+  export type InputGroup = Omit<AutocompleteInputGroupProps, keyof Autocomplete | keyof Root>;
 
-  export type Root<TItem = any> = Omit<
-    AutocompleteRootProps<TItem>,
-    "children" | keyof Autocomplete
-  >;
+  export type Root<TItem = any> = Omit<AutocompleteRootProps<TItem>, keyof Autocomplete>;
 }
 
 /**

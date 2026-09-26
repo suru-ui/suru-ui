@@ -88,7 +88,7 @@ export type ToggleButtonSlotProps = {
 export type ToggleButtonState = ToggleButtonRootState;
 
 namespace ToggleButtonProps {
-  export type Root = Omit<ToggleButtonRootProps, "children" | keyof ToggleButton>;
+  export type Root = Omit<ToggleButtonRootProps, keyof ToggleButton>;
 
   export type ToggleButton = {
     /**

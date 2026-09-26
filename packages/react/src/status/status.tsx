@@ -37,7 +37,7 @@ export type StatusSlotProps = {
 export type StatusState = StatusRootState;
 
 namespace StatusProps {
-  export type Root = Omit<StatusRootProps, "children" | keyof Status>;
+  export type Root = Omit<StatusRootProps, keyof Status>;
 
   export type Status = {
     /**
