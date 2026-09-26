@@ -130,7 +130,8 @@ export const WithAccept = meta.story({
       <div className="flex flex-col gap-2">
         <FileUpload {...props} />
         <p className="text-sm text-slate-500">
-          画像のみ受け付けます。ドラッグアンドドロップでもブラウザーが対応していれば絞り込まれます。
+          画像のみ受け付けます。ドラッグアンドドロップでも一致しないファイルは拒否され、onFileReject
+          へ報告されます。
         </p>
       </div>
     );

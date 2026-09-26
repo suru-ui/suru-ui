@@ -2,6 +2,7 @@ import { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
 import { CheckIcon } from "../_icons.jsx";
+import { getItemKey } from "../_item.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
@@ -46,7 +47,7 @@ export namespace MenuRadioGroupProps {
 
   export type SuruUI<TItem = any> = {
     /**
-     * ポップアップの内容、または各項目をレンダリングする関数です。
+     * グループの内容、または各項目をレンダリングする関数です。
      *
      * 関数を指定した場合は {@link MenuRadioGroupProps.items|items} の各項目が引数として渡されます。
      */
@@ -138,10 +139,10 @@ export namespace RadioGroup {
 const defaultItemRenderer: IMenuRadioGroupItemRenderer = (item, index) => {
   switch (true) {
     case isRadioItemObject(item): {
-      const { label, ...props } = item;
+      const { type: _, label, ...props } = item;
 
       return (
-        <MenuRadioItem {...props} key={index}>
+        <MenuRadioItem {...props} key={getItemKey(item) ?? index}>
           {label}
           <MenuRadioItemIndicator>
             <CheckIcon />

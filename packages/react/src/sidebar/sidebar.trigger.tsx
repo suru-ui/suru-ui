@@ -1,6 +1,7 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
+import { SidebarIcon } from "../_icons.jsx";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
@@ -10,6 +11,11 @@ import { type SidebarOpenState, useSidebarContext } from "./sidebar.context.js";
  * {@link SidebarTrigger} の状態です。
  */
 export type SidebarTriggerState = {
+  /**
+   * サイドバーを無効にするかどうかです。
+   */
+  readonly disabled: boolean;
+
   /**
    * サイドバーの開閉状態です。
    */
@@ -63,7 +69,10 @@ export const SidebarTrigger: IComponent<SidebarTriggerProps> = function SuiSideb
       ctx.toggle();
     }
   };
-  const renderState = React.useMemo<SidebarTriggerState>(() => ({ state: ctx.state }), [ctx.state]);
+  const renderState = React.useMemo<SidebarTriggerState>(
+    () => ({ state: ctx.state, disabled: triggerDisabled }),
+    [ctx.state, triggerDisabled],
+  );
 
   return useRender({
     props: [
@@ -71,11 +80,12 @@ export const SidebarTrigger: IComponent<SidebarTriggerProps> = function SuiSideb
       {
         type,
         onClick: handleOnClick,
-        children: children ?? <DefaultTriggerIcon />,
+        children: children ?? <SidebarIcon />,
         disabled: triggerDisabled || undefined,
         className: cn<SidebarTriggerState>(
           "sui_sidebar_trigger",
           (state) => `sui_sidebar_trigger-${state.state}`,
+          (state) => state.disabled && "sui_sidebar_trigger-disabled",
         ),
         "aria-label": ariaLabel,
         "aria-expanded": ctx.open,
@@ -104,22 +114,3 @@ export namespace Trigger {
     export type HTML = SidebarTriggerProps.HTML;
   }
 }
-
-const DefaultTriggerIcon: IComponent = function SuiDefaultTriggerIcon() {
-  return (
-    <svg
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-      focusable="false"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <rect x="3" y="3" rx="2" width="18" height="18" />
-      <path d="M9 3v18" />
-    </svg>
-  );
-};

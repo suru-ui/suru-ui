@@ -12,13 +12,13 @@ import type { IComponent } from "../types.js";
 export type DialogCloseTriggerState = Dialog.Close.State;
 
 export namespace DialogCloseTriggerProps {
-  export type Render = RenderProps<DialogCloseTriggerState>;
+  export type Render = Omit<RenderProps<DialogCloseTriggerState>, "render">;
 
   export type SuruUI = {
     /**
-     * ボタンとしてレンダリングする要素です。
+     * ボタンとして描画する関数です。
      */
-    children: NonNullable<React.ComponentProps<typeof Dialog.Close>["render"]>;
+    children: NonNullable<RenderProps<DialogCloseTriggerState>["render"]>;
   };
 
   export type BaseUI = Pick<

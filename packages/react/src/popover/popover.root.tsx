@@ -1,8 +1,8 @@
 import { Popover } from "@base-ui/react/popover";
-import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import type { IComponent } from "../types.js";
+import type { PopoverContextSize, PopoverContextRadius } from "./popover.context.js";
 import { PopoverContext } from "./popover.context.js";
 import type { PopoverHandle } from "./popover.handle.js";
 
@@ -29,7 +29,7 @@ export type PopoverRootChangeEventReason = Popover.Root.ChangeEventReason;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type PopoverRootRadius = "none" | Size;
+export type PopoverRootRadius = PopoverContextRadius;
 
 /**
  * ポップオーバーの大きさです。
@@ -38,7 +38,7 @@ export type PopoverRootRadius = "none" | Size;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type PopoverRootSize = Size;
+export type PopoverRootSize = PopoverContextSize;
 
 /**
  * {@link PopoverRoot} が持つ状態です。
@@ -130,16 +130,16 @@ interface IPopoverRoot extends IComponent<PopoverRootProps> {
 export const PopoverRoot: IPopoverRoot = function SuiPopoverRoot<TPayload>(
   props: PopoverRootProps<TPayload>,
 ) {
-  const { size = "md", radius = size, outlined = false, ...otherProps } = props;
+  const { size = "md", handle, radius = size, outlined = false, ...otherProps } = props;
   const ctx = React.useMemo<PopoverContext>(
     () => ({ size, radius, outlined }),
     [size, radius, outlined],
   );
 
   return (
-    <PopoverContext.Provider value={ctx}>
-      <Popover.Root {...otherProps} />
-    </PopoverContext.Provider>
+    <PopoverContext value={ctx}>
+      <Popover.Root {...otherProps} handle={handle} />
+    </PopoverContext>
   );
 };
 

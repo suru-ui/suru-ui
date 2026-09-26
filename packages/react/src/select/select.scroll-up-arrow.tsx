@@ -56,9 +56,6 @@ export const SelectScrollUpArrow: IComponent<SelectScrollUpArrowProps> =
 
 export { SelectScrollUpArrow as ScrollUpArrow };
 
-/**
- * {@link SelectScrollUpArrow} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace ScrollUpArrow {
   export type State = SelectScrollUpArrowState;
 

@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import { type TextFieldAddonProps, TextFieldAddon } from "../text-field/text-field.parts.js";
@@ -13,19 +11,26 @@ export type PasswordFieldAddonState = {};
 export namespace PasswordFieldAddonProps {
   export type Render = RenderProps<PasswordFieldAddonState>;
 
-  export type SuruUI = {};
+  export type SuruUI = {
+    /**
+     * クリック時の入力欄への自動フォーカスを無効にするかどうかを指定します。
+     *
+     * @default false
+     */
+    disableFocusOnClick?: boolean | undefined;
+  };
 
   export type BaseUI = Pick<
-    TextFieldAddonProps,
+    TextFieldAddonProps.BaseUI,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // PasswordFieldAddonProps: TextField の props をすべて継承します。
-      keyof TextFieldAddonProps,
+      // PasswordFieldAddonProps:
+      never,
       keyof Render | keyof SuruUI
     >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"span">, keyof Render | keyof SuruUI | keyof BaseUI>;
+  export type HTML = Omit<TextFieldAddonProps.HTML, keyof Render | keyof SuruUI | keyof BaseUI>;
 }
 
 /**

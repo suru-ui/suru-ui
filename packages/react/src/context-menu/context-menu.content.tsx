@@ -3,6 +3,7 @@ import * as React from "react";
 
 import { CheckIcon, ChevronRightIcon } from "../_icons.jsx";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
+import { getItemKey } from "../_item.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
@@ -128,7 +129,7 @@ export { ContextMenuContent as Content };
 export namespace Content {
   export type State = ContextMenuContentState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = ContextMenuContentProps.Render;
@@ -151,7 +152,7 @@ const defaultItemRenderer: IContextMenuContentItemRenderer = (item, index, items
       const { type: _, label, ...props } = item;
 
       return (
-        <ContextMenuItem {...props} key={index}>
+        <ContextMenuItem {...props} key={getItemKey(item) ?? index}>
           {label}
         </ContextMenuItem>
       );
@@ -161,7 +162,7 @@ const defaultItemRenderer: IContextMenuContentItemRenderer = (item, index, items
       const { type: _, label, ...props } = item;
 
       return (
-        <ContextMenuLinkItem {...props} key={index}>
+        <ContextMenuLinkItem {...props} key={getItemKey(item) ?? index}>
           {label}
         </ContextMenuLinkItem>
       );
@@ -171,7 +172,7 @@ const defaultItemRenderer: IContextMenuContentItemRenderer = (item, index, items
       const { type: _, label, ...props } = item;
 
       return (
-        <ContextMenuCheckboxItem {...props} key={index}>
+        <ContextMenuCheckboxItem {...props} key={getItemKey(item) ?? index}>
           {label}
           <ContextMenuCheckboxItemIndicator>
             <CheckIcon />
@@ -183,14 +184,16 @@ const defaultItemRenderer: IContextMenuContentItemRenderer = (item, index, items
     case isRadioItemObjectGroup(item): {
       const { type: _, items: groupItems, ...props } = item;
 
-      return <ContextMenuRadioGroup {...props} key={index} items={groupItems} />;
+      return (
+        <ContextMenuRadioGroup {...props} key={getItemKey(item) ?? index} items={groupItems} />
+      );
     }
 
     case isSubmenuItemObject(item): {
       const { type: _, items, label, ...props } = item;
 
       return (
-        <ContextMenuSubmenuRoot {...props} key={index} items={items}>
+        <ContextMenuSubmenuRoot {...props} key={getItemKey(item) ?? index} items={items}>
           <ContextMenuSubmenuTrigger>
             {label}
             <ChevronRightIcon />
@@ -208,8 +211,8 @@ const defaultItemRenderer: IContextMenuContentItemRenderer = (item, index, items
       const { type: _, items: groupItems, label, ...props } = item;
 
       return (
-        <React.Fragment key={index}>
-          <ContextMenuGroup {...props} key={index}>
+        <React.Fragment key={getItemKey(item) ?? index}>
+          <ContextMenuGroup {...props}>
             {isLikelyVisibleNode(label) && <ContextMenuGroupLabel>{label}</ContextMenuGroupLabel>}
             {groupItems.map(defaultItemRenderer)}
           </ContextMenuGroup>

@@ -6,6 +6,7 @@ import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { BreadcrumbContext } from "./breadcrumb.context.js";
+import type { BreadcrumbLinkProps } from "./breadcrumb.link.jsx";
 
 /**
  * パンくずリストの配色です。
@@ -14,35 +15,14 @@ export type BreadcrumbRootColor = Color;
 
 /**
  * {@link BreadcrumbRoot} の各項目です。
+ *
+ * `label` を表示内容として扱い、その他のプロパティーは {@link BreadcrumbLink} に渡されます。
  */
-export type BreadcrumbRootItemObject = {
+export type BreadcrumbRootItemObject = Omit<BreadcrumbLinkProps, "children"> & {
   /**
-   * 項目のラベルです。
+   * 項目の表示内容です。
    */
   readonly label: React.ReactNode;
-
-  /**
-   * 現在のページかどうかを指定します。
-   *
-   * 最後の項目は、指定しない場合に現在位置として描画します。
-   */
-  readonly current?: boolean | undefined;
-
-  /**
-   * 項目を無効にするかどうかを指定します。
-   *
-   * `true` の場合、リンク先へ遷移できなくなります。
-   *
-   * @default false
-   */
-  readonly disabled?: boolean | undefined;
-
-  /**
-   * リンク先の URL です。
-   *
-   * 未指定の場合、リンクにならない要素として描画します。
-   */
-  readonly href?: string | undefined;
 };
 
 /**
@@ -74,6 +54,8 @@ export namespace BreadcrumbRootProps {
 
     /**
      * パンくずリストの項目です。
+     *
+     * `children` を省略した {@link BreadcrumbList} は、この項目を順に並べて表示します。
      */
     items?: readonly BreadcrumbRootItemObject[] | undefined;
 
@@ -102,7 +84,9 @@ export type BreadcrumbRootProps = BreadcrumbRootProps.Render &
   BreadcrumbRootProps.HTML;
 
 /**
- * パンくずリストのルートコンポーネントです。
+ * パンくずリストのルート要素です。
+ *
+ * 大きさと配色を子パーツへ伝播し、`items` を {@link BreadcrumbList} の既定の並びで表示するためのデータ源になります。
  */
 export const BreadcrumbRoot: IComponent<BreadcrumbRootProps> = function SuiBreadcrumbRoot(props) {
   const {

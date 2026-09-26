@@ -24,29 +24,23 @@ export type ButtonCircularProgressContext = {
 export const ButtonCircularProgressContext: React.Context<ButtonCircularProgressContext | null> =
   React.createContext<ButtonCircularProgressContext | null>(null);
 
-function useSuiButtonCircularProgressContext(optional?: false): ButtonCircularProgressContext;
-function useSuiButtonCircularProgressContext(
-  optional?: boolean,
-): ButtonCircularProgressContext | null;
-function useSuiButtonCircularProgressContext(
-  optional?: boolean,
-): ButtonCircularProgressContext | null {
-  const ctx = React.use(ButtonCircularProgressContext);
-  if (ctx === null && !optional) {
-    throw new ContextMissingError({
-      contextName: "ButtonCircularProgressContext",
-      providerName: "ButtonCircularProgress",
-    });
-  }
-
-  return ctx;
-}
+export type IUseButtonCircularProgressContext = IUseContext<ButtonCircularProgressContext>;
 
 /**
  * {@link ButtonCircularProgressContext} を読み取るフックです。
  */
-export const useButtonCircularProgressContext: IUseContext<ButtonCircularProgressContext> =
-  useSuiButtonCircularProgressContext;
+export const useButtonCircularProgressContext: IUseButtonCircularProgressContext =
+  function useSuiButtonCircularProgressContext(optional?: boolean): any {
+    const ctx = React.use(ButtonCircularProgressContext);
+    if (ctx === null && !optional) {
+      throw new ContextMissingError({
+        contextName: "ButtonCircularProgressContext",
+        providerName: "ButtonCircularProgress",
+      });
+    }
+
+    return ctx;
+  };
 
 export {
   ButtonCircularProgressContext as CircularProgressContext,

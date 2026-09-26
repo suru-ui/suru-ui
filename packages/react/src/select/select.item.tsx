@@ -57,7 +57,7 @@ export type SelectItemProps = SelectItemProps.Render &
  * 選択肢の個々の項目です。
  */
 export const SelectItem: IComponent<SelectItemProps> = function SuiSelectItem(props) {
-  const ctx = useSelectContext(true);
+  const ctx = useSelectContext();
   const {
     label,
     style,
@@ -92,7 +92,7 @@ export const SelectItem: IComponent<SelectItemProps> = function SuiSelectItem(pr
             Pick<Button.ButtonRootProps.HTML, "disabled">
         > = {
           item: true,
-          size: ctx?.size,
+          size: ctx.size,
           color: "grey",
           muted: undefined,
           radius: undefined,
@@ -117,8 +117,8 @@ export const SelectItem: IComponent<SelectItemProps> = function SuiSelectItem(pr
                   className,
                   "sui_select_item",
                   (state) => state.disabled && "sui_select_item-disabled",
-                  (state) => state.highlighted && "sui_select_item-highlighted",
                   (state) => state.selected && "sui_select_item-selected",
+                  (state) => state.highlighted && "sui_select_item-highlighted",
                 ),
               }),
             ])}
@@ -131,9 +131,6 @@ export const SelectItem: IComponent<SelectItemProps> = function SuiSelectItem(pr
 
 export { SelectItem as Item };
 
-/**
- * {@link SelectItem} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Item {
   export type State = SelectItemState;
 

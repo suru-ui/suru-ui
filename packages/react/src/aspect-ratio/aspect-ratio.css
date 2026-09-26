@@ -6,13 +6,6 @@
 :scope {
   position: relative;
   overflow: hidden;
-
-  > * {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
 }
 
 /* 変数 */
@@ -48,6 +41,24 @@
 
   &.sui_aspect_ratio-radius_lg {
     --sui_aspect_ratio-border_radius: var(--sui-radius-lg);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Root */
+/* 直接の子要素は Suru UI コンポーネント (data-scope 付き) のことがあるため、子要素を広げる宣言だけ下限なしの別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_aspect_ratio) {
+
+/* 固定 */
+:scope {
+  > * {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
   }
 }
 

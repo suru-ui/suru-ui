@@ -11,21 +11,38 @@ export type ActionGroupContextColor = Color;
 
 /**
  * グループアイテムの向きです。
+ *
+ * - `"horizontal"`: 横並び
+ * - `"vertical"`: 縦並び
  */
 export type ActionGroupContextOrientation = "horizontal" | "vertical";
 
 /**
  * グループアイテムの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
  */
 export type ActionGroupContextRadius = "none" | Size | "full";
 
 /**
  * グループアイテムのサイズです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
  */
 export type ActionGroupContextSize = Size;
 
 /**
  * グループアイテムの主な外観です。
+ *
+ * - `"solid"`: 塗りつぶしスタイル
+ * - `"naked"`: 背景のないテキストのみ
+ * - `"liquid"`: 薄い塗りつぶし
  */
 export type ActionGroupContextVariant = ColorTemplate;
 

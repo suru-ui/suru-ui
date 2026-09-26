@@ -84,7 +84,7 @@
   }
 
   &.sui_avatar-radius_full {
-    --sui_avatar-border_radius: 50%;
+    --sui_avatar-border_radius: calc(var(--sui_avatar-size) / 2);
   }
 
   &.sui_avatar-color_grey {

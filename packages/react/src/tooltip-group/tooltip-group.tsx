@@ -24,11 +24,23 @@ export type TooltipGroupProps = TooltipGroupRootProps;
 /**
  * {@link TooltipGroup} を構成する各パーツの props を作成するための API です。
  */
-export interface TooltipGroupAPI {
+export class TooltipGroupAPI {
+  private readonly rootProps: TooltipGroupRootProps;
+
+  /**
+   * @param props {@link TooltipGroup} の props です。
+   * @internal
+   */
+  public constructor(props: TooltipGroupProps) {
+    this.rootProps = props;
+  }
+
   /**
    * {@link TooltipGroupRoot} に渡す props を取得します。
    */
-  getRootProps(): TooltipGroupRootProps;
+  public getRootProps(): TooltipGroupRootProps {
+    return this.rootProps;
+  }
 }
 
 interface IUseTooltipGroupAPI {
@@ -45,14 +57,10 @@ interface IUseTooltipGroupAPI {
  * {@link TooltipGroupAPI} を作成するフックです。
  */
 export const useTooltipGroupAPI: IUseTooltipGroupAPI = function useSuiTooltipGroupAPI(props) {
-  return {
-    getRootProps() {
-      return props;
-    },
-  };
+  return new TooltipGroupAPI(props);
 };
 
-export { type TooltipGroupAPI as API, useTooltipGroupAPI as useAPI };
+export { TooltipGroupAPI as API, useTooltipGroupAPI as useAPI };
 
 // Component
 // ---------

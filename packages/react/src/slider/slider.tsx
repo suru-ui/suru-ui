@@ -1,5 +1,5 @@
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
-import type { Override, IComponent } from "../types.js";
+import type { IComponent } from "../types.js";
 import {
   type SliderRootSize,
   type SliderRootColor,
@@ -57,7 +57,7 @@ export type SliderSlotProps = {
   /**
    * {@link SliderIndicator} に渡す props です。
    */
-  readonly indicator?: Omit<SliderIndicatorProps, "children"> | undefined;
+  readonly indicator?: SliderIndicatorProps | undefined;
 
   /**
    * {@link SliderLabel} に渡す props です。
@@ -67,7 +67,7 @@ export type SliderSlotProps = {
   /**
    * {@link SliderThumb} に渡す props です。
    */
-  readonly thumb?: Omit<SliderThumbProps, "children"> | undefined;
+  readonly thumb?: SliderThumbProps | undefined;
 
   /**
    * {@link SliderTrack} に渡す props です。
@@ -85,6 +85,36 @@ export type SliderSlotProps = {
  */
 export type SliderState = SliderRootState;
 
+namespace SliderProps {
+  export type Root<TValue extends number | readonly number[] = number | readonly number[]> = Omit<
+    SliderRootProps<TValue>,
+    "children" | keyof Slider
+  >;
+
+  export type Slider = {
+    /**
+     * スライダーの説明ラベルです。
+     *
+     * 指定すると {@link SliderLabel} を表示します。
+     */
+    label?: SliderLabelProps["children"] | undefined;
+
+    /**
+     * 現在値の表示内容です。
+     *
+     * `true` を指定すると {@link SliderValue} が数値を既定の形式で表示します。
+     * 関数を指定すると、書式化された値と生の値を引数として受け取り、表示内容を返します。
+     * ノードを指定すると、そのノードをそのまま表示します。
+     */
+    renderValue?: SliderValueProps["children"] | true | undefined;
+
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     */
+    slotProps?: SliderSlotProps | undefined;
+  };
+}
+
 /**
  * {@link Slider} に渡す props です。
  *
@@ -94,30 +124,7 @@ export type SliderState = SliderRootState;
  * @template TValue 値の型です。
  */
 export type SliderProps<TValue extends number | readonly number[] = number | readonly number[]> =
-  Override<
-    Omit<SliderRootProps<TValue>, "children">,
-    {
-      /**
-       * スライダーの説明ラベルです。
-       *
-       * 指定すると {@link SliderLabel} を表示します。
-       */
-      label?: SliderLabelProps["children"] | undefined;
-
-      /**
-       * 現在値の表示内容です。
-       *
-       * `true` を指定すると {@link SliderValue} が数値を既定の形式で表示します。
-       * 関数を指定すると、書式化された値と生の値を引数として受け取り、表示内容を返します。
-       */
-      renderValue?: SliderValueProps["children"] | true | undefined;
-
-      /**
-       * 各パーツに個別の props を渡すためのオブジェクトです。
-       */
-      slotProps?: SliderSlotProps | undefined;
-    }
-  >;
+  SliderProps.Slider & SliderProps.Root<TValue>;
 
 // API
 // ---
@@ -127,47 +134,112 @@ export type SliderProps<TValue extends number | readonly number[] = number | rea
  *
  * @template TValue 値の型です。
  */
-export interface SliderAPI<TValue extends number | readonly number[] = number | readonly number[]> {
+export class SliderAPI<TValue extends number | readonly number[] = number | readonly number[]> {
+  private readonly sliderProps: Required<Omit<SliderProps.Slider, "slotProps">>;
+
+  private readonly slotProps: SliderSlotProps;
+
+  private readonly rootProps: SliderProps.Root<TValue>;
+
+  /**
+   * @param props {@link Slider} の props です。
+   * @internal
+   */
+  public constructor(props: SliderProps<TValue>) {
+    const { label, slotProps = {}, renderValue, ...rootProps } = props;
+    this.sliderProps = { label, renderValue };
+    this.slotProps = slotProps;
+    this.rootProps = rootProps;
+  }
+
   /**
    * {@link SliderControl} に渡す props を取得します。
    */
-  getControlProps(): SliderControlProps;
+  public getControlProps(): Omit<SliderControlProps, "children"> {
+    const { control: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link SliderIndicator} に渡す props を取得します。
    */
-  getIndicatorProps(): SliderIndicatorProps;
+  public getIndicatorProps(): SliderIndicatorProps {
+    const { indicator: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link SliderLabel} に渡す props を取得します。
    *
-   * それを表示しないときは `null` を返します。
+   * ラベルを表示しないときは `null` を返します。
    */
-  getLabelProps(): SliderLabelProps | null;
+  public getLabelProps(): SliderLabelProps | null {
+    const { label: props = {} } = this.slotProps;
+    const { label } = this.sliderProps;
+
+    if (isLikelyVisibleNode(label)) {
+      return {
+        ...props,
+        children: label,
+      };
+    }
+
+    return null;
+  }
 
   /**
    * {@link SliderRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<SliderRootProps<TValue>, "children">;
+  public getRootProps(): SliderProps.Root<TValue> {
+    return this.rootProps;
+  }
 
   /**
    * {@link SliderThumb} に渡す props の一覧を取得します。
    *
    * `value` または `defaultValue` が配列のときは値の数だけ返します。
    */
-  getThumbPropsList(): readonly SliderThumbProps[];
+  public getThumbPropsList(): readonly SliderThumbProps[] {
+    const { thumb: props = {} } = this.slotProps;
+    const { value, defaultValue } = this.rootProps;
+    const current = value ?? defaultValue;
+    const thumbCount = Array.isArray(current) ? current.length : 1;
+
+    return Array.from({ length: thumbCount }, (_, index) => ({
+      ...props,
+      index,
+    }));
+  }
 
   /**
    * {@link SliderTrack} に渡す props を取得します。
    */
-  getTrackProps(): SliderTrackProps;
+  public getTrackProps(): Omit<SliderTrackProps, "children"> {
+    const { track: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link SliderValue} に渡す props を取得します。
    *
-   * それを表示しないときは `null` を返します。
+   * 値を表示しないときは `null` を返します。
    */
-  getValueProps(): SliderValueProps | null;
+  public getValueProps(): SliderValueProps | null {
+    const { value: props = {} } = this.slotProps;
+    const { renderValue } = this.sliderProps;
+
+    if (renderValue !== undefined) {
+      return {
+        ...props,
+        children: renderValue === true ? undefined : renderValue,
+      };
+    }
+
+    return this.slotProps.value ? props : null;
+  }
 }
 
 interface IUseSliderAPI {
@@ -187,73 +259,10 @@ interface IUseSliderAPI {
  * {@link SliderAPI} を作成するフックです。
  */
 export const useSliderAPI: IUseSliderAPI = function useSuiSliderAPI(props) {
-  const {
-    label,
-    slotProps: {
-      label: labelProps,
-      thumb: thumbProps = {},
-      track: trackProps = {},
-      value: valueProps,
-      control: controlProps = {},
-      indicator: indicatorProps = {},
-    } = {},
-    renderValue,
-    ...otherRootProps
-  } = props;
-  const current = otherRootProps.value ?? otherRootProps.defaultValue;
-  const thumbCount = Array.isArray(current) ? current.length : 1;
-
-  return {
-    getRootProps() {
-      return otherRootProps;
-    },
-    getLabelProps() {
-      if (isLikelyVisibleNode(label)) {
-        return {
-          ...labelProps,
-          children: label,
-        };
-      }
-
-      if (labelProps) {
-        return labelProps;
-      }
-
-      return null;
-    },
-    getTrackProps() {
-      return trackProps;
-    },
-    getValueProps() {
-      if (renderValue !== undefined) {
-        return {
-          ...valueProps,
-          children: renderValue === true ? undefined : renderValue,
-        };
-      }
-
-      if (valueProps) {
-        return valueProps;
-      }
-
-      return null;
-    },
-    getControlProps() {
-      return controlProps;
-    },
-    getIndicatorProps() {
-      return indicatorProps;
-    },
-    getThumbPropsList() {
-      return Array.from({ length: thumbCount }, (_, index) => ({
-        ...thumbProps,
-        index,
-      }));
-    },
-  };
+  return new SliderAPI(props);
 };
 
-export { type SliderAPI as API, useSliderAPI as useAPI };
+export { SliderAPI as API, useSliderAPI as useAPI };
 
 // Component
 // ---------

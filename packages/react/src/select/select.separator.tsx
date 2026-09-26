@@ -52,9 +52,6 @@ export const SelectSeparator: IComponent<SelectSeparatorProps> = function SuiSel
 
 export { SelectSeparator as Separator };
 
-/**
- * {@link SelectSeparator} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Separator {
   export type State = SelectSeparatorState;
 

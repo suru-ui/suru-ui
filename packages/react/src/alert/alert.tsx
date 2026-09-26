@@ -1,5 +1,5 @@
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
-import type { Override, IComponent } from "../types.js";
+import type { IComponent } from "../types.js";
 import {
   type AlertRootSize,
   type AlertIconProps,
@@ -59,12 +59,8 @@ export type AlertSlotProps = {
  */
 export type AlertState = AlertRootState;
 
-/**
- * {@link Alert} に渡す props です。
- */
-export type AlertProps = Override<
-  AlertRootProps,
-  {
+namespace AlertProps {
+  export type Alert = {
     /**
      * アラートの操作ボタンです。
      */
@@ -89,8 +85,15 @@ export type AlertProps = Override<
      * アラートのタイトルです。
      */
     title?: AlertTitleProps["children"] | undefined;
-  }
->;
+  };
+
+  export type Root = Omit<AlertRootProps, "children" | keyof Alert>;
+}
+
+/**
+ * {@link Alert} に渡す props です。
+ */
+export type AlertProps = AlertProps.Alert & AlertProps.Root;
 
 // API
 // ---
@@ -98,44 +101,106 @@ export type AlertProps = Override<
 /**
  * {@link Alert} を構成する各パーツの props を作成するための API です。
  */
-export interface AlertAPI {
+export class AlertAPI {
+  private readonly alertProps: Required<Omit<AlertProps.Alert, "slotProps">>;
+
+  private readonly slotProps: AlertSlotProps;
+
+  private readonly rootProps: AlertProps.Root;
+
+  /**
+   * @param props {@link Alert} の props です。
+   * @internal
+   */
+  public constructor(props: AlertProps) {
+    const { icon, title, actions, children, slotProps = {}, ...rootProps } = props;
+    this.alertProps = { icon, title, actions, children };
+    this.slotProps = slotProps;
+    this.rootProps = rootProps;
+  }
+
   /**
    * {@link AlertActions} に渡す props を取得します。
    *
    * それを表示しないときは `null` を返します。
    */
-  getActionsProps(): AlertActionsProps | null;
+  public getActionsProps(): AlertActionsProps | null {
+    const { actions: props = {} } = this.slotProps;
+    const { actions } = this.alertProps;
 
-  /**
-   * {@link AlertContent} に表示する子要素を取得します。
-   */
-  getContentChildren(): AlertContentProps["children"];
+    if (isLikelyVisibleNode(actions)) {
+      return {
+        ...props,
+        children: actions,
+      };
+    }
+
+    return null;
+  }
 
   /**
    * {@link AlertContent} に渡す props を取得します。
    *
    * それを表示しないときは `null` を返します。
    */
-  getContentProps(): Omit<AlertContentProps, "children"> | null;
+  public getContentProps(): AlertContentProps | null {
+    const { content: props = {} } = this.slotProps;
+    const { children } = this.alertProps;
+
+    if (isLikelyVisibleNode(children)) {
+      return {
+        ...props,
+        children,
+      };
+    }
+
+    return null;
+  }
 
   /**
    * {@link AlertIcon} に渡す props を取得します。
    *
    * それを表示しないときは `null` を返します。
    */
-  getIconProps(): AlertIconProps | null;
+  public getIconProps(): AlertIconProps | null {
+    const { icon: props = {} } = this.slotProps;
+    const { icon } = this.alertProps;
+
+    if (isLikelyVisibleNode(icon)) {
+      return {
+        ...props,
+        children: icon,
+      };
+    }
+
+    return null;
+  }
 
   /**
    * {@link AlertRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<AlertRootProps, "children">;
+  public getRootProps(): AlertProps.Root {
+    return this.rootProps;
+  }
 
   /**
    * {@link AlertTitle} に渡す props を取得します。
    *
    * それを表示しないときは `null` を返します。
    */
-  getTitleProps(): AlertTitleProps | null;
+  public getTitleProps(): AlertTitleProps | null {
+    const { title: props = {} } = this.slotProps;
+    const { title } = this.alertProps;
+
+    if (isLikelyVisibleNode(title)) {
+      return {
+        ...props,
+        children: title,
+      };
+    }
+
+    return null;
+  }
 }
 
 interface IUseAlertAPI {
@@ -152,43 +217,10 @@ interface IUseAlertAPI {
  * {@link AlertAPI} を作成するフックです。
  */
 export const useAlertAPI: IUseAlertAPI = function useSuiAlertAPI(props) {
-  const {
-    icon,
-    title,
-    actions,
-    children,
-    slotProps: {
-      icon: iconProps = {},
-      title: titleProps = {},
-      actions: actionsProps = {},
-      content: contentProps = {},
-    } = {},
-    ...otherRootProps
-  } = props;
-
-  return {
-    getIconProps() {
-      return isLikelyVisibleNode(icon) ? { ...iconProps, children: icon } : null;
-    },
-    getRootProps() {
-      return otherRootProps;
-    },
-    getTitleProps() {
-      return isLikelyVisibleNode(title) ? { ...titleProps, children: title } : null;
-    },
-    getActionsProps() {
-      return isLikelyVisibleNode(actions) ? { ...actionsProps, children: actions } : null;
-    },
-    getContentProps() {
-      return isLikelyVisibleNode(children) ? contentProps : null;
-    },
-    getContentChildren() {
-      return children;
-    },
-  };
+  return new AlertAPI(props);
 };
 
-export { type AlertAPI as API, useAlertAPI as useAPI };
+export { AlertAPI as API, useAlertAPI as useAPI };
 
 // Component
 // ---------
@@ -207,7 +239,7 @@ export const Alert: IComponent<AlertProps> = function SuiAlert(props: AlertProps
     <AlertRoot {...api.getRootProps()}>
       {iconProps && <AlertIcon {...iconProps} />}
       {titleProps && <AlertTitle {...titleProps} />}
-      {contentProps && <AlertContent {...contentProps}>{api.getContentChildren()}</AlertContent>}
+      {contentProps && <AlertContent {...contentProps} />}
       {actionsProps && <AlertActions {...actionsProps} />}
     </AlertRoot>
   );

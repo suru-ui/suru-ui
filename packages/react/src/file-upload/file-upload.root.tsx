@@ -45,11 +45,12 @@ export type FileUploadRootVariant = "naked" | "liquid";
 /**
  * ファイルが検証で拒否された理由です。
  *
+ * - `"invalid_type"`: ファイルの種類が `accept` に一致しない
  * - `"max_files"`: 選択できるファイル数を超えている
  * - `"min_size"`: ファイルサイズが小さすぎる
  * - `"max_size"`: ファイルサイズが大きすぎる
  */
-export type FileUploadFileErrorReason = "max_files" | "min_size" | "max_size";
+export type FileUploadFileErrorReason = "invalid_type" | "max_files" | "min_size" | "max_size";
 
 /**
  * 検証で拒否されたファイルとその理由です。
@@ -108,7 +109,8 @@ export namespace FileUploadRootProps {
      * - 文字列の例: `"image/png,.pdf"`
      * - 配列の例: `["image/png", ".pdf"]`
      *
-     * この指定はファイル選択ダイアログのフィルターに使われ、ブラウザーが対応している場合はドラッグ&ドロップにも適用されます。
+     * この指定はファイル選択ダイアログのフィルターとドラッグ&ドロップの検証に使われます。
+     * 一致しないファイルは {@link FileUploadRootProps.onFileReject|onFileReject} へ報告されます。
      */
     accept?: string | readonly string[] | undefined;
 
@@ -308,6 +310,7 @@ export const FileUploadRoot: IComponent<FileUploadRootProps> = function SuiFileU
   const selectFiles = React.useCallback(
     (incomingFiles: readonly File[]) => {
       const { accepted, rejected } = validateFiles(incomingFiles, files, {
+        accept,
         maxFiles,
         multiple,
         maxFileSize,
@@ -322,7 +325,17 @@ export const FileUploadRoot: IComponent<FileUploadRootProps> = function SuiFileU
         onFileAccept?.({ files: accepted });
       }
     },
-    [commit, files, maxFileSize, maxFiles, minFileSize, multiple, onFileAccept, onFileReject],
+    [
+      accept,
+      commit,
+      files,
+      maxFileSize,
+      maxFiles,
+      minFileSize,
+      multiple,
+      onFileAccept,
+      onFileReject,
+    ],
   );
 
   const ctx = React.useMemo<FileUploadContext>(

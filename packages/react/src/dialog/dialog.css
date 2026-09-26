@@ -172,7 +172,7 @@
     z-index: 1;
     display: flex;
     grid-area: controls;
-    margin-left: auto;
+    justify-content: flex-end;
   }
 
   .sui_dialog_controls-absolute {

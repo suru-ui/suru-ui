@@ -101,6 +101,11 @@ namespace ContextMenuRootRadioItemObject {
      * 項目のラベルです。
      */
     readonly label: ContextMenuRadioItemProps["children"];
+
+    /**
+     * 項目の種類です。
+     */
+    readonly type?: "radio" | undefined;
   };
 }
 
@@ -232,7 +237,9 @@ export namespace ContextMenuRootProps {
 
   export type SuruUI<TItem = any> = {
     /**
-     * コンテキストメニューの項目です。
+     * ポップアップに表示する項目の一覧です。
+     *
+     * グループの配列を指定するとグループごとに区切って表示します。
      */
     items?: readonly TItem[] | undefined;
 

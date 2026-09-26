@@ -111,6 +111,10 @@
       "types": "./dist/src/tooltip/index.d.ts",
       "default": "./dist/src/tooltip/index.js"
     },
+    "./tooltip-group": {
+      "types": "./dist/src/tooltip-group/index.d.ts",
+      "default": "./dist/src/tooltip-group/index.js"
+    },
     "./button": {
       "types": "./dist/src/button/index.d.ts",
       "default": "./dist/src/button/index.js"

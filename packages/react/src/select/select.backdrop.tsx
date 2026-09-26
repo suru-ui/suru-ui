@@ -61,9 +61,6 @@ export const SelectBackdrop: IComponent<SelectBackdropProps> = function SuiSelec
 
 export { SelectBackdrop as Backdrop };
 
-/**
- * {@link SelectBackdrop} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Backdrop {
   export type State = SelectBackdropState;
 

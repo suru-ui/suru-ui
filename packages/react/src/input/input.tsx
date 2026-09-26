@@ -45,11 +45,23 @@ export type InputProps = InputRootProps;
 /**
  * {@link Input} を構成する各パーツの props を作成するための API です。
  */
-export interface InputAPI {
+export class InputAPI {
+  private readonly rootProps: InputRootProps;
+
+  /**
+   * @param props {@link Input} の props です。
+   * @internal
+   */
+  public constructor(props: InputProps) {
+    this.rootProps = props;
+  }
+
   /**
    * {@link InputRoot} に渡す props を取得します。
    */
-  getRootProps(): InputRootProps;
+  public getRootProps(): InputRootProps {
+    return this.rootProps;
+  }
 }
 
 interface IUseInputAPI {
@@ -66,14 +78,10 @@ interface IUseInputAPI {
  * {@link InputAPI} を作成するフックです。
  */
 export const useInputAPI: IUseInputAPI = function useSuiInputAPI(props) {
-  return {
-    getRootProps() {
-      return props;
-    },
-  };
+  return new InputAPI(props);
 };
 
-export { type InputAPI as API, useInputAPI as useAPI };
+export { InputAPI as API, useInputAPI as useAPI };
 
 // Component
 // ---------

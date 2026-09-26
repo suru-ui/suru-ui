@@ -55,9 +55,14 @@ export type AvatarGroupContext = {
 export const AvatarGroupContext: React.Context<AvatarGroupContext | null> =
   React.createContext<AvatarGroupContext | null>(null);
 
-function useSuiAvatarGroupContext(optional?: false): AvatarGroupContext;
-function useSuiAvatarGroupContext(optional?: boolean): AvatarGroupContext | null;
-function useSuiAvatarGroupContext(optional?: boolean): AvatarGroupContext | null {
+export type IUseAvatarGroupContext = IUseContext<AvatarGroupContext>;
+
+/**
+ * {@link AvatarGroupContext} を読み取るフックです。
+ */
+export const useAvatarGroupContext: IUseAvatarGroupContext = function useSuiAvatarGroupContext(
+  optional?: boolean,
+): any {
   const ctx = React.use(AvatarGroupContext);
   if (ctx === null && !optional) {
     throw new ContextMissingError({
@@ -67,12 +72,7 @@ function useSuiAvatarGroupContext(optional?: boolean): AvatarGroupContext | null
   }
 
   return ctx;
-}
-
-/**
- * {@link AvatarGroupContext} を読み取るフックです。
- */
-export const useAvatarGroupContext: IUseContext<AvatarGroupContext> = useSuiAvatarGroupContext;
+};
 
 export { AvatarGroupContext as Context, useAvatarGroupContext as useContext };
 

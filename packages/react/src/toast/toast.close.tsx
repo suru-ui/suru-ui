@@ -7,12 +7,24 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import type { Override, IComponent } from "../types.js";
 
+/**
+ * 通知を閉じるボタンの配色です。
+ */
 export type ToastCloseColor = Button.Root.Color;
 
+/**
+ * 通知を閉じるボタンの角丸の大きさです。
+ */
 export type ToastCloseRadius = Button.Root.Radius;
 
+/**
+ * 通知を閉じるボタンの大きさです。
+ */
 export type ToastCloseSize = Button.Root.Size;
 
+/**
+ * 通知を閉じるボタンの主な外観です。
+ */
 export type ToastCloseVariant = Button.Root.Variant;
 
 /**
@@ -82,12 +94,12 @@ export const ToastClose: IComponent<ToastCloseProps> = function SuiToastClose(pr
       {...baseuiProps}
       render={(htmlProps: {}, toastState) => {
         const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> = {
-          item: undefined,
+          item: false,
           size,
           color,
           muted,
           radius,
-          pending: undefined,
+          pending: false,
           squared,
           variant,
           outlined,

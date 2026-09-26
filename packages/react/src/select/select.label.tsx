@@ -50,9 +50,6 @@ export const SelectLabel: IComponent<SelectLabelProps> = function SuiSelectLabel
 
 export { SelectLabel as Label };
 
-/**
- * {@link SelectLabel} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Label {
   export type State = SelectLabelState;
 

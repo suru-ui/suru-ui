@@ -86,7 +86,7 @@
   --sui_select-border_color-hover: ;
   --sui_select-border_color-active: ;
   --sui_select-border_color-invalid: ;
-  --sui_select-border_width: ;
+  --sui_select-border_width-idle: ;
   --sui_select-border_width-invalid: ;
   --sui_select-border_radius: ;
 }
@@ -120,7 +120,7 @@
   --sui_select-focusring_color: var(--sui-focusring_color);
   --sui_select-focusring_offset: var(--sui-focusring_offset);
   --sui_select-border_color-invalid: var(--sui-red-naked-canvas_text-normal);
-  --sui_select-border_width: --sui-border_width(1);
+  --sui_select-border_width-idle: --sui-border_width(1);
   --sui_select-border_width-invalid: --sui-border_width(2);
 
   &.sui_select-size_sm {
@@ -197,7 +197,7 @@
 
 /* 変異 */
 :scope {
-  &:enabled {
+  &:not(.sui_select-disabled) {
     @media (any-hover: hover) {
       &:hover {
         --_sui_select-color: var(--sui_select-color-hover);
@@ -217,9 +217,9 @@
 
   &.sui_select-outlined {
     --_sui_select-border_color: var(--sui_select-border_color-idle);
-    --_sui_select-border_width: var(--sui_select-border_width);
+    --_sui_select-border_width: var(--sui_select-border_width-idle);
 
-    &:enabled {
+    &:not(.sui_select-disabled) {
       @media (any-hover: hover) {
         &:hover {
           --_sui_select-border_color: var(--sui_select-border_color-hover);

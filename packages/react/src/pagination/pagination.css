@@ -135,9 +135,11 @@
 
 /* 変異 */
 :scope {
-  .sui_pagination_ellipsis_input:enabled:focus-visible {
-    --_sui_pagination_ellipsis_input-outline_width: var(--sui_pagination_ellipsis_input-focusring_width);
-    --_sui_pagination_ellipsis_input-outline_color: var(--sui_pagination_ellipsis_input-focusring_color);
+  &:not(.sui_pagination-disabled) .sui_pagination_ellipsis_input:focus-visible {
+    --_sui_pagination_ellipsis_input-outline_width:
+      var(--sui_pagination_ellipsis_input-focusring_width);
+    --_sui_pagination_ellipsis_input-outline_color:
+      var(--sui_pagination_ellipsis_input-focusring_color);
   }
 }
 
@@ -158,7 +160,7 @@
 /* EllipsisInput */
 :scope {
   &.sui_pagination-disabled .sui_pagination_ellipsis_input,
-  .sui_pagination_ellipsis_input:disabled {
+  .sui_pagination_ellipsis_input-disabled {
     color: var(--sui-disabled-liquid-canvas_text);
     cursor: not-allowed;
     background-color: var(--sui-disabled-liquid-canvas);

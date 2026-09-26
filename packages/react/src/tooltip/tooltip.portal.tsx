@@ -46,16 +46,13 @@ export type TooltipPortalProps = TooltipPortalProps.Render &
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
 export const TooltipPortal: IComponent<TooltipPortalProps> = function SuiTooltipPortal(props) {
+  const { size, radius, outlined } = useTooltipContext();
   const {
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
-  const ctx = useTooltipContext(true);
-  const size = ctx?.size ?? "md";
-  const radius = ctx?.radius ?? "md";
-  const outlined = ctx?.outlined ?? false;
 
   return (
     <Tooltip.Portal

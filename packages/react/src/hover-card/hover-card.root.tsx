@@ -1,8 +1,8 @@
 import { PreviewCard } from "@base-ui/react/preview-card";
-import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import type { IComponent } from "../types.js";
+import type { HoverCardContextSize, HoverCardContextRadius } from "./hover-card.context.js";
 import { HoverCardContext } from "./hover-card.context.js";
 import type { HoverCardHandle } from "./hover-card.handle.js";
 
@@ -29,7 +29,7 @@ export type HoverCardRootChangeEventReason = PreviewCard.Root.ChangeEventReason;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type HoverCardRootRadius = "none" | Size;
+export type HoverCardRootRadius = HoverCardContextRadius;
 
 /**
  * ホバーカードの大きさです。
@@ -38,7 +38,7 @@ export type HoverCardRootRadius = "none" | Size;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type HoverCardRootSize = Size;
+export type HoverCardRootSize = HoverCardContextSize;
 
 /**
  * {@link HoverCardRoot} が持つ状態です。
@@ -136,9 +136,9 @@ export const HoverCardRoot: IHoverCardRoot = function SuiHoverCardRoot<TPayload>
   );
 
   return (
-    <HoverCardContext.Provider value={ctx}>
+    <HoverCardContext value={ctx}>
       <PreviewCard.Root {...otherProps} />
-    </HoverCardContext.Provider>
+    </HoverCardContext>
   );
 };
 

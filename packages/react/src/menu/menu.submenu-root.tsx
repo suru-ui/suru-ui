@@ -24,7 +24,9 @@ export namespace MenuSubmenuRootProps {
 
   export type SuruUI<TItem = any> = {
     /**
-     * メニューの項目です。
+     * サブメニューに表示する項目の一覧です。
+     *
+     * 省略時は親の項目を引き継ぎます。
      */
     items?: readonly TItem[] | undefined;
   };
@@ -79,17 +81,14 @@ export const MenuSubmenuRoot: IMenuSubmenuRoot = function SuiMenuSubmenuRoot(
 ) {
   const parentCtx = useMenuContext();
   const { items = parentCtx.items, ...otherProps } = props;
-  const ctx = React.useMemo<MenuContext>(() => {
-    if (Object.is(items, parentCtx.items)) {
-      return parentCtx;
-    }
-
-    return {
+  const ctx = React.useMemo<MenuContext>(
+    () => ({
       ...parentCtx,
       depth: parentCtx.depth + 1,
       items,
-    };
-  }, [items, parentCtx]);
+    }),
+    [items, parentCtx],
+  );
 
   return (
     <MenuContext value={ctx}>

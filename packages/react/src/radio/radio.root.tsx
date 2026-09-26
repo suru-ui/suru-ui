@@ -5,7 +5,7 @@ import * as React from "react";
 
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import { useRadioGroupContext } from "../radio-group/radio-group.parts.js";
+import { useRadioGroupContext } from "../radio-group/radio-group.context.js";
 import type { IComponent } from "../types.js";
 
 /**
@@ -103,6 +103,7 @@ export namespace RadioRootProps {
       // NonNativeButtonProps:
       | keyof NonNativeButtonProps
       // RadioRootProps:
+      | "id"
       | "value"
       | "disabled"
       | "required"

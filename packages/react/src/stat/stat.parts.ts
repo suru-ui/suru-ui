@@ -1,6 +1,5 @@
 import "./stat.css";
 
-export * from "./stat.context.js";
 export * from "./stat.root.jsx";
 export * from "./stat.label.jsx";
 export * from "./stat.value.jsx";

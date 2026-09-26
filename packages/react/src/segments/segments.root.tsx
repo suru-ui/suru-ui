@@ -5,6 +5,8 @@ import * as React from "react";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import { SegmentsContext } from "./segments.context.js";
+import type { SegmentsItemProps } from "./segments.item.jsx";
 
 /**
  * Segments のアクティブなセグメントが変更されるイベントの詳細です。
@@ -17,12 +19,33 @@ export type SegmentsRootChangeEventDetails = BaseTabs.Root.ChangeEventDetails;
 export type SegmentsRootChangeEventReason = BaseTabs.Root.ChangeEventReason;
 
 /**
- * Segments の方向です。
+ * Segments の項目を表すオブジェクトです。
  *
- * - `"horizontal"`: 水平方向
- * - `"vertical"`: 垂直方向
+ * `label` を含み、その他のプロパティーは {@link SegmentsItem} に渡されます。
  */
-export type SegmentsRootOrientation = BaseTabs.Root.Orientation;
+export type SegmentsRootItemObject = Omit<SegmentsItemProps, "children"> & {
+  /**
+   * 項目に表示するラベルです。
+   */
+  readonly label: React.ReactNode;
+};
+
+/**
+ * Segments の各項目をレンダリングする関数のインターフェイスです。
+ *
+ * @template TItem 項目の型です。
+ */
+export interface ISegmentsRootItemRenderer<TItem = any> {
+  /**
+   * 項目をレンダリングします。
+   *
+   * @param item 現在の項目です。
+   * @param index 項目のインデックスです。
+   * @param items すべての項目です。
+   * @returns レンダリングする内容です。
+   */
+  (item: TItem, index: number, items: readonly TItem[]): React.ReactNode;
+}
 
 /**
  * 選択中のセグメントの主な外観です。
@@ -37,6 +60,14 @@ export type SegmentsRootActiveVariant = ColorTemplate;
  * Segments の配色です。
  */
 export type SegmentsRootColor = Color;
+
+/**
+ * Segments の方向です。
+ *
+ * - `"horizontal"`: 水平方向
+ * - `"vertical"`: 垂直方向
+ */
+export type SegmentsRootOrientation = BaseTabs.Root.Orientation;
 
 /**
  * Segments の角丸の大きさです。
@@ -66,7 +97,7 @@ export type SegmentsRootState = BaseTabs.Root.State;
 export namespace SegmentsRootProps {
   export type Render = RenderProps<SegmentsRootState>;
 
-  export type SuruUI = {
+  export type SuruUI<TItem = any> = {
     /**
      * 選択中のセグメントの主な外観を指定します。
      *
@@ -84,9 +115,16 @@ export namespace SegmentsRootProps {
     color?: SegmentsRootColor | undefined;
 
     /**
+     * セグメントに表示する項目です。
+     *
+     * `children` を省略した {@link SegmentsList} は、この項目を順に並べて表示します。
+     */
+    items?: readonly TItem[] | undefined;
+
+    /**
      * Segments の角丸の大きさを指定します。
      *
-     * 既定値は {@link SegmentsRootProps.size|size}
+     * 既定値は {@link SegmentsRootProps.size|size} です。
      */
     radius?: SegmentsRootRadius | undefined;
 
@@ -116,21 +154,33 @@ export namespace SegmentsRootProps {
 
 /**
  * {@link SegmentsRoot} に渡す props です。
+ *
+ * @template TItem 項目の型です。
  */
-export type SegmentsRootProps = SegmentsRootProps.Render &
-  SegmentsRootProps.SuruUI &
+export type SegmentsRootProps<TItem = any> = SegmentsRootProps.Render &
+  SegmentsRootProps.SuruUI<TItem> &
   SegmentsRootProps.BaseUI &
   SegmentsRootProps.HTML;
+
+export interface ISegmentsRoot extends IComponent<SegmentsRootProps> {
+  /**
+   * @template TItem 項目の型です。
+   */
+  <TItem = never>(props: SegmentsRootProps<TItem>): IComponent.Return;
+}
 
 /**
  * Segments のルート要素です。
  *
  * 個々のセグメントをグループ化し、選択値を管理します。
+ *
+ * `items` は子孫の {@link SegmentsList} へコンテキスト経由で渡されます。
  */
-export const SegmentsRoot: IComponent<SegmentsRootProps> = function SuiSegmentsRoot(props) {
+export const SegmentsRoot: ISegmentsRoot = function SuiSegmentsRoot(props: SegmentsRootProps) {
   const {
     size = "md",
     color = "grey",
+    items = [],
     radius = size,
     className,
     activeVariant = "solid",
@@ -138,21 +188,24 @@ export const SegmentsRoot: IComponent<SegmentsRootProps> = function SuiSegmentsR
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
+  const ctx = React.useMemo<SegmentsContext>(() => ({ items }), [items]);
 
   return (
-    <BaseTabs.Root
-      {...otherProps}
-      className={cn(
-        className,
-        "sui_segments",
-        `sui_segments-size_${size}`,
-        `sui_segments-color_${color}`,
-        `sui_segments-radius_${radius}`,
-        `sui_segments-active_variant_${activeVariant}`,
-        (state) => `sui_segments-orientation_${state.orientation}`,
-      )}
-      data-scope={dataScope}
-    />
+    <SegmentsContext value={ctx}>
+      <BaseTabs.Root
+        {...otherProps}
+        className={cn(
+          className,
+          "sui_segments",
+          `sui_segments-size_${size}`,
+          `sui_segments-color_${color}`,
+          `sui_segments-radius_${radius}`,
+          `sui_segments-active_variant_${activeVariant}`,
+          (state) => `sui_segments-orientation_${state.orientation}`,
+        )}
+        data-scope={dataScope}
+      />
+    </SegmentsContext>
   );
 };
 
@@ -161,12 +214,12 @@ export { SegmentsRoot as Root };
 export namespace Root {
   export type State = SegmentsRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = SegmentsRootProps.Render;
 
-    export type SuruUI = SegmentsRootProps.SuruUI;
+    export type SuruUI<TItem = any> = SegmentsRootProps.SuruUI<TItem>;
 
     export type BaseUI = SegmentsRootProps.BaseUI;
 
@@ -180,6 +233,10 @@ export namespace Root {
   export type ChangeEventReason = SegmentsRootChangeEventReason;
 
   export type Color = SegmentsRootColor;
+
+  export type IItemRenderer<TItem = any> = ISegmentsRootItemRenderer<TItem>;
+
+  export type ItemObject = SegmentsRootItemObject;
 
   export type Orientation = SegmentsRootOrientation;
 

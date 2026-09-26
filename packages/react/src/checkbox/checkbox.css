@@ -172,7 +172,11 @@
 
 /* 変異 */
 :scope {
-  &:not(.sui_checkbox-checked, .sui_checkbox-indeterminate) {
+  &:is(.sui_checkbox-checked, .sui_checkbox-indeterminate) {
+    --_sui_checkbox-canvas: var(--sui_checkbox-canvas-idle-checked);
+  }
+
+  &:not(.sui_checkbox-checked, .sui_checkbox-indeterminate):not(.sui_checkbox-disabled) {
     @media (any-hover: hover) {
       &:hover {
         --_sui_checkbox-canvas: var(--sui_checkbox-canvas-hover);
@@ -184,9 +188,7 @@
     }
   }
 
-  &:is(.sui_checkbox-checked, .sui_checkbox-indeterminate) {
-    --_sui_checkbox-canvas: var(--sui_checkbox-canvas-idle-checked);
-
+  &:is(.sui_checkbox-checked, .sui_checkbox-indeterminate):not(.sui_checkbox-disabled) {
     @media (any-hover: hover) {
       &:hover {
         --_sui_checkbox-canvas: var(--sui_checkbox-canvas-hover-checked);
@@ -198,7 +200,7 @@
     }
   }
 
-  &:focus-visible {
+  &:focus-visible:not(.sui_checkbox-disabled) {
     --_sui_checkbox-outline_width: var(--sui_checkbox-focusring_width);
     --_sui_checkbox-outline_color: var(--sui_checkbox-focusring_color);
     --_sui_checkbox-outline_offset: var(--sui_checkbox-focusring_offset);
@@ -208,16 +210,16 @@
     --_sui_checkbox-border_color: var(--sui_checkbox-border_color-idle);
     --_sui_checkbox-border_width: var(--sui_checkbox-border_width);
 
-    @media (any-hover: hover) {
-      &:hover {
-        --_sui_checkbox-border_color: var(--sui_checkbox-border_color-hover);
-        --_sui_checkbox-border_width: var(--sui_checkbox-border_width);
+    &:not(.sui_checkbox-disabled) {
+      @media (any-hover: hover) {
+        &:hover {
+          --_sui_checkbox-border_color: var(--sui_checkbox-border_color-hover);
+        }
       }
-    }
 
-    &:active {
-      --_sui_checkbox-border_color: var(--sui_checkbox-border_color-active);
-      --_sui_checkbox-border_width: var(--sui_checkbox-border_width);
+      &:active {
+        --_sui_checkbox-border_color: var(--sui_checkbox-border_color-active);
+      }
     }
   }
 

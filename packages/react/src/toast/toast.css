@@ -65,10 +65,11 @@
     user-select: none;
     outline-style: solid;
     transform-origin: bottom center;
-    transition: translate 500ms cubic-bezier(0.22, 1, 0.36, 1),
-                scale 500ms cubic-bezier(0.22, 1, 0.36, 1),
-                opacity 500ms ease,
-                height 150ms ease;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1),
+                                cubic-bezier(0.22, 1, 0.36, 1),
+                                ease,
+                                ease;
+    transition-property: translate, scale, opacity, height;
   }
 
   .sui_toast::after {
@@ -94,7 +95,9 @@
   --sui_toast-focusring_offset: ;
   --sui_toast-opacity: ;
   --sui_toast-scale: ;
+  --sui_toast-transition_duration: ;
   --sui_toast-peek: ;
+  --sui_toast-transition_duration_height: ;
   --sui_toast-translate_x: ;
   --sui_toast-translate_y: ;
 }
@@ -116,6 +119,18 @@
     scale: var(--_sui_toast-scale, var(--sui_toast-scale));
     translate: var(--_sui_toast-translate_x, var(--sui_toast-translate_x))
                var(--_sui_toast-translate_y, var(--sui_toast-translate_y));
+    transition-duration: var(--_sui_toast-transition_duration,
+                           var(--sui_toast-transition_duration)
+                         ),
+                         var(--_sui_toast-transition_duration,
+                           var(--sui_toast-transition_duration)
+                         ),
+                         var(--_sui_toast-transition_duration,
+                           var(--sui_toast-transition_duration)
+                         ),
+                         var(--_sui_toast-transition_duration_height,
+                           var(--sui_toast-transition_duration_height)
+                         );
   }
 
   .sui_toast::after {
@@ -130,6 +145,8 @@
   --sui_toast-focusring_color: var(--sui-focusring_color);
   --sui_toast-focusring_offset: var(--sui-focusring_offset);
   --sui_toast-opacity: 1;
+  --sui_toast-transition_duration: 500ms;
+  --sui_toast-transition_duration_height: 150ms;
 
   /* 親や Toast ごとの変数を参照する値は Toast 自身に代入します。 */
   .sui_toast {
@@ -156,6 +173,11 @@
 :scope {
   .sui_toast-limited {
     --_sui_toast-opacity: 0;
+  }
+
+  .sui_toast-swiping {
+    --_sui_toast-transition_duration: 0ms;
+    --_sui_toast-transition_duration_height: 0ms;
   }
 
   .sui_toast_viewport:not(.sui_toast_viewport-expanded)

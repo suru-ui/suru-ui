@@ -50,7 +50,7 @@ export type ToastDescriptionProps = ToastDescriptionProps.Render &
 export const ToastDescription: IComponent<ToastDescriptionProps> = function SuiToastDescription(
   props,
 ) {
-  const { style, render, className, ...otherProps } = props;
+  const { style, render = <p />, className, ...otherProps } = props;
 
   return (
     <Toast.Description

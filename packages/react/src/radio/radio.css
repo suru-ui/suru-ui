@@ -172,7 +172,7 @@
 
 /* 変異 */
 :scope {
-  &:not(.sui_radio-checked) {
+  &:not(.sui_radio-checked):not(.sui_radio-disabled) {
     @media (any-hover: hover) {
       &:hover {
         --_sui_radio-canvas: var(--sui_radio-canvas-hover);
@@ -188,7 +188,9 @@
     --_sui_radio-border_color: var(--sui_radio-border_color-checked);
     --_sui_radio-border_width: 0px;
     --_sui_radio-canvas: var(--sui_radio-canvas-idle-checked);
+  }
 
+  &.sui_radio-checked:not(.sui_radio-disabled) {
     @media (any-hover: hover) {
       &:hover {
         --_sui_radio-canvas: var(--sui_radio-canvas-hover-checked);
@@ -200,7 +202,7 @@
     }
   }
 
-  &:focus-visible {
+  &:focus-visible:not(.sui_radio-disabled) {
     --_sui_radio-outline_width: var(--sui_radio-focusring_width);
     --_sui_radio-outline_color: var(--sui_radio-focusring_color);
     --_sui_radio-outline_offset: var(--sui_radio-focusring_offset);
@@ -210,16 +212,16 @@
     --_sui_radio-border_color: var(--sui_radio-border_color-idle);
     --_sui_radio-border_width: var(--sui_radio-border_width);
 
-    @media (any-hover: hover) {
-      &:hover {
-        --_sui_radio-border_color: var(--sui_radio-border_color-hover);
-        --_sui_radio-border_width: var(--sui_radio-border_width);
+    &:not(.sui_radio-disabled) {
+      @media (any-hover: hover) {
+        &:hover {
+          --_sui_radio-border_color: var(--sui_radio-border_color-hover);
+        }
       }
-    }
 
-    &:active {
-      --_sui_radio-border_color: var(--sui_radio-border_color-active);
-      --_sui_radio-border_width: var(--sui_radio-border_width);
+      &:active {
+        --_sui_radio-border_color: var(--sui_radio-border_color-active);
+      }
     }
   }
 
@@ -239,7 +241,6 @@
 /* 固定 */
 :scope {
   .sui_radio_indicator {
-    display: flex;
     align-items: center;
     justify-content: center;
   }
@@ -247,25 +248,38 @@
 
 /* 変数 */
 :scope {
+  --sui_radio_indicator-display: ;
   --sui_radio_indicator-size: ;
   --sui_radio_indicator-color: ;
   --sui_radio_indicator-border_radius: ;
+  --sui_radio_indicator__svg-size: ;
+  --sui_radio_indicator__svg-color: ;
 }
 
 /* 可変 */
 :scope {
   .sui_radio_indicator {
+    display: var(--_sui_radio_indicator-display, var(--sui_radio_indicator-display));
     width: var(--sui_radio_indicator-size);
     height: var(--sui_radio_indicator-size);
     color: var(--sui_radio_indicator-color);
     background-color: var(--sui_radio_indicator-color);
     border-radius: var(--sui_radio_indicator-border_radius);
+
+    svg:not(.sui-ignore) {
+      width: var(--sui_radio_indicator__svg-size);
+      height: var(--sui_radio_indicator__svg-size);
+      color: var(--sui_radio_indicator__svg-color);
+    }
   }
 }
 
 /* 代入 */
 :scope {
+  --sui_radio_indicator-display: none;
   --sui_radio_indicator-border_radius: calc(var(--sui_radio-size) / 2);
+  --sui_radio_indicator__svg-size: 75%;
+  --sui_radio_indicator__svg-color: var(--sui_radio_indicator-color);
 
   &.sui_radio-color_grey {
     --sui_radio_indicator-color: var(--sui-grey-solid-canvas_text-normal);
@@ -300,24 +314,46 @@
   }
 
   &.sui_radio-size_sm {
-    --sui_radio_indicator-size: calc(
-                                  var(--sui_radio-size)
-                                  * if(style(--sui-theme: dark): 0.53; else: 0.42;)
-                                );
+    --sui_radio_indicator-size: calc(var(--sui_radio-size) * 0.42);
   }
 
   &.sui_radio-size_md {
-    --sui_radio_indicator-size: calc(
-                                  var(--sui_radio-size)
-                                  * if(style(--sui-theme: dark): 0.53; else: 0.42;)
-                                );
+    --sui_radio_indicator-size: calc(var(--sui_radio-size) * 0.42);
   }
 
   &.sui_radio-size_lg {
-    --sui_radio_indicator-size: calc(
-                                  var(--sui_radio-size)
-                                  * if(style(--sui-theme: dark): 0.53; else: 0.42;)
-                                );
+    --sui_radio_indicator-size: calc(var(--sui_radio-size) * 0.42);
+  }
+
+  /* `if()` と `style()` の非対応ブラウザーでは暗色テーマの比率を解決できず寸法が 0 になるため、対応ブラウザーにだけ適用します。 */
+  @supports (width: calc(1px * if(style(--x: y): 1; else: 2;))) {
+    &.sui_radio-size_sm {
+      --sui_radio_indicator-size: calc(
+                                    var(--sui_radio-size)
+                                    * if(style(--sui-theme: dark): 0.53; else: 0.42;)
+                                  );
+    }
+
+    &.sui_radio-size_md {
+      --sui_radio_indicator-size: calc(
+                                    var(--sui_radio-size)
+                                    * if(style(--sui-theme: dark): 0.53; else: 0.42;)
+                                  );
+    }
+
+    &.sui_radio-size_lg {
+      --sui_radio_indicator-size: calc(
+                                    var(--sui_radio-size)
+                                    * if(style(--sui-theme: dark): 0.53; else: 0.42;)
+                                  );
+    }
+  }
+}
+
+/* 変異 */
+:scope {
+  &.sui_radio-checked .sui_radio_indicator {
+    --_sui_radio_indicator-display: flex;
   }
 }
 
@@ -332,7 +368,6 @@
 :scope {
   &.sui_radio-disabled {
     cursor: not-allowed;
-    background-color: var(--sui-disabled-canvas);
   }
 
   &.sui_radio-disabled:not(.sui_radio-checked) {
@@ -344,14 +379,24 @@
       background-color: var(--sui-disabled-liquid-canvas);
     }
 
-    &.sui_radio-outlined {
+    &.sui_radio-variant_naked.sui_radio-outlined {
       border-color: var(--sui-disabled-naked-border);
+      border-width: var(--sui-disabled-border_width);
+    }
+
+    &.sui_radio-variant_liquid.sui_radio-outlined {
+      border-color: var(--sui-disabled-liquid-border);
       border-width: var(--sui-disabled-border_width);
     }
   }
 
   &.sui_radio-disabled.sui_radio-checked {
     background-color: var(--sui-disabled-solid-canvas);
+
+    &.sui_radio-outlined {
+      border-color: var(--sui-disabled-solid-border);
+      border-width: var(--sui-disabled-border_width);
+    }
   }
 }
 
@@ -361,6 +406,10 @@
     color: var(--sui-disabled-solid-canvas_text);
     cursor: not-allowed;
     background-color: var(--sui-disabled-solid-canvas_text);
+
+    svg:not(.sui-ignore) {
+      color: var(--sui-disabled-solid-canvas_text);
+    }
   }
 }
 

@@ -26,24 +26,22 @@ export type PasswordFieldContext = {
 export const PasswordFieldContext: React.Context<PasswordFieldContext | null> =
   React.createContext<PasswordFieldContext | null>(null);
 
-function useSuiPasswordFieldContext(optional?: false): PasswordFieldContext;
-function useSuiPasswordFieldContext(optional?: boolean): PasswordFieldContext | null;
-function useSuiPasswordFieldContext(optional?: boolean): PasswordFieldContext | null {
-  const ctx = React.use(PasswordFieldContext);
-  if (ctx === null && !optional) {
-    throw new ContextMissingError({
-      contextName: "PasswordFieldContext",
-      providerName: "PasswordFieldRoot",
-    });
-  }
-
-  return ctx;
-}
+export type IUsePasswordFieldContext = IUseContext<PasswordFieldContext>;
 
 /**
  * {@link PasswordFieldContext} を読み取るフックです。
  */
-export const usePasswordFieldContext: IUseContext<PasswordFieldContext> =
-  useSuiPasswordFieldContext;
+export const usePasswordFieldContext: IUsePasswordFieldContext =
+  function useSuiPasswordFieldContext(optional?: boolean): any {
+    const ctx = React.use(PasswordFieldContext);
+    if (ctx === null && !optional) {
+      throw new ContextMissingError({
+        contextName: "PasswordFieldContext",
+        providerName: "PasswordFieldRoot",
+      });
+    }
+
+    return ctx;
+  };
 
 export { PasswordFieldContext as Context, usePasswordFieldContext as useContext };

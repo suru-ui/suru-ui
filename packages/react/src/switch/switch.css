@@ -74,7 +74,14 @@
   --sui_switch-focusring_width: var(--sui-focusring_width);
   --sui_switch-focusring_color: var(--sui-focusring_color);
   --sui_switch-focusring_offset: var(--sui-focusring_offset);
-  --sui_switch-border_width: --sui-border_width(1);
+  --sui_switch-border_width: 1px;
+
+  /* @function 非対応ブラウザーでは --sui-border_width() を解決できず outlined の枠線が既定の 3px になるため、対応ブラウザーにだけ適用します。 */
+  @supports (outline-width: --sui-border_width(1)) {
+    & {
+      --sui_switch-border_width: --sui-border_width(1);
+    }
+  }
 
   &.sui_switch-size_sm {
     --sui_switch-height: calc(
@@ -82,7 +89,7 @@
                            * var(--sui-text-oln-sm-m-line_height)
                            * 1.2
                          );
-    --sui_switch-padding: --sui-space(1.5);
+    --sui_switch-padding: 1.99px;
   }
 
   &.sui_switch-size_md {
@@ -91,7 +98,7 @@
                            * var(--sui-text-oln-md-m-line_height)
                            * 1.2
                          );
-    --sui_switch-padding: --sui-space(1.5);
+    --sui_switch-padding: 1.99px;
   }
 
   &.sui_switch-size_lg {
@@ -100,7 +107,16 @@
                            * var(--sui-text-oln-lg-m-line_height)
                            * 1.2
                          );
-    --sui_switch-padding: --sui-space(1.5);
+    --sui_switch-padding: 1.99px;
+  }
+
+  /* @function 非対応ブラウザーでは --sui-space() を解決できずつまみの寸法が 0 になるため、対応ブラウザーにだけ適用します。 */
+  @supports (padding-block: --sui-space(1.5)) {
+    &.sui_switch-size_sm,
+    &.sui_switch-size_md,
+    &.sui_switch-size_lg {
+      --sui_switch-padding: --sui-space(1.5);
+    }
   }
 
   &.sui_switch-radius_none {
@@ -200,7 +216,7 @@
 
 /* 変異 */
 :scope {
-  &:not(.sui_switch-checked) {
+  &:not(.sui_switch-checked):not(.sui_switch-disabled) {
     @media (any-hover: hover) {
       &:hover {
         --_sui_switch-canvas: var(--sui_switch-canvas-hover);
@@ -214,7 +230,9 @@
 
   &.sui_switch-checked {
     --_sui_switch-canvas: var(--sui_switch-canvas-idle-checked);
+  }
 
+  &.sui_switch-checked:not(.sui_switch-disabled) {
     @media (any-hover: hover) {
       &:hover {
         --_sui_switch-canvas: var(--sui_switch-canvas-hover-checked);
@@ -226,7 +244,7 @@
     }
   }
 
-  &:focus-visible {
+  &:focus-visible:not(.sui_switch-disabled) {
     --_sui_switch-outline_width: var(--sui_switch-focusring_width);
     --_sui_switch-outline_color: var(--sui_switch-focusring_color);
     --_sui_switch-outline_offset: var(--sui_switch-focusring_offset);
@@ -236,16 +254,16 @@
     --_sui_switch-border_color: var(--sui_switch-border_color-idle);
     --_sui_switch-border_width: var(--sui_switch-border_width);
 
-    @media (any-hover: hover) {
-      &:hover {
-        --_sui_switch-border_color: var(--sui_switch-border_color-hover);
-        --_sui_switch-border_width: var(--sui_switch-border_width);
+    &:not(.sui_switch-disabled) {
+      @media (any-hover: hover) {
+        &:hover {
+          --_sui_switch-border_color: var(--sui_switch-border_color-hover);
+        }
       }
-    }
 
-    &:active {
-      --_sui_switch-border_color: var(--sui_switch-border_color-active);
-      --_sui_switch-border_width: var(--sui_switch-border_width);
+      &:active {
+        --_sui_switch-border_color: var(--sui_switch-border_color-active);
+      }
     }
   }
 
@@ -352,9 +370,14 @@
       background-color: var(--sui-disabled-liquid-canvas);
     }
 
-    &.sui_switch-outlined::after {
+    &.sui_switch-variant_naked.sui_switch-outlined::after {
       outline-width: var(--sui-disabled-border_width);
       outline-color: var(--sui-disabled-naked-border);
+    }
+
+    &.sui_switch-variant_liquid.sui_switch-outlined::after {
+      outline-width: var(--sui-disabled-border_width);
+      outline-color: var(--sui-disabled-liquid-border);
     }
   }
 
@@ -362,7 +385,7 @@
     background-color: var(--sui-disabled-solid-canvas);
   }
 
-  &.sui_switch-disabled.sui_switch-checked::after {
+  &.sui_switch-disabled.sui_switch-checked.sui_switch-outlined::after {
     outline-width: var(--sui-disabled-border_width);
     outline-color: var(--sui-disabled-solid-border);
   }

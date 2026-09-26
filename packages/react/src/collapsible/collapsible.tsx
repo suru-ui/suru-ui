@@ -6,7 +6,6 @@ import {
   type CollapsibleRootState,
   type CollapsibleContentProps,
   type CollapsibleTriggerProps,
-  type CollapsibleIndicatorProps,
   type CollapsibleRootChangeEventReason,
   type CollapsibleRootChangeEventDetails,
   CollapsibleRoot,
@@ -34,11 +33,6 @@ export type CollapsibleSlotProps = {
   readonly content?: Omit<CollapsibleContentProps, "children"> | undefined;
 
   /**
-   * {@link CollapsibleIndicator} に渡す props です。
-   */
-  readonly indicator?: CollapsibleIndicatorProps | undefined;
-
-  /**
    * {@link CollapsibleTrigger} に渡す props です。
    */
   readonly trigger?: Omit<CollapsibleTriggerProps, "children"> | undefined;
@@ -49,27 +43,33 @@ export type CollapsibleSlotProps = {
  */
 export type CollapsibleState = CollapsibleRootState;
 
+namespace CollapsibleProps {
+  export type Collapsible = {
+    /**
+     * コンテンツに表示する内容です。
+     */
+    children?: CollapsibleContentProps["children"] | undefined;
+
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     */
+    slotProps?: CollapsibleSlotProps | undefined;
+
+    /**
+     * {@link CollapsibleTrigger} の子要素として描画する内容です。
+     *
+     * `render` と同じ型で、そのまま {@link CollapsibleTrigger} へ渡されます。
+     */
+    trigger?: CollapsibleTriggerProps["children"] | undefined;
+  };
+
+  export type Root = Omit<CollapsibleRootProps, keyof Collapsible>;
+}
+
 /**
  * {@link Collapsible} に渡す props です。
  */
-export type CollapsibleProps = Omit<CollapsibleRootProps, "children"> & {
-  /**
-   * コンテンツに表示する内容です。
-   */
-  children?: CollapsibleContentProps["children"] | undefined;
-
-  /**
-   * 各パーツに個別の props を渡すためのオブジェクトです。
-   */
-  slotProps?: CollapsibleSlotProps | undefined;
-
-  /**
-   * {@link CollapsibleTrigger} の子要素として描画する内容です。
-   *
-   * {@link Collapsible.Trigger} の `render` と同じ型で、そのまま渡されます。
-   */
-  trigger?: CollapsibleTriggerProps["children"] | undefined;
-};
+export type CollapsibleProps = CollapsibleProps.Collapsible & CollapsibleProps.Root;
 
 // API
 // ---
@@ -77,26 +77,68 @@ export type CollapsibleProps = Omit<CollapsibleRootProps, "children"> & {
 /**
  * {@link Collapsible} を構成する各パーツの props などを作成するための API です。
  */
-export interface CollapsibleAPI {
-  /**
-   * {@link CollapsibleContent} に渡す props を取得します。
-   */
-  getContentProps(): CollapsibleContentProps | null;
+export class CollapsibleAPI {
+  private readonly collapsibleProps: Required<Omit<CollapsibleProps.Collapsible, "slotProps">>;
+
+  private readonly rootProps: Omit<CollapsibleRootProps, "children">;
+
+  private readonly slotProps: CollapsibleSlotProps;
 
   /**
-   * {@link CollapsibleIndicator} に渡す props を取得します。
+   * @param props {@link Collapsible} の props です。
+   * @internal
    */
-  getIndicatorProps(): CollapsibleIndicatorProps;
+  public constructor(props: CollapsibleProps) {
+    const { trigger, children, slotProps = {}, ...rootProps } = props;
+    this.collapsibleProps = { trigger, children };
+    this.rootProps = rootProps;
+    this.slotProps = slotProps;
+  }
+
+  /**
+   * {@link CollapsibleContent} に渡す props を取得します。
+   *
+   * コンテンツを表示しないときは `null` を返します。
+   */
+  public getContentProps(): CollapsibleContentProps | null {
+    const { content: props = {} } = this.slotProps;
+    const { children } = this.collapsibleProps;
+
+    if (isLikelyVisibleNode(children)) {
+      return {
+        ...props,
+        children,
+      };
+    }
+
+    return null;
+  }
 
   /**
    * {@link CollapsibleRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<CollapsibleRootProps, "children">;
+  public getRootProps(): Omit<CollapsibleRootProps, "children"> {
+    return this.rootProps;
+  }
 
   /**
    * {@link CollapsibleTrigger} に渡す props を取得します。
+   *
+   * トリガーを表示しないときは `null` を返します。
    */
-  getTriggerProps(): CollapsibleTriggerProps | null;
+  public getTriggerProps(): CollapsibleTriggerProps | null {
+    const { trigger: props = {} } = this.slotProps;
+    const { trigger } = this.collapsibleProps;
+
+    if (!trigger) {
+      return null;
+    }
+
+    return {
+      ...props,
+      children: trigger,
+    };
+  }
 }
 
 interface IUseCollapsibleAPI {
@@ -113,48 +155,10 @@ interface IUseCollapsibleAPI {
  * {@link CollapsibleAPI} を作成するフックです。
  */
 export const useCollapsibleAPI: IUseCollapsibleAPI = function useSuiCollapsibleAPI(props) {
-  const {
-    trigger,
-    children,
-    slotProps: {
-      content: contentProps = {},
-      trigger: triggerProps = {},
-      indicator: indicatorProps = {},
-    } = {},
-    ...otherRootProps
-  } = props;
-
-  return {
-    getRootProps() {
-      return otherRootProps;
-    },
-    getContentProps() {
-      if (isLikelyVisibleNode(children)) {
-        return {
-          ...contentProps,
-          children,
-        };
-      }
-
-      return null;
-    },
-    getTriggerProps() {
-      if (!trigger) {
-        return null;
-      }
-
-      return {
-        ...triggerProps,
-        children: trigger,
-      };
-    },
-    getIndicatorProps() {
-      return indicatorProps;
-    },
-  };
+  return new CollapsibleAPI(props);
 };
 
-export { type CollapsibleAPI as API, useCollapsibleAPI as useAPI };
+export { CollapsibleAPI as API, useCollapsibleAPI as useAPI };
 
 // Component
 // ---------

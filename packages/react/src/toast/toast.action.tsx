@@ -7,12 +7,24 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import type { Override, IComponent } from "../types.js";
 
+/**
+ * 通知のアクションの配色です。
+ */
 export type ToastActionColor = Button.Root.Color;
 
+/**
+ * 通知のアクションの角丸の大きさです。
+ */
 export type ToastActionRadius = Button.Root.Radius;
 
+/**
+ * 通知のアクションの大きさです。
+ */
 export type ToastActionSize = Button.Root.Size;
 
+/**
+ * 通知のアクションの主な外観です。
+ */
 export type ToastActionVariant = Button.Root.Variant;
 
 /**

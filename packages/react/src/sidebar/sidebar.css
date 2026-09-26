@@ -39,6 +39,7 @@
 
     /* 可変 */
     :scope {
+      order: var(--_sui_sidebar-order, 0);
       width: var(--_sui_sidebar-width, var(--sui_sidebar-width));
       margin-block: var(--sui_sidebar-margin_block);
       margin-inline: var(--sui_sidebar-margin_inline);
@@ -65,8 +66,8 @@
       --sui_sidebar-collapsed_width: 3rem;
 
       &.sui_sidebar-variant_floating {
-        --sui_sidebar-margin_block: var(--sui-space(2));
-        --sui_sidebar-margin_inline: var(--sui-space(2));
+        --sui_sidebar-margin_block: --sui-space(2);
+        --sui_sidebar-margin_inline: --sui-space(2);
         --sui_sidebar-border_radius: var(--sui-radius-xl);
       }
     }
@@ -78,6 +79,7 @@
       }
 
       &.sui_sidebar-side_right {
+        --_sui_sidebar-order: 1;
         --_sui_sidebar-border_inline_start_width: var(--sui_sidebar-border_width);
       }
 
@@ -384,8 +386,8 @@
       --sui_sidebar_inset-border_radius: 0px;
 
       &:has(> .sui_sidebar-variant_inset) > .sui_sidebar_inset {
-        --sui_sidebar_inset-margin_block: var(--sui-space(2));
-        --sui_sidebar_inset-margin_inline: var(--sui-space(2));
+        --sui_sidebar_inset-margin_block: --sui-space(2);
+        --sui_sidebar_inset-margin_inline: --sui-space(2);
         --sui_sidebar_inset-background_color: var(--sui-canvas-1);
         --sui_sidebar_inset-border_color: var(--sui-border-2);
         --sui_sidebar_inset-border_width: --sui-border_width(1);
@@ -459,7 +461,7 @@
     /* 変異 */
     :scope {
       .sui_sidebar_rail {
-        &:enabled {
+        &:not(.sui_sidebar_rail-disabled) {
           @media (any-hover: hover) {
             &:hover {
               --_sui_sidebar_rail-background_color: var(--sui_sidebar_rail-background_color-hover);
@@ -549,7 +551,7 @@
 
     /* 変異 */
     :scope {
-      &:enabled {
+      &:not(.sui_sidebar_trigger-disabled) {
         @media (any-hover: hover) {
           &:hover {
             --_sui_sidebar_trigger-color: var(--sui_sidebar_trigger-color-hover);
@@ -580,7 +582,7 @@
 
 /* Trigger */
 :scope {
-  &:disabled {
+  &.sui_sidebar_trigger-disabled {
     color: var(--sui-disabled-naked-canvas_text);
     cursor: not-allowed;
     background-color: var(--sui-disabled-naked-canvas);
@@ -588,6 +590,23 @@
     svg:not(.sui-ignore) {
       color: var(--sui-disabled-naked-canvas_text);
     }
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* レールは自身がスタイル起点のため、上のスコープでは届きません。自身の無効クラスで判定する別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_sidebar_rail) to ([data-scope]) {
+
+/* Rail */
+:scope {
+  &.sui_sidebar_rail-disabled {
+    color: var(--sui-disabled-naked-canvas_text);
+    cursor: not-allowed;
+    background-color: var(--sui-disabled-naked-canvas);
   }
 }
 

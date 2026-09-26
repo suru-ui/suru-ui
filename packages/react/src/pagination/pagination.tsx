@@ -1,10 +1,8 @@
 import * as React from "react";
 
-import type { LikelyVisibleNode } from "../_is-likely-visible-node.js";
-import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
+import { usePaginationState } from "./_pagination.js";
 import {
-  type PaginationGoToPage,
   type PaginationRootSize,
   type PaginationItemProps,
   type PaginationRootColor,
@@ -94,41 +92,47 @@ export type PaginationSlotProps = {
   /**
    * {@link PaginationNextButton} に渡す props です。
    */
-  readonly next?: PaginationNextButtonProps | undefined;
+  readonly nextButton?: PaginationNextButtonProps | undefined;
 
   /**
    * {@link PaginationPreviousButton} に渡す props です。
    */
-  readonly previous?: PaginationPreviousButtonProps | undefined;
+  readonly previousButton?: PaginationPreviousButtonProps | undefined;
 };
+
+namespace PaginationProps {
+  export type Pagination = {
+    /**
+     * 先頭と末尾に常に表示するページ数を指定します。
+     *
+     * 小数値は切り捨て、負の値は 0 として扱います。
+     *
+     * @default 1
+     */
+    boundaryCount?: number | undefined;
+
+    /**
+     * 現在のページの前後に表示するページ数を指定します。
+     *
+     * 小数値は切り捨て、負の値は 0 として扱います。
+     *
+     * @default 1
+     */
+    siblingCount?: number | undefined;
+
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     */
+    slotProps?: PaginationSlotProps | undefined;
+  };
+
+  export type Root = Omit<PaginationRootProps, "children" | keyof Pagination>;
+}
 
 /**
  * {@link Pagination} に渡す props です。
  */
-export type PaginationProps = Omit<PaginationRootProps, "children"> & {
-  /**
-   * 先頭と末尾に常に表示するページ数を指定します。
-   *
-   * 小数値は切り捨て、負の値は 0 として扱います。
-   *
-   * @default 1
-   */
-  boundaryCount?: number | undefined;
-
-  /**
-   * 現在のページの前後に表示するページ数を指定します。
-   *
-   * 小数値は切り捨て、負の値は 0 として扱います。
-   *
-   * @default 1
-   */
-  siblingCount?: number | undefined;
-
-  /**
-   * 各パーツに個別の props を渡すためのオブジェクトです。
-   */
-  slotProps?: PaginationSlotProps | undefined;
-};
+export type PaginationProps = PaginationProps.Pagination & PaginationProps.Root;
 
 // API
 // ---
@@ -150,9 +154,7 @@ export interface PaginationAPI {
    *
    * @param page 項目のページ番号です。
    */
-  getItemProps(page: number): Omit<PaginationItemProps, "children"> & {
-    children: LikelyVisibleNode | undefined;
-  };
+  getItemProps(page: number): PaginationItemProps;
 
   /**
    * 表示する項目の一覧を取得します。
@@ -162,12 +164,12 @@ export interface PaginationAPI {
   /**
    * {@link PaginationNextButton} に渡す props を取得します。
    */
-  getNextProps(): PaginationNextButtonProps;
+  getNextButtonProps(): PaginationNextButtonProps;
 
   /**
    * {@link PaginationPreviousButton} に渡す props を取得します。
    */
-  getPreviousProps(): PaginationPreviousButtonProps;
+  getPreviousButtonProps(): PaginationPreviousButtonProps;
 
   /**
    * {@link PaginationRoot} に渡す props を取得します。
@@ -187,6 +189,8 @@ interface IUsePaginationAPI {
 
 /**
  * {@link PaginationAPI} を作成するフックです。
+ *
+ * 非制御の現在ページを内部状態で管理するため、API はクラスではなくフックとして提供します。
  */
 export const usePaginationAPI: IUsePaginationAPI = function useSuiPaginationAPI(props) {
   const {
@@ -194,38 +198,24 @@ export const usePaginationAPI: IUsePaginationAPI = function useSuiPaginationAPI(
     disabled = false,
     slotProps: {
       item: itemProps = {},
-      next: nextProps = {},
       ellipsis: ellipsisProps = {},
-      previous: previousProps = {},
+      nextButton: nextButtonProps = {},
+      previousButton: previousButtonProps = {},
     } = {},
-    totalPages,
-    defaultPage = 1,
+    totalPages: totalPagesProp,
+    defaultPage,
     onPageChange,
     siblingCount = 1,
     boundaryCount = 1,
     ...otherRootProps
   } = props;
-  const maxPage = Math.max(1, Math.trunc(totalPages));
-  const [innerPage, setInnerPage] = React.useState(() =>
-    Math.min(Math.max(Math.trunc(defaultPage), 1), maxPage),
-  );
-  const page = Math.min(Math.max(Math.trunc(pageProp ?? innerPage), 1), maxPage);
-  const handlePageChange: PaginationGoToPage = (nextPage, details) => {
-    if (disabled || totalPages < 1) {
-      return;
-    }
-
-    const target = Math.min(Math.max(Math.trunc(nextPage), 1), maxPage);
-    if (target === page) {
-      return;
-    }
-
-    if (pageProp === undefined) {
-      setInnerPage(target);
-    }
-
-    onPageChange?.(target, details);
-  };
+  const { page, goToPage, totalPages } = usePaginationState({
+    page: pageProp,
+    disabled,
+    totalPages: totalPagesProp,
+    defaultPage,
+    onPageChange,
+  });
   const items = getPaginationItems(
     totalPages,
     page,
@@ -241,20 +231,17 @@ export const usePaginationAPI: IUsePaginationAPI = function useSuiPaginationAPI(
       return {
         ...itemProps,
         page: itemPage,
-        children: toReactNode(itemPage),
+        children: itemPage,
         selected: itemPage === page,
       };
-    },
-    getNextProps() {
-      return nextProps;
     },
     getRootProps() {
       return {
         ...otherRootProps,
         page,
         disabled,
-        totalPages,
-        onPageChange: handlePageChange,
+        totalPages: totalPagesProp,
+        onPageChange: goToPage,
       };
     },
     getEllipsisProps(start, end) {
@@ -264,8 +251,11 @@ export const usePaginationAPI: IUsePaginationAPI = function useSuiPaginationAPI(
         start,
       };
     },
-    getPreviousProps() {
-      return previousProps;
+    getNextButtonProps() {
+      return nextButtonProps;
+    },
+    getPreviousButtonProps() {
+      return previousButtonProps;
     },
   };
 };
@@ -282,22 +272,23 @@ export { type PaginationAPI as API, usePaginationAPI as useAPI };
  */
 export const Pagination: IComponent<PaginationProps> = function SuiPagination(props) {
   const api = usePaginationAPI(props);
-  const items = api.getItems();
 
   return (
     <PaginationRoot {...api.getRootProps()}>
-      <PaginationPreviousButton {...api.getPreviousProps()} />
-      {items.map((item) =>
-        item.type === "item" ? (
-          <PaginationItem {...api.getItemProps(item.page)} key={`page-${item.page}`} />
-        ) : (
-          <PaginationEllipsis
-            {...api.getEllipsisProps(item.start, item.end)}
-            key={`ellipsis-${item.start}-${item.end}`}
-          />
-        ),
-      )}
-      <PaginationNextButton {...api.getNextProps()} />
+      <PaginationPreviousButton {...api.getPreviousButtonProps()} />
+      {api
+        .getItems()
+        .map((item) =>
+          item.type === "item" ? (
+            <PaginationItem {...api.getItemProps(item.page)} key={`page-${item.page}`} />
+          ) : (
+            <PaginationEllipsis
+              {...api.getEllipsisProps(item.start, item.end)}
+              key={`ellipsis-${item.start}-${item.end}`}
+            />
+          ),
+        )}
+      <PaginationNextButton {...api.getNextButtonProps()} />
     </PaginationRoot>
   );
 };
@@ -327,7 +318,7 @@ export namespace Pagination {
  *
  * 先頭末尾の固定表示と現在ページ前後の表示から重複を取り除き、離れた区間を省略記号でつなぎます。
  *
- * @param totalPages 総ページ数です。
+ * @param totalPages 1 以上の整数に丸め済みの総ページ数です。
  * @param page 現在のページです。
  * @param siblingCount 現在のページの前後に表示するページ数です。
  * @param boundaryCount 先頭と末尾に常に表示するページ数です。
@@ -339,18 +330,21 @@ function getPaginationItems(
   siblingCount: number,
   boundaryCount: number,
 ): PaginationItemObject[] {
-  const maxPage = Math.max(1, Math.trunc(totalPages));
   const pages = new Set<number>();
 
-  for (let i = 1; i <= Math.min(boundaryCount, maxPage); i++) {
+  for (let i = 1; i <= Math.min(boundaryCount, totalPages); i++) {
     pages.add(i);
   }
 
-  for (let i = Math.max(1, maxPage - boundaryCount + 1); i <= maxPage; i++) {
+  for (let i = Math.max(1, totalPages - boundaryCount + 1); i <= totalPages; i++) {
     pages.add(i);
   }
 
-  for (let i = Math.max(1, page - siblingCount); i <= Math.min(maxPage, page + siblingCount); i++) {
+  for (
+    let i = Math.max(1, page - siblingCount);
+    i <= Math.min(totalPages, page + siblingCount);
+    i++
+  ) {
     pages.add(i);
   }
 

@@ -1,11 +1,30 @@
+import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
 import type { IUseContext } from "../types.js";
-import type { HoverCardRootSize, HoverCardRootRadius } from "./hover-card.root.jsx";
 
 /**
- * {@link HoverCardRoot} が子パーツへ提供するコンテキストです。
+ * ホバーカードの角丸の大きさです。
+ *
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ */
+export type HoverCardContextRadius = "none" | Size;
+
+/**
+ * ホバーカードの大きさです。
+ *
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ */
+export type HoverCardContextSize = Size;
+
+/**
+ * {@link HoverCardRoot} が子パーツへ提供する状態です。
  */
 export type HoverCardContext = {
   /**
@@ -16,16 +35,16 @@ export type HoverCardContext = {
   /**
    * ホバーカードの角丸の大きさです。
    */
-  readonly radius: HoverCardRootRadius;
+  readonly radius: HoverCardContextRadius;
 
   /**
    * ホバーカードの大きさです。
    */
-  readonly size: HoverCardRootSize;
+  readonly size: HoverCardContextSize;
 };
 
 /**
- * {@link HoverCardRoot} が子パーツへ提供するコンテキストです。
+ * ホバーカードの見た目を子パーツへ伝播するコンテキストです。
  */
 export const HoverCardContext: React.Context<HoverCardContext | null> =
   React.createContext<HoverCardContext | null>(null);
@@ -52,7 +71,7 @@ export const useHoverCardContext: IUseContext<HoverCardContext> = useSuiHoverCar
 export { HoverCardContext as Context, useHoverCardContext as useContext };
 
 export namespace Context {
-  export type Radius = HoverCardRootRadius;
+  export type Radius = HoverCardContextRadius;
 
-  export type Size = HoverCardRootSize;
+  export type Size = HoverCardContextSize;
 }

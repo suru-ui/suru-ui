@@ -1,6 +1,6 @@
 /* Indicator */
+/* トリガーは Button などの [data-scope] を持つ要素で描画されるため、インジケーターのスタイルは下限なしの別ブロックにまとめます。下限を設けるとスタイルが届きません。 */
 @layer sui.component {
-/* 例外: 回転に関するスタイルは [data-scope] の下限を設けません。ボタンコンポーネントが [data-scope] を持つため、下限があると Indicator が回転できません。 */
 @scope (.sui_collapsible) {
 
 /* 固定 */
@@ -15,41 +15,6 @@
 
 /* 変数 */
 :scope {
-  --sui_collapsible_indicator-rotate-closed: ;
-  --sui_collapsible_indicator-rotate-open: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_collapsible_indicator {
-    rotate: var(--_sui_collapsible_indicator-rotate,
-              var(--sui_collapsible_indicator-rotate-closed)
-            );
-  }
-}
-
-/* 代入 */
-:scope {
-  --sui_collapsible_indicator-rotate-closed: 0deg;
-  --sui_collapsible_indicator-rotate-open: 90deg;
-}
-
-/* 変異 */
-:scope {
-  &.sui_collapsible-open .sui_collapsible_indicator {
-    --_sui_collapsible_indicator-rotate: var(--sui_collapsible_indicator-rotate-open);
-  }
-}
-
-} /* @scope */
-} /* @layer */
-
-/* Indicator */
-@layer sui.component {
-@scope (.sui_collapsible) to ([data-scope]) {
-
-/* 変数 */
-:scope {
   --sui_collapsible_indicator-size: ;
   --sui_collapsible_indicator-font_family: ;
   --sui_collapsible_indicator-font_size: ;
@@ -57,6 +22,8 @@
   --sui_collapsible_indicator-line_height: ;
   --sui_collapsible_indicator-color: ;
   --sui_collapsible_indicator-letter_spacing: ;
+  --sui_collapsible_indicator-rotate-closed: ;
+  --sui_collapsible_indicator-rotate-open: ;
 }
 
 /* 可変 */
@@ -70,6 +37,9 @@
     line-height: var(--sui_collapsible_indicator-line_height);
     color: var(--sui_collapsible_indicator-color);
     letter-spacing: var(--sui_collapsible_indicator-letter_spacing);
+    rotate: var(--_sui_collapsible_indicator-rotate,
+              var(--sui_collapsible_indicator-rotate-closed)
+            );
 
     svg:not(.sui-ignore) {
       width: var(--sui_collapsible_indicator-size);
@@ -90,6 +60,8 @@
                                        var(--sui-grey-solid-canvas_text-normal),
                                        var(--sui-canvas-1)
                                      );
+  --sui_collapsible_indicator-rotate-closed: 0deg;
+  --sui_collapsible_indicator-rotate-open: 90deg;
 
   &.sui_collapsible-size_sm {
     --sui_collapsible_indicator-font_size: var(--sui-text-oln-sm-n-font_size);
@@ -110,6 +82,13 @@
     --sui_collapsible_indicator-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_collapsible_indicator-line_height: var(--sui-text-oln-lg-n-line_height);
     --sui_collapsible_indicator-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
+  }
+}
+
+/* 変異 */
+:scope {
+  &.sui_collapsible-open .sui_collapsible_indicator {
+    --_sui_collapsible_indicator-rotate: var(--sui_collapsible_indicator-rotate-open);
   }
 }
 
@@ -194,8 +173,9 @@
 } /* @layer */
 
 /* disabled */
+/* トリガーは Button などの [data-scope] を持つ要素で描画されるため、インジケーターの無効状態は下限なしの別ブロックにします。 */
 @layer sui.important {
-@scope (.sui_collapsible) to ([data-scope]) {
+@scope (.sui_collapsible) {
 
 /* Root */
 :scope {
@@ -206,9 +186,13 @@
 
 /* Indicator */
 :scope {
-  .sui_collapsible-disabled .sui_collapsible_indicator {
+  &.sui_collapsible-disabled .sui_collapsible_indicator {
     color: var(--sui-disabled-naked-canvas_text);
     cursor: not-allowed;
+
+    svg:not(.sui-ignore) {
+      color: var(--sui-disabled-naked-canvas_text);
+    }
   }
 }
 

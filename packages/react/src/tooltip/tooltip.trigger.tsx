@@ -8,19 +8,17 @@ import type { TooltipHandle } from "./tooltip.handle.js";
 
 /**
  * {@link TooltipTrigger} が持つ状態です。
- *
- * @template TPayload トリガーから渡すデータの型です。
  */
 export type TooltipTriggerState = Tooltip.Trigger.State;
 
 export namespace TooltipTriggerProps {
-  export type Render = RenderProps<TooltipTriggerState>;
+  export type Render = Omit<RenderProps<TooltipTriggerState>, "render">;
 
   export type SuruUI<TPayload = any> = {
     /**
      * トリガーとしてレンダリングする要素です。
      *
-     * {@link Tooltip.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
+     * Base UI の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
      */
     children: NonNullable<Tooltip.Trigger.Props<TPayload>["render"]>;
 
@@ -80,7 +78,7 @@ export interface ITooltipTrigger extends IComponent<TooltipTriggerProps> {
 /**
  * ツールチップを開くトリガー要素です。
  *
- * 子要素は何にもラップされず、そのまま {@link Tooltip.Trigger} の `render` プロパティーに渡されます。
+ * 子要素は何にもラップされず、そのまま Base UI の `render` プロパティーに渡されます。
  */
 export const TooltipTrigger: ITooltipTrigger = function SuiTooltipTrigger<TPayload>(
   props: TooltipTriggerProps<TPayload>,

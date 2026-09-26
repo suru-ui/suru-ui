@@ -1,11 +1,30 @@
+import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
 import type { IUseContext } from "../types.js";
-import type { PopoverRootSize, PopoverRootRadius } from "./popover.root.jsx";
 
 /**
- * {@link PopoverRoot} が子パーツへ提供するコンテキストです。
+ * ポップオーバーの角丸の大きさです。
+ *
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ */
+export type PopoverContextRadius = "none" | Size;
+
+/**
+ * ポップオーバーの大きさです。
+ *
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ */
+export type PopoverContextSize = Size;
+
+/**
+ * {@link PopoverRoot} が子パーツへ提供する状態です。
  */
 export type PopoverContext = {
   /**
@@ -16,23 +35,35 @@ export type PopoverContext = {
   /**
    * ポップオーバーの角丸の大きさです。
    */
-  readonly radius: PopoverRootRadius;
+  readonly radius: PopoverContextRadius;
 
   /**
    * ポップオーバーの大きさです。
    */
-  readonly size: PopoverRootSize;
+  readonly size: PopoverContextSize;
 };
 
 /**
- * {@link PopoverRoot} が子パーツへ提供するコンテキストです。
+ * ポップオーバーの見た目を子パーツへ伝播するコンテキストです。
  */
 export const PopoverContext: React.Context<PopoverContext | null> =
   React.createContext<PopoverContext | null>(null);
 
-function useSuiPopoverContext(optional?: false): PopoverContext;
-function useSuiPopoverContext(optional?: boolean): PopoverContext | null;
-function useSuiPopoverContext(optional?: boolean): PopoverContext | null {
+export interface IUsePopoverContext extends IUseContext<PopoverContext> {
+  /**
+   * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
+   * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
+   */
+  (optional?: false): PopoverContext;
+  (optional?: boolean): PopoverContext | null;
+}
+
+/**
+ * {@link PopoverContext} を読み取るフックです。
+ */
+export const usePopoverContext: IUsePopoverContext = function useSuiPopoverContext(
+  optional?: boolean,
+): any {
   const ctx = React.use(PopoverContext);
   if (ctx === null && !optional) {
     throw new ContextMissingError({
@@ -42,17 +73,12 @@ function useSuiPopoverContext(optional?: boolean): PopoverContext | null {
   }
 
   return ctx;
-}
-
-/**
- * {@link PopoverContext} を読み取るフックです。
- */
-export const usePopoverContext: IUseContext<PopoverContext> = useSuiPopoverContext;
+};
 
 export { PopoverContext as Context, usePopoverContext as useContext };
 
 export namespace Context {
-  export type Radius = PopoverRootRadius;
+  export type Radius = PopoverContextRadius;
 
-  export type Size = PopoverRootSize;
+  export type Size = PopoverContextSize;
 }

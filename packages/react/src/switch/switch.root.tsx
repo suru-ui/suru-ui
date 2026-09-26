@@ -159,8 +159,17 @@ export const SwitchRoot: IComponent<SwitchRootProps> = function SuiSwitchRoot(pr
         `sui_switch-radius_${radius}`,
         `sui_switch-variant_${variant}`,
         outlined && "sui_switch-outlined",
+        (state) => state.dirty && "sui_switch-dirty",
+        (state) => state.valid === null && "sui_switch-unverified",
+        (state) => state.valid === true && "sui_switch-valid",
+        (state) => state.valid === false && "sui_switch-invalid",
+        (state) => state.filled && "sui_switch-filled",
         (state) => state.checked && "sui_switch-checked",
+        (state) => state.focused && "sui_switch-focused",
+        (state) => state.touched && "sui_switch-touched",
         (state) => state.disabled && "sui_switch-disabled",
+        (state) => state.readOnly && "sui_switch-readonly",
+        (state) => state.required && "sui_switch-required",
       )}
       data-scope={dataScope}
     />

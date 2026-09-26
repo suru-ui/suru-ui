@@ -2,7 +2,6 @@ import { Drawer } from "@base-ui/react/drawer";
 import * as React from "react";
 
 import type { IComponent } from "../types.js";
-import type { DrawerHandle } from "./drawer.handle.js";
 
 /**
  * ドロワーを命令的に操作するためのオブジェクトです。
@@ -42,12 +41,7 @@ export type DrawerRootState = Drawer.Root.State;
 export namespace DrawerRootProps {
   export type Render = {};
 
-  export type SuruUI<TPayload = any> = {
-    /**
-     * トリガーとドロワーに関連付けるためのハンドルです。
-     */
-    handle: DrawerHandle<TPayload>;
-  };
+  export type SuruUI = {};
 
   export type BaseUI<TPayload = any> = Pick<
     React.ComponentProps<typeof Drawer.Root<TPayload>>,
@@ -61,6 +55,7 @@ export namespace DrawerRootProps {
       | "onOpenChangeComplete"
       | "disablePointerDismissal"
       | "actionsRef"
+      | "handle"
       | "triggerId"
       | "defaultTriggerId"
       | "swipeDirection"
@@ -85,7 +80,7 @@ export namespace DrawerRootProps {
  * @template TPayload トリガーが送信するデータの型です。
  */
 export type DrawerRootProps<TPayload = any> = DrawerRootProps.Render &
-  DrawerRootProps.SuruUI<TPayload> &
+  DrawerRootProps.SuruUI &
   DrawerRootProps.BaseUI<TPayload> &
   DrawerRootProps.HTML<TPayload>;
 
@@ -111,14 +106,14 @@ export namespace Root {
   export type State = DrawerRootState;
 
   export type Props<TPayload = any> = Props.Render &
-    Props.SuruUI<TPayload> &
+    Props.SuruUI &
     Props.BaseUI<TPayload> &
     Props.HTML<TPayload>;
 
   export namespace Props {
     export type Render = DrawerRootProps.Render;
 
-    export type SuruUI<TPayload = any> = DrawerRootProps.SuruUI<TPayload>;
+    export type SuruUI = DrawerRootProps.SuruUI;
 
     export type BaseUI<TPayload = any> = DrawerRootProps.BaseUI<TPayload>;
 

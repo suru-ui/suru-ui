@@ -194,10 +194,10 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
           `sui_button-variant_${variant}`,
           item && "sui_button-item",
           muted && "sui_button-muted",
+          outlined && "sui_button-outlined",
           pending && "sui_button-pending",
           squared && "sui_button-squared",
           (state) => state.disabled && !pending && "sui_button-disabled",
-          outlined && "sui_button-outlined",
         )}
         focusableWhenDisabled={focusableWhenDisabled}
         data-scope={dataScope}

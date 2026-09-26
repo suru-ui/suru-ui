@@ -1,4 +1,4 @@
-import type { IComponent, IUseContext } from "../types.js";
+import type { IComponent } from "../types.js";
 import {
   type RadioGroupContext,
   type RadioGroupRootSize,
@@ -6,6 +6,7 @@ import {
   type RadioGroupRootProps,
   type RadioGroupRootState,
   type RadioGroupRootRadius,
+  type IUseRadioGroupContext,
   type RadioGroupRootVariant,
   type RadioGroupRootOrientation,
   type RadioGroupRootChangeEventReason,
@@ -51,11 +52,23 @@ export type RadioGroupProps<TValue = any> = RadioGroupRootProps<TValue>;
  *
  * @template TValue 項目の値の型です。
  */
-export interface RadioGroupAPI<TValue = any> {
+export class RadioGroupAPI<TValue = any> {
+  private readonly rootProps: RadioGroupRootProps<TValue>;
+
+  /**
+   * @param props {@link RadioGroup} の props です。
+   * @internal
+   */
+  public constructor(props: RadioGroupProps<TValue>) {
+    this.rootProps = props;
+  }
+
   /**
    * {@link RadioGroupRoot} に渡す props を取得します。
    */
-  getRootProps(): RadioGroupRootProps<TValue>;
+  public getRootProps(): RadioGroupRootProps<TValue> {
+    return this.rootProps;
+  }
 }
 
 interface IUseRadioGroupAPI {
@@ -72,12 +85,10 @@ interface IUseRadioGroupAPI {
 /**
  * {@link RadioGroupAPI} を作成するフックです。
  */
-export const useRadioGroupAPI: IUseRadioGroupAPI = function useSuiRadioGroupAPI(props) {
-  return {
-    getRootProps() {
-      return props;
-    },
-  };
+export const useRadioGroupAPI: IUseRadioGroupAPI = function useSuiRadioGroupAPI<TValue>(
+  props: RadioGroupProps<TValue>,
+) {
+  return new RadioGroupAPI(props);
 };
 
 export { type RadioGroupAPI as API, useRadioGroupAPI as useAPI };
@@ -91,7 +102,7 @@ interface IRadioGroup extends IComponent<RadioGroupProps> {
    */
   <TValue = any>(props: RadioGroupProps<TValue>): IComponent.Return;
 
-  readonly useContext: IUseContext<RadioGroupContext>;
+  readonly useContext: IUseRadioGroupContext;
 }
 
 /**

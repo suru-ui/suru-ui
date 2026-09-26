@@ -69,14 +69,19 @@ export type FileUploadContext = {
 };
 
 /**
- * {@link FileUploadRoot} が子パーツへ提供するコンテキストです。
+ * ファイルアップロードの状態と操作を子要素へ伝播するコンテキストです。
  */
 export const FileUploadContext: React.Context<FileUploadContext | null> =
   React.createContext<FileUploadContext | null>(null);
 
-function useSuiFileUploadContext(optional?: false): FileUploadContext;
-function useSuiFileUploadContext(optional?: boolean): FileUploadContext | null;
-function useSuiFileUploadContext(optional?: boolean): FileUploadContext | null {
+export type IUseFileUploadContext = IUseContext<FileUploadContext>;
+
+/**
+ * {@link FileUploadContext} を読み取るフックです。
+ */
+export const useFileUploadContext: IUseFileUploadContext = function useSuiFileUploadContext(
+  optional?: boolean,
+): any {
   const ctx = React.use(FileUploadContext);
   if (ctx === null && !optional) {
     throw new ContextMissingError({
@@ -86,11 +91,6 @@ function useSuiFileUploadContext(optional?: boolean): FileUploadContext | null {
   }
 
   return ctx;
-}
-
-/**
- * {@link FileUploadContext} を読み取るフックです。
- */
-export const useFileUploadContext: IUseContext<FileUploadContext> = useSuiFileUploadContext;
+};
 
 export { FileUploadContext as Context, useFileUploadContext as useContext };

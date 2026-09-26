@@ -48,12 +48,18 @@ export type NumberFieldIncrementProps = NumberFieldIncrementProps.Render &
  */
 export const NumberFieldIncrement: IComponent<NumberFieldIncrementProps> =
   function SuiNumberFieldIncrement(props) {
-    const { children = <PlusIcon />, className, ...otherProps } = props;
+    const {
+      children = <PlusIcon />,
+      className,
+      "aria-label": ariaLabel = "値を増やす",
+      ...otherProps
+    } = props;
 
     return (
       <NumberField.Increment
         {...otherProps}
         className={cn(className, "sui_number_field_stepper", "sui_number_field_increment")}
+        aria-label={ariaLabel}
       >
         {children}
       </NumberField.Increment>

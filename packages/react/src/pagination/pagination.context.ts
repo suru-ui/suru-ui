@@ -97,7 +97,7 @@ export type PaginationContext = {
   readonly size: PaginationContextSize;
 
   /**
-   * 総ページ数です。
+   * 1 以上の整数に丸め済みの総ページ数です。
    */
   readonly totalPages: number;
 };
@@ -108,9 +108,14 @@ export type PaginationContext = {
 export const PaginationContext: React.Context<PaginationContext | null> =
   React.createContext<PaginationContext | null>(null);
 
-function useSuiPaginationContext(optional?: false): PaginationContext;
-function useSuiPaginationContext(optional?: boolean): PaginationContext | null;
-function useSuiPaginationContext(optional?: boolean): PaginationContext | null {
+export type IUsePaginationContext = IUseContext<PaginationContext>;
+
+/**
+ * {@link PaginationContext} を読み取るフックです。
+ */
+export const usePaginationContext: IUsePaginationContext = function useSuiPaginationContext(
+  optional?: boolean,
+): any {
   const ctx = React.use(PaginationContext);
   if (ctx === null && !optional) {
     throw new ContextMissingError({
@@ -120,12 +125,7 @@ function useSuiPaginationContext(optional?: boolean): PaginationContext | null {
   }
 
   return ctx;
-}
-
-/**
- * {@link PaginationContext} を読み取るフックです。
- */
-export const usePaginationContext: IUseContext<PaginationContext> = useSuiPaginationContext;
+};
 
 export { PaginationContext as Context, usePaginationContext as useContext };
 

@@ -1,20 +1,20 @@
 import type { RenderProps } from "../_use-render.js";
-import * as Avatar from "../avatar/avatar.parts.js";
+import { type AvatarRootProps, type AvatarRootState, AvatarRoot } from "../avatar/avatar.root.jsx";
 import type { IComponent } from "../types.js";
 
 /**
  * {@link AvatarGroupSurplus} が持つ状態です。
  */
-export type AvatarGroupSurplusState = Avatar.Root.State;
+export type AvatarGroupSurplusState = AvatarRootState;
 
 export namespace AvatarGroupSurplusProps {
   export type Render = RenderProps<AvatarGroupSurplusState>;
 
-  export type SuruUI = Avatar.Root.Props.SuruUI;
+  export type SuruUI = AvatarRootProps.SuruUI;
 
-  export type BaseUI = Omit<Avatar.Root.Props.BaseUI, keyof Render | keyof SuruUI>;
+  export type BaseUI = Omit<AvatarRootProps.BaseUI, keyof Render | keyof SuruUI>;
 
-  export type HTML = Omit<Avatar.Root.Props, keyof Render | keyof SuruUI | keyof BaseUI>;
+  export type HTML = Omit<AvatarRootProps, keyof Render | keyof SuruUI | keyof BaseUI>;
 }
 
 /**
@@ -30,9 +30,9 @@ export type AvatarGroupSurplusProps = AvatarGroupSurplusProps.Render &
  */
 export const AvatarGroupSurplus: IComponent<AvatarGroupSurplusProps> =
   function SuiAvatarGroupSurplus(props) {
-    const { color = "grey", className, ...otherProps } = props;
+    const { color = "grey", ...otherProps } = props;
 
-    return <Avatar.Root {...otherProps} color={color} className={className} />;
+    return <AvatarRoot {...otherProps} color={color} />;
   };
 
 export { AvatarGroupSurplus as Surplus };

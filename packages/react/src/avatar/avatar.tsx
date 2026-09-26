@@ -42,15 +42,19 @@ export type AvatarSlotProps = {
  */
 export type AvatarState = AvatarRootState;
 
-/**
- * {@link Avatar} に渡す props です。
- */
-export type AvatarProps = Omit<AvatarRootProps, "children"> &
-  Pick<AvatarFallbackProps, "children"> & {
+namespace AvatarProps {
+  export type Avatar = {
     /**
      * 画像の代替テキストです。
+     *
+     * 画像を表示するときにだけ使われます。
      */
-    alt?: AvatarImageProps["alt"];
+    alt?: AvatarImageProps["alt"] | undefined;
+
+    /**
+     * 画像を表示できないときに代わりに表示する内容です。
+     */
+    children?: AvatarFallbackProps["children"] | undefined;
 
     /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
@@ -59,9 +63,19 @@ export type AvatarProps = Omit<AvatarRootProps, "children"> &
 
     /**
      * 表示する画像の URL です。
+     *
+     * 省略するとフォールバックだけを表示します。
      */
-    src?: AvatarImageProps["src"];
+    src?: AvatarImageProps["src"] | undefined;
   };
+
+  export type Root = Omit<AvatarRootProps, "children" | keyof Avatar>;
+}
+
+/**
+ * {@link Avatar} に渡す props です。
+ */
+export type AvatarProps = AvatarProps.Avatar & AvatarProps.Root;
 
 // API
 // ---
@@ -69,25 +83,69 @@ export type AvatarProps = Omit<AvatarRootProps, "children"> &
 /**
  * {@link Avatar} を構成する各パーツの props を作成するための API です。
  */
-export interface AvatarAPI {
+export class AvatarAPI {
+  private readonly avatarProps: Required<Omit<AvatarProps.Avatar, "slotProps">>;
+
+  private readonly slotProps: AvatarSlotProps;
+
+  private readonly rootProps: AvatarProps.Root;
+
+  /**
+   * @param props {@link Avatar} の props です。
+   * @internal
+   */
+  public constructor(props: AvatarProps) {
+    const { alt, src, children, slotProps = {}, ...rootProps } = props;
+    this.avatarProps = { alt, src, children };
+    this.slotProps = slotProps;
+    this.rootProps = rootProps;
+  }
+
   /**
    * {@link AvatarFallback} に渡す props を取得します。
    *
    * それを表示しないときは `null` を返します。
    */
-  getFallbackProps(): AvatarFallbackProps | null;
+  public getFallbackProps(): AvatarFallbackProps | null {
+    const { fallback: props = {} } = this.slotProps;
+    const { children } = this.avatarProps;
+
+    if (isLikelyVisibleNode(children)) {
+      return {
+        ...props,
+        children,
+      };
+    }
+
+    return null;
+  }
 
   /**
    * {@link AvatarImage} に渡す props を取得します。
    *
    * それを表示しないときは `null` を返します。
    */
-  getImageProps(): AvatarImageProps | null;
+  public getImageProps(): AvatarImageProps | null {
+    const { image: props = {} } = this.slotProps;
+    const { alt, src } = this.avatarProps;
+
+    if (isLikelyVisibleNode(src)) {
+      return {
+        ...props,
+        alt,
+        src,
+      };
+    }
+
+    return null;
+  }
 
   /**
    * {@link AvatarRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<AvatarRootProps, "children">;
+  public getRootProps(): AvatarProps.Root {
+    return this.rootProps;
+  }
 }
 
 interface IUseAvatarAPI {
@@ -104,28 +162,10 @@ interface IUseAvatarAPI {
  * {@link AvatarAPI} を作成するフックです。
  */
 export const useAvatarAPI: IUseAvatarAPI = function useSuiAvatarAPI(props) {
-  const {
-    alt,
-    src,
-    children,
-    slotProps: { image: imageProps = {}, fallback: fallbackProps = {} } = {},
-    ...otherRootProps
-  } = props;
-
-  return {
-    getRootProps() {
-      return otherRootProps;
-    },
-    getImageProps() {
-      return isLikelyVisibleNode(src) ? { ...imageProps, alt, src } : null;
-    },
-    getFallbackProps() {
-      return isLikelyVisibleNode(children) ? { ...fallbackProps, children } : null;
-    },
-  };
+  return new AvatarAPI(props);
 };
 
-export { type AvatarAPI as API, useAvatarAPI as useAPI };
+export { AvatarAPI as API, useAvatarAPI as useAPI };
 
 // Component
 // ---------

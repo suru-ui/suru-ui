@@ -103,7 +103,9 @@ export namespace BadgeRootProps {
     radius?: BadgeRootRadius | undefined;
 
     /**
-     * 仮想リングを表示するかどうかを指定します。
+     * バッジの周囲にリングを表示するかどうかを指定します。
+     *
+     * 重ねた要素との境界を分けるために使います。
      *
      * @default false
      */
@@ -141,7 +143,9 @@ export type BadgeRootProps = BadgeRootProps.Render &
   BadgeRootProps.HTML;
 
 /**
- * バッジのルートコンポーネントです。
+ * バッジのルート要素です。
+ *
+ * 大きさ、配色、角丸などの外観を自身のスタイルに集約します。
  */
 export const BadgeRoot: IComponent<BadgeRootProps> = function SuiBadgeRoot(props) {
   const {
@@ -171,7 +175,7 @@ export const BadgeRoot: IComponent<BadgeRootProps> = function SuiBadgeRoot(props
           `sui_badge-radius_${radius}`,
           `sui_badge-overlap_${overlap}`,
           `sui_badge-variant_${variant}`,
-          position && `sui_badge-position_${position.replace("-", "_")}`,
+          position && `sui_badge-position_${position.replaceAll("-", "_")}`,
           ring && "sui_badge-ring",
           outlined && "sui_badge-outlined",
         ),

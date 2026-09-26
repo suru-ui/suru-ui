@@ -1,3 +1,5 @@
+import * as React from "react";
+
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import type { IComponent } from "../types.js";
 import {
@@ -59,29 +61,35 @@ export type MeterSlotProps = {
  */
 export type MeterState = MeterRootState;
 
+namespace MeterProps {
+  export type Meter = {
+    /**
+     * メーターの説明ラベルです。
+     *
+     * 指定すると {@link MeterValue} も表示されます。
+     */
+    label?: React.ReactNode | undefined;
+
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     */
+    slotProps?: MeterSlotProps | undefined;
+
+    /**
+     * 現在値です。
+     *
+     * @default 0
+     */
+    value?: number | undefined;
+  };
+
+  export type Root = Omit<MeterRootProps, "children" | keyof Meter>;
+}
+
 /**
  * {@link Meter} に渡す props です。
  */
-export type MeterProps = Omit<MeterRootProps, "children" | "value"> & {
-  /**
-   * メーターの説明ラベルです。
-   *
-   * 指定すると {@link MeterValue} も表示されます。
-   */
-  label?: MeterLabelProps["children"] | undefined;
-
-  /**
-   * 各パーツに個別の props を渡すためのオブジェクトです。
-   */
-  slotProps?: MeterSlotProps | undefined;
-
-  /**
-   * 現在値です。
-   *
-   * @default 0
-   */
-  value?: number | undefined;
-};
+export type MeterProps = MeterProps.Meter & MeterProps.Root;
 
 // API
 // ---
@@ -89,35 +97,88 @@ export type MeterProps = Omit<MeterRootProps, "children" | "value"> & {
 /**
  * {@link Meter} を構成する各パーツの props を作成するための API です。
  */
-export interface MeterAPI {
+export class MeterAPI {
+  private readonly meterProps: Required<Omit<MeterProps.Meter, "slotProps" | "value">> & {
+    readonly value: number;
+  };
+
+  private readonly rootProps: MeterProps.Root;
+
+  private readonly slotProps: MeterSlotProps;
+
+  /**
+   * @param props {@link Meter} の props です。
+   * @internal
+   */
+  public constructor(props: MeterProps) {
+    const { label, value, slotProps = {}, ...rootProps } = props;
+    this.meterProps = { label, value: value ?? 0 };
+    this.rootProps = rootProps;
+    this.slotProps = slotProps;
+  }
+
   /**
    * {@link MeterIndicator} に渡す props を取得します。
    */
-  getIndicatorProps(): MeterIndicatorProps;
+  public getIndicatorProps(): MeterIndicatorProps {
+    const { indicator: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link MeterLabel} に渡す props を取得します。
    *
-   * それを表示しないときは `null` を返します。
+   * ラベルを表示しないときは `null` を返します。
    */
-  getLabelProps(): MeterLabelProps | null;
+  public getLabelProps(): MeterLabelProps | null {
+    const { label: props = {} } = this.slotProps;
+    const { label } = this.meterProps;
+
+    if (isLikelyVisibleNode(label)) {
+      return {
+        ...props,
+        children: label,
+      };
+    }
+
+    return null;
+  }
 
   /**
    * {@link MeterRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<MeterRootProps, "children">;
+  public getRootProps(): Omit<MeterRootProps, "children"> {
+    return {
+      ...this.rootProps,
+      value: this.meterProps.value,
+    };
+  }
 
   /**
    * {@link MeterTrack} に渡す props を取得します。
    */
-  getTrackProps(): Omit<MeterTrackProps, "children">;
+  public getTrackProps(): Omit<MeterTrackProps, "children"> {
+    const { track: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link MeterValue} に渡す props を取得します。
    *
-   * それを表示しないときは `null` を返します。
+   * 値を表示しないときは `null` を返します。
    */
-  getValueProps(): MeterValueProps | null;
+  public getValueProps(): MeterValueProps | null {
+    const { value: props = {} } = this.slotProps;
+    const { label } = this.meterProps;
+
+    if (isLikelyVisibleNode(label)) {
+      return props;
+    }
+
+    return null;
+  }
 }
 
 interface IUseMeterAPI {
@@ -134,49 +195,10 @@ interface IUseMeterAPI {
  * {@link MeterAPI} を作成するフックです。
  */
 export const useMeterAPI: IUseMeterAPI = function useSuiMeterAPI(props) {
-  const {
-    label,
-    value = 0,
-    slotProps: {
-      label: labelProps = {},
-      track: trackProps = {},
-      value: valueProps = {},
-      indicator: indicatorProps = {},
-    } = {},
-    ...otherRootProps
-  } = props;
-
-  return {
-    getRootProps() {
-      return { value, ...otherRootProps };
-    },
-    getLabelProps() {
-      if (isLikelyVisibleNode(label)) {
-        return {
-          ...labelProps,
-          children: label,
-        };
-      }
-
-      return null;
-    },
-    getTrackProps() {
-      return trackProps;
-    },
-    getValueProps() {
-      if (isLikelyVisibleNode(label)) {
-        return valueProps;
-      }
-
-      return null;
-    },
-    getIndicatorProps() {
-      return indicatorProps;
-    },
-  };
+  return new MeterAPI(props);
 };
 
-export { type MeterAPI as API, useMeterAPI as useAPI };
+export { MeterAPI as API, useMeterAPI as useAPI };
 
 // Component
 // ---------

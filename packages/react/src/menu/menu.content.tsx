@@ -3,6 +3,7 @@ import * as React from "react";
 
 import { CheckIcon, ChevronRightIcon } from "../_icons.jsx";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
+import { getItemKey } from "../_item.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
@@ -71,7 +72,7 @@ export namespace MenuContentProps {
     React.ComponentProps<typeof Menu.Popup>,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // MenuContentProps:
+      // MenuPopupProps:
       "id" | "finalFocus",
       keyof Render | keyof SuruUI
     >
@@ -126,7 +127,7 @@ export { MenuContent as Content };
 export namespace Content {
   export type State = MenuContentState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
 
   export namespace Props {
     export type Render = MenuContentProps.Render;
@@ -149,7 +150,7 @@ const defaultItemRenderer: IMenuContentItemRenderer = (item, index, items) => {
       const { type: _, label, ...props } = item;
 
       return (
-        <MenuItem {...props} key={index}>
+        <MenuItem {...props} key={getItemKey(item) ?? index}>
           {label}
         </MenuItem>
       );
@@ -159,7 +160,7 @@ const defaultItemRenderer: IMenuContentItemRenderer = (item, index, items) => {
       const { type: _, label, ...props } = item;
 
       return (
-        <MenuLinkItem {...props} key={index}>
+        <MenuLinkItem {...props} key={getItemKey(item) ?? index}>
           {label}
         </MenuLinkItem>
       );
@@ -169,7 +170,7 @@ const defaultItemRenderer: IMenuContentItemRenderer = (item, index, items) => {
       const { type: _, label, ...props } = item;
 
       return (
-        <MenuCheckboxItem {...props} key={index}>
+        <MenuCheckboxItem {...props} key={getItemKey(item) ?? index}>
           {label}
           <MenuCheckboxItemIndicator>
             <CheckIcon />
@@ -181,14 +182,14 @@ const defaultItemRenderer: IMenuContentItemRenderer = (item, index, items) => {
     case isRadioItemObjectGroup(item): {
       const { type: _, items: groupItems, ...props } = item;
 
-      return <MenuRadioGroup {...props} key={index} items={groupItems} />;
+      return <MenuRadioGroup {...props} key={getItemKey(item) ?? index} items={groupItems} />;
     }
 
     case isSubmenuItemObject(item): {
       const { type: _, items, label, ...props } = item;
 
       return (
-        <MenuSubmenuRoot {...props} key={index} items={items}>
+        <MenuSubmenuRoot {...props} key={getItemKey(item) ?? index} items={items}>
           <MenuSubmenuTrigger>
             {label}
             <ChevronRightIcon />
@@ -206,8 +207,8 @@ const defaultItemRenderer: IMenuContentItemRenderer = (item, index, items) => {
       const { type: _, items: groupItems, label, ...props } = item;
 
       return (
-        <React.Fragment key={index}>
-          <MenuGroup {...props} key={index}>
+        <React.Fragment key={getItemKey(item) ?? index}>
+          <MenuGroup {...props}>
             {isLikelyVisibleNode(label) && <MenuGroupLabel>{label}</MenuGroupLabel>}
             {groupItems.map(defaultItemRenderer)}
           </MenuGroup>

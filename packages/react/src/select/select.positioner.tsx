@@ -67,9 +67,6 @@ export const SelectPositioner: IComponent<SelectPositionerProps> = function SuiS
 
 export { SelectPositioner as Positioner };
 
-/**
- * {@link SelectPositioner} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Positioner {
   export type State = SelectPositionerState;
 

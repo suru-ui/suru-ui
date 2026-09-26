@@ -8,7 +8,6 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { getItemVariant } from "./_context-menu.utils.jsx";
 import { useContextMenuContext } from "./context-menu.context.js";
 
 /**
@@ -54,9 +53,7 @@ export namespace ContextMenuItemProps {
     radius?: ContextMenuItemRadius | undefined;
 
     /**
-     * チェック状態のときの外観を指定します。
-     *
-     * チェックされていないときは常に `"naked"` になります。
+     * 項目の主な外観を指定します。
      *
      * 既定値は {@link ContextMenuRootProps.variant|variant} です。
      */
@@ -146,7 +143,7 @@ export const ContextMenuItem: IComponent<ContextMenuItemProps> = function SuiCon
           radius,
           pending: undefined,
           squared: undefined,
-          variant: getItemVariant(state, variant),
+          variant,
           disabled: state.disabled,
           outlined: undefined,
           nativeButton,

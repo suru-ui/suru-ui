@@ -1,8 +1,8 @@
 import { Tooltip } from "@base-ui/react/tooltip";
-import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import type { IComponent } from "../types.js";
+import type { TooltipContextSize, TooltipContextRadius } from "./tooltip.context.js";
 import { TooltipContext } from "./tooltip.context.js";
 import type { TooltipHandle } from "./tooltip.handle.js";
 
@@ -29,7 +29,7 @@ export type TooltipRootChangeEventReason = Tooltip.Root.ChangeEventReason;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type TooltipRootRadius = "none" | Size;
+export type TooltipRootRadius = TooltipContextRadius;
 
 /**
  * ツールチップの大きさです。
@@ -38,7 +38,7 @@ export type TooltipRootRadius = "none" | Size;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type TooltipRootSize = Size;
+export type TooltipRootSize = TooltipContextSize;
 
 /**
  * {@link TooltipRoot} が持つ状態です。
@@ -133,16 +133,16 @@ interface ITooltipRoot extends IComponent<TooltipRootProps> {
 export const TooltipRoot: ITooltipRoot = function SuiTooltipRoot<TPayload>(
   props: TooltipRootProps<TPayload>,
 ) {
-  const { size = "md", radius = size, outlined = false, ...otherProps } = props;
+  const { size = "md", handle, radius = size, outlined = false, ...otherProps } = props;
   const ctx = React.useMemo<TooltipContext>(
     () => ({ size, radius, outlined }),
     [size, radius, outlined],
   );
 
   return (
-    <TooltipContext.Provider value={ctx}>
-      <Tooltip.Root {...otherProps} />
-    </TooltipContext.Provider>
+    <TooltipContext value={ctx}>
+      <Tooltip.Root {...otherProps} handle={handle} />
+    </TooltipContext>
   );
 };
 

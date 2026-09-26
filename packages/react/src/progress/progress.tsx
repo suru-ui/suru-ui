@@ -1,3 +1,5 @@
+import * as React from "react";
+
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import type { IComponent } from "../types.js";
 import {
@@ -62,29 +64,35 @@ export type ProgressSlotProps = {
  */
 export type ProgressState = ProgressRootState;
 
+namespace ProgressProps {
+  export type Progress = {
+    /**
+     * 進捗の説明ラベルです。
+     *
+     * 指定すると {@link ProgressValue} も表示されます。
+     */
+    label?: ProgressLabelProps["children"] | undefined;
+
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     */
+    slotProps?: ProgressSlotProps | undefined;
+
+    /**
+     * 現在値です。`null` を指定すると不確定状態になります。
+     *
+     * @default null
+     */
+    value?: number | null | undefined;
+  };
+
+  export type Root = Omit<ProgressRootProps, "children" | keyof Progress>;
+}
+
 /**
  * {@link Progress} に渡す props です。
  */
-export type ProgressProps = Omit<ProgressRootProps, "children" | "value"> & {
-  /**
-   * 進捗の説明ラベルです。
-   *
-   * 指定すると {@link ProgressValue} も表示されます。
-   */
-  label?: ProgressLabelProps["children"] | undefined;
-
-  /**
-   * 各パーツに個別の props を渡すためのオブジェクトです。
-   */
-  slotProps?: ProgressSlotProps | undefined;
-
-  /**
-   * 現在値です。`null` を指定すると不確定状態になります。
-   *
-   * @default null
-   */
-  value?: number | null | undefined;
-};
+export type ProgressProps = ProgressProps.Progress & ProgressProps.Root;
 
 // API
 // ---
@@ -92,35 +100,88 @@ export type ProgressProps = Omit<ProgressRootProps, "children" | "value"> & {
 /**
  * {@link Progress} を構成する各パーツの props を作成するための API です。
  */
-export interface ProgressAPI {
+export class ProgressAPI {
+  private readonly progressProps: Required<Omit<ProgressProps.Progress, "slotProps" | "value">> & {
+    readonly value: number | null;
+  };
+
+  private readonly rootProps: ProgressProps.Root;
+
+  private readonly slotProps: ProgressSlotProps;
+
+  /**
+   * @param props {@link Progress} の props です。
+   * @internal
+   */
+  public constructor(props: ProgressProps) {
+    const { label, value = null, slotProps = {}, ...rootProps } = props;
+    this.progressProps = { label, value };
+    this.rootProps = rootProps;
+    this.slotProps = slotProps;
+  }
+
   /**
    * {@link ProgressIndicator} に渡す props を取得します。
    */
-  getIndicatorProps(): ProgressIndicatorProps;
+  public getIndicatorProps(): ProgressIndicatorProps {
+    const { indicator: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link ProgressLabel} に渡す props を取得します。
    *
-   * それを表示しないときは `null` を返します。
+   * ラベルを表示しないときは `null` を返します。
    */
-  getLabelProps(): ProgressLabelProps | null;
+  public getLabelProps(): ProgressLabelProps | null {
+    const { label: props = {} } = this.slotProps;
+    const { label } = this.progressProps;
+
+    if (isLikelyVisibleNode(label)) {
+      return {
+        ...props,
+        children: label,
+      };
+    }
+
+    return null;
+  }
 
   /**
    * {@link ProgressRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<ProgressRootProps, "children">;
+  public getRootProps(): Omit<ProgressRootProps, "children"> {
+    return {
+      ...this.rootProps,
+      value: this.progressProps.value,
+    };
+  }
 
   /**
    * {@link ProgressTrack} に渡す props を取得します。
    */
-  getTrackProps(): Omit<ProgressTrackProps, "children">;
+  public getTrackProps(): Omit<ProgressTrackProps, "children"> {
+    const { track: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link ProgressValue} に渡す props を取得します。
    *
-   * それを表示しないときは `null` を返します。
+   * 値を表示しないときは `null` を返します。
    */
-  getValueProps(): ProgressValueProps | null;
+  public getValueProps(): ProgressValueProps | null {
+    const { value: props = {} } = this.slotProps;
+    const { label } = this.progressProps;
+
+    if (isLikelyVisibleNode(label)) {
+      return props;
+    }
+
+    return null;
+  }
 }
 
 interface IUseProgressAPI {
@@ -137,49 +198,10 @@ interface IUseProgressAPI {
  * {@link ProgressAPI} を作成するフックです。
  */
 export const useProgressAPI: IUseProgressAPI = function useSuiProgressAPI(props) {
-  const {
-    label,
-    value = null,
-    slotProps: {
-      label: labelProps = {},
-      track: trackProps = {},
-      value: valueProps = {},
-      indicator: indicatorProps = {},
-    } = {},
-    ...otherRootProps
-  } = props;
-
-  return {
-    getRootProps() {
-      return { ...otherRootProps, value };
-    },
-    getLabelProps() {
-      if (isLikelyVisibleNode(label)) {
-        return {
-          ...labelProps,
-          children: label,
-        };
-      }
-
-      return null;
-    },
-    getTrackProps() {
-      return trackProps;
-    },
-    getValueProps() {
-      if (isLikelyVisibleNode(label)) {
-        return valueProps;
-      }
-
-      return null;
-    },
-    getIndicatorProps() {
-      return indicatorProps;
-    },
-  };
+  return new ProgressAPI(props);
 };
 
-export { type ProgressAPI as API, useProgressAPI as useAPI };
+export { ProgressAPI as API, useProgressAPI as useAPI };
 
 // Component
 // ---------

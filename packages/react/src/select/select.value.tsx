@@ -59,9 +59,6 @@ export const SelectValue: IComponent<SelectValueProps> = function SuiSelectValue
 
 export { SelectValue as Value };
 
-/**
- * {@link SelectValue} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Value {
   export type State = SelectValueState;
 

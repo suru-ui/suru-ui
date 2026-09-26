@@ -5,7 +5,6 @@ import * as React from "react";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import type { DrawerHandle } from "./drawer.handle.js";
 
 /**
  * {@link DrawerTrigger} が持つ状態です。
@@ -13,18 +12,13 @@ import type { DrawerHandle } from "./drawer.handle.js";
 export type DrawerTriggerState = Drawer.Trigger.State;
 
 export namespace DrawerTriggerProps {
-  export type Render = RenderProps<DrawerTriggerState>;
+  export type Render = Omit<RenderProps<DrawerTriggerState>, "render">;
 
-  export type SuruUI<TPayload = any> = {
+  export type SuruUI = {
     /**
-     * ボタンとしてレンダリングする要素です。
+     * ボタンとして描画する関数です。
      */
-    children: NonNullable<React.ComponentProps<typeof Drawer.Trigger>["render"]>;
-
-    /**
-     * トリガーとドロワーに関連付けるためのハンドルです。
-     */
-    handle: DrawerHandle<TPayload>;
+    children: NonNullable<RenderProps<DrawerTriggerState>["render"]>;
   };
 
   export type BaseUI<TPayload = any> = Pick<
@@ -34,6 +28,7 @@ export namespace DrawerTriggerProps {
       // NativeButtonProps:
       | keyof NativeButtonProps
       // DrawerTriggerProps:
+      | "handle"
       | "payload"
       | "id",
       keyof Render | keyof SuruUI
@@ -52,7 +47,7 @@ export namespace DrawerTriggerProps {
  * @template TPayload トリガーが送信するデータの型です。
  */
 export type DrawerTriggerProps<TPayload = any> = DrawerTriggerProps.Render &
-  DrawerTriggerProps.SuruUI<TPayload> &
+  DrawerTriggerProps.SuruUI &
   DrawerTriggerProps.BaseUI<TPayload> &
   DrawerTriggerProps.HTML<TPayload>;
 
@@ -85,14 +80,14 @@ export namespace Trigger {
   export type State = DrawerTriggerState;
 
   export type Props<TPayload = any> = Props.Render &
-    Props.SuruUI<TPayload> &
+    Props.SuruUI &
     Props.BaseUI<TPayload> &
     Props.HTML<TPayload>;
 
   export namespace Props {
     export type Render = DrawerTriggerProps.Render;
 
-    export type SuruUI<TPayload = any> = DrawerTriggerProps.SuruUI<TPayload>;
+    export type SuruUI = DrawerTriggerProps.SuruUI;
 
     export type BaseUI<TPayload = any> = DrawerTriggerProps.BaseUI<TPayload>;
 

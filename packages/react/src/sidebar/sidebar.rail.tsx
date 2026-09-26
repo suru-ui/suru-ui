@@ -11,6 +11,11 @@ import { type SidebarOpenState, useSidebarContext } from "./sidebar.context.js";
  */
 export type SidebarRailState = {
   /**
+   * サイドバーを無効にするかどうかです。
+   */
+  readonly disabled: boolean;
+
+  /**
    * サイドバーの開閉状態です。
    */
   readonly state: SidebarOpenState;
@@ -48,16 +53,20 @@ export const SidebarRail: IComponent<SidebarRailProps> = function SuiSidebarRail
     type = "button",
     onClick,
     children,
+    disabled = false,
     "aria-label": ariaLabel = "サイドバーを切り替える",
     ...otherButtonProps
   } = props;
   const handleOnClick: NonNullable<SidebarRailProps["onClick"]> = (event) => {
     onClick?.(event);
-    if (!event.defaultPrevented && ctx.collapsible !== "none") {
+    if (!event.defaultPrevented && !disabled && ctx.collapsible !== "none") {
       ctx.toggle();
     }
   };
-  const renderState = React.useMemo<SidebarRailState>(() => ({ state: ctx.state }), [ctx.state]);
+  const renderState = React.useMemo<SidebarRailState>(
+    () => ({ state: ctx.state, disabled }),
+    [ctx.state, disabled],
+  );
 
   if (ctx.collapsible === "none") {
     return null;
@@ -70,12 +79,15 @@ export const SidebarRail: IComponent<SidebarRailProps> = function SuiSidebarRail
         type,
         onClick: handleOnClick,
         children,
+        disabled,
         className: cn<SidebarRailState>(
           "sui_sidebar_rail",
           (state) => state.state === "expanded" && "sui_sidebar_rail-expanded",
           (state) => state.state === "collapsed" && "sui_sidebar_rail-collapsed",
+          (state) => state.disabled && "sui_sidebar_rail-disabled",
         ),
         "aria-label": ariaLabel,
+        "aria-expanded": ctx.open,
       },
     ],
     state: renderState,

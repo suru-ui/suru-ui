@@ -37,13 +37,13 @@ export type FileUploadItemSizeTextProps = FileUploadItemSizeTextProps.Render &
 export const FileUploadItemSizeText: IComponent<FileUploadItemSizeTextProps> =
   function SuiFileUploadItemSizeText(props) {
     const ctx = useFileUploadItemContext();
-    const { children, ...otherSpanProps } = props;
+    const { children = formatFileSize(ctx.file.size), ...otherSpanProps } = props;
 
     return useRender({
       props: [
         otherSpanProps,
         {
-          children: children ?? formatFileSize(ctx.file.size),
+          children,
           className: "sui_file_upload_item_size_text",
         },
       ],

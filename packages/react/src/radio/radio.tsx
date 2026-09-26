@@ -37,16 +37,28 @@ export type RadioSlotProps = {
  */
 export type RadioState = RadioRootState;
 
-/**
- * {@link Radio} に渡す props です。
- */
-export type RadioProps = Omit<RadioRootProps, "children"> &
-  Pick<RadioIndicatorProps, "children"> & {
+namespace RadioProps {
+  export type Radio = {
+    /**
+     * ラジオボタンのインジケーターに表示する内容です。
+     *
+     * 省略時は既定の丸印を表示します。
+     */
+    children?: RadioIndicatorProps["children"] | undefined;
+
     /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
      */
     slotProps?: RadioSlotProps | undefined;
   };
+
+  export type Root = Omit<RadioRootProps, "children" | keyof Radio>;
+}
+
+/**
+ * {@link Radio} に渡す props です。
+ */
+export type RadioProps = RadioProps.Radio & RadioProps.Root;
 
 // API
 // ---
@@ -54,16 +66,43 @@ export type RadioProps = Omit<RadioRootProps, "children"> &
 /**
  * {@link Radio} を構成する各パーツの props などを作成するための API です。
  */
-export interface RadioAPI {
+export class RadioAPI {
+  private readonly radioProps: Required<Omit<RadioProps.Radio, "slotProps">>;
+
+  private readonly slotProps: RadioSlotProps;
+
+  private readonly rootProps: RadioProps.Root;
+
+  /**
+   * @param props {@link Radio} の props です。
+   * @internal
+   */
+  public constructor(props: RadioProps) {
+    const { children, slotProps = {}, ...rootProps } = props;
+    this.radioProps = { children };
+    this.slotProps = slotProps;
+    this.rootProps = rootProps;
+  }
+
   /**
    * {@link RadioIndicator} に渡す props を取得します。
    */
-  getIndicatorProps(): RadioIndicatorProps;
+  public getIndicatorProps(): RadioIndicatorProps {
+    const { children } = this.radioProps;
+    const { indicator: props = {} } = this.slotProps;
+
+    return {
+      ...props,
+      children,
+    };
+  }
 
   /**
    * {@link RadioRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<RadioRootProps, "children">;
+  public getRootProps(): Omit<RadioRootProps, "children"> {
+    return this.rootProps;
+  }
 }
 
 interface IUseRadioAPI {
@@ -71,7 +110,7 @@ interface IUseRadioAPI {
    * {@link RadioAPI} を作成します。
    *
    * @param props {@link Radio} の props です。
-   * @returns ラジオボタンの API です
+   * @returns ラジオボタンの API です。
    */
   (props: RadioProps): RadioAPI;
 }
@@ -80,28 +119,18 @@ interface IUseRadioAPI {
  * {@link RadioAPI} を作成するフックです。
  */
 export const useRadioAPI: IUseRadioAPI = function useSuiRadioAPI(props) {
-  const { children, slotProps: { indicator: indicatorProps = {} } = {}, ...otherRootProps } = props;
-
-  return {
-    getRootProps() {
-      return otherRootProps;
-    },
-    getIndicatorProps() {
-      return {
-        ...indicatorProps,
-        children,
-      };
-    },
-  };
+  return new RadioAPI(props);
 };
 
-export { type RadioAPI as API, useRadioAPI as useAPI };
+export { RadioAPI as API, useRadioAPI as useAPI };
 
 // Component
 // ---------
 
 /**
  * ラジオボタンを表示するコンポーネントです。
+ *
+ * ラベルのテキストは `label` 要素で囲んで指定します。
  */
 export const Radio: IComponent<RadioProps> = function SuiRadio(props) {
   const api = useRadioAPI(props);

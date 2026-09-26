@@ -2,6 +2,8 @@ import { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
 import { CheckIcon } from "../_icons.jsx";
+import isLikelyVisibleNode from "../_is-likely-visible-node.js";
+import { getItemKey } from "../_item.js";
 import toReactNode from "../_to-react-node.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
@@ -63,22 +65,9 @@ export interface ISelectListItemRenderer<TValue = any> {
    * @returns レンダリングする内容です。
    */
   (
-    item: SelectListLabeledItemObject<TValue>,
+    item: SelectListItemObject<TValue>,
     index: number,
-    items: readonly SelectListLabeledItemObject<TValue>[],
-  ): React.ReactNode;
-  (
-    item: SelectListItemObjectGroup<TValue>,
-    index: number,
-    items: readonly SelectListItemObjectGroup<TValue>[],
-  ): React.ReactNode;
-}
-
-interface IAnySelectListItemRenderer {
-  (
-    item: SelectListItemObject,
-    index: number,
-    items: readonly SelectListItemObject[],
+    items: readonly SelectListItemObject<TValue>[],
   ): React.ReactNode;
 }
 
@@ -90,23 +79,22 @@ export type SelectListState = BaseSelect.List.State;
 export namespace SelectListProps {
   export type Render = RenderProps<SelectListState>;
 
-  export type SuruUI<TValue = any> = {
-    /**
-     * リストの内容、または各項目をレンダリングする関数です。
-     *
-     * 関数を指定した場合は {@link SelectRootProps.items|items} の各項目が引数として渡されます。
-     */
-    children?: React.ReactNode | ISelectListItemRenderer<TValue>;
-  };
+  export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof BaseSelect.List>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // SelectListProps:
-      never,
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI<TValue = any> = Override<
+    Pick<
+      React.ComponentProps<typeof BaseSelect.List>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // SelectListProps:
+        "children",
+        keyof Render | keyof SuruUI
+      >
+    >,
+    // Base UI の型を強化します。
+    {
+      children?: React.ReactNode | ISelectListItemRenderer<TValue> | undefined;
+    }
   >;
 
   export type HTML = Omit<
@@ -121,16 +109,23 @@ export namespace SelectListProps {
  * @template TValue 項目の値の型です。
  */
 export type SelectListProps<TValue = any> = SelectListProps.Render &
-  SelectListProps.SuruUI<TValue> &
-  SelectListProps.BaseUI &
+  SelectListProps.SuruUI &
+  SelectListProps.BaseUI<TValue> &
   SelectListProps.HTML;
+
+interface ISelectList extends IComponent<SelectListProps> {
+  /**
+   * @template TValue 項目の値の型です。
+   */
+  <TValue = any>(props: SelectListProps<TValue>): IComponent.Return;
+}
 
 /**
  * 選択項目を列挙するリスト要素です。
  *
  * {@link SelectRoot} の `items` を読み取り、関数子を受け取った場合は各項目に適用します。
  */
-export const SelectList: IComponent<SelectListProps> = function SuiSelectList(props) {
+export const SelectList: ISelectList = function SuiSelectList(props: SelectListProps) {
   const ctx = useSelectContext();
   const { children = defaultListItemRenderer, className, ...otherProps } = props;
 
@@ -186,7 +181,7 @@ function renderListItems(
           value: item,
         };
       })
-      .map(renderer as IAnySelectListItemRenderer);
+      .map(renderer);
   }
 
   return Object.entries(items)
@@ -200,12 +195,11 @@ function renderListItems(
 const defaultListItemRenderer: ISelectListItemRenderer = (item, index, items) => {
   if ("items" in item) {
     const { items: groupItems, label, ...otherGroupProps } = item;
-    const labelNode = toReactNode(label);
 
     return (
-      <React.Fragment key={index}>
+      <React.Fragment key={getItemKey(item) ?? index}>
         <SelectGroup {...otherGroupProps}>
-          {labelNode && <SelectGroupLabel>{labelNode}</SelectGroupLabel>}
+          {isLikelyVisibleNode(label) && <SelectGroupLabel>{label}</SelectGroupLabel>}
           {groupItems.map(defaultListItemRenderer)}
         </SelectGroup>
         {index < items.length - 1 && <SelectSeparator />}
@@ -216,7 +210,7 @@ const defaultListItemRenderer: ISelectListItemRenderer = (item, index, items) =>
   const { label, value, ...otherItemProps } = item;
 
   return (
-    <SelectItem {...otherItemProps} key={index} value={value}>
+    <SelectItem {...otherItemProps} key={getItemKey(item) ?? index} value={value}>
       <SelectItemText>{toReactNode(label, String(value))}</SelectItemText>
       <SelectItemIndicator>
         <CheckIcon />
@@ -227,20 +221,17 @@ const defaultListItemRenderer: ISelectListItemRenderer = (item, index, items) =>
 
 export { SelectList as List };
 
-/**
- * {@link SelectList} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace List {
   export type State = SelectListState;
 
-  export type Props<TValue = any> = Props.Render & Props.SuruUI<TValue> & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render & Props.SuruUI & Props.BaseUI<TValue> & Props.HTML;
 
   export namespace Props {
     export type Render = SelectListProps.Render;
 
-    export type SuruUI<TValue = any> = SelectListProps.SuruUI<TValue>;
+    export type SuruUI = SelectListProps.SuruUI;
 
-    export type BaseUI = SelectListProps.BaseUI;
+    export type BaseUI<TValue = any> = SelectListProps.BaseUI<TValue>;
 
     export type HTML = SelectListProps.HTML;
   }

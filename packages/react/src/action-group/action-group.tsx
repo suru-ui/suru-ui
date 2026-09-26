@@ -35,6 +35,50 @@ export type ActionGroupState = ActionGroupRootState;
  */
 export type ActionGroupProps = ActionGroupRootProps;
 
+// API
+// ---
+
+/**
+ * {@link ActionGroup} を構成する各パーツの props などを作成するための API です。
+ */
+export class ActionGroupAPI {
+  private readonly rootProps: ActionGroupRootProps;
+
+  /**
+   * @param props {@link ActionGroup} の props です。
+   * @internal
+   */
+  public constructor(props: ActionGroupProps) {
+    this.rootProps = props;
+  }
+
+  /**
+   * {@link ActionGroupRoot} に渡す props を取得します。
+   */
+  public getRootProps(): ActionGroupRootProps {
+    return this.rootProps;
+  }
+}
+
+interface IUseActionGroupAPI {
+  /**
+   * {@link ActionGroupAPI} を作成します。
+   *
+   * @param props {@link ActionGroup} の props です。
+   * @returns アクショングループの API です
+   */
+  (props: ActionGroupProps): ActionGroupAPI;
+}
+
+/**
+ * {@link ActionGroupAPI} を作成するフックです。
+ */
+export const useActionGroupAPI: IUseActionGroupAPI = function useSuiActionGroupAPI(props) {
+  return new ActionGroupAPI(props);
+};
+
+export { ActionGroupAPI as API, useActionGroupAPI as useAPI };
+
 // Component
 // ---------
 
@@ -47,7 +91,9 @@ interface IActionGroup extends IComponent<ActionGroupProps> {
  */
 export const ActionGroup: IActionGroup = /*#__PURE__*/ Object.assign(
   function SuiActionGroup(props: ActionGroupProps) {
-    return <ActionGroupRoot {...props} />;
+    const api = useActionGroupAPI(props);
+
+    return <ActionGroupRoot {...api.getRootProps()} />;
   },
   {
     useContext: useActionGroupContext,

@@ -5,14 +5,26 @@
 /* 固定 */
 :scope {
   display: flex;
-  flex-direction: column;
+}
 
+/* 変数 */
+:scope {
+  --sui_radio_group-flex_direction: ;
+}
+
+/* 可変 */
+:scope {
+  flex-direction: var(--sui_radio_group-flex_direction);
+}
+
+/* 代入 */
+:scope {
   &.sui_radio_group-orientation_horizontal {
-    flex-direction: row;
+    --sui_radio_group-flex_direction: row;
   }
 
   &.sui_radio_group-orientation_vertical {
-    flex-direction: column;
+    --sui_radio_group-flex_direction: column;
   }
 }
 

@@ -8,19 +8,17 @@ import type { HoverCardHandle } from "./hover-card.handle.js";
 
 /**
  * {@link HoverCardTrigger} が持つ状態です。
- *
- * @template TPayload トリガーから渡すデータの型です。
  */
 export type HoverCardTriggerState = PreviewCard.Trigger.State;
 
 export namespace HoverCardTriggerProps {
-  export type Render = RenderProps<HoverCardTriggerState>;
+  export type Render = Omit<RenderProps<HoverCardTriggerState>, "render">;
 
   export type SuruUI<TPayload = any> = {
     /**
      * ホバーの反応対象としてレンダリングする要素です。
      *
-     * {@link PreviewCard.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
+     * Base UI の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
      */
     children: NonNullable<PreviewCard.Trigger.Props<TPayload>["render"]>;
 
@@ -72,7 +70,7 @@ export interface IHoverCardTrigger extends IComponent<HoverCardTriggerProps> {
  * ホバーカードを開くトリガー要素です。
  *
  * 要素にマウスカーソルを重ねると、遅延の後にホバーカードが開きます。
- * 子要素は何にもラップされず、そのまま {@link PreviewCard.Trigger} の `render` プロパティーに渡されます。
+ * 子要素は何にもラップされず、そのまま Base UI の `render` プロパティーに渡されます。
  */
 export const HoverCardTrigger: IHoverCardTrigger = function SuiHoverCardTrigger<TPayload>(
   props: HoverCardTriggerProps<TPayload>,

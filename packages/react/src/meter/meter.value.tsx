@@ -3,7 +3,21 @@ import * as React from "react";
 
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+
+/**
+ * 値をレンダリングする関数のインターフェイスです。
+ */
+export interface IMeterValueRenderer {
+  /**
+   * 値をレンダリングします。
+   *
+   * @param formattedValue 書式化された値です。
+   * @param value 現在値です。
+   * @returns レンダリングする内容です。
+   */
+  (formattedValue: string, value: number): React.ReactNode;
+}
 
 /**
  * {@link MeterValue} が持つ状態です。
@@ -15,14 +29,19 @@ export namespace MeterValueProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Meter.Value>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // MeterValueProps:
-      "children",
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Override<
+    Pick<
+      React.ComponentProps<typeof Meter.Value>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // MeterValueProps:
+        "children",
+        keyof Render | keyof SuruUI
+      >
+    >,
+    {
+      children?: IMeterValueRenderer | React.ReactNode | undefined;
+    }
   >;
 
   export type HTML = Omit<
@@ -43,9 +62,15 @@ export type MeterValueProps = MeterValueProps.Render &
  * メーターの現在値を表示するコンポーネントです。
  */
 export const MeterValue: IComponent<MeterValueProps> = function SuiMeterValue(props) {
-  const { className, ...otherProps } = props;
+  const { children, className, ...otherProps } = props;
+  const renderer =
+    typeof children === "function" ? children : children != null ? () => children : undefined;
 
-  return <Meter.Value {...otherProps} className={cn(className, "sui_meter_value")} />;
+  return (
+    <Meter.Value {...otherProps} className={cn(className, "sui_meter_value")}>
+      {renderer}
+    </Meter.Value>
+  );
 };
 
 export { MeterValue as Value };
@@ -64,4 +89,6 @@ export namespace Value {
 
     export type HTML = MeterValueProps.HTML;
   }
+
+  export type IRenderer = IMeterValueRenderer;
 }

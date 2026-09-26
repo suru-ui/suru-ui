@@ -32,10 +32,10 @@ export type DialogHeaderProps = DialogHeaderProps.Render &
 /**
  * ダイアログのヘッダーコンポーネントです。
  */
-export const DialogHeader: IComponent<DialogHeaderProps> = function SuiDialogHeader(htmlProps) {
+export const DialogHeader: IComponent<DialogHeaderProps> = function SuiDialogHeader(props) {
   return useRender({
     props: [
-      htmlProps,
+      props,
       {
         className: "sui_dialog_header",
       },

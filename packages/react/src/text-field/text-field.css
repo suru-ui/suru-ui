@@ -34,11 +34,11 @@
   --sui_text_field-focusring_color: ;
   --sui_text_field-focusring_offset: ;
   --sui_text_field-background_color: ;
-  --sui_text_field-border_color-normal: ;
+  --sui_text_field-border_color-idle: ;
   --sui_text_field-border_color-hover: ;
   --sui_text_field-border_color-invalid: ;
   --sui_text_field-border_color-focus_visible: ;
-  --sui_text_field-border_width-normal: ;
+  --sui_text_field-border_width-idle: ;
   --sui_text_field-border_width-hover: ;
   --sui_text_field-border_width-focus_visible: ;
   --sui_text_field-border_width-invalid: ;
@@ -68,10 +68,10 @@
   --sui_text_field-focusring_width: var(--sui-focusring_width);
   --sui_text_field-focusring_color: var(--sui-focusring_color);
   --sui_text_field-focusring_offset: var(--sui-focusring_offset);
-  --sui_text_field-border_color-normal: var(--sui-grey-naked-border-normal);
+  --sui_text_field-border_color-idle: var(--sui-grey-naked-border-normal);
   --sui_text_field-border_color-hover: var(--sui-grey-naked-border-subtle);
   --sui_text_field-border_color-invalid: var(--sui-red-naked-canvas_text-normal);
-  --sui_text_field-border_width-normal: --sui-border_width(1);
+  --sui_text_field-border_width-idle: --sui-border_width(1);
   --sui_text_field-border_width-hover: --sui-border_width(1);
   --sui_text_field-border_width-focus_visible: --sui-border_width(2);
   --sui_text_field-border_width-invalid: --sui-border_width(2);
@@ -196,19 +196,21 @@
   }
 
   &.sui_text_field-outlined {
-    --_sui_text_field-border_color: var(--sui_text_field-border_color-normal);
-    --_sui_text_field-border_width: var(--sui_text_field-border_width-normal);
+    --_sui_text_field-border_color: var(--sui_text_field-border_color-idle);
+    --_sui_text_field-border_width: var(--sui_text_field-border_width-idle);
 
-    @media (any-hover: hover) {
-      &:hover {
-        --_sui_text_field-border_color: var(--sui_text_field-border_color-hover);
-        --_sui_text_field-border_width: var(--sui_text_field-border_width-hover);
+    &:not(:has(.sui_text_field_input-disabled)) {
+      @media (any-hover: hover) {
+        &:hover {
+          --_sui_text_field-border_color: var(--sui_text_field-border_color-hover);
+          --_sui_text_field-border_width: var(--sui_text_field-border_width-hover);
+        }
       }
-    }
 
-    &:focus-within {
-      --_sui_text_field-border_color: var(--sui_text_field-border_color-focus_visible);
-      --_sui_text_field-border_width: var(--sui_text_field-border_width-focus_visible);
+      &:focus-within {
+        --_sui_text_field-border_color: var(--sui_text_field-border_color-focus_visible);
+        --_sui_text_field-border_width: var(--sui_text_field-border_width-focus_visible);
+      }
     }
   }
 

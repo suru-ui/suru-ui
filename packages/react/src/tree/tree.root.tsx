@@ -8,7 +8,7 @@ import useRender, { type RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { getSelectAction } from "./_tree.jsx";
+import { isItemObject, getSelectAction } from "./_tree.jsx";
 import { type TreeSelectAction, TreeContext } from "./tree.context.js";
 import { TreeItemIndicator } from "./tree.indicator.jsx";
 import { type TreeItemProps, TreeItem } from "./tree.item.jsx";
@@ -605,10 +605,6 @@ const defaultRootItemRenderer: ITreeRootItemRenderer = (node, level, posInSet, s
     </TreeItem>
   );
 };
-
-function isItemObject(item: unknown): item is TreeRootItemObject {
-  return typeof item === "object" && item !== null && "id" in item && "label" in item;
-}
 
 /**
  * {@link TreeRoot} の状態やプロパティーをまとめた型名前空間です。

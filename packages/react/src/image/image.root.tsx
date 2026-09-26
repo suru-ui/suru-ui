@@ -69,6 +69,8 @@ export type ImageRootProps = ImageRootProps.Render &
 
 /**
  * 画像のルートコンポーネントです。
+ *
+ * 既定では `object-fit` を指定せず、画像は元の比率のまま表示されます。`fit` でコンテナーへのはめ込み方法を、`radius` で角丸を指定できます。
  */
 export const ImageRoot: IComponent<ImageRootProps> = function SuiImageRoot(props) {
   const {

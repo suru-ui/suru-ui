@@ -73,7 +73,18 @@ export const FieldRoot: IComponent<FieldRootProps> = function SuiFieldRoot(props
   return (
     <Field.Root
       {...otherProps}
-      className={cn(className, "sui_field", (state) => state.disabled && "sui_field-disabled")}
+      className={cn(
+        className,
+        "sui_field",
+        (state) => state.disabled && "sui_field-disabled",
+        (state) => state.touched && "sui_field-touched",
+        (state) => state.dirty && "sui_field-dirty",
+        (state) => state.valid === false && "sui_field-invalid",
+        (state) => state.valid === true && "sui_field-valid",
+        (state) => state.valid === null && "sui_field-unverified",
+        (state) => state.filled && "sui_field-filled",
+        (state) => state.focused && "sui_field-focused",
+      )}
       data-scope={dataScope}
     />
   );

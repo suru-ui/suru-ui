@@ -5,7 +5,7 @@ import * as React from "react";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { AlertDialogContentContext } from "./alert-dialog.context.js";
+import { AlertDialogContentContext } from "./alert-dialog.content.context.js";
 
 /**
  * アラートダイアログの角丸の大きさです。

@@ -1,11 +1,9 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import type { Size } from "@suru-ui/theme";
-import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { StatContext } from "./stat.context.js";
 
 /**
  * 統計の大きさです。
@@ -52,7 +50,7 @@ export type StatRootProps = StatRootProps.Render &
 /**
  * ラベルと値の組で統計を表示するルートコンポーネントです。
  *
- * `dl` 要素を描画し、大きさをコンテキストで子パーツへ伝えます。
+ * `dl` 要素を描画し、大きさを修飾クラスとして子パーツのスタイルへ反映します。
  */
 export const StatRoot: IComponent<StatRootProps> = function SuiStatRoot(props) {
   const {
@@ -61,8 +59,8 @@ export const StatRoot: IComponent<StatRootProps> = function SuiStatRoot(props) {
     "data-scope": dataScope = "",
     ...otherDlProps
   } = props;
-  const ctx = React.useMemo<StatContext>(() => ({ size }), [size]);
-  const element = useRender({
+
+  return useRender({
     props: [
       otherDlProps,
       {
@@ -72,8 +70,6 @@ export const StatRoot: IComponent<StatRootProps> = function SuiStatRoot(props) {
     ],
     defaultTagName: "dl",
   });
-
-  return <StatContext value={ctx}>{element}</StatContext>;
 };
 
 export { StatRoot as Root };

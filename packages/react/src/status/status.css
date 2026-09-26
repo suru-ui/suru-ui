@@ -36,7 +36,7 @@
   --sui_status-color: var(--sui-canvas_text-1);
 
   &.sui_status-size_sm {
-    --sui_status-gap: --sui-space(2);
+    --sui_status-gap: --sui-gap(2);
     --sui_status-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_status-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_status-line_height: var(--sui-text-oln-sm-n-line_height);
@@ -44,7 +44,7 @@
   }
 
   &.sui_status-size_md {
-    --sui_status-gap: --sui-space(3);
+    --sui_status-gap: --sui-gap(3);
     --sui_status-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_status-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_status-line_height: var(--sui-text-oln-md-n-line_height);
@@ -52,7 +52,7 @@
   }
 
   &.sui_status-size_lg {
-    --sui_status-gap: --sui-space(4);
+    --sui_status-gap: --sui-gap(4);
     --sui_status-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_status-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_status-line_height: var(--sui-text-oln-lg-n-line_height);
@@ -92,7 +92,7 @@
   --sui_status_indicator-border_radius: ;
   --sui_status_indicator-animation_duration: ;
   --sui_status_indicator-ripple_margin: ;
-  --sui_status_indicator-ripple_scale: ;
+  --sui_status_indicator-virtual_ripple_scale: ;
 }
 
 /* 可変 */
@@ -118,7 +118,7 @@
   --sui_status_indicator-animation_duration: 1.5s;
   --sui_status_indicator-ripple_margin: calc(
                                           var(--sui_status_indicator-size)
-                                          * (var(--sui_status_indicator-ripple_scale) - 1) / 2
+                                          * (var(--sui_status_indicator-virtual_ripple_scale) - 1) / 2
                                         );
 
   &.sui_status-size_sm {
@@ -134,39 +134,39 @@
   }
 
   &.sui_status-size_sm.sui_status-ripple_size_sm {
-    --sui_status_indicator-ripple_scale: 2;
+    --sui_status_indicator-virtual_ripple_scale: 2;
   }
 
   &.sui_status-size_sm.sui_status-ripple_size_md {
-    --sui_status_indicator-ripple_scale: 2.67;
+    --sui_status_indicator-virtual_ripple_scale: 2.67;
   }
 
   &.sui_status-size_sm.sui_status-ripple_size_lg {
-    --sui_status_indicator-ripple_scale: 3.33;
+    --sui_status_indicator-virtual_ripple_scale: 3.33;
   }
 
   &.sui_status-size_md.sui_status-ripple_size_sm {
-    --sui_status_indicator-ripple_scale: 1.75;
+    --sui_status_indicator-virtual_ripple_scale: 1.75;
   }
 
   &.sui_status-size_md.sui_status-ripple_size_md {
-    --sui_status_indicator-ripple_scale: 2.25;
+    --sui_status_indicator-virtual_ripple_scale: 2.25;
   }
 
   &.sui_status-size_md.sui_status-ripple_size_lg {
-    --sui_status_indicator-ripple_scale: 2.75;
+    --sui_status_indicator-virtual_ripple_scale: 2.75;
   }
 
   &.sui_status-size_lg.sui_status-ripple_size_sm {
-    --sui_status_indicator-ripple_scale: 1.6;
+    --sui_status_indicator-virtual_ripple_scale: 1.6;
   }
 
   &.sui_status-size_lg.sui_status-ripple_size_md {
-    --sui_status_indicator-ripple_scale: 2;
+    --sui_status_indicator-virtual_ripple_scale: 2;
   }
 
   &.sui_status-size_lg.sui_status-ripple_size_lg {
-    --sui_status_indicator-ripple_scale: 2.4;
+    --sui_status_indicator-virtual_ripple_scale: 2.4;
   }
 
   &.sui_status-color_grey {
@@ -225,7 +225,7 @@
 
   to {
     opacity: 0;
-    transform: scale(var(--sui_status_indicator-ripple_scale));
+    transform: scale(var(--sui_status_indicator-virtual_ripple_scale));
   }
 }
 }

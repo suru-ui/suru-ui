@@ -106,9 +106,19 @@ export type TreeContext = {
 export const TreeContext: React.Context<TreeContext | null> =
   React.createContext<TreeContext | null>(null);
 
-function useSuiTreeContext(optional?: false): TreeContext;
-function useSuiTreeContext(optional?: boolean): TreeContext | null;
-function useSuiTreeContext(optional?: boolean): TreeContext | null {
+export interface IUseTreeContext extends IUseContext<TreeContext> {
+  /**
+   * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
+   * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
+   */
+  (optional?: false): TreeContext;
+  (optional?: boolean): TreeContext | null;
+}
+
+/**
+ * {@link TreeContext} を読み取るフックです。
+ */
+export const useTreeContext: IUseTreeContext = function useSuiTreeContext(optional?: boolean): any {
   const ctx = React.use(TreeContext);
   if (ctx === null && !optional) {
     throw new ContextMissingError({
@@ -118,15 +128,18 @@ function useSuiTreeContext(optional?: boolean): TreeContext | null {
   }
 
   return ctx;
-}
-
-/**
- * {@link TreeContext} を読み取るフックです。
- */
-export const useTreeContext: IUseContext<TreeContext> = useSuiTreeContext;
+};
 
 export { TreeContext as Context, useTreeContext as useContext };
 
 export namespace Context {
+  export type Color = TreeRootColor;
+
+  export type Radius = TreeRootRadius;
+
   export type SelectAction = TreeSelectAction;
+
+  export type Size = TreeRootSize;
+
+  export type Variant = TreeRootVariant;
 }

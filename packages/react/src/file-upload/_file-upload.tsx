@@ -16,11 +16,42 @@ export function formatFileSize(bytes: number): string {
   return `${formattedValue} ${SIZE_UNITS[unitIndex]}`;
 }
 
+// HTML の accept 属性と同じ基準で、ファイルが指定された種類に一致するか判定します。
+function isFileAcceptable(file: File, accept: string | readonly string[] | undefined): boolean {
+  if (accept === undefined) {
+    return true;
+  }
+
+  const tokens = (typeof accept === "string" ? accept.split(",") : accept)
+    .map((token) => token.trim().toLowerCase())
+    .filter((token) => token.length > 0);
+
+  if (tokens.length === 0 || tokens.includes("*/*")) {
+    return true;
+  }
+
+  const fileName = file.name.toLowerCase();
+  const fileType = file.type.toLowerCase();
+
+  return tokens.some((token) => {
+    if (token.startsWith(".")) {
+      return fileName.endsWith(token);
+    }
+
+    if (token.endsWith("/*")) {
+      return fileType.startsWith(token.slice(0, -1));
+    }
+
+    return fileType === token;
+  });
+}
+
 // 追加されたファイルを受け入れられるか検証し、合格と不合格に振り分けます。
 export function validateFiles(
   incomingFiles: readonly File[],
   currentFiles: readonly File[],
   options: {
+    readonly accept: string | readonly string[] | undefined;
     readonly maxFileSize: number;
     readonly maxFiles: number;
     readonly minFileSize: number;
@@ -36,6 +67,11 @@ export function validateFiles(
   let remaining = options.multiple ? Math.max(0, options.maxFiles - currentFiles.length) : 1;
 
   for (const file of incomingFiles) {
+    if (!isFileAcceptable(file, options.accept)) {
+      rejected.push({ file, reason: "invalid_type" });
+      continue;
+    }
+
     if (file.size < options.minFileSize) {
       rejected.push({ file, reason: "min_size" });
       continue;

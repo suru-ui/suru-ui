@@ -36,11 +36,23 @@ export type ChipProps = ChipRootProps;
 /**
  * {@link Chip} を構成する各パーツの props を作成するための API です。
  */
-export interface ChipAPI {
+export class ChipAPI {
+  private readonly rootProps: ChipRootProps;
+
+  /**
+   * @param props {@link Chip} の props です。
+   * @internal
+   */
+  public constructor(props: ChipProps) {
+    this.rootProps = props;
+  }
+
   /**
    * {@link ChipRoot} に渡す props を取得します。
    */
-  getRootProps(): ChipRootProps;
+  public getRootProps(): ChipRootProps {
+    return this.rootProps;
+  }
 }
 
 interface IUseChipAPI {
@@ -57,14 +69,10 @@ interface IUseChipAPI {
  * {@link ChipAPI} を作成するフックです。
  */
 export const useChipAPI: IUseChipAPI = function useSuiChipAPI(props) {
-  return {
-    getRootProps() {
-      return props;
-    },
-  };
+  return new ChipAPI(props);
 };
 
-export { type ChipAPI as API, useChipAPI as useAPI };
+export { ChipAPI as API, useChipAPI as useAPI };
 
 // Component
 // ---------

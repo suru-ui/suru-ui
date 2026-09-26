@@ -1,24 +1,17 @@
 import { useControlled } from "@base-ui/utils/useControlled";
+import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import {
-  type TextFieldRootSize,
-  type TextFieldRootColor,
-  type TextFieldRootProps,
-  type TextFieldRootState,
-  type TextFieldRootRadius,
-  type TextFieldRootVariant,
-  TextFieldRoot,
-} from "../text-field/text-field.parts.js";
+import { type TextFieldRootProps, TextFieldRoot } from "../text-field/text-field.parts.js";
 import type { IComponent } from "../types.js";
 import { PasswordFieldContext } from "./password-field.context.js";
 
 /**
  * パスワード入力欄の配色です。
  */
-export type PasswordFieldRootColor = TextFieldRootColor;
+export type PasswordFieldRootColor = Color;
 
 /**
  * パスワード入力欄の角丸です。
@@ -29,7 +22,7 @@ export type PasswordFieldRootColor = TextFieldRootColor;
  * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-export type PasswordFieldRootRadius = TextFieldRootRadius;
+export type PasswordFieldRootRadius = "none" | Size | "full";
 
 /**
  * パスワード入力欄の大きさです。
@@ -38,7 +31,7 @@ export type PasswordFieldRootRadius = TextFieldRootRadius;
  * - `"md"`: 標準的なサイズ
  * - `"lg"`: 大きいサイズ
  */
-export type PasswordFieldRootSize = TextFieldRootSize;
+export type PasswordFieldRootSize = Size;
 
 /**
  * パスワード入力欄の主な外観の種類です。
@@ -46,17 +39,24 @@ export type PasswordFieldRootSize = TextFieldRootSize;
  * - `"naked"`: 背景のないパスワード入力欄
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type PasswordFieldRootVariant = TextFieldRootVariant;
+export type PasswordFieldRootVariant = "naked" | "liquid";
 
 /**
  * {@link PasswordFieldRoot} の状態です。
  */
-export type PasswordFieldRootState = TextFieldRootState;
+export type PasswordFieldRootState = {};
 
 export namespace PasswordFieldRootProps {
   export type Render = RenderProps<PasswordFieldRootState>;
 
   export type SuruUI = {
+    /**
+     * フォーカス時に枠線へ適用する色を指定します。
+     *
+     * @default "grey"
+     */
+    color?: PasswordFieldRootColor | undefined;
+
     /**
      * パスワードの初期表示状態を指定します。
      *
@@ -72,6 +72,34 @@ export namespace PasswordFieldRootProps {
     onVisibleChange?: ((visible: boolean) => void) | undefined;
 
     /**
+     * 枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
+     * パスワード入力欄の角丸を指定します。
+     *
+     * 既定値は {@link PasswordFieldRootProps.size|size} です。
+     */
+    radius?: PasswordFieldRootRadius | undefined;
+
+    /**
+     * パスワード入力欄のサイズを指定します。
+     *
+     * @default "md"
+     */
+    size?: PasswordFieldRootSize | undefined;
+
+    /**
+     * パスワード入力欄の主な外観を指定します。
+     *
+     * @default "liquid"
+     */
+    variant?: PasswordFieldRootVariant | undefined;
+
+    /**
      * パスワードを表示状態にします。
      *
      * 子パーツにはコンテキスト経由で伝播します。指定した場合は表示状態がこの値で固定され、内部の状態を使わなくなります。
@@ -80,16 +108,16 @@ export namespace PasswordFieldRootProps {
   };
 
   export type BaseUI = Pick<
-    TextFieldRootProps,
+    TextFieldRootProps.BaseUI,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // PasswordFieldRootProps: TextField の props をすべて継承します。
-      keyof TextFieldRootProps,
+      // PasswordFieldRootProps:
+      never,
       keyof Render | keyof SuruUI
     >
   >;
 
-  export type HTML = Omit<React.ComponentProps<"div">, keyof Render | keyof SuruUI | keyof BaseUI>;
+  export type HTML = Omit<TextFieldRootProps.HTML, keyof Render | keyof SuruUI | keyof BaseUI>;
 }
 
 /**

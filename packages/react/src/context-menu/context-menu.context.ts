@@ -13,7 +13,7 @@ import type { IUseContext } from "../types.js";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-type ContextMenuContextRadius = "none" | Size;
+export type ContextMenuContextRadius = "none" | Size;
 
 /**
  * ポップアップと項目の大きさです。
@@ -22,7 +22,7 @@ type ContextMenuContextRadius = "none" | Size;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-type ContextMenuContextSize = Size;
+export type ContextMenuContextSize = Size;
 
 /**
  * 項目の主な外観です。
@@ -31,7 +31,7 @@ type ContextMenuContextSize = Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-type ContextMenuContextVariant = Button.Root.Variant;
+export type ContextMenuContextVariant = Button.Root.Variant;
 
 /**
  * {@link ContextMenuRoot} が子パーツへ提供する状態です。
@@ -76,9 +76,22 @@ export type ContextMenuContext<TItem = any> = {
 export const ContextMenuContext: React.Context<ContextMenuContext | null> =
   React.createContext<ContextMenuContext | null>(null);
 
-function useSuiContextMenuContext(optional?: false): ContextMenuContext;
-function useSuiContextMenuContext(optional?: boolean): ContextMenuContext | null;
-function useSuiContextMenuContext(optional?: boolean): ContextMenuContext | null {
+export interface IUseContextMenuContext extends IUseContext<ContextMenuContext> {
+  /**
+   * @template TItem 項目の型です。
+   * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
+   * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
+   */
+  <TItem = any>(optional?: false): ContextMenuContext<TItem>;
+  <TItem = any>(optional?: boolean): ContextMenuContext<TItem> | null;
+}
+
+/**
+ * {@link ContextMenuContext} を読み取るフックです。
+ */
+export const useContextMenuContext: IUseContextMenuContext = function useSuiContextMenuContext(
+  optional?: boolean,
+): any {
   const ctx = React.use(ContextMenuContext);
   if (ctx === null && !optional) {
     throw new ContextMissingError({
@@ -88,12 +101,7 @@ function useSuiContextMenuContext(optional?: boolean): ContextMenuContext | null
   }
 
   return ctx;
-}
-
-/**
- * {@link ContextMenuContext} を読み取るフックです。
- */
-export const useContextMenuContext: IUseContext<ContextMenuContext> = useSuiContextMenuContext;
+};
 
 export { ContextMenuContext as Context, useContextMenuContext as useContext };
 

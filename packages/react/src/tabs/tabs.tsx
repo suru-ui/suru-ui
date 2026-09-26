@@ -1,7 +1,15 @@
 import * as React from "react";
 
-import toReactNode from "../_to-react-node.js";
+import { getItemKey } from "../_item.js";
+import mergeProps from "../_merge-props.js";
 import type { IComponent } from "../types.js";
+import {
+  getTabsItemLabel,
+  getTabsItemProps,
+  createItemRenderer,
+  getTabsItemContent,
+} from "./_tabs.jsx";
+import type { TabsContext } from "./tabs.context.js";
 import {
   type TabsRootSize,
   type TabsTabProps,
@@ -13,7 +21,9 @@ import {
   type TabsRootRadius,
   type TabsRootVariant,
   type TabsIndicatorProps,
+  type TabsRootItemObject,
   type TabsRootOrientation,
+  type ITabsRootItemRenderer,
   type TabsRootActiveVariant,
   type TabsRootChangeEventReason,
   type TabsRootChangeEventDetails,
@@ -27,55 +37,30 @@ import {
 // Types
 // -----
 
-export type TabsRadius = TabsRootRadius;
-
-export type TabsSize = TabsRootSize;
-
-export type TabsVariant = TabsRootVariant;
-
 export type TabsActiveVariant = TabsRootActiveVariant;
-
-export type TabsOrientation = TabsRootOrientation;
-
-export type TabsValue = TabsTabValue;
 
 export type TabsChangeEventDetails = TabsRootChangeEventDetails;
 
 export type TabsChangeEventReason = TabsRootChangeEventReason;
 
+export type TabsItemObject = TabsRootItemObject;
+
+export interface ITabsItemRenderer<TItem = any> extends ITabsRootItemRenderer<TItem> {}
+
+export type TabsOrientation = TabsRootOrientation;
+
+export type TabsRadius = TabsRootRadius;
+
+export type TabsSize = TabsRootSize;
+
+export type TabsValue = TabsTabValue;
+
+export type TabsVariant = TabsRootVariant;
+
 /**
  * {@link Tabs} が持つ状態です。
  */
 export type TabsState = TabsRootState;
-
-/**
- * {@link Tabs} の1つのタブとパネルを表す項目オブジェクトです。
- */
-export type TabsItemObject = {
-  /**
-   * タブに表示するラベルです。
-   */
-  readonly label: React.ReactNode;
-
-  /**
-   * タブの値です。
-   */
-  readonly value: TabsTabProps["value"];
-
-  /**
-   * タブに対応するパネルに表示する内容です。
-   *
-   * 省略するとその項目のパネルは作られません。
-   */
-  readonly content?: React.ReactNode | undefined;
-
-  /**
-   * タブを無効にするかどうかを指定します。
-   *
-   * @default false
-   */
-  readonly disabled?: boolean | undefined;
-};
 
 /**
  * {@link Tabs} の各パーツに渡す props です。
@@ -103,133 +88,170 @@ export type TabsSlotProps = {
   /**
    * {@link TabsTab} に渡す props です。
    *
-   * すべてのタブに同じ props が渡されます。`children` と `disabled` と `value` は上書きされます。
+   * すべてのタブに同じ props が渡されます。`children` と `value` は上書きされます。
    */
-  readonly tab?: Omit<TabsTabProps, "children" | "disabled" | "value"> | undefined;
+  readonly tab?: Omit<TabsTabProps, "children" | "value"> | undefined;
 };
+
+namespace TabsProps {
+  export type Root<TItem = any> = Omit<TabsRootProps<TItem>, "children" | keyof Tabs>;
+
+  export type Tabs = {
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     */
+    slotProps?: TabsSlotProps | undefined;
+  };
+}
 
 /**
  * {@link Tabs} に渡す props です。
  *
- * `value` を指定すると制御コンポーネントになり、`defaultValue` を指定すると非制御コンポーネントになります。
+ * @template TItem 項目の型です。
  */
-export type TabsProps = Omit<TabsRootProps, "children"> & {
-  /**
-   * タブとパネルの項目です。
-   */
-  items?: readonly TabsItemObject[] | undefined;
-
-  /**
-   * 各パーツに個別の props を渡すためのオブジェクトです。
-   */
-  slotProps?: TabsSlotProps | undefined;
-};
+export type TabsProps<TItem = any> = TabsProps.Tabs & TabsProps.Root<TItem>;
 
 // API
 // ---
 
 /**
- * {@link Tabs} を構成する各パーツの props を作成するための API です。
+ * {@link Tabs} を構成する各パーツの props などを作成するための API です。
+ *
+ * @template TItem 項目の型です。
  */
-export interface TabsAPI {
+export class TabsAPI<TItem = any> {
+  private readonly rootProps: TabsProps.Root<TItem>;
+
+  private readonly slotProps: TabsSlotProps;
+
+  /**
+   * @param props {@link Tabs} の props です。
+   * @internal
+   */
+  public constructor(props: TabsProps<TItem>) {
+    const { slotProps = {}, ...rootProps } = props;
+    this.rootProps = rootProps;
+    this.slotProps = slotProps;
+  }
+
+  private readonly defaultItemRenderer: ITabsItemRenderer<TItem> = createItemRenderer<TItem>(
+    (item) => this.getTabProps(item),
+    (item) => this.getLabel(item),
+  );
+
   /**
    * {@link TabsIndicator} に渡す props を取得します。
    */
-  getIndicatorProps(): TabsIndicatorProps;
+  public getIndicatorProps(): TabsIndicatorProps {
+    const { indicator: props = {} } = this.slotProps;
+
+    return props;
+  }
+
+  /**
+   * 項目のラベルを取得します。
+   *
+   * @param item 項目です。
+   */
+  public getLabel(item: TItem): React.ReactNode {
+    return getTabsItemLabel(item);
+  }
 
   /**
    * {@link TabsList} に渡す props を取得します。
    */
-  getListProps(): Omit<TabsListProps, "children"> | null;
+  public getListProps(): Omit<TabsListProps<TItem>, "children"> & {
+    children: React.ReactNode;
+  } {
+    const { list: props = {} } = this.slotProps;
+    const { items = [] } = this.rootProps;
+
+    return {
+      ...props,
+      children: (
+        <>
+          {items.map(this.defaultItemRenderer)}
+          <TabsIndicator {...this.getIndicatorProps()} />
+        </>
+      ),
+    };
+  }
 
   /**
    * 各 {@link TabsPanel} に渡す props の一覧を取得します。
    *
    * 内容のない項目に対応するパネルは含まれません。
    */
-  getPanelPropsList(): TabsPanelProps[];
+  public getPanelPropsList(): TabsPanelProps[] {
+    const { panel: props = {} } = this.slotProps;
+    const { items = [] } = this.rootProps;
+    const panelPropsList: TabsPanelProps[] = [];
+
+    for (const item of items) {
+      const children = getTabsItemContent(item);
+      if (children === undefined) {
+        continue;
+      }
+
+      panelPropsList.push({
+        ...props,
+        value: getTabsItemProps(item).value,
+        children,
+      });
+    }
+
+    return panelPropsList;
+  }
 
   /**
    * {@link TabsRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<TabsRootProps, "children">;
+  public getRootProps(): TabsProps.Root<TItem> {
+    return this.rootProps;
+  }
 
   /**
-   * 各 {@link TabsTab} に渡す props の一覧を取得します。
+   * {@link TabsTab} に渡す props を取得します。
+   *
+   * @param item 項目です。
    */
-  getTabPropsList(): TabsTabProps[];
+  public getTabProps(item: TItem): Omit<TabsTabProps, "children"> {
+    const { tab: props = {} } = this.slotProps;
+    const itemProps = getTabsItemProps(item);
+
+    return mergeProps<typeof TabsTab>([{ ...props, value: itemProps.value }, itemProps]);
+  }
 }
 
-interface IUseTabsAPI {
+export interface IUseTabsAPI {
   /**
    * {@link TabsAPI} を作成します。
    *
+   * @template TItem 項目の型です。
    * @param props {@link Tabs} の props です。
-   * @returns タブの API です
+   * @returns タブの API です。
    */
-  (props: TabsProps): TabsAPI;
+  <TItem = never>(props: TabsProps<TItem>): TabsAPI<TItem>;
 }
 
 /**
  * {@link TabsAPI} を作成するフックです。
  */
 export const useTabsAPI: IUseTabsAPI = function useSuiTabsAPI(props) {
-  const {
-    items,
-    slotProps: {
-      tab: tabProps = {},
-      list: listProps = {},
-      panel: panelProps = {},
-      indicator: indicatorProps = {},
-    } = {},
-    ...otherRootProps
-  } = props;
-
-  return {
-    getListProps() {
-      if (items === undefined) {
-        return null;
-      }
-
-      return listProps;
-    },
-    getRootProps() {
-      return otherRootProps;
-    },
-    getTabPropsList() {
-      return (
-        items?.map((item) => ({
-          ...tabProps,
-          value: item.value,
-          children: toReactNode(item.label),
-          disabled: item.disabled,
-        })) ?? []
-      );
-    },
-    getIndicatorProps() {
-      return indicatorProps;
-    },
-    getPanelPropsList() {
-      const panelPropsList: TabsPanelProps[] = [];
-
-      for (const item of items ?? []) {
-        const children = toReactNode(item.content);
-        if (children === undefined) {
-          continue;
-        }
-
-        panelPropsList.push({ ...panelProps, value: item.value, children });
-      }
-
-      return panelPropsList;
-    },
-  };
+  return new TabsAPI(props);
 };
 
-export { type TabsAPI as API, useTabsAPI as useAPI };
+export { TabsAPI as API, useTabsAPI as useAPI };
 
 // Component
 // ---------
+
+export interface ITabs extends IComponent<TabsProps> {
+  /**
+   * @template TItem 項目の型です。
+   */
+  <TItem = never>(props: TabsProps<TItem>): IComponent.Return;
+}
 
 /**
  * タブとパネルを切り替えるコンポーネントです。
@@ -238,48 +260,28 @@ export { type TabsAPI as API, useTabsAPI as useAPI };
  * 矢印キーでタブ間を移動でき、`Enter` または `Space` で選択します。
  * レイアウトを細かく制御する場合は、`Root` と各パーツを直接組み立てます。
  */
-export const Tabs: IComponent<TabsProps> = function SuiTabs(props) {
+export const Tabs: ITabs = function SuiTabs(props: TabsProps) {
   const api = useTabsAPI(props);
-  const listProps = api.getListProps();
+  const panelPropsList = api.getPanelPropsList();
 
   return (
     <TabsRoot {...api.getRootProps()}>
-      {listProps && (
-        <>
-          <TabsList {...listProps}>
-            {api.getTabPropsList().map((tabProps, index) => (
-              <TabsTab key={getTabsItemKey(tabProps.value, index)} {...tabProps} />
-            ))}
-            <TabsIndicator {...api.getIndicatorProps()} />
-          </TabsList>
-          {api.getPanelPropsList().map((panelProps, index) => (
-            <TabsPanel key={getTabsItemKey(panelProps.value, index)} {...panelProps} />
-          ))}
-        </>
-      )}
+      <TabsList {...api.getListProps()} />
+      {panelPropsList.map((panelProps, index) => (
+        <TabsPanel key={getItemKey(panelProps.value) ?? index} {...panelProps} />
+      ))}
     </TabsRoot>
   );
 };
 
-/**
- * 反復描画の要素に付けるキーを求めます。
- *
- * 値が文字列または数値の場合はそのまま使い、それ以外の場合はインデックスを使います。
- *
- * @param value 項目の値です。
- * @param index 項目のインデックスです。
- * @returns キーに使う値です。
- */
-function getTabsItemKey(value: unknown, index: number): React.Key {
-  return typeof value === "string" || typeof value === "number" ? value : index;
-}
-
 export namespace Tabs {
   export type State = TabsState;
 
-  export type Props = TabsProps;
+  export type Props<TItem = any> = TabsProps<TItem>;
 
   export type SlotProps = TabsSlotProps;
+
+  export type Context<TItem = any> = TabsContext<TItem>;
 
   export type ActiveVariant = TabsActiveVariant;
 
@@ -288,6 +290,8 @@ export namespace Tabs {
   export type ChangeEventReason = TabsChangeEventReason;
 
   export type ItemObject = TabsItemObject;
+
+  export interface IItemRenderer<TItem = any> extends ITabsItemRenderer<TItem> {}
 
   export type Orientation = TabsOrientation;
 

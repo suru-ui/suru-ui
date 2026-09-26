@@ -30,11 +30,23 @@ export type SkeletonProps = SkeletonRootProps;
 /**
  * {@link Skeleton} を構成する各パーツの props を作成するための API です。
  */
-export interface SkeletonAPI {
+export class SkeletonAPI {
+  private readonly rootProps: SkeletonRootProps;
+
+  /**
+   * @param props {@link Skeleton} の props です。
+   * @internal
+   */
+  public constructor(props: SkeletonProps) {
+    this.rootProps = props;
+  }
+
   /**
    * {@link SkeletonRoot} に渡す props を取得します。
    */
-  getRootProps(): SkeletonRootProps;
+  public getRootProps(): SkeletonRootProps {
+    return this.rootProps;
+  }
 }
 
 interface IUseSkeletonAPI {
@@ -51,14 +63,10 @@ interface IUseSkeletonAPI {
  * {@link SkeletonAPI} を作成するフックです。
  */
 export const useSkeletonAPI: IUseSkeletonAPI = function useSuiSkeletonAPI(props) {
-  return {
-    getRootProps() {
-      return props;
-    },
-  };
+  return new SkeletonAPI(props);
 };
 
-export { type SkeletonAPI as API, useSkeletonAPI as useAPI };
+export { SkeletonAPI as API, useSkeletonAPI as useAPI };
 
 // Component
 // ---------

@@ -53,35 +53,41 @@ export type StatSlotProps = {
  */
 export type StatState = StatRootState;
 
+namespace StatProps {
+  export type Root = Omit<StatRootProps, "children" | keyof Stat>;
+
+  export type Stat = {
+    /**
+     * 統計の補足説明です。
+     */
+    description?: StatDescriptionProps["children"] | undefined;
+
+    /**
+     * 統計のラベルです。
+     */
+    label?: StatLabelProps["children"] | undefined;
+
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     */
+    slotProps?: StatSlotProps | undefined;
+
+    /**
+     * 値の増減を示す内容です。
+     */
+    trend?: StatTrendProps["children"] | undefined;
+
+    /**
+     * 統計の値です。
+     */
+    value?: StatValueProps["children"] | undefined;
+  };
+}
+
 /**
  * {@link Stat} に渡す props です。
  */
-export type StatProps = Omit<StatRootProps, "children"> & {
-  /**
-   * 統計の補足説明です。
-   */
-  description?: StatDescriptionProps["children"] | undefined;
-
-  /**
-   * 統計のラベルです。
-   */
-  label?: StatLabelProps["children"] | undefined;
-
-  /**
-   * 各パーツに個別の props を渡すためのオブジェクトです。
-   */
-  slotProps?: StatSlotProps | undefined;
-
-  /**
-   * 値の増減を示す内容です。
-   */
-  trend?: StatTrendProps["children"] | undefined;
-
-  /**
-   * 統計の値です。
-   */
-  value?: StatValueProps["children"] | undefined;
-};
+export type StatProps = StatProps.Stat & StatProps.Root;
 
 // API
 // ---
@@ -89,39 +95,106 @@ export type StatProps = Omit<StatRootProps, "children"> & {
 /**
  * {@link Stat} を構成する各パーツの props を作成するための API です。
  */
-export interface StatAPI {
+export class StatAPI {
+  private readonly rootProps: StatProps.Root;
+
+  private readonly slotProps: StatSlotProps;
+
+  private readonly statProps: Required<Omit<StatProps.Stat, "slotProps">>;
+
+  /**
+   * @param props {@link Stat} の props です。
+   * @internal
+   */
+  public constructor(props: StatProps) {
+    const { label, trend, value, slotProps = {}, description, ...rootProps } = props;
+    this.statProps = { label, trend, value, description };
+    this.slotProps = slotProps;
+    this.rootProps = rootProps;
+  }
+
   /**
    * {@link StatDescription} に渡す props を取得します。
    *
-   * それを表示しないときは `null` を返します。
+   * 説明を表示しないときは `null` を返します。
    */
-  getDescriptionProps(): StatDescriptionProps | null;
+  public getDescriptionProps(): StatDescriptionProps | null {
+    const { description: props = {} } = this.slotProps;
+    const { description } = this.statProps;
+
+    if (isLikelyVisibleNode(description)) {
+      return {
+        ...props,
+        children: description,
+      };
+    }
+
+    return null;
+  }
 
   /**
    * {@link StatLabel} に渡す props を取得します。
    *
-   * それを表示しないときは `null` を返します。
+   * ラベルを表示しないときは `null` を返します。
    */
-  getLabelProps(): StatLabelProps | null;
+  public getLabelProps(): StatLabelProps | null {
+    const { label: props = {} } = this.slotProps;
+    const { label } = this.statProps;
+
+    if (isLikelyVisibleNode(label)) {
+      return {
+        ...props,
+        children: label,
+      };
+    }
+
+    return null;
+  }
 
   /**
    * {@link StatRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<StatRootProps, "children">;
+  public getRootProps(): Omit<StatRootProps, "children"> {
+    return this.rootProps;
+  }
 
   /**
    * {@link StatTrend} に渡す props を取得します。
    *
-   * それを表示しないときは `null` を返します。
+   * トレンドを表示しないときは `null` を返します。
    */
-  getTrendProps(): StatTrendProps | null;
+  public getTrendProps(): StatTrendProps | null {
+    const { trend: props = {} } = this.slotProps;
+    const { trend } = this.statProps;
+
+    if (isLikelyVisibleNode(trend)) {
+      return {
+        ...props,
+        children: trend,
+      };
+    }
+
+    return null;
+  }
 
   /**
    * {@link StatValue} に渡す props を取得します。
    *
-   * それを表示しないときは `null` を返します。
+   * 値を表示しないときは `null` を返します。
    */
-  getValueProps(): StatValueProps | null;
+  public getValueProps(): StatValueProps | null {
+    const { value: props = {} } = this.slotProps;
+    const { value } = this.statProps;
+
+    if (isLikelyVisibleNode(value)) {
+      return {
+        ...props,
+        children: value,
+      };
+    }
+
+    return null;
+  }
 }
 
 interface IUseStatAPI {
@@ -138,68 +211,10 @@ interface IUseStatAPI {
  * {@link StatAPI} を作成するフックです。
  */
 export const useStatAPI: IUseStatAPI = function useSuiStatAPI(props) {
-  const {
-    label,
-    trend,
-    value,
-    slotProps: {
-      label: labelProps = {},
-      trend: trendProps = {},
-      value: valueProps = {},
-      description: descriptionProps = {},
-    } = {},
-    description,
-    ...otherRootProps
-  } = props;
-
-  return {
-    getRootProps() {
-      return otherRootProps;
-    },
-    getLabelProps() {
-      if (isLikelyVisibleNode(label)) {
-        return {
-          ...labelProps,
-          children: label,
-        };
-      }
-
-      return null;
-    },
-    getTrendProps() {
-      if (isLikelyVisibleNode(trend)) {
-        return {
-          ...trendProps,
-          children: trend,
-        };
-      }
-
-      return null;
-    },
-    getValueProps() {
-      if (isLikelyVisibleNode(value)) {
-        return {
-          ...valueProps,
-          children: value,
-        };
-      }
-
-      return null;
-    },
-    getDescriptionProps() {
-      if (isLikelyVisibleNode(description)) {
-        return {
-          ...descriptionProps,
-          children: description,
-        };
-      }
-
-      return null;
-    },
-  };
+  return new StatAPI(props);
 };
 
-export { type StatAPI as API, useStatAPI as useAPI };
+export { StatAPI as API, useStatAPI as useAPI };
 
 // Component
 // ---------
@@ -207,7 +222,7 @@ export { type StatAPI as API, useStatAPI as useAPI };
 /**
  * ラベルと値の組で統計を表示するコンポーネントです。
  */
-export const Stat: IComponent<StatProps> = function SuiStat(props: StatProps) {
+export const Stat: IComponent<StatProps> = function SuiStat(props) {
   const api = useStatAPI(props);
   const labelProps = api.getLabelProps();
   const valueProps = api.getValueProps();

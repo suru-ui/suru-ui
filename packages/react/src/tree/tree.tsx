@@ -1,9 +1,11 @@
 import * as React from "react";
 
-import type { LikelyVisibleNode } from "../_is-likely-visible-node.js";
+import { getItemKey } from "../_item.js";
 import mergeProps from "../_merge-props.js";
 import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
+import { isItemObject } from "./_tree.jsx";
+import type { TreeContext } from "./tree.context.js";
 import {
   type TreeRootSize,
   type TreeItemProps,
@@ -33,12 +35,12 @@ export type TreeRadius = TreeRootRadius;
 
 export type TreeSize = TreeRootSize;
 
-export type TreeVariant = TreeRootVariant;
-
 /**
  * {@link Tree} が持つ状態です。
  */
 export type TreeState = TreeRootState;
+
+export type TreeVariant = TreeRootVariant;
 
 /**
  * {@link Tree} の各パーツに渡す props です。
@@ -47,40 +49,35 @@ export type TreeSlotProps = {
   /**
    * {@link TreeItemIndicator} に渡す props です。
    *
-   * すべての項目のインジケーターに同じ props が渡されます。`visible` は上書きされません。
+   * すべての項目のインジケーターに同じ props が渡されます。`visible` は項目から組み立てるため指定できません。
    */
   readonly indicator?: Omit<TreeItemIndicatorProps, "visible"> | undefined;
 
   /**
    * {@link TreeItem} に渡す props です。
    *
-   * すべての項目に同じ props が渡されます。ツリーの構造に関わる props は上書きされません。
+   * すべての項目に同じ props が渡されます。`children` とツリーの構造に関わる props は項目から組み立てるため指定できません。
    */
   readonly item?:
-    | Omit<
-        TreeItemProps,
-        "children" | "hasItems" | "id" | "label" | "level" | "posInSet" | "setSize"
-      >
+    | Omit<TreeItemProps, "children" | "hasItems" | "id" | "level" | "posInSet" | "setSize">
     | undefined;
 };
 
-/**
- * {@link Tree} に渡す props です。
- */
-export type TreeProps = Omit<TreeRootProps, "children" | "items"> &
-  Pick<TreeRootProps, "children"> & {
-    /**
-     * ツリーの項目です。
-     *
-     * ノードから {@link TreeItem} を再帰的に描画します。手動で項目を組み立てるときは、{@link TreeRoot} を直接使ってください。
-     */
-    items: readonly TreeItemObject[];
+namespace TreeProps {
+  export type Root = Omit<TreeRootProps, keyof Tree>;
 
+  export type Tree = {
     /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
      */
     slotProps?: TreeSlotProps | undefined;
   };
+}
+
+/**
+ * {@link Tree} に渡す props です。
+ */
+export type TreeProps = TreeProps.Tree & TreeProps.Root;
 
 // API
 // ---
@@ -88,20 +85,64 @@ export type TreeProps = Omit<TreeRootProps, "children" | "items"> &
 /**
  * {@link Tree} を構成する各パーツの props などを作成するための API です。
  */
-export interface TreeAPI {
+export class TreeAPI {
+  private readonly rootProps: TreeProps.Root;
+
+  private readonly slotProps: TreeSlotProps;
+
+  /**
+   * @param props {@link Tree} の props です。
+   * @internal
+   */
+  public constructor(props: TreeProps) {
+    const { slotProps = {}, ...rootProps } = props;
+    this.rootProps = rootProps;
+    this.slotProps = slotProps;
+  }
+
+  private readonly defaultItemRenderer: ITreeItemRenderer = (node, level, posInSet, setSize) => {
+    switch (true) {
+      case isItemObject(node):
+        return (
+          <TreeItem
+            key={getItemKey(node) ?? node.id}
+            {...this.getItemProps(node, level, posInSet, setSize)}
+          >
+            <TreeItemIndicator {...this.getIndicatorProps(node)} />
+            {this.getItemLabel(node)}
+          </TreeItem>
+        );
+
+      default:
+        return (
+          <React.Fragment key={getItemKey(node) ?? posInSet}>{toReactNode(node)}</React.Fragment>
+        );
+    }
+  };
+
   /**
    * {@link TreeItemIndicator} に渡す props を取得します。
    *
    * @param node 描画対象のノードです。
    */
-  getIndicatorProps(node: Readonly<TreeItemObject>): TreeItemIndicatorProps;
+  public getIndicatorProps(node: Readonly<TreeItemObject>): TreeItemIndicatorProps {
+    const { indicator: props = {} } = this.slotProps;
+    const hasItems = node.items != null && node.items.length > 0;
+
+    return {
+      ...props,
+      visible: hasItems,
+    };
+  }
 
   /**
    * ノードのラベルを取得します。
    *
    * @param node 描画対象のノードです。
    */
-  getItemLabel(node: Readonly<TreeItemObject>): React.ReactNode;
+  public getItemLabel(node: Readonly<TreeItemObject>): React.ReactNode {
+    return toReactNode(node.label);
+  }
 
   /**
    * {@link TreeItem} に渡す props を取得します。
@@ -111,21 +152,36 @@ export interface TreeAPI {
    * @param posInSet 同じ深さの中での位置です。1 起点です。
    * @param setSize 同じ深さの項目数です。
    */
-  getItemProps(
+  public getItemProps(
     node: Readonly<TreeItemObject>,
     level: number,
     posInSet: number,
     setSize: number,
-  ): Omit<TreeItemProps, "children">;
+  ): Omit<TreeItemProps, "children"> {
+    const { item: props = {} } = this.slotProps;
+    const { id, items, label: _label, disabled, ...otherNodeProps } = node;
+    const hasItems = items != null && items.length > 0;
+
+    return {
+      ...mergeProps([props, otherNodeProps, { disabled: disabled || props.disabled, hasItems }]),
+      id,
+      level,
+      setSize,
+      posInSet,
+    };
+  }
 
   /**
    * {@link TreeRoot} に渡す props を取得します。
-   *
-   * 関数を指定した場合はそのまま渡し、{@link TreeRoot} が表示中のノードへ適用します。
    */
-  getRootProps(): Omit<TreeRootProps, "children"> & {
-    children: LikelyVisibleNode | ITreeRootItemRenderer | undefined;
-  };
+  public getRootProps(): TreeRootProps {
+    const { children = this.defaultItemRenderer, ...otherProps } = this.rootProps;
+
+    return {
+      ...otherProps,
+      children,
+    };
+  }
 }
 
 interface IUseTreeAPI {
@@ -142,56 +198,10 @@ interface IUseTreeAPI {
  * {@link TreeAPI} を作成するフックです。
  */
 export const useTreeAPI: IUseTreeAPI = function useSuiTreeAPI(props) {
-  const {
-    items,
-    children,
-    slotProps: { item: itemProps = {}, indicator: indicatorProps = {} } = {},
-    ...otherRootProps
-  } = props;
-
-  return {
-    getItemLabel(node) {
-      return node.label;
-    },
-    getItemProps(node, level, posInSet, setSize) {
-      // label と items を取り除いた props を TreeItem の props とします。
-      const { id, items, label: _2, disabled, ...otherNodeProps } = node;
-      const hasItems = items != null && items.length > 0;
-
-      return {
-        ...mergeProps([
-          itemProps,
-          otherNodeProps,
-          {
-            disabled: disabled || itemProps.disabled,
-            hasItems,
-          },
-        ]),
-        id,
-        level,
-        setSize,
-        posInSet,
-      };
-    },
-    getRootProps() {
-      return {
-        ...otherRootProps,
-        items,
-        children: typeof children === "function" ? children : toReactNode(children),
-      };
-    },
-    getIndicatorProps(node) {
-      const hasItems = node.items != null && node.items.length > 0;
-
-      return {
-        ...indicatorProps,
-        visible: hasItems,
-      };
-    },
-  };
+  return new TreeAPI(props);
 };
 
-export { type TreeAPI as API, useTreeAPI as useAPI };
+export { TreeAPI as API, useTreeAPI as useAPI };
 
 // Component
 // ---------
@@ -203,19 +213,8 @@ export { type TreeAPI as API, useTreeAPI as useAPI };
  */
 export const Tree: IComponent<TreeProps> = function SuiTree(props) {
   const api = useTreeAPI(props);
-  const { children, ...otherRootProps } = api.getRootProps();
 
-  return (
-    <TreeRoot {...otherRootProps}>
-      {children ??
-        ((node, level, posInSet, setSize) => (
-          <TreeItem key={node.id} {...api.getItemProps(node, level, posInSet, setSize)}>
-            <TreeItemIndicator {...api.getIndicatorProps(node)} />
-            {api.getItemLabel(node)}
-          </TreeItem>
-        ))}
-    </TreeRoot>
-  );
+  return <TreeRoot {...api.getRootProps()} />;
 };
 
 export namespace Tree {
@@ -224,6 +223,8 @@ export namespace Tree {
   export type Props = TreeProps;
 
   export type SlotProps = TreeSlotProps;
+
+  export type Context = TreeContext;
 
   export type Color = TreeColor;
 

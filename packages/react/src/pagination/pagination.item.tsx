@@ -31,19 +31,16 @@ export namespace PaginationItemProps {
   };
 
   export type BaseUI = Pick<
-    Button.ButtonRootProps,
+    Button.ButtonRootProps.BaseUI,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // PaginationItemProps: context が制御するため除きます。
-      keyof Button.ButtonRootProps,
-      keyof Render | keyof SuruUI | "color" | "radius" | "size" | "squared" | "variant"
+      // PaginationItemProps:
+      keyof Button.ButtonRootProps.BaseUI,
+      keyof Render | keyof SuruUI
     >
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof Omit<Button.ButtonRootProps, "color" | "variant">
-  >;
+  export type HTML = Omit<Button.ButtonRootProps.HTML, keyof Render | keyof SuruUI | keyof BaseUI>;
 }
 
 /**

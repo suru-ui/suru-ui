@@ -41,7 +41,7 @@ export type ProgressRootRadius = "none" | Size | "full";
 export type ProgressRootSize = Size;
 
 /**
- * 進捗の主な外観です。
+ * 進捗の主な外観の種類です。
  *
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし

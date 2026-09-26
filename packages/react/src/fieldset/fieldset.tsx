@@ -26,39 +26,76 @@ export type FieldsetSlotProps = {
   readonly legend?: Omit<FieldsetLegendProps, "children"> | undefined;
 };
 
+namespace FieldsetProps {
+  export type Fieldset = {
+    /**
+     * フィールドセットの凡例です。
+     */
+    legend?: FieldsetLegendProps["children"] | undefined;
+
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     */
+    slotProps?: FieldsetSlotProps | undefined;
+  };
+
+  export type Root = Omit<FieldsetRootProps, keyof Fieldset>;
+}
+
 /**
  * {@link Fieldset} に渡す props です。
  */
-export type FieldsetProps = FieldsetRootProps & {
-  /**
-   * フィールドセットの凡例です。
-   */
-  legend?: FieldsetLegendProps["children"] | undefined;
-
-  /**
-   * 各パーツに個別の props を渡すためのオブジェクトです。
-   */
-  slotProps?: FieldsetSlotProps | undefined;
-};
+export type FieldsetProps = FieldsetProps.Fieldset & FieldsetProps.Root;
 
 // API
 // ---
 
 /**
- * {@link Fieldset} を構成する各パーツの props を作成するための API です。
+ * {@link Fieldset} を構成する各パーツの props などを作成するための API です。
  */
-export interface FieldsetAPI {
+export class FieldsetAPI {
+  private readonly legend: FieldsetProps.Fieldset["legend"];
+
+  private readonly slotProps: FieldsetSlotProps;
+
+  private readonly rootProps: FieldsetRootProps;
+
+  /**
+   * @param props {@link Fieldset} の props です。
+   * @internal
+   */
+  public constructor(props: FieldsetProps) {
+    const { legend, slotProps = {}, ...rootProps } = props;
+    this.legend = legend;
+    this.slotProps = slotProps;
+    this.rootProps = rootProps;
+  }
+
   /**
    * {@link FieldsetLegend} に渡す props を取得します。
    *
    * それを表示しないときは `null` を返します。
    */
-  getLegendProps(): FieldsetLegendProps | null;
+  public getLegendProps(): FieldsetLegendProps | null {
+    const { legend } = this;
+    const { legend: props = {} } = this.slotProps;
+
+    if (isLikelyVisibleNode(legend)) {
+      return {
+        ...props,
+        children: legend,
+      };
+    }
+
+    return null;
+  }
 
   /**
    * {@link FieldsetRoot} に渡す props を取得します。
    */
-  getRootProps(): FieldsetRootProps;
+  public getRootProps(): FieldsetRootProps {
+    return this.rootProps;
+  }
 }
 
 interface IUseFieldsetAPI {
@@ -75,26 +112,10 @@ interface IUseFieldsetAPI {
  * {@link FieldsetAPI} を作成するフックです。
  */
 export const useFieldsetAPI: IUseFieldsetAPI = function useSuiFieldsetAPI(props) {
-  const { legend, slotProps: { legend: legendProps = {} } = {}, ...rootProps } = props;
-
-  return {
-    getRootProps() {
-      return rootProps;
-    },
-    getLegendProps() {
-      if (isLikelyVisibleNode(legend)) {
-        return {
-          ...legendProps,
-          children: legend,
-        };
-      }
-
-      return null;
-    },
-  };
+  return new FieldsetAPI(props);
 };
 
-export { type FieldsetAPI as API, useFieldsetAPI as useAPI };
+export { FieldsetAPI as API, useFieldsetAPI as useAPI };
 
 // Component
 // ---------
@@ -106,13 +127,13 @@ export { type FieldsetAPI as API, useFieldsetAPI as useAPI };
  */
 export const Fieldset: IComponent<FieldsetProps> = function SuiFieldset(props) {
   const api = useFieldsetAPI(props);
-  const rootProps = api.getRootProps();
+  const { children, ...otherRootProps } = api.getRootProps();
   const legendProps = api.getLegendProps();
 
   return (
-    <FieldsetRoot {...rootProps}>
+    <FieldsetRoot {...otherRootProps}>
       {legendProps && <FieldsetLegend {...legendProps} />}
-      {rootProps.children}
+      {children}
     </FieldsetRoot>
   );
 };

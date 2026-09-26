@@ -41,11 +41,11 @@ export type DialogControlsProps = DialogControlsProps.Render &
  * ダイアログのコントロールコンポーネントです。
  */
 export const DialogControls: IComponent<DialogControlsProps> = function SuiDialogControls(props) {
-  const { absolute = false, ...htmlProps } = props;
+  const { absolute = false, ...otherDivProps } = props;
 
   return useRender({
     props: [
-      htmlProps,
+      otherDivProps,
       {
         className: cn(
           "sui_dialog_controls",

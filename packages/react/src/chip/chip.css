@@ -461,19 +461,24 @@
 
 /* 変異 */
 /**
- * Chip がボタンとしてレンダリングされた場合、ホバーなどで色が変わるようにします。
+ * Chip がボタンやリンクとしてレンダリングされた場合、ホバーなどで色が変わるようにします。
  * ただし、Chip 内に削除ボタンなどのインタラクティブな要素がある場合は、Chip の色を変更しません。
  */
 :scope {
-  &:enabled {
+  &.sui_chip-outlined {
+    --_sui_chip-border_color: var(--sui_chip-border_color-idle);
+    --_sui_chip-border_width: var(--sui_chip-border_width);
+  }
+
+  &:is(button, a[href]):not(:disabled) {
     @media (any-hover: hover) {
-      &:not(:has(:enabled:hover)):hover {
+      &:not(:has(:is(button, a[href]):not(:disabled):hover)):hover {
         --_sui_chip-color: var(--sui_chip-color-hover);
         --_sui_chip-background_color: var(--sui_chip-background_color-hover);
       }
     }
 
-    &:not(:has(:enabled:active)):active {
+    &:not(:has(:is(button, a[href]):not(:disabled):active)):active {
       --_sui_chip-color: var(--sui_chip-color-active);
       --_sui_chip-background_color: var(--sui_chip-background_color-active);
     }
@@ -483,20 +488,15 @@
       --_sui_chip-outline_color: var(--sui_chip-focusring_color);
       --_sui_chip-outline_offset: var(--sui_chip-focusring_offset);
     }
-  }
 
-  &.sui_chip-outlined {
-    --_sui_chip-border_color: var(--sui_chip-border_color-idle);
-    --_sui_chip-border_width: var(--sui_chip-border_width);
-
-    &:enabled {
+    &.sui_chip-outlined {
       @media (any-hover: hover) {
-        &:not(:has(:enabled:hover)):hover {
+        &:not(:has(:is(button, a[href]):not(:disabled):hover)):hover {
           --_sui_chip-border_color: var(--sui_chip-border_color-hover);
         }
       }
 
-      &:not(:has(:enabled:active)):active {
+      &:not(:has(:is(button, a[href]):not(:disabled):active)):active {
         --_sui_chip-border_color: var(--sui_chip-border_color-active);
       }
     }

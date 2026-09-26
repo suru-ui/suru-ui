@@ -27,9 +27,21 @@ export type ResizableContext = {
 export const ResizableContext: React.Context<ResizableContext | null> =
   React.createContext<ResizableContext | null>(null);
 
-function useSuiResizableContext(optional?: false): ResizableContext;
-function useSuiResizableContext(optional?: boolean): ResizableContext | null;
-function useSuiResizableContext(optional?: boolean): ResizableContext | null {
+export interface IUseResizableContext extends IUseContext<ResizableContext> {
+  /**
+   * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
+   * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
+   */
+  (optional?: false): ResizableContext;
+  (optional?: boolean): ResizableContext | null;
+}
+
+/**
+ * {@link ResizableContext} を読み取るフックです。
+ */
+export const useResizableContext: IUseResizableContext = function useSuiResizableContext(
+  optional?: boolean,
+): any {
   const ctx = React.use(ResizableContext);
   if (ctx === null && !optional) {
     throw new ContextMissingError({
@@ -39,12 +51,7 @@ function useSuiResizableContext(optional?: boolean): ResizableContext | null {
   }
 
   return ctx;
-}
-
-/**
- * {@link ResizableContext} を読み取るフックです。
- */
-export const useResizableContext: IUseContext<ResizableContext> = useSuiResizableContext;
+};
 
 export { ResizableContext as Context, useResizableContext as useContext };
 

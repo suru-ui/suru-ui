@@ -42,11 +42,23 @@ export type TextareaProps = TextareaRootProps;
 /**
  * {@link Textarea} を構成する各パーツの props を作成するための API です。
  */
-export interface TextareaAPI {
+export class TextareaAPI {
+  private readonly rootProps: TextareaRootProps;
+
+  /**
+   * @param props {@link Textarea} の props です。
+   * @internal
+   */
+  public constructor(props: TextareaProps) {
+    this.rootProps = props;
+  }
+
   /**
    * {@link TextareaRoot} に渡す props を取得します。
    */
-  getRootProps(): TextareaRootProps;
+  public getRootProps(): TextareaRootProps {
+    return this.rootProps;
+  }
 }
 
 interface IUseTextareaAPI {
@@ -63,14 +75,10 @@ interface IUseTextareaAPI {
  * {@link TextareaAPI} を作成するフックです。
  */
 export const useTextareaAPI: IUseTextareaAPI = function useSuiTextareaAPI(props) {
-  return {
-    getRootProps() {
-      return props;
-    },
-  };
+  return new TextareaAPI(props);
 };
 
-export { type TextareaAPI as API, useTextareaAPI as useAPI };
+export { TextareaAPI as API, useTextareaAPI as useAPI };
 
 // Component
 // ---------

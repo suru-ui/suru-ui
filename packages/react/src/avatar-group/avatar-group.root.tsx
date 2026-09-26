@@ -71,7 +71,7 @@ export namespace AvatarGroupRootProps {
     /**
      * アバターの大きさを指定します。
      *
-     * アバターの大きさを上書きします。
+     * 子のアバターの大きさを上書きします。
      *
      * @default "md"
      */
@@ -88,6 +88,8 @@ export namespace AvatarGroupRootProps {
 
 /**
  * {@link AvatarGroupRoot} に渡す props です。
+ *
+ * 大きさは子のアバターの指定より優先され、色と角丸は子の指定がないときに使われます。
  */
 export type AvatarGroupRootProps = AvatarGroupRootProps.Render &
   AvatarGroupRootProps.SuruUI &
@@ -97,7 +99,9 @@ export type AvatarGroupRootProps = AvatarGroupRootProps.Render &
 const colors = /*#__PURE__*/ COLORS.filter((color) => color !== "grey");
 
 /**
- * アバターを重ねて表示するグループのルートコンポーネントです。
+ * アバターを重ねて表示するグループのルート要素です。
+ *
+ * 大きさ・色・角丸をコンテキストで子のアバターへ伝播します。
  */
 export const AvatarGroupRoot: IComponent<AvatarGroupRootProps> = function SuiAvatarGroupRoot(
   props,

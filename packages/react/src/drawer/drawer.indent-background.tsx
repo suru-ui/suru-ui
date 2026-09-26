@@ -42,7 +42,7 @@ export type DrawerIndentBackgroundProps = DrawerIndentBackgroundProps.Render &
 /**
  * ドロワーが開いているときの背景レイヤーです。
  *
- * {@link Provider} の子として {@link Indent} より前に配置します。
+ * `DrawerProvider` の子として `DrawerIndent` より前に配置します。
  */
 export const DrawerIndentBackground: IComponent<DrawerIndentBackgroundProps> =
   function SuiDrawerIndentBackground(props) {

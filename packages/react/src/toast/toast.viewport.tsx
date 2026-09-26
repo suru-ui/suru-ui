@@ -43,7 +43,7 @@ export type ToastViewportProps = ToastViewportProps.Render &
  * 通知を表示するビューポートコンポーネントです。
  */
 export const ToastViewport: IComponent<ToastViewportProps> = function SuiToastViewport(props) {
-  const { className, ...otherProps } = props;
+  const { className, "aria-label": ariaLabel = "通知", ...otherProps } = props;
 
   return (
     <Toast.Viewport
@@ -53,6 +53,7 @@ export const ToastViewport: IComponent<ToastViewportProps> = function SuiToastVi
         "sui_toast_viewport",
         (state) => state.expanded && "sui_toast_viewport-expanded",
       )}
+      aria-label={ariaLabel}
     />
   );
 };

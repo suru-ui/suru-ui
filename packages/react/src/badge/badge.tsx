@@ -42,11 +42,23 @@ export type BadgeProps = BadgeRootProps;
 /**
  * {@link Badge} を構成する各パーツの props を作成するための API です。
  */
-export interface BadgeAPI {
+export class BadgeAPI {
+  private readonly rootProps: BadgeRootProps;
+
+  /**
+   * @param props {@link Badge} の props です。
+   * @internal
+   */
+  public constructor(props: BadgeProps) {
+    this.rootProps = props;
+  }
+
   /**
    * {@link BadgeRoot} に渡す props を取得します。
    */
-  getRootProps(): BadgeRootProps;
+  public getRootProps(): BadgeRootProps {
+    return this.rootProps;
+  }
 }
 
 interface IUseBadgeAPI {
@@ -63,20 +75,18 @@ interface IUseBadgeAPI {
  * {@link BadgeAPI} を作成するフックです。
  */
 export const useBadgeAPI: IUseBadgeAPI = function useSuiBadgeAPI(props) {
-  return {
-    getRootProps() {
-      return props;
-    },
-  };
+  return new BadgeAPI(props);
 };
 
-export { type BadgeAPI as API, useBadgeAPI as useAPI };
+export { BadgeAPI as API, useBadgeAPI as useAPI };
 
 // Component
 // ---------
 
 /**
- * 状態や数値を示す小さなラベルを表示するバッジコンポーネントです。
+ * 状態や数値を示す小さなラベルを表示するコンポーネントです。
+ *
+ * `position` を指定すると、基準となる要素の四隅へ重ねて表示できます。`variant` が `"dot"` のときは内容を表示せず、小さな点だけを描画します。
  */
 export const Badge: IComponent<BadgeProps> = function SuiBadge(props) {
   const api = useBadgeAPI(props);

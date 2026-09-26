@@ -1,3 +1,5 @@
+import * as React from "react";
+
 import type { IComponent } from "../types.js";
 import {
   type StatusRootSize,
@@ -26,7 +28,7 @@ export type StatusSlotProps = {
   /**
    * {@link StatusIndicator} に渡す props です。
    */
-  readonly indicator?: Omit<StatusIndicatorProps, "children"> | undefined;
+  readonly indicator?: StatusIndicatorProps | undefined;
 };
 
 /**
@@ -34,15 +36,26 @@ export type StatusSlotProps = {
  */
 export type StatusState = StatusRootState;
 
+namespace StatusProps {
+  export type Root = Omit<StatusRootProps, "children" | keyof Status>;
+
+  export type Status = {
+    /**
+     * ステータスに表示するラベルです。
+     */
+    children?: React.ReactNode | undefined;
+
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     */
+    slotProps?: StatusSlotProps | undefined;
+  };
+}
+
 /**
  * {@link Status} に渡す props です。
  */
-export type StatusProps = StatusRootProps & {
-  /**
-   * 各パーツに個別の props を渡すためのオブジェクトです。
-   */
-  slotProps?: StatusSlotProps | undefined;
-};
+export type StatusProps = StatusProps.Status & StatusProps.Root;
 
 // API
 // ---
@@ -50,16 +63,46 @@ export type StatusProps = StatusRootProps & {
 /**
  * {@link Status} を構成する各パーツの props を作成するための API です。
  */
-export interface StatusAPI {
+export class StatusAPI {
+  private readonly rootProps: StatusProps.Root;
+
+  private readonly slotProps: StatusSlotProps;
+
+  private readonly statusProps: Required<Omit<StatusProps.Status, "slotProps">>;
+
+  /**
+   * @param props {@link Status} の props です。
+   * @internal
+   */
+  public constructor(props: StatusProps) {
+    const { children, slotProps = {}, ...rootProps } = props;
+    this.statusProps = { children };
+    this.slotProps = slotProps;
+    this.rootProps = rootProps;
+  }
+
   /**
    * {@link StatusIndicator} に渡す props を取得します。
    */
-  getIndicatorProps(): StatusIndicatorProps;
+  public getIndicatorProps(): StatusIndicatorProps {
+    const { indicator: props = {} } = this.slotProps;
+
+    return props;
+  }
+
+  /**
+   * ラベルとして表示する内容を取得します。
+   */
+  public getLabel(): React.ReactNode {
+    return this.statusProps.children;
+  }
 
   /**
    * {@link StatusRoot} に渡す props を取得します。
    */
-  getRootProps(): StatusRootProps;
+  public getRootProps(): StatusProps.Root {
+    return this.rootProps;
+  }
 }
 
 interface IUseStatusAPI {
@@ -76,19 +119,10 @@ interface IUseStatusAPI {
  * {@link StatusAPI} を作成するフックです。
  */
 export const useStatusAPI: IUseStatusAPI = function useSuiStatusAPI(props) {
-  const { slotProps: { indicator: indicatorProps = {} } = {}, ...rootProps } = props;
-
-  return {
-    getRootProps() {
-      return rootProps;
-    },
-    getIndicatorProps() {
-      return indicatorProps;
-    },
-  };
+  return new StatusAPI(props);
 };
 
-export { type StatusAPI as API, useStatusAPI as useAPI };
+export { StatusAPI as API, useStatusAPI as useAPI };
 
 // Component
 // ---------
@@ -98,12 +132,11 @@ export { type StatusAPI as API, useStatusAPI as useAPI };
  */
 export const Status: IComponent<StatusProps> = function SuiStatus(props) {
   const api = useStatusAPI(props);
-  const { children, ...otherRootProps } = api.getRootProps();
 
   return (
-    <StatusRoot {...otherRootProps}>
+    <StatusRoot {...api.getRootProps()}>
       <StatusIndicator {...api.getIndicatorProps()} />
-      {children}
+      {api.getLabel()}
     </StatusRoot>
   );
 };

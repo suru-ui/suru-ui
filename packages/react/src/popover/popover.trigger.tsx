@@ -9,21 +9,19 @@ import type { PopoverHandle } from "./popover.handle.js";
 
 /**
  * {@link PopoverTrigger} が持つ状態です。
- *
- * @template TPayload トリガーから渡すデータの型です。
  */
 export type PopoverTriggerState = Popover.Trigger.State;
 
 export namespace PopoverTriggerProps {
-  export type Render = RenderProps<PopoverTriggerState>;
+  export type Render = Omit<RenderProps<PopoverTriggerState>, "render">;
 
   export type SuruUI<TPayload = any> = {
     /**
      * ボタンとしてレンダリングする要素です。
      *
-     * {@link Popover.Trigger} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
+     * Base UI の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
      */
-    children: NonNullable<React.ComponentProps<typeof Popover.Trigger>["render"]>;
+    children: NonNullable<Popover.Trigger.Props<TPayload>["render"]>;
 
     /**
      * ポップオーバー ({@link Root}) を関連付けるハンドルです。
@@ -78,7 +76,7 @@ interface IPopoverTrigger extends IComponent<PopoverTriggerProps> {
 /**
  * ポップオーバーを開くトリガー要素です。
  *
- * 子要素は何にもラップされず、そのまま {@link Popover.Trigger} の `render` プロパティーに渡されます。
+ * 子要素は何にもラップされず、そのまま Base UI の `render` プロパティーに渡されます。
  */
 export const PopoverTrigger: IPopoverTrigger = function SuiPopoverTrigger<TPayload>(
   props: PopoverTriggerProps<TPayload>,

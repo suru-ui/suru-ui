@@ -48,7 +48,13 @@ export type ToastTitleProps = ToastTitleProps.Render &
  * 通知のタイトルを表示する見出し要素です。
  */
 export const ToastTitle: IComponent<ToastTitleProps> = function SuiToastTitle(props) {
-  const { style, render, className, ...otherProps } = props;
+  const {
+    style,
+    // oxlint-disable-next-line jsx-a11y/heading-has-content
+    render = <h2 />,
+    className,
+    ...otherProps
+  } = props;
 
   return (
     <Toast.Title

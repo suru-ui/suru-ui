@@ -260,19 +260,19 @@
   > .sui_action_group_item.sui_input {
     --sui_input-color: var(--sui_action_group-item-color);
     --sui_input-background_color: var(--sui_action_group-item-background_color);
-    --sui_input-border_color-normal: var(--sui_action_group-item-border_color);
+    --sui_input-border_color-idle: var(--sui_action_group-item-border_color);
   }
 
   > .sui_action_group_item.sui_number_field {
     --sui_number_field_input-color: var(--sui_action_group-item-color);
     --sui_number_field_group-background_color: var(--sui_action_group-item-background_color);
-    --sui_number_field_group-border_color-normal: var(--sui_action_group-item-border_color);
+    --sui_number_field_group-border_color-idle: var(--sui_action_group-item-border_color);
   }
 
   > .sui_action_group_item.sui_select {
-    --sui_select-color: var(--sui_action_group-item-color);
-    --sui_select-border_color-normal: var(--sui_action_group-item-border_color);
-    --sui_select-canvas-normal: var(--sui_action_group-item-background_color);
+    --sui_select-color-idle: var(--sui_action_group-item-color);
+    --sui_select-background_color-idle: var(--sui_action_group-item-background_color);
+    --sui_select-border_color-idle: var(--sui_action_group-item-border_color);
   }
 }
 
@@ -306,17 +306,17 @@
 
   .sui_action_group_separator-orientation_horizontal {
     align-self: stretch;
-    width: 1px;
   }
 
   .sui_action_group_separator-orientation_vertical {
     width: 100%;
-    height: 1px;
   }
 }
 
 /* 変数 */
 :scope {
+  --sui_action_group_separator-width: ;
+  --sui_action_group_separator-height: ;
   --sui_action_group_separator-background_color: ;
 }
 
@@ -325,11 +325,21 @@
   .sui_action_group_separator {
     background-color: var(--sui_action_group_separator-background_color);
   }
+
+  .sui_action_group_separator-orientation_horizontal {
+    width: var(--sui_action_group_separator-width);
+  }
+
+  .sui_action_group_separator-orientation_vertical {
+    height: var(--sui_action_group_separator-height);
+  }
 }
 
 /* 代入 */
 :scope {
-  --sui_action_group_separator-background_color: var(--sui_action_group-item-border_color, var(--sui-grey-60));
+  --sui_action_group_separator-width: --sui-border_width(1);
+  --sui_action_group_separator-height: --sui-border_width(1);
+  --sui_action_group_separator-background_color: var(--sui_action_group-item-border_color, var(--sui-border-1));
 }
 
 } /* @scope */

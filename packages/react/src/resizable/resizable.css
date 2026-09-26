@@ -55,9 +55,9 @@
   --sui_resizable_handle-color-active: ;
   --sui_resizable_handle-color-hover: ;
   --sui_resizable_handle-color-idle: ;
-  --sui_resizable_handle-outline_width: ;
-  --sui_resizable_handle-outline_color: ;
-  --sui_resizable_handle-outline_offset: ;
+  --sui_resizable_handle-focusring_width: ;
+  --sui_resizable_handle-focusring_color: ;
+  --sui_resizable_handle-focusring_offset: ;
 }
 
 /* 可変 */
@@ -84,15 +84,15 @@
   --sui_resizable_handle-color-idle: var(--sui-border-1);
   --sui_resizable_handle-color-hover: var(--sui-border-2);
   --sui_resizable_handle-color-active: var(--sui-border-3);
-  --sui_resizable_handle-outline_width: var(--sui-focusring_width);
-  --sui_resizable_handle-outline_color: var(--sui-focusring_color);
-  --sui_resizable_handle-outline_offset: var(--sui-focusring_offset);
+  --sui_resizable_handle-focusring_width: var(--sui-focusring_width);
+  --sui_resizable_handle-focusring_color: var(--sui-focusring_color);
+  --sui_resizable_handle-focusring_offset: var(--sui-focusring_offset);
 }
 
 /* 変異 */
 :scope {
-  /* react-resizable-panels では data 属性をクラス名に変換できないので、例題的に data 属性をセレクターに使用します。 */
-  .sui_resizable_handle {
+  /* react-resizable-panels は data-separator 属性でホバー・操作中の状態を出力します。 */
+  .sui_resizable_handle:not(.sui_resizable_handle-disabled) {
     &[data-separator="hover"] {
       --_sui_resizable_handle-color: var(--sui_resizable_handle-color-hover);
     }
@@ -102,9 +102,9 @@
     }
 
     &:focus-visible {
-      --_sui_resizable_handle-outline_width: var(--sui_resizable_handle-outline_width);
-      --_sui_resizable_handle-outline_color: var(--sui_resizable_handle-outline_color);
-      --_sui_resizable_handle-outline_offset: var(--sui_resizable_handle-outline_offset);
+      --_sui_resizable_handle-outline_width: var(--sui_resizable_handle-focusring_width);
+      --_sui_resizable_handle-outline_color: var(--sui_resizable_handle-focusring_color);
+      --_sui_resizable_handle-outline_offset: var(--sui_resizable_handle-focusring_offset);
     }
   }
 

@@ -81,39 +81,45 @@ export type FieldSlotProps = {
  */
 export type FieldState = FieldRootState;
 
+namespace FieldProps {
+  export type Field = {
+    /**
+     * 入力欄の下に表示する説明文です。
+     */
+    description?: FieldDescriptionProps["children"] | undefined;
+
+    /**
+     * 表示するエラーメッセージの検証状態を指定します。
+     *
+     * `false` を指定すると、エラーメッセージを表示しません。
+     *
+     * @default true
+     */
+    errorMatches?: FieldErrorMatches | undefined;
+
+    /**
+     * 入力欄の上に表示するラベルです。
+     */
+    label?: FieldLabelProps["children"] | undefined;
+
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     */
+    slotProps?: FieldSlotProps | undefined;
+
+    /**
+     * 入力欄の検証状態に応じて表示する内容です。
+     */
+    validity?: FieldValidityProps["children"] | undefined;
+  };
+
+  export type Root = Omit<FieldRootProps, keyof Field>;
+}
+
 /**
  * {@link Field} に渡す props です。
  */
-export type FieldProps = FieldRootProps & {
-  /**
-   * 入力欄の下に表示する説明文です。
-   */
-  description?: FieldDescriptionProps["children"] | undefined;
-
-  /**
-   * 表示するエラーメッセージの検証状態を指定します。
-   *
-   * `false` を指定すると、エラーメッセージを表示しません。
-   *
-   * @default true
-   */
-  errorMatches?: FieldErrorMatches | undefined;
-
-  /**
-   * 入力欄の上に表示するラベルです。
-   */
-  label?: FieldLabelProps["children"] | undefined;
-
-  /**
-   * 各パーツに個別の props を渡すためのオブジェクトです。
-   */
-  slotProps?: FieldSlotProps | undefined;
-
-  /**
-   * 入力欄の検証状態に応じて表示する内容です。
-   */
-  validity?: FieldValidityProps["children"] | undefined;
-};
+export type FieldProps = FieldProps.Field & FieldProps.Root;
 
 // API
 // ---
@@ -121,31 +127,129 @@ export type FieldProps = FieldRootProps & {
 /**
  * {@link Field} を構成する各パーツの props を作成するための API です。
  */
-export interface FieldAPI {
+export class FieldAPI {
+  private readonly fieldProps: Required<Omit<FieldProps.Field, "slotProps" | "errorMatches">> & {
+    readonly errorMatches: FieldErrorMatches;
+  };
+
+  private readonly slotProps: FieldSlotProps;
+
+  private readonly rootProps: Omit<FieldRootProps, "children">;
+
+  /**
+   * @param props {@link Field} の props です。
+   * @internal
+   */
+  public constructor(props: FieldProps) {
+    const {
+      label,
+      children: _children,
+      validity,
+      slotProps = {},
+      description,
+      errorMatches = true,
+      ...rootProps
+    } = props;
+    this.fieldProps = { label, validity, description, errorMatches };
+    this.slotProps = slotProps;
+    this.rootProps = rootProps;
+  }
+
   /**
    * {@link FieldDescription} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
-  getDescriptionProps(): FieldDescriptionProps | null;
+  public getDescriptionProps(): FieldDescriptionProps | null {
+    const { description } = this.fieldProps;
+    const { description: props = {} } = this.slotProps;
+
+    if (isLikelyVisibleNode(description)) {
+      return {
+        ...props,
+        children: description,
+      };
+    }
+
+    return null;
+  }
 
   /**
    * {@link FieldError} に渡す props の一覧を取得します。
+   *
+   * エラーメッセージを表示しないときは空配列を返します。
    */
-  getErrorPropsList(): readonly FieldErrorProps[];
+  public getErrorPropsList(): readonly FieldErrorProps[] {
+    const { errorMatches } = this.fieldProps;
+    const { error: props = {} } = this.slotProps;
+
+    if (errorMatches === false) {
+      return [];
+    }
+
+    if (typeof errorMatches === "boolean" || typeof errorMatches === "string") {
+      return [{ ...props, match: errorMatches }];
+    }
+
+    if (Array.isArray(errorMatches)) {
+      const matches = [...new Set(errorMatches)];
+
+      return matches.map((match) => ({ ...props, match }));
+    }
+
+    const entries = Object.entries(errorMatches) as [FieldErrorMatch, React.ReactNode][];
+
+    return entries.map(([match, children]) => ({
+      ...props,
+      match,
+      children,
+    }));
+  }
 
   /**
    * {@link FieldLabel} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
-  getLabelProps(): FieldLabelProps | null;
+  public getLabelProps(): FieldLabelProps | null {
+    const { label } = this.fieldProps;
+    const { label: props = {} } = this.slotProps;
+
+    if (isLikelyVisibleNode(label)) {
+      return {
+        ...props,
+        children: label,
+      };
+    }
+
+    return null;
+  }
 
   /**
    * {@link FieldRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<FieldRootProps, "children">;
+  public getRootProps(): Omit<FieldRootProps, "children"> {
+    return this.rootProps;
+  }
 
   /**
    * {@link FieldValidity} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
-  getValidityProps(): FieldValidityProps | null;
+  public getValidityProps(): FieldValidityProps | null {
+    const { validity } = this.fieldProps;
+    const { validity: props = {} } = this.slotProps;
+
+    if (typeof validity === "function") {
+      return {
+        ...props,
+        children: validity,
+      };
+    }
+
+    return null;
+  }
 }
 
 interface IUseFieldAPI {
@@ -162,82 +266,10 @@ interface IUseFieldAPI {
  * {@link FieldAPI} を作成するフックです。
  */
 export const useFieldAPI: IUseFieldAPI = function useSuiFieldAPI(props) {
-  const {
-    label,
-    children: _children,
-    validity,
-    slotProps: {
-      error: errorProps = {},
-      label: labelProps = {},
-      validity: validityProps = {},
-      description: descriptionProps = {},
-    } = {},
-    description,
-    errorMatches = true,
-    ...otherRootProps
-  } = props;
-
-  return {
-    getRootProps() {
-      return otherRootProps;
-    },
-    getLabelProps() {
-      if (isLikelyVisibleNode(label)) {
-        return {
-          ...labelProps,
-          children: label,
-        };
-      }
-
-      return null;
-    },
-    getValidityProps() {
-      if (typeof validity === "function") {
-        return {
-          ...validityProps,
-          children: validity,
-        };
-      }
-
-      return null;
-    },
-    getErrorPropsList() {
-      if (errorMatches === false) {
-        return [];
-      }
-
-      if (typeof errorMatches === "boolean" || typeof errorMatches === "string") {
-        return [{ ...errorProps, match: errorMatches }];
-      }
-
-      if (Array.isArray(errorMatches)) {
-        const matches = [...new Set(errorMatches)];
-
-        return matches.map((match) => ({ ...errorProps, match }));
-      }
-
-      const entries = Object.entries(errorMatches) as [FieldErrorMatch, React.ReactNode][];
-
-      return entries.map(([match, children]) => ({
-        ...errorProps,
-        match,
-        children,
-      }));
-    },
-    getDescriptionProps() {
-      if (isLikelyVisibleNode(description)) {
-        return {
-          ...descriptionProps,
-          children: description,
-        };
-      }
-
-      return null;
-    },
-  };
+  return new FieldAPI(props);
 };
 
-export { type FieldAPI as API, useFieldAPI as useAPI };
+export { FieldAPI as API, useFieldAPI as useAPI };
 
 // Component
 // ---------
@@ -261,8 +293,8 @@ interface IField extends IComponent<FieldProps> {
  */
 export const Field: IField = /*#__PURE__*/ Object.assign(
   function SuiField(props: FieldProps) {
-    const { children } = props;
     const api = useFieldAPI(props);
+    const { children } = props;
     const labelProps = api.getLabelProps();
     const descriptionProps = api.getDescriptionProps();
     const validityProps = api.getValidityProps();

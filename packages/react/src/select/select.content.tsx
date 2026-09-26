@@ -61,9 +61,6 @@ export const SelectContent: IComponent<SelectContentProps> = function SuiSelectC
 
 export { SelectContent as Content };
 
-/**
- * {@link SelectContent} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Content {
   export type State = SelectContentState;
 

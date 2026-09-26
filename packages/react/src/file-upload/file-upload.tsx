@@ -2,7 +2,6 @@ import * as React from "react";
 
 import type { LikelyVisibleNode } from "../_is-likely-visible-node.js";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
-import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
 import {
   type FileUploadRootSize,
@@ -91,20 +90,25 @@ export type FileUploadSlotProps = {
  */
 export type FileUploadState = FileUploadRootState;
 
+namespace FileUploadProps {
+  export type FileUpload = {
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     */
+    slotProps?: FileUploadSlotProps | undefined;
+  };
+
+  export type Dropzone = Pick<FileUploadDropzoneProps, "children">;
+
+  export type Root = Omit<FileUploadRootProps, keyof FileUpload | keyof Dropzone>;
+}
+
 /**
  * {@link FileUpload} に渡す props です。
  */
-export type FileUploadProps = Omit<FileUploadRootProps, "children"> & {
-  /**
-   * ドロップゾーンの中身です。
-   */
-  children?: FileUploadDropzoneProps["children"] | undefined;
-
-  /**
-   * 各パーツに個別の props を渡すためのオブジェクトです。
-   */
-  slotProps?: FileUploadSlotProps | undefined;
-};
+export type FileUploadProps = FileUploadProps.FileUpload &
+  FileUploadProps.Root &
+  FileUploadProps.Dropzone;
 
 // API
 // ---
@@ -112,53 +116,110 @@ export type FileUploadProps = Omit<FileUploadRootProps, "children"> & {
 /**
  * {@link FileUpload} を構成する各パーツの props などを作成するための API です。
  */
-export interface FileUploadAPI {
+export class FileUploadAPI {
+  private readonly dropzoneProps: Required<FileUploadProps.Dropzone>;
+
+  private readonly slotProps: FileUploadSlotProps;
+
+  private readonly rootProps: Omit<FileUploadRootProps, "children">;
+
+  /**
+   * @param props {@link FileUpload} の props です。
+   * @internal
+   */
+  public constructor(props: FileUploadProps) {
+    const { children, slotProps = {}, ...rootProps } = props;
+    this.dropzoneProps = { children };
+    this.slotProps = slotProps;
+    this.rootProps = rootProps;
+  }
+
   /**
    * {@link FileUploadDropzone} に渡す props を取得します。
    */
-  getDropzoneProps(): Omit<FileUploadDropzoneProps, "children"> & {
-    children: LikelyVisibleNode | undefined;
-  };
+  public getDropzoneProps(): FileUploadDropzoneProps {
+    const { children = "ここにファイルをドラッグアンドドロップ、またはクリックして選択" } =
+      this.dropzoneProps;
+    const { dropzone: props = {} } = this.slotProps;
+
+    return {
+      ...props,
+      children,
+    };
+  }
 
   /**
    * {@link FileUploadHiddenInput} に渡す props を取得します。
    */
-  getHiddenInputProps(): FileUploadHiddenInputProps;
+  public getHiddenInputProps(): FileUploadHiddenInputProps {
+    const { hiddenInput: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link FileUploadItemDeleteTrigger} に渡す props を取得します。
    */
-  getItemDeleteTriggerProps(): FileUploadItemDeleteTriggerProps;
+  public getItemDeleteTriggerProps(): FileUploadItemDeleteTriggerProps {
+    const { itemDeleteTrigger: props = {} } = this.slotProps;
+    const { children = "×", ...otherProps } = props;
+
+    return {
+      ...otherProps,
+      children,
+    };
+  }
 
   /**
    * {@link FileUploadItemGroup} に渡す props を取得します。
    */
-  getItemGroupProps(): Omit<FileUploadItemGroupProps, "children">;
+  public getItemGroupProps(): Omit<FileUploadItemGroupProps, "children"> {
+    const { itemGroup: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link FileUploadItemName} に渡す props を取得します。
    */
-  getItemNameProps(): Omit<FileUploadItemNameProps, "children">;
+  public getItemNameProps(): Omit<FileUploadItemNameProps, "children"> {
+    const { itemName: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link FileUploadItem} に渡す props を取得します。
    *
    * @param file 表示するファイルです。
    */
-  getItemProps(file: File): Omit<FileUploadItemProps, "children">;
+  public getItemProps(file: File): Omit<FileUploadItemProps, "children"> {
+    const { item: props = {} } = this.slotProps;
+
+    return {
+      ...props,
+      file,
+    };
+  }
 
   /**
    * {@link FileUploadItemSizeText} に渡す props を取得します。
    */
-  getItemSizeTextProps(): Omit<FileUploadItemSizeTextProps, "children">;
+  public getItemSizeTextProps(): Omit<FileUploadItemSizeTextProps, "children"> {
+    const { itemSizeText: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link FileUploadRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<FileUploadRootProps, "children">;
+  public getRootProps(): Omit<FileUploadRootProps, "children"> {
+    return this.rootProps;
+  }
 }
 
-interface IUseFileUploadAPI {
+export interface IUseFileUploadAPI {
   /**
    * {@link FileUploadAPI} を作成します。
    *
@@ -172,60 +233,10 @@ interface IUseFileUploadAPI {
  * {@link FileUploadAPI} を作成するフックです。
  */
 export const useFileUploadAPI: IUseFileUploadAPI = function useSuiFileUploadAPI(props) {
-  const {
-    children,
-    slotProps: {
-      item: itemProps = {},
-      dropzone: dropzoneProps = {},
-      itemName: itemNameProps = {},
-      itemGroup: itemGroupProps = {},
-      hiddenInput: hiddenInputProps = {},
-      itemSizeText: itemSizeTextProps = {},
-      itemDeleteTrigger: itemDeleteTriggerProps = {},
-    } = {},
-    ...otherRootProps
-  } = props;
-
-  return {
-    getItemProps(file) {
-      return {
-        ...itemProps,
-        file,
-      };
-    },
-    getRootProps() {
-      return otherRootProps;
-    },
-    getDropzoneProps() {
-      return {
-        ...dropzoneProps,
-        children: isLikelyVisibleNode(children)
-          ? children
-          : toReactNode("ここにファイルをドラッグアンドドロップ、またはクリックして選択"),
-      };
-    },
-    getItemNameProps() {
-      return itemNameProps;
-    },
-    getItemGroupProps() {
-      return itemGroupProps;
-    },
-    getHiddenInputProps() {
-      return hiddenInputProps;
-    },
-    getItemSizeTextProps() {
-      return itemSizeTextProps;
-    },
-    getItemDeleteTriggerProps() {
-      return {
-        ...itemDeleteTriggerProps,
-        children: itemDeleteTriggerProps.children ?? toReactNode("×"),
-      };
-    },
-  };
+  return new FileUploadAPI(props);
 };
 
-export { type FileUploadAPI as API, useFileUploadAPI as useAPI };
+export { FileUploadAPI as API, useFileUploadAPI as useAPI };
 
 // Component
 // ---------

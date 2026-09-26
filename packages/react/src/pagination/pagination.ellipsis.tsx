@@ -27,23 +27,25 @@ export namespace PaginationEllipsisProps {
      * 飛び先のページ範囲の開始ページを指定します。
      *
      * 終了ページより大きい値を指定した場合は入れ替えて扱います。
+     *
+     * @default 2
      */
     start?: number | undefined;
   };
 
   export type BaseUI = Pick<
-    Button.ButtonRootProps,
+    Button.ButtonRootProps.BaseUI,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // PaginationEllipsisProps: context が制御するため除きます。
-      keyof Button.ButtonRootProps,
-      keyof Render | keyof SuruUI | "children" | "color" | "radius" | "size" | "squared" | "variant"
+      // PaginationEllipsisProps:
+      keyof Button.ButtonRootProps.BaseUI,
+      keyof Render | keyof SuruUI
     >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof Omit<Button.ButtonRootProps, "children"> | "children"
+    Button.ButtonRootProps.HTML,
+    keyof Render | keyof SuruUI | keyof BaseUI | "children"
   >;
 }
 
@@ -82,17 +84,28 @@ export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
     );
     const label = ariaLabel ?? `${resolvedStart}〜${resolvedEnd}ページへ移動`;
     const [editing, setEditing] = React.useState(false);
+    const inputRef = React.useRef<HTMLInputElement>(null);
     const isDisabled = ctx?.disabled || disabled;
+
+    React.useEffect(() => {
+      if (editing) {
+        inputRef.current?.focus();
+      }
+    }, [editing]);
+
     const inputElement = useRender<HTMLInputElement, {}, boolean>({
       props: {
+        ref: inputRef,
         type: "text",
         onBlur() {
           setEditing(false);
         },
         pattern: "[0-9]*",
         disabled: isDisabled,
-        autoFocus: true,
-        className: "sui_pagination_ellipsis_input",
+        className: cn(
+          "sui_pagination_ellipsis_input",
+          isDisabled && "sui_pagination_ellipsis_input-disabled",
+        ),
         inputMode: "numeric",
         onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
           if (event.key === "Escape") {

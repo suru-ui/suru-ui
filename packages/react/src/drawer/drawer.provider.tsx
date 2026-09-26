@@ -1,7 +1,6 @@
 import { Drawer } from "@base-ui/react/drawer";
 import * as React from "react";
 
-import type { RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
 
 /**
@@ -10,7 +9,7 @@ import type { IComponent } from "../types.js";
 export type DrawerProviderState = Drawer.Provider.State;
 
 export namespace DrawerProviderProps {
-  export type Render = RenderProps<DrawerProviderState>;
+  export type Render = {};
 
   export type SuruUI = {};
 
@@ -19,7 +18,7 @@ export namespace DrawerProviderProps {
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
       // DrawerProviderProps:
-      never,
+      "children",
       keyof Render | keyof SuruUI
     >
   >;

@@ -181,7 +181,7 @@
 
 /* 変異 */
 :scope {
-  .sui_file_upload_trigger {
+  &:not(.sui_file_upload-disabled) .sui_file_upload_trigger {
     @media (any-hover: hover) {
       &:hover {
         --_sui_file_upload_trigger-background_color:
@@ -420,7 +420,7 @@
 
 /* 変異 */
 :scope {
-  .sui_file_upload_dropzone {
+  &:not(.sui_file_upload-disabled) .sui_file_upload_dropzone {
     @media (any-hover: hover) {
       &:hover {
         --_sui_file_upload_dropzone-border_color:
@@ -433,13 +433,13 @@
       --_sui_file_upload_dropzone-border_color:
         var(--sui_file_upload_dropzone-border_color-focus_visible);
     }
+  }
 
-    &.sui_file_upload_dropzone-dragover {
-      --_sui_file_upload_dropzone-background_color:
-        var(--sui_file_upload_dropzone-background_color-dragover);
-      --_sui_file_upload_dropzone-border_color:
-        var(--sui_file_upload_dropzone-border_color-dragover);
-    }
+  .sui_file_upload_dropzone.sui_file_upload_dropzone-dragover {
+    --_sui_file_upload_dropzone-background_color:
+      var(--sui_file_upload_dropzone-background_color-dragover);
+    --_sui_file_upload_dropzone-border_color:
+      var(--sui_file_upload_dropzone-border_color-dragover);
   }
 }
 
@@ -557,7 +557,7 @@
 
 /* 変異 */
 :scope {
-  .sui_file_upload_clear_trigger {
+  &:not(.sui_file_upload-disabled) .sui_file_upload_clear_trigger {
     @media (any-hover: hover) {
       &:hover {
         --_sui_file_upload_clear_trigger-background_color:
@@ -871,7 +871,7 @@
 
 /* 変異 */
 :scope {
-  .sui_file_upload_item_delete_trigger {
+  &:not(.sui_file_upload-disabled) .sui_file_upload_item_delete_trigger {
     @media (any-hover: hover) {
       &:hover {
         --_sui_file_upload_item_delete_trigger-background_color:
@@ -912,12 +912,21 @@
 /* Dropzone */
 :scope {
   &.sui_file_upload-disabled .sui_file_upload_dropzone {
-    color: var(--sui-disabled-naked-canvas_text);
     cursor: not-allowed;
-    background-color: var(--sui-disabled-naked-canvas);
-    border-color: var(--sui-disabled-naked-border);
     border-style: solid;
     border-width: var(--sui-disabled-border_width);
+  }
+
+  &.sui_file_upload-disabled.sui_file_upload-variant_naked .sui_file_upload_dropzone {
+    color: var(--sui-disabled-naked-canvas_text);
+    background-color: var(--sui-disabled-naked-canvas);
+    border-color: var(--sui-disabled-naked-border);
+  }
+
+  &.sui_file_upload-disabled.sui_file_upload-variant_liquid .sui_file_upload_dropzone {
+    color: var(--sui-disabled-liquid-canvas_text);
+    background-color: var(--sui-disabled-liquid-canvas);
+    border-color: var(--sui-disabled-liquid-border);
   }
 }
 

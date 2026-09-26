@@ -7,6 +7,7 @@ import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import type { Override, IComponent } from "../types.js";
+import { ToggleButtonContext } from "./toggle-button.context.js";
 
 /**
  * トグルボタンの押下状態が変更されたイベントの詳細です。
@@ -186,46 +187,49 @@ export const ToggleButtonRoot: IComponent<ToggleButtonRootProps> = function SuiT
     onPressedChange,
     focusableWhenDisabled,
   };
+  const ctx = React.useMemo<ToggleButtonContext>(() => ({ pending }), [pending]);
 
   return (
-    <Toggle
-      {...otherProps}
-      {...baseuiProps}
-      render={(htmlProps: {}, toggleState) => {
-        const buttonRootProps: Required<
-          Button.ButtonRootProps.SuruUI &
-            Button.ButtonRootProps.BaseUI &
-            Pick<Button.ButtonRootProps.HTML, "disabled">
-        > = {
-          item: false,
-          size,
-          color: toggleState.pressed ? color : "grey",
-          muted: undefined,
-          radius,
-          pending,
-          squared,
-          variant: toggleState.pressed ? "solid" : variant,
-          disabled,
-          outlined,
-          nativeButton,
-          focusableWhenDisabled,
-        };
+    <ToggleButtonContext value={ctx}>
+      <Toggle
+        {...otherProps}
+        {...baseuiProps}
+        render={(htmlProps: {}, toggleState) => {
+          const buttonRootProps: Required<
+            Button.ButtonRootProps.SuruUI &
+              Button.ButtonRootProps.BaseUI &
+              Pick<Button.ButtonRootProps.HTML, "disabled">
+          > = {
+            item: false,
+            size,
+            color: toggleState.pressed ? color : "grey",
+            muted: undefined,
+            radius,
+            pending,
+            squared,
+            variant: toggleState.pressed ? "solid" : variant,
+            disabled,
+            outlined,
+            nativeButton,
+            focusableWhenDisabled,
+          };
 
-        return (
-          <Button.Root
-            {...mergeProps<typeof Button.Root>([
-              htmlProps,
-              buttonRootProps,
-              proxyRenderProps(toggleState, {
-                style,
-                render,
-                className,
-              }),
-            ])}
-          />
-        );
-      }}
-    />
+          return (
+            <Button.Root
+              {...mergeProps<typeof Button.Root>([
+                htmlProps,
+                buttonRootProps,
+                proxyRenderProps(toggleState, {
+                  style,
+                  render,
+                  className,
+                }),
+              ])}
+            />
+          );
+        }}
+      />
+    </ToggleButtonContext>
   );
 };
 

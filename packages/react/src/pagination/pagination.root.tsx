@@ -5,8 +5,8 @@ import * as React from "react";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import { usePaginationState } from "./_pagination.js";
 import {
-  type PaginationGoToPage,
   type PaginationRootChangeEventReason,
   type PaginationRootChangeEventDetails,
   PaginationContext,
@@ -137,46 +137,33 @@ export const PaginationRoot: IComponent<PaginationRootProps> = function SuiPagin
     radius = size,
     disabled = false,
     totalPages,
-    defaultPage = 1,
+    defaultPage,
     onPageChange,
     "aria-label": ariaLabel = "ページネーション",
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherNavProps
   } = props;
-  const maxPage = Math.max(1, Math.trunc(totalPages));
-  const [innerPage, setInnerPage] = React.useState(() =>
-    Math.min(Math.max(Math.trunc(defaultPage), 1), maxPage),
-  );
-  const page = Math.min(Math.max(Math.trunc(pageProp ?? innerPage), 1), maxPage);
-  const goToPage = React.useCallback<PaginationGoToPage>(
-    (nextPage, details) => {
-      if (disabled || totalPages < 1) {
-        return;
-      }
-
-      const target = Math.min(Math.max(Math.trunc(nextPage), 1), maxPage);
-      if (target === page) {
-        return;
-      }
-
-      if (pageProp === undefined) {
-        setInnerPage(target);
-      }
-
-      onPageChange?.(target, details);
-    },
-    [disabled, maxPage, onPageChange, page, pageProp, totalPages],
-  );
+  const {
+    page,
+    goToPage,
+    totalPages: maxPage,
+  } = usePaginationState({
+    page: pageProp,
+    disabled,
+    totalPages,
+    defaultPage,
+    onPageChange,
+  });
   const ctx = React.useMemo<PaginationContext>(
-    () => ({ page, size, color, radius, disabled, goToPage, totalPages }),
-    [color, disabled, goToPage, page, radius, size, totalPages],
+    () => ({ page, size, color, radius, disabled, goToPage, totalPages: maxPage }),
+    [color, disabled, goToPage, maxPage, page, radius, size],
   );
   const element = useRender({
     props: [
       otherNavProps,
       {
-        className: cn<PaginationRootState>(
+        className: cn(
           "sui_pagination",
           `sui_pagination-size_${size}`,
           `sui_pagination-radius_${radius}`,

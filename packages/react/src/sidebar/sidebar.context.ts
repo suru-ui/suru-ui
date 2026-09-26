@@ -50,9 +50,21 @@ export type SidebarContext = {
 export const SidebarContext: React.Context<SidebarContext | null> =
   React.createContext<SidebarContext | null>(null);
 
-function useSuiSidebarContext(optional?: false): SidebarContext;
-function useSuiSidebarContext(optional?: boolean): SidebarContext | null;
-function useSuiSidebarContext(optional?: boolean): SidebarContext | null {
+export interface IUseSidebarContext extends IUseContext<SidebarContext> {
+  /**
+   * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
+   * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
+   */
+  (optional?: false): SidebarContext;
+  (optional?: boolean): SidebarContext | null;
+}
+
+/**
+ * {@link SidebarContext} を読み取るフックです。
+ */
+export const useSidebarContext: IUseSidebarContext = function useSuiSidebarContext(
+  optional?: boolean,
+): any {
   const ctx = React.use(SidebarContext);
   if (ctx === null && !optional) {
     throw new ContextMissingError({
@@ -62,11 +74,12 @@ function useSuiSidebarContext(optional?: boolean): SidebarContext | null {
   }
 
   return ctx;
-}
-
-/**
- * {@link SidebarContext} を読み取るフックです。
- */
-export const useSidebarContext: IUseContext<SidebarContext> = useSuiSidebarContext;
+};
 
 export { SidebarContext as Context, useSidebarContext as useContext };
+
+export namespace Context {
+  export type Collapsible = SidebarRootCollapsible;
+
+  export type OpenState = SidebarOpenState;
+}

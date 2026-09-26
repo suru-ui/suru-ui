@@ -48,16 +48,13 @@ export type HoverCardPortalProps = HoverCardPortalProps.Render &
 export const HoverCardPortal: IComponent<HoverCardPortalProps> = function SuiHoverCardPortal(
   props,
 ) {
+  const ctx = useHoverCardContext();
   const {
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
-  const ctx = useHoverCardContext(true);
-  const size = ctx?.size ?? "md";
-  const radius = ctx?.radius ?? "md";
-  const outlined = ctx?.outlined ?? false;
 
   return (
     <PreviewCard.Portal
@@ -65,9 +62,9 @@ export const HoverCardPortal: IComponent<HoverCardPortalProps> = function SuiHov
       className={cn(
         className,
         "sui_hover_card_portal",
-        `sui_hover_card_portal-size_${size}`,
-        `sui_hover_card_portal-radius_${radius}`,
-        outlined && "sui_hover_card_portal-outlined",
+        `sui_hover_card_portal-size_${ctx.size}`,
+        `sui_hover_card_portal-radius_${ctx.radius}`,
+        ctx.outlined && "sui_hover_card_portal-outlined",
       )}
       data-scope={dataScope}
     />

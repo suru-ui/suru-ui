@@ -57,9 +57,6 @@ export const SelectItemIndicator: IComponent<SelectItemIndicatorProps> =
 
 export { SelectItemIndicator as ItemIndicator };
 
-/**
- * {@link SelectItemIndicator} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace ItemIndicator {
   export type State = SelectItemIndicatorState;
 

@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import type { IComponent, IUseContext } from "../types.js";
 import {
   type SidebarContext,
@@ -67,20 +65,21 @@ export type SidebarSlotProps = {
   readonly provider?: Omit<SidebarProviderProps, "children"> | undefined;
 };
 
+namespace SidebarProps {
+  export type Provider = Omit<SidebarProviderProps, keyof Sidebar>;
+
+  export type Sidebar = {
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     */
+    slotProps?: SidebarSlotProps | undefined;
+  };
+}
+
 /**
  * {@link Sidebar} に渡す props です。
  */
-export type SidebarProps = Omit<SidebarProviderProps, "children"> & {
-  /**
-   * サイドバーの内容です。
-   */
-  children?: React.ReactNode | undefined;
-
-  /**
-   * 各パーツに個別の props を渡すためのオブジェクトです。
-   */
-  slotProps?: SidebarSlotProps | undefined;
-};
+export type SidebarProps = SidebarProps.Sidebar & SidebarProps.Provider;
 
 // API
 // ---
@@ -88,11 +87,32 @@ export type SidebarProps = Omit<SidebarProviderProps, "children"> & {
 /**
  * {@link Sidebar} を構成する各パーツの props を作成するための API です。
  */
-export interface SidebarAPI {
+export class SidebarAPI {
+  private readonly slotProps: SidebarSlotProps;
+
+  private readonly providerProps: SidebarProviderProps;
+
+  /**
+   * @param props {@link Sidebar} の props です。
+   * @internal
+   */
+  public constructor(props: SidebarProps) {
+    const { slotProps = {}, ...providerProps } = props;
+    this.slotProps = slotProps;
+    this.providerProps = providerProps;
+  }
+
   /**
    * {@link SidebarProvider} に渡す props を取得します。
    */
-  getProviderProps(): SidebarProviderProps;
+  public getProviderProps(): SidebarProviderProps {
+    const { provider: props = {} } = this.slotProps;
+
+    return {
+      ...this.providerProps,
+      ...props,
+    };
+  }
 }
 
 interface IUseSidebarAPI {
@@ -109,19 +129,10 @@ interface IUseSidebarAPI {
  * {@link SidebarAPI} を作成するフックです。
  */
 export const useSidebarAPI: IUseSidebarAPI = function useSuiSidebarAPI(props) {
-  const { slotProps: { provider: providerProps = {} } = {}, ...otherProviderProps } = props;
-
-  return {
-    getProviderProps() {
-      return {
-        ...otherProviderProps,
-        ...providerProps,
-      };
-    },
-  };
+  return new SidebarAPI(props);
 };
 
-export { type SidebarAPI as API, useSidebarAPI as useAPI };
+export { SidebarAPI as API, useSidebarAPI as useAPI };
 
 // Component
 // ---------

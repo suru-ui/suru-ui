@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import type { IComponent, IUseContext } from "../types.js";
+import type { IComponent } from "../types.js";
 import {
   type TextFieldContext,
   type TextFieldRootSize,
@@ -11,6 +11,7 @@ import {
   type TextFieldAddonProps,
   type TextFieldInputProps,
   type TextFieldRootRadius,
+  type IUseTextFieldContext,
   type TextFieldRootVariant,
   type TextFieldInputChangeEventReason,
   type TextFieldInputChangeEventDetails,
@@ -48,21 +49,10 @@ export type TextFieldSlotProps = {
 
   /**
    * {@link TextFieldInput} に渡す props です。
+   *
+   * トップレベルに指定した入力欄の props より優先されます。
    */
-  readonly input?:
-    | Omit<
-        TextFieldInputProps,
-        | "defaultValue"
-        | "disabled"
-        | "name"
-        | "onValueChange"
-        | "placeholder"
-        | "readOnly"
-        | "required"
-        | "type"
-        | "value"
-      >
-    | undefined;
+  readonly input?: TextFieldInputProps | undefined;
 };
 
 /**
@@ -70,26 +60,51 @@ export type TextFieldSlotProps = {
  */
 export type TextFieldState = TextFieldRootState;
 
-/**
- * {@link TextField} に渡す props です。
- */
-export type TextFieldProps = Omit<TextFieldRootProps, "children"> &
-  Pick<
-    TextFieldInputProps,
-    | "defaultValue"
-    | "disabled"
-    | "name"
-    | "onValueChange"
-    | "placeholder"
-    | "readOnly"
-    | "required"
-    | "type"
-    | "value"
-  > & {
+namespace TextFieldProps {
+  export type Root = Omit<TextFieldRootProps, "children" | keyof TextField>;
+
+  export type TextField = {
+    /**
+     * 入力欄の初期値です。
+     *
+     * {@link TextFieldProps.TextField.value|value} を指定しないときに使われます。
+     */
+    defaultValue?: TextFieldInputProps["defaultValue"] | undefined;
+
+    /**
+     * 入力欄を無効にするかどうかを指定します。
+     */
+    disabled?: TextFieldInputProps["disabled"] | undefined;
+
     /**
      * 入力欄の末尾に表示する内容です。
      */
     endAddons?: Iterable<React.ReactNode> | undefined;
+
+    /**
+     * フォーム送信時に使う入力欄の名前を指定します。
+     */
+    name?: TextFieldInputProps["name"] | undefined;
+
+    /**
+     * 入力値が変わったときに呼ばれます。
+     */
+    onValueChange?: TextFieldInputProps["onValueChange"] | undefined;
+
+    /**
+     * 入力欄に表示する案内文です。
+     */
+    placeholder?: TextFieldInputProps["placeholder"] | undefined;
+
+    /**
+     * 入力欄を読み取り専用にするかどうかを指定します。
+     */
+    readOnly?: TextFieldInputProps["readOnly"] | undefined;
+
+    /**
+     * 入力欄を必須にするかどうかを指定します。
+     */
+    required?: TextFieldInputProps["required"] | undefined;
 
     /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
@@ -100,7 +115,27 @@ export type TextFieldProps = Omit<TextFieldRootProps, "children"> &
      * 入力欄の先頭に表示する内容です。
      */
     startAddons?: Iterable<React.ReactNode> | undefined;
+
+    /**
+     * 入力項目です。
+     *
+     * @default "text"
+     */
+    type?: TextFieldInputProps["type"] | undefined;
+
+    /**
+     * 入力値を制御します。
+     *
+     * 入力値を確定するには {@link TextFieldProps.TextField.onValueChange|onValueChange} で更新してください。
+     */
+    value?: TextFieldInputProps["value"] | undefined;
   };
+}
+
+/**
+ * {@link TextField} に渡す props です。
+ */
+export type TextFieldProps = TextFieldProps.TextField & TextFieldProps.Root;
 
 // API
 // ---
@@ -108,26 +143,117 @@ export type TextFieldProps = Omit<TextFieldRootProps, "children"> &
 /**
  * {@link TextField} を構成する各パーツの props を作成するための API です。
  */
-export interface TextFieldAPI {
+export class TextFieldAPI {
+  private readonly textFieldProps: Required<Omit<TextFieldProps.TextField, "slotProps">>;
+
+  private readonly rootProps: Omit<TextFieldRootProps, "children">;
+
+  private readonly slotProps: TextFieldSlotProps;
+
+  /**
+   * @param props {@link TextField} の props です。
+   * @internal
+   */
+  public constructor(props: TextFieldProps) {
+    const {
+      name,
+      type,
+      value,
+      disabled,
+      readOnly,
+      required,
+      endAddons = [],
+      slotProps = {},
+      placeholder,
+      startAddons = [],
+      defaultValue,
+      onValueChange,
+      ...rootProps
+    } = props;
+    this.textFieldProps = {
+      name,
+      type,
+      value,
+      disabled,
+      readOnly,
+      required,
+      endAddons,
+      placeholder,
+      startAddons,
+      defaultValue,
+      onValueChange,
+    };
+    this.rootProps = rootProps;
+    this.slotProps = slotProps;
+  }
+
   /**
    * 末尾の {@link TextFieldAddon} に渡す props の一覧を取得します。
    */
-  getEndAddonsPropsList(): readonly TextFieldAddonProps[];
+  public getEndAddonsPropsList(): readonly TextFieldAddonProps[] {
+    const { endAddons } = this.textFieldProps;
+    const { addon: props = {} } = this.slotProps;
+
+    return (
+      React.Children.map(endAddons, (addon) => ({
+        ...props,
+        children: addon,
+      })) ?? []
+    );
+  }
 
   /**
    * {@link TextFieldInput} に渡す props を取得します。
    */
-  getInputProps(): TextFieldInputProps;
+  public getInputProps(): TextFieldInputProps {
+    const {
+      name,
+      type,
+      value,
+      disabled,
+      readOnly,
+      required,
+      placeholder,
+      defaultValue,
+      onValueChange,
+    } = this.textFieldProps;
+    const { input: props = {} } = this.slotProps;
+
+    return {
+      name,
+      type,
+      value,
+      disabled,
+      readOnly,
+      required,
+      placeholder,
+      defaultValue,
+      onValueChange,
+      ...props,
+    };
+  }
 
   /**
    * {@link TextFieldRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<TextFieldRootProps, "children">;
+  public getRootProps(): Omit<TextFieldRootProps, "children"> {
+    return this.rootProps;
+  }
 
   /**
    * 先頭の {@link TextFieldAddon} に渡す props の一覧を取得します。
    */
-  getStartAddonsPropsList(): readonly TextFieldAddonProps[];
+  public getStartAddonsPropsList(): readonly TextFieldAddonProps[] {
+    const { startAddons } = this.textFieldProps;
+    const { addon: props = {} } = this.slotProps;
+
+    return (
+      React.Children.map(startAddons, (addon) => ({
+        ...props,
+        children: addon,
+      })) ?? []
+    );
+  }
 }
 
 interface IUseTextFieldAPI {
@@ -144,66 +270,16 @@ interface IUseTextFieldAPI {
  * {@link TextFieldAPI} を作成するフックです。
  */
 export const useTextFieldAPI: IUseTextFieldAPI = function useSuiTextFieldAPI(props) {
-  const {
-    name,
-    type,
-    value,
-    disabled,
-    readOnly,
-    required,
-    endAddons = [],
-    slotProps: { addon: addonProps = {}, input: inputProps = {} } = {},
-    placeholder,
-    startAddons = [],
-    defaultValue,
-    onValueChange,
-    ...otherRootProps
-  } = props;
-
-  return {
-    getRootProps() {
-      return otherRootProps;
-    },
-    getInputProps() {
-      return {
-        name,
-        type,
-        value,
-        disabled,
-        readOnly,
-        required,
-        placeholder,
-        defaultValue,
-        onValueChange,
-        ...inputProps,
-      };
-    },
-    getEndAddonsPropsList() {
-      return (
-        React.Children.map(endAddons, (addon) => ({
-          ...addonProps,
-          children: addon,
-        })) ?? []
-      );
-    },
-    getStartAddonsPropsList() {
-      return (
-        React.Children.map(startAddons, (addon) => ({
-          ...addonProps,
-          children: addon,
-        })) ?? []
-      );
-    },
-  };
+  return new TextFieldAPI(props);
 };
 
-export { type TextFieldAPI as API, useTextFieldAPI as useAPI };
+export { TextFieldAPI as API, useTextFieldAPI as useAPI };
 
 // Component
 // ---------
 
 interface ITextField extends IComponent<TextFieldProps> {
-  readonly useContext: IUseContext<TextFieldContext>;
+  readonly useContext: IUseTextFieldContext;
 }
 
 /**

@@ -20,6 +20,7 @@ export default defineConfig({
   test: {
     include: ["tests/**/*.test.{ts,tsx}"],
     exclude: ["tests/**/*.server.test.{ts,tsx}"],
+    setupFiles: ["./tests/setup.client.ts"],
     browser: {
       provider: playwright(),
       enabled: true,

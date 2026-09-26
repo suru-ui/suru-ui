@@ -50,9 +50,6 @@ export const SelectGroup: IComponent<SelectGroupProps> = function SuiSelectGroup
 
 export { SelectGroup as Group };
 
-/**
- * {@link SelectGroup} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Group {
   export type State = SelectGroupState;
 

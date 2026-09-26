@@ -5,7 +5,6 @@ import * as React from "react";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import type { AlertDialogHandle } from "./alert-dialog.handle.js";
 
 /**
  * {@link AlertDialogToggleTrigger} が持つ状態です。
@@ -20,11 +19,6 @@ export namespace AlertDialogToggleTriggerProps {
      * ボタンとしてレンダリングする要素です。
      */
     children: NonNullable<React.ComponentProps<typeof AlertDialog.Trigger<TPayload>>["render"]>;
-
-    /**
-     * トリガーとアラートダイアログに関連付けるためのハンドルです。
-     */
-    handle: AlertDialogHandle<TPayload>;
   };
 
   export type BaseUI<TPayload = any> = Pick<
@@ -34,6 +28,7 @@ export namespace AlertDialogToggleTriggerProps {
       // NativeButtonProps:
       | keyof NativeButtonProps
       // AlertDialogTriggerProps:
+      | "handle"
       | "payload"
       | "id",
       keyof Render | keyof SuruUI

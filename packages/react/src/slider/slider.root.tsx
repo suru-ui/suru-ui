@@ -52,7 +52,7 @@ export type SliderRootRadius = "none" | Size | "full";
 export type SliderRootSize = Size;
 
 /**
- * スライダーの主な外観です。
+ * スライダーの主な外観の種類です。
  *
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし

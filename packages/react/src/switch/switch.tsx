@@ -35,7 +35,7 @@ export type SwitchSlotProps = {
   /**
    * {@link SwitchThumb} に渡す props です。
    */
-  readonly thumb?: SwitchThumbProps | undefined;
+  readonly thumb?: Omit<SwitchThumbProps, "children"> | undefined;
 };
 
 /**
@@ -43,32 +43,72 @@ export type SwitchSlotProps = {
  */
 export type SwitchState = SwitchRootState;
 
+namespace SwitchProps {
+  export type Root = Omit<SwitchRootProps, "children" | keyof Switch>;
+
+  export type Switch = {
+    /**
+     * スイッチのつまみに表示する内容です。
+     *
+     * 省略時はつまみに何も表示しません。
+     */
+    children?: SwitchThumbProps["children"] | undefined;
+
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     */
+    slotProps?: SwitchSlotProps | undefined;
+  };
+}
+
 /**
  * {@link Switch} に渡す props です。
  */
-export type SwitchProps = Omit<SwitchRootProps, "children"> & {
-  /**
-   * 各パーツに個別の props を渡すためのオブジェクトです。
-   */
-  slotProps?: SwitchSlotProps | undefined;
-};
+export type SwitchProps = SwitchProps.Switch & SwitchProps.Root;
 
 // API
 // ---
 
 /**
- * {@link Switch} を構成する各パーツの props を作成するための API です。
+ * {@link Switch} を構成する各パーツの props などを作成するための API です。
  */
-export interface SwitchAPI {
+export class SwitchAPI {
+  private readonly switchProps: Required<Omit<SwitchProps.Switch, "slotProps">>;
+
+  private readonly slotProps: SwitchSlotProps;
+
+  private readonly rootProps: SwitchProps.Root;
+
+  /**
+   * @param props {@link Switch} の props です。
+   * @internal
+   */
+  public constructor(props: SwitchProps) {
+    const { children, slotProps = {}, ...rootProps } = props;
+    this.switchProps = { children };
+    this.slotProps = slotProps;
+    this.rootProps = rootProps;
+  }
+
   /**
    * {@link SwitchRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<SwitchRootProps, "children">;
+  public getRootProps(): Omit<SwitchRootProps, "children"> {
+    return this.rootProps;
+  }
 
   /**
    * {@link SwitchThumb} に渡す props を取得します。
    */
-  getThumbProps(): SwitchThumbProps;
+  public getThumbProps(): SwitchThumbProps {
+    const { children } = this.switchProps;
+    const { thumb: props = {} } = this.slotProps;
+
+    return {
+      ...props,
+      children,
+    };
+  }
 }
 
 interface IUseSwitchAPI {
@@ -76,7 +116,7 @@ interface IUseSwitchAPI {
    * {@link SwitchAPI} を作成します。
    *
    * @param props {@link Switch} の props です。
-   * @returns スイッチの API です
+   * @returns スイッチの API です。
    */
   (props: SwitchProps): SwitchAPI;
 }
@@ -85,25 +125,18 @@ interface IUseSwitchAPI {
  * {@link SwitchAPI} を作成するフックです。
  */
 export const useSwitchAPI: IUseSwitchAPI = function useSuiSwitchAPI(props) {
-  const { slotProps: { thumb: thumbProps = {} } = {}, ...otherRootProps } = props;
-
-  return {
-    getRootProps() {
-      return otherRootProps;
-    },
-    getThumbProps() {
-      return thumbProps;
-    },
-  };
+  return new SwitchAPI(props);
 };
 
-export { type SwitchAPI as API, useSwitchAPI as useAPI };
+export { SwitchAPI as API, useSwitchAPI as useAPI };
 
 // Component
 // ---------
 
 /**
  * スイッチを表示するコンポーネントです。
+ *
+ * ラベルのテキストは `label` 要素で囲んで指定します。
  */
 export const Switch: IComponent<SwitchProps> = function SuiSwitch(props) {
   const api = useSwitchAPI(props);

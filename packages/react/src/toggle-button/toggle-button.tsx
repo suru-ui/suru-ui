@@ -1,4 +1,4 @@
-import type { IComponent, IUseContext } from "../types.js";
+import type { IComponent } from "../types.js";
 import {
   type ToggleButtonContext,
   type ToggleButtonRootSize,
@@ -6,6 +6,7 @@ import {
   type ToggleButtonRootProps,
   type ToggleButtonRootState,
   type ToggleButtonRootRadius,
+  type IUseToggleButtonContext,
   type ToggleButtonRootVariant,
   type ToggleButtonContentProps,
   type ToggleButtonPendingProps,
@@ -86,17 +87,40 @@ export type ToggleButtonSlotProps = {
  */
 export type ToggleButtonState = ToggleButtonRootState;
 
-/**
- * {@link ToggleButton} に渡す props です。
- */
-export type ToggleButtonProps = Omit<ToggleButtonRootProps, "children"> &
-  Pick<ToggleButtonContentProps, "children"> &
-  Pick<ToggleButtonCircularProgressProps, "percentage" | "indeterminate"> & {
+namespace ToggleButtonProps {
+  export type Root = Omit<ToggleButtonRootProps, "children" | keyof ToggleButton>;
+
+  export type ToggleButton = {
+    /**
+     * トグルボタンの内容です。
+     */
+    children?: ToggleButtonContentProps["children"] | undefined;
+
+    /**
+     * 不定モードで円形プログレスバーを表示するかどうかを指定します。
+     *
+     * 省略時は `percentage` が未定義または負の値のとき `true` になります。
+     */
+    indeterminate?: ToggleButtonCircularProgressProps["indeterminate"] | undefined;
+
+    /**
+     * 進行状況をパーセンテージ（0〜100）で指定します。
+     *
+     * 未定義または負の値の場合は不定モードになります。
+     */
+    percentage?: ToggleButtonCircularProgressProps["percentage"] | undefined;
+
     /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
      */
     slotProps?: ToggleButtonSlotProps | undefined;
   };
+}
+
+/**
+ * {@link ToggleButton} に渡す props です。
+ */
+export type ToggleButtonProps = ToggleButtonProps.ToggleButton & ToggleButtonProps.Root;
 
 // API
 // ---
@@ -104,41 +128,96 @@ export type ToggleButtonProps = Omit<ToggleButtonRootProps, "children"> &
 /**
  * {@link ToggleButton} を構成する各パーツの props などを作成するための API です。
  */
-export interface ToggleButtonAPI {
+export class ToggleButtonAPI {
+  private readonly toggleButtonProps: Required<Omit<ToggleButtonProps.ToggleButton, "slotProps">>;
+
+  private readonly slotProps: ToggleButtonSlotProps;
+
+  private readonly rootProps: ToggleButtonProps.Root;
+
+  /**
+   * @param props {@link ToggleButton} の props です。
+   * @internal
+   */
+  public constructor(props: ToggleButtonProps) {
+    const { children, slotProps = {}, percentage, indeterminate, ...rootProps } = props;
+    this.toggleButtonProps = { children, percentage, indeterminate };
+    this.slotProps = slotProps;
+    this.rootProps = rootProps;
+  }
+
   /**
    * {@link ToggleButtonCircularProgressFill} に渡す props を取得します。
    */
-  getCircularProgressFillProps(): Omit<ToggleButtonCircularProgressFillProps, "children">;
+  public getCircularProgressFillProps(): Omit<ToggleButtonCircularProgressFillProps, "children"> {
+    const { circularProgressFill: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link ToggleButtonCircularProgressFillRotation} に渡す props を取得します。
    */
-  getCircularProgressFillRotationProps(): ToggleButtonCircularProgressFillRotationProps;
+  public getCircularProgressFillRotationProps(): ToggleButtonCircularProgressFillRotationProps {
+    const { circularProgressFillRotation: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link ToggleButtonCircularProgress} に渡す props を取得します。
    */
-  getCircularProgressProps(): Omit<ToggleButtonCircularProgressProps, "children">;
+  public getCircularProgressProps(): Omit<ToggleButtonCircularProgressProps, "children"> {
+    const { percentage, indeterminate } = this.toggleButtonProps;
+    const { circularProgress: props = {} } = this.slotProps;
+
+    return {
+      ...props,
+      percentage,
+      indeterminate,
+    };
+  }
 
   /**
    * {@link ToggleButtonCircularProgressTrack} に渡す props を取得します。
    */
-  getCircularProgressTrackProps(): Omit<ToggleButtonCircularProgressTrackProps, "children">;
+  public getCircularProgressTrackProps(): Omit<ToggleButtonCircularProgressTrackProps, "children"> {
+    const { circularProgressTrack: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link ToggleButtonContent} に渡す props を取得します。
    */
-  getContentProps(): ToggleButtonContentProps;
+  public getContentProps(): ToggleButtonContentProps {
+    const { children } = this.toggleButtonProps;
+    const { content: props = {} } = this.slotProps;
+
+    return {
+      ...props,
+      children,
+    };
+  }
 
   /**
    * {@link ToggleButtonPending} に渡す props を取得します。
    */
-  getPendingProps(): Omit<ToggleButtonPendingProps, "children">;
+  public getPendingProps(): Omit<ToggleButtonPendingProps, "children"> {
+    const { pending: { overlay = true, ...props } = {} } = this.slotProps;
+
+    return {
+      ...props,
+      overlay,
+    };
+  }
 
   /**
    * {@link ToggleButtonRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<ToggleButtonRootProps, "children">;
+  public getRootProps(): Omit<ToggleButtonRootProps, "children"> {
+    return this.rootProps;
+  }
 }
 
 interface IUseToggleButtonAPI {
@@ -155,63 +234,16 @@ interface IUseToggleButtonAPI {
  * {@link ToggleButtonAPI} を作成するフックです。
  */
 export const useToggleButtonAPI: IUseToggleButtonAPI = function useSuiToggleButtonAPI(props) {
-  const {
-    children,
-    slotProps: {
-      content: contentProps = {},
-      pending: { overlay = true, ...otherPendingProps } = {},
-      circularProgress: circularProgressProps = {},
-      circularProgressFill: circularProgressFillProps = {},
-      circularProgressTrack: circularProgressTrackProps = {},
-      circularProgressFillRotation: circularProgressFillRotationProps = {},
-    } = {},
-    percentage,
-    indeterminate,
-    ...otherRootProps
-  } = props;
-
-  return {
-    getRootProps() {
-      return otherRootProps;
-    },
-    getContentProps() {
-      return {
-        ...contentProps,
-        children,
-      };
-    },
-    getPendingProps() {
-      return {
-        ...otherPendingProps,
-        overlay,
-      };
-    },
-    getCircularProgressProps() {
-      return {
-        ...circularProgressProps,
-        percentage,
-        indeterminate,
-      };
-    },
-    getCircularProgressFillProps() {
-      return circularProgressFillProps;
-    },
-    getCircularProgressTrackProps() {
-      return circularProgressTrackProps;
-    },
-    getCircularProgressFillRotationProps() {
-      return circularProgressFillRotationProps;
-    },
-  };
+  return new ToggleButtonAPI(props);
 };
 
-export { type ToggleButtonAPI as API, useToggleButtonAPI as useAPI };
+export { ToggleButtonAPI as API, useToggleButtonAPI as useAPI };
 
 // Component
 // ---------
 
 interface IToggleButton extends IComponent<ToggleButtonProps> {
-  readonly useContext: IUseContext<ToggleButtonContext>;
+  readonly useContext: IUseToggleButtonContext;
 }
 
 /**

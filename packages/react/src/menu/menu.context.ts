@@ -13,7 +13,7 @@ import type { IUseContext } from "../types.js";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-type MenuContextRadius = "none" | Size;
+export type MenuContextRadius = "none" | Size;
 
 /**
  * ポップアップと項目の大きさです。
@@ -22,7 +22,7 @@ type MenuContextRadius = "none" | Size;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-type MenuContextSize = Size;
+export type MenuContextSize = Size;
 
 /**
  * 項目の主な外観です。
@@ -31,7 +31,7 @@ type MenuContextSize = Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-type MenuContextVariant = Button.Root.Variant;
+export type MenuContextVariant = Button.Root.Variant;
 
 /**
  * {@link MenuRoot} が子パーツへ提供する状態です。
@@ -76,9 +76,20 @@ export type MenuContext<TItem = any> = {
 export const MenuContext: React.Context<MenuContext | null> =
   React.createContext<MenuContext | null>(null);
 
-function useSuiMenuContext(optional?: false): MenuContext;
-function useSuiMenuContext(optional?: boolean): MenuContext | null;
-function useSuiMenuContext(optional?: boolean): MenuContext | null {
+export interface IUseMenuContext extends IUseContext<MenuContext> {
+  /**
+   * @template TItem 項目の型です。
+   * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
+   * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
+   */
+  <TItem = any>(optional?: false): MenuContext<TItem>;
+  <TItem = any>(optional?: boolean): MenuContext<TItem> | null;
+}
+
+/**
+ * {@link MenuContext} を読み取るフックです。
+ */
+export const useMenuContext: IUseMenuContext = function useSuiMenuContext(optional?: boolean): any {
   const ctx = React.use(MenuContext);
   if (ctx === null && !optional) {
     throw new ContextMissingError({
@@ -88,12 +99,7 @@ function useSuiMenuContext(optional?: boolean): MenuContext | null {
   }
 
   return ctx;
-}
-
-/**
- * {@link MenuContext} を読み取るフックです。
- */
-export const useMenuContext: IUseContext<MenuContext> = useSuiMenuContext;
+};
 
 export { MenuContext as Context, useMenuContext as useContext };
 

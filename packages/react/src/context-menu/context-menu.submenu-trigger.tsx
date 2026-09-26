@@ -8,7 +8,6 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { getItemVariant } from "./_context-menu.utils.jsx";
 import { useContextMenuContext } from "./context-menu.context.js";
 
 /**
@@ -57,9 +56,7 @@ export namespace ContextMenuSubmenuTriggerProps {
     radius?: ContextMenuSubmenuTriggerRadius | undefined;
 
     /**
-     * チェック状態のときの外観を指定します。
-     *
-     * チェックされていないときは常に `"naked"` になります。
+     * 項目の主な外観を指定します。
      *
      * 既定値は {@link ContextMenuRootProps.variant|variant} です。
      */
@@ -121,7 +118,7 @@ export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProp
       className,
       closeDelay,
       openOnHover,
-      nativeButton,
+      nativeButton = false,
       focusableWhenDisabled,
       ...otherProps
     } = props;
@@ -154,7 +151,7 @@ export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProp
             radius,
             pending: undefined,
             squared: undefined,
-            variant: getItemVariant(state, variant),
+            variant,
             disabled: state.disabled,
             outlined: undefined,
             nativeButton,

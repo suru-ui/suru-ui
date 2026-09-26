@@ -1,4 +1,5 @@
 import { ContextMenu } from "@base-ui/react/context-menu";
+import * as React from "react";
 
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
@@ -10,28 +11,31 @@ import type { IComponent } from "../types.js";
 export type ContextMenuTriggerState = ContextMenu.Trigger.State;
 
 export namespace ContextMenuTriggerProps {
-  export type Render = RenderProps<ContextMenuTriggerState>;
+  export type Render = Omit<RenderProps<ContextMenuTriggerState>, "render">;
 
   export type SuruUI = {
     /**
      * トリガーとしてレンダリングする要素です。
      *
-     * {@link ContextMenu.Trigger} の `render` props と同じ型で、そのまま `render` に渡されます。
+     * `render` props と同じ型で、そのまま `render` に渡されます。
      */
-    children: NonNullable<ContextMenu.Trigger.Props["render"]>;
+    children: NonNullable<RenderProps<ContextMenuTriggerState>["render"]>;
   };
 
   export type BaseUI = Pick<
-    ContextMenu.Trigger.Props,
+    React.ComponentProps<typeof ContextMenu.Trigger>,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // MenuTriggerProps:
+      // ContextMenuTriggerProps:
       never,
       keyof Render | keyof SuruUI
     >
   >;
 
-  export type HTML = Omit<ContextMenu.Trigger.Props, keyof Render | keyof SuruUI | keyof BaseUI>;
+  export type HTML = Omit<
+    React.ComponentProps<typeof ContextMenu.Trigger>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
 }
 
 /**
@@ -45,7 +49,7 @@ export type ContextMenuTriggerProps = ContextMenuTriggerProps.Render &
 /**
  * 右クリックまたは長押しでコンテキストメニューを開く対象です。
  *
- * 子要素は追加のラッパーなしで `div` 要素に表示されます。
+ * `children` には表示する内容ではなく、トリガーとしてレンダリングする要素を渡します。
  */
 export const ContextMenuTrigger: IComponent<ContextMenuTriggerProps> =
   function SuiContextMenuTrigger(props) {

@@ -243,3 +243,28 @@ export const EyeOffIcon: IComponent<React.SVGProps<SVGSVGElement>> = function Su
     </svg>
   );
 };
+
+/**
+ * サイドバーの既定の切り替えアイコンです。
+ */
+export const SidebarIcon: IComponent<React.SVGProps<SVGSVGElement>> = function SuiSidebarIcon(
+  props,
+) {
+  return (
+    <svg
+      {...props}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      focusable="false"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="3" y="3" rx="2" width="18" height="18" />
+      <path d="M9 3v18" />
+    </svg>
+  );
+};

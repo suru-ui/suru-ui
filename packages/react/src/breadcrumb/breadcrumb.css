@@ -110,8 +110,7 @@
     --sui_breadcrumb_item-border_radius: calc(
                                            var(--sui_breadcrumb_link-font_size)
                                            * var(--sui_breadcrumb_link-line_height)
-                                           * var(--sui-radius-sm)
-                                           / var(--sui-size-sm)
+                                           * (var(--sui-radius-sm) / var(--sui-size-sm))
                                          );
   }
 
@@ -119,8 +118,7 @@
     --sui_breadcrumb_item-border_radius: calc(
                                            var(--sui_breadcrumb_link-font_size)
                                            * var(--sui_breadcrumb_link-line_height)
-                                           * var(--sui-radius-md)
-                                           / var(--sui-size-md)
+                                           * (var(--sui-radius-md) / var(--sui-size-md))
                                          );
   }
 
@@ -128,8 +126,7 @@
     --sui_breadcrumb_item-border_radius: calc(
                                            var(--sui_breadcrumb_link-font_size)
                                            * var(--sui_breadcrumb_link-line_height)
-                                           * var(--sui-radius-lg)
-                                           / var(--sui-size-lg)
+                                           * (var(--sui-radius-lg) / var(--sui-size-lg))
                                          );
   }
 }
@@ -251,7 +248,7 @@
     --_sui_breadcrumb_link-color: var(--sui_breadcrumb_link-color-current);
   }
 
-  .sui_breadcrumb_link:not(.sui_breadcrumb_link-current) {
+  .sui_breadcrumb_link:not(.sui_breadcrumb_link-current):not(.sui_breadcrumb_link-disabled) {
     @media (any-hover: hover) {
       &:hover {
         --_sui_breadcrumb_link-color: var(--sui_breadcrumb_link-color-hover);
@@ -285,7 +282,7 @@
   --sui_breadcrumb_separator-letter_spacing: ;
   --sui_breadcrumb_separator__svg-size: ;
   --sui_breadcrumb_separator__svg-color: ;
-  }
+}
 
 /* 可変 */
 :scope {

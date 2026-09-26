@@ -24,7 +24,9 @@ export namespace ContextMenuSubmenuRootProps {
 
   export type SuruUI<TItem = any> = {
     /**
-     * コンテキストメニューの項目です。
+     * サブメニューに表示する項目の一覧です。
+     *
+     * 省略時は親の項目を引き継ぎます。
      */
     items?: readonly TItem[] | undefined;
   };
@@ -79,17 +81,14 @@ export const ContextMenuSubmenuRoot: IContextMenuSubmenuRoot = function SuiConte
 ) {
   const parentCtx = useContextMenuContext();
   const { items = parentCtx.items, ...otherProps } = props;
-  const ctx = React.useMemo<ContextMenuContext>(() => {
-    if (Object.is(items, parentCtx.items)) {
-      return parentCtx;
-    }
-
-    return {
+  const ctx = React.useMemo<ContextMenuContext>(
+    () => ({
       ...parentCtx,
       depth: parentCtx.depth + 1,
       items,
-    };
-  }, [items, parentCtx]);
+    }),
+    [items, parentCtx],
+  );
 
   return (
     <ContextMenuContext value={ctx}>

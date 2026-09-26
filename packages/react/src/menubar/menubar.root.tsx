@@ -1,6 +1,7 @@
 import { Menubar as BaseMenubar } from "@base-ui/react/menubar";
 import * as React from "react";
 
+import { getItemKey } from "../_item.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import { Menu } from "../menu/menu.jsx";
@@ -9,6 +10,8 @@ import { isItemObject } from "./_menubar.jsx";
 
 /**
  * メニューバーの項目を表すオブジェクトです。
+ *
+ * `items` と `trigger` を含み、その他のプロパティーは {@link Menu} に渡されます。
  */
 export type MenubarRootItemObject = Override<
   Omit<Menu.Props<Menu.ItemObject>, "children">,
@@ -20,8 +23,6 @@ export type MenubarRootItemObject = Override<
 
     /**
      * メニューを開くトリガーに表示する要素です。
-     *
-     * 省略した場合は `label` を表示するボタンになります。
      */
     readonly trigger: NonNullable<Menu.Props<Menu.ItemObject>["trigger"]>;
   }
@@ -46,11 +47,8 @@ export interface IMenubarRootItemRenderer<TItem = any> {
 
 /**
  * メニューバーの向きです。
- *
- * - `"horizontal"`: 水平方向
- * - `"vertical"`: 垂直方向
  */
-export type MenubarRootOrientation = "horizontal" | "vertical";
+export type MenubarRootOrientation = MenubarRootState["orientation"];
 
 /**
  * {@link MenubarRoot} が持つ状態です。
@@ -66,7 +64,7 @@ export namespace MenubarRootProps {
      *
      * 関数を指定した場合は {@link MenubarRootProps.items|items} の各項目が引数として渡されます。
      */
-    children?: React.ReactNode | IMenubarRootItemRenderer<TItem>;
+    children?: React.ReactNode | IMenubarRootItemRenderer<TItem> | undefined;
 
     /**
      * メニューバーの項目です。
@@ -106,13 +104,23 @@ interface IMenubarRoot extends IComponent<MenubarRootProps> {
   /**
    * @template TItem 項目の型です。
    */
-  <TItem = any>(props: MenubarRootProps<TItem>): IComponent.Return;
+  <TItem = never>(props: MenubarRootProps<TItem>): IComponent.Return;
 }
 
 /**
  * メニューを横または縦に並べるルート要素です。
  */
 export const MenubarRoot: IMenubarRoot = function SuiMenubarRoot(props: MenubarRootProps) {
+  const defaultItemRenderer: IMenubarRootItemRenderer = (item, index) => {
+    switch (true) {
+      case isItemObject(item):
+        return <Menu {...item} key={getItemKey(item) ?? index} />;
+
+      default:
+        return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
+    }
+  };
+
   const {
     items = [],
     children = defaultItemRenderer,
@@ -144,16 +152,6 @@ export const MenubarRoot: IMenubarRoot = function SuiMenubarRoot(props: MenubarR
   );
 };
 
-const defaultItemRenderer: IMenubarRootItemRenderer = (item, index) => {
-  switch (true) {
-    case isItemObject(item):
-      return <Menu {...item} key={index} />;
-
-    default:
-      return item;
-  }
-};
-
 export { MenubarRoot as Root };
 
 export namespace Root {
@@ -171,9 +169,9 @@ export namespace Root {
     export type HTML = MenubarRootProps.HTML;
   }
 
-  export type ItemObject = MenubarRootItemObject;
+  export type IItemRenderer<TItem = any> = IMenubarRootItemRenderer<TItem>;
 
-  export interface IItemRenderer<TItem = any> extends IMenubarRootItemRenderer<TItem> {}
+  export type ItemObject = MenubarRootItemObject;
 
   export type Orientation = MenubarRootOrientation;
 }

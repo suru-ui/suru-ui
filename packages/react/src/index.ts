@@ -29,6 +29,7 @@ export {
   useAccordionAPI,
 } from "./accordion/index.js";
 export {
+  type ActionGroupAPI,
   type ActionGroupSize,
   type ActionGroupColor,
   type ActionGroupProps,
@@ -37,6 +38,7 @@ export {
   type ActionGroupVariant,
   type ActionGroupOrientation,
   ActionGroup,
+  useActionGroupAPI,
   ActionGroupContext,
   useActionGroupContext,
 } from "./action-group/index.js";
@@ -420,7 +422,6 @@ export {
   useMenuContext,
 } from "./menu/index.js";
 export {
-  type MenubarAPI,
   type MenubarProps,
   type MenubarState,
   type MenubarSlotProps,
@@ -428,6 +429,7 @@ export {
   type MenubarOrientation,
   type IMenubarItemRenderer,
   Menubar,
+  MenubarAPI,
   useMenubarAPI,
 } from "./menubar/index.js";
 export {
@@ -572,16 +574,21 @@ export {
   type SegmentsColor,
   type SegmentsProps,
   type SegmentsState,
+  type SegmentsValue,
   type SegmentsRadius,
   type SegmentsSlotProps,
   type SegmentsItemObject,
+  type SegmentsOrientation,
   type ISegmentsItemRenderer,
   type SegmentsActiveVariant,
+  type SegmentsChangeEventReason,
+  type SegmentsChangeEventDetails,
   Segments,
   useSegmentsAPI,
+  SegmentsContext,
+  useSegmentsContext,
 } from "./segments/index.js";
 export {
-  type SelectAPI,
   type SelectSize,
   type SelectItems,
   type SelectProps,
@@ -594,12 +601,12 @@ export {
   type SelectChangeEventReason,
   type SelectChangeEventDetails,
   Select,
+  SelectAPI,
   useSelectAPI,
   SelectContext,
   useSelectContext,
 } from "./select/index.js";
 export {
-  type SidebarAPI,
   type SidebarSide,
   type SidebarProps,
   type SidebarState,
@@ -608,6 +615,7 @@ export {
   type SidebarSlotProps,
   type SidebarCollapsible,
   Sidebar,
+  SidebarAPI,
   useSidebarAPI,
   SidebarContext,
   useSidebarContext,
@@ -646,8 +654,6 @@ export {
   type StatSlotProps,
   Stat,
   useStatAPI,
-  StatContext,
-  useStatContext,
 } from "./stat/index.js";
 export {
   type StatusAPI,
@@ -679,13 +685,20 @@ export {
   type TabsSize,
   type TabsProps,
   type TabsState,
+  type TabsValue,
   type TabsRadius,
   type TabsVariant,
   type TabsSlotProps,
   type TabsItemObject,
+  type TabsOrientation,
+  type ITabsItemRenderer,
   type TabsActiveVariant,
+  type TabsChangeEventReason,
+  type TabsChangeEventDetails,
   Tabs,
   useTabsAPI,
+  TabsContext,
+  useTabsContext,
 } from "./tabs/index.js";
 export {
   type TextFieldAPI,
@@ -726,8 +739,12 @@ export {
   type ToastRadius,
   type ToastListAPI,
   type ToastVariant,
+  type ToastListProps,
+  type ToastListState,
   type ToastSlotProps,
   type ToastToastObject,
+  type IToastListRenderer,
+  type ToastListSlotProps,
   Toast,
   useToastAPI,
   useToastClient,
@@ -760,6 +777,8 @@ export {
   type TooltipChangeEventDetails,
   Tooltip,
   useTooltipAPI,
+  TooltipContext,
+  useTooltipContext,
 } from "./tooltip/index.js";
 export {
   type TooltipGroupAPI,

@@ -2,6 +2,7 @@ import { Select as BaseSelect } from "@base-ui/react/select";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
+import Config from "../_config.jsx";
 import type { Override, IComponent } from "../types.js";
 import { isItemObjectGroup, isLabeledItemObject } from "./_select.jsx";
 import { SelectContext } from "./select.context.js";
@@ -172,6 +173,7 @@ export namespace SelectRootProps {
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
       // SelectRootProps:
+      | "children"
       | "inputRef"
       | "name"
       | "form"
@@ -222,12 +224,12 @@ export type SelectRootProps<
   SelectRootProps.BaseUI<TValue, TMultiple> &
   SelectRootProps.HTML<TValue, TMultiple>;
 
-interface ISelectRoot extends IComponent<SelectRootProps<unknown, boolean | undefined>> {
+interface ISelectRoot extends IComponent<SelectRootProps> {
   /**
    * @template TValue 項目の値の型です。
    * @template TMultiple 複数選択を有効にするかどうかです。
    */
-  <TValue, TMultiple extends boolean | undefined = false>(
+  <TValue, const TMultiple extends boolean | undefined = false>(
     props: SelectRootProps<TValue, TMultiple>,
   ): IComponent.Return;
 }
@@ -238,12 +240,16 @@ interface ISelectRoot extends IComponent<SelectRootProps<unknown, boolean | unde
  * それ自身は HTML 要素をレンダリングせず、スタイルと項目を子パーツへ伝播します。
  */
 export const SelectRoot: ISelectRoot = function SuiSelectRoot(props: SelectRootProps) {
+  const config = React.use(Config);
   const {
     size = "md",
     items,
     radius = size,
     variant = "liquid",
+    disabled = false,
     outlined = false,
+    readOnly = false,
+    required = false,
     onValueChange,
     isItemEqualToValue: isItemEqualToValueProp,
     ...otherProps
@@ -320,22 +326,32 @@ export const SelectRoot: ISelectRoot = function SuiSelectRoot(props: SelectRootP
   );
 
   return (
-    <SelectContext value={ctx}>
-      <BaseSelect.Root
-        {...otherProps}
-        items={baseuiItems}
-        onValueChange={handleValueChange}
-        isItemEqualToValue={isItemEqualToValue}
-      />
-    </SelectContext>
+    <config.Context
+      size={size}
+      radius={radius}
+      variant={variant}
+      disabled={disabled}
+      outlined={outlined}
+      readOnly={readOnly}
+      required={required}
+    >
+      <SelectContext value={ctx}>
+        <BaseSelect.Root
+          {...otherProps}
+          items={baseuiItems}
+          disabled={disabled}
+          readOnly={readOnly}
+          required={required}
+          onValueChange={handleValueChange}
+          isItemEqualToValue={isItemEqualToValue}
+        />
+      </SelectContext>
+    </config.Context>
   );
 };
 
 export { SelectRoot as Root };
 
-/**
- * {@link SelectRoot} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Root {
   export type State = SelectRootState;
 
@@ -369,9 +385,13 @@ export namespace Root {
 
   export type ChangeEventReason = SelectRootChangeEventReason;
 
+  export type Item<TValue = any> = SelectRootItem<TValue>;
+
   export type ItemObjectGroup<TValue = any> = SelectRootItemObjectGroup<TValue>;
 
   export type Items<TValue = any> = SelectRootItems<TValue>;
+
+  export type LabeledItemObject<TValue = any> = SelectRootLabeledItemObject<TValue>;
 
   export type Radius = SelectRootRadius;
 

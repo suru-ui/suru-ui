@@ -2,7 +2,6 @@ import { Dialog } from "@base-ui/react/dialog";
 import * as React from "react";
 
 import type { IComponent } from "../types.js";
-import type { DialogHandle } from "./dialog.handle.js";
 
 /**
  * ダイアログを命令的に操作するためのオブジェクトです。
@@ -27,14 +26,7 @@ export type DialogRootState = Dialog.Root.State;
 export namespace DialogRootProps {
   export type Render = {};
 
-  export type SuruUI<TPayload = any> = {
-    /**
-     * トリガーとダイアログに関連付けるためのハンドルです。
-     *
-     * {@link createDialogHandle} で作成します。
-     */
-    handle: DialogHandle<TPayload>;
-  };
+  export type SuruUI = {};
 
   export type BaseUI<TPayload = any> = Pick<
     React.ComponentProps<typeof Dialog.Root<TPayload>>,
@@ -49,6 +41,7 @@ export namespace DialogRootProps {
       | "disablePointerDismissal"
       | "actionsRef"
       | "children"
+      | "handle"
       | "triggerId"
       | "defaultTriggerId",
       keyof Render | keyof SuruUI
@@ -67,7 +60,7 @@ export namespace DialogRootProps {
  * @template TPayload トリガーが送信するデータの型です。
  */
 export type DialogRootProps<TPayload = any> = DialogRootProps.Render &
-  DialogRootProps.SuruUI<TPayload> &
+  DialogRootProps.SuruUI &
   DialogRootProps.BaseUI<TPayload> &
   DialogRootProps.HTML<TPayload>;
 
@@ -93,14 +86,14 @@ export namespace Root {
   export type State = DialogRootState;
 
   export type Props<TPayload = any> = Props.Render &
-    Props.SuruUI<TPayload> &
+    Props.SuruUI &
     Props.BaseUI<TPayload> &
     Props.HTML<TPayload>;
 
   export namespace Props {
     export type Render = DialogRootProps.Render;
 
-    export type SuruUI<TPayload = any> = DialogRootProps.SuruUI<TPayload>;
+    export type SuruUI = DialogRootProps.SuruUI;
 
     export type BaseUI<TPayload = any> = DialogRootProps.BaseUI<TPayload>;
 

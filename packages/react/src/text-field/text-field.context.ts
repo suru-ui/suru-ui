@@ -60,9 +60,21 @@ export type TextFieldContext = {
 export const TextFieldContext: React.Context<TextFieldContext | null> =
   React.createContext<TextFieldContext | null>(null);
 
-function useSuiTextFieldContext(optional?: false): TextFieldContext;
-function useSuiTextFieldContext(optional?: boolean): TextFieldContext | null;
-function useSuiTextFieldContext(optional?: boolean): TextFieldContext | null {
+export interface IUseTextFieldContext extends IUseContext<TextFieldContext> {
+  /**
+   * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
+   * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
+   */
+  (optional?: false): TextFieldContext;
+  (optional?: boolean): TextFieldContext | null;
+}
+
+/**
+ * {@link TextFieldContext} を読み取るフックです。
+ */
+export const useTextFieldContext: IUseTextFieldContext = function useSuiTextFieldContext(
+  optional?: boolean,
+): any {
   const ctx = React.use(TextFieldContext);
   if (ctx === null && !optional) {
     throw new ContextMissingError({
@@ -72,12 +84,7 @@ function useSuiTextFieldContext(optional?: boolean): TextFieldContext | null {
   }
 
   return ctx;
-}
-
-/**
- * {@link TextFieldContext} を読み取るフックです。
- */
-export const useTextFieldContext: IUseContext<TextFieldContext> = useSuiTextFieldContext;
+};
 
 export { TextFieldContext as Context, useTextFieldContext as useContext };
 

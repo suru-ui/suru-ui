@@ -30,11 +30,23 @@ export type AspectRatioProps = AspectRatioRootProps;
 /**
  * {@link AspectRatio} を構成する各パーツの props を作成するための API です。
  */
-export interface AspectRatioAPI {
+export class AspectRatioAPI {
+  private readonly rootProps: AspectRatioRootProps;
+
+  /**
+   * @param props {@link AspectRatio} の props です。
+   * @internal
+   */
+  public constructor(props: AspectRatioProps) {
+    this.rootProps = props;
+  }
+
   /**
    * {@link AspectRatioRoot} に渡す props を取得します。
    */
-  getRootProps(): AspectRatioRootProps;
+  public getRootProps(): AspectRatioRootProps {
+    return this.rootProps;
+  }
 }
 
 interface IUseAspectRatioAPI {
@@ -51,20 +63,19 @@ interface IUseAspectRatioAPI {
  * {@link AspectRatioAPI} を作成するフックです。
  */
 export const useAspectRatioAPI: IUseAspectRatioAPI = function useSuiAspectRatioAPI(props) {
-  return {
-    getRootProps() {
-      return props;
-    },
-  };
+  return new AspectRatioAPI(props);
 };
 
-export { type AspectRatioAPI as API, useAspectRatioAPI as useAPI };
+export { AspectRatioAPI as API, useAspectRatioAPI as useAPI };
 
 // Component
 // ---------
 
 /**
  * 指定した比率で幅と高さを保つコンテナーコンポーネントです。
+ *
+ * レスポンシブに決まる幅に対して、画像や動画、地図の埋め込みなどを一定の比率で表示します。
+ * 直接の子要素はコンテナーいっぱいに配置されます。
  */
 export const AspectRatio: IComponent<AspectRatioProps> = function SuiAspectRatio(props) {
   const api = useAspectRatioAPI(props);

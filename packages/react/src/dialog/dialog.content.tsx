@@ -5,7 +5,7 @@ import * as React from "react";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { DialogContentContext } from "./dialog.context.js";
+import { DialogContentContext } from "./dialog.content.context.js";
 
 /**
  * ダイアログの角丸の大きさです。

@@ -100,6 +100,11 @@ namespace MenuRootRadioItemObject {
      * 項目のラベルです。
      */
     readonly label: MenuRadioItemProps["children"];
+
+    /**
+     * 項目の種類です。
+     */
+    readonly type?: "radio" | undefined;
   };
 }
 
@@ -238,7 +243,9 @@ export namespace MenuRootProps {
     handle?: MenuHandle<TPayload> | undefined;
 
     /**
-     * メニューの項目です。
+     * ポップアップに表示する項目の一覧です。
+     *
+     * グループの配列を指定するとグループごとに区切って表示します。
      */
     items?: readonly TItem[] | undefined;
 

@@ -1,9 +1,11 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
+import { getItemKey } from "../_item.js";
 import toReactNode from "../_to-react-node.js";
 import useRender, { type RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
+import { isItemObject } from "./_breadcrumb.jsx";
 import { useBreadcrumbContext } from "./breadcrumb.context.js";
 import { BreadcrumbItem } from "./breadcrumb.item.jsx";
 import { BreadcrumbLink } from "./breadcrumb.link.jsx";
@@ -43,7 +45,7 @@ export namespace BreadcrumbListProps {
      *
      * 関数を指定した場合は {@link BreadcrumbRootProps.items|items} の各項目が引数として渡されます。
      */
-    children?: React.ReactNode | IBreadcrumbListItemRenderer;
+    children?: React.ReactNode | IBreadcrumbListItemRenderer | undefined;
   };
 
   export type BaseUI = {};
@@ -83,28 +85,24 @@ export const BreadcrumbList: IComponent<BreadcrumbListProps> = function SuiBread
 };
 
 const defaultListItemRenderer: IBreadcrumbListItemRenderer = (item, index, items) => {
-  if (!isListItemObject(item)) {
+  if (!isItemObject(item)) {
     return toReactNode(item);
   }
 
-  const { href, label, current: currentProp, disabled } = item;
+  const { label, current: currentProp, ...otherItemProps } = item;
   const current = currentProp ?? index === items.length - 1;
 
   return (
-    <React.Fragment key={index}>
+    <React.Fragment key={getItemKey(item) ?? index}>
       {index > 0 && <BreadcrumbSeparator />}
       <BreadcrumbItem>
-        <BreadcrumbLink href={current ? undefined : href} current={current} disabled={disabled}>
+        <BreadcrumbLink {...otherItemProps} current={current}>
           {toReactNode(label)}
         </BreadcrumbLink>
       </BreadcrumbItem>
     </React.Fragment>
   );
 };
-
-function isListItemObject(item: unknown): item is BreadcrumbRootItemObject {
-  return typeof item === "object" && item !== null && "label" in item;
-}
 
 export { BreadcrumbList as List };
 

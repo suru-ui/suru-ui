@@ -1,8 +1,9 @@
 import * as React from "react";
 
+import { getItemKey } from "../_item.js";
 import mergeProps from "../_merge-props.js";
 import { Menu } from "../menu/menu.jsx";
-import type { Override, IComponent } from "../types.js";
+import type { IComponent } from "../types.js";
 import { isItemObject } from "./_menubar.jsx";
 import {
   type MenubarRootProps,
@@ -33,25 +34,29 @@ export type MenubarState = MenubarRootState;
 export type MenubarSlotProps = {
   /**
    * すべての {@link Menu} に渡す props です。
+   *
+   * `items` と `trigger` は項目ごとに指定するため、ここでは指定できません。
    */
-  // items を除外しているので、Menu.Props に型引数は不要です。
   readonly menu?: Omit<Menu.Props, "items" | "trigger"> | undefined;
 };
+
+namespace MenubarProps {
+  export type Menubar = {
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     */
+    slotProps?: MenubarSlotProps | undefined;
+  };
+
+  export type Root<TItem = any> = Omit<MenubarRootProps<TItem>, keyof Menubar>;
+}
 
 /**
  * {@link Menubar} に渡す props です。
  *
  * @template TItem 項目の型です。
  */
-export type MenubarProps<TItem = any> = Override<
-  MenubarRootProps<TItem>,
-  {
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
-    slotProps?: MenubarSlotProps | undefined;
-  }
->;
+export type MenubarProps<TItem = any> = MenubarProps.Menubar & MenubarProps.Root<TItem>;
 
 // API
 // ---
@@ -61,28 +66,67 @@ export type MenubarProps<TItem = any> = Override<
  *
  * @template TItem 項目の型です。
  */
-export interface MenubarAPI<TItem = any> {
+export class MenubarAPI<TItem = any> {
+  private readonly rootProps: MenubarProps.Root<TItem>;
+
+  private readonly slotProps: MenubarSlotProps;
+
+  /**
+   * @param props {@link Menubar} の props です。
+   * @internal
+   */
+  public constructor(props: MenubarProps<TItem>) {
+    const { slotProps = {}, ...rootProps } = props;
+    this.rootProps = rootProps;
+    this.slotProps = slotProps;
+  }
+
+  private readonly defaultItemRenderer: IMenubarItemRenderer = (item, index) => {
+    switch (true) {
+      case isItemObject(item):
+        return <Menu {...this.getMenuProps(item)} key={getItemKey(item) ?? index} />;
+
+      default:
+        return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
+    }
+  };
+
   /**
    * {@link Menu} に渡す props を取得します。
    */
-  getMenuProps(): Omit<Menu.Props, "items" | "trigger">;
+  public getMenuProps(): Omit<Menu.Props, "items" | "trigger">;
   /**
    * {@link Menu} に渡す props を取得します。
    *
    * @param item 項目です。
    */
-  getMenuProps(item: MenubarItemObject): Menu.Props<Menu.ItemObject>;
-  getMenuProps(
+  public getMenuProps(item: MenubarItemObject): Menu.Props<Menu.ItemObject>;
+  public getMenuProps(
     item?: MenubarItemObject,
-  ): Omit<Menu.Props, "items" | "trigger"> | Menu.Props<Menu.ItemObject>;
+  ): Omit<Menu.Props, "items" | "trigger"> | Menu.Props<Menu.ItemObject> {
+    const { menu: props = {} } = this.slotProps;
+
+    if (!item) {
+      return props;
+    }
+
+    return mergeProps([props, item]);
+  }
 
   /**
    * {@link MenubarRoot} に渡す props を取得します。
    */
-  getRootProps(): MenubarRootProps<TItem>;
+  public getRootProps(): MenubarRootProps<TItem> {
+    const { children = this.defaultItemRenderer, ...otherProps } = this.rootProps;
+
+    return {
+      ...otherProps,
+      children,
+    };
+  }
 }
 
-interface IUseMenubarAPI {
+export interface IUseMenubarAPI {
   /**
    * {@link MenubarAPI} を作成します。
    *
@@ -90,56 +134,26 @@ interface IUseMenubarAPI {
    * @param props {@link Menubar} の props です。
    * @returns メニューバーの API です。
    */
-  <TItem = any>(props: MenubarProps<TItem>): MenubarAPI<TItem>;
+  <TItem = never>(props: MenubarProps<TItem>): MenubarAPI<TItem>;
 }
 
 /**
  * {@link MenubarAPI} を作成するフックです。
  */
 export const useMenubarAPI: IUseMenubarAPI = function useSuiMenubarAPI(props) {
-  const { slotProps: { menu: menuProps = {} } = {}, ...rootProps } = props;
-
-  return {
-    getMenuProps(item?: MenubarItemObject): any {
-      return ((): ReturnType<MenubarAPI["getMenuProps"]> => {
-        if (!item) {
-          return menuProps;
-        }
-
-        return mergeProps([menuProps, item]);
-      })();
-    },
-    getRootProps() {
-      const defaultItemRenderer: IMenubarRootItemRenderer = (item, index) => {
-        switch (true) {
-          case isItemObject(item):
-            return <Menu {...this.getMenuProps(item)} key={index} />;
-
-          default:
-            return item;
-        }
-      };
-
-      const { children = defaultItemRenderer, ...otherRootProps } = rootProps;
-
-      return {
-        ...otherRootProps,
-        children,
-      };
-    },
-  };
+  return new MenubarAPI(props);
 };
 
-export { type MenubarAPI as API, useMenubarAPI as useAPI };
+export { MenubarAPI as API, useMenubarAPI as useAPI };
 
 // Component
 // ---------
 
-interface IMenubar extends IComponent<MenubarProps> {
+export interface IMenubar extends IComponent<MenubarProps> {
   /**
    * @template TItem 項目の型です。
    */
-  <TItem = any>(props: MenubarProps<TItem>): IComponent.Return;
+  <TItem = never>(props: MenubarProps<TItem>): IComponent.Return;
 }
 
 /**
@@ -158,9 +172,9 @@ export namespace Menubar {
 
   export type SlotProps = MenubarSlotProps;
 
-  export type ItemObject = MenubarItemObject;
+  export type IItemRenderer<TItem = any> = IMenubarItemRenderer<TItem>;
 
-  export interface IItemRenderer<TItem = any> extends IMenubarItemRenderer<TItem> {}
+  export type ItemObject = MenubarItemObject;
 
   export type Orientation = MenubarOrientation;
 }

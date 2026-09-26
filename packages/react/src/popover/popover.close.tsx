@@ -12,15 +12,15 @@ import type { IComponent } from "../types.js";
 export type PopoverCloseState = Popover.Close.State;
 
 export namespace PopoverCloseProps {
-  export type Render = RenderProps<PopoverCloseState>;
+  export type Render = Omit<RenderProps<PopoverCloseState>, "render">;
 
   export type SuruUI = {
     /**
      * ボタンとしてレンダリングする要素です。
      *
-     * {@link Popover.Close} の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
+     * Base UI の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
      */
-    children: NonNullable<React.ComponentProps<typeof Popover.Close>["render"]>;
+    children: NonNullable<Popover.Close.Props["render"]>;
   };
 
   export type BaseUI = Pick<
@@ -52,7 +52,7 @@ export type PopoverCloseProps = PopoverCloseProps.Render &
 /**
  * ポップオーバーを閉じるボタン要素です。
  *
- * 子要素は何にもラップされず、そのまま {@link Popover.Close} の `render` プロパティーに渡されます。
+ * 子要素は何にもラップされず、そのまま Base UI の `render` プロパティーに渡されます。
  */
 export const PopoverClose: IComponent<PopoverCloseProps> = function SuiPopoverClose(props) {
   const { children, className, ...otherProps } = props;

@@ -100,6 +100,8 @@ export type StatusRootProps = StatusRootProps.Render &
 
 /**
  * 状態を示すドットとラベルを並べて表示するルートコンポーネントです。
+ *
+ * 大きさと配色、リップルの修飾を自身のクラスに集約し、子のインジケーターへ反映します。
  */
 export const StatusRoot: IComponent<StatusRootProps> = function SuiStatusRoot(props) {
   const {

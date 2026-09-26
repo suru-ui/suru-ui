@@ -50,9 +50,6 @@ export const SelectArrow: IComponent<SelectArrowProps> = function SuiSelectArrow
 
 export { SelectArrow as Arrow };
 
-/**
- * {@link SelectArrow} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Arrow {
   export type State = SelectArrowState;
 

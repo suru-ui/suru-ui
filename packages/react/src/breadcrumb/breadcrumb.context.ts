@@ -42,14 +42,19 @@ export type BreadcrumbContext = {
 };
 
 /**
- * {@link BreadcrumbRoot} が子パーツへ提供するコンテキストです。
+ * パンくずリストのスタイルと項目を子パーツへ伝播するコンテキストです。
  */
 export const BreadcrumbContext: React.Context<BreadcrumbContext | null> =
   React.createContext<BreadcrumbContext | null>(null);
 
-function useSuiBreadcrumbContext(optional?: false): BreadcrumbContext;
-function useSuiBreadcrumbContext(optional?: boolean): BreadcrumbContext | null;
-function useSuiBreadcrumbContext(optional?: boolean): BreadcrumbContext | null {
+export type IUseBreadcrumbContext = IUseContext<BreadcrumbContext>;
+
+/**
+ * {@link BreadcrumbContext} を読み取るフックです。
+ */
+export const useBreadcrumbContext: IUseBreadcrumbContext = function useSuiBreadcrumbContext(
+  optional?: boolean,
+): any {
   const ctx = React.use(BreadcrumbContext);
   if (ctx === null && !optional) {
     throw new ContextMissingError({
@@ -59,12 +64,7 @@ function useSuiBreadcrumbContext(optional?: boolean): BreadcrumbContext | null {
   }
 
   return ctx;
-}
-
-/**
- * {@link BreadcrumbContext} を読み取るフックです。
- */
-export const useBreadcrumbContext: IUseContext<BreadcrumbContext> = useSuiBreadcrumbContext;
+};
 
 export { BreadcrumbContext as Context, useBreadcrumbContext as useContext };
 

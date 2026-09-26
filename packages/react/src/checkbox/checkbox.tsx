@@ -43,16 +43,23 @@ export type CheckboxSlotProps = {
  */
 export type CheckboxState = CheckboxRootState;
 
-/**
- * {@link Checkbox} に渡す props です。
- */
-export type CheckboxProps = Omit<CheckboxRootProps, "children"> &
-  Pick<CheckboxIndicatorProps, "children"> & {
+namespace CheckboxProps {
+  export type Checkbox = {
     /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
      */
     slotProps?: CheckboxSlotProps | undefined;
   };
+
+  export type Root = Omit<CheckboxRootProps, keyof Checkbox | keyof Indicator>;
+
+  export type Indicator = Pick<CheckboxIndicatorProps, "children">;
+}
+
+/**
+ * {@link Checkbox} に渡す props です。
+ */
+export type CheckboxProps = CheckboxProps.Checkbox & CheckboxProps.Root & CheckboxProps.Indicator;
 
 // API
 // ---
@@ -60,16 +67,42 @@ export type CheckboxProps = Omit<CheckboxRootProps, "children"> &
 /**
  * {@link Checkbox} を構成する各パーツの props などを作成するための API です。
  */
-export interface CheckboxAPI {
+export class CheckboxAPI {
+  private readonly indicatorProps: Required<CheckboxProps.Indicator>;
+
+  private readonly slotProps: CheckboxSlotProps;
+
+  private readonly rootProps: CheckboxProps.Root;
+
+  /**
+   * @param props {@link Checkbox} の props です。
+   * @internal
+   */
+  public constructor(props: CheckboxProps) {
+    const { children, slotProps = {}, ...rootProps } = props;
+    this.indicatorProps = { children };
+    this.slotProps = slotProps;
+    this.rootProps = rootProps;
+  }
+
   /**
    * {@link CheckboxIndicator} に渡す props を取得します。
    */
-  getIndicatorProps(): CheckboxIndicatorProps;
+  public getIndicatorProps(): CheckboxIndicatorProps {
+    const { indicator: props = {} } = this.slotProps;
+
+    return {
+      ...props,
+      ...this.indicatorProps,
+    };
+  }
 
   /**
    * {@link CheckboxRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<CheckboxRootProps, "children">;
+  public getRootProps(): Omit<CheckboxRootProps, "children"> {
+    return this.rootProps;
+  }
 }
 
 interface IUseCheckboxAPI {
@@ -77,7 +110,7 @@ interface IUseCheckboxAPI {
    * {@link CheckboxAPI} を作成します。
    *
    * @param props {@link Checkbox} の props です。
-   * @returns チェックボックスの API です
+   * @returns チェックボックスの API です。
    */
   (props: CheckboxProps): CheckboxAPI;
 }
@@ -86,28 +119,18 @@ interface IUseCheckboxAPI {
  * {@link CheckboxAPI} を作成するフックです。
  */
 export const useCheckboxAPI: IUseCheckboxAPI = function useSuiCheckboxAPI(props) {
-  const { children, slotProps: { indicator: indicatorProps = {} } = {}, ...otherRootProps } = props;
-
-  return {
-    getRootProps() {
-      return otherRootProps;
-    },
-    getIndicatorProps() {
-      return {
-        ...indicatorProps,
-        children,
-      };
-    },
-  };
+  return new CheckboxAPI(props);
 };
 
-export { type CheckboxAPI as API, useCheckboxAPI as useAPI };
+export { CheckboxAPI as API, useCheckboxAPI as useAPI };
 
 // Component
 // ---------
 
 /**
  * チェックボックスを表示するコンポーネントです。
+ *
+ * ラベルのテキストは `label` 要素で囲んで指定します。
  */
 export const Checkbox: IComponent<CheckboxProps> = function SuiCheckbox(props) {
   const api = useCheckboxAPI(props);

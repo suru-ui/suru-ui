@@ -36,9 +36,10 @@
   min-height: 100%;
   transform-origin: center top;
   transition:
-    transform 400ms cubic-bezier(0.32, 0.72, 0, 1),
+    scale 400ms cubic-bezier(0.32, 0.72, 0, 1),
+    translate 400ms cubic-bezier(0.32, 0.72, 0, 1),
     border-radius 250ms cubic-bezier(0.32, 0.72, 0, 1);
-  will-change: transform;
+  will-change: scale, translate;
 }
 
 /* 変数 */
@@ -93,28 +94,29 @@
   touch-action: none;
 }
 
+/* 開くスワイプの方向とスワイプ領域を置く辺は逆になります。 */
 :scope.sui_drawer_swipe_area-swipe_direction_down {
+  top: 0px;
   right: 0px;
-  bottom: 0px;
   left: 0px;
 }
 
 :scope.sui_drawer_swipe_area-swipe_direction_up {
-  top: 0px;
   right: 0px;
+  bottom: 0px;
   left: 0px;
 }
 
 :scope.sui_drawer_swipe_area-swipe_direction_left {
   top: 0px;
+  right: 0px;
   bottom: 0px;
-  left: 0px;
 }
 
 :scope.sui_drawer_swipe_area-swipe_direction_right {
   top: 0px;
-  right: 0px;
   bottom: 0px;
+  left: 0px;
 }
 
 /* 変数 */
@@ -521,72 +523,6 @@
 } /* @scope */
 } /* @layer */
 
-/* Controls */
-@layer sui.component {
-@scope (.sui_drawer_portal) to ([data-scope]) {
-
-/* 固定 */
-:scope {
-  .sui_drawer_controls {
-    z-index: 1;
-    display: flex;
-    grid-area: controls;
-    margin-left: auto;
-  }
-
-  .sui_drawer_controls-absolute {
-    position: absolute;
-  }
-
-  .sui_drawer_controls-relative {
-    position: relative;
-  }
-}
-
-/* 変数 */
-:scope {
-  --sui_drawer_controls-virtual_margin: ;
-  --sui_drawer_controls-margin_left: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_drawer_controls {
-    top: var(--_sui_drawer_controls-top, unset);
-    right: var(--_sui_drawer_controls-right, unset);
-    margin-left: var(--sui_drawer_controls-margin_left);
-  }
-}
-
-/* 代入 */
-:scope {
-  --sui_drawer_controls-virtual_margin: var(--sui_drawer_header-padding);
-
-  .sui_drawer_controls-absolute {
-    --sui_drawer_controls-margin_left: auto;
-  }
-
-  .sui_drawer_controls-relative {
-    --sui_drawer_controls-margin_left: var(--sui_drawer_controls-virtual_margin);
-  }
-}
-
-/* 変異 */
-:scope {
-  .sui_drawer_controls-absolute {
-    --_sui_drawer_controls-top: var(--sui_drawer_controls-virtual_margin);
-    --_sui_drawer_controls-right: var(--sui_drawer_controls-virtual_margin);
-  }
-
-  .sui_drawer_header .sui_drawer_controls-absolute {
-    --_sui_drawer_controls-top: 0px;
-    --_sui_drawer_controls-right: 0px;
-  }
-}
-
-} /* @scope */
-} /* @layer */
-
 /* Content */
 @layer sui.component {
 @scope (.sui_drawer_portal) to ([data-scope]) {
@@ -621,6 +557,75 @@
 :scope {
   --sui_drawer_content-width: 100%;
   --sui_drawer_content-max_width: 512px;
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Controls */
+@layer sui.component {
+@scope (.sui_drawer_portal) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_drawer_controls {
+    z-index: 1;
+    display: flex;
+    grid-area: controls;
+    justify-content: flex-end;
+  }
+
+  .sui_drawer_controls-absolute {
+    position: absolute;
+  }
+
+  .sui_drawer_controls-relative {
+    position: relative;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_drawer_controls-gap: ;
+  --sui_drawer_controls-virtual_margin: ;
+  --sui_drawer_controls-margin_left: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_drawer_controls {
+    top: var(--_sui_drawer_controls-top, unset);
+    right: var(--_sui_drawer_controls-right, unset);
+    gap: var(--sui_drawer_controls-gap);
+    margin-left: var(--sui_drawer_controls-margin_left);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_drawer_controls-gap: --sui-gap(4);
+  --sui_drawer_controls-virtual_margin: var(--sui_drawer_header-padding);
+
+  .sui_drawer_controls-absolute {
+    --sui_drawer_controls-margin_left: auto;
+  }
+
+  .sui_drawer_controls-relative {
+    --sui_drawer_controls-margin_left: var(--sui_drawer_controls-virtual_margin);
+  }
+}
+
+/* 変異 */
+:scope {
+  .sui_drawer_controls-absolute {
+    --_sui_drawer_controls-top: var(--sui_drawer_controls-virtual_margin);
+    --_sui_drawer_controls-right: var(--sui_drawer_controls-virtual_margin);
+  }
+
+  .sui_drawer_header .sui_drawer_controls-absolute {
+    --_sui_drawer_controls-top: 0px;
+    --_sui_drawer_controls-right: 0px;
+  }
 }
 
 } /* @scope */

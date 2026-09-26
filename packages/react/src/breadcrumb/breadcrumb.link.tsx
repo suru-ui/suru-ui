@@ -16,7 +16,7 @@ export namespace BreadcrumbLinkProps {
     /**
      * 現在のページかどうかを指定します。
      *
-     * `true` の場合、リンクではなく現在位置として描画します。
+     * `true` の場合、リンクではなく現在位置を示す要素として描画します。
      *
      * @default false
      */
@@ -50,6 +50,8 @@ export type BreadcrumbLinkProps = BreadcrumbLinkProps.Render &
 
 /**
  * パンくずのリンクコンポーネントです。
+ *
+ * `current` が `true` の場合はリンクにせず、`aria-current="page"` を持つ要素として描画します。
  */
 export const BreadcrumbLink: IComponent<BreadcrumbLinkProps> = function SuiBreadcrumbLink(props) {
   const { href, current = false, onClick, disabled = false, tabIndex, ...otherAnchorProps } = props;

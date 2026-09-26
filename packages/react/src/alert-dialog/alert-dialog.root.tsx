@@ -2,7 +2,6 @@ import { AlertDialog } from "@base-ui/react/alert-dialog";
 import * as React from "react";
 
 import type { IComponent } from "../types.js";
-import type { AlertDialogHandle } from "./alert-dialog.handle.js";
 
 /**
  * アラートダイアログを命令的に操作するためのオブジェクトです。
@@ -27,12 +26,7 @@ export type AlertDialogRootState = AlertDialog.Root.State;
 export namespace AlertDialogRootProps {
   export type Render = {};
 
-  export type SuruUI<TPayload = any> = {
-    /**
-     * トリガーとアラートダイアログに関連付けるためのハンドルです。
-     */
-    handle: AlertDialogHandle<TPayload>;
-  };
+  export type SuruUI = {};
 
   export type BaseUI<TPayload = any> = Pick<
     React.ComponentProps<typeof AlertDialog.Root<TPayload>>,
@@ -45,6 +39,7 @@ export namespace AlertDialogRootProps {
       | "onOpenChangeComplete"
       | "actionsRef"
       | "children"
+      | "handle"
       | "triggerId"
       | "defaultTriggerId",
       keyof Render | keyof SuruUI
@@ -63,7 +58,7 @@ export namespace AlertDialogRootProps {
  * @template TPayload トリガーが送信するデータの型です。
  */
 export type AlertDialogRootProps<TPayload = any> = AlertDialogRootProps.Render &
-  AlertDialogRootProps.SuruUI<TPayload> &
+  AlertDialogRootProps.SuruUI &
   AlertDialogRootProps.BaseUI<TPayload> &
   AlertDialogRootProps.HTML<TPayload>;
 
@@ -78,11 +73,25 @@ interface IAlertDialogRoot extends IComponent<AlertDialogRootProps> {
  * アラートダイアログのルートコンポーネントです。
  *
  * ダイアログの開閉状態を管理し、各パーツをグループ化します。それ自身は HTML 要素をレンダリングしません。
+ * Escape キーでは閉じず、中止または確認の操作を必要とします。
  */
 export const AlertDialogRoot: IAlertDialogRoot = function SuiAlertDialogRoot(
   props: AlertDialogRootProps,
 ) {
-  return <AlertDialog.Root {...props} />;
+  const { onOpenChange, ...otherProps } = props;
+
+  return (
+    <AlertDialog.Root
+      {...otherProps}
+      onOpenChange={(open, eventDetails) => {
+        if (!open && eventDetails.reason === "escape-key") {
+          eventDetails.cancel();
+        }
+
+        onOpenChange?.(open, eventDetails);
+      }}
+    />
+  );
 };
 
 export { AlertDialogRoot as Root };
@@ -91,14 +100,14 @@ export namespace Root {
   export type State = AlertDialogRootState;
 
   export type Props<TPayload = any> = Props.Render &
-    Props.SuruUI<TPayload> &
+    Props.SuruUI &
     Props.BaseUI<TPayload> &
     Props.HTML<TPayload>;
 
   export namespace Props {
     export type Render = AlertDialogRootProps.Render;
 
-    export type SuruUI<TPayload = any> = AlertDialogRootProps.SuruUI<TPayload>;
+    export type SuruUI = AlertDialogRootProps.SuruUI;
 
     export type BaseUI<TPayload = any> = AlertDialogRootProps.BaseUI<TPayload>;
 

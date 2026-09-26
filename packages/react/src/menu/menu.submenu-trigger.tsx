@@ -8,7 +8,6 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { getItemVariant } from "./_menu.utils.jsx";
 import { useMenuContext } from "./menu.context.js";
 
 /**
@@ -54,9 +53,7 @@ export namespace MenuSubmenuTriggerProps {
     radius?: MenuSubmenuTriggerRadius | undefined;
 
     /**
-     * チェック状態のときの外観を指定します。
-     *
-     * チェックされていないときは常に `"naked"` になります。
+     * 項目の主な外観を指定します。
      *
      * 既定値は {@link MenuRootProps.variant|variant} です。
      */
@@ -118,7 +115,7 @@ export const MenuSubmenuTrigger: IComponent<MenuSubmenuTriggerProps> =
       className,
       closeDelay,
       openOnHover,
-      nativeButton,
+      nativeButton = false,
       focusableWhenDisabled,
       ...otherProps
     } = props;
@@ -151,7 +148,7 @@ export const MenuSubmenuTrigger: IComponent<MenuSubmenuTriggerProps> =
             radius,
             pending: undefined,
             squared: undefined,
-            variant: getItemVariant(state, variant),
+            variant,
             disabled: state.disabled,
             outlined: undefined,
             nativeButton,

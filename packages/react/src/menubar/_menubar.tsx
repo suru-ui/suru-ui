@@ -1,4 +1,5 @@
 import isReactNode from "../_is-react-node.js";
+import { hasItems, isObject } from "../_item.js";
 import type { MenubarRootItemObject } from "./menubar.root.jsx";
 
 /**
@@ -9,11 +10,9 @@ import type { MenubarRootItemObject } from "./menubar.root.jsx";
  */
 export function isItemObject(item: unknown): item is MenubarRootItemObject {
   return (
-    typeof item === "object" &&
-    item !== null &&
-    "items" in item &&
-    Array.isArray(item.items) &&
+    isObject(item) &&
+    hasItems(item) &&
     "trigger" in item &&
-    (typeof item === "function" || isReactNode(item.trigger))
+    (typeof item.trigger === "function" || isReactNode(item.trigger))
   );
 }

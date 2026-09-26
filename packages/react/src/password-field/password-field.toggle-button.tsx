@@ -45,10 +45,9 @@ export const PasswordFieldToggleButton: IComponent<PasswordFieldToggleButtonProp
       onClick,
       children = visible ? <EyeOffIcon /> : <EyeIcon />,
       disabled = false,
-      "aria-label": ariaLabel,
+      "aria-label": ariaLabel = visible ? "パスワードを隠す" : "パスワードを表示",
       ...otherButtonProps
     } = props;
-    const label = ariaLabel ?? (visible ? "パスワードを隠す" : "パスワードを表示");
     const handleClick: NonNullable<PasswordFieldToggleButtonProps["onClick"]> = (evt) => {
       onClick?.(evt);
       if (!evt.defaultPrevented) {
@@ -66,9 +65,9 @@ export const PasswordFieldToggleButton: IComponent<PasswordFieldToggleButtonProp
           disabled,
           className: cn(
             "sui_password_field_toggle",
-            visible && "sui_password_field_toggle-visible",
+            disabled && "sui_password_field_toggle-disabled",
           ),
-          "aria-label": label,
+          "aria-label": ariaLabel,
           "aria-pressed": visible,
         },
       ],

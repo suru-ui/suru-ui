@@ -12,15 +12,15 @@ import type { MenuHandle } from "./menu.handle.js";
 export type MenuTriggerState = Menu.Trigger.State;
 
 export namespace MenuTriggerProps {
-  export type Render = RenderProps<MenuTriggerState>;
+  export type Render = Omit<RenderProps<MenuTriggerState>, "render">;
 
   export type SuruUI<TPayload = any> = {
     /**
      * トリガーとしてレンダリングする要素です。
      *
-     * {@link Menu.Trigger} の `render` props と同じ型で、そのまま `render` に渡されます。
+     * `render` props と同じ型で、そのまま `render` に渡されます。
      */
-    children: NonNullable<Menu.Trigger.Props<TPayload>["render"]>;
+    children: NonNullable<RenderProps<MenuTriggerState>["render"]>;
 
     /**
      * メニュー ({@link Root}) を関連付けるハンドルです。
@@ -72,7 +72,7 @@ interface IMenuTrigger extends IComponent<MenuTriggerProps> {
 /**
  * メニューを開くトリガーです。
  *
- * 子要素は追加のラッパーなしで `button` 要素に表示されます。
+ * `children` には表示する内容ではなく、トリガーとしてレンダリングする要素を渡します。
  */
 export const MenuTrigger: IMenuTrigger = function SuiMenuTrigger(props: MenuTriggerProps) {
   const { handle, children, className, ...otherProps } = props;

@@ -46,16 +46,13 @@ export type PopoverPortalProps = PopoverPortalProps.Render &
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
 export const PopoverPortal: IComponent<PopoverPortalProps> = function SuiPopoverPortal(props) {
+  const { size, radius, outlined } = usePopoverContext();
   const {
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
-  const ctx = usePopoverContext(true);
-  const size = ctx?.size ?? "md";
-  const radius = ctx?.radius ?? "md";
-  const outlined = ctx?.outlined ?? false;
 
   return (
     <Popover.Portal

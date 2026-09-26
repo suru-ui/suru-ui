@@ -136,7 +136,7 @@ export const Video = meta.story({
   },
 });
 
-export const StreatMap = meta.story({
+export const StreetMap = meta.story({
   name: "地図",
   ...ctrl({
     ratio: 16 / 9,

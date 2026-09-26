@@ -41,6 +41,9 @@ export namespace LabelRootProps {
     /**
      * ラベルを無効にするかどうかを指定します。
      *
+     * ラベル自身の見た目だけを変え、関連するコントロールは無効化しません。
+     * 関連するコントロールを無効にするときは、そのコントロール自身の `disabled` を指定してください。
+     *
      * 既定値は設定コンテクストですが、それが有効な値でなければ `false` です。
      */
     disabled?: boolean | undefined;
@@ -70,9 +73,9 @@ export type LabelRootProps = LabelRootProps.Render &
   LabelRootProps.HTML;
 
 /**
- * ラベルのルートコンポーネントです。
+ * ラベルのルート要素です。
  *
- * フォームコントロールと関連付けられる見出しを表示します。
+ * 大きさと配色の外観を自身のスタイルに集約します。
  */
 export const LabelRoot: IComponent<LabelRootProps> = function SuiLabelRoot(props) {
   const config = React.use(Config);
@@ -89,13 +92,12 @@ export const LabelRoot: IComponent<LabelRootProps> = function SuiLabelRoot(props
     props: [
       otherLabelProps,
       {
-        className: cn<LabelRootState>(
+        className: cn(
           "sui_label",
           `sui_label-size_${size}`,
           `sui_label-color_${color}`,
           disabled && "sui_label-disabled",
         ),
-        "aria-disabled": disabled || undefined,
         "data-scope": dataScope,
       },
     ],

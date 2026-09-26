@@ -39,11 +39,23 @@ export type ResizableProps = ResizableRootProps;
 /**
  * {@link Resizable} を構成する各パーツの props を作成するための API です。
  */
-export interface ResizableAPI {
+export class ResizableAPI {
+  private readonly rootProps: ResizableRootProps;
+
+  /**
+   * @param props {@link Resizable} の props です。
+   * @internal
+   */
+  public constructor(props: ResizableProps) {
+    this.rootProps = props;
+  }
+
   /**
    * {@link ResizableRoot} に渡す props を取得します。
    */
-  getRootProps(): ResizableRootProps;
+  public getRootProps(): ResizableRootProps {
+    return this.rootProps;
+  }
 }
 
 interface IUseResizableAPI {
@@ -60,19 +72,15 @@ interface IUseResizableAPI {
  * {@link ResizableAPI} を作成するフックです。
  */
 export const useResizableAPI: IUseResizableAPI = function useSuiResizableAPI(props) {
-  return {
-    getRootProps() {
-      return props;
-    },
-  };
+  return new ResizableAPI(props);
 };
 
-export { type ResizableAPI as API, useResizableAPI as useAPI };
+export { ResizableAPI as API, useResizableAPI as useAPI };
 
 // Component
 // ---------
 
-interface ResizableType extends IComponent<ResizableProps> {
+export interface IResizable extends IComponent<ResizableProps> {
   /**
    * 隣接するパネルのサイズを変更するハンドルです。
    */
@@ -100,7 +108,7 @@ interface ResizableType extends IComponent<ResizableProps> {
  * 子要素には {@link ResizablePanel} と {@link ResizableHandle} を交互に配置します。
  * ハンドルはポインター操作と矢印キーによる操作に対応します。
  */
-export const Resizable: ResizableType = /*#__PURE__*/ Object.assign(
+export const Resizable: IResizable = /*#__PURE__*/ Object.assign(
   function SuiResizable(props: ResizableProps) {
     const api = useResizableAPI(props);
 

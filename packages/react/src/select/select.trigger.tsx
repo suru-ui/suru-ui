@@ -51,7 +51,7 @@ export type SelectTriggerProps = SelectTriggerProps.Render &
  * キーボードでは `Enter` や `Space`、`ArrowDown` で開きます。
  */
 export const SelectTrigger: IComponent<SelectTriggerProps> = function SuiSelectTrigger(props) {
-  const actionGroup = useActionGroupContext(true);
+  const actionGroupCtx = useActionGroupContext(true);
   const ctx = useSelectContext(true);
   const {
     className,
@@ -59,10 +59,13 @@ export const SelectTrigger: IComponent<SelectTriggerProps> = function SuiSelectT
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
-  const size = actionGroup?.size ?? ctx?.size ?? "md";
-  const radius = actionGroup?.radius ?? ctx?.radius ?? "md";
-  const variant = actionGroup?.variant ?? ctx?.variant ?? "naked";
-  const outlined = actionGroup?.outlined ?? ctx?.outlined ?? variant === "naked";
+  const size = actionGroupCtx?.size ?? ctx?.size ?? "md";
+  const radius = actionGroupCtx?.radius ?? ctx?.radius ?? size;
+  const variant =
+    (actionGroupCtx?.variant === "solid" ? null : actionGroupCtx?.variant) ??
+    ctx?.variant ??
+    "liquid";
+  const outlined = actionGroupCtx?.outlined ?? ctx?.outlined ?? false;
 
   return (
     <BaseSelect.Trigger
@@ -75,8 +78,10 @@ export const SelectTrigger: IComponent<SelectTriggerProps> = function SuiSelectT
         `sui_select-radius_${radius}`,
         `sui_select-variant_${variant}`,
         outlined && "sui_select-outlined",
-        (state) => state.disabled && "sui_select-disabled",
+        (state) => state.valid === true && "sui_select-valid",
         (state) => state.valid === false && "sui_select-invalid",
+        (state) => state.valid === null && "sui_select-unverified",
+        (state) => state.disabled && "sui_select-disabled",
         (state) => state.open && "sui_select-open",
       )}
       data-scope={dataScope}
@@ -86,9 +91,6 @@ export const SelectTrigger: IComponent<SelectTriggerProps> = function SuiSelectT
 
 export { SelectTrigger as Trigger };
 
-/**
- * {@link SelectTrigger} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Trigger {
   export type State = SelectTriggerState;
 

@@ -18,18 +18,18 @@ export namespace PaginationNextButtonProps {
   export type SuruUI = {};
 
   export type BaseUI = Pick<
-    Button.ButtonRootProps,
+    Button.ButtonRootProps.BaseUI,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // PaginationNextButtonProps: context が制御するため除きます。
-      keyof Button.ButtonRootProps,
-      keyof Render | keyof SuruUI | "children" | "color" | "radius" | "size" | "squared" | "variant"
+      // PaginationNextButtonProps:
+      keyof Button.ButtonRootProps.BaseUI,
+      keyof Render | keyof SuruUI
     >
   >;
 
   export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof Omit<Button.ButtonRootProps, "children"> | "children"
+    Button.ButtonRootProps.HTML,
+    keyof Render | keyof SuruUI | keyof BaseUI | "children"
   >;
 }
 
@@ -56,10 +56,7 @@ export const PaginationNextButton: IComponent<PaginationNextButtonProps> =
       "aria-label": ariaLabel = "次のページへ",
       ...otherProps
     } = props;
-    const isDisabled =
-      ctx?.disabled ||
-      disabled ||
-      (ctx?.page ?? 1) >= (ctx?.totalPages ?? Number.POSITIVE_INFINITY);
+    const isDisabled = disabled || (ctx !== null && (ctx.disabled || ctx.page >= ctx.totalPages));
     const handleClick: NonNullable<Button.ButtonRootProps["onClick"]> = (event) => {
       onClick?.(event);
       if (!event.defaultPrevented && !isDisabled && ctx !== null) {

@@ -126,6 +126,7 @@ export const SidebarRoot: IComponent<SidebarRootProps> = function SuiSidebarRoot
     () => ({ open, side, state, variant, collapsible }),
     [collapsible, open, side, state, variant],
   );
+  // collapsible は Root の内側でだけ確定するため、子孫へ伝えます。
   const childCtx = React.useMemo<SidebarContext>(
     () => ({ ...(ctx ?? { open, state, toggle: () => {}, setOpen: () => {} }), collapsible }),
     [collapsible, ctx, open, state],

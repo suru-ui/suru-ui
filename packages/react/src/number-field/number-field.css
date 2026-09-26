@@ -6,7 +6,7 @@
 :scope {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   cursor: text;
 }
 
@@ -140,11 +140,11 @@
   --sui_number_field_group-outline_color: ;
   --sui_number_field_group-outline_offset: ;
   --sui_number_field_group-background_color: ;
-  --sui_number_field_group-border_color-normal: ;
+  --sui_number_field_group-border_color-idle: ;
   --sui_number_field_group-border_color-hover: ;
   --sui_number_field_group-border_color-invalid: ;
   --sui_number_field_group-border_color-focus_visible: ;
-  --sui_number_field_group-border_width-normal: ;
+  --sui_number_field_group-border_width-idle: ;
   --sui_number_field_group-border_width-hover: ;
   --sui_number_field_group-border_width-focus_visible: ;
   --sui_number_field_group-border_width-invalid: ;
@@ -176,10 +176,10 @@
   --sui_number_field_group-focusring_width: var(--sui-focusring_width);
   --sui_number_field_group-outline_color: var(--sui-focusring_color);
   --sui_number_field_group-outline_offset: var(--sui-focusring_offset);
-  --sui_number_field_group-border_color-normal: var(--sui-grey-naked-border-normal);
+  --sui_number_field_group-border_color-idle: var(--sui-grey-naked-border-normal);
   --sui_number_field_group-border_color-hover: var(--sui-grey-naked-border-subtle);
   --sui_number_field_group-border_color-invalid: var(--sui-red-naked-canvas_text-normal);
-  --sui_number_field_group-border_width-normal: --sui-border_width(1);
+  --sui_number_field_group-border_width-idle: --sui-border_width(1);
   --sui_number_field_group-border_width-hover: --sui-border_width(1);
   --sui_number_field_group-border_width-focus_visible: --sui-border_width(2);
   --sui_number_field_group-border_width-invalid: --sui-border_width(2);
@@ -297,25 +297,30 @@
 
 /* 変異 */
 :scope {
-  &:has(.sui_number_field_input:focus-visible) .sui_number_field_group {
+  &:not(.sui_number_field-disabled):has(.sui_number_field_input:focus-visible)
+    .sui_number_field_group {
     --_sui_number_field_group-outline_width: var(--sui_number_field_group-focusring_width);
   }
 
   &.sui_number_field-outlined .sui_number_field_group::after {
-    --_sui_number_field_group-border_color: var(--sui_number_field_group-border_color-normal);
-    --_sui_number_field_group-border_width: var(--sui_number_field_group-border_width-normal);
+    --_sui_number_field_group-border_color: var(--sui_number_field_group-border_color-idle);
+    --_sui_number_field_group-border_width: var(--sui_number_field_group-border_width-idle);
   }
 
-  &.sui_number_field-outlined:has(.sui_number_field_group:hover) .sui_number_field_group::after {
+  &:not(.sui_number_field-disabled) {
     @media (any-hover: hover) {
-      --_sui_number_field_group-border_color: var(--sui_number_field_group-border_color-hover);
-      --_sui_number_field_group-border_width: var(--sui_number_field_group-border_width-hover);
+      &.sui_number_field-outlined:has(.sui_number_field_group:hover)
+        .sui_number_field_group::after {
+        --_sui_number_field_group-border_color: var(--sui_number_field_group-border_color-hover);
+        --_sui_number_field_group-border_width: var(--sui_number_field_group-border_width-hover);
+      }
     }
-  }
 
-  &.sui_number_field-outlined:focus-within .sui_number_field_group::after {
-    --_sui_number_field_group-border_color: var(--sui_number_field_group-border_color-focus_visible);
-    --_sui_number_field_group-border_width: var(--sui_number_field_group-border_width-focus_visible);
+    &.sui_number_field-outlined:focus-within .sui_number_field_group::after {
+      --_sui_number_field_group-border_color: var(--sui_number_field_group-border_color-focus_visible);
+      --_sui_number_field_group-border_width:
+        var(--sui_number_field_group-border_width-focus_visible);
+    }
   }
 
   &:has(.sui_number_field_input-invalid) .sui_number_field_group::after {
@@ -676,7 +681,7 @@
 
 /* 変異 */
 :scope {
-  .sui_number_field_decrement {
+  &:not(.sui_number_field-disabled) .sui_number_field_decrement {
     @media (any-hover: hover) {
       &:hover {
         --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-hover);
@@ -753,7 +758,7 @@
 
 /* 変異 */
 :scope {
-  .sui_number_field_increment {
+  &:not(.sui_number_field-disabled) .sui_number_field_increment {
     @media (any-hover: hover) {
       &:hover {
         --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-hover);

@@ -51,7 +51,7 @@ export namespace AlertDialogIconProps {
     /**
      * アラートダイアログのアイコンの配色を指定します。
      *
-     * @default "grey"
+     * @default "red"
      */
     color?: AlertDialogIconColor | undefined;
 
@@ -120,6 +120,7 @@ export const AlertDialogIcon: IComponent<AlertDialogIconProps> = function SuiAle
     radius = size,
     variant = "liquid",
     outlined = false,
+    "aria-hidden": ariaHidden = true,
     ...otherDivProps
   } = props;
 
@@ -136,6 +137,7 @@ export const AlertDialogIcon: IComponent<AlertDialogIconProps> = function SuiAle
           muted && "sui_alert_dialog_icon-muted",
           outlined && "sui_alert_dialog_icon-outlined",
         ),
+        "aria-hidden": ariaHidden,
       },
     ],
     defaultTagName: "div",

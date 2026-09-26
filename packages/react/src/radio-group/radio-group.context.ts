@@ -78,9 +78,21 @@ export type RadioGroupContext = {
 export const RadioGroupContext: React.Context<RadioGroupContext | null> =
   React.createContext<RadioGroupContext | null>(null);
 
-function useSuiRadioGroupContext(optional?: false): RadioGroupContext;
-function useSuiRadioGroupContext(optional?: boolean): RadioGroupContext | null;
-function useSuiRadioGroupContext(optional?: boolean): RadioGroupContext | null {
+export interface IUseRadioGroupContext extends IUseContext<RadioGroupContext> {
+  /**
+   * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
+   * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
+   */
+  (optional?: false): RadioGroupContext;
+  (optional?: boolean): RadioGroupContext | null;
+}
+
+/**
+ * {@link RadioGroupContext} を読み取るフックです。
+ */
+export const useRadioGroupContext: IUseRadioGroupContext = function useSuiRadioGroupContext(
+  optional?: boolean,
+): any {
   const ctx = React.use(RadioGroupContext);
   if (ctx === null && !optional) {
     throw new ContextMissingError({
@@ -90,12 +102,7 @@ function useSuiRadioGroupContext(optional?: boolean): RadioGroupContext | null {
   }
 
   return ctx;
-}
-
-/**
- * {@link RadioGroupContext} を読み取るフックです。
- */
-export const useRadioGroupContext: IUseContext<RadioGroupContext> = useSuiRadioGroupContext;
+};
 
 export { RadioGroupContext as Context, useRadioGroupContext as useContext };
 

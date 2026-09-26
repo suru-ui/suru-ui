@@ -32,10 +32,10 @@ export type DrawerHeaderProps = DrawerHeaderProps.Render &
 /**
  * ドロワーのヘッダーコンポーネントです。
  */
-export const DrawerHeader: IComponent<DrawerHeaderProps> = function SuiDrawerHeader(htmlProps) {
+export const DrawerHeader: IComponent<DrawerHeaderProps> = function SuiDrawerHeader(props) {
   return useRender({
     props: [
-      htmlProps,
+      props,
       {
         className: "sui_drawer_header",
       },

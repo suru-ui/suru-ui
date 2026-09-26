@@ -87,8 +87,6 @@ export namespace RadioGroupRootProps {
      * ラジオボタンに枠線を表示するかどうかを指定します。
      *
      * グループ内のラジオボタンより優先されます。
-     *
-     * @default false
      */
     outlined?: boolean | undefined;
 
@@ -202,7 +200,7 @@ export const RadioGroupRoot: IRadioGroupRoot = function SuiRadioGroupRoot(
           "sui_radio_group",
           `sui_radio_group-orientation_${orientation}`,
           (state) => state.dirty && "sui_radio_group-dirty",
-          (state) => state.valid && "sui_radio_group-valid",
+          (state) => state.valid === true && "sui_radio_group-valid",
           (state) => state.filled && "sui_radio_group-filled",
           (state) => state.focused && "sui_radio_group-focused",
           (state) => state.touched && "sui_radio_group-touched",

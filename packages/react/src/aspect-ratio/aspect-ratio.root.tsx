@@ -43,7 +43,7 @@ export namespace AspectRatioRootProps {
      * コンテンツの幅と高さの比率を指定します。
      *
      * 数値は「幅 / 高さ」として解釈されます。
-     * `16 / 9` のような計算式や、CSS の `aspect-ratio` プロパティーと同じ形式の文字列も指定できます。
+     * 文字列は CSS の `aspect-ratio` プロパティーと同じ規則で解釈され、`16 / 9` のような比率の表記を指定できます。
      *
      * @default 1
      */
@@ -68,6 +68,8 @@ export type AspectRatioRootProps = AspectRatioRootProps.Render &
 
 /**
  * 指定した比率で幅と高さを保つコンテナーのルートコンポーネントです。
+ *
+ * 直接の子要素はコンテナーいっぱいに広がるように配置されます。画像や動画、地図の埋め込みなどの表示に使います。
  */
 export const AspectRatioRoot: IComponent<AspectRatioRootProps> = function SuiAspectRatioRoot(
   props,
@@ -85,7 +87,7 @@ export const AspectRatioRoot: IComponent<AspectRatioRootProps> = function SuiAsp
       otherDivProps,
       {
         style: {
-          "--sui_aspect_ratio-ratio": ratio.toString(10),
+          "--sui_aspect_ratio-ratio": `${ratio}`,
         },
         className: cn("sui_aspect_ratio", `sui_aspect_ratio-radius_${radius}`),
         "data-scope": dataScope,

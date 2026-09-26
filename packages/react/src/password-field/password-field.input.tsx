@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import type { RenderProps } from "../_use-render.js";
 import {
   type TextFieldInputProps,
@@ -32,19 +30,16 @@ export namespace PasswordFieldInputProps {
   export type SuruUI = {};
 
   export type BaseUI = Pick<
-    TextFieldInputProps,
+    TextFieldInputProps.BaseUI,
     Exclude<
       // Base UI の型を確認して取り出すプロパティーを決めます。
-      // PasswordFieldInputProps: type は visible から決まるため除きます。
-      keyof TextFieldInputProps,
-      keyof Render | keyof SuruUI | "type"
+      // PasswordFieldInputProps:
+      keyof TextFieldInputProps.BaseUI,
+      keyof Render | keyof SuruUI
     >
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<"input">,
-    keyof Render | keyof SuruUI | keyof BaseUI | "type"
-  >;
+  export type HTML = Omit<TextFieldInputProps.HTML, keyof Render | keyof SuruUI | keyof BaseUI>;
 }
 
 /**
@@ -58,7 +53,7 @@ export type PasswordFieldInputProps = PasswordFieldInputProps.Render &
   PasswordFieldInputProps.HTML;
 
 /**
- * Base UI の Input を使ったパスワード入力欄の入力欄です。
+ * パスワード入力欄の入力欄です。
  *
  * 入力項目はコンテキストから読み取った表示状態で自動的に切り替わり、常に上書きされます。
  */

@@ -125,12 +125,17 @@ export namespace TreeItemProps {
     variant?: TreeItemVariant | undefined;
   };
 
-  export type BaseUI = Omit<Button.Root.Props.BaseUI, keyof Render | keyof SuruUI>;
-
-  export type HTML = Omit<
-    React.ComponentProps<"button">,
-    keyof Render | keyof SuruUI | keyof BaseUI
+  export type BaseUI = Pick<
+    Button.ButtonRootProps.BaseUI,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // ButtonRootProps:
+      keyof Button.ButtonRootProps.BaseUI,
+      keyof Render | keyof SuruUI
+    >
   >;
+
+  export type HTML = Omit<Button.ButtonRootProps.HTML, keyof Render | keyof SuruUI | keyof BaseUI>;
 }
 
 /**
@@ -149,18 +154,19 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
   const {
     id: itemId,
     role = "treeitem",
-    size = ctx.size ?? "md",
-    color = ctx.color ?? "grey",
+    size = ctx.size,
+    color = ctx.color,
     level,
-    muted = ctx.muted ?? false,
-    radius = ctx.radius ?? size,
+    muted = ctx.muted,
+    style,
+    radius = ctx.radius,
     render = <div />,
     onClick: onClickProp,
     setSize,
-    variant = ctx.variant ?? "liquid",
+    variant = ctx.variant,
     disabled = false,
     hasItems = false,
-    outlined = ctx.outlined ?? false,
+    outlined = ctx.outlined,
     posInSet,
     // フォーカスは aria-activedescendant でルートに集約するため、項目自体はタブ移動の対象にしません。
     tabIndex = -1,
@@ -172,6 +178,15 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
   const domId = ctx.getItemId(itemId);
   const expanded = ctx.expanded.has(itemId);
   const selected = ctx.selected.has(itemId);
+
+  const levelStyle = (state: TreeItemState): React.CSSProperties => {
+    const result: React.CSSProperties = {};
+    Object.assign(result, typeof style === "function" ? style(state) : style, {
+      "--sui_tree_item-level": level,
+    });
+
+    return result;
+  };
 
   const handleClick: NonNullable<TreeItemProps["onClick"]> = (event) => {
     onClickProp?.(event);
@@ -199,6 +214,7 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
       size={size}
       color={selected ? color : "grey"}
       muted={muted}
+      style={levelStyle}
       radius={radius}
       render={render}
       onClick={handleClick}
@@ -206,7 +222,13 @@ export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
       disabled={disabled}
       outlined={selected && outlined}
       tabIndex={tabIndex}
-      className={cn(className, "sui_tree_item", expanded && "sui_tree_item-expanded")}
+      className={cn(
+        className,
+        "sui_tree_item",
+        expanded && "sui_tree_item-expanded",
+        selected && "sui_tree_item-selected",
+        disabled && "sui_tree_item-disabled",
+      )}
       nativeButton={nativeButton}
       aria-level={level}
       aria-setsize={setSize}

@@ -43,11 +43,23 @@ export type FormProps<TValues extends FormValues = FormValues> = FormRootProps<T
  *
  * @template TValues フォームの入力値を表す型です。
  */
-export interface FormAPI<TValues extends FormValues = FormValues> {
+export class FormAPI<TValues extends FormValues = FormValues> {
+  private readonly rootProps: FormRootProps<TValues>;
+
+  /**
+   * @param props {@link Form} の props です。
+   * @internal
+   */
+  public constructor(props: FormProps<TValues>) {
+    this.rootProps = props;
+  }
+
   /**
    * {@link FormRoot} に渡す props を取得します。
    */
-  getRootProps(): FormRootProps<TValues>;
+  public getRootProps(): FormRootProps<TValues> {
+    return this.rootProps;
+  }
 }
 
 interface IUseFormAPI {
@@ -64,15 +76,13 @@ interface IUseFormAPI {
 /**
  * {@link FormAPI} を作成するフックです。
  */
-export const useFormAPI: IUseFormAPI = function useSuiFormAPI(props) {
-  return {
-    getRootProps() {
-      return props;
-    },
-  };
+export const useFormAPI: IUseFormAPI = function useSuiFormAPI<TValues extends FormValues>(
+  props: FormProps<TValues>,
+): FormAPI<TValues> {
+  return new FormAPI(props);
 };
 
-export { type FormAPI as API, useFormAPI as useAPI };
+export { FormAPI as API, useFormAPI as useAPI };
 
 // Component
 // ---------

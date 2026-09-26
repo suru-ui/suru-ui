@@ -338,18 +338,13 @@
                                );
 
   &:has(.sui_alert_icon) {
-    --sui_alert_icon-font_size: 0px;
-    --sui_alert_icon-line_height: 0;
+    --sui_alert_icon-font_size: var(--sui_alert_content-font_size);
+    --sui_alert_icon-line_height: var(--sui_alert_content-line_height);
   }
 
   &:has(.sui_alert_icon):has(.sui_alert_title) {
     --sui_alert_icon-font_size: var(--sui_alert_title-font_size);
     --sui_alert_icon-line_height: var(--sui_alert_title-line_height);
-  }
-
-  &:has(.sui_alert_icon):not(:has(.sui_alert_title)):has(.sui_alert_content) {
-    --sui_alert_icon-font_size: var(--sui_alert_content-font_size);
-    --sui_alert_icon-line_height: var(--sui_alert_content-line_height);
   }
 
   &.sui_alert-color_grey {

@@ -19,9 +19,14 @@ export type ButtonContext = {
 export const ButtonContext: React.Context<ButtonContext | null> =
   React.createContext<ButtonContext | null>(null);
 
-function useSuiButtonContext(optional?: false): ButtonContext;
-function useSuiButtonContext(optional?: boolean): ButtonContext | null;
-function useSuiButtonContext(optional?: boolean): ButtonContext | null {
+export type IUseButtonContext = IUseContext<ButtonContext>;
+
+/**
+ * {@link ButtonContext} を読み取るフックです。
+ */
+export const useButtonContext: IUseButtonContext = function useSuiButtonContext(
+  optional?: boolean,
+): any {
   const ctx = React.use(ButtonContext);
   if (ctx === null && !optional) {
     throw new ContextMissingError({
@@ -31,11 +36,6 @@ function useSuiButtonContext(optional?: boolean): ButtonContext | null {
   }
 
   return ctx;
-}
-
-/**
- * {@link ButtonContext} を読み取るフックです。
- */
-export const useButtonContext: IUseContext<ButtonContext> = useSuiButtonContext;
+};
 
 export { ButtonContext as Context, useButtonContext as useContext };

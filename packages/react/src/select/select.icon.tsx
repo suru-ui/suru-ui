@@ -50,9 +50,6 @@ export const SelectIcon: IComponent<SelectIconProps> = function SuiSelectIcon(pr
 
 export { SelectIcon as Icon };
 
-/**
- * {@link SelectIcon} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace Icon {
   export type State = SelectIconState;
 

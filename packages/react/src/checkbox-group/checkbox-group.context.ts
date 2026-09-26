@@ -78,25 +78,23 @@ export type CheckboxGroupContext = {
 export const CheckboxGroupContext: React.Context<CheckboxGroupContext | null> =
   React.createContext<CheckboxGroupContext | null>(null);
 
-function useSuiCheckboxGroupContext(optional?: false): CheckboxGroupContext;
-function useSuiCheckboxGroupContext(optional?: boolean): CheckboxGroupContext | null;
-function useSuiCheckboxGroupContext(optional?: boolean): CheckboxGroupContext | null {
-  const ctx = React.use(CheckboxGroupContext);
-  if (ctx === null && !optional) {
-    throw new ContextMissingError({
-      contextName: "CheckboxGroupContext",
-      providerName: "CheckboxGroupRoot",
-    });
-  }
-
-  return ctx;
-}
+export type IUseCheckboxGroupContext = IUseContext<CheckboxGroupContext>;
 
 /**
  * {@link CheckboxGroupContext} を読み取るフックです。
  */
-export const useCheckboxGroupContext: IUseContext<CheckboxGroupContext> =
-  useSuiCheckboxGroupContext;
+export const useCheckboxGroupContext: IUseCheckboxGroupContext =
+  function useSuiCheckboxGroupContext(optional?: boolean): any {
+    const ctx = React.use(CheckboxGroupContext);
+    if (ctx === null && !optional) {
+      throw new ContextMissingError({
+        contextName: "CheckboxGroupContext",
+        providerName: "CheckboxGroupRoot",
+      });
+    }
+
+    return ctx;
+  };
 
 export { CheckboxGroupContext as Context, useCheckboxGroupContext as useContext };
 

@@ -565,28 +565,30 @@
 
 /* 変異 */
 :scope {
-  @media (any-hover: hover) {
-    &:hover {
-      --_sui_button-z_index: 1;
-      --_sui_button-color: var(--sui_button-color-hover);
-      --_sui_button-background_color: var(--sui_button-background_color-hover);
+  &:not(.sui_button-disabled) {
+    @media (any-hover: hover) {
+      &:hover {
+        --_sui_button-z_index: 1;
+        --_sui_button-color: var(--sui_button-color-hover);
+        --_sui_button-background_color: var(--sui_button-background_color-hover);
+      }
     }
-  }
 
-  &:active {
-    --_sui_button-z_index: 1;
-    --_sui_button-color: var(--sui_button-color-active);
-    --_sui_button-background_color: var(--sui_button-background_color-active);
+    &:active {
+      --_sui_button-z_index: 1;
+      --_sui_button-color: var(--sui_button-color-active);
+      --_sui_button-background_color: var(--sui_button-background_color-active);
+    }
   }
 
   &:focus-visible {
     --_sui_button-z_index: 1;
+  }
 
-    &:not([data-highlighted]) {
-      --_sui_button-outline_width: var(--sui_button-focusring_width);
-      --_sui_button-outline_color: var(--sui_button-focusring_color);
-      --_sui_button-outline_offset: var(--sui_button-focusring_offset);
-    }
+  &:focus-visible:not(.sui_button-item) {
+    --_sui_button-outline_width: var(--sui_button-focusring_width);
+    --_sui_button-outline_color: var(--sui_button-focusring_color);
+    --_sui_button-outline_offset: var(--sui_button-focusring_offset);
   }
 
   &.sui_button-squared {
@@ -603,14 +605,16 @@
     --_sui_button-border_color: var(--sui_button-border_color-idle);
     --_sui_button-border_width: var(--sui_button-border_width);
 
-    @media (any-hover: hover) {
-      &:hover {
-        --_sui_button-border_color: var(--sui_button-border_color-hover);
+    &:not(.sui_button-disabled) {
+      @media (any-hover: hover) {
+        &:hover {
+          --_sui_button-border_color: var(--sui_button-border_color-hover);
+        }
       }
-    }
 
-    &:active {
-      --_sui_button-border_color: var(--sui_button-border_color-active);
+      &:active {
+        --_sui_button-border_color: var(--sui_button-border_color-active);
+      }
     }
   }
 }
@@ -688,14 +692,16 @@
 
 /* 変異 */
 :scope {
-  @media (any-hover: hover) {
-    &:hover {
-      --_sui_button_content-color: var(--sui_button_content-color-hover);
+  &:not(.sui_button-disabled) {
+    @media (any-hover: hover) {
+      &:hover {
+        --_sui_button_content-color: var(--sui_button_content-color-hover);
+      }
     }
-  }
 
-  &:active {
-    --_sui_button_content-color: var(--sui_button_content-color-active);
+    &:active {
+      --_sui_button_content-color: var(--sui_button_content-color-active);
+    }
   }
 
   &.sui_button-item .sui_button_content {
@@ -709,6 +715,15 @@
 /* Pending */
 @layer sui.component {
 @scope (.sui_button) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_button_pending {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
 
 /* 変数 */
 :scope {

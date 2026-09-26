@@ -70,12 +70,13 @@ export const CustomParts = meta.story({
           trigger={
             <Button variant="naked">
               カスタムアイコン
-              <Collapsible.Indicator />
+              <Collapsible.Indicator>
+                <PlusIcon />
+              </Collapsible.Indicator>
             </Button>
           }
-          slotProps={{ indicator: { children: <PlusIcon /> } }}
         >
-          `slotProps.indicator` で開閉状態を示すアイコンを差し替えられます。
+          `Collapsible.Indicator` の子要素で開閉状態を示すアイコンを差し替えられます。
         </Collapsible>
       </div>
     );

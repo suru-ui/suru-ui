@@ -16,7 +16,9 @@ export type TextFieldInputChangeEventDetails = BaseInput.ChangeEventDetails;
 export type TextFieldInputChangeEventReason = BaseInput.ChangeEventReason;
 
 /**
- * {@link TextFieldInput} で使用できる入力項目の種類です。
+ * 入力欄で使用できる入力項目の種類です。
+ *
+ * ボタンや選択系 (`"button"`、`"checkbox"`、`"radio"` など) は除きます。
  */
 export type TextFieldInputType = Exclude<
   React.HTMLInputTypeAttribute,
@@ -65,7 +67,7 @@ export type TextFieldInputProps = TextFieldInputProps.Render &
   TextFieldInputProps.HTML;
 
 /**
- * Base UI の Input を使った文字入力欄の入力欄です。
+ * 文字入力欄の入力欄です。
  */
 export const TextFieldInput: IComponent<TextFieldInputProps> = function SuiTextFieldInput(props) {
   const { type = "text", className, ...otherProps } = props;

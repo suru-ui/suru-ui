@@ -226,7 +226,7 @@
   --sui_tabs_tab-font_size: ;
   --sui_tabs_tab-font_weight: ;
   --sui_tabs_tab-line_height: ;
-  --sui_tabs_tab-color-normal: ;
+  --sui_tabs_tab-color-idle: ;
   --sui_tabs_tab-color-active: ;
   --sui_tabs_tab-color-hover: ;
   --sui_tabs_tab-letter_spacing: ;
@@ -247,7 +247,7 @@
     font-size: var(--sui_tabs_tab-font_size);
     font-weight: var(--sui_tabs_tab-font_weight);
     line-height: var(--sui_tabs_tab-line_height);
-    color: var(--_sui_tabs_tab-color, var(--sui_tabs_tab-color-normal));
+    color: var(--_sui_tabs_tab-color, var(--sui_tabs_tab-color-idle));
     letter-spacing: var(--sui_tabs_tab-letter_spacing);
     outline-width: var(--_sui_tabs_tab-outline_width, 0px);
     outline-color: var(--_sui_tabs_tab-outline_color, transparent);
@@ -265,7 +265,7 @@
                                   ) / 2
                                 );
   --sui_tabs_tab-font_family: var(--sui-font-sans);
-  --sui_tabs_tab-color-normal: var(--sui-canvas_text-2);
+  --sui_tabs_tab-color-idle: var(--sui-canvas_text-2);
   --sui_tabs_tab-color-hover: var(--sui-canvas_text-1);
   --sui_tabs_tab-focusring_width: var(--sui-focusring_width);
   --sui_tabs_tab-focusring_color: var(--sui-focusring_color);

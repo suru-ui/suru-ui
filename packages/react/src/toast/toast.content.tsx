@@ -8,12 +8,24 @@ import * as Alert from "../alert/alert.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
 
+/**
+ * 通知の配色です。
+ */
 export type ToastContentColor = Alert.Root.Color;
 
+/**
+ * 通知の角丸の大きさです。
+ */
 export type ToastContentRadius = Alert.Root.Radius;
 
+/**
+ * 通知の大きさです。
+ */
 export type ToastContentSize = Alert.Root.Size;
 
+/**
+ * 通知の主な外観です。
+ */
 export type ToastContentVariant = Alert.Root.Variant;
 
 /**

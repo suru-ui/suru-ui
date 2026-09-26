@@ -12,13 +12,13 @@ import type { IComponent } from "../types.js";
 export type DrawerCloseState = Drawer.Close.State;
 
 export namespace DrawerCloseProps {
-  export type Render = RenderProps<DrawerCloseState>;
+  export type Render = Omit<RenderProps<DrawerCloseState>, "render">;
 
   export type SuruUI = {
     /**
-     * ボタンとしてレンダリングする要素です。
+     * ボタンとして描画する関数です。
      */
-    children: NonNullable<React.ComponentProps<typeof Drawer.Close>["render"]>;
+    children: NonNullable<RenderProps<DrawerCloseState>["render"]>;
   };
 
   export type BaseUI = Pick<

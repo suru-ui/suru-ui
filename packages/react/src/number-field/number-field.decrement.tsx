@@ -48,12 +48,18 @@ export type NumberFieldDecrementProps = NumberFieldDecrementProps.Render &
  */
 export const NumberFieldDecrement: IComponent<NumberFieldDecrementProps> =
   function SuiNumberFieldDecrement(props) {
-    const { children = <MinusIcon />, className, ...otherProps } = props;
+    const {
+      children = <MinusIcon />,
+      className,
+      "aria-label": ariaLabel = "値を減らす",
+      ...otherProps
+    } = props;
 
     return (
       <NumberField.Decrement
         {...otherProps}
         className={cn(className, "sui_number_field_stepper", "sui_number_field_decrement")}
+        aria-label={ariaLabel}
       >
         {children}
       </NumberField.Decrement>

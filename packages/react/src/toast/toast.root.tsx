@@ -82,10 +82,9 @@ export const ToastRoot: IToastRoot = function SuiToastRoot<TData extends object 
         className,
         "sui_toast",
         (state) =>
-          state.transitionStatus !== undefined &&
+          (state.transitionStatus === "starting" || state.transitionStatus === "ending") &&
           `sui_toast-transition_status_${state.transitionStatus}`,
         (state) => state.limited && "sui_toast-limited",
-        (state) => state.type !== undefined && `sui_toast-type_${CSS.escape(state.type)}`,
         (state) => state.swiping && "sui_toast-swiping",
         (state) =>
           state.swipeDirection !== undefined && `sui_toast-swipe_direction_${state.swipeDirection}`,

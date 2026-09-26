@@ -1,4 +1,4 @@
-import type { IComponent, IUseContext } from "../types.js";
+import type { IComponent } from "../types.js";
 import {
   type ButtonContext,
   type ButtonRootSize,
@@ -7,6 +7,7 @@ import {
   type ButtonRootState,
   type ButtonRootRadius,
   type ButtonRootVariant,
+  type IUseButtonContext,
   type ButtonContentProps,
   type ButtonPendingProps,
   type ButtonCircularProgressProps,
@@ -76,17 +77,31 @@ export type ButtonSlotProps = {
  */
 export type ButtonState = ButtonRootState;
 
-/**
- * {@link Button} に渡す props です。
- */
-export type ButtonProps = Omit<ButtonRootProps, "children"> &
-  Pick<ButtonContentProps, "children"> &
-  Pick<ButtonCircularProgressProps, "percentage" | "indeterminate"> & {
+namespace ButtonProps {
+  export type Button = {
     /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
      */
     slotProps?: ButtonSlotProps | undefined;
   };
+
+  export type Root = Omit<
+    ButtonRootProps,
+    "children" | keyof Button | keyof Content | keyof CircularProgress
+  >;
+
+  export type Content = Pick<ButtonContentProps, "children">;
+
+  export type CircularProgress = Pick<ButtonCircularProgressProps, "indeterminate" | "percentage">;
+}
+
+/**
+ * {@link Button} に渡す props です。
+ */
+export type ButtonProps = ButtonProps.Button &
+  ButtonProps.Root &
+  ButtonProps.Content &
+  ButtonProps.CircularProgress;
 
 // API
 // ---
@@ -94,41 +109,96 @@ export type ButtonProps = Omit<ButtonRootProps, "children"> &
 /**
  * {@link Button} を構成する各パーツの props などを作成するための API です。
  */
-export interface ButtonAPI {
+export class ButtonAPI {
+  private readonly contentProps: Required<ButtonProps.Content>;
+
+  private readonly circularProgressProps: Required<ButtonProps.CircularProgress>;
+
+  private readonly slotProps: ButtonSlotProps;
+
+  private readonly rootProps: ButtonProps.Root;
+
+  /**
+   * @param props {@link Button} の props です。
+   * @internal
+   */
+  public constructor(props: ButtonProps) {
+    const { children, slotProps = {}, percentage, indeterminate, ...rootProps } = props;
+    this.contentProps = { children };
+    this.circularProgressProps = { percentage, indeterminate };
+    this.slotProps = slotProps;
+    this.rootProps = rootProps;
+  }
+
   /**
    * {@link ButtonCircularProgressFill} に渡す props を取得します。
    */
-  getCircularProgressFillProps(): Omit<ButtonCircularProgressFillProps, "children">;
+  public getCircularProgressFillProps(): Omit<ButtonCircularProgressFillProps, "children"> {
+    const { circularProgressFill: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link ButtonCircularProgressFillRotation} に渡す props を取得します。
    */
-  getCircularProgressFillRotationProps(): ButtonCircularProgressFillRotationProps;
+  public getCircularProgressFillRotationProps(): ButtonCircularProgressFillRotationProps {
+    const { circularProgressFillRotation: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link ButtonCircularProgress} に渡す props を取得します。
    */
-  getCircularProgressProps(): Omit<ButtonCircularProgressProps, "children">;
+  public getCircularProgressProps(): Omit<ButtonCircularProgressProps, "children"> {
+    const { circularProgress: props = {} } = this.slotProps;
+
+    return {
+      ...props,
+      ...this.circularProgressProps,
+    };
+  }
 
   /**
    * {@link ButtonCircularProgressTrack} に渡す props を取得します。
    */
-  getCircularProgressTrackProps(): Omit<ButtonCircularProgressTrackProps, "children">;
+  public getCircularProgressTrackProps(): Omit<ButtonCircularProgressTrackProps, "children"> {
+    const { circularProgressTrack: props = {} } = this.slotProps;
+
+    return props;
+  }
 
   /**
    * {@link ButtonContent} に渡す props を取得します。
    */
-  getContentProps(): ButtonContentProps;
+  public getContentProps(): ButtonContentProps {
+    const { content: props = {} } = this.slotProps;
+
+    return {
+      ...props,
+      ...this.contentProps,
+    };
+  }
 
   /**
    * {@link ButtonPending} に渡す props を取得します。
    */
-  getPendingProps(): Omit<ButtonPendingProps, "children">;
+  public getPendingProps(): Omit<ButtonPendingProps, "children"> {
+    const { pending: { overlay = true, ...props } = {} } = this.slotProps;
+
+    return {
+      ...props,
+      overlay,
+    };
+  }
 
   /**
    * {@link ButtonRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<ButtonRootProps, "children">;
+  public getRootProps(): Omit<ButtonRootProps, "children"> {
+    return this.rootProps;
+  }
 }
 
 interface IUseButtonAPI {
@@ -145,63 +215,16 @@ interface IUseButtonAPI {
  * {@link ButtonAPI} を作成するフックです。
  */
 export const useButtonAPI: IUseButtonAPI = function useSuiButtonAPI(props) {
-  const {
-    children,
-    slotProps: {
-      content: contentProps = {},
-      pending: { overlay = true, ...otherPendingProps } = {},
-      circularProgress: circularProgressProps = {},
-      circularProgressFill: circularProgressFillProps = {},
-      circularProgressTrack: circularProgressTrackProps = {},
-      circularProgressFillRotation: circularProgressFillRotationProps = {},
-    } = {},
-    percentage,
-    indeterminate,
-    ...otherRootProps
-  } = props;
-
-  return {
-    getRootProps() {
-      return otherRootProps;
-    },
-    getContentProps() {
-      return {
-        ...contentProps,
-        children,
-      };
-    },
-    getPendingProps() {
-      return {
-        ...otherPendingProps,
-        overlay,
-      };
-    },
-    getCircularProgressProps() {
-      return {
-        ...circularProgressProps,
-        percentage,
-        indeterminate,
-      };
-    },
-    getCircularProgressFillProps() {
-      return circularProgressFillProps;
-    },
-    getCircularProgressTrackProps() {
-      return circularProgressTrackProps;
-    },
-    getCircularProgressFillRotationProps() {
-      return circularProgressFillRotationProps;
-    },
-  };
+  return new ButtonAPI(props);
 };
 
-export { type ButtonAPI as API, useButtonAPI as useAPI };
+export { ButtonAPI as API, useButtonAPI as useAPI };
 
 // Component
 // ---------
 
 interface IButton extends IComponent<ButtonProps> {
-  readonly useContext: IUseContext<ButtonContext>;
+  readonly useContext: IUseButtonContext;
 }
 
 /**

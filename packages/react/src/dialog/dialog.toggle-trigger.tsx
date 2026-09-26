@@ -5,7 +5,6 @@ import * as React from "react";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import type { DialogHandle } from "./dialog.handle.js";
 
 /**
  * {@link DialogToggleTrigger} が持つ状態です。
@@ -13,18 +12,13 @@ import type { DialogHandle } from "./dialog.handle.js";
 export type DialogToggleTriggerState = Dialog.Trigger.State;
 
 export namespace DialogToggleTriggerProps {
-  export type Render = RenderProps<DialogToggleTriggerState>;
+  export type Render = Omit<RenderProps<DialogToggleTriggerState>, "render">;
 
-  export type SuruUI<TPayload = any> = {
+  export type SuruUI = {
     /**
-     * ボタンとしてレンダリングする要素です。
+     * ボタンとして描画する関数です。
      */
-    children: NonNullable<React.ComponentProps<typeof Dialog.Trigger>["render"]>;
-
-    /**
-     * トリガーとダイアログに関連付けるためのハンドルです。
-     */
-    handle: DialogHandle<TPayload>;
+    children: NonNullable<RenderProps<DialogToggleTriggerState>["render"]>;
   };
 
   export type BaseUI<TPayload = any> = Pick<
@@ -34,6 +28,7 @@ export namespace DialogToggleTriggerProps {
       // NativeButtonProps:
       | keyof NativeButtonProps
       // DialogTriggerProps:
+      | "handle"
       | "payload"
       | "id",
       keyof Render | keyof SuruUI
@@ -52,7 +47,7 @@ export namespace DialogToggleTriggerProps {
  * @template TPayload トリガーが送信するデータの型です。
  */
 export type DialogToggleTriggerProps<TPayload = any> = DialogToggleTriggerProps.Render &
-  DialogToggleTriggerProps.SuruUI<TPayload> &
+  DialogToggleTriggerProps.SuruUI &
   DialogToggleTriggerProps.BaseUI<TPayload> &
   DialogToggleTriggerProps.HTML<TPayload>;
 
@@ -79,14 +74,14 @@ export namespace ToggleTrigger {
   export type State = DialogToggleTriggerState;
 
   export type Props<TPayload = any> = Props.Render &
-    Props.SuruUI<TPayload> &
+    Props.SuruUI &
     Props.BaseUI<TPayload> &
     Props.HTML<TPayload>;
 
   export namespace Props {
     export type Render = DialogToggleTriggerProps.Render;
 
-    export type SuruUI<TPayload = any> = DialogToggleTriggerProps.SuruUI<TPayload>;
+    export type SuruUI = DialogToggleTriggerProps.SuruUI;
 
     export type BaseUI<TPayload = any> = DialogToggleTriggerProps.BaseUI<TPayload>;
 

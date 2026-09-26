@@ -18,6 +18,9 @@ const meta = preview.meta({
 export default meta;
 
 const ctrl = controls(Chip, {
+  children: {
+    control: "text",
+  },
   color: {
     control: "select",
     options: COLORS,

@@ -54,9 +54,6 @@ export const SelectGroupLabel: IComponent<SelectGroupLabelProps> = function SuiS
 
 export { SelectGroupLabel as GroupLabel };
 
-/**
- * {@link SelectGroupLabel} の状態やプロパティーをまとめた型名前空間です。
- */
 export namespace GroupLabel {
   export type State = SelectGroupLabelState;
 

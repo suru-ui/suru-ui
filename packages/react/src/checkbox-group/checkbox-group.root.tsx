@@ -183,7 +183,7 @@ export const CheckboxGroupRoot: IComponent<CheckboxGroupRootProps> = function Su
           "sui_checkbox_group",
           `sui_checkbox_group-orientation_${orientation}`,
           (state) => state.dirty && "sui_checkbox_group-dirty",
-          (state) => state.valid && "sui_checkbox_group-valid",
+          (state) => state.valid === true && "sui_checkbox_group-valid",
           (state) => state.filled && "sui_checkbox_group-filled",
           (state) => state.focused && "sui_checkbox_group-focused",
           (state) => state.touched && "sui_checkbox_group-touched",

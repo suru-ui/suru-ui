@@ -1,4 +1,4 @@
-import type { IComponent, IUseContext } from "../types.js";
+import type { IComponent } from "../types.js";
 import {
   type CheckboxGroupContext,
   type CheckboxGroupRootSize,
@@ -7,6 +7,7 @@ import {
   type CheckboxGroupRootState,
   type CheckboxGroupRootRadius,
   type CheckboxGroupRootVariant,
+  type IUseCheckboxGroupContext,
   type CheckboxGroupRootOrientation,
   type CheckboxGroupRootChangeEventReason,
   type CheckboxGroupRootChangeEventDetails,
@@ -47,11 +48,23 @@ export type CheckboxGroupProps = CheckboxGroupRootProps;
 /**
  * {@link CheckboxGroup} を構成する各パーツの props などを作成するための API です。
  */
-export interface CheckboxGroupAPI {
+export class CheckboxGroupAPI {
+  private readonly rootProps: CheckboxGroupRootProps;
+
+  /**
+   * @param props {@link CheckboxGroup} の props です。
+   * @internal
+   */
+  public constructor(props: CheckboxGroupProps) {
+    this.rootProps = props;
+  }
+
   /**
    * {@link CheckboxGroupRoot} に渡す props を取得します。
    */
-  getRootProps(): CheckboxGroupRootProps;
+  public getRootProps(): CheckboxGroupRootProps {
+    return this.rootProps;
+  }
 }
 
 interface IUseCheckboxGroupAPI {
@@ -68,11 +81,7 @@ interface IUseCheckboxGroupAPI {
  * {@link CheckboxGroupAPI} を作成するフックです。
  */
 export const useCheckboxGroupAPI: IUseCheckboxGroupAPI = function useSuiCheckboxGroupAPI(props) {
-  return {
-    getRootProps() {
-      return props;
-    },
-  };
+  return new CheckboxGroupAPI(props);
 };
 
 export { type CheckboxGroupAPI as API, useCheckboxGroupAPI as useAPI };
@@ -81,7 +90,7 @@ export { type CheckboxGroupAPI as API, useCheckboxGroupAPI as useAPI };
 // ---------
 
 interface ICheckboxGroup extends IComponent<CheckboxGroupProps> {
-  readonly useContext: IUseContext<CheckboxGroupContext>;
+  readonly useContext: IUseCheckboxGroupContext;
 }
 
 /**

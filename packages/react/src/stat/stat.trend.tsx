@@ -28,7 +28,7 @@ export namespace StatTrendProps {
      *
      * 方向に応じた矢印が値の前に表示され、色が変わります。
      *
-     * @default "up"
+     * 省略した場合は内容の先頭にある数値の符号から推測し、判断できないときは `"flat"` として扱います。
      */
     direction?: StatTrendDirection | undefined;
   };

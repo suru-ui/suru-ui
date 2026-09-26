@@ -33,7 +33,6 @@
 /* 固定 */
 :scope {
   .sui_tooltip_content {
-    position: relative;
     display: flex;
     flex-direction: column;
     line-break: strict;
@@ -48,6 +47,7 @@
 
 /* 変数 */
 :scope {
+  --sui_tooltip_content-gap: ;
   --sui_tooltip_content-max_width: ;
   --sui_tooltip_content-padding_block: ;
   --sui_tooltip_content-padding_inline: ;
@@ -69,6 +69,7 @@
 /* 可変 */
 :scope {
   .sui_tooltip_content {
+    gap: var(--sui_tooltip_content-gap);
     max-width: var(--sui_tooltip_content-max_width);
     padding-block: var(--sui_tooltip_content-padding_block);
     padding-inline: var(--sui_tooltip_content-padding_inline);
@@ -79,7 +80,7 @@
     color: var(--sui_tooltip_content-color);
     letter-spacing: var(--sui_tooltip_content-letter_spacing);
     background-color: var(--sui_tooltip_content-background_color);
-    border-color: var(--_sui_tooltip_content-border_color, transparent);
+    border-color: var(--sui_tooltip_content-border_color);
     border-width: var(--_sui_tooltip_content-border_width, 0px);
     border-radius: var(--sui_tooltip_content-border_radius);
     opacity: var(--_sui_tooltip_content-opacity, var(--sui_tooltip_content-opacity));
@@ -90,6 +91,7 @@
 
 /* 代入 */
 :scope {
+  --sui_tooltip_content-gap: --sui-gap(2);
   --sui_tooltip_content-font_family: var(--sui-font-sans);
   --sui_tooltip_content-color: var(--sui-tooltip-canvas_text);
   --sui_tooltip_content-background_color: var(--sui-tooltip-canvas);
@@ -174,7 +176,6 @@
   }
 
   &.sui_tooltip_portal-outlined {
-    --_sui_tooltip_content-border_color: var(--sui_tooltip_content-border_color);
     --_sui_tooltip_content-border_width: var(--sui_tooltip_content-border_width);
   }
 }

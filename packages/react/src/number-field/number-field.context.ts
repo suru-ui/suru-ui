@@ -60,9 +60,14 @@ export type NumberFieldContext = {
 export const NumberFieldContext: React.Context<NumberFieldContext | null> =
   React.createContext<NumberFieldContext | null>(null);
 
-function useSuiNumberFieldContext(optional?: false): NumberFieldContext;
-function useSuiNumberFieldContext(optional?: boolean): NumberFieldContext | null;
-function useSuiNumberFieldContext(optional?: boolean): NumberFieldContext | null {
+export type IUseNumberFieldContext = IUseContext<NumberFieldContext>;
+
+/**
+ * {@link NumberFieldContext} を読み取るフックです。
+ */
+export const useNumberFieldContext: IUseNumberFieldContext = function useSuiNumberFieldContext(
+  optional?: boolean,
+): any {
   const ctx = React.use(NumberFieldContext);
   if (ctx === null && !optional) {
     throw new ContextMissingError({
@@ -72,12 +77,7 @@ function useSuiNumberFieldContext(optional?: boolean): NumberFieldContext | null
   }
 
   return ctx;
-}
-
-/**
- * {@link NumberFieldContext} を読み取るフックです。
- */
-export const useNumberFieldContext: IUseContext<NumberFieldContext> = useSuiNumberFieldContext;
+};
 
 export { NumberFieldContext as Context, useNumberFieldContext as useContext };
 

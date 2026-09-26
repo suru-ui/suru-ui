@@ -36,13 +36,13 @@ export type FileUploadItemNameProps = FileUploadItemNameProps.Render &
 export const FileUploadItemName: IComponent<FileUploadItemNameProps> =
   function SuiFileUploadItemName(props) {
     const { file } = useFileUploadItemContext();
-    const { children, ...otherSpanProps } = props;
+    const { children = file.name, ...otherSpanProps } = props;
 
     return useRender({
       props: [
         otherSpanProps,
         {
-          children: children ?? file.name,
+          children,
           className: "sui_file_upload_item_name",
         },
       ],

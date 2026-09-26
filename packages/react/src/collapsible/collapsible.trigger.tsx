@@ -12,15 +12,15 @@ import type { IComponent } from "../types.js";
 export type CollapsibleTriggerState = Collapsible.Trigger.State;
 
 export namespace CollapsibleTriggerProps {
-  export type Render = RenderProps<CollapsibleTriggerState>;
+  export type Render = Omit<RenderProps<CollapsibleTriggerState>, "render">;
 
   export type SuruUI = {
     /**
      * ボタンとして描画する内容です。
      *
-     * {@link Collapsible.Trigger} の `render` と同じ型で、そのまま渡されます。
+     * `render` と同じ型で、そのまま {@link CollapsibleTrigger} へ渡されます。
      */
-    children: NonNullable<React.ComponentProps<typeof Collapsible.Trigger>["render"]>;
+    children: NonNullable<RenderProps<CollapsibleTriggerState>["render"]>;
   };
 
   export type BaseUI = Pick<

@@ -6,6 +6,7 @@ import { Checkbox } from "../src/checkbox/index.js";
 import { Input } from "../src/input/index.js";
 import { Label } from "../src/label/index.js";
 
+const COLORS: readonly Label.Color[] = theme.COLORS;
 const SIZES: readonly Label.Size[] = theme.SIZES;
 
 const meta = preview.meta({
@@ -18,6 +19,13 @@ export default meta;
 const ctrl = controls(Label, {
   children: {
     control: "text",
+  },
+  color: {
+    control: "select",
+    options: COLORS,
+  },
+  disabled: {
+    control: "boolean",
   },
   htmlFor: {
     control: "text",
@@ -81,6 +89,27 @@ export const Sizes = meta.story({
   },
 });
 
+export const Colors = meta.story({
+  name: "色",
+  ...ctrl({
+    children: "ラベル",
+    color: "grey",
+    htmlFor: undefined,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        {COLORS.map((color) => (
+          <div key={color} className="flex flex-col gap-2">
+            <span>{color}</span>
+            <Label {...props} color={color} />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
 export const WithInputSizes = meta.story({
   name: "入力との大きさ合わせ",
   ...ctrl({
@@ -128,6 +157,26 @@ export const Required = meta.story({
           </Label>
           <Input id="label-optional-input" placeholder="すーるー" />
         </div>
+      </div>
+    );
+  },
+});
+
+export const Disabled = meta.story({
+  name: "無効",
+  ...ctrl({
+    children: "メールアドレス",
+    disabled: true,
+    htmlFor: undefined,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <Label {...props} htmlFor="label-disabled-input" />
+          <Input id="label-disabled-input" disabled placeholder="suru@example.com" />
+        </div>
+        <Label {...props}>無効なラベル</Label>
       </div>
     );
   },

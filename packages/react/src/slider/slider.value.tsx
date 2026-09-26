@@ -3,7 +3,21 @@ import * as React from "react";
 
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+
+/**
+ * 値をレンダリングする関数のインターフェイスです。
+ */
+export interface ISliderValueRenderer {
+  /**
+   * スライダーの現在値をレンダリングします。
+   *
+   * @param formattedValues 書式化された値の一覧です。
+   * @param values 現在値の一覧です。
+   * @returns レンダリングする内容です。
+   */
+  (formattedValues: readonly string[], values: readonly number[]): React.ReactNode;
+}
 
 /**
  * {@link SliderValue} が持つ状態です。
@@ -15,14 +29,20 @@ export namespace SliderValueProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Slider.Value>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // SliderValueProps:
-      "children",
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Override<
+    Pick<
+      React.ComponentProps<typeof Slider.Value>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // SliderValueProps:
+        "children",
+        keyof Render | keyof SuruUI
+      >
+    >,
+    // Base UI の型を強化します。
+    {
+      children?: ISliderValueRenderer | React.ReactNode | undefined;
+    }
   >;
 
   export type HTML = Omit<
@@ -43,9 +63,17 @@ export type SliderValueProps = SliderValueProps.Render &
  * スライダーの現在値を表示するコンポーネントです。
  */
 export const SliderValue: IComponent<SliderValueProps> = function SuiSliderValue(props) {
-  const { className, ...otherProps } = props;
+  const { children, className, ...otherProps } = props;
+  const renderer =
+    typeof children === "function" ? children : children != null ? () => children : undefined;
 
-  return <Slider.Value {...otherProps} className={cn(className, "sui_slider_value")} />;
+  return (
+    <Slider.Value
+      {...otherProps}
+      children={renderer}
+      className={cn(className, "sui_slider_value")}
+    />
+  );
 };
 
 export { SliderValue as Value };
@@ -67,4 +95,6 @@ export namespace Value {
 
     export type HTML = SliderValueProps.HTML;
   }
+
+  export type IRenderer = ISliderValueRenderer;
 }

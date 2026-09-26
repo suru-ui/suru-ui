@@ -43,24 +43,30 @@ export type AvatarGroupSlotProps = {
  */
 export type AvatarGroupState = AvatarGroupRootState;
 
+namespace AvatarGroupProps {
+  export type AvatarGroup = {
+    /**
+     * 表示するアバターの最大数です。
+     *
+     * 省略アバターもこの数に含まれます。
+     *
+     * @default 4
+     */
+    max?: number | undefined;
+
+    /**
+     * 各パーツに個別の props を渡すためのオブジェクトです。
+     */
+    slotProps?: AvatarGroupSlotProps | undefined;
+  };
+
+  export type Root = Omit<AvatarGroupRootProps, keyof AvatarGroup>;
+}
+
 /**
  * {@link AvatarGroup} に渡す props です。
  */
-export type AvatarGroupProps = AvatarGroupRootProps & {
-  /**
-   * 表示するアバターの最大数です。
-   *
-   * 省略アバターもこの数に含まれます。
-   *
-   * @default 4
-   */
-  max?: number | undefined;
-
-  /**
-   * 各パーツに個別の props を渡すためのオブジェクトです。
-   */
-  slotProps?: AvatarGroupSlotProps | undefined;
-};
+export type AvatarGroupProps = AvatarGroupProps.AvatarGroup & AvatarGroupProps.Root;
 
 // API
 // ---
@@ -68,20 +74,60 @@ export type AvatarGroupProps = AvatarGroupRootProps & {
 /**
  * {@link AvatarGroup} を構成する各パーツの props を作成するための API です。
  */
-export interface AvatarGroupAPI {
+export class AvatarGroupAPI {
+  private readonly max: number;
+
+  private readonly rootProps: AvatarGroupRootProps;
+
+  private readonly slotProps: AvatarGroupSlotProps;
+
+  /**
+   * @param props {@link AvatarGroup} の props です。
+   * @internal
+   */
+  public constructor(props: AvatarGroupProps) {
+    const { max = 4, slotProps = {}, ...rootProps } = props;
+    this.max = max;
+    this.rootProps = rootProps;
+    this.slotProps = slotProps;
+  }
+
   /**
    * {@link AvatarGroupRoot} に渡す props を取得します。
    */
-  getRootProps(): Omit<AvatarGroupRootProps, "children"> & {
-    children: React.ReactNode;
-  };
+  public getRootProps(): AvatarGroupRootProps {
+    const { root: props = {} } = this.slotProps;
+    const children = React.Children.toArray(this.rootProps.children);
+
+    return {
+      ...this.rootProps,
+      ...props,
+      children: children.slice(0, this.getVisibleCount(children.length)),
+    };
+  }
 
   /**
    * {@link AvatarGroupSurplus} に渡す props を取得します。
    *
    * それを表示しないときは `null` を返します。
    */
-  getSurplusProps(): AvatarGroupSurplusProps | null;
+  public getSurplusProps(): AvatarGroupSurplusProps | null {
+    const { surplus: props = {} } = this.slotProps;
+    const children = React.Children.toArray(this.rootProps.children);
+
+    if (children.length <= this.max) {
+      return null;
+    }
+
+    return {
+      ...props,
+      children: `+${children.length - this.getVisibleCount(children.length)}`,
+    };
+  }
+
+  private getVisibleCount(childCount: number): number {
+    return childCount > this.max ? Math.max(0, this.max - 1) : Math.max(0, this.max);
+  }
 }
 
 interface IUseAvatarGroupAPI {
@@ -98,39 +144,10 @@ interface IUseAvatarGroupAPI {
  * {@link AvatarGroupAPI} を作成するフックです。
  */
 export const useAvatarGroupAPI: IUseAvatarGroupAPI = function useSuiAvatarGroupAPI(props) {
-  const {
-    max = 4,
-    children,
-    slotProps: { root: rootProps = {}, surplus: surplusProps = {} } = {},
-    ...otherRootProps
-  } = props;
-  const childArray = React.Children.toArray(children);
-  const hasSurplus = childArray.length > max;
-  const visibleCount = hasSurplus ? Math.max(0, max - 1) : Math.max(0, max);
-  const renderedChildArray = childArray.slice(0, visibleCount);
-
-  return {
-    getRootProps() {
-      return {
-        ...otherRootProps,
-        ...rootProps,
-        children: renderedChildArray,
-      };
-    },
-    getSurplusProps() {
-      if (!hasSurplus) {
-        return null;
-      }
-
-      return {
-        ...surplusProps,
-        children: `+${Math.max(0, childArray.length - renderedChildArray.length)}`,
-      };
-    },
-  };
+  return new AvatarGroupAPI(props);
 };
 
-export { type AvatarGroupAPI as API, useAvatarGroupAPI as useAPI };
+export { AvatarGroupAPI as API, useAvatarGroupAPI as useAPI };
 
 // Component
 // ---------
