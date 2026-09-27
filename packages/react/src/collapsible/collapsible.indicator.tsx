@@ -3,11 +3,12 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import { ChevronRightIcon } from "../_icons.jsx";
 import useRender, { type RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
+import { type CollapsibleContext, useCollapsibleContext } from "./collapsible.context.js";
 
 /**
  * {@link CollapsibleIndicator} が持つ状態です。
  */
-export type CollapsibleIndicatorState = {};
+export type CollapsibleIndicatorState = CollapsibleContext;
 
 export namespace CollapsibleIndicatorProps {
   export type Render = RenderProps<CollapsibleIndicatorState>;
@@ -37,6 +38,7 @@ export type CollapsibleIndicatorProps = CollapsibleIndicatorProps.Render &
  */
 export const CollapsibleIndicator: IComponent<CollapsibleIndicatorProps> =
   function SuiCollapsibleIndicator(props) {
+    const ctx = useCollapsibleContext();
     const { children = <ChevronRightIcon />, ...otherSpanProps } = props;
 
     return useRender({
@@ -47,6 +49,7 @@ export const CollapsibleIndicator: IComponent<CollapsibleIndicatorProps> =
           className: "sui_collapsible_indicator",
         },
       ],
+      state: ctx,
       defaultTagName: "span",
     });
   };

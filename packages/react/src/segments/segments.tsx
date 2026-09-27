@@ -207,7 +207,7 @@ export interface IUseSegmentsAPI {
    * @param props {@link Segments} の props です。
    * @returns セグメントの API です。
    */
-  <TItem = never>(props: SegmentsProps<TItem>): SegmentsAPI<TItem>;
+  <TItem = any>(props: SegmentsProps<TItem>): SegmentsAPI<TItem>;
 }
 
 /**
@@ -226,7 +226,7 @@ export interface ISegments extends IComponent<SegmentsProps> {
   /**
    * @template TItem 項目の型です。
    */
-  <TItem = never>(props: SegmentsProps<TItem>): IComponent.Return;
+  <TItem = any>(props: SegmentsProps<TItem>): IComponent.Return;
 }
 
 /**

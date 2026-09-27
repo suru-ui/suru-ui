@@ -4,7 +4,7 @@ import * as React from "react";
 
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import { SegmentsContext } from "./segments.context.js";
 import type { SegmentsItemProps } from "./segments.item.jsx";
 
@@ -23,12 +23,15 @@ export type SegmentsRootChangeEventReason = BaseTabs.Root.ChangeEventReason;
  *
  * `label` を含み、その他のプロパティーは {@link SegmentsItem} に渡されます。
  */
-export type SegmentsRootItemObject = Omit<SegmentsItemProps, "children"> & {
-  /**
-   * 項目に表示するラベルです。
-   */
-  readonly label: React.ReactNode;
-};
+export type SegmentsRootItemObject = Override<
+  Omit<SegmentsItemProps, "children">,
+  {
+    /**
+     * 項目に表示するラベルです。
+     */
+    readonly label: React.ReactNode;
+  }
+>;
 
 /**
  * Segments の各項目をレンダリングする関数のインターフェイスです。
@@ -166,7 +169,7 @@ export interface ISegmentsRoot extends IComponent<SegmentsRootProps> {
   /**
    * @template TItem 項目の型です。
    */
-  <TItem = never>(props: SegmentsRootProps<TItem>): IComponent.Return;
+  <TItem = any>(props: SegmentsRootProps<TItem>): IComponent.Return;
 }
 
 /**

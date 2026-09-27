@@ -7,7 +7,7 @@ import toReactNode from "../_to-react-node.js";
 import useRender, { type RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import { isItemObject, getSelectAction } from "./_tree.jsx";
 import { type TreeSelectAction, TreeContext } from "./tree.context.js";
 import { TreeItemIndicator } from "./tree.indicator.jsx";
@@ -18,29 +18,29 @@ import { type TreeItemProps, TreeItem } from "./tree.item.jsx";
  *
  * `id` と `label` と `items` を含み、その他のプロパティーは {@link TreeItem} に渡されます。
  */
-export type TreeRootItemObject = Omit<
-  TreeItemProps,
-  "children" | "hasItems" | "id" | "level" | "posInSet" | "setSize"
-> & {
-  /**
-   * ノードの一意な識別子です。
-   *
-   * 展開や選択の状態管理に使います。
-   */
-  readonly id: string;
+export type TreeRootItemObject = Override<
+  Omit<TreeItemProps, "children" | "hasItems" | "level" | "posInSet" | "setSize">,
+  {
+    /**
+     * ノードの一意な識別子です。
+     *
+     * 展開や選択の状態管理に使います。
+     */
+    readonly id: string;
 
-  /**
-   * ノードのラベルです。
-   */
-  readonly label: React.ReactNode;
+    /**
+     * ノードのラベルです。
+     */
+    readonly label: React.ReactNode;
 
-  /**
-   * 子ノードの一覧です。
-   *
-   * 空でない場合に展開可能な分岐として扱います。
-   */
-  readonly items?: readonly TreeRootItemObject[] | undefined;
-};
+    /**
+     * 子ノードの一覧です。
+     *
+     * 空でない場合に展開可能な分岐として扱います。
+     */
+    readonly items?: readonly TreeRootItemObject[] | undefined;
+  }
+>;
 
 /**
  * {@link TreeRoot} の各ノードをレンダリングする関数のインターフェイスです。

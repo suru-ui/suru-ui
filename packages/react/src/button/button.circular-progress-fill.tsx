@@ -21,7 +21,7 @@ export namespace ButtonCircularProgressFillProps {
      *
      * 関数の場合は現在の状態から値を求めます。
      *
-     * {@link https://developer.mozilla.org/docs/Web/SVG/Reference/Attribute/stroke-dashoffset|stroke-dashoffset}
+     * @see https://developer.mozilla.org/docs/Web/SVG/Reference/Attribute/stroke-dashoffset
      */
     strokeDashoffset?:
       | string

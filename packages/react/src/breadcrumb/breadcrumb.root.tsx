@@ -4,7 +4,7 @@ import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import { BreadcrumbContext } from "./breadcrumb.context.js";
 import type { BreadcrumbLinkProps } from "./breadcrumb.link.jsx";
 
@@ -18,12 +18,15 @@ export type BreadcrumbRootColor = Color;
  *
  * `label` を表示内容として扱い、その他のプロパティーは {@link BreadcrumbLink} に渡されます。
  */
-export type BreadcrumbRootItemObject = Omit<BreadcrumbLinkProps, "children"> & {
-  /**
-   * 項目の表示内容です。
-   */
-  readonly label: React.ReactNode;
-};
+export type BreadcrumbRootItemObject = Override<
+  Omit<BreadcrumbLinkProps, "children">,
+  {
+    /**
+     * 項目の表示内容です。
+     */
+    readonly label: React.ReactNode;
+  }
+>;
 
 /**
  * パンくずリストの大きさです。

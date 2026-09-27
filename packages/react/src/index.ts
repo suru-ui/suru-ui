@@ -214,6 +214,8 @@ export {
   type CollapsibleChangeEventDetails,
   Collapsible,
   useCollapsibleAPI,
+  CollapsibleContext,
+  useCollapsibleContext,
 } from "./collapsible/index.js";
 export {
   type ComboboxSize,

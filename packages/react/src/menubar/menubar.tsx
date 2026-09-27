@@ -134,7 +134,7 @@ export interface IUseMenubarAPI {
    * @param props {@link Menubar} の props です。
    * @returns メニューバーの API です。
    */
-  <TItem = never>(props: MenubarProps<TItem>): MenubarAPI<TItem>;
+  <TItem = any>(props: MenubarProps<TItem>): MenubarAPI<TItem>;
 }
 
 /**
@@ -153,7 +153,7 @@ export interface IMenubar extends IComponent<MenubarProps> {
   /**
    * @template TItem 項目の型です。
    */
-  <TItem = never>(props: MenubarProps<TItem>): IComponent.Return;
+  <TItem = any>(props: MenubarProps<TItem>): IComponent.Return;
 }
 
 /**

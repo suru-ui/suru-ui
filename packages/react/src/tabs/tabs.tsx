@@ -231,7 +231,7 @@ export interface IUseTabsAPI {
    * @param props {@link Tabs} の props です。
    * @returns タブの API です。
    */
-  <TItem = never>(props: TabsProps<TItem>): TabsAPI<TItem>;
+  <TItem = any>(props: TabsProps<TItem>): TabsAPI<TItem>;
 }
 
 /**
@@ -250,7 +250,7 @@ export interface ITabs extends IComponent<TabsProps> {
   /**
    * @template TItem 項目の型です。
    */
-  <TItem = never>(props: TabsProps<TItem>): IComponent.Return;
+  <TItem = any>(props: TabsProps<TItem>): IComponent.Return;
 }
 
 /**

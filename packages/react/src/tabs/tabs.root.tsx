@@ -4,7 +4,7 @@ import * as React from "react";
 
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import { TabsContext } from "./tabs.context.js";
 import type { TabsTabProps } from "./tabs.tab.jsx";
 
@@ -23,19 +23,22 @@ export type TabsRootChangeEventReason = BaseTabs.Root.ChangeEventReason;
  *
  * `label` と `content` を含み、その他のプロパティーは {@link TabsTab} に渡されます。
  */
-export type TabsRootItemObject = Omit<TabsTabProps, "children"> & {
-  /**
-   * タブに表示するラベルです。
-   */
-  readonly label: React.ReactNode;
+export type TabsRootItemObject = Override<
+  Omit<TabsTabProps, "children">,
+  {
+    /**
+     * タブに表示するラベルです。
+     */
+    readonly label: React.ReactNode;
 
-  /**
-   * タブに対応するパネルに表示する内容です。
-   *
-   * 省略するとその項目のパネルは作られません。
-   */
-  readonly content?: React.ReactNode | undefined;
-};
+    /**
+     * タブに対応するパネルに表示する内容です。
+     *
+     * 省略するとその項目のパネルは作られません。
+     */
+    readonly content?: React.ReactNode | undefined;
+  }
+>;
 
 /**
  * Tabs の各項目をレンダリングする関数のインターフェイスです。
@@ -183,7 +186,7 @@ export interface ITabsRoot extends IComponent<TabsRootProps> {
   /**
    * @template TItem 項目の型です。
    */
-  <TItem = never>(props: TabsRootProps<TItem>): IComponent.Return;
+  <TItem = any>(props: TabsRootProps<TItem>): IComponent.Return;
 }
 
 /**

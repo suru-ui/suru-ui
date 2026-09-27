@@ -3,7 +3,7 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import { ChevronIcon } from "../_icons.jsx";
 import useRender, { type RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
-import { useAccordionItemContext, type AccordionItemContext } from "./accordion.item.context.js";
+import { type AccordionItemContext, useAccordionItemContext } from "./accordion.item.context.js";
 
 /**
  * {@link AccordionIndicator} が持つ状態です。
@@ -40,7 +40,6 @@ export const AccordionIndicator: IComponent<AccordionIndicatorProps> =
     const { children = <ChevronIcon />, ...otherSpanProps } = props;
 
     return useRender({
-      state: ctx,
       props: [
         otherSpanProps,
         {
@@ -48,6 +47,7 @@ export const AccordionIndicator: IComponent<AccordionIndicatorProps> =
           className: "sui_accordion_indicator",
         },
       ],
+      state: ctx,
       defaultTagName: "span",
     });
   };

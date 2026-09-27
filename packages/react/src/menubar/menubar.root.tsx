@@ -104,7 +104,7 @@ interface IMenubarRoot extends IComponent<MenubarRootProps> {
   /**
    * @template TItem 項目の型です。
    */
-  <TItem = never>(props: MenubarRootProps<TItem>): IComponent.Return;
+  <TItem = any>(props: MenubarRootProps<TItem>): IComponent.Return;
 }
 
 /**

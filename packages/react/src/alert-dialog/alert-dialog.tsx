@@ -237,7 +237,7 @@ namespace AlertDialogProps {
     /**
      * アラートダイアログの HTML `title` 属性です。
      *
-     * {@link https://developer.mozilla.org/docs/Web/HTML/Reference/Global_attributes/title|title}
+     * @see https://developer.mozilla.org/docs/Web/HTML/Reference/Global_attributes/title
      */
     htmlTitle?: React.HTMLAttributes<HTMLDivElement>["title"];
   };
