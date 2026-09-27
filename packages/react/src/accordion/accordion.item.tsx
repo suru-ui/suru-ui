@@ -1,9 +1,11 @@
 import { Accordion } from "@base-ui/react/accordion";
 import * as React from "react";
 
+import RenderElement from "../_render-element.jsx";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import { AccordionItemContext } from "./accordion.item.context.js";
 
 /**
  * アコーディオンの項目の開閉状態が変更するイベントの詳細です。
@@ -56,11 +58,16 @@ export type AccordionItemProps = AccordionItemProps.Render &
  * アコーディオンの項目コンポーネントです。
  */
 export const AccordionItem: IComponent<AccordionItemProps> = function SuiAccordionItem(props) {
-  const { className, ...otherProps } = props;
+  const { render, className, ...otherProps } = props;
 
   return (
     <Accordion.Item
       {...otherProps}
+      render={(htmlProps, state) => (
+        <AccordionItemContext value={state}>
+          <RenderElement state={state} render={render} htmlProps={htmlProps} defaultTagName="div" />
+        </AccordionItemContext>
+      )}
       className={cn(
         className,
         "sui_accordion_item",
