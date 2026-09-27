@@ -1,7 +1,6 @@
-import type * as React from "react";
-
 import isReactNode from "../_is-react-node.js";
 import { isObject } from "../_item.js";
+import type { Override } from "../types.js";
 import type { AccordionRootItemObject } from "./accordion.root.jsx";
 
 /**
@@ -9,13 +8,8 @@ import type { AccordionRootItemObject } from "./accordion.root.jsx";
  *
  * @template TItem 項目の型です。
  */
-export type $InferItemObjectValue<TItem> = TItem extends {
-  content: React.ReactNode;
-  title: React.ReactNode;
-  value?: infer TItemValue;
-}
-  ? TItemValue
-  : unknown;
+export type $InferItemObjectValue<TItem> =
+  TItem extends Override<AccordionRootItemObject, { value?: infer TItemValue }> ? TItemValue : any;
 
 /**
  * 項目が `title` と `content` を持つオブジェクトかどうかを判定します。

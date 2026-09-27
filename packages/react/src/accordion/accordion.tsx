@@ -241,7 +241,7 @@ export class AccordionAPI<TItem = any, TValue = any> {
   }
 }
 
-interface IUseAccordionAPI {
+export interface IUseAccordionAPI {
   /**
    * {@link AccordionAPI} を作成します。
    *
@@ -250,7 +250,7 @@ interface IUseAccordionAPI {
    * @param props {@link Accordion} の props です。
    * @returns アコーディオンの API です
    */
-  <TItem = never, TValue = $InferItemObjectValue<TItem>>(
+  <TItem = any, TValue = $InferItemObjectValue<TItem>>(
     props: AccordionProps<TItem, TValue>,
   ): AccordionAPI<TItem, TValue>;
 }
@@ -272,7 +272,7 @@ export interface IAccordion extends IComponent<AccordionProps> {
    * @template TItem 項目の型です。
    * @template TValue 項目の値の型です。
    */
-  <TItem = never, TValue = $InferItemObjectValue<TItem>>(
+  <TItem = any, TValue = $InferItemObjectValue<TItem>>(
     props: AccordionProps<TItem, TValue>,
   ): IComponent.Return;
 }

@@ -5,7 +5,7 @@ import * as React from "react";
 import { getItemKey } from "../_item.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import { type $InferItemObjectValue, isItemObject } from "./_accordion.jsx";
 import { AccordionContent } from "./accordion.content.jsx";
 import { AccordionHeading } from "./accordion.heading.jsx";
@@ -28,24 +28,27 @@ export type AccordionRootChangeEventReason = Accordion.Root.ChangeEventReason;
  *
  * `title` と `content` を含み、その他のプロパティーは {@link AccordionItem} に渡されます。
  */
-export type AccordionRootItemObject = Omit<AccordionItemProps, "title"> & {
-  /**
-   * 項目のパネルに表示する内容です。
-   */
-  readonly content: React.ReactNode;
+export type AccordionRootItemObject = Override<
+  AccordionItemProps,
+  {
+    /**
+     * 項目のパネルに表示する内容です。
+     */
+    readonly content: React.ReactNode;
 
-  /**
-   * 項目の見出しに表示するタイトルです。
-   */
-  readonly title: React.ReactNode;
+    /**
+     * 項目の見出しに表示するタイトルです。
+     */
+    readonly title: React.ReactNode;
 
-  /**
-   * 項目の HTML `title` 属性です。
-   *
-   * {@link https://developer.mozilla.org/docs/Web/HTML/Reference/Global_attributes/title|title}
-   */
-  readonly htmlTitle?: React.HTMLAttributes<HTMLDivElement>["title"];
-};
+    /**
+     * 項目の HTML `title` 属性です。
+     *
+     * @see https://developer.mozilla.org/docs/Web/HTML/Reference/Global_attributes/title
+     */
+    readonly htmlTitle?: React.HTMLAttributes<HTMLDivElement>["title"];
+  }
+>;
 
 /**
  * アコーディオンの各項目をレンダリングする関数のインターフェイスです。
@@ -199,7 +202,7 @@ export interface IAccordionRoot extends IComponent<AccordionRootProps> {
    * @template TItem 項目の型です。
    * @template TValue 項目の値の型です。
    */
-  <TItem = never, TValue = $InferItemObjectValue<TItem>>(
+  <TItem = any, TValue = $InferItemObjectValue<TItem>>(
     props: AccordionRootProps<TItem, TValue>,
   ): IComponent.Return;
 }
@@ -270,7 +273,7 @@ export { AccordionRoot as Root };
 export namespace Root {
   export type State<TValue = any> = AccordionRootState<TValue>;
 
-  export type Props<TItem = any, TValue = any> = Props.Render<TValue> &
+  export type Props<TItem = any, TValue = $InferItemObjectValue<TItem>> = Props.Render<TValue> &
     Props.SuruUI<TItem> &
     Props.BaseUI<TValue> &
     Props.HTML<TValue>;
