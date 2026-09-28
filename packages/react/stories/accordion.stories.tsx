@@ -127,7 +127,31 @@ export const Disabled = meta.story({
   },
 });
 
-// export const Borders = meta.story({});
+export const Borders = meta.story({
+  name: "枠線",
+  ...ctrl({
+    size: "md",
+    multiple: false,
+    separator: true,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="w-[400px] h-[320px]">
+        <Accordion
+          {...props}
+          items={ITEMS}
+          className="border-1 border-solid"
+          slotProps={{
+            item: {
+              className: "px-4",
+            },
+          }}
+        />
+      </div>
+    );
+  },
+});
 
 export const WithIcon = meta.story({
   name: "アイコン付き",

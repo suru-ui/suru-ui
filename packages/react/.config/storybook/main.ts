@@ -1,4 +1,5 @@
 import { defineMain } from "@storybook/react-vite/node";
+import { presetSuruUI } from "@suru-ui/unocss";
 import react from "@vitejs/plugin-react";
 import { presetWind3 } from "unocss";
 import unocss from "unocss/vite";
@@ -18,7 +19,10 @@ export default defineMain({
       plugins: [
         react(),
         unocss({
-          presets: [presetWind3()],
+          presets: [
+            presetWind3(),
+            presetSuruUI({ namespace: false }), // Suru UI のデザイントークンで上書きします。
+          ],
         }),
       ],
     });
