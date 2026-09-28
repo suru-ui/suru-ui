@@ -3,6 +3,44 @@ import type { CSSEntry, Rule } from "@unocss/core";
 
 import { colorTokenVar, isColorToken, isTextStyle, textStyleVar } from "./tokens.js";
 
+/**
+ * ルール生成のオプションです。
+ */
+export interface CreateRulesOptions {
+  /**
+   * ユーティリティーの名前に `sui` の名前空間を付けるかどうかです。
+   *
+   * `false` にすると `p-sui-2` ではなく `p-2` を生成し、既存のルールを上書きできます。
+   *
+   * @default true
+   */
+  namespace?: boolean;
+}
+
+/**
+ * プリセットが提供する UnoCSS ルールの一覧を生成します。
+ *
+ * @param options 名前空間の有無です。
+ * @returns ルールの一覧です。
+ */
+export function createRules(options: CreateRulesOptions = {}): Rule[] {
+  const { namespace = true } = options;
+  const separator = namespace ? "-sui-" : "-";
+
+  return [
+    createColorRule(separator),
+    createSpaceRule(separator),
+    createGapRule(separator),
+    createSizeRule(separator),
+    createInsetRule(separator),
+    createBorderWidthRule(separator),
+    createOutlineWidthRule(separator),
+    createRadiusRule(separator),
+    createFontFamilyRule(separator),
+    createTextStyleRule(separator),
+  ];
+}
+
 const COLOR_PROPERTIES = {
   bg: ["background-color"],
   text: ["color"],
@@ -96,152 +134,174 @@ const RADIUS_PROPERTIES = {
 
 const LEVEL_PATTERN = /^\d+(?:\.\d+)?$/;
 
-const colorRule: Rule = [
-  new RegExp(`^(${Object.keys(COLOR_PROPERTIES).join("|")})-sui-(.+?)(?:/(\\d{1,3}))?$`),
-  (match) => {
-    const property = match[1];
-    const token = match[2];
-    const opacity = match[3];
+function createColorRule(separator: string): Rule {
+  return [
+    new RegExp(`^(${Object.keys(COLOR_PROPERTIES).join("|")})${separator}(.+?)(?:/(\\d{1,3}))?$`),
+    (match) => {
+      const property = match[1];
+      const token = match[2];
+      const opacity = match[3];
 
-    if (property === undefined || token === undefined) return;
-    if (!isKeyOf(COLOR_PROPERTIES, property) || !isColorToken(token)) return;
+      if (property === undefined || token === undefined) return;
+      if (!isKeyOf(COLOR_PROPERTIES, property) || !isColorToken(token)) return;
 
-    const color = colorTokenVar(token);
+      const color = colorTokenVar(token);
 
-    if (opacity === undefined) {
-      return toEntries(COLOR_PROPERTIES[property], color);
-    }
+      if (opacity === undefined) {
+        return toEntries(COLOR_PROPERTIES[property], color);
+      }
 
-    if (Number(opacity) > 100) return;
+      if (Number(opacity) > 100) return;
 
-    return toEntries(
-      COLOR_PROPERTIES[property],
-      `color-mix(in oklab, ${color} ${opacity}%, transparent)`,
-    );
-  },
-];
+      return toEntries(
+        COLOR_PROPERTIES[property],
+        `color-mix(in oklab, ${color} ${opacity}%, transparent)`,
+      );
+    },
+  ];
+}
 
-const spaceRule: Rule = [
-  new RegExp(`^(-?)(${Object.keys(SPACE_PROPERTIES).join("|")})-sui-(\\d+(?:\\.\\d+)?)$`),
-  (match) => {
-    const sign = match[1];
-    const property = match[2];
-    const level = match[3];
+function createSpaceRule(separator: string): Rule {
+  return [
+    new RegExp(`^(-?)(${Object.keys(SPACE_PROPERTIES).join("|")})${separator}(\\d+(?:\\.\\d+)?)$`),
+    (match) => {
+      const sign = match[1];
+      const property = match[2];
+      const level = match[3];
 
-    if (sign === undefined || property === undefined || level === undefined) return;
-    if (!isKeyOf(SPACE_PROPERTIES, property)) return;
-    if (sign === "-" && !property.startsWith("m")) return;
+      if (sign === undefined || property === undefined || level === undefined) return;
+      if (!isKeyOf(SPACE_PROPERTIES, property)) return;
+      if (sign === "-" && !property.startsWith("m")) return;
 
-    return toEntries(SPACE_PROPERTIES[property], `--sui-space(${sign}${level})`);
-  },
-];
+      return toEntries(SPACE_PROPERTIES[property], `--sui-space(${sign}${level})`);
+    },
+  ];
+}
 
-const gapRule: Rule = [
-  new RegExp(`^(${Object.keys(GAP_PROPERTIES).join("|")})-sui-(\\d+(?:\\.\\d+)?)$`),
-  (match) => {
-    const property = match[1];
-    const level = match[2];
+function createGapRule(separator: string): Rule {
+  return [
+    new RegExp(`^(${Object.keys(GAP_PROPERTIES).join("|")})${separator}(\\d+(?:\\.\\d+)?)$`),
+    (match) => {
+      const property = match[1];
+      const level = match[2];
 
-    if (property === undefined || level === undefined) return;
-    if (!isKeyOf(GAP_PROPERTIES, property)) return;
+      if (property === undefined || level === undefined) return;
+      if (!isKeyOf(GAP_PROPERTIES, property)) return;
 
-    return toEntries(GAP_PROPERTIES[property], `--sui-gap(${level})`);
-  },
-];
+      return toEntries(GAP_PROPERTIES[property], `--sui-gap(${level})`);
+    },
+  ];
+}
 
-const sizeRule: Rule = [
-  new RegExp(`^(${Object.keys(SIZE_PROPERTIES).join("|")})-sui-(.+)$`),
-  (match) => {
-    const property = match[1];
-    const value = match[2];
+function createSizeRule(separator: string): Rule {
+  return [
+    new RegExp(`^(${Object.keys(SIZE_PROPERTIES).join("|")})${separator}(.+)$`),
+    (match) => {
+      const property = match[1];
+      const value = match[2];
 
-    if (property === undefined || value === undefined) return;
-    if (!isKeyOf(SIZE_PROPERTIES, property)) return;
+      if (property === undefined || value === undefined) return;
+      if (!isKeyOf(SIZE_PROPERTIES, property)) return;
 
-    if (isSize(value)) {
-      return toEntries(SIZE_PROPERTIES[property], `var(--sui-size-${value})`);
-    }
+      if (isSize(value)) {
+        return toEntries(SIZE_PROPERTIES[property], `var(--sui-size-${value})`);
+      }
 
-    if (LEVEL_PATTERN.test(value)) {
-      return toEntries(SIZE_PROPERTIES[property], `--sui-space(${value})`);
-    }
+      if (LEVEL_PATTERN.test(value)) {
+        return toEntries(SIZE_PROPERTIES[property], `--sui-space(${value})`);
+      }
 
-    return;
-  },
-];
+      return;
+    },
+  ];
+}
 
-const insetRule: Rule = [
-  new RegExp(`^(-?)(${Object.keys(INSET_PROPERTIES).join("|")})-sui-(\\d+(?:\\.\\d+)?)$`),
-  (match) => {
-    const sign = match[1];
-    const property = match[2];
-    const level = match[3];
+function createInsetRule(separator: string): Rule {
+  return [
+    new RegExp(`^(-?)(${Object.keys(INSET_PROPERTIES).join("|")})${separator}(\\d+(?:\\.\\d+)?)$`),
+    (match) => {
+      const sign = match[1];
+      const property = match[2];
+      const level = match[3];
 
-    if (sign === undefined || property === undefined || level === undefined) return;
-    if (!isKeyOf(INSET_PROPERTIES, property)) return;
+      if (sign === undefined || property === undefined || level === undefined) return;
+      if (!isKeyOf(INSET_PROPERTIES, property)) return;
 
-    return toEntries(INSET_PROPERTIES[property], `--sui-space(${sign}${level})`);
-  },
-];
+      return toEntries(INSET_PROPERTIES[property], `--sui-space(${sign}${level})`);
+    },
+  ];
+}
 
-const borderWidthRule: Rule = [
-  new RegExp(`^(${Object.keys(BORDER_WIDTH_PROPERTIES).join("|")})-sui-(\\d+(?:\\.\\d+)?)$`),
-  (match) => {
-    const property = match[1];
-    const level = match[2];
+function createBorderWidthRule(separator: string): Rule {
+  return [
+    new RegExp(
+      `^(${Object.keys(BORDER_WIDTH_PROPERTIES).join("|")})${separator}(\\d+(?:\\.\\d+)?)$`,
+    ),
+    (match) => {
+      const property = match[1];
+      const level = match[2];
 
-    if (property === undefined || level === undefined) return;
-    if (!isKeyOf(BORDER_WIDTH_PROPERTIES, property)) return;
+      if (property === undefined || level === undefined) return;
+      if (!isKeyOf(BORDER_WIDTH_PROPERTIES, property)) return;
 
-    return toEntries(BORDER_WIDTH_PROPERTIES[property], `--sui-border_width(${level})`);
-  },
-];
+      return toEntries(BORDER_WIDTH_PROPERTIES[property], `--sui-border_width(${level})`);
+    },
+  ];
+}
 
-const outlineWidthRule: Rule = [
-  /^outline-sui-(\d+(?:\.\d+)?)$/,
-  (match) => {
-    const level = match[1];
+function createOutlineWidthRule(separator: string): Rule {
+  return [
+    new RegExp(`^outline${separator}(\\d+(?:\\.\\d+)?)$`),
+    (match) => {
+      const level = match[1];
 
-    if (level === undefined) return;
+      if (level === undefined) return;
 
-    return { "outline-width": `--sui-border_width(${level})` };
-  },
-];
+      return { "outline-width": `--sui-border_width(${level})` };
+    },
+  ];
+}
 
-const radiusRule: Rule = [
-  new RegExp(`^(${Object.keys(RADIUS_PROPERTIES).join("|")})-sui-(\\d+(?:\\.\\d+)?)$`),
-  (match) => {
-    const property = match[1];
-    const level = match[2];
+function createRadiusRule(separator: string): Rule {
+  return [
+    new RegExp(`^(${Object.keys(RADIUS_PROPERTIES).join("|")})${separator}(\\d+(?:\\.\\d+)?)$`),
+    (match) => {
+      const property = match[1];
+      const level = match[2];
 
-    if (property === undefined || level === undefined) return;
-    if (!isKeyOf(RADIUS_PROPERTIES, property)) return;
+      if (property === undefined || level === undefined) return;
+      if (!isKeyOf(RADIUS_PROPERTIES, property)) return;
 
-    return toEntries(RADIUS_PROPERTIES[property], `--sui-corner_radius(${level})`);
-  },
-];
+      return toEntries(RADIUS_PROPERTIES[property], `--sui-corner_radius(${level})`);
+    },
+  ];
+}
 
-const fontFamilyRule: Rule = [
-  /^font-sui-(.+)$/,
-  (match) => {
-    const family = match[1];
+function createFontFamilyRule(separator: string): Rule {
+  return [
+    new RegExp(`^font${separator}(.+)$`),
+    (match) => {
+      const family = match[1];
 
-    if (family === undefined || !isFontFamily(family)) return;
+      if (family === undefined || !isFontFamily(family)) return;
 
-    return { "font-family": `var(--sui-font-${family})` };
-  },
-];
+      return { "font-family": `var(--sui-font-${family})` };
+    },
+  ];
+}
 
-const textStyleRule: Rule = [
-  /^text-sui-((?:dns|oln|std)-.+)$/,
-  (match) => {
-    const style = match[1];
+function createTextStyleRule(separator: string): Rule {
+  return [
+    new RegExp(`^text${separator}((?:dns|oln|std)-.+)$`),
+    (match) => {
+      const style = match[1];
 
-    if (style === undefined || !isTextStyle(style)) return;
+      if (style === undefined || !isTextStyle(style)) return;
 
-    return textStyleEntries(style);
-  },
-];
+      return textStyleEntries(style);
+    },
+  ];
+}
 
 function toEntries(properties: readonly string[], value: string): CSSEntry[] {
   return properties.map((property): CSSEntry => [property, value]);
@@ -259,19 +319,3 @@ function textStyleEntries(style: string): CSSEntry[] {
 function isKeyOf<T extends object>(object: T, key: string): key is Extract<keyof T, string> {
   return Object.hasOwn(object, key);
 }
-
-/**
- * プリセットが提供する UnoCSS ルールの一覧です。
- */
-export const rules: Rule[] = [
-  colorRule,
-  spaceRule,
-  gapRule,
-  sizeRule,
-  insetRule,
-  borderWidthRule,
-  outlineWidthRule,
-  radiusRule,
-  fontFamilyRule,
-  textStyleRule,
-];

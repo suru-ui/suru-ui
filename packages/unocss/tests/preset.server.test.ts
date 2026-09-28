@@ -1,4 +1,5 @@
 import { createGenerator } from "@unocss/core";
+import { presetWind3 } from "unocss";
 import { describe, expect, test } from "vitest";
 
 import { SUI_UTILITIES_LAYER, presetSuruUI } from "../src/index.js";
@@ -263,5 +264,74 @@ describe("CSS カスケードレイヤー", () => {
 
     // 検証
     expect(css).toContain(`@layer ${SUI_UTILITIES_LAYER}`);
+  });
+});
+
+describe("名前空間", () => {
+  test("既定では名前空間を外したユーティリティーを生成しない", async () => {
+    // 実行
+    const css = await generate(["p-2", "bg-blue-60", "rounded-2", "font-sans"]);
+
+    // 検証
+    expect(css).toBe("");
+  });
+
+  test("名前空間を外して生成する", async () => {
+    // 準備
+    const uno = await createGenerator({
+      presets: [presetSuruUI({ namespace: false })],
+    });
+
+    // 実行
+    const { css } = await uno.generate(
+      [
+        "p-2",
+        "bg-blue-60",
+        "text-canvas_text-1",
+        "border-blue-solid-border-normal",
+        "rounded-2",
+        "font-mono",
+        "text-oln-md-m",
+        "w-sm",
+        "gap-4",
+        "top-1",
+        "outline-1",
+        "size-8",
+      ],
+      { preflights: false },
+    );
+
+    // 検証
+    expect(css).toContain(".p-2{padding:--sui-space(2);}");
+    expect(css).toContain(".bg-blue-60{background-color:var(--sui-blue-60);}");
+    expect(css).toContain(".text-canvas_text-1{color:var(--sui-canvas_text-1);}");
+    expect(css).toContain(
+      ".border-blue-solid-border-normal{border-color:var(--sui-blue-solid-border-normal);}",
+    );
+    expect(css).toContain(".rounded-2{border-radius:--sui-corner_radius(2);}");
+    expect(css).toContain(".font-mono{font-family:var(--sui-font-mono);}");
+    expect(css).toContain(
+      ".text-oln-md-m{font-size:var(--sui-text-oln-md-m-font_size);font-weight:var(--sui-text-oln-md-m-font_weight);letter-spacing:var(--sui-text-oln-md-m-letter_spacing);line-height:var(--sui-text-oln-md-m-line_height);}",
+    );
+    expect(css).toContain(".w-sm{width:var(--sui-size-sm);}");
+    expect(css).toContain(".gap-4{gap:--sui-gap(4);}");
+    expect(css).toContain(".top-1{top:--sui-space(1);}");
+    expect(css).toContain(".outline-1{outline-width:--sui-border_width(1);}");
+    expect(css).toContain(".size-8{width:--sui-space(8);height:--sui-space(8);}");
+  });
+
+  test("後に置いたプリセットとして別のプリセットのルールを上書きする", async () => {
+    // 準備
+    const uno = await createGenerator({
+      presets: [presetWind3(), presetSuruUI({ namespace: false })],
+    });
+
+    // 実行
+    const { css } = await uno.generate(["p-2", "w-8", "gap-4"], { preflights: false });
+
+    // 検証
+    expect(css).toContain(".p-2{padding:--sui-space(2);}");
+    expect(css).toContain(".w-8{width:--sui-space(8);}");
+    expect(css).toContain(".gap-4{gap:--sui-gap(4);}");
   });
 });

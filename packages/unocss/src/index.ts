@@ -1,4 +1,5 @@
 export { SUI_UTILITIES_LAYER, presetSuruUI } from "./preset.js";
+export type { PresetSuruUIOptions } from "./preset.js";
 export type { Prominence, TemplatePart, TextFamily, TextSize, TextWeight } from "./tokens.js";
 export {
   COLOR_STEPS,

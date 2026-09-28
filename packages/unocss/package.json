@@ -36,6 +36,7 @@
     "@types/node": "^24.13.3",
     "@unocss/core": "^66.8.1",
     "npm-check-updates": "^22.2.9",
+    "unocss": "^66.8.1",
     "vite": "^8.2.2",
     "vitest": "^4.1.11"
   },
