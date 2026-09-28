@@ -257,6 +257,21 @@ export const BORDER_WIDTH_PROPERTIES = {
 } as const satisfies Properties;
 
 /**
+ * 角丸の段階を省略したときの既定値です。
+ */
+export const DEFAULT_RADIUS_LEVEL = 1;
+
+/**
+ * 角丸の形状を設定する CSS プロパティーです。
+ */
+export const CORNER_SHAPE_PROPERTY = "corner-shape";
+
+/**
+ * 角丸の形状をスーパー楕円にする CSS の値です。
+ */
+export const CORNER_SHAPE_VALUE = "superellipse(var(--sui-superellipse))";
+
+/**
  * アウトラインの幅を設定するユーティリティーの対応表です。
  */
 export const OUTLINE_PROPERTIES = {

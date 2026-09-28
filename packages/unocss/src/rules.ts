@@ -18,8 +18,11 @@ import {
   SPACE_PROPERTIES,
   TEXT_STYLE_VALUE,
   DEFAULT_NAMESPACE,
+  CORNER_SHAPE_VALUE,
   OUTLINE_PROPERTIES,
   NAMESPACED_SEPARATOR,
+  DEFAULT_RADIUS_LEVEL,
+  CORNER_SHAPE_PROPERTY,
   TEXT_STYLE_PROPERTIES,
   UNNAMESPACED_SEPARATOR,
   BORDER_WIDTH_PROPERTIES,
@@ -62,6 +65,13 @@ interface PropertyRuleOptions {
    * 関数を渡すと、受け付けるかどうかをプロパティーごとに判定します。
    */
   negative?: boolean | ((property: string) => boolean);
+
+  /**
+   * 値を省略できるかどうかです。
+   *
+   * `true` にすると区切り文字も含めて値を省略でき、省略した場合は値が `undefined` としてリゾルバーに渡されます。
+   */
+  optional?: boolean;
 }
 
 /**
@@ -172,7 +182,11 @@ function createRadiusRule(separator: string): Rule {
     RADIUS_PROPERTIES,
     separator,
     LEVEL_CAPTURE,
-    scale("--sui-corner_radius"),
+    (properties, level) => [
+      ...toEntries(properties, `--sui-corner_radius(${level ?? DEFAULT_RADIUS_LEVEL})`),
+      [CORNER_SHAPE_PROPERTY, CORNER_SHAPE_VALUE],
+    ],
+    { optional: true },
   );
 }
 
@@ -204,7 +218,7 @@ function createTextStyleRule(separator: string): Rule {
  * @param separator 接頭辞と値の区切り文字です。
  * @param value 値をキャプチャーするグループを含む正規表現のソースです。
  * @param resolve キャプチャーした値を CSS エントリーに変換する関数です。
- * @param options 負の値の受け付けに関するオプションです。
+ * @param options 値の受け付けに関するオプションです。
  * @returns 動的ルールです。
  */
 function createPropertyRule(
@@ -214,11 +228,14 @@ function createPropertyRule(
   resolve: Resolver,
   options: PropertyRuleOptions = {},
 ): Rule {
-  const { negative = false } = options;
+  const { negative = false, optional = false } = options;
   const signed = negative !== false;
   const names = Object.keys(properties).map(escapeRegExp).join("|");
+  // 値を省略できる場合は、区切り文字の末尾の `-` も値と一緒に省略できるようにします。
+  const scope = optional ? separator.slice(0, -1) : separator;
+  const suffix = optional ? `(?:-${value})?` : value;
   const pattern = new RegExp(
-    signed ? `^(-?)(${names})${separator}${value}$` : `^(${names})${separator}${value}$`,
+    signed ? `^(-?)(${names})${scope}${suffix}$` : `^(${names})${scope}${suffix}$`,
   );
   const canBeNegative = typeof negative === "function" ? negative : () => true;
 

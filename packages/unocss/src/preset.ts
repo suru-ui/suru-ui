@@ -21,7 +21,7 @@ export type PresetSuruUIOptions = CreateRulesOptions;
  * - 色: `bg-sui-canvas-1`、`text-sui-blue-60`、`border-sui-blue-solid-border-normal` など。
  * - 余白: `p-sui-2`、`gap-sui-4` など。
  * - 大きさ: `w-sui-sm`、`size-sui-8` など。
- * - 角丸: `rounded-sui-2` など。
+ * - 角丸: `rounded-sui-2` など。段階を省略すると `1` になり、`corner-shape` も併せて設定します。
  * - フォント: `font-sui-sans`、`font-sui-mono` など。
  * - 文字スタイル: `text-sui-oln-md-m` など。
  *

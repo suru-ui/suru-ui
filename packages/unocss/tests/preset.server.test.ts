@@ -201,14 +201,29 @@ describe("枠線と角丸", () => {
     expect(css).toContain(".outline-sui-3{outline-width:--sui-border_width(3);}");
   });
 
-  test("角丸を --sui-corner_radius() で生成する", async ({ expect }) => {
+  test("角丸を --sui-corner_radius() と corner-shape で生成する", async ({ expect }) => {
     // 実行
     const css = await generate(["rounded-sui-2", "rounded-t-sui-1"]);
 
     // 検証
-    expect(css).toContain(".rounded-sui-2{border-radius:--sui-corner_radius(2);}");
     expect(css).toContain(
-      ".rounded-t-sui-1{border-top-left-radius:--sui-corner_radius(1);border-top-right-radius:--sui-corner_radius(1);}",
+      ".rounded-sui-2{border-radius:--sui-corner_radius(2);corner-shape:superellipse(var(--sui-superellipse));}",
+    );
+    expect(css).toContain(
+      ".rounded-t-sui-1{border-top-left-radius:--sui-corner_radius(1);border-top-right-radius:--sui-corner_radius(1);corner-shape:superellipse(var(--sui-superellipse));}",
+    );
+  });
+
+  test("角丸の段階を省略すると既定値を使う", async ({ expect }) => {
+    // 実行
+    const css = await generate(["rounded-sui", "rounded-t-sui"]);
+
+    // 検証
+    expect(css).toContain(
+      ".rounded-sui{border-radius:--sui-corner_radius(1);corner-shape:superellipse(var(--sui-superellipse));}",
+    );
+    expect(css).toContain(
+      ".rounded-t-sui{border-top-left-radius:--sui-corner_radius(1);border-top-right-radius:--sui-corner_radius(1);corner-shape:superellipse(var(--sui-superellipse));}",
     );
   });
 
@@ -298,6 +313,7 @@ describe("名前空間", () => {
         "text-canvas_text-1",
         "border-blue-solid-border-normal",
         "rounded-2",
+        "rounded",
         "font-mono",
         "text-oln-md-m",
         "w-sm",
@@ -316,7 +332,12 @@ describe("名前空間", () => {
     expect(css).toContain(
       ".border-blue-solid-border-normal{border-color:var(--sui-blue-solid-border-normal);}",
     );
-    expect(css).toContain(".rounded-2{border-radius:--sui-corner_radius(2);}");
+    expect(css).toContain(
+      ".rounded-2{border-radius:--sui-corner_radius(2);corner-shape:superellipse(var(--sui-superellipse));}",
+    );
+    expect(css).toContain(
+      ".rounded{border-radius:--sui-corner_radius(1);corner-shape:superellipse(var(--sui-superellipse));}",
+    );
     expect(css).toContain(".font-mono{font-family:var(--sui-font-mono);}");
     expect(css).toContain(
       ".text-oln-md-m{font-size:var(--sui-text-oln-md-m-font_size);font-weight:var(--sui-text-oln-md-m-font_weight);letter-spacing:var(--sui-text-oln-md-m-letter_spacing);line-height:var(--sui-text-oln-md-m-line_height);}",
