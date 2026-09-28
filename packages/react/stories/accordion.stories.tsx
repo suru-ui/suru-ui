@@ -39,9 +39,7 @@ const ITEMS: readonly Accordion.ItemObject[] = [
       "展開された領域の高さは、内部に含まれるコンテンツの量に応じて自動的に調整されます。長い文章やリスト、複数の要素を含む場合でも、コンテンツが途中で隠れないよう自然にレイアウトされます。",
   },
 ];
-const RADII: readonly Accordion.Radius[] = ["none", ...theme.SIZES];
 const SIZES: readonly Accordion.Size[] = theme.SIZES;
-const VARIANTS: readonly Accordion.Variant[] = ["liquid", "naked"];
 
 const meta = preview.meta({
   title: "Accordion",
@@ -60,59 +58,90 @@ const ctrl = controls(Accordion, {
   multiple: {
     control: "boolean",
   },
-  outlined: {
-    control: "boolean",
-  },
-  radius: {
-    control: "select",
-    options: RADII,
-  },
   size: {
     control: "select",
     options: SIZES,
   },
-  variant: {
-    control: "select",
-    options: VARIANTS,
-  },
 });
 
-export const Usage = meta.story({
-  name: "使い方",
+export const Basic = meta.story({
+  name: "基本",
   ...ctrl({
-    variant: "liquid",
     size: "md",
-    radius: undefined,
     multiple: false,
-    outlined: false,
-    separator: false,
+    separator: true,
     disabled: false,
   }),
   render(props) {
     return (
-      <div className="w-80">
+      <div className="w-[400px] h-[320px]">
         <Accordion {...props} items={ITEMS} />
       </div>
     );
   },
 });
 
+export const Multiple = meta.story({
+  name: "複数",
+  ...ctrl({
+    size: "md",
+    separator: true,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="w-[400px] h-[380px]">
+        <Accordion {...props} items={ITEMS.slice(0, 3)} multiple />
+      </div>
+    );
+  },
+});
+
+export const Disabled = meta.story({
+  name: "無効",
+  ...ctrl({
+    size: "md",
+    multiple: false,
+    separator: true,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-6">
+        {[
+          ["2", "3", "4"],
+          ["1", "3", "5"],
+        ].map((disabledValue) => (
+          <div className="w-[400px] h-[320px]" key={disabledValue.join()}>
+            <Accordion
+              {...props}
+              items={ITEMS.map((item) => ({
+                ...item,
+                disabled: disabledValue.includes(item.value),
+              }))}
+              defaultValue={["1"]}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+// export const Borders = meta.story({});
+
 export const WithIcon = meta.story({
   name: "アイコン付き",
   ...ctrl({
-    variant: "liquid",
     size: "md",
-    radius: undefined,
     multiple: false,
-    outlined: false,
-    separator: false,
+    separator: true,
     disabled: false,
   }),
   render(props) {
     const Accordion = AccordionParts;
 
     return (
-      <div className="w-80">
+      <div className="w-[400px] h-[320px]">
         <Accordion.Root {...props} items={ITEMS}>
           {(item, index) => (
             <Accordion.Item key={index}>
@@ -137,19 +166,16 @@ export const WithIcon = meta.story({
 export const CustomTrigger = meta.story({
   name: "独自トリガー",
   ...ctrl({
-    variant: "liquid",
     size: "md",
-    radius: undefined,
     multiple: false,
-    outlined: false,
-    separator: false,
+    separator: true,
     disabled: false,
   }),
   render(props) {
     const Accordion = AccordionParts;
 
     return (
-      <div className="w-80">
+      <div className="w-[400px] h-[320px]">
         <Accordion.Root {...props} items={ITEMS}>
           {(item, index) => (
             <Accordion.Item key={index}>
@@ -173,43 +199,16 @@ export const CustomTrigger = meta.story({
   },
 });
 
-export const Variants = meta.story({
-  name: "主な外観",
-  ...ctrl({
-    size: "md",
-    radius: undefined,
-    multiple: false,
-    outlined: false,
-    separator: false,
-    disabled: false,
-  }),
-  render(props) {
-    return (
-      <div className="w-80 flex flex-col gap-6">
-        {VARIANTS.map((variant) => (
-          <div key={variant} className="flex flex-col gap-2">
-            <span>{variant}</span>
-            <Accordion {...props} key={variant} items={ITEMS} variant={variant} />
-          </div>
-        ))}
-      </div>
-    );
-  },
-});
-
 export const Sizes = meta.story({
   name: "大きさ",
   ...ctrl({
-    variant: "liquid",
-    radius: undefined,
     multiple: false,
-    outlined: false,
-    separator: false,
+    separator: true,
     disabled: false,
   }),
   render(props) {
     return (
-      <div className="w-80 flex flex-col gap-6">
+      <div className="w-[400px] h-[320px] flex flex-col gap-6">
         {SIZES.map((size) => (
           <div key={size} className="flex flex-col gap-2">
             <span>{size}</span>
@@ -221,86 +220,17 @@ export const Sizes = meta.story({
   },
 });
 
-export const Radii = meta.story({
-  name: "角丸",
-  ...ctrl({
-    variant: "liquid",
-    size: "md",
-    multiple: false,
-    outlined: false,
-    separator: false,
-    disabled: false,
-  }),
-  render(props) {
-    return (
-      <div className="w-80 flex flex-col gap-6">
-        {RADII.map((radius) => (
-          <div key={radius} className="flex flex-col gap-2">
-            <span>{radius}</span>
-            <Accordion {...props} key={radius} items={ITEMS.slice(0, 2)} radius={radius} />
-          </div>
-        ))}
-      </div>
-    );
-  },
-});
-
-export const Outlined = meta.story({
-  name: "枠線",
-  ...ctrl({
-    size: "md",
-    radius: undefined,
-    multiple: false,
-    separator: false,
-    disabled: false,
-  }),
-  render(props) {
-    return (
-      <div className="w-80 flex flex-col gap-6">
-        {VARIANTS.map((variant) => (
-          <div key={variant} className="flex flex-col gap-2">
-            <span>{variant}</span>
-            <Accordion {...props} key={variant} items={ITEMS} variant={variant} outlined />
-          </div>
-        ))}
-      </div>
-    );
-  },
-});
-
 export const Separated = meta.story({
   name: "区切り線",
   ...ctrl({
-    variant: "liquid",
     size: "md",
-    radius: undefined,
     multiple: false,
-    outlined: false,
     disabled: false,
   }),
   render(props) {
     return (
-      <div className="w-80">
+      <div className="w-[400px] h-[320px]">
         <Accordion {...props} items={ITEMS} separator />
-      </div>
-    );
-  },
-});
-
-export const MultipleExpanded = meta.story({
-  name: "複数展開",
-  ...ctrl({
-    variant: "liquid",
-    size: "md",
-    radius: undefined,
-    outlined: false,
-    separator: false,
-    disabled: false,
-  }),
-  render(props) {
-    return (
-      <div className="w-80">
-        <Accordion {...props} items={ITEMS} multiple />
       </div>
     );
   },
@@ -309,49 +239,14 @@ export const MultipleExpanded = meta.story({
 export const FullyDisabled = meta.story({
   name: "完全無効化",
   ...ctrl({
-    variant: "liquid",
     size: "md",
-    radius: undefined,
     multiple: false,
-    outlined: false,
-    separator: false,
+    separator: true,
   }),
   render(props) {
     return (
-      <div className="w-80">
+      <div className="w-[400px] h-[320px]">
         <Accordion {...props} items={ITEMS} disabled defaultValue={["2"]} />
-      </div>
-    );
-  },
-});
-
-export const PartialDisabled = meta.story({
-  name: "一部無効化",
-  ...ctrl({
-    variant: "liquid",
-    size: "md",
-    radius: undefined,
-    multiple: false,
-    outlined: false,
-    separator: false,
-  }),
-  render(props) {
-    return (
-      <div className="w-80 flex flex-col gap-6">
-        {[
-          ["2", "3", "4"],
-          ["1", "3", "5"],
-        ].map((disabledValue) => (
-          <Accordion
-            {...props}
-            key={disabledValue.join()}
-            items={ITEMS.map((item) => ({
-              ...item,
-              disabled: disabledValue.includes(item.value),
-            }))}
-            defaultValue={["3"]}
-          />
-        ))}
       </div>
     );
   },

@@ -1,7 +1,8 @@
 import { Accordion } from "@base-ui/react/accordion";
-import type { Size } from "@suru-ui/theme";
+import { type Size, isSize } from "@suru-ui/theme";
 import * as React from "react";
 
+import Config from "../_config.jsx";
 import { getItemKey } from "../_item.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
@@ -78,6 +79,16 @@ export interface IAccordionRootItemRenderer<TItem = any> {
 export type AccordionRootRadius = "none" | Size;
 
 /**
+ * 角丸の大きさかどうかを判定します。
+ *
+ * @param radius 判定する値です。
+ * @returns 角丸の大きさの場合に `true` を返します。
+ */
+function isAccordionRootRadius(radius: any): radius is AccordionRootRadius {
+  return radius === "none" || isSize(radius);
+}
+
+/**
  * アコーディオンの大きさです。
  *
  * - `"sm"`: 小さめ
@@ -85,14 +96,6 @@ export type AccordionRootRadius = "none" | Size;
  * - `"lg"`: 大きめ
  */
 export type AccordionRootSize = Size;
-
-/**
- * アコーディオンの主な外観です。
- *
- * - `"naked"`: 背景なし
- * - `"liquid"`: 薄い塗りつぶし
- */
-export type AccordionRootVariant = "naked" | "liquid";
 
 /**
  * アコーディオンの項目の値です。
@@ -127,20 +130,6 @@ export namespace AccordionRootProps {
     items?: readonly TItem[] | undefined;
 
     /**
-     * アコーディオンの枠線を表示するかどうかを指定します。
-     *
-     * @default false
-     */
-    outlined?: boolean | undefined;
-
-    /**
-     * アコーディオンの角丸の大きさを指定します。
-     *
-     * 既定値は {@link AccordionRootProps.size|size} です。
-     */
-    radius?: AccordionRootRadius | undefined;
-
-    /**
      * アコーディオンの項目が隣接する項目の区切り線を表示するかどうかを指定します。
      *
      * @default false
@@ -153,13 +142,6 @@ export namespace AccordionRootProps {
      * @default "md"
      */
     size?: AccordionRootSize | undefined;
-
-    /**
-     * アコーディオンの主な外観を指定します。
-     *
-     * @default "liquid"
-     */
-    variant?: AccordionRootVariant | undefined;
   };
 
   export type BaseUI<TValue = any> = Pick<
@@ -211,6 +193,7 @@ export interface IAccordionRoot extends IComponent<AccordionRootProps> {
  * アコーディオンのルートコンポーネントです。
  */
 export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: AccordionRootProps) {
+  const config = React.use(Config);
   const defaultItemRenderer: IAccordionRootItemRenderer = (item, index) => {
     switch (true) {
       case isItemObject(item): {
@@ -237,16 +220,14 @@ export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: Ac
   const {
     size = "md",
     items = [],
-    radius = size,
-    variant = "liquid",
     children = defaultItemRenderer,
-    outlined = false,
     className,
     separator = false,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
+  const radius = config.get("radius", isAccordionRootRadius, "none");
 
   return (
     <Accordion.Root
@@ -256,8 +237,6 @@ export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: Ac
         "sui_accordion",
         `sui_accordion-size_${size}`,
         `sui_accordion-radius_${radius}`,
-        `sui_accordion-variant_${variant}`,
-        outlined && "sui_accordion-outlined",
         separator && "sui_accordion-separator",
         (state) => state.disabled && "sui_accordion-disabled",
       )}
@@ -301,6 +280,4 @@ export namespace Root {
   export type Size = AccordionRootSize;
 
   export type Value<TValue = any> = AccordionRootValue<TValue>;
-
-  export type Variant = AccordionRootVariant;
 }

@@ -19,7 +19,6 @@ export {
   type AccordionState,
   type AccordionValue,
   type AccordionRadius,
-  type AccordionVariant,
   type AccordionSlotProps,
   type AccordionItemObject,
   type IAccordionItemRenderer,

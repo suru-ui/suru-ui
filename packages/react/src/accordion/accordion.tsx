@@ -11,7 +11,6 @@ import {
   type AccordionRootState,
   type AccordionRootValue,
   type AccordionRootRadius,
-  type AccordionRootVariant,
   type AccordionContentProps,
   type AccordionHeadingProps,
   type AccordionTriggerProps,
@@ -44,8 +43,6 @@ export type AccordionRadius = AccordionRootRadius;
 export type AccordionSize = AccordionRootSize;
 
 export type AccordionValue<TValue = any> = AccordionRootValue<TValue>;
-
-export type AccordionVariant = AccordionRootVariant;
 
 /**
  * {@link Accordion} の各パーツに渡す props です。
@@ -306,6 +303,4 @@ export namespace Accordion {
   export type Size = AccordionSize;
 
   export type Value<TValue = any> = AccordionValue<TValue>;
-
-  export type Variant = AccordionVariant;
 }
