@@ -1,0 +1,45 @@
+{
+  "name": "@suru-ui/unocss",
+  "version": "0.0.0",
+  "description": "",
+  "homepage": "https://github.com/suru-ui/suru-ui",
+  "license": "MIT",
+  "author": "tai-kun",
+  "repository": {
+    "url": "https://github.com/suru-ui/suru-ui"
+  },
+  "files": [
+    "dist",
+    "src",
+    "package.json",
+    "LICENSE"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/src/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc --project ./.config/tsconfig.build.json"
+  },
+  "dependencies": {
+    "@suru-ui/theme": "workspace:*"
+  },
+  "devDependencies": {
+    "@tsconfig/node24": "^24.0.5",
+    "@tsconfig/strictest": "^2.0.8",
+    "@types/node": "^24.13.3",
+    "@unocss/core": "^66.8.1",
+    "npm-check-updates": "^22.2.9",
+    "vite": "^8.2.2",
+    "vitest": "^4.1.11"
+  },
+  "peerDependencies": {
+    "@unocss/core": "^66.0.0"
+  }
+}

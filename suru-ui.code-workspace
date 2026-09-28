@@ -13,6 +13,10 @@
       "path": "packages/theme",
     },
     {
+      "name": "@suru-ui/unocss",
+      "path": "packages/unocss",
+    },
+    {
       "name": "@suru-ui/core",
       "path": "packages/core",
     },

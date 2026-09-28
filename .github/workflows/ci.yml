@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package-directory: ["packages/core", "packages/theme", "packages/react"]
+        package-directory: ["packages/core", "packages/theme", "packages/unocss", "packages/react"]
     timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:

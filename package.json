@@ -11,6 +11,7 @@
   "workspaces": [
     "packages/core",
     "packages/theme",
+    "packages/unocss",
     "packages/react"
   ],
   "type": "module",
