@@ -141,7 +141,7 @@ export const Borders = meta.story({
         <Accordion
           {...props}
           items={ITEMS}
-          className="border-1 border-solid"
+          className="border rounded-3"
           slotProps={{
             item: {
               className: "px-4",
