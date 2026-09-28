@@ -24,8 +24,11 @@ export {
   type IAccordionItemRenderer,
   type AccordionChangeEventReason,
   type AccordionChangeEventDetails,
+  type IDecomposeAccordionItemObject,
+  type AccordionItemObjectDecomposition,
   Accordion,
   useAccordionAPI,
+  decomposeAccordionItemObject,
 } from "./accordion/index.js";
 export {
   type ActionGroupAPI,

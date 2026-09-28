@@ -1,8 +1,7 @@
 import { Accordion } from "@base-ui/react/accordion";
-import { type Size, isSize } from "@suru-ui/theme";
+import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
-import Config from "../_config.jsx";
 import { getItemKey } from "../_item.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
@@ -13,6 +12,7 @@ import { AccordionHeading } from "./accordion.heading.jsx";
 import { AccordionIndicator } from "./accordion.indicator.jsx";
 import { type AccordionItemProps, AccordionItem } from "./accordion.item.jsx";
 import { AccordionTrigger } from "./accordion.trigger.jsx";
+import { decomposeItemObject } from "./accordion.utils.js";
 
 /**
  * アコーディオンの項目の開閉状態を変更するイベントの詳細です。
@@ -79,16 +79,6 @@ export interface IAccordionRootItemRenderer<TItem = any> {
 export type AccordionRootRadius = "none" | Size;
 
 /**
- * 角丸の大きさかどうかを判定します。
- *
- * @param radius 判定する値です。
- * @returns 角丸の大きさの場合に `true` を返します。
- */
-function isAccordionRootRadius(radius: any): radius is AccordionRootRadius {
-  return radius === "none" || isSize(radius);
-}
-
-/**
  * アコーディオンの大きさです。
  *
  * - `"sm"`: 小さめ
@@ -128,6 +118,13 @@ export namespace AccordionRootProps {
      * `children` に関数を指定した場合、この配列の各項目が引数として渡されます。
      */
     items?: readonly TItem[] | undefined;
+
+    /**
+     * アコーディオンの角丸の大きさを指定します。
+     *
+     * @default "none"
+     */
+    radius?: AccordionRootRadius | undefined;
 
     /**
      * アコーディオンの項目が隣接する項目の区切り線を表示するかどうかを指定します。
@@ -193,14 +190,13 @@ export interface IAccordionRoot extends IComponent<AccordionRootProps> {
  * アコーディオンのルートコンポーネントです。
  */
 export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: AccordionRootProps) {
-  const config = React.use(Config);
   const defaultItemRenderer: IAccordionRootItemRenderer = (item, index) => {
     switch (true) {
       case isItemObject(item): {
-        const { title, content, htmlTitle, ...otherItemProps } = item;
+        const { title, content, itemProps } = decomposeItemObject(item);
 
         return (
-          <AccordionItem {...otherItemProps} key={getItemKey(item) ?? index} title={htmlTitle}>
+          <AccordionItem {...itemProps} key={getItemKey(item) ?? index}>
             <AccordionHeading>
               <AccordionTrigger>
                 {title}
@@ -220,6 +216,7 @@ export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: Ac
   const {
     size = "md",
     items = [],
+    radius = "none",
     children = defaultItemRenderer,
     className,
     separator = false,
@@ -227,7 +224,6 @@ export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: Ac
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
-  const radius = config.get("radius", isAccordionRootRadius, "none");
 
   return (
     <Accordion.Root

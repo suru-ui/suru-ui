@@ -26,6 +26,7 @@ import {
   AccordionTrigger,
   AccordionIndicator,
 } from "./accordion.parts.js";
+import { decomposeItemObject } from "./accordion.utils.js";
 
 // Types
 // -----
@@ -193,15 +194,10 @@ export class AccordionAPI<TItem = any, TValue = any> {
     const { item: props = {} } = this.slotProps;
 
     if (item) {
-      const {
-        // title と content を取り除いた props を AccordionItem の props とします。
-        title: _title,
-        content: _content,
-        htmlTitle: title,
-        ...otherItemProps
-      } = item as AccordionItemObject;
+      // title と content は他のパーツへ渡すため取り除きます。
+      const { itemProps } = decomposeItemObject(item);
 
-      return mergeProps([props, otherItemProps, { title }]);
+      return mergeProps([props, itemProps]);
     }
 
     return props;

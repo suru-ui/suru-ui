@@ -6,6 +6,7 @@ import { preview, controls } from "../.config/storybook/preview.js";
 import { Accordion } from "../src/accordion/index.js";
 import * as AccordionParts from "../src/accordion/index.js";
 import { Button } from "../src/button/index.js";
+import { Card as SuiCard } from "../src/card/index.js";
 
 const ITEMS: readonly Accordion.ItemObject[] = [
   {
@@ -39,6 +40,7 @@ const ITEMS: readonly Accordion.ItemObject[] = [
       "展開された領域の高さは、内部に含まれるコンテンツの量に応じて自動的に調整されます。長い文章やリスト、複数の要素を含む場合でも、コンテンツが途中で隠れないよう自然にレイアウトされます。",
   },
 ];
+const RADII: readonly Accordion.Radius[] = ["none", ...theme.SIZES];
 const SIZES: readonly Accordion.Size[] = theme.SIZES;
 
 const meta = preview.meta({
@@ -58,6 +60,10 @@ const ctrl = controls(Accordion, {
   multiple: {
     control: "boolean",
   },
+  radius: {
+    control: "select",
+    options: RADII,
+  },
   size: {
     control: "select",
     options: SIZES,
@@ -68,6 +74,7 @@ export const Basic = meta.story({
   name: "基本",
   ...ctrl({
     size: "md",
+    radius: undefined,
     multiple: false,
     separator: true,
     disabled: false,
@@ -75,149 +82,7 @@ export const Basic = meta.story({
   render(props) {
     return (
       <div className="w-[400px] h-[320px]">
-        <Accordion {...props} items={ITEMS} />
-      </div>
-    );
-  },
-});
-
-export const Multiple = meta.story({
-  name: "複数",
-  ...ctrl({
-    size: "md",
-    separator: true,
-    disabled: false,
-  }),
-  render(props) {
-    return (
-      <div className="w-[400px] h-[380px]">
-        <Accordion {...props} items={ITEMS.slice(0, 3)} multiple />
-      </div>
-    );
-  },
-});
-
-export const Disabled = meta.story({
-  name: "無効",
-  ...ctrl({
-    size: "md",
-    multiple: false,
-    separator: true,
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-col gap-6">
-        {[
-          ["2", "3", "4"],
-          ["1", "3", "5"],
-        ].map((disabledValue) => (
-          <div className="w-[400px] h-[320px]" key={disabledValue.join()}>
-            <Accordion
-              {...props}
-              items={ITEMS.map((item) => ({
-                ...item,
-                disabled: disabledValue.includes(item.value),
-              }))}
-              defaultValue={["1"]}
-            />
-          </div>
-        ))}
-      </div>
-    );
-  },
-});
-
-export const Borders = meta.story({
-  name: "枠線",
-  ...ctrl({
-    size: "md",
-    multiple: false,
-    separator: true,
-    disabled: false,
-  }),
-  render(props) {
-    return (
-      <div className="w-[400px] h-[320px]">
-        <Accordion
-          {...props}
-          items={ITEMS}
-          className="border rounded-3"
-          slotProps={{
-            item: {
-              className: "px-4",
-            },
-          }}
-        />
-      </div>
-    );
-  },
-});
-
-export const WithIcon = meta.story({
-  name: "アイコン付き",
-  ...ctrl({
-    size: "md",
-    multiple: false,
-    separator: true,
-    disabled: false,
-  }),
-  render(props) {
-    const Accordion = AccordionParts;
-
-    return (
-      <div className="w-[400px] h-[320px]">
-        <Accordion.Root {...props} items={ITEMS}>
-          {(item, index) => (
-            <Accordion.Item key={index}>
-              <Accordion.Heading>
-                <Accordion.Trigger>
-                  <div className="flex gap-2 items-center">
-                    <MessageCircleQuestionIcon />
-                    {item.title}
-                  </div>
-                  <Accordion.Indicator />
-                </Accordion.Trigger>
-              </Accordion.Heading>
-              <Accordion.Content>{item.content}</Accordion.Content>
-            </Accordion.Item>
-          )}
-        </Accordion.Root>
-      </div>
-    );
-  },
-});
-
-export const CustomTrigger = meta.story({
-  name: "独自トリガー",
-  ...ctrl({
-    size: "md",
-    multiple: false,
-    separator: true,
-    disabled: false,
-  }),
-  render(props) {
-    const Accordion = AccordionParts;
-
-    return (
-      <div className="w-[400px] h-[320px]">
-        <Accordion.Root {...props} items={ITEMS}>
-          {(item, index) => (
-            <Accordion.Item key={index}>
-              <Accordion.Heading>
-                <span>{item.title}</span>
-                <Accordion.Trigger
-                  render={(props: {}, state) => (
-                    <Button {...props} size="sm" squared disabled={state.disabled}>
-                      {state.open ? <ChevronUpIcon /> : <ChevronDownIcon />}
-                    </Button>
-                  )}
-                  unstyled
-                />
-              </Accordion.Heading>
-              <Accordion.Content>{item.content}</Accordion.Content>
-            </Accordion.Item>
-          )}
-        </Accordion.Root>
+        <Accordion {...props} items={ITEMS} defaultValue={["1"]} />
       </div>
     );
   },
@@ -226,6 +91,7 @@ export const CustomTrigger = meta.story({
 export const Sizes = meta.story({
   name: "大きさ",
   ...ctrl({
+    radius: undefined,
     multiple: false,
     separator: true,
     disabled: false,
@@ -244,33 +110,235 @@ export const Sizes = meta.story({
   },
 });
 
-export const Separated = meta.story({
-  name: "区切り線",
+// フォーカスリングの角丸が変わるだけなので、ストーリーには追加しません。
+// export const Radii = meta.story();
+
+export const Multiple = meta.story({
+  name: "複数",
   ...ctrl({
     size: "md",
+    radius: undefined,
+    separator: true,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="w-[400px] h-[380px]">
+        <Accordion {...props} items={ITEMS.slice(0, 3)} multiple defaultValue={["1"]} />
+      </div>
+    );
+  },
+});
+
+export const WithoutSeparator = meta.story({
+  name: "仕切りなし",
+  ...ctrl({
+    size: "md",
+    radius: undefined,
     multiple: false,
     disabled: false,
   }),
   render(props) {
     return (
       <div className="w-[400px] h-[320px]">
-        <Accordion {...props} items={ITEMS} separator />
+        <Accordion {...props} items={ITEMS} />
       </div>
     );
   },
 });
 
-export const FullyDisabled = meta.story({
-  name: "完全無効化",
+export const Disabled = meta.story({
+  name: "無効",
   ...ctrl({
     size: "md",
+    radius: undefined,
     multiple: false,
     separator: true,
   }),
   render(props) {
     return (
+      <div className="flex flex-col gap-6">
+        <div className="w-[400px] h-[320px] flex flex-col gap-2">
+          <span>部分的に無効なアイテム</span>
+          <Accordion
+            {...props}
+            items={ITEMS.map((item) => ({
+              ...item,
+              disabled: ["1", "3", "5"].includes(item.value),
+            }))}
+            defaultValue={["1"]}
+          />
+        </div>
+        <div className="w-[400px] h-[320px] flex flex-col gap-2">
+          <span>連続する無効アイテム</span>
+          <Accordion
+            {...props}
+            items={ITEMS.map((item) => ({
+              ...item,
+              disabled: ["2", "3", "4"].includes(item.value),
+            }))}
+            defaultValue={["1"]}
+          />
+        </div>
+        <div className="w-[400px] h-[320px] flex flex-col gap-2">
+          <span>全体的に無効</span>
+          <Accordion {...props} items={ITEMS} disabled defaultValue={["1"]} />
+        </div>
+      </div>
+    );
+  },
+});
+
+export const Borders = meta.story({
+  name: "枠線",
+  ...ctrl({
+    size: "md",
+    radius: undefined,
+    multiple: false,
+    separator: true,
+    disabled: false,
+  }),
+  render(props) {
+    return (
       <div className="w-[400px] h-[320px]">
-        <Accordion {...props} items={ITEMS} disabled defaultValue={["2"]} />
+        <Accordion
+          {...props}
+          items={ITEMS}
+          className="border rounded-3"
+          slotProps={{
+            item: {
+              className: "px-4",
+            },
+          }}
+          defaultValue={["1"]}
+        />
+      </div>
+    );
+  },
+});
+
+export const Card = meta.story({
+  name: "カード",
+  ...ctrl({
+    size: "md",
+    radius: undefined,
+    multiple: false,
+    separator: true,
+    disabled: false,
+  }),
+  render(props) {
+    const Card = SuiCard;
+
+    return (
+      <div className="w-[400px] h-[450px]">
+        <Card
+          title="アコーディオン"
+          outlined
+          description="複数の項目を折りたたんで表示し、必要な項目だけを展開して内容を確認できるコンポーネントです。"
+        >
+          <Accordion {...props} items={ITEMS} defaultValue={["1"]} />
+        </Card>
+      </div>
+    );
+  },
+});
+
+export const WithIcon = meta.story({
+  name: "アイコン付き",
+  ...ctrl({
+    size: "md",
+    radius: undefined,
+    multiple: false,
+    separator: true,
+    disabled: false,
+  }),
+  render(props) {
+    const Accordion = AccordionParts;
+
+    return (
+      <div className="w-[400px] h-[320px]">
+        <Accordion.Root {...props} items={ITEMS} defaultValue={["1"]}>
+          {(item, index) => {
+            const { title, content, itemProps } = Accordion.decomposeItemObject(item);
+
+            return (
+              <Accordion.Item {...itemProps} key={index}>
+                <Accordion.Heading>
+                  <Accordion.Trigger>
+                    <div className="flex gap-2 items-center">
+                      <MessageCircleQuestionIcon />
+                      {title}
+                    </div>
+                    <Accordion.Indicator />
+                  </Accordion.Trigger>
+                </Accordion.Heading>
+                <Accordion.Content>{content}</Accordion.Content>
+              </Accordion.Item>
+            );
+          }}
+        </Accordion.Root>
+      </div>
+    );
+
+    // 合成コンポーネントを使用して以下のように簡単に実装できますが、配列内に React 要素を渡すと Storybook の不具合（？）でブラウザーがフリーズするため、ここではメモとして残しておきます。
+    // return (
+    //   <div className="w-[400px] h-[320px]">
+    //     <Accordion
+    //       {...props}
+    //       items={ITEMS.map((item) => ({
+    //         ...item,
+    //         title: (
+    //           <>
+    //             <div className="flex gap-2 items-center">
+    //               <MessageCircleQuestionIcon />
+    //               {item.title}
+    //             </div>
+    //           </>
+    //         ),
+    //       }))}
+    //       defaultValue={["1"]}
+    //     />
+    //   </div>
+    // );
+  },
+});
+
+export const CustomTrigger = meta.story({
+  name: "独自トリガー",
+  ...ctrl({
+    size: "md",
+    radius: undefined,
+    multiple: false,
+    separator: true,
+    disabled: false,
+  }),
+  render(props) {
+    const Accordion = AccordionParts;
+
+    return (
+      <div className="w-[400px] h-[320px]">
+        <Accordion.Root {...props} items={ITEMS}>
+          {(item, index) => {
+            const { title, content, itemProps } = Accordion.decomposeItemObject(item);
+
+            return (
+              <Accordion.Item {...itemProps} key={index}>
+                <Accordion.Heading>
+                  <span>{title}</span>
+                  <Accordion.Trigger
+                    render={(htmlProps: {}, state) => (
+                      <Button {...htmlProps} size="sm" squared disabled={state.disabled}>
+                        {state.open ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                      </Button>
+                    )}
+                    unstyled
+                  />
+                </Accordion.Heading>
+                <Accordion.Content>{content}</Accordion.Content>
+              </Accordion.Item>
+            );
+          }}
+        </Accordion.Root>
       </div>
     );
   },
