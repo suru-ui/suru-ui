@@ -219,10 +219,11 @@ $RECYCLE.BIN/
 
 ################################################################################
 
-__screenshots__
-.blume-verify
-.history
+.agents/
+.claude/
+.history/
+.vitest-attachments/
+__screenshots__/
+reports/
 .tmp-*
-.vitest-attachments
-reports
 review*.md
