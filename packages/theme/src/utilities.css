@@ -1,37 +1,18 @@
 @layer sui.utilities {
-  @function --_sui-exp-func(--level, --base, --growth, --offset) {
-    --exp: calc(var(--growth) * var(--level));
-    --coef: var(--level);
-    --value: calc(var(--coef) * pow(var(--base), var(--exp)) + var(--offset));
-
-    result: calc((round(calc(var(--value) * 100)) / 100) * 1px);
-  }
-
   @function --sui-space(--level) {
-    result: --_sui-exp-func(
-      var(--level),
-      var(--sui-space-base),
-      var(--sui-space-growth),
-      var(--sui-space-offset)
-    );
+    result: calc(var(--sui-space-base) * var(--level));
   }
 
   @function --sui-gap(--level) {
-    result: --_sui-exp-func(
-      var(--level),
-      var(--sui-gap-base),
-      var(--sui-gap-growth),
-      var(--sui-gap-offset)
-    );
+    result: calc(var(--sui-gap-base) * var(--level));
   }
 
   @function --sui-border_width(--level) {
-    result: --_sui-exp-func(
-      var(--level),
-      var(--sui-border_width-base),
-      var(--sui-border_width-growth),
-      var(--sui-border_width-offset)
-    );
+    result: calc(var(--sui-border_width-base) * var(--level));
+  }
+
+  @function --sui-corner_radius(--level) {
+    result: calc(var(--sui-corner_radius-base) * var(--level));
   }
 
   @function --sui-icon_color(--canvas_text, --canvas) {

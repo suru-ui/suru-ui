@@ -515,22 +515,14 @@
   --sui-size-md: 28px;
   --sui-size-lg: 36px;
 
-  --sui-radius-sm: 4px;
-  --sui-radius-md: 4px;
-  --sui-radius-lg: 6px;
-  --sui-radius-xl: 12px;
+  --sui-space-base: var(--spacing, 4px);
 
-  --sui-space-base: 1.6;
-  --sui-space-growth: 0.4;
-  --sui-space-offset: 0;
+  --sui-gap-base: var(--spacing, 4px);
 
-  --sui-gap-base: 1.6;
-  --sui-gap-growth: 0.25;
-  --sui-gap-offset: 0;
+  --sui-border_width-base: 1px;
 
-  --sui-border_width-base: 3;
-  --sui-border_width-growth: 0.05;
-  --sui-border_width-offset: 0;
+  --sui-corner_radius-base: 8px;
+  --sui-superellipse: 1.4;
 
   --sui-text-oln-sm-n-font_size: 12px;
   --sui-text-oln-sm-n-font_weight: 400;

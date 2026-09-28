@@ -1,7 +1,7 @@
 @layer sui.source {
   /*
     https://tai-kun.github.io/alpha-color-lab/
-    alpha-Alpha: 0.8
+    Alpha: 0.8
   */
   :root {
     --_flexoki-black-alpha: #100f0f;
@@ -78,19 +78,19 @@
     --_flexoki-green-alpha-950: #1a1e0c;
 
     /*
-    --_flexoki-cyan-alpha-50:         rgb(213 238 225 / 0.8);
-    --_flexoki-cyan-alpha-100:        rgb(175 227 211 / 0.8);
-    --_flexoki-cyan-alpha-150:        rgb(139 215 198 / 0.8);
-    --_flexoki-cyan-alpha-200:        rgb(105 201 184 / 0.8);
-    --_flexoki-cyan-alpha-300:        rgb(49 173 155 / 0.8);
-    --_flexoki-cyan-alpha-400:        rgb(9 148 139 / 0.8);
-    --_flexoki-cyan-alpha-500:        #2F968D;
-    --_flexoki-cyan-alpha-600:        #24837B;
-    --_flexoki-cyan-alpha-700:        #1C6C66;
-    --_flexoki-cyan-alpha-800:        #164F4A;
-    --_flexoki-cyan-alpha-850:        #143F3C;
-    --_flexoki-cyan-alpha-900:        #122F2C;
-    --_flexoki-cyan-alpha-950:        #101F1D;
+    --_flexoki-cyan-alpha-50: rgb(213 238 225 / 0.8);
+    --_flexoki-cyan-alpha-100: rgb(175 227 211 / 0.8);
+    --_flexoki-cyan-alpha-150: rgb(139 215 198 / 0.8);
+    --_flexoki-cyan-alpha-200: rgb(105 201 184 / 0.8);
+    --_flexoki-cyan-alpha-300: rgb(49 173 155 / 0.8);
+    --_flexoki-cyan-alpha-400: rgb(9 148 139 / 0.8);
+    --_flexoki-cyan-alpha-500: 2F968D;
+    --_flexoki-cyan-alpha-600: 24837B;
+    --_flexoki-cyan-alpha-700: 1C6C66;
+    --_flexoki-cyan-alpha-800: 164F4A;
+    --_flexoki-cyan-alpha-850: 143F3C;
+    --_flexoki-cyan-alpha-900: 122F2C;
+    --_flexoki-cyan-alpha-950: 101F1D;
     */
 
     --_flexoki-blue-alpha-50: rgb(218 232 234 / 0.8);
