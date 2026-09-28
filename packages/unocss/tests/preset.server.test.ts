@@ -191,14 +191,27 @@ describe("位置", () => {
 });
 
 describe("枠線と角丸", () => {
-  test("枠線の幅を --sui-border_width() で生成する", async ({ expect }) => {
+  test("枠線の幅を --sui-border_width() と border-style で生成する", async ({ expect }) => {
     // 実行
     const css = await generate(["border-sui-2", "border-t-sui-1", "outline-sui-3"]);
 
     // 検証
-    expect(css).toContain(".border-sui-2{border-width:--sui-border_width(2);}");
-    expect(css).toContain(".border-t-sui-1{border-top-width:--sui-border_width(1);}");
+    expect(css).toContain(".border-sui-2{border-width:--sui-border_width(2);border-style:solid;}");
+    expect(css).toContain(
+      ".border-t-sui-1{border-top-width:--sui-border_width(1);border-style:solid;}",
+    );
     expect(css).toContain(".outline-sui-3{outline-width:--sui-border_width(3);}");
+  });
+
+  test("枠線の幅の段階を省略すると既定値を使う", async ({ expect }) => {
+    // 実行
+    const css = await generate(["border-sui", "border-t-sui"]);
+
+    // 検証
+    expect(css).toContain(".border-sui{border-width:--sui-border_width(1);border-style:solid;}");
+    expect(css).toContain(
+      ".border-t-sui{border-top-width:--sui-border_width(1);border-style:solid;}",
+    );
   });
 
   test("角丸を --sui-corner_radius() と corner-shape で生成する", async ({ expect }) => {
@@ -233,7 +246,7 @@ describe("枠線と角丸", () => {
 
     // 検証
     expect(css).toContain(".border-sui-blue-60{border-color:var(--sui-blue-60);}");
-    expect(css).toContain(".border-sui-2{border-width:--sui-border_width(2);}");
+    expect(css).toContain(".border-sui-2{border-width:--sui-border_width(2);border-style:solid;}");
   });
 });
 
@@ -312,6 +325,7 @@ describe("名前空間", () => {
         "bg-blue-60",
         "text-canvas_text-1",
         "border-blue-solid-border-normal",
+        "border-1",
         "rounded-2",
         "rounded",
         "font-mono",
@@ -332,6 +346,7 @@ describe("名前空間", () => {
     expect(css).toContain(
       ".border-blue-solid-border-normal{border-color:var(--sui-blue-solid-border-normal);}",
     );
+    expect(css).toContain(".border-1{border-width:--sui-border_width(1);border-style:solid;}");
     expect(css).toContain(
       ".rounded-2{border-radius:--sui-corner_radius(2);corner-shape:superellipse(var(--sui-superellipse));}",
     );

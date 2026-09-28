@@ -18,10 +18,13 @@ import {
   SPACE_PROPERTIES,
   TEXT_STYLE_VALUE,
   DEFAULT_NAMESPACE,
+  BORDER_STYLE_VALUE,
   CORNER_SHAPE_VALUE,
   OUTLINE_PROPERTIES,
   NAMESPACED_SEPARATOR,
+  DEFAULT_BORDER_LEVEL,
   DEFAULT_RADIUS_LEVEL,
+  BORDER_STYLE_PROPERTY,
   CORNER_SHAPE_PROPERTY,
   TEXT_STYLE_PROPERTIES,
   UNNAMESPACED_SEPARATOR,
@@ -164,7 +167,11 @@ function createBorderWidthRule(separator: string): Rule {
     BORDER_WIDTH_PROPERTIES,
     separator,
     LEVEL_CAPTURE,
-    scale("--sui-border_width"),
+    (properties, level) => [
+      ...toEntries(properties, `--sui-border_width(${level ?? DEFAULT_BORDER_LEVEL})`),
+      [BORDER_STYLE_PROPERTY, BORDER_STYLE_VALUE],
+    ],
+    { optional: true },
   );
 }
 

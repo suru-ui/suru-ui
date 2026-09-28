@@ -257,6 +257,21 @@ export const BORDER_WIDTH_PROPERTIES = {
 } as const satisfies Properties;
 
 /**
+ * 枠線の幅の段階を省略したときの既定値です。
+ */
+export const DEFAULT_BORDER_LEVEL = 1;
+
+/**
+ * 枠線のスタイルを設定する CSS プロパティーです。
+ */
+export const BORDER_STYLE_PROPERTY = "border-style";
+
+/**
+ * 枠線のスタイルの既定値です。
+ */
+export const BORDER_STYLE_VALUE = "solid";
+
+/**
  * 角丸の段階を省略したときの既定値です。
  */
 export const DEFAULT_RADIUS_LEVEL = 1;
