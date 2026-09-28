@@ -1,14 +1,37 @@
-import { isFontFamily, isSize } from "@suru-ui/theme";
-import type { CSSEntry, Rule } from "@unocss/core";
+import { isSize, isFontFamily } from "@suru-ui/theme";
+import { escapeRegExp } from "@unocss/core";
+import type { Rule, CSSEntry } from "@unocss/core";
 
-import { colorTokenVar, isColorToken, isTextStyle, textStyleVar } from "./tokens.js";
+import {
+  type Properties,
+  ANY_VALUE,
+  COLOR_VALUE,
+  MAX_OPACITY,
+  LEVEL_CAPTURE,
+  LEVEL_PATTERN,
+  GAP_PROPERTIES,
+  FONT_PROPERTIES,
+  SIZE_PROPERTIES,
+  COLOR_PROPERTIES,
+  INSET_PROPERTIES,
+  RADIUS_PROPERTIES,
+  SPACE_PROPERTIES,
+  TEXT_STYLE_VALUE,
+  DEFAULT_NAMESPACE,
+  OUTLINE_PROPERTIES,
+  NAMESPACED_SEPARATOR,
+  TEXT_STYLE_PROPERTIES,
+  UNNAMESPACED_SEPARATOR,
+  BORDER_WIDTH_PROPERTIES,
+} from "./constants.js";
+import { isTextStyle, isColorToken, textStyleVar, colorTokenVar } from "./tokens.js";
 
 /**
  * ルール生成のオプションです。
  */
 export interface CreateRulesOptions {
   /**
-   * ユーティリティーの名前に `sui` の名前空間を付けるかどうかです。
+   * ユーティリティー名に `sui` の名前空間を付けるかどうかです。
    *
    * `false` にすると `p-sui-2` ではなく `p-2` を生成し、既存のルールを上書きできます。
    *
@@ -18,14 +41,38 @@ export interface CreateRulesOptions {
 }
 
 /**
+ * 正規表現がキャプチャーした値を CSS エントリーに変換する関数です。
+ *
+ * @param properties ユーティリティーが設定する CSS プロパティーです。
+ * @param values 正規表現がキャプチャーした値です。
+ * @returns 生成する CSS エントリーです。`undefined` を返すとユーティリティーは生成されません。
+ */
+type Resolver = (
+  properties: readonly string[],
+  ...values: (string | undefined)[]
+) => CSSEntry[] | undefined;
+
+/**
+ * 動的ルールの作成オプションです。
+ */
+interface PropertyRuleOptions {
+  /**
+   * 先頭に `-` を付けた負の値を受け付けるかどうかです。
+   *
+   * 関数を渡すと、受け付けるかどうかをプロパティーごとに判定します。
+   */
+  negative?: boolean | ((property: string) => boolean);
+}
+
+/**
  * プリセットが提供する UnoCSS ルールの一覧を生成します。
  *
  * @param options 名前空間の有無です。
  * @returns ルールの一覧です。
  */
 export function createRules(options: CreateRulesOptions = {}): Rule[] {
-  const { namespace = true } = options;
-  const separator = namespace ? "-sui-" : "-";
+  const { namespace = DEFAULT_NAMESPACE } = options;
+  const separator = namespace ? NAMESPACED_SEPARATOR : UNNAMESPACED_SEPARATOR;
 
   return [
     createColorRule(separator),
@@ -41,258 +88,105 @@ export function createRules(options: CreateRulesOptions = {}): Rule[] {
   ];
 }
 
-const COLOR_PROPERTIES = {
-  bg: ["background-color"],
-  text: ["color"],
-  border: ["border-color"],
-  outline: ["outline-color"],
-  fill: ["fill"],
-  stroke: ["stroke"],
-  caret: ["caret-color"],
-  accent: ["accent-color"],
-  decoration: ["text-decoration-color"],
-} as const satisfies Record<string, readonly string[]>;
-
-const SPACE_PROPERTIES = {
-  p: ["padding"],
-  px: ["padding-inline"],
-  py: ["padding-block"],
-  ps: ["padding-inline-start"],
-  pe: ["padding-inline-end"],
-  pt: ["padding-top"],
-  pr: ["padding-right"],
-  pb: ["padding-bottom"],
-  pl: ["padding-left"],
-  m: ["margin"],
-  mx: ["margin-inline"],
-  my: ["margin-block"],
-  ms: ["margin-inline-start"],
-  me: ["margin-inline-end"],
-  mt: ["margin-top"],
-  mr: ["margin-right"],
-  mb: ["margin-bottom"],
-  ml: ["margin-left"],
-} as const satisfies Record<string, readonly string[]>;
-
-const GAP_PROPERTIES = {
-  gap: ["gap"],
-  "gap-x": ["column-gap"],
-  "gap-y": ["row-gap"],
-} as const satisfies Record<string, readonly string[]>;
-
-const SIZE_PROPERTIES = {
-  w: ["width"],
-  h: ["height"],
-  size: ["width", "height"],
-  "min-w": ["min-width"],
-  "max-w": ["max-width"],
-  "min-h": ["min-height"],
-  "max-h": ["max-height"],
-} as const satisfies Record<string, readonly string[]>;
-
-const INSET_PROPERTIES = {
-  inset: ["inset"],
-  "inset-x": ["inset-inline"],
-  "inset-y": ["inset-block"],
-  top: ["top"],
-  right: ["right"],
-  bottom: ["bottom"],
-  left: ["left"],
-  start: ["inset-inline-start"],
-  end: ["inset-inline-end"],
-} as const satisfies Record<string, readonly string[]>;
-
-const BORDER_WIDTH_PROPERTIES = {
-  border: ["border-width"],
-  "border-x": ["border-inline-width"],
-  "border-y": ["border-block-width"],
-  "border-t": ["border-top-width"],
-  "border-r": ["border-right-width"],
-  "border-b": ["border-bottom-width"],
-  "border-l": ["border-left-width"],
-  "border-s": ["border-inline-start-width"],
-  "border-e": ["border-inline-end-width"],
-} as const satisfies Record<string, readonly string[]>;
-
-const RADIUS_PROPERTIES = {
-  rounded: ["border-radius"],
-  "rounded-t": ["border-top-left-radius", "border-top-right-radius"],
-  "rounded-r": ["border-top-right-radius", "border-bottom-right-radius"],
-  "rounded-b": ["border-bottom-right-radius", "border-bottom-left-radius"],
-  "rounded-l": ["border-top-left-radius", "border-bottom-left-radius"],
-  "rounded-s": ["border-start-start-radius", "border-end-start-radius"],
-  "rounded-e": ["border-start-end-radius", "border-end-end-radius"],
-  "rounded-tl": ["border-top-left-radius"],
-  "rounded-tr": ["border-top-right-radius"],
-  "rounded-br": ["border-bottom-right-radius"],
-  "rounded-bl": ["border-bottom-left-radius"],
-  "rounded-ss": ["border-start-start-radius"],
-  "rounded-se": ["border-start-end-radius"],
-  "rounded-ee": ["border-end-end-radius"],
-  "rounded-es": ["border-end-start-radius"],
-} as const satisfies Record<string, readonly string[]>;
-
-const LEVEL_PATTERN = /^\d+(?:\.\d+)?$/;
-
 function createColorRule(separator: string): Rule {
-  return [
-    new RegExp(`^(${Object.keys(COLOR_PROPERTIES).join("|")})${separator}(.+?)(?:/(\\d{1,3}))?$`),
-    (match) => {
-      const property = match[1];
-      const token = match[2];
-      const opacity = match[3];
-
-      if (property === undefined || token === undefined) return;
-      if (!isKeyOf(COLOR_PROPERTIES, property) || !isColorToken(token)) return;
+  return createPropertyRule(
+    COLOR_PROPERTIES,
+    separator,
+    COLOR_VALUE,
+    (properties, token, opacity) => {
+      if (token === undefined || !isColorToken(token)) return;
 
       const color = colorTokenVar(token);
 
       if (opacity === undefined) {
-        return toEntries(COLOR_PROPERTIES[property], color);
+        return toEntries(properties, color);
       }
 
-      if (Number(opacity) > 100) return;
+      if (Number(opacity) > MAX_OPACITY) return;
 
-      return toEntries(
-        COLOR_PROPERTIES[property],
-        `color-mix(in oklab, ${color} ${opacity}%, transparent)`,
-      );
+      return toEntries(properties, `color-mix(in oklab, ${color} ${opacity}%, transparent)`);
     },
-  ];
+  );
 }
 
 function createSpaceRule(separator: string): Rule {
-  return [
-    new RegExp(`^(-?)(${Object.keys(SPACE_PROPERTIES).join("|")})${separator}(\\d+(?:\\.\\d+)?)$`),
-    (match) => {
-      const sign = match[1];
-      const property = match[2];
-      const level = match[3];
-
-      if (sign === undefined || property === undefined || level === undefined) return;
-      if (!isKeyOf(SPACE_PROPERTIES, property)) return;
-      if (sign === "-" && !property.startsWith("m")) return;
-
-      return toEntries(SPACE_PROPERTIES[property], `--sui-space(${sign}${level})`);
-    },
-  ];
+  return createPropertyRule(
+    SPACE_PROPERTIES,
+    separator,
+    LEVEL_CAPTURE,
+    signedScale("--sui-space"),
+    { negative: (property) => property.startsWith("m") },
+  );
 }
 
 function createGapRule(separator: string): Rule {
-  return [
-    new RegExp(`^(${Object.keys(GAP_PROPERTIES).join("|")})${separator}(\\d+(?:\\.\\d+)?)$`),
-    (match) => {
-      const property = match[1];
-      const level = match[2];
-
-      if (property === undefined || level === undefined) return;
-      if (!isKeyOf(GAP_PROPERTIES, property)) return;
-
-      return toEntries(GAP_PROPERTIES[property], `--sui-gap(${level})`);
-    },
-  ];
+  return createPropertyRule(GAP_PROPERTIES, separator, LEVEL_CAPTURE, scale("--sui-gap"));
 }
 
 function createSizeRule(separator: string): Rule {
-  return [
-    new RegExp(`^(${Object.keys(SIZE_PROPERTIES).join("|")})${separator}(.+)$`),
-    (match) => {
-      const property = match[1];
-      const value = match[2];
+  return createPropertyRule(SIZE_PROPERTIES, separator, ANY_VALUE, (properties, value) => {
+    if (value === undefined) return;
 
-      if (property === undefined || value === undefined) return;
-      if (!isKeyOf(SIZE_PROPERTIES, property)) return;
+    if (isSize(value)) {
+      return toEntries(properties, `var(--sui-size-${value})`);
+    }
 
-      if (isSize(value)) {
-        return toEntries(SIZE_PROPERTIES[property], `var(--sui-size-${value})`);
-      }
+    if (LEVEL_PATTERN.test(value)) {
+      return toEntries(properties, `--sui-space(${value})`);
+    }
 
-      if (LEVEL_PATTERN.test(value)) {
-        return toEntries(SIZE_PROPERTIES[property], `--sui-space(${value})`);
-      }
-
-      return;
-    },
-  ];
+    return;
+  });
 }
 
 function createInsetRule(separator: string): Rule {
-  return [
-    new RegExp(`^(-?)(${Object.keys(INSET_PROPERTIES).join("|")})${separator}(\\d+(?:\\.\\d+)?)$`),
-    (match) => {
-      const sign = match[1];
-      const property = match[2];
-      const level = match[3];
-
-      if (sign === undefined || property === undefined || level === undefined) return;
-      if (!isKeyOf(INSET_PROPERTIES, property)) return;
-
-      return toEntries(INSET_PROPERTIES[property], `--sui-space(${sign}${level})`);
-    },
-  ];
+  return createPropertyRule(
+    INSET_PROPERTIES,
+    separator,
+    LEVEL_CAPTURE,
+    signedScale("--sui-space"),
+    { negative: true },
+  );
 }
 
 function createBorderWidthRule(separator: string): Rule {
-  return [
-    new RegExp(
-      `^(${Object.keys(BORDER_WIDTH_PROPERTIES).join("|")})${separator}(\\d+(?:\\.\\d+)?)$`,
-    ),
-    (match) => {
-      const property = match[1];
-      const level = match[2];
-
-      if (property === undefined || level === undefined) return;
-      if (!isKeyOf(BORDER_WIDTH_PROPERTIES, property)) return;
-
-      return toEntries(BORDER_WIDTH_PROPERTIES[property], `--sui-border_width(${level})`);
-    },
-  ];
+  return createPropertyRule(
+    BORDER_WIDTH_PROPERTIES,
+    separator,
+    LEVEL_CAPTURE,
+    scale("--sui-border_width"),
+  );
 }
 
 function createOutlineWidthRule(separator: string): Rule {
-  return [
-    new RegExp(`^outline${separator}(\\d+(?:\\.\\d+)?)$`),
-    (match) => {
-      const level = match[1];
-
-      if (level === undefined) return;
-
-      return { "outline-width": `--sui-border_width(${level})` };
-    },
-  ];
+  return createPropertyRule(
+    OUTLINE_PROPERTIES,
+    separator,
+    LEVEL_CAPTURE,
+    scale("--sui-border_width"),
+  );
 }
 
 function createRadiusRule(separator: string): Rule {
-  return [
-    new RegExp(`^(${Object.keys(RADIUS_PROPERTIES).join("|")})${separator}(\\d+(?:\\.\\d+)?)$`),
-    (match) => {
-      const property = match[1];
-      const level = match[2];
-
-      if (property === undefined || level === undefined) return;
-      if (!isKeyOf(RADIUS_PROPERTIES, property)) return;
-
-      return toEntries(RADIUS_PROPERTIES[property], `--sui-corner_radius(${level})`);
-    },
-  ];
+  return createPropertyRule(
+    RADIUS_PROPERTIES,
+    separator,
+    LEVEL_CAPTURE,
+    scale("--sui-corner_radius"),
+  );
 }
 
 function createFontFamilyRule(separator: string): Rule {
-  return [
-    new RegExp(`^font${separator}(.+)$`),
-    (match) => {
-      const family = match[1];
+  return createPropertyRule(FONT_PROPERTIES, separator, ANY_VALUE, (properties, family) => {
+    if (family === undefined || !isFontFamily(family)) return;
 
-      if (family === undefined || !isFontFamily(family)) return;
-
-      return { "font-family": `var(--sui-font-${family})` };
-    },
-  ];
+    return toEntries(properties, `var(--sui-font-${family})`);
+  });
 }
 
 function createTextStyleRule(separator: string): Rule {
   return [
-    new RegExp(`^text${separator}((?:dns|oln|std)-.+)$`),
+    new RegExp(`^text${separator}${TEXT_STYLE_VALUE}$`),
     (match) => {
       const style = match[1];
 
@@ -303,19 +197,89 @@ function createTextStyleRule(separator: string): Rule {
   ];
 }
 
+/**
+ * ユーティリティー名の接頭辞から CSS プロパティーへの対応表をもとに動的ルールを作成します。
+ *
+ * @param properties ユーティリティー名の接頭辞から CSS プロパティーへの対応表です。
+ * @param separator 接頭辞と値の区切り文字です。
+ * @param value 値をキャプチャーするグループを含む正規表現のソースです。
+ * @param resolve キャプチャーした値を CSS エントリーに変換する関数です。
+ * @param options 負の値の受け付けに関するオプションです。
+ * @returns 動的ルールです。
+ */
+function createPropertyRule(
+  properties: Properties,
+  separator: string,
+  value: string,
+  resolve: Resolver,
+  options: PropertyRuleOptions = {},
+): Rule {
+  const { negative = false } = options;
+  const signed = negative !== false;
+  const names = Object.keys(properties).map(escapeRegExp).join("|");
+  const pattern = new RegExp(
+    signed ? `^(-?)(${names})${separator}${value}$` : `^(${names})${separator}${value}$`,
+  );
+  const canBeNegative = typeof negative === "function" ? negative : () => true;
+
+  return [
+    pattern,
+    (match) => {
+      // 符号付きの場合は `match[1]` が符号になるため、以降のキャプチャーは 1 つ後ろにずれます。
+      const offset = signed ? 1 : 0;
+      const sign = signed ? (match[1] ?? "") : undefined;
+      const name = match[1 + offset];
+
+      if (name === undefined) return;
+
+      if (sign === "-" && !canBeNegative(name)) return;
+
+      const cssProperties = properties[name];
+
+      if (cssProperties === undefined) return;
+
+      const values = signed ? [sign, ...match.slice(2 + offset)] : match.slice(2 + offset);
+
+      return resolve(cssProperties, ...values);
+    },
+  ];
+}
+
+/**
+ * 段階の数値を引数にした CSS 関数呼び出しを生成するリゾルバーを作成します。
+ *
+ * @param reference 呼び出す CSS 関数です。
+ * @returns 段階の数値を `reference` の引数にした CSS 関数呼び出しを生成するリゾルバーです。
+ */
+function scale(reference: string): Resolver {
+  return (properties, level) => {
+    if (level === undefined) return;
+
+    return toEntries(properties, `${reference}(${level})`);
+  };
+}
+
+/**
+ * 符号を保持したまま段階の数値を引数にした CSS 関数呼び出しを生成するリゾルバーを作成します。
+ *
+ * @param reference 呼び出す CSS 関数です。
+ * @returns 符号付きの段階の数値を `reference` の引数にした CSS 関数呼び出しを生成するリゾルバーです。
+ */
+function signedScale(reference: string): Resolver {
+  return (properties, sign, level) => {
+    if (level === undefined) return;
+
+    return toEntries(properties, `${reference}(${sign ?? ""}${level})`);
+  };
+}
+
 function toEntries(properties: readonly string[], value: string): CSSEntry[] {
   return properties.map((property): CSSEntry => [property, value]);
 }
 
 function textStyleEntries(style: string): CSSEntry[] {
-  return [
-    ["font-size", textStyleVar(style, "font_size")],
-    ["font-weight", textStyleVar(style, "font_weight")],
-    ["letter-spacing", textStyleVar(style, "letter_spacing")],
-    ["line-height", textStyleVar(style, "line_height")],
-  ];
-}
-
-function isKeyOf<T extends object>(object: T, key: string): key is Extract<keyof T, string> {
-  return Object.hasOwn(object, key);
+  return TEXT_STYLE_PROPERTIES.map((property): CSSEntry => [
+    property.replaceAll("_", "-"),
+    textStyleVar(style, property),
+  ]);
 }

@@ -1,23 +1,23 @@
 import { createGenerator } from "@unocss/core";
 import { presetWind3 } from "unocss";
-import { describe, expect, test } from "vitest";
+import { describe, test } from "vitest";
 
 import { SUI_UTILITIES_LAYER, presetSuruUI } from "../src/index.js";
 
 const preset = presetSuruUI();
 
+/**
+ * 指定したユーティリティーを Suru UI のプリセットで生成し、その CSS を返します。
+ */
 async function generate(utilities: string | string[]): Promise<string> {
-  // 準備
   const uno = await createGenerator({ presets: [preset] });
-
-  // 実行
   const { css } = await uno.generate(utilities, { preflights: false });
 
   return css;
 }
 
 describe("presetSuruUI", () => {
-  test("プリセット名とレイヤーを提供する", () => {
+  test("プリセット名とレイヤーを提供する", ({ expect }) => {
     // 検証
     expect(preset.name).toBe("@suru-ui/unocss");
     expect(preset.layer).toBe(SUI_UTILITIES_LAYER);
@@ -25,7 +25,7 @@ describe("presetSuruUI", () => {
 });
 
 describe("色トークン", () => {
-  test("スケールの色をユーティリティーとして生成する", async () => {
+  test("スケールの色をユーティリティーとして生成する", async ({ expect }) => {
     // 実行
     const css = await generate([
       "bg-sui-blue-60",
@@ -41,7 +41,7 @@ describe("色トークン", () => {
     expect(css).toContain(".fill-sui-green-40{fill:var(--sui-green-40);}");
   });
 
-  test("意味を持つ色をユーティリティーとして生成する", async () => {
+  test("意味を持つ色をユーティリティーとして生成する", async ({ expect }) => {
     // 実行
     const css = await generate([
       "bg-sui-canvas-1",
@@ -67,7 +67,7 @@ describe("色トークン", () => {
     );
   });
 
-  test("配色テンプレートの色をユーティリティーとして生成する", async () => {
+  test("配色テンプレートの色をユーティリティーとして生成する", async ({ expect }) => {
     // 実行
     const css = await generate([
       "bg-sui-green-liquid-canvas-strong",
@@ -87,7 +87,7 @@ describe("色トークン", () => {
     );
   });
 
-  test("不透明度を受け付ける", async () => {
+  test("不透明度を受け付ける", async ({ expect }) => {
     // 実行
     const css = await generate(["bg-sui-blue-60/50", "text-sui-canvas_text-1/25"]);
 
@@ -100,7 +100,7 @@ describe("色トークン", () => {
     );
   });
 
-  test("存在しない色トークンと範囲外の不透明度を無視する", async () => {
+  test("存在しない色トークンと範囲外の不透明度を無視する", async ({ expect }) => {
     // 実行
     const css = await generate(["bg-sui-blue-1", "bg-sui-unknown", "bg-sui-blue-60/101"]);
 
@@ -110,7 +110,7 @@ describe("色トークン", () => {
 });
 
 describe("余白", () => {
-  test("パディングとマージンを --sui-space() で生成する", async () => {
+  test("パディングとマージンを --sui-space() で生成する", async ({ expect }) => {
     // 実行
     const css = await generate(["p-sui-2", "mt-sui-3", "px-sui-1"]);
 
@@ -120,7 +120,7 @@ describe("余白", () => {
     expect(css).toContain(".px-sui-1{padding-inline:--sui-space(1);}");
   });
 
-  test("マージンの負の値を生成する", async () => {
+  test("マージンの負の値を生成する", async ({ expect }) => {
     // 実行
     const css = await generate(["-m-sui-2"]);
 
@@ -128,7 +128,7 @@ describe("余白", () => {
     expect(css).toContain(".-m-sui-2{margin:--sui-space(-2);}");
   });
 
-  test("パディングの負の値を無視する", async () => {
+  test("パディングの負の値を無視する", async ({ expect }) => {
     // 実行
     const css = await generate(["-p-sui-2"]);
 
@@ -136,7 +136,7 @@ describe("余白", () => {
     expect(css).toBe("");
   });
 
-  test("ギャップを --sui-gap() で生成する", async () => {
+  test("ギャップを --sui-gap() で生成する", async ({ expect }) => {
     // 実行
     const css = await generate(["gap-sui-4", "gap-x-sui-2", "gap-y-sui-1.5"]);
 
@@ -145,10 +145,18 @@ describe("余白", () => {
     expect(css).toContain(".gap-x-sui-2{column-gap:--sui-gap(2);}");
     expect(css).toContain(".gap-y-sui-1\\.5{row-gap:--sui-gap(1.5);}");
   });
+
+  test("ギャップの負の値を無視する", async ({ expect }) => {
+    // 実行
+    const css = await generate(["-gap-sui-2"]);
+
+    // 検証
+    expect(css).toBe("");
+  });
 });
 
 describe("大きさ", () => {
-  test("数値の大きさを --sui-space() で生成する", async () => {
+  test("数値の大きさを --sui-space() で生成する", async ({ expect }) => {
     // 実行
     const css = await generate(["w-sui-8", "h-sui-4", "size-sui-2", "min-w-sui-10"]);
 
@@ -159,7 +167,7 @@ describe("大きさ", () => {
     expect(css).toContain(".min-w-sui-10{min-width:--sui-space(10);}");
   });
 
-  test("名前付きの大きさをトークンで生成する", async () => {
+  test("名前付きの大きさをトークンで生成する", async ({ expect }) => {
     // 実行
     const css = await generate(["w-sui-sm", "h-sui-md", "size-sui-lg"]);
 
@@ -171,7 +179,7 @@ describe("大きさ", () => {
 });
 
 describe("位置", () => {
-  test("位置を --sui-space() で生成する", async () => {
+  test("位置を --sui-space() で生成する", async ({ expect }) => {
     // 実行
     const css = await generate(["top-sui-2", "inset-x-sui-1", "-inset-sui-3"]);
 
@@ -183,7 +191,7 @@ describe("位置", () => {
 });
 
 describe("枠線と角丸", () => {
-  test("枠線の幅を --sui-border_width() で生成する", async () => {
+  test("枠線の幅を --sui-border_width() で生成する", async ({ expect }) => {
     // 実行
     const css = await generate(["border-sui-2", "border-t-sui-1", "outline-sui-3"]);
 
@@ -193,7 +201,7 @@ describe("枠線と角丸", () => {
     expect(css).toContain(".outline-sui-3{outline-width:--sui-border_width(3);}");
   });
 
-  test("角丸を --sui-corner_radius() で生成する", async () => {
+  test("角丸を --sui-corner_radius() で生成する", async ({ expect }) => {
     // 実行
     const css = await generate(["rounded-sui-2", "rounded-t-sui-1"]);
 
@@ -204,7 +212,7 @@ describe("枠線と角丸", () => {
     );
   });
 
-  test("色トークンと幅のユーティリティーを区別する", async () => {
+  test("色トークンと幅のユーティリティーを区別する", async ({ expect }) => {
     // 実行
     const css = await generate(["border-sui-blue-60", "border-sui-2"]);
 
@@ -215,7 +223,7 @@ describe("枠線と角丸", () => {
 });
 
 describe("フォント", () => {
-  test("フォントファミリーをトークンで生成する", async () => {
+  test("フォントファミリーをトークンで生成する", async ({ expect }) => {
     // 実行
     const css = await generate(["font-sui-sans", "font-sui-mono"]);
 
@@ -224,7 +232,7 @@ describe("フォント", () => {
     expect(css).toContain(".font-sui-mono{font-family:var(--sui-font-mono);}");
   });
 
-  test("存在しないフォントファミリーを無視する", async () => {
+  test("存在しないフォントファミリーを無視する", async ({ expect }) => {
     // 実行
     const css = await generate(["font-sui-serif"]);
 
@@ -232,7 +240,7 @@ describe("フォント", () => {
     expect(css).toBe("");
   });
 
-  test("文字スタイルをトークンで生成する", async () => {
+  test("文字スタイルをトークンで生成する", async ({ expect }) => {
     // 実行
     const css = await generate(["text-sui-oln-md-m"]);
 
@@ -242,7 +250,7 @@ describe("フォント", () => {
     );
   });
 
-  test("存在しない文字スタイルを無視する", async () => {
+  test("存在しない文字スタイルを無視する", async ({ expect }) => {
     // 実行
     const css = await generate(["text-sui-dns-md-m", "text-sui-oln-5xl-n"]);
 
@@ -252,7 +260,7 @@ describe("フォント", () => {
 });
 
 describe("CSS カスケードレイヤー", () => {
-  test("sui.utilities レイヤーに出力する", async () => {
+  test("sui.utilities レイヤーに出力する", async ({ expect }) => {
     // 準備
     const uno = await createGenerator({
       outputToCssLayers: true,
@@ -268,7 +276,7 @@ describe("CSS カスケードレイヤー", () => {
 });
 
 describe("名前空間", () => {
-  test("既定では名前空間を外したユーティリティーを生成しない", async () => {
+  test("既定では名前空間を外したユーティリティーを生成しない", async ({ expect }) => {
     // 実行
     const css = await generate(["p-2", "bg-blue-60", "rounded-2", "font-sans"]);
 
@@ -276,7 +284,7 @@ describe("名前空間", () => {
     expect(css).toBe("");
   });
 
-  test("名前空間を外して生成する", async () => {
+  test("名前空間を外して生成する", async ({ expect }) => {
     // 準備
     const uno = await createGenerator({
       presets: [presetSuruUI({ namespace: false })],
@@ -320,7 +328,7 @@ describe("名前空間", () => {
     expect(css).toContain(".size-8{width:--sui-space(8);height:--sui-space(8);}");
   });
 
-  test("後に置いたプリセットとして別のプリセットのルールを上書きする", async () => {
+  test("別のプリセットの後に置くとルールを上書きする", async ({ expect }) => {
     // 準備
     const uno = await createGenerator({
       presets: [presetWind3(), presetSuruUI({ namespace: false })],

@@ -1,18 +1,29 @@
-export { SUI_UTILITIES_LAYER, presetSuruUI } from "./preset.js";
+export { presetSuruUI } from "./preset.js";
 export type { PresetSuruUIOptions } from "./preset.js";
-export type { Prominence, TemplatePart, TextFamily, TextSize, TextWeight } from "./tokens.js";
+export type {
+  TextSize,
+  Prominence,
+  TextFamily,
+  TextWeight,
+  TemplatePart,
+  TextStyleProperty,
+} from "./constants.js";
 export {
-  COLOR_STEPS,
-  COLOR_TOKENS,
-  GREY_COLOR_STEPS,
-  PROMINENCES,
-  TEMPLATE_PARTS,
-  TEXT_FAMILIES,
   TEXT_SIZES,
-  TEXT_STYLES,
+  COLOR_STEPS,
+  PROMINENCES,
   TEXT_WEIGHTS,
-  colorTokenVar,
-  isColorToken,
+  TEXT_FAMILIES,
+  TEMPLATE_PARTS,
+  GREY_COLOR_STEPS,
+  SUI_UTILITIES_LAYER,
+  TEXT_STYLE_PROPERTIES,
+} from "./constants.js";
+export {
   isTextStyle,
+  TEXT_STYLES,
+  COLOR_TOKENS,
+  isColorToken,
   textStyleVar,
+  colorTokenVar,
 } from "./tokens.js";
