@@ -500,9 +500,9 @@
   --sui-tooltip-canvas: #5a5a5a;
   --sui-tooltip-canvas_text: #fff;
 
-  --sui-border-1: var(--sui-grey-30);
-  --sui-border-2: var(--sui-grey-40);
-  --sui-border-3: var(--sui-grey-50);
+  --sui-border-1: var(--sui-grey-20);
+  --sui-border-2: var(--sui-grey-30);
+  --sui-border-3: var(--sui-grey-40);
 
   --sui-backdrop-color: oklab(0 0 0 / 0.1);
   --sui-backdrop-blur: 4px;

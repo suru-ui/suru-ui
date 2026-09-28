@@ -13,7 +13,7 @@
 - [x] `Textarea`（shadcn/ui, Mantine, Chakra UI, daisyUI, PrimeReact）
 - [x] `Label`（shadcn/ui, Mantine, Chakra UI, daisyUI, PrimeReact）
 - [x] `Badge`（shadcn/ui, HeroUI, Mantine, Chakra UI, daisyUI, MUI, PrimeReact）
-- [ ] `Card`（shadcn/ui, HeroUI, Mantine, Chakra UI, daisyUI, MUI, PrimeReact）
+- [x] `Card`（shadcn/ui, HeroUI, Mantine, Chakra UI, daisyUI, MUI, PrimeReact）
 - [x] `Skeleton`（shadcn/ui, HeroUI, Mantine, Chakra UI, MUI, PrimeReact）
 - [ ] `Table`（shadcn/ui, HeroUI, Mantine, Chakra UI, daisyUI, MUI）
 - [x] `Pagination`（shadcn/ui, HeroUI, Mantine, Chakra UI, daisyUI, MUI, PrimeReact）

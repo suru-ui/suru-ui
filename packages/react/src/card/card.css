@@ -1,0 +1,475 @@
+/* Root */
+@layer sui.component {
+@scope (.sui_card) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-style: solid;
+}
+
+/* 変数 */
+:scope {
+  --sui_card-gap: ;
+  --sui_card-padding_block_start: ;
+  --sui_card-padding_block_end: ;
+  --sui_card-font_family: ;
+  --sui_card-font_size: ;
+  --sui_card-font_weight: ;
+  --sui_card-line_height: ;
+  --sui_card-color: ;
+  --sui_card-letter_spacing: ;
+  --sui_card-background_color: ;
+  --sui_card-border_color: ;
+  --sui_card-border_width: ;
+  --sui_card-border_radius: ;
+}
+
+/* 可変 */
+:scope {
+  gap: var(--sui_card-gap);
+  padding-block-start: var(--_sui_card-padding_block_start, var(--sui_card-padding_block_start));
+  padding-block-end: var(--_sui_card-padding_block_end, var(--sui_card-padding_block_end));
+  font-family: var(--sui_card-font_family);
+  font-size: var(--sui_card-font_size);
+  font-weight: var(--sui_card-font_weight);
+  line-height: var(--sui_card-line_height);
+  color: var(--sui_card-color);
+  letter-spacing: var(--sui_card-letter_spacing);
+  background-color: var(--sui_card-background_color);
+  border-color: var(--_sui_card-border_color, transparent);
+  border-width: var(--_sui_card-border_width, 0px);
+  border-radius: var(--sui_card-border_radius);
+}
+
+/* 代入 */
+:scope {
+  --sui_card-font_family: var(--sui-font-sans);
+  --sui_card-color: var(--sui-canvas_text-1);
+  --sui_card-background_color: if(
+                                 style(--sui-theme: dark): var(--sui-canvas-2);
+                                 else:                     var(--sui-canvas-1);
+                               );
+  --sui_card-border_color: var(--sui-border-1);
+  --sui_card-border_width: --sui-border_width(1);
+
+  &.sui_card-size_sm {
+    --sui_card-gap: --sui-gap(3);
+    --sui_card-padding_block_start: --sui-space(3);
+    --sui_card-padding_block_end: --sui-space(3);
+    --sui_card-font_size: var(--sui-text-std-sm-n-font_size);
+    --sui_card-font_weight: var(--sui-text-std-sm-n-font_weight);
+    --sui_card-line_height: var(--sui-text-std-sm-n-line_height);
+    --sui_card-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+  }
+
+  &.sui_card-size_md {
+    --sui_card-gap: --sui-gap(4);
+    --sui_card-padding_block_start: --sui-space(4);
+    --sui_card-padding_block_end: --sui-space(4);
+    --sui_card-font_size: var(--sui-text-std-md-n-font_size);
+    --sui_card-font_weight: var(--sui-text-std-md-n-font_weight);
+    --sui_card-line_height: var(--sui-text-std-md-n-line_height);
+    --sui_card-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
+  }
+
+  &.sui_card-size_lg {
+    --sui_card-gap: --sui-gap(5);
+    --sui_card-padding_block_start: --sui-space(5);
+    --sui_card-padding_block_end: --sui-space(5);
+    --sui_card-font_size: var(--sui-text-std-lg-n-font_size);
+    --sui_card-font_weight: var(--sui-text-std-lg-n-font_weight);
+    --sui_card-line_height: var(--sui-text-std-lg-n-line_height);
+    --sui_card-letter_spacing: var(--sui-text-std-lg-n-letter_spacing);
+  }
+
+  &.sui_card-radius_none {
+    --sui_card-border_radius: 0px;
+  }
+
+  &.sui_card-radius_sm {
+    --sui_card-border_radius: --sui-corner_radius(2);
+  }
+
+  &.sui_card-radius_md {
+    --sui_card-border_radius: --sui-corner_radius(3);
+  }
+
+  &.sui_card-radius_lg {
+    --sui_card-border_radius: --sui-corner_radius(4);
+  }
+}
+
+/* 変異 */
+:scope {
+  &.sui_card-outlined {
+    --_sui_card-border_color: var(--sui_card-border_color);
+    --_sui_card-border_width: var(--sui_card-border_width);
+  }
+
+  &:has(> img:first-child) {
+    --_sui_card-padding_block_start: 0px;
+  }
+
+  &:has(> .sui_card_footer) {
+    --_sui_card-padding_block_end: 0px;
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Header */
+@layer sui.component {
+@scope (.sui_card) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_card_header {
+    display: grid;
+    grid-template-columns: auto;
+    align-items: flex-start;
+  }
+
+  &:has(.sui_card_action) .sui_card_header {
+    grid-template-columns: 1fr auto;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_card_header-row_gap: ;
+  --sui_card_header-column_gap: ;
+  --sui_card_header-padding_inline: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_card_header {
+    row-gap: var(--sui_card_header-row_gap);
+    column-gap: var(--sui_card_header-column_gap);
+    padding-inline: var(--sui_card_header-padding_inline);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_card_header-row_gap: --sui-gap(1);
+  --sui_card_header-column_gap: --sui-gap(4);
+
+  &.sui_card-size_sm {
+    --sui_card_header-padding_inline: --sui-space(3);
+  }
+
+  &.sui_card-size_md {
+    --sui_card_header-padding_inline: --sui-space(4);
+  }
+
+  &.sui_card-size_lg {
+    --sui_card_header-padding_inline: --sui-space(5);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Title */
+@layer sui.component {
+@scope (.sui_card) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_card_title {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    line-break: strict;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_card_title-font_family: ;
+  --sui_card_title-font_size: ;
+  --sui_card_title-font_weight: ;
+  --sui_card_title-line_height: ;
+  --sui_card_title-color: ;
+  --sui_card_title-letter_spacing: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_card_title {
+    font-family: var(--sui_card_title-font_family);
+    font-size: var(--sui_card_title-font_size);
+    font-weight: var(--sui_card_title-font_weight);
+    line-height: var(--sui_card_title-line_height);
+    color: var(--sui_card_title-color);
+    letter-spacing: var(--sui_card_title-letter_spacing);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_card_title-font_family: var(--sui-font-sans);
+  --sui_card_title-color: var(--sui_card-color);
+
+  &.sui_card-size_sm {
+    --sui_card_title-font_size: var(--sui-text-std-sm-b-font_size);
+    --sui_card_title-font_weight: var(--sui-text-std-sm-b-font_weight);
+    --sui_card_title-line_height: var(--sui-text-std-sm-b-line_height);
+    --sui_card_title-letter_spacing: var(--sui-text-std-sm-b-letter_spacing);
+  }
+
+  &.sui_card-size_md {
+    --sui_card_title-font_size: var(--sui-text-std-md-b-font_size);
+    --sui_card_title-font_weight: var(--sui-text-std-md-b-font_weight);
+    --sui_card_title-line_height: var(--sui-text-std-md-b-line_height);
+    --sui_card_title-letter_spacing: var(--sui-text-std-md-b-letter_spacing);
+  }
+
+  &.sui_card-size_lg {
+    --sui_card_title-font_size: var(--sui-text-std-lg-b-font_size);
+    --sui_card_title-font_weight: var(--sui-text-std-lg-b-font_weight);
+    --sui_card_title-line_height: var(--sui-text-std-lg-b-line_height);
+    --sui_card_title-letter_spacing: var(--sui-text-std-lg-b-letter_spacing);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Description */
+@layer sui.component {
+@scope (.sui_card) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_card_description {
+    grid-column-start: 1;
+    line-break: strict;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+
+  &:has(.sui_card_title) .sui_card_description {
+    grid-row-start: 2;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_card_description-font_family: ;
+  --sui_card_description-font_size: ;
+  --sui_card_description-font_weight: ;
+  --sui_card_description-line_height: ;
+  --sui_card_description-color: ;
+  --sui_card_description-letter_spacing: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_card_description {
+    font-family: var(--sui_card_description-font_family);
+    font-size: var(--sui_card_description-font_size);
+    font-weight: var(--sui_card_description-font_weight);
+    line-height: var(--sui_card_description-line_height);
+    color: var(--sui_card_description-color);
+    letter-spacing: var(--sui_card_description-letter_spacing);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_card_description-font_family: var(--sui-font-sans);
+  --sui_card_description-color: var(--sui-canvas_text-2);
+
+  &.sui_card-size_sm {
+    --sui_card_description-font_size: var(--sui-text-std-sm-n-font_size);
+    --sui_card_description-font_weight: var(--sui-text-std-sm-n-font_weight);
+    --sui_card_description-line_height: var(--sui-text-std-sm-n-line_height);
+    --sui_card_description-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+  }
+
+  &.sui_card-size_md {
+    --sui_card_description-font_size: var(--sui-text-std-md-n-font_size);
+    --sui_card_description-font_weight: var(--sui-text-std-md-n-font_weight);
+    --sui_card_description-line_height: var(--sui-text-std-md-n-line_height);
+    --sui_card_description-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
+  }
+
+  &.sui_card-size_lg {
+    --sui_card_description-font_size: var(--sui-text-std-lg-n-font_size);
+    --sui_card_description-font_weight: var(--sui-text-std-lg-n-font_weight);
+    --sui_card_description-line_height: var(--sui-text-std-lg-n-line_height);
+    --sui_card_description-letter_spacing: var(--sui-text-std-lg-n-letter_spacing);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Action */
+@layer sui.component {
+@scope (.sui_card) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_card_action {
+    display: flex;
+    grid-row-start: 1;
+    grid-column-start: 2;
+    align-items: center;
+    justify-self: end;
+  }
+
+  &:has(.sui_card_title):has(.sui_card_description) .sui_card_action {
+    grid-row-end: 3;
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Content */
+@layer sui.component {
+@scope (.sui_card) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_card_content {
+    line-break: strict;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_card_content-padding_inline: ;
+  --sui_card_content-font_family: ;
+  --sui_card_content-font_size: ;
+  --sui_card_content-font_weight: ;
+  --sui_card_content-line_height: ;
+  --sui_card_content-color: ;
+  --sui_card_content-letter_spacing: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_card_content {
+    padding-inline: var(--sui_card_content-padding_inline);
+    font-family: var(--sui_card_content-font_family);
+    font-size: var(--sui_card_content-font_size);
+    font-weight: var(--sui_card_content-font_weight);
+    line-height: var(--sui_card_content-line_height);
+    color: var(--sui_card_content-color);
+    letter-spacing: var(--sui_card_content-letter_spacing);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_card_content-font_family: var(--sui-font-sans);
+  --sui_card_content-color: var(--sui_card-color);
+
+  &.sui_card-size_sm {
+    --sui_card_content-padding_inline: --sui-space(3);
+    --sui_card_content-font_size: var(--sui-text-std-sm-n-font_size);
+    --sui_card_content-font_weight: var(--sui-text-std-sm-n-font_weight);
+    --sui_card_content-line_height: var(--sui-text-std-sm-n-line_height);
+    --sui_card_content-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+  }
+
+  &.sui_card-size_md {
+    --sui_card_content-padding_inline: --sui-space(4);
+    --sui_card_content-font_size: var(--sui-text-std-md-n-font_size);
+    --sui_card_content-font_weight: var(--sui-text-std-md-n-font_weight);
+    --sui_card_content-line_height: var(--sui-text-std-md-n-line_height);
+    --sui_card_content-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
+  }
+
+  &.sui_card-size_lg {
+    --sui_card_content-padding_inline: --sui-space(5);
+    --sui_card_content-font_size: var(--sui-text-std-lg-n-font_size);
+    --sui_card_content-font_weight: var(--sui-text-std-lg-n-font_weight);
+    --sui_card_content-line_height: var(--sui-text-std-lg-n-line_height);
+    --sui_card_content-letter_spacing: var(--sui-text-std-lg-n-letter_spacing);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Footer */
+@layer sui.component {
+@scope (.sui_card) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_card_footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border-block-start-style: solid;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_card_footer-gap: ;
+  --sui_card_footer-padding_block_start: ;
+  --sui_card_footer-padding_block_end: ;
+  --sui_card_footer-padding_inline: ;
+  --sui_card_footer-background_color: ;
+  --sui_card_footer-border_color: ;
+  --sui_card_footer-border_width: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_card_footer {
+    gap: var(--sui_card_footer-gap);
+    padding-block-start: var(--sui_card_footer-padding_block_start);
+    padding-block-end: var(--sui_card_footer-padding_block_end);
+    padding-inline: var(--sui_card_footer-padding_inline);
+    background-color: var(--sui_card_footer-background_color);
+    border-block-start-color: var(--sui_card_footer-border_color);
+    border-block-start-width: var(--sui_card_footer-border_width);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_card_footer-gap: --sui-gap(2);
+  --sui_card_footer-background_color: if(
+                                        style(--sui-theme: dark): var(--sui-canvas-3);
+                                        else:                     var(--sui-canvas-2);
+                                      );
+  --sui_card_footer-border_color: var(--sui-border-1);
+  --sui_card_footer-border_width: --sui-border_width(1);
+
+  &.sui_card-size_sm {
+    --sui_card_footer-padding_block_start: --sui-space(3);
+    --sui_card_footer-padding_block_end: --sui-space(3);
+    --sui_card_footer-padding_inline: --sui-space(3);
+  }
+
+  &.sui_card-size_md {
+    --sui_card_footer-padding_block_start: --sui-space(4);
+    --sui_card_footer-padding_block_end: --sui-space(4);
+    --sui_card_footer-padding_inline: --sui-space(4);
+  }
+
+  &.sui_card-size_lg {
+    --sui_card_footer-padding_block_start: --sui-space(5);
+    --sui_card_footer-padding_block_end: --sui-space(5);
+    --sui_card_footer-padding_inline: --sui-space(5);
+  }
+}
+
+} /* @scope */
+} /* @layer */

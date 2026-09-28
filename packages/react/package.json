@@ -35,6 +35,10 @@
       "types": "./dist/src/breadcrumb/index.d.ts",
       "default": "./dist/src/breadcrumb/index.js"
     },
+    "./card": {
+      "types": "./dist/src/card/index.d.ts",
+      "default": "./dist/src/card/index.js"
+    },
     "./collapsible": {
       "types": "./dist/src/collapsible/index.d.ts",
       "default": "./dist/src/collapsible/index.js"
