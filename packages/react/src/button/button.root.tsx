@@ -5,7 +5,6 @@ import * as React from "react";
 
 import RenderElement from "../_render-element.jsx";
 import type { RenderProps } from "../_use-render.js";
-import { useActionGroupContext } from "../action-group/action-group.parts.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { ButtonContext } from "./button.context.js";
@@ -153,31 +152,25 @@ export type ButtonRootProps = ButtonRootProps.Render &
  * ボタンのルートコンポーネントです。
  */
 export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(props) {
-  const actionGroupCtx = useActionGroupContext(true);
   const {
     item = false,
-    size: sizeProp = "md",
+    size = "md",
     type = "button",
-    color: colorProp = "grey",
+    color = "grey",
     muted = false,
-    radius: radiusProp = sizeProp,
+    radius = size,
     render,
     pending = false,
     squared = false,
-    variant: variantProp = "solid",
+    variant = "solid",
     disabled = false,
-    outlined: outlinedProp = false,
+    outlined = false,
     className,
     focusableWhenDisabled = !disabled && pending,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
-  const size = actionGroupCtx?.size ?? sizeProp;
-  const color = actionGroupCtx?.color ?? colorProp;
-  const radius = actionGroupCtx?.radius ?? radiusProp;
-  const variant = actionGroupCtx?.variant ?? variantProp;
-  const outlined = actionGroupCtx?.outlined ?? outlinedProp;
 
   return (
     <Button
