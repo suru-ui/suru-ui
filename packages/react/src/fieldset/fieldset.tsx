@@ -47,6 +47,8 @@ namespace FieldsetProps {
  */
 export type FieldsetProps = FieldsetProps.Fieldset & FieldsetProps.Root;
 
+export type IFieldset = IComponent<FieldsetProps>;
+
 // API
 // ---
 
@@ -125,7 +127,7 @@ export { FieldsetAPI as API, useFieldsetAPI as useAPI };
  *
  * `disabled` を指定すると、グループ内のコントロールも無効になります。
  */
-export const Fieldset: IComponent<FieldsetProps> = function SuiFieldset(props) {
+export const Fieldset: IFieldset = function SuiFieldset(props) {
   const api = useFieldsetAPI(props);
   const { children, ...otherRootProps } = api.getRootProps();
   const legendProps = api.getLegendProps();

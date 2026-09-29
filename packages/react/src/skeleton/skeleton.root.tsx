@@ -73,10 +73,12 @@ export type SkeletonRootProps = SkeletonRootProps.Render &
   SkeletonRootProps.BaseUI &
   SkeletonRootProps.HTML;
 
+export type ISkeletonRoot = IComponent<SkeletonRootProps>;
+
 /**
  * スケルトンのルートコンポーネントです。
  */
-export const SkeletonRoot: IComponent<SkeletonRootProps> = function SuiSkeletonRoot(props) {
+export const SkeletonRoot: ISkeletonRoot = function SuiSkeletonRoot(props) {
   const {
     radius = "md",
     overlay = false,

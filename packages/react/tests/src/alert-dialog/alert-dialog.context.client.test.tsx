@@ -3,26 +3,26 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import {
-  AlertDialogContentContext,
-  useAlertDialogContentContext,
-} from "../../../src/alert-dialog/alert-dialog.content.context.js";
+  AlertDialogPopupContext,
+  useAlertDialogPopupContext,
+} from "../../../src/alert-dialog/alert-dialog.popup.context.js";
 import { ContextMissingError } from "../../../src/errors.js";
 
-describe("useAlertDialogContentContext", () => {
+describe("useAlertDialogPopupContext", () => {
   test("提供された値を返す", async ({ expect }) => {
     // 準備
-    const provided = { radius: "lg" } as const;
+    const provided = { size: "sm", radius: "lg", variant: "stacked" } as const;
     function Probe() {
-      const ctx = useAlertDialogContentContext();
+      const ctx = useAlertDialogPopupContext();
 
       return <span>{ctx.radius}</span>;
     }
 
     // 実行
     const screen = await render(
-      <AlertDialogContentContext value={provided}>
+      <AlertDialogPopupContext value={provided}>
         <Probe />
-      </AlertDialogContentContext>,
+      </AlertDialogPopupContext>,
     );
 
     // 検証
@@ -32,7 +32,7 @@ describe("useAlertDialogContentContext", () => {
   test("提供がないときはエラーを投げる", async ({ expect }) => {
     // 準備
     function Probe() {
-      useAlertDialogContentContext();
+      useAlertDialogPopupContext();
 
       return null;
     }
@@ -44,7 +44,7 @@ describe("useAlertDialogContentContext", () => {
   test("任意指定では提供がないときに null を返す", async ({ expect }) => {
     // 準備
     function Probe() {
-      const ctx = useAlertDialogContentContext(true);
+      const ctx = useAlertDialogPopupContext(true);
 
       return <span>{ctx === null ? "なし" : "あり"}</span>;
     }

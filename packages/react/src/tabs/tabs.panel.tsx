@@ -44,10 +44,12 @@ export type TabsPanelProps = TabsPanelProps.Render &
   TabsPanelProps.BaseUI &
   TabsPanelProps.HTML;
 
+export type ITabsPanel = IComponent<TabsPanelProps>;
+
 /**
  * アクティブな Tab に対応するコンテンツを表示するパネル要素です。
  */
-export const TabsPanel: IComponent<TabsPanelProps> = function SuiTabsPanel(props) {
+export const TabsPanel: ITabsPanel = function SuiTabsPanel(props) {
   const { className, ...otherProps } = props;
 
   return <BaseTabs.Panel {...otherProps} className={cn(className, "sui_tabs_panel")} />;

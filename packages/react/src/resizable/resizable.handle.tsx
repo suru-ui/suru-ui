@@ -72,12 +72,12 @@ export type ResizableHandleProps = ResizableHandleProps.Render &
   ResizableHandleProps.BaseUI &
   ResizableHandleProps.HTML;
 
+export type IResizableHandle = IComponent<ResizableHandleProps>;
+
 /**
  * 隣接するパネルのサイズを変更するハンドルです。
  */
-export const ResizableHandle: IComponent<ResizableHandleProps> = function SuiResizableHandle(
-  props,
-) {
+export const ResizableHandle: IResizableHandle = function SuiResizableHandle(props) {
   const ctx = useResizableContext();
   const { disabled = false, invisible = false, ...otherProps } = props;
   // ハンドルはパネル群と直交するため、ルートの orientation とは逆の向きになります。

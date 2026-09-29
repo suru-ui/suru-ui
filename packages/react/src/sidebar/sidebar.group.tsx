@@ -29,12 +29,14 @@ export type SidebarGroupProps = SidebarGroupProps.Render &
   SidebarGroupProps.BaseUI &
   SidebarGroupProps.HTML;
 
+export type ISidebarGroup = IComponent<SidebarGroupProps>;
+
 /**
  * サイドバー内のセクションです。
  *
  * 子要素には {@link SidebarGroupLabel} と {@link SidebarGroupContent} を配置します。
  */
-export const SidebarGroup: IComponent<SidebarGroupProps> = function SuiSidebarGroup(props) {
+export const SidebarGroup: ISidebarGroup = function SuiSidebarGroup(props) {
   return useRender({
     props: [
       props,

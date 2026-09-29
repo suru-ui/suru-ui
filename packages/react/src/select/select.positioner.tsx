@@ -52,12 +52,12 @@ export type SelectPositionerProps = SelectPositionerProps.Render &
   SelectPositionerProps.BaseUI &
   SelectPositionerProps.HTML;
 
+export type ISelectPositioner = IComponent<SelectPositionerProps>;
+
 /**
  * ポップアップをトリガーへ位置合わせする要素です。
  */
-export const SelectPositioner: IComponent<SelectPositionerProps> = function SuiSelectPositioner(
-  props,
-) {
+export const SelectPositioner: ISelectPositioner = function SuiSelectPositioner(props) {
   const { className, ...otherProps } = props;
 
   return (

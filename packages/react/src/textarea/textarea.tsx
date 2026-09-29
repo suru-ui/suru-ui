@@ -36,6 +36,8 @@ export type TextareaState = TextareaRootState;
  */
 export type TextareaProps = TextareaRootProps;
 
+export type ITextarea = IComponent<TextareaProps>;
+
 // API
 // ---
 
@@ -86,7 +88,7 @@ export { TextareaAPI as API, useTextareaAPI as useAPI };
 /**
  * 複数行のテキストを入力するテキストエリアを表示するコンポーネントです。
  */
-export const Textarea: IComponent<TextareaProps> = function SuiTextarea(props) {
+export const Textarea: ITextarea = function SuiTextarea(props) {
   const api = useTextareaAPI(props);
 
   return <TextareaRoot {...api.getRootProps()} />;

@@ -1,27 +1,33 @@
 import { AlertDialog } from "@base-ui/react/alert-dialog";
 import * as React from "react";
 
+import mergeProps from "../_merge-props.js";
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
+import * as Card from "../card/card.parts.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 
 /**
  * {@link AlertDialogTitle} が持つ状態です。
  */
-export type AlertDialogTitleState = AlertDialog.Title.State;
+export type AlertDialogTitleState = Override<Card.CardTitleState, AlertDialog.Title.State>;
 
 export namespace AlertDialogTitleProps {
   export type Render = RenderProps<AlertDialogTitleState>;
 
-  export type SuruUI = {};
+  export type SuruUI = Card.CardTitleProps.SuruUI;
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof AlertDialog.Title>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // DialogTitleProps:
-      never,
-      keyof Render | keyof SuruUI
+  export type BaseUI = Override<
+    Card.CardTitleProps.BaseUI,
+    Pick<
+      React.ComponentProps<typeof AlertDialog.Title>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // AlertDialogTitleProps:
+        never,
+        keyof Render | keyof SuruUI
+      >
     >
   >;
 
@@ -39,15 +45,39 @@ export type AlertDialogTitleProps = AlertDialogTitleProps.Render &
   AlertDialogTitleProps.BaseUI &
   AlertDialogTitleProps.HTML;
 
+export type IAlertDialogTitle = IComponent<AlertDialogTitleProps>;
+
 /**
  * アラートダイアログの見出しを表示するコンポーネントです。
+ *
+ * 見た目はカードの見出しとして描画され、ポップアップのラベルに関連付けます。
  */
-export const AlertDialogTitle: IComponent<AlertDialogTitleProps> = function SuiAlertDialogTitle(
-  props,
-) {
-  const { className, ...otherProps } = props;
+export const AlertDialogTitle: IAlertDialogTitle = function SuiAlertDialogTitle(props) {
+  const {
+    style,
+    // oxlint-disable-next-line jsx-a11y/heading-has-content
+    render = <h2 />,
+    className,
+    ...otherProps
+  } = props;
 
-  return <AlertDialog.Title {...otherProps} className={cn(className, "sui_alert_dialog_title")} />;
+  return (
+    <AlertDialog.Title
+      {...otherProps}
+      render={(htmlProps: {}, titleState) => (
+        <Card.Title
+          {...mergeProps<typeof Card.Title>([
+            htmlProps,
+            proxyRenderProps(titleState, {
+              style,
+              render,
+              className: cn(className, "sui_alert_dialog_title"),
+            }),
+          ])}
+        />
+      )}
+    />
+  );
 };
 
 export { AlertDialogTitle as Title };

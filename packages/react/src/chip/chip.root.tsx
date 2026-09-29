@@ -100,12 +100,14 @@ export type ChipRootProps = ChipRootProps.Render &
   ChipRootProps.BaseUI &
   ChipRootProps.HTML;
 
+export type IChipRoot = IComponent<ChipRootProps>;
+
 /**
  * チップのルートコンポーネントです。
  *
  * `render` に `button` 要素を渡すと、押せるチップとして描画できます。
  */
-export const ChipRoot: IComponent<ChipRootProps> = function SuiChipRoot(props) {
+export const ChipRoot: IChipRoot = function SuiChipRoot(props) {
   const {
     size = "sm",
     color = "grey",

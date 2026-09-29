@@ -49,7 +49,7 @@ export type IComboboxClear = IComponent<ComboboxClearProps>;
 /**
  * 選択値を消去するボタン要素です。
  */
-export const ComboboxClear: IComponent<ComboboxClearProps> = function SuiComboboxClear(props) {
+export const ComboboxClear: IComboboxClear = function SuiComboboxClear(props) {
   const {
     children = <ClearIcon />,
     className,

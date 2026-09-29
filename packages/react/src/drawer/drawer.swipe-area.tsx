@@ -39,12 +39,12 @@ export type DrawerSwipeAreaProps = DrawerSwipeAreaProps.Render &
   DrawerSwipeAreaProps.BaseUI &
   DrawerSwipeAreaProps.HTML;
 
+export type IDrawerSwipeArea = IComponent<DrawerSwipeAreaProps>;
+
 /**
  * 画面端からのスワイプでドロワーを開く領域です。
  */
-export const DrawerSwipeArea: IComponent<DrawerSwipeAreaProps> = function SuiDrawerSwipeArea(
-  props,
-) {
+export const DrawerSwipeArea: IDrawerSwipeArea = function SuiDrawerSwipeArea(props) {
   const { className, ...otherProps } = props;
 
   return (

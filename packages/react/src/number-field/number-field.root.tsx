@@ -149,12 +149,12 @@ export type NumberFieldRootProps = NumberFieldRootProps.Render &
   NumberFieldRootProps.BaseUI &
   NumberFieldRootProps.HTML;
 
+export type INumberFieldRoot = IComponent<NumberFieldRootProps>;
+
 /**
  * 数値入力欄のルートコンポーネントです。
  */
-export const NumberFieldRoot: IComponent<NumberFieldRootProps> = function SuiNumberFieldRoot(
-  props,
-) {
+export const NumberFieldRoot: INumberFieldRoot = function SuiNumberFieldRoot(props) {
   const {
     size = "md",
     color = "grey",

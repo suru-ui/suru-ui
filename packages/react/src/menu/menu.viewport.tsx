@@ -39,10 +39,12 @@ export type MenuViewportProps = MenuViewportProps.Render &
   MenuViewportProps.BaseUI &
   MenuViewportProps.HTML;
 
+export type IMenuViewport = IComponent<MenuViewportProps>;
+
 /**
  * トリガーの切り替えに伴うメニュー内容のアニメーション用ビューポートです。
  */
-export const MenuViewport: IComponent<MenuViewportProps> = function SuiMenuViewport(props) {
+export const MenuViewport: IMenuViewport = function SuiMenuViewport(props) {
   const { className, ...otherProps } = props;
 
   return <Menu.Viewport {...otherProps} className={cn(className, "sui_menu_viewport")} />;

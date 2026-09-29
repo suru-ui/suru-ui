@@ -117,12 +117,14 @@ export type ProgressRootProps = ProgressRootProps.Render &
   ProgressRootProps.BaseUI &
   ProgressRootProps.HTML;
 
+export type IProgressRoot = IComponent<ProgressRootProps>;
+
 /**
  * 進捗のルートコンポーネントです。
  *
  * `value` に `null` を指定すると、不確定状態になります。
  */
-export const ProgressRoot: IComponent<ProgressRootProps> = function SuiProgressRoot(props) {
+export const ProgressRoot: IProgressRoot = function SuiProgressRoot(props) {
   const {
     size = "md",
     color = "grey",

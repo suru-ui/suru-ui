@@ -102,12 +102,14 @@ export type TextFieldRootProps = TextFieldRootProps.Render &
   TextFieldRootProps.BaseUI &
   TextFieldRootProps.HTML;
 
+export type ITextFieldRoot = IComponent<TextFieldRootProps>;
+
 /**
  * 文字入力欄の入力欄と Addon をまとめるルート要素です。
  *
  * 指定したスタイルプロパティーは、子パーツへ継承されます。
  */
-export const TextFieldRoot: IComponent<TextFieldRootProps> = function SuiTextFieldRoot(props) {
+export const TextFieldRoot: ITextFieldRoot = function SuiTextFieldRoot(props) {
   const {
     size = "md",
     color = "grey",

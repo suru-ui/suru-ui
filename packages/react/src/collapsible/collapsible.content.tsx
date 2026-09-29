@@ -39,17 +39,16 @@ export type CollapsibleContentProps = CollapsibleContentProps.Render &
   CollapsibleContentProps.BaseUI &
   CollapsibleContentProps.HTML;
 
+export type ICollapsibleContent = IComponent<CollapsibleContentProps>;
+
 /**
  * コラプシブルのコンテンツコンポーネントです。
  */
-export const CollapsibleContent: IComponent<CollapsibleContentProps> =
-  function SuiCollapsibleContent(props) {
-    const { className, ...otherProps } = props;
+export const CollapsibleContent: ICollapsibleContent = function SuiCollapsibleContent(props) {
+  const { className, ...otherProps } = props;
 
-    return (
-      <Collapsible.Panel {...otherProps} className={cn(className, "sui_collapsible_content")} />
-    );
-  };
+  return <Collapsible.Panel {...otherProps} className={cn(className, "sui_collapsible_content")} />;
+};
 
 export { CollapsibleContent as Content };
 

@@ -51,29 +51,32 @@ export type ContextMenuPositionerProps = ContextMenuPositionerProps.Render &
   ContextMenuPositionerProps.BaseUI &
   ContextMenuPositionerProps.HTML;
 
+export type IContextMenuPositioner = IComponent<ContextMenuPositionerProps>;
+
 /**
  * ポップアップを右クリックまたは長押しした位置に合わせる要素です。
  */
-export const ContextMenuPositioner: IComponent<ContextMenuPositionerProps> =
-  function SuiContextMenuPositioner(props) {
-    const ctx = useContextMenuContext();
-    const {
-      // ルートメニューは上下優先、サブメニューは左右優先にします。
-      side = ctx.depth === 1 ? "bottom" : "right",
-      align = "start",
-      className,
-      ...otherProps
-    } = props;
+export const ContextMenuPositioner: IContextMenuPositioner = function SuiContextMenuPositioner(
+  props,
+) {
+  const ctx = useContextMenuContext();
+  const {
+    // ルートメニューは上下優先、サブメニューは左右優先にします。
+    side = ctx.depth === 1 ? "bottom" : "right",
+    align = "start",
+    className,
+    ...otherProps
+  } = props;
 
-    return (
-      <ContextMenu.Positioner
-        {...otherProps}
-        side={side}
-        align={align}
-        className={cn(className, "sui_context_menu_positioner")}
-      />
-    );
-  };
+  return (
+    <ContextMenu.Positioner
+      {...otherProps}
+      side={side}
+      align={align}
+      className={cn(className, "sui_context_menu_positioner")}
+    />
+  );
+};
 
 export { ContextMenuPositioner as Positioner };
 

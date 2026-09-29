@@ -99,10 +99,12 @@ export type AlertRootProps = AlertRootProps.Render &
   AlertRootProps.BaseUI &
   AlertRootProps.HTML;
 
+export type IAlertRoot = IComponent<AlertRootProps>;
+
 /**
  * アラートのルートコンポーネントです。
  */
-export const AlertRoot: IComponent<AlertRootProps> = function SuiAlertRoot(props) {
+export const AlertRoot: IAlertRoot = function SuiAlertRoot(props) {
   const {
     role = "alert",
     size = "md",

@@ -40,12 +40,14 @@ export type MenuPortalProps = MenuPortalProps.Render &
   MenuPortalProps.BaseUI &
   MenuPortalProps.HTML;
 
+export type IMenuPortal = IComponent<MenuPortalProps>;
+
 /**
  * メニューを DOM の別の場所へ移動する要素です。
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
-export const MenuPortal: IComponent<MenuPortalProps> = function SuiMenuPortal(props) {
+export const MenuPortal: IMenuPortal = function SuiMenuPortal(props) {
   const ctx = useMenuContext();
   const {
     className,

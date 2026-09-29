@@ -39,10 +39,12 @@ export type DrawerTitleProps = DrawerTitleProps.Render &
   DrawerTitleProps.BaseUI &
   DrawerTitleProps.HTML;
 
+export type IDrawerTitle = IComponent<DrawerTitleProps>;
+
 /**
  * ドロワーの見出しを表示するコンポーネントです。
  */
-export const DrawerTitle: IComponent<DrawerTitleProps> = function SuiDrawerTitle(props) {
+export const DrawerTitle: IDrawerTitle = function SuiDrawerTitle(props) {
   const { className, ...otherProps } = props;
 
   return <Drawer.Title {...otherProps} className={cn(className, "sui_drawer_title")} />;

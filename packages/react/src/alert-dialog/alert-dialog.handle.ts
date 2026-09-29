@@ -7,7 +7,7 @@ import { AlertDialog } from "@base-ui/react/alert-dialog";
  */
 export type AlertDialogHandle<TPayload = any> = AlertDialog.Handle<TPayload>;
 
-interface ICreateHandle {
+export interface ICreateAlertDialogHandle {
   /**
    * @template TPayload トリガーが送信するデータの型です。
    * @returns アラートダイアログを命令的に制御するハンドルです。
@@ -18,8 +18,9 @@ interface ICreateHandle {
 /**
  * {@link AlertDialogHandle} を作成する関数です。
  */
-export const createAlertDialogHandle: ICreateHandle = function createSuiAlertDialogHandle() {
-  return AlertDialog.createHandle();
-};
+export const createAlertDialogHandle: ICreateAlertDialogHandle =
+  function createSuiAlertDialogHandle() {
+    return AlertDialog.createHandle();
+  };
 
 export { type AlertDialogHandle as Handle, createAlertDialogHandle as createHandle };

@@ -33,10 +33,12 @@ export type FileUploadItemDeleteTriggerProps = FileUploadItemDeleteTriggerProps.
   FileUploadItemDeleteTriggerProps.BaseUI &
   FileUploadItemDeleteTriggerProps.HTML;
 
+export type IFileUploadItemDeleteTrigger = IComponent<FileUploadItemDeleteTriggerProps>;
+
 /**
  * 対象のファイルを選択済みリストから削除するボタンです。
  */
-export const FileUploadItemDeleteTrigger: IComponent<FileUploadItemDeleteTriggerProps> =
+export const FileUploadItemDeleteTrigger: IFileUploadItemDeleteTrigger =
   function SuiFileUploadItemDeleteTrigger(props) {
     const ctx = useFileUploadContext(true);
     const { file } = useFileUploadItemContext();

@@ -29,12 +29,14 @@ export type AlertIconProps = AlertIconProps.Render &
   AlertIconProps.BaseUI &
   AlertIconProps.HTML;
 
+export type IAlertIcon = IComponent<AlertIconProps>;
+
 /**
  * アラートの状態を視覚的に示すインジケーターコンポーネントです。
  *
  * 子要素を省略すると、状態色の丸いインジケーターを表示します。
  */
-export const AlertIcon: IComponent<AlertIconProps> = function SuiAlertIcon(props) {
+export const AlertIcon: IAlertIcon = function SuiAlertIcon(props) {
   const { "aria-hidden": ariaHidden = true, ...otherDivProps } = props;
 
   return useRender({

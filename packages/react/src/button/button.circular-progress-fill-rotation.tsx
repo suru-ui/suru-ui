@@ -31,12 +31,15 @@ export type ButtonCircularProgressFillRotationProps =
     ButtonCircularProgressFillRotationProps.BaseUI &
     ButtonCircularProgressFillRotationProps.HTML;
 
+export type IButtonCircularProgressFillRotation =
+  IComponent<ButtonCircularProgressFillRotationProps>;
+
 /**
  * 不定モード時に円形プログレスバーを回転させるアニメーションコンポーネントです。
  *
  * 不定モードの場合のみ有効になります。
  */
-export const ButtonCircularProgressFillRotation: IComponent<ButtonCircularProgressFillRotationProps> =
+export const ButtonCircularProgressFillRotation: IButtonCircularProgressFillRotation =
   function SuiButtonCircularProgressFillRotation(props) {
     const ctx = useButtonCircularProgressContext();
     const {

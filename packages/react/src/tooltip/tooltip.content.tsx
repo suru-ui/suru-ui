@@ -39,10 +39,12 @@ export type TooltipContentProps = TooltipContentProps.Render &
   TooltipContentProps.BaseUI &
   TooltipContentProps.HTML;
 
+export type ITooltipContent = IComponent<TooltipContentProps>;
+
 /**
  * ツールチップの内容を表示するポップアップ要素です。
  */
-export const TooltipContent: IComponent<TooltipContentProps> = function SuiTooltipContent(props) {
+export const TooltipContent: ITooltipContent = function SuiTooltipContent(props) {
   const { className, ...otherProps } = props;
 
   return (

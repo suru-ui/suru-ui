@@ -39,12 +39,14 @@ export type DrawerViewportProps = DrawerViewportProps.Render &
   DrawerViewportProps.BaseUI &
   DrawerViewportProps.HTML;
 
+export type IDrawerViewport = IComponent<DrawerViewportProps>;
+
 /**
  * ポップアップの配置コンテナーコンポーネントです。
  *
  * スクロール可能なオーバーレイを作り、ポップアップを配置します。
  */
-export const DrawerViewport: IComponent<DrawerViewportProps> = function SuiDrawerViewport(props) {
+export const DrawerViewport: IDrawerViewport = function SuiDrawerViewport(props) {
   const { className, ...otherProps } = props;
 
   return <Drawer.Viewport {...otherProps} className={cn(className, "sui_drawer_viewport")} />;

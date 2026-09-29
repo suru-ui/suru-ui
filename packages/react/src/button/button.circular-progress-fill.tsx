@@ -46,10 +46,12 @@ export type ButtonCircularProgressFillProps = ButtonCircularProgressFillProps.Re
   ButtonCircularProgressFillProps.BaseUI &
   ButtonCircularProgressFillProps.HTML;
 
+export type IButtonCircularProgressFill = IComponent<ButtonCircularProgressFillProps>;
+
 /**
  * 円形プログレスバーのフィル（進捗を表す円弧）を描画するコンポーネントです。
  */
-export const ButtonCircularProgressFill: IComponent<ButtonCircularProgressFillProps> =
+export const ButtonCircularProgressFill: IButtonCircularProgressFill =
   function SuiButtonCircularProgressFill(props) {
     const ctx = useButtonCircularProgressContext();
     const {

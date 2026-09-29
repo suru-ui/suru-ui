@@ -63,6 +63,8 @@ export type FormatNumberState = FormatNumberRootState;
  */
 export type FormatNumberProps = FormatNumberRootProps;
 
+export type IFormatNumber = IComponent<FormatNumberProps>;
+
 // API
 // ---
 
@@ -115,7 +117,7 @@ export { FormatNumberAPI as API, useFormatNumberAPI as useAPI };
  *
  * 小数、通貨、パーセント、単位などの書式を指定できます。テキストノードとして描画されるため、見た目の調整は親要素で行います。
  */
-export const FormatNumber: IComponent<FormatNumberProps> = function SuiFormatNumber(props) {
+export const FormatNumber: IFormatNumber = function SuiFormatNumber(props) {
   const api = useFormatNumberAPI(props);
 
   return <FormatNumberRoot {...api.getRootProps()} />;

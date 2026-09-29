@@ -7,7 +7,7 @@ import { Menu } from "@base-ui/react/menu";
  */
 export type MenuHandle<TPayload = any> = Menu.Handle<TPayload>;
 
-interface ICreateHandle {
+export interface ICreateMenuHandle {
   /**
    * @template TPayload トリガーが送信するデータの型です。
    * @returns メニューを命令的に制御するハンドルです。
@@ -18,7 +18,7 @@ interface ICreateHandle {
 /**
  * メニューを制御するハンドルを新しく作成します。
  */
-export const createMenuHandle: ICreateHandle = function createSuiMenuHandle() {
+export const createMenuHandle: ICreateMenuHandle = function createSuiMenuHandle() {
   return Menu.createHandle();
 };
 

@@ -55,6 +55,8 @@ namespace RadioProps {
  */
 export type RadioProps = RadioProps.Radio & RadioProps.Root & RadioProps.Indicator;
 
+export type IRadio = IComponent<RadioProps>;
+
 // API
 // ---
 
@@ -126,7 +128,7 @@ export { RadioAPI as API, useRadioAPI as useAPI };
  *
  * ラベルのテキストは `label` 要素で囲んで指定します。
  */
-export const Radio: IComponent<RadioProps> = function SuiRadio(props) {
+export const Radio: IRadio = function SuiRadio(props) {
   const api = useRadioAPI(props);
 
   return (

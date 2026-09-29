@@ -42,12 +42,14 @@ export type SidebarRailProps = SidebarRailProps.Render &
   SidebarRailProps.BaseUI &
   SidebarRailProps.HTML;
 
+export type ISidebarRail = IComponent<SidebarRailProps>;
+
 /**
  * サイドバーの内側の端で開閉を切り替える細い帯です。
  *
  * {@link SidebarRoot} の内側に配置します。折りたたみ不可のサイドバーでは表示されません。
  */
-export const SidebarRail: IComponent<SidebarRailProps> = function SuiSidebarRail(props) {
+export const SidebarRail: ISidebarRail = function SuiSidebarRail(props) {
   const ctx = useSidebarContext();
   const {
     type = "button",

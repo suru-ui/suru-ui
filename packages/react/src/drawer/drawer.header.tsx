@@ -29,10 +29,12 @@ export type DrawerHeaderProps = DrawerHeaderProps.Render &
   DrawerHeaderProps.BaseUI &
   DrawerHeaderProps.HTML;
 
+export type IDrawerHeader = IComponent<DrawerHeaderProps>;
+
 /**
  * ドロワーのヘッダーコンポーネントです。
  */
-export const DrawerHeader: IComponent<DrawerHeaderProps> = function SuiDrawerHeader(props) {
+export const DrawerHeader: IDrawerHeader = function SuiDrawerHeader(props) {
   return useRender({
     props: [
       props,

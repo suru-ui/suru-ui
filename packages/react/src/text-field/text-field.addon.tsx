@@ -37,12 +37,14 @@ export type TextFieldAddonProps = TextFieldAddonProps.Render &
   TextFieldAddonProps.BaseUI &
   TextFieldAddonProps.HTML;
 
+export type ITextFieldAddon = IComponent<TextFieldAddonProps>;
+
 /**
  * 入力欄の左右に表示する補助コンポーネントです。
  *
  * 接頭辞、接尾辞、アイコンなどを表示できます。
  */
-export const TextFieldAddon: IComponent<TextFieldAddonProps> = function SuiTextFieldAddon(props) {
+export const TextFieldAddon: ITextFieldAddon = function SuiTextFieldAddon(props) {
   const { disableFocusOnClick = false, ...otherSpanProps } = props;
 
   return useRender({

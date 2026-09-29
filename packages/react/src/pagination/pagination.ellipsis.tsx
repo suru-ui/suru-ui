@@ -57,114 +57,115 @@ export type PaginationEllipsisProps = PaginationEllipsisProps.Render &
   PaginationEllipsisProps.BaseUI &
   PaginationEllipsisProps.HTML;
 
+export type IPaginationEllipsis = IComponent<PaginationEllipsisProps>;
+
 /**
  * 飛ばされたページ範囲を表す省略記号コンポーネントです。
  *
  * 押下すると入力欄が表示され、範囲内のページ番号を入力してそのページへ移動できます。`Enter` で決定、`Escape` で取り消します。
  */
-export const PaginationEllipsis: IComponent<PaginationEllipsisProps> =
-  function SuiPaginationEllipsis(props) {
-    const ctx = usePaginationContext(true);
-    const {
-      end,
-      start = 2,
-      onClick,
-      disabled = false,
-      className,
-      "aria-label": ariaLabel,
-      ...otherButtonProps
-    } = props;
-    const resolvedStart = Math.min(
-      Math.max(1, Math.trunc(start)),
-      Math.max(1, Math.trunc(end ?? start)),
-    );
-    const resolvedEnd = Math.max(
-      Math.max(1, Math.trunc(start)),
-      Math.max(1, Math.trunc(end ?? start)),
-    );
-    const label = ariaLabel ?? `${resolvedStart}〜${resolvedEnd}ページへ移動`;
-    const [editing, setEditing] = React.useState(false);
-    const inputRef = React.useRef<HTMLInputElement>(null);
-    const isDisabled = ctx?.disabled || disabled;
+export const PaginationEllipsis: IPaginationEllipsis = function SuiPaginationEllipsis(props) {
+  const ctx = usePaginationContext(true);
+  const {
+    end,
+    start = 2,
+    onClick,
+    disabled = false,
+    className,
+    "aria-label": ariaLabel,
+    ...otherButtonProps
+  } = props;
+  const resolvedStart = Math.min(
+    Math.max(1, Math.trunc(start)),
+    Math.max(1, Math.trunc(end ?? start)),
+  );
+  const resolvedEnd = Math.max(
+    Math.max(1, Math.trunc(start)),
+    Math.max(1, Math.trunc(end ?? start)),
+  );
+  const label = ariaLabel ?? `${resolvedStart}〜${resolvedEnd}ページへ移動`;
+  const [editing, setEditing] = React.useState(false);
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const isDisabled = ctx?.disabled || disabled;
 
-    React.useEffect(() => {
-      if (editing) {
-        inputRef.current?.focus();
-      }
-    }, [editing]);
-
-    const inputElement = useRender<HTMLInputElement, {}, boolean>({
-      props: {
-        ref: inputRef,
-        type: "text",
-        onBlur() {
-          setEditing(false);
-        },
-        pattern: "[0-9]*",
-        disabled: isDisabled,
-        className: cn(
-          "sui_pagination_ellipsis_input",
-          isDisabled && "sui_pagination_ellipsis_input-disabled",
-        ),
-        inputMode: "numeric",
-        onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
-          if (event.key === "Escape") {
-            setEditing(false);
-
-            return;
-          }
-
-          if (event.key !== "Enter") {
-            return;
-          }
-
-          const value = Number.parseInt(event.currentTarget.value, 10);
-          setEditing(false);
-          if (Number.isNaN(value)) {
-            return;
-          }
-
-          ctx?.goToPage(Math.min(Math.max(value, resolvedStart), resolvedEnd), {
-            event,
-            reason: "ellipsis",
-          });
-        },
-        placeholder: String(resolvedStart),
-        defaultValue: "",
-        "aria-label": label,
-      },
-      enabled: editing,
-      defaultTagName: "input",
-    });
-
+  React.useEffect(() => {
     if (editing) {
-      return inputElement;
+      inputRef.current?.focus();
     }
+  }, [editing]);
 
-    const handleClick: NonNullable<Button.ButtonRootProps["onClick"]> = (event) => {
-      onClick?.(event);
-      if (!event.defaultPrevented && !isDisabled) {
-        setEditing(true);
-      }
-    };
+  const inputElement = useRender<HTMLInputElement, {}, boolean>({
+    props: {
+      ref: inputRef,
+      type: "text",
+      onBlur() {
+        setEditing(false);
+      },
+      pattern: "[0-9]*",
+      disabled: isDisabled,
+      className: cn(
+        "sui_pagination_ellipsis_input",
+        isDisabled && "sui_pagination_ellipsis_input-disabled",
+      ),
+      inputMode: "numeric",
+      onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+        if (event.key === "Escape") {
+          setEditing(false);
 
-    return (
-      <Button.Root
-        {...otherButtonProps}
-        size={ctx?.size ?? "md"}
-        color="grey"
-        radius={ctx?.radius}
-        onClick={handleClick}
-        squared
-        variant="naked"
-        disabled={isDisabled}
-        className={cn(className, "sui_pagination_ellipsis")}
-        aria-label={label}
-      >
-        <MoreIcon />
-      </Button.Root>
-    );
+          return;
+        }
+
+        if (event.key !== "Enter") {
+          return;
+        }
+
+        const value = Number.parseInt(event.currentTarget.value, 10);
+        setEditing(false);
+        if (Number.isNaN(value)) {
+          return;
+        }
+
+        ctx?.goToPage(Math.min(Math.max(value, resolvedStart), resolvedEnd), {
+          event,
+          reason: "ellipsis",
+        });
+      },
+      placeholder: String(resolvedStart),
+      defaultValue: "",
+      "aria-label": label,
+    },
+    enabled: editing,
+    defaultTagName: "input",
+  });
+
+  if (editing) {
+    return inputElement;
+  }
+
+  const handleClick: NonNullable<Button.ButtonRootProps["onClick"]> = (event) => {
+    onClick?.(event);
+    if (!event.defaultPrevented && !isDisabled) {
+      setEditing(true);
+    }
   };
+
+  return (
+    <Button.Root
+      {...otherButtonProps}
+      size={ctx?.size ?? "md"}
+      color="grey"
+      radius={ctx?.radius}
+      onClick={handleClick}
+      squared
+      variant="naked"
+      disabled={isDisabled}
+      className={cn(className, "sui_pagination_ellipsis")}
+      aria-label={label}
+    >
+      <MoreIcon />
+    </Button.Root>
+  );
+};
 
 export { PaginationEllipsis as Ellipsis };
 

@@ -125,10 +125,12 @@ export type TextareaRootProps = TextareaRootProps.Render &
   TextareaRootProps.BaseUI &
   TextareaRootProps.HTML;
 
+export type ITextareaRoot = IComponent<TextareaRootProps>;
+
 /**
  * テキストエリアのルートコンポーネントです。
  */
-export const TextareaRoot: IComponent<TextareaRootProps> = function SuiTextareaRoot(props) {
+export const TextareaRoot: ITextareaRoot = function SuiTextareaRoot(props) {
   const {
     size = "md",
     color = "grey",

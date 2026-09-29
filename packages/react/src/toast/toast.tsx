@@ -7,6 +7,7 @@ import type { IComponent } from "../types.js";
 import {
   type IToastClient,
   type IToastManager,
+  type IToastProvider,
   type ToastRootProps,
   type ToastRootState,
   type ToastCloseProps,
@@ -503,9 +504,9 @@ interface IToast extends IComponent<ToastProps> {
    */
   <TData extends object = any>(props: ToastProps<TData>): IComponent.Return;
 
-  readonly List: typeof ToastList;
+  readonly List: IToastList;
 
-  readonly Provider: typeof ToastProvider;
+  readonly Provider: IToastProvider;
 
   readonly createManager: <TData extends object = any>() => IToastManager<TData>;
 

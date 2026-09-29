@@ -43,13 +43,15 @@ export type SelectTriggerProps = SelectTriggerProps.Render &
   SelectTriggerProps.BaseUI &
   SelectTriggerProps.HTML;
 
+export type ISelectTrigger = IComponent<SelectTriggerProps>;
+
 /**
  * Select ポップアップを開閉するボタン要素です。
  *
  * Root のスタイルプロパティーがこの要素へ適用されます。
  * キーボードでは `Enter` や `Space`、`ArrowDown` で開きます。
  */
-export const SelectTrigger: IComponent<SelectTriggerProps> = function SuiSelectTrigger(props) {
+export const SelectTrigger: ISelectTrigger = function SuiSelectTrigger(props) {
   const ctx = useSelectContext(true);
   const {
     className,

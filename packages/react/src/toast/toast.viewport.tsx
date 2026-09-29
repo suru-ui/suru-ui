@@ -39,10 +39,12 @@ export type ToastViewportProps = ToastViewportProps.Render &
   ToastViewportProps.BaseUI &
   ToastViewportProps.HTML;
 
+export type IToastViewport = IComponent<ToastViewportProps>;
+
 /**
  * 通知を表示するビューポートコンポーネントです。
  */
-export const ToastViewport: IComponent<ToastViewportProps> = function SuiToastViewport(props) {
+export const ToastViewport: IToastViewport = function SuiToastViewport(props) {
   const { className, "aria-label": ariaLabel = "通知", ...otherProps } = props;
 
   return (

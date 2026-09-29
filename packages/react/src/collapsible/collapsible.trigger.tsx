@@ -49,23 +49,24 @@ export type CollapsibleTriggerProps = CollapsibleTriggerProps.Render &
   CollapsibleTriggerProps.BaseUI &
   CollapsibleTriggerProps.HTML;
 
+export type ICollapsibleTrigger = IComponent<CollapsibleTriggerProps>;
+
 /**
  * コラプシブルの開閉ボタンコンポーネントです。
  *
  * ボタンなどの操作要素を子に渡して使います。
  */
-export const CollapsibleTrigger: IComponent<CollapsibleTriggerProps> =
-  function SuiCollapsibleTrigger(props) {
-    const { children, className, ...otherProps } = props;
+export const CollapsibleTrigger: ICollapsibleTrigger = function SuiCollapsibleTrigger(props) {
+  const { children, className, ...otherProps } = props;
 
-    return (
-      <Collapsible.Trigger
-        {...otherProps}
-        render={children}
-        className={cn(className, "sui_collapsible_trigger")}
-      />
-    );
-  };
+  return (
+    <Collapsible.Trigger
+      {...otherProps}
+      render={children}
+      className={cn(className, "sui_collapsible_trigger")}
+    />
+  );
+};
 
 export { CollapsibleTrigger as Trigger };
 

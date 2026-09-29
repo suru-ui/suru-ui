@@ -39,10 +39,12 @@ export type MenuGroupProps = MenuGroupProps.Render &
   MenuGroupProps.BaseUI &
   MenuGroupProps.HTML;
 
+export type IMenuGroup = IComponent<MenuGroupProps>;
+
 /**
  * 関連するメニュー項目をまとめるグループ要素です。
  */
-export const MenuGroup: IComponent<MenuGroupProps> = function SuiMenuGroup(props) {
+export const MenuGroup: IMenuGroup = function SuiMenuGroup(props) {
   const { className, ...otherProps } = props;
 
   return <Menu.Group {...otherProps} className={cn(className, "sui_menu_group")} />;

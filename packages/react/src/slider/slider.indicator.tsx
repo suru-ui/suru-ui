@@ -39,12 +39,12 @@ export type SliderIndicatorProps = SliderIndicatorProps.Render &
   SliderIndicatorProps.BaseUI &
   SliderIndicatorProps.HTML;
 
+export type ISliderIndicator = IComponent<SliderIndicatorProps>;
+
 /**
  * スライダーの現在値を示すインジケーターコンポーネントです。
  */
-export const SliderIndicator: IComponent<SliderIndicatorProps> = function SuiSliderIndicator(
-  props,
-) {
+export const SliderIndicator: ISliderIndicator = function SuiSliderIndicator(props) {
   const { className, ...otherProps } = props;
 
   return <Slider.Indicator {...otherProps} className={cn(className, "sui_slider_indicator")} />;

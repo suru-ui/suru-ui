@@ -24,6 +24,8 @@ export type ImageState = ImageRootState;
  */
 export type ImageProps = ImageRootProps;
 
+export type IImage = IComponent<ImageProps>;
+
 // API
 // ---
 
@@ -76,7 +78,7 @@ export { ImageAPI as API, useImageAPI as useAPI };
  *
  * 大きさは `width` と `height` または CSS で指定します。`fit` でコンテナーへのはめ込み方法を、`radius` で角丸を指定できます。
  */
-export const Image: IComponent<ImageProps> = function SuiImage(props) {
+export const Image: IImage = function SuiImage(props) {
   const api = useImageAPI(props);
 
   return <ImageRoot {...api.getRootProps()} />;

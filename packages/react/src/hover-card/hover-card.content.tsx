@@ -39,12 +39,12 @@ export type HoverCardContentProps = HoverCardContentProps.Render &
   HoverCardContentProps.BaseUI &
   HoverCardContentProps.HTML;
 
+export type IHoverCardContent = IComponent<HoverCardContentProps>;
+
 /**
  * ホバーカードの内容を表示するポップアップ要素です。
  */
-export const HoverCardContent: IComponent<HoverCardContentProps> = function SuiHoverCardContent(
-  props,
-) {
+export const HoverCardContent: IHoverCardContent = function SuiHoverCardContent(props) {
   const { className, ...otherProps } = props;
 
   return (

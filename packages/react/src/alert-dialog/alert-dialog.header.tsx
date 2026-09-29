@@ -1,24 +1,21 @@
-import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
-
-import useRender, { type RenderProps } from "../_use-render.js";
+import type { RenderProps } from "../_use-render.js";
+import * as Card from "../card/card.parts.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
 /**
  * {@link AlertDialogHeader} が持つ状態です。
  */
-export type AlertDialogHeaderState = {};
+export type AlertDialogHeaderState = Card.CardHeaderState;
 
 export namespace AlertDialogHeaderProps {
   export type Render = RenderProps<AlertDialogHeaderState>;
 
-  export type SuruUI = {};
+  export type SuruUI = Card.CardHeaderProps.SuruUI;
 
-  export type BaseUI = {};
+  export type BaseUI = Card.CardHeaderProps.BaseUI;
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Card.CardHeaderProps.HTML;
 }
 
 /**
@@ -29,21 +26,13 @@ export type AlertDialogHeaderProps = AlertDialogHeaderProps.Render &
   AlertDialogHeaderProps.BaseUI &
   AlertDialogHeaderProps.HTML;
 
+export type IAlertDialogHeader = IComponent<AlertDialogHeaderProps>;
+
 /**
- * アラートダイアログのヘッダーコンポーネントです。
+ * アラートダイアログの見出し・説明・操作をまとめるコンポーネントです。
  */
-export const AlertDialogHeader: IComponent<AlertDialogHeaderProps> = function SuiAlertDialogHeader(
-  props,
-) {
-  return useRender({
-    props: [
-      props,
-      {
-        className: "sui_alert_dialog_header",
-      },
-    ],
-    defaultTagName: "div",
-  });
+export const AlertDialogHeader: IAlertDialogHeader = function SuiAlertDialogHeader(props) {
+  return <Card.Header {...props} className={cn(props.className, "sui_alert_dialog_header")} />;
 };
 
 export { AlertDialogHeader as Header };

@@ -25,15 +25,16 @@ export type ToggleButtonPendingProps = ToggleButtonPendingProps.Render &
   ToggleButtonPendingProps.BaseUI &
   ToggleButtonPendingProps.HTML;
 
+export type IToggleButtonPending = IComponent<ToggleButtonPendingProps>;
+
 /**
  * トグルボタンの保留状態を表示するコンポーネントです。
  *
  * 保留中のみ有効になります。
  */
-export const ToggleButtonPending: IComponent<ToggleButtonPendingProps> =
-  function SuiToggleButtonPending(props) {
-    return <Button.Pending {...props} />;
-  };
+export const ToggleButtonPending: IToggleButtonPending = function SuiToggleButtonPending(props) {
+  return <Button.Pending {...props} />;
+};
 
 export { ToggleButtonPending as Pending };
 

@@ -37,12 +37,14 @@ export type ToastProviderProps = ToastProviderProps.Render &
   ToastProviderProps.BaseUI &
   ToastProviderProps.HTML;
 
+export type IToastProvider = IComponent<ToastProviderProps>;
+
 /**
  * 通知の作成と管理を行うコンテキストを提供します。
  *
  * それ自身は HTML 要素をレンダリングしません。
  */
-export const ToastProvider: IComponent<ToastProviderProps> = function SuiToastProvider(props) {
+export const ToastProvider: IToastProvider = function SuiToastProvider(props) {
   return <Toast.Provider {...props} />;
 };
 

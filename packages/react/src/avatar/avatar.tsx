@@ -77,6 +77,8 @@ namespace AvatarProps {
  */
 export type AvatarProps = AvatarProps.Avatar & AvatarProps.Root;
 
+export type IAvatar = IComponent<AvatarProps>;
+
 // API
 // ---
 
@@ -173,7 +175,7 @@ export { AvatarAPI as API, useAvatarAPI as useAPI };
 /**
  * 画像またはフォールバックコンテンツを持つアバターを表示するコンポーネントです。
  */
-export const Avatar: IComponent<AvatarProps> = function SuiAvatar(props) {
+export const Avatar: IAvatar = function SuiAvatar(props) {
   const api = useAvatarAPI(props);
   const imageProps = api.getImageProps();
   const fallbackProps = api.getFallbackProps();

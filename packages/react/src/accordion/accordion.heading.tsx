@@ -39,12 +39,12 @@ export type AccordionHeadingProps = AccordionHeadingProps.Render &
   AccordionHeadingProps.BaseUI &
   AccordionHeadingProps.HTML;
 
+export type IAccordionHeading = IComponent<AccordionHeadingProps>;
+
 /**
  * アコーディオンの見出しコンポーネントです。
  */
-export const AccordionHeading: IComponent<AccordionHeadingProps> = function SuiAccordionHeading(
-  props,
-) {
+export const AccordionHeading: IAccordionHeading = function SuiAccordionHeading(props) {
   const { className, ...otherProps } = props;
 
   return <Accordion.Header {...otherProps} className={cn(className, "sui_accordion_heading")} />;

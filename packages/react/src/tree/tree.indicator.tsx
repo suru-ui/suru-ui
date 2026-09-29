@@ -40,14 +40,14 @@ export type TreeItemIndicatorProps = TreeItemIndicatorProps.Render &
   TreeItemIndicatorProps.BaseUI &
   TreeItemIndicatorProps.HTML;
 
+export type ITreeItemIndicator = IComponent<TreeItemIndicatorProps>;
+
 /**
  * ツリーの項目の展開状態を示すアイコン要素です。
  *
  * 既定では右向きのシェブロンアイコンを表示し、展開時には下向きに回転します。
  */
-export const TreeItemIndicator: IComponent<TreeItemIndicatorProps> = function SuiTreeItemIndicator(
-  props,
-) {
+export const TreeItemIndicator: ITreeItemIndicator = function SuiTreeItemIndicator(props) {
   const { visible = true, children = <ChevronRightIcon />, ...otherSpanProps } = props;
 
   return useRender({

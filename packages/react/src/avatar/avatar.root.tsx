@@ -88,12 +88,14 @@ export type AvatarRootProps = AvatarRootProps.Render &
   AvatarRootProps.BaseUI &
   AvatarRootProps.HTML;
 
+export type IAvatarRoot = IComponent<AvatarRootProps>;
+
 /**
  * アバターのルートコンポーネントです。
  *
  * 画像の読み込み状態を管理し、大きさ・配色・角丸を子パーツへ伝播します。
  */
-export const AvatarRoot: IComponent<AvatarRootProps> = function SuiAvatarRoot(props) {
+export const AvatarRoot: IAvatarRoot = function SuiAvatarRoot(props) {
   const group = useAvatarGroupContext(true);
   const {
     size: sizeProp = "md",

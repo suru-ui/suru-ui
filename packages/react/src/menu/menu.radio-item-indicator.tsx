@@ -39,26 +39,29 @@ export type MenuRadioItemIndicatorProps = MenuRadioItemIndicatorProps.Render &
   MenuRadioItemIndicatorProps.BaseUI &
   MenuRadioItemIndicatorProps.HTML;
 
+export type IMenuRadioItemIndicator = IComponent<MenuRadioItemIndicatorProps>;
+
 /**
  * 選択されたラジオ項目を示す要素です。
  */
-export const MenuRadioItemIndicator: IComponent<MenuRadioItemIndicatorProps> =
-  function SuiMenuRadioItemIndicator(props) {
-    const { className, keepMounted = true, ...otherProps } = props;
+export const MenuRadioItemIndicator: IMenuRadioItemIndicator = function SuiMenuRadioItemIndicator(
+  props,
+) {
+  const { className, keepMounted = true, ...otherProps } = props;
 
-    return (
-      <Menu.RadioItemIndicator
-        {...otherProps}
-        className={cn(
-          className,
-          "sui_menu_item_indicator",
-          "sui_menu_radio_item_indicator",
-          (state) => !state.checked && "sui_menu_item_indicator-unchecked",
-        )}
-        keepMounted={keepMounted}
-      />
-    );
-  };
+  return (
+    <Menu.RadioItemIndicator
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_menu_item_indicator",
+        "sui_menu_radio_item_indicator",
+        (state) => !state.checked && "sui_menu_item_indicator-unchecked",
+      )}
+      keepMounted={keepMounted}
+    />
+  );
+};
 
 export { MenuRadioItemIndicator as RadioItemIndicator };
 

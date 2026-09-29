@@ -39,10 +39,12 @@ export type DrawerBackdropProps = DrawerBackdropProps.Render &
   DrawerBackdropProps.BaseUI &
   DrawerBackdropProps.HTML;
 
+export type IDrawerBackdrop = IComponent<DrawerBackdropProps>;
+
 /**
  * ポップアップの背後に表示されるオーバーレイコンポーネントです。
  */
-export const DrawerBackdrop: IComponent<DrawerBackdropProps> = function SuiDrawerBackdrop(props) {
+export const DrawerBackdrop: IDrawerBackdrop = function SuiDrawerBackdrop(props) {
   const { className, ...otherProps } = props;
 
   return (

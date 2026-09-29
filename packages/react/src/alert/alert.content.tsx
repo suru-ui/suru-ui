@@ -29,10 +29,12 @@ export type AlertContentProps = AlertContentProps.Render &
   AlertContentProps.BaseUI &
   AlertContentProps.HTML;
 
+export type IAlertContent = IComponent<AlertContentProps>;
+
 /**
  * アラートのメッセージをまとめるコンテンツコンポーネントです。
  */
-export const AlertContent: IComponent<AlertContentProps> = function SuiAlertContent(props) {
+export const AlertContent: IAlertContent = function SuiAlertContent(props) {
   return useRender({
     props: [
       props,

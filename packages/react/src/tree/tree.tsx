@@ -79,6 +79,8 @@ namespace TreeProps {
  */
 export type TreeProps = TreeProps.Tree & TreeProps.Root;
 
+export type ITree = IComponent<TreeProps>;
+
 // API
 // ---
 
@@ -211,7 +213,7 @@ export { TreeAPI as API, useTreeAPI as useAPI };
  *
  * WAI-ARIA tree パターンに従い、キーボード操作と選択と展開の状態は {@link TreeRoot} が管理します。展開されているノードだけが描画されます。
  */
-export const Tree: IComponent<TreeProps> = function SuiTree(props) {
+export const Tree: ITree = function SuiTree(props) {
   const api = useTreeAPI(props);
 
   return <TreeRoot {...api.getRootProps()} />;

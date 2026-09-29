@@ -123,14 +123,14 @@ export type FormatNumberRootProps = FormatNumberRootProps.Render &
   FormatNumberRootProps.BaseUI &
   FormatNumberRootProps.HTML;
 
+export type IFormatNumberRoot = IComponent<FormatNumberRootProps>;
+
 /**
  * 数値をロケールに従って書式化して表示するルートコンポーネントです。
  *
  * 小数、通貨、パーセント、単位などの書式を指定できます。テキストノードとして描画されるため、見た目の調整は親要素で行います。
  */
-export const FormatNumberRoot: IComponent<FormatNumberRootProps> = function SuiFormatNumberRoot(
-  props,
-) {
+export const FormatNumberRoot: IFormatNumberRoot = function SuiFormatNumberRoot(props) {
   const { value, ...options } = props;
   const formatter = getNumberFormatter(options);
   const formatted = React.useMemo(() => formatter.format(value), [formatter, value]);

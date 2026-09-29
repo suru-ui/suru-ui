@@ -48,12 +48,14 @@ export type BreadcrumbLinkProps = BreadcrumbLinkProps.Render &
   BreadcrumbLinkProps.BaseUI &
   BreadcrumbLinkProps.HTML;
 
+export type IBreadcrumbLink = IComponent<BreadcrumbLinkProps>;
+
 /**
  * パンくずのリンクコンポーネントです。
  *
  * `current` が `true` の場合はリンクにせず、`aria-current="page"` を持つ要素として描画します。
  */
-export const BreadcrumbLink: IComponent<BreadcrumbLinkProps> = function SuiBreadcrumbLink(props) {
+export const BreadcrumbLink: IBreadcrumbLink = function SuiBreadcrumbLink(props) {
   const { href, current = false, onClick, disabled = false, tabIndex, ...otherAnchorProps } = props;
   const handleOnClick: NonNullable<BreadcrumbLinkProps["onClick"]> = (event) => {
     onClick?.(event);

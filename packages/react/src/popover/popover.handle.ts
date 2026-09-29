@@ -7,7 +7,7 @@ import { Popover } from "@base-ui/react/popover";
  */
 export type PopoverHandle<TPayload = any> = Popover.Handle<TPayload>;
 
-interface ICreatePopoverHandle {
+export interface ICreatePopoverHandle {
   /**
    * @template TPayload トリガーが送信するデータの型です。
    * @returns ポップオーバーを制御するハンドルです。

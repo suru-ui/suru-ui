@@ -50,12 +50,12 @@ export type PopoverPositionerProps = PopoverPositionerProps.Render &
   PopoverPositionerProps.BaseUI &
   PopoverPositionerProps.HTML;
 
+export type IPopoverPositioner = IComponent<PopoverPositionerProps>;
+
 /**
  * トリガーを基準にポップアップを配置する要素です。
  */
-export const PopoverPositioner: IComponent<PopoverPositionerProps> = function SuiPopoverPositioner(
-  props,
-) {
+export const PopoverPositioner: IPopoverPositioner = function SuiPopoverPositioner(props) {
   const { className, ...otherProps } = props;
 
   return <Popover.Positioner {...otherProps} className={cn(className, "sui_popover_positioner")} />;

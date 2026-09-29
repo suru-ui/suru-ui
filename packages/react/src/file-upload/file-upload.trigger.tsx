@@ -32,12 +32,12 @@ export type FileUploadTriggerProps = FileUploadTriggerProps.Render &
   FileUploadTriggerProps.BaseUI &
   FileUploadTriggerProps.HTML;
 
+export type IFileUploadTrigger = IComponent<FileUploadTriggerProps>;
+
 /**
  * ファイル選択ダイアログを開くボタンです。
  */
-export const FileUploadTrigger: IComponent<FileUploadTriggerProps> = function SuiFileUploadTrigger(
-  props,
-) {
+export const FileUploadTrigger: IFileUploadTrigger = function SuiFileUploadTrigger(props) {
   const ctx = useFileUploadContext(true);
   const { disabled: disabledProp, ...otherButtonProps } = props;
   const disabled = ctx?.disabled || disabledProp || false;

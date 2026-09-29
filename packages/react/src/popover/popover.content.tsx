@@ -39,10 +39,12 @@ export type PopoverContentProps = PopoverContentProps.Render &
   PopoverContentProps.BaseUI &
   PopoverContentProps.HTML;
 
+export type IPopoverContent = IComponent<PopoverContentProps>;
+
 /**
  * ポップオーバーの内容を表示するポップアップ要素です。
  */
-export const PopoverContent: IComponent<PopoverContentProps> = function SuiPopoverContent(props) {
+export const PopoverContent: IPopoverContent = function SuiPopoverContent(props) {
   const { className, ...otherProps } = props;
 
   return (

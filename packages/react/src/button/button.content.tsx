@@ -30,10 +30,12 @@ export type ButtonContentProps = ButtonContentProps.Render &
   ButtonContentProps.BaseUI &
   ButtonContentProps.HTML;
 
+export type IButtonContent = IComponent<ButtonContentProps>;
+
 /**
  * ボタンのコンテンツを表示するコンポーネントです。
  */
-export const ButtonContent: IComponent<ButtonContentProps> = function SuiButtonContent(props) {
+export const ButtonContent: IButtonContent = function SuiButtonContent(props) {
   const ctx = useButtonContext();
 
   return useRender({

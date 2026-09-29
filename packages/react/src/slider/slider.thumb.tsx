@@ -48,12 +48,14 @@ export type SliderThumbProps = SliderThumbProps.Render &
   SliderThumbProps.BaseUI &
   SliderThumbProps.HTML;
 
+export type ISliderThumb = IComponent<SliderThumbProps>;
+
 /**
  * スライダーのつまみコンポーネントです。
  *
  * 矢印キーで操作でき、フォーカス時はフォーカスリングが表示されます。
  */
-export const SliderThumb: IComponent<SliderThumbProps> = function SuiSliderThumb(props) {
+export const SliderThumb: ISliderThumb = function SuiSliderThumb(props) {
   const { className, ...otherProps } = props;
 
   return <Slider.Thumb {...otherProps} className={cn(className, "sui_slider_thumb")} />;

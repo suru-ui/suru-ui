@@ -30,25 +30,26 @@ export type FileUploadItemNameProps = FileUploadItemNameProps.Render &
   FileUploadItemNameProps.BaseUI &
   FileUploadItemNameProps.HTML;
 
+export type IFileUploadItemName = IComponent<FileUploadItemNameProps>;
+
 /**
  * ファイル名を表示するコンポーネントです。
  */
-export const FileUploadItemName: IComponent<FileUploadItemNameProps> =
-  function SuiFileUploadItemName(props) {
-    const { file } = useFileUploadItemContext();
-    const { children = file.name, ...otherSpanProps } = props;
+export const FileUploadItemName: IFileUploadItemName = function SuiFileUploadItemName(props) {
+  const { file } = useFileUploadItemContext();
+  const { children = file.name, ...otherSpanProps } = props;
 
-    return useRender({
-      props: [
-        otherSpanProps,
-        {
-          children,
-          className: "sui_file_upload_item_name",
-        },
-      ],
-      defaultTagName: "span",
-    });
-  };
+  return useRender({
+    props: [
+      otherSpanProps,
+      {
+        children,
+        className: "sui_file_upload_item_name",
+      },
+    ],
+    defaultTagName: "span",
+  });
+};
 
 export { FileUploadItemName as ItemName };
 

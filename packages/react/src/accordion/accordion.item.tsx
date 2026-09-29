@@ -54,10 +54,12 @@ export type AccordionItemProps = AccordionItemProps.Render &
   AccordionItemProps.BaseUI &
   AccordionItemProps.HTML;
 
+export type IAccordionItem = IComponent<AccordionItemProps>;
+
 /**
  * アコーディオンの項目コンポーネントです。
  */
-export const AccordionItem: IComponent<AccordionItemProps> = function SuiAccordionItem(props) {
+export const AccordionItem: IAccordionItem = function SuiAccordionItem(props) {
   const { render, className, ...otherProps } = props;
 
   return (

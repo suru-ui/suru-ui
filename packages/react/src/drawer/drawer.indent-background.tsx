@@ -39,22 +39,25 @@ export type DrawerIndentBackgroundProps = DrawerIndentBackgroundProps.Render &
   DrawerIndentBackgroundProps.BaseUI &
   DrawerIndentBackgroundProps.HTML;
 
+export type IDrawerIndentBackground = IComponent<DrawerIndentBackgroundProps>;
+
 /**
  * ドロワーが開いているときの背景レイヤーです。
  *
  * `DrawerProvider` の子として `DrawerIndent` より前に配置します。
  */
-export const DrawerIndentBackground: IComponent<DrawerIndentBackgroundProps> =
-  function SuiDrawerIndentBackground(props) {
-    const { className, ...otherProps } = props;
+export const DrawerIndentBackground: IDrawerIndentBackground = function SuiDrawerIndentBackground(
+  props,
+) {
+  const { className, ...otherProps } = props;
 
-    return (
-      <Drawer.IndentBackground
-        {...otherProps}
-        className={cn(className, "sui_drawer_indent_background")}
-      />
-    );
-  };
+  return (
+    <Drawer.IndentBackground
+      {...otherProps}
+      className={cn(className, "sui_drawer_indent_background")}
+    />
+  );
+};
 
 export { DrawerIndentBackground as IndentBackground };
 

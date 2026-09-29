@@ -40,14 +40,14 @@ export type ContextMenuPortalProps = ContextMenuPortalProps.Render &
   ContextMenuPortalProps.BaseUI &
   ContextMenuPortalProps.HTML;
 
+export type IContextMenuPortal = IComponent<ContextMenuPortalProps>;
+
 /**
  * コンテキストメニューを DOM の別の場所へ移動する要素です。
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
-export const ContextMenuPortal: IComponent<ContextMenuPortalProps> = function SuiContextMenuPortal(
-  props,
-) {
+export const ContextMenuPortal: IContextMenuPortal = function SuiContextMenuPortal(props) {
   const ctx = useContextMenuContext();
   const {
     className,

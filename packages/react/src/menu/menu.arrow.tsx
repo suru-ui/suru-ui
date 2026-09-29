@@ -39,10 +39,12 @@ export type MenuArrowProps = MenuArrowProps.Render &
   MenuArrowProps.BaseUI &
   MenuArrowProps.HTML;
 
+export type IMenuArrow = IComponent<MenuArrowProps>;
+
 /**
  * ポップアップとトリガーをつなぐ矢印要素です。
  */
-export const MenuArrow: IComponent<MenuArrowProps> = function SuiMenuArrow(props) {
+export const MenuArrow: IMenuArrow = function SuiMenuArrow(props) {
   const { className, ...otherProps } = props;
 
   return <Menu.Arrow {...otherProps} className={cn(className, "sui_menu_arrow")} />;

@@ -29,10 +29,12 @@ export type DrawerBodyProps = DrawerBodyProps.Render &
   DrawerBodyProps.BaseUI &
   DrawerBodyProps.HTML;
 
+export type IDrawerBody = IComponent<DrawerBodyProps>;
+
 /**
  * ドロワーのボディーコンポーネントです。
  */
-export const DrawerBody: IComponent<DrawerBodyProps> = function SuiDrawerBody(props) {
+export const DrawerBody: IDrawerBody = function SuiDrawerBody(props) {
   return useRender({
     props: [
       props,

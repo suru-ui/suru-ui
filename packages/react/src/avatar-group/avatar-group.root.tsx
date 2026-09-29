@@ -97,6 +97,8 @@ export type AvatarGroupRootProps = AvatarGroupRootProps.Render &
   AvatarGroupRootProps.BaseUI &
   AvatarGroupRootProps.HTML;
 
+export type IAvatarGroupRoot = IComponent<AvatarGroupRootProps>;
+
 const colors = /*#__PURE__*/ COLORS.filter((color) => color !== "grey");
 
 /**
@@ -104,9 +106,7 @@ const colors = /*#__PURE__*/ COLORS.filter((color) => color !== "grey");
  *
  * 大きさ・色・角丸をコンテキストで子のアバターへ伝播します。
  */
-export const AvatarGroupRoot: IComponent<AvatarGroupRootProps> = function SuiAvatarGroupRoot(
-  props,
-) {
+export const AvatarGroupRoot: IAvatarGroupRoot = function SuiAvatarGroupRoot(props) {
   const {
     size = "md",
     color = "auto",

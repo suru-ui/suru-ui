@@ -29,23 +29,24 @@ export type SidebarGroupContentProps = SidebarGroupContentProps.Render &
   SidebarGroupContentProps.BaseUI &
   SidebarGroupContentProps.HTML;
 
+export type ISidebarGroupContent = IComponent<SidebarGroupContentProps>;
+
 /**
  * グループの内容です。
  *
  * ナビゲーションの項目などを配置します。
  */
-export const SidebarGroupContent: IComponent<SidebarGroupContentProps> =
-  function SuiSidebarGroupContent(props) {
-    return useRender({
-      props: [
-        props,
-        {
-          className: "sui_sidebar_group_content",
-        },
-      ],
-      defaultTagName: "div",
-    });
-  };
+export const SidebarGroupContent: ISidebarGroupContent = function SuiSidebarGroupContent(props) {
+  return useRender({
+    props: [
+      props,
+      {
+        className: "sui_sidebar_group_content",
+      },
+    ],
+    defaultTagName: "div",
+  });
+};
 
 export { SidebarGroupContent as GroupContent };
 

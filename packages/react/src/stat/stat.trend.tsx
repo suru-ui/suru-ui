@@ -49,6 +49,8 @@ export type StatTrendProps = StatTrendProps.Render &
   StatTrendProps.BaseUI &
   StatTrendProps.HTML;
 
+export type IStatTrend = IComponent<StatTrendProps>;
+
 function getTrendDirectionFromNumber(value: number): StatTrendDirection {
   // 数値の符号から方向を求めます。
   if (value === 0) {
@@ -97,7 +99,7 @@ function getDefaultTrendDirection(value: React.ReactNode): StatTrendDirection {
  *
  * `dd` 要素を描画し、前回からの増減を矢印と色で示します。
  */
-export const StatTrend: IComponent<StatTrendProps> = function SuiStatTrend(props) {
+export const StatTrend: IStatTrend = function SuiStatTrend(props) {
   const { children, direction = getDefaultTrendDirection(children), ...otherDdProps } = props;
 
   return useRender({

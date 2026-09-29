@@ -39,12 +39,12 @@ export type ScrollAreaCornerProps = ScrollAreaCornerProps.Render &
   ScrollAreaCornerProps.BaseUI &
   ScrollAreaCornerProps.HTML;
 
+export type IScrollAreaCorner = IComponent<ScrollAreaCornerProps>;
+
 /**
  * 水平スクロールバーと垂直スクロールバーの交差部分を埋める要素です。
  */
-export const ScrollAreaCorner: IComponent<ScrollAreaCornerProps> = function SuiScrollAreaCorner(
-  props,
-) {
+export const ScrollAreaCorner: IScrollAreaCorner = function SuiScrollAreaCorner(props) {
   const { className, ...otherProps } = props;
   return (
     <BaseScrollArea.Corner {...otherProps} className={cn(className, "sui_scroll_area_corner")} />

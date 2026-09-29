@@ -39,14 +39,14 @@ export type HoverCardViewportProps = HoverCardViewportProps.Render &
   HoverCardViewportProps.BaseUI &
   HoverCardViewportProps.HTML;
 
+export type IHoverCardViewport = IComponent<HoverCardViewportProps>;
+
 /**
  * 複数のトリガー間で内容を切り替えるときのアニメーション領域です。
  *
  * 1 つのホバーカードを複数のトリガーで共有し、内容をトリガーごとに変える場合に使います。
  */
-export const HoverCardViewport: IComponent<HoverCardViewportProps> = function SuiHoverCardViewport(
-  props,
-) {
+export const HoverCardViewport: IHoverCardViewport = function SuiHoverCardViewport(props) {
   const { className, ...otherProps } = props;
 
   return (

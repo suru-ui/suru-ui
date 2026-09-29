@@ -36,12 +36,14 @@ export type FileUploadItemProps = FileUploadItemProps.Render &
   FileUploadItemProps.BaseUI &
   FileUploadItemProps.HTML;
 
+export type IFileUploadItem = IComponent<FileUploadItemProps>;
+
 /**
  * 選択済みファイル 1 件を表示する項目です。
  *
  * 子パーツへファイルを伝播します。
  */
-export const FileUploadItem: IComponent<FileUploadItemProps> = function SuiFileUploadItem(props) {
+export const FileUploadItem: IFileUploadItem = function SuiFileUploadItem(props) {
   const { file, ...otherLiProps } = props;
   const ctx = React.useMemo<FileUploadItemContext>(() => ({ file }), [file]);
   const element = useRender({

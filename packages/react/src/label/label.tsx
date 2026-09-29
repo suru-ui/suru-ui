@@ -24,6 +24,8 @@ export type LabelState = LabelRootState;
  */
 export type LabelProps = LabelRootProps;
 
+export type ILabel = IComponent<LabelProps>;
+
 // API
 // ---
 
@@ -76,7 +78,7 @@ export { LabelAPI as API, useLabelAPI as useAPI };
  *
  * `htmlFor` でコントロールの `id` を指定するか、コントロールを子要素として配置します。
  */
-export const Label: IComponent<LabelProps> = function SuiLabel(props) {
+export const Label: ILabel = function SuiLabel(props) {
   const api = useLabelAPI(props);
 
   return <LabelRoot {...api.getRootProps()} />;

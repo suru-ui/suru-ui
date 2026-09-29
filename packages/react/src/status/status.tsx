@@ -57,6 +57,8 @@ namespace StatusProps {
  */
 export type StatusProps = StatusProps.Status & StatusProps.Root;
 
+export type IStatus = IComponent<StatusProps>;
+
 // API
 // ---
 
@@ -130,7 +132,7 @@ export { StatusAPI as API, useStatusAPI as useAPI };
 /**
  * 状態を示すドットとラベルを並べて表示するコンポーネントです。
  */
-export const Status: IComponent<StatusProps> = function SuiStatus(props) {
+export const Status: IStatus = function SuiStatus(props) {
   const api = useStatusAPI(props);
 
   return (

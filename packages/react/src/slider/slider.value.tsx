@@ -59,10 +59,12 @@ export type SliderValueProps = SliderValueProps.Render &
   SliderValueProps.BaseUI &
   SliderValueProps.HTML;
 
+export type ISliderValue = IComponent<SliderValueProps>;
+
 /**
  * スライダーの現在値を表示するコンポーネントです。
  */
-export const SliderValue: IComponent<SliderValueProps> = function SuiSliderValue(props) {
+export const SliderValue: ISliderValue = function SuiSliderValue(props) {
   const { children, className, ...otherProps } = props;
   const renderer =
     typeof children === "function" ? children : children != null ? () => children : undefined;

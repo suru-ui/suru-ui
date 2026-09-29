@@ -39,12 +39,12 @@ export type SelectGroupLabelProps = SelectGroupLabelProps.Render &
   SelectGroupLabelProps.BaseUI &
   SelectGroupLabelProps.HTML;
 
+export type ISelectGroupLabel = IComponent<SelectGroupLabelProps>;
+
 /**
  * 選択肢グループの見出し要素です。
  */
-export const SelectGroupLabel: IComponent<SelectGroupLabelProps> = function SuiSelectGroupLabel(
-  props,
-) {
+export const SelectGroupLabel: ISelectGroupLabel = function SuiSelectGroupLabel(props) {
   const { className, ...otherProps } = props;
 
   return (

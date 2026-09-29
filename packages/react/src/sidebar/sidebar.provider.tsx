@@ -54,14 +54,14 @@ export type SidebarProviderProps = SidebarProviderProps.Render &
   SidebarProviderProps.BaseUI &
   SidebarProviderProps.HTML;
 
+export type ISidebarProvider = IComponent<SidebarProviderProps>;
+
 /**
  * サイドバーとその内容を包むルート要素です。
  *
  * 子要素には {@link SidebarRoot}、{@link SidebarTrigger}、{@link SidebarInset} を配置します。
  */
-export const SidebarProvider: IComponent<SidebarProviderProps> = function SuiSidebarProvider(
-  props,
-) {
+export const SidebarProvider: ISidebarProvider = function SuiSidebarProvider(props) {
   const {
     open: openProp,
     defaultOpen = true,

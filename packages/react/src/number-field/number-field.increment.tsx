@@ -43,28 +43,29 @@ export type NumberFieldIncrementProps = NumberFieldIncrementProps.Render &
   NumberFieldIncrementProps.BaseUI &
   NumberFieldIncrementProps.HTML;
 
+export type INumberFieldIncrement = IComponent<NumberFieldIncrementProps>;
+
 /**
  * 値を増やすボタンです。
  */
-export const NumberFieldIncrement: IComponent<NumberFieldIncrementProps> =
-  function SuiNumberFieldIncrement(props) {
-    const {
-      children = <PlusIcon />,
-      className,
-      "aria-label": ariaLabel = "値を増やす",
-      ...otherProps
-    } = props;
+export const NumberFieldIncrement: INumberFieldIncrement = function SuiNumberFieldIncrement(props) {
+  const {
+    children = <PlusIcon />,
+    className,
+    "aria-label": ariaLabel = "値を増やす",
+    ...otherProps
+  } = props;
 
-    return (
-      <NumberField.Increment
-        {...otherProps}
-        className={cn(className, "sui_number_field_stepper", "sui_number_field_increment")}
-        aria-label={ariaLabel}
-      >
-        {children}
-      </NumberField.Increment>
-    );
-  };
+  return (
+    <NumberField.Increment
+      {...otherProps}
+      className={cn(className, "sui_number_field_stepper", "sui_number_field_increment")}
+      aria-label={ariaLabel}
+    >
+      {children}
+    </NumberField.Increment>
+  );
+};
 
 export { NumberFieldIncrement as Increment };
 

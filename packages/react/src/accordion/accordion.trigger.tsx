@@ -51,12 +51,12 @@ export type AccordionTriggerProps = AccordionTriggerProps.Render &
   AccordionTriggerProps.BaseUI &
   AccordionTriggerProps.HTML;
 
+export type IAccordionTrigger = IComponent<AccordionTriggerProps>;
+
 /**
  * アコーディオンの開閉ボタンコンポーネントです。
  */
-export const AccordionTrigger: IComponent<AccordionTriggerProps> = function SuiAccordionTrigger(
-  props,
-) {
+export const AccordionTrigger: IAccordionTrigger = function SuiAccordionTrigger(props) {
   const { unstyled = false, className, ...otherProps } = props;
 
   return (

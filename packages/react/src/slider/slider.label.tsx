@@ -39,10 +39,12 @@ export type SliderLabelProps = SliderLabelProps.Render &
   SliderLabelProps.BaseUI &
   SliderLabelProps.HTML;
 
+export type ISliderLabel = IComponent<SliderLabelProps>;
+
 /**
  * スライダーのラベルコンポーネントです。
  */
-export const SliderLabel: IComponent<SliderLabelProps> = function SuiSliderLabel(props) {
+export const SliderLabel: ISliderLabel = function SuiSliderLabel(props) {
   const { className, ...otherProps } = props;
 
   return <Slider.Label {...otherProps} className={cn(className, "sui_slider_label")} />;

@@ -51,12 +51,12 @@ export type TooltipPositionerProps = TooltipPositionerProps.Render &
   TooltipPositionerProps.BaseUI &
   TooltipPositionerProps.HTML;
 
+export type ITooltipPositioner = IComponent<TooltipPositionerProps>;
+
 /**
  * トリガーを基準にポップアップを配置する要素です。
  */
-export const TooltipPositioner: IComponent<TooltipPositionerProps> = function SuiTooltipPositioner(
-  props,
-) {
+export const TooltipPositioner: ITooltipPositioner = function SuiTooltipPositioner(props) {
   const { className, positionMethod = "fixed", ...otherProps } = props;
 
   return (

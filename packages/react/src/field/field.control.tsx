@@ -49,10 +49,12 @@ export type FieldControlProps = FieldControlProps.Render &
   FieldControlProps.BaseUI &
   FieldControlProps.HTML;
 
+export type IFieldControl = IComponent<FieldControlProps>;
+
 /**
  * フィールドの入力欄コンポーネントです。
  */
-export const FieldControl: IComponent<FieldControlProps> = function SuiFieldControl(props) {
+export const FieldControl: IFieldControl = function SuiFieldControl(props) {
   const { className, ...otherProps } = props;
 
   return <Field.Control {...otherProps} className={cn(className, "sui_field_control")} />;

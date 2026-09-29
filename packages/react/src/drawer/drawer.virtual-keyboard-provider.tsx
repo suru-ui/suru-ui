@@ -37,12 +37,14 @@ export type DrawerVirtualKeyboardProviderProps = DrawerVirtualKeyboardProviderPr
   DrawerVirtualKeyboardProviderProps.BaseUI &
   DrawerVirtualKeyboardProviderProps.HTML;
 
+export type IDrawerVirtualKeyboardProvider = IComponent<DrawerVirtualKeyboardProviderProps>;
+
 /**
  * ソフトウェアキーボードに合わせたフォーカスとスクロールを管理するプロバイダーです。
  *
  * ボトムシート内にフォームを配置するときに使用します。
  */
-export const DrawerVirtualKeyboardProvider: IComponent<DrawerVirtualKeyboardProviderProps> =
+export const DrawerVirtualKeyboardProvider: IDrawerVirtualKeyboardProvider =
   function SuiDrawerVirtualKeyboardProvider(props) {
     return <Drawer.VirtualKeyboardProvider {...props} />;
   };

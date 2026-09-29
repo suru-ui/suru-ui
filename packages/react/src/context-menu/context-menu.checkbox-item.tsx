@@ -112,10 +112,12 @@ export type ContextMenuCheckboxItemProps = ContextMenuCheckboxItemProps.Render &
   ContextMenuCheckboxItemProps.BaseUI &
   ContextMenuCheckboxItemProps.HTML;
 
+export type IContextMenuCheckboxItem = IComponent<ContextMenuCheckboxItemProps>;
+
 /**
  * 設定をオンまたはオフにできるコンテキストメニュー項目です。
  */
-export const ContextMenuCheckboxItem: IComponent<ContextMenuCheckboxItemProps> =
+export const ContextMenuCheckboxItem: IContextMenuCheckboxItem =
   function SuiContextMenuCheckboxItem(props) {
     const ctx = useContextMenuContext();
     const {

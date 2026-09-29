@@ -57,12 +57,14 @@ export type FieldRootProps = FieldRootProps.Render &
   FieldRootProps.BaseUI &
   FieldRootProps.HTML;
 
+export type IFieldRoot = IComponent<FieldRootProps>;
+
 /**
  * フィールドのルートコンポーネントです。
  *
  * ラベル、入力欄、エラーメッセージ、説明文をグループ化し、検証状態を管理します。
  */
-export const FieldRoot: IComponent<FieldRootProps> = function SuiFieldRoot(props) {
+export const FieldRoot: IFieldRoot = function SuiFieldRoot(props) {
   const {
     className,
     // @ts-expect-error

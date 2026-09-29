@@ -50,20 +50,21 @@ export type HoverCardPositionerProps = HoverCardPositionerProps.Render &
   HoverCardPositionerProps.BaseUI &
   HoverCardPositionerProps.HTML;
 
+export type IHoverCardPositioner = IComponent<HoverCardPositionerProps>;
+
 /**
  * トリガーを基準にポップアップを配置する要素です。
  */
-export const HoverCardPositioner: IComponent<HoverCardPositionerProps> =
-  function SuiHoverCardPositioner(props) {
-    const { className, ...otherProps } = props;
+export const HoverCardPositioner: IHoverCardPositioner = function SuiHoverCardPositioner(props) {
+  const { className, ...otherProps } = props;
 
-    return (
-      <PreviewCard.Positioner
-        {...otherProps}
-        className={cn(className, "sui_hover_card_positioner")}
-      />
-    );
-  };
+  return (
+    <PreviewCard.Positioner
+      {...otherProps}
+      className={cn(className, "sui_hover_card_positioner")}
+    />
+  );
+};
 
 export { HoverCardPositioner as Positioner };
 

@@ -108,10 +108,12 @@ export type MeterRootProps = MeterRootProps.Render &
   MeterRootProps.BaseUI &
   MeterRootProps.HTML;
 
+export type IMeterRoot = IComponent<MeterRootProps>;
+
 /**
  * メーターのルートコンポーネントです。
  */
-export const MeterRoot: IComponent<MeterRootProps> = function SuiMeterRoot(props) {
+export const MeterRoot: IMeterRoot = function SuiMeterRoot(props) {
   const {
     size = "md",
     color = "grey",

@@ -39,12 +39,14 @@ export type DrawerPortalProps = DrawerPortalProps.Render &
   DrawerPortalProps.BaseUI &
   DrawerPortalProps.HTML;
 
+export type IDrawerPortal = IComponent<DrawerPortalProps>;
+
 /**
  * ドロワーを DOM の別の場所に配置するコンポーネントです。
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
-export const DrawerPortal: IComponent<DrawerPortalProps> = function SuiDrawerPortal(props) {
+export const DrawerPortal: IDrawerPortal = function SuiDrawerPortal(props) {
   const {
     className,
     // @ts-expect-error

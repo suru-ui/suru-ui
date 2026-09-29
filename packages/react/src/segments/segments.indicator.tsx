@@ -39,14 +39,14 @@ export type SegmentsIndicatorProps = SegmentsIndicatorProps.Render &
   SegmentsIndicatorProps.BaseUI &
   SegmentsIndicatorProps.HTML;
 
+export type ISegmentsIndicator = IComponent<SegmentsIndicatorProps>;
+
 /**
  * 選択されているセグメントの位置に追従するインジケーターです。
  *
  * {@link SegmentsList} の子要素として配置します。
  */
-export const SegmentsIndicator: IComponent<SegmentsIndicatorProps> = function SuiSegmentsIndicator(
-  props,
-) {
+export const SegmentsIndicator: ISegmentsIndicator = function SuiSegmentsIndicator(props) {
   const { className, ...otherProps } = props;
 
   return <BaseTabs.Indicator {...otherProps} className={cn(className, "sui_segments_indicator")} />;

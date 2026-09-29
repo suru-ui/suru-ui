@@ -39,20 +39,21 @@ export type NumberFieldScrubAreaProps = NumberFieldScrubAreaProps.Render &
   NumberFieldScrubAreaProps.BaseUI &
   NumberFieldScrubAreaProps.HTML;
 
+export type INumberFieldScrubArea = IComponent<NumberFieldScrubAreaProps>;
+
 /**
  * ドラッグで値を変更できる領域を提供するコンポーネントです。
  */
-export const NumberFieldScrubArea: IComponent<NumberFieldScrubAreaProps> =
-  function SuiNumberFieldScrubArea(props) {
-    const { className, ...otherProps } = props;
+export const NumberFieldScrubArea: INumberFieldScrubArea = function SuiNumberFieldScrubArea(props) {
+  const { className, ...otherProps } = props;
 
-    return (
-      <NumberField.ScrubArea
-        {...otherProps}
-        className={cn(className, "sui_number_field_scrub_area")}
-      />
-    );
-  };
+  return (
+    <NumberField.ScrubArea
+      {...otherProps}
+      className={cn(className, "sui_number_field_scrub_area")}
+    />
+  );
+};
 
 export { NumberFieldScrubArea as ScrubArea };
 

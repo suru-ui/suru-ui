@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import type { IComponent, IUseContext } from "../types.js";
+import type { IComponent } from "../types.js";
 import {
   type ResizableContext,
   type ResizablePanelSize,
@@ -8,6 +8,7 @@ import {
   type ResizableRootState,
   type ResizablePanelProps,
   type ResizablePanelState,
+  type IUseResizableContext,
   type ResizableHandleProps,
   type ResizableHandleState,
   type ResizableHandleDirection,
@@ -99,7 +100,7 @@ export interface IResizable extends IComponent<ResizableProps> {
   /**
    * {@link useResizableContext} です。
    */
-  readonly useContext: IUseContext<ResizableContext>;
+  readonly useContext: IUseResizableContext;
 }
 
 /**

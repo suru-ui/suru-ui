@@ -93,12 +93,12 @@ export type ContextMenuItemProps = ContextMenuItemProps.Render &
   ContextMenuItemProps.BaseUI &
   ContextMenuItemProps.HTML;
 
+export type IContextMenuItem = IComponent<ContextMenuItemProps>;
+
 /**
  * コンテキストメニューの操作項目です。
  */
-export const ContextMenuItem: IComponent<ContextMenuItemProps> = function SuiContextMenuItem(
-  props,
-) {
+export const ContextMenuItem: IContextMenuItem = function SuiContextMenuItem(props) {
   const ctx = useContextMenuContext();
   const {
     id,

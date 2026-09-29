@@ -44,31 +44,32 @@ export type ComboboxInputDisplayProps = ComboboxInputDisplayProps.Render &
   ComboboxInputDisplayProps.BaseUI &
   ComboboxInputDisplayProps.HTML;
 
+export type IComboboxInputDisplay = IComponent<ComboboxInputDisplayProps>;
+
 /**
  * 選択値を表示する要素です。
  *
  * {@link ComboboxInput} と同じ見た目を持つ描画専用の要素で、入力欄をポップアップの中に置く構成のトリガー内で使います。
  */
-export const ComboboxInputDisplay: IComponent<ComboboxInputDisplayProps> =
-  function SuiComboboxInputDisplay(props) {
-    const ctx = useComboboxContext();
-    const { value, placeholder, ...otherSpanProps } = props;
-    const label = ctx.itemToStringLabel(value);
+export const ComboboxInputDisplay: IComboboxInputDisplay = function SuiComboboxInputDisplay(props) {
+  const ctx = useComboboxContext();
+  const { value, placeholder, ...otherSpanProps } = props;
+  const label = ctx.itemToStringLabel(value);
 
-    return useRender({
-      props: [
-        otherSpanProps,
-        {
-          children: label || placeholder,
-          className: cn(
-            "sui_combobox_input_display",
-            !label && "sui_combobox_input_display-placeholder",
-          ),
-        },
-      ],
-      defaultTagName: "span",
-    });
-  };
+  return useRender({
+    props: [
+      otherSpanProps,
+      {
+        children: label || placeholder,
+        className: cn(
+          "sui_combobox_input_display",
+          !label && "sui_combobox_input_display-placeholder",
+        ),
+      },
+    ],
+    defaultTagName: "span",
+  });
+};
 
 export { ComboboxInputDisplay as InputDisplay };
 

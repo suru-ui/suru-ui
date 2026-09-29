@@ -27,12 +27,15 @@ export type ToggleButtonCircularProgressFillRotationProps =
     ToggleButtonCircularProgressFillRotationProps.BaseUI &
     ToggleButtonCircularProgressFillRotationProps.HTML;
 
+export type IToggleButtonCircularProgressFillRotation =
+  IComponent<ToggleButtonCircularProgressFillRotationProps>;
+
 /**
  * 不定モード時に円形プログレスバーを回転させるアニメーションコンポーネントです。
  *
  * 不定モードの場合のみ有効になります。
  */
-export const ToggleButtonCircularProgressFillRotation: IComponent<ToggleButtonCircularProgressFillRotationProps> =
+export const ToggleButtonCircularProgressFillRotation: IToggleButtonCircularProgressFillRotation =
   function SuiToggleButtonCircularProgressFillRotation(props) {
     return <Button.CircularProgressFillRotation {...props} />;
   };

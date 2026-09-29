@@ -25,10 +25,12 @@ export type ToggleButtonCircularProgressFillProps = ToggleButtonCircularProgress
   ToggleButtonCircularProgressFillProps.BaseUI &
   ToggleButtonCircularProgressFillProps.HTML;
 
+export type IToggleButtonCircularProgressFill = IComponent<ToggleButtonCircularProgressFillProps>;
+
 /**
  * 円形プログレスバーのフィル（進捗を表す円弧）を描画するコンポーネントです。
  */
-export const ToggleButtonCircularProgressFill: IComponent<ToggleButtonCircularProgressFillProps> =
+export const ToggleButtonCircularProgressFill: IToggleButtonCircularProgressFill =
   function SuiToggleButtonCircularProgressFill(props) {
     return <Button.CircularProgressFill {...props} />;
   };

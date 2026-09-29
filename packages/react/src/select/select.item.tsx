@@ -53,10 +53,12 @@ export type SelectItemProps = SelectItemProps.Render &
   SelectItemProps.BaseUI &
   SelectItemProps.HTML;
 
+export type ISelectItem = IComponent<SelectItemProps>;
+
 /**
  * 選択肢の個々の項目です。
  */
-export const SelectItem: IComponent<SelectItemProps> = function SuiSelectItem(props) {
+export const SelectItem: ISelectItem = function SuiSelectItem(props) {
   const ctx = useSelectContext();
   const {
     label,

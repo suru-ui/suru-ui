@@ -30,6 +30,8 @@ export type ChipState = ChipRootState;
  */
 export type ChipProps = ChipRootProps;
 
+export type IChip = IComponent<ChipProps>;
+
 // API
 // ---
 
@@ -80,7 +82,7 @@ export { ChipAPI as API, useChipAPI as useAPI };
 /**
  * 短いラベルや属性を表示するチップコンポーネントです。
  */
-export const Chip: IComponent<ChipProps> = function SuiChip(props) {
+export const Chip: IChip = function SuiChip(props) {
   const api = useChipAPI(props);
 
   return <ChipRoot {...api.getRootProps()} />;

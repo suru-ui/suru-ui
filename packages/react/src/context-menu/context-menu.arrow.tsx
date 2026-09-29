@@ -39,12 +39,12 @@ export type ContextMenuArrowProps = ContextMenuArrowProps.Render &
   ContextMenuArrowProps.BaseUI &
   ContextMenuArrowProps.HTML;
 
+export type IContextMenuArrow = IComponent<ContextMenuArrowProps>;
+
 /**
  * ポップアップとトリガーをつなぐ矢印要素です。
  */
-export const ContextMenuArrow: IComponent<ContextMenuArrowProps> = function SuiContextMenuArrow(
-  props,
-) {
+export const ContextMenuArrow: IContextMenuArrow = function SuiContextMenuArrow(props) {
   const { className, ...otherProps } = props;
 
   return <ContextMenu.Arrow {...otherProps} className={cn(className, "sui_context_menu_arrow")} />;

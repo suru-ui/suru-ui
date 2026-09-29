@@ -149,10 +149,12 @@ export type ButtonRootProps = ButtonRootProps.Render &
   ButtonRootProps.BaseUI &
   ButtonRootProps.HTML;
 
+export type IButtonRoot = IComponent<ButtonRootProps>;
+
 /**
  * ボタンのルートコンポーネントです。
  */
-export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(props) {
+export const ButtonRoot: IButtonRoot = function SuiButtonRoot(props) {
   const {
     item = false,
     size = "md",

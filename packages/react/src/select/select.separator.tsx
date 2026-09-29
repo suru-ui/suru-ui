@@ -39,12 +39,12 @@ export type SelectSeparatorProps = SelectSeparatorProps.Render &
   SelectSeparatorProps.BaseUI &
   SelectSeparatorProps.HTML;
 
+export type ISelectSeparator = IComponent<SelectSeparatorProps>;
+
 /**
  * 項目やグループを区切る要素です。
  */
-export const SelectSeparator: IComponent<SelectSeparatorProps> = function SuiSelectSeparator(
-  props,
-) {
+export const SelectSeparator: ISelectSeparator = function SuiSelectSeparator(props) {
   const { className, ...otherProps } = props;
 
   return <BaseSelect.Separator {...otherProps} className={cn(className, "sui_select_separator")} />;

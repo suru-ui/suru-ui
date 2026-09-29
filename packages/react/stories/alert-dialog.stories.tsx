@@ -33,6 +33,10 @@ const ctrl = controls(AlertDialog, {
   showCancelIconButton: {
     control: "boolean",
   },
+  size: {
+    control: "select",
+    options: theme.SIZES,
+  },
   title: {
     control: "text",
   },

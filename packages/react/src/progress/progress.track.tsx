@@ -39,10 +39,12 @@ export type ProgressTrackProps = ProgressTrackProps.Render &
   ProgressTrackProps.BaseUI &
   ProgressTrackProps.HTML;
 
+export type IProgressTrack = IComponent<ProgressTrackProps>;
+
 /**
  * 進捗の全範囲を表すトラックコンポーネントです。
  */
-export const ProgressTrack: IComponent<ProgressTrackProps> = function SuiProgressTrack(props) {
+export const ProgressTrack: IProgressTrack = function SuiProgressTrack(props) {
   const { className, ...otherProps } = props;
 
   return <Progress.Track {...otherProps} className={cn(className, "sui_progress_track")} />;

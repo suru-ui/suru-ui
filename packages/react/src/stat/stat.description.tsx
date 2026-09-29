@@ -29,14 +29,14 @@ export type StatDescriptionProps = StatDescriptionProps.Render &
   StatDescriptionProps.BaseUI &
   StatDescriptionProps.HTML;
 
+export type IStatDescription = IComponent<StatDescriptionProps>;
+
 /**
  * 統計の補足説明を表すコンポーネントです。
  *
  * `dd` 要素を描画します。
  */
-export const StatDescription: IComponent<StatDescriptionProps> = function SuiStatDescription(
-  props,
-) {
+export const StatDescription: IStatDescription = function SuiStatDescription(props) {
   return useRender({
     props: [
       props,

@@ -142,7 +142,7 @@ describe("AlertDialog", () => {
   test("アイコンと本文と操作を表示する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
-      <AlertDialog defaultOpen controls="操作" icon={<span>!</span>} title="見出し">
+      <AlertDialog defaultOpen action="操作" icon={<span>!</span>} title="見出し">
         本文
       </AlertDialog>,
     );
@@ -153,12 +153,32 @@ describe("AlertDialog", () => {
     expect(screen.getByText("操作").query()?.textContent).toBe("操作");
   });
 
-  test("積み上げ式では操作をフッターの外に置く", async ({ expect }) => {
+  test("フッターと中止ボタンと確認ボタンを表示する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <AlertDialog
         defaultOpen
-        controls="操作"
+        showCancelIconButton={false}
+        title="見出し"
+        cancel={cancelButton}
+        confirm={confirmButton}
+        footer="補足"
+      />,
+    );
+
+    // 検証
+    const footer = screen.getByClassName("sui_alert_dialog_footer").element();
+    expect(footer.textContent).toContain("補足");
+    expect(footer.textContent).toContain("キャンセル");
+    expect(footer.textContent).toContain("削除する");
+  });
+
+  test("積み上げ式では操作をヘッダーの外に置く", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <AlertDialog
+        defaultOpen
+        action="操作"
         title="見出し"
         variant="stacked"
         cancel={cancelButton}
@@ -167,9 +187,19 @@ describe("AlertDialog", () => {
     );
 
     // 検証
-    const controls = screen.getByClassName("sui_alert_dialog_controls").element();
-    expect(controls.classList.contains("sui_alert_dialog_controls-absolute")).toBe(true);
-    expect(controls.closest(".sui_alert_dialog_footer")).toBe(null);
+    const action = screen.getByClassName("sui_alert_dialog_action").element();
+    expect(action.closest(".sui_alert_dialog_popup")).not.toBe(null);
+    expect(action.closest(".sui_alert_dialog_header")).toBe(null);
+    expect(action.closest(".sui_alert_dialog_footer")).toBe(null);
+  });
+
+  test("積み上げ式で操作だけのときヘッダーを描画しない", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(<AlertDialog defaultOpen variant="stacked" action="操作" />);
+
+    // 検証
+    expect(screen.getByClassName("sui_alert_dialog_header").query()).toBe(null);
+    expect(screen.getByClassName("sui_alert_dialog_action").query()).not.toBe(null);
   });
 
   test("slotProps で各パーツに props を渡す", async ({ expect }) => {
@@ -178,14 +208,20 @@ describe("AlertDialog", () => {
       <AlertDialog
         defaultOpen
         title="見出し"
-        slotProps={{ body: { id: "body" }, header: { id: "header" } }}
+        action="操作"
+        slotProps={{
+          action: { id: "action" },
+          content: { id: "content" },
+          header: { id: "header" },
+        }}
       >
         本文
       </AlertDialog>,
     );
 
     // 検証
-    expect(screen.getByClassName("sui_alert_dialog_body").element().id).toBe("body");
+    expect(screen.getByClassName("sui_alert_dialog_action").element().id).toBe("action");
+    expect(screen.getByClassName("sui_alert_dialog_content").element().id).toBe("content");
     expect(screen.getByClassName("sui_alert_dialog_header").element().id).toBe("header");
   });
 
@@ -221,10 +257,10 @@ describe("AlertDialog", () => {
     expect(screen.getByRole("alertdialog").query()).not.toBe(null);
   });
 
-  test("useContentContext で角丸を読み取る", async ({ expect }) => {
+  test("usePopupContext で角丸を読み取る", async ({ expect }) => {
     // 準備
     function Probe() {
-      const ctx = AlertDialog.useContentContext();
+      const ctx = AlertDialog.usePopupContext();
 
       return <span>{ctx.radius}</span>;
     }

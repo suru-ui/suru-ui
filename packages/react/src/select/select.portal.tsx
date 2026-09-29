@@ -40,12 +40,14 @@ export type SelectPortalProps = SelectPortalProps.Render &
   SelectPortalProps.BaseUI &
   SelectPortalProps.HTML;
 
+export type ISelectPortal = IComponent<SelectPortalProps>;
+
 /**
  * ポップアップを DOM の別の場所へ移動する要素です。
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
-export const SelectPortal: IComponent<SelectPortalProps> = function SuiSelectPortal(props) {
+export const SelectPortal: ISelectPortal = function SuiSelectPortal(props) {
   const ctx = useSelectContext();
   const {
     className,

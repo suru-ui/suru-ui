@@ -31,25 +31,28 @@ export type FileUploadItemSizeTextProps = FileUploadItemSizeTextProps.Render &
   FileUploadItemSizeTextProps.BaseUI &
   FileUploadItemSizeTextProps.HTML;
 
+export type IFileUploadItemSizeText = IComponent<FileUploadItemSizeTextProps>;
+
 /**
  * ファイルサイズを人間が読める形式で表示するコンポーネントです。
  */
-export const FileUploadItemSizeText: IComponent<FileUploadItemSizeTextProps> =
-  function SuiFileUploadItemSizeText(props) {
-    const ctx = useFileUploadItemContext();
-    const { children = formatFileSize(ctx.file.size), ...otherSpanProps } = props;
+export const FileUploadItemSizeText: IFileUploadItemSizeText = function SuiFileUploadItemSizeText(
+  props,
+) {
+  const ctx = useFileUploadItemContext();
+  const { children = formatFileSize(ctx.file.size), ...otherSpanProps } = props;
 
-    return useRender({
-      props: [
-        otherSpanProps,
-        {
-          children,
-          className: "sui_file_upload_item_size_text",
-        },
-      ],
-      defaultTagName: "span",
-    });
-  };
+  return useRender({
+    props: [
+      otherSpanProps,
+      {
+        children,
+        className: "sui_file_upload_item_size_text",
+      },
+    ],
+    defaultTagName: "span",
+  });
+};
 
 export { FileUploadItemSizeText as ItemSizeText };
 

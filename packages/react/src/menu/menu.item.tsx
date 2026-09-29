@@ -93,10 +93,12 @@ export type MenuItemProps = MenuItemProps.Render &
   MenuItemProps.BaseUI &
   MenuItemProps.HTML;
 
+export type IMenuItem = IComponent<MenuItemProps>;
+
 /**
  * メニューの操作項目です。
  */
-export const MenuItem: IComponent<MenuItemProps> = function SuiMenuItem(props) {
+export const MenuItem: IMenuItem = function SuiMenuItem(props) {
   const ctx = useMenuContext();
   const {
     id,

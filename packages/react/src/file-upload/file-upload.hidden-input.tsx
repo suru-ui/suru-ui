@@ -33,38 +33,41 @@ export type FileUploadHiddenInputProps = FileUploadHiddenInputProps.Render &
   FileUploadHiddenInputProps.BaseUI &
   FileUploadHiddenInputProps.HTML;
 
+export type IFileUploadHiddenInput = IComponent<FileUploadHiddenInputProps>;
+
 /**
  * ファイル選択ダイアログの実体になる隠し input 要素です。
  *
  * {@link FileUploadRoot} の子として配置し、スクリーンリーダーとフォーム送信のために DOM に残ります。
  */
-export const FileUploadHiddenInput: IComponent<FileUploadHiddenInputProps> =
-  function SuiFileUploadHiddenInput(props) {
-    const ctx = useFileUploadContext();
+export const FileUploadHiddenInput: IFileUploadHiddenInput = function SuiFileUploadHiddenInput(
+  props,
+) {
+  const ctx = useFileUploadContext();
 
-    return useRender({
-      props: [
-        props,
-        {
-          ref: ctx.setInputElement,
-          name: ctx.name,
-          type: "file",
-          accept: ctx.accept,
-          disabled: ctx.disabled,
-          multiple: ctx.multiple,
-          onChange(event: React.ChangeEvent<HTMLInputElement>) {
-            const selectedFiles = Array.from(event.target.files ?? []);
-            // 同じファイルを再度選んでも change イベントが発火するように、値を必ずリセットします。
-            event.target.value = "";
-            ctx.selectFiles(selectedFiles);
-          },
-          required: ctx.required,
-          className: "sui_file_upload_hidden_input",
+  return useRender({
+    props: [
+      props,
+      {
+        ref: ctx.setInputElement,
+        name: ctx.name,
+        type: "file",
+        accept: ctx.accept,
+        disabled: ctx.disabled,
+        multiple: ctx.multiple,
+        onChange(event: React.ChangeEvent<HTMLInputElement>) {
+          const selectedFiles = Array.from(event.target.files ?? []);
+          // 同じファイルを再度選んでも change イベントが発火するように、値を必ずリセットします。
+          event.target.value = "";
+          ctx.selectFiles(selectedFiles);
         },
-      ],
-      defaultTagName: "input",
-    });
-  };
+        required: ctx.required,
+        className: "sui_file_upload_hidden_input",
+      },
+    ],
+    defaultTagName: "input",
+  });
+};
 
 export { FileUploadHiddenInput as HiddenInput };
 

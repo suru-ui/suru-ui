@@ -95,6 +95,8 @@ namespace AlertProps {
  */
 export type AlertProps = AlertProps.Alert & AlertProps.Root;
 
+export type IAlert = IComponent<AlertProps>;
+
 // API
 // ---
 
@@ -228,7 +230,7 @@ export { AlertAPI as API, useAlertAPI as useAPI };
 /**
  * 重要なメッセージや通知をステータスインジケーター付きで表示するコンポーネントです。
  */
-export const Alert: IComponent<AlertProps> = function SuiAlert(props: AlertProps) {
+export const Alert: IAlert = function SuiAlert(props: AlertProps) {
   const api = useAlertAPI(props);
   const iconProps = api.getIconProps();
   const titleProps = api.getTitleProps();

@@ -51,12 +51,14 @@ export type PaginationItemProps = PaginationItemProps.Render &
   PaginationItemProps.BaseUI &
   PaginationItemProps.HTML;
 
+export type IPaginationItem = IComponent<PaginationItemProps>;
+
 /**
  * ページ番号のボタンコンポーネントです。
  *
  * 子要素を指定しない場合、{@link PaginationItemProps.page|page} をラベルとして表示します。現在のページは `aria-current="page"` で示します。
  */
-export const PaginationItem: IComponent<PaginationItemProps> = function SuiPaginationItem(props) {
+export const PaginationItem: IPaginationItem = function SuiPaginationItem(props) {
   const ctx = usePaginationContext(true);
   const {
     page,

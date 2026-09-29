@@ -39,19 +39,20 @@ export type ScrollAreaViewportProps = ScrollAreaViewportProps.Render &
   ScrollAreaViewportProps.BaseUI &
   ScrollAreaViewportProps.HTML;
 
+export type IScrollAreaViewport = IComponent<ScrollAreaViewportProps>;
+
 /**
  * コンテンツをクリップし、スクロール操作を受け付けるビューポート要素です。
  */
-export const ScrollAreaViewport: IComponent<ScrollAreaViewportProps> =
-  function SuiScrollAreaViewport(props) {
-    const { className, ...otherProps } = props;
-    return (
-      <BaseScrollArea.Viewport
-        {...otherProps}
-        className={cn(className, "sui_scroll_area_viewport")}
-      />
-    );
-  };
+export const ScrollAreaViewport: IScrollAreaViewport = function SuiScrollAreaViewport(props) {
+  const { className, ...otherProps } = props;
+  return (
+    <BaseScrollArea.Viewport
+      {...otherProps}
+      className={cn(className, "sui_scroll_area_viewport")}
+    />
+  );
+};
 
 export { ScrollAreaViewport as Viewport };
 

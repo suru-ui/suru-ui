@@ -39,10 +39,12 @@ export type SelectIconProps = SelectIconProps.Render &
   SelectIconProps.BaseUI &
   SelectIconProps.HTML;
 
+export type ISelectIcon = IComponent<SelectIconProps>;
+
 /**
  * ポップアップの開閉を示すアイコンのラッパー要素です。
  */
-export const SelectIcon: IComponent<SelectIconProps> = function SuiSelectIcon(props) {
+export const SelectIcon: ISelectIcon = function SuiSelectIcon(props) {
   const { className, ...otherProps } = props;
 
   return <BaseSelect.Icon {...otherProps} className={cn(className, "sui_select_icon")} />;

@@ -10,10 +10,12 @@ import {
   type TooltipRootState,
   type TooltipArrowProps,
   type TooltipRootRadius,
+  type IUseTooltipContext,
   type TooltipPortalProps,
   type TooltipRootActions,
   type TooltipContentProps,
   type TooltipTriggerProps,
+  type ICreateTooltipHandle,
   type TooltipPositionerProps,
   type TooltipRootChangeEventReason,
   type TooltipRootChangeEventDetails,
@@ -355,7 +357,7 @@ export { TooltipAPI as API, useTooltipAPI as useAPI };
 // Component
 // ---------
 
-interface ITooltip extends IComponent<TooltipProps> {
+export interface ITooltip extends IComponent<TooltipProps> {
   /**
    * @template TPayload トリガーが送信するデータの型です。
    */
@@ -369,9 +371,9 @@ interface ITooltip extends IComponent<TooltipProps> {
   /**
    * {@link TooltipHandle} を作成する関数です。
    */
-  readonly createHandle: typeof createTooltipHandle;
+  readonly createHandle: ICreateTooltipHandle;
 
-  readonly useContext: typeof useTooltipContext;
+  readonly useContext: IUseTooltipContext;
 }
 
 /**

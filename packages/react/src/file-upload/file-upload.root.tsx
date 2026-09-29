@@ -241,12 +241,14 @@ export type FileUploadRootProps = FileUploadRootProps.Render &
   FileUploadRootProps.BaseUI &
   FileUploadRootProps.HTML;
 
+export type IFileUploadRoot = IComponent<FileUploadRootProps>;
+
 /**
  * ファイルアップロードのルートコンポーネントです。
  *
  * ファイルの選択状態を管理し、子パーツへ状態とスタイルを伝播します。
  */
-export const FileUploadRoot: IComponent<FileUploadRootProps> = function SuiFileUploadRoot(props) {
+export const FileUploadRoot: IFileUploadRoot = function SuiFileUploadRoot(props) {
   const {
     name,
     size = "md",

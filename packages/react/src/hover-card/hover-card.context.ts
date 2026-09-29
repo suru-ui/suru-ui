@@ -63,10 +63,12 @@ function useSuiHoverCardContext(optional?: boolean): HoverCardContext | null {
   return ctx;
 }
 
+export type IUseHoverCardContext = IUseContext<HoverCardContext>;
+
 /**
  * {@link HoverCardContext} を読み取るフックです。
  */
-export const useHoverCardContext: IUseContext<HoverCardContext> = useSuiHoverCardContext;
+export const useHoverCardContext: IUseHoverCardContext = useSuiHoverCardContext;
 
 export { HoverCardContext as Context, useHoverCardContext as useContext };
 

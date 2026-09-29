@@ -39,12 +39,12 @@ export type NumberFieldInputProps = NumberFieldInputProps.Render &
   NumberFieldInputProps.BaseUI &
   NumberFieldInputProps.HTML;
 
+export type INumberFieldInput = IComponent<NumberFieldInputProps>;
+
 /**
  * 数値の入力欄です。
  */
-export const NumberFieldInput: IComponent<NumberFieldInputProps> = function SuiNumberFieldInput(
-  props,
-) {
+export const NumberFieldInput: INumberFieldInput = function SuiNumberFieldInput(props) {
   const { className, ...otherProps } = props;
 
   return (

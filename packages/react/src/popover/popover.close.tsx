@@ -49,12 +49,14 @@ export type PopoverCloseProps = PopoverCloseProps.Render &
   PopoverCloseProps.BaseUI &
   PopoverCloseProps.HTML;
 
+export type IPopoverClose = IComponent<PopoverCloseProps>;
+
 /**
  * ポップオーバーを閉じるボタン要素です。
  *
  * 子要素は何にもラップされず、そのまま Base UI の `render` プロパティーに渡されます。
  */
-export const PopoverClose: IComponent<PopoverCloseProps> = function SuiPopoverClose(props) {
+export const PopoverClose: IPopoverClose = function SuiPopoverClose(props) {
   const { children, className, ...otherProps } = props;
 
   return (

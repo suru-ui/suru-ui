@@ -47,10 +47,12 @@ export type AlertDialogCloseTriggerProps = AlertDialogCloseTriggerProps.Render &
   AlertDialogCloseTriggerProps.BaseUI &
   AlertDialogCloseTriggerProps.HTML;
 
+export type IAlertDialogCloseTrigger = IComponent<AlertDialogCloseTriggerProps>;
+
 /**
  * アラートダイアログを閉じるボタンコンポーネントです。
  */
-export const AlertDialogCloseTrigger: IComponent<AlertDialogCloseTriggerProps> =
+export const AlertDialogCloseTrigger: IAlertDialogCloseTrigger =
   function SuiAlertDialogCloseTrigger(props) {
     const { children, className, ...otherProps } = props;
 

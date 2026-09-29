@@ -31,28 +31,29 @@ export type CollapsibleIndicatorProps = CollapsibleIndicatorProps.Render &
   CollapsibleIndicatorProps.BaseUI &
   CollapsibleIndicatorProps.HTML;
 
+export type ICollapsibleIndicator = IComponent<CollapsibleIndicatorProps>;
+
 /**
  * コラプシブルの展開状態を示すアイコンを表示するコンポーネントです。
  *
  * 開閉に合わせて回転し、現在の状態を視覚的に伝えます。
  */
-export const CollapsibleIndicator: IComponent<CollapsibleIndicatorProps> =
-  function SuiCollapsibleIndicator(props) {
-    const ctx = useCollapsibleContext();
-    const { children = <ChevronRightIcon />, ...otherSpanProps } = props;
+export const CollapsibleIndicator: ICollapsibleIndicator = function SuiCollapsibleIndicator(props) {
+  const ctx = useCollapsibleContext();
+  const { children = <ChevronRightIcon />, ...otherSpanProps } = props;
 
-    return useRender({
-      props: [
-        otherSpanProps,
-        {
-          children,
-          className: "sui_collapsible_indicator",
-        },
-      ],
-      state: ctx,
-      defaultTagName: "span",
-    });
-  };
+  return useRender({
+    props: [
+      otherSpanProps,
+      {
+        children,
+        className: "sui_collapsible_indicator",
+      },
+    ],
+    state: ctx,
+    defaultTagName: "span",
+  });
+};
 
 export { CollapsibleIndicator as Indicator };
 

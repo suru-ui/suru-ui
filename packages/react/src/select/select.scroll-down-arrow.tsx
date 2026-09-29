@@ -39,20 +39,23 @@ export type SelectScrollDownArrowProps = SelectScrollDownArrowProps.Render &
   SelectScrollDownArrowProps.BaseUI &
   SelectScrollDownArrowProps.HTML;
 
+export type ISelectScrollDownArrow = IComponent<SelectScrollDownArrowProps>;
+
 /**
  * 下方向へスクロールできることを示す要素です。
  */
-export const SelectScrollDownArrow: IComponent<SelectScrollDownArrowProps> =
-  function SuiSelectScrollDownArrow(props) {
-    const { className, ...otherProps } = props;
+export const SelectScrollDownArrow: ISelectScrollDownArrow = function SuiSelectScrollDownArrow(
+  props,
+) {
+  const { className, ...otherProps } = props;
 
-    return (
-      <BaseSelect.ScrollDownArrow
-        {...otherProps}
-        className={cn(className, "sui_select_scroll_down_arrow")}
-      />
-    );
-  };
+  return (
+    <BaseSelect.ScrollDownArrow
+      {...otherProps}
+      className={cn(className, "sui_select_scroll_down_arrow")}
+    />
+  );
+};
 
 export { SelectScrollDownArrow as ScrollDownArrow };
 

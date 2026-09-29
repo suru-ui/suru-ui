@@ -132,10 +132,12 @@ export type SwitchRootProps = SwitchRootProps.Render &
   SwitchRootProps.BaseUI &
   SwitchRootProps.HTML;
 
+export type ISwitchRoot = IComponent<SwitchRootProps>;
+
 /**
  * スイッチのルートコンポーネントです。
  */
-export const SwitchRoot: IComponent<SwitchRootProps> = function SuiSwitchRoot(props) {
+export const SwitchRoot: ISwitchRoot = function SuiSwitchRoot(props) {
   const {
     size = "md",
     color = "grey",

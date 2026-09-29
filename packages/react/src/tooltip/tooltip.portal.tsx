@@ -40,12 +40,14 @@ export type TooltipPortalProps = TooltipPortalProps.Render &
   TooltipPortalProps.BaseUI &
   TooltipPortalProps.HTML;
 
+export type ITooltipPortal = IComponent<TooltipPortalProps>;
+
 /**
  * ツールチップを DOM の別の場所へ移動する要素です。
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
-export const TooltipPortal: IComponent<TooltipPortalProps> = function SuiTooltipPortal(props) {
+export const TooltipPortal: ITooltipPortal = function SuiTooltipPortal(props) {
   const { size, radius, outlined } = useTooltipContext();
   const {
     className,

@@ -39,25 +39,26 @@ export type ScrollAreaScrollbarProps = ScrollAreaScrollbarProps.Render &
   ScrollAreaScrollbarProps.BaseUI &
   ScrollAreaScrollbarProps.HTML;
 
+export type IScrollAreaScrollbar = IComponent<ScrollAreaScrollbarProps>;
+
 /**
  * スクロール可能な方向とスクロール位置を示すバー要素です。
  *
  * 子要素として {@link ScrollAreaThumb} を配置します。
  */
-export const ScrollAreaScrollbar: IComponent<ScrollAreaScrollbarProps> =
-  function SuiScrollAreaScrollbar(props) {
-    const { className, ...otherProps } = props;
-    return (
-      <BaseScrollArea.Scrollbar
-        {...otherProps}
-        className={cn(
-          className,
-          "sui_scroll_area_scrollbar",
-          (state) => `sui_scroll_area_scrollbar-orientation_${state.orientation}`,
-        )}
-      />
-    );
-  };
+export const ScrollAreaScrollbar: IScrollAreaScrollbar = function SuiScrollAreaScrollbar(props) {
+  const { className, ...otherProps } = props;
+  return (
+    <BaseScrollArea.Scrollbar
+      {...otherProps}
+      className={cn(
+        className,
+        "sui_scroll_area_scrollbar",
+        (state) => `sui_scroll_area_scrollbar-orientation_${state.orientation}`,
+      )}
+    />
+  );
+};
 
 export { ScrollAreaScrollbar as Scrollbar };
 

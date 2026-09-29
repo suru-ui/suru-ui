@@ -39,10 +39,12 @@ export type MeterLabelProps = MeterLabelProps.Render &
   MeterLabelProps.BaseUI &
   MeterLabelProps.HTML;
 
+export type IMeterLabel = IComponent<MeterLabelProps>;
+
 /**
  * メーターのラベルコンポーネントです。
  */
-export const MeterLabel: IComponent<MeterLabelProps> = function SuiMeterLabel(props) {
+export const MeterLabel: IMeterLabel = function SuiMeterLabel(props) {
   const { className, ...otherProps } = props;
 
   return <Meter.Label {...otherProps} className={cn(className, "sui_meter_label")} />;

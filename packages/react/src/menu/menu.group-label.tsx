@@ -39,10 +39,12 @@ export type MenuGroupLabelProps = MenuGroupLabelProps.Render &
   MenuGroupLabelProps.BaseUI &
   MenuGroupLabelProps.HTML;
 
+export type IMenuGroupLabel = IComponent<MenuGroupLabelProps>;
+
 /**
  * グループに自動的に対応付けられるラベル要素です。
  */
-export const MenuGroupLabel: IComponent<MenuGroupLabelProps> = function SuiMenuGroupLabel(props) {
+export const MenuGroupLabel: IMenuGroupLabel = function SuiMenuGroupLabel(props) {
   const { className, ...otherProps } = props;
 
   return <Menu.GroupLabel {...otherProps} className={cn(className, "sui_menu_group_label")} />;

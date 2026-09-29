@@ -39,12 +39,12 @@ export type ContextMenuGroupProps = ContextMenuGroupProps.Render &
   ContextMenuGroupProps.BaseUI &
   ContextMenuGroupProps.HTML;
 
+export type IContextMenuGroup = IComponent<ContextMenuGroupProps>;
+
 /**
  * 関連するコンテキストメニュー項目をまとめるグループ要素です。
  */
-export const ContextMenuGroup: IComponent<ContextMenuGroupProps> = function SuiContextMenuGroup(
-  props,
-) {
+export const ContextMenuGroup: IContextMenuGroup = function SuiContextMenuGroup(props) {
   const { className, ...otherProps } = props;
 
   return <ContextMenu.Group {...otherProps} className={cn(className, "sui_context_menu_group")} />;

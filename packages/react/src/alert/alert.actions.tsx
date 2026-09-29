@@ -29,10 +29,12 @@ export type AlertActionsProps = AlertActionsProps.Render &
   AlertActionsProps.BaseUI &
   AlertActionsProps.HTML;
 
+export type IAlertActions = IComponent<AlertActionsProps>;
+
 /**
  * アラートの操作ボタンを右寄せでまとめるコンポーネントです。
  */
-export const AlertActions: IComponent<AlertActionsProps> = function SuiAlertActions(props) {
+export const AlertActions: IAlertActions = function SuiAlertActions(props) {
   return useRender({
     props: [
       props,

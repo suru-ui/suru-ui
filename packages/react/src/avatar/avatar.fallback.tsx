@@ -39,10 +39,12 @@ export type AvatarFallbackProps = AvatarFallbackProps.Render &
   AvatarFallbackProps.BaseUI &
   AvatarFallbackProps.HTML;
 
+export type IAvatarFallback = IComponent<AvatarFallbackProps>;
+
 /**
  * アバターのフォールバックを表示するコンポーネントです。
  */
-export const AvatarFallback: IComponent<AvatarFallbackProps> = function SuiAvatarFallback(props) {
+export const AvatarFallback: IAvatarFallback = function SuiAvatarFallback(props) {
   const { className, ...otherProps } = props;
 
   return <Avatar.Fallback {...otherProps} className={cn(className, "sui_avatar_fallback")} />;

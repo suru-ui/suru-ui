@@ -39,12 +39,12 @@ export type ScrollAreaContentProps = ScrollAreaContentProps.Render &
   ScrollAreaContentProps.BaseUI &
   ScrollAreaContentProps.HTML;
 
+export type IScrollAreaContent = IComponent<ScrollAreaContentProps>;
+
 /**
  * ビューポート内でスクロールされるコンテンツを保持する要素です。
  */
-export const ScrollAreaContent: IComponent<ScrollAreaContentProps> = function SuiScrollAreaContent(
-  props,
-) {
+export const ScrollAreaContent: IScrollAreaContent = function SuiScrollAreaContent(props) {
   const { className, ...otherProps } = props;
   return (
     <BaseScrollArea.Content {...otherProps} className={cn(className, "sui_scroll_area_content")} />

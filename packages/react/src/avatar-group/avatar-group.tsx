@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import type { IComponent, IUseContext } from "../types.js";
+import type { IComponent } from "../types.js";
 import {
   type AvatarGroupContext,
   type AvatarGroupRootSize,
@@ -8,6 +8,7 @@ import {
   type AvatarGroupRootProps,
   type AvatarGroupRootState,
   type AvatarGroupRootRadius,
+  type IUseAvatarGroupContext,
   type AvatarGroupSurplusProps,
   AvatarGroupRoot,
   AvatarGroupSurplus,
@@ -156,7 +157,7 @@ interface IAvatarGroup extends IComponent<AvatarGroupProps> {
   /**
    * {@link AvatarGroupContext} を読み取るフックです。
    */
-  readonly useContext: IUseContext<AvatarGroupContext>;
+  readonly useContext: IUseAvatarGroupContext;
 }
 
 /**

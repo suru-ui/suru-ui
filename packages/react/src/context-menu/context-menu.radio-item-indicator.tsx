@@ -39,10 +39,12 @@ export type ContextMenuRadioItemIndicatorProps = ContextMenuRadioItemIndicatorPr
   ContextMenuRadioItemIndicatorProps.BaseUI &
   ContextMenuRadioItemIndicatorProps.HTML;
 
+export type IContextMenuRadioItemIndicator = IComponent<ContextMenuRadioItemIndicatorProps>;
+
 /**
  * 選択されたラジオ項目を示す要素です。
  */
-export const ContextMenuRadioItemIndicator: IComponent<ContextMenuRadioItemIndicatorProps> =
+export const ContextMenuRadioItemIndicator: IContextMenuRadioItemIndicator =
   function SuiContextMenuRadioItemIndicator(props) {
     const { className, keepMounted = true, ...otherProps } = props;
 

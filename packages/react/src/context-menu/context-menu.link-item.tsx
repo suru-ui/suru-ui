@@ -95,82 +95,83 @@ export type ContextMenuLinkItemProps = ContextMenuLinkItemProps.Render &
   ContextMenuLinkItemProps.BaseUI &
   ContextMenuLinkItemProps.HTML;
 
+export type IContextMenuLinkItem = IComponent<ContextMenuLinkItemProps>;
+
 /**
  * 別のページやセクションへ移動するコンテキストメニュー項目です。
  */
-export const ContextMenuLinkItem: IComponent<ContextMenuLinkItemProps> =
-  function SuiContextMenuLinkItem(props) {
-    const ctx = useContextMenuContext();
-    const {
-      id,
-      color = "grey",
-      label,
-      style,
-      radius = ctx.radius,
-      // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
-      render = <a />,
-      variant = ctx.variant,
-      disabled,
-      className,
-      closeOnClick,
-      nativeButton = false,
-      focusableWhenDisabled,
-      ...otherProps
-    } = props;
-    const baseuiProps: Required<ContextMenuLinkItemProps.BaseUI> = {
-      id,
-      label,
-      closeOnClick,
-      nativeButton,
-      focusableWhenDisabled,
-    };
-
-    return (
-      <ContextMenu.LinkItem
-        {...otherProps}
-        {...baseuiProps}
-        render={(htmlProps: {}, state) => {
-          const buttonRootProps: Required<
-            Button.Root.Props.SuruUI &
-              Button.Root.Props.BaseUI &
-              Pick<Button.Root.Props.HTML, "disabled">
-          > = {
-            item: true,
-            size: ctx.size,
-            color,
-            muted: undefined,
-            radius,
-            pending: undefined,
-            squared: undefined,
-            variant,
-            disabled,
-            outlined: undefined,
-            nativeButton,
-            focusableWhenDisabled,
-          };
-
-          return (
-            <Button.Root
-              {...mergeProps<typeof Button.Root>([
-                htmlProps,
-                buttonRootProps,
-                proxyRenderProps(state, {
-                  style,
-                  render,
-                  className: cn(
-                    className,
-                    "sui_context_menu_item",
-                    "sui_context_menu_link_item",
-                    (state) => state.highlighted && "sui_context_menu_item-highlighted",
-                  ),
-                }),
-              ])}
-            />
-          );
-        }}
-      />
-    );
+export const ContextMenuLinkItem: IContextMenuLinkItem = function SuiContextMenuLinkItem(props) {
+  const ctx = useContextMenuContext();
+  const {
+    id,
+    color = "grey",
+    label,
+    style,
+    radius = ctx.radius,
+    // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
+    render = <a />,
+    variant = ctx.variant,
+    disabled,
+    className,
+    closeOnClick,
+    nativeButton = false,
+    focusableWhenDisabled,
+    ...otherProps
+  } = props;
+  const baseuiProps: Required<ContextMenuLinkItemProps.BaseUI> = {
+    id,
+    label,
+    closeOnClick,
+    nativeButton,
+    focusableWhenDisabled,
   };
+
+  return (
+    <ContextMenu.LinkItem
+      {...otherProps}
+      {...baseuiProps}
+      render={(htmlProps: {}, state) => {
+        const buttonRootProps: Required<
+          Button.Root.Props.SuruUI &
+            Button.Root.Props.BaseUI &
+            Pick<Button.Root.Props.HTML, "disabled">
+        > = {
+          item: true,
+          size: ctx.size,
+          color,
+          muted: undefined,
+          radius,
+          pending: undefined,
+          squared: undefined,
+          variant,
+          disabled,
+          outlined: undefined,
+          nativeButton,
+          focusableWhenDisabled,
+        };
+
+        return (
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              buttonRootProps,
+              proxyRenderProps(state, {
+                style,
+                render,
+                className: cn(
+                  className,
+                  "sui_context_menu_item",
+                  "sui_context_menu_link_item",
+                  (state) => state.highlighted && "sui_context_menu_item-highlighted",
+                ),
+              }),
+            ])}
+          />
+        );
+      }}
+    />
+  );
+};
 
 export { ContextMenuLinkItem as LinkItem };
 

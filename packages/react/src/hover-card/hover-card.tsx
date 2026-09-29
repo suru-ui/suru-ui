@@ -11,9 +11,11 @@ import {
   type HoverCardRootRadius,
   type HoverCardPortalProps,
   type HoverCardRootActions,
+  type IUseHoverCardContext,
   type HoverCardContentProps,
   type HoverCardTriggerProps,
   type HoverCardBackdropProps,
+  type ICreateHoverCardHandle,
   type IHoverCardRootRenderer,
   type HoverCardPositionerProps,
   type HoverCardRootChangeEventReason,
@@ -394,9 +396,9 @@ interface IHoverCard extends IComponent<HoverCardProps> {
   /**
    * {@link HoverCardHandle} を作成する関数です。
    */
-  readonly createHandle: typeof createHoverCardHandle;
+  readonly createHandle: ICreateHoverCardHandle;
 
-  readonly useContext: typeof useHoverCardContext;
+  readonly useContext: IUseHoverCardContext;
 }
 
 /**

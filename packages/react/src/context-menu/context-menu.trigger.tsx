@@ -46,27 +46,28 @@ export type ContextMenuTriggerProps = ContextMenuTriggerProps.Render &
   ContextMenuTriggerProps.BaseUI &
   ContextMenuTriggerProps.HTML;
 
+export type IContextMenuTrigger = IComponent<ContextMenuTriggerProps>;
+
 /**
  * 右クリックまたは長押しでコンテキストメニューを開く対象です。
  *
  * `children` には表示する内容ではなく、トリガーとしてレンダリングする要素を渡します。
  */
-export const ContextMenuTrigger: IComponent<ContextMenuTriggerProps> =
-  function SuiContextMenuTrigger(props) {
-    const { children, className, ...otherProps } = props;
+export const ContextMenuTrigger: IContextMenuTrigger = function SuiContextMenuTrigger(props) {
+  const { children, className, ...otherProps } = props;
 
-    return (
-      <ContextMenu.Trigger
-        {...otherProps}
-        render={children}
-        className={cn(
-          className,
-          "sui_context_menu_trigger",
-          (state) => state.open && "sui_context_menu_trigger-open",
-        )}
-      />
-    );
-  };
+  return (
+    <ContextMenu.Trigger
+      {...otherProps}
+      render={children}
+      className={cn(
+        className,
+        "sui_context_menu_trigger",
+        (state) => state.open && "sui_context_menu_trigger-open",
+      )}
+    />
+  );
+};
 
 export { ContextMenuTrigger as Trigger };
 

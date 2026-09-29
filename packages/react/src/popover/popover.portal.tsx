@@ -40,12 +40,14 @@ export type PopoverPortalProps = PopoverPortalProps.Render &
   PopoverPortalProps.BaseUI &
   PopoverPortalProps.HTML;
 
+export type IPopoverPortal = IComponent<PopoverPortalProps>;
+
 /**
  * ポップオーバーを DOM の別の場所へ移動する要素です。
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
-export const PopoverPortal: IComponent<PopoverPortalProps> = function SuiPopoverPortal(props) {
+export const PopoverPortal: IPopoverPortal = function SuiPopoverPortal(props) {
   const { size, radius, outlined } = usePopoverContext();
   const {
     className,

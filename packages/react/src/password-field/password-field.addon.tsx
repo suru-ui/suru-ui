@@ -41,17 +41,18 @@ export type PasswordFieldAddonProps = PasswordFieldAddonProps.Render &
   PasswordFieldAddonProps.BaseUI &
   PasswordFieldAddonProps.HTML;
 
+export type IPasswordFieldAddon = IComponent<PasswordFieldAddonProps>;
+
 /**
  * パスワード入力欄の入力欄の左右に表示する補助コンポーネントです。
  *
  * 接頭辞、接尾辞、アイコンなどを表示できます。
  */
-export const PasswordFieldAddon: IComponent<PasswordFieldAddonProps> =
-  function SuiPasswordFieldAddon(props) {
-    const { className, ...otherProps } = props;
+export const PasswordFieldAddon: IPasswordFieldAddon = function SuiPasswordFieldAddon(props) {
+  const { className, ...otherProps } = props;
 
-    return <TextFieldAddon {...otherProps} className={cn(className, "sui_password_field_addon")} />;
-  };
+  return <TextFieldAddon {...otherProps} className={cn(className, "sui_password_field_addon")} />;
+};
 
 export { PasswordFieldAddon as Addon };
 

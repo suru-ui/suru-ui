@@ -108,6 +108,8 @@ export type FileUploadProps = FileUploadProps.FileUpload &
   FileUploadProps.Root &
   FileUploadProps.Dropzone;
 
+export type IFileUpload = IComponent<FileUploadProps>;
+
 // API
 // ---
 
@@ -244,7 +246,7 @@ export { FileUploadAPI as API, useFileUploadAPI as useAPI };
  *
  * ドロップゾーンでのクリックとドラッグアンドドロップ、隠し input によるファイル選択を受け付けます。
  */
-export const FileUpload: IComponent<FileUploadProps> = function SuiFileUpload(props) {
+export const FileUpload: IFileUpload = function SuiFileUpload(props) {
   const api = useFileUploadAPI(props);
   const itemGroupProps = api.getItemGroupProps();
 

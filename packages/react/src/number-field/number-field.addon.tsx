@@ -37,14 +37,14 @@ export type NumberFieldAddonProps = NumberFieldAddonProps.Render &
   NumberFieldAddonProps.BaseUI &
   NumberFieldAddonProps.HTML;
 
+export type INumberFieldAddon = IComponent<NumberFieldAddonProps>;
+
 /**
  * 入力欄の左右に表示する補助コンポーネントです。
  *
  * 接頭辞、接尾辞、アイコンなどを表示できます。
  */
-export const NumberFieldAddon: IComponent<NumberFieldAddonProps> = function SuiNumberFieldAddon(
-  props,
-) {
+export const NumberFieldAddon: INumberFieldAddon = function SuiNumberFieldAddon(props) {
   const { disableFocusOnClick = false, ...otherSpanProps } = props;
 
   return useRender({

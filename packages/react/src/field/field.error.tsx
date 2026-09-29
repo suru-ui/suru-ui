@@ -39,12 +39,14 @@ export type FieldErrorProps = FieldErrorProps.Render &
   FieldErrorProps.BaseUI &
   FieldErrorProps.HTML;
 
+export type IFieldError = IComponent<FieldErrorProps>;
+
 /**
  * フィールドのエラーメッセージコンポーネントです。
  *
  * 検証に失敗したときに表示されます。
  */
-export const FieldError: IComponent<FieldErrorProps> = function SuiFieldError(props) {
+export const FieldError: IFieldError = function SuiFieldError(props) {
   const { className, ...otherProps } = props;
 
   return <Field.Error {...otherProps} className={cn(className, "sui_field_error")} />;

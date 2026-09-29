@@ -29,12 +29,14 @@ export type SidebarContentProps = SidebarContentProps.Render &
   SidebarContentProps.BaseUI &
   SidebarContentProps.HTML;
 
+export type ISidebarContent = IComponent<SidebarContentProps>;
+
 /**
  * サイドバーのスクロール領域です。
  *
  * {@link SidebarGroup} などの内容を配置します。
  */
-export const SidebarContent: IComponent<SidebarContentProps> = function SuiSidebarContent(props) {
+export const SidebarContent: ISidebarContent = function SuiSidebarContent(props) {
   return useRender({
     props: [
       props,

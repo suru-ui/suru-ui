@@ -4,6 +4,7 @@ import {
   type CollapsibleRootSize,
   type CollapsibleRootProps,
   type CollapsibleRootState,
+  type ICollapsibleIndicator,
   type CollapsibleContentProps,
   type CollapsibleTriggerProps,
   type CollapsibleRootChangeEventReason,
@@ -164,7 +165,7 @@ export { CollapsibleAPI as API, useCollapsibleAPI as useAPI };
 // ---------
 
 interface ICollapsible extends IComponent<CollapsibleProps> {
-  readonly Indicator: typeof CollapsibleIndicator;
+  readonly Indicator: ICollapsibleIndicator;
 }
 
 /**

@@ -39,10 +39,12 @@ export type NumberFieldScrubAreaCursorProps = NumberFieldScrubAreaCursorProps.Re
   NumberFieldScrubAreaCursorProps.BaseUI &
   NumberFieldScrubAreaCursorProps.HTML;
 
+export type INumberFieldScrubAreaCursor = IComponent<NumberFieldScrubAreaCursorProps>;
+
 /**
  * スクラブ中にネイティブカーソルの代わりに表示する要素です。
  */
-export const NumberFieldScrubAreaCursor: IComponent<NumberFieldScrubAreaCursorProps> =
+export const NumberFieldScrubAreaCursor: INumberFieldScrubAreaCursor =
   function SuiNumberFieldScrubAreaCursor(props) {
     const { className, ...otherProps } = props;
 

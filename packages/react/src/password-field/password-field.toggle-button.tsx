@@ -32,12 +32,14 @@ export type PasswordFieldToggleButtonProps = PasswordFieldToggleButtonProps.Rend
   PasswordFieldToggleButtonProps.BaseUI &
   PasswordFieldToggleButtonProps.HTML;
 
+export type IPasswordFieldToggleButton = IComponent<PasswordFieldToggleButtonProps>;
+
 /**
  * パスワードの表示と非表示を切り替えるボタンです。
  *
  * アイコン、既定のラベル、押下状態はコンテキストから読み取った表示状態で切り替わります。
  */
-export const PasswordFieldToggleButton: IComponent<PasswordFieldToggleButtonProps> =
+export const PasswordFieldToggleButton: IPasswordFieldToggleButton =
   function SuiPasswordFieldToggleButton(props) {
     const ctx = usePasswordFieldContext();
     const { visible, setVisible } = ctx;

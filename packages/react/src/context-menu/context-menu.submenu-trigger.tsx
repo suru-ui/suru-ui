@@ -98,10 +98,12 @@ export type ContextMenuSubmenuTriggerProps = ContextMenuSubmenuTriggerProps.Rend
   ContextMenuSubmenuTriggerProps.BaseUI &
   ContextMenuSubmenuTriggerProps.HTML;
 
+export type IContextMenuSubmenuTrigger = IComponent<ContextMenuSubmenuTriggerProps>;
+
 /**
  * サブメニューを開くコンテキストメニュー項目です。
  */
-export const ContextMenuSubmenuTrigger: IComponent<ContextMenuSubmenuTriggerProps> =
+export const ContextMenuSubmenuTrigger: IContextMenuSubmenuTrigger =
   function SuiContextMenuSubmenuTrigger(props) {
     const ctx = useContextMenuContext();
     const {

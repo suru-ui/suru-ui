@@ -39,10 +39,12 @@ export type HoverCardArrowProps = HoverCardArrowProps.Render &
   HoverCardArrowProps.BaseUI &
   HoverCardArrowProps.HTML;
 
+export type IHoverCardArrow = IComponent<HoverCardArrowProps>;
+
 /**
  * ポップアップとトリガーをつなぐ矢印要素です。
  */
-export const HoverCardArrow: IComponent<HoverCardArrowProps> = function SuiHoverCardArrow(props) {
+export const HoverCardArrow: IHoverCardArrow = function SuiHoverCardArrow(props) {
   const { className, ...otherProps } = props;
 
   return (

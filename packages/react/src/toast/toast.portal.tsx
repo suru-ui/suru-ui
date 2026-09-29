@@ -39,12 +39,14 @@ export type ToastPortalProps = ToastPortalProps.Render &
   ToastPortalProps.BaseUI &
   ToastPortalProps.HTML;
 
+export type IToastPortal = IComponent<ToastPortalProps>;
+
 /**
  * 通知の表示領域を DOM の別の場所へ移動する要素です。
  *
  * 既定では表示領域を `<body>` の末尾に配置します。
  */
-export const ToastPortal: IComponent<ToastPortalProps> = function SuiToastPortal(props) {
+export const ToastPortal: IToastPortal = function SuiToastPortal(props) {
   const {
     className,
     // @ts-expect-error

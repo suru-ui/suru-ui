@@ -39,10 +39,12 @@ export type DrawerIndentProps = DrawerIndentProps.Render &
   DrawerIndentProps.BaseUI &
   DrawerIndentProps.HTML;
 
+export type IDrawerIndent = IComponent<DrawerIndentProps>;
+
 /**
  * アプリケーションのメイン UI を囲み、ドロワーのインデント状態を受け取る要素です。
  */
-export const DrawerIndent: IComponent<DrawerIndentProps> = function SuiDrawerIndent(props) {
+export const DrawerIndent: IDrawerIndent = function SuiDrawerIndent(props) {
   const { className, ...otherProps } = props;
 
   return (

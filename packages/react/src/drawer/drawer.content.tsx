@@ -39,10 +39,12 @@ export type DrawerContentProps = DrawerContentProps.Render &
   DrawerContentProps.BaseUI &
   DrawerContentProps.HTML;
 
+export type IDrawerContent = IComponent<DrawerContentProps>;
+
 /**
  * ドロワー内のテキスト選択とスワイプ操作を分けるコンテンツコンポーネントです。
  */
-export const DrawerContent: IComponent<DrawerContentProps> = function SuiDrawerContent(props) {
+export const DrawerContent: IDrawerContent = function SuiDrawerContent(props) {
   const { className, ...otherProps } = props;
 
   return <Drawer.Content {...otherProps} className={cn(className, "sui_drawer_content")} />;

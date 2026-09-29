@@ -39,10 +39,12 @@ export type SliderTrackProps = SliderTrackProps.Render &
   SliderTrackProps.BaseUI &
   SliderTrackProps.HTML;
 
+export type ISliderTrack = IComponent<SliderTrackProps>;
+
 /**
  * スライダーの全範囲を表すトラックコンポーネントです。
  */
-export const SliderTrack: IComponent<SliderTrackProps> = function SuiSliderTrack(props) {
+export const SliderTrack: ISliderTrack = function SuiSliderTrack(props) {
   const { className, ...otherProps } = props;
 
   return <Slider.Track {...otherProps} className={cn(className, "sui_slider_track")} />;

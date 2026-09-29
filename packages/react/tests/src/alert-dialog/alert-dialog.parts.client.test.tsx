@@ -2,14 +2,14 @@ import * as React from "react";
 import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 
+import { AlertDialogAction } from "../../../src/alert-dialog/alert-dialog.action.jsx";
 import { AlertDialogBackdrop } from "../../../src/alert-dialog/alert-dialog.backdrop.jsx";
-import { AlertDialogBody } from "../../../src/alert-dialog/alert-dialog.body.jsx";
 import { AlertDialogCloseTrigger } from "../../../src/alert-dialog/alert-dialog.close-trigger.jsx";
 import { AlertDialogContent } from "../../../src/alert-dialog/alert-dialog.content.jsx";
-import { AlertDialogControls } from "../../../src/alert-dialog/alert-dialog.controls.jsx";
 import { AlertDialogDescription } from "../../../src/alert-dialog/alert-dialog.description.jsx";
 import { AlertDialogFooter } from "../../../src/alert-dialog/alert-dialog.footer.jsx";
 import { AlertDialogHeader } from "../../../src/alert-dialog/alert-dialog.header.jsx";
+import { AlertDialogPopup } from "../../../src/alert-dialog/alert-dialog.popup.jsx";
 import { AlertDialogPortal } from "../../../src/alert-dialog/alert-dialog.portal.jsx";
 import { AlertDialogRoot } from "../../../src/alert-dialog/alert-dialog.root.jsx";
 import { AlertDialogTitle } from "../../../src/alert-dialog/alert-dialog.title.jsx";
@@ -28,7 +28,7 @@ function renderDialog(children: React.ReactNode) {
       <AlertDialogPortal>
         <AlertDialogBackdrop />
         <AlertDialogViewport>
-          <AlertDialogContent>{children}</AlertDialogContent>
+          <AlertDialogPopup>{children}</AlertDialogPopup>
         </AlertDialogViewport>
       </AlertDialogPortal>
     </AlertDialogRoot>,
@@ -71,7 +71,7 @@ describe("AlertDialogViewport", () => {
 });
 
 describe("AlertDialogHeader", () => {
-  test("ヘッダーを描画する", async ({ expect }) => {
+  test("カードのヘッダーとして描画する", async ({ expect }) => {
     // 準備と実行
     const screen = await renderDialog(
       <AlertDialogHeader>
@@ -82,6 +82,7 @@ describe("AlertDialogHeader", () => {
     // 検証
     const header = screen.getByClassName("sui_alert_dialog_header").element();
     expect(header.tagName).toBe("DIV");
+    expect(header.classList.contains("sui_card_header")).toBe(true);
     expect(header.textContent).toBe("内容");
   });
 });
@@ -94,6 +95,7 @@ describe("AlertDialogTitle", () => {
     // 検証
     const title = screen.getByRole("heading", { name: "見出し" }).element();
     expect(title.tagName).toBe("H2");
+    expect(title.classList.contains("sui_card_title")).toBe(true);
     expect(title.classList.contains("sui_alert_dialog_title")).toBe(true);
   });
 
@@ -116,6 +118,7 @@ describe("AlertDialogDescription", () => {
     // 検証
     const description = screen.getByText("説明").element();
     expect(description.tagName).toBe("P");
+    expect(description.classList.contains("sui_card_description")).toBe(true);
     expect(description.classList.contains("sui_alert_dialog_description")).toBe(true);
   });
 
@@ -130,16 +133,17 @@ describe("AlertDialogDescription", () => {
   });
 });
 
-describe("AlertDialogBody", () => {
-  test("本文を描画する", async ({ expect }) => {
+describe("AlertDialogContent", () => {
+  test("カードの本文として描画する", async ({ expect }) => {
     // 準備と実行
-    const screen = await renderDialog(<AlertDialogBody title="説明">本文</AlertDialogBody>);
+    const screen = await renderDialog(<AlertDialogContent title="説明">本文</AlertDialogContent>);
 
     // 検証
-    const body = screen.getByClassName("sui_alert_dialog_body").element();
-    expect(body.tagName).toBe("DIV");
-    expect(body.textContent).toBe("本文");
-    expect(body.getAttribute("title")).toBe("説明");
+    const content = screen.getByClassName("sui_alert_dialog_content").element();
+    expect(content.tagName).toBe("DIV");
+    expect(content.classList.contains("sui_card_content")).toBe(true);
+    expect(content.textContent).toBe("本文");
+    expect(content.getAttribute("title")).toBe("説明");
   });
 });
 
@@ -155,28 +159,21 @@ describe("AlertDialogFooter", () => {
     // 検証
     const footer = screen.getByClassName("sui_alert_dialog_footer").element();
     expect(footer.tagName).toBe("DIV");
+    expect(footer.classList.contains("sui_card_footer")).toBe(true);
     expect(footer.textContent).toBe("操作");
   });
 });
 
-describe("AlertDialogControls", () => {
-  test("既定では相対配置にする", async ({ expect }) => {
+describe("AlertDialogAction", () => {
+  test("カードの操作要素として描画する", async ({ expect }) => {
     // 準備と実行
-    const screen = await renderDialog(<AlertDialogControls>操作</AlertDialogControls>);
+    const screen = await renderDialog(<AlertDialogAction>操作</AlertDialogAction>);
 
     // 検証
-    const controls = screen.getByClassName("sui_alert_dialog_controls").element();
-    expect(controls.classList.contains("sui_alert_dialog_controls-relative")).toBe(true);
-    expect(controls.classList.contains("sui_alert_dialog_controls-absolute")).toBe(false);
-  });
-
-  test("指定すると絶対配置にする", async ({ expect }) => {
-    // 準備と実行
-    const screen = await renderDialog(<AlertDialogControls absolute>操作</AlertDialogControls>);
-
-    // 検証
-    const controls = screen.getByClassName("sui_alert_dialog_controls").element();
-    expect(controls.classList.contains("sui_alert_dialog_controls-absolute")).toBe(true);
+    const action = screen.getByClassName("sui_alert_dialog_action").element();
+    expect(action.tagName).toBe("DIV");
+    expect(action.classList.contains("sui_card_action")).toBe(true);
+    expect(action.textContent).toBe("操作");
   });
 });
 

@@ -41,46 +41,47 @@ export type PaginationNextButtonProps = PaginationNextButtonProps.Render &
   PaginationNextButtonProps.BaseUI &
   PaginationNextButtonProps.HTML;
 
+export type IPaginationNextButton = IComponent<PaginationNextButtonProps>;
+
 /**
  * 次のページへ移動するボタンコンポーネントです。
  *
  * 最後のページでは無効になります。
  */
-export const PaginationNextButton: IComponent<PaginationNextButtonProps> =
-  function SuiPaginationNextButton(props) {
-    const ctx = usePaginationContext(true);
-    const {
-      onClick,
-      disabled = false,
-      className,
-      "aria-label": ariaLabel = "次のページへ",
-      ...otherProps
-    } = props;
-    const isDisabled = disabled || (ctx !== null && (ctx.disabled || ctx.page >= ctx.totalPages));
-    const handleClick: NonNullable<Button.ButtonRootProps["onClick"]> = (event) => {
-      onClick?.(event);
-      if (!event.defaultPrevented && !isDisabled && ctx !== null) {
-        ctx.goToPage(ctx.page + 1, { event, reason: "next" });
-      }
-    };
-
-    return (
-      <Button.Root
-        {...otherProps}
-        size={ctx?.size ?? "md"}
-        color={ctx?.color ?? "grey"}
-        radius={ctx?.radius}
-        onClick={handleClick}
-        squared
-        variant="naked"
-        disabled={isDisabled}
-        className={cn(className, "sui_pagination_next")}
-        aria-label={ariaLabel}
-      >
-        <ChevronRightIcon />
-      </Button.Root>
-    );
+export const PaginationNextButton: IPaginationNextButton = function SuiPaginationNextButton(props) {
+  const ctx = usePaginationContext(true);
+  const {
+    onClick,
+    disabled = false,
+    className,
+    "aria-label": ariaLabel = "次のページへ",
+    ...otherProps
+  } = props;
+  const isDisabled = disabled || (ctx !== null && (ctx.disabled || ctx.page >= ctx.totalPages));
+  const handleClick: NonNullable<Button.ButtonRootProps["onClick"]> = (event) => {
+    onClick?.(event);
+    if (!event.defaultPrevented && !isDisabled && ctx !== null) {
+      ctx.goToPage(ctx.page + 1, { event, reason: "next" });
+    }
   };
+
+  return (
+    <Button.Root
+      {...otherProps}
+      size={ctx?.size ?? "md"}
+      color={ctx?.color ?? "grey"}
+      radius={ctx?.radius}
+      onClick={handleClick}
+      squared
+      variant="naked"
+      disabled={isDisabled}
+      className={cn(className, "sui_pagination_next")}
+      aria-label={ariaLabel}
+    >
+      <ChevronRightIcon />
+    </Button.Root>
+  );
+};
 
 export { PaginationNextButton as NextButton };
 

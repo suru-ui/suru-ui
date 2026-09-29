@@ -44,6 +44,7 @@ export {
 } from "./alert/index.js";
 export {
   type AlertDialogAPI,
+  type AlertDialogSize,
   type AlertDialogProps,
   type AlertDialogState,
   type AlertDialogRadius,
@@ -54,8 +55,8 @@ export {
   type AlertDialogChangeEventDetails,
   AlertDialog,
   useAlertDialogAPI,
-  AlertDialogContentContext,
-  useAlertDialogContentContext,
+  AlertDialogPopupContext,
+  useAlertDialogPopupContext,
 } from "./alert-dialog/index.js";
 export {
   type AspectRatioAPI,

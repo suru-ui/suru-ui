@@ -39,6 +39,8 @@ export type InputState = InputRootState;
  */
 export type InputProps = InputRootProps;
 
+export type IInput = IComponent<InputProps>;
+
 // API
 // ---
 
@@ -89,7 +91,7 @@ export { InputAPI as API, useInputAPI as useAPI };
 /**
  * テキスト入力欄を表示するコンポーネントです。
  */
-export const Input: IComponent<InputProps> = function SuiInput(props) {
+export const Input: IInput = function SuiInput(props) {
   const api = useInputAPI(props);
 
   return <InputRoot {...api.getRootProps()} />;

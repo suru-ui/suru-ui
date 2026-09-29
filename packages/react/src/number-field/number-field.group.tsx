@@ -40,12 +40,12 @@ export type NumberFieldGroupProps = NumberFieldGroupProps.Render &
   NumberFieldGroupProps.BaseUI &
   NumberFieldGroupProps.HTML;
 
+export type INumberFieldGroup = IComponent<NumberFieldGroupProps>;
+
 /**
  * 入力欄と増減ボタンをまとめるグループ要素です。
  */
-export const NumberFieldGroup: IComponent<NumberFieldGroupProps> = function SuiNumberFieldGroup(
-  props,
-) {
+export const NumberFieldGroup: INumberFieldGroup = function SuiNumberFieldGroup(props) {
   const { onClick, className, ...otherProps } = props;
   const handleClick: NonNullable<NumberFieldGroupProps["onClick"]> = (evt) => {
     onClick?.(evt);

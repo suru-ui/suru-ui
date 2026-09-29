@@ -143,12 +143,12 @@ export type CheckboxGroupRootProps = CheckboxGroupRootProps.Render &
   CheckboxGroupRootProps.BaseUI &
   CheckboxGroupRootProps.HTML;
 
+export type ICheckboxGroupRoot = IComponent<CheckboxGroupRootProps>;
+
 /**
  * チェックボックスグループのルートコンポーネントです。
  */
-export const CheckboxGroupRoot: IComponent<CheckboxGroupRootProps> = function SuiCheckboxGroupRoot(
-  props,
-) {
+export const CheckboxGroupRoot: ICheckboxGroupRoot = function SuiCheckboxGroupRoot(props) {
   const {
     size = "md",
     color = "grey",

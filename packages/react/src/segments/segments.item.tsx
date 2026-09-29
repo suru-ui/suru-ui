@@ -74,10 +74,12 @@ export type SegmentsItemProps = SegmentsItemProps.Render &
   SegmentsItemProps.BaseUI &
   SegmentsItemProps.HTML;
 
+export type ISegmentsItem = IComponent<SegmentsItemProps>;
+
 /**
  * 選択できる個々のセグメントです。
  */
-export const SegmentsItem: IComponent<SegmentsItemProps> = function SuiSegmentsItem(props) {
+export const SegmentsItem: ISegmentsItem = function SuiSegmentsItem(props) {
   const { className, ...otherProps } = props;
 
   return (

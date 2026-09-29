@@ -39,10 +39,12 @@ export type RadioIndicatorProps = RadioIndicatorProps.Render &
   RadioIndicatorProps.BaseUI &
   RadioIndicatorProps.HTML;
 
+export type IRadioIndicator = IComponent<RadioIndicatorProps>;
+
 /**
  * ラジオボタンのインジケーターコンポーネントです。
  */
-export const RadioIndicator: IComponent<RadioIndicatorProps> = function SuiRadioIndicator(props) {
+export const RadioIndicator: IRadioIndicator = function SuiRadioIndicator(props) {
   const { className, ...otherProps } = props;
 
   return <Radio.Indicator {...otherProps} className={cn(className, "sui_radio_indicator")} />;

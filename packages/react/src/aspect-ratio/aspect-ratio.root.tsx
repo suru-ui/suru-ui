@@ -66,14 +66,14 @@ export type AspectRatioRootProps = AspectRatioRootProps.Render &
   AspectRatioRootProps.BaseUI &
   AspectRatioRootProps.HTML;
 
+export type IAspectRatioRoot = IComponent<AspectRatioRootProps>;
+
 /**
  * 指定した比率で幅と高さを保つコンテナーのルートコンポーネントです。
  *
  * 直接の子要素はコンテナーいっぱいに広がるように配置されます。画像や動画、地図の埋め込みなどの表示に使います。
  */
-export const AspectRatioRoot: IComponent<AspectRatioRootProps> = function SuiAspectRatioRoot(
-  props,
-) {
+export const AspectRatioRoot: IAspectRatioRoot = function SuiAspectRatioRoot(props) {
   const {
     ratio = 1,
     radius = "none",

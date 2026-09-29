@@ -8,10 +8,12 @@ import {
   type PopoverRootState,
   type PopoverArrowProps,
   type PopoverRootRadius,
+  type IUsePopoverContext,
   type PopoverPortalProps,
   type PopoverRootActions,
   type PopoverContentProps,
   type PopoverTriggerProps,
+  type ICreatePopoverHandle,
   type PopoverBackdropProps,
   type PopoverPositionerProps,
   type PopoverRootChangeEventReason,
@@ -352,9 +354,9 @@ interface IPopover extends IComponent<PopoverProps> {
   /**
    * {@link PopoverHandle} を作成する関数です。
    */
-  readonly createHandle: typeof createPopoverHandle;
+  readonly createHandle: ICreatePopoverHandle;
 
-  readonly useContext: typeof usePopoverContext;
+  readonly useContext: IUsePopoverContext;
 }
 
 /**

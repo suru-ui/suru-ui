@@ -102,6 +102,8 @@ export type ResizablePanelProps = ResizablePanelProps.Render &
   ResizablePanelProps.BaseUI &
   ResizablePanelProps.HTML;
 
+export type IResizablePanel = IComponent<ResizablePanelProps>;
+
 function normalizePanelSize(value: ResizablePanelSize | undefined): ResizablePanelSize | undefined {
   return typeof value === "number" ? value + "%" : value;
 }
@@ -112,7 +114,7 @@ function normalizePanelSize(value: ResizablePanelSize | undefined): ResizablePan
  * `size` を指定すると、外部ライブラリーの命令型 API を使ってサイズを更新します。
  * 数値のサイズはパーセントとして扱います。
  */
-export const ResizablePanel: IComponent<ResizablePanelProps> = function SuiResizablePanel(props) {
+export const ResizablePanel: IResizablePanel = function SuiResizablePanel(props) {
   const ctx = useResizableContext();
   const {
     size: sizeProp,

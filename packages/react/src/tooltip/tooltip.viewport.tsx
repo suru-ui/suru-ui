@@ -39,14 +39,14 @@ export type TooltipViewportProps = TooltipViewportProps.Render &
   TooltipViewportProps.BaseUI &
   TooltipViewportProps.HTML;
 
+export type ITooltipViewport = IComponent<TooltipViewportProps>;
+
 /**
  * 複数のトリガー間で内容を切り替えるときのアニメーション領域です。
  *
  * 1 つのツールチップを複数のトリガーで共有し、内容をトリガーごとに変える場合に使います。
  */
-export const TooltipViewport: IComponent<TooltipViewportProps> = function SuiTooltipViewport(
-  props,
-) {
+export const TooltipViewport: ITooltipViewport = function SuiTooltipViewport(props) {
   const { className, ...otherProps } = props;
 
   return <Tooltip.Viewport {...otherProps} className={cn(className, "sui_tooltip_viewport")} />;

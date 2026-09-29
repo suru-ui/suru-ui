@@ -1,27 +1,36 @@
 import { AlertDialog } from "@base-ui/react/alert-dialog";
 import * as React from "react";
 
+import mergeProps from "../_merge-props.js";
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
+import * as Card from "../card/card.parts.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 
 /**
  * {@link AlertDialogDescription} が持つ状態です。
  */
-export type AlertDialogDescriptionState = AlertDialog.Description.State;
+export type AlertDialogDescriptionState = Override<
+  Card.CardDescriptionState,
+  AlertDialog.Description.State
+>;
 
 export namespace AlertDialogDescriptionProps {
   export type Render = RenderProps<AlertDialogDescriptionState>;
 
-  export type SuruUI = {};
+  export type SuruUI = Card.CardDescriptionProps.SuruUI;
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof AlertDialog.Description>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // DialogDescriptionProps:
-      never,
-      keyof Render | keyof SuruUI
+  export type BaseUI = Override<
+    Card.CardDescriptionProps.BaseUI,
+    Pick<
+      React.ComponentProps<typeof AlertDialog.Description>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // AlertDialogDescriptionProps:
+        never,
+        keyof Render | keyof SuruUI
+      >
     >
   >;
 
@@ -39,20 +48,36 @@ export type AlertDialogDescriptionProps = AlertDialogDescriptionProps.Render &
   AlertDialogDescriptionProps.BaseUI &
   AlertDialogDescriptionProps.HTML;
 
+export type IAlertDialogDescription = IComponent<AlertDialogDescriptionProps>;
+
 /**
  * アラートダイアログの説明文を表示するコンポーネントです。
+ *
+ * 見た目はカードの説明文として描画され、ポップアップの説明に関連付けます。
  */
-export const AlertDialogDescription: IComponent<AlertDialogDescriptionProps> =
-  function SuiAlertDialogDescription(props) {
-    const { className, ...otherProps } = props;
+export const AlertDialogDescription: IAlertDialogDescription = function SuiAlertDialogDescription(
+  props,
+) {
+  const { style, render = <p />, className, ...otherProps } = props;
 
-    return (
-      <AlertDialog.Description
-        {...otherProps}
-        className={cn(className, "sui_alert_dialog_description")}
-      />
-    );
-  };
+  return (
+    <AlertDialog.Description
+      {...otherProps}
+      render={(htmlProps: {}, descriptionState) => (
+        <Card.Description
+          {...mergeProps<typeof Card.Description>([
+            htmlProps,
+            proxyRenderProps(descriptionState, {
+              style,
+              render,
+              className: cn(className, "sui_alert_dialog_description"),
+            }),
+          ])}
+        />
+      )}
+    />
+  );
+};
 
 export { AlertDialogDescription as Description };
 

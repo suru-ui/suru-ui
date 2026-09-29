@@ -39,12 +39,14 @@ export type DrawerPopupProps = DrawerPopupProps.Render &
   DrawerPopupProps.BaseUI &
   DrawerPopupProps.HTML;
 
+export type IDrawerPopup = IComponent<DrawerPopupProps>;
+
 /**
  * ドロワーの本文を表示するコンポーネントです。
  *
  * `initialFocus` と `finalFocus` を使うと、開閉時に移動するフォーカス先を指定できます。
  */
-export const DrawerPopup: IComponent<DrawerPopupProps> = function SuiDrawerPopup(props) {
+export const DrawerPopup: IDrawerPopup = function SuiDrawerPopup(props) {
   const { className, ...otherProps } = props;
 
   return (

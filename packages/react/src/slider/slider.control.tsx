@@ -39,10 +39,12 @@ export type SliderControlProps = SliderControlProps.Render &
   SliderControlProps.BaseUI &
   SliderControlProps.HTML;
 
+export type ISliderControl = IComponent<SliderControlProps>;
+
 /**
  * スライダーの操作領域コンポーネントです。
  */
-export const SliderControl: IComponent<SliderControlProps> = function SuiSliderControl(props) {
+export const SliderControl: ISliderControl = function SuiSliderControl(props) {
   const { className, ...otherProps } = props;
 
   return <Slider.Control {...otherProps} className={cn(className, "sui_slider_control")} />;

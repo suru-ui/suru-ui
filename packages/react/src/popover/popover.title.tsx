@@ -39,10 +39,12 @@ export type PopoverTitleProps = PopoverTitleProps.Render &
   PopoverTitleProps.BaseUI &
   PopoverTitleProps.HTML;
 
+export type IPopoverTitle = IComponent<PopoverTitleProps>;
+
 /**
  * ポップオーバーのタイトルを表示する見出し要素です。
  */
-export const PopoverTitle: IComponent<PopoverTitleProps> = function SuiPopoverTitle(props) {
+export const PopoverTitle: IPopoverTitle = function SuiPopoverTitle(props) {
   const { className, ...otherProps } = props;
 
   return <Popover.Title {...otherProps} className={cn(className, "sui_popover_title")} />;

@@ -29,12 +29,14 @@ export type StatValueProps = StatValueProps.Render &
   StatValueProps.BaseUI &
   StatValueProps.HTML;
 
+export type IStatValue = IComponent<StatValueProps>;
+
 /**
  * 統計の値を表すコンポーネントです。
  *
  * `dd` 要素を描画します。
  */
-export const StatValue: IComponent<StatValueProps> = function SuiStatValue(props) {
+export const StatValue: IStatValue = function SuiStatValue(props) {
   return useRender({
     props: [
       props,

@@ -29,10 +29,12 @@ export type AlertTitleProps = AlertTitleProps.Render &
   AlertTitleProps.BaseUI &
   AlertTitleProps.HTML;
 
+export type IAlertTitle = IComponent<AlertTitleProps>;
+
 /**
  * アラートのタイトルを表示するコンポーネントです。
  */
-export const AlertTitle: IComponent<AlertTitleProps> = function SuiAlertTitle(props) {
+export const AlertTitle: IAlertTitle = function SuiAlertTitle(props) {
   return useRender({
     props: [
       props,

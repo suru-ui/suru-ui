@@ -94,6 +94,8 @@ namespace ProgressProps {
  */
 export type ProgressProps = ProgressProps.Progress & ProgressProps.Root;
 
+export type IProgress = IComponent<ProgressProps>;
+
 // API
 // ---
 
@@ -211,7 +213,7 @@ export { ProgressAPI as API, useProgressAPI as useAPI };
  *
  * `value` に `null` を指定すると不確定状態になります。
  */
-export const Progress: IComponent<ProgressProps> = function SuiProgress(props) {
+export const Progress: IProgress = function SuiProgress(props) {
   const api = useProgressAPI(props);
   const labelProps = api.getLabelProps();
   const valueProps = api.getValueProps();

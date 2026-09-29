@@ -39,21 +39,22 @@ export type SelectItemIndicatorProps = SelectItemIndicatorProps.Render &
   SelectItemIndicatorProps.BaseUI &
   SelectItemIndicatorProps.HTML;
 
+export type ISelectItemIndicator = IComponent<SelectItemIndicatorProps>;
+
 /**
  * 選択された項目を示す要素です。
  */
-export const SelectItemIndicator: IComponent<SelectItemIndicatorProps> =
-  function SuiSelectItemIndicator(props) {
-    const { className, keepMounted = true, ...otherProps } = props;
+export const SelectItemIndicator: ISelectItemIndicator = function SuiSelectItemIndicator(props) {
+  const { className, keepMounted = true, ...otherProps } = props;
 
-    return (
-      <BaseSelect.ItemIndicator
-        {...otherProps}
-        className={cn(className, "sui_select_item_indicator")}
-        keepMounted={keepMounted}
-      />
-    );
-  };
+  return (
+    <BaseSelect.ItemIndicator
+      {...otherProps}
+      className={cn(className, "sui_select_item_indicator")}
+      keepMounted={keepMounted}
+    />
+  );
+};
 
 export { SelectItemIndicator as ItemIndicator };
 

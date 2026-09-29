@@ -32,35 +32,38 @@ export type FileUploadClearTriggerProps = FileUploadClearTriggerProps.Render &
   FileUploadClearTriggerProps.BaseUI &
   FileUploadClearTriggerProps.HTML;
 
+export type IFileUploadClearTrigger = IComponent<FileUploadClearTriggerProps>;
+
 /**
  * 選択済みのファイルをすべて削除するボタンです。
  */
-export const FileUploadClearTrigger: IComponent<FileUploadClearTriggerProps> =
-  function SuiFileUploadClearTrigger(props) {
-    const ctx = useFileUploadContext(true);
-    const { disabled: disabledProp, ...otherButtonProps } = props;
-    const disabled =
-      ctx === null
-        ? (disabledProp ?? false)
-        : ctx.disabled || (disabledProp ?? false) || ctx.files.length === 0;
+export const FileUploadClearTrigger: IFileUploadClearTrigger = function SuiFileUploadClearTrigger(
+  props,
+) {
+  const ctx = useFileUploadContext(true);
+  const { disabled: disabledProp, ...otherButtonProps } = props;
+  const disabled =
+    ctx === null
+      ? (disabledProp ?? false)
+      : ctx.disabled || (disabledProp ?? false) || ctx.files.length === 0;
 
-    return useRender({
-      props: [
-        otherButtonProps,
-        {
-          type: "button",
-          onClick() {
-            if (!disabled) {
-              ctx?.clear();
-            }
-          },
-          disabled,
-          className: "sui_file_upload_clear_trigger",
+  return useRender({
+    props: [
+      otherButtonProps,
+      {
+        type: "button",
+        onClick() {
+          if (!disabled) {
+            ctx?.clear();
+          }
         },
-      ],
-      defaultTagName: "button",
-    });
-  };
+        disabled,
+        className: "sui_file_upload_clear_trigger",
+      },
+    ],
+    defaultTagName: "button",
+  });
+};
 
 export { FileUploadClearTrigger as ClearTrigger };
 

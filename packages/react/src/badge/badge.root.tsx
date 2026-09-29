@@ -142,12 +142,14 @@ export type BadgeRootProps = BadgeRootProps.Render &
   BadgeRootProps.BaseUI &
   BadgeRootProps.HTML;
 
+export type IBadgeRoot = IComponent<BadgeRootProps>;
+
 /**
  * バッジのルート要素です。
  *
  * 大きさ、配色、角丸などの外観を自身のスタイルに集約します。
  */
-export const BadgeRoot: IComponent<BadgeRootProps> = function SuiBadgeRoot(props) {
+export const BadgeRoot: IBadgeRoot = function SuiBadgeRoot(props) {
   const {
     ring = false,
     size = "sm",

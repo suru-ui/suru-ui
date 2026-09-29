@@ -39,20 +39,21 @@ export type SelectScrollUpArrowProps = SelectScrollUpArrowProps.Render &
   SelectScrollUpArrowProps.BaseUI &
   SelectScrollUpArrowProps.HTML;
 
+export type ISelectScrollUpArrow = IComponent<SelectScrollUpArrowProps>;
+
 /**
  * 上方向へスクロールできることを示す要素です。
  */
-export const SelectScrollUpArrow: IComponent<SelectScrollUpArrowProps> =
-  function SuiSelectScrollUpArrow(props) {
-    const { className, ...otherProps } = props;
+export const SelectScrollUpArrow: ISelectScrollUpArrow = function SuiSelectScrollUpArrow(props) {
+  const { className, ...otherProps } = props;
 
-    return (
-      <BaseSelect.ScrollUpArrow
-        {...otherProps}
-        className={cn(className, "sui_select_scroll_up_arrow")}
-      />
-    );
-  };
+  return (
+    <BaseSelect.ScrollUpArrow
+      {...otherProps}
+      className={cn(className, "sui_select_scroll_up_arrow")}
+    />
+  );
+};
 
 export { SelectScrollUpArrow as ScrollUpArrow };
 

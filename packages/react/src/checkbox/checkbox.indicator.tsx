@@ -40,12 +40,12 @@ export type CheckboxIndicatorProps = CheckboxIndicatorProps.Render &
   CheckboxIndicatorProps.BaseUI &
   CheckboxIndicatorProps.HTML;
 
+export type ICheckboxIndicator = IComponent<CheckboxIndicatorProps>;
+
 /**
  * チェックボックスのインジケーターコンポーネントです。
  */
-export const CheckboxIndicator: IComponent<CheckboxIndicatorProps> = function SuiCheckboxIndicator(
-  props,
-) {
+export const CheckboxIndicator: ICheckboxIndicator = function SuiCheckboxIndicator(props) {
   const { children = <CheckboxIcon />, className, ...otherProps } = props;
 
   return (

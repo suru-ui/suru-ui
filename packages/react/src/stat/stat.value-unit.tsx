@@ -29,12 +29,14 @@ export type StatValueUnitProps = StatValueUnitProps.Render &
   StatValueUnitProps.BaseUI &
   StatValueUnitProps.HTML;
 
+export type IStatValueUnit = IComponent<StatValueUnitProps>;
+
 /**
  * 統計の値の単位を表すコンポーネントです。
  *
  * `span` 要素を描画し、{@link StatValue} の子として使用します。
  */
-export const StatValueUnit: IComponent<StatValueUnitProps> = function SuiStatValueUnit(props) {
+export const StatValueUnit: IStatValueUnit = function SuiStatValueUnit(props) {
   return useRender({
     props: [
       props,

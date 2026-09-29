@@ -68,6 +68,8 @@ export type ResizableRootProps = ResizableRootProps.Render &
   ResizableRootProps.BaseUI &
   ResizableRootProps.HTML;
 
+export type IResizableRoot = IComponent<ResizableRootProps>;
+
 // resizeTargetMinimumSize は、ポインターでリサイズを始められる当たり判定の最小サイズ (px) です。
 // 対象はパネル群内の各ハンドルとパネルの端で、要素の見た目やレイアウトには影響しません。
 // 判定領域が最小サイズより小さい場合は、中心から上下左右へ対称に広げて補われます。
@@ -85,7 +87,7 @@ const DEFAULT_RESIZE_TARGET_MINIMUM_SIZE = {
  *
  * 子要素には {@link ResizablePanel} と {@link ResizableHandle} を交互に配置します。
  */
-export const ResizableRoot: IComponent<ResizableRootProps> = function SuiResizableRoot(props) {
+export const ResizableRoot: IResizableRoot = function SuiResizableRoot(props) {
   const {
     orientation = "horizontal",
     resizeTargetMinimumSize = DEFAULT_RESIZE_TARGET_MINIMUM_SIZE,

@@ -41,12 +41,14 @@ export type PaginationPreviousButtonProps = PaginationPreviousButtonProps.Render
   PaginationPreviousButtonProps.BaseUI &
   PaginationPreviousButtonProps.HTML;
 
+export type IPaginationPreviousButton = IComponent<PaginationPreviousButtonProps>;
+
 /**
  * 前のページへ移動するボタンコンポーネントです。
  *
  * 最初のページでは無効になります。
  */
-export const PaginationPreviousButton: IComponent<PaginationPreviousButtonProps> =
+export const PaginationPreviousButton: IPaginationPreviousButton =
   function SuiPaginationPreviousButton(props) {
     const ctx = usePaginationContext(true);
     const {

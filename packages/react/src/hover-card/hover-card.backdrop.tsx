@@ -39,12 +39,12 @@ export type HoverCardBackdropProps = HoverCardBackdropProps.Render &
   HoverCardBackdropProps.BaseUI &
   HoverCardBackdropProps.HTML;
 
+export type IHoverCardBackdrop = IComponent<HoverCardBackdropProps>;
+
 /**
  * ポップアップの背後に表示されるオーバーレイ要素です。
  */
-export const HoverCardBackdrop: IComponent<HoverCardBackdropProps> = function SuiHoverCardBackdrop(
-  props,
-) {
+export const HoverCardBackdrop: IHoverCardBackdrop = function SuiHoverCardBackdrop(props) {
   const { className, ...otherProps } = props;
 
   return (

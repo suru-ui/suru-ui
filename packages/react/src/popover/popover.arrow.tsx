@@ -39,10 +39,12 @@ export type PopoverArrowProps = PopoverArrowProps.Render &
   PopoverArrowProps.BaseUI &
   PopoverArrowProps.HTML;
 
+export type IPopoverArrow = IComponent<PopoverArrowProps>;
+
 /**
  * ポップアップとトリガーをつなぐ矢印要素です。
  */
-export const PopoverArrow: IComponent<PopoverArrowProps> = function SuiPopoverArrow(props) {
+export const PopoverArrow: IPopoverArrow = function SuiPopoverArrow(props) {
   const { className, ...otherProps } = props;
 
   return (

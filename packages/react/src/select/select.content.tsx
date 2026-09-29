@@ -39,10 +39,12 @@ export type SelectContentProps = SelectContentProps.Render &
   SelectContentProps.BaseUI &
   SelectContentProps.HTML;
 
+export type ISelectContent = IComponent<SelectContentProps>;
+
 /**
  * 選択項目を表示するポップアップ要素です。
  */
-export const SelectContent: IComponent<SelectContentProps> = function SuiSelectContent(props) {
+export const SelectContent: ISelectContent = function SuiSelectContent(props) {
   const { className, ...otherProps } = props;
 
   return (

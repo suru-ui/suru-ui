@@ -97,85 +97,86 @@ export type ContextMenuRadioItemProps = ContextMenuRadioItemProps.Render &
   ContextMenuRadioItemProps.BaseUI &
   ContextMenuRadioItemProps.HTML;
 
+export type IContextMenuRadioItem = IComponent<ContextMenuRadioItemProps>;
+
 /**
  * ラジオグループ内のコンテキストメニュー項目です。
  */
-export const ContextMenuRadioItem: IComponent<ContextMenuRadioItemProps> =
-  function SuiContextMenuRadioItem(props) {
-    const ctx = useContextMenuContext();
-    const {
-      id,
-      color = "grey",
-      label,
-      style,
-      value,
-      radius = ctx.radius,
-      render,
-      onClick,
-      variant = ctx.variant,
-      disabled,
-      className,
-      closeOnClick,
-      nativeButton = false,
-      focusableWhenDisabled,
-      ...otherProps
-    } = props;
-    const baseuiProps: Required<ContextMenuRadioItemProps.BaseUI> = {
-      id,
-      label,
-      value,
-      onClick,
-      disabled,
-      closeOnClick,
-      nativeButton,
-      focusableWhenDisabled,
-    };
-
-    return (
-      <ContextMenu.RadioItem
-        {...otherProps}
-        {...baseuiProps}
-        render={(htmlProps: {}, state) => {
-          const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
-            Pick<Button.Root.Props.HTML, "disabled"> = {
-            item: true,
-            size: ctx.size,
-            color,
-            muted: undefined,
-            radius,
-            pending: undefined,
-            squared: undefined,
-            variant: getItemVariant(state, variant),
-            disabled: state.disabled,
-            outlined: undefined,
-            nativeButton,
-            focusableWhenDisabled,
-          };
-
-          return (
-            <Button.Root
-              {...mergeProps<typeof Button.Root>([
-                htmlProps,
-                buttonRootProps,
-                proxyRenderProps(state, {
-                  style,
-                  render: render ?? <div />,
-                  className: cn(
-                    className,
-                    "sui_context_menu_item",
-                    "sui_context_menu_radio_item",
-                    (state) => state.checked && "sui_context_menu_item-checked",
-                    (state) => state.highlighted && "sui_context_menu_item-highlighted",
-                    (state) => state.disabled && "sui_context_menu_item-disabled",
-                  ),
-                }),
-              ])}
-            />
-          );
-        }}
-      />
-    );
+export const ContextMenuRadioItem: IContextMenuRadioItem = function SuiContextMenuRadioItem(props) {
+  const ctx = useContextMenuContext();
+  const {
+    id,
+    color = "grey",
+    label,
+    style,
+    value,
+    radius = ctx.radius,
+    render,
+    onClick,
+    variant = ctx.variant,
+    disabled,
+    className,
+    closeOnClick,
+    nativeButton = false,
+    focusableWhenDisabled,
+    ...otherProps
+  } = props;
+  const baseuiProps: Required<ContextMenuRadioItemProps.BaseUI> = {
+    id,
+    label,
+    value,
+    onClick,
+    disabled,
+    closeOnClick,
+    nativeButton,
+    focusableWhenDisabled,
   };
+
+  return (
+    <ContextMenu.RadioItem
+      {...otherProps}
+      {...baseuiProps}
+      render={(htmlProps: {}, state) => {
+        const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
+          Pick<Button.Root.Props.HTML, "disabled"> = {
+          item: true,
+          size: ctx.size,
+          color,
+          muted: undefined,
+          radius,
+          pending: undefined,
+          squared: undefined,
+          variant: getItemVariant(state, variant),
+          disabled: state.disabled,
+          outlined: undefined,
+          nativeButton,
+          focusableWhenDisabled,
+        };
+
+        return (
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              buttonRootProps,
+              proxyRenderProps(state, {
+                style,
+                render: render ?? <div />,
+                className: cn(
+                  className,
+                  "sui_context_menu_item",
+                  "sui_context_menu_radio_item",
+                  (state) => state.checked && "sui_context_menu_item-checked",
+                  (state) => state.highlighted && "sui_context_menu_item-highlighted",
+                  (state) => state.disabled && "sui_context_menu_item-disabled",
+                ),
+              }),
+            ])}
+          />
+        );
+      }}
+    />
+  );
+};
 
 export { ContextMenuRadioItem as RadioItem };
 

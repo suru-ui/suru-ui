@@ -239,6 +239,8 @@ export type TreeRootProps = TreeRootProps.Render &
   TreeRootProps.BaseUI &
   TreeRootProps.HTML;
 
+export type ITreeRoot = IComponent<TreeRootProps>;
+
 const EMPTY: readonly string[] = [];
 
 const EMPTY_NODES: readonly TreeRootItemObject[] = [];
@@ -252,7 +254,7 @@ function isBranchElement(element: Element): boolean {
  *
  * WAI-ARIA tree パターンに従い、キーボード操作と選択と展開の状態を管理します。
  */
-export const TreeRoot: IComponent<TreeRootProps> = function SuiTreeRoot(props) {
+export const TreeRoot: ITreeRoot = function SuiTreeRoot(props) {
   const {
     size = "md",
     color = "grey",

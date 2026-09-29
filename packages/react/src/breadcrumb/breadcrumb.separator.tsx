@@ -30,29 +30,30 @@ export type BreadcrumbSeparatorProps = BreadcrumbSeparatorProps.Render &
   BreadcrumbSeparatorProps.BaseUI &
   BreadcrumbSeparatorProps.HTML;
 
+export type IBreadcrumbSeparator = IComponent<BreadcrumbSeparatorProps>;
+
 /**
  * パンくずの項目を区切るセパレーターコンポーネントです。
  */
-export const BreadcrumbSeparator: IComponent<BreadcrumbSeparatorProps> =
-  function SuiBreadcrumbSeparator(props) {
-    const {
-      children = <ChevronRightIcon />,
-      "aria-hidden": ariaHidden = true,
-      ...otherLiProps
-    } = props;
+export const BreadcrumbSeparator: IBreadcrumbSeparator = function SuiBreadcrumbSeparator(props) {
+  const {
+    children = <ChevronRightIcon />,
+    "aria-hidden": ariaHidden = true,
+    ...otherLiProps
+  } = props;
 
-    return useRender({
-      props: [
-        otherLiProps,
-        {
-          children,
-          className: "sui_breadcrumb_separator",
-          "aria-hidden": ariaHidden,
-        },
-      ],
-      defaultTagName: "li",
-    });
-  };
+  return useRender({
+    props: [
+      otherLiProps,
+      {
+        children,
+        className: "sui_breadcrumb_separator",
+        "aria-hidden": ariaHidden,
+      },
+    ],
+    defaultTagName: "li",
+  });
+};
 
 export { BreadcrumbSeparator as Separator };
 

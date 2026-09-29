@@ -29,10 +29,12 @@ export type BreadcrumbItemProps = BreadcrumbItemProps.Render &
   BreadcrumbItemProps.BaseUI &
   BreadcrumbItemProps.HTML;
 
+export type IBreadcrumbItem = IComponent<BreadcrumbItemProps>;
+
 /**
  * パンくずの項目コンポーネントです。
  */
-export const BreadcrumbItem: IComponent<BreadcrumbItemProps> = function SuiBreadcrumbItem(props) {
+export const BreadcrumbItem: IBreadcrumbItem = function SuiBreadcrumbItem(props) {
   return useRender({
     props: [
       props,

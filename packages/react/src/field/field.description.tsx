@@ -39,14 +39,14 @@ export type FieldDescriptionProps = FieldDescriptionProps.Render &
   FieldDescriptionProps.BaseUI &
   FieldDescriptionProps.HTML;
 
+export type IFieldDescription = IComponent<FieldDescriptionProps>;
+
 /**
  * フィールドの補足説明コンポーネントです。
  *
  * 入力欄の補助情報を表示します。
  */
-export const FieldDescription: IComponent<FieldDescriptionProps> = function SuiFieldDescription(
-  props,
-) {
+export const FieldDescription: IFieldDescription = function SuiFieldDescription(props) {
   const { className, ...otherProps } = props;
 
   return <Field.Description {...otherProps} className={cn(className, "sui_field_description")} />;

@@ -66,10 +66,12 @@ export type TextFieldInputProps = TextFieldInputProps.Render &
   TextFieldInputProps.BaseUI &
   TextFieldInputProps.HTML;
 
+export type ITextFieldInput = IComponent<TextFieldInputProps>;
+
 /**
  * 文字入力欄の入力欄です。
  */
-export const TextFieldInput: IComponent<TextFieldInputProps> = function SuiTextFieldInput(props) {
+export const TextFieldInput: ITextFieldInput = function SuiTextFieldInput(props) {
   const { type = "text", className, ...otherProps } = props;
 
   return (

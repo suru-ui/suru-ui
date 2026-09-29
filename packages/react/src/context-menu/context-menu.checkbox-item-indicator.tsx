@@ -39,10 +39,12 @@ export type ContextMenuCheckboxItemIndicatorProps = ContextMenuCheckboxItemIndic
   ContextMenuCheckboxItemIndicatorProps.BaseUI &
   ContextMenuCheckboxItemIndicatorProps.HTML;
 
+export type IContextMenuCheckboxItemIndicator = IComponent<ContextMenuCheckboxItemIndicatorProps>;
+
 /**
  * チェックされた項目を示す要素です。
  */
-export const ContextMenuCheckboxItemIndicator: IComponent<ContextMenuCheckboxItemIndicatorProps> =
+export const ContextMenuCheckboxItemIndicator: IContextMenuCheckboxItemIndicator =
   function SuiContextMenuCheckboxItemIndicator(props) {
     const { className, ...otherProps } = props;
 

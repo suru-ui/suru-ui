@@ -61,12 +61,14 @@ export type ProgressValueProps = ProgressValueProps.Render &
   ProgressValueProps.BaseUI &
   ProgressValueProps.HTML;
 
+export type IProgressValue = IComponent<ProgressValueProps>;
+
 /**
  * 進捗の現在値を表示するコンポーネントです。
  *
  * 不確定状態では既定の表示が空になります。
  */
-export const ProgressValue: IComponent<ProgressValueProps> = function SuiProgressValue(props) {
+export const ProgressValue: IProgressValue = function SuiProgressValue(props) {
   const { children, className, ...otherProps } = props;
   const renderer =
     typeof children === "function" ? children : children != null ? () => children : undefined;

@@ -39,17 +39,18 @@ export type PopoverDescriptionProps = PopoverDescriptionProps.Render &
   PopoverDescriptionProps.BaseUI &
   PopoverDescriptionProps.HTML;
 
+export type IPopoverDescription = IComponent<PopoverDescriptionProps>;
+
 /**
  * ポップオーバーの説明文を表示する段落要素です。
  */
-export const PopoverDescription: IComponent<PopoverDescriptionProps> =
-  function SuiPopoverDescription(props) {
-    const { className, ...otherProps } = props;
+export const PopoverDescription: IPopoverDescription = function SuiPopoverDescription(props) {
+  const { className, ...otherProps } = props;
 
-    return (
-      <Popover.Description {...otherProps} className={cn(className, "sui_popover_description")} />
-    );
-  };
+  return (
+    <Popover.Description {...otherProps} className={cn(className, "sui_popover_description")} />
+  );
+};
 
 export { PopoverDescription as Description };
 

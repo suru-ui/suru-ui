@@ -39,10 +39,12 @@ export type SelectArrowProps = SelectArrowProps.Render &
   SelectArrowProps.BaseUI &
   SelectArrowProps.HTML;
 
+export type ISelectArrow = IComponent<SelectArrowProps>;
+
 /**
  * ポップアップとトリガーをつなぐ矢印要素です。
  */
-export const SelectArrow: IComponent<SelectArrowProps> = function SuiSelectArrow(props) {
+export const SelectArrow: ISelectArrow = function SuiSelectArrow(props) {
   const { className, ...otherProps } = props;
 
   return <BaseSelect.Arrow {...otherProps} className={cn(className, "sui_select_arrow")} />;

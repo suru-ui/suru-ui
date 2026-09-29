@@ -64,10 +64,12 @@ export type ToastCloseProps = ToastCloseProps.Render &
   ToastCloseProps.BaseUI &
   ToastCloseProps.HTML;
 
+export type IToastClose = IComponent<ToastCloseProps>;
+
 /**
  * 通知を閉じるボタン要素です。
  */
-export const ToastClose: IComponent<ToastCloseProps> = function SuiToastClose(props) {
+export const ToastClose: IToastClose = function SuiToastClose(props) {
   const {
     size,
     color = "grey",

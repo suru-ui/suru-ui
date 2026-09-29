@@ -39,22 +39,20 @@ export type AlertDialogViewportProps = AlertDialogViewportProps.Render &
   AlertDialogViewportProps.BaseUI &
   AlertDialogViewportProps.HTML;
 
+export type IAlertDialogViewport = IComponent<AlertDialogViewportProps>;
+
 /**
  * ポップアップの配置コンテナーコンポーネントです。
  *
  * スクロール可能なオーバーレイを作り、ポップアップを中央に配置します。
  */
-export const AlertDialogViewport: IComponent<AlertDialogViewportProps> =
-  function SuiAlertDialogViewport(props) {
-    const { className, ...otherProps } = props;
+export const AlertDialogViewport: IAlertDialogViewport = function SuiAlertDialogViewport(props) {
+  const { className, ...otherProps } = props;
 
-    return (
-      <AlertDialog.Viewport
-        {...otherProps}
-        className={cn(className, "sui_alert_dialog_viewport")}
-      />
-    );
-  };
+  return (
+    <AlertDialog.Viewport {...otherProps} className={cn(className, "sui_alert_dialog_viewport")} />
+  );
+};
 
 export { AlertDialogViewport as Viewport };
 

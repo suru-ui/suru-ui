@@ -47,12 +47,14 @@ export type StatRootProps = StatRootProps.Render &
   StatRootProps.BaseUI &
   StatRootProps.HTML;
 
+export type IStatRoot = IComponent<StatRootProps>;
+
 /**
  * ラベルと値の組で統計を表示するルートコンポーネントです。
  *
  * `dl` 要素を描画し、大きさを修飾クラスとして子パーツのスタイルへ反映します。
  */
-export const StatRoot: IComponent<StatRootProps> = function SuiStatRoot(props) {
+export const StatRoot: IStatRoot = function SuiStatRoot(props) {
   const {
     size = "md",
     // @ts-expect-error

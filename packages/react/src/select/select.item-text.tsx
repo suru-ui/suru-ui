@@ -39,10 +39,12 @@ export type SelectItemTextProps = SelectItemTextProps.Render &
   SelectItemTextProps.BaseUI &
   SelectItemTextProps.HTML;
 
+export type ISelectItemText = IComponent<SelectItemTextProps>;
+
 /**
  * 選択肢の表示テキストを包む要素です。
  */
-export const SelectItemText: IComponent<SelectItemTextProps> = function SuiSelectItemText(props) {
+export const SelectItemText: ISelectItemText = function SuiSelectItemText(props) {
   const { className, ...otherProps } = props;
 
   return <BaseSelect.ItemText {...otherProps} className={cn(className, "sui_select_item_text")} />;

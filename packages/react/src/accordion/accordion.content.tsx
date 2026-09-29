@@ -42,12 +42,12 @@ export type AccordionContentProps = AccordionContentProps.Render &
   AccordionContentProps.BaseUI &
   AccordionContentProps.HTML;
 
+export type IAccordionContent = IComponent<AccordionContentProps>;
+
 /**
  * アコーディオンのパネルコンポーネントです。
  */
-export const AccordionContent: IComponent<AccordionContentProps> = function SuiAccordionContent(
-  props,
-) {
+export const AccordionContent: IAccordionContent = function SuiAccordionContent(props) {
   const { className, ...otherProps } = props;
 
   return (

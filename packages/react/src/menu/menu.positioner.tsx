@@ -51,10 +51,12 @@ export type MenuPositionerProps = MenuPositionerProps.Render &
   MenuPositionerProps.BaseUI &
   MenuPositionerProps.HTML;
 
+export type IMenuPositioner = IComponent<MenuPositionerProps>;
+
 /**
  * ポップアップをトリガーに位置合わせする要素です。
  */
-export const MenuPositioner: IComponent<MenuPositionerProps> = function SuiMenuPositioner(props) {
+export const MenuPositioner: IMenuPositioner = function SuiMenuPositioner(props) {
   const ctx = useMenuContext();
   const {
     // ルートメニューは上下優先、サブメニューは左右優先にします。

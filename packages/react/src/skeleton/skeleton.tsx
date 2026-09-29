@@ -24,6 +24,8 @@ export type SkeletonState = SkeletonRootState;
  */
 export type SkeletonProps = SkeletonRootProps;
 
+export type ISkeleton = IComponent<SkeletonProps>;
+
 // API
 // ---
 
@@ -76,7 +78,7 @@ export { SkeletonAPI as API, useSkeletonAPI as useAPI };
  *
  * 大きさは `className` や `style` などで指定します。
  */
-export const Skeleton: IComponent<SkeletonProps> = function SuiSkeleton(props) {
+export const Skeleton: ISkeleton = function SuiSkeleton(props) {
   const api = useSkeletonAPI(props);
 
   return <SkeletonRoot {...api.getRootProps()} />;

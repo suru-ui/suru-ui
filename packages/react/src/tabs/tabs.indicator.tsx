@@ -39,12 +39,14 @@ export type TabsIndicatorProps = TabsIndicatorProps.Render &
   TabsIndicatorProps.BaseUI &
   TabsIndicatorProps.HTML;
 
+export type ITabsIndicator = IComponent<TabsIndicatorProps>;
+
 /**
  * アクティブな Tab の位置に追従するインジケーター要素です。
  *
  * {@link TabsList} の子要素として配置します。
  */
-export const TabsIndicator: IComponent<TabsIndicatorProps> = function SuiTabsIndicator(props) {
+export const TabsIndicator: ITabsIndicator = function SuiTabsIndicator(props) {
   const { className, ...otherProps } = props;
 
   return <BaseTabs.Indicator {...otherProps} className={cn(className, "sui_tabs_indicator")} />;

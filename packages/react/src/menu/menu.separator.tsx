@@ -39,10 +39,12 @@ export type MenuSeparatorProps = MenuSeparatorProps.Render &
   MenuSeparatorProps.BaseUI &
   MenuSeparatorProps.HTML;
 
+export type IMenuSeparator = IComponent<MenuSeparatorProps>;
+
 /**
  * メニュー項目を区切る要素です。
  */
-export const MenuSeparator: IComponent<MenuSeparatorProps> = function SuiMenuSeparator(props) {
+export const MenuSeparator: IMenuSeparator = function SuiMenuSeparator(props) {
   const { className, ...otherProps } = props;
 
   return <Menu.Separator {...otherProps} className={cn(className, "sui_menu_separator")} />;

@@ -37,12 +37,14 @@ export type DrawerProviderProps = DrawerProviderProps.Render &
   DrawerProviderProps.BaseUI &
   DrawerProviderProps.HTML;
 
+export type IDrawerProvider = IComponent<DrawerProviderProps>;
+
 /**
  * 複数のドロワーでインデント効果などの状態を共有するプロバイダーです。
  *
  * それ自身は HTML 要素をレンダリングしません。
  */
-export const DrawerProvider: IComponent<DrawerProviderProps> = function SuiDrawerProvider(props) {
+export const DrawerProvider: IDrawerProvider = function SuiDrawerProvider(props) {
   return <Drawer.Provider {...props} />;
 };
 

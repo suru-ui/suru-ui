@@ -134,6 +134,8 @@ namespace PaginationProps {
  */
 export type PaginationProps = PaginationProps.Pagination & PaginationProps.Root;
 
+export type IPagination = IComponent<PaginationProps>;
+
 // API
 // ---
 
@@ -287,7 +289,7 @@ export { PaginationAPI as API, usePaginationAPI as useAPI };
  *
  * 総ページ数から表示する項目を組み立て、前後の移動ボタンとページ番号ボタンを並べます。省略記号（…）を押下すると入力欄が表示され、ページ番号を入力してそのページへ直接移動できます。
  */
-export const Pagination: IComponent<PaginationProps> = function SuiPagination(props) {
+export const Pagination: IPagination = function SuiPagination(props) {
   const api = usePaginationAPI(props);
 
   return (

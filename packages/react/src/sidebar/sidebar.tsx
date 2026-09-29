@@ -1,4 +1,4 @@
-import type { IComponent, IUseContext } from "../types.js";
+import type { IComponent } from "../types.js";
 import {
   type SidebarContext,
   type SidebarRootSide,
@@ -11,6 +11,7 @@ import {
   type SidebarGroupState,
   type SidebarInsetProps,
   type SidebarInsetState,
+  type IUseSidebarContext,
   type SidebarFooterProps,
   type SidebarFooterState,
   type SidebarHeaderProps,
@@ -202,7 +203,7 @@ interface ISidebar extends IComponent<SidebarProps> {
   /**
    * {@link SidebarContext} を読み取るフックです。
    */
-  readonly useContext: IUseContext<SidebarContext>;
+  readonly useContext: IUseSidebarContext;
 }
 
 export const Sidebar: ISidebar = /*#__PURE__*/ Object.assign(

@@ -29,12 +29,14 @@ export type SidebarFooterProps = SidebarFooterProps.Render &
   SidebarFooterProps.BaseUI &
   SidebarFooterProps.HTML;
 
+export type ISidebarFooter = IComponent<SidebarFooterProps>;
+
 /**
  * サイドバー下部に固定される領域です。
  *
  * ユーザーメニューなどを配置します。
  */
-export const SidebarFooter: IComponent<SidebarFooterProps> = function SuiSidebarFooter(props) {
+export const SidebarFooter: ISidebarFooter = function SuiSidebarFooter(props) {
   return useRender({
     props: [
       props,

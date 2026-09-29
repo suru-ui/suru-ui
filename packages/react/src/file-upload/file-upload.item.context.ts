@@ -33,10 +33,11 @@ function useSuiFileUploadItemContext(optional?: boolean): FileUploadItemContext 
   return ctx;
 }
 
+export type IUseFileUploadItemContext = IUseContext<FileUploadItemContext>;
+
 /**
  * {@link FileUploadItemContext} を読み取るフックです。
  */
-export const useFileUploadItemContext: IUseContext<FileUploadItemContext> =
-  useSuiFileUploadItemContext;
+export const useFileUploadItemContext: IUseFileUploadItemContext = useSuiFileUploadItemContext;
 
 export { FileUploadItemContext as ItemContext, useFileUploadItemContext as useItemContext };

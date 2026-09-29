@@ -95,10 +95,12 @@ export type MenuLinkItemProps = MenuLinkItemProps.Render &
   MenuLinkItemProps.BaseUI &
   MenuLinkItemProps.HTML;
 
+export type IMenuLinkItem = IComponent<MenuLinkItemProps>;
+
 /**
  * 別のページやセクションへ移動するメニュー項目です。
  */
-export const MenuLinkItem: IComponent<MenuLinkItemProps> = function SuiMenuLinkItem(props) {
+export const MenuLinkItem: IMenuLinkItem = function SuiMenuLinkItem(props) {
   const ctx = useMenuContext();
   const {
     id,

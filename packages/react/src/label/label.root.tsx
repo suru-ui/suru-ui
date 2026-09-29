@@ -72,12 +72,14 @@ export type LabelRootProps = LabelRootProps.Render &
   LabelRootProps.BaseUI &
   LabelRootProps.HTML;
 
+export type ILabelRoot = IComponent<LabelRootProps>;
+
 /**
  * ラベルのルート要素です。
  *
  * 大きさと配色の外観を自身のスタイルに集約します。
  */
-export const LabelRoot: IComponent<LabelRootProps> = function SuiLabelRoot(props) {
+export const LabelRoot: ILabelRoot = function SuiLabelRoot(props) {
   const config = React.use(Config);
   const {
     size = config.get("size", isSize, "md"),

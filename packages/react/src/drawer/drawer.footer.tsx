@@ -29,10 +29,12 @@ export type DrawerFooterProps = DrawerFooterProps.Render &
   DrawerFooterProps.BaseUI &
   DrawerFooterProps.HTML;
 
+export type IDrawerFooter = IComponent<DrawerFooterProps>;
+
 /**
  * ドロワーのフッターコンポーネントです。
  */
-export const DrawerFooter: IComponent<DrawerFooterProps> = function SuiDrawerFooter(props) {
+export const DrawerFooter: IDrawerFooter = function SuiDrawerFooter(props) {
   return useRender({
     props: [
       props,

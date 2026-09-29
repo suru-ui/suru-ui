@@ -37,15 +37,15 @@ export type TooltipGroupRootProps = TooltipGroupRootProps.Render &
   TooltipGroupRootProps.BaseUI &
   TooltipGroupRootProps.HTML;
 
+export type ITooltipGroupRoot = IComponent<TooltipGroupRootProps>;
+
 /**
  * 複数のツールチップで開閉の遅延を共有するルートです。
  *
  * 近接したツールチップを続けて表示するとき、先に表示したツールチップが閉じてから一定時間内であれば、次のツールチップをすぐに表示します。
  * それ自身は HTML 要素をレンダリングしません。
  */
-export const TooltipGroupRoot: IComponent<TooltipGroupRootProps> = function SuiTooltipGroupRoot(
-  props,
-) {
+export const TooltipGroupRoot: ITooltipGroupRoot = function SuiTooltipGroupRoot(props) {
   return <Tooltip.Provider {...props} />;
 };
 

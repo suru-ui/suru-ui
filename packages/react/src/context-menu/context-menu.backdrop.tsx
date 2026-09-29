@@ -39,20 +39,18 @@ export type ContextMenuBackdropProps = ContextMenuBackdropProps.Render &
   ContextMenuBackdropProps.BaseUI &
   ContextMenuBackdropProps.HTML;
 
+export type IContextMenuBackdrop = IComponent<ContextMenuBackdropProps>;
+
 /**
  * コンテキストメニューの背後に表示されるオーバーレイ要素です。
  */
-export const ContextMenuBackdrop: IComponent<ContextMenuBackdropProps> =
-  function SuiContextMenuBackdrop(props) {
-    const { className, ...otherProps } = props;
+export const ContextMenuBackdrop: IContextMenuBackdrop = function SuiContextMenuBackdrop(props) {
+  const { className, ...otherProps } = props;
 
-    return (
-      <ContextMenu.Backdrop
-        {...otherProps}
-        className={cn(className, "sui_context_menu_backdrop")}
-      />
-    );
-  };
+  return (
+    <ContextMenu.Backdrop {...otherProps} className={cn(className, "sui_context_menu_backdrop")} />
+  );
+};
 
 export { ContextMenuBackdrop as Backdrop };
 

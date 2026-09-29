@@ -29,12 +29,14 @@ export type SidebarHeaderProps = SidebarHeaderProps.Render &
   SidebarHeaderProps.BaseUI &
   SidebarHeaderProps.HTML;
 
+export type ISidebarHeader = IComponent<SidebarHeaderProps>;
+
 /**
  * サイドバー上部に固定される領域です。
  *
  * ブランドやワークスペースの切り替えなどを配置します。
  */
-export const SidebarHeader: IComponent<SidebarHeaderProps> = function SuiSidebarHeader(props) {
+export const SidebarHeader: ISidebarHeader = function SuiSidebarHeader(props) {
   return useRender({
     props: [
       props,

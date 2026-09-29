@@ -39,10 +39,12 @@ export type MenuCheckboxItemIndicatorProps = MenuCheckboxItemIndicatorProps.Rend
   MenuCheckboxItemIndicatorProps.BaseUI &
   MenuCheckboxItemIndicatorProps.HTML;
 
+export type IMenuCheckboxItemIndicator = IComponent<MenuCheckboxItemIndicatorProps>;
+
 /**
  * チェックされた項目を示す要素です。
  */
-export const MenuCheckboxItemIndicator: IComponent<MenuCheckboxItemIndicatorProps> =
+export const MenuCheckboxItemIndicator: IMenuCheckboxItemIndicator =
   function SuiMenuCheckboxItemIndicator(props) {
     const { className, ...otherProps } = props;
 

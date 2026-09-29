@@ -39,10 +39,12 @@ export type ProgressLabelProps = ProgressLabelProps.Render &
   ProgressLabelProps.BaseUI &
   ProgressLabelProps.HTML;
 
+export type IProgressLabel = IComponent<ProgressLabelProps>;
+
 /**
  * 進捗のラベルコンポーネントです。
  */
-export const ProgressLabel: IComponent<ProgressLabelProps> = function SuiProgressLabel(props) {
+export const ProgressLabel: IProgressLabel = function SuiProgressLabel(props) {
   const { className, ...otherProps } = props;
 
   return <Progress.Label {...otherProps} className={cn(className, "sui_progress_label")} />;

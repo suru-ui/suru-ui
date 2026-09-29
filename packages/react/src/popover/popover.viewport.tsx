@@ -39,14 +39,14 @@ export type PopoverViewportProps = PopoverViewportProps.Render &
   PopoverViewportProps.BaseUI &
   PopoverViewportProps.HTML;
 
+export type IPopoverViewport = IComponent<PopoverViewportProps>;
+
 /**
  * 複数のトリガー間で内容を切り替えるときのアニメーション領域です。
  *
  * 1 つのポップオーバーを複数のトリガーで共有し、内容をトリガーごとに変える場合に使います。
  */
-export const PopoverViewport: IComponent<PopoverViewportProps> = function SuiPopoverViewport(
-  props,
-) {
+export const PopoverViewport: IPopoverViewport = function SuiPopoverViewport(props) {
   const { className, ...otherProps } = props;
 
   return <Popover.Viewport {...otherProps} className={cn(className, "sui_popover_viewport")} />;

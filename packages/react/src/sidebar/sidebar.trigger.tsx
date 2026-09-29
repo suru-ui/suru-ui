@@ -43,12 +43,14 @@ export type SidebarTriggerProps = SidebarTriggerProps.Render &
   SidebarTriggerProps.BaseUI &
   SidebarTriggerProps.HTML;
 
+export type ISidebarTrigger = IComponent<SidebarTriggerProps>;
+
 /**
  * サイドバーの開閉を切り替えるボタンです。
  *
  * 子要素を省略すると既定のアイコンが表示されます。
  */
-export const SidebarTrigger: IComponent<SidebarTriggerProps> = function SuiSidebarTrigger(props) {
+export const SidebarTrigger: ISidebarTrigger = function SuiSidebarTrigger(props) {
   const ctx = useSidebarContext();
   const {
     type = "button",

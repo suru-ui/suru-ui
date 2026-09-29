@@ -89,6 +89,8 @@ namespace StatProps {
  */
 export type StatProps = StatProps.Stat & StatProps.Root;
 
+export type IStat = IComponent<StatProps>;
+
 // API
 // ---
 
@@ -222,7 +224,7 @@ export { StatAPI as API, useStatAPI as useAPI };
 /**
  * ラベルと値の組で統計を表示するコンポーネントです。
  */
-export const Stat: IComponent<StatProps> = function SuiStat(props) {
+export const Stat: IStat = function SuiStat(props) {
   const api = useStatAPI(props);
   const labelProps = api.getLabelProps();
   const valueProps = api.getValueProps();

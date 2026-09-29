@@ -39,12 +39,12 @@ export type ProgressIndicatorProps = ProgressIndicatorProps.Render &
   ProgressIndicatorProps.BaseUI &
   ProgressIndicatorProps.HTML;
 
+export type IProgressIndicator = IComponent<ProgressIndicatorProps>;
+
 /**
  * 進捗の現在値を示すインジケーターコンポーネントです。
  */
-export const ProgressIndicator: IComponent<ProgressIndicatorProps> = function SuiProgressIndicator(
-  props,
-) {
+export const ProgressIndicator: IProgressIndicator = function SuiProgressIndicator(props) {
   const { className, ...otherProps } = props;
 
   return <Progress.Indicator {...otherProps} className={cn(className, "sui_progress_indicator")} />;

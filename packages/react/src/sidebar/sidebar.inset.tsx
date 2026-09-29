@@ -29,12 +29,14 @@ export type SidebarInsetProps = SidebarInsetProps.Render &
   SidebarInsetProps.BaseUI &
   SidebarInsetProps.HTML;
 
+export type ISidebarInset = IComponent<SidebarInsetProps>;
+
 /**
  * メインコンテンツの領域です。
  *
  * {@link SidebarRoot} に `variant="inset"` を指定すると、押し込まれた外観になります。
  */
-export const SidebarInset: IComponent<SidebarInsetProps> = function SuiSidebarInset(props) {
+export const SidebarInset: ISidebarInset = function SuiSidebarInset(props) {
   return useRender({
     props: [
       props,

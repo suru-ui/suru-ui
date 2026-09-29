@@ -51,10 +51,12 @@ export type AlertDialogToggleTriggerProps<TPayload = any> = AlertDialogToggleTri
   AlertDialogToggleTriggerProps.BaseUI<TPayload> &
   AlertDialogToggleTriggerProps.HTML<TPayload>;
 
+export type IAlertDialogToggleTrigger = IComponent<AlertDialogToggleTriggerProps>;
+
 /**
  * アラートダイアログを開くボタンコンポーネントです。
  */
-export const AlertDialogToggleTrigger: IComponent<AlertDialogToggleTriggerProps> =
+export const AlertDialogToggleTrigger: IAlertDialogToggleTrigger =
   function SuiAlertDialogToggleTrigger(props) {
     const { handle, children, className, ...otherProps } = props;
 

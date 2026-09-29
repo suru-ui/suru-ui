@@ -39,12 +39,12 @@ export type DrawerDescriptionProps = DrawerDescriptionProps.Render &
   DrawerDescriptionProps.BaseUI &
   DrawerDescriptionProps.HTML;
 
+export type IDrawerDescription = IComponent<DrawerDescriptionProps>;
+
 /**
  * ドロワーの内容を表示するコンポーネントです。
  */
-export const DrawerDescription: IComponent<DrawerDescriptionProps> = function SuiDrawerDescription(
-  props,
-) {
+export const DrawerDescription: IDrawerDescription = function SuiDrawerDescription(props) {
   const { className, ...otherProps } = props;
 
   return <Drawer.Description {...otherProps} className={cn(className, "sui_drawer_description")} />;

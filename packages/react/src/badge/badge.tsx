@@ -36,6 +36,8 @@ export type BadgeState = BadgeRootState;
  */
 export type BadgeProps = BadgeRootProps;
 
+export type IBadge = IComponent<BadgeProps>;
+
 // API
 // ---
 
@@ -88,7 +90,7 @@ export { BadgeAPI as API, useBadgeAPI as useAPI };
  *
  * `position` を指定すると、基準となる要素の四隅へ重ねて表示できます。`variant` が `"dot"` のときは内容を表示せず、小さな点だけを描画します。
  */
-export const Badge: IComponent<BadgeProps> = function SuiBadge(props) {
+export const Badge: IBadge = function SuiBadge(props) {
   const api = useBadgeAPI(props);
 
   return <BadgeRoot {...api.getRootProps()} />;

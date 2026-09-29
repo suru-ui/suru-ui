@@ -124,12 +124,14 @@ export type PaginationRootProps = PaginationRootProps.Render &
   PaginationRootProps.BaseUI &
   PaginationRootProps.HTML;
 
+export type IPaginationRoot = IComponent<PaginationRootProps>;
+
 /**
  * ページネーションのルートコンポーネントです。
  *
  * 現在のページを内部状態で管理し、子パーツへ配色や大きさとともに提供します。前後の移動ボタンやページ番号ボタンは利用者が組み立てます。一括で組み立てる場合は {@link Pagination} を使います。
  */
-export const PaginationRoot: IComponent<PaginationRootProps> = function SuiPaginationRoot(props) {
+export const PaginationRoot: IPaginationRoot = function SuiPaginationRoot(props) {
   const {
     page: pageProp,
     size = "md",

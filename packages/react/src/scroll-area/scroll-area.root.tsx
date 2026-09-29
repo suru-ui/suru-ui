@@ -48,10 +48,12 @@ export type ScrollAreaRootProps = ScrollAreaRootProps.Render &
   ScrollAreaRootProps.BaseUI &
   ScrollAreaRootProps.HTML;
 
+export type IScrollAreaRoot = IComponent<ScrollAreaRootProps>;
+
 /**
  * スクロール領域の各パーツをまとめるルート要素です。
  */
-export const ScrollAreaRoot: IComponent<ScrollAreaRootProps> = function SuiScrollAreaRoot(props) {
+export const ScrollAreaRoot: IScrollAreaRoot = function SuiScrollAreaRoot(props) {
   const {
     className,
     alwaysShowScrollbar = false,

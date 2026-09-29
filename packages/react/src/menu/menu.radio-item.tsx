@@ -97,10 +97,12 @@ export type MenuRadioItemProps = MenuRadioItemProps.Render &
   MenuRadioItemProps.BaseUI &
   MenuRadioItemProps.HTML;
 
+export type IMenuRadioItem = IComponent<MenuRadioItemProps>;
+
 /**
  * ラジオグループ内のメニュー項目です。
  */
-export const MenuRadioItem: IComponent<MenuRadioItemProps> = function SuiMenuRadioItem(props) {
+export const MenuRadioItem: IMenuRadioItem = function SuiMenuRadioItem(props) {
   const ctx = useMenuContext();
   const {
     id,

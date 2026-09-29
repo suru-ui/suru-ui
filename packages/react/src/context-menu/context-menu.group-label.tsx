@@ -39,20 +39,23 @@ export type ContextMenuGroupLabelProps = ContextMenuGroupLabelProps.Render &
   ContextMenuGroupLabelProps.BaseUI &
   ContextMenuGroupLabelProps.HTML;
 
+export type IContextMenuGroupLabel = IComponent<ContextMenuGroupLabelProps>;
+
 /**
  * グループに自動的に対応付けられるラベル要素です。
  */
-export const ContextMenuGroupLabel: IComponent<ContextMenuGroupLabelProps> =
-  function SuiContextMenuGroupLabel(props) {
-    const { className, ...otherProps } = props;
+export const ContextMenuGroupLabel: IContextMenuGroupLabel = function SuiContextMenuGroupLabel(
+  props,
+) {
+  const { className, ...otherProps } = props;
 
-    return (
-      <ContextMenu.GroupLabel
-        {...otherProps}
-        className={cn(className, "sui_context_menu_group_label")}
-      />
-    );
-  };
+  return (
+    <ContextMenu.GroupLabel
+      {...otherProps}
+      className={cn(className, "sui_context_menu_group_label")}
+    />
+  );
+};
 
 export { ContextMenuGroupLabel as GroupLabel };
 

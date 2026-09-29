@@ -29,21 +29,22 @@ export type FileUploadItemGroupProps = FileUploadItemGroupProps.Render &
   FileUploadItemGroupProps.BaseUI &
   FileUploadItemGroupProps.HTML;
 
+export type IFileUploadItemGroup = IComponent<FileUploadItemGroupProps>;
+
 /**
  * 選択済みファイルの一覧を包むコンテナーです。
  */
-export const FileUploadItemGroup: IComponent<FileUploadItemGroupProps> =
-  function SuiFileUploadItemGroup(props) {
-    return useRender({
-      props: [
-        props,
-        {
-          className: "sui_file_upload_item_group",
-        },
-      ],
-      defaultTagName: "ul",
-    });
-  };
+export const FileUploadItemGroup: IFileUploadItemGroup = function SuiFileUploadItemGroup(props) {
+  return useRender({
+    props: [
+      props,
+      {
+        className: "sui_file_upload_item_group",
+      },
+    ],
+    defaultTagName: "ul",
+  });
+};
 
 export { FileUploadItemGroup as ItemGroup };
 

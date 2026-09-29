@@ -39,10 +39,12 @@ export type SelectLabelProps = SelectLabelProps.Render &
   SelectLabelProps.BaseUI &
   SelectLabelProps.HTML;
 
+export type ISelectLabel = IComponent<SelectLabelProps>;
+
 /**
  * 選択欄に対応する表示ラベルです。
  */
-export const SelectLabel: IComponent<SelectLabelProps> = function SuiSelectLabel(props) {
+export const SelectLabel: ISelectLabel = function SuiSelectLabel(props) {
   const { className, ...otherProps } = props;
 
   return <BaseSelect.Label {...otherProps} className={cn(className, "sui_select_label")} />;

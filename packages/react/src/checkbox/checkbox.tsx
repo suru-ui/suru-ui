@@ -61,6 +61,8 @@ namespace CheckboxProps {
  */
 export type CheckboxProps = CheckboxProps.Checkbox & CheckboxProps.Root & CheckboxProps.Indicator;
 
+export type ICheckbox = IComponent<CheckboxProps>;
+
 // API
 // ---
 
@@ -132,7 +134,7 @@ export { CheckboxAPI as API, useCheckboxAPI as useAPI };
  *
  * ラベルのテキストは `label` 要素で囲んで指定します。
  */
-export const Checkbox: IComponent<CheckboxProps> = function SuiCheckbox(props) {
+export const Checkbox: ICheckbox = function SuiCheckbox(props) {
   const api = useCheckboxAPI(props);
 
   return (

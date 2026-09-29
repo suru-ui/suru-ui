@@ -40,14 +40,14 @@ export type HoverCardPortalProps = HoverCardPortalProps.Render &
   HoverCardPortalProps.BaseUI &
   HoverCardPortalProps.HTML;
 
+export type IHoverCardPortal = IComponent<HoverCardPortalProps>;
+
 /**
  * ホバーカードを DOM の別の場所へ移動する要素です。
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
-export const HoverCardPortal: IComponent<HoverCardPortalProps> = function SuiHoverCardPortal(
-  props,
-) {
+export const HoverCardPortal: IHoverCardPortal = function SuiHoverCardPortal(props) {
   const ctx = useHoverCardContext();
   const {
     className,

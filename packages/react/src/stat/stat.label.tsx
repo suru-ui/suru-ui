@@ -29,12 +29,14 @@ export type StatLabelProps = StatLabelProps.Render &
   StatLabelProps.BaseUI &
   StatLabelProps.HTML;
 
+export type IStatLabel = IComponent<StatLabelProps>;
+
 /**
  * 統計のラベルを表すコンポーネントです。
  *
  * `dt` 要素を描画します。
  */
-export const StatLabel: IComponent<StatLabelProps> = function SuiStatLabel(props) {
+export const StatLabel: IStatLabel = function SuiStatLabel(props) {
   return useRender({
     props: [
       props,

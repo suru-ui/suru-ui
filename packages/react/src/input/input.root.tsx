@@ -135,10 +135,12 @@ export type InputRootProps = InputRootProps.Render &
   InputRootProps.BaseUI &
   InputRootProps.HTML;
 
+export type IInputRoot = IComponent<InputRootProps>;
+
 /**
  * テキスト入力欄のルートコンポーネントです。
  */
-export const InputRoot: IComponent<InputRootProps> = function SuiInputRoot(props) {
+export const InputRoot: IInputRoot = function SuiInputRoot(props) {
   const {
     size = "md",
     type = "text",

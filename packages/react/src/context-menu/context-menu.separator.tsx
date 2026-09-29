@@ -39,20 +39,21 @@ export type ContextMenuSeparatorProps = ContextMenuSeparatorProps.Render &
   ContextMenuSeparatorProps.BaseUI &
   ContextMenuSeparatorProps.HTML;
 
+export type IContextMenuSeparator = IComponent<ContextMenuSeparatorProps>;
+
 /**
  * コンテキストメニュー項目を区切る要素です。
  */
-export const ContextMenuSeparator: IComponent<ContextMenuSeparatorProps> =
-  function SuiContextMenuSeparator(props) {
-    const { className, ...otherProps } = props;
+export const ContextMenuSeparator: IContextMenuSeparator = function SuiContextMenuSeparator(props) {
+  const { className, ...otherProps } = props;
 
-    return (
-      <ContextMenu.Separator
-        {...otherProps}
-        className={cn(className, "sui_context_menu_separator")}
-      />
-    );
-  };
+  return (
+    <ContextMenu.Separator
+      {...otherProps}
+      className={cn(className, "sui_context_menu_separator")}
+    />
+  );
+};
 
 export { ContextMenuSeparator as Separator };
 

@@ -29,12 +29,12 @@ export type StatusIndicatorProps = StatusIndicatorProps.Render &
   StatusIndicatorProps.BaseUI &
   StatusIndicatorProps.HTML;
 
+export type IStatusIndicator = IComponent<StatusIndicatorProps>;
+
 /**
  * 状態を示すドットを表示するインジケーターコンポーネントです。
  */
-export const StatusIndicator: IComponent<StatusIndicatorProps> = function SuiStatusIndicator(
-  props,
-) {
+export const StatusIndicator: IStatusIndicator = function SuiStatusIndicator(props) {
   const { "aria-hidden": ariaHidden = true, ...otherSpanProps } = props;
 
   return useRender({

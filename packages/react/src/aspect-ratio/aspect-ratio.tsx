@@ -24,6 +24,8 @@ export type AspectRatioState = AspectRatioRootState;
  */
 export type AspectRatioProps = AspectRatioRootProps;
 
+export type IAspectRatio = IComponent<AspectRatioProps>;
+
 // API
 // ---
 
@@ -77,7 +79,7 @@ export { AspectRatioAPI as API, useAspectRatioAPI as useAPI };
  * レスポンシブに決まる幅に対して、画像や動画、地図の埋め込みなどを一定の比率で表示します。
  * 直接の子要素はコンテナーいっぱいに配置されます。
  */
-export const AspectRatio: IComponent<AspectRatioProps> = function SuiAspectRatio(props) {
+export const AspectRatio: IAspectRatio = function SuiAspectRatio(props) {
   const api = useAspectRatioAPI(props);
 
   return <AspectRatioRoot {...api.getRootProps()} />;

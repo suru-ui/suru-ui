@@ -33,10 +33,12 @@ export type ButtonCircularProgressTrackProps = ButtonCircularProgressTrackProps.
   ButtonCircularProgressTrackProps.BaseUI &
   ButtonCircularProgressTrackProps.HTML;
 
+export type IButtonCircularProgressTrack = IComponent<ButtonCircularProgressTrackProps>;
+
 /**
  * 円形プログレスバーのトラック（背景の円弧）を描画するコンポーネントです。
  */
-export const ButtonCircularProgressTrack: IComponent<ButtonCircularProgressTrackProps> =
+export const ButtonCircularProgressTrack: IButtonCircularProgressTrack =
   function SuiButtonCircularProgressTrack(props) {
     const ctx = useButtonCircularProgressContext();
     const {

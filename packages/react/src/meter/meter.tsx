@@ -91,6 +91,8 @@ namespace MeterProps {
  */
 export type MeterProps = MeterProps.Meter & MeterProps.Root;
 
+export type IMeter = IComponent<MeterProps>;
+
 // API
 // ---
 
@@ -208,7 +210,7 @@ export { MeterAPI as API, useMeterAPI as useAPI };
  *
  * 測定値や使用量など、既知の範囲に対する割合を示します。ラベルを指定すると現在値もあわせて表示されます。
  */
-export const Meter: IComponent<MeterProps> = function SuiMeter(props) {
+export const Meter: IMeter = function SuiMeter(props) {
   const api = useMeterAPI(props);
   const labelProps = api.getLabelProps();
   const valueProps = api.getValueProps();

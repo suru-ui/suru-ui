@@ -39,10 +39,12 @@ export type SelectGroupProps = SelectGroupProps.Render &
   SelectGroupProps.BaseUI &
   SelectGroupProps.HTML;
 
+export type ISelectGroup = IComponent<SelectGroupProps>;
+
 /**
  * 関連する選択肢をまとめるグループ要素です。
  */
-export const SelectGroup: IComponent<SelectGroupProps> = function SuiSelectGroup(props) {
+export const SelectGroup: ISelectGroup = function SuiSelectGroup(props) {
   const { className, ...otherProps } = props;
 
   return <BaseSelect.Group {...otherProps} className={cn(className, "sui_select_group")} />;

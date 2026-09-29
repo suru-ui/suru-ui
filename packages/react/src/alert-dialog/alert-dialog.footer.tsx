@@ -1,24 +1,21 @@
-import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
-
-import useRender, { type RenderProps } from "../_use-render.js";
+import type { RenderProps } from "../_use-render.js";
+import * as Card from "../card/card.parts.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
 /**
  * {@link AlertDialogFooter} が持つ状態です。
  */
-export type AlertDialogFooterState = {};
+export type AlertDialogFooterState = Card.CardFooterState;
 
 export namespace AlertDialogFooterProps {
   export type Render = RenderProps<AlertDialogFooterState>;
 
-  export type SuruUI = {};
+  export type SuruUI = Card.CardFooterProps.SuruUI;
 
-  export type BaseUI = {};
+  export type BaseUI = Card.CardFooterProps.BaseUI;
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Card.CardFooterProps.HTML;
 }
 
 /**
@@ -29,21 +26,15 @@ export type AlertDialogFooterProps = AlertDialogFooterProps.Render &
   AlertDialogFooterProps.BaseUI &
   AlertDialogFooterProps.HTML;
 
+export type IAlertDialogFooter = IComponent<AlertDialogFooterProps>;
+
 /**
- * アラートダイアログのフッターコンポーネントです。
+ * アラートダイアログの操作や補足情報を末尾に配置するコンポーネントです。
+ *
+ * 積み上げ式では内容を等幅の 2 列に並べます。
  */
-export const AlertDialogFooter: IComponent<AlertDialogFooterProps> = function SuiAlertDialogFooter(
-  props,
-) {
-  return useRender({
-    props: [
-      props,
-      {
-        className: "sui_alert_dialog_footer",
-      },
-    ],
-    defaultTagName: "div",
-  });
+export const AlertDialogFooter: IAlertDialogFooter = function SuiAlertDialogFooter(props) {
+  return <Card.Footer {...props} className={cn(props.className, "sui_alert_dialog_footer")} />;
 };
 
 export { AlertDialogFooter as Footer };

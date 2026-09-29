@@ -45,12 +45,14 @@ export type ButtonPendingProps = ButtonPendingProps.Render &
   ButtonPendingProps.BaseUI &
   ButtonPendingProps.HTML;
 
+export type IButtonPending = IComponent<ButtonPendingProps>;
+
 /**
  * ボタンの保留状態を表示するコンポーネントです。
  *
  * 保留中のみ有効になります。
  */
-export const ButtonPending: IComponent<ButtonPendingProps> = function SuiButtonPending(props) {
+export const ButtonPending: IButtonPending = function SuiButtonPending(props) {
   const ctx = useButtonContext();
   const { overlay = false, keepMounted = false, ...otherSpanProps } = props;
 

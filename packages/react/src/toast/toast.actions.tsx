@@ -25,10 +25,12 @@ export type ToastActionsProps = ToastActionsProps.Render &
   ToastActionsProps.BaseUI &
   ToastActionsProps.HTML;
 
+export type IToastActions = IComponent<ToastActionsProps>;
+
 /**
  * 通知の操作ボタンを右寄せでまとめるコンポーネントです。
  */
-export const ToastActions: IComponent<ToastActionsProps> = function SuiToastActions(props) {
+export const ToastActions: IToastActions = function SuiToastActions(props) {
   return <Alert.Actions {...props} />;
 };
 

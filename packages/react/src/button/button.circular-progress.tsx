@@ -45,43 +45,46 @@ export type ButtonCircularProgressProps = ButtonCircularProgressProps.Render &
   ButtonCircularProgressProps.BaseUI &
   ButtonCircularProgressProps.HTML;
 
+export type IButtonCircularProgress = IComponent<ButtonCircularProgressProps>;
+
 /**
  * 円形プログレスバーの SVG ルートコンポーネントです。
  */
-export const ButtonCircularProgress: IComponent<ButtonCircularProgressProps> =
-  function SuiButtonCircularProgress(props) {
-    const {
-      fill = "none",
-      width = "100%",
-      xmlns = "http://www.w3.org/2000/svg",
-      height = "100%",
-      viewBox = "0 0 24 24",
-      percentage,
-      indeterminate = percentage === undefined || percentage < 0,
-      ...otherSvgProps
-    } = props;
-    const ctx = React.useMemo<ButtonCircularProgressContext>(
-      () => ({ percentage, indeterminate }),
-      [percentage, indeterminate],
-    );
-    const element = useRender({
-      props: [
-        otherSvgProps,
-        {
-          fill,
-          width,
-          xmlns,
-          height,
-          viewBox,
-          className: "sui_button_circular_progress",
-        },
-      ],
-      state: ctx,
-      defaultTagName: "svg",
-    });
+export const ButtonCircularProgress: IButtonCircularProgress = function SuiButtonCircularProgress(
+  props,
+) {
+  const {
+    fill = "none",
+    width = "100%",
+    xmlns = "http://www.w3.org/2000/svg",
+    height = "100%",
+    viewBox = "0 0 24 24",
+    percentage,
+    indeterminate = percentage === undefined || percentage < 0,
+    ...otherSvgProps
+  } = props;
+  const ctx = React.useMemo<ButtonCircularProgressContext>(
+    () => ({ percentage, indeterminate }),
+    [percentage, indeterminate],
+  );
+  const element = useRender({
+    props: [
+      otherSvgProps,
+      {
+        fill,
+        width,
+        xmlns,
+        height,
+        viewBox,
+        className: "sui_button_circular_progress",
+      },
+    ],
+    state: ctx,
+    defaultTagName: "svg",
+  });
 
-    return <ButtonCircularProgressContext value={ctx}>{element}</ButtonCircularProgressContext>;
-  };
+  return <ButtonCircularProgressContext value={ctx}>{element}</ButtonCircularProgressContext>;
+};
 
 export { ButtonCircularProgress as CircularProgress };
 

@@ -39,10 +39,12 @@ export type MeterTrackProps = MeterTrackProps.Render &
   MeterTrackProps.BaseUI &
   MeterTrackProps.HTML;
 
+export type IMeterTrack = IComponent<MeterTrackProps>;
+
 /**
  * メーターの全範囲を表すトラックコンポーネントです。
  */
-export const MeterTrack: IComponent<MeterTrackProps> = function SuiMeterTrack(props) {
+export const MeterTrack: IMeterTrack = function SuiMeterTrack(props) {
   const { className, ...otherProps } = props;
 
   return <Meter.Track {...otherProps} className={cn(className, "sui_meter_track")} />;

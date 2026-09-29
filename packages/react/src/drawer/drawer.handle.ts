@@ -7,7 +7,7 @@ import { Drawer } from "@base-ui/react/drawer";
  */
 export type DrawerHandle<TPayload = any> = Drawer.Handle<TPayload>;
 
-interface ICreateHandle {
+export interface ICreateDrawerHandle {
   /**
    * @template TPayload トリガーが送信するデータの型です。
    * @returns ドロワーを命令的に制御するハンドルです。
@@ -18,7 +18,7 @@ interface ICreateHandle {
 /**
  * {@link DrawerHandle} を作成する関数です。
  */
-export const createDrawerHandle: ICreateHandle = function createSuiDrawerHandle() {
+export const createDrawerHandle: ICreateDrawerHandle = function createSuiDrawerHandle() {
   return Drawer.createHandle();
 };
 

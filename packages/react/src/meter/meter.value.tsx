@@ -58,10 +58,12 @@ export type MeterValueProps = MeterValueProps.Render &
   MeterValueProps.BaseUI &
   MeterValueProps.HTML;
 
+export type IMeterValue = IComponent<MeterValueProps>;
+
 /**
  * メーターの現在値を表示するコンポーネントです。
  */
-export const MeterValue: IComponent<MeterValueProps> = function SuiMeterValue(props) {
+export const MeterValue: IMeterValue = function SuiMeterValue(props) {
   const { children, className, ...otherProps } = props;
   const renderer =
     typeof children === "function" ? children : children != null ? () => children : undefined;

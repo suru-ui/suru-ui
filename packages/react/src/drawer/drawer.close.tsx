@@ -47,10 +47,12 @@ export type DrawerCloseProps = DrawerCloseProps.Render &
   DrawerCloseProps.BaseUI &
   DrawerCloseProps.HTML;
 
+export type IDrawerClose = IComponent<DrawerCloseProps>;
+
 /**
  * ドロワーを閉じるボタンコンポーネントです。
  */
-export const DrawerClose: IComponent<DrawerCloseProps> = function SuiDrawerClose(props) {
+export const DrawerClose: IDrawerClose = function SuiDrawerClose(props) {
   const { children, className, ...otherProps } = props;
 
   return (

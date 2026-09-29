@@ -26,31 +26,31 @@ describe("AlertDialogAPI", () => {
     expect(api.getBackdropProps()).toStrictEqual({ id: "backdrop" });
   });
 
-  test("getBodyProps は未指定のとき null を返す", ({ expect }) => {
+  test("getContentProps は未指定のとき null を返す", ({ expect }) => {
     // 準備と実行
     const api = new AlertDialogAPI({});
 
     // 検証
-    expect(api.getBodyProps()).toBe(null);
+    expect(api.getContentProps()).toBe(null);
   });
 
-  test("getBodyProps は HTML title を本文の title にする", ({ expect }) => {
+  test("getContentProps は本文を子要素にして返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ children: "本文", htmlTitle: "説明" });
+    const api = new AlertDialogAPI({ children: "本文" });
 
     // 検証
-    expect(api.getBodyProps()).toStrictEqual({ title: "説明", children: "本文" });
+    expect(api.getContentProps()).toStrictEqual({ children: "本文" });
   });
 
-  test("getBodyProps は slotProps の指定を重ねる", ({ expect }) => {
+  test("getContentProps は slotProps の指定を重ねる", ({ expect }) => {
     // 準備と実行
     const api = new AlertDialogAPI({
       children: "本文",
-      slotProps: { body: { id: "body" } },
+      slotProps: { content: { id: "content" } },
     });
 
     // 検証
-    expect(api.getBodyProps()).toStrictEqual({ id: "body", title: undefined, children: "本文" });
+    expect(api.getContentProps()).toStrictEqual({ id: "content", children: "本文" });
   });
 
   test("getCancelTriggerProps は未指定のとき null を返す", ({ expect }) => {
@@ -85,54 +85,56 @@ describe("AlertDialogAPI", () => {
     expect(api.getConfirmTriggerProps()?.children).toBe(confirmButton);
   });
 
-  test("getContentProps は角丸と外観と枠線を返す", ({ expect }) => {
+  test("getPopupProps は大きさと角丸と外観と枠線を返す", ({ expect }) => {
     // 準備と実行
     const api = new AlertDialogAPI({ radius: "lg", variant: "stacked", outlined: true });
 
     // 検証
-    expect(api.getContentProps()).toStrictEqual({
+    expect(api.getPopupProps()).toStrictEqual({
+      size: undefined,
       radius: "lg",
       variant: "stacked",
       outlined: true,
     });
   });
 
-  test("getContentProps は slotProps の指定を重ねる", ({ expect }) => {
+  test("getPopupProps は slotProps の指定を重ねる", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ slotProps: { content: { id: "content" } } });
+    const api = new AlertDialogAPI({ slotProps: { popup: { id: "popup" } } });
 
     // 検証
-    expect(api.getContentProps()).toStrictEqual({
-      id: "content",
+    expect(api.getPopupProps()).toStrictEqual({
+      id: "popup",
+      size: undefined,
       radius: undefined,
       variant: "default",
       outlined: undefined,
     });
   });
 
-  test("getControlsProps は未指定のとき null を返す", ({ expect }) => {
+  test("getActionProps は未指定のとき null を返す", ({ expect }) => {
     // 準備と実行
     const api = new AlertDialogAPI({});
 
     // 検証
-    expect(api.getControlsProps()).toBe(null);
+    expect(api.getActionProps()).toBe(null);
   });
 
-  test("getControlsProps は指定した内容を子要素にして返す", async ({ expect }) => {
+  test("getActionProps は指定した内容を子要素にして返す", async ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ controls: "操作" });
-    const screen = await render(<>{api.getControlsProps()?.children}</>);
+    const api = new AlertDialogAPI({ action: "操作" });
+    const screen = await render(<>{api.getActionProps()?.children}</>);
 
     // 検証
     expect(screen.getByText("操作").query()).not.toBe(null);
   });
 
-  test("getControlsProps は閉じるアイコンボタンを表示できる", ({ expect }) => {
+  test("getActionProps は閉じるアイコンボタンを表示できる", ({ expect }) => {
     // 準備と実行
     const api = new AlertDialogAPI({ showCancelIconButton: true });
 
     // 検証
-    expect(React.isValidElement(api.getControlsProps()?.children)).toBe(true);
+    expect(React.isValidElement(api.getActionProps()?.children)).toBe(true);
   });
 
   test("getDescriptionProps は空文字を表示対象にする", ({ expect }) => {
@@ -156,7 +158,7 @@ describe("AlertDialogAPI", () => {
     const api = new AlertDialogAPI({ cancel: cancelButton });
 
     // 検証
-    expect(api.getFooterProps()).toStrictEqual({});
+    expect(api.getFooterProps()).toStrictEqual({ children: undefined });
   });
 
   test("getFooterProps は確認ボタンだけで表示する", ({ expect }) => {
@@ -164,12 +166,36 @@ describe("AlertDialogAPI", () => {
     const api = new AlertDialogAPI({ confirm: confirmButton });
 
     // 検証
-    expect(api.getFooterProps()).toStrictEqual({});
+    expect(api.getFooterProps()).toStrictEqual({ children: undefined });
+  });
+
+  test("getFooterProps は指定した内容を子要素にして返す", ({ expect }) => {
+    // 準備と実行
+    const api = new AlertDialogAPI({ footer: "補足" });
+
+    // 検証
+    expect(api.getFooterProps()).toStrictEqual({ children: "補足" });
+  });
+
+  test("getHeaderProps は内容がないとき null を返す", ({ expect }) => {
+    // 準備と実行
+    const api = new AlertDialogAPI({ children: "本文" });
+
+    // 検証
+    expect(api.getHeaderProps()).toBe(null);
+  });
+
+  test("getHeaderProps は見出しだけで表示する", ({ expect }) => {
+    // 準備と実行
+    const api = new AlertDialogAPI({ title: "見出し" });
+
+    // 検証
+    expect(api.getHeaderProps()).toStrictEqual({});
   });
 
   test("getHeaderProps は slotProps の指定を返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ slotProps: { header: { id: "header" } } });
+    const api = new AlertDialogAPI({ title: "見出し", slotProps: { header: { id: "header" } } });
 
     // 検証
     expect(api.getHeaderProps()).toStrictEqual({ id: "header" });

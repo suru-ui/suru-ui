@@ -61,6 +61,8 @@ namespace SwitchProps {
  */
 export type SwitchProps = SwitchProps.Switch & SwitchProps.Root & SwitchProps.Thumb;
 
+export type ISwitch = IComponent<SwitchProps>;
+
 // API
 // ---
 
@@ -132,7 +134,7 @@ export { SwitchAPI as API, useSwitchAPI as useAPI };
  *
  * ラベルのテキストは `label` 要素で囲んで指定します。
  */
-export const Switch: IComponent<SwitchProps> = function SuiSwitch(props) {
+export const Switch: ISwitch = function SuiSwitch(props) {
   const api = useSwitchAPI(props);
 
   return (

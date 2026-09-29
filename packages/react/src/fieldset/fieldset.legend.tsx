@@ -39,12 +39,14 @@ export type FieldsetLegendProps = FieldsetLegendProps.Render &
   FieldsetLegendProps.BaseUI &
   FieldsetLegendProps.HTML;
 
+export type IFieldsetLegend = IComponent<FieldsetLegendProps>;
+
 /**
  * フィールドセットの凡例コンポーネントです。
  *
  * グループの見出しを表示し、グループと自動的に関連付けられます。
  */
-export const FieldsetLegend: IComponent<FieldsetLegendProps> = function SuiFieldsetLegend(props) {
+export const FieldsetLegend: IFieldsetLegend = function SuiFieldsetLegend(props) {
   const { className, ...otherProps } = props;
 
   return <Fieldset.Legend {...otherProps} className={cn(className, "sui_fieldset_legend")} />;

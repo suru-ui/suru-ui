@@ -39,10 +39,12 @@ export type MeterIndicatorProps = MeterIndicatorProps.Render &
   MeterIndicatorProps.BaseUI &
   MeterIndicatorProps.HTML;
 
+export type IMeterIndicator = IComponent<MeterIndicatorProps>;
+
 /**
  * メーターの現在値を示すインジケーターコンポーネントです。
  */
-export const MeterIndicator: IComponent<MeterIndicatorProps> = function SuiMeterIndicator(props) {
+export const MeterIndicator: IMeterIndicator = function SuiMeterIndicator(props) {
   const { className, ...otherProps } = props;
 
   return <Meter.Indicator {...otherProps} className={cn(className, "sui_meter_indicator")} />;

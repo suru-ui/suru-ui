@@ -39,10 +39,12 @@ export type SelectValueProps = SelectValueProps.Render &
   SelectValueProps.BaseUI &
   SelectValueProps.HTML;
 
+export type ISelectValue = IComponent<SelectValueProps>;
+
 /**
  * 現在の選択値またはプレースホルダーを表示する要素です。
  */
-export const SelectValue: IComponent<SelectValueProps> = function SuiSelectValue(props) {
+export const SelectValue: ISelectValue = function SuiSelectValue(props) {
   const { className, ...otherProps } = props;
 
   return (

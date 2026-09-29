@@ -62,7 +62,7 @@ export type AlertDialogRootProps<TPayload = any> = AlertDialogRootProps.Render &
   AlertDialogRootProps.BaseUI<TPayload> &
   AlertDialogRootProps.HTML<TPayload>;
 
-interface IAlertDialogRoot extends IComponent<AlertDialogRootProps> {
+export interface IAlertDialogRoot extends IComponent<AlertDialogRootProps> {
   /**
    * @template TPayload トリガーが送信するデータの型です。
    */

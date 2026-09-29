@@ -39,10 +39,12 @@ export type TooltipArrowProps = TooltipArrowProps.Render &
   TooltipArrowProps.BaseUI &
   TooltipArrowProps.HTML;
 
+export type ITooltipArrow = IComponent<TooltipArrowProps>;
+
 /**
  * ポップアップとトリガーをつなぐ矢印要素です。
  */
-export const TooltipArrow: IComponent<TooltipArrowProps> = function SuiTooltipArrow(props) {
+export const TooltipArrow: ITooltipArrow = function SuiTooltipArrow(props) {
   const { className, ...otherProps } = props;
 
   return (

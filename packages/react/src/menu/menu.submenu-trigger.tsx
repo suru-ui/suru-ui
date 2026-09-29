@@ -95,90 +95,91 @@ export type MenuSubmenuTriggerProps = MenuSubmenuTriggerProps.Render &
   MenuSubmenuTriggerProps.BaseUI &
   MenuSubmenuTriggerProps.HTML;
 
+export type IMenuSubmenuTrigger = IComponent<MenuSubmenuTriggerProps>;
+
 /**
  * サブメニューを開くメニュー項目です。
  */
-export const MenuSubmenuTrigger: IComponent<MenuSubmenuTriggerProps> =
-  function SuiMenuSubmenuTrigger(props) {
-    const ctx = useMenuContext();
-    const {
-      id,
-      color = "grey",
-      delay,
-      label,
-      style,
-      radius = ctx.radius,
-      render = <div />,
-      onClick,
-      variant = ctx.variant,
-      disabled,
-      className,
-      closeDelay,
-      openOnHover,
-      nativeButton = false,
-      focusableWhenDisabled,
-      ...otherProps
-    } = props;
-    const baseuiProps: Required<MenuSubmenuTriggerProps.BaseUI> = {
-      id,
-      delay,
-      label,
-      onClick,
-      disabled,
-      closeDelay,
-      openOnHover,
-      nativeButton,
-      focusableWhenDisabled,
-    };
-
-    return (
-      <Menu.SubmenuTrigger
-        {...otherProps}
-        {...baseuiProps}
-        render={(htmlProps: {}, state) => {
-          const buttonRootProps: Required<
-            Button.Root.Props.SuruUI &
-              Button.Root.Props.BaseUI &
-              Pick<Button.Root.Props.HTML, "disabled">
-          > = {
-            item: true,
-            size: ctx.size,
-            color,
-            muted: undefined,
-            radius,
-            pending: undefined,
-            squared: undefined,
-            variant,
-            disabled: state.disabled,
-            outlined: undefined,
-            nativeButton,
-            focusableWhenDisabled,
-          };
-
-          return (
-            <Button.Root
-              {...mergeProps<typeof Button.Root>([
-                htmlProps,
-                buttonRootProps,
-                proxyRenderProps(state, {
-                  style,
-                  render,
-                  className: cn(
-                    className,
-                    "sui_menu_item",
-                    "sui_menu_submenu_trigger",
-                    (state) => state.disabled && "sui_menu_item-disabled",
-                    (state) => state.highlighted && "sui_menu_item-highlighted",
-                    (state) => state.open && "sui_menu_item-open",
-                  ),
-                }),
-              ])}
-            />
-          );
-        }}
-      />
-    );
+export const MenuSubmenuTrigger: IMenuSubmenuTrigger = function SuiMenuSubmenuTrigger(props) {
+  const ctx = useMenuContext();
+  const {
+    id,
+    color = "grey",
+    delay,
+    label,
+    style,
+    radius = ctx.radius,
+    render = <div />,
+    onClick,
+    variant = ctx.variant,
+    disabled,
+    className,
+    closeDelay,
+    openOnHover,
+    nativeButton = false,
+    focusableWhenDisabled,
+    ...otherProps
+  } = props;
+  const baseuiProps: Required<MenuSubmenuTriggerProps.BaseUI> = {
+    id,
+    delay,
+    label,
+    onClick,
+    disabled,
+    closeDelay,
+    openOnHover,
+    nativeButton,
+    focusableWhenDisabled,
   };
+
+  return (
+    <Menu.SubmenuTrigger
+      {...otherProps}
+      {...baseuiProps}
+      render={(htmlProps: {}, state) => {
+        const buttonRootProps: Required<
+          Button.Root.Props.SuruUI &
+            Button.Root.Props.BaseUI &
+            Pick<Button.Root.Props.HTML, "disabled">
+        > = {
+          item: true,
+          size: ctx.size,
+          color,
+          muted: undefined,
+          radius,
+          pending: undefined,
+          squared: undefined,
+          variant,
+          disabled: state.disabled,
+          outlined: undefined,
+          nativeButton,
+          focusableWhenDisabled,
+        };
+
+        return (
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              buttonRootProps,
+              proxyRenderProps(state, {
+                style,
+                render,
+                className: cn(
+                  className,
+                  "sui_menu_item",
+                  "sui_menu_submenu_trigger",
+                  (state) => state.disabled && "sui_menu_item-disabled",
+                  (state) => state.highlighted && "sui_menu_item-highlighted",
+                  (state) => state.open && "sui_menu_item-open",
+                ),
+              }),
+            ])}
+          />
+        );
+      }}
+    />
+  );
+};
 
 export { MenuSubmenuTrigger as SubmenuTrigger };
 

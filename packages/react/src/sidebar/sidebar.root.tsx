@@ -104,13 +104,15 @@ export type SidebarRootProps = SidebarRootProps.Render &
   SidebarRootProps.BaseUI &
   SidebarRootProps.HTML;
 
+export type ISidebarRoot = IComponent<SidebarRootProps>;
+
 /**
  * サイドバー本体の要素です。
  *
  * 子要素には {@link SidebarHeader}、{@link SidebarContent}、{@link SidebarFooter}、
  * {@link SidebarGroup}、{@link SidebarRail} を配置します。
  */
-export const SidebarRoot: IComponent<SidebarRootProps> = function SuiSidebarRoot(props) {
+export const SidebarRoot: ISidebarRoot = function SuiSidebarRoot(props) {
   const ctx = useSidebarContext(true);
   const {
     side = "left",

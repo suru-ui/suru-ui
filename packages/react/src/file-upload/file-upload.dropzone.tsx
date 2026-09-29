@@ -40,57 +40,58 @@ export type FileUploadDropzoneProps = FileUploadDropzoneProps.Render &
   FileUploadDropzoneProps.BaseUI &
   FileUploadDropzoneProps.HTML;
 
+export type IFileUploadDropzone = IComponent<FileUploadDropzoneProps>;
+
 /**
  * ドラッグ&ドロップを受け付ける領域です。
  */
-export const FileUploadDropzone: IComponent<FileUploadDropzoneProps> =
-  function SuiFileUploadDropzone(props) {
-    const ctx = useFileUploadContext(true);
-    const { disabled: disabledProp, ...otherButtonProps } = props;
-    const disabled = ctx?.disabled || disabledProp || false;
-    const [dragging, setDragging] = React.useState(false);
+export const FileUploadDropzone: IFileUploadDropzone = function SuiFileUploadDropzone(props) {
+  const ctx = useFileUploadContext(true);
+  const { disabled: disabledProp, ...otherButtonProps } = props;
+  const disabled = ctx?.disabled || disabledProp || false;
+  const [dragging, setDragging] = React.useState(false);
 
-    return useRender({
-      props: [
-        otherButtonProps,
-        {
-          type: "button",
-          onDrop(event: React.DragEvent<HTMLButtonElement>) {
-            event.preventDefault();
-            setDragging(false);
-            if (!disabled) {
-              const droppedFiles = Array.from(event.dataTransfer?.files ?? []);
-              ctx?.selectFiles(droppedFiles);
-            }
-          },
-          onClick() {
-            if (!disabled) {
-              ctx?.open();
-            }
-          },
-          disabled,
-          className: cn<FileUploadDropzoneState>(
-            "sui_file_upload_dropzone",
-            (state) => state.dragging && "sui_file_upload_dropzone-dragover",
-          ),
-          onDragOver(event: React.DragEvent<HTMLButtonElement>) {
-            event.preventDefault();
-          },
-          onDragEnter(event: React.DragEvent<HTMLButtonElement>) {
-            event.preventDefault();
-            if (!disabled) {
-              setDragging(true);
-            }
-          },
-          onDragLeave() {
-            setDragging(false);
-          },
+  return useRender({
+    props: [
+      otherButtonProps,
+      {
+        type: "button",
+        onDrop(event: React.DragEvent<HTMLButtonElement>) {
+          event.preventDefault();
+          setDragging(false);
+          if (!disabled) {
+            const droppedFiles = Array.from(event.dataTransfer?.files ?? []);
+            ctx?.selectFiles(droppedFiles);
+          }
         },
-      ],
-      state: { dragging },
-      defaultTagName: "button",
-    });
-  };
+        onClick() {
+          if (!disabled) {
+            ctx?.open();
+          }
+        },
+        disabled,
+        className: cn<FileUploadDropzoneState>(
+          "sui_file_upload_dropzone",
+          (state) => state.dragging && "sui_file_upload_dropzone-dragover",
+        ),
+        onDragOver(event: React.DragEvent<HTMLButtonElement>) {
+          event.preventDefault();
+        },
+        onDragEnter(event: React.DragEvent<HTMLButtonElement>) {
+          event.preventDefault();
+          if (!disabled) {
+            setDragging(true);
+          }
+        },
+        onDragLeave() {
+          setDragging(false);
+        },
+      },
+    ],
+    state: { dragging },
+    defaultTagName: "button",
+  });
+};
 
 export { FileUploadDropzone as Dropzone };
 

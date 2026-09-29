@@ -39,14 +39,14 @@ export type AlertDialogPortalProps = AlertDialogPortalProps.Render &
   AlertDialogPortalProps.BaseUI &
   AlertDialogPortalProps.HTML;
 
+export type IAlertDialogPortal = IComponent<AlertDialogPortalProps>;
+
 /**
  * アラートダイアログを DOM の別の場所に配置するコンポーネントです。
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
-export const AlertDialogPortal: IComponent<AlertDialogPortalProps> = function SuiAlertDialogPortal(
-  props,
-) {
+export const AlertDialogPortal: IAlertDialogPortal = function SuiAlertDialogPortal(props) {
   const {
     className,
     // @ts-expect-error

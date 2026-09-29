@@ -74,10 +74,12 @@ export type TabsTabProps = TabsTabProps.Render &
   TabsTabProps.BaseUI &
   TabsTabProps.HTML;
 
+export type ITabsTab = IComponent<TabsTabProps>;
+
 /**
  * 対応するパネルを切り替える Tab ボタンです。
  */
-export const TabsTab: IComponent<TabsTabProps> = function SuiTabsTab(props) {
+export const TabsTab: ITabsTab = function SuiTabsTab(props) {
   const { className, ...otherProps } = props;
 
   return (

@@ -109,12 +109,12 @@ export type MenuCheckboxItemProps = MenuCheckboxItemProps.Render &
   MenuCheckboxItemProps.BaseUI &
   MenuCheckboxItemProps.HTML;
 
+export type IMenuCheckboxItem = IComponent<MenuCheckboxItemProps>;
+
 /**
  * 設定をオンまたはオフにできるメニュー項目です。
  */
-export const MenuCheckboxItem: IComponent<MenuCheckboxItemProps> = function SuiMenuCheckboxItem(
-  props,
-) {
+export const MenuCheckboxItem: IMenuCheckboxItem = function SuiMenuCheckboxItem(props) {
   const ctx = useMenuContext();
   const {
     id,

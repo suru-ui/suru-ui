@@ -39,12 +39,14 @@ export type FieldsetRootProps = FieldsetRootProps.Render &
   FieldsetRootProps.BaseUI &
   FieldsetRootProps.HTML;
 
+export type IFieldsetRoot = IComponent<FieldsetRootProps>;
+
 /**
  * フィールドセットのルートコンポーネントです。
  *
  * 関連するコントロールを凡例とともにグループ化します。
  */
-export const FieldsetRoot: IComponent<FieldsetRootProps> = function SuiFieldsetRoot(props) {
+export const FieldsetRoot: IFieldsetRoot = function SuiFieldsetRoot(props) {
   const {
     className,
     // @ts-expect-error

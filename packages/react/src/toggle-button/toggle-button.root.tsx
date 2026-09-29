@@ -153,12 +153,12 @@ export type ToggleButtonRootProps<TValue extends string = string> = ToggleButton
   ToggleButtonRootProps.BaseUI<TValue> &
   ToggleButtonRootProps.HTML<TValue>;
 
+export type IToggleButtonRoot = IComponent<ToggleButtonRootProps>;
+
 /**
  * トグルボタンのルートコンポーネントです。
  */
-export const ToggleButtonRoot: IComponent<ToggleButtonRootProps> = function SuiToggleButtonRoot(
-  props,
-) {
+export const ToggleButtonRoot: IToggleButtonRoot = function SuiToggleButtonRoot(props) {
   const {
     size = "md",
     color = "grey",

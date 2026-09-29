@@ -39,12 +39,12 @@ export type PopoverBackdropProps = PopoverBackdropProps.Render &
   PopoverBackdropProps.BaseUI &
   PopoverBackdropProps.HTML;
 
+export type IPopoverBackdrop = IComponent<PopoverBackdropProps>;
+
 /**
  * ポップアップの背後に表示されるオーバーレイ要素です。
  */
-export const PopoverBackdrop: IComponent<PopoverBackdropProps> = function SuiPopoverBackdrop(
-  props,
-) {
+export const PopoverBackdrop: IPopoverBackdrop = function SuiPopoverBackdrop(props) {
   const { className, ...otherProps } = props;
 
   return (

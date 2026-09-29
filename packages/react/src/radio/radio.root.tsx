@@ -128,10 +128,12 @@ export type RadioRootProps = RadioRootProps.Render &
   RadioRootProps.BaseUI &
   RadioRootProps.HTML;
 
+export type IRadioRoot = IComponent<RadioRootProps>;
+
 /**
  * ラジオボタンのルートコンポーネントです。
  */
-export const RadioRoot: IComponent<RadioRootProps> = function SuiRadioRoot(props) {
+export const RadioRoot: IRadioRoot = function SuiRadioRoot(props) {
   const group = useRadioGroupContext(true);
   const {
     size: sizeProp = "md",

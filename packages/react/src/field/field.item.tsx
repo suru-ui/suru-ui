@@ -39,12 +39,14 @@ export type FieldItemProps = FieldItemProps.Render &
   FieldItemProps.BaseUI &
   FieldItemProps.HTML;
 
+export type IFieldItem = IComponent<FieldItemProps>;
+
 /**
  * チェックボックスグループやラジオグループの個別項目をグループ化するコンポーネントです。
  *
  * ラベルと説明文をラップして 1 つの項目としてまとめます。
  */
-export const FieldItem: IComponent<FieldItemProps> = function SuiFieldItem(props) {
+export const FieldItem: IFieldItem = function SuiFieldItem(props) {
   const { className, ...otherProps } = props;
 
   return <Field.Item {...otherProps} className={cn(className, "sui_field_item")} />;

@@ -39,10 +39,12 @@ export type MenuBackdropProps = MenuBackdropProps.Render &
   MenuBackdropProps.BaseUI &
   MenuBackdropProps.HTML;
 
+export type IMenuBackdrop = IComponent<MenuBackdropProps>;
+
 /**
  * メニューの背後に表示されるオーバーレイ要素です。
  */
-export const MenuBackdrop: IComponent<MenuBackdropProps> = function SuiMenuBackdrop(props) {
+export const MenuBackdrop: IMenuBackdrop = function SuiMenuBackdrop(props) {
   const { className, ...otherProps } = props;
 
   return <Menu.Backdrop {...otherProps} className={cn(className, "sui_menu_backdrop")} />;

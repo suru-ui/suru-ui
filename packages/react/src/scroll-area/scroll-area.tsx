@@ -97,6 +97,8 @@ namespace ScrollAreaProps {
  */
 export type ScrollAreaProps = ScrollAreaProps.ScrollArea & ScrollAreaProps.Root;
 
+export type IScrollArea = IComponent<ScrollAreaProps>;
+
 // API
 // ---
 
@@ -241,7 +243,7 @@ export { ScrollAreaAPI as API, useScrollAreaAPI as useAPI };
 /**
  * スクロール可能なコンテンツを表示するコンポーネントです。
  */
-export const ScrollArea: IComponent<ScrollAreaProps> = function SuiScrollArea(props) {
+export const ScrollArea: IScrollArea = function SuiScrollArea(props) {
   const api = useScrollAreaAPI(props);
   const horizontalScrollbarProps = api.getHorizontalScrollbarProps();
   const horizontalThumbProps = api.getHorizontalThumbProps();

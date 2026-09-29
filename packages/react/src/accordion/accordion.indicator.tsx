@@ -31,26 +31,27 @@ export type AccordionIndicatorProps = AccordionIndicatorProps.Render &
   AccordionIndicatorProps.BaseUI &
   AccordionIndicatorProps.HTML;
 
+export type IAccordionIndicator = IComponent<AccordionIndicatorProps>;
+
 /**
  * アコーディオンの展開状態を示すアイコンを表示するコンポーネントです。
  */
-export const AccordionIndicator: IComponent<AccordionIndicatorProps> =
-  function SuiAccordionIndicator(props) {
-    const ctx = useAccordionItemContext();
-    const { children = <ChevronIcon />, ...otherSpanProps } = props;
+export const AccordionIndicator: IAccordionIndicator = function SuiAccordionIndicator(props) {
+  const ctx = useAccordionItemContext();
+  const { children = <ChevronIcon />, ...otherSpanProps } = props;
 
-    return useRender({
-      props: [
-        otherSpanProps,
-        {
-          children,
-          className: "sui_accordion_indicator",
-        },
-      ],
-      state: ctx,
-      defaultTagName: "span",
-    });
-  };
+  return useRender({
+    props: [
+      otherSpanProps,
+      {
+        children,
+        className: "sui_accordion_indicator",
+      },
+    ],
+    state: ctx,
+    defaultTagName: "span",
+  });
+};
 
 export { AccordionIndicator as Indicator };
 

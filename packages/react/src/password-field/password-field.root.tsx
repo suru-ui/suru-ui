@@ -128,14 +128,14 @@ export type PasswordFieldRootProps = PasswordFieldRootProps.Render &
   PasswordFieldRootProps.BaseUI &
   PasswordFieldRootProps.HTML;
 
+export type IPasswordFieldRoot = IComponent<PasswordFieldRootProps>;
+
 /**
  * 文字入力欄のパスワード入力版である、パスワード入力欄のルート要素です。
  *
  * 指定したスタイルプロパティーは、子パーツへ継承されます。
  */
-export const PasswordFieldRoot: IComponent<PasswordFieldRootProps> = function SuiPasswordFieldRoot(
-  props,
-) {
+export const PasswordFieldRoot: IPasswordFieldRoot = function SuiPasswordFieldRoot(props) {
   const {
     size = "md",
     color = "grey",

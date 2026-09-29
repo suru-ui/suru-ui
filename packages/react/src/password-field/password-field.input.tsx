@@ -52,18 +52,19 @@ export type PasswordFieldInputProps = PasswordFieldInputProps.Render &
   PasswordFieldInputProps.BaseUI &
   PasswordFieldInputProps.HTML;
 
+export type IPasswordFieldInput = IComponent<PasswordFieldInputProps>;
+
 /**
  * パスワード入力欄の入力欄です。
  *
  * 入力項目はコンテキストから読み取った表示状態で自動的に切り替わり、常に上書きされます。
  */
-export const PasswordFieldInput: IComponent<PasswordFieldInputProps> =
-  function SuiPasswordFieldInput(props) {
-    const ctx = usePasswordFieldContext();
+export const PasswordFieldInput: IPasswordFieldInput = function SuiPasswordFieldInput(props) {
+  const ctx = usePasswordFieldContext();
 
-    // 表示状態は必ずコンテキストから決まるため、利用者の指定より優先します。
-    return <TextFieldInput {...props} type={ctx.visible ? "text" : "password"} />;
-  };
+  // 表示状態は必ずコンテキストから決まるため、利用者の指定より優先します。
+  return <TextFieldInput {...props} type={ctx.visible ? "text" : "password"} />;
+};
 
 export { PasswordFieldInput as Input };
 

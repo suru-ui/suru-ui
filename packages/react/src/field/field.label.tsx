@@ -39,12 +39,14 @@ export type FieldLabelProps = FieldLabelProps.Render &
   FieldLabelProps.BaseUI &
   FieldLabelProps.HTML;
 
+export type IFieldLabel = IComponent<FieldLabelProps>;
+
 /**
  * フィールドのラベルコンポーネントです。
  *
  * 自動的に入力欄と関連付けられ、クリックで入力欄にフォーカスされます。
  */
-export const FieldLabel: IComponent<FieldLabelProps> = function SuiFieldLabel(props) {
+export const FieldLabel: IFieldLabel = function SuiFieldLabel(props) {
   const { className, ...otherProps } = props;
 
   return <Field.Label {...otherProps} className={cn(className, "sui_field_label")} />;

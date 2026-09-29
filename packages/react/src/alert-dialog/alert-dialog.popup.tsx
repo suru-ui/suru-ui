@@ -1,0 +1,160 @@
+import { AlertDialog } from "@base-ui/react/alert-dialog";
+import * as React from "react";
+
+import mergeProps from "../_merge-props.js";
+import proxyRenderProps from "../_proxy-render-props.js";
+import type { RenderProps } from "../_use-render.js";
+import * as Card from "../card/card.parts.js";
+import cn from "../cn.js";
+import type { Override, IComponent } from "../types.js";
+import {
+  type AlertDialogPopupContextSize,
+  type AlertDialogPopupContextRadius,
+  type AlertDialogPopupContextVariant,
+  AlertDialogPopupContext,
+} from "./alert-dialog.popup.context.js";
+
+/**
+ * アラートダイアログの角丸の大きさです。
+ */
+export type AlertDialogPopupRadius = AlertDialogPopupContextRadius;
+
+/**
+ * アラートダイアログの大きさです。
+ */
+export type AlertDialogPopupSize = AlertDialogPopupContextSize;
+
+/**
+ * アラートダイアログの主な外観です。
+ *
+ * - `"default"`: 規定のスタイル
+ * - `"stacked"`: 積み重なっているスタイル
+ */
+export type AlertDialogPopupVariant = AlertDialogPopupContextVariant;
+
+/**
+ * {@link AlertDialogPopup} が持つ状態です。
+ */
+export type AlertDialogPopupState = Override<Card.CardRootState, AlertDialog.Popup.State>;
+
+export namespace AlertDialogPopupProps {
+  export type Render = RenderProps<AlertDialogPopupState>;
+
+  export type SuruUI = Card.CardRootProps.SuruUI & {
+    /**
+     * アラートダイアログの主な外観を指定します。
+     *
+     * `"stacked"` では見出しと説明文を中央に寄せ、操作を右上へ重ねます。
+     *
+     * @default "default"
+     */
+    variant?: AlertDialogPopupVariant | undefined;
+  };
+
+  export type BaseUI = Override<
+    Card.CardRootProps.BaseUI,
+    Pick<
+      React.ComponentProps<typeof AlertDialog.Popup>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // AlertDialogPopupProps:
+        "initialFocus" | "finalFocus",
+        keyof Render | keyof SuruUI
+      >
+    >
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<typeof AlertDialog.Popup>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
+}
+
+/**
+ * {@link AlertDialogPopup} に渡す props です。
+ */
+export type AlertDialogPopupProps = AlertDialogPopupProps.Render &
+  AlertDialogPopupProps.SuruUI &
+  AlertDialogPopupProps.BaseUI &
+  AlertDialogPopupProps.HTML;
+
+export type IAlertDialogPopup = IComponent<AlertDialogPopupProps>;
+
+/**
+ * アラートダイアログのポップアップ要素です。
+ *
+ * 見た目はカードとして描画され、大きさや角丸や枠線はカードのルートから引き継ぎます。
+ */
+export const AlertDialogPopup: IAlertDialogPopup = function SuiAlertDialogPopup(props) {
+  const {
+    size = "md",
+    style,
+    radius = size,
+    render,
+    variant = "default",
+    outlined = false,
+    className,
+    ...otherProps
+  } = props;
+  const ctx = React.useMemo<AlertDialogPopupContext>(
+    () => ({ size, radius, variant }),
+    [radius, size, variant],
+  );
+
+  return (
+    <AlertDialogPopupContext value={ctx}>
+      <AlertDialog.Popup
+        {...otherProps}
+        render={(htmlProps: {}, popupState) => {
+          const cardRootProps: Required<Card.CardRootProps.SuruUI> = {
+            size,
+            radius,
+            outlined,
+          };
+
+          return (
+            <Card.Root
+              {...mergeProps<typeof Card.Root>([
+                htmlProps,
+                cardRootProps,
+                proxyRenderProps(popupState, {
+                  style,
+                  render,
+                  className: cn(
+                    className,
+                    "sui_alert_dialog_popup",
+                    `sui_alert_dialog_popup-variant_${variant}`,
+                  ),
+                }),
+              ])}
+            />
+          );
+        }}
+      />
+    </AlertDialogPopupContext>
+  );
+};
+
+export { AlertDialogPopup as Popup };
+
+export namespace Popup {
+  export type State = AlertDialogPopupState;
+
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type Render = AlertDialogPopupProps.Render;
+
+    export type SuruUI = AlertDialogPopupProps.SuruUI;
+
+    export type BaseUI = AlertDialogPopupProps.BaseUI;
+
+    export type HTML = AlertDialogPopupProps.HTML;
+  }
+
+  export type Radius = AlertDialogPopupRadius;
+
+  export type Size = AlertDialogPopupSize;
+
+  export type Variant = AlertDialogPopupVariant;
+}

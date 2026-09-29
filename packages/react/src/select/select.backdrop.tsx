@@ -39,10 +39,12 @@ export type SelectBackdropProps = SelectBackdropProps.Render &
   SelectBackdropProps.BaseUI &
   SelectBackdropProps.HTML;
 
+export type ISelectBackdrop = IComponent<SelectBackdropProps>;
+
 /**
  * ポップアップの背後に表示される要素です。
  */
-export const SelectBackdrop: IComponent<SelectBackdropProps> = function SuiSelectBackdrop(props) {
+export const SelectBackdrop: ISelectBackdrop = function SuiSelectBackdrop(props) {
   const { className, ...otherProps } = props;
 
   return (

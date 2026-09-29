@@ -39,12 +39,14 @@ export type AvatarImageProps = AvatarImageProps.Render &
   AvatarImageProps.BaseUI &
   AvatarImageProps.HTML;
 
+export type IAvatarImage = IComponent<AvatarImageProps>;
+
 /**
  * アバターの画像コンポーネントです。
  *
  * 画像の読み込みに失敗すると、{@link AvatarFallback} を表示します。
  */
-export const AvatarImage: IComponent<AvatarImageProps> = function SuiAvatarImage(props) {
+export const AvatarImage: IAvatarImage = function SuiAvatarImage(props) {
   const { className, ...otherProps } = props;
 
   return <Avatar.Image {...otherProps} className={cn(className, "sui_avatar_image")} />;

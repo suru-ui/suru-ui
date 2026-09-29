@@ -37,12 +37,14 @@ export type FieldValidityProps = FieldValidityProps.Render &
   FieldValidityProps.BaseUI &
   FieldValidityProps.HTML;
 
+export type IFieldValidity = IComponent<FieldValidityProps>;
+
 /**
  * フィールドの検証状態に応じてカスタムメッセージを表示するコンポーネントです。
  *
  * `children` には検証状態を受け取る関数を指定します。それ自身は HTML 要素をレンダリングしません。
  */
-export const FieldValidity: IComponent<FieldValidityProps> = function SuiFieldValidity(props) {
+export const FieldValidity: IFieldValidity = function SuiFieldValidity(props) {
   return <Field.Validity {...props} />;
 };
 

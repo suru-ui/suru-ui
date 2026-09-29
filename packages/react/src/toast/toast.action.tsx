@@ -64,10 +64,12 @@ export type ToastActionProps = ToastActionProps.Render &
   ToastActionProps.BaseUI &
   ToastActionProps.HTML;
 
+export type IToastAction = IComponent<ToastActionProps>;
+
 /**
  * 通知に設定されたアクションを実行するボタン要素です。
  */
-export const ToastAction: IComponent<ToastActionProps> = function SuiToastAction(props) {
+export const ToastAction: IToastAction = function SuiToastAction(props) {
   const {
     size,
     color = "grey",

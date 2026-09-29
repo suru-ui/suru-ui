@@ -22,6 +22,7 @@ import {
   type DrawerControlsProps,
   type DrawerRootSnapPoint,
   type DrawerViewportProps,
+  type ICreateDrawerHandle,
   type DrawerSwipeAreaProps,
   type DrawerDescriptionProps,
   type DrawerRootChangeEventReason,
@@ -620,7 +621,7 @@ interface IDrawer extends IComponent<DrawerProps> {
   /**
    * {@link DrawerHandle} を作成する関数です。
    */
-  readonly createHandle: typeof createDrawerHandle;
+  readonly createHandle: ICreateDrawerHandle;
 }
 
 /**

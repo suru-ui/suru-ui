@@ -44,12 +44,12 @@ export type ToastDescriptionProps = ToastDescriptionProps.Render &
   ToastDescriptionProps.BaseUI &
   ToastDescriptionProps.HTML;
 
+export type IToastDescription = IComponent<ToastDescriptionProps>;
+
 /**
  * 通知の説明文を表示する段落要素です。
  */
-export const ToastDescription: IComponent<ToastDescriptionProps> = function SuiToastDescription(
-  props,
-) {
+export const ToastDescription: IToastDescription = function SuiToastDescription(props) {
   const { style, render = <p />, className, ...otherProps } = props;
 
   return (

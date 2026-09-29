@@ -39,20 +39,18 @@ export type AlertDialogBackdropProps = AlertDialogBackdropProps.Render &
   AlertDialogBackdropProps.BaseUI &
   AlertDialogBackdropProps.HTML;
 
+export type IAlertDialogBackdrop = IComponent<AlertDialogBackdropProps>;
+
 /**
  * ポップアップの背後に表示されるオーバーレイコンポーネントです。
  */
-export const AlertDialogBackdrop: IComponent<AlertDialogBackdropProps> =
-  function SuiAlertDialogBackdrop(props) {
-    const { className, ...otherProps } = props;
+export const AlertDialogBackdrop: IAlertDialogBackdrop = function SuiAlertDialogBackdrop(props) {
+  const { className, ...otherProps } = props;
 
-    return (
-      <AlertDialog.Backdrop
-        {...otherProps}
-        className={cn(className, "sui_alert_dialog_backdrop")}
-      />
-    );
-  };
+  return (
+    <AlertDialog.Backdrop {...otherProps} className={cn(className, "sui_alert_dialog_backdrop")} />
+  );
+};
 
 export { AlertDialogBackdrop as Backdrop };
 

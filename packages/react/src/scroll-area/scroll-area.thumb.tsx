@@ -39,12 +39,12 @@ export type ScrollAreaThumbProps = ScrollAreaThumbProps.Render &
   ScrollAreaThumbProps.BaseUI &
   ScrollAreaThumbProps.HTML;
 
+export type IScrollAreaThumb = IComponent<ScrollAreaThumbProps>;
+
 /**
  * スクロール位置とスクロール可能な範囲を示す、スクロールバー内のつまみ要素です。
  */
-export const ScrollAreaThumb: IComponent<ScrollAreaThumbProps> = function SuiScrollAreaThumb(
-  props,
-) {
+export const ScrollAreaThumb: IScrollAreaThumb = function SuiScrollAreaThumb(props) {
   const { className, ...otherProps } = props;
   return (
     <BaseScrollArea.Thumb

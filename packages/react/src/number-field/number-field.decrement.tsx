@@ -43,28 +43,29 @@ export type NumberFieldDecrementProps = NumberFieldDecrementProps.Render &
   NumberFieldDecrementProps.BaseUI &
   NumberFieldDecrementProps.HTML;
 
+export type INumberFieldDecrement = IComponent<NumberFieldDecrementProps>;
+
 /**
  * 値を減らすボタンです。
  */
-export const NumberFieldDecrement: IComponent<NumberFieldDecrementProps> =
-  function SuiNumberFieldDecrement(props) {
-    const {
-      children = <MinusIcon />,
-      className,
-      "aria-label": ariaLabel = "値を減らす",
-      ...otherProps
-    } = props;
+export const NumberFieldDecrement: INumberFieldDecrement = function SuiNumberFieldDecrement(props) {
+  const {
+    children = <MinusIcon />,
+    className,
+    "aria-label": ariaLabel = "値を減らす",
+    ...otherProps
+  } = props;
 
-    return (
-      <NumberField.Decrement
-        {...otherProps}
-        className={cn(className, "sui_number_field_stepper", "sui_number_field_decrement")}
-        aria-label={ariaLabel}
-      >
-        {children}
-      </NumberField.Decrement>
-    );
-  };
+  return (
+    <NumberField.Decrement
+      {...otherProps}
+      className={cn(className, "sui_number_field_stepper", "sui_number_field_decrement")}
+      aria-label={ariaLabel}
+    >
+      {children}
+    </NumberField.Decrement>
+  );
+};
 
 export { NumberFieldDecrement as Decrement };
 

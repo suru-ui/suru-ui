@@ -146,10 +146,12 @@ export type TreeItemProps = TreeItemProps.Render &
   TreeItemProps.BaseUI &
   TreeItemProps.HTML;
 
+export type ITreeItem = IComponent<TreeItemProps>;
+
 /**
  * ツリーの項目要素です。
  */
-export const TreeItem: IComponent<TreeItemProps> = function SuiTreeItem(props) {
+export const TreeItem: ITreeItem = function SuiTreeItem(props) {
   const ctx = useTreeContext();
   const {
     id: itemId,

@@ -29,12 +29,12 @@ export type SidebarGroupLabelProps = SidebarGroupLabelProps.Render &
   SidebarGroupLabelProps.BaseUI &
   SidebarGroupLabelProps.HTML;
 
+export type ISidebarGroupLabel = IComponent<SidebarGroupLabelProps>;
+
 /**
  * グループのラベルです。
  */
-export const SidebarGroupLabel: IComponent<SidebarGroupLabelProps> = function SuiSidebarGroupLabel(
-  props,
-) {
+export const SidebarGroupLabel: ISidebarGroupLabel = function SuiSidebarGroupLabel(props) {
   return useRender({
     props: [
       props,
