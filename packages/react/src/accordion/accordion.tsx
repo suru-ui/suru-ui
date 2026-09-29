@@ -62,7 +62,7 @@ export type AccordionSlotProps = {
   /**
    * {@link AccordionIndicator} に渡す props です。
    */
-  readonly indicator?: AccordionIndicatorProps | undefined;
+  readonly indicator?: Omit<AccordionIndicatorProps, "children"> | undefined;
 
   /**
    * {@link AccordionItem} に渡す props です。
@@ -84,6 +84,13 @@ export type AccordionState<TValue = any> = AccordionRootState<TValue>;
 
 namespace AccordionProps {
   export type Accordion = {
+    /**
+     * アコーディオンのインジケーターです。
+     *
+     * `true` を指定すると既定のインジケーターを表示し、`false` を指定すると表示しません。表示内容を指定するとその内容で表示します。
+     */
+    indicator?: React.ReactNode;
+
     /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
      */
@@ -115,6 +122,8 @@ export type AccordionProps<TItem = any, TValue = any> = AccordionProps.Accordion
  * @template TValue 項目の値の型です。
  */
 export class AccordionAPI<TItem = any, TValue = any> {
+  private readonly indicator: AccordionProps.Accordion["indicator"];
+
   private readonly slotProps: AccordionSlotProps;
 
   private readonly rootProps: AccordionRootProps<TItem, TValue>;
@@ -124,25 +133,29 @@ export class AccordionAPI<TItem = any, TValue = any> {
    * @internal
    */
   public constructor(props: AccordionProps<TItem, TValue>) {
-    const { slotProps = {}, ...rootProps } = props;
+    const { indicator, slotProps = {}, ...rootProps } = props;
+    this.indicator = indicator;
     this.slotProps = slotProps;
     this.rootProps = rootProps;
   }
 
   private defaultItemRenderer: IAccordionItemRenderer = (item, index) => {
     switch (true) {
-      case isItemObject(item):
+      case isItemObject(item): {
+        const indicatorProps = this.getIndicatorProps();
+
         return (
           <AccordionItem {...this.getItemProps(item)} key={getItemKey(item) ?? index}>
             <AccordionHeading {...this.getHeadingProps()}>
               <AccordionTrigger {...this.getTriggerProps()}>
                 {this.getTitle(item)}
-                <AccordionIndicator {...this.getIndicatorProps()} />
+                {indicatorProps && <AccordionIndicator {...indicatorProps} />}
               </AccordionTrigger>
             </AccordionHeading>
             <AccordionContent {...this.getContentProps(item)} />
           </AccordionItem>
         );
+      }
 
       default:
         return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
@@ -178,11 +191,27 @@ export class AccordionAPI<TItem = any, TValue = any> {
 
   /**
    * {@link AccordionIndicator} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
-  public getIndicatorProps(): AccordionIndicatorProps {
+  public getIndicatorProps(): AccordionIndicatorProps | null {
+    const { indicator } = this;
     const { indicator: props = {} } = this.slotProps;
 
-    return props;
+    switch (indicator) {
+      case false:
+        return null;
+
+      case true:
+      case undefined:
+        return props;
+
+      default:
+        return {
+          ...props,
+          children: indicator,
+        };
+    }
   }
 
   /**

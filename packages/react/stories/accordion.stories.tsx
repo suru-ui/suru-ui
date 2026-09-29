@@ -1,5 +1,5 @@
 import * as theme from "@suru-ui/theme";
-import { ChevronUpIcon, ChevronDownIcon, MessageCircleQuestionIcon } from "lucide-react";
+import { PlusIcon, ChevronUpIcon, ChevronDownIcon, MessageCircleQuestionIcon } from "lucide-react";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
@@ -54,6 +54,9 @@ const ctrl = controls(Accordion, {
   disabled: {
     control: "boolean",
   },
+  indicator: {
+    control: "boolean",
+  },
   separator: {
     control: "boolean",
   },
@@ -76,6 +79,7 @@ export const Basic = meta.story({
     size: "md",
     radius: undefined,
     multiple: false,
+    indicator: true,
     separator: true,
     disabled: false,
   }),
@@ -93,6 +97,7 @@ export const Sizes = meta.story({
   ...ctrl({
     radius: undefined,
     multiple: false,
+    indicator: true,
     separator: true,
     disabled: false,
   }),
@@ -118,6 +123,7 @@ export const Multiple = meta.story({
   ...ctrl({
     size: "md",
     radius: undefined,
+    indicator: true,
     separator: true,
     disabled: false,
   }),
@@ -130,18 +136,37 @@ export const Multiple = meta.story({
   },
 });
 
+export const WithoutIndicator = meta.story({
+  name: "インジケーターなし",
+  ...ctrl({
+    size: "md",
+    radius: undefined,
+    multiple: false,
+    separator: true,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="w-[400px] h-[320px]">
+        <Accordion {...props} items={ITEMS} indicator={false} defaultValue={["1"]} />
+      </div>
+    );
+  },
+});
+
 export const WithoutSeparator = meta.story({
   name: "仕切りなし",
   ...ctrl({
     size: "md",
     radius: undefined,
     multiple: false,
+    indicator: true,
     disabled: false,
   }),
   render(props) {
     return (
       <div className="w-[400px] h-[320px]">
-        <Accordion {...props} items={ITEMS} />
+        <Accordion {...props} items={ITEMS} defaultValue={["1"]} />
       </div>
     );
   },
@@ -195,6 +220,7 @@ export const Borders = meta.story({
     size: "md",
     radius: undefined,
     multiple: false,
+    indicator: true,
     separator: true,
     disabled: false,
   }),
@@ -223,6 +249,7 @@ export const Card = meta.story({
     size: "md",
     radius: undefined,
     multiple: false,
+    indicator: true,
     separator: true,
     disabled: false,
   }),
@@ -317,7 +344,7 @@ export const CustomTrigger = meta.story({
 
     return (
       <div className="w-[400px] h-[320px]">
-        <Accordion.Root {...props} items={ITEMS}>
+        <Accordion.Root {...props} items={ITEMS} defaultValue={["1"]}>
           {(item, index) => {
             const { title, content, itemProps } = Accordion.decomposeItemObject(item);
 
@@ -327,12 +354,56 @@ export const CustomTrigger = meta.story({
                   <span>{title}</span>
                   <Accordion.Trigger
                     render={(htmlProps: {}, state) => (
-                      <Button {...htmlProps} size="sm" squared disabled={state.disabled}>
+                      <Button
+                        {...htmlProps}
+                        size="sm"
+                        squared
+                        variant="liquid"
+                        disabled={state.disabled}
+                      >
                         {state.open ? <ChevronUpIcon /> : <ChevronDownIcon />}
                       </Button>
                     )}
                     unstyled
                   />
+                </Accordion.Heading>
+                <Accordion.Content>{content}</Accordion.Content>
+              </Accordion.Item>
+            );
+          }}
+        </Accordion.Root>
+      </div>
+    );
+  },
+});
+
+export const CustomIndicator = meta.story({
+  name: "独自インジケーター",
+  ...ctrl({
+    size: "md",
+    radius: undefined,
+    multiple: false,
+    separator: true,
+    disabled: false,
+  }),
+  render(props) {
+    const Accordion = AccordionParts;
+
+    return (
+      <div className="w-[400px] h-[320px]">
+        <Accordion.Root {...props} items={ITEMS} defaultValue={["1"]}>
+          {(item, index) => {
+            const { title, content, itemProps } = Accordion.decomposeItemObject(item);
+
+            return (
+              <Accordion.Item {...itemProps} key={index}>
+                <Accordion.Heading>
+                  <Accordion.Trigger>
+                    {title}
+                    <Accordion.Indicator className={(state) => (state.open ? "rotate-45" : "")}>
+                      <PlusIcon />
+                    </Accordion.Indicator>
+                  </Accordion.Trigger>
                 </Accordion.Heading>
                 <Accordion.Content>{content}</Accordion.Content>
               </Accordion.Item>
