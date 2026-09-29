@@ -134,14 +134,14 @@ describe("Tabs の配置", () => {
 
     // 検証
     const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm [role=tablist]")!);
-    expect(sm.columnGap).toBe("1.12px");
-    expect(sm.paddingInlineStart).toBe("5.27px");
+    expect(sm.columnGap).toBe("2px");
+    expect(sm.paddingInlineStart).toBe("6px");
     const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md [role=tablist]")!);
-    expect(md.columnGap).toBe("2.53px");
-    expect(md.paddingInlineStart).toBe("5.27px");
+    expect(md.columnGap).toBe("4px");
+    expect(md.paddingInlineStart).toBe("6px");
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg [role=tablist]")!);
-    expect(lg.columnGap).toBe("4.27px");
-    expect(lg.paddingInlineStart).toBe("8.49px");
+    expect(lg.columnGap).toBe("6px");
+    expect(lg.paddingInlineStart).toBe("8px");
   });
 
   test.skipIf(!supportsCustomFunctions())(
@@ -160,15 +160,15 @@ describe("Tabs の配置", () => {
       const sm = getComputedStyle(
         screen.container.querySelector<HTMLElement>("#sm [role=tablist]")!,
       );
-      expect(sm.columnGap).toBe("2.53px");
+      expect(sm.columnGap).toBe("2px");
       const md = getComputedStyle(
         screen.container.querySelector<HTMLElement>("#md [role=tablist]")!,
       );
-      expect(md.columnGap).toBe("4.27px");
+      expect(md.columnGap).toBe("4px");
       const lg = getComputedStyle(
         screen.container.querySelector<HTMLElement>("#lg [role=tablist]")!,
       );
-      expect(lg.columnGap).toBe("6.4px");
+      expect(lg.columnGap).toBe("6px");
     },
   );
 
@@ -208,11 +208,11 @@ describe("Tabs の配置", () => {
 
       // 検証
       const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm [role=tab]")!);
-      expect(Number.parseFloat(sm.paddingInlineStart)).toBeCloseTo(8.49, 1);
+      expect(Number.parseFloat(sm.paddingInlineStart)).toBeCloseTo(8, 1);
       const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md [role=tab]")!);
-      expect(Number.parseFloat(md.paddingInlineStart)).toBeCloseTo(12.8, 1);
+      expect(Number.parseFloat(md.paddingInlineStart)).toBeCloseTo(12, 1);
       const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg [role=tab]")!);
-      expect(Number.parseFloat(lg.paddingInlineStart)).toBeCloseTo(18.54, 1);
+      expect(Number.parseFloat(lg.paddingInlineStart)).toBeCloseTo(16, 1);
     },
   );
 
@@ -348,8 +348,8 @@ describe("Tabs の配置", () => {
 
     // 検証
     const panel = getComputedStyle(screen.getByRole("tabpanel").element());
-    expect(Number.parseFloat(panel.paddingInlineStart)).toBeCloseTo(5.27, 1);
-    expect(Number.parseFloat(panel.paddingBlockStart)).toBeCloseTo(5.27, 1);
+    expect(Number.parseFloat(panel.paddingInlineStart)).toBeCloseTo(6, 1);
+    expect(Number.parseFloat(panel.paddingBlockStart)).toBeCloseTo(6, 1);
   });
 
   test("無効なタブを淡色にして操作不能にする", async ({ expect }) => {

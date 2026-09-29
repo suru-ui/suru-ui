@@ -97,21 +97,21 @@
   --sui_segments_list-corner_shape: var(--sui_segments-corner_shape);
 
   &.sui_segments-size_sm {
-    --sui_segments_list-gap: --sui-gap(2);
-    --sui_segments_list-padding_block: --sui-space(3);
-    --sui_segments_list-padding_inline: --sui-space(3);
+    --sui_segments_list-gap: --sui-gap(0.5);
+    --sui_segments_list-padding_block: --sui-space(1.5);
+    --sui_segments_list-padding_inline: --sui-space(1.5);
   }
 
   &.sui_segments-size_md {
-    --sui_segments_list-gap: --sui-gap(3);
-    --sui_segments_list-padding_block: --sui-space(3);
-    --sui_segments_list-padding_inline: --sui-space(3);
+    --sui_segments_list-gap: --sui-gap(1);
+    --sui_segments_list-padding_block: --sui-space(1.5);
+    --sui_segments_list-padding_inline: --sui-space(1.5);
   }
 
   &.sui_segments-size_lg {
-    --sui_segments_list-gap: --sui-gap(4);
-    --sui_segments_list-padding_block: --sui-space(4);
-    --sui_segments_list-padding_inline: --sui-space(4);
+    --sui_segments_list-gap: --sui-gap(1.5);
+    --sui_segments_list-padding_block: --sui-space(2);
+    --sui_segments_list-padding_inline: --sui-space(2);
   }
 }
 
@@ -206,7 +206,7 @@
 
   &.sui_segments-size_sm {
     --sui_segments_item-min_height: var(--sui-size-sm);
-    --sui_segments_item-padding_inline: --sui-space(4);
+    --sui_segments_item-padding_inline: --sui-space(1.5);
     --sui_segments_item-font_size: var(--sui-text-oln-sm-m-font_size);
     --sui_segments_item-font_weight: var(--sui-text-oln-sm-m-font_weight);
     --sui_segments_item-line_height: var(--sui-text-oln-sm-m-line_height);
@@ -215,7 +215,7 @@
 
   &.sui_segments-size_md {
     --sui_segments_item-min_height: var(--sui-size-md);
-    --sui_segments_item-padding_inline: --sui-space(5);
+    --sui_segments_item-padding_inline: --sui-space(2.5);
     --sui_segments_item-font_size: var(--sui-text-oln-md-m-font_size);
     --sui_segments_item-font_weight: var(--sui-text-oln-md-m-font_weight);
     --sui_segments_item-line_height: var(--sui-text-oln-md-m-line_height);
@@ -224,7 +224,7 @@
 
   &.sui_segments-size_lg {
     --sui_segments_item-min_height: var(--sui-size-lg);
-    --sui_segments_item-padding_inline: --sui-space(6);
+    --sui_segments_item-padding_inline: --sui-space(3.5);
     --sui_segments_item-font_size: var(--sui-text-oln-lg-m-font_size);
     --sui_segments_item-font_weight: var(--sui-text-oln-lg-m-font_weight);
     --sui_segments_item-line_height: var(--sui-text-oln-lg-m-line_height);

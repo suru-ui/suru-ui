@@ -148,7 +148,7 @@
 
 /* 代入 */
 :scope {
-  --sui_popover_content-gap: --sui-gap(4);
+  --sui_popover_content-gap: --sui-gap(2);
   --sui_popover_content-max_width: var(--available-width);
   --sui_popover_content-max_height: var(--available-height);
   --sui_popover_content-font_family: var(--sui-font-sans);
@@ -171,17 +171,17 @@
 
   &.sui_popover_portal-size_sm {
     --sui_popover_content-width: calc(var(--sui_popover_content-font_size) * 16);
-    --sui_popover_content-padding: --sui-space(4);
+    --sui_popover_content-padding: --sui-space(3);
   }
 
   &.sui_popover_portal-size_md {
     --sui_popover_content-width: calc(var(--sui_popover_content-font_size) * 20);
-    --sui_popover_content-padding: --sui-space(5);
+    --sui_popover_content-padding: --sui-space(4);
   }
 
   &.sui_popover_portal-size_lg {
     --sui_popover_content-width: calc(var(--sui_popover_content-font_size) * 24);
-    --sui_popover_content-padding: --sui-space(6);
+    --sui_popover_content-padding: --sui-space(5);
   }
 
   &.sui_popover_portal-radius_none {

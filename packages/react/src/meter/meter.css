@@ -21,7 +21,7 @@
 
 /* 代入 */
 :scope {
-  --sui_meter-gap: --sui-gap(4);
+  --sui_meter-gap: --sui-gap(2);
 }
 
 } /* @scope */

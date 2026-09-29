@@ -20,7 +20,7 @@
 
 /* 代入 */
 :scope {
-  --sui_form-gap: --sui-gap(4);
+  --sui_form-gap: --sui-gap(2);
 }
 
 } /* @scope */

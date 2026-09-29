@@ -25,19 +25,19 @@
 /* 代入 */
 :scope {
   &.sui_pagination-size_sm {
-    --sui_pagination-gap: --sui-gap(1);
+    --sui_pagination-gap: --sui-gap(0.5);
     --sui_pagination-min_height: var(--sui-size-sm);
     --sui_pagination-font_size: var(--sui-text-oln-sm-m-font_size);
   }
 
   &.sui_pagination-size_md {
-    --sui_pagination-gap: --sui-gap(1);
+    --sui_pagination-gap: --sui-gap(0.5);
     --sui_pagination-min_height: var(--sui-size-md);
     --sui_pagination-font_size: var(--sui-text-oln-md-m-font_size);
   }
 
   &.sui_pagination-size_lg {
-    --sui_pagination-gap: --sui-gap(2);
+    --sui_pagination-gap: --sui-gap(1);
     --sui_pagination-min_height: var(--sui-size-lg);
     --sui_pagination-font_size: var(--sui-text-oln-lg-m-font_size);
   }

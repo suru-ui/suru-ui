@@ -25,15 +25,15 @@
   --sui_file_upload-font_family: var(--sui-font-sans);
 
   &.sui_file_upload-size_sm {
-    --sui_file_upload-gap: --sui-space(2);
+    --sui_file_upload-gap: --sui-gap(0.5);
   }
 
   &.sui_file_upload-size_md {
-    --sui_file_upload-gap: --sui-space(3);
+    --sui_file_upload-gap: --sui-gap(1);
   }
 
   &.sui_file_upload-size_lg {
-    --sui_file_upload-gap: --sui-space(4);
+    --sui_file_upload-gap: --sui-gap(1.5);
   }
 }
 
@@ -135,7 +135,7 @@
 
   &.sui_file_upload-size_sm {
     --sui_file_upload_trigger-min_height: var(--sui-size-sm);
-    --sui_file_upload_trigger-padding_inline: --sui-space(3);
+    --sui_file_upload_trigger-padding_inline: --sui-space(1.5);
     --sui_file_upload_trigger-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_file_upload_trigger-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_file_upload_trigger-line_height: var(--sui-text-oln-sm-n-line_height);
@@ -144,7 +144,7 @@
 
   &.sui_file_upload-size_md {
     --sui_file_upload_trigger-min_height: var(--sui-size-md);
-    --sui_file_upload_trigger-padding_inline: --sui-space(4);
+    --sui_file_upload_trigger-padding_inline: --sui-space(2.5);
     --sui_file_upload_trigger-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_file_upload_trigger-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_file_upload_trigger-line_height: var(--sui-text-oln-md-n-line_height);
@@ -153,7 +153,7 @@
 
   &.sui_file_upload-size_lg {
     --sui_file_upload_trigger-min_height: var(--sui-size-lg);
-    --sui_file_upload_trigger-padding_inline: --sui-space(5);
+    --sui_file_upload_trigger-padding_inline: --sui-space(3.5);
     --sui_file_upload_trigger-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_file_upload_trigger-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_file_upload_trigger-line_height: var(--sui-text-oln-lg-n-line_height);
@@ -288,7 +288,7 @@
 
   &.sui_file_upload-size_sm {
     --sui_file_upload_dropzone-min_height: 64px;
-    --sui_file_upload_dropzone-padding_inline: --sui-space(4);
+    --sui_file_upload_dropzone-padding_inline: --sui-space(3);
     --sui_file_upload_dropzone-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_file_upload_dropzone-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_file_upload_dropzone-line_height: var(--sui-text-oln-sm-n-line_height);
@@ -297,7 +297,7 @@
 
   &.sui_file_upload-size_md {
     --sui_file_upload_dropzone-min_height: 80px;
-    --sui_file_upload_dropzone-padding_inline: --sui-space(5);
+    --sui_file_upload_dropzone-padding_inline: --sui-space(4);
     --sui_file_upload_dropzone-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_file_upload_dropzone-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_file_upload_dropzone-line_height: var(--sui-text-oln-md-n-line_height);
@@ -306,7 +306,7 @@
 
   &.sui_file_upload-size_lg {
     --sui_file_upload_dropzone-min_height: 96px;
-    --sui_file_upload_dropzone-padding_inline: --sui-space(6);
+    --sui_file_upload_dropzone-padding_inline: --sui-space(5);
     --sui_file_upload_dropzone-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_file_upload_dropzone-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_file_upload_dropzone-line_height: var(--sui-text-oln-lg-n-line_height);
@@ -523,7 +523,7 @@
 
   &.sui_file_upload-size_sm {
     --sui_file_upload_clear_trigger-min_height: var(--sui-size-sm);
-    --sui_file_upload_clear_trigger-padding_inline: --sui-space(2);
+    --sui_file_upload_clear_trigger-padding_inline: --sui-space(1);
     --sui_file_upload_clear_trigger-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_file_upload_clear_trigger-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_file_upload_clear_trigger-line_height: var(--sui-text-oln-sm-n-line_height);
@@ -532,7 +532,7 @@
 
   &.sui_file_upload-size_md {
     --sui_file_upload_clear_trigger-min_height: var(--sui-size-md);
-    --sui_file_upload_clear_trigger-padding_inline: --sui-space(3);
+    --sui_file_upload_clear_trigger-padding_inline: --sui-space(2);
     --sui_file_upload_clear_trigger-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_file_upload_clear_trigger-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_file_upload_clear_trigger-line_height: var(--sui-text-oln-md-n-line_height);
@@ -541,7 +541,7 @@
 
   &.sui_file_upload-size_lg {
     --sui_file_upload_clear_trigger-min_height: var(--sui-size-lg);
-    --sui_file_upload_clear_trigger-padding_inline: --sui-space(4);
+    --sui_file_upload_clear_trigger-padding_inline: --sui-space(3);
     --sui_file_upload_clear_trigger-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_file_upload_clear_trigger-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_file_upload_clear_trigger-line_height: var(--sui-text-oln-lg-n-line_height);
@@ -622,7 +622,7 @@
 
 /* 代入 */
 :scope {
-  --sui_file_upload_item_group-gap: --sui-space(2);
+  --sui_file_upload_item_group-gap: --sui-gap(2);
 }
 
 } /* @scope */
@@ -683,7 +683,7 @@
 
 /* 代入 */
 :scope {
-  --sui_file_upload_item-gap: --sui-space(2);
+  --sui_file_upload_item-gap: --sui-gap(1);
   --sui_file_upload_item-font_family: var(--sui-font-sans);
   --sui_file_upload_item-color: var(--sui-canvas_text-1);
   --sui_file_upload_item-background_color: var(--sui-grey-naked-canvas-normal);
@@ -692,8 +692,8 @@
 
   &.sui_file_upload-size_sm {
     --sui_file_upload_item-min_height: var(--sui-size-sm);
-    --sui_file_upload_item-padding_block: --sui-space(1);
-    --sui_file_upload_item-padding_inline: --sui-space(3);
+    --sui_file_upload_item-padding_block: --sui-space(0.5);
+    --sui_file_upload_item-padding_inline: --sui-space(1.5);
     --sui_file_upload_item-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_file_upload_item-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_file_upload_item-line_height: var(--sui-text-oln-sm-n-line_height);
@@ -702,8 +702,8 @@
 
   &.sui_file_upload-size_md {
     --sui_file_upload_item-min_height: var(--sui-size-md);
-    --sui_file_upload_item-padding_block: --sui-space(2);
-    --sui_file_upload_item-padding_inline: --sui-space(4);
+    --sui_file_upload_item-padding_block: --sui-space(1);
+    --sui_file_upload_item-padding_inline: --sui-space(2.5);
     --sui_file_upload_item-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_file_upload_item-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_file_upload_item-line_height: var(--sui-text-oln-md-n-line_height);
@@ -712,8 +712,8 @@
 
   &.sui_file_upload-size_lg {
     --sui_file_upload_item-min_height: var(--sui-size-lg);
-    --sui_file_upload_item-padding_block: --sui-space(3);
-    --sui_file_upload_item-padding_inline: --sui-space(5);
+    --sui_file_upload_item-padding_block: --sui-space(1.5);
+    --sui_file_upload_item-padding_inline: --sui-space(3.5);
     --sui_file_upload_item-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_file_upload_item-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_file_upload_item-line_height: var(--sui-text-oln-lg-n-line_height);

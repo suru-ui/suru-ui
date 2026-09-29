@@ -92,7 +92,7 @@
                            * var(--sui-text-oln-sm-m-line_height)
                            * 1.2
                          );
-    --sui_switch-padding: 1.99px;
+    --sui_switch-padding: 2px;
   }
 
   &.sui_switch-size_md {
@@ -101,7 +101,7 @@
                            * var(--sui-text-oln-md-m-line_height)
                            * 1.2
                          );
-    --sui_switch-padding: 1.99px;
+    --sui_switch-padding: 2px;
   }
 
   &.sui_switch-size_lg {
@@ -110,15 +110,15 @@
                            * var(--sui-text-oln-lg-m-line_height)
                            * 1.2
                          );
-    --sui_switch-padding: 1.99px;
+    --sui_switch-padding: 2px;
   }
 
   /* @function 非対応ブラウザーでは --sui-space() を解決できずつまみの寸法が 0 になるため、対応ブラウザーにだけ適用します。 */
-  @supports (padding-block: --sui-space(1.5)) {
+  @supports (padding-block: --sui-space(0.5)) {
     &.sui_switch-size_sm,
     &.sui_switch-size_md,
     &.sui_switch-size_lg {
-      --sui_switch-padding: --sui-space(1.5);
+      --sui_switch-padding: --sui-space(0.5);
     }
   }
 

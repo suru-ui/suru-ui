@@ -143,16 +143,16 @@ describe("Drawer の配置", () => {
 
       // 検証
       const headerStyle = getComputedStyle(screen.getByClassName("sui_drawer_header").element());
-      expect(Number.parseFloat(headerStyle.paddingBlockStart)).toBeCloseTo(18.54, 2);
-      expect(Number.parseFloat(headerStyle.paddingInlineStart)).toBeCloseTo(18.54, 2);
-      expect(Number.parseFloat(headerStyle.rowGap)).toBeCloseTo(2.53, 2);
+      expect(Number.parseFloat(headerStyle.paddingBlockStart)).toBeCloseTo(16, 2);
+      expect(Number.parseFloat(headerStyle.paddingInlineStart)).toBeCloseTo(16, 2);
+      expect(Number.parseFloat(headerStyle.rowGap)).toBeCloseTo(4, 2);
       const bodyStyle = getComputedStyle(screen.getByClassName("sui_drawer_body").element());
-      expect(Number.parseFloat(bodyStyle.paddingBlockStart)).toBeCloseTo(18.54, 2);
-      expect(Number.parseFloat(bodyStyle.paddingInlineStart)).toBeCloseTo(18.54, 2);
+      expect(Number.parseFloat(bodyStyle.paddingBlockStart)).toBeCloseTo(16, 2);
+      expect(Number.parseFloat(bodyStyle.paddingInlineStart)).toBeCloseTo(16, 2);
       const footerStyle = getComputedStyle(screen.getByClassName("sui_drawer_footer").element());
-      expect(Number.parseFloat(footerStyle.paddingBlockStart)).toBeCloseTo(18.54, 2);
-      expect(Number.parseFloat(footerStyle.paddingInlineStart)).toBeCloseTo(18.54, 2);
-      expect(Number.parseFloat(footerStyle.gap)).toBeCloseTo(6.4, 2);
+      expect(Number.parseFloat(footerStyle.paddingBlockStart)).toBeCloseTo(16, 2);
+      expect(Number.parseFloat(footerStyle.paddingInlineStart)).toBeCloseTo(16, 2);
+      expect(Number.parseFloat(footerStyle.gap)).toBeCloseTo(8, 2);
       expect(footerStyle.justifyContent).toBe("flex-end");
     },
   );
@@ -189,7 +189,7 @@ describe("Drawer の配置", () => {
       const controls = screen.getByClassName("sui_drawer_controls").element();
       expect(getComputedStyle(controls).position).toBe("absolute");
       expect(getComputedStyle(controls).justifyContent).toBe("flex-end");
-      expect(getComputedStyle(controls).gap).toBe("6.4px");
+      expect(getComputedStyle(controls).gap).toBe("8px");
       const headerRect = screen
         .getByClassName("sui_drawer_header")
         .element()
@@ -198,8 +198,8 @@ describe("Drawer の配置", () => {
         .getByRole("button", { name: "閉じる" })
         .element()
         .getBoundingClientRect();
-      expect(buttonRect.right).toBeCloseTo(headerRect.right - 18.54, 1);
-      expect(buttonRect.top).toBeCloseTo(headerRect.top + 18.54, 1);
+      expect(buttonRect.right).toBeCloseTo(headerRect.right - 16, 1);
+      expect(buttonRect.top).toBeCloseTo(headerRect.top + 16, 1);
     },
   );
 
@@ -225,7 +225,7 @@ describe("Drawer の配置", () => {
         .getByRole("button", { name: "閉じる" })
         .element()
         .getBoundingClientRect();
-      expect(buttonRect.right).toBeCloseTo(headerRect.right - 18.54, 1);
+      expect(buttonRect.right).toBeCloseTo(headerRect.right - 16, 1);
     },
   );
 

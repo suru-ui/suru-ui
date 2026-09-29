@@ -21,15 +21,15 @@
 /* 代入 */
 :scope {
   &.sui_breadcrumb-size_sm {
-    --sui_breadcrumb-gap: --sui-gap(1.5);
+    --sui_breadcrumb-gap: --sui-gap(0.5);
   }
 
   &.sui_breadcrumb-size_md {
-    --sui_breadcrumb-gap: --sui-gap(2);
+    --sui_breadcrumb-gap: --sui-gap(1);
   }
 
   &.sui_breadcrumb-size_lg {
-    --sui_breadcrumb-gap: --sui-gap(2);
+    --sui_breadcrumb-gap: --sui-gap(1.5);
   }
 }
 

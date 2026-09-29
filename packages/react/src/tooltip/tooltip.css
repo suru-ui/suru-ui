@@ -93,7 +93,7 @@
 
 /* 代入 */
 :scope {
-  --sui_tooltip_content-gap: --sui-gap(2);
+  --sui_tooltip_content-gap: --sui-gap(0.5);
   --sui_tooltip_content-font_family: var(--sui-font-sans);
   --sui_tooltip_content-color: var(--sui-tooltip-canvas_text);
   --sui_tooltip_content-background_color: var(--sui-tooltip-canvas);
@@ -108,11 +108,11 @@
   &.sui_tooltip_portal-size_sm {
     --sui_tooltip_content-max_width: calc(var(--sui_tooltip_content-font_size) * 20);
     --sui_tooltip_content-padding_block: calc(
-                                           --sui-space(1)
+                                           --sui-space(0.5)
                                            - var(--_sui_tooltip_content-border_width, 0px)
                                          );
     --sui_tooltip_content-padding_inline: calc(
-                                            --sui-space(2)
+                                            --sui-space(1)
                                             - var(--_sui_tooltip_content-border_width, 0px)
                                           );
     --sui_tooltip_content-font_size: var(--sui-text-dns-sm-n-font_size);
@@ -124,11 +124,11 @@
   &.sui_tooltip_portal-size_md {
     --sui_tooltip_content-max_width: calc(var(--sui_tooltip_content-font_size) * 24);
     --sui_tooltip_content-padding_block: calc(
-                                           --sui-space(2)
+                                           --sui-space(1)
                                            - var(--_sui_tooltip_content-border_width, 0px)
                                          );
     --sui_tooltip_content-padding_inline: calc(
-                                            --sui-space(3)
+                                            --sui-space(1.5)
                                             - var(--_sui_tooltip_content-border_width, 0px)
                                           );
     --sui_tooltip_content-font_size: var(--sui-text-dns-sm-n-font_size);
@@ -140,11 +140,11 @@
   &.sui_tooltip_portal-size_lg {
     --sui_tooltip_content-max_width: calc(var(--sui_tooltip_content-font_size) * 28);
     --sui_tooltip_content-padding_block: calc(
-                                           --sui-space(3)
+                                           --sui-space(1.5)
                                            - var(--_sui_tooltip_content-border_width, 0px)
                                          );
     --sui_tooltip_content-padding_inline: calc(
-                                            --sui-space(4)
+                                            --sui-space(2)
                                             - var(--_sui_tooltip_content-border_width, 0px)
                                           );
     --sui_tooltip_content-font_size: var(--sui-text-dns-md-n-font_size);

@@ -117,7 +117,7 @@
 
   &.sui_textarea-size_sm {
     --sui_textarea-min_height: var(--sui-size-sm);
-    --sui_textarea-padding_inline: --sui-space(3);
+    --sui_textarea-padding_inline: --sui-space(1.5);
     --sui_textarea-font_size: var(--sui-text-std-sm-n-font_size);
     --sui_textarea-font_weight: var(--sui-text-std-sm-n-font_weight);
     --sui_textarea-line_height: var(--sui-text-std-sm-n-line_height);
@@ -126,7 +126,7 @@
 
   &.sui_textarea-size_md {
     --sui_textarea-min_height: var(--sui-size-md);
-    --sui_textarea-padding_inline: --sui-space(4);
+    --sui_textarea-padding_inline: --sui-space(2.5);
     --sui_textarea-font_size: var(--sui-text-std-md-n-font_size);
     --sui_textarea-font_weight: var(--sui-text-std-md-n-font_weight);
     --sui_textarea-line_height: var(--sui-text-std-md-n-line_height);
@@ -135,7 +135,7 @@
 
   &.sui_textarea-size_lg {
     --sui_textarea-min_height: var(--sui-size-lg);
-    --sui_textarea-padding_inline: --sui-space(5);
+    --sui_textarea-padding_inline: --sui-space(3.5);
     --sui_textarea-font_size: var(--sui-text-std-lg-n-font_size);
     --sui_textarea-font_weight: var(--sui-text-std-lg-n-font_weight);
     --sui_textarea-line_height: var(--sui-text-std-lg-n-line_height);

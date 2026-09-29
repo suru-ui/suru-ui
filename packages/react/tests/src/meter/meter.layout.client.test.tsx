@@ -181,7 +181,7 @@ describe("Meter の配置", () => {
     // 準備と実行
     const screen = await render(
       <>
-        <span id="expected" style={{ display: "block", gap: "--sui-gap(4)" }} />
+        <span id="expected" style={{ display: "block", gap: "--sui-gap(2)" }} />
         <Meter id="meter" label="使用量" value={25} />
       </>,
     );

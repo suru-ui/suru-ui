@@ -80,21 +80,21 @@
   --sui_text_field-border_width-invalid: --sui-border_width(2);
 
   &.sui_text_field-size_sm {
-    --sui_text_field-gap: --sui-space(2);
+    --sui_text_field-gap: --sui-gap(0.5);
     --sui_text_field-min_height: var(--sui-size-sm);
-    --sui_text_field-padding_inline: --sui-space(3);
+    --sui_text_field-padding_inline: --sui-space(1.5);
   }
 
   &.sui_text_field-size_md {
-    --sui_text_field-gap: --sui-space(3);
+    --sui_text_field-gap: --sui-gap(1);
     --sui_text_field-min_height: var(--sui-size-md);
-    --sui_text_field-padding_inline: --sui-space(4);
+    --sui_text_field-padding_inline: --sui-space(2.5);
   }
 
   &.sui_text_field-size_lg {
-    --sui_text_field-gap: --sui-space(3);
+    --sui_text_field-gap: --sui-gap(1.5);
     --sui_text_field-min_height: var(--sui-size-lg);
-    --sui_text_field-padding_inline: --sui-space(5);
+    --sui_text_field-padding_inline: --sui-space(3.5);
   }
 
   &.sui_text_field-radius_none {

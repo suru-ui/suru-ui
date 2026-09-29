@@ -31,7 +31,7 @@
 
 /* 代入 */
 :scope {
-  --sui_select_label-margin_block_end: --sui-space(2);
+  --sui_select_label-margin_block_end: --sui-space(1);
   --sui_select_label-font_family: var(--sui-font-sans);
   --sui_select_label-font_size: var(--sui-text-std-sm-n-font_size);
   --sui_select_label-font_weight: var(--sui-text-std-sm-n-font_weight);
@@ -127,7 +127,7 @@
 
   &.sui_select-size_sm {
     --sui_select-min_height: var(--sui-size-sm);
-    --sui_select-padding_inline: --sui-space(3);
+    --sui_select-padding_inline: --sui-space(1.5);
     --sui_select-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_select-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_select-line_height: var(--sui-text-oln-sm-n-line_height);
@@ -136,7 +136,7 @@
 
   &.sui_select-size_md {
     --sui_select-min_height: var(--sui-size-md);
-    --sui_select-padding_inline: --sui-space(4);
+    --sui_select-padding_inline: --sui-space(2.5);
     --sui_select-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_select-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_select-line_height: var(--sui-text-oln-md-n-line_height);
@@ -145,7 +145,7 @@
 
   &.sui_select-size_lg {
     --sui_select-min_height: var(--sui-size-lg);
-    --sui_select-padding_inline: --sui-space(5);
+    --sui_select-padding_inline: --sui-space(3.5);
     --sui_select-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_select-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_select-line_height: var(--sui-text-oln-lg-n-line_height);
@@ -489,7 +489,7 @@
   }
 
   &.sui_select_portal-size_sm {
-    --sui_select_content-padding: --sui-space(2);
+    --sui_select_content-padding: --sui-space(3);
     --sui_select_content-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_select_content-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_select_content-line_height: var(--sui-text-oln-sm-n-line_height);
@@ -504,7 +504,7 @@
   }
 
   &.sui_select_portal-size_lg {
-    --sui_select_content-padding: --sui-space(3);
+    --sui_select_content-padding: --sui-space(4);
     --sui_select_content-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_select_content-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_select_content-line_height: var(--sui-text-oln-lg-n-line_height);
@@ -790,7 +790,7 @@
 
 /* 代入 */
 :scope {
-  --sui_select_group_label-padding_block: --sui-space(3);
+  --sui_select_group_label-padding_block: --sui-space(1);
   --sui_select_group_label-padding_inline: --sui-space(2);
   --sui_select_group_label-font_family: var(--sui-font-sans);
   --sui_select_group_label-font_size: var(--sui-text-std-sm-n-font_size);

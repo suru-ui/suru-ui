@@ -56,7 +56,7 @@ describe("MenubarRoot の配置", () => {
 
     // 検証
     const style = getComputedStyle(screen.getByRole("menubar").element());
-    expect(Number.parseFloat(style.columnGap)).toBeCloseTo(1.12, 1);
+    expect(Number.parseFloat(style.columnGap)).toBeCloseTo(4, 1);
   });
 
   test.skipIf(!supportsCustomFunctions())("縦方向の間隔を空ける", async ({ expect }) => {
@@ -65,6 +65,6 @@ describe("MenubarRoot の配置", () => {
 
     // 検証
     const style = getComputedStyle(screen.getByRole("menubar").element());
-    expect(Number.parseFloat(style.rowGap)).toBeCloseTo(1.12, 1);
+    expect(Number.parseFloat(style.rowGap)).toBeCloseTo(4, 1);
   });
 });

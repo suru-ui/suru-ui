@@ -59,10 +59,10 @@ describe("AlertDialog の配置", () => {
     // 検証
     const content = screen.getByClassName("sui_alert_dialog_content").element();
     const style = getComputedStyle(content);
-    expect(style.paddingBlockStart).toBe("12.8px");
-    expect(style.paddingInlineStart).toBe("12.8px");
-    expect(style.rowGap).toBe("15.93px");
-    expect(style.borderRadius).toBe("22px");
+    expect(style.paddingBlockStart).toBe("16px");
+    expect(style.paddingInlineStart).toBe("16px");
+    expect(style.rowGap).toBe("16px");
+    expect(style.borderRadius).toBe("20px");
   });
 
   test.skipIf(!supportsCustomFunctions())(
@@ -84,7 +84,7 @@ describe("AlertDialog の配置", () => {
         .getBoundingClientRect();
       const descriptionRect = screen.getByText("説明").element().getBoundingClientRect();
       expect(titleRect.left).toBeGreaterThan(iconRect.right);
-      expect(titleRect.left - iconRect.right).toBeCloseTo(12.14, 1);
+      expect(titleRect.left - iconRect.right).toBeCloseTo(12, 1);
       expect(descriptionRect.top).toBeGreaterThan(titleRect.bottom);
       expect(descriptionRect.left).toBe(titleRect.left);
     },
@@ -102,7 +102,7 @@ describe("AlertDialog の配置", () => {
     const content = screen.getByClassName("sui_alert_dialog_content").element();
     const footer = screen.getByClassName("sui_alert_dialog_footer").element();
     expect(getComputedStyle(footer).justifyContent).toBe("flex-end");
-    expect(getComputedStyle(footer).gap).toBe("6.4px");
+    expect(getComputedStyle(footer).gap).toBe("8px");
     const confirmRect = screen
       .getByRole("button", { name: "削除する" })
       .element()
@@ -112,7 +112,7 @@ describe("AlertDialog の配置", () => {
       .element()
       .getBoundingClientRect();
     expect(cancelRect.right).toBeLessThan(confirmRect.left);
-    expect(confirmRect.right).toBeCloseTo(content.getBoundingClientRect().right - 12.8, 1);
+    expect(confirmRect.right).toBeCloseTo(content.getBoundingClientRect().right - 16, 1);
   });
 
   test.skipIf(!supportsCustomFunctions())(
@@ -176,8 +176,8 @@ describe("AlertDialog の配置", () => {
       expect(getComputedStyle(controls).position).toBe("absolute");
       const contentRect = content.getBoundingClientRect();
       const controlsRect = controls.getBoundingClientRect();
-      expect(controlsRect.right).toBeCloseTo(contentRect.right - 12.8, 1);
-      expect(controlsRect.top).toBeCloseTo(contentRect.top + 12.8, 1);
+      expect(controlsRect.right).toBeCloseTo(contentRect.right - 16, 1);
+      expect(controlsRect.top).toBeCloseTo(contentRect.top + 16, 1);
     },
   );
 
@@ -200,9 +200,9 @@ describe("AlertDialog の配置", () => {
     // 検証
     const icon = screen.getByClassName("sui_alert_dialog_icon").element();
     const style = getComputedStyle(icon);
-    expect(Number.parseFloat(style.width)).toBeCloseTo(44.97, 1);
+    expect(Number.parseFloat(style.width)).toBeCloseTo(44, 1);
     expect(style.width).toBe(style.height);
-    expect(style.borderRadius).toBe("4px");
+    expect(style.borderRadius).toBe("8px");
     const svgRect = icon.querySelector("svg")?.getBoundingClientRect();
     expect(svgRect?.width).toBeCloseTo(28, 1);
     expect(svgRect?.height).toBeCloseTo(28, 1);

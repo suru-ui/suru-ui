@@ -38,15 +38,15 @@
   --sui_tabs-corner_shape: superellipse(var(--sui-superellipse));
 
   &.sui_tabs-size_sm {
-    --sui_tabs-padding-around: --sui-space(3);
+    --sui_tabs-padding-around: --sui-space(1.5);
   }
 
   &.sui_tabs-size_md {
-    --sui_tabs-padding-around: --sui-space(3);
+    --sui_tabs-padding-around: --sui-space(1.5);
   }
 
   &.sui_tabs-size_lg {
-    --sui_tabs-padding-around: --sui-space(4);
+    --sui_tabs-padding-around: --sui-space(2);
   }
 
   &.sui_tabs-radius_none {
@@ -147,15 +147,15 @@
   --sui_tabs_list-border_width: --sui-border_width(1);
 
   &.sui_tabs-size_sm {
-    --sui_tabs_list-gap: --sui-gap(1);
+    --sui_tabs_list-gap: --sui-gap(0.5);
   }
 
   &.sui_tabs-size_md {
-    --sui_tabs_list-gap: --sui-gap(2);
+    --sui_tabs_list-gap: --sui-gap(1);
   }
 
   &.sui_tabs-size_lg {
-    --sui_tabs_list-gap: --sui-gap(3);
+    --sui_tabs_list-gap: --sui-gap(1.5);
   }
 
   &.sui_tabs-variant_segments {
@@ -188,15 +188,15 @@
   }
 
   &.sui_tabs-variant_segments.sui_tabs-size_sm {
-    --sui_tabs_list-gap: --sui-gap(2);
+    --sui_tabs_list-gap: --sui-gap(0.5);
   }
 
   &.sui_tabs-variant_segments.sui_tabs-size_md {
-    --sui_tabs_list-gap: --sui-gap(3);
+    --sui_tabs_list-gap: --sui-gap(1);
   }
 
   &.sui_tabs-variant_segments.sui_tabs-size_lg {
-    --sui_tabs_list-gap: --sui-gap(4);
+    --sui_tabs_list-gap: --sui-gap(1.5);
   }
 }
 
@@ -290,7 +290,7 @@
 
   &.sui_tabs-size_sm {
     --sui_tabs_tab-min_height: var(--sui-size-sm);
-    --sui_tabs_tab-padding_inline: --sui-space(4);
+    --sui_tabs_tab-padding_inline: --sui-space(2);
     --sui_tabs_tab-font_size: var(--sui-text-oln-sm-m-font_size);
     --sui_tabs_tab-font_weight: var(--sui-text-oln-sm-m-font_weight);
     --sui_tabs_tab-line_height: var(--sui-text-oln-sm-m-line_height);
@@ -299,7 +299,7 @@
 
   &.sui_tabs-size_md {
     --sui_tabs_tab-min_height: var(--sui-size-md);
-    --sui_tabs_tab-padding_inline: --sui-space(5);
+    --sui_tabs_tab-padding_inline: --sui-space(3);
     --sui_tabs_tab-font_size: var(--sui-text-oln-md-m-font_size);
     --sui_tabs_tab-font_weight: var(--sui-text-oln-md-m-font_weight);
     --sui_tabs_tab-line_height: var(--sui-text-oln-md-m-line_height);
@@ -308,7 +308,7 @@
 
   &.sui_tabs-size_lg {
     --sui_tabs_tab-min_height: var(--sui-size-lg);
-    --sui_tabs_tab-padding_inline: --sui-space(6);
+    --sui_tabs_tab-padding_inline: --sui-space(4);
     --sui_tabs_tab-font_size: var(--sui-text-oln-lg-m-font_size);
     --sui_tabs_tab-font_weight: var(--sui-text-oln-lg-m-font_weight);
     --sui_tabs_tab-line_height: var(--sui-text-oln-lg-m-line_height);

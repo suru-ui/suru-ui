@@ -185,7 +185,7 @@
 
 /* 代入 */
 :scope {
-  --sui_stat_value_unit-padding_inline: --sui-space(2);
+  --sui_stat_value_unit-padding_inline: --sui-space(0.5);
   --sui_stat_value_unit-font_family: var(--sui-font-sans);
   --sui_stat_value_unit-color: var(--sui_stat_label-color);
 

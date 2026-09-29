@@ -104,9 +104,9 @@
                          );
 
   &.sui_chip-size_sm {
-    --sui_chip-gap: --sui-gap(2);
+    --sui_chip-gap: --sui-gap(0.5);
     --sui_chip-min_height: var(--sui-size-sm);
-    --sui_chip-padding_inline: --sui-space(4);
+    --sui_chip-padding_inline: --sui-space(1.5);
     --sui_chip-font_size: var(--sui-text-oln-sm-m-font_size);
     --sui_chip-font_weight: var(--sui-text-oln-sm-m-font_weight);
     --sui_chip-line_height: var(--sui-text-oln-sm-m-line_height);
@@ -115,9 +115,9 @@
   }
 
   &.sui_chip-size_md {
-    --sui_chip-gap: --sui-gap(3);
+    --sui_chip-gap: --sui-gap(1);
     --sui_chip-min_height: var(--sui-size-md);
-    --sui_chip-padding_inline: --sui-space(5);
+    --sui_chip-padding_inline: --sui-space(2.5);
     --sui_chip-font_size: var(--sui-text-oln-md-m-font_size);
     --sui_chip-font_weight: var(--sui-text-oln-md-m-font_weight);
     --sui_chip-line_height: var(--sui-text-oln-md-m-line_height);
@@ -126,9 +126,9 @@
   }
 
   &.sui_chip-size_lg {
-    --sui_chip-gap: --sui-gap(4);
+    --sui_chip-gap: --sui-gap(1.5);
     --sui_chip-min_height: var(--sui-size-lg);
-    --sui_chip-padding_inline: --sui-space(6);
+    --sui_chip-padding_inline: --sui-space(3.5);
     --sui_chip-font_size: var(--sui-text-oln-lg-m-font_size);
     --sui_chip-font_weight: var(--sui-text-oln-lg-m-font_weight);
     --sui_chip-line_height: var(--sui-text-oln-lg-m-line_height);

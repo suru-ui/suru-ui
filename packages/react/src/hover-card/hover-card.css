@@ -147,7 +147,7 @@
 
 /* 代入 */
 :scope {
-  --sui_hover_card_content-gap: --sui-gap(2);
+  --sui_hover_card_content-gap: --sui-gap(0.5);
   --sui_hover_card_content-max_width: var(--available-width);
   --sui_hover_card_content-max_height: var(--available-height);
   --sui_hover_card_content-font_family: var(--sui-font-sans);
@@ -170,17 +170,17 @@
 
   &.sui_hover_card_portal-size_sm {
     --sui_hover_card_content-width: calc(var(--sui_hover_card_content-font_size) * 16);
-    --sui_hover_card_content-padding: --sui-space(4);
+    --sui_hover_card_content-padding: --sui-space(3);
   }
 
   &.sui_hover_card_portal-size_md {
     --sui_hover_card_content-width: calc(var(--sui_hover_card_content-font_size) * 20);
-    --sui_hover_card_content-padding: --sui-space(5);
+    --sui_hover_card_content-padding: --sui-space(4);
   }
 
   &.sui_hover_card_portal-size_lg {
     --sui_hover_card_content-width: calc(var(--sui_hover_card_content-font_size) * 24);
-    --sui_hover_card_content-padding: --sui-space(6);
+    --sui_hover_card_content-padding: --sui-space(5);
   }
 
   &.sui_hover_card_portal-radius_none {

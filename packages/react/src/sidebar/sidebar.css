@@ -68,8 +68,8 @@
       --sui_sidebar-collapsed_width: 3rem;
 
       &.sui_sidebar-variant_floating {
-        --sui_sidebar-margin_block: --sui-space(2);
-        --sui_sidebar-margin_inline: --sui-space(2);
+        --sui_sidebar-margin_block: --sui-space(1);
+        --sui_sidebar-margin_inline: --sui-space(1);
         --sui_sidebar-border_radius: --sui-corner_radius(3);
         --sui_sidebar-corner_shape: superellipse(var(--sui-superellipse));
       }
@@ -131,9 +131,9 @@
 
     /* 代入 */
     :scope {
-      --sui_sidebar_header-gap: --sui-gap(2);
-      --sui_sidebar_header-padding_block: --sui-space(3);
-      --sui_sidebar_header-padding_inline: --sui-space(4);
+      --sui_sidebar_header-gap: --sui-gap(1);
+      --sui_sidebar_header-padding_block: --sui-space(2);
+      --sui_sidebar_header-padding_inline: --sui-space(2);
     }
   } /* @scope */
 } /* @layer */
@@ -172,9 +172,9 @@
 
     /* 代入 */
     :scope {
-      --sui_sidebar_content-gap: --sui-gap(3);
-      --sui_sidebar_content-padding_block: --sui-space(2);
-      --sui_sidebar_content-padding_inline: --sui-space(3);
+      --sui_sidebar_content-gap: --sui-gap(2);
+      --sui_sidebar_content-padding_block: --sui-space(1);
+      --sui_sidebar_content-padding_inline: --sui-space(2);
     }
   } /* @scope */
 } /* @layer */
@@ -211,9 +211,9 @@
 
     /* 代入 */
     :scope {
-      --sui_sidebar_footer-gap: --sui-gap(2);
-      --sui_sidebar_footer-padding_block: --sui-space(3);
-      --sui_sidebar_footer-padding_inline: --sui-space(4);
+      --sui_sidebar_footer-gap: --sui-gap(1);
+      --sui_sidebar_footer-padding_block: --sui-space(2);
+      --sui_sidebar_footer-padding_inline: --sui-space(2);
     }
   } /* @scope */
 } /* @layer */
@@ -247,9 +247,9 @@
 
     /* 代入 */
     :scope {
-      --sui_sidebar_group-gap: --sui-gap(1);
-      --sui_sidebar_group-padding_block: --sui-space(2);
-      --sui_sidebar_group-padding_inline: --sui-space(1);
+      --sui_sidebar_group-gap: --sui-gap(0.5);
+      --sui_sidebar_group-padding_block: --sui-space(1);
+      --sui_sidebar_group-padding_inline: --sui-space(0.5);
     }
   } /* @scope */
 } /* @layer */
@@ -294,8 +294,8 @@
 
     /* 代入 */
     :scope {
-      --sui_sidebar_group_label-min_height: --sui-space(6);
-      --sui_sidebar_group_label-padding_inline: --sui-space(3);
+      --sui_sidebar_group_label-min_height: --sui-space(4);
+      --sui_sidebar_group_label-padding_inline: --sui-space(2);
       --sui_sidebar_group_label-font_family: var(--sui-text-oln-sm-n-font_family);
       --sui_sidebar_group_label-font_size: var(--sui-text-oln-sm-n-font_size);
       --sui_sidebar_group_label-font_weight: var(--sui-text-oln-sm-n-font_weight);
@@ -332,7 +332,7 @@
 
     /* 代入 */
     :scope {
-      --sui_sidebar_group_content-gap: --sui-gap(1);
+      --sui_sidebar_group_content-gap: --sui-gap(0.5);
     }
   } /* @scope */
 } /* @layer */
@@ -391,8 +391,8 @@
       --sui_sidebar_inset-border_radius: 0px;
 
       &:has(> .sui_sidebar-variant_inset) > .sui_sidebar_inset {
-        --sui_sidebar_inset-margin_block: --sui-space(2);
-        --sui_sidebar_inset-margin_inline: --sui-space(2);
+        --sui_sidebar_inset-margin_block: --sui-space(1);
+        --sui_sidebar_inset-margin_inline: --sui-space(1);
         --sui_sidebar_inset-background_color: var(--sui-canvas-1);
         --sui_sidebar_inset-border_color: var(--sui-border-2);
         --sui_sidebar_inset-border_width: --sui-border_width(1);

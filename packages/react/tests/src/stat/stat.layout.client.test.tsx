@@ -262,7 +262,7 @@ describe("Stat の配置", () => {
     // 準備と実行
     const screen = await render(
       <>
-        <span id="expected" style={{ display: "block", paddingInline: "--sui-space(2)" }} />
+        <span id="expected" style={{ display: "block", paddingInline: "--sui-space(0.5)" }} />
         <Stat
           id="stat"
           value={

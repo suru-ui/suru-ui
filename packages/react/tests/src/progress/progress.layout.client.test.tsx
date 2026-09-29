@@ -200,7 +200,7 @@ describe("Progress の配置", () => {
     // 準備と実行
     const screen = await render(
       <>
-        <span id="expected" style={{ display: "block", gap: "--sui-gap(4)" }} />
+        <span id="expected" style={{ display: "block", gap: "--sui-gap(2)" }} />
         <Progress id="progress" label="読み込み中" value={25} />
       </>,
     );

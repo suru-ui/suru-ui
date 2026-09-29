@@ -20,7 +20,7 @@
 
 /* 代入 */
 :scope {
-  --sui_fieldset-gap: --sui-gap(4);
+  --sui_fieldset-gap: --sui-gap(2);
 }
 
 } /* @scope */

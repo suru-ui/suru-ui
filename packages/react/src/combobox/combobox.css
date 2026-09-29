@@ -34,7 +34,7 @@
 
 /* 代入 */
 :scope {
-  --sui_combobox_trigger_label-margin_block_end: --sui-space(2);
+  --sui_combobox_trigger_label-margin_block_end: --sui-space(1);
   --sui_combobox_trigger_label-font_family: var(--sui-font-sans);
   --sui_combobox_trigger_label-font_size: var(--sui-text-std-sm-n-font_size);
   --sui_combobox_trigger_label-font_weight: var(--sui-text-std-sm-n-font_weight);
@@ -133,7 +133,7 @@
                                 * var(--sui_combobox-line_height)
                                 + (var(--sui_combobox-button-virtual_padding_block) * 2)
                               );
-  --sui_combobox-button-virtual_padding_block: --sui-space(2);
+  --sui_combobox-button-virtual_padding_block: --sui-space(0.5);
   --sui_combobox-padding_block: calc(
                                   (var(--sui_combobox-min_height) - var(--sui_combobox-button-size))
                                   / 2
@@ -152,10 +152,10 @@
   --sui_combobox-border_width-invalid: --sui-border_width(2);
 
   &.sui_combobox-size_sm {
-    --sui_combobox-gap: --sui-space(1);
+    --sui_combobox-gap: --sui-gap(0.5);
     --sui_combobox-icon-size: calc(var(--sui_combobox-font_size) * var(--sui_combobox-line_height));
     --sui_combobox-min_height: var(--sui-size-sm);
-    --sui_combobox-padding_inline: --sui-space(2);
+    --sui_combobox-padding_inline: --sui-space(1);
     --sui_combobox-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_combobox-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_combobox-line_height: var(--sui-text-oln-sm-n-line_height);
@@ -163,10 +163,10 @@
   }
 
   &.sui_combobox-size_md {
-    --sui_combobox-gap: --sui-space(2);
+    --sui_combobox-gap: --sui-gap(1);
     --sui_combobox-icon-size: calc(var(--sui_combobox-font_size) * var(--sui_combobox-line_height));
     --sui_combobox-min_height: var(--sui-size-md);
-    --sui_combobox-padding_inline: --sui-space(3);
+    --sui_combobox-padding_inline: --sui-space(1.5);
     --sui_combobox-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_combobox-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_combobox-line_height: var(--sui-text-oln-md-n-line_height);
@@ -174,10 +174,10 @@
   }
 
   &.sui_combobox-size_lg {
-    --sui_combobox-gap: --sui-space(2);
+    --sui_combobox-gap: --sui-gap(1.5);
     --sui_combobox-icon-size: calc(var(--sui_combobox-font_size) * var(--sui_combobox-line_height));
     --sui_combobox-min_height: var(--sui-size-lg);
-    --sui_combobox-padding_inline: --sui-space(3);
+    --sui_combobox-padding_inline: --sui-space(2);
     --sui_combobox-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_combobox-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_combobox-line_height: var(--sui-text-oln-lg-n-line_height);
@@ -386,15 +386,15 @@
   --sui_combobox_input-letter_spacing: var(--sui_combobox-letter_spacing);
 
   &.sui_combobox-size_sm {
-    --sui_combobox_input-padding_inline: --sui-space(2);
+    --sui_combobox_input-padding_inline: --sui-space(0.5);
   }
 
   &.sui_combobox-size_md {
-    --sui_combobox_input-padding_inline: --sui-space(3);
+    --sui_combobox_input-padding_inline: --sui-space(1);
   }
 
   &.sui_combobox-size_lg {
-    --sui_combobox_input-padding_inline: --sui-space(3);
+    --sui_combobox_input-padding_inline: --sui-space(1.5);
   }
 }
 
@@ -692,8 +692,8 @@
 
 /* 代入 */
 :scope {
-  --sui_combobox_chips-row_gap: --sui-space(2);
-  --sui_combobox_chips-column_gap: --sui-space(2);
+  --sui_combobox_chips-row_gap: --sui-space(1);
+  --sui_combobox_chips-column_gap: --sui-space(1);
 }
 
 } /* @scope */
@@ -765,7 +765,7 @@
 
 /* 代入 */
 :scope {
-  --sui_combobox_chip-gap: --sui-space(2);
+  --sui_combobox_chip-gap: --sui-gap(0.5);
   --sui_combobox_chip-height: var(--sui_combobox-button-size);
   --sui_combobox_chip-font_family: var(--sui-font-sans);
   --sui_combobox_chip-color: var(--sui-grey-liquid-canvas_text-normal);
@@ -781,7 +781,7 @@
                                   );
 
   &.sui_combobox-size_sm {
-    --sui_combobox_chip-padding_inline_start: --sui-space(2);
+    --sui_combobox_chip-padding_inline_start: --sui-space(1.5);
     --sui_combobox_chip-font_size: var(--sui-text-oln-sm-m-font_size);
     --sui_combobox_chip-font_weight: var(--sui-text-oln-sm-m-font_weight);
     --sui_combobox_chip-line_height: var(--sui-text-oln-sm-m-line_height);
@@ -789,7 +789,7 @@
   }
 
   &.sui_combobox-size_md {
-    --sui_combobox_chip-padding_inline_start: --sui-space(3);
+    --sui_combobox_chip-padding_inline_start: --sui-space(2.5);
     --sui_combobox_chip-font_size: var(--sui-text-oln-md-m-font_size);
     --sui_combobox_chip-font_weight: var(--sui-text-oln-md-m-font_weight);
     --sui_combobox_chip-line_height: var(--sui-text-oln-md-m-line_height);
@@ -797,7 +797,7 @@
   }
 
   &.sui_combobox-size_lg {
-    --sui_combobox_chip-padding_inline_start: --sui-space(3);
+    --sui_combobox_chip-padding_inline_start: --sui-space(3.5);
     --sui_combobox_chip-font_size: var(--sui-text-oln-lg-m-font_size);
     --sui_combobox_chip-font_weight: var(--sui-text-oln-lg-m-font_weight);
     --sui_combobox_chip-line_height: var(--sui-text-oln-lg-m-line_height);
@@ -1604,7 +1604,7 @@
   }
 
   &.sui_combobox_portal-size_lg {
-    --sui_combobox_popup-padding: --sui-space(3);
+    --sui_combobox_popup-padding: --sui-space(4);
   }
 
   &.sui_combobox_portal-radius_none {
@@ -1842,7 +1842,7 @@
 
   &.sui_combobox_portal-size_lg {
     --sui_combobox_status-min_height: var(--sui-size-md);
-    --sui_combobox_status-padding_inline: --sui-space(3);
+    --sui_combobox_status-padding_inline: --sui-space(4);
     --sui_combobox_status-font_size: var(--sui-text-std-lg-n-font_size);
     --sui_combobox_status-font_weight: var(--sui-text-std-lg-n-font_weight);
     --sui_combobox_status-line_height: var(--sui-text-std-lg-n-line_height);
@@ -1927,7 +1927,7 @@
 
   &.sui_combobox_portal-size_lg {
     --sui_combobox_empty-min_height: var(--sui-size-md);
-    --sui_combobox_empty-padding_inline: --sui-space(3);
+    --sui_combobox_empty-padding_inline: --sui-space(4);
     --sui_combobox_empty-font_size: var(--sui-text-std-lg-n-font_size);
     --sui_combobox_empty-font_weight: var(--sui-text-std-lg-n-font_weight);
     --sui_combobox_empty-line_height: var(--sui-text-std-lg-n-line_height);
@@ -2074,7 +2074,7 @@
   }
 
   &.sui_combobox_portal-size_lg {
-    --sui_combobox_group-padding_bottom: --sui-space(3);
+    --sui_combobox_group-padding_bottom: --sui-space(4);
   }
 }
 
@@ -2125,7 +2125,7 @@
   --sui_combobox_group_label-color: var(--sui-canvas_text-2);
 
   &.sui_combobox_portal-size_sm {
-    --sui_combobox_group_label-padding_block: --sui-space(2);
+    --sui_combobox_group_label-padding_block: --sui-space(1);
     --sui_combobox_group_label-padding_inline: --sui-space(2);
     --sui_combobox_group_label-font_size: var(--sui-text-dns-sm-n-font_size);
     --sui_combobox_group_label-font_weight: var(--sui-text-dns-sm-n-font_weight);
@@ -2134,8 +2134,8 @@
   }
 
   &.sui_combobox_portal-size_md {
-    --sui_combobox_group_label-padding_block: --sui-space(2);
-    --sui_combobox_group_label-padding_inline: --sui-space(3);
+    --sui_combobox_group_label-padding_block: --sui-space(1);
+    --sui_combobox_group_label-padding_inline: --sui-space(2);
     --sui_combobox_group_label-font_size: var(--sui-text-dns-sm-n-font_size);
     --sui_combobox_group_label-font_weight: var(--sui-text-dns-sm-n-font_weight);
     --sui_combobox_group_label-line_height: var(--sui-text-dns-sm-n-line_height);
@@ -2143,8 +2143,8 @@
   }
 
   &.sui_combobox_portal-size_lg {
-    --sui_combobox_group_label-padding_block: --sui-space(2);
-    --sui_combobox_group_label-padding_inline: --sui-space(3);
+    --sui_combobox_group_label-padding_block: --sui-space(1);
+    --sui_combobox_group_label-padding_inline: --sui-space(2);
     --sui_combobox_group_label-font_size: var(--sui-text-dns-md-n-font_size);
     --sui_combobox_group_label-font_weight: var(--sui-text-dns-md-n-font_weight);
     --sui_combobox_group_label-line_height: var(--sui-text-dns-md-n-line_height);
@@ -2196,7 +2196,7 @@
                                          * 2
                                         )
                                       );
-  --sui_combobox_item_indicator-virtual_padding_block: --sui-space(2);
+  --sui_combobox_item_indicator-virtual_padding_block: --sui-space(1);
 
   &.sui_combobox_portal-size_sm {
     --sui_combobox-font_size: var(--sui-text-oln-sm-n-font_size);

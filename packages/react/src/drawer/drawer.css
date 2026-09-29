@@ -79,7 +79,7 @@
     --_sui_drawer_indent-border_top_left_radius: --sui-corner_radius(3);
     --_sui_drawer_indent-border_top_right_radius: --sui-corner_radius(3);
     --_sui_drawer_indent-scale: 0.98;
-    --_sui_drawer_indent-translate: --sui-space(2);
+    --_sui_drawer_indent-translate: --sui-space(1);
   }
 }
 
@@ -137,12 +137,12 @@
 /* 代入 */
 :scope {
   --sui_drawer_swipe_area-width: auto;
-  --sui_drawer_swipe_area-height: --sui-space(4);
+  --sui_drawer_swipe_area-height: --sui-space(2);
 }
 
 :scope.sui_drawer_swipe_area-swipe_direction_left,
 :scope.sui_drawer_swipe_area-swipe_direction_right {
-  --sui_drawer_swipe_area-width: --sui-space(4);
+  --sui_drawer_swipe_area-width: --sui-space(2);
   --sui_drawer_swipe_area-height: auto;
 }
 
@@ -364,7 +364,7 @@
 :scope {
   --sui_drawer_popup-width: 100%;
   --sui_drawer_popup-max_width: 640px;
-  --sui_drawer_popup-max_height: calc(100dvh - --sui-space(11));
+  --sui_drawer_popup-max_height: calc(100dvh - --sui-space(20));
   --sui_drawer_popup-padding: 0px;
   --sui_drawer_popup-padding_block_end: calc(
                                           env(safe-area-inset-bottom, 0px)
@@ -385,7 +385,7 @@
   --sui_drawer_popup-opacity: 1;
   --sui_drawer_popup-transform: translate3d(0px, 0px, 0px);
   --sui_drawer_popup-transition_duration: 450ms;
-  --sui_drawer_popup-virtual_bleed: --sui-space(9);
+  --sui_drawer_popup-virtual_bleed: --sui-space(12);
 }
 
 /* 変異 */
@@ -609,7 +609,7 @@
 
 /* 代入 */
 :scope {
-  --sui_drawer_controls-gap: --sui-gap(4);
+  --sui_drawer_controls-gap: --sui-gap(2);
   --sui_drawer_controls-virtual_margin: var(--sui_drawer_header-padding);
 
   .sui_drawer_controls-absolute {
@@ -706,8 +706,8 @@
 
 /* 代入 */
 :scope {
-  --sui_drawer_header-row_gap: --sui-gap(2);
-  --sui_drawer_header-padding: --sui-space(6);
+  --sui_drawer_header-row_gap: --sui-gap(1);
+  --sui_drawer_header-padding: --sui-space(4);
 }
 
 } /* @scope */
@@ -858,7 +858,7 @@
 
 /* 代入 */
 :scope {
-  --sui_drawer_body-padding: --sui-space(6);
+  --sui_drawer_body-padding: --sui-space(4);
   --sui_drawer_body-font_family: var(--sui-font-sans);
   --sui_drawer_body-font_size: var(--sui-text-std-md-n-font_size);
   --sui_drawer_body-font_weight: var(--sui-text-std-md-n-font_weight);
@@ -903,8 +903,8 @@
 
 /* 代入 */
 :scope {
-  --sui_drawer_footer-gap: --sui-gap(4);
-  --sui_drawer_footer-padding: --sui-space(6);
+  --sui_drawer_footer-gap: --sui-gap(2);
+  --sui_drawer_footer-padding: --sui-space(4);
 }
 
 } /* @scope */

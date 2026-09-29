@@ -240,7 +240,7 @@
 
 /* 代入 */
 :scope {
-  --sui_context_menu_arrow-size: calc(--sui-space(2) * 2);
+  --sui_context_menu_arrow-size: --sui-space(1.5);
   --sui_context_menu_arrow-background_color: var(--sui_context_menu_content-background_color);
   --sui_context_menu_arrow-border_color: var(--sui_context_menu_content-border_color);
   --sui_context_menu_arrow-border_width: var(--sui_context_menu_content-border_width);
@@ -372,9 +372,9 @@
 
 /* 代入 */
 :scope {
-  --sui_context_menu_group_label-padding_block_start: --sui-space(2);
-  --sui_context_menu_group_label-padding_block_end: --sui-space(2);
-  --sui_context_menu_group_label-padding_inline: --sui-space(3);
+  --sui_context_menu_group_label-padding_block_start: --sui-space(1);
+  --sui_context_menu_group_label-padding_block_end: --sui-space(1);
+  --sui_context_menu_group_label-padding_inline: --sui-space(2);
   --sui_context_menu_group_label-font_family: var(--sui-font-sans);
   --sui_context_menu_group_label-font_size: var(--sui-text-std-sm-n-font_size);
   --sui_context_menu_group_label-font_weight: var(--sui-text-std-sm-n-font_weight);

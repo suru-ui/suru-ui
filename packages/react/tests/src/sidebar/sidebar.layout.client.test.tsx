@@ -136,7 +136,7 @@ describe("Sidebar の配置", () => {
 
     // 検証
     const style = getComputedStyle(screen.getByClassName("sui_sidebar").element());
-    const margin = resolveLength("--sui-space(2)");
+    const margin = resolveLength("--sui-space(1)");
     expect(Number.parseFloat(style.marginTop)).toBeCloseTo(margin, 0);
     expect(Number.parseFloat(style.marginLeft)).toBeCloseTo(margin, 0);
     expect(Number.parseFloat(style.borderTopLeftRadius)).toBeCloseTo(12, 0);
@@ -148,34 +148,34 @@ describe("Sidebar の配置", () => {
 
     // 検証
     const header = getComputedStyle(screen.getByClassName("sui_sidebar_header").element());
-    expect(Number.parseFloat(header.paddingTop)).toBeCloseTo(resolveLength("--sui-space(3)"), 0);
-    expect(Number.parseFloat(header.paddingLeft)).toBeCloseTo(resolveLength("--sui-space(4)"), 0);
-    expect(Number.parseFloat(header.rowGap)).toBeCloseTo(resolveLength("--sui-gap(2)"), 0);
+    expect(Number.parseFloat(header.paddingTop)).toBeCloseTo(resolveLength("--sui-space(2)"), 0);
+    expect(Number.parseFloat(header.paddingLeft)).toBeCloseTo(resolveLength("--sui-space(2)"), 0);
+    expect(Number.parseFloat(header.rowGap)).toBeCloseTo(resolveLength("--sui-gap(1)"), 0);
 
     const content = getComputedStyle(screen.getByClassName("sui_sidebar_content").element());
-    expect(Number.parseFloat(content.paddingTop)).toBeCloseTo(resolveLength("--sui-space(2)"), 0);
-    expect(Number.parseFloat(content.paddingLeft)).toBeCloseTo(resolveLength("--sui-space(3)"), 0);
-    expect(Number.parseFloat(content.rowGap)).toBeCloseTo(resolveLength("--sui-gap(3)"), 0);
+    expect(Number.parseFloat(content.paddingTop)).toBeCloseTo(resolveLength("--sui-space(1)"), 0);
+    expect(Number.parseFloat(content.paddingLeft)).toBeCloseTo(resolveLength("--sui-space(2)"), 0);
+    expect(Number.parseFloat(content.rowGap)).toBeCloseTo(resolveLength("--sui-gap(2)"), 0);
     expect(content.overflowY).toBe("auto");
 
     const group = getComputedStyle(screen.getByClassName("sui_sidebar_group").element());
-    expect(Number.parseFloat(group.paddingTop)).toBeCloseTo(resolveLength("--sui-space(2)"), 0);
-    expect(Number.parseFloat(group.paddingLeft)).toBeCloseTo(resolveLength("--sui-space(1)"), 0);
-    expect(Number.parseFloat(group.rowGap)).toBeCloseTo(resolveLength("--sui-gap(1)"), 0);
+    expect(Number.parseFloat(group.paddingTop)).toBeCloseTo(resolveLength("--sui-space(1)"), 0);
+    expect(Number.parseFloat(group.paddingLeft)).toBeCloseTo(resolveLength("--sui-space(0.5)"), 0);
+    expect(Number.parseFloat(group.rowGap)).toBeCloseTo(resolveLength("--sui-gap(0.5)"), 0);
 
     const label = getComputedStyle(screen.getByClassName("sui_sidebar_group_label").element());
-    expect(Number.parseFloat(label.minHeight)).toBeCloseTo(resolveLength("--sui-space(6)"), 0);
-    expect(Number.parseFloat(label.paddingLeft)).toBeCloseTo(resolveLength("--sui-space(3)"), 0);
+    expect(Number.parseFloat(label.minHeight)).toBeCloseTo(resolveLength("--sui-space(4)"), 0);
+    expect(Number.parseFloat(label.paddingLeft)).toBeCloseTo(resolveLength("--sui-space(2)"), 0);
 
     const groupContent = getComputedStyle(
       screen.getByClassName("sui_sidebar_group_content").element(),
     );
-    expect(Number.parseFloat(groupContent.rowGap)).toBeCloseTo(resolveLength("--sui-gap(1)"), 0);
+    expect(Number.parseFloat(groupContent.rowGap)).toBeCloseTo(resolveLength("--sui-gap(0.5)"), 0);
 
     const footer = getComputedStyle(screen.getByClassName("sui_sidebar_footer").element());
-    expect(Number.parseFloat(footer.paddingTop)).toBeCloseTo(resolveLength("--sui-space(3)"), 0);
-    expect(Number.parseFloat(footer.paddingLeft)).toBeCloseTo(resolveLength("--sui-space(4)"), 0);
-    expect(Number.parseFloat(footer.rowGap)).toBeCloseTo(resolveLength("--sui-gap(2)"), 0);
+    expect(Number.parseFloat(footer.paddingTop)).toBeCloseTo(resolveLength("--sui-space(2)"), 0);
+    expect(Number.parseFloat(footer.paddingLeft)).toBeCloseTo(resolveLength("--sui-space(2)"), 0);
+    expect(Number.parseFloat(footer.rowGap)).toBeCloseTo(resolveLength("--sui-gap(1)"), 0);
   });
 
   test.skipIf(!supportsCustomFunctions())(
@@ -186,7 +186,7 @@ describe("Sidebar の配置", () => {
 
       // 検証
       const style = getComputedStyle(screen.getByClassName("sui_sidebar_inset").element());
-      const margin = resolveLength("--sui-space(2)");
+      const margin = resolveLength("--sui-space(1)");
       expect(Number.parseFloat(style.marginTop)).toBeCloseTo(margin, 0);
       expect(Number.parseFloat(style.marginLeft)).toBeCloseTo(margin, 0);
       expect(Number.parseFloat(style.borderTopWidth)).toBeGreaterThan(0);

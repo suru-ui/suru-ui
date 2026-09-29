@@ -78,9 +78,9 @@ describe("PaginationRoot の配置", () => {
     );
 
     // 検証
-    expect(getComputedStyle(screen.container.querySelector("#sm")!).gap).toBe("1.12px");
-    expect(getComputedStyle(screen.container.querySelector("#md")!).gap).toBe("1.12px");
-    expect(getComputedStyle(screen.container.querySelector("#lg")!).gap).toBe("2.53px");
+    expect(getComputedStyle(screen.container.querySelector("#sm")!).gap).toBe("2px");
+    expect(getComputedStyle(screen.container.querySelector("#md")!).gap).toBe("2px");
+    expect(getComputedStyle(screen.container.querySelector("#lg")!).gap).toBe("4px");
   });
 
   test("角丸 full は高さの半分にする", async ({ expect }) => {

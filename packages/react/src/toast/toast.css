@@ -45,8 +45,8 @@
 
 /* 代入 */
 :scope {
-  --sui_toast_viewport-gap: --sui-gap(6);
-  --sui_toast_viewport-padding: --sui-space(4);
+  --sui_toast_viewport-gap: --sui-gap(3);
+  --sui_toast_viewport-padding: --sui-space(2);
 }
 
 } /* @scope */

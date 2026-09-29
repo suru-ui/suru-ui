@@ -50,11 +50,11 @@ describe("InputRoot の配置", () => {
 
     // 検証
     const sm = getComputedStyle(screen.getByRole("textbox", { name: "小" }).element());
-    expect(sm.paddingInlineStart).toBe("5.27px");
+    expect(sm.paddingInlineStart).toBe("6px");
     const md = getComputedStyle(screen.getByRole("textbox", { name: "中" }).element());
-    expect(md.paddingInlineStart).toBe("8.49px");
+    expect(md.paddingInlineStart).toBe("10px");
     const lg = getComputedStyle(screen.getByRole("textbox", { name: "大" }).element());
-    expect(lg.paddingInlineStart).toBe("12.8px");
+    expect(lg.paddingInlineStart).toBe("14px");
   });
 
   test("指定した角丸で切り抜く", async ({ expect }) => {

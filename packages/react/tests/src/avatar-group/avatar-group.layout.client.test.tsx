@@ -214,7 +214,7 @@ describe("AvatarGroupRoot の配置", () => {
     expect(shadow).toContain(canvas);
     const spread = /0px 0px 0px ([\d.]+)px/.exec(shadow)?.[1];
     expect(spread).toBeDefined();
-    expect(Number.parseFloat(spread!)).toBeCloseTo(3.54, 1);
+    expect(Number.parseFloat(spread!)).toBeCloseTo(3, 1);
   });
 
   test("角丸を子のアバターへ伝える", async ({ expect }) => {

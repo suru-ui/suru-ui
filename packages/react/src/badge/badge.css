@@ -170,7 +170,7 @@
   --sui_badge__svg-color: var(--sui_badge-color);
 
   &.sui_badge-size_sm {
-    --sui_badge-gap: --sui-space(1);
+    --sui_badge-gap: --sui-gap(0.5);
     --sui_badge-font_size: var(--sui-text-oln-sm-m-font_size);
     --sui_badge-font_weight: var(--sui-text-oln-sm-m-font_weight);
     --sui_badge-line_height: var(--sui-text-oln-sm-m-line_height);
@@ -179,7 +179,7 @@
   }
 
   &.sui_badge-size_md {
-    --sui_badge-gap: --sui-space(2);
+    --sui_badge-gap: --sui-gap(1);
     --sui_badge-font_size: var(--sui-text-oln-md-m-font_size);
     --sui_badge-font_weight: var(--sui-text-oln-md-m-font_weight);
     --sui_badge-line_height: var(--sui-text-oln-md-m-line_height);
@@ -188,7 +188,7 @@
   }
 
   &.sui_badge-size_lg {
-    --sui_badge-gap: --sui-space(2);
+    --sui_badge-gap: --sui-gap(1.5);
     --sui_badge-font_size: var(--sui-text-oln-lg-m-font_size);
     --sui_badge-font_weight: var(--sui-text-oln-lg-m-font_weight);
     --sui_badge-line_height: var(--sui-text-oln-lg-m-line_height);
@@ -223,17 +223,17 @@
   &.sui_badge-variant_standard {
     &.sui_badge-size_sm {
       --sui_badge-min_size: var(--sui-size-sm);
-      --sui_badge-padding_inline: --sui-space(2);
+      --sui_badge-padding_inline: --sui-space(1.5);
     }
 
     &.sui_badge-size_md {
       --sui_badge-min_size: var(--sui-size-md);
-      --sui_badge-padding_inline: --sui-space(3);
+      --sui_badge-padding_inline: --sui-space(2.5);
     }
 
     &.sui_badge-size_lg {
       --sui_badge-min_size: var(--sui-size-lg);
-      --sui_badge-padding_inline: --sui-space(4);
+      --sui_badge-padding_inline: --sui-space(3.5);
     }
   }
 

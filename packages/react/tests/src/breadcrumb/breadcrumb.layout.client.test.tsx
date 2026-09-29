@@ -55,11 +55,11 @@ describe("Breadcrumb の配置", () => {
 
     // 検証
     const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm")!);
-    expect(sm.columnGap).toBe("1.79px");
+    expect(sm.columnGap).toBe("2px");
     const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md")!);
-    expect(md.columnGap).toBe("2.53px");
+    expect(md.columnGap).toBe("4px");
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg")!);
-    expect(lg.columnGap).toBe("2.53px");
+    expect(lg.columnGap).toBe("6px");
   });
 
   test.skipIf(!supportsCustomFunctions())(
@@ -76,11 +76,11 @@ describe("Breadcrumb の配置", () => {
 
       // 検証
       const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm a")!);
-      expect(sm.paddingInlineStart).toBe("1.79px");
+      expect(sm.paddingInlineStart).toBe("2px");
       const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md a")!);
-      expect(md.paddingInlineStart).toBe("2.53px");
+      expect(md.paddingInlineStart).toBe("4px");
       const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg a")!);
-      expect(lg.paddingInlineStart).toBe("2.53px");
+      expect(lg.paddingInlineStart).toBe("6px");
     },
   );
 

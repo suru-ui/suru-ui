@@ -43,9 +43,9 @@ describe("PasswordField の配置", () => {
     // 準備と実行
     const screen = await render(
       <>
-        <span id="expected-sm" style={{ display: "block", paddingInline: "--sui-space(3)" }} />
-        <span id="expected-md" style={{ display: "block", paddingInline: "--sui-space(4)" }} />
-        <span id="expected-lg" style={{ display: "block", paddingInline: "--sui-space(5)" }} />
+        <span id="expected-sm" style={{ display: "block", paddingInline: "--sui-space(1.5)" }} />
+        <span id="expected-md" style={{ display: "block", paddingInline: "--sui-space(2.5)" }} />
+        <span id="expected-lg" style={{ display: "block", paddingInline: "--sui-space(3.5)" }} />
         <PasswordField size="sm" />
         <PasswordField size="md" />
         <PasswordField size="lg" />

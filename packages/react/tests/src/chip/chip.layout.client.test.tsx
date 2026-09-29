@@ -65,11 +65,11 @@ describe("ChipRoot の配置", () => {
 
     // 検証
     const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm")!);
-    expect(Number.parseFloat(sm.paddingInlineStart)).toBeCloseTo(8.49, 1);
+    expect(Number.parseFloat(sm.paddingInlineStart)).toBeCloseTo(6, 1);
     const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md")!);
-    expect(Number.parseFloat(md.paddingInlineStart)).toBeCloseTo(12.8, 1);
+    expect(Number.parseFloat(md.paddingInlineStart)).toBeCloseTo(10, 1);
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg")!);
-    expect(Number.parseFloat(lg.paddingInlineStart)).toBeCloseTo(18.54, 1);
+    expect(Number.parseFloat(lg.paddingInlineStart)).toBeCloseTo(14, 1);
   });
 
   test.skipIf(!supportsCustomFunctions())("大きさごとの間隔を付ける", async ({ expect }) => {
@@ -93,11 +93,11 @@ describe("ChipRoot の配置", () => {
 
     // 検証
     const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm")!);
-    expect(sm.columnGap).toBe("2.53px");
+    expect(sm.columnGap).toBe("2px");
     const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md")!);
-    expect(md.columnGap).toBe("4.27px");
+    expect(md.columnGap).toBe("4px");
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg")!);
-    expect(lg.columnGap).toBe("6.4px");
+    expect(lg.columnGap).toBe("6px");
   });
 
   test("指定した角丸で切り抜く", async ({ expect }) => {

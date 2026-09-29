@@ -74,16 +74,16 @@ describe("Toast の配置", () => {
       // 検証
       const viewport = screen.getByClassName("sui_toast_viewport").element();
       const root = screen.getByClassName("sui_toast").element();
-      expect(getComputedStyle(viewport).rowGap).toBe("12.14px");
-      expect(getComputedStyle(viewport).paddingTop).toBe("8.49px");
-      expect(getComputedStyle(viewport).paddingLeft).toBe("8.49px");
-      expect(getComputedStyle(root).right).toBe("8.49px");
-      expect(getComputedStyle(root).bottom).toBe("8.49px");
+      expect(getComputedStyle(viewport).rowGap).toBe("12px");
+      expect(getComputedStyle(viewport).paddingTop).toBe("8px");
+      expect(getComputedStyle(viewport).paddingLeft).toBe("8px");
+      expect(getComputedStyle(root).right).toBe("8px");
+      expect(getComputedStyle(root).bottom).toBe("8px");
       await vi.waitFor(() => {
         const viewportRect = viewport.getBoundingClientRect();
         const rootRect = root.getBoundingClientRect();
-        expect(viewportRect.right - rootRect.right).toBeCloseTo(8.49, 1);
-        expect(viewportRect.bottom - rootRect.bottom).toBeCloseTo(8.49, 1);
+        expect(viewportRect.right - rootRect.right).toBeCloseTo(8, 1);
+        expect(viewportRect.bottom - rootRect.bottom).toBeCloseTo(8, 1);
       });
     },
   );
@@ -110,7 +110,7 @@ describe("Toast の配置", () => {
       await vi.waitFor(() => {
         const front = roots[0]!.getBoundingClientRect();
         const back = roots[1]!.getBoundingClientRect();
-        expect(front.top - back.top).toBeCloseTo(12.14, 1);
+        expect(front.top - back.top).toBeCloseTo(12, 1);
       });
     },
   );

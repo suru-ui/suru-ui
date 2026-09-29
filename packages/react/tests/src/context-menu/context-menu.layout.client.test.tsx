@@ -42,9 +42,9 @@ describe("ContextMenu の配置", () => {
       // 検証
       const content = screen.getByRole("menu").element();
       const style = getComputedStyle(content);
-      expect(Number.parseFloat(style.paddingBlockStart)).toBeCloseTo(5.27, 1);
-      expect(Number.parseFloat(style.paddingInlineStart)).toBeCloseTo(5.27, 1);
-      expect(Number.parseFloat(style.rowGap)).toBeCloseTo(1.12, 1);
+      expect(Number.parseFloat(style.paddingBlockStart)).toBeCloseTo(12, 1);
+      expect(Number.parseFloat(style.paddingInlineStart)).toBeCloseTo(12, 1);
+      expect(Number.parseFloat(style.rowGap)).toBeCloseTo(4, 1);
       expect(style.borderRadius).toBe("12px");
       expect(style.minWidth).toBe("192px");
       expect(style.backgroundColor).toBe("rgb(242, 240, 229)");
@@ -59,7 +59,7 @@ describe("ContextMenu の配置", () => {
 
       // 検証
       const style = getComputedStyle(screen.getByRole("menu").element());
-      expect(Number.parseFloat(style.paddingBlockStart)).toBeGreaterThan(5.27);
+      expect(Number.parseFloat(style.paddingBlockStart)).toBeGreaterThan(12);
       expect(Number.parseFloat(style.fontSize)).toBeGreaterThan(14);
     },
   );
@@ -88,7 +88,7 @@ describe("ContextMenu の配置", () => {
 
     // 検証
     const group = screen.getByClassName("sui_context_menu_group").first().element();
-    expect(Number.parseFloat(getComputedStyle(group).gap)).toBeCloseTo(1.12, 1);
+    expect(Number.parseFloat(getComputedStyle(group).gap)).toBeCloseTo(4, 1);
   });
 
   test.skipIf(!supportsCustomFunctions())("グループのラベルを項目に揃える", async ({ expect }) => {
@@ -98,8 +98,8 @@ describe("ContextMenu の配置", () => {
     // 検証
     const label = screen.getByText("果物").element();
     const labelStyle = getComputedStyle(label);
-    expect(Number.parseFloat(labelStyle.paddingBlockStart)).toBeCloseTo(2.91, 1);
-    expect(Number.parseFloat(labelStyle.paddingInlineStart)).toBeCloseTo(5.27, 1);
+    expect(Number.parseFloat(labelStyle.paddingBlockStart)).toBeCloseTo(4, 1);
+    expect(Number.parseFloat(labelStyle.paddingInlineStart)).toBeCloseTo(8, 1);
     expect(labelStyle.fontSize).toBe("12px");
   });
 
@@ -115,9 +115,9 @@ describe("ContextMenu の配置", () => {
       const style = getComputedStyle(item);
       expect(style.justifyContent).toBe("space-between");
       expect(Number.parseFloat(style.minHeight)).toBeCloseTo(28, 0);
-      expect(Number.parseFloat(style.paddingInlineStart)).toBeCloseTo(5.27, 1);
+      expect(Number.parseFloat(style.paddingInlineStart)).toBeCloseTo(8, 1);
       expect(item.getBoundingClientRect().width).toBeCloseTo(
-        content.getBoundingClientRect().width - 5.27 * 2,
+        content.getBoundingClientRect().width - 12 * 2,
         0,
       );
     },
@@ -130,8 +130,8 @@ describe("ContextMenu の配置", () => {
     // 検証
     const separator = screen.getByRole("separator").element();
     const style = getComputedStyle(separator);
-    expect(Number.parseFloat(style.height)).toBeCloseTo(1.05, 1);
-    expect(Number.parseFloat(style.marginBlockStart)).toBeCloseTo(5.27, 1);
+    expect(Number.parseFloat(style.height)).toBeCloseTo(1, 1);
+    expect(Number.parseFloat(style.marginBlockStart)).toBeCloseTo(12, 1);
   });
 
   test.skipIf(!supportsCustomFunctions())("サブメニューを親項目の右へ開く", async ({ expect }) => {

@@ -75,20 +75,20 @@ describe("AlertRoot の配置", () => {
 
     // 検証
     const sm = getComputedStyle(screen.getByRole("alert", { name: "小" }).element());
-    expect(sm.rowGap).toBe("1.12px");
-    expect(sm.columnGap).toBe("6.4px");
-    expect(sm.paddingBlockStart).toBe("5.27px");
-    expect(sm.paddingInlineStart).toBe("8.49px");
+    expect(sm.rowGap).toBe("2px");
+    expect(sm.columnGap).toBe("8px");
+    expect(sm.paddingBlockStart).toBe("8px");
+    expect(sm.paddingInlineStart).toBe("8px");
     const md = getComputedStyle(screen.getByRole("alert", { name: "中" }).element());
-    expect(md.rowGap).toBe("2.53px");
-    expect(md.columnGap).toBe("9px");
-    expect(md.paddingBlockStart).toBe("8.49px");
-    expect(md.paddingInlineStart).toBe("12.8px");
+    expect(md.rowGap).toBe("4px");
+    expect(md.columnGap).toBe("12px");
+    expect(md.paddingBlockStart).toBe("12px");
+    expect(md.paddingInlineStart).toBe("12px");
     const lg = getComputedStyle(screen.getByRole("alert", { name: "大" }).element());
-    expect(lg.rowGap).toBe("4.27px");
-    expect(lg.columnGap).toBe("12.14px");
-    expect(lg.paddingBlockStart).toBe("8.49px");
-    expect(lg.paddingInlineStart).toBe("12.8px");
+    expect(lg.rowGap).toBe("6px");
+    expect(lg.columnGap).toBe("16px");
+    expect(lg.paddingBlockStart).toBe("16px");
+    expect(lg.paddingInlineStart).toBe("16px");
   });
 
   test.skipIf(!supportsCustomFunctions())("枠線の幅だけ内側の余白を詰める", async ({ expect }) => {
@@ -107,12 +107,12 @@ describe("AlertRoot の配置", () => {
     // 検証
     const plain = getComputedStyle(screen.getByRole("alert", { name: "枠線なし" }).element());
     expect(Number.parseFloat(plain.borderTopWidth)).toBeCloseTo(0, 1);
-    expect(plain.paddingBlockStart).toBe("8.49px");
-    expect(plain.paddingInlineStart).toBe("12.8px");
+    expect(plain.paddingBlockStart).toBe("12px");
+    expect(plain.paddingInlineStart).toBe("12px");
     const outlined = getComputedStyle(screen.getByRole("alert", { name: "枠線あり" }).element());
     expect(Number.parseFloat(outlined.borderTopWidth)).toBeGreaterThan(0.5);
-    expect(Number.parseFloat(outlined.paddingBlockStart)).toBeCloseTo(7.43, 1);
-    expect(Number.parseFloat(outlined.paddingInlineStart)).toBeCloseTo(11.74, 1);
+    expect(Number.parseFloat(outlined.paddingBlockStart)).toBeCloseTo(11, 1);
+    expect(Number.parseFloat(outlined.paddingInlineStart)).toBeCloseTo(11, 1);
   });
 
   test.skipIf(!supportsCustomFunctions())(
@@ -129,7 +129,7 @@ describe("AlertRoot の配置", () => {
       // 検証
       const icon = screen.getByClassName("sui_alert_icon").element().getBoundingClientRect();
       const title = screen.getByText("更新完了").element().getBoundingClientRect();
-      expect(title.left - icon.right).toBeCloseTo(9, 1);
+      expect(title.left - icon.right).toBeCloseTo(12, 1);
     },
   );
 
@@ -148,7 +148,7 @@ describe("AlertRoot の配置", () => {
       .getByText("プロフィールを更新しました。")
       .element()
       .getBoundingClientRect();
-    expect(content.top - title.bottom).toBeCloseTo(2.53, 1);
+    expect(content.top - title.bottom).toBeCloseTo(4, 1);
   });
 
   test("アイコンをタイトルの行に揃える", async ({ expect }) => {
@@ -289,12 +289,12 @@ describe("AlertRoot の配置", () => {
     const actionsStyle = getComputedStyle(actions);
     expect(actionsStyle.justifyContent).toBe("flex-end");
     expect(actionsStyle.justifySelf).toBe("end");
-    expect(actionsStyle.gap).toBe("6.4px");
-    expect(actionsStyle.paddingBlockStart).toBe("9px");
-    expect(actionsStyle.paddingBlockEnd).toBe("4.27px");
+    expect(actionsStyle.gap).toBe("8px");
+    expect(actionsStyle.paddingBlockStart).toBe("12px");
+    expect(actionsStyle.paddingBlockEnd).toBe("4px");
     const actionsRect = actions.getBoundingClientRect();
-    expect(actionsRect.right).toBeCloseTo(root.right - 12.8, 1);
-    expect(actionsRect.bottom).toBeCloseTo(root.bottom - 8.49, 1);
+    expect(actionsRect.right).toBeCloseTo(root.right - 12, 1);
+    expect(actionsRect.bottom).toBeCloseTo(root.bottom - 12, 1);
   });
 
   test.skipIf(!supportsCustomFunctions())(

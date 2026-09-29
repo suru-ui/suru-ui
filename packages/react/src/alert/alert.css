@@ -124,24 +124,24 @@
   --sui_alert-border_width: --sui-border_width(1);
 
   &.sui_alert-size_sm {
-    --sui_alert-row_gap: --sui-gap(1);
-    --sui_alert-column_gap: --sui-gap(4);
-    --sui_alert-padding_block: calc(--sui-space(3) - var(--_sui_alert-border_width, 0px));
-    --sui_alert-padding_inline: calc(--sui-space(4) - var(--_sui_alert-border_width, 0px));
+    --sui_alert-row_gap: --sui-gap(0.5);
+    --sui_alert-column_gap: --sui-gap(2);
+    --sui_alert-padding_block: calc(--sui-space(2) - var(--_sui_alert-border_width, 0px));
+    --sui_alert-padding_inline: calc(--sui-space(2) - var(--_sui_alert-border_width, 0px));
   }
 
   &.sui_alert-size_md {
-    --sui_alert-row_gap: --sui-gap(2);
-    --sui_alert-column_gap: --sui-gap(5);
-    --sui_alert-padding_block: calc(--sui-space(4) - var(--_sui_alert-border_width, 0px));
-    --sui_alert-padding_inline: calc(--sui-space(5) - var(--_sui_alert-border_width, 0px));
+    --sui_alert-row_gap: --sui-gap(1);
+    --sui_alert-column_gap: --sui-gap(3);
+    --sui_alert-padding_block: calc(--sui-space(3) - var(--_sui_alert-border_width, 0px));
+    --sui_alert-padding_inline: calc(--sui-space(3) - var(--_sui_alert-border_width, 0px));
   }
 
   &.sui_alert-size_lg {
-    --sui_alert-row_gap: --sui-gap(3);
-    --sui_alert-column_gap: --sui-gap(6);
+    --sui_alert-row_gap: --sui-gap(1.5);
+    --sui_alert-column_gap: --sui-gap(4);
     --sui_alert-padding_block: calc(--sui-space(4) - var(--_sui_alert-border_width, 0px));
-    --sui_alert-padding_inline: calc(--sui-space(5) - var(--_sui_alert-border_width, 0px));
+    --sui_alert-padding_inline: calc(--sui-space(4) - var(--_sui_alert-border_width, 0px));
   }
 
   &.sui_alert-radius_none {
@@ -725,21 +725,21 @@
 
 /* 代入 */
 :scope {
-  --sui_alert_actions-gap: --sui-gap(4);
+  --sui_alert_actions-gap: --sui-gap(2);
 
   &.sui_alert-size_sm:has(.sui_alert_title, .sui_alert_content) {
-    --sui_alert_actions-padding_block_start: --sui-gap(4);
-    --sui_alert_actions-padding_block_end: --sui-gap(3);
+    --sui_alert_actions-padding_block_start: --sui-gap(2);
+    --sui_alert_actions-padding_block_end: --sui-gap(1);
   }
 
   &.sui_alert-size_md:has(.sui_alert_title, .sui_alert_content) {
-    --sui_alert_actions-padding_block_start: --sui-gap(5);
-    --sui_alert_actions-padding_block_end: --sui-gap(3);
+    --sui_alert_actions-padding_block_start: --sui-gap(3);
+    --sui_alert_actions-padding_block_end: --sui-gap(1);
   }
 
   &.sui_alert-size_lg:has(.sui_alert_title, .sui_alert_content) {
-    --sui_alert_actions-padding_block_start: --sui-gap(6);
-    --sui_alert_actions-padding_block_end: --sui-gap(4);
+    --sui_alert_actions-padding_block_start: --sui-gap(4);
+    --sui_alert_actions-padding_block_end: --sui-gap(1.5);
   }
 }
 

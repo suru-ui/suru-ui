@@ -46,7 +46,7 @@
   --sui_avatar_group_avatar-z_index: auto;
   --sui_avatar_group_avatar-margin_inline_start: 0px;
   --sui_avatar_group_avatar-margin_inline_end: 0px;
-  --sui_avatar_group_avatar-overlap: calc(-1 * --sui-space(4));
+  --sui_avatar_group_avatar-overlap: calc(-1 * --sui-space(2));
   --sui_avatar_group_avatar-ring_color: var(--sui-canvas-1);
   --sui_avatar_group_avatar-ring_width: --sui-border_width(3);
 

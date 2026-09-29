@@ -113,7 +113,7 @@
 
   &.sui_input-size_sm {
     --sui_input-min_height: var(--sui-size-sm);
-    --sui_input-padding_inline: --sui-space(3);
+    --sui_input-padding_inline: --sui-space(1.5);
     --sui_input-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_input-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_input-line_height: var(--sui-text-oln-sm-n-line_height);
@@ -122,7 +122,7 @@
 
   &.sui_input-size_md {
     --sui_input-min_height: var(--sui-size-md);
-    --sui_input-padding_inline: --sui-space(4);
+    --sui_input-padding_inline: --sui-space(2.5);
     --sui_input-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_input-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_input-line_height: var(--sui-text-oln-md-n-line_height);
@@ -131,7 +131,7 @@
 
   &.sui_input-size_lg {
     --sui_input-min_height: var(--sui-size-lg);
-    --sui_input-padding_inline: --sui-space(5);
+    --sui_input-padding_inline: --sui-space(3.5);
     --sui_input-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_input-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_input-line_height: var(--sui-text-oln-lg-n-line_height);

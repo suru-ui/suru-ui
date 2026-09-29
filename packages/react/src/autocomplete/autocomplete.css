@@ -85,7 +85,7 @@
                                     * var(--sui_autocomplete-line_height)
                                     + (var(--sui_autocomplete-button-virtual_padding_block) * 2)
                                   );
-  --sui_autocomplete-button-virtual_padding_block: --sui-space(2);
+  --sui_autocomplete-button-virtual_padding_block: --sui-space(0.5);
   --sui_autocomplete-padding_block: calc(
                                       (
                                         var(--sui_autocomplete-min_height)
@@ -106,13 +106,13 @@
   --sui_autocomplete-border_width-invalid: --sui-border_width(2);
 
   &.sui_autocomplete-size_sm {
-    --sui_autocomplete-gap: --sui-space(1);
+    --sui_autocomplete-gap: --sui-gap(0.5);
     --sui_autocomplete-icon-size: calc(
                                     var(--sui_autocomplete-font_size)
                                     * var(--sui_autocomplete-line_height)
                                   );
     --sui_autocomplete-min_height: var(--sui-size-sm);
-    --sui_autocomplete-padding_inline: --sui-space(2);
+    --sui_autocomplete-padding_inline: --sui-space(1);
     --sui_autocomplete-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_autocomplete-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_autocomplete-line_height: var(--sui-text-oln-sm-n-line_height);
@@ -120,13 +120,13 @@
   }
 
   &.sui_autocomplete-size_md {
-    --sui_autocomplete-gap: --sui-space(2);
+    --sui_autocomplete-gap: --sui-gap(1);
     --sui_autocomplete-icon-size: calc(
                                     var(--sui_autocomplete-font_size)
                                     * var(--sui_autocomplete-line_height)
                                   );
     --sui_autocomplete-min_height: var(--sui-size-md);
-    --sui_autocomplete-padding_inline: --sui-space(3);
+    --sui_autocomplete-padding_inline: --sui-space(1.5);
     --sui_autocomplete-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_autocomplete-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_autocomplete-line_height: var(--sui-text-oln-md-n-line_height);
@@ -134,13 +134,13 @@
   }
 
   &.sui_autocomplete-size_lg {
-    --sui_autocomplete-gap: --sui-space(2);
+    --sui_autocomplete-gap: --sui-gap(1.5);
     --sui_autocomplete-icon-size: calc(
                                     var(--sui_autocomplete-font_size)
                                     * var(--sui_autocomplete-line_height)
                                   );
     --sui_autocomplete-min_height: var(--sui-size-lg);
-    --sui_autocomplete-padding_inline: --sui-space(3);
+    --sui_autocomplete-padding_inline: --sui-space(2);
     --sui_autocomplete-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_autocomplete-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_autocomplete-line_height: var(--sui-text-oln-lg-n-line_height);
@@ -347,15 +347,15 @@
   --sui_autocomplete_input-letter_spacing: var(--sui_autocomplete-letter_spacing);
 
   &.sui_autocomplete-size_sm {
-    --sui_autocomplete_input-padding_inline: --sui-space(2);
+    --sui_autocomplete_input-padding_inline: --sui-space(0.5);
   }
 
   &.sui_autocomplete-size_md {
-    --sui_autocomplete_input-padding_inline: --sui-space(3);
+    --sui_autocomplete_input-padding_inline: --sui-space(1);
   }
 
   &.sui_autocomplete-size_lg {
-    --sui_autocomplete_input-padding_inline: --sui-space(3);
+    --sui_autocomplete_input-padding_inline: --sui-space(1.5);
   }
 }
 
@@ -749,7 +749,7 @@
   }
 
   &.sui_autocomplete_portal-size_lg {
-    --sui_autocomplete_popup-padding: --sui-space(3);
+    --sui_autocomplete_popup-padding: --sui-space(4);
   }
 
   &.sui_autocomplete_portal-radius_none {
@@ -852,7 +852,7 @@
 
   &.sui_autocomplete_portal-size_lg {
     --sui_autocomplete_status-min_height: var(--sui-size-md);
-    --sui_autocomplete_status-padding_inline: --sui-space(3);
+    --sui_autocomplete_status-padding_inline: --sui-space(4);
     --sui_autocomplete_status-font_size: var(--sui-text-std-lg-n-font_size);
     --sui_autocomplete_status-font_weight: var(--sui-text-std-lg-n-font_weight);
     --sui_autocomplete_status-line_height: var(--sui-text-std-lg-n-line_height);
@@ -937,7 +937,7 @@
 
   &.sui_autocomplete_portal-size_lg {
     --sui_autocomplete_empty-min_height: var(--sui-size-md);
-    --sui_autocomplete_empty-padding_inline: --sui-space(3);
+    --sui_autocomplete_empty-padding_inline: --sui-space(4);
     --sui_autocomplete_empty-font_size: var(--sui-text-std-lg-n-font_size);
     --sui_autocomplete_empty-font_weight: var(--sui-text-std-lg-n-font_weight);
     --sui_autocomplete_empty-line_height: var(--sui-text-std-lg-n-line_height);
@@ -1084,7 +1084,7 @@
   }
 
   &.sui_autocomplete_portal-size_lg {
-    --sui_autocomplete_group-padding_bottom: --sui-space(3);
+    --sui_autocomplete_group-padding_bottom: --sui-space(4);
   }
 }
 
@@ -1135,7 +1135,7 @@
   --sui_autocomplete_group_label-color: var(--sui-canvas_text-2);
 
   &.sui_autocomplete_portal-size_sm {
-    --sui_autocomplete_group_label-padding_block: --sui-space(2);
+    --sui_autocomplete_group_label-padding_block: --sui-space(1);
     --sui_autocomplete_group_label-padding_inline: --sui-space(2);
     --sui_autocomplete_group_label-font_size: var(--sui-text-dns-sm-n-font_size);
     --sui_autocomplete_group_label-font_weight: var(--sui-text-dns-sm-n-font_weight);
@@ -1144,8 +1144,8 @@
   }
 
   &.sui_autocomplete_portal-size_md {
-    --sui_autocomplete_group_label-padding_block: --sui-space(2);
-    --sui_autocomplete_group_label-padding_inline: --sui-space(3);
+    --sui_autocomplete_group_label-padding_block: --sui-space(1);
+    --sui_autocomplete_group_label-padding_inline: --sui-space(2);
     --sui_autocomplete_group_label-font_size: var(--sui-text-dns-sm-n-font_size);
     --sui_autocomplete_group_label-font_weight: var(--sui-text-dns-sm-n-font_weight);
     --sui_autocomplete_group_label-line_height: var(--sui-text-dns-sm-n-line_height);
@@ -1153,8 +1153,8 @@
   }
 
   &.sui_autocomplete_portal-size_lg {
-    --sui_autocomplete_group_label-padding_block: --sui-space(2);
-    --sui_autocomplete_group_label-padding_inline: --sui-space(3);
+    --sui_autocomplete_group_label-padding_block: --sui-space(1);
+    --sui_autocomplete_group_label-padding_inline: --sui-space(2);
     --sui_autocomplete_group_label-font_size: var(--sui-text-dns-md-n-font_size);
     --sui_autocomplete_group_label-font_weight: var(--sui-text-dns-md-n-font_weight);
     --sui_autocomplete_group_label-line_height: var(--sui-text-dns-md-n-line_height);

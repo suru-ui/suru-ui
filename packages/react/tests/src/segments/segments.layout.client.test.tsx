@@ -92,14 +92,14 @@ describe("Segments の配置", () => {
 
     // 検証
     const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm [role=tablist]")!);
-    expect(sm.columnGap).toBe("2.53px");
-    expect(sm.paddingInlineStart).toBe("5.27px");
+    expect(sm.columnGap).toBe("2px");
+    expect(sm.paddingInlineStart).toBe("6px");
     const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md [role=tablist]")!);
-    expect(md.columnGap).toBe("4.27px");
-    expect(md.paddingInlineStart).toBe("5.27px");
+    expect(md.columnGap).toBe("4px");
+    expect(md.paddingInlineStart).toBe("6px");
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg [role=tablist]")!);
-    expect(lg.columnGap).toBe("6.4px");
-    expect(lg.paddingInlineStart).toBe("8.49px");
+    expect(lg.columnGap).toBe("6px");
+    expect(lg.paddingInlineStart).toBe("8px");
   });
 
   test("大きさごとの活字と最小高さを反映する", async ({ expect }) => {
@@ -138,11 +138,11 @@ describe("Segments の配置", () => {
 
       // 検証
       const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm [role=tab]")!);
-      expect(Number.parseFloat(sm.paddingInlineStart)).toBeCloseTo(8.49, 1);
+      expect(Number.parseFloat(sm.paddingInlineStart)).toBeCloseTo(6, 1);
       const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md [role=tab]")!);
-      expect(Number.parseFloat(md.paddingInlineStart)).toBeCloseTo(12.8, 1);
+      expect(Number.parseFloat(md.paddingInlineStart)).toBeCloseTo(10, 1);
       const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg [role=tab]")!);
-      expect(Number.parseFloat(lg.paddingInlineStart)).toBeCloseTo(18.54, 1);
+      expect(Number.parseFloat(lg.paddingInlineStart)).toBeCloseTo(14, 1);
     },
   );
 

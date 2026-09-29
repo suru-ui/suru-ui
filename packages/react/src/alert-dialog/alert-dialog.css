@@ -104,7 +104,7 @@
 
 /* 代入 */
 :scope {
-  --sui_alert_dialog_content-row_gap: --sui-gap(7);
+  --sui_alert_dialog_content-row_gap: --sui-gap(4);
   --sui_alert_dialog_content-width-desktop: calc(var(--sui-text-std-md-n-font_size) * 24);
   --sui_alert_dialog_content-width-mobile: calc(
                                              100vw
@@ -120,9 +120,9 @@
                                            - var(--sui_alert_dialog_content-virtual_margin_block)
                                            * 2
                                          );
-  --sui_alert_dialog_content-padding: --sui-space(5);
-  --sui_alert_dialog_content-virtual_margin_block: --sui-space(4);
-  --sui_alert_dialog_content-virtual_margin_inline: --sui-space(4);
+  --sui_alert_dialog_content-padding: --sui-space(4);
+  --sui_alert_dialog_content-virtual_margin_block: --sui-space(2);
+  --sui_alert_dialog_content-virtual_margin_inline: --sui-space(2);
   --sui_alert_dialog_content-background_color: var(--sui-canvas-2);
   --sui_alert_dialog_content-border_color: var(--sui-border-1);
   --sui_alert_dialog_content-border_width: --sui-border_width(1);
@@ -208,7 +208,7 @@
 
 /* 代入 */
 :scope {
-  --sui_alert_dialog_controls-gap: --sui-space(4);
+  --sui_alert_dialog_controls-gap: --sui-gap(2);
   --sui_alert_dialog_controls-virtual_margin: var(--sui_alert_dialog_content-padding);
 
   .sui_alert_dialog_controls-absolute {
@@ -440,8 +440,8 @@
 
 /* 代入 */
 :scope {
-  --sui_alert_dialog_header-row_gap: --sui-gap(2);
-  --sui_alert_dialog_header-virtual_column_gap: --sui-gap(6);
+  --sui_alert_dialog_header-row_gap: --sui-gap(1);
+  --sui_alert_dialog_header-virtual_column_gap: --sui-gap(3);
 
   &:has(.sui_alert_dialog_icon) {
     --sui_alert_dialog_icon-font_size: 1em;
@@ -548,7 +548,7 @@
 :scope {
   --sui_alert_dialog_icon-color: var(--sui-canvas_text-1);
   --sui_alert_dialog_icon-border_width: --sui-border_width(1);
-  --sui_alert_dialog_icon-floating: --sui-space(4);
+  --sui_alert_dialog_icon-floating: --sui-space(2);
   --sui_alert_dialog_icon__svg-size: calc(
                                        var(--sui_alert_dialog_icon-size)
                                        - var(--sui_alert_dialog_icon-virtual_padding) * 2
@@ -559,7 +559,7 @@
                                     var(--sui-size-sm)
                                     + var(--sui_alert_dialog_icon-virtual_padding) * 2
                                   );
-    --sui_alert_dialog_icon-virtual_padding: --sui-space(3);
+    --sui_alert_dialog_icon-virtual_padding: --sui-space(1.5);
   }
 
   &:has(.sui_alert_dialog_icon-size_md) {
@@ -567,7 +567,7 @@
                                     var(--sui-size-md)
                                     + var(--sui_alert_dialog_icon-virtual_padding) * 2
                                   );
-    --sui_alert_dialog_icon-virtual_padding: --sui-space(4);
+    --sui_alert_dialog_icon-virtual_padding: --sui-space(2);
   }
 
   &:has(.sui_alert_dialog_icon-size_lg) {
@@ -575,7 +575,7 @@
                                     var(--sui-size-lg)
                                     + var(--sui_alert_dialog_icon-virtual_padding) * 2
                                   );
-    --sui_alert_dialog_icon-virtual_padding: --sui-space(5);
+    --sui_alert_dialog_icon-virtual_padding: --sui-space(3);
   }
 
   &:has(.sui_alert_dialog_icon-radius_none) {
@@ -993,7 +993,7 @@
 
 /* 代入 */
 :scope {
-  --sui_alert_dialog_footer-gap: --sui-gap(4);
+  --sui_alert_dialog_footer-gap: --sui-gap(2);
 }
 
 } /* @scope */

@@ -32,7 +32,7 @@ describe("NumberField の配置", () => {
       // 準備と実行
       const screen = await render(
         <>
-          <span id="expected" style={{ display: "block", gap: "--sui-gap(4)" }} />
+          <span id="expected" style={{ display: "block", gap: "--sui-gap(2)" }} />
           <NumberField scrubArea="数量" />
         </>,
       );
@@ -77,9 +77,9 @@ describe("NumberField の配置", () => {
     // 準備と実行
     const screen = await render(
       <>
-        <span id="expected-sm" style={{ display: "block", paddingInline: "--sui-space(3)" }} />
-        <span id="expected-md" style={{ display: "block", paddingInline: "--sui-space(4)" }} />
-        <span id="expected-lg" style={{ display: "block", paddingInline: "--sui-space(5)" }} />
+        <span id="expected-sm" style={{ display: "block", paddingInline: "--sui-space(1.5)" }} />
+        <span id="expected-md" style={{ display: "block", paddingInline: "--sui-space(2.5)" }} />
+        <span id="expected-lg" style={{ display: "block", paddingInline: "--sui-space(3.5)" }} />
         <NumberField size="sm" />
         <NumberField size="md" />
         <NumberField size="lg" />

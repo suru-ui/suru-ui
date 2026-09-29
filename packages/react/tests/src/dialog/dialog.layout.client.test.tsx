@@ -51,10 +51,10 @@ describe("Dialog の配置", () => {
     // 検証
     const content = screen.getByClassName("sui_dialog_content").element();
     const style = getComputedStyle(content);
-    expect(style.paddingBlockStart).toBe("12.8px");
-    expect(style.paddingInlineStart).toBe("12.8px");
-    expect(style.rowGap).toBe("15.93px");
-    expect(style.borderRadius).toBe("22px");
+    expect(style.paddingBlockStart).toBe("16px");
+    expect(style.paddingInlineStart).toBe("16px");
+    expect(style.rowGap).toBe("16px");
+    expect(style.borderRadius).toBe("20px");
   });
 
   test.skipIf(!supportsCustomFunctions())("見出しの下に説明を並べる", async ({ expect }) => {
@@ -89,12 +89,12 @@ describe("Dialog の配置", () => {
       const content = screen.getByClassName("sui_dialog_content").element();
       const footer = screen.getByClassName("sui_dialog_footer").element();
       expect(getComputedStyle(footer).justifyContent).toBe("flex-end");
-      expect(getComputedStyle(footer).gap).toBe("6.4px");
+      expect(getComputedStyle(footer).gap).toBe("8px");
       const buttonRect = screen
         .getByRole("button", { name: "閉じる" })
         .element()
         .getBoundingClientRect();
-      expect(buttonRect.right).toBeCloseTo(content.getBoundingClientRect().right - 12.8, 1);
+      expect(buttonRect.right).toBeCloseTo(content.getBoundingClientRect().right - 16, 1);
     },
   );
 
@@ -140,8 +140,8 @@ describe("Dialog の配置", () => {
       expect(getComputedStyle(controls).position).toBe("absolute");
       const contentRect = content.getBoundingClientRect();
       const controlsRect = controls.getBoundingClientRect();
-      expect(controlsRect.right).toBeCloseTo(contentRect.right - 12.8, 1);
-      expect(controlsRect.top).toBeCloseTo(contentRect.top + 12.8, 1);
+      expect(controlsRect.right).toBeCloseTo(contentRect.right - 16, 1);
+      expect(controlsRect.top).toBeCloseTo(contentRect.top + 16, 1);
     },
   );
 
@@ -238,7 +238,7 @@ describe("Dialog の配置", () => {
       const body = screen.getByClassName("sui_dialog_body").element();
       const contentRect = content.getBoundingClientRect();
       const bodyRect = body.getBoundingClientRect();
-      expect(bodyRect.top - contentRect.top).toBeCloseTo(12.8, 1);
+      expect(bodyRect.top - contentRect.top).toBeCloseTo(16, 1);
     },
   );
 });
