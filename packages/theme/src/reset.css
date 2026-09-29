@@ -136,8 +136,13 @@
 }
 
 @layer sui.reset {
-  *:where([class*="sui_"]:not(.sui_ignore)) {
+  :where([class*="sui_"]:not(.sui_ignore)) {
     border-color: var(--sui-border-1);
     outline-color: var(--sui-focusring_color);
+  }
+
+  :where(button:not(:disabled)),
+  :where([role="button"]:not(:disabled)) {
+    cursor: pointer;
   }
 }
