@@ -1,24 +1,21 @@
-import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
-
-import useRender, { type RenderProps } from "../_use-render.js";
+import type { RenderProps } from "../_use-render.js";
+import * as Card from "../card/card.parts.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
 /**
  * {@link DialogHeader} が持つ状態です。
  */
-export type DialogHeaderState = {};
+export type DialogHeaderState = Card.CardHeaderState;
 
 export namespace DialogHeaderProps {
   export type Render = RenderProps<DialogHeaderState>;
 
-  export type SuruUI = {};
+  export type SuruUI = Card.CardHeaderProps.SuruUI;
 
-  export type BaseUI = {};
+  export type BaseUI = Card.CardHeaderProps.BaseUI;
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Card.CardHeaderProps.HTML;
 }
 
 /**
@@ -30,18 +27,10 @@ export type DialogHeaderProps = DialogHeaderProps.Render &
   DialogHeaderProps.HTML;
 
 /**
- * ダイアログのヘッダーコンポーネントです。
+ * ダイアログの見出し・説明・操作をまとめるコンポーネントです。
  */
 export const DialogHeader: IComponent<DialogHeaderProps> = function SuiDialogHeader(props) {
-  return useRender({
-    props: [
-      props,
-      {
-        className: "sui_dialog_header",
-      },
-    ],
-    defaultTagName: "div",
-  });
+  return <Card.Header {...props} className={cn(props.className, "sui_dialog_header")} />;
 };
 
 export { DialogHeader as Header };

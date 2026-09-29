@@ -1,21 +1,28 @@
 import { Dialog } from "@base-ui/react/dialog";
-import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
+import mergeProps from "../_merge-props.js";
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
+import * as Card from "../card/card.parts.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { DialogPopupContext } from "./dialog.popup.context.js";
+import type { Override, IComponent } from "../types.js";
+import {
+  type DialogPopupContextSize,
+  type DialogPopupContextRadius,
+  type DialogPopupContextVariant,
+  DialogPopupContext,
+} from "./dialog.popup.context.js";
 
 /**
  * ダイアログの角丸の大きさです。
- *
- * - `"none"`: 直角
- * - `"sm"`: 小さめ
- * - `"md"`: 標準的
- * - `"lg"`: 大きめ
  */
-export type DialogPopupRadius = "none" | Size;
+export type DialogPopupRadius = DialogPopupContextRadius;
+
+/**
+ * ダイアログの大きさです。
+ */
+export type DialogPopupSize = DialogPopupContextSize;
 
 /**
  * ダイアログの主な外観です。
@@ -23,46 +30,37 @@ export type DialogPopupRadius = "none" | Size;
  * - `"default"`: 規定のスタイル
  * - `"stacked"`: 積み重なっているスタイル
  */
-export type DialogPopupVariant = "default" | "stacked";
+export type DialogPopupVariant = DialogPopupContextVariant;
 
 /**
  * {@link DialogPopup} が持つ状態です。
  */
-export type DialogPopupState = Dialog.Popup.State;
+export type DialogPopupState = Override<Card.CardRootState, Dialog.Popup.State>;
 
 export namespace DialogPopupProps {
   export type Render = RenderProps<DialogPopupState>;
 
-  export type SuruUI = {
-    /**
-     * ダイアログに枠線を表示するかどうかを指定します。
-     *
-     * @default false
-     */
-    outlined?: boolean | undefined;
-
-    /**
-     * ダイアログの角丸の大きさを指定します。
-     *
-     * @default "md"
-     */
-    radius?: DialogPopupRadius | undefined;
-
+  export type SuruUI = Card.CardRootProps.SuruUI & {
     /**
      * ダイアログの主な外観を指定します。
+     *
+     * `"stacked"` では見出しと説明文を中央に寄せ、操作を右上へ重ねます。
      *
      * @default "default"
      */
     variant?: DialogPopupVariant | undefined;
   };
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Dialog.Popup>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // DialogPopupProps:
-      "initialFocus" | "finalFocus",
-      keyof Render | keyof SuruUI
+  export type BaseUI = Override<
+    Card.CardRootProps.BaseUI,
+    Pick<
+      React.ComponentProps<typeof Dialog.Popup>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // DialogPopupProps:
+        "initialFocus" | "finalFocus",
+        keyof Render | keyof SuruUI
+      >
     >
   >;
 
@@ -82,22 +80,54 @@ export type DialogPopupProps = DialogPopupProps.Render &
 
 /**
  * ダイアログのポップアップ要素です。
+ *
+ * 見た目はカードとして描画され、大きさや角丸や枠線はカードのルートから引き継ぎます。
  */
 export const DialogPopup: IComponent<DialogPopupProps> = function SuiDialogPopup(props) {
-  const { radius = "md", variant = "default", outlined = false, className, ...otherProps } = props;
-  const ctx = React.useMemo<DialogPopupContext>(() => ({ radius }), [radius]);
+  const {
+    size = "md",
+    style,
+    radius = size,
+    render,
+    variant = "default",
+    outlined = false,
+    className,
+    ...otherProps
+  } = props;
+  const ctx = React.useMemo<DialogPopupContext>(
+    () => ({ size, radius, variant }),
+    [radius, size, variant],
+  );
 
   return (
     <DialogPopupContext value={ctx}>
       <Dialog.Popup
         {...otherProps}
-        className={cn(
-          className,
-          "sui_dialog_popup",
-          `sui_dialog_popup-radius_${radius}`,
-          `sui_dialog_popup-variant_${variant}`,
-          outlined && "sui_dialog_popup-outlined",
-        )}
+        render={(htmlProps: {}, popupState) => {
+          const cardRootProps: Required<Card.CardRootProps.SuruUI> = {
+            size,
+            radius,
+            outlined,
+          };
+
+          return (
+            <Card.Root
+              {...mergeProps<typeof Card.Root>([
+                htmlProps,
+                cardRootProps,
+                proxyRenderProps(popupState, {
+                  style,
+                  render,
+                  className: cn(
+                    className,
+                    "sui_dialog_popup",
+                    `sui_dialog_popup-variant_${variant}`,
+                  ),
+                }),
+              ])}
+            />
+          );
+        }}
       />
     </DialogPopupContext>
   );
@@ -121,6 +151,8 @@ export namespace Popup {
   }
 
   export type Radius = DialogPopupRadius;
+
+  export type Size = DialogPopupSize;
 
   export type Variant = DialogPopupVariant;
 }

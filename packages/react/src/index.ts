@@ -255,6 +255,7 @@ export {
 } from "./context-menu/index.js";
 export {
   type DialogAPI,
+  type DialogSize,
   type DialogProps,
   type DialogState,
   type DialogRadius,

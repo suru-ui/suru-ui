@@ -2,10 +2,10 @@ import * as React from "react";
 import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 
+import { DialogAction } from "../../../src/dialog/dialog.action.jsx";
 import { DialogBackdrop } from "../../../src/dialog/dialog.backdrop.jsx";
-import { DialogBody } from "../../../src/dialog/dialog.body.jsx";
 import { DialogCloseTrigger } from "../../../src/dialog/dialog.close-trigger.jsx";
-import { DialogControls } from "../../../src/dialog/dialog.controls.jsx";
+import { DialogContent } from "../../../src/dialog/dialog.content.jsx";
 import { DialogDescription } from "../../../src/dialog/dialog.description.jsx";
 import { DialogFooter } from "../../../src/dialog/dialog.footer.jsx";
 import { DialogHeader } from "../../../src/dialog/dialog.header.jsx";
@@ -71,7 +71,7 @@ describe("DialogViewport", () => {
 });
 
 describe("DialogHeader", () => {
-  test("ヘッダーを描画する", async ({ expect }) => {
+  test("カードのヘッダーとして描画する", async ({ expect }) => {
     // 準備と実行
     const screen = await renderDialog(
       <DialogHeader>
@@ -82,6 +82,7 @@ describe("DialogHeader", () => {
     // 検証
     const header = screen.getByClassName("sui_dialog_header").element();
     expect(header.tagName).toBe("DIV");
+    expect(header.classList.contains("sui_card_header")).toBe(true);
     expect(header.textContent).toBe("内容");
   });
 });
@@ -94,7 +95,7 @@ describe("DialogTitle", () => {
     // 検証
     const title = screen.getByRole("heading", { name: "見出し" }).element();
     expect(title.tagName).toBe("H2");
-    expect(title.classList.contains("sui_dialog_title")).toBe(true);
+    expect(title.classList.contains("sui_card_title")).toBe(true);
   });
 
   test("ポップアップのラベルに関連付ける", async ({ expect }) => {
@@ -116,7 +117,7 @@ describe("DialogDescription", () => {
     // 検証
     const description = screen.getByText("説明").element();
     expect(description.tagName).toBe("P");
-    expect(description.classList.contains("sui_dialog_description")).toBe(true);
+    expect(description.classList.contains("sui_card_description")).toBe(true);
   });
 
   test("ポップアップの説明に関連付ける", async ({ expect }) => {
@@ -130,21 +131,35 @@ describe("DialogDescription", () => {
   });
 });
 
-describe("DialogBody", () => {
-  test("本文を描画する", async ({ expect }) => {
+describe("DialogAction", () => {
+  test("カードの操作要素として描画する", async ({ expect }) => {
     // 準備と実行
-    const screen = await renderDialog(<DialogBody title="説明">本文</DialogBody>);
+    const screen = await renderDialog(<DialogAction>操作</DialogAction>);
 
     // 検証
-    const body = screen.getByClassName("sui_dialog_body").element();
-    expect(body.tagName).toBe("DIV");
-    expect(body.textContent).toBe("本文");
-    expect(body.getAttribute("title")).toBe("説明");
+    const action = screen.getByClassName("sui_dialog_action").element();
+    expect(action.tagName).toBe("DIV");
+    expect(action.classList.contains("sui_card_action")).toBe(true);
+    expect(action.textContent).toBe("操作");
+  });
+});
+
+describe("DialogContent", () => {
+  test("カードの本文として描画する", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderDialog(<DialogContent title="説明">本文</DialogContent>);
+
+    // 検証
+    const content = screen.getByClassName("sui_dialog_content").element();
+    expect(content.tagName).toBe("DIV");
+    expect(content.classList.contains("sui_card_content")).toBe(true);
+    expect(content.textContent).toBe("本文");
+    expect(content.getAttribute("title")).toBe("説明");
   });
 });
 
 describe("DialogFooter", () => {
-  test("フッターを描画する", async ({ expect }) => {
+  test("カードのフッターとして描画する", async ({ expect }) => {
     // 準備と実行
     const screen = await renderDialog(
       <DialogFooter>
@@ -155,28 +170,8 @@ describe("DialogFooter", () => {
     // 検証
     const footer = screen.getByClassName("sui_dialog_footer").element();
     expect(footer.tagName).toBe("DIV");
+    expect(footer.classList.contains("sui_card_footer")).toBe(true);
     expect(footer.textContent).toBe("操作");
-  });
-});
-
-describe("DialogControls", () => {
-  test("既定では相対配置にする", async ({ expect }) => {
-    // 準備と実行
-    const screen = await renderDialog(<DialogControls>操作</DialogControls>);
-
-    // 検証
-    const controls = screen.getByClassName("sui_dialog_controls").element();
-    expect(controls.classList.contains("sui_dialog_controls-relative")).toBe(true);
-    expect(controls.classList.contains("sui_dialog_controls-absolute")).toBe(false);
-  });
-
-  test("指定すると絶対配置にする", async ({ expect }) => {
-    // 準備と実行
-    const screen = await renderDialog(<DialogControls absolute>操作</DialogControls>);
-
-    // 検証
-    const controls = screen.getByClassName("sui_dialog_controls").element();
-    expect(controls.classList.contains("sui_dialog_controls-absolute")).toBe(true);
   });
 });
 

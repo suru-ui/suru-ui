@@ -40,22 +40,25 @@ describe("Dialog の配置", () => {
     expect(rect.height).toBe(window.innerHeight);
   });
 
-  test.skipIf(!supportsCustomFunctions())("余白と行間と角丸を付ける", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <Dialog defaultOpen title="見出し">
-        本文
-      </Dialog>,
-    );
+  test.skipIf(!supportsCustomFunctions())(
+    "カードと同じ余白と行間と角丸を付ける",
+    async ({ expect }) => {
+      // 準備と実行
+      const screen = await render(
+        <Dialog defaultOpen title="見出し">
+          本文
+        </Dialog>,
+      );
 
-    // 検証
-    const content = screen.getByClassName("sui_dialog_popup").element();
-    const style = getComputedStyle(content);
-    expect(style.paddingBlockStart).toBe("16px");
-    expect(style.paddingInlineStart).toBe("16px");
-    expect(style.rowGap).toBe("16px");
-    expect(style.borderRadius).toBe("20px");
-  });
+      // 検証
+      const popup = screen.getByClassName("sui_dialog_popup").element();
+      const style = getComputedStyle(popup);
+      expect(style.paddingBlockStart).toBe("16px");
+      expect(style.paddingInlineStart).toBe("0px");
+      expect(style.rowGap).toBe("16px");
+      expect(style.borderRadius).toBe("12px");
+    },
+  );
 
   test.skipIf(!supportsCustomFunctions())("見出しの下に説明を並べる", async ({ expect }) => {
     // 準備と実行
@@ -116,6 +119,11 @@ describe("Dialog の配置", () => {
       const descriptionRect = screen.getByText("説明").element().getBoundingClientRect();
       expect(descriptionRect.top).toBeGreaterThan(titleRect.bottom);
       expect(getComputedStyle(screen.getByText("説明").element()).textAlign).toBe("center");
+      const popupRect = screen.getByClassName("sui_dialog_popup").element().getBoundingClientRect();
+      expect(titleRect.left + titleRect.width / 2).toBeCloseTo(
+        popupRect.left + popupRect.width / 2,
+        0,
+      );
       const footer = screen.getByClassName("sui_dialog_footer").element();
       expect(getComputedStyle(footer).display).toBe("grid");
       const columns = getComputedStyle(footer).gridTemplateColumns.split(" ");
@@ -136,12 +144,12 @@ describe("Dialog の配置", () => {
 
       // 検証
       const content = screen.getByClassName("sui_dialog_popup").element();
-      const controls = screen.getByClassName("sui_dialog_controls").element();
-      expect(getComputedStyle(controls).position).toBe("absolute");
+      const action = screen.getByClassName("sui_dialog_action").element();
+      expect(getComputedStyle(action).position).toBe("absolute");
       const contentRect = content.getBoundingClientRect();
-      const controlsRect = controls.getBoundingClientRect();
-      expect(controlsRect.right).toBeCloseTo(contentRect.right - 16, 1);
-      expect(controlsRect.top).toBeCloseTo(contentRect.top + 16, 1);
+      const actionRect = action.getBoundingClientRect();
+      expect(actionRect.right).toBeCloseTo(contentRect.right - 16, 1);
+      expect(actionRect.top).toBeCloseTo(contentRect.top + 16, 1);
     },
   );
 
@@ -191,7 +199,7 @@ describe("Dialog の配置", () => {
         .element()
         .getBoundingClientRect();
       const buttonRect = button.getBoundingClientRect();
-      expect(buttonRect.right).toBeCloseTo(headerRect.right, 0);
+      expect(buttonRect.right).toBeCloseTo(headerRect.right - 16, 0);
       expect(buttonRect.top).toBeCloseTo(headerRect.top, 0);
     },
   );
@@ -207,8 +215,8 @@ describe("Dialog の配置", () => {
       );
 
       // 検証
-      const controls = screen.getByClassName("sui_dialog_controls").element();
-      expect(getComputedStyle(controls).justifyContent).toBe("flex-end");
+      const action = screen.getByClassName("sui_dialog_action").element();
+      expect(getComputedStyle(action).justifySelf).toBe("end");
       const headerRect = screen
         .getByClassName("sui_dialog_header")
         .element()
@@ -217,7 +225,7 @@ describe("Dialog の配置", () => {
         .getByRole("button", { name: "閉じる" })
         .element()
         .getBoundingClientRect();
-      expect(buttonRect.right).toBeCloseTo(headerRect.right, 0);
+      expect(buttonRect.right).toBeCloseTo(headerRect.right - 16, 0);
       expect(buttonRect.top).toBeCloseTo(headerRect.top, 0);
     },
   );
@@ -235,7 +243,7 @@ describe("Dialog の配置", () => {
       // 検証
       expect(screen.getByClassName("sui_dialog_header").query()).toBe(null);
       const content = screen.getByClassName("sui_dialog_popup").element();
-      const body = screen.getByClassName("sui_dialog_body").element();
+      const body = screen.getByClassName("sui_dialog_content").element();
       const contentRect = content.getBoundingClientRect();
       const bodyRect = body.getBoundingClientRect();
       expect(bodyRect.top - contentRect.top).toBeCloseTo(16, 1);

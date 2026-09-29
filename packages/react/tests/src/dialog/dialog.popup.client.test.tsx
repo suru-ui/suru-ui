@@ -34,14 +34,17 @@ describe("DialogPopup", () => {
     // 検証
     const popup = screen.getByClassName("sui_dialog_popup").element();
     expect(popup.tagName).toBe("DIV");
-    expect(popup.classList.contains("sui_dialog_popup-radius_md")).toBe(true);
+    expect(popup.classList.contains("sui_card")).toBe(true);
+    expect(popup.classList.contains("sui_card-size_md")).toBe(true);
+    expect(popup.classList.contains("sui_card-radius_md")).toBe(true);
     expect(popup.classList.contains("sui_dialog_popup-variant_default")).toBe(true);
-    expect(popup.classList.contains("sui_dialog_popup-outlined")).toBe(false);
+    expect(popup.classList.contains("sui_card-outlined")).toBe(false);
   });
 
-  test("指定した角丸と外観と枠線をクラスにする", async ({ expect }) => {
+  test("指定した大きさと角丸と外観と枠線をクラスにする", async ({ expect }) => {
     // 準備と実行
     const screen = await renderPopup("内容", {
+      size: "sm",
       radius: "lg",
       variant: "stacked",
       outlined: true,
@@ -49,24 +52,29 @@ describe("DialogPopup", () => {
 
     // 検証
     const popup = screen.getByClassName("sui_dialog_popup").element();
-    expect(popup.classList.contains("sui_dialog_popup-radius_lg")).toBe(true);
+    expect(popup.classList.contains("sui_card-size_sm")).toBe(true);
+    expect(popup.classList.contains("sui_card-radius_lg")).toBe(true);
     expect(popup.classList.contains("sui_dialog_popup-variant_stacked")).toBe(true);
-    expect(popup.classList.contains("sui_dialog_popup-outlined")).toBe(true);
+    expect(popup.classList.contains("sui_card-outlined")).toBe(true);
   });
 
-  test("子パーツへ角丸を伝える", async ({ expect }) => {
+  test("子パーツへ修飾を伝える", async ({ expect }) => {
     // 準備
     function Probe() {
       const ctx = useDialogPopupContext();
 
-      return <span>{ctx.radius}</span>;
+      return (
+        <span>
+          {ctx.size}/{ctx.radius}/{ctx.variant}
+        </span>
+      );
     }
 
     // 実行
-    const screen = await renderPopup(<Probe />, { radius: "sm" });
+    const screen = await renderPopup(<Probe />, { size: "sm", radius: "lg", variant: "stacked" });
 
     // 検証
-    expect(screen.getByText("sm").query()?.textContent).toBe("sm");
+    expect(screen.getByText("sm/lg/stacked").query()?.textContent).toBe("sm/lg/stacked");
   });
 
   test("利用者の className を保持する", async ({ expect }) => {
@@ -77,6 +85,7 @@ describe("DialogPopup", () => {
     const popup = screen.getByClassName("sui_dialog_popup").element();
     expect(popup.classList.contains("custom")).toBe(true);
     expect(popup.classList.contains("sui_dialog_popup")).toBe(true);
+    expect(popup.classList.contains("sui_card")).toBe(true);
   });
 
   test("render に指定した要素へ描画する", async ({ expect }) => {
@@ -84,6 +93,8 @@ describe("DialogPopup", () => {
     const screen = await renderPopup("内容", { render: <section /> });
 
     // 検証
-    expect(screen.getByClassName("sui_dialog_popup").element().tagName).toBe("SECTION");
+    const popup = screen.getByClassName("sui_dialog_popup").element();
+    expect(popup.tagName).toBe("SECTION");
+    expect(popup.classList.contains("sui_card")).toBe(true);
   });
 });

@@ -30,6 +30,10 @@ const ctrl = controls(Dialog, {
   showCloseIconButton: {
     control: "boolean",
   },
+  size: {
+    control: "select",
+    options: theme.SIZES,
+  },
   title: {
     control: "text",
   },
@@ -154,8 +158,8 @@ export const WithoutCloseIconButton = meta.story({
   },
 });
 
-export const CustomControls = meta.story({
-  name: "カスタムコントロール",
+export const CustomAction = meta.story({
+  name: "カスタム操作",
   ...ctrl({
     variant: "default",
     radius: "md",
@@ -169,8 +173,8 @@ export const CustomControls = meta.story({
       <Dialog
         {...props}
         close={<Button variant="naked">閉じる</Button>}
+        action={<span className="text-xs text-neutral-500">自動保存済み</span>}
         trigger={<Button>下書きを開く</Button>}
-        controls={<span className="text-xs text-neutral-500">自動保存済み</span>}
       />
     );
   },

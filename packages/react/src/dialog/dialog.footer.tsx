@@ -1,24 +1,21 @@
-import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
-
-import useRender, { type RenderProps } from "../_use-render.js";
+import type { RenderProps } from "../_use-render.js";
+import * as Card from "../card/card.parts.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
 /**
  * {@link DialogFooter} が持つ状態です。
  */
-export type DialogFooterState = {};
+export type DialogFooterState = Card.CardFooterState;
 
 export namespace DialogFooterProps {
   export type Render = RenderProps<DialogFooterState>;
 
-  export type SuruUI = {};
+  export type SuruUI = Card.CardFooterProps.SuruUI;
 
-  export type BaseUI = {};
+  export type BaseUI = Card.CardFooterProps.BaseUI;
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Card.CardFooterProps.HTML;
 }
 
 /**
@@ -30,18 +27,12 @@ export type DialogFooterProps = DialogFooterProps.Render &
   DialogFooterProps.HTML;
 
 /**
- * ダイアログのフッターコンポーネントです。
+ * ダイアログの操作や補足情報を末尾に配置するコンポーネントです。
+ *
+ * 積み上げ式では内容を等幅の 2 列に並べます。
  */
 export const DialogFooter: IComponent<DialogFooterProps> = function SuiDialogFooter(props) {
-  return useRender({
-    props: [
-      props,
-      {
-        className: "sui_dialog_footer",
-      },
-    ],
-    defaultTagName: "div",
-  });
+  return <Card.Footer {...props} className={cn(props.className, "sui_dialog_footer")} />;
 };
 
 export { DialogFooter as Footer };

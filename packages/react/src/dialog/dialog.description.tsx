@@ -1,27 +1,33 @@
 import { Dialog } from "@base-ui/react/dialog";
 import * as React from "react";
 
+import mergeProps from "../_merge-props.js";
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
+import * as Card from "../card/card.parts.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 
 /**
  * {@link DialogDescription} が持つ状態です。
  */
-export type DialogDescriptionState = Dialog.Description.State;
+export type DialogDescriptionState = Override<Card.CardDescriptionState, Dialog.Description.State>;
 
 export namespace DialogDescriptionProps {
   export type Render = RenderProps<DialogDescriptionState>;
 
-  export type SuruUI = {};
+  export type SuruUI = Card.CardDescriptionProps.SuruUI;
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Dialog.Description>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // DialogDescriptionProps:
-      never,
-      keyof Render | keyof SuruUI
+  export type BaseUI = Override<
+    Card.CardDescriptionProps.BaseUI,
+    Pick<
+      React.ComponentProps<typeof Dialog.Description>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // DialogDescriptionProps:
+        never,
+        keyof Render | keyof SuruUI
+      >
     >
   >;
 
@@ -40,14 +46,32 @@ export type DialogDescriptionProps = DialogDescriptionProps.Render &
   DialogDescriptionProps.HTML;
 
 /**
- * ダイアログの内容を表示するコンポーネントです。
+ * ダイアログの説明文を表示するコンポーネントです。
+ *
+ * 見た目はカードの説明文として描画され、ポップアップの説明に関連付けます。
  */
 export const DialogDescription: IComponent<DialogDescriptionProps> = function SuiDialogDescription(
   props,
 ) {
-  const { className, ...otherProps } = props;
+  const { style, render = <p />, className, ...otherProps } = props;
 
-  return <Dialog.Description {...otherProps} className={cn(className, "sui_dialog_description")} />;
+  return (
+    <Dialog.Description
+      {...otherProps}
+      render={(htmlProps: {}, descriptionState) => (
+        <Card.Description
+          {...mergeProps<typeof Card.Description>([
+            htmlProps,
+            proxyRenderProps(descriptionState, {
+              style,
+              render,
+              className: cn(className, "sui_dialog_description"),
+            }),
+          ])}
+        />
+      )}
+    />
+  );
 };
 
 export { DialogDescription as Description };

@@ -16,39 +16,37 @@ const triggerButton = (props: React.ComponentProps<"button">) => (
 );
 
 describe("DialogAPI", () => {
+  test("getActionProps は閉じるアイコンも操作もないとき null を返す", ({ expect }) => {
+    // 準備と実行
+    const api = new DialogAPI({ showCloseIconButton: false });
+
+    // 検証
+    expect(api.getActionProps()).toBe(null);
+  });
+
+  test("getActionProps は指定した内容を子要素にして返す", async ({ expect }) => {
+    // 準備と実行
+    const api = new DialogAPI({ action: "操作", showCloseIconButton: false });
+    const screen = await render(<>{api.getActionProps()?.children}</>);
+
+    // 検証
+    expect(screen.getByText("操作").query()).not.toBe(null);
+  });
+
+  test("getActionProps は既定で閉じるアイコンボタンを表示する", ({ expect }) => {
+    // 準備と実行
+    const api = new DialogAPI({});
+
+    // 検証
+    expect(React.isValidElement(api.getActionProps()?.children)).toBe(true);
+  });
+
   test("getBackdropProps は slotProps の指定を返す", ({ expect }) => {
     // 準備と実行
     const api = new DialogAPI({ slotProps: { backdrop: { id: "backdrop" } } });
 
     // 検証
     expect(api.getBackdropProps()).toStrictEqual({ id: "backdrop" });
-  });
-
-  test("getBodyProps は未指定のとき null を返す", ({ expect }) => {
-    // 準備と実行
-    const api = new DialogAPI({});
-
-    // 検証
-    expect(api.getBodyProps()).toBe(null);
-  });
-
-  test("getBodyProps は HTML title を本文の title にする", ({ expect }) => {
-    // 準備と実行
-    const api = new DialogAPI({ children: "本文", htmlTitle: "説明" });
-
-    // 検証
-    expect(api.getBodyProps()).toStrictEqual({ title: "説明", children: "本文" });
-  });
-
-  test("getBodyProps は slotProps の指定を重ねる", ({ expect }) => {
-    // 準備と実行
-    const api = new DialogAPI({
-      children: "本文",
-      slotProps: { body: { id: "body" } },
-    });
-
-    // 検証
-    expect(api.getBodyProps()).toStrictEqual({ id: "body", title: undefined, children: "本文" });
   });
 
   test("getCloseTriggerProps は未指定のとき null を返す", ({ expect }) => {
@@ -79,57 +77,26 @@ describe("DialogAPI", () => {
 
     // 検証
     expect(api.getCloseTriggerProps()?.children).toBeTypeOf("function");
-    expect(api.getFooterProps()).toStrictEqual({});
+    expect(api.getFooterProps()).toStrictEqual({ children: undefined });
   });
 
-  test("getPopupProps は角丸と外観と枠線を返す", ({ expect }) => {
-    // 準備と実行
-    const api = new DialogAPI({ radius: "lg", variant: "stacked", outlined: true });
-
-    // 検証
-    expect(api.getPopupProps()).toStrictEqual({
-      radius: "lg",
-      variant: "stacked",
-      outlined: true,
-    });
-  });
-
-  test("getPopupProps は slotProps の指定を重ねる", ({ expect }) => {
-    // 準備と実行
-    const api = new DialogAPI({ slotProps: { popup: { id: "popup" } } });
-
-    // 検証
-    expect(api.getPopupProps()).toStrictEqual({
-      id: "popup",
-      radius: undefined,
-      variant: "default",
-      outlined: undefined,
-    });
-  });
-
-  test("getControlsProps は閉じるアイコンも操作もないとき null を返す", ({ expect }) => {
-    // 準備と実行
-    const api = new DialogAPI({ showCloseIconButton: false });
-
-    // 検証
-    expect(api.getControlsProps()).toBe(null);
-  });
-
-  test("getControlsProps は指定した内容を子要素にして返す", async ({ expect }) => {
-    // 準備と実行
-    const api = new DialogAPI({ controls: "操作", showCloseIconButton: false });
-    const screen = await render(<>{api.getControlsProps()?.children}</>);
-
-    // 検証
-    expect(screen.getByText("操作").query()).not.toBe(null);
-  });
-
-  test("getControlsProps は既定で閉じるアイコンボタンを表示する", ({ expect }) => {
+  test("getContentProps は未指定のとき null を返す", ({ expect }) => {
     // 準備と実行
     const api = new DialogAPI({});
 
     // 検証
-    expect(React.isValidElement(api.getControlsProps()?.children)).toBe(true);
+    expect(api.getContentProps()).toBe(null);
+  });
+
+  test("getContentProps は slotProps の指定を重ねる", ({ expect }) => {
+    // 準備と実行
+    const api = new DialogAPI({
+      children: "本文",
+      slotProps: { content: { id: "content" } },
+    });
+
+    // 検証
+    expect(api.getContentProps()).toStrictEqual({ id: "content", children: "本文" });
   });
 
   test("getDescriptionProps は空文字を表示対象にする", ({ expect }) => {
@@ -140,7 +107,7 @@ describe("DialogAPI", () => {
     expect(api.getDescriptionProps()).toStrictEqual({ children: "" });
   });
 
-  test("getFooterProps は閉じるボタンがないとき null を返す", ({ expect }) => {
+  test("getFooterProps は閉じるボタンも内容もないとき null を返す", ({ expect }) => {
     // 準備と実行
     const api = new DialogAPI({});
 
@@ -153,7 +120,15 @@ describe("DialogAPI", () => {
     const api = new DialogAPI({ close: closeButton });
 
     // 検証
-    expect(api.getFooterProps()).toStrictEqual({});
+    expect(api.getFooterProps()).toStrictEqual({ children: undefined });
+  });
+
+  test("getFooterProps は指定した内容を子要素にして返す", ({ expect }) => {
+    // 準備と実行
+    const api = new DialogAPI({ footer: "補足" });
+
+    // 検証
+    expect(api.getFooterProps()).toStrictEqual({ children: "補足" });
   });
 
   test("getHeaderProps は slotProps の指定を返す", ({ expect }) => {
@@ -202,6 +177,33 @@ describe("DialogAPI", () => {
 
     // 検証
     expect(api.getPortalProps()).toStrictEqual({ id: "portal" });
+  });
+
+  test("getPopupProps は大きさと角丸と外観と枠線を返す", ({ expect }) => {
+    // 準備と実行
+    const api = new DialogAPI({ size: "sm", radius: "lg", variant: "stacked", outlined: true });
+
+    // 検証
+    expect(api.getPopupProps()).toStrictEqual({
+      size: "sm",
+      radius: "lg",
+      variant: "stacked",
+      outlined: true,
+    });
+  });
+
+  test("getPopupProps は slotProps の指定を重ねる", ({ expect }) => {
+    // 準備と実行
+    const api = new DialogAPI({ slotProps: { popup: { id: "popup" } } });
+
+    // 検証
+    expect(api.getPopupProps()).toStrictEqual({
+      id: "popup",
+      size: undefined,
+      radius: undefined,
+      variant: "default",
+      outlined: undefined,
+    });
   });
 
   test("getRootProps はハンドルを補完する", ({ expect }) => {

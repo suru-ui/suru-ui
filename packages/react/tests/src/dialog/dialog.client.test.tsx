@@ -126,7 +126,7 @@ describe("Dialog", () => {
   test("本文と操作を表示する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
-      <Dialog defaultOpen controls="操作" title="見出し">
+      <Dialog defaultOpen action="操作" title="見出し">
         本文
       </Dialog>,
     );
@@ -136,16 +136,44 @@ describe("Dialog", () => {
     expect(screen.getByText("操作").query()?.textContent).toBe("操作");
   });
 
-  test("積み上げ式では操作をフッターの外に置く", async ({ expect }) => {
+  test("フッターと閉じるボタンを表示する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
-      <Dialog defaultOpen controls="操作" title="見出し" variant="stacked" close={closeButton} />,
+      <Dialog
+        defaultOpen
+        showCloseIconButton={false}
+        title="見出し"
+        close={closeButton}
+        footer="補足"
+      />,
     );
 
     // 検証
-    const controls = screen.getByClassName("sui_dialog_controls").element();
-    expect(controls.classList.contains("sui_dialog_controls-absolute")).toBe(true);
-    expect(controls.closest(".sui_dialog_footer")).toBe(null);
+    const footer = screen.getByClassName("sui_dialog_footer").element();
+    expect(footer.textContent).toContain("補足");
+    expect(footer.textContent).toContain("閉じる");
+  });
+
+  test("積み上げ式では操作をヘッダーの外に置く", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <Dialog defaultOpen action="操作" title="見出し" variant="stacked" close={closeButton} />,
+    );
+
+    // 検証
+    const action = screen.getByClassName("sui_dialog_action").element();
+    expect(action.closest(".sui_dialog_popup")).not.toBe(null);
+    expect(action.closest(".sui_dialog_header")).toBe(null);
+    expect(action.closest(".sui_dialog_footer")).toBe(null);
+  });
+
+  test("積み上げ式で操作だけのときヘッダーを描画しない", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(<Dialog defaultOpen variant="stacked" />);
+
+    // 検証
+    expect(screen.getByClassName("sui_dialog_header").query()).toBe(null);
+    expect(screen.getByClassName("sui_dialog_action").query()).not.toBe(null);
   });
 
   test("slotProps で各パーツに props を渡す", async ({ expect }) => {
@@ -155,10 +183,12 @@ describe("Dialog", () => {
         defaultOpen
         showCloseIconButton={false}
         title="見出し"
+        action="操作"
         close={closeButton}
         description="説明"
         slotProps={{
-          body: { id: "body" },
+          action: { id: "action" },
+          content: { id: "content" },
           closeTrigger: { id: "close" },
           popup: { id: "popup" },
           description: { id: "description" },
@@ -172,13 +202,14 @@ describe("Dialog", () => {
     );
 
     // 検証
-    expect(screen.getByClassName("sui_dialog_body").element().id).toBe("body");
+    expect(screen.getByClassName("sui_dialog_action").element().id).toBe("action");
+    expect(screen.getByClassName("sui_dialog_content").element().id).toBe("content");
     expect(screen.getByClassName("sui_dialog_close").element().id).toBe("close");
     expect(screen.getByClassName("sui_dialog_popup").element().id).toBe("popup");
-    expect(screen.getByClassName("sui_dialog_description").element().id).toBe("description");
+    expect(screen.getByClassName("sui_card_description").element().id).toBe("description");
     expect(screen.getByClassName("sui_dialog_footer").element().id).toBe("footer");
     expect(screen.getByClassName("sui_dialog_header").element().id).toBe("header");
-    expect(screen.getByClassName("sui_dialog_title").element().id).toBe("title");
+    expect(screen.getByClassName("sui_card_title").element().id).toBe("title");
   });
 
   test("外側を押すと閉じる", async ({ expect }) => {

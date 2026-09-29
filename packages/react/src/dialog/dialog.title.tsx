@@ -1,27 +1,33 @@
 import { Dialog } from "@base-ui/react/dialog";
 import * as React from "react";
 
+import mergeProps from "../_merge-props.js";
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
+import * as Card from "../card/card.parts.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 
 /**
  * {@link DialogTitle} が持つ状態です。
  */
-export type DialogTitleState = Dialog.Title.State;
+export type DialogTitleState = Override<Card.CardTitleState, Dialog.Title.State>;
 
 export namespace DialogTitleProps {
   export type Render = RenderProps<DialogTitleState>;
 
-  export type SuruUI = {};
+  export type SuruUI = Card.CardTitleProps.SuruUI;
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Dialog.Title>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // DialogTitleProps:
-      never,
-      keyof Render | keyof SuruUI
+  export type BaseUI = Override<
+    Card.CardTitleProps.BaseUI,
+    Pick<
+      React.ComponentProps<typeof Dialog.Title>,
+      Exclude<
+        // Base UI の型を確認して取り出すプロパティーを決めます。
+        // DialogTitleProps:
+        never,
+        keyof Render | keyof SuruUI
+      >
     >
   >;
 
@@ -41,11 +47,35 @@ export type DialogTitleProps = DialogTitleProps.Render &
 
 /**
  * ダイアログの見出しを表示するコンポーネントです。
+ *
+ * 見た目はカードの見出しとして描画され、ポップアップのラベルに関連付けます。
  */
 export const DialogTitle: IComponent<DialogTitleProps> = function SuiDialogTitle(props) {
-  const { className, ...otherProps } = props;
+  const {
+    style,
+    // oxlint-disable-next-line jsx-a11y/heading-has-content
+    render = <h2 />,
+    className,
+    ...otherProps
+  } = props;
 
-  return <Dialog.Title {...otherProps} className={cn(className, "sui_dialog_title")} />;
+  return (
+    <Dialog.Title
+      {...otherProps}
+      render={(htmlProps: {}, titleState) => (
+        <Card.Title
+          {...mergeProps<typeof Card.Title>([
+            htmlProps,
+            proxyRenderProps(titleState, {
+              style,
+              render,
+              className: cn(className, "sui_dialog_title"),
+            }),
+          ])}
+        />
+      )}
+    />
+  );
 };
 
 export { DialogTitle as Title };
