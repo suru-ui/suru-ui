@@ -183,7 +183,7 @@ export class MeterAPI {
   }
 }
 
-interface IUseMeterAPI {
+export interface IUseMeterAPI {
   /**
    * {@link MeterAPI} を作成します。
    *

@@ -90,7 +90,7 @@ export class FormatNumberAPI {
   }
 }
 
-interface IUseFormatNumberAPI {
+export interface IUseFormatNumberAPI {
   /**
    * {@link FormatNumberAPI} を作成します。
    *

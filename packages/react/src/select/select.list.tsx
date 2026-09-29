@@ -113,7 +113,7 @@ export type SelectListProps<TValue = any> = SelectListProps.Render &
   SelectListProps.BaseUI<TValue> &
   SelectListProps.HTML;
 
-interface ISelectList extends IComponent<SelectListProps> {
+export interface ISelectList extends IComponent<SelectListProps> {
   /**
    * @template TValue 項目の値の型です。
    */

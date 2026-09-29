@@ -627,7 +627,7 @@ export { SelectAPI as API, useSelectAPI as useAPI };
 // Component
 // ---------
 
-interface ISelect extends IComponent<SelectProps> {
+export interface ISelect extends IComponent<SelectProps> {
   /**
    * @template TValue 項目の値の型です。
    * @template TMultiple 複数選択を有効にするかどうかです。

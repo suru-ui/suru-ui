@@ -224,7 +224,7 @@ export class TextFieldAPI {
   }
 }
 
-interface IUseTextFieldAPI {
+export interface IUseTextFieldAPI {
   /**
    * {@link TextFieldAPI} を作成します。
    *
@@ -246,7 +246,7 @@ export { TextFieldAPI as API, useTextFieldAPI as useAPI };
 // Component
 // ---------
 
-interface ITextField extends IComponent<TextFieldProps> {
+export interface ITextField extends IComponent<TextFieldProps> {
   readonly useContext: IUseTextFieldContext;
 }
 

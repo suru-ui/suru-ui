@@ -45,7 +45,7 @@ export class TooltipGroupAPI {
   }
 }
 
-interface IUseTooltipGroupAPI {
+export interface IUseTooltipGroupAPI {
   /**
    * {@link TooltipGroupAPI} を作成します。
    *

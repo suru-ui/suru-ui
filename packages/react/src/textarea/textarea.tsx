@@ -63,7 +63,7 @@ export class TextareaAPI {
   }
 }
 
-interface IUseTextareaAPI {
+export interface IUseTextareaAPI {
   /**
    * {@link TextareaAPI} を作成します。
    *

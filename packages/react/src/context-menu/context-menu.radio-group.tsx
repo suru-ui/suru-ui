@@ -83,7 +83,7 @@ export type ContextMenuRadioGroupProps<TItem = any> = ContextMenuRadioGroupProps
   ContextMenuRadioGroupProps.BaseUI &
   ContextMenuRadioGroupProps.HTML;
 
-interface IContextMenuRadioGroup extends IComponent<ContextMenuRadioGroupProps> {
+export interface IContextMenuRadioGroup extends IComponent<ContextMenuRadioGroupProps> {
   /**
    * @template TItem 項目の型です。
    */

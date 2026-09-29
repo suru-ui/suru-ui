@@ -660,7 +660,7 @@ export class AlertDialogAPI<TPayload = any> {
   }
 }
 
-interface IUseAlertDialogAPI {
+export interface IUseAlertDialogAPI {
   /**
    * {@link AlertDialogAPI} を作成します。
    *
@@ -690,7 +690,7 @@ export { AlertDialogAPI as API, useAlertDialogAPI as useAPI };
 // Component
 // ---------
 
-interface IAlertDialog extends IComponent<AlertDialogProps> {
+export interface IAlertDialog extends IComponent<AlertDialogProps> {
   /**
    * @template TPayload トリガーが送信するデータの型です。
    */

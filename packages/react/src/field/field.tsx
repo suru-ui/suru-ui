@@ -251,7 +251,7 @@ export class FieldAPI {
   }
 }
 
-interface IUseFieldAPI {
+export interface IUseFieldAPI {
   /**
    * {@link FieldAPI} を作成します。
    *
@@ -273,7 +273,7 @@ export { FieldAPI as API, useFieldAPI as useAPI };
 // Component
 // ---------
 
-interface IField extends IComponent<FieldProps> {
+export interface IField extends IComponent<FieldProps> {
   /**
    * {@link FieldControl} です。
    */

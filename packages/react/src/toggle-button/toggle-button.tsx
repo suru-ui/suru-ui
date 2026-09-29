@@ -220,7 +220,7 @@ export class ToggleButtonAPI {
   }
 }
 
-interface IUseToggleButtonAPI {
+export interface IUseToggleButtonAPI {
   /**
    * {@link ToggleButtonAPI} を作成します。
    *
@@ -242,7 +242,7 @@ export { ToggleButtonAPI as API, useToggleButtonAPI as useAPI };
 // Component
 // ---------
 
-interface IToggleButton extends IComponent<ToggleButtonProps> {
+export interface IToggleButton extends IComponent<ToggleButtonProps> {
   readonly useContext: IUseToggleButtonContext;
 }
 

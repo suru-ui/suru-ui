@@ -242,7 +242,7 @@ export class SliderAPI<TValue extends number | readonly number[] = number | read
   }
 }
 
-interface IUseSliderAPI {
+export interface IUseSliderAPI {
   /**
    * {@link SliderAPI} を作成します。
    *
@@ -273,7 +273,7 @@ export { SliderAPI as API, useSliderAPI as useAPI };
  * 単一値のときはつまみを 1 つ、配列のときは値の数だけつまみを表示します。
  * つまみは矢印キーで操作でき、ラベルと現在値は `label` と `renderValue` を渡したときだけ表示します。
  */
-interface ISlider extends IComponent<SliderProps> {
+export interface ISlider extends IComponent<SliderProps> {
   /**
    * @template TValue 値の型です。
    */

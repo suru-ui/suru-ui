@@ -376,7 +376,7 @@ export class ToastAPI<TData extends object = any> {
   }
 }
 
-interface IUseToastAPI {
+export interface IUseToastAPI {
   /**
    * {@link ToastAPI} を作成します。
    *
@@ -451,7 +451,7 @@ export class ToastListAPI<TData extends object = any> {
   }
 }
 
-interface IUseToastListAPI {
+export interface IUseToastListAPI {
   /**
    * {@link ToastListAPI} を作成します。
    *
@@ -478,7 +478,7 @@ export { ToastListAPI as ListAPI, useToastListAPI as useListAPI };
 // Component
 // ---------
 
-interface IToastList extends IComponent<ToastListProps> {
+export interface IToastList extends IComponent<ToastListProps> {
   /**
    * @template TData 通知に含める追加データの型です。
    */
@@ -498,7 +498,7 @@ const ToastList: IToastList = function SuiToastList(props: ToastListProps) {
   );
 };
 
-interface IToast extends IComponent<ToastProps> {
+export interface IToast extends IComponent<ToastProps> {
   /**
    * @template TData 通知に含める追加データの型です。
    */

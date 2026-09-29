@@ -85,7 +85,7 @@ export type DrawerRootProps<TPayload = any> = DrawerRootProps.Render &
   DrawerRootProps.BaseUI<TPayload> &
   DrawerRootProps.HTML<TPayload>;
 
-interface IDrawerRoot extends IComponent<DrawerRootProps> {
+export interface IDrawerRoot extends IComponent<DrawerRootProps> {
   /**
    * @template TPayload トリガーが送信するデータの型です。
    */

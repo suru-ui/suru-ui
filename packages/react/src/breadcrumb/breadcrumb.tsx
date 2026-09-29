@@ -209,7 +209,7 @@ export class BreadcrumbAPI<TItem = any> {
   }
 }
 
-interface IUseBreadcrumbAPI {
+export interface IUseBreadcrumbAPI {
   /**
    * {@link BreadcrumbAPI} を作成します。
    *
@@ -232,7 +232,7 @@ export { BreadcrumbAPI as API, useBreadcrumbAPI as useAPI };
 // Component
 // ---------
 
-interface IBreadcrumb extends IComponent<BreadcrumbProps> {
+export interface IBreadcrumb extends IComponent<BreadcrumbProps> {
   /**
    * @template TItem 項目の型です。
    */

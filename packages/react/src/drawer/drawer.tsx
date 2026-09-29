@@ -582,7 +582,7 @@ export class DrawerAPI<TPayload = any> {
   }
 }
 
-interface IUseDrawerAPI {
+export interface IUseDrawerAPI {
   /**
    * {@link DrawerAPI} を作成します。
    *
@@ -612,7 +612,7 @@ export { DrawerAPI as API, useDrawerAPI as useAPI };
 // Component
 // ---------
 
-interface IDrawer extends IComponent<DrawerProps> {
+export interface IDrawer extends IComponent<DrawerProps> {
   /**
    * @template TPayload トリガーが送信するデータの型です。
    */

@@ -199,7 +199,7 @@ export class StatAPI {
   }
 }
 
-interface IUseStatAPI {
+export interface IUseStatAPI {
   /**
    * {@link StatAPI} を作成します。
    *

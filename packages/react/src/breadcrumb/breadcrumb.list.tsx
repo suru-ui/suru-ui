@@ -63,7 +63,7 @@ export type BreadcrumbListProps<TItem = any> = BreadcrumbListProps.Render &
   BreadcrumbListProps.BaseUI &
   BreadcrumbListProps.HTML;
 
-interface IBreadcrumbList extends IComponent<BreadcrumbListProps> {
+export interface IBreadcrumbList extends IComponent<BreadcrumbListProps> {
   /**
    * @template TItem 項目の型です。
    */

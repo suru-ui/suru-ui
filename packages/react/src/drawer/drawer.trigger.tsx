@@ -51,7 +51,7 @@ export type DrawerTriggerProps<TPayload = any> = DrawerTriggerProps.Render &
   DrawerTriggerProps.BaseUI<TPayload> &
   DrawerTriggerProps.HTML<TPayload>;
 
-interface IDrawerTrigger extends IComponent<DrawerTriggerProps> {
+export interface IDrawerTrigger extends IComponent<DrawerTriggerProps> {
   /**
    * @template TPayload トリガーが送信するデータの型です。
    */

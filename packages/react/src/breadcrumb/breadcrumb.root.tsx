@@ -88,7 +88,7 @@ export type BreadcrumbRootProps<TItem = any> = BreadcrumbRootProps.Render &
   BreadcrumbRootProps.BaseUI &
   BreadcrumbRootProps.HTML;
 
-interface IBreadcrumbRoot extends IComponent<BreadcrumbRootProps> {
+export interface IBreadcrumbRoot extends IComponent<BreadcrumbRootProps> {
   /**
    * @template TItem 項目の型です。
    */

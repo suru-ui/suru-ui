@@ -63,7 +63,7 @@ export class BadgeAPI {
   }
 }
 
-interface IUseBadgeAPI {
+export interface IUseBadgeAPI {
   /**
    * {@link BadgeAPI} を作成します。
    *

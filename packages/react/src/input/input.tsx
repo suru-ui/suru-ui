@@ -66,7 +66,7 @@ export class InputAPI {
   }
 }
 
-interface IUseInputAPI {
+export interface IUseInputAPI {
   /**
    * {@link InputAPI} を作成します。
    *

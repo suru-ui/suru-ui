@@ -151,7 +151,7 @@ export type SliderRootProps<
 /**
  * {@link SliderRoot} のコンポーネント型です。
  */
-interface ISliderRoot extends IComponent<SliderRootProps> {
+export interface ISliderRoot extends IComponent<SliderRootProps> {
   /**
    * @template TValue 値の型です。
    */

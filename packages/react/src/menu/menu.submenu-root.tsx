@@ -74,7 +74,7 @@ export type MenuSubmenuRootProps<TItem = any> = MenuSubmenuRootProps.Render &
   MenuSubmenuRootProps.BaseUI &
   MenuSubmenuRootProps.HTML;
 
-interface IMenuSubmenuRoot extends IComponent<MenuSubmenuRootProps> {
+export interface IMenuSubmenuRoot extends IComponent<MenuSubmenuRootProps> {
   /**
    * @template TItem 項目の型です。
    */

@@ -100,7 +100,7 @@ export class FieldsetAPI {
   }
 }
 
-interface IUseFieldsetAPI {
+export interface IUseFieldsetAPI {
   /**
    * {@link FieldsetAPI} を作成します。
    *

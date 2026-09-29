@@ -117,7 +117,7 @@ export type TooltipRootProps<TPayload = any> = TooltipRootProps.Render &
 /**
  * {@link TooltipRoot} のコンポーネント型です。
  */
-interface ITooltipRoot extends IComponent<TooltipRootProps> {
+export interface ITooltipRoot extends IComponent<TooltipRootProps> {
   /**
    * @template TPayload トリガーから受け取るデータの型です。
    */

@@ -71,7 +71,7 @@ export class RadioGroupAPI<TValue = any> {
   }
 }
 
-interface IUseRadioGroupAPI {
+export interface IUseRadioGroupAPI {
   /**
    * {@link RadioGroupAPI} を作成します。
    *
@@ -96,7 +96,7 @@ export { type RadioGroupAPI as API, useRadioGroupAPI as useAPI };
 // Component
 // ---------
 
-interface IRadioGroup extends IComponent<RadioGroupProps> {
+export interface IRadioGroup extends IComponent<RadioGroupProps> {
   /**
    * @template TValue 項目の値の型です。
    */

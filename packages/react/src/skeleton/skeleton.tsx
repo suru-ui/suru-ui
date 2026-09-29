@@ -51,7 +51,7 @@ export class SkeletonAPI {
   }
 }
 
-interface IUseSkeletonAPI {
+export interface IUseSkeletonAPI {
   /**
    * {@link SkeletonAPI} を作成します。
    *

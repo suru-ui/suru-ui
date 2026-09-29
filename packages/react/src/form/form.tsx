@@ -62,7 +62,7 @@ export class FormAPI<TValues extends FormValues = FormValues> {
   }
 }
 
-interface IUseFormAPI {
+export interface IUseFormAPI {
   /**
    * {@link FormAPI} を作成します。
    *
@@ -87,7 +87,7 @@ export { FormAPI as API, useFormAPI as useAPI };
 // Component
 // ---------
 
-interface IForm extends IComponent<FormProps> {
+export interface IForm extends IComponent<FormProps> {
   /**
    * @template TValues フォームの入力値を表す型です。
    */

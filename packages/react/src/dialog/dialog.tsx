@@ -570,7 +570,7 @@ export class DialogAPI<TPayload = any> {
   }
 }
 
-interface IUseDialogAPI {
+export interface IUseDialogAPI {
   /**
    * {@link DialogAPI} を作成します。
    *
@@ -600,7 +600,7 @@ export { DialogAPI as API, useDialogAPI as useAPI };
 // Component
 // ---------
 
-interface IDialog extends IComponent<DialogProps> {
+export interface IDialog extends IComponent<DialogProps> {
   /**
    * @template TPayload トリガーが送信するデータの型です。
    */

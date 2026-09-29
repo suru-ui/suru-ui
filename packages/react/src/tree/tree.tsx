@@ -186,7 +186,7 @@ export class TreeAPI {
   }
 }
 
-interface IUseTreeAPI {
+export interface IUseTreeAPI {
   /**
    * {@link TreeAPI} を作成します。
    *

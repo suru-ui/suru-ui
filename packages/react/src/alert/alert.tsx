@@ -205,7 +205,7 @@ export class AlertAPI {
   }
 }
 
-interface IUseAlertAPI {
+export interface IUseAlertAPI {
   /**
    * {@link AlertAPI} を作成します。
    *

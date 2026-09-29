@@ -345,7 +345,7 @@ export { PopoverAPI as API, usePopoverAPI as useAPI };
 // Component
 // ---------
 
-interface IPopover extends IComponent<PopoverProps> {
+export interface IPopover extends IComponent<PopoverProps> {
   /**
    * @template TPayload トリガーが送信するデータの型です。
    */

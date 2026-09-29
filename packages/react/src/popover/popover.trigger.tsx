@@ -66,7 +66,7 @@ export type PopoverTriggerProps<TPayload = any> = PopoverTriggerProps.Render &
 /**
  * {@link PopoverTrigger} のコンポーネント型です。
  */
-interface IPopoverTrigger extends IComponent<PopoverTriggerProps> {
+export interface IPopoverTrigger extends IComponent<PopoverTriggerProps> {
   /**
    * @template TPayload トリガーから渡すデータの型です。
    */

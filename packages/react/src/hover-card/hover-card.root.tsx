@@ -137,7 +137,7 @@ export type HoverCardRootProps<TPayload = any> = HoverCardRootProps.Render &
 /**
  * {@link HoverCardRoot} のコンポーネント型です。
  */
-interface IHoverCardRoot extends IComponent<HoverCardRootProps> {
+export interface IHoverCardRoot extends IComponent<HoverCardRootProps> {
   /**
    * @template TPayload トリガーから受け取るデータの型です。
    */

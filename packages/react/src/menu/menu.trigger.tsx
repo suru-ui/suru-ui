@@ -62,7 +62,7 @@ export type MenuTriggerProps<TPayload = any> = MenuTriggerProps.Render &
   MenuTriggerProps.BaseUI<TPayload> &
   MenuTriggerProps.HTML<TPayload>;
 
-interface IMenuTrigger extends IComponent<MenuTriggerProps> {
+export interface IMenuTrigger extends IComponent<MenuTriggerProps> {
   /**
    * @template TPayload 開いたときに渡される値の型です。
    */

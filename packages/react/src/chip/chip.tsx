@@ -57,7 +57,7 @@ export class ChipAPI {
   }
 }
 
-interface IUseChipAPI {
+export interface IUseChipAPI {
   /**
    * {@link ChipAPI} を作成します。
    *

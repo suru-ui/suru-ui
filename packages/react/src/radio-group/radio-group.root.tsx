@@ -156,7 +156,7 @@ export type RadioGroupRootProps<TValue = any> = RadioGroupRootProps.Render &
 /**
  * ラジオボタングループのルートコンポーネントです。
  */
-interface IRadioGroupRoot extends IComponent<RadioGroupRootProps> {
+export interface IRadioGroupRoot extends IComponent<RadioGroupRootProps> {
   /**
    * @template TValue 項目の値の型です。
    */

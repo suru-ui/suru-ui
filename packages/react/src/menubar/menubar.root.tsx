@@ -100,7 +100,7 @@ export type MenubarRootProps<TItem = any> = MenubarRootProps.Render &
   MenubarRootProps.BaseUI &
   MenubarRootProps.HTML;
 
-interface IMenubarRoot extends IComponent<MenubarRootProps> {
+export interface IMenubarRoot extends IComponent<MenubarRootProps> {
   /**
    * @template TItem 項目の型です。
    */

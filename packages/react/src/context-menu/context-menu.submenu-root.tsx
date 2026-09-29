@@ -75,7 +75,7 @@ export type ContextMenuSubmenuRootProps<TItem = any> = ContextMenuSubmenuRootPro
   ContextMenuSubmenuRootProps.BaseUI &
   ContextMenuSubmenuRootProps.HTML;
 
-interface IContextMenuSubmenuRoot extends IComponent<ContextMenuSubmenuRootProps> {
+export interface IContextMenuSubmenuRoot extends IComponent<ContextMenuSubmenuRootProps> {
   /**
    * @template TItem 項目の型です。
    */

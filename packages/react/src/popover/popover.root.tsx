@@ -115,7 +115,7 @@ export type PopoverRootProps<TPayload = any> = PopoverRootProps.Render &
 /**
  * {@link PopoverRoot} のコンポーネント型です。
  */
-interface IPopoverRoot extends IComponent<PopoverRootProps> {
+export interface IPopoverRoot extends IComponent<PopoverRootProps> {
   /**
    * @template TPayload トリガーから受け取るデータの型です。
    */

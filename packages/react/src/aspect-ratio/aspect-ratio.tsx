@@ -51,7 +51,7 @@ export class AspectRatioAPI {
   }
 }
 
-interface IUseAspectRatioAPI {
+export interface IUseAspectRatioAPI {
   /**
    * {@link AspectRatioAPI} を作成します。
    *

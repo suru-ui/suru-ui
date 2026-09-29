@@ -832,7 +832,7 @@ export { AutocompleteAPI as API, useAutocompleteAPI as useAPI };
 // Component
 // ---------
 
-interface IAutocomplete extends IComponent<AutocompleteProps> {
+export interface IAutocomplete extends IComponent<AutocompleteProps> {
   /**
    * @template TItem 項目の値の型です。
    */

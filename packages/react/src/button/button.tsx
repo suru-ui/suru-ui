@@ -198,7 +198,7 @@ export class ButtonAPI {
   }
 }
 
-interface IUseButtonAPI {
+export interface IUseButtonAPI {
   /**
    * {@link ButtonAPI} を作成します。
    *
@@ -220,7 +220,7 @@ export { ButtonAPI as API, useButtonAPI as useAPI };
 // Component
 // ---------
 
-interface IButton extends IComponent<ButtonProps> {
+export interface IButton extends IComponent<ButtonProps> {
   readonly useContext: IUseButtonContext;
 }
 

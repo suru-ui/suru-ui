@@ -51,7 +51,7 @@ export class ImageAPI {
   }
 }
 
-interface IUseImageAPI {
+export interface IUseImageAPI {
   /**
    * {@link ImageAPI} を作成します。
    *

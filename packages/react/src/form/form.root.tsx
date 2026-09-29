@@ -73,7 +73,7 @@ export type FormRootProps<TValues extends FormRootValues = FormRootValues> = For
   FormRootProps.BaseUI<TValues> &
   FormRootProps.HTML<TValues>;
 
-interface IFormRoot extends IComponent<FormRootProps> {
+export interface IFormRoot extends IComponent<FormRootProps> {
   /**
    * @template TValues フォームの入力値を表す型です。
    */

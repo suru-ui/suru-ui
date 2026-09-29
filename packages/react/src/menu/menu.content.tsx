@@ -92,7 +92,7 @@ export type MenuContentProps<TItem = any> = MenuContentProps.Render &
   MenuContentProps.BaseUI &
   MenuContentProps.HTML;
 
-interface IMenuContent extends IComponent<MenuContentProps> {
+export interface IMenuContent extends IComponent<MenuContentProps> {
   /**
    * @template TItem 項目の型です。
    */

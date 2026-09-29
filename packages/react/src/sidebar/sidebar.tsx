@@ -116,7 +116,7 @@ export class SidebarAPI {
   }
 }
 
-interface IUseSidebarAPI {
+export interface IUseSidebarAPI {
   /**
    * {@link SidebarAPI} を作成します。
    *
@@ -144,7 +144,7 @@ export { SidebarAPI as API, useSidebarAPI as useAPI };
  * 呼び出しは {@link Sidebar.Provider} と同じです。子要素には
  * {@link Sidebar.Root}、{@link Sidebar.Trigger}、{@link Sidebar.Inset} を配置します。
  */
-interface ISidebar extends IComponent<SidebarProps> {
+export interface ISidebar extends IComponent<SidebarProps> {
   /**
    * サイドバーのスクロール領域です。
    */

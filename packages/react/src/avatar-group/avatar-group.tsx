@@ -131,7 +131,7 @@ export class AvatarGroupAPI {
   }
 }
 
-interface IUseAvatarGroupAPI {
+export interface IUseAvatarGroupAPI {
   /**
    * {@link AvatarGroupAPI} を作成します。
    *
@@ -153,7 +153,7 @@ export { AvatarGroupAPI as API, useAvatarGroupAPI as useAPI };
 // Component
 // ---------
 
-interface IAvatarGroup extends IComponent<AvatarGroupProps> {
+export interface IAvatarGroup extends IComponent<AvatarGroupProps> {
   /**
    * {@link AvatarGroupContext} を読み取るフックです。
    */

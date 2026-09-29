@@ -67,7 +67,7 @@ export class CheckboxGroupAPI {
   }
 }
 
-interface IUseCheckboxGroupAPI {
+export interface IUseCheckboxGroupAPI {
   /**
    * {@link CheckboxGroupAPI} を作成します。
    *
@@ -89,7 +89,7 @@ export { type CheckboxGroupAPI as API, useCheckboxGroupAPI as useAPI };
 // Component
 // ---------
 
-interface ICheckboxGroup extends IComponent<CheckboxGroupProps> {
+export interface ICheckboxGroup extends IComponent<CheckboxGroupProps> {
   readonly useContext: IUseCheckboxGroupContext;
 }
 

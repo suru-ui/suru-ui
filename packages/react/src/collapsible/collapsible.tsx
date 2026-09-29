@@ -142,7 +142,7 @@ export class CollapsibleAPI {
   }
 }
 
-interface IUseCollapsibleAPI {
+export interface IUseCollapsibleAPI {
   /**
    * {@link CollapsibleAPI} を作成します。
    *
@@ -164,7 +164,7 @@ export { CollapsibleAPI as API, useCollapsibleAPI as useAPI };
 // Component
 // ---------
 
-interface ICollapsible extends IComponent<CollapsibleProps> {
+export interface ICollapsible extends IComponent<CollapsibleProps> {
   readonly Indicator: ICollapsibleIndicator;
 }
 

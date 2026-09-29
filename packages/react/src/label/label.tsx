@@ -51,7 +51,7 @@ export class LabelAPI {
   }
 }
 
-interface IUseLabelAPI {
+export interface IUseLabelAPI {
   /**
    * {@link LabelAPI} を作成します。
    *

@@ -92,7 +92,7 @@ export type ContextMenuContentProps<TItem = any> = ContextMenuContentProps.Rende
   ContextMenuContentProps.BaseUI &
   ContextMenuContentProps.HTML;
 
-interface IContextMenuContent extends IComponent<ContextMenuContentProps> {
+export interface IContextMenuContent extends IComponent<ContextMenuContentProps> {
   /**
    * @template TItem 項目の型です。
    */

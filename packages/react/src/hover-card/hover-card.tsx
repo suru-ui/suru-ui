@@ -385,7 +385,7 @@ export { HoverCardAPI as API, useHoverCardAPI as useAPI };
 // Component
 // ---------
 
-interface IHoverCard extends IComponent<HoverCardProps> {
+export interface IHoverCard extends IComponent<HoverCardProps> {
   /**
    * @template TPayload トリガーから受け取るデータの型です。
    */

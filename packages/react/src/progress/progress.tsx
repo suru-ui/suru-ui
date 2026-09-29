@@ -186,7 +186,7 @@ export class ProgressAPI {
   }
 }
 
-interface IUseProgressAPI {
+export interface IUseProgressAPI {
   /**
    * {@link ProgressAPI} を作成します。
    *

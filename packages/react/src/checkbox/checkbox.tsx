@@ -107,7 +107,7 @@ export class CheckboxAPI {
   }
 }
 
-interface IUseCheckboxAPI {
+export interface IUseCheckboxAPI {
   /**
    * {@link CheckboxAPI} を作成します。
    *

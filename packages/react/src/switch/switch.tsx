@@ -107,7 +107,7 @@ export class SwitchAPI {
   }
 }
 
-interface IUseSwitchAPI {
+export interface IUseSwitchAPI {
   /**
    * {@link SwitchAPI} を作成します。
    *

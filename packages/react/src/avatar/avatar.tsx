@@ -150,7 +150,7 @@ export class AvatarAPI {
   }
 }
 
-interface IUseAvatarAPI {
+export interface IUseAvatarAPI {
   /**
    * {@link AvatarAPI} を作成します。
    *

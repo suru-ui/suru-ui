@@ -218,7 +218,7 @@ export class ScrollAreaAPI {
   }
 }
 
-interface IUseScrollAreaAPI {
+export interface IUseScrollAreaAPI {
   /**
    * {@link ScrollAreaAPI} を作成します。
    *

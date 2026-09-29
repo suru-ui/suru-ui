@@ -107,7 +107,7 @@ export class StatusAPI {
   }
 }
 
-interface IUseStatusAPI {
+export interface IUseStatusAPI {
   /**
    * {@link StatusAPI} を作成します。
    *

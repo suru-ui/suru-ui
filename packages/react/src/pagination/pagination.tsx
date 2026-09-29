@@ -254,7 +254,7 @@ export class PaginationAPI {
   }
 }
 
-interface IUsePaginationAPI {
+export interface IUsePaginationAPI {
   /**
    * {@link PaginationAPI} を作成します。
    *

@@ -59,7 +59,7 @@ export class ResizableAPI {
   }
 }
 
-interface IUseResizableAPI {
+export interface IUseResizableAPI {
   /**
    * {@link ResizableAPI} を作成します。
    *

@@ -83,7 +83,7 @@ export type MenuRadioGroupProps<TItem = any> = MenuRadioGroupProps.Render &
   MenuRadioGroupProps.BaseUI &
   MenuRadioGroupProps.HTML;
 
-interface IMenuRadioGroup extends IComponent<MenuRadioGroupProps> {
+export interface IMenuRadioGroup extends IComponent<MenuRadioGroupProps> {
   /**
    * @template TItem 項目の型です。
    */

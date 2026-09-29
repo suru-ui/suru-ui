@@ -319,7 +319,7 @@ export type MenuRootProps<TPayload = any, TItem = any> = MenuRootProps.Render &
   MenuRootProps.BaseUI<TPayload> &
   MenuRootProps.HTML<TPayload>;
 
-interface IMenuRoot extends IComponent<MenuRootProps> {
+export interface IMenuRoot extends IComponent<MenuRootProps> {
   /**
    * @template TPayload 開いたときに渡される値の型です。
    * @template TItem 項目の型です。

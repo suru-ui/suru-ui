@@ -101,7 +101,7 @@ export class RadioAPI {
   }
 }
 
-interface IUseRadioAPI {
+export interface IUseRadioAPI {
   /**
    * {@link RadioAPI} を作成します。
    *

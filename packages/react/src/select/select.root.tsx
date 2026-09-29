@@ -224,7 +224,7 @@ export type SelectRootProps<
   SelectRootProps.BaseUI<TValue, TMultiple> &
   SelectRootProps.HTML<TValue, TMultiple>;
 
-interface ISelectRoot extends IComponent<SelectRootProps> {
+export interface ISelectRoot extends IComponent<SelectRootProps> {
   /**
    * @template TValue 項目の値の型です。
    * @template TMultiple 複数選択を有効にするかどうかです。
