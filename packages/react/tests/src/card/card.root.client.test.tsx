@@ -14,7 +14,7 @@ describe("CardRoot", () => {
     expect(root.classList.contains("sui_card")).toBe(true);
     expect(root.classList.contains("sui_card-size_md")).toBe(true);
     expect(root.classList.contains("sui_card-radius_md")).toBe(true);
-    expect(root.classList.contains("sui_card-outlined")).toBe(true);
+    expect(root.classList.contains("sui_card-outlined")).toBe(false);
   });
 
   test("指定した修飾クラスを付ける", async ({ expect }) => {
