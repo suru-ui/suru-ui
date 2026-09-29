@@ -7,22 +7,24 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  corner-shape: superellipse(var(--sui-superellipse));
 }
 
 /* 変数 */
 :scope {
   --sui_accordion-border_radius: ;
+  --sui_accordion-corner_shape: ;
 }
 
 /* 可変 */
 :scope {
   border-radius: var(--sui_accordion-border_radius);
+  corner-shape: var(--sui_accordion-corner_shape);
 }
 
 /* 代入 */
 :scope {
-  --sui_accordion-border_radius: var(--sui-radius-md);
+  --sui_accordion-border_radius: --sui-corner_radius(3);
+  --sui_accordion-corner_shape: superellipse(var(--sui-superellipse));
 
   &.sui_accordion-radius_none {
     --sui_accordion-border_radius: 0px;
@@ -116,6 +118,7 @@
   --sui_accordion_heading-color: ;
   --sui_accordion_heading-letter_spacing: ;
   --sui_accordion_heading-border_radius: ;
+  --sui_accordion_heading-corner_shape: ;
   --sui_accordion_heading__svg-size: ;
   --sui_accordion_heading__svg-color: ;
 }
@@ -146,11 +149,13 @@
   .sui_accordion_item:first-child .sui_accordion_heading {
     border-top-left-radius: var(--sui_accordion_heading-border_radius);
     border-top-right-radius: var(--sui_accordion_heading-border_radius);
+    corner-shape: var(--sui_accordion_heading-corner_shape);
   }
 
   .sui_accordion_item:last-child .sui_accordion_heading {
     border-bottom-right-radius: var(--sui_accordion_heading-border_radius);
     border-bottom-left-radius: var(--sui_accordion_heading-border_radius);
+    corner-shape: var(--sui_accordion_heading-corner_shape);
   }
 }
 
@@ -159,6 +164,7 @@
   --sui_accordion_heading-font_family: var(--sui-font-sans);
   --sui_accordion_heading-color: var(--sui-canvas_text-1);
   --sui_accordion_heading-border_radius: var(--sui_accordion-border_radius);
+  --sui_accordion_heading-corner_shape: var(--sui_accordion-corner_shape);
   --sui_accordion_heading__svg-size: calc(
                                        var(--sui_accordion_heading-font_size)
                                        * var(--sui_accordion_heading-line_height)
@@ -240,6 +246,7 @@
   --sui_accordion_trigger-focusring_color: ;
   --sui_accordion_trigger-focusring_offset: ;
   --sui_accordion_trigger-border_radius: ;
+  --sui_accordion_trigger-corner_shape: ;
   --sui_accordion_trigger__svg-size: ;
   --sui_accordion_trigger__svg-color: ;
 }
@@ -273,12 +280,14 @@
   .sui_accordion_item:first-child .sui_accordion_trigger:not(.sui_accordion_trigger-unstyled) {
     border-top-left-radius: var(--sui_accordion_trigger-border_radius);
     border-top-right-radius: var(--sui_accordion_trigger-border_radius);
+    corner-shape: var(--sui_accordion_trigger-corner_shape);
   }
 
   .sui_accordion_item:last-child:not(.sui_accordion_item-open)
     .sui_accordion_trigger:not(.sui_accordion_trigger-unstyled) {
     border-bottom-right-radius: var(--sui_accordion_trigger-border_radius);
     border-bottom-left-radius: var(--sui_accordion_trigger-border_radius);
+    corner-shape: var(--sui_accordion_trigger-corner_shape);
   }
 }
 
@@ -293,6 +302,7 @@
   --sui_accordion_trigger-focusring_color: var(--sui-focusring_color);
   --sui_accordion_trigger-focusring_offset: var(--sui-focusring_offset);
   --sui_accordion_trigger-border_radius: var(--sui_accordion-border_radius);
+  --sui_accordion_trigger-corner_shape: var(--sui_accordion-corner_shape);
   --sui_accordion_trigger__svg-size: calc(
                                        var(--sui_accordion_trigger-font_size)
                                        * var(--sui_accordion_trigger-line_height)
@@ -445,6 +455,7 @@
   --sui_accordion_content-color: ;
   --sui_accordion_content-letter_spacing: ;
   --sui_accordion_content-border_radius: ;
+  --sui_accordion_content-corner_shape: ;
   --sui_accordion_content-transition_timing_function: ;
   --sui_accordion_content-transition_duration: ;
 }
@@ -473,6 +484,7 @@
   .sui_accordion_item:last-child.sui_accordion_item-open .sui_accordion_content {
     border-bottom-right-radius: var(--sui_accordion_content-border_radius);
     border-bottom-left-radius: var(--sui_accordion_content-border_radius);
+    corner-shape: var(--sui_accordion_content-corner_shape);
   }
 }
 
@@ -481,6 +493,7 @@
   --sui_accordion_content-font_family: var(--sui-font-sans);
   --sui_accordion_content-color: var(--sui-canvas_text-1);
   --sui_accordion_content-border_radius: var(--sui_accordion-border_radius);
+  --sui_accordion_content-corner_shape: var(--sui_accordion-corner_shape);
   --sui_accordion_content-transition_timing_function: cubic-bezier(0.25, 0.7, 0.3, 1);
   --sui_accordion_content-transition_duration: 240ms;
 

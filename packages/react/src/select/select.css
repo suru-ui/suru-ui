@@ -89,6 +89,7 @@
   --sui_select-border_width-idle: ;
   --sui_select-border_width-invalid: ;
   --sui_select-border_radius: ;
+  --sui_select-corner_shape: ;
 }
 
 /* 可変 */
@@ -110,6 +111,7 @@
   border-color: var(--_sui_select-border_color, transparent);
   border-width: var(--_sui_select-border_width, 0px);
   border-radius: var(--sui_select-border_radius);
+  corner-shape: var(--sui_select-corner_shape);
 }
 
 /* 代入 */
@@ -155,19 +157,23 @@
   }
 
   &.sui_select-radius_sm {
-    --sui_select-border_radius: var(--sui-radius-sm);
+    --sui_select-border_radius: --sui-corner_radius(1);
+    --sui_select-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_select-radius_md {
-    --sui_select-border_radius: var(--sui-radius-md);
+    --sui_select-border_radius: --sui-corner_radius(2);
+    --sui_select-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_select-radius_lg {
-    --sui_select-border_radius: var(--sui-radius-lg);
+    --sui_select-border_radius: --sui-corner_radius(3);
+    --sui_select-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_select-radius_full {
     --sui_select-border_radius: calc(var(--sui_select-min_height) / 2);
+    --sui_select-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_select-variant_naked {
@@ -429,6 +435,7 @@
   --sui_select_content-border_color: ;
   --sui_select_content-border_width: ;
   --sui_select_content-border_radius: ;
+  --sui_select_content-corner_shape: ;
   --sui_select_content-opacity: ;
   --sui_select_content-transform_origin: ;
   --sui_select_content-scale: ;
@@ -450,6 +457,7 @@
     border-color: var(--sui_select_content-border_color);
     border-width: var(--sui_select_content-border_width);
     border-radius: var(--sui_select_content-border_radius);
+    corner-shape: var(--sui_select_content-corner_shape);
     opacity: var(--_sui_select_content-opacity, var(--sui_select_content-opacity));
     transform-origin: var(--sui_select_content-transform_origin);
     scale: var(--_sui_select_content-scale, var(--sui_select_content-scale));
@@ -468,7 +476,8 @@
   --sui_select_content-background_color: var(--sui-canvas-2);
   --sui_select_content-border_color: var(--sui-grey-naked-border-normal);
   --sui_select_content-border_width: --sui-border_width(1);
-  --sui_select_content-border_radius: var(--sui-radius-md);
+  --sui_select_content-border_radius: --sui-corner_radius(3);
+  --sui_select_content-corner_shape: superellipse(var(--sui-superellipse));
   --sui_select_content-opacity: 1;
   --sui_select_content-scale: 1;
 
@@ -507,19 +516,23 @@
   }
 
   &.sui_select_portal-radius_sm {
-    --sui_select_content-border_radius: var(--sui-radius-sm);
+    --sui_select_content-border_radius: --sui-corner_radius(2);
+    --sui_select_content-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_select_portal-radius_md {
-    --sui_select_content-border_radius: var(--sui-radius-md);
+    --sui_select_content-border_radius: --sui-corner_radius(3);
+    --sui_select_content-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_select_portal-radius_lg {
-    --sui_select_content-border_radius: var(--sui-radius-lg);
+    --sui_select_content-border_radius: --sui-corner_radius(4);
+    --sui_select_content-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_select_portal-radius_full {
-    --sui_select_content-border_radius: var(--sui-radius-lg);
+    --sui_select_content-border_radius: --sui-corner_radius(4);
+    --sui_select_content-corner_shape: superellipse(var(--sui-superellipse));
   }
 }
 
@@ -558,6 +571,7 @@
   --sui_select_scroll_up_arrow-background_color: ;
   --sui_select_scroll_up_arrow-background_image: ;
   --sui_select_scroll_up_arrow-border_radius: ;
+  --sui_select_scroll_up_arrow-corner_shape: ;
   --sui_select_scroll_up_arrow__svg-size: ;
   --sui_select_scroll_up_arrow__svg-color: ;
 }
@@ -569,6 +583,7 @@
     background-image: var(--sui_select_scroll_up_arrow-background_image);
     border-top-left-radius: var(--sui_select_scroll_up_arrow-border_radius);
     border-top-right-radius: var(--sui_select_scroll_up_arrow-border_radius);
+    corner-shape: var(--sui_select_scroll_up_arrow-corner_shape);
 
     svg:not(.sui-ignore) {
       width: var(--sui_select_scroll_up_arrow__svg-size);
@@ -591,6 +606,7 @@
                                                     transparent
                                                   );
   --sui_select_scroll_up_arrow-border_radius: var(--sui_select_content-border_radius);
+  --sui_select_scroll_up_arrow-corner_shape: var(--sui_select_content-corner_shape);
   --sui_select_scroll_up_arrow__svg-size: var(--sui_select_scroll_up_arrow-size);
   --sui_select_scroll_up_arrow__svg-color: --sui-icon_color(
                                              var(--sui_select_content-color),
@@ -624,6 +640,7 @@
   --sui_select_scroll_down_arrow-background_color: ;
   --sui_select_scroll_down_arrow-background_image: ;
   --sui_select_scroll_down_arrow-border_radius: ;
+  --sui_select_scroll_down_arrow-corner_shape: ;
   --sui_select_scroll_down_arrow__svg-size: ;
   --sui_select_scroll_down_arrow__svg-color: ;
 }
@@ -635,6 +652,7 @@
     background-image: var(--sui_select_scroll_down_arrow-background_image);
     border-bottom-right-radius: var(--sui_select_scroll_down_arrow-border_radius);
     border-bottom-left-radius: var(--sui_select_scroll_down_arrow-border_radius);
+    corner-shape: var(--sui_select_scroll_down_arrow-corner_shape);
 
     svg:not(.sui-ignore) {
       width: var(--sui_select_scroll_down_arrow__svg-size);
@@ -657,6 +675,7 @@
                                                       transparent
                                                     );
   --sui_select_scroll_down_arrow-border_radius: var(--sui_select_content-border_radius);
+  --sui_select_scroll_down_arrow-corner_shape: var(--sui_select_content-corner_shape);
   --sui_select_scroll_down_arrow__svg-size: var(--sui_select_scroll_down_arrow-size);
   --sui_select_scroll_down_arrow__svg-color: --sui-icon_color(
                                                var(--sui_select_content-color),

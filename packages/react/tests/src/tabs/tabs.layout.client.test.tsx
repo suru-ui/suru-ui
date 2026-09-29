@@ -230,9 +230,9 @@ describe("Tabs の配置", () => {
     const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm [role=tab]")!);
     expect(sm.borderTopLeftRadius).toBe("4px");
     const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md [role=tab]")!);
-    expect(md.borderTopLeftRadius).toBe("4px");
+    expect(md.borderTopLeftRadius).toBe("8px");
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg [role=tab]")!);
-    expect(lg.borderTopLeftRadius).toBe("6px");
+    expect(lg.borderTopLeftRadius).toBe("12px");
   });
 
   test("区切り表示ではリストに背景を付ける", async ({ expect }) => {

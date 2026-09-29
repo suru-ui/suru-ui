@@ -191,7 +191,6 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
       className={cn(
         className,
         "sui_button",
-        "sui_action_group_item",
         `sui_button-size_${size}`,
         `sui_button-color_${color}`,
         `sui_button-radius_${radius}`,

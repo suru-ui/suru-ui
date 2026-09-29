@@ -175,6 +175,7 @@
   --sui_meter_track-border_color: ;
   --sui_meter_track-border_width: ;
   --sui_meter_track-border_radius: ;
+  --sui_meter_track-corner_shape: ;
 }
 
 /* 可変 */
@@ -185,6 +186,7 @@
     border-color: var(--_sui_meter_track-border_color, transparent);
     border-width: var(--_sui_meter_track-border_width, 0px);
     border-radius: var(--sui_meter_track-border_radius);
+    corner-shape: var(--sui_meter_track-corner_shape);
   }
 }
 
@@ -209,19 +211,23 @@
   }
 
   &.sui_meter-radius_sm {
-    --sui_meter_track-border_radius: var(--sui-radius-sm);
+    --sui_meter_track-border_radius: --sui-corner_radius(1);
+    --sui_meter_track-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_meter-radius_md {
-    --sui_meter_track-border_radius: var(--sui-radius-md);
+    --sui_meter_track-border_radius: --sui-corner_radius(2);
+    --sui_meter_track-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_meter-radius_lg {
-    --sui_meter_track-border_radius: var(--sui-radius-lg);
+    --sui_meter_track-border_radius: --sui-corner_radius(3);
+    --sui_meter_track-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_meter-radius_full {
     --sui_meter_track-border_radius: calc(var(--sui_meter_track-height) / 2);
+    --sui_meter_track-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_meter-variant_naked {
@@ -258,6 +264,7 @@
     inset-inline-start: 0px;
     display: block;
     border-radius: inherit;
+    corner-shape: inherit;
     transition: width 500ms;
   }
 }

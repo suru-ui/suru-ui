@@ -1,7 +1,6 @@
 import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { ActionGroupRoot } from "../../../src/action-group/action-group.root.jsx";
 import { FieldRoot } from "../../../src/field/field.root.jsx";
 import { NumberFieldInput } from "../../../src/number-field/number-field.input.jsx";
 import "../../../src/number-field/number-field.parts.js";
@@ -19,7 +18,6 @@ describe("NumberFieldRoot", () => {
     // 検証
     const root = screen.getByClassName("sui_number_field").element();
     expect(root.classList.contains("sui_number_field")).toBe(true);
-    expect(root.classList.contains("sui_action_group_item")).toBe(true);
     expect(root.classList.contains("sui_number_field-size_md")).toBe(true);
     expect(root.classList.contains("sui_number_field-color_grey")).toBe(true);
     expect(root.classList.contains("sui_number_field-radius_md")).toBe(true);
@@ -168,22 +166,6 @@ describe("NumberFieldRoot", () => {
     const inputs = screen.container.querySelectorAll<HTMLElement>(".sui_number_field_input");
     expect(inputs[0]?.classList.contains("sui_number_field_input-invalid")).toBe(true);
     expect(inputs[1]?.classList.contains("sui_number_field_input-unverified")).toBe(true);
-  });
-
-  test("ActionGroup のスタイルを引き継ぐ", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <ActionGroupRoot color="blue" outlined size="lg" variant="naked">
-        <NumberFieldRoot />
-      </ActionGroupRoot>,
-    );
-
-    // 検証
-    const root = screen.getByClassName("sui_number_field").element();
-    expect(root.classList.contains("sui_number_field-size_lg")).toBe(true);
-    expect(root.classList.contains("sui_number_field-color_blue")).toBe(true);
-    expect(root.classList.contains("sui_number_field-variant_naked")).toBe(true);
-    expect(root.classList.contains("sui_number_field-outlined")).toBe(true);
   });
 
   test("render で要素を置き換える", async ({ expect }) => {

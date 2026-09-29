@@ -29,6 +29,7 @@
   --sui_radio-border_color-checked: ;
   --sui_radio-border_width: ;
   --sui_radio-border_radius: ;
+  --sui_radio-corner_shape: ;
   --sui_radio-canvas-idle: ;
   --sui_radio-canvas-idle-checked: ;
   --sui_radio-canvas-hover: ;
@@ -48,6 +49,7 @@
   border-color: var(--_sui_radio-border_color, transparent);
   border-width: var(--_sui_radio-border_width, 0px);
   border-radius: var(--sui_radio-border_radius);
+  corner-shape: var(--sui_radio-corner_shape);
 }
 
 /* 代入 */
@@ -80,19 +82,28 @@
   }
 
   &.sui_radio-radius_sm {
-    --sui_radio-border_radius: var(--sui-radius-sm);
+    --sui_radio-border_radius: --sui-corner_radius(1);
+    --sui_radio-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_radio-radius_md {
-    --sui_radio-border_radius: var(--sui-radius-md);
+    --sui_radio-border_radius: --sui-corner_radius(2);
+    --sui_radio-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_radio-radius_lg {
-    --sui_radio-border_radius: var(--sui-radius-lg);
+    --sui_radio-border_radius: --sui-corner_radius(3);
+    --sui_radio-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_radio-radius_full {
     --sui_radio-border_radius: calc(var(--sui_radio-size) / 2);
+    --sui_radio-corner_shape: none;
+  }
+
+  &.sui_radio-radius_circle {
+    --sui_radio-border_radius: calc(var(--sui_radio-size) / 2);
+    --sui_radio-corner_shape: none;
   }
 
   &.sui_radio-color_grey {
@@ -252,6 +263,7 @@
   --sui_radio_indicator-size: ;
   --sui_radio_indicator-color: ;
   --sui_radio_indicator-border_radius: ;
+  --sui_radio_indicator-corner_shape: ;
   --sui_radio_indicator__svg-size: ;
   --sui_radio_indicator__svg-color: ;
 }
@@ -265,6 +277,7 @@
     color: var(--sui_radio_indicator-color);
     background-color: var(--sui_radio_indicator-color);
     border-radius: var(--sui_radio_indicator-border_radius);
+    corner-shape: var(--sui_radio_indicator-corner_shape);
 
     svg:not(.sui-ignore) {
       width: var(--sui_radio_indicator__svg-size);
@@ -278,6 +291,7 @@
 :scope {
   --sui_radio_indicator-display: none;
   --sui_radio_indicator-border_radius: calc(var(--sui_radio-size) / 2);
+  --sui_radio_indicator-corner_shape: none;
   --sui_radio_indicator__svg-size: 75%;
   --sui_radio_indicator__svg-color: var(--sui_radio_indicator-color);
 

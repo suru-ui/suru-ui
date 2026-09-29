@@ -149,6 +149,7 @@
   --sui_number_field_group-border_width-focus_visible: ;
   --sui_number_field_group-border_width-invalid: ;
   --sui_number_field_group-border_radius: ;
+  --sui_number_field_group-corner_shape: ;
 }
 
 /* 可変 */
@@ -162,11 +163,13 @@
     outline-offset: var(--sui_number_field_group-outline_offset);
     background-color: var(--sui_number_field_group-background_color);
     border-radius: var(--sui_number_field_group-border_radius);
+    corner-shape: var(--sui_number_field_group-corner_shape);
 
     &::after {
       border-color: var(--_sui_number_field_group-border_color, transparent);
       border-width: var(--_sui_number_field_group-border_width, 0px);
       border-radius: var(--sui_number_field_group-border_radius);
+      corner-shape: var(--sui_number_field_group-corner_shape);
     }
   }
 }
@@ -207,19 +210,23 @@
   }
 
   &.sui_number_field-radius_sm {
-    --sui_number_field_group-border_radius: var(--sui-radius-sm);
+    --sui_number_field_group-border_radius: --sui-corner_radius(1);
+    --sui_number_field_group-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_number_field-radius_md {
-    --sui_number_field_group-border_radius: var(--sui-radius-md);
+    --sui_number_field_group-border_radius: --sui-corner_radius(2);
+    --sui_number_field_group-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_number_field-radius_lg {
-    --sui_number_field_group-border_radius: var(--sui-radius-lg);
+    --sui_number_field_group-border_radius: --sui-corner_radius(3);
+    --sui_number_field_group-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_number_field-radius_full {
     --sui_number_field_group-border_radius: calc(var(--sui_number_field_group-min_height) / 2);
+    --sui_number_field_group-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_number_field-variant_naked {
@@ -562,6 +569,7 @@
   --sui_number_field_stepper-background_color-hover: ;
   --sui_number_field_stepper-background_color-active: ;
   --sui_number_field_stepper-border_radius: ;
+  --sui_number_field_stepper-corner_shape: ;
   --sui_number_field_stepper__svg-size: ;
   --sui_number_field_stepper__svg-color: ;
 }
@@ -581,6 +589,7 @@
                         var(--sui_number_field_stepper-background_color-idle)
                       );
     border-radius: var(--sui_number_field_stepper-border_radius);
+    corner-shape: var(--sui_number_field_stepper-corner_shape);
 
     svg:not(.sui-ignore) {
       width: var(--sui_number_field_stepper__svg-size);
@@ -645,19 +654,23 @@
   }
 
   &.sui_number_field-radius_sm {
-    --sui_number_field_stepper-border_radius: var(--sui-radius-sm);
+    --sui_number_field_stepper-border_radius: --sui-corner_radius(1);
+    --sui_number_field_stepper-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_number_field-radius_md {
-    --sui_number_field_stepper-border_radius: var(--sui-radius-md);
+    --sui_number_field_stepper-border_radius: --sui-corner_radius(2);
+    --sui_number_field_stepper-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_number_field-radius_lg {
-    --sui_number_field_stepper-border_radius: var(--sui-radius-lg);
+    --sui_number_field_stepper-border_radius: --sui-corner_radius(3);
+    --sui_number_field_stepper-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_number_field-radius_full {
     --sui_number_field_stepper-border_radius: calc(var(--sui_number_field_stepper-size) / 2);
+    --sui_number_field_stepper-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_number_field-variant_naked {
@@ -747,6 +760,7 @@
                         var(--sui_number_field_stepper-background_color-idle)
                       );
     border-radius: var(--sui_number_field_stepper-border_radius);
+    corner-shape: var(--sui_number_field_stepper-corner_shape);
 
     svg:not(.sui-ignore) {
       width: var(--sui_number_field_stepper__svg-size);

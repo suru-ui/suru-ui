@@ -31,20 +31,6 @@ export {
   decomposeAccordionItemObject,
 } from "./accordion/index.js";
 export {
-  type ActionGroupAPI,
-  type ActionGroupSize,
-  type ActionGroupColor,
-  type ActionGroupProps,
-  type ActionGroupState,
-  type ActionGroupRadius,
-  type ActionGroupVariant,
-  type ActionGroupOrientation,
-  ActionGroup,
-  useActionGroupAPI,
-  ActionGroupContext,
-  useActionGroupContext,
-} from "./action-group/index.js";
-export {
   type AlertAPI,
   type AlertSize,
   type AlertColor,

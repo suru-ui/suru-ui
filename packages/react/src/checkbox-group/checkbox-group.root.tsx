@@ -38,8 +38,9 @@ export type CheckboxGroupRootOrientation = "horizontal" | "vertical";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
+ * - `"circle"`: 完全な丸形
  */
-export type CheckboxGroupRootRadius = "none" | Size | "full";
+export type CheckboxGroupRootRadius = "none" | Size | "full" | "circle";
 
 /**
  * チェックボックスの大きさです。

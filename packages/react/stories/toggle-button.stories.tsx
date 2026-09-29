@@ -6,7 +6,7 @@ import { preview, controls } from "../.config/storybook/preview.js";
 import { ToggleButton } from "../src/toggle-button/index.js";
 
 const COLORS: readonly ToggleButton.Color[] = theme.COLORS;
-const RADII: readonly ToggleButton.Radius[] = ["none", ...theme.SIZES, "full"];
+const RADII: readonly ToggleButton.Radius[] = ["none", ...theme.SIZES, "full", "circle"];
 const SIZES: readonly ToggleButton.Size[] = theme.SIZES;
 const VARIANTS: readonly ToggleButton.Variant[] = ["naked", "liquid"];
 

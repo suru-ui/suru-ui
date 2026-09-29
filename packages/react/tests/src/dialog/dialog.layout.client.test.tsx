@@ -54,7 +54,7 @@ describe("Dialog の配置", () => {
     expect(style.paddingBlockStart).toBe("12.8px");
     expect(style.paddingInlineStart).toBe("12.8px");
     expect(style.rowGap).toBe("15.93px");
-    expect(style.borderRadius).toBe("10.4px");
+    expect(style.borderRadius).toBe("22px");
   });
 
   test.skipIf(!supportsCustomFunctions())("見出しの下に説明を並べる", async ({ expect }) => {

@@ -6,7 +6,7 @@ import { preview, controls } from "../.config/storybook/preview.js";
 import { Radio } from "../src/radio/index.js";
 
 const COLORS: readonly Radio.Color[] = theme.COLORS;
-const RADII: readonly Radio.Radius[] = ["none", ...theme.SIZES, "full"];
+const RADII: readonly Radio.Radius[] = ["none", ...theme.SIZES, "full", "circle"];
 const SIZES: readonly Radio.Size[] = theme.SIZES;
 const VARIANTS: readonly Radio.Variant[] = ["liquid", "naked"];
 

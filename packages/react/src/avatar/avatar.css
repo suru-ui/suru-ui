@@ -23,6 +23,7 @@
   --sui_avatar-letter_spacing: ;
   --sui_avatar-background_color: ;
   --sui_avatar-border_radius: ;
+  --sui_avatar-corner_shape: ;
 }
 
 /* 可変 */
@@ -37,6 +38,7 @@
   letter-spacing: var(--sui_avatar-letter_spacing);
   background-color: var(--sui_avatar-background_color);
   border-radius: var(--sui_avatar-border_radius);
+  corner-shape: var(--sui_avatar-corner_shape);
 }
 
 /* 代入 */
@@ -72,19 +74,28 @@
   }
 
   &.sui_avatar-radius_sm {
-    --sui_avatar-border_radius: var(--sui-radius-sm);
+    --sui_avatar-border_radius: --sui-corner_radius(1);
+    --sui_avatar-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_avatar-radius_md {
-    --sui_avatar-border_radius: var(--sui-radius-md);
+    --sui_avatar-border_radius: --sui-corner_radius(2);
+    --sui_avatar-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_avatar-radius_lg {
-    --sui_avatar-border_radius: var(--sui-radius-lg);
+    --sui_avatar-border_radius: --sui-corner_radius(3);
+    --sui_avatar-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_avatar-radius_full {
     --sui_avatar-border_radius: calc(var(--sui_avatar-size) / 2);
+    --sui_avatar-corner_shape: none;
+  }
+
+  &.sui_avatar-radius_circle {
+    --sui_avatar-border_radius: calc(var(--sui_avatar-size) / 2);
+    --sui_avatar-corner_shape: none;
   }
 
   &.sui_avatar-color_grey {
@@ -148,18 +159,21 @@
 /* 変数 */
 :scope {
   --sui_avatar_image-border_radius: ;
+  --sui_avatar_image-corner_shape: ;
 }
 
 /* 可変 */
 :scope {
   .sui_avatar_image {
     border-radius: var(--sui_avatar_image-border_radius);
+    corner-shape: var(--sui_avatar_image-corner_shape);
   }
 }
 
 /* 代入 */
 :scope {
   --sui_avatar_image-border_radius: var(--sui_avatar-border_radius);
+  --sui_avatar_image-corner_shape: var(--sui_avatar-corner_shape);
 }
 
 } /* @scope */
@@ -189,6 +203,7 @@
   --sui_avatar_fallback-color: ;
   --sui_avatar_fallback-letter_spacing: ;
   --sui_avatar_fallback-border_radius: ;
+  --sui_avatar_fallback-corner_shape: ;
 }
 
 /* 可変 */
@@ -201,6 +216,7 @@
     color: var(--sui_avatar_fallback-color);
     letter-spacing: var(--sui_avatar_fallback-letter_spacing);
     border-radius: var(--sui_avatar_fallback-border_radius);
+    corner-shape: var(--sui_avatar_fallback-corner_shape);
   }
 }
 
@@ -213,6 +229,7 @@
   --sui_avatar_fallback-color: var(--sui_avatar-color);
   --sui_avatar_fallback-letter_spacing: var(--sui_avatar-letter_spacing);
   --sui_avatar_fallback-border_radius: var(--sui_avatar-border_radius);
+  --sui_avatar_fallback-corner_shape: var(--sui_avatar-corner_shape);
 }
 
 } /* @scope */

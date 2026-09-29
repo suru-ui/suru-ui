@@ -69,18 +69,9 @@ describe("Progress の配置", () => {
     // 準備と実行
     const screen = await render(
       <>
-        <span
-          id="expected-sm"
-          style={{ display: "block", borderTopLeftRadius: "var(--sui-radius-sm)" }}
-        />
-        <span
-          id="expected-md"
-          style={{ display: "block", borderTopLeftRadius: "var(--sui-radius-md)" }}
-        />
-        <span
-          id="expected-lg"
-          style={{ display: "block", borderTopLeftRadius: "var(--sui-radius-lg)" }}
-        />
+        <span id="expected-sm" style={{ display: "block", borderTopLeftRadius: "4px" }} />
+        <span id="expected-md" style={{ display: "block", borderTopLeftRadius: "8px" }} />
+        <span id="expected-lg" style={{ display: "block", borderTopLeftRadius: "12px" }} />
         <Progress id="none" radius="none" label="読み込み中" value={25} />
         <Progress id="sm" radius="sm" label="読み込み中" value={25} />
         <Progress id="md" radius="md" label="読み込み中" value={25} />

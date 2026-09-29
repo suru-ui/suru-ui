@@ -2,8 +2,6 @@ import "@suru-ui/theme/suru.css";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import "../../../src/action-group/action-group.parts.js";
-import { ActionGroupRoot } from "../../../src/action-group/action-group.root.jsx";
 import { FieldRoot } from "../../../src/field/field.root.jsx";
 import "../../../src/number-field/number-field.parts.js";
 import { NumberField } from "../../../src/number-field/number-field.jsx";
@@ -132,8 +130,8 @@ describe("NumberField の配置", () => {
     // 準備と実行
     const screen = await render(
       <>
-        <span id="expected-sm" style={{ borderTopLeftRadius: "var(--sui-radius-sm)" }} />
-        <span id="expected-lg" style={{ borderTopLeftRadius: "var(--sui-radius-lg)" }} />
+        <span id="expected-sm" style={{ borderTopLeftRadius: "4px" }} />
+        <span id="expected-lg" style={{ borderTopLeftRadius: "12px" }} />
         <NumberField decrement radius="none" />
         <NumberField decrement radius="sm" />
         <NumberField decrement radius="lg" />
@@ -332,33 +330,6 @@ describe("NumberField の配置", () => {
     // 検証
     expect(getComputedStyle(group, "::after").borderTopColor).not.toBe(idle);
     expect(Number.parseFloat(getComputedStyle(group).outlineWidth)).toBeGreaterThan(0);
-  });
-
-  test("ActionGroup の outlined ではグループ色を枠線色へ引き継ぐ", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <>
-        <span
-          style={{
-            borderColor: "var(--sui-blue-naked-border-normal)",
-            borderStyle: "solid",
-          }}
-        >
-          枠線の基準
-        </span>
-        <ActionGroupRoot color="blue" variant="naked" outlined>
-          <NumberField />
-        </ActionGroupRoot>
-      </>,
-    );
-
-    // 検証
-    const expected = getComputedStyle(screen.getByText("枠線の基準").element()).borderTopColor;
-    const group = getComputedStyle(
-      screen.getByClassName("sui_number_field_group").element(),
-      "::after",
-    );
-    expect(group.borderTopColor).toBe(expected);
   });
 
   test("不正な Field では枠線色を変える", async ({ expect }) => {

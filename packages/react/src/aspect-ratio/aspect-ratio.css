@@ -13,6 +13,7 @@
   --sui_aspect_ratio-width: ;
   --sui_aspect_ratio-ratio: ;
   --sui_aspect_ratio-border_radius: ;
+  --sui_aspect_ratio-corner_shape: ;
 }
 
 /* 可変 */
@@ -20,6 +21,7 @@
   width: var(--sui_aspect_ratio-width);
   aspect-ratio: var(--sui_aspect_ratio-ratio);
   border-radius: var(--sui_aspect_ratio-border_radius);
+  corner-shape: var(--sui_aspect_ratio-corner_shape);
 }
 
 /* 代入 */
@@ -32,15 +34,18 @@
   }
 
   &.sui_aspect_ratio-radius_sm {
-    --sui_aspect_ratio-border_radius: var(--sui-radius-sm);
+    --sui_aspect_ratio-border_radius: --sui-corner_radius(1);
+    --sui_aspect_ratio-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_aspect_ratio-radius_md {
-    --sui_aspect_ratio-border_radius: var(--sui-radius-md);
+    --sui_aspect_ratio-border_radius: --sui-corner_radius(2);
+    --sui_aspect_ratio-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_aspect_ratio-radius_lg {
-    --sui_aspect_ratio-border_radius: var(--sui-radius-lg);
+    --sui_aspect_ratio-border_radius: --sui-corner_radius(3);
+    --sui_aspect_ratio-corner_shape: superellipse(var(--sui-superellipse));
   }
 }
 

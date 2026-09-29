@@ -160,18 +160,9 @@ describe("Slider の配置", () => {
     // 準備と実行
     const screen = await render(
       <>
-        <span
-          id="expected-sm"
-          style={{ display: "block", borderTopLeftRadius: "var(--sui-radius-sm)" }}
-        />
-        <span
-          id="expected-md"
-          style={{ display: "block", borderTopLeftRadius: "var(--sui-radius-md)" }}
-        />
-        <span
-          id="expected-lg"
-          style={{ display: "block", borderTopLeftRadius: "var(--sui-radius-lg)" }}
-        />
+        <span id="expected-sm" style={{ display: "block", borderTopLeftRadius: "4px" }} />
+        <span id="expected-md" style={{ display: "block", borderTopLeftRadius: "8px" }} />
+        <span id="expected-lg" style={{ display: "block", borderTopLeftRadius: "12px" }} />
         <Slider id="none" radius="none" label="音量" defaultValue={25} />
         <Slider id="sm" radius="sm" label="音量" defaultValue={25} />
         <Slider id="md" radius="md" label="音量" defaultValue={25} />

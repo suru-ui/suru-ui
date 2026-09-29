@@ -129,9 +129,9 @@ describe("AspectRatioRoot の配置", () => {
     expect(none.borderTopLeftRadius).toBe("0px");
     expect(none.overflow).toBe("hidden");
     const md = getComputedStyle(screen.getByClassName("sui_aspect_ratio-radius_md").element());
-    expect(md.borderTopLeftRadius).toBe("4px");
+    expect(md.borderTopLeftRadius).toBe("8px");
     const lg = getComputedStyle(screen.getByClassName("sui_aspect_ratio-radius_lg").element());
-    expect(lg.borderTopLeftRadius).toBe("6px");
+    expect(lg.borderTopLeftRadius).toBe("12px");
   });
 
   test("余白を持たない", async ({ expect }) => {

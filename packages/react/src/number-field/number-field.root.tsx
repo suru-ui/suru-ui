@@ -3,7 +3,6 @@ import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import type { RenderProps } from "../_use-render.js";
-import { useActionGroupContext } from "../action-group/action-group.context.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { NumberFieldContext } from "./number-field.context.js";
@@ -156,24 +155,17 @@ export type NumberFieldRootProps = NumberFieldRootProps.Render &
 export const NumberFieldRoot: IComponent<NumberFieldRootProps> = function SuiNumberFieldRoot(
   props,
 ) {
-  const actionGroupCtx = useActionGroupContext(true);
   const {
-    size: sizeProp = "md",
-    color: colorProp = "grey",
-    radius: radiusProp = sizeProp,
-    variant: variantProp = "liquid",
-    outlined: outlinedProp = false,
+    size = "md",
+    color = "grey",
+    radius = size,
+    variant = "liquid",
+    outlined = false,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
-  const size = actionGroupCtx?.size ?? sizeProp;
-  const color = actionGroupCtx?.color ?? colorProp;
-  const radius = actionGroupCtx?.radius ?? radiusProp;
-  const variant =
-    (actionGroupCtx?.variant === "solid" ? null : actionGroupCtx?.variant) ?? variantProp;
-  const outlined = actionGroupCtx?.outlined ?? outlinedProp;
   const ctx = React.useMemo<NumberFieldContext>(
     () => ({ size, color, radius, variant, outlined }),
     [size, color, radius, variant, outlined],
@@ -186,7 +178,6 @@ export const NumberFieldRoot: IComponent<NumberFieldRootProps> = function SuiNum
         className={cn(
           className,
           "sui_number_field",
-          "sui_action_group_item",
           `sui_number_field-size_${size}`,
           `sui_number_field-color_${color}`,
           `sui_number_field-radius_${radius}`,

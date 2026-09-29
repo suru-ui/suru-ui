@@ -7,7 +7,7 @@ import { Checkbox } from "../src/checkbox/index.js";
 
 const COLORS: readonly CheckboxGroup.Color[] = theme.COLORS;
 const SIZES: readonly CheckboxGroup.Size[] = theme.SIZES;
-const RADII: readonly CheckboxGroup.Radius[] = ["none", ...SIZES, "full"];
+const RADII: readonly CheckboxGroup.Radius[] = ["none", ...SIZES, "full", "circle"];
 const VARIANTS: readonly CheckboxGroup.Variant[] = ["naked", "liquid"];
 const ORIENTATIONS: readonly CheckboxGroup.Orientation[] = ["vertical", "horizontal"];
 

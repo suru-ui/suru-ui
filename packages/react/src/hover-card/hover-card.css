@@ -111,6 +111,7 @@
   --sui_hover_card_content-border_color: ;
   --sui_hover_card_content-border_width: ;
   --sui_hover_card_content-border_radius: ;
+  --sui_hover_card_content-corner_shape: ;
   --sui_hover_card_content-opacity: ;
   --sui_hover_card_content-transform_origin: ;
   --sui_hover_card_content-scale: ;
@@ -137,6 +138,7 @@
     border-color: var(--sui_hover_card_content-border_color);
     border-width: var(--_sui_hover_card_content-border_width, 0px);
     border-radius: var(--sui_hover_card_content-border_radius);
+    corner-shape: var(--sui_hover_card_content-corner_shape);
     opacity: var(--_sui_hover_card_content-opacity, var(--sui_hover_card_content-opacity));
     transform-origin: var(--sui_hover_card_content-transform_origin);
     scale: var(--_sui_hover_card_content-scale, var(--sui_hover_card_content-scale));
@@ -160,7 +162,8 @@
   --sui_hover_card_content-background_color: var(--sui-canvas-2);
   --sui_hover_card_content-border_color: var(--sui-grey-naked-border-normal);
   --sui_hover_card_content-border_width: --sui-border_width(1);
-  --sui_hover_card_content-border_radius: var(--sui-radius-md);
+  --sui_hover_card_content-border_radius: --sui-corner_radius(3);
+  --sui_hover_card_content-corner_shape: superellipse(var(--sui-superellipse));
   --sui_hover_card_content-opacity: 1;
   --sui_hover_card_content-transform_origin: var(--transform-origin);
   --sui_hover_card_content-scale: 1;
@@ -185,15 +188,18 @@
   }
 
   &.sui_hover_card_portal-radius_sm {
-    --sui_hover_card_content-border_radius: var(--sui-radius-sm);
+    --sui_hover_card_content-border_radius: --sui-corner_radius(2);
+    --sui_hover_card_content-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_hover_card_portal-radius_md {
-    --sui_hover_card_content-border_radius: var(--sui-radius-md);
+    --sui_hover_card_content-border_radius: --sui-corner_radius(3);
+    --sui_hover_card_content-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_hover_card_portal-radius_lg {
-    --sui_hover_card_content-border_radius: var(--sui-radius-lg);
+    --sui_hover_card_content-border_radius: --sui-corner_radius(4);
+    --sui_hover_card_content-corner_shape: superellipse(var(--sui-superellipse));
   }
 }
 

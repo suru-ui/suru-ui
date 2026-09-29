@@ -203,10 +203,6 @@
       "types": "./dist/src/aspect-ratio/index.d.ts",
       "default": "./dist/src/aspect-ratio/index.js"
     },
-    "./action-group": {
-      "types": "./dist/src/action-group/index.d.ts",
-      "default": "./dist/src/action-group/index.js"
-    },
     "./resizable": {
       "types": "./dist/src/resizable/index.d.ts",
       "default": "./dist/src/resizable/index.js"

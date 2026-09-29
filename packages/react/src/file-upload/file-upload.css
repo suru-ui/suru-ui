@@ -97,6 +97,7 @@
   --sui_file_upload_trigger-background_color-hover: ;
   --sui_file_upload_trigger-background_color-active: ;
   --sui_file_upload_trigger-border_radius: ;
+  --sui_file_upload_trigger-corner_shape: ;
 }
 
 /* 可変 */
@@ -117,6 +118,7 @@
                         var(--sui_file_upload_trigger-background_color-idle)
                       );
     border-radius: var(--sui_file_upload_trigger-border_radius);
+    corner-shape: var(--sui_file_upload_trigger-corner_shape);
   }
 }
 
@@ -163,19 +165,23 @@
   }
 
   &.sui_file_upload-radius_sm {
-    --sui_file_upload_trigger-border_radius: var(--sui-radius-sm);
+    --sui_file_upload_trigger-border_radius: --sui-corner_radius(1);
+    --sui_file_upload_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_file_upload-radius_md {
-    --sui_file_upload_trigger-border_radius: var(--sui-radius-md);
+    --sui_file_upload_trigger-border_radius: --sui-corner_radius(2);
+    --sui_file_upload_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_file_upload-radius_lg {
-    --sui_file_upload_trigger-border_radius: var(--sui-radius-lg);
+    --sui_file_upload_trigger-border_radius: --sui-corner_radius(3);
+    --sui_file_upload_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_file_upload-radius_full {
     --sui_file_upload_trigger-border_radius: calc(var(--sui_file_upload_trigger-min_height) / 2);
+    --sui_file_upload_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 }
 
@@ -241,6 +247,7 @@
   --sui_file_upload_dropzone-border_color-dragover: ;
   --sui_file_upload_dropzone-border_width: ;
   --sui_file_upload_dropzone-border_radius: ;
+  --sui_file_upload_dropzone-corner_shape: ;
 }
 
 /* 可変 */
@@ -265,6 +272,7 @@
                   );
     border-width: var(--sui_file_upload_dropzone-border_width);
     border-radius: var(--sui_file_upload_dropzone-border_radius);
+    corner-shape: var(--sui_file_upload_dropzone-corner_shape);
   }
 }
 
@@ -310,19 +318,23 @@
   }
 
   &.sui_file_upload-radius_sm {
-    --sui_file_upload_dropzone-border_radius: var(--sui-radius-sm);
+    --sui_file_upload_dropzone-border_radius: --sui-corner_radius(2);
+    --sui_file_upload_dropzone-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_file_upload-radius_md {
-    --sui_file_upload_dropzone-border_radius: var(--sui-radius-md);
+    --sui_file_upload_dropzone-border_radius: --sui-corner_radius(3);
+    --sui_file_upload_dropzone-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_file_upload-radius_lg {
-    --sui_file_upload_dropzone-border_radius: var(--sui-radius-lg);
+    --sui_file_upload_dropzone-border_radius: --sui-corner_radius(4);
+    --sui_file_upload_dropzone-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_file_upload-radius_full {
     --sui_file_upload_dropzone-border_radius: calc(var(--sui_file_upload_dropzone-min_height) / 2);
+    --sui_file_upload_dropzone-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_file_upload-variant_naked {
@@ -477,6 +489,7 @@
   --sui_file_upload_clear_trigger-focusring_offset: ;
   --sui_file_upload_clear_trigger-background_color-hover: ;
   --sui_file_upload_clear_trigger-border_radius: ;
+  --sui_file_upload_clear_trigger-corner_shape: ;
 }
 
 /* 可変 */
@@ -495,6 +508,7 @@
     outline-offset: var(--sui_file_upload_clear_trigger-focusring_offset);
     background-color: var(--_sui_file_upload_clear_trigger-background_color, transparent);
     border-radius: var(--sui_file_upload_clear_trigger-border_radius);
+    corner-shape: var(--sui_file_upload_clear_trigger-corner_shape);
   }
 }
 
@@ -539,19 +553,23 @@
   }
 
   &.sui_file_upload-radius_sm {
-    --sui_file_upload_clear_trigger-border_radius: var(--sui-radius-sm);
+    --sui_file_upload_clear_trigger-border_radius: --sui-corner_radius(1);
+    --sui_file_upload_clear_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_file_upload-radius_md {
-    --sui_file_upload_clear_trigger-border_radius: var(--sui-radius-md);
+    --sui_file_upload_clear_trigger-border_radius: --sui-corner_radius(2);
+    --sui_file_upload_clear_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_file_upload-radius_lg {
-    --sui_file_upload_clear_trigger-border_radius: var(--sui-radius-lg);
+    --sui_file_upload_clear_trigger-border_radius: --sui-corner_radius(3);
+    --sui_file_upload_clear_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_file_upload-radius_full {
     --sui_file_upload_clear_trigger-border_radius: calc(var(--sui_file_upload_clear_trigger-min_height) / 2);
+    --sui_file_upload_clear_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 }
 
@@ -639,6 +657,7 @@
   --sui_file_upload_item-border_color: ;
   --sui_file_upload_item-border_width: ;
   --sui_file_upload_item-border_radius: ;
+  --sui_file_upload_item-corner_shape: ;
 }
 
 /* 可変 */
@@ -658,6 +677,7 @@
     border-color: var(--sui_file_upload_item-border_color);
     border-width: var(--sui_file_upload_item-border_width);
     border-radius: var(--sui_file_upload_item-border_radius);
+    corner-shape: var(--sui_file_upload_item-corner_shape);
   }
 }
 
@@ -705,19 +725,23 @@
   }
 
   &.sui_file_upload-radius_sm {
-    --sui_file_upload_item-border_radius: var(--sui-radius-sm);
+    --sui_file_upload_item-border_radius: --sui-corner_radius(1);
+    --sui_file_upload_item-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_file_upload-radius_md {
-    --sui_file_upload_item-border_radius: var(--sui-radius-md);
+    --sui_file_upload_item-border_radius: --sui-corner_radius(2);
+    --sui_file_upload_item-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_file_upload-radius_lg {
-    --sui_file_upload_item-border_radius: var(--sui-radius-lg);
+    --sui_file_upload_item-border_radius: --sui-corner_radius(3);
+    --sui_file_upload_item-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_file_upload-radius_full {
     --sui_file_upload_item-border_radius: calc(var(--sui_file_upload_item-min_height) / 2);
+    --sui_file_upload_item-corner_shape: superellipse(var(--sui-superellipse));
   }
 }
 
@@ -808,6 +832,7 @@
   --sui_file_upload_item_delete_trigger-focusring_offset: ;
   --sui_file_upload_item_delete_trigger-background_color-hover: ;
   --sui_file_upload_item_delete_trigger-border_radius: ;
+  --sui_file_upload_item_delete_trigger-corner_shape: ;
 }
 
 /* 可変 */
@@ -822,6 +847,7 @@
     outline-offset: var(--sui_file_upload_item_delete_trigger-focusring_offset);
     background-color: var(--_sui_file_upload_item_delete_trigger-background_color, transparent);
     border-radius: var(--sui_file_upload_item_delete_trigger-border_radius);
+    corner-shape: var(--sui_file_upload_item_delete_trigger-corner_shape);
   }
 }
 
@@ -853,19 +879,23 @@
   }
 
   &.sui_file_upload-radius_sm {
-    --sui_file_upload_item_delete_trigger-border_radius: var(--sui-radius-sm);
+    --sui_file_upload_item_delete_trigger-border_radius: --sui-corner_radius(1);
+    --sui_file_upload_item_delete_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_file_upload-radius_md {
-    --sui_file_upload_item_delete_trigger-border_radius: var(--sui-radius-md);
+    --sui_file_upload_item_delete_trigger-border_radius: --sui-corner_radius(2);
+    --sui_file_upload_item_delete_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_file_upload-radius_lg {
-    --sui_file_upload_item_delete_trigger-border_radius: var(--sui-radius-lg);
+    --sui_file_upload_item_delete_trigger-border_radius: --sui-corner_radius(3);
+    --sui_file_upload_item_delete_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_file_upload-radius_full {
     --sui_file_upload_item_delete_trigger-border_radius: calc(var(--sui_file_upload_item_delete_trigger-size) / 2);
+    --sui_file_upload_item_delete_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 }
 

@@ -175,6 +175,7 @@
   --sui_progress_track-border_color: ;
   --sui_progress_track-border_width: ;
   --sui_progress_track-border_radius: ;
+  --sui_progress_track-corner_shape: ;
 }
 
 /* 可変 */
@@ -185,6 +186,7 @@
     border-color: var(--_sui_progress_track-border_color, transparent);
     border-width: var(--_sui_progress_track-border_width, 0px);
     border-radius: var(--sui_progress_track-border_radius);
+    corner-shape: var(--sui_progress_track-corner_shape);
   }
 }
 
@@ -209,19 +211,23 @@
   }
 
   &.sui_progress-radius_sm {
-    --sui_progress_track-border_radius: var(--sui-radius-sm);
+    --sui_progress_track-border_radius: --sui-corner_radius(1);
+    --sui_progress_track-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_progress-radius_md {
-    --sui_progress_track-border_radius: var(--sui-radius-md);
+    --sui_progress_track-border_radius: --sui-corner_radius(2);
+    --sui_progress_track-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_progress-radius_lg {
-    --sui_progress_track-border_radius: var(--sui-radius-lg);
+    --sui_progress_track-border_radius: --sui-corner_radius(3);
+    --sui_progress_track-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_progress-radius_full {
     --sui_progress_track-border_radius: calc(var(--sui_progress_track-height) / 2);
+    --sui_progress_track-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_progress-variant_naked {
@@ -258,6 +264,7 @@
     inset-inline-start: 0px;
     display: block;
     border-radius: inherit;
+    corner-shape: inherit;
     transition: width 500ms;
     animation-timing-function: linear;
     animation-iteration-count: infinite;

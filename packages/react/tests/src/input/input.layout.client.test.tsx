@@ -2,8 +2,6 @@ import "@suru-ui/theme/suru.css";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import "../../../src/action-group/action-group.parts.js";
-import { ActionGroupRoot } from "../../../src/action-group/action-group.root.jsx";
 import "../../../src/input/input.parts.js";
 import { InputRoot } from "../../../src/input/input.root.jsx";
 import "../_locators.js";
@@ -77,9 +75,9 @@ describe("InputRoot の配置", () => {
     const sm = getComputedStyle(screen.getByRole("textbox", { name: "小" }).element());
     expect(sm.borderTopLeftRadius).toBe("4px");
     const md = getComputedStyle(screen.getByRole("textbox", { name: "中" }).element());
-    expect(md.borderTopLeftRadius).toBe("4px");
+    expect(md.borderTopLeftRadius).toBe("8px");
     const lg = getComputedStyle(screen.getByRole("textbox", { name: "大" }).element());
-    expect(lg.borderTopLeftRadius).toBe("6px");
+    expect(lg.borderTopLeftRadius).toBe("12px");
     const full = getComputedStyle(screen.getByRole("textbox", { name: "丸" }).element());
     expect(full.borderTopLeftRadius).toBe("14px");
   });
@@ -159,30 +157,6 @@ describe("InputRoot の配置", () => {
       expect(Number.parseFloat(getComputedStyle(input).borderTopWidth)).toBeGreaterThan(idle);
     },
   );
-
-  test("ActionGroup の outlined ではグループ色を枠線色へ引き継ぐ", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <>
-        <span
-          style={{
-            borderColor: "var(--sui-blue-naked-border-normal)",
-            borderStyle: "solid",
-          }}
-        >
-          枠線の基準
-        </span>
-        <ActionGroupRoot color="blue" variant="naked" outlined>
-          <InputRoot aria-label="名前" />
-        </ActionGroupRoot>
-      </>,
-    );
-
-    // 検証
-    const expected = getComputedStyle(screen.getByText("枠線の基準").element()).borderTopColor;
-    const input = getComputedStyle(screen.getByRole("textbox", { name: "名前" }).element());
-    expect(input.borderTopColor).toBe(expected);
-  });
 
   test("外観に応じた背景色を持つ", async ({ expect }) => {
     // 準備と実行

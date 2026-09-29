@@ -1,7 +1,6 @@
 import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { ActionGroupRoot } from "../../../src/action-group/action-group.root.jsx";
 import { FieldRoot } from "../../../src/field/field.root.jsx";
 import "../../../src/input/input.parts.js";
 import { type InputRootProps, InputRoot } from "../../../src/input/input.root.jsx";
@@ -17,7 +16,6 @@ describe("InputRoot", () => {
     expect(root.tagName).toBe("INPUT");
     expect(root.type).toBe("text");
     expect(root.classList.contains("sui_input")).toBe(true);
-    expect(root.classList.contains("sui_action_group_item")).toBe(true);
     expect(root.classList.contains("sui_input-size_md")).toBe(true);
     expect(root.classList.contains("sui_input-color_grey")).toBe(true);
     expect(root.classList.contains("sui_input-radius_md")).toBe(true);
@@ -183,22 +181,6 @@ describe("InputRoot", () => {
       const root = screen.getByRole("textbox", { name: "有効" }).element();
       expect(root.classList.contains("sui_input-valid")).toBe(true);
     });
-  });
-
-  test("ActionGroup のスタイルを引き継ぐ", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <ActionGroupRoot color="blue" outlined size="lg" variant="naked">
-        <InputRoot aria-label="名前" />
-      </ActionGroupRoot>,
-    );
-
-    // 検証
-    const root = screen.getByRole("textbox", { name: "名前" }).element();
-    expect(root.classList.contains("sui_input-size_lg")).toBe(true);
-    expect(root.classList.contains("sui_input-color_blue")).toBe(true);
-    expect(root.classList.contains("sui_input-variant_naked")).toBe(true);
-    expect(root.classList.contains("sui_input-outlined")).toBe(true);
   });
 
   test("render で要素を置き換える", async ({ expect }) => {

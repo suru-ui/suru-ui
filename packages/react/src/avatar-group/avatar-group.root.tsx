@@ -21,9 +21,10 @@ export type AvatarGroupRootColor = "auto" | Color;
  * - `"sm"`: 小さめ
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
- * - `"full"`: 完全な丸形
+ * - `"full"`: 丸形
+ * - `"circle"`: 完全な丸形
  */
-export type AvatarGroupRootRadius = "none" | Size | "full";
+export type AvatarGroupRootRadius = "none" | Size | "full" | "circle";
 
 /**
  * 各アバターの大きさです。

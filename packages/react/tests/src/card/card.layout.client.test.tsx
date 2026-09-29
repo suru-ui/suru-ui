@@ -138,11 +138,11 @@ describe("CardRoot の配置", () => {
     const none = getComputedStyle(screen.container.querySelector<HTMLElement>("#none")!);
     expect(none.borderTopLeftRadius).toBe("0px");
     const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm")!);
-    expect(sm.borderTopLeftRadius).toBe("4px");
+    expect(sm.borderTopLeftRadius).toBe("8px");
     const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md")!);
-    expect(md.borderTopLeftRadius).toBe("8px");
+    expect(md.borderTopLeftRadius).toBe("12px");
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg")!);
-    expect(lg.borderTopLeftRadius).toBe("12px");
+    expect(lg.borderTopLeftRadius).toBe("16px");
   });
 
   test.skipIf(!supportsCustomFunctions())("枠線を表示する", async ({ expect }) => {

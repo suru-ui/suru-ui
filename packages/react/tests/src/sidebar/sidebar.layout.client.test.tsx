@@ -139,10 +139,7 @@ describe("Sidebar の配置", () => {
     const margin = resolveLength("--sui-space(2)");
     expect(Number.parseFloat(style.marginTop)).toBeCloseTo(margin, 0);
     expect(Number.parseFloat(style.marginLeft)).toBeCloseTo(margin, 0);
-    expect(Number.parseFloat(style.borderTopLeftRadius)).toBeCloseTo(
-      resolveLength("var(--sui-radius-xl)"),
-      0,
-    );
+    expect(Number.parseFloat(style.borderTopLeftRadius)).toBeCloseTo(12, 0);
   });
 
   test.skipIf(!supportsCustomFunctions())("各領域がテーマの余白を持つ", async ({ expect }) => {
@@ -193,10 +190,7 @@ describe("Sidebar の配置", () => {
       expect(Number.parseFloat(style.marginTop)).toBeCloseTo(margin, 0);
       expect(Number.parseFloat(style.marginLeft)).toBeCloseTo(margin, 0);
       expect(Number.parseFloat(style.borderTopWidth)).toBeGreaterThan(0);
-      expect(Number.parseFloat(style.borderTopLeftRadius)).toBeCloseTo(
-        resolveLength("var(--sui-radius-xl)"),
-        0,
-      );
+      expect(Number.parseFloat(style.borderTopLeftRadius)).toBeCloseTo(12, 0);
     },
   );
 

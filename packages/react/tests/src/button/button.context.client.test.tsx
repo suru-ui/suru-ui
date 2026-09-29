@@ -14,7 +14,7 @@ describe("useButtonContext", () => {
     // 準備
     function Probe() {
       const ctx = useButtonContext();
-      return <span>{String(ctx.pending)}</span>;
+      return <span>{[String(ctx.pending), String(ctx.disabled)].join(",")}</span>;
     }
 
     // 実行
@@ -25,7 +25,7 @@ describe("useButtonContext", () => {
     );
 
     // 検証
-    expect(screen.getByText("true").query()?.textContent).toBe("true");
+    expect(screen.getByText("true,true").query()?.textContent).toBe("true,true");
   });
 
   test("提供がないときはエラーを投げる", async ({ expect }) => {
@@ -55,7 +55,7 @@ describe("useButtonContext", () => {
 
   test("直接提供した値を返す", async ({ expect }) => {
     // 準備
-    const provided = { pending: false } as const;
+    const provided = { disabled: false, pending: false } as const;
     function Probe() {
       const ctx = useButtonContext();
       return <span>{ctx === provided ? "同一" : "別物"}</span>;

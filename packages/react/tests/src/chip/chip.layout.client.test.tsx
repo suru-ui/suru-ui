@@ -119,9 +119,9 @@ describe("ChipRoot の配置", () => {
     const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm")!);
     expect(sm.borderTopLeftRadius).toBe("4px");
     const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md")!);
-    expect(md.borderTopLeftRadius).toBe("4px");
+    expect(md.borderTopLeftRadius).toBe("8px");
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg")!);
-    expect(lg.borderTopLeftRadius).toBe("6px");
+    expect(lg.borderTopLeftRadius).toBe("12px");
     const fullSm = getComputedStyle(screen.container.querySelector<HTMLElement>("#fullSm")!);
     expect(fullSm.borderTopLeftRadius).toBe("10px");
     const fullLg = getComputedStyle(screen.container.querySelector<HTMLElement>("#fullLg")!);

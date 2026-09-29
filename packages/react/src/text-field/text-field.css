@@ -43,6 +43,7 @@
   --sui_text_field-border_width-focus_visible: ;
   --sui_text_field-border_width-invalid: ;
   --sui_text_field-border_radius: ;
+  --sui_text_field-corner_shape: ;
 }
 
 /* 可変 */
@@ -55,11 +56,13 @@
   outline-offset: var(--_sui_text_field-outline_offset, 0px);
   background-color: var(--sui_text_field-background_color);
   border-radius: var(--sui_text_field-border_radius);
+  corner-shape: var(--sui_text_field-corner_shape);
 
   &::after {
     border-color: var(--_sui_text_field-border_color, transparent);
     border-width: var(--_sui_text_field-border_width, 0px);
     border-radius: var(--sui_text_field-border_radius);
+    corner-shape: var(--sui_text_field-corner_shape);
   }
 }
 
@@ -99,19 +102,23 @@
   }
 
   &.sui_text_field-radius_sm {
-    --sui_text_field-border_radius: var(--sui-radius-sm);
+    --sui_text_field-border_radius: --sui-corner_radius(1);
+    --sui_text_field-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_text_field-radius_md {
-    --sui_text_field-border_radius: var(--sui-radius-md);
+    --sui_text_field-border_radius: --sui-corner_radius(2);
+    --sui_text_field-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_text_field-radius_lg {
-    --sui_text_field-border_radius: var(--sui-radius-lg);
+    --sui_text_field-border_radius: --sui-corner_radius(3);
+    --sui_text_field-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_text_field-radius_full {
     --sui_text_field-border_radius: calc(var(--sui_text_field-min_height) / 2);
+    --sui_text_field-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_text_field-variant_naked {

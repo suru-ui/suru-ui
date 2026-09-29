@@ -84,6 +84,7 @@
   --sui_dialog_content-border_color: ;
   --sui_dialog_content-border_width: ;
   --sui_dialog_content-border_radius: ;
+  --sui_dialog_content-corner_shape: ;
 }
 
 /* 可変 */
@@ -97,6 +98,7 @@
     border-color: var(--_sui_dialog_content-border_color, transparent);
     border-width: var(--_sui_dialog_content-border_width, 0px);
     border-radius: var(--sui_dialog_content-border_radius);
+    corner-shape: var(--sui_dialog_content-corner_shape);
   }
 }
 
@@ -131,23 +133,26 @@
 
   &:has(.sui_dialog_content-radius_sm) {
     --sui_dialog_content-border_radius: calc(
-                                          var(--sui-radius-sm)
+                                          --sui-corner_radius(2)
                                           + var(--sui_dialog_content-padding) / 8
                                         );
+    --sui_dialog_content-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &:has(.sui_dialog_content-radius_md) {
     --sui_dialog_content-border_radius: calc(
-                                          var(--sui-radius-md)
+                                          --sui-corner_radius(3)
                                           + var(--sui_dialog_content-padding) / 2
                                         );
+    --sui_dialog_content-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &:has(.sui_dialog_content-radius_lg) {
     --sui_dialog_content-border_radius: calc(
-                                          var(--sui-radius-lg)
+                                          --sui-corner_radius(4)
                                           + var(--sui_dialog_content-padding)
                                         );
+    --sui_dialog_content-corner_shape: superellipse(var(--sui-superellipse));
   }
 }
 

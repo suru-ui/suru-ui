@@ -1,7 +1,6 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { ActionGroupRoot } from "../../../src/action-group/action-group.root.jsx";
 import { ButtonRoot } from "../../../src/button/button.root.jsx";
 import "../_locators.js";
 
@@ -99,22 +98,6 @@ describe("ButtonRoot", () => {
     const link = screen.getByRole("button").element();
     expect(link.tagName).toBe("A");
     expect(link.classList.contains("sui_button")).toBe(true);
-  });
-
-  test("ActionGroup のスタイルを引き継ぐ", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <ActionGroupRoot color="blue" outlined size="lg" variant="naked">
-        <ButtonRoot>実行</ButtonRoot>
-      </ActionGroupRoot>,
-    );
-
-    // 検証
-    const button = screen.getByClassName("sui_button").element();
-    expect(button.classList.contains("sui_button-size_lg")).toBe(true);
-    expect(button.classList.contains("sui_button-color_blue")).toBe(true);
-    expect(button.classList.contains("sui_button-variant_naked")).toBe(true);
-    expect(button.classList.contains("sui_button-outlined")).toBe(true);
   });
 
   test("押下時にクリックを受け取る", async ({ expect }) => {

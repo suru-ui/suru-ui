@@ -17,7 +17,6 @@ describe("Select", () => {
     // 検証
     const trigger = screen.getByRole("combobox", { name: "果物" }).element();
     expect(trigger.classList.contains("sui_select")).toBe(true);
-    expect(trigger.classList.contains("sui_action_group_item")).toBe(true);
     expect(trigger.getAttribute("data-scope")).toBe("");
     expect(trigger.getAttribute("aria-haspopup")).toBe("listbox");
     expect(trigger.getAttribute("aria-expanded")).toBe("false");

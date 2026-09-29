@@ -38,6 +38,7 @@
   --sui_input-border_width-focus_visible: ;
   --sui_input-border_width-invalid: ;
   --sui_input-border_radius: ;
+  --sui_input-corner_shape: ;
   --sui_input-virtual_text_height: ;
 }
 
@@ -61,6 +62,7 @@
   border-color: var(--_sui_input-border_color, transparent);
   border-width: var(--_sui_input-border_width, 0px);
   border-radius: var(--sui_input-border_radius);
+  corner-shape: var(--sui_input-corner_shape);
 
   &::placeholder {
     color: var(--sui_input-placeholder-color);
@@ -141,19 +143,23 @@
   }
 
   &.sui_input-radius_sm {
-    --sui_input-border_radius: var(--sui-radius-sm);
+    --sui_input-border_radius: --sui-corner_radius(1);
+    --sui_input-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_input-radius_md {
-    --sui_input-border_radius: var(--sui-radius-md);
+    --sui_input-border_radius: --sui-corner_radius(2);
+    --sui_input-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_input-radius_lg {
-    --sui_input-border_radius: var(--sui-radius-lg);
+    --sui_input-border_radius: --sui-corner_radius(3);
+    --sui_input-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_input-radius_full {
     --sui_input-border_radius: calc(var(--sui_input-min_height) / 2);
+    --sui_input-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_input-variant_naked {

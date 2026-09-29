@@ -45,7 +45,7 @@ describe("ContextMenu の配置", () => {
       expect(Number.parseFloat(style.paddingBlockStart)).toBeCloseTo(5.27, 1);
       expect(Number.parseFloat(style.paddingInlineStart)).toBeCloseTo(5.27, 1);
       expect(Number.parseFloat(style.rowGap)).toBeCloseTo(1.12, 1);
-      expect(style.borderRadius).toBe("4px");
+      expect(style.borderRadius).toBe("12px");
       expect(style.minWidth).toBe("192px");
       expect(style.backgroundColor).toBe("rgb(242, 240, 229)");
     },

@@ -5,7 +5,7 @@ import { preview, controls } from "../.config/storybook/preview.js";
 import { Checkbox } from "../src/checkbox/index.js";
 
 const COLORS: readonly Checkbox.Color[] = theme.COLORS;
-const RADII: readonly Checkbox.Radius[] = ["none", ...theme.SIZES, "full"];
+const RADII: readonly Checkbox.Radius[] = ["none", ...theme.SIZES, "full", "circle"];
 const SIZES: readonly Checkbox.Size[] = theme.SIZES;
 const VARIANTS: readonly Checkbox.Variant[] = ["naked", "liquid"];
 

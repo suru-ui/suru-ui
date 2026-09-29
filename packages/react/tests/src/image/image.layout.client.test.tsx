@@ -97,9 +97,9 @@ describe("ImageRoot の配置", () => {
     const sm = getComputedStyle(screen.getByAltText("sm").element());
     expect(sm.borderTopLeftRadius).toBe("4px");
     const md = getComputedStyle(screen.getByAltText("md").element());
-    expect(md.borderTopLeftRadius).toBe("4px");
+    expect(md.borderTopLeftRadius).toBe("8px");
     const lg = getComputedStyle(screen.getByAltText("lg").element());
-    expect(lg.borderTopLeftRadius).toBe("6px");
+    expect(lg.borderTopLeftRadius).toBe("12px");
     const full = getComputedStyle(screen.getByAltText("full").element());
     expect(full.borderTopLeftRadius).toBe("9999px");
   });

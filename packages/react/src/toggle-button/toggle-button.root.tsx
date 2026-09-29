@@ -32,6 +32,7 @@ export type ToggleButtonRootColor = Button.Root.Color;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
+ * - `"circle"`: 完全な丸形
  */
 export type ToggleButtonRootRadius = Button.Root.Radius;
 
@@ -187,34 +188,33 @@ export const ToggleButtonRoot: IComponent<ToggleButtonRootProps> = function SuiT
     onPressedChange,
     focusableWhenDisabled,
   };
-  const ctx = React.useMemo<ToggleButtonContext>(() => ({ pending }), [pending]);
 
   return (
-    <ToggleButtonContext value={ctx}>
-      <Toggle
-        {...otherProps}
-        {...baseuiProps}
-        render={(htmlProps: {}, toggleState) => {
-          const buttonRootProps: Required<
-            Button.ButtonRootProps.SuruUI &
-              Button.ButtonRootProps.BaseUI &
-              Pick<Button.ButtonRootProps.HTML, "disabled">
-          > = {
-            item: false,
-            size,
-            color: toggleState.pressed ? color : "grey",
-            muted: undefined,
-            radius,
-            pending,
-            squared,
-            variant: toggleState.pressed ? "solid" : variant,
-            disabled,
-            outlined,
-            nativeButton,
-            focusableWhenDisabled,
-          };
+    <Toggle
+      {...otherProps}
+      {...baseuiProps}
+      render={(htmlProps: {}, toggleState) => {
+        const buttonRootProps: Required<
+          Button.ButtonRootProps.SuruUI &
+            Button.ButtonRootProps.BaseUI &
+            Pick<Button.ButtonRootProps.HTML, "disabled">
+        > = {
+          item: false,
+          size,
+          color: toggleState.pressed ? color : "grey",
+          muted: undefined,
+          radius,
+          pending,
+          squared,
+          variant: toggleState.pressed ? "solid" : variant,
+          disabled,
+          outlined,
+          nativeButton,
+          focusableWhenDisabled,
+        };
 
-          return (
+        return (
+          <ToggleButtonContext value={{ ...toggleState, pending }}>
             <Button.Root
               {...mergeProps<typeof Button.Root>([
                 htmlProps,
@@ -226,10 +226,10 @@ export const ToggleButtonRoot: IComponent<ToggleButtonRootProps> = function SuiT
                 }),
               ])}
             />
-          );
-        }}
-      />
-    </ToggleButtonContext>
+          </ToggleButtonContext>
+        );
+      }}
+    />
   );
 };
 

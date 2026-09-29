@@ -47,6 +47,7 @@
   --sui_autocomplete-border_width-focus_visible: ;
   --sui_autocomplete-border_width-invalid: ;
   --sui_autocomplete-border_radius: ;
+  --sui_autocomplete-corner_shape: ;
 }
 
 /* 可変 */
@@ -67,11 +68,13 @@
   outline-offset: var(--sui_autocomplete-focusring_offset);
   background-color: var(--sui_autocomplete-background_color);
   border-radius: var(--sui_autocomplete-border_radius);
+  corner-shape: var(--sui_autocomplete-corner_shape);
 
   &::after {
     border-color: var(--_sui_autocomplete-border_color, transparent);
     border-width: var(--_sui_autocomplete-border_width, 0px);
     border-radius: var(--sui_autocomplete-border_radius);
+    corner-shape: var(--sui_autocomplete-corner_shape);
   }
 }
 
@@ -149,19 +152,23 @@
   }
 
   &.sui_autocomplete-radius_sm {
-    --sui_autocomplete-border_radius: var(--sui-radius-sm);
+    --sui_autocomplete-border_radius: --sui-corner_radius(1);
+    --sui_autocomplete-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_autocomplete-radius_md {
-    --sui_autocomplete-border_radius: var(--sui-radius-md);
+    --sui_autocomplete-border_radius: --sui-corner_radius(2);
+    --sui_autocomplete-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_autocomplete-radius_lg {
-    --sui_autocomplete-border_radius: var(--sui-radius-lg);
+    --sui_autocomplete-border_radius: --sui-corner_radius(3);
+    --sui_autocomplete-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_autocomplete-radius_full {
     --sui_autocomplete-border_radius: calc(var(--sui_autocomplete-min_height) / 2);
+    --sui_autocomplete-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_autocomplete-variant_naked {
@@ -489,6 +496,7 @@
   --sui_autocomplete_clear-background_color-hover: ;
   --sui_autocomplete_clear-background_color-active: ;
   --sui_autocomplete_clear-border_radius: ;
+  --sui_autocomplete_clear-corner_shape: ;
   --sui_autocomplete_clear__svg-size: ;
   --sui_autocomplete_clear__svg-color: ;
 }
@@ -507,6 +515,7 @@
                         var(--sui_autocomplete_clear-background_color-idle)
                       );
     border-radius: var(--sui_autocomplete_clear-border_radius);
+    corner-shape: var(--sui_autocomplete_clear-corner_shape);
 
     svg:not(.sui-ignore) {
       width: var(--sui_autocomplete_clear__svg-size);
@@ -535,19 +544,23 @@
   }
 
   &.sui_autocomplete-radius_sm {
-    --sui_autocomplete_clear-border_radius: var(--sui-radius-sm);
+    --sui_autocomplete_clear-border_radius: --sui-corner_radius(1);
+    --sui_autocomplete_clear-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_autocomplete-radius_md {
-    --sui_autocomplete_clear-border_radius: var(--sui-radius-md);
+    --sui_autocomplete_clear-border_radius: --sui-corner_radius(2);
+    --sui_autocomplete_clear-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_autocomplete-radius_lg {
-    --sui_autocomplete_clear-border_radius: var(--sui-radius-lg);
+    --sui_autocomplete_clear-border_radius: --sui-corner_radius(3);
+    --sui_autocomplete_clear-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_autocomplete-radius_full {
     --sui_autocomplete_clear-border_radius: calc(var(--sui_autocomplete_clear-size) / 2);
+    --sui_autocomplete_clear-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_autocomplete-variant_naked {
@@ -680,6 +693,7 @@
   --sui_autocomplete_popup-border_color: ;
   --sui_autocomplete_popup-border_width: ;
   --sui_autocomplete_popup-border_radius: ;
+  --sui_autocomplete_popup-corner_shape: ;
 }
 
 /* 可変 */
@@ -697,11 +711,13 @@
     letter-spacing: var(--sui_autocomplete_popup-letter_spacing);
     background-color: var(--sui_autocomplete_popup-background_color);
     border-radius: var(--sui_autocomplete_popup-border_radius);
+    corner-shape: var(--sui_autocomplete_popup-corner_shape);
 
     &::after {
       border-color: var(--_sui_autocomplete_popup-border_color, transparent);
       border-width: var(--_sui_autocomplete_popup-border_width, 0px);
       border-radius: var(--sui_autocomplete_popup-border_radius);
+      corner-shape: var(--sui_autocomplete_popup-corner_shape);
     }
   }
 }
@@ -741,19 +757,23 @@
   }
 
   &.sui_autocomplete_portal-radius_sm {
-    --sui_autocomplete_popup-border_radius: var(--sui-radius-sm);
+    --sui_autocomplete_popup-border_radius: --sui-corner_radius(2);
+    --sui_autocomplete_popup-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_autocomplete_portal-radius_md {
-    --sui_autocomplete_popup-border_radius: var(--sui-radius-md);
+    --sui_autocomplete_popup-border_radius: --sui-corner_radius(3);
+    --sui_autocomplete_popup-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_autocomplete_portal-radius_lg {
-    --sui_autocomplete_popup-border_radius: var(--sui-radius-lg);
+    --sui_autocomplete_popup-border_radius: --sui-corner_radius(4);
+    --sui_autocomplete_popup-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_autocomplete_portal-radius_full {
-    --sui_autocomplete_popup-border_radius: var(--sui-radius-md);
+    --sui_autocomplete_popup-border_radius: --sui-corner_radius(3);
+    --sui_autocomplete_popup-corner_shape: superellipse(var(--sui-superellipse));
   }
 }
 

@@ -3,7 +3,6 @@ import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import type { RenderProps } from "../_use-render.js";
-import { useActionGroupContext } from "../action-group/action-group.context.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
@@ -140,25 +139,18 @@ export type InputRootProps = InputRootProps.Render &
  * テキスト入力欄のルートコンポーネントです。
  */
 export const InputRoot: IComponent<InputRootProps> = function SuiInputRoot(props) {
-  const actionGroupCtx = useActionGroupContext(true);
   const {
-    size: sizeProp = "md",
+    size = "md",
     type = "text",
-    color: colorProp = "grey",
-    radius: radiusProp = sizeProp,
-    variant: variantProp = "liquid",
-    outlined: outlinedProp = false,
+    color = "grey",
+    radius = size,
+    variant = "liquid",
+    outlined = false,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
-  const size = actionGroupCtx?.size ?? sizeProp;
-  const color = actionGroupCtx?.color ?? colorProp;
-  const radius = actionGroupCtx?.radius ?? radiusProp;
-  const variant =
-    (actionGroupCtx?.variant === "solid" ? null : actionGroupCtx?.variant) ?? variantProp;
-  const outlined = actionGroupCtx?.outlined ?? outlinedProp;
 
   return (
     <Input
@@ -167,7 +159,6 @@ export const InputRoot: IComponent<InputRootProps> = function SuiInputRoot(props
       className={cn(
         className,
         "sui_input",
-        "sui_action_group_item",
         `sui_input-size_${size}`,
         `sui_input-color_${color}`,
         `sui_input-radius_${radius}`,

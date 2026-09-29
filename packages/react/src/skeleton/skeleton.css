@@ -16,6 +16,7 @@
   --sui_skeleton-height: ;
   --sui_skeleton-background_color: ;
   --sui_skeleton-border_radius: ;
+  --sui_skeleton-corner_shape: ;
   --sui_skeleton-opacity-min: ;
   --sui_skeleton-end_color: ;
   --sui_skeleton-start_color: ;
@@ -32,6 +33,7 @@
   background-image: var(--_sui_skeleton-background_image, none);
   background-size: var(--_sui_skeleton-background_size, auto);
   border-radius: var(--sui_skeleton-border_radius);
+  corner-shape: var(--sui_skeleton-corner_shape);
   animation-name: var(--_sui_skeleton-animation_name, none);
   animation-duration: var(--_sui_skeleton-animation_duration, 0s);
   animation-timing-function: var(--_sui_skeleton-animation_timing_function, linear);
@@ -51,15 +53,18 @@
   }
 
   &.sui_skeleton-radius_sm {
-    --sui_skeleton-border_radius: var(--sui-radius-sm);
+    --sui_skeleton-border_radius: --sui-corner_radius(1);
+    --sui_skeleton-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_skeleton-radius_md {
-    --sui_skeleton-border_radius: var(--sui-radius-md);
+    --sui_skeleton-border_radius: --sui-corner_radius(2);
+    --sui_skeleton-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_skeleton-radius_lg {
-    --sui_skeleton-border_radius: var(--sui-radius-lg);
+    --sui_skeleton-border_radius: --sui-corner_radius(3);
+    --sui_skeleton-corner_shape: superellipse(var(--sui-superellipse));
   }
 }
 

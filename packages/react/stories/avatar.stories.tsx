@@ -5,7 +5,7 @@ import { Avatar } from "../src/avatar/index.js";
 
 const COLORS: readonly Avatar.Color[] = theme.COLORS;
 const SIZES: readonly Avatar.Size[] = theme.SIZES;
-const RADII: readonly Avatar.Radius[] = ["none", ...SIZES, "full"];
+const RADII: readonly Avatar.Radius[] = ["none", ...SIZES, "full", "circle"];
 
 const meta = preview.meta({
   title: "Avatar",

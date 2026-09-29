@@ -29,6 +29,7 @@
   --sui_checkbox-border_color-checked: ;
   --sui_checkbox-border_width: ;
   --sui_checkbox-border_radius: ;
+  --sui_checkbox-corner_shape: ;
   --sui_checkbox-canvas-idle: ;
   --sui_checkbox-canvas-idle-checked: ;
   --sui_checkbox-canvas-hover: ;
@@ -48,6 +49,7 @@
   border-color: var(--_sui_checkbox-border_color, transparent);
   border-width: var(--_sui_checkbox-border_width, 0px);
   border-radius: var(--sui_checkbox-border_radius);
+  corner-shape: var(--sui_checkbox-corner_shape);
 }
 
 /* 代入 */
@@ -80,19 +82,28 @@
   }
 
   &.sui_checkbox-radius_sm {
-    --sui_checkbox-border_radius: var(--sui-radius-sm);
+    --sui_checkbox-border_radius: --sui-corner_radius(1);
+    --sui_checkbox-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_checkbox-radius_md {
-    --sui_checkbox-border_radius: var(--sui-radius-md);
+    --sui_checkbox-border_radius: --sui-corner_radius(2);
+    --sui_checkbox-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_checkbox-radius_lg {
-    --sui_checkbox-border_radius: var(--sui-radius-lg);
+    --sui_checkbox-border_radius: --sui-corner_radius(3);
+    --sui_checkbox-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_checkbox-radius_full {
     --sui_checkbox-border_radius: calc(var(--sui_checkbox-size) / 2);
+    --sui_checkbox-corner_shape: none;
+  }
+
+  &.sui_checkbox-radius_circle {
+    --sui_checkbox-border_radius: calc(var(--sui_checkbox-size) / 2);
+    --sui_checkbox-corner_shape: none;
   }
 
   &.sui_checkbox-color_grey {

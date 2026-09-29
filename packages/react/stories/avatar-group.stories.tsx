@@ -6,7 +6,7 @@ import { Avatar } from "../src/avatar/index.js";
 
 const COLORS: readonly AvatarGroup.Color[] = ["auto", ...theme.COLORS];
 const SIZES: readonly AvatarGroup.Size[] = theme.SIZES;
-const RADII: readonly AvatarGroup.Radius[] = ["none", ...SIZES, "full"];
+const RADII: readonly AvatarGroup.Radius[] = ["none", ...SIZES, "full", "circle"];
 
 const meta = preview.meta({
   title: "Avatar Group",

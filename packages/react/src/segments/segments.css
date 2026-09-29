@@ -11,30 +11,36 @@
 /* 変数 */
 :scope {
   --sui_segments-border_radius: ;
+  --sui_segments-corner_shape: ;
 }
 
 /* 代入 */
 :scope {
-  --sui_segments-border_radius: var(--sui-radius-md);
+  --sui_segments-border_radius: --sui-corner_radius(2);
+  --sui_segments-corner_shape: superellipse(var(--sui-superellipse));
 
   &.sui_segments-radius_none {
     --sui_segments-border_radius: 0px;
   }
 
   &.sui_segments-radius_sm {
-    --sui_segments-border_radius: var(--sui-radius-sm);
+    --sui_segments-border_radius: --sui-corner_radius(1);
+    --sui_segments-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_segments-radius_md {
-    --sui_segments-border_radius: var(--sui-radius-md);
+    --sui_segments-border_radius: --sui-corner_radius(2);
+    --sui_segments-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_segments-radius_lg {
-    --sui_segments-border_radius: var(--sui-radius-lg);
+    --sui_segments-border_radius: --sui-corner_radius(3);
+    --sui_segments-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_segments-radius_full {
     --sui_segments-border_radius: 999px;
+    --sui_segments-corner_shape: superellipse(var(--sui-superellipse));
   }
 }
 
@@ -69,6 +75,7 @@
   --sui_segments_list-padding_inline: ;
   --sui_segments_list-background_color: ;
   --sui_segments_list-border_radius: ;
+  --sui_segments_list-corner_shape: ;
 }
 
 /* 可変 */
@@ -79,6 +86,7 @@
     padding-inline: var(--sui_segments_list-padding_inline);
     background-color: var(--sui_segments_list-background_color);
     border-radius: var(--sui_segments_list-border_radius);
+    corner-shape: var(--sui_segments_list-corner_shape);
   }
 }
 
@@ -86,6 +94,7 @@
 :scope {
   --sui_segments_list-background_color: var(--sui-grey-naked-canvas-subtle);
   --sui_segments_list-border_radius: var(--sui_segments-border_radius);
+  --sui_segments_list-corner_shape: var(--sui_segments-corner_shape);
 
   &.sui_segments-size_sm {
     --sui_segments_list-gap: --sui-gap(2);
@@ -151,6 +160,7 @@
   --sui_segments_item-focusring_offset: ;
   --sui_segments_item-virtual_content-leading: ;
   --sui_segments_item-border_radius: ;
+  --sui_segments_item-corner_shape: ;
 }
 
 /* 可変 */
@@ -169,6 +179,7 @@
     outline-color: var(--_sui_segments_item-outline_color, transparent);
     outline-offset: var(--_sui_segments_item-outline_offset, 0px);
     border-radius: var(--sui_segments_item-border_radius);
+    corner-shape: var(--sui_segments_item-corner_shape);
   }
 }
 
@@ -191,6 +202,7 @@
                                             * var(--sui_segments_item-line_height)
                                           );
   --sui_segments_item-border_radius: var(--sui_segments-border_radius);
+  --sui_segments_item-corner_shape: var(--sui_segments-corner_shape);
 
   &.sui_segments-size_sm {
     --sui_segments_item-min_height: var(--sui-size-sm);
@@ -377,6 +389,7 @@
   --sui_segments_indicator-border_color: ;
   --sui_segments_indicator-border_width: ;
   --sui_segments_indicator-border_radius: ;
+  --sui_segments_indicator-corner_shape: ;
   --sui_segments_indicator-active_height: ;
   --sui_segments_indicator-active_left: ;
   --sui_segments_indicator-active_top: ;
@@ -395,6 +408,7 @@
     border-color: var(--sui_segments_indicator-border_color);
     border-width: var(--sui_segments_indicator-border_width);
     border-radius: var(--sui_segments_indicator-border_radius);
+    corner-shape: var(--sui_segments_indicator-corner_shape);
     transition: var(--_sui_segments_indicator-transition,
                   inset-inline-start 240ms cubic-bezier(0.25, 0.7, 0.3, 1),
                   width              240ms cubic-bezier(0.25, 0.7, 0.3, 1),
@@ -410,6 +424,7 @@
   --sui_segments_indicator-border_color: transparent;
   --sui_segments_indicator-border_width: 0px;
   --sui_segments_indicator-border_radius: var(--sui_segments-border_radius);
+  --sui_segments_indicator-corner_shape: var(--sui_segments-corner_shape);
 
   /* Base UI がインジケーター自身に設定する変数を受けるため、要素起点で代入します。 */
   .sui_segments_indicator {

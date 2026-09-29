@@ -31,8 +31,9 @@ export type CheckboxRootColor = Color;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
+ * - `"circle"`: 完全な丸形
  */
-export type CheckboxRootRadius = "none" | Size | "full";
+export type CheckboxRootRadius = "none" | Size | "full" | "circle";
 
 /**
  * チェックボックスの大きさです。

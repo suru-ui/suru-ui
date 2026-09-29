@@ -125,11 +125,11 @@ describe("Breadcrumb の配置", () => {
     const md = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#md .sui_breadcrumb_item")!,
     );
-    expect(Number.parseFloat(md.borderTopLeftRadius)).toBeCloseTo(2.2, 1);
+    expect(Number.parseFloat(md.borderTopLeftRadius)).toBeCloseTo(4.4, 1);
     const lg = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#lg .sui_breadcrumb_item")!,
     );
-    expect(Number.parseFloat(lg.borderTopLeftRadius)).toBeCloseTo(3.12, 1);
+    expect(Number.parseFloat(lg.borderTopLeftRadius)).toBeCloseTo(6.23, 1);
   });
 
   test("セパレーターを活字の高さに合わせる", async ({ expect }) => {

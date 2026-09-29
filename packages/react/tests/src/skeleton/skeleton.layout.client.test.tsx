@@ -48,9 +48,9 @@ describe("SkeletonRoot の配置", () => {
     const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm")!);
     expect(sm.borderTopLeftRadius).toBe("4px");
     const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md")!);
-    expect(md.borderTopLeftRadius).toBe("4px");
+    expect(md.borderTopLeftRadius).toBe("8px");
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg")!);
-    expect(lg.borderTopLeftRadius).toBe("6px");
+    expect(lg.borderTopLeftRadius).toBe("12px");
   });
 
   test("アニメーションを適用する", async ({ expect }) => {

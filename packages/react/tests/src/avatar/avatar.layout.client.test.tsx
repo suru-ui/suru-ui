@@ -100,7 +100,7 @@ describe("AvatarRoot の配置", () => {
     const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm")!);
     expect(sm.borderTopLeftRadius).toBe("4px");
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg")!);
-    expect(lg.borderTopLeftRadius).toBe("6px");
+    expect(lg.borderTopLeftRadius).toBe("12px");
     const full = getComputedStyle(screen.container.querySelector<HTMLElement>("#full")!);
     expect(full.borderTopLeftRadius).toBe("14px");
     const fullLg = getComputedStyle(screen.container.querySelector<HTMLElement>("#fullLg")!);

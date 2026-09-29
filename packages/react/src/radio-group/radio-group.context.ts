@@ -17,8 +17,9 @@ export type RadioGroupContextColor = Color;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
+ * - `"circle"`: 完全な丸形
  */
-export type RadioGroupContextRadius = "none" | Size | "full";
+export type RadioGroupContextRadius = "none" | Size | "full" | "circle";
 
 /**
  * ラジオボタンの大きさです。

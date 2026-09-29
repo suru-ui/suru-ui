@@ -1,17 +1,21 @@
+import type { ButtonState } from "@base-ui/react";
+import type { Toggle } from "@base-ui/react/toggle";
 import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
-import type { IUseContext } from "../types.js";
+import type { Override, IUseContext } from "../types.js";
 
 /**
  * {@link ToggleButtonRoot} が子パーツへ提供するコンテキストです。
  */
-export type ToggleButtonContext = {
-  /**
-   * トグルボタンが保留状態かどうかです。
-   */
-  readonly pending: boolean;
-};
+export type ToggleButtonContext = Readonly<
+  Override<ButtonState, Toggle.State> & {
+    /**
+     * トグルボタンが保留状態かどうかです。
+     */
+    readonly pending: boolean;
+  }
+>;
 
 /**
  * {@link ToggleButtonRoot} が子パーツへ提供するコンテキストです。

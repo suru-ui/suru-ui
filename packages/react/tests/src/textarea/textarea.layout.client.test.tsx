@@ -103,9 +103,9 @@ describe("TextareaRoot の配置", () => {
     // 準備と実行
     const screen = await render(
       <>
-        <span id="expected-sm" style={{ borderTopLeftRadius: "var(--sui-radius-sm)" }} />
-        <span id="expected-md" style={{ borderTopLeftRadius: "var(--sui-radius-md)" }} />
-        <span id="expected-lg" style={{ borderTopLeftRadius: "var(--sui-radius-lg)" }} />
+        <span id="expected-sm" style={{ borderTopLeftRadius: "4px" }} />
+        <span id="expected-md" style={{ borderTopLeftRadius: "8px" }} />
+        <span id="expected-lg" style={{ borderTopLeftRadius: "12px" }} />
         <TextareaRoot aria-label="なし" radius="none" />
         <TextareaRoot aria-label="小" radius="sm" />
         <TextareaRoot aria-label="中" radius="md" />

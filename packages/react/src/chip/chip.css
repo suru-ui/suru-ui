@@ -42,6 +42,7 @@
   --sui_chip-border_color-active: ;
   --sui_chip-border_width: ;
   --sui_chip-border_radius: ;
+  --sui_chip-corner_shape: ;
   --sui_chip-virtual_text_height: ;
   --sui_chip__svg-size: ;
   --sui_chip__svg-color: ;
@@ -67,6 +68,7 @@
   border-color: var(--_sui_chip-border_color, transparent);
   border-width: var(--_sui_chip-border_width, 0px);
   border-radius: var(--sui_chip-border_radius);
+  corner-shape: var(--sui_chip-corner_shape);
 
   svg:not(.sui-ignore) {
     width: var(--sui_chip__svg-size);
@@ -139,19 +141,23 @@
   }
 
   &.sui_chip-radius_sm {
-    --sui_chip-border_radius: var(--sui-radius-sm);
+    --sui_chip-border_radius: --sui-corner_radius(1);
+    --sui_chip-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_chip-radius_md {
-    --sui_chip-border_radius: var(--sui-radius-md);
+    --sui_chip-border_radius: --sui-corner_radius(2);
+    --sui_chip-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_chip-radius_lg {
-    --sui_chip-border_radius: var(--sui-radius-lg);
+    --sui_chip-border_radius: --sui-corner_radius(3);
+    --sui_chip-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_chip-radius_full {
     --sui_chip-border_radius: calc(var(--sui_chip-min_height) / 2);
+    --sui_chip-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_chip-color_grey {

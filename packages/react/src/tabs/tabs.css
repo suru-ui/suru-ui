@@ -17,6 +17,7 @@
   --sui_tabs-border_color: ;
   --sui_tabs-border_width: ;
   --sui_tabs-border_radius: ;
+  --sui_tabs-corner_shape: ;
 }
 
 /* 可変 */
@@ -25,6 +26,7 @@
   border-color: var(--_sui_tabs-border_color, transparent);
   border-width: var(--_sui_tabs-border_width, 0px);
   border-radius: var(--sui_tabs-border_radius);
+  corner-shape: var(--sui_tabs-corner_shape);
 }
 
 /* 代入 */
@@ -32,7 +34,8 @@
   --sui_tabs-background_color: var(--sui-canvas-1);
   --sui_tabs-border_color: var(--sui-grey-naked-border-normal);
   --sui_tabs-border_width: --sui-border_width(1);
-  --sui_tabs-border_radius: var(--sui-radius-md);
+  --sui_tabs-border_radius: --sui-corner_radius(2);
+  --sui_tabs-corner_shape: superellipse(var(--sui-superellipse));
 
   &.sui_tabs-size_sm {
     --sui_tabs-padding-around: --sui-space(3);
@@ -51,15 +54,18 @@
   }
 
   &.sui_tabs-radius_sm {
-    --sui_tabs-border_radius: var(--sui-radius-sm);
+    --sui_tabs-border_radius: --sui-corner_radius(1);
+    --sui_tabs-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_tabs-radius_md {
-    --sui_tabs-border_radius: var(--sui-radius-md);
+    --sui_tabs-border_radius: --sui-corner_radius(2);
+    --sui_tabs-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_tabs-radius_lg {
-    --sui_tabs-border_radius: var(--sui-radius-lg);
+    --sui_tabs-border_radius: --sui-corner_radius(3);
+    --sui_tabs-corner_shape: superellipse(var(--sui-superellipse));
   }
 }
 
@@ -108,6 +114,7 @@
   --sui_tabs_list-border_color: ;
   --sui_tabs_list-border_width: ;
   --sui_tabs_list-border_radius: ;
+  --sui_tabs_list-corner_shape: ;
 }
 
 /* 可変 */
@@ -120,6 +127,7 @@
     padding-inline-end: var(--sui_tabs_list-padding_inline_end);
     background-color: var(--sui_tabs_list-background_color);
     border-radius: var(--sui_tabs_list-border_radius);
+    corner-shape: var(--sui_tabs_list-corner_shape);
   }
 
   &.sui_tabs-orientation_horizontal .sui_tabs_list {
@@ -158,6 +166,7 @@
     --sui_tabs_list-background_color: var(--sui-grey-naked-canvas-subtle);
     --sui_tabs_list-border_width: 0px;
     --sui_tabs_list-border_radius: var(--sui_tabs-border_radius);
+    --sui_tabs_list-corner_shape: var(--sui_tabs-corner_shape);
   }
 
   &.sui_tabs-orientation_horizontal.sui_tabs-variant_line {
@@ -235,6 +244,7 @@
   --sui_tabs_tab-focusring_offset: ;
   --sui_tabs_tab-virtual_content-leading: ;
   --sui_tabs_tab-border_radius: ;
+  --sui_tabs_tab-corner_shape: ;
 }
 
 /* 可変 */
@@ -253,6 +263,7 @@
     outline-color: var(--_sui_tabs_tab-outline_color, transparent);
     outline-offset: var(--_sui_tabs_tab-outline_offset, 0px);
     border-radius: var(--sui_tabs_tab-border_radius);
+    corner-shape: var(--sui_tabs_tab-corner_shape);
   }
 }
 
@@ -275,6 +286,7 @@
                                             * var(--sui_tabs_tab-line_height)
                                           );
   --sui_tabs_tab-border_radius: var(--sui_tabs-border_radius);
+  --sui_tabs_tab-corner_shape: var(--sui_tabs-corner_shape);
 
   &.sui_tabs-size_sm {
     --sui_tabs_tab-min_height: var(--sui-size-sm);
@@ -370,6 +382,7 @@
   --sui_tabs_indicator-border_color: ;
   --sui_tabs_indicator-border_width: ;
   --sui_tabs_indicator-border_radius: ;
+  --sui_tabs_indicator-corner_shape: ;
   --sui_tabs_indicator-active_bottom: ;
   --sui_tabs_indicator-active_height: ;
   --sui_tabs_indicator-active_left: ;
@@ -387,6 +400,7 @@
     border-color: var(--sui_tabs_indicator-border_color);
     border-width: var(--sui_tabs_indicator-border_width);
     border-radius: var(--sui_tabs_indicator-border_radius);
+    corner-shape: var(--sui_tabs_indicator-corner_shape);
     transition: var(--_sui_tabs_indicator-transition,
                   inset-inline-start 240ms cubic-bezier(0.25, 0.7, 0.3, 1),
                   width              240ms cubic-bezier(0.25, 0.7, 0.3, 1),
@@ -443,6 +457,7 @@
       --sui_tabs_indicator-display: block;
       --sui_tabs_indicator-background_color: var(--sui-grey-solid-canvas-normal);
       --sui_tabs_indicator-border_radius: var(--sui_tabs-border_radius);
+      --sui_tabs_indicator-corner_shape: var(--sui_tabs-corner_shape);
     }
 
     &.sui_tabs-active_variant_naked {
@@ -456,6 +471,7 @@
       --sui_tabs_indicator-border_color: var(--sui-grey-naked-border-normal);
       --sui_tabs_indicator-border_width: --sui-border_width(1);
       --sui_tabs_indicator-border_radius: var(--sui_tabs-border_radius);
+      --sui_tabs_indicator-corner_shape: var(--sui_tabs-corner_shape);
     }
 
     &.sui_tabs-active_variant_liquid {
@@ -469,6 +485,7 @@
       --sui_tabs_indicator-border_color: var(--sui-grey-liquid-border-normal);
       --sui_tabs_indicator-border_width: --sui-border_width(1);
       --sui_tabs_indicator-border_radius: var(--sui_tabs-border_radius);
+      --sui_tabs_indicator-corner_shape: var(--sui_tabs-corner_shape);
     }
   }
 

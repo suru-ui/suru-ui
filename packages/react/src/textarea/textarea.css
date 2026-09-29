@@ -42,6 +42,7 @@
   --sui_textarea-border_width-focus_visible: ;
   --sui_textarea-border_width-invalid: ;
   --sui_textarea-border_radius: ;
+  --sui_textarea-corner_shape: ;
   --sui_textarea-virtual_text_height: ;
 }
 
@@ -65,6 +66,7 @@
   border-color: var(--_sui_textarea-border_color, transparent);
   border-width: var(--_sui_textarea-border_width, 0px);
   border-radius: var(--sui_textarea-border_radius);
+  corner-shape: var(--sui_textarea-corner_shape);
 
   &::placeholder {
     color: var(--sui_textarea-placeholder-color);
@@ -145,15 +147,18 @@
   }
 
   &.sui_textarea-radius_sm {
-    --sui_textarea-border_radius: var(--sui-radius-sm);
+    --sui_textarea-border_radius: --sui-corner_radius(1);
+    --sui_textarea-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_textarea-radius_md {
-    --sui_textarea-border_radius: var(--sui-radius-md);
+    --sui_textarea-border_radius: --sui-corner_radius(2);
+    --sui_textarea-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_textarea-radius_lg {
-    --sui_textarea-border_radius: var(--sui-radius-lg);
+    --sui_textarea-border_radius: --sui-corner_radius(3);
+    --sui_textarea-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_textarea-variant_naked {

@@ -136,11 +136,11 @@ describe("Tree の配置", () => {
     const md = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#md [role=treeitem]")!,
     );
-    expect(md.borderTopLeftRadius).toBe("4px");
+    expect(md.borderTopLeftRadius).toBe("8px");
     const lg = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#lg [role=treeitem]")!,
     );
-    expect(lg.borderTopLeftRadius).toBe("6px");
+    expect(lg.borderTopLeftRadius).toBe("12px");
   });
 
   test("角丸 full では丸くする", async ({ expect }) => {

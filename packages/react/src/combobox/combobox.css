@@ -95,6 +95,7 @@
   --sui_combobox-border_width-focus_visible: ;
   --sui_combobox-border_width-invalid: ;
   --sui_combobox-border_radius: ;
+  --sui_combobox-corner_shape: ;
 }
 
 /* 可変 */
@@ -115,11 +116,13 @@
   outline-offset: var(--sui_combobox-focusring_offset);
   background-color: var(--sui_combobox-background_color);
   border-radius: var(--sui_combobox-border_radius);
+  corner-shape: var(--sui_combobox-corner_shape);
 
   &::after {
     border-color: var(--_sui_combobox-border_color, transparent);
     border-width: var(--_sui_combobox-border_width, 0px);
     border-radius: var(--sui_combobox-border_radius);
+    corner-shape: var(--sui_combobox-corner_shape);
   }
 }
 
@@ -186,19 +189,23 @@
   }
 
   &.sui_combobox-radius_sm {
-    --sui_combobox-border_radius: var(--sui-radius-sm);
+    --sui_combobox-border_radius: --sui-corner_radius(1);
+    --sui_combobox-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_combobox-radius_md {
-    --sui_combobox-border_radius: var(--sui-radius-md);
+    --sui_combobox-border_radius: --sui-corner_radius(2);
+    --sui_combobox-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_combobox-radius_lg {
-    --sui_combobox-border_radius: var(--sui-radius-lg);
+    --sui_combobox-border_radius: --sui-corner_radius(3);
+    --sui_combobox-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_combobox-radius_full {
     --sui_combobox-border_radius: calc(var(--sui_combobox-min_height) / 2);
+    --sui_combobox-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_combobox-variant_naked {
@@ -542,6 +549,7 @@
   --sui_combobox_clear-background_color-hover: ;
   --sui_combobox_clear-background_color-active: ;
   --sui_combobox_clear-border_radius: ;
+  --sui_combobox_clear-corner_shape: ;
   --sui_combobox_clear__svg-size: ;
   --sui_combobox_clear__svg-color: ;
 }
@@ -560,6 +568,7 @@
                         var(--sui_combobox_clear-background_color-idle)
                       );
     border-radius: var(--sui_combobox_clear-border_radius);
+    corner-shape: var(--sui_combobox_clear-corner_shape);
 
     svg:not(.sui-ignore) {
       width: var(--sui_combobox_clear__svg-size);
@@ -588,19 +597,23 @@
   }
 
   &.sui_combobox-radius_sm {
-    --sui_combobox_clear-border_radius: var(--sui-radius-sm);
+    --sui_combobox_clear-border_radius: --sui-corner_radius(1);
+    --sui_combobox_clear-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_combobox-radius_md {
-    --sui_combobox_clear-border_radius: var(--sui-radius-md);
+    --sui_combobox_clear-border_radius: --sui-corner_radius(2);
+    --sui_combobox_clear-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_combobox-radius_lg {
-    --sui_combobox_clear-border_radius: var(--sui-radius-lg);
+    --sui_combobox_clear-border_radius: --sui-corner_radius(3);
+    --sui_combobox_clear-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_combobox-radius_full {
     --sui_combobox_clear-border_radius: calc(var(--sui_combobox_clear-size) / 2);
+    --sui_combobox_clear-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_combobox-variant_naked {
@@ -719,6 +732,7 @@
   --sui_combobox_chip-border_color: ;
   --sui_combobox_chip-border_width: ;
   --sui_combobox_chip-border_radius: ;
+  --sui_combobox_chip-corner_shape: ;
   --sui_combobox_chip__svg-size: ;
   --sui_combobox_chip__svg-color: ;
 }
@@ -739,6 +753,7 @@
     border-color: var(--_sui_combobox_chip-border_color, transparent);
     border-width: var(--_sui_combobox_chip-border_width, 0px);
     border-radius: var(--sui_combobox_chip-border_radius);
+    corner-shape: var(--sui_combobox_chip-corner_shape);
 
     svg:not(.sui-ignore) {
       width: var(--sui_combobox_chip__svg-size);
@@ -794,19 +809,23 @@
   }
 
   .sui_combobox_chip-radius_sm {
-    --sui_combobox_chip-border_radius: var(--sui-radius-sm);
+    --sui_combobox_chip-border_radius: --sui-corner_radius(1);
+    --sui_combobox_chip-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   .sui_combobox_chip-radius_md {
-    --sui_combobox_chip-border_radius: var(--sui-radius-md);
+    --sui_combobox_chip-border_radius: --sui-corner_radius(2);
+    --sui_combobox_chip-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   .sui_combobox_chip-radius_lg {
-    --sui_combobox_chip-border_radius: var(--sui-radius-lg);
+    --sui_combobox_chip-border_radius: --sui-corner_radius(3);
+    --sui_combobox_chip-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   .sui_combobox_chip-radius_full {
     --sui_combobox_chip-border_radius: calc(var(--sui_combobox_chip-height) / 2);
+    --sui_combobox_chip-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   .sui_combobox_chip-color_grey {
@@ -1010,6 +1029,7 @@
   --sui_combobox_chip_remove-background_color-hover: ;
   --sui_combobox_chip_remove-background_color-active: ;
   --sui_combobox_chip_remove-border_radius: ;
+  --sui_combobox_chip_remove-corner_shape: ;
   --sui_combobox_chip_remove__svg-size: ;
   --sui_combobox_chip_remove__svg-color: ;
 }
@@ -1022,6 +1042,7 @@
                         var(--sui_combobox_chip_remove-background_color-idle)
                       );
     border-radius: var(--sui_combobox_chip_remove-border_radius);
+    corner-shape: var(--sui_combobox_chip_remove-corner_shape);
 
     svg:not(.sui-ignore) {
       width: var(--sui_combobox_chip_remove__svg-size);
@@ -1066,19 +1087,23 @@
   }
 
   .sui_combobox_chip_remove-radius_sm {
-    --sui_combobox_chip_remove-border_radius: var(--sui-radius-sm);
+    --sui_combobox_chip_remove-border_radius: --sui-corner_radius(1);
+    --sui_combobox_chip_remove-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   .sui_combobox_chip_remove-radius_md {
-    --sui_combobox_chip_remove-border_radius: var(--sui-radius-md);
+    --sui_combobox_chip_remove-border_radius: --sui-corner_radius(2);
+    --sui_combobox_chip_remove-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   .sui_combobox_chip_remove-radius_lg {
-    --sui_combobox_chip_remove-border_radius: var(--sui-radius-lg);
+    --sui_combobox_chip_remove-border_radius: --sui-corner_radius(3);
+    --sui_combobox_chip_remove-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   .sui_combobox_chip_remove-radius_full {
     --sui_combobox_chip_remove-border_radius: calc(var(--sui_combobox_chip-height) / 2);
+    --sui_combobox_chip_remove-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   .sui_combobox_chip-color_grey {
@@ -1520,6 +1545,7 @@
   --sui_combobox_popup-border_color: ;
   --sui_combobox_popup-border_width: ;
   --sui_combobox_popup-border_radius: ;
+  --sui_combobox_popup-corner_shape: ;
 }
 
 /* 可変 */
@@ -1539,11 +1565,13 @@
     letter-spacing: var(--sui_combobox_popup-letter_spacing);
     background-color: var(--sui_combobox_popup-background_color);
     border-radius: var(--sui_combobox_popup-border_radius);
+    corner-shape: var(--sui_combobox_popup-corner_shape);
 
     &::after {
       border-color: var(--_sui_combobox_popup-border_color, transparent);
       border-width: var(--_sui_combobox_popup-border_width, 0px);
       border-radius: var(--sui_combobox_popup-border_radius);
+      corner-shape: var(--sui_combobox_popup-corner_shape);
     }
   }
 }
@@ -1584,19 +1612,23 @@
   }
 
   &.sui_combobox_portal-radius_sm {
-    --sui_combobox_popup-border_radius: var(--sui-radius-sm);
+    --sui_combobox_popup-border_radius: --sui-corner_radius(2);
+    --sui_combobox_popup-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_combobox_portal-radius_md {
-    --sui_combobox_popup-border_radius: var(--sui-radius-md);
+    --sui_combobox_popup-border_radius: --sui-corner_radius(3);
+    --sui_combobox_popup-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_combobox_portal-radius_lg {
-    --sui_combobox_popup-border_radius: var(--sui-radius-lg);
+    --sui_combobox_popup-border_radius: --sui-corner_radius(4);
+    --sui_combobox_popup-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_combobox_portal-radius_full {
-    --sui_combobox_popup-border_radius: var(--sui-radius-md);
+    --sui_combobox_popup-border_radius: --sui-corner_radius(3);
+    --sui_combobox_popup-corner_shape: superellipse(var(--sui-superellipse));
   }
 }
 

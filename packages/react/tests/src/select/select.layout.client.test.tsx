@@ -57,9 +57,9 @@ describe("Select の配置", () => {
     const sm = getComputedStyle(screen.getByRole("combobox", { name: "小" }).element());
     expect(sm.borderTopLeftRadius).toBe("4px");
     const md = getComputedStyle(screen.getByRole("combobox", { name: "中" }).element());
-    expect(md.borderTopLeftRadius).toBe("4px");
+    expect(md.borderTopLeftRadius).toBe("8px");
     const lg = getComputedStyle(screen.getByRole("combobox", { name: "大" }).element());
-    expect(lg.borderTopLeftRadius).toBe("6px");
+    expect(lg.borderTopLeftRadius).toBe("12px");
     const full = getComputedStyle(screen.getByRole("combobox", { name: "丸" }).element());
     expect(full.borderTopLeftRadius).toBe("14px");
   });

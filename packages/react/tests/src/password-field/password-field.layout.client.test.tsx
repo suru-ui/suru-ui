@@ -136,8 +136,8 @@ describe("PasswordField の配置", () => {
     // 準備と実行
     const screen = await render(
       <>
-        <span id="expected-sm" style={{ borderTopLeftRadius: "var(--sui-radius-sm)" }} />
-        <span id="expected-lg" style={{ borderTopLeftRadius: "var(--sui-radius-lg)" }} />
+        <span id="expected-sm" style={{ borderTopLeftRadius: "4px" }} />
+        <span id="expected-lg" style={{ borderTopLeftRadius: "12px" }} />
         <PasswordField radius="none" />
         <PasswordField radius="sm" />
         <PasswordField radius="lg" />
@@ -169,7 +169,7 @@ describe("PasswordField の配置", () => {
       // 準備と実行
       const screen = await render(
         <>
-          <span id="expected-sm" style={{ borderTopLeftRadius: "var(--sui-radius-sm)" }} />
+          <span id="expected-sm" style={{ borderTopLeftRadius: "4px" }} />
           <PasswordField radius="sm" />
           <PasswordField radius="full" />
         </>,

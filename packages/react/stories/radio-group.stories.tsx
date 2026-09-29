@@ -7,7 +7,7 @@ import { Radio } from "../src/radio/index.js";
 
 const COLORS: readonly RadioGroup.Color[] = theme.COLORS;
 const SIZES: readonly RadioGroup.Size[] = theme.SIZES;
-const RADII: readonly RadioGroup.Radius[] = ["none", ...SIZES, "full"];
+const RADII: readonly RadioGroup.Radius[] = ["none", ...SIZES, "full", "circle"];
 const VARIANTS: readonly RadioGroup.Variant[] = ["naked", "liquid"];
 const ORIENTATIONS: readonly RadioGroup.Orientation[] = ["vertical", "horizontal"];
 

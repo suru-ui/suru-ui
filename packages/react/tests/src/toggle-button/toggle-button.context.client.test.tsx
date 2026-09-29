@@ -26,7 +26,7 @@ describe("useToggleButtonContext", () => {
 
     // 実行
     const screen = await render(
-      <ToggleButtonContext value={{ pending: true }}>
+      <ToggleButtonContext value={{ disabled: false, pending: true, pressed: false }}>
         <Probe />
       </ToggleButtonContext>,
     );
