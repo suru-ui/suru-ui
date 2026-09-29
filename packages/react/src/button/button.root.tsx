@@ -3,6 +3,7 @@ import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import type { Size, Color, ColorTemplate } from "@suru-ui/theme";
 import * as React from "react";
 
+import RenderElement from "../_render-element.jsx";
 import type { RenderProps } from "../_use-render.js";
 import { useActionGroupContext } from "../action-group/action-group.parts.js";
 import cn from "../cn.js";
@@ -160,6 +161,7 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
     color: colorProp = "grey",
     muted = false,
     radius: radiusProp = sizeProp,
+    render,
     pending = false,
     squared = false,
     variant: variantProp = "solid",
@@ -176,33 +178,40 @@ export const ButtonRoot: IComponent<ButtonRootProps> = function SuiButtonRoot(pr
   const radius = actionGroupCtx?.radius ?? radiusProp;
   const variant = actionGroupCtx?.variant ?? variantProp;
   const outlined = actionGroupCtx?.outlined ?? outlinedProp;
-  const ctx = React.useMemo<ButtonContext>(() => ({ pending }), [pending]);
 
   return (
-    <ButtonContext value={ctx}>
-      <Button
-        {...otherProps}
-        type={type}
-        disabled={disabled || pending}
-        className={cn(
-          className,
-          "sui_button",
-          "sui_action_group_item",
-          `sui_button-size_${size}`,
-          `sui_button-color_${color}`,
-          `sui_button-radius_${radius}`,
-          `sui_button-variant_${variant}`,
-          item && "sui_button-item",
-          muted && "sui_button-muted",
-          outlined && "sui_button-outlined",
-          pending && "sui_button-pending",
-          squared && "sui_button-squared",
-          (state) => state.disabled && !pending && "sui_button-disabled",
-        )}
-        focusableWhenDisabled={focusableWhenDisabled}
-        data-scope={dataScope}
-      />
-    </ButtonContext>
+    <Button
+      {...otherProps}
+      type={type}
+      render={(htmlProps, state) => (
+        <ButtonContext value={{ ...state, pending }}>
+          <RenderElement
+            state={state}
+            render={render}
+            htmlProps={htmlProps}
+            defaultTagName="button"
+          />
+        </ButtonContext>
+      )}
+      disabled={disabled || pending}
+      className={cn(
+        className,
+        "sui_button",
+        "sui_action_group_item",
+        `sui_button-size_${size}`,
+        `sui_button-color_${color}`,
+        `sui_button-radius_${radius}`,
+        `sui_button-variant_${variant}`,
+        item && "sui_button-item",
+        muted && "sui_button-muted",
+        outlined && "sui_button-outlined",
+        pending && "sui_button-pending",
+        squared && "sui_button-squared",
+        (state) => state.disabled && !pending && "sui_button-disabled",
+      )}
+      focusableWhenDisabled={focusableWhenDisabled}
+      data-scope={dataScope}
+    />
   );
 };
 

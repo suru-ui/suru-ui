@@ -1,3 +1,4 @@
+import type { ButtonState } from "@base-ui/react";
 import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
@@ -6,12 +7,14 @@ import type { IUseContext } from "../types.js";
 /**
  * {@link ButtonRoot} が子パーツへ提供するコンテキストです。
  */
-export type ButtonContext = {
-  /**
-   * ボタンが保留状態かどうかです。
-   */
-  readonly pending: boolean;
-};
+export type ButtonContext = Readonly<
+  ButtonState & {
+    /**
+     * ボタンが保留状態かどうかです。
+     */
+    pending: boolean;
+  }
+>;
 
 /**
  * {@link ButtonRoot} が子パーツへ提供するコンテキストです。
