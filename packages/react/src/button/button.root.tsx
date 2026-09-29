@@ -22,8 +22,9 @@ export type ButtonRootColor = Color;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
+ * - `"circle"`: 完全な丸形
  */
-export type ButtonRootRadius = "none" | Size | "full";
+export type ButtonRootRadius = "none" | Size | "full" | "circle";
 
 /**
  * ボタンの大きさです。

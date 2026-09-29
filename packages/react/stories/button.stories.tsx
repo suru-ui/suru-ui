@@ -7,7 +7,7 @@ import { Button } from "../src/button/index.js";
 import * as ButtonParts from "../src/button/index.js";
 
 const COLORS: readonly Button.Color[] = theme.COLORS;
-const RADII: readonly Button.Radius[] = ["none", ...theme.SIZES, "full"];
+const RADII: readonly Button.Radius[] = ["none", ...theme.SIZES, "full", "circle"];
 const SIZES: readonly Button.Size[] = theme.SIZES;
 const VARIANTS: readonly Button.Variant[] = theme.COLOR_TEMPLATES;
 

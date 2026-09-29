@@ -47,6 +47,7 @@
   --sui_button-border_color-active: ;
   --sui_button-border_width: ;
   --sui_button-border_radius: ;
+  --sui_button-corner_shape: ;
   --sui_button__svg-size: ;
   --sui_button__svg-color: ;
 }
@@ -74,6 +75,7 @@
   border-color: var(--_sui_button-border_color, transparent);
   border-width: var(--_sui_button-border_width, 0px);
   border-radius: var(--sui_button-border_radius);
+  corner-shape: var(--sui_button-corner_shape);
 
   svg:not(.sui-ignore) {
     width: var(--sui_button__svg-size);
@@ -103,10 +105,7 @@
                                           var(--sui_button__svg-size)
                                         );
   --sui_button-border_width: --sui-border_width(1);
-  --sui_button__svg-size: calc(
-                            var(--sui_button-font_size)
-                            * var(--sui_button-line_height)
-                          );
+  --sui_button__svg-size: calc(var(--sui_button-font_size) * var(--sui_button-line_height));
   --sui_button__svg-color: --sui-icon_color(
                              var(--_sui_button-color, var(--sui_button-color-idle)),
                              var(--_sui_button-background_color,
@@ -115,9 +114,9 @@
                            );
 
   &.sui_button-size_sm {
-    --sui_button-gap: --sui-gap(2);
+    --sui_button-gap: --sui-gap(0.5);
     --sui_button-min_height: var(--sui-size-sm);
-    --sui_button-padding_inline: --sui-space(4);
+    --sui_button-padding_inline: --sui-space(1.5);
     --sui_button-font_size: var(--sui-text-oln-sm-m-font_size);
     --sui_button-font_weight: var(--sui-text-oln-sm-m-font_weight);
     --sui_button-line_height: var(--sui-text-oln-sm-m-line_height);
@@ -125,9 +124,9 @@
   }
 
   &.sui_button-size_md {
-    --sui_button-gap: --sui-gap(3);
+    --sui_button-gap: --sui-gap(1);
     --sui_button-min_height: var(--sui-size-md);
-    --sui_button-padding_inline: --sui-space(5);
+    --sui_button-padding_inline: --sui-space(2.5);
     --sui_button-font_size: var(--sui-text-oln-md-m-font_size);
     --sui_button-font_weight: var(--sui-text-oln-md-m-font_weight);
     --sui_button-line_height: var(--sui-text-oln-md-m-line_height);
@@ -135,9 +134,9 @@
   }
 
   &.sui_button-size_lg {
-    --sui_button-gap: --sui-gap(4);
+    --sui_button-gap: --sui-gap(1.5);
     --sui_button-min_height: var(--sui-size-lg);
-    --sui_button-padding_inline: --sui-space(6);
+    --sui_button-padding_inline: --sui-space(3.5);
     --sui_button-font_size: var(--sui-text-oln-lg-m-font_size);
     --sui_button-font_weight: var(--sui-text-oln-lg-m-font_weight);
     --sui_button-line_height: var(--sui-text-oln-lg-m-line_height);
@@ -146,15 +145,15 @@
 
   &.sui_button-item {
     &.sui_button-size_sm {
-      --sui_button-padding_inline: --sui-space(3);
+      --sui_button-padding_inline: --sui-space(1);
     }
 
     &.sui_button-size_md {
-      --sui_button-padding_inline: --sui-space(3);
+      --sui_button-padding_inline: --sui-space(2);
     }
 
     &.sui_button-size_lg {
-      --sui_button-padding_inline: --sui-space(4);
+      --sui_button-padding_inline: --sui-space(3);
     }
   }
 
@@ -163,19 +162,28 @@
   }
 
   &.sui_button-radius_sm {
-    --sui_button-border_radius: var(--sui-radius-sm);
+    --sui_button-border_radius: --sui-corner_radius(1);
+    --sui_button-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_button-radius_md {
-    --sui_button-border_radius: var(--sui-radius-md);
+    --sui_button-border_radius: --sui-corner_radius(2);
+    --sui_button-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_button-radius_lg {
-    --sui_button-border_radius: var(--sui-radius-lg);
+    --sui_button-border_radius: --sui-corner_radius(3);
+    --sui_button-corner_shape: superellipse(var(--sui-superellipse));
   }
 
   &.sui_button-radius_full {
     --sui_button-border_radius: calc(var(--sui_button-min_height) / 2);
+    --sui_button-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_button-radius_circle {
+    --sui_button-border_radius: calc(var(--sui_button-min_height) / 2);
+    --sui_button-corner_shape: none;
   }
 
   &.sui_button-color_grey {
