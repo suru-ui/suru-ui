@@ -73,7 +73,7 @@ export const Usage = meta.story({
         <Card
           {...props}
           footer={
-            <Button color="grey" size={props.size}>
+            <Button size={props.size} color="grey">
               アカウントを作成
             </Button>
           }

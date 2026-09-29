@@ -10,6 +10,7 @@ import { BreadcrumbItem } from "./breadcrumb.item.jsx";
 import { BreadcrumbLink } from "./breadcrumb.link.jsx";
 import type { BreadcrumbRootItemObject } from "./breadcrumb.root.jsx";
 import { BreadcrumbSeparator } from "./breadcrumb.separator.jsx";
+import { decomposeItemObject } from "./breadcrumb.utils.js";
 
 /**
  * パンくずリストの各項目をレンダリングする関数のインターフェイスです。
@@ -95,14 +96,14 @@ export const BreadcrumbList: IBreadcrumbList = function SuiBreadcrumbList(
 const defaultListItemRenderer: IBreadcrumbListItemRenderer = (item, index, items) => {
   switch (true) {
     case isItemObject(item): {
-      const { label, current: currentProp, ...otherItemProps } = item;
-      const current = currentProp ?? index === items.length - 1;
+      const { label, itemProps } = decomposeItemObject(item);
+      const current = itemProps.current ?? index === items.length - 1;
 
       return (
         <React.Fragment key={getItemKey(item) ?? index}>
           {index > 0 && <BreadcrumbSeparator />}
           <BreadcrumbItem>
-            <BreadcrumbLink {...otherItemProps} current={current}>
+            <BreadcrumbLink {...itemProps} current={current}>
               {label}
             </BreadcrumbLink>
           </BreadcrumbItem>

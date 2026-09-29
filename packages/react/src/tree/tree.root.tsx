@@ -12,6 +12,7 @@ import { isItemObject, getSelectAction } from "./_tree.jsx";
 import { type TreeSelectAction, TreeContext } from "./tree.context.js";
 import { TreeItemIndicator } from "./tree.indicator.jsx";
 import { type TreeItemProps, TreeItem } from "./tree.item.jsx";
+import { decomposeItemObject } from "./tree.utils.js";
 
 /**
  * {@link TreeRoot} の項目を表すオブジェクトです。
@@ -589,12 +590,12 @@ const defaultRootItemRenderer: ITreeRootItemRenderer = (node, level, posInSet, s
     return toReactNode(node);
   }
 
-  const { id, items, label, ...otherItemProps } = node;
+  const { id, items, label, itemProps } = decomposeItemObject(node);
   const hasItems = items != null && items.length > 0;
 
   return (
     <TreeItem
-      {...otherItemProps}
+      {...itemProps}
       id={id}
       key={id}
       level={level}

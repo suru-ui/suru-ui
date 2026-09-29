@@ -21,6 +21,7 @@ import {
   TreeRoot,
   TreeItemIndicator,
 } from "./tree.parts.js";
+import { decomposeItemObject } from "./tree.utils.js";
 
 // Types
 // -----
@@ -161,11 +162,15 @@ export class TreeAPI {
     setSize: number,
   ): Omit<TreeItemProps, "children"> {
     const { item: props = {} } = this.slotProps;
-    const { id, items, label: _label, disabled, ...otherNodeProps } = node;
+    const { id, items, itemProps } = decomposeItemObject(node);
     const hasItems = items != null && items.length > 0;
 
     return {
-      ...mergeProps([props, otherNodeProps, { disabled: disabled || props.disabled, hasItems }]),
+      ...mergeProps([
+        props,
+        itemProps,
+        { disabled: itemProps.disabled || props.disabled, hasItems },
+      ]),
       id,
       level,
       setSize,

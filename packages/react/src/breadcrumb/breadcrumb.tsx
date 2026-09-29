@@ -22,6 +22,7 @@ import {
   BreadcrumbRoot,
   BreadcrumbSeparator,
 } from "./breadcrumb.parts.js";
+import { decomposeItemObject } from "./breadcrumb.utils.js";
 
 // Types
 // -----
@@ -170,10 +171,10 @@ export class BreadcrumbAPI<TItem = any> {
    */
   public getLinkProps(item: BreadcrumbItemObject, index: number): BreadcrumbLinkProps {
     const { link: props = {} } = this.slotProps;
-    const { label: _label, current: currentProp, ...otherItemProps } = item;
-    const current = currentProp ?? index === this.breadcrumbProps.items.length - 1;
+    const { itemProps } = decomposeItemObject(item);
+    const current = itemProps.current ?? index === this.breadcrumbProps.items.length - 1;
 
-    return mergeProps([props, otherItemProps, { current, children: this.getLabel(item) }]);
+    return mergeProps([props, itemProps, { current, children: this.getLabel(item) }]);
   }
 
   /**

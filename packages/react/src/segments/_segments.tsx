@@ -5,6 +5,7 @@ import { hasLabel, isObject, getItemKey, isPrimitiveItem } from "../_item.js";
 import toReactNode from "../_to-react-node.js";
 import { type SegmentsItemProps, SegmentsItem } from "./segments.item.jsx";
 import type { SegmentsRootItemObject, ISegmentsRootItemRenderer } from "./segments.root.jsx";
+import { decomposeItemObject } from "./segments.utils.js";
 
 /**
  * 項目が `label` を持つオブジェクトかどうかを判定します。
@@ -25,13 +26,13 @@ export function isItemObject(item: unknown): item is SegmentsRootItemObject {
  * @returns セグメントの props です。
  */
 export function getSegmentsItemProps(item: unknown): Omit<SegmentsItemProps, "children"> {
-  if (!isItemObject(item)) {
-    return { value: item };
+  switch (true) {
+    case isItemObject(item):
+      return decomposeItemObject(item).itemProps;
+
+    default:
+      return { value: item };
   }
-
-  const { label: _label, ...otherItemProps } = item;
-
-  return otherItemProps;
 }
 
 /**

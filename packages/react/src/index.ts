@@ -133,10 +133,13 @@ export {
   type BreadcrumbSlotProps,
   type BreadcrumbItemObject,
   type IBreadcrumbItemRenderer,
+  type IDecomposeBreadcrumbItemObject,
+  type BreadcrumbItemObjectDecomposition,
   Breadcrumb,
   useBreadcrumbAPI,
   BreadcrumbContext,
   useBreadcrumbContext,
+  decomposeBreadcrumbItemObject,
 } from "./breadcrumb/index.js";
 export {
   type ButtonAPI,
@@ -585,10 +588,13 @@ export {
   type SegmentsActiveVariant,
   type SegmentsChangeEventReason,
   type SegmentsChangeEventDetails,
+  type IDecomposeSegmentsItemObject,
+  type SegmentsItemObjectDecomposition,
   Segments,
   useSegmentsAPI,
   SegmentsContext,
   useSegmentsContext,
+  decomposeSegmentsItemObject,
 } from "./segments/index.js";
 export {
   type SelectSize,
@@ -697,10 +703,13 @@ export {
   type TabsActiveVariant,
   type TabsChangeEventReason,
   type TabsChangeEventDetails,
+  type IDecomposeTabsItemObject,
+  type TabsItemObjectDecomposition,
   Tabs,
   useTabsAPI,
   TabsContext,
   useTabsContext,
+  decomposeTabsItemObject,
 } from "./tabs/index.js";
 export {
   type TextFieldAPI,
@@ -800,8 +809,11 @@ export {
   type TreeSlotProps,
   type TreeItemObject,
   type ITreeItemRenderer,
+  type IDecomposeTreeItemObject,
+  type TreeItemObjectDecomposition,
   Tree,
   useTreeAPI,
   TreeContext,
   useTreeContext,
+  decomposeTreeItemObject,
 } from "./tree/index.js";

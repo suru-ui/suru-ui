@@ -5,6 +5,7 @@ import { hasLabel, isObject, getItemKey, isPrimitiveItem } from "../_item.js";
 import toReactNode from "../_to-react-node.js";
 import type { TabsRootItemObject, ITabsRootItemRenderer } from "./tabs.root.jsx";
 import { type TabsTabProps, TabsTab } from "./tabs.tab.jsx";
+import { decomposeItemObject } from "./tabs.utils.js";
 
 /**
  * 項目が `label` を持つオブジェクトかどうかを判定します。
@@ -26,13 +27,13 @@ export function isItemObject(item: unknown): item is TabsRootItemObject {
  * @returns タブの props です。
  */
 export function getTabsItemProps(item: unknown): Omit<TabsTabProps, "children"> {
-  if (!isItemObject(item)) {
-    return { value: item };
+  switch (true) {
+    case isItemObject(item):
+      return decomposeItemObject(item).itemProps;
+
+    default:
+      return { value: item };
   }
-
-  const { label: _label, content: _content, ...otherItemProps } = item;
-
-  return otherItemProps;
 }
 
 /**
