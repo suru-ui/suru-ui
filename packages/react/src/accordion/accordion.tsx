@@ -112,6 +112,16 @@ namespace AccordionProps {
 export type AccordionProps<TItem = any, TValue = any> = AccordionProps.Accordion &
   AccordionProps.Root<TItem, TValue>;
 
+export interface IAccordion extends IComponent<AccordionProps> {
+  /**
+   * @template TItem 項目の型です。
+   * @template TValue 項目の値の型です。
+   */
+  <TItem = any, TValue = $InferItemObjectValue<TItem>>(
+    props: AccordionProps<TItem, TValue>,
+  ): IComponent.Return;
+}
+
 // API
 // ---
 
@@ -288,16 +298,6 @@ export { AccordionAPI as API, useAccordionAPI as useAPI };
 
 // Component
 // ---------
-
-export interface IAccordion extends IComponent<AccordionProps> {
-  /**
-   * @template TItem 項目の型です。
-   * @template TValue 項目の値の型です。
-   */
-  <TItem = any, TValue = $InferItemObjectValue<TItem>>(
-    props: AccordionProps<TItem, TValue>,
-  ): IComponent.Return;
-}
 
 /**
  * アコーディオンを表示するコンポーネントです。
