@@ -6,6 +6,7 @@ import { preview, controls } from "../.config/storybook/preview.js";
 import { AlertDialog } from "../src/alert-dialog/index.js";
 import { Button } from "../src/button/index.js";
 
+const SIZES: readonly AlertDialog.Size[] = theme.SIZES;
 const RADII: readonly AlertDialog.Radius[] = ["none", ...theme.SIZES];
 const VARIANTS: readonly AlertDialog.Variant[] = ["default", "stacked"];
 
@@ -35,7 +36,7 @@ const ctrl = controls(AlertDialog, {
   },
   size: {
     control: "select",
-    options: theme.SIZES,
+    options: SIZES,
   },
   title: {
     control: "text",
@@ -51,7 +52,7 @@ export const Usage = meta.story({
   ...ctrl({
     variant: "default",
     radius: "md",
-    outlined: false,
+    outlined: true,
     showCancelIconButton: false,
     icon: false,
     title: "プロジェクトを削除しますか？",
@@ -89,7 +90,7 @@ export const Stacked = meta.story({
   name: "積み上げ式",
   ...ctrl({
     radius: "md",
-    outlined: false,
+    outlined: true,
     showCancelIconButton: false,
     icon: false,
     title: "プロジェクトを削除しますか？",
@@ -129,7 +130,7 @@ export const WithIcon = meta.story({
   ...ctrl({
     variant: "default",
     radius: "md",
-    outlined: false,
+    outlined: true,
     showCancelIconButton: false,
     title: "プロジェクトを削除しますか？",
     description:
@@ -166,7 +167,7 @@ export const StackedWithIcon = meta.story({
   name: "アイコン付きの積み上げ式",
   ...ctrl({
     radius: "md",
-    outlined: false,
+    outlined: true,
     showCancelIconButton: false,
     title: "プロジェクトを削除しますか？",
     description:
@@ -205,7 +206,7 @@ export const WithCancelIconButton = meta.story({
   ...ctrl({
     variant: "default",
     radius: "md",
-    outlined: false,
+    outlined: true,
     icon: false,
     title: "プロジェクトを削除しますか？",
     description:

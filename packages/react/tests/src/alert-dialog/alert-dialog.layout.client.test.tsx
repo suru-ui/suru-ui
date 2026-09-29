@@ -90,6 +90,29 @@ describe("AlertDialog の配置", () => {
       expect(titleRect.left - iconRect.right).toBeCloseTo(16, 1);
       expect(descriptionRect.top).toBeGreaterThan(titleRect.bottom);
       expect(descriptionRect.left).toBe(titleRect.left);
+      // アイコンは見出しと上端を揃え、説明の行まで伸びます。
+      expect(iconRect.top).toBeCloseTo(titleRect.top, 1);
+      expect(iconRect.bottom).toBeGreaterThan(descriptionRect.top);
+    },
+  );
+
+  test.skipIf(!supportsCustomFunctions())(
+    "説明がなければアイコンを見出しの行に収める",
+    async ({ expect }) => {
+      // 準備と実行
+      const screen = await render(
+        <AlertDialog defaultOpen icon={<span>!</span>} title="見出し">
+          本文
+        </AlertDialog>,
+      );
+
+      // 検証
+      const header = screen.getByClassName("sui_alert_dialog_header").element();
+      const iconRect = screen
+        .getByClassName("sui_alert_dialog_icon")
+        .element()
+        .getBoundingClientRect();
+      expect(header.getBoundingClientRect().height).toBeCloseTo(iconRect.height, 0);
     },
   );
 
