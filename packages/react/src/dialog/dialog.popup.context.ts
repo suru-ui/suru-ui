@@ -57,10 +57,7 @@ export type DialogPopupContext = {
 export const DialogPopupContext: React.Context<DialogPopupContext | null> =
   React.createContext<DialogPopupContext | null>(null);
 
-export interface IUseDialogPopupContext extends IUseContext<DialogPopupContext> {
-  (optional?: false): DialogPopupContext;
-  (optional?: boolean): DialogPopupContext | null;
-}
+export type IUseDialogPopupContext = IUseContext<DialogPopupContext>;
 
 export const useDialogPopupContext: IUseDialogPopupContext = function useSuiDialogPopupContext(
   optional?: boolean,
