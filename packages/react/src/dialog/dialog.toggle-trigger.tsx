@@ -51,22 +51,23 @@ export type DialogToggleTriggerProps<TPayload = any> = DialogToggleTriggerProps.
   DialogToggleTriggerProps.BaseUI<TPayload> &
   DialogToggleTriggerProps.HTML<TPayload>;
 
+export type IDialogToggleTrigger = IComponent<DialogToggleTriggerProps>;
+
 /**
  * ダイアログを開くボタンコンポーネントです。
  */
-export const DialogToggleTrigger: IComponent<DialogToggleTriggerProps> =
-  function SuiDialogToggleTrigger(props) {
-    const { handle, children, className, ...otherProps } = props;
+export const DialogToggleTrigger: IDialogToggleTrigger = function SuiDialogToggleTrigger(props) {
+  const { handle, children, className, ...otherProps } = props;
 
-    return (
-      <Dialog.Trigger
-        {...otherProps}
-        handle={handle}
-        render={children}
-        className={cn(className, "sui_dialog_trigger")}
-      />
-    );
-  };
+  return (
+    <Dialog.Trigger
+      {...otherProps}
+      handle={handle}
+      render={children}
+      className={cn(className, "sui_dialog_trigger")}
+    />
+  );
+};
 
 export { DialogToggleTrigger as ToggleTrigger };
 

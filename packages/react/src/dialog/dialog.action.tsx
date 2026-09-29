@@ -26,12 +26,14 @@ export type DialogActionProps = DialogActionProps.Render &
   DialogActionProps.BaseUI &
   DialogActionProps.HTML;
 
+export type IDialogAction = IComponent<DialogActionProps>;
+
 /**
  * ダイアログのヘッダー右上に操作要素を配置するコンポーネントです。
  *
  * 積み上げ式では右上へ重ねて配置します。
  */
-export const DialogAction: IComponent<DialogActionProps> = function SuiDialogAction(props) {
+export const DialogAction: IDialogAction = function SuiDialogAction(props) {
   return <Card.Action {...props} className={cn(props.className, "sui_dialog_action")} />;
 };
 

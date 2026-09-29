@@ -78,12 +78,14 @@ export type DialogPopupProps = DialogPopupProps.Render &
   DialogPopupProps.BaseUI &
   DialogPopupProps.HTML;
 
+export type IDialogPopup = IComponent<DialogPopupProps>;
+
 /**
  * ダイアログのポップアップ要素です。
  *
  * 見た目はカードとして描画され、大きさや角丸や枠線はカードのルートから引き継ぎます。
  */
-export const DialogPopup: IComponent<DialogPopupProps> = function SuiDialogPopup(props) {
+export const DialogPopup: IDialogPopup = function SuiDialogPopup(props) {
   const {
     size = "md",
     style,

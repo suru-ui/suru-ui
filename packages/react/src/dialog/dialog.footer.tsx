@@ -26,12 +26,14 @@ export type DialogFooterProps = DialogFooterProps.Render &
   DialogFooterProps.BaseUI &
   DialogFooterProps.HTML;
 
+export type IDialogFooter = IComponent<DialogFooterProps>;
+
 /**
  * ダイアログの操作や補足情報を末尾に配置するコンポーネントです。
  *
  * 積み上げ式では内容を等幅の 2 列に並べます。
  */
-export const DialogFooter: IComponent<DialogFooterProps> = function SuiDialogFooter(props) {
+export const DialogFooter: IDialogFooter = function SuiDialogFooter(props) {
   return <Card.Footer {...props} className={cn(props.className, "sui_dialog_footer")} />;
 };
 

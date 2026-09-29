@@ -45,14 +45,14 @@ export type DialogDescriptionProps = DialogDescriptionProps.Render &
   DialogDescriptionProps.BaseUI &
   DialogDescriptionProps.HTML;
 
+export type IDialogDescription = IComponent<DialogDescriptionProps>;
+
 /**
  * ダイアログの説明文を表示するコンポーネントです。
  *
  * 見た目はカードの説明文として描画され、ポップアップの説明に関連付けます。
  */
-export const DialogDescription: IComponent<DialogDescriptionProps> = function SuiDialogDescription(
-  props,
-) {
+export const DialogDescription: IDialogDescription = function SuiDialogDescription(props) {
   const { style, render = <p />, className, ...otherProps } = props;
 
   return (

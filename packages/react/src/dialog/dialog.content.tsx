@@ -26,10 +26,12 @@ export type DialogContentProps = DialogContentProps.Render &
   DialogContentProps.BaseUI &
   DialogContentProps.HTML;
 
+export type IDialogContent = IComponent<DialogContentProps>;
+
 /**
  * ダイアログの本文を表示するコンポーネントです。
  */
-export const DialogContent: IComponent<DialogContentProps> = function SuiDialogContent(props) {
+export const DialogContent: IDialogContent = function SuiDialogContent(props) {
   return <Card.Content {...props} className={cn(props.className, "sui_dialog_content")} />;
 };
 

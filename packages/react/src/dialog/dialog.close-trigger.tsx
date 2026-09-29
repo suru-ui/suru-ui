@@ -47,21 +47,18 @@ export type DialogCloseTriggerProps = DialogCloseTriggerProps.Render &
   DialogCloseTriggerProps.BaseUI &
   DialogCloseTriggerProps.HTML;
 
+export type IDialogCloseTrigger = IComponent<DialogCloseTriggerProps>;
+
 /**
  * ダイアログを閉じるボタンコンポーネントです。
  */
-export const DialogCloseTrigger: IComponent<DialogCloseTriggerProps> =
-  function SuiDialogCloseTrigger(props) {
-    const { children, className, ...otherProps } = props;
+export const DialogCloseTrigger: IDialogCloseTrigger = function SuiDialogCloseTrigger(props) {
+  const { children, className, ...otherProps } = props;
 
-    return (
-      <Dialog.Close
-        {...otherProps}
-        render={children}
-        className={cn(className, "sui_dialog_close")}
-      />
-    );
-  };
+  return (
+    <Dialog.Close {...otherProps} render={children} className={cn(className, "sui_dialog_close")} />
+  );
+};
 
 export { DialogCloseTrigger as CloseTrigger };
 

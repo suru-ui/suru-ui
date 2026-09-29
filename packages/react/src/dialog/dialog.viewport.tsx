@@ -39,12 +39,14 @@ export type DialogViewportProps = DialogViewportProps.Render &
   DialogViewportProps.BaseUI &
   DialogViewportProps.HTML;
 
+export type IDialogViewport = IComponent<DialogViewportProps>;
+
 /**
  * ポップアップの配置コンテナーコンポーネントです。
  *
  * スクロール可能なオーバーレイを作り、ポップアップを中央に配置します。
  */
-export const DialogViewport: IComponent<DialogViewportProps> = function SuiDialogViewport(props) {
+export const DialogViewport: IDialogViewport = function SuiDialogViewport(props) {
   const { className, ...otherProps } = props;
 
   return <Dialog.Viewport {...otherProps} className={cn(className, "sui_dialog_viewport")} />;

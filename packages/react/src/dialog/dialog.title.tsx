@@ -45,12 +45,14 @@ export type DialogTitleProps = DialogTitleProps.Render &
   DialogTitleProps.BaseUI &
   DialogTitleProps.HTML;
 
+export type IDialogTitle = IComponent<DialogTitleProps>;
+
 /**
  * ダイアログの見出しを表示するコンポーネントです。
  *
  * 見た目はカードの見出しとして描画され、ポップアップのラベルに関連付けます。
  */
-export const DialogTitle: IComponent<DialogTitleProps> = function SuiDialogTitle(props) {
+export const DialogTitle: IDialogTitle = function SuiDialogTitle(props) {
   const {
     style,
     // oxlint-disable-next-line jsx-a11y/heading-has-content

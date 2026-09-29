@@ -64,7 +64,7 @@ export type DialogRootProps<TPayload = any> = DialogRootProps.Render &
   DialogRootProps.BaseUI<TPayload> &
   DialogRootProps.HTML<TPayload>;
 
-interface IDialogRoot extends IComponent<DialogRootProps> {
+export interface IDialogRoot extends IComponent<DialogRootProps> {
   /**
    * @template TPayload トリガーが送信するデータの型です。
    */

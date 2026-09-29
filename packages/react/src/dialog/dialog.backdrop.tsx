@@ -39,10 +39,12 @@ export type DialogBackdropProps = DialogBackdropProps.Render &
   DialogBackdropProps.BaseUI &
   DialogBackdropProps.HTML;
 
+export type IDialogBackdrop = IComponent<DialogBackdropProps>;
+
 /**
  * ポップアップの背後に表示されるオーバーレイコンポーネントです。
  */
-export const DialogBackdrop: IComponent<DialogBackdropProps> = function SuiDialogBackdrop(props) {
+export const DialogBackdrop: IDialogBackdrop = function SuiDialogBackdrop(props) {
   const { className, ...otherProps } = props;
 
   return <Dialog.Backdrop {...otherProps} className={cn(className, "sui_dialog_backdrop")} />;

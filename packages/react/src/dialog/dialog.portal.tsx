@@ -39,12 +39,14 @@ export type DialogPortalProps = DialogPortalProps.Render &
   DialogPortalProps.BaseUI &
   DialogPortalProps.HTML;
 
+export type IDialogPortal = IComponent<DialogPortalProps>;
+
 /**
  * ダイアログを DOM の別の場所に配置するコンポーネントです。
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
-export const DialogPortal: IComponent<DialogPortalProps> = function SuiDialogPortal(props) {
+export const DialogPortal: IDialogPortal = function SuiDialogPortal(props) {
   const {
     className,
     // @ts-expect-error

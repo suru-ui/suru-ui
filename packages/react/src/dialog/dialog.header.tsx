@@ -26,10 +26,12 @@ export type DialogHeaderProps = DialogHeaderProps.Render &
   DialogHeaderProps.BaseUI &
   DialogHeaderProps.HTML;
 
+export type IDialogHeader = IComponent<DialogHeaderProps>;
+
 /**
  * ダイアログの見出し・説明・操作をまとめるコンポーネントです。
  */
-export const DialogHeader: IComponent<DialogHeaderProps> = function SuiDialogHeader(props) {
+export const DialogHeader: IDialogHeader = function SuiDialogHeader(props) {
   return <Card.Header {...props} className={cn(props.className, "sui_dialog_header")} />;
 };
 
