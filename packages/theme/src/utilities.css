@@ -1,4 +1,8 @@
 @layer sui.utilities {
+  @function --sui-rem(--length) {
+    result: calc(var(--sui-text-std-md-m-font_size) * var(--length));
+  }
+
   @function --sui-space(--level) {
     result: calc(var(--sui-space-base) * var(--level));
   }

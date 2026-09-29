@@ -214,16 +214,51 @@ export const GAP_PROPERTIES = {
 } as const satisfies Properties;
 
 /**
- * 大きさを設定するユーティリティーの対応表です。
+ * 高さに適用する大きさを設定するユーティリティーの対応表です。
+ *
+ * `size` は正方形を作るために幅にも適用します。
  */
 export const SIZE_PROPERTIES = {
-  w: ["width"],
   h: ["height"],
   size: ["width", "height"],
-  "min-w": ["min-width"],
-  "max-w": ["max-width"],
   "min-h": ["min-height"],
   "max-h": ["max-height"],
+} as const satisfies Properties;
+
+/**
+ * コンテナーが持つ大きさの一覧です。
+ */
+export const CONTAINER_SIZES = [
+  "3xs",
+  "2xs",
+  "xs",
+  "sm",
+  "md",
+  "lg",
+  "xl",
+  "2xl",
+  "3xl",
+  "4xl",
+  "5xl",
+  "6xl",
+  "7xl",
+] as const;
+
+/**
+ * コンテナーが持つ大きさです。
+ */
+export type ContainerSize = (typeof CONTAINER_SIZES)[number];
+
+/**
+ * 幅などのインライン軸に適用するコンテナーを設定するユーティリティーの対応表です。
+ */
+export const CONTAINER_PROPERTIES = {
+  w: ["width"],
+  basis: ["flex-basis"],
+  "min-w": ["min-width"],
+  "min-inline": ["min-inline-size"],
+  "max-w": ["max-width"],
+  "max-inline": ["max-inline-size"],
 } as const satisfies Properties;
 
 /**

@@ -7,6 +7,7 @@ import {
   PROMINENCES,
   TEXT_FAMILIES,
   TEMPLATE_PARTS,
+  CONTAINER_SIZES,
   GREY_COLOR_STEPS,
   BASE_COLOR_TOKENS,
   TEXT_FAMILY_WEIGHTS,
@@ -21,6 +22,11 @@ export const COLOR_TOKENS: ReadonlySet<string> = createColorTokens();
  * 文字スタイルかどうかを判定するための集合です。要素は `text-sui-` を含まない名前です。
  */
 export const TEXT_STYLES: ReadonlySet<string> = createTextStyles();
+
+/**
+ * コンテナーの大きさかどうかを判定するための集合です。要素は `container-` を含まない名前です。
+ */
+export const CONTAINER_TOKENS: ReadonlySet<string> = new Set(CONTAINER_SIZES);
 
 /**
  * 色トークンの名前から、その値を参照する CSS カスタムプロパティーの式を返します。
@@ -59,6 +65,15 @@ export function isTextStyle(style: string): boolean {
  */
 export function textStyleVar(style: string, property: TextStyleProperty): string {
   return `var(--sui-text-${style}-${property})`;
+}
+
+/**
+ * コンテナーの大きさかどうかを判定します。
+ *
+ * @param size コンテナーの大きさです。`container-` を含みません。
+ */
+export function isContainerSize(size: string): boolean {
+  return CONTAINER_TOKENS.has(size);
 }
 
 function createColorTokens(): ReadonlySet<string> {

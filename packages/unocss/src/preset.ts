@@ -20,7 +20,8 @@ export type PresetSuruUIOptions = CreateRulesOptions;
  *
  * - 色: `bg-sui-canvas-1`、`text-sui-blue-60`、`border-sui-blue-solid-border-normal` など。
  * - 余白: `p-sui-2`、`gap-sui-4` など。
- * - 大きさ: `w-sui-sm`、`size-sui-8` など。
+ * - 大きさ: `h-sui-sm`、`size-sui-8` など。高さに適用され、`--sui-size-*` を参照します。
+ * - コンテナー: `w-sui-3xs`、`max-w-sui-7xl`、`basis-sui-lg`、`min-inline-sui-xl`、`max-inline-sui-2xl` など。幅などのインライン軸に適用され、`--sui-container-*` を参照します。
  * - 枠線: `border-sui-2` など。段階を省略すると `1` になり、`border-style` も併せて設定します。
  * - 角丸: `rounded-sui-2` など。段階を省略すると `1` になり、`corner-shape` も併せて設定します。
  * - フォント: `font-sui-sans`、`font-sui-mono` など。

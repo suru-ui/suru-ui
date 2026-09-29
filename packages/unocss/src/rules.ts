@@ -14,6 +14,7 @@ import {
   SIZE_PROPERTIES,
   COLOR_PROPERTIES,
   INSET_PROPERTIES,
+  CONTAINER_PROPERTIES,
   RADIUS_PROPERTIES,
   SPACE_PROPERTIES,
   TEXT_STYLE_VALUE,
@@ -30,7 +31,13 @@ import {
   UNNAMESPACED_SEPARATOR,
   BORDER_WIDTH_PROPERTIES,
 } from "./constants.js";
-import { isTextStyle, isColorToken, textStyleVar, colorTokenVar } from "./tokens.js";
+import {
+  isTextStyle,
+  isColorToken,
+  textStyleVar,
+  colorTokenVar,
+  isContainerSize,
+} from "./tokens.js";
 
 /**
  * ルール生成のオプションです。
@@ -92,6 +99,7 @@ export function createRules(options: CreateRulesOptions = {}): Rule[] {
     createSpaceRule(separator),
     createGapRule(separator),
     createSizeRule(separator),
+    createContainerRule(separator),
     createInsetRule(separator),
     createBorderWidthRule(separator),
     createOutlineWidthRule(separator),
@@ -142,6 +150,22 @@ function createSizeRule(separator: string): Rule {
 
     if (isSize(value)) {
       return toEntries(properties, `var(--sui-size-${value})`);
+    }
+
+    if (LEVEL_PATTERN.test(value)) {
+      return toEntries(properties, `--sui-space(${value})`);
+    }
+
+    return;
+  });
+}
+
+function createContainerRule(separator: string): Rule {
+  return createPropertyRule(CONTAINER_PROPERTIES, separator, ANY_VALUE, (properties, value) => {
+    if (value === undefined) return;
+
+    if (isContainerSize(value)) {
+      return toEntries(properties, `var(--sui-container-${value})`);
     }
 
     if (LEVEL_PATTERN.test(value)) {

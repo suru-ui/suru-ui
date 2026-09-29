@@ -6,6 +6,7 @@ export type {
   TextFamily,
   TextWeight,
   TemplatePart,
+  ContainerSize,
   TextStyleProperty,
 } from "./constants.js";
 export {
@@ -15,6 +16,7 @@ export {
   TEXT_WEIGHTS,
   TEXT_FAMILIES,
   TEMPLATE_PARTS,
+  CONTAINER_SIZES,
   GREY_COLOR_STEPS,
   SUI_UTILITIES_LAYER,
   TEXT_STYLE_PROPERTIES,
@@ -26,4 +28,6 @@ export {
   isColorToken,
   textStyleVar,
   colorTokenVar,
+  isContainerSize,
+  CONTAINER_TOKENS,
 } from "./tokens.js";

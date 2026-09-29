@@ -158,23 +158,102 @@ describe("余白", () => {
 describe("大きさ", () => {
   test("数値の大きさを --sui-space() で生成する", async ({ expect }) => {
     // 実行
-    const css = await generate(["w-sui-8", "h-sui-4", "size-sui-2", "min-w-sui-10"]);
+    const css = await generate(["h-sui-4", "size-sui-2", "min-h-sui-6", "max-h-sui-8"]);
 
     // 検証
-    expect(css).toContain(".w-sui-8{width:--sui-space(8);}");
     expect(css).toContain(".h-sui-4{height:--sui-space(4);}");
     expect(css).toContain(".size-sui-2{width:--sui-space(2);height:--sui-space(2);}");
-    expect(css).toContain(".min-w-sui-10{min-width:--sui-space(10);}");
+    expect(css).toContain(".min-h-sui-6{min-height:--sui-space(6);}");
+    expect(css).toContain(".max-h-sui-8{max-height:--sui-space(8);}");
   });
 
   test("名前付きの大きさをトークンで生成する", async ({ expect }) => {
     // 実行
-    const css = await generate(["w-sui-sm", "h-sui-md", "size-sui-lg"]);
+    const css = await generate(["h-sui-sm", "min-h-sui-md", "max-h-sui-lg", "size-sui-lg"]);
 
     // 検証
-    expect(css).toContain(".w-sui-sm{width:var(--sui-size-sm);}");
-    expect(css).toContain(".h-sui-md{height:var(--sui-size-md);}");
+    expect(css).toContain(".h-sui-sm{height:var(--sui-size-sm);}");
+    expect(css).toContain(".min-h-sui-md{min-height:var(--sui-size-md);}");
+    expect(css).toContain(".max-h-sui-lg{max-height:var(--sui-size-lg);}");
     expect(css).toContain(".size-sui-lg{width:var(--sui-size-lg);height:var(--sui-size-lg);}");
+  });
+});
+
+describe("コンテナー", () => {
+  test("コンテナーの大きさを幅・flex-basis・論理プロパティーで生成する", async ({ expect }) => {
+    // 実行
+    const css = await generate([
+      "w-sui-3xs",
+      "min-w-sui-2xs",
+      "max-w-sui-xs",
+      "basis-sui-xl",
+      "min-inline-sui-2xl",
+      "max-inline-sui-7xl",
+    ]);
+
+    // 検証
+    expect(css).toContain(".w-sui-3xs{width:var(--sui-container-3xs);}");
+    expect(css).toContain(".min-w-sui-2xs{min-width:var(--sui-container-2xs);}");
+    expect(css).toContain(".max-w-sui-xs{max-width:var(--sui-container-xs);}");
+    expect(css).toContain(".basis-sui-xl{flex-basis:var(--sui-container-xl);}");
+    expect(css).toContain(".min-inline-sui-2xl{min-inline-size:var(--sui-container-2xl);}");
+    expect(css).toContain(".max-inline-sui-7xl{max-inline-size:var(--sui-container-7xl);}");
+  });
+
+  test("名前が重複する値は幅をコンテナー、高さを大きさとして生成する", async ({ expect }) => {
+    // 実行
+    const css = await generate([
+      "w-sui-sm",
+      "min-w-sui-md",
+      "max-w-sui-lg",
+      "h-sui-sm",
+      "min-h-sui-md",
+      "max-h-sui-lg",
+      "size-sui-lg",
+    ]);
+
+    // 検証
+    expect(css).toContain(".w-sui-sm{width:var(--sui-container-sm);}");
+    expect(css).toContain(".min-w-sui-md{min-width:var(--sui-container-md);}");
+    expect(css).toContain(".max-w-sui-lg{max-width:var(--sui-container-lg);}");
+    expect(css).toContain(".h-sui-sm{height:var(--sui-size-sm);}");
+    expect(css).toContain(".min-h-sui-md{min-height:var(--sui-size-md);}");
+    expect(css).toContain(".max-h-sui-lg{max-height:var(--sui-size-lg);}");
+    expect(css).toContain(".size-sui-lg{width:var(--sui-size-lg);height:var(--sui-size-lg);}");
+  });
+
+  test("段階の数値を --sui-space() で生成する", async ({ expect }) => {
+    // 実行
+    const css = await generate([
+      "w-sui-8",
+      "min-w-sui-10",
+      "max-w-sui-12",
+      "basis-sui-4",
+      "min-inline-sui-2",
+      "max-inline-sui-6",
+    ]);
+
+    // 検証
+    expect(css).toContain(".w-sui-8{width:--sui-space(8);}");
+    expect(css).toContain(".min-w-sui-10{min-width:--sui-space(10);}");
+    expect(css).toContain(".max-w-sui-12{max-width:--sui-space(12);}");
+    expect(css).toContain(".basis-sui-4{flex-basis:--sui-space(4);}");
+    expect(css).toContain(".min-inline-sui-2{min-inline-size:--sui-space(2);}");
+    expect(css).toContain(".max-inline-sui-6{max-inline-size:--sui-space(6);}");
+  });
+
+  test("適用できない値や存在しない名前を無視する", async ({ expect }) => {
+    // 実行
+    const css = await generate([
+      "h-sui-3xs",
+      "max-h-sui-7xl",
+      "w-sui-8xl",
+      "basis-sui-huge",
+      "min-inline-sui-unknown",
+    ]);
+
+    // 検証
+    expect(css).toBe("");
   });
 });
 
@@ -331,6 +410,8 @@ describe("名前空間", () => {
         "font-mono",
         "text-oln-md-m",
         "w-sm",
+        "basis-3xs",
+        "max-inline-2xl",
         "gap-4",
         "top-1",
         "outline-1",
@@ -357,7 +438,9 @@ describe("名前空間", () => {
     expect(css).toContain(
       ".text-oln-md-m{font-size:var(--sui-text-oln-md-m-font_size);font-weight:var(--sui-text-oln-md-m-font_weight);letter-spacing:var(--sui-text-oln-md-m-letter_spacing);line-height:var(--sui-text-oln-md-m-line_height);}",
     );
-    expect(css).toContain(".w-sm{width:var(--sui-size-sm);}");
+    expect(css).toContain(".w-sm{width:var(--sui-container-sm);}");
+    expect(css).toContain(".basis-3xs{flex-basis:var(--sui-container-3xs);}");
+    expect(css).toContain(".max-inline-2xl{max-inline-size:var(--sui-container-2xl);}");
     expect(css).toContain(".gap-4{gap:--sui-gap(4);}");
     expect(css).toContain(".top-1{top:--sui-space(1);}");
     expect(css).toContain(".outline-1{outline-width:--sui-border_width(1);}");

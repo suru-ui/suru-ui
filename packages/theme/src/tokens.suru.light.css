@@ -512,9 +512,24 @@
   --sui-font-sans: "Noto Sans JP", sans-serif;
   --sui-font-mono: "Noto Sans Mono CJK JP", monospace;
 
-  --sui-size-sm: 24px;
-  --sui-size-md: 28px;
-  --sui-size-lg: 36px;
+  --sui-size-sm: --sui-rem(1.6);
+  --sui-size-md: --sui-rem(2);
+  --sui-size-lg: --sui-rem(2.4);
+
+  /* 参考: Tailwind v4 */
+  --sui-container-3xs: --sui-rem(16);
+  --sui-container-2xs: --sui-rem(18);
+  --sui-container-xs: --sui-rem(20);
+  --sui-container-sm: --sui-rem(24);
+  --sui-container-md: --sui-rem(28);
+  --sui-container-lg: --sui-rem(32);
+  --sui-container-xl: --sui-rem(36);
+  --sui-container-2xl: --sui-rem(42);
+  --sui-container-3xl: --sui-rem(48);
+  --sui-container-4xl: --sui-rem(56);
+  --sui-container-5xl: --sui-rem(63);
+  --sui-container-6xl: --sui-rem(72);
+  --sui-container-7xl: --sui-rem(80);
 
   --sui-space-base: var(--spacing, 4px);
 
