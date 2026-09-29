@@ -3,7 +3,7 @@ import * as React from "react";
 import { XIcon } from "../_icons.jsx";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import * as Button from "../button/button.parts.js";
-import type { IComponent, IUseContext } from "../types.js";
+import type { IComponent } from "../types.js";
 import {
   type DialogHandle,
   type DialogPopupSize,
@@ -22,7 +22,10 @@ import {
   type DialogPopupVariant,
   type DialogBackdropProps,
   type DialogViewportProps,
+  type ICreateDialogHandle,
+  type IDialogToggleTrigger,
   type DialogDescriptionProps,
+  type IUseDialogPopupContext,
   type DialogCloseTriggerProps,
   type DialogToggleTriggerProps,
   type DialogRootChangeEventReason,
@@ -603,12 +606,14 @@ interface IDialog extends IComponent<DialogProps> {
    */
   <TPayload = any>(props: DialogProps<TPayload>): IComponent.Return;
 
+  readonly ToggleTrigger: IDialogToggleTrigger;
+
   /**
    * {@link DialogHandle} を作成する関数です。
    */
-  readonly createHandle: typeof createDialogHandle;
+  readonly createHandle: ICreateDialogHandle;
 
-  readonly usePopupContext: IUseContext<DialogPopupContext>;
+  readonly usePopupContext: IUseDialogPopupContext;
 }
 
 /**
@@ -661,6 +666,7 @@ export const Dialog: IDialog = /*#__PURE__*/ Object.assign(
   },
   {
     createHandle: createDialogHandle,
+    ToggleTrigger: DialogToggleTrigger,
     usePopupContext: useDialogPopupContext,
   },
 );

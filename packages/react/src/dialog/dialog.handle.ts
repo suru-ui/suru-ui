@@ -7,7 +7,7 @@ import { Dialog } from "@base-ui/react/dialog";
  */
 export type DialogHandle<TPayload = any> = Dialog.Handle<TPayload>;
 
-interface ICreateHandle {
+export interface ICreateDialogHandle {
   /**
    * @template TPayload トリガーが送信するデータの型です。
    * @returns ダイアログを命令的に制御するハンドルです。
@@ -18,7 +18,7 @@ interface ICreateHandle {
 /**
  * {@link DialogHandle} を作成する関数です。
  */
-export const createDialogHandle: ICreateHandle = function createSuiDialogHandle() {
+export const createDialogHandle: ICreateDialogHandle = function createSuiDialogHandle() {
   return Dialog.createHandle();
 };
 
