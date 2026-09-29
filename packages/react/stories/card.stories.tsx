@@ -70,7 +70,14 @@ export const Usage = meta.story({
   render(props) {
     return (
       <div className="w-[420px]">
-        <Card {...props} footer={<Button color="grey">アカウントを作成</Button>} />
+        <Card
+          {...props}
+          footer={
+            <Button color="grey" size={props.size}>
+              アカウントを作成
+            </Button>
+          }
+        />
       </div>
     );
   },
