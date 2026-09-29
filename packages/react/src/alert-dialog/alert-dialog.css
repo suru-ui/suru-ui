@@ -86,10 +86,10 @@
 :scope {
   --sui_alert_dialog_popup-max_width-desktop: var(--sui-container-md);
   --sui_alert_dialog_popup-max_width-mobile: calc(
-                                              100vw
-                                              - var(--sui_alert_dialog_popup-virtual_margin_inline)
-                                              * 2
-                                            );
+                                               100vw
+                                               - var(--sui_alert_dialog_popup-virtual_margin_inline)
+                                               * 2
+                                             );
   --sui_alert_dialog_popup-max_width: min(
                                         var(--sui_alert_dialog_popup-max_width-desktop),
                                         var(--sui_alert_dialog_popup-max_width-mobile)

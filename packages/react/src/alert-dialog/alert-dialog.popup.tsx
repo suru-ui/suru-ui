@@ -35,12 +35,12 @@ export type AlertDialogPopupVariant = AlertDialogPopupContextVariant;
 /**
  * {@link AlertDialogPopup} が持つ状態です。
  */
-export type AlertDialogPopupState = Override<Card.CardRootState, AlertDialog.Popup.State>;
+export type AlertDialogPopupState = Override<Card.Root.State, AlertDialog.Popup.State>;
 
 export namespace AlertDialogPopupProps {
   export type Render = RenderProps<AlertDialogPopupState>;
 
-  export type SuruUI = Card.CardRootProps.SuruUI & {
+  export type SuruUI = Card.Root.Props.SuruUI & {
     /**
      * アラートダイアログの主な外観を指定します。
      *
@@ -52,7 +52,7 @@ export namespace AlertDialogPopupProps {
   };
 
   export type BaseUI = Override<
-    Card.CardRootProps.BaseUI,
+    Card.Root.Props.BaseUI,
     Pick<
       React.ComponentProps<typeof AlertDialog.Popup>,
       Exclude<
@@ -106,7 +106,7 @@ export const AlertDialogPopup: IAlertDialogPopup = function SuiAlertDialogPopup(
       <AlertDialog.Popup
         {...otherProps}
         render={(htmlProps: {}, popupState) => {
-          const cardRootProps: Required<Card.CardRootProps.SuruUI> = {
+          const cardRootProps: Required<Card.Root.Props.SuruUI> = {
             size,
             radius,
             outlined,

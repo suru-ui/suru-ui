@@ -6,16 +6,16 @@ import type { IComponent } from "../types.js";
 /**
  * {@link AlertDialogFooter} が持つ状態です。
  */
-export type AlertDialogFooterState = Card.CardFooterState;
+export type AlertDialogFooterState = Card.Footer.State;
 
 export namespace AlertDialogFooterProps {
   export type Render = RenderProps<AlertDialogFooterState>;
 
-  export type SuruUI = Card.CardFooterProps.SuruUI;
+  export type SuruUI = Card.Footer.Props.SuruUI;
 
-  export type BaseUI = Card.CardFooterProps.BaseUI;
+  export type BaseUI = Card.Footer.Props.BaseUI;
 
-  export type HTML = Card.CardFooterProps.HTML;
+  export type HTML = Card.Footer.Props.HTML;
 }
 
 /**

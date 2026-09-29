@@ -270,7 +270,7 @@ export type ComboboxRootVariant = "naked" | "liquid";
 
 - `Render` / `SuruUI` / `BaseUI` / `HTML` 自体に JSDoc を付けません。区分の並び順は自動整形に任せます。
 - 結合した `Props` 本体には `/** {@link Xxx} に渡す props です。 */` を残します。
-- 他コンポーネントを土台にする場合 (例: ToggleButton が Button を包む) は短名 (`Button.Root.Props`) ではなく完全な交差型 (`Button.ButtonRootProps`) を参照します。
+- 他コンポーネントの型を参照する場合は、そのコンポーネントが公開する短名 namespace を使い、型名にコンポーネント名を重ねません (`Card.CardRootProps.SuruUI` ではなく `Card.Root.Props.SuruUI`、`Card.CardRootState` ではなく `Card.Root.State`)。基点になるコンポーネントの `Props` 全体が要る場合 (例: ToggleButton が Button を包む) も `Button.ButtonRootProps` ではなく `Button.Root.Props` を参照します。
 - HTML 属性と衝突する名は避け、別名にします (例: `title` と区別する `htmlTitle`)。
 
 ### テンプレート A: 素の要素
@@ -1377,7 +1377,7 @@ mise run test:typecheck
 - 短名 namespace の `Props` を `&` で結合している。`BaseUI` を落としていない。値型 (`Color`・`Radius`・`IRenderer` など) を追加している。
 - 空の `SuruUI` / `BaseUI` でも `Exclude` / `Omit` の `| keyof SuruUI` / `| keyof BaseUI` を省略していない。
 - 型引数名が `T` 始まりである。テーマ型 (`Color`・`Size`) を union 再定義していない。`Radius` が `"none" | Size | "full"` または `"none" | Size` (Accordion のように `full` が要らない形状は後者) である。
-- 他コンポーネント参照に短名を使っていない。完全な交差型を使っている。
+- 他コンポーネントの型参照に短名 namespace を使っている (`Card.Root.Props.SuruUI`・`Card.Root.State` など)。長名 (`Card.CardRootProps.SuruUI`・`Card.CardRootState`) を使っていない。
 - Base UI の公開型に漏れがない。`Handle` の有無を確認している。根拠コメントの型名が実体と一致している。
 - Context を持つ場合、`Context` 値型が `readonly` + 汎型既定値付きである。フック型が `IUseContext` 継承 + オーバーロードである。`ContextMissingError` の `contextName` / `providerName` が正しい。ローカル変数は `ctx` である。派生コンテキストが `useMemo` + スプレッドで、意図注釈がある。Context を持たない場合 (Accordion のように修飾が Root 自身に集約する場合) は Context ファイルがない。
 - 再輸出・再命名に JSDoc (`{@link X}` のみを含む) を付けていない。`State` / `Props` を省略していない。該当するフック短名 (例: `useFilter`・`useFilteredItems`・`useItemContext`・`ItemContext` など) を落としていない。

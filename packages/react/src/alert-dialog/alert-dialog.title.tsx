@@ -11,15 +11,15 @@ import type { Override, IComponent } from "../types.js";
 /**
  * {@link AlertDialogTitle} が持つ状態です。
  */
-export type AlertDialogTitleState = Override<Card.CardTitleState, AlertDialog.Title.State>;
+export type AlertDialogTitleState = Override<Card.Title.State, AlertDialog.Title.State>;
 
 export namespace AlertDialogTitleProps {
   export type Render = RenderProps<AlertDialogTitleState>;
 
-  export type SuruUI = Card.CardTitleProps.SuruUI;
+  export type SuruUI = Card.Title.Props.SuruUI;
 
   export type BaseUI = Override<
-    Card.CardTitleProps.BaseUI,
+    Card.Title.Props.BaseUI,
     Pick<
       React.ComponentProps<typeof AlertDialog.Title>,
       Exclude<

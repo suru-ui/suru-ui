@@ -6,16 +6,16 @@ import type { IComponent } from "../types.js";
 /**
  * {@link AlertDialogHeader} が持つ状態です。
  */
-export type AlertDialogHeaderState = Card.CardHeaderState;
+export type AlertDialogHeaderState = Card.Header.State;
 
 export namespace AlertDialogHeaderProps {
   export type Render = RenderProps<AlertDialogHeaderState>;
 
-  export type SuruUI = Card.CardHeaderProps.SuruUI;
+  export type SuruUI = Card.Header.Props.SuruUI;
 
-  export type BaseUI = Card.CardHeaderProps.BaseUI;
+  export type BaseUI = Card.Header.Props.BaseUI;
 
-  export type HTML = Card.CardHeaderProps.HTML;
+  export type HTML = Card.Header.Props.HTML;
 }
 
 /**
