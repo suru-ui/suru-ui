@@ -5,11 +5,11 @@ import { render } from "vitest-browser-react";
 import { DialogBackdrop } from "../../../src/dialog/dialog.backdrop.jsx";
 import { DialogBody } from "../../../src/dialog/dialog.body.jsx";
 import { DialogCloseTrigger } from "../../../src/dialog/dialog.close-trigger.jsx";
-import { DialogContent } from "../../../src/dialog/dialog.content.jsx";
 import { DialogControls } from "../../../src/dialog/dialog.controls.jsx";
 import { DialogDescription } from "../../../src/dialog/dialog.description.jsx";
 import { DialogFooter } from "../../../src/dialog/dialog.footer.jsx";
 import { DialogHeader } from "../../../src/dialog/dialog.header.jsx";
+import { DialogPopup } from "../../../src/dialog/dialog.popup.jsx";
 import { DialogPortal } from "../../../src/dialog/dialog.portal.jsx";
 import { DialogRoot } from "../../../src/dialog/dialog.root.jsx";
 import { DialogTitle } from "../../../src/dialog/dialog.title.jsx";
@@ -28,7 +28,7 @@ function renderDialog(children: React.ReactNode) {
       <DialogPortal>
         <DialogBackdrop />
         <DialogViewport>
-          <DialogContent>{children}</DialogContent>
+          <DialogPopup>{children}</DialogPopup>
         </DialogViewport>
       </DialogPortal>
     </DialogRoot>,

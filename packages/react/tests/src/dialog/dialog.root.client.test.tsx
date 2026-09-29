@@ -82,25 +82,25 @@ describe("DialogAPI", () => {
     expect(api.getFooterProps()).toStrictEqual({});
   });
 
-  test("getContentProps は角丸と外観と枠線を返す", ({ expect }) => {
+  test("getPopupProps は角丸と外観と枠線を返す", ({ expect }) => {
     // 準備と実行
     const api = new DialogAPI({ radius: "lg", variant: "stacked", outlined: true });
 
     // 検証
-    expect(api.getContentProps()).toStrictEqual({
+    expect(api.getPopupProps()).toStrictEqual({
       radius: "lg",
       variant: "stacked",
       outlined: true,
     });
   });
 
-  test("getContentProps は slotProps の指定を重ねる", ({ expect }) => {
+  test("getPopupProps は slotProps の指定を重ねる", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({ slotProps: { content: { id: "content" } } });
+    const api = new DialogAPI({ slotProps: { popup: { id: "popup" } } });
 
     // 検証
-    expect(api.getContentProps()).toStrictEqual({
-      id: "content",
+    expect(api.getPopupProps()).toStrictEqual({
+      id: "popup",
       radius: undefined,
       variant: "default",
       outlined: undefined,

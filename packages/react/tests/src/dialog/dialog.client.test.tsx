@@ -160,7 +160,7 @@ describe("Dialog", () => {
         slotProps={{
           body: { id: "body" },
           closeTrigger: { id: "close" },
-          content: { id: "content" },
+          popup: { id: "popup" },
           description: { id: "description" },
           footer: { id: "footer" },
           header: { id: "header" },
@@ -174,7 +174,7 @@ describe("Dialog", () => {
     // 検証
     expect(screen.getByClassName("sui_dialog_body").element().id).toBe("body");
     expect(screen.getByClassName("sui_dialog_close").element().id).toBe("close");
-    expect(screen.getByClassName("sui_dialog_content").element().id).toBe("content");
+    expect(screen.getByClassName("sui_dialog_popup").element().id).toBe("popup");
     expect(screen.getByClassName("sui_dialog_description").element().id).toBe("description");
     expect(screen.getByClassName("sui_dialog_footer").element().id).toBe("footer");
     expect(screen.getByClassName("sui_dialog_header").element().id).toBe("header");
@@ -249,10 +249,10 @@ describe("Dialog", () => {
     });
   });
 
-  test("useContentContext で角丸を読み取る", async ({ expect }) => {
+  test("usePopupContext で角丸を読み取る", async ({ expect }) => {
     // 準備
     function Probe() {
-      const ctx = Dialog.useContentContext();
+      const ctx = Dialog.usePopupContext();
 
       return <span>{ctx.radius}</span>;
     }

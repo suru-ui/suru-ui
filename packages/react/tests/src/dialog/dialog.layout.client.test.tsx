@@ -19,7 +19,7 @@ describe("Dialog の配置", () => {
     );
 
     // 検証
-    const content = screen.getByClassName("sui_dialog_content").element();
+    const content = screen.getByClassName("sui_dialog_popup").element();
     const rect = content.getBoundingClientRect();
     expect(rect.left).toBeCloseTo((window.innerWidth - rect.width) / 2, 0);
     expect(rect.top).toBeCloseTo((window.innerHeight - rect.height) / 2, 0);
@@ -49,7 +49,7 @@ describe("Dialog の配置", () => {
     );
 
     // 検証
-    const content = screen.getByClassName("sui_dialog_content").element();
+    const content = screen.getByClassName("sui_dialog_popup").element();
     const style = getComputedStyle(content);
     expect(style.paddingBlockStart).toBe("16px");
     expect(style.paddingInlineStart).toBe("16px");
@@ -86,7 +86,7 @@ describe("Dialog の配置", () => {
       );
 
       // 検証
-      const content = screen.getByClassName("sui_dialog_content").element();
+      const content = screen.getByClassName("sui_dialog_popup").element();
       const footer = screen.getByClassName("sui_dialog_footer").element();
       expect(getComputedStyle(footer).justifyContent).toBe("flex-end");
       expect(getComputedStyle(footer).gap).toBe("8px");
@@ -135,7 +135,7 @@ describe("Dialog の配置", () => {
       );
 
       // 検証
-      const content = screen.getByClassName("sui_dialog_content").element();
+      const content = screen.getByClassName("sui_dialog_popup").element();
       const controls = screen.getByClassName("sui_dialog_controls").element();
       expect(getComputedStyle(controls).position).toBe("absolute");
       const contentRect = content.getBoundingClientRect();
@@ -154,7 +154,7 @@ describe("Dialog の配置", () => {
     );
 
     // 検証
-    const style = getComputedStyle(screen.getByClassName("sui_dialog_content").element());
+    const style = getComputedStyle(screen.getByClassName("sui_dialog_popup").element());
     expect(style.borderTopStyle).toBe("solid");
     expect(Number.parseFloat(style.borderTopWidth)).toBeGreaterThan(0.5);
   });
@@ -168,9 +168,9 @@ describe("Dialog の配置", () => {
     );
 
     // 検証
-    expect(
-      getComputedStyle(screen.getByClassName("sui_dialog_content").element()).borderRadius,
-    ).toBe("0px");
+    expect(getComputedStyle(screen.getByClassName("sui_dialog_popup").element()).borderRadius).toBe(
+      "0px",
+    );
   });
 
   test.skipIf(!supportsCustomFunctions())(
@@ -234,7 +234,7 @@ describe("Dialog の配置", () => {
 
       // 検証
       expect(screen.getByClassName("sui_dialog_header").query()).toBe(null);
-      const content = screen.getByClassName("sui_dialog_content").element();
+      const content = screen.getByClassName("sui_dialog_popup").element();
       const body = screen.getByClassName("sui_dialog_body").element();
       const contentRect = content.getBoundingClientRect();
       const bodyRect = body.getBoundingClientRect();

@@ -5,7 +5,7 @@ import * as React from "react";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { DialogContentContext } from "./dialog.content.context.js";
+import { DialogPopupContext } from "./dialog.popup.context.js";
 
 /**
  * ダイアログの角丸の大きさです。
@@ -15,7 +15,7 @@ import { DialogContentContext } from "./dialog.content.context.js";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type DialogContentRadius = "none" | Size;
+export type DialogPopupRadius = "none" | Size;
 
 /**
  * ダイアログの主な外観です。
@@ -23,15 +23,15 @@ export type DialogContentRadius = "none" | Size;
  * - `"default"`: 規定のスタイル
  * - `"stacked"`: 積み重なっているスタイル
  */
-export type DialogContentVariant = "default" | "stacked";
+export type DialogPopupVariant = "default" | "stacked";
 
 /**
- * {@link DialogContent} が持つ状態です。
+ * {@link DialogPopup} が持つ状態です。
  */
-export type DialogContentState = Dialog.Popup.State;
+export type DialogPopupState = Dialog.Popup.State;
 
-export namespace DialogContentProps {
-  export type Render = RenderProps<DialogContentState>;
+export namespace DialogPopupProps {
+  export type Render = RenderProps<DialogPopupState>;
 
   export type SuruUI = {
     /**
@@ -46,14 +46,14 @@ export namespace DialogContentProps {
      *
      * @default "md"
      */
-    radius?: DialogContentRadius | undefined;
+    radius?: DialogPopupRadius | undefined;
 
     /**
      * ダイアログの主な外観を指定します。
      *
      * @default "default"
      */
-    variant?: DialogContentVariant | undefined;
+    variant?: DialogPopupVariant | undefined;
   };
 
   export type BaseUI = Pick<
@@ -73,54 +73,54 @@ export namespace DialogContentProps {
 }
 
 /**
- * {@link DialogContent} に渡す props です。
+ * {@link DialogPopup} に渡す props です。
  */
-export type DialogContentProps = DialogContentProps.Render &
-  DialogContentProps.SuruUI &
-  DialogContentProps.BaseUI &
-  DialogContentProps.HTML;
+export type DialogPopupProps = DialogPopupProps.Render &
+  DialogPopupProps.SuruUI &
+  DialogPopupProps.BaseUI &
+  DialogPopupProps.HTML;
 
 /**
- * ダイアログを表示するコンポーネントです。
+ * ダイアログのポップアップ要素です。
  */
-export const DialogContent: IComponent<DialogContentProps> = function SuiDialogContent(props) {
+export const DialogPopup: IComponent<DialogPopupProps> = function SuiDialogPopup(props) {
   const { radius = "md", variant = "default", outlined = false, className, ...otherProps } = props;
-  const ctx = React.useMemo<DialogContentContext>(() => ({ radius }), [radius]);
+  const ctx = React.useMemo<DialogPopupContext>(() => ({ radius }), [radius]);
 
   return (
-    <DialogContentContext value={ctx}>
+    <DialogPopupContext value={ctx}>
       <Dialog.Popup
         {...otherProps}
         className={cn(
           className,
-          "sui_dialog_content",
-          `sui_dialog_content-radius_${radius}`,
-          `sui_dialog_content-variant_${variant}`,
-          outlined && "sui_dialog_content-outlined",
+          "sui_dialog_popup",
+          `sui_dialog_popup-radius_${radius}`,
+          `sui_dialog_popup-variant_${variant}`,
+          outlined && "sui_dialog_popup-outlined",
         )}
       />
-    </DialogContentContext>
+    </DialogPopupContext>
   );
 };
 
-export { DialogContent as Content };
+export { DialogPopup as Popup };
 
-export namespace Content {
-  export type State = DialogContentState;
+export namespace Popup {
+  export type State = DialogPopupState;
 
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = DialogContentProps.Render;
+    export type Render = DialogPopupProps.Render;
 
-    export type SuruUI = DialogContentProps.SuruUI;
+    export type SuruUI = DialogPopupProps.SuruUI;
 
-    export type BaseUI = DialogContentProps.BaseUI;
+    export type BaseUI = DialogPopupProps.BaseUI;
 
-    export type HTML = DialogContentProps.HTML;
+    export type HTML = DialogPopupProps.HTML;
   }
 
-  export type Radius = DialogContentRadius;
+  export type Radius = DialogPopupRadius;
 
-  export type Variant = DialogContentVariant;
+  export type Variant = DialogPopupVariant;
 }

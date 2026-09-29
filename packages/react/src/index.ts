@@ -265,8 +265,8 @@ export {
   type DialogChangeEventDetails,
   Dialog,
   useDialogAPI,
-  DialogContentContext,
-  useDialogContentContext,
+  DialogPopupContext,
+  useDialogPopupContext,
 } from "./dialog/index.js";
 export {
   type FieldsetAPI,

@@ -3,26 +3,26 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import {
-  DialogContentContext,
-  useDialogContentContext,
-} from "../../../src/dialog/dialog.content.context.js";
+  DialogPopupContext,
+  useDialogPopupContext,
+} from "../../../src/dialog/dialog.popup.context.js";
 import { ContextMissingError } from "../../../src/errors.js";
 
-describe("useDialogContentContext", () => {
+describe("useDialogPopupContext", () => {
   test("提供された値を返す", async ({ expect }) => {
     // 準備
     const provided = { radius: "lg" } as const;
     function Probe() {
-      const ctx = useDialogContentContext();
+      const ctx = useDialogPopupContext();
 
       return <span>{ctx.radius}</span>;
     }
 
     // 実行
     const screen = await render(
-      <DialogContentContext value={provided}>
+      <DialogPopupContext value={provided}>
         <Probe />
-      </DialogContentContext>,
+      </DialogPopupContext>,
     );
 
     // 検証
@@ -32,7 +32,7 @@ describe("useDialogContentContext", () => {
   test("提供がないときはエラーを投げる", async ({ expect }) => {
     // 準備
     function Probe() {
-      useDialogContentContext();
+      useDialogPopupContext();
 
       return null;
     }
@@ -44,7 +44,7 @@ describe("useDialogContentContext", () => {
   test("任意指定では提供がないときに null を返す", async ({ expect }) => {
     // 準備
     function Probe() {
-      const ctx = useDialogContentContext(true);
+      const ctx = useDialogPopupContext(true);
 
       return <span>{ctx === null ? "なし" : "あり"}</span>;
     }

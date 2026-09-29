@@ -53,13 +53,13 @@
 } /* @scope */
 } /* @layer */
 
-/* Content */
+/* Popup */
 @layer sui.component {
 @scope (.sui_dialog_portal) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_dialog_content {
+  .sui_dialog_popup {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -72,95 +72,95 @@
 
 /* 変数 */
 :scope {
-  --sui_dialog_content-row_gap: ;
-  --sui_dialog_content-width-desktop: ;
-  --sui_dialog_content-width-mobile: ;
-  --sui_dialog_content-width: ;
-  --sui_dialog_content-max_height: ;
-  --sui_dialog_content-padding: ;
-  --sui_dialog_content-virtual_margin_block: ;
-  --sui_dialog_content-virtual_margin_inline: ;
-  --sui_dialog_content-background_color: ;
-  --sui_dialog_content-border_color: ;
-  --sui_dialog_content-border_width: ;
-  --sui_dialog_content-border_radius: ;
-  --sui_dialog_content-corner_shape: ;
+  --sui_dialog_popup-row_gap: ;
+  --sui_dialog_popup-width-desktop: ;
+  --sui_dialog_popup-width-mobile: ;
+  --sui_dialog_popup-width: ;
+  --sui_dialog_popup-max_height: ;
+  --sui_dialog_popup-padding: ;
+  --sui_dialog_popup-virtual_margin_block: ;
+  --sui_dialog_popup-virtual_margin_inline: ;
+  --sui_dialog_popup-background_color: ;
+  --sui_dialog_popup-border_color: ;
+  --sui_dialog_popup-border_width: ;
+  --sui_dialog_popup-border_radius: ;
+  --sui_dialog_popup-corner_shape: ;
 }
 
 /* 可変 */
 :scope {
-  .sui_dialog_content {
-    row-gap: var(--sui_dialog_content-row_gap);
-    width: var(--sui_dialog_content-width);
-    max-height: var(--sui_dialog_content-max_height);
-    padding: var(--sui_dialog_content-padding);
-    background-color: var(--sui_dialog_content-background_color);
-    border-color: var(--_sui_dialog_content-border_color, transparent);
-    border-width: var(--_sui_dialog_content-border_width, 0px);
-    border-radius: var(--sui_dialog_content-border_radius);
-    corner-shape: var(--sui_dialog_content-corner_shape);
+  .sui_dialog_popup {
+    row-gap: var(--sui_dialog_popup-row_gap);
+    width: var(--sui_dialog_popup-width);
+    max-height: var(--sui_dialog_popup-max_height);
+    padding: var(--sui_dialog_popup-padding);
+    background-color: var(--sui_dialog_popup-background_color);
+    border-color: var(--_sui_dialog_popup-border_color, transparent);
+    border-width: var(--_sui_dialog_popup-border_width, 0px);
+    border-radius: var(--sui_dialog_popup-border_radius);
+    corner-shape: var(--sui_dialog_popup-corner_shape);
   }
 }
 
 /* 代入 */
 :scope {
-  --sui_dialog_content-row_gap: --sui-gap(4);
-  --sui_dialog_content-width-desktop: 448px;
-  --sui_dialog_content-width-mobile: calc(
+  --sui_dialog_popup-row_gap: --sui-gap(4);
+  --sui_dialog_popup-width-desktop: 448px;
+  --sui_dialog_popup-width-mobile: calc(
                                        100vw
-                                       - var(--sui_dialog_content-virtual_margin_inline)
+                                       - var(--sui_dialog_popup-virtual_margin_inline)
                                        * 2
                                      );
-  --sui_dialog_content-width: min(
-                                var(--sui_dialog_content-width-desktop),
-                                var(--sui_dialog_content-width-mobile)
+  --sui_dialog_popup-width: min(
+                                var(--sui_dialog_popup-width-desktop),
+                                var(--sui_dialog_popup-width-mobile)
                               );
-  --sui_dialog_content-max_height: calc(
+  --sui_dialog_popup-max_height: calc(
                                      100%
-                                     - var(--sui_dialog_content-virtual_margin_block)
+                                     - var(--sui_dialog_popup-virtual_margin_block)
                                      * 2
                                    );
-  --sui_dialog_content-padding: --sui-space(4);
-  --sui_dialog_content-virtual_margin_block: --sui-space(2);
-  --sui_dialog_content-virtual_margin_inline: --sui-space(2);
-  --sui_dialog_content-background_color: var(--sui-canvas-2);
-  --sui_dialog_content-border_color: var(--sui-border-1);
-  --sui_dialog_content-border_width: --sui-border_width(1);
+  --sui_dialog_popup-padding: --sui-space(4);
+  --sui_dialog_popup-virtual_margin_block: --sui-space(2);
+  --sui_dialog_popup-virtual_margin_inline: --sui-space(2);
+  --sui_dialog_popup-background_color: var(--sui-canvas-2);
+  --sui_dialog_popup-border_color: var(--sui-border-1);
+  --sui_dialog_popup-border_width: --sui-border_width(1);
 
-  &:has(.sui_dialog_content-radius_none) {
-    --sui_dialog_content-border_radius: 0px;
+  &:has(.sui_dialog_popup-radius_none) {
+    --sui_dialog_popup-border_radius: 0px;
   }
 
-  &:has(.sui_dialog_content-radius_sm) {
-    --sui_dialog_content-border_radius: calc(
+  &:has(.sui_dialog_popup-radius_sm) {
+    --sui_dialog_popup-border_radius: calc(
                                           --sui-corner_radius(2)
-                                          + var(--sui_dialog_content-padding) / 8
+                                          + var(--sui_dialog_popup-padding) / 8
                                         );
-    --sui_dialog_content-corner_shape: superellipse(var(--sui-superellipse));
+    --sui_dialog_popup-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &:has(.sui_dialog_content-radius_md) {
-    --sui_dialog_content-border_radius: calc(
+  &:has(.sui_dialog_popup-radius_md) {
+    --sui_dialog_popup-border_radius: calc(
                                           --sui-corner_radius(3)
-                                          + var(--sui_dialog_content-padding) / 2
+                                          + var(--sui_dialog_popup-padding) / 2
                                         );
-    --sui_dialog_content-corner_shape: superellipse(var(--sui-superellipse));
+    --sui_dialog_popup-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &:has(.sui_dialog_content-radius_lg) {
-    --sui_dialog_content-border_radius: calc(
+  &:has(.sui_dialog_popup-radius_lg) {
+    --sui_dialog_popup-border_radius: calc(
                                           --sui-corner_radius(4)
-                                          + var(--sui_dialog_content-padding)
+                                          + var(--sui_dialog_popup-padding)
                                         );
-    --sui_dialog_content-corner_shape: superellipse(var(--sui-superellipse));
+    --sui_dialog_popup-corner_shape: superellipse(var(--sui-superellipse));
   }
 }
 
 /* 変異 */
 :scope {
-  .sui_dialog_content-outlined {
-    --_sui_dialog_content-border_color: var(--sui_dialog_content-border_color);
-    --_sui_dialog_content-border_width: var(--sui_dialog_content-border_width);
+  .sui_dialog_popup-outlined {
+    --_sui_dialog_popup-border_color: var(--sui_dialog_popup-border_color);
+    --_sui_dialog_popup-border_width: var(--sui_dialog_popup-border_width);
   }
 }
 
@@ -209,7 +209,7 @@
 /* 代入 */
 :scope {
   --sui_dialog_controls-gap: --sui-gap(2);
-  --sui_dialog_controls-virtual_margin: var(--sui_dialog_content-padding);
+  --sui_dialog_controls-virtual_margin: var(--sui_dialog_popup-padding);
 
   .sui_dialog_controls-absolute {
     --sui_dialog_controls-margin_left: auto;
@@ -247,7 +247,7 @@
     display: grid;
   }
 
-  .sui_dialog_content-variant_default .sui_dialog_header {
+  .sui_dialog_popup-variant_default .sui_dialog_header {
     &:has(.sui_dialog_title) {
       grid-template: "title" auto
                      /auto ;
@@ -287,7 +287,7 @@
     }
   }
 
-  .sui_dialog_content-variant_stacked .sui_dialog_header {
+  .sui_dialog_popup-variant_stacked .sui_dialog_header {
     &:has(.sui_dialog_title) {
       grid-template: "title" auto
                      /auto ;
@@ -365,11 +365,11 @@
     overflow-wrap: anywhere;
   }
 
-  .sui_dialog_content-variant_default .sui_dialog_title {
+  .sui_dialog_popup-variant_default .sui_dialog_title {
     text-align: start;
   }
 
-  .sui_dialog_content-variant_stacked .sui_dialog_title {
+  .sui_dialog_popup-variant_stacked .sui_dialog_title {
     text-align: center;
   }
 }
@@ -423,7 +423,7 @@
     overflow-wrap: anywhere;
   }
 
-  .sui_dialog_content-variant_stacked .sui_dialog_description {
+  .sui_dialog_popup-variant_stacked .sui_dialog_description {
     text-align: center;
   }
 }
@@ -523,13 +523,13 @@
     align-items: center;
   }
 
-  .sui_dialog_content-variant_default .sui_dialog_footer {
+  .sui_dialog_popup-variant_default .sui_dialog_footer {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
   }
 
-  .sui_dialog_content-variant_stacked .sui_dialog_footer {
+  .sui_dialog_popup-variant_stacked .sui_dialog_footer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }

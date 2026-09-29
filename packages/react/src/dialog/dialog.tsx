@@ -9,18 +9,18 @@ import {
   type DialogBodyProps,
   type DialogRootProps,
   type DialogRootState,
+  type DialogPopupProps,
   type DialogTitleProps,
   type DialogFooterProps,
   type DialogHeaderProps,
+  type DialogPopupRadius,
   type DialogPortalProps,
   type DialogRootActions,
-  type DialogContentProps,
+  type DialogPopupContext,
+  type DialogPopupVariant,
   type DialogBackdropProps,
-  type DialogContentRadius,
   type DialogControlsProps,
   type DialogViewportProps,
-  type DialogContentContext,
-  type DialogContentVariant,
   type DialogDescriptionProps,
   type DialogCloseTriggerProps,
   type DialogToggleTriggerProps,
@@ -28,11 +28,11 @@ import {
   type DialogRootChangeEventDetails,
   DialogBody,
   DialogRoot,
+  DialogPopup,
   DialogTitle,
   DialogFooter,
   DialogHeader,
   DialogPortal,
-  DialogContent,
   DialogBackdrop,
   DialogControls,
   DialogViewport,
@@ -40,7 +40,7 @@ import {
   DialogCloseTrigger,
   createDialogHandle,
   DialogToggleTrigger,
-  useDialogContentContext,
+  useDialogPopupContext,
 } from "./dialog.parts.js";
 
 // Types
@@ -52,9 +52,9 @@ export type DialogChangeEventDetails = DialogRootChangeEventDetails;
 
 export type DialogChangeEventReason = DialogRootChangeEventReason;
 
-export type DialogRadius = DialogContentRadius;
+export type DialogRadius = DialogPopupRadius;
 
-export type DialogVariant = DialogContentVariant;
+export type DialogVariant = DialogPopupVariant;
 
 /**
  * {@link Dialog} の各パーツに渡す props です。
@@ -78,11 +78,6 @@ export type DialogSlotProps<TPayload = any> = {
   readonly closeTrigger?: Omit<DialogCloseTriggerProps, "children"> | undefined;
 
   /**
-   * {@link DialogContent} に渡す props です。
-   */
-  readonly content?: Omit<DialogContentProps, "children" | keyof DialogProps.Dialog> | undefined;
-
-  /**
    * {@link DialogControls} に渡す props です。
    */
   readonly controls?: Omit<DialogControlsProps, "children"> | undefined;
@@ -101,6 +96,11 @@ export type DialogSlotProps<TPayload = any> = {
    * {@link DialogHeader} に渡す props です。
    */
   readonly header?: Omit<DialogHeaderProps, "children"> | undefined;
+
+  /**
+   * {@link DialogPopup} に渡す props です。
+   */
+  readonly popup?: Omit<DialogPopupProps, "children" | keyof DialogProps.Dialog> | undefined;
 
   /**
    * {@link DialogPortal} に渡す props です。
@@ -174,14 +174,14 @@ namespace DialogProps {
      *
      * @default false
      */
-    outlined?: DialogContentProps["outlined"] | undefined;
+    outlined?: DialogPopupProps["outlined"] | undefined;
 
     /**
      * ダイアログの角丸の大きさを指定します。
      *
      * @default "md"
      */
-    radius?: DialogContentProps["radius"] | undefined;
+    radius?: DialogPopupProps["radius"] | undefined;
 
     /**
      * ダイアログを閉じるアイコンボタンを表示にします。
@@ -212,7 +212,7 @@ namespace DialogProps {
      *
      * @default "default"
      */
-    variant?: DialogContentProps["variant"] | undefined;
+    variant?: DialogPopupProps["variant"] | undefined;
   };
 
   export type Root<TPayload = any> = Omit<DialogRootProps<TPayload>, "children" | keyof Dialog>;
@@ -231,7 +231,7 @@ export type DialogProps<TPayload = any> = DialogProps.Dialog<TPayload> &
 // ---
 
 function CloseIconButton() {
-  const ctx = useDialogContentContext(true);
+  const ctx = useDialogPopupContext(true);
 
   return (
     <DialogCloseTrigger>
@@ -390,10 +390,10 @@ export class DialogAPI<TPayload = any> {
   }
 
   /**
-   * {@link DialogContent} に渡す props を取得します。
+   * {@link DialogPopup} に渡す props を取得します。
    */
-  public getContentProps(): Omit<DialogContentProps, "children"> {
-    const { content: props = {} } = this.slotProps;
+  public getPopupProps(): Omit<DialogPopupProps, "children"> {
+    const { popup: props = {} } = this.slotProps;
     const { radius, variant, outlined } = this.dialogProps;
 
     return {
@@ -595,7 +595,7 @@ interface IDialog extends IComponent<DialogProps> {
    */
   readonly createHandle: typeof createDialogHandle;
 
-  readonly useContentContext: IUseContext<DialogContentContext>;
+  readonly usePopupContext: IUseContext<DialogPopupContext>;
 }
 
 /**
@@ -607,7 +607,7 @@ export const Dialog: IDialog = /*#__PURE__*/ Object.assign(
   function SuiDialog(props: DialogProps) {
     const api = useDialogAPI(props);
     const toggleTriggerProps = api.getToggleTriggerProps();
-    const contentProps = api.getContentProps();
+    const popupProps = api.getPopupProps();
     const headerProps = api.getHeaderProps();
     const titleProps = api.getTitleProps();
     const descriptionProps = api.getDescriptionProps();
@@ -622,12 +622,12 @@ export const Dialog: IDialog = /*#__PURE__*/ Object.assign(
         <DialogPortal {...api.getPortalProps()}>
           <DialogBackdrop {...api.getBackdropProps()} />
           <DialogViewport {...api.getViewportProps()}>
-            <DialogContent {...contentProps}>
+            <DialogPopup {...popupProps}>
               {headerProps && (
                 <DialogHeader {...headerProps}>
                   {titleProps && <DialogTitle {...titleProps} />}
                   {descriptionProps && <DialogDescription {...descriptionProps} />}
-                  {contentProps.variant === "default" && controlsProps && (
+                  {popupProps.variant === "default" && controlsProps && (
                     <DialogControls {...controlsProps} />
                   )}
                 </DialogHeader>
@@ -638,10 +638,10 @@ export const Dialog: IDialog = /*#__PURE__*/ Object.assign(
                   {closeTriggerProps && <DialogCloseTrigger {...closeTriggerProps} />}
                 </DialogFooter>
               )}
-              {contentProps.variant === "stacked" && controlsProps && (
+              {popupProps.variant === "stacked" && controlsProps && (
                 <DialogControls {...controlsProps} absolute={controlsProps.absolute ?? true} />
               )}
-            </DialogContent>
+            </DialogPopup>
           </DialogViewport>
         </DialogPortal>
       </DialogRoot>
@@ -649,7 +649,7 @@ export const Dialog: IDialog = /*#__PURE__*/ Object.assign(
   },
   {
     createHandle: createDialogHandle,
-    useContentContext: useDialogContentContext,
+    usePopupContext: useDialogPopupContext,
   },
 );
 
@@ -660,7 +660,7 @@ export namespace Dialog {
 
   export type SlotProps<TPayload = any> = DialogSlotProps<TPayload>;
 
-  export type ContentContext = DialogContentContext;
+  export type PopupContext = DialogPopupContext;
 
   export type Actions = DialogActions;
 
