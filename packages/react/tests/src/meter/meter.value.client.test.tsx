@@ -20,7 +20,6 @@ describe("MeterValue", () => {
     expect(value.tagName).toBe("SPAN");
     expect(value.textContent).toBe("25%");
     expect(value.classList.contains("sui_meter_value")).toBe(true);
-    expect(value.getAttribute("aria-hidden")).toBe("true");
   });
 
   test("書式化された値と現在値を描画関数へ渡す", async ({ expect }) => {

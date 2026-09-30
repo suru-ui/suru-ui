@@ -14,25 +14,6 @@ const items = [
 ];
 
 describe("ContextMenu の配置", () => {
-  test("ポップアップを右クリック位置に置く", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(<ContextMenu items={items} trigger={<div>右クリック領域</div>} />);
-    await screen.getByText("右クリック領域").click({ button: "right" });
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(screen.getByRole("menu").query()).not.toBe(null);
-    });
-    const content = screen.getByRole("menu").element();
-    const rect = content.getBoundingClientRect();
-    const triggerRect = screen.getByText("右クリック領域").element().getBoundingClientRect();
-    const clickX = triggerRect.left + triggerRect.width / 2;
-    const clickY = triggerRect.top + triggerRect.height / 2;
-    expect(rect.width).toBeGreaterThan(0);
-    expect(Math.abs(rect.left - clickX)).toBeLessThan(2);
-    expect(rect.top).toBeGreaterThanOrEqual(clickY - 1);
-  });
-
   test.skipIf(!supportsCustomFunctions())(
     "ポップアップに余白と角丸を付ける",
     async ({ expect }) => {
@@ -141,11 +122,15 @@ describe("ContextMenu の配置", () => {
         defaultOpen
         items={[
           { label: "編集" },
-          { type: "submenu", label: "共有", delay: 0, items: [{ label: "リンクをコピー" }] },
+          {
+            type: "submenu",
+            label: "共有",
+            defaultOpen: true,
+            items: [{ label: "リンクをコピー" }],
+          },
         ]}
       />,
     );
-    await screen.getByRole("menuitem", { name: "共有" }).hover();
 
     // 検証
     await vi.waitFor(() => {

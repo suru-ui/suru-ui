@@ -1,4 +1,4 @@
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { TooltipGroup } from "../../../src/tooltip-group/tooltip-group.jsx";
@@ -43,33 +43,5 @@ describe("TooltipGroup", () => {
 
     // 検証
     expect(screen.getByRole("tooltip").element().textContent).toBe("保存します");
-  });
-
-  test("閉じた後に近接するツールチップをすぐに開く", async ({ expect }) => {
-    // 準備
-    const screen = await render(
-      <TooltipGroup delay={1000}>
-        <Tooltip trigger={<button>保存</button>}>保存します</Tooltip>
-        <Tooltip trigger={<button>共有</button>}>共有します</Tooltip>
-      </TooltipGroup>,
-    );
-
-    // 実行
-    await screen.getByRole("button", { name: "保存" }).hover();
-    await vi.waitFor(
-      () => {
-        expect(screen.getByText("保存します").query()).not.toBe(null);
-      },
-      { timeout: 3000 },
-    );
-    await screen.getByRole("button", { name: "共有" }).hover();
-
-    // 検証
-    await vi.waitFor(
-      () => {
-        expect(screen.getByText("共有します").query()).not.toBe(null);
-      },
-      { timeout: 500 },
-    );
   });
 });

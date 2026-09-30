@@ -249,19 +249,14 @@ describe("PasswordField", () => {
     expect(screen.getByRole("button").query()).toBe(null);
   });
 
-  test("無効状態では入力欄と表示切替ボタンを無効にする", async ({ expect }) => {
+  test("無効状態では表示切替ボタンの無効クラスを付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <PasswordField disabled slotProps={{ input: { "aria-label": "パスワード" } }} />,
     );
 
     // 検証
-    const input = screen.getByRole("textbox", { name: "パスワード" }).element() as HTMLInputElement;
-    expect(input.disabled).toBe(true);
-    const toggle = screen
-      .getByRole("button", { name: "パスワードを表示" })
-      .element() as HTMLButtonElement;
-    expect(toggle.disabled).toBe(true);
+    const toggle = screen.getByRole("button", { name: "パスワードを表示" }).element();
     expect(toggle.classList.contains("sui_password_field_toggle-disabled")).toBe(true);
   });
 

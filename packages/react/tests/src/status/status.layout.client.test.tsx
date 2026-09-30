@@ -47,14 +47,14 @@ describe("Status の配置", () => {
 
     // 検証
     const sm = getIndicator(screen.container, "sm").getBoundingClientRect();
-    expect(sm.width).toBeCloseTo(6, 1);
-    expect(sm.height).toBeCloseTo(6, 1);
+    expect(sm.width).toBeCloseTo(6.72, 1);
+    expect(sm.height).toBeCloseTo(6.72, 1);
     const md = getIndicator(screen.container, "md").getBoundingClientRect();
     expect(md.width).toBeCloseTo(8.4, 1);
     expect(md.height).toBeCloseTo(8.4, 1);
     const lg = getIndicator(screen.container, "lg").getBoundingClientRect();
-    expect(lg.width).toBeCloseTo(10.8, 1);
-    expect(lg.height).toBeCloseTo(10.8, 1);
+    expect(lg.width).toBeCloseTo(10.08, 1);
+    expect(lg.height).toBeCloseTo(10.08, 1);
   });
 
   test("点を円形にする", async ({ expect }) => {

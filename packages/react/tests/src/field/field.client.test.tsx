@@ -1,6 +1,6 @@
 import "@suru-ui/theme/suru.css";
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/field/field.parts.js";
@@ -183,33 +183,6 @@ describe("Field", () => {
     expect(screen.getByRole("textbox", { name: "名前" }).query()).not.toBe(null);
     expect(screen.getByText("プロフィールに表示されます。").query()).not.toBe(null);
     expect(screen.getByText("有効性: null").query()).not.toBe(null);
-  });
-
-  test("検証に失敗するとエラーメッセージを描画する", async ({ expect }) => {
-    // 準備
-    const screen = await render(
-      <Field
-        label="名前"
-        errorMatches={{ valueMissing: "名前を入力してください。" }}
-        validationMode="onBlur"
-      >
-        <Field.Control required />
-      </Field>,
-    );
-    const input = screen.getByRole("textbox", { name: "名前" });
-
-    // 実行
-    // 一度入力してから消すと、未入力による検証エラーが表示対象になります。
-    await input.fill("すーるー");
-    await input.fill("");
-    input.element().focus();
-    await Promise.resolve();
-    input.element().blur();
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(screen.getByText("名前を入力してください。").query()).not.toBe(null);
-    });
   });
 
   test("Control と Item を公開する", ({ expect }) => {

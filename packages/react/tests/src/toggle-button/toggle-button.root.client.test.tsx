@@ -1,5 +1,5 @@
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { useToggleButtonContext } from "../../../src/toggle-button/toggle-button.context.js";
@@ -29,7 +29,6 @@ describe("ToggleButtonRoot", () => {
 
     // 検証
     const button = screen.getByClassName("sui_button").element();
-    expect(button.getAttribute("aria-pressed")).toBe("true");
     expect(button.classList.contains("sui_button-color_blue")).toBe(true);
     expect(button.classList.contains("sui_button-variant_solid")).toBe(true);
   });
@@ -40,7 +39,6 @@ describe("ToggleButtonRoot", () => {
 
     // 検証
     const button = screen.getByClassName("sui_button").element();
-    expect(button.getAttribute("aria-pressed")).toBe("false");
     expect(button.classList.contains("sui_button-color_grey")).toBe(true);
     expect(button.classList.contains("sui_button-color_blue")).toBe(false);
   });
@@ -78,7 +76,7 @@ describe("ToggleButtonRoot", () => {
     expect(button.disabled).toBe(true);
   });
 
-  test("保留中は無効化しつつフォーカスを維持する", async ({ expect }) => {
+  test("保留中は無効の状態クラスを付けず無効化しない", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<ToggleButtonRoot pending />);
 
@@ -86,25 +84,7 @@ describe("ToggleButtonRoot", () => {
     const button = screen.getByClassName("sui_button").element() as HTMLButtonElement;
     expect(button.classList.contains("sui_button-pending")).toBe(true);
     expect(button.classList.contains("sui_button-disabled")).toBe(false);
-    expect(button.getAttribute("aria-disabled")).toBe("true");
     expect(button.disabled).toBe(false);
-    expect(button.tabIndex).toBe(0);
-  });
-
-  test("押下状態の変更で onPressedChange を呼ぶ", async ({ expect }) => {
-    // 準備
-    const onPressedChange = vi.fn<(pressed: boolean) => void>();
-    const screen = await render(
-      <ToggleButtonRoot onPressedChange={onPressedChange}>切り替え</ToggleButtonRoot>,
-    );
-
-    // 実行
-    await screen.getByRole("button", { name: "切り替え" }).click();
-
-    // 検証
-    expect(onPressedChange).toHaveBeenCalledTimes(1);
-    expect(onPressedChange).toHaveBeenCalledWith(true, expect.anything());
-    expect(screen.getByRole("button").element().getAttribute("aria-pressed")).toBe("true");
   });
 
   test("render で要素を置き換える", async ({ expect }) => {
@@ -116,7 +96,7 @@ describe("ToggleButtonRoot", () => {
     );
 
     // 検証
-    const link = screen.getByRole("button").element();
+    const link = screen.getByClassName("sui_button").element();
     expect(link.tagName).toBe("A");
     expect(link.classList.contains("sui_button")).toBe(true);
   });

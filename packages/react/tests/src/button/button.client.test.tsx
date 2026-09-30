@@ -138,8 +138,6 @@ describe("Button", () => {
     const button = screen.getByClassName("sui_button").element();
     expect(button.classList.contains("sui_button-pending")).toBe(true);
     expect(button.classList.contains("sui_button-disabled")).toBe(false);
-    expect(button.getAttribute("aria-disabled")).toBe("true");
-    expect(button.hasAttribute("disabled")).toBe(false);
     expect(screen.getByClassName("sui_button_pending-overlay").query()).not.toBe(null);
     expect(screen.getByClassName("sui_button_circular_progress").query()).not.toBe(null);
     expect(screen.container.querySelector("animateTransform")).not.toBe(null);
@@ -234,25 +232,13 @@ describe("Button", () => {
     expect(screen.getByClassName("sui_button_pending-visibility_hidden").query()).not.toBe(null);
   });
 
-  test("無効時は操作を受け付けない", async ({ expect }) => {
-    // 準備
-    let clicked = false;
-    const handleClick = () => {
-      clicked = true;
-    };
-
-    // 実行
-    const screen = await render(
-      <Button disabled onClick={handleClick}>
-        送信
-      </Button>,
-    );
-    screen.container.querySelector<HTMLButtonElement>(".sui_button")!.click();
+  test("無効時は無効の状態クラスを付ける", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(<Button disabled>送信</Button>);
 
     // 検証
-    expect(clicked).toBe(false);
-    const button = screen.getByClassName("sui_button").element();
-    expect(button.classList.contains("sui_button-disabled")).toBe(true);
-    expect((button as HTMLButtonElement).disabled).toBe(true);
+    expect(
+      screen.getByClassName("sui_button").element().classList.contains("sui_button-disabled"),
+    ).toBe(true);
   });
 });

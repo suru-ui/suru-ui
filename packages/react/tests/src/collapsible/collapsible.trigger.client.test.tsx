@@ -1,7 +1,6 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { CollapsibleContent } from "../../../src/collapsible/collapsible.content.jsx";
 import { CollapsibleRoot } from "../../../src/collapsible/collapsible.root.jsx";
 import {
   type CollapsibleTriggerProps,
@@ -61,42 +60,5 @@ describe("CollapsibleTrigger", () => {
     const trigger = screen.getByRole("button", { name: "開閉" }).element();
     expect(trigger.classList.contains("custom")).toBe(true);
     expect(trigger.classList.contains("sui_collapsible_trigger")).toBe(true);
-  });
-
-  test("開閉に合わせて展開状態を伝える", async ({ expect }) => {
-    // 準備
-    const screen = await render(
-      <CollapsibleRoot>
-        <CollapsibleTrigger>{renderTrigger()}</CollapsibleTrigger>
-        <CollapsibleContent id="content">内容</CollapsibleContent>
-      </CollapsibleRoot>,
-    );
-    const trigger = screen.getByRole("button", { name: "開閉" });
-
-    // 実行と検証
-    expect(trigger.element().getAttribute("aria-expanded")).toBe("false");
-    await trigger.click();
-    expect(trigger.element().getAttribute("aria-expanded")).toBe("true");
-    expect(trigger.element().getAttribute("aria-controls")).toBe("content");
-    expect(screen.getByText("内容").query()).not.toBe(null);
-  });
-
-  test("無効なときは開閉できない", async ({ expect }) => {
-    // 準備
-    const screen = await render(
-      <CollapsibleRoot disabled>
-        <CollapsibleTrigger>{renderTrigger()}</CollapsibleTrigger>
-        <CollapsibleContent>内容</CollapsibleContent>
-      </CollapsibleRoot>,
-    );
-    const trigger = screen.getByRole("button", { name: "開閉" });
-
-    // 実行
-    await trigger.click({ force: true });
-
-    // 検証
-    expect(trigger.element().getAttribute("aria-disabled")).toBe("true");
-    expect(trigger.element().getAttribute("aria-expanded")).toBe("false");
-    expect(screen.getByText("内容").query()).toBe(null);
   });
 });

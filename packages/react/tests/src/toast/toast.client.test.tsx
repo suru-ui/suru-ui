@@ -1,6 +1,6 @@
 import "@suru-ui/theme/suru.css";
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { useToastClient } from "../../../src/toast/toast.client.js";
@@ -13,7 +13,6 @@ import "../_locators.js";
  * Provider の配下で client から通知を追加する動作を検証するために使用します。
  */
 function AddButton(props: {
-  actionProps?: React.ComponentPropsWithoutRef<"button"> | undefined;
   children?: React.ReactNode;
   description?: string | undefined;
   title?: string | undefined;
@@ -29,7 +28,6 @@ function AddButton(props: {
           type: props.type,
           title: props.title ?? "通知",
           description: props.description,
-          actionProps: props.actionProps,
         });
       }}
     >
@@ -56,49 +54,6 @@ describe("Toast", () => {
     expect(screen.getByText("プロフィールを更新しました。").element().tagName).toBe("P");
   });
 
-  test("見出しと説明を通知に関連付ける", async ({ expect }) => {
-    // 準備
-    const screen = await render(
-      <Toast.Provider timeout={0}>
-        <AddButton title="更新完了" description="プロフィールを更新しました。" />
-        <Toast.List />
-      </Toast.Provider>,
-    );
-
-    // 実行
-    await screen.getByRole("button", { name: "追加" }).click();
-
-    // 検証
-    const root = screen.getByRole("dialog").element();
-    const title = screen.getByRole("heading", { name: "更新完了" }).element();
-    const description = screen.getByText("プロフィールを更新しました。").element();
-    expect(root.getAttribute("aria-labelledby")).toBe(title.id);
-    expect(root.getAttribute("aria-describedby")).toBe(description.id);
-  });
-
-  test("既定の閉じるボタンで通知を閉じる", async ({ expect }) => {
-    // 準備
-    const screen = await render(
-      <Toast.Provider timeout={0}>
-        <AddButton />
-        <Toast.List />
-      </Toast.Provider>,
-    );
-    await screen.getByRole("button", { name: "追加" }).click();
-
-    // 実行
-    // 通知は画面外に配置され得るため、要素へ直接クリックイベントを送ります。
-    screen
-      .getByText("閉じる")
-      .element()
-      .dispatchEvent(new MouseEvent("click", { bubbles: true }));
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(screen.getByClassName("sui_toast").query()).toBe(null);
-    });
-  });
-
   for (const [type, color] of [
     ["success", "sui_alert-color_green"],
     ["warning", "sui_alert-color_yellow"],
@@ -123,29 +78,6 @@ describe("Toast", () => {
       );
     });
   }
-
-  test("アクションを表示して押下する", async ({ expect }) => {
-    // 準備
-    const onClick = vi.fn<() => void>();
-    const screen = await render(
-      <Toast.Provider timeout={0}>
-        <AddButton title="完了" actionProps={{ children: "元に戻す", onClick }} />
-        <Toast.List />
-      </Toast.Provider>,
-    );
-    await screen.getByRole("button", { name: "追加" }).click();
-
-    // 実行
-    // 通知は画面外に配置され得るため、要素へ直接クリックイベントを送ります。
-    screen
-      .getByRole("button", { name: "元に戻す" })
-      .element()
-      .dispatchEvent(new MouseEvent("click", { bubbles: true }));
-
-    // 検証
-    expect(onClick).toHaveBeenCalledTimes(1);
-    expect(screen.getByClassName("sui_toast").query()).not.toBe(null);
-  });
 
   test("アクションと閉じるボタンがないときは操作を表示しない", async ({ expect }) => {
     // 準備

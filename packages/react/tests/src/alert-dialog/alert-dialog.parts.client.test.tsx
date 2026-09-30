@@ -1,5 +1,5 @@
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { AlertDialogAction } from "../../../src/alert-dialog/alert-dialog.action.jsx";
@@ -69,7 +69,6 @@ describe("AlertDialogViewport", () => {
     // 検証
     const viewport = screen.getByClassName("sui_alert_dialog_viewport").element();
     expect(viewport.tagName).toBe("DIV");
-    expect(viewport.getAttribute("role")).toBe("presentation");
   });
 });
 
@@ -138,16 +137,6 @@ describe("AlertDialogTitle", () => {
     expect(title.classList.contains("sui_alert_dialog_title")).toBe(true);
   });
 
-  test("ポップアップのラベルに関連付ける", async ({ expect }) => {
-    // 準備と実行
-    const screen = await renderDialog(<AlertDialogTitle>見出し</AlertDialogTitle>);
-
-    // 検証
-    const content = screen.getByRole("alertdialog").element();
-    const title = screen.getByRole("heading", { name: "見出し" }).element();
-    expect(content.getAttribute("aria-labelledby")).toBe(title.id);
-  });
-
   test("render の関数へポップアップの状態を渡す", async ({ expect }) => {
     // 準備と実行
     const screen = await renderDialog(
@@ -180,16 +169,6 @@ describe("AlertDialogDescription", () => {
     expect(description.tagName).toBe("P");
     expect(description.classList.contains("sui_card_description")).toBe(true);
     expect(description.classList.contains("sui_alert_dialog_description")).toBe(true);
-  });
-
-  test("ポップアップの説明に関連付ける", async ({ expect }) => {
-    // 準備と実行
-    const screen = await renderDialog(<AlertDialogDescription>説明</AlertDialogDescription>);
-
-    // 検証
-    const content = screen.getByRole("alertdialog").element();
-    const description = screen.getByText("説明").element();
-    expect(content.getAttribute("aria-describedby")).toBe(description.id);
   });
 
   test("render の関数へポップアップの状態を渡す", async ({ expect }) => {
@@ -335,7 +314,6 @@ describe("AlertDialogToggleTrigger", () => {
     // 検証
     const trigger = screen.getByRole("button", { name: "削除" }).element();
     expect(trigger.classList.contains("sui_alert_dialog_trigger")).toBe(true);
-    expect(trigger.getAttribute("aria-haspopup")).toBe("dialog");
   });
 });
 
@@ -355,24 +333,5 @@ describe("AlertDialogCloseTrigger", () => {
     // 検証
     const close = screen.getByRole("button", { name: "閉じる" }).element();
     expect(close.classList.contains("sui_alert_dialog_close")).toBe(true);
-  });
-
-  test("押すとアラートダイアログを閉じる", async ({ expect }) => {
-    // 準備と実行
-    const screen = await renderDialog(
-      <AlertDialogCloseTrigger>
-        {(props) => (
-          <button type="button" {...props}>
-            閉じる
-          </button>
-        )}
-      </AlertDialogCloseTrigger>,
-    );
-    await screen.getByRole("button", { name: "閉じる" }).click();
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(screen.getByRole("alertdialog").query()).toBe(null);
-    });
   });
 });

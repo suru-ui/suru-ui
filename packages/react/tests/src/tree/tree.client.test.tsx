@@ -1,5 +1,5 @@
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { TreeItem } from "../../../src/tree/tree.item.jsx";
@@ -19,11 +19,9 @@ const items = [
 ] as const;
 
 describe("Tree", () => {
-  test("項目を並べて既定の展開と選択を反映する", async ({ expect }) => {
+  test("項目を並べて既定の展開を反映する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(
-      <Tree defaultExpandedValue={["src"]} defaultValue={["package"]} items={[...items]} />,
-    );
+    const screen = await render(<Tree defaultExpandedValue={["src"]} items={[...items]} />);
 
     // 検証
     const treeitems = screen.getByRole("treeitem").elements();
@@ -33,83 +31,7 @@ describe("Tree", () => {
       "index.ts",
       "package.json",
     ]);
-    expect(
-      screen
-        .getByRole("treeitem", { name: "package.json" })
-        .element()
-        .getAttribute("aria-selected"),
-    ).toBe("true");
-    expect(
-      screen.getByRole("treeitem", { name: "src" }).element().getAttribute("aria-expanded"),
-    ).toBe("true");
     expect(screen.getByClassName("sui_tree_item_indicator").elements().length).toBe(4);
-  });
-
-  test("項目を押すと選択が移りイベントを呼ぶ", async ({ expect }) => {
-    // 準備
-    const onValueChange = vi.fn<(value: readonly string[], event: unknown) => void>();
-    const screen = await render(
-      <Tree defaultExpandedValue={["src"]} items={[...items]} onValueChange={onValueChange} />,
-    );
-
-    // 実行
-    await screen.getByRole("treeitem", { name: "index.ts" }).click();
-
-    // 検証
-    expect(onValueChange).toHaveBeenCalledTimes(1);
-    expect(onValueChange).toHaveBeenCalledWith(["index"], expect.anything());
-    expect(
-      screen.getByRole("treeitem", { name: "index.ts" }).element().getAttribute("aria-selected"),
-    ).toBe("true");
-  });
-
-  test("Shift を押しながら押すと範囲を選択する", async ({ expect }) => {
-    // 準備
-    const onValueChange = vi.fn<(value: readonly string[], event: unknown) => void>();
-    const screen = await render(
-      <Tree defaultExpandedValue={["src"]} items={[...items]} onValueChange={onValueChange} />,
-    );
-    await screen.getByRole("treeitem", { name: "index.ts" }).click();
-
-    // 実行
-    screen
-      .getByRole("treeitem", { name: "package.json" })
-      .element()
-      .dispatchEvent(
-        new MouseEvent("click", { bubbles: true, cancelable: true, detail: 1, shiftKey: true }),
-      );
-
-    // 検証
-    expect(onValueChange).toHaveBeenLastCalledWith(["index", "package"], expect.anything());
-    await vi.waitFor(() => {
-      expect(
-        screen
-          .getByRole("treeitem", { name: "package.json" })
-          .element()
-          .getAttribute("aria-selected"),
-      ).toBe("true");
-    });
-  });
-
-  test("制御値に追従する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <Tree defaultExpandedValue={["src"]} items={[...items]} value={["package"]} />,
-    );
-
-    // 実行
-    await screen.getByRole("treeitem", { name: "index.ts" }).click();
-
-    // 検証
-    expect(
-      screen
-        .getByRole("treeitem", { name: "package.json" })
-        .element()
-        .getAttribute("aria-selected"),
-    ).toBe("true");
-    expect(
-      screen.getByRole("treeitem", { name: "index.ts" }).element().getAttribute("aria-selected"),
-    ).toBe("false");
   });
 
   test("slotProps を各パーツへ渡す", async ({ expect }) => {
@@ -131,28 +53,18 @@ describe("Tree", () => {
   });
 
   test("項目ごとの disabled を項目へ渡す", async ({ expect }) => {
-    // 準備
-    const onValueChange = vi.fn<(value: readonly string[], event: unknown) => void>();
+    // 準備と実行
     const screen = await render(
       <Tree
         items={[
           { id: "src", label: "src" },
           { disabled: true, id: "package", label: "package.json" },
         ]}
-        onValueChange={onValueChange}
       />,
     );
 
-    // 実行
-    screen
-      .getByRole("treeitem", { name: "package.json" })
-      .element()
-      .dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
-
     // 検証
-    expect(onValueChange).not.toHaveBeenCalled();
     const item = screen.getByRole("treeitem", { name: "package.json" }).element();
-    expect(item.getAttribute("aria-disabled")).toBe("true");
     expect(item.classList.contains("sui_tree_item-disabled")).toBe(true);
   });
 

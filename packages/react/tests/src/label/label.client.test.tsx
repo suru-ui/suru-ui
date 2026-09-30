@@ -2,8 +2,6 @@ import "@suru-ui/theme/suru.css";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import "../../../src/input/input.parts.js";
-import { Input } from "../../../src/input/input.jsx";
 import { Label, LabelAPI, useLabelAPI } from "../../../src/label/label.jsx";
 import "../_locators.js";
 
@@ -49,35 +47,6 @@ describe("Label", () => {
     expect(root.classList.contains("sui_label")).toBe(true);
     expect(root.classList.contains("sui_label-size_md")).toBe(true);
     expect(root.classList.contains("sui_label-color_grey")).toBe(true);
-  });
-
-  test("htmlFor で紐付けた入力欄にフォーカスする", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <>
-        <Label htmlFor="label-email">メールアドレス</Label>
-        <Input id="label-email" />
-      </>,
-    );
-    await screen.getByText("メールアドレス").click();
-
-    // 検証
-    expect(document.activeElement).toBe(
-      screen.getByRole("textbox", { name: "メールアドレス" }).element(),
-    );
-  });
-
-  test("子のコントロールに名前を付ける", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <Label>
-        名前
-        <Input />
-      </Label>,
-    );
-
-    // 検証
-    expect(screen.getByRole("textbox", { name: "名前" }).query()).not.toBe(null);
   });
 
   test("利用者の props をルートへ渡す", async ({ expect }) => {

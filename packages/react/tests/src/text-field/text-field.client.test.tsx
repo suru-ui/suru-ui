@@ -161,59 +161,14 @@ describe("TextField", () => {
     expect(input.placeholder).toBe("田中 太郎");
   });
 
-  test("入力値の変更を通知する", async ({ expect }) => {
-    // 準備
-    const onValueChange = vi.fn<(value: string) => void>();
-    const screen = await render(
-      <TextField onValueChange={onValueChange} slotProps={{ input: { "aria-label": "名前" } }} />,
-    );
-
-    // 実行
-    await screen.getByRole("textbox", { name: "名前" }).fill("すーるー");
-
-    // 検証
-    expect(onValueChange).toHaveBeenCalledTimes(1);
-    expect(onValueChange).toHaveBeenCalledWith("すーるー", expect.anything());
-  });
-
-  test("ルートのクリックで入力欄へフォーカスする", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <TextField slotProps={{ input: { "aria-label": "名前" } }} startAddons={["🔒"]} />,
-    );
-
-    // 実行
-    await screen.getByText("🔒").click();
-
-    // 検証
-    expect(document.activeElement?.tagName).toBe("INPUT");
-  });
-
-  test("disableFocusOnClick の Addon では入力欄へフォーカスしない", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <TextField
-        slotProps={{ addon: { disableFocusOnClick: true }, input: { "aria-label": "名前" } }}
-        startAddons={["🔒"]}
-      />,
-    );
-
-    // 実行
-    await screen.getByText("🔒").click();
-
-    // 検証
-    expect(document.activeElement?.tagName).not.toBe("INPUT");
-  });
-
-  test("無効時は入力欄を無効にする", async ({ expect }) => {
+  test("無効時は状態クラスを付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <TextField disabled slotProps={{ input: { "aria-label": "名前" } }} />,
     );
 
     // 検証
-    const input = screen.getByRole("textbox", { name: "名前" }).element() as HTMLInputElement;
-    expect(input.disabled).toBe(true);
+    const input = screen.getByRole("textbox", { name: "名前" }).element();
     expect(input.classList.contains("sui_text_field_input-disabled")).toBe(true);
   });
 

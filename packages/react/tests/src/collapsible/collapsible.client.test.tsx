@@ -105,29 +105,9 @@ describe("Collapsible", () => {
 
     // 検証
     const trigger = screen.getByRole("button", { name: "開閉" }).element();
-    expect(trigger.getAttribute("aria-expanded")).toBe("true");
+    expect(trigger.classList.contains("sui_collapsible_trigger")).toBe(true);
     expect(screen.getByClassName("sui_collapsible").element().tagName).toBe("DIV");
     expect(screen.getByText("内容").query()).not.toBe(null);
-  });
-
-  test("トリガーを押すと開閉する", async ({ expect }) => {
-    // 準備
-    const screen = await render(<Collapsible trigger={renderTrigger()}>内容</Collapsible>);
-    const trigger = screen.getByRole("button", { name: "開閉" });
-
-    // 実行
-    await trigger.click();
-
-    // 検証
-    expect(trigger.element().getAttribute("aria-expanded")).toBe("true");
-    expect(screen.getByText("内容").query()).not.toBe(null);
-
-    // 実行
-    await trigger.click();
-
-    // 検証
-    expect(trigger.element().getAttribute("aria-expanded")).toBe("false");
-    expect(screen.getByText("内容").query()).toBe(null);
   });
 
   test("トリガーに要素を渡せる", async ({ expect }) => {

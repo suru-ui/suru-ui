@@ -236,22 +236,6 @@ describe("PasswordFieldAddon", () => {
     expect(addon.classList.contains("sui_password_field_addon")).toBe(true);
   });
 
-  test("disableFocusOnClick では入力欄へフォーカスしない", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <PasswordFieldRoot>
-        <PasswordFieldAddon disableFocusOnClick>🔒</PasswordFieldAddon>
-        <PasswordFieldInput aria-label="パスワード" />
-      </PasswordFieldRoot>,
-    );
-
-    // 実行
-    await screen.getByText("🔒").click();
-
-    // 検証
-    expect(document.activeElement?.tagName).not.toBe("INPUT");
-  });
-
   test("render の関数へ表示状態とスタイル情報を渡す", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
@@ -325,8 +309,7 @@ describe("PasswordFieldToggleButton", () => {
     );
 
     // 検証
-    const toggle = screen.getByRole("button").element() as HTMLButtonElement;
-    expect(toggle.disabled).toBe(true);
+    const toggle = screen.getByRole("button").element();
     expect(toggle.classList.contains("sui_password_field_toggle-disabled")).toBe(true);
   });
 

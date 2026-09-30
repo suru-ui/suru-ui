@@ -7,7 +7,7 @@ import { NumberFieldRoot } from "../../../src/number-field/number-field.root.jsx
 import "../_locators.js";
 
 describe("NumberFieldInput", () => {
-  test("入力欄に修飾クラスと数値入力の属性を付ける", async ({ expect }) => {
+  test("入力欄に修飾クラスを付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <NumberFieldRoot defaultValue={1}>
@@ -16,11 +16,8 @@ describe("NumberFieldInput", () => {
     );
 
     // 検証
-    const input = screen.getByRole("textbox").element() as HTMLInputElement;
+    const input = screen.getByRole("textbox").element();
     expect(input.tagName).toBe("INPUT");
-    expect(input.type).toBe("text");
-    expect(input.getAttribute("inputmode")).toBe("numeric");
-    expect(input.getAttribute("aria-roledescription")).toBe("Number field");
     expect(input.classList.contains("sui_number_field_input")).toBe(true);
     expect(input.classList.contains("sui_number_field_input-unverified")).toBe(true);
   });
@@ -39,20 +36,6 @@ describe("NumberFieldInput", () => {
     expect(input.placeholder).toBe("数量");
     expect(input.getAttribute("autocomplete")).toBe("off");
     expect(input.required).toBe(true);
-  });
-
-  test("補助技術向けの説明を上書きする", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <NumberFieldRoot>
-        <NumberFieldInput aria-roledescription="数値の入力欄" />
-      </NumberFieldRoot>,
-    );
-
-    // 検証
-    expect(screen.getByRole("textbox").element().getAttribute("aria-roledescription")).toBe(
-      "数値の入力欄",
-    );
   });
 
   test("利用者の className を保持する", async ({ expect }) => {

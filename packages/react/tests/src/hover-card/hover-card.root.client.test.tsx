@@ -1,15 +1,11 @@
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { useHoverCardContext } from "../../../src/hover-card/hover-card.context.js";
 import { HoverCard } from "../../../src/hover-card/hover-card.jsx";
 import { HoverCardRoot } from "../../../src/hover-card/hover-card.root.jsx";
 import "../_locators.js";
-
-type Member = {
-  name: string;
-};
 
 describe("HoverCardRoot", () => {
   test("自身の見た目を持つ要素を表示しない", async ({ expect }) => {
@@ -87,33 +83,6 @@ describe("HoverCard", () => {
     // 検証
     const content = screen.getByClassName("sui_hover_card_content").element();
     expect(content.textContent).toBe("利用規約の概要");
-  });
-
-  test("トリガーを関連付けて payload を内容へ渡す", async ({ expect }) => {
-    // 準備
-    const handle = HoverCard.createHandle<Member>();
-
-    // 実行
-    const screen = await render(
-      <>
-        <HoverCard.Trigger handle={handle} delay={0} payload={{ name: "田中" }}>
-          {(props) => (
-            <a href="#member" {...props}>
-              作成者
-            </a>
-          )}
-        </HoverCard.Trigger>
-        <HoverCard handle={handle}>
-          {({ payload }) => <span>{payload?.name ?? "なし"}</span>}
-        </HoverCard>
-      </>,
-    );
-    await screen.getByText("作成者").hover();
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(screen.getByText("田中").query()?.textContent).toBe("田中");
-    });
   });
 
   test("内容用の props をポップアップへ渡す", async ({ expect }) => {

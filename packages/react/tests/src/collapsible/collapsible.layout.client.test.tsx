@@ -48,24 +48,24 @@ describe("Collapsible の配置", () => {
     );
   });
 
-  test("開閉に合わせてインジケーターを回転する", async ({ expect }) => {
-    // 準備
+  test("開いた状態ではインジケーターを回転する", async ({ expect }) => {
+    // 準備と実行
     const screen = await render(
-      <CollapsibleRoot>
-        <TriggerWithIndicator />
-        <CollapsibleContent>内容</CollapsibleContent>
-      </CollapsibleRoot>,
+      <>
+        <CollapsibleRoot id="closed">
+          <TriggerWithIndicator />
+        </CollapsibleRoot>
+        <CollapsibleRoot defaultOpen id="open">
+          <TriggerWithIndicator />
+        </CollapsibleRoot>
+      </>,
     );
-    const indicator = screen.getByTestId("indicator").element();
-    const closed = getComputedStyle(indicator).rotate;
-
-    // 実行
-    await screen.getByRole("button", { name: "開閉" }).click();
-    const open = getComputedStyle(indicator).rotate;
 
     // 検証
-    expect(closed).not.toBe(open);
-    expect(open).toBe("90deg");
+    const closed = screen.container.querySelector<HTMLElement>("#closed [data-testid=indicator]")!;
+    const open = screen.container.querySelector<HTMLElement>("#open [data-testid=indicator]")!;
+    expect(getComputedStyle(closed).rotate).not.toBe(getComputedStyle(open).rotate);
+    expect(getComputedStyle(open).rotate).toBe("90deg");
   });
 
   test("大きさごとにインジケーターとコンテンツの活字サイズを変える", async ({ expect }) => {

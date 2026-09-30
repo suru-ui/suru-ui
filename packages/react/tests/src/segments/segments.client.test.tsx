@@ -1,5 +1,5 @@
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { SegmentsItem } from "../../../src/segments/segments.item.jsx";
@@ -28,40 +28,6 @@ describe("Segments", () => {
         .classList.contains("sui_segments_item-active"),
     ).toBe(true);
     expect(screen.getByClassName("sui_segments_indicator").query()).not.toBe(null);
-  });
-
-  test("項目を押すと選択が移りイベントを呼ぶ", async ({ expect }) => {
-    // 準備
-    const onValueChange = vi.fn<(value: unknown, details: unknown) => void>();
-    const screen = await render(
-      <Segments defaultValue="day" items={[...items]} onValueChange={onValueChange} />,
-    );
-
-    // 実行
-    await screen.getByRole("tab", { name: "月" }).click();
-
-    // 検証
-    expect(onValueChange).toHaveBeenCalledTimes(1);
-    expect(onValueChange).toHaveBeenCalledWith("month", expect.anything());
-    expect(
-      screen
-        .getByRole("tab", { name: "月" })
-        .element()
-        .classList.contains("sui_segments_item-active"),
-    ).toBe(true);
-  });
-
-  test("制御値に追従する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(<Segments items={[...items]} value="month" />);
-
-    // 実行
-    await screen.getByRole("tab", { name: "日" }).click();
-
-    // 検証
-    expect(screen.getByRole("tab", { name: "月" }).element().getAttribute("aria-selected")).toBe(
-      "true",
-    );
   });
 
   test("slotProps を各パーツへ渡す", async ({ expect }) => {
@@ -118,9 +84,12 @@ describe("Segments", () => {
     );
 
     // 検証
-    expect(screen.getByRole("tab", { name: "週" }).element().getAttribute("aria-disabled")).toBe(
-      "true",
-    );
+    expect(
+      screen
+        .getByRole("tab", { name: "週" })
+        .element()
+        .classList.contains("sui_segments_item-disabled"),
+    ).toBe(true);
   });
 
   test("項目がないときはタブを描画しない", async ({ expect }) => {

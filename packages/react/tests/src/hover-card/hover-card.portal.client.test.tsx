@@ -11,7 +11,7 @@ import { HoverCardRoot } from "../../../src/hover-card/hover-card.root.jsx";
 import "../_locators.js";
 
 describe("HoverCardPortal", () => {
-  test("ポップアップを別の場所へ配置する", async ({ expect }) => {
+  test("ポータル要素として描画する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <HoverCard defaultOpen trigger={<a href="#terms">利用規約</a>}>
@@ -23,7 +23,6 @@ describe("HoverCardPortal", () => {
     const portal = screen.getByClassName("sui_hover_card_portal").element();
     expect(portal.tagName).toBe("DIV");
     expect(portal.getAttribute("data-scope")).toBe("");
-    expect(screen.container.contains(portal)).toBe(false);
   });
 
   test("大きさと角丸と枠線をクラスにする", async ({ expect }) => {

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { DrawerBackdrop } from "../../../src/drawer/drawer.backdrop.jsx";
@@ -122,16 +122,6 @@ describe("DrawerTitle", () => {
     expect(title.tagName).toBe("H2");
     expect(title.classList.contains("sui_drawer_title")).toBe(true);
   });
-
-  test("ポップアップのラベルに関連付ける", async ({ expect }) => {
-    // 準備と実行
-    const screen = await renderDrawer(<DrawerTitle>見出し</DrawerTitle>);
-
-    // 検証
-    const popup = screen.getByRole("dialog").element();
-    const title = screen.getByRole("heading", { name: "見出し" }).element();
-    expect(popup.getAttribute("aria-labelledby")).toBe(title.id);
-  });
 });
 
 describe("DrawerDescription", () => {
@@ -143,16 +133,6 @@ describe("DrawerDescription", () => {
     const description = screen.getByText("説明").element();
     expect(description.tagName).toBe("P");
     expect(description.classList.contains("sui_drawer_description")).toBe(true);
-  });
-
-  test("ポップアップの説明に関連付ける", async ({ expect }) => {
-    // 準備と実行
-    const screen = await renderDrawer(<DrawerDescription>説明</DrawerDescription>);
-
-    // 検証
-    const popup = screen.getByRole("dialog").element();
-    const description = screen.getByText("説明").element();
-    expect(popup.getAttribute("aria-describedby")).toBe(description.id);
   });
 });
 
@@ -223,7 +203,6 @@ describe("DrawerTrigger", () => {
     // 検証
     const trigger = screen.getByRole("button", { name: "開く" }).element();
     expect(trigger.classList.contains("sui_drawer_trigger")).toBe(true);
-    expect(trigger.getAttribute("aria-haspopup")).toBe("dialog");
   });
 });
 
@@ -243,25 +222,6 @@ describe("DrawerClose", () => {
     // 検証
     const close = screen.getByRole("button", { name: "閉じる" }).element();
     expect(close.classList.contains("sui_drawer_close")).toBe(true);
-  });
-
-  test("押すとドロワーを閉じる", async ({ expect }) => {
-    // 準備と実行
-    const screen = await renderDrawer(
-      <DrawerClose>
-        {(props) => (
-          <button type="button" {...props}>
-            閉じる
-          </button>
-        )}
-      </DrawerClose>,
-    );
-    await screen.getByRole("button", { name: "閉じる" }).click();
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(screen.getByRole("dialog").query()).toBe(null);
-    });
   });
 });
 

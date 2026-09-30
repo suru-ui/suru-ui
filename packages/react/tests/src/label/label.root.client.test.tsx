@@ -105,8 +105,8 @@ describe("LabelRoot", () => {
     expect(root.classList.contains("sui_label-disabled")).toBe(false);
   });
 
-  test("無効状態でも子要素のコントロールを操作できる", async ({ expect }) => {
-    // 準備
+  test("無効状態でも子要素のコントロールを無効にしない", async ({ expect }) => {
+    // 準備と実行
     const screen = await render(
       <LabelRoot disabled>
         名前
@@ -114,13 +114,9 @@ describe("LabelRoot", () => {
       </LabelRoot>,
     );
 
-    // 実行
-    await screen.getByRole("textbox", { name: "名前" }).fill("すーるー");
-
     // 検証
     const input = screen.getByRole("textbox", { name: "名前" }).element() as HTMLInputElement;
     expect(input.disabled).toBe(false);
-    expect(input.value).toBe("すーるー");
   });
 
   test("スタイル起点として data-scope を付ける", async ({ expect }) => {

@@ -394,19 +394,21 @@ describe("ComboboxRoot", () => {
     expect(screen.getByClassName("sui_combobox").query()).toBe(null);
   });
 
-  test("無効状態を入力欄へ中継する", async ({ expect }) => {
+  test("無効時は状態クラスを付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<Combobox items={["りんご"]} disabled />);
 
     // 検証
-    expect(screen.getByRole("combobox").query()?.hasAttribute("disabled")).toBe(true);
+    const group = screen.getByClassName("sui_combobox").element();
+    expect(group.classList.contains("sui_combobox-disabled")).toBe(true);
   });
 
-  test("読み取り専用を入力欄へ中継する", async ({ expect }) => {
+  test("読み取り専用時は状態クラスを付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<Combobox items={["りんご"]} readOnly />);
 
     // 検証
-    expect(screen.getByRole("combobox").query()?.getAttribute("readonly")).not.toBe(null);
+    const group = screen.getByClassName("sui_combobox").element();
+    expect(group.classList.contains("sui_combobox-readonly")).toBe(true);
   });
 });

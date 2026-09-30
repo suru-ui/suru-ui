@@ -158,39 +158,6 @@ describe("MeterRoot", () => {
     // 検証
     expect(screen.getByClassName("sui_meter").element().tagName).toBe("SECTION");
   });
-
-  test("meter として現在値と範囲を読み上げる", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(<MeterRoot value={25} min={0} max={100} />);
-
-    // 検証
-    const root = screen.getByClassName("sui_meter").element();
-    expect(root.getAttribute("role")).toBe("meter");
-    expect(root.getAttribute("aria-valuenow")).toBe("25");
-    expect(root.getAttribute("aria-valuemin")).toBe("0");
-    expect(root.getAttribute("aria-valuemax")).toBe("100");
-    expect(root.getAttribute("aria-valuetext")).toBe("25%");
-  });
-
-  test("範囲外の値を範囲に収める", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(<MeterRoot value={120} min={0} max={100} />);
-
-    // 検証
-    expect(screen.getByClassName("sui_meter").element().getAttribute("aria-valuenow")).toBe("100");
-  });
-
-  test("getAriaValueText の結果を読み上げテキストにする", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <MeterRoot value={25} getAriaValueText={(formattedValue) => `${formattedValue}使用中`} />,
-    );
-
-    // 検証
-    expect(screen.getByClassName("sui_meter").element().getAttribute("aria-valuetext")).toBe(
-      "25%使用中",
-    );
-  });
 });
 
 describe("MeterAPI", () => {

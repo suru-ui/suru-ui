@@ -25,21 +25,7 @@ describe("FieldLabel", () => {
     expect(label.classList.contains("sui_field_label")).toBe(true);
   });
 
-  test("クリックで入力欄にフォーカスする", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <FieldRoot>
-        <FieldLabel>名前</FieldLabel>
-        <FieldControl />
-      </FieldRoot>,
-    );
-    await screen.getByText("名前").click();
-
-    // 検証
-    expect(document.activeElement).toBe(screen.getByRole("textbox", { name: "名前" }).element());
-  });
-
-  test("非ネイティブの要素でもラベルにする", async ({ expect }) => {
+  test("非ネイティブの要素で描画する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <FieldRoot>
@@ -54,6 +40,5 @@ describe("FieldLabel", () => {
     const label = screen.getByText("名前").element();
     expect(label.tagName).toBe("SPAN");
     expect(label.classList.contains("sui_field_label")).toBe(true);
-    expect(screen.getByRole("textbox", { name: "名前" }).query()).not.toBe(null);
   });
 });

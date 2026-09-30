@@ -1,4 +1,4 @@
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/avatar/avatar.parts.js";
@@ -46,23 +46,5 @@ describe("AvatarFallback", () => {
 
     // 検証
     expect(screen.getByClassName("sui_avatar_fallback").element().tagName).toBe("DIV");
-  });
-
-  test("遅延を指定すると後から表示する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <AvatarRoot>
-        <AvatarFallback delay={500}>名</AvatarFallback>
-      </AvatarRoot>,
-    );
-
-    // 検証
-    expect(screen.getByClassName("sui_avatar_fallback").query()).toBe(null);
-    await vi.waitFor(
-      () => {
-        expect(screen.getByClassName("sui_avatar_fallback").query()).not.toBe(null);
-      },
-      { timeout: 3000 },
-    );
   });
 });

@@ -26,11 +26,11 @@ describe("BadgeRoot の配置", () => {
 
     // 検証
     const sm = screen.container.querySelector<HTMLElement>("#sm")?.getBoundingClientRect();
-    expect(sm?.height).toBeCloseTo(20, 1);
+    expect(sm?.height).toBeCloseTo(22.4, 1);
     const md = screen.container.querySelector<HTMLElement>("#md")?.getBoundingClientRect();
     expect(md?.height).toBeCloseTo(28, 1);
     const lg = screen.container.querySelector<HTMLElement>("#lg")?.getBoundingClientRect();
-    expect(lg?.height).toBeCloseTo(36, 1);
+    expect(lg?.height).toBeCloseTo(33.6, 1);
   });
 
   test("dot では大きさの半分の正方形にする", async ({ expect }) => {
@@ -45,14 +45,14 @@ describe("BadgeRoot の配置", () => {
 
     // 検証
     const sm = screen.container.querySelector<HTMLElement>("#sm")?.getBoundingClientRect();
-    expect(sm?.width).toBeCloseTo(10, 1);
-    expect(sm?.height).toBeCloseTo(10, 1);
+    expect(sm?.width).toBeCloseTo(11.2, 1);
+    expect(sm?.height).toBeCloseTo(11.2, 1);
     const md = screen.container.querySelector<HTMLElement>("#md")?.getBoundingClientRect();
     expect(md?.width).toBeCloseTo(14, 1);
     expect(md?.height).toBeCloseTo(14, 1);
     const lg = screen.container.querySelector<HTMLElement>("#lg")?.getBoundingClientRect();
-    expect(lg?.width).toBeCloseTo(18, 1);
-    expect(lg?.height).toBeCloseTo(18, 1);
+    expect(lg?.width).toBeCloseTo(16.8, 1);
+    expect(lg?.height).toBeCloseTo(16.8, 1);
   });
 
   test("内容を中央に配置する", async ({ expect }) => {
@@ -147,9 +147,9 @@ describe("BadgeRoot の配置", () => {
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg")!);
     expect(lg.borderTopLeftRadius).toBe("12px");
     const full = getComputedStyle(screen.container.querySelector<HTMLElement>("#full")!);
-    expect(full.borderTopLeftRadius).toBe("10px");
+    expect(full.borderTopLeftRadius).toBe("11.2px");
     const fullLg = getComputedStyle(screen.container.querySelector<HTMLElement>("#fullLg")!);
-    expect(fullLg.borderTopLeftRadius).toBe("18px");
+    expect(fullLg.borderTopLeftRadius).toBe("16.8px");
   });
 
   test("配色を背景と文字へ適用する", async ({ expect }) => {

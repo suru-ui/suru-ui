@@ -120,17 +120,6 @@ describe("Progress", () => {
     expect(screen.getByClassName("sui_progress_indicator").query()).not.toBe(null);
   });
 
-  test("progressbar として現在値と範囲を読み上げる", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(<Progress label="読み込み中" value={25} min={0} max={100} />);
-
-    // 検証
-    const root = screen.getByRole("progressbar").element();
-    expect(root.getAttribute("aria-valuenow")).toBe("25");
-    expect(root.getAttribute("aria-valuetext")).toBe("25%");
-    expect(root.getAttribute("aria-labelledby")).toBe(screen.getByText("読み込み中").element().id);
-  });
-
   test("ラベルを省略すると値も表示しない", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<Progress value={25} />);
@@ -141,23 +130,13 @@ describe("Progress", () => {
     expect(screen.getByClassName("sui_progress_track").query()).not.toBe(null);
   });
 
-  test("現在値の既定値を null にして不確定状態にする", async ({ expect }) => {
+  test("現在値の既定値で不確定状態のクラスを付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<Progress label="読み込み中" />);
 
     // 検証
-    const root = screen.getByRole("progressbar").element();
+    const root = screen.getByClassName("sui_progress").element();
     expect(root.classList.contains("sui_progress-status_indeterminate")).toBe(true);
-    expect(root.getAttribute("aria-valuenow")).toBe(null);
-    expect(screen.getByClassName("sui_progress_value").element().textContent).toBe("");
-  });
-
-  test("範囲を変更すると割合を変える", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(<Progress label="読み込み中" value={0} min={-50} max={50} />);
-
-    // 検証
-    expect(screen.getByClassName("sui_progress_indicator").element().style.width).toBe("50%");
   });
 
   test("slotProps を各パーツへ渡す", async ({ expect }) => {

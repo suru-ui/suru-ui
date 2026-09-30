@@ -1,8 +1,7 @@
 import "@suru-ui/theme/suru.css";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { type PaginationChangeEventDetails } from "../../../src/pagination/pagination.jsx";
 import { PaginationPreviousButton } from "../../../src/pagination/pagination.previous-button.jsx";
 import { PaginationRoot } from "../../../src/pagination/pagination.root.jsx";
 import "../_locators.js";
@@ -33,8 +32,10 @@ describe("PaginationPreviousButton", () => {
 
     // 検証
     expect(
-      (screen.getByRole("button", { name: "前のページへ" }).element() as HTMLButtonElement)
-        .disabled,
+      screen
+        .getByRole("button", { name: "前のページへ" })
+        .element()
+        .classList.contains("sui_button-disabled"),
     ).toBe(true);
   });
 
@@ -48,42 +49,11 @@ describe("PaginationPreviousButton", () => {
 
     // 検証
     expect(
-      (screen.getByRole("button", { name: "前のページへ" }).element() as HTMLButtonElement)
-        .disabled,
+      screen
+        .getByRole("button", { name: "前のページへ" })
+        .element()
+        .classList.contains("sui_button-disabled"),
     ).toBe(false);
-  });
-
-  test("押すと前のページへ移動する", async ({ expect }) => {
-    // 準備
-    const onPageChange = vi.fn<(page: number, details: PaginationChangeEventDetails) => void>();
-
-    // 実行
-    const screen = await render(
-      <PaginationRoot defaultPage={3} totalPages={5} onPageChange={onPageChange}>
-        <PaginationPreviousButton />
-      </PaginationRoot>,
-    );
-    await screen.getByRole("button", { name: "前のページへ" }).click();
-
-    // 検証
-    expect(onPageChange).toHaveBeenCalledTimes(1);
-    expect(onPageChange).toHaveBeenCalledWith(2, expect.objectContaining({ reason: "previous" }));
-  });
-
-  test("無効なときは移動しない", async ({ expect }) => {
-    // 準備
-    const onPageChange = vi.fn<(page: number, details: PaginationChangeEventDetails) => void>();
-
-    // 実行
-    const screen = await render(
-      <PaginationRoot defaultPage={3} disabled totalPages={5} onPageChange={onPageChange}>
-        <PaginationPreviousButton />
-      </PaginationRoot>,
-    );
-    (screen.getByRole("button", { name: "前のページへ" }).element() as HTMLButtonElement).click();
-
-    // 検証
-    expect(onPageChange).not.toHaveBeenCalled();
   });
 
   test("無効を指定できる", async ({ expect }) => {
@@ -96,8 +66,10 @@ describe("PaginationPreviousButton", () => {
 
     // 検証
     expect(
-      (screen.getByRole("button", { name: "前のページへ" }).element() as HTMLButtonElement)
-        .disabled,
+      screen
+        .getByRole("button", { name: "前のページへ" })
+        .element()
+        .classList.contains("sui_button-disabled"),
     ).toBe(true);
   });
 

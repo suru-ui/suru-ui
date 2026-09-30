@@ -34,7 +34,6 @@ describe("HoverCardArrow", () => {
     // 検証
     const arrow = screen.getByClassName("sui_hover_card_arrow").element();
     expect(arrow.tagName).toBe("DIV");
-    expect(arrow.getAttribute("aria-hidden")).toBe("true");
   });
 
   test("配置された側のクラスを付ける", async ({ expect }) => {

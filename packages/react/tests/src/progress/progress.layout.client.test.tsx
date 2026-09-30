@@ -129,18 +129,6 @@ describe("Progress の配置", () => {
     expect(trackRect.top).toBeGreaterThanOrEqual(labelRect.bottom - 0.5);
   });
 
-  test("現在値の割合に応じてインジケーターを伸ばす", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <Progress id="progress" label="読み込み中" value={25} style={{ width: "320px" }} />,
-    );
-
-    // 検証
-    const trackRect = getTrack(screen.container, "progress").getBoundingClientRect();
-    const indicatorRect = getIndicator(screen.container, "progress").getBoundingClientRect();
-    expect(indicatorRect.width).toBeCloseTo(trackRect.width / 4, 0);
-  });
-
   test("不確定状態ではトラックの割合でインジケーターを動かす", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

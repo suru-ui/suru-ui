@@ -9,6 +9,7 @@ import {
   useCheckboxGroupAPI,
 } from "../../../src/checkbox-group/checkbox-group.jsx";
 import { Checkbox } from "../../../src/checkbox/checkbox.jsx";
+import "../_locators.js";
 
 describe("CheckboxGroupAPI", () => {
   test("getRootProps は渡した props を返す", ({ expect }) => {
@@ -46,9 +47,9 @@ describe("CheckboxGroup", () => {
     );
 
     // 検証
-    const root = screen.getByRole("group", { name: "通知" }).element();
+    const root = screen.getByClassName("sui_checkbox_group").element();
     expect(root.classList.contains("sui_checkbox_group-orientation_horizontal")).toBe(true);
-    const checkbox = screen.getByRole("checkbox", { name: "メール" }).element();
+    const checkbox = screen.getByClassName("sui_checkbox").element();
     expect(checkbox.classList.contains("sui_checkbox-size_lg")).toBe(true);
     expect(checkbox.classList.contains("sui_checkbox-color_blue")).toBe(true);
   });

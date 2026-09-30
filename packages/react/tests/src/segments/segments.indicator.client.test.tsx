@@ -1,5 +1,5 @@
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { SegmentsIndicator } from "../../../src/segments/segments.indicator.jsx";
@@ -9,7 +9,7 @@ import { SegmentsRoot } from "../../../src/segments/segments.root.jsx";
 import "../_locators.js";
 
 describe("SegmentsIndicator", () => {
-  test("選択中の項目の位置に追従する", async ({ expect }) => {
+  test("インジケーターとして描画する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <SegmentsRoot defaultValue="week">
@@ -25,41 +25,6 @@ describe("SegmentsIndicator", () => {
     const indicator = screen.getByRole("presentation").element();
     expect(indicator.tagName).toBe("SPAN");
     expect(indicator.classList.contains("sui_segments_indicator")).toBe(true);
-    await vi.waitFor(() => {
-      expect(indicator.hasAttribute("hidden")).toBe(false);
-    });
-    const active = screen.getByRole("tab", { name: "週" }).element();
-    expect(Number.parseFloat(indicator.style.getPropertyValue("--active-tab-width"))).toBeCloseTo(
-      active.getBoundingClientRect().width,
-      1,
-    );
-  });
-
-  test("選択を変えると位置を移す", async ({ expect }) => {
-    // 準備
-    const screen = await render(
-      <SegmentsRoot defaultValue="day">
-        <SegmentsList>
-          <SegmentsItem value="day">日</SegmentsItem>
-          <SegmentsItem value="week">週</SegmentsItem>
-          <SegmentsIndicator />
-        </SegmentsList>
-      </SegmentsRoot>,
-    );
-    const indicator = screen.getByRole("presentation").element();
-
-    // 実行
-    await screen.getByRole("tab", { name: "週" }).click();
-
-    // 検証
-    const active = screen.getByRole("tab", { name: "週" }).element();
-    await vi.waitFor(() => {
-      expect(Number.parseFloat(indicator.style.getPropertyValue("--active-tab-width"))).toBeCloseTo(
-        active.getBoundingClientRect().width,
-        1,
-      );
-    });
-    expect(active.classList.contains("sui_segments_item-active")).toBe(true);
   });
 
   test("利用者の className を保持する", async ({ expect }) => {

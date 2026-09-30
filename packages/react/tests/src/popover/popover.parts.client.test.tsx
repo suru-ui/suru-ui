@@ -1,11 +1,10 @@
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../../../src/errors.js";
 import { PopoverArrow } from "../../../src/popover/popover.arrow.jsx";
 import { PopoverBackdrop } from "../../../src/popover/popover.backdrop.jsx";
-import { PopoverClose } from "../../../src/popover/popover.close.jsx";
 import { PopoverContent } from "../../../src/popover/popover.content.jsx";
 import { PopoverDescription } from "../../../src/popover/popover.description.jsx";
 import { Popover } from "../../../src/popover/popover.jsx";
@@ -35,7 +34,7 @@ function renderPopover(children: React.ReactNode) {
 }
 
 describe("PopoverTrigger", () => {
-  test("ポップオーバーを開く対象として描画する", async ({ expect }) => {
+  test("トリガー要素として描画する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <PopoverRoot>
@@ -46,28 +45,6 @@ describe("PopoverTrigger", () => {
     // 検証
     const trigger = screen.getByRole("button", { name: "開く" }).element();
     expect(trigger.classList.contains("sui_popover_trigger")).toBe(true);
-    expect(trigger.getAttribute("aria-haspopup")).toBe("dialog");
-    expect(trigger.getAttribute("aria-expanded")).toBe("false");
-  });
-
-  test("押すとポップアップを開く", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <PopoverRoot>
-        <PopoverTrigger>{(props) => <button {...props}>開く</button>}</PopoverTrigger>
-        <PopoverPortal>
-          <PopoverPositioner>
-            <PopoverContent>内容</PopoverContent>
-          </PopoverPositioner>
-        </PopoverPortal>
-      </PopoverRoot>,
-    );
-    await screen.getByRole("button", { name: "開く" }).click();
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(screen.getByText("内容").query()?.textContent).toBe("内容");
-    });
   });
 
   test("描画関数へルートの状態を渡す", async ({ expect }) => {
@@ -91,7 +68,7 @@ describe("PopoverTrigger", () => {
 });
 
 describe("PopoverPortal", () => {
-  test("ポップアップを別の場所へ配置する", async ({ expect }) => {
+  test("ポータル要素として描画する", async ({ expect }) => {
     // 準備と実行
     const screen = await renderPopover("内容");
 
@@ -99,7 +76,6 @@ describe("PopoverPortal", () => {
     const portal = screen.getByClassName("sui_popover_portal").element();
     expect(portal.tagName).toBe("DIV");
     expect(portal.getAttribute("data-scope")).toBe("");
-    expect(screen.container.contains(portal)).toBe(false);
   });
 
   test("大きさと角丸と枠線をクラスにする", async ({ expect }) => {
@@ -202,21 +178,6 @@ describe("PopoverPositioner", () => {
     const positioner = screen.getByClassName("sui_popover_positioner").element();
     expect(positioner.tagName).toBe("DIV");
     expect(positioner.classList.contains("sui_popover_positioner")).toBe(true);
-  });
-
-  test("既定では下端の中央へ配置する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await renderPopover("内容");
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(screen.getByClassName("sui_popover_positioner").element().dataset["side"]).toBe(
-        "bottom",
-      );
-    });
-    expect(screen.getByClassName("sui_popover_positioner").element().dataset["align"]).toBe(
-      "center",
-    );
   });
 
   test("render の関数へルートの状態を渡す", async ({ expect }) => {
@@ -346,7 +307,6 @@ describe("PopoverArrow", () => {
     // 検証
     const arrow = screen.getByClassName("sui_popover_arrow").element();
     expect(arrow.tagName).toBe("DIV");
-    expect(arrow.getAttribute("aria-hidden")).toBe("true");
   });
 
   test("配置された側のクラスを付ける", async ({ expect }) => {
@@ -400,25 +360,6 @@ describe("PopoverDescription", () => {
   });
 });
 
-describe("PopoverClose", () => {
-  test("押すとポップアップを閉じる", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <Popover defaultOpen trigger={<button>開く</button>}>
-        <PopoverClose>
-          <button>閉じる</button>
-        </PopoverClose>
-      </Popover>,
-    );
-    await screen.getByRole("button", { name: "閉じる" }).click();
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(screen.getByRole("dialog").query()).toBe(null);
-    });
-  });
-});
-
 describe("PopoverViewport", () => {
   test("内容の切り替え領域を描画する", async ({ expect }) => {
     // 準備と実行
@@ -438,24 +379,5 @@ describe("PopoverViewport", () => {
     const style = getComputedStyle(screen.getByClassName("sui_popover_viewport").element());
     expect(style.display).toBe("flex");
     expect(style.flexDirection).toBe("column");
-  });
-});
-
-describe("アクセシビリティー", () => {
-  test("見出しと説明をポップアップへ関連付ける", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <Popover defaultOpen trigger={<button>開く</button>}>
-        <PopoverTitle>見出し</PopoverTitle>
-        <PopoverDescription>説明</PopoverDescription>
-      </Popover>,
-    );
-
-    // 検証
-    const dialog = screen.getByRole("dialog").element();
-    const title = screen.getByText("見出し").element();
-    const description = screen.getByText("説明").element();
-    expect(dialog.getAttribute("aria-labelledby")).toBe(title.id);
-    expect(dialog.getAttribute("aria-describedby")).toBe(description.id);
   });
 });

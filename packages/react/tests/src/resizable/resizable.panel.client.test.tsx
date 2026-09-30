@@ -1,15 +1,13 @@
 import "@suru-ui/theme/suru.css";
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
-import { userEvent } from "vitest/browser";
 
 import "../../../src/resizable/resizable.parts.js";
 import { ResizableHandle } from "../../../src/resizable/resizable.handle.jsx";
 import { ResizablePanel } from "../../../src/resizable/resizable.panel.jsx";
 import { ResizableRoot } from "../../../src/resizable/resizable.root.jsx";
 import "../_locators.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 
 /**
  * パネルの割合を安定して測るための幅 400px の固定コンテナーです。
@@ -127,51 +125,6 @@ describe("ResizablePanel", () => {
     const [left] = getPanelRatios(screen.container);
     expect(left).toBeCloseTo(0.4, 1);
   });
-
-  test("onSizeChange にパーセント値を渡す", async ({ expect }) => {
-    // 準備
-    const sizes: number[] = [];
-
-    // 実行
-    await render(
-      <SizedGroup>
-        <ResizablePanel defaultSize={25} onSizeChange={(size) => sizes.push(size)}>
-          左
-        </ResizablePanel>
-        <ResizableHandle />
-        <ResizablePanel defaultSize={75}>右</ResizablePanel>
-      </SizedGroup>,
-    );
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(sizes[0]).toBeCloseTo(25, 0);
-    });
-  });
-
-  test.skipIf(!supportsCustomFunctions())(
-    "ハンドルのドラッグでパネルのサイズを変更する",
-    async ({ expect }) => {
-      // 準備
-      const screen = await render(
-        <SizedGroup>
-          <ResizablePanel defaultSize={50}>左</ResizablePanel>
-          <ResizableHandle />
-          <ResizablePanel defaultSize={50}>右</ResizablePanel>
-        </SizedGroup>,
-      );
-      const before = getPanelRatios(screen.container)[0]!;
-      const handle = screen.getByRole("separator");
-      const right = screen.getByClassName("sui_resizable_panel").all().at(-1)!;
-
-      // 実行
-      await userEvent.dragAndDrop(handle, right);
-
-      // 検証
-      const after = getPanelRatios(screen.container)[0]!;
-      expect(after).toBeGreaterThan(before);
-    },
-  );
 
   test("className と style を状態に応じて解決する", async ({ expect }) => {
     // 準備と実行

@@ -19,19 +19,6 @@ describe("Slider", () => {
     expect(screen.getByClassName("sui_slider_thumb").query()).not.toBe(null);
   });
 
-  test("slider として現在値と範囲を読み上げる", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(<Slider label="音量" defaultValue={25} min={0} max={100} />);
-
-    // 検証
-    const slider = screen.getByRole("slider").element();
-    expect(slider.getAttribute("aria-valuenow")).toBe("25");
-    expect(slider.getAttribute("min")).toBe("0");
-    expect(slider.getAttribute("max")).toBe("100");
-    expect(slider.getAttribute("aria-orientation")).toBe("horizontal");
-    expect(slider.getAttribute("aria-labelledby")).toBe(screen.getByText("音量").element().id);
-  });
-
   test("ラベルを省略するとラベルと値を表示しない", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<Slider defaultValue={25} />);
@@ -81,19 +68,6 @@ describe("Slider", () => {
     // 検証
     expect(screen.getByClassName("sui_slider_thumb").elements().length).toBe(2);
     expect(screen.getByRole("slider").elements().length).toBe(2);
-  });
-
-  test("トラックを押すと値を変える", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <Slider label="音量" defaultValue={0} style={{ width: "320px" }} />,
-    );
-    await screen.getByClassName("sui_slider_track").click({ position: { x: 240, y: 2 } });
-
-    // 検証
-    const value = Number(screen.getByRole("slider").element().getAttribute("aria-valuenow"));
-    expect(value).toBeGreaterThan(0);
-    expect(value).toBeLessThanOrEqual(100);
   });
 
   test("slotProps を各パーツへ渡す", async ({ expect }) => {

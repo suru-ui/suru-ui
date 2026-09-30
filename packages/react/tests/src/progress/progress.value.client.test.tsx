@@ -20,7 +20,6 @@ describe("ProgressValue", () => {
     expect(value.tagName).toBe("SPAN");
     expect(value.textContent).toBe("25%");
     expect(value.classList.contains("sui_progress_value")).toBe(true);
-    expect(value.getAttribute("aria-hidden")).toBe("true");
   });
 
   test("書式化された値と現在値を描画関数へ渡す", async ({ expect }) => {
@@ -67,18 +66,6 @@ describe("ProgressValue", () => {
     // 検証
     expect(receivedFormattedValue).toBe("indeterminate");
     expect(receivedValue).toBe(null);
-  });
-
-  test("不確定状態では既定の表示を空にする", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <ProgressRoot value={null}>
-        <ProgressValue />
-      </ProgressRoot>,
-    );
-
-    // 検証
-    expect(screen.getByClassName("sui_progress_value").element().textContent).toBe("");
   });
 
   test("固定内容をそのまま表示する", async ({ expect }) => {

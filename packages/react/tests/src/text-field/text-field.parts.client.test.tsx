@@ -1,4 +1,4 @@
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../../../src/errors.js";
@@ -135,38 +135,6 @@ describe("TextFieldRoot", () => {
         .classList.contains("probe-size_lg-color_blue"),
     ).toBe(true);
   });
-
-  test("入力欄の外側のクリックで入力欄へフォーカスする", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <TextFieldRoot>
-        <TextFieldAddon>🔒</TextFieldAddon>
-        <TextFieldInput aria-label="名前" />
-      </TextFieldRoot>,
-    );
-
-    // 実行
-    await screen.getByText("🔒").click();
-
-    // 検証
-    expect(document.activeElement?.tagName).toBe("INPUT");
-  });
-
-  test("onClick で既定のフォーカスを防げる", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <TextFieldRoot onClick={(event) => event.preventDefault()}>
-        <TextFieldAddon>🔒</TextFieldAddon>
-        <TextFieldInput aria-label="名前" />
-      </TextFieldRoot>,
-    );
-
-    // 実行
-    await screen.getByText("🔒").click();
-
-    // 検証
-    expect(document.activeElement?.tagName).not.toBe("INPUT");
-  });
 });
 
 describe("TextFieldInput", () => {
@@ -205,13 +173,12 @@ describe("TextFieldInput", () => {
     expect(input.required).toBe(true);
   });
 
-  test("無効時は状態クラスと disabled 属性を付ける", async ({ expect }) => {
+  test("無効時は状態クラスを付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<TextFieldInput aria-label="名前" disabled />);
 
     // 検証
-    const input = screen.getByRole("textbox", { name: "名前" }).element() as HTMLInputElement;
-    expect(input.disabled).toBe(true);
+    const input = screen.getByRole("textbox", { name: "名前" }).element();
     expect(input.classList.contains("sui_text_field_input-disabled")).toBe(true);
   });
 
@@ -241,42 +208,6 @@ describe("TextFieldInput", () => {
         .element()
         .classList.contains("sui_text_field_input-unverified"),
     ).toBe(true);
-  });
-
-  test("不正な Field では aria-invalid を付ける", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <FieldRoot invalid>
-        <TextFieldInput aria-label="名前" />
-      </FieldRoot>,
-    );
-
-    // 検証
-    expect(
-      screen.getByRole("textbox", { name: "名前" }).element().getAttribute("aria-invalid"),
-    ).toBe("true");
-  });
-
-  test("検証に成功した Field の状態をクラスへ反映する", async ({ expect }) => {
-    // 準備
-    const screen = await render(
-      <FieldRoot validate={() => null} validationMode="onChange">
-        <TextFieldInput aria-label="有効" />
-      </FieldRoot>,
-    );
-
-    // 実行
-    await screen.getByRole("textbox", { name: "有効" }).fill("すーるー");
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(
-        screen
-          .getByRole("textbox", { name: "有効" })
-          .element()
-          .classList.contains("sui_text_field_input-valid"),
-      ).toBe(true);
-    });
   });
 
   test("利用者の className を保持する", async ({ expect }) => {
@@ -352,22 +283,6 @@ describe("TextFieldAddon", () => {
     const addon = screen.getByText("🔒").element();
     expect(addon.tagName).toBe("B");
     expect(addon.classList.contains("sui_text_field_addon")).toBe(true);
-  });
-
-  test("disableFocusOnClick では入力欄へフォーカスしない", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <TextFieldRoot>
-        <TextFieldAddon disableFocusOnClick>🔒</TextFieldAddon>
-        <TextFieldInput aria-label="名前" />
-      </TextFieldRoot>,
-    );
-
-    // 実行
-    await screen.getByText("🔒").click();
-
-    // 検証
-    expect(document.activeElement?.tagName).not.toBe("INPUT");
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {

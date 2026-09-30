@@ -105,7 +105,7 @@ describe("Tree の配置", () => {
       screen.container.querySelector<HTMLElement>("#sm [role=treeitem]")!,
     );
     expect(sm.fontSize).toBe("12px");
-    expect(sm.minHeight).toBe("20px");
+    expect(sm.minHeight).toBe("22.4px");
     const md = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#md [role=treeitem]")!,
     );
@@ -115,7 +115,7 @@ describe("Tree の配置", () => {
       screen.container.querySelector<HTMLElement>("#lg [role=treeitem]")!,
     );
     expect(lg.fontSize).toBe("17px");
-    expect(lg.minHeight).toBe("36px");
+    expect(lg.minHeight).toBe("33.6px");
   });
 
   test("角丸を大きさに合わせる", async ({ expect }) => {

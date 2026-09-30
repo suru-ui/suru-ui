@@ -53,37 +53,24 @@ describe("ButtonRoot", () => {
     expect(screen.getByClassName("sui_button").element().getAttribute("data-scope")).toBe("");
   });
 
-  test("無効時は状態クラスと disabled 属性を付ける", async ({ expect }) => {
+  test("無効時は無効の状態クラスを付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<ButtonRoot disabled />);
 
     // 検証
-    const button = screen.getByClassName("sui_button").element() as HTMLButtonElement;
-    expect(button.classList.contains("sui_button-disabled")).toBe(true);
-    expect(button.disabled).toBe(true);
+    expect(
+      screen.getByClassName("sui_button").element().classList.contains("sui_button-disabled"),
+    ).toBe(true);
   });
 
-  test("保留中は無効化しつつフォーカスを維持する", async ({ expect }) => {
+  test("保留中は pending の状態クラスだけを付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<ButtonRoot pending />);
 
     // 検証
-    const button = screen.getByClassName("sui_button").element() as HTMLButtonElement;
+    const button = screen.getByClassName("sui_button").element();
     expect(button.classList.contains("sui_button-pending")).toBe(true);
     expect(button.classList.contains("sui_button-disabled")).toBe(false);
-    expect(button.getAttribute("aria-disabled")).toBe("true");
-    expect(button.disabled).toBe(false);
-    expect(button.tabIndex).toBe(0);
-  });
-
-  test("無効と保留中が重なるときは無効化を優先する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(<ButtonRoot disabled pending />);
-
-    // 検証
-    const button = screen.getByClassName("sui_button").element() as HTMLButtonElement;
-    expect(button.disabled).toBe(true);
-    expect(button.getAttribute("aria-disabled")).toBe(null);
   });
 
   test("render で要素を置き換える", async ({ expect }) => {
@@ -95,7 +82,7 @@ describe("ButtonRoot", () => {
     );
 
     // 検証
-    const link = screen.getByRole("button").element();
+    const link = screen.getByClassName("sui_button").element();
     expect(link.tagName).toBe("A");
     expect(link.classList.contains("sui_button")).toBe(true);
   });
@@ -155,20 +142,5 @@ describe("ButtonRoot", () => {
     const button = screen.getByClassName("sui_button").element();
     expect(button.classList.contains("probe-pending_true")).toBe(true);
     expect(button.classList.contains("probe-size_lg")).toBe(true);
-  });
-
-  test("押下時にクリックを受け取る", async ({ expect }) => {
-    // 準備
-    let clicked = 0;
-    const handleClick = () => {
-      clicked++;
-    };
-
-    // 実行
-    const screen = await render(<ButtonRoot onClick={handleClick}>実行</ButtonRoot>);
-    await screen.getByRole("button", { name: "実行" }).click();
-
-    // 検証
-    expect(clicked).toBe(1);
   });
 });

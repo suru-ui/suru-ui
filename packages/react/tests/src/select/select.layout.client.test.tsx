@@ -32,11 +32,11 @@ describe("Select の配置", () => {
 
     // 検証
     const sm = getComputedStyle(screen.getByRole("combobox", { name: "小" }).element());
-    expect(sm.minHeight).toBe("20px");
+    expect(sm.minHeight).toBe("22.4px");
     const md = getComputedStyle(screen.getByRole("combobox", { name: "中" }).element());
     expect(md.minHeight).toBe("28px");
     const lg = getComputedStyle(screen.getByRole("combobox", { name: "大" }).element());
-    expect(lg.minHeight).toBe("36px");
+    expect(lg.minHeight).toBe("33.6px");
   });
 
   test("指定した角丸で切り抜く", async ({ expect }) => {

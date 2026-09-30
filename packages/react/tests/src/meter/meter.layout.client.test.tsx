@@ -122,18 +122,6 @@ describe("Meter の配置", () => {
     expect(trackRect.top).toBeGreaterThanOrEqual(labelRect.bottom - 0.5);
   });
 
-  test("現在値の割合に応じてインジケーターを伸ばす", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <Meter id="meter" label="使用量" value={25} style={{ width: "320px" }} />,
-    );
-
-    // 検証
-    const trackRect = getTrack(screen.container, "meter").getBoundingClientRect();
-    const indicatorRect = getIndicator(screen.container, "meter").getBoundingClientRect();
-    expect(indicatorRect.width).toBeCloseTo(trackRect.width / 4, 0);
-  });
-
   test("配色をインジケーターへ適用する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

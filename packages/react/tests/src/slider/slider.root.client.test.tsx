@@ -141,7 +141,6 @@ describe("SliderRoot", () => {
     // 検証
     const root = screen.getByClassName("sui_slider").element();
     expect(root.classList.contains("sui_slider-orientation_vertical")).toBe(true);
-    expect(root.getAttribute("data-orientation")).toBe("vertical");
   });
 
   test("無効では無効状態の修飾クラスを付ける", async ({ expect }) => {

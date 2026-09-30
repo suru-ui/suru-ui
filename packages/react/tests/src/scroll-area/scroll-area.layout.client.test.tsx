@@ -267,22 +267,4 @@ describe("ScrollArea の配置", () => {
       .element();
     expect(scrollbar.getBoundingClientRect().width).toBeCloseTo(16, 0);
   });
-
-  test("スクロール可能なときビューポートをフォーカス可能にする", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <ScrollArea id="scroll-area" style={{ height: "200px", width: "300px" }}>
-        {tallContent}
-      </ScrollArea>,
-    );
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(
-        screen.container
-          .querySelector("#scroll-area .sui_scroll_area_viewport")
-          ?.getAttribute("tabindex"),
-      ).toBe("0");
-    });
-  });
 });

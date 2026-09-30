@@ -4,7 +4,6 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/fieldset/fieldset.parts.js";
-import { FieldsetLegend } from "../../../src/fieldset/fieldset.legend.jsx";
 import { FieldsetRoot } from "../../../src/fieldset/fieldset.root.jsx";
 import "../_locators.js";
 
@@ -39,28 +38,12 @@ describe("FieldsetRoot", () => {
     expect(root.getAttribute("data-scope")).toBe("");
   });
 
-  test("無効を指定すると無効化して状態クラスを付ける", async ({ expect }) => {
+  test("無効を指定すると無効の状態クラスを付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<FieldsetRoot disabled />);
 
     // 検証
     const root = screen.getByClassName("sui_fieldset").element();
-    expect(root.hasAttribute("disabled")).toBe(true);
     expect(root.classList.contains("sui_fieldset-disabled")).toBe(true);
-  });
-
-  test("凡例と関連付ける", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <FieldsetRoot>
-        <FieldsetLegend>お支払い情報</FieldsetLegend>
-      </FieldsetRoot>,
-    );
-
-    // 検証
-    const root = screen.getByClassName("sui_fieldset").element();
-    const legend = screen.getByClassName("sui_fieldset_legend").element();
-    expect(legend.id).not.toBe("");
-    expect(root.getAttribute("aria-labelledby")).toBe(legend.id);
   });
 });

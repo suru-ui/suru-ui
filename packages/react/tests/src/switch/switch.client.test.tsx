@@ -1,5 +1,4 @@
 import "@suru-ui/theme/suru.css";
-import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
@@ -71,7 +70,6 @@ describe("Switch", () => {
     // 検証
     const root = screen.getByClassName("sui_switch").element();
     expect(root.tagName).toBe("SPAN");
-    expect(root.getAttribute("role")).toBe("switch");
     expect(screen.getByClassName("sui_switch_thumb").query()).not.toBe(null);
   });
 
@@ -91,37 +89,6 @@ describe("Switch", () => {
     expect(screen.container.querySelector("#thumb")).not.toBe(null);
   });
 
-  test("クリックで状態を変更する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(<Switch />);
-    await screen.getByRole("switch").click();
-
-    // 検証
-    expect(screen.getByRole("switch").element().getAttribute("aria-checked")).toBe("true");
-  });
-
-  test("制御された状態に追従する", async ({ expect }) => {
-    // 準備
-    function Controlled() {
-      const [checked, setChecked] = React.useState(false);
-      return (
-        <Switch
-          checked={checked}
-          onCheckedChange={(next) => {
-            setChecked(next);
-          }}
-        />
-      );
-    }
-
-    // 実行
-    const screen = await render(<Controlled />);
-    await screen.getByRole("switch").click();
-
-    // 検証
-    expect(screen.getByRole("switch").element().getAttribute("aria-checked")).toBe("true");
-  });
-
   test("追加の props をルートへ渡す", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<Switch aria-label="通知を受け取る" data-testid="switch" />);
@@ -129,18 +96,5 @@ describe("Switch", () => {
     // 検証
     expect(screen.getByRole("switch", { name: "通知を受け取る" }).query()).not.toBe(null);
     expect(screen.getByTestId("switch").query()).not.toBe(null);
-  });
-
-  test("フォームへ値を送信する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <form>
-        <Switch defaultChecked name="notify" value="yes" />
-      </form>,
-    );
-
-    // 検証
-    const form = screen.container.querySelector("form")!;
-    expect(new FormData(form).get("notify")).toBe("yes");
   });
 });

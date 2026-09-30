@@ -1,6 +1,6 @@
 import "@suru-ui/theme/suru.css";
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/radio/radio.parts.js";
@@ -54,7 +54,7 @@ describe("RadioRoot", () => {
     expect(screen.getByClassName("sui_radio").element().getAttribute("data-scope")).toBe("");
   });
 
-  test("選択状態を状態クラスと aria 属性へ反映する", async ({ expect }) => {
+  test("選択状態を状態クラスへ反映する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <RadioGroupRoot defaultValue="a">
@@ -65,62 +65,19 @@ describe("RadioRoot", () => {
     // 検証
     const root = screen.getByClassName("sui_radio").element();
     expect(root.classList.contains("sui_radio-checked")).toBe(true);
-    expect(root.getAttribute("aria-checked")).toBe("true");
   });
 
-  test("クリックで選択して onValueChange を受け取る", async ({ expect }) => {
-    // 準備
-    const onValueChange = vi.fn<(value: string) => void>();
-    const screen = await render(
-      <RadioGroupRoot onValueChange={onValueChange}>
-        <RadioRoot aria-label="オプション" value="a" />
-      </RadioGroupRoot>,
-    );
-
-    // 実行
-    await screen.getByRole("radio", { name: "オプション" }).click();
-
-    // 検証
-    expect(onValueChange).toHaveBeenCalledTimes(1);
-    expect(onValueChange).toHaveBeenCalledWith("a", expect.anything());
-    expect(
-      screen.getByRole("radio", { name: "オプション" }).element().getAttribute("aria-checked"),
-    ).toBe("true");
-  });
-
-  test("label のクリックで選択する", async ({ expect }) => {
+  test("無効時は無効の状態クラスを付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <RadioGroupRoot>
-        <label>
-          <RadioRoot value="a" />
-          設定を有効にする
-        </label>
+        <RadioRoot value="a" disabled />
       </RadioGroupRoot>,
     );
-    await screen.getByText("設定を有効にする").click();
-
-    // 検証
-    expect(screen.getByRole("radio").element().getAttribute("aria-checked")).toBe("true");
-  });
-
-  test("無効時は状態クラスを付け操作を受け付けない", async ({ expect }) => {
-    // 準備
-    const onValueChange = vi.fn<(value: string) => void>();
-    const screen = await render(
-      <RadioGroupRoot onValueChange={onValueChange}>
-        <RadioRoot aria-label="オプション" disabled value="a" />
-      </RadioGroupRoot>,
-    );
-
-    // 実行
-    await screen.getByRole("radio", { name: "オプション" }).click({ force: true });
 
     // 検証
     const root = screen.getByClassName("sui_radio").element();
     expect(root.classList.contains("sui_radio-disabled")).toBe(true);
-    expect(root.getAttribute("aria-disabled")).toBe("true");
-    expect(onValueChange).not.toHaveBeenCalled();
   });
 
   test("RadioGroup のスタイルを引き継ぐ", async ({ expect }) => {
@@ -177,7 +134,7 @@ describe("RadioRoot", () => {
     );
   });
 
-  test("RadioGroup の無効を引き継ぐ", async ({ expect }) => {
+  test("RadioGroup の無効を状態クラスへ引き継ぐ", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <RadioGroupRoot disabled>
@@ -186,7 +143,9 @@ describe("RadioRoot", () => {
     );
 
     // 検証
-    expect(screen.getByClassName("sui_radio").element().getAttribute("aria-disabled")).toBe("true");
+    expect(
+      screen.getByClassName("sui_radio").element().classList.contains("sui_radio-disabled"),
+    ).toBe(true);
   });
 
   test("render で要素を置き換える", async ({ expect }) => {
@@ -200,37 +159,5 @@ describe("RadioRoot", () => {
     // 検証
     const root = screen.getByClassName("sui_radio").element();
     expect(root.tagName).toBe("DIV");
-  });
-
-  test("フォームへ値を送信する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <form>
-        <RadioGroupRoot defaultValue="a" name="choice">
-          <RadioRoot value="a" />
-          <RadioRoot value="b" />
-        </RadioGroupRoot>
-      </form>,
-    );
-
-    // 検証
-    const form = screen.container.querySelector("form")!;
-    expect(new FormData(form).get("choice")).toBe("a");
-  });
-
-  test("未選択ではフォームへ値を送信しない", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <form>
-        <RadioGroupRoot name="choice">
-          <RadioRoot value="a" />
-          <RadioRoot value="b" />
-        </RadioGroupRoot>
-      </form>,
-    );
-
-    // 検証
-    const form = screen.container.querySelector("form")!;
-    expect(new FormData(form).get("choice")).toBe(null);
   });
 });

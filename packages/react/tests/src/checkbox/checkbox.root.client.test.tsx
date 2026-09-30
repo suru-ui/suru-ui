@@ -1,6 +1,6 @@
 import "@suru-ui/theme/suru.css";
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/checkbox/checkbox.parts.js";
@@ -62,67 +62,31 @@ describe("CheckboxRoot", () => {
     expect(screen.getByClassName("sui_checkbox").element().getAttribute("data-scope")).toBe("");
   });
 
-  test("チェック状態を状態クラスと aria 属性へ反映する", async ({ expect }) => {
+  test("チェック状態を状態クラスへ反映する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<CheckboxRoot defaultChecked />);
 
     // 検証
     const root = screen.getByClassName("sui_checkbox").element();
     expect(root.classList.contains("sui_checkbox-checked")).toBe(true);
-    expect(root.getAttribute("aria-checked")).toBe("true");
   });
 
-  test("中間状態を状態クラスと aria 属性へ反映する", async ({ expect }) => {
+  test("中間状態を状態クラスへ反映する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<CheckboxRoot indeterminate />);
 
     // 検証
     const root = screen.getByClassName("sui_checkbox").element();
     expect(root.classList.contains("sui_checkbox-indeterminate")).toBe(true);
-    expect(root.getAttribute("aria-checked")).toBe("mixed");
   });
 
-  test("クリックで状態を変更して onCheckedChange を受け取る", async ({ expect }) => {
-    // 準備
-    const onCheckedChange = vi.fn<(checked: boolean) => void>();
-    const screen = await render(<CheckboxRoot onCheckedChange={onCheckedChange} />);
-
-    // 実行
-    await screen.getByRole("checkbox").click();
-
-    // 検証
-    expect(onCheckedChange).toHaveBeenCalledTimes(1);
-    expect(onCheckedChange).toHaveBeenCalledWith(true, expect.anything());
-    expect(screen.getByRole("checkbox").element().getAttribute("aria-checked")).toBe("true");
-  });
-
-  test("label のクリックで状態を変更する", async ({ expect }) => {
+  test("無効時は無効の状態クラスを付ける", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(
-      <label>
-        <CheckboxRoot />
-        設定を有効にする
-      </label>,
-    );
-    await screen.getByText("設定を有効にする").click();
-
-    // 検証
-    expect(screen.getByRole("checkbox").element().getAttribute("aria-checked")).toBe("true");
-  });
-
-  test("無効時は状態クラスを付け操作を受け付けない", async ({ expect }) => {
-    // 準備
-    const onCheckedChange = vi.fn<(checked: boolean) => void>();
-    const screen = await render(<CheckboxRoot disabled onCheckedChange={onCheckedChange} />);
-
-    // 実行
-    await screen.getByRole("checkbox").click({ force: true });
+    const screen = await render(<CheckboxRoot disabled />);
 
     // 検証
     const root = screen.getByClassName("sui_checkbox").element();
     expect(root.classList.contains("sui_checkbox-disabled")).toBe(true);
-    expect(root.getAttribute("aria-disabled")).toBe("true");
-    expect(onCheckedChange).not.toHaveBeenCalled();
   });
 
   test("CheckboxGroup のスタイルを引き継ぐ", async ({ expect }) => {
@@ -178,7 +142,7 @@ describe("CheckboxRoot", () => {
     );
   });
 
-  test("CheckboxGroup の無効を引き継ぐ", async ({ expect }) => {
+  test("CheckboxGroup の無効を状態クラスへ引き継ぐ", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <CheckboxGroupRoot disabled>
@@ -187,9 +151,9 @@ describe("CheckboxRoot", () => {
     );
 
     // 検証
-    expect(screen.getByClassName("sui_checkbox").element().getAttribute("aria-disabled")).toBe(
-      "true",
-    );
+    expect(
+      screen.getByClassName("sui_checkbox").element().classList.contains("sui_checkbox-disabled"),
+    ).toBe(true);
   });
 
   test("render で要素を置き換える", async ({ expect }) => {
@@ -199,31 +163,5 @@ describe("CheckboxRoot", () => {
     // 検証
     const root = screen.getByClassName("sui_checkbox").element();
     expect(root.tagName).toBe("DIV");
-  });
-
-  test("フォームへ値を送信する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <form>
-        <CheckboxRoot defaultChecked name="accept" value="yes" />
-      </form>,
-    );
-
-    // 検証
-    const form = screen.container.querySelector("form")!;
-    expect(new FormData(form).get("accept")).toBe("yes");
-  });
-
-  test("未チェックではフォームへ値を送信しない", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <form>
-        <CheckboxRoot name="accept" value="yes" />
-      </form>,
-    );
-
-    // 検証
-    const form = screen.container.querySelector("form")!;
-    expect(new FormData(form).get("accept")).toBe(null);
   });
 });

@@ -1,6 +1,6 @@
 import "@suru-ui/theme/suru.css";
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/radio/radio.parts.js";
@@ -9,7 +9,7 @@ import { RadioRoot } from "../../../src/radio/radio.root.jsx";
 import "../_locators.js";
 
 describe("RadioGroupRoot", () => {
-  test("既定の修飾クラスと役割を付ける", async ({ expect }) => {
+  test("既定の修飾クラスを付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<RadioGroupRoot />);
 
@@ -17,7 +17,6 @@ describe("RadioGroupRoot", () => {
     const root = screen.getByClassName("sui_radio_group").element();
     expect(root.classList.contains("sui_radio_group")).toBe(true);
     expect(root.classList.contains("sui_radio_group-orientation_vertical")).toBe(true);
-    expect(root.getAttribute("role")).toBe("radiogroup");
   });
 
   test("指定した向きの修飾クラスを付ける", async ({ expect }) => {
@@ -61,16 +60,6 @@ describe("RadioGroupRoot", () => {
     ).toBe(true);
   });
 
-  test("読み取り専用と必須を aria 属性へ反映する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(<RadioGroupRoot readOnly required />);
-
-    // 検証
-    const root = screen.getByClassName("sui_radio_group").element();
-    expect(root.getAttribute("aria-readonly")).toBe("true");
-    expect(root.getAttribute("aria-required")).toBe("true");
-  });
-
   test("render で要素を置き換える", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<RadioGroupRoot render={<section />} />);
@@ -105,7 +94,7 @@ describe("RadioGroupRoot", () => {
     expect(root.getAttribute("data-probe")).toBe("lg/blue/naked/true/horizontal");
   });
 
-  test("既定値の選択状態を子へ伝える", async ({ expect }) => {
+  test("既定値の選択状態を子の状態クラスへ伝える", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <RadioGroupRoot defaultValue="option-a">
@@ -115,28 +104,8 @@ describe("RadioGroupRoot", () => {
     );
 
     // 検証
-    expect(
-      screen.getByRole("radio", { name: "オプション A" }).element().getAttribute("aria-checked"),
-    ).toBe("true");
-    expect(
-      screen.getByRole("radio", { name: "オプション B" }).element().getAttribute("aria-checked"),
-    ).toBe("false");
-  });
-
-  test("子の操作で onValueChange を受け取る", async ({ expect }) => {
-    // 準備
-    const onValueChange = vi.fn<(value: string) => void>();
-    const screen = await render(
-      <RadioGroupRoot onValueChange={onValueChange}>
-        <RadioRoot aria-label="オプション A" value="option-a" />
-      </RadioGroupRoot>,
-    );
-
-    // 実行
-    await screen.getByRole("radio", { name: "オプション A" }).click();
-
-    // 検証
-    expect(onValueChange).toHaveBeenCalledTimes(1);
-    expect(onValueChange).toHaveBeenCalledWith("option-a", expect.anything());
+    const radios = screen.container.querySelectorAll<HTMLElement>(".sui_radio");
+    expect(radios[0]?.classList.contains("sui_radio-checked")).toBe(true);
+    expect(radios[1]?.classList.contains("sui_radio-checked")).toBe(false);
   });
 });

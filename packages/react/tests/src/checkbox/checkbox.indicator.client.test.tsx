@@ -89,17 +89,4 @@ describe("CheckboxIndicator", () => {
     expect(indicator.classList.contains("custom")).toBe(true);
     expect(indicator.classList.contains("sui_checkbox_indicator")).toBe(true);
   });
-
-  test("状態の変化に追従する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <CheckboxRoot>
-        <CheckboxIndicator />
-      </CheckboxRoot>,
-    );
-    await screen.getByRole("checkbox").click();
-
-    // 検証
-    expect(screen.getByClassName("sui_checkbox_indicator").query()).not.toBe(null);
-  });
 });

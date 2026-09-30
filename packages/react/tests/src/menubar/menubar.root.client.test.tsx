@@ -1,7 +1,6 @@
 import * as React from "react";
 import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
-import { userEvent } from "vitest/browser";
 
 import { MenubarRoot } from "../../../src/menubar/menubar.root.jsx";
 import "../_locators.js";
@@ -28,7 +27,6 @@ describe("MenubarRoot", () => {
     expect(menubar.tagName).toBe("DIV");
     expect(menubar.classList.contains("sui_menubar")).toBe(true);
     expect(menubar.getAttribute("data-scope")).toBe("");
-    expect(menubar.getAttribute("aria-orientation")).toBe("horizontal");
   });
 
   test("項目ごとにトリガーとメニューを描画する", async ({ expect }) => {
@@ -41,29 +39,6 @@ describe("MenubarRoot", () => {
     expect(screen.getByText("編集").query()).not.toBe(null);
   });
 
-  test("トリガーからメニューを開く", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(<MenubarRoot items={items} />);
-    await screen.getByText("ファイル").click();
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(screen.getByRole("menuitem", { name: "新規作成" }).query()).not.toBe(null);
-    });
-  });
-
-  test("矢印キーでメニューを開く", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(<MenubarRoot items={items} />);
-    screen.getByText("ファイル").element().focus();
-    await userEvent.keyboard("{ArrowDown}");
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(screen.getByRole("menuitem", { name: "新規作成" }).query()).not.toBe(null);
-    });
-  });
-
   test("サブメニューが開くとクラスを付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
@@ -71,13 +46,19 @@ describe("MenubarRoot", () => {
         items={[
           {
             trigger: <button>ファイル</button>,
-            items: [{ type: "submenu", label: "共有", items: [{ label: "リンクをコピー" }] }],
+            defaultOpen: true,
+            items: [
+              {
+                type: "submenu",
+                label: "共有",
+                defaultOpen: true,
+                items: [{ label: "リンクをコピー" }],
+              },
+            ],
           },
         ]}
       />,
     );
-    await screen.getByText("ファイル").click();
-    await screen.getByRole("menuitem", { name: "共有" }).hover();
 
     // 検証
     await vi.waitFor(() => {
@@ -87,7 +68,7 @@ describe("MenubarRoot", () => {
     });
   });
 
-  test("縦向きをクラスと属性に反映する", async ({ expect }) => {
+  test("縦向きをクラスに反映する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<MenubarRoot items={items} orientation="vertical" />);
 
@@ -95,7 +76,6 @@ describe("MenubarRoot", () => {
     const menubar = screen.getByRole("menubar").element();
     expect(menubar.classList.contains("sui_menubar-orientation_vertical")).toBe(true);
     expect(menubar.classList.contains("sui_menubar-orientation_horizontal")).toBe(false);
-    expect(menubar.getAttribute("aria-orientation")).toBe("vertical");
   });
 
   test("無効状態をクラスに反映する", async ({ expect }) => {

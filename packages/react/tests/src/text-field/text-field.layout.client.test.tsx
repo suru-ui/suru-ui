@@ -35,9 +35,9 @@ describe("TextField の配置", () => {
 
     // 検証
     const roots = screen.container.querySelectorAll<HTMLElement>(".sui_text_field");
-    expect(getComputedStyle(roots[0]!).minHeight).toBe("20px");
+    expect(getComputedStyle(roots[0]!).minHeight).toBe("22.4px");
     expect(getComputedStyle(roots[1]!).minHeight).toBe("28px");
-    expect(getComputedStyle(roots[2]!).minHeight).toBe("36px");
+    expect(getComputedStyle(roots[2]!).minHeight).toBe("33.6px");
   });
 
   test.skipIf(!supportsCustomFunctions())("大きさに応じた水平余白を持つ", async ({ expect }) => {

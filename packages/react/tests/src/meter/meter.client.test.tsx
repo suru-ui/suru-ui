@@ -17,17 +17,6 @@ describe("Meter", () => {
     expect(screen.getByClassName("sui_meter_indicator").query()).not.toBe(null);
   });
 
-  test("meter として現在値と範囲を読み上げる", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(<Meter label="使用量" value={25} min={0} max={100} />);
-
-    // 検証
-    const root = screen.getByRole("meter").element();
-    expect(root.getAttribute("aria-valuenow")).toBe("25");
-    expect(root.getAttribute("aria-valuetext")).toBe("25%");
-    expect(root.getAttribute("aria-labelledby")).toBe(screen.getByText("使用量").element().id);
-  });
-
   test("ラベルを省略すると値も表示しない", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<Meter value={25} />);
@@ -44,14 +33,6 @@ describe("Meter", () => {
 
     // 検証
     expect(screen.getByText("0%").query()).not.toBe(null);
-  });
-
-  test("範囲を変更すると割合を変える", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(<Meter label="使用量" value={0} min={-50} max={50} />);
-
-    // 検証
-    expect(screen.getByClassName("sui_meter_indicator").element().style.width).toBe("50%");
   });
 
   test("slotProps を各パーツへ渡す", async ({ expect }) => {

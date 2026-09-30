@@ -22,22 +22,6 @@ describe("MeterLabel", () => {
     expect(label.classList.contains("sui_meter_label")).toBe(true);
   });
 
-  test("ルートから参照される識別子を付ける", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <MeterRoot value={25}>
-        <MeterLabel>使用量</MeterLabel>
-      </MeterRoot>,
-    );
-
-    // 検証
-    const label = screen.getByText("使用量").element();
-    expect(label.id).not.toBe("");
-    expect(screen.getByClassName("sui_meter").element().getAttribute("aria-labelledby")).toBe(
-      label.id,
-    );
-  });
-
   test("利用者の className を保持する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

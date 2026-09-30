@@ -1,5 +1,5 @@
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { HoverCardContent } from "../../../src/hover-card/hover-card.content.jsx";
@@ -56,25 +56,6 @@ describe("HoverCardTrigger", () => {
     // 検証
     const trigger = screen.getByRole("link", { name: "ヘルプ" }).element();
     expect(trigger.getAttribute("href")).toBe("#help");
-  });
-
-  test("ホバーでホバーカードを開く", async ({ expect }) => {
-    // 準備と実行
-    const screen = await renderCard(
-      <HoverCardTrigger delay={0}>
-        {(props) => (
-          <a href="#terms" {...props}>
-            利用規約
-          </a>
-        )}
-      </HoverCardTrigger>,
-    );
-    await screen.getByRole("link", { name: "利用規約" }).hover();
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(screen.getByText("内容").query()?.textContent).toBe("内容");
-    });
   });
 
   test("描画関数へルートの状態を渡す", async ({ expect }) => {

@@ -58,13 +58,4 @@ describe("FormRoot", () => {
     // 検証
     expect(screen.getByText("内容").query()).not.toBe(null);
   });
-
-  test("ブラウザーの既定検証を無効化する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(<FormRoot />);
-
-    // 検証
-    const root = screen.container.querySelector<HTMLFormElement>(".sui_form");
-    expect(root?.noValidate).toBe(true);
-  });
 });

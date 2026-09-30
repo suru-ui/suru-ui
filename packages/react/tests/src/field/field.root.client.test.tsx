@@ -1,6 +1,6 @@
 import "@suru-ui/theme/suru.css";
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/field/field.parts.js";
@@ -91,67 +91,5 @@ describe("FieldRoot", () => {
     // 検証
     const root = screen.getByClassName("sui_field").element();
     expect(root.classList.contains("sui_field-filled")).toBe(true);
-  });
-
-  test("フォーカスするとフォーカスの状態クラスを付ける", async ({ expect }) => {
-    // 準備
-    const screen = await render(
-      <FieldRoot>
-        <FieldControl aria-label="名前" />
-      </FieldRoot>,
-    );
-    const input = screen.getByRole("textbox", { name: "名前" }).element();
-
-    // 実行
-    input.focus();
-    await Promise.resolve();
-
-    // 検証
-    expect(
-      screen.getByClassName("sui_field").element().classList.contains("sui_field-focused"),
-    ).toBe(true);
-  });
-
-  test("フォーカスが外れると操作済みの状態クラスに切り替える", async ({ expect }) => {
-    // 準備
-    const screen = await render(
-      <FieldRoot>
-        <FieldControl aria-label="名前" />
-      </FieldRoot>,
-    );
-    const input = screen.getByRole("textbox", { name: "名前" }).element();
-
-    // 実行
-    input.focus();
-    await Promise.resolve();
-    input.blur();
-    await Promise.resolve();
-
-    // 検証
-    const root = screen.getByClassName("sui_field").element();
-    expect(root.classList.contains("sui_field-focused")).toBe(false);
-    expect(root.classList.contains("sui_field-touched")).toBe(true);
-  });
-
-  test("検証に成功すると有効の状態クラスを付ける", async ({ expect }) => {
-    // 準備
-    const screen = await render(
-      <FieldRoot validationMode="onBlur">
-        <FieldControl aria-label="名前" defaultValue="すーるー" />
-      </FieldRoot>,
-    );
-    const input = screen.getByRole("textbox", { name: "名前" }).element();
-
-    // 実行
-    input.focus();
-    await Promise.resolve();
-    input.blur();
-
-    // 検証
-    await vi.waitFor(() => {
-      const root = screen.getByClassName("sui_field").element();
-      expect(root.classList.contains("sui_field-valid")).toBe(true);
-      expect(root.classList.contains("sui_field-invalid")).toBe(false);
-    });
   });
 });

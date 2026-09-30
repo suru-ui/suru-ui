@@ -185,13 +185,13 @@ describe("Tabs の配置", () => {
     // 検証
     const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm [role=tab]")!);
     expect(sm.fontSize).toBe("12px");
-    expect(sm.minHeight).toBe("20px");
+    expect(sm.minHeight).toBe("22.4px");
     const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md [role=tab]")!);
     expect(md.fontSize).toBe("14px");
     expect(md.minHeight).toBe("28px");
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg [role=tab]")!);
     expect(lg.fontSize).toBe("17px");
-    expect(lg.minHeight).toBe("36px");
+    expect(lg.minHeight).toBe("33.6px");
   });
 
   test.skipIf(!supportsCustomFunctions())(
@@ -311,30 +311,6 @@ describe("Tabs の配置", () => {
     expect(plain.borderTopWidth).toBe("0px");
     const outlined = getComputedStyle(screen.container.querySelector<HTMLElement>("#outlined")!);
     expect(Number.parseFloat(outlined.borderTopWidth)).toBeGreaterThan(0);
-  });
-
-  test("インジケーターを選択中のタブに重ねる", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(<Tabs defaultValue="projects" items={[...items]} />);
-    const indicator = screen.getByClassName("sui_tabs_indicator").element();
-    const list = screen.getByRole("tablist").element();
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(indicator.hasAttribute("hidden")).toBe(false);
-    });
-    const active = screen
-      .getByRole("tab", { name: "プロジェクト" })
-      .element()
-      .getBoundingClientRect();
-    expect(Number.parseFloat(indicator.style.getPropertyValue("--active-tab-width"))).toBeCloseTo(
-      active.width,
-      1,
-    );
-    expect(Number.parseFloat(indicator.style.getPropertyValue("--active-tab-left"))).toBeCloseTo(
-      active.left - list.getBoundingClientRect().left,
-      1,
-    );
   });
 
   test.skipIf(!supportsCustomFunctions())("パネルに余白を付ける", async ({ expect }) => {

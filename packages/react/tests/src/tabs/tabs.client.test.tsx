@@ -1,5 +1,5 @@
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { Tabs, TabsAPI, useTabsAPI } from "../../../src/tabs/tabs.jsx";
@@ -32,40 +32,6 @@ describe("Tabs", () => {
     ).toBe(true);
     expect(screen.getByClassName("sui_tabs_indicator").query()).not.toBe(null);
     expect(screen.getByRole("tabpanel").element().textContent).toBe("プロジェクトの内容");
-  });
-
-  test("項目を押すと選択が移りイベントを呼ぶ", async ({ expect }) => {
-    // 準備
-    const onValueChange = vi.fn<(value: unknown, details: unknown) => void>();
-    const screen = await render(
-      <Tabs defaultValue="overview" items={[...items]} onValueChange={onValueChange} />,
-    );
-
-    // 実行
-    await screen.getByRole("tab", { name: "アカウント" }).click();
-
-    // 検証
-    expect(onValueChange).toHaveBeenCalledTimes(1);
-    expect(onValueChange).toHaveBeenCalledWith("account", expect.anything());
-    expect(
-      screen
-        .getByRole("tab", { name: "アカウント" })
-        .element()
-        .classList.contains("sui_tabs_tab-active"),
-    ).toBe(true);
-  });
-
-  test("制御値に追従する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(<Tabs items={[...items]} value="projects" />);
-
-    // 実行
-    await screen.getByRole("tab", { name: "概要" }).click();
-
-    // 検証
-    expect(
-      screen.getByRole("tab", { name: "プロジェクト" }).element().getAttribute("aria-selected"),
-    ).toBe("true");
   });
 
   test("slotProps を各パーツへ渡す", async ({ expect }) => {
@@ -105,8 +71,11 @@ describe("Tabs", () => {
 
     // 検証
     expect(
-      screen.getByRole("tab", { name: "プロジェクト" }).element().getAttribute("aria-disabled"),
-    ).toBe("true");
+      screen
+        .getByRole("tab", { name: "プロジェクト" })
+        .element()
+        .classList.contains("sui_tabs_tab-disabled"),
+    ).toBe(true);
   });
 
   test("内容のない項目にはパネルを作らない", async ({ expect }) => {

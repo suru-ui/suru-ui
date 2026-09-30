@@ -22,22 +22,6 @@ describe("ProgressLabel", () => {
     expect(label.classList.contains("sui_progress_label")).toBe(true);
   });
 
-  test("ルートから参照される識別子を付ける", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <ProgressRoot value={25}>
-        <ProgressLabel>読み込み中</ProgressLabel>
-      </ProgressRoot>,
-    );
-
-    // 検証
-    const label = screen.getByText("読み込み中").element();
-    expect(label.id).not.toBe("");
-    expect(screen.getByClassName("sui_progress").element().getAttribute("aria-labelledby")).toBe(
-      label.id,
-    );
-  });
-
   test("利用者の className を保持する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

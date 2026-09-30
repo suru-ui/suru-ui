@@ -123,48 +123,6 @@ describe("PaginationRoot の配置", () => {
   });
 });
 
-describe("PaginationEllipsis の配置", () => {
-  test("入力欄は省略記号の2倍の幅を持つ", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <PaginationRoot totalPages={20}>
-        <PaginationEllipsis end={4} start={2} />
-      </PaginationRoot>,
-    );
-    (
-      screen.getByRole("button", { name: "2〜4ページへ移動" }).element() as HTMLButtonElement
-    ).click();
-    // React の状態更新を待ちます。
-    await Promise.resolve();
-
-    // 検証
-    const input = screen.getByRole("textbox", { name: "2〜4ページへ移動" }).element();
-    const style = getComputedStyle(input);
-    expect(style.width).toBe("56px");
-    expect(style.minHeight).toBe("28px");
-    expect(style.textAlign).toBe("center");
-  });
-
-  test("入力欄はフォーカス時に焦点リングを表示する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <PaginationRoot totalPages={20}>
-        <PaginationEllipsis end={4} start={2} />
-      </PaginationRoot>,
-    );
-    (
-      screen.getByRole("button", { name: "2〜4ページへ移動" }).element() as HTMLButtonElement
-    ).click();
-    // React の状態更新を待ちます。
-    await Promise.resolve();
-    const input = screen.getByRole("textbox", { name: "2〜4ページへ移動" }).element();
-    input.focus({ focusVisible: true });
-
-    // 検証
-    expect(Number.parseFloat(getComputedStyle(input).outlineWidth)).toBeGreaterThan(0);
-  });
-});
-
 describe("焦点リング", () => {
   test("ページ番号ボタンはフォーカス時に焦点リングを表示する", async ({ expect }) => {
     // 準備

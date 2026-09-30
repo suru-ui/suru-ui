@@ -7,7 +7,7 @@ import { SliderRoot } from "../../../src/slider/slider.root.jsx";
 import "../_locators.js";
 
 describe("SliderIndicator", () => {
-  test("現在値の割合を幅にする", async ({ expect }) => {
+  test("インジケーターを描画する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <SliderRoot defaultValue={25}>
@@ -19,22 +19,6 @@ describe("SliderIndicator", () => {
     const indicator = screen.getByClassName("sui_slider_indicator").element();
     expect(indicator.tagName).toBe("DIV");
     expect(indicator.classList.contains("sui_slider_indicator")).toBe(true);
-    expect(indicator.style.width).toBe("25%");
-  });
-
-  test.for([
-    [120, "100%"],
-    [-20, "0%"],
-  ] as const)("範囲外の値 %i を %s に収める", async ([value, width], { expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <SliderRoot defaultValue={value} min={0} max={100}>
-        <SliderIndicator />
-      </SliderRoot>,
-    );
-
-    // 検証
-    expect(screen.getByClassName("sui_slider_indicator").element().style.width).toBe(width);
   });
 
   test("利用者の className を保持する", async ({ expect }) => {

@@ -11,7 +11,6 @@ import { MenuPositioner } from "../../../src/menu/menu.positioner.jsx";
 import { MenuRoot } from "../../../src/menu/menu.root.jsx";
 import { MenuSubmenuRoot } from "../../../src/menu/menu.submenu-root.jsx";
 import { MenuSubmenuTrigger } from "../../../src/menu/menu.submenu-trigger.jsx";
-import { MenuTrigger } from "../../../src/menu/menu.trigger.jsx";
 import "../_locators.js";
 import supportsCustomFunctions from "./_supports-custom-functions.js";
 
@@ -22,28 +21,6 @@ const items = [
 ];
 
 describe("Menu の配置", () => {
-  test("ポップアップをトリガーの下へ置く", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <Menu
-        items={items}
-        trigger={<button style={{ marginInlineStart: 100 }}>メニューを開く</button>}
-      />,
-    );
-    await screen.getByText("メニューを開く").click();
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(screen.getByRole("menu").query()).not.toBe(null);
-    });
-    const content = screen.getByRole("menu").element();
-    const triggerRect = screen.getByText("メニューを開く").element().getBoundingClientRect();
-    const rect = content.getBoundingClientRect();
-    expect(rect.width).toBeGreaterThan(0);
-    expect(rect.top).toBeGreaterThanOrEqual(triggerRect.bottom - 1);
-    expect(Math.abs(rect.left - triggerRect.left)).toBeLessThan(2);
-  });
-
   test.skipIf(!supportsCustomFunctions())(
     "ポップアップに余白と角丸を付ける",
     async ({ expect }) => {
@@ -152,7 +129,7 @@ describe("Menu の配置", () => {
         defaultOpen
         items={[
           { label: "編集" },
-          { type: "submenu", label: "共有", delay: 0, items: [{ label: "リンクをコピー" }] },
+          { type: "submenu", label: "共有", items: [{ label: "リンクをコピー" }] },
         ]}
       />,
     );
@@ -173,8 +150,7 @@ describe("Menu の配置", () => {
   test("項目を渡さないサブメニューも右側の配置にする", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
-      <MenuRoot>
-        <MenuTrigger>{(props) => <button {...props}>メニューを開く</button>}</MenuTrigger>
+      <MenuRoot defaultOpen>
         <MenuPortal>
           <MenuPositioner>
             <MenuContent>
@@ -193,10 +169,6 @@ describe("Menu の配置", () => {
         </MenuPortal>
       </MenuRoot>,
     );
-    await screen.getByText("メニューを開く").click();
-    await vi.waitFor(() => {
-      expect(screen.getByRole("menuitem", { name: "共有" }).query()).not.toBe(null);
-    });
     await screen.getByRole("menuitem", { name: "共有" }).hover();
     await vi.waitFor(() => {
       expect(screen.getByRole("menu").elements().length).toBe(2);

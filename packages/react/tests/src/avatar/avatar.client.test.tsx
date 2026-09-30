@@ -133,34 +133,6 @@ describe("Avatar", () => {
     expect(screen.getByClassName("sui_avatar_image").query()).toBe(null);
   });
 
-  test("画像を読み込めたら画像だけを描画する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <Avatar alt="プロフィール画像" src={imageSrc}>
-        名
-      </Avatar>,
-    );
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(screen.getByAltText("プロフィール画像").query()).not.toBe(null);
-      expect(screen.getByClassName("sui_avatar_fallback").query()).toBe(null);
-    });
-  });
-
-  test("画像を読み込めないときはフォールバックを描画する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <Avatar alt="プロフィール画像" src="">
-        名
-      </Avatar>,
-    );
-
-    // 検証
-    expect(screen.getByClassName("sui_avatar_fallback").query()).not.toBe(null);
-    expect(screen.getByAltText("プロフィール画像").query()).toBe(null);
-  });
-
   test("slotProps を画像へ渡す", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

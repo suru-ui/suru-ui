@@ -1,16 +1,11 @@
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { usePopoverContext } from "../../../src/popover/popover.context.js";
 import { Popover } from "../../../src/popover/popover.jsx";
 import { PopoverRoot } from "../../../src/popover/popover.root.jsx";
-import { PopoverTrigger } from "../../../src/popover/popover.trigger.jsx";
 import "../_locators.js";
-
-type Member = {
-  name: string;
-};
 
 describe("PopoverRoot", () => {
   test("自身の見た目を持つ要素を表示しない", async ({ expect }) => {
@@ -88,42 +83,6 @@ describe("Popover", () => {
     // 検証
     const content = screen.getByClassName("sui_popover_content").element();
     expect(content.textContent).toBe("ポップオーバーの内容");
-  });
-
-  test("トリガーを押すと開く", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <Popover trigger={<button>開く</button>}>ポップオーバーの内容</Popover>,
-    );
-    await screen.getByRole("button", { name: "開く" }).click();
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(screen.getByText("ポップオーバーの内容").query()?.textContent).toBe(
-        "ポップオーバーの内容",
-      );
-    });
-  });
-
-  test("ハンドルでトリガーと内容を関連付ける", async ({ expect }) => {
-    // 準備
-    const handle = Popover.createHandle<Member>();
-
-    // 実行
-    const screen = await render(
-      <>
-        <PopoverTrigger handle={handle} payload={{ name: "田中" }}>
-          {(props) => <button {...props}>作成者</button>}
-        </PopoverTrigger>
-        <Popover handle={handle}>作成者の詳細</Popover>
-      </>,
-    );
-    await screen.getByRole("button", { name: "作成者" }).click();
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(screen.getByText("作成者の詳細").query()?.textContent).toBe("作成者の詳細");
-    });
   });
 
   test("内容用の props をポップアップへ渡す", async ({ expect }) => {

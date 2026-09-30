@@ -24,7 +24,9 @@ describe("ComboboxItem", () => {
     const screen = await render(<Combobox items={fruits} defaultOpen defaultValue="りんご" />);
 
     // 検証
-    expect(screen.getByRole("option", { name: "りんご", selected: true }).query()).not.toBe(null);
-    expect(screen.getByRole("option", { name: "ばなな", selected: false }).query()).not.toBe(null);
+    const selected = screen.getByRole("option", { name: "りんご" }).element();
+    expect(selected.classList.contains("sui_combobox_item-selected")).toBe(true);
+    const unselected = screen.getByRole("option", { name: "ばなな" }).element();
+    expect(unselected.classList.contains("sui_combobox_item-selected")).toBe(false);
   });
 });

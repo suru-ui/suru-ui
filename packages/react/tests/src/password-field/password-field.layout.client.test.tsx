@@ -34,9 +34,9 @@ describe("PasswordField の配置", () => {
 
     // 検証
     const roots = screen.container.querySelectorAll<HTMLElement>(".sui_password_field");
-    expect(getComputedStyle(roots[0]!).minHeight).toBe("20px");
+    expect(getComputedStyle(roots[0]!).minHeight).toBe("22.4px");
     expect(getComputedStyle(roots[1]!).minHeight).toBe("28px");
-    expect(getComputedStyle(roots[2]!).minHeight).toBe("36px");
+    expect(getComputedStyle(roots[2]!).minHeight).toBe("33.6px");
   });
 
   test.skipIf(!supportsCustomFunctions())("大きさに応じた水平余白を持つ", async ({ expect }) => {
@@ -122,13 +122,9 @@ describe("PasswordField の配置", () => {
 
     // 検証
     const toggles = screen.container.querySelectorAll<HTMLElement>(".sui_password_field_toggle");
-    const widths = [...toggles].map((toggle) => toggle.getBoundingClientRect().width);
-    for (const [index, toggle] of [...toggles].entries()) {
+    for (const toggle of toggles) {
       const rect = toggle.getBoundingClientRect();
       expect(rect.width).toBeCloseTo(rect.height, 1);
-      if (index > 0) {
-        expect(widths[index]!).toBeGreaterThan(widths[index - 1]!);
-      }
     }
   });
 

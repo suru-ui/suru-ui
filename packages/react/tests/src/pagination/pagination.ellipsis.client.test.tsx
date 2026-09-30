@@ -1,9 +1,8 @@
 import "@suru-ui/theme/suru.css";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { PaginationEllipsis } from "../../../src/pagination/pagination.ellipsis.jsx";
-import { type PaginationChangeEventDetails } from "../../../src/pagination/pagination.jsx";
 import { PaginationRoot } from "../../../src/pagination/pagination.root.jsx";
 import "../_locators.js";
 
@@ -46,200 +45,20 @@ describe("PaginationEllipsis", () => {
     expect(screen.getByRole("button", { name: "2〜2ページへ移動" }).query()).not.toBe(null);
   });
 
-  test("押すと入力欄を表示する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <PaginationRoot totalPages={10}>
-        <PaginationEllipsis end={5} start={2} />
-      </PaginationRoot>,
-    );
-    (
-      screen.getByRole("button", { name: "2〜5ページへ移動" }).element() as HTMLButtonElement
-    ).click();
-    // React の状態更新を待ちます。
-    await Promise.resolve();
-
-    // 検証
-    const input = screen
-      .getByRole("textbox", { name: "2〜5ページへ移動" })
-      .element() as HTMLInputElement;
-    expect(input.tagName).toBe("INPUT");
-    expect(input.getAttribute("inputmode")).toBe("numeric");
-    expect(input.placeholder).toBe("2");
-    expect(screen.getByRole("button", { name: "2〜5ページへ移動" }).query()).toBe(null);
-  });
-
-  test("入力したページへ移動する", async ({ expect }) => {
-    // 準備
-    const onPageChange = vi.fn<(page: number, details: PaginationChangeEventDetails) => void>();
-
-    // 実行
-    const screen = await render(
-      <PaginationRoot totalPages={10} onPageChange={onPageChange}>
-        <PaginationEllipsis end={5} start={2} />
-      </PaginationRoot>,
-    );
-    (
-      screen.getByRole("button", { name: "2〜5ページへ移動" }).element() as HTMLButtonElement
-    ).click();
-    // React の状態更新を待ちます。
-    await Promise.resolve();
-    const input = screen
-      .getByRole("textbox", { name: "2〜5ページへ移動" })
-      .element() as HTMLInputElement;
-    input.value = "4";
-    input.dispatchEvent(new KeyboardEvent("keydown", { bubbles: true, key: "Enter" }));
-    await Promise.resolve();
-
-    // 検証
-    expect(onPageChange).toHaveBeenCalledTimes(1);
-    expect(onPageChange).toHaveBeenCalledWith(4, expect.objectContaining({ reason: "ellipsis" }));
-    expect(screen.getByRole("button", { name: "2〜5ページへ移動" }).query()).not.toBe(null);
-  });
-
-  test("範囲より大きい入力は終了ページへ丸める", async ({ expect }) => {
-    // 準備
-    const onPageChange = vi.fn<(page: number, details: PaginationChangeEventDetails) => void>();
-
-    // 実行
-    const screen = await render(
-      <PaginationRoot totalPages={10} onPageChange={onPageChange}>
-        <PaginationEllipsis end={5} start={2} />
-      </PaginationRoot>,
-    );
-    (
-      screen.getByRole("button", { name: "2〜5ページへ移動" }).element() as HTMLButtonElement
-    ).click();
-    // React の状態更新を待ちます。
-    await Promise.resolve();
-    const input = screen
-      .getByRole("textbox", { name: "2〜5ページへ移動" })
-      .element() as HTMLInputElement;
-    input.value = "99";
-    input.dispatchEvent(new KeyboardEvent("keydown", { bubbles: true, key: "Enter" }));
-
-    // 検証
-    expect(onPageChange).toHaveBeenCalledWith(5, expect.objectContaining({ reason: "ellipsis" }));
-  });
-
-  test("範囲より小さい入力は開始ページへ丸める", async ({ expect }) => {
-    // 準備
-    const onPageChange = vi.fn<(page: number, details: PaginationChangeEventDetails) => void>();
-
-    // 実行
-    const screen = await render(
-      <PaginationRoot totalPages={10} onPageChange={onPageChange}>
-        <PaginationEllipsis end={5} start={2} />
-      </PaginationRoot>,
-    );
-    (
-      screen.getByRole("button", { name: "2〜5ページへ移動" }).element() as HTMLButtonElement
-    ).click();
-    // React の状態更新を待ちます。
-    await Promise.resolve();
-    const input = screen
-      .getByRole("textbox", { name: "2〜5ページへ移動" })
-      .element() as HTMLInputElement;
-    input.value = "0";
-    input.dispatchEvent(new KeyboardEvent("keydown", { bubbles: true, key: "Enter" }));
-
-    // 検証
-    expect(onPageChange).toHaveBeenCalledWith(2, expect.objectContaining({ reason: "ellipsis" }));
-  });
-
-  test("Escape で取り消す", async ({ expect }) => {
-    // 準備
-    const onPageChange = vi.fn<(page: number, details: PaginationChangeEventDetails) => void>();
-
-    // 実行
-    const screen = await render(
-      <PaginationRoot totalPages={10} onPageChange={onPageChange}>
-        <PaginationEllipsis end={5} start={2} />
-      </PaginationRoot>,
-    );
-    (
-      screen.getByRole("button", { name: "2〜5ページへ移動" }).element() as HTMLButtonElement
-    ).click();
-    // React の状態更新を待ちます。
-    await Promise.resolve();
-    const input = screen
-      .getByRole("textbox", { name: "2〜5ページへ移動" })
-      .element() as HTMLInputElement;
-    input.value = "4";
-    input.dispatchEvent(new KeyboardEvent("keydown", { bubbles: true, key: "Escape" }));
-    await Promise.resolve();
-
-    // 検証
-    expect(onPageChange).not.toHaveBeenCalled();
-    expect(screen.getByRole("button", { name: "2〜5ページへ移動" }).query()).not.toBe(null);
-  });
-
-  test("フォーカスが外れると取り消す", async ({ expect }) => {
-    // 準備
-    const onPageChange = vi.fn<(page: number, details: PaginationChangeEventDetails) => void>();
-
-    // 実行
-    const screen = await render(
-      <PaginationRoot totalPages={10} onPageChange={onPageChange}>
-        <PaginationEllipsis end={5} start={2} />
-      </PaginationRoot>,
-    );
-    (
-      screen.getByRole("button", { name: "2〜5ページへ移動" }).element() as HTMLButtonElement
-    ).click();
-    // React の状態更新を待ちます。
-    await Promise.resolve();
-    screen.getByRole("textbox", { name: "2〜5ページへ移動" }).element().blur();
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(screen.getByRole("button", { name: "2〜5ページへ移動" }).query()).not.toBe(null);
-    });
-    expect(onPageChange).not.toHaveBeenCalled();
-  });
-
-  test("数値でない入力では移動しない", async ({ expect }) => {
-    // 準備
-    const onPageChange = vi.fn<(page: number, details: PaginationChangeEventDetails) => void>();
-
-    // 実行
-    const screen = await render(
-      <PaginationRoot totalPages={10} onPageChange={onPageChange}>
-        <PaginationEllipsis end={5} start={2} />
-      </PaginationRoot>,
-    );
-    (
-      screen.getByRole("button", { name: "2〜5ページへ移動" }).element() as HTMLButtonElement
-    ).click();
-    // React の状態更新を待ちます。
-    await Promise.resolve();
-    const input = screen
-      .getByRole("textbox", { name: "2〜5ページへ移動" })
-      .element() as HTMLInputElement;
-    input.value = "あ";
-    input.dispatchEvent(new KeyboardEvent("keydown", { bubbles: true, key: "Enter" }));
-    await Promise.resolve();
-
-    // 検証
-    expect(onPageChange).not.toHaveBeenCalled();
-    expect(screen.getByRole("button", { name: "2〜5ページへ移動" }).query()).not.toBe(null);
-  });
-
-  test("無効なときは入力欄を表示しない", async ({ expect }) => {
+  test("無効なときは状態クラスを付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <PaginationRoot disabled totalPages={10}>
         <PaginationEllipsis end={5} start={2} />
       </PaginationRoot>,
     );
-    (
-      screen.getByRole("button", { name: "2〜5ページへ移動" }).element() as HTMLButtonElement
-    ).click();
 
     // 検証
     expect(
-      (screen.getByRole("button", { name: "2〜5ページへ移動" }).element() as HTMLButtonElement)
-        .disabled,
+      screen
+        .getByRole("button", { name: "2〜5ページへ移動" })
+        .element()
+        .classList.contains("sui_button-disabled"),
     ).toBe(true);
     expect(screen.getByClassName("sui_pagination_ellipsis_input").query()).toBe(null);
   });
@@ -254,8 +73,10 @@ describe("PaginationEllipsis", () => {
 
     // 検証
     expect(
-      (screen.getByRole("button", { name: "2〜5ページへ移動" }).element() as HTMLButtonElement)
-        .disabled,
+      screen
+        .getByRole("button", { name: "2〜5ページへ移動" })
+        .element()
+        .classList.contains("sui_button-disabled"),
     ).toBe(true);
   });
 

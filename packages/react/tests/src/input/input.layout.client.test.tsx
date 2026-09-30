@@ -31,11 +31,11 @@ describe("InputRoot の配置", () => {
 
     // 検証
     const sm = getComputedStyle(screen.getByRole("textbox", { name: "小" }).element());
-    expect(sm.minHeight).toBe("20px");
+    expect(sm.minHeight).toBe("22.4px");
     const md = getComputedStyle(screen.getByRole("textbox", { name: "中" }).element());
     expect(md.minHeight).toBe("28px");
     const lg = getComputedStyle(screen.getByRole("textbox", { name: "大" }).element());
-    expect(lg.minHeight).toBe("36px");
+    expect(lg.minHeight).toBe("33.6px");
   });
 
   test.skipIf(!supportsCustomFunctions())("大きさに応じた水平余白を持つ", async ({ expect }) => {

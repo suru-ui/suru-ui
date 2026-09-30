@@ -57,9 +57,9 @@ describe("ButtonRoot の配置", () => {
     );
 
     // 検証
-    expect(getComputedStyle(screen.container.querySelector("#sm")!).minHeight).toBe("20px");
+    expect(getComputedStyle(screen.container.querySelector("#sm")!).minHeight).toBe("22.4px");
     expect(getComputedStyle(screen.container.querySelector("#md")!).minHeight).toBe("28px");
-    expect(getComputedStyle(screen.container.querySelector("#lg")!).minHeight).toBe("36px");
+    expect(getComputedStyle(screen.container.querySelector("#lg")!).minHeight).toBe("33.6px");
   });
 
   test("正方形では幅と高さを揃える", async ({ expect }) => {

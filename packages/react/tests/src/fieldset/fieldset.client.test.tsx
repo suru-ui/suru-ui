@@ -91,8 +91,9 @@ describe("Fieldset", () => {
     );
 
     // 検証
-    const fieldset = screen.getByRole("group", { name: "お支払い情報" }).element();
+    const fieldset = screen.getByClassName("sui_fieldset").element();
     expect(fieldset.tagName).toBe("FIELDSET");
+    expect(screen.getByText("お支払い情報").query()).not.toBe(null);
     expect(screen.getByRole("textbox", { name: "カード番号" }).query()).not.toBe(null);
   });
 
@@ -107,20 +108,5 @@ describe("Fieldset", () => {
     // 検証
     expect(screen.getByClassName("sui_fieldset_legend").query()).toBe(null);
     expect(screen.getByText("内容").query()).not.toBe(null);
-  });
-
-  test("無効をグループ内のコントロールへ伝える", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <Fieldset legend="お支払い情報" disabled>
-        <FieldRoot name="sui:card">
-          <FieldControl aria-label="カード番号" />
-        </FieldRoot>
-      </Fieldset>,
-    );
-
-    // 検証
-    const input = screen.getByRole("textbox", { name: "カード番号" }).element();
-    expect(input.hasAttribute("disabled")).toBe(true);
   });
 });

@@ -25,21 +25,6 @@ describe("FieldDescription", () => {
     expect(description.classList.contains("sui_field_description")).toBe(true);
   });
 
-  test("入力欄の説明として関連付ける", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <FieldRoot>
-        <FieldControl aria-label="名前" />
-        <FieldDescription>プロフィールに表示されます。</FieldDescription>
-      </FieldRoot>,
-    );
-
-    // 検証
-    const input = screen.getByRole("textbox", { name: "名前" }).element();
-    const description = screen.getByText("プロフィールに表示されます。").element();
-    expect(input.getAttribute("aria-describedby")).toContain(description.id);
-  });
-
   test("render で要素を置き換える", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

@@ -33,7 +33,9 @@ describe("ComboboxTriggerLabel", () => {
     );
 
     // 検証
-    expect(screen.getByText("果物").query()?.hasAttribute("data-disabled")).toBe(true);
+    expect(
+      screen.getByText("果物").query()?.classList.contains("sui_combobox_trigger_label-disabled"),
+    ).toBe(true);
   });
 
   test("有効時は無効状態にしない", async ({ expect }) => {
@@ -45,6 +47,8 @@ describe("ComboboxTriggerLabel", () => {
     );
 
     // 検証
-    expect(screen.getByText("果物").query()?.hasAttribute("data-disabled")).toBe(false);
+    expect(
+      screen.getByText("果物").query()?.classList.contains("sui_combobox_trigger_label-disabled"),
+    ).toBe(false);
   });
 });

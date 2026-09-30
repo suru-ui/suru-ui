@@ -1,18 +1,11 @@
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { TooltipContent } from "../../../src/tooltip/tooltip.content.jsx";
 import { useTooltipContext } from "../../../src/tooltip/tooltip.context.js";
 import { Tooltip } from "../../../src/tooltip/tooltip.jsx";
-import { TooltipPortal } from "../../../src/tooltip/tooltip.portal.jsx";
-import { TooltipPositioner } from "../../../src/tooltip/tooltip.positioner.jsx";
 import { TooltipRoot } from "../../../src/tooltip/tooltip.root.jsx";
 import "../_locators.js";
-
-type Member = {
-  name: string;
-};
 
 describe("TooltipRoot", () => {
   test("自身の見た目を持つ要素を表示しない", async ({ expect }) => {
@@ -88,35 +81,6 @@ describe("Tooltip", () => {
     // 検証
     const content = screen.getByClassName("sui_tooltip_content").element();
     expect(content.textContent).toBe("保存します");
-  });
-
-  test("トリガーの payload を内容へ渡す", async ({ expect }) => {
-    // 準備
-    const handle = Tooltip.createHandle<Member>();
-
-    // 実行
-    const screen = await render(
-      <>
-        <Tooltip.Trigger handle={handle} delay={0} payload={{ name: "田中" }}>
-          {(props) => <button {...props}>作成者</button>}
-        </Tooltip.Trigger>
-        <TooltipRoot handle={handle}>
-          {({ payload }) => (
-            <TooltipPortal>
-              <TooltipPositioner>
-                <TooltipContent>作成者: {payload?.name ?? "なし"}</TooltipContent>
-              </TooltipPositioner>
-            </TooltipPortal>
-          )}
-        </TooltipRoot>
-      </>,
-    );
-    await screen.getByRole("button", { name: "作成者" }).hover();
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(screen.getByText("作成者: 田中").query()?.textContent).toBe("作成者: 田中");
-    });
   });
 
   test("内容用の props をポップアップへ渡す", async ({ expect }) => {

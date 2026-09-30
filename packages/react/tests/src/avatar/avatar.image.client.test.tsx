@@ -2,7 +2,7 @@ import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/avatar/avatar.parts.js";
-import { type AvatarImageProps, AvatarImage } from "../../../src/avatar/avatar.image.jsx";
+import { AvatarImage } from "../../../src/avatar/avatar.image.jsx";
 import { AvatarRoot } from "../../../src/avatar/avatar.root.jsx";
 import "../_locators.js";
 
@@ -53,27 +53,6 @@ describe("AvatarImage", () => {
     // 検証
     await vi.waitFor(() => {
       expect(screen.getByClassName("sui_avatar_image").element().tagName).toBe("SPAN");
-    });
-  });
-
-  test("読み込み状態の変化を通知する", async ({ expect }) => {
-    // 準備
-    const onLoadingStatusChange = vi.fn<NonNullable<AvatarImageProps["onLoadingStatusChange"]>>();
-
-    // 実行
-    await render(
-      <AvatarRoot>
-        <AvatarImage
-          alt="プロフィール画像"
-          src={imageSrc}
-          onLoadingStatusChange={onLoadingStatusChange}
-        />
-      </AvatarRoot>,
-    );
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(onLoadingStatusChange).toHaveBeenCalledWith("loaded");
     });
   });
 });

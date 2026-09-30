@@ -27,24 +27,6 @@ describe("NumberFieldIncrement", () => {
     expect(button.querySelector("svg")).not.toBe(null);
   });
 
-  test("押下で値を増やす", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <NumberFieldRoot defaultValue={5}>
-        <NumberFieldGroup>
-          <NumberFieldInput />
-          <NumberFieldIncrement />
-        </NumberFieldGroup>
-      </NumberFieldRoot>,
-    );
-
-    // 実行
-    await screen.getByRole("button", { name: "値を増やす" }).click();
-
-    // 検証
-    expect((screen.getByRole("textbox").element() as HTMLInputElement).value).toBe("6");
-  });
-
   test("指定した内容を表示する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

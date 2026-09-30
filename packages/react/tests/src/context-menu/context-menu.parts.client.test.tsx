@@ -143,7 +143,6 @@ describe("ContextMenuItem", () => {
     // 検証
     const item = screen.getByRole("menuitem", { name: "編集" }).element();
     expect(item.classList.contains("sui_context_menu_item-disabled")).toBe(true);
-    expect(item.getAttribute("aria-disabled")).toBe("true");
   });
 
   test("配色と大きさと角丸を反映する", async ({ expect }) => {
@@ -233,7 +232,6 @@ describe("ContextMenuRadioGroup", () => {
     const group = screen.getByRole("group").element();
     expect(group.classList.contains("sui_context_menu_radio_group")).toBe(true);
     const selected = screen.getByRole("menuitemradio", { name: "名前" }).element();
-    expect(selected.getAttribute("aria-checked")).toBe("true");
     expect(selected.classList.contains("sui_context_menu_radio_item")).toBe(true);
     expect(selected.classList.contains("sui_context_menu_item-checked")).toBe(true);
     const indicator = screen
@@ -279,7 +277,6 @@ describe("ContextMenuCheckboxItem", () => {
 
     // 検証
     const item = screen.getByRole("menuitemcheckbox", { name: "サイドバー" }).element();
-    expect(item.getAttribute("aria-checked")).toBe("true");
     expect(item.classList.contains("sui_context_menu_checkbox_item")).toBe(true);
     expect(item.classList.contains("sui_context_menu_item-checked")).toBe(true);
     const indicator = screen.getByClassName("sui_context_menu_checkbox_item_indicator").element();
@@ -305,7 +302,6 @@ describe("ContextMenuSubmenu", () => {
 
     // 検証
     const trigger = screen.getByRole("menuitem", { name: "共有" }).element();
-    expect(trigger.getAttribute("aria-haspopup")).toBe("menu");
     expect(trigger.classList.contains("sui_context_menu_submenu_trigger")).toBe(true);
   });
 

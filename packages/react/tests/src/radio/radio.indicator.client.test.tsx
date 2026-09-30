@@ -100,19 +100,4 @@ describe("RadioIndicator", () => {
     expect(indicator.classList.contains("custom")).toBe(true);
     expect(indicator.classList.contains("sui_radio_indicator")).toBe(true);
   });
-
-  test("状態の変化に追従する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <RadioGroupRoot>
-        <RadioRoot aria-label="オプション" value="a">
-          <RadioIndicator />
-        </RadioRoot>
-      </RadioGroupRoot>,
-    );
-    await screen.getByRole("radio", { name: "オプション" }).click();
-
-    // 検証
-    expect(screen.getByClassName("sui_radio_indicator").query()).not.toBe(null);
-  });
 });

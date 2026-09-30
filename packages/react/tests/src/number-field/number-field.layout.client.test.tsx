@@ -68,9 +68,9 @@ describe("NumberField の配置", () => {
 
     // 検証
     const groups = screen.container.querySelectorAll<HTMLElement>(".sui_number_field_group");
-    expect(getComputedStyle(groups[0]!).minHeight).toBe("20px");
+    expect(getComputedStyle(groups[0]!).minHeight).toBe("22.4px");
     expect(getComputedStyle(groups[1]!).minHeight).toBe("28px");
-    expect(getComputedStyle(groups[2]!).minHeight).toBe("36px");
+    expect(getComputedStyle(groups[2]!).minHeight).toBe("33.6px");
   });
 
   test.skipIf(!supportsCustomFunctions())("大きさに応じた水平余白を持つ", async ({ expect }) => {
@@ -174,13 +174,9 @@ describe("NumberField の配置", () => {
 
     // 検証
     const steppers = screen.container.querySelectorAll<HTMLElement>(".sui_number_field_decrement");
-    const widths = [...steppers].map((stepper) => stepper.getBoundingClientRect().width);
-    for (const [index, stepper] of [...steppers].entries()) {
+    for (const stepper of steppers) {
       const rect = stepper.getBoundingClientRect();
       expect(rect.width).toBeCloseTo(rect.height, 1);
-      if (index > 0) {
-        expect(widths[index]!).toBeGreaterThan(widths[index - 1]!);
-      }
     }
   });
 

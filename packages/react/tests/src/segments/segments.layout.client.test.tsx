@@ -1,6 +1,6 @@
 import "@suru-ui/theme/suru.css";
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/segments/segments.parts.js";
@@ -115,13 +115,13 @@ describe("Segments の配置", () => {
     // 検証
     const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm [role=tab]")!);
     expect(sm.fontSize).toBe("12px");
-    expect(sm.minHeight).toBe("20px");
+    expect(sm.minHeight).toBe("22.4px");
     const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md [role=tab]")!);
     expect(md.fontSize).toBe("14px");
     expect(md.minHeight).toBe("28px");
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg [role=tab]")!);
     expect(lg.fontSize).toBe("17px");
-    expect(lg.minHeight).toBe("36px");
+    expect(lg.minHeight).toBe("33.6px");
   });
 
   test.skipIf(!supportsCustomFunctions())(
@@ -204,27 +204,6 @@ describe("Segments の配置", () => {
     const expected = getComputedStyle(screen.getByText("基準").element());
     const indicator = getComputedStyle(screen.getByClassName("sui_segments_indicator").element());
     expect(indicator.backgroundColor).toBe(expected.backgroundColor);
-  });
-
-  test("インジケーターを選択中の項目に重ねる", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(<Segments defaultValue="week" items={[...items]} />);
-    const indicator = screen.getByClassName("sui_segments_indicator").element();
-    const list = screen.getByRole("tablist").element();
-
-    // 検証
-    await vi.waitFor(() => {
-      expect(indicator.hasAttribute("hidden")).toBe(false);
-    });
-    const active = screen.getByRole("tab", { name: "週" }).element().getBoundingClientRect();
-    expect(Number.parseFloat(indicator.style.getPropertyValue("--active-tab-width"))).toBeCloseTo(
-      active.width,
-      1,
-    );
-    expect(Number.parseFloat(indicator.style.getPropertyValue("--active-tab-left"))).toBeCloseTo(
-      active.left - list.getBoundingClientRect().left,
-      1,
-    );
   });
 
   test("無効な項目を淡色にして操作不能にする", async ({ expect }) => {

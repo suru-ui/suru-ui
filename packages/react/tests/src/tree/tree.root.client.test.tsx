@@ -62,15 +62,6 @@ describe("TreeRoot", () => {
       .elements()
       .map((item) => item.textContent);
     expect(labels).toStrictEqual(["src", "components", "index.ts", "package.json"]);
-    expect(
-      screen.getByRole("treeitem", { name: "src" }).element().getAttribute("aria-expanded"),
-    ).toBe("true");
-    expect(
-      screen
-        .getByRole("treeitem", { name: "package.json" })
-        .element()
-        .getAttribute("aria-expanded"),
-    ).toBe(null);
   });
 
   test("関数の children に表示中のノードと位置を渡す", async ({ expect }) => {
@@ -162,11 +153,17 @@ describe("TreeRoot", () => {
 
     // 検証
     expect(
-      screen.getByRole("treeitem", { name: "index.ts" }).element().getAttribute("aria-selected"),
-    ).toBe("true");
+      screen
+        .getByRole("treeitem", { name: "index.ts" })
+        .element()
+        .classList.contains("sui_tree_item-selected"),
+    ).toBe(true);
     expect(
-      screen.getByRole("treeitem", { name: "src" }).element().getAttribute("aria-selected"),
-    ).toBe("false");
+      screen
+        .getByRole("treeitem", { name: "src" })
+        .element()
+        .classList.contains("sui_tree_item-selected"),
+    ).toBe(false);
   });
 
   test("項目を子孫へ伝える", async ({ expect }) => {

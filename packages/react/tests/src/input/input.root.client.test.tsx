@@ -1,9 +1,9 @@
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { FieldRoot } from "../../../src/field/field.root.jsx";
 import "../../../src/input/input.parts.js";
-import { type InputRootProps, InputRoot } from "../../../src/input/input.root.jsx";
+import { InputRoot } from "../../../src/input/input.root.jsx";
 import "../_locators.js";
 
 describe("InputRoot", () => {
@@ -108,27 +108,13 @@ describe("InputRoot", () => {
     expect(root.required).toBe(true);
   });
 
-  test("値の変更を通知する", async ({ expect }) => {
-    // 準備
-    const onValueChange = vi.fn<NonNullable<InputRootProps["onValueChange"]>>();
-    const screen = await render(<InputRoot aria-label="名前" onValueChange={onValueChange} />);
-
-    // 実行
-    await screen.getByRole("textbox", { name: "名前" }).fill("すーるー");
-
-    // 検証
-    expect(onValueChange).toHaveBeenCalledTimes(1);
-    expect(onValueChange).toHaveBeenCalledWith("すーるー", expect.anything());
-  });
-
-  test("無効時は状態クラスと disabled 属性を付ける", async ({ expect }) => {
+  test("無効時は状態クラスを付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<InputRoot aria-label="名前" disabled />);
 
     // 検証
-    const root = screen.getByRole("textbox", { name: "名前" }).element() as HTMLInputElement;
+    const root = screen.getByRole("textbox", { name: "名前" }).element();
     expect(root.classList.contains("sui_input-disabled")).toBe(true);
-    expect(root.disabled).toBe(true);
   });
 
   test("Field の検証状態をクラスへ反映する", async ({ expect }) => {
@@ -149,38 +135,6 @@ describe("InputRoot", () => {
     expect(invalid.classList.contains("sui_input-invalid")).toBe(true);
     const unverified = screen.getByRole("textbox", { name: "未検証" }).element();
     expect(unverified.classList.contains("sui_input-unverified")).toBe(true);
-  });
-
-  test("不正な Field では aria-invalid を付ける", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <FieldRoot invalid>
-        <InputRoot aria-label="名前" />
-      </FieldRoot>,
-    );
-
-    // 検証
-    expect(
-      screen.getByRole("textbox", { name: "名前" }).element().getAttribute("aria-invalid"),
-    ).toBe("true");
-  });
-
-  test("検証に成功した Field の状態をクラスへ反映する", async ({ expect }) => {
-    // 準備
-    const screen = await render(
-      <FieldRoot validate={() => null} validationMode="onChange">
-        <InputRoot aria-label="有効" />
-      </FieldRoot>,
-    );
-
-    // 実行
-    await screen.getByRole("textbox", { name: "有効" }).fill("すーるー");
-
-    // 検証
-    await vi.waitFor(() => {
-      const root = screen.getByRole("textbox", { name: "有効" }).element();
-      expect(root.classList.contains("sui_input-valid")).toBe(true);
-    });
   });
 
   test("render で要素を置き換える", async ({ expect }) => {

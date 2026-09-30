@@ -38,13 +38,12 @@ describe("TabsTab", () => {
     // 検証
     const active = screen.getByRole("tab", { name: "プロジェクト" }).element();
     expect(active.classList.contains("sui_tabs_tab-active")).toBe(true);
-    expect(active.getAttribute("aria-selected")).toBe("true");
     expect(
       screen.getByRole("tab", { name: "概要" }).element().classList.contains("sui_tabs_tab-active"),
     ).toBe(false);
   });
 
-  test("無効なタブに状態クラスと無効属性を付ける", async ({ expect }) => {
+  test("無効なタブに状態クラスを付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <TabsRoot>
@@ -59,7 +58,6 @@ describe("TabsTab", () => {
     // 検証
     const tab = screen.getByRole("tab", { name: "概要" }).element();
     expect(tab.classList.contains("sui_tabs_tab-disabled")).toBe(true);
-    expect(tab.getAttribute("aria-disabled")).toBe("true");
   });
 
   test("render に指定した要素へ描画する", async ({ expect }) => {

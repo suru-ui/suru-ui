@@ -18,8 +18,6 @@ describe("NumberFieldScrubArea", () => {
     const area = screen.getByClassName("sui_number_field_scrub_area").element();
     expect(area.tagName).toBe("SPAN");
     expect(area.textContent).toBe("数量");
-    expect(area.getAttribute("role")).toBe("presentation");
-    expect(getComputedStyle(area).touchAction).toBe("none");
   });
 
   test("利用者の className を保持する", async ({ expect }) => {

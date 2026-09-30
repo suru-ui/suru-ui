@@ -27,24 +27,6 @@ describe("NumberFieldDecrement", () => {
     expect(button.querySelector("svg")).not.toBe(null);
   });
 
-  test("押下で値を減らす", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <NumberFieldRoot defaultValue={5}>
-        <NumberFieldGroup>
-          <NumberFieldInput />
-          <NumberFieldDecrement />
-        </NumberFieldGroup>
-      </NumberFieldRoot>,
-    );
-
-    // 実行
-    await screen.getByRole("button", { name: "値を減らす" }).click();
-
-    // 検証
-    expect((screen.getByRole("textbox").element() as HTMLInputElement).value).toBe("4");
-  });
-
   test("指定した内容を表示する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

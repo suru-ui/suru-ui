@@ -9,6 +9,7 @@ import {
   useRadioGroupAPI,
 } from "../../../src/radio-group/radio-group.jsx";
 import { Radio } from "../../../src/radio/radio.jsx";
+import "../_locators.js";
 
 describe("RadioGroupAPI", () => {
   test("getRootProps は渡した props を返す", ({ expect }) => {
@@ -52,9 +53,9 @@ describe("RadioGroup", () => {
     );
 
     // 検証
-    const root = screen.getByRole("radiogroup", { name: "通知" }).element();
+    const root = screen.getByClassName("sui_radio_group").element();
     expect(root.classList.contains("sui_radio_group-orientation_horizontal")).toBe(true);
-    const radio = screen.getByRole("radio", { name: "メール" }).element();
+    const radio = screen.getByClassName("sui_radio").element();
     expect(radio.classList.contains("sui_radio-size_lg")).toBe(true);
     expect(radio.classList.contains("sui_radio-color_blue")).toBe(true);
   });

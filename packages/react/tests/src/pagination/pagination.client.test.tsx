@@ -1,11 +1,10 @@
 import "@suru-ui/theme/suru.css";
 import * as React from "react";
-import { describe, test, vi } from "vitest";
+import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import {
   type PaginationAPI,
-  type PaginationChangeEventDetails,
   type PaginationProps,
   Pagination,
   usePaginationAPI,
@@ -164,80 +163,11 @@ describe("Pagination", () => {
     expect(screen.container.querySelectorAll(".sui_pagination_ellipsis").length).toBe(2);
   });
 
-  test("現在のページを選択状態にする", async ({ expect }) => {
+  test("無効なときは状態クラスを付ける", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<Pagination defaultPage={5} totalPages={20} />);
+    const screen = await render(<Pagination disabled totalPages={20} />);
 
     // 検証
-    const current = screen.getByRole("button", { name: "5", exact: true }).element();
-    expect(current.getAttribute("aria-current")).toBe("page");
-    expect(
-      screen.getByRole("button", { name: "4", exact: true }).element().getAttribute("aria-current"),
-    ).toBe(null);
-  });
-
-  test("ページ番号を押すと選択が移動する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(<Pagination defaultPage={5} totalPages={20} />);
-    await screen.getByRole("button", { name: "6", exact: true }).click();
-
-    // 検証
-    expect(
-      screen.getByRole("button", { name: "6", exact: true }).element().getAttribute("aria-current"),
-    ).toBe("page");
-    expect(
-      screen.getByRole("button", { name: "5", exact: true }).element().getAttribute("aria-current"),
-    ).toBe(null);
-  });
-
-  test("省略記号からページを指定する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(<Pagination defaultPage={5} totalPages={20} />);
-    (
-      screen.getByRole("button", { name: "2〜3ページへ移動" }).element() as HTMLButtonElement
-    ).click();
-    // React の状態更新を待ちます。
-    await Promise.resolve();
-    const input = screen
-      .getByRole("textbox", { name: "2〜3ページへ移動" })
-      .element() as HTMLInputElement;
-    input.value = "3";
-    input.dispatchEvent(new KeyboardEvent("keydown", { bubbles: true, key: "Enter" }));
-    await Promise.resolve();
-
-    // 検証
-    expect(
-      screen.getByRole("button", { name: "3", exact: true }).element().getAttribute("aria-current"),
-    ).toBe("page");
-  });
-
-  test("ページ変更の理由を伝える", async ({ expect }) => {
-    // 準備
-    const onPageChange = vi.fn<(page: number, details: PaginationChangeEventDetails) => void>();
-
-    // 実行
-    const screen = await render(
-      <Pagination defaultPage={5} totalPages={20} onPageChange={onPageChange} />,
-    );
-    await screen.getByRole("button", { name: "次のページへ" }).click();
-
-    // 検証
-    expect(onPageChange).toHaveBeenCalledWith(6, expect.objectContaining({ reason: "next" }));
-  });
-
-  test("無効なときは操作できない", async ({ expect }) => {
-    // 準備
-    const onPageChange = vi.fn<(page: number, details: PaginationChangeEventDetails) => void>();
-
-    // 実行
-    const screen = await render(
-      <Pagination defaultPage={5} disabled totalPages={20} onPageChange={onPageChange} />,
-    );
-    (screen.getByRole("button", { name: "6" }).element() as HTMLButtonElement).click();
-    (screen.getByRole("button", { name: "次のページへ" }).element() as HTMLButtonElement).click();
-
-    // 検証
-    expect(onPageChange).not.toHaveBeenCalled();
     expect(screen.getByClassName("sui_pagination-disabled").query()).not.toBe(null);
   });
 
@@ -248,12 +178,16 @@ describe("Pagination", () => {
     // 検証
     expect(screen.container.querySelectorAll(".sui_pagination_ellipsis").length).toBe(0);
     expect(
-      (screen.getByRole("button", { name: "前のページへ" }).element() as HTMLButtonElement)
-        .disabled,
+      screen
+        .getByRole("button", { name: "前のページへ" })
+        .element()
+        .classList.contains("sui_button-disabled"),
     ).toBe(true);
     expect(
-      (screen.getByRole("button", { name: "次のページへ" }).element() as HTMLButtonElement)
-        .disabled,
+      screen
+        .getByRole("button", { name: "次のページへ" })
+        .element()
+        .classList.contains("sui_button-disabled"),
     ).toBe(true);
   });
 

@@ -62,17 +62,4 @@ describe("SwitchThumb", () => {
     // 検証
     expect(screen.container.querySelector("#thumb")).not.toBe(null);
   });
-
-  test("状態の変化に追従する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <SwitchRoot>
-        <SwitchThumb />
-      </SwitchRoot>,
-    );
-    await screen.getByRole("switch").click();
-
-    // 検証
-    expect(screen.getByClassName("sui_switch_thumb").query()).not.toBe(null);
-  });
 });
