@@ -5,18 +5,24 @@ import mergeProps from "../_merge-props.js";
 import type { IComponent } from "../types.js";
 import { type $InferItemObjectValue, isItemObject } from "./_accordion.jsx";
 import {
+  type AccordionContext,
   type AccordionRootSize,
   type AccordionItemProps,
   type AccordionRootProps,
   type AccordionRootState,
   type AccordionRootValue,
   type AccordionRootRadius,
+  type AccordionItemContext,
+  type IUseAccordionContext,
   type AccordionContentProps,
   type AccordionHeadingProps,
   type AccordionTriggerProps,
   type AccordionIndicatorProps,
   type AccordionRootItemObject,
+  type AccordionTriggerContext,
+  type IUseAccordionItemContext,
   type IAccordionRootItemRenderer,
+  type IUseAccordionTriggerContext,
   type AccordionRootChangeEventReason,
   type AccordionRootChangeEventDetails,
   AccordionItem,
@@ -25,8 +31,11 @@ import {
   AccordionHeading,
   AccordionTrigger,
   AccordionIndicator,
+  decomposeItemObject,
+  useAccordionContext,
+  useAccordionItemContext,
+  useAccordionTriggerContext,
 } from "./accordion.parts.js";
-import { decomposeItemObject } from "./accordion.utils.js";
 
 // Types
 // -----
@@ -112,6 +121,20 @@ namespace AccordionProps {
 export type AccordionProps<TItem = any, TValue = any> = AccordionProps.Accordion &
   AccordionProps.Root<TItem, TValue>;
 
+export interface IUseAccordionAPI {
+  /**
+   * {@link AccordionAPI} を作成します。
+   *
+   * @template TItem 項目の型です。
+   * @template TValue 項目の値の型です。
+   * @param props {@link Accordion} の props です。
+   * @returns アコーディオンの API です
+   */
+  <TItem = any, TValue = $InferItemObjectValue<TItem>>(
+    props: AccordionProps<TItem, TValue>,
+  ): AccordionAPI<TItem, TValue>;
+}
+
 export interface IAccordion extends IComponent<AccordionProps> {
   /**
    * @template TItem 項目の型です。
@@ -120,6 +143,12 @@ export interface IAccordion extends IComponent<AccordionProps> {
   <TItem = any, TValue = $InferItemObjectValue<TItem>>(
     props: AccordionProps<TItem, TValue>,
   ): IComponent.Return;
+
+  readonly useContext: IUseAccordionContext;
+
+  readonly useItemContext: IUseAccordionItemContext;
+
+  readonly useTriggerContext: IUseAccordionTriggerContext;
 }
 
 // API
@@ -273,20 +302,6 @@ export class AccordionAPI<TItem = any, TValue = any> {
   }
 }
 
-export interface IUseAccordionAPI {
-  /**
-   * {@link AccordionAPI} を作成します。
-   *
-   * @template TItem 項目の型です。
-   * @template TValue 項目の値の型です。
-   * @param props {@link Accordion} の props です。
-   * @returns アコーディオンの API です
-   */
-  <TItem = any, TValue = $InferItemObjectValue<TItem>>(
-    props: AccordionProps<TItem, TValue>,
-  ): AccordionAPI<TItem, TValue>;
-}
-
 /**
  * {@link AccordionAPI} を作成するフックです。
  */
@@ -302,11 +317,18 @@ export { AccordionAPI as API, useAccordionAPI as useAPI };
 /**
  * アコーディオンを表示するコンポーネントです。
  */
-export const Accordion: IAccordion = function SuiAccordion(props: AccordionProps) {
-  const api = useAccordionAPI(props);
+export const Accordion: IAccordion = Object.assign(
+  function SuiAccordion(props: AccordionProps) {
+    const api = useAccordionAPI(props);
 
-  return <AccordionRoot {...api.getRootProps()} />;
-};
+    return <AccordionRoot {...api.getRootProps()} />;
+  },
+  {
+    useContext: useAccordionContext,
+    useItemContext: useAccordionItemContext,
+    useTriggerContext: useAccordionTriggerContext,
+  },
+);
 
 export namespace Accordion {
   export type State<TValue = any> = AccordionState<TValue>;
@@ -314,6 +336,12 @@ export namespace Accordion {
   export type Props<TItem = any, TValue = any> = AccordionProps<TItem, TValue>;
 
   export type SlotProps = AccordionSlotProps;
+
+  export type Context = AccordionContext;
+
+  export type ItemContext = AccordionItemContext;
+
+  export type TriggerContext = AccordionTriggerContext;
 
   export type ChangeEventDetails = AccordionChangeEventDetails;
 

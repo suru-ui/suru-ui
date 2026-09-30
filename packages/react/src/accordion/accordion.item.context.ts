@@ -2,12 +2,13 @@ import type { Accordion } from "@base-ui/react/accordion";
 import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
-import type { IUseContext } from "../types.js";
+import type { Override, IUseContext } from "../types.js";
+import type { AccordionContext } from "./accordion.context.js";
 
 /**
- * {@link AccordionItem} が子パーツへ提供するコンテキストです。
+ * {@link AccordionItem} が子パーツへ提供する状態です。
  */
-export type AccordionItemContext = Readonly<Accordion.Item.State>;
+export type AccordionItemContext = Readonly<Override<AccordionContext, Accordion.Item.State>>;
 
 /**
  * {@link AccordionItem} が子パーツへ提供するコンテキストです。
@@ -33,4 +34,4 @@ export const useAccordionItemContext: IUseAccordionItemContext =
     return ctx;
   };
 
-export { AccordionItemContext as Context, useAccordionItemContext as useContext };
+export { AccordionItemContext as ItemContext, useAccordionItemContext as useItemContext };

@@ -1,13 +1,18 @@
 import { Accordion } from "@base-ui/react/accordion";
-import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import { getItemKey } from "../_item.js";
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
 import { type $InferItemObjectValue, isItemObject } from "./_accordion.jsx";
 import { AccordionContent } from "./accordion.content.jsx";
+import {
+  type AccordionContextSize,
+  type AccordionContextRadius,
+  AccordionContext,
+} from "./accordion.context.js";
 import { AccordionHeading } from "./accordion.heading.jsx";
 import { AccordionIndicator } from "./accordion.indicator.jsx";
 import { type AccordionItemProps, AccordionItem } from "./accordion.item.jsx";
@@ -76,7 +81,7 @@ export interface IAccordionRootItemRenderer<TItem = any> {
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type AccordionRootRadius = "none" | Size;
+export type AccordionRootRadius = AccordionContextRadius;
 
 /**
  * アコーディオンの大きさです。
@@ -85,7 +90,7 @@ export type AccordionRootRadius = "none" | Size;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type AccordionRootSize = Size;
+export type AccordionRootSize = AccordionContextSize;
 
 /**
  * アコーディオンの項目の値です。
@@ -99,7 +104,10 @@ export type AccordionRootValue<TValue = any> = Accordion.Root.Value<TValue>;
  *
  * @template TValue 項目の値の型です。
  */
-export type AccordionRootState<TValue = any> = Accordion.Root.State<TValue>;
+export type AccordionRootState<TValue = any> = Override<
+  AccordionContext,
+  Accordion.Root.State<TValue>
+>;
 
 export namespace AccordionRootProps {
   export type Render<TValue = any> = RenderProps<AccordionRootState<TValue>>;
@@ -216,7 +224,9 @@ export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: Ac
   const {
     size = "md",
     items = [],
+    style,
     radius = "none",
+    render,
     children = defaultItemRenderer,
     className,
     separator = false,
@@ -224,22 +234,35 @@ export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: Ac
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
+  const ctx = React.useMemo<AccordionContext>(
+    () => ({ size, radius, separator }),
+    [radius, separator, size],
+  );
 
   return (
-    <Accordion.Root
-      {...otherProps}
-      className={cn(
-        className,
-        "sui_accordion",
-        `sui_accordion-size_${size}`,
-        `sui_accordion-radius_${radius}`,
-        separator && "sui_accordion-separator",
-        (state) => state.disabled && "sui_accordion-disabled",
-      )}
-      data-scope={dataScope}
-    >
-      {typeof children === "function" ? items.map(children) : children}
-    </Accordion.Root>
+    <AccordionContext value={ctx}>
+      <Accordion.Root
+        {...otherProps}
+        {...proxyRenderProps<Accordion.Root.State, AccordionRootState>(
+          (state) => ({ ...ctx, ...state }),
+          {
+            style,
+            render,
+            className: cn<AccordionRootState>(
+              className,
+              "sui_accordion",
+              (state) => `sui_accordion-size_${state.size}`,
+              (state) => `sui_accordion-radius_${state.radius}`,
+              (state) => state.separator && "sui_accordion-separator",
+              (state) => state.disabled && "sui_accordion-disabled",
+            ),
+          },
+        )}
+        data-scope={dataScope}
+      >
+        {typeof children === "function" ? items.map(children) : children}
+      </Accordion.Root>
+    </AccordionContext>
   );
 };
 

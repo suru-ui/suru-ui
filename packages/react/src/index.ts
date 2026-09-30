@@ -28,6 +28,12 @@ export {
   type AccordionItemObjectDecomposition,
   Accordion,
   useAccordionAPI,
+  AccordionContext,
+  useAccordionContext,
+  AccordionItemContext,
+  AccordionTriggerContext,
+  useAccordionItemContext,
+  useAccordionTriggerContext,
   decomposeAccordionItemObject,
 } from "./accordion/index.js";
 export {

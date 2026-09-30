@@ -2,14 +2,27 @@ import { Accordion } from "@base-ui/react/accordion";
 import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
+import RenderElement from "../_render-element.jsx";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { useAccordionContext } from "./accordion.context.js";
+import type { AccordionItemContext } from "./accordion.item.context.js";
+import { AccordionTriggerContext } from "./accordion.trigger.context.js";
 
 /**
  * {@link AccordionTrigger} が持つ状態です。
  */
-export type AccordionTriggerState = Accordion.Trigger.State;
+export type AccordionTriggerState = Override<
+  Override<AccordionItemContext, Accordion.Trigger.State>,
+  {
+    /**
+     * `true` の場合、Suru UI のスタイルがついていません。
+     */
+    unstyled: boolean;
+  }
+>;
 
 export namespace AccordionTriggerProps {
   export type Render = RenderProps<AccordionTriggerState>;
@@ -57,15 +70,32 @@ export type IAccordionTrigger = IComponent<AccordionTriggerProps>;
  * アコーディオンの開閉ボタンコンポーネントです。
  */
 export const AccordionTrigger: IAccordionTrigger = function SuiAccordionTrigger(props) {
-  const { unstyled = false, className, ...otherProps } = props;
+  const ctx = useAccordionContext();
+  const { style, render, unstyled = false, className, ...otherProps } = props;
 
   return (
     <Accordion.Trigger
       {...otherProps}
-      className={cn(
-        className,
-        "sui_accordion_trigger",
-        unstyled && "sui_accordion_trigger-unstyled",
+      {...proxyRenderProps<Accordion.Trigger.State, AccordionTriggerState>(
+        (state) => ({ ...ctx, ...state, unstyled }),
+        {
+          style,
+          render: (htmlProps, state) => (
+            <AccordionTriggerContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="button"
+              />
+            </AccordionTriggerContext>
+          ),
+          className: cn(
+            className,
+            "sui_accordion_trigger",
+            (state) => state.unstyled && "sui_accordion_trigger-unstyled",
+          ),
+        },
       )}
     />
   );
