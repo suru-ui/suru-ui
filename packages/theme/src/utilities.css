@@ -22,4 +22,11 @@
   @function --sui-icon_color(--canvas_text, --canvas) {
     result: color-mix(in oklab, var(--canvas_text) 100%, var(--canvas) 20%);
   }
+
+  @function --sui-light-dark(--light, --dark) {
+    result: if(
+              style(--sui-scheme: light): var(--light);
+              else:                       var(--dark);
+            );
+  }
 }

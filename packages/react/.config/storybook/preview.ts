@@ -12,10 +12,10 @@ export const preview = definePreview({
   decorators: [
     withThemeByDataAttribute({
       themes: {
-        ダーク: "dark",
         ライト: "light",
+        ダーク: "dark",
       },
-      defaultTheme: "ダーク",
+      defaultTheme: "ライト",
     }),
   ],
   addons: [

@@ -328,39 +328,15 @@
   }
 
   &.sui_radio-size_sm {
-    --sui_radio_indicator-size: calc(var(--sui_radio-size) * 0.42);
+    --sui_radio_indicator-size: calc(var(--sui_radio-size) * --sui-light-dark(0.42, 0.53));
   }
 
   &.sui_radio-size_md {
-    --sui_radio_indicator-size: calc(var(--sui_radio-size) * 0.42);
+    --sui_radio_indicator-size: calc(var(--sui_radio-size) * --sui-light-dark(0.42, 0.53));
   }
 
   &.sui_radio-size_lg {
-    --sui_radio_indicator-size: calc(var(--sui_radio-size) * 0.42);
-  }
-
-  /* `if()` と `style()` の非対応ブラウザーでは暗色テーマの比率を解決できず寸法が 0 になるため、対応ブラウザーにだけ適用します。 */
-  @supports (width: calc(1px * if(style(--x: y): 1; else: 2;))) {
-    &.sui_radio-size_sm {
-      --sui_radio_indicator-size: calc(
-                                    var(--sui_radio-size)
-                                    * if(style(--sui-scheme: dark): 0.53; else: 0.42;)
-                                  );
-    }
-
-    &.sui_radio-size_md {
-      --sui_radio_indicator-size: calc(
-                                    var(--sui_radio-size)
-                                    * if(style(--sui-scheme: dark): 0.53; else: 0.42;)
-                                  );
-    }
-
-    &.sui_radio-size_lg {
-      --sui_radio_indicator-size: calc(
-                                    var(--sui_radio-size)
-                                    * if(style(--sui-scheme: dark): 0.53; else: 0.42;)
-                                  );
-    }
+    --sui_radio_indicator-size: calc(var(--sui_radio-size) * --sui-light-dark(0.42, 0.53));
   }
 }
 
