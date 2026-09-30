@@ -2,11 +2,13 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
+import { useCardContext } from "./card.context.js";
+import type { CardHeaderState } from "./card.header.jsx";
 
 /**
  * {@link CardAction} が持つ状態です。
  */
-export type CardActionState = {};
+export type CardActionState = CardHeaderState;
 
 export namespace CardActionProps {
   export type Render = RenderProps<CardActionState>;
@@ -35,6 +37,8 @@ export type ICardAction = IComponent<CardActionProps>;
  * カードのヘッダー右上に操作要素を配置するコンポーネントです。
  */
 export const CardAction: ICardAction = function SuiCardAction(props) {
+  const ctx = useCardContext();
+
   return useRender({
     props: [
       props,
@@ -42,6 +46,7 @@ export const CardAction: ICardAction = function SuiCardAction(props) {
         className: "sui_card_action",
       },
     ],
+    state: ctx,
     defaultTagName: "div",
   });
 };

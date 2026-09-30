@@ -2,11 +2,13 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
+import { useCardContext } from "./card.context.js";
+import type { CardRootState } from "./card.root.jsx";
 
 /**
  * {@link CardHeader} が持つ状態です。
  */
-export type CardHeaderState = {};
+export type CardHeaderState = CardRootState;
 
 export namespace CardHeaderProps {
   export type Render = RenderProps<CardHeaderState>;
@@ -35,6 +37,8 @@ export type ICardHeader = IComponent<CardHeaderProps>;
  * カードのタイトル・説明・アクションをまとめるコンポーネントです。
  */
 export const CardHeader: ICardHeader = function SuiCardHeader(props) {
+  const ctx = useCardContext();
+
   return useRender({
     props: [
       props,
@@ -42,6 +46,7 @@ export const CardHeader: ICardHeader = function SuiCardHeader(props) {
         className: "sui_card_header",
       },
     ],
+    state: ctx,
     defaultTagName: "div",
   });
 };

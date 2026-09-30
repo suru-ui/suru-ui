@@ -2,11 +2,13 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
+import { useCardContext } from "./card.context.js";
+import type { CardHeaderState } from "./card.header.jsx";
 
 /**
  * {@link CardDescription} が持つ状態です。
  */
-export type CardDescriptionState = {};
+export type CardDescriptionState = CardHeaderState;
 
 export namespace CardDescriptionProps {
   export type Render = RenderProps<CardDescriptionState>;
@@ -35,6 +37,8 @@ export type ICardDescription = IComponent<CardDescriptionProps>;
  * カードのタイトルを補足する説明を表示するコンポーネントです。
  */
 export const CardDescription: ICardDescription = function SuiCardDescription(props) {
+  const ctx = useCardContext();
+
   return useRender({
     props: [
       props,
@@ -42,6 +46,7 @@ export const CardDescription: ICardDescription = function SuiCardDescription(pro
         className: "sui_card_description",
       },
     ],
+    state: ctx,
     defaultTagName: "div",
   });
 };

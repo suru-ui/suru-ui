@@ -2,12 +2,17 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { CardHeader } from "../../../src/card/card.header.jsx";
+import { CardRoot } from "../../../src/card/card.root.jsx";
 import "../_locators.js";
 
 describe("CardHeader", () => {
   test("ヘッダーとして描画する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<CardHeader>見出し</CardHeader>);
+    const screen = await render(
+      <CardRoot>
+        <CardHeader>見出し</CardHeader>
+      </CardRoot>,
+    );
 
     // 検証
     const header = screen.getByClassName("sui_card_header").element();
@@ -17,7 +22,11 @@ describe("CardHeader", () => {
 
   test("利用者の className を保持する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<CardHeader className="custom" />);
+    const screen = await render(
+      <CardRoot>
+        <CardHeader className="custom" />
+      </CardRoot>,
+    );
 
     // 検証
     const header = screen.getByClassName("sui_card_header").element();
@@ -27,9 +36,31 @@ describe("CardHeader", () => {
 
   test("render に指定した要素へ描画する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<CardHeader render={<header />} />);
+    const screen = await render(
+      <CardRoot>
+        <CardHeader render={<header />} />
+      </CardRoot>,
+    );
 
     // 検証
     expect(screen.getByClassName("sui_card_header").element().tagName).toBe("HEADER");
+  });
+
+  test("render の関数へルートの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <CardRoot size="lg" radius="sm" outlined>
+        <CardHeader
+          render={(props, state) => (
+            <div {...props} data-probe={`${state.size}/${state.radius}/${state.outlined}`} />
+          )}
+        />
+      </CardRoot>,
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_card_header").element().getAttribute("data-probe")).toBe(
+      "lg/sm/true",
+    );
   });
 });

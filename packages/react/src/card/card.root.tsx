@@ -1,11 +1,11 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
-import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import Config from "../_config.jsx";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import { type CardContextSize, type CardContextRadius, CardContext } from "./card.context.js";
 
 /**
  * カードの角丸の大きさです。
@@ -15,7 +15,7 @@ import type { IComponent } from "../types.js";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type CardRootRadius = "none" | Size;
+export type CardRootRadius = CardContextRadius;
 
 /**
  * カードの大きさです。
@@ -24,12 +24,12 @@ export type CardRootRadius = "none" | Size;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type CardRootSize = Size;
+export type CardRootSize = CardContextSize;
 
 /**
  * {@link CardRoot} が持つ状態です。
  */
-export type CardRootState = {};
+export type CardRootState = CardContext;
 
 export namespace CardRootProps {
   export type Render = RenderProps<CardRootState>;
@@ -77,7 +77,7 @@ export type ICardRoot = IComponent<CardRootProps>;
  * カードの各パーツをまとめるルートコンポーネントです。
  */
 export const CardRoot: ICardRoot = function SuiCardRoot(props) {
-  const config = React.use(Config);
+  const conf = React.use(Config);
   const {
     size = "md",
     radius = size,
@@ -86,26 +86,31 @@ export const CardRoot: ICardRoot = function SuiCardRoot(props) {
     "data-scope": dataScope = "",
     ...otherDivProps
   } = props;
+  const ctx = React.useMemo<CardContext>(
+    () => ({ size, radius, outlined }),
+    [size, radius, outlined],
+  );
   const element = useRender({
     props: [
       otherDivProps,
       {
-        className: cn(
+        className: cn<CardRootState>(
           "sui_card",
-          `sui_card-size_${size}`,
-          `sui_card-radius_${radius}`,
-          outlined && "sui_card-outlined",
+          (state) => `sui_card-size_${state.size}`,
+          (state) => `sui_card-radius_${state.radius}`,
+          (state) => state.outlined && "sui_card-outlined",
         ),
         "data-scope": dataScope,
       },
     ],
+    state: ctx,
     defaultTagName: "div",
   });
 
   return (
-    <config.Context size={size} radius={radius}>
-      {element}
-    </config.Context>
+    <conf.Context size={size} radius={radius}>
+      <CardContext value={ctx}>{element}</CardContext>
+    </conf.Context>
   );
 };
 

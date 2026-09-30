@@ -2,11 +2,13 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
+import { useCardContext } from "./card.context.js";
+import type { CardRootState } from "./card.root.jsx";
 
 /**
  * {@link CardContent} が持つ状態です。
  */
-export type CardContentState = {};
+export type CardContentState = CardRootState;
 
 export namespace CardContentProps {
   export type Render = RenderProps<CardContentState>;
@@ -35,6 +37,8 @@ export type ICardContent = IComponent<CardContentProps>;
  * カードの本文を表示するコンポーネントです。
  */
 export const CardContent: ICardContent = function SuiCardContent(props) {
+  const ctx = useCardContext();
+
   return useRender({
     props: [
       props,
@@ -42,6 +46,7 @@ export const CardContent: ICardContent = function SuiCardContent(props) {
         className: "sui_card_content",
       },
     ],
+    state: ctx,
     defaultTagName: "div",
   });
 };

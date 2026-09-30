@@ -1,5 +1,6 @@
 import "./card.css";
 
+export * from "./card.context.js";
 export * from "./card.root.jsx";
 export * from "./card.header.jsx";
 export * from "./card.title.jsx";

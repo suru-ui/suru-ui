@@ -2,13 +2,17 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { CardDescription } from "../../../src/card/card.description.jsx";
+import { CardHeader } from "../../../src/card/card.header.jsx";
+import { CardRoot } from "../../../src/card/card.root.jsx";
 import "../_locators.js";
 
 describe("CardDescription", () => {
   test("説明として描画する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
-      <CardDescription>毎週のスナップショットを共有します。</CardDescription>,
+      <CardRoot>
+        <CardDescription>毎週のスナップショットを共有します。</CardDescription>
+      </CardRoot>,
     );
 
     // 検証
@@ -19,7 +23,11 @@ describe("CardDescription", () => {
 
   test("利用者の className を保持する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<CardDescription className="custom" />);
+    const screen = await render(
+      <CardRoot>
+        <CardDescription className="custom" />
+      </CardRoot>,
+    );
 
     // 検証
     const description = screen.getByClassName("sui_card_description").element();
@@ -29,9 +37,33 @@ describe("CardDescription", () => {
 
   test("render に指定した要素へ描画する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<CardDescription render={<p />} />);
+    const screen = await render(
+      <CardRoot>
+        <CardDescription render={<p />} />
+      </CardRoot>,
+    );
 
     // 検証
     expect(screen.getByClassName("sui_card_description").element().tagName).toBe("P");
+  });
+
+  test("render の関数へ親パーツの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <CardRoot size="lg" radius="sm" outlined>
+        <CardHeader>
+          <CardDescription
+            render={(props, state) => (
+              <div {...props} data-probe={`${state.size}/${state.radius}/${state.outlined}`} />
+            )}
+          />
+        </CardHeader>
+      </CardRoot>,
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_card_description").element().getAttribute("data-probe")).toBe(
+      "lg/sm/true",
+    );
   });
 });

@@ -2,11 +2,13 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
+import { useCardContext } from "./card.context.js";
+import type { CardRootState } from "./card.root.jsx";
 
 /**
  * {@link CardFooter} が持つ状態です。
  */
-export type CardFooterState = {};
+export type CardFooterState = CardRootState;
 
 export namespace CardFooterProps {
   export type Render = RenderProps<CardFooterState>;
@@ -35,6 +37,8 @@ export type ICardFooter = IComponent<CardFooterProps>;
  * カードの操作や補足情報を末尾に配置するコンポーネントです。
  */
 export const CardFooter: ICardFooter = function SuiCardFooter(props) {
+  const ctx = useCardContext();
+
   return useRender({
     props: [
       props,
@@ -42,6 +46,7 @@ export const CardFooter: ICardFooter = function SuiCardFooter(props) {
         className: "sui_card_footer",
       },
     ],
+    state: ctx,
     defaultTagName: "div",
   });
 };

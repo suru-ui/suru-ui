@@ -62,6 +62,25 @@ describe("CardRoot", () => {
     expect(screen.getByClassName("sui_card").element().tagName).toBe("SECTION");
   });
 
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <CardRoot
+        size="lg"
+        radius="sm"
+        outlined
+        render={(props, state) => (
+          <section {...props} data-probe={`${state.size}/${state.radius}/${state.outlined}`} />
+        )}
+      />,
+    );
+
+    // 検証
+    const root = screen.getByClassName("sui_card").element();
+    expect(root.tagName).toBe("SECTION");
+    expect(root.getAttribute("data-probe")).toBe("lg/sm/true");
+  });
+
   test("スタイル起点として data-scope を付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<CardRoot />);

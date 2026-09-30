@@ -164,6 +164,8 @@ export {
   type CardSlotProps,
   Card,
   useCardAPI,
+  CardContext,
+  useCardContext,
 } from "./card/index.js";
 export {
   type CheckboxAPI,
