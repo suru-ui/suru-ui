@@ -19,7 +19,7 @@
       )
   ) {
     all: unset;
-    color-scheme: var(--sui-theme);
+    color-scheme: var(--sui-scheme);
     display: revert;
   }
 

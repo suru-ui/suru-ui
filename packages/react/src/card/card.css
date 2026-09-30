@@ -51,7 +51,7 @@
   --sui_card-font_family: var(--sui-font-sans);
   --sui_card-color: var(--sui-canvas_text-1);
   --sui_card-background_color: if(
-                                 style(--sui-theme: dark): var(--sui-canvas-2);
+                                 style(--sui-scheme: dark): var(--sui-canvas-2);
                                  else:                     var(--sui-canvas-1);
                                );
   --sui_card-border_color: var(--sui-border-1);
@@ -451,7 +451,7 @@
 :scope {
   --sui_card_footer-gap: --sui-gap(2);
   --sui_card_footer-background_color: if(
-                                        style(--sui-theme: dark): var(--sui-canvas-3);
+                                        style(--sui-scheme: dark): var(--sui-canvas-3);
                                         else:                     var(--sui-canvas-2);
                                       );
   --sui_card_footer-border_color: var(--sui-border-1);
